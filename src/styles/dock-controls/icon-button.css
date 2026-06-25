@@ -95,6 +95,18 @@
             scale: var(--scale-press-dock);
         }
 
+        /* W-NAV-DOCK-FIX — the four-state DISABLED register. A boundary nav control
+           (prev/next at the first/last item) stays PRESENT but disabled so the row
+           geometry holds (never DOM-absent — the "flaky" read). It dims to the shared
+           disabled opacity + suppresses the press/pointer (the hover/active rules
+           already `:not(:disabled)`-exclude it, so this only needs the dim + the
+           pointer-suppress). Compositor-only (opacity); no layout shift. */
+        &:disabled {
+            opacity: var(--opacity-disabled, 0.4);
+            pointer-events: none;
+            cursor: default;
+        }
+
         &:focus:not(:focus-visible) {
             box-shadow: none;
             outline: none;
@@ -122,9 +134,29 @@
            `--dock-active-*` cohort above (a parent-scoped audacious override): this is
            the library's default selected glass, ergonomic sugar over the shipped
            register so a selectable dock control needs no hand-rolled active paint. The
-           glyph/label firm to the full warm-ink, mirroring the rail's `.is-active`. */
+           glyph/label firm to the full warm-ink, mirroring the rail's `.is-active`.
+
+           BD.W-DOCK-CORE (P4 deferred) — the selected pill now COMPOSES the shared
+           `.glass-capsule` register (the component adds the `.glass-capsule` class when
+           `active`). So instead of painting a bare `background`, the `[data-active]`
+           rung re-points `--glass-capsule-fill` (the override hook the capsule register
+           exposes) to the selected glass tier — the capsule's lifted-plate composite
+           (rim + lift + the warm-floor fill base) reads the selected tier WITHOUT
+           forking the register (the selected-parity rung). The glyph firms to the full
+           warm-ink. */
         &[data-active] {
-            background: var(--dock-control-active-bg, var(--glass-bg-floating));
+            --glass-capsule-fill: var(
+                --dock-control-active-bg,
+                var(--glass-bg-floating)
+            );
+            /* Re-assert the capsule fill as the painted background — the base
+               `.dock-icon-button { background: transparent }` (same layer, later
+               source order, equal specificity) would otherwise win over
+               `.glass-capsule`'s background; this `[data-active]` rule (specificity
+               0,2,0 > the base 0,1,0) hands the selected pill its lifted-glass fill.
+               The capsule's rim/lift `box-shadow` + `backdrop-filter` already apply
+               (the base rule never sets those). */
+            background: var(--glass-capsule-fill);
             color: var(--dock-fg-on-aurora, var(--foreground));
         }
     }

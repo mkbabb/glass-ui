@@ -46,18 +46,43 @@ const props = withDefaults(
         active?: boolean;
         /** Button type attribute (default: "button" to prevent form submission). */
         type?: ButtonHTMLAttributes["type"];
+        /**
+         * Disabled state (the four-state contract). A boundary nav control (a
+         * prev/next at the first/last item) stays PRESENT but disabled so the row
+         * geometry holds, never DOM-absent (the "flaky" read). On a <button> host it
+         * lands the native `disabled` attribute + `aria-disabled`; the CSS reads the
+         * `:disabled` register (the shared `.dock-icon-button:disabled` dim + the
+         * `pointer-events:none` press-suppress).
+         */
+        disabled?: boolean;
         /** Host tag/component (reka-ui Primitive `as`; default "button"). */
         as?: string | Component;
         /** Merge props onto a slotted child instead of rendering a host tag. */
         asChild?: boolean;
         class?: HTMLAttributes["class"];
     }>(),
-    { compact: false, active: false, type: "button", as: "button", asChild: false },
+    {
+        compact: false,
+        active: false,
+        type: "button",
+        disabled: false,
+        as: "button",
+        asChild: false,
+    },
 );
 
+// BD.W-DOCK-CORE (P4 deferred) — the selected pill COMPOSES the shared
+// `.glass-capsule` register (the ONE glassy lifted-lozenge recipe, BD.W-TAB-IOS-CAPSULE)
+// now that the `--glass-capsule-fill` override hook ships. `.glass-capsule-hover` is
+// composed ALWAYS (it only adds the specular-lift + press-snap transitions — inert at
+// rest, no resting fill), and `.glass-capsule` is added ONLY when `active` so the
+// selected control reads as the lifted warm-glass capsule (the dock-controls.css
+// `[data-active]` rule re-points `--glass-capsule-fill` to the selected glass tier).
+// A stateless icon button stays transparent at rest (no capsule plate).
 const classes = computed(() =>
     cn(
-        "dock-icon-button glass-specular-track",
+        "dock-icon-button glass-specular-track glass-capsule-hover",
+        { "glass-capsule": props.active },
         { "dock-icon-button--compact": props.compact },
         props.class,
     ),
@@ -68,9 +93,19 @@ const classes = computed(() =>
 // register reads. Both omitted when `active` is unset (a stateless button carries no
 // pressed semantic). Spread through `$attrs` so they land on the rendered host
 // regardless of the `as`/`as-child` Primitive host.
-const stateAttrs = computed(() =>
-    props.active ? { "aria-pressed": "true", "data-active": "" } : {},
-);
+const stateAttrs = computed(() => ({
+    ...(props.active ? { "aria-pressed": "true", "data-active": "" } : {}),
+    // The disabled register (the four-state contract). The native `disabled` attr only
+    // applies on a <button> host; `aria-disabled` carries the semantic on any host.
+    ...(props.disabled
+        ? {
+              ...(props.as === "button" && !props.asChild
+                  ? { disabled: true }
+                  : {}),
+              "aria-disabled": "true",
+          }
+        : {}),
+}));
 
 // `type` is a <button>-only attribute; emit it only when the host is a button.
 // It is spread through `$attrs` (not bound on <Primitive> directly — reka's

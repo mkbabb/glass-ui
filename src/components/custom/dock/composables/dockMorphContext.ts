@@ -1,59 +1,40 @@
-import { nextTick, onUnmounted, readonly, ref, watch } from "vue";
+import { onUnmounted, readonly, ref, watch } from "vue";
 import type { Ref } from "vue";
 import { SpringProgress } from "@mkbabb/keyframes.js";
 import { createOptionalContext } from "../../../../composables/context";
 import { DOCK_MORPH_LABEL, DOCK_SPRING } from "../constants";
-// BB.W-CARVE4 — the PURE geometry + reserved-footprint measure + SYNCHRONOUS PRM seat
-// helpers carved into a sibling colocation module (the aurora/goo-blob/useFourierField
-// pattern); the orchestrator below stays the morph DRIVER and IMPORTS them.
-import {
-    armRootMorphSpan,
-    clearMorphVars,
-    clearRootMorphSpan,
-    dimOf,
-    getSize,
-    measureAndArmMorph,
-    morphAxisProp,
-    rebaseSiblingSpans,
-    seatTargetSync,
-    type MorphMeasureTarget,
-} from "./dockMorphMeasure";
+// BD.W-DOCK-CORE — the width-seizure cure. The per-swap FLIP measure pipeline
+// (measureAndArmMorph/seatTargetSync/rebaseSiblingSpans/forceNestedMaxContent/
+// measureTo/armRootMorphSpan/clearRootMorphSpan/morphMinFloorPx) is DELETED. The
+// orchestrator now ONLY arms `[data-morphing]`, runs ONE `SpringProgress` writing
+// the `--dock-morph-t` 0→1 scalar, and swaps the per-target crossfade classes; the
+// VISIBLE size rides the ratio-free `--dock-live` convex blend of two measure-ONCE
+// endpoints (`useDockExpandedSize` + layers.css), so the unbounded `from/to` ratio
+// that detonated the width (`scaleX(~56)` ≈ 2451px) is GONE by construction.
+import { dimOf } from "./dockMorphMeasure";
 
 /**
  * AX.W02 — ONE morph orchestrator per dock. The dock is a single morph stack
  * whose active "layer" is `(expandedState × activePane)`: the outer
  * collapse↔expand swap and the inner `<DockLayerGroup>` pane swaps are
- * transitions in the SAME group — ONE spring, ONE scalar (`--dock-morph-t`,
- * established by W01), ONE clock. No second engine.
+ * transitions in the SAME group — ONE spring, ONE scalar (`--dock-morph-t`),
+ * ONE clock. No second engine.
  *
- * Re-derived from first principles on W01's settled single-scalar substrate:
- *  - `--dock-morph-t` is written to the `.glass-dock` root and INHERITS to every
- *    descendant (dock.css `@property … inherits:true`), so ONE spring writing
- *    that one scalar drives EVERY registered container's size calc at once.
- *  - Each morphing container carries its OWN `--dock-morph-from`/`--dock-morph-to`
- *    px span (the allowed one-time FLIP measurement) and interpolates it against
- *    the shared scalar — `from + (to − from) · t`. So a simultaneous
- *    collapse + pane-swap reads as one continuous spring: the box, the nested
- *    stack, and every child stagger ramp on the same `t`.
- *
- * The orchestrator OWNS one `SpringProgress`. The OUTER collapse↔expand pair
- * registers as a target; a NESTED `<DockLayerGroup>` registers a SECOND target
- * instead of minting its own `useLayerTransition` engine. A re-toggle mid-flight
- * re-bases the live solver onto the new span from its current velocity (the iOS
- * interruptible-physics contract W01 keeps), so even an interrupted morph stays
- * one continuous trajectory.
- *
- * This is the dock-flavored first instance of the general `MorphGroup` /
- * `GlassEffectContainer` facility (the iOS-26 Liquid-Glass corpus, facet 26 —
- * the `provideMorphGroup` two-part seam: a per-element driver + a provide/inject
- * orchestrator). AX.W42 generalizes it; W02 establishes the seam it builds on.
+ * BD.W-DOCK-CORE (the size re-invent) — the orchestrator no longer MEASURES a
+ * per-swap `from/to` span. The visible size is a ratio-free convex blend of two
+ * endpoints measured ONCE per content change (`useDockExpandedSize` writes
+ * `--dock-expanded-px`/`--dock-collapsed-px`; layers.css blends them on
+ * `--dock-morph-t`). So this driver shrinks to its essence: on a layer swap it
+ * arms `[data-morphing]`, swaps the crossfade classes (the a11y-006 3-state
+ * hit-test contract, LOAD-BEARING — KEPT verbatim), and runs ONE `SpringProgress`
+ * gliding `--dock-morph-t` 0→1; on settle it clears the morph state. A re-toggle
+ * mid-flight re-bases the live solver onto a fresh spring CARRYING the prior
+ * velocity (the iOS interruptible-physics continuity).
  *
  * LIGHT-surface only: `SpringProgress` owns its own rAF via `.play(onFrame)` and
- * carries no static value.js edge — never import `AnimationGroup` / `./engine`
- * (that pulls value.js into the dock bundle).
+ * carries no static value.js edge — never import `AnimationGroup` / `./engine`.
  *
- * The `DOCK_SPRING` tuning this orchestrator drives is the ONE authority shared with
- * `useLayerTransition` — it lives in `../constants` (the feature-dir constants home).
+ * `DOCK_SPRING` is byte-fenced — it lives in `../constants`.
  */
 
 export interface DockMorphGroupRegistration {
@@ -83,19 +64,12 @@ export interface DockMorphContext {
 }
 
 // ── internal: one morph target the shared spring drives ────────────────────────
-// Extends MorphMeasureTarget (containerEl/axis/txId — the shape the carved measure/
-// seat helpers read), adding the orchestrator-internal layer + lifecycle fields.
-interface MorphTarget extends MorphMeasureTarget {
+interface MorphTarget {
+    containerEl: Ref<HTMLElement | null>;
+    axis: Ref<"horizontal" | "vertical">;
     activeLayer: Ref<string>;
     currentLayer: Ref<string>;
     leavingLayer: Ref<string | null>;
-    /**
-     * PER-TARGET swap generation. Each target owns its own monotonic id so two
-     * targets swapping in the SAME tick (a simultaneous collapse + pane-swap) do
-     * NOT clobber each other's deferred rAF measurement — the SHARED spring is the
-     * one clock, but each target's pin/measure pipeline is gated on its own id.
-     * (txId comes from MorphMeasureTarget.)
-     */
     stop: () => void;
 }
 
@@ -134,24 +108,20 @@ export interface UseDockMorphOrchestratorReturn {
 }
 
 /**
- * The ONE morph engine for a dock instance. Owns a single `SpringProgress`;
- * drives the outer collapse↔expand box AND every nested `<DockLayerGroup>`'s
- * pane-swap off the one `--dock-morph-t` scalar. Replaces the per-pair
- * `useLayerTransition` instantiation (W01's single-scalar primitive) with a
- * single multi-target driver, so a nested dock runs ONE engine, not two.
+ * The ONE morph engine for a dock instance. Owns a single `SpringProgress` that
+ * glides the one `--dock-morph-t` scalar 0→1 on a layer swap; the size is a
+ * ratio-free blend of the measure-ONCE endpoints (layers.css). Crossfade classes
+ * (the 3-state a11y hit-test contract) swap on the swap; the spring is the clock.
  */
 export function useDockMorphOrchestrator(
     options: UseDockMorphOrchestratorOptions,
 ): UseDockMorphOrchestratorReturn {
     const { rootEl, outerEl, outerActiveLayer, outerAxis } = options;
 
-    // The single live morph driver, shared across every registered target. A
-    // re-toggle mid-flight RE-BASES it onto the new span from its current
-    // velocity rather than reconstructing from rest (the iOS interruptible-spring
-    // contract). The normalized scalar runs 0→1; the per-frame `value` IS
-    // `--dock-morph-t` on the root. ONE spring is the dock's single clock; targets
-    // gate their pin/measure pipelines on PER-TARGET generations so a simultaneous
-    // multi-target swap does not clobber a sibling's deferred measurement.
+    // The single live morph driver. A re-toggle mid-flight RE-BASES it onto a
+    // fresh spring carrying the prior velocity (iOS interruptible-physics). The
+    // normalized scalar runs 0→1; the per-frame value IS `--dock-morph-t` on the
+    // root. ONE spring is the dock's single clock.
     let spring: SpringProgress | null = null;
 
     const targets = new Set<MorphTarget>();
@@ -167,91 +137,39 @@ export function useDockMorphOrchestrator(
         }
     }
 
-    /**
-     * BB.W-DOCK-MORPH-FAMILY (c) — the PRM probe. Mirrors
-     * `useDockOrientationMorph.prefersReducedMotion()` (the orientation driver's
-     * precedent this collapse/expand path adopts). Under reduce there is NO morph
-     * to play, so the geometry must seat SYNCHRONOUSLY at the target (no rAF
-     * measure-defer, no morph window) — else the box paints the collapsed `from`
-     * sliver while the spring's `respectReducedMotion` jump already reads the scalar
-     * at the endpoint (the measured 10×74 blank-sliver P0 terminal failure).
-     */
-    function prefersReducedMotion(): boolean {
-        return (
-            typeof window !== "undefined" &&
-            typeof window.matchMedia === "function" &&
-            window.matchMedia("(prefers-reduced-motion: reduce)").matches
-        );
-    }
-
-    // dimOf/morphAxisProp/getSize/clearMorphVars are the PURE geometry helpers
-    // imported from dockMorphMeasure (BB.W-CARVE4 — carved sibling).
-
-    /**
-     * Whether ANY target is still mid-morph (a pinned span on its container). The
-     * root keeps `[data-morphing]` + the scalar while any target is animating.
-     */
+    /** Whether ANY target is still mid-morph (the root keeps `[data-morphing]`). */
     function anyMorphing(): boolean {
-        for (const t of targets) {
-            const el = t.containerEl.value;
-            if (el && el.style.getPropertyValue("--dock-morph-to")) return true;
-        }
-        return false;
+        const r = root();
+        return !!r && r.hasAttribute("data-morphing");
     }
 
     function settleTarget(t: MorphTarget) {
-        const el = t.containerEl.value;
-        if (el) clearMorphVars(el);
-        // BC.W-DOCK-ROOT-MORPH — the outer target also pins the ROOT box span (so the
-        // root's own measured `inline-size` rides the scalar, not just the inner's
-        // compositor `scaleX`). Clear it on settle so the rest-state shrink-wrap owns
-        // the box again. (clearRootMorphSpan/armRootMorphSpan are the PURE root-span
-        // writers carved into dockMorphMeasure — BB.W-CARVE4 colocation pattern.)
-        if (t === outerTarget) clearRootMorphSpan(root());
         t.leavingLayer.value = null;
     }
 
-    /** Clear the shared scalar + park the spring only once NO target is morphing. */
+    /** Clear the shared scalar + park the spring once the morph settles. */
     function maybeSettleRoot() {
-        if (anyMorphing()) return;
         const r = root();
         if (r) {
             r.style.removeProperty("--dock-morph-t");
             r.removeAttribute("data-morphing");
+            r.removeAttribute("data-punching");
         }
         disposeSpring();
     }
 
     /**
-     * Ensure the ONE shared spring is running 0→1, writing `--dock-morph-t` to the
-     * root once per frame. Created once per morph episode; a fresh start seats it
-     * at rest, a re-arm mid-flight RE-BASES it from its current velocity (the iOS
-     * interruptible contract) so the trajectory stays continuous. The frame loop is
-     * owned HERE (one `play()` per spring lifecycle), so N targets armed in the same
-     * tick all ride this ONE loop — one clock. `respectReducedMotion` jumps the
-     * scalar 0→1 in one frame, so the chrome snaps under PRM.
+     * Ensure the ONE shared spring is running 0→1, writing `--dock-morph-t` once
+     * per frame. Every episode gets a FRESH spring that starts from rest CARRYING
+     * the prior spring's velocity (iOS interruptible continuity) and `play()`s a
+     * GUARANTEED-running loop — the idempotent-target trap (a re-arm at value≈1
+     * leaving the closed-form clock frozen) cannot bite a fresh instance, so the
+     * scalar genuinely GLIDES 0→1 over the ~285–320ms DOCK_SPRING clock.
+     * `respectReducedMotion` jumps the scalar 0→1 in one frame under PRM.
      */
     function ensureSpringRunning() {
         const r = root();
         if (!r) return;
-        // BC.W-DOCK-GLIDE — the SNAP root cause + fix. The dock spring ALWAYS targets 1
-        // (the morph DIRECTION lives in the `--dock-expand-t` derivation off the
-        // `.collapsed`/`.expanded` class, NOT the spring sign — every episode runs the
-        // scalar 0→1). So `set target = 1` on a re-armed spring is ALWAYS IDEMPOTENT
-        // (keyframes.js: "Idempotent if the target is unchanged"), which means the prior
-        // re-seat-the-live-spring path could NOT re-seat the closed-form clock and — when
-        // the prior episode's `play()` rAF loop had already auto-stopped on settle — could
-        // NOT restart the loop either. A swap that arrived while the prior morph was at
-        // value≈1 (low velocity, near settle — exactly the gate's ENTER-at-900ms-mid-
-        // collapse case) thus left `--dock-morph-t` frozen and the box SNAPPED to the
-        // endpoint in one giant-dt frame.
-        //
-        // THE FIX: every morph episode gets a FRESH spring that starts from rest CARRYING
-        // the prior spring's velocity (the iOS interruptible-physics continuity — a
-        // mid-flight retarget joins the same trajectory) and `play()`s a GUARANTEED-running
-        // loop. `reset(0, v)` + a fresh `target = 1` re-seats the closed-form origin/clock
-        // cleanly (the idempotent-target trap cannot bite a fresh instance), so the scalar
-        // genuinely GLIDES 0→1 over the ~285-320ms DOCK_SPRING clock — no snap, no freeze.
         const inheritedVelocity =
             spring !== null && !spring.settled ? spring.velocity : 0;
         disposeSpring();
@@ -264,181 +182,62 @@ export function useDockMorphOrchestrator(
         const activeSpring = spring;
         activeSpring.reset(0, inheritedVelocity);
         activeSpring.target = 1;
-        // BC.W-DOCK-GLIDE — seat the scalar at 0 SYNCHRONOUSLY now (before `play()`'s
-        // first rAF callback). The prior episode's still-running `play()` loop may have
-        // overwritten the onSwap pin's `--dock-morph-t = 0` back to its ~1 settle value
-        // during the nextTick+rAF measure gap; `disposeSpring()` above stopped those
-        // writes, but the LAST stale value lingers until this fresh spring's first
-        // callback. Re-seating 0 here makes the single frame between this arm and the
-        // first spring frame read 0 (the inner reserved `to` × scale 0 = collapsed
-        // footprint), eliminating the 1-frame endpoint-flash before the glide.
+        r.setAttribute("data-morphing", "");
+        // BD.W-DOCK-PUNCH-CHANNEL — arm the dedicated cartoon-punch for ONE episode.
+        // `[data-punching]` lifts `--dock-punch-stretch` to its overshoot target; the
+        // CSS transition on `--ease-cartoon-punch` carries it there on the punch curve
+        // (the ~4% pre-dip + ~22% overshoot), and clearing the hook below transitions it
+        // back to 1 (the RETURN — never latched). Cleared partway through the glide so
+        // the return completes by settle. PRM zeroes `--motion-weight` → amplitude 1.
+        r.setAttribute("data-punching", "");
+        // Seat the scalar at 0 SYNCHRONOUSLY now (before `play()`'s first rAF) so
+        // the single frame between this arm and the first spring frame reads 0 (the
+        // collapsed footprint), eliminating a 1-frame endpoint-flash before the glide.
         r.style.setProperty("--dock-morph-t", "0");
         activeSpring.play((tValue: number) => {
             const rr = root();
-            if (rr) rr.style.setProperty("--dock-morph-t", `${tValue}`);
-            if (activeSpring.settled) {
-                // Settle every still-pinned target, then park the root.
-                for (const tt of targets) {
-                    const ttEl = tt.containerEl.value;
-                    if (ttEl && ttEl.style.getPropertyValue("--dock-morph-to")) {
-                        settleTarget(tt);
-                    }
+            if (rr) {
+                rr.style.setProperty("--dock-morph-t", `${tValue}`);
+                // Clear the punch hook past the curve's overshoot peak so it transitions
+                // BACK to the rest 1 before the morph settles (the never-latch fence).
+                if (tValue > 0.5 && rr.hasAttribute("data-punching")) {
+                    rr.removeAttribute("data-punching");
                 }
+            }
+            if (activeSpring.settled) {
+                const rrr = root();
+                if (rrr) rrr.removeAttribute("data-punching");
+                for (const tt of targets) settleTarget(tt);
                 maybeSettleRoot();
             }
         });
     }
 
-    /**
-     * Arm the morph span on ONE target, then ensure the SHARED spring is running.
-     * Each target's own `--dock-morph-from`/`--dock-morph-to` span interpolates
-     * against the one `--dock-morph-t` scalar.
-     */
-    function armTarget(t: MorphTarget, id: number, fromSize: number, toSize: number) {
-        if (id !== t.txId) return;
-        const el = t.containerEl.value;
-        const r = root();
-        if (!el || !r) return;
-        // No span — a same-size swap, nothing to morph. Land flush at rest.
-        if (Math.abs(toSize - fromSize) < 0.5) {
-            settleTarget(t);
-            maybeSettleRoot();
-            return;
-        }
-        el.style.setProperty("--dock-morph-from", `${fromSize}px`);
-        el.style.setProperty("--dock-morph-to", `${toSize}px`);
-        r.setAttribute("data-morphing", "");
-        // The shared spring OWNS the `--dock-morph-t` scalar (written once per frame
-        // from `ensureSpringRunning`); arming a target only pins its own span.
-        ensureSpringRunning();
-    }
-
-    // measureTo + seatTargetSync (the reserved-footprint measure + the SYNCHRONOUS
-    // PRM seat, composing the BA-VJS-1 nested ordering) are imported from
-    // dockMorphMeasure (BB.W-CARVE4). The seat composes the orchestrator's settle
-    // callbacks via the `seatCallbacks` bundle below.
-
-    /** The settle callbacks the carved synchronous PRM seat composes. */
-    const seatCallbacks = { settleTarget, maybeSettleRoot };
-
-    /** The per-target swap handler — the W01 measured-once FLIP, shared spring. */
+    /** The per-target swap handler — swap the crossfade classes, run the spring. */
     function onSwap(t: MorphTarget, newLayer: string, oldLayer: string) {
         if (newLayer === oldLayer) return;
-        const el = t.containerEl.value;
         const r = root();
-        if (!el || !r) {
+        if (!r) {
             t.currentLayer.value = newLayer;
             t.leavingLayer.value = null;
             return;
         }
-
-        const id = ++t.txId;
-        const axis = t.axis.value;
-
-        // 1. Capture from-size BEFORE the ref-swap, so it reads the live painted
-        //    geometry (a retarget reads mid-morph px; a fresh swap reads the rest
-        //    aperture), never an intrinsic re-resolve.
-        const fromSize = getSize(el, axis);
-        // BC.W-DOCK-ROOT-MORPH — capture the ROOT box's own `from` on the morph axis
-        // (the outer target only). The root box must ramp on the scalar too — the
-        // inner `scaleX` is paint-only, so the root would otherwise shrink-wrap to the
-        // inner's reserved full `to` and SNAP (the headline defect). Captured here at
-        // the live painted geometry, mirrored to the root once `to` is measured.
-        const rootFromSize = t === outerTarget ? getSize(r, axis) : 0;
-
-        // 2. Swap the layer refs (drives the crossfade classes on the next flush).
+        // Swap the layer refs — drives the `.is-active`/`.is-leaving` crossfade +
+        // hit-test classes on the next flush (the a11y-006 3-state contract). The
+        // size rides the `--dock-live` blend off the scalar below; NO measurement.
         t.leavingLayer.value = oldLayer;
         t.currentLayer.value = newLayer;
-
-        // 2b. The shared scalar resets to 0 for the new span. Re-base any mid-morph
-        //     SIBLING target's `from` to its CURRENT painted px first (the pure
-        //     `rebaseSiblingSpans` helper carved into dockMorphMeasure), so resetting
-        //     the scalar keeps a swap-while-morphing visually continuous — every active
-        //     target carries its trajectory rather than snapping back to its old `from`.
-        rebaseSiblingSpans(t, targets);
-
-        // 3. PIN this container at `from` NOW (from=to=from, scalar 0,
-        //    `data-morphing` armed) so the box HOLDS and the child stagger holds at
-        //    t=0. The active pane is in-flow (`width:max-content`), the inactive one
-        //    is out of flow (`absolute; inset:0`) — so the container shrink-wraps to
-        //    whichever pane is active. The to-size is the container shrink-wrapped to
-        //    the TARGET pane, which only becomes in-flow AFTER Vue flushes the
-        //    class flip. Reading `to` in this synchronous tick would see the OLD
-        //    active pane (from≈to → frozen). Pinning defers the measurement safely.
-        el.style.setProperty("--dock-morph-from", `${fromSize}px`);
-        el.style.setProperty("--dock-morph-to", `${fromSize}px`);
-        r.style.setProperty("--dock-morph-t", "0");
-        r.setAttribute("data-morphing", "");
-        // BC.W-DOCK-ROOT-MORPH — pin the ROOT span at `from` too (from=to=rootFrom),
-        // so during the measure-defer frame the root holds its collapsed width on the
-        // scalar recipe rather than snapping to the inner's reserved `to`. The true
-        // `to` is measured one rAF later, after the post-flush inner measurement.
-        if (t === outerTarget) armRootMorphSpan(root(), rootFromSize, rootFromSize);
-
-        // 3b. BB.W-DOCK-MORPH-FAMILY (c) — the SYNCHRONOUS PRM seat. Under
-        //     `prefers-reduced-motion: reduce` there is NO morph window: seat the
-        //     geometry + the scalar at the target in ONE step, NOT a zero-duration
-        //     spring over an rAF-deferred span. The rAF measure-defer below pins the
-        //     box at `from` while the spring's `respectReducedMotion` jump reads the
-        //     scalar at the endpoint a frame later — so the box paints the collapsed
-        //     `from` sliver (the measured 10×74 P0 terminal failure). The `nextTick`
-        //     (a microtask post-flush, NOT an rAF morph window) runs AFTER Vue
-        //     flushes the swapped pane in-flow (the flush-ordering the named
-        //     successor names), so the synchronous measure reads the TRUE shrink-
-        //     wrapped `to` (composing the BA-VJS-1 nested ordering via `measureTo`),
-        //     then seats the box at `to` + scalar at the endpoint + clears the morph
-        //     state — no spring, no rAF, no sliver. The orientation driver's `pin()`
-        //     precedent, transplanted onto the collapse/expand path.
-        if (prefersReducedMotion()) {
-            void nextTick(() => seatTargetSync(t, id, root(), targets, seatCallbacks));
-            return;
-        }
-
-        // 4. ONE rAF later (post-flush), the PURE `measureAndArmMorph` helper (carved
-        //    into dockMorphMeasure, BB.W-CARVE4) lifts the pin for a single synchronous
-        //    measurement, then re-pins + starts the spring IN THE SAME FRAME — the box
-        //    never paints unpinned. It composes the BA-VJS-1 nested-`DockLayerGroup`
-        //    `max-content` ordering, the BC.W-DOCK-ROOT-MORPH root-pin lift/measure/
-        //    re-pin, and the BC.W-LIQUID-MORPH (M3) `to:0` measure-failure floor, via
-        //    the orchestrator's `armTarget` re-pin callback. Gated on THIS target's own
-        //    `txId` so a sibling swapping in the same tick cannot clobber it.
-        //
-        // BC.W-DOCK-GLIDE — the measure is gated behind `nextTick` (Vue's post-flush
-        // microtask) BEFORE the layout rAF, so it lands AFTER Vue flushes the active-
-        // pane class (the to-pane is in-flow, its `max-content` read is the true
-        // expanded span, not the still-`position:absolute` empty-summary `to:0` that a
-        // bare rAF mid-collapse re-expand would mis-read and snap on).
-        void nextTick(() =>
-            requestAnimationFrame(() =>
-                measureAndArmMorph(
-                    t,
-                    id,
-                    axis,
-                    fromSize,
-                    rootFromSize,
-                    t === outerTarget,
-                    root(),
-                    targets,
-                    { armTarget },
-                ),
-            ),
-        );
+        ensureSpringRunning();
     }
-
-    // nestedTargetsWithin + forceNestedMaxContent + the rAF measure-and-arm window
-    // (measureAndArmMorph) are the BA-VJS-1 nested-descendant max-content ordering +
-    // the BC.W-DOCK-ROOT-MORPH root-span measure, carved into dockMorphMeasure
-    // (BB.W-CARVE4) and composed above.
 
     /** Register a morph target; returns its watch-stop. */
     function addTarget(reg: DockMorphGroupRegistration): MorphTarget {
         const t: MorphTarget = {
             containerEl: reg.containerEl,
-            activeLayer: reg.activeLayer,
             axis: reg.axis,
+            activeLayer: reg.activeLayer,
             currentLayer: ref(reg.activeLayer.value),
             leavingLayer: ref<string | null>(null),
-            txId: 0,
             stop: () => {},
         };
         t.stop = watch(reg.activeLayer, (newLayer, oldLayer) => {
@@ -451,7 +250,7 @@ export function useDockMorphOrchestrator(
     function removeTarget(t: MorphTarget) {
         t.stop();
         targets.delete(t);
-        maybeSettleRoot();
+        if (!anyMorphing()) disposeSpring();
     }
 
     // The OUTER collapse↔expand pair is the first registered target.
@@ -476,8 +275,13 @@ export function useDockMorphOrchestrator(
     function onOuterTransitionEnd(e: TransitionEvent) {
         const el = outerEl.value;
         if (!el || e.target !== el) return;
-        const prop = morphAxisProp(outerAxis.value);
-        if (e.propertyName !== prop && e.propertyName !== dimOf(outerAxis.value)) return;
+        if (
+            e.propertyName !== "width" &&
+            e.propertyName !== "height" &&
+            e.propertyName !== dimOf(outerAxis.value)
+        ) {
+            return;
+        }
         if (spring && spring.settled) {
             settleTarget(outerTarget);
             maybeSettleRoot();

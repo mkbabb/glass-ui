@@ -2,10 +2,11 @@
  * contract (AX.W06 carve).
  *
  * Carved from the dock.css god-module (slice 25). This partial owns the dock's
- * layer model: the `.dock-layers` grid container + the FLIP-driven box-size morph
- * (BB.W-DOCK-MORPH-FAMILY — a `transform: scale()` over a reserved settled `to`
- * footprint, the live `--dock-morph-scale` derived off the ONE `--dock-morph-t`
- * scalar; NO per-frame layout-axis lerp), the unified
+ * layer model: the `.dock-layers` grid container + the ratio-FREE convex-blend
+ * box-size morph (BD.W-DOCK-CORE — `scale: var(--dock-size-scale)` from a
+ * `--dock-live` blend of two measure-ONCE endpoints `--dock-expanded-px`/
+ * `--dock-collapsed-px`, BOUNDED by construction off the ONE `--dock-morph-t`
+ * scalar; NO per-swap `from/to` ratio, NO per-frame layout-axis lerp), the unified
  * `.is-active` / `.is-leaving` 3-state crossfade + hit-test contract (the
  * a11y-006 anchor), the per-child reveal stagger (the `--dock-stagger-*` ramp),
  * and the `layout="grid"` 2D tile-grid arrangement. The `.dock-layer-group` /
@@ -39,114 +40,63 @@
     }
 
 
-    /* BB.W-DOCK-MORPH-FAMILY (a)/(b) — the box morph is now a COMPOSITOR TRANSFORM
-       over a RESERVED SETTLED footprint, NOT a per-frame `inline-size` lerp (the C3
-       "too slow and laggy" relayout-every-frame defect). `useLayerTransition` /
-       the orchestrator still measure the from→to size ONCE per swap (the allowed
-       one-time FLIP measurement) and write `--dock-morph-from`/`--dock-morph-to` px
-       on the morphing element — but the layout axis is set to the SETTLED `to`
-       value (ONE layout solve, the box reserves its end footprint from frame 0), and
-       the live `--dock-morph-t` scalar drives a `transform: scale()` between the
-       from/to RATIO and 1. The content lays out COMPLETE at `to` behind the
-       `overflow: clip` aperture (shell.css), and the scaled-down box reads as the
-       smaller in-flight footprint (the clip uncovers the scaled box, never a
-       half-painted growing layout — the reveal-seat (b) fix). `--dock-morph-ratio`
-       is `from/to` (guarded: `to:0` → ratio 0); `--dock-morph-scale` runs
-       `ratio → 1` as `t: 0 → 1`. `transform-origin` anchors the pinned edge
-       (inline-start for the horizontal aperture) so the box grows from the correct
-       side. NO `inline-size`/`block-size` reads the live scalar — the CDP Layout
-       track stays FLAT through the morph (the F1 compositor-bound floor). */
-    .glass-dock[data-morphing] .dock-layers,
-    .glass-dock[data-morphing] .dock-layer-stack {
-        --dock-morph-ratio: calc(
-            var(--dock-morph-from, 0px) / max(var(--dock-morph-to, 1px), 1px)
+    /* ── BD.W-DOCK-CORE — the ratio-FREE convex-blend SIZE (the width-seizure cure) ──
+       THE BUG THIS RETIRES: the prior morph drove the visible size by an UNBOUNDED
+       per-swap `from/to` ratio — `--dock-root-scale = max(ratio + (1−ratio)·t, 0.06)`,
+       a FLOOR with NO CEILING. A degenerate `to` (the FLIP measure racing the content
+       layout) ran `ratio = from/max(to,1px)` to ~56 → `scaleX(56)` ≈ 2451px on
+       collapse, or an inversion at the spring's >1 overshoot peak. `transform-origin:
+       center` kept the centroid clean (cxRange 0), which is exactly why every prior
+       judge measuring the centroid PASSED while the WIDTH detonated. The whole
+       per-swap measure-and-arm pipeline + the `--dock-root-*`/`--dock-morph-ratio/scale`
+       rules are DELETED (clean break, no legacy).
+
+       THE CURE — a convex blend of two POSITIVE measure-ONCE endpoints. The dock
+       measures its expanded content span + its collapsed box ONCE per content change
+       (`useDockExpandedSize` writes `--dock-expanded-px`/`--dock-collapsed-px`, NOT a
+       per-swap rAF race) and the visible size is `--dock-live = collapsed +
+       (expanded − collapsed)·clamp(0, --dock-morph-t, 1)` → BOUNDED by construction:
+       a convex blend can NEVER exceed the larger endpoint nor invert below the smaller,
+       regardless of spring overshoot (the `clamp(0,t,1)` caps the size term; the >1
+       excursion routes to the orthogonal `--dock-punch-stretch` channel). No ratio, no
+       `from>to` degeneracy, no floor guard (the two endpoints ARE the floors). The box
+       RESERVES `--dock-expanded-px` (ONE layout solve, CDP-Layout-flat) and the visible
+       size rides `scale: var(--dock-size-scale)` from `transform-origin: center` —
+       container-justify-agnostic, center-out by construction (left-anchored / centred /
+       auto-margin docks ALL grow center-out, no justify detection, no translate). The
+       endpoints default to a no-op (`expanded == collapsed → scale 1`) so an unmeasured
+       dock paints neutral. The actual `scale:` property is composed in shape.css (folded
+       WITH the `--stretch` squish × the `--dock-punch-stretch` cartoon punch on ONE
+       compositor channel). KEEP `--dock-morph-t` (the shipped token — NO rename). */
+    .glass-dock[data-morphing] {
+        --dock-live: calc(
+            var(--dock-collapsed-px, var(--dock-expanded-px, 0px)) +
+                (
+                    var(--dock-expanded-px, 0px) -
+                        var(--dock-collapsed-px, var(--dock-expanded-px, 0px))
+                ) *
+                clamp(0, var(--dock-morph-t, 1), 1)
         );
-        /* BC.W-LIQUID-MORPH — the SCALE FLOOR (the white morph can never paint). A
-           degenerate `from:0`/`to:0` measurement (the BA-VJS-1 nested-group race)
-           drives `--dock-morph-ratio` to 0 → `scaleX(0)` at t=0 → the zero-width void
-           `overflow: clip` blanks (the white/invisible morph, glass-dock-codebase.md
-           §2.2 fix (2)). Flooring the scale at ~6% bottoms a degenerate ratio at a
-           thin-but-VISIBLE glass sliver (clipped, but never white), recovered by the
-           next correct measurement one frame later. A SAFETY NET: a real measurement is
-           always well above 6%, so the `max()` is inert on the healthy path (the
-           gestalt of a healthy morph is byte-unchanged). */
-        --dock-morph-scale: max(
-            calc(
-                var(--dock-morph-ratio) +
-                    (1 - var(--dock-morph-ratio)) * var(--dock-morph-t, 0)
-            ),
-            0.06
+        --dock-size-scale: clamp(
+            0.06,
+            calc(var(--dock-live) / max(var(--dock-expanded-px, 1px), 1px)),
+            1
         );
-        /* The box RESERVES its settled `to` footprint — a single layout solve, NOT
-           the live scalar calc. The transform composites over it.
-           BC.W-LIQUID-MORPH — the RESERVE FLOOR: `max(var(--dock-morph-to),
-           var(--dock-morph-min))` so a `to:0` measurement reserves the collapsed-pill
-           minimum (~44px), never a zero-width box (the white morph root). Inert above
-           the floor on every healthy measurement. */
-        inline-size: max(var(--dock-morph-to), var(--dock-morph-min, 2.75rem));
-        transform: scaleX(var(--dock-morph-scale));
-        transform-origin: left center;
+        transform-origin: center center;
         will-change: transform;
     }
 
-    /* BC.W-DOCK-ROOT-MORPH — the ROOT box rides the scalar (THE snap fix). The inner
-       `.dock-layers` above reserves its settled `to` + morphs via `scaleX()` (paint-
-       only), so the root `.glass-dock` (inline-flex) shrink-wraps to that reserved full
-       `to` and SNAPS on frame 0 while the inner scales smoothly — yet the gate + the
-       page reflow both read the ROOT box. The orchestrator (dockMorphContext.ts)
-       measures + writes the root's own `--dock-root-morph-{from,to}` px span; this
-       drives the morph-axis size as a `calc()` of the SAME `--dock-morph-t` scalar the
-       spring glides — NOT a `transition: width` (proof:no-layout-animation stays GREEN;
-       a `calc()` over the scalar is not a transition). The span is armed inline ONLY by
-       the outer collapse↔expand swap; a nested-only pane-swap leaves it unset → the
-       fallback-less `var()` invalidates the rule → the box returns to its at-rest
-       shrink-wrap (the inert path). Horizontal morphs `inline-size`, vertical morphs
-       `block-size` (matching the orchestrator's `morphAxisProp` axis pick). */
+    /* The box RESERVES its expanded footprint (ONE layout solve — the page reflows
+       ONCE to the final size, CDP-Layout stays FLAT) while the visible size scales
+       toward it. Horizontal reserves `inline-size`, vertical reserves `block-size`,
+       matching the morph axis. The `.dock-layers` content lays out at its natural
+       size behind the clip (shell.css) — that natural span is the `--dock-expanded-px`
+       the ResizeObserver reads. */
     .glass-dock[data-morphing]:not(.vertical) {
-        inline-size: calc(
-            var(--dock-root-morph-from) +
-                (var(--dock-root-morph-to) - var(--dock-root-morph-from)) *
-                var(--dock-morph-t, 0)
-        );
+        inline-size: var(--dock-expanded-px);
     }
     .glass-dock[data-morphing].vertical {
-        block-size: calc(
-            var(--dock-root-morph-from) +
-                (var(--dock-root-morph-to) - var(--dock-root-morph-from)) *
-                var(--dock-morph-t, 0)
-        );
-    }
-
-    /* AZ.W-DOCK-TAXONOMY (move 2) — a VERTICAL dock's outer `.dock-layers` morphs the
-       BLOCK axis (its collapse↔expand shrinks `height`, not `width`). The orchestrator
-       measures/writes the same `--dock-morph-from/to` span on the block axis
-       (`outerLayerAxis` is now the resolved orientation; `morphAxisProp` maps
-       vertical→`block-size`).
-       BB.W-DOCK-MORPH-FAMILY (a)/(b) — the vertical box reserves its settled `to`
-       BLOCK footprint + composites a `scaleY()` over it on the SAME `--dock-morph-t`
-       scalar (the inverse axis of the horizontal `scaleX`), `transform-origin` at the
-       block-start pinned edge. NO live-scalar `block-size` calc → no per-frame
-       relayout on the vertical axis either. */
-    .glass-dock.vertical[data-morphing] .dock-layers {
-        inline-size: auto;
-        /* BC.W-LIQUID-MORPH — the vertical RESERVE FLOOR (the inverse axis twin of the
-           horizontal floor above): a `to:0` block measurement reserves the collapsed-pill
-           minimum, never a zero-height void. Inert above the floor on every healthy read. */
-        block-size: max(var(--dock-morph-to), var(--dock-morph-min, 2.75rem));
-        transform: scaleY(var(--dock-morph-scale));
-        transform-origin: center top;
-        will-change: transform;
-    }
-
-    /* A vertical inner group morphs the BLOCK axis — the same settled-footprint
-       reserve + `scaleY()` composite over it. */
-    .glass-dock[data-morphing] .dock-layer-group.vertical .dock-layer-stack {
-        inline-size: auto;
-        /* BC.W-LIQUID-MORPH — the nested vertical group's reserve is floored too. */
-        block-size: max(var(--dock-morph-to), var(--dock-morph-min, 2.75rem));
-        transform: scaleY(var(--dock-morph-scale));
-        transform-origin: center top;
-        will-change: transform;
+        block-size: var(--dock-expanded-px);
     }
 
     /* The inner DockLayerGroup stack has no collapsed/expanded class, so its
@@ -326,7 +276,10 @@
     .glass-dock[data-morphing] .dock-layer-item-host.is-active > * {
         --dock-stagger-window: var(--dock-stagger-window-size, 0.55);
         --dock-stagger-onset: 0;
-        opacity: clamp(
+        /* BD.W-DOCK-CORE (A6) — factor the reveal ramp into ONE named var so opacity AND
+           the center-coupled scale read the SAME clamp (W-MOTION-CANON P3, fade coupled to
+           transform). */
+        --child-reveal: clamp(
             0,
             calc(
                 (var(--dock-expand-t, 1) - var(--dock-stagger-onset)) /
@@ -334,11 +287,14 @@
             ),
             1
         );
-        translate: 0
-            calc(
-                (1 - clamp(0, calc((var(--dock-expand-t, 1) - var(--dock-stagger-onset)) / var(--dock-stagger-window)), 1)) *
-                    var(--dock-stagger-rise, 4px)
-            );
+        opacity: var(--child-reveal);
+        /* BD.W-DOCK-CORE (A6) — the rise is a center-coupled SCALE pop (0.82 → 1 on the
+           reveal ramp, transform-origin center), NOT the prior independent `translate: 0
+           4px` vertical hop. The children inherit the SAME center-anchored read as the box
+           — a small inertial pop FROM the center, coupled to opacity. The global PRM gate
+           strips `scale` → snap. */
+        scale: calc(0.82 + 0.18 * var(--child-reveal));
+        transform-origin: center;
     }
 
     /* AX.W02 — per-child onsets off the ONE `--dock-stagger-step` token. Each
@@ -353,25 +309,33 @@
        collapse this to a single declaration, but it is not yet Baseline across
        Safari/Firefox — the token-keyed nth-child set is the cross-engine form, and
        the magic ladder is gone either way.) */
-    .glass-dock[data-morphing] .dock-layer.is-active > *:nth-child(2),
-    .glass-dock[data-morphing] .dock-layer-item-host.is-active > *:nth-child(2) {
+    /* BD.W-DOCK-CORE (A6) — the SYMMETRIC center-out stagger (the index-cascade RETIRED,
+       clean break). The onset ladders by DISTANCE FROM THE ROW CENTER (center pair = onset
+       0 via the base rule, then ±1, ±2 …) so the reveal radiates center-out in lockstep
+       with the center-out box morph (I.2) — never the prior left-to-right index cascade
+       that desynced from the centered grow. `--dock-stagger-step` is the per-ring beat;
+       `nth-child(N of *)` + `nth-last-child(N of *)` reach BOTH ends (the row is short —
+       ≤8 controls is the dock norm), the central rule holds the deep middle. The `of *`
+       syntax is Safari 16.4+/Chrome 111+. The rule is duplicated for the inner pane-stack
+       host (identical onsets). */
+    /* ring ±1 — 2nd-from-center each side */
+    .glass-dock[data-morphing] .dock-layer.is-active > *:nth-child(2 of *),
+    .glass-dock[data-morphing] .dock-layer.is-active > *:nth-last-child(2 of *),
+    .glass-dock[data-morphing] .dock-layer-item-host.is-active > *:nth-child(2 of *),
+    .glass-dock[data-morphing] .dock-layer-item-host.is-active > *:nth-last-child(2 of *) {
         --dock-stagger-onset: calc(var(--dock-stagger-step) * 1);
     }
-    .glass-dock[data-morphing] .dock-layer.is-active > *:nth-child(3),
-    .glass-dock[data-morphing] .dock-layer-item-host.is-active > *:nth-child(3) {
+    /* ring ±2 — 3rd-from-center each side */
+    .glass-dock[data-morphing] .dock-layer.is-active > *:nth-child(3 of *),
+    .glass-dock[data-morphing] .dock-layer.is-active > *:nth-last-child(3 of *),
+    .glass-dock[data-morphing] .dock-layer-item-host.is-active > *:nth-child(3 of *),
+    .glass-dock[data-morphing] .dock-layer-item-host.is-active > *:nth-last-child(3 of *) {
         --dock-stagger-onset: calc(var(--dock-stagger-step) * 2);
     }
-    .glass-dock[data-morphing] .dock-layer.is-active > *:nth-child(4),
-    .glass-dock[data-morphing] .dock-layer-item-host.is-active > *:nth-child(4) {
+    /* ring ±3 — the deep-middle 4th/5th-from-edge cap (a long row finishes in-window) */
+    .glass-dock[data-morphing] .dock-layer.is-active > *:nth-child(n + 4):nth-child(-n + 5),
+    .glass-dock[data-morphing] .dock-layer-item-host.is-active > *:nth-child(n + 4):nth-child(-n + 5) {
         --dock-stagger-onset: calc(var(--dock-stagger-step) * 3);
-    }
-    .glass-dock[data-morphing] .dock-layer.is-active > *:nth-child(5),
-    .glass-dock[data-morphing] .dock-layer-item-host.is-active > *:nth-child(5) {
-        --dock-stagger-onset: calc(var(--dock-stagger-step) * 4);
-    }
-    .glass-dock[data-morphing] .dock-layer.is-active > *:nth-child(n + 6),
-    .glass-dock[data-morphing] .dock-layer-item-host.is-active > *:nth-child(n + 6) {
-        --dock-stagger-onset: calc(var(--dock-stagger-step) * 5);
     }
 
     /* AW.W2 — the at-rest clip-lift moved to `.expanded:not([data-morphing])` /

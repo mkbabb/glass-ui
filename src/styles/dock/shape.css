@@ -27,6 +27,23 @@
  *
  * @import-ed by dock.css in cascade order, in the SAME `@layer components`. */
 
+/* BD.W-DOCK-PUNCH-CHANNEL — the dedicated cartoon-punch squish scalar. A SEPARATE
+   typed `<number>` @property (init 1, the no-op identity) so a one-shot transition on
+   `--ease-cartoon-punch` INTERPOLATES the ~4% pre-dip + ~22% overshoot rather than
+   snapping. It is DISTINCT from `--stretch` (the orientation/fission squish, capped by
+   `--dock-morph-max-stretch: 1.14`): the punch is NOT subject to that cap (the cartoon
+   register overshoots PAST the spring fence), it has ZERO JS owners (CSS-only, driven
+   by the transition below), and a fission split fired mid-collapse cannot clobber it
+   (the 6-owner `--stretch` last-writer race the shared channel would have introduced —
+   the dedicated channel REMOVES it, a net improvement to fission). `inherits: false` —
+   the punch is the dock root's OWN deformation, never cascaded to children. A
+   non-supporting engine reads the safe 1 fallback (no punch, just the bounded size). */
+@property --dock-punch-stretch {
+    syntax: "<number>";
+    inherits: false;
+    initial-value: 1;
+}
+
 @layer components {
     /* ── The corner-profile lerp (A1 — the shape is a scalar parameter) ───────────
        The dock surface radius interpolates the `--dock-shape-from`/`--dock-shape-to`
@@ -99,26 +116,135 @@
     /* ── The squish — the `useLiquidFlex` `--stretch` deformation (A4) ────────────
        The shape morph couples the volume-preserving squish the tab-indicator +
        useDockOrientationMorph already speak: `scale: var(--stretch) calc(1/var(--stretch))`
-       along the morph axis, capped LOW at `--dock-morph-max-stretch` (~1.08) by
+       along the morph axis, capped LOW at `--dock-morph-max-stretch` (~1.14) by
        useLiquidFlex itself (the ONE squish source — no forked deformation math). The
        plate DEFORMS like liquid as it changes shape — a fast morph swells, a slow one
        barely. The driver (useDockOrientationMorph) writes `--stretch` on the dock scope;
        at rest `--stretch` is unset → 1/1 (no squish). The reciprocal pairing preserves
        volume (stretch along travel, compress across). This is compositor-only (a
-       `scale` transform), composed WITH the reserved-footprint `scaleX/scaleY` morph
-       (layers.css) — the box scale rides `--dock-morph-scale`, the squish rides
-       `--stretch`, both transforms multiply on the compositor.
+       `scale` transform), composed WITH the ratio-free convex-blend size morph
+       (layers.css) — the box scale rides `--dock-size-scale`, the squish rides
+       `--stretch`, the cartoon punch rides `--dock-punch-stretch`, all three
+       multiply on the compositor on ONE `scale:` property.
 
        Scoped to `[data-morphing]` so the squish is a morph-transient (at rest the plate
        is un-squished); the cross-axis is the morph axis's reciprocal. Horizontal docks
        stretch X / compress Y; vertical stretch Y / compress X (the inverse-axis twin,
-       mirroring the bridge plates' per-orientation squish in morph-bridge.css). The
-       squish multiplies onto the dock's OWN transform box (the shell), distinct from the
-       inner `.dock-layers` reserved-scale box, so the two do not fight. */
-    .glass-dock[data-morphing]:not(.vertical) {
-        scale: var(--stretch, 1) calc(1 / var(--stretch, 1));
+       mirroring the bridge plates' per-orientation squish in morph-bridge.css).
+
+       BD.W-DOCK-CORE / BD.W-DOCK-PUNCH-CHANNEL — THREE factors fold onto this ONE
+       `scale:` along the morph axis:
+         1. `--dock-size-scale` (layers.css) — the ratio-FREE convex-blend size, BOUNDED
+            in [0.06, 1] by construction (the container-justify-agnostic grow-from-center,
+            box reserves `--dock-expanded-px` + scales toward it from `transform-origin:
+            center`). The seizure-prone `--dock-root-scale` ratio it REPLACES is gone.
+         2. `--stretch` — the orientation/fission volume-preserving squish (the 6-JS-owner
+            channel, capped 1.14). Unset → 1 (the squish-only path byte-identical).
+         3. `--dock-punch-stretch` — the dedicated cartoon-punch overshoot (the §PUNCH
+            channel, driven by the one-shot transition below; NOT capped by 1.14). Unset →
+            1 (no punch).
+       The cross-axis is the RECIPROCAL of the two volume-preserving factors
+       `1 / (--stretch × --dock-punch-stretch)` so the punch + the squish deform the pill
+       along travel and pinch across WITHOUT moving the footprint or the centroid — the
+       size factor (`--dock-size-scale`) is NOT reciprocated (it is the real footprint
+       morph, not a volume-preserving deformation). Folding all three on ONE `scale:`
+       keeps the multiply explicit + on one compositor channel (a separate `transform`
+       would be a distinct box that could fight the `scale:`). Horizontal: X = size ×
+       squish × punch, Y = 1/(squish × punch); vertical: the inverse axes. */
+    .glass-dock[data-morphing]:not(.vertical),
+    .glass-dock[data-punching]:not(.vertical) {
+        scale: calc(
+                var(--dock-size-scale, 1) * var(--stretch, 1) *
+                    var(--dock-punch-stretch, 1)
+            )
+            calc(1 / (var(--stretch, 1) * var(--dock-punch-stretch, 1)));
     }
-    .glass-dock[data-morphing].vertical {
-        scale: calc(1 / var(--stretch, 1)) var(--stretch, 1);
+    .glass-dock[data-morphing].vertical,
+    .glass-dock[data-punching].vertical {
+        scale: calc(1 / (var(--stretch, 1) * var(--dock-punch-stretch, 1)))
+            calc(
+                var(--dock-size-scale, 1) * var(--stretch, 1) *
+                    var(--dock-punch-stretch, 1)
+            );
+    }
+
+    /* ── BD.W-DOCK-PUNCH-CHANNEL — the dedicated cartoon-punch DRIVER ──────────────
+       The size blend above is monotone + bounded (correct, boring, bulletproof). The
+       PUNCH is the audacious half: a SEPARATE one-shot transition on
+       `--ease-cartoon-punch` (the ~4% pre-dip + ~22% overshoot `linear()`) that blooms
+       `--dock-punch-stretch` AWAY from 1 then RETURNS to 1 at settle — NEVER latched
+       (the +16%-forever spike defect). It is honestly a SECOND punch animation layered
+       on the spring (NOT "one clock"): the bounded size rides `--dock-morph-t`, the
+       punch rides this transition. `--motion-weight` (dock scope 1) co-scales the punch
+       AMPLITUDE; PRM zeroes `--motion-weight` → the amplitude collapses to 1 (no punch),
+       and the PRM `--ease-cartoon-punch → --ease-standard` re-alias removes the curve
+       shape — the bounded size still snaps via the clamped `t`, the morph still CONFIRMS.
+
+       The dock is a LOUD DRIVER (design.md §L4): it pins `--motion-weight: 1` on its own
+       scope so even a slow user-driven morph rides the full punch register. The
+       `[data-punching]` hook (armed by the dock for one episode) is what lifts the punch
+       to its overshoot value; the transition carries it there on the punch curve and
+       back to the rest 1. The amplitude is `1 + 0.22·--motion-weight` (the ~22% overshoot
+       the curve peaks at × the loud-register weight). */
+    .glass-dock {
+        /* LOUD DRIVER — the dock pushes the motion weight to max so the punch reads at
+           full cartoon amplitude (design.md §L4; the rest 0.618 would mute it to ~+13.6%). */
+        --motion-weight: 1;
+        /* the punch rests at the identity 1 (no deformation) */
+        --dock-punch-stretch: 1;
+        /* the one-shot punch transition — the curve does the dip+overshoot+settle; the
+           weight zeroes it under PRM (the curve also re-aliases to --ease-standard). */
+        transition: --dock-punch-stretch var(--duration-normal)
+            var(--ease-cartoon-punch);
+    }
+    /* While punching, the dock lifts the punch to its overshoot target; the transition
+       carries `--dock-punch-stretch` there on the cartoon curve then the hook clears and
+       it transitions back to 1 (the RETURN — never latched). The overshoot share scales
+       with the loud weight; PRM weight 0 → amplitude 1 (no punch). */
+    .glass-dock[data-punching] {
+        --dock-punch-stretch: calc(1 + 0.22 * var(--motion-weight, 1));
+    }
+
+    /* ── BD.W-DOCK-PUNCH-CHANNEL — the kinetic cartoon CAST ────────────────────────
+       The bold 1940s offset-shadow made kinetic: the inert `.cartoon-cast` child
+       (BD.W-CARTOON-CASTER — a real DOM child, NOT a pseudo, since the dock's `::before`/
+       `::after` are both occupied by the grain + the morph chrome) carries the SHIPPED
+       `--shadow-cartoon-md/lg` rung and SLIDES opposite the morph as the box punches.
+       The travel reads `--motion-weight` (PRM → 0 → static) so the cast deepens + slides
+       through the punch then snaps home at settle. Plain per-mode `.dark` arms (the
+       light-dark() inset-shadow trap avoided — the cast is a plain offset shadow, no
+       inset fragment). Behind the plate (z-index -1), pointer-inert, paint-only. */
+    .glass-dock > .cartoon-cast {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        border-radius: inherit;
+        pointer-events: none;
+        /* the warm-cream rest cast — the bold offset ink the plate floats above */
+        box-shadow: var(--shadow-cartoon-md);
+        /* the derived travel — opposite-morph slide, gated by the loud weight × the punch
+           presence. At rest (punch 1) the travel is 0; mid-punch it slides out + deepens. */
+        --cast-travel: calc(
+            7px * var(--motion-weight, 1) *
+                clamp(0, calc((var(--dock-punch-stretch, 1) - 1) / 0.22), 1)
+        );
+        translate: calc(-1 * var(--cast-travel)) var(--cast-travel);
+        transition:
+            translate calc(var(--duration-normal) * 1.15) var(--ease-cartoon-punch),
+            box-shadow var(--duration-normal) var(--ease-standard);
+    }
+    /* mid-punch the cast deepens to the LOUD rung (a plain per-mode arm below adds the
+       dark-mode rung — the light-dark() inset trap avoided). */
+    .glass-dock[data-punching] > .cartoon-cast {
+        box-shadow: var(--shadow-cartoon-lg);
+    }
+    @media (prefers-reduced-motion: reduce) {
+        /* PRM — the cast is static (no travel); the offset ink stays (a legibility
+           asset). `--motion-weight: 0` already zeroes `--cast-travel`; pin the
+           transition off too so a residual frame cannot slide. */
+        .glass-dock > .cartoon-cast {
+            transition: none;
+            translate: 0 0;
+        }
     }
 }

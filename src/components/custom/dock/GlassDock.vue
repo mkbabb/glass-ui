@@ -5,8 +5,18 @@
 // isTransitioning flag lifecycle) lives in ./composables/useDockMorphWindow. This
 // SFC composes the dual-layer grid, the axis-aware expand/collapse transition, and
 // the pointer/focus hold machinery.
-import { computed, onMounted, ref, useId, useSlots, useTemplateRef, watch } from "vue";
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, shallowRef, useId, useSlots, useTemplateRef, watch } from "vue";
 import { useTouchGate } from "../../../composables/dom/useTouchGate";
+// BD.W-DOCK-CORE (A13 / II.2) — the SHIPPED fission engine, WIRED into a first-class
+// `<GlassDock split>` facility (the engine is 100%, assembly was 0%). A CONSUMING seam
+// BESIDE the morph engine (box-INVIOLATE — it does NOT import/edit dockMorphContext/
+// DOCK_SPRING; it morphs surviving controls off the dock body).
+import {
+    useDockFission,
+    DOCK_SPLIT_SIGNATURES,
+    type DockFissionPieceHandle,
+    type DockSplitPlacement,
+} from "./composables/useDockFission";
 // AZ.W-ADAPTIVE-AUTO Arm 2 (H3 arm a) — the sampled-luminance observer is wired ON by
 // DEFAULT for the dock (the surface the user reported unreadable over light, and the
 // one most often over a live/bright backdrop). It REFINES the W55 declarative bucket +
@@ -22,9 +32,11 @@ import {
     useDockMorphOrchestrator,
     provideDockMorphContext,
 } from "./composables/dockMorphContext";
+import { useDockExpandedSize } from "./composables/dockMorphMeasure";
 import { useDockShellProps, type DockProps } from "./composables/useDockShellProps";
 import { useDockMorphWindow } from "./composables/useDockMorphWindow";
 import { useDockClickIntegrity } from "./composables/useDockClickIntegrity";
+import { useDockItemDrag } from "./composables/useDockItemDrag";
 
 /* AZ R4-RAIL attrs contract — the `.glass-dock-frame` shell is STRUCTURAL chrome
    (the rail's non-clipping positioning context), never the consumer's surface.
@@ -44,6 +56,11 @@ defineOptions({ inheritAttrs: false });
    opt-out is `alwaysExpanded`, default false). Defaults are applied at each read
    site in `useDockShellProps` via `?? default`. */
 const props = defineProps<DockProps>();
+
+/* BD.W-DOCK-CORE (A12) — the draggable-items reorder emit (additive; fires only on a
+   committed pull when `:draggable-items` is armed). The consumer wires it to its own
+   item-order model — the single source of truth (the DOM move is the VISUAL commit). */
+const emit = defineEmits<{ "update:order": [from: number, to: number] }>();
 
 /* The resolved shell-prop computeds — shape/orientation/density, the collapse
    surface (`collapseDelay`/`startCollapsed`/`layoutValue`), the scroll-overflow
@@ -195,6 +212,22 @@ const { context: dockMorphContext, onOuterTransitionEnd: onLayersTransitionEnd }
    befitting-silent standalone-render path, not a library-internal violation. */
 provideDockMorphContext(dockMorphContext);
 
+/* BD.W-DOCK-CORE (the width-seizure cure) — measure the two convex-blend endpoints
+   ONCE per content change (a ResizeObserver on `.dock-layers`), writing
+   `--dock-expanded-px`/`--dock-collapsed-px` on the dock root. The visible size is a
+   ratio-FREE blend of those two stable endpoints off `--dock-morph-t` (shape.css),
+   so the prior unbounded `from/to` per-swap ratio (the ~2451px `scaleX(56)`
+   detonation) is gone by construction. The collapsed endpoint falls back to the
+   resolved `--dock-morph-min` icon-square floor (the summary box is a pane INSIDE
+   `.dock-layers`, so no separate ref is needed); the expanded endpoint is floored at
+   `max(measured, collapsed)` — the freshness guard against a 0-measurement. */
+useDockExpandedSize({
+    rootEl: dockEl,
+    contentEl: layersEl,
+    axis: outerLayerAxis,
+    expanded: visualExpanded,
+});
+
 /* AX.W01 — the route-morph `view-transition-name` seam (PRESERVED). The dock
    COLLAPSE VT fork is RETIRED (the box morph runs on the single spring scalar
    above; VT crossfades rasterized pixels — the wrong primitive for a layout
@@ -305,7 +338,188 @@ watch(visualExpanded, (isExpanded) => {
     }
 });
 
-defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, keepOpen, release });
+/* BD.W-DOCK-CORE (A13 / II.2) — the fission split facility. Armed ONLY when
+   `:splittable` (additive default-off → byte-identical to HEAD otherwise). The fission
+   spring rides the SAME re-tuned WEIGHTY `DOCK_SPRING` register (no second clock), BESIDE
+   the morph engine. */
+const splitSignature = shallowRef(
+    DOCK_SPLIT_SIGNATURES[props.splitContext ?? "nav"],
+);
+watch(
+    () => props.splitContext,
+    (ctx) => {
+        splitSignature.value = DOCK_SPLIT_SIGNATURES[ctx ?? "nav"];
+    },
+);
+
+/* BD.W-DOCK-CORE (II.2 — F-1) — the placement the detached pieces fly to form the
+   sibling island dock (beside/above/below). A Ref the fission reads as the ONE coherent
+   travel vector for the whole cluster (NOT per-piece radial scatter). */
+const splitPlacement = shallowRef<DockSplitPlacement>(
+    props.splitPlacement ?? "beside",
+);
+watch(
+    () => props.splitPlacement,
+    (p) => {
+        splitPlacement.value = p ?? "beside";
+    },
+);
+
+/* BD.W-DOCK-CORE (II.2 — F-1) — the fission scalars (`--dock-split-t`/`--island-*`/
+   `--seam-tension`) + the `[data-fissioning]`/`[data-fissioned]` state hooks are written on
+   the `.glass-dock-frame` (NOT the `.glass-dock` root) so BOTH the pieces INSIDE the dock
+   AND the sibling island/neck bridge (a frame child, outside the dock's `contain: paint`)
+   inherit the cascading scalars from their common ancestor. The frame is the fission scope. */
+const fission = props.splittable
+    ? useDockFission({
+          rootEl: frameEl,
+          signature: splitSignature,
+          placement: splitPlacement,
+      })
+    : null;
+
+/* BD.W-DOCK-CORE (II.2 — F-1) — the live fissioned flag the template reads to render the
+   sibling island plate + the goo neck. */
+const isFissioned = fission ? fission.fissioned : computed(() => false);
+
+/* Auto-register every child marked `data-dock-splittable` as a fission PIECE. The
+   detach vector is the child's FLIP-measured center relative to the dock center — a
+   radial bloom for `search`, a lateral peel for `media`, the inward (negative-radial)
+   merge for `nav` (the placement reads the vector). The vector is a GETTER so a live
+   re-measure re-resolves per read (the dock geometry can shift on density/orientation). */
+const pieceHandles: DockFissionPieceHandle[] = [];
+
+function dockCenter(): { x: number; y: number } {
+    const el = dockEl.value;
+    if (!el) return { x: 0, y: 0 };
+    const r = el.getBoundingClientRect();
+    return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+}
+
+function registerSplittablePieces(): void {
+    const root = dockEl.value;
+    if (!root || !fission) return;
+    // Clear any prior registration (a re-register after a layout shift).
+    for (const h of pieceHandles.splice(0)) h.release();
+    const marked = Array.from(
+        root.querySelectorAll<HTMLElement>("[data-dock-splittable]"),
+    );
+    const ctx = props.splitContext ?? "nav";
+    marked.forEach((el, rank) => {
+        el.classList.add("dock-fission-piece");
+        const handle = fission.registerPiece({
+            el: ref(el),
+            rank,
+            vector: () => {
+                const c = dockCenter();
+                const r = el.getBoundingClientRect();
+                const ex = r.left + r.width / 2;
+                const ey = r.top + r.height / 2;
+                let dx = ex - c.x;
+                let dy = ey - c.y;
+                // Normalize to a unit-ish vector (the orchestrator scales by --piece-reach).
+                const mag = Math.hypot(dx, dy) || 1;
+                dx /= mag;
+                dy /= mag;
+                // nav = INWARD merge: the negative radial (pieces fold toward center).
+                if (ctx === "nav") {
+                    dx = -dx;
+                    dy = -dy;
+                }
+                // media = LATERAL peel: bias to the cross (inline) axis.
+                if (ctx === "media") dy *= 0.25;
+                return { dx, dy };
+            },
+        });
+        pieceHandles.push(handle);
+    });
+}
+
+if (fission) {
+    onMounted(() => {
+        nextTick(registerSplittablePieces);
+    });
+    onBeforeUnmount(() => {
+        for (const h of pieceHandles.splice(0)) h.release();
+    });
+}
+
+/* BD.W-DOCK-CORE (A12) — the draggable-ITEMS axis. Armed ONLY when `:draggable-items`;
+   a non-draggable dock mints ZERO gesture (the `enabled()` gate keeps the listener off).
+   WIRES the shipped `useDragMorph` (follow + tanh squish + fling-to-nearest) — no second
+   drag engine. The grab decorates the dock root `.glass-drag-grabbable` so the cursor
+   reads grabbable; the grabbed item carries `.glass-drag-lift` during the gesture. */
+const itemDrag = useDockItemDrag({
+    rootEl: dockEl,
+    enabled: () => props.draggableItems === true,
+    axis: () => (orientation.value === "vertical" ? "y" : "x"),
+    onReorder: (from, to) => emit("update:order", from, to),
+});
+const itemsDragging = itemDrag.dragging;
+
+function onDockPointerMove(event: PointerEvent): void {
+    fission?.onPointerMove(event);
+    // BD.W-DOCK-CORE (A12 / II.3) — the drag IS the split gesture. While a pointer is
+    // held down on a split-eligible control, a pull PAST the threshold COMMITS the
+    // fission (morph-more-on-move: the seam-tension feed above already stretches the necks
+    // as the pull accelerates). Compositor-only (the fission translates via transform).
+    if (dragOrigin) {
+        const dx = event.clientX - dragOrigin.x;
+        const dy = event.clientY - dragOrigin.y;
+        if (Math.hypot(dx, dy) > DRAG_SPLIT_THRESHOLD_PX && fission && !fission.fissioned.value) {
+            split();
+        }
+    }
+}
+
+/* BD.W-DOCK-CORE (A12) — the drag-to-split pointer state. A pointerdown on a
+   `[data-dock-splittable]` control arms the drag origin; a pull past the threshold (in
+   onDockPointerMove) commits the fission; pointerup disarms. The keyboard path
+   (Enter/Space on a split-eligible control) is the consumer's `toggleSplit()` call. */
+const DRAG_SPLIT_THRESHOLD_PX = 36;
+let dragOrigin: { x: number; y: number } | null = null;
+
+function onDockPointerDown(event: PointerEvent): void {
+    if (!fission) return;
+    const target = event.target as HTMLElement | null;
+    if (target?.closest("[data-dock-splittable]")) {
+        dragOrigin = { x: event.clientX, y: event.clientY };
+    }
+}
+function onDockPointerUp(): void {
+    dragOrigin = null;
+}
+
+/** Imperative split/merge/toggle — re-measure pieces, then run the fission spring. */
+function split(): void {
+    if (!fission) return;
+    registerSplittablePieces();
+    fission.split();
+}
+function merge(): void {
+    fission?.merge();
+}
+function toggleSplit(): void {
+    if (!fission) return;
+    registerSplittablePieces();
+    fission.toggle();
+}
+
+defineExpose({
+    expanded,
+    isPinned,
+    isHeld,
+    isTransitioning,
+    expand,
+    collapse,
+    keepOpen,
+    release,
+    /* BD.W-DOCK-CORE (A13) — the fission control surface (no-ops on a non-splittable dock). */
+    split,
+    merge,
+    toggleSplit,
+    fissioned: fission ? fission.fissioned : computed(() => false),
+});
 </script>
 
 <template>
@@ -314,6 +528,8 @@ defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, ke
         class="glass-dock-frame"
         :class="orientation"
         :data-has-rail="hasRail || undefined"
+        :data-splittable="splittable || undefined"
+        :data-fissioned="isFissioned || undefined"
     >
 <!--
         AZ.W-RAIL-EXTEND (R4-1) — the dock is ALWAYS wrapped in a thin shell, but the
@@ -339,6 +555,7 @@ defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, ke
             `layout-${layout}`,
             scrollClass,
             { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded, 'dock-overflow-wrap': overflow === 'wrap' && orientation !== 'vertical' },
+            { 'glass-drag-grabbable': draggableItems && !itemsDragging, 'dock-items-draggable': draggableItems },
             position === 'fixed' ? 'fixed bottom-(--dock-pos) left-1/2 -translate-x-1/2'
               : position === 'sticky' ? 'dock-sticky'
               : 'dock-inline',
@@ -357,6 +574,10 @@ defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, ke
         @touchend="onTouchEnd"
         @pointerdown.capture="onPointerDownCapture"
         @click.capture="onClickCapture"
+        @pointermove="splittable ? onDockPointerMove($event) : undefined"
+        @pointerdown="splittable ? onDockPointerDown($event) : undefined"
+        @pointerup="splittable ? onDockPointerUp() : undefined"
+        @pointercancel="splittable ? onDockPointerUp() : undefined"
         @transitionend="onDockTransitionDone"
         @transitioncancel="onDockTransitionDone"
     >
@@ -373,6 +594,17 @@ defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, ke
             animates on the ONE spring. Rendered only when authored ($slots.persistent),
             so a dock with no persistent controls is byte-identical to before.
         -->
+        <!--
+            BD.W-DOCK-PUNCH-CHANNEL — the kinetic cartoon CAST caster. An inert
+            aria-hidden child (NOT a pseudo — the dock's `::before`/`::after` are both
+            occupied by the grain + the morph chrome) carrying the SHIPPED
+            `--shadow-cartoon-md/lg` rung that SLIDES opposite the morph as the box
+            punches (shape.css `.glass-dock > .cartoon-cast`). Paint-only, behind the
+            plate, PRM-static. Always rendered (the rest cast is the bold offset ink the
+            plate floats above).
+        -->
+        <span class="cartoon-cast" aria-hidden="true"></span>
+
         <div v-if="$slots.persistent" class="dock-persistent">
             <slot name="persistent" />
         </div>
@@ -434,6 +666,33 @@ defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, ke
             </div>
         </div>
 
+    </div>
+
+    <!-- BD.W-DOCK-CORE (A13 / II.2 — F-1, THE HEADLINE ASSEMBLY) — the fission BRIDGE,
+         rendered as a SIBLING of `.glass-dock` inside the non-clipping `.glass-dock-frame`
+         (the SAME escape the rail uses) so the detached ISLAND + the goo NECK paint
+         OUTSIDE the dock's `contain: paint` clip box — beside/above/below the source pill.
+         The prior build rendered the bridge INSIDE `.glass-dock`, so the island could never
+         leave the dock box (the empty-bridge / nothing-detaches F-1 defect). It carries the
+         goo NECK (a stretching gel filament from the source edge to the island) + the
+         sibling ISLAND plate (the SECOND dock the pieces fly into) + the ripple/merge-
+         splash jubilance (`::before`/`::after`). The SHIPPED `DockGooFilter` supplies the
+         goo `<filter>` the bridge applies via the REGULAR `filter` property (Safari). -->
+    <div
+        v-if="splittable"
+        class="dock-fission-bridge"
+        :class="[orientation, `place-${splitPlacement ?? 'beside'}`]"
+        :aria-hidden="!isFissioned || undefined"
+    >
+        <div class="dock-fission-neck" aria-hidden="true" />
+        <!-- The SECOND DOCK plate. When the consumer authors a `#split` slot, the detached
+             controls render HERE (the island IS their new dock — the source pill's marked
+             pieces fade/retract as these arrive, so the content visibly MIGRATES from the
+             source pill into the sibling island). The slot is interactive only while
+             fissioned (inert otherwise); a bare island (no slot) is a pure visual plate. -->
+        <div class="dock-fission-island" :inert="!isFissioned || undefined">
+            <slot name="split" :fissioned="isFissioned" />
+        </div>
     </div>
 
     <!--
