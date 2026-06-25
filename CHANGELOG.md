@@ -1,5 +1,38 @@
 # Changelog
 
+## 4.2.0
+
+### The BD greenfield hardening wave — the warm / weighty / liquid redesign
+
+The §3 gray root cause is CURED: a warm colourful `.paper-field` is transmitted behind every
+surface (live-π light C 0.075 @ H79° / dark C 0.053 @ H68°, tealFrac 0), and the ONE shared
+`.glass-capsule` register (warm-floor fill + `--glass-capsule-fill` override + the real
+`--specular-intensity` hover lift) is composed by tabs · buttons · cards · chips · select ·
+the dock selected pill — no per-component glass fork. The 1/φ `--motion-weight` governing
+scalar + the loud `--ease-cartoon-punch` anticipation→punch `linear()` + the inert
+`.cartoon-cast` cel shadow give every motion real weight (driver `.liquid-stage`→1, observer
+`[data-autoplay]`→0).
+
+**Headline fixes (all live-π verified):**
+- The year-old **dock width-seizure** — the unbounded `--dock-root-ratio`/`-scale` machinery
+  replaced by a bounded `--dock-live = collapsed + (expanded−collapsed)·clamp(0,t,1)` convex
+  blend of two RO-measured-once endpoints; `--dock-punch-stretch` is a separate channel.
+- The unifying **`useMorphField` WELD + ONE `GooFilter`** retiring ~12 forked morph mechanisms
+  (GlassGooFilter/DockGooFilter removed; the dock-fission-goo double-mount killed).
+- **`/dock/morph-showcase`** — the `view-transition` crossfade dodge (`--dock-morph-t ≡ 0`) →
+  a real continuous metaball teardrop with √φ overshoot.
+- The **carousel/deck goo** — a real barbell that wells-then-pinches (was a sliding band).
+- The **11 procedural vizzes** warmed + RE-INVENT registers (aurora vividness lift, goo-blob
+  mercury-colony split, dot-flow aurora-current, paper-grid the face term, …), warm/no-teal.
+- The **category landings** — gray placeholder cards → live warm specimens, one-GL-budget
+  frozen stills (≤1 GL context per landing).
+- The responsive **hero clamp** (no off-page overflow); the broken **scroll-choreography** page
+  (dead CSS ScrollTimeline → keyframes.js SpringProgress); the dead **useLiquidReveal**.
+
+`design.md` gains the 8/12 laws-applied-universally, the cartoon / 1940s-technicolor register,
+aristotelian √φ proportion, the canonical ios27 demos, and the cross-engine (Chrome + Safari)
+floor. NO legacy, NO backwards-compat shims — a clean union onto the shared registers.
+
 ## 4.1.0
 
 ### The honest paint-verified cut — the BB source-green/visually-broken disease CURED
