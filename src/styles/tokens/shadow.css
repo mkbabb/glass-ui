@@ -6,12 +6,17 @@
     /* ═══════════════════════════════════════════════
        §7  SHADOWS — cartoon offset is the signature
        ═══════════════════════════════════════════════ */
-    --shadow-cartoon:       3px 3px 0px 0px color-mix(in srgb, var(--foreground) 8%, transparent);
-    --shadow-cartoon-hover: 4px 4px 0px 0px color-mix(in srgb, var(--foreground) 10%, transparent);
+    /* BD.W-CARTOON-CEL-INK — the `--shadow-cartoon`/`-hover` aliases + the
+       `--shadow-modal` cartoon plane re-point onto the warm `--cartoon-ink-lead`
+       (0-blur down-LEFT, the cel family coherence — no neutral `--foreground` gray
+       smudge). `--cartoon-ink-lead` is defined below in this same :root block (custom
+       properties resolve order-independently). */
+    --shadow-cartoon:       -3px 3px 0px 0px var(--cartoon-ink-lead);
+    --shadow-cartoon-hover: -4px 4px 0px 0px var(--cartoon-ink-lead);
     --shadow-soft:          0 4px 12px rgba(0, 0, 0, 0.1);
     --shadow-elevated:      0 8px 24px rgba(0, 0, 0, 0.12);
     --shadow-modal:
-        4px 4px 0px 0px color-mix(in srgb, var(--foreground) 8%, transparent),
+        -4px 4px 0px 0px var(--cartoon-ink-lead),
         0 24px 64px color-mix(in srgb, var(--foreground) 12%, transparent);
 
     --cartoon-shadow:       var(--shadow-cartoon);
@@ -88,16 +93,42 @@
     --shadow-cartoon-color:             rgb(0 0 0 / 0.12);
     --shadow-cartoon-color-soft:        rgb(0 0 0 / 0.06);
 
-    /* Tiered cartoon shadows */
-    --shadow-cartoon-sm: -3px 2px 1px color-mix(in srgb, var(--shadow-color) 10%, transparent),
-        0 3px 1px color-mix(in srgb, var(--shadow-color) 10%, transparent),
-        -3px 3px 1px color-mix(in srgb, var(--shadow-color) 6%, transparent);
-    --shadow-cartoon-md: -4px 3px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
-        0 4px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
-        -4px 4px 2px color-mix(in srgb, var(--shadow-color) 8%, transparent);
-    --shadow-cartoon-lg: -6px 4px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
-        0 6px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
-        -6px 6px 2px color-mix(in srgb, var(--shadow-color) 8%, transparent);
+    /* ── BD.W-CARTOON-CEL-INK — the cartoon register's OWN warm cel ink ──────────────
+       Decoupled from `--shadow-color` so a consumer retunes the cast without
+       disturbing every elevation box-shadow. Built by EXTRACTING the warm
+       `--foreground` hue (`oklch from`) and FLOORING chroma (`max(c, 0.11)` —
+       TECHNICOLOR, not merely-non-gray, the BA.W-NO-GRAY discipline applied to the
+       cast) + DEEPENING L (`clamp(0.14, l, 0.18)`) so at stamp opacity it reads as a
+       COLORED cel line, never a neutral gray. A cel cast is INK — it stays a warm DARK
+       ink (the dark arm pins its own warm dark ink, dark-arm.css). The three planes
+       step DOWN in opacity (lead 32% / mid 26% / contact 18%) — `in oklab` NOT
+       `in srgb` (srgb muddies a warm dark ink toward gray as it dilutes; oklab holds
+       the warm hue stable across the alpha ramp — the landed gray-dilution defect). */
+    --cartoon-ink: oklch(from var(--foreground) clamp(0.14, l, 0.18) max(c, 0.11) h);
+    --cartoon-ink-lead:    color-mix(in oklab, var(--cartoon-ink) 32%, transparent);
+    --cartoon-ink-mid:     color-mix(in oklab, var(--cartoon-ink) 26%, transparent);
+    --cartoon-ink-contact: color-mix(in oklab, var(--cartoon-ink) 18%, transparent);
+    /* `@supports not (oklch from …)` floors the ink to a named warm sRGB literal
+       (a legacy engine gets a WARM — not gray — stamp; NO dead inline literal). */
+    --cartoon-ink-fallback: #4a3320;
+
+    /* BD.W-CARTOON-CEL-INK — the tiered cel-ink STAMP, re-pointed to the warm
+       `--cartoon-ink` rungs at HARD 0-BLUR (lead + mid + contact all 0px — the cel
+       edge; the landed 1–2px soft blur is the gray-smudge defect), keeping the LANDED
+       down-LEFT geometry (REFINE-not-flip — the direction is coherent with the
+       upper-right `--glass-key`; cast lands lower-LEFT). φ-cadenced offsets. */
+    --shadow-cartoon-sm:
+        -2px 2px 0 var(--cartoon-ink-lead),
+        -3px 3px 0 var(--cartoon-ink-mid),
+        -4px 4px 0 var(--cartoon-ink-contact);
+    --shadow-cartoon-md:
+        -3px 3px 0 var(--cartoon-ink-lead),
+        -5px 5px 0 var(--cartoon-ink-mid),
+        -7px 7px 0 var(--cartoon-ink-contact);
+    --shadow-cartoon-lg:
+        -4px 4px 0 var(--cartoon-ink-lead),
+        -7px 7px 0 var(--cartoon-ink-mid),
+       -11px 11px 0 var(--cartoon-ink-contact);
     --cartoon-shadow-sm: var(--shadow-cartoon-sm);
     --cartoon-shadow-md: var(--shadow-cartoon-md);
     --cartoon-shadow-lg: var(--shadow-cartoon-lg);
@@ -163,4 +194,33 @@
     --blob-shadow-contact-hover: 0 1px 4px
         color-mix(in srgb, var(--blob-shadow-color) 44%, transparent);
 
+}
+
+/* BD.W-CARTOON-CEL-INK — the relative-color-syntax fallback. On a legacy engine that
+   lacks `oklch(from …)`, `--cartoon-ink` would be invalid (the whole cast drops). Floor
+   it to the named warm sRGB literal `--cartoon-ink-fallback` (NOT a dead inline literal)
+   so the cel stamp degrades to a WARM — never gray, never empty — ink. The three
+   strength rungs re-derive off the floored ink for free (they `color-mix` it). */
+@supports not (color: oklch(from white l c h)) {
+    :root {
+        --cartoon-ink: var(--cartoon-ink-fallback);
+    }
+}
+
+/* BD.W-CARTOON-CEL-INK — prefers-contrast / reduced-transparency floor the inked edge
+   UP (the cel cast is a legibility ASSET, not decoration; PRT is NOT a no-op — the cast
+   is translucent ink). */
+@media (prefers-contrast: more) {
+    :root {
+        --cartoon-ink-lead:    color-mix(in oklab, var(--cartoon-ink) 42%, transparent);
+        --cartoon-ink-mid:     color-mix(in oklab, var(--cartoon-ink) 34%, transparent);
+        --cartoon-ink-contact: color-mix(in oklab, var(--cartoon-ink) 24%, transparent);
+    }
+}
+@media (prefers-reduced-transparency: reduce) {
+    :root {
+        --cartoon-ink-lead:    color-mix(in oklab, var(--cartoon-ink) 42%, transparent);
+        --cartoon-ink-mid:     color-mix(in oklab, var(--cartoon-ink) 34%, transparent);
+        --cartoon-ink-contact: color-mix(in oklab, var(--cartoon-ink) 24%, transparent);
+    }
 }

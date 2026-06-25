@@ -19,6 +19,10 @@ import {
 // the `"linear"` law so the write is byte-identical to the prior local
 // `1 + frac·(cap−1)`. The composable owns no size span here (squish-only consumer).
 import { useLiquidFlex } from "../../../../composables/motion/useLiquidFlex";
+import {
+    effectiveCap,
+    writeVelocityWeight,
+} from "../../../../composables/motion/core/writeVelocityWeight";
 // `import type` keeps this type-only reference out of the runtime graph, so the
 // SFC ↔ composable edge never forms a runtime require cycle.
 
@@ -233,10 +237,21 @@ export function useTabIndicator(
         // `useLiquidFlex` (linear law) computes `--stretch` = 1 + frac·(cap − 1),
         // capped — byte-identical to the prior local write — so a full-width jump
         // reaches the cap and a tiny hop stays near 1.
+        // BD.W-MOTION-WEIGHT — the cap is derived SITE-LOCALLY off the live
+        // `--motion-weight` read at the indicator (the spike-corrected mechanism):
+        // `effectiveCap` returns the shipped cap token at rest weight 0.618
+        // (byte-identical feel) and 1.0 at weight 0 (the observer/PRM fence). Reads
+        // the EXISTING `--tab-indicator-max-stretch` token directly — no `--*-stretch-k`
+        // cohort.
         const cs = getComputedStyle(el);
         const capRaw = cs.getPropertyValue("--tab-indicator-max-stretch").trim();
-        capForSquish = Number(capRaw) || DEFAULT_INDICATOR_MAX_STRETCH;
+        const capToken = Number(capRaw) || DEFAULT_INDICATOR_MAX_STRETCH;
+        capForSquish = effectiveCap(el, capToken);
         liquidSquish.squish(frac);
+        // §2c — fold the travel velocity into the transient `--motion-weight` boost on
+        // the indicator (the SAME element the cap getter reads), so a far jump deepens
+        // its own squish and self-extinguishes at arrival.
+        writeVelocityWeight(el, liquidSquish.flexVel.value);
 
         if (releaseTimer) clearTimeout(releaseTimer);
         // Open the stretch synchronously with the glide…
@@ -250,6 +265,8 @@ export function useTabIndicator(
         releaseTimer = setTimeout(() => {
             liquidSquish.squish(0);
             el.style.setProperty("--stretch", String(liquidSquish.stretch.value));
+            // §2c — the velocity boost self-extinguishes back to rest weight at arrival.
+            writeVelocityWeight(el, 0);
             releaseTimer = null;
         }, releaseAt);
     }

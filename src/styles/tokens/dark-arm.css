@@ -71,8 +71,8 @@
     /* BA.W-DARK-MATERIAL scope 1 — the --card plate LIFTS L10→L16 (a warm-dark elevated
        surface, macOS-window territory) so it sits ~5× the deepened L4 page relL — a
        clearly distinct surface the five glass rungs ladder up from. LOCKSTEP light-dark.css:80. */
-    --card: hsl(24 8% 16%);
-    --popover: hsl(24 8% 16%);
+    --card: hsl(26 22% 17%);
+    --popover: hsl(26 22% 17%);
 
     /* R0G-5 (AO.W4) — dark mirror of the warm-neutral public-data panel.
        --card's dark hsl(24 8% 16%) nudged one warmth step toward amber
@@ -164,12 +164,28 @@
     --warning-foreground: hsl(24 10% 10%);
     --info-foreground:    hsl(48 10% 96%);
 
-    --shadow-cartoon:       3px 3px 0px 0px color-mix(in srgb, var(--foreground) 6%, transparent);
-    --shadow-cartoon-hover: 4px 4px 0px 0px color-mix(in srgb, var(--foreground) 8%, transparent);
+    /* BD.W-CARTOON-CEL-INK — the WARM DARK ink. In dark, `--foreground` flips to
+       near-cream, so the SAME `oklch(from --foreground …)` construction would lift the
+       ink toward a light warm LINE (the iOS-7-sticker glow). A cel cast is dark INK on
+       any cel — so the dark ink is built by the SAME `oklch(from)` mechanism (NOT a
+       hardcoded `oklch(0.22 0.07 70)` literal — the H3/R6 retirement) but L-TARGETED to
+       a warm MID-tone: `clamp(0.20, 1 − l, 0.30)` deepens the flipped-cream L back down
+       to a warm dark mid that READS as a defined edge against the near-black `--card`
+       (ΔL ≥ 0.12), chroma floored `max(c, 0.11)` for TECHNICOLOR, hue preserved. The
+       opacity rungs floor UP (46/38/26%) for presence on the dark ground. Plain `.dark`
+       ancestor — NO `:global()`, NO `light-dark()` (the recorded traps). */
+    --cartoon-ink: oklch(from var(--foreground) clamp(0.20, calc(1 - l), 0.30) max(c, 0.11) h);
+    --cartoon-ink-lead:    color-mix(in oklab, var(--cartoon-ink) 46%, transparent);
+    --cartoon-ink-mid:     color-mix(in oklab, var(--cartoon-ink) 38%, transparent);
+    --cartoon-ink-contact: color-mix(in oklab, var(--cartoon-ink) 26%, transparent);
+    --cartoon-ink-fallback: #5a3f28;
+
+    --shadow-cartoon:       -3px 3px 0px 0px var(--cartoon-ink-lead);
+    --shadow-cartoon-hover: -4px 4px 0px 0px var(--cartoon-ink-lead);
     --shadow-soft:     0 4px 12px rgba(0, 0, 0, 0.3);
     --shadow-elevated: 0 8px 24px rgba(0, 0, 0, 0.35);
     --shadow-modal:
-        4px 4px 0px 0px color-mix(in srgb, var(--foreground) 6%, transparent),
+        -4px 4px 0px 0px var(--cartoon-ink-lead),
         0 24px 64px color-mix(in srgb, var(--foreground) 18%, transparent);
 
     --shadow-cartoon-color:            rgb(255 255 255 / 0.07);
@@ -222,6 +238,12 @@
        automatically per mode. */
     --glass-opacity-dialog:   0.76;
     --glass-grain-opacity: 0.045;
+    /* BD.W-PAPER-MORPHISM — re-calibrated to the JND floor for the CORRECTED coarse
+       tooth + SCREEN blend (std ≥ 3.86 dark): screen on the ink pole BITES HARD so it
+       needs LESS alpha (the honest inversion the measurements force — the opacity
+       ladder light→dark 0.22→0.16 ≈ ×1/√φ, dark steps DOWN). Was 0.11 on the
+       self-cancelling soft-light arm. */
+    --paper-grain-opacity: 0.16;
     --glass-highlight: inset 0 0.5px 0 0 hsl(0 0% 100% / 0.08);
 
     /* BA.W-DARK-MATERIAL scope 2 — dark glass is TRANSMISSIVE. The dark rung
@@ -255,7 +277,12 @@
     --glass-blur-resting:  blur(calc(var(--glass-blur-resting-radius) * var(--glass-level))) saturate(var(--glass-saturate-resting)) brightness(1.14);
     --glass-blur-floating: blur(calc(var(--glass-blur-floating-radius) * var(--glass-level))) saturate(var(--glass-saturate-floating)) brightness(1.10);
     --glass-blur-overlay:  blur(calc(var(--glass-blur-overlay-radius) * var(--glass-level))) saturate(var(--glass-saturate-overlay)) brightness(1.06);
-    --glass-blur-dock:     blur(calc(var(--glass-blur-dock-radius) * var(--glass-level))) saturate(1.30) brightness(1.12);
+    /* W-NAV-DOCK-FIX — re-point the dark dock saturate to the named --glass-saturate-dock
+       knob (the single retune point in BOTH modes; the dark value 1.30 is declared here
+       so the descendant var() substitutes the dark value — the substitution-vs-redeclare
+       discipline). Value unchanged. */
+    --glass-saturate-dock: 1.30;
+    --glass-blur-dock:     blur(calc(var(--glass-blur-dock-radius) * var(--glass-level))) saturate(var(--glass-saturate-dock)) brightness(1.12);
 
     /* BB.W-DEEP-GLASS — the DARK arm of the OPT-IN deep tier (the luminous-dark
        deep mirror, the W-DARK-MATERIAL scope-2 "dark glass glows where light
@@ -288,6 +315,13 @@
        self-engage uses the AA arm directly (the luminous-dark lift is the desired default,
        not a sub-perceptual silhouette). */
     --glass-tint-strength-aa: 12%;
+    /* BD.W-DOCK-CORE (D4) — the dark §2c dock-ink lockstep (the MIRROR of the light
+       darken). In dark the dock tint is a LIFT toward a luminous warm-cream (L 0.90,
+       C 0.045) — `oklch(from var(--foreground) …)` extracts the dark foreground's warm
+       hue/chroma and lifts L (the dark `--foreground` is the light cream, so this stays a
+       luminous lift). The dark `--glass-tint-strength-aa` stays 12% (FROZEN,
+       W-DARK-MATERIAL). The dock self-engage reads this dock-scoped ink in BOTH modes. */
+    --glass-tint-ink-dock: oklch(from var(--foreground) 0.90 0.045 h);
     /* The unconditional content-tier self-engage (glass/ladder.css) reads
        --glass-tint-strength-floor. In LIGHT that is the 4% sub-perceptual silhouette (the
        calm-light card stays warm); in DARK the content tiers WANT the full luminous-dark
@@ -368,8 +402,17 @@
        page, so the rim is the PRIMARY silhouette device — dark glass glows where light
        passes; mirrors the --glass-edge-light-dark 0.18→0.22 lift). The bottom warm
        under-shadow holds at 6% — the shadow grounds the plate in BOTH modes. */
-    --glass-rim-top: inset 0 1px 0 hsl(0 0% 100% / 0.40);
-    --glass-rim-bottom: inset 0 -1px 0 color-mix(in srgb, var(--foreground) 6%, transparent);
+    /* BD.W-GLASS-KEY-EDGE — the dark rim rides the SAME `--glass-key-{lit,shade}-{x,y}`
+       sign tokens (inherited from :root — not re-declared here) so the dark plate's
+       lit edge agrees with the cartoon cast's key in both modes. The top/lit catch
+       lifts to 0.40 (the dark silhouette device); the key-facing side stop a touch
+       brighter (0.24). The shade under-shadow holds warm at 6%/4%. */
+    --glass-rim-top:
+        inset 0 var(--glass-key-lit-y) 0 hsl(0 0% 100% / 0.40),
+        inset var(--glass-key-lit-x) 0 0 hsl(0 0% 100% / 0.24);
+    --glass-rim-bottom:
+        inset 0 var(--glass-key-shade-y) 0 color-mix(in srgb, var(--foreground) 6%, transparent),
+        inset var(--glass-key-shade-x) 0 0 color-mix(in srgb, var(--foreground) 4%, transparent);
 
     /* AW.W23 — the chromatic-fringe + adaptive-tint dark arm. The fringe drops
        to a lower-luminance warm/cool pair on the deep canvas; `--glass-tint-

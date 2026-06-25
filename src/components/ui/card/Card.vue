@@ -400,6 +400,13 @@ useStalePropWarning("Card", ["flush"]);
             )
         "
     >
+        <!-- BD.W-CARTOON-CASTER — the inert moving-cel-cast child. Emitted ONLY for
+             `surface="cartoon"`, it carries the warm `--cartoon-ink` plate that travels
+             DOWN-LEFT + spreads on press (reading `--card-press-t × --motion-weight`),
+             lagging the body for the late ink recoil. It is `aria-hidden` + inert (a
+             pure decoration child, NOT a `::before`/`::after` pseudo — both occupied on
+             the glass carrier). z-index:-1 sits it behind the cel face. -->
+        <span v-if="surface === 'cartoon'" class="cartoon-cast" aria-hidden="true" />
         <slot />
     </Primitive>
 </template>

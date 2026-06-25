@@ -77,9 +77,21 @@
            `--glass-rim-top`. `--glass-rim-ink` is the resolved top-ink stop (kept as
            the accent-compose seam — the `.dark` arm below re-points it). */
         --glass-rim-ink: hsl(0 0% 100% / 0.30);
+        /* BD.W-GLASS-KEY-EDGE — the LIT catch is now KEY-DRIVEN: the accent-mixed
+           catch-light rides the key-facing edges (`--glass-key-lit-y` top +
+           `--glass-key-lit-x` side, the upper-right cel key) so the accent reads on
+           the LIT edge that agrees with the cartoon cast's light source — not a flat
+           top-only halo. The side stop carries the same accent-mixed ink at the rim's
+           own 0.18-class weight (via `--glass-rim-ink`-derived mix). The SHADE half is
+           the key-driven `--glass-rim-bottom` two-stop under-shadow. At 0% accent
+           strength the mix resolves byte-compatible to the bare key-driven rim (the W2
+           no-op floor). The moving-specular `::before` catch-light + the grain
+           `::after` are UNTOUCHED (both occupied). */
         --glass-material-rim:
-            inset 0 1px 0
+            inset 0 var(--glass-key-lit-y) 0
                 color-mix(in oklab, var(--glass-rim-ink), var(--glass-accent) var(--glass-accent-strength)),
+            inset var(--glass-key-lit-x) 0 0
+                color-mix(in oklab, hsl(0 0% 100% / 0.18), var(--glass-accent) var(--glass-accent-strength)),
             var(--glass-rim-bottom);
         /* the per-rung border ink, accent-composed. `--glass-border-rung` is set by
            each rung at its own declaration (it reads the rung's `--glass-border-*`

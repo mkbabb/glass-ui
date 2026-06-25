@@ -182,13 +182,90 @@
        a card surface that often hosts portaled content; `translate: 0` at rest
        mints the stacking context once. Longhand maps `translate(x, y)` 1:1. */
     translate: 0;
+    position: relative;
+    /* BD.W-CARTOON-CASTER — the LOUD register carries `--motion-weight: 1` in the
+       SAME recipe (the loud-register coupling: so the punch is never accidentally
+       muted to ~+13.6% by inheriting the rest 0.618 — the BD.W-CARTOON-PUNCH
+       loud-register guard's concrete pass-subject). The press ramp ALIASES the
+       existing `--card-press-t` (the host's `useLiquidPress` already drives it for
+       every `pressable` card) — NO second press var, NO Card press-driver rewrite. */
+    --motion-weight: 1;
+    --cartoon-press-t: var(--card-press-t, 0);
     transition:
-        translate var(--duration-normal) var(--spring-smooth),
+        translate var(--duration-normal) var(--ease-cartoon-punch),
+        scale var(--duration-normal) var(--ease-cartoon-punch),
         box-shadow var(--duration-normal) var(--ease-standard);
 
-    &:hover:not(:disabled) {
+    /* BD.W-CARTOON-CASTER — the hover RE-POINTS the existing rule onto the punch
+       curve (was --spring-smooth) and guards `:not(:active)` so the press squash wins;
+       the object lifts a hair UP-RIGHT (toward the upper-right `--glass-key`) and the
+       cast deepens to the lg rung (the gap opens). ONE hover rule, no double-declare. */
+    &:hover:not(:active):not(:disabled) {
         translate: var(--lift-sm) var(--lift-sm);
         box-shadow: var(--shadow-cartoon-lg);
+        & .cartoon-cast {
+            box-shadow: var(--shadow-cartoon-lg);
+        }
+    }
+
+    /* BD.W-CARTOON-CASTER — the press is a NON-uniform SQUASH (H5): widen X, compress
+       Y — real squash & stretch, NOT a uniform shrink. The CSS `:active` is the no-JS
+       floor; `useLiquidPress` drives `--card-press-t` 0→1 for the continuous
+       interruptible press the inert caster rides. */
+    &:active:not(:disabled) {
+        scale: 1.04 0.94;
+    }
+}
+
+/* ── BD.W-CARTOON-CASTER — the inert-child moving cel cast ───────────────────────
+   The cast rides an INERT `<span class="cartoon-cast" aria-hidden>` child the Card
+   emits when `surface="cartoon"` — NOT a `::before`/`::after` pseudo (both are
+   OCCUPIED on the real glass carrier: `::before` is the moving-specular catch-light,
+   `::after` is the grain overlay; the H2 hardening). The child is a self-contained
+   ink-plate the body floats above: it carries the SAME shipped `--shadow-cartoon-md`
+   box-shadow (set ONCE per state-flip — NEVER animated, the §L7 paint-fence) and
+   MOVES on the compositor via `translate`/`scale` only.
+
+   The cast travels DOWN-LEFT (opposite the upper-right `--glass-key`, coherent with
+   the shadow.css cel-ink geometry) as the body lifts, and SPREADS as the gap opens.
+   ONE scalar drive: `--cartoon-press-t × --motion-weight` (the `:root` PRM carve
+   zeroes `--motion-weight` → travel/spread collapse to rest). It LAGS the body
+   (~1.15× slower transition) → the ink recoils LATE on release (follow-through /
+   overlapping action). The `--cartoon-cast-dx/dy` drag-track deltas are 0 at rest
+   (the opt-in `useCartoonCast` DOM bridge is future — labeled honestly). */
+.cartoon-cast {
+    position: absolute;
+    inset: 0;
+    z-index: -1; /* behind the cel face, in front of the page */
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow: var(--shadow-cartoon-md);
+    /* the derived offset + spread — read `--motion-weight × --cartoon-press-t`. The
+       sign is DOWN-LEFT (negative X, positive Y) to match the upper-right key. */
+    --cast-travel: calc(6px * var(--motion-weight) * var(--cartoon-press-t));
+    --cast-spread: calc(1 + 0.18 * var(--motion-weight) * var(--cartoon-press-t));
+    translate:
+        calc(-1 * var(--cast-travel) + var(--cartoon-cast-dx))
+        calc(var(--cast-travel) + var(--cartoon-cast-dy));
+    scale: var(--cast-spread);
+    /* the caster LAGS the body (~1.15×) → the late ink recoil on release. */
+    transition:
+        translate calc(var(--duration-normal) * 1.15) var(--ease-cartoon-punch),
+        scale calc(var(--duration-normal) * 1.15) var(--ease-cartoon-punch),
+        --cartoon-cast-dx var(--duration-normal) var(--ease-cartoon-punch),
+        --cartoon-cast-dy var(--duration-normal) var(--ease-cartoon-punch);
+    will-change: translate, scale;
+}
+
+/* BD.W-CARTOON-CASTER — PRM/PRT carve. Under reduced-motion `--motion-weight: 0`
+   zeroes travel/spread/squash/lag in ONE assignment (every `calc(… * --motion-weight)`
+   collapses to rest); the transition is killed. The static bold cel STAMP persists
+   (identity/legibility — only the TRAVEL/PUNCH is removed). */
+@media (prefers-reduced-motion: reduce) {
+    .cartoon-surface,
+    .cartoon-cast {
+        --motion-weight: 0;
+        transition: none;
     }
 }
 

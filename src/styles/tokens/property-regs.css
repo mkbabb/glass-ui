@@ -56,6 +56,22 @@
     initial-value: 0%;
 }
 
+/* BD.W-GOO-CAROUSEL-DECK — the ONE goo-morph travel scalar (the de-dup of the pager
+   WORM's `--worm-t`). The morph silhouette (dot worm / carousel slide plate / deck
+   slide plate) travels between MEASURED slot centers driven by a continuous page-space
+   float the host `transition`s on a `--{prefix}-flow` `linear()` curve. A bare
+   unregistered `var()` would SNAP `--goo-t` (no spring glide); the typed `<number>`
+   registration lets the engine interpolate the scalar so the silhouette's two-edge
+   geometry (useGooMorph.ts) springs past then settles. `inherits: true` — the host
+   transitions it, the rAF projection reads it off the host. `initial-value: 0` is the
+   resting slot (a non-supporting engine snaps onto the active slot, the floor). ONE
+   shared registration: the worm, the carousel plate, and the deck plate all read it. */
+@property --goo-t {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+}
+
 @property --phase-tint-amount {
     syntax: "<percentage>";
     inherits: true;
@@ -117,6 +133,91 @@
     syntax: "<angle>";
     inherits: false;
     initial-value: 0deg;
+}
+
+/* BD.W-MOTION-WEIGHT — the LIVE velocity channel. `useLiquidFlex` writes this
+   per-frame off the SAME saturating velocity term it already computes
+   (`tanh(|ṫ|·k) ∈ [0,1]`); the consumer's `writeVelocityWeight` helper folds it
+   into a transient `--motion-weight: calc(0.618 + 0.382 * var(--flex-vel))` boost
+   so a driver in active fast motion deepens its own squish/punch/shadow-travel and
+   self-extinguishes back to rest as it settles ("elements morph MORE the faster
+   they move"). `inherits: false` is LOAD-BEARING (the C2·R1 subtree-storm bite): a
+   per-frame write invalidates exactly ONE element, never a subtree — an inheriting
+   velocity channel would re-paint every descendant on every frame. `initial-value:
+   0` is the still rest (no boost when unwired). */
+@property --flex-vel {
+    syntax: "<number>";
+    inherits: false;
+    initial-value: 0;
+}
+
+/* BD.W-CARTOON-CASTER — the cartoon cel-cast drive props (H1: proven-live-DEAD
+   without these — the calc chain falls back to initials → no punch). The cast
+   travel/spread READ `--motion-weight × --cartoon-press-t`, so the inert
+   `.cartoon-cast` child plate moves on the compositor as the body presses.
+   • --cartoon-press-t (<number>, inherits:true) — the 0→1 press ramp the existing
+     `useLiquidPress` writes (aliased onto `--card-press-t` on `.cartoon-surface`);
+     inherits so the inert child reads its host's press scalar.
+   • --cast-travel (<length>, inherits:false) / --cast-spread (<number>,
+     inherits:false) — the per-caster derived offset + scale; non-inheriting (each
+     caster owns its own, never bleeds onto a nested cartoon child).
+   • --cartoon-cast-dx/dy (<length>, inherits:true) — the OPT-IN drag-track delta
+     (0 at rest; a future `useCartoonCast` DOM bridge writes them). Inherits so the
+     host can set them for the child. Typed so the gap INTERPOLATES on the
+     compositor; a non-supporting engine snaps rather than eases (the gap still
+     reads). */
+@property --cartoon-press-t {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+}
+
+@property --cast-travel {
+    syntax: "<length>";
+    inherits: false;
+    initial-value: 0px;
+}
+
+@property --cast-spread {
+    syntax: "<number>";
+    inherits: false;
+    initial-value: 1;
+}
+
+@property --cartoon-cast-dx {
+    syntax: "<length>";
+    inherits: true;
+    initial-value: 0px;
+}
+
+@property --cartoon-cast-dy {
+    syntax: "<length>";
+    inherits: true;
+    initial-value: 0px;
+}
+
+/* BD.W-PAGE-FIELD — the warm colorful FIELD drive props (paper.css `.paper-field`).
+   The chassis writes ONE per-route hue (`--field-h-raw`) on the `[data-paper-field]`
+   wrapper; `.paper-field` CLAMPS it warm IN THE CSS (`clamp(25, raw, 95)`) so an
+   inline `--field-h-raw:210` paint-CANNOT go teal — the warm-bound is a paint-layer
+   invariant, not a TS-only convention.
+   • --field-h-raw (<number>, inherits:true) — the route's raw hue request. Inherits so
+     the wrapper sets it once and every `.paper-field` descendant resolves it. Initial 62
+     (warm amber — the canonical cream identity).
+   • --field-intensity (<number>, inherits:true) — the ground/hero rung scalar (0.85
+     ground, 1.0 vivid hero, 0 under prefers-reduced-transparency → the warm stops drop
+     and the decoupled --neutral-0 floor shows). Inherits so a hero surface can lift it
+     on a sub-tree. */
+@property --field-h-raw {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 62;
+}
+
+@property --field-intensity {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0.85;
 }
 
 /* BB.W-LENSING `--glass-refract` axis — RETIRED (DDR-LENS-BAKE, glass-refract.css).
@@ -261,6 +362,27 @@
     syntax: "<number>";
     inherits: true;
     initial-value: 1;
+}
+
+/* BD.W-MOTION-WEIGHT — the GOVERNING motion scalar (the iOS-27 register-triangle
+   centroid). ONE number co-scales the squash depth, the overshoot share, the
+   anticipation pull-back, and the cartoon-shadow travel so they read as ONE
+   proportioned deformation, never four unrelated tics. Registered with the EXACT
+   `--ui-scale`/`--glass-level` typed cascading-scalar idiom — `inherits: true` is
+   the whole mechanism: a DRIVER ancestor (`.dock`, a celebrating card, a sheet)
+   locally pushes `--motion-weight: 1`; an OBSERVER subtree (`<CarouselContent>`
+   auto-advance, `[data-reorder]` lists) pins `--motion-weight: 0` — everything
+   below reads the local value with zero prop-drilling. `initial-value: 0.618`
+   (1/φ, design.md §L6 golden-proportion law): not 0 (dead), not 1 (manic) —
+   present, alive, never cartoonish-by-default. The `:root` rest decl + the PRM
+   carve live in scheme-motion.css §2 (the Feature-token-home, beside the
+   `--spring-*` clocks it co-governs). A non-supporting engine reads the safe
+   0.618 fallback (the squish still reads, just non-animatable — the same fail-safe
+   `--ui-scale` documents). */
+@property --motion-weight {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0.618;
 }
 
 /* ── The specular-intensity magnitude cohort (AX.W09) ──────────────────────

@@ -110,6 +110,24 @@ export interface UseLiquidFlexReturn {
      */
     stretchStyle: ComputedRef<Record<string, string>>;
     /**
+     * BD.W-MOTION-WEIGHT — the SATURATING velocity term `tanh(|ṫ|·k) ∈ [0,1]` (the
+     * SAME term the squish already computes), exposed so a consumer can fold it into
+     * the universal `--motion-weight` velocity boost (§2c). 0 at rest; rises toward 1
+     * on a fast travel; self-extinguishes as the travel stills. In `"linear"` law it
+     * is the travel FRACTION (clamped to [0,1]); in `"tanh"` law it is `tanh(travel·k)`.
+     * The PRIMITIVE STAYS ELEMENT-LESS — it merely projects the term; the consumer
+     * writes it onto the driving element via the `writeVelocityWeight` helper.
+     */
+    flexVel: ComputedRef<number>;
+    /**
+     * The velocity term as a CSS custom-property style object
+     * (`{ "--flex-vel": "0.42" }`). The consumer binds it on the driving element (the
+     * one extra style object — the term it ALREADY computes); the local
+     * `--motion-weight: calc(0.618 + 0.382 * var(--flex-vel))` boost rides it. The
+     * primitive stays element-less; this is a pure projection.
+     */
+    velStyle: ComputedRef<Record<string, string>>;
+    /**
      * Advance the morph: set the normalized progress to `next` (0→1). The squish
      * travel velocity is the |Δt| since the prior `drive`, so calling `drive` on a
      * spring's per-frame value gives a squish that swells on a fast travel and
@@ -139,7 +157,7 @@ export function useLiquidFlex(params: UseLiquidFlexParams): UseLiquidFlexReturn 
     const maxStretchOf = (): number =>
         typeof params.maxStretch === "function"
             ? params.maxStretch()
-            : (params.maxStretch ?? 1.08);
+            : (params.maxStretch ?? 1.14);
 
     const fromOf = (): number =>
         typeof params.from === "function" ? params.from() : params.from;
@@ -194,12 +212,30 @@ export function useLiquidFlex(params: UseLiquidFlexParams): UseLiquidFlexReturn 
         "--stretch": String(stretch.value),
     }));
 
+    // BD.W-MOTION-WEIGHT — the saturating velocity term `tanh(travel·k) ∈ [0,1]` the
+    // squish already computes (linear law: the travel fraction, clamped). The
+    // consumer folds it into the universal `--motion-weight` velocity boost (§2c).
+    // The primitive stays element-less — this is a pure projection of the SAME term.
+    const flexVel = computed(() => {
+        const v =
+            squishLaw === "linear"
+                ? travel.value
+                : Math.tanh(travel.value * squishK);
+        return v < 0 ? 0 : v > 1 ? 1 : v;
+    });
+
+    const velStyle = computed<Record<string, string>>(() => ({
+        "--flex-vel": flexVel.value.toFixed(4),
+    }));
+
     return {
         t,
         size,
         stretch,
         sizeStyle,
         stretchStyle,
+        flexVel,
+        velStyle,
         drive,
         squish,
     };

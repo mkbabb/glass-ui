@@ -5,6 +5,10 @@ import {
     type DragMorphSnapTarget,
     type UseDragMorphReturn,
 } from "../../../../composables/motion/useDragMorph";
+import {
+    effectiveCap,
+    writeVelocityWeight,
+} from "../../../../composables/motion/core/writeVelocityWeight";
 import { DEFAULT_INDICATOR_MAX_STRETCH } from "../constants";
 import type { SegmentedTabOption } from "../SegmentedTabs.vue";
 
@@ -63,13 +67,18 @@ export function useTabDragMorph(
 
     const dragEnabled = computed(() => draggable() && !isUnderline.value);
 
+    // BD.W-MOTION-WEIGHT — the drag squish cap is derived SITE-LOCALLY off the live
+    // `--motion-weight` read at the indicator (the spike-corrected mechanism): the
+    // shipped `--tab-indicator-max-stretch` token at rest weight 0.618, 1.0 at
+    // weight 0. Reads the EXISTING token directly — no `--*-stretch-k` cohort.
     function readMaxStretch(): number {
         const el = indicatorRef.value;
         if (!el) return DEFAULT_INDICATOR_MAX_STRETCH;
         const raw = getComputedStyle(el)
             .getPropertyValue("--tab-indicator-max-stretch")
             .trim();
-        return Number(raw) || DEFAULT_INDICATOR_MAX_STRETCH;
+        const capToken = Number(raw) || DEFAULT_INDICATOR_MAX_STRETCH;
+        return effectiveCap(el, capToken);
     }
 
     // The snap targets — the center-anchored button centers on the active axis. kf
@@ -112,8 +121,22 @@ export function useTabDragMorph(
         ([isDragging, stretch]) => {
             const el = indicatorRef.value;
             if (!el || !dragEnabled.value) return;
-            if (isDragging) el.style.setProperty("--stretch", String(stretch));
-            else el.style.removeProperty("--stretch");
+            if (isDragging) {
+                el.style.setProperty("--stretch", String(stretch));
+                // BD.W-MOTION-WEIGHT (§2c) — recover the saturating velocity term from
+                // the tanh-law stretch (`stretch = 1 + tanh(v·k)·(cap−1)`, so
+                // `flexVel = (stretch−1)/(cap−1)`) and fold it into the transient
+                // `--motion-weight` boost on the indicator, so a fast fling deepens its
+                // own squish. The cap here is the EFFECTIVE cap (already weight-scaled),
+                // which is correct: at weight→0 the cap→1 so the boost term vanishes too.
+                const cap = readMaxStretch();
+                const flexVel = cap > 1 ? (stretch - 1) / (cap - 1) : 0;
+                writeVelocityWeight(el, flexVel);
+            } else {
+                el.style.removeProperty("--stretch");
+                // The boost self-extinguishes back to rest weight on settle.
+                writeVelocityWeight(el, 0);
+            }
         },
     );
 

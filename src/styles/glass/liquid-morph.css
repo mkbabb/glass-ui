@@ -35,6 +35,41 @@
         --glass-tint-strength: var(--glass-ambient-strength, 0%);
     }
 
+    /* ── BD.W-AMBIENT-TINT (AUGMENT 2 — widen the bias past the dock) ───────────────
+       The ambient-hue bias is GENERALIZED from the dock-only `.liquid-stage` seam to
+       EVERY glass tier rendered OVER the warm field: any `[data-paper-field]` host
+       re-points the SAME EXISTING `--glass-tint-source`/`--glass-tint-strength`
+       self-engage seam toward the sampled `--glass-ambient-hue`, so a plate over the
+       warm field WARMS toward the field/section-accent hue (the transmissive read —
+       the Maps-card transmission becomes real, not latent). This is a RE-POINT of the
+       extant seam onto a `[data-paper-field]` scope, NOT a new tint mechanism (the
+       `useGlassBackdropLuminance` histogram is already general).
+
+       The strength is BOUNDED ≤ 8% (the `--glass-ambient-strength` cascade bound,
+       sub-perceptual under the W55 `--glass-tint-strength-aa` ceiling); the field
+       itself is built in the NEXT stage — here we WIRE the bias to read
+       `[data-paper-field]` so the seam is live the instant the field mounts.
+
+       THE COMBINED-HUE CLAMP (C #1 R4): the field warmth is counted into the plate up
+       to three times (intrinsic warm fill + field-through-blur + ambient-of-that-field).
+       To keep the combined plate-over-field-plus-ambient hue inside the warm band
+       [45,88] for ALL section-accents (a violet/teal accent + warm ambient must not
+       over-rotate past WARM_HUE_HI), the ambient strength is GATED: it engages only
+       while the host has NOT already cleared the warm bar — a host that resolves a
+       warm-enough field sets `--paper-field-warm: 1` to SKIP the ambient mix (the
+       no-double-count guard). `--glass-ambient-strength-field` is the bounded ceiling
+       (≤8%); `--paper-field-warm` (default 0 = engage) is the skip flag the field
+       writes when it already clears the bar. */
+    [data-paper-field] {
+        --glass-ambient-strength-field: min(var(--glass-ambient-strength, 8%), 8%);
+        --glass-tint-source: var(--glass-ambient-hue, transparent);
+        /* engage the bounded bias UNLESS the field already clears the warm bar
+           (`--paper-field-warm: 1` → 0% = skip the ambient mix, no over-rotation). */
+        --glass-tint-strength: calc(
+            var(--glass-ambient-strength-field) * (1 - var(--paper-field-warm, 0))
+        );
+    }
+
     /* ── The bloom SOURCE — a small glass pill. STAYS PILL-SIZED in every state (the
        bloom FLIPs the SHEET, not the pill). At rest it shows the search field / the
        now-playing row; while the sheet is open it fades out (the sheet IS its bloomed

@@ -58,6 +58,13 @@ export * from "../useTextHighlight";
 // so it is engine-FREE + vueuse-FREE and ships on the `/motion-core` surface AND the
 // root barrel. ≥2 consumers: useDockOrientationMorph + the tabs-indicator squish.
 export * from "../useLiquidFlex";
+// BD.W-GOO-CAROUSEL-DECK — the ONE goo-morph engine (the de-dup of the pager WORM):
+// a two-edge stretch→merge→pinch→settle driver consumed by the pager dot (worm scale),
+// the carousel slide PLATE, and the deck slide PLATE — ONE engine, per-consumer tokens.
+// Composes `useLiquidFlex` + Vue only (engine-FREE + vueuse-FREE), so it ships on the
+// `/motion-core` surface AND the root barrel (the `useLiquidFlex` precedent). ≥2
+// consumers: PagerDots (worm) + CarouselContent (slide plate) + the deck demo.
+export * from "../useGooMorph";
 // BB.B4 (W-VIZ-POINTER) — the shared viz-pointer-physics field (pointer position +
 // derived velocity + the ACCEL term), fed by the renderer's frame `tick` (NO own
 // rAF), frozen under PRM (`tick(0)`). Imports `vue` only — engine-FREE + vueuse-FREE,
@@ -106,3 +113,12 @@ export * from "../useScrollChrome";
 // H1-fenced). It lives IN core/ (the only leaf that does — the spec's home) so it is
 // exported by its local path, not the sibling-up `../` form.
 export * from "./useHaptic";
+// BD.W-MOTION-WEIGHT — the consumer-side velocity→weight write home + the
+// site-local effective-cap derivation (the spike-corrected mechanism: derive the
+// cap AT the consuming element off the live `--motion-weight`, NEVER a :root calc
+// token). Engine-FREE + vueuse-FREE (no `vue`, no `@mkbabb/keyframes.js`) — ships
+// on the `/motion-core` surface alongside the squish primitives it serves. The
+// `--stretch` write-sites (useDockOrientationMorph/useTabIndicator/useTabDragMorph/
+// useLiquidPress) read the cap through `effectiveCap` + fold the velocity boost via
+// `writeVelocityWeight`.
+export * from "./writeVelocityWeight";

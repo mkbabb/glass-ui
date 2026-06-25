@@ -48,6 +48,7 @@ import {
 } from "vue";
 import { useSpringPress, type UseSpringPressOptions } from "./useSpringPress";
 import { useLiquidFlex } from "./useLiquidFlex";
+import { effectiveCap } from "./core/writeVelocityWeight";
 
 export interface UseLiquidPressOptions extends UseSpringPressOptions {
     /**
@@ -79,6 +80,18 @@ export interface UseLiquidPressOptions extends UseSpringPressOptions {
      * then yields back to the cascade as it settles). Default 0.001.
      */
     engageThreshold?: number;
+    /**
+     * BD.W-MOTION-WEIGHT — the pressed element (the host the consumer binds
+     * `pressStyle` on), so the press cap is derived SITE-LOCALLY off the live
+     * `--motion-weight` read at THAT element (the spike-corrected mechanism): the
+     * shipped `maxStretch` cap at rest weight 0.618 (byte-identical feel), 1.0 at
+     * weight 0 (the observer/PRM fence). When omitted, the cap is the static
+     * `maxStretch` (the no-element fallback — still correct at rest weight, the
+     * universal coupling is just not weight-scaled for that surface). The press is
+     * the GENTLE register — a button has no size span, so the weight-coupled cap is a
+     * lively settle, never a taffy-pull.
+     */
+    el?: Ref<HTMLElement | null>;
 }
 
 export interface UseLiquidPressReturn {
@@ -148,7 +161,12 @@ export function useLiquidPress(
         from: 0,
         to: 1,
         axis: "width",
-        maxStretch,
+        // BD.W-MOTION-WEIGHT — the cap is weight-coupled SITE-LOCALLY: `effectiveCap`
+        // reads the live `--motion-weight` off the pressed element and returns the
+        // `maxStretch` cap at rest 0.618, 1.0 at weight 0 (the observer/PRM fence). No
+        // element → the static cap (still correct at rest weight). The reciprocal
+        // squish is the GENTLE press register.
+        maxStretch: () => effectiveCap(options.el?.value ?? null, maxStretch),
         squishLaw: "linear",
     });
 
@@ -175,6 +193,13 @@ export function useLiquidPress(
             // The ONE press drive scalar the coupled brightness/specular leg reads. The
             // var NAME is consumer-chosen so a surface routes it onto its own gleam token.
             [pressVar]: t.toFixed(4),
+            // BD.W-MOTION-WEIGHT (§2c) — the saturating press velocity term, emitted so
+            // the surface CSS can ride the local `--motion-weight: calc(0.618 + 0.382 *
+            // var(--flex-vel))` boost (the GENTLE press register). 0 at rest;
+            // self-extinguishing as the spring settles. The primitive stays
+            // element-less — this is a pure projection of the term `useLiquidFlex`
+            // already computes.
+            "--flex-vel": squish.flexVel.value.toFixed(4),
         } as CSSProperties;
         // Emit the JS reciprocal `scale` ONLY while the press is engaged (past the
         // sub-perceptual threshold) — at rest the inline `scale` is OMITTED so the

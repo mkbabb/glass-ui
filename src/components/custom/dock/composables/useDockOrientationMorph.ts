@@ -32,6 +32,10 @@
 import { computed, onScopeDispose, ref, watch, type ComputedRef, type Ref } from "vue";
 import { SpringProgress } from "@mkbabb/keyframes.js";
 import { useLiquidFlex } from "../../../../composables/motion/useLiquidFlex";
+import {
+    effectiveCap,
+    writeVelocityWeight,
+} from "../../../../composables/motion/core/writeVelocityWeight";
 import { DOCK_SPRING } from "../constants";
 
 export type DockMorphOrientation = "vertical" | "horizontal";
@@ -89,19 +93,26 @@ export function useDockOrientationMorph(
     const morphing = ref(false);
 
     // BC.W-DOCK-ARBITRARY (A4) — the shape-morph squish cap reads the
-    // `--dock-morph-max-stretch` cascade token (density.css default 1.08, the LOW
-    // iOS-segmented register the tab-indicator already speaks). Resolved per-read off
-    // the live root so a consumer override re-resolves the cap without reconstructing
-    // the primitive (the useLiquidFlex getter contract). Falls back to the 1.08 default
-    // when the root is unmounted / the token is unset.
+    // `--dock-morph-max-stretch` cascade token (the lifted iOS-27 register, default
+    // 1.14 — BD.W-MOTION-WEIGHT C1·R3 drift fix: the prior 1.08 fallback was stale).
+    // Resolved per-read off the live root so a consumer override re-resolves the cap
+    // without reconstructing the primitive (the useLiquidFlex getter contract).
+    //
+    // BD.W-MOTION-WEIGHT — the cap is then derived SITE-LOCALLY off the live
+    // `--motion-weight` read at the SAME root (the spike-corrected mechanism — NEVER
+    // a :root calc token): `effectiveCap` returns `cap_token` at rest weight 0.618
+    // (byte-identical feel) and 1.0 at weight 0 (the observer/PRM fence). The
+    // (weight/0.618) factor reads the EXISTING cap token directly — zero new
+    // `--*-stretch-k` coefficient cohort.
     const maxStretchOf = (): number => {
         const r = rootEl.value;
-        if (!r) return 1.08;
+        if (!r) return 1.14;
         const raw = getComputedStyle(r)
             .getPropertyValue("--dock-morph-max-stretch")
             .trim();
         const n = raw ? Number.parseFloat(raw) : NaN;
-        return Number.isFinite(n) && n >= 1 ? n : 1.08;
+        const capToken = Number.isFinite(n) && n >= 1 ? n : 1.14;
+        return effectiveCap(r, capToken);
     };
 
     // The vertical dock height-collapse span: full → 0 as t: 0 → 1. We interpolate the
@@ -144,6 +155,16 @@ export function useDockOrientationMorph(
             r.style.setProperty(
                 "--stretch",
                 `${Math.max(verticalFlex.stretch.value, horizontalFlex.stretch.value)}`,
+            );
+            // BD.W-MOTION-WEIGHT (§2c) — fold the live travel velocity into a
+            // transient `--motion-weight` boost on the SAME dock root the cap getter
+            // reads, so a fast V↔H morph deepens its own squish (and any cartoon
+            // register it composes) and self-extinguishes back to rest as it settles.
+            // Both flex spans ride the SAME scalar derivative, so the max velocity is
+            // the value to write.
+            writeVelocityWeight(
+                r,
+                Math.max(verticalFlex.flexVel.value, horizontalFlex.flexVel.value),
             );
         }
     }

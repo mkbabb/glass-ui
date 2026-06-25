@@ -15,6 +15,16 @@
        so it sits at the perceptual floor. Dark companion drops 0.06 →
        0.045 below to keep the soft-light blend alive without stippling. */
     --glass-grain-opacity: 0.025;
+    /* BD.W-PAPER-MORPHISM — the PAPER grain is its OWN register (~3× the glass grain):
+       paper texture is MEANT to READ (the user: "I don't see any paper grain or grit
+       anywhere"), not sit at the glass perceptual floor. ONE token retunes paper grit
+       library-wide WITHOUT coarsening the subtle glass-material grain (the split keeps
+       glass calm + paper tactile). The dark arm (dark-arm.css) lifts it for soft-light. */
+    /* BD.W-PAPER-MORPHISM — re-calibrated to the JND floor for the CORRECTED coarse
+       tooth + multiply blend (std ≥ 4.5 light, the no-squint floor): multiply on the
+       cream pole is GENTLE so it needs MORE alpha. The prior 0.08 rode a blend
+       (overlay) that was mathematically incapable of moving a near-white pixel. */
+    --paper-grain-opacity: 0.22;
     /* BB.W-LIQUIDHOVER — the grain ENGAGE clock: a hover/active grain lift cross-fades
        the grain `::after` OPACITY on this thin ~120ms linear write while the
        `background-image` stays ALWAYS PRESENT (never a none→image swap — the one-frame
@@ -85,8 +95,40 @@
        re-declares both in dark-arm.css; light-dark() round an inset computes the WHOLE
        box-shadow to none). The dark arm lifts the top to 0.40 (dark glass glows where
        light passes) + keeps the bottom under-shadow at 6%. */
-    --glass-rim-top:         inset 0 1px 0 hsl(0 0% 100% / 0.30);
-    --glass-rim-bottom:      inset 0 -1px 0 color-mix(in srgb, var(--foreground) 6%, transparent);
+    /* BD.W-GLASS-KEY-EDGE — the cel KEYSTONE. ONE light vector (the 1940s cel
+       upper-right key) drives WHICH edge of the existing two-stop directional rim
+       reads LIT vs SHADE, in lockstep with the shipped `.shadow-cartoon-*` down-LEFT
+       cast (shadow.css `-Npx Npx` → key upper-right). The key is expressed NOT as a
+       `-58deg` angle with sign-inverted cos()/sin() trig (the glass-material sign
+       trap — banned here), but as two PLAIN per-axis sign tokens the rim stops read
+       directly: the LIT catch wraps the key-facing edges (top + right), the SHADE
+       under-shadow grounds the opposite edges (bottom + left). A consumer re-points
+       `--glass-key-lit-x`/`--glass-key-lit-y` to move the key (e.g. upper-LEFT →
+       `1px`/`1px`) and the rim re-reads off it with ZERO new layer, ZERO new conic,
+       ZERO new DOM node. `--glass-key` is the semantic handle (the documented
+       keystone; its sign tokens are the wired form). */
+    --glass-key: upper-right;
+    --glass-key-lit-x: -1px; /* the lit catch sits on the RIGHT edge (key-facing) */
+    --glass-key-lit-y: 1px; /* …and the TOP edge — the upper-right key */
+    --glass-key-shade-x: 1px; /* the under-shadow grounds the LEFT edge */
+    --glass-key-shade-y: -1px; /* …and the BOTTOM edge — opposite the key */
+    /* BC.W-BLACK-BAR D2 + BD.W-GLASS-KEY-EDGE — the two-stop directional rim, now
+       KEY-DRIVEN: the bright catch-light `--glass-rim-top` rides the lit (key-facing)
+       edges, the faint warm under-shadow `--glass-rim-bottom` rides the shade edges.
+       Which edge each lands on is `--glass-key-{lit,shade}-{x,y}` so the rim and the
+       cartoon cast AGREE on one light source (the cel coherence). At the default
+       upper-right key these resolve byte-compatibly to the shipped top-lit/bottom-shade
+       silhouette (top catch + bottom under-shadow) PLUS the key-facing side stops, so
+       the lit edge reads as a real lit pane corner, not a flat omnidirectional halo.
+       The accent (BB.W-GLASS-ACCENT) still mixes onto the lit ink in rim.css — at 0%
+       strength byte-identical. Plain per-mode arms — NEVER an inset fragment inside
+       light-dark() (the dark arm re-declares both in dark-arm.css). */
+    --glass-rim-top:
+        inset 0 var(--glass-key-lit-y) 0 hsl(0 0% 100% / 0.30),
+        inset var(--glass-key-lit-x) 0 0 hsl(0 0% 100% / 0.18);
+    --glass-rim-bottom:
+        inset 0 var(--glass-key-shade-y) 0 color-mix(in srgb, var(--foreground) 6%, transparent),
+        inset var(--glass-key-shade-x) 0 0 color-mix(in srgb, var(--foreground) 4%, transparent);
     /* BA.W-DARK-MATERIAL scope 2 — the dark edge/rim is the PRIMARY silhouette device in
        dark. The light register's fill+shadow carry the plate; in dark the fill barely
        separates (the deep page is near-black), so the EDGE + the transmitted glow carry the
@@ -154,6 +196,20 @@
        ratifies the exact value. */
     --glass-backdrop:           dark;
     --glass-tint-ink:           var(--foreground);
+
+    /* BD.W-DOCK-CORE (D1) — the warm-CHROMATIC dock tint ink (the keystone, RESEARCH-3).
+       The dock self-engage (dock/morph.css) mixes its thin ~0.42-alpha plate toward the
+       near-black `--foreground` (chroma ≈ 0.0062) → it darkens L with chroma DEAD-FLAT (the
+       gray dock the user reports). This dock-SCOPED ink extracts the foreground's warm
+       hue/chroma via `oklch(from …)` (the BB.W-DARK-INK-WARM idiom — NOT a new mechanism),
+       LIFTS the chroma to 0.05 (well above foreground's 0.0062), and DROPS L to 0.42 (the
+       darken anchor). At the bright-bucket AA engage the composited plate yields a WARM
+       material darken (C ≈ 0.016, ~2× HEAD, H ≈ 62°) — never gray. The OUTER mix stays
+       `color-mix(in oklab)` (the glass-tint family, AW.W26 in-srgb fence untouched); this
+       `oklch(from)` is only the INK SOURCE. The GLOBAL `--glass-tint-ink` above is FROZEN
+       (W-DARK-MATERIAL's whole-system register) — this is a NEW dock-scoped token read ONLY
+       by the dock self-engage (file-line-disjoint, no-dual-path). */
+    --glass-tint-ink-dock:      oklch(from var(--foreground) 0.42 0.05 h);
 
     /* BC.W-ADAPTIVE-RECONCILE — the ONE retune knob for the continuous observer
        driver. `--glass-backdrop-luma` (the measured sampled relative-luminance the

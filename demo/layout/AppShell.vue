@@ -21,6 +21,7 @@ import {
     Bell,
 } from "@lucide/vue";
 import {
+    DockGooFilter,
     DockIconButton,
     GlassDock,
     useDockOrientationMorph,
@@ -33,6 +34,7 @@ import {
     useRegisteredShortcuts,
 } from "../../src/composables/keyboard";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
+import { warmFieldHue } from "../stories/warm-field";
 import { PresetEditor } from "../configurator";
 import SidebarDock from "./SidebarDock.vue";
 import BottomDock from "./BottomDock.vue";
@@ -195,6 +197,16 @@ watch(
     },
 );
 
+// BD.W-PAGE-FIELD / BD.W-FIELD-SCRIPT — the per-route WARM COLORFUL FIELD hue.
+// The chassis writes ONE warm number per route into the mounted <PaperBackdrop>;
+// `warmFieldHue` derives it from the route's category via the ONE documented
+// `categoryHue` source (NO third color registry), warm-projected into [25,95]
+// (paint-clamped again in paper.css, so cool is unrepresentable). Every category
+// route is enrolled; the field is the calm CSS floor behind every glass surface.
+const fieldHue = computed(() =>
+    warmFieldHue(String(route.meta?.categoryId ?? "foundations")),
+);
+
 onMounted(() => {
     registerShortcut("]", () => next(), {
         label: "Next story",
@@ -247,7 +259,16 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <PaperBackdrop class="fixed inset-0 -z-10 bg-background" />
+    <!-- The grain wrapper drops `bg-background`: the warm `.paper-field` plane
+         now owns the opaque floor (it ends in --neutral-0), so the grain must
+         stay transparent or it would occlude the field. -->
+    <PaperBackdrop field :field-hue="fieldHue" class="fixed inset-0 -z-10" />
+
+    <!-- BD.W-DOCK-CORE (II.1 / F1) — the library goo `<filter>` mount, ONCE at the shell
+         root. It is a global `<defs>` referenced by id (`url(#dock-fission-goo)` via
+         `var(--dock-fission-goo-filter)`); mounting twice dups the id. A `<GlassDock split>`
+         consumes it for its fission necks (the SHIPPED engine, WIRED). -->
+    <DockGooFilter />
 
     <div class="relative flex h-screen overflow-hidden text-foreground">
         <!-- Fixed vertical sidebar rail dock (off-canvas below the mobile
@@ -281,10 +302,17 @@ onBeforeUnmount(() => {
                             v-if="Component"
                             :key="route.fullPath"
                         />
-                        <!-- BC.W-STORYBOOK-META — the empty-state composes the
-                             shipped <Card> (the dogfood SHELL sweep — GAP-5), not a
-                             raw `rounded-[…] border bg-background/40` div. -->
-                        <Card v-else class="mx-auto max-w-xl p-8 text-center">
+                        <!-- W-NAV-DOCK-FIX (defect 7) — the "Pick a story" placeholder is
+                             reachable ONLY for a literal no-matched-route. During async
+                             chunk resolve of a MATCHED route both branches are false, so
+                             the <Transition> renders NOTHING (no flash), then the real page
+                             enters ONCE — the FOUC where the empty Card painted under every
+                             async-pending route is gone. The empty-state still composes the
+                             shipped <Card> (BC.W-STORYBOOK-META dogfood GAP-5). -->
+                        <Card
+                            v-else-if="route.matched.length === 0"
+                            class="mx-auto max-w-xl p-8 text-center"
+                        >
                             <p class="font-display text-2xl text-foreground">
                                 Pick a story
                             </p>

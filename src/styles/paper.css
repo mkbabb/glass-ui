@@ -1,29 +1,68 @@
 /*
- * paper.css — Paper-texture primitives
+ * paper.css — Paper-texture primitives (BD.W-PAPER-MORPHISM, the texture+blend
+ * redesign — the grain/grit must be PLAINLY VISIBLE; if you squint, it FAILS).
  *
  * Two composable Tailwind `@utility` declarations:
- *   - paper-underpaint: fixed, app-root, fullscreen SVG turbulence at z-index -1
- *   - paper-grain-overlay: ::after overlay for individual surfaces
+ *   - paper-underpaint: fixed, app-root, fullscreen tooth texture at z-index -1
+ *   - paper-grain-overlay: ::after tooth overlay for individual surfaces
  *
- * Texture: feTurbulence baseFrequency 0.65, 4 octaves, desaturated via
- * feColorMatrix, blended multiply (light) / soft-light (dark). Tiles ~60px.
+ * THE FIX (the headline): the prior `feTurbulence bf=0.65 4-oct` + `feBlend
+ * multiply in2=SourceGraphic` cloud was a self-cancelling no-op — a fine cloud
+ * averaged to grey on hiDPI, and `overlay`/`soft-light` collapse to IDENTITY
+ * against a near-white cream wash (L≈0.98) / near-black ink wash (the blends only
+ * bite mid-grey backdrops; the paper register lives on the poles). Measured std
+ * 0.02–0.86 — invisible by math.
+ *
+ * THE TEXTURE — `--paper-grain-tooth`: a COARSE anisotropic grey-RGB speckle
+ * (`baseFrequency='0.04 0.09'` = grain direction, 2 octaves), KEEP the RGB
+ * (`feColorMatrix saturate=0` → grey, never zero it), per-channel
+ * `feComponentTransfer` slope-1.8/intercept-(-0.4) CONTRAST-STRETCH (the
+ * letterpress bite) + `feFuncA slope=0 intercept=1` (FULL OPAQUE alpha — the
+ * grey speckle is painted straight, the blend carries the darken/lighten; NOT the
+ * lens-A luminance→alpha matrix that gives a near-empty texture). `<filter
+ * color-interpolation-filters='sRGB'>` pins sRGB (identical Chrome↔Safari,
+ * deterministic seed). NO `feBlend` mud op. Tile 140px (coarse tooth reads as
+ * STRUCTURE, survives hiDPI, divides cleanly DPR 1/2/3).
+ *
+ * THE BLEND LAW (the decisive, physically-true move): `multiply` (light — ink
+ * sinks into the paper's pits → darken) / `screen` (dark — fiber catches light →
+ * lighten). Baseline, sRGB-safe, identical both engines. Plain per-mode arms.
+ *
+ * THE ALPHA: `--paper-grain-opacity` re-calibrated to the JND floor (light 0.22 /
+ * dark 0.16 — glass-fx.css / dark-arm.css; the inversion the measurements force:
+ * multiply on cream is gentle → MORE, screen on ink bites hard → LESS).
+ *
+ * The LIBRARY FENCE: `--glass-grain-opacity` (0.025/0.045) is BYTE-UNTOUCHED — the
+ * calm glass identity stands; paper is loud, glass is a whisper. That separation
+ * IS the design.
  */
+
+/* The ONE coarse-tooth texture — DRY single source, both utilities resolve it.
+   Painted onto a rect at full alpha (`feFuncA slope=0 intercept=1`); the
+   mix-blend-mode carries the visibility. sRGB-pinned, deterministic seed. */
+:root {
+    --paper-grain-tooth: url("data:image/svg+xml,%3Csvg width='140' height='140' viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='t' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04 0.09' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='1.8' intercept='-0.4'/%3E%3CfeFuncG type='linear' slope='1.8' intercept='-0.4'/%3E%3CfeFuncB type='linear' slope='1.8' intercept='-0.4'/%3E%3CfeFuncA type='linear' slope='0' intercept='1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23t)'/%3E%3C/svg%3E");
+    --paper-grain-tile: 140px;
+}
 
 @utility paper-underpaint {
     position: fixed;
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeBlend mode='multiply' in2='SourceGraphic'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    background-image: var(--paper-grain-tooth);
     background-repeat: repeat;
-    background-size: 60px 60px;
-    opacity: var(--glass-grain-opacity);
+    background-size: var(--paper-grain-tile) var(--paper-grain-tile);
+    opacity: var(--paper-grain-opacity, var(--glass-grain-opacity));
+    /* LIGHT: ink sinks into the cream → multiply darkens the valleys. */
     mix-blend-mode: multiply;
 }
 
 :where(.dark) .paper-underpaint,
 .dark .paper-underpaint {
-    mix-blend-mode: soft-light;
+    /* DARK: fiber catches light off the ink → screen lifts (NOT soft-light, which
+       collapses to identity on the near-black pole — the self-cancelling defect). */
+    mix-blend-mode: screen;
 }
 
 @utility paper-grain-overlay {
@@ -36,23 +75,200 @@
         inset: 0;
         border-radius: inherit;
         pointer-events: none;
-        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeBlend mode='multiply' in2='SourceGraphic'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+        background-image: var(--paper-grain-tooth);
         background-repeat: repeat;
-        background-size: 60px 60px;
-        opacity: var(--glass-grain-opacity);
-        mix-blend-mode: overlay;
+        background-size: var(--paper-grain-tile) var(--paper-grain-tile);
+        opacity: var(--paper-grain-opacity, var(--glass-grain-opacity));
+        /* LIGHT tooth: multiply — the physically-true ink-into-pits darken (NOT
+           overlay, which is identity on the L≈0.98 cream pole). */
+        mix-blend-mode: multiply;
     }
 }
 
 :where(.dark) .paper-grain-overlay::after,
 .dark .paper-grain-overlay::after {
-    mix-blend-mode: soft-light;
+    /* DARK tooth: screen — fiber catches light off the ink (NOT soft-light). */
+    mix-blend-mode: screen;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BD.W-PAGE-FIELD / BD.W-GLASS-FIELD — the WARM COLORFUL FIELD register
+   ───────────────────────────────────────────────────────────────────────
+   The single highest-leverage piece: it turns the gray storybook WARM. A
+   per-route four-layer technicolor CEL (amber key → terracotta mid → sand
+   bounce + a warm over-glaze toward the --glass-key corner) PLUS a wide
+   low-chroma BASE WASH that raises the floor everywhere, painted at FIELD
+   lightness (L 0.90-0.93 light / 0.28-0.34 dark — where the gamut admits
+   REAL chroma, NOT the gamut-bound L0.98 plate) OVER the decoupled
+   --neutral-0 floor (KEEP-NEUTRAL, untouched, never deleted).
+
+   ONE primitive, TWO acceptance floors (glass-floor ~0.012 composite-behind-
+   glass + field-floor 0.045 ground). The library glass material is BYTE-
+   UNTOUCHED — it finally has a backdrop worthy of it.
+
+   THE WARM-BOUND IS A PAINT INVARIANT: --field-h clamps the route's
+   --field-h-raw to [25,95] IN THE CSS calc, so an inline raw:210 CANNOT
+   paint teal/navy. The teal/navy purge is enforced at the paint layer.
+
+   OPT-IN: the warm stops only render under `[data-paper-field]` (the demo
+   chassis sets it per glass route) — the calm neutral underpaint stays the
+   default for solid-chrome routes; --neutral-0 stays decoupled + calm.
+
+   CROSS-ENGINE: pure compositor CSS — radial/conic-gradient + oklch() +
+   transform only. NO backdrop-filter:url, NO SVG goo, NO trig. oklch ≥ Safari
+   15.4, @property ≥ 16.4, gradients/transform forever. The WebKit premultiply-
+   toward-black desaturation hole is dodged: every warm 0-alpha stop is an
+   explicit `oklch(L C H / 0)` warm color, NEVER bare `transparent`.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* The warm-bound: clamp the route's raw hue request to [25,95]. A DISTINCT
+   var (NOT self-referential `--field-h: max(var(--field-h),…)` which is a
+   no-op) — the route writes --field-h-raw, the field resolves --field-h.
+   Set on the field element itself so the clamp resolves even when the chassis
+   writes --field-h-raw on an ancestor. */
+.paper-field {
+    --field-h: clamp(25, var(--field-h-raw, 62), 95);
+}
+
+/* The warm-cel GROUND — a dedicated fixed plane the chassis mounts UNDER the
+   grain (the grain `.paper-underpaint` rides on top at its 0.22 multiply
+   opacity; the field paints true at full opacity / normal blend, so the grain
+   does NOT crush the pigment). ONE <PaperBackdrop field> component emits both,
+   stacked — one backdrop mount, grain on top, warm field below. */
+.paper-field {
+    position: fixed;
+    inset: 0;
+    /* one step BELOW the grain underpaint (the chassis mounts the grain at
+       -z-10) so the grain rides ON TOP of the warm field — one backdrop, two
+       stacked planes. Still above the page floor (content is z 0+). */
+    z-index: -11;
+    pointer-events: none;
+    /* L4 warm over-glaze — a faint cel sheen brightest toward the upper-right
+       --glass-key corner (cel coherence: field + glass rim/cast share ONE key).
+       --glass-key is a KEYWORD (upper-right), so the glaze is positioned by a
+       fixed `at`/`from` matching it — NEVER a `-58deg`/keyword-as-angle bug. */
+    background:
+        conic-gradient(
+            from -45deg at 78% 22%,
+            oklch(0.96 0.05 calc(var(--field-h) + 6) / calc(0.30 * var(--field-intensity))),
+            oklch(0.96 0.05 calc(var(--field-h) + 6) / 0) 28%,
+            oklch(0.96 0.05 calc(var(--field-h) + 6) / 0) 72%,
+            oklch(0.96 0.05 calc(var(--field-h) + 6) / calc(0.18 * var(--field-intensity)))
+        ),
+        /* the wide warm BASE WASH — raises the floor EVERYWHERE (no flat gap). */
+        radial-gradient(
+            120% 100% at 50% 50%,
+            oklch(0.91 0.075 calc(var(--field-h) + 8) / calc(0.50 * var(--field-intensity))),
+            oklch(0.91 0.075 calc(var(--field-h) + 8) / 0) 100%
+        ),
+        /* L3 sand fill-light bounce (bottom-right). */
+        radial-gradient(
+            95% 80% at 80% 88%,
+            oklch(0.88 0.115 calc(var(--field-h) + 30) / calc(0.90 * var(--field-intensity))),
+            oklch(0.88 0.115 calc(var(--field-h) + 30) / 0) 70%
+        ),
+        /* L2 terracotta saturated mid (right band, where the cards sit). */
+        radial-gradient(
+            95% 78% at 78% 30%,
+            oklch(0.85 0.145 calc(var(--field-h) - 24) / calc(0.90 * var(--field-intensity))),
+            oklch(0.85 0.145 calc(var(--field-h) - 24) / 0) 72%
+        ),
+        /* L1 amber key mass (densest pigment, top-left toward the key-light). */
+        radial-gradient(
+            100% 84% at 24% 20%,
+            oklch(0.87 0.155 calc(var(--field-h)) / calc(0.95 * var(--field-intensity))),
+            oklch(0.87 0.155 calc(var(--field-h)) / 0) 75%
+        ),
+        var(--neutral-0); /* L0 the KEEP-NEUTRAL solid floor — decoupled. */
+}
+
+/* DARK: warm-LUMINOUS — lower L, KEEP chroma; NEVER gray-charcoal. Plain
+   ancestor `.dark .x` (a scoped :global(.dark) silently drops; this is a
+   non-scoped global stylesheet so a plain `.dark` ancestor is correct). */
+.dark .paper-field {
+    background:
+        conic-gradient(
+            from -45deg at 78% 22%,
+            oklch(0.42 0.05 calc(var(--field-h) + 6) / calc(0.30 * var(--field-intensity))),
+            oklch(0.42 0.05 calc(var(--field-h) + 6) / 0) 28%,
+            oklch(0.42 0.05 calc(var(--field-h) + 6) / 0) 72%,
+            oklch(0.42 0.05 calc(var(--field-h) + 6) / calc(0.18 * var(--field-intensity)))
+        ),
+        radial-gradient(
+            120% 100% at 50% 50%,
+            oklch(0.30 0.055 calc(var(--field-h) + 8) / calc(0.50 * var(--field-intensity))),
+            oklch(0.30 0.055 calc(var(--field-h) + 8) / 0) 100%
+        ),
+        radial-gradient(
+            95% 80% at 80% 88%,
+            oklch(0.34 0.085 calc(var(--field-h) + 30) / calc(0.90 * var(--field-intensity))),
+            oklch(0.34 0.085 calc(var(--field-h) + 30) / 0) 70%
+        ),
+        radial-gradient(
+            95% 78% at 78% 30%,
+            oklch(0.33 0.10 calc(var(--field-h) - 24) / calc(0.90 * var(--field-intensity))),
+            oklch(0.33 0.10 calc(var(--field-h) - 24) / 0) 72%
+        ),
+        radial-gradient(
+            100% 84% at 24% 20%,
+            oklch(0.36 0.11 calc(var(--field-h)) / calc(0.95 * var(--field-intensity))),
+            oklch(0.36 0.11 calc(var(--field-h)) / 0) 75%
+        ),
+        var(--neutral-0);
+}
+
+/* The CARTOON DRIFT — liquid-weight on the ground: anticipation (pull-back) →
+   arc sweep (translate + rotate on ONE curve) → follow-through overshoot, baked
+   by --ease-cartoon-punch (DEPEND on BD.W-CARTOON-PUNCH, no literal-cubic dup).
+   Rides a `::before` copy of the bg (the field plane has a FREE ::before, no
+   collision with the grain). The warm stops survive PRM; only the drift
+   freezes. */
+.paper-field::before {
+    content: "";
+    position: absolute;
+    inset: -28%;
+    background: inherit;
+    opacity: 0.72;
+    pointer-events: none;
+    animation: field-cel-drift 42s
+        var(--ease-cartoon-punch, cubic-bezier(0.5, -0.2, 0.4, 1.2)) infinite
+        alternate;
+    will-change: transform;
+    content-visibility: auto;
+}
+
+@keyframes field-cel-drift {
+    /* independent translate:/scale:/rotate: LONGHANDS — a `transform: scale()`
+       shorthand would clobber the translate centering (build-trap e). */
+    from {
+        translate: -1.5% 1%;
+        scale: 1;
+        rotate: -1.2deg;
+    }
+    to {
+        translate: 2.5% -2.5%;
+        scale: 1.07;
+        rotate: 2.4deg;
+    }
 }
 
 /* ═══════════════════════════════════════════════
    A11y — respect user motion + transparency preferences
    ═══════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+    /* the drift freezes — the warm field STAYS (it is content, not motion). */
+    .paper-field::before {
+        animation: none;
+    }
+}
+
 @media (prefers-reduced-transparency: reduce) {
+    /* the warm stops drop to 0-alpha; the decoupled --neutral-0 floor shows
+       (the calm opaque legibility floor). The field is a transmissive
+       enhancement, NEVER a legibility dependency. */
+    .paper-field {
+        --field-intensity: 0;
+    }
     .paper-underpaint,
     .paper-grain-overlay::after {
         opacity: 0;
