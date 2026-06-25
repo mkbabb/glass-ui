@@ -4,7 +4,7 @@
   (re-capture + re-pixel-read before the close). Re-stamped at the BC anti-disease close to
   the CURRENT source bytes against the fresh warm-cream LIVE-motion :5199 capture set. -->
 <!-- surface-paths: src/styles/configurator.css, src/subpaths/goo-blob.ts -->
-<!-- surface-hash: 76e672960e09b471a8b6ea5a7067a9c50df91b29c12af20a4325c4c31cd6b759 -->
+<!-- surface-hash: 0e3cea1c66d22bf020fdb3b2a1c4814d1c8f1f3c3bc9a94f49b9224895bd3ad1 -->
 
 # BC gestalt surface — configurators-goo
 

@@ -105,12 +105,12 @@ export const BLOCK_START_MARKER =
 // six names the PRESETS table carries — a name added to the table must be added here
 // (the gen WRITE + the sync gate READ both anchor on this alternation).
 export const SPRING_LINES_RE =
-    /(    --spring-(?:smooth|snappy|bouncy|gentle|dock|press): linear\([^)]+\);\n?)+/m;
+    /(    --spring-(?:smooth|snappy|bouncy|gentle|dock|press|timeline-head|timeline-fill|timeline-press): linear\([^)]+\);\n?)+/m;
 // BA.W-GLASS-CAL Unit 3 — the per-spring DURATION block. A SEPARATE contiguous
 // block (immediately after the `linear()` easing block) so SPRING_LINES_RE keeps
 // matching only the easing lines; this regex owns the duration lines.
 export const SPRING_DURATION_LINES_RE =
-    /(    --spring-(?:smooth|snappy|bouncy|gentle|dock|press)-duration: [\d.]+s;\n?)+/m;
+    /(    --spring-(?:smooth|snappy|bouncy|gentle|dock|press|timeline-head|timeline-fill|timeline-press)-duration: [\d.]+s;\n?)+/m;
 
 export function main() {
     const source = readFileSync(tokensPath, "utf8");

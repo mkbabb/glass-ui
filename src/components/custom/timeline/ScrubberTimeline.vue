@@ -3,7 +3,17 @@ import { computed, ref, watch } from "vue";
 import { useSpring } from "../../../composables/motion/useSpring";
 import { useLiquidFlex } from "../../../composables/motion/useLiquidFlex";
 import { useSpringPress } from "../../../composables/motion/useSpringPress";
+import { springPreset } from "../../../composables/motion/springPresets";
 import { vSpecular } from "../../../composables/glass";
+
+// BD.W-TIMELINE-RAIL-UNIFY (LEG-2) — the head/fill/press clocks are NAMED
+// SPRING_PRESETS rows (`timeline-head`/`-fill`/`-press`), the SINGLE source the
+// regen CSS `--spring-timeline-*` tokens + the `MOTION_CURVES` JS twins also
+// derive from. Read the (response, ζ) off the table via `springPreset(name)` —
+// NEVER a hand-inlined literal (the no-second-authority fence, proof:motion-one-clock M1).
+const HEAD_SPRING = springPreset("timeline-head");
+const FILL_SPRING = springPreset("timeline-fill");
+const PRESS_SPRING = springPreset("timeline-press");
 
 /**
  * <ScrubberTimeline> — single-track normalized 0..1 scrubber.
@@ -58,12 +68,12 @@ const scrubbing = ref(false);
 // LAGS the head on a slightly slower spring clock (the lane reads as liquid
 // trailing the bead).
 const headSpring = useSpring(() => props.modelValue, {
-    response: 0.34,
-    dampingFraction: 0.74, // ζ<1 — a hair of fling-overshoot then settle to 1.0
+    response: HEAD_SPRING.response, // 0.34 — ζ<1 a hair of fling-overshoot then settle to 1.0
+    dampingFraction: HEAD_SPRING.dampingFraction,
 });
 const fillSpring = useSpring(() => props.modelValue, {
-    response: 0.46, // slower clock — the fill trails the head
-    dampingFraction: 0.82,
+    response: FILL_SPRING.response, // slower clock — the fill trails the head
+    dampingFraction: FILL_SPRING.dampingFraction,
 });
 
 // ── The velocity-squish (`useLiquidFlex` "tanh", vol-preserving, LOW cap).
@@ -88,7 +98,10 @@ watch(
 const headStretch = computed(() => flex.stretch.value);
 
 // ── Beat 1 · ANTICIPATION — `useSpringPress` grab-squash on pointerdown.
-const press = useSpringPress({ response: 0.22, dampingFraction: 0.7 });
+const press = useSpringPress({
+    response: PRESS_SPRING.response,
+    dampingFraction: PRESS_SPRING.dampingFraction,
+});
 // 1 at rest → 0.96 floor at full press (the --scale-press anticipation dip).
 const pressScale = computed(() => 1 - 0.04 * press.value.value);
 

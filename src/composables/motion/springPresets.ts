@@ -14,7 +14,16 @@
 // data) — it adds no peer edge wherever it is reached.
 
 /** A glass-ui named-spring preset name. */
-export type SpringPresetName = "smooth" | "snappy" | "bouncy" | "gentle" | "dock" | "press";
+export type SpringPresetName =
+    | "smooth"
+    | "snappy"
+    | "bouncy"
+    | "gentle"
+    | "dock"
+    | "press"
+    | "timeline-head"
+    | "timeline-fill"
+    | "timeline-press";
 
 /** One named-spring row: the analytic (response, dampingFraction) pair + its register doc. */
 export interface SpringPresetRow {
@@ -99,6 +108,24 @@ export const SPRING_PRESETS: readonly SpringPresetRow[] = [
         response: 0.2,
         dampingFraction: 0.8,
         comment: "PRESS register — the iOS interactive tap (useSpringPress + --glass-btn-press-t): a hair of inertial carry (sub-200ms iOS window) + a tiny alive rebound (+1.5%); the interruptible re-seat keeps the gesture continuous. BD.W-ANIM-IOS27-TUNE",
+    },
+    {
+        name: "timeline-head",
+        response: 0.34,
+        dampingFraction: 0.74,
+        comment: "TIMELINE-HEAD register — the ScrubberTimeline warm-glass lozenge travel (LEG-2): the head LAGS the pointer a hair then settles with a whisper of fling-overshoot (+3.2%). The fast head clock the fill trails. BD.W-TIMELINE-RAIL-UNIFY",
+    },
+    {
+        name: "timeline-fill",
+        response: 0.46,
+        dampingFraction: 0.82,
+        comment: "TIMELINE-FILL register — the ScrubberTimeline lane fill (LEG-2): a slower clock than the head so the fill TRAILS the bead (the lane reads as liquid trailing), settling with a hint of carry (+1.1%). BD.W-TIMELINE-RAIL-UNIFY",
+    },
+    {
+        name: "timeline-press",
+        response: 0.22,
+        dampingFraction: 0.7,
+        comment: "TIMELINE-PRESS register — the ScrubberTimeline grab-anticipation (LEG-2): the head's pointerdown squash on the cartoon-punch clock, a crisp short-response press settle (+4.6%) feeding the --scale-press dip. BD.W-TIMELINE-RAIL-UNIFY",
     },
 ] as const;
 
