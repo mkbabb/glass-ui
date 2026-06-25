@@ -33,6 +33,10 @@ scalar + the loud `--ease-cartoon-punch` anticipation→punch `linear()` + the i
 aristotelian √φ proportion, the canonical ios27 demos, and the cross-engine (Chrome + Safari)
 floor. NO legacy, NO backwards-compat shims — a clean union onto the shared registers.
 
+**Peer requirement:** `@mkbabb/keyframes.js` is now `^5.0.0` (adopted the keyframes 5.x major;
+glass-ui's `SpringProgress`/`SmoothProgress`/`Draggable` usage is verified against 5.1.0).
+Consumers on keyframes 4.x must upgrade.
+
 ## 4.1.0
 
 ### The honest paint-verified cut — the BB source-green/visually-broken disease CURED

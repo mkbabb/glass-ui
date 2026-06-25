@@ -67,6 +67,11 @@ import {
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const SCHEME_MOTION = resolve(ROOT, "src/styles/tokens/scheme-motion.css");
+// BD.W-CUT carved scheme-motion's §2 EASING block (the --spring-* curves + the
+// --spring-*-duration clocks) into the adjacent scheme-spring.css partial. U1/U2b/
+// U3 read the SPRING partial concatenated with scheme-motion (no-gray/glass-fx
+// carve precedent); readScheme() returns null only if BOTH are unreadable.
+const SCHEME_SPRING = resolve(ROOT, "src/styles/tokens/scheme-spring.css");
 const SCALE_PAPER = resolve(ROOT, "src/styles/tokens/scale-paper.css");
 const SEGMENTED_TABS = resolve(ROOT, "src/styles/segmented-tabs.css");
 const TABS_CONSTANTS = resolve(ROOT, "src/components/custom/tabs/constants.ts");
@@ -128,6 +133,13 @@ function read(path) {
     } catch {
         return null;
     }
+}
+
+// The spring register is split across scheme-motion.css + scheme-spring.css
+// (BD.W-CUT carve); read both concatenated, returning null only if neither resolves.
+function readScheme() {
+    const parts = [read(SCHEME_MOTION), read(SCHEME_SPRING)].filter((s) => s != null);
+    return parts.length ? parts.join("\n") : null;
 }
 
 function presetByName(presets, name) {
@@ -459,7 +471,7 @@ export function detectAudaciousLabels(segmentedSrc) {
 // ──────────────────────────────────────────────────────────────────────────────
 export function detectAll({ presets, schemeSrc, scaleSrc, segmentedSrc, constantsSrc } = {}) {
     const p = presets ?? PRESETS;
-    const scheme = schemeSrc ?? read(SCHEME_MOTION);
+    const scheme = schemeSrc ?? readScheme();
     const scale = scaleSrc ?? read(SCALE_PAPER);
     const segmented = segmentedSrc ?? read(SEGMENTED_TABS);
     const constants = constantsSrc ?? read(TABS_CONSTANTS);
@@ -486,7 +498,7 @@ export function detectAll({ presets, schemeSrc, scaleSrc, segmentedSrc, constant
 // ── the inline self-test bites (the gate proves its own bite every run) ──────────
 function selfTest() {
     const failures = [];
-    const realScheme = read(SCHEME_MOTION);
+    const realScheme = readScheme();
     const realScale = read(SCALE_PAPER);
     const realSegmented = read(SEGMENTED_TABS);
     const realConstants = read(TABS_CONSTANTS);

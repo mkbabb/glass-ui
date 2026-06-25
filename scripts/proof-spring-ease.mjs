@@ -52,6 +52,11 @@ import {
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const SCHEME_MOTION = resolve(ROOT, "src/styles/tokens/scheme-motion.css");
+// BD.W-CUT carved scheme-motion's §2 EASING block (the `--spring-*` curves + the
+// `--spring-*-duration` clocks) into the adjacent scheme-spring.css partial to
+// hold the 500-line bound. The S3/S4/S5 spring assertions read the SPRING partial
+// where the register now lives (the no-gray/glass-fx carve precedent).
+const SCHEME_SPRING = resolve(ROOT, "src/styles/tokens/scheme-spring.css");
 const PRESETS_TS = resolve(ROOT, "src/composables/motion/springPresets.ts");
 const USE_SPRING_PRESS_TS = resolve(ROOT, "src/composables/motion/useSpringPress.ts");
 const CURVES_TS = resolve(ROOT, "src/composables/motion/curves.ts");
@@ -587,7 +592,8 @@ export function detectUniversalSweep() {
 // ──────────────────────────────────────────────────────────────────────────────
 export function detectAll({ presets, schemeSrc, useSpringPressSrc, regenSrc, curvesSrc } = {}) {
     const p = presets ?? PRESETS;
-    const scheme = schemeSrc ?? read(SCHEME_MOTION);
+    const scheme =
+        schemeSrc ?? [read(SCHEME_MOTION), read(SCHEME_SPRING)].filter(Boolean).join("\n");
     const press = useSpringPressSrc ?? read(USE_SPRING_PRESS_TS);
     const regen = regenSrc ?? read(REGEN_MJS);
     const curves = curvesSrc ?? read(CURVES_TS);

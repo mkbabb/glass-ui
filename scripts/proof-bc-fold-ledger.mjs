@@ -28,7 +28,8 @@
 //   F6   close-union binding — the close runs `--run full` siblings-absent per-round; a
 //        --run local-only close path REDs (the masked-accretion cure).
 //   F7   disposition-register reconcile — the 2 open register destinations carry a real BC
-//        wave; the 28 honest-hold rows carry reStampedAt:"BC" + rationale (in-place, no delete).
+//        wave; every honest-hold book row carries reStampedAt ∈ {BC,BD} + rationale (in-place,
+//        no delete; BD §P10 honestly re-decided 2 BC-era holds in place — see the F7 body).
 //
 // SELF-TEST (born-RED→GREEN): `node scripts/proof-bc-fold-ledger.mjs --self-test` runs 7
 // synthetic-fixture bites — a dropped item (F1 RED), a stale-transcribed band (F1.b RED), a
@@ -267,25 +268,45 @@ function runChecks({ ledger, docIds, register, synthesisText }) {
             fail("F7", `disposition-register row "${rowId}" must carry resolvedBy "${expectedWave}" (the close-gated flip the BB register could not fire); found ${JSON.stringify(row.resolvedBy)}.`);
         }
     }
-    // The 28 honest-hold book rows: reStampedAt:"BC" + a non-empty rationale (the in-place
-    // fold — a HOLD is folded in place, never deleted; L-inv-8). This covers all 28 book
-    // rows INCLUDING the 2 open dests (which are re-pointed AND re-stamped).
-    let restampedBC = 0;
+    // The honest-hold book rows: each re-stamped at the tranche that LAST folded it in
+    // place (BC, or a later tranche that honestly re-decided it) + a non-empty rationale —
+    // the in-place fold, a HOLD is folded in place, never deleted (L-inv-8).
+    //
+    // BD §P10 EVOLUTION (the no-silent-drop floor held isomorphically): the register stayed
+    // 31 rows (zero deletions, verified against v4.1.0). BD honestly re-decided two BC-era
+    // book holds IN PLACE during its own close: `css-at-function` book→RETIRED (the bare-
+    // `@function` grep over-matches CSS-tooling that PARSES the at-rule; the semantic
+    // authoring-DRY trigger is genuinely un-MET, so the disposition is DECIDED retire), and
+    // `speedtest-native-first-receive` stayed book but flipped resolved:true (the deferred
+    // consumer-side RECEIVE LANDED — speedtest imports the shipped instrument-chassis/
+    // metric-cell/metric-stack subpaths). Neither was deleted; both carry a full BD
+    // rationale. So a book row's honest re-stamp is BC OR BD (the LAST tranche that folded
+    // it in place), and the expected book-row count is DERIVED from the present register
+    // population (book minus the rows a later tranche legitimately retired/superseded in
+    // place), NOT a frozen BC-snapshot number. The COMPLETENESS floor is the 31-row no-
+    // delete invariant above, not a hardcoded book count.
+    const HONEST_RESTAMP = new Set(["BC", "BD"]);
+    let restampedHeld = 0;
     for (const row of regItems) {
         if (row.disposition !== "book") continue;
-        if (row.reStampedAt !== "BC") {
-            fail("F7", `disposition-register book row "${row.id}" must be re-stamped reStampedAt:"BC" (an honest hold is folded in-place, never deleted — L-inv-8); found ${JSON.stringify(row.reStampedAt)}.`);
+        if (!HONEST_RESTAMP.has(row.reStampedAt)) {
+            fail("F7", `disposition-register book row "${row.id}" must be re-stamped reStampedAt ∈ {BC,BD} (an honest hold is folded in-place at the tranche that last decided it, never deleted — L-inv-8); found ${JSON.stringify(row.reStampedAt)}.`);
         } else if (!row.reStampNote || !String(row.reStampNote).trim()) {
-            fail("F7", `disposition-register book row "${row.id}" is reStampedAt:"BC" but carries no rationale (reStampNote).`);
+            fail("F7", `disposition-register book row "${row.id}" is reStampedAt:${JSON.stringify(row.reStampedAt)} but carries no rationale (reStampNote).`);
         } else {
-            restampedBC++;
+            restampedHeld++;
         }
     }
-    if (restampedBC !== 28) {
-        fail("F7", `expected 28 honest-hold book rows re-stamped reStampedAt:"BC" in-place, found ${restampedBC} (L-inv-8 no-delete — every booked row is folded in place).`);
+    // The no-delete floor: every present book row is honestly re-stamped + rationaled (so
+    // restampedHeld === the present book count). The register's 31-row totality (asserted
+    // against v4.1.0 — zero deletions) is the no-silent-drop guarantee; a book row that
+    // dropped its stamp/rationale is the only F7-RED here.
+    const bookCount = regItems.filter((r) => r.disposition === "book").length;
+    if (restampedHeld !== bookCount) {
+        fail("F7", `${bookCount - restampedHeld} of ${bookCount} book rows are not honestly re-stamped (reStampedAt ∈ {BC,BD} + rationale) — L-inv-8 no-delete requires every booked row folded in place.`);
     }
 
-    return { failures, count, restampedBC, reqCount: reqs.length };
+    return { failures, count, restampedHeld, reqCount: reqs.length };
 }
 
 // ── self-test ────────────────────────────────────────────────────────────────────
@@ -411,11 +432,11 @@ if (process.argv.includes("--self-test")) {
     selfTest();
 } else {
     const real = loadReal();
-    const { failures, count, restampedBC, reqCount } = runChecks(real);
+    const { failures, count, restampedHeld, reqCount } = runChecks(real);
     console.log("proof:bc-fold-ledger — the no-silent-drop floor (BC.W-FOLD-LEDGER)");
     console.log(`  ledger rows            : ${count} (expected ${EXPECTED_COUNT})`);
     console.log(`  PM-SYNTHESIS reqs      : ${reqCount} (expected 10)`);
-    console.log(`  register holds re-stamped BC : ${restampedBC}`);
+    console.log(`  register holds re-stamped (BC|BD) : ${restampedHeld}`);
     console.log(`  failures               : ${failures.length}`);
     for (const f of failures) console.error(`  [${f.clause}] ${f.msg}`);
     if (failures.length > 0) {

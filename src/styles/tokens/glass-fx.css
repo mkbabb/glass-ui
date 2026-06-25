@@ -105,9 +105,8 @@
        under-shadow grounds the opposite edges (bottom + left). A consumer re-points
        `--glass-key-lit-x`/`--glass-key-lit-y` to move the key (e.g. upper-LEFT →
        `1px`/`1px`) and the rim re-reads off it with ZERO new layer, ZERO new conic,
-       ZERO new DOM node. `--glass-key` is the semantic handle (the documented
-       keystone; its sign tokens are the wired form). */
-    --glass-key: upper-right;
+       ZERO new DOM node. The key's SIGN tokens below are the wired form (the
+       upper-right keystone). */
     --glass-key-lit-x: -1px; /* the lit catch sits on the RIGHT edge (key-facing) */
     --glass-key-lit-y: 1px; /* …and the TOP edge — the upper-right key */
     --glass-key-shade-x: 1px; /* the under-shadow grounds the LEFT edge */

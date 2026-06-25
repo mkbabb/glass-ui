@@ -79,7 +79,13 @@ const OPACITY_RUNGS = ["wash", "quiet", "resting", "floating", "overlay"];
 const UNCONDITIONAL_WHERE_RULES = [
     { file: "src/styles/glass/ladder.css", surface: ".glass-card,.glass-resting,.glass-quiet,.glass-wash content tiers" },
     { file: "src/styles/glass/ladder.css", surface: ".glass-floating,.glass-overlay overlay band" },
-    { file: "src/styles/dock/morph.css", surface: ".glass-dock" },
+    // BD P10b — the `.glass-dock` unconditional :where() self-engage (the calm-default
+    // floor re-point) was CARVED out of dock/morph.css into dock/adaptive-legibility.css
+    // to hold both partials under the 500-line no-god-module bound. The carve is isomorphic
+    // (same `@layer components`, source order preserved → ZERO visual delta). The witness
+    // follows the carve by reading BOTH dock partials (the no-gray precedent at
+    // proof-no-gray.mjs:652 concats the same two partials). The invariant is UNCHANGED.
+    { file: "src/styles/dock/morph.css", extraFiles: ["src/styles/dock/adaptive-legibility.css"], surface: ".glass-dock" },
 ];
 // The BIDIRECTIONAL identity band (the calm-light anti-grey ceiling; the same band the
 // live π arm reads — paintBand over the surface's OWN composited bg).
@@ -200,7 +206,11 @@ function whereBlocksOf(src) {
 export function detectUnconditionalFloor(sources) {
     const violations = [];
     const facts = { rules: [] };
-    const files = sources ?? UNCONDITIONAL_WHERE_RULES.map((r) => ({ ...r, src: stripCss(readFile(r.file)) }));
+    const files = sources ?? UNCONDITIONAL_WHERE_RULES.map((r) => ({
+        ...r,
+        // the carved dock self-engage spans two partials (P10b isomorphic carve); concat them.
+        src: stripCss([r.file, ...(r.extraFiles ?? [])].map((f) => readFile(f)).join("\n")),
+    }));
 
     for (const { file, surface, src } of files) {
         // the GLASS `:where()` rules that re-point --glass-tint-strength (the tint floor

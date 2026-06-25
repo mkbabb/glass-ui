@@ -32,15 +32,18 @@ import { fileURLToPath } from "node:url";
 import semver from "semver";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
-// The audited npm-latest at BB (2026-06-16) — the offline fallback.
+// The audited npm-latest at BD (2026-06-25) — the offline fallback. keyframes
+// advanced to its 5.x major (the `KeyframesScrollTimeline` rename + value.js 1.x
+// dep); glass-ui adopted it (peer `^5.0.0`). The pins track that reality so the
+// network-less CI arm enforces the live range, never false-GREENs.
 const PINNED_LATEST = {
-    "@mkbabb/keyframes.js": "4.3.0",
-    "@mkbabb/value.js": "0.13.0",
+    "@mkbabb/keyframes.js": "5.1.0",
+    "@mkbabb/value.js": "1.2.0",
 };
 
-// keyframes 4's value.js dep — the singleton-identity partner. Read live off the
+// keyframes 5's value.js dep — the singleton-identity partner. Read live off the
 // installed keyframes package below; this is the offline/absent fallback only.
-const PINNED_KEYFRAMES_VALUE_DEP = "^0.13.0";
+const PINNED_KEYFRAMES_VALUE_DEP = "^1.2.0";
 
 function registryLatest(pkg) {
     try {

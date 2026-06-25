@@ -142,12 +142,12 @@ const RATCHET_BASELINES = {
     "components/custom/dock/composables/useDockFission.ts": 604,
     "components/ui/carousel/CarouselContent.vue": 577,
     "styles/tokens/property-regs.css": 566,
-    // BD.W-CUT (P10b reconcile) — +22 lines: the --pager-worm-flow goo-morph dwell
-    // curve relocated HERE from PagerDots.vue (the curve-definition home — a `linear()`
-    // ships in the §2 EASING register, never serialized inline in an SFC; the
-    // proof:animation-coherence inline-literal fix). The matching PagerDots row DRAINS
-    // by the same count (527 → 509) — the move is line-conservative across the pair.
-    "styles/tokens/scheme-motion.css": 579,
+    // BD.W-CUT (no-god-module carve) — scheme-motion.css DRAINED (585 → 359): its
+    // §2 EASING block (spring linear() curves + per-spring duration clocks + the
+    // goo-morph dwell-flow curves incl. --pager-worm-flow + bezier cores/aliases)
+    // carved WHOLE into the adjacent scheme-spring.css (239), @import-ed
+    // IMMEDIATELY AFTER scheme-motion.css at the same cascade slot. The row is
+    // DELETED in this same diff (the monotonic drain — the file is now ≤ 500).
     "styles/dock/fission-bridge.css": 552,
     "components/custom/dock/composables/useDockContextSilhouette.ts": 551,
     "composables/glass/useGlassBackdropLuminance.ts": 542,

@@ -29,6 +29,13 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 const root = resolve(fileURLToPath(new URL("../", import.meta.url)));
 
 const SCHEME_MOTION = resolve(root, "src/styles/tokens/scheme-motion.css");
+// BD.W-CUT carved scheme-motion's §2 EASING block (every `--spring-*` curve +
+// duration clock) into the adjacent scheme-spring.css partial to hold the 500-
+// line bound. The spring-register CSS assertions below read the SPRING partial
+// where the tokens genuinely live now (the no-gray/glass-fx carve precedent);
+// the negative `--spring-crisp` assertion holds over either since the token is
+// absent from both.
+const SCHEME_SPRING = resolve(root, "src/styles/tokens/scheme-spring.css");
 const SPRING_PRESETS_TS = resolve(root, "src/composables/motion/springPresets.ts");
 const DELTA = resolve(root, "docs/tranches/BB/audit/visual/W-SPRING-CRISP-DELTA.md");
 
@@ -59,7 +66,11 @@ function read(path) {
 
 export function runChecks({ schemeMotion, presetsTs, delta } = {}) {
     const local = arguments.length === 0;
-    const schemeSrc = schemeMotion ?? read(SCHEME_MOTION);
+    // Read BOTH partials concatenated: scheme-motion (color-scheme/font/weight/
+    // ease-cartoon) + scheme-spring (the carved §2 EASING spring register). The
+    // `--spring-*` curve/clock assertions live in the spring partial post-carve.
+    const schemeSrc =
+        schemeMotion ?? [read(SCHEME_MOTION), read(SCHEME_SPRING)].filter(Boolean).join("\n");
     const presetsSrc = presetsTs ?? read(SPRING_PRESETS_TS);
     const deltaSrc = delta ?? read(DELTA);
     const fails = [];

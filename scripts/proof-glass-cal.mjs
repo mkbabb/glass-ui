@@ -355,7 +355,15 @@ export function detectSpringClock() {
     const facts = { durations: {}, swept: {} };
 
     // ── S1 — the per-spring --spring-<name>-duration vocabulary is minted.
-    const schemeMotion = stripCss(readFile("src/styles/tokens/scheme-motion.css"));
+    // BD.W-CUT carved scheme-motion's §2 EASING block (the spring curves + per-
+    // spring duration clocks) into the adjacent scheme-spring.css partial to hold
+    // the 500-line bound. Read BOTH partials concatenated so the minted clocks are
+    // in scope (the no-gray/glass-fx carve precedent).
+    const schemeMotion = stripCss(
+        readFile("src/styles/tokens/scheme-motion.css") +
+            "\n" +
+            readFile("src/styles/tokens/scheme-spring.css"),
+    );
     for (const name of SPRING_NAMES) {
         const m = schemeMotion.match(new RegExp(`--spring-${name}-duration:\\s*([\\d.]+)s`));
         facts.durations[name] = m ? Number(m[1]) : null;

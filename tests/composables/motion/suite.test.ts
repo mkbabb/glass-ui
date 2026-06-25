@@ -1,26 +1,33 @@
 // AY.W-MOTION2 — the keyframes.js STATIC suite re-export through /motion.
 //
-// VERIFIES the distribution-seam contract:
-//   · the 24 STATIC runtime exports + loadAnimationEngine are reachable from the
+// VERIFIES the distribution-seam contract (enumerated against keyframes.js 5.x):
+//   · the STATIC runtime exports + loadAnimationEngine are reachable from the
 //     /motion barrel (verbatim, no wrapper/rename);
 //   · the DYNAMIC engine surface is NOT statically present on /motion (the
 //     loadAnimationEngine boundary is preserved) but IS reachable through the loader.
+//
+// 5.x deltas (the keyframes major adopt): `ScrollTimeline`→`KeyframesScrollTimeline`
+// + `Animation`→`KeyframesAnimation` (the PKG-3 ambient-collision renames); the
+// top-level `animate()` helper removed; the static surface gained `Oscillator`,
+// `drag2D`, `reseatToSpring`, `probeVelocity`, `reducedMotionScale`, `waveformValue`,
+// `warmEngine`. Mirrors scripts/proof-motion-suite.mjs.
 
 import { describe, expect, it } from "vitest";
 import * as motion from "../../../src/composables/motion";
 
 const STATIC_RUNTIME = [
-    "NumericAnimation", "SpringProgress", "SmoothProgress",
-    "Sequence", "Timeline", "ManualTimeline", "RAFPlayback", "ScrollTimeline",
+    "NumericAnimation", "SpringProgress", "SmoothProgress", "Oscillator",
+    "Sequence", "Timeline", "ManualTimeline", "RAFPlayback", "KeyframesScrollTimeline",
     "createNativeTimeline", "flip", "flipShared", "ElementMorph",
-    "drag", "Draggable", "decay", "decayRest", "stagger",
+    "drag", "drag2D", "Draggable", "decay", "decayRest", "reseatToSpring",
+    "probeVelocity", "reducedMotionScale", "waveformValue", "warmEngine", "stagger",
     "springTimingFunction", "springLinearStops", "toEasing", "resolveEasing",
     "AnimationOptionError", "UnknownEasingError", "loadAnimationEngine",
 ];
 
 const DYNAMIC_ENGINE = [
-    "Animation", "CSSKeyframesAnimation", "AnimationGroup", "getAnimationId",
-    "getTimingFunction", "resolveKeyframes", "animate", "MotionPath",
+    "KeyframesAnimation", "CSSKeyframesAnimation", "AnimationGroup", "getAnimationId",
+    "getTimingFunction", "resolveKeyframes", "MotionPath",
     "fromMotionPath", "DrawSVG", "fromDrawSVG", "presets",
     "DIRECTIONS", "FILL_MODES", "defaultOptions", "defaultLayerConfig",
 ];

@@ -362,8 +362,8 @@ All runtime deps are peer:
 | `embla-carousel-vue` ^8.0 | Carousel substrate |
 | `@lucide/vue` ^1.16.0 | Icon set (the renamed v1 package; was `lucide-vue-next` ^0.x pre-v1.0) |
 | `tw-animate-css` ^1.2.5 | `animate-in`/`animate-out` data-state utilities (optionalPeer) |
-| `@mkbabb/keyframes.js` ^4.0.0 | Spring/keyframe runtime (BB.W-SPINE-LATEST: the `^2\|\|^3\|\|^4` union collapsed to clean `^4` — the coherent-latest spine) |
-| `@mkbabb/value.js` ^0.13.0 \|\| ^1.0.0 | Color/value normalization (keyframes peer transitive). The `^1.0.0` leg is glass-ui's pre-guard for value.js's DECIDED 1.0.0 stabilization cut (the pre-1.0 lockstep regime dissolves at the cut); the broken-singleton is an enforced IDENTITY against keyframes' value dep (`proof:peer-conformance` / `proof:constellation-spine` clause 1) |
+| `@mkbabb/keyframes.js` ^5.0.0 | Spring/keyframe runtime (BD: the keyframes 5.x major adopt — a clean break to `^5`, no `\|\|^4` straddle; the `KeyframesScrollTimeline`/`KeyframesAnimation` ambient-collision renames + the value.js 1.x spine) |
+| `@mkbabb/value.js` ^1.0.0 | Color/value normalization (keyframes peer transitive — keyframes 5.x deps value `^1.2.0`). value.js's DECIDED 1.0.0 stabilization cut has landed (the pre-1.0 lockstep regime is dissolved; the `^0.13.0` leg retired, no legacy straddle); the broken-singleton is an enforced IDENTITY against keyframes' value dep (`proof:peer-conformance` clause 1) |
 
 ## Path aliases (tsconfig)
 

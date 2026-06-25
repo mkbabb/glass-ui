@@ -51,19 +51,15 @@
 /* ─────────────────────────────────────────────────────────────────────────────
  * BD.W-SCROLL-LIQUID-ENGINE — the liquid-weight scroll tokens.
  *
- * The `--scroll-scrub` family is the ONE liquid-weight knob the JS spine
- * (`useScrollScene`/`useScrollPin`) reads; the `--ease-scroll-spring` is the
- * compositor spring-scrub the cascade rides (ZERO JS). The pin-phase fractions are
- * the calc-friendly window bounds the `--pin-t` recipes read (a NUMBER, not the
- * `%` the dead `animation-range` used). All golden-proportioned (1/φ family). The
- * cartoon-punch deps (`--motion-weight`/`--ease-cartoon-punch`/`--shadow-cartoon-md`)
- * SHIP today and are consumed via `var(…, fallback)` so the recipes stay GREEN. */
+ * The `--ease-scroll-spring` is the compositor spring-scrub the cascade rides
+ * (ZERO JS). The pin-phase fractions are the calc-friendly window bounds the
+ * `--pin-t` recipes read (a NUMBER, not the `%` the dead `animation-range` used).
+ * All golden-proportioned (1/φ family). The liquid-weight scrub itself is a JS-side
+ * param of `useScrollScene`/`useScrollPin` (the φ-derived defaults live in the
+ * composables, PRM → 0 inside them). The cartoon-punch deps
+ * (`--motion-weight`/`--ease-cartoon-punch`/`--shadow-cartoon-md`) SHIP today and are
+ * consumed via `var(…, fallback)` so the recipes stay GREEN. */
 :root {
-    /* The scroll liquid-weight rest — 1/φ. The felt-axis scrub the JS spine damps
-       toward; PRM → 0 (a 1:1 snap, inside the composable). */
-    --scroll-scrub: 0.618;
-    /* The pin drifts HEAVIER — 1/φ² (a scene, not a control). */
-    --scroll-scrub-pin: 0.382;
     /* The spring-shaped compositor cascade ease — the `--spring-gentle` twin
        (ζ ≈ 0.85, a `springLinearStops` `linear()` stop-set). Degrades to the
        no-overshoot `--ease-out` where `linear()` is unsupported (Safari < 17.2 —
@@ -271,7 +267,7 @@
  *
  * Liquid weight is the DEFAULT here (the §L4 no-stiff-snap law): `useScrollPin`'s
  * `SpringProgress` keeps converging AFTER the finger lifts. PRM zeroes the scrub
- * (`--scroll-scrub-pin → 0` under reduce inside the composable) so `--pin-t` tracks
+ * (the pin scrub → 0 under reduce inside the composable) so `--pin-t` tracks
  * scroll 1:1 with no interpolated drift — the vestibular floor.
  * ─────────────────────────────────────────────────────────────────────────── */
 

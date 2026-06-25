@@ -115,16 +115,17 @@ const RUNTIME_PROPS = new Set([
     "--overlay-pad-inline",
     "--overlay-pad-block",
     // BB.W-BUTTON-GLASS — the lit glass-button fill re-points off the RAW
-    // `--glass-bg-{resting,floating}` rung tokens onto an ELEMENT-LEVEL oklab-tinted
-    // pair minted on `.btn-glass` (glass/surfaces.css): `color-mix(in oklab, <rung>,
-    // var(--glass-tint-source) var(--glass-tint-strength))`. They are DELIBERATELY
-    // element-scoped, NOT :root base props — a :root emit would bake them at the
+    // `--glass-bg-floating` rung token onto an ELEMENT-LEVEL oklab-tinted wrapper
+    // minted on `.btn-glass` (glass/surfaces.css): `color-mix(in oklab, <rung>,
+    // var(--glass-tint-source) var(--glass-tint-strength))`. It is DELIBERATELY
+    // element-scoped, NOT a :root base prop — a :root emit would bake it at the
     // root 0%-strength and the W55 bright-bucket darken / contrast-color() flip would
     // never reach the lit fill (the substitution-vs-inheritance trap W-BUTTON-GLASS
-    // closes). The button CVA's `bg-(--glass-bg-resting-tinted)` utility (self-emitted
-    // into components.css by W-EMISSION) resolves them at runtime off the `.btn-glass`
-    // host — the same component-scoped runtime-prop pattern as --dock-pos / --card-pad-*.
-    "--glass-bg-resting-tinted",
+    // closes). The tab pill + the floating button rung resolve `--glass-bg-floating-tinted`
+    // at runtime off their host — the same component-scoped runtime-prop pattern as
+    // --dock-pos / --card-pad-*. (BD: the button's resting fill now rides the
+    // `quiet`-tinted rung via `[--glass-capsule-fill:var(--glass-bg-quiet-tinted)]`,
+    // retiring the former `--glass-bg-resting-tinted` wrapper.)
     "--glass-bg-floating-tinted",
     // BB.W-EASING-PRIMITIVE — EasingPicker localizes the curve-stroke color onto an
     // ELEMENT-LEVEL `--easing-curve-accent` (declared inline on the SVG root as

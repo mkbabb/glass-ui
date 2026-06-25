@@ -649,10 +649,17 @@ add(
     `the light --glass-tint-ink-dock is a warm-chromatic oklch(from --foreground …) source with chroma ${dockInkChroma} (≥ 0.030 — well above --foreground's ~0.0062; the darken RAISES chroma toward warm material, never the flat near-black gray ink)`,
 );
 // 2. The dock self-engage reads --glass-tint-ink-dock, NOT the frozen global --glass-tint-ink.
-const morphCss = read("src/styles/dock/morph.css");
+// BD P10b — the `:where(.glass-dock)` adaptive self-engage was CARVED out of dock/morph.css
+// into dock/adaptive-legibility.css to hold both partials under the 500-line no-god-module
+// bound (the carve is isomorphic — same `@layer components`, source order preserved via
+// dock.css's adjacent @imports → ZERO visual delta). The witness follows the carve, exactly
+// as the glassTokens read above follows the BB.W-CARVE4 glass.css→glass-fx.css carve. The
+// invariant is UNCHANGED: the rule must genuinely re-point --glass-tint-source to the dock ink.
+const dockMorphCss =
+    read("src/styles/dock/morph.css") + "\n" + read("src/styles/dock/adaptive-legibility.css");
 const selfEngageReadsDockInk =
     /:where\(\.glass-dock\)\s*\{[\s\S]{0,600}?--glass-tint-source:\s*var\(--glass-tint-ink-dock\)/.test(
-        morphCss,
+        dockMorphCss,
     );
 add(
     "dock-self-engage-reads-dock-ink",

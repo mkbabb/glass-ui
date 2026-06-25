@@ -52,7 +52,7 @@ export interface UseScrollPinOptions {
     source?: MaybeRefOrGetter<ScrollSource>;
     /**
      * The pin scrub ∈ [0, 1] — the pin drifts HEAVIER than a control (a scene, not a knob).
-     * Read from `--scroll-scrub-pin` (1/φ² ≈ 0.382). Default 0.382. PRM → 0.
+     * Defaults to 1/φ² ≈ 0.382 (the golden heavier-drift rest). PRM → 0.
      */
     scrub?: number;
     /** The spring damping ratio ζ for the felt reveal. < 1 overshoots. Default 0.85. */

@@ -753,9 +753,16 @@ if (preceptsSubmodulePresent) {
 // ── BB.W-MOTION-CANON MC2 — the §6 easing table carries the SIZE/MORPH row + the
 //    spatial/effects label (source-asserted on scheme-motion.css). ──
 const schemeMotionFile = resolve(ROOT, "src/styles/tokens/scheme-motion.css");
+// BD.W-CUT carved scheme-motion's §2 EASING block — which carries the §6 easing-
+// table prose (the Size/morph row + the [SPATIAL]/[EFFECTS] labels) — into the
+// adjacent scheme-spring.css partial. Read BOTH so the table is in scope.
+const schemeSpringFile = resolve(ROOT, "src/styles/tokens/scheme-spring.css");
 let tableFacts = { exists: false, hasSizeMorph: false, hasSpatialEffectsLabel: false };
 if (existsSync(schemeMotionFile)) {
-    const sm = readFileSync(schemeMotionFile, "utf8");
+    const sm =
+        readFileSync(schemeMotionFile, "utf8") +
+        "\n" +
+        (existsSync(schemeSpringFile) ? readFileSync(schemeSpringFile, "utf8") : "");
     tableFacts.exists = true;
     tableFacts.hasSizeMorph = /Size\s*\/\s*morph/i.test(sm);
     tableFacts.hasSpatialEffectsLabel = /\[SPATIAL\]/.test(sm) && /\[EFFECTS\]/.test(sm);

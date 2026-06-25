@@ -43,6 +43,11 @@ const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const CURVES_TS = resolve(ROOT, "src/composables/motion/curves.ts");
 const SPRING_PRESETS_TS = resolve(ROOT, "src/composables/motion/springPresets.ts");
 const SCHEME_MOTION = resolve(ROOT, "src/styles/tokens/scheme-motion.css");
+// BD.W-CUT carved scheme-motion's §2 EASING block — incl. the `--ease-convergence`
+// alias + every `--ease-*`/`--spring-*` curve — into the adjacent scheme-spring.css
+// partial. The MP1 convergence-mint assertion reads the SPRING partial concatenated
+// with scheme-motion (the no-gray/glass-fx carve precedent).
+const SCHEME_SPRING = resolve(ROOT, "src/styles/tokens/scheme-spring.css");
 const SCROLL_DRIVEN = resolve(ROOT, "src/styles/scroll-driven.css");
 const USE_STAGGER_REVEAL = resolve(ROOT, "src/composables/motion/useStaggerReveal.ts");
 
@@ -321,7 +326,8 @@ const CONSUMER_RECORD = {
 export function detectAll({ curvesSrc, presetsSrc, schemeSrc, scrollSrc, staggerSrc } = {}) {
     const curves = curvesSrc ?? read(CURVES_TS);
     const presets = presetsSrc ?? read(SPRING_PRESETS_TS);
-    const scheme = schemeSrc ?? read(SCHEME_MOTION);
+    const scheme =
+        schemeSrc ?? [read(SCHEME_MOTION), read(SCHEME_SPRING)].filter(Boolean).join("\n");
     const scroll = scrollSrc ?? read(SCROLL_DRIVEN);
     const stagger = staggerSrc ?? read(USE_STAGGER_REVEAL);
 

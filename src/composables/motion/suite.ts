@@ -6,35 +6,36 @@
 // instead of adding a direct `@mkbabb/keyframes.js` dependency + a second vocabulary.
 //
 // STATIC / DYNAMIC split (load-bearing — keyframes.js `src/animation/index.ts`):
-// this barrel re-exports ONLY the 4.1.0 STATIC surface — the 24 static runtime
-// exports + the erased types + `loadAnimationEngine` ITSELF. It does NOT statically
-// re-export the 16-member heavy `AnimationEngine` surface (`Animation`,
-// `CSSKeyframesAnimation`, `AnimationGroup`, `animate`, `presets`, `MotionPath`,
-// `DrawSVG`, …) that 4.x deliberately gates behind `loadAnimationEngine()` (the
+// this barrel re-exports ONLY the 5.x STATIC surface — the static runtime exports
+// + the erased types + `loadAnimationEngine` ITSELF. It does NOT statically
+// re-export the heavy `AnimationEngine` surface (`KeyframesAnimation`,
+// `CSSKeyframesAnimation`, `AnimationGroup`, `presets`, `MotionPath`,
+// `DrawSVG`, …) that 5.x deliberately gates behind `loadAnimationEngine()` (the
 // package's value.js isolation boundary). Statically flattening those would drag
 // the heavy engine graph onto `/motion`'s eager chunk. Consumers reach the engine
 // the same way keyframes.js consumers do:
 //
 //   const engine = await loadAnimationEngine();  // re-exported below
-//   engine.animate(el, { ... });
+//   new engine.KeyframesAnimation({ ... });
 //
 // The two-tier parity manifest (`scripts/proof-motion-suite.mjs` / gate
 // `proof:motion-suite`) asserts: STATIC rows PRESENT in this dts; DYNAMIC rows
 // REACHABLE THROUGH the loader and NOT present statically (a static DYNAMIC row is
 // itself a RED — the isolation boundary must not flatten).
 
-// ── STATIC runtime exports (24 — the 4.1.0 light barrel) ──────────────────────
+// ── STATIC runtime exports (31 — the 5.x light barrel) ────────────────────────
 export {
     // Steppers / progress engines
     NumericAnimation,
     SpringProgress,
     SmoothProgress,
+    Oscillator,
     // Sequencing + orchestration
     Sequence,
     Timeline,
     ManualTimeline,
     RAFPlayback,
-    ScrollTimeline,
+    KeyframesScrollTimeline,
     createNativeTimeline,
     // Layout FLIP + shared-element
     flip,
@@ -42,10 +43,16 @@ export {
     ElementMorph,
     // Gesture
     drag,
+    drag2D,
     Draggable,
     // Momentum / inertia
     decay,
     decayRest,
+    reseatToSpring,
+    probeVelocity,
+    reducedMotionScale,
+    waveformValue,
+    warmEngine,
     // Stagger
     stagger,
     // Spring solver pair (the CSS↔JS curve bridge — MOTION_CURVES references these)
@@ -104,7 +111,6 @@ export type {
     AnimationEngine,
     AnimationOptions,
     AnimationFrame,
-    AnimateOptions,
     InputAnimationOptions,
     ResolvedKeyframes,
     Vars,

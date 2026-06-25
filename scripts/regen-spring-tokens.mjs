@@ -27,9 +27,12 @@ import { SPRING_PRESETS } from "../src/composables/motion/springPresets.ts";
 
 const root = resolve(fileURLToPath(new URL("../", import.meta.url)));
 // AY.W-CSS1 — tokens.css was carved into thin @import root + tokens/* partials;
-// the §2 EASING `--spring-*` regen block now lives in tokens/scheme-motion.css.
-// Both the regen WRITE and the sync gate READ target the partial.
-export const tokensPath = resolve(root, "src/styles/tokens/scheme-motion.css");
+// BD.W-CUT then carved scheme-motion.css's §2 EASING block (the spring linear()
+// curves + per-spring duration clocks + goo-flow curves + bezier cores/aliases)
+// into the adjacent tokens/scheme-spring.css partial to hold the 500-line bound.
+// The §2 EASING marker block + every `--spring-*` line moved there verbatim, so
+// the regen WRITE and the sync gate READ both now target scheme-spring.css.
+export const tokensPath = resolve(root, "src/styles/tokens/scheme-spring.css");
 
 /** The shared (response, ζ) table — re-exported so the sync gate keeps its import. */
 export const PRESETS = SPRING_PRESETS;

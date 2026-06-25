@@ -21,10 +21,17 @@
  * (registrations + the specular magnitude cohort that reads them).
  */
 
-/* CSS @import rules must precede every other rule. The ten partials @import in
+/* CSS @import rules must precede every other rule. The partials @import in
    cascade order (offsets-sizing.css was carved into offsets.css + sizing.css at
-   BB.W-CARVE3 — adjacent same-selector :root blocks at the same cascade slot): */
+   BB.W-CARVE3, and scheme-motion's §2 EASING block into scheme-spring.css at
+   BD.W-CUT — adjacent same-selector :root blocks at the same cascade slot): */
 @import "./tokens/scheme-motion.css";
+/* BD.W-CUT (no-god-module carve) — scheme-motion's §2 EASING block (spring
+   linear() curves + per-spring duration clocks + goo-flow curves + bezier
+   cores/aliases) carved into scheme-spring.css to hold the 500-line bound,
+   @import-ed IMMEDIATELY AFTER scheme-motion.css (adjacent same-selector :root
+   blocks at the same cascade slot — the spring/easing tokens resolve in order). */
+@import "./tokens/scheme-spring.css";
 @import "./tokens/color-radius.css";
 @import "./tokens/shadow.css";
 @import "./tokens/glass.css";

@@ -41,13 +41,13 @@
     --scroll-cascade-range-end: 45%;
     --scroll-cascade-column-stagger: 60ms;
     /* .scroll-pin — the fixed-stage-advances-time scroll-pinned register. The stage
-       height is the Nvh temporal space the sticky stage advances its phases across;
-       the phase windows are the scroll-progress fractions the stage's internal
-       phases key off (grid-reveal 0..45%, expand 45..90%, settle 90..100% — the
-       Codrops phased-sequence shape). */
+       height is the Nvh temporal space the sticky stage advances its phases across.
+       The phase windows the stage's internal phases key off (grid-reveal 0..reveal-end,
+       expand reveal-end..expand-end, settle expand-end..100% — the Codrops phased-
+       sequence shape) live in scroll-choreography.css as the `-frac` numerators
+       (`--scroll-pin-phase-reveal-end-frac` 0.382 / `--scroll-pin-phase-expand-end-frac`
+       0.9), the form the calc()s consume. */
     --scroll-pin-stage-height: 320vh;
-    --scroll-pin-phase-reveal-end: 45%;
-    --scroll-pin-phase-expand-end: 90%;
     --scroll-pin-lift: 2.5rem;
 
     /* TOP-LAYER (animations.css §TOP-LAYER). The `@starting-style` entry/exit

@@ -106,7 +106,8 @@
     .glass-dock:not(.vertical) {
         /* AY.W-A11Y-PERF O-1 / AZ.W-ADAPTIVE-AUTO Arm 1 — BOTH morph endpoints compose
            the W55 oklab adaptive tint so the self-engage darken (the unconditional
-           `:where(.glass-dock)` rule below re-points the element-level
+           `:where(.glass-dock)` rule in the sibling adaptive-legibility.css partial
+           re-points the element-level
            `--glass-tint-source`/`--glass-tint-strength`) reaches the LIVE
            horizontal dock surface in BOTH the expanded AND the COLLAPSED look (this
            0,3,0 morph interp OVERRIDES the 0,1,0 shell.css bg, so the tint must be

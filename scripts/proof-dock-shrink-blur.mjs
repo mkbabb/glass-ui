@@ -48,6 +48,8 @@ const readRel = (rel) => {
 };
 
 const MORPH_CSS = "src/styles/dock/morph.css";
+// BD P10b — the PRM reveal-blur carve moved into this sibling partial (isomorphic carve).
+const ADAPTIVE_CSS = "src/styles/dock/adaptive-legibility.css";
 const GLASS_TOKENS = "src/styles/tokens/glass.css";
 
 // Parse top-level rule blocks: { selector, body, line }.
@@ -167,10 +169,16 @@ function detectS3SelfTest() {
 }
 
 // ── S4 — the PRM carve preserved (the self-blur zeroed under reduce) ──
+// BD P10b — the @media (prefers-reduced-motion) reveal-blur-zero block was CARVED out of
+// dock/morph.css into dock/adaptive-legibility.css to hold both partials under the 500-line
+// no-god-module bound. The carve is isomorphic (the PRM block moved verbatim; ZERO visual
+// delta). The witness follows the carve by reading BOTH dock partials (the no-gray precedent
+// at proof-no-gray.mjs:652 concats the same two partials). S1/S2/S3 still read morph.css —
+// the resting-zero + morph-gated bloom + backdrop blur stayed there.
 export function detectS4() {
     const violations = [];
     const facts = {};
-    const src = stripCss(readRel(MORPH_CSS));
+    const src = stripCss(readRel(MORPH_CSS) + "\n" + readRel(ADAPTIVE_CSS));
     const prmBlock = /@media[^{]*prefers-reduced-motion:\s*reduce[^{]*\{([\s\S]*?\}\s*)\}/.exec(src);
     facts.prmBlockPresent = Boolean(prmBlock);
     facts.prmZeroesSelfBlur =

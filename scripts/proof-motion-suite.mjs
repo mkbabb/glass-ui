@@ -49,21 +49,30 @@ const CURVES_TS = resolve(ROOT, "src/composables/motion/curves.ts");
 const TOKENS_CSS = resolve(ROOT, "src/styles/tokens.css");
 const THEME_CSS = resolve(ROOT, "src/styles/theme.css");
 
-// ── The two-tier surface, enumerated against the pinned 4.1.0 barrel ──────────
-// STATIC runtime exports (24 — the 4.1.0 light barrel) + loadAnimationEngine.
+// ── The two-tier surface, enumerated against the pinned 5.x barrel ────────────
+// STATIC runtime exports (31 — the 5.x light barrel) + loadAnimationEngine.
+// 5.x deltas vs the 4.x manifest (the keyframes major bump, audit BD): the
+// `ScrollTimeline` class was renamed `KeyframesScrollTimeline` (PKG-3, to dodge
+// the ambient `globalThis.ScrollTimeline` collision in the rolled-up d.ts); the
+// static surface gained `Oscillator`, `drag2D`, `reseatToSpring`, `probeVelocity`,
+// `reducedMotionScale`, `waveformValue`, `warmEngine`.
 const STATIC_RUNTIME = [
-    "NumericAnimation", "SpringProgress", "SmoothProgress",
-    "Sequence", "Timeline", "ManualTimeline", "RAFPlayback", "ScrollTimeline",
+    "NumericAnimation", "SpringProgress", "SmoothProgress", "Oscillator",
+    "Sequence", "Timeline", "ManualTimeline", "RAFPlayback", "KeyframesScrollTimeline",
     "createNativeTimeline", "flip", "flipShared", "ElementMorph",
-    "drag", "Draggable", "decay", "decayRest", "stagger",
+    "drag", "drag2D", "Draggable", "decay", "decayRest", "reseatToSpring",
+    "probeVelocity", "reducedMotionScale", "waveformValue", "warmEngine", "stagger",
     "springTimingFunction", "springLinearStops", "toEasing", "resolveEasing",
     "AnimationOptionError", "UnknownEasingError", "loadAnimationEngine",
 ];
 
-// The 16-member heavy AnimationEngine surface (behind loadAnimationEngine()).
+// The heavy AnimationEngine surface (behind loadAnimationEngine()). 5.x deltas:
+// `Animation` was renamed `KeyframesAnimation` (the same PKG-3 ambient-collision
+// rename as the timeline); the top-level `animate()` helper was removed (the engine
+// is reached through the `KeyframesAnimation` / `CSSKeyframesAnimation` class API).
 const DYNAMIC_ENGINE = [
-    "Animation", "CSSKeyframesAnimation", "AnimationGroup", "getAnimationId",
-    "getTimingFunction", "resolveKeyframes", "animate", "MotionPath",
+    "KeyframesAnimation", "CSSKeyframesAnimation", "AnimationGroup", "getAnimationId",
+    "getTimingFunction", "resolveKeyframes", "MotionPath",
     "fromMotionPath", "DrawSVG", "fromDrawSVG", "presets",
     "DIRECTIONS", "FILL_MODES", "defaultOptions", "defaultLayerConfig",
 ];
@@ -109,18 +118,19 @@ export async function detect() {
     const vjVersion = pkgVersion("@mkbabb/value.js");
     facts.versions = { keyframes: kfVersion, value: vjVersion };
 
-    // VERSION STAMP — the manifest enumerated against keyframes.js 4.3.x + value.js
-    // 0.13.x (re-enumerated at BB.W-SPINE-LATEST, the coherent-latest spine bump).
-    // A later bump REDs here and forces a manifest re-run (not silent widen) — the
-    // tripwire is HONORED, never loosened to a wildcard.
-    if (!/^4\.3\./.test(kfVersion)) {
+    // VERSION STAMP — the manifest enumerated against keyframes.js 5.x + value.js
+    // 1.x (re-enumerated at BD, the keyframes 5.x major adopt — the
+    // `KeyframesScrollTimeline`/`KeyframesAnimation` ambient-collision renames + the
+    // value.js 1.x spine). A later bump REDs here and forces a manifest re-run (not
+    // a silent widen) — the tripwire is HONORED, never loosened to a wildcard.
+    if (!/^5\./.test(kfVersion)) {
         violations.push(
-            `VERSION STAMP: keyframes.js is ${kfVersion}, manifest enumerated against 4.3.x — re-run the manifest after the bump`,
+            `VERSION STAMP: keyframes.js is ${kfVersion}, manifest enumerated against 5.x — re-run the manifest after the bump`,
         );
     }
-    if (!/^0\.13\./.test(vjVersion)) {
+    if (!/^1\./.test(vjVersion)) {
         violations.push(
-            `VERSION STAMP: value.js is ${vjVersion}, manifest enumerated against 0.13.x — re-run after the bump`,
+            `VERSION STAMP: value.js is ${vjVersion}, manifest enumerated against 1.x — re-run after the bump`,
         );
     }
 

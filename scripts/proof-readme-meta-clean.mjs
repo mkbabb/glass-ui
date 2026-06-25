@@ -222,11 +222,11 @@ function run() {
         if (/useDockTransition/.test(cm)) violations.push("CLAUDE.md names phantom useDockTransition");
         if (/proof:glass-one-model/.test(cm)) violations.push("CLAUDE.md names removed proof:glass-one-model");
         if (/useSpringOrchestrator/.test(cm)) violations.push("CLAUDE.md names phantom useSpringOrchestrator");
-        // BB.W-SPINE-LATEST collapsed the keyframes peer `^2.2.0 || ^3.0.0 || ^4.0.0`
-        // union to the clean `^4.0.0` spine — assert the CLAUDE.md deps line carries
-        // the shipped clean form (the union requirement is retired with the spine bump).
-        if (!/@mkbabb\/keyframes\.js[`\s]*\^4\.0\.0/.test(cm))
-            violations.push("CLAUDE.md keyframes peer-range line does not carry the clean ^4.0.0 spine (BB.W-SPINE-LATEST)");
+        // BD adopted the keyframes 5.x major (a clean break to `^5.0.0`, no `||^4`
+        // straddle) — assert the CLAUDE.md deps line carries the shipped clean form
+        // (the `^4.0.0` spine is retired with the major bump).
+        if (!/@mkbabb\/keyframes\.js[`\s]*\^5\.0\.0/.test(cm))
+            violations.push("CLAUDE.md keyframes peer-range line does not carry the clean ^5.0.0 spine (BD keyframes-5 adopt)");
         if (!/RESERVED/.test(cm) || !/no observer ships|NO observer ships/i.test(cm)) {
             // luma RESERVE sentinel
             if (/ships demo-private/.test(cm) && /glass-backdrop-luma/.test(cm))

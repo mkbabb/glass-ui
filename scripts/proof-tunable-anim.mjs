@@ -64,7 +64,8 @@ const USE_EASING_PICKER_TS =
 // the union of these). Each is a real file:line definition home (verified at the
 // wave's starting-state read).
 const TOKEN_SOURCE_FILES = [
-    "src/styles/tokens/scheme-motion.css", // --spring-*, --spring-*-duration, --ease-*
+    "src/styles/tokens/scheme-motion.css", // --motion-weight, --ease-cartoon-punch, ambient/progress curves
+    "src/styles/tokens/scheme-spring.css", // BD.W-CUT carve: --spring-*, --spring-*-duration, --ease-* (the §2 EASING register)
     "src/styles/tokens/scale-paper.css", // --scale-hover*, --scale-press*, --tab-indicator-max-stretch
     "src/styles/tokens/property-regs.css", // --glass-btn-press-t, --border-progress-fill, --progress-crescendo, --phase-tint-amount
     "src/styles/tokens/scroll-tokens.css", // --scroll-*

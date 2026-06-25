@@ -4,7 +4,7 @@
   (re-capture + re-pixel-read before the close). Re-stamped at the BC anti-disease close to
   the CURRENT source bytes against the fresh warm-cream LIVE-motion :5199 capture set. -->
 <!-- surface-paths: src/styles/glass.css, src/styles/glass/material.css, src/styles/glass/surfaces.css -->
-<!-- surface-hash: 16eb77d7347fb98887ef171b14cf290d9bd1bd428271cb207236e3ff5b6b64c7 -->
+<!-- surface-hash: 947824d0b9ac6fd88aa67d5b4ec6ac3f8884864fa62e253bdc309679dfb5c844 -->
 
 # BC gestalt surface — glass-adaptive
 

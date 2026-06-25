@@ -24,8 +24,7 @@
         --dock-separator-height: calc(var(--dock-h, var(--size-icon-btn)) * 0.5);
         --dock-collapsed-hover-scale: var(--scale-hover-dock);
         /* AW.W3 — the spring-keyed child stagger knobs. `--dock-stagger-window-size`
-           is the fraction of the morph each child reveals over; `--dock-stagger-rise`
-           is the px the child rises from as it fades in. Consumers retune the
+           is the fraction of the morph each child reveals over. Consumers retune the
            cascade feel per instance.
 
            AX.W02 — `--dock-stagger-step` is the per-child onset BEAT: each
@@ -49,7 +48,6 @@
            beat, that was too wide. The summary/persistent glyph is front-loaded
            structurally (onset 0, scalar-keyed below). */
         --dock-stagger-window-size: 0.4;
-        --dock-stagger-rise: 4px;
         --dock-stagger-step: 0.08;
         /* AW.W3b — big-dock tokens. `--dock-card-radius` is the finite card-shell
            radius (default --radius-dock-card = --radius-3xl, density-scaled

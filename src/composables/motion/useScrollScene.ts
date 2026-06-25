@@ -56,9 +56,9 @@ export interface UseScrollSceneOptions {
     map?: (reader: ScrollReader) => number;
     /**
      * The liquid-weight scrub ∈ [0, 1] — how much lag the scroll carries. 0 = a 1:1 snap
-     * (no weight); higher = heavier drift. Read from `--scroll-scrub` (1/φ ≈ 0.618) at the
-     * call site. PRM → 0. Mapped to the engine damping by `scrubToDamping` (a STATED
-     * function, no magic affine constants).
+     * (no weight); higher = heavier drift. Defaults to 1/φ ≈ 0.618 (the golden
+     * liquid-weight rest); a call site overrides per scene. PRM → 0. Mapped to the engine
+     * damping by `scrubToDamping` (a STATED function, no magic affine constants).
      */
     scrub?: number;
     /** The smoother register (default `smooth` — the pure-lag low-pass). */
@@ -93,7 +93,7 @@ function clamp01(v: number): number {
 
 /**
  * The scrub → damping map — a STATED function, no free affine constants. `scrub` is a
- * normalized lag ∈ [0, 1] (the `--scroll-scrub` token; 0 = no weight, 1 = maximum drift).
+ * normalized lag ∈ [0, 1] (the scrub param; 0 = no weight, 1 = maximum drift).
  * `SmoothProgress.damping` ∈ (0, 1] is "higher = faster convergence", i.e. LESS lag — the
  * inverse polarity. So damping = 1 − scrub·(1 − floor): scrub 0 → damping 1 (instant catch-
  * up, no felt lag); scrub 1 → damping = floor (heaviest drift). The floor keeps the loop

@@ -90,15 +90,16 @@ function writeArtifact(status, extra = {}) {
 
 mkdirSync(tmp, { recursive: true });
 
-// AU.W3 / BB.W-SPINE-LATEST — the keyframes peer-compatibility MATRIX axis.
-// BB.W-SPINE-LATEST collapsed the `^2.2.0 || ^3.0.0 || ^4.0.0` multi-major union
-// to the clean `^4.0.0` spine (the whole constellation is on kf 4). CI-witness
-// that the declared range accepts both the 4.x floor AND the current latest 4.x
-// line — a silent drift (a re-narrow below the published latest) would orphan
-// consumers with no error. semver-checked against the literal range.
+// AU.W3 / BD — the keyframes peer-compatibility MATRIX axis. BD adopted the
+// keyframes 5.x major (a clean break to `^5.0.0`, no `||^4` straddle — the
+// `KeyframesScrollTimeline`/`KeyframesAnimation` ambient-collision renames moved
+// the surface). CI-witness that the declared range accepts both the 5.x floor AND
+// the current latest 5.x line — a silent drift (a re-narrow below the published
+// latest) would orphan consumers with no error. semver-checked against the literal
+// range; 4.x is deliberately NOT accepted (the clean-break major bump).
 {
     const kfRange = pkg.peerDependencies?.["@mkbabb/keyframes.js"] ?? "";
-    const kfMatrix = ["4.0.0", "4.3.0"];
+    const kfMatrix = ["5.0.0", "5.1.0"];
     const kfMisses = kfMatrix.filter((v) => !semver.satisfies(v, kfRange));
     if (kfMisses.length) {
         steps.push({ command: `peer-matrix @mkbabb/keyframes.js`, status: "fail" });

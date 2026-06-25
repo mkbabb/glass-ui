@@ -58,10 +58,17 @@ const readFileRel = (rel) => {
 };
 
 // The dock shell carved into src/styles/dock/*.css; the tint seam lives in dock/morph.css.
+// BD P10b — the `:where(.glass-dock)` adaptive self-engage (the A1 luma-read + A3 continuous
+// clamp) was CARVED out of dock/morph.css into dock/adaptive-legibility.css to hold both
+// partials under the 500-line no-god-module bound. The carve is isomorphic (same
+// `@layer components`, source order preserved via dock.css's adjacent @imports → ZERO visual
+// delta). The witness follows the carve — the joined DOCK_FILES blob still contains the rule
+// (the no-gray precedent at proof-no-gray.mjs:652 reads both dock partials the same way).
 const DOCK_FILES = [
     "src/styles/dock.css",
     "src/styles/dock/shell.css",
     "src/styles/dock/morph.css",
+    "src/styles/dock/adaptive-legibility.css",
     "src/styles/dock/density.css",
     "src/styles/dock/layer-group.css",
     "src/styles/dock/layers.css",

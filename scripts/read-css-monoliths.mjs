@@ -33,6 +33,12 @@ export const CSS_MONOLITHS = {
         // @property registrations + the specular magnitude cohort LAST.
         order: [
             "scheme-motion.css",
+            // BD.W-CUT — scheme-motion's §2 EASING block (spring linear() curves
+            // + per-spring duration clocks + goo-flow curves + bezier cores/
+            // aliases) carved into scheme-spring.css to hold the 500-line bound,
+            // @import-ed IMMEDIATELY AFTER scheme-motion.css (adjacent same-
+            // selector :root blocks at the same cascade slot).
+            "scheme-spring.css",
             "color-radius.css",
             "shadow.css",
             "glass.css",

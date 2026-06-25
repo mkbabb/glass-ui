@@ -135,9 +135,12 @@ export function detectButtonGlass(sources) {
         /color-mix\(\s*in\s+oklab/.test(capFillBlock);
     // (3) surfaces.css mints the tinted pair on the W55 oklab seam (BOTH tint vars
     //     present — the anti-evasion: a tint-FREE oklab swap REDs). The glass button
-    //     reads `--glass-bg-floating-tinted` through the capsule; the seam must hold.
-    const restingTintedBlock =
-        surf.match(/--glass-bg-resting-tinted:\s*color-mix\([\s\S]*?\)\s*;/)?.[0] ??
+    //     reads `--glass-bg-floating-tinted` through the capsule for the hover/active
+    //     register; the QUIET-rung tint is the button's RESTING fill (BD: the button's
+    //     resting fill rides `[--glass-capsule-fill:var(--glass-bg-quiet-tinted)]`,
+    //     retiring the former `--glass-bg-resting-tinted` wrapper). Both seams must hold.
+    const quietTintedBlock =
+        surf.match(/--glass-bg-quiet-tinted:\s*color-mix\([\s\S]*?\)\s*;/)?.[0] ??
         "";
     const floatingTintedBlock =
         surf.match(/--glass-bg-floating-tinted:\s*color-mix\([\s\S]*?\)\s*;/)?.[0] ??
@@ -147,7 +150,7 @@ export function detectButtonGlass(sources) {
         new RegExp(`--glass-bg-${rung}\\b`).test(block) &&
         /--glass-tint-source/.test(block) &&
         /--glass-tint-strength/.test(block);
-    facts.b1.restingSeam = seamOk(restingTintedBlock, "resting");
+    facts.b1.restingSeam = seamOk(quietTintedBlock, "quiet");
     facts.b1.floatingSeam = seamOk(floatingTintedBlock, "floating");
 
     if (!facts.b1.noRawHoverActive) {
@@ -167,7 +170,7 @@ export function detectButtonGlass(sources) {
     }
     if (!(facts.b1.restingSeam && facts.b1.floatingSeam)) {
         violations.push(
-            "B1: surfaces.css must mint `--glass-bg-{resting,floating}-tinted` as `color-mix(in oklab, <rung>, var(--glass-tint-source) var(--glass-tint-strength))` — BOTH tint vars present (a tint-FREE oklab swap REDs: the W55 seam must be the mix's second arm)",
+            "B1: surfaces.css must mint `--glass-bg-{quiet,floating}-tinted` as `color-mix(in oklab, <rung>, var(--glass-tint-source) var(--glass-tint-strength))` — BOTH tint vars present (a tint-FREE oklab swap REDs: the W55 seam must be the mix's second arm)",
         );
     }
 

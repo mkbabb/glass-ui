@@ -83,6 +83,9 @@ function cliPaths() {
             "src/components/custom/pager-dots/PagerDots.vue",
         ),
         SCHEME_MOTION: resolve(ROOT, "src/styles/tokens/scheme-motion.css"),
+        // BD.W-CUT carved the §2 EASING block (incl. --spring-deck) into the
+        // adjacent scheme-spring.css partial; D7 reads it concatenated below.
+        SCHEME_SPRING: resolve(ROOT, "src/styles/tokens/scheme-spring.css"),
         SUBPATH: resolve(ROOT, "src/subpaths/deck.ts"),
         CAROUSEL_SUBPATH: resolve(ROOT, "src/subpaths/carousel.ts"),
         API_INDEX: resolve(ROOT, "src/api/index.ts"),
@@ -446,7 +449,7 @@ function readInputs(P) {
         index: stripTs(read(P.INDEX)),
         pagerWindow: stripTs(read(P.PAGER_WINDOW)),
         pagerDots: stripTs(read(P.PAGER_DOTS)),
-        schemeMotion: stripCss(read(P.SCHEME_MOTION)),
+        schemeMotion: stripCss(read(P.SCHEME_MOTION) + "\n" + read(P.SCHEME_SPRING)),
         subpath: stripTs(read(P.SUBPATH)),
         carouselSubpath: stripTs(read(P.CAROUSEL_SUBPATH)),
         apiIndex: stripTs(read(P.API_INDEX)),
