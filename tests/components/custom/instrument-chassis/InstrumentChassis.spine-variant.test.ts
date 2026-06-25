@@ -104,13 +104,15 @@ describe("InstrumentChassis spine variant canon", () => {
         expect(cssSource).toMatch(beforeRetireRegex);
     });
 
-    it("carries the dock blur radius dialed back by BA.W-GLASS-CAL B1 (9px / 0.42)", () => {
+    it("carries the dock blur radius dialed back by BA.W-GLASS-CAL B1 (9px) + the BD dock base alpha (0.50)", () => {
         // The AL-W3-α T10 retune set the dock blur radius to 11px; BA.W-GLASS-CAL B1
         // dialed the whole blur ladder back ~15-20% (within the AV.W7-F2 8-15px band),
         // pulling the dock radius 11px → 9px. proof:glass-cal owns the band assertion;
         // this companion re-points off the superseded 11px literal to the current value.
-        // The opacity axis (0.42) is the WRONG-AXIS B3 fence — byte-untouched by the pull.
+        // BD.W-DOCK-CORE (D3) lifted the dock base alpha 0.42 → 0.50 (margin-insurance
+        // for the warm-chromatic darken — the base composite chroma closes a notch
+        // before any tint engages); stays the lightest chrome tier (below resting 0.65).
         expect(tokensSource).toMatch(/--glass-blur-dock-radius\s*:\s*9px\s*;/);
-        expect(tokensSource).toMatch(/--glass-opacity-dock\s*:\s*0\.42\s*;/);
+        expect(tokensSource).toMatch(/--glass-opacity-dock\s*:\s*0\.50\s*;/);
     });
 });

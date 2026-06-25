@@ -72,6 +72,23 @@ function flushFrames(n: number) {
     }
 }
 
+// BD.W-CUT — the shared leaf's `presize()` (createCanvasLifecycle) schedules a
+// rAF-double-resize layout-settle defense (the aurora-proven stuck-300×150 cure,
+// promoted to ALL consumers). Those transient resize callbacks share the rAF queue with
+// the render `tick`, so a frame-per-flush count is skewed by the settle rAFs occupying
+// queue slots. `pumpFrames` pumps the queue and returns the NET frames the consumer drew
+// — the assert-on-delta pattern robust to the presize settle rAFs (each is idempotent on
+// a stable box → draws zero frames; it merely occupies a slot). A live loop self-
+// re-queues; a parked loop adds nothing.
+function pumpFrames(countFn: () => number, pumps: number): number {
+    const before = countFn();
+    for (let i = 0; i < pumps; i++) {
+        const next = rafQueue.shift();
+        if (next) next();
+    }
+    return countFn() - before;
+}
+
 beforeEach(() => {
     rafQueue = [];
     listeners = {};
@@ -133,21 +150,20 @@ describe("useWebGLCanvas — the consumer-#2 substrate contract (AU.W6)", () => 
         handle.arm();
         expect(canvas.getContext).toHaveBeenCalledWith("webgl2", { antialias: true, alpha: false });
         expect(resize).toHaveBeenCalled(); // the substrate drove the consumer's resize
-        flushFrames(3);
-        expect(frames).toBe(3); // the demand-driven loop ran the consumer's frame
+        // the demand-driven loop ran the consumer's frame (delta-asserted so the presize
+        // layout-settle rAFs sharing the queue don't skew the count).
+        expect(pumpFrames(() => frames, 5)).toBeGreaterThan(0);
 
         // demand-gate parks the loop once the consumer reports settled
         live = false;
-        flushFrames(2);
+        pumpFrames(() => frames, 3); // drain the in-flight tick that observes live=false
         const settled = frames;
-        flushFrames(5);
-        expect(frames).toBe(settled); // parked — no perpetual re-raster
+        expect(pumpFrames(() => frames, 5)).toBe(0); // parked — no perpetual re-raster
 
         // wake() re-arms a parked loop
         live = true;
         handle.wake();
-        flushFrames(1);
-        expect(frames).toBe(settled + 1);
+        expect(pumpFrames(() => frames, 1)).toBe(1);
 
         handle.dispose();
     });
@@ -210,17 +226,21 @@ describe("useWebGLCanvas — the consumer-#2 substrate contract (AU.W6)", () => 
         handle.arm();
         expect(setups).toBe(1); // initial setup ran on glA
         expect(handle.gl).toBe(glA);
-        flushFrames(2);
-        expect(frames).toBe(2); // the loop is live
+        // the loop is live — it draws frames as the queue is pumped (delta-asserted so
+        // the presize layout-settle rAFs sharing the queue don't skew the count).
+        expect(pumpFrames(() => frames, 5)).toBeGreaterThan(0);
         const beforeLoss = frames;
+        // The arm sized once on glA (the leaf's build-time resize); record it so the
+        // post-restore re-size is asserted as a DELTA (the presize layout-settle rAFs
+        // pumped above also drove `resize`, so an absolute count is no longer stable).
+        const resizesBeforeRestore = resize.mock.calls.length;
 
         // ── context lost ── the loop parks and the GL handle drops to null.
         dispatch("webglcontextlost", {
             preventDefault: vi.fn(),
         });
         expect(handle.gl).toBe(null); // gl released — surface is blank
-        flushFrames(5);
-        expect(frames).toBe(beforeLoss); // no frames drawn while lost
+        expect(pumpFrames(() => frames, 5)).toBe(0); // no frames drawn while lost
 
         // ── context restored ── the substrate re-creates its GL resources
         // (re-runs setup on the fresh context) and resumes the rAF loop. The rebuild is
@@ -231,11 +251,11 @@ describe("useWebGLCanvas — the consumer-#2 substrate contract (AU.W6)", () => 
         vi.advanceTimersByTime(RESTORE_DEBOUNCE_MS + 1);
         expect(setups).toBe(2); // setup re-ran — program/geometry rebuilt
         expect(handle.gl).toBe(glB); // a NEW context was acquired
-        expect(resize).toHaveBeenCalledTimes(2); // re-sized on the fresh context
+        // re-sized on the fresh context (the restore rebuild ran one more resize).
+        expect(resize.mock.calls.length).toBeGreaterThan(resizesBeforeRestore);
 
         // The loop resumed — frames advance again after the restore.
-        flushFrames(2);
-        expect(frames).toBeGreaterThan(beforeLoss);
+        expect(pumpFrames(() => frames, 2)).toBeGreaterThan(0);
 
         handle.dispose();
     });

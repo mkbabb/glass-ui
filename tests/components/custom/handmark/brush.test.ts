@@ -24,10 +24,14 @@ describe("D6.a brush — the flat continuum", () => {
         expect(grainFilter("hm-x", pen, 1)).toBe(""); // the zero-cost vector edge
     });
 
-    it("the SHIPPED crayon is the stroke-crayon: ribbon='stroke', 2 passes, real grain", () => {
+    it("the SHIPPED crayon is the hull-crayon: ribbon='hull', 2 passes, real grain", () => {
         const crayon = BRUSHES.crayon;
-        expect(crayon.ribbon).toBe("stroke"); // NOT a pf hull (the proven recipe)
-        expect(crayon.passes).toBe(2); // two offset constant-width passes
+        // BD impl P5 RE-INVENT — crayon engages `ribbon:'hull'` (the perfect-freehand
+        // curvature-coupled variable-width body): the 2 offset passes swell + run out
+        // dry, a real waxy crayon, not a flat constant-width ruler. The seeded static
+        // feTurbulence grain (ds-crayon-handmark) still rides on TOP.
+        expect(crayon.ribbon).toBe("hull");
+        expect(crayon.passes).toBe(2); // two offset hull passes
         expect(crayon.grain).toBeGreaterThan(0); // a real broken-edge filter
         expect(hasGrain(crayon)).toBe(true);
         expect(grainFilter("hm-x", crayon, 1)).toContain("<filter");

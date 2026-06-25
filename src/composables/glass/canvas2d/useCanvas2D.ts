@@ -159,18 +159,34 @@ export function useCanvas2D(options: Canvas2DOptions): Canvas2DHandle {
         const h = canvas.clientHeight || canvas.offsetHeight || 0;
         if (!w || !h) return;
         const dpr = Math.min((hasWindow && window.devicePixelRatio) || 1, 2);
-        canvas.width = Math.round(w * dpr);
-        canvas.height = Math.round(h * dpr);
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const nextW = Math.round(w * dpr);
+        const nextH = Math.round(h * dpr);
+        // Idempotent (twins the leaf `sizeBacking` `changed` guard): a same-box tick
+        // — the leaf's presize double-rAF layout-settle defense fires `resize()`
+        // twice on a stable box, and a same-size RO/wake tick costs nothing — must
+        // NOT re-alloc (which clears the buffer) NOR repaint. Without this guard the
+        // presize defense painted two extra static frames under reduced-motion (the
+        // "exactly ONE static frame" contract breach) and cleared the live buffer on
+        // a no-op tick. The backing only changes (and only then repaints) on a genuine
+        // box change.
+        const changed = canvas.width !== nextW || canvas.height !== nextH;
+        if (changed) {
+            canvas.width = nextW;
+            canvas.height = nextH;
+        }
+        // The transform must be (re)applied whenever we (re)allocated the buffer
+        // (a width/height write resets the 2D transform to identity).
+        if (changed) ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         // A parked surface (offscreen / reduced) repaints one static frame so a
         // resize does not leave a stale or blank canvas — but NOT during the
-        // initial arm (the core's own first-paint owns that), and NOT while the
-        // live loop is running (the next tick paints the new size). "Parked" =
-        // the loop is not actively scheduling, which the core's getters expose:
-        // suspend-set non-empty OR reduced-motion (where running is true but the
-        // loop draws a single static frame, not a perpetual one).
+        // initial arm (the core's own first-paint owns that), NOT while the live
+        // loop is running (the next tick paints the new size), and NOT on an
+        // idempotent same-box tick (nothing to repaint). "Parked" = the loop is not
+        // actively scheduling, which the core's getters expose: suspend-set non-empty
+        // OR reduced-motion (where running is true but the loop draws a single static
+        // frame, not a perpetual one).
         const parked = !lifecycle || !lifecycle.running || lifecycle.reducedMotion;
-        if (!arming && parked) paintStatic();
+        if (changed && !arming && parked) paintStatic();
     }
 
     function bindResize(canvas: HTMLCanvasElement): void {

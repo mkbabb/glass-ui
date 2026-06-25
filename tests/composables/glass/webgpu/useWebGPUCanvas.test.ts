@@ -24,6 +24,7 @@ import { createGpuSubstrate } from "../../../../src/composables/glass/webgpu/use
 import {
     createWebGPUCanvas,
     WebGPUInitError,
+    __resetSharedGpuDeviceForTest,
 } from "../../../../src/composables/glass/webgpu/useWebGPUCanvas";
 
 let rafQueue: Array<() => void>;
@@ -49,7 +50,29 @@ function flushFrames(n: number) {
     }
 }
 
+// BD.W-CUT — the shared leaf's `presize()` (createCanvasLifecycle) schedules a
+// rAF-double-resize layout-settle defense (the aurora-proven stuck-300×150 cure,
+// promoted to ALL consumers). Those transient resize callbacks share the rAF queue with
+// the render `tick`, so a frame-per-flush count is skewed by the settle rAFs occupying
+// queue slots. `pumpFrames` pumps the queue and returns the NET frames the consumer drew
+// — the assert-on-delta pattern robust to the presize settle rAFs (each is idempotent on
+// a stable box → draws zero frames; it merely occupies a slot).
+function pumpFrames(countFn: () => number, pumps: number): number {
+    const before = countFn();
+    for (let i = 0; i < pumps; i++) {
+        const next = rafQueue.shift();
+        if (next) next();
+    }
+    return countFn() - before;
+}
+
 beforeEach(() => {
+    // BD.W-CUT (D3a) — reset the PROCESS-SHARED WebGPU device memo so a prior test's
+    // resolved device never leaks into a later test (which would skip its own
+    // `requestAdapter` acquire — the no-adapter / idempotent contracts assert that call
+    // count). The shared-device warm is correct in production (one device per page); the
+    // reset restores per-test isolation.
+    __resetSharedGpuDeviceForTest();
     rafQueue = [];
     listeners = {};
     vi.stubGlobal("requestAnimationFrame", (cb: () => void) => {
@@ -108,23 +131,23 @@ describe("useGpuSubstrate — the transparent picker degrade contract (W-GPU-SUB
         // The uniform start seam: `armAsync` resolves immediately on the WebGL2 path.
         await substrate.armAsync();
         expect(canvas.getContext).toHaveBeenCalledWith("webgl2", undefined);
-        flushFrames(3);
-        expect(frames).toBe(3); // the demand-driven loop ran the consumer's frame
+        // the demand-driven loop ran the consumer's frame (delta-asserted so the presize
+        // layout-settle rAFs sharing the queue don't skew the count).
+        expect(pumpFrames(() => frames, 5)).toBeGreaterThan(0);
 
         // demand-gate parks; wake re-arms (the uniform handle drives generically)
         live = false;
-        flushFrames(2);
+        pumpFrames(() => frames, 3); // drain the in-flight tick that observes live=false
         const settled = frames;
-        flushFrames(5);
-        expect(frames).toBe(settled);
+        expect(pumpFrames(() => frames, 5)).toBe(0); // parked — no perpetual re-raster
         live = true;
         substrate.wake();
-        flushFrames(1);
-        expect(frames).toBe(settled + 1);
+        expect(pumpFrames(() => frames, 1)).toBe(1);
 
         // renderAt draws one frame out of loop (capture parity)
+        const beforeRenderAt = frames;
         substrate.renderAt(0.5);
-        expect(frames).toBe(settled + 2);
+        expect(frames).toBe(beforeRenderAt + 1);
 
         substrate.dispose();
     });
@@ -301,8 +324,9 @@ describe("createGpuSubstrate — the try-WebGPU-then-rebuild-WebGL2 picker (BC.W
         // The WebGL2 net armed + the consumer's frame runs — the substrate PAINTS, never
         // a black void (the D8 close).
         expect(canvas.getContext).toHaveBeenCalledWith("webgl2", undefined);
-        flushFrames(3);
-        expect(glFrames).toBe(3);
+        // the WebGL2 net's loop runs the consumer's frame (delta-asserted so the presize
+        // layout-settle rAFs sharing the queue don't skew the count).
+        expect(pumpFrames(() => glFrames, 5)).toBeGreaterThan(0);
 
         substrate.dispose();
     });

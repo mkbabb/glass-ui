@@ -369,8 +369,6 @@ export function useDockFission(options: UseDockFissionOptions): UseDockFissionRe
             r.style.setProperty("--island-dy", String(pv.dy));
         }
 
-        const pv = placementVector();
-        const mid = (count - 1) / 2;
         for (const p of pieces) {
             const el = p.el.value;
             if (!el) continue;
@@ -387,21 +385,18 @@ export function useDockFission(options: UseDockFissionOptions): UseDockFissionRe
             // |Δt| derivative IS the squish travel (the swell on a fast pull, capped LOW).
             p.flex.drive(neckT);
 
-            // BD.W-DOCK-CORE (II.2 — F-1, THE FIX). The detach vector is the COHERENT
-            // placement vector (the whole cluster flies as ONE toward the island) PLUS a
-            // small per-piece cross-axis FAN so they spread into a row inside the island
-            // (not a stacked pile). The dominant motion is the placement travel — this is
-            // what reads as "the pieces detach into a sibling dock", not the prior
-            // per-piece radial scatter that stayed inside the source pill.
-            const fan = p.rank - mid; // -1, 0, +1 … the row spread
-            // cross-axis unit (perpendicular to the placement vector)
-            const crossX = -pv.dy;
-            const crossY = pv.dx;
-            const dx = pv.dx + crossX * fan * 0.42;
-            const dy = pv.dy + crossY * fan * 0.42;
+            // The per-piece DETACH VECTOR is the piece's OWN registered vector (the
+            // box-INVIOLATE `registerPiece({ vector })` contract). It may be a getter, so
+            // it RE-RESOLVES per write — the live FLIP-measured center the consumer feeds
+            // (`GlassDock.vue` resolves each piece's radial/inward/lateral direction off
+            // the current `getBoundingClientRect`). The COHERENT cluster read (F-1 — the
+            // pieces fly as one toward the sibling island, not a scatter inside the pill)
+            // is carried by the ROOT's `--island-dx`/`--island-dy` placement vector above;
+            // the per-piece vector adds the bridge/fan the consumer measured.
+            const v = p.vectorOf();
 
-            el.style.setProperty("--split-dx", String(dx));
-            el.style.setProperty("--split-dy", String(dy));
+            el.style.setProperty("--split-dx", String(v.dx));
+            el.style.setProperty("--split-dy", String(v.dy));
             el.style.setProperty("--i", String(p.rank));
             el.style.setProperty("--neck-t", String(neckT));
             // The NECK SPECULAR-SWEEP angle (BE.W-METABALL-BRIDGE2 B3 / BE.W-DOCK-JUBILANCE
@@ -444,18 +439,16 @@ export function useDockFission(options: UseDockFissionOptions): UseDockFissionRe
         }
         field.tick(0); // zero the field (no live velocity under the cut).
         // Seat each piece at its endpoint vector, neck-t at the target, stretch at rest.
-        const mid = (count() - 1) / 2;
+        // The PRM sync-seat honors the SAME box-INVIOLATE `vector` contract as the live
+        // loop — the piece's own (possibly getter) detach vector, re-resolved here so the
+        // instant cut lands at the live FLIP-measured endpoint.
         for (const p of pieces) {
             const el = p.el.value;
             if (!el) continue;
-            const fan = p.rank - mid;
-            const crossX = -pv.dy;
-            const crossY = pv.dx;
-            const dx = pv.dx + crossX * fan * 0.42;
-            const dy = pv.dy + crossY * fan * 0.42;
+            const v = p.vectorOf();
             p.flex.drive(target);
-            el.style.setProperty("--split-dx", String(dx));
-            el.style.setProperty("--split-dy", String(dy));
+            el.style.setProperty("--split-dx", String(v.dx));
+            el.style.setProperty("--split-dy", String(v.dy));
             el.style.setProperty("--i", String(p.rank));
             el.style.setProperty("--neck-t", String(target));
             // PRM seat — the specular-sweep is static-OFF (the @media block hides the

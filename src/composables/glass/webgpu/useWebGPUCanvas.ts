@@ -123,6 +123,20 @@ function withAcquireTimeout<T>(
 let sharedDevicePromise: Promise<GPUDevice> | null = null;
 
 /**
+ * Reset the PROCESS-SHARED device memo. The shared-device warm (D3a) is a module-level
+ * singleton — the first canvas on a page pays the cold `requestAdapter` → `requestDevice`
+ * and every later canvas reuses it. That is correct in production (one device per page),
+ * but it makes the memo leak ACROSS isolated unit tests in the same file (a prior test's
+ * resolved device satisfies a later test's `armAsync`, so `requestAdapter` is never called
+ * + the no-adapter path never runs). A test calls this in `beforeEach` to restore a clean
+ * per-test acquire. NOT part of the runtime API surface — exported only for the substrate's
+ * own test isolation (no consumer reaches for it).
+ */
+export function __resetSharedGpuDeviceForTest(): void {
+    sharedDevicePromise = null;
+}
+
+/**
  * Acquire the PROCESS-SHARED WebGPU device — memoised so every canvas on a page shares the
  * single cold `requestAdapter` → `requestDevice`. Rejects with the typed `WebGPUInitError`
  * on a no-adapter / software-adapter / hung host (the picker falls to the WebGL2 net on it).

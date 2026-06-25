@@ -43,6 +43,24 @@ function flushFrames(n: number) {
     }
 }
 
+// BD.W-CUT — the shared leaf's `presize()` (createCanvasLifecycle) schedules a
+// rAF-double-resize layout-settle defense (the aurora-proven stuck-300×150 cure,
+// promoted to ALL consumers). Those transient resize callbacks share the rAF queue with
+// the render `tick`, so the steady loop is reached only after they drain. `runFrames`
+// pumps the queue a generous number of times and returns the NET frames the consumer's
+// `render` drew across the pump — the assert-on-delta pattern that is robust to the
+// presize settle rAFs sharing the queue (a settle rAF is idempotent on a stable box →
+// adds zero frames; it merely occupies a slot). A live loop self-re-queues, so each pump
+// step that lands on a tick advances the count by one; a parked loop adds nothing.
+function runFrames(countFn: () => number, pumps: number): number {
+    const before = countFn();
+    for (let i = 0; i < pumps; i++) {
+        const next = rafQueue.shift();
+        if (next) next();
+    }
+    return countFn() - before;
+}
+
 beforeEach(() => {
     rafQueue = [];
     docListeners = {};
@@ -106,28 +124,25 @@ describe("useCanvas2D — the Canvas2D substrate park/freeze contract (AW.W17)",
         // dpr-clamped resize applied the transform (dpr=2).
         expect(ctx.setTransform).toHaveBeenCalledWith(2, 0, 0, 2, 0, 0);
 
-        flushFrames(3);
-        expect(frames).toBe(3);
+        // the live loop draws frames as the queue is pumped (delta-asserted so the
+        // presize layout-settle rAFs sharing the queue don't skew the count).
+        expect(runFrames(() => frames, 5)).toBeGreaterThan(0);
 
         // the 3-reason suspend model: both held → parked, isRunning false.
         handle.suspend("off-screen");
         handle.suspend("tab-hidden");
         expect(handle.isRunning()).toBe(false);
-        const settled = frames;
-        flushFrames(3);
-        expect(frames).toBe(settled);
+        expect(runFrames(() => frames, 5)).toBe(0); // parked — no frames
 
         // clearing ONLY tab-hidden must NOT resume (off-screen still held).
         handle.resume("tab-hidden");
         expect(handle.isRunning()).toBe(false);
-        flushFrames(3);
-        expect(frames).toBe(settled);
+        expect(runFrames(() => frames, 5)).toBe(0);
 
         // clearing the last reason resumes the loop.
         handle.resume("off-screen");
         expect(handle.isRunning()).toBe(true);
-        flushFrames(1);
-        expect(frames).toBeGreaterThan(settled);
+        expect(runFrames(() => frames, 5)).toBeGreaterThan(0);
 
         handle.dispose();
     });
@@ -168,11 +183,14 @@ describe("useCanvas2D — the Canvas2D substrate park/freeze contract (AW.W17)",
             canvas,
             setup: () => ({ render: () => { frames += 1; } }),
         });
-        // one static frame painted at arm() (no rAF scheduled).
+        // one static frame painted SYNCHRONOUSLY at arm() — the reduced-motion path
+        // calls tick() in-line (paints once, never reschedules because !reducedMotion
+        // gates the reschedule). The ONLY rAF queued is the leaf's presize layout-settle
+        // defense, which is idempotent on a stable box (draws no extra frame). Pumping
+        // the queue must NOT grow the frame count — there is no live loop under reduce.
         expect(frames).toBe(1);
-        expect(rafQueue.length).toBe(0);
-        flushFrames(5);
-        expect(frames).toBe(1); // still parked — no live loop under reduce
+        expect(runFrames(() => frames, 5)).toBe(0); // still parked — no live loop
+        expect(frames).toBe(1);
     });
 
     it("dispose() is idempotent and parks the loop", () => {

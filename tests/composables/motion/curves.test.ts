@@ -126,15 +126,18 @@ describe("MOTION_CURVES — the CSS↔JS curve table", () => {
 describe("SPRING_PRESETS — the shared single-source table", () => {
     it("holds the six iOS-canonical (response, ζ) pairs", () => {
         const byName = Object.fromEntries(SPRING_PRESETS.map((p) => [p.name, p]));
-        expect(byName.smooth).toMatchObject({ response: 0.5, dampingFraction: 0.86 });
-        // BC.W-SPRING-EASE — snappy eased 0.35/0.65 → 0.42/0.78 (fills its clock).
-        expect(byName.snappy).toMatchObject({ response: 0.42, dampingFraction: 0.78 });
-        // BC.W-SPRING-EASE — bouncy ζ 0.45 → 0.55 (overshoot into the Apple 12-18% band).
-        expect(byName.bouncy).toMatchObject({ response: 0.5, dampingFraction: 0.55 });
-        expect(byName.gentle).toMatchObject({ response: 0.7, dampingFraction: 1.0 });
-        expect(byName.dock).toMatchObject({ response: 0.32, dampingFraction: 0.7 });
-        // BC.W-SPRING-EASE — press MINTED at the Apple interactiveSpring 0.15/0.86.
-        expect(byName.press).toMatchObject({ response: 0.15, dampingFraction: 0.86 });
+        // BD.W-ANIM-IOS27-TUNE — the GLOBAL re-calibration toward the iOS-27 weighty-
+        // gooey-inertial pole (longer response → inertia/weight; through-body damping
+        // toward critically-damped-with-a-TOUCH-of-overshoot; every overshoot ∈ [0%,10%]).
+        // The BC.W-SPRING-EASE byte-frozen KEEP fence is RETIRED — all six rows re-tune
+        // in lockstep; gentle ζ stays EXACTLY 1.0 (the --ease-convergence alias depends
+        // on overshoot==0).
+        expect(byName.smooth).toMatchObject({ response: 0.58, dampingFraction: 0.8 });
+        expect(byName.snappy).toMatchObject({ response: 0.48, dampingFraction: 0.74 });
+        expect(byName.bouncy).toMatchObject({ response: 0.6, dampingFraction: 0.6 });
+        expect(byName.gentle).toMatchObject({ response: 0.82, dampingFraction: 1.0 });
+        expect(byName.dock).toMatchObject({ response: 0.68, dampingFraction: 0.64 });
+        expect(byName.press).toMatchObject({ response: 0.2, dampingFraction: 0.8 });
     });
 });
 

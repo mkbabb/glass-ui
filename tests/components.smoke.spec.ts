@@ -227,8 +227,12 @@ describe("component smoke coverage", () => {
     });
 
     it("applies PaperBackdrop opacity", () => {
+        // BD.W-PAGE-FIELD — PaperBackdrop is now a two-plane template (an opt-in
+        // `.paper-field` warm cel plane via the `field` prop, then the `.paper-
+        // underpaint` grain plane). The opacity override rides the underpaint plane,
+        // so target it directly rather than the (now multi-root) wrapper.
         const wrapper = mount(PaperBackdrop, { props: { opacity: 0.5 } });
-        expect(wrapper.attributes("style")).toContain("opacity: 0.5");
+        expect(wrapper.find(".paper-underpaint").attributes("style")).toContain("opacity: 0.5");
     });
 
     it("V.W3.T7 — Section composes typography ladder via tone variant", () => {

@@ -101,7 +101,7 @@
     .glass-capsule-hover {
         transition:
             scale var(--duration-fast) var(--ease-standard),
-            --specular-intensity var(--duration-fast) ease;
+            --specular-intensity var(--duration-fast) var(--ease-standard);
     }
     /* The SHARED specular-lift step — declared ONCE here, COMPOSED by both the hover
        register AND the drag-lift (BD.W-TAB-IOS-CAPSULE C7: one declaration of the

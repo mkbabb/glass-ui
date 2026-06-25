@@ -300,12 +300,11 @@ const exactSubpathRuntimeSurfaces = [
             "DOCK_SPLIT_SIGNATURES",
             "DockBackgroundToggle",
             "DockDropdownTrigger",
-            // BE.W-DOCK-FISSION — the ONE library goo <filter> mount (the fission
-            // bridge's url(#dock-fission-goo) target). Runtime SFC default-export.
-            "DockGooFilter",
             "DockIconButton",
             "DockLayer",
             "DockLayerGroup",
+            // BD impl P-dock — the popover-trigger dock control primitive.
+            "DockPopoverTrigger",
             // BA.W-DOCK-SECTIONS — the declarative tripartite section dock chassis
             // (the descriptor-driven <DockSection> the shell docks compose; the
             // W-SHELL-RAIL-RESEAT re-seat consumer). Runtime SFC default-export.
@@ -318,6 +317,10 @@ const exactSubpathRuntimeSurfaces = [
             "DockStack",
             "DockTabButton",
             "GlassDock",
+            // BD.W-MORPH-FIELD-WELD — the ONE library metaball <filter> mount (the DRY
+            // union of the prior four goo mounts incl. the retired DockGooFilter; off one
+            // byte-identical sRGB graph at shell root). Runtime SFC default-export.
+            "GooFilter",
             // BC.W-AX-DOCK-CTA-SEAT — the external-CTA-morphs-into-dock receive seam +
             // the [data-cta-pending] landing-seat API (setPending/clearPending/pending),
             // ADDITIVELY re-exported on the /dock subpath as the natural home beside
