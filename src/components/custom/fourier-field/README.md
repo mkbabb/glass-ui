@@ -138,6 +138,40 @@ the bundle's resting loudness; a hero recesses behind a glass card at `≈0.7`, 
 the `~2` ceiling lets a feature hero overdrive without runaway. A consumer/deck
 tunes loudness from ONE prop — never a magic-number patch in the component.
 
+## The harmonic LOOM (BD.W-FOURIER-LOOM — §2a/§2b/§3b)
+
+The field is not a diagram floating over dead cream — it is a living LOOM that
+LIGHTS its own warm ground, with a head bead that squashes-and-stretches and a
+chain inked with a cel-shadow. Three orthogonal mechanisms, all in this module:
+
+- **§2a — the comet lights the field (the lit-field seam).** `useFourierField`
+  derives the head's `[0,1]²` UV once per frame (`headUnit()` → `partialSumAt` over
+  N harmonics, mapped through the SAME cached `computeFourierFit` the GPU comet
+  paints from, with the cursor-lean folded in so it co-locates with the painted
+  head). It is handed to the SFC via the `onHeadFrame` hook — fired from INSIDE the
+  ONE clock's `onFrame` (no second rAF) — which writes `--ff-head-xy` (per frame) +
+  `--ff-head-hue` (reactively off the palette) on its host. The page-background warm
+  field reads those vars to TRANSLATE a phosphor bloom sprite to the head. PRM →
+  the var is present + STABLE at the frozen-T head (the bloom seats, no sweep).
+- **§2b — the squash-and-stretch head (the one new shader math).** The round head
+  SDF becomes a volume-preserving anisotropic ellipse off the local travel tangent
+  `T` (derived in-shader from `curveSamples[0]` vs `[1]` — the SAME evaluator on
+  both engines, so the anisotropy is parity-safe by construction). The tangent
+  extent scales `1 + k·ŝ`, the normal extent `1/(1 + k·ŝ)`; a cusp (`s ≤
+  FOURIER_TANGENT_EPS`) falls back to the last stable tangent identically across
+  WGSL/GLSL/CPU. `config.squashGain` carries a small non-zero library default
+  (cartoon-weight at rest); a consumer vivid preset turns it to 11.
+- **§3b — the cel-shadow + the fat rope.** A second darker ink copy of the rope +
+  chain, offset opposite the head travel (`−T`), painted UNDER the lit chain;
+  `config.celGain` gates it (small non-zero default; vivid preset floors it UP).
+  The fat two-tone rope + louder scaffold are a DEMO `FOURIER_PRESET_VIVID`
+  (presets-in-consumers — `trailWidth`/`trailFloor`/`intensity`/`epicycle*`), never
+  a src-token edit; `WARM_IDENTITY_PALETTE` + the render `* 0.7` default stay frozen.
+
+The clock flick-settle is a bounded-overshoot SPRING (ζ ≈ 0.62), not the stiff
+exponential decay it replaces — the iOS fling / liquid-weight register. The math
+leaf (`math.ts`) is byte-frozen throughout.
+
 ## Relation to the fourier-analysis teaching figure
 
 The fourier-field is the fourier-analysis web renderer's **procedural sibling** —

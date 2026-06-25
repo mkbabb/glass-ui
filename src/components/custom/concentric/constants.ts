@@ -1,126 +1,156 @@
-// BC.W-VIZ-CONCENTRIC — the concentric compile-time shape budget + the WARM-IDENTITY
-// default config (the single source the SFC, the composables, and the WGSL/GLSL shaders all
-// read).
+// BD.W-CONCENTRIC-RELIEF — the concentric compile-time shape budget + the WARM-DIVERGENT
+// hypsometric identity (the single source the SFC, the composables, and the WGSL/GLSL
+// shaders all read).
 //
-// THE WARM-IDENTITY FENCE (load-bearing). `DEFAULT_CONCENTRIC_CONFIG.palette` is the
-// neutral warm-cream library identity (resolved via the ColorResolver). The demo themes the
-// rings through a PRESET in `demo/stories/substrates/presets.ts` (presets-in-consumers —
-// never a library token). `proof:concentric` clause 5 reds a teal/navy/ppmycota-violet
-// literal in THIS file.
+// concentric is a living LEVEL-SET hypsometric survey: the iso-contours of a curl-warped
+// low-octave topography H(p,t), painted as an OPAQUE warm hypsometric FILL, lifted into
+// 2.5-D relief by one analytic hillshade, inked with a two-tier index/minor contour
+// hierarchy, the cursor HEAVING the sheet with real weight. NOT lines-over-transparent.
 //
-// THE LINE IS THE POINT (BC.W-VIZ-CONCENTRIC). The default config is TWO clean ring families
-// at a small beat detune — thin bright ellipsoid LINES that beat into distinct waves (NOT
-// the retired 5-octave Phillips turbulence ladder, which read as a smooth color blur).
+// THE WARM-DIVERGENT FENCE (load-bearing). `WARM_IDENTITY_PALETTE` is a true multi-warm
+// hypsometric tint (deep plum-rose basin → ember → amber → wheat crest) — hues wrapping
+// through red, NEVER teal/navy [180,270], and NEVER a single-bin amber wash. The dark arm
+// (`WARM_IDENTITY_PALETTE_DARK`) is a luminous-ember twin. The demo themes the survey
+// through a PRESET (presets-in-consumers — never a library token). `proof:concentric`
+// clause L5 reds any hue ∈ [180,270] OR a single-bin amber collapse in THIS file.
 
-import type { RingComponent, RingCenter } from "./composables/ringField";
-import { buildRingFamily } from "./composables/ringField";
 import type { OklchStop } from "../../../composables/color";
-
-/** Compile-time ring-component cap — mirrors the WGSL `MAX_RINGS` #define. */
-export const MAX_RINGS = 8;
-
-/** Compile-time center cap — mirrors the WGSL `MAX_CENTERS` #define. */
-export const MAX_CENTERS = 4;
 
 /** Compile-time palette cap — mirrors the WGSL `MAX_RING_STOPS` #define. */
 export const MAX_RING_STOPS = 4;
-
-/** The render mode — traveling crest-lines, static elevation-contour, or both. */
-export type ConcentricRenderMode = "traveling-rings" | "static-contour" | "both";
-
-/** Map a render mode to the shader int (the uniform `ints.w` lane). */
-export function renderModeToInt(mode: ConcentricRenderMode): number {
-    return mode === "static-contour" ? 1 : mode === "both" ? 2 : 0;
-}
 
 /**
  * The full author schema — the studio's `useConfiguratorState` model. Every field is a
  * tunable the demo configurator drives; the SFC resolves it into the uniform table.
  */
 export interface ConcentricConfig {
-    /** The ring origins (1..MAX_CENTERS) — a multi-center sum produces ring interference. */
-    centers: RingCenter[];
-    /** The clean radial sum-of-sines table (1..2 frequencies — NOT a turbulence ladder). */
-    ringComponents: RingComponent[];
-    /** The ellipsoidal-norm axis ratio (a, b) — the tilted-disc depth implication. */
-    axisRatio: [number, number];
-    /** The ring-travel speed (scales ω). */
+    /** The level-set flow speed (scales the traveling-wave time). */
     speed: number;
-    /** The stroke half-width (field-distance units; the IQ line thickness). */
+    /** The contour stroke half-width (px units; the IQ line thickness). */
     lineWidth: number;
-    /** The stroke AA softness (field-distance units; the edge feather). */
+    /** The stroke AA softness (px units; the edge feather). */
     lineSoftness: number;
-    /** The render mode — traveling crest-lines · static elevation-contour · both. */
-    renderMode: ConcentricRenderMode;
-    /** The contour-level count for the static-contour mode (4..24). */
+    /** The contour-level count (the iso-line density; 4..24). */
     contourLevels: number;
-    /** The beat detune — the second ring's wavelength offset that makes the families BEAT. */
-    beatDetune: number;
+    /** The topography cell pitch (domain units per cell — the contour-warp granularity). */
+    cellSize: number;
+    /** The height-field octaves (LOW → clean nested loops). */
+    heightOctaves: number;
+    /** The height-field seed (a different topography per seed). */
+    heightSeed: number;
+    /** The ω=√(g·k) breathing swell depth — basins inflate/deflate (weight). */
+    swellAmp: number;
+    /** Per-contour wobble depth — the contours wobble independently as the wave flows. */
+    perturbAmp: number;
+    /** Max per-cell twist angle at the wave crest (rad — the cell-warp the contours ride). */
+    twistMax: number;
+    /** Max per-cell shear at the crest. */
+    shearMax: number;
+    /** The traveling-wave front direction (a gentle diagonal). */
+    waveDir: [number, number];
+    /** The crest-band spatial frequency (LOW — cells per crest). */
+    waveK: number;
+    /** The front speed (slow — inertia). */
+    waveOmega: number;
+    /** The crest-band width (a localized front). */
+    waveSigma: number;
+    /** The cursor Gaussian peak depth — the topography HEAVES toward the pointer. */
+    cursorWell: number;
+    /** The hypsometric tone gain — `tone = 0.5 + 0.5·tanh(H·toneGain)` (fills the ramp ends). */
+    toneGain: number;
+    /** The analytic-hillshade relief depth (`fill *= mix(1-shadeAmp, 1+shadeAmp, shade)`). */
+    shadeAmp: number;
+    /** The fixed cartoon-sun direction (the raking cel light dotted with ∇H). */
+    lightDir: [number, number];
+    /** Index-contour stride — every Nth level is a bold index line (two-tier hierarchy). */
+    indexEvery: number;
+    /** The index-line width multiplier (index ~indexMul× the minor half-width). */
+    indexMul: number;
+    /** The ink darken factor — the contour is a darker ember of its OWN local fill band. */
+    inkDarken: number;
+    /** Cursor-HEAVE gain — pointer SPEED scales the well depth/radius (JS-side; free). */
+    velocityHeave: number;
     /** The field-value color ramp (the demo themes it); resolved via the ColorResolver. */
     palette: OklchStop[];
-    /** The ground color (default transparent so it reads over the page; demo sets it). */
+    /** The opaque warm hypsometric ground (the survey reads standalone; per-mode resolved). */
     background: OklchStop | "transparent";
-    /** Pointer adds a transient ring center (a local perturbation about the cursor). */
+    /** Pointer HEAVES the topography (gravity over the contour map). */
     interactive: boolean;
-    /** ONE static frame then park under `prefers-reduced-motion: reduce`. */
+    /** ONE static survey frame then park under `prefers-reduced-motion: reduce`. */
     respectReducedMotion: boolean;
 }
 
 /**
- * The warm-cream identity palette (the library default — NOT a themed hue). A three-stop
- * warm ramp over the warm-cream foreground family, resolved via the ColorResolver: a soft
- * cream trough, a warm amber mid, a deeper ember crest — so the ring LINES read as warm
- * light interference. A consumer (the demo) themes it through a PRESET, never a token edit.
+ * The WARM-DIVERGENT light identity — a true multi-warm hypsometric tint (NOT a mono-amber
+ * wash). Four stops spanning the warm wheel from a deep plum-rose basin through ember and
+ * amber to a wheat ridge crest. Every hue wraps through red — none lands in the teal/navy
+ * purge band [180,270]. Resolved via the ColorResolver; a consumer (the demo) themes it
+ * through a PRESET, never a token edit.
  */
 export const WARM_IDENTITY_PALETTE: OklchStop[] = [
-    // the trough — a soft warm cream
-    { L: 0.94, C: 0.025, h: 80 },
-    // the mid — a warm amber
-    { L: 0.82, C: 0.075, h: 62 },
-    // the crest — a deeper ember
-    { L: 0.66, C: 0.105, h: 44 },
+    // the basin — a deep warm plum-rose (lowest ground)
+    { L: 0.5, C: 0.115, h: 350 },
+    // the slope — a warm ember
+    { L: 0.66, C: 0.14, h: 38 },
+    // the upper slope — a bright amber
+    { L: 0.8, C: 0.115, h: 70 },
+    // the crest — a warm wheat (highest ground)
+    { L: 0.92, C: 0.06, h: 86 },
 ];
 
 /**
- * Build the default clean beating ring table — one base ring + a slightly-detuned twin so
- * the field BEATS into a low-frequency moiré envelope (the "distinct waves"). NOT the
- * retired 5-octave Phillips turbulence ladder.
+ * The WARM-DIVERGENT dark identity — the survey-at-night twin (plain per-mode arm, NOT a
+ * CSS `light-dark()` branch, NOT an in-shader `uMode` seam). A deep ember basin glowing up
+ * to a luminous amber ridge ladder. Hues stay warm [330..90] — never teal/navy.
  */
-export function buildDefaultRingComponents(
-    baseWavelength = 0.24,
-    beatDetune = 0.04,
-): RingComponent[] {
-    const a = buildRingFamily(baseWavelength, 1, 0)[0];
-    const b = buildRingFamily(baseWavelength * (1 + beatDetune), 1, 1.7)[0];
-    return [a, b];
-}
-
-/** The default clean beating ring table (2 detuned low-frequency rings). */
-export const DEFAULT_RING_COMPONENTS: RingComponent[] = buildDefaultRingComponents();
-
-/**
- * Two ring FAMILIES offset on the diagonal at different tilts — the default interference: a
- * moiré BEAT where the two tilted-ellipsoid families cross (the literal "ellipsoid lines
- * forming distinct waves").
- */
-export const DEFAULT_CENTERS: RingCenter[] = [
-    { x: -0.28, y: -0.18, weight: 1.0, rotAlpha: 0.35 },
-    { x: 0.3, y: 0.22, weight: 0.85, rotAlpha: -0.55 },
+export const WARM_IDENTITY_PALETTE_DARK: OklchStop[] = [
+    // the basin — a deep warm-ember
+    { L: 0.26, C: 0.09, h: 30 },
+    // the slope — a glowing rust
+    { L: 0.45, C: 0.15, h: 42 },
+    // the upper slope — a luminous amber
+    { L: 0.66, C: 0.155, h: 66 },
+    // the crest — a bright warm gold
+    { L: 0.84, C: 0.13, h: 84 },
 ];
 
-/** The shipped warm-identity default config — thin bright LINES that beat into waves. */
+/** The per-mode warm hypsometric GROUND (the opaque floor; resolved off `useGlobalDark`). */
+export const WARM_GROUND_LIGHT: OklchStop = { L: 0.96, C: 0.018, h: 78 };
+export const WARM_GROUND_DARK: OklchStop = { L: 0.16, C: 0.035, h: 32 };
+
+/**
+ * The shipped warm-identity default config — a living LEVEL-SET hypsometric SURVEY (paper-grid
+ * kin): the iso-contours of a low-octave curl-warped height field, painted as an opaque warm
+ * hypsometric fill, hillshaded into 2.5-D relief, inked with a two-tier index/minor contour
+ * hierarchy, the cursor HEAVING the sheet with velocity-scaled weight. Reads standalone in
+ * BOTH modes — it CONTRIBUTES a colorful field rather than revealing a flat plate.
+ */
 export const DEFAULT_CONCENTRIC_CONFIG: ConcentricConfig = {
-    centers: DEFAULT_CENTERS,
-    ringComponents: DEFAULT_RING_COMPONENTS,
-    axisRatio: [1, 0.62],
-    speed: 0.5,
-    lineWidth: 1.4,
+    speed: 0.6,
+    lineWidth: 1.8, // a present contour stroke (the survey reads clearly)
     lineSoftness: 1.0,
-    renderMode: "traveling-rings",
-    contourLevels: 12,
-    beatDetune: 0.04,
+    contourLevels: 13, // the iso-line density (a readable survey — broad bands)
+    cellSize: 1.2, // the cursor-well radius granularity
+    heightOctaves: 3, // LOW → clean nested loops (not high-freq speckle)
+    heightSeed: 7.0,
+    swellAmp: 0.22, // the basins inflate/deflate breathing (weight)
+    perturbAmp: 0.06, // per-contour wobble
+    twistMax: 0.6, // a DRAMATIC contour flow as the wave passes
+    shearMax: 0.24,
+    waveDir: [0.92, 0.39],
+    waveK: 0.42,
+    waveOmega: 0.7,
+    waveSigma: 0.85, // a BROAD sweeping front
+    cursorWell: 0.5, // the cursor gravity peak (the topography HEAVES toward the pointer)
+    toneGain: 1.6, // the tanh tone expansion — basins+ridges hit the ramp ENDS
+    shadeAmp: 0.18, // the analytic-hillshade relief depth (2.5-D pop)
+    lightDir: [-0.6, 0.8], // the fixed cartoon sun (raking cel light)
+    indexEvery: 5, // every 5th contour is a bold index line (two-tier hierarchy)
+    indexMul: 1.9, // the index line ~1.9× the minor half-width
+    inkDarken: 0.45, // the ink is a darker ember of its own local fill band
+    velocityHeave: 0.4, // pointer SPEED scales the well depth/radius (the heave weight)
     palette: WARM_IDENTITY_PALETTE,
-    background: "transparent",
-    interactive: false,
+    background: WARM_GROUND_LIGHT, // the opaque warm floor (per-mode resolved by the SFC)
+    interactive: true, // cursor gravity on (paper-grid parity)
     respectReducedMotion: true,
 };

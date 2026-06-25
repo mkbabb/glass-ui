@@ -1,50 +1,51 @@
-// BC.W-VIZ-CONCENTRIC — the fullscreen radial-Fourier ring-interference fragment pass
-// (WebGPU primary), rendered as thin bright ELLIPSOID ISOLINE STROKES (not a smooth blur).
+// BD.W-CONCENTRIC-RELIEF — concentric = a living level-set hypsometric SURVEY (WebGPU primary).
 //
-// The same shape-class as aurora — a pure full-screen-triangle fragment pass (no vertex
-// buffer). `fs_main` evaluates the field f(p,t) (a sum of CLEAN radial sinusoids over
-// ≤ MAX_CENTERS tilted-ellipsoid families × ≤ MAX_RINGS clean frequencies), extracts each
-// crest as a constant-width antialiased LINE via Inigo Quilez's gradient-normalized
-// distance-estimation (de ≈ |sin|/(|cos|·k·|∇r|), iquilezles.org/articles/distance/ — the
-// gradient is closed-form since the field is a sum of sinusoids), unions the lines
-// brightest-wins (crossing families read as a bright moiré lattice), and tints the BEAT
-// ENVELOPE through the shared OKLCh ramp. The LINE carries the ink; the field is transparent
-// behind it (the page reads through the troughs).
+// concentric is the paper-grid's traveling-wave CELL-WARP applied to a LOW-octave topography
+// H(p,t), rendered as the level-set ISO-CONTOURS of H over an OPAQUE warm hypsometric FILL: a
+// tanh tone expansion, one analytic hillshade for 2.5-D relief, and a two-tier index/minor
+// contour hierarchy inked via the IQ gradient-free `contourInk` (the contour density tracks
+// 1/|∇H|, bunched on steep ground). The wave flows the contours as it crosses; the cursor
+// HEAVES the topography toward the pointer with velocity-scaled weight. The output is OPAQUE.
 //
-// THE SINGLE MATH SOURCE. The `sampleRingField`/`ellipsoidalRadiusRot`/`ellipsoidalGradMag`/
-// the isoline `de` below transcribe `composables/ringField.ts` line-for-line. `proof:concentric`
-// clause 3 round-trips the two paths at a fixed sample set (the transcription-drift trap
-// closed by a structural match, not a per-line loop).
+// THE SINGLE MATH SOURCE. `heightField` / `cellTwist` / `waveSwell` are the SHARED `waveField`
+// leaf (the SAME paper-grid splices); `sampleHeight` transcribes `composables/levelField.ts`,
+// and the finishing reads (tone/hillshade/isIndex) transcribe its oracle twins. `proof:concentric`
+// round-trips the JS↔GLSL↔WGSL numeric identity at a fixed level-boundary sample lattice.
 
 import {
     OETF_WGSL,
     OKLCH_MATRICES_WGSL,
 } from "../../aurora/constants/shaders/procedural-color.wgsl";
+import { CURL_FBM_WGSL } from "../../../../composables/glass/webgl/shaders/flow.wgsl";
+import { WAVE_FIELD_WGSL } from "../../../../composables/glass/wave/waveField.wgsl";
 
 export const CONCENTRIC_WGSL = /* wgsl */ `
 const PI: f32 = 3.141592653589793;
 const TAU: f32 = 6.283185307179586;
-const RING_GRAVITY: f32 = 9.81;
-const MAX_RINGS: i32 = 8;
-const MAX_CENTERS: i32 = 4;
 const MAX_RING_STOPS: i32 = 4;
 
 // ── Concentric uniforms (the typed-struct source-of-truth — see uniformBridgeWGPU.ts) ──
 struct ConcentricUniforms {
-  // u0: (uTime, uSpeed, uAxisA, uAxisB)
+  // u0: (uTime, uSpeed, uCellSize, _pad)
   u0: vec4<f32>,
-  // ints: (uCenterCount, uRingCount, uStopCount, uRenderMode)  // 0 rings · 1 contour · 2 both
+  // ints: (_pad, _pad, uStopCount, _pad)
   ints: vec4<i32>,
   // bg: (background.rgb (linear), hasBackground)
   bg: vec4<f32>,
-  // norm: (uFieldNorm, uAspect, _pad, _pad) — field → [0,1] scale
+  // norm: (uFieldNorm, uAspect, lightDirX, lightDirY)
   norm: vec4<f32>,
-  // line: (lineHalfWidth, aaSoftness, contourLevels, _pad) — stroke geometry (field units)
+  // line: (lineHalfWidth, aaSoftness, contourLevels, indexEvery)
   line: vec4<f32>,
-  // each ring row: (amplitude, wavelength, phase, _pad)
-  rings: array<vec4<f32>, 8>,
-  // each center row: (x, y, weight, rotAlpha)
-  centers: array<vec4<f32>, 4>,
+  // wave: (waveDirX, waveDirY, waveK, waveOmega)
+  wave: vec4<f32>,
+  // wave2: (waveSigma, twistMax, shearMax, amp)
+  wave2: vec4<f32>,
+  // topo: (heightOctaves, heightSeed, swellAmp, perturbAmp)
+  topo: vec4<f32>,
+  // cursor: (cursorX, cursorY, cursorWell, interactive)
+  cursor: vec4<f32>,
+  // tune: (toneGain, shadeAmp, indexMul, inkDarken)
+  tune: vec4<f32>,
   // each palette stop: linear-sRGB rgb + _pad
   palette: array<vec4<f32>, 4>,
 };
@@ -54,11 +55,10 @@ struct ConcentricUniforms {
 ${OETF_WGSL}
 ${OKLCH_MATRICES_WGSL}
 
-// Full-screen-triangle (the pilot idiom): NDC corners (-1,-1),(3,-1),(-1,3) cover the
-// viewport from a single 3-vertex draw — no vertex buffer.
+// Full-screen-triangle (the pilot idiom).
 struct VSOut {
   @builtin(position) pos: vec4<f32>,
-  @location(0) uv: vec2<f32>,  // domain [-1,1]², aspect-corrected x
+  @location(0) uv: vec2<f32>,
 };
 
 @vertex
@@ -73,130 +73,84 @@ fn vs_main(@builtin(vertex_index) vi: u32) -> VSOut {
   return out;
 }
 
-// The ellipsoidal radial distance in the family's ROTATED frame R(−α): rotate (p − c) by
-// −α, then scale by (a,b). Transcribes ringField.ts ellipsoidalRadiusRot.
-fn ellipsoidalRadiusRot(p: vec2<f32>, center: vec2<f32>, rotAlpha: f32, axisA: f32, axisB: f32) -> f32 {
-  let ca = cos(rotAlpha);
-  let sa = sin(rotAlpha);
-  let px = p.x - center.x;
-  let py = p.y - center.y;
-  let rx = ca * px + sa * py;
-  let ry = -sa * px + ca * py;
-  let dx = rx / max(axisA, 1e-4);
-  let dy = ry / max(axisB, 1e-4);
-  return sqrt(dx * dx + dy * dy);
+// ── The host noise basis (the SAME quintic-faded value-noise the suite speaks) ──
+fn hash21(x: f32, y: f32) -> f32 {
+  var px = fract(x * 0.1031);
+  var py = fract(y * 0.1031);
+  var pz = fract(x * 0.1031);
+  let d = px * (py + 33.33) + py * (pz + 33.33) + pz * (px + 33.33);
+  px = px + d; py = py + d; pz = pz + d;
+  return fract((px + py) * pz);
 }
-
-// |∇r| of the rotated ellipsoidal radius — closed-form (the IQ distance-estimation
-// denominator). Transcribes ringField.ts ellipsoidalGradMag.
-fn ellipsoidalGradMag(p: vec2<f32>, center: vec2<f32>, rotAlpha: f32, axisA: f32, axisB: f32) -> f32 {
-  let ca = cos(rotAlpha);
-  let sa = sin(rotAlpha);
-  let px = p.x - center.x;
-  let py = p.y - center.y;
-  let rx = ca * px + sa * py;
-  let ry = -sa * px + ca * py;
-  let a = max(axisA, 1e-4);
-  let b = max(axisB, 1e-4);
-  let sx = rx / a;
-  let sy = ry / b;
-  let r = sqrt(sx * sx + sy * sy);
-  let gx = sx / a;
-  let gy = sy / b;
-  return sqrt(gx * gx + gy * gy) / max(r, 1e-4);
+fn valueNoise(x: f32, y: f32) -> f32 {
+  let ix = floor(x); let iy = floor(y);
+  let fx = x - ix; let fy = y - iy;
+  let ux = fx * fx * fx * (fx * (fx * 6.0 - 15.0) + 10.0);
+  let uy = fy * fy * fy * (fy * (fy * 6.0 - 15.0) + 10.0);
+  let a = hash21(ix, iy);
+  let b = hash21(ix + 1.0, iy);
+  let c = hash21(ix, iy + 1.0);
+  let d2 = hash21(ix + 1.0, iy + 1.0);
+  return mix(mix(a, b, ux), mix(c, d2, ux), uy);
 }
-
-// The radial-Fourier ring-interference value f(p,t) — the multi-center weighted sum of
-// CLEAN radial sinusoids (the BEAT ENVELOPE; transcribes ringField.ts sampleRingField).
-fn sampleRingField(p: vec2<f32>, t: f32) -> f32 {
-  var acc = 0.0;
-  let speed = u.u0.y;
-  let axisA = u.u0.z;
-  let axisB = u.u0.w;
-  let centerCount = u.ints.x;
-  let ringCount = u.ints.y;
-  for (var j = 0; j < MAX_CENTERS; j = j + 1) {
-    if (j >= centerCount) { break; }
-    let cj = u.centers[j];
-    let radius = ellipsoidalRadiusRot(p, cj.xy, cj.w, axisA, axisB);
-    var centerSum = 0.0;
-    for (var i = 0; i < MAX_RINGS; i = i + 1) {
-      if (i >= ringCount) { break; }
-      let r = u.rings[i];
-      let k = TAU / max(r.y, 1e-4);
-      let omega = sqrt(RING_GRAVITY * k) * speed;
-      let theta = k * radius - omega * t + r.z;
-      centerSum = centerSum + r.x * sin(theta);
-    }
-    acc = acc + centerSum * cj.z;
+// The single-octave potential the curl operator wraps + the height field samples.
+fn potentialFBM(p: vec2f) -> f32 {
+  var v = 0.0; var amp = 0.5; var freq = 1.0;
+  var px = p.x; var py = p.y;
+  for (var i = 0; i < 3; i = i + 1) {
+    v = v + amp * valueNoise(px * freq, py * freq);
+    let rx = 0.8 * px - 0.6 * py;
+    let ry = 0.6 * px + 0.8 * py;
+    px = rx; py = ry; freq = freq * 2.0; amp = amp * 0.5;
   }
-  return acc;
+  return v;
 }
 
-// The IQ gradient-normalized isoline INK + the beat ENVELOPE — the per-pixel line strength
-// (brightest-wins union over every family × ring crest) and the raw envelope (the hue
-// driver). Transcribes ringField.ts ringIsolineInk.
-struct InkEnv { ink: f32, env: f32, };
-fn ringIsolineInk(p: vec2<f32>, t: f32) -> InkEnv {
-  var ink = 0.0;
-  var env = 0.0;
-  let speed = u.u0.y;
-  let axisA = u.u0.z;
-  let axisB = u.u0.w;
-  let centerCount = u.ints.x;
-  let ringCount = u.ints.y;
-  let lineHalfW = u.line.x;
-  let aa = u.line.y;
-  for (var j = 0; j < MAX_CENTERS; j = j + 1) {
-    if (j >= centerCount) { break; }
-    let cj = u.centers[j];
-    let radius = ellipsoidalRadiusRot(p, cj.xy, cj.w, axisA, axisB);
-    let gradR = ellipsoidalGradMag(p, cj.xy, cj.w, axisA, axisB);
-    for (var i = 0; i < MAX_RINGS; i = i + 1) {
-      if (i >= ringCount) { break; }
-      let r = u.rings[i];
-      let k = TAU / max(r.y, 1e-4);
-      let omega = sqrt(RING_GRAVITY * k) * speed;
-      let phase = k * radius - omega * t + r.z;
-      let s = sin(phase);
-      let cphase = abs(cos(phase));
-      let gradPhase = max(k * gradR, 1e-4);
-      // The IQ gradient-normalized distance-to-isoline (domain units; round-trips JS).
-      let de = abs(s) / max(cphase * gradPhase, 1e-4);
-      // Convert the domain-units distance to PIXELS via fwidth(phase) (the device
-      // per-pixel phase change) so the stroke is a constant pixel width everywhere —
-      // lineHalfW/aa are in pixels (NOT fwidthFine, Compatibility-Mode safe).
-      let dPx = max(fwidth(phase), 1e-4);
-      let dePx = de * gradPhase / dPx;
-      var lineV = 1.0 - smoothstep(lineHalfW, lineHalfW + aa, dePx);
-      // Analytic anti-aliasing: where the rings pack tighter than the pixel can resolve
-      // (fwidth(phase) ≳ π, near a center / under DPR), FADE the line out instead of
-      // flooding to a solid mass (IQ filterwidth — the aliasing-fade that keeps the field
-      // thin LINES, not a bright slab where the rings converge).
-      let aliasFade = 1.0 - smoothstep(PI * 0.6, PI * 1.2, dPx);
-      lineV = lineV * aliasFade;
-      let w = r.x * cj.z;
-      ink = max(ink, lineV * w);
-      env = env + s * w;
-    }
+// The shared curl + wave chunks (splice AFTER valueNoise + potentialFBM are declared).
+${CURL_FBM_WGSL}
+${WAVE_FIELD_WGSL}
+
+fn smoothstepEdge(e0: f32, e1: f32, x: f32) -> f32 {
+  let t = clamp((x - e0) / max(e1 - e0, 1e-6), 0.0, 1.0);
+  return t * t * (3.0 - 2.0 * t);
+}
+
+// The level-set height at domain p (transcribes levelField.ts sampleHeight). The sampling
+// coordinate is cell-twisted (the SAME wave that twists paper-grid cells — kinship); the
+// height is a low-octave topography + the swell + the cursor peak.
+fn sampleHeight(p: vec2f, t: f32) -> f32 {
+  // The CONTINUOUS traveling-wave flow warp (no per-cell seam — the contours flow + twist as
+  // the wave passes OVER and THROUGH them, the SAME wave that twists the paper-grid cells).
+  var g = waveFlow(p, t, u.wave.xy, u.wave.z, u.wave.w, u.wave2.x, u.wave2.y, u.wave2.w);
+  if (u.cursor.w > 0.5) {
+    g = cursorSwirl(g, u.cursor.xy, u.cursor.z * 0.6, u.u0.z * 2.5);
   }
-  var oe: InkEnv;
-  oe.ink = clamp(ink, 0.0, 1.0);
-  oe.env = env;
-  return oe;
+  // Sample the topography at a LOW base frequency so the basins are BROAD nested loops (a
+  // readable contour map — not a fine speckle). heightOctaves carries the fractal detail.
+  var H = heightField(g * 0.9, u.topo.x, u.topo.y);
+  H = H + u.topo.z * waveSwell(t, u.topo.y);
+  if (u.cursor.w > 0.5) {
+    let d = p - u.cursor.xy;
+    let d2 = dot(d, d);
+    // The cursor HEAVE — a SOFT bulge (a Gaussian peak feathered by a smoothstep falloff so
+    // the heave is C1-smooth, NOT the hard-edged quad the old dark render showed). The well
+    // depth/radius already carry the velocity-HEAVE scale (packed JS-side into u.cursor.z).
+    let g0 = exp(-d2 / 0.22);
+    let fall = smoothstepEdge(0.0, 0.55, exp(-d2 / 0.6));
+    H = H + u.cursor.z * g0 * fall;
+  }
+  return H;
 }
 
-// The topographic-contour operator: the isolines of the STATIC interference envelope at N
-// evenly-spaced heights. de_contour = |fract(f·N + 0.5) − 0.5| / |fwidth(f·N)| — the IQ
-// contour-line form. fwidth is the device pixel-derivative safety clamp on the composite
-// ONLY (NOT fwidthFine — Compatibility-Mode safe on Metal/WebKit).
-fn contourInk(envValue: f32, levels: f32) -> f32 {
-  let fN = envValue * levels;
+// The IQ gradient-free level-set contour ink — KEPT BYTE-FROZEN (the perfect GPU AA). It is
+// FED the per-level half-width 'hw' (a parameter, NOT a re-derivation): de_contour =
+// |fract(fN + 0.5) − 0.5| / fwidth(fN). The contour density tracks 1/|∇H| automatically.
+// 'aaW' floors against a DPR-aware minimum so the index line stays CONTINUOUS where the heave
+// packs contours (steep |∇H| saturates fwidth — challenge R4).
+fn contourInk(fN: f32, hw: f32) -> f32 {
   let band = abs(fract(fN + 0.5) - 0.5);
-  // fwidth is the device pixel-derivative safety clamp (NOT fwidthFine — Compatibility-Mode
-  // safe on Metal/WebKit).
-  let aaW = max(fwidth(fN), 1e-4);
-  return 1.0 - smoothstep(u.line.x, u.line.x + u.line.y, band / aaW);
+  let aaW = max(fwidth(fN), 6e-4);
+  return 1.0 - smoothstepEdge(hw, hw + u.line.y, band / aaW);
 }
 
 // Sample the multi-stop palette (linear-sRGB stops, OKLab mix). t in [0,1].
@@ -213,45 +167,50 @@ fn samplePaletteLin(t: f32) -> vec3<f32> {
   return oklabToLinearSrgb(mix(labA, labB, f));
 }
 
+// The SHARED hillshade finite-diff epsilon — pinned ONCE (mirrors levelField.HILLSHADE_EPSILON
+// + the GLSL twin; a per-backend drift would red the L6 numeric parity).
+const HILLSHADE_E: f32 = 0.012;
+
 @fragment
 fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
-  // aspect-correct the domain x so the rings read circular under the ellipsoidal norm.
   let aspect = max(u.norm.y, 1e-4);
   let p = vec2<f32>(in.uv.x * aspect, in.uv.y);
-  let t = u.u0.x;
-  let mode = u.ints.w;  // 0 traveling-rings · 1 static-contour · 2 both
-  let levels = u.line.z;
+  let t = u.u0.x * u.u0.y;
+  let levels = max(u.line.z, 1.0);
 
-  // The isoline strokes (the LINES) + the beat envelope (the HUE).
-  let oe = ringIsolineInk(p, t);
-  var ink = oe.ink;
-  let env = oe.env;
+  // The level-set topography (the KEPT field — the PRIMARY path).
+  let H = sampleHeight(p, t);
 
-  // The static-contour mode draws elevation lines of the (static) envelope.
-  if (mode == 1) {
-    ink = contourInk(env * u.norm.x, max(levels, 1.0));
-  } else if (mode == 2) {
-    ink = max(ink, contourInk(env * u.norm.x, max(levels, 1.0)));
-  }
-  // fwidth safety clamp on the final line composite (Compatibility-Mode safe).
-  ink = clamp(ink, 0.0, 1.0);
+  // ── 1. HYPSOMETRIC TONE — tanh expands the compressed band so basins+ridges hit the ramp
+  //    ENDS (the live lumVar-flat cause). samplePaletteLin is the KEPT OKLab operator.
+  let tone = 0.5 + 0.5 * tanh(H * u.tune.x);
+  var fill = samplePaletteLin(tone);
 
-  // The beat-envelope drives the warm-family tone across the ramp (cream↔amber↔ember) so the
-  // crossing ring families read as warm-light interference; the saturated mid-amber reads on
-  // BOTH the cream page and the dark page (the warm-cream identity, NOT a themed hue).
-  let v = clamp(0.5 + env * u.norm.x, 0.0, 1.0);
-  let lin = samplePaletteLin(v);
-  let rgb = clamp(linearToSrgb(lin), vec3<f32>(0.0), vec3<f32>(1.0));
+  // ── 2. ANALYTIC HILLSHADE — one ∇H finite-diff at the SHARED e, dotted with the fixed cel
+  //    light → 2.5-D relief. A read-only re-sample of sampleHeight (no second field).
+  let e = HILLSHADE_E;
+  let hx = sampleHeight(p + vec2<f32>(e, 0.0), t) - sampleHeight(p - vec2<f32>(e, 0.0), t);
+  let hy = sampleHeight(p + vec2<f32>(0.0, e), t) - sampleHeight(p - vec2<f32>(0.0, e), t);
+  let grad = vec2<f32>(hx, hy) / (2.0 * e);
+  let L = normalize(u.norm.zw + vec2<f32>(1e-5, 1e-5));
+  let shade = 0.5 + 0.5 * clamp(dot(normalize(grad + vec2<f32>(1e-5)), L), -1.0, 1.0);
+  fill = fill * mix(1.0 - u.tune.y, 1.0 + u.tune.y, shade);
 
-  let hasBg = u.bg.w;
-  if (hasBg > 0.5) {
-    // opaque themed ground: composite the lit line over the themed bg.
-    let bg = clamp(linearToSrgb(u.bg.rgb), vec3<f32>(0.0), vec3<f32>(1.0));
-    let outRgb = mix(bg, rgb, ink);
-    return vec4<f32>(outRgb, 1.0);
-  }
-  // transparent ground: the LINE carries the alpha — the page reads through the troughs.
-  let alpha = ink;
-  return vec4<f32>(rgb * alpha, alpha);
+  // ── 3. TWO-TIER INDEX/MINOR CONTOUR — isIndex a pure f(level) (floor + mod + select, NOT a
+  //    state buffer); the per-level half-width hw is FED to the byte-frozen contourInk.
+  let fN = H * levels + u.topo.w * sin(floor(H * levels) * 2.4 + t * 0.7);
+  let indexEvery = max(u.line.w, 1.0);
+  let lvl = floor(fN);
+  let isIndex = select(0.0, 1.0, fract(lvl / indexEvery) < (0.5 / indexEvery));
+  let hw = mix(u.line.x, u.line.x * u.tune.z, isIndex);
+  let ink = clamp(contourInk(fN, hw), 0.0, 1.0);
+
+  // ── 4. INK = a darker ember of the LOCAL fill (the edge-of-its-own-band signature).
+  let inkCol = mix(fill, fill * u.tune.w, 0.85);
+
+  // ── 5. ONE color path + OPAQUE OUT — the viz IS the colorful field, never lines-over-nothing.
+  //    Per-mode is resolved in the CONSUMED stops + the bg token (no in-shader uMode branch).
+  let col = mix(fill, inkCol, ink);
+  return vec4<f32>(clamp(linearToSrgb(col), vec3<f32>(0.0), vec3<f32>(1.0)), 1.0);
 }
 `;

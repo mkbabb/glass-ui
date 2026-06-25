@@ -19,6 +19,8 @@ export {
     sampleVelocity,
     gerstnerVelocity,
     curlFBM,
+    pointerVortex,
+    type VortexParams,
     buildWaveLadder,
     gridOrigin,
     sampleHeight,

@@ -24,6 +24,12 @@ const TAU: f32 = 6.283185307179586;
 const MAX_CURVE_SAMPLES: i32 = 384;
 const MAX_PHASORS: i32 = 64;
 const MAX_FOURIER_STOPS: i32 = 4;
+// BD.W-FOURIER-LOOM §2b — the degenerate-tangent guard (must equal FOURIER_TANGENT_EPS in
+// constants.ts + the GL CPU bead path so a cusp resolves IDENTICALLY across both engines).
+const TANGENT_EPS: f32 = 1e-4;
+// The speed yardstick: the head speed (model units between curveSamples[0] and [1]) is
+// normalized against this many trail half-widths so ŝ ∈ [0,1] is scale-free + parity-safe.
+const SPEED_REF_HALFWIDTHS: f32 = 6.0;
 
 // ── Render uniforms (the typed-struct source-of-truth — see uniformBridgeWGPU.ts) ──
 struct RenderUniforms {
@@ -33,6 +39,8 @@ struct RenderUniforms {
   r1: vec4<f32>,
   // r2: (trailFloor, intensity, showEpicycles, rainbowChain)
   r2: vec4<f32>,
+  // r3: (squashGain, celGain, _pad, _pad) — FOURIER-LOOM §2b/§3b
+  r3: vec4<f32>,
   // ints: (sampleCount, armCount, stopCount, _pad)
   ints: vec4<i32>,
   // palette stops: linear-sRGB rgb + _pad
@@ -84,6 +92,37 @@ fn segDist(p: vec2<f32>, a: vec2<f32>, b: vec2<f32>) -> f32 {
   return length(pa - ba * h);
 }
 
+// BD.W-FOURIER-LOOM §2b — the head travel frame: the unit tangent T from curveSamples[0]
+// (head) vs [1] (one step back) + the normalized speed ŝ ∈ [0,1]. The cusp guard returns
+// the +x axis as the stable fallback when s ≤ TANGENT_EPS, identical to the GL CPU path.
+struct HeadFrame { T: vec2<f32>, sHat: f32, };
+fn headFrame(head: vec2<f32>, headBack: vec2<f32>, halfW: f32) -> HeadFrame {
+  let d = head - headBack;
+  let s = length(d);
+  var out: HeadFrame;
+  if (s <= TANGENT_EPS) {
+    out.T = vec2<f32>(1.0, 0.0);
+    out.sHat = 0.0;
+    return out;
+  }
+  out.T = d / s;
+  let ref = max(halfW * SPEED_REF_HALFWIDTHS, 1e-6);
+  out.sHat = clamp(s / ref, 0.0, 1.0);
+  return out;
+}
+
+// The volume-preserving anisotropic head distance: project (p − head) onto T and T⊥, stretch
+// the tangent extent by (1 + k·ŝ) and squeeze the normal extent by 1/(1 + k·ŝ), then length.
+// k = 0 (or ŝ = 0) collapses to the round disc length(p − head) — byte-frozen at rest.
+fn headAniso(p: vec2<f32>, head: vec2<f32>, fr: HeadFrame, k: f32) -> f32 {
+  let g = 1.0 + k * fr.sHat;
+  let n = vec2<f32>(-fr.T.y, fr.T.x);
+  let rel = p - head;
+  let along = dot(rel, fr.T) / g;
+  let across = dot(rel, n) * g;
+  return length(vec2<f32>(along, across));
+}
+
 struct VSOut {
   @builtin(position) pos: vec4<f32>,
   @location(0) model: vec2<f32>,   // model-space coordinate of this fragment
@@ -124,9 +163,52 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
   let armCount = u.ints.y;
   let showEpicycles = u.r2.z > 0.5;
   let rainbow = u.r2.w > 0.5;
+  let squashGain = u.r3.x;                 // FOURIER-LOOM §2b
+  let celGain = u.r3.y;                    // FOURIER-LOOM §3b
   let halfW = trailWidth * 0.5;
 
+  // BD.W-FOURIER-LOOM §2b — the head travel frame (the SAME curveSamples[0]/[1] both engines
+  // read → parity by construction). The cel offset (§3b) rides −T (opposite travel).
+  var headFr: HeadFrame;
+  headFr.T = vec2<f32>(1.0, 0.0);
+  headFr.sHat = 0.0;
+  if (sampleCount >= 2) {
+    headFr = headFrame(curveSamples[0].xy, curveSamples[1].xy, halfW);
+  }
+  let celOff = -headFr.T * halfW * 1.4;    // the ink lags behind the travel
+
   var accum = vec4<f32>(0.0);              // premultiplied accumulation
+
+  // ── §3b — the cartoon CEL-SHADOW: a darker offset copy of the chain + rope, opposite
+  //    travel, painted FIRST (it sits UNDER the lit chain). PRM-static (the frozen-T travel
+  //    frame is a fixed offset, no live sweep). celGain = 0 → no pass (byte-frozen). ──
+  if (celGain > 0.001) {
+    let ink = vec3<f32>(0.0);              // pure ink — the technicolor 2-tone shadow
+    let celA = clamp(celGain, 0.0, 1.0);
+    // the rope cel (one offset distance-to-curve band).
+    for (var i = 0; i < MAX_CURVE_SAMPLES; i = i + 1) {
+      if (i >= sampleCount - 1) { break; }
+      let sa = curveSamples[i].xy + celOff;
+      let sb = curveSamples[i + 1].xy + celOff;
+      let d = segDist(p, sa, sb);
+      let cover = 1.0 - smoothstep(halfW, halfW + aa, d);
+      if (cover < 0.002) { continue; }
+      let m = cover * celA * peak;
+      accum = vec4<f32>(ink * m, m) + accum * (1.0 - m);
+    }
+    // the chain cel (arms only — the bold scaffold ink).
+    if (showEpicycles && armCount >= 1) {
+      for (var k = 0; k < MAX_PHASORS; k = k + 1) {
+        if (k >= armCount) { break; }
+        let a = chainTips[k].xy + celOff;
+        let b = chainTips[k + 1].xy + celOff;
+        let dArm = segDist(p, a, b);
+        let armMask = 1.0 - smoothstep(halfW * 0.55, halfW * 0.55 + aa, dArm);
+        let m = armMask * celA * peak * 0.7;
+        accum = vec4<f32>(ink * m, m) + accum * (1.0 - m);
+      }
+    }
+  }
 
   // ── Epicycle scaffolding (orbit rings + arms + joint dots) UNDER the curve ──
   if (showEpicycles && armCount >= 1) {
@@ -172,10 +254,12 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
     accum = vec4<f32>(rgb * a, a) + accum * (1.0 - a);
   }
 
-  // ── The comet HEAD — halo + saturated core + white specular at curveSamples[0] ──
+  // ── The comet HEAD — squash-and-stretch (§2b) halo + saturated core + white specular.
+  //    dHead is the volume-preserving anisotropic distance off the travel frame; at rest
+  //    (sHat=0) or squashGain=0 it collapses to the round disc length(p − head). ──
   if (sampleCount >= 1) {
     let head = curveSamples[0].xy;
-    let dHead = length(p - head);
+    let dHead = headAniso(p, head, headFr, squashGain);
     let coreR = halfW * 1.5;
     let haloR = coreR * 3.0;
     let headLin = samplePaletteLin(0.0);

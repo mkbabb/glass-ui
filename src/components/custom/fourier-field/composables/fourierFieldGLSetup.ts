@@ -43,6 +43,12 @@ export interface FourierGLSetupDeps {
     getHeadT: () => number;
     shouldContinue: () => boolean;
     onFrame?: (timeSec: number) => void;
+    /**
+     * BD.W-VIZ-BROKEN-FIX D6b — the 2-D cursor FOLLOW (model-space center lean). Mirrors the
+     * WGSL arm exactly (both read the SAME uFit center) — parity-safe by construction.
+     * `{x:0,y:0}` (ambient/PRM) is byte-identical to today.
+     */
+    getPointerLean?: () => { x: number; y: number };
 }
 
 function compile(gl: WebGL2RenderingContext, type: number, src: string): WebGLShader {
@@ -63,6 +69,7 @@ export function createFourierGLSetup(
 ): (gl: WebGL2RenderingContext) => WebGLCanvasFrame {
     const { canvas, config, getSpectrum, getPalette, getHeadT, shouldContinue, onFrame } =
         deps;
+    const getPointerLean = deps.getPointerLean;
 
     return function setupGL(gl) {
         const vs = compile(gl, gl.VERTEX_SHADER, FOURIER_FIELD_VERT_GLSL);
@@ -95,6 +102,7 @@ export function createFourierGLSetup(
         const uFit = u("uFit");
         const uTrail = u("uTrail");
         const uEnv = u("uEnv");
+        const uLoom = u("uLoom"); // FOURIER-LOOM §2b/§3b — (squashGain, celGain, _pad, _pad)
         const uSampleCount = u("uSampleCount");
         const uArmCount = u("uArmCount");
         const uStopCount = u("uStopCount");
@@ -197,7 +205,18 @@ export function createFourierGLSetup(
             gl.clearColor(0, 0, 0, 0);
             gl.clear(gl.COLOR_BUFFER_BIT);
 
-            gl.uniform4f(uFit, fit.centerX, fit.centerY, fit.scale, aspect);
+            // D6b — lean the view-fit CENTER toward the cursor (the 2-D follow). SUBTRACT the
+            // cursor's model offset so the content pans TOWARD the cursor on screen (the
+            // clip→model map p = center + vClip*aspect/scale). Mirrors the WGSL arm exactly;
+            // ambient/PRM is {0,0} → byte-identical. The ONE uFit uniform carries it.
+            const lean = getPointerLean?.() ?? { x: 0, y: 0 };
+            gl.uniform4f(
+                uFit,
+                fit.centerX - lean.x,
+                fit.centerY - lean.y,
+                fit.scale,
+                aspect,
+            );
             gl.uniform4f(
                 uTrail,
                 trailModel,
@@ -212,6 +231,9 @@ export function createFourierGLSetup(
                 config.showEpicycles ? 1 : 0,
                 config.rainbowChain ? 1 : 0,
             );
+            // FOURIER-LOOM §2b/§3b — the squash + cel gains (the tangent is derived in-shader
+            // off uCurve[0]/[1], the SAME evaluator both engines step → parity by construction).
+            gl.uniform4f(uLoom, config.squashGain, config.celGain, 0, 0);
             gl.uniform1i(uSampleCount, sampleCount);
             gl.uniform1i(uArmCount, armN);
             gl.uniform1i(uStopCount, stopCount);

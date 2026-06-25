@@ -6,27 +6,20 @@ export {
 } from "./composables/useConcentric";
 export {
     type ConcentricConfig,
-    type ConcentricRenderMode,
-    renderModeToInt,
     DEFAULT_CONCENTRIC_CONFIG,
-    DEFAULT_RING_COMPONENTS,
-    DEFAULT_CENTERS,
     WARM_IDENTITY_PALETTE,
-    buildDefaultRingComponents,
-    MAX_RINGS,
-    MAX_CENTERS,
+    WARM_IDENTITY_PALETTE_DARK,
+    WARM_GROUND_LIGHT,
+    WARM_GROUND_DARK,
     MAX_RING_STOPS,
 } from "./constants";
 export {
-    type RingComponent,
-    type RingCenter,
     type Vec2,
-    sampleRingField,
-    ringIsolineInk,
-    ellipsoidalRadius,
-    ellipsoidalRadiusRot,
-    ellipsoidalGradMag,
-    buildRingFamily,
-    RING_GRAVITY,
-} from "./composables/ringField";
+    type LevelFieldParams,
+    sampleHeight,
+    toneFromHeight,
+    hillshade,
+    isIndexLevel,
+    HILLSHADE_EPSILON,
+} from "./composables/levelField";
 export type { OklchStop } from "../../../composables/color";

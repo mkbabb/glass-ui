@@ -23,8 +23,13 @@ import {
     MAX_BLOB_STOPS,
     UNIFORM_NAMES,
 } from "../../goo-blob/constants";
-import { GOO_DOT_WGSL } from "../shaders/goo-dot.wgsl";
-import { GOO_DOT_VERT_GLSL, GOO_DOT_FRAG_GLSL } from "../shaders/goo-dot.frag";
+import { GOO_DOT_WGSL, GOO_DOT_GROUND_WGSL } from "../shaders/goo-dot.wgsl";
+import {
+    GOO_DOT_VERT_GLSL,
+    GOO_DOT_FRAG_GLSL,
+    GOO_DOT_GROUND_VERT_GLSL,
+    GOO_DOT_GROUND_FRAG_GLSL,
+} from "../shaders/goo-dot.frag";
 import {
     GOO_DOT_UNIFORM_BYTES,
     createGooDotScratch,
@@ -39,10 +44,19 @@ const SHADER_STAGE_FRAGMENT = 0x2;
 
 export const GOO_DOT_LABEL = "[GooDotMatrix]";
 
-/** The one-time WGPU resources the per-frame closure reads (pipeline + the two buffers + scratch). */
+/** The ground uniform buffer byte size — ONE vec4 (uGroundTime, aspect, pad, pad). */
+export const GOO_DOT_GROUND_BYTES = 16;
+
+/** The one-time WGPU resources the per-frame closure reads (the dot pipeline + the ground
+ * pipeline (Move 4a, pass-1) + the buffers + scratch). */
 export interface GooDotWGPUResources {
     pipeline: GPURenderPipeline;
     bindGroup: GPUBindGroup;
+    /** Move 4a — the warm-ground pass-1 pipeline (its own minimal shader, NOT Aurora). */
+    groundPipeline: GPURenderPipeline;
+    groundBindGroup: GPUBindGroup;
+    groundBuffer: GPUBuffer;
+    groundScratch: Float32Array;
     fieldBuffer: GPUBuffer;
     dotBuffer: GPUBuffer;
     fieldScratch: BlobWGPUUniformScratch;
@@ -122,9 +136,53 @@ export function createGooDotWGPUResources(
             { binding: 1, resource: { buffer: dotBuffer } },
         ],
     });
+
+    // ── Move 4a — the warm-ground pass-1 pipeline (its OWN minimal module, NOT Aurora). +1
+    // pipeline / +1 module / +1 BGL / +1 draw, in the ONE owned context. Opaque (no blend);
+    // drawn first with loadOp:"clear", the dot pass-2 loads over it.
+    const groundModule = device.createShaderModule({
+        label: `${GOO_DOT_LABEL} goo-dot-ground.wgsl`,
+        code: GOO_DOT_GROUND_WGSL,
+    });
+    const groundBuffer = device.createBuffer({
+        label: `${GOO_DOT_LABEL} ground-uniforms`,
+        size: GOO_DOT_GROUND_BYTES,
+        usage: BUFFER_USAGE_UNIFORM | BUFFER_USAGE_COPY_DST,
+    });
+    const groundBgl = device.createBindGroupLayout({
+        label: `${GOO_DOT_LABEL} ground-bgl`,
+        entries: [
+            {
+                binding: 0,
+                visibility: SHADER_STAGE_FRAGMENT,
+                buffer: { type: "uniform" },
+            },
+        ],
+    });
+    const groundPipeline = device.createRenderPipeline({
+        label: `${GOO_DOT_LABEL} ground-pipeline`,
+        layout: device.createPipelineLayout({ bindGroupLayouts: [groundBgl] }),
+        vertex: { module: groundModule, entryPoint: "vs_main" },
+        fragment: {
+            module: groundModule,
+            entryPoint: "fs_main",
+            targets: [{ format }],
+        },
+        primitive: { topology: "triangle-list" },
+    });
+    const groundBindGroup = device.createBindGroup({
+        label: `${GOO_DOT_LABEL} ground-bg`,
+        layout: groundBgl,
+        entries: [{ binding: 0, resource: { buffer: groundBuffer } }],
+    });
+
     return {
         pipeline,
         bindGroup,
+        groundPipeline,
+        groundBindGroup,
+        groundBuffer,
+        groundScratch: new Float32Array(GOO_DOT_GROUND_BYTES / 4),
         fieldBuffer,
         dotBuffer,
         fieldScratch: createBlobWGPUUniformScratch(),
@@ -132,7 +190,8 @@ export function createGooDotWGPUResources(
     };
 }
 
-/** The dot-grid uniform locations (the dot extend, beside the field locations). */
+/** The dot-grid uniform locations (the dot extend, beside the field locations). The N named
+ * scalars are the GLSL twin of the WGSL s8–s13 lane-fields; a unit asserts count parity. */
 export interface GooDotGLUniforms {
     mode: WebGLUniformLocation | null;
     pix: WebGLUniformLocation | null;
@@ -145,9 +204,29 @@ export interface GooDotGLUniforms {
     pa: WebGLUniformLocation | null;
     cursor: WebGLUniformLocation | null;
     bloom: WebGLUniformLocation | null;
+    shadowGate: WebGLUniformLocation | null;
+    presenceFloor: WebGLUniformLocation | null;
+    weldLo: WebGLUniformLocation | null;
+    weldHi: WebGLUniformLocation | null;
+    time: WebGLUniformLocation | null;
+    weldSwell: WebGLUniformLocation | null;
+    weldSpecular: WebGLUniformLocation | null;
+    flowAmt: WebGLUniformLocation | null;
+    latticeSquash: WebGLUniformLocation | null;
 }
 
-/** The one-time GL resources the per-frame closure reads (program + VAO + the field + dot locations). */
+/** The Move 4a warm-ground GL program (the WebGL2/Safari tail of pass-1). */
+export interface GooDotGroundGLResources {
+    prog: WebGLProgram;
+    vs: WebGLShader;
+    fs: WebGLShader;
+    vao: WebGLVertexArrayObject;
+    buf: WebGLBuffer;
+    uTime: WebGLUniformLocation | null;
+}
+
+/** The one-time GL resources the per-frame closure reads (program + VAO + the field + dot
+ * locations + the Move 4a ground program). */
 export interface GooDotGLResources {
     prog: WebGLProgram;
     vs: WebGLShader;
@@ -156,6 +235,7 @@ export interface GooDotGLResources {
     vao: WebGLVertexArrayObject;
     locs: MetaballUniformLocations;
     dU: GooDotGLUniforms;
+    ground: GooDotGroundGLResources;
 }
 
 /**
@@ -217,7 +297,7 @@ export function createGooDotGLResources(
         paletteLocs,
     };
 
-    // The dot-grid uniform locations (the extend).
+    // The dot-grid uniform locations (the extend — the N named scalars).
     const dU: GooDotGLUniforms = {
         mode: gl.getUniformLocation(prog, "uDotMode"),
         pix: gl.getUniformLocation(prog, "uDotPixelSize"),
@@ -230,10 +310,46 @@ export function createGooDotGLResources(
         pa: gl.getUniformLocation(prog, "uDotPointerActive"),
         cursor: gl.getUniformLocation(prog, "uDotCursor"),
         bloom: gl.getUniformLocation(prog, "uDotBloom"),
+        shadowGate: gl.getUniformLocation(prog, "uDotShadowGate"),
+        presenceFloor: gl.getUniformLocation(prog, "uPresenceFloor"),
+        weldLo: gl.getUniformLocation(prog, "uWeldLo"),
+        weldHi: gl.getUniformLocation(prog, "uWeldHi"),
+        time: gl.getUniformLocation(prog, "uDotTime"),
+        weldSwell: gl.getUniformLocation(prog, "uWeldSwell"),
+        weldSpecular: gl.getUniformLocation(prog, "uWeldSpecular"),
+        flowAmt: gl.getUniformLocation(prog, "uFlowAmt"),
+        latticeSquash: gl.getUniformLocation(prog, "uLatticeSquash"),
     };
+
+    // ── Move 4a — the warm-ground program (the WebGL2 tail of pass-1). Its own full-quad VAO
+    // (the dot pass reuses the shared field-upload quad; this one is independent).
+    const gVs = compileShader(gl, gl.VERTEX_SHADER, GOO_DOT_GROUND_VERT_GLSL, GOO_DOT_LABEL);
+    const gFs = compileShader(gl, gl.FRAGMENT_SHADER, GOO_DOT_GROUND_FRAG_GLSL, GOO_DOT_LABEL);
+    const gProg = linkProgram(gl, gVs, gFs, GOO_DOT_LABEL);
+    const gVao = gl.createVertexArray()!;
+    gl.bindVertexArray(gVao);
+    const gBuf = gl.createBuffer()!;
+    gl.bindBuffer(gl.ARRAY_BUFFER, gBuf);
+    gl.bufferData(
+        gl.ARRAY_BUFFER,
+        new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
+        gl.STATIC_DRAW,
+    );
+    const gAPos = gl.getAttribLocation(gProg, "aPosition");
+    gl.enableVertexAttribArray(gAPos);
+    gl.vertexAttribPointer(gAPos, 2, gl.FLOAT, false, 0, 0);
+    const ground: GooDotGroundGLResources = {
+        prog: gProg,
+        vs: gVs,
+        fs: gFs,
+        vao: gVao,
+        buf: gBuf,
+        uTime: gl.getUniformLocation(gProg, "uGroundTime"),
+    };
+    gl.bindVertexArray(null);
 
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
 
-    return { prog, vs, fs, buf, vao, locs, dU };
+    return { prog, vs, fs, buf, vao, locs, dU, ground };
 }

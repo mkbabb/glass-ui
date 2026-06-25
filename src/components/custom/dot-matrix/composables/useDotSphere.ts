@@ -59,7 +59,17 @@ export interface DotSetupDeps {
     shouldContinue: () => boolean;
     /** The per-frame pointer hook — advances the shared field (the no-own-rAF discipline). */
     onFrame?: (timeSec: number) => void;
+    /**
+     * The live `prefers-reduced-motion` state (read lazily — the handle resolves AFTER the
+     * setup closure is built). When true the frame PINS uTime to a fixed √φ rung so the spin
+     * AND the per-dot twinkle `sin` are bit-identical across runs (the deterministic static
+     * frame — G9). Capture mode is already deterministic via `renderAt(fixedT)`.
+     */
+    getReducedMotion?: () => boolean;
 }
+
+/** The √φ-rung uTime the PRM/static frame pins to (deterministic spin + twinkle). */
+const PRM_PINNED_TIME = 1.272019649514069; // √φ — the proportion-ladder constant, fixed
 
 function resolutionPx(canvas: HTMLCanvasElement): { w: number; h: number } {
     return { w: canvas.width || 1, h: canvas.height || 1 };
@@ -73,7 +83,7 @@ export function createDotWGPUSetup(
     context: GPUCanvasContext,
     format: GPUTextureFormat,
 ) => WebGPUCanvasFrame {
-    const { canvas, config, getPalette, pointer, shouldContinue, onFrame } = deps;
+    const { canvas, config, getPalette, pointer, shouldContinue, onFrame, getReducedMotion } = deps;
 
     return function setupWGPU(device, context, format) {
         const module = device.createShaderModule({
@@ -166,12 +176,15 @@ export function createDotWGPUSetup(
 
         function frame(timeSec: number): void {
             onFrame?.(timeSec);
+            // PRM → pin uTime to a fixed √φ rung so the spin + the per-dot twinkle are
+            // bit-identical across runs (the deterministic static frame; G9).
+            const drawTime = getReducedMotion?.() ? PRM_PINNED_TIME : timeSec;
             const dpr = resolveBudgetDpr();
-            const breath = breathRadius(timeSec, config.breathing, 0.6);
+            const breath = breathRadius(drawTime, config.breathing, 0.6);
             packDotRenderUniforms(
                 scratch,
                 config,
-                timeSec,
+                drawTime,
                 resolutionPx(canvas),
                 dpr,
                 pointer,
@@ -194,7 +207,7 @@ export function createDotWGPUSetup(
             });
             rpass.setPipeline(pipeline);
             rpass.setBindGroup(0, bindGroup);
-            rpass.draw(6, instanceCount, 0, 0); // 6 verts (quad) × N instances
+            rpass.draw(12, instanceCount, 0, 0); // 12 verts/instance: 6 dot + 6 cartoon-cast
             rpass.end();
             device.queue.submit([encoder.finish()]);
         }
@@ -243,7 +256,7 @@ function compileGL(
 export function createDotGLSetup(
     deps: DotSetupDeps,
 ): (gl: WebGL2RenderingContext) => WebGLCanvasFrame {
-    const { canvas, config, getPalette, pointer, shouldContinue, onFrame } = deps;
+    const { canvas, config, getPalette, pointer, shouldContinue, onFrame, getReducedMotion } = deps;
 
     return function setupGL(gl) {
         const vs = compileGL(gl, gl.VERTEX_SHADER, DOT_MATRIX_VERT_GLSL);
@@ -266,20 +279,8 @@ export function createDotGLSetup(
         const vao = gl.createVertexArray();
         gl.bindVertexArray(vao);
 
-        // The static quad corners (6 verts: two triangles).
-        const cornerBuf = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, cornerBuf);
-        gl.bufferData(
-            gl.ARRAY_BUFFER,
-            new Float32Array([
-                -1, -1, 1, -1, -1, 1,
-                -1, 1, 1, -1, 1, 1,
-            ]),
-            gl.STATIC_DRAW,
-        );
-        const cornerLoc = gl.getAttribLocation(program, "aCorner");
-        gl.enableVertexAttribArray(cornerLoc);
-        gl.vertexAttribPointer(cornerLoc, 2, gl.FLOAT, false, 0, 0);
+        // No corner attribute — the quad corners are re-derived in the vertex shader from
+        // `gl_VertexID % 6` (12 verts/instance: 6 the lit dot, 6 the cartoon offset-cast).
 
         // The instanced per-dot data (unitPos.xyz, sphereIdx) — divisor 1.
         const dotBuf = gl.createBuffer();
@@ -298,6 +299,8 @@ export function createDotGLSetup(
         const uU3 = u("uU3");
         const uU4 = u("uU4");
         const uU5 = u("uU5");
+        const uU6 = u("uU6");
+        const uU7 = u("uU7");
         const uSpin = u("uSpin");
         const uBg = u("uBg");
         const uStopCount = u("uStopCount");
@@ -318,12 +321,14 @@ export function createDotGLSetup(
 
         function frame(timeSec: number): void {
             onFrame?.(timeSec);
+            // PRM → pin uTime to a fixed √φ rung (deterministic spin + twinkle; G9).
+            const drawTime = getReducedMotion?.() ? PRM_PINNED_TIME : timeSec;
             const dpr = resolveBudgetDpr();
             const resW = canvas.width || 1;
             const resH = canvas.height || 1;
             const resMin = Math.min(resW, resH) || 1;
             const aspect = resW / Math.max(resH, 1);
-            const breath = breathRadius(timeSec, config.breathing, 0.6);
+            const breath = breathRadius(drawTime, config.breathing, 0.6);
 
             gl.useProgram(program);
             gl.bindVertexArray(vao);
@@ -338,7 +343,7 @@ export function createDotGLSetup(
             gl.clear(gl.COLOR_BUFFER_BIT);
 
             const dotSizeNdc = (config.dotSize * dpr * 2) / resMin;
-            gl.uniform4f(uU0, resW, resH, dpr, timeSec);
+            gl.uniform4f(uU0, resW, resH, dpr, drawTime);
             gl.uniform4f(uU1, config.radius, dotSizeNdc, config.baseOpacity, aspect);
             gl.uniform4f(uU2, 0.15, 0.85 * config.depthFade, 0.6, 0.4);
             gl.uniform4f(uU3, config.parallax, pointer.push, pointer.bloom, pointer.active);
@@ -350,10 +355,22 @@ export function createDotGLSetup(
                 config.background === "transparent" ? 0 : 1,
                 0,
             );
+            // The layout register + the cursor-gravity well + the plane scale.
+            const planeScale = 1.18 * Math.max(aspect, 1);
+            gl.uniform4f(
+                uU6,
+                config.layout === "plane" ? 1 : 0,
+                config.gravityStrength,
+                config.gravityRadius,
+                planeScale,
+            );
+            // The reclaimed velocity lane (velX, velY, twinkleRate, wakeStrength) — the
+            // directional-lens travel vector + the resting-twinkle clock + the spring-engaged wake.
+            gl.uniform4f(uU7, pointer.velX, pointer.velY, config.twinkle, pointer.active);
 
             // The spin matrix (column-major for the GLSL mat3 uniform — same columns).
             const m = spinMatrix(
-                timeSec,
+                drawTime,
                 (config.axisTilt * Math.PI) / 180,
                 config.rotationSpeed,
             );
@@ -383,7 +400,7 @@ export function createDotGLSetup(
             }
             gl.uniform3fv(uPalette, palData);
 
-            gl.drawArraysInstanced(gl.TRIANGLES, 0, 6, instanceCount);
+            gl.drawArraysInstanced(gl.TRIANGLES, 0, 12, instanceCount); // 6 dot + 6 cartoon-cast
             gl.bindVertexArray(null);
         }
 
@@ -394,7 +411,6 @@ export function createDotGLSetup(
             teardown: () => {
                 gl.deleteProgram(program);
                 gl.deleteVertexArray(vao);
-                gl.deleteBuffer(cornerBuf);
                 gl.deleteBuffer(dotBuf);
             },
         };

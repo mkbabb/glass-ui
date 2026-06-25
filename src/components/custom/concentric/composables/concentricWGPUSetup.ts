@@ -1,8 +1,8 @@
-// BB.W-VIZ-SUITE (W-CONCENTRIC) — the WebGPU `setupWGPU` builder (the primary path).
+// BD.W-CONCENTRIC-RELIEF — the WebGPU `setupWGPU` builder (the primary path).
 //
 // A pure fullscreen fragment pass (the aurora shape-class — no compute, no particles):
-// the full-screen-triangle `vs_main` + the `fs_main` radial-Fourier ring evaluator. Each
-// `frame(t)` records ONE command encoder: pack the uniform buffer (the typed-struct SoT),
+// the full-screen-triangle `vs_main` + the `fs_main` level-set hypsometric-survey evaluator.
+// Each `frame(t)` records ONE command encoder: pack the uniform buffer (the typed-struct SoT),
 // begin a render pass against the swap-chain view, draw 3 vertices, submit. It owns NO
 // scheduling — the canvas lifecycle leaf delivers the frame.
 
@@ -11,7 +11,7 @@ import type { OklchStop } from "../../../../composables/color";
 import { resolveBudgetDpr } from "../../aurora/constants/budget";
 import { CONCENTRIC_WGSL } from "../shaders/concentric.wgsl";
 import type { ConcentricConfig } from "../constants";
-import type { RingCenter } from "./ringField";
+import type { Vec2 } from "./levelField";
 import {
     createConcentricScratch,
     packConcentricUniforms,
@@ -29,14 +29,18 @@ export interface ConcentricWGPUSetupDeps {
     config: ConcentricConfig;
     /** The resolved (ColorResolver) palette stops as OKLCh — re-read each frame so a live edit reaches the buffer. */
     getPalette: () => OklchStop[];
-    /** The render centers (author + the transient pointer center) — re-read each frame. */
-    getCenters: () => RingCenter[];
+    /** The pointer in DOMAIN space (the cursor gravity well) — re-read each frame. */
+    getCursor: () => Vec2;
+    /** The spring-eased traveling-wave envelope amplitude (0..1; PRM → 0). */
+    getAmp: () => number;
+    /** The velocity-HEAVE multiplier on the cursor well (1.0 at rest → grows with speed). */
+    getWellScale: () => number;
     /** Demand-gate (the renderer's quiescence layer — substrate-agnostic). */
     shouldContinue: () => boolean;
     /**
      * The per-frame pointer hook — useConcentric advances the shared `usePointerVelocityField`
      * here (the no-own-rAF discipline: the renderer's frame loop FEEDS `tick(delta)`) and
-     * mutates `config.centers` to inject the transient cursor ring-family. ZERO own rAF.
+     * derives the cursor in domain space. ZERO own rAF.
      */
     onFrame?: (timeSec: number) => void;
 }
@@ -49,7 +53,7 @@ export function createConcentricWGPUSetup(
     context: GPUCanvasContext,
     format: GPUTextureFormat,
 ) => WebGPUCanvasFrame {
-    const { canvas, config, getPalette, getCenters, shouldContinue, onFrame } = deps;
+    const { canvas, config, getPalette, getCursor, getAmp, getWellScale, shouldContinue, onFrame } = deps;
 
     return function setupWGPU(device, context, format) {
         const module = device.createShaderModule({
@@ -133,7 +137,9 @@ export function createConcentricWGPUSetup(
                 timeSec,
                 aspect,
                 getPalette(),
-                getCenters(),
+                getCursor(),
+                getAmp(),
+                getWellScale(),
             );
             device.queue.writeBuffer(uniformBuffer, 0, scratch.buffer);
 

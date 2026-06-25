@@ -9,7 +9,14 @@
 import type { BlobConfig, MoodParams } from "../types";
 import type { BlobPointer } from "./useBlobPointer";
 import type { BlobSatelliteSystem } from "./useBlobSatellites";
-import { MAX_SATS, TRAIL_N, MAX_BLOB_STOPS, POS_SCALE, UNIFORM_NAMES } from "../constants";
+import {
+    MAX_SATS,
+    TRAIL_N,
+    MAX_BLOB_STOPS,
+    POS_SCALE,
+    UNIFORM_NAMES,
+    FISSION_REACH_MAX,
+} from "../constants";
 import type { UniformName } from "../constants";
 
 // The compile-time shape budget (MAX_SATS / TRAIL_N / MAX_BLOB_STOPS / POS_SCALE /
@@ -259,10 +266,20 @@ export function uploadBlobUniforms(
     gl.uniform1f(U.uSmoothK, nominalBand * orbitWiden * POS_SCALE);
     gl.uniform1f(U.uMerge, cMem.merge === "circular" ? 1.0 : 0.0);
 
-    // BC.W-GOOBLOB-PLAIN — the STAGE-1 gate. variant="blob" strips the lit/shadow/
-    // iridescence/SSS to the plain fill-only floor; "meatball" (default) runs the full
-    // pipeline (byte-identical to HEAD; the `uLit` flag still owns lit-on/off within it).
-    gl.uniform1f(U.uStage, config.variant === "blob" ? 1.0 : 0.0);
+    // BD.W-GOO-CAROUSEL-DECK — the blob↔meatball SHADING MORPH. `morphT` resolves from
+    // `config.morphT` (an explicit consumer-animated 0..1 scalar) or, when absent, from
+    // `variant` for back-compat (blob → 0 = flat, meatball → 1 = lit). `uStage` is now
+    // DERIVED: at morphT <= 0 it is 1.0 (the byte-identical STAGE-1 flat floor — the pure
+    // blob pays zero dressing cost via the early-return); for any morphT > 0 it is 0.0 so
+    // the shader runs the dressing pipeline and LERPS flat→dressed on `uMorphT`.
+    const morphT =
+        typeof config.morphT === "number"
+            ? Math.max(0, Math.min(1, config.morphT))
+            : config.variant === "blob"
+              ? 0
+              : 1;
+    gl.uniform1f(U.uMorphT, morphT);
+    gl.uniform1f(U.uStage, morphT <= 0 ? 1.0 : 0.0);
 
     // AX.W16 (arm 5) — the PRE-FBM bounding-discard radius (UV space).
     // The fragment early-outs to a transparent write for any pixel
@@ -284,7 +301,16 @@ export function uploadBlobUniforms(
     // bridge widen can NEVER push the wet meniscus past the bounding-discard
     // and get clipped (the scope-2 pad-confirm: the widened band exceeds the
     // nominal, so the pad must track it).
-    const satWorst = worstOrbitDist + cGeo.satelliteRadius;
+    // BD.W-GOOBLOB-MERCURY-COLONY — when the colony register is armed
+    // (surface.fissionAmp > 0) the fissioning satellite breathes OUT to the
+    // bounded apex FISSION_REACH_MAX (0.40) with a ~12% snap overshoot — FURTHER
+    // than the bonded `worstOrbitDist`. The bounding-discard radius must cover that
+    // pinch reach or the freed bead clips the pre-FBM early-out. A READ of the
+    // config register (no new uniform); zero when fissionAmp is 0 so the calm
+    // default's maxReach is BYTE-IDENTICAL to HEAD (the gate-faithful contract).
+    const fissionWorst =
+        (config.surface.fissionAmp ?? 0) > 0 ? FISSION_REACH_MAX * 1.12 : 0;
+    const satWorst = Math.max(worstOrbitDist, fissionWorst) + cGeo.satelliteRadius;
     const maxReach =
         (Math.max(cGeo.bodyRadius, satWorst) +
             nominalBand * orbitWiden +
@@ -309,11 +335,14 @@ export function uploadBlobUniforms(
     // var()-token via resolveTokenColor — AX.W16) and resolves through
     // the SAME `resolveColor` memo (the `/color` leaf) as `uBaseColor`,
     // never the DOM. Gated behind `uLit` (default lit).
-    // BC.W-GOOBLOB-MEATBALL — variant=meatball flips uLit/uShadow on (T1); variant=blob
-    // keeps them OFF (the STAGE-1 floor — the uStage gate strips the lit/shadow work
-    // regardless; this is the explicit per-variant flip, the GLSL twin of the WGSL bridge).
-    const isMeatball = config.variant !== "blob";
-    gl.uniform1f(U.uLit, isMeatball && cSurf.lit ? 1.0 : 0.0);
+    // BD.W-GOO-CAROUSEL-DECK — the dressing uniforms flip ON for ANY morph in progress
+    // (morphT > 0), not just the discrete meatball variant — so an intermediate morph
+    // frame HAS the dressed surface to LERP toward (the shader's `mix(flatRgb, rgb,
+    // morphT)`). At morphT == 0 (pure blob) the shader early-returns before reaching the
+    // lit/shadow blocks (zero cost), so leaving uLit/uShadow on for morphT == 0 is moot,
+    // but we gate them off there anyway for clarity + a true byte-identical blob upload.
+    const isDressed = morphT > 0;
+    gl.uniform1f(U.uLit, isDressed && cSurf.lit ? 1.0 : 0.0);
     const rim = resolveColor(rimColor);
     gl.uniform3f(U.uRimColor, rim[0], rim[1], rim[2]);
     gl.uniform3f(
@@ -326,8 +355,10 @@ export function uploadBlobUniforms(
     gl.uniform1f(U.uSpecShininess, cSurf.specShininess);
     gl.uniform1f(U.uRimPower, cSurf.rimPower);
     gl.uniform1f(U.uRimStrength, cSurf.rimStrength);
-    // BC.W-GOOBLOB-MEATBALL — the procedural soft-shadow march (T2, the GLSL twin).
-    gl.uniform1f(U.uShadow, isMeatball && cSurf.shadow ? 1.0 : 0.0);
+    // BC.W-GOOBLOB-MEATBALL — the procedural soft-shadow march (T2, the GLSL twin). The
+    // EXPENSIVE secondary march is on only when dressing (morphT > 0 — the SLOW-fix:
+    // a pure blob pays zero shadow-march cost via the morphT == 0 early-return).
+    gl.uniform1f(U.uShadow, isDressed && cSurf.shadow ? 1.0 : 0.0);
     gl.uniform1f(U.uShadowSoftness, cSurf.shadowSoftness);
 
     // Iridescence + fake-SSS (W11.a). iridHue is degrees in config,

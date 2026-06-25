@@ -22,6 +22,7 @@ import type { OklchStop } from "../../../../composables/color";
 import type { UniformLocations } from "./glSetup";
 import type { CursorState } from "./cursorModel";
 import {
+    DEFAULT_VIVIDNESS,
     MAX_NUCLEI,
     MAX_STOPS,
     type AuroraConfig,
@@ -307,5 +308,7 @@ export function createUniformBridge(
         gl.uniform1f(U.uSaturation, cfg.saturation);
         gl.uniform1f(U.uPaperGrain, cfg.paperGrain);
         gl.uniform1f(U.uAlpha, cfg.alpha);
+        // BD.W-AUR-VIVIDNESS — the §3 chroma-floor strength (omitted = the vivid default).
+        gl.uniform1f(U.uVividness, cfg.vividness ?? DEFAULT_VIVIDNESS);
     };
 }

@@ -18,20 +18,25 @@ import { gridScaleFor } from "./paperGrid";
 
 // ── PAPER-GRID uniform layout ─────────────────────────────────────────────────
 //   u0      : vec4<f32>  off   0  (uTime, uGridScale, uMinorPitch, uMajorEvery)
-//   warp    : vec4<f32>  off  16  (uWarpScale, uWarpSpeed, uWarpScale2, uWarpSpeed2)
-//   warp2   : vec4<f32>  off  32  (uAmplitude, uAspect, _pad, _pad)
+//   face    : vec4<f32>  off  16  (uFaceAlpha, uFaceRelief, uSquashK, uBaseInset) — re-points the retired warp lane
+//   warp2   : vec4<f32>  off  32  (uAmplitude, uAspect, uLightDirX, uLightDirY)
 //   grid    : vec4<f32>  off  48  (uTargetWidth, uTargetWidthMajor, uMinorAlpha, uMajorAlpha)
 //   field   : vec4<f32>  off  64  (uFieldAlpha, uHasBackground, _pad, _pad)
 //   cursor  : vec4<f32>  off  80  (uCursorX, uCursorY, uBulgeStrength, uBulgeRadius)
 //   cursor2 : vec4<f32>  off  96  (uBulgeMode, uInteractive, _pad, _pad)
 //   line    : vec4<f32>  off 112  (uLineColor.rgb (linear-sRGB), _pad)
 //   bg      : vec4<f32>  off 128  (uBg.rgb (linear-sRGB), _pad)
-//   total   : 144 bytes
-export const PAPER_GRID_UNIFORM_BYTES = 144;
+//   wave    : vec4<f32>  off 144  (waveDirX, waveDirY, waveK, waveOmega)
+//   wave2   : vec4<f32>  off 160  (waveSigma, twistMax, shearMax, amp)
+//   faceLo  : vec4<f32>  off 176  (rose-umber trough .rgb (linear), _pad) — the warm-divergent ramp
+//   faceMid : vec4<f32>  off 192  (ember-amber mid .rgb (linear), _pad)
+//   faceHi  : vec4<f32>  off 208  (warm-wheat crest .rgb (linear), _pad)
+//   total   : 224 bytes
+export const PAPER_GRID_UNIFORM_BYTES = 224;
 
 const OFF = {
     u0: 0,
-    warp: 4,
+    face: 4,
     warp2: 8,
     grid: 12,
     field: 16,
@@ -39,6 +44,11 @@ const OFF = {
     cursor2: 24,
     line: 28,
     bg: 32,
+    wave: 36,
+    wave2: 40,
+    faceLo: 44,
+    faceMid: 48,
+    faceHi: 52,
 } as const;
 
 export interface PaperGridUniformScratch {
@@ -65,6 +75,7 @@ export function packPaperGridUniforms(
     aspect: number,
     viewExtentPx: number,
     cursor: Vec2,
+    amp: number,
 ): PaperGridUniformScratch {
     const { f32 } = scratch;
 
@@ -74,21 +85,18 @@ export function packPaperGridUniforms(
     f32[OFF.u0 + 2] = config.cellSize;
     f32[OFF.u0 + 3] = config.majorEvery;
 
-    // The warp ride: a LOW base scale (the whole sheet bows together) + a counter-flow term
-    // at a slightly higher scale + opposite speed (never visibly loops).
-    const warpScale = config.waveScale;
-    const warpScale2 = config.waveScale * 1.7;
-    const warpSpeed = config.waveSpeed;
-    const warpSpeed2 = config.waveSpeed * 0.6;
-    f32[OFF.warp + 0] = warpScale;
-    f32[OFF.warp + 1] = warpSpeed;
-    f32[OFF.warp + 2] = warpScale2;
-    f32[OFF.warp + 3] = warpSpeed2;
+    // The FACE lane (re-points the retired LINE-warp lane — BD.W-PAPERGRID-FACE). faceAlpha:0
+    // default → the face evaporates → byte-identical to HEAD. lightDir rides warp2.zw; aspect
+    // stays on warp2.y.
+    f32[OFF.face + 0] = config.faceAlpha;
+    f32[OFF.face + 1] = config.faceRelief;
+    f32[OFF.face + 2] = config.squashK;
+    f32[OFF.face + 3] = config.baseInset;
 
-    f32[OFF.warp2 + 0] = config.waveAmplitude;
+    f32[OFF.warp2 + 0] = 0;
     f32[OFF.warp2 + 1] = aspect;
-    f32[OFF.warp2 + 2] = 0;
-    f32[OFF.warp2 + 3] = 0;
+    f32[OFF.warp2 + 2] = config.lightDir[0];
+    f32[OFF.warp2 + 3] = config.lightDir[1];
 
     // The Golus target half-widths in GRID units: lineWidthPx / minorPitchPx (so the line is
     // N device-pixels wide at any DPR — the Golus derivative reads the actual backing-store
@@ -137,5 +145,32 @@ export function packPaperGridUniforms(
         f32[OFF.bg + 2] = bg[2];
         f32[OFF.bg + 3] = 0;
     }
+
+    // The traveling-wave CELL-TWIST lanes (the C3 cure — the cells twist, the lines don't bow).
+    f32[OFF.wave + 0] = config.waveDir[0];
+    f32[OFF.wave + 1] = config.waveDir[1];
+    f32[OFF.wave + 2] = config.waveK;
+    f32[OFF.wave + 3] = config.waveOmega;
+    f32[OFF.wave2 + 0] = config.waveSigma;
+    f32[OFF.wave2 + 1] = config.twistMax;
+    f32[OFF.wave2 + 2] = config.shearMax;
+    f32[OFF.wave2 + 3] = amp; // the spring-eased envelope amplitude (PRM snaps to 0)
+
+    // The 3-stop warm-divergent FACE ramp baked to linear-sRGB (the fragment OETFs to sRGB).
+    const lo = oklchToLinear(config.faceWarmLo);
+    const mid = oklchToLinear(config.faceWarmMid);
+    const hi = oklchToLinear(config.faceWarmHi);
+    f32[OFF.faceLo + 0] = lo[0];
+    f32[OFF.faceLo + 1] = lo[1];
+    f32[OFF.faceLo + 2] = lo[2];
+    f32[OFF.faceLo + 3] = 0;
+    f32[OFF.faceMid + 0] = mid[0];
+    f32[OFF.faceMid + 1] = mid[1];
+    f32[OFF.faceMid + 2] = mid[2];
+    f32[OFF.faceMid + 3] = 0;
+    f32[OFF.faceHi + 0] = hi[0];
+    f32[OFF.faceHi + 1] = hi[1];
+    f32[OFF.faceHi + 2] = hi[2];
+    f32[OFF.faceHi + 3] = 0;
     return scratch;
 }

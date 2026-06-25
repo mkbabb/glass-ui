@@ -30,9 +30,15 @@ import {
 import { usePointerVelocityField } from "../../../../composables/motion/usePointerVelocityField";
 import type { OklchStop } from "../../../../composables/color";
 import type { FourierFieldConfig } from "../constants";
-import type { BasisComponent } from "../math";
+import { SCRUB_GAIN, FOLLOW_LEAN, MAX_PHASORS } from "../constants";
+import { partialSumAt, type BasisComponent } from "../math";
 import { createFourierWGPUSetup } from "./fourierFieldWGPUSetup";
 import { createFourierGLSetup } from "./fourierFieldGLSetup";
+import {
+    computeFourierFit,
+    headToUnit,
+    type FourierFit,
+} from "./uniformBridgeWGPU";
 
 export interface UseFourierFieldOptions {
     config: FourierFieldConfig;
@@ -48,6 +54,14 @@ export interface UseFourierFieldOptions {
     periodS?: number;
     /** `"capture"` → renderAt-only (the deterministic π capture path). Default `"live"`. */
     mode?: "live" | "capture";
+    /**
+     * BD.W-FOURIER-LOOM §2a — the lit-field seam hook. Fired ONCE per frame from INSIDE the
+     * ONE clock's `onFrame` (NO second rAF), AFTER `headT` advances, with the head's `[0,1]²`
+     * UV (or `null` before the canvas is sized). The SFC writes `--ff-head-xy` on its host so
+     * the warm field's phosphor bloom tracks the comet. PRM → fired with the STABLE frozen-T
+     * UV (the bloom seats, no sweep).
+     */
+    onHeadFrame?: (unit: { x: number; y: number } | null) => void;
 }
 
 /** The uniform handle a consumer wires its lifecycle against (backend-agnostic). */
@@ -68,6 +82,13 @@ export interface FourierFieldHandle {
     readonly headT: number;
     /** Scrub the clock directly (the transport scrubber / a pointer drag). */
     setHeadT: (t: number) => void;
+    /**
+     * BD.W-FOURIER-LOOM §2a — the comet head mapped to the stage's `[0,1]²` UV, off the SAME
+     * cached fit the GPU comet paints from. The SFC writes this to `--ff-head-xy` per frame so
+     * the warm field's phosphor bloom tracks the head (the lit-field seam). `null` before the
+     * canvas is sized. PRM → a STABLE frozen-T value (the bloom seats, no sweep).
+     */
+    headUnit: () => { x: number; y: number } | null;
     /** Tear down the renderer + release GPU/GL resources. */
     dispose: () => void;
 }
@@ -84,7 +105,32 @@ export function useFourierField(
     // ── The ONE head_t clock (no second rAF — advanced by the substrate frame). ──
     let headT = 0;
     let lastFrameSec = -1;
-    let momentum = 0; // a flick-injected velocity-continuous impulse (1/s), decaying to 0.
+    // BD.W-FOURIER-LOOM §clock-settle — the flick impulse is a SPRING displacement, not a
+    // monotonic exponential decay. `momentum` is the clock-rate offset (turns/s) from rest;
+    // `momentumVel` is its spring velocity. A flick injects `momentum`; the spring pulls it
+    // back to 0 with ζ < 1 so it OVERSHOOTS rest (the iOS fling settle, the liquid-weight
+    // register) instead of the stiff `Math.pow(0.92, …)` it replaces. Do NOT propagate this
+    // to the keyboard scrub (the DELTA-ASSAY clause).
+    let momentum = 0;
+    let momentumVel = 0;
+    // ζ ≈ 0.62 (under-damped → a visible overshoot); ω natural ~ 8 rad/s → a ~0.8s settle.
+    const SETTLE_OMEGA = 8.0;
+    const SETTLE_ZETA = 0.62;
+
+    // Integrate the momentum spring one step (semi-implicit Euler — bounded + stable). The
+    // rest target is 0 (ambient); a flick seeds `momentum` away from rest and the spring
+    // overshoots back through it. Returns nothing — mutates `momentum`/`momentumVel`.
+    function settleMomentum(dt: number): void {
+        if (momentum === 0 && momentumVel === 0) return;
+        const accel = -SETTLE_OMEGA * SETTLE_OMEGA * momentum
+            - 2 * SETTLE_ZETA * SETTLE_OMEGA * momentumVel;
+        momentumVel += accel * dt;
+        momentum += momentumVel * dt;
+        if (Math.abs(momentum) < 1e-4 && Math.abs(momentumVel) < 1e-4) {
+            momentum = 0;
+            momentumVel = 0;
+        }
+    }
 
     // ── The shared pointer-physics field (FED by the renderer frame via onFrame). ──
     const pointer = usePointerVelocityField({
@@ -95,8 +141,19 @@ export function useFourierField(
         (options.freeze?.() ?? false) || (handle?.reducedMotion ?? false);
 
     // The per-frame hook the setups invoke from inside their frame callback. It advances the
-    // shared pointer field (the push-API tick) + the head_t clock (the ONE clock).
+    // shared pointer field (the push-API tick) + the head_t clock (the ONE clock), THEN fires
+    // the §2a lit-field seam (the SFC writes `--ff-head-xy`) — once per frame, NO second rAF.
     function onFrame(timeSec: number): void {
+        advanceClock(timeSec);
+        // §2a — hand the freshly-advanced head UV to the SFC (it writes `--ff-head-xy`). Fired
+        // in EVERY register (frozen/interactive/free) so the bloom always tracks (PRM → the
+        // STABLE frozen-T UV). `getHeadUnit` is defined below; this hook runs after setup.
+        options.onHeadFrame?.(getHeadUnit());
+    }
+
+    // Advance the pointer field + the head_t clock (the ONE clock). The early-returns keep
+    // the register branches readable; `onFrame` fires the §2a seam after it returns.
+    function advanceClock(timeSec: number): void {
         const deltaMs = lastFrameSec >= 0 ? (timeSec - lastFrameSec) * 1000 : 16.7;
         lastFrameSec = timeSec;
         pointer.tick(deltaMs);
@@ -104,32 +161,122 @@ export function useFourierField(
         if (isFrozen()) {
             headT = frozenT;
             momentum = 0;
+            momentumVel = 0;
             return;
         }
 
         const dt = Math.min(Math.max(deltaMs / 1000, 0), 0.05);
 
         if (config.interactive && pointer.active.value) {
-            // SCRUB: pointer X → head_t directly (left rewinds, right fast-forwards). The
-            // smoothed X is the loop parameter; the chain assembles/disassembles under the finger.
-            headT = pointer.smoothedPosition.value.x % 1;
+            // BD.W-VIZ-BROKEN-FIX D6a — a VELOCITY scrub, NOT an absolute-X teleport. The
+            // cursor MOTION nudges the clock (a flick fast-forwards, a still cursor lets it
+            // drift at config speed), velocity-continuous so the head NEVER teleports (the
+            // prior `headT = pointerX` snapped the comet to an arbitrary phase, ignored Y,
+            // and read as "not following"). The 2-D follow rides the `uPointer` uniform
+            // (D6b — the field/chain LEANS toward the cursor). PRM keeps the position read
+            // but zeros velocity (the `usePointerVelocityField` tick(0) discipline), so the
+            // scrub term → 0 + the field static-leans (no live momentum).
+            const baseRate = config.speed / periodS; // turns per second
+            const rate =
+                baseRate +
+                pointer.velocity.value.x * SCRUB_GAIN + // the cursor-motion scrub (weighted)
+                momentum; // the decaying flick impulse
+            headT = (headT + rate * dt) % 1;
             if (headT < 0) headT += 1;
-            // A fast flick injects a momentum impulse (velocity-continuous fling-and-settle).
-            momentum = pointer.burst.value * 4.0;
+            // A flick SEEDS the spring displacement (a velocity-continuous impulse); the
+            // spring then overshoots rest + settles (the bounded-overshoot register).
+            const burst = pointer.burst.value * 4.0;
+            if (burst !== 0) {
+                momentum = burst;
+                momentumVel = 0;
+            }
+            settleMomentum(dt);
             return;
         }
 
-        // Free advance at the config speed + the decaying flick momentum.
+        // Free advance at the config speed + the settling flick momentum (the spring).
         const baseRate = config.speed / periodS; // turns per second
         const rate = baseRate + momentum;
         headT = (headT + rate * dt) % 1;
         if (headT < 0) headT += 1;
-        // Decay the flick momentum back to ambient speed (iOS fling settle).
-        momentum *= Math.pow(0.92, dt * 60);
-        if (Math.abs(momentum) < 1e-4) momentum = 0;
+        settleMomentum(dt);
     }
 
     const getHeadT = (): number => headT;
+
+    // ── BD.W-FOURIER-LOOM §2a — the shared CPU head derive (the lit-field seam). ──
+    // ONE `partialSumAt` per frame (N ≤ 64 cos/sin — cheap), CPU-side, consumed by the SFC
+    // to write `--ff-head-xy`. It uses the SAME `computeFourierFit` the GPU twins use (the
+    // cached fit below), so the bloom maps model→[0,1]² off the EXACT fit the comet head
+    // paints from — the bloom can never desync from the GPU comet. The WGPU twin computes
+    // the head inside its compute shader (uploads only the scalar `headT`); this shared CPU
+    // derive kills that engine-asymmetry by construction (both consume the ONE evaluator).
+    let fitSpectrum: readonly BasisComponent[] | null = null;
+    let fit: FourierFit = { centerX: 0, centerY: 0, scale: 1 };
+    const ensureFit = (): FourierFit => {
+        const spectrum = getSpectrum();
+        if (spectrum !== fitSpectrum) {
+            fitSpectrum = spectrum;
+            fit = computeFourierFit(spectrum);
+        }
+        return fit;
+    };
+
+    /** The MODEL-space head point at the current `headT` (the partial sum over N harmonics). */
+    const getHeadModel = (): { x: number; y: number } => {
+        const spectrum = getSpectrum() as BasisComponent[];
+        const harmonicN = Math.max(
+            1,
+            Math.min(Math.round(config.harmonics), spectrum.length, MAX_PHASORS),
+        );
+        const [x, y] = partialSumAt(spectrum, headT, harmonicN);
+        return { x, y };
+    };
+
+    /**
+     * The head mapped to the stage's `[0,1]²` UV (the SFC writes this to `--ff-head-xy`). The
+     * `aspect` is the live canvas CSS aspect (the SAME the render reads), and the cursor LEAN
+     * is folded into the fit center EXACTLY as the GPU twins do (both setups subtract the lean
+     * from `fit.center`), so the bloom co-locates with the GPU comet head on screen — the
+     * desync fence (challenge-1 R3: the bloom can never drift off the painted comet). Returns
+     * `null` before the canvas is sized.
+     */
+    const getHeadUnit = (): { x: number; y: number } | null => {
+        const canvas = canvasRef.value;
+        if (!canvas) return null;
+        const w = canvas.clientWidth || 0;
+        const h = canvas.clientHeight || 0;
+        if (w <= 0 || h <= 0) return null;
+        const aspect = w / h;
+        const m = getHeadModel();
+        const base = ensureFit();
+        const lean = getPointerLean();
+        const leanedFit: FourierFit =
+            lean.x !== 0 || lean.y !== 0
+                ? { ...base, centerX: base.centerX - lean.x, centerY: base.centerY - lean.y }
+                : base;
+        return headToUnit(m.x, m.y, leanedFit, aspect);
+    };
+
+    // ── BD.W-VIZ-BROKEN-FIX D6b — the 2-D cursor FOLLOW lean (model-space center offset). ──
+    // When interactive + active, the field LEANS toward the cursor: a small bounded MODEL-
+    // space offset the setups SUBTRACT from the view-fit center so the whole reconstruction
+    // pans toward the cursor on screen (the spatial "follow" beside D6a's velocity scrub).
+    // The smoothed pointer is [0,1] → clip [-1,1] → a fraction of the [-1,1] model half-span.
+    // PRM-safe: under reduce `usePointerVelocityField` HOLDS the position (no live motion),
+    // so the lean is a STATIC bend toward the last position (a static lean is not motion);
+    // when not active it relaxes to {0,0} (the ambient/byte-identical register). FOLLOW_LEAN
+    // is the bounded follow depth (≈12% of the model half-span — a gentle pull, never a yank).
+    const getPointerLean = (): { x: number; y: number } => {
+        if (!config.interactive || !pointer.active.value) return { x: 0, y: 0 };
+        const sp = pointer.smoothedPosition.value;
+        // [0,1] → clip [-1,1]; the model half-span is ~1 (the fit maps the curve into [-1,1]),
+        // so the model offset is the clip offset × the bounded follow depth.
+        return {
+            x: (sp.x * 2 - 1) * FOLLOW_LEAN,
+            y: (sp.y * 2 - 1) * FOLLOW_LEAN,
+        };
+    };
 
     // ── Pointer listeners on the wrapper (the canvas is pointer-events:none). ──
     const onMove = (e: Event): void => {
@@ -172,6 +319,7 @@ export function useFourierField(
                     getHeadT,
                     shouldContinue: () => true,
                     onFrame,
+                    getPointerLean,
                 }),
                 setupGL: createFourierGLSetup({
                     canvas,
@@ -181,6 +329,7 @@ export function useFourierField(
                     getHeadT,
                     shouldContinue: () => true,
                     onFrame,
+                    getPointerLean,
                 }),
             });
             void handle.armAsync();
@@ -207,6 +356,7 @@ export function useFourierField(
             headT = ((t % 1) + 1) % 1;
             ensure()?.wake();
         },
+        headUnit: getHeadUnit,
         dispose: () => {
             const canvas = canvasRef.value;
             if (canvas) unbindPointer(canvas);

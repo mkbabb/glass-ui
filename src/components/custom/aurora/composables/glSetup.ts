@@ -70,6 +70,8 @@ export const UNIFORM_NAMES = [
     "uSaturation",
     "uPaperGrain",
     "uAlpha",
+    // BD.W-AUR-VIVIDNESS — the §3 chroma-floor strength.
+    "uVividness",
 ] as const;
 
 export type UniformName = (typeof UNIFORM_NAMES)[number];

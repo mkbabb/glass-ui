@@ -20,3 +20,10 @@ export {
     type GpuSubstrateHandle,
     type GpuSubstrateOptions,
 } from "./useGpuSubstrate";
+// BD.W-SUBSTRATE-SIZE-UNIFY — the ONE backing-store sizer's types, so a consumer that
+// adopts the leaf sizer types its `resize(s: BackingSize)` + its `dprPolicy`.
+export {
+    sizeBacking,
+    type BackingSize,
+    type DprPolicy,
+} from "../webgl/createCanvasLifecycle";

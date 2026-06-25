@@ -59,7 +59,8 @@ struct Uniforms {
   scalars1: vec4<f32>,
   // scalars2: (uAlpha, uNucleiDrift, uPaletteDrift, uBreathDepth)
   scalars2: vec4<f32>,
-  // scalars3: (uBreathPeriod, uCursorStrength, uCursorRadius, _pad)
+  // scalars3: (uBreathPeriod, uCursorStrength, uCursorRadius, uVividness)
+  // BD.W-AUR-VIVIDNESS — the .w pad lane now carries the §3 chroma-floor strength.
   scalars3: vec4<f32>,
   // cursor: (uCursor.x, uCursor.y, _pad, _pad)
   cursor: vec4<f32>,
@@ -269,6 +270,27 @@ fn saturate3(c: vec3<f32>, amt: f32) -> vec3<f32> {
   return max(oklabToLinearSrgb(oklchToOklab(lch)), vec3<f32>(0.0));
 }
 
+// BD.W-AUR-VIVIDNESS — the §3 chroma FLOOR, the WGSL twin of the GLSL vividnessFloor.
+// OKLab chroma lifted toward the floor, hue + L preserved; below VIVID_EPS the (a,b)
+// direction is precision noise so the lift synthesizes along the WARM anchor (amber,
+// both components positive) — never teal/navy. vividness (scalars3.w) == 0 is a no-op
+// (the byte-identity opt-out). Mode factor lifts a dim field a touch (read through glass).
+const VIVID_TARGET: f32 = 0.115;
+const VIVID_EPS: f32 = 0.012;
+const VIVID_WARM_ANCHOR: vec2<f32> = vec2<f32>(0.34202, 0.93969);
+fn vividnessFloor(c: vec3<f32>, vividness: f32) -> vec3<f32> {
+  if (vividness <= 0.0001) { return c; }
+  var lab = linOklab(c);
+  let C = length(lab.yz);
+  let modeLift = mix(1.18, 1.0, clamp(lab.x * 1.4, 0.0, 1.0));
+  let Cmin = vividness * VIVID_TARGET * modeLift;
+  var hueDir = VIVID_WARM_ANCHOR;
+  if (C > VIVID_EPS) { hueDir = lab.yz / C; }
+  let yz = hueDir * max(C, Cmin);
+  lab = vec3<f32>(lab.x, yz.x, yz.y);
+  return max(oklabToLinearSrgb(lab), vec3<f32>(0.0));
+}
+
 // ── PBR-Neutral tonemap (named aces() in the GLSL — the tonemap slot) ──
 fn aces(color0: vec3<f32>) -> vec3<f32> {
   let startCompression = 0.8 - 0.04;
@@ -323,6 +345,7 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
   let saturation = u.scalars1.z;
   let paperGrain = u.scalars1.w;
   let alpha = u.scalars2.x;
+  let vividness = u.scalars3.w;
 
   let uv = in.uv;
   let pN = uv;
@@ -346,6 +369,10 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
 
   // Saturation trim.
   col = saturate3(col, saturation);
+
+  // BD.W-AUR-VIVIDNESS — the §3 chroma floor (warm-anchored, hue-preserving). The WGSL
+  // twin of the GLSL call; vividness:0 is a no-op so the smooth/pale default stays gated.
+  col = vividnessFloor(col, vividness);
 
   // Tonemap + film grain.
   col = aces(col);

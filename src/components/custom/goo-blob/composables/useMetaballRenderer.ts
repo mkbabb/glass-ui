@@ -121,6 +121,14 @@ export function useMetaballRenderer(
     // in tick. The fold KEEPS useBlobPointer intact (the W-VIZ-POINTER not-re-point rule).
     const pointerField = usePointerVelocityField();
 
+    // BD.W-GOOBLOB-MERCURY-COLONY — wire the pinch-off SNAP to the body-pulse spring. A
+    // fission pinch (the mercury bead snapping free, useBlobSatellites) kicks the EXISTING
+    // underdamped click-impulse oscillator (`pointer.click`) so the body squash-settles
+    // with a cartoon follow-through recoil — the SAME `pulseVel` channel a decel-flick
+    // kicks (no new spring, no new clock; the recoil inherits the BD.W-BLOB-MOTION-TUNE ζ).
+    // The split rides MOTION; the recoil is the body's reaction to losing a bead.
+    satellites.onPinch((impulse) => pointer.click(impulse));
+
     // Resolve a CONCRETE CSS color string to a GAMMA-sRGB triple via the `/color`
     // leaf (`cssToOklch → oklchToGammaRgb` — the faithful AU.W7 gamma exit; ONE shared
     // color core, inv J-10, no parallel math). Memoised: the consumer cycles through a

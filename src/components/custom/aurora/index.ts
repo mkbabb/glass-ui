@@ -20,6 +20,10 @@ export type { AuroraRuntimeMode, AuroraRuntimeOptions } from "./composables/runt
 export {
     DEFAULT_AURORA_CONFIG,
     PAPER_WASH_GROUND,
+    // BD.W-AUR-VIVIDNESS — the §3 chroma-floor identity (the gate + consumers compose
+    // these by name, no magic number).
+    DEFAULT_VIVIDNESS,
+    VIVID_TARGET,
     MAX_NUCLEI,
     MAX_STOPS,
     type AuroraConfig,

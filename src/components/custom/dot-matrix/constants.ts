@@ -27,6 +27,9 @@ export const MAX_DOT_STOPS = 4;
 /** Pointer interaction mode — a repel pushes dots off the surface, attract pulls them in. */
 export type DotPointerMode = "repel" | "attract";
 
+/** The dot layout register — a 3D phyllotaxis SPHERE (kept) or a flat 2D background PLANE. */
+export type DotLayout = "sphere" | "plane";
+
 /**
  * The full author schema — the studio's `useConfiguratorState` model. Every field is a
  * tunable the demo configurator drives; the composable resolves it into the uniform table.
@@ -55,12 +58,24 @@ export interface DotMatrixConfig {
     palette: OklchStop[];
     /** The ground color (the demo sets near-black; default transparent). */
     background: OklchStop | "transparent";
+    /** The layout register — 3D sphere (kept preset) or a flat 2D background plane (the default). */
+    layout: DotLayout;
     /** Pointer parallax + repel + accel-burst (the §T7 interaction). */
     interactive: boolean;
     /** repel ↔ attract (the dimple direction). */
     pointerMode: DotPointerMode;
     /** The pointer-parallax depth (0–0.3; the screen-center tracks the cursor). */
     parallax: number;
+    /** The cursor-gravity well depth — how far a near dot is pulled toward the cursor (NDC). */
+    gravityStrength: number;
+    /** The cursor-gravity well radius — the falloff width (NDC; WIDE → many dots feel it). */
+    gravityRadius: number;
+    /**
+     * The resting per-dot TWINKLE rate (the living-constellation floor): each dot's opacity
+     * breathes on an `instance_index`-hashed phase at this rate (0 = a dead-still field; the
+     * demo lifts it). Frozen under PRM (the `sin` reads the pinned capture time).
+     */
+    twinkle: number;
     /** ONE static frame then park under `prefers-reduced-motion: reduce`. */
     respectReducedMotion: boolean;
 }
@@ -96,8 +111,14 @@ export const DEFAULT_DOT_MATRIX_CONFIG: DotMatrixConfig = {
     breathing: 0.0, // sub-perceptual pulse OFF by default
     palette: WARM_IDENTITY_PALETTE,
     background: "transparent",
-    interactive: false,
-    pointerMode: "repel",
+    layout: "plane", // the NEW default — a 2D background field (the sphere is a kept preset)
+    interactive: true, // cursor gravity on (the background-effect register)
+    pointerMode: "attract", // the plane register ATTRACTS (dots gather to the cursor)
     parallax: 0.08, // pointer-parallax depth
+    gravityStrength: 0.62, // DEEP well — "persist MORE gravity" (was the 0.08 parallax register)
+    gravityRadius: 0.34, // the lens falloff (NDC) — tight enough that the ellipse/wake READ over
+    // the viewport-filling grid (a wide 0.7 Gaussian covered the whole disc → "everything is near"
+    // → the directional warp collapsed; re-anchored so the squash/stretch + comet-tail are visible)
+    twinkle: 0.0, // the resting per-dot twinkle floor OFF by default (the demo lifts it)
     respectReducedMotion: true,
 };

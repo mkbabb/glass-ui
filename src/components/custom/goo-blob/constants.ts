@@ -177,6 +177,47 @@ export const ORBIT_BLEND_MS = 2000;
 /** Minimum spacing (ms) between satellite merge events. */
 export const MERGE_STAGGER_MS = 3000;
 
+// ── BD.W-GOOBLOB-MERCURY-COLONY — the SPLIT (fission) engine constants ─────────────
+//
+// The MERCURY-COLONY split is an OPT-IN register (config.surface.fissionAmp, default 0).
+// When armed, AT MOST ONE satellite per cycle is the `fissioning` satellite: it buds OUT
+// through a thinning neck whose gap exceeds the smin reach so it SNAPS into a free
+// orbiting bead (the mercury pinch), then re-merges next cycle. The split rides MOTION
+// (the satellite radius rises along the `fissionSnap` curve), NOT a global smin-band
+// re-base — sidestepping the AZ.W-BLOB-STUDIO D2 lean-regression. The bounded apex
+// `FISSION_REACH_MAX` is TUNED against the proof:blob-render calm-lean ceiling (0.10): at
+// orbit 0.30, apex 0.40 paints at 0.40·POS_SCALE = 0.25 uv (clears the canvas edge) — the
+// spike (golden/fission-topology-spike.mjs) sweeps this and reports the worst-case lean.
+
+/**
+ * The bounded fission APEX (config-UV) — the orbit radius the fissioning satellite
+ * breathes OUT to at its excursion peak. Beyond the body skin (0.22) by a clean gap that
+ * exceeds the smin reach so the neck SNAPS; bounded so the single fissioner + apex rule
+ * re-prevents the "two unrelated discs" failure WITHOUT the blanket never-leaves-reach
+ * clamp. Paints at `FISSION_REACH_MAX · POS_SCALE` uv.
+ */
+export const FISSION_REACH_MAX = 0.4;
+
+/** The fission PERIAPSIS (config-UV) — the merged-in radius the satellite gathers to before the snap (well inside the body skin, fully bonded). */
+export const FISSION_REACH_MIN = 0.18;
+
+/**
+ * The full fission BEAT duration (ms) — the SLOW gather + FAST snap + re-merge window the
+ * `fissioning` phase runs for. Long enough that the colony reads as a steady-state
+ * merge↔split breath (perpetually mid-merge on one satellite while mid-split on another),
+ * NOT a rare twitch. The `fissionSnap` curve maps the beat's `t in [0,1]` to the reach.
+ */
+export const FISSION_BEAT_MS = 5200;
+
+/**
+ * The fission INTENSITY → cadence map. `fissionAmp` (0..1, config × mood) scales how
+ * OFTEN a satellite enters the fissioning beat vs the calm bonded breath: at amp 0 the
+ * fission probability is 0 (the calm default never splits); at amp 1 a satellite reaching
+ * its orbit-phase boundary enters `fissioning` with this probability instead of a plain
+ * merge. Mood-coupled (excited raises the effective amp, sleepy lowers it).
+ */
+export const FISSION_PROB_AT_FULL = 0.75;
+
 export const UNIFORM_NAMES = [
     "uResolution",
     "uTime",
@@ -195,6 +236,7 @@ export const UNIFORM_NAMES = [
     "uSmoothK",
     "uMerge",
     "uStage",
+    "uMorphT",
     "uMaxReach",
     "uLit",
     "uRimColor",

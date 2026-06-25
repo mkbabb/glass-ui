@@ -1,14 +1,26 @@
 # DotFlowField
 
-A calm regular lattice of small soft warm-cream dots that a single LARGE wave sweeps
-slowly through — an **anchored dot-matrix** (NOT a free particle cloud) where each dot only
-breathes a hair off its anchor while a broad bright iso-band crosses the field like a tide,
-lighting the dots it passes. The "Claude co-work" dot-matrix aesthetic: subtle fine-dot
-spheres on near-dark that big calm shapes drift through (a demo preset); the library default
-is warm-cream identity. The grid is the stable canvas; the field is the slow brush.
+**Two registers, one component** (the dock `dim`-idiom discipline — one schema, two
+orthogonal lever sets, no fork). Select with `config.mode`:
 
-`@mkbabb/glass-ui/dot-flow-field` · subpath leaf · WebGPU-first (RETOPOLOGIZED at
-BC.W-VIZ-DOTFLOW off the BB free-advection cloud).
+- **`mode:"flow"` — the AURORA CURRENT (the default).** A dense population of motes
+  **advected** along a divergence-free curl current, each trailing a **fading ribbon of
+  WARM-FIRE light** — the ribbon hue mapped to the mote's **speed** (a 1940s-technicolor
+  velocity-map: slow ember/oxblood → molten amber → incandescent gold → near-white bloom),
+  the **cursor a live VORTEX** that motes bend around and spiral off, over a deep
+  warm-near-black floor + a warm rose corner-bloom (**NO cyan/teal**). A feedback-fade trail
+  buffer braids the ribbons; low turn-rate inertia gives the motes liquid weight (BD.W-DOTFLOW-AURORA-CURRENT).
+
+- **`mode:"field"` — the calm anchored halftone (KEPT).** A regular lattice of soft dots a
+  single LARGE wave sweeps slowly through; each dot only breathes a hair off its anchor while
+  a broad bright iso-band crosses the field like a tide. The v4 content-deferential backdrop
+  (BC.W-VIZ-DOTFLOW, untouched under its math fence).
+
+Cross-engine: WebGPU runs a compute-advected storage buffer + a half-res RGBA16F trail;
+the **WebGL2 channel (the live path on most hosts)** runs a state-texture GPGPU ping-pong +
+a two-FBO RGBA16F trail + point-sprite motes — the SAME advected-population gestalt on both.
+
+`@mkbabb/glass-ui/dot-flow-field` · subpath leaf · WebGPU-first with a real WebGL2 channel.
 
 ## Quick start
 

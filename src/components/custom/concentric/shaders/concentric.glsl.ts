@@ -1,20 +1,18 @@
-// BC.W-VIZ-CONCENTRIC — the WebGL2 GLSL FALLBACK (the genuinely-absent-tail path; never
-// demoed where WebGPU is present).
+// BD.W-CONCENTRIC-RELIEF — concentric = a living level-set hypsometric SURVEY (WebGL2 + Safari).
 //
-// The aurora-class clean twin: a fullscreen fragment pass that evaluates the SAME
-// radial-Fourier ring-interference field f(p,t) the WGSL primary does (transcribing
-// `composables/ringField.ts`) and renders it as thin bright ELLIPSOID ISOLINE STROKES via
-// the same IQ gradient-normalized distance-estimation, splicing the SHARED
-// `procedural-color.glsl.ts` OETF + OKLCh chunk (the ONE color source — the WGSL primary
-// splices its WGSL twin, so the color math can never DRIFT between the two backends). The
-// full-screen-triangle vertex pass is the substrate's; this module is the fragment source
-// the `setupGL` callback compiles + the JS↔GLSL math the round-trip gate matches against
-// `ringField.ts`.
+// The aurora-class clean twin: a fullscreen fragment pass that evaluates the SAME level-set
+// topography H(p,t) the WGSL primary does (transcribing `composables/levelField.ts`) and paints
+// the SAME opaque finishing layer — a tanh hypsometric fill, one analytic hillshade, a two-tier
+// index/minor contour hierarchy via the IQ gradient-free `contourInk` — splicing the SHARED
+// `procedural-color.glsl.ts` OETF + OKLCh chunk + the shared `CURL_FBM_GLSL` + the shared
+// `WAVE_FIELD_GLSL` cell-warp (the SAME the paper-grid splices — the kinship). The output is OPAQUE.
 
 import {
     OETF_GLSL,
     OKLCH_MATRICES_GLSL,
 } from "../../../../composables/glass/webgl/shaders/procedural-color.glsl";
+import { CURL_FBM_GLSL } from "../../../../composables/glass/webgl/shaders/flow.glsl";
+import { WAVE_FIELD_GLSL } from "../../../../composables/glass/wave/waveField.glsl";
 
 /** The full-screen-triangle vertex shader (the substrate's standard fullscreen pass). */
 export const CONCENTRIC_VERT_GLSL = /* glsl */ `#version 300 es
@@ -26,15 +24,12 @@ void main() {
   gl_Position = vec4(aPosition, 0.0, 1.0);
 }`;
 
-/** The concentric fragment source — the aurora-class radial-Fourier isoline render. */
+/** The concentric fragment source — the level-set contour-map render (paper-grid kin). */
 export const CONCENTRIC_FRAG_GLSL = /* glsl */ `#version 300 es
 precision highp float;
 
 #define PI 3.141592653589793
 #define TAU 6.283185307179586
-#define RING_GRAVITY 9.81
-#define MAX_RINGS 8
-#define MAX_CENTERS 4
 #define MAX_RING_STOPS 4
 
 in vec2 vUv;
@@ -42,121 +37,99 @@ out vec4 fragColor;
 
 uniform float uTime;
 uniform float uSpeed;
-uniform vec2  uAxis;          // (a, b) ellipsoidal-norm axis ratio
-uniform float uFieldNorm;     // field → [0,1] amplitude scale
+uniform float uCellSize;      // the topography cell pitch (the contour-warp granularity)
+uniform float uFieldNorm;     // height → [0,1] tone scale
 uniform float uAspect;
-uniform int   uCenterCount;
-uniform int   uRingCount;
 uniform int   uStopCount;
-uniform int   uRenderMode;    // 0 traveling-rings · 1 static-contour · 2 both
 uniform float uHasBackground;
-uniform vec3  uLine;          // (lineHalfWidth, aaSoftness, contourLevels) — stroke geometry
+uniform vec4  uLine;          // (lineHalfWidth, aaSoftness, contourLevels, indexEvery)
+uniform vec2  uLightDir;      // the fixed cel-light direction (folded norm.zw)
 uniform vec3  uBg;            // themed background (linear-sRGB)
-uniform vec3  uRings[MAX_RINGS];     // (amplitude, wavelength, phase)
-uniform vec4  uCenters[MAX_CENTERS]; // (x, y, weight, rotAlpha)
+uniform vec4  uWave;          // (waveDirX, waveDirY, waveK, waveOmega)
+uniform vec4  uWave2;         // (waveSigma, twistMax, shearMax, amp)
+uniform vec4  uTopo;          // (heightOctaves, heightSeed, swellAmp, perturbAmp)
+uniform vec4  uCursor;        // (cursorX, cursorY, cursorWell, interactive)
+uniform vec4  uTune;          // (toneGain, shadeAmp, indexMul, inkDarken)
 uniform vec3  uPalette[MAX_RING_STOPS]; // linear-sRGB stops
 
 ${OETF_GLSL}
 ${OKLCH_MATRICES_GLSL}
 
-// rotated ellipsoidal radius — transcribes ringField.ts ellipsoidalRadiusRot.
-float ellipsoidalRadiusRot(vec2 p, vec2 center, float rotAlpha, float axisA, float axisB) {
-  float ca = cos(rotAlpha);
-  float sa = sin(rotAlpha);
-  float px = p.x - center.x;
-  float py = p.y - center.y;
-  float rx = ca * px + sa * py;
-  float ry = -sa * px + ca * py;
-  float dx = rx / max(axisA, 1e-4);
-  float dy = ry / max(axisB, 1e-4);
-  return sqrt(dx * dx + dy * dy);
-}
+// The shared curl operator (flow.glsl.ts — forward-declares potentialFBM).
+${CURL_FBM_GLSL}
 
-// |∇r| of the rotated ellipsoidal radius — transcribes ringField.ts ellipsoidalGradMag.
-float ellipsoidalGradMag(vec2 p, vec2 center, float rotAlpha, float axisA, float axisB) {
-  float ca = cos(rotAlpha);
-  float sa = sin(rotAlpha);
-  float px = p.x - center.x;
-  float py = p.y - center.y;
-  float rx = ca * px + sa * py;
-  float ry = -sa * px + ca * py;
-  float a = max(axisA, 1e-4);
-  float b = max(axisB, 1e-4);
-  float sx = rx / a;
-  float sy = ry / b;
-  float r = sqrt(sx * sx + sy * sy);
-  float gx = sx / a;
-  float gy = sy / b;
-  return sqrt(gx * gx + gy * gy) / max(r, 1e-4);
+// ── The host noise basis (the SAME quintic-faded value-noise the suite speaks) ──
+float hash21(float x, float y) {
+  float px = fract(x * 0.1031);
+  float py = fract(y * 0.1031);
+  float pz = fract(x * 0.1031);
+  float d = px * (py + 33.33) + py * (pz + 33.33) + pz * (px + 33.33);
+  px += d; py += d; pz += d;
+  return fract((px + py) * pz);
 }
-
-// f(p,t) — the multi-center weighted radial sum (transcribes ringField.ts sampleRingField).
-float sampleRingField(vec2 p, float t) {
-  float acc = 0.0;
-  for (int j = 0; j < MAX_CENTERS; j++) {
-    if (j >= uCenterCount) break;
-    vec4 cj = uCenters[j];
-    float radius = ellipsoidalRadiusRot(p, cj.xy, cj.w, uAxis.x, uAxis.y);
-    float centerSum = 0.0;
-    for (int i = 0; i < MAX_RINGS; i++) {
-      if (i >= uRingCount) break;
-      vec3 r = uRings[i];
-      float k = TAU / max(r.y, 1e-4);
-      float omega = sqrt(RING_GRAVITY * k) * uSpeed;
-      float theta = k * radius - omega * t + r.z;
-      centerSum += r.x * sin(theta);
-    }
-    acc += centerSum * cj.z;
+float valueNoise(float x, float y) {
+  float ix = floor(x); float iy = floor(y);
+  float fx = x - ix; float fy = y - iy;
+  float ux = fx * fx * fx * (fx * (fx * 6.0 - 15.0) + 10.0);
+  float uy = fy * fy * fy * (fy * (fy * 6.0 - 15.0) + 10.0);
+  float a = hash21(ix, iy);
+  float b = hash21(ix + 1.0, iy);
+  float c = hash21(ix, iy + 1.0);
+  float d2 = hash21(ix + 1.0, iy + 1.0);
+  return mix(mix(a, b, ux), mix(c, d2, ux), uy);
+}
+// The curl chunk's forward-declared potentialFBM body.
+float potentialFBM(vec2 p) {
+  float v = 0.0; float amp = 0.5; float freq = 1.0;
+  float px = p.x; float py = p.y;
+  for (int i = 0; i < 3; i++) {
+    v += amp * valueNoise(px * freq, py * freq);
+    float rx = 0.8 * px - 0.6 * py;
+    float ry = 0.6 * px + 0.8 * py;
+    px = rx; py = ry; freq *= 2.0; amp *= 0.5;
   }
-  return acc;
+  return v;
 }
 
-// The IQ gradient-normalized isoline ink + the beat envelope (transcribes ringIsolineInk).
-// Returns vec2(ink, env).
-vec2 ringIsolineInk(vec2 p, float t) {
-  float ink = 0.0;
-  float env = 0.0;
-  float lineHalfW = uLine.x;
-  float aa = uLine.y;
-  for (int j = 0; j < MAX_CENTERS; j++) {
-    if (j >= uCenterCount) break;
-    vec4 cj = uCenters[j];
-    float radius = ellipsoidalRadiusRot(p, cj.xy, cj.w, uAxis.x, uAxis.y);
-    float gradR = ellipsoidalGradMag(p, cj.xy, cj.w, uAxis.x, uAxis.y);
-    for (int i = 0; i < MAX_RINGS; i++) {
-      if (i >= uRingCount) break;
-      vec3 r = uRings[i];
-      float k = TAU / max(r.y, 1e-4);
-      float omega = sqrt(RING_GRAVITY * k) * uSpeed;
-      float phase = k * radius - omega * t + r.z;
-      float s = sin(phase);
-      float cphase = abs(cos(phase));
-      float gradPhase = max(k * gradR, 1e-4);
-      // The IQ gradient-normalized distance-to-isoline (domain units; round-trips JS).
-      float de = abs(s) / max(cphase * gradPhase, 1e-4);
-      // Convert to PIXELS via fwidth(phase) so the stroke is a constant pixel width.
-      float dPx = max(fwidth(phase), 1e-4);
-      float dePx = de * gradPhase / dPx;
-      float lineV = 1.0 - smoothstep(lineHalfW, lineHalfW + aa, dePx);
-      // Analytic anti-aliasing: fade lines where the rings pack tighter than a pixel can
-      // resolve (fwidth(phase) ≳ π, near a center / under DPR) so the field stays thin LINES
-      // instead of flooding to a bright slab (IQ filterwidth).
-      float aliasFade = 1.0 - smoothstep(PI * 0.6, PI * 1.2, dPx);
-      lineV *= aliasFade;
-      float w = r.x * cj.z;
-      ink = max(ink, lineV * w);
-      env += s * w;
-    }
+// The shared traveling-wave CELL-WARP chunk (spliced AFTER valueNoise + potentialFBM + curl).
+${WAVE_FIELD_GLSL}
+
+float smoothstepEdge(float e0, float e1, float x) {
+  float t = clamp((x - e0) / max(e1 - e0, 1e-6), 0.0, 1.0);
+  return t * t * (3.0 - 2.0 * t);
+}
+
+// The level-set height at domain p (transcribes levelField.ts sampleHeight).
+float sampleHeight(vec2 p, float t) {
+  // The CONTINUOUS traveling-wave flow warp (no per-cell seam — the contours flow + twist as
+  // the wave passes OVER and THROUGH them, the SAME wave that twists the paper-grid cells).
+  vec2 g = waveFlow(p, t, uWave.xy, uWave.z, uWave.w, uWave2.x, uWave2.y, uWave2.w);
+  if (uCursor.w > 0.5) {
+    g = cursorSwirl(g, uCursor.xy, uCursor.z * 0.6, uCellSize * 2.5);
   }
-  return vec2(clamp(ink, 0.0, 1.0), env);
+  // LOW base frequency → BROAD nested loops (a readable contour map). Octaves carry detail.
+  float H = heightField(g * 0.9, uTopo.x, uTopo.y);
+  H += uTopo.z * waveSwell(t, uTopo.y);
+  if (uCursor.w > 0.5) {
+    vec2 d = p - uCursor.xy;
+    float d2 = dot(d, d);
+    // The cursor HEAVE — a SOFT bulge (a Gaussian peak feathered by a smoothstep falloff so
+    // the heave is C1-smooth, NOT a hard-edged quad). The well depth/radius carry the
+    // velocity-HEAVE scale (packed JS-side into uCursor.z).
+    float g0 = exp(-d2 / 0.22);
+    float fall = smoothstepEdge(0.0, 0.55, exp(-d2 / 0.6));
+    H += uCursor.z * g0 * fall;
+  }
+  return H;
 }
 
-// The topographic-contour operator (transcribes contourInk).
-float contourInk(float envValue, float levels) {
-  float fN = envValue * levels;
+// The IQ gradient-free level-set contour ink — KEPT BYTE-FROZEN (the perfect GPU AA). It is
+// FED the per-level half-width 'hw' (a parameter, NOT a re-derivation). 'aaW' floors against a
+// DPR-aware minimum so the index line stays CONTINUOUS where the heave packs contours.
+float contourInk(float fN, float hw) {
   float band = abs(fract(fN + 0.5) - 0.5);
-  float aaW = max(fwidth(fN), 1e-4);
-  return 1.0 - smoothstep(uLine.x, uLine.x + uLine.y, band / aaW);
+  float aaW = max(fwidth(fN), 6e-4);
+  return 1.0 - smoothstepEdge(hw, hw + uLine.y, band / aaW);
 }
 
 vec3 samplePaletteLin(float t) {
@@ -173,32 +146,44 @@ vec3 samplePaletteLin(float t) {
   return oklabToLinearSrgb(mix(labA, labB, f));
 }
 
+// The SHARED hillshade finite-diff epsilon — pinned ONCE (mirrors levelField.HILLSHADE_EPSILON
+// + the WGSL twin; a per-backend drift would red the L6 numeric parity).
+const float HILLSHADE_E = 0.012;
+
 void main() {
   float aspect = max(uAspect, 1e-4);
   vec2 p = vec2(vUv.x * aspect, vUv.y);
+  float t = uTime * uSpeed;
+  float levels = max(uLine.z, 1.0);
 
-  vec2 ie = ringIsolineInk(p, uTime);
-  float ink = ie.x;
-  float env = ie.y;
+  // The level-set topography (the KEPT field — the PRIMARY path).
+  float H = sampleHeight(p, t);
 
-  if (uRenderMode == 1) {
-    ink = contourInk(env * uFieldNorm, max(uLine.z, 1.0));
-  } else if (uRenderMode == 2) {
-    ink = max(ink, contourInk(env * uFieldNorm, max(uLine.z, 1.0)));
-  }
-  ink = clamp(ink, 0.0, 1.0);
+  // ── 1. HYPSOMETRIC TONE — tanh expands the compressed band (basins+ridges hit the ramp ENDS).
+  float tone = 0.5 + 0.5 * tanh(H * uTune.x);
+  vec3 fill = samplePaletteLin(tone);
 
-  // The beat-envelope drives the warm-family tone across the ramp (cream↔amber↔ember) so the
-  // crossing families read as warm-light interference (the warm-cream identity).
-  float v = clamp(0.5 + env * uFieldNorm, 0.0, 1.0);
-  vec3 lin = samplePaletteLin(v);
-  vec3 rgb = clamp(linearToSrgb(lin), vec3(0.0), vec3(1.0));
+  // ── 2. ANALYTIC HILLSHADE — one ∇H finite-diff at the SHARED e, dotted with the cel light.
+  float e = HILLSHADE_E;
+  float hx = sampleHeight(p + vec2(e, 0.0), t) - sampleHeight(p - vec2(e, 0.0), t);
+  float hy = sampleHeight(p + vec2(0.0, e), t) - sampleHeight(p - vec2(0.0, e), t);
+  vec2 grad = vec2(hx, hy) / (2.0 * e);
+  vec2 L = normalize(uLightDir + vec2(1e-5));
+  float shade = 0.5 + 0.5 * clamp(dot(normalize(grad + vec2(1e-5)), L), -1.0, 1.0);
+  fill *= mix(1.0 - uTune.y, 1.0 + uTune.y, shade);
 
-  if (uHasBackground > 0.5) {
-    vec3 bg = clamp(linearToSrgb(uBg), vec3(0.0), vec3(1.0));
-    fragColor = vec4(mix(bg, rgb, ink), 1.0);
-    return;
-  }
-  float alpha = ink;
-  fragColor = vec4(rgb * alpha, alpha);
+  // ── 3. TWO-TIER INDEX/MINOR CONTOUR — isIndex a pure f(level); hw FED to the frozen contourInk.
+  float fN = H * levels + uTopo.w * sin(floor(H * levels) * 2.4 + t * 0.7);
+  float indexEvery = max(uLine.w, 1.0);
+  float lvl = floor(fN);
+  float isIndex = fract(lvl / indexEvery) < (0.5 / indexEvery) ? 1.0 : 0.0;
+  float hw = mix(uLine.x, uLine.x * uTune.z, isIndex);
+  float ink = clamp(contourInk(fN, hw), 0.0, 1.0);
+
+  // ── 4. INK = a darker ember of the LOCAL fill (the edge-of-its-own-band signature).
+  vec3 inkCol = mix(fill, fill * uTune.w, 0.85);
+
+  // ── 5. ONE color path + OPAQUE OUT — the viz IS the colorful field.
+  vec3 col = mix(fill, inkCol, ink);
+  fragColor = vec4(clamp(linearToSrgb(col), vec3(0.0), vec3(1.0)), 1.0);
 }`;

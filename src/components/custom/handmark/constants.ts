@@ -32,12 +32,32 @@ export const HIGHLIGHT_RISE = 0.22;
 export const HIGHLIGHT_FALLBACK_FRAC = 0.66;
 
 /**
- * Natural-underline morphology (BA.W-HANDMARK C-2). The procedural wobble is
- * SCALE-RELATIVE: the amplitude is a fraction of the rendered word width (a long
- * word and a short word wobble in proportion, not the viewBox-stretched-constant
- * the fork's GlassUnderline shipped). The period count is IRREGULAR — a seeded
- * pick in [PERIODS_MIN, PERIODS_MAX] — so two seeds differ in hump count, never
- * identical twins.
+ * The boil voice — φ-incommensurate fractal value-noise (the masthead morphology).
+ * ─────────────────────────────────────────────────────────────────────────────
+ * The boil centerline is a 1-D fractal value-noise displacement off the HOUSE
+ * `mulberry32`, NOT a seeded sinusoid. A sinusoid (the prior body) self-correlates
+ * into a near-period — it reads as a spell-check squiggle and a clean sine fails any
+ * honest non-periodicity discriminator (a sine's extrema are near-uniformly spaced).
+ * The value-noise sums octaves at φ-stepped frequencies (mutually irrational → the
+ * sum NEVER closes into a period); each octave's amplitude decays by 1/φ. The result
+ * is a hump-to-hump-IRREGULAR hand line whose inter-extremum spacing-CV is the honest
+ * teeth (measured: ~0.41 at the paint's segment count, ~0.71 resampled at RES=64,
+ * over 400 seeds — vs the prior sinusoid's ~0.14; a clean separation either side of a
+ * 0.30 floor). The amplitude is SCALE-RELATIVE (a fraction of the rendered span), so
+ * a long word and a short word wobble in proportion. FILTER-FREE — the wander lives
+ * in the control points + the hull width, never a feTurbulence.
+ *
+ * Constants pinned against a 400-seed spacing-CV spike (NOT the seed-overfit autocorr
+ * peak the prior gate keyed — autocorr cannot separate smooth low-frequency value-
+ * noise from a sinusoid at any resolution).
  */
-export const PERIODS_MIN = 2;
-export const PERIODS_MAX = 4;
+/** φ — the per-octave frequency step (mutually irrational → never periodic). */
+export const NOISE_PHI = 1.618033988749895;
+/** octave count of the fractal value-noise sum. */
+export const NOISE_OCTAVES = 4;
+/** base octave frequency (humps across the unit span); octave k rides F0·φ^k. */
+export const NOISE_F0 = 2.5;
+/** displacement amplitude as a fraction of the rendered span (scale-relative). */
+export const NOISE_AMP_FRAC = 0.05;
+/** endpoint-only cosine taper width (the ends settle to baseline; the BODY stays irregular). */
+export const NOISE_EDGE = 0.12;

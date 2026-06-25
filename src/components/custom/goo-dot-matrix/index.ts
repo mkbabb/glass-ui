@@ -8,10 +8,10 @@ export {
     type GooDotConfig,
     type GooDotVariant,
     type GooDotPointerMode,
+    type GooDotFieldGround,
     DEFAULT_GOO_DOT_CONFIG,
     WARM_IDENTITY_PALETTE,
     MIN_DOT_PIXEL_SIZE,
-    MAX_LATTICE_COLS,
 } from "./constants";
 export {
     gridOrigin,

@@ -64,12 +64,16 @@ export function packFourierComputeUniforms(
 //   r0      : vec4<f32>  off   0  (centerX, centerY, scale, aspect)
 //   r1      : vec4<f32>  off  16  (trailWidth, peakAlpha, headGlowAlpha, trailFadeExp)
 //   r2      : vec4<f32>  off  32  (trailFloor, intensity, showEpicycles, rainbowChain)
-//   ints    : vec4<i32>  off  48  (sampleCount, armCount, stopCount, _pad)
-//   palette : array<vec4<f32>, 4>  off 64  (linear-sRGB rgb + _pad)
-//   total   : 64 + 4*16 = 128 bytes
-export const FOURIER_RENDER_UNIFORM_BYTES = 64 + MAX_FOURIER_STOPS * 16;
+//   r3      : vec4<f32>  off  48  (squashGain, celGain, _pad, _pad)  ← FOURIER-LOOM §2b/§3b
+//             (the head tangent + speed are derived IN-shader from curveSamples[0] vs [1] —
+//              the SAME evaluator on both engines, so the anisotropy is parity-safe by
+//              construction; only the two scalar GAINS are uploaded.)
+//   ints    : vec4<i32>  off  64  (sampleCount, armCount, stopCount, _pad)
+//   palette : array<vec4<f32>, 4>  off 80  (linear-sRGB rgb + _pad)
+//   total   : 80 + 4*16 = 144 bytes
+export const FOURIER_RENDER_UNIFORM_BYTES = 80 + MAX_FOURIER_STOPS * 16;
 
-const R_OFF = { r0: 0, r1: 4, r2: 8, ints: 12, palette: 16 } as const;
+const R_OFF = { r0: 0, r1: 4, r2: 8, r3: 12, ints: 16, palette: 20 } as const;
 
 export function createFourierRenderScratch(): FourierUniformScratch {
     const buffer = new ArrayBuffer(FOURIER_RENDER_UNIFORM_BYTES);
@@ -121,6 +125,29 @@ export function computeFourierFit(spectrum: readonly BasisComponent[]): FourierF
 }
 
 /**
+ * Map a MODEL-space head point to the stage's `[0,1]²` UV via the SAME fit + aspect the
+ * render's clip→model inverse uses (BD.W-FOURIER-LOOM §2a — the bloom-desync fence). The
+ * render maps clip = (model − center)·scale with the x clip un-aspect-corrected (clip.x is
+ * scaled by aspect in the inverse), so the forward is:
+ *   clipX = (mx − cx)·scale / aspect,  clipY = (my − cy)·scale,  clip ∈ [-1,1].
+ * Then UV = (clipX·0.5 + 0.5, 1 − (clipY·0.5 + 0.5))  (CSS y grows DOWN; the lean is folded
+ * into `center` upstream so the bloom tracks the LEANED head). The result is NOT clamped —
+ * a head that leaves the stage carries the bloom off-edge honestly; the consumer clamps if
+ * it must paint a sprite. Pure arithmetic off the cached `fit` — no second CPU fit to drift.
+ */
+export function headToUnit(
+    headX: number,
+    headY: number,
+    fit: FourierFit,
+    aspect: number,
+): { x: number; y: number } {
+    const a = Math.max(aspect, 1e-4);
+    const clipX = ((headX - fit.centerX) * fit.scale) / a;
+    const clipY = (headY - fit.centerY) * fit.scale;
+    return { x: clipX * 0.5 + 0.5, y: 1 - (clipY * 0.5 + 0.5) };
+}
+
+/**
  * Convert a CSS-px stroke width to MODEL units (the shader's space). The fit `scale` maps
  * model → clip; clip spans [-1,1] over the min CSS dimension → cssPx-per-clip = canvasCssMin/2.
  * model-per-cssPx = (1/scale)·(2/canvasCssMin).
@@ -147,6 +174,8 @@ export function packFourierRenderUniforms(
     intensity: number,
     showEpicycles: boolean,
     rainbowChain: boolean,
+    squashGain: number,
+    celGain: number,
     sampleCount: number,
     armCount: number,
     palette: OklchStop[],
@@ -167,6 +196,12 @@ export function packFourierRenderUniforms(
     f32[R_OFF.r2 + 1] = intensity;
     f32[R_OFF.r2 + 2] = showEpicycles ? 1 : 0;
     f32[R_OFF.r2 + 3] = rainbowChain ? 1 : 0;
+
+    // r3 — FOURIER-LOOM §2b/§3b: the squash + cel gains (the tangent is derived in-shader).
+    f32[R_OFF.r3 + 0] = squashGain;
+    f32[R_OFF.r3 + 1] = celGain;
+    f32[R_OFF.r3 + 2] = 0;
+    f32[R_OFF.r3 + 3] = 0;
 
     const stopCount = Math.min(palette.length, MAX_FOURIER_STOPS);
     i32[R_OFF.ints + 0] = sampleCount;

@@ -10,13 +10,13 @@
  * Field-count discipline (SPEC §2): resist a 13th scalar per new instrument —
  * `blend` earned its place only because highlighter genuinely needed `multiply`.
  *
- * The shipped register: PEN is the default (clean ink, grain:0 ⇒ no filter); the
- * CRAYON ships as the proven STROKE-crayon (constant-width offset passes + the
- * seeded static feTurbulence grain — `ds-crayon-handmark` verdict), i.e.
- * `ribbon:'stroke'`. The HIGHLIGHTER (BA.W-HANDMARK C-1) ENGAGES `ribbon:'hull'`
- * — the perfect-freehand variable-width slab the atlas's field delta names — so the
- * vendored pf body ships whenever the highlighter does (the budget note in the cut
- * + a `profile:budget` rebaseline).
+ * The shipped register: PEN is the default (clean ink, grain:0 ⇒ no filter, the one
+ * `ribbon:'stroke'` clean voice). The variable-width VOICES — boil (the pressured
+ * pen-line), crayon (the waxy swell), marker (the juicy core), highlighter (the wide
+ * slab) — all ENGAGE `ribbon:'hull'`, the vendored perfect-freehand body, sharing the
+ * one curvature-coupled pressure profile (ink.ts `addPressure`). pen/pencil/ring stay
+ * `ribbon:'stroke'` by intent (pen clean, pencil's dry tooth-grain is its character,
+ * ring a thin whisper). The pf body ships whenever any hull brush does.
  */
 
 export type BlendMode = "source-over" | "multiply" | "darken" | "screen";
@@ -101,9 +101,9 @@ export interface InkPath {
 }
 
 /**
- * The named points in the continuum. `pen` is the DEFAULT (clean ink, grain:0).
- * `crayon` is the SHIPPED stroke-crayon (ribbon:'stroke', the static grain filter);
- * `pencil`/`marker`/`highlighter` round out the spanning set.
+ * The named points in the continuum. `pen` is the DEFAULT (clean ink, grain:0,
+ * `ribbon:'stroke'`). `boil`/`crayon`/`marker`/`highlighter` engage `ribbon:'hull'`
+ * (the curvature-coupled variable-width body); `pencil`/`ring` stay clean stroke.
  */
 export const BRUSHES = {
     // ── PEN — the DEFAULT. Clean ink, no grain, smooth. (slides / atlas masthead) ──
@@ -126,18 +126,22 @@ export const BRUSHES = {
         segments: 9,
         cap: "round",
     },
-    // ── BOIL — the masthead procedural-underline voice (BA.W-HANDMARK C-2). A clean
-    //    pen-grade ink (grain:0 ⇒ no filter) whose UNDERLINE geometry routes through
-    //    the natural morphology (`normalizeProps` auto-engages `natural` for this
-    //    brush): scale-relative amplitude, irregular seeded periods. Distinct from
-    //    pencil/crayon by both its clean ribbon AND its procedural centerline — the
-    //    W5 "voices differ" trio. ──
+    // ── BOIL — the masthead procedural-underline voice. A clean pen-grade ink
+    //    (grain:0 ⇒ no filter) whose UNDERLINE geometry routes through the φ-
+    //    incommensurate value-noise morphology (`normalizeProps` auto-engages
+    //    `natural` for this brush): scale-relative amplitude, hump-to-hump-irregular
+    //    spacing. `ribbon:'hull'` routes it through the perfect-freehand variable-
+    //    width body (the highlighter's slab engine) → a TRUE pressured pen-line, not
+    //    a constant-width ruler. The curvature-coupled pressure (ink.ts `addPressure`)
+    //    presses harder on the straights, lighter through the wobbles — the move that
+    //    turns "a wiggly line" into "a pen line". `taper {start:14,end:18}` — the run-
+    //    out is longer than the lead by ≈√φ (the §L6 type-ladder ratio). ──
     boil: {
-        weight: 5,
+        weight: 7,
         weightJitter: 0.12,
-        thinning: 0.2,
-        taper: { start: 12, end: 12, ease: "out-cubic" },
-        ribbon: "stroke",
+        thinning: 0.55,
+        taper: { start: 14, end: 18, ease: "out-cubic" },
+        ribbon: "hull",
         opacity: 1.0,
         blend: "source-over",
         passes: 1,
@@ -171,15 +175,17 @@ export const BRUSHES = {
         segments: 11,
         cap: "round",
     },
-    // ── CRAYON — the SHIPPED stroke-crayon: 2 offset constant-width passes + the
-    //    seeded static 5-stage feTurbulence grain (ds-crayon-handmark). NOT a pf
-    //    hull (ribbon:'stroke' — the width-variance hull is the highlighter's). ──
+    // ── CRAYON — a waxy stick that SWELLS and TAPERS. `ribbon:'hull'` routes the 2
+    //    offset passes through the perfect-freehand variable-width body (the shared
+    //    hull engine), so the wax core fattens and the ends run out dry — a real
+    //    crayon, not a flat constant-width ruler. The seeded static feTurbulence grain
+    //    (ds-crayon-handmark) rides on TOP, unchanged. ──
     crayon: {
         weight: 16,
         weightJitter: 1.0,
         thinning: 0.25,
         taper: { start: 6, end: 6, ease: "linear" },
-        ribbon: "stroke",
+        ribbon: "hull",
         opacity: 0.8,
         blend: "source-over",
         passes: 2,
@@ -222,13 +228,15 @@ export const BRUSHES = {
         segments: 13,
         cap: "round",
     },
-    // ── MARKER — fat, juicy, near-solid, only the edges fray. (green ref) ──
+    // ── MARKER — fat, juicy, near-solid, with a fat core and frayed-thin ends.
+    //    `ribbon:'hull'` routes it through the variable-width body so the juicy core
+    //    swells and the ends taper (the lift-on / dry run-out), not a flat ruler. ──
     marker: {
         weight: 12,
         weightJitter: 0.2,
         thinning: 0.1,
         taper: { start: 4, end: 10, ease: "out-cubic" },
-        ribbon: "stroke",
+        ribbon: "hull",
         opacity: 0.92,
         blend: "source-over",
         passes: 1,

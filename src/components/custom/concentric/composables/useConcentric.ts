@@ -1,4 +1,4 @@
-// BC.W-VIZ-CONCENTRIC — the public composable: the studio handle + the lifecycle wiring
+// BD.W-CONCENTRIC-RELIEF — the public composable: the studio handle + the lifecycle wiring
 // over the WebGPU-first substrate (with the WebGL2 GLSL fallback) + the shared pointer field.
 //
 // `useConcentric(canvasRef, options)` composes the `createGpuSubstrate` picker — the
@@ -8,13 +8,13 @@
 // `ConcentricHandle`. The renderer owns the frame loop (the canvas lifecycle leaf); this
 // composable re-implements ZERO scheduling.
 //
-// THE POINTER (BC.W-VIZ-INTERACTION). When `config.interactive`, the rings warp toward the
-// cursor: useConcentric composes the SHARED `usePointerVelocityField` (NEVER a second rAF —
-// the field is FED `tick(delta)` from inside the renderer's existing `frame` callback via the
-// `onFrame` setup hook) and injects a TRANSIENT ring-family center about the pointer
-// (position → center, velocity → off-axis stretch, burst → an expanding ripple). The
-// pointermove/enter/leave listeners are bound on the canvas; PRM freezes the field (the
-// usePointerVelocityField `tick(0)` discipline).
+// THE POINTER (BD.W-CONCENTRIC-RELIEF). When `config.interactive`, the cursor HEAVES the
+// level-set topography: useConcentric composes the SHARED `usePointerVelocityField` (NEVER a
+// second rAF — the field is FED `tick(delta)` from inside the renderer's existing `frame`
+// callback via the `onFrame` setup hook) and derives a domain-space cursor that bulges the
+// height field (position → the Gaussian peak, velocity → the well LEAD + the velocity-HEAVE
+// scale on the well depth/radius). The pointermove/enter/leave listeners are bound on the
+// wrapper; PRM freezes the field (the usePointerVelocityField `tick(0)` discipline).
 
 import { onScopeDispose, type Ref } from "vue";
 import {
@@ -24,8 +24,7 @@ import {
 import { usePointerVelocityField } from "../../../../composables/motion/usePointerVelocityField";
 import type { OklchStop } from "../../../../composables/color";
 import type { ConcentricConfig } from "../constants";
-import { MAX_CENTERS as MAX_CONCENTRIC_CENTERS } from "../constants";
-import type { RingCenter } from "./ringField";
+import type { Vec2 } from "./levelField";
 import { createConcentricWGPUSetup } from "./concentricWGPUSetup";
 import { createConcentricGLSetup } from "./concentricGLSetup";
 
@@ -57,9 +56,9 @@ export interface ConcentricHandle {
 
 /**
  * Mount the concentric renderer on `canvasRef`. The WebGPU primary + the WebGL2 fallback are
- * BOTH pure fullscreen fragment passes evaluating the SAME radial-Fourier field (the ONE
- * math source `ringField.ts`), so the picker is the only seam. Returns the uniform lifecycle
- * handle.
+ * BOTH pure fullscreen fragment passes evaluating the SAME level-set topography (the ONE math
+ * source `levelField.ts` `sampleHeight`), so the picker is the only seam. Returns the uniform
+ * lifecycle handle.
  */
 export function useConcentric(
     canvasRef: Ref<HTMLCanvasElement | null>,
@@ -73,10 +72,19 @@ export function useConcentric(
         respectReducedMotion: config.respectReducedMotion,
     });
 
-    // The INTERNAL render-centers array — the setups read THIS, never the consumer's
-    // reactive `config.centers` directly, so the transient cursor center is appended here
-    // WITHOUT mutating the consumer's config (no reactive feedback churn).
-    let renderCenters: RingCenter[] = config.centers.slice();
+    // The transient cursor in DOMAIN space the setups read each frame (the cursor gravity
+    // well). At rest it sits far off-screen so the Gaussian peak contributes nothing.
+    let cursor: Vec2 = { x: 1e6, y: 1e6 };
+    const getCursor = (): Vec2 => cursor;
+    // The spring-eased traveling-wave envelope amplitude — ramps 0→1 on mount (the liquid-weight
+    // ease-in with a slight overshoot), snaps to 0 under PRM (one static survey frame).
+    let amp = 0;
+    const getAmp = (): number => amp;
+    // The velocity-HEAVE multiplier on the cursor well — pointer SPEED bulges the topography HARD
+    // (a fast sweep heaves the terrain, at rest it settles to 1×). JS-side so it costs no uniform
+    // lane; the well-engage rides a smoothstep so the heave grows with real weight (PRM → 1×).
+    let wellScale = 1;
+    const getWellScale = (): number => wellScale;
     let lastFrameSec = 0;
 
     // Bind the pointer listeners on the canvas. A first hover wakes a parked loop on the
@@ -107,31 +115,49 @@ export function useConcentric(
     }
 
     // The per-frame pointer hook the setups invoke from inside their frame callback. It
-    // advances the field one renderer frame (the push-API tick) and injects/removes the
-    // transient cursor ring-family center.
+    // advances the field one renderer frame (the push-API tick), drives the spring-eased wave
+    // amplitude, and derives the cursor in domain space (the gravity well that bulges the
+    // topography toward the pointer — paper-grid parity).
     function onFrame(timeSec: number): void {
         const deltaMs = lastFrameSec > 0 ? (timeSec - lastFrameSec) * 1000 : 16.7;
         lastFrameSec = timeSec;
         pointer.tick(deltaMs);
 
-        // Re-read the AUTHOR centers from the (live) config each frame so a configurator edit
-        // reaches the buffer; the transient cursor center is appended to OUR array only.
-        renderCenters = config.centers.slice(0, MAX_CONCENTRIC_CENTERS);
-        if (!config.interactive || !pointer.active.value) return;
-        if (renderCenters.length >= MAX_CONCENTRIC_CENTERS) return;
+        // Drive the spring-eased traveling-wave envelope amplitude (the liquid-weight inertia).
+        if (handle?.reducedMotion) {
+            amp = 0;
+            wellScale = 1;
+        } else {
+            const target = 1.06;
+            amp += (target - amp) * 0.04;
+            if (amp > 1) amp = 1 + (amp - 1) * 0.85;
+        }
 
+        if (!config.interactive || !pointer.active.value) {
+            cursor = { x: 1e6, y: 1e6 };
+            wellScale = 1;
+            return;
+        }
         // Map the normalized pointer (0..1, y-down) → domain space (-1..1, y-up). The
-        // velocity tilts the transient family (off-axis stretch via rotAlpha); the burst
-        // lifts its weight (an expanding ripple as a flick fires).
+        // velocity LEADS the well a hair (the gravity trails the cursor — liquid weight).
         const sp = pointer.smoothedPosition.value;
         const vel = pointer.velocity.value;
-        const cx = sp.x * 2 - 1;
-        const cy = -(sp.y * 2 - 1);
-        const rot = Math.atan2(vel.y, vel.x);
-        const ripple = 0.35 + Math.min(0.65, pointer.burst.value);
-        renderCenters.push({ x: cx, y: cy, weight: ripple, rotAlpha: rot });
+        const lead = 0.1;
+        const canvas = canvasRef.value;
+        const aspect = (canvas?.clientWidth || 320) / Math.max(canvas?.clientHeight || 320, 1);
+        cursor = {
+            x: ((sp.x * 2 - 1) + vel.x * lead) * aspect,
+            y: -(sp.y * 2 - 1) - vel.y * lead,
+        };
+
+        // The velocity-HEAVE — pointer SPEED scales the well depth/radius (morph-more-on-move).
+        // A smoothstep on the velocity magnitude gives the heave real weight (a pre-dip→overshoot
+        // feel the monotone spring can't), saturating so a flick can't blow the well out.
+        const speed = Math.hypot(vel.x, vel.y);
+        const s = Math.min(speed / 1.2, 1); // normalize a fast sweep toward the ceiling
+        const ramp = s * s * (3 - 2 * s); // smoothstep — C1-smooth engage
+        wellScale = 1 + config.velocityHeave * ramp;
     }
-    const getCenters = (): RingCenter[] => renderCenters;
 
     let handle: ReturnType<typeof createGpuSubstrate> | null = null;
     const ensure = (): ReturnType<typeof createGpuSubstrate> | null => {
@@ -146,7 +172,9 @@ export function useConcentric(
                     canvas,
                     config,
                     getPalette,
-                    getCenters,
+                    getCursor,
+                    getAmp,
+                    getWellScale,
                     shouldContinue: () => true,
                     onFrame,
                 }),
@@ -154,7 +182,9 @@ export function useConcentric(
                     canvas,
                     config,
                     getPalette,
-                    getCenters,
+                    getCursor,
+                    getAmp,
+                    getWellScale,
                     shouldContinue: () => true,
                     onFrame,
                 }),

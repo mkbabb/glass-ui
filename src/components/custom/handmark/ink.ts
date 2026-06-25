@@ -43,17 +43,77 @@ function arcLength(pts: [number, number][]): number {
     return len;
 }
 
-/** Add seeded [x,y,pressure] pressure to a centerline for the pf hull body. */
+/** ONE Catmull-Rom pre-smooth pass — fair the raw value-noise so the curvature read
+ *  sees a faired curve, not raw per-vertex jitter (the compose-order pin: noise →
+ *  ONE smooth → curvature→pressure → hull). Endpoints are anchored. */
+function preSmooth(pts: [number, number][]): [number, number][] {
+    const n = pts.length;
+    if (n < 3) return pts;
+    const out: [number, number][] = [pts[0]];
+    for (let i = 1; i < n - 1; i++) {
+        const a = pts[i - 1];
+        const c = pts[i + 1];
+        const p = pts[i];
+        // a gentle 3-tap fair (1/4·a + 1/2·p + 1/4·c) — one pass, weight on the centre.
+        out.push([
+            0.25 * a[0] + 0.5 * p[0] + 0.25 * c[0],
+            0.25 * a[1] + 0.5 * p[1] + 0.25 * c[1],
+        ]);
+    }
+    out.push(pts[n - 1]);
+    return out;
+}
+
+/** Discrete unsigned curvature at each vertex (turning angle / arc, 0 on straights). */
+function curvatureAt(pts: [number, number][], i: number): number {
+    const n = pts.length;
+    if (i <= 0 || i >= n - 1) return 0;
+    const a = pts[i - 1];
+    const p = pts[i];
+    const c = pts[i + 1];
+    const v1x = p[0] - a[0];
+    const v1y = p[1] - a[1];
+    const v2x = c[0] - p[0];
+    const v2y = c[1] - p[1];
+    const l1 = Math.hypot(v1x, v1y);
+    const l2 = Math.hypot(v2x, v2y);
+    if (l1 === 0 || l2 === 0) return 0;
+    // cross / (|v1||v2|) = sin(turn) — unsigned turning magnitude in [0,1].
+    const cross = Math.abs(v1x * v2y - v1y * v2x) / (l1 * l2);
+    return Math.min(1, cross);
+}
+
+/**
+ * Add seeded [x,y,pressure] pressure to a centerline for the pf hull body —
+ * CURVATURE-COUPLED (the "pen line not wiggly line" truth: a hand presses HARDER on
+ * the straights, LIGHTER through a tight wobble). The compose order is pinned: the
+ * centerline is faired by ONE pre-smooth pass FIRST (so curvature reads a faired
+ * curve, not raw jitter), then high local curvature → low pressure → thin; straight
+ * → high pressure → thick. A mild seeded per-sample jitter keeps the body alive. The
+ * profile is clamped 0.05..1; the seed leaf is the HOUSE `mulberry32`.
+ *
+ * On a low-curvature centerline (the highlighter's near-flat slab) the curvature term
+ * is ~0, so the pressure floors to the straight baseline ≈ the prior mean swell — the
+ * A8 highlighter-fence holds (the re-author is a near-no-op on a flat brush).
+ */
+const CURVATURE_GAIN = 2.5; // how much a tight wobble thins the line (the body variation)
+const PRESSURE_BASE = 0.9; // the straight-segment pressure (a firm press)
+
 function addPressure(
     pts: [number, number][],
     b: Brush,
     seed: number,
 ): [number, number, number][] {
     const rng = mulberry32(seed >>> 0);
+    // Fair the line ONCE to read curvature off a smooth curve (the compose-order pin);
+    // the emitted coords stay the ORIGINAL points — the fairing informs pressure, it
+    // does not move the painted line.
+    const faired = preSmooth(pts);
     return pts.map((p, i) => {
-        const t = i / Math.max(1, pts.length - 1);
-        // a seeded low-freq swell × a mild per-sample jitter (the crayon body)
-        const swell = 0.5 + 0.35 * Math.sin(Math.PI * t) + (rng() - 0.5) * b.weightJitter * 0.4;
+        const k = curvatureAt(faired, i);
+        // straight (k→0) ⇒ PRESSURE_BASE; tight wobble (k→1) ⇒ thinned by the gain.
+        const swell =
+            PRESSURE_BASE * (1 - CURVATURE_GAIN * k) + (rng() - 0.5) * b.weightJitter * 0.4;
         return [p[0], p[1], Math.max(0.05, Math.min(1, swell))];
     });
 }
@@ -115,10 +175,16 @@ export function ink(
         if (b.ribbon === "hull") {
             // ── L2 variable-width body (opt-in, vendored perfect-freehand) ──
             const pressured = addPressure(jittered, b, seed + 7 * k);
+            // streamline (pf low-pass) keyed off `roughness` — a ROUGH brush (boil's
+            // 0.9, the curvature-rich value-noise) gets a LOW streamline (~0.20) so the
+            // irregular wander survives the low-pass; a smooth brush (the highlighter's
+            // 0.5) keeps ~0.50 (the audited slab, A8-preserved). The line through
+            // (roughness 0.5 → 0.50, 0.9 → 0.20), floored at 0.12.
+            const streamline = Math.max(0.12, Math.min(0.6, 0.875 - 0.75 * b.roughness));
             const outline = getStroke(pressured, {
                 size: b.weight,
                 thinning: b.thinning,
-                streamline: Math.max(0.1, 0.55 - b.roughness * 0.1),
+                streamline,
                 last: true,
                 start: { taper: b.taper.start, easing: easeFor(b.taper.ease) },
                 end: { taper: b.taper.end, easing: easeFor(b.taper.ease) },

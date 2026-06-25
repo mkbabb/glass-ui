@@ -13,7 +13,7 @@
  *   scalars0 : vec4<f32>   off   0   (uTime, uSoftmaxBeta, uValueVariance, uWarpAmount)
  *   scalars1 : vec4<f32>   off  16   (uWarpScale, uWarpDrift, uSaturation, uPaperGrain)
  *   scalars2 : vec4<f32>   off  32   (uAlpha, uNucleiDrift, uPaletteDrift, uBreathDepth)
- *   scalars3 : vec4<f32>   off  48   (uBreathPeriod, uCursorStrength, uCursorRadius, _)
+ *   scalars3 : vec4<f32>   off  48   (uBreathPeriod, uCursorStrength, uCursorRadius, uVividness)
  *   cursor   : vec4<f32>   off  64   (uCursor.x, uCursor.y, _, _)
  *   ints0    : vec4<i32>   off  80   (uStopCount, uNucleiCount, uWarpMode, uNoiseOctaves)
  *   ints1    : vec4<i32>   off  96   (uMedium, uHuePath, _, _)
@@ -42,7 +42,12 @@ import {
     HUE_PATH_ID,
     WARP_ID,
 } from "./uniformBridge";
-import { MAX_NUCLEI, MAX_STOPS, type AuroraConfig } from "../constants/presets";
+import {
+    DEFAULT_VIVIDNESS,
+    MAX_NUCLEI,
+    MAX_STOPS,
+    type AuroraConfig,
+} from "../constants/presets";
 import type { CursorState } from "./cursorModel";
 
 /** The total uniform-buffer byte size (16-aligned). */
@@ -129,11 +134,13 @@ export function packAuroraWGPUUniforms(
     f32[OFF.scalars2 + 2] = cfg.paletteDrift;
     f32[OFF.scalars2 + 3] = cfg.breathDepth;
 
-    // scalars3: uBreathPeriod, uCursorStrength, uCursorRadius, _pad
+    // scalars3: uBreathPeriod, uCursorStrength, uCursorRadius, uVividness
+    // BD.W-AUR-VIVIDNESS — the .w pad lane carries the §3 chroma-floor strength (omitted
+    // = the vivid default). vividness:0 writes 0 → the floor is a no-op (byte-identity).
     f32[OFF.scalars3 + 0] = cfg.breathPeriod;
     f32[OFF.scalars3 + 1] = cursor.strength;
     f32[OFF.scalars3 + 2] = cursor.radius;
-    f32[OFF.scalars3 + 3] = 0;
+    f32[OFF.scalars3 + 3] = cfg.vividness ?? DEFAULT_VIVIDNESS;
 
     // cursor: uCursor.x, flipY(uCursor.y), _, _
     f32[OFF.cursor + 0] = cursor.x;

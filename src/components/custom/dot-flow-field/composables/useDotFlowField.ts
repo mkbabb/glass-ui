@@ -29,6 +29,11 @@ import { usePointerVelocityField } from "../../../../composables/motion/usePoint
 import type { OklchStop } from "../../../../composables/color";
 import type { FlowFieldConfig } from "../constants";
 import { createFlowWGPUSetup, createFlowGLSetup } from "./useFlowParticles";
+import {
+    FLOW_DOMAIN_HALF,
+    FLOW_POINTER_REST,
+    type FlowPointerState,
+} from "./uniformBridgeWGPU";
 
 export interface UseDotFlowFieldOptions {
     config: FlowFieldConfig;
@@ -90,6 +95,28 @@ export function useDotFlowField(
     // The transient pointer-push (closed over; the setups read it each frame, never the
     // consumer config). The renderer blends it into the effective config in onFrame.
     const push: PointerPush = { displaceBoost: 1, bloom: 0 };
+
+    // ── BD.W-DOTFLOW-AURORA-CURRENT — the live cursor VORTEX state the flow kernel reads
+    //    each frame (domain space). The pointer field is in canvas-relative [0,1]; map it to
+    //    the domain [-half,half]² (NDC y flips). Velocity → domain/sec (× 2·half). Inert when
+    //    the pointer is inactive (the vortex is off — PRM/no-hover REDs the swirl correctly).
+    const pointerState: FlowPointerState = { ...FLOW_POINTER_REST };
+    const getPointer = (): FlowPointerState => {
+        if (!config.interactive || !pointer.active.value) {
+            pointerState.active = 0;
+            return pointerState;
+        }
+        const p = pointer.position.value;
+        const v = pointer.velocity.value;
+        const k = 2 * FLOW_DOMAIN_HALF;
+        pointerState.cursorX = (p.x * 2 - 1) * FLOW_DOMAIN_HALF;
+        pointerState.cursorY = (1 - p.y * 2) * FLOW_DOMAIN_HALF;
+        pointerState.velX = v.x * k;
+        pointerState.velY = -v.y * k;
+        pointerState.burst = pointer.burst.value;
+        pointerState.active = 1;
+        return pointerState;
+    };
 
     // The EFFECTIVE config the setups read each frame — a shallow clone of the consumer
     // config with the pointer push blended in (so the lattice ripples toward the cursor
@@ -163,6 +190,7 @@ export function useDotFlowField(
                 canvas,
                 config: getEffective(),
                 getPalette,
+                getPointer,
                 shouldContinue: () => true,
                 onFrame,
             };

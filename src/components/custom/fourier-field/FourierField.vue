@@ -139,20 +139,71 @@ function refreshPalette(): void {
 }
 const getPalette = (): OklchStop[] => resolvedPalette.value;
 
+// BD.W-VIZ-BROKEN-FIX D1 — pass a LIVE forward-through config (the GooBlob `renderConfig`
+// Proxy idiom, the fourier analogue). `cfg` is a `computed<FourierFieldConfig>` over
+// `props.config` + the intensity/interactive overrides; `cfg.value` SPREADS the live
+// reactive getters into a FROZEN snapshot read ONCE — so the renderer's per-frame setups
+// (which read `config.harmonics`/`.intensity`/… off the captured reference) never saw a
+// control edit (the "options do not even work" defect). The Proxy forwards EVERY reflection
+// (get/has/ownKeys/getOwnPropertyDescriptor — the setups spread/enumerate `config` in
+// places, so a bare `get`-only Proxy over `{}` would enumerate empty) to `cfg.value`, so
+// the per-frame reads track every configurator edit with NO re-feed wiring.
+const renderConfig = new Proxy({} as FourierFieldConfig, {
+    get: (_t, key) => Reflect.get(cfg.value, key),
+    has: (_t, key) => Reflect.has(cfg.value, key),
+    ownKeys: () => Reflect.ownKeys(cfg.value),
+    getOwnPropertyDescriptor: (_t, key) =>
+        Reflect.getOwnPropertyDescriptor(cfg.value, key),
+});
+// BD.W-FOURIER-LOOM §2a — the lit-field seam. The composable hands the comet head's [0,1]²
+// UV here once per frame (from INSIDE the ONE clock — NO second rAF); the SFC writes it to
+// `--ff-head-xy` on its own host so the warm field's phosphor bloom (mounted by the page-
+// background warm field) tracks the comet. The write is a string `"x y"` the CSS reads via
+// a fixed-size bloom SPRITE TRANSLATED to it (a compositor transform, not a re-rastered
+// gradient center — the per-frame-paint honesty fence). Absent at HEAD (born-RED); present +
+// STABLE under PRM (the frozen-T head — the bloom seats, no sweep). The hue is written
+// reactively off the palette base (NOT per frame), so it tracks the active warm anchor.
+function writeHeadXY(unit: { x: number; y: number } | null): void {
+    const el = hostRef.value;
+    if (!el || !unit) return;
+    el.style.setProperty("--ff-head-xy", `${unit.x.toFixed(4)} ${unit.y.toFixed(4)}`);
+}
+
 const renderer = useFourierField(canvasRef, {
-    config: cfg.value,
+    config: renderConfig,
     getSpectrum,
     getPalette,
     freeze: () => props.freeze,
+    onHeadFrame: writeHeadXY,
 });
+
+// `--ff-head-hue` — the bloom's warm anchor hue (degrees), written reactively off the
+// resolved palette base (the comet core stop), NOT per frame. Re-runs on a palette/mode
+// flip so the bloom hue tracks the active warm anchor (the §2a hue seam).
+function writeHeadHue(): void {
+    const el = hostRef.value;
+    if (!el) return;
+    const base = resolvedPalette.value[0];
+    if (base) el.style.setProperty("--ff-head-hue", `${base.h.toFixed(1)}`);
+}
+// Wake a parked loop on a config edit (the blob paletteStops-watcher precedent) so a
+// control change to a quiescent field repaints same-frame.
+watch(() => props.config, () => renderer.wake(), { deep: true });
 
 watch([() => props.color, () => props.getPalette, isDark], refreshPalette, {
     immediate: true,
 });
+// The §2a head-hue seam — re-write `--ff-head-hue` whenever the resolved palette changes
+// (a palette/mode flip retints the bloom anchor). The host may not exist yet in setup(); the
+// onMounted below seeds it once the element is real.
+watch(resolvedPalette, writeHeadHue);
 // The immediate watch fires in setup() before `hostRef` is mounted, so a `var()`-token
 // `color` cannot resolve the cascade yet (it kept the warm-identity default). Re-resolve
 // once the host element exists — the `var()` un-wrap now reaches a real element.
-onMounted(refreshPalette);
+onMounted(() => {
+    refreshPalette();
+    writeHeadHue();
+});
 watch(isDark, () => renderer.wake());
 watch(
     () => props.freeze,
@@ -166,6 +217,7 @@ defineExpose({
     wake: renderer.wake,
     renderAt: renderer.renderAt,
     setHeadT: renderer.setHeadT,
+    headUnit: renderer.headUnit,
 });
 </script>
 

@@ -1,36 +1,37 @@
 <script setup lang="ts">
-// BD.W-GOO-CAROUSEL-DECK — the carousel track host + the liquid GOO-MORPH transition.
+// BD.W-GOO-BARBELL-NECK — the carousel track host + the liquid BARBELL goo-morph.
 //
 // THE BINDING BAR (the user's verbatim carousel feedback): the carousel transitions
 // should be "more GLASSY, have more DISTORTION and INERTIA" and "should MORPH BLOB and
 // MEATBALL from one to another" (the Gemini-carousel read). embla owns the ITEM-SCROLL;
-// the goo-morph rides ON it as the TRANSITION layer — exactly the way <PagerDots> already
-// rides the embla `select` event.
+// the goo-morph rides ON it as the TRANSITION layer.
 //
-// THE MECHANISM (Safari-first, compositor-only — the de-duped `useGooMorph` engine).
-// THE KEY FACT (JUDGE-1): a metaball goo-morph needs ≥2 MASSES inside ONE goo filter — a
-// single travelling mass has nothing to merge with (no neck, no pinch). So the goo layer
-// hosts THREE+ masses, EXACTLY the proven W-PAGER-GOO-MORPH pattern at plate scale:
-//   • N STATIC slide-PLATE silhouettes — one opaque warm-cream plate parked at each slide
-//     center (the plate-scale twin of the pager's N static `goo-dot` pips). These are the
-//     fixed bodies the travelling worm necks INTO and OUT OF;
-//   • ONE travelling WORM-plate that morphs between the plate centers (useGooMorph). As it
-//     approaches a neighbor plate, the blur→alpha-threshold filter wells a warm-cream NECK
-//     bridging the two distinct masses → the worm stretches across the gap → the threshold
-//     merges it INTO the incoming plate + pinches OFF the outgoing (the Gemini "morph blob
-//     and meatball from one to another" read — a real two-mass metaball merge, NOT a single
-//     plate sliding under a lens);
+// THE MECHANISM (Safari-first, compositor-only — the de-duped `useGooMorph` BARBELL).
+// A metaball merge is, definitionally, TWO round bodies + the bridge between them. The
+// prior build painted ONE full-height plate over N static plates — a single
+// constant-cross-section rectangle, blurred + thresholded, can only fatten into a rounded
+// rectangle (a warm TRAY with one scalloped edge — NO geometry that produces a WAIST). The
+// N-plate bed + the single worm are DELETED. The goo layer now hosts the BARBELL:
+//   • bodyA / bodyB — TWO round warm-cream droplets (`D = restSize/φ`, the golden-minor of
+//     the slide pitch — a BLOB, not a plate) travelling apart-then-together;
+//   • neck — a SEPARATE element between them whose girth WELLS on `--goo-t` (a bell, peak
+//     mid, ~0 at the ends) and whose `clip-path` carves a smooth CONCAVE waist (the
+//     `--neck-waist` throat — a structural hourglass on BOTH engines BEFORE the filter even
+//     fuses it: the Safari insurance); the static `#glass-goo` blur→threshold welds the
+//     three into ONE warm silhouette WITH A REAL LOCAL-MINIMUM WAIST (waist/body ≤ 0.45);
 //   • the crisp content rides the EXISTING embla track UNFILTERED on top (text never passes
 //     the goo threshold — feColorMatrix would mangle it).
-//   • the drive is `useGooMorph(tokenPrefix: "carousel-goo", girthFloor: 0.85)` — on embla
-//     `select` it `travel()`s the worm; on `scroll` (the live drag) it `drive()`s the worm
-//     continuously off embla `scrollProgress()` (the drag-driven neck). The INERTIA is the
-//     `--carousel-goo-flow` `--spring-*`-derived `linear()` + the `useLiquidFlex` squish,
-//     NOT embla's flat scroll — the slide change carries weight.
+//   • the drive is `useGooMorph(tokenPrefix: "carousel-goo")` — on embla `select` it
+//     `travel()`s the barbell; on `scroll` (the live drag) it `drive()`s it continuously off
+//     embla `scrollProgress()` (the drag-driven neck). The INERTIA is the `--carousel-goo-flow`
+//     `--spring-*`-derived `linear()` + the `useLiquidFlex` squish, the cartoon-punch (the
+//     `--ease-cartoon-punch` pre-dip + arc + moving-cast + the trailing `--neck-specular-angle`
+//     sweep), gated on `--goo-weight`.
 //
 // SAFARI / PRM: the goo filter is the regular `filter: url(#glass-goo)` graph (GlassGooFilter
-// carries the WebKit-correctness facts); `@supports not (filter: url(#x))` drops the layer to
-// a plain cross-fade floor; under reduce the goo layer is `display:none`, the worm snaps.
+// carries the WebKit-correctness facts); the concave throat is the engine-agnostic waist
+// floor; `@supports not (filter: url(#x))` drops the layer to a plain cross-fade floor; under
+// reduce the goo layer is `display:none`, the barbell coalesces to ONE body.
 import type { WithClassAsProps, UnwrapRefCarouselApi } from "./interface";
 import { computed, nextTick, onMounted, ref, watch, onBeforeUnmount } from "vue";
 import { cn } from "../../../utils";
@@ -51,24 +52,14 @@ const vertical = computed(() => orientation === "vertical");
 // the content root (the user-gesture listen surface — any pointerdown/keydown inside the
 // carousel is a DRIVER; the autoplay timer never dispatches a real DOM gesture).
 const rootEl = ref<HTMLElement | null>(null);
-// the goo silhouette layer host (the geometry origin + the `--goo-t` transition host),
-// the traveling worm-plate, and the N resting plate silhouettes.
+// the goo silhouette layer host (the geometry origin + the `--goo-t` transition host) +
+// the BARBELL: two round bodies + a welling concave neck. The N-plate bed is DELETED — the
+// two bodies ARE the masses.
 const gooLayerEl = ref<HTMLElement | null>(null);
-const wormEl = ref<HTMLElement | null>(null);
+const bodyAEl = ref<HTMLElement | null>(null);
+const bodyBEl = ref<HTMLElement | null>(null);
+const neckEl = ref<HTMLElement | null>(null);
 const snapCount = ref(0);
-
-// the N STATIC slide-PLATE silhouettes — the fixed metaball bodies the worm necks INTO
-// and OUT OF (the plate-scale twin of the pager's static `goo-dot` pips). Keyed by slide
-// index; positioned at each slide center by `placePlates()`.
-const plateEls = new Map<number, HTMLElement>();
-function setPlate(i: number, el: Element | null): void {
-    if (el) plateEls.set(i, el as HTMLElement);
-    else plateEls.delete(i);
-}
-// the per-slide list the template renders the static plates over.
-const plateIndices = computed(() =>
-    Array.from({ length: Math.max(0, snapCount.value) }, (_, i) => i),
-);
 
 /** The single-slide travel step (px on the axis) — the live slide pitch read off the
  *  first two slide nodes (robust to peek/basis layouts), falling back to the viewport
@@ -106,70 +97,34 @@ function centerOf(i: number): number | null {
     return viewExtent / 2 + (i - activeIndex) * step;
 }
 
-/** The resting worm-plate extent (px) on the travel axis — the live slide width (the
- *  step is a good proxy for the slide pitch). */
+/** The resting SLOT pitch (px) on the travel axis — the live slide step. The engine takes
+ *  the golden-minor `D = restSize/φ` as the barbell body diameter (a BLOB, not a plate). */
 function restSize(): number {
-    const step = slideStep();
-    return Math.max(24, step * 0.82);
-}
-
-/** Park each STATIC slide-plate silhouette at its slide center (compositor transform —
- *  one transform write, never a layout property). The plates are the fixed metaball
- *  bodies; the active plate dims (the WORM sits over it, so the merged read is the
- *  worm-into-plate neck, not two stacked masses). Only plates within ±1 slot of the
- *  ACTIVE are kept on-screen (the rest translate off the layer) so the goo region stays
- *  tight + the neck reads between the two relevant masses. */
-function placePlates(): void {
-    const host = gooLayerEl.value;
-    if (!host) return;
-    const r = host.getBoundingClientRect();
-    const viewExtent = vertical.value ? r.height : r.width;
-    const W = restSize();
-    for (const [i, el] of plateEls) {
-        const c = centerOf(i);
-        if (c == null) continue;
-        const near = Math.abs(i - activeIndex) <= 1;
-        // park the plate at its center (transform-origin top/left → translate(center) then
-        // -50% recenters); a far plate slides off the visible region (it never necks).
-        if (vertical.value) {
-            el.style.transform = `translateY(${c.toFixed(2)}px) translateY(-50%)`;
-        } else {
-            el.style.transform = `translateX(${c.toFixed(2)}px) translateX(-50%)`;
-        }
-        el.style.setProperty("--plate-w", `${W}px`);
-        // dim the plate the worm is currently parked over (the active) so the worm's
-        // full-presence mass reads above the plate bed; the off-screen plates hide.
-        const onScreen = c > -W && c < viewExtent + W;
-        el.style.opacity =
-            i === activeIndex ? "0.42" : near && onScreen ? "1" : "0";
-    }
+    return Math.max(24, slideStep());
 }
 
 const goo = useGooMorph({
-    morphRef: wormEl,
+    barbellRefs: { bodyARef: bodyAEl, bodyBRef: bodyBEl, neckRef: neckEl },
     hostRef: gooLayerEl,
     vertical,
     centerOf,
     restSize,
-    // a LOWER girth floor (0.74 vs the prior 0.85) so the neck PINCHES thinner cross-axis
-    // mid-stretch — the decisive "two distinct blobs welling a neck and pinching" read the
-    // Gemini-carousel reference implies (JUDGE-2 §3), not a warm tray with wavy edges. The
-    // goo filter's fatter blur supplies the mass-to-mass meld so the floored neck still
-    // reads as liquid, never a hairline thread.
     tokenPrefix: "carousel-goo",
-    girthFloor: 0.74,
+    // the bodies near to 0.78·D at the midpoint — a tight, gooey concave waist (the
+    // `--carousel-goo-neck-gap` token in CSS overrides if a consumer retunes).
+    neckGap: 0.78,
 });
 
 let activeIndex = 0;
 
-/** Reserve the worm-plate footprint W = the live slide width (so the morph's scaleX =
- *  len/W lands on the correct base). Compositor-safe: a ONE-time `inline-size` reserve
- *  (the settled footprint writer), NEVER a per-frame layout property. */
+/** Reserve the body footprint D = the live slide step / φ (so the engine's bare transforms
+ *  land on the correct base — the bodies are sized to D, no scale-to-fit). Compositor-safe:
+ *  a ONE-time `inline-size` reserve, NEVER a per-frame layout property. */
 function setWormGeometry(): void {
     const host = gooLayerEl.value;
     if (!host) return;
-    host.style.setProperty("--carousel-worm-w", `${restSize()}px`);
-    placePlates();
+    const D = restSize() / 1.618033988749895;
+    host.style.setProperty("--carousel-body-d", `${D.toFixed(2)}px`);
 }
 
 // BD.W-CAROUSEL-DECK-GLASS §5 — the DRIVER-vs-OBSERVER carve, the load-bearing autoplay
@@ -202,7 +157,11 @@ function onUserGesture(e: Event): void {
     if (region && t && region.contains(t)) markUserDriven();
 }
 
-// the goo glass bridge fades IN during travel + OUT a beat after the morph settles.
+// the goo glass bridge fades IN during travel + OUT ~80ms after the morph settles. The
+// dwell FOLLOWS THE NECK, not a fixed timer: the engine writes the neck's own opacity off
+// `neckGirth` (the bridge is visible EXACTLY while the goo deforms — wells then pinches),
+// so the layer gate need only bracket the travel window + clear ~80ms past settle (the
+// neck has already pinched to ~0 by then — no dead-slab dwell).
 let travelOffTimer: ReturnType<typeof setTimeout> | null = null;
 function markTraveling(): void {
     const host = gooLayerEl.value;
@@ -218,10 +177,12 @@ function markTraveling(): void {
         (parseFloat(
             getComputedStyle(host).getPropertyValue("--carousel-goo-duration"),
         ) || 0.95) * 1000;
+    // the engine runs `durMs + 80` then coalesces; clear the layer gate right after, so the
+    // bridge is gone within ~80ms of settle (kills the live-captured dead-slab dwell).
     travelOffTimer = setTimeout(() => {
         host.removeAttribute("data-traveling");
         travelOffTimer = null;
-    }, durMs + 120);
+    }, durMs + 80);
 }
 
 function onSelect(): void {
@@ -253,9 +214,6 @@ function onScroll(): void {
     // mark traveling while mid-scroll (the live drag bridge); the timer clears it after
     // the settle so a momentum drag keeps the glass bridge alive then fades.
     if (prog > 0.001 && prog < 0.999) markTraveling();
-    // re-park the static plates each drag frame so the neighbor plate the worm is necking
-    // toward stays painted (the two-mass merge holds through a live drag).
-    placePlates();
     goo.drive(prog * last);
 }
 
@@ -326,38 +284,56 @@ onBeforeUnmount(() => {
          an absolutely-positioned sibling OVER the viewport. -->
     <div ref="rootEl" class="carousel-content-root">
         <!-- the library goo <filter> mount (Safari-safe, static). ONE per carousel. The
-             blur is bumped to 10 + the threshold steepened (slope 24 / offset -11) so the
-             two plate fringes MELD into a fatter neck then the threshold PINCHES it off
-             crisply — the decisive "two distinct blobs welling a neck and pinching" read
-             (JUDGE-2 §3). STATIC literals (Safari-safe). -->
-        <GlassGooFilter :blur="10" :threshold-slope="24" :threshold-offset="-11" />
+             BARBELL gooey-shoulder defaults (blur 11 / slope 15 / offset -7): a wider alpha
+             skirt so the two bodies feel each other → the concave neck wells gooier, then
+             the soft-shoulder threshold reads the WAIST (not the slope-24 razor that
+             sharpened the bleed before it could become a neck). STATIC literals (Safari). -->
+        <GlassGooFilter :blur="11" :threshold-slope="15" :threshold-offset="-7" />
 
-        <!-- THE GOO SILHOUETTE LAYER — the traveling warm-cream worm-plate, wrapped in the
-             static SVG goo filter. aria-hidden + pointer-events:none (the crisp track owns
-             content + interaction). The worm sits at the active slide center; on
-             select/drag it STRETCHES toward the neighbor, its blurred fringe wells up a
-             warm-cream metaball NECK across the gap (the goo threshold), then pinches off +
-             re-forms at the destination — the Gemini "morph blob and meatball" read. The
-             layer opacity is the ONE translucency (the opaque-layer technique). -->
+        <!-- THE CONCAVE NECK-THROAT clip-path (NET-NEW — the `--neck-waist` hourglass). An
+             SVG <clipPath clipPathUnits="objectBoundingBox"> so the 0..1 cubic-Bézier
+             coords SCALE with the neck element (a CSS `path()` is fixed-px + cannot take
+             `%`/`calc` — build-trap; `shape()` is not Safari-stable). The top + bottom edges
+             curve INWARD to the 0.34 waist via √φ-proportioned control points — a SMOOTH
+             concave throat (NOT a faceted polygon, NOT the fission `inset()` thinner). The
+             waist depth is the static `--neck-waist` literal; the engine's scaleY(neckGirth)
+             WELLS it. Safari-safe (objectBoundingBox clipPath is universally supported). -->
+        <svg
+            class="carousel-neck-defs"
+            width="0"
+            height="0"
+            aria-hidden="true"
+            focusable="false"
+        >
+            <defs>
+                <clipPath id="carousel-neck-throat" clipPathUnits="objectBoundingBox">
+                    <path
+                        d="M0,0 C0.25,0 0.36,0.34 0.5,0.34 C0.64,0.34 0.75,0 1,0 L1,1 C0.75,1 0.64,0.66 0.5,0.66 C0.36,0.66 0.25,1 0,1 Z"
+                    />
+                </clipPath>
+            </defs>
+        </svg>
+
+        <!-- THE GOO SILHOUETTE LAYER — the BARBELL: two round warm-cream bodies + a welling
+             concave neck, wrapped in the static SVG goo filter. aria-hidden +
+             pointer-events:none (the crisp track owns content + interaction). On select/drag
+             the bodies bud apart, the neck WELLS a concave waist across the gap (the
+             `--neck-waist` clip-path + the goo threshold), the filter MERGES the three into
+             one warm silhouette with a real local-minimum waist, then the bodies coalesce +
+             PINCH off — the "morph blob and meatball" read. The layer opacity is the ONE
+             translucency (the opaque-layer technique). -->
         <div
             ref="gooLayerEl"
             class="carousel-goo-layer"
             :class="orientation === 'vertical' ? 'carousel-goo-layer--vertical' : ''"
             aria-hidden="true"
         >
-            <!-- THE N STATIC SLIDE-PLATE SILHOUETTES — the fixed metaball bodies the worm
-                 necks INTO and OUT OF (the plate-scale twin of the pager's static goo-dots).
-                 Parked at each slide center by placePlates(); the active one dims (the worm
-                 sits over it). Without these there is only ONE mass and nothing to merge. -->
-            <span
-                v-for="i in plateIndices"
-                :key="i"
-                :ref="(el) => setPlate(i, el as Element | null)"
-                class="carousel-goo-plate"
-            />
-            <!-- the traveling worm-plate — transform-driven (useGooMorph). It necks across
-                 the gap, merging the outgoing plate into the incoming plate. -->
-            <span ref="wormEl" class="carousel-goo-worm" />
+            <!-- THE BARBELL — bodyA / neck / bodyB (three explicit refs the engine projects).
+                 bodyA/bodyB are round droplets (D = step/φ); the neck is the concave-throat
+                 bridge that wells then pinches. The filter welds them into ONE waisted mass. -->
+            <span ref="bodyAEl" class="carousel-goo-body" />
+            <span ref="neckEl" class="carousel-goo-neck" />
+            <span ref="bodyBEl" class="carousel-goo-body" />
         </div>
 
         <!-- THE EMBLA VIEWPORT — `carouselRef`; its ONLY child is the scroll track (NEVER
@@ -417,6 +393,15 @@ onBeforeUnmount(() => {
        zeroes it for calm auto-motion; PRM zeroes it too (the `--motion-weight: 0` carve). */
     --goo-weight: 1;
     --motion-weight: var(--goo-weight);
+    /* BD.W-GOO-BARBELL-NECK — the NEW barbell tokens (declared once, consumer-scoped —
+       the shared `src/styles/tokens/*` stay read-only; these are the carousel's own).
+       `--carousel-goo-neck-gap` — how near the two bodies draw at mid (the engine reads it,
+       falling to its 0.78 param); `--neck-waist` — the concave throat depth (the % the
+       hourglass clip-path pulls IN at the midpoint); the max-stretch bump 1.24→1.32 (a more
+       decisive welling neck) overrides the read-only token in-scope (no-legacy clean lift). */
+    --carousel-goo-neck-gap: 0.78;
+    --neck-waist: 0.34; /* the throat depth — the sides pull in to 34% at the waist */
+    --carousel-goo-max-stretch: 1.32;
     will-change: transform, opacity; /* force a compositor layer — Safari re-raster */
     contain: layout style; /* scope restyle, NOT paint — `contain: paint` clips the
        metaball neck at the layer box (JUDGE-1 §3); the SVG filter region (-50%/200%) +
@@ -493,63 +478,76 @@ onBeforeUnmount(() => {
     margin-block-start: -1rem; /* mirror the vertical track's -mt-4 */
 }
 
-/* THE N STATIC SLIDE-PLATE SILHOUETTES — the fixed metaball bodies. FULL alpha (the goo
-   threshold needs opacity:1; the layer opacity supplies the glass translucency). Parked at
-   each slide center by placePlates() (transform translate). Same warm-cream domed-droplet
-   fill as the worm so a worm-into-plate merge reads as ONE continuous warm mass. The
-   per-plate opacity (active dims, off-screen hides) is written inline by placePlates. */
-.carousel-goo-plate {
+/* THE BARBELL BODIES — two round warm-cream droplets (the metaball masses). FULL alpha
+   (the goo threshold needs opacity:1; the layer opacity supplies the glass translucency).
+   Sized to the body diameter D = step/φ (set by `setWormGeometry`), `border-radius: 50%`
+   (a BLOB, not a plate). The domed-droplet radial-gradient inner catch-light reads as a
+   LIQUID GLASS droplet. transform-origin LEFT/TOP so the engine's translate(center)
+   translate(-50%) lands the centre exactly. The travel + squash are ALL transform (written
+   by useGooMorph off the `--goo-t` flow). NEVER an animated width/height (motion-canon P5). */
+.carousel-goo-body {
     position: absolute;
     top: 0;
     left: 0;
-    inline-size: var(--plate-w, var(--carousel-worm-w, 60%));
-    block-size: 100%;
-    border-radius: var(--radius-card);
+    inline-size: var(--carousel-body-d, 40%);
+    block-size: var(--carousel-body-d, 40%);
+    border-radius: 50%; /* a round BLOB — the metaball body */
     background:
         radial-gradient(
-            120% 90% at 50% 18%,
+            120% 110% at 50% 22%,
             color-mix(in oklab, currentColor, white 18%),
-            currentColor 70%
-        );
-    transform-origin: center;
-    opacity: 0; /* placePlates() sets the live presence (active 0.42 / neighbor 1 / off 0) */
-    will-change: transform, opacity;
-}
-
-/* THE WORM-PLATE — the traveling opaque plate. It RESERVES a resting footprint ONCE
-   (one plate cell); the travel + elongation are ALL transform (translate + scale),
-   written by useGooMorph off the `--goo-t` flow. The squish reads `--stretch`
-   reciprocally (axis-derived). NEVER an animated width/height (motion-canon P5). */
-.carousel-goo-worm {
-    position: absolute;
-    top: 0;
-    left: 0;
-    /* the resting footprint W = the live slide width (written by `setWormGeometry` so the
-       scaleX = len/W the morph computes lands on the correct base). Falls back to the
-       layer width. transform-origin LEFT so the JS translate(center) translate(-50%)
-       lands the worm center exactly. */
-    inline-size: var(--carousel-worm-w, 100%);
-    block-size: 100%;
-    border-radius: var(--radius-card);
-    /* FULL alpha (the goo merge needs opacity:1) — the warm-cream goo medium with a soft
-       inner catch-light gradient so the bridge reads as a domed LIQUID GLASS droplet (the
-       iOS-27 inner catch-light layer), not a flat fill. The layer opacity makes the whole
-       bridge translucent (the six-layer optical read survives the merge threshold). */
-    background:
-        radial-gradient(
-            120% 90% at 50% 18%,
-            color-mix(in oklab, currentColor, white 18%),
-            currentColor 70%
+            currentColor 72%
         );
     transform-origin: center;
     /* the volume-preserving travel-velocity swell — paired reciprocally, axis-derived
-       (the SegmentedTabs indicator law). The worm transform carries the lenRatio scale;
+       (the SegmentedTabs indicator law). The engine transform carries the per-frame squash;
        `--stretch` is the EXTRA velocity swell on top (released at arrival). */
     scale: var(--stretch, 1) calc(1 / var(--stretch, 1));
     will-change: transform;
 }
-.carousel-goo-layer--vertical .carousel-goo-worm {
+.carousel-goo-layer--vertical .carousel-goo-body {
     scale: calc(1 / var(--stretch, 1)) var(--stretch, 1);
+}
+
+/* THE CONCAVE NECK — the welling hourglass bridge between the two bodies. NET-NEW: a smooth
+   concave `clip-path: path()` (cubic-Bézier sides whose control points pull IN to the
+   `--neck-waist` midpoint) — NOT the fission `inset()` capsule-thinner (a rectangular
+   thinner, not an hourglass) and NOT a faceted hand-placed polygon (the straight segments
+   survive the slope-15 shoulder + read as facets). The throat is a STRUCTURAL concavity on
+   BOTH engines BEFORE the filter fuses it (the Safari insurance — the waist is geometry,
+   not a filter nuance). The engine writes translate(mid) scaleX(gap/D) scaleY(neckGirth) +
+   the opacity (girth-following), so the neck WELLS then PINCHES. Sized to the body diameter
+   D; transform-origin centre so the scale grows symmetrically. */
+.carousel-goo-neck {
+    position: absolute;
+    top: 0;
+    left: 0;
+    inline-size: var(--carousel-body-d, 40%);
+    block-size: var(--carousel-body-d, 40%);
+    background:
+        radial-gradient(
+            120% 110% at 50% 30%,
+            color-mix(in oklab, currentColor, white 14%),
+            currentColor 76%
+        );
+    /* the concave hourglass throat — an SVG objectBoundingBox clipPath (the top + bottom
+       edges curve INWARD to the `--neck-waist` (0.34) midpoint via cubic-Bézier control
+       points): a STRUCTURAL concave waist BEFORE the filter fuses it. Smooth (cubic Bézier),
+       never faceted; references the in-template `#carousel-neck-throat` defs (Safari-safe,
+       scales with the element via objectBoundingBox units). */
+    clip-path: url(#carousel-neck-throat);
+    transform-origin: center;
+    opacity: 0; /* the engine writes the girth-following opacity (wells → pinches) */
+    will-change: transform, opacity;
+}
+
+/* the concave-throat clipPath defs host — off-screen, non-interactive, paints nothing; it
+   only carries the <clipPath> the neck references by id. */
+.carousel-neck-defs {
+    position: absolute;
+    width: 0;
+    height: 0;
+    pointer-events: none;
 }
 
 /* THE CRISP CONTENT — the embla track, above the goo layer. */
@@ -558,20 +556,21 @@ onBeforeUnmount(() => {
     z-index: 1;
 }
 
-/* @supports gate — on a non-supporting/buggy engine DROP the goo filter; the plates +
-   worm-plate still cross-fade as the correct floor (no metaball merge). */
+/* @supports gate — on a non-supporting/buggy engine DROP the goo filter; the bodies still
+   cross-fade as the correct floor (no metaball weld). The crisp embla track is the legible
+   surface; without the filter the bare two bodies are just flat bg blocks → hide the layer. */
 @supports not (filter: url(#glass-goo)) {
     .carousel-goo-layer {
         filter: none;
-        opacity: 0; /* without the merge the bare plates would just be a flat bg block;
-                       the crisp embla track is the legible floor on a gap engine. */
+        opacity: 0;
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    /* P6 — the goo layer is DROPPED (a static blur+threshold is pure cost with no travel
-       to merge); the worm snaps (useGooMorph early-returns). The crisp embla scroll is
-       the legible floor; only the embla translate survives (no goo, no squish). */
+    /* P6 — the goo layer is DROPPED (a static blur+threshold is pure cost with no travel to
+       merge); the barbell coalesces to ONE body (useGooMorph early-returns, the neck +
+       bodyB hidden). The crisp embla scroll is the legible floor; only the embla translate
+       survives (no goo, no squish). */
     .carousel-goo-layer {
         display: none;
         /* zero the cartoon weight in ONE assignment (the cast travel collapses to rest). */

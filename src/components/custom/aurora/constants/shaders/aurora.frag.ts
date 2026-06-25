@@ -141,6 +141,11 @@ uniform float uSaturation;
 uniform float uPaperGrain;
 uniform float uAlpha;
 
+// BD.W-AUR-VIVIDNESS — the §3 chroma-floor strength (0 = off / pre-floor identity,
+// 1 = the vivid default). The shader lifts any pale zone's OKLab chroma toward
+// uVividness * VIVID_TARGET, hue-preserving, warm-anchored below the near-gray epsilon.
+uniform float uVividness;
+
 // ── Time rate ────────────────────────────────────────────────────────────────
 // The authoring coefficients (uNucleiDrift, uPaletteDrift, uWarpDrift) live in a
 // human-friendly 0..~0.05 band — that scale is what the config schema and every
@@ -356,6 +361,32 @@ vec3 saturate3(vec3 c, float amt) {
   lch.y = max(lch.y * amt, 0.0);
   return max(oklabToLinearSrgb(oklchToOklab(lch)), vec3(0.0));
 }
+
+// BD.W-AUR-VIVIDNESS — the §3 chroma FLOOR. Operate in OKLab: lightness + hue are
+// untouched, chroma is lifted toward the floor. A pale zone BLOOMS to transmission-fit;
+// a vivid zone (already above the floor) is byte-untouched. The near-gray hue guard is
+// STRUCTURAL: below VIVID_EPS the (a,b) direction is precision noise, so the lift
+// synthesizes along the WARM anchor (amber, both components positive) — NEVER the noisy
+// near-zero vector, NEVER a cold/teal hue. uVividness:0 returns c identically (the gated
+// byte-identity opt-out). Mode factor: a dark route lifts the floor a touch (a dim field
+// needs more chroma to read vivid through glass) — derived from the field's own L.
+const float VIVID_TARGET = 0.115;
+const float VIVID_EPS = 0.012;
+// The warm amber anchor in OKLab (a,b): OKLCh hue 70°, unit chroma. cos/sin(70°) — both
+// POSITIVE (warm yellow-orange). The near-gray fallback direction, the warm-floor law.
+const vec2 VIVID_WARM_ANCHOR = vec2(0.34202, 0.93969);
+vec3 vividnessFloor(vec3 c) {
+  if (uVividness <= 0.0001) return c;
+  vec3 lab = linOklab(c);
+  float C = length(lab.yz);
+  // Mode-aware: dim fields (low L) get a slightly higher target so they read vivid
+  // through glass. mix factor is gentle (1.0 .. 1.18) so light routes are unaffected.
+  float modeLift = mix(1.18, 1.0, clamp(lab.x * 1.4, 0.0, 1.0));
+  float Cmin = uVividness * VIVID_TARGET * modeLift;
+  vec2 hueDir = (C > VIVID_EPS) ? lab.yz / C : VIVID_WARM_ANCHOR;
+  lab.yz = hueDir * max(C, Cmin);
+  return max(oklabToLinearSrgb(lab), vec3(0.0));
+}
 ` +
     NL +
     AURORA_TONEMAP_GLSL +
@@ -407,6 +438,11 @@ void main() {
 
   // Saturation trim
   col = saturate3(col, uSaturation);
+
+  // BD.W-AUR-VIVIDNESS — the §3 chroma floor (warm-anchored, hue-preserving). Lifts a
+  // pale zone toward the transmissive floor so warm glass over the field reads
+  // transmissive-not-gray; a vivid zone is untouched; uVividness:0 is a no-op.
+  col = vividnessFloor(col);
 
   // Tonemap + film grain
   col = aces(col);

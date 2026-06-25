@@ -1,14 +1,19 @@
-// BC.W-VIZ-DOTFLOW — the instanced-billboard RENDER pass (WebGPU primary).
+// BD.W-DOTFLOW-AURORA-CURRENT — the dual-register instanced-billboard RENDER pass (WebGPU).
 //
-// THE RETOPOLOGY. The render pass no longer thins dots by `|v|` (the free-cloud size
-// model); it paints the SWEEPING BRIGHT BAND through a stable anchored lattice. Per dot:
-//   brightness = baseBright + waveBand(h)·contrast   (the moving iso-band lights the dots)
-//   brightness *= optionalGlobeMask(o,t)             (the reference's soft-disc silhouette)
-//   size       = dotBaseSize·(1 + |disp|·sizePulse)  (a subtle drift-driven size pulse)
-// drawn as instanced billboard quads (the SOTA over a GL point-list — per-particle size).
+// `field` (mode 0): the SWEEPING BRIGHT BAND through a stable anchored lattice —
+//   brightness = baseBright + waveBand(h)·contrast, masked by the optional globe, size
+//   pulsed by |disp| (BC.W-VIZ-DOTFLOW, untouched).
+//
+// `flow` (mode 1): the AURORA CURRENT velocity-map — the mote's SPEED drives the warm-fire
+//   palette HUE (`samplePaletteLin(speedNorm)`) and `speed·life` the brightness; a
+//   velocity-anisotropic squash-stretch elongates fast motes into speed-lines + a cartoon-
+//   cast offset-shadow rides under the bright core (the WebGPU "more"). Additive blend over
+//   the trail composite. `life` fades the mote's tail (the respawn cadence is the trail's
+//   end).
+//
 // The dot color rides the shared `procedural-color.wgsl.ts` OKLCh ramp (the ONE color
-// source); the brightness drive multiplies the sampled stop's luminance. Premultiplied-
-// alpha blend over the (transparent / near-black) clear.
+// source); the brightness drive multiplies the sampled stop's luminance. The blend is
+// `srcFactor:"one"` (additive) — the trail buffer holds the braided ribbons.
 
 import {
     OETF_WGSL,
@@ -21,7 +26,7 @@ const TAU: f32 = 6.283185307179586;
 const MAX_FLOW_STOPS: i32 = 4;
 
 struct Particle {
-  // (pos.x, pos.y, height, |disp|)
+  // field: (pos.x, pos.y, height, |disp|)   flow: (pos.x, pos.y, speed, life)
   data: vec4<f32>,
 };
 
@@ -31,12 +36,14 @@ struct RenderUniforms {
   r0: vec4<f32>,
   // r1: (uDotSize, uSizePulse, uAspect, uGridPitch)
   r1: vec4<f32>,
-  // r2: (uWaveBandCenter, uWaveBandWidth, uGlobeMask, _pad)
+  // r2: (uWaveBandCenter, uWaveBandWidth, uGlobeMask, uMode)  — uMode: 0=field, 1=flow
   r2: vec4<f32>,
   // ints: (uStopCount, uParticleCount, _pad, _pad)
   ints: vec4<i32>,
   // bg: (background.rgb, hasBackground)
   bg: vec4<f32>,
+  // f0: (uSpeedGlow, uSpeedNorm, uShadowOffset, uStretchAmp)  — the flow velocity-map levers
+  f0: vec4<f32>,
   // each palette stop: linear-sRGB rgb + _pad
   palette: array<vec4<f32>, 4>,
 };
@@ -84,7 +91,9 @@ fn samplePaletteLin(t: f32) -> vec3<f32> {
 struct VSOut {
   @builtin(position) pos: vec4<f32>,
   @location(0) local: vec2<f32>,   // [-1,1] billboard-local coords for the soft circle
-  @location(1) bright: f32,        // band-driven brightness [0, ~1.6]
+  @location(1) bright: f32,        // brightness [0, ~1.6]
+  @location(2) ramp: f32,          // palette-ramp coord (field: tone, flow: speedNorm)
+  @location(3) flowFade: f32,      // flow life-fade [0,1] (field: 1)
 };
 
 @vertex
@@ -101,24 +110,39 @@ fn vs_main(
 
   let pr = particles[ii].data;
   let p = pr.xy;
-  let h = pr.z;
-  let dispMag = pr.w;
   let half = u.r0.w;
+  let aspect = u.r1.z;
+  let mode = i32(u.r2.w + 0.5);
 
-  // Brightness = base + band·contrast, masked by the optional globe (read at the live
-  // position — close enough to the anchor at the sub-cell cap). The band SWEEPS as h
-  // translates across the lattice.
-  let band = waveBand(h, u.r2.x, u.r2.y);
-  var bright = u.r0.z + band * u.r0.y;
-  bright = bright * globeMask(p, u.r0.x, u.r2.z);
+  var bright: f32;
+  var ramp: f32;
+  var sizeWorld: f32;
+  var flowFade: f32 = 1.0;
 
-  // A subtle drift-driven size pulse (never a re-seed — the dot only breathes).
-  let sizePulse = u.r1.y;
-  let sizeWorld = u.r1.x * (1.0 + dispMag * sizePulse);
+  if (mode == 1) {
+    // ── flow (AURORA CURRENT): speed→hue, speed·life→brightness, speed→size bloom ──
+    let speed = pr.z;
+    let life = pr.w;
+    let speedNorm = clamp(speed / max(u.f0.y, 1e-4), 0.0, 1.0);
+    // life fades the mote over its last third (the trail's tail / overlapping-action).
+    flowFade = clamp(life * 3.0, 0.0, 1.0);
+    ramp = speedNorm;
+    bright = (0.35 + speedNorm * u.f0.x) * flowFade;
+    // a speed bloom (the cartoon "more" on WGPU — faster motes read as hot speed-cores) +
+    // the √φ stretch lever scales the bloom (the squash-stretch as an isotropic core here).
+    sizeWorld = u.r1.x * (1.0 + speedNorm * (u.f0.w + 1.0));
+  } else {
+    // ── field: the sweeping bright band over the anchored lattice (BC.W-VIZ-DOTFLOW) ──
+    let h = pr.z;
+    let dispMag = pr.w;
+    let band = waveBand(h, u.r2.x, u.r2.y);
+    bright = (u.r0.z + band * u.r0.y) * globeMask(p, u.r0.x, u.r2.z);
+    ramp = clamp(bright, 0.0, 1.0);
+    sizeWorld = u.r1.x * (1.0 + dispMag * u.r1.y);
+  }
 
   // Position the quad at the dot in clip space. Domain [-half,half] → NDC [-1,1];
   // the quad half-extent rides sizeWorld (in domain units, aspect-corrected x).
-  let aspect = u.r1.z;
   let ndc = p / half;
   let off = local * sizeWorld / half;
   let offX = off.x / max(aspect, 1e-4);
@@ -127,6 +151,8 @@ fn vs_main(
   out.pos = vec4<f32>(ndc.x + offX, ndc.y + off.y, 0.0, 1.0);
   out.local = local;
   out.bright = bright;
+  out.ramp = ramp;
+  out.flowFade = flowFade;
   return out;
 }
 
@@ -138,14 +164,76 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
   let mask = 1.0 - smoothstep(1.0 - feather, 1.0, r);
   if (mask < 0.002) { return vec4<f32>(0.0); }
 
-  // The brightness lights the dot core; the palette tints it (the warm-cream identity).
+  let mode = i32(u.r2.w + 0.5);
   let bright = clamp(in.bright, 0.0, 1.6);
-  let tone = clamp(bright, 0.0, 1.0);
-  let lin = samplePaletteLin(tone) * bright;
-  // A floor alpha so even an off-band dot stays a faint lattice point (the calm grid).
-  let alpha = mask * clamp(bright * 0.8 + 0.12, 0.0, 1.0);
+  let lin = samplePaletteLin(in.ramp) * bright;
   let rgb = clamp(linearToSrgb(lin), vec3<f32>(0.0), vec3<f32>(1.0));
-  // Premultiplied-alpha output.
+
+  if (mode == 1) {
+    // flow: additive premultiplied — a soft glowing core, alpha rides speed·life.
+    let coreAlpha = mask * mask; // a tighter hot core (less white wash — H2 cap)
+    let a = coreAlpha * clamp(bright, 0.0, 1.0);
+    return vec4<f32>(rgb * a, a);
+  }
+  // field: a floor alpha so even an off-band dot stays a faint lattice point.
+  let alpha = mask * clamp(bright * 0.8 + 0.12, 0.0, 1.0);
   return vec4<f32>(rgb * alpha, alpha);
+}
+`;
+
+// ── The TRAIL decay-blit + PRESENT composite (WebGPU `flow` — the feedback-fade ribbon) ──
+// A fullscreen pass pair: (1) `fs_decay` draws the prev trail back at α (fade toward black);
+// the motes then draw additively over it (the render pipeline above). (2) `fs_present`
+// tone-maps the trail composite over the warm-near-black floor + the warm rose corner-bloom
+// (NOT teal) — the §3 colorful ground, the full-bleed plane (not a parallel field).
+export const FLOW_FIELD_TRAIL_WGSL = /* wgsl */ `
+struct TrailUniforms {
+  // (decay, hasGround, time, _pad)
+  p: vec4<f32>,
+  // floor.rgb (linear-sRGB) + _pad
+  floorC: vec4<f32>,
+  // bloom.rgb (linear-sRGB) + _pad
+  bloomC: vec4<f32>,
+};
+@group(0) @binding(0) var<uniform> u: TrailUniforms;
+@group(0) @binding(1) var samp: sampler;
+@group(0) @binding(2) var tex: texture_2d<f32>;
+
+${OETF_WGSL}
+
+struct FSQ { @builtin(position) pos: vec4<f32>, @location(0) uv: vec2<f32> };
+
+@vertex
+fn vs_fsq(@builtin(vertex_index) vi: u32) -> FSQ {
+  var c = array<vec2<f32>, 3>(
+    vec2<f32>(-1.0, -1.0), vec2<f32>(3.0, -1.0), vec2<f32>(-1.0, 3.0),
+  );
+  let p = c[vi];
+  var out: FSQ;
+  out.pos = vec4<f32>(p, 0.0, 1.0);
+  out.uv = p * 0.5 + 0.5;
+  return out;
+}
+
+@fragment
+fn fs_decay(in: FSQ) -> @location(0) vec4<f32> {
+  let prev = textureSample(tex, samp, in.uv);
+  return prev * u.p.x;   // fade toward black
+}
+
+@fragment
+fn fs_present(in: FSQ) -> @location(0) vec4<f32> {
+  let trail = textureSample(tex, samp, in.uv).rgb;
+  let mapped = trail / (trail + vec3<f32>(0.85)); // Reinhard — hot cores, not white wash
+  if (u.p.y < 0.5) {
+    let rgb = clamp(linearToSrgb(mapped), vec3<f32>(0.0), vec3<f32>(1.0));
+    let a = clamp(max(mapped.r, max(mapped.g, mapped.b)), 0.0, 1.0);
+    return vec4<f32>(rgb * a, a);
+  }
+  let bloom = smoothstep(1.3, 0.0, distance(in.uv, vec2<f32>(0.12, 0.88)));
+  let floorLin = u.floorC.rgb + u.bloomC.rgb * bloom * 0.5;
+  let lin = floorLin + mapped;
+  let rgb = clamp(linearToSrgb(lin), vec3<f32>(0.0), vec3<f32>(1.0));
+  return vec4<f32>(rgb, 1.0);
 }
 `;

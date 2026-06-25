@@ -217,6 +217,19 @@ export {
     type UseLiquidFlexReturn,
 } from "./composables/motion/useLiquidFlex";
 
+// BD.W-GOO-CAROUSEL-DECK — the ONE goo-morph engine (the de-dup of the pager WORM):
+// a two-edge stretch→merge→pinch→settle driver, generalized off the dot-pip register
+// into the library's single liquid metaball-morph transition driver — consumed by the
+// pager dot (worm scale), the carousel slide PLATE, and the deck slide PLATE. Composes
+// `useLiquidFlex` + `vue` only — engine-FREE + vueuse-FREE, root-barrel safe + on
+// `@mkbabb/glass-ui/motion-core` (the `useLiquidFlex` precedent).
+export {
+    useGooMorph,
+    type GooBarbellRefs,
+    type UseGooMorphParams,
+    type UseGooMorphReturn,
+} from "./composables/motion/useGooMorph";
+
 // BB.B4 (W-VIZ-POINTER) — the shared viz-pointer-physics field (pointer position +
 // derived velocity + the ACCEL term). The viz renderer FEEDS it via its frame `tick`
 // (NO own rAF — the one-loop discipline); under PRM it freezes (`tick(0)`). Imports

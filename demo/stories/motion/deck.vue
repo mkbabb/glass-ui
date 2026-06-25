@@ -41,14 +41,16 @@ const index = computed({
     set: (i: number) => deck.go(i),
 });
 
-// BD.W-GOO-CAROUSEL-DECK — the deck slide GOO-MORPH (the demo is binary consumer #3 of
-// `useGooMorph` — the worm #1, the carousel plate #2, the deck plate #3). The library
-// SHIP is `useGooMorph` + `GlassGooFilter`; this demo CONSUMES them. The outgoing→incoming
-// slide bridge wells up a warm-cream metaball NECK between the two full-viewport slides at
-// the calmer deck register (`--deck-goo-flow`, no-overshoot — the vestibular floor). The
-// `useDeck` library surface is byte-untouched.
+// BD.W-GOO-BARBELL-NECK — the deck slide GOO-MORPH (the demo is consumer #3 of
+// `useGooMorph` — the pager #1, the carousel #2, the deck #3). The library SHIP is
+// `useGooMorph` + `GlassGooFilter`; this demo CONSUMES them. The outgoing→incoming slide
+// bridge is the BARBELL: two warm-cream bodies neck a concave waist between them at the
+// calmer deck register (`--deck-goo-flow`, no-overshoot — the vestibular floor;
+// `--goo-weight: 0.4` zeroes the arc-lob). The `useDeck` library surface is byte-untouched.
 const gooStageEl = ref<HTMLElement | null>(null);
-const gooWormEl = ref<HTMLElement | null>(null);
+const gooBodyAEl = ref<HTMLElement | null>(null);
+const gooBodyBEl = ref<HTMLElement | null>(null);
+const gooNeckEl = ref<HTMLElement | null>(null);
 const verticalFalse = ref(false);
 
 // The deck slides are full-viewport, stacked at inset:0 — there is no physical gap to
@@ -63,18 +65,22 @@ function deckCenterOf(i: number): number | null {
     return w / 2 + i * (w * 0.5); // slot 0 = center, ±1 = ± half-stage neighbor
 }
 function deckRestSize(): number {
+    // the slot PITCH — the engine takes D = pitch/φ as the body diameter. A 0.97·width
+    // pitch lands D ≈ 0.6·width (the prior plate inline-size), a big viewport-scale blob.
     const host = gooStageEl.value;
-    return host ? Math.max(8, (host.clientWidth || 1) * 0.6) : 64;
+    return host ? Math.max(8, (host.clientWidth || 1) * 0.97) : 64;
 }
 
 const deckGoo = useGooMorph({
-    morphRef: gooWormEl,
+    barbellRefs: { bodyARef: gooBodyAEl, bodyBRef: gooBodyBEl, neckRef: gooNeckEl },
     hostRef: gooStageEl,
     vertical: verticalFalse,
     centerOf: deckCenterOf,
     restSize: deckRestSize,
     tokenPrefix: "deck-goo",
-    girthFloor: 0.85,
+    // the bodies near to 0.85·D at the midpoint — the calmest, widest waist (a full-viewport
+    // page-flip necks BARELY; the vestibular floor).
+    neckGap: 0.85,
 });
 
 // The goo glass bridge fades IN during travel + OUT a beat after the morph settles —
@@ -98,7 +104,21 @@ function markDeckTraveling(): void {
     }, durMs + 120);
 }
 
-onMounted(() => void nextTick(() => deckGoo.snap(0)));
+/** Reserve the body diameter D = pitch/φ in px (the engine's bare transforms land on this
+ *  base — the bodies are sized to D, no scale-to-fit). */
+function setDeckBodyGeometry(): void {
+    const host = gooStageEl.value;
+    if (!host) return;
+    const D = deckRestSize() / 1.618033988749895;
+    host.style.setProperty("--deck-body-d", `${D.toFixed(2)}px`);
+}
+
+onMounted(() =>
+    void nextTick(() => {
+        setDeckBodyGeometry();
+        deckGoo.snap(0);
+    }),
+);
 onBeforeUnmount(() => {
     if (travelOffTimer) clearTimeout(travelOffTimer);
 });
@@ -109,7 +129,10 @@ watch(
         // (slot +1) and settles at center (slot 0); backward → from the LEFT (slot -1).
         const dir = to >= (from ?? to) ? 1 : -1;
         markDeckTraveling();
-        void nextTick(() => deckGoo.travel(dir, 0));
+        void nextTick(() => {
+            setDeckBodyGeometry();
+            deckGoo.travel(dir, 0);
+        });
     },
 );
 </script>
@@ -126,16 +149,27 @@ watch(
                      on the --spring-deck slide-transition curve, with the GOO-MORPH neck
                      bridging the outgoing→incoming slide (BD.W-GOO-CAROUSEL-DECK). -->
                 <div ref="gooStageEl" class="deck-demo-stage glass-quiet rounded-card">
-                    <!-- the library goo <filter> mount (Safari-safe, static) -->
-                    <GlassGooFilter />
-                    <!-- the goo silhouette layer — TWO warm-cream masses (the merge needs
-                         ≥2): a STATIC center plate (the resting destination body) + ONE
-                         traveling worm that necks IN from the incoming-slide side and MERGES
-                         into the center plate (the metaball blob↔meatball read). aria-hidden,
-                         behind the crisp content. -->
+                    <!-- the library goo <filter> mount (Safari-safe, static — the BARBELL
+                         gooey-shoulder defaults blur 10 / slope 15 / offset -7) -->
+                    <GlassGooFilter :blur="9" :threshold-slope="15" :threshold-offset="-7" />
+                    <!-- the concave NECK-THROAT clipPath (the deck-scale `--neck-waist`
+                         hourglass; objectBoundingBox cubic-Bézier sides, Safari-safe). -->
+                    <svg class="deck-neck-defs" width="0" height="0" aria-hidden="true" focusable="false">
+                        <defs>
+                            <clipPath id="deck-neck-throat" clipPathUnits="objectBoundingBox">
+                                <path d="M0,0 C0.25,0 0.36,0.34 0.5,0.34 C0.64,0.34 0.75,0 1,0 L1,1 C0.75,1 0.64,0.66 0.5,0.66 C0.36,0.66 0.25,1 0,1 Z" />
+                            </clipPath>
+                        </defs>
+                    </svg>
+                    <!-- the goo silhouette layer — the BARBELL (two warm-cream bodies + a
+                         welling concave neck): the outgoing/incoming bodies bud apart, the
+                         neck wells a concave waist, the filter merges them into one waisted
+                         mass, then they coalesce (the metaball blob↔meatball read at viewport
+                         scale). aria-hidden, behind the crisp content. -->
                     <div class="deck-goo-layer" aria-hidden="true">
-                        <span class="deck-goo-plate" />
-                        <span ref="gooWormEl" class="deck-goo-worm" />
+                        <span ref="gooBodyAEl" class="deck-goo-body" />
+                        <span ref="gooNeckEl" class="deck-goo-neck" />
+                        <span ref="gooBodyBEl" class="deck-goo-body" />
                     </div>
                     <section
                         v-for="(s, i) in slides"
@@ -194,6 +228,10 @@ watch(
        deliberate keyboard/click DRIVER. */
     --goo-weight: 0.4;
     --motion-weight: var(--goo-weight);
+    /* BD.W-GOO-BARBELL-NECK — the deck barbell tokens (demo-scoped). The widest, calmest
+       waist (a full-viewport flip necks barely — the vestibular floor). */
+    --deck-goo-neck-gap: 0.85;
+    --neck-waist: 0.34;
     /* BD.W-CAROUSEL-DECK-GLASS §3 — the WARM FIELD behind the goo (presets-in-consumers,
        a DEMO-surface change, NOT a library token). The live deck slide resolved a flat
        taupe `oklab(0.793 0.005 0.012)` (C≈0.0128, near-gray) with NO colorful field — the
@@ -315,50 +353,60 @@ watch(
     color: oklch(from var(--card) 0.68 0.05 h);
     filter: url(#glass-goo) saturate(1.3) brightness(1.3);
 }
-/* the STATIC center plate — the resting metaball BODY the worm necks into + merges with
-   (the ≥2-mass requirement; without it the worm has nothing to goo-merge). Parked dead
-   center, full alpha (the layer opacity supplies the translucency). The domed-droplet
-   radial-gradient inner catch-light (JUDGE-2 §2(b)) reads as a LIQUID GLASS droplet, not
-   a flat gray box. */
-.deck-goo-plate {
+/* THE BARBELL BODIES — two round warm-cream droplets (the viewport-scale metaball masses).
+   Sized to the body diameter D = pitch/φ (set via --deck-body-d), border-radius:50% (a
+   BLOB). The domed-droplet radial-gradient inner catch-light reads as a LIQUID GLASS
+   droplet, not a flat gray box; the CENTER stop drops to 0.82 alpha (a warm
+   `oklch(from currentColor … / 0.82)`, NOT a white-mix that would gray it) so the warm
+   field reads THROUGH the body's thinnest part — the "field through the neck + edge"
+   transmission read. The travel + squash are ALL transform (useGooMorph). */
+.deck-goo-body {
     position: absolute;
-    top: 10%;
-    left: 50%;
-    inline-size: 60%;
-    block-size: 80%;
-    transform: translateX(-50%);
-    border-radius: var(--radius-card);
-    background:
-        radial-gradient(
-            120% 90% at 50% 18%,
-            color-mix(in oklab, currentColor, white 20%),
-            currentColor 70%
-        );
-    will-change: transform;
-}
-.deck-goo-worm {
-    position: absolute;
-    top: 10%;
+    top: 50%;
     left: 0;
-    inline-size: 60%; /* the rest plate reserve (the worm scales off it) */
-    block-size: 80%;
-    border-radius: var(--radius-card);
-    /* the SAME domed-droplet catch-light as the plate so a worm-into-plate merge reads as
-       ONE continuous warm liquid mass (JUDGE-2 §2(b)). BD.W-CAROUSEL-DECK-GLASS §3 — the
-       CENTER stop drops to 0.82 alpha (a warm `oklch(from currentColor … / 0.82)`, NOT a
-       white-mix that would gray it) so the warm field reads THROUGH the thinnest part of
-       the waist as the worm necks — the "field through the neck + edge" transmission read.
-       The domed edges stay full-alpha so the body reads substantial. */
+    inline-size: var(--deck-body-d, 58%);
+    block-size: var(--deck-body-d, 58%);
+    margin-block-start: calc(var(--deck-body-d, 58%) / -2);
+    border-radius: 50%;
     background:
         radial-gradient(
-            120% 90% at 50% 18%,
+            120% 110% at 50% 22%,
             color-mix(in oklab, currentColor, white 20%),
             oklch(from currentColor l c h / 0.82) 55%,
-            currentColor 72%
+            currentColor 74%
         );
     transform-origin: center;
     scale: var(--stretch, 1) calc(1 / var(--stretch, 1));
     will-change: transform;
+}
+/* THE CONCAVE NECK — the welling hourglass throat between the two bodies (the
+   `#deck-neck-throat` objectBoundingBox clipPath: cubic-Bézier sides pulling IN to the
+   --neck-waist midpoint — a STRUCTURAL concave waist, never faceted, never `inset()`). The
+   engine writes the well + the girth-following opacity. */
+.deck-goo-neck {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    inline-size: var(--deck-body-d, 58%);
+    block-size: var(--deck-body-d, 58%);
+    margin-block-start: calc(var(--deck-body-d, 58%) / -2);
+    background:
+        radial-gradient(
+            120% 110% at 50% 30%,
+            color-mix(in oklab, currentColor, white 16%),
+            oklch(from currentColor l c h / 0.82) 50%,
+            currentColor 78%
+        );
+    clip-path: url(#deck-neck-throat);
+    transform-origin: center;
+    opacity: 0; /* the engine writes the girth-following opacity */
+    will-change: transform, opacity;
+}
+.deck-neck-defs {
+    position: absolute;
+    width: 0;
+    height: 0;
+    pointer-events: none;
 }
 @supports not (filter: url(#glass-goo)) {
     .deck-goo-layer {

@@ -38,6 +38,51 @@ export const MAX_CURVE_SAMPLES = 384;
 export const MAX_FOURIER_STOPS = 4;
 
 /**
+ * The cursor-velocity → head_t clock-coupling gain (BD.W-VIZ-BROKEN-FIX D6 — the weighted
+ * scrub). The cursor MOTION (not its absolute X) nudges the loop clock: a flick fast-
+ * forwards, a still cursor lets the field drift at its config speed. Velocity-continuous —
+ * the head never teleports (the prior `headT = pointerX` absolute-X scrub read as "not
+ * following" a 2-D cursor).
+ */
+export const SCRUB_GAIN = 0.15;
+
+/**
+ * The 2-D cursor-FOLLOW lean depth (BD.W-VIZ-BROKEN-FIX D6b — the spatial follow beside the
+ * velocity scrub). A bounded fraction of the model half-span the view-fit center leans
+ * toward the cursor, so the whole reconstruction pans TOWARD the cursor on screen (a gentle
+ * pull, never a yank — the [[feedback-liquid-weight-universal]] weighted register). At 0
+ * the field is byte-identical (the ambient/non-interactive register).
+ */
+export const FOLLOW_LEAN = 0.12;
+
+/**
+ * The degenerate-tangent guard (BD.W-FOURIER-LOOM §2b). At a cusp the head's instantaneous
+ * speed `s = length(head − headBack)` collapses to ~0 and the unit tangent `T = d/s` blows
+ * up; below `FOURIER_TANGENT_EPS` the shaders + the GL CPU bead path all fall back to the
+ * LAST stable tangent, so `s→0` resolves IDENTICALLY across both engines (the cross-engine
+ * cusp-parity fence — one shared constant, no per-engine drift).
+ */
+export const FOURIER_TANGENT_EPS = 1e-4;
+
+/**
+ * The head squash-and-stretch gain (BD.W-FOURIER-LOOM §2b). The round head bead becomes a
+ * volume-preserving anisotropic ellipse: the tangent extent scales `1 + k·ŝ`, the normal
+ * extent `1/(1 + k·ŝ)`, where `ŝ` is the normalized head speed. The library identity carries
+ * a SMALL non-zero gain (cartoon-weight at rest — the head is never a dead disc); a consumer
+ * vivid preset turns it to 11. `0` = the byte-frozen round disc.
+ */
+export const FOURIER_SQUASH_GAIN = 0.55;
+
+/**
+ * The cartoon cel-shadow gain (BD.W-FOURIER-LOOM §3b). Each chain ring/arm/dot + the comet
+ * rope paints a second darker copy OFFSET opposite its travel — the 1940s technicolor ink.
+ * The library identity carries a SMALL non-zero gain (a quiet weight under the chain); a
+ * consumer vivid preset floors it UP. `0` = no cel pass (byte-frozen). The offset rides the
+ * head tangent, mirrored on both engines off the SAME `curveSamples` tangent.
+ */
+export const FOURIER_CEL_GAIN = 0.35;
+
+/**
  * The full author schema — the studio's `useConfiguratorState` model. Every field is a
  * tunable the demo configurator drives; the composable resolves it into the uniform table.
  */
@@ -68,6 +113,19 @@ export interface FourierFieldConfig {
     respectReducedMotion: boolean;
     /** Pointer scrubs `head_t` + a flick injects clock momentum (the W-VIZ-INTERACTION consume). */
     interactive: boolean;
+    /**
+     * Head squash-and-stretch gain (BD.W-FOURIER-LOOM §2b). The head bead stretches along the
+     * curve tangent on straights, squashes across it on corners (volume-preserving). The
+     * library identity carries a small non-zero default (cartoon-weight at rest); a vivid
+     * consumer preset turns it to 11. 0 = the byte-frozen round disc.
+     */
+    squashGain: number;
+    /**
+     * Cartoon cel-shadow gain (BD.W-FOURIER-LOOM §3b). A second darker copy of the chain + rope,
+     * offset opposite the head travel (the technicolor ink). The library identity carries a
+     * small non-zero default; a vivid consumer preset floors it UP. 0 = no cel pass.
+     */
+    celGain: number;
 }
 
 /**
@@ -98,4 +156,8 @@ export const DEFAULT_FOURIER_CONFIG: FourierFieldConfig = {
     palette: WARM_IDENTITY_PALETTE,
     respectReducedMotion: true,
     interactive: true,
+    // The library identity carries cartoon-weight at rest (BD.W-FOURIER-LOOM §2b/§3b — a
+    // SMALL non-zero squash + cel; the vivid lift is a consumer preset turning these to 11).
+    squashGain: FOURIER_SQUASH_GAIN,
+    celGain: FOURIER_CEL_GAIN,
 };

@@ -36,7 +36,13 @@
 // radius, the worst-case-orbit smin band widen) so the WGSL primary reads the IDENTICAL
 // resolved geometry as the WebGL2 fallback.
 
-import { MAX_SATS, TRAIL_N, MAX_BLOB_STOPS, POS_SCALE } from "../constants";
+import {
+    MAX_SATS,
+    TRAIL_N,
+    MAX_BLOB_STOPS,
+    POS_SCALE,
+    FISSION_REACH_MAX,
+} from "../constants";
 import type { BlobConfig, MoodParams } from "../types";
 import type { BlobPointer } from "./useBlobPointer";
 import type { BlobSatelliteSystem } from "./useBlobSatellites";
@@ -139,7 +145,13 @@ export function packBlobWGPUUniforms(
     const smoothK = nominalBand * orbitWiden * POS_SCALE;
 
     // ── maxReach (byte-identical) ──
-    const satWorst = worstOrbitDist + cGeo.satelliteRadius;
+    // BD.W-GOOBLOB-MERCURY-COLONY — the colony-register fission-apex pad (the WGSL twin
+    // of uploadBlobUniforms): when surface.fissionAmp > 0 the freed bead reaches the
+    // bounded apex FISSION_REACH_MAX + the snap overshoot, further than worstOrbitDist;
+    // the bounding-discard radius must cover it. Zero (byte-identical to HEAD) at amp 0.
+    const fissionWorst =
+        (config.surface.fissionAmp ?? 0) > 0 ? FISSION_REACH_MAX * 1.12 : 0;
+    const satWorst = Math.max(worstOrbitDist, fissionWorst) + cGeo.satelliteRadius;
     const maxReach =
         (Math.max(cGeo.bodyRadius, satWorst) +
             nominalBand * orbitWiden +
@@ -161,16 +173,24 @@ export function packBlobWGPUUniforms(
     f32[OFF.s1 + 2] = cMem.noiseSpeed;
     f32[OFF.s1 + 3] = cMem.warpAmp;
 
+    // BD.W-GOO-CAROUSEL-DECK — the blob↔meatball SHADING-MORPH scalar (the WGSL twin).
+    // `morphT` resolves from `config.morphT` (explicit) or `variant` (back-compat: blob →
+    // 0, meatball → 1). The dressing uniforms (uLit/uShadow) flip ON for ANY morph in
+    // progress (morphT > 0) so an intermediate frame HAS the dressed surface to lerp
+    // toward; uStage is DERIVED (1.0 at morphT <= 0 = the flat floor, else 0.0).
+    const morphT =
+        typeof config.morphT === "number"
+            ? Math.max(0, Math.min(1, config.morphT))
+            : config.variant === "blob"
+              ? 0
+              : 1;
+    const isDressed = morphT > 0;
+
     // s2: uSmoothK, uMerge, uMaxReach, uLit
-    // BC.W-GOOBLOB-MEATBALL — variant=meatball flips uLit on (T1); variant=blob keeps it
-    // OFF (the STAGE-1 floor — the uStage gate strips the lit work regardless, this is the
-    // explicit per-variant flip). The surface.lit flag still owns the lit-on/off WITHIN
-    // the meatball register.
-    const isMeatball = config.variant !== "blob";
     f32[OFF.s2 + 0] = smoothK;
     f32[OFF.s2 + 1] = cMem.merge === "circular" ? 1.0 : 0.0;
     f32[OFF.s2 + 2] = maxReach;
-    f32[OFF.s2 + 3] = isMeatball && cSurf.lit ? 1.0 : 0.0;
+    f32[OFF.s2 + 3] = isDressed && cSurf.lit ? 1.0 : 0.0;
 
     // s3: uSpecStrength, uSpecShininess, uRimPower, uRimStrength
     f32[OFF.s3 + 0] = cSurf.specStrength;
@@ -203,7 +223,8 @@ export function packBlobWGPUUniforms(
     f32[OFF.s7 + 0] = pointer.active.value ? 1.0 : 0.0;
     f32[OFF.s7 + 1] = netAttraction;
     f32[OFF.s7 + 2] = cInt.pointerStrength * POS_SCALE;
-    f32[OFF.s7 + 3] = config.variant === "blob" ? 1.0 : 0.0;
+    // uStage DERIVED from morphT (BD.W-GOO-CAROUSEL-DECK): 1.0 = the flat STAGE-1 floor.
+    f32[OFF.s7 + 3] = morphT <= 0 ? 1.0 : 0.0;
 
     // ptr: uPointer.xy, uVelocity.xy (the `* 0.5 * POS_SCALE` mapping)
     f32[OFF.ptr + 0] = ptr.x * 0.5 * POS_SCALE;
@@ -211,11 +232,12 @@ export function packBlobWGPUUniforms(
     f32[OFF.ptr + 2] = vel.x * 0.5 * POS_SCALE;
     f32[OFF.ptr + 3] = vel.y * 0.5 * POS_SCALE;
 
-    // base: uBaseColor.rgb
+    // base: uBaseColor.rgb, uMorphT (the base.w lane — BD.W-GOO-CAROUSEL-DECK SHADING
+    // morph scalar; the WGSL fragment reads `u.base.w`).
     f32[OFF.base + 0] = rgb[0];
     f32[OFF.base + 1] = rgb[1];
     f32[OFF.base + 2] = rgb[2];
-    f32[OFF.base + 3] = 0;
+    f32[OFF.base + 3] = morphT;
 
     // rim: uRimColor.rgb (resolved through the SAME /color memo as uBaseColor)
     const rim = resolveColor(rimColor);
@@ -237,7 +259,7 @@ export function packBlobWGPUUniforms(
     // surface.shadow flag owns the on/off WITHIN the meatball register.
     f32[OFF.res + 0] = canvas.width;
     f32[OFF.res + 1] = canvas.height;
-    f32[OFF.res + 2] = isMeatball && cSurf.shadow ? 1.0 : 0.0;
+    f32[OFF.res + 2] = isDressed && cSurf.shadow ? 1.0 : 0.0;
     f32[OFF.res + 3] = cSurf.shadowSoftness;
 
     // ── palette (W11.b) — write rgb into the vec4 lanes (a=0); empty → uBaseColor. ──

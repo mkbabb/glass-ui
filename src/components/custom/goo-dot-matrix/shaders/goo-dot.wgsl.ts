@@ -39,16 +39,20 @@ export const GOO_DOT_FIELD_WGSL =
 export const GOO_DOT_WGSL = /* wgsl */ `
 ${GOO_DOT_FIELD_WGSL}
 
-// ── Dot-grid uniforms (the s8/s9 lanes — see uniformBridgeWGPU.ts; the SoT extend) ──
+// ── Dot-grid uniforms (the s8–s13 lanes — see uniformBridgeWGPU.ts; the SoT extend) ──
 struct DotUniforms {
   // s8: (uDotMode, uDotPixelSize, uFieldFloor, uDotBrightFloor)
   s8: vec4<f32>,
   // s9: (uDotMin, uDotMax, uPointerRadius, uPointerMode)
   s9: vec4<f32>,
-  // s10: (uResX, uResY, uDpr, _pad) — the device-px resolution the cell grid quantizes to
+  // s10: (uResX, uResY, uDpr, uShadowGate) — res + the opaque-ground cartoon-shadow gate
   s10: vec4<f32>,
   // s11: (uPointerActive, uPointerX, uPointerY, uBloom) — the dot-cursor influence
   s11: vec4<f32>,
+  // s12: (uPresenceFloor, uWeldLo, uWeldHi, uTime) — Move 1 floor + Move 2 weld band + twinkle clock
+  s12: vec4<f32>,
+  // s13: (uWeldSwell, uWeldSpecular, uFlowAmt, uLatticeSquash) — Move 2 ridge + Move 4b lattice
+  s13: vec4<f32>,
 };
 @group(0) @binding(1) var<uniform> dg: DotUniforms;
 
@@ -95,9 +99,18 @@ fn fs_main(in: DotVSOut) -> @location(0) vec4<f32> {
   let uPointerRadius  = max(dg.s9.z, 1e-4);
   let uPointerMode    = dg.s9.w;          // +1 repel (push out), -1 attract (pull in)
   let uRes            = dg.s10.xy;
+  let uShadowGate     = dg.s10.w;         // 1 when an opaque ground is present (cast shadow), else 0
   let pAct            = dg.s11.x;
   let cursor          = dg.s11.yz;        // NDC-ish [-0.5,0.5] (the field's uv space)
   let uBloom          = dg.s11.w;
+  let uPresenceFloor  = dg.s12.x;         // Move 1 — the base-lattice floor
+  let uWeldLo         = dg.s12.y;         // Move 2 — the weld band lower fCell
+  let uWeldHi         = dg.s12.z;         // Move 2 — the weld band upper fCell
+  let uTime           = dg.s12.w;         // the φ-twinkle clock (s)
+  let uWeldSwell      = dg.s13.x;         // Move 2 — the neck-ridge radius swell
+  let uWeldSpecular   = dg.s13.y;         // Move 2 — the multiplicative HDR weld pop
+  let uFlowAmt        = dg.s13.z;         // Move 4b — the liquid-lattice advection
+  let uLatticeSquash  = dg.s13.w;         // Move 4b — the volume-preserving squash
 
   let bodyR = u.s0.y + breath(u.s0.z) * u.s0.w;
 
@@ -105,6 +118,7 @@ fn fs_main(in: DotVSOut) -> @location(0) vec4<f32> {
   //    pixel coordinate is in.pos.xy (device px).
   let fragCoord = in.pos.xy;
   let cell      = floor(fragCoord / uDotPixelSize);
+  let cellHalf  = uDotPixelSize * 0.5;
   let cellCtr   = (cell + 0.5) * uDotPixelSize;
 
   // 2. The field AT THE CELL CENTER (so every fragment in a cell agrees on ONE dot). The cell
@@ -118,24 +132,53 @@ fn fs_main(in: DotVSOut) -> @location(0) vec4<f32> {
   let toCursor   = cellCtrUv - cursor;
   let cdist      = length(toCursor);
   let influence  = (1.0 - smoothstep(0.0, uPointerRadius, cdist)) * pAct;
-  let sampleUv   = cellCtrUv + normalize(toCursor + vec2<f32>(1e-6)) * influence * uPointerMode * 0.03;
+  let cursorUv   = cellCtrUv + normalize(toCursor + vec2<f32>(1e-6)) * influence * uPointerMode * 0.03;
+
+  // MOVE 4b — the LIQUID LATTICE. Probe the field once at the cursor-shifted cell to get the
+  //    local gradient, then advect the sample DOWN that gradient toward the forming core (the
+  //    dots migrate INTO the goo, not a screen-locked grid). The volume-preserving squash leans
+  //    the cell on the pulse + a fast drag (X·Y ≈ 1, a liquid lean not a balloon).
+  let probe      = sceneDistG(cursorUv);
+  let probeF     = clamp(-probe.x / max(bodyR, 1e-4), 0.0, 1.0);
+  let flowDir    = normalize(probe.yz + vec2<f32>(1e-6));
+  let sq         = max(uLatticeSquash, 1e-3);
+  let leanUv     = vec2<f32>(cursorUv.x / sq, cursorUv.y * sq);  // vol-preserving X·Y ≈ 1
+  let sampleUv   = leanUv - flowDir * uFlowAmt * probeF * 0.06;
 
   // 4. The field value at the cell — thickness = clamp(-d/bodyR, 0, 1) (metaball.wgsl line 500,
   //    the one-line re-use). 0 at the silhouette → 1 deep in the core — the goo↔dot bridge.
   let scene = sceneDistG(sampleUv);
   let fCell = clamp(-scene.x / max(bodyR, 1e-4), 0.0, 1.0);
 
-  // 5. The dot radius (px) — field-driven: dense+big inside, small at the rim, 0 outside the
-  //    floor. The cursor swells the near-cursor dots (mix toward 1.5× + the accel bloom).
-  let cellHalf = uDotPixelSize * 0.5;
-  let baseR    = (uDotMin + (uDotMax - uDotMin) * smoothstep(uFieldFloor, 1.0, fCell)) * cellHalf;
-  let dotR     = baseR * (1.0 + influence * 0.5 + uBloom * influence);
+  // MOVE 1 — the phi-banded PRESENCE FLOOR. band is the meniscus rise the old step() deleted;
+  //    core is the body rise. present NEVER drops below uPresenceFloor -> a living lattice
+  //    fills the card corner-to-corner. uPresenceFloor = 0 => byte-identical to the old gate.
+  let band    = smoothstep(0.0, max(uFieldFloor, 1e-4), fCell);
+  let core    = smoothstep(uFieldFloor, 1.0, fCell);
+  let present = max(uPresenceFloor, band);
+
+  // MOVE 2 — the NECK-RIDGE. The weld is gated on the rim/iso BAND (where two membranes meet),
+  //    NOT on core (lower at the waist), AND on a shallow field gradient (a flat welding
+  //    membrane). At a weld the dots get the field's biggest+brightest swell — the climax.
+  let gradMag = length(scene.yz);
+  let inBand  = smoothstep(uWeldLo, (uWeldLo + uWeldHi) * 0.5, fCell)
+              * (1.0 - smoothstep((uWeldLo + uWeldHi) * 0.5, uWeldHi, fCell));
+  let weld    = inBand * (1.0 - smoothstep(0.0, 0.25, gradMag));
+
+  // 5. The dot radius (px). The presence floor sets the base; core ramps the body; the weld
+  //    swells the neck dots ~1+uWeldSwell (pinned sub-cell so they stay ROUND, not clipped
+  //    squares); the cursor swell + accel bloom ride on top.
+  let coreR   = (uDotMin + (uDotMax - uDotMin) * core);
+  let baseR   = mix(uDotMin, coreR, present)
+              * (1.0 + uWeldSwell * weld)
+              * (1.0 + influence * 0.5 + uBloom * influence);
+  let dotR    = clamp(baseR, 0.0, 0.98) * cellHalf;  // the √φ cell-clip ceiling — round dots
 
   var mask = 1.0;
   if (uDotMode > 0.5) {
     // §T2 Register-A dither: ORDERED-dither the field thickness into ON/OFF dots — denser at
     // the core, sparser at the rim (the classic halftone). The dot still AA-stamps below.
-    mask = step(0.5, fCell + bayer8(cell) - 0.5);
+    mask = step(0.5, max(uPresenceFloor, fCell) + bayer8(cell) - 0.5);
   }
 
   // 6. The antialiased circle at the cell center (the fwidth-feathered Book-of-Shaders dot —
@@ -144,22 +187,79 @@ fn fs_main(in: DotVSOut) -> @location(0) vec4<f32> {
   let aa  = max(fwidth(pd), 1e-4);
   let dot = (1.0 - smoothstep(dotR - aa, dotR + aa, pd)) * mask;
 
-  // 7. The brightness/color ALSO reads fCell (dim outside, bright inside) on the SAME OKLCh
-  //    ramp the metaball pass samples (the ONE color source). The tone reads DEPTH (the core
-  //    is the bright cream stop, the rim the amber stop) so the field reads TONALLY on both
-  //    grounds; the brightness multiplies the sampled stop's luminance.
-  let bright = uDotBrightFloor + (1.0 - uDotBrightFloor) * fCell + uBloom * influence * 0.6;
-  let tone   = clamp(1.0 - fCell, 0.0, 1.0);
-  var oklch  = samplePaletteOklch(tone);
-  oklch.x    = clamp(oklch.x * clamp(bright, 0.0, 1.6), 0.0, 1.0);
-  let lin    = oklabToLinearSrgb(oklchToOklab(gamutClampOklch(oklch)));
-  let rgb    = clamp(linearToSrgb(lin), vec3<f32>(0.0), vec3<f32>(1.0));
+  // MOVE 3 — the GATED CARTOON SHADOW. A larger, darker disc UNDER the bright dot, offset by
+  //    the cursor burst (the velocity tell). GATED on uShadowGate (an opaque ground to cast
+  //    onto — no dark halos on a light/transparent host). Premultiplied UNDER the dot.
+  let twinkle = 0.85 + 0.15 * sin(uTime * 0.6 + hash21(cell) * 6.2831853);
+  let shOff   = normalize(toCursor + vec2<f32>(1e-6)) * (0.6 + uBloom * 2.2) * uShadowGate;
+  let shPd    = length(fragCoord - (cellCtr + shOff * cellHalf));
+  let shadowR = dotR * 1.45;
+  let shadow  = (1.0 - smoothstep(shadowR - aa, shadowR + aa, shPd)) * mask
+              * uShadowGate * (present * 0.55);
 
-  // No dot where the field is below the floor (the dots stop at the silhouette band).
-  let alpha = dot * step(uFieldFloor, fCell);
-  if (alpha < 0.002) { discard; }
+  // 7. The TECHNICOLOR read (Move 3). The tone maps fCell over the 3-stop warm ramp: deep core
+  //    = hot butter-gold (stop 0), the weld band = molten coral (stop 1), the base lattice =
+  //    deep amber (stop 2). On a light host the FLOOR dots read coral/amber (not the L0.96 core
+  //    stop) so the resting lattice carries chroma. The weld specular is a MULTIPLICATIVE HDR
+  //    pop that can exceed the core ceiling — the waist is the brightest band.
+  let bright  = (uDotBrightFloor + (1.0 - uDotBrightFloor) * core + uBloom * influence * 0.6)
+              * (1.0 + uWeldSpecular * weld) * twinkle;
+  // tone: 0 deep core → 1 base lattice; the weld pulls toward the coral stop (~0.5).
+  let tone    = clamp(mix(1.0 - core, 0.5, weld), 0.0, 1.0);
+  var oklch   = samplePaletteOklch(tone);
+  oklch.x     = clamp(oklch.x * clamp(bright, 0.0, 1.8), 0.0, 1.0);
+  let lin     = oklabToLinearSrgb(oklchToOklab(gamutClampOklch(oklch)));
+  let rgb     = clamp(linearToSrgb(lin), vec3<f32>(0.0), vec3<f32>(1.0));
 
-  // Premultiplied-alpha output (the warm-cream dots additive over the clear).
-  return vec4<f32>(rgb * alpha, alpha);
+  let alpha = dot * present * twinkle;
+  if (alpha < 0.002 && shadow < 0.002) { discard; }
+
+  // The cartoon shadow (a warm-dark disc) composited UNDER, then the bright dot OVER. Both
+  // premultiplied. The dot wins where it stamps; the shadow shows in the offset crescent.
+  let shadowRgb = vec3<f32>(0.10, 0.05, 0.02);
+  let outRgb    = rgb * alpha + shadowRgb * shadow * (1.0 - alpha);
+  let outA      = alpha + shadow * (1.0 - alpha);
+  return vec4<f32>(outRgb, outA);
+}`;
+
+// ── BD.W-GOODOT-LIQUID-FIELD Move 4a — the warm GROUND pass (pass-1, loadOp:"clear") ──
+// A tiny dedicated warm-amber gradient fragment (its OWN minimal shader, NOT Aurora). +1
+// pipeline / +1 module / +1 draw, in the ONE owned context. It paints a LIVING warm field
+// (the centroid drifts over uGroundTime) the dots read over; the dot pass-2 loads over it.
+export const GOO_DOT_GROUND_WGSL = /* wgsl */ `
+struct GroundUniforms {
+  // g0: (uGroundTime, uGroundAspect, _pad, _pad)
+  g0: vec4<f32>,
+};
+@group(0) @binding(0) var<uniform> gu: GroundUniforms;
+
+struct GVSOut {
+  @builtin(position) pos: vec4<f32>,
+  @location(0) uv: vec2<f32>,
+};
+
+@vertex
+fn vs_main(@builtin(vertex_index) vi: u32) -> GVSOut {
+  var p = vec2<f32>(-1.0, -1.0);
+  if (vi == 1u) { p = vec2<f32>(3.0, -1.0); }
+  else if (vi == 2u) { p = vec2<f32>(-1.0, 3.0); }
+  var out: GVSOut;
+  out.pos = vec4<f32>(p, 0.0, 1.0);
+  out.uv = p * 0.5 + 0.5;
+  return out;
 }
-`;
+
+@fragment
+fn fs_main(in: GVSOut) -> @location(0) vec4<f32> {
+  let t   = gu.g0.x;
+  let uv  = in.uv;
+  // Two slow warm drifts — the centroid moves so the ground is LIVING (G3c).
+  let d1  = 0.5 + 0.5 * sin(t * 0.11 + uv.x * 2.1);
+  let d2  = 0.5 + 0.5 * sin(t * 0.07 - uv.y * 1.7 + 1.3);
+  let amber = vec3<f32>(0.99, 0.86, 0.62);   // warm gold high
+  let coral = vec3<f32>(0.95, 0.62, 0.42);   // molten coral mid
+  let deep  = vec3<f32>(0.86, 0.50, 0.30);   // deep amber low
+  let g     = mix(deep, coral, d1);
+  let rgb   = mix(g, amber, d2 * (1.0 - uv.y) * 0.8);
+  return vec4<f32>(rgb, 1.0);
+}`;

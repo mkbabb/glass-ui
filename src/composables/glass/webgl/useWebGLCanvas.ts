@@ -33,7 +33,11 @@
 import {
     createCanvasLifecycle,
     type CanvasFrameHooks,
+    type BackingSize,
+    type DprPolicy,
 } from "./createCanvasLifecycle";
+
+export type { BackingSize, DprPolicy } from "./createCanvasLifecycle";
 
 /**
  * The ONE `getContext("webgl2")` capability probe (BB.W-CI-GREEN — the
@@ -71,6 +75,28 @@ export function probeWebGL2Renderer(): string | null {
     }
 }
 
+/**
+ * The WebGPU→WebGL2 fall POISON test — can THIS specific canvas still host WebGL2?
+ * (BD.W-VIZ-BROKEN-FIX — the single-bootstrap home for the probe.) Once `getContext("webgpu")`
+ * has run on a canvas, the HTML one-context-type rule locks it to `webgpu` forever and
+ * `getContext("webgl2")` returns `null`. The picker's fall-to-WebGL2 path probes this to
+ * decide whether it must clone+swap the canvas (genuinely poisoned) or can keep the original
+ * (a fall that ran BEFORE any `getContext("webgpu")` — no-adapter / device-reject / acquire-
+ * timeout — never poisoned it; reusing it avoids orphaning the consumer's captured canvas
+ * reference). The `getContext("webgl2")` bootstrap stays in THIS substrate (the sole webgl2-
+ * creating module per `proof:webgl-substrate-single` clause B); the picker composes this
+ * helper rather than calling `getContext("webgl2")` itself. `getContext` is idempotent for
+ * the same type, so on a clean canvas the probe returns the very context the net re-acquires
+ * (no extra cost). Returns `true` if the canvas can host WebGL2, `false` if poisoned/unable.
+ */
+export function canvasCanHostWebGL2(canvas: HTMLCanvasElement): boolean {
+    try {
+        return canvas.getContext("webgl2") != null;
+    } catch {
+        return false;
+    }
+}
+
 // Lockstep with createCanvasLifecycle's CanvasSuspendReason (AX.W16 F6 adds
 // "off-screen-io" — the IntersectionObserver fallback's OWN reason key, distinct from
 // the content-visibility path's "off-screen").
@@ -86,8 +112,14 @@ export interface WebGLCanvasFrame {
     frame: (timeSec: number) => void;
     /** Demand-gate: is there live motion to render next frame? `false` → park. */
     shouldContinue: () => boolean;
-    /** Size the canvas + set the viewport. The consumer owns its DPR policy. */
-    resize: () => void;
+    /**
+     * Upload the backing geometry to the viewport/uniforms. BD.W-SUBSTRATE-SIZE-UNIFY:
+     * when a `dprPolicy` is supplied the leaf MEASURES + sizes the backing and passes
+     * the live `BackingSize` here (the consumer body shrinks to
+     * `gl.viewport(0,0,s.w,s.h)`); the arg is optional so a legacy self-measuring
+     * consumer keeps compiling until it adopts the leaf sizer.
+     */
+    resize: (s?: BackingSize) => void;
     /** Frame time from elapsed seconds — the consumer owns frozen/reduced-motion. */
     time?: (elapsedSec: number) => number;
     /** Delete GL resources (program/buffers/VAO). Runs on dispose + before a restore re-setup. */
@@ -109,6 +141,19 @@ export interface WebGLCanvasOptions {
      */
     respectReducedMotion?: boolean;
     /**
+     * BD.W-SUBSTRATE-SIZE-UNIFY (G1/G2) — the consumer's DPR policy. When PRESENT the
+     * leaf owns the backing-store measurement + sizing (the ONE sizer, sized
+     * synchronously at mount before any acquire) and hands the live `BackingSize` to
+     * `resize(s)`. When ABSENT the legacy path runs (the consumer self-measures).
+     */
+    dprPolicy?: DprPolicy;
+    /** Compose the leaf IO park (G3). Default `false` (opt-in; see createCanvasLifecycle). */
+    composeIntersectionPark?: boolean;
+    /** `rootMargin` for the leaf IO park (G3). */
+    intersectionRootMargin?: string;
+    /** Fire the cold-first-paint reveal bloom (G6, gated on Band-0 tokens). Default `false`. */
+    revealBloom?: boolean;
+    /**
      * Build the program + geometry on a fresh context. Called on `arm()` AND on
      * every `webglcontextrestored`. Returns the per-frame hooks.
      */
@@ -118,6 +163,8 @@ export interface WebGLCanvasOptions {
 export interface WebGLCanvasHandle {
     /** Run the expensive init (context + `setup` + arm the loop). Idempotent; no-op post-dispose. */
     arm: () => void;
+    /** BD.W-SUBSTRATE-SIZE-UNIFY (G2) — size the backing + start the leaf RO synchronously (pre-acquire). */
+    presize: () => void;
     suspend: (reason?: WebGLSuspendReason) => void;
     resume: (reason?: WebGLSuspendReason) => void;
     /** Re-arm a parked loop (a setter that re-introduced motion calls this). */
@@ -143,21 +190,22 @@ export function createWebGLCanvas(
     const { setup, contextAttrs } = options;
 
     let gl: WebGL2RenderingContext | null = null;
-    let ro: ResizeObserver | null = null;
     let frameHooks: WebGLCanvasFrame | null = null;
 
     // ── the WebGL2 BACKEND seam — the one backend-specific concern the agnostic
     // lifecycle core threads through `buildContext`. The `getContext("webgl2")`
     // acquisition + the consumer `setup(gl)` live here; the schedule lives in the core.
+    //
+    // BD.W-SUBSTRATE-SIZE-UNIFY (G2) — the per-backend ResizeObserver is DELETED. The
+    // ONE engine-agnostic RO now lives in `createCanvasLifecycle` (the leaf), observing
+    // the canvas + routing through the leaf's `sizeBacking`. A backend RO here would be
+    // a triple-observe parallel path (leaf RO + WebGL RO + WebGPU RO) the BINDING LAW
+    // forbids. The consumer's `resize` is still threaded through the leaf seam below.
     function buildContext(): CanvasFrameHooks {
         const ctx = canvas.getContext("webgl2", contextAttrs ?? undefined);
         if (!ctx) throw new Error("[useWebGLCanvas] WebGL2 unavailable");
         gl = ctx;
         frameHooks = setup(gl);
-        if (!ro) {
-            ro = new ResizeObserver(() => frameHooks?.resize());
-            ro.observe(canvas);
-        }
         return {
             frame: frameHooks.frame,
             shouldContinue: frameHooks.shouldContinue,
@@ -166,8 +214,6 @@ export function createWebGLCanvas(
                 frameHooks?.teardown?.();
                 // Force context release under the per-page WebGL-context cap (~8 in Chromium).
                 gl?.getExtension("WEBGL_lose_context")?.loseContext();
-                ro?.disconnect();
-                ro = null;
                 gl = null;
                 frameHooks = null;
             },
@@ -190,8 +236,14 @@ export function createWebGLCanvas(
         canvas,
         mode: options.mode,
         respectReducedMotion: options.respectReducedMotion,
+        dprPolicy: options.dprPolicy,
+        composeIntersectionPark: options.composeIntersectionPark,
+        intersectionRootMargin: options.intersectionRootMargin,
+        revealBloom: options.revealBloom,
         buildContext,
-        resize: () => frameHooks?.resize(),
+        // The leaf hands the freshly-computed BackingSize (when it owns sizing); forward
+        // it to the consumer's upload-only resize. Legacy consumers ignore the arg.
+        resize: (s) => frameHooks?.resize(s),
         // Bind the WebGL-specific context-loss/restore pair; on `webglcontextrestored`
         // the core re-runs buildContext (re-creating the program on the fresh context)
         // + re-arms — a GPU context loss self-heals instead of going permanently blank.
@@ -219,6 +271,7 @@ export function createWebGLCanvas(
 
     return {
         arm: lifecycle.arm,
+        presize: lifecycle.presize,
         suspend: lifecycle.suspend,
         resume: lifecycle.resume,
         wake: lifecycle.wake,

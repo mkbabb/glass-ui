@@ -1,10 +1,10 @@
 <script setup lang="ts">
-// DotFlowField — the WebGPU-first curl-noise flow-field studio. The DEFAULT is the
-// warm-cream library identity (soft warm-white dots over a transparent/warm ground),
-// seeded along undulating streamlines rippling in Gerstner/Tessendorf waves. The
-// ACTUAL reference (subtle mono-warm-white dots on near-black) toggles beside it as a
-// non-default named preset (presets-in-consumers; BC.W-TEAL-NAVY-PURGE — the
-// fabricated teal-on-navy reproduction is DELETED).
+// DotFlowField — the AURORA CURRENT (BD.W-DOTFLOW-AURORA-CURRENT). The DEFAULT register is
+// `mode:"flow"`: a dense population ADVECTED along the divergence-free curl current, trailing
+// fading ribbons of WARM-FIRE light (a velocity-map: slow ember → molten amber → incandescent
+// gold → near-white bloom), the cursor a live VORTEX, over a deep warm-near-black floor + a
+// warm rose corner-bloom (NO cyan/teal — the warm-fire fence). The calm `mode:"field"`
+// anchored halftone (the v4 content-deferential backdrop, KEPT) toggles beside it.
 import { computed, reactive, ref } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
@@ -15,36 +15,35 @@ import {
     DotFlowField,
     type FlowFieldConfig,
 } from "../../../src/components/custom/dot-flow-field";
-import { FLOW_PRESET_MONO_REFERENCE, FLOW_PRESET_WARM } from "./presets";
+import { FLOW_PRESET_AURORA_CURRENT, FLOW_PRESET_HALFTONE } from "./presets";
 
-// The studio model — a live config the controls drive (commit-on-write — a single
-// surface; a toggle is a clean reset, the library default). The DEFAULT is warm-cream.
-const useReference = ref(false);
+// The studio model — a live config the controls drive (commit-on-write). The DEFAULT is the
+// AURORA CURRENT (flow); the toggle swaps to the calm halftone (field) register.
+const useHalftone = ref(false);
 const paused = ref(false);
 const interactive = ref(true);
 
-const config = reactive<FlowFieldConfig>({ ...FLOW_PRESET_WARM, interactive: true });
+const config = reactive<FlowFieldConfig>({ ...FLOW_PRESET_AURORA_CURRENT });
 
-// Switch the whole config between the mono-warm-white-on-near-black reference and the
-// warm-cream identity (presets-in-consumers — the library default is warm-cream).
-function applyPreset(reference: boolean): void {
-    const src = reference ? FLOW_PRESET_MONO_REFERENCE : FLOW_PRESET_WARM;
+// Switch the whole config between the AURORA CURRENT (flow) and the halftone (field).
+function applyPreset(halftone: boolean): void {
+    const src = halftone ? FLOW_PRESET_HALFTONE : FLOW_PRESET_AURORA_CURRENT;
     Object.assign(config, JSON.parse(JSON.stringify(src)));
-    config.interactive = interactive.value;
+    config.interactive = halftone ? false : interactive.value;
 }
 
 const liveConfig = computed<FlowFieldConfig>(() => ({ ...config }));
 
 // Re-apply on the toggle.
 function onTogglePreset(v: boolean): void {
-    useReference.value = v;
+    useHalftone.value = v;
     applyPreset(v);
 }
 
-// Toggle the pointer-ripple interaction (the velocity + flick-accel response).
+// Toggle the cursor-vortex interaction (the velocity-drag + flick-shockwave response).
 function onToggleInteractive(v: boolean): void {
     interactive.value = v;
-    config.interactive = v;
+    if (!useHalftone.value) config.interactive = v;
 }
 </script>
 
@@ -52,23 +51,23 @@ function onToggleInteractive(v: boolean): void {
     <StoryPage>
         <StorySection
             heading="Dot flow field"
-            label="anchored dot-matrix · LARGE sweeping waves"
-            blurb="A calm regular lattice of small soft warm-cream dots that a single LARGE wave sweeps slowly through — an anchored dot-matrix (NOT a free particle cloud), where each dot only breathes a hair off its anchor while a broad bright iso-band crosses the field like a tide, lighting the dots it passes. The scalar height undulates as a Gerstner/Tessendorf sum-of-sines water-wave field (Tessendorf 2001 · Bridson 2007), the regime inverted to the LOW-frequency coherent band (one dominant wave, a faint curl break). WebGPU-FIRST: the compute pass pulls the lattice toward its sub-cell displacement with a restoring spring, the render pass draws instanced billboard quads lit by the sweeping band; a pure WebGL2 fragment fallback evaluates the SAME field where WebGPU is absent. Drag the cursor — a soft ripple pushes through the lattice (the steady-drag velocity), and a flick fires a brief brightness bloom (the accel burst). ONE GL context (the field's own) — the one-GL-per-route budget held."
+            label="AURORA CURRENT · advected motes · warm-fire trails · cursor vortex"
+            blurb="A dense population of motes ADVECTED along a divergence-free curl current, each trailing a fading ribbon of WARM-FIRE light — the ribbon hue mapped to the mote's SPEED (a 1940s-technicolor velocity-map: slow eddies ember/oxblood → fast jets molten amber → incandescent gold → near-white bloom), the whole field breathing on a slow clock, the CURSOR a live VORTEX that motes bend around and spiral off — over a deep warm-near-black floor with a warm rose corner-bloom (NO cyan/teal). The current undulates as a Gerstner/Tessendorf curl-noise field (Tessendorf 2001 · Bridson 2007). A feedback-fade TRAIL buffer braids the ribbons; low turn-rate inertia gives the motes liquid weight (they ease into the current's arcs, never jitter). WebGPU runs a compute-advected storage buffer + a half-res RGBA16F trail; the WebGL2 channel (the live path on most hosts) runs a state-texture GPGPU ping-pong + a two-FBO trail — the SAME advected-population gestalt on both engines. Drag the cursor: a slow drag DRAGS the streamlines along the gesture (and keeps spinning a beat after you stop), a fast flick SHOVES a radial shockwave. ONE GL context — the one-GL-per-route budget held. Toggle to the calm anchored halftone (the field register)."
         >
             <div class="flex flex-wrap items-center gap-4">
                 <Label class="flex items-center gap-2">
                     <Switch
-                        :model-value="useReference"
+                        :model-value="useHalftone"
                         @update:model-value="onTogglePreset"
                     />
-                    <span class="text-sm">mono-on-near-black reference (off = warm-cream identity default)</span>
+                    <span class="text-sm">calm halftone (field) — off = AURORA CURRENT (flow) default</span>
                 </Label>
                 <Label class="flex items-center gap-2">
                     <Switch
                         :model-value="interactive"
                         @update:model-value="onToggleInteractive"
                     />
-                    <span class="text-sm">interactive (pointer ripple + flick bloom)</span>
+                    <span class="text-sm">interactive (cursor vortex — drag + flick)</span>
                 </Label>
                 <Label class="flex items-center gap-2">
                     <Switch v-model="paused" />
@@ -88,11 +87,13 @@ function onToggleInteractive(v: boolean): void {
 
             <p class="text-sm text-muted-foreground">
                 Under <code class="font-mono text-xs">prefers-reduced-motion: reduce</code>
-                the substrate paints ONE static frame then parks — the lattice freezes
-                mid-sweep, the shape held. The grid is the stable canvas; the sweeping
-                bright band is the slow brush. Each dot's brightness reads the Gerstner
-                height at its anchor (<code class="font-mono text-xs">waveBand(h)·contrast</code>)
-                — the moving iso-band, not a chaotic per-particle flicker.
+                the substrate pre-rolls the trail then paints ONE static frame and parks —
+                the braided ribbons hold, the cursor vortex inert. The trail buffer is the
+                ribbon: each frame the previous frame draws back at the derived decay
+                (<code class="font-mono text-xs">trailHalfLife</code>), then the motes draw
+                additively over it. The mote's speed reads its hue + brightness
+                (<code class="font-mono text-xs">samplePaletteLin(speedNorm)</code>) — the
+                warm-fire velocity-map, never a chaotic per-particle flicker.
             </p>
         </StorySection>
     </StoryPage>

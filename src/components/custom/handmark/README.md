@@ -20,7 +20,7 @@ text; the mark is an `aria-hidden` SVG overlay.
 | Layer | Home | Role |
 |---|---|---|
 | L1 GEOMETRY | `@mkbabb/pencil-boil` (optional peer) | wobble + `ellipsePoints` ring |
-| L2 BODY | `ink.ts` — `ribbon:'stroke'` (pen/crayon) \| `'hull'` (vendored pf — highlighter) | the stroke/fill body |
+| L2 BODY | `ink.ts` — `ribbon:'stroke'` (pen/pencil/ring clean) \| `'hull'` (vendored pf — boil/crayon/marker/highlighter, the curvature-coupled variable-width body) | the stroke/fill body |
 | L3 GRAIN | `texture.ts` — feTurbulence graph, STATIC + SEEDED (rasters once) | the paper-tooth/wax grain |
 | L4 ANIMATION | `composables/useHandMark.ts` — draw-on (dashoffset \| clip-path wipe) + boil | the reveal/living-line clock |
 | L5 SURFACE | `HandMark.vue` — anchor/measure, mount the namespaced filter, a11y | the SFC |
@@ -67,8 +67,9 @@ its OWN perturb math. ONE seed leaf, the house identity.
 
 ## Optional peers
 
-- `@mkbabb/pencil-boil ^0.4.1` — the L1 wobble geometry. Only the `boil` natural
-  morphology + the `ellipsePoints` ring + the per-pass perturb touch it.
+- `@mkbabb/pencil-boil ^0.4.1` — the L1 wobble geometry (the `ellipsePoints` ring +
+  the per-pass perturb + the default underline wobble). The `boil` voice is the HOUSE
+  φ-incommensurate value-noise morphology (`geometry.ts`), not a pencil-boil line.
 - `perfect-freehand` — VENDORED into `freehand.ts` (MIT, tldraw). The `ribbon:'hull'`
-  highlighter slab is the only consumer; the default pen/crayon (`ribbon:'stroke'`)
-  treeshake it away.
+  variable-width body (boil/crayon/marker/highlighter) is the consumer; the clean
+  `ribbon:'stroke'` voices (pen/pencil/ring) treeshake it away.

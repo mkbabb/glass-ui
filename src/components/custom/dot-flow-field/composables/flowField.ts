@@ -207,6 +207,53 @@ export function sampleVelocity(
     };
 }
 
+// ── BD.W-DOTFLOW-AURORA-CURRENT: the cursor VORTEX (the flow register's interaction) ─
+// The SINGLE math source the WGSL `cs_flow`/the GLSL state-pass transcribe line-for-line
+// (the `proof:dotflow-fence` F1b vortex witness + the F3 round-trip cover this). r = p −
+// cursor; a gaussian fall-off; a TRUE tangential ∇⊥ swirl + a drag-along term + a radial
+// burst shove. Inert when the pointer is inactive.
+
+/** The cursor-vortex lever set (the √φ-laddered radius + the spin/drag/burst gains). */
+export interface VortexParams {
+    cursor: Vec2;
+    /** Pointer velocity (domain units / sec). */
+    pointerVel: Vec2;
+    /** Flick-burst impulse 0..1. */
+    burst: number;
+    /** Pointer active? (inert when false — the vortex is off). */
+    active: boolean;
+    radius: number;
+    spin: number;
+    dragGain: number;
+    burstShove: number;
+}
+
+/**
+ * The velocity the cursor injects at `p` — the perturbation `cs_flow` adds to the curl
+ * current. A true tangential vortex (∇⊥ of the radial), plus a drag-along (the streamlines
+ * follow the gesture) and a radial flick shove (the shockwave), all gaussian-falling off the
+ * vortex radius. Returns the un-normalized perturbation in domain/sec.
+ */
+export function pointerVortex(p: Vec2, v: VortexParams): Vec2 {
+    if (!v.active) return { x: 0, y: 0 };
+    const rx = p.x - v.cursor.x;
+    const ry = p.y - v.cursor.y;
+    const d = Math.hypot(rx, ry);
+    const radius = Math.max(v.radius, 1e-3);
+    const fall = Math.exp(-(d * d) / (radius * radius));
+    // tangential ∇⊥ swirl (normalized perpendicular of r).
+    const sx = -ry;
+    const sy = rx;
+    const sl = Math.hypot(sx, sy) || 1e-6;
+    const swirlX = sx / sl;
+    const swirlY = sy / sl;
+    const radX = rx / Math.max(d, 1e-4);
+    const radY = ry / Math.max(d, 1e-4);
+    const x = swirlX * v.spin + v.pointerVel.x * v.dragGain + radX * v.burst * v.burstShove;
+    const y = swirlY * v.spin + v.pointerVel.y * v.dragGain + radY * v.burst * v.burstShove;
+    return { x: x * fall, y: y * fall };
+}
+
 // ── BC.W-VIZ-DOTFLOW: the anchored dot-matrix topology (the gestalt fix) ─────────
 // The field stops being a free-advecting particle cloud and becomes a CALM ANCHORED
 // LATTICE a slow LARGE wave sweeps through (research/viz/dot-flow-field.md §3.3, §5).

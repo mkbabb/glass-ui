@@ -57,6 +57,14 @@ export interface FourierWGPUSetupDeps {
     shouldContinue: () => boolean;
     /** The per-frame pointer hook — useFourierField advances the shared pointer field here. */
     onFrame?: (timeSec: number) => void;
+    /**
+     * BD.W-VIZ-BROKEN-FIX D6b — the 2-D cursor FOLLOW: a small MODEL-space offset added to
+     * the view-fit center so the whole reconstruction LEANS toward the cursor (the spatial
+     * "follow" beside D6a's velocity scrub). Reuses the EXISTING uFit center uniform (NO new
+     * uniform, NO shader/bridge edit — parity-safe by construction, both arms read the same
+     * fit). `{x:0,y:0}` (the ambient/PRM register) is byte-identical to today.
+     */
+    getPointerLean?: () => { x: number; y: number };
 }
 
 /** Build the fourier-field `setupWGPU(device, context, format)` callback. */
@@ -69,6 +77,7 @@ export function createFourierWGPUSetup(
 ) => WebGPUCanvasFrame {
     const { canvas, config, getSpectrum, getPalette, getHeadT, shouldContinue, onFrame } =
         deps;
+    const getPointerLean = deps.getPointerLean;
 
     return function setupWGPU(device, context, format) {
         const computeModule = device.createShaderModule({
@@ -257,9 +266,20 @@ export function createFourierWGPUSetup(
                 (canvas.clientWidth || 320) / Math.max(canvas.clientHeight || 320, 1);
             const trailModel = trailWidthToModel(config.trailWidth, fit.scale, cssMin);
 
+            // D6b — lean the view-fit CENTER toward the cursor (the 2-D follow). The render
+            // maps clip→model as p = center + vClip*aspect/scale, so SUBTRACTING the cursor's
+            // model offset from the center pans the content TOWARD the cursor on screen. The
+            // offset is small + bounded (the lean register sets it; ambient/PRM is {0,0} → the
+            // byte-identical fit). The ONE uFit uniform carries it — no new uniform.
+            const lean = getPointerLean?.() ?? { x: 0, y: 0 };
+            const leanedFit: FourierFit =
+                lean.x !== 0 || lean.y !== 0
+                    ? { ...fit, centerX: fit.centerX - lean.x, centerY: fit.centerY - lean.y }
+                    : fit;
+
             packFourierRenderUniforms(
                 renderScratch,
-                fit,
+                leanedFit,
                 aspect,
                 trailModel,
                 PEAK_ALPHA,
@@ -269,6 +289,8 @@ export function createFourierWGPUSetup(
                 config.intensity,
                 config.showEpicycles,
                 config.rainbowChain,
+                config.squashGain,
+                config.celGain,
                 sampleCount,
                 armN,
                 getPalette(),

@@ -1,12 +1,12 @@
-// BB.W-VIZ-SUITE (W-CONCENTRIC) — the WebGL2 `setupGL` builder (the ~5-10%-tail path).
+// BD.W-CONCENTRIC-RELIEF — the WebGL2 `setupGL` builder (the ~5-10%-tail path, and Safari).
 //
 // A clean aurora-class fullscreen pass: compile the full-screen-triangle vertex + the
-// `CONCENTRIC_FRAG_GLSL` fragment (which evaluates the SAME radial-Fourier field the WGSL
-// primary does, splicing the SHARED GLSL color chunk), and on each `frame(t)` upload the
-// uniform table (the SAME field/center/ring/palette data the WGPU uniform bridge packs,
-// here as plain GL uniforms — concentric has no storage buffer, it is a pure fragment
-// field, so the parity is `verified` not `degraded`). It owns NO scheduling — the canvas
-// lifecycle leaf delivers the frame.
+// `CONCENTRIC_FRAG_GLSL` fragment (which evaluates the SAME level-set topography + opaque
+// finishing layer the WGSL primary does, splicing the SHARED GLSL color chunk), and on each
+// `frame(t)` upload the uniform table (the SAME field/topo/tune/palette data the WGPU uniform
+// bridge packs, here as plain GL uniforms — concentric has no storage buffer, it is a pure
+// fragment field, so the parity is `verified` not `degraded`). It owns NO scheduling — the
+// canvas lifecycle leaf delivers the frame.
 
 import type { WebGLCanvasFrame } from "../../../../composables/glass/webgl/useWebGLCanvas";
 import type { OklchStop } from "../../../../composables/color";
@@ -17,24 +17,26 @@ import {
     CONCENTRIC_FRAG_GLSL,
 } from "../shaders/concentric.glsl";
 import {
-    MAX_RINGS,
-    MAX_CENTERS,
     MAX_RING_STOPS,
-    renderModeToInt,
     type ConcentricConfig,
 } from "../constants";
-import type { RingCenter } from "./ringField";
+import type { Vec2 } from "./levelField";
 import { CONCENTRIC_FIELD_NORM } from "./uniformBridgeWGPU";
 
 export interface ConcentricGLSetupDeps {
     canvas: HTMLCanvasElement;
     config: ConcentricConfig;
     getPalette: () => OklchStop[];
-    getCenters: () => RingCenter[];
+    /** The pointer in DOMAIN space (the cursor gravity well) — re-read each frame. */
+    getCursor: () => Vec2;
+    /** The spring-eased traveling-wave envelope amplitude (0..1; PRM → 0). */
+    getAmp: () => number;
+    /** The velocity-HEAVE multiplier on the cursor well (1.0 at rest → grows with speed). */
+    getWellScale: () => number;
     shouldContinue: () => boolean;
     /**
      * The per-frame pointer hook — useConcentric advances the shared pointer field +
-     * injects the transient cursor center here (the no-own-rAF discipline). ZERO own rAF.
+     * derives the cursor in domain space here (the no-own-rAF discipline). ZERO own rAF.
      */
     onFrame?: (timeSec: number) => void;
 }
@@ -55,7 +57,7 @@ function compile(gl: WebGL2RenderingContext, type: number, src: string): WebGLSh
 export function createConcentricGLSetup(
     deps: ConcentricGLSetupDeps,
 ): (gl: WebGL2RenderingContext) => WebGLCanvasFrame {
-    const { canvas, config, getPalette, getCenters, shouldContinue, onFrame } = deps;
+    const { canvas, config, getPalette, getCursor, getAmp, getWellScale, shouldContinue, onFrame } = deps;
 
     return function setupGL(gl) {
         const vs = compile(gl, gl.VERTEX_SHADER, CONCENTRIC_VERT_GLSL);
@@ -88,18 +90,19 @@ export function createConcentricGLSetup(
         const u = (name: string) => gl.getUniformLocation(program, name);
         const uTime = u("uTime");
         const uSpeed = u("uSpeed");
-        const uAxis = u("uAxis");
+        const uCellSize = u("uCellSize");
         const uFieldNorm = u("uFieldNorm");
         const uAspect = u("uAspect");
-        const uCenterCount = u("uCenterCount");
-        const uRingCount = u("uRingCount");
         const uStopCount = u("uStopCount");
-        const uRenderMode = u("uRenderMode");
         const uHasBackground = u("uHasBackground");
         const uLine = u("uLine");
+        const uLightDir = u("uLightDir");
         const uBg = u("uBg");
-        const uRings = u("uRings[0]");
-        const uCenters = u("uCenters[0]");
+        const uWave = u("uWave");
+        const uWave2 = u("uWave2");
+        const uTopo = u("uTopo");
+        const uCursor = u("uCursor");
+        const uTune = u("uTune");
         const uPalette = u("uPalette[0]");
 
         function resize(): void {
@@ -132,27 +135,33 @@ export function createConcentricGLSetup(
 
             gl.uniform1f(uTime, timeSec);
             gl.uniform1f(uSpeed, config.speed);
-            gl.uniform2f(uAxis, config.axisRatio[0], config.axisRatio[1]);
+            gl.uniform1f(uCellSize, config.cellSize);
             gl.uniform1f(uFieldNorm, CONCENTRIC_FIELD_NORM);
             gl.uniform1f(uAspect, aspect);
 
-            const centers = getCenters();
-            const centerCount = Math.min(centers.length, MAX_CENTERS);
-            const ringCount = Math.min(config.ringComponents.length, MAX_RINGS);
             const palette = getPalette();
             const stopCount = Math.min(palette.length, MAX_RING_STOPS);
-            gl.uniform1i(uCenterCount, centerCount);
-            gl.uniform1i(uRingCount, ringCount);
             gl.uniform1i(uStopCount, stopCount);
-            gl.uniform1i(uRenderMode, renderModeToInt(config.renderMode));
 
-            // line stroke geometry (field-distance units): half-width, AA softness, levels.
-            gl.uniform3f(
+            // line stroke geometry (px units): half-width, AA softness, contour levels, index stride.
+            gl.uniform4f(
                 uLine,
                 config.lineWidth,
                 config.lineSoftness,
                 config.contourLevels,
+                config.indexEvery,
             );
+            gl.uniform2f(uLightDir, config.lightDir[0], config.lightDir[1]);
+
+            // the traveling-wave CELL-WARP + the topography + the cursor gravity well (velocity-HEAVED).
+            gl.uniform4f(uWave, config.waveDir[0], config.waveDir[1], config.waveK, config.waveOmega);
+            gl.uniform4f(uWave2, config.waveSigma, config.twistMax, config.shearMax, getAmp());
+            gl.uniform4f(uTopo, config.heightOctaves, config.heightSeed, config.swellAmp, config.perturbAmp);
+            const cursor = getCursor();
+            gl.uniform4f(uCursor, cursor.x, cursor.y, config.cursorWell * getWellScale(), config.interactive ? 1 : 0);
+
+            // the finishing-layer tunables (tone gain, hillshade depth, index multiplier, ink darken).
+            gl.uniform4f(uTune, config.toneGain, config.shadeAmp, config.indexMul, config.inkDarken);
 
             if (config.background === "transparent") {
                 gl.uniform1f(uHasBackground, 0);
@@ -162,25 +171,6 @@ export function createConcentricGLSetup(
                 const lin = oklchToLinear(config.background);
                 gl.uniform3f(uBg, lin[0], lin[1], lin[2]);
             }
-
-            const ringData = new Float32Array(MAX_RINGS * 3);
-            for (let i = 0; i < MAX_RINGS; i++) {
-                const r = config.ringComponents[i];
-                ringData[i * 3 + 0] = r?.amplitude ?? 0;
-                ringData[i * 3 + 1] = r?.wavelength ?? 1;
-                ringData[i * 3 + 2] = r?.phase ?? 0;
-            }
-            gl.uniform3fv(uRings, ringData);
-
-            const centerData = new Float32Array(MAX_CENTERS * 4);
-            for (let i = 0; i < MAX_CENTERS; i++) {
-                const c = centers[i];
-                centerData[i * 4 + 0] = c?.x ?? 0;
-                centerData[i * 4 + 1] = c?.y ?? 0;
-                centerData[i * 4 + 2] = c?.weight ?? 0;
-                centerData[i * 4 + 3] = c?.rotAlpha ?? 0;
-            }
-            gl.uniform4fv(uCenters, centerData);
 
             const palData = new Float32Array(MAX_RING_STOPS * 3);
             for (let i = 0; i < MAX_RING_STOPS; i++) {

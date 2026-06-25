@@ -50,9 +50,32 @@ export interface MetaballSource {
     y: number;
     radius: number;
     opacity: number;
+    /**
+     * BD.W-GOOBLOB-MERCURY-COLONY — the per-source SPLIT token (default `false`). When a
+     * satellite is mid-`fissioning`, this is `true` and the uniform packers DROP the
+     * `orbitWiden` bridge to nominal for it ALONE, so its neck thins past the smin reach
+     * and SNAPS into a free bead. Every non-fissioning source keeps the full bridge (the
+     * R8-07 "instant fully-detached disc" cure). Trail sources never fission (`false`).
+     */
+    fissioning?: boolean;
 }
 
-export type SatellitePhase = "orbiting" | "merging" | "absorbed" | "emerging";
+// BD.W-GOOBLOB-MERCURY-COLONY — the phase machine repurposes `emerging` → `fissioning`
+// (at most ONE beat of churn). `fissioning` is the SPLIT beat: the satellite buds OUT
+// through a thinning neck whose gap exceeds the smin reach so it SNAPS into a free
+// orbiting bead (the mercury pinch), then re-merges next cycle. At most ONE satellite is
+// the fissioning satellite per cycle (the single-fissioner + bounded-apex rule — the
+// "two unrelated discs" failure is re-prevented WITHOUT the blanket never-leaves-reach
+// clamp). The phase token is READ by BOTH uniform packers to PHASE-SCOPE `orbitWiden`:
+// full+capped for non-fissioning satellites (R8-07 stays cured — the neck stays gooey),
+// dropped to nominal ONLY for the fissioning satellite so its neck CAN thin past the
+// smin reach and SNAP.
+export type SatellitePhase =
+    | "orbiting"
+    | "merging"
+    | "absorbed"
+    | "emerging"
+    | "fissioning";
 
 export interface SatelliteInternal {
     phase: SatellitePhase;
@@ -81,6 +104,22 @@ export interface SatelliteInternal {
     startY: number;
     endX: number;
     endY: number;
+
+    // BD.W-GOOBLOB-MERCURY-COLONY — the per-satellite SPLIT state.
+    /**
+     * The live phase token the uniform packers READ to phase-scope `orbitWiden`. Mirrors
+     * `phase`, but exposed on the published `MetaballSource` (below) so the GL leaves can
+     * gate the bridge widen per-satellite WITHOUT importing the satellite internals. A
+     * fissioning satellite drops to nominal bridge (its neck snaps); every other
+     * satellite keeps the full+capped widen (R8-07 cured).
+     */
+    fissioning: boolean;
+    /**
+     * BD.W-GOOBLOB-MERCURY-COLONY — the phase-local SNAP latch: false at the fission
+     * beat start, set true once the neck crosses the snap band (so the body-pulse recoil
+     * kick fires EXACTLY ONCE per pinch, not every frame across the snap window).
+     */
+    snapFired: boolean;
 }
 
 // ── The BlobConfig ATOM set (AY.W-BLOB2 — the "simplify the options set to atoms"
@@ -186,6 +225,22 @@ export interface BlobSurface {
     sssPower: number;
     /** Thickness-driven inner-luminosity (core glow) lift. */
     coreGlow: number;
+
+    /**
+     * BD.W-GOOBLOB-MERCURY-COLONY — the MERCURY-COLONY split register (the OPT-IN scalar,
+     * 0..1, default the calm floor `0`). At `0` the shipped `variant:"blob"` default stays
+     * calm + gate-faithful: a permanently-bonded merge/un-merge breath, NO pinch (so
+     * `proof:blob-render`/`-studio`/`-page` are UNMOVED — `orbitRadius 0.17` is NOT
+     * re-based). Lifting it toward `1` arms the `fissioning` beat: the colony breathes a
+     * satellite OUT through a thinning neck whose gap exceeds the smin reach so it SNAPS
+     * into a free orbiting bead (the mercury pinch), then re-merges next cycle. This is a
+     * DERIVED bundling over the EXISTING `surface` atom (the variant IS the bundle) — NOT
+     * a 9th geometry atom; the split rides MOTION (the satellite moves) on the EXISTING
+     * phase machine, NOT a global smin-band re-base (which would lean-regress per
+     * AZ.W-BLOB-STUDIO D2). Mood-coupled: `excited` splits more, `sleepy` barely. The
+     * `colony`/`mercury` register a consumer/studio opts into.
+     */
+    fissionAmp: number;
 }
 
 /** Pointer interaction — lean / squash-stretch / click-impulse. */
@@ -228,6 +283,19 @@ export interface BlobConfig {
      * pre-STAGE-1 default (the `surface.lit` flag still owns the lit-on/off within it).
      */
     variant: BlobVariant;
+
+    /**
+     * BD.W-GOO-CAROUSEL-DECK — the blob↔meatball SHADING-MORPH scalar (0..1). The user's
+     * "MORPH BLOB and MEATBALL from one to another" — a CONTINUOUS in-between, not a hard
+     * `variant` cut. `0` = the flat warm-cream blob (byte-identical to `variant: "blob"`);
+     * `1` = the fully-dressed lit meatball (byte-identical to `variant: "meatball"`);
+     * `0 < morphT < 1` lerps the SURFACE shading (the smin GEOMETRY is shared, so only the
+     * fill→lit/shadow/iridescence dressing interpolates). UNSET (the default) → the value
+     * is resolved from `variant` (blob → 0, meatball → 1), so the existing `variant` prop
+     * is byte-back-compat. A consumer ANIMATING this (a `useSpring`/registered-scalar) gets
+     * the live morph.
+     */
+    morphT?: number;
 
     // Render quality (AX.W16) — `full` (default) | `half` (half-res backing store +
     // free bilinear upsample, ~4× fragment savings for weak GPUs). NON-length.
@@ -383,6 +451,12 @@ export const BLOB_CONFIG_DEFAULTS: BlobConfig = {
         sssScale: 0.1,
         sssPower: 2.0,
         coreGlow: 0.06,
+        // BD.W-GOOBLOB-MERCURY-COLONY — the CALM FLOOR (the OPT-IN register defaults OFF).
+        // The shipped default creature stays the permanently-bonded breath the gates
+        // record (born-RED for `proof:goo-mercury-colony` because the register is dormant,
+        // NOT because the default mutated). A consumer/studio raises this toward 1 for the
+        // mercury colony that SPLITS.
+        fissionAmp: 0,
     },
 
     interaction: {

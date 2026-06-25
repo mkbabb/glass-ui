@@ -37,6 +37,9 @@ export {
     shapeGeom,
     serialize,
     boilLines,
+    // EXPORTED so the measuring gate samples the REAL φ-incommensurate value-noise
+    // point-set (the boil voice) — never a symbol-presence regex.
+    naturalUnderlinePoints,
     VB_W,
     VB_H,
     UNDERLINE_GAP,

@@ -29,12 +29,18 @@ export interface PaperGridConfig {
     majorAlpha: number;
     /** Line width in device-px — one crisp pixel via Golus AA. */
     lineWidth: number;
-    /** Wave amplitude in CELL units — how far the lines bow (the liquid; subtle = "felt, not loud"). */
-    waveAmplitude: number;
-    /** Wave spatial frequency (λ multiple) — LOW = the whole sheet bows together (coherent, not noise). */
-    waveScale: number;
-    /** The slow warp drift (ω-scale). */
-    waveSpeed: number;
+    /** Max per-cell twist angle at the crest (rad ≈ 15° — a clear lean, never a tumble; ≤ ~18° floor). */
+    twistMax: number;
+    /** Max per-cell shear at the crest — a small skew so the box MORPHS, not just rotates. */
+    shearMax: number;
+    /** The traveling-wave front direction (a gentle diagonal). */
+    waveDir: [number, number];
+    /** The crest-band spatial frequency (LOW — cells per crest). */
+    waveK: number;
+    /** The front speed (slow — inertia). */
+    waveOmega: number;
+    /** The crest-band width (a localized front, not a global pulse). */
+    waveSigma: number;
     /** The GLOBAL subtlety knob — 1 demo, ~0.12 suffusion (the site-wide background). */
     fieldAlpha: number;
     /** How far the cursor pushes the grid (the local bulge). */
@@ -45,6 +51,31 @@ export interface PaperGridConfig {
     bulgeMode: "repel" | "attract";
     /** The line ink (the warm `--foreground` identity by default — NEVER teal-on-navy). */
     lineColor: OklchStop;
+
+    // ── The FACE (BD.W-PAPERGRID-FACE — the height-lit filled cell interior) ──────────────
+    /**
+     * The filled-FACE opacity — **default `0`** so the face EVAPORATES → byte-identical to the
+     * line-only HEAD render (every `proof:viz-papergrid` cage clause + the warm-identity fence
+     * stay GREEN). The demo `PAPER_GRID_PRESET_RIPPLE` lifts it (presets-in-consumers).
+     */
+    faceAlpha: number;
+    /** The slope-shade gain (the ∇H Lambert relief — higher = steeper crest/trough contrast). */
+    faceRelief: number;
+    /** The volume-preserving SQUASH: the plateau inset retreats at the crest so the face inflates. */
+    squashK: number;
+    /** The base inset-square coverage (the soft tile inside the warped cell, 0..0.5 grid units). */
+    baseInset: number;
+    /**
+     * The 3-stop warm-DIVERGENT face ramp (FOLD B — height-keyed, NOT a 2-point mid-park `mix`):
+     * trough → mid → crest. ALL hues ∈ [20,90] (rose-umber → ember/amber → warm-wheat) so the
+     * teal-navy purge is clear by construction. `proof:viz-papergrid` clause reds a hue ∈ [180,280].
+     */
+    faceWarmLo: OklchStop;
+    faceWarmMid: OklchStop;
+    faceWarmHi: OklchStop;
+    /** The fixed cel key-light direction (upper-right) the slope-shade Lamberts against. */
+    lightDir: [number, number];
+
     /** The ground (default transparent so it suffuses over the page). */
     background: OklchStop | "transparent";
     /** Pointer bulge (§4/§8) — on (demo) / off (suffusion). */
@@ -63,6 +94,17 @@ export interface PaperGridConfig {
 export const WARM_IDENTITY_INK: OklchStop = { L: 0.62, C: 0.05, h: 62 };
 
 /**
+ * The library-default FACE ramp stops — a CALM warm-divergent fold the face would paint IF lit
+ * (the `faceAlpha:0` default keeps the face evaporated, so these never paint at HEAD; they are
+ * the warm-identity SSR fallback the vivid demo preset overrides). ALL hues ∈ [20,90] — the
+ * teal-navy purge clear by construction (`proof:viz-papergrid` reds a hue ∈ [180,280] here).
+ *   trough → rose-umber, mid → ember-amber, crest → warm-wheat.
+ */
+export const FACE_WARM_LO: OklchStop = { L: 0.44, C: 0.07, h: 32 };
+export const FACE_WARM_MID: OklchStop = { L: 0.66, C: 0.12, h: 58 };
+export const FACE_WARM_HI: OklchStop = { L: 0.9, C: 0.1, h: 84 };
+
+/**
  * The shipped warm-identity default config — evenly-spaced, LARGE 64px cells, a crisp fine
  * rule with a bolder major rule every 5 cells, on a slowly breathing liquid curl-flow sheet
  * (research/viz/paper-grid.md §6). SUBTLE + LARGE + evenly-spaced — the user's binding
@@ -71,17 +113,30 @@ export const WARM_IDENTITY_INK: OklchStop = { L: 0.62, C: 0.05, h: 62 };
 export const DEFAULT_PAPER_GRID_CONFIG: PaperGridConfig = {
     cellSize: 64, // LARGER than the 28/32px static — the user's "LARGER"
     majorEvery: 5, // the kf --graph-major 5rem/1rem ratio
-    minorAlpha: 0.04, // ≈ kf 3%
-    majorAlpha: 0.11, // kf 11%, above the 10% floor
+    minorAlpha: 0.12, // the twist must be SEEN — real warm-amber ink (judge's biggest lever; still graph-paper, not heavy)
+    majorAlpha: 0.22, // the bolder rule carries the cell silhouette over cream
     lineWidth: 1.0, // one crisp device-pixel via Golus AA
-    waveAmplitude: 0.1, // subtle — "felt, not loud"
-    waveScale: 0.5, // LOW freq → the whole sheet bows together (the inverse-coherence target)
-    waveSpeed: 0.15, // the slow breath
+    twistMax: 0.62, // ≈ 36° crest ceiling — a DRAMATIC, decisive twist (the user rejected subtle)
+    shearMax: 0.26, // the box MORPHS as it twists (a strong skew)
+    waveDir: [0.92, 0.39], // the front travels along a gentle diagonal
+    waveK: 0.62, // the crest-band spatial frequency — ~one full crest cycle across the visible field (a distinct front)
+    waveOmega: 1.05, // the front speed — the sweep READS at a glance (still inertia-eased)
+    waveSigma: 0.42, // the crest-band width — a NARROW distinct moving front (a wave passing, not a global pulse)
     fieldAlpha: 1.0, // demo (suffusion drops to ~0.12)
-    bulgeStrength: 0.12,
-    bulgeRadius: 3, // cells
+    bulgeStrength: 0.9, // the cursor-swirl peak twist (rad) — a strong finger swirl
+    bulgeRadius: 2.5, // cells
     bulgeMode: "repel",
     lineColor: WARM_IDENTITY_INK,
+    // The FACE — OPT-IN, calm default byte-identical (faceAlpha:0 → the face evaporates → the
+    // HEAD line-only render is unchanged; the demo PAPER_GRID_PRESET_RIPPLE lifts it).
+    faceAlpha: 0, // the structurally-absent FACE stays OFF by default (byte-identical to HEAD)
+    faceRelief: 2.6, // the ∇H Lambert gain (so shade traverses ~[0.15,0.95] across a crest)
+    squashK: 0.42, // the crest face visibly inflates (inset retreats) — bounded by the CV<0.15 fence
+    baseInset: 0.14, // the soft inset tile inside the warped cell
+    faceWarmLo: FACE_WARM_LO,
+    faceWarmMid: FACE_WARM_MID,
+    faceWarmHi: FACE_WARM_HI,
+    lightDir: [0.6, 0.8], // the upper-right cel key-light
     background: "transparent",
     interactive: true,
     respectReducedMotion: true,

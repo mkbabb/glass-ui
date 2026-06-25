@@ -38,7 +38,11 @@
 import {
     createCanvasLifecycle,
     type CanvasFrameHooks,
+    type BackingSize,
+    type DprPolicy,
 } from "../webgl/createCanvasLifecycle";
+
+export type { BackingSize, DprPolicy } from "../webgl/createCanvasLifecycle";
 // The typed INIT-FAILURE signal + the software/CPU-adapter classifier are carved into the
 // sibling webgpuDevice.ts leaf (the no-god-module re-drain); they carry NO bootstrap token
 // (proof:gpu-substrate-single clause A — navigator.gpu/getContext/requestAdapter stay here).
@@ -60,6 +64,125 @@ export function supportsWebGPU(): boolean {
         "gpu" in navigator &&
         navigator.gpu != null
     );
+}
+
+/**
+ * The bound on the adapter/device acquisition (ms). `requestAdapter()` /
+ * `requestDevice()` can resolve NEITHER way on a hanging host (a headless / virtualized-
+ * Metal + some-Chrome class). A REAL cold acquire on a healthy Metal-3 host was live-
+ * measured at ~3478ms (the FIRST `requestDevice` on a cold GPU process) — well over the
+ * prior tight 2500ms ceiling, which converted a slow-but-fine cold acquire into a FALSE
+ * hang so the WGSL primary was never exercised (every viz silently downgraded to WebGL2
+ * forever — the Safari-primary surface the "broken TOTALLY" reports live on, masked by the
+ * always-winning fallback). 6000ms lets the real cold acquire through while a genuine wedge
+ * (a device that never settles) still falls to the WebGL2 net before the user perceives a
+ * permanent blank. With the SHARED device warm (`acquireSharedDevice`) the ceiling is hit
+ * at most ONCE per page, not N-times-per-canvas — a single ≤6s race, never N.
+ */
+export const WEBGPU_ACQUIRE_TIMEOUT_MS = 6000;
+
+/**
+ * Race a WebGPU acquisition promise against a timeout. On a hang the timeout wins and
+ * rejects with the recognized typed `acquire-timeout` signal (the picker falls to the
+ * WebGL2 net on it, exactly like a no-adapter host). The timer is cleared the instant the
+ * acquisition settles (resolve OR reject), so a healthy device leaves no dangling timeout.
+ * SSR-safe: with no `setTimeout` the bare promise passes through (a non-DOM runtime has no
+ * WebGPU surface to hang anyway).
+ */
+function withAcquireTimeout<T>(
+    promise: Promise<T>,
+    label: "requestAdapter" | "requestDevice",
+): Promise<T> {
+    if (typeof setTimeout === "undefined") return promise;
+    let timer: ReturnType<typeof setTimeout>;
+    const timeout = new Promise<never>((_resolve, reject) => {
+        timer = setTimeout(() => {
+            reject(
+                new WebGPUInitError(
+                    "acquire-timeout",
+                    `[useWebGPUCanvas] ${label}() did not settle within ${WEBGPU_ACQUIRE_TIMEOUT_MS}ms — falling to the WebGL2 net`,
+                ),
+            );
+        }, WEBGPU_ACQUIRE_TIMEOUT_MS);
+    });
+    return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
+}
+
+// ── The PROCESS-SHARED device warm (D3a — pay the cold acquire ONCE, not per-canvas). ──
+//
+// Each `createWebGPUCanvas.armAsync()` USED to call `requestAdapter()` + `requestDevice()`
+// itself and race EACH against the timeout. With N viz on a page, the cold acquire was
+// re-paid + re-raced N times, and the FIRST slow one (a cold GPU process at ~3.5s) tripped
+// the (then 2500ms) ceiling → every viz silently downgraded to WebGL2 forever, the WGSL
+// primary never exercised. The fix is the standard WebGPU pattern: ONE device, MANY
+// contexts. The FIRST canvas pays the cold acquire (raced ONCE against the relaxed ceiling);
+// every subsequent canvas `await`s the SAME resolved device (instant — no re-race). A
+// `device.lost` invalidates the cache so the next acquire re-warms it (the self-heal stays);
+// a rejected warm clears the cache so a later page can retry (a transient failure is never
+// pinned). The memo lives in THIS substrate (the single WebGPU-bootstrap home — clause A).
+let sharedDevicePromise: Promise<GPUDevice> | null = null;
+
+/**
+ * Acquire the PROCESS-SHARED WebGPU device — memoised so every canvas on a page shares the
+ * single cold `requestAdapter` → `requestDevice`. Rejects with the typed `WebGPUInitError`
+ * on a no-adapter / software-adapter / hung host (the picker falls to the WebGL2 net on it).
+ * The per-canvas CONTEXT configure + `setup` stay per-canvas (each canvas owns its own swap
+ * chain + pipeline); only the DEVICE is shared.
+ */
+function acquireSharedDevice(
+    adapterOptions?: GPURequestAdapterOptions,
+    deviceDescriptor?: GPUDeviceDescriptor,
+): Promise<GPUDevice> {
+    if (sharedDevicePromise) return sharedDevicePromise;
+    if (!supportsWebGPU()) {
+        return Promise.reject(
+            new WebGPUInitError("no-navigator-gpu", "[useWebGPUCanvas] navigator.gpu unavailable"),
+        );
+    }
+    const warm = (async (): Promise<GPUDevice> => {
+        const adapter = await withAcquireTimeout(
+            navigator.gpu.requestAdapter(adapterOptions),
+            "requestAdapter",
+        );
+        if (!adapter) {
+            throw new WebGPUInitError("no-adapter", "[useWebGPUCanvas] no GPU adapter");
+        }
+        // SOFTWARE-ADAPTER GUARD (the WebGPU twin of the WebGL software-raster guard,
+        // BB.W-AURORA-SWRASTER) — a SwiftShader/llvmpipe/fallback adapter cannot validate
+        // the metaball pipeline (the per-frame `[Invalid RenderPipeline]` flood); reject so
+        // the picker falls to the WebGL2 net SILENTLY. On a real GPU this is false.
+        if (isSoftwareWebGPUAdapter(adapter)) {
+            throw new WebGPUInitError(
+                "software-adapter",
+                "[useWebGPUCanvas] software WebGPU adapter (SwiftShader/llvmpipe/fallback) — falling to the WebGL2 net",
+            );
+        }
+        let device: GPUDevice;
+        try {
+            device = await withAcquireTimeout(
+                adapter.requestDevice(deviceDescriptor),
+                "requestDevice",
+            );
+        } catch (err) {
+            if (err instanceof WebGPUInitError) throw err;
+            throw new WebGPUInitError(
+                "device-request",
+                "[useWebGPUCanvas] requestDevice rejected",
+                err,
+            );
+        }
+        // Invalidate the shared cache on a device loss so the next acquire re-warms it
+        // (the self-heal: a driver TDR / browser-evicted device re-acquires fresh).
+        void device.lost.then(() => {
+            if (sharedDevicePromise === warm) sharedDevicePromise = null;
+        });
+        return device;
+    })();
+    warm.catch(() => {
+        if (sharedDevicePromise === warm) sharedDevicePromise = null;
+    });
+    sharedDevicePromise = warm;
+    return warm;
 }
 
 // Lockstep with createCanvasLifecycle's CanvasSuspendReason (the AX.W16 F6
@@ -85,8 +208,13 @@ export interface WebGPUCanvasFrame {
     frame: (timeSec: number) => void;
     /** Demand-gate: is there live motion to render next frame? `false` → park. */
     shouldContinue: () => boolean;
-    /** Size the canvas backing store. The consumer owns its DPR policy. */
-    resize: () => void;
+    /**
+     * Upload the backing geometry. BD.W-SUBSTRATE-SIZE-UNIFY: when a `dprPolicy` is
+     * supplied the leaf sizes the backing + passes the live `BackingSize` here (the
+     * WGSL swap chain auto-tracks the backing, so the consumer body shrinks to an aspect
+     * upload). The arg is optional so a legacy self-measuring consumer keeps compiling.
+     */
+    resize: (s?: BackingSize) => void;
     /** Frame time from elapsed seconds — the consumer owns frozen/reduced-motion. */
     time?: (elapsedSec: number) => number;
     /** Release per-instance GPU resources (pipelines/buffers/bind groups). Runs on dispose + before a restore re-setup. */
@@ -109,6 +237,19 @@ export interface WebGPUCanvasOptions {
      * Default `true` for live mode, `false` for capture mode.
      */
     respectReducedMotion?: boolean;
+    /**
+     * BD.W-SUBSTRATE-SIZE-UNIFY (G1/G2) — the consumer's DPR policy. When PRESENT the
+     * leaf sizes the backing SYNCHRONOUSLY at mount (via `presize`, BEFORE the async
+     * device acquire — the ≤6s blurry-flash close) and hands the live `BackingSize` to
+     * `resize(s)`. When ABSENT the legacy path runs (the consumer self-measures).
+     */
+    dprPolicy?: DprPolicy;
+    /** Compose the leaf IO park (G3). Default `false` (opt-in; see createCanvasLifecycle). */
+    composeIntersectionPark?: boolean;
+    /** `rootMargin` for the leaf IO park (G3). */
+    intersectionRootMargin?: string;
+    /** Fire the cold-first-paint reveal bloom (G6, gated on Band-0 tokens). Default `false`. */
+    revealBloom?: boolean;
     /**
      * Build the WGSL pipeline + bind groups on the resolved device. Called on the
      * async arm AND on every device-restore. Returns the per-frame hooks.
@@ -135,6 +276,8 @@ export interface WebGPUCanvasHandle {
      * `armAsync` for the WebGPU path). Idempotent.
      */
     arm: () => void;
+    /** BD.W-SUBSTRATE-SIZE-UNIFY (G2) — size the backing + start the leaf RO synchronously, before the async acquire. */
+    presize: () => void;
     suspend: (reason?: WebGPUSuspendReason) => void;
     resume: (reason?: WebGPUSuspendReason) => void;
     /** Re-arm a parked loop (a setter that re-introduced motion calls this). */
@@ -162,7 +305,6 @@ export function createWebGPUCanvas(
     let device: GPUDevice | null = null;
     let context: GPUCanvasContext | null = null;
     let format: GPUTextureFormat = "bgra8unorm";
-    let ro: ResizeObserver | null = null;
     let frameHooks: WebGPUCanvasFrame | null = null;
     let disposed = false;
     let acquiring: Promise<void> | null = null;
@@ -214,10 +356,10 @@ export function createWebGPUCanvas(
         void validationProbe.then((err) => {
             if (err) options.onInitError?.(err);
         });
-        if (!ro) {
-            ro = new ResizeObserver(() => frameHooks?.resize());
-            ro.observe(canvas);
-        }
+        // BD.W-SUBSTRATE-SIZE-UNIFY (G2) — the per-backend ResizeObserver is DELETED.
+        // The ONE engine-agnostic RO lives in `createCanvasLifecycle` (the leaf); a
+        // backend RO here would be a triple-observe parallel path the BINDING LAW
+        // forbids. The WebGPU swap chain auto-tracks the backing the leaf sizes.
         return {
             frame: (t) => frameHooks?.frame(t),
             shouldContinue: () => frameHooks?.shouldContinue() ?? false,
@@ -225,8 +367,6 @@ export function createWebGPUCanvas(
             teardown: () => {
                 frameHooks?.teardown?.();
                 device?.removeEventListener("uncapturederror", onUncapturedError);
-                ro?.disconnect();
-                ro = null;
                 context = null;
                 frameHooks = null;
                 validationProbe = null;
@@ -264,8 +404,14 @@ export function createWebGPUCanvas(
         canvas,
         mode: options.mode,
         respectReducedMotion: options.respectReducedMotion,
+        dprPolicy: options.dprPolicy,
+        composeIntersectionPark: options.composeIntersectionPark,
+        intersectionRootMargin: options.intersectionRootMargin,
+        revealBloom: options.revealBloom,
         buildContext,
-        resize: () => frameHooks?.resize(),
+        // The leaf hands the freshly-computed BackingSize (when it owns sizing); forward
+        // it to the consumer's upload-only resize. Legacy consumers ignore the arg.
+        resize: (s) => frameHooks?.resize(s),
         // Bind the WebGPU device-loss self-heal (the twin of the WebGL
         // `webglcontextlost`/`restored` pair). The leaf hands us `rebuild`
         // (re-runs buildContext on a fresh context + re-arms) + `markLost` (nulls
@@ -287,6 +433,16 @@ export function createWebGPUCanvas(
      * no-adapter host it REJECTS with the typed `WebGPUInitError` (NOT a bare uncaught
      * `throw new Error("no GPU adapter")` spewed to the page — the picker recognizes
      * the typed signal and falls to the WebGL2 net silently, the D8/D8' close).
+     *
+     * The acquisition is TIMEOUT-BOUNDED (`WEBGPU_ACQUIRE_TIMEOUT_MS`). `requestAdapter()`
+     * and especially `requestDevice()` can HANG indefinitely — resolving NEITHER way — on
+     * some headless / virtualized-Metal hosts + certain Chrome builds (the live-found
+     * class: an `apple/metal-3` adapter resolves, then `requestDevice()` never settles, so
+     * `armAsync` never reaches `lifecycle.arm()` → the canvas backing never resizes off its
+     * 300×150 default → a blank, un-sized viz). A hang is a recognized init failure exactly
+     * like a no-adapter host: the timeout rejects with the typed signal so the picker falls
+     * to the WebGL2 net. The bound is generous (a real Metal/Vulkan/D3D device resolves in
+     * well under it), so a healthy host never trips it.
      */
     async function acquireDevice(): Promise<void> {
         if (!supportsWebGPU()) {
@@ -295,36 +451,17 @@ export function createWebGPUCanvas(
                 "[useWebGPUCanvas] navigator.gpu unavailable",
             );
         }
-        const adapter = await navigator.gpu.requestAdapter(options.adapterOptions);
-        if (!adapter) {
-            // The recognizable no-adapter signal — the picker catches it to fall to the
-            // WebGL2 net. NEVER a bare uncaught throw to the page (D8').
-            throw new WebGPUInitError("no-adapter", "[useWebGPUCanvas] no GPU adapter");
-        }
-        // SOFTWARE-ADAPTER GUARD (the WebGPU twin of the WebGL software-raster guard,
-        // BB.W-AURORA-SWRASTER). A SwiftShader / llvmpipe / fallback adapter creates a
-        // device + arms WITHOUT rejecting, but cannot validate the metaball pipeline —
-        // it would flood per-frame `[Invalid RenderPipeline]` errors with no fallback. So
-        // a software adapter is a RECOGNIZED init failure: reject with the typed signal so
-        // the picker's `armAsync` try/catch falls to the WebGL2 net SILENTLY (the
-        // invisible insurance), never the invalid-pipeline spew. On a real GPU this is
-        // false → the WebGPU path is byte-untouched.
-        if (isSoftwareWebGPUAdapter(adapter)) {
-            throw new WebGPUInitError(
-                "software-adapter",
-                "[useWebGPUCanvas] software WebGPU adapter (SwiftShader/llvmpipe/fallback) — falling to the WebGL2 net",
-            );
-        }
-        let dev: GPUDevice;
-        try {
-            dev = await adapter.requestDevice(options.deviceDescriptor);
-        } catch (err) {
-            throw new WebGPUInitError(
-                "device-request",
-                "[useWebGPUCanvas] requestDevice rejected",
-                err,
-            );
-        }
+        // D3a — the PROCESS-SHARED device warm. The cold `requestAdapter` → software-guard
+        // → `requestDevice` (each timeout-raced) lives ONCE in `acquireSharedDevice`: the
+        // FIRST canvas on a page pays the cold acquire, every subsequent canvas `await`s the
+        // SAME resolved device (instant — no re-race against the ceiling). A no-adapter /
+        // software-adapter / hung host rejects with the typed `WebGPUInitError` the picker
+        // recognizes (it falls to the WebGL2 net). On a real GPU the warm resolves once and
+        // the WebGPU path is byte-untouched. The per-canvas CONTEXT + `setup` stay below.
+        const dev = await acquireSharedDevice(
+            options.adapterOptions,
+            options.deviceDescriptor,
+        );
         device = dev;
         wireDeviceLoss(dev);
     }
@@ -359,6 +496,15 @@ export function createWebGPUCanvas(
             lifecycle.arm();
             return;
         }
+        // BD.W-SUBSTRATE-SIZE-UNIFY (G2) — size the backing SYNCHRONOUSLY here, BEFORE
+        // the async device acquire. On the WebGPU path `lifecycle.arm()` (which would
+        // size) is only reached AFTER `acquireDevice()` resolves (a cold acquire ≤6s),
+        // so without this the canvas sat at the un-laid-out 300×150 default for the whole
+        // acquire window (the live blurry-flash / stuck-canvas). `presize()` runs the ONE
+        // sizer + starts the leaf RO now; the device then resolves behind a sharp,
+        // correctly-sized, transparent surface. Idempotent (a no-op once `arm()` re-runs
+        // it; a no-op when no `dprPolicy` was supplied).
+        lifecycle.presize();
         acquiring = (async () => {
             try {
                 await acquireDevice();
@@ -420,6 +566,7 @@ export function createWebGPUCanvas(
         arm: () => {
             if (device) lifecycle.arm();
         },
+        presize: lifecycle.presize,
         suspend: lifecycle.suspend,
         resume: lifecycle.resume,
         wake: lifecycle.wake,
@@ -427,9 +574,12 @@ export function createWebGPUCanvas(
         dispose: () => {
             disposed = true;
             lifecycle.dispose();
-            // Releasing the device resolves `device.lost` with reason "destroyed";
-            // `wireDeviceLoss` short-circuits the re-acquire on that reason.
-            device?.destroy?.();
+            // D3a — the device is PROCESS-SHARED (acquireSharedDevice): a single canvas
+            // dispose must NOT `device.destroy()` it (that would kill the GPU device for
+            // every OTHER live viz on the page). The per-canvas GPU resources (pipeline /
+            // buffers / bind groups) are released by the consumer `teardown` the leaf's
+            // `lifecycle.dispose()` runs; the shared device is owned by the leaf memo and is
+            // reclaimed on process teardown / a real `device.lost`. Just drop the local ref.
             device = null;
         },
         get device() {

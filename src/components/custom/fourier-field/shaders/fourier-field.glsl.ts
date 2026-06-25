@@ -32,6 +32,9 @@ precision highp float;
 
 #define MAX_CURVE_SAMPLES 256
 #define MAX_PHASORS 64
+// BD.W-FOURIER-LOOM §2b — MUST equal the WGSL twin + FOURIER_TANGENT_EPS (constants.ts).
+#define TANGENT_EPS 1e-4
+#define SPEED_REF_HALFWIDTHS 6.0
 
 in vec2 vClip;
 out vec4 fragColor;
@@ -39,6 +42,7 @@ out vec4 fragColor;
 uniform vec4 uFit;          // (centerX, centerY, scale, aspect)
 uniform vec4 uTrail;        // (trailWidth, peakAlpha, headGlowAlpha, trailFadeExp)
 uniform vec4 uEnv;          // (trailFloor, intensity, showEpicycles, rainbowChain)
+uniform vec4 uLoom;         // (squashGain, celGain, _pad, _pad) — FOURIER-LOOM §2b/§3b
 uniform int  uSampleCount;
 uniform int  uArmCount;
 uniform int  uStopCount;
@@ -84,6 +88,31 @@ float segDist(vec2 p, vec2 a, vec2 b) {
   return length(pa - ba * h);
 }
 
+// BD.W-FOURIER-LOOM §2b — the head travel frame (T, ŝ), the GLSL twin of the WGSL headFrame.
+// The cusp guard returns +x as the stable fallback when s ≤ TANGENT_EPS — identical to the
+// WGSL twin + the CPU bead path.
+struct HeadFrame { vec2 T; float sHat; };
+HeadFrame headFrame(vec2 head, vec2 headBack, float halfW) {
+  vec2 d = head - headBack;
+  float s = length(d);
+  HeadFrame fr;
+  if (s <= TANGENT_EPS) { fr.T = vec2(1.0, 0.0); fr.sHat = 0.0; return fr; }
+  fr.T = d / s;
+  float ref = max(halfW * SPEED_REF_HALFWIDTHS, 1e-6);
+  fr.sHat = clamp(s / ref, 0.0, 1.0);
+  return fr;
+}
+
+// The volume-preserving anisotropic head distance (the WGSL headAniso twin).
+float headAniso(vec2 p, vec2 head, HeadFrame fr, float k) {
+  float g = 1.0 + k * fr.sHat;
+  vec2 n = vec2(-fr.T.y, fr.T.x);
+  vec2 rel = p - head;
+  float along = dot(rel, fr.T) / g;
+  float across = dot(rel, n) * g;
+  return length(vec2(along, across));
+}
+
 void main() {
   vec2 center = uFit.xy;
   float scale = max(uFit.z, 1e-6);
@@ -99,9 +128,48 @@ void main() {
   float trailFloor = uEnv.x;
   bool showEpicycles = uEnv.z > 0.5;
   bool rainbow = uEnv.w > 0.5;
+  float squashGain = uLoom.x;            // FOURIER-LOOM §2b
+  float celGain = uLoom.y;               // FOURIER-LOOM §3b
   float halfW = trailWidth * 0.5;
 
+  // §2b — the head travel frame (SAME uCurve[0]/[1] the WGSL twin reads → parity).
+  HeadFrame headFr;
+  headFr.T = vec2(1.0, 0.0);
+  headFr.sHat = 0.0;
+  if (uSampleCount >= 2) {
+    headFr = headFrame(uCurve[0].xy, uCurve[1].xy, halfW);
+  }
+  vec2 celOff = -headFr.T * halfW * 1.4;
+
   vec4 accum = vec4(0.0);
+
+  // §3b — the cartoon CEL-SHADOW: a darker offset copy of the rope + chain, opposite travel,
+  // painted FIRST (under the lit chain). PRM-static; celGain = 0 → no pass (byte-frozen).
+  if (celGain > 0.001) {
+    vec3 ink = vec3(0.0);
+    float celA = clamp(celGain, 0.0, 1.0);
+    for (int i = 0; i < MAX_CURVE_SAMPLES; i++) {
+      if (i >= uSampleCount - 1) break;
+      vec2 sa = uCurve[i].xy + celOff;
+      vec2 sb = uCurve[i + 1].xy + celOff;
+      float d = segDist(p, sa, sb);
+      float cover = 1.0 - smoothstep(halfW, halfW + aa, d);
+      if (cover < 0.002) continue;
+      float m = cover * celA * peak;
+      accum = vec4(ink * m, m) + accum * (1.0 - m);
+    }
+    if (showEpicycles && uArmCount >= 1) {
+      for (int k = 0; k < MAX_PHASORS; k++) {
+        if (k >= uArmCount) break;
+        vec2 a = uChain[k] + celOff;
+        vec2 b = uChain[k + 1] + celOff;
+        float dArm = segDist(p, a, b);
+        float armMask = 1.0 - smoothstep(halfW * 0.55, halfW * 0.55 + aa, dArm);
+        float m = armMask * celA * peak * 0.7;
+        accum = vec4(ink * m, m) + accum * (1.0 - m);
+      }
+    }
+  }
 
   if (showEpicycles && uArmCount >= 1) {
     for (int k = 0; k < MAX_PHASORS; k++) {
@@ -142,7 +210,8 @@ void main() {
 
   if (uSampleCount >= 1) {
     vec2 head = uCurve[0].xy;
-    float dHead = length(p - head);
+    // §2b — the squash-and-stretch anisotropic head (collapses to the round disc at rest).
+    float dHead = headAniso(p, head, headFr, squashGain);
     float coreR = halfW * 1.5;
     float haloR = coreR * 3.0;
     vec3 headRgb = clamp(linearToSrgb(samplePaletteLin(0.0)), vec3(0.0), vec3(1.0));

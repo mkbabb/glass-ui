@@ -2,23 +2,26 @@
 //
 // The same shape-class as aurora/concentric — a pure full-screen-triangle fragment pass (no
 // vertex buffer, no compute, no storage buffer — the LIGHTEST viz in the suite). `fs_main`
-// evaluates the grid at a WARPED coordinate `g(uv) = uv + curlWarp(uv,t) + cursorBulge(uv)`
-// (the IQ domain-warp substitution f(p)→f(g(p)) driven by the Bridson divergence-free curl —
-// the "liquid" that bows the whole sheet together, never a per-line jitter), and extracts
-// each line as a crisp constant-pixel-width stroke via the Ben Golus screen-space derivative
-// AA (the crisp-line fix — kills the CSS sub-pixel blur). Two tiers: a fine minor rule + a
-// bolder major rule every `majorEvery` cells, composited brightest-wins. The ink is the warm
-// `--foreground` identity over TRANSPARENT (the page reads through the cells); teal-on-navy
-// is gone (§E REMOVE).
+// evaluates the grid at a CELL-TWISTED coordinate `g = cellTwist(uv·scale) → cursorSwirl` (each
+// cell rotates about its own center, gated by a traveling Gaussian crest — the C3 cure; the
+// lines stay locally straight) and extracts each line as a crisp constant-pixel-width stroke via
+// the Ben Golus screen-space derivative AA (the blur-kill). BD.W-PAPERGRID-FACE adds the
+// structurally-absent FACE: a height-lit filled cell interior (`cellHeight`/`faceRelief`/
+// `facePlateau` — the slope of the SAME traveling-wave height the twist rides, squashed so the
+// crest face inflates), a 3-stop warm-divergent ramp keyed on `mix(shade,h)`, composited UNDER
+// the kept creases. The ink is warm (hue ∈ [20,90] — teal-on-navy gone, §E REMOVE); over
+// TRANSPARENT (the page reads through the gutters). `faceAlpha:0` default → the face evaporates
+// → byte-identical line render.
 //
-// THE SINGLE MATH SOURCE. `potentialFBM` / `curlWarp` / `cursorBulge` / `gridCoverage` below
-// transcribe `composables/paperGrid.ts` line-for-line; `proof:viz-papergrid` clause P3
-// round-trips the JS↔WGSL↔GLSL paths at a fixed sample set (the transcription-drift trap
-// closed by a structural match + a numeric round-trip). The curl operator is the SHARED
-// `flow.wgsl.ts` chunk (the FIRST WGSL curl consumer) — ONE curl source per backend.
+// THE SINGLE MATH SOURCE. `potentialFBM` / `gridCoverage` here + the SHARED `cellTwist` /
+// `cellHeight` / `faceRelief` / `facePlateau` / `cursorSwirl` (the `waveField` leaf) transcribe
+// `composables/paperGrid.ts` line-for-line; `proof:viz-papergrid` clause P3 round-trips the
+// JS↔WGSL↔GLSL paths at a fixed sample set. The curl operator is the SHARED `flow.wgsl.ts` chunk
+// (ONE curl source per backend).
 
 import { OETF_WGSL } from "../../aurora/constants/shaders/procedural-color.wgsl";
 import { CURL_FBM_WGSL } from "../../../../composables/glass/webgl/shaders/flow.wgsl";
+import { WAVE_FIELD_WGSL } from "../../../../composables/glass/wave/waveField.wgsl";
 
 export const PAPER_GRID_WGSL = /* wgsl */ `
 const TAU: f32 = 6.283185307179586;
@@ -27,15 +30,15 @@ const TAU: f32 = 6.283185307179586;
 struct PaperGridUniforms {
   // u0: (uTime, uGridScale, uMinorPitch, uMajorEvery)
   u0: vec4<f32>,
-  // warp: (uWarpScale, uWarpSpeed, uWarpScale2, uWarpSpeed2)
-  warp: vec4<f32>,
-  // warp2: (uAmplitude, uAspect, _pad, _pad)
+  // face: (uFaceAlpha, uFaceRelief, uSquashK, uBaseInset) — the height-lit FACE (re-points the retired warp lane)
+  face: vec4<f32>,
+  // warp2: (uAmplitude, uAspect, uLightDirX, uLightDirY) — aspect + the cel key-light
   warp2: vec4<f32>,
   // grid: (uTargetWidth, uTargetWidthMajor, uMinorAlpha, uMajorAlpha)
   grid: vec4<f32>,
   // field: (uFieldAlpha, uHasBackground, _pad, _pad)
   field: vec4<f32>,
-  // cursor: (uCursorX, uCursorY, uBulgeStrength, uBulgeRadius)
+  // cursor: (uCursorX, uCursorY, uSwirlStrength, uSwirlRadius)
   cursor: vec4<f32>,
   // cursor2: (uBulgeMode, uInteractive, _pad, _pad)
   cursor2: vec4<f32>,
@@ -43,6 +46,16 @@ struct PaperGridUniforms {
   line: vec4<f32>,
   // bg: (uBg.rgb (linear), _pad)
   bg: vec4<f32>,
+  // wave: (waveDirX, waveDirY, waveK, waveOmega) — the traveling-wave crest
+  wave: vec4<f32>,
+  // wave2: (waveSigma, twistMax, shearMax, amp) — the cell-twist envelope (amp: spring-eased)
+  wave2: vec4<f32>,
+  // faceLo: (rose-umber trough .rgb (linear), _pad) — the warm-divergent ramp (FOLD B, 3-stop)
+  faceLo: vec4<f32>,
+  // faceMid: (ember-amber mid .rgb (linear), _pad)
+  faceMid: vec4<f32>,
+  // faceHi: (warm-wheat crest .rgb (linear), _pad)
+  faceHi: vec4<f32>,
 };
 
 @group(0) @binding(0) var<uniform> u: PaperGridUniforms;
@@ -101,31 +114,11 @@ fn potentialFBM(p: vec2f) -> f32 {
 // The shared divergence-free 2D-curl operator (flow.wgsl.ts — the FIRST WGSL curl consumer).
 ${CURL_FBM_WGSL}
 
-// ── §3 The "liquid": the global curl-flow domain warp (transcribes paperGrid.ts curlWarp) ──
-// TWO counter-flowing curl terms at different scales/speeds (Alex Harri counter-flow — never
-// visibly loops). A SHALLOW, LOW-frequency warp keeps the lines a clearly-readable grid.
-fn curlWarp(g: vec2f, t: f32) -> vec2f {
-  let warpScale = u.warp.x;
-  let warpSpeed = u.warp.y;
-  let warpScale2 = u.warp.z;
-  let warpSpeed2 = u.warp.w;
-  let amp = u.warp2.x;
-  let a = curlFBM(vec2f(g.x * warpScale + t * warpSpeed, g.y * warpScale + t * warpSpeed));
-  let b = curlFBM(vec2f(g.x * warpScale2 - t * warpSpeed2, g.y * warpScale2 - t * warpSpeed2));
-  return vec2f(a.x * amp + b.x * amp * 0.5, a.y * amp + b.y * amp * 0.5);
-}
-
-// ── §4 The pointer bulge: a LOCAL Gaussian warp (transcribes paperGrid.ts cursorBulge) ──
-fn cursorBulge(g: vec2f) -> vec2f {
-  let cursor = u.cursor.xy;
-  let strength = u.cursor.z * u.cursor2.x;  // bulgeStrength × bulgeMode (+repel / −attract)
-  let radius = max(u.cursor.w, 1e-4);
-  let toC = g - cursor;
-  let d = length(toC);
-  let bulge = strength * exp(-(d * d) / (2.0 * radius * radius));
-  if (d < 1e-5) { return vec2f(0.0); }
-  return (toC / d) * bulge;
-}
+// The shared traveling-wave CELL-WARP chunk (waveField.wgsl.ts — cellTwist/cursorSwirl/
+// travelingEnvelope; splices AFTER valueNoise + curlFBM are declared). paper-grid + concentric
+// share this EXACTLY — the cell-local twist replaces the retired LINE-warp (the C3 cure: the
+// boxes twist about their own center, the lines stay locally straight).
+${WAVE_FIELD_WGSL}
 
 // ── §1 The crisp line: Ben Golus derivative-AA grid coverage (transcribes gridCoverage) ──
 // targetWidth is the line half-width in GRID UNITS (lineWidthPx / minorPitchPx); uvDeriv is
@@ -143,6 +136,18 @@ fn gridCoverage(g: vec2f, targetWidth: f32, uvDeriv: vec2f) -> f32 {
   // Moiré suppression: fade toward the average where the cell packs tighter than a pixel.
   grid2 = mix(grid2, vec2f(targetWidth), clamp(uvDeriv * 2.0 - 1.0, vec2f(0.0), vec2f(1.0)));
   return max(grid2.x, grid2.y);
+}
+
+// ── The 3-stop warm-divergent FACE ramp (FOLD B — height-keyed, NOT a 2-point mid-park) ──
+// trough (faceLo) → mid (faceMid) → crest (faceHi), keyed on rampT = mix(shade, h). All stops
+// are warm hue ∈ [20,90] (the teal-navy purge clear by construction). Linear-space stops; the
+// fs_main routes the result through the production OETF (FOLD E).
+fn faceRamp(rampT: f32) -> vec3f {
+  let s = clamp(rampT, 0.0, 1.0);
+  if (s < 0.5) {
+    return mix(u.faceLo.rgb, u.faceMid.rgb, s * 2.0);
+  }
+  return mix(u.faceMid.rgb, u.faceHi.rgb, (s - 0.5) * 2.0);
 }
 
 // Full-screen-triangle (the pilot idiom): NDC corners (-1,-1),(3,-1),(-1,3) cover the
@@ -172,10 +177,20 @@ fn fs_main(in: VSOut) -> @location(0) vec4f {
   let t = u.u0.x;
   let gridScale = u.u0.y;
 
-  // §5 the per-pixel kernel: warp + bulge the grid coordinate, then two-tier Golus.
-  var g = uv * gridScale;
-  g = g + curlWarp(g, t);
-  g = g + cursorBulge(g);
+  // §5 the per-pixel kernel: CELL-TWIST + cursor-swirl the grid coordinate, then two-tier Golus.
+  // cellTwist rotates each cell about its OWN center (the boxes twist, the lines stay locally
+  // straight — the C3 cure) gated by a traveling Gaussian crest; cursorSwirl twists the cells
+  // about the finger. The Golus dv reads the FINAL twisted coord (the crisp-line fence survives).
+  let g0 = uv * gridScale;
+  // FOLD A — the PRE-twist driver: the face samples height/relief at THIS cc (floor(twisted_g)
+  // at the crest lights a NEIGHBOUR cell). cellTwist rides the SAME driver, so twist + face fuse.
+  let drv = cellDriver(g0, 1.0, t, u.wave.xy, u.wave.z, u.wave.w, u.wave2.x, u.wave2.w);
+  let cc = drv.xy;
+  var g = cellTwist(g0, 1.0, t, u.wave.xy, u.wave.z, u.wave.w, u.wave2.x, u.wave2.y, u.wave2.z, u.wave2.w);
+  if (u.cursor2.y > 0.5) {
+    // bulgeMode (cursor2.x: +repel / −attract) signs the swirl direction.
+    g = cursorSwirl(g, u.cursor.xy, u.cursor.z * u.cursor2.x, u.cursor.w);
+  }
 
   // The screen-space derivative of g (Golus): length(vec2(dpdx, dpdy)) per axis. fwidth-class
   // derivative reads the ACTUAL backing-store pixel (NOT fwidthFine — Compatibility-Mode safe).
@@ -190,17 +205,38 @@ fn fs_main(in: VSOut) -> @location(0) vec4f {
   let major = gridCoverage(g / me, u.grid.y, dv / me);
   let line = max(minor * u.grid.z, major * u.grid.w);
 
+  // ── The FACE (BD.W-PAPERGRID-FACE) — height-lit filled cell interior ──────────────────
+  // Sample height/relief at the pre-twist driver cc (FOLD A); Lambert the ∇H slope against the
+  // fixed cel key-light; squash the inset so the crest face inflates; multi-stop warm-divergent
+  // ramp keyed on mix(shade, h) (FOLD B); the ink through the production OETF (FOLD E).
+  let h     = cellHeight(cc, t, u.wave.xy, u.wave.z, u.wave.w, u.wave2.x, u.wave2.w);
+  let grad  = faceRelief(cc, 1.0, t, u.wave.xy, u.wave.z, u.wave.w, u.wave2.x, u.wave2.w);
+  let n     = normalize(vec3f(-grad * u.face.y, 1.0));
+  let shade = clamp(0.5 + dot(n, normalize(vec3f(u.warp2.zw, 1.0))) * 0.5, 0.0, 1.0);
+  let inset = u.face.w * (1.0 - u.face.z * h);            // squash & stretch
+  let face  = facePlateau(g, inset, dv);
+  let rampT = clamp(shade * 0.5 + h * 0.5, 0.0, 1.0);     // FOLD B — height-keyed crest
+  let faceInk = clamp(linearToSrgb(faceRamp(rampT)), vec3f(0.0), vec3f(1.0));
+  let faceA = face * u.face.x * u.field.x;                // FOLD D — one field-blend scalar
+
   let col = clamp(linearToSrgb(u.line.rgb), vec3f(0.0), vec3f(1.0));
   let hasBg = u.field.y;
   if (hasBg > 0.5) {
-    // opaque ground: composite the ink over the themed bg.
+    // opaque ground: the face fills the cell, the ink over the themed bg, the line on top.
     let bg = clamp(linearToSrgb(u.bg.rgb), vec3f(0.0), vec3f(1.0));
+    let base = mix(bg, faceInk, faceA);
     let a = line * u.field.x;
-    let outRgb = mix(bg, col, a);
+    let outRgb = mix(base, col, a);
     return vec4f(outRgb, 1.0);
   }
-  // transparent ground: the LINE carries the alpha — the page reads through the cells.
-  let a = line * u.field.x;
-  return vec4f(col * a, a);  // premultiplied over transparent
+  // transparent ground: the FACE composites UNDER the line, the SOURCE-OVER operator in
+  // PREMULTIPLIED space (the page reads through the gutters). faceAlpha:0 → faceA=0 → the face
+  // term vanishes → vec4f(col·line, line) = byte-identical to the HEAD line-only render.
+  let linePremult = (col * line) * u.field.x;            // line layer (the FieldAlpha global subtlety)
+  let lineA = line * u.field.x;
+  let facePremult = faceInk * faceA;                     // face layer premultiplied (faceA folds field.x)
+  let outPremult = linePremult + facePremult * (1.0 - lineA);
+  let a = lineA + faceA * (1.0 - lineA);
+  return vec4f(outPremult, a);                           // premultiplied over transparent
 }
 `;

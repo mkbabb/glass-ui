@@ -217,6 +217,21 @@ export interface AuroraConfig {
     alpha: number; // 0..1
 
     /**
+     * BD.W-AUR-VIVIDNESS — the §3 chroma FLOOR (the warm-field vividness contract).
+     * Optional; omitted = `DEFAULT_VIVIDNESS` (1 — high, the library's vivid identity).
+     * A shader-resident OKLab chroma-floor lifts any pale zone toward `VIVID_TARGET`
+     * (mode-scaled in the shader) so the field never resolves toward gray BEHIND glass
+     * — the literal fix for the "missing colorful field → gray glass" defect. The lift
+     * is HUE-PRESERVING (scales chroma along the zone's existing OKLab direction); below
+     * `VIVID_EPS` the hue is precision noise, so the floor synthesizes along the WARM
+     * anchor (`VIVID_WARM_ANCHOR`) — NEVER teal/navy, the warm-floor guarantee. A
+     * deliberately-pale hero surface opts OUT with `vividness: 0` (the new lanes write 0,
+     * so a `vividness:0` config is byte-identical to the pre-floor render — the gated
+     * identity move). Range 0..1.
+     */
+    vividness?: number;
+
+    /**
      * AW.W6/W8 — the pointer/scroll interactivity opt-in (default OFF — the wispy-sky
      * default stays static). W6 declares the SHAPE; W8 wires the cursor-as-light /
      * velocity-reactive flow / scroll-coupling / WebGPU-wake behavior. Omitted = every
@@ -267,6 +282,23 @@ export interface AuroraInstance extends AuroraCursorApi {
 export const MAX_NUCLEI = 6;
 export const MAX_STOPS = 8;
 
+// ── BD.W-AUR-VIVIDNESS — the §3 chroma-floor constants ──────────────────────
+/**
+ * The default `vividness` for a bare `<Aurora>` — HIGH (the library's vivid identity).
+ * This INVERTS the pre-floor status quo: vivid is the default, pale is the explicit
+ * `vividness: 0` opt-out. The literal §3 fix — a warm glass plate over the default field
+ * now reads transmissive-not-gray because the field carries chroma.
+ */
+export const DEFAULT_VIVIDNESS = 1.0;
+/**
+ * The per-fragment OKLab chroma the floor lifts a pale zone TOWARD at `vividness:1`
+ * (the shader scales this by a mode factor — a dim/dark field needs more chroma to read
+ * vivid through glass). Tuned so the lifted DEFAULT field clears the §3 transmissive
+ * floor (mean OKLab chroma ≥ 0.045) with headroom; a vivid zone above this is untouched.
+ * Mirrored as `VIVID_TARGET` in the GLSL + WGSL twins.
+ */
+export const VIVID_TARGET = 0.115;
+
 // ── Minimum-viable default ─────────────────────────────────────────────
 
 /**
@@ -279,10 +311,15 @@ export const DEFAULT_AURORA_CONFIG: AuroraConfig = {
     // so a bare `<Aurora>` reads warm-cream at rest. The prior blue/teal default
     // (h:220/200) was the teal-on-navy disease in the library identity. Named
     // themed presets (Sky, Ocean, …) live in the consumer (presets-in-consumers).
+    // BD.W-AUR-VIVIDNESS — the AUTHORED vivid identity (the floor is the runtime
+    // guarantee; this is the authored chroma). The pre-floor ramp topped out at the pale
+    // C:0.10 whisper (the §3 gray-glass root cause). Lifted to a warm C:0.16–0.20 band,
+    // hues held in the warm 45..70 amber family (NO teal/navy — the warm-floor law) so a
+    // bare `<Aurora>` reads warm-VIVID at rest, not warm-pale. Both, not either.
     palette: [
-        { L: 0.72, C: 0.10, h: 55 },
-        { L: 0.86, C: 0.06, h: 45 },
-        { L: 0.95, C: 0.03, h: 70 },
+        { L: 0.68, C: 0.16, h: 52 },
+        { L: 0.78, C: 0.13, h: 45 },
+        { L: 0.86, C: 0.095, h: 68 },
     ],
     nuclei: [
         { x: 0.3, y: 0.3, radius: 0.5, paletteBias: 0.0, valueBias: 0, driftRadius: 0.045, driftPhase: 0.0 },
@@ -314,6 +351,9 @@ export const DEFAULT_AURORA_CONFIG: AuroraConfig = {
     saturation: 1.0,
     paperGrain: 0.008,
     alpha: 1.0,
+    // BD.W-AUR-VIVIDNESS — the §3 floor ON by default (the vivid identity). A pale hero
+    // surface opts out with `vividness: 0`.
+    vividness: DEFAULT_VIVIDNESS,
 };
 
 /**

@@ -34,16 +34,33 @@
 // it + a WGSL path is provided) and resolves to the ACTUAL backend after `armAsync()`
 // (it falls to `"webgl2"` if the WebGPU init failed).
 //
-// The shared `createCanvasLifecycle` leaf is BYTE-UNTOUCHED (the demand-gate, the
-// three-reason suspend Set, the offscreen-park, the live-PRM re-monitor, the
-// device-loss self-heal are sound — the fix is exclusively the PICKER; NO per-viz fork
-// of the lifecycle).
+// The shared `createCanvasLifecycle` leaf carries the demand-gate, the three-reason
+// suspend Set, the offscreen-park, the live-PRM re-monitor, the device-loss self-heal —
+// all sound. BD.W-SUBSTRATE-SIZE-UNIFY adds the ONE backing-store sizer + the leaf RO/IO
+// to that leaf; the PICKER threads the consumer's `dprPolicy` to both legs so a viz that
+// adopts the leaf sizer is sized SYNCHRONOUSLY at mount before the async acquire, on
+// either backend, identically.
+//
+// ── BD.W-SUBSTRATE-SIZE-UNIFY (G4) — THE READBACK CONTRACT (documented, not folklore) ──
+//
+// All live consumers create their context with `preserveDrawingBuffer:false`. So a live
+// `getImageData`/`readPixels` after the compositor has cleared returns ALL-ZERO — this is
+// CORRECT behaviour in BOTH engines (and it AVOIDS WebKit's always-allocated readback
+// buffer), NOT a substrate defect. A live π-gate therefore reads pixels via the COMPOSITOR
+// (`locator.screenshot()`), never `getImageData`. The EXACT-PIXEL in-page read is
+// `captureFrame(timeSec)`: in `mode:"capture"` the substrate auto-flips
+// `preserveDrawingBuffer:true` at context creation (free only there), `renderAt(timeSec)`,
+// then reads back. The all-zero live `readPixels` is a FEATURE; capture-mode is the read.
 
 import {
     createWebGLCanvas,
+    canvasCanHostWebGL2,
     type WebGLCanvasFrame,
     type WebGLCanvasOptions,
 } from "../webgl/useWebGLCanvas";
+import type { BackingSize, DprPolicy } from "../webgl/createCanvasLifecycle";
+
+export type { BackingSize, DprPolicy } from "../webgl/createCanvasLifecycle";
 import {
     createWebGPUCanvas,
     supportsWebGPU,
@@ -69,6 +86,32 @@ export interface GpuSubstrateOptions {
     setupWGPU?: WebGPUCanvasOptions["setup"];
     /** The GLSL program builder (the WebGL2 fallback path — always required). */
     setupGL: WebGLCanvasOptions["setup"];
+    /**
+     * BD.W-SUBSTRATE-SIZE-UNIFY (G1/G2) — the consumer's DPR policy (a flat multiplier
+     * or a box-aware resolver). When PRESENT the leaf owns the backing-store measurement
+     * + sizes it SYNCHRONOUSLY at mount (the ONE sizer; before the async acquire on the
+     * WebGPU path), handing the live `BackingSize` to each `setup`'s `resize(s)`. When
+     * ABSENT the legacy path runs (the consumer self-measures) — the per-viz adoption
+     * seam, identical on both backends.
+     */
+    dprPolicy?: DprPolicy;
+    /**
+     * G3 — compose the leaf IntersectionObserver park (a consumer inherits the
+     * off-screen IO-park ORed with content-visibility, no per-viz `useIntersectionPause`
+     * wiring). Default `false` (OPT-IN): several consumers already write `"off-screen-io"`
+     * from their own `useIntersectionPause` and a leaf IO default-on would double-write
+     * that reason. A viz with NO IO wiring (concentric/fourier/dot-flow) opts IN.
+     */
+    composeIntersectionPark?: boolean;
+    /** `rootMargin` for the leaf IO park (G3). Default `"256px"`. */
+    intersectionRootMargin?: string;
+    /**
+     * G6 — fire the cold-first-paint reveal bloom (a one-shot `--substrate-reveal-t`
+     * 0→1 the shader reads to ramp the field from within). Gated on the Band-0
+     * `--ease-cartoon-punch` + `--motion-weight` tokens; a no-op until they land.
+     * Default `false`.
+     */
+    revealBloom?: boolean;
     /** WebGPU `context.configure` alpha mode (default `"premultiplied"`). */
     alphaMode?: WebGPUCanvasOptions["alphaMode"];
     /** WebGPU adapter/device request options. */
@@ -106,6 +149,15 @@ export interface GpuSubstrateHandle {
     armAsync: () => Promise<void>;
     /** Synchronous arm (the WebGL2 net arms immediately; the WebGPU path is a no-op until the device resolves). */
     arm: () => void;
+    /**
+     * BD.W-SUBSTRATE-SIZE-UNIFY (G2) — size the backing store + start the leaf RO
+     * SYNCHRONOUSLY, decoupled from the (async) backend acquire. Call it the instant the
+     * canvas is in the DOM so the field is sharp from frame 0 while the device resolves
+     * (the ≤6s blurry-flash close). `armAsync` already calls it internally on both legs;
+     * exposed so a consumer can presize even earlier (e.g. immediately on mount, before
+     * the awaited `armAsync`). A no-op when no `dprPolicy` was supplied (legacy).
+     */
+    presize: () => void;
     suspend: (reason?: "tab-hidden" | "off-screen" | "off-screen-io" | "manual") => void;
     resume: (reason?: "tab-hidden" | "off-screen" | "off-screen-io" | "manual") => void;
     wake: () => void;
@@ -123,6 +175,10 @@ function buildWebGL2(
         mode: options.mode,
         respectReducedMotion: options.respectReducedMotion,
         contextAttrs: options.contextAttrs,
+        dprPolicy: options.dprPolicy,
+        composeIntersectionPark: options.composeIntersectionPark,
+        intersectionRootMargin: options.intersectionRootMargin,
+        revealBloom: options.revealBloom,
         setup: options.setupGL,
     });
 }
@@ -134,12 +190,24 @@ function buildWebGL2(
  * The HTML canvas one-context-type rule: once `getContext("webgpu")` is called on a
  * canvas, `getContext("webgl2")` on the SAME element returns `null` forever (the canvas
  * is locked to the `webgpu` context type). So when the picker falls from a failed-to-
- * validate WebGPU pipeline to the WebGL2 net, the original canvas can NEVER host WebGL2 —
- * the net would throw `WebGL2 unavailable` even on a WebGL2-capable host (the headless
- * software-Metal class: a Metal adapter that reports hardware yet cannot validate the
- * pipeline, on a host whose WebGL2 works fine). The fix: clone the canvas (copying its
- * attributes + class + inline style so the layout/aria are byte-identical) and swap it in
- * place, returning the fresh un-poisoned element for the WebGL2 net to acquire.
+ * validate WebGPU pipeline to the WebGL2 net, that canvas can NEVER host WebGL2 — the net
+ * would throw `WebGL2 unavailable` even on a WebGL2-capable host (the headless software-
+ * Metal class). The fix: clone the canvas (copying its attributes + class + inline style
+ * so the layout/aria are byte-identical) and swap it in place, returning the fresh
+ * un-poisoned element for the WebGL2 net to acquire.
+ *
+ * BUT THE SWAP IS ONLY DONE WHEN THE CANVAS IS ACTUALLY POISONED. A fall triggered BEFORE
+ * `getContext("webgpu")` ever ran — a no-adapter host, a `requestDevice()` reject, or the
+ * acquire-TIMEOUT (the device-hang class) — never poisoned the canvas: it can host WebGL2
+ * directly. Swapping it anyway was a LIVE BUG: the swap orphans the original element, and a
+ * consumer's `setup`/`resize` closure that captured the ORIGINAL canvas reference (e.g.
+ * `resizeBacking(canvas)` in `useMetaballRenderer`) then sizes the now-detached original
+ * (its `clientWidth` is 0 → the backing falls to a tiny default) while the live clone's
+ * backing is never written — the canvas renders into the untouched 300×150 default that CSS
+ * upscales (the blurry-viz defect). So we SWAP ONLY when the original cannot host WebGL2
+ * (genuinely poisoned). The probe `getContext("webgl2")` is the canonical poison test (a
+ * poisoned canvas returns null); on a clean canvas it returns the very context the net will
+ * re-acquire (getContext is idempotent for the same type), so the probe costs nothing.
  *
  * SSR / detached-canvas safe: with no `parentNode` (never mounted) the clone cannot swap
  * — the original is returned unchanged (a never-mounted canvas was never poisoned anyway).
@@ -147,6 +215,14 @@ function buildWebGL2(
 function freshCanvasForFallback(poisoned: HTMLCanvasElement): HTMLCanvasElement {
     const parent = poisoned.parentNode;
     if (!parent || typeof document === "undefined") return poisoned;
+    // Not actually poisoned (the fall came before getContext("webgpu") — no-adapter /
+    // device-reject / acquire-timeout): the original can host WebGL2, so KEEP it. Swapping
+    // would orphan the consumer's captured canvas reference (the blurry-viz clone-mismatch).
+    // The poison probe lives in the WebGL2 substrate (`canvasCanHostWebGL2` — the sole
+    // webgl2-bootstrap home, proof:webgl-substrate-single clause B); the picker composes it.
+    if (canvasCanHostWebGL2(poisoned)) return poisoned;
+    // Genuinely poisoned (a `getContext("webgpu")` ran — the pipeline-validation fall): the
+    // original is locked to the webgpu context type and can never host WebGL2. Clone + swap.
     const fresh = poisoned.cloneNode(false) as HTMLCanvasElement;
     // cloneNode(false) copies attributes (class/aria-hidden/data-*/inline style) but the
     // backing-store width/height are reset by the next `resize()`; the CSS box is carried
@@ -191,6 +267,10 @@ export function createGpuSubstrate(
         webgpu = createWebGPUCanvas(canvas, {
             mode: options.mode,
             respectReducedMotion: options.respectReducedMotion,
+            dprPolicy: options.dprPolicy,
+            composeIntersectionPark: options.composeIntersectionPark,
+            intersectionRootMargin: options.intersectionRootMargin,
+            revealBloom: options.revealBloom,
             setup: options.setupWGPU as WebGPUCanvasOptions["setup"],
             alphaMode: options.alphaMode,
             adapterOptions: options.adapterOptions,
@@ -238,6 +318,9 @@ export function createGpuSubstrate(
 
     async function armAsync(): Promise<void> {
         if (disposed) return;
+        // G2 — size the backing the instant arm starts, before any await, so the field
+        // is sharp through the (≤6s) cold device acquire on the WebGPU leg.
+        presize();
         if (webgpu) {
             try {
                 // The WebGPU leaf's `armAsync()` runs the async adapter → device →
@@ -260,8 +343,21 @@ export function createGpuSubstrate(
         webgl2?.arm();
     }
 
+    function presize(): void {
+        if (disposed) return;
+        // BD.W-SUBSTRATE-SIZE-UNIFY (G2) — size the backing on whichever leg is live,
+        // decoupled from the acquire. Idempotent on both legs (a no-op once armed / when
+        // no dprPolicy). On the WebGPU leg this sizes BEFORE the device request so the
+        // canvas is sharp during the cold acquire window.
+        webgpu?.presize();
+        webgl2?.presize();
+    }
+
     function arm(): void {
         if (disposed) return;
+        // Size synchronously first (G2) so a consumer that arms-without-await still gets
+        // a sharp backing from frame 0.
+        presize();
         // The synchronous twin: the WebGL2 net arms immediately; the WebGPU path is a
         // no-op until `armAsync` resolves the device (the uniform-handle parity). If
         // the net was already built (no WGSL path / a prior fall), arm it now so a
@@ -278,6 +374,7 @@ export function createGpuSubstrate(
         },
         armAsync,
         arm,
+        presize,
         suspend: (reason) => {
             webgpu?.suspend(reason);
             webgl2?.suspend(reason);

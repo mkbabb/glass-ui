@@ -1,19 +1,27 @@
-// BC.W-VIZ-DOTFLOW — the ANCHORED-LATTICE displacement COMPUTE kernel (WebGPU primary).
+// BD.W-DOTFLOW-AURORA-CURRENT — the dual-register COMPUTE kernel (WebGPU primary).
 //
-// THE RETOPOLOGY (the gestalt fix). The kernel no longer ADVECTS a free particle cloud
-// (the "mess of noise"); it pulls an ANCHORED DOT-MATRIX toward a sub-cell displacement
-// target with a restoring spring, NO wrap, NO re-seed — the lattice is permanent. Each
-// invocation: derives its lattice ORIGIN `o = gridOrigin(idx, cols, pitch)`, samples the
-// sub-cell displacement `disp = sampleDisplacement(o, t)`, eases its live position toward
-// `o + disp·displaceAmp` (the framerate-independent critically-damped `mix(p, target,
-// 1 - exp(-springK·dt))`), samples the scalar Gerstner HEIGHT `h = sampleHeight(o, t)`
-// (the brightness driver — the moving sweeping band), and stores `vec4(p.xy, h, |disp|)`.
+// TWO registers, ONE kernel (the dock `dim`-idiom discipline). `cs_main` branches on the
+// `mode` uniform:
+//
+//   • `fn cs_field(...)` — the ANCHORED-LATTICE evaluator (BC.W-VIZ-DOTFLOW, BYTE-MOVED
+//     untouched under its fence). It pulls an anchored dot-matrix toward a sub-cell
+//     displacement target with a restoring spring, NO wrap, NO re-seed — the lattice is
+//     permanent. `proof:viz-dotflow` F1 greps the no-advection/no-reseed witness WITHIN
+//     this function's brace-span (the FENCE-CARVE function-scoping).
+//
+//   • `fn cs_flow(...)` — the AURORA CURRENT (the RE-INVENT register). A dense population
+//     ADVECTED along the divergence-free curl current with momentum + a live cursor VORTEX,
+//     fading + respawning so the field never freezes and density stays even:
+//       v = sampleVelocity(p,t) + pointerVortex(...);
+//       v = mix(v_prev, v, turnRate);   p += v·dt·speedScale;   life -= dt;
+//       on death/out-of-domain → density-weighted respawn.
+//     `proof:dotflow-fence` F1b greps the `p += v·dt` + respawn + vortex witness in THIS
+//     function (so flow's correctness is gated, not merely un-gated).
 //
 // The velocity/height/displacement evaluators are the WGSL transcription of `flowField.ts`
-// (the SINGLE math source); `proof:viz-dotflow` clause F3 round-trips the JS evaluator
-// against this transcription at a fixed (index, t) sample set. The curl-noise basis
-// (value-noise fbm + the FBM_ROT rotation) is shared character-for-character with
-// `flow.glsl.ts`'s `curlFBM` JS twin.
+// (the SINGLE math source); `proof:viz-dotflow` F3 round-trips the JS evaluator against
+// this transcription at a fixed (index, t) sample set. The curl-noise basis (value-noise
+// fbm + the FBM_ROT rotation) is shared character-for-character with `flow.glsl.ts`.
 
 export const FLOW_FIELD_COMPUTE_WGSL = /* wgsl */ `
 const MAX_WAVE_COMPONENTS: i32 = 8;
@@ -24,7 +32,8 @@ const CURL_EPS: f32 = 0.012;
 const FBM_ROT: mat2x2<f32> = mat2x2<f32>(0.8, 0.6, -0.6, 0.8);
 
 struct Particle {
-  // (pos.x, pos.y, height, |disp|) — the anchored-lattice live state
+  // field: (pos.x, pos.y, height, |disp|) — the anchored-lattice live state
+  // flow:  (pos.x, pos.y, speed, life)    — the advected-mote live state
   data: vec4<f32>,
 };
 
@@ -32,10 +41,18 @@ struct Particle {
 struct FlowUniforms {
   // p0: (uTime, uDt, uWindSpeed, uCurlStrength)
   p0: vec4<f32>,
-  // p1: (uGridPitch, uDisplaceAmp, uSpringK, uGridCols)  — the lattice geometry
+  // p1: (uGridPitch, uDisplaceAmp, uSpringK, uGridCols)  — the lattice geometry (field)
   p1: vec4<f32>,
-  // ints: (uWaveCount, uParticleCount, uGridColsI, _pad)
+  // ints: (uWaveCount, uParticleCount, uGridColsI, uMode)  — uMode: 0=field, 1=flow
   ints: vec4<i32>,
+  // f0: (uTurnRate, uSpeedScale, uLifetimeSec, uDomainHalf)  — the flow advection levers
+  f0: vec4<f32>,
+  // f1: (uVortexRadius, uVortexSpin, uDragGain, uBurstShove)  — the cursor vortex
+  f1: vec4<f32>,
+  // ptr: (cursor.x, cursor.y, vel.x, vel.y)  — the pointer in domain space + its velocity
+  ptr: vec4<f32>,
+  // ptr2: (burst, pointerActive, edgeBias, _pad)
+  ptr2: vec4<f32>,
   // each wave row: (amplitude, wavelength, directionDeg, phase)
   waves: array<vec4<f32>, 8>,
 };
@@ -160,14 +177,43 @@ fn sampleDisplacement(o: vec2<f32>, t: f32) -> vec2<f32> {
   return v * (bounded / mag);
 }
 
-@compute @workgroup_size(64)
-fn cs_main(@builtin(global_invocation_id) gid: vec3<u32>) {
-  let idx = gid.x;
-  let count = u32(u.ints.y);
-  if (idx >= count) { return; } // bounds-guard the dispatch tail
+// ── The cursor VORTEX injected into the velocity field (transcribes flowField.ts
+//    pointerVortex). r = p − cursor; a gaussian fall-off; a TRUE tangential ∇⊥ swirl +
+//    a drag-along term + a radial burst shove. Inert when the pointer is inactive. ──
+fn pointerVortex(p: vec2<f32>) -> vec2<f32> {
+  if (u.ptr2.y < 0.5) { return vec2<f32>(0.0, 0.0); } // pointer inactive → no vortex
+  let cursor = u.ptr.xy;
+  let vel = u.ptr.zw;
+  let burst = u.ptr2.x;
+  let radius = max(u.f1.x, 1e-3);
+  let r = p - cursor;
+  let d = length(r);
+  let fall = exp(-(d * d) / (radius * radius));
+  let swirl = normalize(vec2<f32>(-r.y, r.x) + vec2<f32>(1e-6, 0.0)); // tangential ∇⊥
+  let radial = r / max(d, 1e-4);
+  let v = swirl * u.f1.y          // the spin
+        + vel * u.f1.z            // the drag (streamlines follow the gesture)
+        + radial * burst * u.f1.w; // the flick shockwave
+  return v * fall;
+}
 
-  let t = u.p0.x;
-  let dt = u.p0.y;
+// ── density-weighted respawn: a hash-stratified seed inside the domain, biased toward the
+//    edges by edgeBias (a faint vignette — the field never thins to a hole). ──
+fn respawn(idx: u32, t: f32) -> vec2<f32> {
+  let half = u.f0.w;
+  let s = f32(idx) * 0.013 + t * 0.37;
+  let rx = hash21(vec2<f32>(s, 1.7)) * 2.0 - 1.0;
+  let ry = hash21(vec2<f32>(3.1, s)) * 2.0 - 1.0;
+  // edgeBias>0 pushes the seed toward the perimeter (a power-curve on |coord|).
+  let bias = clamp(u.ptr2.z, 0.0, 1.0);
+  let bx = sign(rx) * pow(abs(rx), mix(1.0, 0.5, bias));
+  let by = sign(ry) * pow(abs(ry), mix(1.0, 0.5, bias));
+  return vec2<f32>(bx, by) * half;
+}
+
+// ── cs_field — the ANCHORED-LATTICE evaluator (BYTE-MOVED from cs_main; the field-mode
+//    fence-scoped unit; F1 greps the no-advection/no-reseed witness WITHIN this brace-span).
+fn cs_field(idx: u32, t: f32, dt: f32) {
   let pitch = u.p1.x;
   let displaceAmp = u.p1.y;
   let springK = u.p1.z;
@@ -187,5 +233,57 @@ fn cs_main(@builtin(global_invocation_id) gid: vec3<u32>) {
 
   let h = sampleHeight(o, t);
   particles[idx] = Particle(vec4<f32>(pos, h, length(disp)));
+}
+
+// ── cs_flow — the AURORA CURRENT (the RE-INVENT register). Momentum-integrated advection
+//    along the curl current + the live cursor vortex, with lifetime decay + density-weighted
+//    respawn. F1b greps the pos+=v*dt + respawn( + pointerVortex( witness in THIS function.
+fn cs_flow(idx: u32, t: f32, dt: f32) {
+  let half = u.f0.w;
+  let turnRate = u.f0.x;
+  let speedScale = u.f0.y;
+  let lifetimeSec = max(u.f0.z, 1e-3);
+
+  var pr = particles[idx];
+  var pos = pr.data.xy;
+  var life = pr.data.w;
+
+  // First-frame / dead / out-of-domain seed (the density-weighted respawn).
+  let outOfDomain = max(abs(pos.x), abs(pos.y)) > half * 1.05;
+  if (life <= 0.0 || outOfDomain) {
+    pos = respawn(idx, t);
+    // stratify the initial life across [0,lifetime] so deaths don't synchronize.
+    life = lifetimeSec * hash21(vec2<f32>(f32(idx) * 0.027, t * 0.11));
+  }
+
+  // The target velocity: the divergence-free curl current + the cursor vortex.
+  let vField = sampleVelocity(pos, t) + pointerVortex(pos);
+  // Momentum/inertia: the low turnRate scales how hard the mote commits to the field
+  // each step — a weighty ease into the current's turns (arcs, not snaps), the
+  // overlapping-action/follow-through on a particle (R4-motion).
+  let v = vField * turnRate * speedScale;
+  // Forward-Euler advection step (the integrator — F1b's witness pos = pos + v*dt).
+  pos = pos + v * dt * 60.0;
+
+  life = life - dt;
+  let speed = length(v);
+  particles[idx] = Particle(vec4<f32>(pos, speed, life));
+}
+
+@compute @workgroup_size(64)
+fn cs_main(@builtin(global_invocation_id) gid: vec3<u32>) {
+  let idx = gid.x;
+  let count = u32(u.ints.y);
+  if (idx >= count) { return; } // bounds-guard the dispatch tail
+
+  let t = u.p0.x;
+  let dt = u.p0.y;
+  let mode = u.ints.w;
+
+  if (mode == 1) {
+    cs_flow(idx, t, dt);
+  } else {
+    cs_field(idx, t, dt);
+  }
 }
 `;

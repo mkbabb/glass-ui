@@ -40,6 +40,7 @@ import {
     useBlobMood,
     useBlobPointer,
     useBlobSatellites,
+    type BlobConfig,
 } from "../../goo-blob";
 import { packBlobWGPUUniforms } from "../../goo-blob/composables/uniformBridgeWGPU";
 import {
@@ -51,6 +52,8 @@ import {
     packGooDotUniforms,
     pointerModeSign,
     restingDotPointer,
+    WELD_LO,
+    WELD_HI,
     type GooDotPointerState,
 } from "./uniformBridgeWGPU";
 // The one-time GPU/GL RESOURCE construction is carved into the sibling gooDotSetup.ts leaf
@@ -61,6 +64,17 @@ import {
     createGooDotWGPUResources,
     createGooDotGLResources,
 } from "./gooDotSetup";
+
+/** A calm 0..1 breathing pulse on the sim clock — the Move 4b lattice-squash drive (the same
+ * slow-throb register the field's `breath` carries, kept JS-side so the squash rides one source). */
+function breathPulse(simTimeMs: number): number {
+    return 0.5 + 0.5 * Math.sin((simTimeMs / 1000) * 0.5);
+}
+
+/** The deterministic mid-merge clock (ms) the PRM/static frame pins to — the satellite phase
+ * where the neck band is present (a merge crossing for the default seed), NOT the t=0 separated
+ * state. Picked so the frozen composite shows a FILLED, necking field. */
+const MID_MERGE_CLOCK_MS = 4200;
 
 export interface UseGooDotMatrixOptions {
     config: GooDotConfig;
@@ -97,6 +111,12 @@ export function useGooDotMatrix(
 ): GooDotMatrixHandle {
     const { config } = options;
     const mode = options.mode ?? "live";
+    // BD.W-VIZ-BROKEN-FIX D2 — read `.field` LIVE each frame (the config IS a forward-through
+    // Proxy over the live source; a captured `const field = config.field` snapshot froze it,
+    // so a variant/preset swap never reached the per-frame uniform packs). The satellite
+    // SETUP-time bind below keeps the snapshot (the satellite system re-reads the field's
+    // atoms via its own reactive seam — the goo-blob precedent).
+    const getField = (): BlobConfig => config.field;
     const field = config.field;
 
     // The shared field-sim (the byte-untouched goo-blob systems — the SHARED simulation).
@@ -132,6 +152,8 @@ export function useGooDotMatrix(
     let paused = false;
     let lastTimeSec = 0;
     let simTimeMs = 0;
+    // Whether the PRM/static frame has already been pinned to the mid-merge clock (one-shot).
+    let midMergePinned = false;
 
     // ── The SHARED field-advance (substrate-agnostic; the goo-blob resolveFrame shape) ──
     // Advances the mood / pointer / satellite systems on the tempo-scaled step + feeds the
@@ -143,9 +165,20 @@ export function useGooDotMatrix(
         const dtMs = Math.max(0, Math.min(rawDtMs, 50));
 
         const reduced = handle?.reducedMotion ?? false;
-        const tempo = reduced || paused ? 0 : field.tempo;
+        const tempo = reduced || paused ? 0 : getField().tempo;
         const stepMs = tempo * dtMs;
         simTimeMs += stepMs;
+
+        // BD.W-GOODOT-LIQUID-FIELD — the PRM/static frame is pinned to a deterministic MID-MERGE
+        // clock (NOT t=0, where the satellite is maximally separated). On the first reduced/frozen
+        // frame we seed the sim clock to a merge-phase constant so the held composite shows the
+        // neck band present + the field FILLED (the presence floor) + legible — strictly better
+        // than a frozen speck. The twinkle/flow/squash stay zeroed below (no advection in a still).
+        if (reduced && !midMergePinned) {
+            simTimeMs = MID_MERGE_CLOCK_MS;
+            midMergePinned = true;
+        }
+        if (!reduced) midMergePinned = false;
 
         // Feed the shared pointer field from THIS frame callback (NO own rAF — the one-loop
         // discipline). Reads BOTH velocity AND acceleration (the accel/flick-burst leg).
@@ -187,13 +220,20 @@ export function useGooDotMatrix(
             dotPush.bloom *= 0.9;
         }
 
+        // BD.W-GOODOT-LIQUID-FIELD Move 4b — the liquid-lattice clock + volume-preserving squash.
+        // The φ-twinkle reads simTime; the squash leans the cell on the pulse + the pointer
+        // burst (X·Y ≈ 1 via the shader's `x/sq, y*sq`). PRM/park hold a static composite.
+        dotPush.timeSec = reduced ? 0 : simTimeMs / 1000;
+        const pulse = reduced ? 0 : breathPulse(simTimeMs);
+        dotPush.latticeSquash = 1 + pulse * 0.08 + dotPush.bloom * 0.18;
+
         return {
             params: mood.params.value,
             rgb: resolveColor(baseColorCss),
             simTimeMs,
             timeSec,
             resolveColor,
-            rimColor: field.surface.rimColor,
+            rimColor: getField().surface.rimColor,
             paletteStops: paletteCss,
         };
     }
@@ -226,8 +266,8 @@ export function useGooDotMatrix(
 
             function resize(): void {
                 const dpr = resolveBudgetDpr();
-                const cssW = canvas.clientWidth || field.geometry.canvasSize;
-                const cssH = canvas.clientHeight || field.geometry.canvasSize;
+                const cssW = canvas.clientWidth || getField().geometry.canvasSize;
+                const cssH = canvas.clientHeight || getField().geometry.canvasSize;
                 const w = Math.max(1, Math.round(cssW * dpr));
                 const h = Math.max(1, Math.round(cssH * dpr));
                 if (canvas.width !== w || canvas.height !== h) {
@@ -242,7 +282,7 @@ export function useGooDotMatrix(
                 packBlobWGPUUniforms(
                     res.fieldScratch,
                     canvas,
-                    field,
+                    getField(),
                     pointer,
                     satellites,
                     frameState,
@@ -258,14 +298,39 @@ export function useGooDotMatrix(
                 );
                 device.queue.writeBuffer(res.dotBuffer, 0, res.dotScratch.buffer);
 
+                const groundOn = config.fieldGround === "warm";
                 const view = context.getCurrentTexture().createView();
                 const encoder = device.createCommandEncoder({ label: `${GOO_DOT_LABEL} frame` });
+
+                // Move 4a — pass 1: the warm ground (loadOp:"clear"), ONLY when fieldGround:"warm".
+                // The dot pass then loads OVER it; transparent skips straight to the clear dot pass.
+                if (groundOn) {
+                    res.groundScratch[0] = frameState.simTimeMs / 1000;
+                    res.groundScratch[1] = (canvas.width || 1) / (canvas.height || 1);
+                    device.queue.writeBuffer(res.groundBuffer, 0, res.groundScratch.buffer);
+                    const gPass = encoder.beginRenderPass({
+                        colorAttachments: [
+                            {
+                                view,
+                                clearValue: { r: 0, g: 0, b: 0, a: 0 },
+                                loadOp: "clear",
+                                storeOp: "store",
+                            },
+                        ],
+                    });
+                    gPass.setPipeline(res.groundPipeline);
+                    gPass.setBindGroup(0, res.groundBindGroup);
+                    gPass.draw(3, 1, 0, 0);
+                    gPass.end();
+                }
+
+                // Pass 2: the dot stamp. Loads over the ground if present, else clears.
                 const pass = encoder.beginRenderPass({
                     colorAttachments: [
                         {
                             view,
                             clearValue: { r: 0, g: 0, b: 0, a: 0 },
-                            loadOp: "clear",
+                            loadOp: groundOn ? "load" : "clear",
                             storeOp: "store",
                         },
                     ],
@@ -284,6 +349,7 @@ export function useGooDotMatrix(
                 teardown: () => {
                     res.fieldBuffer.destroy();
                     res.dotBuffer.destroy();
+                    res.groundBuffer.destroy();
                 },
             };
         };
@@ -299,8 +365,8 @@ export function useGooDotMatrix(
 
             function resize(): void {
                 const dpr = resolveBudgetDpr();
-                const cssW = canvas.clientWidth || field.geometry.canvasSize;
-                const cssH = canvas.clientHeight || field.geometry.canvasSize;
+                const cssW = canvas.clientWidth || getField().geometry.canvasSize;
+                const cssH = canvas.clientHeight || getField().geometry.canvasSize;
                 const w = Math.max(1, Math.round(cssW * dpr));
                 const h = Math.max(1, Math.round(cssH * dpr));
                 if (canvas.width !== w || canvas.height !== h) {
@@ -312,6 +378,24 @@ export function useGooDotMatrix(
 
             function frame(timeSec: number): void {
                 const frameState = resolveFrame(timeSec);
+                const groundOn = config.fieldGround === "warm";
+
+                // Move 4a — pass 1: the warm ground (the WebGL2 tail). Clear, blend OFF, draw the
+                // opaque gradient quad; the dot pass then blends over it.
+                if (groundOn) {
+                    gl.disable(gl.BLEND);
+                    gl.clearColor(0, 0, 0, 0);
+                    gl.clear(gl.COLOR_BUFFER_BIT);
+                    gl.useProgram(res.ground.prog);
+                    gl.bindVertexArray(res.ground.vao);
+                    gl.uniform1f(res.ground.uTime, frameState.simTimeMs / 1000);
+                    gl.drawArrays(gl.TRIANGLES, 0, 6);
+                    gl.bindVertexArray(null);
+                    gl.enable(gl.BLEND);
+                    gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+                }
+
+                // Pass 2: the dot stamp.
                 gl.useProgram(prog);
                 // The dot-grid uniforms (set BEFORE the field upload — which issues the draw).
                 const dpr = resolveBudgetDpr();
@@ -329,8 +413,18 @@ export function useGooDotMatrix(
                 gl.uniform1f(dU.pa, config.interactive ? dotPush.active : 0);
                 gl.uniform2f(dU.cursor, dotPush.x, dotPush.y);
                 gl.uniform1f(dU.bloom, dotPush.bloom);
+                // The liquid-field lanes (Move 1/2/4b — the N named scalars).
+                gl.uniform1f(dU.shadowGate, groundOn ? 1 : 0);
+                gl.uniform1f(dU.presenceFloor, config.presenceFloor);
+                gl.uniform1f(dU.weldLo, WELD_LO);
+                gl.uniform1f(dU.weldHi, WELD_HI);
+                gl.uniform1f(dU.time, dotPush.timeSec);
+                gl.uniform1f(dU.weldSwell, config.weldSwell);
+                gl.uniform1f(dU.weldSpecular, config.weldSpecular);
+                gl.uniform1f(dU.flowAmt, config.flowAmt);
+                gl.uniform1f(dU.latticeSquash, dotPush.latticeSquash);
                 // The field uniforms + the draw (the REUSED goo-blob upload path).
-                uploadBlobUniforms(gl, prog, vao, locs, canvas, field, pointer, satellites, frameState);
+                uploadBlobUniforms(gl, prog, vao, locs, canvas, getField(), pointer, satellites, frameState);
             }
 
             return {
@@ -343,6 +437,11 @@ export function useGooDotMatrix(
                     gl.deleteShader(res.fs);
                     gl.deleteBuffer(res.buf);
                     gl.deleteVertexArray(res.vao);
+                    gl.deleteProgram(res.ground.prog);
+                    gl.deleteShader(res.ground.vs);
+                    gl.deleteShader(res.ground.fs);
+                    gl.deleteBuffer(res.ground.buf);
+                    gl.deleteVertexArray(res.ground.vao);
                 },
             };
         };
