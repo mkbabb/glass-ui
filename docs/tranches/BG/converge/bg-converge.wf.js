@@ -135,7 +135,8 @@ while (passNum < MAX_PASSES && convergencePct < 100) {
   const researchDigest = research.map(r => `### ${r.angle}\n${r.findings}\nRECS: ${(r.recommendations||[]).join(' | ')}`).join('\n\n')
   const synth = await agent(
     `You are the SYNTHESIS agent for workstream ${ws.id} (pass ${passNum}).\n\n${ctxHdr}\n\nThe research fleet returned:\n\n${researchDigest}\n\nSynthesize ONE cogent, idiomatic, gestalt SPECIFICATION + plan for this workstream that resolves the brief + every covered defect + the user directives, honoring the cardinal laws. ${passNum>1 ? 'INCORPORATE the prior converged spec at '+convergedSpecFile+' (Read it) and ADVANCE it on the unconverged frontier — do not restart.' : ''}\n\nWrite the spec to ${DIR}/SPEC-pass${passNum}.md (structured: GESTALT GOAL · MECHANISM (the idiomatic approach, concrete) · FILES TOUCHED · the BG.W-* wave breakdown · the acceptance/real-paint-π bar · folded deferred items · open risks).\n\nThen return the specFile + a list of 3-6 PROTOTYPE ITEMS — the riskiest/most-load-bearing slices that MUST be build-proven (mode:'implement' → a worktree build-test of a real proof) or design-proven (mode:'spec' → a concrete code sketch). Pick items whose failure would falsify the spec.`,
-    { model:'opus', phase:'Synthesize', label:`${ws.id}/synth/p${passNum}`, schema:SYNTH_SCHEMA })
+    { model:'opus', phase:'Synthesize', label:`${ws.id}/synth/p${passNum}`, schema:SYNTH_SCHEMA }).catch(() => null)
+  if (!synth || !synth.specFile) { log(`${ws.id} pass ${passNum}: synth failed (session/rate limit) — ending at prior ${convergencePct}%`); break }
   convergedSpecFile = synth.specFile
 
   // ── STEP 3: prototype fleet (greenfield brainstorm + worktree test-implement), batches of 3 ──
@@ -157,7 +158,8 @@ while (passNum < MAX_PASSES && convergencePct < 100) {
   const critDigest = critiques.map(c=>`- ${c.item}: ${c.convergencePct}% [${c.verdict}] — ${c.critique?.slice(0,400)} | MUSTFIX: ${(c.mustFix||[]).join('; ')}`).join('\n')
   const final = await agent(
     `You are the FINAL SYNTHESIS lead for workstream ${ws.id} (pass ${passNum}). Agglomerate the research, the spec, the prototypes, and the critiques into the CONVERGED specification for this workstream.\n\n${ctxHdr}\n\nSPEC: ${convergedSpecFile} (Read it).\nPROTOTYPE RESULTS:\n${protoDigest}\n\nCRITIQUE RESULTS:\n${critDigest}\n\nFOLD the critiques' mustFix into the spec; adopt the validated prototype approaches; resolve contradictions. Write the CONVERGED spec to ${DIR}/SPEC-pass${passNum}-converged.md (the same structure, hardened — each BG.W-* wave now carries its validated mechanism + the real-paint-π acceptance bar + the folded deferred items).\n\nReturn: the convergedSpecFile, the OVERALL convergencePct (0-100 — the honest gate: 100 ONLY if every prototype item is converged per its critique AND the brief + every covered defect + every user directive is fully + idiomatically resolved AND no residual gap remains; a single 'refine'/'reject' verdict or an unmet directive caps it below 100), the waveSet (BG.W-* : intent, ready to develop out), the residualGaps, and the nextPassContext (the focused brief for the next pass = the unconverged frontier; empty string if 100%).`,
-    { model:'opus', phase:'Re-synthesize', label:`${ws.id}/final/p${passNum}`, schema:FINAL_SCHEMA })
+    { model:'opus', phase:'Re-synthesize', label:`${ws.id}/final/p${passNum}`, schema:FINAL_SCHEMA }).catch(() => null)
+  if (!final) { log(`${ws.id} pass ${passNum}: final-synth failed (session/rate limit) — keeping prior ${convergencePct}%`); break }
 
   convergencePct = final.convergencePct
   convergedSpecFile = final.convergedSpecFile
