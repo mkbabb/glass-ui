@@ -26,7 +26,7 @@ export const meta = {
 }
 
 // ── workstream registry (embedded — nested-object args-passing is unreliable; flip WS_SELECT + re-invoke via scriptPath) ──
-const WS_SELECT = (typeof args === 'object' && args?.select) || 'WS6'   // EDIT per workstream: WS1✓ WS3✓ WS2✓ WS5✓ → WS6 siri
+const WS_SELECT = (typeof args === 'object' && args?.select) || 'WS4'   // WS1✓ WS3✓ WS2✓ WS5✓ WS6✓ → WS4 components
 const MAX_PASSES = (typeof args === 'object' && args?.maxPasses) || 4
 const UNIVERSAL = `UNIVERSAL LAWS (bind every wave): liquid-weight/inertia/bounce on ALL motion & transitions & scrolling; gestalt-not-patch (architectural transpositions for elegance/simplicity/perf are desired); NO legacy (clean breaks); KISS+DRY+DEFT; real-paint-verify is the bar (the headless-green/visually-broken trap shipped 3×); iOS-27 fidelity; aristotelian √φ proportion; cartoon-technicolor punch; perfected glass+paper morphism; Chrome AND Safari. Full directive slice: docs/tranches/BG/DIRECTIVE-LEDGER.md.`
 const WORKSTREAMS = {
