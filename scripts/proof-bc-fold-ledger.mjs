@@ -39,6 +39,12 @@
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+    extractDocIds as coreExtractDocIds,
+    deriveBand as coreDeriveBand,
+    waveSpecExists as coreWaveSpecExists,
+    clausesHit,
+} from "./lib/fold-ledger-core.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, "..");
@@ -74,45 +80,20 @@ const BC_WAVE_RE = /^BC\.W-[A-Z0-9-]+$/;
 // the human reader; the machine ledger carries one row per DISTINCT fold.
 const GENEALOGY_IDS = new Set(["phantom-w-aur-t5", "phantom-w-kf-consumer"]);
 
-function extractDocIds(docText) {
-    const ids = new Set();
-    for (const line of docText.split("\n")) {
-        const m = line.match(/^\|\s*([a-z][a-z0-9-]+)\s*\|/);
-        if (!m) continue;
-        const id = m[1];
-        if (id === "id" || id === "ask" || id === "source") continue; // header cells
-        if (GENEALOGY_IDS.has(id)) continue; // §8 genealogy cross-refs, not distinct folds
-        ids.add(id);
-    }
-    return ids;
-}
+// The four primitives are the shared `fold-ledger-core.mjs` leaf, composed here via thin
+// closures bound to BC's roster (the no-clone DRY contract — proof:bg-deferred-ledger asserts
+// both fold-ledger gates IMPORT the core rather than re-defining the bodies). The genealogy
+// cross-refs (§8) are excluded so the 213-count + the JSON⟷doc parity see one row per fold.
+const extractDocIds = (docText) => coreExtractDocIds(docText, { exclude: GENEALOGY_IDS });
 
 // ── on-disk band derivation ─────────────────────────────────────────────────────
 // The SINGLE band authority: the named wave's `**Band:**` header line 2/3. We parse the
 // LEADING band token (a number, or the FORENSICS letter F) — the parenthetical and any
 // "/ N" co-band suffix are advisory. So "**Band:** 1 / 12 (glass…)" derives 1;
 // "**Band:** 4 (cross-cutting)" derives 4; "**Band:** F (FORENSICS)" derives "F".
-const bandCache = new Map();
-function deriveBand(waveId) {
-    if (bandCache.has(waveId)) return bandCache.get(waveId);
-    const file = join(WAVES_DIR, `${waveId}.md`);
-    let band = null;
-    if (existsSync(file)) {
-        const text = readFileSync(file, "utf8");
-        const m = text.match(/\*\*Band:\*\*\s*([0-9]+|F)\b/);
-        if (m) band = m[1] === "F" ? "F" : Number(m[1]);
-    }
-    bandCache.set(waveId, band);
-    return band;
-}
-
-function waveSpecExists(waveId) {
-    return (
-        typeof waveId === "string" &&
-        BC_WAVE_RE.test(waveId) &&
-        existsSync(join(WAVES_DIR, `${waveId}.md`))
-    );
-}
+const deriveBand = (waveId) => coreDeriveBand(waveId, { wavesDir: WAVES_DIR });
+const waveSpecExists = (waveId) =>
+    coreWaveSpecExists(waveId, { wavesDir: WAVES_DIR, wavePattern: BC_WAVE_RE });
 
 // ── the 10 PM-SYNTHESIS root-failure-class requirements (F5) ─────────────────────
 // The requirement → wave map is the §22 table (lines 27-36): each requirement is "owned
@@ -328,10 +309,6 @@ function loadReal() {
         register: JSON.parse(readFileSync(REGISTER, "utf8")),
         synthesisText: readFileSync(SYNTHESIS, "utf8"),
     };
-}
-
-function clausesHit(failures) {
-    return new Set(failures.map((f) => f.clause));
 }
 
 function selfTest() {
