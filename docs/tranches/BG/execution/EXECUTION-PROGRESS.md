@@ -32,11 +32,11 @@ WAVE-DONE bar: `real-paint-protocol.md §1`. Interleave/collision: `bh-interleav
 
 | seq | wave | tranche/ws | class | status | gate | paint |
 |----:|------|-----------|:-----:|:------:|------|:-----:|
-| 0.1 | BG.W-PAINT-IS-THE-GATE | BG/WS7 | P | PENDING | proof:ba-gestalt (decoder ext, born-RED Metal) | — |
+| 0.1 | BG.W-PAINT-IS-THE-GATE | BG/WS7 | P | PAINT-PENDING | proof:ba-gestalt (decoder ext, born-RED Metal) | 7fa3156b · self-test 14 bites GREEN; roster born-RED, non-authoring paint pending |
 | 0.2 | BG.W-GESTALT-ROSTER-RE-POINT | BG/WS7 | H | PENDING | surface-closure routeSeeds | — |
 | 0.3 | BG.W-SHIP-DISCIPLINE-LIVE-PRECONDITION | BG/WS7 | H | PENDING | proof:ship-attestation ["ci","release"] | — |
-| 0.4 | BG.W-DEFERRED-LEDGER | BG/WS7 | H | PENDING | proof:bg-deferred-ledger (9-bite) | — |
-| 0.5 | BG.W-BE-BF-LEDGER | BG/WS7 | H | PENDING | proof:be-bf-ledger | — |
+| 0.4 | BG.W-DEFERRED-LEDGER | BG/WS7 | H | DONE | proof:bg-deferred-ledger (9-bite) GREEN | 3fce612a |
+| 0.5 | BG.W-BE-BF-LEDGER | BG/WS7 | H | DONE | proof:be-bf-ledger GREEN | 6105ed6f |
 | 0.6 | BG.W-DISPOSITION-RESTAMP | BG/WS7 | H | PENDING | proof:disposition-live (n:2 re-eval) | — |
 
 ## PHASE 1 — BH concurrent-safe [C] (run now, dodges BG's write-set)
@@ -282,5 +282,5 @@ WAVE-DONE bar: `real-paint-protocol.md §1`. Interleave/collision: `bh-interleav
 ---
 
 **Boot counts.** PENDING: all (≈110 BG active + ≈30 BH = ≈140; +2 BG booked, +1 BH deferred). BUILDING: 0 ·
-PAINT-PENDING: 0 · DONE: 0 · BLOCKED: 0. Frontier = seq 0.1 `BG.W-PAINT-IS-THE-GATE` (Stage-0 ground-freeze
-builds first; the tag-blocker is live from here).
+PAINT-PENDING: 1 · DONE: 2 · BLOCKED: 0. Frontier = seq 0.2 `BG.W-GESTALT-ROSTER-RE-POINT` (Stage-0 ground-freeze
+builds first; the tag-blocker is live from here). [batch: 0.1 PAINT-PENDING 7fa3156b · 0.4 DONE 3fce612a · 0.5 DONE 6105ed6f]
