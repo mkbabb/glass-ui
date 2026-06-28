@@ -1560,6 +1560,12 @@ export const GATES = [
         note: "BG.W-DEFERRED-LEDGER — the no-silent-drop machine BUILT (the D11 chronic cured, the disposition machine that was itself the deferred item). DERIVES the 136-item deferred corpus from disk (AX DISPOSITION-REGISTER 31 + BF DEFERRED-CENSUS 32 + BE waves 39 + BF waves 31 + in-src CONSUME/BOOKED 3) and REDs the close on any dropped / undecided / blanket-routed / templated / over-concentrated row. COMPOSES scripts/lib/fold-ledger-core.mjs (the DRY leaf proof:bc-fold-ledger also imports — the no-clone contract) + the THREE BG teeth: F2 charter-match (a BUILD/MET/COORDINATED row never routes to a RETIRE/SWEEP wave; a RETIRE lands in a sweep/decide wave; the dest resolves in the build-map roster), F4 templated-evidence (N rows sharing one evidence skeleton + the placeholder phrase RED), F5 concentration-ceiling (≥24 rows to ONE dest RED). Self-contained (reads only committed BG/AX/BF/BE docs + src markers + docs/tranches/BG/execution/bg-build-map.md); no sibling deps, runs siblings-absent. 9-bite self-test (AX-31-vs-32, de-shadcn-not-a-false-orphan, no-clone, disjoint-namespace, F0-scoped no-orphan, charter-match, templated-evidence, concentration, count-assert), born-RED→GREEN.",
     },
     {
+        id: "proof:be-bf-ledger",
+        cmd: "proof:be-bf-ledger",
+        tags: ["local", "ci", "release"],
+        note: "BG.W-BE-BF-LEDGER — the 70-wave BE+BF parity floor (the no-silent-drop oracle for the two tranches BG unioned). BE (39 developed wave-specs) + BF (31) were tranche-DEVELOPED but NEVER executed as their own tranches; their per-wave deliverables must not vanish in the fold. Every one of the 70 BE/BF wave-specs (corpus DERIVED from disk — readdir of docs/tranches/{BE,BF}/waves, never a hand-list) carries ONE DECIDED disposition in docs/tranches/BG/BE-BF-LEDGER.md: LANDED-no-build (the landed-evidence path existsSync — a LANDED claim cannot float free of the file), NEVER-BUILT-names-a-wave (the carry-dest is a real BG.W-* in the embedded BG WAVE REGISTRY, cross-checked against bg-build-map.md), or RETIRE (a non-empty rationale ≥20 chars). L1-L8 device-free + a 7-bite self-test (dropped-row, bad-disposition, landed-phantom-path, phantom-dest, bare-RETIRE, extra-unknown-row, band-only-dest), born-RED→GREEN. Self-contained; runs siblings-absent.",
+    },
+    {
         id: "proof:observer-loop",
         cmd: "proof:observer-loop",
         tags: ["local", "ci"],
