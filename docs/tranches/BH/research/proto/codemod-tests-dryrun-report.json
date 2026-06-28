@@ -1,0 +1,1976 @@
+{
+  "summary": {
+    "specFiles": 120,
+    "totalRewrites": 227,
+    "byDepth": {
+      "1": 56,
+      "2": 21,
+      "3": 33,
+      "4": 117
+    },
+    "byKind": {
+      "static": 219,
+      "dynamic": 8
+    },
+    "filesTouched": 111,
+    "fsPathRefs_safeNonRewrite": 4,
+    "unmatchedComments": 0,
+    "unmatchedREVIEW_unsafeIfNonzero": 0,
+    "SAFE": true
+  },
+  "fsPathRefs": [
+    {
+      "file": "tests/components/custom/instrument-chassis/InstrumentChassis.phase-canon.test.ts",
+      "line": 24,
+      "path": "../../../../src/styles/instrument-chassis.css"
+    },
+    {
+      "file": "tests/components/custom/instrument-chassis/InstrumentChassis.phase-canon.test.ts",
+      "line": 45,
+      "path": "../../../../src/components/custom/instrument-chassis/InstrumentChassis.vue"
+    },
+    {
+      "file": "tests/components/custom/instrument-chassis/InstrumentChassis.spine-variant.test.ts",
+      "line": 35,
+      "path": "../../../../src/styles/instrument-chassis.css"
+    },
+    {
+      "file": "tests/components/custom/instrument-chassis/InstrumentChassis.spine-variant.test.ts",
+      "line": 45,
+      "path": "../../../../src/components/custom/instrument-chassis/InstrumentChassis.vue"
+    }
+  ],
+  "reviewHits": [],
+  "sampleEdits": [
+    {
+      "file": "tests/components/custom/animated-digit/AnimatedDigit.test.ts",
+      "line": 4,
+      "old": "../../../../src/components/custom/animated-digit/index",
+      "new": "@glass/components/custom/animated-digit/index",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/aurora/atoms.test.ts",
+      "line": 25,
+      "old": "../../../../src/components/custom/aurora/composables/atoms",
+      "new": "@glass/components/custom/aurora/composables/atoms",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/aurora/atoms.test.ts",
+      "line": 32,
+      "old": "../../../../src/components/custom/aurora/constants/presets",
+      "new": "@glass/components/custom/aurora/constants/presets",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/aurora/atoms.test.ts",
+      "line": 33,
+      "old": "../../../../src/components/custom/aurora/composables/color",
+      "new": "@glass/components/custom/aurora/composables/color",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/aurora/atoms.test.ts",
+      "line": 34,
+      "old": "../../../../src/components/custom/aurora/constants/budget",
+      "new": "@glass/components/custom/aurora/constants/budget",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/aurora/color-equivalence.test.ts",
+      "line": 17,
+      "old": "../../../../src/components/custom/aurora/composables/color",
+      "new": "@glass/components/custom/aurora/composables/color",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/aurora/color-equivalence.test.ts",
+      "line": 18,
+      "old": "../../../../src/components/custom/aurora/constants/presets",
+      "new": "@glass/components/custom/aurora/constants/presets",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/aurora/derive-aurora.test.ts",
+      "line": 9,
+      "old": "../../../../src/components/custom/aurora/composables/color",
+      "new": "@glass/components/custom/aurora/composables/color",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/aurora/derive-aurora.test.ts",
+      "line": 10,
+      "old": "../../../../src/components/custom/aurora/composables/color",
+      "new": "@glass/components/custom/aurora/composables/color",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/aurora/derive-aurora.test.ts",
+      "line": 11,
+      "old": "../../../../src/components/custom/aurora/constants/presets",
+      "new": "@glass/components/custom/aurora/constants/presets",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/aurora/derive-aurora.test.ts",
+      "line": 12,
+      "old": "../../../../src/components/custom/aurora/constants/presets",
+      "new": "@glass/components/custom/aurora/constants/presets",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/aurora/derive-color.test.ts",
+      "line": 18,
+      "old": "../../../../src/components/custom/aurora/composables/color",
+      "new": "@glass/components/custom/aurora/composables/color",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/aurora/interaction-prm.test.ts",
+      "line": 21,
+      "old": "../../../../src/components/custom/aurora/composables/cursorModel",
+      "new": "@glass/components/custom/aurora/composables/cursorModel",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/aurora/mediums-extraction.test.ts",
+      "line": 18,
+      "old": "../../../../src/components/custom/aurora/constants/shaders/mediums.glsl",
+      "new": "@glass/components/custom/aurora/constants/shaders/mediums.glsl",
+      "depth": 4,
+      "kind": "static"
+    }
+  ],
+  "allEdits": [
+    {
+      "file": "tests/components/custom/animated-digit/AnimatedDigit.test.ts",
+      "line": 4,
+      "old": "../../../../src/components/custom/animated-digit/index",
+      "new": "@glass/components/custom/animated-digit/index",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/aurora/atoms.test.ts",
+      "line": 25,
+      "old": "../../../../src/components/custom/aurora/composables/atoms",
+      "new": "@glass/components/custom/aurora/composables/atoms",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/aurora/atoms.test.ts",
+      "line": 32,
+      "old": "../../../../src/components/custom/aurora/constants/presets",
+      "new": "@glass/components/custom/aurora/constants/presets",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/aurora/atoms.test.ts",
+      "line": 33,
+      "old": "../../../../src/components/custom/aurora/composables/color",
+      "new": "@glass/components/custom/aurora/composables/color",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/aurora/atoms.test.ts",
+      "line": 34,
+      "old": "../../../../src/components/custom/aurora/constants/budget",
+      "new": "@glass/components/custom/aurora/constants/budget",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/aurora/color-equivalence.test.ts",
+      "line": 17,
+      "old": "../../../../src/components/custom/aurora/composables/color",
+      "new": "@glass/components/custom/aurora/composables/color",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/aurora/color-equivalence.test.ts",
+      "line": 18,
+      "old": "../../../../src/components/custom/aurora/constants/presets",
+      "new": "@glass/components/custom/aurora/constants/presets",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/aurora/derive-aurora.test.ts",
+      "line": 9,
+      "old": "../../../../src/components/custom/aurora/composables/color",
+      "new": "@glass/components/custom/aurora/composables/color",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/aurora/derive-aurora.test.ts",
+      "line": 10,
+      "old": "../../../../src/components/custom/aurora/composables/color",
+      "new": "@glass/components/custom/aurora/composables/color",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/aurora/derive-aurora.test.ts",
+      "line": 11,
+      "old": "../../../../src/components/custom/aurora/constants/presets",
+      "new": "@glass/components/custom/aurora/constants/presets",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/aurora/derive-aurora.test.ts",
+      "line": 12,
+      "old": "../../../../src/components/custom/aurora/constants/presets",
+      "new": "@glass/components/custom/aurora/constants/presets",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/aurora/derive-color.test.ts",
+      "line": 18,
+      "old": "../../../../src/components/custom/aurora/composables/color",
+      "new": "@glass/components/custom/aurora/composables/color",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/aurora/interaction-prm.test.ts",
+      "line": 21,
+      "old": "../../../../src/components/custom/aurora/composables/cursorModel",
+      "new": "@glass/components/custom/aurora/composables/cursorModel",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/aurora/mediums-extraction.test.ts",
+      "line": 18,
+      "old": "../../../../src/components/custom/aurora/constants/shaders/mediums.glsl",
+      "new": "@glass/components/custom/aurora/constants/shaders/mediums.glsl",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/aurora/painterly.test.ts",
+      "line": 22,
+      "old": "../../../../src/components/custom/aurora/composables/uniformBridge",
+      "new": "@glass/components/custom/aurora/composables/uniformBridge",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/aurora/painterly.test.ts",
+      "line": 23,
+      "old": "../../../../src/components/custom/aurora/constants/presets",
+      "new": "@glass/components/custom/aurora/constants/presets",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/aurora/painterly.test.ts",
+      "line": 24,
+      "old": "../../../../src/components/custom/aurora/constants/presets",
+      "new": "@glass/components/custom/aurora/constants/presets",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/aurora/render-mode.test.ts",
+      "line": 16,
+      "old": "../../../../src/components/custom/aurora/constants/renderMode",
+      "new": "@glass/components/custom/aurora/constants/renderMode",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/border-progress/spectrum-walk.test.ts",
+      "line": 22,
+      "old": "../../../../src/components/custom/border-progress/composables/useBorderSpectrum",
+      "new": "@glass/components/custom/border-progress/composables/useBorderSpectrum",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/border-progress/spectrum-walk.test.ts",
+      "line": 26,
+      "old": "../../../../src/components/custom/border-progress/composables/spectrum-walk",
+      "new": "@glass/components/custom/border-progress/composables/spectrum-walk",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/border-progress/spectrum-walk.test.ts",
+      "line": 27,
+      "old": "../../../../src/components/custom/border-progress/constants",
+      "new": "@glass/components/custom/border-progress/constants",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/configurator/ConfiguratorLayer.model.test.ts",
+      "line": 3,
+      "old": "../../../../src/components/custom/configurator/ConfiguratorLayer.vue",
+      "new": "@glass/components/custom/configurator/ConfiguratorLayer.vue",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/constellation/constellationField.test.ts",
+      "line": 6,
+      "old": "../../../../src/utils/prng",
+      "new": "@glass/utils/prng",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/constellation/constellationField.test.ts",
+      "line": 18,
+      "old": "../../../../src/components/custom/constellation/constellationField",
+      "new": "@glass/components/custom/constellation/constellationField",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/constellation/constellationField.test.ts",
+      "line": 32,
+      "old": "../../../../src/components/custom/constellation/constellationInteraction",
+      "new": "@glass/components/custom/constellation/constellationInteraction",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/constellation/constellationField.test.ts",
+      "line": 33,
+      "old": "../../../../src/components/custom/constellation/constellationRender",
+      "new": "@glass/components/custom/constellation/constellationRender",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/constellation/constellationField.test.ts",
+      "line": 806,
+      "old": "../../../../src/components/custom/constellation/constellationField",
+      "new": "@glass/components/custom/constellation/constellationField",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/constellation/constellationField.test.ts",
+      "line": 807,
+      "old": "../../../../src/components/custom/constellation/constants",
+      "new": "@glass/components/custom/constellation/constants",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/constellation/constellationField.test.ts",
+      "line": 808,
+      "old": "../../../../src/components/custom/constellation/constellationRender",
+      "new": "@glass/components/custom/constellation/constellationRender",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/controls/DarkModeToggle.icon-morph.test.ts",
+      "line": 54,
+      "old": "../../../../src/composables/dark/useGlobalDark",
+      "new": "@glass/composables/dark/useGlobalDark",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/dock/DockBackgroundToggle.a11y.test.ts",
+      "line": 16,
+      "old": "../../../../src/components/custom/dock/DockBackgroundToggle.vue",
+      "new": "@glass/components/custom/dock/DockBackgroundToggle.vue",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/dock/DockLayerRail.a11y.test.ts",
+      "line": 17,
+      "old": "../../../../src/components/custom/dock/GlassDock.vue",
+      "new": "@glass/components/custom/dock/GlassDock.vue",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/dock/DockLayerRail.a11y.test.ts",
+      "line": 18,
+      "old": "../../../../src/components/custom/dock/DockLayerGroup.vue",
+      "new": "@glass/components/custom/dock/DockLayerGroup.vue",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/dock/DockLayerRail.a11y.test.ts",
+      "line": 19,
+      "old": "../../../../src/components/custom/dock/DockLayer.vue",
+      "new": "@glass/components/custom/dock/DockLayer.vue",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/dock/GlassDock.motion-parity.test.ts",
+      "line": 4,
+      "old": "../../../../src/components/custom/dock/GlassDock.vue",
+      "new": "@glass/components/custom/dock/GlassDock.vue",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/dock/GlassDock.scroll-overflow.test.ts",
+      "line": 4,
+      "old": "../../../../src/components/custom/dock/GlassDock.vue",
+      "new": "@glass/components/custom/dock/GlassDock.vue",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/dock/GlassDock.touch-gate.test.ts",
+      "line": 5,
+      "old": "../../../../src/components/custom/dock/GlassDock.vue",
+      "new": "@glass/components/custom/dock/GlassDock.vue",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/dock/GlassDock.touch-gate.test.ts",
+      "line": 6,
+      "old": "../../../../src/components/custom/dock/DockIconButton.vue",
+      "new": "@glass/components/custom/dock/DockIconButton.vue",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/dock/GlassDock.vertical-collapse.test.ts",
+      "line": 5,
+      "old": "../../../../src/components/custom/dock/GlassDock.vue",
+      "new": "@glass/components/custom/dock/GlassDock.vue",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/dock/GlassDock.vertical-collapse.test.ts",
+      "line": 6,
+      "old": "../../../../src/components/custom/dock/DockIconButton.vue",
+      "new": "@glass/components/custom/dock/DockIconButton.vue",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/dock/GlassDock.vt-names.test.ts",
+      "line": 5,
+      "old": "../../../../src/components/custom/dock/GlassDock.vue",
+      "new": "@glass/components/custom/dock/GlassDock.vue",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/dock/GlassDock.vt-names.test.ts",
+      "line": 6,
+      "old": "../../../../src/components/custom/dock/composables/dockContext",
+      "new": "@glass/components/custom/dock/composables/dockContext",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/dock/dock-orchestrator-single.detect.test.ts",
+      "line": 190,
+      "old": "../../../../src/components/custom/dock/GlassDock.vue",
+      "new": "@glass/components/custom/dock/GlassDock.vue",
+      "depth": 4,
+      "kind": "dynamic"
+    },
+    {
+      "file": "tests/components/custom/dock/dock-orchestrator-single.detect.test.ts",
+      "line": 191,
+      "old": "../../../../src/components/custom/dock/DockLayerGroup.vue",
+      "new": "@glass/components/custom/dock/DockLayerGroup.vue",
+      "depth": 4,
+      "kind": "dynamic"
+    },
+    {
+      "file": "tests/components/custom/dock/dock-orchestrator-single.detect.test.ts",
+      "line": 192,
+      "old": "../../../../src/components/custom/dock/DockLayer.vue",
+      "new": "@glass/components/custom/dock/DockLayer.vue",
+      "depth": 4,
+      "kind": "dynamic"
+    },
+    {
+      "file": "tests/components/custom/dock/dock-orchestrator-single.detect.test.ts",
+      "line": 196,
+      "old": "../../../../src/components/custom/dock/GlassDock.vue",
+      "new": "@glass/components/custom/dock/GlassDock.vue",
+      "depth": 4,
+      "kind": "dynamic"
+    },
+    {
+      "file": "tests/components/custom/dock/dock-orchestrator-single.detect.test.ts",
+      "line": 198,
+      "old": "../../../../src/components/custom/dock/DockLayerGroup.vue",
+      "new": "@glass/components/custom/dock/DockLayerGroup.vue",
+      "depth": 4,
+      "kind": "dynamic"
+    },
+    {
+      "file": "tests/components/custom/dock/dock-orchestrator-single.detect.test.ts",
+      "line": 200,
+      "old": "../../../../src/components/custom/dock/DockLayer.vue",
+      "new": "@glass/components/custom/dock/DockLayer.vue",
+      "depth": 4,
+      "kind": "dynamic"
+    },
+    {
+      "file": "tests/components/custom/dock/dock-orchestrator-single.detect.test.ts",
+      "line": 234,
+      "old": "../../../../src/components/custom/dock/composables/dockMorphContext",
+      "new": "@glass/components/custom/dock/composables/dockMorphContext",
+      "depth": 4,
+      "kind": "dynamic"
+    },
+    {
+      "file": "tests/components/custom/dock/dockLayerContext.readonly.test-d.ts",
+      "line": 18,
+      "old": "../../../../src/components/custom/dock/composables/dockLayerContext",
+      "new": "@glass/components/custom/dock/composables/dockLayerContext",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/dock/useDockContextSilhouette.test.ts",
+      "line": 18,
+      "old": "../../../../src/components/custom/dock/composables/useDockContextSilhouette",
+      "new": "@glass/components/custom/dock/composables/useDockContextSilhouette",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/dock/useDockFission.test.ts",
+      "line": 18,
+      "old": "../../../../src/components/custom/dock/composables/useDockFission",
+      "new": "@glass/components/custom/dock/composables/useDockFission",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/fourier-field/FourierField.smoke.test.ts",
+      "line": 28,
+      "old": "../../../../src/components/custom/fourier-field",
+      "new": "@glass/components/custom/fourier-field",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/fourier-field/FourierField.smoke.test.ts",
+      "line": 29,
+      "old": "../../../../src/composables/color",
+      "new": "@glass/composables/color",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/glass-panel/GlassPanel.test.ts",
+      "line": 4,
+      "old": "../../../../src/components/custom/glass-panel/index",
+      "new": "@glass/components/custom/glass-panel/index",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/goo-blob/resolveColor.test.ts",
+      "line": 6,
+      "old": "../../../../src/composables/color/index",
+      "new": "@glass/composables/color/index",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/handmark/HandMark.test.ts",
+      "line": 14,
+      "old": "../../../../src/components/custom/handmark/HandMark.vue",
+      "new": "@glass/components/custom/handmark/HandMark.vue",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/handmark/brush.test.ts",
+      "line": 15,
+      "old": "../../../../src/components/custom/handmark/brush",
+      "new": "@glass/components/custom/handmark/brush",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/handmark/brush.test.ts",
+      "line": 16,
+      "old": "../../../../src/components/custom/handmark/texture",
+      "new": "@glass/components/custom/handmark/texture",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/handmark/geometry.test.ts",
+      "line": 13,
+      "old": "../../../../src/components/custom/handmark/geometry",
+      "new": "@glass/components/custom/handmark/geometry",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/handmark/highlight.test.ts",
+      "line": 15,
+      "old": "../../../../src/components/custom/handmark/HandMark.vue",
+      "new": "@glass/components/custom/handmark/HandMark.vue",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/handmark/highlight.test.ts",
+      "line": 16,
+      "old": "../../../../src/components/custom/handmark/brush",
+      "new": "@glass/components/custom/handmark/brush",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/handmark/highlight.test.ts",
+      "line": 17,
+      "old": "../../../../src/components/custom/handmark/ink",
+      "new": "@glass/components/custom/handmark/ink",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/handmark/highlight.test.ts",
+      "line": 18,
+      "old": "../../../../src/components/custom/handmark/geometry",
+      "new": "@glass/components/custom/handmark/geometry",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/handmark/morphology.test.ts",
+      "line": 12,
+      "old": "../../../../src/components/custom/handmark/geometry",
+      "new": "@glass/components/custom/handmark/geometry",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/handmark/texture.test.ts",
+      "line": 10,
+      "old": "../../../../src/components/custom/handmark/brush",
+      "new": "@glass/components/custom/handmark/brush",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/handmark/texture.test.ts",
+      "line": 11,
+      "old": "../../../../src/components/custom/handmark/texture",
+      "new": "@glass/components/custom/handmark/texture",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/hover-popover/HoverPopover.model.test.ts",
+      "line": 14,
+      "old": "../../../../src/components/custom/hover-popover/HoverPopover.vue",
+      "new": "@glass/components/custom/hover-popover/HoverPopover.vue",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/hover-popover/HoverPopover.model.test.ts",
+      "line": 18,
+      "old": "../../../../src/components/custom/dock/composables/dockContext",
+      "new": "@glass/components/custom/dock/composables/dockContext",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/instrument-chassis/InstrumentChassis.phase-canon.test.ts",
+      "line": 7,
+      "old": "../../../../src/components/custom/instrument-chassis/index",
+      "new": "@glass/components/custom/instrument-chassis/index",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/instrument-chassis/InstrumentChassis.spine-variant.test.ts",
+      "line": 10,
+      "old": "../../../../src/components/custom/instrument-chassis/index",
+      "new": "@glass/components/custom/instrument-chassis/index",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/metric-badge/zero-value.test.ts",
+      "line": 4,
+      "old": "../../../../src/components/custom/metric-badge/index",
+      "new": "@glass/components/custom/metric-badge/index",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/metric-badge/zero-value.test.ts",
+      "line": 5,
+      "old": "../../../../src/components/ui/metric-pill/index",
+      "new": "@glass/components/ui/metric-pill/index",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/metric-badge/zero-value.test.ts",
+      "line": 6,
+      "old": "../../../../src/utils/coalesceMetric",
+      "new": "@glass/utils/coalesceMetric",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/metric-stack/MetricStack.test.ts",
+      "line": 4,
+      "old": "../../../../src/components/custom/metric-stack/index",
+      "new": "@glass/components/custom/metric-stack/index",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/scrolling-text/ScrollingText.test.ts",
+      "line": 4,
+      "old": "../../../../src/components/custom/scrolling-text/index",
+      "new": "@glass/components/custom/scrolling-text/index",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/search/fuzzySearchIndex.test.ts",
+      "line": 11,
+      "old": "../../../../src/components/custom/search/composables/fuzzySearchIndex",
+      "new": "@glass/components/custom/search/composables/fuzzySearchIndex",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/search/fuzzySearchIndex.test.ts",
+      "line": 12,
+      "old": "../../../../src/components/custom/search/composables/types",
+      "new": "@glass/components/custom/search/composables/types",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/search/search-contracts.test.ts",
+      "line": 4,
+      "old": "../../../../src/components/custom/search/FuzzySearch.vue",
+      "new": "@glass/components/custom/search/FuzzySearch.vue",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/search/search-contracts.test.ts",
+      "line": 5,
+      "old": "../../../../src/components/custom/search/composables/fuzzySearchIndex",
+      "new": "@glass/components/custom/search/composables/fuzzySearchIndex",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/search/search-contracts.test.ts",
+      "line": 6,
+      "old": "../../../../src/components/custom/search/composables/useFuzzySearch",
+      "new": "@glass/components/custom/search/composables/useFuzzySearch",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/search/search-contracts.test.ts",
+      "line": 7,
+      "old": "../../../../src/components/custom/search/composables/types",
+      "new": "@glass/components/custom/search/composables/types",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/search/useFuzzySearch.test.ts",
+      "line": 7,
+      "old": "../../../../src/components/custom/search/composables/useFuzzySearch",
+      "new": "@glass/components/custom/search/composables/useFuzzySearch",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/search/useFuzzySearch.test.ts",
+      "line": 8,
+      "old": "../../../../src/components/custom/search/composables/types",
+      "new": "@glass/components/custom/search/composables/types",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/tabs/segmented-tabs.test.ts",
+      "line": 3,
+      "old": "../../../../src/components/custom/tabs/SegmentedTabs.vue",
+      "new": "@glass/components/custom/tabs/SegmentedTabs.vue",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/timeline/aria-valuenow.test.ts",
+      "line": 4,
+      "old": "../../../../src/components/custom/timeline/GlassTimeline.vue",
+      "new": "@glass/components/custom/timeline/GlassTimeline.vue",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/timeline/continuous-stitched-gradient.test.ts",
+      "line": 4,
+      "old": "../../../../src/components/custom/timeline/GlassTimeline.vue",
+      "new": "@glass/components/custom/timeline/GlassTimeline.vue",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/timeline/continuous-stitched-gradient.test.ts",
+      "line": 8,
+      "old": "../../../../src/components/custom/timeline/geometry",
+      "new": "@glass/components/custom/timeline/geometry",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/timeline/continuous-stitched-gradient.test.ts",
+      "line": 9,
+      "old": "../../../../src/components/custom/timeline/types",
+      "new": "@glass/components/custom/timeline/types",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/timeline/continuous-structural-split.test.ts",
+      "line": 4,
+      "old": "../../../../src/components/custom/timeline/GlassTimeline.vue",
+      "new": "@glass/components/custom/timeline/GlassTimeline.vue",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/timeline/continuous-structural-split.test.ts",
+      "line": 5,
+      "old": "../../../../src/components/custom/hover-popover/HoverPopover.vue",
+      "new": "@glass/components/custom/hover-popover/HoverPopover.vue",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/custom/timeline/continuous-structural-split.test.ts",
+      "line": 6,
+      "old": "../../../../src/components/custom/timeline/types",
+      "new": "@glass/components/custom/timeline/types",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/ui/_shared/ModalOverlay.test.ts",
+      "line": 5,
+      "old": "../../../../src/components/ui/_shared/ModalOverlay.vue",
+      "new": "@glass/components/ui/_shared/ModalOverlay.vue",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/ui/button/Button.test.ts",
+      "line": 4,
+      "old": "../../../../src/components/ui/button/index",
+      "new": "@glass/components/ui/button/index",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/ui/card/Card.test.ts",
+      "line": 4,
+      "old": "../../../../src/components/ui/card/index",
+      "new": "@glass/components/ui/card/index",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/ui/card/Card.test.ts",
+      "line": 233,
+      "old": "../../../../src/components/ui/card/index",
+      "new": "@glass/components/ui/card/index",
+      "depth": 4,
+      "kind": "dynamic"
+    },
+    {
+      "file": "tests/components/ui/data-table/DataTable.test.ts",
+      "line": 4,
+      "old": "../../../../src/components/ui/data-table/DataTable.vue",
+      "new": "@glass/components/ui/data-table/DataTable.vue",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/ui/data-table/DataTable.test.ts",
+      "line": 5,
+      "old": "../../../../src/components/ui/data-table/types",
+      "new": "@glass/components/ui/data-table/types",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/ui/data-table/useDataTableResponsive.test.ts",
+      "line": 4,
+      "old": "../../../../src/components/ui/data-table/composables/useDataTableResponsive",
+      "new": "@glass/components/ui/data-table/composables/useDataTableResponsive",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/ui/data-table/useDataTableResponsive.test.ts",
+      "line": 5,
+      "old": "../../../../src/components/ui/data-table/types",
+      "new": "@glass/components/ui/data-table/types",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/ui/data-table/useDataTableRowIdentity.test.ts",
+      "line": 4,
+      "old": "../../../../src/components/ui/data-table/composables/useDataTableRowIdentity",
+      "new": "@glass/components/ui/data-table/composables/useDataTableRowIdentity",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/ui/dialog/dialog-show-close.test.ts",
+      "line": 13,
+      "old": "../../../../src/components/ui/dialog/index",
+      "new": "@glass/components/ui/dialog/index",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/ui/dialog/dialog-spring.test.ts",
+      "line": 14,
+      "old": "../../../../src/components/ui/dialog/index",
+      "new": "@glass/components/ui/dialog/index",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/ui/multi-select/MultiSelect.test.ts",
+      "line": 4,
+      "old": "../../../../src/components/ui/multi-select/MultiSelect.vue",
+      "new": "@glass/components/ui/multi-select/MultiSelect.vue",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/ui/progress/Progress.test.ts",
+      "line": 4,
+      "old": "../../../../src/components/ui/progress/index",
+      "new": "@glass/components/ui/progress/index",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/ui/reka-binding-idiom.test.ts",
+      "line": 16,
+      "old": "../../../src/components/ui/button/index",
+      "new": "@glass/components/ui/button/index",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/ui/reka-binding-idiom.test.ts",
+      "line": 17,
+      "old": "../../../src/components/ui/toggle/index",
+      "new": "@glass/components/ui/toggle/index",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/ui/reka-binding-idiom.test.ts",
+      "line": 18,
+      "old": "../../../src/components/ui/switch/index",
+      "new": "@glass/components/ui/switch/index",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/ui/reka-binding-idiom.test.ts",
+      "line": 19,
+      "old": "../../../src/components/ui/checkbox/index",
+      "new": "@glass/components/ui/checkbox/index",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/ui/reka-binding-idiom.test.ts",
+      "line": 24,
+      "old": "../../../src/components/ui/tags-input/index",
+      "new": "@glass/components/ui/tags-input/index",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/ui/reka-binding-idiom.test.ts",
+      "line": 29,
+      "old": "../../../src/components/ui/combobox/index",
+      "new": "@glass/components/ui/combobox/index",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/ui/reka-binding-idiom.test.ts",
+      "line": 30,
+      "old": "../../../src/components/ui/toast/use-toast",
+      "new": "@glass/components/ui/toast/use-toast",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/ui/sheet/sheet-spring.test.ts",
+      "line": 13,
+      "old": "../../../../src/components/ui/sheet/index",
+      "new": "@glass/components/ui/sheet/index",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/ui/skeleton/Skeleton.test.ts",
+      "line": 4,
+      "old": "../../../../src/components/ui/skeleton/index",
+      "new": "@glass/components/ui/skeleton/index",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/ui/slider/dock-hold-contract.test.ts",
+      "line": 25,
+      "old": "../../../../src/components/custom/dock",
+      "new": "@glass/components/custom/dock",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/ui/slider/dock-hold-contract.test.ts",
+      "line": 26,
+      "old": "../../../../src/components/ui/slider",
+      "new": "@glass/components/ui/slider",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components/ui/slider/dock-hold-contract.test.ts",
+      "line": 30,
+      "old": "../../../../src/components/custom/dock/composables/dockContext",
+      "new": "@glass/components/custom/dock/composables/dockContext",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components.smoke.spec.ts",
+      "line": 22,
+      "old": "../src/index",
+      "new": "@glass/index",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components.smoke.spec.ts",
+      "line": 23,
+      "old": "../src/forms",
+      "new": "@glass/forms",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components.smoke.spec.ts",
+      "line": 24,
+      "old": "../src/subpaths/controls",
+      "new": "@glass/subpaths/controls",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components.smoke.spec.ts",
+      "line": 25,
+      "old": "../src/subpaths/dock",
+      "new": "@glass/subpaths/dock",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components.smoke.spec.ts",
+      "line": 26,
+      "old": "../src/subpaths/metric-badge",
+      "new": "@glass/subpaths/metric-badge",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components.smoke.spec.ts",
+      "line": 27,
+      "old": "../src/subpaths/paper-backdrop",
+      "new": "@glass/subpaths/paper-backdrop",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components.smoke.spec.ts",
+      "line": 28,
+      "old": "../src/subpaths/pulse",
+      "new": "@glass/subpaths/pulse",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components.smoke.spec.ts",
+      "line": 29,
+      "old": "../src/subpaths/status-dot",
+      "new": "@glass/subpaths/status-dot",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components.smoke.spec.ts",
+      "line": 30,
+      "old": "../src/subpaths/tabs",
+      "new": "@glass/subpaths/tabs",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/components.smoke.spec.ts",
+      "line": 31,
+      "old": "../src/subpaths/toggle-chip",
+      "new": "@glass/subpaths/toggle-chip",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/color/use-accent-tone.test.ts",
+      "line": 8,
+      "old": "../../../src/composables/color",
+      "new": "@glass/composables/color",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/color/warm-catch-light.test.ts",
+      "line": 11,
+      "old": "../../../src/composables/color",
+      "new": "@glass/composables/color",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/color/warm-catch-light.test.ts",
+      "line": 12,
+      "old": "../../../src/components/custom/aurora/composables/uniformBridge",
+      "new": "@glass/components/custom/aurora/composables/uniformBridge",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/dark/darkModeSyncScript.test.ts",
+      "line": 5,
+      "old": "../../../src/composables/dark/darkModeSyncScript",
+      "new": "@glass/composables/dark/darkModeSyncScript",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/dom/useTokenColor.test.ts",
+      "line": 5,
+      "old": "../../../src/composables/dom/useTokenColor",
+      "new": "@glass/composables/dom/useTokenColor",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/glass/canvas2d/resolveCanvasColor.test.ts",
+      "line": 22,
+      "old": "../../../../src/composables/glass/canvas2d/resolveCanvasColor",
+      "new": "@glass/composables/glass/canvas2d/resolveCanvasColor",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/glass/canvas2d/useCanvas2D.test.ts",
+      "line": 12,
+      "old": "../../../../src/composables/glass/canvas2d/useCanvas2D",
+      "new": "@glass/composables/glass/canvas2d/useCanvas2D",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/glass/webgl/useWebGLCanvas.test.ts",
+      "line": 14,
+      "old": "../../../../src/composables/glass/webgl/useWebGLCanvas",
+      "new": "@glass/composables/glass/webgl/useWebGLCanvas",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/glass/webgl/useWebGLCanvas.test.ts",
+      "line": 19,
+      "old": "../../../../src/composables/glass/webgl/createCanvasLifecycle",
+      "new": "@glass/composables/glass/webgl/createCanvasLifecycle",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/glass/webgpu/useWebGPUCanvas.test.ts",
+      "line": 23,
+      "old": "../../../../src/composables/glass/webgpu/useGpuSubstrate",
+      "new": "@glass/composables/glass/webgpu/useGpuSubstrate",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/glass/webgpu/useWebGPUCanvas.test.ts",
+      "line": 28,
+      "old": "../../../../src/composables/glass/webgpu/useWebGPUCanvas",
+      "new": "@glass/composables/glass/webgpu/useWebGPUCanvas",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/motion/convergence.test.ts",
+      "line": 22,
+      "old": "../../../src/composables/motion/curves",
+      "new": "@glass/composables/motion/curves",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/motion/core/useHaptic.test.ts",
+      "line": 3,
+      "old": "../../../../src/composables/motion/core/useHaptic",
+      "new": "@glass/composables/motion/core/useHaptic",
+      "depth": 4,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/motion/curves.test.ts",
+      "line": 23,
+      "old": "../../../src/composables/motion/curves",
+      "new": "@glass/composables/motion/curves",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/motion/scroll-reveal-once.test.ts",
+      "line": 17,
+      "old": "../../../src/composables/motion/useStaggerReveal",
+      "new": "@glass/composables/motion/useStaggerReveal",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/motion/suite.test.ts",
+      "line": 16,
+      "old": "../../../src/composables/motion",
+      "new": "@glass/composables/motion",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/motion/text-highlight-home.test.ts",
+      "line": 22,
+      "old": "../../../src/composables/motion/core",
+      "new": "@glass/composables/motion/core",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/motion/useBloomUp.test.ts",
+      "line": 16,
+      "old": "../../../src/composables/motion/useBloomUp",
+      "new": "@glass/composables/motion/useBloomUp",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/motion/useCelebrationBurst.test.ts",
+      "line": 15,
+      "old": "../../../src/composables/motion/useCelebrationBurst",
+      "new": "@glass/composables/motion/useCelebrationBurst",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/motion/useCharStagger.test.ts",
+      "line": 9,
+      "old": "../../../src/composables/motion/useCharStagger",
+      "new": "@glass/composables/motion/useCharStagger",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/motion/usePointerVelocityField.test.ts",
+      "line": 2,
+      "old": "../../../src/composables/motion/usePointerVelocityField",
+      "new": "@glass/composables/motion/usePointerVelocityField",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/motion/useScrollTrigger.test.ts",
+      "line": 2,
+      "old": "../../../src/composables/motion/useScrollTrigger",
+      "new": "@glass/composables/motion/useScrollTrigger",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/motion/useScrollTrigger.test.ts",
+      "line": 3,
+      "old": "../../../src/composables/motion/useScrollTrigger",
+      "new": "@glass/composables/motion/useScrollTrigger",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/motion/useTextHighlight.test.ts",
+      "line": 2,
+      "old": "../../../src/composables/motion/useTextHighlight",
+      "new": "@glass/composables/motion/useTextHighlight",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/sidebar/useLazyLoader.test.ts",
+      "line": 4,
+      "old": "../../../src/composables/sidebar/useLazyLoader",
+      "new": "@glass/composables/sidebar/useLazyLoader",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/sidebar/useScrollTo.test.ts",
+      "line": 3,
+      "old": "../../../src/composables/sidebar/useScrollTo",
+      "new": "@glass/composables/sidebar/useScrollTo",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/sidebar/useScrollTo.test.ts",
+      "line": 4,
+      "old": "../../../src/composables/sidebar/types",
+      "new": "@glass/composables/sidebar/types",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/sidebar/useScrollTracker.test.ts",
+      "line": 4,
+      "old": "../../../src/composables/sidebar/useScrollTracker",
+      "new": "@glass/composables/sidebar/useScrollTracker",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/sidebar/useScrollTracker.test.ts",
+      "line": 5,
+      "old": "../../../src/composables/sidebar/useTreeIndex",
+      "new": "@glass/composables/sidebar/useTreeIndex",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/sidebar/useScrollTracker.test.ts",
+      "line": 7,
+      "old": "../../../src/composables/sidebar/types",
+      "new": "@glass/composables/sidebar/types",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/sortable/drag-ring-radius.test.ts",
+      "line": 3,
+      "old": "../../../src/composables/sortable/useSortable",
+      "new": "@glass/composables/sortable/useSortable",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/useAnimatedNumber.test.ts",
+      "line": 3,
+      "old": "../../src/composables/motion",
+      "new": "@glass/composables/motion",
+      "depth": 2,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/useCountup.test.ts",
+      "line": 6,
+      "old": "../../src/composables/motion/useCountup",
+      "new": "@glass/composables/motion/useCountup",
+      "depth": 2,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/useIntersectionPause.test.ts",
+      "line": 4,
+      "old": "../../src/composables/motion/core",
+      "new": "@glass/composables/motion/core",
+      "depth": 2,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/useInterval.test.ts",
+      "line": 3,
+      "old": "../../src/composables/reactive/useInterval",
+      "new": "@glass/composables/reactive/useInterval",
+      "depth": 2,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/useKeyboardShortcuts.test.ts",
+      "line": 8,
+      "old": "../../src/composables/keyboard",
+      "new": "@glass/composables/keyboard",
+      "depth": 2,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/useNumericTransition.test.ts",
+      "line": 10,
+      "old": "../../src/composables/motion/useNumericTransition",
+      "new": "@glass/composables/motion/useNumericTransition",
+      "depth": 2,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/usePrioritizedTask.test.ts",
+      "line": 5,
+      "old": "../../src/composables/motion/core",
+      "new": "@glass/composables/motion/core",
+      "depth": 2,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/useRAFLoop.test.ts",
+      "line": 3,
+      "old": "../../src/composables/motion/core",
+      "new": "@glass/composables/motion/core",
+      "depth": 2,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/useSpring.test.ts",
+      "line": 3,
+      "old": "../../src/composables/motion",
+      "new": "@glass/composables/motion",
+      "depth": 2,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/useSpringMount.test.ts",
+      "line": 13,
+      "old": "../../src/composables/motion",
+      "new": "@glass/composables/motion",
+      "depth": 2,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/useSpringPress.test.ts",
+      "line": 2,
+      "old": "../../src/composables/motion",
+      "new": "@glass/composables/motion",
+      "depth": 2,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/useTimer.test.ts",
+      "line": 3,
+      "old": "../../src/composables/reactive/useTimer",
+      "new": "@glass/composables/reactive/useTimer",
+      "depth": 2,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/useTokenColor.test.ts",
+      "line": 3,
+      "old": "../../src/composables/dom/useTokenColor",
+      "new": "@glass/composables/dom/useTokenColor",
+      "depth": 2,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/useTouchGate.test.ts",
+      "line": 2,
+      "old": "../../src/composables/dom/useTouchGate",
+      "new": "@glass/composables/dom/useTouchGate",
+      "depth": 2,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/useViewTransition.test.ts",
+      "line": 7,
+      "old": "../../src/composables/motion/core",
+      "new": "@glass/composables/motion/core",
+      "depth": 2,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/useYieldToMain.test.ts",
+      "line": 5,
+      "old": "../../src/composables/motion/core",
+      "new": "@glass/composables/motion/core",
+      "depth": 2,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/vReveal.test.ts",
+      "line": 5,
+      "old": "../../src/composables/motion/vReveal",
+      "new": "@glass/composables/motion/vReveal",
+      "depth": 2,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/virtual/virtualSectionLayout.test.ts",
+      "line": 9,
+      "old": "../../../src/composables/virtual/virtualSectionLayout",
+      "new": "@glass/composables/virtual/virtualSectionLayout",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables/virtual/virtualSectionLayout.test.ts",
+      "line": 10,
+      "old": "../../../src/composables/virtual/useWindowedStore",
+      "new": "@glass/composables/virtual/useWindowedStore",
+      "depth": 3,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables.smoke.spec.ts",
+      "line": 3,
+      "old": "../src/index",
+      "new": "@glass/index",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables.smoke.spec.ts",
+      "line": 7,
+      "old": "../src/motion-core",
+      "new": "@glass/motion-core",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables.smoke.spec.ts",
+      "line": 8,
+      "old": "../src/keyboard",
+      "new": "@glass/keyboard",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables.smoke.spec.ts",
+      "line": 9,
+      "old": "../src/infinite-scroll",
+      "new": "@glass/infinite-scroll",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables.smoke.spec.ts",
+      "line": 15,
+      "old": "../src/subpaths/search",
+      "new": "@glass/subpaths/search",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/composables.smoke.spec.ts",
+      "line": 21,
+      "old": "../src/sidebar",
+      "new": "@glass/sidebar",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/configurator-recursion.spec.ts",
+      "line": 48,
+      "old": "../src/components/custom/configurator",
+      "new": "@glass/components/custom/configurator",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/configurator-recursion.spec.ts",
+      "line": 49,
+      "old": "../src/components/custom/tabs",
+      "new": "@glass/components/custom/tabs",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/lifecycle-cleanup.spec.ts",
+      "line": 3,
+      "old": "../src/components/custom/expandable-container/ExpandableContainer.vue",
+      "new": "@glass/components/custom/expandable-container/ExpandableContainer.vue",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/lifecycle-cleanup.spec.ts",
+      "line": 4,
+      "old": "../src/components/custom/typewriter/TypewriterText.vue",
+      "new": "@glass/components/custom/typewriter/TypewriterText.vue",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/menuItemVariants.spec.ts",
+      "line": 2,
+      "old": "../src/components/ui/_shared/menuItemVariants",
+      "new": "@glass/components/ui/_shared/menuItemVariants",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 4,
+      "old": "../src/api",
+      "new": "@glass/api",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 5,
+      "old": "../src/subpaths/aurora",
+      "new": "@glass/subpaths/aurora",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 6,
+      "old": "../src/carousel",
+      "new": "@glass/carousel",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 7,
+      "old": "../src/subpaths/command",
+      "new": "@glass/subpaths/command",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 8,
+      "old": "../src/subpaths/confirm-dialog",
+      "new": "@glass/subpaths/confirm-dialog",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 9,
+      "old": "../src/subpaths/context-menu",
+      "new": "@glass/subpaths/context-menu",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 10,
+      "old": "../src/index",
+      "new": "@glass/index",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 11,
+      "old": "../src/subpaths/controls",
+      "new": "@glass/subpaths/controls",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 12,
+      "old": "../src/dark",
+      "new": "@glass/dark",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 13,
+      "old": "../src/subpaths/data-table",
+      "new": "@glass/subpaths/data-table",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 14,
+      "old": "../src/subpaths/dock",
+      "new": "@glass/subpaths/dock",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 15,
+      "old": "../src/subpaths/drawer",
+      "new": "@glass/subpaths/drawer",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 16,
+      "old": "../src/subpaths/dropdown-menu",
+      "new": "@glass/subpaths/dropdown-menu",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 17,
+      "old": "../src/subpaths/expandable-container",
+      "new": "@glass/subpaths/expandable-container",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 18,
+      "old": "../src/forms",
+      "new": "@glass/forms",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 19,
+      "old": "../src/subpaths/icon-tooltip",
+      "new": "@glass/subpaths/icon-tooltip",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 20,
+      "old": "../src/infinite-scroll",
+      "new": "@glass/infinite-scroll",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 21,
+      "old": "../src/keyboard",
+      "new": "@glass/keyboard",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 22,
+      "old": "../src/subpaths/labeled-field",
+      "new": "@glass/subpaths/labeled-field",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 23,
+      "old": "../src/subpaths/metric-badge",
+      "new": "@glass/subpaths/metric-badge",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 24,
+      "old": "../src/motion",
+      "new": "@glass/motion",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 25,
+      "old": "../src/motion-core",
+      "new": "@glass/motion-core",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 26,
+      "old": "../src/subpaths/paper-backdrop",
+      "new": "@glass/subpaths/paper-backdrop",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 27,
+      "old": "../src/subpaths/popover",
+      "new": "@glass/subpaths/popover",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 28,
+      "old": "../src/subpaths/pulse",
+      "new": "@glass/subpaths/pulse",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 29,
+      "old": "../src/subpaths/search",
+      "new": "@glass/subpaths/search",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 30,
+      "old": "../src/subpaths/select",
+      "new": "@glass/subpaths/select",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 31,
+      "old": "../src/sidebar",
+      "new": "@glass/sidebar",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 32,
+      "old": "../src/subpaths/sortable-list",
+      "new": "@glass/subpaths/sortable-list",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 33,
+      "old": "../src/subpaths/stacked-icons",
+      "new": "@glass/subpaths/stacked-icons",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 34,
+      "old": "../src/subpaths/status-dot",
+      "new": "@glass/subpaths/status-dot",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 35,
+      "old": "../src/subpaths/tabs",
+      "new": "@glass/subpaths/tabs",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 36,
+      "old": "../src/subpaths/timeline",
+      "new": "@glass/subpaths/timeline",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 37,
+      "old": "../src/subpaths/toggle-chip",
+      "new": "@glass/subpaths/toggle-chip",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/public-surface.spec.ts",
+      "line": 38,
+      "old": "../src/subpaths/typewriter",
+      "new": "@glass/subpaths/typewriter",
+      "depth": 1,
+      "kind": "static"
+    },
+    {
+      "file": "tests/scripts/demo-dock-nav.detect.test.ts",
+      "line": 24,
+      "old": "../../src/components/custom/dock",
+      "new": "@glass/components/custom/dock",
+      "depth": 2,
+      "kind": "static"
+    },
+    {
+      "file": "tests/scripts/demo-dock-nav.detect.test.ts",
+      "line": 30,
+      "old": "../../src/components/custom/dock",
+      "new": "@glass/components/custom/dock",
+      "depth": 2,
+      "kind": "static"
+    },
+    {
+      "file": "tests/utils/cn.test.ts",
+      "line": 3,
+      "old": "../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 2,
+      "kind": "static"
+    },
+    {
+      "file": "tests/utils/moveBefore.test.ts",
+      "line": 3,
+      "old": "../../src/utils/moveBefore",
+      "new": "@glass/utils/moveBefore",
+      "depth": 2,
+      "kind": "static"
+    }
+  ]
+}

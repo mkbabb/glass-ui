@@ -1,0 +1,3600 @@
+{
+  "summary": {
+    "totalRewrites": 492,
+    "byDepth": {
+      "2": 68,
+      "3": 384,
+      "4": 40
+    },
+    "filesTouched": 166,
+    "cssRefs_separateClass": 10,
+    "unmatchedComments": 0,
+    "unmatchedREVIEW_unsafeIfNonzero": 0,
+    "SAFE": true
+  },
+  "cssRefs": [
+    {
+      "file": "demo/demo.css",
+      "line": 20,
+      "text": "* resolvable relative path — `../src/fonts/<family>/<face>.woff2`. These"
+    },
+    {
+      "file": "demo/demo.css",
+      "line": 35,
+      "text": "src: url(\"../src/fonts/plus-jakarta-sans/plus-jakarta-sans-latin.woff2\")"
+    },
+    {
+      "file": "demo/demo.css",
+      "line": 48,
+      "text": "src: url(\"../src/fonts/plus-jakarta-sans/plus-jakarta-sans-latin-ext.woff2\")"
+    },
+    {
+      "file": "demo/demo.css",
+      "line": 63,
+      "text": "src: url(\"../src/fonts/fira-code/fira-code-latin.woff2\") format(\"woff2\");"
+    },
+    {
+      "file": "demo/demo.css",
+      "line": 75,
+      "text": "src: url(\"../src/fonts/fira-code/fira-code-latin-ext.woff2\")"
+    },
+    {
+      "file": "demo/demo.css",
+      "line": 95,
+      "text": "@source \"../src/components/**/*.vue\";"
+    },
+    {
+      "file": "demo/demo.css",
+      "line": 96,
+      "text": "@source \"../src/components/ui/_shared/*.ts\";"
+    },
+    {
+      "file": "demo/demo.css",
+      "line": 97,
+      "text": "@source \"../src/components/custom/**/*Variants.ts\";"
+    },
+    {
+      "file": "demo/demo.css",
+      "line": 108,
+      "text": "@import \"../src/styles/index.css\";"
+    },
+    {
+      "file": "demo/demo.css",
+      "line": 125,
+      "text": "@import \"../src/styles/glass/liquid-morph.css\";"
+    }
+  ],
+  "reviewHits": [],
+  "sampleEdits": [
+    {
+      "file": "demo/configurator/PresetEditor.vue",
+      "line": 9,
+      "old": "../../src/components/ui/sheet",
+      "new": "@glass/components/ui/sheet",
+      "depth": 2
+    },
+    {
+      "file": "demo/configurator/PresetEditor.vue",
+      "line": 10,
+      "old": "../../src/components/ui/slider",
+      "new": "@glass/components/ui/slider",
+      "depth": 2
+    },
+    {
+      "file": "demo/configurator/PresetEditor.vue",
+      "line": 11,
+      "old": "../../src/components/ui/switch",
+      "new": "@glass/components/ui/switch",
+      "depth": 2
+    },
+    {
+      "file": "demo/configurator/PresetEditor.vue",
+      "line": 18,
+      "old": "../../src/components/ui/select",
+      "new": "@glass/components/ui/select",
+      "depth": 2
+    },
+    {
+      "file": "demo/configurator/PresetEditor.vue",
+      "line": 19,
+      "old": "../../src/components/ui/label",
+      "new": "@glass/components/ui/label",
+      "depth": 2
+    },
+    {
+      "file": "demo/configurator/PresetEditor.vue",
+      "line": 20,
+      "old": "../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 2
+    },
+    {
+      "file": "demo/configurator/PresetEditor.vue",
+      "line": 24,
+      "old": "../../src/components/custom/tabs",
+      "new": "@glass/components/custom/tabs",
+      "depth": 2
+    },
+    {
+      "file": "demo/configurator/PresetEditor.vue",
+      "line": 28,
+      "old": "../../src/components/custom/configurator",
+      "new": "@glass/components/custom/configurator",
+      "depth": 2
+    },
+    {
+      "file": "demo/configurator/PresetEditor.vue",
+      "line": 29,
+      "old": "../../src/components/custom/controls",
+      "new": "@glass/components/custom/controls",
+      "depth": 2
+    },
+    {
+      "file": "demo/configurator/preset-editor/store.ts",
+      "line": 20,
+      "old": "../../../src/composables/dark",
+      "new": "@glass/composables/dark",
+      "depth": 3
+    },
+    {
+      "file": "demo/eggs/CommandPalette.vue",
+      "line": 18,
+      "old": "../../src/components/ui/command",
+      "new": "@glass/components/ui/command",
+      "depth": 2
+    },
+    {
+      "file": "demo/eggs/FRedrawOverlay.vue",
+      "line": 15,
+      "old": "../../src/components/custom/fourier-field",
+      "new": "@glass/components/custom/fourier-field",
+      "depth": 2
+    }
+  ],
+  "allEdits": [
+    {
+      "file": "demo/configurator/PresetEditor.vue",
+      "line": 9,
+      "old": "../../src/components/ui/sheet",
+      "new": "@glass/components/ui/sheet",
+      "depth": 2
+    },
+    {
+      "file": "demo/configurator/PresetEditor.vue",
+      "line": 10,
+      "old": "../../src/components/ui/slider",
+      "new": "@glass/components/ui/slider",
+      "depth": 2
+    },
+    {
+      "file": "demo/configurator/PresetEditor.vue",
+      "line": 11,
+      "old": "../../src/components/ui/switch",
+      "new": "@glass/components/ui/switch",
+      "depth": 2
+    },
+    {
+      "file": "demo/configurator/PresetEditor.vue",
+      "line": 18,
+      "old": "../../src/components/ui/select",
+      "new": "@glass/components/ui/select",
+      "depth": 2
+    },
+    {
+      "file": "demo/configurator/PresetEditor.vue",
+      "line": 19,
+      "old": "../../src/components/ui/label",
+      "new": "@glass/components/ui/label",
+      "depth": 2
+    },
+    {
+      "file": "demo/configurator/PresetEditor.vue",
+      "line": 20,
+      "old": "../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 2
+    },
+    {
+      "file": "demo/configurator/PresetEditor.vue",
+      "line": 24,
+      "old": "../../src/components/custom/tabs",
+      "new": "@glass/components/custom/tabs",
+      "depth": 2
+    },
+    {
+      "file": "demo/configurator/PresetEditor.vue",
+      "line": 28,
+      "old": "../../src/components/custom/configurator",
+      "new": "@glass/components/custom/configurator",
+      "depth": 2
+    },
+    {
+      "file": "demo/configurator/PresetEditor.vue",
+      "line": 29,
+      "old": "../../src/components/custom/controls",
+      "new": "@glass/components/custom/controls",
+      "depth": 2
+    },
+    {
+      "file": "demo/configurator/preset-editor/store.ts",
+      "line": 20,
+      "old": "../../../src/composables/dark",
+      "new": "@glass/composables/dark",
+      "depth": 3
+    },
+    {
+      "file": "demo/eggs/CommandPalette.vue",
+      "line": 18,
+      "old": "../../src/components/ui/command",
+      "new": "@glass/components/ui/command",
+      "depth": 2
+    },
+    {
+      "file": "demo/eggs/FRedrawOverlay.vue",
+      "line": 15,
+      "old": "../../src/components/custom/fourier-field",
+      "new": "@glass/components/custom/fourier-field",
+      "depth": 2
+    },
+    {
+      "file": "demo/eggs/FRedrawOverlay.vue",
+      "line": 16,
+      "old": "../../src/components/custom/fourier-field",
+      "new": "@glass/components/custom/fourier-field",
+      "depth": 2
+    },
+    {
+      "file": "demo/eggs/KonamiAurora.vue",
+      "line": 11,
+      "old": "../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 2
+    },
+    {
+      "file": "demo/eggs/NotFound.vue",
+      "line": 6,
+      "old": "../../src/components/custom/constellation",
+      "new": "@glass/components/custom/constellation",
+      "depth": 2
+    },
+    {
+      "file": "demo/eggs/NotFound.vue",
+      "line": 7,
+      "old": "../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 2
+    },
+    {
+      "file": "demo/layout/AppShell.vue",
+      "line": 11,
+      "old": "../../src/components/ui/dialog",
+      "new": "@glass/components/ui/dialog",
+      "depth": 2
+    },
+    {
+      "file": "demo/layout/AppShell.vue",
+      "line": 12,
+      "old": "../../src/components/custom/paper-backdrop",
+      "new": "@glass/components/custom/paper-backdrop",
+      "depth": 2
+    },
+    {
+      "file": "demo/layout/AppShell.vue",
+      "line": 13,
+      "old": "../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 2
+    },
+    {
+      "file": "demo/layout/AppShell.vue",
+      "line": 14,
+      "old": "../../src/components/ui/switch",
+      "new": "@glass/components/ui/switch",
+      "depth": 2
+    },
+    {
+      "file": "demo/layout/AppShell.vue",
+      "line": 15,
+      "old": "../../src/components/ui/card",
+      "new": "@glass/components/ui/card",
+      "depth": 2
+    },
+    {
+      "file": "demo/layout/AppShell.vue",
+      "line": 28,
+      "old": "../../src/components/custom/dock",
+      "new": "@glass/components/custom/dock",
+      "depth": 2
+    },
+    {
+      "file": "demo/layout/AppShell.vue",
+      "line": 29,
+      "old": "../../src/components/ui/skeleton",
+      "new": "@glass/components/ui/skeleton",
+      "depth": 2
+    },
+    {
+      "file": "demo/layout/AppShell.vue",
+      "line": 30,
+      "old": "../../src/composables/motion/useBloomUp",
+      "new": "@glass/composables/motion/useBloomUp",
+      "depth": 2
+    },
+    {
+      "file": "demo/layout/AppShell.vue",
+      "line": 31,
+      "old": "../../src/composables/motion/useViewTransition",
+      "new": "@glass/composables/motion/useViewTransition",
+      "depth": 2
+    },
+    {
+      "file": "demo/layout/AppShell.vue",
+      "line": 37,
+      "old": "../../src/composables/keyboard",
+      "new": "@glass/composables/keyboard",
+      "depth": 2
+    },
+    {
+      "file": "demo/layout/BottomDock.vue",
+      "line": 33,
+      "old": "../../src/components/custom/dock",
+      "new": "@glass/components/custom/dock",
+      "depth": 2
+    },
+    {
+      "file": "demo/layout/BottomDock.vue",
+      "line": 41,
+      "old": "../../src/components/ui/sheet",
+      "new": "@glass/components/ui/sheet",
+      "depth": 2
+    },
+    {
+      "file": "demo/layout/BottomDock.vue",
+      "line": 47,
+      "old": "../../src/components/ui/tooltip",
+      "new": "@glass/components/ui/tooltip",
+      "depth": 2
+    },
+    {
+      "file": "demo/layout/BottomDock.vue",
+      "line": 48,
+      "old": "../../src/components/custom/fading-scroll",
+      "new": "@glass/components/custom/fading-scroll",
+      "depth": 2
+    },
+    {
+      "file": "demo/layout/SidebarDock.vue",
+      "line": 25,
+      "old": "../../src/components/custom/dock",
+      "new": "@glass/components/custom/dock",
+      "depth": 2
+    },
+    {
+      "file": "demo/layout/SidebarDock.vue",
+      "line": 31,
+      "old": "../../src/components/ui/tooltip",
+      "new": "@glass/components/ui/tooltip",
+      "depth": 2
+    },
+    {
+      "file": "demo/layout/SidebarDock.vue",
+      "line": 33,
+      "old": "../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/Code.vue",
+      "line": 21,
+      "old": "../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/CodeBlock.vue",
+      "line": 24,
+      "old": "../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/SectionLanding.vue",
+      "line": 12,
+      "old": "../../src/components/ui/tooltip",
+      "new": "@glass/components/ui/tooltip",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/SectionLanding.vue",
+      "line": 13,
+      "old": "../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/SectionLanding.vue",
+      "line": 14,
+      "old": "../../src/components/ui/card",
+      "new": "@glass/components/ui/card",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/SectionLanding.vue",
+      "line": 15,
+      "old": "../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/SectionLanding.vue",
+      "line": 16,
+      "old": "../../src/components/ui/slider",
+      "new": "@glass/components/ui/slider",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/SectionLanding.vue",
+      "line": 17,
+      "old": "../../src/components/ui/switch",
+      "new": "@glass/components/ui/switch",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/SectionLanding.vue",
+      "line": 18,
+      "old": "../../src/components/custom/metric-badge",
+      "new": "@glass/components/custom/metric-badge",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/SectionLanding.vue",
+      "line": 19,
+      "old": "../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/SectionPreviewCard.vue",
+      "line": 22,
+      "old": "../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/SectionPreviewCard.vue",
+      "line": 23,
+      "old": "../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/SectionPreviewCard.vue",
+      "line": 24,
+      "old": "../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/ShowcaseFrame.vue",
+      "line": 37,
+      "old": "../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/StoryHeader.vue",
+      "line": 35,
+      "old": "../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/StoryHero.vue",
+      "line": 16,
+      "old": "../../src/components/ui/card",
+      "new": "@glass/components/ui/card",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/StoryHero.vue",
+      "line": 17,
+      "old": "../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/StoryHero.vue",
+      "line": 18,
+      "old": "../../src/components/custom/constellation",
+      "new": "@glass/components/custom/constellation",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/StoryHero.vue",
+      "line": 19,
+      "old": "../../src/components/custom/fourier-field",
+      "new": "@glass/components/custom/fourier-field",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/StoryHero.vue",
+      "line": 20,
+      "old": "../../src/components/custom/paper-grid",
+      "new": "@glass/components/custom/paper-grid",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/StoryHero.vue",
+      "line": 22,
+      "old": "../../src/composables/color",
+      "new": "@glass/composables/color",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/StoryHero.vue",
+      "line": 23,
+      "old": "../../src/composables/dom/useTokenColor",
+      "new": "@glass/composables/dom/useTokenColor",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/StoryHero.vue",
+      "line": 24,
+      "old": "../../src/composables/dark/useGlobalDark",
+      "new": "@glass/composables/dark/useGlobalDark",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/StoryHero.vue",
+      "line": 25,
+      "old": "../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/StoryPage.vue",
+      "line": 3,
+      "old": "../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/StoryPage.vue",
+      "line": 4,
+      "old": "../../src/components/ui/tooltip",
+      "new": "@glass/components/ui/tooltip",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/StoryPlayButton.vue",
+      "line": 19,
+      "old": "../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/StoryPlayButton.vue",
+      "line": 20,
+      "old": "../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/StorySection.vue",
+      "line": 34,
+      "old": "../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/StorySectionHeader.vue",
+      "line": 25,
+      "old": "../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/StorySectionHeader.vue",
+      "line": 26,
+      "old": "../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/StorySectionHeader.vue",
+      "line": 27,
+      "old": "../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/TokenLadder.vue",
+      "line": 8,
+      "old": "../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/_chassis/DemoFrame.vue",
+      "line": 38,
+      "old": "../../../src/components/ui/card",
+      "new": "@glass/components/ui/card",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/aurora/AuroraConfigDock.vue",
+      "line": 4,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/aurora/AuroraConfigDock.vue",
+      "line": 5,
+      "old": "../../../src/components/custom/configurator",
+      "new": "@glass/components/custom/configurator",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/aurora/AuroraConfigDock.vue",
+      "line": 6,
+      "old": "../../../src/components/custom/fading-scroll",
+      "new": "@glass/components/custom/fading-scroll",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/aurora/AuroraConfigDock.vue",
+      "line": 12,
+      "old": "../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/aurora/AuroraStage.vue",
+      "line": 3,
+      "old": "../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/aurora/AuroraStage.vue",
+      "line": 4,
+      "old": "../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/aurora/NucleiOverlay.vue",
+      "line": 3,
+      "old": "../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/aurora/OklchStopRow.vue",
+      "line": 4,
+      "old": "../../../src/components/ui/slider",
+      "new": "@glass/components/ui/slider",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/aurora/OklchStopRow.vue",
+      "line": 5,
+      "old": "../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/aurora/PresetPickerRow.vue",
+      "line": 2,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/aurora/PresetPickerRow.vue",
+      "line": 3,
+      "old": "../../../src/components/custom/fading-scroll",
+      "new": "@glass/components/custom/fading-scroll",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/aurora/config/CompositionLayer.vue",
+      "line": 2,
+      "old": "../../../../src/components/custom/tabs",
+      "new": "@glass/components/custom/tabs",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/config/CompositionLayer.vue",
+      "line": 3,
+      "old": "../../../../src/components/custom/labeled-field",
+      "new": "@glass/components/custom/labeled-field",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/config/CompositionLayer.vue",
+      "line": 4,
+      "old": "../../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/config/FlowLayer.vue",
+      "line": 3,
+      "old": "../../../../src/components/custom/tabs",
+      "new": "@glass/components/custom/tabs",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/config/FlowLayer.vue",
+      "line": 4,
+      "old": "../../../../src/components/custom/labeled-field",
+      "new": "@glass/components/custom/labeled-field",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/config/FlowLayer.vue",
+      "line": 5,
+      "old": "../../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/config/NucleiLayer.vue",
+      "line": 3,
+      "old": "../../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/config/NucleiLayer.vue",
+      "line": 4,
+      "old": "../../../../src/components/custom/labeled-field",
+      "new": "@glass/components/custom/labeled-field",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/config/NucleiLayer.vue",
+      "line": 5,
+      "old": "../../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/config/NucleiLayer.vue",
+      "line": 6,
+      "old": "../../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/config/PaletteLayer.vue",
+      "line": 4,
+      "old": "../../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/config/PaletteLayer.vue",
+      "line": 5,
+      "old": "../../../../src/components/ui/toggle-group",
+      "new": "@glass/components/ui/toggle-group",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/config/PaletteLayer.vue",
+      "line": 6,
+      "old": "../../../../src/components/custom/sortable-list",
+      "new": "@glass/components/custom/sortable-list",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/config/PaletteLayer.vue",
+      "line": 7,
+      "old": "../../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/config/PaletteLayer.vue",
+      "line": 8,
+      "old": "../../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/config/TextureLayer.vue",
+      "line": 3,
+      "old": "../../../../src/components/custom/tabs",
+      "new": "@glass/components/custom/tabs",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/config/TextureLayer.vue",
+      "line": 4,
+      "old": "../../../../src/components/custom/labeled-field",
+      "new": "@glass/components/custom/labeled-field",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/config/TextureLayer.vue",
+      "line": 8,
+      "old": "../../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/config/options.ts",
+      "line": 6,
+      "old": "../../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/config/usePaletteStops.ts",
+      "line": 2,
+      "old": "../../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/config/usePaletteStops.ts",
+      "line": 3,
+      "old": "../../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/presets.ts",
+      "line": 14,
+      "old": "../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/aurora/presets.ts",
+      "line": 15,
+      "old": "../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/aurora/sections/AuroraColorSection.vue",
+      "line": 4,
+      "old": "../../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/sections/AuroraColorSection.vue",
+      "line": 5,
+      "old": "../../../../src/components/ui/toggle-group",
+      "new": "@glass/components/ui/toggle-group",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/sections/AuroraColorSection.vue",
+      "line": 10,
+      "old": "../../../../src/components/custom/labeled-field",
+      "new": "@glass/components/custom/labeled-field",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/sections/AuroraColorSection.vue",
+      "line": 11,
+      "old": "../../../../src/components/custom/sortable-list",
+      "new": "@glass/components/custom/sortable-list",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/sections/AuroraColorSection.vue",
+      "line": 12,
+      "old": "../../../../src/components/custom/color-swatch",
+      "new": "@glass/components/custom/color-swatch",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/sections/AuroraColorSection.vue",
+      "line": 17,
+      "old": "../../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/sections/AuroraColorSection.vue",
+      "line": 22,
+      "old": "../../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/sections/AuroraCompositionSection.vue",
+      "line": 6,
+      "old": "../../../../src/components/custom/labeled-field",
+      "new": "@glass/components/custom/labeled-field",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/sections/AuroraCompositionSection.vue",
+      "line": 11,
+      "old": "../../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/sections/AuroraMotionSection.vue",
+      "line": 6,
+      "old": "../../../../src/components/custom/labeled-field",
+      "new": "@glass/components/custom/labeled-field",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/sections/AuroraMotionSection.vue",
+      "line": 11,
+      "old": "../../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/aurora/usePresetThumbnails.ts",
+      "line": 5,
+      "old": "../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/aurora-hero.ts",
+      "line": 22,
+      "old": "../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/aurora-hero.ts",
+      "line": 23,
+      "old": "../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/aurora-hero.ts",
+      "line": 24,
+      "old": "../../src/composables/color",
+      "new": "@glass/composables/color",
+      "depth": 2
+    },
+    {
+      "file": "demo/stories/compositions/auth-shell.vue",
+      "line": 5,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/auth-shell.vue",
+      "line": 6,
+      "old": "../../../src/components/ui/checkbox",
+      "new": "@glass/components/ui/checkbox",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/auth-shell.vue",
+      "line": 7,
+      "old": "../../../src/components/ui/input",
+      "new": "@glass/components/ui/input",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/auth-shell.vue",
+      "line": 8,
+      "old": "../../../src/components/ui/label",
+      "new": "@glass/components/ui/label",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/auth-shell.vue",
+      "line": 9,
+      "old": "../../../src/components/ui/separator",
+      "new": "@glass/components/ui/separator",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/auth-shell.vue",
+      "line": 10,
+      "old": "../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/auth-shell.vue",
+      "line": 11,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/auth-shell.vue",
+      "line": 12,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/configurator.vue",
+      "line": 18,
+      "old": "../../../src/components/custom/configurator",
+      "new": "@glass/components/custom/configurator",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/configurator.vue",
+      "line": 23,
+      "old": "../../../src/components/custom/labeled-field",
+      "new": "@glass/components/custom/labeled-field",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/drawer-live-behind.vue",
+      "line": 28,
+      "old": "../../../src/components/ui/drawer",
+      "new": "@glass/components/ui/drawer",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/drawer-live-behind.vue",
+      "line": 29,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/empty-states.vue",
+      "line": 12,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/empty-states.vue",
+      "line": 13,
+      "old": "../../../src/components/ui/card",
+      "new": "@glass/components/ui/card",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/empty-states.vue",
+      "line": 14,
+      "old": "../../../src/components/custom/goo-blob",
+      "new": "@glass/components/custom/goo-blob",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/empty-states.vue",
+      "line": 15,
+      "old": "../../../src/components/custom/goo-blob/types",
+      "new": "@glass/components/custom/goo-blob/types",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/empty-states.vue",
+      "line": 16,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/empty-states.vue",
+      "line": 17,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/form-validation.vue",
+      "line": 7,
+      "old": "../../../src/composables/dom/useUserInvalidAria",
+      "new": "@glass/composables/dom/useUserInvalidAria",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/form-validation.vue",
+      "line": 8,
+      "old": "../../../src/components/ui/input",
+      "new": "@glass/components/ui/input",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/form-validation.vue",
+      "line": 9,
+      "old": "../../../src/components/ui/textarea",
+      "new": "@glass/components/ui/textarea",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/form-validation.vue",
+      "line": 10,
+      "old": "../../../src/components/ui/label",
+      "new": "@glass/components/ui/label",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/form-validation.vue",
+      "line": 11,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/form-validation.vue",
+      "line": 12,
+      "old": "../../../src/components/custom/labeled-field",
+      "new": "@glass/components/custom/labeled-field",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/gate-pattern.vue",
+      "line": 24,
+      "old": "../../../src/components/ui/card",
+      "new": "@glass/components/ui/card",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/gate-pattern.vue",
+      "line": 31,
+      "old": "../../../src/components/ui/dialog",
+      "new": "@glass/components/ui/dialog",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/gate-pattern.vue",
+      "line": 32,
+      "old": "../../../src/components/ui/input",
+      "new": "@glass/components/ui/input",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/gate-pattern.vue",
+      "line": 33,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/icon-tooltip.vue",
+      "line": 10,
+      "old": "../../../src/components/custom/icon-tooltip",
+      "new": "@glass/components/custom/icon-tooltip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/instrument-chassis.vue",
+      "line": 8,
+      "old": "../../../src/components/custom/instrument-chassis",
+      "new": "@glass/components/custom/instrument-chassis",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/instrument-chassis.vue",
+      "line": 9,
+      "old": "../../../src/components/custom/metric-badge",
+      "new": "@glass/components/custom/metric-badge",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/instrument-chassis.vue",
+      "line": 10,
+      "old": "../../../src/components/custom/dock",
+      "new": "@glass/components/custom/dock",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/labeled-field.vue",
+      "line": 16,
+      "old": "../../../src/components/custom/labeled-field",
+      "new": "@glass/components/custom/labeled-field",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/labeled-field.vue",
+      "line": 17,
+      "old": "../../../src/components/ui/input",
+      "new": "@glass/components/ui/input",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/labeled-field.vue",
+      "line": 18,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/math-paper.vue",
+      "line": 3,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/settings.vue",
+      "line": 4,
+      "old": "../../../src/components/ui/card",
+      "new": "@glass/components/ui/card",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/settings.vue",
+      "line": 5,
+      "old": "../../../src/components/ui/separator",
+      "new": "@glass/components/ui/separator",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/settings.vue",
+      "line": 11,
+      "old": "../../../src/components/custom/labeled-field",
+      "new": "@glass/components/custom/labeled-field",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/compositions/settings.vue",
+      "line": 12,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/accordion.vue",
+      "line": 9,
+      "old": "../../../src/components/ui/accordion",
+      "new": "@glass/components/ui/accordion",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/accordion.vue",
+      "line": 10,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/collapsible.vue",
+      "line": 9,
+      "old": "../../../src/components/ui/collapsible",
+      "new": "@glass/components/ui/collapsible",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/collapsible.vue",
+      "line": 10,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/collapsible.vue",
+      "line": 11,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/command.vue",
+      "line": 18,
+      "old": "../../../src/components/ui/command",
+      "new": "@glass/components/ui/command",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/command.vue",
+      "line": 19,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/context-menu.vue",
+      "line": 16,
+      "old": "../../../src/components/ui/context-menu",
+      "new": "@glass/components/ui/context-menu",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/context-menu.vue",
+      "line": 17,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/dialog.vue",
+      "line": 14,
+      "old": "../../../src/components/ui/dialog",
+      "new": "@glass/components/ui/dialog",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/dialog.vue",
+      "line": 15,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/dialog.vue",
+      "line": 16,
+      "old": "../../../src/components/ui/input",
+      "new": "@glass/components/ui/input",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/dialog.vue",
+      "line": 17,
+      "old": "../../../src/components/ui/label",
+      "new": "@glass/components/ui/label",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/dialog.vue",
+      "line": 18,
+      "old": "../../../src/components/custom/confirm-dialog",
+      "new": "@glass/components/custom/confirm-dialog",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/dialog.vue",
+      "line": 19,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/drawer.vue",
+      "line": 14,
+      "old": "../../../src/components/ui/drawer",
+      "new": "@glass/components/ui/drawer",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/drawer.vue",
+      "line": 15,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/drawer.vue",
+      "line": 16,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/dropdown-menu.vue",
+      "line": 20,
+      "old": "../../../src/components/ui/dropdown-menu",
+      "new": "@glass/components/ui/dropdown-menu",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/dropdown-menu.vue",
+      "line": 21,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/dropdown-menu.vue",
+      "line": 22,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/expandable-container.vue",
+      "line": 12,
+      "old": "../../../src/components/custom/expandable-container",
+      "new": "@glass/components/custom/expandable-container",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/expandable-container.vue",
+      "line": 13,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/hover-card.vue",
+      "line": 8,
+      "old": "../../../src/components/ui/hover-card",
+      "new": "@glass/components/ui/hover-card",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/hover-card.vue",
+      "line": 9,
+      "old": "../../../src/components/ui/avatar",
+      "new": "@glass/components/ui/avatar",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/hover-card.vue",
+      "line": 10,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/hover-card.vue",
+      "line": 11,
+      "old": "../../../src/components/custom/icon-tooltip",
+      "new": "@glass/components/custom/icon-tooltip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/hover-card.vue",
+      "line": 12,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/hover-popover.vue",
+      "line": 3,
+      "old": "../../../src/components/custom/hover-popover",
+      "new": "@glass/components/custom/hover-popover",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/hover-popover.vue",
+      "line": 4,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/hover-popover.vue",
+      "line": 5,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/popover.vue",
+      "line": 8,
+      "old": "../../../src/components/ui/popover",
+      "new": "@glass/components/ui/popover",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/popover.vue",
+      "line": 9,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/popover.vue",
+      "line": 10,
+      "old": "../../../src/components/ui/input",
+      "new": "@glass/components/ui/input",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/popover.vue",
+      "line": 11,
+      "old": "../../../src/components/ui/label",
+      "new": "@glass/components/ui/label",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/popover.vue",
+      "line": 12,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/sheet.vue",
+      "line": 13,
+      "old": "../../../src/components/ui/sheet",
+      "new": "@glass/components/ui/sheet",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/sheet.vue",
+      "line": 14,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/sheet.vue",
+      "line": 15,
+      "old": "../../../src/components/ui/input",
+      "new": "@glass/components/ui/input",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/sheet.vue",
+      "line": 16,
+      "old": "../../../src/components/ui/label",
+      "new": "@glass/components/ui/label",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/sheet.vue",
+      "line": 17,
+      "old": "../../../src/components/ui/textarea",
+      "new": "@glass/components/ui/textarea",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/sheet.vue",
+      "line": 18,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/spa-view.vue",
+      "line": 10,
+      "old": "../../../src/components/custom/spa-view",
+      "new": "@glass/components/custom/spa-view",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/spa-view.vue",
+      "line": 11,
+      "old": "../../../src/components/custom/tabs",
+      "new": "@glass/components/custom/tabs",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/tooltip.vue",
+      "line": 9,
+      "old": "../../../src/components/ui/tooltip",
+      "new": "@glass/components/ui/tooltip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/tooltip.vue",
+      "line": 10,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/containers/tooltip.vue",
+      "line": 11,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/avatar.vue",
+      "line": 3,
+      "old": "../../../src/components/ui/avatar",
+      "new": "@glass/components/ui/avatar",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/avatar.vue",
+      "line": 4,
+      "old": "../../../src/components/custom/stacked-icons",
+      "new": "@glass/components/custom/stacked-icons",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/avatar.vue",
+      "line": 5,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/data-table.vue",
+      "line": 5,
+      "old": "../../../src/components/ui/data-table",
+      "new": "@glass/components/ui/data-table",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/data-table.vue",
+      "line": 9,
+      "old": "../../../src/components/ui/data-table",
+      "new": "@glass/components/ui/data-table",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/data-table.vue",
+      "line": 10,
+      "old": "../../../src/components/ui/input",
+      "new": "@glass/components/ui/input",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/data-table.vue",
+      "line": 11,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/data-table.vue",
+      "line": 12,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/infinite-scroll.vue",
+      "line": 5,
+      "old": "../../../src/components/custom/infinite-scroll",
+      "new": "@glass/components/custom/infinite-scroll",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/infinite-scroll.vue",
+      "line": 6,
+      "old": "../../../src/components/ui/badge",
+      "new": "@glass/components/ui/badge",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/infinite-scroll.vue",
+      "line": 7,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/metric-cell.vue",
+      "line": 5,
+      "old": "../../../src/components/custom/metric-cell",
+      "new": "@glass/components/custom/metric-cell",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/metric-cell.vue",
+      "line": 6,
+      "old": "../../../src/composables/motion/useCountup",
+      "new": "@glass/composables/motion/useCountup",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/metric-stack.vue",
+      "line": 4,
+      "old": "../../../src/components/custom/metric-stack",
+      "new": "@glass/components/custom/metric-stack",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/scrolling-text.vue",
+      "line": 4,
+      "old": "../../../src/components/custom/scrolling-text",
+      "new": "@glass/components/custom/scrolling-text",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/search.vue",
+      "line": 21,
+      "old": "../../../src/components/custom/search",
+      "new": "@glass/components/custom/search",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/search.vue",
+      "line": 26,
+      "old": "../../../src/components/custom/search",
+      "new": "@glass/components/custom/search",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/search.vue",
+      "line": 27,
+      "old": "../../../src/components/ui/badge",
+      "new": "@glass/components/ui/badge",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/search.vue",
+      "line": 28,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/search.vue",
+      "line": 35,
+      "old": "../../../src/components/ui/card",
+      "new": "@glass/components/ui/card",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/search.vue",
+      "line": 36,
+      "old": "../../../src/components/ui/input",
+      "new": "@glass/components/ui/input",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/sortable-list.vue",
+      "line": 10,
+      "old": "../../../src/components/custom/sortable-list",
+      "new": "@glass/components/custom/sortable-list",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/sortable-list.vue",
+      "line": 11,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/table.vue",
+      "line": 12,
+      "old": "../../../src/components/ui/table",
+      "new": "@glass/components/ui/table",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/table.vue",
+      "line": 13,
+      "old": "../../../src/components/ui/badge",
+      "new": "@glass/components/ui/badge",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/table.vue",
+      "line": 14,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/table.vue",
+      "line": 15,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/tags-input.vue",
+      "line": 10,
+      "old": "../../../src/components/ui/tags-input",
+      "new": "@glass/components/ui/tags-input",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/tags-input.vue",
+      "line": 11,
+      "old": "../../../src/components/ui/label",
+      "new": "@glass/components/ui/label",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/tags-input.vue",
+      "line": 12,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/timeline-continuous.vue",
+      "line": 4,
+      "old": "../../../src/components/custom/timeline",
+      "new": "@glass/components/custom/timeline",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/timeline-continuous.vue",
+      "line": 8,
+      "old": "../../../src/components/custom/timeline",
+      "new": "@glass/components/custom/timeline",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/timeline-continuous.vue",
+      "line": 9,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/timeline-segmented.vue",
+      "line": 4,
+      "old": "../../../src/components/custom/timeline",
+      "new": "@glass/components/custom/timeline",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/timeline-segmented.vue",
+      "line": 8,
+      "old": "../../../src/components/custom/timeline",
+      "new": "@glass/components/custom/timeline",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/timeline-segmented.vue",
+      "line": 9,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/timeline.vue",
+      "line": 4,
+      "old": "../../../src/components/custom/timeline",
+      "new": "@glass/components/custom/timeline",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/timeline.vue",
+      "line": 5,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/virtual-section.vue",
+      "line": 8,
+      "old": "../../../src/composables/virtual",
+      "new": "@glass/composables/virtual",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/virtual-section.vue",
+      "line": 9,
+      "old": "../../../src/components/ui/badge",
+      "new": "@glass/components/ui/badge",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/data/virtual-section.vue",
+      "line": 10,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/display/badge.vue",
+      "line": 4,
+      "old": "../../../src/components/ui/badge",
+      "new": "@glass/components/ui/badge",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/display/badge.vue",
+      "line": 5,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/display/badge.vue",
+      "line": 6,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/display/buttons.vue",
+      "line": 20,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/display/buttons.vue",
+      "line": 21,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/display/buttons.vue",
+      "line": 22,
+      "old": "../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/display/card.vue",
+      "line": 18,
+      "old": "../../../src/components/ui/card",
+      "new": "@glass/components/ui/card",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/display/card.vue",
+      "line": 19,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/display/card.vue",
+      "line": 20,
+      "old": "../../../src/components/ui/switch",
+      "new": "@glass/components/ui/switch",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/display/card.vue",
+      "line": 21,
+      "old": "../../../src/components/ui/label",
+      "new": "@glass/components/ui/label",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/display/card.vue",
+      "line": 25,
+      "old": "../../../src/subpaths/aurora",
+      "new": "@glass/subpaths/aurora",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/display/dark-mode-toggle.vue",
+      "line": 12,
+      "old": "../../../src/subpaths/controls",
+      "new": "@glass/subpaths/controls",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/display/dark-mode-toggle.vue",
+      "line": 13,
+      "old": "../../../src/components/custom/dock",
+      "new": "@glass/components/custom/dock",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/display/metric-badge.vue",
+      "line": 3,
+      "old": "../../../src/components/custom/metric-badge",
+      "new": "@glass/components/custom/metric-badge",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/display/metric-pill.vue",
+      "line": 3,
+      "old": "../../../src/components/ui/metric-pill",
+      "new": "@glass/components/ui/metric-pill",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/display/metric-pill.vue",
+      "line": 4,
+      "old": "../../../src/components/custom/dock",
+      "new": "@glass/components/custom/dock",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/display/pulse.vue",
+      "line": 4,
+      "old": "../../../src/components/custom/pulse",
+      "new": "@glass/components/custom/pulse",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/display/section.vue",
+      "line": 4,
+      "old": "../../../src/components/ui/section",
+      "new": "@glass/components/ui/section",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/display/separator.vue",
+      "line": 4,
+      "old": "../../../src/components/ui/separator",
+      "new": "@glass/components/ui/separator",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/display/separator.vue",
+      "line": 5,
+      "old": "../../../src/components/ui/card",
+      "new": "@glass/components/ui/card",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/display/stacked-icons.vue",
+      "line": 7,
+      "old": "../../../src/subpaths/stacked-icons",
+      "new": "@glass/subpaths/stacked-icons",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/display/status-dot.vue",
+      "line": 4,
+      "old": "../../../src/components/custom/status-dot",
+      "new": "@glass/components/custom/status-dot",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/DockStage.vue",
+      "line": 22,
+      "old": "../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/cta-receive.vue",
+      "line": 15,
+      "old": "../../../src/components/custom/dock",
+      "new": "@glass/components/custom/dock",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/cta-receive.vue",
+      "line": 16,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/cta-receive.vue",
+      "line": 17,
+      "old": "../../../src/composables/motion/useDockCtaReceive",
+      "new": "@glass/composables/motion/useDockCtaReceive",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/dock-search.vue",
+      "line": 19,
+      "old": "../../../src/components/custom/dock",
+      "new": "@glass/components/custom/dock",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/dock-search.vue",
+      "line": 20,
+      "old": "../../../src/components/custom/dock/composables/useDockState",
+      "new": "@glass/components/custom/dock/composables/useDockState",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/dock-search.vue",
+      "line": 21,
+      "old": "../../../src/composables/virtual",
+      "new": "@glass/composables/virtual",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/dock-search.vue",
+      "line": 22,
+      "old": "../../../src/composables/sidebar",
+      "new": "@glass/composables/sidebar",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/dock-search.vue",
+      "line": 23,
+      "old": "../../../src/components/custom/search/composables",
+      "new": "@glass/components/custom/search/composables",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/dock-search.vue",
+      "line": 24,
+      "old": "../../../src/composables/virtual/virtualSectionLayout",
+      "new": "@glass/composables/virtual/virtualSectionLayout",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/examples/AppSwitcher.vue",
+      "line": 13,
+      "old": "../../../../src/composables/motion/useBloomUp",
+      "new": "@glass/composables/motion/useBloomUp",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/dock/examples/AppleMusic.vue",
+      "line": 13,
+      "old": "../../../../src/composables/motion/useBloomUp",
+      "new": "@glass/composables/motion/useBloomUp",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/dock/examples/DynamicIslandCall.vue",
+      "line": 23,
+      "old": "../../../../src/components/custom/dock/composables",
+      "new": "@glass/components/custom/dock/composables",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/dock/examples/Notification.vue",
+      "line": 12,
+      "old": "../../../../src/composables/motion/useBloomUp",
+      "new": "@glass/composables/motion/useBloomUp",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/dock/examples/Spotlight.vue",
+      "line": 12,
+      "old": "../../../../src/composables/motion/useBloomUp",
+      "new": "@glass/composables/motion/useBloomUp",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/dock/examples/TabBar.vue",
+      "line": 11,
+      "old": "../../../../src/components/custom/tabs",
+      "new": "@glass/components/custom/tabs",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/dock/examples/TabBar.vue",
+      "line": 16,
+      "old": "../../../../src/components/custom/dock",
+      "new": "@glass/components/custom/dock",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/dock/examples/VolumeHUD.vue",
+      "line": 13,
+      "old": "../../../../src/composables/motion/useBloomUp",
+      "new": "@glass/composables/motion/useBloomUp",
+      "depth": 4
+    },
+    {
+      "file": "demo/stories/dock/layers.vue",
+      "line": 6,
+      "old": "../../../src/components/custom/dock",
+      "new": "@glass/components/custom/dock",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/layers.vue",
+      "line": 7,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/liquid-playground.vue",
+      "line": 47,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/liquid-playground.vue",
+      "line": 50,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/liquid-playground.vue",
+      "line": 51,
+      "old": "../../../src/components/ui/slider",
+      "new": "@glass/components/ui/slider",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/liquid-playground.vue",
+      "line": 52,
+      "old": "../../../src/components/custom/tabs",
+      "new": "@glass/components/custom/tabs",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/liquid-playground.vue",
+      "line": 53,
+      "old": "../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/liquid-playground.vue",
+      "line": 54,
+      "old": "../../../src/composables/motion/useBloomUp",
+      "new": "@glass/composables/motion/useBloomUp",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/liquid-playground.vue",
+      "line": 58,
+      "old": "../../../src/components/custom/dock/composables",
+      "new": "@glass/components/custom/dock/composables",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/liquid-playground.vue",
+      "line": 64,
+      "old": "../../../src/components/custom/dock",
+      "new": "@glass/components/custom/dock",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/liquid-playground.vue",
+      "line": 65,
+      "old": "../../../src/components/custom/dock/constants",
+      "new": "@glass/components/custom/dock/constants",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/morph-showcase.vue",
+      "line": 36,
+      "old": "../../../src/components/custom/dock",
+      "new": "@glass/components/custom/dock",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/morph-showcase.vue",
+      "line": 37,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/overview.vue",
+      "line": 29,
+      "old": "../../../src/components/custom/dock",
+      "new": "@glass/components/custom/dock",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/overview.vue",
+      "line": 30,
+      "old": "../../../src/components/ui/slider",
+      "new": "@glass/components/ui/slider",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/overview.vue",
+      "line": 31,
+      "old": "../../../src/components/custom/hover-popover",
+      "new": "@glass/components/custom/hover-popover",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/overview.vue",
+      "line": 32,
+      "old": "../../../src/components/ui/popover",
+      "new": "@glass/components/ui/popover",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/overview.vue",
+      "line": 40,
+      "old": "../../../src/components/ui/dropdown-menu",
+      "new": "@glass/components/ui/dropdown-menu",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/overview.vue",
+      "line": 46,
+      "old": "../../../src/components/ui/select",
+      "new": "@glass/components/ui/select",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/overview.vue",
+      "line": 47,
+      "old": "../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/overview.vue",
+      "line": 48,
+      "old": "../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/overview.vue",
+      "line": 177,
+      "old": "../../../src/components/custom/dock",
+      "new": "@glass/components/custom/dock",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/rail.vue",
+      "line": 23,
+      "old": "../../../src/components/custom/dock",
+      "new": "@glass/components/custom/dock",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/rail.vue",
+      "line": 24,
+      "old": "../../../src/components/ui/tooltip",
+      "new": "@glass/components/ui/tooltip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/rail.vue",
+      "line": 25,
+      "old": "../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/rail.vue",
+      "line": 26,
+      "old": "../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/dock/sections.vue",
+      "line": 20,
+      "old": "../../../src/components/custom/dock",
+      "new": "@glass/components/custom/dock",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/feedback/alert.vue",
+      "line": 4,
+      "old": "../../../src/components/ui/alert",
+      "new": "@glass/components/ui/alert",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/feedback/alert.vue",
+      "line": 5,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/feedback/completion-seal.vue",
+      "line": 5,
+      "old": "../../../src/components/custom/completion-seal",
+      "new": "@glass/components/custom/completion-seal",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/feedback/completion-seal.vue",
+      "line": 6,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/feedback/confirm-dialog.vue",
+      "line": 4,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/feedback/confirm-dialog.vue",
+      "line": 5,
+      "old": "../../../src/components/custom/confirm-dialog",
+      "new": "@glass/components/custom/confirm-dialog",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/feedback/confirm-dialog.vue",
+      "line": 6,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/feedback/notification.vue",
+      "line": 6,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/feedback/notification.vue",
+      "line": 7,
+      "old": "../../../src/components/ui/notification",
+      "new": "@glass/components/ui/notification",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/feedback/notification.vue",
+      "line": 9,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/feedback/progress.vue",
+      "line": 8,
+      "old": "../../../src/components/ui/progress",
+      "new": "@glass/components/ui/progress",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/feedback/progress.vue",
+      "line": 9,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/feedback/progress.vue",
+      "line": 10,
+      "old": "../../../src/components/custom/border-progress",
+      "new": "@glass/components/custom/border-progress",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/feedback/progress.vue",
+      "line": 11,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/feedback/skeleton.vue",
+      "line": 5,
+      "old": "../../../src/components/ui/skeleton",
+      "new": "@glass/components/ui/skeleton",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/feedback/skeleton.vue",
+      "line": 6,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/feedback/toast.vue",
+      "line": 5,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/feedback/toast.vue",
+      "line": 13,
+      "old": "../../../src/components/ui/toast",
+      "new": "@glass/components/ui/toast",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/feedback/toast.vue",
+      "line": 15,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/feedback/toaster.vue",
+      "line": 8,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/feedback/toaster.vue",
+      "line": 10,
+      "old": "../../../src/components/ui/toast",
+      "new": "@glass/components/ui/toast",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/checks.vue",
+      "line": 5,
+      "old": "../../../src/components/ui/checkbox",
+      "new": "@glass/components/ui/checkbox",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/checks.vue",
+      "line": 6,
+      "old": "../../../src/components/ui/radio-group",
+      "new": "@glass/components/ui/radio-group",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/checks.vue",
+      "line": 7,
+      "old": "../../../src/components/ui/switch",
+      "new": "@glass/components/ui/switch",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/checks.vue",
+      "line": 8,
+      "old": "../../../src/components/ui/label",
+      "new": "@glass/components/ui/label",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/checks.vue",
+      "line": 9,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/combobox.vue",
+      "line": 15,
+      "old": "../../../src/components/ui/combobox",
+      "new": "@glass/components/ui/combobox",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/combobox.vue",
+      "line": 16,
+      "old": "../../../src/components/ui/label",
+      "new": "@glass/components/ui/label",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/combobox.vue",
+      "line": 17,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/inputs.vue",
+      "line": 5,
+      "old": "../../../src/components/ui/input",
+      "new": "@glass/components/ui/input",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/inputs.vue",
+      "line": 6,
+      "old": "../../../src/components/ui/label",
+      "new": "@glass/components/ui/label",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/inputs.vue",
+      "line": 7,
+      "old": "../../../src/components/custom/search",
+      "new": "@glass/components/custom/search",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/inputs.vue",
+      "line": 8,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/label.vue",
+      "line": 4,
+      "old": "../../../src/components/ui/label",
+      "new": "@glass/components/ui/label",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/label.vue",
+      "line": 5,
+      "old": "../../../src/components/ui/input",
+      "new": "@glass/components/ui/input",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/label.vue",
+      "line": 6,
+      "old": "../../../src/components/ui/checkbox",
+      "new": "@glass/components/ui/checkbox",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/label.vue",
+      "line": 7,
+      "old": "../../../src/components/ui/switch",
+      "new": "@glass/components/ui/switch",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/label.vue",
+      "line": 8,
+      "old": "../../../src/components/ui/radio-group",
+      "new": "@glass/components/ui/radio-group",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/label.vue",
+      "line": 9,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/multi-select.vue",
+      "line": 4,
+      "old": "../../../src/components/ui/multi-select",
+      "new": "@glass/components/ui/multi-select",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/multi-select.vue",
+      "line": 5,
+      "old": "../../../src/components/ui/label",
+      "new": "@glass/components/ui/label",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/multi-select.vue",
+      "line": 6,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/number-field.vue",
+      "line": 10,
+      "old": "../../../src/components/ui/number-field",
+      "new": "@glass/components/ui/number-field",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/number-field.vue",
+      "line": 11,
+      "old": "../../../src/components/ui/label",
+      "new": "@glass/components/ui/label",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/number-field.vue",
+      "line": 12,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/select.vue",
+      "line": 13,
+      "old": "../../../src/components/ui/select",
+      "new": "@glass/components/ui/select",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/select.vue",
+      "line": 14,
+      "old": "../../../src/components/ui/label",
+      "new": "@glass/components/ui/label",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/select.vue",
+      "line": 15,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/selectable-chip.vue",
+      "line": 11,
+      "old": "../../../src/subpaths/selectable-chip",
+      "new": "@glass/subpaths/selectable-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/slider.vue",
+      "line": 4,
+      "old": "../../../src/components/ui/slider",
+      "new": "@glass/components/ui/slider",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/slider.vue",
+      "line": 5,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/slider.vue",
+      "line": 6,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/textarea.vue",
+      "line": 5,
+      "old": "../../../src/components/ui/textarea",
+      "new": "@glass/components/ui/textarea",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/textarea.vue",
+      "line": 6,
+      "old": "../../../src/components/ui/label",
+      "new": "@glass/components/ui/label",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/textarea.vue",
+      "line": 7,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/toggle-chip.vue",
+      "line": 9,
+      "old": "../../../src/subpaths/toggle-chip",
+      "new": "@glass/subpaths/toggle-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/toggle-chip.vue",
+      "line": 10,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/toggle.vue",
+      "line": 5,
+      "old": "../../../src/components/ui/toggle",
+      "new": "@glass/components/ui/toggle",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/toggle.vue",
+      "line": 6,
+      "old": "../../../src/components/ui/toggle-group",
+      "new": "@glass/components/ui/toggle-group",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/toggle.vue",
+      "line": 7,
+      "old": "../../../src/components/custom/toggle-chip",
+      "new": "@glass/components/custom/toggle-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/forms/toggle.vue",
+      "line": 8,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/foundations/chart-chassis-palette.vue",
+      "line": 13,
+      "old": "../../../src/components/custom/instrument-chassis",
+      "new": "@glass/components/custom/instrument-chassis",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/foundations/colors.vue",
+      "line": 15,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/foundations/icons.vue",
+      "line": 38,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/foundations/motion.vue",
+      "line": 11,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/foundations/motion.vue",
+      "line": 12,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/foundations/paper-glass.vue",
+      "line": 5,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/foundations/paper-texture.vue",
+      "line": 13,
+      "old": "../../../src/components/custom/paper-backdrop",
+      "new": "@glass/components/custom/paper-backdrop",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/foundations/radii.vue",
+      "line": 10,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/foundations/shadows.vue",
+      "line": 9,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/foundations/typography.vue",
+      "line": 15,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/animated-digit.vue",
+      "line": 5,
+      "old": "../../../src/components/custom/animated-digit",
+      "new": "@glass/components/custom/animated-digit",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/animated-digit.vue",
+      "line": 6,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/countup.vue",
+      "line": 7,
+      "old": "../../../src/composables/motion/useCountup",
+      "new": "@glass/composables/motion/useCountup",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/countup.vue",
+      "line": 8,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/curve-families.ts",
+      "line": 52,
+      "old": "../../../src/composables/motion/curves",
+      "new": "@glass/composables/motion/curves",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/curve-gallery.vue",
+      "line": 36,
+      "old": "../../../src/components/custom/fading-scroll",
+      "new": "@glass/components/custom/fading-scroll",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/curve-gallery.vue",
+      "line": 43,
+      "old": "../../../src/components/ui/select",
+      "new": "@glass/components/ui/select",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/curve-gallery.vue",
+      "line": 44,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/curve-gallery.vue",
+      "line": 59,
+      "old": "../../../src/components/custom/easing",
+      "new": "@glass/components/custom/easing",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/deck.vue",
+      "line": 19,
+      "old": "../../../src/components/custom/deck",
+      "new": "@glass/components/custom/deck",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/deck.vue",
+      "line": 20,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/deck.vue",
+      "line": 21,
+      "old": "../../../src/composables/motion/useGooMorph",
+      "new": "@glass/composables/motion/useGooMorph",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/handmark.vue",
+      "line": 10,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/handmark.vue",
+      "line": 11,
+      "old": "../../../src/components/custom/handmark",
+      "new": "@glass/components/custom/handmark",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/reveal.vue",
+      "line": 14,
+      "old": "../../../src/composables/motion/vReveal",
+      "new": "@glass/composables/motion/vReveal",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/reveal.vue",
+      "line": 15,
+      "old": "../../../src/composables/motion/useLiquidReveal",
+      "new": "@glass/composables/motion/useLiquidReveal",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/reveal.vue",
+      "line": 16,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/scroll-choreography.vue",
+      "line": 24,
+      "old": "../../../src/composables/motion/supportsCssTimeline",
+      "new": "@glass/composables/motion/supportsCssTimeline",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/scroll-choreography.vue",
+      "line": 25,
+      "old": "../../../src/composables/motion/useScrollPin",
+      "new": "@glass/composables/motion/useScrollPin",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/scroll-system.vue",
+      "line": 24,
+      "old": "../../../src/composables/motion/core",
+      "new": "@glass/composables/motion/core",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/scroll-system.vue",
+      "line": 25,
+      "old": "../../../src/composables/motion/core",
+      "new": "@glass/composables/motion/core",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/scroll-vt.vue",
+      "line": 14,
+      "old": "../../../src/composables/motion/useViewTransition",
+      "new": "@glass/composables/motion/useViewTransition",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/scroll-vt.vue",
+      "line": 18,
+      "old": "../../../src/composables/motion/supportsCssTimeline",
+      "new": "@glass/composables/motion/supportsCssTimeline",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/scroll-vt.vue",
+      "line": 19,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/scroll-vt.vue",
+      "line": 20,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/split-chars.vue",
+      "line": 14,
+      "old": "../../../src/components/custom/split-chars",
+      "new": "@glass/components/custom/split-chars",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/split-chars.vue",
+      "line": 15,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/springs.vue",
+      "line": 24,
+      "old": "../../../src/composables/motion",
+      "new": "@glass/composables/motion",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/springs.vue",
+      "line": 25,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/springs.vue",
+      "line": 26,
+      "old": "../../../src/components/ui/label",
+      "new": "@glass/components/ui/label",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/springs.vue",
+      "line": 27,
+      "old": "../../../src/components/custom/labeled-field",
+      "new": "@glass/components/custom/labeled-field",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/springs.vue",
+      "line": 34,
+      "old": "../../../src/components/ui/select",
+      "new": "@glass/components/ui/select",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/springs.vue",
+      "line": 36,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/typewriter.vue",
+      "line": 8,
+      "old": "../../../src/components/custom/typewriter",
+      "new": "@glass/components/custom/typewriter",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/typewriter.vue",
+      "line": 9,
+      "old": "../../../src/components/ui/button",
+      "new": "@glass/components/ui/button",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/typewriter.vue",
+      "line": 10,
+      "old": "../../../src/components/ui/label",
+      "new": "@glass/components/ui/label",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/typewriter.vue",
+      "line": 11,
+      "old": "../../../src/components/ui/slider",
+      "new": "@glass/components/ui/slider",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/typewriter.vue",
+      "line": 12,
+      "old": "../../../src/components/ui/switch",
+      "new": "@glass/components/ui/switch",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/motion/typewriter.vue",
+      "line": 13,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/navigation/carousel.vue",
+      "line": 11,
+      "old": "../../../src/components/ui/carousel",
+      "new": "@glass/components/ui/carousel",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/navigation/carousel.vue",
+      "line": 12,
+      "old": "../../../src/components/custom/pager-dots",
+      "new": "@glass/components/custom/pager-dots",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/navigation/carousel.vue",
+      "line": 13,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/navigation/carousel.vue",
+      "line": 15,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/navigation/header-ribbon.vue",
+      "line": 4,
+      "old": "../../../src/components/custom/header-ribbon",
+      "new": "@glass/components/custom/header-ribbon",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/navigation/header-ribbon.vue",
+      "line": 5,
+      "old": "../../../src/components/custom/dock",
+      "new": "@glass/components/custom/dock",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/navigation/header-ribbon.vue",
+      "line": 6,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/navigation/tabs.vue",
+      "line": 15,
+      "old": "../../../src/components/custom/tabs",
+      "new": "@glass/components/custom/tabs",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/navigation/tabs.vue",
+      "line": 16,
+      "old": "../../../src/components/custom/icon-chip",
+      "new": "@glass/components/custom/icon-chip",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/navigation/toc-tracking.vue",
+      "line": 25,
+      "old": "../../../src/composables/sidebar",
+      "new": "@glass/composables/sidebar",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/navigation/toc-tracking.vue",
+      "line": 26,
+      "old": "../../../src/composables/virtual",
+      "new": "@glass/composables/virtual",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/navigation/toc-tracking.vue",
+      "line": 27,
+      "old": "../../../src/composables/virtual",
+      "new": "@glass/composables/virtual",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/VizStudio.vue",
+      "line": 37,
+      "old": "../../../src/utils/cn",
+      "new": "@glass/utils/cn",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/VizStudio.vue",
+      "line": 44,
+      "old": "../../../src/components/custom/configurator",
+      "new": "@glass/components/custom/configurator",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/aurora.vue",
+      "line": 6,
+      "old": "../../../src/components/custom/configurator",
+      "new": "@glass/components/custom/configurator",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/aurora.vue",
+      "line": 7,
+      "old": "../../../src/composables/keyboard",
+      "new": "@glass/composables/keyboard",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/aurora.vue",
+      "line": 8,
+      "old": "../../../src/components/custom/aurora",
+      "new": "@glass/components/custom/aurora",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/blob.vue",
+      "line": 16,
+      "old": "../../../src/components/custom/goo-blob",
+      "new": "@glass/components/custom/goo-blob",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/blob.vue",
+      "line": 17,
+      "old": "../../../src/components/custom/goo-blob",
+      "new": "@glass/components/custom/goo-blob",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/blob.vue",
+      "line": 18,
+      "old": "../../../src/components/custom/goo-blob/types",
+      "new": "@glass/components/custom/goo-blob/types",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/blob.vue",
+      "line": 19,
+      "old": "../../../src/components/custom/goo-blob/constants",
+      "new": "@glass/components/custom/goo-blob/constants",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/blob.vue",
+      "line": 20,
+      "old": "../../../src/components/custom/watercolor-dot",
+      "new": "@glass/components/custom/watercolor-dot",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/blob.vue",
+      "line": 21,
+      "old": "../../../src/components/custom/dock",
+      "new": "@glass/components/custom/dock",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/blob.vue",
+      "line": 22,
+      "old": "../../../src/components/custom/fading-scroll",
+      "new": "@glass/components/custom/fading-scroll",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/blob.vue",
+      "line": 29,
+      "old": "../../../src/components/custom/configurator",
+      "new": "@glass/components/custom/configurator",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/blob.vue",
+      "line": 34,
+      "old": "../../../src/components/custom/labeled-field",
+      "new": "@glass/components/custom/labeled-field",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/blob.vue",
+      "line": 39,
+      "old": "../../../src/composables/color",
+      "new": "@glass/composables/color",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/concentric.vue",
+      "line": 15,
+      "old": "../../../src/components/custom/configurator",
+      "new": "@glass/components/custom/configurator",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/concentric.vue",
+      "line": 16,
+      "old": "../../../src/components/custom/labeled-field",
+      "new": "@glass/components/custom/labeled-field",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/concentric.vue",
+      "line": 20,
+      "old": "../../../src/components/custom/concentric",
+      "new": "@glass/components/custom/concentric",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/constellation.vue",
+      "line": 13,
+      "old": "../../../src/subpaths/constellation",
+      "new": "@glass/subpaths/constellation",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/constellation.vue",
+      "line": 14,
+      "old": "../../../src/components/ui/switch",
+      "new": "@glass/components/ui/switch",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/constellation.vue",
+      "line": 15,
+      "old": "../../../src/components/ui/label",
+      "new": "@glass/components/ui/label",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/constellation.vue",
+      "line": 16,
+      "old": "../../../src/composables/dom/useTokenColor",
+      "new": "@glass/composables/dom/useTokenColor",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/dot-flow-field.vue",
+      "line": 12,
+      "old": "../../../src/components/ui/switch",
+      "new": "@glass/components/ui/switch",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/dot-flow-field.vue",
+      "line": 13,
+      "old": "../../../src/components/ui/label",
+      "new": "@glass/components/ui/label",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/dot-flow-field.vue",
+      "line": 17,
+      "old": "../../../src/components/custom/dot-flow-field",
+      "new": "@glass/components/custom/dot-flow-field",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/dot-matrix.vue",
+      "line": 12,
+      "old": "../../../src/components/ui/switch",
+      "new": "@glass/components/ui/switch",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/dot-matrix.vue",
+      "line": 13,
+      "old": "../../../src/components/ui/label",
+      "new": "@glass/components/ui/label",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/dot-matrix.vue",
+      "line": 17,
+      "old": "../../../src/components/custom/dot-matrix",
+      "new": "@glass/components/custom/dot-matrix",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/fourier-field.vue",
+      "line": 19,
+      "old": "../../../src/components/custom/fourier-field",
+      "new": "@glass/components/custom/fourier-field",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/fourier-field.vue",
+      "line": 20,
+      "old": "../../../src/components/custom/fourier-field",
+      "new": "@glass/components/custom/fourier-field",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/fourier-field.vue",
+      "line": 21,
+      "old": "../../../src/utils/prng",
+      "new": "@glass/utils/prng",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/fourier-field.vue",
+      "line": 25,
+      "old": "../../../src/composables/color",
+      "new": "@glass/composables/color",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/fourier-field.vue",
+      "line": 26,
+      "old": "../../../src/composables/dark",
+      "new": "@glass/composables/dark",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/fourier-field.vue",
+      "line": 27,
+      "old": "../../../src/components/custom/dock",
+      "new": "@glass/components/custom/dock",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/fourier-field.vue",
+      "line": 28,
+      "old": "../../../src/components/custom/timeline",
+      "new": "@glass/components/custom/timeline",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/fourier-field.vue",
+      "line": 35,
+      "old": "../../../src/components/custom/configurator",
+      "new": "@glass/components/custom/configurator",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/fourier-field.vue",
+      "line": 39,
+      "old": "../../../src/components/custom/labeled-field",
+      "new": "@glass/components/custom/labeled-field",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/fourier-paths.ts",
+      "line": 17,
+      "old": "../../../src/components/custom/fourier-field",
+      "new": "@glass/components/custom/fourier-field",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/glass-material.vue",
+      "line": 20,
+      "old": "../../../src/index",
+      "new": "@glass/index",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/glass-material.vue",
+      "line": 29,
+      "old": "../../../src/composables/glass/useGlassBackdropLuminance",
+      "new": "@glass/composables/glass/useGlassBackdropLuminance",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/glass-panel.vue",
+      "line": 18,
+      "old": "../../../src/subpaths/aurora",
+      "new": "@glass/subpaths/aurora",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/glass-panel.vue",
+      "line": 19,
+      "old": "../../../src/components/ui/toggle-group",
+      "new": "@glass/components/ui/toggle-group",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/goo-dot.vue",
+      "line": 13,
+      "old": "../../../src/components/ui/switch",
+      "new": "@glass/components/ui/switch",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/goo-dot.vue",
+      "line": 14,
+      "old": "../../../src/components/ui/label",
+      "new": "@glass/components/ui/label",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/goo-dot.vue",
+      "line": 19,
+      "old": "../../../src/components/custom/goo-dot-matrix",
+      "new": "@glass/components/custom/goo-dot-matrix",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/paper-grid.vue",
+      "line": 15,
+      "old": "../../../src/components/custom/configurator",
+      "new": "@glass/components/custom/configurator",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/paper-grid.vue",
+      "line": 19,
+      "old": "../../../src/components/custom/labeled-field",
+      "new": "@glass/components/custom/labeled-field",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/paper-grid.vue",
+      "line": 20,
+      "old": "../../../src/components/custom/dock",
+      "new": "@glass/components/custom/dock",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/paper-grid.vue",
+      "line": 24,
+      "old": "../../../src/components/custom/paper-grid",
+      "new": "@glass/components/custom/paper-grid",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/presets.ts",
+      "line": 15,
+      "old": "../../../src/components/custom/dot-flow-field",
+      "new": "@glass/components/custom/dot-flow-field",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/presets.ts",
+      "line": 19,
+      "old": "../../../src/components/custom/dot-flow-field",
+      "new": "@glass/components/custom/dot-flow-field",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/presets.ts",
+      "line": 113,
+      "old": "../../../src/components/custom/concentric",
+      "new": "@glass/components/custom/concentric",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/presets.ts",
+      "line": 114,
+      "old": "../../../src/components/custom/concentric",
+      "new": "@glass/components/custom/concentric",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/presets.ts",
+      "line": 145,
+      "old": "../../../src/components/custom/paper-grid",
+      "new": "@glass/components/custom/paper-grid",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/presets.ts",
+      "line": 146,
+      "old": "../../../src/components/custom/paper-grid",
+      "new": "@glass/components/custom/paper-grid",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/presets.ts",
+      "line": 208,
+      "old": "../../../src/components/custom/dot-matrix",
+      "new": "@glass/components/custom/dot-matrix",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/presets.ts",
+      "line": 209,
+      "old": "../../../src/components/custom/dot-matrix",
+      "new": "@glass/components/custom/dot-matrix",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/presets.ts",
+      "line": 258,
+      "old": "../../../src/components/custom/goo-dot-matrix",
+      "new": "@glass/components/custom/goo-dot-matrix",
+      "depth": 3
+    },
+    {
+      "file": "demo/stories/substrates/presets.ts",
+      "line": 259,
+      "old": "../../../src/components/custom/goo-dot-matrix",
+      "new": "@glass/components/custom/goo-dot-matrix",
+      "depth": 3
+    }
+  ]
+}

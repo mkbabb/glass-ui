@@ -1,0 +1,93 @@
+{
+  "bound": 500,
+  "exemptionGlob": "src/**/*.{wgsl,glsl,frag,vert}.ts",
+  "exemptionRegex": "\\.(wgsl|glsl|frag|vert)\\.ts$",
+  "exemptionSuffixes": [
+    ".wgsl.ts",
+    ".glsl.ts",
+    ".frag.ts",
+    ".vert.ts"
+  ],
+  "totalShaderLiteralFiles": 44,
+  "shaderLiteralFilesOver500": [
+    {
+      "file": "src/components/custom/goo-blob/shaders/metaball.wgsl.ts",
+      "lines": 530
+    },
+    {
+      "file": "src/components/custom/dot-flow-field/shaders/flow-field.glsl.ts",
+      "lines": 518
+    },
+    {
+      "file": "src/components/custom/goo-blob/shaders/metaball.frag.ts",
+      "lines": 511
+    }
+  ],
+  "expectedThreeShadersOver500": [
+    "src/components/custom/goo-blob/shaders/metaball.wgsl.ts",
+    "src/components/custom/dot-flow-field/shaders/flow-field.glsl.ts",
+    "src/components/custom/goo-blob/shaders/metaball.frag.ts"
+  ],
+  "overmatchNonShaderFilesCaughtByGlob": [
+    "src/composables/glass/wave/waveField.glsl.ts",
+    "src/composables/glass/wave/waveField.wgsl.ts"
+  ],
+  "residualGodModulesAfterExemption": [
+    {
+      "file": "src/components/custom/dock/GlassDock.vue",
+      "lines": 712
+    },
+    {
+      "file": "src/composables/glass/webgl/createCanvasLifecycle.ts",
+      "lines": 696
+    },
+    {
+      "file": "src/composables/glass/webgpu/useWebGPUCanvas.ts",
+      "lines": 607
+    },
+    {
+      "file": "src/components/custom/dock/composables/useDockFission.ts",
+      "lines": 605
+    },
+    {
+      "file": "src/components/ui/carousel/CarouselContent.vue",
+      "lines": 578
+    },
+    {
+      "file": "src/components/custom/dock/composables/useDockContextSilhouette.ts",
+      "lines": 552
+    },
+    {
+      "file": "src/composables/glass/useGlassBackdropLuminance.ts",
+      "lines": 543
+    },
+    {
+      "file": "src/components/custom/goo-blob/composables/useBlobSatellites.ts",
+      "lines": 534
+    },
+    {
+      "file": "src/components/custom/tabs/SegmentedTabs.vue",
+      "lines": 513
+    },
+    {
+      "file": "src/components/custom/pager-dots/PagerDots.vue",
+      "lines": 510
+    },
+    {
+      "file": "src/components/custom/goo-dot-matrix/composables/useGooDotMatrix.ts",
+      "lines": 509
+    },
+    {
+      "file": "src/composables/motion/useBloomUp.ts",
+      "lines": 508
+    },
+    {
+      "file": "src/api/index.ts",
+      "lines": 506
+    }
+  ],
+  "nonShaderGodModuleCount": 13,
+  "assert_exactly_three_shaders_over_500": true,
+  "assert_three_match_expected": true,
+  "assert_no_overmatch": false
+}

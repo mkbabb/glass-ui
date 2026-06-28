@@ -1,0 +1,72 @@
+{
+  "mode": "real",
+  "failClosed": {
+    "pass": true,
+    "unclassified": [],
+    "stale": []
+  },
+  "tiers": {
+    "ui": {
+      "tier": "ui",
+      "total": 43,
+      "counts": {
+        "PUBLISH": 25,
+        "INTERNAL": 18,
+        "CURATED": 0
+      },
+      "unclassified": [],
+      "stale": []
+    },
+    "custom": {
+      "tier": "custom",
+      "total": 50,
+      "counts": {
+        "PUBLISH": 47,
+        "INTERNAL": 3,
+        "CURATED": 0
+      },
+      "unclassified": [],
+      "stale": []
+    },
+    "composable": {
+      "tier": "composable",
+      "total": 11,
+      "counts": {
+        "PUBLISH": 4,
+        "INTERNAL": 3,
+        "CURATED": 4
+      },
+      "unclassified": [],
+      "stale": []
+    }
+  },
+  "symbolFidelity": {
+    "total": 91,
+    "failedCount": 1,
+    "failed": [
+      {
+        "kind": "curated",
+        "name": "phantom",
+        "rel": "src/this-source-was-deleted.ts",
+        "ok": false,
+        "reason": "ABSENT"
+      }
+    ]
+  },
+  "regen": {
+    "currentExportKeys": 96,
+    "emittedExportKeys": 96,
+    "jsSubpaths": 89,
+    "publishUi": 25,
+    "publishCustom": 47,
+    "collisions": [],
+    "drops": [],
+    "adds": [],
+    "targetMismatchCount": 0,
+    "targetMismatches": [],
+    "tvDrops": [],
+    "tvAdds": [],
+    "tvMismatchCount": 0,
+    "EXACT_REPRODUCTION": true
+  }
+}

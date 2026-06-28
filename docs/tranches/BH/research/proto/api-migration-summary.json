@@ -1,0 +1,996 @@
+{
+  "summary": {
+    "totalApiSymbols": 203,
+    "uniqueSymbols": 203,
+    "byKind": {
+      "const": 4,
+      "type": 199
+    },
+    "subpathCount": 46,
+    "symbolsPerSubpath": {
+      "/aurora": 28,
+      "/motion": 20,
+      "/motion-core": 18,
+      "/handmark": 9,
+      "/sidebar": 9,
+      "/easing": 7,
+      "/search": 7,
+      "/card": 6,
+      "/motion-curves": 5,
+      "/configurator": 5,
+      "/virtual": 4,
+      "/icon-chip": 4,
+      "/border-progress": 4,
+      "/dom": 4,
+      "/dark": 4,
+      "/canvas": 4,
+      "/dot-flow-field": 4,
+      "/tabs": 4,
+      "(ORPHAN)": 3,
+      "/dock": 3,
+      "/paper-grid": 3,
+      "/timeline": 3,
+      ".": 3,
+      "/metric-badge": 3,
+      "/concentric": 3,
+      "/constellation": 3,
+      "/glass-panel": 2,
+      "/toast": 2,
+      "/pager-dots": 2,
+      "/deck": 2,
+      "/color": 2,
+      "/completion-seal": 2,
+      "/metric-cell": 2,
+      "/metric-stack": 2,
+      "/paper-backdrop": 2,
+      "/header-ribbon": 2,
+      "/fourier-field": 2,
+      "/animated-digit": 2,
+      "/instrument-chassis": 1,
+      "/spa-view": 1,
+      "/selectable-chip": 1,
+      "/badge": 1,
+      "/button": 1,
+      "/sheet": 1,
+      "/slider": 1,
+      "/toggle-chip": 1,
+      "/stacked-icons": 1
+    },
+    "orphans": [
+      "Surface",
+      "MenuItemVariants",
+      "ControlSize"
+    ],
+    "orphanRehomes": {
+      "Surface": {
+        "decision": "/card",
+        "rationale": "Surface is the SHARED {glass·veil·opaque} surface-decoration union threaded onto Card/GlassPanel/Dialog/Sheet/Drawer/Popover/Command/Expandable/Skeleton/Toast/Button. /card already publishes CardSurface (its superset) + CardTier; Card is the canonical surface-axis exemplar. Re-export Surface (+ surfaceClass value if a consumer needs the resolver) from components/ui/card/index.ts. ALT: a NEW published /surface-axis subpath off ui/_shared — heavier (new subpath for 3 types). Recommend /card (zero new subpath; Card is where Surface is documented)."
+      },
+      "MenuItemVariants": {
+        "decision": "/command",
+        "rationale": "MenuItemVariants is the CVA-union for the 11-site menu/picker item four-state contract (command/dropdown-menu/context-menu/combobox/select). All 5 consumers are published subpaths; the cleanest single home is /command (the richest menu surface). Re-export MenuItemVariants from components/ui/command/index.ts (it already composes menuItemVariants). ALT: publish from EACH of the 5 menu subpaths (DRY-violating). Recommend /command as the canonical menu-item home; the other 4 LINK in docs."
+      },
+      "ControlSize": {
+        "decision": "/forms",
+        "rationale": "ControlSize is the shared control-size union ('sm'|'default'|'lg') threaded by Input/Switch/Textarea/NumberFieldInput. /forms already publishes Input+Textarea (its primary consumers) + their props; it is the form-family barrel. Re-export ControlSize (+ controlSizeClass) from src/forms.ts. ALT: /input — but /input is INTERNAL (folded into /forms). Recommend /forms (the form-family canonical home)."
+      }
+    },
+    "completeness": {
+      "totalRows": 203,
+      "uniqueSymbols": 203,
+      "duplicates": [],
+      "orphanCount": 3,
+      "resolvedCount": 200,
+      "everyRowResolvedOrOrphan": true,
+      "everySymbolExactlyOnce": true
+    }
+  },
+  "perSubpathDelta": {
+    "/aurora": [
+      {
+        "symbol": "AuroraAtoms",
+        "kind": "type"
+      },
+      {
+        "symbol": "AuroraConfig",
+        "kind": "type"
+      },
+      {
+        "symbol": "AuroraCursorApi",
+        "kind": "type"
+      },
+      {
+        "symbol": "AuroraFlow",
+        "kind": "type"
+      },
+      {
+        "symbol": "AuroraHarmony",
+        "kind": "type"
+      },
+      {
+        "symbol": "AuroraHuePath",
+        "kind": "type"
+      },
+      {
+        "symbol": "AuroraInstance",
+        "kind": "type"
+      },
+      {
+        "symbol": "AuroraInteractivity",
+        "kind": "type"
+      },
+      {
+        "symbol": "AuroraInteractivityAtom",
+        "kind": "type"
+      },
+      {
+        "symbol": "AuroraMedium",
+        "kind": "type"
+      },
+      {
+        "symbol": "AuroraMediumAtom",
+        "kind": "type"
+      },
+      {
+        "symbol": "AuroraMotionAtom",
+        "kind": "type"
+      },
+      {
+        "symbol": "AuroraNucleus",
+        "kind": "type"
+      },
+      {
+        "symbol": "AuroraRuntimeMode",
+        "kind": "type"
+      },
+      {
+        "symbol": "AuroraRuntimeOptions",
+        "kind": "type"
+      },
+      {
+        "symbol": "AuroraZoneArrangement",
+        "kind": "type"
+      },
+      {
+        "symbol": "AuroraZones",
+        "kind": "type"
+      },
+      {
+        "symbol": "DEFAULT_AURORA_CONFIG",
+        "kind": "const"
+      },
+      {
+        "symbol": "DeriveAuroraOptions",
+        "kind": "type"
+      },
+      {
+        "symbol": "DeriveEasing",
+        "kind": "type"
+      },
+      {
+        "symbol": "FlowPattern",
+        "kind": "type"
+      },
+      {
+        "symbol": "MAX_NUCLEI",
+        "kind": "const"
+      },
+      {
+        "symbol": "MAX_STOPS",
+        "kind": "const"
+      },
+      {
+        "symbol": "OklchStop",
+        "kind": "type"
+      },
+      {
+        "symbol": "PAPER_WASH_GROUND",
+        "kind": "const"
+      },
+      {
+        "symbol": "StrokeMode",
+        "kind": "type"
+      },
+      {
+        "symbol": "StrokeOrient",
+        "kind": "type"
+      },
+      {
+        "symbol": "WarpMode",
+        "kind": "type"
+      }
+    ],
+    "/card": [
+      {
+        "symbol": "CardMetal",
+        "kind": "type"
+      },
+      {
+        "symbol": "CardSurface",
+        "kind": "type"
+      },
+      {
+        "symbol": "CardTier",
+        "kind": "type"
+      },
+      {
+        "symbol": "CardVariant",
+        "kind": "type"
+      },
+      {
+        "symbol": "ScrollCardHeaderProps",
+        "kind": "type"
+      },
+      {
+        "symbol": "ScrollCardProps",
+        "kind": "type"
+      }
+    ],
+    "(ORPHAN)": [
+      {
+        "symbol": "ControlSize",
+        "kind": "type"
+      },
+      {
+        "symbol": "MenuItemVariants",
+        "kind": "type"
+      },
+      {
+        "symbol": "Surface",
+        "kind": "type"
+      }
+    ],
+    "/glass-panel": [
+      {
+        "symbol": "GlassPanelProps",
+        "kind": "type"
+      },
+      {
+        "symbol": "GlassPanelVariant",
+        "kind": "type"
+      }
+    ],
+    "/instrument-chassis": [
+      {
+        "symbol": "InstrumentChassisPhase",
+        "kind": "type"
+      }
+    ],
+    "/toast": [
+      {
+        "symbol": "ToastType",
+        "kind": "type"
+      },
+      {
+        "symbol": "ToastVariant",
+        "kind": "type"
+      }
+    ],
+    "/handmark": [
+      {
+        "symbol": "BlendMode",
+        "kind": "type"
+      },
+      {
+        "symbol": "Brush",
+        "kind": "type"
+      },
+      {
+        "symbol": "BrushName",
+        "kind": "type"
+      },
+      {
+        "symbol": "HandAnimation",
+        "kind": "type"
+      },
+      {
+        "symbol": "HandMarkProps",
+        "kind": "type"
+      },
+      {
+        "symbol": "HandShape",
+        "kind": "type"
+      },
+      {
+        "symbol": "InkPath",
+        "kind": "type"
+      },
+      {
+        "symbol": "MarkBox",
+        "kind": "type"
+      },
+      {
+        "symbol": "TaperSpec",
+        "kind": "type"
+      }
+    ],
+    "/sidebar": [
+      {
+        "symbol": "ClickDelegateOptions",
+        "kind": "type"
+      },
+      {
+        "symbol": "LazyLoaderOptions",
+        "kind": "type"
+      },
+      {
+        "symbol": "ScrollToOptions",
+        "kind": "type"
+      },
+      {
+        "symbol": "ScrollTrackerOptions",
+        "kind": "type"
+      },
+      {
+        "symbol": "SidebarIndexEntry",
+        "kind": "type"
+      },
+      {
+        "symbol": "SidebarSection",
+        "kind": "type"
+      },
+      {
+        "symbol": "SidebarState",
+        "kind": "type"
+      },
+      {
+        "symbol": "TreeIndexEntry",
+        "kind": "type"
+      },
+      {
+        "symbol": "TreeNode",
+        "kind": "type"
+      }
+    ],
+    "/virtual": [
+      {
+        "symbol": "FlatSection",
+        "kind": "type"
+      },
+      {
+        "symbol": "ForcedSectionWindowRange",
+        "kind": "type"
+      },
+      {
+        "symbol": "SectionLayout",
+        "kind": "type"
+      },
+      {
+        "symbol": "SectionWindowRange",
+        "kind": "type"
+      }
+    ],
+    "/spa-view": [
+      {
+        "symbol": "SpaViewProps",
+        "kind": "type"
+      }
+    ],
+    "/pager-dots": [
+      {
+        "symbol": "PagerDotsProps",
+        "kind": "type"
+      },
+      {
+        "symbol": "PagerWindow",
+        "kind": "type"
+      }
+    ],
+    "/deck": [
+      {
+        "symbol": "DeckCore",
+        "kind": "type"
+      },
+      {
+        "symbol": "DeckMoves",
+        "kind": "type"
+      }
+    ],
+    "/icon-chip": [
+      {
+        "symbol": "IconChipIcon",
+        "kind": "type"
+      },
+      {
+        "symbol": "IconChipProps",
+        "kind": "type"
+      },
+      {
+        "symbol": "IconChipSection",
+        "kind": "type"
+      },
+      {
+        "symbol": "IconChipTone",
+        "kind": "type"
+      }
+    ],
+    "/selectable-chip": [
+      {
+        "symbol": "SelectableChipVariants",
+        "kind": "type"
+      }
+    ],
+    "/color": [
+      {
+        "symbol": "UseAccentToneOptions",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseAccentToneReturn",
+        "kind": "type"
+      }
+    ],
+    "/dock": [
+      {
+        "symbol": "UseDockSearchOptions",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseDockSearchReturn",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseDockStateReturn",
+        "kind": "type"
+      }
+    ],
+    "/motion-core": [
+      {
+        "symbol": "HapticPattern",
+        "kind": "type"
+      },
+      {
+        "symbol": "HighlightMatcher",
+        "kind": "type"
+      },
+      {
+        "symbol": "NavigateOptions",
+        "kind": "type"
+      },
+      {
+        "symbol": "PointerVec2",
+        "kind": "type"
+      },
+      {
+        "symbol": "TriggerPoint",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseCharStaggerOptions",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseCharStaggerReturn",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseHapticOptions",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseHapticReturn",
+        "kind": "type"
+      },
+      {
+        "symbol": "UsePointerVelocityField",
+        "kind": "type"
+      },
+      {
+        "symbol": "UsePointerVelocityFieldOptions",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseScrollChromeOptions",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseScrollChromeReturn",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseScrollTriggerOptions",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseScrollTriggerReturn",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseTextHighlightControls",
+        "kind": "type"
+      },
+      {
+        "symbol": "ViewTransitionOptions",
+        "kind": "type"
+      },
+      {
+        "symbol": "ViewTransitionResult",
+        "kind": "type"
+      }
+    ],
+    "/easing": [
+      {
+        "symbol": "BezierPoints",
+        "kind": "type"
+      },
+      {
+        "symbol": "EasingFn",
+        "kind": "type"
+      },
+      {
+        "symbol": "EasingPickerMode",
+        "kind": "type"
+      },
+      {
+        "symbol": "EasingPickerValue",
+        "kind": "type"
+      },
+      {
+        "symbol": "JumpTerm",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseEasingPickerOptions",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseEasingPickerReturn",
+        "kind": "type"
+      }
+    ],
+    "/border-progress": [
+      {
+        "symbol": "BorderProgressCoverage",
+        "kind": "type"
+      },
+      {
+        "symbol": "BorderProgressMilestone",
+        "kind": "type"
+      },
+      {
+        "symbol": "BorderProgressMilestoneEvent",
+        "kind": "type"
+      },
+      {
+        "symbol": "BorderProgressProps",
+        "kind": "type"
+      }
+    ],
+    "/completion-seal": [
+      {
+        "symbol": "CompletionSealProps",
+        "kind": "type"
+      },
+      {
+        "symbol": "CompletionSealShape",
+        "kind": "type"
+      }
+    ],
+    "/paper-grid": [
+      {
+        "symbol": "PaperGridConfig",
+        "kind": "type"
+      },
+      {
+        "symbol": "PaperGridHandle",
+        "kind": "type"
+      },
+      {
+        "symbol": "UsePaperGridOptions",
+        "kind": "type"
+      }
+    ],
+    "/search": [
+      {
+        "symbol": "FuzzySearchState",
+        "kind": "type"
+      },
+      {
+        "symbol": "SearchableItem",
+        "kind": "type"
+      },
+      {
+        "symbol": "SearchIndex",
+        "kind": "type"
+      },
+      {
+        "symbol": "SearchResult",
+        "kind": "type"
+      },
+      {
+        "symbol": "SearchVariant",
+        "kind": "type"
+      },
+      {
+        "symbol": "SearchVariants",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseFuzzySearchOptions",
+        "kind": "type"
+      }
+    ],
+    "/motion": [
+      {
+        "symbol": "BloomUpPreset",
+        "kind": "type"
+      },
+      {
+        "symbol": "CelebrationBurstPreset",
+        "kind": "type"
+      },
+      {
+        "symbol": "Countup",
+        "kind": "type"
+      },
+      {
+        "symbol": "DockCtaReceivePreset",
+        "kind": "type"
+      },
+      {
+        "symbol": "DragMorphAxis",
+        "kind": "type"
+      },
+      {
+        "symbol": "DragMorphSnapTarget",
+        "kind": "type"
+      },
+      {
+        "symbol": "Easing",
+        "kind": "type"
+      },
+      {
+        "symbol": "LiquidRevealPreset",
+        "kind": "type"
+      },
+      {
+        "symbol": "TimingFunction",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseBloomUpOptions",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseBloomUpReturn",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseCelebrationBurstOptions",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseCelebrationBurstReturn",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseCountupOptions",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseDockCtaReceiveOptions",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseDockCtaReceiveReturn",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseDragMorphParams",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseDragMorphReturn",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseLiquidRevealOptions",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseLiquidRevealReturn",
+        "kind": "type"
+      }
+    ],
+    "/motion-curves": [
+      {
+        "symbol": "CurveFn",
+        "kind": "type"
+      },
+      {
+        "symbol": "MotionCurve",
+        "kind": "type"
+      },
+      {
+        "symbol": "MotionCurveKind",
+        "kind": "type"
+      },
+      {
+        "symbol": "SpringPresetName",
+        "kind": "type"
+      },
+      {
+        "symbol": "SpringPresetRow",
+        "kind": "type"
+      }
+    ],
+    "/configurator": [
+      {
+        "symbol": "ConfiguratorCloneMode",
+        "kind": "type"
+      },
+      {
+        "symbol": "ConfiguratorPreset",
+        "kind": "type"
+      },
+      {
+        "symbol": "ConfiguratorScrollMode",
+        "kind": "type"
+      },
+      {
+        "symbol": "ConfiguratorState",
+        "kind": "type"
+      },
+      {
+        "symbol": "ConfiguratorStateOptions",
+        "kind": "type"
+      }
+    ],
+    "/timeline": [
+      {
+        "symbol": "TimelineSegment",
+        "kind": "type"
+      },
+      {
+        "symbol": "TimelineSegmentGradient",
+        "kind": "type"
+      },
+      {
+        "symbol": "TimelineSegmentState",
+        "kind": "type"
+      }
+    ],
+    ".": [
+      {
+        "symbol": "AlertVariants",
+        "kind": "type"
+      },
+      {
+        "symbol": "AvatarVariants",
+        "kind": "type"
+      },
+      {
+        "symbol": "ToggleVariants",
+        "kind": "type"
+      }
+    ],
+    "/badge": [
+      {
+        "symbol": "BadgeVariants",
+        "kind": "type"
+      }
+    ],
+    "/button": [
+      {
+        "symbol": "ButtonVariants",
+        "kind": "type"
+      }
+    ],
+    "/sheet": [
+      {
+        "symbol": "SheetVariants",
+        "kind": "type"
+      }
+    ],
+    "/slider": [
+      {
+        "symbol": "SliderVariants",
+        "kind": "type"
+      }
+    ],
+    "/toggle-chip": [
+      {
+        "symbol": "ToggleChipVariants",
+        "kind": "type"
+      }
+    ],
+    "/dom": [
+      {
+        "symbol": "UseClipboardOptions",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseClipboardReturn",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseUserInvalidAriaOptions",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseUserInvalidAriaReturn",
+        "kind": "type"
+      }
+    ],
+    "/metric-badge": [
+      {
+        "symbol": "MetricBadgeLabelPosition",
+        "kind": "type"
+      },
+      {
+        "symbol": "MetricBadgeProps",
+        "kind": "type"
+      },
+      {
+        "symbol": "MetricBadgeSize",
+        "kind": "type"
+      }
+    ],
+    "/metric-cell": [
+      {
+        "symbol": "MetricCellAppearance",
+        "kind": "type"
+      },
+      {
+        "symbol": "MetricCellProps",
+        "kind": "type"
+      }
+    ],
+    "/metric-stack": [
+      {
+        "symbol": "MetricRowProps",
+        "kind": "type"
+      },
+      {
+        "symbol": "MetricStackProps",
+        "kind": "type"
+      }
+    ],
+    "/stacked-icons": [
+      {
+        "symbol": "StackedIconGroupProps",
+        "kind": "type"
+      }
+    ],
+    "/paper-backdrop": [
+      {
+        "symbol": "PaperBackdropFrequency",
+        "kind": "type"
+      },
+      {
+        "symbol": "PaperBackdropProps",
+        "kind": "type"
+      }
+    ],
+    "/dark": [
+      {
+        "symbol": "DarkFlipSettledCallback",
+        "kind": "type"
+      },
+      {
+        "symbol": "DarkModeSyncScriptOptions",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseGlobalDarkOptions",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseGlobalDarkReturn",
+        "kind": "type"
+      }
+    ],
+    "/canvas": [
+      {
+        "symbol": "Canvas2DFrame",
+        "kind": "type"
+      },
+      {
+        "symbol": "Canvas2DHandle",
+        "kind": "type"
+      },
+      {
+        "symbol": "Canvas2DOptions",
+        "kind": "type"
+      },
+      {
+        "symbol": "Canvas2DSuspendReason",
+        "kind": "type"
+      }
+    ],
+    "/dot-flow-field": [
+      {
+        "symbol": "DotFlowFieldHandle",
+        "kind": "type"
+      },
+      {
+        "symbol": "FlowFieldConfig",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseDotFlowFieldOptions",
+        "kind": "type"
+      },
+      {
+        "symbol": "WaveComponent",
+        "kind": "type"
+      }
+    ],
+    "/concentric": [
+      {
+        "symbol": "ConcentricConfig",
+        "kind": "type"
+      },
+      {
+        "symbol": "ConcentricHandle",
+        "kind": "type"
+      },
+      {
+        "symbol": "UseConcentricOptions",
+        "kind": "type"
+      }
+    ],
+    "/header-ribbon": [
+      {
+        "symbol": "HeaderRibbonPosition",
+        "kind": "type"
+      },
+      {
+        "symbol": "HeaderRibbonProps",
+        "kind": "type"
+      }
+    ],
+    "/constellation": [
+      {
+        "symbol": "ConstellationField",
+        "kind": "type"
+      },
+      {
+        "symbol": "ConstellationProps",
+        "kind": "type"
+      },
+      {
+        "symbol": "ConstellationWarp",
+        "kind": "type"
+      }
+    ],
+    "/fourier-field": [
+      {
+        "symbol": "FourierFieldConfig",
+        "kind": "type"
+      },
+      {
+        "symbol": "FourierFieldProps",
+        "kind": "type"
+      }
+    ],
+    "/animated-digit": [
+      {
+        "symbol": "AnimatedDigitMode",
+        "kind": "type"
+      },
+      {
+        "symbol": "AnimatedDigitProps",
+        "kind": "type"
+      }
+    ],
+    "/tabs": [
+      {
+        "symbol": "SegmentedTabOption",
+        "kind": "type"
+      },
+      {
+        "symbol": "SegmentedTabsOrientation",
+        "kind": "type"
+      },
+      {
+        "symbol": "SegmentedTabsProps",
+        "kind": "type"
+      },
+      {
+        "symbol": "SegmentedTabsVariant",
+        "kind": "type"
+      }
+    ]
+  }
+}
