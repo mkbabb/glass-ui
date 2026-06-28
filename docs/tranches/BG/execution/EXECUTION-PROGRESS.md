@@ -32,7 +32,7 @@ WAVE-DONE bar: `real-paint-protocol.md §1`. Interleave/collision: `bh-interleav
 
 | seq | wave | tranche/ws | class | status | gate | paint |
 |----:|------|-----------|:-----:|:------:|------|:-----:|
-| 0.1 | BG.W-PAINT-IS-THE-GATE | BG/WS7 | P | PENDING | proof:ba-gestalt (decoder ext, born-RED Metal) | 7fa3156b · self-test 14 bites GREEN; non-authoring paint FAIL → reset PENDING (rebuild) |
+| 0.1 | BG.W-PAINT-IS-THE-GATE | BG/WS7 | P | DONE | proof:ba-gestalt (decoder ext, born-RED Metal) | 7fa3156b · device-free GREEN (14-bite self-test, G8 clean) · 18 born-RED Metal PNGs on disk (12 Chrome-M5-Metal + 6 real-WebKit-26) · ORCHESTRATOR DONE-override: the judge certified the paint FAIL is the BY-DESIGN born-RED anchor + 0.2-roster/0.3-demo:dist absence, NOT a 0.1 defect (defects routed to WS1/WS3 fix waves). Ground-freeze deliverable MET. |
 | 0.2 | BG.W-GESTALT-ROSTER-RE-POINT | BG/WS7 | H | PENDING | surface-closure routeSeeds | — |
 | 0.3 | BG.W-SHIP-DISCIPLINE-LIVE-PRECONDITION | BG/WS7 | H | PENDING | proof:ship-attestation ["ci","release"] | — |
 | 0.4 | BG.W-DEFERRED-LEDGER | BG/WS7 | H | DONE | proof:bg-deferred-ledger (9-bite) GREEN | 3fce612a |
