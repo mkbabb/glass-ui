@@ -1,0 +1,121 @@
+{
+  "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Max, Unspecified Version)",
+  "results": {
+    "broken": {
+      "pngPath": "/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/1cec2ef4-8e9b-486a-a1f7-877fa77a0ade/scratchpad/metal-broken-desktop.png",
+      "dims": {
+        "w": 1280,
+        "h": 800
+      },
+      "field": {
+        "meanL": 0.8637077271207949,
+        "meanChroma": 0.08469978562009359,
+        "meanAlpha": 1,
+        "meanHue": 55.46341829346009,
+        "chromaMax": 0.09068996625550324,
+        "lVar": 0.00002993581645038823,
+        "samples": 23072
+      },
+      "amber": {
+        "meanL": 0.8740442191050588,
+        "meanChroma": 0.09702398393889818,
+        "meanAlpha": 1,
+        "meanHue": 70.8398567793827,
+        "chromaMax": 0.1032583282489127,
+        "lVar": 0.000009247544442425593,
+        "samples": 19982
+      },
+      "card": {
+        "meanL": 0.9739050876914919,
+        "meanChroma": 0.01471548211854171,
+        "meanAlpha": 1,
+        "meanHue": 70.89070037465146,
+        "chromaMax": 0.014715482118541609,
+        "lVar": 9.092726571680032e-14,
+        "samples": 5040
+      },
+      "top": {
+        "meanL": 0.19320047370322427,
+        "meanChroma": 0.00381488266739864,
+        "meanAlpha": 1,
+        "meanHue": 48.516683195338665,
+        "chromaMax": 0.0038148826673979606,
+        "lVar": 2.987193825632062e-14,
+        "samples": 19200
+      },
+      "below": {
+        "meanL": 0.891921008175364,
+        "meanChroma": 0.07527965538614856,
+        "meanAlpha": 1,
+        "meanHue": 66.57937363245739,
+        "chromaMax": 0.09228286050713924,
+        "lVar": 0.000042443583799123275,
+        "samples": 21760
+      },
+      "desc": "metallic field I=1 + near-black top-bar"
+    },
+    "fixed": {
+      "pngPath": "/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/1cec2ef4-8e9b-486a-a1f7-877fa77a0ade/scratchpad/metal-fixed-desktop.png",
+      "dims": {
+        "w": 1280,
+        "h": 800
+      },
+      "field": {
+        "meanL": 0.9420516186151071,
+        "meanChroma": 0.030488022312947897,
+        "meanAlpha": 1,
+        "meanHue": 59.98331739506464,
+        "chromaMax": 0.03419832926374894,
+        "lVar": 0.000008142102565278364,
+        "samples": 23072
+      },
+      "amber": {
+        "meanL": 0.9458534872935309,
+        "meanChroma": 0.03508625991659466,
+        "meanAlpha": 1,
+        "meanHue": 73.07663249067336,
+        "chromaMax": 0.039176576590560876,
+        "lVar": 0.000009041522804897895,
+        "samples": 19982
+      },
+      "card": {
+        "meanL": 0.9739050876914919,
+        "meanChroma": 0.01471548211854171,
+        "meanAlpha": 1,
+        "meanHue": 70.89070037465146,
+        "chromaMax": 0.014715482118541609,
+        "lVar": 9.092726571680032e-14,
+        "samples": 5040
+      },
+      "top": {
+        "meanL": 0.9577198266106107,
+        "meanChroma": 0.02341935991352816,
+        "meanAlpha": 1,
+        "meanHue": 71.11587406155917,
+        "chromaMax": 0.030450288483023506,
+        "lVar": 0.000021816125614360082,
+        "samples": 19200
+      },
+      "below": {
+        "meanL": 0.9541894092667504,
+        "meanChroma": 0.025725687591700828,
+        "meanAlpha": 1,
+        "meanHue": 69.92498884573111,
+        "chromaMax": 0.03296914520854678,
+        "lVar": 0.00002579889682630121,
+        "samples": 21760
+      },
+      "desc": "calm field I=0.22, no top-bar"
+    }
+  },
+  "verdicts": {
+    "metalReached": true,
+    "floor1280": true,
+    "ceilingSeparatesMetallicFromCalm": true,
+    "ceilingSeparatesMetallicFromCard": true,
+    "hueCannotSeparate": true,
+    "topBarSeparates": true,
+    "measurementValid": true
+  },
+  "ceiling": 0.07
+}

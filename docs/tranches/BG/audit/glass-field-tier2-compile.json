@@ -1,0 +1,41 @@
+{
+  "artifact": "BG-WS8 Tier-2 WGSL compile-proof (K5/K10/R9)",
+  "shader": "glassShader-tier2.wgsl",
+  "claim": "WebKit-26's WGSL COMPILER accepts the textureSampleLevel rewrite (array<vec4f,8> panel loop, ZERO implicit textureSample). This proves the COMPILE, NOT that a default-Safari user reaches Tier-2.",
+  "caveat_honest": "WebGPU is FLAG-GATED in Safari 26 (WKWebView needs the private _WKFeature WebGPUEnabled flip — see wkdriver.swift). Tier-2 reaches ~0 default-Safari users today; Tier-1 WebGL2/GLSL is the REAL Safari floor. 'compiles' != 'is the Tier-2 rung' (the JS array<vec4f,8> uniform writer + tier-oracle wiring + render-target two-pass are the W-BACKDROP-SAMPLE/W-SOTA-LADDER integration residual, R9).",
+  "shader_shape": {
+    "panel_bounds": "array<vec4f, 8> (MAX_PANELS=8u)",
+    "sampler_wrapper": "sampleBG = textureSampleLevel(tex, samp, uv, 0.0)",
+    "textureSampleLevel_sites": 5,
+    "implicit_textureSample_count": 0,
+    "uniformity_legal": true,
+    "displacement": "rim-concentrated 4th-order squircle (replaces flat from_center*strength)",
+    "blur_taps": "<=9"
+  },
+  "engines": {
+    "dawn_chromium": {
+      "role": "the CI-green re-runnable WGSL compile arm + the ZERO-implicit-textureSample regression bite",
+      "navigator_gpu": "defined (Chrome 113+ default-on)",
+      "compile": "accepted",
+      "errCount": 0,
+      "pipelineErr": null,
+      "note": "Dawn enforces the SAME uniformity-analysis rule; a future edit re-introducing an implicit textureSample re-reds here too."
+    },
+    "webkit_26": {
+      "role": "the COMMITTED static manual-flagged-Safari compile proof (NEVER a webkit-project CI arm — Playwright bundled WebKit has navigator.gpu undefined, K10)",
+      "platform": "Apple M5 Max, macOS 26.4.1, Safari 26.4, WKWebView via wkdriver.swift (_WKFeature WebGPUEnabled flip)",
+      "navigator_gpu": "undefined by default; defined only under the private flag flip",
+      "compile": "accepted",
+      "errCount": 0,
+      "pipelineErr": null,
+      "rimDeltaMean": "non-zero displacement rendered (PT-C / PT1 anchor rimDelta 240.8 / chromaticRim 79.5)"
+    },
+    "playwright_bundled_webkit": {
+      "role": "NEGATIVE control — proves the structural impossibility the K10 split is built around",
+      "navigator_gpu": "undefined",
+      "compile": "N/A — no WebGPU; the webkit testMatch carries Tier-0 + the Tier-1 WebGL2 arm ONLY, NEVER a Tier-2 WGSL arm"
+    }
+  },
+  "K10_split": "(1) Dawn(chromium) re-runnable WGSL compile arm in glass-field-lens.spec.ts (CI-green, the regression bite); (2) THIS committed static JSON for WebKit-26 (manual flagged-Safari). The webkit Playwright project gets glass-suffuse.spec.ts + the Tier-1 WebGL2 arm ONLY.",
+  "source": "PT-C (pass-2) + the pass-3 Tier-2 split prototype (build=true), re-verified this synthesis pass; glassShader-tier2.wgsl committed alongside."
+}

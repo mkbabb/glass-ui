@@ -1,0 +1,159 @@
+<!doctype html><html><head><meta charset=utf-8><title>wgsl compile</title></head>
+<body><pre id=out>running...</pre>
+<script type=module>
+const out = document.getElementById('out');
+const log = (o) => { out.textContent = JSON.stringify(o, null, 2); window.__RESULT__ = o; };
+
+// ORIGINAL shader (implicit textureSample in non-uniform control flow) — abbreviated
+// to the violating shape: early-return passthrough + per-fragment branch sampling.
+const ORIGINAL = `
+struct U { resolution: vec2f, glass_bounds: vec4f, blur_radius: f32, _p: vec3f };
+@group(0) @binding(0) var<uniform> u: U;
+@group(0) @binding(1) var tex: texture_2d<f32>;
+@group(0) @binding(2) var smp: sampler;
+@fragment fn fs_main(@builtin(position) fc: vec4f) -> @location(0) vec4f {
+  let uv = fc.xy / u.resolution;
+  let gmin = u.glass_bounds.xy;
+  let gmax = u.glass_bounds.xy + u.glass_bounds.zw;
+  if (uv.x < gmin.x || uv.x > gmax.x || uv.y < gmin.y || uv.y > gmax.y) {
+    return textureSample(tex, smp, uv);              // implicit LOD in non-uniform CF
+  }
+  let c = textureSample(tex, smp, uv + vec2f(0.01)); // also non-uniform CF
+  return c;
+}
+@vertex fn vs_main(@builtin(vertex_index) vi: u32) -> @builtin(position) vec4f {
+  let x = f32(i32(vi)/2)*4.0-1.0; let y = f32(i32(vi)%2)*4.0-1.0;
+  return vec4f(x,y,0.0,1.0);
+}`;
+
+async function compileInfo(device, code) {
+  device.pushErrorScope('validation');
+  const mod = device.createShaderModule({ code });
+  const info = await mod.getCompilationInfo();
+  const scopeErr = await device.popErrorScope();
+  const errors = info.messages.filter(m => m.type === 'error').map(m => m.message);
+  return { mod, errors, scopeErr: scopeErr ? scopeErr.message : null };
+}
+
+(async () => {
+  try {
+    if (!navigator.gpu) return log({ ok:false, reason:'no navigator.gpu' });
+    const adapter = await navigator.gpu.requestAdapter();
+    if (!adapter) return log({ ok:false, reason:'no adapter' });
+    const device = await adapter.requestDevice();
+    const adapterInfo = adapter.info ? { vendor:adapter.info.vendor, arch:adapter.info.architecture, desc:adapter.info.description } : {};
+
+    // 1) ORIGINAL — expect uniformity errors
+    const orig = await compileInfo(device, ORIGINAL);
+
+    // 2) REWRITE
+    const REWRITE = window.__REWRITE_SRC__;
+    const rew = await compileInfo(device, REWRITE);
+
+    // 3) Build a pipeline from the rewrite + a one-panel render -> readback
+    let renderResult = { attempted:false };
+    if (rew.errors.length === 0) {
+      renderResult = await renderRewrite(device, rew.mod);
+    }
+
+    log({
+      ok: true,
+      adapterInfo,
+      original: { errorCount: orig.errors.length, sample: orig.errors.slice(0,2), scopeErr: orig.scopeErr },
+      rewrite:  { errorCount: rew.errors.length, sample: rew.errors.slice(0,2), scopeErr: rew.scopeErr },
+      render: renderResult,
+    });
+  } catch (e) {
+    log({ ok:false, reason:'exception', error:String(e), stack:String(e.stack||'') });
+  }
+})();
+
+async function renderRewrite(device, mod) {
+  const W = 64, H = 64;
+  // High-frequency background texture (checker) so displacement MOVES texels.
+  const bg = device.createTexture({
+    size:[W,H], format:'rgba8unorm',
+    usage: GPUTextureUsage.TEXTURE_BINDING | GPUTextureUsage.COPY_DST
+  });
+  const data = new Uint8Array(W*H*4);
+  for (let y=0;y<H;y++) for (let x=0;x<W;x++){
+    const i=(y*W+x)*4; const c=((x>>2)+(y>>2))&1 ? 255:0;
+    data[i]=c; data[i+1]=c; data[i+2]=c; data[i+3]=255;
+  }
+  device.queue.writeTexture({texture:bg}, data, {bytesPerRow:W*4, rowsPerImage:H}, {width:W,height:H});
+  const sampler = device.createSampler({magFilter:'nearest',minFilter:'nearest'});
+
+  // Uniforms — must match the rewrite struct layout (176 bytes).
+  const ubo = device.createBuffer({ size:176, usage:GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST });
+  const ab = new ArrayBuffer(176);
+  const f = new Float32Array(ab); const u32 = new Uint32Array(ab);
+  f[0]=W; f[1]=H;            // resolution
+  f[2]=0.0;                  // time
+  u32[3]=1;                  // panel_count = 1
+  f[4]=0.5; f[5]=0.5;        // light_pos
+  f[6]=2.0;                  // blur_radius
+  f[7]=6.0;                  // refraction_strength (strong, to make displacement obvious)
+  f[8]=0.0;                  // chromatic_aberration (off for determinism)
+  f[9]=0.0;                  // caustic_intensity (off)
+  // f[10],f[11] pad
+  // glass_bounds[0] at offset 48 bytes -> float index 12: a centred panel
+  f[12]=0.25; f[13]=0.25; f[14]=0.5; f[15]=0.5;
+  device.queue.writeBuffer(ubo, 0, ab);
+
+  const target = device.createTexture({
+    size:[W,H], format:'rgba8unorm',
+    usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.COPY_SRC
+  });
+
+  device.pushErrorScope('validation');
+  const pipeline = device.createRenderPipeline({
+    layout:'auto',
+    vertex:{ module:mod, entryPoint:'vs_main' },
+    fragment:{ module:mod, entryPoint:'fs_main', targets:[{format:'rgba8unorm'}] },
+    primitive:{ topology:'triangle-list' },
+  });
+  const pipelineErr = await device.popErrorScope();
+
+  const bg0 = device.createBindGroup({
+    layout: pipeline.getBindGroupLayout(0),
+    entries:[
+      {binding:0, resource:{buffer:ubo}},
+      {binding:1, resource: bg.createView()},
+      {binding:2, resource: sampler},
+    ]
+  });
+
+  const enc = device.createCommandEncoder();
+  const pass = enc.beginRenderPass({ colorAttachments:[{ view:target.createView(), loadOp:'clear', storeOp:'store', clearValue:{r:0,g:0,b:0,a:1} }] });
+  pass.setPipeline(pipeline); pass.setBindGroup(0,bg0); pass.draw(3); pass.end();
+
+  // readback
+  const rb = device.createBuffer({ size:W*H*4, usage:GPUBufferUsage.COPY_DST|GPUBufferUsage.MAP_READ });
+  enc.copyTextureToBuffer({texture:target},{buffer:rb,bytesPerRow:W*4,rowsPerImage:H},{width:W,height:H});
+  device.queue.submit([enc.finish()]);
+  await rb.mapAsync(GPUMapMode.READ);
+  const pix = new Uint8Array(rb.getMappedRange().slice(0));
+  rb.unmap();
+
+  // Compare panel-RIM region (where squircle displacement is strongest) against the
+  // raw checker passthrough at the same coords. Non-zero delta => displacement works.
+  const sampleChecker = (x,y)=>{ const c=((x>>2)+(y>>2))&1?255:0; return c; };
+  let rimDelta=0, rimN=0, interiorPaint=0;
+  for (let y=0;y<H;y++) for (let x=0;x<W;x++){
+    const lx=(x/W-0.5), ly=(y/H-0.5);
+    const inPanel = (x/W>=0.25 && x/W<=0.75 && y/H>=0.25 && y/H<=0.75);
+    if (!inPanel) continue;
+    interiorPaint++;
+    const rr = Math.min(Math.hypot((x/W-0.5)*2/ (0.5), (y/H-0.5)*2/(0.5)),1); // approx
+    const r = Math.min(Math.hypot((x/W-0.5)*2, (y/H-0.5)*2),1);
+    if (r>0.6) { // rim band
+      const painted = pix[(y*W+x)*4];
+      const raw = sampleChecker(x,y);
+      rimDelta += Math.abs(painted-raw); rimN++;
+    }
+  }
+  return { attempted:true, pipelineErr: pipelineErr?pipelineErr.message:null,
+           interiorPx: interiorPaint, rimN, rimDeltaSum: rimDelta,
+           rimDeltaMean: rimN? +(rimDelta/rimN).toFixed(2):0 };
+}
+</script></body></html>
