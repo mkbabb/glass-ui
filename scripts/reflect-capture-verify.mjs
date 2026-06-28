@@ -245,7 +245,7 @@ function decodePngRgba(absPath) {
  *
  * @param {string} absPath absolute path to the captured PNG
  * @param {{x:number, y:number, w:number, h:number}} region fractional box ∈ [0,1]
- * @returns {{meanL:number, meanChroma:number, meanAlpha:number, samples:number} | null}
+ * @returns {{meanL:number, meanChroma:number, meanAlpha:number, meanA:number, meanB:number, samples:number} | null}
  *   null when the PNG cannot be decoded or the region is empty.
  */
 export function pngRegionStats(absPath, region) {
@@ -261,6 +261,8 @@ export function pngRegionStats(absPath, region) {
     let sumL = 0,
         sumChroma = 0,
         sumAlpha = 0,
+        sumA = 0,
+        sumB = 0,
         n = 0;
     for (let y = y0; y < y1; y++) {
         const rowBase = y * w * channels;
@@ -269,10 +271,67 @@ export function pngRegionStats(absPath, region) {
             const ok = oklabFromRgb(pixels[i], pixels[i + 1], pixels[i + 2]);
             sumL += ok.L;
             sumChroma += ok.chroma;
+            sumA += ok.a;
+            sumB += ok.b;
             sumAlpha += channels === 4 ? pixels[i + 3] / 255 : 1;
             n++;
         }
     }
     if (!n) return null;
-    return { meanL: sumL / n, meanChroma: sumChroma / n, meanAlpha: sumAlpha / n, samples: n };
+    return {
+        meanL: sumL / n,
+        meanChroma: sumChroma / n,
+        meanAlpha: sumAlpha / n,
+        meanA: sumA / n,
+        meanB: sumB / n,
+        samples: n,
+    };
+}
+
+// ── BG.W-PAINT-IS-THE-GATE — the per-region DELTA (defect localization) ───────────
+// The Stage-0 ground-freeze adds defect-LOCALIZING decode: where pngRegionStats
+// reads ONE region, the delta reads the OKLab divergence BETWEEN two regions of the
+// SAME capture. The D5 aberrant-top-bar defect (a full-width horizontal band that
+// reads as a distinct slab, NOT composed into the field) is localized as the OKLab
+// ΔE between the top-bar region mean and the field region mean — a large ΔE NAMES
+// the top bar as the failing region, not "the surface broke." The meanA/meanB
+// exposure above is the prerequisite (a chroma-MAGNITUDE-only delta cannot tell a
+// warm field from a cold-metallic one at equal chroma; the D2 hue axis needs a/b).
+
+/**
+ * The PURE per-region OKLab delta between two region-stat objects (the D5 top-bar
+ * localization math). `dE` is the OKLab ΔE = √(ΔL² + Δa² + Δb²) between the two
+ * regions' mean colours — the magnitude a divergent slab registers. PURE over two
+ * stats objects (no PNG) so the gate self-test exercises it deterministically with
+ * zero on-disk fixture (the text-patch discipline — no committed binary in a diff).
+ *
+ * @param {{meanL:number, meanChroma:number, meanA:number, meanB:number}} a
+ * @param {{meanL:number, meanChroma:number, meanA:number, meanB:number}} b
+ * @returns {{dL:number, dChroma:number, dE:number}}
+ */
+export function regionStatsDelta(a, b) {
+    const dL = (a.meanL ?? 0) - (b.meanL ?? 0);
+    const dA = (a.meanA ?? 0) - (b.meanA ?? 0);
+    const dB = (a.meanB ?? 0) - (b.meanB ?? 0);
+    const dChroma = (a.meanChroma ?? 0) - (b.meanChroma ?? 0);
+    return { dL, dChroma, dE: Math.hypot(dL, dA, dB) };
+}
+
+/**
+ * The on-disk top-bar/field delta (BG.W-PAINT-IS-THE-GATE D5 localization). Reads
+ * two probe regions of ONE capture via pngRegionStats (the SINGLE decoder — no
+ * second IDAT inflate) and returns regionStatsDelta plus the two region stats. The
+ * gate feeds `dE` into the roster row's expect band as the `topDelta` axis. `null`
+ * when either region is undecodable/empty.
+ *
+ * @param {string} absPath absolute path to the captured PNG
+ * @param {{x:number, y:number, w:number, h:number}} regionA the top-bar region
+ * @param {{x:number, y:number, w:number, h:number}} regionB the field region
+ * @returns {{dL:number, dChroma:number, dE:number, regionA:object, regionB:object} | null}
+ */
+export function pngRegionDelta(absPath, regionA, regionB) {
+    const a = pngRegionStats(absPath, regionA);
+    const b = pngRegionStats(absPath, regionB);
+    if (!a || !b) return null;
+    return { ...regionStatsDelta(a, b), regionA: a, regionB: b };
 }

@@ -1,55 +1,50 @@
 #!/usr/bin/env node
-// BC.W-GESTALT-FIRST — proof:ba-gestalt, RE-MADE a PIXEL reader, ci-BLOCKING.
+// BG.W-PAINT-IS-THE-GATE — proof:ba-gestalt reads LIVE BG paint, DEFECT-LOCALIZING.
 //
-// The keystone gate redesign. BA.W-GESTALT-GATE minted a per-surface acceptance
-// roster ABOVE the per-mechanism π readback — but it was paint-BLIND (it read
-// verdict STRINGS + asserted PNGs resolve, never a luminance/chroma pixel),
-// release-DEFERRED (tags:["local"]/["release"] — it never ran in --run ci, so the
-// mid-tranche battery carried zero gestalt signal), and single-flipper-LOCKED
-// (W-REFLECT2/W-REFLECT3 the single authorized verdict-flipper — the
-// write-locked-verdict deadlock that funneled all paint-verification into one
-// terminal wave the execution stop cut, the disease that destroyed BB).
+// The Stage-0 ground-freeze. BC.W-GESTALT-FIRST made this gate a PIXEL reader (G5
+// luminance/chroma band + G7 auto-revoke + G8 no-terminal-reflect). BG re-points it
+// to the BG tranche, PURGES the hardcoded surface set, and extends the decoder so a
+// RED NAMES the failing region (the D5 top-bar, the D2 metallic field) instead of
+// "the surface broke":
+//   - RE-POINTED to docs/tranches/BG/audit/reflect/bg-gestalt-roster.md. The gate
+//     reads LIVE BG paint; the roster + the 4.2.0 Metal ground-freeze captures land
+//     via the NON-AUTHORING capture agent (the building agent never judges its own
+//     paint — real-paint-protocol §3). Until they land the gate is born-RED (no
+//     roster present → [ROSTER-PRESENT]); the SELF-TEST below is the device-free
+//     proof the new clauses are load-bearing.
+//   - G6 PURGED — the hardcoded REQUIRED_SURFACES list is GONE (a hand-maintained
+//     per-tranche array is the exact close-class drift it tried to catch). DERIVED-
+//     from-route-files completeness (surface-closure.mjs routeSeeds) is the next wave
+//     (BG.W-GESTALT-ROSTER-RE-POINT).
+//   - DEFECT-LOCALIZATION (new) — the expect band gains the `topDelta` axis (the OKLab
+//     ΔE between a declared top-bar probe (tx=,ty=,tw=,th=) and the field probe — the
+//     D5 aberrant-top-bar localization) + the `meanChroma<=<ceiling>` ceiling (the D2
+//     metallic-vs-aurora over-saturation), and every failed predicate is TAGGED with
+//     its localized defect (D5-TOP-BAR @ top-bar, D2-METALLIC @ field, D-GREY @ field,
+//     …). The FIELD probe is declared away from content, so a high-chroma CONTENT
+//     rainbow never trips the field ceiling (content-rainbow-no-false-RED).
+//   - G5 (PIXEL band) — the gate reads the captured PNG at the FIELD probe + asserts
+//     the warm-translucent band (NOT the grey oklab(0.695) slab — grey separates from
+//     warm by CHROMA, not L). A hand-typed "PASS" is not sufficient.
+//   - G7 (auto-revoke) — a drifted surface-hash AUTO-REVERTS the PASS to FAIL (the
+//     all-PASS-re-shot-broken regression: a green capture replaced by a broken one
+//     auto-reverts; the surface must be re-captured + re-pixel-read).
+//   - G8 (no-terminal-reflect) — scans docs/tranches/BG/waves/*.md + .../PROGRESS*.md
+//     for a wave DEFERRING its verdict to a terminal-reflect wave (the BB disease).
+//     CONTEXT-AWARE (forensic-quote + RETIRE exemptions).
 //
-// BC re-authors it into the SINGLE close oracle for PAINT, mechanically derived
-// from the captured pixels:
-//   - re-tagged ["local","ci","release"] — it runs in --run ci (the mid-tranche
-//     battery now carries gestalt signal; kills BC.W-PM-SYNTHESIS req #4).
-//   - G5 (PIXEL band) — the gate reads the captured PNG's luminance + chroma +
-//     alpha at the roster row's declared probe region and asserts the stats fall
-//     in the row's expect band (warm-translucent, NOT the grey oklab(0.695) slab).
-//     A hand-typed "PASS" is no longer sufficient (kills req #4 roster-text).
-//   - G6 (grow-the-roster) — the roster MUST enroll every BC-touched surface (the
-//     8 BA surfaces + the BC dock/glass/viz/tabs/controls surfaces). A surface a BC
-//     wave paints but the roster omits → RED (kills the BB roster-never-grew gap).
-//   - G7 (auto-revoke) — the surface-hash freshness clause is RE-PURPOSED: when a
-//     surface's surface-hash no longer matches its surface-paths' current bytes the
-//     verdict AUTO-REVERTS to FAIL (not a stale-warning). ANY wave editing a
-//     painting source revokes that surface's PASS — there is no single authorized
-//     flipper; the surface must be re-captured + re-pixel-read before the close.
-//     This is the DEFAULT for the gestalt gate (BB's --strict-freshness opt-in
-//     became the default — req #5).
-//   - G8 (no-terminal-reflect) — a device-free SOURCE clause scans
-//     docs/tranches/BC/waves/*.md + docs/tranches/BC/**/PROGRESS*.md line-by-line
-//     for a wave DEFERRING its own π/verdict to a future terminal-reflect wave and
-//     REDs on a real deferral (kills req #1). CONTEXT-AWARE, not a blind regex:
-//     G8a forward-deferral (`rides? (the )?W-REFLECT\d`) with two exemption arms
-//     (G8a-exempt-1 forensic-quote span-enclosure, G8a-exempt-2 RETIRE/forbidden
-//     context) + G8b staged/deferred-verdict. The corpus correctly RETIRES the
-//     deferral, so G8 is GREEN on the actual 96-wave HEAD corpus (every W-REFLECT
-//     mention is quote-wrapped OR on a RETIRE line); born-RED only on a SYNTHETIC
-//     real deferral.
+// PAINT/GESTALT split: the real-surface roster verdicts stay born-RED (the 4.2.0
+// Metal ground); they flip GREEN ONLY when a paint wave lands warm-cream over a fresh
+// source AND a NON-AUTHORING agent re-captures + pixel-reads inside the warm-glass
+// band. The SELF-TEST fixtures are the proof the gate's logic is load-bearing; the
+// real-surface arm staying born-RED is EXPECTED + CORRECT. There is NO terminal
+// reflect wave — the close is the UNION of per-wave non-authoring verdicts.
 //
-// PAINT/GESTALT split: the real-surface roster verdicts stay born-RED at HEAD (the
-// grey ground); they flip GREEN only when a Band-1 wave PAINTS warm-cream + re-
-// captures + re-pixel-reads. The SELF-TEST fixtures are the proof the gate's logic
-// is load-bearing; the real-surface arm staying RED-until-Band-1 is EXPECTED. There
-// is NO terminal reflect wave — the close is the UNION of per-wave verdicts.
-//
-// ONE hash leaf + ONE PNG decoder (BB.W-GESTALT-GATE2 + BC.W-GESTALT-FIRST): the
-// pixel reader extends scripts/reflect-capture-verify.mjs (pngRegionStats); a second
-// createHash/PNG-decoder outside the leaf is forbidden. The OKLab decompose lives in
-// the leaf (BC.W-PAINT-GATE imports it). The import.meta.url run-guard is preserved
-// (importing the leaf never runs this gate).
+// ONE hash leaf + ONE PNG decoder (BB.W-GESTALT-GATE2 + BC.W-GESTALT-FIRST + BG.W-
+// PAINT-IS-THE-GATE): the pixel reader + the defect-localizing pngRegionDelta extend
+// scripts/reflect-capture-verify.mjs; a second createHash/PNG-decoder outside the leaf
+// is forbidden. The OKLab decompose lives in the leaf. The import.meta.url run-guard
+// is preserved (importing the leaf never runs this gate).
 
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { resolve, relative, basename, join } from "node:path";
@@ -63,40 +58,101 @@ import {
     surfaceHash,
     freshnessVerdict,
     pngRegionStats,
+    pngRegionDelta,
+    regionStatsDelta,
 } from "./reflect-capture-verify.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const COMMAND = "npm run proof:ba-gestalt";
-const REFLECT_DIR = resolve(ROOT, "docs/tranches/BC/audit/reflect");
-const ROSTER = resolve(REFLECT_DIR, "bc-gestalt-roster.md");
-const WAVES_DIR = resolve(ROOT, "docs/tranches/BC/waves");
-const TRANCHE_DIR = resolve(ROOT, "docs/tranches/BC");
+// BG.W-PAINT-IS-THE-GATE re-points the close oracle to the BG tranche: the gate
+// reads LIVE BG paint (the 4.2.0 Metal ground-freeze roster + captures land via the
+// non-authoring capture agent per the real-paint protocol §3). The roster/per-surface
+// records resolve under docs/tranches/BG/audit/reflect/.
+const REFLECT_DIR = resolve(ROOT, "docs/tranches/BG/audit/reflect");
+const ROSTER = resolve(REFLECT_DIR, "bg-gestalt-roster.md");
+const WAVES_DIR = resolve(ROOT, "docs/tranches/BG/waves");
+const TRANCHE_DIR = resolve(ROOT, "docs/tranches/BG");
 
 // The whole-page-capture dimension floor (BB.W-GESTALT-GATE2 — preserved).
 const MIN_CAPTURE_WIDTH = 320;
 const MIN_CAPTURE_HEIGHT = 320;
 
-// ── G6 — the GROWN roster (the BB roster-never-grew gap closed) ─────────────────
-// The completeness set is the 8 BA surfaces + the BC dock/glass/viz/tabs/controls
-// surfaces. A surface a BC wave paints but the roster omits → RED. An extra surface
-// is allowed (a future split). These are the canonical BC-touched surface names.
-const REQUIRED_SURFACES = [
-    // the 8 BA surfaces (inherited)
-    "dock",
-    "configurators-goo",
-    "aurora",
-    "glass-feedback",
-    "shell",
-    "motion-fourier",
-    "dark-register",
-    "cross-repo",
-    // the BC dock/glass/viz/tabs/controls surfaces (the grow)
-    "dock-engine",
-    "glass-adaptive",
-    "viz-procedural",
-    "tabs-segmented",
-    "controls-custom",
-];
+// ── G6 PURGED (BG.W-PAINT-IS-THE-GATE) ──────────────────────────────────────────
+// The HARDCODED `REQUIRED_SURFACES` completeness list is RETIRED. A hand-maintained
+// per-tranche surface array is the exact close-class drift it was meant to catch — it
+// went stale every tranche and a surface a wave painted but the array omitted sailed
+// past. The DERIVED-from-route-files surface completeness (the routeSeeds closure over
+// the real demo route leaf) is BG.W-GESTALT-ROSTER-RE-POINT's `surface-closure.mjs`.
+// This wave reads the roster the gate is POINTED at + pixel-reads every declared
+// surface; it does not assert a fixed surface set.
+
+// ── BG.W-PAINT-IS-THE-GATE — the DEFECT-LOCALIZATION map ────────────────────────
+// The decoder extension turns a RED from "the surface broke" into "the FAILING REGION
+// is <region>, the defect is <D#>." A failed expect-band predicate is keyed (by its
+// `key`+direction) to the defect class it localizes; the violation message NAMES it.
+// The map mirrors docs/tranches/BG/DEFECT-LOCALIZATION-MAP.md (the human ledger). The
+// `region` distinguishes the FIELD-probe (the aurora backdrop / glass plate) from the
+// TOP-BAR probe — so a high-chroma CONTENT rainbow is never read against the FIELD
+// chroma-ceiling (the field probe is declared away from content; D2 is a backdrop
+// defect, not a palette demo).
+const DEFECT_LOCALIZATION = {
+    // D5 — the aberrant full-width top bar (it reads as a distinct slab divergent from
+    // the field, instead of composing INTO it). Localized by topDelta = OKLab ΔE
+    // between the top-bar region and the field region.
+    topDelta: {
+        defect: "D5-TOP-BAR",
+        region: "top-bar",
+        note: "the top region reads as a distinct slab divergent from the field (the aberrant full-width top bar) — it must compose INTO the field, not stack as a separate band",
+    },
+    // D2 — the metallic background (the gray→metallic over-correction). The field
+    // OVER-saturates past the warm-aurora ceiling → a `meanChroma<=<ceiling>` failure.
+    "meanChroma<=": {
+        defect: "D2-METALLIC",
+        region: "field",
+        note: "the field over-saturates past the warm-aurora ceiling (the gray→metallic over-correction) — the backdrop must read warm-translucent AURORA glass, not a metallic sheen",
+    },
+    // D-grey — the warm-chroma floor (the oklab(0.695) grey slab). A `meanChroma>=`
+    // floor failure: the field collapsed to neutral grey.
+    "meanChroma>=": {
+        defect: "D-GREY",
+        region: "field",
+        note: "the field drops below the warm-chroma floor (the oklab(0.695) grey slab) — it reads neutral grey, not warm-cream glass",
+    },
+    // D-cold-hue — a cold metallic/blue cast (negative warm-amber a/b). The D2 hue axis
+    // the meanA/meanB exposure unlocks.
+    meanB: {
+        defect: "D2-COLD-HUE",
+        region: "field",
+        note: "the field hue is cold (the warm-amber b channel collapsed/inverted) — a metallic/blue cast, not the warm-amber identity",
+    },
+    meanA: {
+        defect: "D2-COLD-HUE",
+        region: "field",
+        note: "the field hue is cold (the warm-amber a channel collapsed/inverted) — a metallic/blue cast, not the warm-amber identity",
+    },
+    // D-luma — the field luminance outside the mode's expect band (a too-dark void or a
+    // blown-out plate).
+    meanL: {
+        defect: "D-LUMA",
+        region: "field",
+        note: "the field luminance is outside the mode's expect band (a too-dark void or a blown-out plate)",
+    },
+};
+
+/**
+ * Localize a failed predicate to its defect class. Keyed by `key` (with the `<=`
+ * direction folded onto meanChroma so the ceiling [D2-metallic] and the floor
+ * [D-grey] are distinguished). Returns null for an un-mapped key (no localization tag).
+ * @param {{key:string, op?:string}} p
+ * @returns {{defect:string, region:string, note:string}|null}
+ */
+function localizeFail(p) {
+    if (p.key === "meanChroma")
+        return p.op === "<=" || p.op === "<"
+            ? DEFECT_LOCALIZATION["meanChroma<="]
+            : DEFECT_LOCALIZATION["meanChroma>="];
+    return DEFECT_LOCALIZATION[p.key] ?? null;
+}
 
 const VALID_VERDICTS = new Set(["FAIL", "PASS"]);
 const COLUMNS = [
@@ -184,18 +240,27 @@ function verifyCapture(repoRelPath) {
     return { ok: true, dims };
 }
 
-// ── The probe region + expect band parse (G5) ───────────────────────────────────
-// probe cell: `x=0.00,y=0.40,w=0.30,h=0.20` → a fractional box ∈ [0,1].
-// expect cell: `meanL=0.85..0.99;meanChroma>=0.01;meanAlpha<0.70` → the pixel band.
-/** @returns {{x:number,y:number,w:number,h:number}|null} */
+// ── The probe region + expect band parse (G5 + BG.W-PAINT-IS-THE-GATE) ───────────
+// probe cell: `x=0.00,y=0.40,w=0.30,h=0.20` → the FIELD probe (the glass plate /
+// aurora backdrop). An OPTIONAL second `tx=,ty=,tw=,th=` box declares the TOP-BAR
+// probe (the D5 localization region); when present + the expect band carries a
+// `topDelta` predicate, the gate feeds OKLab ΔE(top-bar, field) as `topDelta`.
+// expect cell: `meanL=0.85..0.99;meanChroma>=0.02;meanChroma<=0.18;topDelta<=0.10`.
+/** @returns {{field:{x:number,y:number,w:number,h:number}, topbar:{x:number,y:number,w:number,h:number}|null}|null} */
 function parseProbe(cell) {
     const m = {};
     for (const part of cell.split(/[,;]/)) {
-        const kv = part.trim().match(/^([xywh])\s*=\s*([0-9.]+)$/);
+        const kv = part.trim().match(/^(t?[xywh])\s*=\s*([0-9.]+)$/);
         if (kv) m[kv[1]] = parseFloat(kv[2]);
     }
-    if (["x", "y", "w", "h"].every((k) => Number.isFinite(m[k]))) return m;
-    return null;
+    const field = ["x", "y", "w", "h"].every((k) => Number.isFinite(m[k]))
+        ? { x: m.x, y: m.y, w: m.w, h: m.h }
+        : null;
+    if (!field) return null;
+    const topbar = ["tx", "ty", "tw", "th"].every((k) => Number.isFinite(m[k]))
+        ? { x: m.tx, y: m.ty, w: m.tw, h: m.th }
+        : null;
+    return { field, topbar };
 }
 /**
  * Parse the expect band into predicates. Supports `meanL=lo..hi`, `meanChroma>=v`,
@@ -220,20 +285,24 @@ function evalBand(stats, preds) {
     const fails = [];
     for (const p of preds) {
         const v = stats[p.key];
+        // BG.W-PAINT-IS-THE-GATE — every fail string carries its localized defect tag
+        // (D5-TOP-BAR @ top-bar, D2-METALLIC @ field, …), so a RED NAMES the region.
+        const loc = localizeFail(p);
+        const tag = loc ? ` [${loc.defect} @ ${loc.region}]` : "";
         if (!Number.isFinite(v)) {
-            fails.push(`${p.key} unread`);
+            fails.push(`${p.key} unread${tag}`);
             continue;
         }
         if (p.lo !== undefined) {
             if (v < p.lo || v > p.hi)
-                fails.push(`${p.key} ${v.toFixed(3)} ∉ [${p.lo},${p.hi}]`);
+                fails.push(`${p.key} ${v.toFixed(3)} ∉ [${p.lo},${p.hi}]${tag}`);
         } else {
             const ok =
                 p.op === ">=" ? v >= p.val :
                 p.op === "<=" ? v <= p.val :
                 p.op === ">" ? v > p.val :
                 v < p.val;
-            if (!ok) fails.push(`${p.key} ${v.toFixed(3)} not ${p.op} ${p.val}`);
+            if (!ok) fails.push(`${p.key} ${v.toFixed(3)} not ${p.op} ${p.val}${tag}`);
         }
     }
     return { ok: fails.length === 0, fails };
@@ -241,9 +310,10 @@ function evalBand(stats, preds) {
 
 // ── G7 (auto-revoke) — the surface-hash freshness clause, RE-PURPOSED ────────────
 // BB held freshness behind --strict-freshness (an opt-in NOTE on the bare arm). BC
-// makes auto-revoke the DEFAULT: a drifted surface-hash AUTO-REVERTS the verdict to
-// FAIL (not a warning). The per-surface record docs/tranches/BC/audit/reflect/
-// <surface>.md carries the <!-- surface-paths --> + <!-- surface-hash --> header.
+// made auto-revoke the DEFAULT; BC keeps it (the real-paint-protocol §4 G7 default):
+// a drifted surface-hash AUTO-REVERTS the verdict to FAIL (not a warning). The
+// per-surface record docs/tranches/BG/audit/reflect/<surface>.md carries the
+// <!-- surface-paths --> + <!-- surface-hash --> header.
 /**
  * @param {string} surface
  * @returns {{state:"fresh"|"stale"|"no-header"|"no-record", reason?:string, recordPath:string}}
@@ -253,7 +323,7 @@ function surfaceFreshness(surface) {
     if (!existsSync(recordPath))
         return {
             state: "no-record",
-            reason: `the per-surface record docs/tranches/BC/audit/reflect/${surface}.md is absent — the freshness header cannot be read`,
+            reason: `the per-surface record docs/tranches/BG/audit/reflect/${surface}.md is absent — the freshness header cannot be read`,
             recordPath,
         };
     const doc = readFileSync(recordPath, "utf8");
@@ -282,7 +352,7 @@ function surfaceFreshness(surface) {
 const G8A_RE = /\brides?\s+(?:the\s+)?W-REFLECT\d/i;
 const G8B_RE = /gestalt verdict\s+(staged|deferred)/i;
 const RETIRE_RE =
-    /\b(RETIRE[DS]?|forbidden|mechanically forbidden|DECIDED\s*[—-]\s*RETIRE|never a (?:BC )?carry|abolished|zero ["`]?rides?)\b/i;
+    /\b(RETIRE[DS]?|forbidden|mechanically forbidden|DECIDED\s*[—-]\s*RETIRE|never a (?:B[A-Z] )?carry|abolished|zero ["`]?rides?)\b/i;
 
 /**
  * G8a-exempt-1 — is the matched substring enclosed in a backtick or double-quote
@@ -317,7 +387,7 @@ function g8ScanLine(line) {
         if (!quoted && !retired)
             return {
                 detector: "G8a",
-                reason: `forward-deferral "${a[0]}" asserts this wave's π/verdict rides a terminal-reflect wave (the BB disease) — a BC verdict is mechanically derived at the wave's OWN close; there is no terminal reflect wave to defer to`,
+                reason: `forward-deferral "${a[0]}" asserts this wave's π/verdict rides a terminal-reflect wave (the BB disease) — a BG verdict is mechanically derived at the wave's OWN close by the non-authoring judge; there is no terminal reflect wave to defer to`,
             };
     }
     const b = line.match(G8B_RE);
@@ -328,7 +398,7 @@ function g8ScanLine(line) {
         if (!quoted && !retired)
             return {
                 detector: "G8b",
-                reason: `staged/deferred gestalt verdict "${b[0]}" punts the verdict to a later wave — every BC verdict is mechanically derived at the wave's own close`,
+                reason: `staged/deferred gestalt verdict "${b[0]}" punts the verdict to a later wave — every BG verdict is mechanically derived at the wave's own close`,
             };
     }
     return null;
@@ -337,11 +407,11 @@ function g8ScanLine(line) {
 /** Recursively collect the *.md files under a dir that match the G8 scope. */
 function g8ScopedFiles() {
     const files = [];
-    // every docs/tranches/BC/waves/*.md
+    // every docs/tranches/BG/waves/*.md
     if (existsSync(WAVES_DIR))
         for (const f of readdirSync(WAVES_DIR))
             if (f.endsWith(".md")) files.push(join(WAVES_DIR, f));
-    // every docs/tranches/BC/**/PROGRESS*.md
+    // every docs/tranches/BG/**/PROGRESS*.md
     const walk = (dir) => {
         for (const ent of readdirSync(dir, { withFileTypes: true })) {
             const p = join(dir, ent.name);
@@ -417,15 +487,12 @@ function detect() {
             `[WELL-FORMED] a roster row has fewer than ${COLUMNS.length} cells: ${JSON.stringify(m.__malformed)}`,
         );
 
-    // ── G6 (COMPLETENESS — the GROWN roster) ────────────────────────────────────
+    // ── COMPLETENESS PURGED (BG.W-PAINT-IS-THE-GATE) ─────────────────────────────
+    // No hardcoded REQUIRED_SURFACES set. The DERIVED-from-route-files completeness
+    // (surface-closure.mjs routeSeeds) is BG.W-GESTALT-ROSTER-RE-POINT's. This gate
+    // reads + pixel-reads whatever the BG roster declares.
     const present = new Set(data.map((r) => r.surface));
     facts.surfaces = [...present];
-    const missing = REQUIRED_SURFACES.filter((s) => !present.has(s));
-    facts.missingSurfaces = missing;
-    for (const s of missing)
-        violations.push(
-            `[G6-COMPLETENESS] the roster is missing the BC-touched surface "${s}" — the GROWN set (8 BA + the BC dock/glass/viz/tabs/controls surfaces) must be enumerated (a surface a BC wave paints but the roster omits is the BB roster-never-grew gap)`,
-        );
 
     // ── per-row checks ──────────────────────────────────────────────────────────
     const surfaceVerdicts = {};
@@ -433,7 +500,7 @@ function detect() {
     const brokenCaptures = [];
     const pixelStats = {}; // G5: surface → {light, dark} stats or "unread"
     const freshness = {}; // G7: surface → fresh | stale | no-header | no-record
-    let allPass = data.length > 0 && missing.length === 0;
+    let allPass = data.length > 0;
     for (const row of data) {
         const { surface, verdict } = row;
         surfaceVerdicts[surface] = verdict;
@@ -478,6 +545,7 @@ function detect() {
         // pixels MUST fall in it (a hand-typed PASS over a grey capture REDs G5).
         const probe = parseProbe(row.probe ?? "");
         const expect = parseExpect(row.expect ?? "");
+        const wantsTopDelta = expect.some((p) => p.key === "topDelta");
         if (verdict === "PASS") {
             if (!probe) {
                 violations.push(
@@ -487,7 +555,15 @@ function detect() {
             }
             if (!expect.length) {
                 violations.push(
-                    `[G5-PIXEL] surface "${surface}" PASS but the expect cell "${row.expect}" declares no band (meanL=lo..hi; meanChroma>=v; meanAlpha<v)`,
+                    `[G5-PIXEL] surface "${surface}" PASS but the expect cell "${row.expect}" declares no band (meanL=lo..hi; meanChroma>=v; meanChroma<=v; topDelta<=v)`,
+                );
+                allPass = false;
+            }
+            // BG.W-PAINT-IS-THE-GATE — a topDelta predicate demands a top-bar probe
+            // region (tx=,ty=,tw=,th=) to localize the D5 defect against.
+            if (wantsTopDelta && probe && !probe.topbar) {
+                violations.push(
+                    `[G5-PIXEL/D5-TOP-BAR] surface "${surface}" PASS declares a topDelta predicate but the probe cell "${row.probe}" carries no top-bar region (tx=,ty=,tw=,th=) — the D5 top-bar/field delta cannot be measured`,
                 );
                 allPass = false;
             }
@@ -506,9 +582,10 @@ function detect() {
                     allPass = false;
                     continue;
                 }
-                // G5: read the pixels at the probe region + assert the expect band.
+                // G5: read the pixels at the FIELD probe region + assert the expect band.
                 if (probe && expect.length) {
-                    const stats = pngRegionStats(resolve(ROOT, p), probe);
+                    const abs = resolve(ROOT, p);
+                    const stats = pngRegionStats(abs, probe.field);
                     pixelStats[surface] = pixelStats[surface] || {};
                     if (!stats) {
                         pixelStats[surface][col] = "unread";
@@ -518,15 +595,26 @@ function detect() {
                         allPass = false;
                         continue;
                     }
+                    // BG.W-PAINT-IS-THE-GATE — inject the D5 top-bar/field OKLab ΔE as
+                    // the `topDelta` axis when the row declares both a top-bar region and
+                    // a topDelta predicate (the metallic/grey/luma axes read the field
+                    // stats directly).
+                    if (wantsTopDelta && probe.topbar) {
+                        const delta = pngRegionDelta(abs, probe.topbar, probe.field);
+                        if (delta) stats.topDelta = delta.dE;
+                    }
                     pixelStats[surface][col] = {
                         meanL: +stats.meanL.toFixed(4),
                         meanChroma: +stats.meanChroma.toFixed(4),
                         meanAlpha: +stats.meanAlpha.toFixed(4),
+                        ...(Number.isFinite(stats.topDelta)
+                            ? { topDelta: +stats.topDelta.toFixed(4) }
+                            : {}),
                     };
                     const band = evalBand(stats, expect);
                     if (!band.ok) {
                         violations.push(
-                            `[G5-PIXEL] surface "${surface}" ${col} reads ${band.fails.join(", ")} at the probe region — OUTSIDE the warm-translucent expect band [${row.expect}]; a hand-typed PASS over a grey-or-broken capture is no longer sufficient (the pixel stats are the operative verdict)`,
+                            `[G5-PIXEL] surface "${surface}" ${col} reads ${band.fails.join(", ")} — OUTSIDE the warm-translucent expect band [${row.expect}]; a hand-typed PASS over a grey/metallic/broken capture is no longer sufficient (the localized pixel stats are the operative verdict)`,
                         );
                         allPass = false;
                     }
@@ -550,7 +638,7 @@ function detect() {
         const openFails = facts.failCount;
         if (openFails > 0 && !violations.some((v) => v.startsWith("[OPERATIVE]")))
             violations.push(
-                `[OPERATIVE] ${openFails} of ${data.length} roster surfaces hold an open FAIL verdict — the gestalt acceptance bar is not met (each flips to PASS only when a Band-1 wave paints warm-cream + re-captures + the pixel band reads warm-translucent)`,
+                `[OPERATIVE] ${openFails} of ${data.length} roster surfaces hold an open FAIL verdict — the gestalt acceptance bar is not met (each flips to PASS ONLY when a paint wave lands warm-cream over a fresh source AND a NON-AUTHORING agent re-captures + pixel-reads the surface inside the warm-glass band; the building agent never flips its own row)`,
             );
     }
 
@@ -581,11 +669,81 @@ function selfTest() {
             })(),
         },
         {
-            label: "G6 missing-surface — a roster present-set omitting a BC-painted surface (glass-adaptive) reds completeness",
+            // BG.W-PAINT-IS-THE-GATE — D2 metallic field ceiling RED. A 4.2.0-grade
+            // metallic field (meanChroma 0.30) BREACHES the warm-aurora ceiling
+            // (meanChroma<=0.18) → flags AND localizes D2-METALLIC @ field.
+            label: "D2-METALLIC field-ceiling — a metallic field (meanChroma 0.30) breaches meanChroma<=0.18 and localizes D2-METALLIC @ field",
             flag: (() => {
-                const present = new Set(REQUIRED_SURFACES.filter((s) => s !== "glass-adaptive"));
-                const missing = REQUIRED_SURFACES.filter((s) => !present.has(s));
-                return missing.includes("glass-adaptive") ? "flagged" : null;
+                const band = parseExpect("meanChroma>=0.02;meanChroma<=0.18");
+                const metallic = evalBand({ meanChroma: 0.3 }, band);
+                return !metallic.ok && metallic.fails.some((f) => f.includes("D2-METALLIC @ field"))
+                    ? "flagged"
+                    : null;
+            })(),
+        },
+        {
+            // The content-rainbow-does-not-false-RED inverse witness: the FIELD probe
+            // reads a warm-translucent field (meanChroma 0.05) UNDER the ceiling — even
+            // though a high-chroma CONTENT rainbow elsewhere reads 0.30, the ceiling is
+            // a FIELD-region predicate, never evaluated against content (the field probe
+            // is declared away from content). The warm field must NOT flag.
+            label: "content-rainbow-no-false-RED — a warm field (meanChroma 0.05) passes the field ceiling (the rainbow content at a separate region never trips it)",
+            flag: (() => {
+                const band = parseExpect("meanChroma>=0.02;meanChroma<=0.18");
+                const warmField = evalBand({ meanChroma: 0.05 }, band);
+                return warmField.ok ? "flagged" : null;
+            })(),
+        },
+        {
+            // D5 top-bar topDelta RED — a divergent top bar (OKLab ΔE 0.30 vs the field)
+            // breaches topDelta<=0.10 → flags AND localizes D5-TOP-BAR @ top-bar. The ΔE
+            // is computed by the SAME regionStatsDelta math the on-disk pngRegionDelta
+            // wraps (the pure-function bite proves the decoder primitive end-to-end).
+            label: "D5-TOP-BAR topDelta — a divergent top bar (regionStatsDelta dE ≈ 0.30) breaches topDelta<=0.10 and localizes D5-TOP-BAR @ top-bar",
+            flag: (() => {
+                const topbar = { meanL: 0.4, meanChroma: 0.02, meanA: -0.04, meanB: -0.02 };
+                const field = { meanL: 0.85, meanChroma: 0.05, meanA: 0.02, meanB: 0.06 };
+                const dE = regionStatsDelta(topbar, field).dE;
+                const band = parseExpect("topDelta<=0.10");
+                const out = evalBand({ topDelta: dE }, band);
+                return dE > 0.1 &&
+                    !out.ok &&
+                    out.fails.some((f) => f.includes("D5-TOP-BAR @ top-bar"))
+                    ? "flagged"
+                    : null;
+            })(),
+        },
+        {
+            // D5 clean inverse witness — a top bar composed INTO the field (ΔE ≈ 0.03)
+            // passes topDelta<=0.10 (must NOT flag).
+            label: "D5-TOP-BAR clean — a top bar matching the field (regionStatsDelta dE ≈ 0.03) passes topDelta<=0.10",
+            flag: (() => {
+                const a = { meanL: 0.84, meanChroma: 0.05, meanA: 0.02, meanB: 0.06 };
+                const b = { meanL: 0.85, meanChroma: 0.05, meanA: 0.03, meanB: 0.07 };
+                const dE = regionStatsDelta(a, b).dE;
+                const band = parseExpect("topDelta<=0.10");
+                return dE <= 0.1 && evalBand({ topDelta: dE }, band).ok ? "flagged" : null;
+            })(),
+        },
+        {
+            // The topDelta-without-top-bar-region bite — a topbar-less probe parses to
+            // {field, topbar:null}; the gate refuses to greenwash a topDelta predicate it
+            // cannot measure (the wantsTopDelta && !probe.topbar guard).
+            label: "D5 probe-discipline — a probe with no top-bar region (tx=,ty=,tw=,th=) parses topbar:null (the gate refuses an un-measurable topDelta)",
+            flag: (() => {
+                const p = parseProbe("x=0.2,y=0.3,w=0.3,h=0.4");
+                return p && p.field && p.topbar === null ? "flagged" : null;
+            })(),
+        },
+        {
+            // The re-shot-broken regression bite — an all-PASS roster whose capture is
+            // RE-SHOT broken (a previously-warm field now reads metallic) AUTO-RED's via
+            // the SAME field-ceiling band; a green capture cannot be silently replaced by
+            // a broken one and ride the stale PASS.
+            label: "re-shot-broken — a re-captured field that drifted metallic (meanChroma 0.30) re-RED's the field ceiling (the all-PASS-re-shot-broken regression)",
+            flag: (() => {
+                const band = parseExpect("meanChroma>=0.02;meanChroma<=0.18");
+                return !evalBand({ meanChroma: 0.3 }, band).ok ? "flagged" : null;
             })(),
         },
         {
@@ -668,22 +826,22 @@ function run() {
         violations,
     });
 
-    console.log("proof:ba-gestalt — the PIXEL-reading, ci-blocking gestalt close oracle (BC.W-GESTALT-FIRST; re-made from BA.W-GESTALT-GATE)");
-    console.log(`  roster ledger        : ${facts.rosterPresent ? relative(ROOT, ROSTER) : "ABSENT"}`);
-    console.log(`  self-test (bite proof): OK — ${facts.selfTestChecks ?? 0} synthetic checks flagged (G5 grey-RED + warm-GREEN, G6 missing-surface, G7 auto-revoke, G8 negation-pair i/i′/ii/iii/iv)`);
+    console.log("proof:ba-gestalt — the PIXEL-reading, ci-blocking gestalt close oracle (BG.W-PAINT-IS-THE-GATE; reads LIVE BG paint, defect-localizing)");
+    console.log(`  roster ledger        : ${facts.rosterPresent ? relative(ROOT, ROSTER) : "ABSENT (born-RED ground-freeze — the BG roster + Metal captures land via the non-authoring capture agent)"}`);
+    console.log(`  self-test (bite proof): OK — ${facts.selfTestChecks ?? 0} synthetic checks flagged (G5 grey-RED + warm-GREEN, D2-METALLIC ceiling, content-rainbow-no-false-RED, D5-TOP-BAR topDelta RED/clean + probe-discipline + re-shot-broken, G7 auto-revoke, G8 negation-pair i/i′/ii/iii/iv)`);
     console.log(`  G8 no-terminal-reflect: ${facts.g8FilesScanned ?? 0} files scanned — ${(facts.g8Hits ?? []).length ? (facts.g8Hits.length + " DEFERRAL HIT(S)") : "clean (the corpus RETIRES the deferral)"}`);
     if (facts.rosterPresent) {
         console.log(`  surfaces present     : ${(facts.surfaces ?? []).length} (${(facts.surfaces ?? []).join(", ")})`);
-        if (facts.missingSurfaces?.length)
-            console.log(`  MISSING surfaces     : ${facts.missingSurfaces.join(", ")}`);
         console.log(`  verdicts             : ${facts.passCount ?? 0} PASS / ${facts.failCount ?? 0} FAIL`);
         if (facts.verdicts)
             for (const [s, v] of Object.entries(facts.verdicts)) {
                 const px = facts.pixelStats?.[s]?.["capture-light"];
-                const pxStr = px && px !== "unread" ? ` L=${px.meanL} chroma=${px.meanChroma} α=${px.meanAlpha}` : "";
+                const pxStr = px && px !== "unread"
+                    ? ` L=${px.meanL} chroma=${px.meanChroma} α=${px.meanAlpha}${px.topDelta !== undefined ? ` topΔ=${px.topDelta}` : ""}`
+                    : "";
                 console.log(`    ${v === "PASS" ? "✓" : "✗"} ${s.padEnd(20)} ${v}  freshness:${facts.freshness?.[s] ?? "?"}${pxStr}`);
             }
-        console.log(`  operative result     : ${facts.operativePass ? "PASS (every surface paints warm-translucent in the pixel-read over a fresh source)" : "FAIL (born-RED until a Band-1 wave paints warm-cream + re-captures + the pixel band reads warm-translucent)"}`);
+        console.log(`  operative result     : ${facts.operativePass ? "PASS (every surface paints warm-translucent in the pixel-read over a fresh source, judged by a non-authoring agent)" : "FAIL (born-RED until a paint wave lands warm-cream + a non-authoring agent re-captures + the localized pixel band reads warm-translucent)"}`);
     }
     if (violations.length) {
         console.log("\nVIOLATIONS:");
