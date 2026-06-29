@@ -1674,6 +1674,12 @@ export const GATES = [
         note: "BC.W-TUNABLE-ANIM — the tunable-animation registry (the configurator/EasingPicker exposes the eased curves + affordances). Indexes the one-clock single source; every tunable curve resolves to a named SPRING_PRESETS row, not an inline literal. Bite: an un-indexed tunable / an inline curve in the picker → RED.",
     },
     {
+        id: "proof:design-docs-files",
+        cmd: "proof:design-docs-files",
+        tags: ["local", "ci"],
+        note: "BH.B4c-precept-extract-files — the design-doc extraction-files lock. Asserts the 4 glass-ui design docs (design-idioms · motion-canon · tunable-anim · affordance-map) RESOLVE on disk in docs/design/ (the first-class home carved out of the docs/precepts submodule) with their identity H1 (F1 exists+non-trivial, F2 identity). Born-RED on HEAD (docs/design/ absent) → GREEN after extraction; a future doc-slim/CLAUDE-delete/gate-rehome wave cannot silently drop a design doc. Bite: a missing/empty-stub/wrong-identity design doc → RED.",
+    },
+    {
         id: "proof:split-chars",
         cmd: "proof:split-chars",
         tags: ["local", "ci"],
