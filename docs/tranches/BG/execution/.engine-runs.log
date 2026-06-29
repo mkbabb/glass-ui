@@ -42,3 +42,12 @@ wf_f560cb6f-e39  resume  2026-06-28 22:01:42  PATCHED engine (worktree STEP-0 sy
 # loop continued cheaply-but-forever, never reaching frontier 1.3/1.5/1.6. FIX: the engine now RECOGNIZES a
 # STEP-0.5 no-op (convergenceNote "already landed") and marks the wave DONE DIRECTLY (b.w._noop → DONE),
 # excluding it from the integrate. Paired with a FRESH resume (LOADER reads accurate cursor DONE=12).
+wf_5dd4bc2d-8af  resume  2026-06-29 02:58:26  PATCHED engine (STEP-0.5 no-op→DONE-direct, drift-loop fix) — fresh re-LOAD; LOADER reads cursor DONE=12, frontier 1.3
+
+## INTERVENTION 2026-06-29 ~04:00 — demo:dist landed + engine hardened for [P] paint waves
+# B2.4a (1.7) was the FIRST [P] wave → PAINT-PENDING, exposing the demo:dist gap (judge served the nonexistent
+# `npm run demo:dist`→:5199 dev = WebKit bare-shell). FIXES (committed, fresh-resume):
+#  1. demo/vite.demo-dist.config.ts (NEW, agent-verified: build exit0 → dist-demo/ 315 assets; serve :5200 real HTML).
+#  2. Judge prompt → serve the BUILT demo (demo:dist:build then demo:dist:serve→:5200), not :5199 dev.
+#  3. STEP-0.5: no-op ONLY non-[paint-pending] commits (a judge-failed [P]-wave re-judges, not silent-DONE).
+#  4. LOADER: load PAINT-PENDING rows as PENDING (wall-mid-judge → resume re-judges). Handles B2.4a on resume.
