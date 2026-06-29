@@ -1686,6 +1686,12 @@ export const GATES = [
         note: "BH.B4c-precept-extract-files — the design-doc extraction-files lock. Asserts the 4 glass-ui design docs (design-idioms · motion-canon · tunable-anim · affordance-map) RESOLVE on disk in docs/design/ (the first-class home carved out of the docs/precepts submodule) with their identity H1 (F1 exists+non-trivial, F2 identity). Born-RED on HEAD (docs/design/ absent) → GREEN after extraction; a future doc-slim/CLAUDE-delete/gate-rehome wave cannot silently drop a design doc. Bite: a missing/empty-stub/wrong-identity design doc → RED.",
     },
     {
+        id: "proof:core-prompts",
+        cmd: "proof:core-prompts",
+        tags: ["local"],
+        note: "BH.B6-core-prompts — the 3 reusable cleanup prompts + README ↔ STYLE.md self-consistency gate (born-RED 1 violation @ HEAD: RESTRUCTURE-FRONTEND carried the STYLE.md banned word 'robust' → GREEN after the robust→sturdy excision). FOUR witnesses + a passing inline self-test bite: W1 the 4 files exist with content; W2 cross-linked (README links all 3 prompts; each prompt links ≥1 sibling); W3 each prompt cites the binding edicts BY NAME (the 'cite … by name' directive + ≥2 catalog edicts); W4 the self-consistency read — no STYLE.md banned word in any of the 4 files (banned list parsed LIVE from STYLE.md when the precepts submodule is present, with a pinned snapshot fallback so the scan bites submodule-absent; 'leverage' excluded per its mechanical-sense carve). The DIRTY self-test (a planted banned word + a dropped README link) flags W4+W2; the CLEAN synthetic flags neither. repo-local doc/source check, no Playwright. Local-only by design (tranche-staging dispatch prompts — recorded in proof:tag-parity JUSTIFIED_LOCAL_ONLY, the gate-detrap/story-language precedent).",
+    },
+    {
         id: "proof:split-chars",
         cmd: "proof:split-chars",
         tags: ["local", "ci"],

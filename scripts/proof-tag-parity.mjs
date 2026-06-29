@@ -129,6 +129,12 @@ const JUSTIFIED_LOCAL_ONLY = new Map([
     // local with the demo-language set.
     ["proof:gate-detrap", "AX.W63 demo de-trap SOURCE scan over a demo/compositions route; local with the demo storybook gate family."],
     ["proof:story-language", "AX.W58 demo-storybook META-LANGUAGE scan over demo/stories/**; local with the demo storybook gate family."],
+    // BH.B6-core-prompts — the 3 reusable cleanup prompts ↔ STYLE.md self-consistency
+    // scan over docs/tranches/BH/prompts/**. A tranche-staging dispatch-doc check (the
+    // prompts promote to the precepts submodule by a by-name ask, not a published-surface
+    // invariant); local-only by design with the tranche/demo-scoped static-gate family —
+    // the proof:gate-detrap / proof:story-language precedent.
+    ["proof:core-prompts", "BH.B6-core-prompts — the 3 reusable cleanup prompts ↔ STYLE.md self-consistency scan over docs/tranches/BH/prompts/**; a tranche-staging dispatch-doc check (promotes to the precepts submodule by by-name ask, not a published-surface guard); local with the tranche/demo-scoped static-gate family (the gate-detrap/story-language precedent)."],
     // AY.W-CLOSE1 — deck-progress-rail lost its π render arm when the DeckProgress
     // WRAPPER was retired (PRUNE-LEDGER R2); it is now a static lock over the KEPT
     // .glass-progress-rail recipe + the /deck reserved guard, sibling to the demo

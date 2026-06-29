@@ -41,7 +41,7 @@ THE PRINCIPLE (cite by name):
   3. DEPRECATED CSS → excised. A dead `@utility` with zero consumers, a retired token still declared,
      a superseded recipe beside its successor — delete at the root. A retired class is
      DEFINITION-ABSENT + token-absent + dist-absent, not commented.
-  4. FRAGILE RULES → robust:
+  4. FRAGILE RULES → sturdy:
      - `:deep()` reach → `:slotted([data-slot])` + token-only retint. Finish any in-progress
        migration off `:deep()`; do not re-add it.
      - `:global(.dark) .x` → the plain-ancestor `.dark .x`. The compiler DROPS the trailing local
