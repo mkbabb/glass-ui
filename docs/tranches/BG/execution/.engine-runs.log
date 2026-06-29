@@ -16,3 +16,22 @@ wf_00282840-677  resume  2026-06-28 19:31:39  fresh after 0.1 DONE override (LOA
 # base → could not integrate → 0.3 built ~5x, never landed, demo:dist never minted, DONE stuck at 6 ~50min.
 # FIX: engine BUILD prompt now mandates STEP 0 = `git reset --hard "$(git rev-parse tranche/BG)"` in the
 # worktree (the stale-worktree-trap memory prescription). Resume FRESH with the patched engine.
+wf_f560cb6f-e39  resume  2026-06-28 22:01:42  PATCHED engine (worktree STEP-0 sync to tranche/BG HEAD) — fixes the 0.3 stale-worktree spin; LOADER re-reads cursor (DONE=6, frontier 0.3)
+
+## WATCH 2026-06-28 ~23:25 — demo:dist gap (PRE-WS1-PAINT TODO)
+# 0.3 added demo:dist:build/serve scripts but demo/vite.demo-dist.config.ts (the config they need) is a WS7
+# deliverable → MISSING now. WS1's [P] paint judges need a working BUILT-demo-serve for real-Safari bytes
+# (the dev :5199 ESM bare-shell the 0.1 judge caught). BEFORE WS1's first [P] paint judge:
+#   (1) create demo/vite.demo-dist.config.ts (pull fwd from WS7),
+#   (2) patch the engine PAINT prompt (line ~204) — build+serve the demo dist on the right port
+#       (demo:dist:build then demo:dist:serve→:5200), NOT the literal `npm run demo:dist`→:5199,
+#   (3) resume so the patched prompt is in effect.
+# Trigger = the WS1-approach background watch.
+
+## INTERVENTION 2026-06-29 ~01:25 — in-memory drift re-processing spin (0.3/B1-W1/B1-W3)
+# wf_f560cb6f-e39 STOPPED at 40 agents / 0 commits in ~50min. ROOT: the engine's in-memory wave-status
+# drifted from the cursor over the long run — composeBatch kept re-picking 3 already-DONE lowest-seq waves
+# (0.3 SHIP-DISCIPLINE, 1.2 B1-W1, 1.4 B1-W3) that never reached in-memory DONE, never advancing to the
+# frontier (1.3/1.5/1.6). FIX: (1) STEP-0.5 git-log done-guard in the BUILD prompt (a build agent for an
+# already-committed wave returns an EMPTY patch — bounds re-processing to a fast no-op, robust for born-RED
+# waves); (2) FRESH resume resets the drifted in-memory state from the accurate cursor (DONE=9).
