@@ -112,7 +112,7 @@ function composeBatch(readyNow) {
     if (hot.some(f => usedHot.has(f))) continue
     batch.push(w)
     files.forEach(f => usedFiles.add(f)); hot.forEach(f => usedHot.add(f))
-    if (batch.length === 3) break
+    if (batch.length === 2) break   // wall-constrained: batch-2 keeps the integrate short enough to commit before a ~40min session-limit wall (batch-3 kept dying mid-integrate)
   }
   return batch
 }

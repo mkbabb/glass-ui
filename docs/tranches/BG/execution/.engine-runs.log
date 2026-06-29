@@ -51,3 +51,4 @@ wf_5dd4bc2d-8af  resume  2026-06-29 02:58:26  PATCHED engine (STEP-0.5 no-op→D
 #  2. Judge prompt → serve the BUILT demo (demo:dist:build then demo:dist:serve→:5200), not :5199 dev.
 #  3. STEP-0.5: no-op ONLY non-[paint-pending] commits (a judge-failed [P]-wave re-judges, not silent-DONE).
 #  4. LOADER: load PAINT-PENDING rows as PENDING (wall-mid-judge → resume re-judges). Handles B2.4a on resume.
+## 06:48 batch-3→batch-2 (integrate too slow for ~40min wall window; smaller batch commits reliably). Fresh resume.
