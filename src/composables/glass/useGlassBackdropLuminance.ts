@@ -246,10 +246,27 @@ function parseRgb(str: string): [number, number, number, number] | null {
     return [Number(m[1]), Number(m[2]), Number(m[3]), m[4] === undefined ? 1 : Number(m[4])];
 }
 
+/** BG.W-FIELD-ACCENT-RECONCILE — the library convention marking the ONE shell
+ *  field canvas (the recessive shell `<Aurora>` the demo chassis mounts behind every
+ *  non-focal route; also the WS8 BACKDROP-SAMPLE marker). A glass surface that does
+ *  NOT name an explicit `backgroundCanvas` auto-discovers this canvas so it samples
+ *  the LIVE field rather than a static stack-walk; absent it (a focal route where the
+ *  shell stands down, an SSR scope) the static `elementsFromPoint` path is the floor. */
+const SHELL_FIELD_CANVAS_SELECTOR =
+    "[data-glass-field-canvas] canvas, canvas[data-glass-field-canvas]";
+
 function resolveSourceCanvas(
     src: UseGlassBackdropLuminanceOptions["backgroundCanvas"],
 ): HTMLCanvasElement | null {
-    if (!src) return null;
+    if (!src) {
+        // Auto-discover the shell field canvas — the rewire to the live shell field
+        // (backward-safe: no field canvas → null → the static elementsFromPoint path).
+        if (typeof document !== "undefined") {
+            const field = document.querySelector(SHELL_FIELD_CANVAS_SELECTOR);
+            if (isCanvas(field)) return field;
+        }
+        return null;
+    }
     if (isCanvas(src)) return src;
     if (typeof src === "function") {
         const c = src();

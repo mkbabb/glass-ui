@@ -738,6 +738,12 @@ export const GATES = [
         note: "BG.W-FIELD-AURORA (M2) — the route-FOCAL enumeration is CONSISTENT (NOT the runtime one-GL law — the close hinges on the LIVE monotonic-GL capture). C1 router.ts threads `isFocalRoute` into `meta.focal` for the story routes AND the section landings, C2 SELF_STAGES_GL ⊇ the committed grep of `<DockStage` over the routed SFCs (a SELF-STAGE route mounting GL outside `background` MUST be enrolled — the silent shell+DockStage=2-GL drift is closed), C3 the resolver is TOTAL (GL_BG_KINDS carries the 4 full-bleed GL kinds, every GL-kind row resolves focal by construction). --self-test planted bite: drop a DockStage route from SELF_STAGES_GL → C2 RED. Bite: add a DockStage route without enrolling it → C2 RED",
     },
     {
+        id: "proof:field-accent-reconcile",
+        cmd: "proof:field-accent-reconcile",
+        tags: ["local", "ci", "release"],
+        note: "BG.W-FIELD-ACCENT-RECONCILE (M3, class H) — the duplicate warm-projection (warm-field.ts ≡ aurora-hero.ts) folded onto ONE source. W1 hue-PARITY ε0.5° (the 13 SECTION_COLOR_OKLCH degrees == the OLD warm-field SECTION_HUE_DEG literal table — the fold doesn't shift a hue; measured 0.0000°), W2 single-source (aurora-hero.ts EXPORTS warmProjectHue+SECTION_COLOR_OKLCH+sectionHueDeg; warm-field.ts is a thin adapter, NO own projectWarm/SECTION_HUE_DEG/clampWarm/warmFieldHueMap dup), W3 2-consumer (AppShell.vue + SectionLanding.vue call warmFieldHue), W4 the AA recessive precondition + the luminance rewire seam (shellAuroraConfig vividness:0/C≤0.10/L≥0.85 at opacityCeiling 0.5; the shell <Aurora> carries data-glass-field-canvas + useGlassBackdropLuminance auto-discovers it — the binding pixel-AA-both-modes is the live capture). --self-test: a synthetic shifted degree flags W1. Bite: re-fork a projectWarm/SECTION_HUE_DEG in warm-field.ts → W2 RED; shift a section degree → W1 RED",
+    },
+    {
         id: "proof:demo-radial-calm",
         cmd: "proof:demo-radial-calm",
         tags: ["local", "ci"],

@@ -60,7 +60,7 @@ const BASE_HERO_PALETTES = {
 // pastel-wash band the existing hero stops use, so a category hero reads DISTINCT
 // (substrates=aurora-blue, motion=constellation-violet, forms=grid-teal …) while
 // staying the calm painterly drift a text-dense hero wants.
-const SECTION_COLOR_OKLCH: readonly string[] = [
+export const SECTION_COLOR_OKLCH: readonly string[] = [
     "oklch(0.552 0.192 359.8)", //  0 rose
     "oklch(0.502 0.165 305.9)", //  1 purple
     "oklch(0.484 0.163 265.5)", //  2 indigo
@@ -75,6 +75,22 @@ const SECTION_COLOR_OKLCH: readonly string[] = [
     "oklch(0.601 0.092 208.0)", // 11 ocean
     "oklch(0.513 0.163 291.9)", // 12 periwinkle
 ];
+
+// BG.W-FIELD-ACCENT-RECONCILE — the section hue DEGREES, derived ONCE from
+// SECTION_COLOR_OKLCH via the `/color` leaf `cssToOklch` (value.js — no re-rolled
+// OKLCh math). This SINGLE source replaces the verbatim `SECTION_HUE_DEG` literal
+// table warm-field.ts carried (the duplicate is FOLDED — one degree source, one
+// warm projection). Precomputed once (not per-call).
+const SECTION_HUE_DEG_DERIVED: readonly number[] = SECTION_COLOR_OKLCH.map(
+    (s) => cssToOklch(s).h,
+);
+
+/** The section ramp hue DEGREE for a ramp index (the `--section-color-N` index,
+ *  modulo 13). The ONE degree source the warm projection reads — derived from the
+ *  SECTION_COLOR_OKLCH ramp through `cssToOklch`, never a parallel literal table. */
+export function sectionHueDeg(idx: number): number {
+    return SECTION_HUE_DEG_DERIVED[((idx % 13) + 13) % 13]!;
+}
 
 // The pastel-wash L/C band the existing painterly hero stops occupy (HERO_PALETTES
 // above run L 0.74–0.93, C 0.03–0.13) — a jewel section hue is LIFTED into it so the
@@ -91,9 +107,13 @@ const HERO_CREAM_TAIL: HeroStop = { L: 0.92, C: 0.04, h: 30.0 }; // the warm-cre
 // `projectWarm` (the field floor) so the chassis reads coherent; the +18°
 // neighbour stop below keeps the SPECIMEN aurora a polychrome spread DISTINCT
 // from the flat field floor (the F7 distinct-from-field fold).
-const WARM_LO = 25;
-const WARM_HI = 95;
-function warmProjectHue(deg: number): number {
+export const WARM_LO = 25;
+export const WARM_HI = 95;
+/** Warm-project a raw color-wheel degree into the warm band [25,95] — the SINGLE
+ *  warm projection (BG.W-FIELD-ACCENT-RECONCILE folded warm-field.ts's identical
+ *  `projectWarm` onto this). Reds → coral floor; the warm wedge passes; cool folds
+ *  across the amber→sand span (never teal/navy). */
+export function warmProjectHue(deg: number): number {
     const h = ((deg % 360) + 360) % 360;
     if (h >= 340 || h < 25) return 38; // reds → coral-terracotta floor
     if (h <= 95) return h; // already in band

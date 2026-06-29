@@ -309,6 +309,7 @@ onBeforeUnmount(() => {
         :opacity-ceiling="0.5"
         :on-init-error="onShellAuroraError"
         class="shell-aurora fixed inset-0 -z-10"
+        data-glass-field-canvas
         aria-hidden="true"
     />
     <!-- The universal grain register (BG.W-PAPER-GRAIN-OPTIN demotes this to opt-in
