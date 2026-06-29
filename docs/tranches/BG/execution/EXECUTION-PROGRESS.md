@@ -52,9 +52,9 @@ WAVE-DONE bar: `real-paint-protocol.md §1`. Interleave/collision: `bh-interleav
 | 1.7 | BH.B2.4a W-bh-carves (worm/bloomUp)¹ | BH/B2 | C | PENDING | proof:colocation | P |
 | 1.8 | BH.B4a-archive-refresh | BH/B4 | C | PENDING | — | — |
 | 1.9 | BH.B4b-skeleton | BH/B4 | C | PENDING | canon-doc/design-docs resolvers | — |
-| 1.10 | BH.B4c-precept-extract (files) | BH/B4 | C | PENDING | — | — |
-| 1.11 | BH.B4d-evidence-prune (files) | BH/B4 | C | PENDING | — | — |
-| 1.12 | BH.B6 W-core-prompts | BH/B6 | C | PENDING | repo-local | — |
+| 1.10 | BH.B4c-precept-extract (files) | BH/B4 | C | DONE | proof:design-docs-files | 0ca2d3ce · proof:design-docs-files GREEN (F1 exists+non-trivial, F2 identity; self-test 4 bites GREEN) · 4 design docs extracted → docs/design/ (affordance-map · design-idioms · motion-canon · tunable-anim) |
+| 1.11 | BH.B4d-evidence-prune (files) | BH/B4 | C | DONE | proof:consumer-evidence-live | 8490378b · proof:consumer-evidence-live GREEN (31 non-README docs all live: 25 gate-ref + 6 orphan-exemption · dead=0 · self-proof ok) · consumer-evidence pruned to 31; gate registered local+ci (gate-script-parity orphan resolved) · proof-component-orphan gatherOrphanInput exported |
+| 1.12 | BH.B6 W-core-prompts | BH/B6 | C | DONE | proof:core-prompts (repo-local) | a9f87453 · proof:core-prompts GREEN (W1-W4 + self-test; born-RED 'robust'→'sturdy' excised) · 3 prompts + README; registered local + proof:tag-parity JUSTIFIED_LOCAL_ONLY (gate-detrap/story-language precedent) |
 
 ¹ carousel arm = the [C]×WS10 graze — land before WS10 rewrites `CarouselContent.vue` or rebase onto it.
 
