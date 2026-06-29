@@ -52,6 +52,10 @@ const tokens = strip(readMonolith(ROOT, "tokens"));
 const colorRadius = strip(read("src/styles/tokens/color-radius.css"));
 const darkArm = strip(read("src/styles/tokens/dark-arm.css"));
 const lightDark = strip(read("src/styles/tokens/light-dark.css"));
+// BG.W-CARTOON-INK-GAMUT — the cartoon-ink recipe lives in tokens/shadow.css; read it
+// directly so the maroon witness reads the LIVE :root pin (the dark arm DRY-collapses
+// onto it).
+const shadowTokens = strip(read("src/styles/tokens/shadow.css"));
 // BB.W-CARVE4 — glass.css's decorative/fx tail (incl. --overlay-scrim-ink) carved
 // into tokens/glass-fx.css; read both so the KEEP-NEUTRAL byte-assert follows the
 // carve (the assert is over the §8 glass-token cascade, now two adjacent partials).
@@ -203,6 +207,81 @@ function relativeOklchFrom(srcColor, liftL) {
 function darkTintLiftL(src) {
     const m = src.match(/oklch\(\s*from\s+var\(--foreground\)\s+([\d.]+)\s+c\s+h\s*\)/i);
     return m ? Number(m[1]) : null;
+}
+
+// ── BG.W-CARTOON-INK-GAMUT — the clamp-aware --cartoon-ink resolver ───────────────────
+// The cartoon ink is `oklch(from var(--foreground) <Lexpr> <Cexpr> h)` where the channel
+// expressions are clamp()/max()/calc() — the prior darkTintLiftL only matched a bare
+// numeric L. This resolver parses the recipe and evaluates it against a source-foreground.
+/** Split a value into TOP-LEVEL space-separated tokens, keeping paren-nested spaces (e.g.
+ *  `clamp(0.20, calc(1 - l), 0.30)`) intact. */
+function splitTopLevel(s) {
+    const out = [];
+    let depth = 0;
+    let cur = "";
+    for (const ch of s) {
+        if (ch === "(") {
+            depth++;
+            cur += ch;
+        } else if (ch === ")") {
+            depth--;
+            cur += ch;
+        } else if (/\s/.test(ch) && depth === 0) {
+            if (cur) {
+                out.push(cur);
+                cur = "";
+            }
+        } else cur += ch;
+    }
+    if (cur) out.push(cur);
+    return out;
+}
+/** Parse a `--cartoon-ink: oklch(from var(--foreground) <Lexpr> <Cexpr> h)` recipe into its
+ *  L + C channel expressions (the hue is always the foreground `h`). Returns null when no
+ *  oklch(from --foreground …) cartoon-ink recipe is present (the DRY-collapsed dark arm —
+ *  the caller falls back to the :root pin). NOT `--cartoon-ink-lead`/etc. (the `\s*:` after
+ *  `--cartoon-ink` excludes the `-suffix` rungs) and NOT the `var(--cartoon-ink-fallback)`
+ *  @supports floor (the `oklch(` requirement excludes it). */
+function parseCartoonInkRecipe(src) {
+    const m = src.match(
+        /--cartoon-ink\s*:\s*oklch\(\s*from\s+var\(--foreground\)\s+([\s\S]*?)\s*\)\s*;/i,
+    );
+    if (!m) return null;
+    const toks = splitTopLevel(m[1]);
+    if (toks.length < 3) return null;
+    return { Lexpr: toks[0], Cexpr: toks[1] };
+}
+/** Eval a relative-color channel keyword (`l`/`c`), a `calc(1 - l)`/`calc(1 - c)` flip, or
+ *  a bare numeric, against the source-foreground channel value. */
+function evalInkMid(s, chVal, chName) {
+    s = s.trim();
+    if (s === chName) return chVal;
+    if (new RegExp(`^calc\\(\\s*1\\s*-\\s*${chName}\\s*\\)$`, "i").test(s)) return 1 - chVal;
+    const n = Number(s);
+    return Number.isFinite(n) ? n : chVal;
+}
+/** Eval a `clamp(lo, <mid>, hi)` / `max(<mid>, N)` / bare-channel expr against the source
+ *  foreground channel — the clamp-aware resolver the maroon witness needs. */
+function evalInkChannel(expr, chVal, chName) {
+    let m = expr.match(/^clamp\(\s*([\d.]+)\s*,\s*([\s\S]+?)\s*,\s*([\d.]+)\s*\)$/i);
+    if (m) {
+        const lo = Number(m[1]);
+        const hi = Number(m[3]);
+        return Math.min(hi, Math.max(lo, evalInkMid(m[2], chVal, chName)));
+    }
+    m = expr.match(/^max\(\s*([\s\S]+?)\s*,\s*([\d.]+)\s*\)$/i);
+    if (m) return Math.max(evalInkMid(m[1], chVal, chName), Number(m[2]));
+    return evalInkMid(expr, chVal, chName);
+}
+/** Resolve a cartoon-ink recipe against a source-foreground color → sRGB [r,g,b] (through
+ *  the SAME oklchToRgb sRGB clamp the browser's "no gamut-map yet" caveat models — so the
+ *  HEAD maroon resolves rgb(N,0,0) here EXACTLY as it paints). */
+function resolveCartoonInk(recipe, fgColor) {
+    const fg = oklchOf(fgColor);
+    if (!fg || !recipe) return null;
+    const L = evalInkChannel(recipe.Lexpr, fg.L, "l");
+    const C = evalInkChannel(recipe.Cexpr, fg.C, "c");
+    return oklchToRgb(L, C, fg.H);
 }
 
 const checks = [];
@@ -588,6 +667,68 @@ add(
             darkArm,
         ),
     "the dark arm's oklch(from var(--foreground) …) is the INK SOURCE inside the unchanged color-mix(in srgb, …) α-mix — NOT a switch of the tint interpolation space (the AW.W26 fence holds; surface-tint-stays-srgb stays GREEN)",
+);
+
+// ════════════════════════════════════════════════════════════════════════════════════
+// BG.W-CARTOON-INK-GAMUT — the cartoon ink is an IN-GAMUT WARM BROWN in BOTH modes (the
+// maroon kill). The HEAD recipe floored chroma `max(c, 0.11)` at a deep `clamp(0.14, l,
+// 0.18)` — OUT OF GAMUT at low L, so the browser clamped each channel and the ink
+// collapsed to rgb(49,0,0) light / rgb(48,5,0) dark (B=0, a flat maroon). The witness
+// reads the LIVE recipe + the live --foreground (light from color-radius, dark from the
+// .dark fallback floor; the DRY-collapsed dark arm falls back to the :root pin), resolves
+// it through the SAME oklchToRgb sRGB clamp the browser models, and asserts R>G>B>0 AND
+// OKLab H ∈ [WARM_HUE_LO, WARM_HUE_HI] for BOTH source-foregrounds. NOT a chroma≥floor
+// predicate — that bar produced BOTH the maroon AND the metallic over-saturate (the
+// chronic-breaker; this is the FIRST instance of the resolved-hue-AND-gamut-at-L witness).
+const cartoonInkRootRecipe = parseCartoonInkRecipe(shadowTokens);
+const cartoonInkDarkRecipe = parseCartoonInkRecipe(darkArm) ?? cartoonInkRootRecipe;
+const cartoonInkLightFg = rootValue(colorRadius, "foreground");
+const cartoonInkLightRgb = resolveCartoonInk(cartoonInkRootRecipe, cartoonInkLightFg ?? "");
+const cartoonInkDarkRgb = resolveCartoonInk(cartoonInkDarkRecipe, darkFgFloor ?? "");
+const warmInkInGamut = (rgb) => {
+    if (!rgb) return false;
+    const [r, g, b] = rgb;
+    if (!(r > g && g > b && b > 0)) return false;
+    const ok = rgbToOklab(rgb);
+    return ok.H >= WARM_HUE_LO && ok.H <= WARM_HUE_HI;
+};
+const cartoonInkLightOk = cartoonInkLightRgb ? rgbToOklab(cartoonInkLightRgb) : null;
+const cartoonInkDarkOk = cartoonInkDarkRgb ? rgbToOklab(cartoonInkDarkRgb) : null;
+facts.cartoonInk = {
+    light: {
+        rgb: cartoonInkLightRgb,
+        H: cartoonInkLightOk ? Number(cartoonInkLightOk.H.toFixed(1)) : null,
+    },
+    dark: {
+        rgb: cartoonInkDarkRgb,
+        H: cartoonInkDarkOk ? Number(cartoonInkDarkOk.H.toFixed(1)) : null,
+        dryCollapsed: parseCartoonInkRecipe(darkArm) === null,
+    },
+};
+add(
+    "cartoon-ink-warm-in-gamut-light",
+    warmInkInGamut(cartoonInkLightRgb),
+    `the light --cartoon-ink resolves rgb(${cartoonInkLightRgb ?? "?"}) at OKLab H = ${cartoonInkLightOk ? cartoonInkLightOk.H.toFixed(1) : "?"}° — R>G>B>0 AND warm ∈ [${WARM_HUE_LO},${WARM_HUE_HI}]° (the in-gamut warm brown; HEAD's max(c,0.11)@L0.18 collapsed to rgb(49,0,0), B=0 maroon)`,
+);
+add(
+    "cartoon-ink-warm-in-gamut-dark",
+    warmInkInGamut(cartoonInkDarkRgb),
+    `the dark --cartoon-ink (the :root pin cascading the dark --foreground via the DRY-collapse) resolves rgb(${cartoonInkDarkRgb ?? "?"}) at OKLab H = ${cartoonInkDarkOk ? cartoonInkDarkOk.H.toFixed(1) : "?"}° — R>G>B>0 AND warm ∈ [${WARM_HUE_LO},${WARM_HUE_HI}]° (HEAD's dark re-paste collapsed to rgb(48,5,0), B=0 maroon)`,
+);
+// Self-test bite — the maroon detector MUST flag a synthetic out-of-gamut chroma-floored
+// recipe (the regression the witness exists to catch). resolveCartoonInk over the HEAD
+// maroon recipe against the light --foreground reproduces rgb(49,0,0) (B=0) → not warm-in-
+// gamut; a passing self-test proves the predicate is load-bearing, not vacuously green.
+const cartoonInkMaroonProbe = resolveCartoonInk(
+    { Lexpr: "clamp(0.14, l, 0.18)", Cexpr: "max(c, 0.11)" },
+    cartoonInkLightFg ?? "",
+);
+add(
+    "cartoon-ink-warm-in-gamut--self-test",
+    cartoonInkMaroonProbe !== null &&
+        cartoonInkMaroonProbe[2] === 0 &&
+        !warmInkInGamut(cartoonInkMaroonProbe),
+    `the maroon detector flags the synthetic HEAD recipe (clamp(0.14,l,0.18) max(c,0.11)) → rgb(${cartoonInkMaroonProbe ?? "?"}) B=0, warm-in-gamut=false — the witness is load-bearing, not vacuously green`,
 );
 
 // ── W-NAV-DOCK-FIX — the dock optical-gray witnesses (3 source arms, NO floor weakened) ─

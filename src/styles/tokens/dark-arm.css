@@ -164,21 +164,22 @@
     --warning-foreground: hsl(24 10% 10%);
     --info-foreground:    hsl(48 10% 96%);
 
-    /* BD.W-CARTOON-CEL-INK — the WARM DARK ink. In dark, `--foreground` flips to
-       near-cream, so the SAME `oklch(from --foreground …)` construction would lift the
-       ink toward a light warm LINE (the iOS-7-sticker glow). A cel cast is dark INK on
-       any cel — so the dark ink is built by the SAME `oklch(from)` mechanism (NOT a
-       hardcoded `oklch(0.22 0.07 70)` literal — the H3/R6 retirement) but L-TARGETED to
-       a warm MID-tone: `clamp(0.20, 1 − l, 0.30)` deepens the flipped-cream L back down
-       to a warm dark mid that READS as a defined edge against the near-black `--card`
-       (ΔL ≥ 0.12), chroma floored `max(c, 0.11)` for TECHNICOLOR, hue preserved. The
-       opacity rungs floor UP (46/38/26%) for presence on the dark ground. Plain `.dark`
-       ancestor — NO `:global()`, NO `light-dark()` (the recorded traps). */
-    --cartoon-ink: oklch(from var(--foreground) clamp(0.20, calc(1 - l), 0.30) max(c, 0.11) h);
+    /* BG.W-CARTOON-INK-GAMUT — the DRY-collapse. The dark `--cartoon-ink:` re-declaration
+       is DELETED — the `:root` in-gamut pin (shadow.css) cascades through the dark
+       `--foreground` directly. In dark, `--foreground` is near-cream (high L) so the
+       pin's `clamp(0.28, l, 0.34)` clamps L UP to its 0.34 ceiling — a warm-brown dark
+       sticker (the maroon `clamp(0.20, 1−l, 0.30) max(c, 0.11)` re-paste is retired; that
+       out-of-gamut chroma floor collapsed to `rgb(48,5,0)`, B=0). The dark pin resolves
+       ~rgb(65,54,38) at OKLab hue ~77° — warm brown (R>G>B>0) in the [45,85]° register.
+       ONLY the mode-correct alpha rungs (46/38/26% — a heavier ink for presence on the
+       dark ground than light's 32/26/18%) + the re-derived warm fallback stay here. */
     --cartoon-ink-lead:    color-mix(in oklab, var(--cartoon-ink) 46%, transparent);
     --cartoon-ink-mid:     color-mix(in oklab, var(--cartoon-ink) 38%, transparent);
     --cartoon-ink-contact: color-mix(in oklab, var(--cartoon-ink) 26%, transparent);
-    --cartoon-ink-fallback: #5a3f28;
+    /* Re-derived from the dark pin's RESOLVED sRGB at the dark `--foreground`
+       (`oklch(0.34 0.030 75°)` → ~rgb(65,54,38)); the old `#5a3f28` assumption is dropped
+       (the painted L floors below nominal — a warm-brown, never gray, never maroon). */
+    --cartoon-ink-fallback: #413626;
 
     --shadow-cartoon:       -3px 3px 0px 0px var(--cartoon-ink-lead);
     --shadow-cartoon-hover: -4px 4px 0px 0px var(--cartoon-ink-lead);

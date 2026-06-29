@@ -93,24 +93,35 @@
     --shadow-cartoon-color:             rgb(0 0 0 / 0.12);
     --shadow-cartoon-color-soft:        rgb(0 0 0 / 0.06);
 
-    /* ── BD.W-CARTOON-CEL-INK — the cartoon register's OWN warm cel ink ──────────────
+    /* ── BG.W-CARTOON-INK-GAMUT — the cartoon register's OWN warm-brown cel ink ──────
        Decoupled from `--shadow-color` so a consumer retunes the cast without
        disturbing every elevation box-shadow. Built by EXTRACTING the warm
-       `--foreground` hue (`oklch from`) and FLOORING chroma (`max(c, 0.11)` —
-       TECHNICOLOR, not merely-non-gray, the BA.W-NO-GRAY discipline applied to the
-       cast) + DEEPENING L (`clamp(0.14, l, 0.18)`) so at stamp opacity it reads as a
-       COLORED cel line, never a neutral gray. A cel cast is INK — it stays a warm DARK
-       ink (the dark arm pins its own warm dark ink, dark-arm.css). The three planes
-       step DOWN in opacity (lead 32% / mid 26% / contact 18%) — `in oklab` NOT
-       `in srgb` (srgb muddies a warm dark ink toward gray as it dilutes; oklab holds
-       the warm hue stable across the alpha ramp — the landed gray-dilution defect). */
-    --cartoon-ink: oklch(from var(--foreground) clamp(0.14, l, 0.18) max(c, 0.11) h);
+       `--foreground` hue (`oklch from`) at an IN-GAMUT warm-brown lightness+chroma:
+       `clamp(0.28, l, 0.34)` lifts the near-black `--foreground` L into the brown
+       midtone band, and `clamp(0.030, c, 0.050)` holds chroma in the range sRGB can
+       actually represent at that L. The maroon DEFECT this kills: the prior
+       `max(c, 0.11)` floor at `clamp(0.14, l, 0.18)` was OUT OF GAMUT at low L — sRGB
+       cannot hold C 0.11 at L 0.18, so the browser clamped each channel and the ink
+       collapsed to a flat maroon `rgb(49,0,0)` (B=0). Chroma-vs-darkness here is a
+       DESIGN choice, NOT a gamut law (the false "gamut-necessity"/"TECHNICOLOR-floor"
+       comment is retired). The pin resolves a warm brown (R>G>B>0) at OKLab hue ~57°
+       (light) / ~77° (dark) — both inside the [45,85]° warm register, never the maroon.
+       A cel cast is INK — the dark arm keeps ONLY its mode-correct alpha rungs + its
+       own re-derived fallback; the `:root` pin itself cascades through the dark
+       `--foreground` (the DRY-collapse, dark-arm.css). The three planes step DOWN in
+       opacity (lead 32% / mid 26% / contact 18%) — `in oklab` NOT `in srgb` (srgb
+       muddies a warm dark ink toward gray as it dilutes; oklab holds the warm hue
+       stable across the alpha ramp — the landed gray-dilution defect). */
+    --cartoon-ink: oklch(from var(--foreground) clamp(0.28, l, 0.34) clamp(0.030, c, 0.050) h);
     --cartoon-ink-lead:    color-mix(in oklab, var(--cartoon-ink) 32%, transparent);
     --cartoon-ink-mid:     color-mix(in oklab, var(--cartoon-ink) 26%, transparent);
     --cartoon-ink-contact: color-mix(in oklab, var(--cartoon-ink) 18%, transparent);
     /* `@supports not (oklch from …)` floors the ink to a named warm sRGB literal
-       (a legacy engine gets a WARM — not gray — stamp; NO dead inline literal). */
-    --cartoon-ink-fallback: #4a3320;
+       (a legacy engine gets a WARM — not gray, not maroon — stamp; NO dead inline
+       literal). Re-derived from the in-gamut pin's RESOLVED sRGB at the light
+       `--foreground` (the painted L floors below the old `#4a3320` nominal):
+       `oklch(0.28 0.030 56°)` → ~rgb(52,37,26). */
+    --cartoon-ink-fallback: #34251a;
 
     /* BD.W-CARTOON-CEL-INK — the tiered cel-ink STAMP, re-pointed to the warm
        `--cartoon-ink` rungs at HARD 0-BLUR (lead + mid + contact all 0px — the cel
@@ -207,17 +218,12 @@
     }
 }
 
-/* BD.W-CARTOON-CEL-INK — prefers-contrast / reduced-transparency floor the inked edge
+/* BG.W-CARTOON-INK-GAMUT — prefers-contrast / reduced-transparency floor the inked edge
    UP (the cel cast is a legibility ASSET, not decoration; PRT is NOT a no-op — the cast
-   is translucent ink). */
-@media (prefers-contrast: more) {
-    :root {
-        --cartoon-ink-lead:    color-mix(in oklab, var(--cartoon-ink) 42%, transparent);
-        --cartoon-ink-mid:     color-mix(in oklab, var(--cartoon-ink) 34%, transparent);
-        --cartoon-ink-contact: color-mix(in oklab, var(--cartoon-ink) 24%, transparent);
-    }
-}
-@media (prefers-reduced-transparency: reduce) {
+   is translucent ink). The two byte-identical arms fold into ONE comma-joined query (the
+   DRY dup pass). The deepen rides ALPHA (32→42%), NEVER chroma — the in-gamut warm-brown
+   hue is preserved across the bracket. */
+@media (prefers-contrast: more), (prefers-reduced-transparency: reduce) {
     :root {
         --cartoon-ink-lead:    color-mix(in oklab, var(--cartoon-ink) 42%, transparent);
         --cartoon-ink-mid:     color-mix(in oklab, var(--cartoon-ink) 34%, transparent);
