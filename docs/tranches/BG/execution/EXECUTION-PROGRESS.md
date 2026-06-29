@@ -84,13 +84,13 @@ WAVE-DONE bar: `real-paint-protocol.md §1`. Interleave/collision: `bh-interleav
 
 | seq | wave | tranche/ws | class | status | gate | paint |
 |----:|------|-----------|:-----:|:------:|------|:-----:|
-| 3.1 | BG.W-CARTOON-INK-GAMUT | BG/WS3 | P | PENDING | proof:no-gray (cartoon-ink-warm-in-gamut) | — |
+| 3.1 | BG.W-CARTOON-INK-GAMUT | BG/WS3 | P | PAINT-PENDING (3857b33) | proof:no-gray (cartoon-ink-warm-in-gamut) GREEN | pending |
 | 3.2 | BG.W-DOCK-CAST-RETIRE | BG/WS3 | H | PENDING | source-absent + in-bundle getComputedStyle | — |
 | 3.3 | BG.W-GLASS-CLIP-DISCIPLINE | BG/WS3 | P | PENDING | proof:glass-clip · proof:dock-plate-clearance | — |
 | 3.4 | BG.W-SAFARI-BLUR-LITERAL | BG/WS3 | P | PENDING | webkit literal-blur value-correctness | — |
 | 3.5 | BG.W-GLASS-TINT-UNIFY (M5a→M5 phased) | BG/WS3 | P | PENDING | proof:glass-foundation A1 | — |
-| 3.6 | BG.W-GLASS-BLUR-PEER | BG/WS3 | P | PENDING | proof:glass-cal (8px peer lock) | — |
-| 3.7 | BG.W-GLASS-IDIOM-FACTOR | BG/WS3 | H | PENDING | reader-census-at-landing | — |
+| 3.6 | BG.W-GLASS-BLUR-PEER | BG/WS3 | P | PAINT-PENDING (cd9ce46) | proof:glass-cal (8px peer lock) GREEN | pending |
+| 3.7 | BG.W-GLASS-IDIOM-FACTOR | BG/WS3 | H | DONE (6ec81de) | proof:glass-idiom-factor GREEN | n/a (H) |
 | 3.8 | BG.W-GLASS-CONSUMER-BAND | BG/WS3 | P | PENDING | computed-style + 3 sign-offs | — |
 | 3.9 | BG.W-DOCK-LEGIBILITY-RECAL | BG/WS3 | P | PENDING | proof:no-gray dock witnesses | — |
 | 3.10 | BG.W-GLASS-DYNAMICS | BG/WS3 | P | PENDING | read-carrier paint sign-off | — |
