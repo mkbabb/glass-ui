@@ -211,6 +211,56 @@ decoder (`pngRegionStats`/`inflateSync`/`oklabFromRgb`) at FULL-RES per-pixel Δ
 equal-crop captures. Writes `docs/tranches/BG/audit/visual/safari-fidelity-delta.{json,md}` (the per-pixel
 ΔE re-run + the C16 navigator.gpu verdict).
 
+### 6.1 · The WORKING method (C18 BUILT — the paint workflow's binding instructions)
+
+The C18 harness is BUILT and PROVEN (`docs/tranches/BG/audit/visual/c18-harness/C18-HARNESS-DELTA.md`).
+The off-screen WKWebView now captures FULL route content + the in-pixel engine badge in BOTH modes — the
+C-SAFARI keystone is unblocked at the harness level (no on-screen `screencapture`/Screen-Recording-TCC path
+is needed for the route-transition surface). Use THIS method.
+
+**The `?capture=` URL form.** Boot the demo into the snapshot-friendly SETTLED-FRAME mode:
+```
+http://localhost:5200/?capture=<route>&mode=<light|dark>
+```
+`capture` is the destination ROUTE (e.g. `/dock/overview`); `mode` is the color scheme (default `light`).
+`demo/main.ts` detects the param, sets `<html data-capture data-capture-mode=<mode>>` + the color scheme
+BEFORE mount (so the `.route-enter` `@keyframes`-on-mount entrance NEVER plays → no transform-promoted CA
+layer for an off-screen snapshot to drop), loads `demo/capture/capture.css` (neutralizes
+`animation`/`transition`/`will-change`/`contain` into the settled frame WITHOUT changing the settled
+pixels), navigates to `<route>`, paints the `demo/capture/engine-badge.ts` in-pixel engine badge after a
+GL warm-up, and signals readiness.
+
+**The readiness POLL (never a fixed sleep).** The page sets `window.__captureReady = true` +
+`<html data-capture-ready>` once the settled frame + badge are painted. POLL for the attribute, THEN
+snapshot — `document.documentElement.hasAttribute('data-capture-ready')`. (An off-screen WKWebView
+throttles `requestAnimationFrame`, so the boot's paint-settle uses an rAF-vs-`setTimeout` race; the
+readiness flag is the deterministic signal.)
+
+**Off-screen WKWebView command (the Safari/WebKit leg — system WebKit.framework/Metal, NO TCC):**
+```bash
+clang -framework Cocoa -framework WebKit -fobjc-arc \
+  docs/tranches/BG/audit/wkshot-live.m -o /tmp/wkshot-live
+/tmp/wkshot-live "http://localhost:5200/?capture=/dock/overview&mode=light" out-light.png light 15000
+/tmp/wkshot-live "http://localhost:5200/?capture=/dock/overview&mode=dark"  out-dark.png  dark  15000
+#   → 2880×1800 (retina-2×) PNGs, FULL content + the WEBKIT engine badge; the harness POLLS
+#     document.documentElement[data-capture-ready] (up to maxWaitMs) BEFORE takeSnapshotWithConfiguration.
+```
+
+**Chrome CDP command (the real-Metal Chrome leg — over the SAME `?capture=` route):**
+```bash
+# real on-screen Chrome.app + CDP (real Metal GPU); per mode:
+#   navigate http://localhost:5200/?capture=/dock/overview&mode=<mode>
+#   poll document.documentElement.hasAttribute('data-capture-ready')  → screenshot
+#   the badge reads ENGINE CHROME / GPU ANGLE Metal Apple M5 Max (proves real GPU, not SwiftShader).
+```
+
+**The in-pixel engine badge (`demo/capture/engine-badge.ts`) — the SOLE provenance source.** A
+deterministic high-contrast top-left panel painted INTO the capture: `ENGINE` (CHROME · WEBKIT · SAFARI
+off `navigator.userAgent` — a bare WKWebView has no `Version/` token → WEBKIT, real Safari.app → SAFARI),
+`GPU` (the live `GL_RENDERER` off a throwaway WebGL2 context — real Metal vs SwiftShader), `VIEW`
+(`W×H @<dpr>x` — proves the Retina double-scale), `MODE`. The gate decodes the badge FROM the pixels; the
+magenta `#ff00ff` 2px border is its deterministic locator. NO JSON sidecar (forgeable beyond a re-stamp).
+
 ---
 
 ## 7 · The release axis re-coupled (the tag-push bypass-closer)

@@ -1,0 +1,107 @@
+/*
+ * capture.css — BG C18 capture harness · the snapshot-friendly settled-frame
+ * stylesheet.
+ *
+ * THE PROBLEM (diagnosed in PIPELINE-VALIDATION-DELTA.md): BG.W-ROUTE-TRANSITION's
+ * `.route-enter` `@keyframes`-on-mount entrance ANIMATES `transform`, which
+ * promotes the keyed route wrapper (`<component class="route-enter">`, the direct
+ * `<main>` child) to a Core Animation compositing layer. An OFF-SCREEN WKWebView
+ * (no attached on-screen window) drops that promoted layer from
+ * `takeSnapshotWithConfiguration` → `<main>` snapshots BLANK while the DOM is
+ * fully real. The aurora field + dock are likewise behind `will-change`/`contain`
+ * promotions an off-screen snapshot drops.
+ *
+ * THE FIX (a capture MODE, not a live manipulation): under the `html[data-capture]`
+ * scope this stylesheet neutralizes the ANIMATION-DRIVEN compositing promotion +
+ * the explicit `will-change`/`contain` hints so every surface composites into the
+ * BASE layer the off-screen snapshot captures — WITHOUT changing the SETTLED
+ * pixels. The entrance recipes JUMP to their settled end-state (the route rises to
+ * `transform:none`/`opacity:1`; the scroll-cascade/reveal children un-hide). The
+ * SETTLED frame is pixel-faithful — the WebKit engine renders correctly; this only
+ * removes the promotions the off-screen snapshot cannot read.
+ *
+ * SCOPE FENCE: every rule is under `html[data-capture]`, set ONLY by the
+ * `?capture=` boot path. The normal demo never carries the attribute, so this
+ * stylesheet is wholly inert outside capture mode (and it is dynamically imported
+ * only in the capture branch, so the normal bundle never ships it).
+ */
+
+/* ── 1 · Kill every animation + transition ──────────────────────────────────
+ *
+ * Animating `transform` is what promotes a layer; with NO animation the route
+ * wrapper's transform is static + un-promoted, and every CSS-animated entrance
+ * (`.route-enter`, `gl-cascade-build`, `gl-reveal-in`, the icon-chip/suffuse
+ * pops, the metal shimmer) reverts to its base style — which is the SETTLED state
+ * for the recipes whose `from` lives only in a keyframe. `transition: none` jumps
+ * any in-flight hover/state transition to its target. */
+html[data-capture] *,
+html[data-capture] *::before,
+html[data-capture] *::after {
+    animation: none !important;
+    animation-delay: 0s !important;
+    animation-duration: 0s !important;
+    transition: none !important;
+    transition-delay: 0s !important;
+    transition-duration: 0s !important;
+}
+
+/* ── 2 · Drop every `will-change` compositing hint ──────────────────────────
+ *
+ * `will-change` is a pure layer-promotion HINT — removing it never changes a
+ * pixel, only whether the browser hoists the element to its own layer (the layer
+ * the off-screen snapshot drops). Blanket-safe. */
+html[data-capture] * {
+    will-change: auto !important;
+}
+
+/* ── 3 · Settle the entrance recipes whose BASE state is hidden ─────────────
+ *
+ * Most entrance recipes (`.route-enter`, `.scroll-cascade > *`) put their hidden
+ * `from` ONLY in a keyframe, so killing the animation (rule 1) already reveals
+ * them. But `[data-scroll-reveal-once] > *` bakes `opacity: 0` as a BASE rule
+ * (revealed by a `[data-revealed]` attr the IntersectionObserver sets) — killing
+ * the animation would leave it invisible. Force every entrance-recipe child to
+ * its SETTLED visible end-state. Scoped to entrance-recipe descendants only, so a
+ * real settled transform elsewhere (a centered dialog, the dock morph) is
+ * untouched. */
+html[data-capture] .route-enter,
+html[data-capture] .scroll-cascade > *,
+html[data-capture] .scroll-cascade--columns > *,
+html[data-capture] [data-scroll-reveal] > *,
+html[data-capture] [data-scroll-reveal-once] > *,
+html[data-capture] [data-reveal],
+html[data-capture] .scroll-pin-phase-reveal,
+html[data-capture] .scroll-pin-phase-settle {
+    opacity: 1 !important;
+    transform: none !important;
+    translate: none !important;
+    scale: none !important;
+    filter: none !important;
+}
+
+/* ── 4 · De-promote the route wrapper + the aurora field ───────────────────
+ *
+ * The `.route-enter` wrapper is the named culprit — rule 1 already de-animates
+ * it; this also drops any `contain` so its subtree composites into the base
+ * layer. The aurora host carries `contain: content` + `content-visibility: auto`
+ * (a render-skip + containment context); force it `visible`/`none` so the WebGL
+ * field always renders into the base layer the snapshot reads (the route's own
+ * DockStage aurora sits INSIDE the route wrapper). This only ever renders MORE,
+ * never less — it cannot hide settled pixels. */
+html[data-capture] .route-enter {
+    contain: none !important;
+}
+html[data-capture] .aurora-root {
+    contain: none !important;
+    content-visibility: visible !important;
+    contain-intrinsic-size: auto !important;
+}
+
+/* ── 5 · Force the smooth-scroll register to a jump ────────────────────────
+ *
+ * `scroll-behavior: smooth` can leave a mid-flight scroll offset at snapshot
+ * time; jump-scroll is the deterministic capture position. */
+html[data-capture] .smooth-scroll,
+html[data-capture] :where(html, body) {
+    scroll-behavior: auto !important;
+}

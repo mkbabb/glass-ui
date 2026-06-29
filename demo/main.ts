@@ -1,9 +1,16 @@
-import { createApp } from "vue";
-import App from "./App.vue";
+import { createApp, nextTick, type App } from "vue";
+import App_ from "./App.vue";
 import { router } from "./router";
 import "./demo.css";
 
-const app = createApp(App).use(router);
+declare global {
+    interface Window {
+        /** BG C18 capture harness — set true once the settled frame is ready to snapshot. */
+        __captureReady?: boolean;
+    }
+}
+
+const app = createApp(App_).use(router);
 
 // BG.W-ROUTE-TRANSITION (M0) — a global error handler so a route-component throw (an
 // Aurora init failure, a lazy-chunk evaluation error) surfaces in the console with the
@@ -14,7 +21,118 @@ app.config.errorHandler = (err, _instance, info) => {
     console.error("[demo] app error", info, err);
 };
 
-// W-NAV-DOCK-FIX (defect 7) — await the router (the F2 beforeResolve eager-resolves the
-// first navigation's lazy chunk) BEFORE mount, so the first paint is the resolved page,
-// never an empty <RouterView> + the "Pick a story" flash.
-void router.isReady().then(() => app.mount("#app"));
+// ── BG C18 — the deterministic capture harness boot ────────────────────────────
+//
+// `?capture=<route>&mode=<light|dark>` boots the demo in a snapshot-friendly
+// SETTLED-FRAME mode (real-paint-protocol §6): the entrance animations +
+// compositing promotions are neutralized (the `html[data-capture]` capture
+// stylesheet) so an OFF-SCREEN WKWebView snapshot captures the FULL route content
+// into the base layer (today it captures a BLANK `<main>` — the `.route-enter`
+// transform-promoted layer is dropped off-screen), an in-pixel engine badge is
+// painted as the SOLE provenance source, and readiness is signalled via
+// `window.__captureReady` + `<html data-capture-ready>` so the harness polls
+// instead of guessing a fixed sleep. WebKit RENDERS correctly — this is a HARNESS
+// path, ZERO src/component logic touched.
+//
+// The non-capture (normal demo) path is BYTE-UNTOUCHED — the capture branch is
+// reached ONLY when the `capture` param is present.
+
+// The GL warm-up before the readiness flag — enough frames for the aurora field
+// to reach a stable composite. The harness polls `data-capture-ready`, so a
+// longer warm-up just delays the flag; it never races the snapshot.
+const GL_WARMUP_MS = 3500;
+
+const wait = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
+// A paint settle that NEVER hangs. An OFF-SCREEN WKWebView (no attached window)
+// throttles/suspends `requestAnimationFrame`, so a bare double-rAF would stall the
+// boot forever and the `data-capture-ready` signal would never land. Race the rAF
+// against a `setTimeout` fallback (setTimeout fires off-screen) so the settle
+// resolves within the cap even when rAF is suspended.
+const nextPaint = () =>
+    new Promise<void>((resolve) => {
+        let done = false;
+        const finish = () => {
+            if (!done) {
+                done = true;
+                resolve();
+            }
+        };
+        requestAnimationFrame(() => requestAnimationFrame(finish));
+        setTimeout(finish, 250);
+    });
+
+const captureParams = new URLSearchParams(window.location.search);
+const captureRoute = captureParams.get("capture");
+
+if (captureRoute) {
+    void bootCaptureMode(app, captureRoute, captureParams);
+} else {
+    // W-NAV-DOCK-FIX (defect 7) — await the router (the F2 beforeResolve eager-resolves
+    // the first navigation's lazy chunk) BEFORE mount, so the first paint is the resolved
+    // page, never an empty <RouterView> + the "Pick a story" flash.
+    void router.isReady().then(() => app.mount("#app"));
+}
+
+/**
+ * Boot the demo into the C18 settled-frame capture mode. The order is
+ * load-bearing: the color scheme + `data-capture` flag are set BEFORE mount, so
+ * the `.route-enter` entrance never plays (the keyed component jumps straight to
+ * its settled frame — no transform-promoted layer to drop off-screen).
+ */
+async function bootCaptureMode(
+    appInstance: App,
+    route: string,
+    params: URLSearchParams,
+): Promise<void> {
+    const mode = params.get("mode") === "dark" ? "dark" : "light";
+    const el = document.documentElement;
+
+    // 1 · Set the color scheme + the capture flag BEFORE mount. `data-capture`
+    //     activates the capture stylesheet from frame 0, so the entrance
+    //     animations (and their layer-promoting transforms) never bind.
+    try {
+        localStorage.setItem("vueuse-color-scheme", mode);
+    } catch {
+        // localStorage may be unavailable (private mode / file URL) — the class +
+        // colorScheme below are the binding signals; the seed is best-effort.
+    }
+    el.classList.toggle("dark", mode === "dark");
+    el.style.colorScheme = mode;
+    el.setAttribute("data-capture", "");
+    el.setAttribute("data-capture-mode", mode);
+
+    // 2 · Load the capture stylesheet (dynamic — never in the normal bundle; inert
+    //     outside the `html[data-capture]` scope regardless).
+    await import("./capture/capture.css");
+
+    // 3 · Resolve the initial navigation, mount, then navigate to the capture
+    //     target. Mounting after `isReady()` + pushing the target is the robust
+    //     order (the `/` redirect resolves first, then we land the real route).
+    await router.isReady();
+    appInstance.mount("#app");
+    if (router.currentRoute.value.fullPath !== route) {
+        await router.push(route).catch((e) => {
+            console.error("[capture] route push failed", route, e);
+        });
+    }
+
+    // 4 · Let the route component + the GL field settle, paint the badge, signal
+    //     ready. The page OWNS the warm-up; the harness polls `data-capture-ready`.
+    await nextTick();
+    await nextPaint();
+    // GL warm-up — give the aurora/WebGL field several frames to paint a stable
+    // image (the substrate's rAF loop keeps running; `animation: none` does not
+    // touch the WebGL canvas, only CSS animation).
+    await wait(GL_WARMUP_MS);
+    await nextPaint();
+
+    const { mountEngineBadge } = await import("./capture/engine-badge");
+    const info = mountEngineBadge(mode);
+    console.info(
+        `[capture] ready · route=${route} mode=${mode} engine=${info.engine} gpu=${info.glRenderer}`,
+    );
+
+    await nextPaint();
+    window.__captureReady = true;
+    el.setAttribute("data-capture-ready", "");
+}
