@@ -45,6 +45,33 @@ const PINNED_LATEST = {
 // installed keyframes package below; this is the offline/absent fallback only.
 const PINNED_KEYFRAMES_VALUE_DEP = "^1.2.0";
 
+// BH.B1-W2-value-destraddle — value.js's 1.0.0 stabilization cut landed; the
+// pre-1.0 lockstep regime dissolved and the `^0.13.0` leg RETIRED. The value.js
+// peer (AND the dev pin) must be a SINGLE clean `^1.x` range — a legacy
+// `^0.13.0 || ^1.0.0` straddle re-admits a pre-1.0 value.js the constellation no
+// longer ships (the no-legacy-straddle law). PRE1_PROBE is the retired leg the
+// straddle still admits. Detection is a pure predicate so the self-test bite can
+// plant synthetic straddles and assert each flags.
+const PRE1_PROBE = "0.13.0";
+
+export function valueDestraddleViolations(label, range) {
+    const out = [];
+    if (range == null) return out; // absence is reported by the admit/peer arm
+    if (semver.satisfies(PRE1_PROBE, range)) {
+        out.push(
+            `value ${label} (${range}) still admits the RETIRED pre-1.0 leg (${PRE1_PROBE}) — the legacy straddle; value.js 1.0.0 stabilized, pin a single ^1.x range`,
+        );
+        return out;
+    }
+    const min = semver.minVersion(range);
+    if (min == null || semver.lt(min, "1.0.0")) {
+        out.push(
+            `value ${label} (${range}) floors below 1.0.0 — destraddle to a single ^1.x range`,
+        );
+    }
+    return out;
+}
+
 function registryLatest(pkg) {
     try {
         const out = execSync(`npm view ${pkg} version`, {
@@ -126,6 +153,57 @@ function run() {
         );
     }
 
+    // BH.B1-W2 destraddle — the value.js peer AND the dev pin must be a single
+    // clean ^1.x range, no `^0.13.0 || ^1.0.0` legacy straddle re-admitting the
+    // retired pre-1.0 leg. Born-RED on HEAD (both carry the straddle) → GREEN at
+    // the `^1.0.0` re-pin (the clean ^1.x that admits the registry-latest
+    // dist-tag AND contains keyframes' `^1.2.0` value dep — see the singleton
+    // arm; a `^1.2.0` peer would re-narrow below registry-latest 1.1.1).
+    const valueDevDep = (pkg.devDependencies ?? {})["@mkbabb/value.js"];
+    const peerDestraddle = valueDestraddleViolations("peer", valueRange);
+    const devDestraddle = valueDestraddleViolations("devDependency", valueDevDep);
+    const destraddled = peerDestraddle.length === 0 && devDestraddle.length === 0;
+    facts.valueDestraddle = {
+        peer: valueRange ?? "(missing)",
+        dev: valueDevDep ?? "(missing)",
+        destraddled,
+    };
+    violations.push(...peerDestraddle, ...devDestraddle);
+
+    // self-test bite — synthetic straddles MUST flag (the anti-hollow-detector
+    // floor; a softened predicate re-greens the bite), and the clean ^1.x range
+    // must NOT (the over-eager floor).
+    const SELF_TEST_STRADDLES = [
+        "^0.13.0 || ^1.0.0",
+        "^0.13.0",
+        ">=0.10.0",
+        "0.13.x || ^1.2.0",
+    ];
+    const selfTestBites = SELF_TEST_STRADDLES.map((r) => ({
+        range: r,
+        flagged: valueDestraddleViolations("self-test", r).length > 0,
+    }));
+    const cleanProbe = {
+        range: "^1.2.0",
+        flagged: valueDestraddleViolations("self-test", "^1.2.0").length > 0,
+    };
+    const allStraddlesFlagged = selfTestBites.every((b) => b.flagged);
+    const cleanGreen = cleanProbe.flagged === false;
+    facts.selfTest = { straddles: selfTestBites, clean: cleanProbe, allStraddlesFlagged, cleanGreen };
+    if (!allStraddlesFlagged) {
+        violations.push(
+            `SELF-TEST — a planted value straddle did NOT flag (hollow detector): ${selfTestBites
+                .filter((b) => !b.flagged)
+                .map((b) => b.range)
+                .join(", ")}`,
+        );
+    }
+    if (!cleanGreen) {
+        violations.push(
+            `SELF-TEST — the clean ^1.2.0 range false-flagged (over-eager detector)`,
+        );
+    }
+
     const status = violations.length === 0 ? "pass" : "fail";
     writeGateArtifact(ARTIFACT, {
         generatedAt: snapshotStamp(),
@@ -144,6 +222,12 @@ function run() {
     }
     console.log(
         `  value singleton (kf value dep ${facts.singletonIdentity.keyframesValueDep} ⊆ glass-ui peer) : ${facts.singletonIdentity.contained ? "YES" : "NO"}`,
+    );
+    console.log(
+        `  value destraddled (single ^1.x, no pre-1.0 leg)   : ${facts.valueDestraddle.destraddled ? "YES" : "NO"} (peer=${facts.valueDestraddle.peer}, dev=${facts.valueDestraddle.dev})`,
+    );
+    console.log(
+        `  self-test straddles flagged + clean green         : ${allStraddlesFlagged && cleanGreen}`,
     );
     if (violations.length) {
         console.log("\nVIOLATIONS:");
