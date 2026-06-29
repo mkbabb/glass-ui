@@ -35,3 +35,10 @@ wf_f560cb6f-e39  resume  2026-06-28 22:01:42  PATCHED engine (worktree STEP-0 sy
 # frontier (1.3/1.5/1.6). FIX: (1) STEP-0.5 git-log done-guard in the BUILD prompt (a build agent for an
 # already-committed wave returns an EMPTY patch — bounds re-processing to a fast no-op, robust for born-RED
 # waves); (2) FRESH resume resets the drifted in-memory state from the accurate cursor (DONE=9).
+
+## INTERVENTION 2026-06-29 ~02:55 — in-memory drift loop NOT broken by STEP-0.5 alone
+# wf_a28577f2-36c STOPPED. STEP-0.5 fired (23 already-landed no-ops) but the engine STILL re-picked the same
+# DONE waves (B4c/B4d/B6 ×7 each) — the no-ops returned but never flipped the wave to DONE in-memory, so the
+# loop continued cheaply-but-forever, never reaching frontier 1.3/1.5/1.6. FIX: the engine now RECOGNIZES a
+# STEP-0.5 no-op (convergenceNote "already landed") and marks the wave DONE DIRECTLY (b.w._noop → DONE),
+# excluding it from the integrate. Paired with a FRESH resume (LOADER reads accurate cursor DONE=12).

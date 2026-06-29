@@ -177,7 +177,10 @@ BUILD this wave from first principles. Implement its Files per its Gate + π row
       .then(r => ({ w, r })).catch(() => ({ w, r: null, error: true }))))
 
   // ----- INTEGRATE (one orchestrator-agent applies the batch onto tranche/BG, re-runs gates, commits, writes cursor) -----
-  const ok = builds.filter(b => b.r && b.r.buildPassed && !b.error)
+  // STEP-0.5 ALREADY-LANDED NO-OPS: a build whose convergenceNote says "already landed" is the engine re-picking
+  // a DONE wave (in-memory status drift). Mark it _noop → DONE directly + exclude from integrate; breaks the loop.
+  for (const b of builds) if (b.r && /already[\s-]*landed/i.test(b.r.convergenceNote || '')) b.w._noop = true
+  const ok = builds.filter(b => b.r && b.r.buildPassed && !b.error && !b.w._noop)
   let integ = null
   if (ok.length) {
     integ = await agent(`You are the INTEGRATOR. Apply this build batch onto the main \`tranche/BG\` working tree at ${REPO}, in seq order, and commit ONE per wave. You OWN the index + the four hot files (${HOT.join(', ')}).
@@ -190,6 +193,7 @@ ${FENCE}`, { schema: INTEGRATE_SCHEMA, model: 'opus', label: `integrate/${batch[
   // apply integrate results to in-memory status
   const res = (integ && integ.results) || []
   for (const b of builds) {
+    if (b.w._noop) { b.w.status = 'DONE'; continue }   // STEP-0.5 already-landed no-op → DONE (break the drift loop)
     const r = res.find(x => x.wave === b.w.id)
     if (!b.r || !b.r.buildPassed || b.error) { b.w.status = 'FAIL'; continue }
     if (!r || !r.integrated || !r.gateGreen) { b.w.status = 'FAIL'; continue }
