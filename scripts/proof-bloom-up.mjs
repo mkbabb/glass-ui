@@ -120,6 +120,12 @@ const REFLOW_PROPS = [
 ];
 
 const LEAF = "src/composables/motion/useBloomUp.ts";
+// BH.B2.4a — the pure field-channel resolution + write helpers (resolveField/resolveHue/
+// clampStrength/prefersReducedMotion + writeFieldHue/writeFieldStrength/releaseField) carved
+// into the sibling leaf; the W2 4th-channel asserts FOLLOW the composition into the carved
+// leaf (the proof:webgl-substrate-single carve-isomorphism precedent — the asserts follow
+// the composition into the leaf). The W2 source-scan reads the COMBINED source.
+const FIELD_LEAF = "src/composables/motion/bloomUpField.ts";
 const MOTION_BARREL = "src/composables/motion/index.ts";
 const ROOT_BARREL = "src/index.ts";
 
@@ -274,7 +280,13 @@ function checkRootBarrel(rawRoot, { fail }) {
 const fails = [];
 const ctx = { fail: (clause, msg) => fails.push(`[${clause}] ${msg}`) };
 
-checkLeaf(read(LEAF), ctx);
+// The W2 4th-channel writes/resolves now live in the carved bloomUpField.ts sibling — read
+// the COMBINED source so they are found whether inline (pre-carve) or in the leaf (the carve
+// FOLLOWS into the leaf). The null-guard rides the MAIN leaf (a missing renderer is W1).
+const rawMain = read(LEAF);
+const rawBloom =
+    rawMain == null ? null : [rawMain, read(FIELD_LEAF)].filter(Boolean).join("\n");
+checkLeaf(rawBloom, ctx);
 checkMotionBarrel(read(MOTION_BARREL), ctx);
 checkRootBarrel(read(ROOT_BARREL), ctx);
 

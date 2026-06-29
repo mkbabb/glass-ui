@@ -94,6 +94,16 @@ import {
 } from "@mkbabb/keyframes.js";
 import { onScopeDispose, readonly, ref, watch, type Ref } from "vue";
 import { springPreset, type SpringPresetName } from "./springPresets";
+// BH.B2.4a — the pure field-channel resolution + write helpers carved into the sibling leaf.
+import {
+    clampStrength,
+    prefersReducedMotion,
+    releaseField,
+    resolveField,
+    resolveHue,
+    writeFieldHue,
+    writeFieldStrength,
+} from "./bloomUpField";
 
 /** The bloom spring register — `snappy` (the quick shared-element default) or `bouncy`
  *  (the emphatic large-surface bloom). A subset of the named `SPRING_PRESETS` rows,
@@ -171,60 +181,6 @@ export interface UseBloomUpReturn {
     prime: () => void;
     /** The reactive bloom state — `true` while a bloom is in flight, `false` at rest. */
     blooming: Readonly<Ref<boolean>>;
-}
-
-const AMBIENT_STRENGTH_CEILING = 8; // the BE.W-AMBIENT-TINT bound (sub-perceptual; never a flood)
-
-function prefersReducedMotion(): boolean {
-    return (
-        typeof window !== "undefined" &&
-        typeof window.matchMedia === "function" &&
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    );
-}
-
-/** Clamp the ambient-strength target into the bounded warm-cream-identity band. */
-function clampStrength(n: number | undefined): number {
-    const v = n ?? AMBIENT_STRENGTH_CEILING;
-    if (!Number.isFinite(v)) return AMBIENT_STRENGTH_CEILING;
-    return Math.min(AMBIENT_STRENGTH_CEILING, Math.max(0, v));
-}
-
-/**
- * Resolve the FIELD container the 4th color channel writes onto. Explicit `field` ref
- * wins; else walk up from `dest` to the nearest `[data-glass-field]` ancestor (the
- * field-marker contract); else `dest.parentElement`. The field is a DIFFERENT element
- * from the blooming surface — the compositor-only de-risk.
- */
-function resolveField(
-    dest: HTMLElement,
-    explicit: Ref<HTMLElement | null> | undefined,
-): HTMLElement | null {
-    if (explicit?.value) return explicit.value;
-    let node: HTMLElement | null = dest.parentElement;
-    while (node) {
-        if (node.hasAttribute("data-glass-field")) return node;
-        node = node.parentElement;
-    }
-    return dest.parentElement;
-}
-
-/**
- * Read the source's dominant hue — the explicit `fieldHue` OR the `--glass-ambient-hue`
- * computed off the source element (the AMBIENT-TINT source). Returns `null` for a
- * neutral/absent hue (the field tints nothing).
- */
-function resolveHue(
-    source: HTMLElement | null,
-    explicit: string | undefined,
-): string | null {
-    if (explicit && explicit.trim() && explicit.trim() !== "transparent") {
-        return explicit.trim();
-    }
-    if (!source || typeof getComputedStyle !== "function") return null;
-    const read = getComputedStyle(source).getPropertyValue("--glass-ambient-hue").trim();
-    if (!read || read === "transparent") return null;
-    return read;
 }
 
 /**
@@ -333,22 +289,8 @@ export function useBloomUp(
         primed = true;
     }
 
-    // The 4th color channel writes — the hue + the ramped strength on the FIELD (a
-    // DIFFERENT element from the blooming surface). The strength is the only animated
-    // value (the registered @property interpolates it); the hue is set ONCE.
-    function writeFieldHue(field: HTMLElement, hue: string): void {
-        field.style.setProperty("--glass-ambient-hue", hue);
-    }
-    function writeFieldStrength(field: HTMLElement, pct: number): void {
-        field.style.setProperty("--glass-ambient-strength", `${pct.toFixed(3)}%`);
-    }
-    function releaseField(field: HTMLElement | null): void {
-        if (!field) return;
-        // Release the bias back to the no-op floor (0%) and clear the hue so the field
-        // returns to its un-biased --glass-tint-ink (the warm-cream identity).
-        field.style.setProperty("--glass-ambient-strength", "0%");
-        field.style.removeProperty("--glass-ambient-hue");
-    }
+    // The 4th color channel writes (hue ONCE + the ramped strength) on the FIELD live in
+    // the colocated bloomUpField leaf (writeFieldHue/writeFieldStrength/releaseField).
 
     function cancelRaf(): void {
         if (raf && typeof cancelAnimationFrame === "function") cancelAnimationFrame(raf);

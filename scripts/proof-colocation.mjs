@@ -239,6 +239,111 @@ function checkIdiomHome() {
     return { violations, facts };
 }
 
+// BH.B2.4a — the CARVE-LEAF clause. The colocation convention's dir-scan covers the
+// `components/custom/` README-bearing feature-dirs; this clause additionally asserts the
+// THREE god-module carves this wave landed live as colocated `composables/` (or sibling)
+// leaves, each IMPORTED BACK by its host (the carve MOVED the logic, it did not duplicate
+// it). The gate FOLLOWS the composition into the leaf (the `proof:webgl-substrate-single`
+// precedent). Born-RED on the pre-carve tree (the leaves are absent — the worm/field logic
+// still lives inline in the SFCs/composable), GREEN once the carve lands. Two arms reach
+// dirs the README-derived target-scan does NOT cover (`components/ui/carousel`,
+// `composables/motion`), so the convention is enforced beyond the custom-dir census.
+const CARVE_LEAVES = [
+    {
+        host: "components/ui/carousel/CarouselContent.vue",
+        leaf: "components/ui/carousel/composables/useCarouselWorm.ts",
+        symbol: "useCarouselWorm",
+        importPath: "./composables/useCarouselWorm",
+    },
+    {
+        host: "components/custom/pager-dots/PagerDots.vue",
+        leaf: "components/custom/pager-dots/composables/usePagerWorm.ts",
+        symbol: "usePagerWorm",
+        importPath: "./composables/usePagerWorm",
+    },
+    {
+        host: "composables/motion/useBloomUp.ts",
+        leaf: "composables/motion/bloomUpField.ts",
+        symbol: "resolveField",
+        importPath: "./bloomUpField",
+    },
+];
+
+/** The reusable carve-leaf clause checker (runs over provided source so the self-test can
+ *  feed it synthetic strings). Returns the violation strings for ONE carve entry. */
+function evaluateCarveLeaf(entry, leafExists, leafSrc, hostSrc) {
+    const violations = [];
+    if (!leafExists) {
+        violations.push(
+            `src/${entry.leaf} — the carved colocation leaf is ABSENT; the ${entry.symbol} logic must live in the colocated leaf, not inline in src/${entry.host}`,
+        );
+        return violations;
+    }
+    const exportRe = new RegExp(
+        `export\\s+(?:async\\s+)?(?:function|const|class)\\s+${entry.symbol}\\b`,
+    );
+    if (!exportRe.test(leafSrc)) {
+        violations.push(
+            `src/${entry.leaf} — does not export ${entry.symbol} (the carved leaf must publish the moved symbol)`,
+        );
+    }
+    if (!hostSrc.includes(entry.importPath)) {
+        violations.push(
+            `src/${entry.host} — does not import from "${entry.importPath}" (the carve must be IMPORTED back, not duplicated)`,
+        );
+    }
+    return violations;
+}
+
+function checkCarveLeaf(entry) {
+    const leafPath = resolve(ROOT, "src", entry.leaf);
+    const hostPath = resolve(ROOT, "src", entry.host);
+    const leafExists = existsSync(leafPath);
+    const leafSrc = leafExists ? readFileSync(leafPath, "utf8") : "";
+    const hostSrc = existsSync(hostPath) ? readFileSync(hostPath, "utf8") : "";
+    return evaluateCarveLeaf(entry, leafExists, leafSrc, hostSrc);
+}
+
+/** The self-test bite — synthetic carve states MUST each flag (or pass) the clause. */
+function selfTestCarveLeaves() {
+    const fails = [];
+    const probe = { host: "x.vue", leaf: "x.ts", symbol: "useFoo", importPath: "./foo" };
+    if (evaluateCarveLeaf(probe, false, "", "").length === 0) {
+        fails.push(
+            "[SELF-TEST] an ABSENT carve leaf did NOT flag (the carve-isomorphism detector is broken)",
+        );
+    }
+    if (
+        evaluateCarveLeaf(probe, true, "export function useFoo() {}", "no import here")
+            .length === 0
+    ) {
+        fails.push(
+            "[SELF-TEST] a leaf the host does NOT import did not flag (the import-back detector is broken — a duplicated carve would pass)",
+        );
+    }
+    if (
+        evaluateCarveLeaf(probe, true, "// no export of the symbol", 'import { useFoo } from "./foo"')
+            .length === 0
+    ) {
+        fails.push(
+            "[SELF-TEST] a leaf that does NOT export the symbol did not flag (the export detector is broken)",
+        );
+    }
+    if (
+        evaluateCarveLeaf(
+            probe,
+            true,
+            "export function useFoo() {}",
+            'import { useFoo } from "./foo"',
+        ).length !== 0
+    ) {
+        fails.push(
+            "[SELF-TEST] a correctly carved-and-imported leaf FALSELY flagged (the clause is over-strict)",
+        );
+    }
+    return fails;
+}
+
 function run() {
     void SRC;
     const allViolations = [];
@@ -251,12 +356,22 @@ function run() {
     const idiom = checkIdiomHome();
     allViolations.push(...idiom.violations);
 
+    // BH.B2.4a — the carve-leaf clause + its self-test bite.
+    const carveFacts = [];
+    for (const entry of CARVE_LEAVES) {
+        const violations = checkCarveLeaf(entry);
+        carveFacts.push({ leaf: `src/${entry.leaf}`, ok: violations.length === 0 });
+        allViolations.push(...violations);
+    }
+    const selfTestFails = selfTestCarveLeaves();
+    allViolations.push(...selfTestFails);
+
     const status = allViolations.length === 0 ? "pass" : "fail";
     writeGateArtifact(ARTIFACT, {
         generatedAt: snapshotStamp(),
         status,
         gate: "proof:colocation",
-        facts: { targets: dirFacts, idiomHome: idiom.facts },
+        facts: { targets: dirFacts, idiomHome: idiom.facts, carveLeaves: carveFacts },
         violations: allViolations,
     });
 
@@ -272,6 +387,9 @@ function run() {
     console.log(
         `  idiom-home: doc=${idiom.facts.docExists ? idiom.facts.docBytes + "B" : "MISSING"} contributing=${idiom.facts.citedByContributing} index.css=${idiom.facts.citedByIndexCss}`,
     );
+    for (const c of carveFacts) {
+        console.log(`  carve-leaf ${c.ok ? "✓" : "✗"} ${c.leaf}`);
+    }
     if (allViolations.length) {
         console.log("\nVIOLATIONS:");
         for (const v of allViolations) console.log(`  ✗ ${v}`);

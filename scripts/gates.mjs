@@ -365,7 +365,7 @@ export const GATES = [
         id: "proof:colocation",
         cmd: "proof:colocation",
         tags: ["local", "ci"],
-        note: "AY.W-COLOCATE — the feature-dir colocation convention over every README-bearing complex feature-dir (DERIVED, currently aurora/constellation/dock/fourier-field/goo-blob/handmark/tabs): composables under composables/, magic-number/config consts in constants.ts, shaders/skeletons co-located, README present, + the design-idioms home doc. Bite: move a composable to the package root, delete a constants.ts, inline a magic-number, or delete a target README → RED",
+        note: "AY.W-COLOCATE — the feature-dir colocation convention over every README-bearing complex feature-dir (DERIVED, currently aurora/constellation/dock/fourier-field/goo-blob/handmark/tabs): composables under composables/, magic-number/config consts in constants.ts, shaders/skeletons co-located, README present, + the design-idioms home doc. Bite: move a composable to the package root, delete a constants.ts, inline a magic-number, or delete a target README → RED. BH.B2.4a — + the CARVE-LEAF clause: the three god-module carves (CarouselContent->useCarouselWorm, PagerDots->usePagerWorm, useBloomUp->bloomUpField) live as colocated leaves IMPORTED BACK by their host (the gate FOLLOWS the composition into the leaf); born-RED if a leaf is absent / not exported / not imported, + a 4-bite self-test. Bite: delete a carved leaf, sever its host import, or drop the export -> RED.",
     },
     {
         id: "proof:alias-codemod",

@@ -140,7 +140,10 @@ const RATCHET_BASELINES = {
     "composables/glass/webgl/createCanvasLifecycle.ts": 695,
     "composables/glass/webgpu/useWebGPUCanvas.ts": 606,
     "components/custom/dock/composables/useDockFission.ts": 604,
-    "components/ui/carousel/CarouselContent.vue": 577,
+    // BH.B2.4a DRAINED CarouselContent.vue (577 → 375): the embla scroll/select wiring +
+    // the DRIVER-vs-OBSERVER autoplay seam + the barbell geometry carved into the colocated
+    // ui/carousel/composables/useCarouselWorm.ts (the SFC keeps template + style + the refs).
+    // Row DELETED in this same diff (the monotonic drain — the file is now ≤ 500).
     "styles/tokens/property-regs.css": 566,
     // BD.W-CUT (no-god-module carve) — scheme-motion.css DRAINED (585 → 359): its
     // §2 EASING block (spring linear() curves + per-spring duration clocks + the
@@ -153,12 +156,19 @@ const RATCHET_BASELINES = {
     "composables/glass/useGlassBackdropLuminance.ts": 542,
     "components/custom/goo-blob/composables/useBlobSatellites.ts": 533,
     "components/custom/goo-blob/shaders/metaball.wgsl.ts": 529,
-    "components/custom/pager-dots/PagerDots.vue": 509,
+    // BH.B2.4a DRAINED PagerDots.vue (509 → 433): the worm geometry (centerOf/restSize) +
+    // the useGooMorph instance + the active/shown travel/settle driver carved into the
+    // colocated pager-dots/composables/usePagerWorm.ts (+ the named consts into constants.ts);
+    // the SFC keeps the interaction layer (dot maps + keyboard focus recovery) + template +
+    // style. Row DELETED in this same diff (the monotonic drain — the file is now ≤ 500).
     "components/custom/dot-flow-field/shaders/flow-field.glsl.ts": 517,
     "components/custom/tabs/SegmentedTabs.vue": 512,
     "components/custom/goo-blob/shaders/metaball.frag.ts": 510,
     "components/custom/goo-dot-matrix/composables/useGooDotMatrix.ts": 508,
-    "composables/motion/useBloomUp.ts": 507,
+    // BH.B2.4a DRAINED useBloomUp.ts (507 → 449): the pure field-channel resolution + write
+    // helpers (resolveField/resolveHue/clampStrength/prefersReducedMotion + the field hue/
+    // strength/release writes) carved into the sibling composables/motion/bloomUpField.ts;
+    // the renderer stays. Row DELETED in this same diff (the monotonic drain — file ≤ 500).
     "api/index.ts": 505,
 };
 
