@@ -676,6 +676,7 @@
         "iter-test": "vitest run --reporter=verbose",
         "iter-test-watch": "vitest --watch",
         "emit-types": "vue-tsc --project tsconfig.build.json && node scripts/flatten-subpath-types.mjs",
+        "gen:structure": "node scripts/regen-structure.mjs --write",
         "iter": "npm run iter-check && npm run iter-build && npm run iter-test",
         "proof:package": "node scripts/proof-package.mjs",
         "proof:consumers:static": "node scripts/proof-consumers-static.mjs",
