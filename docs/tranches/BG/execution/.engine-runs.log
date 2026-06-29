@@ -85,3 +85,5 @@ wf_997d0cce-69f  resume  2026-06-29 06:49:06  BATCH-2 engine (cut from 3; integr
 # OWED AT CUT: `git -C docs/precepts push` the precepts commit 44961f0 (the glass-ui submodule pointer
 #   references it; unpushed → would dangle for fresh clones of the 5.0.0 tag). User-authorized push.
 # PLAN: paint checkpoint after the first build band (validate C-SAFARI early via bg-paint.wf.js), then resume.
+
+## 2026-06-29 11:31 C-SAFARI-FIRST: paused build wf_cb4ff3c8-5ce (LOADER only, no loss); launched bg-paint wf_799b1d27-16c on WS1 5 PAINT-PENDING (2.1/2.2/2.3/2.5/2.6) to PROVE the C-SAFARI keystone + flip WS1 DONE BEFORE the full build. Build relaunches after paint confirms real-Safari capture; if Safari blocked, the workflow hard-stops + reports the harness blocker for me to fix.
