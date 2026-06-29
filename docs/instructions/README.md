@@ -14,12 +14,19 @@ Read `docs/precepts/instructions/` first. Local glass-ui rules:
 - Interactive components need rest, hover, active, disabled, and
   focus-visible states. Shared styling tweaks belong here as tokens, variants,
   or slot-class props.
-- Current proof commands are `npm run typecheck` and `npm run build`. Add
-  Vitest or iter-loop commands only when the local tranche/tooling actually
-  lands them.
-- Browser verification uses the local dev app/story surface. New public
-  surface needs a story or manifest entry plus light/dark runtime evidence
-  and zero console errors.
+- Proof is the `scripts/gates.mjs` register. `npm run typecheck` and
+  `npm run build` are the compile floor; on top of them every wave authors or
+  extends a `proof:*` gate (`npm run gates -- --run local|ci|release|full`
+  runs the tagged set; `npm run gates -- --list` enumerates them). A gate is
+  born-RED on HEAD, GREEN on the fix, and carries a `--self-test` bite. The
+  binding visual truth is the π readback (`tests-visual/*.spec.ts`, run via
+  `npm run gates -- --run pi`), never a device-free gate alone.
+- Browser verification uses the local dev app/story surface (`:5199`). New
+  public surface needs a story or manifest entry plus light/dark runtime
+  evidence and zero console errors.
 - No overfitting. Every public symbol needs a current story, internal
-  consumer, external consumer, or deletion. `docs/audits/overfitting-audit.md`
-  carries the local evidence sweep.
+  consumer, external consumer, or deletion — machine-backed by
+  `proof:component-orphan` (the ≥2-consumer-or-evidence-doc bar) and
+  `proof:consumer-evidence-live` (every `docs/consumer-evidence/<x>.md` is read
+  by a gate or pruned). `docs/audits/overfitting-audit.md` is the reusable
+  read-only sweep prompt behind those gates.

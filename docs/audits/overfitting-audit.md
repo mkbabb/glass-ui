@@ -2,7 +2,7 @@
 
 Reusable canned prompt for auditing one-use components, classes, `@utility` blocks, composables, and type interfaces across glass-ui and its consumers. Substitute `{SCOPE_PATHS}` and `{CONSUMER_PATHS}` per audit; dispatch read-only sub-agent.
 
-Created: tranche C, sub-phase C.W0.A. Substrate for §Invariant 5 ("No silent overfitting") of the glass-ui tranche format.
+This sweep is the read-only DISCOVERY layer behind two standing gates — `proof:component-orphan` (every published custom package + flat subpath + root-barrel composable has ≥2 non-self consumers OR a `docs/consumer-evidence/<x>.md`) and `proof:consumer-evidence-live` (every evidence doc is read by a registered gate or pruned). The gates enforce the ≥2-consumer-or-evidence bar continuously; this prompt is what a human or sub-agent runs to FIND the candidates the gates then lock.
 
 ---
 
@@ -55,7 +55,7 @@ Demands:
 ## Substitutions
 
 - `{SCOPE_PATHS}` — paths to audit (e.g., `src/components/ src/composables/ src/styles/`).
-- `{CONSUMER_PATHS}` — where to count usage (e.g., `src/ demo/ ../fourier-analysis/web/src/ ../words/frontend/src/ ../bbnf-lang/playground/src/`).
+- `{CONSUMER_PATHS}` — where to count usage (e.g., `src/ demo/ ../muster/src/ ../speedtest/src/ ../slides/src/ ../words/frontend/src/ ../bbnf-lang/playground/src/ ../fourier-analysis/web/src/`).
 
 ## Forbidden
 
@@ -76,7 +76,7 @@ For glass-ui tranches, the canonical fan-out is four parallel sub-agents on disj
 
 | Agent | `{SCOPE_PATHS}` | `{CONSUMER_PATHS}` |
 |---|---|---|
-| 0a | `src/components/ui/` | `src/ demo/ ../fourier-analysis/web/src/ ../words/frontend/src/ ../bbnf-lang/playground/src/` |
+| 0a | `src/components/ui/` | `src/ demo/ ../muster/src/ ../speedtest/src/ ../slides/src/ ../words/frontend/src/ ../bbnf-lang/playground/src/ ../fourier-analysis/web/src/` |
 | 0b | `src/components/custom/` | (same) |
 | 0c | `src/composables/` | (same) |
 | 0d | `src/styles/` | (same) |
@@ -85,6 +85,6 @@ Each agent's deliverable lands at `docs/tranches/{LETTER}/audit/W0-overfitting-{
 
 ## When to run
 
-- Every tranche close, as part of the closing ceremony (verifies §Invariant 5).
+- Every tranche close, as part of the closing ceremony (verifies §Invariant 5) — the standing `proof:component-orphan` / `proof:consumer-evidence-live` gates run continuously, so the close sweep is a re-confirm, not the sole check.
 - Before any major refactor that introduces new abstractions — establishes a baseline.
-- On consumer-build smoke (C.W4 in tranche C) — flags newly-orphaned items.
+- On consumer-build smoke — flags newly-orphaned items against the live constellation.
