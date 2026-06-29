@@ -187,17 +187,17 @@ describe("detectOrchestrator — the single-clock bites", () => {
 // engines, so the deferral binding is verified at runtime — the class headless
 // gates miss.
 describe("runtime — ONE morph engine per dock (the deferral binding)", () => {
-    let GlassDock: typeof import("../../../../src/components/custom/dock/GlassDock.vue").default;
-    let DockLayerGroup: typeof import("../../../../src/components/custom/dock/DockLayerGroup.vue").default;
-    let DockLayer: typeof import("../../../../src/components/custom/dock/DockLayer.vue").default;
+    let GlassDock: typeof import("@glass/components/custom/dock/GlassDock.vue").default;
+    let DockLayerGroup: typeof import("@glass/components/custom/dock/DockLayerGroup.vue").default;
+    let DockLayer: typeof import("@glass/components/custom/dock/DockLayer.vue").default;
 
     beforeEach(async () => {
         springCtor.mockClear();
-        GlassDock = (await import("../../../../src/components/custom/dock/GlassDock.vue")).default;
+        GlassDock = (await import("@glass/components/custom/dock/GlassDock.vue")).default;
         DockLayerGroup = (
-            await import("../../../../src/components/custom/dock/DockLayerGroup.vue")
+            await import("@glass/components/custom/dock/DockLayerGroup.vue")
         ).default;
-        DockLayer = (await import("../../../../src/components/custom/dock/DockLayer.vue")).default;
+        DockLayer = (await import("@glass/components/custom/dock/DockLayer.vue")).default;
     });
 
     afterEach(() => {
@@ -232,7 +232,7 @@ describe("runtime — ONE morph engine per dock (the deferral binding)", () => {
         // inject fired (not silently dropped → undefined → a second engine). A
         // born-RED group that minted its own engine would never call registerGroup.
         const { DOCK_MORPH_KEY } = await import(
-            "../../../../src/components/custom/dock/composables/dockMorphContext"
+            "@glass/components/custom/dock/composables/dockMorphContext"
         );
         const registerGroup = vi.fn(() => ({
             currentLayer: { value: "a" },

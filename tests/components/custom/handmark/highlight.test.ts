@@ -12,10 +12,10 @@
 
 import { mount } from "@vue/test-utils";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import HandMark from "../../../../src/components/custom/handmark/HandMark.vue";
-import { BRUSHES } from "../../../../src/components/custom/handmark/brush";
-import { ink } from "../../../../src/components/custom/handmark/ink";
-import { shapeGeom } from "../../../../src/components/custom/handmark/geometry";
+import HandMark from "@glass/components/custom/handmark/HandMark.vue";
+import { BRUSHES } from "@glass/components/custom/handmark/brush";
+import { ink } from "@glass/components/custom/handmark/ink";
+import { shapeGeom } from "@glass/components/custom/handmark/geometry";
 
 function mockPRM(matches: boolean): void {
     Object.defineProperty(window, "matchMedia", {

@@ -20,12 +20,12 @@
 // image; here the device is stubbed (jsdom has no real adapter).
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { createGpuSubstrate } from "../../../../src/composables/glass/webgpu/useGpuSubstrate";
+import { createGpuSubstrate } from "@glass/composables/glass/webgpu/useGpuSubstrate";
 import {
     createWebGPUCanvas,
     WebGPUInitError,
     __resetSharedGpuDeviceForTest,
-} from "../../../../src/composables/glass/webgpu/useWebGPUCanvas";
+} from "@glass/composables/glass/webgpu/useWebGPUCanvas";
 
 let rafQueue: Array<() => void>;
 let listeners: Record<string, Array<(e: any) => void>>;

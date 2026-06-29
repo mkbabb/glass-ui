@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
-import { Card, CardContent } from "../../../src/components/ui/card";
-import { Separator } from "../../../src/components/ui/separator";
+import { Card, CardContent } from "@glass/components/ui/card";
+import { Separator } from "@glass/components/ui/separator";
 import {
     LabeledInput,
     LabeledSelect,
     LabeledSlider,
     LabeledSwitch,
-} from "../../../src/components/custom/labeled-field";
-import { cn } from "../../../src/utils/cn";
+} from "@glass/components/custom/labeled-field";
+import { cn } from "@glass/utils/cn";
 
 const displayName = ref("Mike Babb");
 const email = ref("mbabb@ncsu.edu");

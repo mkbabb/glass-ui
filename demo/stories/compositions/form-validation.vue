@@ -4,12 +4,12 @@
 import { onMounted, onUnmounted, ref } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
-import { useUserInvalidAria } from "../../../src/composables/dom/useUserInvalidAria";
-import { Input } from "../../../src/components/ui/input";
-import { Textarea } from "../../../src/components/ui/textarea";
-import { Label } from "../../../src/components/ui/label";
-import { Button } from "../../../src/components/ui/button";
-import { LabeledInput } from "../../../src/components/custom/labeled-field";
+import { useUserInvalidAria } from "@glass/composables/dom/useUserInvalidAria";
+import { Input } from "@glass/components/ui/input";
+import { Textarea } from "@glass/components/ui/textarea";
+import { Label } from "@glass/components/ui/label";
+import { Button } from "@glass/components/ui/button";
+import { LabeledInput } from "@glass/components/custom/labeled-field";
 
 // The bridge: `aria-invalid` tracks the visual `:user-invalid` state.
 const { bind } = useUserInvalidAria();

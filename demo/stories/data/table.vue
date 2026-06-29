@@ -9,10 +9,10 @@ import {
     TableHeader,
     TableRow,
     TableEmpty,
-} from "../../../src/components/ui/table";
-import { Badge } from "../../../src/components/ui/badge";
-import { IconChip } from "../../../src/components/custom/icon-chip";
-import { cn } from "../../../src/utils/cn";
+} from "@glass/components/ui/table";
+import { Badge } from "@glass/components/ui/badge";
+import { IconChip } from "@glass/components/custom/icon-chip";
+import { cn } from "@glass/utils/cn";
 import { Table as TableIcon, Table2 } from "@lucide/vue";
 
 // BC.W-SUFFUSE-reconcile — the data band's ONE coherent --section-color-9

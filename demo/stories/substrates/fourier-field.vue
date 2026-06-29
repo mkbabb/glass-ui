@@ -16,27 +16,27 @@ import {
     makeEllipticSpectrum,
     type BasisComponent,
     type FourierFieldConfig,
-} from "../../../src/components/custom/fourier-field";
-import { DEFAULT_FOURIER_CONFIG } from "../../../src/components/custom/fourier-field";
-import { mulberry32, hashString } from "../../../src/utils/prng";
+} from "@glass/components/custom/fourier-field";
+import { DEFAULT_FOURIER_CONFIG } from "@glass/components/custom/fourier-field";
+import { mulberry32, hashString } from "@glass/utils/prng";
 import {
     cssToOklch,
     type OklchStop,
-} from "../../../src/composables/color";
-import { useGlobalDark } from "../../../src/composables/dark";
-import { DockBackgroundToggle } from "../../../src/components/custom/dock";
-import { GlassTimeline } from "../../../src/components/custom/timeline";
+} from "@glass/composables/color";
+import { useGlobalDark } from "@glass/composables/dark";
+import { DockBackgroundToggle } from "@glass/components/custom/dock";
+import { GlassTimeline } from "@glass/components/custom/timeline";
 import {
     Configurator,
     ConfiguratorLayer,
     ConfiguratorRow,
     useConfiguratorState,
     type ConfiguratorPreset,
-} from "../../../src/components/custom/configurator";
+} from "@glass/components/custom/configurator";
 import {
     LabeledSelect,
     LabeledSlider,
-} from "../../../src/components/custom/labeled-field";
+} from "@glass/components/custom/labeled-field";
 import { FOURIER_SHAPES, getFourierShape } from "./fourier-paths";
 
 // ── The ONE view config (the variant bundles fold into config PRESETS). ──

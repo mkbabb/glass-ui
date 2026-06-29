@@ -19,9 +19,9 @@ import {
     FLOW_ID,
     resolveMediumId,
     resolveStrokeOrientId,
-} from "../../../../src/components/custom/aurora/composables/uniformBridge";
-import { DEFAULT_AURORA_CONFIG } from "../../../../src/components/custom/aurora/constants/presets";
-import type { AuroraConfig } from "../../../../src/components/custom/aurora/constants/presets";
+} from "@glass/components/custom/aurora/composables/uniformBridge";
+import { DEFAULT_AURORA_CONFIG } from "@glass/components/custom/aurora/constants/presets";
+import type { AuroraConfig } from "@glass/components/custom/aurora/constants/presets";
 
 // ── A TS port of the GLSL structureTensorField eigen-decomposition (W4.1). ────
 // MIRRORS mediums.glsl.ts structureTensorField: form the 2x2 structure tensor from

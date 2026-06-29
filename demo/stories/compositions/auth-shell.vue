@@ -2,14 +2,14 @@
 import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { Lock, ShieldCheck, Sparkles, Users } from "@lucide/vue";
-import { Button } from "../../../src/components/ui/button";
-import { Checkbox } from "../../../src/components/ui/checkbox";
-import { Input } from "../../../src/components/ui/input";
-import { Label } from "../../../src/components/ui/label";
-import { Separator } from "../../../src/components/ui/separator";
-import { Aurora } from "../../../src/components/custom/aurora";
-import { IconChip } from "../../../src/components/custom/icon-chip";
-import { cn } from "../../../src/utils/cn";
+import { Button } from "@glass/components/ui/button";
+import { Checkbox } from "@glass/components/ui/checkbox";
+import { Input } from "@glass/components/ui/input";
+import { Label } from "@glass/components/ui/label";
+import { Separator } from "@glass/components/ui/separator";
+import { Aurora } from "@glass/components/custom/aurora";
+import { IconChip } from "@glass/components/custom/icon-chip";
+import { cn } from "@glass/utils/cn";
 import { heroAuroraConfig } from "../aurora-hero";
 
 const wonkSettings = '"WONK" 1, "SOFT" 0';

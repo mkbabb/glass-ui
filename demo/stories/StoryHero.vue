@@ -13,16 +13,16 @@
 //   - variant="hero"           — a full-bleed glassy hero card floating over the
 //     live substrate; the front-door demonstration.
 import { computed } from "vue";
-import { Card, type CardTier } from "../../src/components/ui/card";
-import { Aurora } from "../../src/components/custom/aurora";
-import { Constellation } from "../../src/components/custom/constellation";
-import { FourierField } from "../../src/components/custom/fourier-field";
-import { PaperGrid } from "../../src/components/custom/paper-grid";
+import { Card, type CardTier } from "@glass/components/ui/card";
+import { Aurora } from "@glass/components/custom/aurora";
+import { Constellation } from "@glass/components/custom/constellation";
+import { FourierField } from "@glass/components/custom/fourier-field";
+import { PaperGrid } from "@glass/components/custom/paper-grid";
 import { PAPER_GRID_PRESET_SUFFUSE } from "./substrates/presets";
-import { defaultBlobColorResolver } from "../../src/composables/color";
-import { useTokenColor } from "../../src/composables/dom/useTokenColor";
-import { useGlobalDark } from "../../src/composables/dark/useGlobalDark";
-import { cn } from "../../src/utils/cn";
+import { defaultBlobColorResolver } from "@glass/composables/color";
+import { useTokenColor } from "@glass/composables/dom/useTokenColor";
+import { useGlobalDark } from "@glass/composables/dark/useGlobalDark";
+import { cn } from "@glass/utils/cn";
 import StoryHeader from "./StoryHeader.vue";
 import {
     heroAuroraConfig,

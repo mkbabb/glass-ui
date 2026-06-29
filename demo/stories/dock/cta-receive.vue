@@ -12,9 +12,9 @@ import { onMounted, ref, useTemplateRef } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import { Plus, Star, Compass, Shapes, Boxes } from "@lucide/vue";
-import { GlassDock, DockIconButton } from "../../../src/components/custom/dock";
-import { Button } from "../../../src/components/ui/button";
-import { useDockCtaReceive } from "../../../src/composables/motion/useDockCtaReceive";
+import { GlassDock, DockIconButton } from "@glass/components/custom/dock";
+import { Button } from "@glass/components/ui/button";
+import { useDockCtaReceive } from "@glass/composables/motion/useDockCtaReceive";
 import DockStage from "./DockStage.vue";
 
 // The external CTA element (the morph vehicle) + the target dock control (the

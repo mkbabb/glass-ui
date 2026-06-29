@@ -6,7 +6,7 @@
 // path, and the `word` split unit.
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { nextTick, ref } from "vue";
-import { useCharStagger } from "../../../src/composables/motion/useCharStagger";
+import { useCharStagger } from "@glass/composables/motion/useCharStagger";
 import { mountComposable } from "../../utils/mountComposable";
 
 let host: HTMLElement;

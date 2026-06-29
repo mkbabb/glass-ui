@@ -1,7 +1,7 @@
 import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
 
-import { AnimatedDigit } from "../../../../src/components/custom/animated-digit/index";
+import { AnimatedDigit } from "@glass/components/custom/animated-digit/index";
 
 describe("AnimatedDigit", () => {
     it("renders the formatted current value through useAnimatedNumber", () => {

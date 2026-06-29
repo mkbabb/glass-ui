@@ -13,30 +13,30 @@ import { computed, reactive, ref, watch } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
-import { GooBlob } from "../../../src/components/custom/goo-blob";
-import type { BlobConfig, BlobMood, BlobMerge } from "../../../src/components/custom/goo-blob";
-import { BLOB_CONFIG_DEFAULTS } from "../../../src/components/custom/goo-blob/types";
-import { MAX_SATS } from "../../../src/components/custom/goo-blob/constants";
-import { WatercolorDot } from "../../../src/components/custom/watercolor-dot";
-import { DockBackgroundToggle } from "../../../src/components/custom/dock";
-import { FadingScroll } from "../../../src/components/custom/fading-scroll";
+import { GooBlob } from "@glass/components/custom/goo-blob";
+import type { BlobConfig, BlobMood, BlobMerge } from "@glass/components/custom/goo-blob";
+import { BLOB_CONFIG_DEFAULTS } from "@glass/components/custom/goo-blob/types";
+import { MAX_SATS } from "@glass/components/custom/goo-blob/constants";
+import { WatercolorDot } from "@glass/components/custom/watercolor-dot";
+import { DockBackgroundToggle } from "@glass/components/custom/dock";
+import { FadingScroll } from "@glass/components/custom/fading-scroll";
 import {
     Configurator,
     ConfiguratorLayer,
     ConfiguratorRow,
     useConfiguratorState,
     type ConfiguratorPreset,
-} from "../../../src/components/custom/configurator";
+} from "@glass/components/custom/configurator";
 import {
     LabeledSelect,
     LabeledSlider,
     LabeledSwitch,
-} from "../../../src/components/custom/labeled-field";
+} from "@glass/components/custom/labeled-field";
 import {
     deriveBlobPalette,
     oklchStopToHex,
     type ColorHarmony,
-} from "../../../src/composables/color";
+} from "@glass/composables/color";
 
 // ── The static zero-GL register (WatercolorDot) — DEMOTED below the hero ──────
 // The lit-droplet look without a WebGL context — a deterministic seeded

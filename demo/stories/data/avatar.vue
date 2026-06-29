@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
-import { Avatar, AvatarFallback, AvatarImage } from "../../../src/components/ui/avatar";
-import { StackedIconGroup } from "../../../src/components/custom/stacked-icons";
-import { cn } from "../../../src/utils/cn";
+import { Avatar, AvatarFallback, AvatarImage } from "@glass/components/ui/avatar";
+import { StackedIconGroup } from "@glass/components/custom/stacked-icons";
+import { cn } from "@glass/utils/cn";
 
 interface Member {
     id: string;

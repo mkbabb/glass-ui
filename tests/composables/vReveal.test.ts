@@ -2,7 +2,7 @@
 // `[data-reveal]` hook + the `--d` stagger-step the consumer CSS reads.
 import { describe, expect, it } from "vitest";
 import type { DirectiveBinding } from "vue";
-import { vReveal } from "../../src/composables/motion/vReveal";
+import { vReveal } from "@glass/composables/motion/vReveal";
 
 function bind(
     el: HTMLElement,

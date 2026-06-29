@@ -17,9 +17,9 @@ import {
     DropdownMenuSubContent,
     DropdownMenuSubTrigger,
     DropdownMenuTrigger,
-} from "../../../src/components/ui/dropdown-menu";
-import { Button } from "../../../src/components/ui/button";
-import { IconChip } from "../../../src/components/custom/icon-chip";
+} from "@glass/components/ui/dropdown-menu";
+import { Button } from "@glass/components/ui/button";
+import { IconChip } from "@glass/components/custom/icon-chip";
 import { Menu } from "@lucide/vue";
 
 // BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2

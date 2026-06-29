@@ -12,16 +12,16 @@ import {
     Configurator,
     ConfiguratorLayer,
     ConfiguratorRow,
-} from "../../../src/components/custom/configurator";
+} from "@glass/components/custom/configurator";
 import {
     LabeledSlider,
     LabeledSwitch,
-} from "../../../src/components/custom/labeled-field";
-import { DockBackgroundToggle } from "../../../src/components/custom/dock";
+} from "@glass/components/custom/labeled-field";
+import { DockBackgroundToggle } from "@glass/components/custom/dock";
 import {
     PaperGrid,
     type PaperGridConfig,
-} from "../../../src/components/custom/paper-grid";
+} from "@glass/components/custom/paper-grid";
 import {
     PAPER_GRID_PRESET_WARM,
     PAPER_GRID_PRESET_SUFFUSE,

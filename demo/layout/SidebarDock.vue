@@ -22,15 +22,15 @@ import {
     GlassDock,
     type DockSectionDescriptor,
     type DockStackItem,
-} from "../../src/components/custom/dock";
+} from "@glass/components/custom/dock";
 import {
     Tooltip,
     TooltipContent,
     TooltipProvider,
     TooltipTrigger,
-} from "../../src/components/ui/tooltip";
+} from "@glass/components/ui/tooltip";
 import { ArrowLeftRight, Settings2 } from "@lucide/vue";
-import { cn } from "../../src/utils/cn";
+import { cn } from "@glass/utils/cn";
 import { CATEGORIES } from "../stories/manifest";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
 import { useContextualDockLayers } from "../composables/useContextualDockLayers";

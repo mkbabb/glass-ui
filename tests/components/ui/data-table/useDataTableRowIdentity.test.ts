@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import { describe, expect, it } from "vitest";
 
-import { useDataTableRowIdentity } from "../../../../src/components/ui/data-table/composables/useDataTableRowIdentity";
+import { useDataTableRowIdentity } from "@glass/components/ui/data-table/composables/useDataTableRowIdentity";
 
 interface Row {
     _id?: string;

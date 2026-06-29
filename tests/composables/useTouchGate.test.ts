@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { useTouchGate } from "../../src/composables/dom/useTouchGate";
+import { useTouchGate } from "@glass/composables/dom/useTouchGate";
 
 describe("useTouchGate", () => {
     afterEach(() => {

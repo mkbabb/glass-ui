@@ -1,7 +1,7 @@
 import { nextTick } from "vue";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { TestIntersectionObserver } from "../../setup";
-import { useLazyLoader } from "../../../src/composables/sidebar/useLazyLoader";
+import { useLazyLoader } from "@glass/composables/sidebar/useLazyLoader";
 import { mountComposable } from "../../utils/mountComposable";
 
 describe("useLazyLoader (the progressive batch-render count)", () => {

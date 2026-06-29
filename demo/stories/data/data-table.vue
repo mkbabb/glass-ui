@@ -2,14 +2,14 @@
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import { computed, ref } from "vue";
-import { DataTable } from "../../../src/components/ui/data-table";
+import { DataTable } from "@glass/components/ui/data-table";
 import type {
     DataTableColumn,
     DataTableSort,
-} from "../../../src/components/ui/data-table";
-import { Input } from "../../../src/components/ui/input";
-import { IconChip } from "../../../src/components/custom/icon-chip";
-import { cn } from "../../../src/utils/cn";
+} from "@glass/components/ui/data-table";
+import { Input } from "@glass/components/ui/input";
+import { IconChip } from "@glass/components/custom/icon-chip";
+import { cn } from "@glass/utils/cn";
 import { Sheet as SheetIcon, Database } from "@lucide/vue";
 
 // BC.W-SUFFUSE-reconcile — the data band's ONE coherent --section-color-9

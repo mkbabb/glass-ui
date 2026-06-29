@@ -12,8 +12,8 @@ import {
     BRUSHES,
     resolveBrush,
     lerpBrush,
-} from "../../../../src/components/custom/handmark/brush";
-import { grainFilter, hasGrain } from "../../../../src/components/custom/handmark/texture";
+} from "@glass/components/custom/handmark/brush";
+import { grainFilter, hasGrain } from "@glass/components/custom/handmark/texture";
 
 describe("D6.a brush — the flat continuum", () => {
     it("pen is the default and is grain:0 ⇒ NO filter emitted (pen is free)", () => {

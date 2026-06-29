@@ -5,12 +5,12 @@ import { computed, ref } from "vue";
 import {
     TypewriterText,
     type TypewriterWord,
-} from "../../../src/components/custom/typewriter";
-import { Button } from "../../../src/components/ui/button";
-import { Label } from "../../../src/components/ui/label";
-import { Slider } from "../../../src/components/ui/slider";
-import { Switch } from "../../../src/components/ui/switch";
-import { cn } from "../../../src/utils/cn";
+} from "@glass/components/custom/typewriter";
+import { Button } from "@glass/components/ui/button";
+import { Label } from "@glass/components/ui/label";
+import { Slider } from "@glass/components/ui/slider";
+import { Switch } from "@glass/components/ui/switch";
+import { cn } from "@glass/utils/cn";
 
 const phrases: TypewriterWord[] = [
     { text: "warm cream" },

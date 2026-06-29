@@ -19,16 +19,16 @@ import {
     Skeleton,
     badgeVariants,
     buttonVariants,
-} from "../src/index";
-import { Input, Textarea } from "../src/forms";
-import { DarkModeToggle } from "../src/subpaths/controls";
-import { DockLayer, DockLayerGroup, GlassDock } from "../src/subpaths/dock";
-import { MetricBadge } from "../src/subpaths/metric-badge";
-import { PaperBackdrop } from "../src/subpaths/paper-backdrop";
-import { Pulse } from "../src/subpaths/pulse";
-import { StatusDot } from "../src/subpaths/status-dot";
-import { SegmentedTabs } from "../src/subpaths/tabs";
-import { ToggleChip, toggleChipVariants } from "../src/subpaths/toggle-chip";
+} from "@glass/index";
+import { Input, Textarea } from "@glass/forms";
+import { DarkModeToggle } from "@glass/subpaths/controls";
+import { DockLayer, DockLayerGroup, GlassDock } from "@glass/subpaths/dock";
+import { MetricBadge } from "@glass/subpaths/metric-badge";
+import { PaperBackdrop } from "@glass/subpaths/paper-backdrop";
+import { Pulse } from "@glass/subpaths/pulse";
+import { StatusDot } from "@glass/subpaths/status-dot";
+import { SegmentedTabs } from "@glass/subpaths/tabs";
+import { ToggleChip, toggleChipVariants } from "@glass/subpaths/toggle-chip";
 
 describe("component smoke coverage", () => {
     it("renders Button slot content", () => {

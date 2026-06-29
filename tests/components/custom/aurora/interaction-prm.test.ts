@@ -18,7 +18,7 @@ import {
     createCursorState,
     advanceCursor,
     injectCursorVelocity,
-} from "../../../../src/components/custom/aurora/composables/cursorModel";
+} from "@glass/components/custom/aurora/composables/cursorModel";
 
 describe("AW.W8.1 — the master tempo scalar freezes the interactive field under PRM", () => {
     it("tempo=0 (reduced-motion) FREEZES the velocity + burst to stillness", () => {

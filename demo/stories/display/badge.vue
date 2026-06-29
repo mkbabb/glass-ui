@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
-import { Badge } from "../../../src/components/ui/badge";
-import { IconChip } from "../../../src/components/custom/icon-chip";
-import { cn } from "../../../src/utils/cn";
+import { Badge } from "@glass/components/ui/badge";
+import { IconChip } from "@glass/components/custom/icon-chip";
+import { cn } from "@glass/utils/cn";
 import { BadgeCheck } from "@lucide/vue";
 
 // BC.W-SUFFUSE-reconcile — the display band's ONE coherent --section-color-5

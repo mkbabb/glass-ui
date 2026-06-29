@@ -1,7 +1,7 @@
 import { mount, flushPromises } from "@vue/test-utils";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { ScrollingText } from "../../../../src/components/custom/scrolling-text/index";
+import { ScrollingText } from "@glass/components/custom/scrolling-text/index";
 
 /**
  * The component depends on `useResizeObserver` to drive its measure cycle.

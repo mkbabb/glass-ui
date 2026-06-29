@@ -19,7 +19,7 @@
 // TRUE light/dark `rgb()` paint readback is the π-lane VISUAL-TRUTH audit.
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { resolveCanvasColor } from "../../../../src/composables/glass/canvas2d/resolveCanvasColor";
+import { resolveCanvasColor } from "@glass/composables/glass/canvas2d/resolveCanvasColor";
 
 // The browser's resolution of a candidate `color:` value → a concrete `rgb()`.
 // A `light-dark()` token flips with the simulated scheme; `var()` tokens map to

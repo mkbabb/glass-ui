@@ -5,9 +5,9 @@
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
-import { Button } from "../../../src/components/ui/button";
+import { Button } from "@glass/components/ui/button";
 import { Play } from "@lucide/vue";
-import { Toaster, useToast } from "../../../src/components/ui/toast";
+import { Toaster, useToast } from "@glass/components/ui/toast";
 
 const { toast } = useToast();
 

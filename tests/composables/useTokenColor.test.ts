@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it } from "vitest";
 import { ref } from "vue";
-import { useTokenColor } from "../../src/composables/dom/useTokenColor";
+import { useTokenColor } from "@glass/composables/dom/useTokenColor";
 import { mountComposable } from "../utils/mountComposable";
 
 describe("useTokenColor", () => {

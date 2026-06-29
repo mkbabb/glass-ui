@@ -2,7 +2,7 @@
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import { onMounted, ref } from "vue";
-import { cn } from "../../../src/utils/cn";
+import { cn } from "@glass/utils/cn";
 
 // The paper-vs-glass tour declares a paper-grain wash on its manifest row; the
 // page chassis renders it behind a glassy hero card, so the tier tiles read

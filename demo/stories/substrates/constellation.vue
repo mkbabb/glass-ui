@@ -10,10 +10,10 @@ import ShowcaseFrame from "../ShowcaseFrame.vue";
 import {
     Constellation,
     type ConstellationField,
-} from "../../../src/subpaths/constellation";
-import { Switch } from "../../../src/components/ui/switch";
-import { Label } from "../../../src/components/ui/label";
-import { useTokenColor } from "../../../src/composables/dom/useTokenColor";
+} from "@glass/subpaths/constellation";
+import { Switch } from "@glass/components/ui/switch";
+import { Label } from "@glass/components/ui/label";
+import { useTokenColor } from "@glass/composables/dom/useTokenColor";
 
 // The primary hero lattice's pointer interactivity toggle. The name surfaces the
 // suite-wide `interactive` enable token (aurora/dot-flow-field/concentric/fourier all

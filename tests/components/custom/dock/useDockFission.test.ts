@@ -15,7 +15,7 @@ import {
     useDockFission,
     DOCK_SPLIT_SIGNATURES,
     type DockSplitSignature,
-} from "../../../../src/components/custom/dock/composables/useDockFission";
+} from "@glass/components/custom/dock/composables/useDockFission";
 
 function installMatchMedia(reduced: boolean): void {
     (window as unknown as { matchMedia: (q: string) => MediaQueryList }).matchMedia = (

@@ -13,7 +13,7 @@ import { mount } from "@vue/test-utils";
 import { describe, expect, it, vi } from "vitest";
 import { nextTick, ref, watch } from "vue";
 
-import DockBackgroundToggle from "../../../../src/components/custom/dock/DockBackgroundToggle.vue";
+import DockBackgroundToggle from "@glass/components/custom/dock/DockBackgroundToggle.vue";
 
 describe("DockBackgroundToggle — WCAG 2.2.2 pause/play (G2)", () => {
     it("reflects paused via aria-pressed and swaps the glyph + label", async () => {

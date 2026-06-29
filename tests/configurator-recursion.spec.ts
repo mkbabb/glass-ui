@@ -45,8 +45,8 @@ import {
     ConfiguratorRow,
     useConfiguratorState,
     type ConfiguratorPreset,
-} from "../src/components/custom/configurator";
-import { SegmentedTabs } from "../src/components/custom/tabs";
+} from "@glass/components/custom/configurator";
+import { SegmentedTabs } from "@glass/components/custom/tabs";
 
 // ─── Fixture shape (local; replaces the retired MetaballConfig) ───────────
 

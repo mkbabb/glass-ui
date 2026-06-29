@@ -1,3 +1,4 @@
+import { resolve } from "node:path";
 import tailwindcss from "@tailwindcss/vite";
 import vue from "@vitejs/plugin-vue";
 import { defineConfig } from "vite";
@@ -9,6 +10,18 @@ import {
 import { publishStyleAssets } from "./vite.style-assets";
 
 export default defineConfig({
+    // BH.B2.0 — the `@glass` source alias (`@glass/*` → `src/*`). Decouples the
+    // demo's deep-relative `../../src/...` imports from src depth so a later src
+    // move is a one-line target change, not a 492-site rewrite. Vite needs its
+    // own `resolve.alias` (the demo dev server + any demo build); vitest does not
+    // read this (it has the twin in `vitest.config.ts`); tsconfig carries the
+    // type-plane `paths` twin. Inert in the library `build.lib` arm — src entries
+    // import relatively, the demo files are not entries.
+    resolve: {
+        alias: {
+            "@glass": resolve(__dirname, "src"),
+        },
+    },
     plugins: [
         tailwindcss(),
         vue(),

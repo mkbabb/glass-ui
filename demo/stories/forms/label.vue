@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
-import { Label } from "../../../src/components/ui/label";
-import { Input } from "../../../src/components/ui/input";
-import { Checkbox } from "../../../src/components/ui/checkbox";
-import { Switch } from "../../../src/components/ui/switch";
-import { RadioGroup, RadioGroupItem } from "../../../src/components/ui/radio-group";
-import { IconChip } from "../../../src/components/custom/icon-chip";
+import { Label } from "@glass/components/ui/label";
+import { Input } from "@glass/components/ui/input";
+import { Checkbox } from "@glass/components/ui/checkbox";
+import { Switch } from "@glass/components/ui/switch";
+import { RadioGroup, RadioGroupItem } from "@glass/components/ui/radio-group";
+import { IconChip } from "@glass/components/custom/icon-chip";
 import { Tag } from "@lucide/vue";
 // BC.W-SUFFUSE-reconcile — the forms band's ONE coherent --section-color-3 teal
 // identity (the cool stop). PH3-safe (inline borderLeft, not the

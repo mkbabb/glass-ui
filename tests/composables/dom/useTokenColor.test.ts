@@ -2,7 +2,7 @@ import { defineComponent, h, nextTick } from "vue";
 import { mount } from "@vue/test-utils";
 import { describe, expect, it, vi } from "vitest";
 
-import { useTokenColor } from "../../../src/composables/dom/useTokenColor";
+import { useTokenColor } from "@glass/composables/dom/useTokenColor";
 
 // AW.W15 — the `useTokenColor` injection seam.
 //

@@ -5,7 +5,7 @@ import {
     isMac,
     registerShortcut,
     useRegisteredShortcuts,
-} from "../../src/composables/keyboard";
+} from "@glass/composables/keyboard";
 
 describe("useKeyboardShortcuts", () => {
     const cleanups: Array<() => void> = [];

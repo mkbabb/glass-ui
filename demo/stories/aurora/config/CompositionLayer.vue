@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { SegmentedTabs } from "../../../../src/components/custom/tabs";
-import { LabeledSlider } from "../../../../src/components/custom/labeled-field";
-import type { AuroraConfig, WarpMode } from "../../../../src/components/custom/aurora";
+import { SegmentedTabs } from "@glass/components/custom/tabs";
+import { LabeledSlider } from "@glass/components/custom/labeled-field";
+import type { AuroraConfig, WarpMode } from "@glass/components/custom/aurora";
 import { warpModeOptions } from "./options";
 
 const props = defineProps<{

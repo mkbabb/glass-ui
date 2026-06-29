@@ -13,7 +13,7 @@
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { nextTick, ref } from "vue";
-import { useBloomUp } from "../../../src/composables/motion/useBloomUp";
+import { useBloomUp } from "@glass/composables/motion/useBloomUp";
 import { mountComposable } from "../../utils/mountComposable";
 
 // Install / uninstall a matchMedia stub so the PRM snap-path is reachable deterministically.

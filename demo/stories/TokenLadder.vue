@@ -5,7 +5,7 @@
 // three cells in either stacked (grid-cols-[auto_1fr_auto]) or inline
 // (flex-wrap) layout.
 import { type HTMLAttributes } from "vue";
-import { cn } from "../../src/utils/cn";
+import { cn } from "@glass/utils/cn";
 
 export interface TokenLadderRow {
     /** Utility class to demonstrate (e.g., "text-display-1", "rounded-md"). */

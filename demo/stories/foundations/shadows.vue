@@ -6,7 +6,7 @@
 // read in DARK) is PRESERVED — the wash sits UNDER it, not replacing it.
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
-import { cn } from "../../../src/utils/cn";
+import { cn } from "@glass/utils/cn";
 
 const shadows: { cls: string; label: string }[] = [
     { cls: "shadow-xs", label: "xs" },

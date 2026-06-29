@@ -3,8 +3,8 @@
 // lattice." Reuses the shipped Constellation's demo-only supernova warp — a 404
 // that warps the lattice on entry, then drifts. PRM-gated: the constellation
 // substrate freezes to a static lattice under reduce (warpOnClick auto-off).
-import { Constellation } from "../../src/components/custom/constellation";
-import { Button } from "../../src/components/ui/button";
+import { Constellation } from "@glass/components/custom/constellation";
+import { Button } from "@glass/components/ui/button";
 </script>
 
 <template>

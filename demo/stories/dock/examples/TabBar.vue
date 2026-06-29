@@ -8,12 +8,12 @@
 import { ref, useTemplateRef } from "vue";
 import { Plus, Star, Bookmark, Bell } from "@lucide/vue";
 import DockExampleTile from "../DockExampleTile.vue";
-import { SegmentedTabs } from "../../../../src/components/custom/tabs";
+import { SegmentedTabs } from "@glass/components/custom/tabs";
 import {
     GlassDock,
     DockIconButton,
     DockSeparator,
-} from "../../../../src/components/custom/dock";
+} from "@glass/components/custom/dock";
 
 import type { Component } from "vue";
 

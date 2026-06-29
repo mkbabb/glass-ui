@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
     DARK_MODE_STORAGE_KEY,
     darkModeSyncScript,
-} from "../../../src/composables/dark/darkModeSyncScript";
+} from "@glass/composables/dark/darkModeSyncScript";
 
 describe("darkModeSyncScript", () => {
     it("is a pure string emitter (no DOM side-effect at call)", () => {

@@ -7,7 +7,7 @@
 // bespoke craft.
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
-import { cn } from "../../../src/utils/cn";
+import { cn } from "@glass/utils/cn";
 
 const scale: { cls: string; label: string; hint: string }[] = [
     { cls: "rounded-xs", label: "xs", hint: "2px" },

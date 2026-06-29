@@ -25,8 +25,8 @@ import {
     DrawerHeader,
     DrawerTitle,
     DrawerDescription,
-} from "../../../src/components/ui/drawer";
-import { Button } from "../../../src/components/ui/button";
+} from "@glass/components/ui/drawer";
+import { Button } from "@glass/components/ui/button";
 
 const liveActiveSnap = ref<number | string | null>(0.12);
 const liveOpen = ref(false);

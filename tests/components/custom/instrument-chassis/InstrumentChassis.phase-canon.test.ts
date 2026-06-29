@@ -4,7 +4,7 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import { readMonolith } from "../../../../scripts/read-css-monoliths.mjs";
 
-import { InstrumentChassis, type InstrumentChassisPhase } from "../../../../src/components/custom/instrument-chassis/index";
+import { InstrumentChassis, type InstrumentChassisPhase } from "@glass/components/custom/instrument-chassis/index";
 
 /**
  * AI.W5-α + AI.W5-β — chassis phase-cascade canon test.

@@ -12,11 +12,11 @@
 import type {
     FlowFieldConfig,
     OklchStop,
-} from "../../../src/components/custom/dot-flow-field";
+} from "@glass/components/custom/dot-flow-field";
 import {
     DEFAULT_FLOW_CONFIG,
     DEFAULT_WAVE_COMPONENTS,
-} from "../../../src/components/custom/dot-flow-field";
+} from "@glass/components/custom/dot-flow-field";
 
 // BC.W-TEAL-NAVY-PURGE — the fabricated teal-on-navy "Claude co-work dot-wave"
 // reproduction is DELETED (clean break, no alias). The ACTUAL reference the user
@@ -110,8 +110,8 @@ export const FLOW_PRESET_HALFTONE: FlowFieldConfig = {
 // library token (`proof:concentric` clause 5 reds a teal/violet literal in the LIBRARY
 // constants.ts; this demo file is the sanctioned home for the themed palettes).
 
-import type { ConcentricConfig } from "../../../src/components/custom/concentric";
-import { DEFAULT_CONCENTRIC_CONFIG } from "../../../src/components/custom/concentric";
+import type { ConcentricConfig } from "@glass/components/custom/concentric";
+import { DEFAULT_CONCENTRIC_CONFIG } from "@glass/components/custom/concentric";
 
 // A cool aurora-teal ring ramp (the demo theme — a calm-deep ground that the rings
 // crest over).
@@ -142,8 +142,8 @@ export const CONCENTRIC_PRESET_WARM: ConcentricConfig = {
 // clause P5 reds a teal/navy hue in the LIBRARY constants.ts; this demo file is the
 // sanctioned home for any named theme).
 
-import type { PaperGridConfig } from "../../../src/components/custom/paper-grid";
-import { DEFAULT_PAPER_GRID_CONFIG } from "../../../src/components/custom/paper-grid";
+import type { PaperGridConfig } from "@glass/components/custom/paper-grid";
+import { DEFAULT_PAPER_GRID_CONFIG } from "@glass/components/custom/paper-grid";
 
 /** The warm-cream library-identity preset (the calm default lead — story 1). */
 export const PAPER_GRID_PRESET_WARM: PaperGridConfig = {
@@ -205,8 +205,8 @@ export const PAPER_GRID_PRESET_RIPPLE: PaperGridConfig = {
 // clause 5 reds a teal/navy stop in the LIBRARY constants.ts; this demo file is the
 // sanctioned home for the named themes).
 
-import type { DotMatrixConfig } from "../../../src/components/custom/dot-matrix";
-import { DEFAULT_DOT_MATRIX_CONFIG } from "../../../src/components/custom/dot-matrix";
+import type { DotMatrixConfig } from "@glass/components/custom/dot-matrix";
+import { DEFAULT_DOT_MATRIX_CONFIG } from "@glass/components/custom/dot-matrix";
 
 /** The warm-cream library-identity preset (the calm default lead). */
 export const DOT_MATRIX_PRESET_WARM: DotMatrixConfig = {
@@ -255,8 +255,8 @@ export const DOT_MATRIX_PRESET_SPHERE: DotMatrixConfig = {
 // NO teal/navy literal — `proof:viz-hybrid` clause 5 reds a teal/navy stop in the LIBRARY
 // constants.ts; this demo file is the sanctioned home for the named themes.
 
-import type { GooDotConfig } from "../../../src/components/custom/goo-dot-matrix";
-import { DEFAULT_GOO_DOT_CONFIG } from "../../../src/components/custom/goo-dot-matrix";
+import type { GooDotConfig } from "@glass/components/custom/goo-dot-matrix";
+import { DEFAULT_GOO_DOT_CONFIG } from "@glass/components/custom/goo-dot-matrix";
 
 /** The warm-cream library-identity preset (the calm default lead, the field-driven dot).
  *

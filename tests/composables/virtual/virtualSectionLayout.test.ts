@@ -6,8 +6,8 @@ import {
     resolveSectionWindow,
     type FlatSection,
     type SectionLayout,
-} from "../../../src/composables/virtual/virtualSectionLayout";
-import { useWindowedStore } from "../../../src/composables/virtual/useWindowedStore";
+} from "@glass/composables/virtual/virtualSectionLayout";
+import { useWindowedStore } from "@glass/composables/virtual/useWindowedStore";
 
 // ── Fixture data — a 1000-item synthetic section list ────────────────────────
 // Heights vary deterministically (40..159px) so offsets are non-uniform; this

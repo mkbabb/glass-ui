@@ -32,7 +32,7 @@
 // .story-hero-title--enter GRAVITY precedent to the eyebrow + blurb).
 //
 // A demo-private chassis primitive — NOT a library export.
-import { cn } from "../../src/utils/cn";
+import { cn } from "@glass/utils/cn";
 
 interface StoryHeaderProps {
     /** The mono eyebrow tag (category · story). Rendered ABOVE the title. */

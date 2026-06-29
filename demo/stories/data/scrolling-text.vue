@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
-import { ScrollingText } from "../../../src/components/custom/scrolling-text";
+import { ScrollingText } from "@glass/components/custom/scrolling-text";
 
 const samples = [
     { label: "short — no overflow", text: "10.0.0.1" },

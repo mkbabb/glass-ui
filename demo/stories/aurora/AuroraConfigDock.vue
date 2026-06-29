@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { nextTick, reactive, watch } from "vue";
 import { RefreshCw } from "@lucide/vue";
-import { Button } from "../../../src/components/ui/button";
-import { ConfiguratorLayer } from "../../../src/components/custom/configurator";
-import { FadingScroll } from "../../../src/components/custom/fading-scroll";
+import { Button } from "@glass/components/ui/button";
+import { ConfiguratorLayer } from "@glass/components/custom/configurator";
+import { FadingScroll } from "@glass/components/custom/fading-scroll";
 import {
     resolveAtoms,
     configToAtoms,
     type AuroraConfig,
     type AuroraAtoms,
-} from "../../../src/components/custom/aurora";
+} from "@glass/components/custom/aurora";
 import AuroraColorSection from "./sections/AuroraColorSection.vue";
 import AuroraCompositionSection from "./sections/AuroraCompositionSection.vue";
 import AuroraMotionSection from "./sections/AuroraMotionSection.vue";

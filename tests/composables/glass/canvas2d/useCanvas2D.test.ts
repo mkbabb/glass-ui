@@ -9,7 +9,7 @@
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { ref } from "vue";
-import { useCanvas2D } from "../../../../src/composables/glass/canvas2d/useCanvas2D";
+import { useCanvas2D } from "@glass/composables/glass/canvas2d/useCanvas2D";
 
 let rafQueue: Array<() => void>;
 let docListeners: Record<string, Array<(e: any) => void>>;

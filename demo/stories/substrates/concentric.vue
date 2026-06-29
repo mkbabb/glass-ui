@@ -12,12 +12,12 @@ import {
     Configurator,
     ConfiguratorLayer,
     ConfiguratorRow,
-} from "../../../src/components/custom/configurator";
-import { LabeledSlider, LabeledSwitch } from "../../../src/components/custom/labeled-field";
+} from "@glass/components/custom/configurator";
+import { LabeledSlider, LabeledSwitch } from "@glass/components/custom/labeled-field";
 import {
     Concentric,
     type ConcentricConfig,
-} from "../../../src/components/custom/concentric";
+} from "@glass/components/custom/concentric";
 import { CONCENTRIC_PRESET_WARM, CONCENTRIC_PRESET_THEME } from "./presets";
 
 // The studio model — a live config the controls drive (commit-on-write — a single surface;

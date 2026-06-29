@@ -20,10 +20,10 @@ import {
     DockSeparator,
     DockStack,
     GlassDock,
-} from "../../../src/components/custom/dock";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../../../src/components/ui/tooltip";
-import { Aurora } from "../../../src/components/custom/aurora";
-import { DEFAULT_AURORA_CONFIG } from "../../../src/components/custom/aurora";
+} from "@glass/components/custom/dock";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@glass/components/ui/tooltip";
+import { Aurora } from "@glass/components/custom/aurora";
+import { DEFAULT_AURORA_CONFIG } from "@glass/components/custom/aurora";
 
 interface Entry {
     id: string;

@@ -15,7 +15,7 @@ import {
     detachVector,
     diffSilhouetteSlots,
     type SilhouetteSlot,
-} from "../../../../src/components/custom/dock/composables/useDockContextSilhouette";
+} from "@glass/components/custom/dock/composables/useDockContextSilhouette";
 
 // Re-derive slotToRect's contract via the public exports' siblings — slotToRect is module-
 // private, so we assert its OBSERVABLE contract through detachVector's orientation axis +

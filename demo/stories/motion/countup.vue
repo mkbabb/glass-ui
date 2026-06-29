@@ -4,8 +4,8 @@
 // `NumericAnimation` engine (value.js-free callable easing).
 import { ref } from "vue";
 import StoryPage from "../StoryPage.vue";
-import { useCountup } from "../../../src/composables/motion/useCountup";
-import { Button } from "../../../src/components/ui/button";
+import { useCountup } from "@glass/composables/motion/useCountup";
+import { Button } from "@glass/components/ui/button";
 
 const host = ref<HTMLElement | null>(null);
 

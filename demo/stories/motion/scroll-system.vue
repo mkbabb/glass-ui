@@ -21,8 +21,8 @@ import { computed, ref } from "vue";
 import {
     useScrollChrome,
     useScrollTrigger,
-} from "../../../src/composables/motion/core";
-import type { TriggerPoint } from "../../../src/composables/motion/core";
+} from "@glass/composables/motion/core";
+import type { TriggerPoint } from "@glass/composables/motion/core";
 
 // The bounded scroll-port — the reader's source (an element with its own scroll).
 const port = ref<HTMLElement | null>(null);

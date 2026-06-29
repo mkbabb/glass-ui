@@ -8,7 +8,7 @@ import { ref } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
-import { SelectableChip } from "../../../src/subpaths/selectable-chip";
+import { SelectableChip } from "@glass/subpaths/selectable-chip";
 
 
 

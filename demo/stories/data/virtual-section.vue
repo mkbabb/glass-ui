@@ -5,9 +5,9 @@ import { computed, ref } from "vue";
 import {
     useVirtualSectionWindow,
     type FlatSection,
-} from "../../../src/composables/virtual";
-import { Badge } from "../../../src/components/ui/badge";
-import { cn } from "../../../src/utils/cn";
+} from "@glass/composables/virtual";
+import { Badge } from "@glass/components/ui/badge";
+import { cn } from "@glass/utils/cn";
 
 // A 1000-section synthetic document. The producer (this flattener) lives in the
 // consumer; glass-ui owns only the generic FlatSection windowing contract. The

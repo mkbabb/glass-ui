@@ -15,7 +15,7 @@ import {
     CommandInput,
     CommandItem,
     CommandList,
-} from "../../src/components/ui/command";
+} from "@glass/components/ui/command";
 import { CATEGORIES } from "../stories/manifest";
 
 const open = defineModel<boolean>("open", { default: false });

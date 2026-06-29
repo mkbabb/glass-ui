@@ -2,8 +2,8 @@
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
-import { Skeleton } from "../../../src/components/ui/skeleton";
-import { IconChip } from "../../../src/components/custom/icon-chip";
+import { Skeleton } from "@glass/components/ui/skeleton";
+import { IconChip } from "@glass/components/custom/icon-chip";
 import { LoaderCircle } from "@lucide/vue";
 // BB.W-SUFFUSE3 — the feedback band's --section-color-8 ruby identity.
 const FEEDBACK_STOP = 8;

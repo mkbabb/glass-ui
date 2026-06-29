@@ -15,7 +15,7 @@
 import { describe, expect, it } from "vitest";
 import {
     AURORA_MEDIUMS_POST_BRUSH_GLSL,
-} from "../../../../src/components/custom/aurora/constants/shaders/mediums.glsl";
+} from "@glass/components/custom/aurora/constants/shaders/mediums.glsl";
 
 const SRC = AURORA_MEDIUMS_POST_BRUSH_GLSL;
 

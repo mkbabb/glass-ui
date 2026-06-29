@@ -16,12 +16,12 @@ import { computed, ref, useTemplateRef } from "vue";
 import { Search } from "@lucide/vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
-import { GlassDock, useDockSearch } from "../../../src/components/custom/dock";
-import { useDockState } from "../../../src/components/custom/dock/composables/useDockState";
-import { useVirtualSectionWindow } from "../../../src/composables/virtual";
-import { useScrollTo } from "../../../src/composables/sidebar";
-import type { SearchableItem } from "../../../src/components/custom/search/composables";
-import type { FlatSection } from "../../../src/composables/virtual/virtualSectionLayout";
+import { GlassDock, useDockSearch } from "@glass/components/custom/dock";
+import { useDockState } from "@glass/components/custom/dock/composables/useDockState";
+import { useVirtualSectionWindow } from "@glass/composables/virtual";
+import { useScrollTo } from "@glass/composables/sidebar";
+import type { SearchableItem } from "@glass/components/custom/search/composables";
+import type { FlatSection } from "@glass/composables/virtual/virtualSectionLayout";
 import DockStage from "./DockStage.vue";
 
 // ── A sizeable searchable item set — section titles + their body text (the fuzzy

@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
-import { GlassTimeline } from "../../../src/components/custom/timeline";
+import { GlassTimeline } from "@glass/components/custom/timeline";
 import type {
     TimelineSegment,
     TimelineSegmentGradient,
-} from "../../../src/components/custom/timeline";
-import { cn } from "../../../src/utils/cn";
+} from "@glass/components/custom/timeline";
+import { cn } from "@glass/utils/cn";
 
 /**
  * Continuous variant — ONE rounded-pill rail with N absolute-positioned region

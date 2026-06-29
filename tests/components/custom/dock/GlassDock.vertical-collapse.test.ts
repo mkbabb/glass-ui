@@ -2,8 +2,8 @@ import { mount } from "@vue/test-utils";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { h, nextTick } from "vue";
 
-import GlassDock from "../../../../src/components/custom/dock/GlassDock.vue";
-import DockIconButton from "../../../../src/components/custom/dock/DockIconButton.vue";
+import GlassDock from "@glass/components/custom/dock/GlassDock.vue";
+import DockIconButton from "@glass/components/custom/dock/DockIconButton.vue";
 
 /**
  * AZ.W-DOCK-TAXONOMY (HG2) — a COLLAPSIBLE vertical dock morphs/shrinks.

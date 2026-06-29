@@ -10,12 +10,12 @@ import {
     SheetHeader,
     SheetTitle,
     SheetTrigger,
-} from "../../../src/components/ui/sheet";
-import { Button } from "../../../src/components/ui/button";
-import { Input } from "../../../src/components/ui/input";
-import { Label } from "../../../src/components/ui/label";
-import { Textarea } from "../../../src/components/ui/textarea";
-import { IconChip } from "../../../src/components/custom/icon-chip";
+} from "@glass/components/ui/sheet";
+import { Button } from "@glass/components/ui/button";
+import { Input } from "@glass/components/ui/input";
+import { Label } from "@glass/components/ui/label";
+import { Textarea } from "@glass/components/ui/textarea";
+import { IconChip } from "@glass/components/custom/icon-chip";
 import { PanelRight } from "@lucide/vue";
 
 // BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2

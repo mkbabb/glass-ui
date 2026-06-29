@@ -34,14 +34,14 @@
 //
 // A demo-private chassis primitive — NOT a library export.
 import { computed, type HTMLAttributes } from "vue";
-import { cn } from "../../../src/utils/cn";
+import { cn } from "@glass/utils/cn";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import {
     Configurator,
     type ConfiguratorPreset,
     type ConfiguratorScrollMode,
-} from "../../../src/components/custom/configurator";
+} from "@glass/components/custom/configurator";
 
 const props = withDefaults(
     defineProps<{

@@ -14,7 +14,7 @@
 import {
     dftFromPoints,
     type BasisComponent,
-} from "../../../src/components/custom/fourier-field";
+} from "@glass/components/custom/fourier-field";
 import { fGlyphPoints } from "../../eggs/fGlyphPoints";
 
 /** A curated trace source: a label + the closed point set + its DFT spectrum. */

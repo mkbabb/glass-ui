@@ -1,9 +1,9 @@
 import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
 
-import GlassTimeline from "../../../../src/components/custom/timeline/GlassTimeline.vue";
-import HoverPopover from "../../../../src/components/custom/hover-popover/HoverPopover.vue";
-import type { TimelineSegment } from "../../../../src/components/custom/timeline/types";
+import GlassTimeline from "@glass/components/custom/timeline/GlassTimeline.vue";
+import HoverPopover from "@glass/components/custom/hover-popover/HoverPopover.vue";
+import type { TimelineSegment } from "@glass/components/custom/timeline/types";
 
 /**
  * AB.W2.T4 (A4 §nested-interactive) — Option C structural split.

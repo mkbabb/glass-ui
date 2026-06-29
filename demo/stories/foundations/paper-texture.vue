@@ -10,7 +10,7 @@ import { ref } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
-import { PaperBackdrop } from "../../../src/components/custom/paper-backdrop";
+import { PaperBackdrop } from "@glass/components/custom/paper-backdrop";
 
 const opacity = ref(0.5);
 </script>

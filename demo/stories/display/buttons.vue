@@ -17,9 +17,9 @@ import StoryPage from "../StoryPage.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
 import StorySection from "../StorySection.vue";
 import { ref } from "vue";
-import { Button } from "../../../src/components/ui/button";
-import { cn } from "../../../src/utils/cn";
-import { Aurora } from "../../../src/components/custom/aurora";
+import { Button } from "@glass/components/ui/button";
+import { cn } from "@glass/utils/cn";
+import { Aurora } from "@glass/components/custom/aurora";
 import { PRESETS } from "../aurora/presets";
 
 const pressed = ref(false);

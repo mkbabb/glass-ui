@@ -9,8 +9,8 @@
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
-import { ExpandableContainer } from "../../../src/components/custom/expandable-container";
-import { IconChip } from "../../../src/components/custom/icon-chip";
+import { ExpandableContainer } from "@glass/components/custom/expandable-container";
+import { IconChip } from "@glass/components/custom/icon-chip";
 import { Maximize2, X } from "@lucide/vue";
 
 // BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2

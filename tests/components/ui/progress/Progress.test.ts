@@ -1,7 +1,7 @@
 import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
 
-import { Progress } from "../../../../src/components/ui/progress/index";
+import { Progress } from "@glass/components/ui/progress/index";
 
 describe("Progress", () => {
     it("renders a progress indicator at the supplied value", () => {

@@ -9,7 +9,7 @@
 import { ref } from "vue";
 import { MessageCircle } from "@lucide/vue";
 import DockExampleTile from "../DockExampleTile.vue";
-import { useBloomUp } from "../../../../src/composables/motion/useBloomUp";
+import { useBloomUp } from "@glass/composables/motion/useBloomUp";
 
 const open = ref(false);
 const pillRef = ref<HTMLElement | null>(null);

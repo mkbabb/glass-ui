@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { useTextHighlight } from "../../../src/composables/motion/useTextHighlight";
+import { useTextHighlight } from "@glass/composables/motion/useTextHighlight";
 import { mountComposable } from "../../utils/mountComposable";
 
 // Minimal stand-ins for the CSS Custom Highlight API. The global `CSS` stub in

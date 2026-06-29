@@ -26,10 +26,10 @@ import {
     DockPopoverTrigger,
     DockSeparator,
     DockBackgroundToggle,
-} from "../../../src/components/custom/dock";
-import { Slider } from "../../../src/components/ui/slider";
-import { HoverPopover } from "../../../src/components/custom/hover-popover";
-import { Popover, PopoverContent } from "../../../src/components/ui/popover";
+} from "@glass/components/custom/dock";
+import { Slider } from "@glass/components/ui/slider";
+import { HoverPopover } from "@glass/components/custom/hover-popover";
+import { Popover, PopoverContent } from "@glass/components/ui/popover";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -37,15 +37,15 @@ import {
     DropdownMenuRadioGroup,
     DropdownMenuRadioItem,
     DropdownMenuSeparator,
-} from "../../../src/components/ui/dropdown-menu";
+} from "@glass/components/ui/dropdown-menu";
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectValue,
-} from "../../../src/components/ui/select";
-import { Aurora } from "../../../src/components/custom/aurora";
-import { DEFAULT_AURORA_CONFIG } from "../../../src/components/custom/aurora";
+} from "@glass/components/ui/select";
+import { Aurora } from "@glass/components/custom/aurora";
+import { DEFAULT_AURORA_CONFIG } from "@glass/components/custom/aurora";
 import DockStage from "./DockStage.vue";
 
 const playing = ref(false);
@@ -174,7 +174,7 @@ function togglePlay() {
             <div
                 class="dock-stage-tile flex flex-col items-center gap-3 rounded-[var(--radius-card)] border border-border/30 p-8"
             >
-                <!-- import { DockSelectTrigger, DockDropdownTrigger } from "../../../src/components/custom/dock"; -->
+                <!-- import { DockSelectTrigger, DockDropdownTrigger } from "@glass/components/custom/dock"; -->
                 <GlassDock :background-canvas="backgroundCanvas" always-expanded fit-content>
                     <Select v-model="dockView">
                         <DockSelectTrigger

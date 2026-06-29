@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import {
     useYieldToMain,
     yieldToMain,
-} from "../../src/composables/motion/core";
+} from "@glass/composables/motion/core";
 
 describe("yieldToMain", () => {
     afterEach(() => {

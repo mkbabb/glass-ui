@@ -12,7 +12,7 @@
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
-import { cn } from "../../../src/utils/cn";
+import { cn } from "@glass/utils/cn";
 
 // The graded display ladder — display → body → admin rail, as a DESIGNED rhythm.
 const ladder: { cls: string; label: string; sample: string }[] = [

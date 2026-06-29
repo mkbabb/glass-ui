@@ -22,9 +22,9 @@
 //
 // A demo-private chassis primitive — NOT a library export (zero src/ paint).
 import { computed } from "vue";
-import { cn } from "../../src/utils/cn";
-import { IconChip } from "../../src/components/custom/icon-chip";
-import type { IconChipIcon } from "../../src/components/custom/icon-chip";
+import { cn } from "@glass/utils/cn";
+import { IconChip } from "@glass/components/custom/icon-chip";
+import type { IconChipIcon } from "@glass/components/custom/icon-chip";
 
 interface StorySectionHeaderProps {
     /** The IconChip POP glyph (a lucide functional component). */

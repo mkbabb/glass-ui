@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
-import { Button } from "../../../src/components/ui/button";
-import { ConfirmDialog } from "../../../src/components/custom/confirm-dialog";
-import { IconChip } from "../../../src/components/custom/icon-chip";
+import { Button } from "@glass/components/ui/button";
+import { ConfirmDialog } from "@glass/components/custom/confirm-dialog";
+import { IconChip } from "@glass/components/custom/icon-chip";
 import { Trash2, LogOut, Archive, CheckCircle2, ShieldAlert } from "@lucide/vue";
 // BB.W-SUFFUSE3 — the feedback band's --section-color-8 ruby identity.
 const FEEDBACK_STOP = 8;

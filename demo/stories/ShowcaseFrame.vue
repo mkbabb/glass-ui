@@ -34,7 +34,7 @@
 // shadow="cartoon">`. The Card-extension follow-up rides under v0.8.7+;
 // for v0.9.0, this demo-side wrapper is the canonical home.
 import { computed, useSlots, type HTMLAttributes } from "vue";
-import { cn } from "../../src/utils/cn";
+import { cn } from "@glass/utils/cn";
 
 interface ShowcaseFrameProps {
     /** Inner padding rung. xs=p-3 / sm=p-4 / md=p-5 (default) / lg=p-6 / xl=p-10. */

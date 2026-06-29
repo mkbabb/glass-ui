@@ -51,7 +51,7 @@ import { resolve } from "node:path";
 import { nextTick } from "vue";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
-import { useGlobalDark } from "../../../../src/composables/dark/useGlobalDark";
+import { useGlobalDark } from "@glass/composables/dark/useGlobalDark";
 
 // ── Read the VERBATIM authored CSS the component + utility actually ship ────────
 // CWD is the project root under vitest; happy-dom's `import.meta.url` is not a

@@ -11,12 +11,12 @@
 // choices, a non-aurora `setup` could not drive it.
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { createWebGLCanvas } from "../../../../src/composables/glass/webgl/useWebGLCanvas";
+import { createWebGLCanvas } from "@glass/composables/glass/webgl/useWebGLCanvas";
 import {
     N_RESTORE_STORM,
     RESTORE_DEBOUNCE_MS,
     T_RESTORE_STORM_MS,
-} from "../../../../src/composables/glass/webgl/createCanvasLifecycle";
+} from "@glass/composables/glass/webgl/createCanvasLifecycle";
 
 // ── A minimal fake DOM: a canvas whose getContext returns a stub WebGL2, a
 // controllable rAF, a no-op ResizeObserver, a controllable document.hidden. ──

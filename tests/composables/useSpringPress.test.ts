@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { useSpringPress } from "../../src/composables/motion";
+import { useSpringPress } from "@glass/composables/motion";
 
 describe("useSpringPress", () => {
     beforeEach(() => {

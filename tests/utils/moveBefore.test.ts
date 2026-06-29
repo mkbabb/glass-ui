@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { moveBeforeSafe, supportsMoveBefore } from "../../src/utils/moveBefore";
+import { moveBeforeSafe, supportsMoveBefore } from "@glass/utils/moveBefore";
 
 // happy-dom does not implement `Element.moveBefore`; we stub it on the prototype
 // to exercise the native path and `delete` it to exercise the `insertBefore`

@@ -44,25 +44,25 @@ import {
     Tag,
     Clock,
 } from "@lucide/vue";
-import { IconChip } from "../../../src/components/custom/icon-chip";
+import { IconChip } from "@glass/components/custom/icon-chip";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
-import { Button } from "../../../src/components/ui/button";
-import { Slider } from "../../../src/components/ui/slider";
-import { SegmentedTabs } from "../../../src/components/custom/tabs";
-import { Aurora, DEFAULT_AURORA_CONFIG } from "../../../src/components/custom/aurora";
-import { useBloomUp } from "../../../src/composables/motion/useBloomUp";
+import { Button } from "@glass/components/ui/button";
+import { Slider } from "@glass/components/ui/slider";
+import { SegmentedTabs } from "@glass/components/custom/tabs";
+import { Aurora, DEFAULT_AURORA_CONFIG } from "@glass/components/custom/aurora";
+import { useBloomUp } from "@glass/composables/motion/useBloomUp";
 import {
     useDockFission,
     DOCK_SPLIT_SIGNATURES,
-} from "../../../src/components/custom/dock/composables";
+} from "@glass/components/custom/dock/composables";
 import {
     DockIconButton,
     DockSeparator,
     DockStack,
     GlassDock,
-} from "../../../src/components/custom/dock";
-import type { DockStackItem } from "../../../src/components/custom/dock/constants";
+} from "@glass/components/custom/dock";
+import type { DockStackItem } from "@glass/components/custom/dock/constants";
 
 // ── controls ──────────────────────────────────────────────────────────────────
 // THREE registers, all driven by REAL primitives:

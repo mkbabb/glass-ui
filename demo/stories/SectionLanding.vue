@@ -9,14 +9,14 @@
 // {icon, hue, preview} content; this wave delivers the route + the bento shell).
 import { computed } from "vue";
 import { useRoute } from "vue-router";
-import { TooltipProvider } from "../../src/components/ui/tooltip";
-import { auroraFallbackGround } from "../../src/components/custom/aurora";
-import { Card } from "../../src/components/ui/card";
-import { Button } from "../../src/components/ui/button";
-import { Slider } from "../../src/components/ui/slider";
-import { Switch } from "../../src/components/ui/switch";
-import { MetricBadge } from "../../src/components/custom/metric-badge";
-import { IconChip } from "../../src/components/custom/icon-chip";
+import { TooltipProvider } from "@glass/components/ui/tooltip";
+import { auroraFallbackGround } from "@glass/components/custom/aurora";
+import { Card } from "@glass/components/ui/card";
+import { Button } from "@glass/components/ui/button";
+import { Slider } from "@glass/components/ui/slider";
+import { Switch } from "@glass/components/ui/switch";
+import { MetricBadge } from "@glass/components/custom/metric-badge";
+import { IconChip } from "@glass/components/custom/icon-chip";
 import StoryHero from "./StoryHero.vue";
 import SectionPreviewCard from "./SectionPreviewCard.vue";
 import { findCategory } from "./manifest";

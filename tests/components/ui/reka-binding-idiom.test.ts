@@ -13,21 +13,21 @@ import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
 import { nextTick } from "vue";
 
-import { Button } from "../../../src/components/ui/button/index";
-import { Toggle } from "../../../src/components/ui/toggle/index";
-import { Switch } from "../../../src/components/ui/switch/index";
-import { Checkbox } from "../../../src/components/ui/checkbox/index";
+import { Button } from "@glass/components/ui/button/index";
+import { Toggle } from "@glass/components/ui/toggle/index";
+import { Switch } from "@glass/components/ui/switch/index";
+import { Checkbox } from "@glass/components/ui/checkbox/index";
 import {
     TagsInput,
     TagsInputItem,
     TagsInputItemText,
-} from "../../../src/components/ui/tags-input/index";
+} from "@glass/components/ui/tags-input/index";
 import {
     Combobox,
     ComboboxAnchor,
     ComboboxInput,
-} from "../../../src/components/ui/combobox/index";
-import { useToast } from "../../../src/components/ui/toast/use-toast";
+} from "@glass/components/ui/combobox/index";
+import { useToast } from "@glass/components/ui/toast/use-toast";
 
 describe("reka binding-idiom render-effect canary (AW.W26)", () => {
     it("Button: a host-sized icon (`size-9`) survives the base `size-4` (cn() no false-merge)", () => {

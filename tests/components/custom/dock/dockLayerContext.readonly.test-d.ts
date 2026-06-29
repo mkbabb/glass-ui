@@ -15,7 +15,7 @@
 
 import { describe, expectTypeOf, it } from "vitest";
 import type { Ref } from "vue";
-import type { DockLayerGroupContext } from "../../../../src/components/custom/dock/composables/dockLayerContext";
+import type { DockLayerGroupContext } from "@glass/components/custom/dock/composables/dockLayerContext";
 
 type CurrentRef = DockLayerGroupContext["currentLayerId"];
 type LeavingRef = DockLayerGroupContext["leavingLayerId"];

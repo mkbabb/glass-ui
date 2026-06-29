@@ -1,6 +1,6 @@
 import { nextTick, ref } from "vue";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { DAMPING, SNAP_THRESHOLD, useAnimatedNumber } from "../../src/composables/motion";
+import { DAMPING, SNAP_THRESHOLD, useAnimatedNumber } from "@glass/composables/motion";
 
 describe("useAnimatedNumber", () => {
     afterEach(() => {

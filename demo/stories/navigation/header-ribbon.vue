@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
-import { HeaderRibbon } from "../../../src/components/custom/header-ribbon";
-import { DockIconButton } from "../../../src/components/custom/dock";
-import { IconChip } from "../../../src/components/custom/icon-chip";
+import { HeaderRibbon } from "@glass/components/custom/header-ribbon";
+import { DockIconButton } from "@glass/components/custom/dock";
+import { IconChip } from "@glass/components/custom/icon-chip";
 import { Menu, Settings, Search, Bell, PanelTop } from "@lucide/vue";
 
 // HeaderRibbon is normally `position: fixed` to the viewport corner; inside a

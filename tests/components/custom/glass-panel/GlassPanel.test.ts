@@ -1,7 +1,7 @@
 import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
 
-import { GlassPanel } from "../../../../src/components/custom/glass-panel/index";
+import { GlassPanel } from "@glass/components/custom/glass-panel/index";
 
 const VARIANTS = ["wash", "quiet", "resting", "floating", "overlay"] as const;
 

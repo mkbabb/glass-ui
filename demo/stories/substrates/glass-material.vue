@@ -17,7 +17,7 @@ import { ref, useTemplateRef } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
-import { useSpecularTracking, Button } from "../../../src/index";
+import { useSpecularTracking, Button } from "@glass/index";
 // AZ.W-ADAPTIVE-AUTO Arm 2 — the DEMO exerciser for the sampled-luminance observer
 // (path B: demo-private — the composable is OFF the public glass barrel, imported
 // directly here as the content-glass DEMO mount that exercises the live sampling path;
@@ -26,7 +26,7 @@ import { useSpecularTracking, Button } from "../../../src/index";
 // painted backdrop (the iOS-27 register). A demo mount is NOT a binary consumer (the
 // W-PRUNE2 E4-3 own-story exclusion) — it exercises the composable, it does not by
 // itself clear the public ≥2-binary bar.
-import { useGlassBackdropLuminance } from "../../../src/composables/glass/useGlassBackdropLuminance";
+import { useGlassBackdropLuminance } from "@glass/composables/glass/useGlassBackdropLuminance";
 
 // The named band surfaces — the five ladder rungs + the card register. Each is
 // a bare `.glass-<rung>` plate (the mixin supplies the `::before` specular + the

@@ -10,9 +10,9 @@ import {
     SelectSeparator,
     SelectTrigger,
     SelectValue,
-} from "../../../src/components/ui/select";
-import { Label } from "../../../src/components/ui/label";
-import { IconChip } from "../../../src/components/custom/icon-chip";
+} from "@glass/components/ui/select";
+import { Label } from "@glass/components/ui/label";
+import { IconChip } from "@glass/components/custom/icon-chip";
 import { ListFilter } from "@lucide/vue";
 // BC.W-SUFFUSE-reconcile — the forms band's ONE coherent --section-color-3 teal
 // identity (the cool stop). PH3-safe (inline borderLeft, not the

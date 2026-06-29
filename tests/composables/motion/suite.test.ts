@@ -13,7 +13,7 @@
 // `warmEngine`. Mirrors scripts/proof-motion-suite.mjs.
 
 import { describe, expect, it } from "vitest";
-import * as motion from "../../../src/composables/motion";
+import * as motion from "@glass/composables/motion";
 
 const STATIC_RUNTIME = [
     "NumericAnimation", "SpringProgress", "SmoothProgress", "Oscillator",

@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
     cssToOklch,
     defaultBlobColorResolver,
-} from "../../../../src/composables/color/index";
+} from "@glass/composables/color/index";
 
 // AW.W13 — the goo-blob per-frame `value.js` throw.
 //

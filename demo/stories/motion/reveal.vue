@@ -11,9 +11,9 @@
 import { ref, type ComponentPublicInstance } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
-import { vReveal } from "../../../src/composables/motion/vReveal";
-import { useLiquidReveal } from "../../../src/composables/motion/useLiquidReveal";
-import { Button } from "../../../src/components/ui/button";
+import { vReveal } from "@glass/composables/motion/vReveal";
+import { useLiquidReveal } from "@glass/composables/motion/useLiquidReveal";
+import { Button } from "@glass/components/ui/button";
 
 const playing = ref(true);
 

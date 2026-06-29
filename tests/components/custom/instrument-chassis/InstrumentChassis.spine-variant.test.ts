@@ -7,7 +7,7 @@ import { readMonolith } from "../../../../scripts/read-css-monoliths.mjs";
 import {
     InstrumentChassis,
     type InstrumentChassisVariant,
-} from "../../../../src/components/custom/instrument-chassis/index";
+} from "@glass/components/custom/instrument-chassis/index";
 
 /**
  * AL-W1-α augmented — chassis spine-variant canon test (per AL-X5 §4.1).

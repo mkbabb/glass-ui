@@ -10,7 +10,7 @@ import {
     shapeGeom,
     serialize,
     boilLines,
-} from "../../../../src/components/custom/handmark/geometry";
+} from "@glass/components/custom/handmark/geometry";
 
 const OPTS = { roughness: 0.7, segments: 9, seed: 1 } as const;
 

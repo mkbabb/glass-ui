@@ -21,7 +21,7 @@
 // <StorySection> / <ShowcaseFrame> precedent).
 import { computed, ref, useSlots } from "vue";
 import { Check, Copy } from "@lucide/vue";
-import { cn } from "../../src/utils/cn";
+import { cn } from "@glass/utils/cn";
 
 interface CodeBlockProps {
     /** The literal code string. XOR the default slot (the slot wins when both). */

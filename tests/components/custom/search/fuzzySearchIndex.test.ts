@@ -8,8 +8,8 @@ import {
     searchIndex,
     fuzzyMatch,
     clearSearchCache,
-} from "../../../../src/components/custom/search/composables/fuzzySearchIndex";
-import type { SearchableItem } from "../../../../src/components/custom/search/composables/types";
+} from "@glass/components/custom/search/composables/fuzzySearchIndex";
+import type { SearchableItem } from "@glass/components/custom/search/composables/types";
 
 afterEach(() => clearSearchCache());
 

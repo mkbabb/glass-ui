@@ -20,7 +20,7 @@ import {
     CSSCubicBezier,
     SPRING_PRESETS,
     springPreset,
-} from "../../../src/composables/motion/curves";
+} from "@glass/composables/motion/curves";
 import { springTimingFunction } from "@mkbabb/keyframes.js";
 
 const SPRING_TOKENS = [

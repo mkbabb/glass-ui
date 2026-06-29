@@ -19,7 +19,7 @@ import {
     MOTION_CURVES,
     motionCurve,
     springPreset,
-} from "../../../src/composables/motion/curves";
+} from "@glass/composables/motion/curves";
 import { springTimingFunction } from "@mkbabb/keyframes.js";
 
 describe("convergence-reveal preset (--ease-convergence)", () => {

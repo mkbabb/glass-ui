@@ -1,7 +1,7 @@
 import { mount } from "@vue/test-utils";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import GlassDock from "../../../../src/components/custom/dock/GlassDock.vue";
+import GlassDock from "@glass/components/custom/dock/GlassDock.vue";
 
 /**
  * GlassDock `isTransitioning` concurrency contract (the morph-generation settle

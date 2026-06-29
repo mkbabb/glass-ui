@@ -21,13 +21,13 @@ import BottomDock from "./BottomDock.vue";
 <template><SidebarDock /><BottomDock /></template>
 `;
 const SIDEBAR_OK = `
-import { GlassDock } from "../../src/components/custom/dock";
+import { GlassDock } from "@glass/components/custom/dock";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
 const { firstOfCategory } = useStoryNavigation();
 <template><GlassDock orientation="vertical" /></template>
 `;
 const BOTTOM_OK = `
-import { GlassDock } from "../../src/components/custom/dock";
+import { GlassDock } from "@glass/components/custom/dock";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
 const { next } = useStoryNavigation();
 <template><GlassDock always-expanded /></template>

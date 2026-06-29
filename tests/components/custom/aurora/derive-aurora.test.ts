@@ -6,10 +6,10 @@ import {
     rawOklchToOklab,
 } from "@mkbabb/value.js";
 
-import { deriveAurora, cssToOklch, oklchToLinear } from "../../../../src/components/custom/aurora/composables/color";
-import type { AuroraHarmony } from "../../../../src/components/custom/aurora/composables/color";
-import { MAX_STOPS } from "../../../../src/components/custom/aurora/constants/presets";
-import type { OklchStop } from "../../../../src/components/custom/aurora/constants/presets";
+import { deriveAurora, cssToOklch, oklchToLinear } from "@glass/components/custom/aurora/composables/color";
+import type { AuroraHarmony } from "@glass/components/custom/aurora/composables/color";
+import { MAX_STOPS } from "@glass/components/custom/aurora/constants/presets";
+import type { OklchStop } from "@glass/components/custom/aurora/constants/presets";
 
 /**
  * D10b witness — `deriveAurora` seeds ONE color into a harmonious, gamut-safe

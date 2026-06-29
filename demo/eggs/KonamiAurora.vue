@@ -8,7 +8,7 @@
 // (the useWebGLCanvas substrate PRM-freezes — one painted frame, no drift). The
 // bounded reveal of a static painterly field is acceptable delight under reduce.
 import { onMounted, onBeforeUnmount, ref } from "vue";
-import { Aurora } from "../../src/components/custom/aurora";
+import { Aurora } from "@glass/components/custom/aurora";
 import { heroAuroraConfig } from "../stories/aurora-hero";
 
 const emit = defineEmits<{ done: [] }>();

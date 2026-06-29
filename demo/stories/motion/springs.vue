@@ -21,19 +21,19 @@ import {
     springPreset,
     type SpringSnapshot,
     type SpringPresetName,
-} from "../../../src/composables/motion";
-import { Button } from "../../../src/components/ui/button";
-import { Label } from "../../../src/components/ui/label";
-import { LabeledSlider } from "../../../src/components/custom/labeled-field";
+} from "@glass/composables/motion";
+import { Button } from "@glass/components/ui/button";
+import { Label } from "@glass/components/ui/label";
+import { LabeledSlider } from "@glass/components/custom/labeled-field";
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from "../../../src/components/ui/select";
+} from "@glass/components/ui/select";
 import { Check, Copy } from "@lucide/vue";
-import { cn } from "../../../src/utils/cn";
+import { cn } from "@glass/utils/cn";
 
 // ── The named presets, straight off the SINGLE source ───────────────────────────
 // `SPRING_PRESETS` is the no-second-authority register table; `springTimingFunction`

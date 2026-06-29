@@ -9,12 +9,12 @@ import {
     TriangleAlert,
     type LucideIcon,
 } from "@lucide/vue";
-import { Button } from "../../../src/components/ui/button";
-import { Card, CardContent } from "../../../src/components/ui/card";
-import { GooBlob } from "../../../src/components/custom/goo-blob";
-import { BLOB_CONFIG_DEFAULTS } from "../../../src/components/custom/goo-blob/types";
-import { IconChip } from "../../../src/components/custom/icon-chip";
-import { cn } from "../../../src/utils/cn";
+import { Button } from "@glass/components/ui/button";
+import { Card, CardContent } from "@glass/components/ui/card";
+import { GooBlob } from "@glass/components/custom/goo-blob";
+import { BLOB_CONFIG_DEFAULTS } from "@glass/components/custom/goo-blob/types";
+import { IconChip } from "@glass/components/custom/icon-chip";
+import { cn } from "@glass/utils/cn";
 
 interface EmptyState {
     id: string;

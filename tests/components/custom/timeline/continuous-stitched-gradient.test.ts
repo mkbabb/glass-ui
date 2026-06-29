@@ -1,12 +1,12 @@
 import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
 
-import GlassTimeline from "../../../../src/components/custom/timeline/GlassTimeline.vue";
+import GlassTimeline from "@glass/components/custom/timeline/GlassTimeline.vue";
 import {
     stitchedRailGradient,
     stitchedRegionWindow,
-} from "../../../../src/components/custom/timeline/geometry";
-import type { TimelineSegment } from "../../../../src/components/custom/timeline/types";
+} from "@glass/components/custom/timeline/geometry";
+import type { TimelineSegment } from "@glass/components/custom/timeline/types";
 
 /**
  * AC.W9 (Lane B / B2) — the `continuous` variant paints ONE rail-

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { menuItemVariants } from "../src/components/ui/_shared/menuItemVariants";
+import { menuItemVariants } from "@glass/components/ui/_shared/menuItemVariants";
 
 /**
  * V.W3.T2 — menuItemVariants CVA contract.

@@ -2,9 +2,9 @@
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import { ref } from "vue";
-import { InfiniteScroll } from "../../../src/components/custom/infinite-scroll";
-import { Badge } from "../../../src/components/ui/badge";
-import { cn } from "../../../src/utils/cn";
+import { InfiniteScroll } from "@glass/components/custom/infinite-scroll";
+import { Badge } from "@glass/components/ui/badge";
+import { cn } from "@glass/utils/cn";
 
 interface Event {
     id: number;

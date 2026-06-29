@@ -31,7 +31,7 @@
 // bare body section). When both are present the eyebrow caption sits above
 // the semantic <h2>.
 import { computed, type HTMLAttributes } from "vue";
-import { cn } from "../../src/utils/cn";
+import { cn } from "@glass/utils/cn";
 
 interface StorySectionProps {
     /**

@@ -11,11 +11,11 @@ import { mount } from "@vue/test-utils";
 import { computed, defineComponent, h, ref } from "vue";
 import { describe, expect, it, vi } from "vitest";
 
-import HoverPopover from "../../../../src/components/custom/hover-popover/HoverPopover.vue";
+import HoverPopover from "@glass/components/custom/hover-popover/HoverPopover.vue";
 import {
     DOCK_CONTEXT_KEY,
     type DockContext,
-} from "../../../../src/components/custom/dock/composables/dockContext";
+} from "@glass/components/custom/dock/composables/dockContext";
 
 function mockDockContext(): { ctx: DockContext; keepOpen: ReturnType<typeof vi.fn>; release: ReturnType<typeof vi.fn> } {
     const keepOpen = vi.fn();

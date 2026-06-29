@@ -2,8 +2,8 @@
 import { onBeforeUnmount, ref, watch } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
-import { MetricCell } from "../../../src/components/custom/metric-cell";
-import { useCountup } from "../../../src/composables/motion/useCountup";
+import { MetricCell } from "@glass/components/custom/metric-cell";
+import { useCountup } from "@glass/composables/motion/useCountup";
 import { Download, Upload, Gauge, Activity } from "@lucide/vue";
 
 // BA.W-ANIMATE Tier C — the audacious display numbers count up on first

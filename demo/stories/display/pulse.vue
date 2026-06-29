@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
-import { Pulse } from "../../../src/components/custom/pulse";
+import { Pulse } from "@glass/components/custom/pulse";
 </script>
 
 <template>

@@ -13,9 +13,9 @@ import {
     LabeledSelect,
     LabeledSlider,
     LabeledSwitch,
-} from "../../../src/components/custom/labeled-field";
-import { Input } from "../../../src/components/ui/input";
-import { Button } from "../../../src/components/ui/button";
+} from "@glass/components/custom/labeled-field";
+import { Input } from "@glass/components/ui/input";
+import { Button } from "@glass/components/ui/button";
 
 const text = ref("hello");
 const choice = ref("Alpha");

@@ -21,8 +21,8 @@ import { onMounted, ref } from "vue";
 import {
     supportsScrollTimeline,
     supportsViewTimeline,
-} from "../../../src/composables/motion/supportsCssTimeline";
-import { useScrollPin } from "../../../src/composables/motion/useScrollPin";
+} from "@glass/composables/motion/supportsCssTimeline";
+import { useScrollPin } from "@glass/composables/motion/useScrollPin";
 
 // ── Capability badges ───────────────────────────────────────────────────────────
 const scrollOk = ref(false);

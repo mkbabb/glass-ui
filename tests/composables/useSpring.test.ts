@@ -1,6 +1,6 @@
 import { effectScope, nextTick, ref } from "vue";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { useSpring } from "../../src/composables/motion";
+import { useSpring } from "@glass/composables/motion";
 
 describe("useSpring", () => {
     beforeEach(() => {

@@ -9,12 +9,12 @@ import { computed, reactive, ref } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
-import { Switch } from "../../../src/components/ui/switch";
-import { Label } from "../../../src/components/ui/label";
+import { Switch } from "@glass/components/ui/switch";
+import { Label } from "@glass/components/ui/label";
 import {
     DotMatrix,
     type DotMatrixConfig,
-} from "../../../src/components/custom/dot-matrix";
+} from "@glass/components/custom/dot-matrix";
 import { DOT_MATRIX_PRESET_SPHERE, DOT_MATRIX_PRESET_WARM } from "./presets";
 
 // The studio model — a live config the controls drive (commit-on-write — a single surface;

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
-import { Alert, AlertDescription, AlertTitle } from "../../../src/components/ui/alert";
-import { IconChip } from "../../../src/components/custom/icon-chip";
+import { Alert, AlertDescription, AlertTitle } from "@glass/components/ui/alert";
+import { IconChip } from "@glass/components/custom/icon-chip";
 import { Info, CircleAlert, TriangleAlert, CircleCheck, Sparkles, Bell } from "@lucide/vue";
 // BB.W-SUFFUSE3 — the feedback band's ONE coherent --section-color-8 ruby
 // (warm-status) identity. Distinct from forms-3 / containers-2 / data-9 /

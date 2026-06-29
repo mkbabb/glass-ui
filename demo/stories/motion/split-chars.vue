@@ -11,8 +11,8 @@
 import { ref } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
-import { SplitChars } from "../../../src/components/custom/split-chars";
-import { Button } from "../../../src/components/ui/button";
+import { SplitChars } from "@glass/components/custom/split-chars";
+import { Button } from "@glass/components/ui/button";
 
 // Replaying remounts the SplitChars instances so the `backwards` entrance plays
 // again (the CSS animation runs once on mount).

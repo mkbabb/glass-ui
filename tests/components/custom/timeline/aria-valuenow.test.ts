@@ -1,7 +1,7 @@
 import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
 
-import GlassTimeline from "../../../../src/components/custom/timeline/GlassTimeline.vue";
+import GlassTimeline from "@glass/components/custom/timeline/GlassTimeline.vue";
 
 /**
  * Regression specs for AA.A4 §S-16 — the W5 axe scan found the scrubber's

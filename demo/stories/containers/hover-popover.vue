@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
-import { HoverPopover } from "../../../src/components/custom/hover-popover";
-import { IconChip } from "../../../src/components/custom/icon-chip";
-import { Button } from "../../../src/components/ui/button";
+import { HoverPopover } from "@glass/components/custom/hover-popover";
+import { IconChip } from "@glass/components/custom/icon-chip";
+import { Button } from "@glass/components/ui/button";
 import { Settings, ArrowLeft, RotateCcw, Square, MousePointer2 } from "@lucide/vue";
 
 // BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2

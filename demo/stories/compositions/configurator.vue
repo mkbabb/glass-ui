@@ -15,12 +15,12 @@ import {
     ConfiguratorRow,
     useConfiguratorState,
     type ConfiguratorPreset,
-} from "../../../src/components/custom/configurator";
+} from "@glass/components/custom/configurator";
 import {
     LabeledSelect,
     LabeledSlider,
     LabeledSwitch,
-} from "../../../src/components/custom/labeled-field";
+} from "@glass/components/custom/labeled-field";
 
 interface Cfg {
     medium: string;

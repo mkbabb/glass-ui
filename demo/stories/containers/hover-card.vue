@@ -5,11 +5,11 @@ import {
     HoverCard,
     HoverCardContent,
     HoverCardTrigger,
-} from "../../../src/components/ui/hover-card";
-import { Avatar, AvatarFallback, AvatarImage } from "../../../src/components/ui/avatar";
-import { Button } from "../../../src/components/ui/button";
-import { IconTooltip } from "../../../src/components/custom/icon-tooltip";
-import { IconChip } from "../../../src/components/custom/icon-chip";
+} from "@glass/components/ui/hover-card";
+import { Avatar, AvatarFallback, AvatarImage } from "@glass/components/ui/avatar";
+import { Button } from "@glass/components/ui/button";
+import { IconTooltip } from "@glass/components/custom/icon-tooltip";
+import { IconChip } from "@glass/components/custom/icon-chip";
 import { Info, CircleHelp, Sparkles, IdCard } from "@lucide/vue";
 
 // BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2

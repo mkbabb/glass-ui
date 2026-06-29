@@ -1,24 +1,24 @@
 import { describe, expect, it, vi } from "vitest";
 import { ref } from "vue";
-import { useSortable } from "../src/index";
+import { useSortable } from "@glass/index";
 // AI.W3 R3 — motion composables moved off the root barrel into the /motion
 // flat subpath (keyframes.js SCC trap closure). Smoke test reaches the new
 // subpath directly via `src/motion` (mirrors the `src/keyboard` shape below).
-import { useStaggerReveal } from "../src/motion-core";
-import { registerShortcut } from "../src/keyboard";
-import { useInfiniteScroll } from "../src/infinite-scroll";
+import { useStaggerReveal } from "@glass/motion-core";
+import { registerShortcut } from "@glass/keyboard";
+import { useInfiniteScroll } from "@glass/infinite-scroll";
 import {
     buildIndex,
     clearSearchCache,
     fuzzyMatch,
     searchIndex,
-} from "../src/subpaths/search";
+} from "@glass/subpaths/search";
 import {
     buildTreeIndex,
     isActive,
     isInActiveChain,
     useTreeIndex,
-} from "../src/sidebar";
+} from "@glass/sidebar";
 import { mountComposable } from "./utils/mountComposable";
 
 describe("search helpers", () => {

@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { useScrollTo } from "../../../src/composables/sidebar/useScrollTo";
-import type { TreeIndexEntry } from "../../../src/composables/sidebar/types";
+import { useScrollTo } from "@glass/composables/sidebar/useScrollTo";
+import type { TreeIndexEntry } from "@glass/composables/sidebar/types";
 
 // These specs assert the SYNCHRONOUS ensureTargetLoaded partial-load (the
 // visibleCount math), not the rAF scroll settle. The composable is invoked bare

@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { ref } from "vue";
-import { useHaptic } from "../../../../src/composables/motion/core/useHaptic";
+import { useHaptic } from "@glass/composables/motion/core/useHaptic";
 
 // useHaptic is a thin, feature-detected navigator.vibrate wrapper. These tests stub
 // navigator.vibrate and assert: (1) supported reflects the feature-detect; (2) pulse()

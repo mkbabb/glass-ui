@@ -49,7 +49,7 @@ import {
     CSSCubicBezier,
     MOTION_CURVES,
     type MotionCurve,
-} from "../../../src/composables/motion/curves";
+} from "@glass/composables/motion/curves";
 import {
     // Back + the 4 CSS Standard keywords (bezier presets) / Bounce siblings / Steps
     // generators / the Hermite smoothStep3 / the cssLinear piecewise twin — the

@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import {
     postTaskSafe,
     usePrioritizedTask,
-} from "../../src/composables/motion/core";
+} from "@glass/composables/motion/core";
 
 describe("postTaskSafe", () => {
     afterEach(() => {

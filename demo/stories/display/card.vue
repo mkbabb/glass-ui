@@ -15,14 +15,14 @@ import {
     ScrollCard,
     ScrollCardHeader,
     type CardTier,
-} from "../../../src/components/ui/card";
-import { Button } from "../../../src/components/ui/button";
-import { Switch } from "../../../src/components/ui/switch";
-import { Label } from "../../../src/components/ui/label";
+} from "@glass/components/ui/card";
+import { Button } from "@glass/components/ui/button";
+import { Switch } from "@glass/components/ui/switch";
+import { Label } from "@glass/components/ui/label";
 // W12 — stage the tier matrix + shadow/grain toggles over a shipped
 // high-frequency backdrop (Aurora) so the tier-alpha steps (0.30→0.95) and the
 // shadow-on/off differential become perceptible against busy color.
-import { Aurora, DEFAULT_AURORA_CONFIG } from "../../../src/subpaths/aurora";
+import { Aurora, DEFAULT_AURORA_CONFIG } from "@glass/subpaths/aurora";
 
 interface TierExample {
     tier: CardTier;

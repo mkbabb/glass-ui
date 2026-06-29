@@ -2,10 +2,10 @@
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import { ref } from "vue";
-import { Input } from "../../../src/components/ui/input";
-import { Label } from "../../../src/components/ui/label";
-import { SearchBar } from "../../../src/components/custom/search";
-import { IconChip } from "../../../src/components/custom/icon-chip";
+import { Input } from "@glass/components/ui/input";
+import { Label } from "@glass/components/ui/label";
+import { SearchBar } from "@glass/components/custom/search";
+import { IconChip } from "@glass/components/custom/icon-chip";
 import { TextCursorInput } from "@lucide/vue";
 // BC.W-SUFFUSE-reconcile — the forms band's ONE coherent --section-color-3 teal
 // identity (the cool stop). PH3-safe (inline borderLeft, not the

@@ -1,7 +1,7 @@
 import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
 
-import GlassDock from "../../../../src/components/custom/dock/GlassDock.vue";
+import GlassDock from "@glass/components/custom/dock/GlassDock.vue";
 
 /**
  * AS.W7 D2 + D12 — `<GlassDock overflow="scroll">` scroll-on-overflow opt-in.

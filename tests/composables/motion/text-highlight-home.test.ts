@@ -19,7 +19,7 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 // The HOME assertion: import via the `/motion-core` barrel, NOT `/dom`. A stale
 // `/dom` home would red this import (the barrel no longer re-exports it).
-import { useTextHighlight } from "../../../src/composables/motion/core";
+import { useTextHighlight } from "@glass/composables/motion/core";
 import { mountComposable } from "../../utils/mountComposable";
 
 class StubHighlight {

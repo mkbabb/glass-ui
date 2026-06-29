@@ -16,9 +16,9 @@ import {
     useDeckKeyboard,
     installDeckSpring,
     DeckPager,
-} from "../../../src/components/custom/deck";
-import { Button } from "../../../src/components/ui/button";
-import { useGooMorph } from "../../../src/composables/motion/useGooMorph";
+} from "@glass/components/custom/deck";
+import { Button } from "@glass/components/ui/button";
+import { useGooMorph } from "@glass/composables/motion/useGooMorph";
 
 const slides = [
     { title: "Welcome", body: "Arrow / PageDown advances. Home / End jump." },

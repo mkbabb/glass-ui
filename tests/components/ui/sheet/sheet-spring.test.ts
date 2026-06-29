@@ -10,7 +10,7 @@ import { mount } from "@vue/test-utils";
 import { defineComponent, h, nextTick } from "vue";
 import { afterEach, describe, expect, it } from "vitest";
 
-import { Sheet, SheetContent, SheetTrigger } from "../../../../src/components/ui/sheet/index";
+import { Sheet, SheetContent, SheetTrigger } from "@glass/components/ui/sheet/index";
 
 type SpringValue = boolean | "smooth" | "snappy" | "bouncy" | "gentle";
 type Side = "top" | "right" | "bottom" | "left";

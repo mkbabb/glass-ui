@@ -14,7 +14,7 @@
 
 import { afterEach, describe, expect, it } from "vitest";
 import { TestIntersectionObserver } from "../../setup";
-import { vScrollRevealOnce } from "../../../src/composables/motion/useStaggerReveal";
+import { vScrollRevealOnce } from "@glass/composables/motion/useStaggerReveal";
 
 function makeScroller(childCount: number): HTMLElement {
     const scroller = document.createElement("div");

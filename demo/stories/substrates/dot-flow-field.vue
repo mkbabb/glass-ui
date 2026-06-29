@@ -9,12 +9,12 @@ import { computed, reactive, ref } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
-import { Switch } from "../../../src/components/ui/switch";
-import { Label } from "../../../src/components/ui/label";
+import { Switch } from "@glass/components/ui/switch";
+import { Label } from "@glass/components/ui/label";
 import {
     DotFlowField,
     type FlowFieldConfig,
-} from "../../../src/components/custom/dot-flow-field";
+} from "@glass/components/custom/dot-flow-field";
 import { FLOW_PRESET_AURORA_CURRENT, FLOW_PRESET_HALFTONE } from "./presets";
 
 // The studio model — a live config the controls drive (commit-on-write). The DEFAULT is the

@@ -3,8 +3,8 @@ import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import { ref } from "vue";
 import { Package, Layers, Library, FileText, ChevronLeft, ChevronRight } from "@lucide/vue";
-import { GlassDock, DockIconButton, DockLayerGroup, DockLayer, DockSeparator } from "../../../src/components/custom/dock";
-import { cn } from "../../../src/utils/cn";
+import { GlassDock, DockIconButton, DockLayerGroup, DockLayer, DockSeparator } from "@glass/components/custom/dock";
+import { cn } from "@glass/utils/cn";
 import DockStage from "./DockStage.vue";
 
 type LayerId = "root" | "assets" | "layers" | "libs";

@@ -1,10 +1,10 @@
 import { nextTick, ref } from "vue";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { TestIntersectionObserver } from "../../setup";
-import { useScrollTracker } from "../../../src/composables/sidebar/useScrollTracker";
-import { useTreeIndex } from "../../../src/composables/sidebar/useTreeIndex";
+import { useScrollTracker } from "@glass/composables/sidebar/useScrollTracker";
+import { useTreeIndex } from "@glass/composables/sidebar/useTreeIndex";
 import { mountComposable } from "../../utils/mountComposable";
-import type { SidebarSection } from "../../../src/composables/sidebar/types";
+import type { SidebarSection } from "@glass/composables/sidebar/types";
 
 // ── Fixture — a 2-root tree, each root with 2 children ───────────────────────
 //   root-a → [child-a1, child-a2]

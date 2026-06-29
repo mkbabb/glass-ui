@@ -15,7 +15,7 @@ import {
     deriveAurora,
     type AuroraHarmony,
     type DeriveEasing,
-} from "../../../../src/components/custom/aurora/composables/color";
+} from "@glass/components/custom/aurora/composables/color";
 
 // The negative residual is the irreducible float-noise of the Ottosson hull
 // placement on deep blues; the bake's Math.max(0,·) clamps it to 0 (never paints).

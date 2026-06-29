@@ -12,8 +12,8 @@
 // COMPLETED ℱ curve once (no animated reconstruction) then fades — the static
 // register.
 import { onMounted, onBeforeUnmount, ref } from "vue";
-import { dftFromPoints, positionsAt } from "../../src/components/custom/fourier-field";
-import type { BasisComponent } from "../../src/components/custom/fourier-field";
+import { dftFromPoints, positionsAt } from "@glass/components/custom/fourier-field";
+import type { BasisComponent } from "@glass/components/custom/fourier-field";
 import { fGlyphPoints } from "./fGlyphPoints";
 
 const emit = defineEmits<{ done: [] }>();

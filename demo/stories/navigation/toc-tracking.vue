@@ -22,9 +22,9 @@ import {
     useLazyLoader,
     useTreeIndex,
     type SidebarSection,
-} from "../../../src/composables/sidebar";
-import { useVirtualSectionWindow } from "../../../src/composables/virtual";
-import type { FlatSection } from "../../../src/composables/virtual";
+} from "@glass/composables/sidebar";
+import { useVirtualSectionWindow } from "@glass/composables/virtual";
+import type { FlatSection } from "@glass/composables/virtual";
 
 // ── A synthetic long document — 12 roots, each with 3 subsections ───────────
 const SECTIONS: SidebarSection[] = Array.from({ length: 12 }, (_, i) => ({

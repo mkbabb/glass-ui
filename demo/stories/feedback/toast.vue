@@ -2,7 +2,7 @@
 import StoryPage from "../StoryPage.vue";
 import { h } from "vue";
 import { ToastProvider, ToastViewport } from "reka-ui";
-import { Button } from "../../../src/components/ui/button";
+import { Button } from "@glass/components/ui/button";
 import {
     Toast,
     ToastAction,
@@ -10,9 +10,9 @@ import {
     ToastDescription,
     ToastTitle,
     useToast,
-} from "../../../src/components/ui/toast";
+} from "@glass/components/ui/toast";
 import { CheckCircle2, AlertTriangle, XCircle, Info, BellRing } from "@lucide/vue";
-import { IconChip } from "../../../src/components/custom/icon-chip";
+import { IconChip } from "@glass/components/custom/icon-chip";
 // BB.W-SUFFUSE3 — the feedback band's --section-color-8 ruby identity.
 const FEEDBACK_STOP = 8;
 

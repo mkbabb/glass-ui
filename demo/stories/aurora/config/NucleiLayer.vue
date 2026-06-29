@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { Plus } from "@lucide/vue";
-import { Button } from "../../../../src/components/ui/button";
-import { LabeledSlider } from "../../../../src/components/custom/labeled-field";
-import type { AuroraConfig } from "../../../../src/components/custom/aurora";
-import { MAX_NUCLEI } from "../../../../src/components/custom/aurora";
+import { Button } from "@glass/components/ui/button";
+import { LabeledSlider } from "@glass/components/custom/labeled-field";
+import type { AuroraConfig } from "@glass/components/custom/aurora";
+import { MAX_NUCLEI } from "@glass/components/custom/aurora";
 
 const props = defineProps<{
     config: AuroraConfig;

@@ -11,13 +11,13 @@
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import { onMounted, ref } from "vue";
-import { startViewTransition } from "../../../src/composables/motion/useViewTransition";
+import { startViewTransition } from "@glass/composables/motion/useViewTransition";
 import {
     supportsScrollTimeline,
     supportsViewTimeline,
-} from "../../../src/composables/motion/supportsCssTimeline";
-import { Button } from "../../../src/components/ui/button";
-import { cn } from "../../../src/utils/cn";
+} from "@glass/composables/motion/supportsCssTimeline";
+import { Button } from "@glass/components/ui/button";
+import { cn } from "@glass/utils/cn";
 
 // ── Capability badges ───────────────────────────────────────────────────────────
 const scrollOk = ref(false);

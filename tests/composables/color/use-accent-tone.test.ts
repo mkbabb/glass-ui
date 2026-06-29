@@ -5,7 +5,7 @@
 // tones in BOTH modes — the load-bearing invariant fourier asked for.
 
 import { describe, expect, it } from "vitest";
-import { useAccentTone } from "../../../src/composables/color";
+import { useAccentTone } from "@glass/composables/color";
 import {
     parseCSSColor,
     colorUnit2,

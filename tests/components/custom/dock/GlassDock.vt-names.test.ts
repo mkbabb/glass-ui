@@ -2,8 +2,8 @@ import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
 import { defineComponent, h } from "vue";
 
-import GlassDock from "../../../../src/components/custom/dock/GlassDock.vue";
-import { useDockContext } from "../../../../src/components/custom/dock/composables/dockContext";
+import GlassDock from "@glass/components/custom/dock/GlassDock.vue";
+import { useDockContext } from "@glass/components/custom/dock/composables/dockContext";
 
 /**
  * AR inv-η — the per-instance id `<GlassDock>` mints (and from which it

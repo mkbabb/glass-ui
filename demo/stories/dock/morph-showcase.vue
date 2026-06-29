@@ -33,8 +33,8 @@ import {
     DockIconButton,
     GlassDock,
     useDockOrientationMorph,
-} from "../../../src/components/custom/dock";
-import { Button } from "../../../src/components/ui/button";
+} from "@glass/components/custom/dock";
+import { Button } from "@glass/components/ui/button";
 import DockStage from "./DockStage.vue";
 
 const entries = [

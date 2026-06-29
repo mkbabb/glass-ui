@@ -3,12 +3,12 @@ import { computed, ref } from "vue";
 import {
     LabeledSelect,
     LabeledSlider,
-} from "../../../../src/components/custom/labeled-field";
+} from "@glass/components/custom/labeled-field";
 import type {
     AuroraAtoms,
     AuroraMedium,
     AuroraZoneArrangement,
-} from "../../../../src/components/custom/aurora";
+} from "@glass/components/custom/aurora";
 
 /**
  * The Composition section — the medium + zones ATOMS. The medium picker is the

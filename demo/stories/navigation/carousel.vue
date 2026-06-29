@@ -8,11 +8,11 @@ import {
     CarouselItem,
     CarouselPager,
     type CarouselApi,
-} from "../../../src/components/ui/carousel";
-import { PagerDots } from "../../../src/components/custom/pager-dots";
-import { IconChip } from "../../../src/components/custom/icon-chip";
+} from "@glass/components/ui/carousel";
+import { PagerDots } from "@glass/components/custom/pager-dots";
+import { IconChip } from "@glass/components/custom/icon-chip";
 import { GalleryHorizontal } from "@lucide/vue";
-import { cn } from "../../../src/utils/cn";
+import { cn } from "@glass/utils/cn";
 
 // BC.W-SUFFUSE-reconcile — the navigation band's ONE coherent --section-color-12 indigo identity. PH3-safe (inline borderLeft, not the border-l-[3px] + <IconChip> double-header shape).
 const NAV_STOP = 12;

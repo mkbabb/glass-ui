@@ -12,7 +12,7 @@
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { ref } from "vue";
-import { useCelebrationBurst } from "../../../src/composables/motion/useCelebrationBurst";
+import { useCelebrationBurst } from "@glass/composables/motion/useCelebrationBurst";
 import { mountComposable } from "../../utils/mountComposable";
 
 function installMatchMedia(reduced: boolean): void {

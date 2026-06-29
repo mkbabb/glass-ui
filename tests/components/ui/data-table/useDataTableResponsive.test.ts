@@ -1,8 +1,8 @@
 import { ref } from "vue";
 import { describe, expect, it } from "vitest";
 
-import { useDataTableResponsive } from "../../../../src/components/ui/data-table/composables/useDataTableResponsive";
-import type { DataTableColumn } from "../../../../src/components/ui/data-table/types";
+import { useDataTableResponsive } from "@glass/components/ui/data-table/composables/useDataTableResponsive";
+import type { DataTableColumn } from "@glass/components/ui/data-table/types";
 
 interface Row {
     name: string;

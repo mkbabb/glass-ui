@@ -6,27 +6,27 @@ import {
     SheetDescription,
     SheetHeader,
     SheetTitle,
-} from "../../src/components/ui/sheet";
-import { Slider } from "../../src/components/ui/slider";
-import { Switch } from "../../src/components/ui/switch";
+} from "@glass/components/ui/sheet";
+import { Slider } from "@glass/components/ui/slider";
+import { Switch } from "@glass/components/ui/switch";
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from "../../src/components/ui/select";
-import { Label } from "../../src/components/ui/label";
-import { Button } from "../../src/components/ui/button";
+} from "@glass/components/ui/select";
+import { Label } from "@glass/components/ui/label";
+import { Button } from "@glass/components/ui/button";
 import {
     SegmentedTabs,
     type SegmentedTabOption,
-} from "../../src/components/custom/tabs";
+} from "@glass/components/custom/tabs";
 import {
     ConfiguratorLayer,
     ConfiguratorRow,
-} from "../../src/components/custom/configurator";
-import { DarkModeToggle } from "../../src/components/custom/controls";
+} from "@glass/components/custom/configurator";
+import { DarkModeToggle } from "@glass/components/custom/controls";
 import { PRESETS } from "../presets/manifest";
 import {
     FONT_OPTIONS,

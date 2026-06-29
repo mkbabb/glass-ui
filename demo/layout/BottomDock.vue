@@ -30,7 +30,7 @@ import {
     GlassDock,
     type DockSectionDescriptor,
     type DockStackItem,
-} from "../../src/components/custom/dock";
+} from "@glass/components/custom/dock";
 import {
     Sheet,
     SheetContent,
@@ -38,14 +38,14 @@ import {
     SheetHeader,
     SheetTitle,
     SheetTrigger,
-} from "../../src/components/ui/sheet";
+} from "@glass/components/ui/sheet";
 import {
     Tooltip,
     TooltipContent,
     TooltipProvider,
     TooltipTrigger,
-} from "../../src/components/ui/tooltip";
-import { FadingScroll } from "../../src/components/custom/fading-scroll";
+} from "@glass/components/ui/tooltip";
+import { FadingScroll } from "@glass/components/custom/fading-scroll";
 import SidebarDock from "./SidebarDock.vue";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
 import { useContextualDockLayers } from "../composables/useContextualDockLayers";

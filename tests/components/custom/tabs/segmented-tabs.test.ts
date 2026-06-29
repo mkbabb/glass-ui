@@ -1,6 +1,6 @@
 import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
-import SegmentedTabs from "../../../../src/components/custom/tabs/SegmentedTabs.vue";
+import SegmentedTabs from "@glass/components/custom/tabs/SegmentedTabs.vue";
 
 // AX.W53 — the unified SegmentedTabs replaced BouncyToggle/BouncyTabs/UnderlineTabs +
 // ResponsiveTabs. v-model round-trip across the variant axis (segmented default = group/

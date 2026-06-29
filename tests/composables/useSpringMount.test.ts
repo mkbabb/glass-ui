@@ -10,7 +10,7 @@
 import { defineComponent, h, nextTick, ref } from "vue";
 import { mount as vueMount } from "@vue/test-utils";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { useSpringMount, type SpringMountRef } from "../../src/composables/motion";
+import { useSpringMount, type SpringMountRef } from "@glass/composables/motion";
 
 function mountHost(opts: {
     initialOpen?: boolean;

@@ -20,7 +20,7 @@ import DockExampleTile from "../DockExampleTile.vue";
 import {
     useDockFission,
     DOCK_SPLIT_SIGNATURES,
-} from "../../../../src/components/custom/dock/composables";
+} from "@glass/components/custom/dock/composables";
 
 const hostRef = ref<HTMLElement | null>(null);
 const leftPieceRef = ref<HTMLElement | null>(null);

@@ -1,25 +1,25 @@
 <script setup lang="ts">
 import { computed, ref, toRef } from "vue";
 import { Plus, Sparkles } from "@lucide/vue";
-import { Button } from "../../../../src/components/ui/button";
-import { ToggleGroup, ToggleGroupItem } from "../../../../src/components/ui/toggle-group";
+import { Button } from "@glass/components/ui/button";
+import { ToggleGroup, ToggleGroupItem } from "@glass/components/ui/toggle-group";
 import {
     LabeledField,
     LabeledSelect,
     LabeledSlider,
-} from "../../../../src/components/custom/labeled-field";
-import { SortableList, SortableItem } from "../../../../src/components/custom/sortable-list";
-import { ColorSwatch } from "../../../../src/components/custom/color-swatch";
+} from "@glass/components/custom/labeled-field";
+import { SortableList, SortableItem } from "@glass/components/custom/sortable-list";
+import { ColorSwatch } from "@glass/components/custom/color-swatch";
 import type {
     AuroraAtoms,
     AuroraConfig,
     AuroraHarmony,
-} from "../../../../src/components/custom/aurora";
+} from "@glass/components/custom/aurora";
 import {
     MAX_STOPS,
     deriveAurora,
     oklchStopToHex,
-} from "../../../../src/components/custom/aurora";
+} from "@glass/components/custom/aurora";
 import OklchStopRow from "../OklchStopRow.vue";
 import { usePaletteStops } from "../config/usePaletteStops";
 

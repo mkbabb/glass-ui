@@ -17,7 +17,7 @@
 // (or create) the global singleton.
 
 import { reactive } from "vue";
-import { useGlobalDark } from "../../../src/composables/dark";
+import { useGlobalDark } from "@glass/composables/dark";
 import type { PresetId } from "../../presets/manifest";
 import { writeField, writeFontSlot } from "./css-writers";
 import { DEFAULT_CONFIG, FIELD_CSS_VARS, FONT_SLOT_VARS } from "./defaults";

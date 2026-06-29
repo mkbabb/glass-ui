@@ -19,12 +19,12 @@ import { describe, expect, it, vi } from "vitest";
 
 import {
     spectrumStops,
-} from "../../../../src/components/custom/border-progress/composables/useBorderSpectrum";
+} from "@glass/components/custom/border-progress/composables/useBorderSpectrum";
 import {
     walkConcreteSpectrum,
     spectrumAt,
-} from "../../../../src/components/custom/border-progress/composables/spectrum-walk";
-import { BORDER_PROGRESS_DEFAULT_SPECTRUM } from "../../../../src/components/custom/border-progress/constants";
+} from "@glass/components/custom/border-progress/composables/spectrum-walk";
+import { BORDER_PROGRESS_DEFAULT_SPECTRUM } from "@glass/components/custom/border-progress/constants";
 
 const CONCRETE = ["#e11d48", "#4f46e5"] as const; // rose → indigo (the spec anchor set)
 const HEX = /^#[0-9a-f]{6}$/i;

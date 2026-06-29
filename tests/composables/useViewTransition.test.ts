@@ -4,7 +4,7 @@ import {
     startViewTransition,
     supportsRouteTransitions,
     supportsViewTransitions,
-} from "../../src/composables/motion/core";
+} from "@glass/composables/motion/core";
 
 // happy-dom does not implement `document.startViewTransition`; we stub it on
 // the global `document` to exercise the native path and `delete` it to exercise

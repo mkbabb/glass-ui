@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
-import { MetricPill } from "../../../src/components/ui/metric-pill";
-import { GlassDock } from "../../../src/components/custom/dock";
+import { MetricPill } from "@glass/components/ui/metric-pill";
+import { GlassDock } from "@glass/components/custom/dock";
 </script>
 
 <template>

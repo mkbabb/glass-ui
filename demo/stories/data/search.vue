@@ -18,22 +18,22 @@ import {
     fuzzyMatch,
     searchIndex,
     useFuzzySearch,
-} from "../../../src/components/custom/search";
+} from "@glass/components/custom/search";
 import type {
     SearchIndex,
     SearchResult,
     SearchableItem,
-} from "../../../src/components/custom/search";
-import { Badge } from "../../../src/components/ui/badge";
-import { Button } from "../../../src/components/ui/button";
+} from "@glass/components/custom/search";
+import { Badge } from "@glass/components/ui/badge";
+import { Button } from "@glass/components/ui/button";
 import {
     Card,
     CardContent,
     CardDescription,
     CardHeader,
     CardTitle,
-} from "../../../src/components/ui/card";
-import { Input } from "../../../src/components/ui/input";
+} from "@glass/components/ui/card";
+import { Input } from "@glass/components/ui/input";
 
 type SearchStatus = "wired" | "proof" | "consumer" | "triage";
 

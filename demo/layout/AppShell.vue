@@ -8,11 +8,11 @@ import {
     DialogDescription,
     DialogHeader,
     DialogTitle,
-} from "../../src/components/ui/dialog";
-import { PaperBackdrop } from "../../src/components/custom/paper-backdrop";
-import { Button } from "../../src/components/ui/button";
-import { Switch } from "../../src/components/ui/switch";
-import { Card } from "../../src/components/ui/card";
+} from "@glass/components/ui/dialog";
+import { PaperBackdrop } from "@glass/components/custom/paper-backdrop";
+import { Button } from "@glass/components/ui/button";
+import { Switch } from "@glass/components/ui/switch";
+import { Card } from "@glass/components/ui/card";
 import {
     Compass,
     Shapes,
@@ -25,16 +25,16 @@ import {
     DockIconButton,
     GlassDock,
     useDockOrientationMorph,
-} from "../../src/components/custom/dock";
-import { Skeleton } from "../../src/components/ui/skeleton";
-import { useBloomUp } from "../../src/composables/motion/useBloomUp";
-import { startViewTransition } from "../../src/composables/motion/useViewTransition";
+} from "@glass/components/custom/dock";
+import { Skeleton } from "@glass/components/ui/skeleton";
+import { useBloomUp } from "@glass/composables/motion/useBloomUp";
+import { startViewTransition } from "@glass/composables/motion/useViewTransition";
 import {
     formatCombo,
     formatComboParts,
     registerShortcut,
     useRegisteredShortcuts,
-} from "../../src/composables/keyboard";
+} from "@glass/composables/keyboard";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
 import { warmFieldHue } from "../stories/warm-field";
 import { PresetEditor } from "../configurator";

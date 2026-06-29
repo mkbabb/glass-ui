@@ -19,7 +19,7 @@
 // OWN functional aurora (it must, to demonstrate pause/resume on a real renderer) — it
 // is NOT a transparent tile; it self-stages.
 import { computed, ref, useTemplateRef } from "vue";
-import { Aurora, type AuroraConfig } from "../../../src/components/custom/aurora";
+import { Aurora, type AuroraConfig } from "@glass/components/custom/aurora";
 import { PRESETS } from "../aurora/presets";
 
 withDefaults(

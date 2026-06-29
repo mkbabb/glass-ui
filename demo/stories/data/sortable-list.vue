@@ -7,8 +7,8 @@ import {
     SortableItem,
     SortableHandle,
     SORTABLE_CONTEXT,
-} from "../../../src/components/custom/sortable-list";
-import { cn } from "../../../src/utils/cn";
+} from "@glass/components/custom/sortable-list";
+import { cn } from "@glass/utils/cn";
 
 interface Task {
     id: string;

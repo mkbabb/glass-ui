@@ -3,9 +3,9 @@ import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import {
     useConfiguratorState,
     type ConfiguratorPreset,
-} from "../../../src/components/custom/configurator";
-import { registerShortcut } from "../../../src/composables/keyboard";
-import type { AuroraConfig } from "../../../src/components/custom/aurora";
+} from "@glass/components/custom/configurator";
+import { registerShortcut } from "@glass/composables/keyboard";
+import type { AuroraConfig } from "@glass/components/custom/aurora";
 import VizStudio from "./VizStudio.vue";
 import PresetPickerRow from "../aurora/PresetPickerRow.vue";
 import AuroraStage from "../aurora/AuroraStage.vue";

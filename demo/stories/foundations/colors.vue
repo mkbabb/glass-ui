@@ -12,7 +12,7 @@
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
-import { cn } from "../../../src/utils/cn";
+import { cn } from "@glass/utils/cn";
 
 // Core surface/semantic roles exposed as Tailwind utilities via @theme.
 const core: { name: string; cssVar: string; utility: string }[] = [

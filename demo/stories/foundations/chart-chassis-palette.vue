@@ -10,7 +10,7 @@ import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
 import TokenLadder from "../TokenLadder.vue";
 import type { TokenLadderRow } from "../TokenLadder.vue";
-import { InstrumentChassis } from "../../../src/components/custom/instrument-chassis";
+import { InstrumentChassis } from "@glass/components/custom/instrument-chassis";
 
 const chartAliases: TokenLadderRow[] = [
     { cls: "bg-[var(--chart-ping)]", label: "--chart-ping", hint: "viz-fourier basis" },

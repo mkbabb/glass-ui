@@ -13,7 +13,7 @@
 // is the software-raster GUARD; on a hardware GPU `"auto"` always arms `"webgl"`.
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { resolveRenderMode } from "../../../../src/components/custom/aurora/constants/renderMode";
+import { resolveRenderMode } from "@glass/components/custom/aurora/constants/renderMode";
 
 const UNMASKED = 0x9246;
 

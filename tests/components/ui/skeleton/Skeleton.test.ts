@@ -1,7 +1,7 @@
 import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
 
-import { Skeleton } from "../../../../src/components/ui/skeleton/index";
+import { Skeleton } from "@glass/components/ui/skeleton/index";
 
 describe("Skeleton", () => {
     it("renders with the pulse variant by default (animate-pulse class)", () => {

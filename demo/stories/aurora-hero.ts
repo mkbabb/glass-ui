@@ -19,9 +19,9 @@
 // static radial on every device. One live GL context per mounted route only
 // (the demo router mounts ONE story page at a time — within the WebGL budget).
 
-import type { AuroraConfig } from "../../src/components/custom/aurora";
-import { DEFAULT_AURORA_CONFIG } from "../../src/components/custom/aurora";
-import { cssToOklch } from "../../src/composables/color";
+import type { AuroraConfig } from "@glass/components/custom/aurora";
+import { DEFAULT_AURORA_CONFIG } from "@glass/components/custom/aurora";
+import { cssToOklch } from "@glass/composables/color";
 
 /** A painterly hero stop mirroring a `--section-color-*` brand hue, lifted to
  *  a pastel-wash L/C the static radial blooms used. */

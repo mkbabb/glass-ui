@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { ref, computed } from "vue";
-import { GlassTimeline } from "../../../src/components/custom/timeline";
+import { GlassTimeline } from "@glass/components/custom/timeline";
 import type {
     TimelineSegment,
     TimelineSegmentGradient,
-} from "../../../src/components/custom/timeline";
-import { cn } from "../../../src/utils/cn";
+} from "@glass/components/custom/timeline";
+import { cn } from "@glass/utils/cn";
 
 /**
  * Segmented variant — adjacent gradient bands with boundary dots that emit

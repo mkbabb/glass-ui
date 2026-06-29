@@ -35,7 +35,7 @@
 //     chassis's; this never renders a 2nd <h1> or in-card eyebrow — the
 //     double-header dies by construction, consuming BD.W-PAGE-CHASSIS).
 import { computed } from "vue";
-import { Card } from "../../../src/components/ui/card";
+import { Card } from "@glass/components/ui/card";
 import StorySection from "../StorySection.vue";
 
 export type DemoVariant =

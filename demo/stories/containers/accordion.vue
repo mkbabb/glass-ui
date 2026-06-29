@@ -6,8 +6,8 @@ import {
     AccordionContent,
     AccordionItem,
     AccordionTrigger,
-} from "../../../src/components/ui/accordion";
-import { IconChip } from "../../../src/components/custom/icon-chip";
+} from "@glass/components/ui/accordion";
+import { IconChip } from "@glass/components/custom/icon-chip";
 import { ChevronsDownUp } from "@lucide/vue";
 
 // BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2

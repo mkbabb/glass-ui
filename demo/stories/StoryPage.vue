@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { cn } from "../../src/utils/cn";
-import { TooltipProvider } from "../../src/components/ui/tooltip";
+import { cn } from "@glass/utils/cn";
+import { TooltipProvider } from "@glass/components/ui/tooltip";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
 import StoryHero from "./StoryHero.vue";
 import StoryHeader from "./StoryHeader.vue";

@@ -19,9 +19,9 @@
 // content}; this wave delivers the card SHELL + the budget-safe preview seam.
 //
 // A demo-private chassis primitive — NOT a library export.
-import { cn } from "../../src/utils/cn";
-import { IconChip } from "../../src/components/custom/icon-chip";
-import type { IconChipIcon } from "../../src/components/custom/icon-chip";
+import { cn } from "@glass/utils/cn";
+import { IconChip } from "@glass/components/custom/icon-chip";
+import type { IconChipIcon } from "@glass/components/custom/icon-chip";
 
 interface SectionPreviewCardProps {
     /** The target route — the card navigates here on click. */

@@ -7,8 +7,8 @@
 // only `seed` ⇒ a different but same-character grain.
 
 import { describe, expect, it } from "vitest";
-import { BRUSHES } from "../../../../src/components/custom/handmark/brush";
-import { grainFilter } from "../../../../src/components/custom/handmark/texture";
+import { BRUSHES } from "@glass/components/custom/handmark/brush";
+import { grainFilter } from "@glass/components/custom/handmark/texture";
 
 describe("D6.a texture — the static seeded grain filter", () => {
     it("emits the 5-stage feTurbulence graph for the crayon (the proven recipe)", () => {

@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { usePointerVelocityField } from "../../../src/composables/motion/usePointerVelocityField";
+import { usePointerVelocityField } from "@glass/composables/motion/usePointerVelocityField";
 import { mountComposable } from "../../utils/mountComposable";
 
 // usePointerVelocityField is a PUSH-API physics model: the renderer feeds it

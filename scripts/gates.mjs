@@ -368,6 +368,12 @@ export const GATES = [
         note: "AY.W-COLOCATE — the feature-dir colocation convention over every README-bearing complex feature-dir (DERIVED, currently aurora/constellation/dock/fourier-field/goo-blob/handmark/tabs): composables under composables/, magic-number/config consts in constants.ts, shaders/skeletons co-located, README present, + the design-idioms home doc. Bite: move a composable to the package root, delete a constants.ts, inline a magic-number, or delete a target README → RED",
     },
     {
+        id: "proof:alias-codemod",
+        cmd: "proof:alias-codemod",
+        tags: ["local", "ci", "release"],
+        note: "BH.B2.0 — the @glass source-alias depth-decouple lock. Asserts the 3-plane @glass alias is wired (tsconfig paths + vite resolve.alias + vitest resolve.alias) AND zero deep-relative (../)+src/ import/export SPECIFIERS survive in demo/ + tests/ (719 rewrites; fs-path literals stay relative by construction). Born-RED on HEAD (alias absent + 719 specifiers) -> GREEN after the codemod. Self-test bite: the SPECIFIER detector must flag a synthetic deep-relative src import and must NOT flag an fs-path literal / already-aliased / non-src relative import. Bite: re-introduce a ../src/ import in demo or tests, or drop a plane's alias -> RED.",
+    },
+    {
         id: "proof:claude-structure-sync",
         cmd: "proof:claude-structure-sync",
         tags: ["local", "ci"],
