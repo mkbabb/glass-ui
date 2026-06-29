@@ -75,3 +75,13 @@ wf_997d0cce-69f  resume  2026-06-29 06:49:06  BATCH-2 engine (cut from 3; integr
 ## 09:19 WS1-core 2.2-2.5 COMPLETE (274a2a6e/c6f44d95/825d4125/3f200f1d, ~36min one builder). 2.4 DONE, 2.2/2.3/2.5 PAINT-PENDING. Builder ran 36min uninterrupted — walls are VARIABLE (not strict 15min). Next: 2.6 HERO-FIT + 2.7 VT-enhance, then WS1 paint-verify (2.1/2.2/2.3/2.5/2.6).
 ## 09:52 WS1 BUILD COMPLETE (2.1-2.6; 2.7 VT-enhance deferred-PENDING by design). 5 PAINT-PENDING (2.1/2.2/2.3/2.5/2.6) → WS1 paint-verify pass NOW (first C-SAFARI exercise). FOLLOW-UP owed: proof:storybook-meta m9c red = 2.1 removed AppShell's Card import (shell-dogfood) → re-point in WS3 builder (AppShell dogfoods GlassDock/etc post-route-freeze, not Card).
 ## 10:09 LIMIT RESET — re-deploy via workflows (ultracode). (1) VALIDATION workflow wf_932df466-769 LIVE: audit all 21 completed waves (battery + per-wave spec-match + clobber) — done-properly + no-clobbering. (2) BUILD-FORWARD engine PREPARED (decoupled paint: batch-3, in-cycle paint-judge retired, PAINT-PENDING stays out of build frontier) — launches FRESH after validation clears. (3) PAINT workflow (C-SAFARI dual-engine) is the separate pass. Sequential (≤3 concurrency per the batches-of-3 directive): validate→build→paint.
+
+## 2026-06-29 11:27 VALIDATION + FIX-WAVE COMPLETE → BUILD LAUNCHED.
+# Validation wf_932df466-769: core library GREEN, 23/24 waves proper, 12 realDefect gate reds + 1 clobber (no
+#   broken deliverable). VALIDATION-REPORT.md committed.
+# SYNTH fix-wave ea4682c0 (+ precepts submodule 44961f0): 3 parallel file-disjoint fix-agents remediated all 12
+#   (clusters A-F) GREEN. gen-ci resynced ci.yml (314 gates). Foundation cleared.
+# BUILD-FORWARD wf_cb4ff3c8-5ce LAUNCHED (decoupled batch-3): WS3→WS12 + BH device-free → [paint-pending].
+# OWED AT CUT: `git -C docs/precepts push` the precepts commit 44961f0 (the glass-ui submodule pointer
+#   references it; unpushed → would dangle for fresh clones of the 5.0.0 tag). User-authorized push.
+# PLAN: paint checkpoint after the first build band (validate C-SAFARI early via bg-paint.wf.js), then resume.
