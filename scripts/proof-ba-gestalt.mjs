@@ -61,6 +61,12 @@ import {
     pngRegionDelta,
     regionStatsDelta,
 } from "./reflect-capture-verify.mjs";
+// BG.W-GESTALT-ROSTER-RE-POINT — the routeSeeds HARD-RED arm. The roster's `routes`
+// cells are DERIVED-resolved against the real demo route files (`surface-closure.mjs`);
+// a 2-segment `/cat/story` token whose SFC is absent on disk is a `[ROUTE-RESOLVES]`
+// HARD-RED here. This is NOT a closure-emptiness guard (SHELL_SEED always makes the
+// closure non-empty) — it is route RESOLUTION at the gate boundary.
+import { routeSeeds } from "./lib/surface-closure.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const COMMAND = "npm run proof:ba-gestalt";
@@ -467,7 +473,8 @@ function detect() {
     }
     facts.rosterPresent = true;
 
-    const parsed = parseRoster(readFileSync(ROSTER, "utf8"));
+    const rosterSource = readFileSync(ROSTER, "utf8");
+    const parsed = parseRoster(rosterSource);
     const header = parsed.find((r) => r.__header)?.__header;
     const malformed = parsed.filter((r) => r.__malformed);
     const data = parsed.filter((r) => !r.__header && !r.__malformed);
@@ -488,11 +495,25 @@ function detect() {
         );
 
     // ── COMPLETENESS PURGED (BG.W-PAINT-IS-THE-GATE) ─────────────────────────────
-    // No hardcoded REQUIRED_SURFACES set. The DERIVED-from-route-files completeness
-    // (surface-closure.mjs routeSeeds) is BG.W-GESTALT-ROSTER-RE-POINT's. This gate
-    // reads + pixel-reads whatever the BG roster declares.
+    // No hardcoded REQUIRED_SURFACES set. This gate reads + pixel-reads whatever the
+    // BG roster declares.
     const present = new Set(data.map((r) => r.surface));
     facts.surfaces = [...present];
+
+    // ── [ROUTE-RESOLVES] — the routeSeeds HARD-RED arm (BG.W-GESTALT-ROSTER-RE-POINT)
+    // The roster's surface-paths are DERIVED, not hand-listed: every `routes` cell's
+    // 2-segment `/cat/story` token must resolve to a real demo SFC. A token whose SFC
+    // is ABSENT on disk is a HARD-RED — a typo'd story slug silently vanishing from the
+    // watched surface is the exact class this closes. A 1-segment `/cat` resolves the
+    // generic SectionLanding; free prose (the shell / cross-repo rows) yields no token.
+    const rs = routeSeeds(rosterSource, { root: ROOT });
+    facts.routeTokens = rs.tokens.length;
+    facts.routeSeeds = rs.seeds.length;
+    facts.routeHardReds = rs.hardReds;
+    for (const hr of rs.hardReds)
+        violations.push(
+            `[ROUTE-RESOLVES] the roster declares route ${hr.token} but its demo SFC ${hr.expected} does NOT exist on disk — a typo'd 2-segment story slug cannot silently vanish from the watched surface (surface-closure.mjs routeSeeds); fix the slug or land the SFC`,
+        );
 
     // ── per-row checks ──────────────────────────────────────────────────────────
     const surfaceVerdicts = {};
@@ -799,6 +820,34 @@ function selfTest() {
                     ? "flagged"
                     : null,
         },
+        {
+            // BG.W-GESTALT-ROSTER-RE-POINT — the routeSeeds HARD-RED RED-witness: a
+            // 2-segment `/dock/typoo` route token whose `demo/stories/dock/typoo.vue` is
+            // ABSENT on disk produces a HARD-RED (the `[ROUTE-RESOLVES]` arm flags it).
+            label: "[ROUTE-RESOLVES] HARD-RED — a routes cell `/dock/typoo` (no demo/stories/dock/typoo.vue) produces a route HARD-RED",
+            flag: (() => {
+                const synthetic =
+                    "| surface | routes | capture-light | capture-dark | probe | expect | verdict | ground-anchor |\n" +
+                    "|---|---|---|---|---|---|---|---|\n" +
+                    "| t | /dock/typoo | a | b | x=0,y=0,w=1,h=1 | meanL=0..1 | FAIL | g |\n";
+                const r = routeSeeds(synthetic, { root: ROOT });
+                return r.hardReds.some((h) => h.token === "/dock/typoo") ? "flagged" : null;
+            })(),
+        },
+        {
+            // The GREEN-witness inverse: free prose ("the shell BottomDock") in a routes
+            // cell carries no `/cat/story` slash-pattern, so routeSeeds produces ZERO
+            // tokens + ZERO HARD-REDs — a prose mention never false-REDs the route arm.
+            label: "[ROUTE-RESOLVES] prose-GREEN — `the shell BottomDock` (free prose, no /cat/story) produces no route token + no HARD-RED",
+            flag: (() => {
+                const synthetic =
+                    "| surface | routes | capture-light | capture-dark | probe | expect | verdict | ground-anchor |\n" +
+                    "|---|---|---|---|---|---|---|---|\n" +
+                    "| p | the shell BottomDock | a | b | x=0,y=0,w=1,h=1 | meanL=0..1 | FAIL | g |\n";
+                const r = routeSeeds(synthetic, { root: ROOT });
+                return r.tokens.length === 0 && r.hardReds.length === 0 ? "flagged" : null;
+            })(),
+        },
     ];
     const missed = checks.filter((c) => !c.flag).map((c) => c.label);
     if (missed.length) {
@@ -828,10 +877,11 @@ function run() {
 
     console.log("proof:ba-gestalt — the PIXEL-reading, ci-blocking gestalt close oracle (BG.W-PAINT-IS-THE-GATE; reads LIVE BG paint, defect-localizing)");
     console.log(`  roster ledger        : ${facts.rosterPresent ? relative(ROOT, ROSTER) : "ABSENT (born-RED ground-freeze — the BG roster + Metal captures land via the non-authoring capture agent)"}`);
-    console.log(`  self-test (bite proof): OK — ${facts.selfTestChecks ?? 0} synthetic checks flagged (G5 grey-RED + warm-GREEN, D2-METALLIC ceiling, content-rainbow-no-false-RED, D5-TOP-BAR topDelta RED/clean + probe-discipline + re-shot-broken, G7 auto-revoke, G8 negation-pair i/i′/ii/iii/iv)`);
+    console.log(`  self-test (bite proof): OK — ${facts.selfTestChecks ?? 0} synthetic checks flagged (G5 grey-RED + warm-GREEN, D2-METALLIC ceiling, content-rainbow-no-false-RED, D5-TOP-BAR topDelta RED/clean + probe-discipline + re-shot-broken, G7 auto-revoke, G8 negation-pair i/i′/ii/iii/iv, ROUTE-RESOLVES /dock/typoo-RED + prose-GREEN)`);
     console.log(`  G8 no-terminal-reflect: ${facts.g8FilesScanned ?? 0} files scanned — ${(facts.g8Hits ?? []).length ? (facts.g8Hits.length + " DEFERRAL HIT(S)") : "clean (the corpus RETIRES the deferral)"}`);
     if (facts.rosterPresent) {
         console.log(`  surfaces present     : ${(facts.surfaces ?? []).length} (${(facts.surfaces ?? []).join(", ")})`);
+        console.log(`  route-resolution arm : ${facts.routeTokens ?? 0} tokens → ${facts.routeSeeds ?? 0} seeds — ${(facts.routeHardReds ?? []).length ? (facts.routeHardReds.length + " HARD-RED(S): " + facts.routeHardReds.map((h) => h.token).join(", ")) : "GREEN (every /cat/story route resolves to a real demo SFC)"}`);
         console.log(`  verdicts             : ${facts.passCount ?? 0} PASS / ${facts.failCount ?? 0} FAIL`);
         if (facts.verdicts)
             for (const [s, v] of Object.entries(facts.verdicts)) {
