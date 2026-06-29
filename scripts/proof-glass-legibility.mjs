@@ -266,37 +266,62 @@ export function detectDiseaseRoot() {
     return { facts, violations };
 }
 
-// ── L3 — the button glass-morphism lifted + measured ──────────────────────────────────────
+// ── L3 — the button glass-morphism is the UNIFIED RESTING PEER ──────────────────────────────
+// BG.W-GLASS-BLUR-PEER demoted the glass button OFF the floating-tier "more glass" register
+// onto the ONE unified 8px material: `--glass-blur-btn` is now an ALIAS of
+// `--glass-blur-resting`, so the calm glass button reads the SAME radius leg the dock, the
+// default-Card, and the menu-row read (the resolved-radius peer lock, proof:glass-cal). L3
+// is ALIAS-FOLLOWING + asserts the button reads a CALM CONTENT-TIER peer (resting/quiet,
+// 8-10px band) — REAL glass, NOT the sub-perceptual wash 1px tile AND NOT a per-button
+// divergent floating/deep slab. The MORE-glass register now lives on the HERO deep tier only
+// (`.btn-glass.glass-deep` → `--glass-blur-deep`, measured by L4 / proof:glass-depth). The
+// button still CONCENTRATES light (saturate ≥ 1.18 — resting's 1.4 clears it).
+function followBlurAlias(glass, value, depth = 0) {
+    if (depth > 4) return value;
+    const alias = value.match(/^var\(\s*--(glass-blur-[a-z]+)\s*\)$/);
+    if (!alias) return value;
+    const m = glass.match(new RegExp(`--${alias[1]}:\\s*([^;]+);`));
+    return m ? followBlurAlias(glass, m[1].trim(), depth + 1) : value;
+}
+
 export function detectButtonGlass({ glassOverride } = {}) {
     const violations = [];
     const facts = {};
     const glass = stripCss(glassOverride ?? readFile("src/styles/tokens/glass.css"));
     const m = glass.match(/--glass-blur-btn:\s*([^;]+);/);
-    const value = m ? m[1].trim() : null;
-    facts.btn = value;
-    if (!value) {
+    const rawValue = m ? m[1].trim() : null;
+    facts.btn = rawValue;
+    if (!rawValue) {
         violations.push("L3: --glass-blur-btn not found in tokens/glass.css");
         return { facts, violations };
     }
+    // ALIAS-FOLLOW the btn token to its resolved composite (`--glass-blur-btn` →
+    // `--glass-blur-resting`), then read the radius tier + saturate off the composite.
+    const value = followBlurAlias(glass, rawValue);
+    facts.btnResolved = value;
     // the blur radius the btn composes (it reads --glass-blur-{tier}-radius × --glass-level).
     const radTok = value.match(/--glass-blur-(\w+)-radius/);
     const radTier = radTok ? radTok[1] : null;
     const radPx = radTier ? Number((glass.match(new RegExp(`--glass-blur-${radTier}-radius:\\s*([\\d.]+)px`)) ?? [])[1]) : null;
     facts.btnRadiusTier = radTier;
     facts.btnRadiusPx = radPx;
-    if (radPx == null || !(radPx >= 10)) {
-        violations.push(`L3: --glass-blur-btn composes the ${radTier}-tier radius (${radPx}px) — below the 10px floating-tier "more glass" floor (born-RED on the 8px quiet HEAD)`);
+    // The unified peer: a CALM CONTENT tier (resting | quiet) in the 8-10px band — real glass,
+    // the dock/Card/menu-row material. A wash (1px) tile reds (sub-perceptual); a floating/deep
+    // per-button slab reds (the un-collapsed BC state — more-glass is the hero deep tier only).
+    const isPeerTier = radTier === "resting" || radTier === "quiet";
+    if (radPx == null || !isPeerTier || !(radPx >= 8 && radPx <= 10)) {
+        violations.push(`L3: --glass-blur-btn resolves the ${radTier}-tier radius (${radPx}px) — not the unified 8px content-tier resting/quiet peer (real glass, the dock·Card·menu-row material; a wash 1px tile or a per-button floating/deep slab reds)`);
     }
     // the saturate the btn reads (the named --glass-saturate-{tier} knob, L7-threaded).
     const satTok = value.match(/saturate\(var\(--glass-saturate-(\w+)\)\)/);
     const satTier = satTok ? satTok[1] : null;
     const satVal = satTier ? Number((glass.match(new RegExp(`--glass-saturate-${satTier}:\\s*([\\d.]+)`)) ?? [])[1]) : null;
-    // tolerate a baked literal too (a future re-bake), but the floating "more glass" is the bar.
+    // tolerate a baked literal too (a future re-bake); the concentrate-light floor stays 1.18.
     const bakedSat = value.match(/saturate\(([\d.]+)\)/);
     const resolvedSat = satVal ?? (bakedSat ? Number(bakedSat[1]) : null);
     facts.btnSaturate = resolvedSat;
     if (resolvedSat == null || !(resolvedSat >= 1.18)) {
-        violations.push(`L3: --glass-blur-btn saturate resolves ${resolvedSat} — below the 1.18 floating-tier "more glass" floor (born-RED on the 1.05 quiet HEAD)`);
+        violations.push(`L3: --glass-blur-btn saturate resolves ${resolvedSat} — below the 1.18 concentrate-light floor (the glass button must still concentrate light)`);
     }
     return { facts, violations };
 }
@@ -423,9 +448,19 @@ export function selfTest() {
     });
     if (!opaqueOverlay.violations.some((v) => /L6/.test(v))) fails.push("self-test L6: a near-opaque (α 0.95) overlay rung did NOT red the simultaneity bound");
 
-    // L3: the 8px/1.05 quiet HEAD button blur reds.
-    const headBtn = detectButtonGlass({ glassOverride: ":root { --glass-blur-quiet-radius: 8px; --glass-blur-btn: blur(calc(var(--glass-blur-quiet-radius) * var(--glass-level))) saturate(1.05) brightness(1.02); }" });
-    if (!headBtn.violations.some((v) => /L3:/.test(v))) fails.push("self-test L3: the 8px/1.05 quiet HEAD button blur did NOT red the more-glass floor");
+    // L3 (BG.W-GLASS-BLUR-PEER): the unified 8px resting-peer button (the alias to
+    // --glass-blur-resting) PASSES — it is the dock/Card/menu-row material.
+    const peerBtn = detectButtonGlass({ glassOverride: ":root { --glass-blur-resting-radius: 8px; --glass-blur-resting: blur(calc(var(--glass-blur-resting-radius) * var(--glass-level))) saturate(var(--glass-saturate-resting)); --glass-saturate-resting: 1.4; --glass-blur-btn: var(--glass-blur-resting); }" });
+    if (peerBtn.violations.some((v) => /L3:/.test(v))) fails.push(`self-test L3: the unified 8px resting-peer button (alias) unexpectedly RED (${peerBtn.violations.filter((v) => /L3:/.test(v)).join("; ")})`);
+    // L3: a sub-perceptual WASH 1px tile button reds (it is not real glass / not the peer).
+    const washBtn = detectButtonGlass({ glassOverride: ":root { --glass-blur-wash-radius: 1px; --glass-blur-wash: blur(calc(var(--glass-blur-wash-radius) * var(--glass-level))) saturate(1.4); --glass-blur-btn: var(--glass-blur-wash); }" });
+    if (!washBtn.violations.some((v) => /L3:/.test(v))) fails.push("self-test L3: a wash 1px tile button did NOT red the real-glass content-tier peer floor");
+    // L3: the un-collapsed BC floating-tier (13px) per-button slab reds (more-glass is the hero deep tier only).
+    const floatingBtn = detectButtonGlass({ glassOverride: ":root { --glass-blur-floating-radius: 13px; --glass-blur-floating: blur(calc(var(--glass-blur-floating-radius) * var(--glass-level))) saturate(1.6); --glass-blur-btn: blur(calc(var(--glass-blur-floating-radius) * var(--glass-level))) saturate(1.6) brightness(1.02); }" });
+    if (!floatingBtn.violations.some((v) => /L3:/.test(v))) fails.push("self-test L3: the un-collapsed floating-tier (13px) per-button slab did NOT red the unified-peer floor");
+    // L3: a content-tier 8px button with a too-low saturate reds the concentrate-light floor.
+    const lowSatBtn = detectButtonGlass({ glassOverride: ":root { --glass-blur-resting-radius: 8px; --glass-blur-resting: blur(calc(var(--glass-blur-resting-radius) * var(--glass-level))) saturate(var(--glass-saturate-resting)); --glass-saturate-resting: 1.05; --glass-blur-btn: var(--glass-blur-resting); }" });
+    if (!lowSatBtn.violations.some((v) => /saturate/.test(v))) fails.push("self-test L3: a 1.05-saturate button did NOT red the concentrate-light floor");
 
     // L4: a silent 16px-stay with NO budget booking reds.
     const silentDeep = detectDeepBudget({ deepOverride: ":root { --glass-blur-deep-radius: 16px; --glass-saturate-deep: 1.5; --glass-saturate-deep-ceiling: 1.8; }" });
@@ -495,7 +530,7 @@ function run() {
     console.log(`  L1/L2 calm  : ${Object.entries(facts.roster.calm).map(([k, v]) => `${k}=${v.ratio}:1/α${v.alpha}${v.pass ? "✓" : "✗"}`).join(" ")}`);
     console.log(`  L1/L2 bright: ${Object.entries(facts.roster.bright).map(([k, v]) => `${k}=${v.ratio}:1/α${v.alpha}${v.pass ? "✓" : "✗"}`).join(" ")}`);
     console.log(`  disease-root: grey ${facts.disease.greySlab?.pass ? "PASSED ✗" : "REDs ✓"}  opaque ${facts.disease.nearOpaque?.pass ? "PASSED ✗" : "REDs ✓"}  thin ${facts.disease.thinPlate?.pass ? "PASSED ✗" : "REDs ✓"}`);
-    console.log(`  L3 button   : ${facts.button.btnRadiusPx}px / saturate ${facts.button.btnSaturate} (≥10px/≥1.18)`);
+    console.log(`  L3 button   : ${facts.button.btnRadiusPx}px (${facts.button.btnRadiusTier} peer) / saturate ${facts.button.btnSaturate} (8px content-tier peer / ≥1.18)`);
     console.log(`  L4 deep     : ${facts.deep.deepRadiusPx}px / sat ${facts.deep.deepSaturate} (ceiling ${facts.deep.deepSaturateCeiling}) — ${facts.deep.budgetCall}`);
     console.log(`  L5 specular : ${facts.specular.specularOpacity} (band [0.2, 0.5])`);
     console.log(`  L7 per-rung : ${Object.entries(facts.perRung.minted).map(([k, v]) => `${k}=${v}${facts.perRung.readThrough[k] ? "→" : "✗"}`).join(" ")} (≤${facts.perRung.ceiling})`);

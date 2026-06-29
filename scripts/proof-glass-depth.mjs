@@ -63,12 +63,17 @@ const APPLE_BAND = { min: 14, max: 20 };
 // The deep saturate must stay STRICTLY above the lifted calm floating (1.6), ≤ ceiling 1.8.
 const DEEP_SATURATE_FLOOR = 1.6;
 
-// The W-GLASS-CAL frozen base radius primitives — D3 asserts each is byte-unchanged
-// (a deep mint that edits a base primitive to "reach Apple" REVERTS the user call).
+// The W-GLASS-CAL frozen base radius primitives — D3 asserts each is the calm-ladder
+// value (a deep mint that edits a base primitive to "reach Apple" REVERTS the user call;
+// the calm default must NOT be un-dialed by the deep tier). BG.W-GLASS-BLUR-PEER pulled
+// the resting rung 10→8 to mint the ONE unified 8px material (dock·button·default-Card·
+// menu-row resolve the SAME radius leg, proof:glass-cal) — the deep tier still NEVER reads
+// these (it is a separate --glass-blur-deep-* family), so the calm-vs-deep fence holds;
+// this row tracks the calm ladder, not a "reach-Apple" un-dial.
 const FROZEN_BASE_RADII = {
     "glass-blur-wash-radius": 1,
     "glass-blur-quiet-radius": 8,
-    "glass-blur-resting-radius": 10,
+    "glass-blur-resting-radius": 8,
     "glass-blur-floating-radius": 13,
     "glass-blur-overlay-radius": 13,
     "glass-blur-dock-radius": 9,

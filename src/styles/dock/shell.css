@@ -14,7 +14,19 @@
 
 @layer components {
     .glass-dock {
-        --dock-surface-blur: var(--glass-blur-dock, var(--glass-blur-wash));
+        /* BG.W-GLASS-BLUR-PEER — the dock's backdrop re-points onto the SHARED
+           `--glass-blur-resting` (the unified 8px material), so the dock reads the
+           SAME `blur(8px)` RADIUS LEG as the glass button (`.btn-glass`), the
+           default-Card, and the menu-row — ONE liquid-glass material (the
+           resolved-radius peer lock, proof:glass-cal). `--glass-blur-resting`
+           carries a `saturate()` companion (it concentrates light like every
+           other tier — the flat-slab gray-read root stays closed, proof:no-gray
+           dock witnesses follow this source), and it composes `--glass-level` so
+           the `prefers-reduced-transparency` → `--glass-level: 0` a11y bracket
+           firms the dock to `blur(0)` unchanged. The `--glass-blur-dock` tier
+           identity stays defined (its dark-arm pair + the gate's B3 shape assert);
+           the dock simply reads the peer instead of its own rung. */
+        --dock-surface-blur: var(--glass-blur-resting);
         /* J.W3.C — vertical-rail max-block + horizontal max-inline caps
            live as semantic tokens (defaults in `tokens.css`). When
            content exceeds the cap, the appropriate axis container

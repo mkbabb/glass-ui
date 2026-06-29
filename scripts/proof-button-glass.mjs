@@ -359,33 +359,40 @@ export function detectButtonGlass(sources) {
     const gtok = stripComments(glassTokens);
     const spec = stripComments(buttonGlassSpec);
 
-    // ── BG-IOS-1 — the button blur reads the FLOATING radius register (≥10px / sat ≥1.15) ──
+    // ── BG-IOS-1 — the button blur is the UNIFIED RESTING PEER (8px content material) ──
+    // BG.W-GLASS-BLUR-PEER demoted the glass button OFF the floating-tier "more glass"
+    // register onto the ONE 8px material: `--glass-blur-btn` is now an ALIAS of
+    // `--glass-blur-resting` (the dock·button·default-Card·menu-row peer, the resolved-radius
+    // peer lock in proof:glass-cal). The button reads REAL glass (the resting peer, NOT the
+    // sub-perceptual wash 1px tile AND NOT a per-button floating/deep slab — more-glass is the
+    // HERO deep tier only). ALIAS-FOLLOWING: a re-pin to the wash tile OR a per-button floating
+    // composite REDs.
     facts.bgIos1 = {};
-    // the composed `--glass-blur-btn` token reads the floating radius primitive (NOT the
-    // quiet 8px) + a saturate ≥ 1.15 (the floating saturate knob). A re-pin to the quiet
-    // radius (`--glass-blur-quiet-radius`) REDs.
-    const btnBlurBlock =
-        gtok.match(/--glass-blur-btn:\s*blur\([\s\S]*?;/)?.[0] ?? "";
-    facts.bgIos1.readsFloatingRadius =
-        /--glass-blur-floating-radius\b/.test(btnBlurBlock);
-    facts.bgIos1.notQuietRadius = !/--glass-blur-quiet-radius\b/.test(btnBlurBlock);
-    facts.bgIos1.readsFloatingSaturate =
-        /saturate\(\s*var\(--glass-saturate-floating\)\s*\)/.test(btnBlurBlock);
-    if (
-        !(
-            facts.bgIos1.readsFloatingRadius &&
-            facts.bgIos1.notQuietRadius &&
-            facts.bgIos1.readsFloatingSaturate
-        )
-    ) {
+    const btnDecl = gtok.match(/--glass-blur-btn:\s*([^;]+);/)?.[1]?.trim() ?? "";
+    const btnAlias = btnDecl.match(/^var\(\s*--(glass-blur-[a-z]+)\s*\)$/);
+    const btnTier = btnAlias
+        ? btnAlias[1].replace("glass-blur-", "") // alias → tier name
+        : (btnDecl.match(/--glass-blur-([a-z]+)-radius/)?.[1] ?? null); // composite → tier
+    facts.bgIos1.btnTier = btnTier;
+    // the peer is a CALM CONTENT tier (resting | quiet) = the 8px material; wash 1px tile reds,
+    // a per-button floating/deep slab reds (more-glass lives on the hero deep tier).
+    facts.bgIos1.readsContentPeer = btnTier === "resting" || btnTier === "quiet";
+    // it still concentrates light: the resolved source carries a saturate() companion.
+    const btnResolved = btnAlias
+        ? (gtok.match(new RegExp(`--${btnAlias[1]}:\\s*([^;]+);`))?.[1] ?? "")
+        : btnDecl;
+    facts.bgIos1.concentratesLight = /saturate\(/.test(btnResolved);
+    if (!(facts.bgIos1.readsContentPeer && facts.bgIos1.concentratesLight)) {
         violations.push(
-            "BG-IOS-1: `--glass-blur-btn` must read the FLOATING radius register (`--glass-blur-floating-radius`, 13px ≥ 10px) + `saturate(var(--glass-saturate-floating))` (1.18 ≥ 1.15) — NOT the quiet 8px radius (a re-pin to `--glass-blur-quiet-radius` REDs: the button reads quieter than a content tile)",
+            "BG-IOS-1: `--glass-blur-btn` must resolve the UNIFIED RESTING peer (`--glass-blur-resting`, the 8px dock·button·Card·menu-row material, alias-following) + a saturate() (it still concentrates light) — NOT the wash 1px tile NOR a per-button floating/deep slab (more-glass is the hero deep tier only)",
         );
     }
 
-    // ── BG-IOS-2 — default/primary-audacious compose .glass-deep on the hero register ──
+    // ── BG-IOS-2 — ONLY the hero primary-audacious composes .glass-deep (default demoted) ──
+    // BG.W-GLASS-BLUR-PEER demoted the bare `default` button OFF `.glass-deep` onto the 8px
+    // peer; the maximal iOS deep-glass register is the HERO opt-in only. So `primary-audacious`
+    // MUST carry `.glass-deep` and `default` MUST NOT.
     facts.bgIos2 = {};
-    // the hero CTA arms carry `glass-deep` in their CVA class string.
     const heroArmHasDeep = (arm) => {
         const re = new RegExp(
             `['"\`]?${arm.replace(/[-]/g, "\\$&")}['"\`]?\\s*:\\s*\\n?\\s*['"\`]([^'"\`]*)['"\`]`,
@@ -401,14 +408,19 @@ export function detectButtonGlass(sources) {
         /\.btn-glass\.glass-deep\s*\{[\s\S]*?--glass-blur-btn:\s*var\(--glass-blur-deep\)/.test(
             surf,
         );
-    if (!(facts.bgIos2.defaultDeep && facts.bgIos2.primaryDeep)) {
+    if (!facts.bgIos2.primaryDeep) {
         violations.push(
-            "BG-IOS-2: the hero CTAs (`default` + `primary-audacious`) must compose `.glass-deep` (the maximal iOS deep-glass register) — a flat-quiet hero REDs",
+            "BG-IOS-2: the hero CTA `primary-audacious` must compose `.glass-deep` (the maximal iOS deep-glass register) — a flat-quiet hero REDs",
+        );
+    }
+    if (facts.bgIos2.defaultDeep) {
+        violations.push(
+            "BG-IOS-2: the bare `default` button must NOT compose `.glass-deep` — BG.W-GLASS-BLUR-PEER demoted it onto the unified 8px peer; the deep register is the hero opt-in only (`primary-audacious`/`<Button :liquid>`/an explicit `.glass-deep`)",
         );
     }
     if (!facts.bgIos2.btnDeepArm) {
         violations.push(
-            "BG-IOS-2: surfaces.css must carry the `.btn-glass.glass-deep { --glass-blur-btn: var(--glass-blur-deep) }` arm (re-point the button blur onto the ONE deep axis via the token-substitution model — `.btn-glass` reads `--glass-blur-btn`, not `--glass-blur-floating`, so the bare `.glass-deep` axis would not deepen it)",
+            "BG-IOS-2: surfaces.css must carry the `.btn-glass.glass-deep { --glass-blur-btn: var(--glass-blur-deep) }` arm (the hero deep opt-in re-points the button blur onto the ONE deep axis via the token-substitution model — the calm `--glass-blur-btn` alias keeps this re-point working)",
         );
     }
 
@@ -574,15 +586,38 @@ function run() {
     }
 
     // ── BC.W-BUTTON-GLASS-IOS SELF-TEST BITES — each forbidden form must RED ──
-    // BG-IOS-1: a synthetic quiet-8px re-pin of `--glass-blur-btn` REDs.
+    // BG-IOS-1 (BG.W-GLASS-BLUR-PEER): a synthetic WASH-1px re-pin of `--glass-blur-btn`
+    // REDs (the sub-perceptual tile is not the content-tier peer).
     const ios1Bite = detectButtonGlass({
         ...sources,
         glassTokens: sources.glassTokens.replace(
-            /--glass-blur-btn:\s*blur\([\s\S]*?;/,
-            "--glass-blur-btn: blur(calc(var(--glass-blur-quiet-radius) * var(--glass-level))) saturate(1.05);",
+            /--glass-blur-btn:\s*[^;]+;/,
+            "--glass-blur-btn: var(--glass-blur-wash);",
         ),
     });
     const ios1BiteRed = ios1Bite.violations.some((v) => v.startsWith("BG-IOS-1:"));
+
+    // BG-IOS-1b: a synthetic per-button FLOATING (13px) slab re-pin REDs (the un-collapsed BC
+    // state — more-glass is the hero deep tier only, the calm button stays the 8px peer).
+    const ios1bBite = detectButtonGlass({
+        ...sources,
+        glassTokens: sources.glassTokens.replace(
+            /--glass-blur-btn:\s*[^;]+;/,
+            "--glass-blur-btn: blur(calc(var(--glass-blur-floating-radius) * var(--glass-level))) saturate(var(--glass-saturate-floating)) brightness(1.02);",
+        ),
+    });
+    const ios1bBiteRed = ios1bBite.violations.some((v) => v.startsWith("BG-IOS-1:"));
+
+    // BG-IOS-2: a synthetic `default` arm carrying `glass-deep` REDs (the demoted default must
+    // NOT reach the hero deep register).
+    const ios2Bite = detectButtonGlass({
+        ...sources,
+        buttonIndex: sources.buttonIndex.replace(
+            /default:\s*\n?\s*['"`][^'"`]*['"`]/,
+            "default:\n          'glass-wash btn-glass glass-deep glass-capsule glass-capsule-hover text-foreground'",
+        ),
+    });
+    const ios2BiteRed = ios2Bite.violations.some((v) => v.startsWith("BG-IOS-2:"));
 
     // BG-IOS-4: a synthetic scale-only press (strip the press-drive specular coupling) REDs.
     const ios4Bite = detectButtonGlass({
@@ -612,7 +647,9 @@ function run() {
     const ios6BiteRed = ios6Bite.violations.some((v) => v.startsWith("BG-IOS-6:"));
 
     const iosBiteChecks = [
-        ["BG-IOS-1 quiet-8px re-pin", ios1BiteRed],
+        ["BG-IOS-1 wash-1px tile re-pin", ios1BiteRed],
+        ["BG-IOS-1b floating-13px slab re-pin", ios1bBiteRed],
+        ["BG-IOS-2 default-composes-deep", ios2BiteRed],
         ["BG-IOS-4 scale-only press", ios4BiteRed],
         ["BG-IOS-5 no-interaction-lane", ios5BiteRed],
         ["BG-IOS-6 shadcn-neutral outline re-paste", ios6BiteRed],
@@ -691,16 +728,14 @@ function run() {
     );
     console.log("  ── BC.W-BUTTON-GLASS-IOS (iOS-27 register lift) ──");
     console.log(
-        `  BG-IOS-1 btn blur = floating reg  : ${yn(
-            facts.bgIos1.readsFloatingRadius &&
-                facts.bgIos1.notQuietRadius &&
-                facts.bgIos1.readsFloatingSaturate,
-        )}`,
+        `  BG-IOS-1 btn blur = 8px resting peer: ${yn(
+            facts.bgIos1.readsContentPeer && facts.bgIos1.concentratesLight,
+        )} (tier=${facts.bgIos1.btnTier})`,
     );
     console.log(
-        `  BG-IOS-2 hero CTAs on .glass-deep : ${yn(
-            facts.bgIos2.defaultDeep &&
-                facts.bgIos2.primaryDeep &&
+        `  BG-IOS-2 deep = HERO only (default off): ${yn(
+            facts.bgIos2.primaryDeep &&
+                !facts.bgIos2.defaultDeep &&
                 facts.bgIos2.btnDeepArm,
         )}`,
     );

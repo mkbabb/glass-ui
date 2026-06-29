@@ -65,8 +65,17 @@ export const buttonVariants = cva(
         // capsule's warm fill wins over `.glass-wash`'s background by source order
         // (glass-capsule.css @import-s after material.css). The variant KEY is a public
         // contract — kept; only the class strings collapse. Buttons own NO material.
+        // BG.W-GLASS-BLUR-PEER — the bare `default` button is DEMOTED off `glass-deep`
+        // onto the ONE unified 8px material (dock·button·default-Card·menu-row resolve the
+        // SAME `blur(8px)` resting peer — `.btn-glass` reads `--glass-blur-btn`, now an
+        // alias of `--glass-blur-resting`/8px). The maximal apple.com-nav-grade DEEP
+        // refraction is the HERO register only — `primary-audacious` (and any explicit
+        // `<Button :liquid>`/`glass-deep` opt-in) KEEPS `glass-deep`; the calm default is
+        // ONE glass with the dock + the content card, never a per-button deeper-than-the-
+        // panel slab. The `.btn-glass.glass-deep` arm (surfaces.css) still re-points
+        // `--glass-blur-btn` → `--glass-blur-deep` for the hero (no recipe change).
         default:
-          'glass-wash btn-glass glass-deep glass-capsule glass-capsule-hover text-foreground',
+          'glass-wash btn-glass glass-capsule glass-capsule-hover text-foreground',
         // BA.W-GLASS-CAL (H2a) — the disco RETIRED. `primary-audacious` collapses
         // onto the calm glass-first register: the `glass-wash btn-glass` surface (the
         // real 10px glass blur + the `--glass-specular` edge catch-light gleam from

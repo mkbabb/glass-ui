@@ -71,10 +71,21 @@
        more through the plate while the glass still reads unmistakably as glass.
        The radius axis ONLY: `--glass-level` + every `saturate()`/`brightness()`
        companion below are UNTOUCHED (the W-DARK-MATERIAL dark-recipe saturate/
-       brightness companions preserved — radius-only, the gate's B3 assert). */
+       brightness companions preserved — radius-only, the gate's B3 assert).
+
+       BG.W-GLASS-BLUR-PEER — the resting rung pulls 10→8 to mint the ONE unified
+       8px glass material: the dock + the glass button (`.btn-glass` via the
+       `--glass-blur-btn` alias below) re-point onto `--glass-blur-resting`, and
+       the default-Card (`--glass-blur-quiet`) + the menu-row (the quiet tier) are
+       already 8px, so dock·button·default-Card·menu-row all resolve the SAME
+       `blur(8px)` RADIUS LEG (the resolved-radius peer lock, proof:glass-cal).
+       The MORE-glass DEEP register is the hero CTA only (`.glass-deep` re-points
+       `--glass-blur-btn` → `--glass-blur-deep`). Radius-only — the per-rung
+       saturate()/brightness() companions stay (the saturate-revert is a later
+       WS1-gated paint, not this collapse). */
     --glass-blur-wash-radius:     1px;
     --glass-blur-quiet-radius:    8px;
-    --glass-blur-resting-radius:  10px;
+    --glass-blur-resting-radius:  8px;
     --glass-blur-floating-radius: 13px;
     /* AV.W7 F2 — clamped from 24px into the 8–15px budget band. A blur radius
        past ~20px is exponentially costlier (`backdrop-filter` is glass-ui's most
@@ -157,23 +168,24 @@
         saturate(var(--glass-saturate-dock))
         brightness(1.02);
 
-    /* AX.W52 → BC.W-GLASS-LEGIBILITY-MEASURED — the GLASS BUTTON blur, lifted to
-       the FLOATING-tier "more glass" register. The `glass`/`glass-wash` button
-       variants compose the `.glass-wash` tier (`--glass-blur-wash` = blur(1px)) — a
-       sub-perceptual diffusion authored for a small detail TILE, not a button the
-       user reads as "glass." A button is a hero control: it wants a real glass blur.
-       The AX.W52 landing sat at the quiet-tier 8px/saturate(1.05) — "quieter than
-       even the calm floating tier" (apple-ios27.md §4.2). This wave lifts it to the
-       FLOATING-tier register (apple-ios27.md §5 bake-table "button blur lift to
-       10-13 / 1.18"): the floating radius (13px, in the 10-13 band) + the named
-       `--glass-saturate-floating` knob (1.18) — a genuinely MORE-glass transmissive
-       capsule revealing the craft beneath (the apple-glass SUPERSET: apple.com's web
-       CTA is a SOLID blue capsule, zero blur — research/apple-glass.md §1.4). The
-       `brightness(1.02)` light-concentration the quiet rung carried is KEPT (no
-       colour-juice). Clean break — the old 8px/quiet value is GONE, no alias. The
-       wash TILE tier (MetricCell et al.) keeps its 1px — only the glass BUTTON
-       variants reach for this. Machine-locked by `proof:glass-legibility` L3. */
-    --glass-blur-btn:      blur(calc(var(--glass-blur-floating-radius) * var(--glass-level))) saturate(var(--glass-saturate-floating)) brightness(1.02);
+    /* BG.W-GLASS-BLUR-PEER — the GLASS BUTTON blur is the unified RESTING peer.
+       `--glass-blur-btn` is now a thin ALIAS of `--glass-blur-resting` (the 8px
+       material), so a `.btn-glass` (the `default`/`glass`/`outline`/`secondary`/
+       `accent`/`ai` glass register) reads the SAME `blur(8px)` RADIUS LEG the dock,
+       the default-Card, and the menu-row read — ONE liquid-glass material, not a
+       per-button deeper-than-the-panel slab (the resolved-radius peer lock,
+       proof:glass-cal). The alias is the substitution seam the `.btn-glass.glass-deep`
+       arm (surfaces.css) re-points for the HERO CTA: `--glass-blur-btn:
+       var(--glass-blur-deep)` deepens ONLY the explicit `primary-audacious`/
+       `glass-deep` opt-in to the apple.com-nav-grade DEEP refraction, while the calm
+       glass button stays the 8px peer. Reading through the alias keeps that hero
+       re-point working unchanged (no recipe fork). The wash TILE tier (MetricCell et
+       al.) keeps its 1px. SUPERSEDES the BC.W-GLASS-LEGIBILITY-MEASURED floating-tier
+       "more glass" button — the more-glass register now lives on the hero deep tier
+       only (the `--glass-blur-deep` family). Machine-locked by `proof:glass-cal`
+       (the 8px peer lock) + `proof:glass-legibility` L3 (the button reads the resting
+       peer, alias-following). */
+    --glass-blur-btn:      var(--glass-blur-resting);
 
     /* Dock-specific opacity (0.42) — lighter than `resting` (0.65) so the dock
        reads as a translucent overlay rather than a panel, backdrop bleed

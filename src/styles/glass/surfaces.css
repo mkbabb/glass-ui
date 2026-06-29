@@ -177,13 +177,18 @@
        diffusion authored for a small detail TILE, not a button the user reads
        as "glass" (the live readback found the glass variants at a negligible
        1px). A hero control wants a real glass blur. `.btn-glass` re-points the
-       backdrop at `--glass-blur-btn` (the `quiet`-tier 10px radius + the gentle
-       `saturate(1.05) brightness(1.02)` light-concentration), so the glass
-       button variants actually read as liquid glass while the wash TILE tier
-       keeps its 1px untouched. Declares the UNPREFIXED `backdrop-filter` ONLY —
-       Lightning CSS emits the `-webkit-` companion per the single-source
-       authorship discipline above (hand-authoring both forms makes Lightning
-       dedup-and-keep-prefixed, which modern Chromium then drops). */
+       backdrop at `--glass-blur-btn`, which the token reads through.
+       BG.W-GLASS-BLUR-PEER — `--glass-blur-btn` is now an ALIAS of
+       `--glass-blur-resting` (the unified 8px material), so the calm glass button
+       reads the SAME `blur(8px)` RADIUS LEG the dock, the default-Card, and the
+       menu-row read (ONE liquid-glass material, the resolved-radius peer lock).
+       The `.btn-glass.glass-deep` arm below re-points the SAME `--glass-blur-btn`
+       to `--glass-blur-deep` for the HERO CTA — so reading the alias keeps the
+       hero deep register working unchanged (the more-glass register lives on the
+       deep tier only, no calm-button floating-tier slab). Declares the UNPREFIXED
+       `backdrop-filter` ONLY — Lightning CSS emits the `-webkit-` companion per
+       the single-source authorship discipline above (hand-authoring both forms
+       makes Lightning dedup-and-keep-prefixed, which modern Chromium then drops). */
     .btn-glass {
         backdrop-filter: var(--glass-blur-btn);
 
@@ -214,13 +219,17 @@
        `.glass-deep` axis (which re-points `--glass-blur-floating`) does not deepen a
        button. This arm re-points `--glass-blur-btn` onto the deep family — the SAME
        token-substitution model `.glass-deep` uses (glass/deep.css), composing the ONE
-       deep axis, NOT a new blur recipe. So a `default`/`primary-audacious` hero CTA
-       reads the apple.com-nav-grade thick refractive liquid glass (16px / saturate 1.5
-       family, `--glass-blur-deep`), while the plain content tiers + the quieter
-       `outline`/`secondary`/`accent` glass buttons stay calm at the floating-tier
-       `--glass-blur-btn`. The deep BLUR is budget-FREE (the W-LENSING budget binds the
-       `:liquid` SVG lens, not the deep-blur tier). The a11y `--glass-level:0` brackets
-       reach it for free (the deep blur composes `--glass-level`, the opaque-escape path). */
+       deep axis, NOT a new blur recipe.
+       BG.W-GLASS-BLUR-PEER — the bare `default` button is DEMOTED off `glass-deep`
+       (button/index.ts), so ONLY the explicit hero opt-ins reach this arm:
+       `primary-audacious`, a `<Button :liquid>`, or a host-applied `.glass-deep`. The
+       hero CTA reads the apple.com-nav-grade thick refractive liquid glass
+       (`--glass-blur-deep`, 16px / saturate 1.5 family), while the calm glass button
+       (`default`/`glass`/`outline`/`secondary`/`accent`/`ai`) stays the unified 8px
+       resting peer (`--glass-blur-btn` → `--glass-blur-resting`). The deep BLUR is
+       budget-FREE (the W-LENSING budget binds the `:liquid` SVG lens, not the deep-blur
+       tier). The a11y `--glass-level:0` brackets reach it for free (the deep blur
+       composes `--glass-level`, the opaque-escape path). */
     .btn-glass.glass-deep {
         --glass-blur-btn: var(--glass-blur-deep);
     }

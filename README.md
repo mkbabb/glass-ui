@@ -62,7 +62,7 @@ import { DEFAULT_AURORA_CONFIG, MAX_NUCLEI } from "@mkbabb/glass-ui/api";
     --glass-opacity-resting: 0.82;
     /* the consumer-tunable radius primitive — the composed --glass-blur-resting
        threads --glass-level + saturate, never override it directly */
-    --glass-blur-resting-radius: 10px;
+    --glass-blur-resting-radius: 8px;
 }
 ```
 

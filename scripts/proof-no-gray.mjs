@@ -733,31 +733,44 @@ add(
 
 // ── W-NAV-DOCK-FIX — the dock optical-gray witnesses (3 source arms, NO floor weakened) ─
 // The base --card chroma is met at HEAD (the WARM_PLATE_FLOOR/HUE asserts above pass), so
-// they do NOT catch the dock's OPTICAL gray-slab: the light --glass-blur-dock was blur()
-// ALONE (the only light tier with no saturate companion), so over the flat warm-cream page
-// the un-saturated backdrop-filter pulled the cream toward neutral. These witnesses lock
-// the saturate companion + the readable warm hairline (born-RED on HEAD, GREEN after S1/S2).
-
-// 1. The light --glass-blur-dock carries a saturate() term (the flat-slab root cannot
+// they do NOT catch the dock's OPTICAL gray-slab: an un-saturated backdrop-filter over the
+// flat warm-cream page pulls the cream toward neutral. These witnesses lock the dock's
+// actual blur source to a saturate-bearing tier + the readable warm hairline.
+//
+// BG.W-GLASS-BLUR-PEER — the dock's backdrop re-pointed onto the SHARED --glass-blur-resting
+// (the unified 8px material, the resolved-radius peer lock). The witnesses FOLLOW the
+// re-point: they read the dock's ACTUAL blur source off dock/shell.css's --dock-surface-blur
+// (now --glass-blur-resting), NOT the now-unconsumed --glass-blur-dock tier token, and
+// assert THAT source concentrates light in BOTH modes. The --glass-blur-dock tier identity
+// stays defined (its dark-arm pair); the live dock just reads the peer.
+const dockShell = strip(read("src/styles/dock/shell.css"));
+const dockSurfaceTok =
+    /--dock-surface-blur:\s*var\(\s*--(glass-blur-[a-z]+)\b/.exec(dockShell)?.[1] ?? "glass-blur-dock";
+// 1. The dock's actual blur source carries a saturate() term (the flat-slab root cannot
 //    regress silently back to blur-alone).
 const lightDockBlur =
-    /--glass-blur-dock:\s*([^;]+);/.exec(glassTokens)?.[1] ?? "";
+    new RegExp(`--${dockSurfaceTok}:\\s*([^;]+);`).exec(glassTokens)?.[1] ?? "";
 add(
     "dock-blur-has-saturate-light",
     /saturate\(/.test(lightDockBlur),
-    `the light --glass-blur-dock carries a saturate() companion (the dock concentrates light like every other tier — the flat-slab gray-read root is closed; matched "${lightDockBlur.trim().slice(0, 60)}…")`,
+    `the dock's light backdrop source (--${dockSurfaceTok}) carries a saturate() companion (the dock concentrates light like every other tier — the flat-slab gray-read root is closed; matched "${lightDockBlur.trim().slice(0, 60)}…")`,
 );
 
-// 2. The light dock saturate ≥ 1.2 AND the dark arm carries its own saturate (the §2c
-//    per-mode pair — neither mode regresses to no-saturate).
-const lightDockSatTok =
-    /--glass-saturate-dock:\s*([0-9.]+)/.exec(glassTokens)?.[1];
-const lightDockSat = lightDockSatTok ? Number(lightDockSatTok) : null;
-const darkDockBlurHasSat = /--glass-blur-dock:[^;]*saturate\(/.test(darkArm);
+// 2. The light dock source saturate ≥ 1.2 AND the dark arm source carries its own saturate
+//    (the §2c per-mode pair — neither mode regresses to no-saturate). The saturate term may
+//    be a named --glass-saturate-{tier} knob (resolve it) or a baked literal.
+const lightDockSatNamed = /saturate\(var\(--glass-saturate-([a-z]+)\)\)/.exec(lightDockBlur)?.[1];
+const lightDockSatBaked = /saturate\(([0-9.]+)\)/.exec(lightDockBlur)?.[1];
+const lightDockSat = lightDockSatNamed
+    ? Number(new RegExp(`--glass-saturate-${lightDockSatNamed}:\\s*([0-9.]+)`).exec(glassTokens)?.[1] ?? "0")
+    : lightDockSatBaked
+      ? Number(lightDockSatBaked)
+      : null;
+const darkDockBlurHasSat = new RegExp(`--${dockSurfaceTok}:[^;]*saturate\\(`).test(darkArm);
 add(
     "dock-blur-saturate-lockstep",
     lightDockSat !== null && lightDockSat >= 1.2 && darkDockBlurHasSat,
-    `the light dock saturate = ${lightDockSat ?? "?"} (≥ 1.2) AND the dark arm --glass-blur-dock carries its own saturate (${darkDockBlurHasSat}) — the per-mode pair, neither mode the flat un-saturated slab`,
+    `the light dock source saturate = ${lightDockSat ?? "?"} (≥ 1.2) AND the dark arm --${dockSurfaceTok} carries its own saturate (${darkDockBlurHasSat}) — the per-mode pair, neither mode the flat un-saturated slab`,
 );
 
 // 3. The light --glass-border-dock α ≥ 6% (the silhouette floor — catches a regression to

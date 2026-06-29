@@ -93,6 +93,117 @@ function parseRadius(src, name) {
     return m ? Number(m[1]) : null;
 }
 
+// ── BG.W-GLASS-BLUR-PEER — the 8px resolved-radius PEER LOCK ────────────────────
+// dock · button · default-Card · menu-row all resolve the SAME blur(8px) RADIUS LEG
+// (the ONE unified glass material). The per-tier brightness/saturate companions are
+// EXCLUDED from the lock — only the radius leg is peer-locked (the saturate-revert is a
+// later WS1-gated paint). The resolver is ALIAS-FOLLOWING: `--glass-blur-btn` is a thin
+// alias of `--glass-blur-resting`, so the gate follows the chain to the 8px primitive.
+// Born-RED on HEAD (button → floating 13px, dock → dock 9px); GREEN after the collapse
+// (button + dock → the resting/quiet 8px peer). The HERO deep register is EXCLUDED — it
+// is reached only via `.btn-glass.glass-deep` (a per-instance opt-in), never the peer.
+const PEER_RADIUS = 8;
+
+// Follow a --glass-blur-<tier> token through an alias chain to its radius primitive (px).
+// An alias is `--glass-blur-btn: var(--glass-blur-resting);`; a composed rung is
+// `--glass-blur-resting: blur(calc(var(--glass-blur-resting-radius) * …)) …`.
+function resolveBlurRadiusPx(glassTokens, blurTokenName, depth = 0) {
+    if (depth > 4) return null; // alias-cycle guard
+    const m = glassTokens.match(new RegExp(`--${blurTokenName}:\\s*([^;]+);`));
+    if (!m) return null;
+    const value = m[1].trim();
+    const alias = value.match(/^var\(\s*--(glass-blur-[a-z]+)\s*\)$/);
+    if (alias) return resolveBlurRadiusPx(glassTokens, alias[1], depth + 1);
+    const radTok = value.match(/--glass-blur-([a-z]+)-radius/);
+    if (!radTok) return null;
+    return parseRadius(glassTokens, `glass-blur-${radTok[1]}-radius`);
+}
+
+export function detectPeerLock({ glassTokens, surfaces, shell, menu } = {}) {
+    const violations = [];
+    const facts = { peers: {} };
+    glassTokens ??= stripCss(readFile("src/styles/tokens/glass.css"));
+    surfaces ??= stripCss(readFile("src/styles/glass/surfaces.css"));
+    shell ??= stripCss(readFile("src/styles/dock/shell.css"));
+    menu ??= stripCss(readFile("src/styles/menu.css"));
+
+    // 1. default-Card — `.glass-card` backdrop-filter reads `--glass-blur-quiet`.
+    const cardTok = surfaces.match(/\.glass-card\s*\{[\s\S]*?backdrop-filter:\s*var\(\s*--(glass-blur-[a-z]+)\s*\)/);
+    facts.peers.card = cardTok ? resolveBlurRadiusPx(glassTokens, cardTok[1]) : null;
+
+    // 2. button — `.btn-glass` backdrop-filter reads `--glass-blur-btn` (alias → resting).
+    const btnTok = surfaces.match(/\.btn-glass\s*\{[\s\S]*?backdrop-filter:\s*var\(\s*--(glass-blur-[a-z]+)\s*\)/);
+    facts.peers.button = btnTok ? resolveBlurRadiusPx(glassTokens, btnTok[1]) : null;
+
+    // 3. dock — `--dock-surface-blur` reads `--glass-blur-resting`.
+    const dockTok = shell.match(/--dock-surface-blur:\s*var\(\s*--(glass-blur-[a-z]+)\b/);
+    facts.peers.dock = dockTok ? resolveBlurRadiusPx(glassTokens, dockTok[1]) : null;
+
+    // 4. menu-row — `.glass-menu-row` binds the QUIET tier via `--menu-row-bg`
+    //    (`color-mix(… var(--glass-bg-quiet) …)`); the row has no own backdrop-filter,
+    //    so its material is the quiet tier whose blur radius is the 8px peer.
+    const menuBindsQuiet = /--menu-row-bg:\s*color-mix\([^;]*var\(--glass-bg-quiet\)/.test(menu);
+    facts.peers.menuRow = menuBindsQuiet ? parseRadius(glassTokens, "glass-blur-quiet-radius") : null;
+
+    for (const [name, px] of Object.entries(facts.peers)) {
+        if (px !== PEER_RADIUS) {
+            violations.push(
+                `PEER: ${name} resolves blur(${px ?? "?"}px) — must resolve the unified blur(${PEER_RADIUS}px) RADIUS LEG (the dock·button·default-Card·menu-row ONE-material peer; alias-following)`,
+            );
+        }
+    }
+    return { facts, violations };
+}
+
+// The peer-lock self-test bite — proves the detector FLAGS a synthetic pre-wave regression
+// (button on the floating 13px tier, dock on the dock 9px tier) AND PASSES the unified
+// 8px peer. Folded into the gate's own violations (the proof-glass-legibility pattern).
+export function selfTestPeerLock() {
+    const fails = [];
+    // The HEAD pre-collapse shape: button reads the floating-tier composite, dock its own
+    // 9px tier, resting still 10px. The peer lock MUST flag button + dock.
+    const headGlass = `:root {
+        --glass-blur-quiet-radius: 8px;
+        --glass-blur-resting-radius: 10px;
+        --glass-blur-floating-radius: 13px;
+        --glass-blur-dock-radius: 9px;
+        --glass-blur-quiet: blur(calc(var(--glass-blur-quiet-radius) * var(--glass-level))) saturate(1.4) brightness(1.02);
+        --glass-blur-resting: blur(calc(var(--glass-blur-resting-radius) * var(--glass-level))) saturate(1.4);
+        --glass-blur-floating: blur(calc(var(--glass-blur-floating-radius) * var(--glass-level))) saturate(1.6);
+        --glass-blur-dock: blur(calc(var(--glass-blur-dock-radius) * var(--glass-level))) saturate(1.4) brightness(1.02);
+        --glass-blur-btn: blur(calc(var(--glass-blur-floating-radius) * var(--glass-level))) saturate(1.6) brightness(1.02);
+    }`;
+    const headSurfaces = `.glass-card { backdrop-filter: var(--glass-blur-quiet); } .btn-glass { backdrop-filter: var(--glass-blur-btn); }`;
+    const headShell = `.glass-dock { --dock-surface-blur: var(--glass-blur-dock, var(--glass-blur-wash)); }`;
+    const menuOk = `.glass-menu-row { --menu-row-bg: color-mix(in oklab, var(--glass-bg-quiet), var(--glass-tint-source) var(--glass-tint-strength)); }`;
+    const head = detectPeerLock({ glassTokens: headGlass, surfaces: headSurfaces, shell: headShell, menu: menuOk });
+    if (!head.violations.some((v) => /PEER: button/.test(v))) {
+        fails.push("self-test PEER: the HEAD floating-tier (13px) button did NOT red the 8px peer lock");
+    }
+    if (!head.violations.some((v) => /PEER: dock/.test(v))) {
+        fails.push("self-test PEER: the HEAD dock-tier (9px) dock did NOT red the 8px peer lock");
+    }
+    // The collapsed shape: button aliases resting (8px), dock reads resting (8px). GREEN.
+    const fixGlass = `:root {
+        --glass-blur-quiet-radius: 8px;
+        --glass-blur-resting-radius: 8px;
+        --glass-blur-quiet: blur(calc(var(--glass-blur-quiet-radius) * var(--glass-level))) saturate(1.4) brightness(1.02);
+        --glass-blur-resting: blur(calc(var(--glass-blur-resting-radius) * var(--glass-level))) saturate(1.4);
+        --glass-blur-btn: var(--glass-blur-resting);
+    }`;
+    const fixShell = `.glass-dock { --dock-surface-blur: var(--glass-blur-resting); }`;
+    const fix = detectPeerLock({ glassTokens: fixGlass, surfaces: headSurfaces, shell: fixShell, menu: menuOk });
+    if (fix.violations.length) {
+        fails.push(`self-test PEER: the collapsed 8px-peer fixture unexpectedly RED (${fix.violations.join("; ")})`);
+    }
+    // A broken menu (no quiet binding) MUST red — the menu-row is IN the peer set.
+    const menuBroken = detectPeerLock({ glassTokens: fixGlass, surfaces: headSurfaces, shell: fixShell, menu: ".glass-menu-row { --menu-row-bg: var(--accent); }" });
+    if (!menuBroken.violations.some((v) => /PEER: menuRow/.test(v))) {
+        fails.push("self-test PEER: a menu-row off the quiet-tier material did NOT red (menus are IN the peer lock)");
+    }
+    return fails;
+}
+
 export function detectBlur() {
     const violations = [];
     const facts = { radii: {}, twodppx: null, companions: {} };
@@ -405,11 +516,19 @@ export function detectSpringClock() {
 
 export function detect() {
     const blur = detectBlur();
+    const peer = detectPeerLock();
     const disco = detectDisco();
     const spring = detectSpringClock();
+    const peerSelfTest = selfTestPeerLock().map((f) => `SELF-TEST ${f}`);
     return {
-        violations: [...blur.violations, ...disco.violations, ...spring.violations],
-        facts: { blur: blur.facts, disco: disco.facts, spring: spring.facts },
+        violations: [
+            ...blur.violations,
+            ...peer.violations,
+            ...peerSelfTest,
+            ...disco.violations,
+            ...spring.violations,
+        ],
+        facts: { blur: blur.facts, peer: { ...peer.facts, selfTestFails: selfTestPeerLock() }, disco: disco.facts, spring: spring.facts },
     };
 }
 
@@ -429,6 +548,7 @@ function run() {
     console.log("proof:glass-cal — the blur ladder dialed back + the disco retired + the per-spring clock minted (BA.W-GLASS-CAL)");
     console.log(`  blur radii        : ${Object.entries(facts.blur.radii).map(([k, v]) => `${k.replace("glass-blur-", "").replace("-radius", "")}=${v}`).join(" ")}`);
     console.log(`  @2dppx restore    : ${facts.blur.twodppx}px   companions intact: ${Object.values(facts.blur.companions).every(Boolean) ? "yes ✓" : "NO ✗"}`);
+    console.log(`  8px peer lock     : ${Object.entries(facts.peer.peers).map(([k, v]) => `${k}=${v}px`).join(" ")} (target ${PEER_RADIUS}px)`);
     console.log(`  disco recipe gone : ${facts.disco.recipeFamilyPresent.length === 0 ? "yes ✓" : `NO ✗ (${facts.disco.recipeFamilyPresent.join(", ")})`}`);
     console.log(`  consumer classes  : ${facts.disco.consumerClassHits.length} live`);
     console.log(`  dock grain gone   : ${facts.disco.dockGrainGone ? "yes ✓" : "NO ✗"}   chip §6: ${facts.disco.chipNoFastSnap && facts.disco.chipScaleLeg ? "yes ✓" : "NO ✗"}`);

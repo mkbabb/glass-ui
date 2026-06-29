@@ -59,13 +59,24 @@ const opacityThreaded = bgRungs.every((r) => {
     return m && /\(1 - \(1 - var\(--glass-opacity-[a-z]+\)\) \* var\(--glass-level\)\)/.test(m[0]);
 });
 add("level", "opacity-seam-threaded", opacityThreaded, "all 7 --glass-bg-* rungs invert through var(--glass-level)");
-// blur seam: every --glass-blur-* token scales its radius by the level
+// blur seam: every --glass-blur-* token scales its radius by the level. The level scaling
+// may be DIRECT (`blur(calc(var(--glass-blur-X-radius) * var(--glass-level)))`) or reached
+// THROUGH an alias (BG.W-GLASS-BLUR-PEER — `--glass-blur-btn: var(--glass-blur-resting)`,
+// which inherits the level scaling from the resting composite; the a11y `--glass-level: 0`
+// bracket reaches the aliased button transitively). Follow the alias to confirm the seam.
 const blurRungs = ["wash", "quiet", "resting", "floating", "overlay", "dock", "btn"];
-const blurThreaded = blurRungs.every((r) => {
-    const m = tokensB.match(new RegExp(`--glass-blur-${r}:[^;]*`));
-    return m && /blur\(calc\(var\(--glass-blur-[a-z]+-radius\) \* var\(--glass-level\)\)\)/.test(m[0]);
-});
-add("level", "blur-seam-threaded", blurThreaded, "all 6 --glass-blur-* + --glass-blur-btn scale the radius by var(--glass-level)");
+const DIRECT_LEVEL = /blur\(calc\(var\(--glass-blur-[a-z]+-radius\) \* var\(--glass-level\)\)\)/;
+const scalesLevel = (tier, depth = 0) => {
+    if (depth > 4) return false;
+    const m = tokensB.match(new RegExp(`--glass-blur-${tier}:\\s*([^;]+);`));
+    if (!m) return false;
+    const value = m[1];
+    if (DIRECT_LEVEL.test(value)) return true;
+    const alias = value.trim().match(/^var\(\s*--glass-blur-([a-z]+)\s*\)$/);
+    return alias ? scalesLevel(alias[1], depth + 1) : false;
+};
+const blurThreaded = blurRungs.every((r) => scalesLevel(r));
+add("level", "blur-seam-threaded", blurThreaded, "all 6 --glass-blur-* + --glass-blur-btn scale the radius by var(--glass-level) (alias-following — the btn alias reaches the seam through --glass-blur-resting)");
 add(
     "level",
     "opaque-escape",

@@ -884,7 +884,7 @@ Projects import styles via CSS, components and composables via JS:
     --glass-opacity-resting: 0.82;
     /* the consumer-tunable radius primitive — the composed --glass-blur-resting
        threads --glass-level + saturate, never override it directly */
-    --glass-blur-resting-radius: 10px;
+    --glass-blur-resting-radius: 8px;
 }
 ```
 
