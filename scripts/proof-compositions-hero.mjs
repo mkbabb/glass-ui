@@ -73,7 +73,11 @@ function safeRead(p) {
  *  is keyed on the painted markup, not the script prose. */
 function templateBody(src) {
     const stripped = stripComments(src);
-    const m = stripped.match(/<template>([\s\S]*?)<\/template>/i);
+    // Match the OUTER <template> GREEDILY to the LAST </template> so a nested
+    // <template #title-ornament> (BG.W-HERO-FIT) does not truncate the body at the
+    // first </template> — the structural content-hash must key on the WHOLE rendered
+    // surface, not just the ornament prefix.
+    const m = stripped.match(/<template>([\s\S]*)<\/template>/i);
     const body = m ? m[1] : stripped;
     return body.replace(/\s+/g, " ").trim();
 }
@@ -107,23 +111,29 @@ export function detectCompositionsHero(sources) {
     const intro = stripComments(introVue);
     const comp = stripComments(compositionsHeroVue);
 
-    // ── CH1 — intro has exactly ONE <h1> ────────────────────────────────────────
+    // ── CH1 — intro routes its title through the ONE chassis path (BG.W-HERO-FIT) ─
+    // The hand-authored bare <h1> + the `:hero-title="false"` opt-out are RETIRED: the
+    // chassis renders the ONE display <h1> off the manifest `displayTitle`, fit-capped.
     facts.ch1 = {};
     facts.ch1.introH1Count = countH1(introVue);
-    facts.ch1.exactlyOne = facts.ch1.introH1Count === 1;
-    // The wordmark folds into the ONE display <h1> as an inline ornament, NOT a second
-    // display moment — no `text-display-N` on a node OUTSIDE the single <h1> (the cluster
-    // `text-display-2/-3/-4` tagline retired). The eyebrow stays the admin-label register.
-    facts.ch1.noStrayDisplayMass =
-        !/text-display-[0-9]/.test(intro.replace(/<h1\b[\s\S]*?<\/h1>/gi, ""));
+    facts.ch1.noHandAuthoredHero = facts.ch1.introH1Count === 0;
+    // The page does NOT opt out of the chassis title (the retired fork lane).
+    facts.ch1.routesChassis = !/hero-title="false"/.test(intro);
+    // No `text-display-N` type mass survives in the page — the wordmark/tagline collapse
+    // onto the chassis displayTitle; the eyebrow stays the admin-label register.
+    facts.ch1.noStrayDisplayMass = !/text-display-[0-9]/.test(intro);
 
-    if (!facts.ch1.exactlyOne)
+    if (!facts.ch1.noHandAuthoredHero)
         violations.push(
-            `CH1: /foundations/intro must have EXACTLY ONE <h1> (found ${facts.ch1.introH1Count}) — the three display moments (wordmark cluster + display-4 tagline + suppressed chassis hero) collapse to ONE audacious hero`,
+            `CH1: /foundations/intro must route its title through the ONE chassis path (found ${facts.ch1.introH1Count} hand-authored <h1>; BG.W-HERO-FIT — the chassis renders the ONE display <h1> off the manifest displayTitle)`,
+        );
+    if (!facts.ch1.routesChassis)
+        violations.push(
+            'CH1: /foundations/intro must NOT carry `:hero-title="false"` — it routes through the chassis title path (BG.W-HERO-FIT clean break)',
         );
     if (!facts.ch1.noStrayDisplayMass)
         violations.push(
-            "CH1: a `text-display-N` type mass survives OUTSIDE the single intro <h1> — the wordmark/tagline must fold INTO the one hero (the eyebrow + body stay non-display)",
+            "CH1: a `text-display-N` type mass survives in /foundations/intro — the wordmark/tagline fold onto the chassis displayTitle (the eyebrow + body stay non-display)",
         );
 
     // ── CH2 — compositions/hero ≠ homepage ──────────────────────────────────────
@@ -178,25 +188,26 @@ export function detectCompositionsHero(sources) {
             "CH3: a named platitude line survives (\"every component honest about its four states\" / \"Every token reachable\" / \"every card carries a cartoon shadow\") — prune the platitudes (keep the identity)",
         );
 
-    // ── CH4 — both heroes reach the audacious tier ──────────────────────────────
+    // ── CH4 — both heroes reach the audacious tier THROUGH the chassis ──────────
+    // (BG.W-HERO-FIT) — the audacious rung is now the chassis `data-hero-scale` rung
+    // (intro D0→mega, compositions/hero explicit `mega`), rendered through the
+    // `.story-hero-title[data-hero-scale]` height-aware fit-cap. The bypassable
+    // hand-authored bare `<h1 class="text-display-*">` lane is RETIRED, so the tier is
+    // reached by routing through the chassis, never a forked utility class.
     facts.ch4 = {};
-    facts.ch4.introMega = /<h1[^>]*\btext-display-mega\b/.test(intro);
-    facts.ch4.compAudacious = /<h1[^>]*\btext-display-(hero|mega)\b/.test(comp);
-    // Neither hero is left at the starved under-audacious tier.
-    facts.ch4.introNotStarved = !/<h1[^>]*\btext-display-[1-4]\b/.test(intro);
-    facts.ch4.compNotStarved = !/<h1[^>]*\btext-display-[1-4]\b/.test(comp);
+    facts.ch4.introRoutesChassis = !/hero-title="false"/.test(intro);
+    facts.ch4.compRoutesChassis = !/hero-title="false"/.test(comp);
+    // Neither page hand-authors a bare `text-display-*` hero <h1> (the chassis owns it).
+    facts.ch4.noBareDisplayHero =
+        !/<h1[^>]*\btext-display-/.test(intro) && !/<h1[^>]*\btext-display-/.test(comp);
 
-    if (!facts.ch4.introMega)
+    if (!(facts.ch4.introRoutesChassis && facts.ch4.compRoutesChassis))
         violations.push(
-            "CH4: the intro <h1> must read `text-display-mega` (the D0 audacious root — HEAD capped at text-display-4)",
+            'CH4: a hero opts out of the chassis via `:hero-title="false"` — both heroes route through the chassis title path so they inherit the audacious heroScale rung (BG.W-HERO-FIT)',
         );
-    if (!facts.ch4.compAudacious)
+    if (!facts.ch4.noBareDisplayHero)
         violations.push(
-            "CH4: the compositions/hero <h1> must read `text-display-hero` (or `-mega`) — the audacious tier (HEAD capped at the text-display-4 typewriter)",
-        );
-    if (!(facts.ch4.introNotStarved && facts.ch4.compNotStarved))
-        violations.push(
-            "CH4: a hero <h1> still reads a starved `text-display-1..4` tier — both heroes reach the audacious mega/hero rung",
+            "CH4: a bare `text-display-*` hero <h1> survives in a page — the audacious tier is the chassis data-hero-scale rung (the bypassable hand-authored lane is RETIRED)",
         );
 
     return { facts, violations };
@@ -205,41 +216,27 @@ export function detectCompositionsHero(sources) {
 // ── The per-clause self-test bites: a synthetic GOOD corpus, each mutated to a
 //    planted violation, asserted to RED its clause through the PURE detector. ──────
 function selfTest() {
+    // BG.W-HERO-FIT — the GOOD corpus is the chassis-routed shape: NO `:hero-title="false"`,
+    // NO hand-authored bare <h1> (the chassis renders the ONE display title off the manifest
+    // displayTitle), the page provides ONLY the inline ℱ ornament (#title-ornament) + the
+    // bento grid. The two bodies differ (categories vs scenes) so the content-hash is distinct.
     const goodIntro = `
         <template>
-        <StoryPage :hero-title="false">
-          <section class="px-2 py-12">
-            <p class="text-admin-label mb-8 text-muted-foreground">
-              <span class="fourier-f italic">ℱ</span> glass-ui · storybook
-            </p>
-            <h1 class="text-display-mega mb-8 text-foreground">
-              Glass, paper, and the golden ratio.
-            </h1>
-            <p class="text-prose max-w-2xl text-foreground/80">
-              A design system built around warm cream and cartoon offset shadows.
-            </p>
-          </section>
+        <StoryPage>
+          <template #title-ornament><span class="fourier-f italic">ℱ&nbsp;</span></template>
           <section class="mt-16">
-            <SectionPreviewCard v-for="cat in categories" :to="x" :icon="cat.icon" :section="cat.section" />
+            <p class="text-admin-label mb-4 text-muted-foreground">Categories</p>
+            <SectionPreviewCard v-for="cat in categories" :to="\`/\${cat.slug}\`" :icon="cat.icon" :section="cat.section" />
           </section>
         </StoryPage>
         </template>
     `;
     const goodComp = `
         <template>
-        <StoryPage :hero-title="false">
-          <section class="px-2 py-12">
-            <p class="text-admin-label mb-8 text-muted-foreground">
-              <span class="fourier-f italic">ℱ</span> compositions · real scenes
-            </p>
-            <h1 class="text-display-hero mb-8 text-foreground">
-              Real scenes, assembled from the parts.
-            </h1>
-            <p class="text-prose max-w-2xl text-foreground/80">
-              Dashboards, auth shells, the math-paper idiom.
-            </p>
-          </section>
+        <StoryPage>
+          <template #title-ornament><span class="fourier-f italic">ℱ&nbsp;</span></template>
           <section class="mt-16">
+            <p class="text-admin-label mb-4 text-muted-foreground">The scenes</p>
             <SectionPreviewCard v-for="scene in scenes" :to="\`/compositions/\${scene.id}\`" :icon="scene.icon" :section="hue" />
           </section>
         </StoryPage>
@@ -250,26 +247,34 @@ function selfTest() {
     const baseRun = detectCompositionsHero(base);
     const bites = [];
 
-    // Bite CH1 — a second <h1> in the intro reds CH1.
+    // Bite CH1 — a hand-authored <h1> in the intro (the retired fork) reds CH1.
     bites.push({
-        name: "CH1: two <h1> in intro",
+        name: "CH1: hand-authored <h1> in intro",
         red: detectCompositionsHero({
             ...base,
             introVue: goodIntro.replace(
                 "</section>",
-                '<h1 class="text-display-4">A second hero</h1></section>',
+                '<h1 class="story-hero-title">A forked hero</h1></section>',
             ),
         }).violations.some((v) => v.startsWith("CH1")),
     });
-    // Bite CH1b — a stray text-display tagline OUTSIDE the <h1> reds CH1.
+    // Bite CH1b — a re-added `:hero-title="false"` opt-out reds CH1.
     bites.push({
-        name: "CH1: stray display mass outside the <h1>",
+        name: "CH1: re-added :hero-title=false opt-out",
         red: detectCompositionsHero({
             ...base,
             introVue: goodIntro.replace(
-                '<span class="fourier-f italic">ℱ</span> glass-ui · storybook',
-                '<span class="text-display-2">glass-ui</span>',
+                "<StoryPage>",
+                '<StoryPage :hero-title="false">',
             ),
+        }).violations.some((v) => v.startsWith("CH1")),
+    });
+    // Bite CH1c — a stray text-display type mass in the page reds CH1.
+    bites.push({
+        name: "CH1: stray display mass in the page",
+        red: detectCompositionsHero({
+            ...base,
+            introVue: goodIntro + '\n<span class="text-display-2">glass-ui</span>',
         }).violations.some((v) => v.startsWith("CH1")),
     });
     // Bite CH2 — compositions/hero a verbatim clone of intro reds CH2.
@@ -285,10 +290,7 @@ function selfTest() {
         name: "CH2: re-added typewriter headline",
         red: detectCompositionsHero({
             ...base,
-            compositionsHeroVue: goodComp.replace(
-                "Real scenes, assembled from the parts.",
-                '<TypewriterText :text="seg1" />',
-            ),
+            compositionsHeroVue: goodComp + '\n<TypewriterText :text="seg1" />',
         }).violations.some((v) => v.startsWith("CH2")),
     });
     // Bite CH2c — a re-added §01/§02/§03 claims grid reds CH2.
@@ -314,26 +316,30 @@ function selfTest() {
         name: "CH3: re-added platitude",
         red: detectCompositionsHero({
             ...base,
-            introVue: goodIntro.replace(
-                "A design system built around warm cream and cartoon offset shadows.",
-                "every component honest about its four states.",
-            ),
+            introVue:
+                goodIntro + "\nevery component honest about its four states.",
         }).violations.some((v) => v.startsWith("CH3")),
     });
-    // Bite CH4 — the intro <h1> at a starved tier reds CH4.
+    // Bite CH4 — an intro :hero-title="false" opt-out (off the chassis tier) reds CH4.
     bites.push({
-        name: "CH4: intro <h1> starved (display-4)",
+        name: "CH4: intro opts out of the chassis tier",
         red: detectCompositionsHero({
             ...base,
-            introVue: goodIntro.replace("text-display-mega", "text-display-4"),
+            introVue: goodIntro.replace(
+                "<StoryPage>",
+                '<StoryPage :hero-title="false">',
+            ),
         }).violations.some((v) => v.startsWith("CH4")),
     });
-    // Bite CH4b — the compositions/hero <h1> at a starved tier reds CH4.
+    // Bite CH4b — a bare text-display hero <h1> in compositions/hero reds CH4.
     bites.push({
-        name: "CH4: compositions/hero <h1> starved (display-4)",
+        name: "CH4: compositions/hero bare text-display <h1>",
         red: detectCompositionsHero({
             ...base,
-            compositionsHeroVue: goodComp.replace("text-display-hero", "text-display-4"),
+            compositionsHeroVue: goodComp.replace(
+                "</section>",
+                '<h1 class="text-display-hero">Real scenes</h1></section>',
+            ),
         }).violations.some((v) => v.startsWith("CH4")),
     });
 
@@ -390,9 +396,11 @@ function run() {
         "proof:compositions-hero — /compositions/hero distinct; /foundations/intro three-heroes → one (BC.W-COMPOSITIONS-HERO)",
     );
     console.log(
-        `  CH1 intro has exactly ONE <h1>     : ${yn(
-            facts.ch1.exactlyOne && facts.ch1.noStrayDisplayMass,
-        )}  (${facts.ch1.introH1Count} <h1>)`,
+        `  CH1 intro routes title via chassis : ${yn(
+            facts.ch1.noHandAuthoredHero &&
+                facts.ch1.routesChassis &&
+                facts.ch1.noStrayDisplayMass,
+        )}  (${facts.ch1.introH1Count} hand-authored <h1>)`,
     );
     console.log(
         `  CH2 compositions/hero ≠ homepage   : ${yn(
@@ -408,11 +416,10 @@ function run() {
         )}`,
     );
     console.log(
-        `  CH4 both heroes reach audacious    : ${yn(
-            facts.ch4.introMega &&
-                facts.ch4.compAudacious &&
-                facts.ch4.introNotStarved &&
-                facts.ch4.compNotStarved,
+        `  CH4 both heroes route via chassis  : ${yn(
+            facts.ch4.introRoutesChassis &&
+                facts.ch4.compRoutesChassis &&
+                facts.ch4.noBareDisplayHero,
         )}`,
     );
     console.log(

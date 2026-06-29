@@ -42,6 +42,13 @@ interface StoryHeroProps {
      *  the chrome <h1> is StoryPage's job (this prop is ignored). */
     title?: string;
     /**
+     * BG.W-HERO-FIT (D10, P4-C) — the MANDATORY short hero wordmark. The chassis
+     * <h1> renders `displayTitle ?? title`, so a front-door composition declares a
+     * SHORT wordmark that fits the height-aware fit-cap; the semantic `title` stays
+     * the long nav/breadcrumb label. Unset → the chassis renders `title`.
+     */
+    displayTitle?: string;
+    /**
      * Whether the chassis renders the display-register hero <h1> (AZ.W-SUFFUSE
      * D2-1). Default `true` — the thin substrate hero pages (aurora /
      * constellation / fourier-field / glass-material / paper-glass) that
@@ -91,12 +98,19 @@ const props = withDefaults(defineProps<StoryHeroProps>(), {
 // per-route `heroScale` rung — `text-display-{4,5,mega,hero,audacious}` (≥4 always).
 const heroClass = computed(() => `text-display-${props.heroScale}`);
 
+// BG.W-HERO-FIT (D10, P4-C) — the chassis hero <h1> renders the MANDATORY short
+// `displayTitle` when declared, else the semantic `title`. The short wordmark is
+// the LOAD-BEARING fix: it fits the height-aware fit-cap without hyphenation at
+// 375px, where the long semantic title would wrap + hyphenate. The semantic
+// `title` stays the nav/breadcrumb/search label (those read `.title`, never this).
+const heroDisplayTitle = computed(() => props.displayTitle ?? props.title);
+
 // The chassis hero <h1> renders at the DISPLAY register on a hero page that has
 // not opted out (the bespoke front-door heroes own their own title). The rung is
 // the per-route depth-keyed `heroScale` (≥ text-display-4 — BC.W-PAGE-CHASSIS; the
 // prior hardcoded text-display-3 is RETIRED), the audacious moment on EVERY page.
 const showHeroTitle = computed(
-    () => isHero.value && props.heroTitle && Boolean(props.title),
+    () => isHero.value && props.heroTitle && Boolean(heroDisplayTitle.value),
 );
 
 // BB.W-HIERARCHY2 — the ordered StoryHeader cluster renders on a HERO page,
@@ -111,7 +125,7 @@ const showCluster = computed(
     () =>
         isHero.value &&
         props.heroTitle &&
-        Boolean(props.title || props.eyebrow || props.blurb),
+        Boolean(heroDisplayTitle.value || props.eyebrow || props.blurb),
 );
 
 // Normalize the string-shorthand and the object form to one shape.
@@ -365,7 +379,11 @@ const cardTier = computed<CardTier>(() => {
                         )
                     "
                 >
-                    {{ title }}
+                    <!-- BG.W-HERO-FIT — the #title-ornament slot carries a page's
+                         bespoke inline ornament (the ℱ wordmark) INSIDE the ONE
+                         chassis <h1>, so a front-door composition customizes the
+                         title CONTENT without forking the <h1> + its fit-cap. -->
+                    <slot name="title-ornament" />{{ heroDisplayTitle }}
                 </h1>
             </StoryHeader>
             <slot />
@@ -423,7 +441,11 @@ const cardTier = computed<CardTier>(() => {
                         )
                     "
                 >
-                    {{ title }}
+                    <!-- BG.W-HERO-FIT — the #title-ornament slot carries a page's
+                         bespoke inline ornament (the ℱ wordmark) INSIDE the ONE
+                         chassis <h1>, so a front-door composition customizes the
+                         title CONTENT without forking the <h1> + its fit-cap. -->
+                    <slot name="title-ornament" />{{ heroDisplayTitle }}
                 </h1>
             </StoryHeader>
             <slot />

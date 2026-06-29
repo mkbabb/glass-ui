@@ -32,6 +32,18 @@
        floats. Off a live substrate the gutter is 0 (the default-path canary). */
     --story-hero-inset: clamp(1.25rem, 2.5vw, 2rem);
 
+    /* ── BG.W-HERO-FIT (D10) — the height-aware fit-cap single-source factors ──
+       The hero <h1> fit-cap (`.story-hero-title[data-hero-scale]`) bounds the √φ
+       rung to MIN(rung, width-budget, svh-budget). These are the two factors the
+       budgets read — single-sourced here so the wordmark-length divisor and the
+       short-viewport line estimate are tuned in ONE place (R3): `--story-hero-cpl`
+       ≡ the chars-per-line wordmark factor (≈7ch holds a short wordmark at the
+       column edge); `--story-hero-est-lines` ≡ the FIXED line estimate (2 — NO
+       ResizeObserver; the svh term is only a short-viewport guard, near-inert on a
+       normal viewport since routing through the chassis is the primary cap). */
+    --story-hero-cpl: 7;
+    --story-hero-est-lines: 2;
+
     /* BC.W-STORYBOOK-META — the page-level whitespace RHYTHM, tokenized (axis-3).
        The HEAD `StoryPage.vue` hardcoded `gap-10`/`max-w-6xl`/`gap-2`; promoting
        them to named rhythm tokens is the "every page breathes consistently" bar
@@ -223,9 +235,27 @@
    0,2,0 specificity (beats the bare utility). The `/7` wordmark factor in the fit
    budget holds an ~7ch wordmark at the column edge; longer words hyphenate. */
 .story-hero-title[data-hero-scale] {
+    /* BG.W-HERO-FIT (D10) — the height-aware fit-cap. The audacious √φ rung is now
+       bounded to MIN of THREE terms: the rung itself, the width budget (the page
+       inline measure ÷ the wordmark `--story-hero-cpl` factor), AND a viewport-
+       HEIGHT budget — a SHORT-VIEWPORT GUARD that caps the rendered block so its
+       font-size × leading × est-lines never exceeds ≈0.62 (1/φ) of the small
+       viewport height. `100svh` (NOT `dvh` — `dvh` jumps as mobile browser chrome
+       collapses on scroll) keeps a laptop/phone hero proportioned, never viewport-
+       dominating. A static `min()` resolution, NOT a layout-animated step
+       (proof:no-layout-animation SAFE). On a normal viewport the chassis routing +
+       the rung is the primary cap and this term is near-inert (the load-bearing
+       fix is the MANDATORY short displayTitle, P4-C). */
     font-size: min(
         var(--story-hero-title-rung, var(--type-display-4)),
-        var(--story-hero-title-fit, calc((100vw - 2 * var(--story-hero-pad, 2rem)) / 7))
+        var(
+            --story-hero-title-fit,
+            calc((100vw - 2 * var(--story-hero-pad, 2rem)) / var(--story-hero-cpl, 7))
+        ),
+        var(
+            --story-hero-title-svh,
+            calc(0.62 * 100svh / var(--story-hero-est-lines, 2))
+        )
     );
 }
 .story-hero-title[data-hero-scale="4"] {

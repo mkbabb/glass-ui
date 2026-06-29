@@ -52,33 +52,18 @@ const categories = computed(() =>
 </script>
 
 <template>
-    <!-- :hero-title="false" — this front-door hero hand-authors its own
-         display-register <h1> (the wordmark + tagline composition), so the
-         chassis does not render a duplicate hero title (AZ.W-SUFFUSE D2-1). -->
-    <StoryPage :hero-title="false">
-        <!-- The front-door hero sits glass-first over the live aurora the chassis
-             renders behind this card. BC.W-HERO-AUDACIOUS Part D — the THREE prior
-             display moments (the ℱ + serif wordmark, the display-4 tagline, the
-             suppressed chassis hero) collapse to ONE audacious `text-display-mega`
-             hero (177px peak — the storybook root, the D0 of the title-size
-             hierarchy). The ℱ wordmark folds into an INLINE ornament inside the
-             single display <h1>; the eyebrow + the body prose stay warm ink (the
-             one-color-event restraint). -->
-        <section class="px-2 py-12 md:px-6 md:py-20">
-            <p class="text-admin-label mb-8 text-muted-foreground">
-                <span class="fourier-f italic">ℱ</span> glass-ui · storybook
-            </p>
-
-            <h1 class="text-display-mega mb-8 max-w-5xl text-foreground">
-                Glass, paper, and the golden ratio.
-            </h1>
-
-            <p class="text-prose max-w-2xl text-foreground/80">
-                A design system built around warm cream, cartoon offset shadows, and the
-                published Plus Jakarta Sans brand face for prose and ornament.
-                Tailwind-native, Vue 3.5, reka-ui primitives under the hood.
-            </p>
-        </section>
+    <!-- BG.W-HERO-FIT — ONE chassis title path: the chassis renders the single hero
+         <h1> (the MANDATORY short front-door wordmark `displayTitle` "glass-ui" through
+         the height-aware fit-cap), the eyebrow + the blurb. The THREE prior display
+         moments (the ℱ + serif wordmark, the display-4 tagline, the bare text-display-mega
+         <h1>) collapse to the ONE chassis display <h1>; this page provides ONLY the inline
+         ℱ ornament (#title-ornament) + the category index (the default slot). -->
+    <StoryPage>
+        <!-- The ℱ wordmark, rendered inline INSIDE the ONE chassis <h1> as the brand
+             serif ornament; the eyebrow + body prose stay warm ink (one-color-event). -->
+        <template #title-ornament>
+            <span class="fourier-f italic">ℱ&nbsp;</span>
+        </template>
 
         <!-- Category index — one SectionPreviewCard per category, navigating to the
              category's SECTION-LANDING hero. Each card carries its IconChip POP + an

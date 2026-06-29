@@ -44,6 +44,10 @@ const eyebrow = computed(() => {
 });
 
 const title = computed(() => current.value?.story.title ?? "");
+// BG.W-HERO-FIT — the MANDATORY short hero wordmark from the manifest row. The
+// chassis hero <h1> renders `displayTitle ?? title`; the chrome page-title (and
+// the nav/breadcrumb eyebrow) keep the semantic `title`.
+const displayTitle = computed(() => current.value?.story.displayTitle);
 const blurb = computed(() => current.value?.story.blurb);
 
 // The page declares its background + register on its manifest row; the chassis
@@ -176,6 +180,7 @@ const depth = computed(() => current.value?.story.depth);
                 :background="background"
                 :variant="variant"
                 :title="title"
+                :display-title="displayTitle"
                 :eyebrow="eyebrow"
                 :subpath="subpath"
                 :blurb="blurb"
@@ -184,6 +189,12 @@ const depth = computed(() => current.value?.story.depth);
                 :hero-title="props.heroTitle"
                 :style="{ '--i': 0 }"
             >
+                <!-- BG.W-HERO-FIT — forward the page's bespoke #title-ornament (the
+                     ℱ wordmark) into the ONE chassis <h1>. Absent on most pages → the
+                     forwarded slot renders nothing (zero layout change). -->
+                <template #title-ornament>
+                    <slot name="title-ornament" />
+                </template>
                 <!-- BB.W-SCROLL-MOTION: the orchestrated section-CASCADE host
                      (supersedes the bare BA.W-ANIMATE `[data-scroll-reveal]` 6px
                      fade — a clean break, no parallel alias). Each direct child (a

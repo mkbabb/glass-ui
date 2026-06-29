@@ -46,6 +46,15 @@ export type StoryDepth = "D0" | "D1" | "D2" | "D3";
 export interface Story {
     id: string;
     title: string;
+    /**
+     * BG.W-HERO-FIT (D10, P4-C) — the MANDATORY short hero wordmark/phrase. On a
+     * HERO page the chassis renders the display <h1> as `displayTitle ?? title`,
+     * so a front-door composition declares a SHORT wordmark (≤ ~2 words) that fits
+     * the height-aware fit-cap without hyphenation at 375px (the semantic `title`
+     * stays the long nav/breadcrumb/search label). Unset on a content page (the
+     * chrome <h1> reads the semantic `title`).
+     */
+    displayTitle?: string;
     blurb?: string;
     component: () => Promise<Component>;
     /**
@@ -134,6 +143,12 @@ function lazy(category: string, id: string): () => Promise<Component> {
 interface StoryOptions {
     background?: StoryBackground;
     hero?: boolean;
+    /**
+     * BG.W-HERO-FIT — the MANDATORY short hero wordmark (see Story.displayTitle).
+     * A `hero: true` front-door composition declares it so the chassis renders a
+     * SHORT title through the height-aware fit-cap.
+     */
+    displayTitle?: string;
     /**
      * The explicit hero title rung override (BC.W-PAGE-CHASSIS). Unset → `s()`
      * derives it from the position-keyed depth (D2 main → `5`, D3 sub → `4`); a
@@ -383,6 +398,9 @@ function s(
     return {
         id,
         title,
+        // BG.W-HERO-FIT — the MANDATORY short hero wordmark threads from the row
+        // opts; unset on a content page (the chrome <h1> reads the semantic title).
+        displayTitle: opts?.displayTitle,
         blurb,
         component: lazy(cat, id),
         background,
@@ -465,10 +483,20 @@ export const CATEGORIES: Category[] = [
         title: "Foundations",
         icon: Compass,
         stories: [
-            s("foundations", "intro", "Intro", "What this storybook is.", {
-                background: { kind: "aurora", palette: "rose-indigo-amber" },
-                hero: true,
-            }),
+            s(
+                "foundations",
+                "intro",
+                "Intro",
+                "A design system built around warm cream, cartoon offset shadows, and the published Plus Jakarta Sans brand face. Tailwind-native, Vue 3.5, reka-ui primitives under the hood.",
+                {
+                    background: { kind: "aurora", palette: "rose-indigo-amber" },
+                    hero: true,
+                    // BG.W-HERO-FIT — the front-door wordmark (the D0 root). The
+                    // chassis renders this through the height-aware fit-cap; the ℱ
+                    // ornament rides the #title-ornament slot in intro.vue.
+                    displayTitle: "glass-ui",
+                },
+            ),
             s(
                 "foundations",
                 "colors",
@@ -1132,13 +1160,22 @@ export const CATEGORIES: Category[] = [
         title: "Compositions",
         icon: LayoutDashboard,
         stories: [
-            s("compositions", "hero", "Hero", undefined, {
-                background: "constellation",
-                hero: true,
-                // The deliberate audacious-type showcase — the ONE D2 main at `mega`
-                // (its content IS the audacious-type demonstration).
-                heroScale: "mega",
-            }),
+            s(
+                "compositions",
+                "hero",
+                "Hero",
+                "Dashboards, auth shells, the math-paper idiom — the components composed into the surfaces they were built for. Warm cream, cartoon offset shadows, translucent glass over a grain underpaint.",
+                {
+                    background: "constellation",
+                    hero: true,
+                    // The deliberate audacious-type showcase — the ONE D2 main at `mega`
+                    // (its content IS the audacious-type demonstration).
+                    heroScale: "mega",
+                    // BG.W-HERO-FIT — the short hero wordmark; the ℱ ornament rides the
+                    // #title-ornament slot in hero.vue.
+                    displayTitle: "Real scenes",
+                },
+            ),
             s("compositions", "math-paper", "Math Paper", undefined, {
                 background: "grid",
             }),

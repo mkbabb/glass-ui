@@ -2052,6 +2052,12 @@ export const GATES = [
         note: "BC.W-HERO-AUDACIOUS — the herostudios-grade audacious-type hero pages, per-category icons, each DISTINCT (not a duplicated grey-card grid). APPLIES the existing √φ display ladder (demo-private, zero src/ paint): the front door + the 11 section landings reach the audacious display rung, each category gets a DISTINCT {icon, sectionHue, heroPalette, bgKind} from the ONE CATEGORY_HERO map, the redirect cards compose the shipped <IconChip> (NO re-paste) + an inline preview + the Fira-Code subpath chip, the per-category hue the ONE color event (chip + eyebrow only — title + body stay warm ink, the herostudios restraint). Flips proof:customizability-census C4 GREEN. Device-free SOURCE witnesses + tests-visual/hero-audacious.spec.ts. Bite: a hero capped below the audacious rung / a duplicated icon-less grey slab / a second per-category color event → RED.",
     },
     {
+        id: "proof:hero-fit",
+        cmd: "proof:hero-fit",
+        tags: ["local", "ci"],
+        note: "BG.W-HERO-FIT (D10) — bound the hero headline to its viewport on ONE chassis-owned title path (the title-source assert). At HEAD compositions/hero + foundations/intro hand-authored a bare `<h1 class=\"text-display-{hero,mega} max-w-5xl\">` via `:hero-title=\"false\"`, bypassing the chassis fit-cap (244.8px / 157% svh@1440 — the viewport-dominating defect). This wave retires that second lane: the chassis (StoryHero → .story-hero-title[data-hero-scale]) renders EVERY hero <h1> through ONE height-aware fit-cap off the MANDATORY short `displayTitle` (renders `displayTitle ?? title`); the page customizes the title CONTENT (the inline ℱ ornament) via the #title-ornament slot, never by forking the <h1>. auth-shell KEEPS its bespoke display-1 title (the carve fence). SIX device-free SOURCE witnesses (HF1 one-path · HF2 chassis renders displayTitle + ornament slot · HF3 mandatory displayTitle in the manifest rows · HF4 max-w-5xl dropped · HF5 height-aware svh fit-cap + single-source --story-hero-cpl/--story-hero-est-lines · HF6 auth-shell keep-fence) + an 8-bite self-test. Class P — the captured-paint truth (the rendered <h1> block ≤0.62×svh at 375/768/1440/1920, font-size ≥ computed(display-4) at ≥768, no hyphenation@375, a preview card above the fold) is the W-REFLECT3 π. Bite: a re-added :hero-title=false / bare poster <h1> / a dropped svh term / a row losing displayTitle → RED.",
+    },
+    {
         id: "proof:code-blocks",
         cmd: "proof:code-blocks",
         tags: ["local", "ci"],

@@ -117,8 +117,12 @@ export function detectHeroAudacious(sources) {
 
     // ── HA1 — the audacious rung reaches the heroes ─────────────────────────────
     facts.ha1 = {};
-    // The front-door hand-authored hero <h1> reads the audacious mega rung.
-    facts.ha1.frontDoorMega = /text-display-mega\b/.test(intro);
+    // BG.W-HERO-FIT — the front-door routes its hero <h1> through the ONE chassis title
+    // path (no `:hero-title="false"` fork), so it INHERITS the manifest D0→mega rung
+    // (asserted by manifestD0Mega + chassisRungIsDynamic below), rendered through the
+    // `.story-hero-title[data-hero-scale]` height-aware fit-cap. The bypassable
+    // hand-authored bare `<h1 class="text-display-mega">` lane is RETIRED.
+    facts.ha1.frontDoorRoutesChassis = !/hero-title="false"/.test(intro);
     // The manifest front-door row resolves heroScale "mega" (the D0 root — assignDepths
     // floors D0 → "mega").
     facts.ha1.manifestD0Mega =
@@ -146,9 +150,9 @@ export function detectHeroAudacious(sources) {
         !/\btext-display-3\b/.test(page) &&
         !/\btext-display-3\b/.test(intro);
 
-    if (!facts.ha1.frontDoorMega)
+    if (!facts.ha1.frontDoorRoutesChassis)
         violations.push(
-            "HA1: the front-door intro.vue hero <h1> must read `text-display-mega` (the D0 audacious root — 177px peak; the retired text-display-4 starved it)",
+            'HA1: the front-door intro.vue must route its hero <h1> through the chassis (no `:hero-title="false"` fork) so it inherits the D0→mega rung via the chassis fit-cap (BG.W-HERO-FIT)',
         );
     if (!facts.ha1.manifestD0Mega)
         violations.push(
@@ -257,11 +261,15 @@ export function detectHeroAudacious(sources) {
     // hero authoring surfaces (the per-category hue is the IconChip + eyebrow ONLY).
     facts.ha4.introBodyInk = !BODY_TINT_RE.test(intro);
     facts.ha4.landingBodyInk = !BODY_TINT_RE.test(landing);
-    // The title rung itself is NOT color-tinted (the display <h1> reads `text-foreground`,
-    // never a `--section-color`). Check the front-door hero <h1> carries `text-foreground`.
+    // BG.W-HERO-FIT — the title rung renders through the ONE chassis hero <h1>, which
+    // is the ink `.story-hero-title` register (story-hero.css `color: var(--foreground)`)
+    // and carries NO color-tint class — the title stays warm ink; the hue lives in the
+    // chip + eyebrow ONLY. Check the chassis <h1> (StoryHero) carries `story-hero-title`
+    // and no section/viz/chart/gold tint within the tag.
     facts.ha4.titleStaysInk =
-        /text-display-mega[^"]*text-foreground|text-foreground[^"]*text-display-mega/.test(
-            intro,
+        /story-hero-title/.test(hero) &&
+        !/<h1[\s\S]{0,240}?(--section-color|--viz-|--chart-|--color-gold|text-(?:warning|success|info))/.test(
+            hero,
         );
 
     if (!facts.ha4.introBodyInk)
@@ -274,7 +282,7 @@ export function detectHeroAudacious(sources) {
         );
     if (!facts.ha4.titleStaysInk)
         violations.push(
-            "HA4: the front-door audacious hero <h1> must read `text-foreground` (the title stays warm ink — the hue lives in the chip + eyebrow ONLY)",
+            "HA4: the chassis hero <h1> (StoryHero) must render through the ink `.story-hero-title` register with NO color-tint class — the title stays warm ink (the hue lives in the chip + eyebrow ONLY)",
         );
 
     // ── HA5 — the 11 section landings reach D1 + bind the per-category descriptor ─
@@ -385,12 +393,18 @@ function selfTest() {
         const c = { heroScale: "hero" }; const d = { heroScale: "hero" };
         function sectionLanding(cat) { return { heroScale: "hero", depth: "D1" }; }
     `;
+    // BG.W-HERO-FIT — the GOOD front-door routes its title through the chassis (no
+    // `:hero-title="false"` fork, no bare <h1>); it provides ONLY the inline ℱ ornament
+    // (#title-ornament) + the category grid. The chassis (StoryHero, the `storyHeroVue`
+    // corpus below) renders the ONE display <h1> off the manifest D0→mega rung.
     const goodIntro = `
         import { categoryHero } from "../category-hero";
-        <h1 class="text-display-mega mb-8 text-foreground">Title</h1>
+        <StoryPage>
+        <template #title-ornament><span class="fourier-f italic">ℱ&nbsp;</span></template>
         <SectionPreviewCard :to="x" :icon="cat.icon" :section="cat.section" :subpath="cat.subpath">
           <template #preview><div class="intro-cat-thumb"><Comp /></div></template>
         </SectionPreviewCard>
+        </StoryPage>
     `;
     const goodLanding = `
         import { categoryHero } from "./category-hero";
@@ -444,12 +458,15 @@ function selfTest() {
     const baseRun = detectHeroAudacious(base);
     const bites = [];
 
-    // Bite HA1 — a front-door pinned `text-display-3` (no mega) reds HA1.
+    // Bite HA1 — a front-door `:hero-title="false"` opt-out (off the chassis tier) reds HA1.
     bites.push({
-        name: "HA1: front-door pinned text-display-3",
+        name: "HA1: front-door opts out of the chassis",
         red: detectHeroAudacious({
             ...base,
-            introVue: goodIntro.replace("text-display-mega", "text-display-3"),
+            introVue: goodIntro.replace(
+                "<StoryPage>",
+                '<StoryPage :hero-title="false">',
+            ),
         }).violations.some((v) => v.startsWith("HA1")),
     });
     // Bite HA1b — a hardcoded `text-display-3` literal in the chassis reds HA1.
@@ -505,6 +522,17 @@ function selfTest() {
             introVue:
                 goodIntro +
                 '\n<p style="color: var(--section-color-7)">tinted body</p>',
+        }).violations.some((v) => v.startsWith("HA4")),
+    });
+    // Bite HA4b — a color-tinted chassis hero <h1> (BG.W-HERO-FIT) reds HA4.
+    bites.push({
+        name: "HA4: chassis hero <h1> color-tinted",
+        red: detectHeroAudacious({
+            ...base,
+            storyHeroVue: goodHero.replace(
+                "<h1 ",
+                '<h1 :style="{ color: \'var(--section-color-7)\' }" ',
+            ),
         }).violations.some((v) => v.startsWith("HA4")),
     });
     // Bite HA5 — the landing not at D1 reds HA5.
@@ -609,7 +637,7 @@ function run() {
     );
     console.log(
         `  HA1 audacious rung reaches heroes : ${yn(
-            facts.ha1.frontDoorMega &&
+            facts.ha1.frontDoorRoutesChassis &&
                 facts.ha1.manifestD0Mega &&
                 facts.ha1.marqueeHeroEnough &&
                 facts.ha1.chassisRungIsDynamic &&

@@ -8,12 +8,15 @@
 // the band actually carries (the dashboard / auth-shell / math-paper / form scenes), at
 // the audacious tier over its own field, the D2 MAIN of the compositions section.
 //
-// It hand-authors ONE audacious `text-display-hero` <h1> (`:hero-title="false"` so the
-// chassis does not double it — the one-<h1> discipline) + a curated bento grid of
-// <SectionPreviewCard>s linking the real scenes (each with an inline preview). The
-// homepage-clone typewriter + the 3-claim grid + the "View the source"/CTA buttons are
-// RETIRED (clean break, no alias). The per-category hue (forest — compositions) lives in
-// the IconChip + eyebrow ONLY; the title + body stay warm ink (the one-color-event rule).
+// BG.W-HERO-FIT — the hero <h1> routes through the ONE chassis title path (no
+// `:hero-title="false"` fork): the chassis renders the MANDATORY short `displayTitle`
+// ("Real scenes", manifest row) through the height-aware fit-cap so the audacious type
+// is large-but-bounded, never viewport-dominating. This main provides ONLY the inline
+// ℱ ornament (the #title-ornament slot) + a curated bento grid of <SectionPreviewCard>s
+// linking the real scenes (each with an inline preview). The homepage-clone typewriter +
+// the 3-claim grid + the "View the source"/CTA buttons are RETIRED (clean break, no
+// alias). The per-category hue (forest — compositions) lives in the IconChip + eyebrow
+// ONLY; the title + body stay warm ink (the one-color-event rule).
 import StoryPage from "../StoryPage.vue";
 import SectionPreviewCard from "../SectionPreviewCard.vue";
 import { categoryHue } from "../category-hero";
@@ -82,30 +85,18 @@ const scenes = [
 </script>
 
 <template>
-    <!-- :hero-title="false" — this main hand-authors its own audacious <h1>, promoted
-         to the document <h1>, so the chassis does not double it (one-<h1> discipline). -->
-    <StoryPage :hero-title="false">
-        <!-- The compositions hero sits glass-first over the live constellation the
-             chassis renders behind this card. ONE audacious `text-display-hero` moment
-             (the D2 main rung) — the ℱ ornament is an inline serif accent, NOT a
-             typewriter sequence. The eyebrow carries the ONE color event (forest); the
-             title + the prose stay warm ink. -->
-        <section class="px-2 py-12 md:px-6 md:py-20">
-            <p class="text-admin-label mb-8 text-muted-foreground">
-                <span class="fourier-f italic">ℱ</span> compositions · real scenes
-            </p>
-
-            <h1 class="text-display-hero mb-8 max-w-5xl text-foreground">
-                Real scenes, assembled from the parts.
-            </h1>
-
-            <p class="text-prose max-w-2xl text-foreground/80">
-                Dashboards, auth shells, the math-paper idiom — the components composed
-                into the surfaces they were built for. Warm cream, cartoon offset shadows,
-                translucent glass over a grain underpaint; the golden-ratio scale carries
-                every heading.
-            </p>
-        </section>
+    <!-- BG.W-HERO-FIT — ONE chassis title path: the chassis renders the single hero
+         <h1> (the MANDATORY short `displayTitle` "Real scenes" through the height-aware
+         fit-cap + scroll-away), the eyebrow (Compositions · Hero) and the blurb. This
+         main provides ONLY the inline ℱ ornament via #title-ornament + the specimen
+         grid (the default slot) — never a forked bare <h1>. -->
+    <StoryPage>
+        <!-- The bespoke ℱ wordmark ornament, rendered inline INSIDE the ONE chassis
+             <h1> (the brand serif accent). The eyebrow carries the ONE color event
+             (forest); the title + the prose stay warm ink (the one-color-event rule). -->
+        <template #title-ornament>
+            <span class="fourier-f italic">ℱ&nbsp;</span>
+        </template>
 
         <!-- The composition specimen grid — one SectionPreviewCard per real scene, each
              linking its route WITH an inline non-text preview (the chassis affordance;
