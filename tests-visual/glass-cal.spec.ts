@@ -40,7 +40,7 @@ const BLOB_ROUTE = "/substrates/blob";
 const EXPECT_RADII: Record<string, number> = {
     "--glass-blur-wash-radius": 1,
     "--glass-blur-quiet-radius": 8,
-    "--glass-blur-resting-radius": 10,
+    "--glass-blur-resting-radius": 8,
     "--glass-blur-floating-radius": 13,
     "--glass-blur-overlay-radius": 13,
     "--glass-blur-dock-radius": 9,
