@@ -283,36 +283,53 @@ export function detectDragMorph(sources) {
         );
     }
 
-    // ── D3 — the release flings velocity-continuously to the NEAREST slot ─────────
-    // The release re-seats from (value, releaseVelocity) — kf `Draggable` does this
-    // on its own pointerup (the free fling). The composable PROJECTS the rest
-    // (decayRest) + re-targets the NEAREST snap center off the projected position.
-    const projectsRest = /decayRest\s*\(/.test(dragMorph);
-    const resolvesNearest = /nearest/i.test(dragMorph);
-    const retargets = /spring\.target\s*=/.test(dragMorph);
-    if (dmExists && !projectsRest) {
-        violations.push(
-            "D3: the release does not project the frictional rest via `decayRest(` (the velocity-projected landing — a flick past the midpoint must snap forward).",
-        );
-    }
-    if (dmExists && !resolvesNearest) {
-        violations.push(
-            "D3: the release does not resolve the NEAREST snap target (the snap is a nearest-center resolution off the projected rest, not a fixed forward step).",
-        );
-    }
-    if (dmExists && !retargets) {
-        violations.push(
-            "D3: the release does not re-target the spring (`spring.target = …`) toward the snap (the C¹-continuous interruptible retarget).",
-        );
-    }
-    // BITE: a single-commit guard exists (a `committed` flag) — the one-registry
-    // discipline forbids a re-fired model write.
+    // ── D3 — the release flings to the NEAREST slot via the NATIVE kf snap ─────────
+    // kf 5.1.0 ships `DragOptions.snap` — the engine projects `decayRest` + re-seats
+    // the spring toward the nearest declared target on its own pointerup. The
+    // composable WIRES it (`snap: snapTargets.map(t => t.center)` in the
+    // `new Draggable({…})` construction) and keeps ONLY the COMMIT-side
+    // `nearestTarget`/`nearestValue` resolver (mapping the settled center back to the
+    // consumer's domain value). The BB-era published-surface re-roll (`decayRest(` +
+    // `spring.target =` + a `commitSnapOnRelease`) is EXCISED — the snap-excise wave.
+    const wiresNativeSnap =
+        /new\s+Draggable\s*\(\s*\{[\s\S]*?\bsnap\s*:[\s\S]*?\}\s*\)/.test(dragMorph) &&
+        /\bsnap\s*:[\s\S]*?\.center\b/.test(dragMorph);
+    // The COMMIT-side value resolver (`nearestTarget`/`nearestValue`) is KEPT — the
+    // engine snaps the PHYSICS to the nearest center; the composable still maps that
+    // settled center back to the consumer's domain VALUE for the single `onSnap`.
+    const keepsCommitResolver = /nearest/i.test(dragMorph);
+    // The single-commit guard (a `committed` flag) — the one-registry discipline
+    // forbids a re-fired model write.
     const singleCommitGuard =
         /committed/.test(dragMorph) &&
         /committed\s*=\s*(true|false)/.test(dragMorph);
+    // BITE (anti-evasion): the published-surface re-roll must be GONE — the native
+    // `snap` option supersedes it. A surviving `decayRest(` call / `spring.target =`
+    // retarget / `commitSnapOnRelease` is the dual-path the wave kills (the
+    // no-dual-path discipline).
+    const reRollExcised =
+        !/decayRest\s*\(/.test(dragMorph) &&
+        !/spring\.target\s*=/.test(dragMorph) &&
+        !/commitSnapOnRelease/.test(dragMorph);
+
+    if (dmExists && !wiresNativeSnap) {
+        violations.push(
+            "D3: the release does not wire the native kf snap (`snap: snapTargets.map(t => t.center)` in the `new Draggable({…})` construction) — kf 5.1.0 `DragOptions.snap` projects decayRest + re-seats toward the nearest target; the composable must hand it the snap centers.",
+        );
+    }
+    if (dmExists && !keepsCommitResolver) {
+        violations.push(
+            "D3: the COMMIT-side `nearestTarget`/`nearestValue` resolver is gone — the composable must map the settled spring center back to the consumer's domain VALUE for the single `onSnap` commit (the value domain the engine does not know).",
+        );
+    }
     if (dmExists && !singleCommitGuard) {
         violations.push(
             "D3: no single-commit guard (a `committed` flag) — `onSnap` could re-fire on the spring's near-settled frames (the one-registry discipline forbids a double model write).",
+        );
+    }
+    if (dmExists && !reRollExcised) {
+        violations.push(
+            "D3: the BB-era published-surface snap re-roll SURVIVES (`decayRest(` / `spring.target =` / `commitSnapOnRelease`) — kf 5.1.0 `DragOptions.snap` supersedes it; the dual-path interim must be EXCISED (the no-dual-path discipline).",
         );
     }
 
@@ -421,7 +438,7 @@ export function detectDragMorph(sources) {
             barrelReexports,
         },
         d2: { usesTanhLaw, usesDrive, capReadsGetter, hardcodedHighCap: hardcodedHighCap?.[1] ?? null },
-        d3: { projectsRest, resolvesNearest, retargets, singleCommitGuard },
+        d3: { wiresNativeSnap, keepsCommitResolver, singleCommitGuard, reRollExcised },
         d4: {
             hasDraggableProp,
             clickPathIntact,
@@ -473,6 +490,35 @@ function selfTestBite() {
     return facts.d5.rovingGatedOnDraggable === true;
 }
 
+// ── The D3 snap-excise self-test bite (proven every run) ─────────────────────────
+// A synthetic useDragMorph that RETAINS the BB-era published-surface re-roll
+// (`decayRest(` + `spring.target =` + a `commitSnapOnRelease`) WITHOUT wiring the
+// native `snap:` option (the exact dual-path the snap-excise wave kills) MUST flag:
+// `reRollExcised` must be false AND `wiresNativeSnap` must be false. If it does NOT,
+// the snap-excise gate has no teeth (a self-proof failure reds the gate).
+function selfTestSnapBite() {
+    const SYNTHETIC_REROLL = [
+        "import { Draggable, SpringProgress, decayRest } from '@mkbabb/keyframes.js'",
+        "import { useLiquidFlex } from './useLiquidFlex'",
+        "const liquid = useLiquidFlex({ squishLaw: 'tanh', maxStretch: params.maxStretch })",
+        "liquid.drive(0); params.onSnap(v); let committed = false; committed = true;",
+        "function nearestTarget(c) { return null }",
+        "function commitSnapOnRelease() {",
+        "  const projected = decayRest({ initial: spring.value, velocity: spring.velocity, friction: 5 });",
+        "  const t = nearestTarget(projected); if (t) spring.target = t.center;",
+        "}",
+        "draggable = new Draggable({ spring: ensureSpring(), axis: axisOf() });",
+    ].join("\n");
+    const { facts } = detectDragMorph({
+        useDragMorphTs: SYNTHETIC_REROLL,
+        motionIndexTs: "useDragMorph",
+        segmentedTabsVue: "",
+        dockLayerGroupVue: "",
+    });
+    // Teeth iff the surviving re-roll is caught AND the missing native snap is caught.
+    return facts.d3.reRollExcised === false && facts.d3.wiresNativeSnap === false;
+}
+
 function run() {
     const P = cliPaths();
     const { ROOT } = P;
@@ -491,6 +537,12 @@ function run() {
             "SELF-TEST: the D5 draggable-gated-tabindex bite did not flag the synthetic evasion — the gate's own teeth are broken.",
         );
     }
+    const snapBiteHasTeeth = selfTestSnapBite();
+    if (!snapBiteHasTeeth) {
+        violations.push(
+            "SELF-TEST: the D3 snap-excise bite did not flag a synthetic surviving re-roll (decayRest + spring.target without native snap) — the snap-excise gate has no teeth.",
+        );
+    }
 
     const status = violations.length === 0 ? "pass" : "fail";
 
@@ -501,7 +553,7 @@ function run() {
         command: "npm run proof:drag-morph",
         facts,
         violations,
-        selfTest: { d5BiteHasTeeth: biteHasTeeth },
+        selfTest: { d5BiteHasTeeth: biteHasTeeth, d3SnapBiteHasTeeth: snapBiteHasTeeth },
     });
 
     const yn = (b) => (b ? "YES" : "NO");
@@ -526,11 +578,11 @@ function run() {
         )}  (cap-literal:${facts.d2.hardcodedHighCap ?? "none"})`,
     );
     console.log(
-        `  D3 fling to NEAREST, single-commit      : ${yn(
-            facts.d3.projectsRest &&
-                facts.d3.resolvesNearest &&
-                facts.d3.retargets &&
-                facts.d3.singleCommitGuard,
+        `  D3 native kf snap, re-roll excised      : ${yn(
+            facts.d3.wiresNativeSnap &&
+                facts.d3.keepsCommitResolver &&
+                facts.d3.singleCommitGuard &&
+                facts.d3.reRollExcised,
         )}`,
     );
     console.log(
@@ -550,6 +602,7 @@ function run() {
         )}`,
     );
     console.log(`  self-test D5 bite has teeth             : ${yn(biteHasTeeth)}`);
+    console.log(`  self-test D3 snap-excise bite has teeth : ${yn(snapBiteHasTeeth)}`);
 
     if (violations.length > 0) {
         console.log("\nVIOLATIONS:");

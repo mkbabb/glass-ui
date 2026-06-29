@@ -25,7 +25,7 @@
 // `seek(masterClock)` — the renderer steps both, never kf's own driver.
 //
 // THE LOAD-BEARING REUSE (no second clock — the MOTION-ONE-CLOCK fence). The leaf
-// composes the PUBLISHED 4.3.0 kf clock — `SpringProgress` (the `revealT` scalar,
+// composes the PUBLISHED kf 5.1.0 clock — `SpringProgress` (the `revealT` scalar,
 // velocity-continuous re-seat) + `springTimingFunction` (the transition cross-fade
 // timing, the typed {fn,css} pair from the SAME SPRING_PRESETS row the --spring-*
 // tokens generate from) + `SmoothProgress` (the config-transition lerp). It owns NO
@@ -72,12 +72,13 @@
 // register resolution is cached ONCE at construction (never re-resolved per tick), and
 // the spring trajectory is read analytically (never integrates a per-frame ODE).
 //
-// THE Oscillator BOOK (kf-vjs §3.1, §F). A breathing/pulsing/rotating idle LOOP wants a
-// continuous looping phase clock — the kf `Oscillator`. It is LOCAL-ONLY past v4.3.0
-// (machine-verified ABSENT from the consumed dist), so it is NOT imported here (a
-// republish-gated by-name cross-repo ask, NO peer-spine widen). The interim idle loop
-// is the viz's existing de-synced sine / `uTime` (KEEP — this leaf owns the four ENTER/
-// TRANSITION/EXIT/RESTART beats, not the idle loop).
+// THE Oscillator is NOT imported here, BY DESIGN (kf-vjs §3.1, §F). A breathing/
+// pulsing/rotating idle LOOP wants a continuous looping phase clock — the kf
+// `Oscillator` (shipped on kf 5.1.0; the booked republish HAS LANDED — ZERO upstream
+// ask remains). This leaf owns the four ENTER/TRANSITION/EXIT/RESTART beats, NOT the
+// idle loop, so it deliberately does not import it: the idle loop is the viz's own
+// de-synced sine / `uTime` (KEEP). A future idle-loop wave composes the kf `Oscillator`
+// directly AT the viz (the ≥2-binary-consumer bar), never through this choreography leaf.
 //
 // INTERNAL (off the public /glass barrel — the substrate-picker precedent). Every
 // canvas viz composes it via a direct relative import; the ≥2-binary-consumer bar is the
@@ -198,7 +199,7 @@ export interface UseVizChoreographyReturn {
 }
 
 /**
- * The procedural-viz choreography clock. Composes the published-4.3.0 kf
+ * The procedural-viz choreography clock. Composes the published kf 5.1.0
  * `SpringProgress` (the reveal scalar) + `SmoothProgress` (the config lerp) +
  * `springTimingFunction` (the cross-fade timing), FED `tick(dt)` from the consuming
  * viz's frame callback. Owns NO rAF (the one-loop discipline; the viz feed it). See the

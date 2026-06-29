@@ -17,15 +17,19 @@
 // that substrate; it owns NO hand-rolled pointer-velocity sampler and NO parallel
 // rAF spring integrator (the D1/D2 fence).
 //
-// THE SNAP-RESOLUTION INTERIM (the named-successor book). The kf source `Draggable`
-// carries a `snap` option (it projects `decayRest` + re-targets the nearest declared
-// target itself), but the PUBLISHED dist `DragOptions` at HEAD does NOT yet expose
-// `snap`/`bounds`. Per the wave's foreign-tree fence, glass-ui does NOT re-fork the
-// pointer-velocity engine; the interim wires the PUBLISHED surface — the free fling
-// (`spring.reset(value, releaseVelocity)`) + the SHIPPED `decayRest` projection +
-// the `spring.target` re-target — and resolves the nearest snap HERE. When the kf
-// `snap` option ships on dist, this collapses onto it (a by-name kf coordination
-// ask, NOT a glass-ui fork). The snap math is IDENTICAL to kf's `handleUp` snap arm.
+// THE NATIVE SNAP (kf 5.1.0 `DragOptions.snap`). The kf `Draggable` carries a `snap`
+// option: on release it projects the frictional resting point (`decayRest`, internal)
+// and re-seats the spring toward the NEAREST declared target rather than decelerating
+// freely. glass-ui hands it `snap: snapTargets.map(t => t.center)` at construction
+// (re-read on every `reattach`, so a resize / option change / orientation flip
+// re-resolves the centers), so the PHYSICS-side snap lives ENTIRELY in the engine —
+// glass-ui owns NO `decayRest` + nearest-center + `spring.target` re-roll (the BB-era
+// published-surface interim is EXCISED; the foreign-tree fence holds — glass-ui edits
+// ZERO kf tree, it wires the published surface). The composable keeps ONLY the
+// COMMIT-side resolution (`nearestTarget`/`nearestValue`): it maps the settled spring
+// center back to the consumer's domain value V for the single `onSnap` commit (the
+// value domain the engine has no knowledge of).
+//
 // The squish rides the SHARED `useLiquidFlex` `"tanh"` velocity register (the
 // metaball/morph-showcase law), capped at the live `--tab-indicator-max-stretch`
 // getter (≤1.08, the anti-taffy-pull bar). The spring is the iOS-canonical drag
@@ -51,7 +55,7 @@
 // INSTANT nearest-snap (the `SpringProgress.respectReducedMotion` policy snaps to
 // target with zero in-between frames). The physics is off; the gesture works.
 
-import { Draggable, SpringProgress, decayRest } from "@mkbabb/keyframes.js";
+import { Draggable, SpringProgress } from "@mkbabb/keyframes.js";
 import {
     computed,
     onScopeDispose,
@@ -257,9 +261,10 @@ export function useDragMorph<V = string>(
     }
 
     // The nearest snap target to a coordinate — the kf `handleUp` `nearestSnap`
-    // math (closest center; ties → the first). Resolves either the committed VALUE
-    // (off the settled spring position) or the retarget CENTER (off the projected
-    // release rest).
+    // math (closest center; ties → the first). The COMMIT-side resolver: it maps the
+    // settled spring position back to the consumer's domain VALUE for the single
+    // `onSnap` commit (the PHYSICS-side nearest-center snap is the engine's, kf 5.1.0
+    // `DragOptions.snap`).
     function nearestTarget(coord: number): DragMorphSnapTarget<V> | null {
         const targets = targetsOf();
         if (targets.length === 0) return null;
@@ -278,38 +283,6 @@ export function useDragMorph<V = string>(
     const nearestValue = (coord: number): V | null =>
         nearestTarget(coord)?.value ?? null;
 
-    // CONSUME(kf snap): BC.W-LIQUID-TAB — when keyframes.js republishes past 4.3.0
-    // with the `snap`+`bounds`+`rubberBand` `DragOptions` (booked by name in
-    // docs/tranches/BC/coordination/asks-and-consumes.md; machine-verified ABSENT on
-    // the published 4.3.0 `DragOptions`), the ~12-line published-surface
-    // `decayRest`+`nearestTarget`+`spring.target` re-roll BELOW collapses onto the
-    // native kf `snap` option AND the pull gains the iOS `rubberBand` overscroll for
-    // free. A cheap by-name kf ask — NO peer-spine widen (glass-ui's spine is
-    // `^4.0.0`); glass-ui edits ZERO kf tree (the foreign-tree fence, inv-26).
-    //
-    // The snap RE-TARGET on release (the published-surface interim, IDENTICAL to
-    // kf's `handleUp` snap arm). The kf `Draggable` re-seats the spring from
-    // `(value, releaseVelocity)` on its own pointerup (the free fling). We then
-    // PROJECT the frictional resting point the fling would coast to (`decayRest`,
-    // the SHIPPED closed-form glide — same DEFAULT_DECAY_K=5 as kf), pick the
-    // nearest snap center, and set `spring.target` to it. `spring.target` re-seats
-    // from the current `(x, v)` so the retarget is C¹-continuous (a flick PAST a
-    // midpoint snaps forward via the velocity-projected rest; a slow drag short of
-    // it snaps back). A mid-fling re-grab re-enters the gesture (the next
-    // pointerdown re-seats the spring at the grab point) — interruptible by
-    // construction.
-    const DECAY_K = 5;
-    function commitSnapOnRelease(): void {
-        if (!spring) return;
-        const projected = decayRest({
-            initial: spring.value,
-            velocity: spring.velocity,
-            friction: DECAY_K,
-        });
-        const target = nearestTarget(projected);
-        if (target) spring.target = target.center;
-    }
-
     // Single-commit guard — the spring can emit several near-settled frames; the
     // commit fires ONCE per gesture (the one-registry discipline forbids a
     // re-fired model write). `hasGestured` arms the commit ONLY after a real
@@ -319,11 +292,12 @@ export function useDragMorph<V = string>(
     let hasGestured = false;
 
     // The kf Draggable — the pointer-capture follow + velocity-window + the C¹
-    // fling (the load-bearing reuse, no re-fork of the pointer-velocity engine). We
-    // hand it OUR spring so the physics core is the single source of truth. The
-    // nearest-snap RE-TARGET on release lives in `commitSnapOnRelease` (the
-    // published-surface interim, see the header) — kf flings free, we project +
-    // retarget.
+    // fling + the NATIVE snap (kf 5.1.0 `DragOptions.snap`, see the header; no
+    // re-fork of the pointer-velocity engine). We hand it OUR spring (the physics
+    // core is the single source of truth) AND the snap centers (the engine projects
+    // `decayRest` + re-seats toward the nearest on release — no glass-ui retarget
+    // re-roll). The composable keeps only the COMMIT-side value resolution
+    // (`nearestValue`, in the settle watcher).
     let draggable: Draggable | null = null;
 
     // (The per-frame mirror `subscribe` + the rAF `play` arm live in `ensureSpring`
@@ -342,9 +316,14 @@ export function useDragMorph<V = string>(
         if (!node) return;
         // (Re)build the Draggable over OUR reused spring (the physics core stays the
         // single source of truth across rebuilds; a rebuild re-resolves the axis on
-        // an orientation flip). The snap centers are read live on release
-        // (`commitSnapOnRelease`), so the rebuild carries no stale snap state.
-        draggable = new Draggable({ spring: ensureSpring(), axis: axisOf() });
+        // an orientation flip AND re-reads the snap centers — kf reads `snap` at
+        // construction, so a geometry change re-resolves them HERE, never live on
+        // release).
+        draggable = new Draggable({
+            spring: ensureSpring(),
+            axis: axisOf(),
+            snap: targetsOf().map((t) => t.center),
+        });
         node.addEventListener("pointerdown", onPointerDownCapture);
         detachDrag = draggable.attach(node);
     }
@@ -361,11 +340,11 @@ export function useDragMorph<V = string>(
     function onPointerUpCapture(): void {
         if (!dragging.value) return;
         // The kf Draggable already re-seated the spring from `(value,
-        // releaseVelocity)` on its own pointerup (the free fling). Flip the flag
-        // (so the settle watcher arms the single commit) and RE-TARGET to the
-        // nearest snap (the published-surface interim).
+        // releaseVelocity)` AND snapped it toward the nearest declared target on its
+        // own pointerup (the native `DragOptions.snap` fling). We only flip the flag
+        // so the settle watcher arms the single COMMIT-side `onSnap` (off the value
+        // the spring settles at — the nearest center the engine snapped to).
         dragging.value = false;
-        commitSnapOnRelease();
     }
 
     // The kf Draggable owns the per-gesture pointermove/up; we mirror dragging
