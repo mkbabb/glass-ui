@@ -38,9 +38,43 @@
        (`tokens/dark-arm.css`), where the tolerant α-mix absorbs the small high-L
        chroma (the gamut-map caveat documented + pinned under the gamut edge there).
        That is the INK derivation, separate from THIS glass-tint mix space. */
+
+    /* BG.W-GLASS-IDIOM-FACTOR — the DRY plate-tint recipe, DECLARED ONCE.
+       The five-rung surface ladder each composed the SAME element-level oklab tint
+       INLINE (5 byte-identical `color-mix(in oklab, var(--glass-bg-<rung>),
+       var(--glass-tint-source) var(--glass-tint-strength))` pastes). The recipe is
+       the W55 adaptive-legibility seam — the rung bg mixed TOWARD the sampled/ink
+       `--glass-tint-source` at the continuous `--glass-tint-strength`; at the `0%`
+       rest default the mix is a no-op (`color-mix(…, X, transparent 0%) ≡ X`),
+       byte-identical to the raw rung bg.
+
+       Factored to ONE declaration: each rung sets only its own `--glass-bg-rung`
+       (the per-rung bg indirection — the EXACT `--glass-border-rung` →
+       `--glass-border-accent` pattern rim.css already runs for the border half) and
+       reads `background: var(--glass-plate-tinted)`. `--glass-plate-tinted` resolves
+       its `var(--glass-bg-rung)` / `--glass-tint-source` / `--glass-tint-strength`
+       at the rung element where it is composed (a custom property substitutes its
+       var() refs against the SAME element's other customs), so the per-rung bg AND
+       the per-element W55 re-points (the `:where()` content-tier + overlay-band tint
+       cascades below) reach it unchanged — net-neutral, dist byte-isomorphic. This
+       single home is the ONE place a later wave (BG.W-GLASS-TINT-UNIFY) adds the
+       bias outer-leg, instead of N pastes. */
+    .glass-wash,
+    .glass-quiet,
+    .glass-resting,
+    .glass-floating,
+    .glass-overlay {
+        --glass-plate-tinted: color-mix(
+            in oklab,
+            var(--glass-bg-rung),
+            var(--glass-tint-source) var(--glass-tint-strength)
+        );
+    }
+
     .glass-wash {
         position: relative;
-        background: color-mix(in oklab, var(--glass-bg-wash), var(--glass-tint-source) var(--glass-tint-strength));
+        --glass-bg-rung: var(--glass-bg-wash);
+        background: var(--glass-plate-tinted);
         backdrop-filter: var(--glass-blur-wash);
         /* BB.W-GLASS-ACCENT — the rung border ink feeds the accent-composed
            `--glass-border-accent` (rim group above); byte-identical at 0%. */
@@ -63,7 +97,8 @@
        Spine tier wires its own rung at instrument-chassis.css. */
     .glass-quiet {
         position: relative;
-        background: color-mix(in oklab, var(--glass-bg-quiet), var(--glass-tint-source) var(--glass-tint-strength));
+        --glass-bg-rung: var(--glass-bg-quiet);
+        background: var(--glass-plate-tinted);
         backdrop-filter: var(--glass-blur-quiet);
         --glass-border-rung: var(--glass-border-quiet);
         border: 1px solid var(--glass-border-accent);
@@ -75,7 +110,8 @@
 
     .glass-resting {
         position: relative;
-        background: color-mix(in oklab, var(--glass-bg-resting), var(--glass-tint-source) var(--glass-tint-strength));
+        --glass-bg-rung: var(--glass-bg-resting);
+        background: var(--glass-plate-tinted);
         backdrop-filter: var(--glass-blur-resting);
         --glass-border-rung: var(--glass-border-resting);
         border: 1px solid var(--glass-border-accent);
@@ -102,7 +138,8 @@
            dark-substrate consumer dials in on an ancestor. */
         --glass-backdrop: light;
         position: relative;
-        background: color-mix(in oklab, var(--glass-bg-floating), var(--glass-tint-source) var(--glass-tint-strength));
+        --glass-bg-rung: var(--glass-bg-floating);
+        background: var(--glass-plate-tinted);
         backdrop-filter: var(--glass-blur-floating);
         --glass-border-rung: var(--glass-border-floating);
         border: 1px solid var(--glass-border-accent);
@@ -117,7 +154,8 @@
            (see .glass-floating). */
         --glass-backdrop: light;
         position: relative;
-        background: color-mix(in oklab, var(--glass-bg-overlay), var(--glass-tint-source) var(--glass-tint-strength));
+        --glass-bg-rung: var(--glass-bg-overlay);
+        background: var(--glass-plate-tinted);
         backdrop-filter: var(--glass-blur-overlay);
         --glass-border-rung: var(--glass-border-overlay);
         border: 1px solid var(--glass-border-accent);
