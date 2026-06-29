@@ -54,3 +54,10 @@ wf_5dd4bc2d-8af  resume  2026-06-29 02:58:26  PATCHED engine (STEP-0.5 no-op→D
 ## 06:48 batch-3→batch-2 (integrate too slow for ~40min wall window; smaller batch commits reliably). Fresh resume.
 wf_997d0cce-69f  resume  2026-06-29 06:49:06  BATCH-2 engine (cut from 3; integrate fits the ~40min wall) — fresh LOADER, re-composes [C] tail into wall-survivable batches; future walls resumeFromRunId (cached LOADER + batch-2)
 ## 07:15 resumeFromRunId wf_997d0cce-69f (TaskStop'd wfb2oind3; cached LOADER+2 builds → straight to batch-2 integrate). Walls are SHORT (~20min) so LOADER-skipping resumeFromRunId is essential; batch-2 integrate commits per-wave so partial progress survives.
+
+## 2026-06-29 07:53 [C]-TAIL HAND-LAND — workflow STOPPED, lander agent ae87e21f6a02f375c landing B4a/B2.1-mech/B4b directly.
+## The [C] tail drift-looped ~3.5h: builds complete but the integrate never ran before a wall, so nothing committed.
+## DECISION: B2.4a -> DONE (byte-identical carve, paint deferred to WS11/WS12). The 3 real waves hand-landed by a
+## single background agent (commits per-wave, wall-survivable). DO NOT resume the workflow until the lander finishes
+## (it owns the main tree). The lander is also a DIAGNOSTIC: if a single low-concurrency agent survives the walls
+## that killed the 2-3-concurrent workflow, run WS1+ at batch-1 (or main-loop-driven). Workflow resumes AFTER [C] tail DONE.
