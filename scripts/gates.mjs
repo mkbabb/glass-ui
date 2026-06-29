@@ -440,6 +440,12 @@ export const GATES = [
         tags: ["local"],
         note: "BB.W-CLOSE-BATTERY — the full-set close-battery lock (born-RED → GREEN at the close-path wiring). Asserts the close/release path runs `gates.mjs --run full` (the deduped union local ∪ ci ∪ release) siblings-absent BEFORE the irreversible tag, NOT `--run local`/`--run release` alone (the BA over-claim: `ci ⊂ local` carried 18 reds AND the close never ran the union). 4 clauses: C1 the `--run full` union mode exists + is the deduped union; C2 release.sh runs `--run full`; C3 release.yml runs `--run full`; C4 the `proof:full` script + the CLAUDE.md close-battery canon. + the self-test bite (a synthetic `--run local`-only close path MUST flag). DEVICE-FREE meta-gate (imports gatesFor — it cannot be in the set it walks); `local`-tagged (the proof:gate-manifest-sound precedent), promoted to the close set by the BB close. Bite: re-point the release path to `--run local`/`--run release`, or narrow the full union → RED.",
     },
+    {
+        id: "proof:ship-attestation",
+        cmd: "proof:ship-attestation",
+        tags: ["ci", "release"],
+        note: "BG.W-SHIP-DISCIPLINE-LIVE-PRECONDITION — Arm B, the tag-push BYPASS-CLOSER. The maintainer's publish path is `git tag && git push` -> release.yml (ubuntu/SwiftShader) -> `gates.mjs --run full` -> `npm publish`, which BYPASSES release.sh's Mac-only ship-block. Registered ['ci','release'] so `--run full` runs it on every tag-push publish; DEVICE-FREE — re-applies the BG band grammar to the per-region pixel DIGEST embedded in docs/tranches/BG/SHIP-ATTESTATION.json + RECOMPUTES the surfaceHash (surface-closure.mjs SOURCE bytes + the transitive paint-closure file LIST) at HEAD; REDs on absent/stale/FAIL-verdict/software-raster/webkit-fail. The attestation is written ONLY by `release.sh --run ship` (Arm A, runShip) on a real Mac/Metal GPU. Born-RED on HEAD (no ceremony has run — the tag-blocker); a 7-leg structural subprocess self-test proves the verdict GREENs on a fresh valid attestation + REDs on each forgery. Bite: absent/stale/re-stamped/software-raster/FAIL-verdict -> RED.",
+    },
 {
         id: "proof:no-layout-animation",
         cmd: "proof:no-layout-animation",
@@ -2248,6 +2254,48 @@ function runMode(mode) {
     console.log(`\n[gates] '${mode}' set PASSED (${set.length} gates).`);
 }
 
+// ── BG.W-SHIP-DISCIPLINE-LIVE-PRECONDITION — runShip() (Arm A, Mac-only, FAIL-CLOSED) ──
+// The live-Metal ship ceremony release.sh's ship-block calls via `--run ship`. Mac-only
+// BY PHYSICS (CI=ubuntu/SwiftShader cannot paint Metal; release.yml runs `--run full`
+// = Arm B = proof:ship-attestation, NEVER `--run ship`). FAIL-CLOSED: a skeleton MUST
+// exit non-zero (a green skeleton re-creates the source-green/visually-broken trap at
+// the META level). The live roster capture + the UNMASKED_RENDERER anti-SwiftShader
+// guard (scripts/lib/gl-renderer-probe.mjs, committed) + the per-region DIGEST + the
+// webkit.{glass,goo} verdict + the DERIVED surfaceHash (scripts/proof-ship-attestation.mjs
+// computeSurfaceHash) -> committed docs/tranches/BG/SHIP-ATTESTATION.json is BG.W-CUT's
+// ceremony body; until it lands, runShip refuses to write a green attestation (trap-clean).
+async function runShip() {
+    if (process.platform !== "darwin") {
+        console.error(
+            "[gates --run ship] runShip is Mac-only (the live-Metal ship ceremony). CI=SwiftShader " +
+                "cannot paint Metal; release.yml runs `--run full` (Arm B = proof:ship-attestation), never `--run ship`.",
+        );
+        process.exit(2);
+    }
+    const DEMO_URL = process.env.GLASS_UI_DEMO_URL ?? "http://127.0.0.1:5199";
+    let served = false;
+    try {
+        served = (await fetch(DEMO_URL, { signal: AbortSignal.timeout(2000) })).ok;
+    } catch {
+        served = false;
+    }
+    if (!served) {
+        console.error(
+            `[gates --run ship] no served demo at ${DEMO_URL} — run \`npm run demo:serve\` ` +
+                "(vite --port 5199) first. Fail-CLOSED (never a silent green).",
+        );
+        process.exit(2);
+    }
+    console.error(
+        "[gates --run ship] FAIL-CLOSED — the live Metal roster capture + the UNMASKED_RENDERER " +
+            "anti-SwiftShader guard + the band re-apply + the committed SHIP-ATTESTATION.json is BG.W-CUT's " +
+            "ceremony body (composing scripts/lib/gl-renderer-probe.mjs + scripts/proof-ship-attestation.mjs " +
+            "computeSurfaceHash). Arm B (proof:ship-attestation, the device-free bypass-closer registered " +
+            "['ci','release']) is the binding tag enforcer and is LANDED. No attestation written (trap-clean).",
+    );
+    process.exit(1);
+}
+
 // ── BB.W-VISUAL-RUNNER — the `--run pi` visual-π runner mode ───────────────────
 //
 // `pi` is NOT a gate-tag aggregate (it does not pass through gatesFor): it is a
@@ -2486,7 +2534,8 @@ if (isMain) {
     // `pi` is the SPEC-runner mode (BB.W-VISUAL-RUNNER) — it spawns the enrolled
     // visual-π set, NOT a gatesFor aggregate. It dispatches off the runMode/list
     // branches BEFORE the gate-tag path so `gatesFor("pi")` is never consulted.
-    if (arg === "--run" && argv[3] === "pi") runPi();
+    if (arg === "--run" && argv[3] === "ship") runShip();
+    else if (arg === "--run" && argv[3] === "pi") runPi();
     else if (arg === "--run") runMode(argv[3]);
     else if (arg === "--verify-ci") verifyCi();
     else if (arg === "--emit-ci") emitCi();
@@ -2500,7 +2549,7 @@ if (isMain) {
         );
     } else {
         console.error(
-            "usage: gates.mjs --run <local|ci|release|full|pi> | --verify-ci | --emit-ci | --list <mode|pi>",
+            "usage: gates.mjs --run <local|ci|release|full|pi|ship> | --verify-ci | --emit-ci | --list <mode|pi>",
         );
         process.exit(2);
     }

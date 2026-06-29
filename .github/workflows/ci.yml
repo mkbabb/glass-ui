@@ -135,6 +135,8 @@ jobs:
               run: npm run proof:strict-templates
             - name: proof:peer-optional
               run: npm run proof:peer-optional
+            - name: proof:ship-attestation
+              run: npm run proof:ship-attestation
             - name: proof:no-layout-animation
               run: npm run proof:no-layout-animation
             - name: proof:css-critical
@@ -439,6 +441,12 @@ jobs:
               run: npm run proof:ba-gestalt
             - name: proof:bc-fold-ledger
               run: npm run proof:bc-fold-ledger
+            - name: proof:bg-deferred-ledger
+              run: npm run proof:bg-deferred-ledger
+            - name: proof:git-hygiene
+              run: npm run proof:git-hygiene
+            - name: proof:be-bf-ledger
+              run: npm run proof:be-bf-ledger
             - name: proof:observer-loop
               run: npm run proof:observer-loop
             - name: proof:black-bar
