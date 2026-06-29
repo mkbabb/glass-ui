@@ -17,24 +17,6 @@ export interface PaperBackdropProps {
     opacity?: number | string;
     /** Override turbulence frequency (advisory only — swaps the texture var). */
     frequency?: PaperBackdropFrequency;
-    /**
-     * BD.W-PAGE-FIELD — mount the WARM COLORFUL FIELD plane beneath the grain.
-     * When set, a `.paper-field` cel plane (amber→terracotta→sand at FIELD
-     * lightness, drifting on the compositor) paints UNDER the grain, so every
-     * glass surface over it reads transmissive/warm instead of gray. The grain
-     * rides ON TOP at its multiply opacity — one backdrop, two stacked planes.
-     * Opt-in (presets-in-consumers demo-chassis contract); the library glass
-     * primitive is UNCHANGED.
-     */
-    field?: boolean;
-    /**
-     * The warm route hue request (any degree). The field CLAMPS it to the warm
-     * band [25,95] IN THE CSS, so a cool/teal value cannot paint cool. Wire
-     * `warmFieldHue(category)` here per route.
-     */
-    fieldHue?: number | string;
-    /** The field rung intensity (0.85 ground / 1.0 vivid hero / 0 = neutral). */
-    fieldIntensity?: number | string;
     /** Additional class names. */
     class?: HTMLAttributes["class"];
 }
@@ -51,28 +33,11 @@ const inlineStyle = computed(() => {
     }
     return s;
 });
-
-/** The warm-field plane's inline drive props (`--field-h-raw` / intensity). */
-const fieldStyle = computed(() => {
-    const s: Record<string, string> = {};
-    if (props.fieldHue !== undefined) {
-        s["--field-h-raw"] = String(props.fieldHue);
-    }
-    if (props.fieldIntensity !== undefined) {
-        s["--field-intensity"] = String(props.fieldIntensity);
-    }
-    return s;
-});
 </script>
 
 <template>
-    <!-- BD.W-PAGE-FIELD — the warm cel field plane UNDER the grain (opt-in). -->
-    <div
-        v-if="props.field"
-        class="paper-field"
-        :style="fieldStyle"
-        aria-hidden="true"
-    />
+    <!-- BG.W-FIELD-AURORA — pure grain register (the `.paper-field` plane is
+         retired; the warm field is the shell <Aurora>). -->
     <div
         :class="cn('paper-underpaint', props.class)"
         :style="inlineStyle"

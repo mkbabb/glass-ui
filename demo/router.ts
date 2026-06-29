@@ -1,6 +1,20 @@
+import { ref } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
 import { CATEGORIES, firstStoryPath } from "./stories/manifest";
+import { isFocalRoute } from "./stories/focal";
+
+/**
+ * BG.W-FIELD-AURORA (M2) — the shell-field gate. `false` on a FOCAL route (the
+ * route owns its own route-dominant GL field → the shell `<Aurora>` stands down,
+ * so exactly ONE GL context is mounted per route — the never-2-contexts law).
+ * Flipped in `router.afterEach` on the COMMITTED route (not the live `route.meta`
+ * computed) so a non-focal→non-focal nav stays `false→false` and the shell node
+ * PERSISTS (the per-route hue re-uploads on the persisted node, no reparent). The
+ * `afterEach` fires during `router.isReady()` (the initial navigation) BEFORE the
+ * app mounts, so the first paint already reflects the correct shell state.
+ */
+export const shellFieldActive = ref(true);
 
 /**
  * Routes are derived from the manifest. Every category produces a
@@ -33,6 +47,9 @@ function buildRoutes(): RouteRecordRaw[] {
                           categoryId: category.id,
                           landing: true,
                           title: category.title,
+                          // BG.W-FIELD-AURORA (M2) — the landing's focal flag,
+                          // derived from its resolved section-landing background.
+                          focal: isFocalRoute(category.id, category.landing?.background),
                       },
                   }
                 : {
@@ -51,6 +68,10 @@ function buildRoutes(): RouteRecordRaw[] {
                     categoryId: category.id,
                     storyId: story.id,
                     title: story.title,
+                    // BG.W-FIELD-AURORA (M2) — the route's focal flag (GL
+                    // background.kind OR a SELF_STAGES_GL dock route). On a focal
+                    // route the shell aurora stands down (the one-GL law).
+                    focal: isFocalRoute(`${category.id}/${story.id}`, story.background),
                 },
             });
         }
@@ -75,6 +96,15 @@ export const router = createRouter({
     // window) owns route scroll, so a window scroll-reset is a no-op double-fire of the
     // AppShell `route.path` watch that scrolls `mainEl` to the top. The ONE scroll-reset
     // owner is the AppShell watch.
+});
+
+// BG.W-FIELD-AURORA (M2) — flip the shell-field gate on the COMMITTED route. The
+// shell `<Aurora>` mounts IFF the destination is NOT focal, so a focal route's own
+// route-dominant GL field is the ONLY mounted context (the never-2-contexts law).
+// Reading the committed `to.meta.focal` (not a live computed) means a non-focal→
+// non-focal nav stays `false→false` and the shell node persists (no reparent).
+router.afterEach((to) => {
+    shellFieldActive.value = !to.meta?.focal;
 });
 
 // W-NAV-DOCK-FIX (defect 7) — eager-resolve the lazy component of the FIRST navigation

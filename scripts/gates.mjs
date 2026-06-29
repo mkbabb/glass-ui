@@ -726,6 +726,18 @@ export const GATES = [
         note: "BG.W-ROUTE-TRANSITION (re-scoped hygiene) — under the bare keyed swap the Vue 'non-element root' <Transition> warning cannot fire, so this asserts every ROUTED SFC (manifest rows + SectionLanding + NotFound) has an ELEMENT root that can carry the .route-enter on-mount entrance class (flags a text-only / interpolation-only / empty / teleport-only root). 7-bite self-test incl. the planted text-root flag. Bite: a routed module with a non-element root → RED",
     },
     {
+        id: "proof:no-paper-field",
+        cmd: "proof:no-paper-field",
+        tags: ["local", "ci", "release"],
+        note: "BG.W-FIELD-AURORA (M2) — the `.paper-field` CSS plane is RETIRED onto the ONE recessive shell <Aurora> (a vividness:0 painterly field), SURGICALLY: the grain register SURVIVES. Comment-blind SOURCE arms — W1 the `.paper-field` recipe/`@keyframes field-cel-drift` ABSENT from paper.css, W2 the field props (`field`/`fieldHue`/`fieldIntensity`/`fieldStyle`) ABSENT from PaperBackdrop.vue, W3 the `@property --field-h-raw`/`--field-intensity` regs ABSENT from property-regs.css, W4 the grain register PRESENT (`.paper-underpaint`/`.paper-grain-overlay::after` + `--paper-grain-tooth` + the PRT opacity:0 grain rule — the blind-delete trap), W5 the BG.W-PAPER-GRAIN-OPTIN demote (advisory until wave 2.5 flips GRAIN_OPTIN_ACTIVE). 5-bite --self-test (each absence/presence detector has teeth). Bite: a `.paper-field` rule/keyframes survives → W1 RED; a blind delete orphans the grain → W4 RED",
+    },
+    {
+        id: "proof:focal-complete",
+        cmd: "proof:focal-complete",
+        tags: ["local", "ci", "release"],
+        note: "BG.W-FIELD-AURORA (M2) — the route-FOCAL enumeration is CONSISTENT (NOT the runtime one-GL law — the close hinges on the LIVE monotonic-GL capture). C1 router.ts threads `isFocalRoute` into `meta.focal` for the story routes AND the section landings, C2 SELF_STAGES_GL ⊇ the committed grep of `<DockStage` over the routed SFCs (a SELF-STAGE route mounting GL outside `background` MUST be enrolled — the silent shell+DockStage=2-GL drift is closed), C3 the resolver is TOTAL (GL_BG_KINDS carries the 4 full-bleed GL kinds, every GL-kind row resolves focal by construction). --self-test planted bite: drop a DockStage route from SELF_STAGES_GL → C2 RED. Bite: add a DockStage route without enrolling it → C2 RED",
+    },
+    {
         id: "proof:demo-radial-calm",
         cmd: "proof:demo-radial-calm",
         tags: ["local", "ci"],

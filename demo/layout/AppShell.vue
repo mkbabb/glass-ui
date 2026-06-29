@@ -10,6 +10,7 @@ import {
     DialogTitle,
 } from "@glass/components/ui/dialog";
 import { PaperBackdrop } from "@glass/components/custom/paper-backdrop";
+import { Aurora } from "@glass/components/custom/aurora";
 import { Button } from "@glass/components/ui/button";
 import { Switch } from "@glass/components/ui/switch";
 import {
@@ -34,6 +35,8 @@ import {
 } from "@glass/composables/keyboard";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
 import { warmFieldHue } from "../stories/warm-field";
+import { shellAuroraConfig as buildShellAuroraConfig } from "../stories/aurora-hero";
+import { shellFieldActive } from "../router";
 import { PresetEditor } from "../configurator";
 import SidebarDock from "./SidebarDock.vue";
 import BottomDock from "./BottomDock.vue";
@@ -215,15 +218,23 @@ watch(
 // the bare keyed atomic swap makes redundant). The functional `toggleShellMorph` VT
 // (the dock-morph crossfade) is KEPT.
 
-// BD.W-PAGE-FIELD / BD.W-FIELD-SCRIPT — the per-route WARM COLORFUL FIELD hue.
-// The chassis writes ONE warm number per route into the mounted <PaperBackdrop>;
-// `warmFieldHue` derives it from the route's category via the ONE documented
-// `categoryHue` source (NO third color registry), warm-projected into [25,95]
-// (paint-clamped again in paper.css, so cool is unrepresentable). Every category
-// route is enrolled; the field is the calm CSS floor behind every glass surface.
+// BG.W-FIELD-AURORA (M2) — the per-route WARM FIELD hue feeds the ONE shell
+// `<Aurora>` (the retired `.paper-field` CSS plane's successor). `warmFieldHue`
+// derives the number from the route's category via the ONE documented `categoryHue`
+// source (NO third color registry), warm-projected into [25,95] (cool is
+// unrepresentable). `shellAuroraConfig` is a recessive vividness:0 aurora on that
+// hue; it re-uploads on the persisted shell node per non-focal nav (no re-mount).
 const fieldHue = computed(() =>
     warmFieldHue(String(route.meta?.categoryId ?? "foundations")),
 );
+const shellAuroraConfig = computed(() => buildShellAuroraConfig(fieldHue.value));
+
+// The shell field is a recessive enhancement, NEVER a legibility dependency — a GL
+// init failure leaves the placeholder/cream floor, logged but non-fatal (the M0
+// onInitError contract threaded onto every Aurora mount).
+function onShellAuroraError(err: Error): void {
+    console.error("[demo] shell aurora init failed", err);
+}
 
 // BG.W-ROUTE-TRANSITION — the BD.W-SHELL-ROUTE-BLOOM skeleton + bloom-find-child watch
 // are DELETED. vue-router awaits each lazy `component: () => import()` DURING navigation,
@@ -285,10 +296,25 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <!-- The grain wrapper drops `bg-background`: the warm `.paper-field` plane
-         now owns the opaque floor (it ends in --neutral-0), so the grain must
-         stay transparent or it would occlude the field. -->
-    <PaperBackdrop field :field-hue="fieldHue" class="fixed inset-0 -z-10" />
+    <!-- BG.W-FIELD-AURORA (M2) — the ONE shell field: a recessive `<Aurora>` that
+         paints behind every NON-focal route (replacing the retired `.paper-field`
+         CSS plane). Mounted IFF `shellFieldActive` (false on a focal route whose own
+         GL field is the only context — the never-2-contexts law). The per-route hue
+         re-uploads on the persisted node; `opacity-ceiling` recedes it behind the
+         page glass. The grain rides ON TOP at its multiply/screen opacity — one
+         backdrop, two stacked planes (the field below, the grain over). -->
+    <Aurora
+        v-if="shellFieldActive"
+        :config="shellAuroraConfig"
+        :opacity-ceiling="0.5"
+        :on-init-error="onShellAuroraError"
+        class="shell-aurora fixed inset-0 -z-10"
+        aria-hidden="true"
+    />
+    <!-- The universal grain register (BG.W-PAPER-GRAIN-OPTIN demotes this to opt-in
+         next). Grain-only — the `.paper-field` props are retired; the warm field is
+         the shell aurora above. -->
+    <PaperBackdrop class="fixed inset-0 -z-10" />
 
     <!-- BD.W-MORPH-FIELD-WELD (M1) — the ONE library goo `<filter>` mount, ONCE at the
          shell root. It exposes EVERY library metaball id off one byte-identical sRGB graph
@@ -298,7 +324,15 @@ onBeforeUnmount(() => {
          twice dups the ids, so it lives HERE once and every route's morph reaches it. -->
     <GooFilter />
 
-    <div class="relative flex h-screen overflow-hidden text-foreground">
+    <!-- BG.W-FIELD-AURORA (C7) — `data-paper-field` on the CONTENT ANCESTOR of
+         <main> (NOT the fixed Aurora sibling). The `cards.css` opaque-fallback
+         suppressor + the `liquid-morph.css` ambient-tint seam are DESCENDANT
+         selectors reading this attr, so it must sit above the cards. Set only while
+         the shell field is active (a focal route's own field needs no suppression). -->
+    <div
+        class="relative flex h-screen overflow-hidden text-foreground"
+        :data-paper-field="shellFieldActive ? '' : null"
+    >
         <!-- Fixed vertical sidebar rail dock (off-canvas below the mobile
              breakpoint — see dock-nav.css; the BottomDock owns the off-canvas
              Sheet trigger). -->

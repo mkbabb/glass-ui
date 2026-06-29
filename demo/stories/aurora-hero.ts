@@ -221,3 +221,42 @@ export function heroAuroraConfig(palette: HeroPaletteKey): AuroraConfig {
         saturation: 0.95,
     };
 }
+
+/**
+ * BG.W-FIELD-AURORA (M2) — the SHELL field config: the ONE recessive aurora that
+ * paints behind every NON-focal route, replacing the retired `.paper-field` CSS
+ * plane. The hue is the route's `warmFieldHue(categoryId)` (already warm-projected
+ * into [25,95]); the shell re-uploads it on the persisted node per route.
+ *
+ * The material is RECESSIVE — "sunrise behind frosted glass", NOT the brand-vivid
+ * studio register. TWO mandatory legs:
+ *   - `vividness: 0` — neuters the shader re-pigment FLOOR (aurora.frag VIVID_TARGET
+ *     0.115 lifts every pale fragment to C≥0.115 whenever uVividness>0); without it
+ *     the recessive palette is re-saturated past the C≤0.10 ceiling.
+ *   - an EXPLICIT recessive C 0.04–0.07 palette (NOT a hue-rotation of
+ *     `DEFAULT_AURORA_CONFIG`, whose C 0.16/0.13/0.095 zones paint C>0.10 at the
+ *     worst-cool sand projections). Measured OKLab C max well under the 0.10 ceiling.
+ * The drift is the calm hero band (breathPeriod 48, low nuclei/palette drift) so the
+ * field reads effectively static (WCAG 2.2.2 by being non-animated — no pause
+ * control owed on the shell field; the in-/substrates focal auroras keep theirs).
+ */
+export function shellAuroraConfig(hue: number): AuroraConfig {
+    const h = clampWarm(hue);
+    return {
+        ...DEFAULT_AURORA_CONFIG,
+        // The EXPLICIT recessive palette — a warm spread on the ONE route hue, all
+        // chroma ≤ 0.07 so even the warm-projected worst-cool sand stays under the
+        // C≤0.10 ceiling (no conic foil, no brown, no speckle).
+        palette: [
+            { L: 0.9, C: 0.06, h }, // the route hue — the dominant warm wash
+            { L: 0.88, C: 0.07, h: clampWarm(h + 14) }, // a warmer neighbour
+            { L: 0.92, C: 0.05, h: clampWarm(h - 10) }, // a cooler-warm neighbour
+            { L: 0.94, C: 0.04, h: 40 }, // the warm-cream settle tail
+        ],
+        vividness: 0,
+        breathPeriod: 48,
+        nucleiDrift: 0.012,
+        paletteDrift: 0.012,
+        saturation: 0.95,
+    };
+}

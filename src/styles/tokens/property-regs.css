@@ -218,29 +218,11 @@
     initial-value: 0px;
 }
 
-/* BD.W-PAGE-FIELD — the warm colorful FIELD drive props (paper.css `.paper-field`).
-   The chassis writes ONE per-route hue (`--field-h-raw`) on the `[data-paper-field]`
-   wrapper; `.paper-field` CLAMPS it warm IN THE CSS (`clamp(25, raw, 95)`) so an
-   inline `--field-h-raw:210` paint-CANNOT go teal — the warm-bound is a paint-layer
-   invariant, not a TS-only convention.
-   • --field-h-raw (<number>, inherits:true) — the route's raw hue request. Inherits so
-     the wrapper sets it once and every `.paper-field` descendant resolves it. Initial 62
-     (warm amber — the canonical cream identity).
-   • --field-intensity (<number>, inherits:true) — the ground/hero rung scalar (0.85
-     ground, 1.0 vivid hero, 0 under prefers-reduced-transparency → the warm stops drop
-     and the decoupled --neutral-0 floor shows). Inherits so a hero surface can lift it
-     on a sub-tree. */
-@property --field-h-raw {
-    syntax: "<number>";
-    inherits: true;
-    initial-value: 62;
-}
-
-@property --field-intensity {
-    syntax: "<number>";
-    inherits: true;
-    initial-value: 0.85;
-}
+/* BD.W-PAGE-FIELD — the warm colorful FIELD drive props (`--field-h-raw` /
+   `--field-intensity`) are RETIRED with the `.paper-field` plane (BG.W-FIELD-AURORA).
+   The shell `<Aurora>` field carries the per-route warm hue now (a JS uniform on the
+   AuroraConfig palette, not a CSS @property), so these registrations are dead. Clean
+   break, no alias — `proof:no-paper-field` asserts both regs ABSENT. */
 
 /* BB.W-LENSING `--glass-refract` axis — RETIRED (DDR-LENS-BAKE, glass-refract.css).
    The axis drove the `feDisplacementMap` `scale` by splicing `var(--glass-refract)`
