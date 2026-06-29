@@ -18,9 +18,11 @@
 //      type/constant surfaces; §3 of the wave spec).
 //   2. ENUMERATE the demonstrated set. Walk every story SFC under
 //      demo/stories/<category>/ and collect every identifier IMPORTED from a
-//      `.../src/...` path (named imports + default `*.vue` imports). The story
-//      import graph IS the story→component mapping (no manifest row declares
-//      `sourceFiles`).
+//      library-source path — EITHER the legacy deep-relative `.../src/...` form
+//      OR the BH.B2.0 `@glass/...` alias (`@glass/* -> src/*`; the codemod
+//      re-pointed all 492 demo imports onto it) — named imports + default
+//      `*.vue` imports. The story import graph IS the story→component mapping
+//      (no manifest row declares `sourceFiles`).
 //   3. ASSERT TOTALITY. Every component export must appear in the demonstrated
 //      set OR in the documented COMPOSED_BY allowlist (an internal sub-component
 //      a parent variant-dispatcher renders — barrel-exported for typing/forwarding
@@ -173,12 +175,28 @@ export function collectComponentExports(barrels, fs) {
 }
 
 /**
- * Walk demo/stories/** and collect every identifier imported from a `…/src/…`
- * path (named imports + default `*.vue` imports). The story import graph is the
+ * Walk demo/stories/** and collect every identifier imported from a library
+ * source path (named imports + default `*.vue` imports). A library-source
+ * specifier is EITHER the legacy deep-relative `…/src/…` form OR the
+ * BH.B2.0 `@glass/…` alias (`@glass/* -> src/*`, the codemod re-pointed all 492
+ * demo imports onto it — tsconfig `paths` + vite/vitest `resolve.alias`); the
+ * enumerator resolves BOTH the same way the build planes do, so a `@glass`
+ * import is NOT a false "zero demonstration". The story import graph is the
  * story → component mapping. Pure given fs injection.
  */
 export function collectDemonstrated(storiesDir, fs) {
     const demonstrated = new Set();
+    // A library-source specifier head: `…/src/` (legacy deep-relative) OR
+    // `@glass/` (the BH.B2.0 alias). Either prefix anchors the import path.
+    const LIB_SRC = String.raw`(?:[^"]*\/src\/|@glass\/)`;
+    const namedRe = new RegExp(
+        String.raw`import\s+(?:type\s+)?\{([^}]+)\}\s+from\s+"(${LIB_SRC}[^"]+)"`,
+        "g",
+    );
+    const defaultVueRe = new RegExp(
+        String.raw`import\s+(\w+)\s+from\s+"(${LIB_SRC}[^"]+\.vue)"`,
+        "g",
+    );
     const walk = (dir) => {
         for (const entry of fs.readdirSync(dir)) {
             const full = resolve(dir, entry);
@@ -189,19 +207,17 @@ export function collectDemonstrated(storiesDir, fs) {
     };
     const collectFromFile = (file) => {
         const src = fs.readFileSync(file, "utf8");
-        // Named imports from any src path: import { A, B as C } from ".../src/…"
-        for (const m of src.matchAll(
-            /import\s+(?:type\s+)?\{([^}]+)\}\s+from\s+"([^"]*\/src\/[^"]+)"/g,
-        )) {
+        // Named imports from a library-source path:
+        //   import { A, B as C } from "@glass/…"  (or ".../src/…")
+        for (const m of src.matchAll(namedRe)) {
             for (const id of m[1].split(",")) {
                 const name = id.trim().split(/\s+as\s+/).pop()?.trim();
                 if (name) demonstrated.add(name);
             }
         }
-        // Default import from a src .vue: import X from ".../src/….vue"
-        for (const m of src.matchAll(
-            /import\s+(\w+)\s+from\s+"([^"]*\/src\/[^"]+\.vue)"/g,
-        )) {
+        // Default import from a library-source .vue:
+        //   import X from "@glass/….vue"  (or ".../src/….vue")
+        for (const m of src.matchAll(defaultVueRe)) {
             demonstrated.add(m[1]);
         }
     };

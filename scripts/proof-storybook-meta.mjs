@@ -68,8 +68,11 @@
 //        M9b raw-<button> census + the NON-REGRESSION RATCHET (same FIX-vs-MEASURE split;
 //            the configurator/control panes are allowlisted; a NEW raw button reds).
 //        M9c the SHELL composes shipped controls (the UN-OWNED-until-now sweep —
-//            no btn-pill chain, no raw type=checkbox, no raw "Pick a story" card;
-//            the <kbd> help chip is the recorded KISS-KEEP). THIS WAVE'S OWN FIX.
+//            no btn-pill chain, no raw type=checkbox, and the standing dogfood is the
+//            shipped <GlassDock> the SHELL frames every route with — the no-match
+//            "Pick a story" <Card> empty-state was retired with the route freeze; the
+//            negative guard bars its re-introduction; the <kbd> help chip is the
+//            recorded KISS-KEEP). THIS WAVE'S OWN FIX.
 //        M9d <StorySectionHeader> exists + composes <IconChip> (no inline-style
 //            chip re-paste — proof:icon-chip D4) + <SectionPreviewCard> composes
 //            ≥2 primitives (the bento dogfood exemplar). THIS WAVE'S OWN MINT/VERIFY.
@@ -392,14 +395,20 @@ function detectShellDogfood(overrides = {}) {
     const noBtnPill = !/\bbtn-pill\b/.test(s);
     // NO raw <input type="checkbox"> (the liquid-preview toggle composes <Switch>).
     const noRawCheckbox = !/<input[^>]*type=["']checkbox["']/.test(s);
-    // NO raw "Pick a story" rounded-[…] border bg-background/40 empty-state card
-    // (it composes <Card>). The detectable signature: a `bg-background/40` paired
-    // with `rounded-[` on a div.
+    // NO raw "Pick a story" rounded-[…] border bg-background/40 empty-state card.
+    // (The no-match empty-state branch — and AppShell's <Card> import with it — was
+    // retired with the route freeze; this NEGATIVE guard bars a hand-rolled
+    // re-introduction. The detectable signature: a `bg-background/40` paired with
+    // `rounded-[` on a div.)
     const noRawEmptyCard = !/rounded-\[[^\]]*\][^>]*\bborder\b[^>]*bg-background\/40/.test(s);
-    // POSITIVE: the SHELL imports the shipped controls.
+    // POSITIVE: the SHELL composes the shipped glass controls. The morph toggle is
+    // <Button>, the liquid-preview toggle is <Switch>, and the chrome the SHELL frames
+    // EVERY route with is the shipped <GlassDock> family — the route-freeze retired the
+    // <Card> empty-state, so the dock IS the SHELL's standing glass-component dogfood
+    // (a component AppShell actually mounts, the highest-visibility surface on screen).
     const importsButton = /import\s*\{[^}]*\bButton\b[^}]*\}\s*from\s*["'][^"']*\/button["']/.test(s);
     const importsSwitch = /import\s*\{[^}]*\bSwitch\b[^}]*\}\s*from\s*["'][^"']*\/switch["']/.test(s);
-    const importsCard = /import\s*\{[^}]*\bCard\b[^}]*\}\s*from\s*["'][^"']*\/card["']/.test(s);
+    const importsDock = /import\s*\{[^}]*\bGlassDock\b[^}]*\}\s*from\s*["'][^"']*\/dock["']/.test(s);
     return {
         pass:
             noBtnPill &&
@@ -407,13 +416,13 @@ function detectShellDogfood(overrides = {}) {
             noRawEmptyCard &&
             importsButton &&
             importsSwitch &&
-            importsCard,
+            importsDock,
         noBtnPill,
         noRawCheckbox,
         noRawEmptyCard,
         importsButton,
         importsSwitch,
-        importsCard,
+        importsDock,
     };
 }
 
@@ -565,8 +574,8 @@ function selfTest(sources) {
             appshell: `
                 import { Button } from "../../src/components/ui/button";
                 import { Switch } from "../../src/components/ui/switch";
-                import { Card } from "../../src/components/ui/card";
-                <Button>x</Button><Switch /><Card />
+                import { GlassDock } from "../../src/components/custom/dock";
+                <Button>x</Button><Switch /><GlassDock />
                 <kbd class="font-mono text-xs">K</kbd>`,
         });
         if (r.pass) flagged++;
@@ -690,8 +699,8 @@ add(
     "m9c-shell-dogfood",
     m9c.pass,
     m9c.pass
-        ? "the demo SHELL (AppShell.vue) composes the shipped controls — the morph toggle is <Button> (no btn-pill chain), the liquid-preview toggle is <Switch> (no raw type=checkbox), the empty state is <Card> (no raw bg-background/40 div); the <kbd> help chip is the recorded KISS-KEEP. The highest-visibility dogfood miss (the SHELL frames every route), UN-OWNED until now"
-        : `the SHELL hand-rolls a shipped control (no-btn-pill=${m9c.noBtnPill} no-raw-checkbox=${m9c.noRawCheckbox} no-raw-empty-card=${m9c.noRawEmptyCard} imports-Button=${m9c.importsButton} imports-Switch=${m9c.importsSwitch} imports-Card=${m9c.importsCard})`,
+        ? "the demo SHELL (AppShell.vue) composes the shipped controls — the morph toggle is <Button> (no btn-pill chain), the liquid-preview toggle is <Switch> (no raw type=checkbox), and the chrome the SHELL frames every route with is the shipped <GlassDock> (no raw bg-background/40 empty-state div survives the route freeze); the <kbd> help chip is the recorded KISS-KEEP. The highest-visibility dogfood miss (the SHELL frames every route), UN-OWNED until now"
+        : `the SHELL hand-rolls a shipped control (no-btn-pill=${m9c.noBtnPill} no-raw-checkbox=${m9c.noRawCheckbox} no-raw-empty-card=${m9c.noRawEmptyCard} imports-Button=${m9c.importsButton} imports-Switch=${m9c.importsSwitch} imports-Dock=${m9c.importsDock})`,
 );
 
 // M9d

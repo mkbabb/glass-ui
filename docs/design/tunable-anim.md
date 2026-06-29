@@ -118,7 +118,6 @@ them is kind 1.
 | progress crescendo | `--progress-crescendo` | 0 | [0,1] | the progress value |
 | phase tint | `--phase-tint-amount` | 0% | [0%,100%] | the instrument-chassis phase |
 | reveal blur | `--glass-reveal-blur` | 4px | [0,8px] | per-instance |
-| page-build stagger | `--scroll-build-step` | 90ms | [0,200ms] | consumer override (scroll-choreography) |
 | cascade rise | `--scroll-cascade-rise` | 1.25rem | per-instance | override |
 | cascade window | `--scroll-cascade-range-end` | 45% | [0%,100%] | override |
 | scroll-pin lift | `--scroll-pin-lift` | 2.5rem | per-instance | override |

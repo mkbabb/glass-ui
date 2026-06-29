@@ -17,9 +17,8 @@ import { defineConfig } from "vite";
 //
 // The demo entry is the REPO-ROOT `index.html` (which loads `/demo/main.ts`),
 // so `root` is the repo root, NOT `demo/`. Styles come through `demo.css`
-// (`@import "tailwindcss" source("../demo")` + `@import "../src/styles/
-// index.css"`) processed by the Tailwind v4 vite plugin — no `publishStyleAssets`
-// needed.
+// (the Tailwind v4 `@import` of the demo source plus the library style cascade)
+// processed by the Tailwind v4 vite plugin — no `publishStyleAssets` needed.
 const repoRoot = resolve(__dirname, "..");
 
 export default defineConfig({

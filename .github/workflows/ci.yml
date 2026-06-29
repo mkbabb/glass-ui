@@ -119,6 +119,10 @@ jobs:
               run: npm run proof:suffuse2
             - name: proof:colocation
               run: npm run proof:colocation
+            - name: proof:alias-codemod
+              run: npm run proof:alias-codemod
+            - name: proof:subpath-classify
+              run: npm run proof:subpath-classify
             - name: proof:claude-structure-sync
               run: npm run proof:claude-structure-sync
             - name: proof:tailwind-v4-idiom
@@ -199,6 +203,16 @@ jobs:
               run: npm run proof:storybook-ia
             - name: proof:no-orphan-demo-route
               run: npm run proof:no-orphan-demo-route
+            - name: proof:route-confounder
+              run: npm run proof:route-confounder
+            - name: proof:route-single-root
+              run: npm run proof:route-single-root
+            - name: proof:no-paper-field
+              run: npm run proof:no-paper-field
+            - name: proof:focal-complete
+              run: npm run proof:focal-complete
+            - name: proof:field-accent-reconcile
+              run: npm run proof:field-accent-reconcile
             - name: proof:demo-radial-calm
               run: npm run proof:demo-radial-calm
             - name: proof:font-canon
@@ -275,6 +289,8 @@ jobs:
               run: npm run proof:glass-cohesion
             - name: proof:component-orphan
               run: npm run proof:component-orphan
+            - name: proof:consumer-evidence-live
+              run: npm run proof:consumer-evidence-live
             - name: proof:substrate-staging
               run: npm run proof:substrate-staging
             - name: proof:easter-eggs
@@ -333,6 +349,8 @@ jobs:
               run: npm run proof:paper-grid
             - name: proof:display-tracking
               run: npm run proof:display-tracking
+            - name: proof:external-payload
+              run: npm run proof:external-payload
             - name: proof:drag-morph
               run: npm run proof:drag-morph
             - name: proof:scroll-motion
@@ -477,6 +495,8 @@ jobs:
               run: npm run proof:affordance-map
             - name: proof:tunable-anim
               run: npm run proof:tunable-anim
+            - name: proof:design-docs-files
+              run: npm run proof:design-docs-files
             - name: proof:split-chars
               run: npm run proof:split-chars
             - name: proof:motion-presets
@@ -577,6 +597,8 @@ jobs:
               run: npm run proof:ghost-dashed
             - name: proof:hero-audacious
               run: npm run proof:hero-audacious
+            - name: proof:hero-fit
+              run: npm run proof:hero-fit
             - name: proof:code-blocks
               run: npm run proof:code-blocks
             - name: proof:separator-fix

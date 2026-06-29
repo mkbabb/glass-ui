@@ -1,4 +1,4 @@
-# BG.W-DEFERRED-LEDGER — the no-silent-drop fold ledger (136 DERIVED items)
+# BG.W-DEFERRED-LEDGER — the no-silent-drop fold ledger (135 DERIVED items)
 
 > Every chronically-deferred + booked-to-successor item across the tranche docs is DERIVED from disk
 > (the AX DISPOSITION-REGISTER, the BF DEFERRED-CENSUS, the BE/BF wave-spec dirs, the in-`src`
@@ -8,8 +8,8 @@
 > `proof:bg-deferred-ledger` (the 3 teeth: charter-match · templated-evidence · concentration-ceiling).
 > The doc⟷JSON parity is asserted; this `.md` is generated from `FOLD-LEDGER.json`.
 
-**Corpus:** AX 31 + BF-census 32 + BE-waves 39 + BF-waves 31 + in-src 3 = **136** (disjoint namespaces).
-**Dispositions:** RETIRE 12 · MET 12 · COORDINATED 74 · DEFER-with-trigger 35 · SUPERSEDED 3.
+**Corpus:** AX 31 + BF-census 32 + BE-waves 39 + BF-waves 31 + in-src 2 = **135** (disjoint namespaces).
+**Dispositions:** RETIRE 12 · MET 12 · COORDINATED 74 · DEFER-with-trigger 34 · SUPERSEDED 3.
 **Max destination concentration:** 19 (ceiling 24).
 
 
@@ -170,10 +170,9 @@
 | `BF.W-TAB-IOS-CAPSULE` | DEFER-with-trigger | _(defer)_ a DockTabBar consumer wants the dock-tab capsule arm |
 | `BF.W-VH-COMPOSE` | SUPERSEDED | `BG.W-DOCK-INPLACE-MORPH` |
 
-## In-`src` CONSUME/BOOKED markers (3 — `.ts`/`.vue` only)
+## In-`src` CONSUME/BOOKED markers (2 — `.ts`/`.vue` only)
 
 | id | disposition | dest / trigger |
 |---|---|---|
-| `src/composables/motion/useDragMorph.ts#CONSUME#kf-snap` | DEFER-with-trigger | _(defer)_ keyframes.js republishes `DragOptions.snap`+`bounds`+`rubberBand` past 4.3.0 |
 | `src/components/custom/dock/DockLayerGroup.vue#BOOKED#ay-w-god1` | COORDINATED | `BG.W-DOCK-DECOMPOSE` |
 | `src/components/custom/dock/composables/useLayerTransition.ts#BOOKED#ay-w-god1` | COORDINATED | `BG.W-DOCK-MORPH-UNIFY` |

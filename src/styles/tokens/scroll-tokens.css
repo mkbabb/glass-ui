@@ -31,9 +31,10 @@
        route entrance is now the bare keyed `<component class="route-enter">` on-mount
        `@keyframes` in transitions.css, NOT a per-child staggered scroll-build). The
        `--scroll-build-rise`/`--scroll-build-step` tokens are deleted with it; the ONE
-       surviving reader (the StoryHero `<h1>` entrance rise) re-points onto this
-       `--story-hero-rise` distance token (the hero-title register's own rise). */
-    --story-hero-rise: 1.5rem;
+       surviving reader (the StoryHero `<h1>` entrance rise) owns its own
+       `--story-hero-rise` distance with an inline fallback default
+       (`translateY(var(--story-hero-rise, 1.5rem))` in demo/stories/story-hero.css),
+       so the library mints no src token here (the demo register's own knob). */
     /* .scroll-cascade — the orchestrated section cascade (the per-child view()
        timeline, the spring-clocked coupled build). The rise lifts the bare
        --scroll-reveal-rise 6px to a perceptible SOTA build; the range-end is the

@@ -20,7 +20,7 @@
 // This gate owns the axis those two do not encode: WHICH ENGINE (the kf spine + its
 // sanctioned off-spine SET), WHICH CLOCK (every spring leg on its OWN
 // `--spring-<name>-duration`, never a generic `--duration-*`, with the coupled
-// fade), and WHICH EXCEPTION (the two named seams + the viz feeds-not-owns
+// fade), and WHICH EXCEPTION (the named off-spine seam + the viz feeds-not-owns
 // inversion). The CURVE-SHAPE arm (abrupt-vs-eased) is BC.W-SPRING-EASE's S6 — the
 // disjoint complement on the same swept corpus; the two share the catch-set + the
 // audited layout-reclaim allowlist, split which-arm owns it (no double-gate).
@@ -36,9 +36,10 @@
 //        a hand-rolled spring/lerp/damping integrator OUTSIDE the kf spine — a rAF
 //        step-loop + damping math with NO `@mkbabb/keyframes.js` primitive import
 //        (PRONG A), OR a `decayRest`+`spring.target` snap RE-ROLL (PRONG B) — reds
-//        UNLESS it is on OFF_SPINE_ALLOWLIST (the two named seams). De-allowlisting
+//        UNLESS it is on OFF_SPINE_ALLOWLIST (the named off-spine seam). De-allowlisting
 //        usePointerVelocityField (the real file trips) proves the allowlist is
-//        load-bearing.
+//        load-bearing. (The useDragMorph decayRest re-roll seam RETIRED at BH.B1-W3 —
+//        kf 5.1.0 published native `DragOptions.snap`, the re-roll collapsed onto it.)
 //   M3 — THE PER-SPRING CLOCK FENCE, UNIVERSAL + COUPLED (the user-mandate clock
 //        bar). A SOURCE sweep of the WHOLE styling corpus reds: (a) ANY `--spring-
 //        <name>` curve leg paired with a generic `--duration-*` (it MUST read its
@@ -103,19 +104,20 @@ const VIZ_DIRS = [
 // ── The SANCTIONED off-spine seams (the allowlist, M2). Each is a real, documented
 //    off-spine seam with its rationale — NOT a license, an explicit audited SET.
 //    motion-canon.md §P7 records the SAME set; M5 cross-checks the two never drift.
-//    A THIRD un-sanctioned off-spine spring/rAF reds.
+//    A SECOND un-sanctioned off-spine spring/rAF reds.
+//
+//    (BH.B1-W3 reconcile: the useDragMorph.ts `decayRest-snap-reroll` seam is RETIRED —
+//    kf 5.1.0 published the native `DragOptions.snap`, so the consume-and-delete fired
+//    (the re-roll collapsed onto the native `snap` option and was deleted). useDragMorph
+//    now imports a kf primitive + carries no `decayRest`+`spring.target` re-roll, so it
+//    trips NEITHER off-spine prong — the allowlist entry would be stale (M2's "every
+//    allowlisted seam must STILL trip a prong" floor), so it is removed.)
 export const OFF_SPINE_ALLOWLIST = [
     {
         file: "src/composables/motion/usePointerVelocityField.ts",
         seam: "hand-rolled-lerp",
         reason:
             "the shared viz-pointer-physics field — a hand-rolled critically-damped lerp (position→velocity→accel), intentionally kf-FREE so it ships on the engine-free /motion-core subpath AND the root barrel (the SCC root-barrel discipline: a keyframes edge would trap it off-root). FED via tick(delta) from the renderer's own canvas-lifecycle loop (owns no rAF — the one-loop discipline). The ONE allowed off-spine smoother; SCC-reasoned, documented (kf-vjs-facilities.md §4).",
-    },
-    {
-        file: "src/composables/motion/useDragMorph.ts",
-        seam: "decayRest-snap-reroll",
-        reason:
-            "the pull/drag-to-morph primitive — it WIRES the published kf surface (Draggable + SpringProgress + the SHIPPED decayRest projection) and re-rolls the SNAP HERE (decayRest projects the frictional rest, then spring.target re-seats to the nearest declared center) because the kf `snap` option is not yet on the published dist. The kf-snap-not-on-dist INTERIM; collapses onto kf `snap` when it ships (kf-vjs-facilities.md §3.2). NOT a second engine — a published-surface composition with one re-rolled seam.",
     },
 ];
 const OFF_SPINE_FILES = new Set(OFF_SPINE_ALLOWLIST.map((e) => e.file));

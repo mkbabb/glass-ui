@@ -2,10 +2,14 @@
 //
 // The BE.W-FOLD-LEDGER / BF.W-FOLD-LEDGER disposition machine was itself the deferred item (the
 // D11 chronic — `proof:be-fold-ledger` ABSENT, the 32 BF census deferrals + the 70 BE/BF wave
-// specs riding UN-DECIDED a third tranche). This gate is the literal cure: it DERIVES the 136-item
+// specs riding UN-DECIDED a third tranche). This gate is the literal cure: it DERIVES the 135-item
 // deferred corpus from disk (AX DISPOSITION-REGISTER 31 + BF DEFERRED-CENSUS 32 + BE waves 39 +
-// BF waves 31 + in-`src` CONSUME/BOOKED markers 3) and REDs the close on any dropped / undecided /
+// BF waves 31 + in-`src` CONSUME/BOOKED markers 2) and REDs the close on any dropped / undecided /
 // blanket-routed / templated / over-concentrated row.
+//
+// (BH.B1-W3 reconcile: the in-`src` marker count fell 3->2 when the useDragMorph.ts
+// `CONSUME(kf snap)` marker was consumed-and-deleted onto kf 5.1.0 native `DragOptions.snap`,
+// so the corpus is 135, not 136 — EXPECTED_COUNT tracks the disk.)
 //
 // It COMPOSES `scripts/lib/fold-ledger-core.mjs` (the DRY leaf proof:bc-fold-ledger also imports —
 // the no-clone contract) and adds the THREE BG teeth the §L.11 producer-evasion class demands:
@@ -42,7 +46,7 @@ const BUILD_MAP = join(ROOT, "docs/tranches/BG/execution/bg-build-map.md");
 const BC_GATE = join(ROOT, "scripts/proof-bc-fold-ledger.mjs");
 const BG_GATE = join(ROOT, "scripts/proof-bg-deferred-ledger.mjs");
 
-const EXPECTED_COUNT = 136;
+const EXPECTED_COUNT = 135;
 const AX_EXPECTED = 31; // the AX register is 31 rows, NOT 32 (the chronic mis-count) — bite #1.
 const CONCENTRATION_CEILING = 24; // ≥24 rows → one home REDs (tooth c).
 const SKELETON_SHARE_THRESHOLD = 4; // ≥4 rows sharing one evidence skeleton REDs (tooth b).
@@ -218,7 +222,7 @@ function runChecks({ ledger, mdIds, derived, bgWaves }) {
     const rows = Array.isArray(ledger?.items) ? ledger.items : [];
     const jsonIds = new Set(rows.map((r) => r.id));
 
-    // F1.count — the DERIVED corpus is exactly 136.
+    // F1.count — the DERIVED corpus is exactly EXPECTED_COUNT (135).
     const sumCounts = Object.values(derived.counts).reduce((a, b) => a + b, 0);
     if (sumCounts !== EXPECTED_COUNT) {
         fail("F1", `the DERIVED corpus is ${sumCounts} (AX ${derived.counts["ax-register"]} + BF-census ${derived.counts["bf-census"]} + BE ${derived.counts["be-wave"]} + BF ${derived.counts["bf-wave"]} + in-src ${derived.counts["in-src"]}), expected ${EXPECTED_COUNT} — a corpus drift REDs.`);
@@ -394,7 +398,7 @@ function runReal() {
         console.error(`\n[proof:bg-deferred-ledger] ${all.length} fold-ledger violation(s) — a deferred item was dropped, left undecided, blanket-routed, templated, or over-concentrated. The close cannot proceed.`);
         process.exit(1);
     }
-    console.log("\n[proof:bg-deferred-ledger] every one of the 136 DERIVED deferred items is present + DECIDED + charter-matched — the no-silent-drop floor holds.");
+    console.log(`\n[proof:bg-deferred-ledger] every one of the ${EXPECTED_COUNT} DERIVED deferred items is present + DECIDED + charter-matched — the no-silent-drop floor holds.`);
     process.exit(0);
 }
 
@@ -485,7 +489,7 @@ function selfTest() {
         }
         bites.push(["concentration (24→one home) → F5", run({ ledger: led }).has("F5")]);
     }
-    // bite 9 — count assert: a corpus ≠ 136 → F1 REDs (drop one census id from the derived set).
+    // bite 9 — count assert: a corpus ≠ EXPECTED_COUNT → F1 REDs (drop one census id from the derived set).
     {
         const trimmed = new Set([...real.derived.sets["bf-census"]]);
         trimmed.delete("D32");
@@ -493,7 +497,7 @@ function selfTest() {
             sets: { ...real.derived.sets, "bf-census": trimmed },
             counts: { ...real.derived.counts, "bf-census": real.derived.counts["bf-census"] - 1 },
         };
-        bites.push(["count-assert (≠136) → F1", run({ derived: d2 }).has("F1")]);
+        bites.push(["count-assert (≠EXPECTED) → F1", run({ derived: d2 }).has("F1")]);
     }
 
     console.log("proof:bg-deferred-ledger — SELF-TEST (born-RED→GREEN, 9 bites)");
@@ -516,7 +520,7 @@ function selfTest() {
         console.error("\n[proof:bg-deferred-ledger] SELF-TEST FAILED — the REAL ledger is not clean (the GREEN-after state must pass every clause).");
         process.exit(1);
     }
-    console.log("\n[proof:bg-deferred-ledger] SELF-TEST GREEN — all 9 bites flag born-RED, the real 136-item ledger passes every clause.");
+    console.log(`\n[proof:bg-deferred-ledger] SELF-TEST GREEN — all 9 bites flag born-RED, the real ${EXPECTED_COUNT}-item ledger passes every clause.`);
     process.exit(0);
 }
 

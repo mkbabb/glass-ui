@@ -21,11 +21,19 @@
 //   - HEAD useDragMorph.ts carries no `// CONSUME(kf snap):` marker + asks-and-
 //     consumes.md books no kf snap/rubberBand republish (L4 reds).
 //
+// BH.B1-W3 RECONCILE: kf 5.1.0 published the native `DragOptions.snap` (machine-verified
+// in node_modules/@mkbabb/keyframes.js/dist/keyframes.d.ts), so the consume-and-delete
+// FIRED — the `// CONSUME(kf snap):` marker + the glass-ui `decayRest`+`spring.target`
+// re-roll are DELETED and useDragMorph wires the native `snap:` option. L3's
+// fling-projection check + L4's consume check are RE-POINTED onto the native snap path
+// (the consume LANDED, not pending); the asks-and-consumes.md book stays GREEN.
+//
 // bite-check (each clause carries a planted self-test below): a planted `draggable:
 // false` default reds L1; a cap >1.2 (taffy) OR a constant/token fork reds L2; a
-// planted local rAF spring in the tab drag reds L3; a missing CONSUME marker / book
-// reds L4; a drag that gates selection behind the pull (removing the click path) reds
-// L5; a drag-snap that does not write the model reds L5.
+// planted local rAF spring in the tab drag reds L3; a useDragMorph that neither wires
+// the native snap nor carries the deleted re-roll / an absent book reds L4; a drag that
+// gates selection behind the pull (removing the click path) reds L5; a drag-snap that
+// does not write the model reds L5.
 
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -171,9 +179,12 @@ export function detectVisibleSquishCap(constantsRaw, scalePaperRaw) {
 
 // ── L3 — no second engine / no re-fork; the drag rides the `snappy` SPRING_PRESETS row.
 //   useTabDragMorph composes useDragMorph (which composes kf Draggable + SpringProgress
-//   + useLiquidFlex + decayRest); no hand-rolled pointer-velocity sampler or parallel
-//   rAF spring integrator in the TAB drag (the D1/D2 fence). The drag spring is a
-//   SPRING_PRESETS row (`snappy`), never a new clock.
+//   + useLiquidFlex + the NATIVE kf snap); no hand-rolled pointer-velocity sampler or
+//   parallel rAF spring integrator in the TAB drag (the D1/D2 fence). The drag spring is
+//   a SPRING_PRESETS row (`snappy`), never a new clock.
+//   (BH.B1-W3: the fling-to-nearest projection moved off glass-ui's `decayRest`+
+//   `spring.target` re-roll onto kf 5.1.0's native `DragOptions.snap` — useDragMorph now
+//   hands the Draggable a `snap:` option; the projection lives INSIDE the engine.)
 export function detectNoSecondEngine(tabDragRaw, useDragMorphRaw) {
     const violations = [];
     const facts = {};
@@ -190,11 +201,15 @@ export function detectNoSecondEngine(tabDragRaw, useDragMorphRaw) {
     facts.composesDraggable = /\bDraggable\b/.test(dragMorph) && /@mkbabb\/keyframes\.js/.test(dragMorph);
     facts.composesSpring = /\bSpringProgress\b/.test(dragMorph);
     facts.composesLiquidFlex = /useLiquidFlex/.test(dragMorph);
-    facts.composesDecayRest = /\bdecayRest\b/.test(dragMorph);
+    // The fling-to-nearest projection is the NATIVE kf snap (kf 5.1.0 `DragOptions.snap`):
+    // useDragMorph hands the Draggable construction a `snap:` option, the engine projects
+    // `decayRest` + re-seats to the nearest center INTERNALLY (BH.B1-W3 excised the glass-ui
+    // re-roll). Assert the native snap is WIRED, not the retired glass-ui-side `decayRest`.
+    facts.wiresNativeSnap = /\bnew\s+Draggable\s*\(/.test(dragMorph) && /\bsnap\s*:/.test(dragMorph);
     if (!facts.composesDraggable) violations.push("L3: useDragMorph does not compose the kf Draggable substrate (the load-bearing reuse — no re-fork)");
     if (!facts.composesSpring) violations.push("L3: useDragMorph does not compose SpringProgress (the physics core)");
     if (!facts.composesLiquidFlex) violations.push("L3: useDragMorph does not compose useLiquidFlex (the `tanh` squish)");
-    if (!facts.composesDecayRest) violations.push("L3: useDragMorph does not compose decayRest (the fling-to-nearest projection)");
+    if (!facts.wiresNativeSnap) violations.push("L3: useDragMorph does not wire the native kf `snap:` option on its Draggable construction (the fling-to-nearest projection is now native kf 5.1.0 `DragOptions.snap`, not a glass-ui `decayRest` re-roll)");
 
     // The drag spring is a SPRING_PRESETS row (`snappy`), NOT a new clock.
     facts.springIsPreset = /springPreset\s*\(\s*["']snappy["']\s*\)/.test(dragMorph);
@@ -216,21 +231,32 @@ export function detectNoSecondEngine(tabDragRaw, useDragMorphRaw) {
     return { facts, violations };
 }
 
-// ── L4 — the kf consume is BOOKED, not faked.
+// ── L4 — the kf snap consume LANDED (consume-and-delete terminal state, BH.B1-W3).
 //   asks-and-consumes.md names the kf `snap`/`rubberBand` republish ask + the consume-
-//   and-delete target lines; useDragMorph.ts carries the `// CONSUME(kf snap):` marker.
-//   Born-RED if the book is absent.
+//   and-delete target lines; the consume FIRED — kf 5.1.0 published `DragOptions.snap`,
+//   so the `// CONSUME(kf snap):` marker + the `decayRest`+`spring.target` re-roll were
+//   DELETED and useDragMorph wires the native `snap:` option. Born-RED if the consume did
+//   not land (no native snap wired) OR the re-roll lingers (a forbidden dual path) OR the
+//   book is absent.
 export function detectKfConsumeBooked(asksRaw, useDragMorphRaw) {
     const violations = [];
     const facts = {};
     const asks = asksRaw ?? readFile(ASKS);
-    // The marker check reads the RAW (un-stripped) source — `// CONSUME(kf snap):` IS
-    // a comment, so it must survive (we look for the literal marker line).
     const dragMorphRaw = useDragMorphRaw ?? readFile(USE_DRAG_MORPH);
+    // Code-shape checks read the COMMENT-STRIPPED source — the module header narrates
+    // "the native snap" / "decayRest, internal" in prose, which must never be a witness.
+    const dragMorph = stripJs(dragMorphRaw);
 
-    facts.hasConsumeMarker = /\/\/\s*CONSUME\(kf snap\):/.test(dragMorphRaw);
-    if (!facts.hasConsumeMarker) {
-        violations.push("L4: useDragMorph.ts carries no `// CONSUME(kf snap):` marker (the consume-and-delete target — where the published-surface re-roll collapses onto the native kf `snap`)");
+    // The consume-and-delete terminal state: the native kf snap is WIRED (the consume
+    // landed) AND the glass-ui `decayRest`+`spring.target` re-roll is GONE (no dual path).
+    facts.nativeSnapWired = /\bnew\s+Draggable\s*\(/.test(dragMorph) && /\bsnap\s*:/.test(dragMorph);
+    facts.reRollGone = !(/\bdecayRest\s*\(/.test(dragMorph) && /\bspring\.target\s*=/.test(dragMorph));
+    facts.consumeLanded = facts.nativeSnapWired && facts.reRollGone;
+    if (!facts.nativeSnapWired) {
+        violations.push("L4: useDragMorph.ts does not wire the native kf `snap:` option on its Draggable construction — the kf 5.1.0 `DragOptions.snap` consume-and-delete must have LANDED (the published-surface re-roll collapsed onto it)");
+    }
+    if (!facts.reRollGone) {
+        violations.push("L4: useDragMorph.ts still carries the `decayRest`+`spring.target` snap RE-ROLL — the consume-and-delete must DELETE the re-roll; a lingering re-roll is the forbidden dual path now that kf 5.1.0 `DragOptions.snap` is native");
     }
 
     // The book names the kf snap/rubberBand republish ask in the BC ledger.
@@ -352,14 +378,14 @@ export function selfTest() {
     const tabWithRaf =
         "import { useDragMorph } from '...'; function useTabDragMorph(){ const x = useDragMorph<string>({}); requestAnimationFrame(() => {}); return x; }";
     const goodMorph =
-        "import { Draggable, SpringProgress, decayRest } from '@mkbabb/keyframes.js'; import { useLiquidFlex } from './useLiquidFlex'; const { response } = springPreset('snappy');";
+        "import { Draggable, SpringProgress } from '@mkbabb/keyframes.js'; import { useLiquidFlex } from './useLiquidFlex'; const { response } = springPreset('snappy'); new Draggable({ spring, axis, snap: targets.map(t => t.center) });";
     if (detectNoSecondEngine(tabWithRaf, goodMorph).violations.every((v) => !v.includes("requestAnimationFrame"))) {
         fails.push("self-test L3: a planted rAF loop in the tab drag did NOT red");
     }
 
-    // L4: a missing CONSUME marker / book reds.
-    if (detectKfConsumeBooked("no booking here", "function x(){ decayRest(); }").violations.length === 0) {
-        fails.push("self-test L4: a missing CONSUME marker + empty book did NOT red");
+    // L4: a useDragMorph that did NOT land the native-snap consume + an empty book reds.
+    if (detectKfConsumeBooked("no booking here", "function x(){ /* no native snap wired */ }").violations.length === 0) {
+        fails.push("self-test L4: a not-landed native-snap consume + empty book did NOT red");
     }
 
     // L5: a draggable-gated roving reds.
@@ -423,8 +449,8 @@ function run() {
     console.log("proof:liquid-tab — the LIQUID TAB: pull the active pill → it morphs/squishes/flings to location (BC.W-LIQUID-TAB, Band 3)");
     console.log(`  L1 pull is default   : draggable=${facts.pull.draggableDefault ?? "MISSING"}  click-path-intact=${facts.pull.clickPathIntact ? "yes ✓" : "NO ✗"}  underline-gated=${facts.pull.dragGatedUnderline ? "yes ✓" : "NO ✗"}`);
     console.log(`  L2 squish cap reads  : stretch const=${facts.cap.cap ?? "MISSING"} token=${facts.cap.token ?? "MISSING"} | blob const=${facts.cap.blobCap ?? "MISSING"} token=${facts.cap.blobToken ?? "MISSING"} (area≈${facts.cap.blobCap ? (facts.cap.blobCap * facts.cap.blobCap).toFixed(3) : "?"}) lockstep=${facts.cap.cap === facts.cap.token && facts.cap.blobCap === facts.cap.blobToken ? "yes ✓" : "NO ✗"}`);
-    console.log(`  L3 no 2nd engine     : tab→useDragMorph=${facts.engine.tabUsesDragMorph} kf(Draggable,Spring,Flex,decayRest)=${facts.engine.composesDraggable}/${facts.engine.composesSpring}/${facts.engine.composesLiquidFlex}/${facts.engine.composesDecayRest} snappy-preset=${facts.engine.springIsPreset}`);
-    console.log(`  L4 kf consume booked : marker=${facts.consume.hasConsumeMarker ? "yes ✓" : "NO ✗"}  book(snap+rubberBand)=${facts.consume.booksSnap ? "yes ✓" : "NO ✗"}  by-name=${facts.consume.booksByName ? "yes ✓" : "NO ✗"}`);
+    console.log(`  L3 no 2nd engine     : tab→useDragMorph=${facts.engine.tabUsesDragMorph} kf(Draggable,Spring,Flex,nativeSnap)=${facts.engine.composesDraggable}/${facts.engine.composesSpring}/${facts.engine.composesLiquidFlex}/${facts.engine.wiresNativeSnap} snappy-preset=${facts.engine.springIsPreset}`);
+    console.log(`  L4 kf consume landed : native-snap=${facts.consume.consumeLanded ? "yes ✓" : "NO ✗"}  book(snap+rubberBand)=${facts.consume.booksSnap ? "yes ✓" : "NO ✗"}  by-name=${facts.consume.booksByName ? "yes ✓" : "NO ✗"}`);
     console.log(`  L5 additive a11y     : roving=${facts.a11y.hasRovingTabindex} keydown=${facts.a11y.hasStripKeydown} ungated=${facts.a11y.rovingNotGatedOnDraggable} drag-writes-model=${facts.a11y.dragWritesModel}`);
     console.log(`  self-tests           : ${facts.selfTestFails.length === 0 ? "all bites fire ✓" : `BROKEN ✗ (${facts.selfTestFails.length})`}`);
 

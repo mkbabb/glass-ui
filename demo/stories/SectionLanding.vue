@@ -79,8 +79,8 @@ const fieldStill = computed(() => {
 <template>
     <!-- BG.W-ROUTE-TRANSITION — the routed page presents a SINGLE ELEMENT root (this
          <article>) so the AppShell bare keyed `<component class="route-enter">` swap
-         applies the `.route-enter` on-mount entrance to it (proof:route-single-root
-         asserts the element root). <TooltipProvider> renders a context-only FRAGMENT
+         applies the `.route-enter` on-mount entrance to it (the swap requires a
+         single element root). <TooltipProvider> renders a context-only FRAGMENT
          (no DOM), so it is nested INSIDE <article> (same tooltip context, zero
          layout/visual change). -->
     <article class="mx-auto w-full max-w-6xl">

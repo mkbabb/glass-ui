@@ -51,6 +51,7 @@ import { useRAFLoop, type RAFLoopControls } from "../motion/useRAFLoop";
 import { useIntersectionPause } from "../motion/useIntersectionPause";
 import { useResizeObserver } from "../dom/useResizeObserver";
 import { resolveTokenColor } from "../dom/useResolveTokenColor";
+import { isCanvas, relLuminance, parseRgb } from "./backdropSampleMath";
 
 /** The discrete bucket the observer derives + writes (re-engages the W55 machinery). */
 export type GlassBackdropBucket = "light" | "dark";
@@ -218,32 +219,6 @@ function resolveAmbientHue(h: HueHistogram): string {
         (Math.atan2(h.sumSin[modal]!, h.sumCos[modal]!) * 180) / Math.PI;
     if (hueDeg < 0) hueDeg += 360;
     return `oklch(${AMBIENT_HUE_L} ${AMBIENT_HUE_C} ${hueDeg.toFixed(1)})`;
-}
-
-function isCanvas(v: unknown): v is HTMLCanvasElement {
-    return (
-        typeof HTMLCanvasElement !== "undefined" && v instanceof HTMLCanvasElement
-    );
-}
-
-/** sRGB channel [0..255] → linear-light (WCAG 2.1 linearization). */
-function linearize(c: number): number {
-    const x = c / 255;
-    return x <= 0.03928 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4;
-}
-
-/** WCAG relative luminance of an sRGB triple [0..255]. */
-function relLuminance(r: number, g: number, b: number): number {
-    return 0.2126 * linearize(r) + 0.7152 * linearize(g) + 0.0722 * linearize(b);
-}
-
-/** Parse a `rgb()/rgba()` string → [r,g,b,a] (the un-wrapped concrete form). */
-function parseRgb(str: string): [number, number, number, number] | null {
-    const m = str.match(
-        /rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)(?:[,\s/]+([\d.]+))?/i,
-    );
-    if (!m) return null;
-    return [Number(m[1]), Number(m[2]), Number(m[3]), m[4] === undefined ? 1 : Number(m[4])];
 }
 
 /** BG.W-FIELD-ACCENT-RECONCILE — the library convention marking the ONE shell
