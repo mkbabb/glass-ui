@@ -112,7 +112,7 @@ function composeBatch(readyNow) {
     if (hot.some(f => usedHot.has(f))) continue
     batch.push(w)
     files.forEach(f => usedFiles.add(f)); hot.forEach(f => usedHot.add(f))
-    if (batch.length === 2) break   // wall-constrained: batch-2 keeps the integrate short enough to commit before a ~40min session-limit wall (batch-3 kept dying mid-integrate)
+    if (batch.length === 3) break   // batch-3 (limit reset; user directive — max parallelism, the integrate applies 3 file-disjoint waves serially)
   }
   return batch
 }
@@ -133,7 +133,7 @@ log(RESUME ? 'Resuming — re-hydrating cursor + agent cache' : 'Fresh boot — 
 
 const loaded = await agent(`You are the DAG LOADER for the BG+BH execution engine. Read these and return the full wave DAG.
 READ: ${EXEC}/bg-build-map.md (the ~110 BG waves — id·intent·files·gate·paint-class[H/P]·preconds), ${EXEC}/bh-interleave-map.md (the ~30 BH waves + their interleave class C/WSn/WS12-LAST + hard-collision files), and ${EXEC}/EXECUTION-PROGRESS.md (the durable cursor — the live status per wave).
-RETURN the DAG_SCHEMA: one node per wave (BG + BH) with id, tranche, ws, seq (build-order ordinal — Stage-0=0, WS12 last, B4f=BH.B4f highest), intent, files (the write-set — the file-disjoint key), deviceFreeGate (proof:*), paintClass (H headless-only | P paint-gated), preconds (the wave ids that must be DONE first — cross-WS + intra-band order; for BH encode the named intra-WS12 edges B5c→B4f, {B2.6,B4e,B4b-content}→B4f, B2.1-mech→B2.1-swap, B2.2→B7, B5b→B5c as preconds), interleaveClass ('-' for BG; 'C'|'WS1'..'WS12'|'WS12-LAST' for BH; B4f='WS12-LAST'), mutatesSrc (true if it edits src/demo/styles/scripts — gets a worktree), and status (READ from EXECUTION-PROGRESS.md; default PENDING — BUT load any PAINT-PENDING row as PENDING so it re-enters the frontier for re-judging: a PAINT-PENDING cursor row means a wall/stop interrupted its paint judge, and STEP-0.5 routes the re-picked committed [P]-wave back to the judge). Set fresh=true iff no row is DONE.
+RETURN the DAG_SCHEMA: one node per wave (BG + BH) with id, tranche, ws, seq (build-order ordinal — Stage-0=0, WS12 last, B4f=BH.B4f highest), intent, files (the write-set — the file-disjoint key), deviceFreeGate (proof:*), paintClass (H headless-only | P paint-gated), preconds (the wave ids that must be DONE first — cross-WS + intra-band order; for BH encode the named intra-WS12 edges B5c→B4f, {B2.6,B4e,B4b-content}→B4f, B2.1-mech→B2.1-swap, B2.2→B7, B5b→B5c as preconds), interleaveClass ('-' for BG; 'C'|'WS1'..'WS12'|'WS12-LAST' for BH; B4f='WS12-LAST'), mutatesSrc (true if it edits src/demo/styles/scripts — gets a worktree), and status (READ from EXECUTION-PROGRESS.md; default PENDING; a PAINT-PENDING row STAYS PAINT-PENDING — paint is DECOUPLED to a dedicated paint workflow, so a [P]-wave committed [paint-pending] is DONE-building and MUST NOT re-enter the build frontier). Set fresh=true iff no row is DONE.
 The B4f node's preconds MUST include every WS12 wave id + B5c + B2.6 + B4e + B4b-content (the absolute-last sentinel). Be COMPLETE — every wave in both maps appears exactly once.
 ${FENCE}`, { schema: DAG_SCHEMA, model: 'opus', label: 'dag-loader', phase: 'Load' }).catch(() => null)
 
@@ -201,7 +201,7 @@ ${FENCE}`, { schema: INTEGRATE_SCHEMA, model: 'opus', label: `integrate/${batch[
   }
 
   // ----- PAINT JUDGE (NON-AUTHORING — fresh agents, fed only route+harness, never the builder's claim) -----
-  const paintWaves = builds.map(b => b.w).filter(w => w.status === 'PAINT-PENDING')
+  const paintWaves = []  // PAINT DECOUPLED: the build lands [P] waves [paint-pending] device-free; a dedicated paint workflow runs the dual-engine/C-SAFARI capture + flips them DONE (the in-cycle judge is retired here to keep build cycles fast + unblocked by the heavy capture)
   if (paintWaves.length) {
     log(`Paint-judge [${paintWaves.map(w => w.id).join(' · ')}] — dual-engine, non-authoring`)
     const verdicts = await parallel(paintWaves.map(w => () =>
