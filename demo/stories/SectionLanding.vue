@@ -98,8 +98,19 @@ const fieldStill = computed(() => {
             >
                 <!-- The bento grid — one SectionPreviewCard per story, each linking to
                      its route WITH an inline live mini-preview (the SECTION-HERO model;
-                     never a text-only link). The first card leads (a wider span). -->
-                <section class="scroll-cascade section-bento mt-4">
+                     never a text-only link). The first card leads (a wider span).
+                     BG.W-CATEGORY-CARD-WARM — the bento carries a recessive WARM AMBIENT
+                     FIELD behind the cards (`--bento-field-h-raw` is the per-category
+                     warm-projected hue, CONSUMED from the ONE `warmFieldHue` source). A
+                     category route is NON-focal (no live shell aurora), so the translucent
+                     `glass-resting` cards otherwise sit over a flat grid/paper wash → a
+                     silver/metallic sheen (the user's "awful metallic wash"); the warm
+                     field gives the glass something WARM to transmit. NO live GL (the
+                     one-GL-per-route budget held) — a static warm CSS radial. -->
+                <section
+                    class="scroll-cascade section-bento mt-4"
+                    :style="{ '--bento-field-h-raw': cardFieldH }"
+                >
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                         <SectionPreviewCard
                             v-for="(story, idx) in category.stories"
@@ -212,9 +223,75 @@ const fieldStill = computed(() => {
    643px (the "useless large card" defect). */
 .section-bento {
     --phi: 1.618;
+    /* the per-category warm field hue — belt-and-suspenders clamped into the warm
+       band [25,95] so an inline cool degree can never paint teal/navy (the same
+       guard SectionPreviewCard's preview field carries; `warmFieldHue` already
+       guarantees warm, the clamp is the defence-in-depth). */
+    --bento-field-h: clamp(25, var(--bento-field-h-raw, 62), 95);
+    position: relative;
+    /* keep the field's negative z-index local to the bento stacking context so it
+       sits BEHIND the cards but IN FRONT of the StoryHero card plate — the
+       glass-resting cards' backdrop-filter then samples the WARM field, not the
+       flat plate (the metallic-wash root cause). */
+    isolation: isolate;
 }
 .section-bento .grid {
     gap: calc(1rem * var(--phi, 1.618));
+}
+
+/* BG.W-CATEGORY-CARD-WARM — the recessive WARM AMBIENT FIELD behind the bento.
+   A static warm CSS radial (NO live GL — the one-GL-per-route budget held): an amber
+   key-mass (top-left, toward the key-light) + a terracotta mid (bottom-right) over a
+   warm low-chroma floor, so the translucent `glass-resting` cards composite WARM and
+   the inter-card gaps read warm — never the silver/metallic sheen of glass over a
+   flat grid/paper wash. PLAIN per-mode `.dark` arm (the light-dark() inset-shadow
+   trap + the scoped :global() drop, MEMORY). */
+.section-bento::before {
+    content: "";
+    position: absolute;
+    inset: -0.5rem;
+    z-index: -1;
+    pointer-events: none;
+    border-radius: var(--radius-card);
+    background:
+        radial-gradient(
+            120% 95% at 12% 0%,
+            oklch(0.91 0.085 calc(var(--bento-field-h) + 6) / 0.55),
+            oklch(0.91 0.085 calc(var(--bento-field-h) + 6) / 0) 62%
+        ),
+        radial-gradient(
+            120% 115% at 100% 100%,
+            oklch(0.88 0.095 calc(var(--bento-field-h) - 8) / 0.46),
+            oklch(0.88 0.095 calc(var(--bento-field-h) - 8) / 0) 66%
+        ),
+        oklch(0.93 0.05 var(--bento-field-h));
+}
+.dark .section-bento::before {
+    /* warm-EMBER dark floor — low L, chroma KEPT (the W-DARK-MATERIAL luminous-dark
+       model), so the cards transmit a warm glow over the near-black page, NEVER a
+       charcoal/metallic slab. */
+    background:
+        radial-gradient(
+            120% 95% at 12% 0%,
+            oklch(0.4 0.06 calc(var(--bento-field-h) + 6) / 0.55),
+            oklch(0.4 0.06 calc(var(--bento-field-h) + 6) / 0) 62%
+        ),
+        radial-gradient(
+            120% 115% at 100% 100%,
+            oklch(0.34 0.07 calc(var(--bento-field-h) - 8) / 0.45),
+            oklch(0.34 0.07 calc(var(--bento-field-h) - 8) / 0) 66%
+        ),
+        oklch(0.25 0.045 var(--bento-field-h));
+}
+
+@media (prefers-reduced-transparency: reduce) {
+    /* the field drops to the warm-SOLID floor (STILL warm, never gray). */
+    .section-bento::before {
+        background: oklch(0.94 0.04 var(--bento-field-h));
+    }
+    .dark .section-bento::before {
+        background: oklch(0.27 0.045 var(--bento-field-h));
+    }
 }
 
 /* ── the specimen fills its stage (≥45% occupancy at every card width) ──

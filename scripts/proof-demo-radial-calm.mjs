@@ -78,6 +78,7 @@ const RADIAL_KEEP_FILES = new Set([
     // surface, the Dynamic-Island call backdrop) — the colorful tile backdrop IS the
     // recognizable iOS surface; replacing it with <Aurora> would destroy the facsimile.
     "SectionPreviewCard.vue", // the bento preview card's warm §3 cel-floor wash (contained card surface)
+    "SectionLanding.vue", // the BG.W-CATEGORY-CARD-WARM recessive warm bento field (a contained card-grid wash behind the glass-resting cards, NOT a full-page --section-color-* hero)
     "dock/examples/AppSwitcher.vue",
     "dock/examples/AppleMusic.vue",
     "dock/examples/DynamicIslandCall.vue",

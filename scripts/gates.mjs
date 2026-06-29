@@ -738,6 +738,12 @@ export const GATES = [
         note: "BG.W-FIELD-AURORA (M2) — the route-FOCAL enumeration is CONSISTENT (NOT the runtime one-GL law — the close hinges on the LIVE monotonic-GL capture). C1 router.ts threads `isFocalRoute` into `meta.focal` for the story routes AND the section landings, C2 SELF_STAGES_GL ⊇ the committed grep of `<DockStage` over the routed SFCs (a SELF-STAGE route mounting GL outside `background` MUST be enrolled — the silent shell+DockStage=2-GL drift is closed), C3 the resolver is TOTAL (GL_BG_KINDS carries the 4 full-bleed GL kinds, every GL-kind row resolves focal by construction). --self-test planted bite: drop a DockStage route from SELF_STAGES_GL → C2 RED. Bite: add a DockStage route without enrolling it → C2 RED",
     },
     {
+        id: "proof:category-card-warm",
+        cmd: "proof:category-card-warm",
+        tags: ["local"],
+        note: "BG.W-CATEGORY-CARD-WARM (USER-REPORTED 2026-06-29) — the category-landing (`SectionLanding`) bento cards must read as WARM LIQUID GLASS, never the 'awful metallic wash'. A category route is NON-focal (no live recessive shell aurora), so a translucent `glass-resting` bento card otherwise sits over a flat grid/paper wash → a silver/metallic sheen. Device-free SOURCE arms: W1 the bento WARM field present (`.section-bento::before` `oklch()`-radial keyed off `--bento-field-h`), W2 the DARK warm-EMBER arm (`.dark .section-bento::before` low-L L<0.5 + chroma kept on every stop — the luminous-dark glow, never charcoal), W3 NO flat/gray backdrop (warm-clamped `clamp(25,…,95)` + every light+dark `oklch()` stop carries chroma), W4 the card transmits warm by construction (the `--bento-field-h-raw` bind off the ONE `warmFieldHue` source + the `SectionPreviewCard` plate is `glass-resting`). 9-bite --self-test (a flat-gray field / a missing dark arm / a missing field each RED). The binding paint (cards read WARM, ZERO metallic, both engines/both modes on /forms + /display + /data) rides the BG gestalt roster. Bite: replace the field with a gray `oklch(L 0 h)` → W3 RED; drop the `.dark` arm → W2 RED",
+    },
+    {
         id: "proof:field-accent-reconcile",
         cmd: "proof:field-accent-reconcile",
         tags: ["local", "ci", "release"],
