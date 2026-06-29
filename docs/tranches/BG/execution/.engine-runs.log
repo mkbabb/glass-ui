@@ -61,3 +61,12 @@ wf_997d0cce-69f  resume  2026-06-29 06:49:06  BATCH-2 engine (cut from 3; integr
 ## single background agent (commits per-wave, wall-survivable). DO NOT resume the workflow until the lander finishes
 ## (it owns the main tree). The lander is also a DIAGNOSTIC: if a single low-concurrency agent survives the walls
 ## that killed the 2-3-concurrent workflow, run WS1+ at batch-1 (or main-loop-driven). Workflow resumes AFTER [C] tail DONE.
+
+## 2026-06-29 08:16 MODEL SHIFT — workflow RETIRED for the build phase; lander-style build agents.
+## [C] band CLOSED (DONE=18, all 1.x rows DONE). The workflow could not commit under the ~20-40min session walls
+## (10min LOADER + build/integrate split + drift; paint-gated WS cycles are even longer ~35-40min). PROVEN
+## alternative: the [C]-tail lander agent landed 3 waves in 17.5min (build+commit unified, no LOADER, per-wave
+## commit, wall-survivable). NEW MODEL: main-loop-driven lander-style build agents (1 agent builds N frontier
+## waves, device-free gate GREEN, commits per-wave [paint-pending]); paint-verify PAINT-PENDING waves in batches
+## (decoupled — the heavy dual-engine capture is its own short pass). WS1 linchpin ROUTE-TRANSITION builder
+## ac0379934966cda57 LIVE — the test of whether a complex WS wave fits a burst. Cron 29edebb6 -> lander-style.
