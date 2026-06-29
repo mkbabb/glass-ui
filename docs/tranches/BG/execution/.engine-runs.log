@@ -87,3 +87,12 @@ wf_997d0cce-69f  resume  2026-06-29 06:49:06  BATCH-2 engine (cut from 3; integr
 # PLAN: paint checkpoint after the first build band (validate C-SAFARI early via bg-paint.wf.js), then resume.
 
 ## 2026-06-29 11:31 C-SAFARI-FIRST: paused build wf_cb4ff3c8-5ce (LOADER only, no loss); launched bg-paint wf_799b1d27-16c on WS1 5 PAINT-PENDING (2.1/2.2/2.3/2.5/2.6) to PROVE the C-SAFARI keystone + flip WS1 DONE BEFORE the full build. Build relaunches after paint confirms real-Safari capture; if Safari blocked, the workflow hard-stops + reports the harness blocker for me to fix.
+
+## 2026-06-29 14:23 WS1 COMPLETE + USER-DEFECT CLOSED → BULK BUILD FIRED.
+# WS1 fully dual-engine painted: 2.1/2.2/2.3/2.5/2.6 DONE (C18 harness — the C-SAFARI keystone PROVEN); 2.7
+#   VT-enhance DONE-deferred (optional). The WS1 paint caught + closed a real dark-mode AA FAIL on 2.2
+#   (field-aurora): dark hero 2.14->13.87/14.68:1 (b3d65eec, re-paint 0ca6c9fa).
+# USER-REPORTED metallic-wash DEFECT (10.25 BG.W-CATEGORY-CARD-WARM) FIXED + VERIFIED DONE: recessive warm
+#   bento field; cards read warm H47-80 C0.019-0.029 (2.4-3.6x gray floor), zero metallic; non-authoring
+#   dual-engine PASS /forms+/data both modes (9e13965d, paint 37bec1ce).
+# BUILD wf_c4e77ac4-079 LAUNCHED (decoupled batch-3): WS3->WS12 + BH device-free -> [paint-pending]. DONE=26/147.
