@@ -71,3 +71,4 @@ wf_997d0cce-69f  resume  2026-06-29 06:49:06  BATCH-2 engine (cut from 3; integr
 ## (decoupled — the heavy dual-engine capture is its own short pass). WS1 linchpin ROUTE-TRANSITION builder
 ## ac0379934966cda57 LIVE — the test of whether a complex WS wave fits a burst. Cron 29edebb6 -> lander-style.
 ## 08:41 WS1 2.1 BG.W-ROUTE-TRANSITION LANDED [paint-pending] (89dc3dee, ~26min) — model VALIDATED for complex waves. 2 gates authored GREEN, AppShell -231L keyed atomic swap, .scroll-build retired. Next: field cluster 2.2/2.4/2.5.
+## 08:57 WS1-core builder agentId ab948de7eb7d5d86a is ALIVE (mid-2.2; SendMessage queued for next round). LESSON: pgrep-node is NOT a reliable agent-liveness signal (agent not pgrep-able; VS Code helpers pollute). Use FILE-ACTIVITY (find -mmin -15 on work tree). A dirty tree = durable builder WIP that survives walls → CONTINUE it (resume agent or fresh continue-builder), NEVER stash/discard. Cron refined accordingly.
