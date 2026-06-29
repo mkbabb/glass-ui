@@ -252,6 +252,91 @@ if (phantomDestinations.length > 0) {
     process.exit(1);
 }
 
+// ── Re-stamp-discharge clause (BG.W-DISPOSITION-RESTAMP) ────────────────────────
+// "Re-stamp-without-decide REDs." A `pendingResolvedBy` is a promise that the
+// close will FLIP pending→resolved when the build lands. The chronic it kills: BB
+// minted `styles-critical-split.pendingResolvedBy = "BB.W-CSS-CRITICAL"` and the
+// BB close never fired the flip, so the un-honored promise rode BB→BC→BD
+// un-discharged ("sat STILL-OPEN"). This clause makes that impossible: a pending
+// must be DISCHARGED (resolved:true) BY the time the register is re-stamped at a
+// LATER tranche. So an un-resolved `pendingResolvedBy` whose own tranche is
+// strictly BEFORE the register's latest re-stamp tranche is a stale, un-honored
+// promise re-stamped forward without a decision — a re-stamp-without-decide — and
+// REDs the close. A pending made AT the latest re-stamp tranche (a fresh promise
+// this cycle) is allowed; it must discharge by the NEXT re-stamp. PURE document
+// cross-check (no siblings) — runs BEFORE the sibling skip, gates CI with zero
+// consumers on disk. The two-char tranche codes are lexicographically ordered by
+// tranche (AX<AY<AZ<BA<BB<BC<BD<BE<BF<BG<BH), so a string compare IS a tranche
+// compare.
+function trancheOf(waveValue) {
+    if (typeof waveValue !== "string") return null;
+    const dot = waveValue.indexOf(".");
+    if (dot <= 0) return null;
+    return waveValue.slice(0, dot);
+}
+
+// The register's latest re-stamp tranche = max reStampedAt — the "current
+// re-stamp cycle" the discharge discipline measures pendings against.
+let latestRestamp = null;
+for (const item of reg.items ?? []) {
+    if (typeof item.reStampedAt === "string") {
+        if (latestRestamp === null || item.reStampedAt > latestRestamp)
+            latestRestamp = item.reStampedAt;
+    }
+}
+
+// A pending is stale (a re-stamp-without-decide) iff it is un-resolved AND its own
+// tranche is strictly before the latest re-stamp tranche.
+function pendingIsStale(item, latest) {
+    if (!item || item.resolved === true) return false;
+    if (!item.pendingResolvedBy) return false;
+    const t = trancheOf(item.pendingResolvedBy);
+    if (t === null || latest === null) return false;
+    return t < latest;
+}
+
+// Acceptance-is-the-inverse self-test: the comparator MUST flag a synthetic stale
+// pending and MUST NOT flag a fresh / discharged / pending-less one. Proven every
+// run — a regression that defangs the detector reds loudly here.
+const RESTAMP_SELFTESTS = [
+    { name: "stale-prior-tranche", item: { pendingResolvedBy: "AA.W-OLD", resolved: false }, latest: "BG", expect: true },
+    { name: "fresh-this-cycle", item: { pendingResolvedBy: "BG.W-FRESH", resolved: false }, latest: "BG", expect: false },
+    { name: "discharged-resolved", item: { pendingResolvedBy: "AA.W-OLD", resolved: true }, latest: "BG", expect: false },
+    { name: "no-pending", item: { resolved: false }, latest: "BG", expect: false },
+];
+for (const t of RESTAMP_SELFTESTS) {
+    if (pendingIsStale(t.item, t.latest) !== t.expect) {
+        console.error(
+            `[proof:disposition-live] RE-STAMP-DISCHARGE SELF-TEST FAILED (${t.name}) — the stale-pending detector is not load-bearing.`,
+        );
+        process.exit(1);
+    }
+}
+
+const stalePendings = [];
+for (const item of reg.items ?? []) {
+    if (pendingIsStale(item, latestRestamp)) {
+        stalePendings.push(
+            `${item.id} → pendingResolvedBy "${item.pendingResolvedBy}" (tranche ${trancheOf(item.pendingResolvedBy)}) is un-discharged while the register is re-stamped to ${latestRestamp} — discharge it (resolved:true) or re-home the pending to a current-cycle wave.`,
+        );
+    }
+}
+
+console.log("proof:disposition-live — re-stamp-discharge clause (BG.W-DISPOSITION-RESTAMP)");
+console.log(`  latest re-stamp tranche : ${latestRestamp ?? "(none)"}`);
+console.log(
+    `  open pendings           : ${(reg.items ?? []).filter((i) => i.pendingResolvedBy && !i.resolved).length}`,
+);
+console.log(`  stale (re-stamp-no-decide): ${stalePendings.length}`);
+console.log(`  self-test (bite proof)  : OK — synthetic stale pending flagged, fresh/discharged pass`);
+for (const p of stalePendings) console.error(`  RE-STAMP-NO-DECIDE   ${p}`);
+if (stalePendings.length > 0) {
+    console.error(
+        `\n[proof:disposition-live] ${stalePendings.length} pending(s) re-stamped past their tranche un-discharged — a deferral promise must be honored (resolved) by the next re-stamp, never carried forward (BG.W-DISPOSITION-RESTAMP).`,
+    );
+    process.exit(1);
+}
+
 // Registry-default world (inv-θ): every trigger re-evaluates via a min-consumers
 // grep over consumer SIBLINGS. A clean CI runner has no consumer sibling checked
 // out, so (a) there is no booked deferral to re-evaluate and (b) the synthetic
@@ -277,6 +362,8 @@ if (!anySiblingPresent) {
         residualRows,
         phantomCount,
         phantomDestinations: phantomDestinations.length,
+        latestRestamp,
+        stalePendings: stalePendings.length,
         reason:
             "no consumer sibling present on this runner (registry-default) — the deferral-trigger re-evaluation walks siblings; nothing to check, and the min-consumers self-test cannot meet without a present consumer.",
     });
@@ -338,6 +425,8 @@ writeGateArtifact(ARTIFACT, {
     residualRows,
     phantomCount,
     phantomDestinations: phantomDestinations.length,
+    latestRestamp,
+    stalePendings: stalePendings.length,
     violations,
 });
 
