@@ -121,7 +121,7 @@ const ctxHdr = (w) => `WAVE ${w.id} — ${w.intent || ''}   [${w.tranche}/${w.ws
 FILES: ${(w.files || []).join(', ')}
 DEVICE-FREE GATE: ${w.deviceFreeGate || '(author one)'}
 PRECONDS (all DONE): ${(w.preconds || []).join(', ') || 'none'}
-BRANCH: tranche/BG (the integrated frontier — prior DONE waves are landed; your worktree forks it).
+BRANCH: tranche/BG (the integrated frontier — prior DONE waves are landed). WARNING: your worktree may be STALE-SEEDED at the 4.2.0/BD base (998136bb) — it does NOT auto-fork the frontier. STEP 0 below is mandatory.
 Read your full wave row from ${EXEC}/${w.tranche === 'BG' ? 'bg-build-map.md' : 'bh-interleave-map.md'} + its converged spec.
 ${LAWS}
 ${FENCE}`
@@ -166,6 +166,8 @@ while (guard++ < SWEEP_CAP) {
   log(`Build batch [${batch.map(w => w.id).join(' · ')}]`)
   const builds = await parallel(batch.map(w => () =>
     agent(`${ctxHdr(w)}
+
+STEP 0 — SYNC YOUR WORKTREE TO THE LIVE FRONTIER (MANDATORY; the stale-worktree trap). Your worktree is likely seeded at the STALE 4.2.0/BD base (998136bb), missing EVERY prior landed wave. FIRST, inside your worktree, run: \`git reset --hard "$(git rev-parse tranche/BG)"\` (linked worktrees share refs — this moves you to the CURRENT tranche/BG HEAD carrying all prior landed waves). Verify with \`git log --oneline -3\` that HEAD is a recent "BG …" commit, NOT 998136bb / the 4.2.0 base. If you skip this, your patch is built against the wrong base and WILL NOT integrate (it conflicts with already-landed waves). Keep the returned \`patch\` to ONLY your wave's own files (exclude any harness scratch like _scratch_*.json / pre_reg).
 
 BUILD this wave from first principles. Implement its Files per its Gate + π row. Author/extend the proof:* gate born-RED on HEAD → GREEN on your edit + a self-test bite. Run \`npx vue-tsc --noEmit\` (+ \`npm run build\` if build-relevant) IN YOUR WORKTREE to prove it compiles. Do NOT touch the hot files (${HOT.join(', ')}) — emit those as gatesRegistration/sharedFileRequests. Do NOT commit/stage/stash (read-only git — the orchestrator owns the index). Return BUILD_SCHEMA: the worktree unified diff as \`patch\` (\`git add -A && git diff --cached\` text), the deviceFreeProof, any gatesRegistration/sharedFileRequests, the expected paintTargets, and a convergenceNote.`,
       { schema: BUILD_SCHEMA, model: 'opus', label: `${w.id}/build`, phase: 'Build',

@@ -7,3 +7,12 @@ wf_8e942461-9ab  launch  2026-06-28 16:55:35  fresh-boot Stage-0 frontier
 # is broken BY DESIGN — the born-RED anchor) but the generic engine re-looped it toward BLOCKED, stalling
 # 0.2(roster)→0.3(demo:dist) which gate ALL downstream Safari paint. Orchestrator override: 0.1 → DONE
 # (device-free GREEN + 18 born-RED Metal PNGs committed); resume FRESH (LOADER re-reads cursor) → 0.2 next.
+wf_00282840-677  resume  2026-06-28 19:31:39  fresh after 0.1 DONE override (LOADER re-reads cursor → frontier 0.2)
+
+## INTERVENTION 2026-06-28 ~22:00 — stale-worktree trap (the 0.3 spin root cause)
+# wf_00282840-677 STOPPED. ROOT CAUSE: the harness seeds isolation:'worktree' at the 4.2.0/BD base (998136bb),
+# NOT tranche/BG HEAD. Build agents forked a base missing every landed wave → new-file waves applied early but
+# file-MODIFYING waves (0.2 proof-ba-gestalt rewrite, 0.3 ship-attestation) produced patches against the wrong
+# base → could not integrate → 0.3 built ~5x, never landed, demo:dist never minted, DONE stuck at 6 ~50min.
+# FIX: engine BUILD prompt now mandates STEP 0 = `git reset --hard "$(git rev-parse tranche/BG)"` in the
+# worktree (the stale-worktree-trap memory prescription). Resume FRESH with the patched engine.
