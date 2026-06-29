@@ -14,8 +14,10 @@
 :root {
     /* SCROLL-DRIVEN (scroll-driven.css). Values mirror the JS-fallback composable
        defaults (`useScrollProgress` / `useStaggerReveal`) so the native CSS path and
-       the fallback path read identically — no visual seam at the `@supports` boundary. */
-    --scroll-progress-scroller: root;
+       the fallback path read identically — no visual seam at the `@supports` boundary.
+       BG.W-SCROLL-PROGRESS-RAIL — `--scroll-progress-scroller` is RETIRED (clean break,
+       no alias): the recipe reads a FULL-value `--scroll-progress-timeline` (default
+       `scroll(nearest block)`), never a `<dashed-ident>` fragment inside `scroll()`. */
     --scroll-reveal-rise: 6px;
     --scroll-reveal-range-end: 60%;
 

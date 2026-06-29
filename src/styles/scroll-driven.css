@@ -30,9 +30,23 @@
  */
 
 /* ── Scroll progress (scroll() timeline) — drives a 0..1 scaleX bar.
- * Consumers add `.scroll-progress` on a position:fixed/absolute element; the
- * scroller is the nearest ancestor block scroller (`root` by default; override
- * via `--scroll-progress-scroller`). */
+ * Consumers add `.scroll-progress` on a position:fixed/absolute/sticky element;
+ * the timeline defaults to `scroll(nearest block)` (the nearest ancestor block
+ * scroller), overridable by the FULL-value var `--scroll-progress-timeline`.
+ *
+ * BG.W-SCROLL-PROGRESS-RAIL (D5) — `scroll-origin`+`scaleX(0)` are HOISTED
+ * UNCONDITIONAL so the rest is INVISIBLE (scaleX 0) on ANY unsupported / invalid /
+ * PRM path (NOT an opacity-only rest). The timeline is a FULL-value var — NEVER
+ * `scroll(var(...))`: a `<dashed-ident>` (a named timeline) substituted into
+ * scroll()'s scroller slot is INVALID and silently computes animation-timeline to
+ * `auto`, which resolves the keyframe to scaleX(1) full-width (the HEAD D5 defect).
+ * A consumer that needs a named cross-element timeline writes the WHOLE value
+ * (`--scroll-progress-timeline: --my-timeline` + `timeline-scope` on an ancestor),
+ * never a fragment inside `scroll()`. */
+.scroll-progress {
+    transform-origin: 0 50%;
+    transform: scaleX(0);
+}
 @media (prefers-reduced-motion: no-preference) {
     @supports (animation-timeline: scroll()) {
         @keyframes gl-scroll-grow {
@@ -40,9 +54,8 @@
             to   { transform: scaleX(1); }
         }
         .scroll-progress {
-            transform-origin: 0 50%;
             animation: gl-scroll-grow auto linear;
-            animation-timeline: scroll(var(--scroll-progress-scroller, root) block);
+            animation-timeline: var(--scroll-progress-timeline, scroll(nearest block));
         }
     }
 }

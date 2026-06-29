@@ -358,14 +358,15 @@ onBeforeUnmount(() => {
                 <p class="sr-only" aria-live="polite" role="status">
                     {{ routeAnnounce }}
                 </p>
-                <!-- BA.W-ANIMATE Tier B — the route-scroller scroll-progress bar.
-                     The `.scroll-progress` recipe (scroll-driven.css) drives a 0..1
-                     scaleX fill off a native scroll() timeline on the compositor;
-                     `.demo-scroll-progress` pins it to the top of the content column
-                     and points `--scroll-progress-scroller` at the `--demo-main-progress`
-                     scroll-timeline named on this `.demo-main-scroller` (the ROUTE owns
-                     scroll, not `root`). PRM-safe + zero-JS by construction (the recipe
-                     sits under the PRM + @supports(animation-timeline) gate). -->
+                <!-- BA.W-ANIMATE Tier B / BG.W-SCROLL-PROGRESS-RAIL — the route-scroller
+                     scroll-progress bar. The `.scroll-progress` recipe (scroll-driven.css)
+                     drives a 0..1 scaleX fill off a native scroll() timeline on the
+                     compositor; `.demo-scroll-progress` is a position:sticky CHILD of this
+                     `.demo-main-scroller`, so `--scroll-progress-timeline: scroll(nearest
+                     block)` resolves to this scroller (the ROUTE owns scroll, not `root`).
+                     PRM-safe + zero-JS by construction (the animated grow sits under the
+                     PRM + @supports(animation-timeline) gate; the unconditional scaleX(0)
+                     is the invisible rest). -->
                 <div class="demo-scroll-progress scroll-progress" aria-hidden="true" />
                 <!-- BG.W-ROUTE-TRANSITION (M1) — the route swap is a BARE KEYED ATOMIC
                      SWAP: NO Vue <Transition>, NO Suspense, NO v-if/skeleton/no-match

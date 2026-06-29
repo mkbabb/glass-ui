@@ -82,11 +82,21 @@ const REVEAL_ITEMS = Array.from({ length: 8 }, (_, i) => `Reveal card ${i + 1}`)
             label="Scroll progress (scroll() timeline)"
             blurb="A .scroll-progress bar driven entirely on the compositor by a native scroll() timeline — no rAF, no scroll listener. Scroll the panel; the bar tracks 0→1 off the main thread."
         >
-            <div class="relative overflow-hidden rounded-card border border-border/60">
-                <!-- the compositor-driven progress bar, scoped to this scroller -->
+            <!-- BG.W-SCROLL-PROGRESS-RAIL — the genuine NAMED-timeline cross-element
+                 case: the bar is a SIBLING of the scroller, so it cannot reach the
+                 scroller's `--sp` scroll-timeline by ancestry. `timeline-scope: --sp`
+                 on the common wrapper hoists the name so the sibling bar can read it;
+                 the bar sets the FULL-value `--scroll-progress-timeline: --sp` (a bare
+                 named timeline, NEVER a `scroll(var(...))` fragment). -->
+            <div
+                class="relative overflow-hidden rounded-card border border-border/60"
+                style="timeline-scope: --sp"
+            >
+                <!-- the compositor-driven progress bar, driven by the sibling
+                     scroller's named `--sp` timeline -->
                 <div
                     class="scroll-progress absolute inset-x-0 top-0 z-10 h-1 bg-[var(--motion-accent)]"
-                    style="--scroll-progress-scroller: self"
+                    style="--scroll-progress-timeline: --sp"
                 />
                 <div class="h-64 overflow-y-auto p-4" style="scroll-timeline: --sp block" tabindex="0">
                     <p v-for="n in 14" :key="n" class="mb-4 text-small text-muted-foreground">

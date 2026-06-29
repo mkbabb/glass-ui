@@ -25,11 +25,15 @@
 //        assert is SCOPED to the <RouterView v-slot> block + the transitions.css
 //        recipe. (The route confounders are owned by proof:route-confounder.)
 //
-//   W2 — the scroll-progress bar is on the route scroller. A .scroll-progress
-//        element exists inside the AppShell <main> region AND its
-//        --scroll-progress-scroller resolves to the <main> block scroller (a named
-//        timeline / scroped scroller override — NOT the default `root`). RED at
-//        HEAD: no .scroll-progress anywhere in AppShell.
+//   W2 — the scroll-progress bar tracks the route scroller (BG.W-SCROLL-PROGRESS-RAIL
+//        re-point). The `.scroll-progress` recipe hoists `transform: scaleX(0)`
+//        UNCONDITIONAL (the invisible rest) + reads a FULL-value `--scroll-progress-
+//        timeline` (default `scroll(nearest block)`); the demo bar (a sticky child of
+//        `.demo-main-scroller`) binds it to that scroller; AND the GLOBAL comment-blind
+//        scan finds NO invalid `scroll(var(...))`/`scroll(--ident ...)` fragment (the
+//        HEAD D5 defect: a dashed-ident in scroll()'s scroller slot → animation-timeline
+//        `auto` → scaleX(1) full-width). A `--self-test` planted bite proves the
+//        fragment detector has teeth.
 //
 //   W3 — the audacious numbers count up, gated. The metric-cell audacious display
 //        figures (text-display-mega / text-display-audacious) carry [data-countup]
@@ -49,12 +53,13 @@
 //        scroll-driven.css / transitions.css recipes. RED-able: a bounce on the
 //        hero or a `transition: all` smuggled into a wired surface fails the arm.
 
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import { ROOT } from "./constellation.mjs";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
 const COMMAND = "npm run proof:ba-animate";
+const SELF_TEST = process.argv.includes("--self-test");
 
 const read = (rel) => {
     const p = resolve(ROOT, rel);
@@ -68,6 +73,74 @@ const strip = (s) =>
         .replace(/<!--[\s\S]*?-->/g, (m) => m.replace(/[^\n]/g, " "))
         .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "))
         .replace(/\/\/[^\n]*/g, "");
+
+// BG.W-SCROLL-PROGRESS-RAIL (D5) — the INVALID scroll() fragment detector: a
+// `<dashed-ident>` (a named timeline) or a `var()` substituted into scroll()'s
+// SCROLLER slot is invalid and silently computes animation-timeline to `auto`
+// (→ scaleX(1) full-width). The FULL-value var form `var(--x, scroll(nearest
+// block))` is fine; only the `scroll(var(...))` / `scroll(--ident ...)` FRAGMENT
+// is forbidden. Comment-blind by construction (callers pass stripped text).
+const SCROLL_FRAGMENT_RE = /scroll\(\s*(?:var\(|--)/;
+
+// Recursive file walk for the GLOBAL scan (comment-blind via strip at the call site).
+function walk(rel, exts, acc = []) {
+    let entries;
+    try {
+        entries = readdirSync(resolve(ROOT, rel));
+    } catch {
+        return acc;
+    }
+    for (const e of entries) {
+        if (e === "node_modules" || e.startsWith(".")) continue;
+        const childRel = `${rel}/${e}`;
+        let st;
+        try {
+            st = statSync(resolve(ROOT, childRel));
+        } catch {
+            continue;
+        }
+        if (st.isDirectory()) walk(childRel, exts, acc);
+        else if (exts.some((x) => e.endsWith(x))) acc.push(childRel);
+    }
+    return acc;
+}
+
+// ── self-test: the planted bite — the fragment detector has teeth ─────────────
+if (SELF_TEST) {
+    const bites = [];
+    const bite = (id, pass, detail) => bites.push({ id, pass, detail });
+    bite(
+        "scroll-var-fragment-flagged",
+        SCROLL_FRAGMENT_RE.test("animation-timeline: scroll(var(--x) block);"),
+        "a synthetic `scroll(var(--x) block)` fragment is FLAGGED (W2 would RED)",
+    );
+    bite(
+        "scroll-dashed-ident-fragment-flagged",
+        SCROLL_FRAGMENT_RE.test("animation-timeline: scroll(--my-name block);"),
+        "a synthetic `scroll(--my-name block)` fragment is FLAGGED (W2 would RED)",
+    );
+    bite(
+        "full-value-var-not-flagged",
+        !SCROLL_FRAGMENT_RE.test(
+            "animation-timeline: var(--scroll-progress-timeline, scroll(nearest block));",
+        ),
+        "the FULL-value var form `var(--x, scroll(nearest block))` is NOT flagged (no false positive)",
+    );
+    bite(
+        "valid-scroll-keyword-not-flagged",
+        !SCROLL_FRAGMENT_RE.test("animation-timeline: scroll(nearest block);"),
+        "a valid `scroll(nearest block)` is NOT flagged (no false positive)",
+    );
+    const failed = bites.filter((b) => !b.pass);
+    console.log("proof:ba-animate --self-test (BG.W-SCROLL-PROGRESS-RAIL scroll-fragment detector)");
+    for (const b of bites) console.log(`  ${b.pass ? "✓" : "✗"} ${b.id} — ${b.detail}`);
+    if (failed.length) {
+        console.error(`\n[self-test] ${failed.length} bite(s) without teeth`);
+        process.exit(1);
+    }
+    console.log("\n[self-test] the scroll() fragment detector has teeth");
+    process.exit(0);
+}
 
 const checks = []; // {id, pass, detail}
 const add = (id, pass, detail) => checks.push({ id, pass: Boolean(pass), detail });
@@ -110,34 +183,45 @@ add(
         : `the route page-enter is not the bare keyed atomic swap (keyed-swap=${rvKeyedSwap} route-enter-recipe=${routeEnterRecipe}) — the route hard-cuts or wedges (ANIM-1/2)`,
 );
 
-// ── W2 — the scroll-progress bar is on the route scroller ─────────────────────
+// ── W2 — the scroll-progress bar tracks the route scroller (BG.W-SCROLL-PROGRESS-RAIL) ──
 //
-// A .scroll-progress element exists in AppShell AND its scroller is overridden to
-// the <main> block scroller (the route owns scroll, not `root`). The override is
-// EITHER an inline/scoped `--scroll-progress-scroller: <name>` paired with a
-// `scroll-timeline-name` on <main>, OR the bar sits inside <main> with the
-// scroller bound to the named timeline. Accept the canonical pattern: the bar
-// class + a --scroll-progress-scroller override that names a timeline (not `root`)
-// + the matching scroll-timeline-name declaration somewhere in the source set.
+// BG.W-SCROLL-PROGRESS-RAIL (D5) re-pointed this off the retired `--scroll-progress-
+// scroller` + named-timeline pairing onto the FULL-value `--scroll-progress-timeline`:
+//   - the `.scroll-progress` recipe HOISTS `transform: scaleX(0)` UNCONDITIONAL (the
+//     invisible terminal rest on any unsupported/invalid/PRM path), and reads a
+//     FULL-value var timeline (default `scroll(nearest block)`);
+//   - the demo bar is a position:sticky CHILD of `.demo-main-scroller`, so its
+//     `--scroll-progress-timeline: scroll(nearest block)` resolves to that scroller;
+//   - the GLOBAL scan finds NO invalid `scroll(var(...))` / `scroll(--ident ...)`
+//     fragment anywhere in src/styles + demo (the HEAD D5 defect — a dashed-ident in
+//     scroll()'s scroller slot computes animation-timeline to `auto` → scaleX(1)).
+const scrollDrivenCss = strip(read("src/styles/scroll-driven.css"));
 const hasScrollProgressEl = /class=["'][^"']*\bscroll-progress\b/.test(appShell);
-const scrollerOverride =
-    /--scroll-progress-scroller\s*:/.test(appShell) ||
-    /--scroll-progress-scroller\s*:/.test(dockNavCss);
-// The named-scroller binding — a `scroll-timeline-name` (or `timeline-scope`) on
-// the <main>/scroller pairs with the bar's `scroll(<name> block)`. Reject a bare
-// `root` scroller (it would track the wrong element — a faint pass over R8).
-const namedTimeline =
-    /scroll-timeline-name\s*:/.test(appShell) ||
-    /scroll-timeline-name\s*:/.test(dockNavCss);
-const scrollerNotRoot =
-    scrollerOverride &&
-    !/--scroll-progress-scroller\s*:\s*root\b/.test(appShell + dockNavCss);
+const recipeHoistsRest =
+    /\.scroll-progress\s*\{[^}]*transform:\s*scaleX\(0\)/.test(scrollDrivenCss);
+const recipeFullValueVar =
+    /animation-timeline:\s*var\(\s*--scroll-progress-timeline\s*,\s*scroll\(nearest block\)\s*\)/.test(
+        scrollDrivenCss,
+    );
+const barBoundToRouteScroller =
+    /--scroll-progress-timeline\s*:\s*scroll\(nearest block\)/.test(dockNavCss);
+// THE GLOBAL SCAN — comment-blind over src/styles + demo.
+const scanFiles = [...walk("src/styles", [".css"]), ...walk("demo", [".css", ".vue"])];
+const scrollFragmentOffenders = scanFiles.filter((f) =>
+    SCROLL_FRAGMENT_RE.test(strip(read(f))),
+);
+const w2 =
+    hasScrollProgressEl &&
+    recipeHoistsRest &&
+    recipeFullValueVar &&
+    barBoundToRouteScroller &&
+    scrollFragmentOffenders.length === 0;
 add(
     "w2-scroll-progress-on-route-scroller",
-    hasScrollProgressEl && scrollerOverride && namedTimeline && scrollerNotRoot,
-    hasScrollProgressEl && scrollerOverride && namedTimeline && scrollerNotRoot
-        ? "a .scroll-progress bar lives in the <main> region with --scroll-progress-scroller bound to a named scroll-timeline on <main> (not root) — the bar tracks the route scroller on the compositor"
-        : `the .scroll-progress bar is missing or mis-scoped (el=${hasScrollProgressEl} override=${scrollerOverride} named-timeline=${namedTimeline} not-root=${scrollerNotRoot}) — the route-owning scroller has no compositor bar (ANIM-3)`,
+    w2,
+    w2
+        ? "the .scroll-progress recipe hoists transform: scaleX(0) UNCONDITIONAL + reads the FULL-value var timeline (default scroll(nearest block)); the demo bar (a sticky child of .demo-main-scroller) binds --scroll-progress-timeline: scroll(nearest block); and the GLOBAL scan finds zero invalid scroll() fragments — the bar tracks the route scroller, invisible at rest"
+        : `the scroll-progress mechanism is wrong (el=${hasScrollProgressEl} hoists-rest=${recipeHoistsRest} full-value-var=${recipeFullValueVar} bar-bound=${barBoundToRouteScroller} fragment-offenders=${scrollFragmentOffenders.join(", ") || "none"}) — the route bar mis-scopes or a scroll(var/--) fragment computes animation-timeline to auto → scaleX(1) (ANIM-3 / D5)`,
 );
 
 // ── W3 — the audacious numbers count up, gated ────────────────────────────────

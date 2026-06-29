@@ -184,22 +184,23 @@
 
 /* ── BA.W-ANIMATE Tier B — the route-scroller scroll-progress bar ───────────
    The `.scroll-progress` recipe (src/styles/scroll-driven.css) drives a 0..1
-   scaleX bar off a native `scroll()` timeline on the compositor. The recipe's
-   scroller defaults to `root`, but the ROUTE owns scroll on `<main>` (the shell
-   is a fixed viewport frame), so we name a scroll-timeline on the scroller and
-   point the bar's `--scroll-progress-scroller` at it. This is a demo-scoped
-   geometry/color rule with no token home (the bar position + ink are demo
-   chrome, not a library token) — the §FileBounds modify-carve clause.
+   scaleX bar off a native `scroll()` timeline on the compositor. BG.W-SCROLL-
+   PROGRESS-RAIL (D5): the bar is a position:sticky CHILD of `.demo-main-scroller`
+   (the ROUTE owns scroll on `<main>`, the shell is a fixed viewport frame), so the
+   bar's `--scroll-progress-timeline: scroll(nearest block)` resolves to that
+   scroller automatically — no named scroll-timeline + no `<dashed-ident>` fragment
+   in scroll()'s scroller slot (the HEAD invalid `scroll(var(--scroll-progress-
+   scroller) block)` that computed animation-timeline to `auto` → scaleX(1) full-
+   width). This is a demo-scoped geometry/color rule with no token home (the bar
+   position + ink are demo chrome, not a library token) — the §FileBounds modify-carve.
 
-   The whole thing is PRM-safe + off-main-thread by construction: the recipe sits
-   under `@media (prefers-reduced-motion: no-preference)` + an `@supports
-   (animation-timeline: scroll())` block, so under PRM or on a non-supporting
-   engine NO animation attaches and the bar renders in its terminal (scaleX 0)
-   state. There is no JS attach (the useScrollProgress fallback short-circuits
-   when the native timeline is present — the dual-path-single-writer rule). */
+   PRM-safe + off-main-thread by construction: the animated grow sits under
+   `@media (prefers-reduced-motion: no-preference)` + `@supports (animation-timeline:
+   scroll())`, and the recipe's UNCONDITIONAL `transform: scaleX(0)` is the invisible
+   terminal rest on any unsupported / invalid / PRM path. No JS attach (the
+   useScrollProgress fallback short-circuits under native support — the dual-path
+   single-writer rule). */
 .demo-main-scroller {
-    scroll-timeline-name: --demo-main-progress;
-    scroll-timeline-axis: block;
     /* BC.W-DROPDOWN-FIX — the no-shift discipline. This route scroller hosts the
        portaled picker overlays (Select / DropdownMenu); reka's body scroll-lock
        removes a classic (space-taking) scrollbar on open, and WITHOUT a reserved
@@ -228,7 +229,12 @@
     scroll-padding-inline-start: var(--dock-content-safe-inset, 2.5rem);
 }
 .demo-scroll-progress {
-    --scroll-progress-scroller: --demo-main-progress;
+    /* BG.W-SCROLL-PROGRESS-RAIL — the bar is a position:sticky CHILD of
+       `.demo-main-scroller`, so `scroll(nearest block)` resolves to that scroller
+       (the ROUTE owns scroll, not `root`). A FULL-value var — NEVER the retired
+       `scroll(var(--scroll-progress-scroller) block)` fragment (a named timeline in
+       scroll()'s scroller slot is invalid → animation-timeline:auto → scaleX(1)). */
+    --scroll-progress-timeline: scroll(nearest block);
     position: sticky;
     inset-block-start: 0;
     z-index: 1;
@@ -243,9 +249,9 @@
         color-mix(in oklab, var(--primary), transparent 10%),
         var(--primary)
     );
-    /* The scaleX origin (the recipe sets transform-origin: 0 50%); a faint rest
-       state so the rail reads as an affordance even before the user scrolls. */
-    opacity: 0.85;
+    /* No opacity rest — the recipe's UNCONDITIONAL `transform: scaleX(0)` is the
+       invisible rest on any unsupported/invalid/PRM path (the bar shows ONLY as it
+       fills; a faint always-on hairline read as a permanent rule, not progress). */
     pointer-events: none;
 }
 
