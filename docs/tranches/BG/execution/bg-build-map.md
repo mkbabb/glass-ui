@@ -374,6 +374,21 @@ WS7 Band-0 no-silent-drop ledger also builds early (it has no integration depend
 - **BG.W-12-LAWS-UNIVERSAL** [P] — liquid-weight/inertia/bounce on ALL restored motion (spatial-on-spring,
   enter-bouncy/exit-no-overshoot, scroll-scrub NO-overshoot); the Liquid-Glass content-fence (glass on chrome,
   paper on content); cartoon-technicolor on state-change beats only.
+- **BG.W-CATEGORY-CARD-WARM** [P] (USER-REPORTED 2026-06-29) — every category page's (`SectionLanding`)
+  sub-category cards (`SectionPreviewCard`, the `glass-resting` bento plates) read as WARM LIQUID GLASS, NEVER
+  the "awful metallic wash" the user reports (the Forms page the exemplar; systemic across all category pages).
+  ROOT: category routes are NON-focal (BG.W-FIELD-AURORA gated the recessive warm shell-aurora field to focal
+  routes only), so the translucent `glass-resting` plate + its specular catch-light sit over a FLAT grid/paper
+  category-page wash → a silver/metallic sheen. BD.W-BENTO-SPECIMEN warmed the preview WINDOW (the specimen),
+  not the card PLATE over the page. FIX (warm-everywhere / no-gray): give the SectionLanding bento a WARM AMBIENT
+  FIELD behind the cards (a recessive warm CSS radial on the bento section — NO live GL, the one-GL-per-route
+  budget held) so the `glass-resting` cards transmit WARM; if the metallic is partly a `glass-resting`
+  specular/tint cast, dial it back in coordination with WS3's glass register (no gray, the warm-cream identity).
+  *Files:* `demo/stories/SectionLanding.vue` (+ bento field css), `SectionPreviewCard.vue`,
+  `scripts/proof-category-card-warm.mjs` (new). *Gate:* `proof:category-card-warm` (the SectionLanding bento
+  carries a warm field behind the cards + NO flat/gray bento backdrop + the card reads warm — device-free
+  assertable). *π:* dual-engine (Chrome + Safari, BOTH modes) on /forms + ≥2 other category pages (/display,
+  /data) — the sub-category cards read WARM liquid glass, ZERO metallic/gray wash (the user's exact defect retired).
 
 ---
 

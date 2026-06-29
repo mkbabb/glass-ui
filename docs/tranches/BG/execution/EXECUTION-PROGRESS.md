@@ -174,6 +174,7 @@ WAVE-DONE bar: `real-paint-protocol.md §1`. Interleave/collision: `bh-interleav
 | 10.22 | BG.W-MANIFEST-COLOCATE | BG/WS4 | H | PENDING | 4 string-maps → s() row | — |
 | 10.23 | BG.W-DESHADCN-SWEEP (W0 — WS10 precondition) | BG/WS4 | P | PENDING | proof:de-shadcn (HEAD-mode) | — |
 | 10.24 | BG.W-12-LAWS-UNIVERSAL | BG/WS4 | P | PENDING | liquid-weight on all restored motion | — |
+| 10.25 | BG.W-CATEGORY-CARD-WARM (USER-REPORTED 2026-06-29) | BG/WS4 | P | PENDING | proof:category-card-warm | — |
 
 ## PHASE 11 — BH [WS4] (after allDone(WS4); B3 demo restructure)
 
