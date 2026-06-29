@@ -374,6 +374,12 @@ export const GATES = [
         note: "BH.B2.0 — the @glass source-alias depth-decouple lock. Asserts the 3-plane @glass alias is wired (tsconfig paths + vite resolve.alias + vitest resolve.alias) AND zero deep-relative (../)+src/ import/export SPECIFIERS survive in demo/ + tests/ (719 rewrites; fs-path literals stay relative by construction). Born-RED on HEAD (alias absent + 719 specifiers) -> GREEN after the codemod. Self-test bite: the SPECIFIER detector must flag a synthetic deep-relative src import and must NOT flag an fs-path literal / already-aliased / non-src relative import. Bite: re-introduce a ../src/ import in demo or tests, or drop a plane's alias -> RED.",
     },
     {
+        id: "proof:subpath-classify",
+        cmd: "proof:subpath-classify",
+        tags: ["local", "ci"],
+        note: "BH.B2.1-mech — the fail-CLOSED subpath-classification mechanism that re-derives the published-subpath surface from ONE explicit classification (scripts/lib/subpath-policy.mjs) feeding BOTH the vite entry map (libraryEntryMap()) AND the generator (scripts/regen-exports.mjs), so the entry NAME set and the export key set can never drift from two hand-lists. The binding evidence is THREE RAN cases (the regen spawned as a subprocess, exit code + machine report asserted): C1 real (--json) -> exit 0 AND fail-closed PASS AND symbol-fidelity 0-fail AND EXACT_REPRODUCTION (regen reproduces package.json exports + typesVersions with zero add/drop/mismatch); C2 --inject-unclassified -> exit 1 (the fail-CLOSED teeth — a synthetic unclassified BG-added dir is a HARD ERROR, never a silent publish); C3 --break-fidelity -> exit 1 (the fidelity teeth — a hand-mapped source that vanished MUST flag). Plus the STRUCTURAL single-source assert: the policy module exports the three classification maps + the entry-map/emit helpers, and libraryEntryMap() name set === buildEntrySet() entry name set. Bite: drop a policy map/helper export, let the regen go fail-OPEN, or sever the single-source identity -> RED.",
+    },
+    {
         id: "proof:claude-structure-sync",
         cmd: "proof:claude-structure-sync",
         tags: ["local", "ci"],
