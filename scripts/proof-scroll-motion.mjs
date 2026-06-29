@@ -132,21 +132,34 @@ const facts = {};
 const add = (id, pass, detail) => checks.push({ id, pass, detail });
 
 // ════════════════════════════════════════════════════════════════════════════
-// S1 — the page-build recipe exists + rides the spring clock + is PRM-carved.
-// `.scroll-build` is a route-enter entrance whose SPATIAL (transform) leg rides a
-// `--spring-<name>` + the matching `--spring-<name>-duration` (P2/P4), COUPLED
-// with an opacity leg on the no-overshoot `--ease-out`/`--ease-expo-out` (P3),
-// under a PRM carve that drops the transform + keeps the fade (P6).
+// S1 — the page-ENTER recipe exists + rides the spring clock + is PRM-carved.
+// BG.W-ROUTE-TRANSITION retired the per-child `.scroll-build` page-build; the route
+// entrance is now the bare keyed `<component class="route-enter">` swap's on-mount
+// `.route-enter` @keyframes `gl-route-enter` (transitions.css). The SPATIAL (transform)
+// leg rides a `--spring-<name>` + the matching `--spring-<name>-duration` (P2/P4),
+// COUPLED with an opacity leg in the SAME keyframe (P3), under a PRM carve that drops
+// the transform + keeps the fade (P6 — the `gl-route-fade` reduce arm).
 // ════════════════════════════════════════════════════════════════════════════
-const hasScrollBuild = /\.scroll-build\b/.test(choreo);
-// The transform leg rides a spring + its matching duration clock.
-const buildSpring = /--spring-(snappy|bouncy|smooth|gentle|dock)\b/.test(choreo);
+const transitions = strip(read("src/styles/transitions.css"));
+const routeEnterRule = (() => {
+    const m = transitions.match(/\.route-enter\s*\{([^}]*)\}/);
+    return m ? m[1] : "";
+})();
+const routeEnterKf = (() => {
+    const m = transitions.match(/@keyframes\s+gl-route-enter\s*\{([\s\S]*?)\}\s*\}/);
+    return m ? m[1] : "";
+})();
+const hasScrollBuild =
+    /\.route-enter\b/.test(transitions) && /@keyframes\s+gl-route-enter\b/.test(transitions);
+// The transform leg rides a spring + its matching duration clock (scoped to the rule).
+const buildSpring = /--spring-(snappy|bouncy|smooth|gentle|dock)\b/.test(routeEnterRule);
 const buildSpringDuration =
-    /--spring-(snappy|bouncy|smooth|gentle|dock)-duration\b/.test(choreo);
-// The coupled opacity leg on a no-overshoot bezier (--ease-out / --ease-expo-out).
-const buildCoupledFade = /--ease-(out|expo-out)\b/.test(choreo);
-// The PRM carve — a (prefers-reduced-motion: reduce) block that drops the build.
-const buildPrmCarve = /@media[^{]*prefers-reduced-motion:\s*reduce/.test(choreo);
+    /--spring-(snappy|bouncy|smooth|gentle|dock)-duration\b/.test(routeEnterRule);
+// The coupled opacity+transform legs in the entrance keyframe (P3 — fade coupled).
+const buildCoupledFade =
+    /opacity/.test(routeEnterKf) && /(transform|translate)/.test(routeEnterKf);
+// The PRM carve — a (prefers-reduced-motion: reduce) block (the .route-enter reduce arm).
+const buildPrmCarve = /@media[^{]*prefers-reduced-motion:\s*reduce/.test(transitions);
 facts.scrollBuild = {
     recipe: hasScrollBuild,
     spring: buildSpring,
@@ -161,7 +174,7 @@ add(
         buildSpringDuration &&
         buildCoupledFade &&
         buildPrmCarve,
-    `.scroll-build exists (${hasScrollBuild}) + the transform leg rides a --spring-* (${buildSpring}) + its matching --spring-*-duration clock (${buildSpringDuration}) + a coupled opacity leg on --ease-out/--ease-expo-out (${buildCoupledFade}) + a (prefers-reduced-motion: reduce) carve (${buildPrmCarve}) — P2/P3/P4/P6. A build springing the transform on a generic --duration-*, omitting the coupled fade, or with no PRM carve reds.`,
+    `the .route-enter page-enter recipe + @keyframes gl-route-enter exist (${hasScrollBuild}) + the transform leg rides a --spring-* (${buildSpring}) + its matching --spring-*-duration clock (${buildSpringDuration}) + a coupled opacity+transform keyframe (${buildCoupledFade}) + a (prefers-reduced-motion: reduce) carve (${buildPrmCarve}) — P2/P3/P4/P6. A page-enter springing the transform on a generic --duration-*, omitting the coupled fade, or with no PRM carve reds.`,
 );
 
 // ════════════════════════════════════════════════════════════════════════════
@@ -272,15 +285,14 @@ const hasSupportsGate = /@supports\s*\([^)]*animation-timeline/.test(choreo);
 // The recipe selectors must NOT appear at the top level before the gate opens.
 // Find the index of the first no-preference gate and the first recipe selector.
 const idxNoPref = choreo.search(/@media[^{]*prefers-reduced-motion:\s*no-preference/);
-const idxBuild = choreo.search(/\.scroll-build\b/);
+// BG.W-ROUTE-TRANSITION retired `.scroll-build` from this sheet (the page-enter is the
+// `.route-enter` recipe in transitions.css now, under its own @layer + PRM arm). The
+// scroll-choreography.css register is the `.scroll-cascade`/`.scroll-pin` pair.
 const idxCascade = choreo.search(/\.scroll-cascade\b/);
 const idxPin = choreo.search(/\.scroll-pin\b/);
 // Each recipe selector appears AFTER the no-preference gate opens (nested under it).
 const recipesUnderGate =
-    idxNoPref !== -1 &&
-    idxBuild > idxNoPref &&
-    idxCascade > idxNoPref &&
-    idxPin > idxNoPref;
+    idxNoPref !== -1 && idxCascade > idxNoPref && idxPin > idxNoPref;
 facts.outerGate = {
     noPreferenceGate: hasNoPreferenceGate,
     supportsGate: hasSupportsGate,
@@ -289,7 +301,7 @@ facts.outerGate = {
 add(
     "s4-outer-prm-supports-gate",
     hasNoPreferenceGate && hasSupportsGate && recipesUnderGate,
-    `every choreography recipe sits under the @media (prefers-reduced-motion: no-preference) (${hasNoPreferenceGate}) + @supports (animation-timeline: …) (${hasSupportsGate}) outer brackets, with the .scroll-build/.scroll-cascade/.scroll-pin selectors nested AFTER the gate opens (${recipesUnderGate}) — the scroll-driven.css discipline. A recipe outside the PRM gate (the vestibular floor) reds.`,
+    `every choreography recipe sits under the @media (prefers-reduced-motion: no-preference) (${hasNoPreferenceGate}) + @supports (animation-timeline: …) (${hasSupportsGate}) outer brackets, with the .scroll-cascade/.scroll-pin selectors nested AFTER the gate opens (${recipesUnderGate}) — the scroll-driven.css discipline. A recipe outside the PRM gate (the vestibular floor) reds.`,
 );
 
 // ════════════════════════════════════════════════════════════════════════════
@@ -381,14 +393,16 @@ add(
 );
 
 const tokensMinted =
-    /--scroll-build-/.test(scalePaper) &&
+    // BG.W-ROUTE-TRANSITION retired the per-child `--scroll-build-*` tokens with the
+    // `.scroll-build` recipe; the page-enter rise is now the `--story-hero-rise` token.
+    /--story-hero-rise\b/.test(scalePaper) &&
     /--scroll-cascade-/.test(scalePaper) &&
     /--scroll-pin-/.test(scalePaper);
 facts.tokensMinted = tokensMinted;
 add(
     "wiring-tokens-minted",
     tokensMinted,
-    `the --scroll-build-*/--scroll-cascade-*/--scroll-pin-* tokens are minted in tokens/scroll-tokens.css (carved from scale-paper.css at BB.W-CARVE4) beside the existing --scroll-reveal-* knobs [minted=${tokensMinted}]`,
+    `the --story-hero-rise + --scroll-cascade-*/--scroll-pin-* tokens are minted in tokens/scroll-tokens.css (carved from scale-paper.css at BB.W-CARVE4) beside the existing --scroll-reveal-* knobs [minted=${tokensMinted}]`,
 );
 
 const piSpecExists = existsSync(resolve(ROOT, "tests-visual/scroll-motion.spec.ts"));

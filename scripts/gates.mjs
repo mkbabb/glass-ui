@@ -714,6 +714,18 @@ export const GATES = [
         note: "AV.W10 — bidirectional set-equality: every demo/stories/<category>/<id>.vue ↔ exactly one manifest row (helper dirs/root chassis excluded by the category-scoped walk). Bite: leave an unreferenced .vue (orphan file) or a row → missing file (dangling row) → RED",
     },
     {
+        id: "proof:route-confounder",
+        cmd: "proof:route-confounder",
+        tags: ["local", "ci", "release"],
+        note: "BG.W-ROUTE-TRANSITION — the route swap is ONE bare keyed atomic mechanism. Device-free SOURCE scan over AppShell.vue (comment-stripped) + transitions.css: the FOUR confounders ABSENT (the fade-slide <Transition>, the useBloomUp/section-landing-skeleton route-bloom, the dataset.categorySwitch VT no-op, the Skeleton/route.matched.length branches) AND the bare keyed <component :is :key=route.path class=route-enter> + the .route-enter @keyframes gl-route-enter PRESENT. 7-bite self-test (each deleted mechanism flags, a clean tree passes, the comment-strip is load-bearing). Bite: re-introduce any confounder or drop the swap → RED",
+    },
+    {
+        id: "proof:route-single-root",
+        cmd: "proof:route-single-root",
+        tags: ["local", "ci", "release"],
+        note: "BG.W-ROUTE-TRANSITION (re-scoped hygiene) — under the bare keyed swap the Vue 'non-element root' <Transition> warning cannot fire, so this asserts every ROUTED SFC (manifest rows + SectionLanding + NotFound) has an ELEMENT root that can carry the .route-enter on-mount entrance class (flags a text-only / interpolation-only / empty / teleport-only root). 7-bite self-test incl. the planted text-root flag. Bite: a routed module with a non-element root → RED",
+    },
+    {
         id: "proof:demo-radial-calm",
         cmd: "proof:demo-radial-calm",
         tags: ["local", "ci"],

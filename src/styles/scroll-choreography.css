@@ -12,9 +12,10 @@
  * natively, off the compositor at 60fps (the no-net-dep fence; the 2026
  * universal-support convergence). NO Lenis/GSAP/Locomotive dependency, ever.
  *
- *   .scroll-build   — the route-enter page-build (chrome -> hero -> body, a
- *                     spring-clocked coupled-fade, @keyframes-on-mount [NOT a
- *                     scroll timeline — the build fires on mount], PRM-snapped).
+ *   .scroll-build   — RETIRED (BG.W-ROUTE-TRANSITION). The route-enter page-build
+ *                     is now the bare keyed `<component class="route-enter">` on-mount
+ *                     `@keyframes gl-route-enter` (transitions.css), not a per-child
+ *                     `.scroll-build` stagger.
  *   .scroll-cascade — the orchestrated section cascade (per-child view() timeline,
  *                     the implicit stagger [NO setTimeout], the spring-clocked
  *                     coupled transform+opacity build).
@@ -82,84 +83,19 @@
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
- * .scroll-build — the route-enter page-build.
+ * .scroll-build — RETIRED (BG.W-ROUTE-TRANSITION).
  *
- * A MOUNT-driven entrance (route-enter), NOT a scroll-driven one — so it rides a
- * plain `@keyframes ... animation` (NOT a `view()`/`scroll()` timeline; the build
- * fires on first paint of the new route, not on scroll). It sits under the PRM
- * no-preference gate ALONE (no `@supports (animation-timeline)` — it does not use a
- * timeline, so it runs on every engine; under PRM it never binds, so the page
- * mounts at its terminal state).
- *
- * The coordinated stagger: the .scroll-build container's direct children are the
- * BEATS (chrome, hero, body), each delayed by `--scroll-build-step * --i` (the
- * per-beat coordinated stagger — the page assembles chrome-first, then the hero,
- * then the first section). `--i` is the beat index a consumer sets per child
- * (0-based); the chassis sets it on the chrome/hero/section in reading order
- * (W-HIERARCHY2 owns the ORDER; this register threads the entrance ON it).
+ * The route-enter page-build is no longer a per-child staggered `.scroll-build`
+ * recipe. Under the bare keyed `<component :is :key="route.path" class="route-enter">`
+ * atomic swap, the page entrance is ONE on-mount `@keyframes gl-route-enter` on the
+ * keyed component (transitions.css `.route-enter`) — it reaches EVERY route root
+ * (StoryPage/SectionLanding/hero/intro/auth-shell/NotFound) without a per-beat
+ * `--i` stagger and without the `<Transition>` leave-window the old build raced.
+ * The `gl-page-build`/`gl-page-build-fade` keyframes + the `--scroll-build-rise`/
+ * `--scroll-build-step` tokens are deleted with it (clean break, no alias). The
+ * `.scroll-cascade`/`.scroll-pin`/`.smooth-scroll` registers below are UNTOUCHED —
+ * they are scroll-driven, not the mount-driven page entrance.
  * ─────────────────────────────────────────────────────────────────────────── */
-@media (prefers-reduced-motion: no-preference) {
-    @keyframes gl-page-build {
-        from {
-            opacity: 0;
-            /* SPATIAL leg — the build rise (a transform, compositor-only). */
-            transform: translateY(var(--scroll-build-rise, 1.5rem));
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    /* The page-build container marks the entrance; the beats are its children. */
-    .scroll-build > * {
-        /* The coupled build: the SPATIAL transform rides the snappy spring settle
-           clock (P2/P4 — the page parts arrive with crisp gravity); the opacity is
-           a coupled leg in the SAME keyframe on the SAME clock so the fade tracks
-           the rise as ONE coherent glide (P3 — fade coupled to transform). The
-           no-overshoot bezier governs the FADE channel where the spring's
-           overshoot is not wanted: `--ease-out` is named on the build's title beat
-           (the hero <h1> — audacious type arrives with GRAVITY, not bounce, per
-           W-HIERARCHY2); the other beats ride the snappy spring. */
-        animation: gl-page-build var(--spring-snappy-duration, 0.34s)
-            var(--spring-snappy) both;
-        animation-delay: calc(var(--scroll-build-step, 90ms) * var(--i, 0));
-    }
-
-    /* The hero/title beat: the audacious-type-arrives-with-gravity register — the
-       no-overshoot `--ease-out` bezier (a strictly monotone settle, NO overshoot
-       past the terminal transform), the existing .story-hero-title--enter
-       discipline folded into the ONE entrance system. A consumer marks the hero
-       beat `.scroll-build-hero`. */
-    .scroll-build > .scroll-build-hero {
-        animation: gl-page-build 0.62s var(--ease-out, ease-out) both;
-    }
-}
-
-/* The EXPLICIT P6 carve — under prefers-reduced-motion: reduce the page-build DROPS
-   the spatial transform (no movement — the vestibular floor) but KEEPS a gentle
-   terminal fade-in (the EFFECTS channel survives per P6: fade-keeps, transform-
-   drops). This sits OUTSIDE the no-preference gate as the reduce-arm of the
-   coordinated build (mirroring the transitions.css fade-slide PRM arm — the
-   opacity leg alone under reduce). The build is mount-driven, so the no-preference
-   gate above never binds under reduce; this arm gives PRM users the coupled-FADE
-   terminal entrance with ZERO motion frames (no translateY), the genuine P6 read. */
-@media (prefers-reduced-motion: reduce) {
-    @keyframes gl-page-build-fade {
-        from {
-            opacity: 0;
-        }
-        to {
-            opacity: 1;
-        }
-    }
-    .scroll-build > * {
-        /* fade-keeps (opacity only), transform-DROPS (no translateY) — P6. */
-        animation: gl-page-build-fade var(--duration-fast, 0.16s) var(--ease-out, ease-out)
-            both;
-        animation-delay: 0s; /* no coordinated stagger under reduce — a single calm paint */
-    }
-}
 
 /* ─────────────────────────────────────────────────────────────────────────────
  * .scroll-cascade — the orchestrated section cascade.

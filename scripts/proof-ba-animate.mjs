@@ -17,12 +17,13 @@
 // pattern, mirroring proof-suffuse.mjs / proof-progress-gradient.mjs), each RED at
 // HEAD pre-wave:
 //
-//   W1 — the route page-enter is wired. AppShell's <RouterView v-slot> mount is
-//        wrapped in a <Transition> whose bound transition references a
-//        transitions.css recipe class (fade / fade-slide). The assert is SCOPED
-//        to the <RouterView v-slot> block — a <Transition> elsewhere (the morph
-//        stage, a dialog) must NOT green it. RED at HEAD: the <RouterView> mount
-//        is a bare <component :is="Component"> with no wrapper.
+//   W1 — the route page-enter is wired. BG.W-ROUTE-TRANSITION re-pointed this onto
+//        the BARE KEYED ATOMIC SWAP: AppShell's <RouterView v-slot> mount is a keyed
+//        `<component :is="Component" :key="route.path" class="route-enter">` (NO
+//        <Transition> wrapper — the swap cannot wedge), and the liquid enter is the
+//        on-mount `.route-enter` @keyframes `gl-route-enter` in transitions.css. The
+//        assert is SCOPED to the <RouterView v-slot> block + the transitions.css
+//        recipe. (The route confounders are owned by proof:route-confounder.)
 //
 //   W2 — the scroll-progress bar is on the route scroller. A .scroll-progress
 //        element exists inside the AppShell <main> region AND its
@@ -76,15 +77,16 @@ const appShell = strip(read("demo/layout/AppShell.vue"));
 const metricCell = strip(read("demo/stories/data/metric-cell.vue"));
 const storyHero = strip(read("demo/stories/StoryHero.vue"));
 const dockNavCss = strip(read("demo/layout/dock-nav.css"));
-
-// The named recipe classes from transitions.css — the only legitimate route
-// page-enter binding.
-const PAGE_ENTER_RECIPES = ["fade-slide", "fade", "pane-swap"];
+const transitionsCss = strip(read("src/styles/transitions.css"));
 
 // ── W1 — the route page-enter is wired (scoped to the <RouterView v-slot> block) ──
 //
-// Extract the <RouterView v-slot=...> ... </RouterView> block and assert a
-// <Transition> wraps the <component :is> mount INSIDE it, bound to a named recipe.
+// BG.W-ROUTE-TRANSITION re-pointed this off the removed `<Transition name="fade-slide">`
+// onto the BARE KEYED ATOMIC SWAP: the <RouterView v-slot> mount is a keyed
+// `<component :is="Component" :key="route.path" class="route-enter">` (no <Transition>
+// wrapper — the swap cannot wedge by construction), and the liquid enter is the
+// on-mount `.route-enter` @keyframes (transitions.css). A route change still fires ONE
+// coherent page-enter; the mechanism is subtraction, not a recipe wrapper.
 function routerViewBlock(src) {
     const open = src.search(/<RouterView\b[^>]*v-slot/);
     if (open === -1) return "";
@@ -93,23 +95,19 @@ function routerViewBlock(src) {
     return src.slice(open, close + "</RouterView>".length);
 }
 const rvBlock = routerViewBlock(appShell);
-const rvHasTransition = /<Transition\b/.test(rvBlock);
-// The bound recipe — a `name="…"` referencing a transitions.css class, OR the
-// recipe class on the mounted component (Vue <Transition name="x"> applies
-// x-enter-active etc.). Accept either the name binding or an explicit class.
-const rvRecipe = (() => {
-    const m = rvBlock.match(/<Transition\b[^>]*\bname=["']([^"']+)["']/);
-    return m ? m[1] : "";
-})();
-const rvRecipeNamed = PAGE_ENTER_RECIPES.includes(rvRecipe);
-const rvWrapsMount =
-    rvHasTransition && /<component\b[^>]*:is=["']?Component/.test(rvBlock);
+const rvKeyedSwap =
+    /<component\b[^>]*:is=["']?Component/.test(rvBlock) &&
+    /:key=["']route\.path["']/.test(rvBlock) &&
+    /class=["'][^"']*\broute-enter\b/.test(rvBlock);
+const routeEnterRecipe =
+    /\.route-enter\s*\{/.test(transitionsCss) &&
+    /@keyframes\s+gl-route-enter\b/.test(transitionsCss);
 add(
     "w1-route-page-enter-wired",
-    rvHasTransition && rvWrapsMount && rvRecipeNamed,
-    rvHasTransition && rvWrapsMount && rvRecipeNamed
-        ? `the <RouterView v-slot> mount is wrapped in <Transition name="${rvRecipe}"> (a transitions.css recipe) — a route change fires ONE coherent page-enter`
-        : `the <RouterView v-slot> mount is NOT wrapped in a recipe-bound <Transition> (has=${rvHasTransition} wraps-mount=${rvWrapsMount} recipe="${rvRecipe || "none"}") — the route hard-cuts (ANIM-1/2)`,
+    rvKeyedSwap && routeEnterRecipe,
+    rvKeyedSwap && routeEnterRecipe
+        ? "the <RouterView v-slot> mount is a bare keyed <component :is :key=route.path class=route-enter> (atomic swap) + the .route-enter on-mount @keyframes (transitions.css) — a route change fires ONE coherent page-enter, no leave window to wedge"
+        : `the route page-enter is not the bare keyed atomic swap (keyed-swap=${rvKeyedSwap} route-enter-recipe=${routeEnterRecipe}) — the route hard-cuts or wedges (ANIM-1/2)`,
 );
 
 // ── W2 — the scroll-progress bar is on the route scroller ─────────────────────

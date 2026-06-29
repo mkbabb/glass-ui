@@ -530,23 +530,21 @@
     }
 }
 
-/* BB.W-SCROLL-MOTION — the hero <h1> entrance is the page-build's HERO BEAT, folded
-   onto the ONE entrance system (scroll-choreography.css `.scroll-build`). Audacious
-   type arrives with GRAVITY, NOT bounce: the keyframe rides --ease-out (a strictly
-   monotone bezier, NO overshoot past the terminal transform — never
+/* BB.W-SCROLL-MOTION — the hero <h1> entrance is the page's HERO-BEAT title rise.
+   Audacious type arrives with GRAVITY, NOT bounce: the keyframe rides --ease-out (a
+   strictly monotone bezier, NO overshoot past the terminal transform — never
    --spring-bouncy/--spring-snappy, the §6 doctrine + the W-ANIMATE W4 negative
-   fence; this is the build's hero beat that uses the no-overshoot leg per P1/P3 —
-   the audacious-type-arrives-with-gravity register W-HIERARCHY2 names). It now reads
-   the shared `--scroll-build-rise` distance token (the page-build register's rise),
-   so the hero <h1> arrives on the SAME build distance as the page chrome — ONE
-   coordinated entrance, not two parallel beats. ONE deliberate event on the title.
-   Gated under prefers-reduced-motion: no-preference — under reduce the <h1> mounts
-   at its static terminal state (no animation declared). */
+   fence; the no-overshoot leg per P1/P3 — the audacious-type-arrives-with-gravity
+   register W-HIERARCHY2 names). It reads the `--story-hero-rise` distance token (the
+   hero-title register's own rise; BG.W-ROUTE-TRANSITION re-pointed it off the retired
+   `--scroll-build-rise` when the `.scroll-build` page-build recipe was deleted). ONE
+   deliberate event on the title. Gated under prefers-reduced-motion: no-preference —
+   under reduce the <h1> mounts at its static terminal state (no animation declared). */
 @media (prefers-reduced-motion: no-preference) {
     @keyframes story-hero-title-rise {
         from {
             opacity: 0;
-            transform: translateY(var(--scroll-build-rise, 1.5rem));
+            transform: translateY(var(--story-hero-rise, 1.5rem));
         }
         to {
             opacity: 1;
@@ -576,7 +574,7 @@
     @keyframes story-hero-cluster-rise {
         from {
             opacity: 0;
-            transform: translateY(var(--scroll-build-rise, 1.5rem));
+            transform: translateY(var(--story-hero-rise, 1.5rem));
         }
         to {
             opacity: 1;

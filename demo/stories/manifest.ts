@@ -1078,7 +1078,7 @@ export const CATEGORIES: Category[] = [
                 "motion",
                 "scroll-choreography",
                 "Scroll Choreography",
-                "The SOTA scroll-driven choreography register — the page builds in on route-enter (.scroll-build), the sections cascade as you scroll (.scroll-cascade), and a showcase pins and advances through phases (.scroll-pin) on the native scroll()/view()/timeline-scope substrate. Compositor-only + PRM-safe + the native smooth-scroll opt-in; ZERO Lenis/GSAP dep.",
+                "The SOTA scroll-driven choreography register — the page enters on the route swap (.route-enter), the sections cascade as you scroll (.scroll-cascade), and a showcase pins and advances through phases (.scroll-pin) on the native scroll()/view()/timeline-scope substrate. Compositor-only + PRM-safe + the native smooth-scroll opt-in; ZERO Lenis/GSAP dep.",
             ),
             s(
                 "motion",

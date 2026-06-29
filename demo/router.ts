@@ -71,7 +71,10 @@ function buildRoutes(): RouteRecordRaw[] {
 export const router = createRouter({
     history: createWebHistory(),
     routes: buildRoutes(),
-    scrollBehavior: () => ({ top: 0 }),
+    // BG.W-ROUTE-TRANSITION (M0) — NO window-targeted scrollBehavior. `<main>` (not the
+    // window) owns route scroll, so a window scroll-reset is a no-op double-fire of the
+    // AppShell `route.path` watch that scrolls `mainEl` to the top. The ONE scroll-reset
+    // owner is the AppShell watch.
 });
 
 // W-NAV-DOCK-FIX (defect 7) — eager-resolve the lazy component of the FIRST navigation

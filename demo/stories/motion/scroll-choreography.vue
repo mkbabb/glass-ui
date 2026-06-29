@@ -6,8 +6,9 @@
 // platform now ships these natively, off the compositor at 60fps).
 //
 // This story CONSUMES the registers — no new substrate:
-//   · the PAGE-BUILD rides this route's own StoryPage <article> mount (the chrome →
-//     hero → body coordinated entrance, scroll-choreography.css `.scroll-build`).
+//   · the PAGE-ENTER rides this route's own StoryPage <article> mount (the keyed
+//     `<component class="route-enter">` on-mount entrance, transitions.css —
+//     BG.W-ROUTE-TRANSITION retired the per-child `.scroll-build` page-build).
 //   · the SECTION-CASCADE rides this StoryPage's section wrap (each StorySection
 //     builds in on its own view() timeline — the implicit stagger, `.scroll-cascade`).
 //   · the SCROLL-PINNED showcase below is the `.scroll-pin`/`.scroll-pin-stage`
@@ -65,8 +66,8 @@ useScrollPin({
             <p class="text-prose text-muted-foreground max-w-prose">
                 Three recipes on the native substrate, all compositor-only and
                 reduced-motion-safe:
-                <code class="fira-code">.scroll-build</code> (the route-enter
-                page-build — this page just assembled chrome → hero → body),
+                <code class="fira-code">.route-enter</code> (the route-enter
+                page entrance — this page just rose + faded in on the keyed swap),
                 <code class="fira-code">.scroll-cascade</code> (the section cascade —
                 each block below builds in on its own
                 <code class="fira-code">view()</code> timeline), and

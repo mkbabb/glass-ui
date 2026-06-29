@@ -77,12 +77,13 @@ const fieldStill = computed(() => {
 </script>
 
 <template>
-    <!-- W-CUT P10c — the routed page presents a SINGLE ELEMENT root (this <article>) to
-         the AppShell route <Transition name="fade-slide">. <TooltipProvider> renders a
-         context-only FRAGMENT (no DOM); as the template root it made the transitioning
-         root a non-element node Vue cannot animate. Nesting it INSIDE <article> provides
-         the same tooltip context with zero layout/visual change. -->
-    <article class="scroll-build mx-auto w-full max-w-6xl">
+    <!-- BG.W-ROUTE-TRANSITION — the routed page presents a SINGLE ELEMENT root (this
+         <article>) so the AppShell bare keyed `<component class="route-enter">` swap
+         applies the `.route-enter` on-mount entrance to it (proof:route-single-root
+         asserts the element root). <TooltipProvider> renders a context-only FRAGMENT
+         (no DOM), so it is nested INSIDE <article> (same tooltip context, zero
+         layout/visual change). -->
+    <article class="mx-auto w-full max-w-6xl">
         <TooltipProvider :delay-duration="250">
             <StoryHero
                 v-if="category && landing"

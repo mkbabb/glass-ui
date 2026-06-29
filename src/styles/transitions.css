@@ -39,6 +39,22 @@
         transform: translateY(4px);
     }
 
+    /* ── Route-enter (BG.W-ROUTE-TRANSITION — the bare keyed atomic swap entrance) ──
+     *
+     * The AppShell route swap is a bare keyed `<component :is :key="route.path"
+     * class="route-enter">` — NO Vue `<Transition>` wrapper (the swap unmounts the old +
+     * mounts the new in ONE atomic patch, so it cannot wedge by construction; the
+     * leave-window race + the `.scroll-build`×`<Transition>` collision that froze the
+     * route are structurally impossible). The liquid enter is therefore a pure ON-MOUNT
+     * `@keyframes` on the keyed component — it lands on EVERY route root (StoryPage,
+     * SectionLanding, hero, intro, auth-shell, NotFound), closing the old
+     * `.story-page-article`-only selector gap. The iOS-NavStack vertical settle: a
+     * SPATIAL spring rise (snappy, P2/P4), fade COUPLED to the transform (P3), `both`
+     * fill-mode so the from-state holds before the first frame (no flash-of-final). */
+    .route-enter {
+        animation: gl-route-enter var(--spring-snappy-duration) var(--spring-snappy) both;
+    }
+
     /* ── Dialog scale (bouncy spring in, ease out) ── */
     .dialog-scale-enter-active {
         transition:
@@ -259,5 +275,32 @@
             animation-duration: 0.01ms !important;
             transform: none !important;
         }
+
+        /* P6 — route-enter KEEPS the fade, DROPS the spatial rise (the vestibular
+           floor; the page settles to its terminal state with zero transform frames). */
+        .route-enter {
+            animation: gl-route-fade var(--duration-fast) var(--ease-out) both;
+        }
+    }
+}
+
+/* The route-enter keyframes — unlayered (pure `@keyframes`, layer-agnostic, the
+   animations.css convention). Referenced by the `.route-enter` recipe above. */
+@keyframes gl-route-enter {
+    from {
+        opacity: 0;
+        transform: translateY(0.75rem);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+@keyframes gl-route-fade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
     }
 }

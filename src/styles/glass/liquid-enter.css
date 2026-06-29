@@ -10,10 +10,13 @@
 
    THREE registers share ONE grammar (NOT three engines):
      • MOUNT  — this file (`.liquid-enter`), plain @keyframes-on-mount, the Safari-15
-                floor, the DEFAULT. Zero JS.
-     • SCROLL — `.scroll-build`/`.scroll-cascade` (scroll-choreography.css), AUGMENTED
-                in place; this file does NOT touch them (Bug B: a 2nd `animation:`
-                shorthand on `.scroll-build > *` clobbers `gl-page-build`).
+                floor, the DEFAULT. Zero JS. The route-enter page entrance rides the
+                sibling `.route-enter` on-mount @keyframes (transitions.css, BG.W-ROUTE-
+                TRANSITION — the bare keyed `<component>` swap), not this recipe.
+     • SCROLL — `.scroll-cascade` (scroll-choreography.css), the section cascade; this
+                file does NOT touch it. (The `.scroll-build` page-build recipe is
+                RETIRED — BG.W-ROUTE-TRANSITION — so its `gl-page-build`-clobber fence
+                is moot.)
      • TRIGGER— `useLiquidReveal`/`useBloomUp` (the JS source-rect bloom).
 
    THE FOUR CHANNELS (the iOS-27 read, design.md §SPATIAL/EFFECTS split):
@@ -221,7 +224,7 @@
    Under `prefers-reduced-motion: reduce` the entrance keeps the FADE and drops the
    transform + squish + bounce + blur + stagger + cast in ONE arm (opacity is not a
    vestibular trigger). One calm paint on the short clock, delay → 0. This mirrors the
-   `.glass-reveal` + `.scroll-build` PRM precedent. The shipped `--ease-cartoon-punch`
+   `.glass-reveal` + `.route-enter` PRM precedent. The shipped `--ease-cartoon-punch`
    already re-aliases to `--ease-standard` under reduce (scheme-motion.css) and
    `--motion-weight → 0` zeroes the arc — this carve is the belt-and-suspenders floor
    that also drops the keyframe channels outright. */

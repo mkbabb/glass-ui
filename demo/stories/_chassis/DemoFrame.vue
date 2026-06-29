@@ -29,7 +29,8 @@
 //   - <Card tier surface="cartoon"> — the glass register + the inert
 //     `.cartoon-cast` child (BD.W-CARTOON-CASTER) the Card emits for free; the
 //     cast LAGS the body for the late ink recoil. NO hand-rolled `::after`.
-//   - `.scroll-build` mount-clock + `--i` stagger — the alive entrance.
+//   - `.route-enter` on-mount keyframes — the alive route entrance (BG.W-ROUTE-
+//     TRANSITION retired the per-child `.scroll-build` stagger).
 //   - `--motion-weight` / `--ease-cartoon-punch` — the cel-slam arc, consumed.
 //   - <StorySection heading> — the ONE in-body <h2> (the page <h1> is the
 //     chassis's; this never renders a 2nd <h1> or in-card eyebrow — the

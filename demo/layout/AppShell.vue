@@ -12,7 +12,6 @@ import {
 import { PaperBackdrop } from "@glass/components/custom/paper-backdrop";
 import { Button } from "@glass/components/ui/button";
 import { Switch } from "@glass/components/ui/switch";
-import { Card } from "@glass/components/ui/card";
 import {
     Compass,
     Shapes,
@@ -26,8 +25,6 @@ import {
     GlassDock,
     useDockOrientationMorph,
 } from "@glass/components/custom/dock";
-import { Skeleton } from "@glass/components/ui/skeleton";
-import { useBloomUp } from "@glass/composables/motion/useBloomUp";
 import { startViewTransition } from "@glass/composables/motion/useViewTransition";
 import {
     formatCombo,
@@ -188,44 +185,35 @@ onMounted(() => {
 // `<main>` owns route scroll now (the shell itself is a fixed viewport frame),
 // so the router's window-targeted scrollBehavior can't reset it. Reset the
 // container to the top on every navigation so a new route never inherits the
-// prior offset.
+// prior offset. BG.W-ROUTE-TRANSITION — the ONE scroll-reset owner (the router's
+// redundant window scrollBehavior is deleted); keyed off `route.path` (a query/hash
+// change is not a page swap and must not re-scroll). Under the bare keyed
+// `<component>` swap there is no <Transition> leave window to race.
 const route = useRoute();
 const mainEl = ref<HTMLElement | null>(null);
 
+// BG.W-ROUTE-TRANSITION (P4-F) — the SR route-change announce. The atomic keyed swap
+// has no skeleton `aria-busy`, so the live region is the only route-change signal AT
+// receives; it also strands focus at <body>, so on settle we move focus into <main
+// tabindex="-1"> (the new page's top).
+const routeAnnounce = ref("");
+
 watch(
-    () => route.fullPath,
+    () => route.path,
     () => {
         mainEl.value?.scrollTo({ top: 0 });
-    },
-);
-
-// ── W-NAV-DOCK-FIX F9 / GOLDEN M3-c — the category-change facet-set swap rides a
-// view-transition. When the CATEGORY itself changes (not just a sibling story), the
-// whole dock facet set + the section landing swap; wrap the DOM update in the SHIPPED
-// `startViewTransition` keyed on `categoryId` so Chrome crossfades the before/after
-// snapshots (the iOS-27 contextual crossfade). Safari (no VT API) degrades gracefully:
-// `startViewTransition` no-ops the wrapper and the calm `.fade-slide` page-enter +
-// the dock's own reactive swap carry the change — ONE code path, per-engine degrade.
-// The `dataset` flag lets the dock-nav.css `@supports (view-transition-name:x)` arm
-// name the facet rail as a VT-participating element only where the API exists.
-const lastCategoryId = ref<string | undefined>(undefined);
-watch(
-    () => route.meta?.categoryId as string | undefined,
-    (categoryId) => {
-        const prev = lastCategoryId.value;
-        lastCategoryId.value = categoryId;
-        // First resolve (prev undefined) is the cold-load entrance, not a switch —
-        // the shell-entrance bloom owns it; no crossfade snapshot needed.
-        if (prev === undefined || prev === categoryId) return;
-        startViewTransition(() => {
-            // The reactive route already advanced; this tick is the snapshot boundary
-            // Chrome crossfades across (the facet set + landing re-render between the
-            // before/after capture). The body is intentionally a no-op write — the
-            // route reactivity IS the DOM delta the VT captures.
-            document.documentElement.dataset.categorySwitch = categoryId ?? "";
+        routeAnnounce.value = String(route.meta?.title ?? "");
+        void nextTick(() => {
+            mainEl.value?.focus({ preventScroll: true });
         });
     },
 );
+
+// BG.W-ROUTE-TRANSITION — the categoryId no-op `startViewTransition` watch + its dead
+// `document.documentElement.dataset.categorySwitch` write are DELETED (the dataset flag
+// had ZERO readers, and the VT body was an intentional no-op — a confounding mechanism
+// the bare keyed atomic swap makes redundant). The functional `toggleShellMorph` VT
+// (the dock-morph crossfade) is KEPT.
 
 // BD.W-PAGE-FIELD / BD.W-FIELD-SCRIPT — the per-route WARM COLORFUL FIELD hue.
 // The chassis writes ONE warm number per route into the mounted <PaperBackdrop>;
@@ -237,70 +225,13 @@ const fieldHue = computed(() =>
     warmFieldHue(String(route.meta?.categoryId ?? "foundations")),
 );
 
-// ── BD.W-SHELL-ROUTE-BLOOM (M2 / V-b) — the route-bloom skeleton + the bloom-through ──
-// iOS-27 never shows empty chrome. During the async route-CHUNK resolve window (a
-// MATCHED-but-pending route — both `<Transition>` content branches false), the shell
-// painted a BLANK `<main>` void. The 3rd `<Transition>` branch fills that rect with a
-// glass `<SectionLandingSkeleton>` (a demo-local LAYOUT — eyebrow bar + √φ title block +
-// bento shimmer grid — that COMPOSES the SHIPPED `<Skeleton surface="glass">` primitive
-// + the warm-field-over-glass register, NOT a 2nd skeleton engine). It is keyed to the
-// matched-but-pending case ONLY (`route.matched.length > 0 && !Component`), so the
-// "Pick a story" no-match `<Card>` guard (defect-7) stays BYTE-UNTOUCHED.
-//
-// When `Component` resolves, the real page BLOOMS THROUGH the skeleton rect via the
-// SHIPPED `useBloomUp` (preset "snappy") — the content squish-grows out of the placeholder
-// rather than a hard `fade-slide` pop. Compositor-only (transform/opacity/filter on the
-// content surface); PRM snaps it (the leaf's own reduce arm). No `backdrop-filter:url`, no
-// goo — Safari-safe by construction.
-const skeletonEl = ref<HTMLElement | null>(null);
-const routeContentEl = ref<HTMLElement | null>(null);
-const { bloom: bloomRouteContent } = useBloomUp(skeletonEl, routeContentEl, {
-    preset: "snappy",
-    // The content blooms out of the skeleton's OWN rect (the placeholder it replaces),
-    // not a warm field re-tint here (the field hue is owned per-route by `fieldHue`).
-    fieldStrength: 0,
-});
-
-// Whether a skeleton was holding the <main> rect on the PREVIOUS tick — the bloom only
-// fires on a skeleton→content swap (a route whose chunk was pending long enough to paint
-// the placeholder). An already-resolved chunk (no skeleton shown) keeps the calm
-// `fade-slide` page-enter — the bloom is the void-fill follow-through, not every nav.
-const skeletonWasShowing = ref(false);
-watch(skeletonEl, (el) => {
-    if (el) skeletonWasShowing.value = true;
-});
-
-// When the route component resolves, bloom it up from where the skeleton sat. We capture
-// the content element off `<main>`'s first non-skeleton child (the route component root),
-// avoiding a JS `@enter` Transition hook (which fires the "non-element root" warning for a
-// fragment-root page + cannot reliably hold the element). The bloom measures the skeleton
-// rect as source, the content rect as dest — squish-grow out of the placeholder. Guarded
-// to the skeleton→content swap; PRM-snapped by the leaf.
-watch(
-    () => route.fullPath,
-    () => {
-        if (!skeletonWasShowing.value) return;
-        // The route just changed AND a skeleton was showing — wait for the content to
-        // mount, then bloom it from the (still-present, leaving) skeleton's rect.
-        void nextTick(() => {
-            const main = mainEl.value;
-            // The entering content is `<main>`'s child that is NOT the leaving skeleton.
-            // During the transition both coexist; take the first non-skeleton element.
-            const content = main
-                ? ([...main.children].find(
-                      (c) =>
-                          c instanceof HTMLElement &&
-                          !c.classList.contains("section-landing-skeleton"),
-                  ) as HTMLElement | undefined)
-                : undefined;
-            if (content && skeletonEl.value) {
-                routeContentEl.value = content;
-                bloomRouteContent();
-            }
-            skeletonWasShowing.value = false;
-        });
-    },
-);
+// BG.W-ROUTE-TRANSITION — the BD.W-SHELL-ROUTE-BLOOM skeleton + bloom-find-child watch
+// are DELETED. vue-router awaits each lazy `component: () => import()` DURING navigation,
+// so the OLD page stays mounted until the new one resolves — there is no in-shell
+// matched-but-pending void to fill, the skeleton branch was dead. Under the bare keyed
+// `<component>` atomic swap there is also no leaving-skeleton rect to bloom THROUGH (no
+// leave window). The `useBloomUp` LEAF stays published (AppleMusic consumer); only the
+// AppShell route-bloom USAGE dies.
 
 onMounted(() => {
     registerShortcut("]", () => next(), {
@@ -377,11 +308,22 @@ onBeforeUnmount(() => {
 
         <div class="flex min-h-0 min-w-0 flex-1 flex-col">
             <!-- `<main>` owns route scroll. The extra bottom padding clears the
-                 viewport-anchored BottomDock that floats over this region. -->
+                 viewport-anchored BottomDock that floats over this region.
+                 `tabindex="-1"` (BG.W-ROUTE-TRANSITION P4-F) lets the route-settle
+                 watch move focus here, so the atomic keyed swap doesn't strand focus
+                 at <body> + keyboard tab order resets to the new page. -->
             <main
                 ref="mainEl"
+                tabindex="-1"
                 class="demo-main-scroller smooth-scroll relative flex-1 min-h-0 min-w-0 overflow-y-auto px-4 pt-6 pb-28 md:px-8 md:pt-10 md:pb-32"
             >
+                <!-- BG.W-ROUTE-TRANSITION (P4-F) — the SR route-change announce. The
+                     atomic keyed swap has no skeleton `aria-busy`, so this polite live
+                     region is the only route-change signal AT receives; the route-settle
+                     watch writes the new page title. -->
+                <p class="sr-only" aria-live="polite" role="status">
+                    {{ routeAnnounce }}
+                </p>
                 <!-- BA.W-ANIMATE Tier B — the route-scroller scroll-progress bar.
                      The `.scroll-progress` recipe (scroll-driven.css) drives a 0..1
                      scaleX fill off a native scroll() timeline on the compositor;
@@ -391,88 +333,21 @@ onBeforeUnmount(() => {
                      scroll, not `root`). PRM-safe + zero-JS by construction (the recipe
                      sits under the PRM + @supports(animation-timeline) gate). -->
                 <div class="demo-scroll-progress scroll-progress" aria-hidden="true" />
-                <!-- BA.W-ANIMATE Tier A — the route page-enter. The
-                     `<RouterView>` mount is wrapped in a <Transition> keyed on the
-                     route so each navigation fires ONE coherent page-enter: the
-                     `fade-slide` recipe (transitions.css), opacity on `--ease-out`
-                     + transform on `--spring-smooth` (the SETTLE/body register),
-                     exit on `--ease-in` (no overshoot past gone). DEFAULT mode (no
-                     out-in) so the entrance does not race the scroll-to-top reset
-                     watcher; ONE event per route, not a per-element cascade. The
-                     recipe's @media (prefers-reduced-motion: reduce) block keeps
-                     only the opacity leg under PRM (transform removed). -->
+                <!-- BG.W-ROUTE-TRANSITION (M1) — the route swap is a BARE KEYED ATOMIC
+                     SWAP: NO Vue <Transition>, NO Suspense, NO v-if/skeleton/no-match
+                     branch chain. A keyed `<component>` unmounts the old + mounts the new
+                     in ONE patch — `<main>` carries exactly the new page at every settle
+                     (children.length === 2: this component + the sticky scroll-progress
+                     bar), exactly one route root, h1 === dest, with NO leave hook to
+                     wedge (the `.scroll-build`×<Transition>-leave collision that froze the
+                     route is structurally impossible). The liquid enter is the on-mount
+                     `.route-enter` @keyframes (transitions.css) — it lands on the keyed
+                     component so it reaches EVERY route root. Plain-lazy: vue-router holds
+                     the OLD page mounted through the async chunk resolve, so the swap lands
+                     on the resolved component, never a void (no skeleton needed). Keyed on
+                     `route.path` (a query/hash change is not a page swap). -->
                 <RouterView v-slot="{ Component }">
-                    <Transition name="fade-slide">
-                        <component
-                            :is="Component"
-                            v-if="Component"
-                            :key="route.fullPath"
-                        />
-                        <!-- BD.W-SHELL-ROUTE-BLOOM (V-b) — the route-bloom skeleton.
-                             During the async route-CHUNK resolve window of a MATCHED route
-                             (`route.matched.length > 0` AND no resolved `Component`) the
-                             shell painted a BLANK <main> void. This 3rd branch fills the
-                             rect with a glass placeholder LAYOUT (eyebrow bar + √φ title +
-                             bento shimmer grid) that COMPOSES the SHIPPED <Skeleton
-                             surface="glass"> over the warm field — zero void, never empty
-                             chrome. It is keyed STRICTLY to the matched-but-pending case so
-                             the no-match "Pick a story" <Card> (defect-7) is byte-untouched.
-                             `aria-busy` announces the pending resolve; the shimmer is
-                             decorative (aria-hidden via the Skeleton block). When the page
-                             resolves it BLOOMS THROUGH this rect (useBloomUp, snappy). -->
-                        <div
-                            v-else-if="route.matched.length > 0"
-                            ref="skeletonEl"
-                            class="section-landing-skeleton mx-auto w-full max-w-6xl"
-                            aria-busy="true"
-                            aria-label="Loading story"
-                            data-testid="section-landing-skeleton"
-                        >
-                            <div class="section-landing-skeleton__hero">
-                                <Skeleton
-                                    surface="glass"
-                                    variant="shimmer"
-                                    class="section-landing-skeleton__eyebrow"
-                                />
-                                <Skeleton
-                                    surface="glass"
-                                    variant="shimmer"
-                                    class="section-landing-skeleton__title"
-                                />
-                                <Skeleton
-                                    surface="glass"
-                                    variant="shimmer"
-                                    class="section-landing-skeleton__chip"
-                                />
-                            </div>
-                            <div class="section-landing-skeleton__bento">
-                                <Skeleton
-                                    v-for="n in 6"
-                                    :key="n"
-                                    surface="glass"
-                                    variant="breath"
-                                    class="section-landing-skeleton__card"
-                                />
-                            </div>
-                        </div>
-                        <!-- W-NAV-DOCK-FIX (defect 7) — the "Pick a story" placeholder is
-                             reachable ONLY for a literal no-matched-route. BYTE-UNTOUCHED:
-                             the route-bloom skeleton above intercepts the matched-but-pending
-                             window, never this no-match branch. The empty-state composes the
-                             shipped <Card> (BC.W-STORYBOOK-META dogfood GAP-5). -->
-                        <Card
-                            v-else-if="route.matched.length === 0"
-                            class="mx-auto max-w-xl p-8 text-center"
-                        >
-                            <p class="font-display text-2xl text-foreground">
-                                Pick a story
-                            </p>
-                            <p class="mt-2 text-sm text-muted-foreground">
-                                Choose a category from the rail on the left, then
-                                a story from the bar below.
-                            </p>
-                        </Card>
-                    </Transition>
+                    <component :is="Component" :key="route.path" class="route-enter" />
                 </RouterView>
             </main>
         </div>

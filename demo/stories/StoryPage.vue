@@ -61,15 +61,15 @@ const depth = computed(() => current.value?.story.depth);
 </script>
 
 <template>
-    <!-- W-CUT P10c — the routed page presents a SINGLE ELEMENT root (this <article>)
-         to the AppShell route <Transition name="fade-slide">. <TooltipProvider> is a
-         context-only provider that renders a FRAGMENT (no DOM), so when it was the
-         template root the page's transitioning root resolved to a non-element node the
-         <Transition> cannot animate ("[Vue warn]: Component inside <Transition> renders
-         non-element root node"). Moving it INSIDE the <article> root provides the same
-         tooltip context to all descendants with zero layout/visual change. -->
+    <!-- BG.W-ROUTE-TRANSITION — the routed page presents a SINGLE ELEMENT root (this
+         <article>) so the AppShell bare keyed `<component class="route-enter">` swap can
+         apply the `.route-enter` on-mount entrance to it (a fragment/text-only root
+         would not receive the class — proof:route-single-root asserts the element root).
+         <TooltipProvider> renders a context-only FRAGMENT (no DOM), so it is nested
+         INSIDE the <article> root (same tooltip context to all descendants, zero
+         layout/visual change). -->
     <article
-        class="scroll-build story-page-article mx-auto w-full"
+        class="story-page-article mx-auto w-full"
         :data-variant="variant"
         :style="{
             maxInlineSize:
@@ -79,23 +79,17 @@ const depth = computed(() => current.value?.story.depth);
         }"
     >
         <TooltipProvider :delay-duration="250">
-            <!-- BB.W-SCROLL-MOTION: the route-enter PAGE-BUILD host. On each navigation
-             the <article> mounts inside the AppShell route <Transition>, and the
-             `.scroll-build` register assembles the page in reading order: on a
-             CONTENT page the <header> chrome (beat 0) rises, then the <StoryHero>
-             body (beat 1) follows; on a HERO page the chrome header is suppressed
-             (the descriptor is re-homed into the StoryHero cluster — W-HIERARCHY2),
-             so <StoryHero> is the lone beat 0 and the cluster's eyebrow→title→blurb
-             3-stage stagger carries the reading-order arrival. Each beat is on a
-             `--scroll-build-step` coordinated stagger (the SOTA page-assembles-itself
-             read). A pure @keyframes-on-mount — NO setTimeout, so the entrance never
-             races the AppShell scroll-to-top reset (it is the <Transition> hook's
-             ordering, not a timer). The hero cluster inside <StoryHero> rides its own
-             `.story-hero-cluster--enter` register (a deep grandchild, not a direct
-             `.scroll-build` child — no double-bind). PRM → no build binds (the
-             recipe's outer @media gate; the page mounts at its terminal state). The
-             reading-ORDER (the ordered cluster: eyebrow → title → blurb → body) is
-             W-HIERARCHY2's; this register threads the entrance ON that order. -->
+            <!-- BG.W-ROUTE-TRANSITION: the route-enter entrance. The <article> is the
+             keyed `<component class="route-enter">` root, so the whole page rises +
+             fades in as ONE on-mount `@keyframes gl-route-enter` beat (transitions.css)
+             — NOT the retired per-child `.scroll-build` stagger (which raced the deleted
+             AppShell <Transition> leave window). The reading-ORDER is carried by the
+             StoryHero cluster's own eyebrow→title→blurb 3-stage stagger
+             (`.story-hero-cluster--enter`, W-HIERARCHY2) inside <StoryHero>; on a HERO
+             page the chrome header is suppressed (the descriptor re-homed into that
+             cluster). A pure @keyframes-on-mount — NO setTimeout — so the entrance never
+             races the AppShell scroll-to-top reset. PRM → keeps the fade, drops the
+             rise (the .route-enter reduce arm). -->
         <!-- W-STORY-PAGE-STANDARD — the box-model INVERSION. On a CONTENT page the
              article WIDENS to `--story-article-w` (min(96vw, 87rem) — the φ ladder
              root, killing the prior 1152-cap 288px dead margin) so the φ²-dominant
