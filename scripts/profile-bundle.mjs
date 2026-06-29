@@ -634,6 +634,89 @@ for (const [name, cur] of currentEntries) {
 const criticalPath = evaluateCriticalPath(distRoot);
 if (criticalPath.violations.length > 0) anyBudgetExceeded = true;
 
+// ─────────────────────────────────────────────────────────────────────────────
+// BH.B1-W1 — the BUILD-side externalization mirror.
+//
+// proof:external-payload (the SOURCE gate) asserts every JS runtime peer the src/
+// graph imports is in `libraryExternal` (E1) and every entry there is a declared
+// peer (E2). Its note assigns the BUILD-side mirror to profile:budget: an
+// externalized peer must ship as an EXTERNAL `from "<peer>"` import in dist, NEVER
+// inlined. The @lucide/vue icon peer (39 src imports) was MISSING from
+// libraryExternal, so Vite BUNDLED it — the `createLucideIcon` factory + every icon
+// body inlined into a `dist/createLucideIcon-*.js` shared chunk + the vendor chunk
+// — and every consumer double-loaded lucide bytes the externalized build now
+// imports from the peer. The drift gate alone is insufficient: a re-bundle is upward
+// drift a SIMULTANEOUS shrink elsewhere could mask. This is the DISCRETE,
+// hash-independent, build-output witness the external-payload note promises —
+// durable across a D5 re-baseline. A bundled peer leaves a content fingerprint (the
+// `createLucideIcon` factory token) ABSENT from dist when externalized (dist then
+// carries only the named `import { Menu, X } from "@lucide/vue"` specifiers); the
+// chunk-name signal (`createLucideIcon-<hash>.js`) is the minify-robust companion.
+const BUNDLED_PEER_MARKERS = [
+    {
+        peer: "@lucide/vue",
+        // The inlined @lucide/vue factory identifier (absent once externalized).
+        marker: /createLucideIcon/,
+        // The Vite-named shared chunk Vite emits for the inlined factory module.
+        chunkName: /^createLucideIcon[-.]/,
+    },
+];
+function evaluateExternalPayload(jsFiles) {
+    const facts = { scannedJsChunks: jsFiles.length, bundledPeers: [] };
+    const violations = [];
+    const hitsByPeer = new Map(
+        BUNDLED_PEER_MARKERS.map((m) => [m.peer, new Set()]),
+    );
+    for (const f of jsFiles) {
+        const base = distName(f);
+        let src = null;
+        for (const { peer, marker, chunkName } of BUNDLED_PEER_MARKERS) {
+            if (chunkName.test(base)) {
+                hitsByPeer.get(peer).add(base);
+                continue;
+            }
+            src ??= readFileSync(resolve(root, f.file), "utf8");
+            if (marker.test(src)) hitsByPeer.get(peer).add(base);
+        }
+    }
+    for (const { peer } of BUNDLED_PEER_MARKERS) {
+        const chunks = [...hitsByPeer.get(peer)];
+        if (chunks.length) {
+            facts.bundledPeers.push({ peer, chunks });
+            violations.push(
+                `${peer} BUNDLED into dist (${chunks.join(", ")}) — add it to libraryExternal so the peer ships external, not inlined (proof:external-payload E1).`,
+            );
+        }
+    }
+    return { facts, violations };
+}
+// Self-test bite — proves the detector BITES every run (the born-RED witness: the
+// real HEAD is GREEN since the @lucide/vue externalization already landed, so the
+// bite is demonstrated against a synthetic bundled tree). A planted factory token
+// MUST flag; the externalized named-import form MUST NOT. A contradiction is a
+// broken detector ⇒ fail closed.
+function externalPayloadSelfTest() {
+    const planted = BUNDLED_PEER_MARKERS[0].marker.test(
+        "const createLucideIcon=(n,node)=>defineComponent({});export{createLucideIcon};",
+    );
+    const externalized = BUNDLED_PEER_MARKERS[0].marker.test(
+        'import{Menu as M,X}from"@lucide/vue";',
+    );
+    return planted === true && externalized === false;
+}
+const externalPayloadJs = files.filter(
+    (f) => f.ext === ".js" && f.file.startsWith("dist/"),
+);
+const externalPayload = evaluateExternalPayload(externalPayloadJs);
+if (externalPayload.violations.length > 0) anyBudgetExceeded = true;
+const externalPayloadSelfTestOk = externalPayloadSelfTest();
+if (!externalPayloadSelfTestOk) {
+    anyBudgetExceeded = true;
+    externalPayload.violations.push(
+        "SELF-TEST: the bundled-peer detector failed its planted-marker bite (detector is broken).",
+    );
+}
+
 const profile = {
     generatedAt: snapshotStamp(),
     status: anyBudgetExceeded ? "fail" : "pass",
@@ -644,6 +727,11 @@ const profile = {
     budgetReport,
     subpathReport,
     criticalPath: { facts: criticalPath.facts, violations: criticalPath.violations },
+    externalPayload: {
+        facts: externalPayload.facts,
+        violations: externalPayload.violations,
+        selfTestOk: externalPayloadSelfTestOk,
+    },
     totals,
     subpathTotals,
     subpathTable: subpathEntries,
@@ -796,6 +884,25 @@ console.log("Critical-path-weight report (BB.W-PAYLOAD-DEFER):");
     if (criticalPath.violations.length) {
         console.log("\n  CRITICAL-PATH VIOLATIONS:");
         for (const v of criticalPath.violations) console.log(`    ✗ ${v}`);
+    }
+}
+
+// BH.B1-W1 — the build-side externalization report (the proof:external-payload
+// build-side mirror). Same rg-friendly format.
+console.log("");
+console.log("External-payload report (BH.B1-W1 — build-side mirror):");
+{
+    const f = externalPayload.facts;
+    console.log(`  [E-BUILD] dist .js chunks scanned        : ${f.scannedJsChunks}`);
+    console.log(
+        `  [E-BUILD] bundled externalized peers     : ${f.bundledPeers.length === 0 ? "none ✓" : f.bundledPeers.map((b) => `${b.peer} (${b.chunks.join(",")})`).join("; ")}`,
+    );
+    console.log(
+        `  [E-BUILD] self-test (planted-marker bite): ${externalPayloadSelfTestOk ? "ok ✓" : "FAILED ✗"}`,
+    );
+    if (externalPayload.violations.length) {
+        console.log("\n  EXTERNAL-PAYLOAD VIOLATIONS:");
+        for (const v of externalPayload.violations) console.log(`    ✗ ${v}`);
     }
 }
 
