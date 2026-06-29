@@ -264,14 +264,59 @@ export function shellAuroraConfig(hue: number): AuroraConfig {
     const h = clampWarm(hue);
     return {
         ...DEFAULT_AURORA_CONFIG,
-        // The EXPLICIT recessive palette — a warm spread on the ONE route hue, all
-        // chroma ≤ 0.07 so even the warm-projected worst-cool sand stays under the
-        // C≤0.10 ceiling (no conic foil, no brown, no speckle).
+        // The EXPLICIT recessive LIGHT palette — a warm spread on the ONE route hue,
+        // all chroma ≤ 0.07 so even the warm-projected worst-cool sand stays under
+        // the C≤0.10 ceiling (no conic foil, no brown, no speckle). The L band is
+        // LIFTED ~0.02–0.03 brighter than the prior 0.88–0.94 (BG.W-FIELD-AURORA
+        // re-paint #3): a brighter recessive field clears the secondary light-mode
+        // eyebrow/blurb `--muted-foreground` register over the composited field
+        // (3.85:1 → ≥4.5:1) while staying L≥0.85 (the recessive precondition) and
+        // unmistakably WARM (the chroma is kept).
         palette: [
-            { L: 0.9, C: 0.06, h }, // the route hue — the dominant warm wash
-            { L: 0.88, C: 0.07, h: clampWarm(h + 14) }, // a warmer neighbour
-            { L: 0.92, C: 0.05, h: clampWarm(h - 10) }, // a cooler-warm neighbour
-            { L: 0.94, C: 0.04, h: 40 }, // the warm-cream settle tail
+            { L: 0.94, C: 0.055, h }, // the route hue — the dominant warm wash
+            { L: 0.93, C: 0.065, h: clampWarm(h + 14) }, // a warmer neighbour
+            { L: 0.95, C: 0.05, h: clampWarm(h - 10) }, // a cooler-warm neighbour
+            { L: 0.96, C: 0.04, h: 40 }, // the warm-cream settle tail
+        ],
+        vividness: 0,
+        breathPeriod: 48,
+        nucleiDrift: 0.012,
+        paletteDrift: 0.012,
+        saturation: 0.95,
+    };
+}
+
+/**
+ * BG.W-FIELD-AURORA (re-paint #1) — the DARK-MODE shell field config: the
+ * dark-aware twin of `shellAuroraConfig`. The light palette (L 0.85+) at
+ * opacityCeiling 0.5 composites over the near-black W-DARK-MATERIAL dark page to a
+ * mid-light warm-BROWN wash (composited L 0.55–0.70) that erases the dark identity
+ * AND drops the hero h1 / muted body text far below AA in both engines (the FAIL
+ * the re-paint verdict named). This config swaps the palette to a LOW-L WARM-EMBER
+ * spread — the W-DARK-MATERIAL luminous-dark transmissive model (the SectionPreviewCard
+ * dark preview-field discipline applied to the page-wide shell): low lightness
+ * (L 0.17–0.25), warm hue, chroma KEPT (C 0.045–0.07) so the field GLOWS
+ * amber/terracotta rather than collapsing to a charcoal slab. At the SAME shell
+ * opacityCeiling 0.5 it composites to L ≈ 0.12–0.16 over the dark page — a light
+ * hero h1 clears >10:1, the `--muted-foreground` body clears ≥4.5:1 — while reading
+ * as a deep warm-ember atmospheric drift, never a light-tan wash.
+ *
+ * The TWO recessive legs are preserved (vividness:0 + chroma ≤ 0.10, no conic/brown/
+ * speckle); only the L band moves DOWN for the dark composite. It rides the same calm
+ * drift (breathPeriod 48, low nuclei/palette drift) so it reads effectively static.
+ */
+export function shellAuroraConfigDark(hue: number): AuroraConfig {
+    const h = clampWarm(hue);
+    return {
+        ...DEFAULT_AURORA_CONFIG,
+        // The DARK warm-EMBER recessive palette — low L (the luminous-dark model),
+        // warm hue, chroma kept so the dark field GLOWS warm-ember over the near-black
+        // page (never a charcoal/metallic slab). composite L ≈ 0.12–0.16 at ceiling 0.5.
+        palette: [
+            { L: 0.22, C: 0.06, h }, // the route hue — the warm-ember dominant
+            { L: 0.25, C: 0.07, h: clampWarm(h + 14) }, // a warmer-ember neighbour (the brightest nuclei)
+            { L: 0.19, C: 0.05, h: clampWarm(h - 10) }, // a deeper warm neighbour
+            { L: 0.17, C: 0.045, h: 40 }, // the warm-ember settle tail
         ],
         vividness: 0,
         breathPeriod: 48,

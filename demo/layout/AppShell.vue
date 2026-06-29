@@ -34,7 +34,11 @@ import {
 } from "@glass/composables/keyboard";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
 import { warmFieldHue } from "../stories/warm-field";
-import { shellAuroraConfig as buildShellAuroraConfig } from "../stories/aurora-hero";
+import {
+    shellAuroraConfig as buildShellAuroraConfig,
+    shellAuroraConfigDark as buildShellAuroraConfigDark,
+} from "../stories/aurora-hero";
+import { useGlobalDark } from "@glass/composables/dark/useGlobalDark";
 import { shellFieldActive } from "../router";
 import { PresetEditor } from "../configurator";
 import SidebarDock from "./SidebarDock.vue";
@@ -226,7 +230,20 @@ watch(
 const fieldHue = computed(() =>
     warmFieldHue(String(route.meta?.categoryId ?? "foundations")),
 );
-const shellAuroraConfig = computed(() => buildShellAuroraConfig(fieldHue.value));
+
+// BG.W-FIELD-AURORA (re-paint #1) — the shell field is DARK-MODE-AWARE. The light
+// palette over the near-black W-DARK-MATERIAL page composited to a mid-light
+// warm-brown wash that dropped hero/body text below AA in both engines; in dark mode
+// the field swaps to the LOW-L warm-EMBER `shellAuroraConfigDark` (the luminous-dark
+// model) so it composites DARK (composite L ≈ 0.12–0.16 at the kept opacityCeiling
+// 0.5) and the light hero h1 / muted body clear AA, while still reading WARM-ember.
+// The persisted shell node re-uploads on the dark flip (no re-mount).
+const { isDark } = useGlobalDark();
+const shellAuroraConfig = computed(() =>
+    isDark.value
+        ? buildShellAuroraConfigDark(fieldHue.value)
+        : buildShellAuroraConfig(fieldHue.value),
+);
 
 // The shell field is a recessive enhancement, NEVER a legibility dependency — a GL
 // init failure leaves the placeholder/cream floor, logged but non-fatal (the M0

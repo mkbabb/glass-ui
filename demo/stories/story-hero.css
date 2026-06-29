@@ -361,6 +361,19 @@
     margin-block-end: 0;
 }
 
+/* BG.W-FIELD-AURORA (re-paint #1) — the LIGHT-mode chrome-header muted ink over the
+   recessive warm shell field. The brighter warm field clears the hero h1 (>13:1) but
+   the page-muted eyebrow/blurb sat ~4.2:1 over it on Chrome (its aurora renders the
+   warm field ~0.09 relLum DARKER than WebKit, where it clears ~4.7). Darken the
+   cluster muted ink a touch — a warm mix of `--neutral-5` toward the warm `--foreground`
+   — so the eyebrow + blurb clear AA 4.5 over the warm field in BOTH engines, WITHOUT
+   washing the warm field toward white (the warm-everywhere identity is the wave's
+   point). LIGHT mode + over the shell field ONLY: in dark mode the field is dark-ember
+   and the muted ink is LIGHT, so darkening there would HURT (the primary AA fix). */
+:root:not(.dark) [data-paper-field] .story-header-cluster {
+    --muted-foreground: color-mix(in oklab, var(--neutral-5), var(--foreground) 22%);
+}
+
 /* ── BD.W-CUT page-chrome — the corner-AA backdrop-child clip register ───────────
    The library-wide corner-AA law: a `backdrop-filter` saturate halo bleeds a
    SQUARE behind the rounded silhouette → a jaggy corner fringe (worst on WebKit).
