@@ -42,7 +42,7 @@ export interface OklchStop {
  * prop (the SVG-field surface owns its own color pipeline). The goo-blob no longer
  * injects it: it resolves color internally through `cssToOklch → oklchToGammaRgb`
  * (W-BLOB3 STRIPPED the speculative DI built for an absent value.js consumer that
- * never repatriated; see `docs/consumer-evidence/goo-blob.md`).
+ * never repatriated).
  */
 export type ColorResolver = (css: string) => [number, number, number];
 

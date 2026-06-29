@@ -41,7 +41,7 @@ import { GooBlob, BLOB_CONFIG_DEFAULTS } from "@mkbabb/glass-ui/goo-blob";
 `config` is required unless an ancestor `provide(BLOB_CONFIG_KEY, …)` supplies it (a mount
 with neither throws — there is no silent defaults synthesis). Color is resolved INTERNALLY
 through the `/color` leaf (`cssToOklch → oklchToGammaRgb`) — no injected resolver prop (the
-speculative DI was stripped at W-BLOB3; see `docs/consumer-evidence/goo-blob.md`). Pass
+speculative DI was stripped at W-BLOB3). Pass
 `BLOB_CONFIG_DEFAULTS` for the stock lit warm-cream droplet — the
 defaults carry a light warm-cream OKLCh `color.paletteStops` ramp, so a bare mount paints the
 cream bead WITHOUT a per-instance `color`; `color` is only the single-stop fallback. Pass an

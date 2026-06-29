@@ -1024,6 +1024,12 @@ export const GATES = [
         note: "AY.W-SB1 — the component-orphan institutional gate (route-prune != component-retire): every PUBLISHED custom pkg + flat subpath + root-barrel composable has >=2 non-self consumers OR a docs/consumer-evidence doc. Self-proving. Bite: a 0-consumer publish with no evidence doc -> RED",
     },
     {
+        id: "proof:consumer-evidence-live",
+        cmd: "proof:consumer-evidence-live",
+        tags: ["local", "ci"],
+        note: "BH.B4d-evidence-prune-files — the consumer-evidence FORCING gate (kills the write-once-never-read class). Every docs/consumer-evidence/<x>.md is LIVE (a registered scripts/*.mjs gate READS it by path or templated basename) OR an ORPHAN-EXEMPTION (a published custom/ pkg proof:component-orphan keeps via its evidence-doc allowlist — REUSES that gate's own census, DRY) — else DELETE it (no third state). README.md is the policy index, exempt. Self-proving: a synthetic dead-doc name is fed the pure detector each run (must flag). Conservative siblings-absent (in-repo census keeps MORE docs, never wrongly drops a load-bearing one — GREEN-robust on CI). Pruned the dir 60 → 31 at BH.B4d. Bite: a dead evidence doc read by no gate → RED.",
+    },
+    {
         id: "proof:substrate-staging",
         cmd: "proof:substrate-staging",
         tags: ["local", "ci"],

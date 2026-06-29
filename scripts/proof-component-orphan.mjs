@@ -322,7 +322,7 @@ export function detectComponentOrphans(input) {
 
 // ── IO: gather the survey facts from the real source tree ────────────────────
 
-function gather() {
+export function gatherOrphanInput() {
     const customRoot = resolve(ROOT, "src/components/custom");
     const customDirs = readdirSync(customRoot)
         .filter((n) => {
@@ -365,14 +365,14 @@ function gather() {
     // emit false orphans for genuinely cross-repo-consumed packages. When ZERO
     // sibling roots resolve, the gate skips (exit 0, loudly) — locally, where
     // the constellation is checked out, the census binds in full.
+    // NOTE — the SIBLING-ABSENCE skip-by-policy decision moved to run() so this
+    // gather is REUSABLE (proof:consumer-evidence-live imports it for the
+    // orphan-exemption arm). gatherOrphanInput NEVER exits; it reports
+    // siblingsPresent and the caller decides (run() skips when empty; the
+    // forcing gate runs the in-repo-only census, which is conservative — it
+    // keeps MORE docs, never wrongly drops an orphan-load-bearing one).
     const siblingRoots = CONSUMER_ROOTS.filter((r) => r.startsWith("../"));
     const siblingsPresent = siblingRoots.filter((r) => existsSync(resolve(ROOT, r)));
-    if (siblingsPresent.length === 0) {
-        console.log(
-            "proof:component-orphan — SKIP-BY-POLICY: no sibling consumer repo is present on this runner (the cross-repo census cannot bind; it runs in full on the local constellation).",
-        );
-        process.exit(0);
-    }
 
     // Consumer files: all code files under the present consumer roots, with their
     // body cached for the import-substring check.
@@ -404,13 +404,20 @@ function gather() {
         consumerFiles,
         rootBarrelCustomPkgs,
         apiSeatCustomPkgs,
+        siblingsPresent,
         // the self-proving phantom — a name guaranteed absent from the tree
         phantom: { pkg: "__synthetic_orphan_probe__" },
     };
 }
 
 function run() {
-    const input = gather();
+    const input = gatherOrphanInput();
+    if (input.siblingsPresent.length === 0) {
+        console.log(
+            "proof:component-orphan — SKIP-BY-POLICY: no sibling consumer repo is present on this runner (the cross-repo census cannot bind; it runs in full on the local constellation).",
+        );
+        process.exit(0);
+    }
     const { facts, violations } = detectComponentOrphans(input);
     const status = violations.length === 0 ? "pass" : "fail";
 
