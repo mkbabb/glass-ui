@@ -23,8 +23,12 @@
     /* BD.W-PAPER-MORPHISM — re-calibrated to the JND floor for the CORRECTED coarse
        tooth + multiply blend (std ≥ 4.5 light, the no-squint floor): multiply on the
        cream pole is GENTLE so it needs MORE alpha. The prior 0.08 rode a blend
-       (overlay) that was mathematically incapable of moving a near-white pixel. */
-    --paper-grain-opacity: 0.22;
+       (overlay) that was mathematically incapable of moving a near-white pixel.
+       BG.W-PAPER-GRAIN-OPTIN — the universal grain plane is RETIRED (the shell field
+       is the recessive aurora; grain is now PER-SURFACE opt-in). The opt-in alpha is
+       nudged sub-JND (0.22 → 0.21) for the per-surface register — barely perceptible,
+       so opt-in cards/panels read tactile-but-calm without the full-page wash. */
+    --paper-grain-opacity: 0.21;
     /* BB.W-LIQUIDHOVER — the grain ENGAGE clock: a hover/active grain lift cross-fades
        the grain `::after` OPACITY on this thin ~120ms linear write while the
        `background-image` stays ALWAYS PRESENT (never a none→image swap — the one-frame

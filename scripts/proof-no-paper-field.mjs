@@ -143,9 +143,9 @@ const paperBackdrop = stripTs(read("src/components/custom/paper-backdrop/PaperBa
 const propRegs = stripCss(read("src/styles/tokens/property-regs.css"));
 const appShell = stripTs(read("demo/layout/AppShell.vue"));
 
-// BG.W-PAPER-GRAIN-OPTIN (wave 2.5) flips W5 from advisory to enforced. Until then
-// the universal grain mount is KEPT (the FIELD-AURORA wave's no-op on grain).
-const GRAIN_OPTIN_ACTIVE = false;
+// BG.W-PAPER-GRAIN-OPTIN (wave 2.5) flips W5 from advisory to enforced: the universal
+// grain mount is RETIRED (per-surface opt-in), the grain tokens stay intact.
+const GRAIN_OPTIN_ACTIVE = true;
 
 const checks = [];
 const add = (id, pass, detail) => checks.push({ id, pass: Boolean(pass), detail });
@@ -182,13 +182,19 @@ add(
 // W5 — the universal grain mount (BG.W-PAPER-GRAIN-OPTIN demotes it). Advisory until
 // wave 2.5 sets GRAIN_OPTIN_ACTIVE.
 const universalGrainMount = /<PaperBackdrop\b(?![^>]*\bv-if)/.test(appShell);
+const glassFx = stripCss(read("src/styles/tokens/glass-fx.css"));
+// the grain TOKENS stay intact (the opt-in surfaces still get grain — the register is
+// demoted, NOT deleted): the paper grain opacity token + the shared tooth source.
+const grainTokensIntact =
+    /--paper-grain-opacity\s*:/.test(glassFx) &&
+    /--paper-grain-tooth\s*:/.test(paperCss);
 if (GRAIN_OPTIN_ACTIVE) {
     add(
         "w5-no-universal-grain-mount",
-        !universalGrainMount,
-        !universalGrainMount
-            ? "no universal `<PaperBackdrop>` shell mount — the grain is per-surface opt-in (BG.W-PAPER-GRAIN-OPTIN)"
-            : "AppShell still mounts a universal `<PaperBackdrop>` — the grain was not demoted to opt-in",
+        !universalGrainMount && grainTokensIntact,
+        !universalGrainMount && grainTokensIntact
+            ? "no universal `<PaperBackdrop>` shell mount AND the grain tokens (`--paper-grain-opacity`, `--paper-grain-tooth`) are intact — the grain is per-surface opt-in (BG.W-PAPER-GRAIN-OPTIN)"
+            : `the grain demote is incomplete (no-universal-mount=${!universalGrainMount} grain-tokens-intact=${grainTokensIntact}) — either AppShell still mounts a universal grain plane or a grain token was deleted with the universal register`,
     );
 } else {
     add(

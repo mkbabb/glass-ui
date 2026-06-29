@@ -9,7 +9,6 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@glass/components/ui/dialog";
-import { PaperBackdrop } from "@glass/components/custom/paper-backdrop";
 import { Aurora } from "@glass/components/custom/aurora";
 import { Button } from "@glass/components/ui/button";
 import { Switch } from "@glass/components/ui/switch";
@@ -312,10 +311,10 @@ onBeforeUnmount(() => {
         data-glass-field-canvas
         aria-hidden="true"
     />
-    <!-- The universal grain register (BG.W-PAPER-GRAIN-OPTIN demotes this to opt-in
-         next). Grain-only — the `.paper-field` props are retired; the warm field is
-         the shell aurora above. -->
-    <PaperBackdrop class="fixed inset-0 -z-10" />
+    <!-- BG.W-PAPER-GRAIN-OPTIN — the universal 0.22 grain mount is RETIRED. The shell
+         field is the recessive <Aurora> above; grain is now a PER-SURFACE opt-in (a
+         surface that wants tactile paper composes `paper-grain-overlay` or mounts its
+         own <PaperBackdrop>). No universal grain plane rides over the whole page. -->
 
     <!-- BD.W-MORPH-FIELD-WELD (M1) — the ONE library goo `<filter>` mount, ONCE at the
          shell root. It exposes EVERY library metaball id off one byte-identical sRGB graph
@@ -667,7 +666,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 /* BA.W-DOCK-MORPH-INSITU — the in-situ morph stage overlay. It opens OVER the live
-   shell: the dim is light enough that the real shell backdrop (the PaperBackdrop +
+   shell: the dim is light enough that the real shell backdrop (the shell aurora field +
    the route page + the shell docks) reads THROUGH it (BA-DSM-3 — the morph is staged
    over the real shell, not a flat plate). */
 .demo-dock-morph-overlay {
