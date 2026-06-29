@@ -1560,6 +1560,12 @@ export const GATES = [
         note: "BG.W-DEFERRED-LEDGER — the no-silent-drop machine BUILT (the D11 chronic cured, the disposition machine that was itself the deferred item). DERIVES the 136-item deferred corpus from disk (AX DISPOSITION-REGISTER 31 + BF DEFERRED-CENSUS 32 + BE waves 39 + BF waves 31 + in-src CONSUME/BOOKED 3) and REDs the close on any dropped / undecided / blanket-routed / templated / over-concentrated row. COMPOSES scripts/lib/fold-ledger-core.mjs (the DRY leaf proof:bc-fold-ledger also imports — the no-clone contract) + the THREE BG teeth: F2 charter-match (a BUILD/MET/COORDINATED row never routes to a RETIRE/SWEEP wave; a RETIRE lands in a sweep/decide wave; the dest resolves in the build-map roster), F4 templated-evidence (N rows sharing one evidence skeleton + the placeholder phrase RED), F5 concentration-ceiling (≥24 rows to ONE dest RED). Self-contained (reads only committed BG/AX/BF/BE docs + src markers + docs/tranches/BG/execution/bg-build-map.md); no sibling deps, runs siblings-absent. 9-bite self-test (AX-31-vs-32, de-shadcn-not-a-false-orphan, no-clone, disjoint-namespace, F0-scoped no-orphan, charter-match, templated-evidence, concentration, count-assert), born-RED→GREEN.",
     },
     {
+        id: "proof:git-hygiene",
+        cmd: "proof:git-hygiene",
+        tags: ["local", "ci"],
+        note: "BH.B0-W0-scratch-sweep — the repo is disciplined, not dirty. Device-free + git-aware: H1 test-results/ is UNTRACKED (the 3 accidentally-tracked Playwright failure artefacts removed), H2 the DEAD .browserslistrc is GONE (absent on disk + untracked — nothing reads it; Tailwind v4 ignores it), H3 .gitignore carries the three scratch-dir guards (test-results/ · .tmp/ · .playwright/) so a `git add -A` can never re-adopt run scratch, H4 .githooks/commit-msg is ENV-DRIVEN (reads GLASS_UI_ACTIVE_TRANCHE — no hardcoded `--tranche=<LETTER>` literal in an executed line; the comment-stripper ignores the explanatory `--tranche=BB` mention), H5 BD-CONTINUATION-PROMPT.md is RE-HOMED under docs/tranches/BD/. Makes the sweep DURABLE — a re-adopted artefact / re-introduced dead config / removed guard / re-stranded doc / re-hardcoded tranche letter all RED here; + 5 self-test bites (the anti-de-fang floor). On a non-git runner the tracking clauses degrade to skip-by-policy; the fs clauses run everywhere.",
+    },
+    {
         id: "proof:be-bf-ledger",
         cmd: "proof:be-bf-ledger",
         tags: ["local", "ci", "release"],

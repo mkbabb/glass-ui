@@ -39,3 +39,11 @@ demo/.qa/
 as-verify/
 docs/tranches/F/audit/W1-runtime-smoke.json
 docs/tranches/BD/_verify/
+
+# BH.B0-W0 hygiene — close the three scratch-dir gaps so a `git add -A` can never
+# re-adopt run scratch (the test-results/ Playwright artefacts were accidentally
+# tracked; .tmp/ + .playwright/ are single-shot probe scratch). Dir-scoped, so the
+# force-track carve-outs above (the visual-evidence *.png exceptions) are untouched.
+.tmp/
+.playwright/
+test-results/
