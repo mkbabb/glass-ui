@@ -110,9 +110,16 @@ onMounted(() => {
 
 <template>
     <StoryPage>
-        <!-- The four glass tier tiles, reading translucent over the paper-grain
-             wash the chassis renders behind this card. -->
-        <div>
+        <!-- The five glass tier tiles, reading translucent over a recessive WARM
+             PAPER FIELD (D2 — BG.W-PAPER-GRAIN-OPTIN retired the universal warm
+             `.paper-field` plane, so a `paper-grain-overlay` glass tile over the
+             bare recessive shell aurora composited GRAY/metallic — the gray tooth
+             desaturated the faint-warm plate below the no-gray floor, C≈0.009). The
+             `paper-glass-tier-field` carries a static warm CSS radial behind the
+             grid (the W-CATEGORY-CARD-WARM precedent, NO live GL), so the
+             translucent glass+grain tiles composite WARM-cream — the warm-cream
+             grain the page is about. -->
+        <div class="paper-glass-tier-field">
             <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
                 <div
                     v-for="t in tiers"
@@ -242,3 +249,67 @@ onMounted(() => {
         </div>
     </StoryPage>
 </template>
+
+<style scoped>
+/* D2 / metallic-wash fold — the recessive WARM PAPER FIELD behind the tier-tile
+   grid. BG.W-PAPER-GRAIN-OPTIN retired the universal warm `.paper-field` plane, so
+   a `glass-{tier} paper-grain-overlay` tile over the bare recessive shell aurora
+   composited GRAY (the saturate=0 grain tooth desaturated the faint-warm plate
+   below the BA.W-NO-GRAY floor C 0.02 — measured C 0.009). This gives the
+   translucent glass+grain tiles a warm-cream substrate to transmit, so they read
+   WARM-cream (the page's own "translucent over warm-cream grain" promise). A static
+   warm CSS radial — NO live GL (the one-GL-per-route budget held) — keyed off the
+   warm field hue 62 ([25,95] band default), mirroring SectionLanding's
+   `.section-bento::before` (the W-CATEGORY-CARD-WARM precedent). Plain per-mode
+   `.dark` arm (the light-dark() inset-shadow trap + the scoped :global() drop). */
+.paper-glass-tier-field {
+    position: relative;
+    isolation: isolate;
+}
+.paper-glass-tier-field::before {
+    content: "";
+    position: absolute;
+    inset: -0.5rem;
+    z-index: -1;
+    pointer-events: none;
+    border-radius: var(--radius-card);
+    background:
+        radial-gradient(
+            120% 95% at 12% 0%,
+            oklch(0.91 0.11 68 / 0.6),
+            oklch(0.91 0.11 68 / 0) 64%
+        ),
+        radial-gradient(
+            120% 115% at 100% 100%,
+            oklch(0.88 0.12 52 / 0.52),
+            oklch(0.88 0.12 52 / 0) 68%
+        ),
+        oklch(0.92 0.068 62);
+}
+/* warm-EMBER dark floor — low L, chroma KEPT (the W-DARK-MATERIAL luminous-dark
+   model), so the tiles transmit a warm glow over the near-black page, NEVER a
+   charcoal/metallic slab. */
+.dark .paper-glass-tier-field::before {
+    background:
+        radial-gradient(
+            120% 95% at 12% 0%,
+            oklch(0.42 0.08 68 / 0.58),
+            oklch(0.42 0.08 68 / 0) 64%
+        ),
+        radial-gradient(
+            120% 115% at 100% 100%,
+            oklch(0.36 0.09 52 / 0.5),
+            oklch(0.36 0.09 52 / 0) 68%
+        ),
+        oklch(0.26 0.055 62);
+}
+@media (prefers-reduced-transparency: reduce) {
+    /* the field drops to the warm-SOLID floor (STILL warm, never gray). */
+    .paper-glass-tier-field::before {
+        background: oklch(0.93 0.05 62);
+    }
+    .dark .paper-glass-tier-field::before {
+        background: oklch(0.25 0.045 62);
+    }
+}
+</style>

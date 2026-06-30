@@ -79,6 +79,7 @@ const RADIAL_KEEP_FILES = new Set([
     // recognizable iOS surface; replacing it with <Aurora> would destroy the facsimile.
     "SectionPreviewCard.vue", // the bento preview card's warm §3 cel-floor wash (contained card surface)
     "SectionLanding.vue", // the BG.W-CATEGORY-CARD-WARM recessive warm bento field (a contained card-grid wash behind the glass-resting cards, NOT a full-page --section-color-* hero)
+    "foundations/paper-glass.vue", // D2 / metallic-wash fold — the `.paper-glass-tier-field::before` recessive warm field behind the glass-tier tile GRID (a contained card-grid wash so the translucent glass+paper-grain tiles transmit warm, NOT a full-page --section-color-* hero; the exact SectionLanding bento class). The HERO arm still guards a section-color hero wash (the `oklch()` field carries no --section-color-* stop).
     "dock/examples/AppSwitcher.vue",
     "dock/examples/AppleMusic.vue",
     "dock/examples/DynamicIslandCall.vue",

@@ -22,7 +22,7 @@ const opacity = ref(0.5);
             blurb="Two SVG turbulence baselines. `clean` is the default fine even grain; `aged` swaps in the coarser higher-octave variant via the `--paper-aged-texture` token."
         >
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <ShowcaseFrame pad="none" class="texture-panel relative h-56 overflow-hidden">
+                <ShowcaseFrame pad="none" class="texture-panel paper-grain-host relative h-56 overflow-hidden">
                     <PaperBackdrop frequency="clean" />
                     <div class="relative grid h-full place-items-center">
                         <div class="flex flex-col items-center gap-1">
@@ -31,7 +31,7 @@ const opacity = ref(0.5);
                         </div>
                     </div>
                 </ShowcaseFrame>
-                <ShowcaseFrame pad="none" class="texture-panel relative h-56 overflow-hidden">
+                <ShowcaseFrame pad="none" class="texture-panel paper-grain-host relative h-56 overflow-hidden">
                     <PaperBackdrop frequency="aged" />
                     <div class="relative grid h-full place-items-center">
                         <div class="flex flex-col items-center gap-1">
@@ -48,19 +48,19 @@ const opacity = ref(0.5);
             blurb="Override the underpaint hue at any ancestor scope. The backdrop re-reads on every layout pass — no per-instance class fork."
         >
             <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-                <div class="relative h-44 overflow-hidden rounded-card border border-border scope-warm">
+                <div class="paper-grain-host relative h-44 overflow-hidden rounded-card border border-border scope-warm">
                     <PaperBackdrop frequency="clean" />
                     <div class="relative grid h-full place-items-center">
                         <code class="fira-code text-mono-caption text-foreground">warm</code>
                     </div>
                 </div>
-                <div class="relative h-44 overflow-hidden rounded-card border border-border scope-cool">
+                <div class="paper-grain-host relative h-44 overflow-hidden rounded-card border border-border scope-cool">
                     <PaperBackdrop frequency="clean" />
                     <div class="relative grid h-full place-items-center">
                         <code class="fira-code text-mono-caption text-foreground">cool</code>
                     </div>
                 </div>
-                <div class="relative h-44 overflow-hidden rounded-card border border-border scope-bone">
+                <div class="paper-grain-host relative h-44 overflow-hidden rounded-card border border-border scope-bone">
                     <PaperBackdrop frequency="clean" />
                     <div class="relative grid h-full place-items-center">
                         <code class="fira-code text-mono-caption text-foreground">bone</code>
@@ -102,7 +102,7 @@ const opacity = ref(0.5);
             label="opacity knob"
             blurb="Override --glass-grain-opacity per-instance. Useful when the backdrop sits over a busy substrate that needs the grain damped."
         >
-            <ShowcaseFrame pad="none" class="relative h-40 overflow-hidden">
+            <ShowcaseFrame pad="none" class="paper-grain-host relative h-40 overflow-hidden">
                 <PaperBackdrop :opacity="opacity" />
                 <div class="relative flex h-full items-center justify-center gap-4">
                     <code class="fira-code text-mono-caption">opacity={{ opacity.toFixed(2) }}</code>
@@ -115,7 +115,7 @@ const opacity = ref(0.5);
             label="layered composition"
             blurb="PaperBackdrop sits behind any content; the surrounding host owns the radius + clip. Pair with Card or ShowcaseFrame to add the grain on demand."
         >
-            <div class="relative overflow-hidden rounded-card border border-border">
+            <div class="paper-grain-host layered-paper relative overflow-hidden rounded-card border border-border">
                 <PaperBackdrop frequency="clean" />
                 <div class="relative p-10">
                     <h3 class="text-display-3 text-foreground">Paper-tier surface</h3>
@@ -130,6 +130,24 @@ const opacity = ref(0.5);
 </template>
 
 <style scoped>
+/* D2 / metallic-wash fold — CONTAIN the `<PaperBackdrop>` grain to its panel.
+   `paper-underpaint` is `position: fixed; inset: 0` (the app-root fullscreen
+   underpaint), so a `<PaperBackdrop>` mounted INSIDE a demo panel escaped its
+   `relative`/`overflow-hidden` wrapper (neither establishes a fixed-positioning
+   containing block) and painted FULLSCREEN — and 6 instances STACKED into a
+   page-wide GRAY/metallic noise wash once BG.W-PAPER-GRAIN-OPTIN retired the warm
+   `.paper-field` the grain used to multiply over. `contain: paint` makes each
+   wrapper a containing block for the fixed grain, so it stays panel-local over the
+   panel's warm base — the clean-vs-aged/warm-vs-cool comparison actually reads
+   per-panel (the SFC's own "the surrounding host owns the radius + clip" promise),
+   and the page background is no longer washed gray. */
+.paper-grain-host {
+    contain: paint;
+}
+
+/* The cascade-retint panels paint their `--paper-underpaint-color` as the panel
+   BASE the grain multiplies over (the retint the section demonstrates — warm/cool/
+   bone read as DISTINCT tinted papers, never identical gray noise). */
 .scope-warm {
     --paper-underpaint-color: #f4ebd6;
 }
@@ -138,6 +156,20 @@ const opacity = ref(0.5);
 }
 .scope-bone {
     --paper-underpaint-color: #f6f1e8;
+}
+.scope-warm,
+.scope-cool,
+.scope-bone {
+    background-color: var(--paper-underpaint-color);
+}
+
+/* The layered-composition panel reads warm paper (NOT gray) — a warm-cream base the
+   grain multiplies over (mirrors `.texture-panel`). */
+.layered-paper {
+    background-color: color-mix(in srgb, var(--foreground) 4%, var(--card));
+}
+.dark .layered-paper {
+    background-color: color-mix(in srgb, var(--foreground) 12%, var(--card));
 }
 
 /* BA.W-STAGE scope 7 — the texture panels read as PAPER in BOTH modes. The

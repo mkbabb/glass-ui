@@ -21,10 +21,20 @@
        is NO parallel `--grid-*-dark` family. */
 
     /* The static-paper wash base (BA.W-STAGE scope 4). The paper background is a
-       warm-cream tint under the grain overlay; in light it's near-invisible (the
-       page is already cream), so the base is transparent and the grain does the
-       work. */
-    --story-paper-wash: transparent;
+       warm-cream tint under the grain overlay.
+       D2 / metallic-wash fold — light was `transparent` on the assumption "the page
+       is already cream", which held while the universal warm `.paper-field`/grain
+       plane existed. BG.W-PAPER-GRAIN-OPTIN retired that plane, so the bleed grain
+       now sits over the bare RECESSIVE shell aurora — and `paper-grain-overlay`'s
+       `isolation: isolate` walls its `mix-blend-mode: multiply` to its OWN box, so
+       a TRANSPARENT base gives the gray tooth nothing warm to multiply over: the
+       grain reads DEAD in Chrome (multiply over transparent → near-invisible) and
+       GRAY/metallic in Safari (the off-screen composite shows the bare tooth). A
+       faint warm-cream base (mirroring the working `.dark` arm's magnitude) gives
+       the tooth a warm substrate, so the bleed grain reads PLAINLY-VISIBLE + WARM
+       in BOTH engines — the BD.W-PAPER-MORPHISM "grain must be visible" goal AND
+       the warm-everywhere/no-gray floor, on every paper hero page. */
+    --story-paper-wash: color-mix(in srgb, var(--card) 70%, transparent);
 
     /* The exposed-substrate margin (W-SB-STAGE §2.1b). Over a LIVE substrate the
        glass card no longer fills the container EXACTLY — an inset gutter lets the
