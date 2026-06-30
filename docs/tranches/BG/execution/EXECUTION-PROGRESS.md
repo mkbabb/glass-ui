@@ -290,6 +290,23 @@ WAVE-DONE bar: `real-paint-protocol.md §1`. Interleave/collision: `bh-interleav
 
 > Deferred past BH: `BH.B5d-detector-kit` (164-script blast radius; closed-wave gate-census subset only).
 
+## PHASE LX — LIVE-DEFECT FIXES (the re-spec DEFECT-LEDGER D-1/D-2/D-3 — landed direct to tranche/BG, dual-engine verified)
+
+> The live-interaction defect-hunt verdicts (`docs/tranches/BG/audit/RESPEC/DEFECT-LEDGER.md`) landed as discrete
+> fix-commits — Chrome (CDP, ANGLE Metal M5 Max) + WebKit/Safari verified. DELTAs + PNGs at
+> `docs/tranches/BG/audit/visual/live-fixes/`.
+
+| seq | wave | tranche/ws | class | status | gate | paint |
+|----:|------|-----------|:-----:|:------:|------|:-----:|
+| LX.1 | BG.W-CONSTELLATION-PARALLAX-OFF (D-1; `DEFAULT_PARALLAX 0.08→0`) | BG/live-fix | P | DONE 07c6e6ec | proof:constellation-field 41/41 · viz/tokens/gen/substrate PASS · tsc 0 | PASS(chrome live-measure 58.1→5.7px; webkit JS-engine 40→0) |
+| LX.2 | BG.W-PAPER-GRAIN-WARM-SUBSTRATE (D-2; demo-local warm field behind paper-grain) | BG/live-fix | P | DONE e40e5095 | proof:demo-radial-calm · no-paper-field · stage · category-card-warm · no-gray · suffuse · demo-design PASS · tsc 0 | PASS(chrome+safari, L+D; tiles C 0.009→0.02-0.045 warm) |
+| LX.3 | BG.W-DOCK-COLLAPSE-DIR (D-3; `--dock-live` blend reads directional `--dock-expand-t`) | BG/live-fix | P | DONE 8947288a | proof:dock-engine (E4 tightened, reds-on-revert) · dock-morph-family · dock-arbitrary · no-layout-animation LOCKED · tsc 0 | PASS(chrome collapse 496→59 no reversal; webkit reversals=0; safari resting unregressed) |
+
+> **LX RECORDED-NOT-FIXED (out-of-scope of the discrete regression repair):** D-2 StoryHero WASH-CARD gray-cream over the
+> recessive shell aurora + `/foundations/intro` category-card header zones (the shell/field hunter's domain); D-3
+> residual first-collapse-only 15px end-snap on `startCollapsed:false` docks (`dockMorphMeasure.ts` seed-staleness) +
+> WS2 dock convergence rows 4.x (still UNBUILT). See the DEFECT-LEDGER for detail.
+
 ---
 
 **Boot counts.** PENDING: all (≈110 BG active + ≈30 BH = ≈140; +2 BG booked, +1 BH deferred). BUILDING: 0 ·
