@@ -137,10 +137,13 @@ export const E_MAX = MAX_NODES * MAX_DEGREE;
  * The pointer-parallax depth default (§6). Each node carries a seeded depth `z ∈ [0,1]`;
  * the pointer offsets node screen positions by `parallax · z · (pointer − center)` — a
  * cheap pointer-parallax giving the flat lattice apparent depth (the Awwwards "living
- * network" register). Additive default-on at a SUB-PERCEPTUAL 0.08 (a hair of depth, not a
- * behavior break). 0 = the flat lattice (no parallax).
+ * network" register). DEFAULT-OFF (`0` — the flat lattice). The prior default-on `0.08`
+ * slid the WHOLE lattice ~58px on a center→corner pointer sweep (every node tracked the
+ * cursor, read as a bug, not depth — `proof` D1-constellation live measure). Depth is now
+ * OPT-IN: a consumer that wants the living-network parallax passes `parallax` (e.g. a
+ * sub-perceptual `0.02`); the bare lattice never tracks the cursor.
  */
-export const DEFAULT_PARALLAX = 0.08;
+export const DEFAULT_PARALLAX = 0;
 
 /**
  * The base node radius band (CSS px) the DPR-aware SDF circle sizes within (the §1 "Node

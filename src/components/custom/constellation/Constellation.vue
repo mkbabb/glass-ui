@@ -2,6 +2,7 @@
 import { useTemplateRef } from "vue";
 import { type ConstellationProps } from "./constellationField";
 import { useConstellation } from "./composables/useConstellation";
+import { DEFAULT_PARALLAX } from "./constants";
 import { cn } from "../../../utils/cn";
 
 /**
@@ -46,7 +47,7 @@ const props = withDefaults(defineProps<ConstellationProps>(), {
     count: 64,
     link: 132,
     speed: 0.16,
-    parallax: 0.08,
+    parallax: DEFAULT_PARALLAX,
     pointerReactive: true,
     warpOnClick: false,
     wander: false,
