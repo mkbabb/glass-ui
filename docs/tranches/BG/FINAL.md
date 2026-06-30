@@ -574,3 +574,150 @@ named proving wave. The execution kickoff order (unchanged from the cursor): STA
 → WS2 → WS5 → WS6 → WS4 → WS7 (close machine: close-sweep · gestalt-cursor-parity · field-aurora-aa ·
 safari-parity) → WS8 (refract-fence on `uChromatic` · backdrop-sample keystone) → WS9 → WS10 → WS11
 → WS12 (late capture sweep) → BH[WS12] (16-reader re-home → CLAUDE delete) → BG.W-CUT.
+
+---
+
+## 11 · COHERENCE AUDIT (2026-06-30) — the SECOND audit, cross-wave coherence re-grounded on the folded plan
+
+This section APPENDS the coherence-audit outcome to the binding lock document — it does NOT supersede §1–§10
+(the master roster, the defect map, the sequencing, AND the §10 RE-SPEC RECONCILIATION all KEEP). The coherence
+audit is the **SECOND** audit, distinct from the first re-spec FOLD (commit `4c761b64`, recorded in §10): where
+the re-spec re-grounded each WS spec on built state and developed the 7 close-machine GAP waves, the coherence
+audit interrogates whether the already-folded waves COHERE with one another across the DAG, the gate set, the
+canon-home map, the consumer constellation, and the BG↔BH interleave — the cross-wave seams a per-WS audit
+cannot see. It found BROKEN COHERENCE inside already-planned waves (a mis-sequenced row, an under-enumerated
+reader set, a stale canon-home string, a self-disagreeing census), **NOT missing waves and NOT a feasibility
+blocker** — every one of the 7 clusters is a plan-text / gate-spec / wf.js amendment on top of the `4c761b64`
+folded state. The authoritative source is `audit/RESPEC-COHERENCE/AMENDED-COHERENCE-PLAN.md` (the fold-ready
+plan, exact edits per cluster); the living master is `audit/RESPEC-COHERENCE/COHERENCE.md` (the friction
+taxonomy + the §2.X coherence-issue board). **HEAD `31b128aa` · critique-weighted convergence 84% · developReady
+TRUE → fold into the tranche set.**
+
+### 11.1 · The three standing truths (re-confirmed against the folded plan)
+
+1. **ZERO restart. The BG/BH plan + DAG + build order KEEP.** No wave is invalidated, no mechanism
+   re-architected; every coherence issue reduces to a plan-text / gate-spec / wf.js amendment. The decoupled-paint
+   engine is ADJUDICATED **keep-decoupled-with-guards** — the cut stays COUPLED to painted truth via the two-gate
+   `cutReady` (`buildComplete ∧ paintComplete`).
+2. **No coherence issue is a feasibility blocker.** All 7 clusters are FEASIBLE in direction (all 7 critiques
+   concur). The work is to fold the exact edits so a resumed execution does not mis-execute (the would-be §0E-1
+   C6-regression, the WS8 reader fan-out, the kf-peer no-op) or stall (the empty-batch terminal, the paint-FAIL
+   ping-pong).
+3. **The missing guard is the FAIL-PAINT recovery** — the one terminating mechanism the §2.A1 adjudication named:
+   `PAINT-PENDING → FAIL-PAINT → a re-triggered FIX-AGENT → the fix wave re-enters the device-free frontier →
+   re-judge`, bounded `MAX_FIX → BLOCKED`. Root-fix-before-re-judge structurally kills the BB terminal-reflect
+   chokepoint the engine could otherwise re-create.
+
+### 11.2 · The friction-history taxonomy verdict — NO repeat-class confirmed UN-mitigated
+
+The audit ran the full A–U friction taxonomy (`COHERENCE.md §2`) — every historical-friction class the prior
+tranches recorded, re-checked for a LIVE un-mitigated BG vector. **The headline verdict: no repeat-class is
+confirmed un-mitigated.** Every class is either structurally CURED (a gate makes the failure
+impossible-not-merely-detected) or carries a LIVE vector that is now NAMED + owned by a specific cluster fold —
+none rides silent. The concentration is three zones: (1) the decoupled-paint engine (cadence + FAIL-recovery +
+null-guards), (2) the glass-ui-specific token/binding traps (C/K/L/U on WS3/6/8/9), (3) C-SAFARI on-device-Metal.
+
+| Class | Name | Recurs | Verdict (the live BG vector + its owner) |
+|---|---|:---:|---|
+| **A** | headless-green over visually-broken (cardinal) | yes | CURED generally (ba-gestalt reads pixels, tag coupled 0/10); LIVE residual = C-SAFARI ★★★ + the decoupled-paint chokepoint → G1 |
+| **B** | orphaned-wave-claim | yes | `proof:no-orphaned-wave-claim` landed; live = HEAD numeral drift only (§2.L2) |
+| **C** | clean-break rename misses a consumer | yes | MOD-HIGH (delete-dense); TINT-UNIFY names 2/5, WS8 `.glass-lens` names 4/24 → G2/G3 |
+| **D** | budget-rebaseline ratchet | yes | MOD; net-lift un-tracked-as-one-number → G4 (the L15 name-agnostic re-baseline) |
+| **E** | ci.yml↔manifest drift | **no** | `--emit-ci` codegen makes drift impossible; symptom = `glass-idiom-factor` un-emit → G4 R3 |
+| **F** | BOOK/ARCHIVE re-label | **no** | disposition-live + NDA-DECIDE + DISPOSITION-RESTAMP + Band-0 ledger; well-defended |
+| **G** | structural / god-module | yes | R1/R2 LIVE (ladder 527, shell 510); carve→re-grow chain → G7 (WS12-CENSUS re-carve owner) |
+| **H** | close-never-runs / provenance | **no** | most-hardened; `--run full` siblings-absent + ship-attestation |
+| **I** | user-directive contradicts spec | yes | MOD; 12-LAWS routes liquid-weight to ONE wave; goo-morph worm owner RESOLVED → G7 |
+| **J** | capability-without-adoption (overfit) | yes | MOD; ≥2 bar must be PRODUCTION (SIRI-ISLAND/-WAVEFORM, REFRACT-WEBGL, useDockSpring, useFlip) |
+| **K** | substitution-vs-inheritance / dead-knob | yes | MOD-HIGH (biggest glass-specific); the F substitution-trap note → G2 |
+| **L** | reka/kf binding silent no-op | yes | MOD-HIGH; the kf-peer↔snap crossover → G4 + MINT `proof:binding-sweep` → G7 |
+| **M** | live-π oklab paint-arm | **no** | reflect-capture-verify parses oklab; re-opens only on an L-only regression |
+| **N** | light-dark / hsl / scoped-:global / :slotted | yes | MOD; dual-engine paint catches the WS8/9/11 scoped-`:global()` drop risk |
+| **P** | rate wall (parallel>3→429) | **no** | CLEAN — all workflows batch ≤3 build / ≤2 paint |
+| **Q** | session-limit null-crash | yes | HIGH (LIVE); bg-paint.wf.js 4 un-guarded `agent(` → G3/G1 (the 4 null-guards) |
+| **R** | foreign-tree catastrophe | yes | LOW-MOD; prose fence + tracked `verify-siblings-intact.mjs` DURABLE |
+| **S** | dependency-floor miscalc | **no** | registry-CONFIRMED; live crossover = the kf-peer bump OWNER re-home → G4, not a floor miscalc |
+| **T** | submodule canon-home | split | G3/G5 moved OUT; G3 homed `BG/canon/` ≠ realized `docs/canon/` → G6 |
+| **U** | wrong-uniform / wrong-anchor | yes | MOD-HIGH; fence keyed `uChromatic` (converge-only) vs ship op `chromatic_aberration @ 0.003` → G2 |
+
+Five classes are structurally CURED (B/E/F/H/M/P/S — the "no" rows); the rest carry a named LIVE vector routed to
+a cluster. The single HIGH-severity LIVE class is **Q** (the bg-paint null-crash) — the longest workflow was the
+un-hardened one; its 4 null-guards are folded co-applied at execution (G1 MR-3 + G3 §4).
+
+### 11.3 · The 7 locked clusters + their convergence
+
+Each cluster is a concrete amendment to the ALREADY-FOLDED cursor / build-map / FINAL from the first audit
+(`4c761b64`). The convergence is critique-weighted (the critique's number, after the mustResolve folds); the
+disposition column names the load-bearing fold.
+
+| Cluster | Name | Mode | Owns (§2.X) | Conv | Disposition (the load-bearing fold) |
+|---|---|---|---|:---:|---|
+| **G1** | dag-paint-keystone | impl (spike) | A1/D1/D2/D3 + G1-lockstep | **82%** | re-seq `BG.W-CLOSEFIX-9SITE` 12.0→0.7 + precond edges on all 3 derivation sources; the FAIL-PAINT→FIX-AGENT→re-judge recovery DEFINED; the 2 live G8 "rides W-REFLECT3" hits content-anchored re-homed |
+| **G2** | token-spine-sourcing | impl (spike) | T4/T1/T2/M4 | **76%** | `--glass-key-*` KEEP-BOTH bound by §0E-1 shared-sourcing; STRIKE the false WS8←WS9 "bevel reads F" DAG edge; chromatic dual-stack re-anchored onto `glassShader-tier2.wgsl` @ `CHROMATIC_SCALE=0.0045`; MINT `--glass-chromatic-strength` scalar; **MR-1 BLOCKING: re-ground M7 onto WS8 pass-4 C6** |
+| **G3** | ws8-reader-fanout | spec | G2/A2 | **90%** | the FULL 28-file reader fan-out (24 behaviour-bearing) + the 3 hard build/published breaks (`index.css:166`, `critical-partition.mjs:63`, published `GlassPanel.vue`) + the wave's `proof:button-glass`/`visual-reconcile`/`safari-webgl` gate set; the TYPED `{sites, bindings}` roster |
+| **G4** | cuttime-gate-blind | spec | C1/G3/G4/L15 | **88%** | kf-peer `^5.0.0→^5.1.0` re-homed onto `BH-B2.1-swap` (the LIVE `useDragMorph.ts:26` broken-snap defect); ci.yml `glass-idiom-factor` over-claim corrected + the R4-before-R3 ordering flip; the 3 AZ freshness discharges gated AFTER WS2∧WS5; the net-lift one-number budget walk across ALL chunks incl. siri+refract |
+| **G5** | livefix-protectors | impl (build-map) | T5/T6/T7 | **90%** | WS2 gains `proof:dock-engine` (E4 IS the D-3 directional `--dock-expand-t` protector); WS5 gains a born-RED `DEFAULT_PARALLAX===0` clause on `proof:constellation-gen`; WS9 OWNS the D-2 demo-warm double-warm hand-off |
+| **G6** | canonhome-interleave | spec | I1/L12/L13/L14 | **79%** | home G3's close-disease-sweep canon at the REALIZED `docs/canon/build-and-gates.md`; receiver-scope the B4f gate onto `proof:claude-deletable`; the `.githooks/commit-msg` B0→G3 EXTEND-not-clobber edge; **MR-1: the census is 16 not 15 (`proof-handmark.mjs:249` is the missed hard reader)** |
+| **G7** | coverage-deadfile-carve | spec | M2/L7/L8/U1/M1/P1/P3/P5/L1 | **85%** | the 14-row amendment table (5 phantom dock-owner FOLDs + 3 DEFER-with-rationale); `PaletteLayer.vue` → a DELETE wave; the L8 late-capture SENTINEL note; `proof:retired-token-consumers` re-architected CI-safe through `constellation.mjs presentConsumers()`/`resolveSibling()`; **MR-1: the dock-gallery/liquid-playground mistarget split** |
+
+**Critique-weighted mean: 84%** — up from the PASS-1 baseline 68%; PASS 3 folded every critique mustResolve item
+in place. G2's 76% is the floor (its 5 mustResolve items folded — the one BLOCKING C6-regression is the
+load-bearing correction). developReady = every cluster is fully-resolved OR an explicitly-accepted-residual with a
+named owner (the 8-row build-phase/executor-judgement residual table, `AMENDED-COHERENCE-PLAN.md §10`).
+
+### 11.4 · The TWO second-order recursions the critique caught mid-audit — the headline proof the audit process works
+
+The strongest evidence that the convergent-audit loop is doing real work is that its OWN critique pass caught two
+SECOND-ORDER recursions — places where the resolve spike itself re-committed the exact friction class it was
+sent to fix, one level down. Both were caught BEFORE the fold, with on-disk verification at HEAD, and both are
+now folded with an exact edit. They are the headline:
+
+- **G2 — the would-have-stripped-a-live-grounding recursion (the BLOCKING fold).** The G2 spike's WS8 M7 framing
+  instructed re-pointing the SHARED `--glass-rim-bottom` token "AWAY from `--glass-key-shade-y`" — but that is the
+  SUPERSEDED PASS-3 framing. WS8's OWN authoritative `SPEC-pass4-converged.md:128` (the C6 fold) had ALREADY
+  corrected it: decouple ONLY via a rim-PRIVATE bottom token consumed ONLY in the `rim.css:90-95` composition, so
+  the SHARED `--glass-rim-bottom` KEEPS its grounding. The spike's verbatim wording would have STRIPPED the
+  `--glass-key-shade-y` grounding from **4 verified live readers** (`select.css:88`, `rim.css:95`,
+  `glass-capsule.css:72+89`, `dock/shell.css:167`) — the exact C6 regression pass-4 caught, **re-committed on the
+  bevel after folding it for §0E-1** (the read-superseded-passes recursion, one level up). The critique re-grounded
+  the M7 amendment onto WS8's own pass-4 C6: the shared token KEEPS its grounding; only a rim-PRIVATE bottom token
+  decouples. This is the load-bearing correction — the develop pass applies the C6-grounded form, NOT the spike's
+  M7 prose.
+- **G7 — the dock-gallery / liquid-playground mistarget recursion.** The G7 spec's new `proof:dock-story-modularize`
+  (the ★★ A10 clause) pointed its "ONE dock + tabs facility" protection assert at `dock-gallery.vue` — which has
+  **0 `<GlassDock>`** (VERIFIED at HEAD: `grep -c GlassDock dock-gallery.vue = 0`); it is the deliberate BREADTH
+  gallery (iOS surface tiles: AppleMusic / Spotlight / DynamicIsland). The "ONE dock + tabs" substance actually
+  lives in `liquid-playground.vue` (VERIFIED: **8 `<GlassDock>`** + `<DockStack mode=facets>`). The clause's
+  assertions would have been born-RED-FOREVER against dock-gallery OR forced a design-breaking rewrite of the
+  gallery — a coverage assert MISTARGETING the file it protects (the project's own all-prompts matrix cannot be
+  trusted as a coverage source). The critique SPLIT the clause: (i) `liquid-playground.vue` OWNS the one-dock+tabs
+  protection assert (it already PASSES — a protection gate, NOT born-RED); (ii) the no-hardcoded-real-names cleanup
+  targets `dock-gallery.vue`'s demo CONTENT labels (NOT the example component filenames, which are the gallery's
+  deliberate breadth point). The audit re-greps BOTH files before authoring the gate.
+
+A companion G7 recursion was caught in the same pass — `proof:retired-token-consumers` was specified as a
+`[local]`-only RAW-GREP of `$BBNF/src`, which CANNOT run in the siblings-ABSENT `--run full` close battery (the
+exact "remembered scout" it claimed to replace, the inv-11 false-clean it targets). The critique re-architected it
+through `constellation.mjs presentConsumers()`/`resolveSibling()` (the CI-safe present-false seam its claimed twin
+`proof:lineage-probe` already uses) tagged `[local,ci,release]` so it actually fires at the cut.
+
+### 11.5 · develop-ready conclusion
+
+**developReady: TRUE.** Every cluster is either fully-resolved (G3/G4/G6/G7 — exact edits named, critique
+mustResolve folded) OR an explicitly-accepted-residual with a named owner (the 8-row residual table) — matching
+the first audit's RESPEC/AMENDED-WAVE-PLAN bar (86% develop-ready with named build-phase deferrals). The seven
+clusters reduce to plan-text / gate-spec amendments + a bounded set of `src/`/wf.js edits the build phase applies;
+**ZERO feasibility restart anywhere.** The two BLOCKING / recursion findings the critiques surfaced (G2's
+C6-regression, G7's A10-mistarget + retired-token CI-blindness) are folded with exact edits + on-disk verification
+this pass. The discount from 100% is (a) the build-phase residuals every cluster honestly carries (the run-time
+DAG-loader dry-run, the on-device Metal parity, the live FAIL-recovery boot — none a feasibility unknown), and
+(b) the bounded EXECUTOR judgements named (the GlassPanel re-point-vs-retire, the Button `:liquid` disposition,
+the soft-mention re-phrasing).
+
+The fold-agent applies each cluster's "EXACT edits" table (`AMENDED-COHERENCE-PLAN.md` §2.3/§3.3/§4.3/§5.3/§6.3/
+§7.3/§8.3) onto the `4c761b64`-folded cursor / build-map / EXECUTION-PROGRESS / wf.js / interleave-map (+ the G2
+`--glass-chromatic-strength` mint in `src/styles/tokens/property-regs.css` at the build phase), each re-anchored
+against HEAD `31b128aa` before applying (the spec resolves ran at `6c1f5386`/`998136bb`; the line numbers drift —
+a mechanical re-anchor pass).
+
+**nextFocus: FOLD INTO THE TRANCHE SET.**

@@ -35,8 +35,9 @@ WS2 → WS5 → WS6 → WS4 → WS7 (close machine: close-sweep · gestalt-curso
 safari-parity) → WS8 (refract-fence on `uChromatic` · backdrop-sample keystone) → WS9 → WS10 → WS11 → WS12
 (late capture sweep) → BH[WS12] (16-reader re-home → CLAUDE.md delete) → BG.W-CUT. **PAINT IS DECOUPLED**
 from the device-free build frontier — a wave flips PAINT-PENDING on device-free GREEN; the NON-AUTHORING
-dual-engine paint verdict rides W-REFLECT3 / the WS12 late capture sweep, NOT the build frontier (the §1
-verification ∧ release axes stay COUPLED only at the cut). The 7 gap waves are folded below: G4 `12.0` ·
+dual-engine paint verdict is owed at the wave's OWN non-authoring paint close (drained by the WS12 late
+capture sweep), NOT the build frontier (the §1 verification ∧ release axes stay COUPLED only at the cut).
+The 7 gap waves are folded below: G4 `0.7` (re-homed from `12.0`, lands FIRST) ·
 G2 `12.4a` (keystone) · G3 `12.4b` · G6 `12.5`(amended)+`3.12` · G1 `13.2`/`13.3`/`12.8`(amended) · G7 =
 corrections to `6.3`/`6.7`/`18.11`; G5 = the corrected 16-reader census on `18.10`/`19.2`. VERDICT: ~93%
 of built work VERIFIED, ZERO restart candidates, the DAG + build order are KEEP.
@@ -63,6 +64,7 @@ of built work VERIFIED, ZERO restart candidates, the DAG + build order are KEEP.
 | 0.4 | BG.W-DEFERRED-LEDGER | BG/WS7 | H | DONE | proof:bg-deferred-ledger (9-bite) GREEN | 3fce612a |
 | 0.5 | BG.W-BE-BF-LEDGER | BG/WS7 | H | DONE | proof:be-bf-ledger GREEN | 6105ed6f |
 | 0.6 | BG.W-DISPOSITION-RESTAMP | BG/WS7 | H | DONE | proof:disposition-live (n:2 re-eval) | 002e9d32 · proof:disposition-live GREEN — 31 rows re-stamped BG (n:2 re-eval), 0 open/0 stale pendings, re-stamp-discharge clause + 4-bite self-test · 6 resolved:true (css-relative-color→BB.W-DARK-INK-WARM, styles-critical-split→BC.W-CSS-CRITICAL discharged; completion-seal/drawer-content-spring flipped) · 0 phantom destinations |
+| 0.7 | BG.W-CLOSEFIX-9SITE (G4 · **LANDS FIRST** — post-STAGE-0, before WS1/WS3; re-homed 12.0→0.7) | BG/WS7 | H | PENDING | **id is `BG.W-CLOSEFIX-9SITE` everywhere; NOT `BG.W-GLASS-BLUR-PEER`** (3.6 is the DISTINCT blur-peer demote that ORPHANS the `--glass-blur-dock` chain this carve retires — they are two waves, never conflated) · *Precond:* `[STAGE-0, BG.W-GLASS-BLUR-PEER (3.6)]` — lands AFTER 3.6 ships `--dock-surface-blur` and is a precond of `[3.5 TINT-UNIFY, 13.1/WS8 SUFFUSE-UNIVERSAL, 14.1/WS9 PAPER-GRAIN-REAL]` · all 15 affected device-free gates flip GREEN in ONE atomic diff · **9 SITES not 6** — FULL RETIREMENT of the `--glass-blur-dock` chain (composite+saturate+radius+`--blur-dock` bridge across glass.css/dark-arm.css/bridges.css; dock paints via `--dock-surface-blur`→resting→8px, 0 orphan readers) + carve `ladder.css` 527→470 (grain-tail→glass/grain-overlay.css) + `shell.css` 510→459 (persistent-region tail→dock/shell-regions.css) · 3 extra FROZEN-STRING readers (dock-shrink-blur S3 · theme-style `.blur-dock` probe · InstrumentChassis.spine-variant unit + glass-cal EXPECT_RADII) · R4 category-card-warm→`["local","ci","release"]` THEN R3 gates:emit-ci regen (the intra-wave ORDER FLIP — R4 re-tag BEFORE R3 emit, so the emit adds BOTH gates in one pass) · `--run full` siblings-absent /tmp PASS · dist `glass-ui.css` BYTE-IDENTICAL to HEAD (dead token already tree-shaken) · clears R1–R4 | — (grain-tail liquid-hover.spec π + ba-gestalt dock/CTA owed at this wave's OWN non-authoring paint close) |
 
 ## PHASE 1 — BH concurrent-safe [C] (run now, dodges BG's write-set)
 
@@ -110,13 +112,13 @@ of built work VERIFIED, ZERO restart candidates, the DAG + build order are KEEP.
 | 3.9 | BG.W-DOCK-LEGIBILITY-RECAL | BG/WS3 | P | PENDING | proof:no-gray dock witnesses | — |
 | 3.10 | BG.W-GLASS-DYNAMICS | BG/WS3 | P | PENDING | read-carrier paint sign-off | — |
 | 3.11 | BG.W-DEMO-STYLE-REHOME | BG/WS3 | H | PENDING | net-neutral (rehome liquid-morph.css) | — |
-| 3.12 | BG.W-EYEBROW-LIGHT-POLISH (G6 · NEW — light-arm twin of the dark fix b3d65eec) | BG/WS3 | P | PENDING | F-AA-LIVE [local] only (device-free CI cannot enforce the lift; F-AA-ROSTER passes the literal `{bar:4.5, born-RED}` forever) · lift the light·chrome `.section-label` raw-field eyebrow ≥4.5 within the warm-no-gray identity WITHOUT regressing dark (6.73) / Safari (4.80) · `resolvedBy` for the F-AA phantom-coupling (NOT prose); binding paint rides W-REFLECT3 | — |
+| 3.12 | BG.W-EYEBROW-LIGHT-POLISH (G6 · NEW — light-arm twin of the dark fix b3d65eec) | BG/WS3 | P | PENDING | F-AA-LIVE [local] only (device-free CI cannot enforce the lift; F-AA-ROSTER passes the literal `{bar:4.5, born-RED}` forever) · lift the light·chrome `.section-label` raw-field eyebrow ≥4.5 within the warm-no-gray identity WITHOUT regressing dark (6.73) / Safari (4.80) · `resolvedBy` for the F-AA phantom-coupling (NOT prose); the binding paint is owed at this wave's OWN non-authoring paint close | — |
 
 ## PHASE 4 — WS2 · Dock convergence (consumes WS3 blur peer + WS1 swap; MORPH-UNIFY produces useDockSpring)
 
 | seq | wave | tranche/ws | class | status | gate | paint |
 |----:|------|-----------|:-----:|:------:|------|:-----:|
-| 4.1 | BG.W-DOCK-MORPH-UNIFY | BG/WS2 | H | PENDING | proof:dock-orchestrator-single (1 SpringProgress) | — |
+| 4.1 | BG.W-DOCK-MORPH-UNIFY | BG/WS2 | H | PENDING | proof:dock-orchestrator-single (1 SpringProgress) · **+ proof:dock-engine `[local,ci,release]` (G5 D-3 PROTECTOR)** — its E4 blend-clamp arm IS the directional `--dock-expand-t` read assert (E4 reds with the EXACT collapse-balloon-revert message on a pre-D-3 base, GREEN iff the LX.3 fix present), so the WS2 dock rewrites cannot silently revert the live D-3 fix | — |
 | 4.2 | BG.W-DOCK-BUSY-SINGLE | BG/WS2 | H | PENDING | grep-single busy-signal | — |
 | 4.3 | BG.W-DOCK-CUT | BG/WS2 | H | PENDING | proof:dock-context delete (AFTER WS6) | — |
 | 4.4 | BG.W-DOCK-DECOMPOSE | BG/WS2 | H | PENDING | RATCHET drain + colocation | — |
@@ -126,7 +128,7 @@ of built work VERIFIED, ZERO restart candidates, the DAG + build order are KEEP.
 | 4.8 | BG.W-DOCK-OVERFLOW-FADE | BG/WS2 | P | PENDING | useFadingScroll soft-edge | — |
 | 4.9 | BG.W-SHELL-DOCK-DRY | BG/WS2 | P | PENDING | P1 landing-semantics build-proof | — |
 | 4.10 | BG.W-DOCK-INPLACE-MORPH | BG/WS2 | P | PENDING | proof:dock-morph-insitu M2/M4 | — |
-| 4.11 | BG.W-DOCK-STORY-MODULARIZE | BG/WS2 | H | PENDING | thin demo-side carve (deferrable) | — |
+| 4.11 | BG.W-DOCK-STORY-MODULARIZE | BG/WS2 | H | PENDING | thin demo-side carve (deferrable) · **+ G7 M2-2 (MR-1) — `proof:dock-story-modularize` SPLIT, re-grepped against BOTH files (the A10 ★★ mistarget corrected):** (i) `liquid-playground.vue` (VERIFIED **8** `<GlassDock>` + `<DockStack mode=facets>`, horizontal+vertical) OWNS the "ONE dock + tabs facility" protection assert — it already PASSES (a protection gate, NOT born-RED); (ii) the no-hardcoded-real-names cleanup targets `dock-gallery.vue` (VERIFIED **0** `<GlassDock>` — the deliberate iOS-surface BREADTH gallery) demo CONTENT labels ONLY, NEVER the example component filenames (AppleMusic/Spotlight/DynamicIsland are the gallery's deliberate breadth point) | — |
 
 ## PHASE 5 — BH [WS2] (after allDone(WS2))
 
@@ -141,7 +143,7 @@ of built work VERIFIED, ZERO restart candidates, the DAG + build order are KEEP.
 |----:|------|-----------|:-----:|:------:|------|:-----:|
 | 6.1 | BG.W-VIZ-INTRINSIC-SIZE | BG/WS5 | P | PENDING | backing==round(gBCR×dpr) | — |
 | 6.2 | BG.W-VIZ-SIZER-ADOPT-HARD | BG/WS5 | P | PENDING | proof:viz-resize-upload-only | — |
-| 6.3 | BG.W-VIZ-DEMIGRATE (G7 Lock-1) | BG/WS5 | P | PENDING | no createGpuSubstrate/.wgsl; budget DOWN · G7: the new clause is `W5-viz-disposition` on proof:crossrepo-asks (NOT `W4` — the W4 inv-26 content-only fence ALREADY exists on disk); key-preserved internal WGSL→useCanvas2D swap (zero consumed subpath key dropped) → NO by-name ask owed, only a VISUAL re-baseline (slides /fourier-field×4 + /constellation×2; atlas /constellation×1 + /dot-flow-field×1, fallback-first) | — |
+| 6.3 | BG.W-VIZ-DEMIGRATE (G7 Lock-1) | BG/WS5 | P | PENDING | no createGpuSubstrate/.wgsl; budget DOWN · G7: the new clause is `W5-viz-disposition` on proof:crossrepo-asks (NOT `W4` — the W4 inv-26 content-only fence ALREADY exists on disk); key-preserved internal WGSL→useCanvas2D swap (zero consumed subpath key dropped) → NO by-name ask owed, only a VISUAL re-baseline (slides /fourier-field×4 + /constellation×2; atlas /constellation×1 + /dot-flow-field×1, fallback-first) · **+ the D-1 parallax-default PRESERVATION (G5 PROTECTOR, MR-1 HARD non-optional WS5 build deliverable):** an extend-in-place `DEFAULT_PARALLAX===0` assert on `proof:constellation-gen` `[local,ci]` (the durable substrate-agnostic host — reads `constants.ts` + asserts behavioral defaults; NOT `proof:viz-constellation`, whose C1 asserts WebGPU which this de-migration INVERTS — wrong host). **BORN-RED CLAUSE:** the arm does NOT exist on disk at HEAD (`grep -c DEFAULT_PARALLAX proof-constellation-gen.mjs = 0`) — the WS5 build MUST land the one-line code-arm + its born-RED self-test (the arm reds on a planted non-zero `DEFAULT_PARALLAX`, mirroring WS9's `proof:paper-grain` born-RED binding); without it `proof:constellation-gen` greens over a re-flipped default (the headless-green/live-broken disease the protector targets, see LX.1) | — |
 | 6.4 | BG.W-VIZ-REVEAL-BLOOM | BG/WS5 | P | PENDING | useVizChoreography DEFINITION-ABSENT | — |
 | 6.5 | BG.W-VIZ-PREVIEW-LIVE | BG/WS5 | P | PENDING | per-card pixel-hash differs | — |
 | 6.6 | BG.W-DOTFLOW-REBUILD | BG/WS5 | P | PENDING | reference flowing dot-wave read | — |
@@ -196,7 +198,7 @@ of built work VERIFIED, ZERO restart candidates, the DAG + build order are KEEP.
 | 10.18 | BG.W-UNIFORM-LAYOUT-BUILDER | BG/WS4 | H | PENDING | carve (re-measure POST-WS5) | — |
 | 10.19 | BG.W-CHIP-ALIAS-KILL | BG/WS4 | H | PENDING | alias delete + MIGRATION (atomic) | — |
 | 10.20 | BG.W-DEAD-TOKEN-SWEEP | BG/WS4 | H | PENDING | proof:squircle-language negative guard | — |
-| 10.21 | BG.W-DEMO-CHASSIS-CONSOLIDATE | BG/WS4 | H | PENDING | zero-importer delete + fold | — |
+| 10.21 | BG.W-DEMO-CHASSIS-CONSOLIDATE | BG/WS4 | H | PENDING | zero-importer delete + fold · **+ G7 L7-1: `aurora/config/PaletteLayer.vue` (zero-importer dead file) joins the delete set** | — |
 | 10.22 | BG.W-MANIFEST-COLOCATE | BG/WS4 | H | PENDING | 4 string-maps → s() row | — |
 | 10.23 | BG.W-DESHADCN-SWEEP (W0 — WS10 precondition) | BG/WS4 | P | PENDING | proof:de-shadcn (HEAD-mode) | — |
 | 10.24 | BG.W-12-LAWS-UNIVERSAL | BG/WS4 | P | PENDING | liquid-weight on all restored motion | — |
@@ -215,21 +217,25 @@ of built work VERIFIED, ZERO restart candidates, the DAG + build order are KEEP.
 
 ## PHASE 12 — WS7 · close-machine bands 1–4 (gates + census BUILDs; the cut is Band-5 LAST)
 
-> **EXECUTION-ORDER NOTE:** `12.0 BG.W-CLOSEFIX-9SITE` is a WS7 wave that **LANDS FIRST in the build order
-> (post-STAGE-0, BEFORE WS1)** — it carves `ladder.css`/`shell.css`, the EXACT files WS3 re-edits, so the
-> carve precedes WS3. The DAG (in `bg-bh-execute.wf.js`) encodes it as a predecessor of WS1; it is homed
-> here in its WS7 phase for organizational clarity. `12.4a`/`12.4b` (the G2 keystone + G3 sweep) build in
-> WS7 proper, AT-OR-AFTER `12.0` clears R1–R4.
+> **EXECUTION-ORDER NOTE:** `BG.W-CLOSEFIX-9SITE` is a WS7 wave **RE-HOMED to seq `0.7` in PHASE 0** (the
+> live row + status live there; `12.0` here is a no-delete BACK-POINTER). It **lands EARLY after `3.6`
+> (`BG.W-GLASS-BLUR-PEER` ships `--dock-surface-blur`, orphaning the `--glass-blur-dock` chain this carve
+> retires), BEFORE `3.5 TINT-UNIFY` / `13.1 SUFFUSE-UNIVERSAL` / `14.1 PAPER-GRAIN-REAL`** — NOT a
+> predecessor of WS1 (WS1 is file-disjoint + already landed; the over-broad "before WS1" framing is
+> corrected). It carves `ladder.css`/`shell.css`, the EXACT files WS3 re-edits, so the carve precedes WS3.
+> The DAG (in `bg-bh-execute.wf.js`) encodes `*Precond:* [STAGE-0, BG.W-GLASS-BLUR-PEER (3.6)]` + it as a
+> precond of `[3.5, 13.1, 14.1]`. `12.4a`/`12.4b` (the G2 keystone + G3 sweep) build in WS7 proper,
+> AT-OR-AFTER `0.7` clears R1–R4.
 
 | seq | wave | tranche/ws | class | status | gate | paint |
 |----:|------|-----------|:-----:|:------:|------|:-----:|
-| 12.0 | BG.W-CLOSEFIX-9SITE (G4 · **LANDS FIRST** — post-STAGE-0, pre-WS1) | BG/WS7 | H | PENDING | all 15 affected device-free gates flip GREEN in ONE atomic diff · **9 SITES not 6** — FULL RETIREMENT of the `--glass-blur-dock` chain (composite+saturate+radius+`--blur-dock` bridge across glass.css/dark-arm.css/bridges.css; dock paints via `--dock-surface-blur`→resting→8px, 0 orphan readers) + carve `ladder.css` 527→470 (grain-tail→glass/grain-overlay.css) + `shell.css` 510→459 (persistent-region tail→dock/shell-regions.css) · 3 extra FROZEN-STRING readers (dock-shrink-blur S3 · theme-style `.blur-dock` probe · InstrumentChassis.spine-variant unit + glass-cal EXPECT_RADII) · R3 gates:emit-ci regen + R4 category-card-warm→`["local","ci","release"]` · `--run full` siblings-absent /tmp PASS · dist `glass-ui.css` BYTE-IDENTICAL to HEAD (dead token already tree-shaken) · clears R1–R4 | — (grain-tail liquid-hover.spec π + ba-gestalt dock/CTA → W-REFLECT3) |
+| 12.0 | BG.W-CLOSEFIX-9SITE (G4 · **RE-HOMED to seq 0.7** — it LANDS FIRST in PHASE 0, before WS1/WS3) | BG/WS7 | H | → see 0.7 | **BACK-POINTER ONLY (no-delete trace).** The live row + status is `0.7` in PHASE 0 — this WS7-organizational entry carries a NON-status sentinel so a wave-id status-lookup resolves to the ONE authoritative `0.7` row, never two diverging rows. The wave is a WS7 close-fix that physically lands FIRST (it carves `ladder.css`/`shell.css`, the EXACT files WS3 re-edits, so the carve precedes WS3). See `0.7`. | — (see 0.7) |
 | 12.1 | BG.W-SPIKE-DELETE | BG/WS7 | H | PENDING | atomic file+gate+ratchet | — |
 | 12.2 | BG.W-JUBILANCE-DECIDE | BG/WS7 | H | PENDING | real-grep adjudicated | — |
 | 12.3 | BG.W-DEAD-GATE-SWEEP | BG/WS7 | H | PENDING | F6 gate→symbol by IMPORT | — |
 | 12.4 | BG.W-GATE-ROUTING-LIVE | BG/WS7 | H | PENDING | proof:route-navigates ["ci","release"] | — |
 | 12.4a | BG.W-GESTALT-CURSOR-PARITY (G2 · **keystone** — as-wired the 5.0.0 tag cannot fire) | BG/WS7 | H | PENDING | proof:gestalt-cursor-parity (device-free) — DERIVES the wave→surface map from the shipped `surface-closure.mjs` join (NO hand-authored `wave-surface-map.md`); `surfaceClosure(s) = collectPaintClosure(SHELL_SEED ∪ routeSeeds(s).seeds) ∩ wave.Files` (SHELL_SEED-inclusive, + `demo/main.ts`) · PARITY-A KEEP (cursor-DONE⇒roster-PASS, the BB-lie catcher) · **PARITY-B DELETED** (UNSAT mid-tranche + redundant with ba-gestalt G5 pixel-band/G7 freshness) · **PARITY-C the load-bearing net** (orphan paint files across ≥7 [P] waves) · ORPHAN-DECISION: enroll a `BG.W-SIRI-ISLAND` roster surface + a scoped accept-residual allowlist (PaperBackdrop/useDockOrientationMorph) · fence-widen `bg-paint.wf.js:22` to admit `docs/tranches/BG/audit/reflect/` so §4 reconciliation can land | — (WS12 late capture sweep, Model-B → W-REFLECT3) |
-| 12.4b | BG.W-CLOSE-SWEEP (G3) | BG/WS7 | H | PENDING | proof:close-sweep `["local"]` born-RED (anchored to R1–R4 — the 3rd born-RED-by-design gate beside ba-gestalt/ship-attestation) · `SWEEP_SET` DERIVED from a manifest `closeDisease:true` flag (8 members) + `SWEEP_SET_FAST` (7) · `--run sweep`/`--run sweep-fast` spawn-all dispatch (names ALL reds) · dual-signal `sweepVerdict` (exit-code ∧ JSON-status) · **canon-home PARENT-TRACKED** (`docs/tranches/BG/canon/close-disease-sweep.md`, OUT of the `docs/precepts` submodule so a fresh /tmp worktree sees it) · commit-hook arm `GLASS_UI_ACTIVE_TRANCHE`-env-gated (NOT hot-file-fires) · lands AT-OR-AFTER 12.0 clears R1–R4 (the HARD P-CLOSE→P-SWEEP edge) | — |
+| 12.4b | BG.W-CLOSE-SWEEP (G3) | BG/WS7 | H | PENDING | proof:close-sweep `["local"]` born-RED (anchored to R1–R4 — the 3rd born-RED-by-design gate beside ba-gestalt/ship-attestation) · `SWEEP_SET` DERIVED from a manifest `closeDisease:true` flag (8 members) + `SWEEP_SET_FAST` (7) · `--run sweep`/`--run sweep-fast` spawn-all dispatch (names ALL reds) · dual-signal `sweepVerdict` (exit-code ∧ JSON-status) · **canon-home PARENT-TRACKED** (`docs/tranches/BG/canon/close-disease-sweep.md`, OUT of the `docs/precepts` submodule so a fresh /tmp worktree sees it) · commit-hook arm `GLASS_UI_ACTIVE_TRANCHE`-env-gated (NOT hot-file-fires) · lands AT-OR-AFTER `0.7` clears R1–R4 (the HARD P-CLOSE→P-SWEEP edge) | — |
 | 12.5 | BG.W-GATE-FIELD-AURORA (G6 · amended) | BG/WS7 | H | PENDING | **proof:field-aurora-aa** (F-AA-SELFTEST + F-AA-SAMPLER + F-AA-ROSTER, `ci`+`release`) + the `[local]` F-AA-LIVE born-RED binding arm (supersedes the 3-stack `proof:field-aurora`) — the field-composited-AA arm: every text register over the recessive shell field clears WCAG AA over the COMPOSITED plate, not the page · leaf gains `pngMedianRgbStddev`+`sampleCompositeBehindText` (within-plate clamp)+`auroraCompositeAaVerdict` (value.js-FREE injected ratioFn) · consumer#2 = `compositions/gate-pattern` (the UNSOUND self-staging `/display/card` is ABSENT) · **value.js peer floor `^1.1.1` (NOT `^1.2.0`** — `^1.2.0` excludes npm-latest 1.1.1 + reds proof:peer-conformance; reconcile the 5 stale `^1.2.0` strings in the spike) · F2 dark-AA bound to the DUAL-engine on-device C18 (a CPU-transcribed absolute number cannot reproduce per-engine GL divergence) · the EYEBROW_LIGHT_POLISH lift is the REAL WS3 wave `3.12`, not prose | — (F-AA-LIVE dual-engine `_anchor` re-shoot at `ebf6e45b` → W-REFLECT3) |
 | 12.6 | BG.W-GATE-PREVIEWS-RENDER | BG/WS7 | P | PENDING | /substrates live-preview render | — |
 | 12.7 | BG.W-GATE-UNIFORM-BLUR | BG/WS7 | H | PENDING | cross-surface uniform-blur peer | — |
@@ -254,7 +260,7 @@ of built work VERIFIED, ZERO restart candidates, the DAG + build order are KEEP.
 | seq | wave | tranche/ws | class | status | gate | paint |
 |----:|------|-----------|:-----:|:------:|------|:-----:|
 | 14.0 | GU-1 token (--glass-key-direction, value-only) | BG/WS9 | H | PENDING | additive/value-only | — |
-| 14.1 | BG.W-PAPER-GRAIN-REAL | BG/WS9 | P | PENDING | proof:paper-grain (warm-hue floor + azimuth==token) | — |
+| 14.1 | BG.W-PAPER-GRAIN-REAL | BG/WS9 | P | PENDING | proof:paper-grain (warm-hue floor + azimuth==token) · **OWNS the D-2 demo-local warm-substrate hand-off (G5 PROTECTOR, MR-2/MR-4 build-time-landing):** the LX.2 demo-warm field behind paper-grain must NOT double-warm under the re-engineered PAPER grain — retire-or-keep-with-rationale, the warm-hue floor `≥0.020` gate-locks no-revert, and the no-double-warm CEILING is enforced by the NAMED `proof:ba-gestalt` paper-band verdict (paint IS the gate for a paint-gated wave — accept-residual, named here so it is not lost in the late-capture sweep). The GLASS `::after` grain (G4 carve) and the PAPER `--paper-grain-tooth` (this wave) are DISJOINT systems | — |
 | 14.2 | BG.W-PAPER-SUFFUSE | BG/WS9 | P | PENDING | proof:paper-grain suffuse arm | — |
 | 14.3 | BG.W-HANDMARK-PERFECT | BG/WS9 | P | PENDING | proof:handmark + proof:handmark-audit | — |
 | 14.4 | BG.W-PENCIL-BOIL-DEEPEN | BG/WS9 | P | PENDING | proof:handmark boil-park arm | — |
@@ -339,7 +345,7 @@ PAINT-PENDING: 0 · DONE: 2 · BLOCKED: 0. Frontier = seq 0.1 `BG.W-PAINT-IS-THE
 reset PENDING; rebuild). [batch: 0.1 PENDING (non-authoring paint FAIL) · 0.4 DONE 3fce612a · 0.5 DONE 6105ed6f]
 
 > **RESPEC fold (post-`AMENDED-WAVE-PLAN.md`).** The 4 NEW gap-fix waves are folded into the roster (BG-active
-> ≈110→≈114): `12.0 BG.W-CLOSEFIX-9SITE` (G4, lands FIRST) · `12.4a BG.W-GESTALT-CURSOR-PARITY` (G2 keystone) ·
+> ≈110→≈114): `0.7 BG.W-CLOSEFIX-9SITE` (G4, re-homed from `12.0`, lands FIRST) · `12.4a BG.W-GESTALT-CURSOR-PARITY` (G2 keystone) ·
 > `12.4b BG.W-CLOSE-SWEEP` (G3) · `3.12 BG.W-EYEBROW-LIGHT-POLISH` (G6). G6-gate (`12.5`), G1 (`13.2`/`13.3`/`12.8`),
 > G7 (`6.3`/`6.7`/`18.11`), and G5 (`18.10`/`19.2`) AMEND existing rows in place. The live-fix DONE rows D-1/D-2/D-3
 > are recorded at PHASE LX. (Boot-state counts above are the frozen boot snapshot; current per-row status is the
