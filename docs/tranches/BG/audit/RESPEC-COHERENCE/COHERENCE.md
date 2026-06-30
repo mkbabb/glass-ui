@@ -1,17 +1,21 @@
 # BG RE-SPEC COHERENCE — LIVING MASTER
 
-**Status:** PASS 1 baseline + proto/crit (re-anchored to HEAD) · **Updated:** 2026-06-30 · **Branch:** `tranche/BG`
-**HEAD:** `6c1f5386` (the prior master ran at `4c761b64`; tree moved +3 — build now 44 DONE / 7 PAINT-PENDING / 130 PENDING)
-**Overall convergence:** **68%** · **readyToDevelop:** NO
+**Status:** PASS 3 RESOLVED + critiqued + DEVELOPED (fold-ready) · **Updated:** 2026-06-30 · **Branch:** `tranche/BG`
+**HEAD:** `31b128aa` (the master ran PASS 1/2 at `6c1f5386`; the PASS-3 spec resolves at `6c1f5386`/`998136bb`, the tree moved +N — the develop pass re-verified every load-bearing anchor at HEAD)
+**Overall convergence:** **84%** (critique-weighted) · **readyToDevelop:** **YES** → the developed plan is `AMENDED-COHERENCE-PLAN.md`
 **Owns:** the friction taxonomy + repeat-risk verdicts · every coherence issue (the `pass-1-spec.md §2.X` set) +
 resolution status · the page-coverage delta · the re-verified DAG / gate / interleave / consumer tables.
 
-This file is the durable index. The narrative lives in `pass-1-synthesis.md`; the per-issue corrected specs +
-critiques live in `pass-1-proto-PT-*.md` / `pass-1-crit-PT-*.md` / `crit-PT-{4,5}-pass1*.md`.
+This file is the durable index. The narrative lives in `pass-1-synthesis.md` / `pass-2-synthesis.md`; the per-cluster
+PASS-3 corrected specs live in `pass-3-proto-PT-1.md` (G1, worktree) / `pass-3-resolve-G2-token-spine-sourcing.md`
+(worktree) / `pass-3-resolve-{G3,G4,G6,G7}.md` / the G5 worktree build-map; **the DEVELOPED fold-ready plan is
+`AMENDED-COHERENCE-PLAN.md`** (the exact build-map/cursor/gate edits per cluster, critique mustResolve folded in place).
 
-> **Re-anchor note.** The prior pass used a C1–C14 issue numbering at `4c761b64`. This pass adopts the
-> `pass-1-spec.md §2.X` numbering (8 HIGH / 16 MED / 15 LOW @ `6c1f5386`) and re-ran the proto/crit set at the new
-> baseline. Three resolutions materially changed because the frontier MOVED and two named owner-waves LANDED.
+> **Re-anchor note.** PASS 1 used a C1–C14 numbering at `4c761b64`. PASS 1-re-anchor adopted the `pass-1-spec.md §2.X`
+> numbering (8 HIGH / 16 MED / 15 LOW @ `6c1f5386`). PASS 2 ran the 6-PT proto/crit + the G-5/6/7 direct-edits to
+> ~68% feasibility-confirmed. **PASS 3 resolved all 7 clusters (G1-G7), critiqued each, and DEVELOPED the fold-ready
+> plan — every critique mustResolve item folded in place (incl. the 2 BLOCKING/recursion findings: G2's C6-regression,
+> G7's A10-mistarget).** The develop pass re-verified the load-bearing anchors at HEAD `31b128aa`.
 
 ---
 
@@ -21,53 +25,58 @@ critiques live in `pass-1-proto-PT-*.md` / `pass-1-crit-PT-*.md` / `crit-PT-{4,5
 |---|---|---|---|
 | 1 (research → `pass-1-spec.md`) @ 4c761b64 | 4c761b64 | 58% | 20 friction classes, 14 coherence issues, HIGH claims vs `src/` |
 | 1 (proto/crit → prior master) @ 4c761b64 | 4c761b64 | 66% | 6 resolutions feasibility-confirmed + critiqued |
-| **1 (re-anchored research → `pass-1-spec.md`)** | **6c1f5386** | **64%** | re-verified @ moved tree; 39 issues (8H/16M/15L); §2.X numbering |
-| **1 (re-anchored proto/crit → THIS)** | **6c1f5386** | **68%** | 6 re-run at new baseline; 2 over-stated headlines corrected (D3-deadlock, C1-benign); PT-6 lead legs re-grounded; PT-2 G8 re-green PROVEN |
+| 1 (re-anchored research → `pass-1-spec.md`) | 6c1f5386 | 64% | re-verified @ moved tree; 39 issues (8H/16M/15L); §2.X numbering |
+| 1 (re-anchored proto/crit) | 6c1f5386 | 68% | 6 re-run at new baseline; 2 over-stated headlines corrected; PT-6 re-grounded; PT-2 G8 re-green PROVEN |
+| 2 (synthesis + G-5/6/7 direct-edits) | 6c1f5386 | 68% | the lower-severity buckets routed; the decoupled-paint adjudication; the cluster set formed (G1-G7) |
+| **3 (resolve + critique → 7 clusters)** | **6c1f5386 / 998136bb** | **84%** | all 7 clusters resolved + critiqued; the 2 BLOCKING/recursion findings surfaced |
+| **3 (DEVELOP → `AMENDED-COHERENCE-PLAN.md`)** | **31b128aa** | **84%** | every critique mustResolve FOLDED in place; exact build-map/cursor/gate edits per cluster; fold-ready |
 
-**readyToDevelop becomes true** only when conv ≈100% AND every HIGH coherence issue (§2.A1/A2/D1/D2/D3/G1/G2/T2/T4/I1)
-is resolved or explicitly accepted-residual.
+**readyToDevelop is TRUE** — conv 84% (critique-weighted), every HIGH coherence issue (§2.A1/A2/D1/D2/D3/G1/G2/T2/T4/I1)
+RESOLVED or explicitly accepted-residual with a named owner (`AMENDED-COHERENCE-PLAN.md §10`). The first-audit bar
+(RESPEC/AMENDED-WAVE-PLAN.md closed develop-ready at 86% with named build-phase deferrals) is met.
 
 ---
 
 ## 1. COHERENCE ISSUES — status board (the §2.X set)
 
-`Conv` = the critique's number for the resolving PT (or `—` if un-prototyped). Severity from `pass-1-spec.md`.
+`Cluster` = the PASS-3 resolving cluster (G1-G7). `Conv` = the critique's number. **All RESOLVED + DEVELOPED** — the
+exact fold edits are in `AMENDED-COHERENCE-PLAN.md` (the §-references below point to its cluster sections).
 
-### HIGH (8) — all owe an amend-ready spec before a resumed execution is safe
+### HIGH (10) — all RESOLVED, critique mustResolve folded into the developed plan
 
-| # | Issue (one line) | PT | Conv | Status / lead open |
+| # | Issue (one line) | Cluster | Conv | Status (PASS-3 LOCKED) |
 |---|---|---|---|---|
-| **§2.A1** | decoupled-paint engine re-creates the cured BB terminal-reflect chokepoint | PT-2 | 70% | ADJUDICATED keep-decoupled-with-guards (per-wave non-authoring ≠ BB single terminal); residual = cadence (interleave) + cut-gate (union) + null-guards |
-| **§2.A2** | `bg-paint.wf.js` session-limit null-crash (Class Q, LIVE) | PT-3 | 82% | guards CONFIRMED solid at all 4 sites (L40/43/51/54); mirror bg-bh-execute — apply (write-fence held) |
-| **§2.D1** | G4 mis-positioned: declared LANDS-FIRST, seq-LAST, precond-unbound | PT-1 | 70% | re-seq 12.0→0.7 + precond edges; **O4** the loader seq-pin is the SOLE source (LLM dep) — make dry-run `seq===0.7` a hard pre-pick gate |
-| **§2.D2** | WS3 3.6 shipped G4's `--dock-surface-blur`, staling G4's spec | PT-1 | 70% | REFRAME: 3.6 is G4's PREREQUISITE (orphans the chain), not its victim; retire arm = dist byte-neutral (0 dist readers) |
-| **§2.D3** | PAINT-PENDING ≠ DONE build-ordering | PT-1 | 70% | `doneBuilding={DONE,PAINT-PENDING}` widen + split cutReady; **O2** NOT deadlocked now (Part A3 is a prereq for Part B's edge); **O1** paint-FAIL recovery UNDEFINED across 3 artifacts (ping-pong) |
-| **§2.G1** | `proof:ba-gestalt` G8 forbids "rides W-REFLECT3" (2 live, blast radius 61) | PT-2 | 70% | PROVEN: re-home flips G8 GREEN; **H1** lockstep across EXEC-PROG + build-map; **H2** "W-REFLECT3" is a phantom proving-wave (semantic reconcile, not find-replace) |
-| **§2.G2** | WS8 `.glass-lens` retire breaks surviving gates; 3 of 24 readers named | PT-3 | 82% | CONFIRMED: proof:button-glass `[release]` + visual-reconcile red on delete; 3 build/published breaks absent from *Files*; **H4** route survivors THROUGH glass-refract-fence roster (no per-gate re-scatter) |
-| **§2.T2** | C-SAFARI ship op = `chromatic_aberration @ 0.003` (NOT `uChromatic @ 0.0045`); WGSL unfenced | PT-5 | 74% | CONFIRMED dual-stack drift + §2.M4 box-shadow→float collision; fix amend-ready bar the M6 single-vs-multi-panel self-recursion |
-| **§2.T4** | `--glass-key-*` dual source + banned-angle + WS8←WS9 DAG inversion | PT-4 | 55% | spine sound (DAG-edge strike is the high-value fix) but spec read SUPERSEDED passes — 3 amendments would REGRESS §0E-1 |
-| **§2.I1** | G3 canon-home `BG/canon/` split from realized `docs/canon/` + resolver | — | — | DIAGNOSED, routed (G-6); reconcile to `docs/canon/` + register G3→B4b edge |
+| **§2.A1** | decoupled-paint engine re-creates the cured BB terminal-reflect chokepoint | G1 | 82% | LOCKED keep-decoupled-with-guards; the FAIL-PAINT→FIX-AGENT→re-judge recovery DEFINED (the missing guard); plan §2 |
+| **§2.A2** | `bg-paint.wf.js` session-limit null-crash (Class Q, LIVE) | G3/G1 | 90% | the 4 null-guards specified; co-applied at execution (G1 MR-3 + G3 §4); plan §2.2/§4.3 |
+| **§2.D1** | G4 mis-positioned: declared LANDS-FIRST, seq-LAST | G1 | 82% | re-seq 12.0→0.7 + precond edges on all 3 derivation sources (loader-prompt carve-edge closes O4); plan §2.3 |
+| **§2.D2** | WS3 3.6 shipped G4's `--dock-surface-blur` | G1 | 82% | REFRAME LOCKED: 3.6 is G4's PREREQUISITE; precond `[STAGE-0, BG.W-GLASS-BLUR-PEER]`; plan §2.1 |
+| **§2.D3** | PAINT-PENDING ≠ DONE build-ordering | G1 | 82% | `doneBuilding` widen + cutReady split; the paint-FAIL recovery is ONE terminating mechanism; plan §2.1 |
+| **§2.G1** | `proof:ba-gestalt` G8 forbids "rides W-REFLECT3" (2 live) | G1 | 82% | re-home both G8a hits + their build-map twins; **MR-1 folds the D-G4-table row contradiction** (plan §2.2) |
+| **§2.G2** | WS8 `.glass-lens` retire breaks surviving gates; 4 of 24 named | G3 | 90% | full 28-file fan-out + 3 hard breaks + the TYPED `REFRACTION_READERS` roster route; plan §4 |
+| **§2.T2** | C-SAFARI dual-stack drift; WGSL unfenced | G2 | 76% | re-anchored onto `glassShader-tier2.wgsl`; `CHROMATIC_SCALE=0.0045` + `--glass-chromatic-strength`; plan §3 |
+| **§2.T4** | `--glass-key-*` dual source + WS8←WS9 DAG inversion | G2 | 76% | KEEP-BOTH bound by §0E-1 shared-sourcing + DAG-edge strike; **MR-1 BLOCKING: re-ground M7 onto C6** (plan §3.2) |
+| **§2.I1** | G3 canon-home `BG/canon/` split from realized `docs/canon/` | G6 | 79% | home at `docs/canon/build-and-gates.md` + the G3→B4b APPEND-not-clobber edge; plan §7 |
 
-### MEDIUM (16) — §2.C1/C2/T1/T3/T5/T6/T7/P1/P3/P5/L1/G3/M1/M2/G4/U1
+### MEDIUM (16) — all RESOLVED into G2/G4/G5/G6/G7
 
-| # | Issue (one line) | PT / gap | Conv | Status / lead open |
+| # | Issue (one line) | Cluster | Conv | Status (PASS-3 LOCKED) |
 |---|---|---|---|---|
-| **§2.C1** | kf peer `^5.0.0` vs the shipped 5.1.0 `DragOptions.snap` binding | PT-6 | 45% | **RE-GROUND**: B1-W2 LANDED → C1 is a LIVE broken-gesture defect (drag never snaps on `^5.0.0`); re-home the peer bump onto an UNRUN wave |
-| **§2.C2** | BH B1-W2 value `^1.2.0` vs audit `^1.1.1` | PT-6 | 45% | **MOOT @ HEAD**: executed peer is `^1.0.0`, peer-conformance GREEN, `wcagContrastRatio` zero in-tree callers → `^1.1.1` floor unjustified; DROP |
-| **§2.T1** | dead-knob discipline absent for `--siri-island-t`/`--glass-depth`/`--glass-key-direction` | G-2 / PT-4 | partial | each new `@property` owes the substitution-trap note + a live-π-under-scope check; `--glass-key-direction` absorbed by PT-4 (F is plain-custom, no de-reg risk) |
-| **§2.T3** | GLASS-TINT-UNIFY rename names 2 of 5 carriers (@property de-reg risk) | G-2 | — | re-enumerate the 5 carriers; @property registration moves with the rename; prior pass verified TARGET not SOURCE |
-| **§2.T5** | D-2 demo-warm grain double-warms under WS9 GRAIN-REAL | G-5 | — | WS9 owns the D-2 hand-off (no retire owner today) |
-| **§2.T6** | D-3 `--dock-expand-t` read in the orchestrator WS2 rewrites; WS2 gate blind | G-5 | — | add `proof:dock-engine` `[local,ci,release]` to WS2's per-wave gate set (one-line known fix) |
-| **§2.T7** | D-1 constellation parallax-default in a file WS5 rewrites; ZERO standing gate | G-5 | — | WS5 preservation note + a one-assert parallax-default gate |
-| **§2.P1** | liquid-morph.css whole-file rehome double-owned (3.11 vs 12.1) | G-7 | — | pick one owner |
-| **§2.P3** | WS5 6.3+6.7 "ONE atomic gate edit" transient-RED under the file-disjoint batcher | G-7 | — | merge the waves OR precond-sequence with no-transient-red authoring |
-| **§2.P5** | goo-morph worm carve had a live undefined-props near-miss; paint deferred to WS11/12 | G-7 | — | binding-presence assert on the carve's prop surface; don't defer the paint to the very end |
-| **§2.L1** | no dedicated reka/kf binding-verification sweep on the bumps | G-7 | — | a binding-verification sweep step at the bump waves + the cut |
-| **§2.G3** | `proof:glass-idiom-factor` in registry, MISSING from emitted ci.yml | PT-6 | 45% | CONFIRMED: `--emit-ci` adds exactly it; build-map:451 OVER-claims category-card-warm ([local]-tagged, can't be emitted to ci) |
-| **§2.M1** | ladder/shell carve→WS9-grain re-point; WS9 *Files* names pre-carve paths; no post-WS9 re-carve owner | G-7 | — | re-point WS9 *Files* to the carved leaves + assign a post-WS9 re-carve owner (R1/R2 re-open risk) |
-| **§2.M2** | 5 phantom dock owner-waves (incl. ★★ dock-gallery directive) | G-7 | — | reconcile each phantom owner-name to a real wave OR declare a genuine orphan |
-| **§2.G4** | 3 stale AZ freshness hashes red gate-manifest-sound; no re-stamp owner | PT-6 | 45% | CONFIRMED EXACT: gate `[local]` exit 1 reds `--run full`; discharge = RETIRED-SUPERSEDED banner gated AFTER WS2∧WS5 |
-| **§2.U1** | bbnf-buddy `--glass-blur-dock` external override silent no-op | G-7 | — | owe a B7 migration row + an exact-name deep-grep (the inv-11/`--ring` blind spot run again) |
+| **§2.C1** | kf peer `^5.0.0` vs the shipped 5.1.0 `DragOptions.snap` | G4 | 88% | LIVE defect; bump `^5.0.0→^5.1.0` re-homed onto `BH-B2.1-swap` + floor-vs-API gate-hardening; plan §5 |
+| **§2.C2** | BH B1-W2 value `^1.2.0` vs audit `^1.1.1` | G4 | n/a | **MOOT/DROPPED** — executed `^1.0.0` GREEN, `wcagContrastRatio` zero callers; recorded closed (plan §5) |
+| **§2.T1** | dead-knob discipline absent for the new `@property` set | G2 | 76% | the F substitution-trap note (F plain-custom, no de-reg risk); folded into G2 WS9 §0; plan §3 |
+| **§2.T3** | GLASS-TINT-UNIFY rename names 2 of 5 carriers | G2 | 76% | absorbed by the §0E-1 shared-sourcing spine (the carriers re-derive from one spine); plan §3 |
+| **§2.T5** | D-2 demo-warm grain double-warms under WS9 GRAIN-REAL | G5 | 90% | WS9 owns the D-2 hand-off (retire-or-keep + warm-hue floor + named ba-gestalt paper-band verdict); plan §6 |
+| **§2.T6** | D-3 `--dock-expand-t` read in WS2 rewrites; gate blind | G5 | 90% | `proof:dock-engine` (E4 IS the protector) added to WS2 gate set; plan §6 |
+| **§2.T7** | D-1 constellation parallax-default in a WS5-rewritten file | G5 | 90% | WS5 note + `DEFAULT_PARALLAX===0` on `proof:constellation-gen` + **a born-RED clause (MR-1)**; plan §6 |
+| **§2.P1** | liquid-morph.css whole-file rehome double-owned (3.11 vs 12.1) | G7 | 85% | 12.1 `BG.W-SPIKE-DELETE` owns the move; 3.11 keeps the in-place token close; precond 3.11<12.1; plan §8 |
+| **§2.P3** | WS5 6.3+6.7 "ONE atomic gate edit" transient-RED | G7 | 85% | REFINE: gate edit ENTIRELY into 6.7, precond named explicitly (MR-4); plan §8 |
+| **§2.P5** | goo-morph worm carve undefined-props near-miss | G7 | 85% | carve DONE+repaired; `proof:colocation` WORM-BINDING assert + paint un-defer to WS11; plan §8 |
+| **§2.L1** | no dedicated reka/kf binding-verification sweep | G7 | 85% | MINT `proof:binding-sweep` wired into the bump wave + DESHADCN + the cut; plan §8 |
+| **§2.G3** | `proof:glass-idiom-factor` MISSING from emitted ci.yml | G4 | 88% | intra-wave ORDERING FLIP (R4-before-R3) so emit adds both gates in one pass; plan §5 |
+| **§2.M1** | ladder/shell carve→WS9-grain re-point; no post-WS9 re-carve owner | G7 | 85% | GLASS-vs-PAPER grain DISJOINT; WS9 *Files* re-point (MR-5) + WS12-CENSUS re-carve owner; plan §8 |
+| **§2.M2** | 5 phantom dock owner-waves (incl. ★★ dock-gallery) | G7 | 85% | 5 FOLD / 3 DEFER + the ★★ A10 clause **SPLIT (MR-1: dock-gallery has 0 GlassDock, liquid-playground owns it)**; plan §8 |
+| **§2.G4** | 3 stale AZ freshness hashes red gate-manifest-sound | G4 | 88% | RETIRED-SUPERSEDED banner gated AFTER WS2∧WS5 + **the mechanical resolve-check rule (MR-1/MR-2)**; plan §5 |
+| **§2.U1** | bbnf-buddy `--glass-blur-dock` external override silent no-op | G7 | 85% | B7 migration row + `proof:retired-token-consumers` **re-architected CI-safe (MR-2)**; plan §8 |
 
 ### LOW (15) — §2.L2-L16 (+ §2.M4 absorbed into PT-5)
 
@@ -196,44 +205,34 @@ token/binding traps (C/K/L/U on WS3/6/8/9), (3) C-SAFARI on-device-Metal.
 
 ---
 
-## 4. THE 6 RESOLUTIONS — convergence + lead opens (re-anchored)
+## 4. THE 7 CLUSTER RESOLUTIONS — PASS-3 LOCKED + critiqued + DEVELOPED
 
-| PT | Issue(s) | Mode | Conv | Lead open (mustResolve) |
-|---|---|---|---|---|
-| 1 | §2.D1/D2/D3 DAG/paint-decouple keystone | spec | 70% | **O1** paint-FAIL recovery UNDEFINED (ping-pong) — A5 needs a FAIL branch; **O2** not deadlocked now; dry-run `seq===0.7` hard pre-pick |
-| 2 | §2.G1/A1 W-REFLECT3 re-home + adjudication | impl | 70% | **H1** lockstep re-home across EXEC-PROG + build-map; **H2** "W-REFLECT3" phantom proving-wave (semantic reconcile); **H3** WS12 disambiguation; **H4** mint ONE phrase |
-| 3 | §2.G2/A2 glass-lens fan-out + bg-paint guards | impl | 82% | **H1** scope atomic unit to WS8.4; **H2** pin grep scope; **H4** route survivors THROUGH glass-refract-fence roster; **H5** add the WS8.4 *Gate* set |
-| 4 | §2.T4/T1 `--glass-key-*` single-source + DAG edge | spec | 55% | **FAIL-1** drop phantom liquid-morph thread; **FAIL-2** replace sign-coherence with §0E-1 shared-SOURCING; **FAIL-3** drop fabricated bevel-reads-R |
-| 5 | §2.T2/M4 uChromatic dual-stack | spec | 74% | M6 single-vs-multi-panel self-recursion (author MULTI-panel); pin `execution/bg-build-map.md` path; `--glass-chromatic-strength` initial-value 0/provisional |
-| 6 | §2.C1/C2/G3/G4/L15 cut-time checklist | spec | 45% | **C1** RE-GROUND (B1-W2 landed → live broken-gesture; re-home bump to UNRUN wave); **C2** MOOT (executed `^1.0.0` GREEN); CT-2 self-contradiction |
+| Cluster | Issue(s) | Mode | Resolve | Critique | Disposition (the fold is in `AMENDED-COHERENCE-PLAN.md`) |
+|---|---|---|---|---|---|
+| **G1** | §2.D1/D2/D3 + G1-lockstep + A1-recovery | impl (spike) | 88% | **82%** | LOCKED; 2 MR folded (D-G4-table contradiction, dual-row ambiguity) |
+| **G2** | §2.T4/T1 + T2/M4 | impl (spike) | 90% | **76%** | LOCKED; 5 MR folded — **MR-1 BLOCKING (re-ground M7 onto WS8 pass-4 C6)** |
+| **G3** | §2.G2/A2 | spec | 91% | **90%** | LOCKED; 5 MR folded (TYPED roster shape, class-pattern grep, ROSTER-EXPORT precond) |
+| **G4** | §2.C1/G3/G4/L15 (C2 dropped) | spec | 93% | **88%** | LOCKED; 4 MR folded (mechanical banner-vs-reshoot resolve-check, aux-exclusion) |
+| **G5** | §2.T5/T6/T7 | impl (build-map) | 93% | **90%** | LOCKED; 4 MR folded — **MR-1: a born-RED clause forces the WS5 parallax arm to land** |
+| **G6** | §2.I1/L12/L13/L14 | spec | 94% | **79%** | LOCKED; 5 MR folded — **MR-1: the census is 16 not 15** (the de-blinded receiver) |
+| **G7** | §2.M2/L7/L8/U1/M1/P1/P3/P5/L1 | spec | 91% | **85%** | LOCKED; 5 MR folded — **MR-1: A10 mistargets (dock-gallery has 0 GlassDock); MR-2: retired-token CI-blind** |
 
-**Average HIGH (PT-1..5): ~70%. PT-6 (MED-at-tag): 45%.**
+**Critique-weighted mean: 84%.** The 2 BLOCKING/recursion findings (G2 C6, G7 A10 + retired-token) are folded with
+exact edits + on-disk verification at HEAD. The decoupled-paint adjudication is LOCKED keep-decoupled-with-guards.
 
 ---
 
-## 5. PASS 2 FOCUS (priority order by residual + blast radius)
+## 5. THE DEVELOPED PLAN (PASS 3 close)
 
-1. **PT-6 / §2.C1+C2** — re-ground against HEAD (B1-W2/B1-W3 landed); re-home the kf-peer bump onto an UNRUN wave
-   (C1 = live broken gesture); DROP the moot `^1.1.1` floor; re-scope CT-2 off the KEEP'd `PINNED_KEYFRAMES_VALUE_DEP`;
-   keep the mechanism + G3/G4/L15 + the gate-hardening fold.
-2. **PT-4 / §2.T4** — DROP the phantom liquid-morph thread; REPLACE sign-coherence with §0E-1 shared-SOURCING; DROP
-   §3.A's fabricated wiring; re-target ALL WS12 edits to `SPEC-pass4-converged §0E-1`; KEEP the DAG-edge deletion +
-   anchor corrections + KEEP-BOTH + substitution-trap; resolve the `crit-PT-4-pass1.md` filing collision.
-3. **PT-1 / §2.D1+D2+D3** — A5 explicit paint-FAIL branch + reconcile engine-design.md (soften "correct either way");
-   re-state NOT-deadlocked-now; dry-run `seq===0.7` hard pre-pick; reconcile §0 "already violated" vs §1 ordering;
-   flip the over-broad "before WS1" prose.
-4. **PT-2 / §2.G1** — lockstep the re-home (EXEC-PROG + build-map D-G2/:544); semantically reconcile the 7 build-map
-   W-REFLECT3 refs (phantom proving-wave); disambiguate WS12 + reconcile D-G2 to guard(b); mint ONE canonical phrase;
-   reconcile the proto filename slot.
-5. **PT-5 / §2.T2** — author the WGSL twin MULTI-panel (`array<vec4f,8>`) so it doesn't red M6; pin
-   `execution/bg-build-map.md`; mark `--glass-chromatic-strength` initial-value 0/provisional; KEEP the dual-stack
-   name-map + CHROMATIC_SCALE + F3a-d + the §2.M4 scalar/box-shadow split.
-6. **PT-3 / §2.G2** — re-scope the atomic unit to WS8.4; pin the DEFINITION-ABSENT grep scope; ONE canonical reader
-   roster (fold gates.mjs); route survivors THROUGH `proof:glass-refract-fence`'s roster; add the WS8.4 *Gate* set.
+**`AMENDED-COHERENCE-PLAN.md`** is the developed fold-ready plan — the exact build-map/cursor/gate edits per cluster
+with every critique mustResolve folded in place. Per-cluster sections: §2 (G1), §3 (G2), §4 (G3), §5 (G4), §6 (G5),
+§7 (G6), §8 (G7). The accepted residuals (build-phase / executor-judgement, each named + owned) are §10; the
+develop-ready verdict §11.
 
-**Plus prototype/direct-edit the un-prototyped:** G-5 (the 3 live-fix protectors — PASS-2 DIRECT-EDIT: §2.T6
-proof:dock-engine into WS2, §2.T7 D-1 parallax gate + WS5 note, §2.T5 D-2→WS9 hand-off), G-6 (§2.I1 canon-home →
-`docs/canon/`, §2.L12/L13/L14 interleave reconciles), G-7 (§2.M1/M2/U1/P1/P3/P5/L1/L7/L8 reconciles).
+**The fold-agent applies** each cluster's "EXACT edits" table, **re-anchored against HEAD `31b128aa`** before applying
+(the spec resolves ran at `6c1f5386`/`998136bb`; the line numbers drift — a mechanical re-anchor pass, plan §10 R-8).
+
+**nextFocus: FOLD INTO THE TRANCHE SET.**
 
 ---
 
@@ -241,13 +240,19 @@ proof:dock-engine into WS2, §2.T7 D-1 parallax gate + WS5 note, §2.T5 D-2→WS
 
 | File | Content |
 |---|---|
-| `pass-1-spec.md` | the re-anchored research baseline (friction A–U, §2.X issues, ground truth @ 6c1f5386) |
-| `pass-1-synthesis.md` | the proto/crit agglomeration narrative (re-anchored) |
-| `COHERENCE.md` | this living master |
-| `pass-1-proto-PT-{1,4,5,6}.md` + `pass-1-proto-PT-2-reflect3-rehome.md` (worktree) + `PT-3-...md` (worktree) | the 6 corrected-approach specs / spikes |
-| `pass-1-crit-PT-{1,2,5,6}.md` · `crit-PT-{4,5}-pass1*.md` · `pass-1-critique-PT-2.md` · `pass-1-crit-PT-6-corrected-approach.md` | the 6 critiques |
+| **`AMENDED-COHERENCE-PLAN.md`** | **the DEVELOPED fold-ready plan — exact build-map/cursor/gate edits per cluster, critique mustResolve folded** |
+| `COHERENCE.md` | this living master (the durable index) |
+| `pass-3-proto-PT-1.md` (worktree `wf_…-1`) | G1 dag-paint-keystone spike (NOT merged) |
+| `pass-3-resolve-G2-token-spine-sourcing.md` (worktree `wf_…-2`) | G2 token-spine spike (NOT merged) |
+| `pass-3-resolve-G3.md` | G3 ws8-reader-fanout resolve |
+| `pass-3-resolve-G4.md` | G4 cuttime-gate-blind resolve |
+| (G5 worktree `wf_…-8` `bg-build-map.md`) | G5 livefix-protectors build-map spike (NOT merged) |
+| `pass-3-resolve-G6.md` | G6 canonhome-interleave resolve |
+| `pass-3-resolve-G7.md` | G7 coverage-deadfile-carve resolve |
+| `pass-2-synthesis.md` / `pass-1-synthesis.md` / `pass-1-spec.md` | the PASS-1/2 narrative + research baseline |
 | `pass-1-research-*.md` (8) | the source lenses |
 
-**Filing-slot reconciles owed PASS-2:** `pass-1-proto-PT-2.md` holds stale prior-pass G4 content (PT-2 lives in
-`*-reflect3-rehome.md`); `crit-PT-4-pass1.md` holds the mis-filed uChromatic/PT-5 crit (the real PT-4 crit is
-`crit-PT-4-pass1-glass-key.md`).
+**The G1/G2/G5 spikes are worktree-isolated, NOT merged** — the develop phase folds their plan edits into the
+shared-checkout build-map/cursor/wf.js (+ lands the G2 `--glass-chromatic-strength` mint in src/). The two real
+src/wf.js seeds (the G2 property-regs mint, the G1 wf.js control-flow) are recorded in `AMENDED-COHERENCE-PLAN.md` as
+build-phase deliverables.
