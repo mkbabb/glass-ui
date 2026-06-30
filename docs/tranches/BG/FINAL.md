@@ -449,3 +449,128 @@ is empty) — the literal frontier the build phase opens against.
 - **The cardinal laws** (binding, re-asserted every round): NO quick solutions / NO workarounds (gestalt
   first-principles, fix at the ROOT); NO legacy code (clean breaks, no aliases/shims/dual-paths); KISS +
   DRY + DEFT integration; presets-in-consumers; warm/weighty/liquid iOS-27 identity (Chrome AND Safari).
+
+---
+
+## 10 · RE-SPEC RECONCILIATION (2026-06-30) — the develop-ready plan re-grounded on built state
+
+This section APPENDS the re-spec outcome to the binding lock document — it does NOT supersede §1–9 (the
+master roster, defect map, and sequencing all KEEP). The re-spec re-checked the AS-BUILT state on disk
+(EXEC underway on `tranche/BG`, HEAD `6369ad6e`, pkg 4.2.0 → cut 5.0.0) rather than on report faith, and
+DEVELOPED the close-machine gaps the running build surfaced into executable waves. The authoritative
+source is `audit/RESPEC/AMENDED-WAVE-PLAN.md` (the executable plan); the living master is
+`audit/RESPEC/RESPEC.md`. **Blended convergence 72% → 86% · readyToDevelop TRUE → EXECUTE THE AMENDED PLAN.**
+
+### 10.1 · The verdict (the re-grounded conclusion)
+
+- **~93% of built work is VERIFIED. ZERO restart candidates. The DAG + build order are KEEP** —
+  `WS1 → WS3 → WS2 → WS5 → WS6 → WS4 → WS7 → WS8 → WS9 → WS10 → WS11 → WS12 → BH` (the §8 order
+  unchanged, BH restructure tail appended, `BG.W-CUT` fires LAST). The cursor is honest at the row level;
+  no wave clobbered an earlier deliverable; no gate was weakened to pass; 8 audit lenses concur.
+- **The user's low confidence was the close machine, NOT the design** — the three doubt-targets are
+  (1) the close battery (`--run full` never run siblings-absent at a real close), (2) the `proof:ba-gestalt`
+  keystone (the cursor↔roster joinery never built), and (3) the field-aurora AA proof (device-free-green
+  while live 1.04:1). All three are close-VERIFICATION gaps, not bad primitives. The honest verdict from
+  §1 holds: 4.2.0 is **assembly- and verification-bound, not primitive-bound.**
+- **The tag CANNOT fire as wired today** — `proof:ba-gestalt` is 0/10, four `[ci,release]` close-reds are
+  live (R1–R4), and the §4 roster reconciliation has never run. The 7 gap waves below are exactly what
+  unblocks the tag; nothing else does.
+
+### 10.2 · The 4 close reds + the 7 gap waves that unblock the tag
+
+**The 4 confirmed `--run full` close reds (R1–R4) — the SAME disease, NEW artifacts vs the cured 12**
+(the SYNTH fix-wave `ea4682c0` cured 12 stale reds; WS3/WS4 re-seeded 4 of the same class):
+
+| # | Gate | Evidence (re-verified on disk) | Root |
+|---|------|--------------------------------|------|
+| R1 | `proof:no-god-module` | `ladder.css`=**527L**, `shell.css`=**510L** (both >500; neither in the live **16**-entry RATCHET — `RATCHET==∅` is doctrine, not a live gate) | 6ec81de + cd9ce46 |
+| R2 | `proof:no-dead-token` | `--glass-blur-dock` = **ZERO readers** (tip of a 2-level dead pair + an N+2 dead chain kept alive only by the `--blur-` exemption) | cd9ce46 |
+| R3 | `proof:gen-ci-fresh` | `glass-idiom-factor` ci-tagged but `ci.yml` un-regenerated (drift) | 6ec81de |
+| R4 | `proof:tag-parity` | `category-card-warm` registered `["local"]` — a static src-scan gate not promoted to `ci` | 9e13965d |
+
+**The 7 close-machine gap fixes (each a concrete wave + locking gate + planning convergence).** Detail in
+`AMENDED-WAVE-PLAN.md §2`; the open design questions are DECIDED (the develop pass's value-add):
+
+| # | Gap | Conv | Wave(s) + locking gate (DECIDED) |
+|---|-----|:----:|----------------------------------|
+| **G4** | 9-SITE atomic close-fix — clears R1–R4 | **90** | `BG.W-CLOSEFIX-9SITE` (amendment 1, **lands FIRST**). FULL RETIREMENT of `--glass-blur-dock`; 2 carves (`ladder.css` 527→470 grain-tail → `glass/grain-overlay.css`, `shell.css` 510→459 persistent-tail → `dock/shell-regions.css`); **9 sites not 6** (+ `proof:dock-shrink-blur` S3 re-point + `proof:theme-style` + the `InstrumentChassis.spine-variant` unit test + `glass-cal.spec` EXPECT_RADII). The G4 spike ran `--run full` siblings-absent GREEN in a fresh `/tmp` worktree; dist `glass-ui.css` BYTE-IDENTICAL (the dead token was already tree-shaken). |
+| **G3** | standing closeDisease sweep | **83** | `BG.W-CLOSE-SWEEP` (WS7) · `proof:close-sweep` born-RED `["local"]` (the THIRD born-RED gate beside ba-gestalt/ship-attestation). DECIDED: commit-hook **tranche-env-gated** (`GLASS_UI_ACTIVE_TRANCHE`, NOT hot-file-fires); **canon home PARENT-TRACKED, OUT of the `docs/precepts` submodule** (a fresh `/tmp` worktree does not recurse submodules → C3 would red); C5 hardens to PATH-MATCH; HARD P-CLOSE→P-SWEEP edge (land AT-OR-AFTER R1–R4 clear). Self-test 9/9. |
+| **G2** | ba-gestalt cursor↔roster — **the keystone** | **80** | `BG.W-GESTALT-CURSOR-PARITY` (WS7) + amend STAGE-0 roster. `surfaceClosure(s) = collectPaintClosure(SHELL_SEED ∪ routeSeeds(s)) ∩ wave.Files` (SHELL_SEED-inclusive). HONEST re-price: 22/105 waves map all-10, 82 map NONE → **PARITY-C is the load-bearing net, PARITY-B DELETED** (unsat mid-tranche + redundant w/ G5 pixel-band/G7 freshness), PARITY-A weak-kept (the BB-lie catcher). SHELL_SEED += `demo/main.ts`; the SiriIsland orphan-decision (enroll a roster surface + a scoped accept-residual allowlist); `bg-paint.wf.js:22` fence-widen → `reflect/`; canonical-capture = first `/cat/story` token; Safari → separate `proof:safari-parity`; mobile rides the `coarse-touch` pi-runner. |
+| **G6** | field-composited-AA gate | **78** | `BG.W-GATE-FIELD-AURORA` (WS7) + **`BG.W-EYEBROW-LIGHT-POLISH` (WS3, NEW — the phantom-coupling-now-real wave)**. Consumer #2 = `compositions/gate-pattern` (the unsound self-staging `/display/card` is ABSENT from the roster); **value.js floor `^1.1.1`** (not `^1.2.0`); F2 dark-AA demoted to a transcription-fidelity FLOOR bound to the dual-engine C18; verbatim recorded `pixel-analysis.json` fixtures. The light-arm `.section-label` is genuinely 4.15:1 over the recessive field → the eyebrow lift is a REAL WS3 wave (no threshold-dodge re-class). |
+| **G1** | C-SAFARI in-situ refraction — **the dominant cut-risk ★★★** | **70** | WS8 `BG.W-GLASS-REFRACT-WEBGL` (`proof:glass-refract-fence` on the **`uChromatic`** operator, NOT the spike's invented `uDispersion`; `["local"]` → `ci` at calibration) + **`BG.W-GLASS-BACKDROP-SAMPLE` (WS8 keystone)** + WS7 `BG.W-SAFARI-PARITY-GATE`. DECIDED: the `uChromatic` operator + calibration algebra (ratio 0.02–0.03 → `uChromatic` 0.20–0.30 @ uRef=1); C12 dark-AA-over-bright-ridge folds IN as gate clause F2 (the likeliest 4th-time miss now IN the gate); **the named renderability fallback ladder `full → drapery-dropped → flat-blur`** (each gated, CSS-SVG `feDisplacementMap` dead on Safari so flat-blur is the recorded last resort); the CPU field-buffer raster spec; the 5 GL refraction sites enumerated. |
+| **G5** | CLAUDE.md-delete safety | **78** | BH `B5c` (canon homes + reader re-point) → `B4f` (the `rm`, **absolute-last act**) · `proof:claude-deletable` born-RED→GREEN-at-delete. Census CORRECTED to **16 readers, not 12** (the G5 spike's grep missed 4 reading via a `read("CLAUDE.md")`/`strip(read(…))` helper: `proof:close-battery-parity`, `proof:doc-override-idiom` BYTE-PARITY, `proof:on-glass-fg`, `proof:readme-meta-clean`). C2 **DE-BLINDED** (flag ANY call receiving the CLAUDE.md literal, keep the `expandable-part:66` dead-constant exclusion); canon home OUT of the submodule (shared discipline with G3); legacy-accumulation widened BG/BH-only → ALL 76 contract-DEFINING anchors. |
+| **G7** | viz-subpath cross-ownership seam | **80** | Lock-1 = `proof:crossrepo-asks` **`W5`-viz-disposition** (NOT W4 — the `W4-content-only-fence` inv-26 clause ALREADY exists on disk; a verbatim W4 would smother it) + Lock-2 = the **live-and-GREEN `proof:subpath-classify`** (`gates.mjs:377`, C1 EXACT_REPRODUCTION). A confirm-step, not a build: WS5 drops/renames ZERO consumed viz keys (DEMIGRATE is an internal WGSL→`useCanvas2D` swap; SUBSTRATE-DELETE keeps the GLSL fallback + dir + `index.ts`), so it owns a VISUAL re-baseline (slides `/fourier-field`×4 + `/constellation`×2; atlas `/constellation`×1 + `/dot-flow-field`×1), no by-name ask owed. |
+
+### 10.3 · The corrections (binding — apply everywhere they appear)
+
+The develop pass corrected six errors carried in the spec drafts; these are AUTHORITATIVE over any
+earlier figure in §1–9 or the RESPEC drafts:
+
+1. **value.js peer floor `^1.1.1`, NOT `^1.2.0`** — `wcagContrastRatio` first shipped in 1.1.1 = npm-latest;
+   `^1.2.0` would EXCLUDE latest and RED `proof:peer-conformance`'s "admits latest" clause + require
+   value.js to publish 1.2.0 first. `^1.1.1` admits latest AND keyframes' `^1.2.0 ⊆ ^1.1.1`. (Reconcile the
+   5 stale `^1.2.0` strings in the G6 spike: gate:23,25,50,58 + leaf:346,348.)
+2. **G4 is 9 sites, not 6** — the FULL RETIREMENT reds 3 more FROZEN-STRING identity readers the spec never
+   enumerated (the dock-shrink-blur S3 re-point + theme-style probe + the InstrumentChassis unit test +
+   the glass-cal.spec EXPECT_RADII), beyond the R1–R4 + glass-cal B3 + glass-depth D3 cascade.
+3. **G3 canon-home is PARENT-TRACKED, NOT in the `docs/precepts` submodule** — a fresh `git worktree add /tmp`
+   does not recurse submodules, so a submodule-homed canon is ABSENT at the exact siblings-absent close the
+   gate locks. Home it in `docs/tranches/BG/canon/` (one home discipline, shared with G5).
+4. **G2 PARITY-B is DELETED** — UNSAT mid-tranche AND redundant (proof:ba-gestalt's G5 pixel-band + G7
+   freshness already auto-revert a faked roster PASS). The §3.3 "flips GREEN surface-by-surface per band"
+   claim is RETRACTED — surfaces flip at the WS12 late sweep (Model-B).
+5. **G5 CLAUDE-delete census is 16 readers, not 12** — see §10.2 G5 (the 4 missed `read(…)`-helper readers).
+6. **G7 clause is `W5`, not `W4`** — `proof:crossrepo-asks` ALREADY owns a `W4-content-only-fence` (the
+   inv-26 foreign-tree fence, confirmed on disk); the viz-subpath disposition lands as `W5`.
+
+### 10.4 · The 3 live-interaction fixes — LANDED (D-1/D-2/D-3, dual-engine verified)
+
+The `DEFECT-LEDGER.md` LIVE-INTERACTION defects (cursor/hover/scroll — uncatchable by device-free gates or
+static captures) were root-caused live and FIXED on `tranche/BG` before the develop pass:
+
+| # | Defect | Fix wave | Commit | Root cause + measure |
+|---|--------|----------|--------|----------------------|
+| **D-1** | Constellation — ALL dots track the cursor | `BG.W-CONSTELLATION-PARALLAX-OFF` | `07c6e6ec` | `DEFAULT_PARALLAX 0.08 → 0` (default-OFF / opt-in depth, clean break, ONE constant the 3 read-sites resolve to); `parallaxNodePos` early-returns unshifted. Chrome CDP center→corner slide **58.1px → 5.7px**; WebKit JS-level verified. |
+| **D-2** | Paper grain — gray/metallic wash on story pages | `BG.W-PAPER-GRAIN-WARM-SUBSTRATE` | `e40e5095` | The saturate=0 gray grain tooth (warmth-from-substrate by library fence) lost its warm substrate when `PAPER-GRAIN-OPTIN`+`FIELD-AURORA` retired the universal `<PaperBackdrop>`. Demo-local fix (library utility BYTE-UNTOUCHED): paper-glass tiles **C 0.009–0.015 → C 0.02–0.045 warm (H67–78°)**; paper-texture full-page wash → per-panel grain; StoryHero light wash restored. |
+| **D-3** | Dock — collapse morph flicker (440px balloon) | `BG.W-DOCK-COLLAPSE-DIR` (Phase-LX) | `8947288a` | The `--dock-live` convex-blend SIZE scalar read the raw progress `--dock-morph-t` (always 0→1) instead of the DIRECTIONAL `--dock-expand-t`, ballooning the box UP on collapse then snapping. Aligned SIZE with the chrome's already-directional scalar; E4 gate tightened to pin the clamp. Chrome CDP collapse **496→59 monotonic, ZERO reversal**; Playwright WebKit + real WKWebView corroborate. |
+
+(The two recorded-not-fixed residuals stand: the first-collapse-only 15px end-snap on a start-EXPANDED dock,
+and the WS2 dock-convergence rows 4.x — both out-of-scope of the discrete-regression repairs.)
+
+### 10.5 · The 6 build-phase deferrals (de-risked + the exact proving wave)
+
+Each proof below needs the REAL build (or a real GPU/Metal/Safari.app); each is de-risked at audit (approach
+proven device-free or by code) and counts as converged-for-planning — none is a feasibility unknown or a
+design restart. Full table in `AMENDED-WAVE-PLAN.md §3`.
+
+| # | Deferral | De-risked because | Proven by (the exact wave) |
+|---|----------|-------------------|----------------------------|
+| 1 | **C-SAFARI Metal capture ★★★** (the 3-tranche chronic — the FULL refraction shader rendering + AA-over-composite + dock-blur sign-off on real macOS Safari/WebKit 26 + Metal; subsumes G1's pinned `uChromatic+ε`, the WebKit compile-time, the per-pixel Metal drift) | the GPU floor is REAL (FBO renders FRAMEBUFFER_COMPLETE on M5 Metal); the named fallback ladder bounds the worst case; the C18 `?capture=` harness ships in `demo/main.ts` | **`BG.W-GLASS-BACKDROP-SAMPLE`** (C17 calibration) + **`BG.W-SAFARI-PARITY-GATE`** + **`BG.W-CUT` `--run ship`** (the non-authoring dual-engine net) |
+| 2 | The field-AA live re-shoot — F-AA-LIVE dual-engine `_anchor` at `ebf6e45b` (the verified pre-fix BROKEN state, Chrome 1.04 / Safari 1.91) + the light-eyebrow ≥4.5 lift | the device-free gate ran GREEN 3/3; the anchor is merge-base-verified | **`BG.W-GATE-FIELD-AURORA`** + **`BG.W-EYEBROW-LIGHT-POLISH`** + **W-REFLECT3** |
+| 3 | The grain-tail paint π (`liquid-hover.spec.ts` — the moved `.glass-*::after` pop-kill) + the ba-gestalt dock/CTA verdict | the grain rules are byte-preserved in compiled dist — a confirmation ceremony, not a feasibility risk | **W-REFLECT3** (rides the WS12/close gestalt sweep) |
+| 4 | The WS12 late capture sweep — all 10 roster surfaces over fresh paint (Model-B) | a cost (re-capture), not an unknown; the joinery proof is device-free | **WS12 `BG.W-PAGE-COMPONENT-AUDIT`** + the close |
+| 5 | The CLAUDE-delete `--run full` `/tmp` siblings-absent dry-run (after all 15 homes authored + all 16 readers re-pointed) + the actual `rm CLAUDE.md` | mechanism sound; the corrected 16-site census + de-blinded C2 are specified; the dry-run is the backstop that surfaces any missed reader | **BH-B5c → B4f** (`proof:claude-deletable` born-RED→GREEN; the rm is the absolute-last act) |
+| 6 | The post-WS12 export re-pin (`verify-export-types`/`proof:subpath-enumeration`) + the human `siri-waveform` PUBLISH-vs-INTERNAL confirm | regen proven (live C1 EXACT_REPRODUCTION=true); pre-derived INTERNAL grounded (no subpath file — a WebGL2 leaf composed by SiriIsland) | **BH-B2.1-swap** (gated STRICTLY AFTER WS5 ∧ WS6 ∧ WS12, STRICTLY BEFORE BG.W-CUT) |
+
+### 10.6 · Convergence accounting + the develop-ready conclusion
+
+| Axis | Pass-1 | This develop pass | Driver |
+|------|:------:|:-----------------:|--------|
+| WHAT-is-built triage | ~93% | **~93%** | Unchanged; ZERO restart, DAG+build-order KEEP, D-1/D-2/D-3 fixed |
+| The 7 gaps (develop-to-executable) | ~60% | **~83%** | G4 90 · G3 83 · G2 80 · G7 80 · G5 78 · G6 78 · G1 70 (mean ~80; weighted up for the now-DECIDED design + the de-risked deferrals) |
+| **Blended** | **72%** | **86%** | +14 — every gap has a named wave + locking gate + a de-risked build-phase approach; the open design decisions are RESOLVED; the residual is build-phase proof (de-risked) + execution-verify |
+
+**The honest residuals (build-phase, de-risked, owned):** (1) **C-SAFARI ★★★** — the dominant cut-risk;
+the GPU floor is REAL but the FULL-shader renderability + AA + dock-blur sign-off bind to the on-device
+Metal/Safari leg by design; the named fallback ladder bounds the worst case. (2) **G2 SiriIsland roster
+enrollment** — a new capture pair (owed for WS6 paint-verify regardless) + a scoped accept-residual
+allowlist for the genuine no-route components. (3) **G5 16-reader re-home + the `/tmp` dry-run** — the
+corrected census is specified; the dry-run surfaces any missed reader at build.
+
+**developReady: TRUE → EXECUTE THE AMENDED PLAN.** The KEEP feature build is ~93% verified with the DAG
+intact; every close-machine gap is approach-converged or a cleanly-de-risked build-phase deliverable with a
+named proving wave. The execution kickoff order (unchanged from the cursor): STAGE-0 ground-freeze (built)
+→ `BG.W-CLOSEFIX-9SITE` (clears R1–R4) → WS1 ROUTE-TRANSITION linchpin → WS3 (with EYEBROW-LIGHT-POLISH)
+→ WS2 → WS5 → WS6 → WS4 → WS7 (close machine: close-sweep · gestalt-cursor-parity · field-aurora-aa ·
+safari-parity) → WS8 (refract-fence on `uChromatic` · backdrop-sample keystone) → WS9 → WS10 → WS11
+→ WS12 (late capture sweep) → BH[WS12] (16-reader re-home → CLAUDE delete) → BG.W-CUT.
