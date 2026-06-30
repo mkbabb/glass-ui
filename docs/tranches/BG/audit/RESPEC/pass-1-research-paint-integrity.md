@@ -83,3 +83,55 @@ Not re-triaged row-by-row here (that is the code-vs-spec lens's job) — but the
 - No blank/zero-byte/relabeled captures. No light==dark or chrome==safari byte-collisions.
 - No premature paint artifact for a PAINT-PENDING row (3.1/3.6 have no DELTA — correct).
 - No `/tmp` capture leakage; `wkshot-live` compiled under the repo; siblings intact before+after.
+
+---
+
+## ADDENDUM — re-verified at HEAD `b716b5be` (2026-06-30, after the live-fix doc commit)
+
+Re-ran `proof:ba-gestalt` + re-inventoried at the current HEAD (the prior body was written at `9dfe285c`).
+Two material updates the live-fix commits introduced:
+
+**A · FRESHNESS NOW STALE on 4 of 10 surfaces (was all-fresh at `9dfe285c`).** `proof:ba-gestalt` reports:
+```
+✗ shell           FAIL  freshness:stale
+✗ dark-register   FAIL  freshness:stale
+✗ page-band       FAIL  freshness:stale
+✗ cross-repo      FAIL  freshness:stale
+(other 6 FAIL freshness:fresh)
+operative result  : FAIL (0 PASS / 10 FAIL)
+```
+The G7 auto-revoke fired: `e40e5095` (D-2) edited `demo/stories/story-hero.css` (in the shell/page-band
+paint-closure) and `8947288a` (D-3) edited `src/styles/dock/layers.css`. Per §4 these surfaces now owe a
+re-capture + re-stamp before any PASS — but since they were never PASS to begin with (all born-RED), the
+stale flag is currently moot. It is a PREVIEW of the per-band re-capture churn the cut will demand: every
+WS3+ glass/dock/paper edit re-stales these surfaces, and the roster has to be re-shot at EACH band close,
+not batched. The 3 live-fixes alone already drifted 4 surfaces.
+
+**B · LIVE-FIX (LX.1–LX.3) Safari coverage is asymmetric vs the "dual-engine verified" LEDGER label.**
+- **D-1 constellation: ZERO Safari pixel capture.** Only 4 Chrome CDP PNGs (`before/after-{A,B}`, 1066×420).
+  The DELTA honestly states "real Safari off-screen WKWebView cannot snapshot the live WebGPU/WebGL2 canvas
+  (known WebKit GPU-layer limitation)" — so the WebKit leg is JS-engine-level (`parallax0_offsetPx=0`), NOT
+  a pixel paint. The DEFECT-LEDGER label "dual-engine verified" is imprecise; record it as Chrome-pixel +
+  WebKit-JS-engine.
+- **D-2 paper-grain: Safari LIGHT-only** (no `*-safari-dark`). 2 Safari PNGs, both light.
+- **D-3 dock: 2 Safari PNGs** (1 dark + 1 light) — narrower than the §2 4-PNG floor.
+
+These are discrete regression repairs, not full paint-gated wave closes, so the §2 reflect-set floor is not
+strictly their bar — but they do NOT discharge any roster surface, and D-1's missing Safari capture is the
+early warning that **the WKWebView harness cannot snapshot a live viz canvas** (every viz-bearing roster
+surface — aurora, motion-fourier, configurators-goo — inherits this limit; the C-SAFARI WS8 capture must
+solve it).
+
+**C · The two-verdict-mechanism split confirmed structural.** The cursor DONE flips ride `PAINT-PASS-LOG.md`
+(prose); `proof:ba-gestalt` reads `bg-gestalt-roster.md` (pixel, all FAIL). The roster's declared capture
+paths (`reflect/dock-light-desktop-full.png`) DO NOT RESOLVE — only the 4.2.0-Metal GROUND anchors
+(`dock-overview-*`, `glass-material-*`, `shell-aurora-field-*`, 3 surfaces) exist in `reflect/`. The real
+WS1 captures live in `visual/route-transition-pipeline/` + `visual/BG.W-FIELD-AURORA-paint/` — paths the
+gate cannot see. **The §4 roster-reconciliation (re-point capture paths off the ground anchor + re-stamp
+freshness + flip the verdict) was NOT executed for any passed WS1 surface.** This is the single biggest
+amend: the good WS1 paint exists but is invisible to the binding gate, so `--run ship` (which includes
+ba-gestalt) cannot pass and the tag cannot fire as wired.
+
+**Net:** the prior body's verdicts STAND (zero inflation; 7 paint claims honest). The addendum sharpens the
+cut risk — it is not "16 surfaces unpainted," it is "16 surfaces un-FLIPPED-into-the-roster-the-gate-reads,"
+plus the live WS1 paint that IS done is sitting at non-roster paths and must be reconciled in.
