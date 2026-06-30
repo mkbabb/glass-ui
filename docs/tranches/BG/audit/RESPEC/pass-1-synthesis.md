@@ -1,151 +1,147 @@
-# BG+BH 5.0.0 Re-Spec — PASS 1 SYNTHESIS
+# BG+BH 5.0.0 Re-Spec — PASS 1 SYNTHESIS (agglomerated)
 
-**Date:** 2026-06-30 · **HEAD:** `9dfe285c` · **pkg:** 4.2.0 (cut 5.0.0) · **branch:** tranche/BG
-**Inputs synthesized:** 8 research lenses + the synth re-spec (`pass-1-spec.md`, 62%) + 6 prototype+critique pairs (P1–P6)
-**Fence:** read-mostly; this agent verified findings on disk + records. Wrote only under `RESPEC/`.
-**Aggregate convergence this pass: 68%** (WHAT-is-built triage ~92% · HOW-the-bulk-converges ~62%).
+**Date:** 2026-06-30 · **HEAD:** `6369ad6e` (docs-only above the spec baseline `b716b5be`) · **pkg:** 4.2.0 → cut 5.0.0 · **branch:** tranche/BG
+**Inputs synthesized:** 8 research lenses · the synth re-spec (`pass-1-spec.md`, 70%) · **6 prototype+critique pairs** (P-CSAFARI · P-CLOSE · P-SWEEP · P-GESTALT · P-CLAUDE-DELETE · P-FIELD-AA) — the re-run/renamed prototype set at the FRESH HEAD (supersedes the prior P1–P6 set captured against `9dfe285c`).
+**Fence:** READ-MOSTLY. Re-ran the 3 crux claims on disk (below); wrote ONLY under `RESPEC/`. `verify-siblings-intact --quiet` exit 0 before + after; tree clean.
+**Aggregate convergence this pass: 72%** (WHAT-is-built triage ~93% · HOW-the-bulk-converges ~60%).
 
----
-
-## 0. THE LOAD-BEARING RECONCILIATION (the disagreement this pass resolved)
-
-The single contradiction across the corpus was the **close-red inventory**: the clobber lens + the synth spec say **4 reds at HEAD**; the P3 critique cites a **VALIDATION-REPORT with 12 `realDefect` reds** and accuses the proposed sweep of "missing 9." **Both are true at different commits — the conflation is the stale artifact, and resolving it strengthens the re-spec.**
-
-Verified on disk:
-- `VALIDATION-REPORT.md` is anchored at HEAD **`ff0933a3`** and enumerates 12 `realDefect=TRUE` reds (clusters A–F).
-- **`ea4682c0` "BG SYNTH fix-wave: remediate the 12 validation realDefect gate reds" landed AFTER `ff0933a3`** (git log confirms the order: `ff0933a3` → `ea4682c0` → `331df934` → … → HEAD `9dfe285c`).
-- **The SYNTH wave cured them:** `proof:storybook-complete` (VALIDATION row #4 / fix #4) reads **`status: pass`** at HEAD from its cache JSON. The clobber lens independently verified the SYNTH-wave re-points GREEN.
-- **WS3/WS4 then re-seeded 4 NEW reds by HEAD** — *same disease class, different artifacts*:
-  - `no-god-module`: was `useGlassBackdropLuminance.ts 559L` (fix #10, cured) → now **`ladder.css 527 + shell.css 510`** (verified live FAIL).
-  - `no-dead-token`: was `--story-hero-rise` (fix #11, cured) → now **`--glass-blur-dock`** (verified **ZERO readers** — `grep var(--glass-blur-dock) src demo` empty).
-  - `gen-ci-fresh`: cured for `alias-codemod`, **re-drifted** for `glass-idiom-factor`.
-  - `tag-parity`: **NEW** — `category-card-warm` registered `["local"]` (verified live FAIL; root-cause message confirmed).
-
-**Consequence for the re-spec (this is the prize):** the recurring disease (`wave greens own gate / leaves sibling RED`) re-seeds with **different artifacts each batch** (12 at ff0933a3 → cured → 4 new at 9dfe285c). A hand-picked SWEEP_SET is therefore structurally brittle — **the P3 critique's deliverable (a `closeDisease:true` manifest flag enrolling the whole CLASS, not the current instances) is the correct and necessary fix**, and the "12 vs 4" reconciliation is the empirical proof that the class re-mints. The P3 critique was wrong on the live HEAD inventory but **right on the deliverable**.
+> **What this agglomeration adds over `pass-1-spec.md` (70%):** it reconciles the 6 proto+critique pairs into per-cluster verdicts, re-verifies the 3 load-bearing critique refutations on disk, and re-prices convergence honestly — net **+2** (two clusters de-risked to ~80 by the implement-spikes G4/G5, offset by the **C-SAFARI fence-number setback** the spike's optimism masked, the **P-FIELD-AA regression** 68→53, and the **P-GESTALT joinery holes** in the newly-prototyped keystone).
 
 ---
 
-## 1. WHAT-IS-BUILT TRIAGE — converged ~92% (firmed this pass)
+## 0. THREE CRUX CLAIMS RE-VERIFIED ON DISK (the critiques' load-bearing refutations — confirmed, not propagated on faith)
 
-Zero restart candidates (8 lenses concur). The landed bands are keep-verified with on-disk dual-engine paint and no inflation. Two items moved this pass:
-
-| Landed wave | Disposition | Pass-1 change |
-|---|---|---|
-| WS7 Stage-0 (0.1–0.6) · BH [C] (1.1–1.12) · WS1 (2.1–2.6) · WS3 3.1/3.7 · WS4 10.25 | **keep-verified** | unchanged; paint PNGs resolve, byte-distinct engines/modes, no inflation |
-| **WS3 3.6 GLASS-BLUR-PEER dock-saturate "regression"** | **DOWNGRADED to a ±2% brightness sign-off** | **P2 critique resolved the "identity loss" as a PHANTOM** — `--glass-saturate-dock` was `1.4` light / `1.30` dark, **byte-identical to the resting peer it now reads** (the W-NAV-DOCK-FIX comment confirms the dock saturate was *calibrated to match resting*). The ONLY real delta is BRIGHTNESS: light `1.02→1.0`, dark `1.12→1.14` (±2%). The contingent `--dock-surface-saturate` additive is **dropped** (fixes nothing). `proof:no-gray` already migrated its dock-gray witness onto `--dock-surface-blur→resting` (49/49 pass) — device-free gray coverage survives. |
-| **C-SAFARI deep-glass renderability** | **floor ESCAPED (renderable on real Metal)** | **P1 spike proved Tier-1 WebGL2 squircle-rim refraction compiles + renders + composites + captures** on real Apple M5 Metal via off-screen WKWebView, deterministic over 2 runs, by a non-author. WGSL/WebGPU Tier-2 compiles clean and is reachable by DEFAULT in WKWebView 26.4. CSS-SVG `feDisplacementMap` re-confirmed DEAD on Safari. **The architecture (WebGL2+WGSL dual-stack) is validated.** |
-
-**The standing WS1 caveat holds (all lenses):** 2.2 FIELD-AURORA shipped device-free-GREEN at **1.04:1** over the composited field (dark mode), caught only by re-paint luck. This is the permanent proof that **device-free GREEN ≠ visually correct for field-composited surfaces** and is the entire rationale for P6.
-
----
-
-## 2. HOW-THE-BULK-CONVERGES — ~62% (5 prototype designs converged, each with a bounded must-resolve)
-
-The DAG is sound (KEEP the build order `WS1→WS3→WS2→WS5→WS6→WS4→WS7core → WS8→WS9→WS10→WS11 → WS12 → BH[WS12] tail`). The 5 sequencing amendments are validated; each prototype advanced its amendment and surfaced concrete build-holes:
-
-### P1 — C-SAFARI front-spike (critique 58%) — floor escaped, HARD legs unproven
-**Converged:** renderability of the WebGL2 floor + composite + off-screen capture + the FBO-`readPixels` metric shape (sidesteps the live `getImageData`-zero-off-screen constraint). KEEP amendment #3 (front-load before the ~50-wave investment).
-**OPEN (must resolve PASS 2):**
-- The spike rendered a **PROCEDURAL backdrop inside the fragment shader** — it **NEVER rendered the actual two-pass `field→FBO→textureSampleLevel(fieldTex, uv+displacement)` path** the wave ships (the part most likely to drift on Metal: texture filtering, sRGB-texture sampling, LOD uniformity, RGBA8 gamma completeness). R4/R9 stay "STUB-build-proven, UNPROVEN in-situ."
-- **CHROMA-FENCE VIOLATION:** the capture is a full prismatic RAINBOW at `uDispersion 0.5` (~27% R-B), **~16–25× over the binding Δ5 fence (0.02–0.03 thin-rim)** and over the K2 "ZERO chroma injection / refraction is DEPTH not hue / 100% luminance modulation of ONE warm hue" identity. A non-authoring verdict would FAIL it.
-- **Author-graded gestalt** (forbidden); needs a NON-authoring verdict against the real `liquid-metal-…01.jpg` reference over WS1's REAL shell-aurora field.
-- **R3 GPU watchdog** (the WebKit ~2s ceiling over a sustained 2880×1800 two-pass N-glass composite) is **unprobed** (the 1.8s synchronous CPU draw-queue is not a watchdog test).
-- **Dark-AA-over-bright-ridge (C12)** — the chronic's hardest leg — declared "out of scope"; the committed evidence shows content fails 4.5:1 (4.04/4.10/2.11), the 9.7:1 hand-math RETRACTED.
-- Do **NOT** act on the "promote Δ1 / WebGPU-by-default" recommendation — WKWebView ≠ Safari.app; it would re-open the settled conservative C16/K10 fence. Treat it only as corroboration that Tier-1 is the safe universal floor.
-- **Land the spike fixture as committed evidence** (fold into the C17 born-GREEN `glass-field-lens.spec.ts`), not a vanishing throwaway-worktree prove (the M2 cardinal-lesson trap).
-
-### P2 — 4-red atomic close-fix (critique 73%) — recipe proven, depth + union owed
-**Converged:** all 4 reds reproduced + cleared atomically; the **cascade-reveal is REAL** — the no-dead-token delete REDS `proof:glass-cal B3` (which positively asserts the dark dock composite reads `saturate(--glass-saturate-dock) brightness(1.12)`), which cascades to `proof:glass-depth D3`. **The close-red sweep touches 6 gates, not 4** (R1–R4 + glass-cal B3 + glass-depth D3). Retire glass-cal B3 in the SAME diff.
-**OPEN (must resolve PASS 2):**
-- **Run `gates.mjs --run full` siblings-absent in a FRESH `/tmp` throwaway worktree** (per SIBLING-SAFETY — NEVER touch `~/Programming`), NOT the 9 individual JSONs. The tag-flip (R4) / ci.yml-regen (R3) / gate-script-parity are mutually coupled — confirm no 7th red surfaces.
-- **The N+2 dead-chain decision (the prototyper MISSED this):** post-delete, `--glass-blur-dock-radius` (9px) + the `--blur-dock` @theme bridge are a DEAD chain — ZERO runtime reader, ZERO `blur-dock`/`backdrop-blur-dock` utility consumer in src/demo/dist; alive only on the `--blur-` prefix exemption + frozen-string gates. This is no-legacy/no-dual-path shelf-ware and the next cascade-reveal a future sweep surfaces. **Decide clean-break depth:** (a) full atomic dock-blur-tier retirement (delete radius+bridge, update dock-shrink-blur S3 / theme-style blur-dock list / glass-depth FROZEN_BASE_RADII in the same wave), OR (b) record radius+bridge as known-dead-exempt and SCHEDULE their drain with the WS4 carve. Do not silently keep.
-- **Re-scope the dock sign-off** to the ±2% brightness phantom (above) — DUAL-engine (Chrome+Safari), not "Metal only."
-- **Ratchet cut-state correction:** `RATCHET==∅` is NOT a live gate (`proof-no-god-module` status keys only on `violations.length`; 14 entries ship GREEN at 4.2.0; `ratchetDrained:false` is reported metadata, not enforced). The +2 grandfather of ladder/shell is gate-green; it does NOT "fail the close-state invariant." The carve is still OWED under the monotonic-drain + no-legacy law — confirm whether it's a HARD pre-cut blocker or lands in the fix wave.
-- Sequencing: flip category-card-warm tag (R4) BEFORE `gates:emit-ci` (R3); rebuild dist before typecheck (the `fourier-math` ENOENT is a stale-dist worktree artifact, absent at main HEAD — a false-red trap); verify worktree base == `9dfe285c` before any fix-agent (the prototyper seeded at the stale `998136bb`).
-
-### P3 — standing per-band close sweep (critique 50%) — mechanism solid, completeness IS the deliverable
-**Converged mechanism:** the `gatesFor("sweep")` special-case, the dual-signal `sweepVerdict` (execSync-throw catches exit-nonzero AND `gen-ci-fresh` which writes NO JSON; the JSON-status leg catches a future exit-0-on-fail — both empirically necessary), the cache-filename map, the env-driven commit-msg hook idiom, the clause-5 synthetic-fixture differential.
-**OPEN (must resolve PASS 2):**
-- **SWEEP_SET completeness is the deliverable, not an OQ.** Derive it from the class definition ("every device-free meta-gate a wave-diff can clobber while greening its own deliverable") via a `closeDisease:true` manifest flag applied to ALL such gates NOW, and make a clause assert *every `closeDisease` gate ∈ SWEEP_SET*. The "12-vs-4" reconciliation (§0) is the proof the class re-mints — a fixed 6-gate list false-greens the next batch.
-- **Reconcile the born-RED anchor:** §0 establishes the HEAD-true set = the 4 (R1–R4). The P3 critique's "9 missed" was the STALE ff0933a3 inventory (cured by `ea4682c0`). The born-RED demo + the completeness census both rest on the *4-at-HEAD* set.
-- **Mint `proof:close-sweep` as `["local"]`** (matching `proof:close-battery-parity` + `proof:gate-manifest-sound`, both verified local-only and still riding `--run full`), NOT `["local","ci"]` — a ci tag RE-SEEDS R3 (a new ci-tagged gate forces `gates:emit-ci` + ci.yml commit). If ci is kept, make ci.yml regen an explicit minting step.
-- **Honest ≥2-consumer accounting:** only the commit-msg hook is automated, it is INERT unless the engine exports `GLASS_UI_ACTIVE_TRANCHE` (verified NOT exported in `bg-bh-execute.wf.js`), and it fires only on orchestrator commits (agents never commit). Either BUILD the engine env-export + a per-wave flip-stamp assertion, or stop labeling the documented disciplines "automated consumers."
-- **Re-cost T0/T1 against the COMPLETE set** (the cheap ~1s/~2min figures assume the 6-gate sample; storybook-complete's demo-tree scan + the ledger-JSON gates push the complete set toward `--run full` cost — decide the tier design).
-- **`gate-manifest-sound` audit false-red:** its HEAD red is `realDefect=FALSE` (π runs overwrite PNGs; orchestrator owns `git checkout`). Scope it to T2/close, not the standing per-flip gate, or a π run cries-wolf-blocks a legitimate flip.
-
-### P4 — CLAUDE.md-delete de-risk (critique 71%) — census exact, parser-rewrite + accumulation-gap owed
-**Converged:** the exact census (**14 presence-asserting / 2 ENOENT-crashers / 16 content-readers / 18 literal-touchers** — corrects the plan's "16"); the 2 ENOENT-crashers (`proof-claude-structure-sync.mjs:74`, `proof-doc-consistency.mjs:197` — `readFileSync` with NO fallback → THROW/crash, not RED); `auditCanonHomes` is **unwired** (zero gates import canon-doc.mjs) AND dangling (instrument-chassis README absent); the phase-palette W4 two-token re-home confirmed; the authored instrument-chassis README carries both tokens; the B4f born-RED-LAST-act gate (`proof:claude-deletable`) shape is correct.
-**OPEN (must resolve PASS 2):**
-- **The structure.md PARSER REWRITE (the unscoped §5 hole):** 4 §Structure readers (`structure-sync.parseDoc`, `split-chars:289`, `accent-tone:353`, `doc-consistency:89/97`) parse the CLAUDE.md **ASCII box-drawing tree** with regexes (`/^│\s+│\s+├──\s+(name)\//`) that match NOTHING in the GENERATED `structure.md` flat-bullet list (`- name/`). §5 mislabels these "regex unchanged" — they are per-reader parser rewrites. Either rewrite each to the flat format, or make `regen-structure.mjs` ALSO emit a tree block. **This is the single biggest unscoped work item.**
-- **The HEAD-snapshot-vs-110-wave accumulation hole (the deepest):** CLAUDE.md is the LIVE canon mutated by every BG wave with a `claudeMdNote` until B4f deletes it. C2 (live-tree reader scan) self-updates for new READERS, but C1's CANON_TOKENS is a FROZEN HEAD manifest — a contract minted by WS5/WS6/WS8/WS9 that appends to CLAUDE.md has no home and is SILENTLY LOST at delete with the gate green. Specify a per-wave discipline (claudeMdNote → canon home + a CANON_TOKENS entry per minted contract) OR a B4f-time CLAUDE.md-delta reconciliation.
-- **CANON_TOKENS drift contradiction:** "declared once, cannot drift" is false while §5 keeps each gate's own regex copy. Either refactor gates to `import CANON_TOKENS[key]` (then "regexes unchanged" is wrong) OR drop the claim + add a `canonTokensMatchGateAsserts()` lock.
-- **Re-size B4b-content honestly:** the dock README is MISSING `#persistent` (verified — §2b "dock likely carries its tokens" is false on disk); ~11 homes need authoring, not "instrument-chassis + ~15%." Drop the dead `MIN_CANON_BYTES=200` floor (stubs are 527–775 non-ws; it never bites) or raise it above skeleton size.
-- Confirm the WS12-tail vs C3-LAST-act ordering against amendment #5 (incremental home authoring must not let C3 pre-green; B4f stays the single final irreversible act).
-
-### P5 — WS3-spine completion + carve ordering + ratchet doctrine (critique 67%) — carve solid, LOCK broken
-**Converged:** the carve seams are real, cohesive, tail-positioned, order-preserving, byte-isomorphic (`ladder.css 462–525` grain tail → `glass/grain-overlay.css` 527→461; `shell.css 438–509` placement/region tail → `dock/shell-regions.css` 510→437; reader gates use `readMonolith`/`readDockCss` concatenation so they FOLLOW the carve — ZERO gate edits). Byte-isomorphism (build-diff empty) is the correct binding π. The drain-vs-accept decision (11 drain booked to named waves + 5 residual) is sound in shape. The Safari-ceiling rows (3.3/3.4) are already correctly ordered before WS8.
-**OPEN (must resolve PASS 2):**
-- **The §4 marker-guard is born-GREEN, not born-RED** (the lock half is broken): it iterates the root-relative `displayPath` (`src/styles/...`) but the RATCHET_BASELINES keys carry NO `src/` prefix (`styles/...`), so `keyIdx === -1` for EVERY row → vacuous pass. It re-creates the exact `void baselinePaths` inert-guard it claims to kill. Fix: iterate the KEYS directly, verify born-RED on 16+2=18.
-- **There is NO `--self-test` arm to "append to"** (`run()` invoked directly, no argv parse). BUILD the harness (argv dispatch + synthetic-fixture-over-tmpdir, the disposition-live shape).
-- **The wave-resolution bite names a non-existent `docs/tranches/*/waves/`** dir — re-point onto the REAL corpus (`execution/bg-build-map.md` + the `converge/BG-WS*/` SPEC tree + the ledgers); confirm each of the 11 BOOK wave-ids resolves there.
-- **Re-frame IRREDUCIBLE → ACCEPTED-residual:** `metaball.wgsl.ts`/`.frag.ts`/`flow-field.glsl.ts` are template-string `.ts` (carveable per the BB.W-CARVE5 byte-identical-splice precedent); `property-regs.css` holds 45 order-independent `@property` names (splittable). At least 3 of the 5 "IRREDUCIBLE" are accepted-not-un-carveable. The marker must read `// ACCEPTED(<grep-lock|cohesive-unit|low-value>):` (re-evaluable) — "IRREDUCIBLE" is a permanent-floor lie a future agent trusts.
-- **The gate does NOT force CARVE over re-pin** (a booked re-pin passes the §4 guard) — so "carve NOW" rests on P2 discipline, not a machine lock. Add a no-re-pin-for-ladder/shell clause OR say carve-vs-re-pin is a discipline P5 cannot enforce.
-- **api/index.ts (#16) cross-tranche sequencing:** pick ONE of "DRAIN (BH B2.2)" vs "accept after /api-fold." B2.2 runs in the BH tail (after WS12) — its BOOK must name a wave that drains BEFORE the cut, and the wave-resolution bite must accept the forward BH reference. Coordinate with P4.
-
-### P6 — proof:field-aurora composited-AA gate (critique 68%) — thesis confirmed, 5 build-holes
-**Converged + STRENGTHENED:** I read WS7's converged spec — `proof:field-aurora`'s designed arms are (a) a simultaneous-painter COUNT + (b) a design-agnostic field meanChroma CEILING. The 2.2 broken state had LOW field chroma (C 0.015–0.046) — its failure was pure DARK-MODE AA. **So WS7's chroma-ceiling arm would have PASSED the broken 2.2 state — P6's AA-over-composite arm IS the genuinely-missing third measurement.** The mechanism is de-risked (the 2.2 DELTA script really median-rejects + WCAG-over-composite; the visual-runner CI-armed/local-paint split is precedented).
-**OPEN (must resolve PASS 2):**
-- **Consumer #2 (dock-overview) is UNSOUND on two axes** — the ≥2-bar is at risk: (a) `.dock-label` is FICTIONAL (DockIconButton renders a bare `<slot/>` SVG icon; a glyph is a graphical-object at 3:1, not text at 4.5); (b) the +24px adjacent-patch sampler leaves the SMALL dock plate onto the raw field — a confident WRONG ratio (silent-wrong-answer). Drop dock-overview OR replace with a second SOUND raw-field/large-plate consumer + add a plate-membership check + the graphical-object 3:1 bar for icon glyphs.
-- **The born-RED LIVE anchor commit is WRONG:** `cb8ecdfc` is POST-fix (verified NOT an ancestor of `b3d65eec`; it contains the FIXED field) → re-shooting it captures GREEN. Correct to `b3d65eec~1` (`ebf6e45b`) or an earlier pre-dark-aware commit.
-- **Safari field-AA NOT covered** (on the ★★★ chronic): the Chrome-only Playwright capture can't see the WebKit composite, which collapsed DIFFERENTLY (Safari 1.91 / L0.55 vs Chrome 1.04 / L0.70). Decide: add a wkshot-live WKWebView arm to F-AA-LIVE, OR scope the gate to "Chrome composite; Safari deferred to proof:safari-parity/ba-gestalt" and reflect it in the name.
-- **value.js floor mis-framed:** WCAG `wcagContrastRatio` is a value.js **1.2.0** feature (seed line 102); package.json floor is `^1.0.0`. A ci/release hard-import module-throws on a fresh install resolving <1.2.0. Bump the floor to `^1.2.0` (clean-break, coupled to the BorderProgress 0.13.0-marker re-point).
-- **WS7 reconciliation + roster eligibility:** P6 reintroduces a design-sensitive per-pixel read WS7 §L.1 deliberately demoted — state + defend it (fixed WCAG bar, not a design choice) + add a machine-checkable roster-eligibility precondition (sampled field C ≤ recessive ceiling, fail-LOUD) so a FOCAL-vivid surface (WS5/WS6) appended at standing-enrollment can't false-RED or silently escape.
-- Build-order: only the device-free clauses (SOURCE count + F-AA-SELFTEST) are early-buildable; F-AA-LIVE needs the WS1 field frozen + Metal captures. State which clauses land at M4 vs the WS7 Metal slot.
-
----
-
-## 3. THE AMENDED WAVE PLAN (KEEP the DAG; the 5 sequencing amendments, now prototype-validated)
-
-| # | Amendment | Status after PASS 1 | Carries-forward to PASS 2 |
+| # | Claim (from a critique) | Re-verified live | Consequence |
 |---|---|---|---|
-| 1 | **Clear the 4 close reds FIRST in ONE atomic sweep** | **VALIDATED + DEEPENED** — it's **6 gates** (R1–R4 + cascade glass-cal B3, glass-depth D3), and the dock sign-off is a ±2% brightness check not an identity loss | run `--run full` siblings-absent in /tmp; decide N+2 dead-chain depth; ratchet-cut-state honesty |
-| 2 | **Standing per-band close-battery sweep** | **VALIDATED + RE-SCOPED** — completeness via `closeDisease:true` manifest flag (the "12→4 re-mint" proves a fixed list is brittle); `["local"]` tag; honest ≥2-consumer | build the manifest-flag completeness clause; engine env-export OR drop "automated" labels |
-| 3 | **Front-load the C-SAFARI spike** | **VALIDATED — floor ESCAPED** (renderable on Metal) | the spike proved the EASY leg; PASS 2 must prove the two-pass texture-sample path + the Δ5 chroma fence + non-author gestalt + R3 watchdog + dark-AA |
-| 4 | **Complete WS3 Safari-ceiling + move a glass-cascade carve BEFORE WS8** | **VALIDATED — carve seams real + byte-isomorphic** | rebuild the P5 lock (born-RED not born-GREEN); ACCEPTED-residual doctrine; carve-vs-re-pin discipline clause |
-| 5 | **Incrementalize the BH CLAUDE-delete tail** | **VALIDATED — census now exact (18 literal / 16 content / 14 assert / 2 ENOENT)** | scope the structure.md parser rewrite; close the HEAD-snapshot-vs-110-wave accumulation gap |
+| **G4 — FULL RETIREMENT is SAFE** | The dock still paints blur after the `--glass-blur-dock` delete | `shell.css:29` `--dock-surface-blur: var(--glass-blur-resting)` + `:159` `backdrop-filter: var(--dock-surface-blur)`; **0** `var(--glass-blur-dock)` readers in src/demo | `--glass-blur-dock` is a genuine orphan of the intentional BD.W-DOCK-CORE 8px unification — full retirement changes ZERO paint. **P-CLOSE's N+2 = FULL RETIREMENT decision HOLDS.** |
+| **G1 — the C-SAFARI fence number is on the WRONG uniform** | The ship shader splits R/B by `uChromatic` absolute rim-offset, NOT the spike's invented `uDispersion` UV-fraction | `docs/tranches/BG/audit/glass-field-shaders.json` ships `uChromatic` (`ca = inward·rim·uChromatic·0.0045`); all 3 spike fixtures swept `uDispersion 0.025`, a uniform the ship shader cannot express | **The spike's "transcribed verbatim" claim is FALSE.** The 0.025 fence value + the recommended `dispΔC p99 ≤ 0.005` gate clause are keyed to a uniform that does not ship. **The dominant cut-risk did NOT advance; the binding question got HARDER.** |
+| **G2 — the wave→surface map should be DERIVED, not hand-authored** | `surface-closure.mjs` already exports the join | `collectPaintClosure`@136, `routeSeeds`@201, `surfaceClosure`@235 — the SAME route/ship-attestation authority the gate already trusts | **P-GESTALT's "decisive miss" HOLDS.** A hand-authored `wave-surface-map.md` re-mints the stale-PASS lie one level up; the map must be `collectPaintClosure(routeSeeds(s)) ∩ wave.Files` + a completeness clause. |
 
-**Build order (KEEP):** `WS1→WS3→WS2→WS5→WS6→WS4→WS7(core)` → `WS8→WS9→WS10→WS11` → `WS12(capstone)` → `BH[WS12] restructure tail`.
-
-**Non-negotiable ordering fence:** the cut MUST NOT precede WS7 phase-12 (the 5 live-render gates) + the W-REFLECT3 gestalt-flip — they are the only automated net for the field-composited-AA class.
-
-**Mechanical CONSUMEs (keep-as-spec'd, low uncertainty):** kf 5.1.0 `DragOptions.snap`/`Oscillator`; value.js 1.2.0 `sampleColorRamp`/`interpolateHue('shorter')`/`wcagContrastRatio` (**repoint the stale BorderProgress `0.13.0 oklchSpectrum` marker**; **bump the value.js floor to `^1.2.0`** per P6); perfect-freehand drop at WS9; W-TAILWIND4-IDIOM = "evaluated, not applicable."
-
-**SOTA/identity fences to HOLD:** WebGL2+WGSL dual-stack is the correct cross-browser bet (CSS-SVG `feDisplacementMap` is Chromium-only, re-confirmed dead on Safari); record the deliberate calm-blur divergence from iOS-27; `contrast-color()` flips the SURFACE not the warm-amber ink; **the K2 chroma fence (refraction is DEPTH not hue, dispersion 0.02–0.03) is binding** — the P1 spike's 0.5 rainbow is a fixture artifact, not the ship target.
+These three confirmations are why the agglomerated number does NOT simply inherit the spec's 70% optimism on G1, and why G4/G2 are firmly anchored.
 
 ---
 
-## 4. OPEN CLUSTERS (what PASS 2 must converge)
+## 1. WHAT-IS-BUILT TRIAGE — converged ~93% (UNCHANGED; two prototype passes concur)
 
-1. **C-SAFARI in-situ:** render the two-pass `field-FBO→textureSampleLevel(uv+displacement)` on Metal within the Δ5 0.02–0.03 chroma fence (thin R/B fringe, NOT the 0.5 rainbow); non-author gestalt verdict over WS1's real field; R3 30s GPU-watchdog on an on-screen window loop; dark-AA-over-bright-ridge (C12) for content surfaces; land the spike as committed C17 evidence.
-2. **SWEEP_SET completeness (P3):** the `closeDisease:true` manifest-flag clause + the `["local"]` tag + honest consumer accounting; reconcile to the 4-at-HEAD born-RED anchor.
-3. **Atomic close-fix finalized (P2):** `--run full` siblings-absent in /tmp; the N+2 dead-chain clean-break depth; the 6-gate cascade; ratchet-cut-state honesty; dock ±2% brightness dual-engine sign-off.
-4. **P5 lock rebuild + doctrine:** born-RED marker-guard (key iteration), real self-test harness, real wave-corpus resolution, ACCEPTED-residual marker, carve-vs-re-pin clause, api/index.ts cross-tranche sequencing.
-5. **P4 CLAUDE-delete:** the structure.md parser rewrite (4 ASCII-tree readers), the 110-wave accumulation discipline, CANON_TOKENS drift lock, honest B4b-content sizing (~11 homes).
-6. **P6 field-aurora:** a sound 2nd consumer, the correct born-RED commit (`b3d65eec~1`), the Safari-arm decision, the value.js `^1.2.0` floor, the roster-eligibility precondition.
-7. **ba-gestalt close cost (un-prototyped, OPEN):** estimate the cut against **~16 surface-flips × 2 engines × 2 modes** still owed; confirm G1 `pngDimensions` tolerates Chrome-desktop @1x (1440×900) vs Safari @2x (2880×1800) asymmetry, or a strict dimension assert trips at the close.
-8. **Cross-ownership seam (un-prototyped, OPEN):** confirm BG-WS5 carries the viz-subpath (`/constellation`, `/fourier-field`) consumer migration (SLIDES named) when it drops/renames a key, or a real break falls between BH-B7 and BG-WS5; resolve at the post-WS12 export-delta re-baseline.
+Zero restart candidates. The cursor is honest at the row level (35 cited SHAs resolve, no fabrication, no DONE-without-code), no wave clobbered an earlier deliverable, no gate was weakened to pass. The landed bands are keep-verified with on-disk dual-engine paint and no inflation:
+
+- **keep-verified (27 DONE + 3 live-fixes):** WS7 Stage-0 (0.1–0.6) · BH [C] (1.1–1.12) · WS1 (2.1–2.6) · WS3 3.7 IDIOM-FACTOR(core) · WS4 10.25 CATEGORY-CARD-WARM · LX.1 D-1 CONSTELLATION-PARALLAX-OFF · LX.2 D-2 PAPER-GRAIN-WARM · LX.3 D-3 DOCK-COLLAPSE-DIR. (Full evidence: `pass-1-spec.md §1` + `DEFECT-LEDGER.md`.)
+- **half-baked (paint genuinely owed):** WS3 **3.1 CARTOON-INK-GAMUT** (source landed, PAINT-PENDING, hostage of every WS4 gestalt verdict) · WS3 **3.6 GLASS-BLUR-PEER** (radius collapse correct, PAINT-PENDING, the source of close-reds R1/R2 + a ±2% brightness phantom no device-free gate sees).
+- **The permanent cardinal-lesson proof:** 2.2 FIELD-AURORA shipped device-free-GREEN at **1.04:1 muted** over the composited dark field (caught only by re-paint luck → 13.87:1). This is the live indictment of the 2 paint-owed waves and the entire rationale for the WS7 live-render gates + the gestalt oracle being the binding net.
+
+The 4 confirmed close reds (R1 `no-god-module` ladder.css 527/shell.css 510 · R2 `no-dead-token` `--glass-blur-dock` orphan · R3 `gen-ci-fresh` missing `glass-idiom-factor` · R4 `tag-parity` `category-card-warm` local-only) all re-ran RED live and are the SAME "green own gate / leave shared close gate RED" disease that re-mints with new artifacts each batch (12→4 proves a fixed sweep is brittle).
+
+---
+
+## 2. THE 6 PROTO+CRITIQUE PAIRS SYNTHESIZED (per-cluster verdict)
+
+Critique convergence this pass: **P-CLOSE 80 · P-CLAUDE-DELETE 80 · P-SWEEP 62 · P-GESTALT 60 · P-CSAFARI 58 · P-FIELD-AA 53** (mean 65.5 vs prior 64.5 — flat mean, shifted composition: the two implement-spikes firmed, the dominant risk did not, one cluster regressed).
+
+### G4 · P-CLOSE — the 6-gate atomic close-fix + N+2 depth → **~80% (near-closed; execution-verify owed)**
+**CONVERGED (verified on disk this pass):** the 6-gate atomic sweep (R1–R4 + glass-cal B3 + glass-depth D3) flips ALL GREEN in one diff; the 350-static-gate CLEAN-base differential surfaced **no 7th logic red**; **N+2 = FULL RETIREMENT** is DECIDED and SAFE (the dock still paints blur via `--glass-blur-resting`; `no-dead-token` re-reports 0 after the atomic full-chain delete → no N+3 hidden level). The cascade is **6 gates but 5 multi-site assertions** (glass-cal PRE_WAVE_RADII:64 + B3:306-314 dark-dock + glass-depth FROZEN:79). The two carves (ladder.css 527→470 grain-tail → `glass/grain-overlay.css`; shell.css 510→444 placement-tail → `dock/shell-regions.css`) are reader-gate-transparent (gates use `readMonolith`/`readDockCss` concatenation → FOLLOW the carve).
+**OPEN (must-resolve PASS 2 — all execution-verification, no open design):**
+1. **Run `npm run build` and prove dist CSS byte-identity** for both carves — the W-CARVE3/4/5 hard invariant the spike NEVER executed (an `@layer`/`@import`-order shift silently moves dist bytes).
+2. **Capture the binding paint π for the grain-tail carve** (`tests-visual/liquid-hover.spec.ts` + the `proof:ba-gestalt` dock/CTA verdict) — the moved `.glass-*::after` IS BB.W-LIQUIDHOVER's disco-grain-pop-kill; device-free `proof:glass-cohesion` GREEN is insufficient per §0.F.
+3. **Pin the `proof:precept-current` W2 interaction** — the 2 new carve leaves must be glass/*-glob-covered OR home-mapped in design-idioms §3 OR non-self-tagged (the "ZERO reader-gate edits" claim never enumerated this src/styles census gate).
+4. **Run `gates.mjs --run full` in a FRESH `/tmp` worktree AFTER committing** — the deferred step that alone proves no 7th red across the deps-bearing arms (typecheck/test/build/motion-suite version-stamp); the build arm is where the carve-byte risk surfaces.
+5. **Re-locate the 5 edit sites + 2 carve seams against LIVE HEAD `6369ad6e`** (the spike worked from stale `b716b5be`); decide R4's tag set (spec said `ci`; spike applied `["local","ci","release"]` matching the `field-accent-reconcile` precedent — close the discrepancy).
+
+### G5 · P-CLAUDE-DELETE — the BH CLAUDE.md-delete safety → **~78% (scoped; census + 2 undefined funcs owed)**
+**CONVERGED (re-verified):** the headline — the GENERATED `structure.md` is FLAT BULLETS (`- name/`) while the 4 §Structure readers parse a box-drawing ASCII tree (`│ │ ├── name/`) whose regexes match ZERO lines → a path-swap-only re-point is a SILENT VACUOUS PASS = a PARSER REWRITE; the **2 ENOENT-crashers** (structure-sync:74, doc-consistency:197 — raw `readFileSync`, THROW → can abort the whole `--run full` battery) are PRECISE (the other readers existsSync-guard); `auditCanonHomes` is existence-only + UNWIRED (0 importers) + RED at HEAD; `useBloomUp` is **KEEP-IN-PLACE** (18 files / 15 consumers / published via motion/index.ts:61 — the "single-consumer relocate" premise was backwards); the B4f born-RED-LAST-act gate `proof:claude-deletable` shape is right; the /tmp throwaway dry-run respects the fence.
+**OPEN (must-resolve PASS 2):**
+1. **Produce the FULL 12-site reader census with per-gate fate** — the proto specifies only 4 (§Structure); the **8 non-§Structure doc-presence readers** (dock-rail-realize:258 R5, handmark:249 W6, dock-unify:656, dropdown-fix:419, easing-primitive:365, phase-palette:335, spa-view:299, surface-axis:520) each carry a POSITIVE "CLAUDE.md documents …" assert that goes RED/vacuous after delete and needs a `gate → canon-home-key → CANON_TOKENS-anchor` mapping. Reconcile the proto's mutually-inconsistent counts (12 RED-ers / 16 content-reads / 2 crashers).
+2. **Define `canonTokensSound()`** — invoked in C1 (§5a) as part of the GREEN condition but DANGLING (no code anywhere).
+3. **Close or explicitly BOUND the deepest accumulation hole** — `canonAccumulationSound` scans only BG/BH tags; CANON_TOKENS is a hand-picked ~15-anchor minimum, NOT an enumeration; a legacy (BA/BB/BC/AX) contract with no anchor AND no home is silently lost at delete with the gate green. Add a coverage gate (every `### …(XX.W-…)` heading maps to a home body) OR record an explicit accepted-residual + a named human-review step.
+4. **Decide the verbatim-tag-preservation contract** — `homeBodies.includes(tag)` requires the exact `BG.W-X` string to survive re-home prose, else a homed-but-tag-dropped contract false-REDs.
+5. **Resolve the README scope mismatch** — auditCanonHomes gates 15 manifest homes (5 component READMEs) but spec G5 names ~28 owed and `proof:colocation` does NOT force the other 23; state 15→0 ≠ all-28-done + assign the 23 an owner.
+6. **DROP the vacuous structureEnumerates smoke-check** (§1c) — a clause that cannot RED is the pattern BH kills; clean-break says drop, not keep-as-self-documenting.
+
+### G3 · P-SWEEP — the standing `closeDisease`-manifest completeness clause → **~62% (mechanism solid; completeness floor relocated + runner contradiction)**
+**CONVERGED:** the manifest-flag deliverable shape (a `closeDisease:true` flag on all class gates + `SWEEP_SET = GATES.filter(g=>g.closeDisease)` DERIVED, not hand-listed); the `["local"]` tag (a ci tag RE-SEEDS R3); the dual-signal `sweepVerdict` (execSync-throw catches `gen-ci-fresh` which writes NO JSON; the JSON-status leg catches a future exit-0-on-fail — BOTH empirically necessary); the 8-gate class (adds gate-script-parity + storybook-complete vs the prior 6); `gate-manifest-sound` is `realDefect=FALSE` at HEAD (112s; stale .cache + dirty-tree) → routed T2/close-only.
+**OPEN (must-resolve PASS 2):**
+1. **The completeness floor is RELOCATED, not eliminated** — C2's inverse-bite compares against `auditedClassGates`, itself a HAND-MAINTAINED registry; a forgotten `closeDisease:true` will equally forget the registry entry → C2 passes vacuously. Either derive `auditedClassGates` from a recorded STRUCTURAL heuristic (device-free ∧ ∈ `--run full` ∧ reads one of {gates.mjs, ci.yml, package tags, CSS line-budget, token graph}) with the false-include tail as a self-test bite, OR drop the "never a hand-list" headline and state honestly it is a hand-audited registry made VISIBLE by the inverse-bite.
+2. **Option A (engine env-export 2nd automated consumer) is INFEASIBLE** — `bg-bh-execute.wf.js` is "pure control-flow, NO filesystem/git access" (grep `spawnSync|execSync|child_process` → 0); there is no flip-step to add LOC to. Accept Option B: ONE OS-automated guard (the commit-msg git-hook, auto-exercised by the engine's commit-per-wave cadence, gated on the currently-UNSET `GLASS_UI_ACTIVE_TRANCHE`) + recorded disciplines + the armed self-test — no "two automated" overstatement.
+3. **The runner contradiction** — `--run sweep` CANNOT delegate to `runMode` (which is FAIL-FAST: `process.exit(1)` on the first red, naming only `no-god-module`, never returning to read JSON). It must be a NEW dispatch branch that spawns every gate, captures each exit, reads each JSON, then exits once on `sweepVerdict`. Rewrite §1.2 ("faithful by construction" is false) and §5 ("RED naming R1–R4" is not producible by `runMode`).
+4. **Cost honesty** — the "~1.8s" is summed node-direct; the npm-run-per-gate mechanism adds ~7 nested npm spinups (~3.5–5s/hot-commit). Invoke proof scripts node-DIRECTLY in the FAST bite (the ledger-bite idiom).
+5. **Orphan runner + born-RED enrollment** — after T0==T1==SWEEP_SET_FAST and gate-manifest-sound→proof:full, nothing runs the full `gates:sweep`; collapse or give it a real consumer. Make the **P-CLOSE-before-P-SWEEP edge HARD** (landing P-SWEEP first seeds a new `--run full` red since close-sweep is `["local"]` ∈ full) + enroll `proof:close-sweep` in the born-RED-by-design register beside ba-gestalt/ship-attestation.
+
+### G2 · P-GESTALT — the ba-gestalt roster reconciliation → **~58% (newly prototyped; diagnosis LOCKED, joinery WRONG)**
+**CONVERGED (verified-live):** the keystone is 0/10 (4 stale = shell·dark-register·page-band·cross-repo); `proof:ba-gestalt` is `[local,ci,release]` so the 5.0.0 tag CANNOT fire as wired; the §4 reconciliation (re-point capture paths + re-stamp + flip verdict) was NEVER executed; the cursor↔roster split is real (`bg-paint.wf.js` flips the cursor, NEVER touches the roster); G1 dimension asymmetry is RESOLVED on disk (≥1280 floor, no ceiling, no per-row equality → Chrome @1x 1440×900 and Safari @2x 2880×1800 both clear); reflect-stamp over the single exported `surfaceHash` is the right single-source move; Model-B late-sweep is the correct schedule.
+**OPEN (must-resolve PASS 2):**
+1. **DERIVE the wave→surface map** from `collectPaintClosure(routeSeeds(s)) ∩ wave.Files` (it ALREADY exists — §0 G2) — do NOT hand-author `wave-surface-map.md` — and add a **PARITY-C completeness clause** (every paint-source a wave's diff touches lands in some mapped surface's closure, else a wave under-declares + re-mints the stale-PASS lie).
+2. **Reformulate or DELETE PARITY-B** — as written ("roster-PASS ⇒ every painting wave DONE") it is UNSAT mid-tranche for every multi-painter surface (page-band has ≥5 painters) and vacuous at the cut. Weaken to "no roster-PASS while any painting wave is PENDING/BUILDING" OR drop it; RETRACT the false §3.3 "flips GREEN surface-by-surface per band" claim.
+3. **Widen the `bg-paint.wf.js` FENCE (line 22)** allowed-edit set to include `docs/tranches/BG/audit/reflect/` — the §4 reconciliation cannot land while the fence prohibits the judge from touching `reflect/`.
+4. **Specify the route→surface CANONICAL-CAPTURE selection rule** — a surface owns ONE capture-light/dark file but the judge captures N per-route PNGs; define which route's capture becomes canonical AND confirm its layout aligns the surface's fractional probe box (a mis-selected route → false band read).
+5. **Cost/schedule the wire on the C-SAFARI dependency** — the dual-engine 16×4-PNG model assumes the unproven (G1) Safari capture pipeline; state the Chrome-only 2-PNG fallback if Safari is blocked; bound the late-sweep strictly AFTER the last src/ paint mutation.
+6. **Own the Safari-pixel decision HERE, not deferred** — the operative band is Chrome-ONLY; the FIELD-AURORA Safari-collapse (1.91 vs 1.04) is gate-invisible. Decide: roster gains a Safari pixel column OR operative verdict is explicitly Chrome-only with Safari carried by `proof:safari-parity`.
+7. **Flag the CLAUDE.md↔code drift** — `proof-ba-gestalt.mjs` at HEAD has ZERO mobile-twin code (no "mobile" string), but the BB.W-GESTALT-GATE2 note claims "G2 16 mobile twins READ + viewport-faithful." Confirm whether WS7/W-REFLECT3 expects mobile-twin gating (if so the gate re-point dropped an arm + the close cost rises).
+
+### G1 · P-CSAFARI — the in-situ two-pass refraction within the chroma fence → **~50% (GPU floor REAL; fence number / ship-pass / perf / dark-AA all owed — the likeliest 4th-time miss)**
+**CONVERGED (the genuine de-risk):** the field→FBO→`texture(uv+disp)` HANDOFF renders FRAMEBUFFER_COMPLETE on real M5 Max Metal (ANGLE Metal, the SAME backend WebKit drives) with zero compile/sRGB/LOD drift — the seam the prior `glassShader-tier2.wgsl` never exercised (it took `background_texture` as an input uniform). The Tier-1 WebGL2/GLSL floor I rendered IS the universal Safari path (Safari 15+) → build it FIRST as the chronic-closing C17 artifact.
+**OPEN — the headline numbers DO NOT TRANSFER to the ship artifact (verified §0 G1):**
+1. **Re-point the fence onto the SHIP operator** — delete the invented `uDispersion` fraction; the ship splits R/B by `ca = inward·rim·uChromatic·0.0045` (`glass-field-shaders.json`); re-sweep the fence on `uChromatic`; key the gate clause `dispΔC p99 ≤ ε` to `uChromatic` with the lived bake stated as a uChromatic number + the `--glass-edge-dispersion` token mapped explicitly.
+2. **Render the FULL source-of-truth pass** (anisotropic metal drapery + uMetalStrength composite + the K12 plate VALVE `smoothstep(uValveKnee,1,structLuma)`) — all 3 fixtures stop at `lensed=mix(lensed,soft,0.35)`; the chroma fence is measured over a synthetic 4-cycle band-grid whose edge-spectrum is nothing like the drapery the fence governs.
+3. **Re-run R3 watchdog on the FULL shader** (drapery + valve + 2nd curlFBM) at 2880×1800 / N≤8 / sustained, and re-measure real shader-compile time against the WebKit ~2s ceiling — the cheap-shader p50 2.8ms (~3× lighter, one fewer fbm-curl) does not bound the ship cost.
+4. **Fold C12/R6 dark-AA-over-bright-ridge INTO this spike** — it is NOT orthogonal; it is resolved by the SAME valve in the SAME fragment shader the spike omitted, unexercisable on a fixture with no bright ridge.
+5. **Calibrate the chroma fence over the WS1 aurora+drapery field**, not the synthetic band-grid (per-pixel fringe is field-content-dependent).
+6. **Name the residual ★★★ chronic the build still owes** — Safari.app `navigator.gpu` (C16) + the WGSL Tier-2 FBO-first-pass capture harness (C18); the spike de-risked Tier-1 (already treated as proven), NOT the leg that missed 3×.
+
+### G6 · P-FIELD-AA — the field-composited-AA gate's 2nd consumer + anchor + Safari arm → **~53% (REGRESSED 68→53; anchor FIXED, consumer UNSOUND, gate NOT green)**
+**CONVERGED:** D2 — the born-RED anchor `cb8ecdfc` IS 2 commits AFTER the fix `b3d65eec`; correct anchor = `b3d65eec~1` = `ebf6e45b` (re-verified live via merge-base). D3 — the per-engine GL divergence is real + on-disk-proven (Chrome L0.70/1.04 vs Safari L0.55/1.91); the DROP-WITH-TRIGGER/never-Playwright-webkit/never-CI-red shape matches `proof:safari-parity`. The fractional-region sampler handles the @1x/@2x asymmetry.
+**OPEN (must-resolve PASS 2 — the core D1 fix is unsound):**
+1. **Replace consumer #2** — `/display/card` is UNSOUND: `card.vue` self-stages TWO contained `DEFAULT_AURORA_CONFIG` auroras explicitly authored "high-frequency/busy/bright" (card.vue:23,147,299,323) → its CardDescriptions composite over the VIVID contained field (the case §6 EXCLUDES); the smoothness-validity gate (stddev<9) would false-RED them. Pick + ON-DISK-VERIFY a real Topology-B route: a calm glass Card with a genuine CardDescription over the RECESSIVE shell field and NO contained GL (a content route — forms/data/feedback). The `/foundations/colors` fallback is INVALID (same route+field as consumer #1 → fails ≥2-DISTINCT-topology).
+2. **Reconcile gate-not-green-at-HEAD** — the fixed-state light·chrome hero eyebrow `.section-label` is **4.15:1** (DELTA.md:101 — the exact register enrolled as consumer #1) → dual-engine F-AA-LIVE REDS over fixed HEAD light/desktop (4.15<4.5). Either couple gate-green to a scheduled light-eyebrow polish fix OR honestly re-class/threshold the eyebrow; "over fixed HEAD both GREEN" is false.
+3. **Re-ground the self-test fixtures honestly** — the invented RGB triples compute 1.108/1.446/10.492 (value.js 1.2.0), NOT the claimed "recorded" 1.04/1.91/6.7; derive fixtures from the actual recorded composite/ink samples. AND add a device-free test of the risk-bearing `sampleCompositeBehindText` (synthetic smooth-vs-vivid PNG) — today the only test of the within-plate clamp is the `["local"]` live arm.
+4. **Make the device-free Safari coverage real OR drop "armed"** — the self-test's "Safari pair" is just a second sub-4.5 value testing no Safari behavior; ALL real Safari coverage sits in the `["local"]` DROP-WITH-TRIGGER leg.
+5. **Sequence the value.js `^1.2.0` peer-floor bump BEFORE/WITH the gate** — F-AA-SELFTEST hard-imports `wcagContrastRatio` at ci/release while the floor is `^1.0.0`; a fresh install <1.2.0 module-throws → can ABORT `--run full`. Add a try-guard/skip if the export is absent.
+6. **Resolve the Safari anchor/live sequencing conflation** (§3 routes the Safari leg through the Mac-only `--run ship` M9 ceremony, but §7 says "pull EARLY M4/M8") + **state the PRM/temporal-determinism contract** (the shell aurora drifts per W-STAGE BA-VJS-2 → freeze to ONE deterministic static frame so a border-case ratio is reproducible).
+
+### G7 · the viz-subpath cross-ownership seam → **~40% (un-prototyped; a confirm-step)**
+Confirm BG-WS5 carries the SLIDES `/constellation`+`/fourier-field` consumer migration when it drops/renames a key, else a break falls between BH-B7 and BG-WS5. The post-WS12 re-baseline needs a HUMAN PUBLISH-vs-INTERNAL classification for any novel WS5/WS6 dir the fail-closed regen surfaces. Resolve at the post-WS12 re-baseline or fold into B7.
+
+---
+
+## 3. THE AMENDED WAVE PLAN (KEEP the DAG; the 5 amendments, re-confirmed + sharpened)
+
+**Build order (KEEP — DAG acyclic, every edge load-bearing-correct against live code):**
+`WS1 → WS3 → WS2 → WS5 → WS6 → WS4 → WS7(core)` → `WS8 → WS9 → WS10 → WS11` → `WS12(capstone)` → `BH[WS12] restructure tail`.
+
+**Non-negotiable fence:** the cut MUST NOT precede WS7 phase-12 (the 5 live-render gates: route-navigates / field-aurora / previews-render / uniform-blur / safari-parity) + the W-REFLECT3 gestalt-flip — the ONLY automated net for the field-composited-AA class.
+
+| # | Sequencing amendment | Status after this pass |
+|---|---|---|
+| 1 | **Clear the 4 close reds FIRST in ONE atomic 6-gate sweep** | **NEAR-CLOSED (G4 ~80)** — N+2 = FULL RETIREMENT verified-safe on disk; owed: build byte-identity + grain-tail paint π + precept-current pin + `--run full` /tmp + line-drift re-locate. |
+| 2 | **Standing `closeDisease`-manifest per-band sweep** | **CONVERGED-MECHANISM (G3 ~62)** — owed: completeness-floor honesty (auditedClassGates is a hand-list), drop Option A, the runMode-vs-spawn-all rewrite, cost honesty, born-RED enrollment + the HARD P-CLOSE-first edge. |
+| 3 | **Front-load the C-SAFARI spike** | **PARTIAL (G1 ~50)** — GPU floor REAL but the fence number is on the WRONG uniform + the ship pass never ran + perf under-probed + C12 not folded. The dominant cut-risk; PASS 2 must re-point onto `uChromatic` + render the FULL pass. |
+| 4 | **WS3 Safari-ceiling (3.3/3.4) + a glass-cascade carve BEFORE WS8** | **FOLDED into G4** — the R1 carve seams are the P-CLOSE carves (byte-isomorphic, reader-gate-transparent); the WS3 3.3/3.4 BLOCKING Safari rows stay correctly ordered before WS8. |
+| 5 | **Incrementalize the BH CLAUDE-delete tail** | **SCOPED (G5 ~78)** — owed: the full 12-site reader census + per-gate re-home, `canonTokensSound()` definition, the legacy-contract accumulation coverage, the README scope, drop the vacuous smoke-check. |
+
+**Mechanical CONSUMEs (fire at the cut):** kf 5.1.0 `DragOptions.snap`/`Oscillator`; value.js peer floor `^1.0.0`→`^1.2.0` (the WCAG hard-import + now coupled to the G6 gate); DROP the dead `perfect-freehand ^1.2.3` at WS9; DO NOT re-list the BorderProgress `oklchSpectrum` CONSUME (already discharged — `spectrum-walk.ts:22`); W-TAILWIND4-IDIOM = "evaluated, not applicable."
+
+**Identity/SOTA fences to HOLD:** WebGL2+WGSL dual-stack (CSS-SVG `feDisplacementMap` dead on Safari/Firefox 2026); the deliberate calm-blur divergence from iOS-27 (keep the at-rest STATIC brighter specular); `contrast-color()` flips the SURFACE via `contrast-color(var(--card))`, NEVER the warm-amber ink; **the K2 chroma fence (refraction = DEPTH not hue) is BINDING — and it is keyed on `uChromatic`, not the spike's `uDispersion`.**
+
+---
+
+## 4. OPEN CLUSTERS (PASS 2 convergence targets — by cut-risk × residual-uncertainty)
+
+1. **C-SAFARI in-situ (G1 ~50) — the dominant cut-risk.** Re-point the fence onto the ship `uChromatic` operator; render the FULL pass (drapery + uMetalStrength + K12 valve); fold C12 dark-AA-over-bright-ridge IN; re-watchdog the full shader; calibrate over WS1's real field; name the Safari.app navigator.gpu + WGSL Tier-2 capture-harness leg (C16/C18) as the residual ★★★ the build still owes. Land as committed C17 evidence.
+2. **field-aurora gate (G6 ~53) — REGRESSED, the weakest.** Replace `/display/card` with a sound calm-Card-over-recessive-field route; reconcile the 4.15 eyebrow gate-not-green; re-ground the self-test fixtures + add a device-free `sampleCompositeBehindText` test; sequence the value.js `^1.2.0` floor; state PRM determinism; resolve the Safari anchor/live conflation.
+3. **ba-gestalt reconciliation (G2 ~58) — the keystone, newly prototyped.** DERIVE the wave→surface map from `collectPaintClosure`; reformulate/delete PARITY-B; widen the wf.js fence; specify the route→capture rule; own the Safari-pixel decision; flag the mobile-twin code↔doc drift.
+4. **closeDisease completeness (G3 ~62).** Make the completeness floor honest (structural heuristic OR named hand-list); drop Option A; the runMode-vs-spawn-all rewrite; cost-honest node-direct invocation; the HARD P-CLOSE-first edge + born-RED enrollment.
+5. **Atomic close-fix execution-verify (G4 ~80).** `npm run build` byte-identity for both carves; the grain-tail paint π; precept-current W2 pin; `--run full` /tmp siblings-absent; re-locate against HEAD `6369ad6e`; settle R4's tag set.
+6. **CLAUDE-delete safety (G5 ~78).** The full 12-site census + per-gate re-home; `canonTokensSound()`; the legacy-accumulation coverage gate; README scope; drop the vacuous smoke-check; concrete deliverables (regen-structure main-guard, detectDeps refactor, the vitest fixture rewrite).
+7. **viz-subpath cross-ownership seam (G7 ~40, un-prototyped).** Confirm BG-WS5 owns the SLIDES `/constellation`+`/fourier-field` migration; the post-WS12 human PUBLISH-vs-INTERNAL call.
 
 ---
 
 ## 5. CONVERGENCE ACCOUNTING
 
-| Axis | Pre-pass | Post-pass | Driver |
+| Axis | Synth re-spec (70%) | This agglomeration | Driver |
 |---|---|---|---|
-| WHAT-is-built triage | 90% | **~92%** | 4-vs-12 reconciled; dock-saturate phantom resolved; C-SAFARI floor renderability escaped |
-| HOW-the-bulk-converges | 55% | **~62%** | 5 prototype designs converged (P2 73 · P4 71 · P6 68 · P5 67 · P1 58 · P3 50) — each with a bounded must-resolve, not an open question |
-| Gaps closed / advanced | — | 1 closed (dock-saturate phantom), 5 design-converged, 2 fully open (gestalt cost, viz seam) | — |
-| **Blended** | **62%** | **68%** | critique mean 64.5 + synth 62 + the dominant C-SAFARI-floor de-risk, offset by the chroma-fence + texture-sample + sweep-completeness new must-resolves |
+| WHAT-is-built triage | ~93% | **~93%** | Two prototype passes concur; the 3 crux refutations re-verified on disk firm (not weaken) the baseline. |
+| HOW-the-bulk-converges | ~62% | **~60%** | The prototype scrutiny REVEALED more holes than it closed on the high-risk clusters: G1 fence-number invalidated (the spike measured the wrong uniform), G6 regressed 68→53 (consumer unsound + gate not green), G2 joinery wrong — offset by G4/G5 firming to ~80. Per-cluster: G4 80 · G5 78 · G3 62 · G2 58 · G6 53 · G1 50 · G7 40 → mean ~60. |
+| **Blended** | **70%** | **72%** | +2 honest: every cluster now has a named owner + a precise must-resolve set (no vague open questions), and the cheapest-unblock (G4) + the CLAUDE-delete (G5) are near-closed — but the dominant cut-risk did NOT advance and one cluster regressed. |
 
-**readyToDevelop: FALSE** — 8 open clusters remain; the dominant C-SAFARI cut-risk is de-risked at the floor but its hard legs (two-pass texture-sample, chroma fence, dark-AA, watchdog) are unproven; ba-gestalt close cost + the viz cross-ownership seam are un-prototyped.
+**readyToDevelop: FALSE.** The dominant C-SAFARI cut-risk had its GPU floor proven but its binding fence number invalidated (wrong uniform) + its ship-pass/perf/dark-AA unrendered; the field-aurora gate regressed (unsound consumer + gate not green at HEAD); the ba-gestalt keystone's wiring (as-is, the 5.0.0 tag cannot fire) is diagnosed but its joinery is unbuilt. 7 bounded gaps with named owners remain.
 
-**PASS 2 focus:** prove the C-SAFARI in-situ two-pass refraction within the chroma fence (the dominant cut-risk's hard legs); finalize the atomic close-fix recipe (6-gate cascade + N+2 depth + /tmp `--run full`); build the P3 closeDisease-manifest completeness clause; rebuild the P5 lock born-RED; scope the P4 structure.md parser rewrite + accumulation discipline; sound the P6 2nd consumer + correct born-RED commit; and prototype the two un-touched gaps (ba-gestalt close cost, viz cross-ownership seam).
+**PASS 2 focus:** re-spike C-SAFARI onto the ship `uChromatic` operator with the FULL pass + C12 folded in (the dominant cut-risk); re-sound the field-aurora 2nd consumer + reconcile the gate-not-green; derive the ba-gestalt wave→surface map + fix PARITY-B + widen the wf.js fence; finalize the close-fix execution-verify (build byte-identity + grain-tail π + `--run full` /tmp); make the closeDisease completeness floor honest + rewrite the spawn-all runner; complete the CLAUDE-delete 12-site census + define `canonTokensSound`.
