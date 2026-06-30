@@ -67,7 +67,21 @@
        endpoints default to a no-op (`expanded == collapsed → scale 1`) so an unmeasured
        dock paints neutral. The actual `scale:` property is composed in shape.css (folded
        WITH the `--stretch` squish × the `--dock-punch-stretch` cartoon punch on ONE
-       compositor channel). KEEP `--dock-morph-t` (the shipped token — NO rename). */
+       compositor channel). KEEP `--dock-morph-t` (the shipped token — NO rename).
+
+       BG.W-DOCK-COLLAPSE-DIR — the size blend reads the DIRECTIONAL `--dock-expand-t`
+       (the expanded-ness 0=collapsed/1=expanded `morph.css` derives: expand `t`, collapse
+       `1−t`), NOT the raw morph PROGRESS `--dock-morph-t` (always 0→1). The raw progress is
+       direction-AGNOSTIC, so reading it made the convex blend `collapsed + Δ·t` play
+       collapsed→expanded for BOTH directions — correct on expand, but on COLLAPSE it
+       ballooned the box UP to the full expanded footprint, held there as the spring settled
+       at t=1, then SNAPPED to the resting collapsed size when `[data-morphing]` cleared (a
+       reproducible ~440px width reversal, the live "morph hover flicker"). The chrome
+       (bg/border/blur — `morph.css`) and the child stagger (`--dock-expand-t` reads below)
+       were ALREADY on the directional scalar; this aligns the SIZE with them. Expand is
+       byte-identical (`.expanded[data-morphing]` derives `--dock-expand-t: --dock-morph-t`);
+       only `.collapsed[data-morphing]` (`1−t`) is corrected, so the box now shrinks
+       monotonically expanded→collapsed with NO snap. */
     .glass-dock[data-morphing] {
         --dock-live: calc(
             var(--dock-collapsed-px, var(--dock-expanded-px, 0px)) +
@@ -75,7 +89,7 @@
                     var(--dock-expanded-px, 0px) -
                         var(--dock-collapsed-px, var(--dock-expanded-px, 0px))
                 ) *
-                clamp(0, var(--dock-morph-t, 1), 1)
+                clamp(0, var(--dock-expand-t, 1), 1)
         );
         --dock-size-scale: clamp(
             0.06,

@@ -447,14 +447,22 @@ export function detectE4() {
     // box RESERVES the measure-ONCE `--dock-expanded-px` (ONE layout solve, CDP-Layout-
     // flat) and the visible footprint rides `scale: var(--dock-size-scale)` from
     // `transform-origin: center`, where `--dock-size-scale = --dock-live/--dock-expanded-px`
-    // and `--dock-live = collapsed + (expanded−collapsed)·clamp(0,--dock-morph-t,1)`
-    // (BOUNDED by construction). E4 now witnesses THAT mechanism: the reserve names the
-    // measured endpoint (NOT --dock-morph-t per-frame), and the clamped size scalar derives
-    // off the convex blend. The actual `scale:` composite is folded in shape.css.
+    // and `--dock-live = collapsed + (expanded−collapsed)·clamp(0,--dock-expand-t,1)`
+    // (BOUNDED by construction). BG.W-DOCK-COLLAPSE-DIR — the blend scalar is the
+    // DIRECTIONAL `--dock-expand-t` (the expanded-ness 0=collapsed/1=expanded `morph.css`
+    // derives off `--dock-morph-t`: expand `t`, collapse `1−t`), NOT the raw morph PROGRESS
+    // `--dock-morph-t` (always 0→1). Reading the raw progress made the convex blend play
+    // collapsed→expanded for BOTH directions — correct on expand, but on collapse it
+    // ballooned the box to the full expanded footprint then snapped to collapsed (the live
+    // "morph hover flicker"). The chrome/child stagger were already on the directional
+    // scalar; this aligns SIZE with them. E4 now witnesses THAT mechanism: the reserve names
+    // the measured endpoint (NOT --dock-morph-t per-frame), and the clamped size scalar
+    // derives off the convex blend on the directional --dock-expand-t. The actual `scale:`
+    // composite is folded in shape.css.
     facts.reservesInlineSize = /inline-size:\s*var\(--dock-expanded-px\)/.test(layers);
     facts.reservesBlockSize = /block-size:\s*var\(--dock-expanded-px\)/.test(layers);
     facts.dockLiveBlend =
-        /--dock-live:\s*calc\([\s\S]*?--dock-collapsed-px[\s\S]*?--dock-expanded-px[\s\S]*?--dock-morph-t/.test(layers);
+        /--dock-live:\s*calc\([\s\S]*?--dock-collapsed-px[\s\S]*?--dock-expanded-px[\s\S]*?clamp\(\s*0\s*,\s*var\(--dock-expand-t/.test(layers);
     facts.sizeScale =
         /--dock-size-scale:\s*clamp\([\s\S]*?var\(--dock-live\)\s*\/\s*max\(\s*var\(--dock-expanded-px/.test(layers);
     // A per-frame-scalar size reserve (the regressed/seizure shape) would name
@@ -466,7 +474,7 @@ export function detectE4() {
     if (!facts.sizeScale)
         violations.push("E4: layers.css no longer derives `--dock-size-scale: clamp(... var(--dock-live)/max(var(--dock-expanded-px ...)))` — the ratio-free convex-blend size morph regressed");
     if (!facts.dockLiveBlend)
-        violations.push("E4: layers.css no longer computes the `--dock-live` convex blend off `--dock-collapsed-px`/`--dock-expanded-px`/`--dock-morph-t` — the bounded-by-construction size endpoint blend regressed");
+        violations.push("E4: layers.css no longer computes the `--dock-live` convex blend off `--dock-collapsed-px`/`--dock-expanded-px`/`--dock-expand-t` (the DIRECTIONAL scalar) — the bounded-by-construction size endpoint blend regressed (or reverted to the direction-agnostic raw `--dock-morph-t`, re-introducing the collapse-balloon)");
     if (!facts.reservesBlockSize)
         violations.push("E4: layers.css no longer reserves `block-size: var(--dock-expanded-px)` for the vertical morph (the vertical reserved footprint regressed)");
     if (!facts.noPerFrameReserve)
