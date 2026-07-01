@@ -37,7 +37,7 @@ NOT WS7 (the Pass-1 error, corrected in Pass-2). Joint cut as **5.0.0**.
 | W-dock-leaf-verify (B2.5) | **[WS2]** | WS2 | verify-only: `GlassDock`/`useDockFission` carved · `useDockContextSilhouette` DEFINITION-ABSENT · `AppSwitcher.vue:3` stale comment | ZERO BH carve (WS2 owns the dock god-modules). |
 | W-leaf-verify-ws4 (B2.4b) | **[WS4]** | WS4 | verify `createCanvasLifecycle`/`useWebGPUCanvas`/`useGlassBackdropLuminance`/`SegmentedTabs` leaf shapes; re-point BH gate expectations if BG diverged | ZERO BH carve. |
 | W-leaf-verify-ws5 (B2.4c) | **[WS5]** | WS5 | verify `useBlobSatellites`/`useGooDotMatrix` | ZERO BH carve. |
-| W-regen-swap (B2.1-swap) | **[WS12]** | WS12 | glob-swap + **delete `src/subpaths/` (79)** · regen `package.json` exports vs the **landed** surface · re-author `flatten-subpath-types.mjs` · rewrite `tests/public-surface.spec.ts` | re-baseline checkpoint (captures WS6 +2 siri, WS5 viz deletes/renames). |
+| W-regen-swap (B2.1-swap) | **[WS12]** | WS12 | glob-swap + **delete `src/subpaths/` (79)** · regen `package.json` exports vs the **landed** surface · re-author `flatten-subpath-types.mjs` · rewrite `tests/public-surface.spec.ts` · **bump the kf peer `@mkbabb/keyframes.js` `^5.0.0 → ^5.1.0`** (the pairing-debt B1-W3 `ba23c086` created by shipping `useDragMorph.ts:325 snap:` against kf-5.1.0's `DragOptions.snap` while the floor stayed `^5.0.0`) · **bump the value.js peer `@mkbabb/value.js` `^1.0.0 → ^1.1.1`** (the `wcagContrastRatio`-bearing floor-lift) — this is the FINAL pre-cut `package.json` single-writer, the LITERAL sole writer between WS9's pf-drop and `BG.W-CUT` | re-baseline checkpoint (captures WS6 +1 /siri-island published subpath entry, WS5 viz deletes/renames). **The floor-vs-API GATE clause is NOT owned here → `BG.W-GATE-FIELD-AURORA` owns the clause (MR-4, do NOT re-litigate) → PLAN.md:68 states the BUMP. The WS7→WS12 born-RED window on `proof:peer-conformance` is EXPECTED / BY DESIGN** — the joint 5.0.0 cut gates on BOTH the clause (BG-WS7) and this bump (WS12) landing; a mid-window `--run release` RED is not a regression. |
 | W-api-fold (B2.2) | **[WS12]** | WS12 | **fold-delete `src/api/` (both files)** · drop `./api` key · 3 orphan re-homes (Surface→/card, MenuItemVariants→/command, ControlSize→/forms) · re-point ~9 fixture gates | the only consumer break (§5). |
 | W-curated-relocate (B2.3) | **[WS12]** | WS12 | `src/types/html-attributes.d.ts`→`src/`; 11 curated flat `src/*.ts`→`src/entries/` | **key-preserving** (source-only, no export break). |
 | W-styles-colocation (B2.6) | **[WS12]** | WS12 | 9 SAFE sheets via GATHER+@import-rewrite; `critical-partition.mjs` UNCHANGED; ~30 gate path-literal re-points fold into the gates pass | **→ B4f edge** (§4). `diff -r dist/styles_before _after` EMPTY. |
@@ -98,7 +98,7 @@ exposure is one shared build-config file + one [C] carve that grazes a BG-owned 
 | `CLAUDE.md` | 15 BG specs append (WS1-WS12) + WS2/9/10/12 prose-rewrites | B4b-content (read), B4f (delete) | BH-no-touch until [WS12]; B4f absolute-last (§4). |
 | dock god-modules | WS2 (MORPH-UNIFY/DECOMPOSE) | none (B2.5 verifies, B4c extracts prose) | BH carves ZERO dock — WS2 owns it. |
 | viz/glass substrate god-modules | WS3, WS5, WS8 | none (B2.4b/B2.4c verify) | BH carves ZERO substrate — BG owns it. |
-| `vite.library.ts` | **WS6** (+2 siri subpath entries) | **B1-W1** (libraryExternal lines) | **the ONE genuinely-shared concurrent file.** Coordinate the FILE, not the lines, with a pre-land sync checkpoint between B1-W1 and WS6. |
+| `vite.library.ts` | **WS6** (+1 /siri-island published subpath entry — siri-waveform INTERNAL, no subpaths line) | **B1-W1** (libraryExternal lines) | **the ONE genuinely-shared concurrent file.** Coordinate the FILE, not the lines, with a pre-land sync checkpoint between B1-W1 and WS6. |
 
 **Merge-checkpoint protocol.**
 1. **Serialize-by-class** — every hard-collision BH wave that WRITES a BG-owned file is [WS12]; the
@@ -165,7 +165,7 @@ Three structural moves collapse the three stacked redundancy layers into ONE gen
   export each (Surface→/card, MenuItemVariants→/command, ControlSize→/forms).
 - **the regen (B2.1-mech [C] authors; B2.1-swap [WS12] runs)** — the fail-CLOSED generator + 3 policy
   maps; `--inject-unclassified`→exit 1, `--break-fidelity`→exit 1. Runs against the **landed post-WS12
-  surface** (re-baseline checkpoint, §2) so WS6's +2 siri subpaths + WS5's viz deletes/renames are
+  surface** (re-baseline checkpoint, §2) so WS6's +1 /siri-island published subpath (siri-waveform INTERNAL) + WS5's viz deletes/renames are
   captured by re-derivation, not the 4.2.0 snapshot. `flatten-subpath-types.mjs` re-authored for the
   colocated dts emit. B2.3's 11 curated flat-barrel→`src/entries/` moves are source-only, **key-preserving**.
 

@@ -124,7 +124,7 @@ Acyclic. **B4f (CLAUDE.md delete) is the unique sink** — the absolute last act
 | usePagerWorm.ts | 142 | BH-B2.4a | LANDED <500 |
 | useBloomUp.ts | 449 | BH-B2.4a | LANDED <500 |
 | PagerDots.vue | 433 | BH-B2.4a | LANDED <500 |
-| useCarouselWorm.ts / CarouselContent.vue | — | BH-B2.4a | **PASS-2 re-verify** (not at proto-T6's cited paths) |
+| useCarouselWorm.ts / CarouselContent.vue | 267 / 375 | BH-B2.4a | **CONFIRMED-LANDED** <500 at HEAD `eaf2c172` (CarouselContent.vue 375L → useCarouselWorm.ts 267L; the Pass-1 "not at proto-T6's cited paths" flag was a transcription artefact — proto-T6 cited them correctly) |
 
 No double-claimed carve target (BH dodges BG's src write-set by construction; the one historical double-owner liquid-morph.css adjudicated by BG §2.P1). **BH residual god-module carve ownership at HEAD = ZERO** — its 3 landed as proof:colocation cohesion relocations, not 500-bound splits (proof:no-god-module cannot FORCE them; GREEN-by-construction).
 

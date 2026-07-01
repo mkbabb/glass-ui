@@ -713,11 +713,18 @@ WS7 Band-0 no-silent-drop ledger also builds early (it has no integration depend
   the actual recorded ~1.04 triple, NOT a reverse-engineered 1.108). The light·chrome eyebrow `.section-label` is
   genuinely **4.15:1** over the recessive field (10–14px = 4.5 binding — re-classing to large=3.0 is the FORBIDDEN
   threshold-dodge) → `resolvedBy: BG.W-EYEBROW-LIGHT-POLISH` (WS3 Phase 3, NEW), NOT prose. *Files:*
-  `proof-field-aurora.mjs` (NEW), `proof-field-aurora-aa.mjs` (NEW), `scripts/reflect-capture-verify.mjs` (leaf
-  ext), `package.json` (value.js `^1.1.1`), **`scripts/proof-peer-conformance.mjs` (COHERENCE FOLD G4 — the SINGLE
+  `proof-field-aurora.mjs` (NEW), `proof-field-aurora-aa.mjs` (NEW) — **the value.js floor-lift's BINDING witness is this
+  wave's `wcagContrastRatio` hard-import** (first ships value.js 1.1.1; the hard-import reds without the floor), `scripts/reflect-capture-verify.mjs` (leaf
+  ext), **the G6 `proof-peer-conformance.mjs` gate-LITERAL pin `1.2.0→1.1.1`** (the value.js `1.2.0` string reconcile at
+  `:41,:46` — this wave edits the GATE FILE + the G6 spike, NOT `package.json`; the value.js peer floor EDIT `^1.0.0→^1.1.1`
+  in `package.json` is `BH-B2.1-swap`'s, the T4/T2 seam that closes the WS7-axis hole),
+  **`scripts/proof-peer-conformance.mjs` (COHERENCE FOLD G4 — the SINGLE
   owner of the floor-vs-API clause): ADD the assertion `kf floor ≥ first-`snap`-version 5.1.0 WHEN
   `useDragMorph.ts` references `snap:``, born-RED on `^5.0.0`** (it already touches `proof:peer-conformance` — the
-  natural home; the kf peer BUMP `^5.0.0 → ^5.1.0` itself is the `BH-B2.1-swap` deliverable per §G4). *Gate:*
+  natural home; the kf peer BUMP `^5.0.0 → ^5.1.0` itself is the `BH-B2.1-swap` deliverable per §G4). **`proof:peer-conformance`
+  is a NEGATIVE fence, NOT the value floor-lift witness** — it greens over BOTH `^1.0.0` AND `^1.1.1` (both admit npm-latest
+  1.1.1) and reds ONLY on `^1.2.0` (which excludes latest); the value floor-lift's actual witness is
+  `proof:field-aurora-aa`'s `wcagContrastRatio` hard-import above (do NOT conflate the two). *Gate:*
   `proof:field-aurora-aa` F-AA-SELFTEST/SAMPLER/ROSTER GREEN
   device-free (3/3) + F-AA-LIVE `[local]` born-RED; `proof:peer-conformance` floor-vs-API clause born-RED on `^5.0.0`. *Build-phase deferral:* the binding F-AA-LIVE arm — the
   dual-engine `_anchor` re-shoot at `ebf6e45b` (= `b3d65eec~1`, the verified pre-fix BROKEN state) in a throwaway

@@ -81,8 +81,8 @@ BH rows are wave-granular.
 ¹ B2.4a's carousel arm is the one [C]×WS10 graze — land the carve before WS10 rewrites `CarouselContent.vue`,
 or rebase onto WS10's render (`bh-interleave-map §2`).
 
-**The two FILE-granularity grazes** (coordinate at file, not line): `vite.library.ts` (B1-W1 × WS6 +2 siri
-subpaths) and `ui/carousel/CarouselContent.vue` (B2.4a × WS10). The four hot files (`scripts/gates.mjs`,
+**The two FILE-granularity grazes** (coordinate at file, not line): `vite.library.ts` (B1-W1 × WS6 +1 /siri-island
+published subpath entry — siri-waveform INTERNAL, no subpaths line) and `ui/carousel/CarouselContent.vue` (B2.4a × WS10). The four hot files (`scripts/gates.mjs`,
 `package.json`, `src/index.ts`, `CLAUDE.md`) are orchestrator-owned — agents emit `gatesRegistration`/
 `sharedFileRequests`, never write them. The interleave classes serialize every other hard collision to [WS12].
 

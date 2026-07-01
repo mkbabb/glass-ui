@@ -721,3 +721,86 @@ against HEAD `31b128aa` before applying (the spec resolves ran at `6c1f5386`/`99
 a mechanical re-anchor pass).
 
 **nextFocus: FOLD INTO THE TRANCHE SET.**
+
+---
+
+## 12 · BH COHERENCE AUDIT (2026-06-30) — the cross-TRANCHE coherence pass (BG+BH share `tranche/BG`, joint cut 5.0.0)
+
+This section APPENDS the BH coherence-audit outcome — the PARALLEL twin of §11's BG coherence note — and does
+NOT supersede §1–§11 (the master roster, defect map, sequencing, the §10 RE-SPEC RECONCILIATION, and the §11
+BG-coherence pass all KEEP). Where §11 interrogated cross-wave coherence WITHIN the BG plan, the BH coherence
+audit interrogates the cross-TRANCHE seams — the obligations BG's own just-folded audit placed ON BH that did
+not propagate to BH's executable plan/cursor, and the reciprocal BG-tree edges those obligations imply. It
+touches BOTH tranche doc-sets because several findings are cross-tranche fold obligations routed to the BG-side
+fold owner. The authoritative source is `docs/tranches/BH/audit/RESPEC-COHERENCE/AMENDED-BH-COHERENCE-PLAN.md`
+(the fold-ready plan, exact edits per cluster); the living master is `docs/tranches/BH/audit/RESPEC-COHERENCE/
+COHERENCE.md`. **HEAD `eaf2c172` · overall convergence 92% · developReady TRUE → fold into the tranche set.**
+**With this pass, BOTH monolithic coherence passes (BG §11 + BH §12) are COMPLETE.**
+
+### 12.1 · The dominant friction class + the standing truths
+
+Every high/medium BH-coherence defect is ONE class: **cross-tranche INCOMPLETE-PAIRING** — an obligation BG's
+just-folded audit placed ON BH that did not propagate to BH's own executable plan/cursor (the SEED-CONTEXT class,
+recurring one cross-tranche-handoff level up from §11's intra-band L×S near-misses). **ZERO restart; no feasibility
+blocker; no missing wave.** Every cluster reduces to bounded plan-text + gate-wiring amendment across BOTH
+interleave sides (BH `PLAN.md` + BG `bh-interleave-map.md`). The seed rule is binding: **BOTH sides of the
+interleave must agree post-fold.** The absolute write-fence (a BH pass may NOT write the BG-tree) forces the split —
+the BH-tree copies apply at develop directly; the BG-tree edges (`bh-interleave-map.md` · `EXECUTION-PROGRESS.md` ·
+`bg-build-map.md` · the BG `AMENDED-COHERENCE-PLAN.md`) route through the BG-side fold owner
+`AMENDED-COHERENCE-PLAN.md:214-215` (which already enrolls `bh-interleave-map §2+§4` + the `PLAN.md:93` gate-form
+swap), recorded here so the two agree.
+
+### 12.2 · The 6 resolved clusters (92% convergence)
+
+Each cluster is a concrete amendment to the ALREADY-FOLDED BG+BH plan; the convergence is critique-weighted after
+the mustResolve folds.
+
+| Cluster | Name | Sev | Resolution (the load-bearing fold) | Status |
+|---|---|---|---|---|
+| **C1** | kf-peer three-sided fold | HIGH·LIVE | The MR-4 split PRESERVED, NOT re-litigated: the CLAUSE (`proof:peer-conformance` gains "kf floor ≥ 5.1.0 WHEN `useDragMorph` references `snap:`", born-RED on `^5.0.0`) is `BG.W-GATE-FIELD-AURORA`'s single deliverable (bg-build-map:717, MR-4); the BUMP (`package.json` peer `^5.0.0→^5.1.0`) is `BH-B2.1-swap`'s (the FINAL pre-cut `package.json` single-writer). ALL THREE docs — BH `PLAN.md:68`, BG `bh-interleave-map.md:40`, BG `EXECUTION-PROGRESS.md` rows 12.5 (clause) + 18.1 (wave-name widened) — state the **WS7→WS12 red-window** (the drag gesture stays a LIVE no-op until B2.1-swap's bump lands post-WS12) as EXPECTED / BY-DESIGN, not an open bug; a mid-window `--run release` RED is not a regression. | RESOLVED (three-sided; BG-tree sides → BG fold) |
+| **C2** | B7 consumer-migration roster | HIGH | The roster COMPLETED from 2 → 4 rows (`asks-and-consumes.md`): +row 3 atlas `migrate-ring-to-focus-ring-color` (`--ring` rename, 12 bare/11 files) + row 4 bbnf `bbnf-glass-blur-dock-retune-no-op` (`--glass-blur-dock` retire, `preset.css:230` live). BOTH stale-count sites fixed — `PLAN.md:106` "exactly 2" AND `PLAN.md:134` "2-ask" (the SECOND site the resolver missed; `grep -c "2-ask"` must return 0 post-fold). Mint `proof:crossrepo-asks:bh` (source-doc AUTO-SCAN, born-RED 18/23 → GREEN 23/23; NOT a hand-list count), registered in the B7 `W-api-ask-roster` wave's Gate set. The bbnf row's PRIMARY born-RED witness is `proof:retired-token-consumers` (BG-owned); crossrepo-asks:bh only records the id. | RESOLVED (roster + gate built) |
+| **C3·C6** | minor fixups (16-reader · gate-form · +2-siri) | MED/LOW | The `PLAN.md:93` B4f gate is a GATE-FORM swap (item-b): the bare-rg form (`rg -l 'CLAUDE.md' = 0`) CANNOT pass at HEAD → swap to `proof:claude-deletable` GREEN (this is the C3C6 crit's load-bearing correction; the `:186`/`:151` numeral misattribution lives only in the proto — `PLAN.md:93` is already content-anchored). The `+2 siri` census widens to FIVE literal sites — `PLAN.md:68`+`:116` + `bh-interleave-map.md:40`+`:101`+`:168` (`:101` is the T6-missed 5th, the `vite.library.ts WS6` row) → each rewrites to `+1 /siri-island` (siri-waveform is INTERNAL — a WebGL2 leaf composed by SiriIsland; /api rises above 203). `bh-interleave-map:112` is count-NEUTRAL ("WS6 siri", no literal) — stays untouched. | RESOLVED (5-site + gate-form swap + :112 neutral) |
+| **C4** | single-writer symmetry (value.js floor) | MED | ABSORB (over downgrade): the value.js peer-floor edit `^1.0.0→^1.1.1` folds INTO `BH-B2.1-swap`'s single-writer block, so B2.1-swap is the LITERAL sole `package.json` writer between WS9's pf-drop and `BG.W-CUT` (symmetric with the kf bump); `EXECUTION-PROGRESS.md` row 19.1 (`BG.W-CUT`) changes from an EDIT-claim to an ASSERT-claim (the floor was LANDED at B2.1-swap; row 19.1 only verifies it, does not re-edit). **PRECISION (load-bearing):** `proof:peer-conformance` is a NEGATIVE fence that greens over BOTH `^1.0.0` AND `^1.1.1` (reds only on `^1.2.0`, which excludes npm-latest) — it is NOT "the floor-lift witness"; the ACTUAL binding witness is `proof:field-aurora-aa`'s hard-import of `wcagContrastRatio` (first ships value.js 1.1.1, BG-owned row 12.5). The `bg-build-map:717` reword (name the GATE FILE + G6 spike, drop `package.json`) is LOAD-BEARING — it closes the real WS7-axis single-writer hole; the absorb DEPENDS on it landing. | RESOLVED via ABSORB (+ 3 precision corrections) |
+| **C5** | B4f HARD-edge + the ENOENT crashers | MED | Re-home `proof:doc-consistency.mjs:197`'s bare `readFileSync(CLAUDE.md)` (RELEASE-tagged — it THROWS ENOENT mid-`--run full`, aborting `git tag`) onto guarded `readCanon` of `structure`+`dependencies`; mint `proof:claude-deletable` born-RED (C-CRASH/C-RGZERO/C-HOMES) making B5c→B4f a HARD gate-enforced edge, NOT advisory prose; upgrade `auditCanonHomes(mode="content")` from existsSync-only to content-completeness (the SKELETON-marker discriminator + 200-char floor). **FIVE fold-obligations:** (1) the NEW dep-TABLE friction-class seam — `citedDeps` parses ONLY a markdown TABLE, so `B4b-content`'s wave spec MUST explicitly require landing the dependency list AS A TABLE (not prose/bullets), or the dep-rot gate silently goes vacuous after B4b-content "completes" — an explicit acceptance criterion on B4b-content; (2) wire the in-gate `--self-test` arm (the house born-RED+N-bite bar); (3) register the gate `["local","ci"]` + `ci.yml` re-emit (else it never fires in `--run full` and the edge is INERT); (4) re-home the 15 companion CLAUDE-readers in the SAME B5c pass (the accent-tone dual-arm DROPS the CLAUDE arm + RE-POINTS the `src/subpaths/selectable-chip.ts` arm onto `src/components/custom/selectable-chip/index.ts`, since B2.1-swap deletes `src/subpaths/`); (5) reconcile the census counts — **16-reader hard census (binding) / 15 gate comment-stripped crash-site count / 17 raw-grep files are THREE DIFFERENT correct numbers for THREE different things**, not one to collapse. | RESOLVED (built device-free + 5 fold-obligations) |
+
+**Carve-path re-verify — CONFIRMED CLOSED (no doc edit owed).** The carousel-worm carve is CORRECT at HEAD
+`eaf2c172` (re-verified: `CarouselContent.vue` 375L → `useCarouselWorm.ts` 267L; `PagerDots.vue` 433L →
+`usePagerWorm.ts` 142L; `useBloomUp.ts` 449L → `bloomUpField.ts` 87L; all <500; `RATCHET_BASELINES` drained to
+∅). The Pass-1 "not at proto's cited paths" flag was a transcription artifact. The T1 gate-spike artifact is
+GENUINELY ABSENT (glob = 0) → crit-T1 O1's `[BLOCKING]` tag is DOWNGRADED to ACCEPTED-GAP (justified by the
+equivalent live-disk C1 trace — the missing spike is unpersisted process trace, not lost work), recorded in
+`COHERENCE.md` so a future audit does not read a silently-dropped BLOCKING must-resolve.
+
+### 12.3 · The cross-tranche fold — three seams closed
+
+The BH pass closed three cross-tranche seams that no per-WS or single-tranche audit could see:
+
+1. **The kf-peer three-sided gap (C1).** The MR-4 split had the CLAUSE owner (BG `BG.W-GATE-FIELD-AURORA`) and
+   the BUMP owner (`BH-B2.1-swap`) authored on the BG side but SILENT on BH's `PLAN.md`/`bh-interleave-map`/
+   `EXECUTION-PROGRESS` — a live `^5.0.0`-consumer drag-gesture no-op with no BH-side carrier. The fold makes all
+   three docs agree AND names the WS7→WS12 red-window BY-DESIGN, so the joint cut gates on BOTH the clause (WS7)
+   and the bump (WS12) landing — the split is preserved, not re-litigated.
+2. **The single-writer symmetry (C4).** `bg-build-map:1184` declared `BH-B2.1-swap` the "FINAL pre-cut
+   `package.json` single-writer" while `EXECUTION-PROGRESS` row 19.1 (`BG.W-CUT`) fired a SECOND `package.json`
+   write (the value.js floor) past that declaration AND past the `--run ship` gate. ABSORB folds the value edit
+   into B2.1-swap (symmetric with the kf bump) so B2.1-swap is genuinely the sole pre-cut writer, and row 19.1
+   becomes an assert-not-edit — with the load-bearing `bg-build-map:717` reword closing the WS7-axis hole (BH
+   edits `package.json` the floor; BG edits `proof-peer-conformance.mjs` the `1.2.0→1.1.1` gate-literal — the
+   T4/T2 owner seam).
+3. **The dep-TABLE gate-vacuity seam (C5, NEW friction-class).** `C-HOMES` greens `dependencies.md` the moment
+   its SKELETON marker strips + body clears 200 chars — but `citedDeps` parses ONLY a markdown TABLE, so a
+   `B4b-content` authoring dependency PROSE would green C-HOMES WHILE the dep-rot check parses 0 deps and stays
+   permanently vacuous. The fold adds the explicit TABLE-form acceptance criterion on `B4b-content` so the
+   dep-rot gate the re-home preserves does not silently assert nothing post-completion.
+
+### 12.4 · develop-ready conclusion
+
+**developReady: TRUE.** Every cluster is RESOLVED or ACCEPTED-RESIDUAL with a named owner. The 8% residual is
+(a) the fold-agent's mechanical application of the enumerated BH-tree edits, (b) the BG-side fold applying the
+BG-tree edges (routed through `AMENDED-COHERENCE-PLAN:214-215`), and (c) two BG-execution dependencies
+(`proof:retired-token-consumers` for C2, `proof:field-aurora-aa`+`proof:peer-conformance` kf-clause for C1/C4)
+that land during BG execution and are cross-referenced not authored here — none a content or feasibility gap.
+No feasibility restart; no new friction class survives. **BOTH monolithic coherence passes are now COMPLETE:**
+§11 (BG cross-wave, 84%) + §12 (BH cross-tranche, 92%) together close the coherence axis for the joint 5.0.0 cut.
+
+**nextFocus: FOLD INTO THE TRANCHE SET.**
