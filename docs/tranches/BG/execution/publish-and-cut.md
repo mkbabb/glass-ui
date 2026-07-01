@@ -4,6 +4,8 @@
 **Owner of record:** the BG/BH joint close. Foreign-tree fence is ABSOLUTE — every cross-repo edit is a by-name ask; glass-ui edits ZERO sibling files.
 **Authority read:** CLAUDE.md §Build "Gate hygiene" (`proof:full` · `--run full` siblings-absent · `proof:close-battery-parity` · `verify-siblings-intact` · `proof:lineage-probe` · inv-11 no-out-of-band-lineage), BH `PLAN.md §7` + §2-#4, BG `FINAL.md §6` (publish cadence), `GU-1-glass-key-fill.md`, `GU-3-TRIAGE.md`, MEMORY "the close must run `--run release` not just `--run local`" (the 4.0.0 lesson).
 
+**THIS is THE canonical 5.0.0 cut choreography.** BH `PLAN.md §2/§7`, the cursor cut-rows (`18.1` peer/version-writer · `18.8` MIGRATION/CHANGELOG author · `19.1` tag-fire), `bh-interleave-map.md §4-§5`, `consumer-constellation.md`, and `EXECUTION-PLAN §D` all POINT here for the cut NUMBERS — the value.js floor, the ask count, the lineage order. They state obligations; THIS doc owns the values. No downstream mention restates a number owned here.
+
 ---
 
 ## §0 The lineage spine (inv-11 — read FIRST; it dominates the ordering)
@@ -51,7 +53,7 @@ A RED at any step ABORTS the cut — fix on the tranche line, never green-wash t
 
 Land these on the cut line (master, descending from 4.4.0) as the LAST commits before the tag, after WS12 + the BH restructure (B2.1-swap, B2.2 /api fold, B4e doc-slim) have landed.
 
-**2.1 — version bump.** `package.json` `4.2.0`→`5.0.0`. (`release.sh`/`release.yml` both hard-assert `tag == package.json.version` — a mismatch aborts.) De-straddle the value.js peer in the SAME commit if BH-B1-W2 has not already: `^0.13.0 || ^1.0.0` → `^1.2.0` (keyframes 5.1.0 transitively deps value `^1.2.0`); `proof:peer-conformance`/`proof:constellation-spine` must be non-vacuously GREEN.
+**2.1 — version bump.** `package.json` `4.2.0`→`5.0.0`. (`release.sh`/`release.yml` both hard-assert `tag == package.json.version` — a mismatch aborts.) The value.js de-straddle already LANDED at BH-B1-W2 (`package.json:1080` = single `^1.0.0`, no straddle). The 5.0.0 floor-LIFT `^1.0.0 → **`^1.1.1`** is **B2.1-swap's** (cursor `18.1`, the LITERAL sole `package.json` writer between WS9's pf-drop and `BG.W-CUT`) — this cut doc does NOT restate the range, it back-points to the owner. `^1.1.1` is the `wcagContrastRatio`-bearing npm-latest; `^1.2.0` ⊆ `^1.1.1` but as a PEER floor `^1.2.0` EXCLUDES npm-latest 1.1.1 and reds `proof:peer-conformance` — the floor is `^1.1.1`, NEVER `^1.2.0`. `proof:peer-conformance`/`proof:constellation-spine` must be non-vacuously GREEN.
 
 **2.2 — MIGRATION.md reshape (the by-name-ask map, BH B4e).** The 5.0.0 break is, EXACTLY: drop the `./api` key + re-home its 203 symbols onto their owning subpaths (200 pure import-path swaps; 3 orphans add an export — `Surface`→/card, `MenuItemVariants`→/command, `ControlSize`→/forms). Reshape MIGRATION.md to the by-name-ask MAP form (`docs/tranches/BH/coordination/asks-and-consumes.md` is the source roster):
   - the 203-row /api re-home table (the input contract for the `public-surface.spec` map arm);
@@ -66,6 +68,8 @@ Land these on the cut line (master, descending from 4.4.0) as the LAST commits b
 ## §3 The gated provenance publish (push the tag — CI publishes)
 
 The publish is CI-gated provenance, NOT a local `npm publish`. The 3.2.0/4.0.0 precedent: push the `v*` tag, `release.yml` runs the gated provenance publish.
+
+**RECORDED build-time clause (proof:build family — NOT applied in the fold; scripts off-limits this phase).** `release.sh:12-19`'s header docstring documents a 4-gate matrix (`typecheck`/`build`/`verify-export-types`/`profile:budget --enforce`) the body no longer runs — `:84` runs only `node scripts/gates.mjs --run full`. All four ARE covered by the union (`verify-export-types` is gate row `gates.mjs:72`), so the behavior is correct; the header lies. The build agent rewrites `:12-19` to describe the single `--run full` union (the BB.W-CLOSE-BATTERY union-not-subset discipline) + the `dist/index.d.ts` smoke + the annotated tag. This is a `proof:build`-family build-time edit, RECORDED here, applied when the release-machine is next touched — never a fold-phase script edit. The `--run full` union at the cut is PROTECTED (do NOT prune the release gate set; the over-contrivance lives UPSTREAM in the 360 scripts, which BH B5e culls).
 
 **3.1 — local pre-flight (optional, on the cut line).** `bash scripts/release.sh v5.0.0` — asserts `tag form` + `package.json == 5.0.0` + clean tree, runs `node scripts/gates.mjs --run full`, smoke-checks `dist/index.d.ts`, creates the annotated tag. (This is the local mirror of CI; the binding run is CI's.)
 
@@ -82,7 +86,9 @@ The publish is CI-gated provenance, NOT a local `npm publish`. The 3.2.0/4.0.0 p
 
 ## §4 The consumer-update cadence (AFTER 5.0.0 is live)
 
-Per the asks-and-consumes relay (`docs/tranches/BH/coordination/asks-and-consumes.md`). The break touches exactly **3 by-name asks** (NOT the whole constellation): muster, speedtest, atlas. Every other live consumer (bbnf-buddy, slides-K) keeps every key — no ask owed. glass-ui issues the ASK; the sibling owns its OWN edit (foreign-tree fence).
+Per the asks-and-consumes relay (`docs/tranches/BH/coordination/asks-and-consumes.md`, authoritative: **exactly 4 by-name asks** with a `proof:crossrepo-asks:bh` `>=4` covered-floor that fails LOUD below it). The break touches exactly **4 by-name asks**: muster, speedtest, atlas, **and bbnf-buddy** (`--glass-blur-dock` token-retire, `preset.css:230` live — a no-op retune for bbnf, but a gate-witnessed row on the `>=4` floor). **slides-K keeps every key — no ask owed.** glass-ui issues the ASK; the sibling owns its OWN edit (foreign-tree fence).
+
+**Key-preserving ≠ zero-lift (the fourth latent vector).** muster (3.1.0), slides-K (3.2.0), and bbnf-buddy (3.9.0) install BELOW 4.0.0, and slides is exact-pinned 3.13.0 — so their `^5` bump crosses the ENTIRE 4.x BA reshape FIRST, with a live witness: `slides-K DeckGate.vue:41`'s `DialogContent variant="opaque"` silently no-ops post-4.0.0 (`BA.W-SURFACE-AXIS` retired `variant`→`surface`). For these four the 5.0.0 update is a **4.0.0 + 5.0.0 JOINT migration**, not a narrow re-point. The foreign-tree fence means glass-ui's own cut is NOT blocked — but the cadence doc states the real reach so it stops disagreeing with the constellation scout.
 
 Per-consumer cadence — the SAME five steps each:
 
@@ -92,15 +98,16 @@ Per-consumer cadence — the SAME five steps each:
 4. **The by-name ask green-handshake** — the ask names the consumer, the import site, the symbols, and the new home; the sibling responds when its re-point is green. `proof:crossrepo-asks` asserts every ask names a consumer wave + a disposition + the green-handshake (no silent drop).
 5. **Consume-and-delete** — the consumer deletes its interim shim in the SAME edit (the dead `optimizeDeps` string, the `:deep` override, the floating `PhaseTimeline`). The interim never lingers.
 
-The 3 asks:
+The 4 asks (all in-repo-witnessed):
 
-| # | Sibling | Site | Symbols | New home | Ask + consume-and-delete |
-|---|---|---|---|---|---|
-| 1 | **muster** | `frontend/src/composables/useAuroraConfig.ts:47` | `DEFAULT_AURORA_CONFIG`, `AuroraConfig` | `/aurora` | `migrate-api-to-aurora` — one-line re-point |
-| 2 | **speedtest** | `src/features/speedtest/ui/PhaseTimeline.vue:52` | `TimelineSegment` | `/timeline` | `migrate-api-to-timeline` — re-point **+** drop the dead `vite.config.mjs:1033` optimizeDeps `/api` string |
-| 3 | **atlas** | 12 bare `var(--ring)` sites across 11 files (GU-3 ASK B) | `--ring` → `--focus-ring-color` | (token rename) | `migrate-ring-to-focus-ring-color` — re-point all 12 ATOMIC with the 5.0.0 cut, fallback-first off the pinned commit; retire the `Dock.vue` `:deep` override |
+| # | Sibling | Site | Symbols | New home | Ask + consume-and-delete | Witness (in-repo) |
+|---|---|---|---|---|---|---|
+| 1 | **muster** | `frontend/src/composables/useAuroraConfig.ts:47` | `DEFAULT_AURORA_CONFIG`, `AuroraConfig` | `/aurora` | `migrate-api-to-aurora` — one-line re-point | 203-row MIGRATION table + `proof:crossrepo-asks:bh` |
+| 2 | **speedtest** | `src/features/speedtest/ui/PhaseTimeline.vue:52` | `TimelineSegment` | `/timeline` | `migrate-api-to-timeline` — re-point **+** drop the dead `vite.config.mjs:1033` optimizeDeps `/api` string | 203-row MIGRATION table + `proof:crossrepo-asks:bh` |
+| 3 | **atlas** | 12 bare `var(--ring)` sites across 11 files (GU-3 ASK B) | `--ring` → `--focus-ring-color` | (token rename) | `migrate-ring-to-focus-ring-color` — re-point all 12 ATOMIC with the 5.0.0 cut, fallback-first off the pinned commit; retire the `Dock.vue` `:deep` override | MIGRATION `--ring` rename row + pinned commit |
+| 4 | **bbnf-buddy** | `src/styles/preset.css:230` (live `--glass-blur-dock` override) | `--glass-blur-dock` (token-retire) | (token retire — resolves to composed default) | `bbnf-glass-blur-dock-retune-no-op` — drop the dead override | the MIGRATION.md `--glass-blur-dock` retire ROW + `proof:crossrepo-asks:bh` `>=4` floor (NOT `proof:retired-token-consumers` — the sibling-probe gate is KILLED per ruling #3; the witness is self-contained in-repo) |
 
-**Unowned-seam cross-reference:** BG-WS5 OWNS the viz-subpath migration (`/constellation`, `/fourier-field`) with SLIDES as the named consumer — confirm WS5 carries it; the post-WS12 export-delta surfaces any key drop. `words/frontend/glass-ui/` is a vendored d6 fork (inv-11 lineage), NOT a registry consumer — owes no ask. The B1c kf/value CONSUME interims are met at the pinned keyframes 5.1.0 / value.js 1.2.0 — ZERO upstream asks.
+**Unowned-seam cross-reference:** BG-WS5 OWNS the viz-subpath migration (`/constellation`, `/fourier-field`) with SLIDES as the named consumer — confirm WS5 carries it; the post-WS12 export-delta surfaces any key drop. `words/frontend/glass-ui/` is a vendored d6 fork (inv-11 lineage), NOT a registry consumer — owes no ask. The B1c kf/value CONSUME interims are met at the pinned keyframes 5.1.0 / value.js 1.1.1 — ZERO upstream asks.
 
 ---
 
@@ -138,6 +145,6 @@ Each tag is an ancestor of the next; 5.0.0 carries Δ1-Δ3 + GU-1 + GU-3-A by de
 |---|---|---|---|---|---|
 | **v4.3.0** | parked Δ1+Δ2+Δ3 (K-I-ROOT-AUTHOR; Δ4 deferred) | master ← `release/4.3.0` merged | §1 (no gestalt OR — additive) | §3 gated provenance | atlas `^4` fallback-first |
 | **v4.4.0** | GU-1 `glass-key-fill` (3 value edits) + GU-3 ASK A (StatusDot opt-in) | master ← BG-converged + GU commits | §1 + re-approve 7 under-shadow baselines | §3 | atlas reaches glass-key-fill on `^4` |
-| **v5.0.0** | joint BG+BH — `./api` drop + 203 re-home + `--ring` rename + restructure | master ← 4.4.0 ← BH restructure | §1 FULL (incl. §1.4 gestalt OR over WS12 surface) | §3 | §4 cadence — 3 by-name asks (muster/speedtest/atlas) |
+| **v5.0.0** | joint BG+BH — `./api` drop + 203 re-home + `--ring` rename + restructure | master ← 4.4.0 ← BH restructure | §1 FULL (incl. §1.4 gestalt OR over WS12 surface) | §3 | §4 cadence — 4 by-name asks (muster/speedtest/atlas/bbnf-buddy) |
 
 Every consume pins the exact landing COMMIT, not a version — the BG-build-fenced discipline (nothing is published on `tranche/BG` until its content reaches a master tag).

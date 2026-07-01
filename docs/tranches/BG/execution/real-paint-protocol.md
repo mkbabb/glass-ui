@@ -86,10 +86,12 @@ warm-cream" reads green on the eye that wrote it.
   did NOT author the slice navigates the served `:5199` build, takes the dual-engine set per §2, pixel-reads
   it through `proof:ba-gestalt`, and records the verdict. The roster row flips ONLY on the fresh agent's
   read.
-- **No single terminal flipper.** There is NO W-REFLECT funnel wave that flips all verdicts at the end (the
-  write-locked-verdict deadlock that destroyed BB). Each painting wave's row is flipped at ITS OWN close by
-  the non-authoring judge, against ITS OWN fresh capture. `proof:ba-gestalt` G8 reds on any wave that DEFERS
-  its π/verdict to a future terminal-reflect wave.
+- **No single terminal flipper — `W-REFLECT3` is ABOLISHED (the ONE canonical rule).** There is NO
+  terminal reflect funnel wave. EVERY live-π (gestalt OR non-gestalt) closes at its owning wave's OWN
+  non-authoring paint close (the write-locked-verdict deadlock that destroyed BB is structurally impossible).
+  Each painting wave's row is flipped at ITS OWN close by the non-authoring judge, against ITS OWN fresh
+  capture. `proof:ba-gestalt` G8 reds ANY wave that DEFERS its π/verdict to a future terminal-reflect wave —
+  and the G8a arm forbids ANY `proof:ba-gestalt` verdict phrasing that names a terminal-reflect wave.
 - **The provenance is in-pixel, not in-prose.** The capture carries the engine badge IN ITS PIXELS (§6);
   the judge does not take the builder's word for which engine produced which PNG. The gate decodes the badge.
 

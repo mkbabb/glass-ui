@@ -21,12 +21,12 @@ NOT WS7 (the Pass-1 error, corrected in Pass-2). Joint cut as **5.0.0**.
 |------|:-----:|:------:|-------------------------|------|
 | W0-scratch-sweep | **[C]** | — | `test-results/`, root scratch images, `.browserslistrc`, `.gitignore`, `.githooks/commit-msg`, `BD-CONTINUATION-PROMPT.md`→`docs/tranches/BD/` | first. Do NOT touch BG's `D .retired-classes.txt`. |
 
-### B1 — Legacy excision + payload fix · 3 waves
+### B1 — Payload + dep-floor fixes (LANDED) · verify-only residual
 | Wave | Class | Gating | File-bounds / collision | Note |
 |------|:-----:|:------:|-------------------------|------|
-| W1-external-payload | **[C]** | — | `vite.library.ts:60-74` libraryExternal · `profile:budget` rebaseline | **shared-file checkpoint w/ WS6** (§3 — coordinate the file, not the lines). |
-| W2-value-destraddle | **[C]** | — | `package.json:1058,1096` value `^0.13.0\|\|^1.0.0`→`^1.2.0` | typecheck 9 import sites against 1.x first. |
-| W3-dragmorph-snap-excise | **[C]** | — | `useDragMorph` snap re-roll → kf 5.1.0 `DragOptions.snap`; `useVizChoreography` stale comment | the 3 CONSUME interims carry ZERO upstream asks. |
+| W1-external-payload | **[C]** | — | `vite.library.ts:85` libraryExternal (`@lucide/vue` in, dead `lucide-vue-next`/`vaul-vue` only in the `:65` comment) · `profile:budget` rebaseline | **LANDED `7813a695`**, `proof:external-payload` GREEN (`gates.mjs:1273`). shared-file checkpoint w/ WS6. |
+| W2-value-destraddle | **[C]** | — | `package.json:1080` = single `^1.0.0` (de-straddle LANDED) | verify-only; the floor-LIFT `^1.0.0 → ^1.1.1` is **B2.1-swap's** single-writer edit (row below), NOT this wave — `^1.1.1` is the floor, NEVER `^1.2.0` (which reds `proof:peer-conformance`). |
+| W3-dragmorph-snap-excise | **[C]** | — | `useDragMorph.ts:325` `snap:` → kf 5.1.0 `DragOptions.snap`; `useVizChoreography` stale comment | **LANDED `ba23c086`**. the 3 CONSUME interims carry ZERO upstream asks; the kf `^5.0.0→^5.1.0` bump is B2.1-swap's. |
 
 ### B2 — Src restructure → 5.0.0 export surface · ~9-10 waves
 | Wave | Class | Gating | File-bounds / collision | Note |
@@ -75,12 +75,12 @@ batches these in the post-WS12 run, but the hard edge is WS4.)
 ### B6 — Three reusable core prompts · 1 wave
 | Wave | Class | Gating | File-bounds / collision | Note |
 |------|:-----:|:------:|-------------------------|------|
-| W-core-prompts | **[C]** | — | `docs/tranches/BH/prompts/{LEGACY-EXCISION,RESTRUCTURE-BACKEND,RESTRUCTURE-FRONTEND}.md`+README | repo-local; promotion to precepts is a by-name ask. |
+| W-core-prompts | **[C]** | — | `docs/tranches/BH/prompts/{LEGACY-EXCISION,RESTRUCTURE-BACKEND,RESTRUCTURE-FRONTEND}.md`+README | repo-local; **B6 folds INTO B7** (both by-name asks) — every B2/B3/B5 restructure dispatch dogfoods its matching prompt as the *Scope + Non-negotiables* payload; the `mkbabb/precepts` promotion-ask folds into the B7 roster. |
 
-### B7 — Consumer-migration cross-repo asks · 1-2 waves
+### B7 — Consumer-migration cross-repo asks (B6 folded in) · 1-2 waves
 | Wave | Class | Gating | File-bounds / collision | Note |
 |------|:-----:|:------:|-------------------------|------|
-| W-api-ask-roster | **[WS12]** | WS12 + B2.2 | the 2 by-name asks: muster→/aurora · speedtest→/timeline (+ drop dead `vite.config.mjs:1033`) | issues at the 5.0.0 cut after B2.2 lands. Confirm BG-WS5 owns the viz-subpath/slides migration. |
+| W-api-ask-roster | **[WS12]** | WS12 + B2.2 | the **4 by-name asks**: (1) muster→/aurora · (2) speedtest→/timeline (+ drop dead `vite.config.mjs:1033`) · (3) atlas `--ring`→`--focus-ring-color` rename · (4) bbnf-buddy `--glass-blur-dock` token-retire (`preset.css:230`) | issues at the 5.0.0 cut after B2.2 lands. The bbnf row-4 witness is the **MIGRATION.md `--glass-blur-dock` retire ROW + `proof:crossrepo-asks:bh` `>=4` floor** (NOT `proof:retired-token-consumers` — the sibling-probe gate is KILLED per ruling #3). The 2 `/api` re-homes are BH's OWN 5.0.0 break; rows 3-4 are token asks the relay carries. `proof:crossrepo-asks:bh` `>=4` covered-floor. Confirm BG-WS5 owns the viz-subpath/slides migration. |
 
 ---
 
@@ -169,9 +169,12 @@ Three structural moves collapse the three stacked redundancy layers into ONE gen
   captured by re-derivation, not the 4.2.0 snapshot. `flatten-subpath-types.mjs` re-authored for the
   colocated dts emit. B2.3's 11 curated flat-barrel→`src/entries/` moves are source-only, **key-preserving**.
 
-**The whole consumer break = ONE dropped key (`./api`) + its 203-symbol re-home.** Across the constellation
-exactly 2 siblings import `/api` → 2 by-name asks (B7): muster→/aurora, speedtest→/timeline. Every other
-published key is preserved (regen proves 96/96 keys reproduce).
+**The whole consumer break = ONE dropped key (`./api`) + its 203-symbol re-home** (+ the `goo-blob → blob`
+component/subpath rename pinned to the export-reshape regen row — PLAN §4 row 7; 5.0.0 is the free break, ONE
+MIGRATION row). Across the constellation exactly 2 siblings import `/api` → those are BH's OWN 5.0.0 break
+(muster→/aurora, speedtest→/timeline); the full B7 roster is **4 by-name asks** (+ atlas `--ring` rename,
+bbnf-buddy `--glass-blur-dock` retire — token asks the relay carries on the `proof:crossrepo-asks:bh` `>=4`
+floor). Every other published key is preserved (regen proves 96/96 keys reproduce).
 
 ---
 

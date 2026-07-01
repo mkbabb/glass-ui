@@ -25,6 +25,13 @@ convergence brief — each Movement-B pass must honor its directive-ledger slice
 **Frequency bands:** `★★★★` chronic (≥6 distinct rounds) · `★★★` recurring (3–5) · `★★` repeated
 (2) · `★` single.
 
+> **RE-STAMP 2026-07-01 (RESPEC-GESTALT, audit #3 — the LAST audit).** This ledger is re-stamped to the fold
+> date. The disease it names (verification and gestalt DECOUPLED — 4.2.0 shipped visibly-broken GREEN) is the
+> RESPEC-GESTALT through-line; the cure adds two binding PROCESS EDICTS to §7 (the Fable/DesignSync design-review
+> routing + the gestalt-acceptance edicts GA-3/GA-9 — see the new **§7b**). The framing is **"the perfection of the
+> LAST SET"**: BG/BH do not add ~25 new ideas — they COLLAPSE the 3–8× delivery accretion around the ~25 real ideas
+> already built, re-coupling verification to the gestalt a user reads. No new workstream; the partition holds.
+
 ---
 
 ## §0 — THE CHRONIC-UNADDRESSED CLUSTER (highest-priority BG carries)
@@ -201,6 +208,26 @@ The single most-asked feature cluster (C-DOCK) decomposes into these distinct ca
 | WS7-10 | Ship to prod — full CI/push/publish; the honest 4.x cut; do NOT re-publish slides to the web yet (standing hold); publish/deploy authority granted. | ship-to-prod | ★★★ | 06-02→06-25 | **PARTIAL** (4.2.0 shipped broken; honest re-cut owed) |
 | WS7-11 | Post-mortem workflows (BB/BA/AZ) — what went wrong to degrade the library so dramatically; the source-green/visually-broken disease named + cured at the gate. | post-mortem | ★★ | 06-18→06-18 | **ADDRESSED** (postmortem SYNTHESIS) |
 | WS7-12 | Path standardization across the storybook (`/motion/scroll-choreography` vs `@mkbabb`); per-page audit (one opus context + a synthesizer + a frontend-design agent each). | path-standardize | ★★ | 06-23→06-23 | **PARTIAL** |
+
+---
+
+## §7b — RESPEC-GESTALT process-edicts (re-stamp 2026-07-01; the design-review + gestalt-acceptance routing)
+
+These are NEW binding PROCESS EDICTS the RESPEC-GESTALT audit adds — the Fable/DesignSync design-review routing and
+the gestalt-acceptance edicts (GA-3 / GA-9). They are process edicts (honored by the running cadence), not src/
+changes; each is owned by a named F8 close-family wave.
+
+| ID | Canonical edict | Theme | Status | Owner (wave) |
+|----|-----------------|-------|--------|--------------|
+| PE-FABLE (GA-3) | Every VISUAL wave declares a `fableArm` (the Fable design arm — the design-language authoring surface) + a `designSyncSurface` (the DesignSync review card set); the **DesignSync PASS verdict comes from a FABLE instance, NOT the building agent — a CLOSE PRECONDITION**. 0/61 compliant at HEAD → schema edit makes it born-RED→GREEN. DesignSync PROVISIONING is USER-GATED (until provisioned, a FABLE instance records the verdict against the committed dual-engine captures; enforceable in both states). | design-review-routing | **UNADDRESSED** (0/61) → BG carry | **F8 12.15 `W-FABLE-DESIGN-ARM`** |
+| PE-GESTALT (GA-9) | The gestalt review reads a 3-axis ACCEPTANCE VERDICT per enrolled surface — **√φ-proportion · animation-laws · technicolor-cartoon-punch** — as acceptance LANGUAGE the review files, NOT N mechanical gates (the aristotelian-proportion edict is a light proportion-census clause, never a gate fan-out). | gestalt-acceptance | **UNADDRESSED** → BG carry | **F8 12.18 `W-ARISTOTELIAN-PROPORTION`** |
+| PE-COMPOSITED (GA-2) | The composited-whole paint gate: change WHAT the probe samples — mean-L box → **dominant-hue histogram over a real route REGION**, both engines; `ba-gestalt` becomes ONE enrolled surface, not the sole oracle (the vacuous-probe → dominant-hue-over-a-route-region transposition, the 4.2.0 green-lie root). | paint-gate | **UNADDRESSED structurally** → BG carry | **F8 12.14 `W-COMPOSITED-GESTALT-GATE`** |
+
+> **The "perfection of the last set" framing.** RESPEC-GESTALT is not a new-feature tranche. Its edicts perfect the
+> LAST SET of accumulated design work — re-coupling the verification axis to the gestalt (PE-COMPOSITED), routing every
+> visual wave through a real design-review verdict authored by a non-building agent (PE-FABLE), and reading the design
+> edicts as acceptance LANGUAGE rather than gate-count (PE-GESTALT). Each closes a distinct arm of RC1 (the through-line:
+> verification and release decoupled). Owned by the F8 close family; no new workstream.
 
 ---
 

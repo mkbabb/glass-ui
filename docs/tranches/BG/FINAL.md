@@ -334,17 +334,18 @@ on-device device-paint; lens-bearing surfaces exempt from the headless claim).
 - **WS5 booked successors** — `BG.W-VIZ-SUBSTRATE-DELETE2` (goo-blob/dot-matrix/goo-dot WGPU delete, gated
   on per-viz arm-probe), `createFragmentGLPass` (≥3-consumer trigger), `metallic-aurora` (the IRONY —
   metallic wanted IN the aurora as an opt-in viz register, `BD.W-AUR-METAL-FINISH`), the **goo-blob→blob
-  rename** (RETIRED — a breaking every-consumer-import change for zero functional gain; re-book only on user reaffirm).
+  rename** (SUPERSEDED by R14 — no longer retired: pinned to BH B2.1-swap's export-regen as an explicit
+  rename line + ONE MIGRATION row; 5.0.0 is the free break, no alias — see §13).
 - **WS8 booked successors** — `BE.W-LENS-SAFARI` (the `filter:url()`-on-the-element-over-cloned-DOM lens for
   non-field routes; webkit bug 245510 STILL-OPEN-2026), the default-Safari WebGPU promote, the in-shader
   squircle-corner, `flow.wgsl.ts` curl tail, the iOS-27 gyroscope specular feed (mobile).
 - **WS9 booked** — the deckle torn-paper param (fenced, skeuomorphic-restraint), anisotropic crayon grain,
   the perfect-freehand consume-and-delete of `freehand.ts`, the raster paper-asset fallback (engaged only
   if the lit tooth diverges cross-engine or still reads metallic).
-- **The W-REFLECT3-deferred human FEEL verdicts** — WS12 defers the *human read* (Card-press feel, deck-slide
-  read, "one light reads coherent", the harmonized-whole 480-capture verdict) to a post-integration reflection
-  pass. (NB: WS1 SCRUBBED the literal "W-REFLECT3" wave-label — there is no W-REFLECT3 wave in BG; it is the
-  name for the deferred post-integration human-verdict step, not a build wave.)
+- **The cross-page harmonized-whole human read** (Card-press feel, deck-slide read, "one light reads coherent",
+  the 480-capture verdict) is **WS12 `BG.W-PAGE-COMPONENT-AUDIT`'s OWN non-authoring close** — a real wave, not a
+  terminal funnel. **There is NO W-REFLECT3 wave; the phantom is ABOLISHED** (RESPEC-GESTALT audit #3): every
+  live-π (gestalt OR non-gestalt) closes at its owning wave's OWN non-authoring paint close.
 - **WS7 DROP-WITH-TRIGGER register** — C-PAINT forgery-beyond-re-stamp (re-enable at capture-signing/OIDC),
   `authoredBy≠runnerIdentity` (re-enable Phase-2 OIDC), Safari PAINT certification (safaridriver-or-DROP),
   Safari ≤18 var()-bake (WS3 literal-bake trigger), Safari backdrop-refraction lens (Safari-IMPOSSIBLE via
@@ -546,8 +547,8 @@ design restart. Full table in `AMENDED-WAVE-PLAN.md §3`.
 | # | Deferral | De-risked because | Proven by (the exact wave) |
 |---|----------|-------------------|----------------------------|
 | 1 | **C-SAFARI Metal capture ★★★** (the 3-tranche chronic — the FULL refraction shader rendering + AA-over-composite + dock-blur sign-off on real macOS Safari/WebKit 26 + Metal; subsumes G1's pinned `uChromatic+ε`, the WebKit compile-time, the per-pixel Metal drift) | the GPU floor is REAL (FBO renders FRAMEBUFFER_COMPLETE on M5 Metal); the named fallback ladder bounds the worst case; the C18 `?capture=` harness ships in `demo/main.ts` | **`BG.W-GLASS-BACKDROP-SAMPLE`** (C17 calibration) + **`BG.W-SAFARI-PARITY-GATE`** + **`BG.W-CUT` `--run ship`** (the non-authoring dual-engine net) |
-| 2 | The field-AA live re-shoot — F-AA-LIVE dual-engine `_anchor` at `ebf6e45b` (the verified pre-fix BROKEN state, Chrome 1.04 / Safari 1.91) + the light-eyebrow ≥4.5 lift | the device-free gate ran GREEN 3/3; the anchor is merge-base-verified | **`BG.W-GATE-FIELD-AURORA`** + **`BG.W-EYEBROW-LIGHT-POLISH`** + **W-REFLECT3** |
-| 3 | The grain-tail paint π (`liquid-hover.spec.ts` — the moved `.glass-*::after` pop-kill) + the ba-gestalt dock/CTA verdict | the grain rules are byte-preserved in compiled dist — a confirmation ceremony, not a feasibility risk | **W-REFLECT3** (rides the WS12/close gestalt sweep) |
+| 2 | The field-AA live re-shoot — F-AA-LIVE dual-engine `_anchor` at `ebf6e45b` (the verified pre-fix BROKEN state, Chrome 1.04 / Safari 1.91) + the light-eyebrow ≥4.5 lift | the device-free gate ran GREEN 3/3; the anchor is merge-base-verified | **`BG.W-GATE-FIELD-AURORA`** + **`BG.W-EYEBROW-LIGHT-POLISH`** own closes |
+| 3 | The grain-tail paint π (`liquid-hover.spec.ts` — the moved `.glass-*::after` pop-kill) + the ba-gestalt dock/CTA verdict | the grain rules are byte-preserved in compiled dist — a confirmation ceremony, not a feasibility risk | **`BG.W-DOCK-BLUR-RETIRE-CARVE`'s OWN non-authoring grain-tail close** (the renamed CLOSEFIX-9SITE) |
 | 4 | The WS12 late capture sweep — all 10 roster surfaces over fresh paint (Model-B) | a cost (re-capture), not an unknown; the joinery proof is device-free | **WS12 `BG.W-PAGE-COMPONENT-AUDIT`** + the close |
 | 5 | The CLAUDE-delete `--run full` `/tmp` siblings-absent dry-run (after all 15 homes authored + all 16 readers re-pointed) + the actual `rm CLAUDE.md` | mechanism sound; the corrected 16-site census + de-blinded C2 are specified; the dry-run is the backstop that surfaces any missed reader | **BH-B5c → B4f** (`proof:claude-deletable` born-RED→GREEN; the rm is the absolute-last act) |
 | 6 | The post-WS12 export re-pin (`verify-export-types`/`proof:subpath-enumeration`) + the human `siri-waveform` PUBLISH-vs-INTERNAL confirm | regen proven (live C1 EXACT_REPRODUCTION=true); pre-derived INTERNAL grounded (no subpath file — a WebGL2 leaf composed by SiriIsland) | **BH-B2.1-swap** (gated STRICTLY AFTER WS5 ∧ WS6 ∧ WS12, STRICTLY BEFORE BG.W-CUT) |
@@ -652,7 +653,7 @@ disposition column names the load-bearing fold.
 
 | Cluster | Name | Mode | Owns (§2.X) | Conv | Disposition (the load-bearing fold) |
 |---|---|---|---|:---:|---|
-| **G1** | dag-paint-keystone | impl (spike) | A1/D1/D2/D3 + G1-lockstep | **82%** | re-seq `BG.W-CLOSEFIX-9SITE` 12.0→0.7 + precond edges on all 3 derivation sources; the FAIL-PAINT→FIX-AGENT→re-judge recovery DEFINED; the 2 live G8 "rides W-REFLECT3" hits content-anchored re-homed |
+| **G1** | dag-paint-keystone | impl (spike) | A1/D1/D2/D3 + G1-lockstep | **82%** | re-seq `BG.W-CLOSEFIX-9SITE` 12.0→0.7 + precond edges on all 3 derivation sources; the FAIL-PAINT→FIX-AGENT→re-judge recovery DEFINED; ALL W-REFLECT3 hits scrubbed (RESPEC-GESTALT audit #3 ABOLISHED the phantom — every live-π re-homed to its owning wave's own close, not just the 2 G8a-blocking) |
 | **G2** | token-spine-sourcing | impl (spike) | T4/T1/T2/M4 | **76%** | `--glass-key-*` KEEP-BOTH bound by §0E-1 shared-sourcing; STRIKE the false WS8←WS9 "bevel reads F" DAG edge; chromatic dual-stack re-anchored onto `glassShader-tier2.wgsl` @ `CHROMATIC_SCALE=0.0045`; MINT `--glass-chromatic-strength` scalar; **MR-1 BLOCKING: re-ground M7 onto WS8 pass-4 C6** |
 | **G3** | ws8-reader-fanout | spec | G2/A2 | **90%** | the FULL 28-file reader fan-out (24 behaviour-bearing) + the 3 hard build/published breaks (`index.css:166`, `critical-partition.mjs:63`, published `GlassPanel.vue`) + the wave's `proof:button-glass`/`visual-reconcile`/`safari-webgl` gate set; the TYPED `{sites, bindings}` roster |
 | **G4** | cuttime-gate-blind | spec | C1/G3/G4/L15 | **88%** | kf-peer `^5.0.0→^5.1.0` re-homed onto `BH-B2.1-swap` (the LIVE `useDragMorph.ts:26` broken-snap defect); ci.yml `glass-idiom-factor` over-claim corrected + the R4-before-R3 ordering flip; the 3 AZ freshness discharges gated AFTER WS2∧WS5; the net-lift one-number budget walk across ALL chunks incl. siri+refract |
@@ -804,3 +805,49 @@ No feasibility restart; no new friction class survives. **BOTH monolithic cohere
 §11 (BG cross-wave, 84%) + §12 (BH cross-tranche, 92%) together close the coherence axis for the joint 5.0.0 cut.
 
 **nextFocus: FOLD INTO THE TRANCHE SET.**
+
+---
+
+## 13 · RESPEC-GESTALT (2026-07-01) — the THIRD audit, the gestalt re-coupling; the LAST audit
+
+This section APPENDS the RESPEC-GESTALT outcome to the binding lock. It does NOT supersede §1–§12; it restructures
+the frontier those sections lock. It is the **THIRD and FINAL audit** — the audit-freeze binds: no further audit,
+build resumes at the fold. Where §1–§12 and the amended plan conflict, the plan wins.
+
+**Authoritative artifact:** `docs/tranches/BG/audit/RESPEC-GESTALT/AMENDED-GESTALT-PLAN.md`, applying the 16
+orchestrator rulings (`RULINGS-PASS2.md`) over the four pass-2 DEV lanes (`DEV-A1`/`A2`/`B`/`C`). HEAD audited at
+`306c3059`; fold HEAD `178b5935` (R16 HEAD-drift re-verify).
+
+**The verdict.** glass-ui is a world-class MATERIAL trapped in an over-articulated SKELETON — the identity (warm
+ladder, spring table, glass composite, demand-loop) is excellent and PROTECTED byte-for-byte; the last tranches
+built cohesion cures shipped UN-ADOPTED, grew a 360-gate machine whose one paint gate was vacuous (4.2.0 shipped
+visibly-broken GREEN), and wrote a follow-up plan reproducing the disease at plan level. **One disease** —
+verification and gestalt decoupled, delivery accreting 3–8× the ~25 real ideas. **One verb: COLLAPSE** + the two
+user ADDs (Siri island; Chart KEEP-BOOKED per R7) + the three NEW mechanisms (the defined control tier, the
+composited-whole paint gate, the Fable/DesignSync arm).
+
+**Convergence (pass 2):** CRIT-1 **87%** · CRIT-2 **89%** · CRIT-3 **88%** — above the develop-ready bar; the one
+CRITICAL (dead-cut double-owner) closed by R1. Fold-verify: PASS, zero CRITICAL/MAJOR residue (`VERIFY-PLAN.md`).
+
+**The restructure.** The ~110-wave BG roster collapses to **64 BG active waves across nine gestalt families (F1
+Field/Route · F2 Glass · F3 Dock · F4 Paper · F5 Motion · F6 Components/API · F7 Demo · F8 Close/Cut · F9
+Substrates/Viz)** + **14 BH family waves** (+3 BH-band grammar). Gate floor **360 → ~250** (committed prune, zero
+behavioral loss; ~40–60 family-table gates the recorded DIRECTION, census-gated). Every visual wave carries
+`fableArm`+`designSyncSurface`; paint is per-wave dual-engine (no terminal funnel). **W-REFLECT3 is ABOLISHED** —
+every live-π closes at its owning wave's OWN non-authoring close; the cross-page harmonized-whole read is `17.6
+BG.W-PAGE-COMPONENT-AUDIT`'s OWN 480-capture close. **DOCK_SPRING byte-frozen (R6) · 4.10 UNTOUCHABLE · the tint-recipe
+home is ONE owner (`W-GLASS-REGISTER-UNIFY` `@utility glass-fill`, R9) · the dead-cut is owned ONCE (10.5, R1)**.
+
+**Rulings pointer.** All 16 rulings applied (`RULINGS-PASS2.md`) — R1 dead-cut single owner · R2 `10.5∈preconds(6.4)`
+· R3 F8 taxonomy (build/meta/warm-identity, NO `proof:close`) · R4 `useDockFission` drain = 4.5 alone · R5 row-3.2
+citation + §9 tally · R6 DOCK_SPRING wins · R7 Chart KEEP-BOOKED · R8 dead-knob witnesses protected · R9 tint-recipe
+home · R10 master table · R11 GA-2 done-vs-open · R12 gate target single-sourced · R13 per-wave Fable inline · R14
+`goo-blob→blob` pinned · R15 F9 exists · R16 the sub-item set.
+
+**The fold** applied it in three lanes: cursor rewrite (`EXECUTION-PROGRESS.md`), build-map/FINAL/EXECUTION-PLAN
+(this section + the `bg-build-map.md` RESPEC-GESTALT AMENDMENT + the §G cross-cutting rules), BH PLAN/interleave/cut
+docs. The engine Stage-0 repair (DEV-B §3) is RECORDED as a HARD pre-build precondition, applied by the build agent
+before the first sweep — not in the fold.
+
+**developReady: TRUE → BUILD RESUMES at the fold.** The coherence axis is closed for the joint 5.0.0 cut across all
+three audits (§11 BG 84% · §12 BH 92% · §13 RESPEC-GESTALT 87/89/88%).

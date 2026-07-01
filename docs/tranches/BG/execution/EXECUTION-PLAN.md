@@ -6,6 +6,15 @@
 > PROVEN slice at a time. Cursor: `EXECUTION-PROGRESS.md`. Engine: `bg-bh-execute.wf.js` (authored by the
 > orchestrator from `engine-design.md`).
 
+> **RESPEC-GESTALT AMENDMENT (2026-07-01, audit #3 — the LAST audit).** The wave frontier is restructured by
+> `docs/tranches/BG/audit/RESPEC-GESTALT/AMENDED-GESTALT-PLAN.md` (authoritative). The **~110-wave BG roster
+> collapses to 64 BG active waves across nine families (F1–F9)**; the **BH band is 14 family waves** (+3 BH-band
+> grammar waves = 17 BH rows), superseding the "≈30 waves, 8 bands" figure in §A/§B below. The gate floor prunes
+> **360 → ~250** (~40–60 family-table gates the recorded DIRECTION). The BD cut recap fact (R16): the canonical BD
+> cut is the **`v4.2.0` tag object** (`git rev-list -1 v4.2.0`), with `998136bb` as the master fork point. The
+> §C real-paint bar and §E constraints are UNCHANGED and extended by the **§G cross-cutting rules** below. Audit-
+> freeze binds: no further audit; build resumes at the fold.
+
 ---
 
 ## §A Executive summary
@@ -162,6 +171,42 @@ run a JOINT 4.0.0+5.0.0 MIGRATION sweep.
   (the `^4`-reachable additive deltas — folding them into 5.0.0 strands the atlas), 5.0.0 is the joint major
   descending from 4.4.0. inv-11 linearity is non-negotiable. `BG.W-CUT` is user-gated — the engine HALTS before
   `git push --tags`.
+
+---
+
+## §G Cross-cutting RESPEC-GESTALT rules (the §C/§E addendum — audit #3, binding on the build)
+
+Verbatim from `SYNTHESIS §3` / `AMENDED-GESTALT-PLAN §3` (GC-FC1). These bind every band, above the per-wave §C bar.
+
+1. **Overhead floor.** Sub-threshold work is a CLAUSE, never a row (`5.1→4.4` · `7.1→6.8/6.9` · `11.1→W-COLOCATE`).
+   No gate-only wave survives (`10.11/12.4/12.6/12.7/15.5` pruned).
+2. **Gates born WITH their feature, per family.** Every family owns ONE growing family gate; a gate lands in the same
+   wave that lands the feature it asserts — never a downstream gate-only wave.
+3. **Net-negative gate count (R12, single-sourced).** The committed in-tranche floor is **360 → ~250** (the B5e/12.13
+   prune, zero behavioral loss, `--list` count DROPS); **~40–60 family-table gates is the recorded DIRECTION**,
+   census-gated, executed as far as the subsumption census proves safe within the tranche. All other mentions
+   back-point here. The `--run full` union at the cut stays the deduped `local`+`ci`+`release` union over the
+   CONSOLIDATED set (the union-not-subset discipline is PRESERVED — R8 true-positive set protected).
+4. **Audit-freeze + ratio ceiling.** RESPEC-GESTALT is the LAST audit; build resumes at the fold. An **audit:build
+   commit-ratio ceiling** binds — the audit corpus (three passes) must not exceed the src-churn it stewards; a further
+   audit-pass is a fence-lift ruling from the orchestrator, never a silent re-open.
+5. **Per-band disk re-verify before any fold** (GC-FC10 — both prior audits violated it once each). The DONE-row disk
+   facts are re-checked at fold HEAD `178b5935` (R16 HEAD-drift) before any KEEP-DONE row is trusted.
+6. **The engine Stage-0 precondition (HARD — DEV-B §3; RECORDED, applied by the build agent, NOT in the fold).**
+   **No build cycle opens until** `bg-bh-execute.wf.js` emits `doneBuilding`/`buildComplete`/`paintComplete`/
+   `FAIL-PAINT` markers AND the scheduled paint edge (`Workflow(bg-paint.wf.js)` after each sweep, guarded by
+   `PAINT_DRAIN_THRESHOLD`) is wired AND a boot dry-run witnesses `cutReady = buildComplete ∧ paintComplete`. The
+   five-edit DAG-deadlock repair (§3.1), the paint edge (§3.2), the FAIL-PAINT→FIX-AGENT recovery, the boot witness
+   line (§3.5) are the build agent's Stage-0 apply-set. **A run without the Stage-0 witness line built against the
+   deadlocked engine, and its cut is VOID** (elevated to a `publish-and-cut §1` cut-blocker checklist item).
+7. **The worktree-GC tripwire (GA-12 — DEV-B §3.4).** `scripts/worktree-gc.mjs` (a NEW in-repo tool, scope-fenced
+   ABSOLUTELY under `${REPO}/.claude/worktrees/` — NEVER `~/Programming` siblings, NEVER `/tmp`, runs
+   `verify-siblings-intact.mjs` FIRST) prunes stale run worktrees; RED at boot over 20 dirs / 20 GB (at HEAD: 99
+   dirs / 83G — born-RED). Wired as a boot step + a `publish-and-cut §1.0` pre-cut battery item (a bloated worktree
+   tree at the cut ABORTS the tag) + a standing `proof:worktree-hygiene` (`local`).
+8. **W-REFLECT3 ABOLISHED.** There is NO terminal reflect funnel; EVERY live-π closes at its owning wave's OWN
+   non-authoring paint close; the cross-page harmonized-whole read is `17.6 BG.W-PAGE-COMPONENT-AUDIT`'s OWN 480-capture
+   close. `proof:ba-gestalt` G8a reds any wave deferring its verdict to a terminal wave.
 
 ---
 

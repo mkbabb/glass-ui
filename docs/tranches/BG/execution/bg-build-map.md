@@ -20,6 +20,210 @@
 > cross-cutting register (corrections · CONSUMEs · live-fixes · build-phase deferrals · verdict) is the **RESPEC
 > DEVELOP-PASS register** section before The CRITICAL PATH.
 
+---
+
+## RESPEC-GESTALT AMENDMENT (2026-07-01, audit #3 — the LAST audit; AUTHORITATIVE)
+
+> **`docs/tranches/BG/audit/RESPEC-GESTALT/AMENDED-GESTALT-PLAN.md` is the authoritative wave frontier.**
+> This build-map is retained as BUILD-ORDER HISTORY + per-wave file/gate/π detail. Where this map and the
+> AMENDED-GESTALT-PLAN conflict, **the plan WINS** (it applies the 16 orchestrator rulings `RULINGS-PASS2.md`
+> over the four pass-2 DEV lanes). The one-verb prescription is **COLLAPSE**: the ~110-wave BG roster
+> restructures into **64 BG active waves across nine families (F1–F9) + 14 BH family waves**; every per-WS
+> block below (`## STAGE 0` · `## WS1..WS12` · `## BH[WS12]`) is **SUPERSEDED by its family block here — see
+> the SUPERSESSION INDEX**. Spec text is NOT deleted (history preserved). Audit-freeze binds: no further
+> audit; build resumes at the fold.
+
+### SUPERSESSION INDEX (per-WS block → family; see `AMENDED-GESTALT-PLAN §1 <Fx>`)
+
+| build-map block | SUPERSEDED BY | notes |
+|---|---|---|
+| `## STAGE 0` (WS7 Band-0/2) | **§2 KEEP-DONE (0.1–0.6, landed)** + **§1 F8** | 0.1 R11-corrected (roster re-pointed LANDED; the vacuous-probe→dominant-hue transposition is **12.14 `W-COMPOSITED-GESTALT-GATE`, OWED**) |
+| `## WS1` Field/Route | **§1 F1** | 2.1–2.6 KEEP-DONE (§2); only 12.5 `W-GATE-FIELD-AURORA` active |
+| `## WS3` Glass | **§1 F2** | tint-recipe home → `W-GLASS-REGISTER-UNIFY` `@utility glass-fill` (R9) |
+| `## WS2` Dock | **§1 F3** (PROTECTED near-verbatim; 4.10 UNTOUCHABLE) | DOCK_SPRING byte-frozen (R6) |
+| `## WS5` Viz | **§1 F9 Substrates/Viz** (R15) | |
+| `## WS6` Siri | **§1 F3 (8.2 `W-SIRI-DOCK-CAPABILITY`)** | dock capability, no subpath/api (ruling 4) |
+| `## WS4` Components/Demo | **§1 F5 · F6 · F7** | dead-cut owned ONCE by 10.5 (R1) |
+| `## WS7` Close-machine | **§1 F8** | R3 taxonomy: `proof:build`·`proof:meta`·`proof:warm-identity` (NO `proof:close`) |
+| `## WS8` Glass-deep | **§1 F2 (13.2, 3.15)** + **§4 (13.3 drop-with-trigger)** | C-SAFARI Tier-1 WebGL2 floor primary |
+| `## WS9` Paper-deep | **§1 F4** | raster tooth PRIMARY; feTurbulence demoted |
+| `## WS10` De-shadcn | **§1 F6 (10.23, ONE concern)** | |
+| `## WS11` Storybook | **§1 F7** | |
+| `## WS12` Coherence capstone | **§1 F8 (17.1/17.4/17.5/17.6; capstone ≤4 rows, R16)** | |
+| `## BH[WS12]` tail | **BH band rows + §1 F8 + F6 BH-grammar** | `goo-blob→blob` pinned to BH B2 reshape (R14) |
+
+### PER-FAMILY AMENDMENT BLOCKS (merged-wave specs; source-wave assertions preserved as named clauses)
+
+**F1 — Field/Route** (`proof:route` + `field-aurora-aa`). `12.5 W-GATE-FIELD-AURORA` (amend, gate-authoring PRUNED
+into landed 2.2): the value.js `^1.1.1` gate-LITERAL pin (`proof-peer-conformance.mjs:41/46` `1.2.0→1.1.1`) + the
+symmetric light-arm eyebrow lift (`+3.12` folded). WS1 2.1–2.6 KEEP-DONE.
+
+**F2 — Glass** (`proof:glass`; paint `proof:warm-identity`). R9 governs the tint-recipe home.
+- `0.7 W-DOCK-BLUR-RETIRE-CARVE` (was `W-CLOSEFIX-9SITE`): delete `--glass-blur-dock` chain (~4–5 src); carve
+  `ladder.css`→`glass/grain-overlay.css` + `shell.css`→`dock/shell-regions.css` (<500); MIGRATION row; **KILL
+  `proof:retired-token-consumers` (never mint — inv-26-backwards)**.
+- `3.1 W-CARTOON-INK-GAMUT` (KEEP, paint-pending `3857b33`).
+- `3.3 W-GLASS-CLIP-DISCIPLINE` (absorbs 3.2): **[3.2 clause]** delete ONLY `dock/shape.css:208-249` `.cartoon-cast`
+  (**`cards.css:359` stays LIVE — R5**); **[3.3 clause]** retire per-class `contain`/`isolation` dialects; `--motion-weight:0`
+  `.glass-dock` reduce clause.
+- `3.5 W-GLASS-REGISTER-UNIFY` **(TENTPOLE; absorbs 3.4+3.8+3.9+3.11 +3.6 landed seed)**: owns the tint-recipe home
+  (R9) — the `@utility glass-fill` element-level compose; **DELETE `--glass-bg-*-tinted` + the 9 inline re-spells**;
+  one-8px blur register; Safari `blur(var())` webkit assert; migrate 6 fill-tint consumers + 3 chromatic pairs.
+- `3.10 W-GLASS-DYNAMICS` (absorbs 13.5 as press-coupled clause): lensing-refraction + neutral specular hairline;
+  GL uniform reads `press.value` (soft-gated by F5.1). Precond F5.1.
+- `3.13 W-GLASS-DEFAULT-DEFINITION` (NEW, CRITICAL): split glass → transmissive default + `.glass-defined` (rim +
+  `--glass-floor-fill` + lit) on the ONE `--glass-level`/edge machinery. Precond **UNIFY (3.5)** (R9).
+- `3.14 W-GLASS-BASIS-CONSOLIDATE` (NEW; zero-pixel): `.glass-surface` basis merge; kill dark COLOR dual-arm
+  (light-dark() only — **records the idiom REVERSAL as intentional + no-color-feeds-inset bite, R16 MN-1**);
+  dead-token sweep; goo-id + refract→lens renames. Does NOT touch the recipe home (R9). Precond **UNIFY (3.5)** + F8.5.
+- `3.15 W-DEEP-GLASS-DECIDE` (NEW; +13.1 arc): RUN `profile:budget` at 20px/1.8 ONCE → land the two-token bump OR
+  RETIRE-at-16px-with-recorded-number (a `booked` state REDs).
+- `13.2 W-GLASS-REFRACT-WEBGL` (C-SAFARI Tier-1 FLOOR, PRIMARY; absorbs 12.8+12.7+13.4): build `glass-refract.glsl.ts`
+  WebGL2 floor + `uChromatic` fence + Safari-parity ladder. *(13.3 FBO second-sample = DROP-WITH-TRIGGER → §4.)*
+
+**F3 — Dock** (`proof:dock` + `proof:siri`; PROTECTED). **R6: DOCK_SPRING byte-frozen WINS** — 4.1 is a pure INSTANCE
+consolidation reading the frozen `{0.32, 0.7}`; `proof:dock-engine` E4 byte-frozen assert PRESERVED; **5.2's "retune
+0.68/0.64" + the motion-canon re-sync deliverable are DELETED** (no retune landed or owed).
+- `4.1 W-DOCK-ENGINE-UNIFY` (4.1+4.2): `useDockSpring` instance consolidation; 4-signals→1 `[data-morphing]`.
+- `4.3 W-DOCK-CUT` **(amend → VERIFY + dock clearance, R1)**: `useDockContextSilhouette` DEFINITION-ABSENT verify;
+  **10.5 owns the delete + `AppSwitcher.vue` rework**. Precond **10.5 ∈ preconds(4.3)**.
+- `4.4 W-DOCK-DECOMPOSE` (KEEP; 5.1 folds as post-carve verify clause): carve `GlassDock.vue` 711→leaves; drains ratchet #2.
+- `4.5 W-DOCK-FISSION-WIRE` (KEEP): drains `useDockFission.ts:604` **(sole owner — R4)** + `fission-bridge.css:552`.
+- `4.6 W-DOCK-PERSISTENT-CUT` · `4.7 W-DOCK-CAP-SCROLL-FADE` (4.7+4.8) · `4.9 W-SHELL-DOCK-DRY` (KEEP the 4.10 chain).
+- `4.10 W-DOCK-INPLACE-MORPH` **(KEEP VERBATIM — UNTOUCHABLE, §4)**. Precond 4.1 + 4.9.
+- `8.2 W-SIRI-DOCK-CAPABILITY` (8.1+8.2+8.3+8.4 → ONE `proof:siri`, 4 arms): Siri as a DOCK CAPABILITY via
+  `.glass-dock-frame`/`#rail` — **NO subpath, NO `api/` entry**; `SiriWaveform` demo-private. Precond 4.1; runs BEFORE 4.3.
+
+**F4 — Paper** (`proof:paper`). `14.1 W-PAPER-TEXTURE-UNIFY` (=F4.1; +14.2+14.0): ONE warm raster tooth PRIMARY
+(`C≥0.02`); RETIRE the self-cancelling `feTurbulence`; `feDiffuseLighting` `@supports`-gated enhancement. `14.3
+W-HANDMARK-PERFECT` (+14.4 pencil-boil). *(14.5 cross-repo-asks → F8.)*
+
+**F5 — Motion** (`proof:motion`).
+- `10.5 W-DEAD-COMPOSABLE-CUT` **(owned ONCE — R1; subsumes 12.1 W-SPIKE-DELETE + 12.2 W-JUBILANCE-DECIDE; corrects
+  the false `useCelebrationBurst` KEEP)**: DELETE `useHaptic`, `useCelebrationBurst`(+`jubilance.css`),
+  `useVizChoreography`, `useLiquidMorph`(+`liquid-morph.css` 850), `useDockContextSilhouette`(+`AppSwitcher.vue`);
+  FOLD `useScrollPin`+`useScrollScene`; gut `useMorphField`; DELETE the 3 lying evidence docs; one MIGRATION row each.
+- `10.6 W-MOTION-SPINE` (=F5.1; 10.6+10.7+10.9): mint `useElementMorph`; reveal/cta/bloom → ≤20-line wrappers;
+  **press-tower collapse — preserve the interruptible velocity-continuous re-seat + Button's `--glass-btn-press-t`
+  drive (R16 WATCH-3)**. Precond dead-cut (10.5).
+- `10.8 W-SPRING-TIDY` · `10.10 W-LIQUID-WEIGHT-DEFAULT` (=F5.2; 10.10+10.24): invert the TRANSITION default
+  (`--transition-liquid-spatial` spring-derived; `.motion-calm` opt-out) — **the Fable storybook sweep is the
+  LOAD-BEARING gate**. `10.26 W-DISCLOSURE-ROTATE` (NEW): ONE `transition-disclosure`; widen `proof:spring-ease` as a CASE ROW.
+
+**F6 — Components/API** (`proof:encapsulation`; ratchet `proof:no-god-module` KEPT as its own true-positive gate).
+- `10.1 W-SCROLL-SHRINK-UNIFY` · `10.2 W-SHEET-INSET-ROOT`.
+- `10.11 W-COLOCATE` (10.11 gate-only PRUNED + 10.12+10.13+10.14+10.16+10.17+10.18): carve `createCanvasLifecycle`
+  (SOLE owner, WS8 fence re-pinned) + `useWebGPUCanvas` + `useGlassBackdropLuminance` (SOLE owner) + `SegmentedTabs` +
+  timeline/Slider partials + std140-builder; drains ratchet #3/4/9/13. AFTER WS5.
+- `10.19 W-DEAD-SWEEP` (10.19+10.20; runs FIRST for net-negative) · `10.23 W-DESHADCN` (10.23+15.1–15.5, ONE concern).
+- `10.15 W-GOO-BARBELL-CSS`.
+- `10.27 W-GOD-MODULE-STRUCTURAL` (NEW): decompose the dock ONCE; the 2 live-RED CSS carves in-wave; **ratchet CONTRACT
+  change** (new baseline needs a companion carve-successor id, OR cap+FAIL); shader-literal exemption. BEFORE F6.2 rename.
+- **BH-grammar (land BEFORE BH row 7):** `BH.W-AXIS-GRAMMAR` (mint `_shared/axes.ts`; homonym kills; `Surface` 3→4 doc
+  fix; `/axes` barrel) · `BH.W-SIZE-UNIFY` (`default`→`md`; `density`→`size`) · `BH.W-MOTION-AXIS` (VISUAL; ONE `motion` axis).
+
+**F7 — Demo** (`proof:demo`). **Sequence: F7.2→F7.1→live-render→colocate→BH B3.**
+- `16.6 W-CHASSIS-ADOPT-OR-RETIRE` (NEW, CRITICAL — centerpiece; PARENT of F7.1): DECIDE adopt-or-retire (DemoFrame ·
+  unified header, DELETE 36 inline `<header>` · VizStudio adopt · StorySectionHeader DELETE).
+- `16.5 W-DEMO-IA-REDESIGN` (NEW, Fable): narrative arc + family collapse → ~90–100 pages; DockStage 240-cerulean→warm.
+- `16.7 W-DEMO-DUP-MERGE` (NEW; +10.3+10.4+10.21+10.22): Timeline×3→1 · Scroll×3→1 · `git mv aurora/`→`substrates/aurora/`.
+- `4.11 W-DOCK-STORY-MODULARIZE` · `16.1 W-SCROLL-PROGRESS-GLASSY` · `16.2 W-SECTION-TYPEWRITER-FADEUP` · `16.3
+  W-STORY-PAGE-API` (+§4-D sub-types restore). *(16.4 suffuse folds into `proof:demo` clause; F7.4 Pass-E 7-category
+  is an AMENDMENT of 17.6.)*
+
+**F8 — Close/Cut** (`proof:build` · `proof:meta` · `proof:warm-identity` — R3; **NO `proof:close`**).
+- `12.4a W-GESTALT-CURSOR-PARITY` · `12.4b W-CLOSE-SWEEP` · `12.9 W-CONSTRAINT-MANIFEST`.
+- `12.13 W-GATE-FAMILY-CONSOLIDATE` (NEW; absorbs 12.3, runs FIRST): detector kit → paint-first inversion → **360→~250**
+  family consolidation; **PROTECT (R8): enroll the dead-knob witnesses — `proof:ui-scale` dock-coarse arms,
+  `proof:dock-plate-clearance` `0px` assert, `proof:adaptive-reconcile` — in the true-positive set; subsumption census
+  enumerates every bite → its surviving clause; `proof:dead-knob` lands as an ENCAPSULATION-family ARM.**
+- `12.14 W-COMPOSITED-GESTALT-GATE` (NEW, CRITICAL): mean-L box → dominant-hue histogram over a real route REGION,
+  both engines; `ba-gestalt` becomes ONE enrolled surface, not the sole oracle.
+- `12.15 W-FABLE-DESIGN-ARM` (NEW, CRITICAL; 0/61 compliant): schema edit — every VISUAL wave declares
+  `fableArm`+`designSyncSurface`; "DesignSync PASS from FABLE, not the builder" a CLOSE PRECONDITION; provisioning USER-GATED (R16).
+- `12.16 W-CSS-MINIFY` (NEW): minify `dist/styles/*.css`; PRUNE BC.W-CSS-CRITICAL machinery; aurora forcing-trigger
+  `dist/aurora.js gz>54KB` MUST split. AFTER F9 demigrate + Siri.
+- `12.17 W-TOKEN-MANIFEST` (NEW; BEFORE 3.14) · `12.18 W-ARISTOTELIAN-PROPORTION` (NEW; acceptance LANGUAGE not N gates
+  — GA-9) · `12.19 W-DEFERRAL-DISPOSITIONS` (NEW; RETIRE half + story sub-types).
+- **Capstone (≤4 rows, R16):** `17.1 W-COHERENCE-CENSUS-GATE` (17.1+17.2, share the capture) · `17.4
+  W-ANIMATION-CONGRUENCE` · `17.5 W-GLASS-PAPER-CONGRUENCE` · `17.6 W-PAGE-COMPONENT-AUDIT` (+17.3 + F7.4 GA-10 — the
+  480-capture cross-page harmonized-whole read, the **abolished-W-REFLECT3 funnel replaced by a REAL wave**).
+- `19.1 BG.W-CUT` (5.0.0 tag): `--run full` union siblings-absent BEFORE tag; `RATCHET_BASELINES=={}` VISIBLE via the drain chain.
+
+**F9 — Substrates/Viz** (R15 — `proof:viz` + `proof:gpu-substrate-single`).
+- `6.1 W-VIZ-RESIZE-ADOPT` (6.1+6.2) · `6.3 W-VIZ-DEMIGRATE` (6.3+6.7 ATOMIC; carries the LX.1 `DEFAULT_PARALLAX===0` protector).
+- `6.4 W-VIZ-REVEAL-BLOOM` **(amend — strip orphan-DELETE)**: reveal-bloom BUILD only; `useVizChoreography`
+  DEFINITION-ABSENT verify. Precond **10.5 ∈ preconds(6.4)** (R2 — 10.5 deletes, 6.4 verifies; "6.4 removes the last consumer" prose STRUCK).
+- `6.5 W-VIZ-PREVIEW-LIVE` · `6.6 W-DOTFLOW-REBUILD` (§4-D advection carrier) · `6.8 W-GOODOT-SETUP-SPLIT` (+7.1) ·
+  `6.9 W-BLOB-KINEMATICS-LEAF` (+7.1) · `6.10 W-AUR-METAL-FINISH` (NEW carrier) · `6.11 W-AUR-IMAGE-SOURCE` (NEW carrier).
+
+### fableArm/designSyncSurface (R13 — inline on kept-visual waves)
+
+| wave | fableArm | designSyncSurface |
+|---|---|---|
+| 3.1 | cartoon-ink warm gamut | /foundations cartoon-shadow (both modes) |
+| 3.5 UNIFY | glass tint/blur register calibration | glass-band cards (5 tiers + bright bucket) |
+| 3.10 | lensing + neutral specular | /foundations glass-dynamics |
+| 3.13 | defined-vs-transmissive calibration | control cohort over flat page + live field |
+| 3.15 | (IF landed) warm-cream still reads | hero/dock deep-glass |
+| 4.5 | dock fission bloom | /navigation dock fission |
+| 4.7 | overflow soft-edge fade | /navigation dock overflow |
+| 4.10 | V↔H real morph (paint tentpole) | /dock morph-showcase + in-situ shell |
+| 8.2 | dynamic-island glass gestalt | /dock siri capability |
+| 6.1 | viz sizes-to-box | /substrates viz gallery |
+| 6.4 | reveal-bloom frame-series | /substrates viz previews |
+| 6.5 | live GL preview cards | /substrates VizStudio |
+| 6.6 | the flowing dot-wave | /substrates dot-flow-field |
+| 10.6 | reveal/cta/bloom frame-series | reveal/cta/bloom card set |
+| 10.10 | transition-register inversion sweep | interactive-surface inventory |
+| 14.1 | tooth calibration + accept/reject enhancement | paper-band Chromium+WebKit |
+| 16.6 | the anatomy DECISION + header cel | candidate anatomies across 4–5 pages |
+| BH.W-MOTION-AXIS | press/drag gestalt across Card/Tab/Slider/Dialog | interactive-gesture card set |
+
+*(structural/mechanical waves carry "—"; the full inline set is in `AMENDED-GESTALT-PLAN §1`.)*
+
+### THE RATCHET-DRAIN DEPENDENCY CHAIN — a VISIBLE cut-gate (16 baselines → owning wave → band; R1/R4 owners)
+
+Disk truth: `proof-no-god-module.mjs:138–172` carries **16 real baselines** (BH PLAN §71's "drained to ∅" describes
+ONLY the 3 deleted BH rows — FALSE for BG). `19.1 BG.W-CUT`'s `violations == [] AND RATCHET_BASELINES == {}` close-state
+is coupled to every one of these draining. A single slipped carve (esp. the WS5-gated WS4 `10.11`) leaves the ratchet
+non-empty → the cut cannot pass `--run full`.
+
+| # | baseline (disk line count) | owning wave | band / lane | drain mechanism |
+|---|-----------------------------|-------------|-------------|-----------------|
+| 1 | `styles/glass/liquid-morph.css` 850 | `10.5 W-DEAD-COMPOSABLE-CUT` (DELETE, §1 F5) | F5 | whole-file DELETE (the spike-cut absorbs the rehome) |
+| 2 | `dock/GlassDock.vue` 711 | `4.4 W-DOCK-DECOMPOSE` | F3 dock | dock decompose carve |
+| 3 | `glass/webgl/createCanvasLifecycle.ts` 695 | `10.11 W-COLOCATE` (SOLE owner) | F6 (AFTER WS5) | carve → `scheduler.ts`+`visibility.ts` |
+| 4 | `glass/webgpu/useWebGPUCanvas.ts` 606 | `10.11 W-COLOCATE` (same wave) | F6 | carve |
+| 5 | `dock/composables/useDockFission.ts` 604 | **`4.5 W-DOCK-FISSION-WIRE` (SOLE owner — R4)** | F3 dock | dock carve |
+| 6 | `styles/tokens/property-regs.css` 548 (base 566) | **RATCHET EXEMPTION** (css-registration-manifest) | contract | EXEMPT — flat `@property` list, STRICT shape check (any selector-block/logic disqualifies — R16) |
+| 7 | `styles/dock/fission-bridge.css` 552 | `4.5` (dock CSS carve) | F3 dock | dock CSS carve |
+| 8 | `dock/composables/useDockContextSilhouette.ts` 551 | **`10.5 W-DEAD-COMPOSABLE-CUT` (SOLE owner — R1)** | F5 | DELETE (drains by removal; 4.3 only VERIFIES) |
+| 9 | `glass/useGlassBackdropLuminance.ts` 534 (base 542) | `10.11 W-COLOCATE` (SOLE owner) | F6 | carve → histogram+wcag leaves |
+| 10 | `goo-blob/composables/useBlobSatellites.ts` 533 | `6.9 W-BLOB-KINEMATICS-LEAF` | F9 | kinematics leaf carve |
+| 11 | `goo-blob/shaders/metaball.wgsl.ts` 529 | **RATCHET EXEMPTION** (shader-string) | contract | EXEMPT |
+| 12 | `dot-flow-field/shaders/flow-field.glsl.ts` 517 | **RATCHET EXEMPTION** (shader-string) | contract | EXEMPT |
+| 13 | `tabs/SegmentedTabs.vue` 512 | `10.11 W-COLOCATE` | F6 | carve → roving-focus+responsive leaves |
+| 14 | `goo-blob/shaders/metaball.frag.ts` 510 | **RATCHET EXEMPTION** (shader-string) | contract | EXEMPT |
+| 15 | `goo-dot-matrix/composables/useGooDotMatrix.ts` 508 | `6.8 W-GOODOT-SETUP-SPLIT` | F9 | setup-split carve |
+| 16 | `api/index.ts` 505 | `BH.B2.2 W-api-fold` | BH WS12 | `./api` drop + 203 re-home (delete-drains) |
+
+**Ratchet-contract hardening (10.27 / GA-4 / FC-B10).** `RATCHET_BASELINES` is a two-class contract: `{god-module → must
+carve}` vs `{EXEMPT: shader-string | css-registration-manifest → rationale-per-file, shape-checked}`. Rows 6/11/12/14
+drain by exemption (ZERO carve) — the real carve surface is **12 baselines across F3(3)/F5(2)/F6(4)/F9(2) + BH-B2.2(1)**.
+CORRECT BH PLAN §71's "drained to ∅" → "the 3 BH rows drained; 12 BG baselines drain across F3/F5/F6/F9 + BH-B2.2, 4 are
+ratchet-EXEMPT (3 shaders + property-regs manifest); `=={}` is `19.1 BG.W-CUT`'s state."
+
+### W-REFLECT3 ABOLITION (audit #3) — scrub applied in this map
+
+`W-REFLECT3` is ABOLISHED. There is NO terminal reflect funnel wave. EVERY live-π (gestalt OR non-gestalt) closes at
+its owning wave's OWN non-authoring paint close; the cross-page harmonized-whole read is `17.6 W-PAGE-COMPONENT-AUDIT`'s
+OWN 480-capture close. `proof:ba-gestalt` G8a reds any wave that defers its verdict to a terminal wave. **The `:66–74`
+carve-out ("a NON-ba-gestalt π may legitimately name W-REFLECT3") is DELETED**; the 6 tails (`:224`/`:733`/`:862`/`:882`/
+`:1320` re-homed; `:589`/`:1318` already correct) name each owning wave's own close.
+
+---
+
 **The binding sequencing law (FINAL §8, ABSOLUTE).** WS7's `BG.W-PAINT-IS-THE-GATE` +
 `BG.W-SHIP-DISCIPLINE-LIVE-PRECONDITION` + `BG.W-GESTALT-ROSTER-RE-POINT` are built **FIRST** (born-RED
 ground-freeze precedes WS1/WS3 integration — §L.9) and **block the tag** (`proof:ship-attestation`
@@ -34,6 +238,7 @@ Legend: **[H]** = HEADLESS-ONLY (device-free gate is the close) · **[P]** = PAI
 ---
 
 ## STAGE 0 — WS7 Band-0/Band-2 paint+ship machine (BUILDS FIRST, before WS1/WS3 integration)
+> **SUPERSEDED — see AMENDED-GESTALT-PLAN §2 KEEP-DONE (0.1–0.6 landed) + §1 F8.** (History; the plan wins.)
 
 The close machine's ground-freeze precondition. These three precede ALL integration so the born-RED
 captures anchor on real 4.2.0 paint, not a half-fixed tree.
@@ -68,10 +273,10 @@ captures anchor on real 4.2.0 paint, not a half-fixed tree.
   > must close against the wave's OWN non-authoring paint capture, never a deferred hand-off). The two live G8a hits
   > (the `BG.W-FIELD-AURORA` own-gestalt-re-paint deferral + the `BG.W-VT-ROUTE-ENHANCE` re-attempt note, in
   > `EXECUTION-PROGRESS.md`) are RE-HOMED content-anchored onto **"the wave's OWN non-authoring paint close"** — the
-  > deferral is owed (the surface is re-captured under live dual-engine paint), but it is NOT phrased as a
-  > `proof:ba-gestalt` verdict riding W-REFLECT3 (which would red the G8a arm at the cut). A NON-ba-gestalt π
-  > deferral may still legitimately name W-REFLECT3 (the light-eyebrow lift, the refract-shader live π) — only the
-  > `proof:ba-gestalt` VERDICT phrasing is the G8a-forbidden form.
+  > deferral is owed (the surface is re-captured under live dual-engine paint at that wave's OWN close).
+  > **RESPEC-GESTALT (audit #3) ABOLISHES the carve-out:** there is NO W-REFLECT3 wave; EVERY live-π — gestalt OR
+  > non-gestalt (the light-eyebrow lift, the refract-shader live π INCLUDED) — closes at its owning wave's OWN
+  > non-authoring paint close, and the G8a arm forbids ANY `proof:ba-gestalt` verdict naming a terminal-reflect wave.
 - **BG.W-GESTALT-ROSTER-RE-POINT** [H] — surface-paths DERIVED from route files; the roster `.md` shipped
   (10 surfaces, BG-dated). *Files:* `docs/tranches/BG/audit/reflect/bg-gestalt-roster.md` + per-surface
   `<surface>.md` hash records, `scripts/lib/surface-closure.mjs` (routeSeeds HARD-RED on the real P6 leaf).
@@ -102,6 +307,7 @@ WS7 Band-0 no-silent-drop ledger also builds early (it has no integration depend
 ---
 
 ## WS1 · Shell · Routing · Field (7) — D1·D2·D5·D9·D10 — the SPA-paint precondition
+> **SUPERSEDED — see AMENDED-GESTALT-PLAN §1 F1** (2.1–2.6 KEEP-DONE §2; 12.5 active). History; the plan wins.
 
 > WS1-routing gates ALL downstream SPA-nav paint-verify. WS1's shell aurora exposes the live
 > `WebGL2RenderingContext` + `[data-glass-field-canvas]` marker WS8 BACKDROP-SAMPLE needs.
@@ -156,6 +362,7 @@ WS7 Band-0 no-silent-drop ledger also builds early (it has no integration depend
 ---
 
 ## WS3 · Glass standardization (11) — D3 — owns the unified blur/cast/clip register
+> **SUPERSEDED — see AMENDED-GESTALT-PLAN §1 F2** (tint-recipe home → `W-GLASS-REGISTER-UNIFY` `@utility glass-fill`, R9). History; the plan wins.
 
 > Phase 1 (M1·M2·M3·M4a·M5a) is field-INDEPENDENT, real-paint-verifiable NOW. Phase 2/3 chromatic paint is
 > WS1-field-gated (the iridescence is field × saturate). WS2 is a PEER consumer of the blur seam — no
@@ -173,8 +380,10 @@ WS7 Band-0 no-silent-drop ledger also builds early (it has no integration depend
   *Gate:* `proof:no-gray` NEW `cartoon-ink-warm-in-gamut` witness (born-RED, reuse `WARM_HUE_LO=45`/`HI=85`).
   *π:* real `box-shadow` getImageData over white AND dark, all 3 rungs, both modes (captures form A + B for
   sign-off). *Precond:* none (Phase 1). **Hostage of EVERY WS4 ba-gestalt verdict.**
-- **BG.W-DOCK-CAST-RETIRE** [H] — delete the W3C-dead `.cartoon-cast` block + wedge + `<span
-  class="cartoon-cast">`; add the dock-scope PRM `--motion-weight:0` carve. *Files:* `shape.css:208-249`,
+- **BG.W-DOCK-CAST-RETIRE** [H] *(folds into F2 3.3 `W-GLASS-CLIP-DISCIPLINE`)* — delete the `.cartoon-cast` block
+  (`src/styles/dock/shape.css:208-249` — **live, being RETIRED by W-DOCK-CAST-RETIRE**, NOT dead; the `cards.css:359`
+  `.cartoon-surface` shadow stays LIVE — R5) + wedge + `<span
+  class="cartoon-cast">`; add the dock-scope PRM `--motion-weight:0` carve. *Files:* `src/styles/dock/shape.css:208-249`,
   `GlassDock.vue:606`. *Gate:* atomic source-absent + post-build `getComputedStyle`-in-bundle confirm
   (`--motion-weight:0` on `.glass-dock` under reduce). *Precond:* sequence M1≤M2.
 - **BG.W-GLASS-CLIP-DISCIPLINE** [P] — Job-B `contain:paint` on a NARROWED content+`.glass-card` selector
@@ -221,7 +430,7 @@ WS7 Band-0 no-silent-drop ledger also builds early (it has no integration depend
   only**. *Files:* the `.section-label` light-arm warm-ink token(s) (`typography.css`/`scale-paper.css`). *Gate:*
   `proof:field-aurora-aa` F-AA-LIVE born-RED→GREEN; `proof:no-gray` warm-identity un-regressed. *π:* the
   light·chrome eyebrow clears ≥4.5 over the COMPOSITED recessive field, both engines, the dark/Safari arms
-  un-regressed (rides W-REFLECT3). *Precond:* WS1 FIELD-AURORA (the recessive field) — `resolvedBy` of the WS7
+  un-regressed (rides the wave's OWN non-authoring close). *Precond:* WS1 FIELD-AURORA (the recessive field) — `resolvedBy` of the WS7
   `BG.W-GATE-FIELD-AURORA` EYEBROW_LIGHT_POLISH `resolvedBy` row.
 - **BG.W-GLASS-CONSUMER-BAND** [P] — fold the fill-tint consumers (Badge/SelectableChip/IconChip/glass-atom/
   glass-chip) onto the plate/rim pairs. *Gate:* 3 design sign-offs + computed-style. *Precond:* WS1-gated, after
@@ -242,6 +451,7 @@ WS7 Band-0 no-silent-drop ledger also builds early (it has no integration depend
 ---
 
 ## WS2 · Dock convergence (11) — D8·D12·D13 — consumes WS3 blur peer + WS1 route swap
+> **SUPERSEDED — see AMENDED-GESTALT-PLAN §1 F3** (PROTECTED near-verbatim; DOCK_SPRING byte-frozen R6; 4.10 UNTOUCHABLE). History; the plan wins.
 
 > The 11-wave order: UNIFY → BUSY-SINGLE → CUT → DECOMPOSE → FISSION-WIRE → PERSISTENT-CUT → CAP-SCROLLS →
 > OVERFLOW-FADE → SHELL-DOCK-DRY → INPLACE-MORPH → STORY-MODULARIZE. `useDockSpring` (UNIFY) GATES WS6.
@@ -319,6 +529,7 @@ WS7 Band-0 no-silent-drop ledger also builds early (it has no integration depend
 ---
 
 ## WS5 · Viz refinement (9 active + 2 booked) — D6 — gates WS4 canvas carves
+> **SUPERSEDED — see AMENDED-GESTALT-PLAN §1 F9 Substrates/Viz** (R15). History; the plan wins.
 
 > WS5 precedes WS4's `CANVAS-LIFECYCLE-LEAVES`/`UNIFORM-LAYOUT-BUILDER` carves (re-measure POST-WS5).
 > **COHERENCE FOLD G7 P3 (REFINE, not a net-new edge) — the `proof-gpu-substrate-single.mjs:177-181` gate edit
@@ -381,6 +592,7 @@ WS7 Band-0 no-silent-drop ledger also builds early (it has no integration depend
 ---
 
 ## WS6 · Siri capabilities (4) — NEW — gated behind WS2's useDockSpring
+> **SUPERSEDED — see AMENDED-GESTALT-PLAN §1 F3 (8.2 `W-SIRI-DOCK-CAPABILITY`, 4 gates → ONE `proof:siri`; NO subpath/api, ruling 4).** History; the plan wins.
 
 > Order: GLASS-BLUR-ENGAGE FIRST → SIRI-ISLAND (ORDERING-GATED behind WS2 `useDockSpring`) → SIRI-WAVEFORM →
 > SIRI-DOCK-INTEGRATION LAST. SIRI-ISLAND is born-RED until WS2 lands `useDockSpring` AND WS6 composes it.
@@ -413,6 +625,7 @@ WS7 Band-0 no-silent-drop ledger also builds early (it has no integration depend
 ---
 
 ## WS4 · Components · Demo · Encapsulation (22) — D4·D6·D7·D11·D14
+> **SUPERSEDED — see AMENDED-GESTALT-PLAN §1 F5 · F6 · F7** (dead-cut owned ONCE by 10.5, R1). History; the plan wins.
 
 > HARD-dep WS1 (scroll-shrink). The canvas-lifecycle carves sequence AFTER WS5. WS3-M1 cartoon-ink is the
 > hostage of EVERY WS4 ba-gestalt verdict. `BG.W-DESHADCN-SWEEP` (W0) PRECEDES WS10's ci arms.
@@ -529,6 +742,7 @@ WS7 Band-0 no-silent-drop ledger also builds early (it has no integration depend
 ---
 
 ## WS7 · Quality · Coverage · Close (19) — the close machine
+> **SUPERSEDED — see AMENDED-GESTALT-PLAN §1 F8** (R3 taxonomy: `proof:build`·`proof:meta`·`proof:warm-identity`; NO `proof:close`; feature builds EXTRACTED). History; the plan wins.
 
 > Band-0 (ledger) + Band-2 (paint/ship) BUILD FIRST (see STAGE 0). The remaining bands run as the close. The
 > 4 WS4 user-visible surfaces MUST enroll in the gestalt roster (the BD/BE/BF roster-frozen blindness recurs
@@ -730,7 +944,7 @@ WS7 Band-0 no-silent-drop ledger also builds early (it has no integration depend
   dual-engine `_anchor` re-shoot at `ebf6e45b` (= `b3d65eec~1`, the verified pre-fix BROKEN state) in a throwaway
   `/tmp` worktree capturing Chrome 1.04 + Safari 1.91 over `/foundations/colors` dark, emitting
   `field-aurora-aa/{chrome,safari}-<surface>-<mode>-<vp>.png+.probe.json` with PRM/pause aurora-freeze — proven by
-  W-REFLECT3 + the light-eyebrow polish landing. **Convergence 78.**
+  the wave's OWN non-authoring close + the light-eyebrow polish landing (`3.12`/`BG.W-EYEBROW-LIGHT-POLISH`). **Convergence 78.**
 - **BG.W-GATE-PREVIEWS-RENDER** [P] — the /substrates live-preview render gate.
 - **BG.W-GATE-UNIFORM-BLUR** [H] — the cross-surface uniform-blur peer gate.
 
@@ -766,6 +980,7 @@ WS7 Band-0 no-silent-drop ledger also builds early (it has no integration depend
 ---
 
 ## WS8 · Glass-deep — the apotheosis (5) — WS1 shell-aurora gated
+> **SUPERSEDED — see AMENDED-GESTALT-PLAN §1 F2 (13.2 Tier-1 WebGL2 floor, 3.15) + §4 (13.3 FBO second-sample DROP-WITH-TRIGGER).** History; the plan wins.
 
 > W-SUFFUSE + W-REFRACT-WEBGL land NOW (field-independent). W-BACKDROP-SAMPLE is the keystone (WS1-gated).
 > C-SAFARI is the ★★★ 3-wave chronic — its Metal-Safari.app capture is the single likeliest item to miss.
@@ -859,7 +1074,7 @@ WS7 Band-0 no-silent-drop ledger also builds early (it has no integration depend
    bites; F3a-F3d/F4 checkable NOW, F1/F2 calibrate over the field at the keystone) + the M6 WGSL-shape gate (1
    wrapper / 5 sites / 0 implicit / `array<vec4f,8>` + synthetic-reintro self-test). *π:* `tests-visual/glass-refract.spec.ts` on real
    WebKit-2287 (rimDelta>0 + chromaticRim>0 + FULL-pass AA-over-bright-ridge + the METAL-FLOW gestalt verdict vs the
-   `liquid-metal-...01.jpg` reference); both modes; LOCAL-only, rides W-REFLECT3. *Precond:* independent. **Convergence
+   `liquid-metal-...01.jpg` reference); both modes; LOCAL-only, rides the wave's OWN non-authoring close. *Precond:* independent. **Convergence
    70 (build-deferred, the dominant cut-risk ★★★).**
 3. **BG.W-GLASS-BACKDROP-SAMPLE** [P, RESPEC-AMENDED (G1)] — THE KEYSTONE (WS1-gated). Wire the backdrop-sampling
    FBO two-pass **+ the FULL pass** (drapery + `uMetalStrength` + the K12 ridge-local plate-alpha valve) into WS1's
@@ -879,7 +1094,7 @@ WS7 Band-0 no-silent-drop ledger also builds early (it has no integration depend
    4.5) + exactly ONE GL context per refracting route + 30s sustained-load no-`webglcontextlost`. *Build-phase
    deferral (no Metal/Safari.app at audit):* the pinned default `uChromatic+ε` (field-dependent), the WebKit
    compile-time measure, the per-pixel Metal-rasterizer drift, the WGSL Tier-2 FBO first-pass on Safari.app
-   `navigator.gpu` — proven by THIS keystone (C17 calibration) + W-REFLECT3 / the close (the non-authoring
+   `navigator.gpu` — proven by THIS keystone (C17 calibration) + the wave's OWN non-authoring close (the non-authoring
    dual-engine Metal capture). *Precond:* **WS1 FIELD-AURORA (the live WebGL2 context + `[data-glass-field-canvas]`
    marker — the named cross-WS gap).**
 4. **BG.W-GLASS-SOTA-LADDER** [H] — formalize the Tier-0 CSS → Tier-1 WebGL2 → Tier-2 WGSL degrade; RETIRE the
@@ -931,6 +1146,7 @@ WS7 Band-0 no-silent-drop ledger also builds early (it has no integration depend
 ---
 
 ## WS9 · Paper-deep (5) — GU-1 key token FIRST
+> **SUPERSEDED — see AMENDED-GESTALT-PLAN §1 F4** (raster tooth PRIMARY; feTurbulence demoted). History; the plan wins.
 
 > Sequence: GRAIN-REAL → SUFFUSE → HANDMARK-PERFECT → PENCIL-BOIL-DEEPEN → CROSSREPO-ASKS. GU-1's
 > `--glass-key-direction` token lands FIRST (value-only) — GRAIN-REAL's azimuth derives from it; **WS12 A6 spine
@@ -990,6 +1206,7 @@ WS7 Band-0 no-silent-drop ledger also builds early (it has no integration depend
 ---
 
 ## WS10 · De-shadcn / idiomatic Tailwind v4 (5) — strictly AFTER WS4's W0
+> **SUPERSEDED — see AMENDED-GESTALT-PLAN §1 F6 (10.23 `W-DESHADCN`, ONE concern with 15.1–15.5).** History; the plan wins.
 
 > W0 precondition: WS4's `BG.W-DESHADCN-SWEEP` registers `proof:de-shadcn` born-GREEN + clears the 9 form
 > violations. WS10 sequences strictly AFTER W0. Rebase the `--ring`/`--input` renames onto WS3-M5.
@@ -1020,6 +1237,7 @@ WS7 Band-0 no-silent-drop ledger also builds early (it has no integration depend
 ---
 
 ## WS11 · Storybook facility (4) — HARD-gates on the WS1+WS4 integration branch
+> **SUPERSEDED — see AMENDED-GESTALT-PLAN §1 F7** (16.1/16.2/16.3). History; the plan wins.
 
 > Intra-WS: 1+2 parallel; 3 after 1+2; 4 last. ALL HARD-gate on WS1/WS4 landing (the integration branch does
 > NOT exist at HEAD — the structural reason WS11 caps). Consumes WS8 glass + the D5-fixed scroll-timeline.
@@ -1048,6 +1266,7 @@ WS7 Band-0 no-silent-drop ledger also builds early (it has no integration depend
 ---
 
 ## WS12 · Coherence · Congruence — the capstone (6) — LAST
+> **SUPERSEDED — see AMENDED-GESTALT-PLAN §1 F8 (capstone collapse ≤4 rows: 17.1/17.4/17.5/17.6, R16).** The `17.6` 480-capture cross-page read replaces the abolished W-REFLECT3 funnel. History; the plan wins.
 
 > WS1–WS11 each converged a DOMAIN in isolation; WS12 audits the WHOLE for CONGRUENCE. PERSIST the gates in
 > dependency order BEFORE the born-RED proof. The 480-capture dual-engine verdict is STRUCTURALLY
@@ -1099,6 +1318,7 @@ WS7 Band-0 no-silent-drop ledger also builds early (it has no integration depend
 ---
 
 ## BH[WS12] restructure tail — the G5 CLAUDE-delete + G7 viz-subpath locks (runs AFTER WS12, BEFORE BG.W-CUT)
+> **SUPERSEDED — see AMENDED-GESTALT-PLAN §5 Lane 3 (BH band rows) + §1 F8 + F6 BH-grammar** (`goo-blob→blob` pinned to BH B2 reshape, R14). History; the plan wins.
 
 > The BH restructure/reshape tail: subpaths-delete · /api-fold · regen export-set · doc-redistribute (CLAUDE→canon)
 > · gate-rehome (the 16 readers) · the CLAUDE.md hard-delete. Build order: …WS12 → BH[WS12] → `BG.W-CUT`. Two
@@ -1317,7 +1537,7 @@ owner `BH-B2.1-swap` (G4 names the wave).
 |---|---|---|---|
 | D-G4 | grain-tail paint π (`liquid-hover.spec.ts`) + ba-gestalt dock/CTA verdict | grain rules byte-preserved in compiled dist | **the wave's OWN non-authoring paint close** (COHERENCE FOLD G1 MR-1 — NOT W-REFLECT3; G4's deferral is `BG.W-CLOSEFIX-9SITE`'s own non-authoring re-capture, not a hand-off to W-REFLECT3) |
 | D-G2 | the WS12 late capture sweep (all 10 roster surfaces, Model-B) | a cost (re-capture), not an unknown; the joinery proof is device-free | **WS12 `BG.W-PAGE-COMPONENT-AUDIT`** + the close |
-| D-G6 | F-AA-LIVE dual-engine `_anchor` re-shoot at `ebf6e45b` + the light-eyebrow ≥4.5 lift | the device-free gate ran GREEN 3/3; the anchor is merge-base-verified | **`BG.W-GATE-FIELD-AURORA`** + **`BG.W-EYEBROW-LIGHT-POLISH`** + W-REFLECT3 |
+| D-G6 | F-AA-LIVE dual-engine `_anchor` re-shoot at `ebf6e45b` + the light-eyebrow ≥4.5 lift | the device-free gate ran GREEN 3/3; the anchor is merge-base-verified | **`BG.W-GATE-FIELD-AURORA`** + **`BG.W-EYEBROW-LIGHT-POLISH`** own closes |
 | D-G1 | pinned `uChromatic+ε` · WebKit compile-time · Metal-rasterizer drift · WGSL Tier-2 FBO on Safari.app | the operator correction + calibration algebra + the named fallback ladder are decided; C18 harness ships | **WS8 `BG.W-GLASS-BACKDROP-SAMPLE`** (C17 calibration) + **WS7 `BG.W-SAFARI-PARITY-GATE`** + the close |
 | D-G5 | the `--run full` `/tmp` siblings-absent dry-run (after 15 homes + 16 readers re-pointed) + the `rm` | mechanism sound; the corrected 16-site census + de-blinded C2 specified; the dry-run is the backstop | **BH-B5c → B4f** (`proof:claude-deletable` born-RED→GREEN) |
 | D-G7 | post-WS12 `verify-export-types`/`subpath-enumeration` re-pin + the human siri-waveform PUBLISH/INTERNAL call | regen proven (C1 EXACT_REPRODUCTION); pre-derived INTERNAL grounded | **BH-B2.1-swap** (after WS5∧WS6∧WS12, before BG.W-CUT) |
