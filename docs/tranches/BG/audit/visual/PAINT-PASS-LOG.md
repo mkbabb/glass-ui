@@ -172,3 +172,97 @@ Honest note (non-blocking, recorded in DELTA): the light-mode card-plate BODY is
 Captures:
 - DELTA: `docs/tranches/BG/audit/visual/BG.W-CATEGORY-CARD-WARM-DELTA.md`
 - 12 PNGs: `docs/tranches/BG/audit/visual/BG.W-CATEGORY-CARD-WARM/{chrome,safari}-{forms,display,data}-{light,dark}.png`
+
+---
+
+## 2026-07-02 — F2 glass-band + F8 gestalt-gate batch (rows 3.1 / 3.3 / F2.3 / 3.6 / F8.2)
+
+allPass: **false** — 4 PASS, 1 FAIL. The COMPOSITED-GESTALT-GATE operative all-warm read holds row F8.2 at PAINT-PENDING; the demo StoryHero ambient aurora backdrops render cold/magenta (a genuine class-A not-warm paint defect the dominant-hue kernel now catches).
+
+| Wave | Row | Verdict | Cursor |
+|------|-----|---------|--------|
+| BG.W-CARTOON-INK-GAMUT | 3.1 | PASS | DONE |
+| BG.W-GLASS-CLIP-DISCIPLINE | 3.3 | PASS | DONE |
+| BG.W-DEEP-GLASS-DECIDE | F2.3 | PASS (moot) | DONE |
+| BG.W-GLASS-BLUR-PEER | 3.6 | PASS | DONE |
+| BG.W-COMPOSITED-GESTALT-GATE | F8.2 | FAIL | PAINT-PENDING (held) |
+
+Provenance across the batch: Chrome = CDP on `ANGLE Metal Renderer: Apple M5 Max` (real Metal, not SwiftShader); WebKit = off-screen WKWebView on system `WebKit.framework` / `Apple GPU` (no `Version/` token -> load-bearing C-SAFARI Tier-1). Engine + GPU decoded IN-PIXEL from the badge per leg. All captures over BUILT bytes on `:5200` (vite preview of the demo dist, NOT the `:5199` dev server) via the C18 `?capture=` harness. `verify-siblings-intact.mjs --quiet` exits 0 before AND after this synthesis; no `/tmp/sibling-park|stash`; servers + throwaway Chrome torn down by each paint agent.
+
+---
+
+### PASSED -> DONE
+
+#### 3.1 — BG.W-CARTOON-INK-GAMUT (build 3857b33b; DELTA + PNGs 7e55b2af)
+
+The cartoon-ink cel register over `/foundations/shadows` reads warm-in-gamut in every painted offset stamp, both engines, both modes.
+
+- Device-free gate GREEN (precondition): `proof:glass` PASS (deep-glass-decided arm); `proof:no-gray` exit 0 with the gate witnesses — cartoon-ink-warm-in-gamut-light ✓ (rgb(52,37,26), OKLab H=57.4°), -dark ✓ (rgb(65,54,38), H=76.7°), and the maroon self-test bite ✓ (flags the synthetic `clamp(0.14,l,0.18) max(c,0.11)` → rgb(49,0,0) B=0 collapse).
+- BINDING PAINTED TRUTH (offset-stamp bands sampled off the full-page PNGs): chrome-light (189,176,153) H81.9° C0.035; chrome-dark (67,58,49) H67.1° C0.020; safari-light (225,213,190) H83.7° C0.034; safari-dark (70,60,50) H67.1° C0.022. EVERY painted stamp is R>G>B warm brown, OKLab hue in [45,85]°, carries real warm chroma (not gray), substantial B channel (not the maroon-collapse the gate exists to kill). The two independent bands (bottom+left) agree.
+- Content + provenance: all four 2880×1800 PNGs render full route content (XS→2XL + CARTOON/CARTOON-HOVER/MODAL/SOFT/ELEVATED grid, HOVER-ME cartoon-lift specimen, both nav docks) + an in-pixel engine badge. Dark modes read as warm luminous-dark transmissive material, not a flat void. Chrome resolves `--cartoon-ink` as oklch(0.28 0.03 55.99) light / oklch(0.34 0.03 75.08) dark.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-CARTOON-INK-GAMUT-DELTA.md`
+- 4 PNGs: `docs/tranches/BG/audit/visual/cartoon-ink-gamut-paint/cartoon-ink-gamut-{chrome,safari}-{light,dark}-desktop-full.png`
+
+#### 3.3 — BG.W-GLASS-CLIP-DISCIPLINE (cursor landed HEAD 7e55b2af; DELTA + 8 PNGs + script 4083726c)
+
+No clip lozenge on any glass surface; the dock control plate clears its track cell. Absorbs 3.2 W-DOCK-CAST-RETIRE (atomic — `shape.css` has no live `.cartoon-cast` rule, `GlassDock.vue` renders no `cartoon-cast` class, `cards.css:329/359` base rule stays LIVE).
+
+- Device-free gate GREEN: `proof:glass-clip` PASS (C1 register=1 clip rule complete, C2 0 surviving `contain:` dialects, C3 exclusions held overlay+dock un-clipped, C4 radius alongside, C5 cast absent shape+vue, C6 PRM carve, C7 built-bundle `contain:paint` survives, self-test teeth) + `proof:dock-plate-clearance` PASS (W1 insetFraction 0.1, comfortable cell=40 plate=32 hover=35.2 slack/side=2.4px; W2 cross-axis visible; W3 `contain:paint` verdict-a true).
+- 8 captures (`/containers` + `/dock/overview` × light/dark × Chrome+Safari), all resolve on disk, real-GPU provenance decoded. Computed DOM (Chrome): overlay-band clip violations=0 all 4 configs; dock plate 40px cell, `background-clip: content-box`, 4px inset/side → 32px painted plate clears the cell edge. Pixel reads: rounded glass plates transmit the blueprint-grid backdrop (glass-first identity intact); dock plates clear cells (perfect-circle collapsed in Safari, fully-rounded expanded pills, clean selected-nav highlight). Cross-engine clip discipline identical.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-GLASS-CLIP-DISCIPLINE-DELTA.md`
+- 8 PNGs: `docs/tranches/BG/audit/visual/BG.W-GLASS-CLIP-DISCIPLINE-DELTA-assets/clip-{containers,dock-overview}-{chrome,safari}-{light,dark}-desktop-full.png`
+
+#### F2.3 — BG.W-DEEP-GLASS-DECIDE (cursor flip + DELTA ccd56953)
+
+PASS by mootness — the conditional paint is NOT owed. Wave F2.3 is class P (cond): the hero/dock deep-glass dual-engine paint is owed ONLY IF the terminal decision is `landed-20px`. The recorded terminal decision on disk is `retired-at-16px` (`src/styles/tokens/glass-deep.css:4` → `DEEP-GLASS-DECIDED: retired-at-16px-cost-0B-profile-budget-per-frame-blind`; `--glass-blur-deep-radius: 16px` at line 57), so NO `blur(20px)` deep-glass surface exists to capture — the paint (and the "IF landed" Fable arm) is moot.
+
+- Binding device-free truth GREEN: `proof:glass · deep-glass-decided` exit 0 (`.cache/gates/BG-glass.json` status pass, violations []): D1 exactly one terminal marker (not `booked`/malformed), D2 zero surviving re-book tokens, D3 verdict==value agreement (retired ⇒ 16px not 20px), all born-RED self-test bites retain teeth.
+- Recorded number: `profile:budget` clears the 16→20px 2-char CSS change at delta-0 bytes (gzip-identical) — a per-frame-blind clearance that cannot fence the decision; no committed per-frame `backdrop-filter` harness clears 20px over the live dock-over-aurora / hero-CTA worst case. Combined with the whole W-GLASS-CAL dial-DOWN trajectory, 16px is the DECIDED ceiling (identity, not debt). No captures produced (writing PNGs of a non-existent 20px surface would be a fabricated artefact).
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-DEEP-GLASS-DECIDE-DELTA.md`
+- Evidence: `.cache/gates/BG-glass.json` · `src/styles/tokens/glass-deep.css`
+
+#### 3.6 — BG.W-GLASS-BLUR-PEER (build cd9ceXX; live-π sync 353eac5d; cursor flip + DELTA 57b2f2c6)
+
+The 8px-peer-locked glass blur register (the 5-rung ladder + the dock `--dock-surface-blur`) reads correct on both engines, both modes, over BUILT bytes on `:5200`.
+
+- COMPUTED-DOM truth (Chrome `getComputedStyle`, glass-level=1): the peer-lock resolves exactly — wash 1px, quiet 8px, resting 8px (quiet==resting==8px, the peer), floating 13px, overlay 20px (@2dppx restore arm). Every painted `.glass-dock` surface (vertical rail + all horizontal pills, 11-12 live surfaces/route) resolves `backdrop-filter: blur(8px) ... = var(--glass-blur-resting)` — `--dock-surface-blur` paints the unified 8px material.
+- PAINTED truth: the paper-grain backdrop reads THROUGH the plate at every tier — wash crispest, quiet/resting soften a hair at 8px, floating most diffuse (13px) — while every tier stays unmistakably frosted glass. Dark register = luminous transmissive warm glass, tier progression preserved, no dead-void slab. Dock pills frost the field at 8px in both modes; dark dock carries the luminosity lift. Cross-engine parity holds (Safari renders the grain a touch crisper, no register divergence).
+- 8 PNGs (routes `/foundations/paper-glass` + `/dock/overview` × light/dark × Chrome+Safari) all resolve on disk at 2880×1800, badge-decoded.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-GLASS-BLUR-PEER-DELTA.md`
+- 8 PNGs: `docs/tranches/BG/audit/visual/BG.W-GLASS-BLUR-PEER-paint/{glass-ladder,dock}-{chrome,safari}-{light,dark}-desktop.png`
+
+---
+
+### FAILED -> PAINT-PENDING (held at row F8.2)
+
+#### F8.2 — BG.W-COMPOSITED-GESTALT-GATE (FAIL evidence c4ee7d6b; NO cursor flip — held at PAINT-PENDING)
+
+Fresh capture set over BUILT `:5200` bytes: 9 in-repo enrolled roster surfaces × {Chrome CDP, Safari WKWebView} × {light, dark} = 36 PNGs, all resolve on disk, all `isRealPng`, all 2880×1800. Engine provenance decoded IN-PIXEL (Chrome = ANGLE Metal Renderer Apple M5 Max, real Metal; WebKit = system WebKit.framework Apple GPU). Device-free `proof:warm-identity` GREEN (kernel + wiring + 14-bite self-test) — the precondition, NECESSARY not SUFFICIENT.
+
+The OPERATIVE all-warm read does NOT flip GREEN. The composited-region dominant-hue histogram (the same `reflect-capture-verify` `pngRegionHueHistogram` + `paint-arm` `warmIdentityVerdict` kernel the gate reads, WARM_BAND warmFractionFloor 0.55 / chromaCeiling 0.30) reads **11/36 all-warm**. Per surface: dock 0/4, configurators-goo 2/4, aurora 0/4, glass-feedback 4/4 (clean warm), shell 0/4, motion-fourier 3/4, dark-register 0/4, tabs-segmented 0/4, page-band 2/4.
+
+Three defect classes (recorded in DELTA, not conflated):
+- **(A) GENUINE not-warm paint** — the demo StoryHero AMBIENT aurora backdrops render pink/lavender/purple/blue (cold/magenta dominant), NOT the warm-cream identity the pages promise. `aurora-hero.ts` hero stops blend RAW cold brand hues (rose 359.8, purple 305.9, indigo 265.5, teal 222.8, violet 317.5) and are NOT warm-projected (unlike `warm-field.ts` `warmProjectHue [25,95]`), so aurora/dark-register/shell read cold/magenta both modes both engines. This is exactly the mean-passes/eye-reads-not-warm gap the gate was minted for; sibling `BG.W-FIELD-AURORA` (row 2.2, DONE) passed on chroma-MAGNITUDE + AA but never checked dominant HUE.
+- **(B) BORDERLINE** — configurators-goo/motion-fourier LIGHT just under 0.55 (a cold violet masthead in the probe region); dock field probe reads a saturated BLUE DockExampleTile not the warm pill.
+- **(C) CAPTURE-CALIBRATION ARTIFACTS** (surface is warm, probe/harness mis-reads — NOT a paint defect) — tabs-segmented probe lands on white heading text ABOVE the warm tab track (neutral chroma 0.004); dock/page-band topBar predicate tripped by the black engine-badge overlay in the top strip (page-band field itself warmF 1.00).
+
+mustFix (for a build-fix-agent):
+1. Warm-project the demo StoryHero ambient aurora backdrop hue into [25,95] so flagship substrate/foundations heroes read warm-dominant both modes; re-verify `field-aurora` on the dominant-hue axis (close the class-A defect + the row-2.2 gate gap).
+2. Re-point the dock probe off the blue demo tile / nudge the borderline violet-masthead reads.
+3. Roster-calibration (build/roster-agent, NOT the paint judge): re-point tabs/dock/shell/page-band probe regions to the intended surface + exclude the engine-badge strip from the topbar region.
+
+PRESERVE: `glass-feedback` reads clean warm 4/4 (the model); the device-free `proof:warm-identity` kernel + roster wiring stay GREEN.
+
+Note: the 10th roster surface (cross-repo = foreign slides consumer) is out of in-repo pipeline scope (foreign-tree fence); its warmth is inherited from library tokens. Zero src/demo/style/script/roster edits by the paint judge — FAIL evidence committed WITHOUT flipping the cursor.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-COMPOSITED-GESTALT-GATE-DELTA.md`
+- 36 PNGs + JSONs: `docs/tranches/BG/audit/visual/BG.W-COMPOSITED-GESTALT-GATE-DELTA-assets/{dock,aurora,glass-feedback,shell,dark-register,tabs-segmented,page-band,configurators-goo,motion-fourier}-{chrome,safari}-{light,dark}-desktop-full.png` (+ `analysis.json` · `chrome-results.json`)
