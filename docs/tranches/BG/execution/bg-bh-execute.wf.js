@@ -147,8 +147,15 @@ ${FENCE}`, { schema: DAG_SCHEMA, model: 'opus', label: 'dag-loader', phase: 'Loa
 
 if (!loaded || !loaded.waves || !loaded.waves.length) { log('DAG load failed — abort (no cursor mutation).'); return { ok: false, reason: 'dag-load-failed' } }
 
-let waves = loaded.waves
+// CLONE the schema-validated nodes into plain mutable objects — the runtime's result objects do NOT
+// reliably accept in-place mutation (the 2026-07-01 wf_fb17de53 spin: every `w.status = …` write silently
+// no-opped, so each sweep re-picked the identical landed batch forever). The clone is the root fix.
+let waves = loaded.waves.map(w => ({ ...w, preconds: [...(w.preconds || [])], files: [...(w.files || [])] }))
 log(`DAG loaded: ${waves.length} waves · ${waves.filter(w => w.status === 'DONE').length} already DONE · fresh=${loaded.fresh}`)
+// mutation witness — if this write does not stick, no status flip will either; abort before burning agents.
+waves[0].status = waves[0].status; waves[0]._probe = 1
+if (waves[0]._probe !== 1) { log('DAG nodes are IMMUTABLE — the status machine cannot run. Abort.'); return { ok: false, reason: 'immutable-dag-nodes' } }
+delete waves[0]._probe
 
 // ============================ THE WAVE-FRONTIER SWEEP ============================
 
@@ -158,6 +165,7 @@ log(`Stage-0 witness: doneBuilding = {DONE, PAINT-PENDING} (allDone/ready/fronti
 if (typeof doneBuilding !== 'function' || typeof PAINT_DRAIN_THRESHOLD === 'undefined') { log('STAGE-0 NOT APPLIED — engine still deadlocks. Abort — apply DEV-B §3.1-3.2 first.'); return { ok: false, reason: 'stage-0-unapplied' } }
 let guard = 0
 const SWEEP_CAP = 600   // runaway backstop (well above ~140 waves × fix-retries)
+let lastSweepSig = ''   // SPIN-BREAKER: identical batch + zero status delta across sweeps = a wedged status machine
 
 while (guard++ < SWEEP_CAP) {
   const map = byId(waves)
@@ -173,6 +181,15 @@ while (guard++ < SWEEP_CAP) {
     log(`No ready waves — ${stuck.length} stuck (precond/interleave/blocked). Escalating frontier.`)
     break   // human gate — do not spin
   }
+
+  // SPIN-BREAKER (defense in depth after the clone fix): the same batch with the same global status
+  // vector means the last sweep changed NOTHING — abort loudly instead of burning identical agents.
+  const sweepSig = batch.map(w => w.id).join('|') + '::' + waves.map(w => w.status).join(',')
+  if (sweepSig === lastSweepSig) {
+    log(`SPIN DETECTED — batch [${batch.map(w => w.id).join(' · ')}] repeats with zero status delta. Aborting for orchestrator diagnosis (no cursor mutation).`)
+    return { ok: false, reason: 'spin-detected', batch: batch.map(w => w.id) }
+  }
+  lastSweepSig = sweepSig
 
   // ----- BUILD (batches of 3, worktree-isolated where the wave mutates src) -----
   log(`Build batch [${batch.map(w => w.id).join(' · ')}]`)
