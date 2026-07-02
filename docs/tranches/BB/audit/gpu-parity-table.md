@@ -111,26 +111,16 @@ re-recorded there if the empirical capture demands a re-tune.
     {
       "viz": "fourier-field",
       "subpath": "/fourier-field",
-      "status": "verified",
-      "primary": "src/components/custom/fourier-field/shaders/fourier-field.render.wgsl.ts",
-      "fallback": "src/components/custom/fourier-field/shaders/fourier-field.glsl.ts",
-      "captures": [
-        "docs/tranches/BC/audit/visual/W-VIZ-FOURIER-DELTA.md"
-      ],
-      "deltaE": { "mean": 0.0, "p99": 0.0 },
-      "note": "BC.W-VIZ-FOURIER — the booked W-FOURIER-GPU FIRED EARLY (the §E WebGPU-everywhere mandate made the 'thousands of phasors' trigger UNCONDITIONAL). The Canvas2D renderer (useCanvas2D; ctx.stroke/shadowBlur) is RETIRED. The new primary is a compute+fullscreen-fragment SDF: fourier-field.compute.wgsl.ts writes the partial-sum curve samples + epicycle chain tips (transcribing math.ts partialSumAt/positionsAt EXACTLY — the ONE math source, the spectrum CPU-minted via makeEllipticSpectrum/dftFromPoints), fourier-field.render.wgsl.ts composites the comet-trail + epicycle-chain + comet-head SDF over premultiplied-alpha (which KILLS the Canvas2D `lighter` hue-blowout). fourier-field.glsl.ts is the WebGL2 SDF twin — it steps the SAME partialSumAt/positionsAt CPU-side into the SAME uniform curve/chain tables the fragment reads, so the field is the same SDF over the same evaluator. The recorded ΔE is the DEVICE-FREE STRUCTURAL PROXY: both backends composite ONE analytic field through ONE shared color seam (procedural-color.{wgsl,glsl}.ts) over the SAME CPU-minted curve table — numerically identical at every fragment (proof:fourier-field U3 round-trips the WGSL partialSumAt transcription against math.ts → mean/p99 = 0.0). The BINDING Metal-GPU live capture-pair rides this wave's close (the real WebGPU swap-chain readback vs WebGL2 readPixels) + re-records the empirical rasterizer-drift ΔE."
+      "status": "no-migrate",
+      "primary": null,
+      "reason": "BG.W-VIZ-DEMIGRATE — DE-migrated OFF the over-built WebGPU compute+fullscreen-fragment substrate BACK onto useCanvas2D (its own PROCEDURAL-SUITE / README no-migrate verdict, honoured; RC2/F4). A few-dozen phasors drawn as a ctx.stroke epicycle chain (math.ts DFT + fourierFieldDraw.ts) is the RIGHT tool — the WGSL compute + the fullscreen-fragment SDF + the typed uniformBridgeWGPU were the excluded over-build. The 6 shader/setup/bridge files (fourier-field.{compute.wgsl,glsl,render.wgsl}.ts + fourierFieldWGPUSetup/GLSetup + uniformBridgeWGPU.ts) are DELETED; the /fourier-field subpath KEY is PRESERVED — an internal WGSL→Canvas2D swap is a VISUAL re-baseline, NOT an import re-point, so no by-name cross-repo ask is owed (owner BG-WS5; consumers slides×4 + atlas). The 'thousands of phasors' GPU trigger stays BOOKED — a ≥256-phasor consumer would flip it back, never the default count=6."
     },
     {
       "viz": "constellation",
       "subpath": "/constellation",
-      "status": "verified",
-      "primary": "src/components/custom/constellation/shaders/constellation-points.wgsl.ts",
-      "fallback": "src/components/custom/constellation/shaders/constellation-points.glsl.ts",
-      "captures": [
-        "docs/tranches/BC/audit/visual/W-VIZ-CONSTELLATION-DELTA.md"
-      ],
-      "deltaE": { "mean": 0.0, "p99": 0.0 },
-      "reason": "BC.W-VIZ-CONSTELLATION — the booked W-CONSTELLATION-GPU FIRED (the §E WebGPU-everywhere mandate made it UNCONDITIONAL — the low-res Canvas2D arc() was the literal defect). The Canvas2D renderer (useCanvas2D + the four ctx-bound draw passes) is RETIRED. The new primary is TWO instanced-billboard render passes: constellation-points.wgsl.ts (instanced quads + a crisp fwidth-smoothstep SDF circle, DPR-aware → resolution-independent crisp) + constellation-lines.wgsl.ts (instanced segment quads + cross-line AA, the three edge classes neutral/accent/focus). constellation-points.glsl.ts + constellation-lines.glsl.ts are the WebGL2 instanced-arrays twins (GPU, NOT Canvas2D — the same SDF + segment expansion via gl_VertexID/gl_InstanceID instanced attributes). The field step (constellationField.ts seedField/stepField + the interaction springs + the pure buildEdges CPU all-pairs scan) stays the ONE JS math source the WGSL/GLSL render transcribes (the compute neighbor-bin is BOOKED at N ≫ 256 — overfit at the default count=64). The recorded ΔE is the DEVICE-FREE STRUCTURAL PROXY: both backends draw the SAME instanced primitives over the SAME stepped field + the SAME JS-side palette read (readPalette → parseColorRGBA → the uniform buffer), numerically identical per-instance. The BINDING Metal-GPU live capture-pair rides this wave's close (the real WebGPU swap-chain readback vs WebGL2 readPixels) + re-records the empirical rasterizer-drift ΔE."
+      "status": "no-migrate",
+      "primary": null,
+      "reason": "BG.W-VIZ-DEMIGRATE — DE-migrated OFF the over-built WebGPU instanced-points+lines substrate BACK onto useCanvas2D (its own PROCEDURAL-SUITE / README no-migrate verdict, honoured; RC2/F4). The four neutral ctx.arc/ctx.stroke draw passes (constellationRender.ts) over the ONE JS field evaluator (constellationField.ts seedField/stepField/buildEdges) are the RIGHT tool — the GPU instanced-quads + the WGSL/GLSL SDF shaders + the typed uniformBridgeWGPU were the excluded over-build. The 7 shader/setup/bridge files (constellation-{points,lines}.{wgsl,glsl}.ts + constellationWGPUSetup/GLSetup + uniformBridgeWGPU.ts) are DELETED; the /constellation subpath KEY is PRESERVED — an internal WGSL→Canvas2D swap is a VISUAL re-baseline, NOT an import re-point, so no by-name cross-repo ask is owed (owner BG-WS5; consumers slides×2 + atlas). The compute neighbor-bin stays BOOKED at N ≫ 256 — overfit at the default count=64."
     },
     {
       "viz": "watercolor-dot",
