@@ -1,5 +1,18 @@
-// BA.W-DOCK-GEOMETRY — proof:dock-plate-clearance, the control-plate clearance +
-// scroll-port cross-axis un-clip gate (born-RED at HEAD, driven GREEN by the wave).
+// BA.W-DOCK-GEOMETRY / BG.W-DOCK-CAP-SCROLL-FADE — proof:dock-plate-clearance,
+// the control-plate clearance + scroll-port cross-axis un-clip gate (born-RED at
+// HEAD, driven GREEN by the wave).
+//
+// BG.W-DOCK-CAP-SCROLL-FADE re-points W2 off the impossible cross-axis-`visible`
+// assertion onto the mechanically-honest `clip` + `overflow-clip-margin` un-clip.
+// The prior `overflow-x/y: visible` pin was a LATENT NO-OP: CSS Overflow §3 forces
+// a `visible` SIBLING of an `auto` axis to COMPUTE to `auto`, so the cross axis
+// clipped the inset plate anyway (the geometric inset was the SOLE guard). The
+// port's cross axis is now `overflow-*: clip` (NOT a scroll value, so §3 leaves it
+// alone) + `overflow-clip-margin: var(--dock-control-safe-inset)` (the clip region
+// extends outward by the inset budget). The `overflow="scroll"` opt-in + the
+// `.dock-scroll-y` class are RETIRED (a capped axis is intrinsically a scroll
+// axis): the vertical block-axis scroll folds into the unconditional cap-derived
+// shell.css rule, and W2 asserts NO `.dock-scroll-y` rule survives.
 //
 // THE DEFECT (DC-1 / DC-2 / WVR-6, three stacked clip mechanisms). A dock
 // control's hover/active/press round plate reads as a FLAT-TOPPED LOZENGE, not a
@@ -34,12 +47,16 @@
 //      reds because the plate would still equal the cell. RED at HEAD: no
 //      `--dock-control-safe-inset` exists (grep 0); the control plate ==
 //      layer-height (both the same density base) → zero slack.
-//   W2 (source) — no `.dock-scroll-x .dock-layer--full` /
-//      `.glass-dock.vertical.dock-scroll-y` rule leaves the CROSS axis to the
-//      overflow-companion `auto`: the cross axis is POSITIVELY pinned `visible`
-//      (not `hidden`, not absent). AND both shell docks pass NO `overflow="scroll"`.
-//      RED at HEAD: overflow.css sets only the single-axis `auto` (cross computes
-//      to `auto`); both shell docks pass `overflow="scroll"`.
+//   W2 (source) — the scroll-port CROSS axis is `overflow-*: clip` +
+//      `overflow-clip-margin: var(--dock-control-safe-inset)` (the honest un-clip),
+//      NOT the latent-no-op `visible` pin: the horizontal port
+//      (`.dock-scroll-x .dock-layer--full`, overflow.css) pins `overflow-y: clip`
+//      + the clip-margin, and the vertical port (the unconditional cap-derived
+//      `.glass-dock.vertical…:not([data-morphing])` rule, shell.css) pins
+//      `overflow-x: clip` + the clip-margin. The `.dock-scroll-y` opt-in class is
+//      DEFINITION-ABSENT (retired — a capped vertical axis is intrinsically a
+//      scroll axis). AND both shell docks pass NO `overflow="scroll"`. RED at HEAD:
+//      the cross axis is `overflow-*: visible` (the no-op) with no clip-margin.
 //   W3 (source) — the contain:paint audit verdict is a RECORDED gate fact: either
 //      (a) `shell.css` `contain: paint` is unedited (the plate stays inside the
 //      dock padding box) with the recorded verdict marker, OR (b) the containment
@@ -247,24 +264,33 @@ function round(n) {
     return Math.round(n * 100) / 100;
 }
 
-// ── W2 — the scroll-port cross axis stays visible (source, device-free) ─────────
-// PURE over the comment-stripped dock CSS + the two shell-dock SFCs. The cross
-// axis of each scroll port must be POSITIVELY pinned `visible` (not left to the
-// companion `auto`, not `hidden`). And neither shell dock passes `overflow="scroll"`.
+// ── W2 — the scroll-port cross axis is `clip` + margin (source, device-free) ────
+// PURE over the comment-stripped dock CSS + the two shell-dock SFCs. Each scroll
+// port's CROSS axis must be `overflow-*: clip` (NOT the latent-no-op `visible`,
+// which CSS Overflow §3 computes to `auto` beside a scroll sibling; NOT `hidden`)
+// PLUS `overflow-clip-margin: var(--dock-control-safe-inset)` (the clip region
+// extended outward by the inset budget so the 1.1× hover plate paints past the
+// track). The `.dock-scroll-y` opt-in class is RETIRED (a capped vertical axis
+// intrinsically scrolls via the unconditional shell rule). And neither shell dock
+// passes `overflow="scroll"` (the value is retired).
+const CLIP_MARGIN_RE = /overflow-clip-margin\s*:\s*[^;}]*--dock-control-safe-inset/;
+
 export function detectScrollPortCrossAxis(dockCss, bottomDockSrc, sidebarDockSrc) {
     const violations = [];
     const facts = {};
     const css = stripBlockComments(dockCss).replace(/\s+/g, " ");
 
-    // The two scroll-port rule blocks. We isolate the rule whose selector matches
-    // each port and inspect its declared overflow axes.
+    // The scroll-port rule blocks. We isolate the rule whose selector matches each
+    // port and inspect its declared overflow axes. (The `@supports (animation-
+    // timeline: scroll())` mask arm shares the port selector but carries no
+    // `overflow-*: auto`, so the `.find`s below pick the main rule.)
     const blocks = [...css.matchAll(/([^{}]+)\{([^{}]*)\}/g)].map((b) => ({
         selector: b[1].trim(),
         body: b[2],
     }));
 
     // Horizontal port: `.glass-dock.dock-scroll-x .dock-layer--full` declares
-    // `overflow-x: auto`; the CROSS axis is `overflow-y` — must be pinned `visible`.
+    // `overflow-x: auto`; the CROSS axis is `overflow-y` — must be `clip` + margin.
     const xPort = blocks.find(
         (b) =>
             /\.glass-dock\.dock-scroll-x\s+\.dock-layer--full\b/.test(b.selector) &&
@@ -273,74 +299,82 @@ export function detectScrollPortCrossAxis(dockCss, bottomDockSrc, sidebarDockSrc
     facts.xPortFound = Boolean(xPort);
     if (!xPort) {
         violations.push(
-            "W2: the horizontal scroll port `.glass-dock.dock-scroll-x .dock-layer--full { overflow-x:auto }` rule was not found (overflow.css drift?) — cannot confirm the cross-y pin",
+            "W2: the horizontal scroll port `.glass-dock.dock-scroll-x .dock-layer--full { overflow-x:auto }` rule was not found (overflow.css drift?) — cannot confirm the cross-y clip",
         );
     } else {
-        const yVisible = /overflow-y\s*:\s*visible/.test(xPort.body);
-        facts.xPortCrossYVisible = yVisible;
-        if (!yVisible) {
+        const yClip = /overflow-y\s*:\s*clip/.test(xPort.body);
+        const yMargin = CLIP_MARGIN_RE.test(xPort.body);
+        facts.xPortCrossYClip = yClip;
+        facts.xPortCrossYClipMargin = yMargin;
+        if (!yClip) {
             violations.push(
-                "W2: the horizontal scroll port `.dock-scroll-x .dock-layer--full` does NOT pin `overflow-y: visible` — the cross block axis computes from the companion to `auto` and clips the plate top/bottom (DC-1 horizontal)",
+                "W2: the horizontal scroll port `.dock-scroll-x .dock-layer--full` cross axis is not `overflow-y: clip` — a `visible`/absent sibling of `overflow-x: auto` computes to `auto` (CSS Overflow §3) and clips the plate top/bottom (the latent no-op the BG re-point kills)",
+            );
+        }
+        if (!yMargin) {
+            violations.push(
+                "W2: the horizontal scroll port `.dock-scroll-x .dock-layer--full` lacks `overflow-clip-margin: var(--dock-control-safe-inset)` — the clip region does not extend by the inset budget, so the 1.1× hover plate slices on the clip edge",
             );
         }
     }
 
-    // Vertical port: `.glass-dock.vertical.dock-scroll-y` declares `overflow-y:
-    // auto`; the CROSS axis is `overflow-x` — must be pinned `visible`.
+    // Vertical port: the UNCONDITIONAL cap-derived shell rule
+    // `.glass-dock.vertical…:not([data-morphing]) { overflow-y: auto }`; the CROSS
+    // axis is `overflow-x` — must be `clip` + margin.
     const yPort = blocks.find(
         (b) =>
-            /\.glass-dock\.vertical\.dock-scroll-y\b/.test(b.selector) &&
+            /\.glass-dock\.vertical\b/.test(b.selector) &&
+            /:not\(\[data-morphing\]\)/.test(b.selector) &&
             !/::-webkit-scrollbar/.test(b.selector) &&
             /overflow-y\s*:\s*auto/.test(b.body),
     );
     facts.yPortFound = Boolean(yPort);
     if (!yPort) {
         violations.push(
-            "W2: the vertical scroll port `.glass-dock.vertical.dock-scroll-y { overflow-y:auto }` rule was not found (overflow.css drift?) — cannot confirm the cross-x pin",
+            "W2: the vertical cap-derived scroll port `.glass-dock.vertical…:not([data-morphing]) { overflow-y:auto }` rule was not found (shell.css drift?) — cannot confirm the cross-x clip",
         );
     } else {
-        const xVisible = /overflow-x\s*:\s*visible/.test(yPort.body);
-        facts.yPortCrossXVisible = xVisible;
-        if (!xVisible) {
+        const xClip = /overflow-x\s*:\s*clip/.test(yPort.body);
+        const xMargin = CLIP_MARGIN_RE.test(yPort.body);
+        facts.yPortCrossXClip = xClip;
+        facts.yPortCrossXClipMargin = xMargin;
+        if (!xClip) {
             violations.push(
-                "W2: the vertical scroll port `.vertical.dock-scroll-y` does NOT pin `overflow-x: visible` — the cross inline axis computes from the companion to `auto` and clips the plate left/right (DC-1 vertical)",
+                "W2: the vertical scroll port `.glass-dock.vertical…:not([data-morphing])` cross axis is not `overflow-x: clip` — a `visible`/absent sibling of `overflow-y: auto` computes to `auto` (CSS Overflow §3) and clips the plate left/right (the latent no-op)",
+            );
+        }
+        if (!xMargin) {
+            violations.push(
+                "W2: the vertical scroll port lacks `overflow-clip-margin: var(--dock-control-safe-inset)` — the clip region does not extend by the inset budget, so the 1.1× hover plate slices on the clip edge",
             );
         }
     }
 
-    // The F6 at-rest vertical port (shell.css) ALREADY pins overflow-x:visible —
-    // confirm it survives (a regression here would re-clip the always-expanded
-    // vertical dock's plate cross axis).
-    const f6Port = blocks.find(
-        (b) =>
-            /\.glass-dock\.vertical\.always-expanded:not\(\[data-morphing\]\)/.test(b.selector) &&
-            /overflow-y\s*:\s*auto/.test(b.body),
-    );
-    facts.f6PortFound = Boolean(f6Port);
-    if (f6Port) {
-        const xVisible = /overflow-x\s*:\s*visible/.test(f6Port.body);
-        facts.f6PortCrossXVisible = xVisible;
-        if (!xVisible) {
-            violations.push(
-                "W2: the F6 at-rest vertical port (shell.css `.vertical.always-expanded`) regressed — `overflow-x: visible` no longer pinned, re-clipping the plate cross axis",
-            );
-        }
+    // The `.dock-scroll-y` opt-in class is RETIRED — any surviving rule selector
+    // mentioning it is a dual-path regression (the capped vertical axis scrolls via
+    // the unconditional shell rule above, not a second opt-in port).
+    const dockScrollYSurvivors = blocks.filter((b) => /\.dock-scroll-y\b/.test(b.selector));
+    facts.dockScrollYRetired = dockScrollYSurvivors.length === 0;
+    if (dockScrollYSurvivors.length) {
+        violations.push(
+            `W2: the retired .dock-scroll-y opt-in class still has ${dockScrollYSurvivors.length} live rule(s) (e.g. "${dockScrollYSurvivors[0].selector}") — a capped vertical axis scrolls via the unconditional shell rule, not a second opt-in port (dual-path regression)`,
+        );
     }
 
-    // The shell docks must pass NO `overflow="scroll"` (the fit-content shells use
-    // the grow-to-fit default; the port is engaged only on real over-cap content).
+    // The shell docks must pass NO `overflow="scroll"` (the value is retired — a
+    // capped axis scrolls intrinsically; there is no `"scroll"` union member).
     const bottomScroll = /overflow\s*=\s*"scroll"/.test(stripAllComments(bottomDockSrc));
     const sidebarScroll = /overflow\s*=\s*"scroll"/.test(stripAllComments(sidebarDockSrc));
     facts.bottomDockOverflowScroll = bottomScroll;
     facts.sidebarDockOverflowScroll = sidebarScroll;
     if (bottomScroll) {
         violations.push(
-            'W2: demo/layout/BottomDock.vue still passes `overflow="scroll"` on a fit-content shell that never overflows — the cross-axis clip is armed for zero scroll benefit (DC-1 consumer half)',
+            'W2: demo/layout/BottomDock.vue still passes `overflow="scroll"` — the value is RETIRED (a capped axis scrolls intrinsically; there is no `"scroll"` union member)',
         );
     }
     if (sidebarScroll) {
         violations.push(
-            'W2: demo/layout/SidebarDock.vue still passes `overflow="scroll"` on a fit-content shell that never overflows — the cross-axis clip is armed for zero scroll benefit (DC-1 consumer half)',
+            'W2: demo/layout/SidebarDock.vue still passes `overflow="scroll"` — the value is RETIRED (a capped axis scrolls intrinsically; there is no `"scroll"` union member)',
         );
     }
 
@@ -452,7 +486,7 @@ function printSummary({ status, w1, w2, w3 }) {
             );
     }
     console.log(
-        `  W2 cross-axis visible : x-port(cross-y)=${w2.facts.xPortCrossYVisible} y-port(cross-x)=${w2.facts.yPortCrossXVisible} f6(cross-x)=${w2.facts.f6PortCrossXVisible ?? "n/a"} shellScroll(bottom/side)=${w2.facts.bottomDockOverflowScroll}/${w2.facts.sidebarDockOverflowScroll} ${w2.violations.length === 0 ? "OK" : "RED"}`,
+        `  W2 cross-axis clip    : x-port(cross-y clip/margin)=${w2.facts.xPortCrossYClip}/${w2.facts.xPortCrossYClipMargin} y-port(cross-x clip/margin)=${w2.facts.yPortCrossXClip}/${w2.facts.yPortCrossXClipMargin} scroll-y-retired=${w2.facts.dockScrollYRetired} shellScroll(bottom/side)=${w2.facts.bottomDockOverflowScroll}/${w2.facts.sidebarDockOverflowScroll} ${w2.violations.length === 0 ? "OK" : "RED"}`,
     );
     console.log(
         `  W3 contain:paint audit: verdict(a)=${w3.facts.verdictARecorded} verdict(b)=${w3.facts.verdictBRecorded} ${w3.violations.length === 0 ? "OK" : "RED"}`,
@@ -465,6 +499,94 @@ function printSummary({ status, w1, w2, w3 }) {
     console.log(`\n  status: ${status.toUpperCase()}`);
 }
 
+// ── Self-test (BG.W-DOCK-CAP-SCROLL-FADE) — the W2 re-point bites ───────────────
+// Each planted defect MUST flag; the correct clip+clip-margin form MUST pass. Run
+// with `--self-test`. This is the born-RED witness: the pre-BG `overflow-*:visible`
+// no-op re-reds here, so a regression that reverts the honest un-clip cannot ship.
+const GOOD_W2_CSS = `
+@layer components {
+  .glass-dock.dock-scroll-x .dock-layer--full {
+    overflow-x: auto;
+    overflow-y: clip;
+    overflow-clip-margin: var(--dock-control-safe-inset);
+  }
+  .glass-dock.vertical.always-expanded:not([data-morphing]),
+  .glass-dock.vertical.expanded:not([data-morphing]) {
+    overflow-x: clip;
+    overflow-clip-margin: var(--dock-control-safe-inset);
+    overflow-y: auto;
+  }
+}`;
+
+function runSelfTest() {
+    const bites = [];
+    const record = (name, ok, detail) => bites.push({ name, ok, detail });
+
+    // bite D — the correct clip+clip-margin form passes clean.
+    {
+        const { violations } = detectScrollPortCrossAxis(GOOD_W2_CSS, "", "");
+        record("correct-clip+margin-passes", violations.length === 0, violations.join(" | "));
+    }
+    // bite A — the pre-BG `overflow-y: visible` no-op on the x-port RE-REDS.
+    {
+        const css = GOOD_W2_CSS.replace("overflow-y: clip;", "overflow-y: visible;");
+        const { violations } = detectScrollPortCrossAxis(css, "", "");
+        record(
+            "visible-no-op-x-port-flags",
+            violations.some((v) => /overflow-y: clip/.test(v)),
+            violations.join(" | "),
+        );
+    }
+    // bite B — a clip axis WITHOUT the clip-margin flags (the inset budget bite).
+    {
+        const css = GOOD_W2_CSS.replace(
+            "    overflow-y: clip;\n    overflow-clip-margin: var(--dock-control-safe-inset);",
+            "    overflow-y: clip;",
+        );
+        const { violations } = detectScrollPortCrossAxis(css, "", "");
+        record(
+            "missing-clip-margin-x-port-flags",
+            violations.some((v) => /overflow-clip-margin/.test(v)),
+            violations.join(" | "),
+        );
+    }
+    // bite C — a SURVIVING `.dock-scroll-y` opt-in rule flags the dual-path.
+    {
+        const css =
+            GOOD_W2_CSS +
+            `\n.glass-dock.vertical.dock-scroll-y { overflow-y: auto; overflow-x: clip; overflow-clip-margin: var(--dock-control-safe-inset); }`;
+        const { violations } = detectScrollPortCrossAxis(css, "", "");
+        record(
+            "surviving-dock-scroll-y-flags",
+            violations.some((v) => /\.dock-scroll-y/.test(v)),
+            violations.join(" | "),
+        );
+    }
+    // bite E — a shell dock passing `overflow="scroll"` flags (the retired value).
+    {
+        const { violations } = detectScrollPortCrossAxis(
+            GOOD_W2_CSS,
+            '<GlassDock overflow="scroll" />',
+            "",
+        );
+        record(
+            "shell-overflow-scroll-flags",
+            violations.some((v) => /overflow="scroll"/.test(v)),
+            violations.join(" | "),
+        );
+    }
+
+    console.log("proof:dock-plate-clearance — SELF-TEST (BG.W-DOCK-CAP-SCROLL-FADE W2 bites)");
+    let allOk = true;
+    for (const b of bites) {
+        console.log(`  ${b.ok ? "OK " : "RED"} ${b.name}${b.ok ? "" : ` :: ${b.detail}`}`);
+        if (!b.ok) allOk = false;
+    }
+    console.log(`\n  self-test: ${allOk ? "PASS" : "FAIL"}`);
+    process.exit(allOk ? 0 : 1);
+}
+
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-    run();
+    if (process.argv.includes("--self-test")) runSelfTest();
+    else run();
 }

@@ -224,39 +224,70 @@
        at rest the `overflow: visible` above let over-cap content SPILL — forcing a
        consumer (bbnf-buddy ToolsLayer) to hand-anchor a max-height + scroll. Ship
        the contract here: at rest a vertical column scrolls its OWN block axis when
-       content exceeds the cap (cross axis stays `visible` for focus rings + grown
-       popovers). When content fits under the cap (`height:auto` < cap) nothing
-       scrolls — the scroll port only engages on real over-cap content. The
-       block-axis morph clip stays `data-morphing`-gated above; this is the
-       AT-REST port only. Consumers set `--dock-max-block-size` per-instance to
-       anchor the column to the viewport without re-deriving the scroll plumbing.
+       content exceeds the cap. When content fits under the cap (`height:auto` <
+       cap) nothing scrolls — the scroll port only engages on real over-cap
+       content. The block-axis morph clip stays `data-morphing`-gated above; this
+       is the AT-REST port only. Consumers set `--dock-max-block-size` per-instance
+       to anchor the column to the viewport without re-deriving the scroll plumbing.
 
-       BA.W-DOCK-GEOMETRY (DC-1) — the port is now GATED behind the `dock-scroll-y`
-       opt-in (`overflow="scroll"`), NOT unconditional on every `.vertical.
-       always-expanded`. THE ROOT: `overflow-y: auto` is a scroll value, and CSS
-       Overflow §3 FORCES the sibling `overflow-x: visible` to COMPUTE to `auto` —
-       so the F6 pin never survived, and EVERY at-rest vertical dock (even a
-       fit-content shell that never scrolls) paid the cross-axis inline clip,
-       slicing a control's inset plate left/right (the live π readback measured
-       `overflow-x: auto` on the grow-to-fit SidebarDock). A vertical dock that
-       genuinely needs the cap+scroll opts IN via `overflow="scroll"` (the
-       `.dock-scroll-y` port in overflow.css, the SAME plumbing the F6 comment names);
-       a grow-to-fit vertical shell stays `overflow: visible` (line 186) on BOTH axes
-       so its inset control plate paints past the track. The fit-content shell pays
-       NO cross-axis clip for zero scroll benefit — the goal criterion's "the
-       scroll-port cross-axis clip no longer fires on a fit-content shell that never
-       scrolls", honored at the geometry root. */
-    .glass-dock.vertical.dock-scroll-y.always-expanded:not([data-morphing]),
-    .glass-dock.vertical.dock-scroll-y.expanded:not([data-morphing]) {
-        overflow-x: visible;
+       BG.W-DOCK-CAP-SCROLL-FADE — a capped vertical axis is INTRINSICALLY a scroll
+       axis (the `dock-scroll-y` opt-in RETIRED): this rule fires UNCONDITIONALLY on
+       every at-rest vertical dock, so a SidebarDock that hits `--dock-max-block-
+       size` at 1280×600 scrolls its trailing utility controls into reach with NO
+       prop change (the #12 "dock scrolling broken" root fix). The CROSS (inline)
+       axis is `overflow-x: clip` + `overflow-clip-margin:
+       var(--dock-control-safe-inset)` — the mechanically-honest un-clip. CSS
+       Overflow §3 forces a `visible` sibling of an `auto` axis to COMPUTE to
+       `auto` (so the prior `overflow-x: visible` pin was a latent NO-OP that
+       clipped the control's inset plate left/right); `clip` is NOT a scroll value
+       so §3 leaves it alone + establishes no scroll container, and the clip-margin
+       extends the paint region outward by the inset budget so the 1.1× hover plate
+       paints past the track. The geometric inset (the 80%-of-cell plate) stays the
+       PRIMARY lozenge guard; the clip-margin is belt-and-suspenders. The soft
+       edge-fade rides the ONE FadingScroll mask seam (the `--fade-start`/
+       `--fade-end` customs driven off `scroll(self block)` in the `@supports`
+       block below); at rest both are 0px → SHARP. NOT PRM-gated (a legibility
+       cue). */
+    .glass-dock.vertical.always-expanded:not([data-morphing]),
+    .glass-dock.vertical.expanded:not([data-morphing]) {
+        overflow-x: clip;
+        overflow-clip-margin: var(--dock-control-safe-inset);
         overflow-y: auto;
         scrollbar-width: none;
         overscroll-behavior-y: contain;
     }
 
-    .glass-dock.vertical.dock-scroll-y.always-expanded:not([data-morphing])::-webkit-scrollbar,
-    .glass-dock.vertical.dock-scroll-y.expanded:not([data-morphing])::-webkit-scrollbar {
+    .glass-dock.vertical.always-expanded:not([data-morphing])::-webkit-scrollbar,
+    .glass-dock.vertical.expanded:not([data-morphing])::-webkit-scrollbar {
         display: none;
+    }
+
+    /* BG.W-DOCK-CAP-SCROLL-FADE — the liquid-weight soft edge on the vertical
+       scroll port: the `mask-image` reads the `--fade-start`/`--fade-end` customs
+       the SAME `gl-fade-start-in`/`gl-fade-end-out` keyframes `<FadingScroll>`
+       uses drive off the `scroll(self block)` timeline (reached by name — ZERO
+       new recipe). The mask + its driver are co-gated on
+       `animation-timeline: scroll()` so a gap engine gets NO mask over the
+       backdrop-filter plate (never a permanently-opaque mask) — the port scrolls
+       plain. NOT PRM-gated (a legibility cue). */
+    @supports (animation-timeline: scroll()) {
+        .glass-dock.vertical.always-expanded:not([data-morphing]),
+        .glass-dock.vertical.expanded:not([data-morphing]) {
+            mask-image: linear-gradient(
+                to bottom,
+                transparent 0,
+                black var(--fade-start, 0px),
+                black calc(100% - var(--fade-end, 0px)),
+                transparent 100%
+            );
+            animation:
+                gl-fade-start-in linear both,
+                gl-fade-end-out linear both;
+            animation-timeline: scroll(self block), scroll(self block);
+            animation-range:
+                0 var(--fade-scroll-width),
+                calc(100% - var(--fade-scroll-width)) 100%;
+        }
     }
 
     .glass-dock::after {

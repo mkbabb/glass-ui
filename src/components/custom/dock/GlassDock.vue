@@ -53,10 +53,13 @@ const props = defineProps<DockProps>();
 const emit = defineEmits<{ "update:order": [from: number, to: number] }>();
 
 /* The resolved shell-prop computeds — shape/orientation/density, the collapse
-   surface (`collapseDelay`/`startCollapsed`/`layoutValue`), the scroll-overflow
-   class, `alwaysExpanded`/`fitContent`, and the container-query `containerStyle`.
-   (See useDockShellProps for the full `containerName` always-expanded-only
-   rationale — AY.W-DOCK2 §F1.) */
+   surface (`collapseDelay`/`startCollapsed`/`layoutValue`), the intrinsic
+   scroll-overflow class (BG.W-DOCK-CAP-SCROLL-FADE — `scrollClass` is
+   `dock-scroll-x` on EVERY horizontal dock and `null` on vertical, whose
+   block-axis scroll folds into the unconditional cap-derived shell.css rule; the
+   `overflow="scroll"` opt-in is retired), `alwaysExpanded`/`fitContent`, and the
+   container-query `containerStyle`. (See useDockShellProps for the full
+   `containerName` always-expanded-only rationale — AY.W-DOCK2 §F1.) */
 const {
     containerStyle,
     collapseDelay,

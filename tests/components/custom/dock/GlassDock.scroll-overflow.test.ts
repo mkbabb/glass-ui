@@ -4,56 +4,57 @@ import { describe, expect, it } from "vitest";
 import GlassDock from "@glass/components/custom/dock/GlassDock.vue";
 
 /**
- * AS.W7 D2 + D12 — `<GlassDock overflow="scroll">` scroll-on-overflow opt-in.
- *
- * The default `overflow="grow"` keeps the historical grow-to-fit-then-visibly-
- * overflow contract on both axes. `overflow="scroll"` makes the dock the scroll
- * port on its layout axis: horizontal docks scroll the active layer inline
- * (`.dock-scroll-x`), vertical docks scroll the root block-axis
- * (`.dock-scroll-y`), keeping the axis cap. The axis is derived from
- * `orientation` — the ONE layout axis (AZ.W-DOCK-TAXONOMY retired the
- * `variant="rail"`/`"instrument-strip"` second-way to express vertical). The CSS
- * that supplies the scroll regions ships in `src/styles/dock.css`; these
- * structural assertions verify the SFC emits the correct axis class hook.
+ * BG.W-DOCK-CAP-SCROLL-FADE — a capped axis is ALWAYS a scroll axis (the
+ * `overflow="scroll"` opt-in RETIRED, clean break). The `scrollClass` computed
+ * (useDockShellProps) now emits `dock-scroll-x` on EVERY horizontal dock (the CSS
+ * `overflow-x: auto` scrolls only when the inline row exceeds
+ * `--dock-max-inline-size`; under the cap the port is inert) and returns `null`
+ * on a vertical dock (whose block-axis scroll folds into the unconditional
+ * cap-derived `.glass-dock.vertical…:not([data-morphing])` rule in shell.css — no
+ * `dock-scroll-y` class). These structural assertions verify the SFC emits the
+ * correct axis class hook; the CSS that supplies the scroll regions ships in
+ * `src/styles/dock/{overflow,shell}.css`.
  */
-describe("GlassDock overflow=\"scroll\" (AS.W7 D2/D12)", () => {
-    it("defaults to grow — no scroll class on a horizontal dock", () => {
+describe("GlassDock intrinsic cap-scroll (BG.W-DOCK-CAP-SCROLL-FADE)", () => {
+    it("a horizontal dock wears `dock-scroll-x` INTRINSICALLY (no opt-in prop)", () => {
         const wrapper = mount(GlassDock);
         const root = wrapper.get(".glass-dock");
-        expect(root.classes()).not.toContain("dock-scroll-x");
+        expect(root.classes()).toContain("dock-scroll-x");
         expect(root.classes()).not.toContain("dock-scroll-y");
     });
 
-    it("horizontal dock with overflow=\"scroll\" emits `dock-scroll-x` (inline axis)", () => {
+    it("an explicit horizontal orientation still wears `dock-scroll-x`", () => {
         const wrapper = mount(GlassDock, {
-            props: { orientation: "horizontal", overflow: "scroll" },
+            props: { orientation: "horizontal" },
         });
         const root = wrapper.get(".glass-dock");
         expect(root.classes()).toContain("dock-scroll-x");
         expect(root.classes()).not.toContain("dock-scroll-y");
     });
 
-    it("vertical dock with overflow=\"scroll\" emits `dock-scroll-y` (block axis)", () => {
+    it("a vertical dock wears NO scroll class — the block-axis scroll folds into the shell rule", () => {
         const wrapper = mount(GlassDock, {
-            props: { orientation: "vertical", overflow: "scroll" },
+            props: { orientation: "vertical" },
         });
         const root = wrapper.get(".glass-dock");
-        expect(root.classes()).toContain("dock-scroll-y");
-        expect(root.classes()).not.toContain("dock-scroll-x");
-    });
-
-    it("vertical dock derives the block axis — `dock-scroll-y`, never `dock-scroll-x`", () => {
-        const wrapper = mount(GlassDock, {
-            props: { orientation: "vertical", overflow: "scroll" },
-        });
-        const root = wrapper.get(".glass-dock");
-        // The vertical orientation resolves the scroll axis to the block axis.
         expect(root.classes()).toContain("vertical");
-        expect(root.classes()).toContain("dock-scroll-y");
+        expect(root.classes()).not.toContain("dock-scroll-y");
         expect(root.classes()).not.toContain("dock-scroll-x");
     });
 
-    it("explicit overflow=\"grow\" never acquires a scroll class", () => {
+    // The `overflow="scroll"` union member is RETIRED (only `"grow" | "wrap"`
+    // survive). The horizontal scroll port is intrinsic — it is not toggled by a
+    // prop. `overflow="grow"` therefore does not SUPPRESS the horizontal port.
+    it("overflow=\"grow\" keeps the intrinsic `dock-scroll-x` on a horizontal dock", () => {
+        const wrapper = mount(GlassDock, {
+            props: { orientation: "horizontal", overflow: "grow" },
+        });
+        const root = wrapper.get(".glass-dock");
+        expect(root.classes()).toContain("dock-scroll-x");
+        expect(root.classes()).not.toContain("dock-scroll-y");
+    });
+
+    it("a vertical grow dock still wears no scroll class", () => {
         const wrapper = mount(GlassDock, {
             props: { orientation: "vertical", overflow: "grow" },
         });
@@ -62,11 +63,11 @@ describe("GlassDock overflow=\"scroll\" (AS.W7 D2/D12)", () => {
         expect(root.classes()).not.toContain("dock-scroll-y");
     });
 
-    // AT.W7-dock-a — the overflow clean break: the `wrap` enum member (replacing
-    // the deleted `wrap` boolean) emits the renamed `dock-overflow-wrap` hook,
-    // parallel to the `dock-scroll-{x,y}` hooks the `scroll` member emits. The
-    // prior `dock-wrap` class is retired (no alias).
-    it("overflow=\"wrap\" emits the `dock-overflow-wrap` hook, never a scroll class", () => {
+    // AT.W7-dock-a — the `wrap` enum member emits the `dock-overflow-wrap` hook.
+    // A wrap dock's over-cap strategy is intrinsic flex REFLOW, not a scroll, so
+    // it wears NEITHER scroll class (the one exception to the horizontal intrinsic
+    // `.dock-scroll-x`). HORIZONTAL-ONLY: a vertical dock never emits the wrap hook.
+    it("overflow=\"wrap\" emits the `dock-overflow-wrap` hook and NO scroll class (reflow, not scroll)", () => {
         const wrapper = mount(GlassDock, {
             props: { overflow: "wrap" },
         });
@@ -77,12 +78,20 @@ describe("GlassDock overflow=\"scroll\" (AS.W7 D2/D12)", () => {
         expect(root.classes()).not.toContain("dock-scroll-y");
     });
 
-    it("the default + non-wrap overflow modes never acquire the wrap hook", () => {
-        for (const overflow of ["grow", "scroll"] as const) {
-            const wrapper = mount(GlassDock, { props: { overflow } });
-            expect(wrapper.get(".glass-dock").classes()).not.toContain(
-                "dock-overflow-wrap",
-            );
-        }
+    it("a vertical wrap dock emits neither the wrap hook nor a scroll class", () => {
+        const wrapper = mount(GlassDock, {
+            props: { orientation: "vertical", overflow: "wrap" },
+        });
+        const root = wrapper.get(".glass-dock");
+        expect(root.classes()).not.toContain("dock-overflow-wrap");
+        expect(root.classes()).not.toContain("dock-scroll-x");
+        expect(root.classes()).not.toContain("dock-scroll-y");
+    });
+
+    it("the grow overflow mode never acquires the wrap hook", () => {
+        const wrapper = mount(GlassDock, { props: { overflow: "grow" } });
+        expect(wrapper.get(".glass-dock").classes()).not.toContain(
+            "dock-overflow-wrap",
+        );
     });
 });

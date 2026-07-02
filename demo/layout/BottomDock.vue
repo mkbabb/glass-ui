@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // BottomDock — the demo's viewport-anchored bottom-bar story dock (AW.W28.b).
 //
-// A horizontal `always-expanded fit-content overflow="scroll"` GlassDock pinned
+// A horizontal `always-expanded fit-content` GlassDock pinned
 // to the viewport bottom (NOT in document flow — it floats over the <main>
 // scroll-region's bottom inset, so route scroll never displaces it). It carries
 // the in-category story tabs (the DockTabButton set) PLUS the prev/next +

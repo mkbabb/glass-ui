@@ -1,5 +1,24 @@
 # MIGRATION—v0.9.x → v1.0 → v2.0
 
+> **BG.W-DOCK-CAP-SCROLL-FADE — the `<GlassDock overflow="scroll">` opt-in RETIRED.
+> Clean break, no alias ("No legacy code").** The `overflow` prop is now
+> `"grow" | "wrap"` (the `"scroll"` member is GONE). A capped dock axis is
+> INTRINSICALLY a scroll axis, no opt-in: a HORIZONTAL dock scrolls its over-cap
+> inline content whenever the row exceeds `--dock-max-inline-size` (the intrinsic
+> `.dock-scroll-x` port; under the cap nothing scrolls), and a VERTICAL rail scrolls
+> its over-cap block content whenever it exceeds `--dock-max-block-size` (the
+> unconditional cap-derived shell rule; the `.dock-scroll-y` opt-in class is
+> retired). The scroll port's CROSS axis is now `overflow-*: clip` +
+> `overflow-clip-margin: var(--dock-control-safe-inset)` (the mechanically-honest
+> un-clip — the prior `overflow-*: visible` pin was a latent no-op that CSS Overflow
+> §3 computed to `auto`), and the over-cap edge feathers via the `<FadingScroll>`
+> `--fade-scroll-width` mask seam (the liquid-weight soft edge). MIGRATE: drop any
+> `overflow="scroll"` prop — a capped dock scrolls by construction; set
+> `--dock-max-block-size` / `--dock-max-inline-size` per-instance to anchor the cap.
+> Machine-locked by `proof:dock-plate-clearance` (W2 re-pointed onto the `clip` +
+> `overflow-clip-margin` un-clip + the `.dock-scroll-y`-retired assert + a self-test
+> bite).
+
 > **BC.W-VIZ-FOURIER — the Canvas2D fourier renderer + the three-view split RETIRED
 > onto the WebGPU-first `useFourierField`. Clean break, no alias ("No legacy code").**
 > The fourier surface — three views (`fourier-field.vue` + the foreground

@@ -96,15 +96,17 @@ export interface DockProps {
      *                `--dock-max-block-size` (its own overflow story), so the
      *                `.dock-overflow-wrap` class is not emitted for a vertical
      *                orientation.
-     *   `"scroll"` — the dock becomes the scroll port. Horizontal docks
-     *                scroll the active layer on the inline axis
-     *                (`.dock-scroll-x`); vertical docks scroll on the
-     *                block axis (`.dock-scroll-y`), keeping the
-     *                `max-block-size` cap. The rounded pill masks the
-     *                scroll edge; the scrollbar is hidden. The axis is
-     *                chosen automatically from `orientation`.
+     *
+     * BG.W-DOCK-CAP-SCROLL-FADE — the `"scroll"` opt-in RETIRED (clean break,
+     * no alias). A capped axis is INTRINSICALLY a scroll axis: a horizontal
+     * dock's inline axis reads `.dock-scroll-x` unconditionally (the CSS
+     * `overflow-x: auto` scrolls ONLY when the row exceeds
+     * `--dock-max-inline-size`; under the cap nothing scrolls), and a vertical
+     * rail's block axis scrolls via the unconditional cap-derived shell rule
+     * (`--dock-max-block-size` is the sole knob). No prop, no unreachable
+     * controls.
      */
-    overflow?: "grow" | "wrap" | "scroll";
+    overflow?: "grow" | "wrap";
     /**
      * When set, the dock root establishes an inline-size container query
      * subject (`container-type: inline-size; container-name: <value>`) so
@@ -277,15 +279,22 @@ export function useDockShellProps(props: DockProps): DockShellProps {
     /* The SINGLE layout axis (AZ.W-DOCK-TAXONOMY — no `variant` second-way). */
     const orientation = computed(() => props.orientation ?? "horizontal");
     const density = computed(() => props.density ?? "comfortable");
-    /* Scroll-on-overflow opt-in (default `"grow"` keeps the historical
-       visible-overflow behaviour). When `overflow === "scroll"` the dock
-       becomes the scroll port on its layout axis: horizontal docks scroll the
-       active layer inline (`.dock-scroll-x`), vertical docks scroll the root
-       block-axis (`.dock-scroll-y`). The axis is derived from `orientation`. */
-    const scrollClass = computed<string | null>(() => {
-        if (props.overflow !== "scroll") return null;
-        return orientation.value === "vertical" ? "dock-scroll-y" : "dock-scroll-x";
-    });
+    /* BG.W-DOCK-CAP-SCROLL-FADE — a capped axis is ALWAYS a scroll axis (no
+       opt-in). A HORIZONTAL dock's inline axis is content-driven, so it wears
+       the `.dock-scroll-x` port INTRINSICALLY — the CSS `overflow-x: auto`
+       scrolls ONLY when the row exceeds `--dock-max-inline-size`; under the cap
+       the port is inert (nothing scrolls). The `overflow="wrap"` register is the
+       one EXCEPTION: a wrap dock's over-cap strategy is intrinsic flex REFLOW
+       (`.dock-overflow-wrap`), not a scroll — so it wears no scroll port. A
+       VERTICAL rail folds into the unconditional cap-derived rule in shell.css
+       (the `.vertical…:not([data-morphing])` at-rest port), so it wears NO class
+       — returning `null` keeps the `.glass-dock.vertical` scroll story in ONE
+       home (shell.css), never a second `.dock-scroll-y` opt-in. */
+    const scrollClass = computed<string | null>(() =>
+        orientation.value === "vertical" || props.overflow === "wrap"
+            ? null
+            : "dock-scroll-x",
+    );
     /* AW.W3b — a `layout="grid"` dock is `alwaysExpanded` BY CONTRACT (a 2D tile
        panel does not read as a collapsible pill, and `alwaysExpanded` means no
        morph → no per-frame grid-column reflow). AZ.W-DOCK-TAXONOMY removed the
