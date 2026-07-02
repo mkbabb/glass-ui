@@ -8,6 +8,7 @@
 
 import { clampBudget } from "../constants/budget";
 import {
+    METAL_POLISH_DEFAULT,
     type AuroraConfig,
     type AuroraMedium,
 } from "../constants/presets";
@@ -85,6 +86,13 @@ export function applyTexture(
             cfg.strokeAmount = a;
             cfg.canvasGrain = a * 0.05;
             break;
+        // BG.W-AUR-METAL-FINISH — the metal mediums read `metalPolish` as their signature
+        // texture amount (the specular catch intensity, 0..4); the atoms door maps it so a
+        // `medium:"metal"`/`"metal-gradient"` atom carries its amount (no silent no-op).
+        case "metal":
+        case "metal-gradient":
+            cfg.metalPolish = a * 4;
+            break;
     }
 }
 
@@ -102,6 +110,11 @@ export function textureAmountFor(cfg: AuroraConfig, kind: Exclude<AuroraMedium, 
             // strokeAmount is the shared signature knob for every stroke medium (the
             // kuwahara finish reads it as its smoothing-strength knob too — BB.W-AUR-KUWAHARA).
             return clampBudget(cfg.strokeAmount, 0, 1);
+        case "metal":
+        case "metal-gradient":
+            // BG.W-AUR-METAL-FINISH — metalPolish (0..4) is the metal signature knob; the
+            // atoms round-trip reads it back in the 0..1 door range (÷4, the applyTexture inverse).
+            return clampBudget((cfg.metalPolish ?? METAL_POLISH_DEFAULT) / 4, 0, 1);
     }
 }
 

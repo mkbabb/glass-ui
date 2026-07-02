@@ -62,7 +62,9 @@ struct Uniforms {
   // scalars3: (uBreathPeriod, uCursorStrength, uCursorRadius, uVividness)
   // BD.W-AUR-VIVIDNESS — the .w pad lane now carries the §3 chroma-floor strength.
   scalars3: vec4<f32>,
-  // cursor: (uCursor.x, uCursor.y, _pad, _pad)
+  // cursor: (uCursor.x, uCursor.y, uMetalPolish, uMetalHeightScale)
+  // BG.W-AUR-METAL-FINISH — the two free pad lanes carry the metal-medium knobs (the
+  // metal light is cursor-synthesized so it reads in-struct on the WGSL primary too).
   cursor: vec4<f32>,
   // ints: (uStopCount, uNucleiCount, uWarpMode, uNoiseOctaves)
   ints0: vec4<i32>,

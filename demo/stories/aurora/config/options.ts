@@ -23,6 +23,10 @@ export const mediumOptions = [
     // BB.W-AUR-KUWAHARA — the anisotropic-Kuwahara edge-preserving painterly finish
     // (uMedium==7), an OPT-IN medium reached only by this explicit selection.
     { label: "Kuwahara", value: "kuwahara" },
+    // BG.W-AUR-METAL-FINISH — the two mutually-exclusive metal mediums (uMedium==8/9):
+    // warm folded metal + gradient-metallic with a twinkle-in-place flake sparkle.
+    { label: "Metal", value: "metal" },
+    { label: "Brushed Metal", value: "metal-gradient" },
 ] as const satisfies readonly TabOption<AuroraMedium>[];
 
 // AX.W13 — the strokeMode tab is oil sub-modes ONLY; the legacy "Crayon" entry is

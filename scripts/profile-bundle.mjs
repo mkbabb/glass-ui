@@ -207,10 +207,18 @@ const startedAt = Date.now();
 // the FULL painterly register, never a silent smooth degrade — the user's "NO FALLBACKS"
 // mandate. Measured raw ~158.7k / gzip ~52.3k; lifted to raw 162_000 / gzip 54_000 (a thin
 // headroom for the WGSL medium bodies, NOT open-ended creep; an overrun still HALTS).
+// BG.W-AUR-METAL-FINISH re-base — THE 11TH LIFT. The two mutually-exclusive metal mediums
+// (uMedium 8/9) DUAL-PORT: the GLSL bodies (metal-medium.glsl.ts, spliced into the
+// aurora.frag mediums) + the WGSL twins (aurora-mediums.wgsl.ts) — a two-term anisotropic
+// BRDF (streak × crest over the structure-tensor gradient-normal, cursor-synth raked, warm
+// catch) + the gradient re-plumb. A frag-only metal would be invisible on the WGSL primary,
+// so the dual-port is the correct cost, not bloat. Measured raw ~173.9k / gzip ~57.5k;
+// lifted to raw 176_000 / gzip 58_500 (a thin headroom for the two metal bodies + the pack
+// helpers, NOT open-ended creep; an overrun still HALTS).
 const BUDGETS = {
     "dist/glass-ui.js": { raw: 190_000, gzip: 33_700 },
     "dist/styles/index.css": { raw: 548_000, gzip: 140_000 },
-    "dist/aurora.js": { raw: 162_000, gzip: 54_000 },
+    "dist/aurora.js": { raw: 176_000, gzip: 58_500 },
     "dist/goo-blob.js": { raw: 85_000, gzip: 28_000 },
     // BC.W-VIZ-CONSTELLATION / W-VIZ-FOURIER re-base — the WebGPU-first re-home
     // (the per-viz Band-4 waves) moved both viz OFF Canvas2D onto createGpuSubstrate:

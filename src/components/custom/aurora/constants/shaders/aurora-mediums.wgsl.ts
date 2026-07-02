@@ -50,6 +50,27 @@ fn mGranulation() -> f32 { return u.scalars5.y; }
 fn mBrokenColor() -> f32 { return u.scalars5.z; }
 fn mKuwaharaQ() -> f32 { return u.scalars5.w; }
 fn mKuwaharaRadius() -> f32 { return u.kuwahara.x; }
+// BG.W-AUR-METAL-FINISH — the metal-medium knobs ride the FREE cursor.z/.w pad lanes
+// (uniformBridgeWGPU packs them; written 0 on a non-metal config → no-op). These read
+// the IN-STRUCT cursor — the metal light is cursor-synthesized so it crosses to WGSL
+// (a phantom uLightDir read would be flat on the primary — uLightDir is .frag-only).
+fn mMetalPolish() -> f32 { return u.cursor.z; }
+fn mMetalHeightScale() -> f32 { return u.cursor.w; }
+
+// ── Gradient pack (BG.W-AUR-METAL-FINISH; the WGSL twin) ────────────────────
+// structureTensorField re-plumbs its already-computed luma gradient (Gx,Gy) out
+// through the return's .w lane so the metal medium pays ZERO extra taps. 12 bits per
+// bounded component ([-4,4]) into one f32; the crayon/kuwahara callers read only .xy/.z.
+fn packGrad(gx: f32, gy: f32) -> f32 {
+  let qx = floor(clamp(gx * 0.125 + 0.5, 0.0, 1.0) * 4095.0);
+  let qy = floor(clamp(gy * 0.125 + 0.5, 0.0, 1.0) * 4095.0);
+  return qx + qy * 4096.0;
+}
+fn unpackGrad(packed: f32) -> vec2<f32> {
+  let qy = floor(packed * (1.0 / 4096.0));
+  let qx = packed - qy * 4096.0;
+  return (vec2<f32>(qx, qy) * (1.0 / 4095.0) - 0.5) * 8.0;
+}
 
 // ── Base color re-sample (the edge-mask operator the mediums Sobel/sector-sample) ──
 // The WGSL twin of mediums.glsl.ts sampleBase: warp -> nuclei field -> palette -> value.
@@ -72,8 +93,10 @@ fn brokenColorJitter(c: vec3<f32>, hueSeed: f32, valueSeed: f32, strength: f32) 
 }
 
 // ── Structure-tensor / edge-tangent-flow (AW.W4.1; the WGSL twin) ───────────
-// Returns vec3(tangent.x, tangent.y, A) — the minor-eigenvector edge-tangent + coherence.
-fn structureTensorField(p: vec2<f32>, t: f32, fallbackDir: vec2<f32>) -> vec3<f32> {
+// Returns vec4(tangent.x, tangent.y, A, packGrad(Gx,Gy)) — the minor-eigenvector
+// edge-tangent + coherence + the metal medium's packed gradient (BG.W-AUR-METAL-FINISH;
+// the .xy/.z crayon/kuwahara callers are byte-unchanged).
+fn structureTensorField(p: vec2<f32>, t: f32, fallbackDir: vec2<f32>) -> vec4<f32> {
   let e = 0.0035;
   let l00 = dot(sampleBase(p + vec2<f32>(-e, -e), t), W_LUMA);
   let l10 = dot(sampleBase(p + vec2<f32>(0.0, -e), t), W_LUMA);
@@ -104,7 +127,7 @@ fn structureTensorField(p: vec2<f32>, t: f32, fallbackDir: vec2<f32>) -> vec3<f3
   if (dot(tangent, fallbackDir) < 0.0) { tangent = -tangent; }
   let blendW = pow(A, 0.28);
   let dir = normalize(mix(fallbackDir, tangent, blendW) + vec2<f32>(1e-6, 1e-6));
-  return vec3<f32>(dir, A);
+  return vec4<f32>(dir, A, packGrad(Gx, Gy));
 }
 
 // ── Flow field (the WGSL twin — the simple flow seed the medium fallback dirs use) ──
@@ -290,18 +313,86 @@ fn mediumKuwahara(col0: vec3<f32>, p: vec2<f32>, t: f32) -> vec3<f32> {
   return mix(col0, result, clamp(mStrokeAmount(), 0.0, 1.0));
 }
 
+// ── Metal — the two-term anisotropic BRDF (uMedium==8/9; the WGSL twin) ──────
+// The field re-lights as warm folded metal: the luma HEIGHT field (the packed
+// structure-tensor gradient → the surface normal) catches an anisotropic Blinn streak
+// (brushed metal, running ALONG the coherent edge-tangent) plus a sharp crest, both
+// raked by the IN-STRUCT cursor-synth light (crosses to WGSL — never uLightDir). The
+// catch is the achromatic-warm anchor (never a cold chrome-blue). ZERO extra taps —
+// the gradient is unpacked from the tensor's .w lane the caller already computed.
+const METAL_CATCH_WARM: vec3<f32> = vec3<f32>(1.0, 0.97, 0.90);
+const METAL_HEIGHT_SCALE: f32 = 2.2;
+const METAL_LIGHT_Z: f32 = 0.55;
+const METAL_IDLE_RAKE: vec2<f32> = vec2<f32>(0.32, 0.34);
+const METAL_SHININESS_ANISO: f32 = 6.0;
+const METAL_SHININESS_CREST: f32 = 40.0;
+const METAL_COHERENCE_FLOOR: f32 = 0.22;
+const METAL_BODY_FLOOR: f32 = 0.42;
+const METAL_GRADIENT_FLATTEN: f32 = 0.55;
+const METAL_SPARKLE_DENSITY: f32 = 240.0;
+const METAL_SPARKLE_THRESH: f32 = 0.72;
+const METAL_SPARKLE_AMP: f32 = 0.6;
+
+fn metalShade(baseCol: vec3<f32>, p: vec2<f32>, stf: vec4<f32>) -> vec3<f32> {
+  let tangent = stf.xy;
+  let A = stf.z;
+  let grad = unpackGrad(stf.w);
+  let N = normalize(vec3<f32>(grad * (METAL_HEIGHT_SCALE * mMetalHeightScale()), 1.0));
+  let V = vec3<f32>(0.0, 0.0, 1.0);
+  // Cursor-synth rake light (u.cursor is in-struct — crosses to WGSL).
+  let L = normalize(vec3<f32>((u.cursor.xy - p) + METAL_IDLE_RAKE, METAL_LIGHT_Z));
+  let H = normalize(L + V);
+  // Anisotropic streak — brushed metal along the edge-tangent.
+  let tH = dot(normalize(tangent), H.xy);
+  let sinTH = sqrt(clamp(1.0 - tH * tH, 0.0, 1.0));
+  let streak = pow(clamp(sinTH, 0.0, 1.0), METAL_SHININESS_ANISO);
+  let crest = pow(clamp(dot(N, H), 0.0, 1.0), METAL_SHININESS_CREST);
+  var spec = streak * crest;
+  spec = spec * smoothstep(0.0, METAL_COHERENCE_FLOOR, A);
+  // Technicolor valley base — the body keeps the FIELD hue; luma rides the relief.
+  let diff = clamp(dot(N, L), 0.0, 1.0);
+  let body = baseCol * (METAL_BODY_FLOOR + (1.0 - METAL_BODY_FLOOR) * diff);
+  return body + METAL_CATCH_WARM * (spec * clamp(mMetalPolish(), 0.0, 4.0));
+}
+
+fn mediumMetal(col: vec3<f32>, p: vec2<f32>, t: f32) -> vec3<f32> {
+  let stf = structureTensorField(p, t, flowField(p, t));
+  return metalShade(col, p, stf);
+}
+
+// metal-gradient (uMedium==9) — the SAME BRDF over a pre-flattened base + the
+// twinkle-in-place flake sparkle (position FIXED per cell, phase-animated, facing-gated).
+fn mediumMetalGradient(col: vec3<f32>, p: vec2<f32>, t: f32) -> vec3<f32> {
+  let stf = structureTensorField(p, t, flowField(p, t));
+  let flat = mix(col, vec3<f32>(dot(col, W_LUMA)), METAL_GRADIENT_FLATTEN);
+  var metal = metalShade(flat, p, stf);
+  let grad = unpackGrad(stf.w);
+  let facing = normalize(vec3<f32>(grad * (METAL_HEIGHT_SCALE * mMetalHeightScale()), 1.0)).z;
+  let cell = floor(p * METAL_SPARKLE_DENSITY);
+  let seed = hash21(cell);
+  let tw = pow(clamp(sin(t + seed * 6.2831853), 0.0, 1.0), 40.0);
+  let flakeGate = step(METAL_SPARKLE_THRESH, seed);
+  metal = metal + METAL_CATCH_WARM * (tw * flakeGate * clamp(facing, 0.0, 1.0) * METAL_SPARKLE_AMP);
+  return metal;
+}
+
 // ── Medium dispatch (the WGSL twin of the GLSL main() if-ladder) ────────────
 // uMedium: 0 smooth · 1 pastel · 2 watercolor · 3 oil · 4 crayon · 5 vangogh ·
-// 6 oil-pastel · 7 kuwahara. The cheap peer mediums (pastel/watercolor/crayon) +
-// kuwahara port their own bodies; the oil/vangogh/oil-pastel STROKE cascade renders
-// the anisotropic-Kuwahara PAINTERLY finish here (a real oil-paint read, never the
-// smooth core — the "NO FALLBACKS on Safari" mandate; the full per-dab Starry-Night
-// stroke WGSL is the booked W-AURORA-WGPU-MEDIUMS-STROKES tail).
+// 6 oil-pastel · 7 kuwahara · 8 metal · 9 metal-gradient. The cheap peer mediums
+// (pastel/watercolor/crayon) + kuwahara + metal port their own bodies; the
+// oil/vangogh/oil-pastel STROKE cascade renders the anisotropic-Kuwahara PAINTERLY
+// finish here (a real oil-paint read, never the smooth core — the "NO FALLBACKS on
+// Safari" mandate; the full per-dab Starry-Night stroke WGSL is the booked
+// W-AURORA-WGPU-MEDIUMS-STROKES tail).
 fn applyMedium(col: vec3<f32>, p: vec2<f32>, t: f32) -> vec3<f32> {
   let medium = u.ints1.x;
   if (medium == 1) { return mediumPastel(col, p, t); }
   if (medium == 2) { return mediumWatercolor(col, p, t); }
   if (medium == 4) { return mediumCrayon(col, p, t); }
+  // BG.W-AUR-METAL-FINISH — metal DUAL-PORTS (a .frag-only metal is invisible on the
+  // WGSL primary of both browsers); 8 metal, 9 metal-gradient.
+  if (medium == 8) { return mediumMetal(col, p, t); }
+  if (medium == 9) { return mediumMetalGradient(col, p, t); }
   // oil(3) / vangogh(5) / oil-pastel(6) / kuwahara(7) all render the painterly
   // anisotropic-Kuwahara finish on the WGSL primary (the WebGL2 fallback carries the
   // full per-dab stroke cascade for oil/vangogh/oil-pastel).

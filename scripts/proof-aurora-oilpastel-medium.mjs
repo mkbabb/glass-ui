@@ -63,10 +63,12 @@ function fnBody(src, name) {
 // then to 54000 — the BC.W-VIZ-AURORA (T4) TENTH lift — for the WGSL painterly-medium
 // port (aurora-mediums.wgsl.ts: the sampleBase/structureTensorField/flowField twins +
 // pastel/watercolor/crayon + the KEYSTONE anisotropic-Kuwahara, so Safari 26 paints the
-// FULL painterly register; measured gzip ≈52.3k / raw ≈158.7k). ONE ceiling, mirrored
-// from the canonical profile:budget figure.
-const AURORA_GZIP_CEIL = 54000;
-const AURORA_RAW_CEIL = 162000;
+// FULL painterly register; measured gzip ≈52.3k / raw ≈158.7k), then to 58500 — the
+// BG.W-AUR-METAL-FINISH ELEVENTH lift — for the two dual-ported metal mediums (the GLSL
+// metal-medium.glsl.ts + the WGSL twins; measured gzip ≈57.5k / raw ≈173.9k). ONE ceiling,
+// mirrored from the canonical profile:budget figure.
+const AURORA_GZIP_CEIL = 58500;
+const AURORA_RAW_CEIL = 176000;
 
 let _cliPaths = null;
 function cliPaths() {

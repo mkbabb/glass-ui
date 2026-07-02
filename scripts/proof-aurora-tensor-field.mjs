@@ -74,9 +74,11 @@ function run() {
         process.exit(1);
     }
 
-    // (1) the structure-tensor body.
+    // (1) the structure-tensor body. BG.W-AUR-METAL-FINISH widened the return vec3→vec4
+    // (the .w lane packs the metal medium's gradient — ZERO new taps; the .xy/.z tangent+
+    // coherence callers are byte-unchanged), so the signature match accepts vec3|vec4.
     facts.hasStructureTensorBody =
-        /vec3\s+structureTensorField\s*\(\s*vec2\s+p\s*,\s*float\s+t\s*,\s*vec2\s+fallbackDir\s*\)\s*\{/.test(mediums) &&
+        /vec[34]\s+structureTensorField\s*\(\s*vec2\s+p\s*,\s*float\s+t\s*,\s*vec2\s+fallbackDir\s*\)\s*\{/.test(mediums) &&
         /Jxx/.test(mediums) && /Jyy/.test(mediums) && /Jxy/.test(mediums) &&
         /atan\s*\(\s*2\.0\s*\*\s*Jxy/.test(mediums) &&
         /lambdaMaj/.test(mediums) && /lambdaMin/.test(mediums);

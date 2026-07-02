@@ -13,6 +13,7 @@
 // the character-equivalent emit order.
 import { AURORA_VANGOGH_MEDIUM_GLSL } from "./vangogh-medium.glsl";
 import { AURORA_OIL_MODES_GLSL } from "./oil-modes.glsl";
+import { AURORA_METAL_PACK_GLSL, AURORA_METAL_MEDIUM_GLSL } from "./metal-medium.glsl";
 
 export const AURORA_MEDIUMS_PRE_BRUSH_GLSL = /* glsl */ `// ── Medium overlays ───────────────────────────────────────────────────────
 
@@ -25,19 +26,21 @@ vec3 sampleBase(vec2 p, float t) {
   c *= 1.0 + uValueVariance * vm;
   return c;
 }
-
+`
+    // BG.W-AUR-METAL-FINISH — the gradient PACK helpers (packGrad before structureTensorField).
+    + AURORA_METAL_PACK_GLSL
+    + /* glsl */ `
 // ── Structure-tensor / edge-tangent-flow (AW.W4.1) ─────────────────────────
 // The keystone of the painterly engine: derive stroke orientation from the COLOR
 // FIELD's OWN structure, not a hand-authored flow pattern. A 3x3 Sobel over
 // luma(sampleBase) yields the gradient (Gx,Gy); the 2x2 structure tensor
 // J = [[Gx², GxGy],[GxGy, Gy²]] eigen-decomposes closed-form into the MINOR
-// eigenvector (the edge-TANGENT — least color change, the stroke direction; the
-// MAJOR eigenvector is the gradient/edge-NORMAL and would make strokes cross the
-// bands) and the coherence A = (λ1-λ2)/(λ1+λ2). Low-coherence (flat) zones relax
-// toward the smooth fallbackDir by (1-A) so tensor noise never reads as jitter.
-// Single-pass small-tap WebGL2 form; the Gaussian-smoothed multi-tap + LIC smear
-// is the AW.W7 WebGPU multi-pass fold. Returns vec3(tangent.x, tangent.y, A).
-vec3 structureTensorField(vec2 p, float t, vec2 fallbackDir) {
+// eigenvector (the edge-TANGENT — least color change, the stroke direction) + the
+// coherence A = (λ1-λ2)/(λ1+λ2); flat zones relax toward fallbackDir by (1-A). The
+// single-pass small-tap WebGL2 form. Returns vec4(tangent.xy, A, packGrad(Gx,Gy)) —
+// the .w lane carries the metal medium's gradient (BG.W-AUR-METAL-FINISH; the .xy/.z
+// callers are byte-unchanged).
+vec4 structureTensorField(vec2 p, float t, vec2 fallbackDir) {
   float e = 0.0035; // small-tap neighborhood (edge-mask scale)
   // 3x3 luma samples.
   float l00 = dot(sampleBase(p + vec2(-e, -e), t), W_LUMA);
@@ -86,7 +89,7 @@ vec3 structureTensorField(vec2 p, float t, vec2 fallbackDir) {
   // relax to the fallback survives (0^0.35=0), so tensor noise never reads as jitter.
   float blendW = pow(A, 0.28);
   vec2 dir = normalize(mix(fallbackDir, tangent, blendW) + 1e-6);
-  return vec3(dir, A);
+  return vec4(dir, A, packGrad(Gx, Gy));
 }
 
 vec3 mediumWatercolor(vec3 col, vec2 p, float t) {
@@ -383,23 +386,20 @@ vec3 mediumOil(vec3 col, vec2 p, float t) {
 
 // ── Kuwahara — the anisotropic generalized Kuwahara painterly finish (uMedium==7,
 // BB.W-AUR-KUWAHARA) ───────────────────────────────────────────────────────────────
-// The SOTA edge-preserving painterly smoothing: the generalized/anisotropic Kuwahara
-// of Kyprianidis 2010, the SOFT polynomial-weighted variant (NOT the pre-2010 hard
-// argmin, which BANDS the flat field into an 8-spoke pinwheel — the §4.2 anti-regression).
-// Aurora is a PROCEDURAL field (no input texture), so the operator runs over the
-// sampleBase() color field directly: an elliptical kernel oriented along the structure
-// tensor (elongated along the edge-tangent, narrowed across by the anisotropy), divided
-// into 8 overlapping sectors via smooth weights; each sector accumulates a weighted mean
-// + variance, and the output is the variance-weighted blend of the sector means
-// (1/(1+var^q) — the low-variance sectors dominate, the SOFT criterion). The result is
-// flat painterly oil-paint patches with crisp colour-zone boundaries — the §4.3 −5/3
-// cascade carried by the multi-scale patch structure, the §4.2 anisotropy carried by the
-// ellipse hugging the tensor. Single-pass small-radius WebGL2 form: 4 rings × 8 angular
-// taps = 32 procedural neighbourhood samples (cost-bounded; the offscreen-park / PRM
-// freeze the substrate owns is untouched — a parked frame attaches zero of these taps).
+// The SOTA edge-preserving painterly smoothing: the generalized/anisotropic Kuwahara of
+// Kyprianidis 2010, the SOFT polynomial-weighted variant (NOT the pre-2010 hard argmin,
+// which BANDS the flat field into an 8-spoke pinwheel — the §4.2 anti-regression). Aurora
+// is a PROCEDURAL field (no input texture), so the operator runs over sampleBase() directly:
+// an elliptical kernel oriented along the structure tensor (elongated along the edge-tangent,
+// narrowed by the anisotropy), divided into 8 overlapping sectors via smooth weights; the
+// output is the variance-weighted blend of the sector means (1/(1+var^q) — low-variance
+// sectors dominate, the SOFT criterion → flat oil-paint patches with crisp zone boundaries).
+// Single-pass small-radius WebGL2 form: 4 rings × 8 angular taps = 32 procedural samples
+// (cost-bounded; the offscreen-park / PRM freeze the substrate owns is untouched).
 vec3 mediumKuwahara(vec3 col, vec2 p, float t) {
-  // Orient the kernel along the structure-tensor edge-tangent + read the coherence A.
-  vec3 stf = structureTensorField(p, t, flowField(p, t));
+  // Orient the kernel along the structure-tensor edge-tangent + read the coherence A
+  // (the field widened vec3→vec4 for metal's gradient; kuwahara reads only .xy/.z).
+  vec4 stf = structureTensorField(p, t, flowField(p, t));
   vec2 tangent = stf.xy;
   float A = stf.z;
   // The ellipse axes: major along the tangent, minor across. Anisotropy squeezes the
@@ -481,6 +481,9 @@ vec3 mediumKuwahara(vec3 col, vec2 p, float t) {
 }
 
 `
+    // BG.W-AUR-METAL-FINISH — the metal bodies (uMedium==8/9) splice in HERE, after
+    // mediumKuwahara + before vangogh (carved to metal-medium.glsl.ts for the bound).
+    + AURORA_METAL_MEDIUM_GLSL
     + AURORA_VANGOGH_MEDIUM_GLSL
     + /* glsl */ `// AX.W13 — the oil-pastel medium (uMedium==6) is a DISTINCT stroke-deposition body,
 // split out of the dry-crayon tooth-multiply (mediumCrayon) (slice 8 F1). It DEPOSITS

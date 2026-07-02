@@ -23,6 +23,8 @@ import type { UniformLocations } from "./glSetup";
 import type { CursorState } from "./cursorModel";
 import {
     DEFAULT_VIVIDNESS,
+    METAL_POLISH_DEFAULT,
+    METAL_HEIGHT_SCALE_DEFAULT,
     MAX_NUCLEI,
     MAX_STOPS,
     type AuroraConfig,
@@ -54,6 +56,11 @@ export const MEDIUM_ID = {
     // booked W-AURORA-WGPU-MEDIUMS successor ports the painterly bodies); the WebGL2
     // path carries the live `mediumKuwahara()` body.
     kuwahara: 7,
+    // BG.W-AUR-METAL-FINISH — the two mutually-exclusive metal mediums. Both DUAL-PORT
+    // (the WebGL2 `mediumMetal`/`mediumMetalGradient` bodies + the WGSL primary twins);
+    // a `medium:"metal"` config re-lights the field as warm folded metal on BOTH backends.
+    metal: 8,
+    "metal-gradient": 9,
 } as const satisfies Record<AuroraMedium, number>;
 
 // W5 — the value.js HueInterpolationMethod → GLSL int map. The `satisfies` forces
@@ -297,6 +304,11 @@ export function createUniformBridge(
         gl.uniform1f(U.uImpasto, cfg.impasto);
         gl.uniform1f(U.uBrokenColor, cfg.brokenColor);
         gl.uniform1f(U.uCanvasGrain, cfg.canvasGrain);
+        // BG.W-AUR-METAL-FINISH — the metal-medium knobs (uMedium==8/9). Uploaded on
+        // every config; a non-metal path never reads them (no-op), so the smooth default
+        // + every existing medium render byte-identical.
+        gl.uniform1f(U.uMetalPolish, cfg.metalPolish ?? METAL_POLISH_DEFAULT);
+        gl.uniform1f(U.uMetalHeightScale, cfg.metalHeightScale ?? METAL_HEIGHT_SCALE_DEFAULT);
 
         // Motion
         gl.uniform1f(U.uNucleiDrift, cfg.nucleiDrift);

@@ -14,7 +14,7 @@
  *   scalars1 : vec4<f32>   off  16   (uWarpScale, uWarpDrift, uSaturation, uPaperGrain)
  *   scalars2 : vec4<f32>   off  32   (uAlpha, uNucleiDrift, uPaletteDrift, uBreathDepth)
  *   scalars3 : vec4<f32>   off  48   (uBreathPeriod, uCursorStrength, uCursorRadius, uVividness)
- *   cursor   : vec4<f32>   off  64   (uCursor.x, uCursor.y, _, _)
+ *   cursor   : vec4<f32>   off  64   (uCursor.x, uCursor.y, uMetalPolish, uMetalHeightScale)
  *   ints0    : vec4<i32>   off  80   (uStopCount, uNucleiCount, uWarpMode, uNoiseOctaves)
  *   ints1    : vec4<i32>   off  96   (uMedium, uHuePath, _, _)
  *   palette  : array<vec4<f32>, 8>  off 112  (rgb linear-sRGB stop + pad)
@@ -44,6 +44,8 @@ import {
 } from "./uniformBridge";
 import {
     DEFAULT_VIVIDNESS,
+    METAL_POLISH_DEFAULT,
+    METAL_HEIGHT_SCALE_DEFAULT,
     MAX_NUCLEI,
     MAX_STOPS,
     type AuroraConfig,
@@ -142,11 +144,15 @@ export function packAuroraWGPUUniforms(
     f32[OFF.scalars3 + 2] = cursor.radius;
     f32[OFF.scalars3 + 3] = cfg.vividness ?? DEFAULT_VIVIDNESS;
 
-    // cursor: uCursor.x, flipY(uCursor.y), _, _
+    // cursor: uCursor.x, flipY(uCursor.y), uMetalPolish, uMetalHeightScale
+    // BG.W-AUR-METAL-FINISH — the two FREE cursor pad lanes carry the metal-medium knobs
+    // (ZERO new struct lanes; the 576-byte offset lockstep is preserved). A non-metal
+    // config never reads them on the WGSL primary (applyMedium at uMedium≠8/9 skips
+    // metalShade), so packing them never perturbs the smooth-default parity capture.
     f32[OFF.cursor + 0] = cursor.x;
     f32[OFF.cursor + 1] = flipY(cursor.y);
-    f32[OFF.cursor + 2] = 0;
-    f32[OFF.cursor + 3] = 0;
+    f32[OFF.cursor + 2] = cfg.metalPolish ?? METAL_POLISH_DEFAULT;
+    f32[OFF.cursor + 3] = cfg.metalHeightScale ?? METAL_HEIGHT_SCALE_DEFAULT;
 
     // ints0: uStopCount, uNucleiCount, uWarpMode, uNoiseOctaves
     i32[OFF.ints0 + 0] = Math.min(cfg.palette.length, MAX_STOPS);

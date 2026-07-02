@@ -72,7 +72,16 @@ export type AuroraMedium =
     // field, the elliptical kernel squeezed along the structure tensor. DEFAULT-OFF
     // (no preset/config carries it unless explicitly selected); the smooth default +
     // the van-Gogh HERO + the oil/oil-pastel mediums are byte-unchanged.
-    | "kuwahara";
+    | "kuwahara"
+    // BG.W-AUR-METAL-FINISH — the two MUTUALLY-EXCLUSIVE metal mediums (uMedium==8/9,
+    // NOT a finish axis): `metal` re-lights the field as warm folded metal (the luma
+    // height field → an anisotropic two-term BRDF raked by a cursor-synth light, catch
+    // = the achromatic-warm anchor); `metal-gradient` is the SAME BRDF over a
+    // pre-flattened base + a twinkle-in-place flake sparkle. OPT-IN, default-OFF (no
+    // preset selects them unless explicitly set); the smooth default + every existing
+    // medium are byte-unchanged. Dual-ported (both WebGL2 + the WGSL primary).
+    | "metal"
+    | "metal-gradient";
 
 // AX.W13 — `crayon` is a first-class `AuroraMedium` (uMedium==4), NOT a `strokeMode`.
 // The legacy `oil` + `strokeMode:"crayon"` peer-route is REMOVED (clean break, no
@@ -188,6 +197,17 @@ export interface AuroraConfig {
     kuwaharaRadius?: number; // 0.006..0.024 procedural-patch units
     kuwaharaQ?: number; // 1..6 soft-blend variance exponent (4 default)
     /**
+     * BG.W-AUR-METAL-FINISH — the metal-medium knobs (the `medium:"metal"` /
+     * `"metal-gradient"` register; uMedium==8/9). Optional; omitted = the recipe
+     * defaults (`METAL_POLISH_DEFAULT` catch intensity, `METAL_HEIGHT_SCALE_DEFAULT`
+     * relief tilt). `metalPolish` scales the specular catch; `metalHeightScale` scales
+     * the luma-relief → normal tilt (a higher value reads as sharper folds). On the WGSL
+     * primary these ride the free cursor.z/.w pad lanes; the .frag carries them as its
+     * own uniforms. A non-metal config never reads them (no-op).
+     */
+    metalPolish?: number; // 0..4 specular catch intensity (1 default)
+    metalHeightScale?: number; // 0.5..3 relief tilt (1 default)
+    /**
      * AW.W4.2 — the impasto relight direction (the movable directional source the
      * accumulated paint-height field catches). Optional; omitted = upper-left
      * (matching the prior fixed-rim default, so the still default reads identically).
@@ -298,6 +318,18 @@ export const DEFAULT_VIVIDNESS = 1.0;
  * Mirrored as `VIVID_TARGET` in the GLSL + WGSL twins.
  */
 export const VIVID_TARGET = 0.115;
+
+// ── BG.W-AUR-METAL-FINISH — the metal-medium knob defaults ──────────────────
+/**
+ * The default `metalPolish` (specular catch intensity) for a `medium:"metal"` /
+ * `"metal-gradient"` config when omitted. The metal light rakes at unit intensity.
+ */
+export const METAL_POLISH_DEFAULT = 1.0;
+/**
+ * The default `metalHeightScale` (luma-relief → normal tilt) when omitted. A higher
+ * value reads as sharper metal folds; 1 is the calibrated warm-folded-metal default.
+ */
+export const METAL_HEIGHT_SCALE_DEFAULT = 1.0;
 
 // ── Minimum-viable default ─────────────────────────────────────────────
 

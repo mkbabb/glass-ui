@@ -123,6 +123,13 @@ uniform float uImpasto;
 uniform float uBrokenColor;
 uniform float uCanvasGrain;
 
+// BG.W-AUR-METAL-FINISH — the metal-medium knobs (uMedium==8/9). uMetalPolish scales
+// the specular catch intensity; uMetalHeightScale scales the luma-relief → normal tilt.
+// On the WGSL primary these ride the free cursor.z/.w pad lanes (uniformBridgeWGPU); the
+// .frag carries them as their own uniforms. Written 0 on a non-metal config → no-op.
+uniform float uMetalPolish;
+uniform float uMetalHeightScale;
+
 // AW.W4.2 — the impasto relight axis. A movable directional source lighting the
 // accumulated paint-height field (diffuse + Blinn specular, in LINEAR before aces()).
 // AW.W8 drives uLightDir from the cursor (cursor-as-light). Default = upper-left so
@@ -435,6 +442,10 @@ void main() {
   else if (uMedium == 5) col = mediumVangogh(col, pN, t);
   else if (uMedium == 6) col = mediumOilPastel(col, pN, t);
   else if (uMedium == 7) col = mediumKuwahara(col, pN, t);
+  // BG.W-AUR-METAL-FINISH — the mutually-exclusive metal mediums (opt-in, uMedium==8/9;
+  // the smooth default + every existing medium are byte-unchanged by these arms).
+  else if (uMedium == 8) col = mediumMetal(col, pN, t);
+  else if (uMedium == 9) col = mediumMetalGradient(col, pN, t);
 
   // Saturation trim
   col = saturate3(col, uSaturation);

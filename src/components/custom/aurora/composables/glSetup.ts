@@ -63,6 +63,9 @@ export const UNIFORM_NAMES = [
     "uImpasto",
     "uBrokenColor",
     "uCanvasGrain",
+    // BG.W-AUR-METAL-FINISH — the metal-medium knobs (uMedium==8/9).
+    "uMetalPolish",
+    "uMetalHeightScale",
     "uNucleiDrift",
     "uPaletteDrift",
     "uBreathDepth",

@@ -343,7 +343,7 @@ function run() {
     // Fold in any co-located medium-chunk sibling the mediums module joins (the
     // 2e carve target). The list is explicit so a new unrelated *.glsl.ts cannot
     // silently shift the hash.
-    const MEDIUM_SIBLINGS = ["oil-modes.glsl.ts", "vangogh-medium.glsl.ts"];
+    const MEDIUM_SIBLINGS = ["oil-modes.glsl.ts", "vangogh-medium.glsl.ts", "metal-medium.glsl.ts"];
     for (const sib of MEDIUM_SIBLINGS) {
         const sp = resolve(SHADERS_DIR, sib);
         if (existsSync(sp)) glslParts.push(glslLiterals(readIf(sp)));
@@ -362,7 +362,14 @@ function run() {
     // is byte-identical to HEAD — the GL shader fence holds (the proof:aurora-* shader
     // gates + the grep-locked mediumKuwahara/structureTensorField/mediumOilPastel/
     // mediumCrayon bodies all STAY in mediums.glsl.ts).
-    const MEDIUMS_GLSL_HASH = "27d2e72087db4c34da4ea174764e7b5f44fb876a1f4033ab6b4a5e02734071d7";
+    // BG.W-AUR-METAL-FINISH re-snapshot: the metal mediums (packGrad/unpackGrad +
+    // structureTensorField vec3→vec4 in mediums.glsl.ts, + the mediumMetal/
+    // mediumMetalGradient/metalShade BRDF bodies carved into the metal-medium.glsl.ts
+    // sibling — the no-god-module carve, added to MEDIUM_SIBLINGS above). This is an
+    // ADDITIVE shader change (the smooth default + every existing medium render
+    // byte-identical — the opt-in metal arms are reached only by an explicit config),
+    // so the recompose hash legitimately advances here.
+    const MEDIUMS_GLSL_HASH = "ce4d4cc51efb3da0d11c765866e075de4d4f28d21981de17fcc3d45f444ada84";
     facts.mediumsGlslHash = glslHash;
     facts.mediumsGlslHashExpected = MEDIUMS_GLSL_HASH;
     // The hash is asserted ONLY once a medium sibling exists (post-carve); before
