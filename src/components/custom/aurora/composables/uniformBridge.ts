@@ -25,6 +25,8 @@ import {
     DEFAULT_VIVIDNESS,
     METAL_POLISH_DEFAULT,
     METAL_HEIGHT_SCALE_DEFAULT,
+    IMAGE_BLUR_MIN_DEFAULT,
+    IMAGE_BLUR_MAX_DEFAULT,
     MAX_NUCLEI,
     MAX_STOPS,
     type AuroraConfig,
@@ -322,5 +324,20 @@ export function createUniformBridge(
         gl.uniform1f(U.uAlpha, cfg.alpha);
         // BD.W-AUR-VIVIDNESS — the §3 chroma-floor strength (omitted = the vivid default).
         gl.uniform1f(U.uVividness, cfg.vividness ?? DEFAULT_VIVIDNESS);
+
+        // BG.W-AUR-IMAGE-SOURCE — the image lane. On the PALETTE program every U.uImage/
+        // uBlur*/uImageAspect location is null (the palette fragment declares none of
+        // them), so these uploads are silent no-ops → the palette-default render is
+        // byte-identical. Only the separate image program reads them. uImage samples
+        // texture unit 0 (the runtime uploads the decoded photo into unit 0). The aspect
+        // is the live canvas W/H (keeps the zone-blur bokeh circular in screen space).
+        gl.uniform1i(U.uImage, 0);
+        gl.uniform1f(U.uBlurMin, cfg.imageBlur?.min ?? IMAGE_BLUR_MIN_DEFAULT);
+        gl.uniform1f(U.uBlurMax, cfg.imageBlur?.max ?? IMAGE_BLUR_MAX_DEFAULT);
+        const aspect =
+            gl.drawingBufferHeight > 0
+                ? gl.drawingBufferWidth / gl.drawingBufferHeight
+                : 1.0;
+        gl.uniform1f(U.uImageAspect, aspect);
     };
 }

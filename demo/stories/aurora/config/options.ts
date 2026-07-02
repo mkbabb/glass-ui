@@ -1,5 +1,6 @@
 import type {
     AuroraMedium,
+    AuroraSource,
     FlowPattern,
     StrokeMode,
     WarpMode,
@@ -9,6 +10,13 @@ type TabOption<T extends string> = {
     label: string;
     value: T;
 };
+
+// BG.W-AUR-IMAGE-SOURCE — the color-source axis: the procedural palette field (default)
+// or a decoded photo dissolved into the field's drift (a separate compiled program).
+export const sourceOptions = [
+    { label: "Palette", value: "palette" },
+    { label: "Image", value: "image" },
+] as const satisfies readonly TabOption<AuroraSource>[];
 
 export const mediumOptions = [
     { label: "Smooth", value: "smooth" },

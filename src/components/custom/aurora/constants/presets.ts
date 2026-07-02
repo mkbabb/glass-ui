@@ -26,6 +26,31 @@ export type { OklchStop };
 import type { HueInterpolationMethod } from "@mkbabb/value.js";
 export type AuroraHuePath = HueInterpolationMethod;
 
+// BG.W-AUR-IMAGE-SOURCE — the color-source axis. `palette` (default) is the procedural
+// nuclei-field ramp (byte-identical to every pre-image config); `image` selects a
+// SEPARATE compiled fragment program (the construction-time permutation) that samples a
+// decoded photo through the ONE shared texture-upload primitive and dissolves it into the
+// field's OWN drift (the blur ZONE is the aurora's drift). NOT a runtime `if(uSource)`
+// branch — the two are distinct programs picked at setup.
+export type AuroraSource = "palette" | "image";
+
+// The photo a `source:"image"` aurora dissolves. Any URL string / `Blob` (decoded through
+// the shared `createImageBitmap` normalisation) OR an already-uploadable source. The
+// concrete type lives in the shared texture-upload primitive — re-exported here so the
+// aurora config surface is self-contained. The macro-flower ARRAY + cross-fade cadence are
+// DEMO/consumer assets (presets-in-consumers); the library ships the axis only.
+import type { ImageInputSource } from "../../../../composables/glass/textureUpload";
+export type AuroraImageSource = ImageInputSource;
+export type { ImageInputSource };
+
+/** The per-fragment blur-radius band (uv units) the drifting zone lerps between. */
+export interface AuroraImageBlur {
+    /** Blur radius (uv) at zone 0 — the near-sharp zones. */
+    min: number;
+    /** Blur radius (uv) at zone 1 — the dramatically-dissolved zones. */
+    max: number;
+}
+
 export interface AuroraNucleus {
     /** 0..1 in CSS-top-origin space (0 = top, 1 = bottom). Runtime flips Y. */
     x: number;
@@ -157,6 +182,25 @@ export interface AuroraConfig {
     warpDrift: number; // 0..0.015
     warpMode: WarpMode;
     noiseOctaves: 3 | 4 | 5;
+
+    // BG.W-AUR-IMAGE-SOURCE — the color SOURCE axis (default `"palette"` — the procedural
+    // field, byte-identical to every pre-image config). `"image"` selects the separate
+    // compiled image program that dissolves `src` into the field's drift. Optional; omitted
+    // = `"palette"` (the palette-default byte-identity floor). Aliased on `/api`.
+    source?: AuroraSource;
+    /**
+     * BG.W-AUR-IMAGE-SOURCE — the photo the `source:"image"` program dissolves. A URL
+     * string / `Blob` (decoded through the shared normalisation) OR an already-uploadable
+     * source (`ImageBitmap`/`HTMLImageElement`/…). Ignored when `source !== "image"`.
+     */
+    src?: AuroraImageSource;
+    /**
+     * BG.W-AUR-IMAGE-SOURCE — the per-fragment blur-radius band (uv units) the drifting
+     * zone lerps between (`radius = mix(min, max, zone)`). Optional; omitted = the
+     * `IMAGE_BLUR_MIN_DEFAULT`/`IMAGE_BLUR_MAX_DEFAULT` band (near-sharp → heavy-bokeh
+     * dissolve). Only read on the `source:"image"` program.
+     */
+    imageBlur?: AuroraImageBlur;
 
     // Medium
     medium: AuroraMedium;
@@ -330,6 +374,19 @@ export const METAL_POLISH_DEFAULT = 1.0;
  * value reads as sharper metal folds; 1 is the calibrated warm-folded-metal default.
  */
 export const METAL_HEIGHT_SCALE_DEFAULT = 1.0;
+
+// ── BG.W-AUR-IMAGE-SOURCE — the image zone-blur band defaults ────────────────
+/**
+ * The default near-sharp blur radius (uv units) at zone 0 for a `source:"image"` aurora
+ * — a whisper so the recognizable zones read crisp against the dissolved ones.
+ */
+export const IMAGE_BLUR_MIN_DEFAULT = 0.004;
+/**
+ * The default dissolved blur radius (uv units) at zone 1 — a heavy bokeh over the fixed
+ * 24-tap kernel reads as a "dramatically dissolved" abstract wash at field scale (the
+ * kuwahara-budget precedent: the RADIUS carries the dissolve, never the tap count).
+ */
+export const IMAGE_BLUR_MAX_DEFAULT = 0.06;
 
 // ── Minimum-viable default ─────────────────────────────────────────────
 

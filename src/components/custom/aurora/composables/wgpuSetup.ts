@@ -18,6 +18,7 @@ import type {
     BackingSize,
 } from "../../../../composables/glass/webgpu/useWebGPUCanvas";
 import { AURORA_WGSL } from "../constants/shaders/aurora.wgsl";
+import { AURORA_IMAGE_WGSL } from "../constants/shaders/aurora-image.wgsl";
 import {
     advanceCursor,
     cursorIsLive,
@@ -28,6 +29,16 @@ import {
     createAuroraWGPUUniformScratch,
     packAuroraWGPUUniforms,
 } from "./uniformBridgeWGPU";
+import {
+    AURORA_IMAGE_WGPU_UNIFORM_BYTES,
+    createAuroraImageWGPUScratch,
+    packAuroraImageWGPUUniforms,
+} from "./uniformBridgeWGPUImage";
+import {
+    placeholderImageSource,
+    uploadImageTextureWebGPU,
+    type UploadableImageSource,
+} from "../../../../composables/glass/textureUpload";
 import type { AuroraConfig } from "../constants/presets";
 import type { UsePointerVelocityField } from "../../../../composables/motion/usePointerVelocityField";
 
@@ -43,6 +54,19 @@ export interface AuroraWGPUSetupDeps {
      * iOS-27 gel snap-back.
      */
     pointerField: UsePointerVelocityField;
+    /**
+     * BG.W-AUR-IMAGE-SOURCE — the decoded photo the `source:"image"` program samples (or
+     * `null` before decode / on a palette config). Read at setup + on re-upload.
+     */
+    getDecodedImage: () => UploadableImageSource | null;
+    /**
+     * BG.W-AUR-IMAGE-SOURCE — register the backend's texture uploader with the runtime so
+     * a late-arriving decode re-uploads into the live GPU texture. Passing `null` clears
+     * it (teardown). The runtime calls the registered fn when a decode resolves.
+     */
+    registerImageUploader: (
+        fn: ((src: UploadableImageSource) => void) | null,
+    ) => void;
 }
 
 // The WebGPU usage/visibility bitflags as their SPEC-defined constants. `lib.dom.d.ts`
@@ -63,12 +87,36 @@ const SHADER_STAGE_FRAGMENT = 0x2;
 export function createAuroraWGPUSetup(
     deps: AuroraWGPUSetupDeps,
 ): (device: GPUDevice, context: GPUCanvasContext, format: GPUTextureFormat) => WebGPUCanvasFrame {
-    const { canvas, cursor, getConfig, getReducedMotion, pointerField } = deps;
+    const {
+        canvas,
+        cursor,
+        getConfig,
+        getReducedMotion,
+        pointerField,
+        getDecodedImage,
+        registerImageUploader,
+    } = deps;
     // BC.W-VIZ-AURORA (T5) — the per-frame delta the shared field's tick() needs (the
     // first frame seeds prevTime so the opening delta is 0 — no teleport spike).
     let prevTimeSec: number | null = null;
 
     return function setupWGPU(device, context, format) {
+        // BG.W-AUR-IMAGE-SOURCE — the CONSTRUCTION-TIME program permutation. A
+        // `source:"image"` config builds the SEPARATE image pipeline (its own bind group
+        // carrying the texture + sampler + the image-uniform tail) rather than the palette
+        // program. The palette path below is byte-UNTOUCHED (this returns early).
+        if (getConfig().source === "image") {
+            return setupImageWGPU(device, context, format, {
+                canvas,
+                cursor,
+                getConfig,
+                getReducedMotion,
+                pointerField,
+                getDecodedImage,
+                registerImageUploader,
+            });
+        }
+
         const module = device.createShaderModule({
             label: "[Aurora] aurora.wgsl",
             code: AURORA_WGSL,
@@ -206,5 +254,172 @@ export function createAuroraWGPUSetup(
                 uniformBuffer.destroy();
             },
         };
+    };
+}
+
+// BG.W-AUR-IMAGE-SOURCE — the SEPARATE image pipeline (the construction-time permutation).
+// Its own bind group carries the uniform buffer (binding 0), the image texture (binding 1),
+// and the sampler (binding 2). The texture is uploaded through the ONE shared
+// `uploadImageTextureWebGPU` primitive (never a raw `createTexture` + `copyExternalImage`
+// here — the cross-engine parity floor). A late-arriving decode re-uploads + rebuilds the
+// bind group via the registered uploader.
+function setupImageWGPU(
+    device: GPUDevice,
+    context: GPUCanvasContext,
+    format: GPUTextureFormat,
+    deps: AuroraWGPUSetupDeps,
+): WebGPUCanvasFrame {
+    const {
+        canvas,
+        cursor,
+        getConfig,
+        getReducedMotion,
+        pointerField,
+        getDecodedImage,
+        registerImageUploader,
+    } = deps;
+    let prevTimeSec: number | null = null;
+
+    const module = device.createShaderModule({
+        label: "[Aurora] aurora-image.wgsl",
+        code: AURORA_IMAGE_WGSL,
+    });
+
+    const uniformBuffer = device.createBuffer({
+        label: "[Aurora] image uniforms",
+        size: AURORA_IMAGE_WGPU_UNIFORM_BYTES,
+        usage: BUFFER_USAGE_UNIFORM | BUFFER_USAGE_COPY_DST,
+    });
+
+    const sampler = device.createSampler({
+        label: "[Aurora] image sampler",
+        magFilter: "linear",
+        minFilter: "linear",
+        addressModeU: "clamp-to-edge",
+        addressModeV: "clamp-to-edge",
+    });
+
+    const bindGroupLayout = device.createBindGroupLayout({
+        label: "[Aurora] image bind-group-0",
+        entries: [
+            { binding: 0, visibility: SHADER_STAGE_FRAGMENT, buffer: { type: "uniform" } },
+            {
+                binding: 1,
+                visibility: SHADER_STAGE_FRAGMENT,
+                texture: { sampleType: "float", viewDimension: "2d" },
+            },
+            {
+                binding: 2,
+                visibility: SHADER_STAGE_FRAGMENT,
+                sampler: { type: "filtering" },
+            },
+        ],
+    });
+
+    const pipeline = device.createRenderPipeline({
+        label: "[Aurora] image pipeline",
+        layout: device.createPipelineLayout({ bindGroupLayouts: [bindGroupLayout] }),
+        vertex: { module, entryPoint: "vs_main" },
+        fragment: {
+            module,
+            entryPoint: "fs_main",
+            targets: [
+                {
+                    format,
+                    blend: {
+                        color: { srcFactor: "one", dstFactor: "one-minus-src-alpha", operation: "add" },
+                        alpha: { srcFactor: "one", dstFactor: "one-minus-src-alpha", operation: "add" },
+                    },
+                },
+            ],
+        },
+        primitive: { topology: "triangle-list" },
+    });
+
+    // Seed the texture through the shared primitive — the decoded photo if present, else the
+    // neutral 1×1 placeholder so the sampler is always complete (never a black-garbage frame).
+    let imageTexture = uploadImageTextureWebGPU(
+        device,
+        getDecodedImage() ?? placeholderImageSource(),
+    ).texture;
+
+    function buildBindGroup(): GPUBindGroup {
+        return device.createBindGroup({
+            label: "[Aurora] image bind-group",
+            layout: bindGroupLayout,
+            entries: [
+                { binding: 0, resource: { buffer: uniformBuffer } },
+                { binding: 1, resource: imageTexture.createView() },
+                { binding: 2, resource: sampler },
+            ],
+        });
+    }
+    let bindGroup = buildBindGroup();
+
+    // Register the late-decode uploader with the runtime: a resolved decode re-uploads
+    // through the SAME shared primitive + rebuilds the bind group over the new texture.
+    registerImageUploader((source) => {
+        imageTexture.destroy();
+        imageTexture = uploadImageTextureWebGPU(device, source).texture;
+        bindGroup = buildBindGroup();
+    });
+
+    const scratch = createAuroraImageWGPUScratch();
+
+    function resize(_s?: BackingSize): void {}
+
+    function frame(timeSec: number): void {
+        const tempo = getReducedMotion() ? 0 : 1;
+        const deltaMs =
+            prevTimeSec === null ? 0 : Math.max(0, (timeSec - prevTimeSec) * 1000);
+        prevTimeSec = timeSec;
+        pointerField.tick(tempo === 0 ? 0 : deltaMs);
+        advanceCursor(cursor, tempo);
+
+        const aspect =
+            canvas.height > 0 ? canvas.width / canvas.height : 1.0;
+        packAuroraImageWGPUUniforms(scratch, getConfig(), cursor, timeSec, aspect);
+        device.queue.writeBuffer(uniformBuffer, 0, scratch.buffer);
+
+        const view = context.getCurrentTexture().createView();
+        const encoder = device.createCommandEncoder({ label: "[Aurora] image frame" });
+        const pass = encoder.beginRenderPass({
+            colorAttachments: [
+                {
+                    view,
+                    clearValue: { r: 0, g: 0, b: 0, a: 0 },
+                    loadOp: "clear",
+                    storeOp: "store",
+                },
+            ],
+        });
+        pass.setPipeline(pipeline);
+        pass.setBindGroup(0, bindGroup);
+        pass.draw(3, 1, 0, 0);
+        pass.end();
+        device.queue.submit([encoder.finish()]);
+    }
+
+    function shouldContinue(): boolean {
+        if (getReducedMotion()) return false;
+        const config = getConfig();
+        const driftLive =
+            config.nucleiDrift !== 0 ||
+            config.warpDrift !== 0 ||
+            config.paletteDrift !== 0;
+        if (driftLive) return true;
+        return cursorIsLive(cursor);
+    }
+
+    return {
+        frame,
+        shouldContinue,
+        resize,
+        time: (elapsedSec) => (getReducedMotion() ? 3.7 : elapsedSec),
+        teardown: () => {
+            registerImageUploader(null);
+            imageTexture.destroy();
+            uniformBuffer.destroy();
+        },
     };
 }

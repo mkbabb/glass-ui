@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { SegmentedTabs } from "@glass/components/custom/tabs";
 import { LabeledSlider } from "@glass/components/custom/labeled-field";
-import type { AuroraConfig, WarpMode } from "@glass/components/custom/aurora";
-import { warpModeOptions } from "./options";
+import type {
+    AuroraConfig,
+    AuroraSource,
+    WarpMode,
+} from "@glass/components/custom/aurora";
+import { sourceOptions, warpModeOptions } from "./options";
 
 const props = defineProps<{
     config: AuroraConfig;
@@ -11,10 +15,39 @@ const props = defineProps<{
 function setWarpMode(v: string | string[]) {
     props.config.warpMode = String(v) as WarpMode;
 }
+
+// BG.W-AUR-IMAGE-SOURCE — the color-source axis. "Image" dissolves a decoded photo into
+// the field's drift (a separate compiled program); a file picker feeds `config.src` (a
+// `Blob`, decoded through the ONE shared texture-upload primitive).
+function setSource(v: string | string[]) {
+    props.config.source = String(v) as AuroraSource;
+}
+function onImageFile(e: Event) {
+    const file = (e.target as HTMLInputElement).files?.[0];
+    if (file) props.config.src = file;
+}
 </script>
 
 <template>
     <div class="flex min-w-[280px] flex-col gap-3 p-3">
+        <div class="flex flex-col gap-1">
+            <p class="text-admin-label text-muted-foreground">Source</p>
+            <SegmentedTabs
+                :options="[...sourceOptions]"
+                :model-value="config.source ?? 'palette'"
+                variant="pill"
+                @update:model-value="setSource"
+            />
+        </div>
+        <div v-if="config.source === 'image'" class="flex flex-col gap-1">
+            <p class="text-admin-label text-muted-foreground">Image</p>
+            <input
+                type="file"
+                accept="image/*"
+                class="text-small"
+                @change="onImageFile"
+            />
+        </div>
         <div class="flex flex-col gap-1">
             <p class="text-admin-label text-muted-foreground">Warp mode</p>
             <SegmentedTabs

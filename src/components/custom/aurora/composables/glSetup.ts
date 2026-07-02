@@ -75,6 +75,15 @@ export const UNIFORM_NAMES = [
     "uAlpha",
     // BD.W-AUR-VIVIDNESS — the §3 chroma-floor strength.
     "uVividness",
+    // BG.W-AUR-IMAGE-SOURCE — the image program's OWN uniform lane (the sampler + the
+    // blur band + the aspect). On the PALETTE program these resolve to null locations
+    // (the palette fragment declares none of them), so uploading them is a silent no-op —
+    // the palette-default render is byte-identical. Only the separate image program (a
+    // construction-time permutation) actually reads them.
+    "uImage",
+    "uBlurMin",
+    "uBlurMax",
+    "uImageAspect",
 ] as const;
 
 export type UniformName = (typeof UNIFORM_NAMES)[number];

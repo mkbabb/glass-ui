@@ -24,6 +24,9 @@ export {
     // these by name, no magic number).
     DEFAULT_VIVIDNESS,
     VIVID_TARGET,
+    // BG.W-AUR-IMAGE-SOURCE — the image-source axis defaults + types.
+    IMAGE_BLUR_MIN_DEFAULT,
+    IMAGE_BLUR_MAX_DEFAULT,
     MAX_NUCLEI,
     MAX_STOPS,
     type AuroraConfig,
@@ -33,6 +36,9 @@ export {
     type AuroraInteractivity,
     type AuroraMedium,
     type AuroraNucleus,
+    type AuroraSource,
+    type AuroraImageSource,
+    type AuroraImageBlur,
     type FlowPattern,
     type OklchStop,
     type StrokeMode,

@@ -215,10 +215,18 @@ const startedAt = Date.now();
 // so the dual-port is the correct cost, not bloat. Measured raw ~173.9k / gzip ~57.5k;
 // lifted to raw 176_000 / gzip 58_500 (a thin headroom for the two metal bodies + the pack
 // helpers, NOT open-ended creep; an overrun still HALTS).
+// BG.W-AUR-IMAGE-SOURCE re-base — THE 12TH LIFT. The image-source axis dual-ports: the
+// SEPARATE compiled image programs (aurora-image.frag.ts WebGL2 + aurora-image.wgsl.ts
+// WebGPU — each a self-contained field foundation + the 24-tap zone blur, a construction-
+// time permutation, NOT a runtime branch) + the shared texture-upload primitive + the image
+// WGPU uniform bridge + the runtime/wgpuSetup image-pipeline wiring. A frag-only image would
+// be invisible on the WGSL primary, so the dual-port is the correct cost. Measured raw
+// ~197.8k / gzip ~62.7k; lifted to raw 208_000 / gzip 66_000 (a thin headroom for the two
+// image programs + the upload/bridge leaves, NOT open-ended creep; an overrun still HALTS).
 const BUDGETS = {
     "dist/glass-ui.js": { raw: 190_000, gzip: 33_700 },
     "dist/styles/index.css": { raw: 548_000, gzip: 140_000 },
-    "dist/aurora.js": { raw: 176_000, gzip: 58_500 },
+    "dist/aurora.js": { raw: 208_000, gzip: 66_000 },
     "dist/goo-blob.js": { raw: 85_000, gzip: 28_000 },
     // BC.W-VIZ-CONSTELLATION / W-VIZ-FOURIER re-base — the WebGPU-first re-home
     // (the per-viz Band-4 waves) moved both viz OFF Canvas2D onto createGpuSubstrate:

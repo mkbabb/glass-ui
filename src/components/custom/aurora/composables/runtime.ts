@@ -22,7 +22,9 @@
 
 import { VERTEX_SRC } from "../constants/shaders/aurora.vert";
 import { FRAGMENT_SRC } from "../constants/shaders/aurora.frag";
+import { IMAGE_FRAGMENT_SRC } from "../constants/shaders/aurora-image.frag";
 import { resolveAuroraWashDpr } from "../constants/budget";
+import { armWebGL2ImageTexture, createAuroraImageCoordinator } from "./auroraImageSource";
 import {
     createGpuSubstrate,
     type BackingSize,
@@ -213,6 +215,10 @@ export function createAurora(
     // `config` for the next `setup` to upload.
     let setConfig: ((cfg: AuroraConfig) => void) | null = null;
 
+    // BG.W-AUR-IMAGE-SOURCE — the `source:"image"` decode/upload coordination leaf (`wake`
+    // is deferred over `canvasHandle` below, only fired post-construction).
+    const imageCoord = createAuroraImageCoordinator({ wake: () => canvasHandle.wake(), onError: options.onInitError });
+
     // BB.W-VIZ-SUITE (W-AURORA-WGPU) — the aurora fragment path is now substrate-
     // AGNOSTIC: the WebGPU-first `aurora.wgsl` primary OR the WebGL2 `aurora.frag`
     // fallback, picked ONCE by `createGpuSubstrate` (`navigator.gpu` feature-detect).
@@ -272,19 +278,31 @@ export function createAurora(
             // BC.W-VIZ-AURORA (T5) — the shared pointer field, FED tick() from the WGPU
             // frame callback (the SAME field instance the WebGL2 loop feeds — one source).
             pointerField,
+            // BG.W-AUR-IMAGE-SOURCE — the image-source seam (no-op on a palette config).
+            getDecodedImage: () => imageCoord.getDecodedImage(),
+            registerImageUploader: (fn) => imageCoord.setImageUploader(fn),
         }),
         // Build the program + geometry + uniform cache on a fresh context. The
         // substrate calls this on arm() AND on every webglcontextrestored, so a
         // GPU context loss self-heals — the closures below close over the fresh
         // `gl`/program/seams each time.
         setupGL: (gl) => {
+            // BG.W-AUR-IMAGE-SOURCE — the CONSTRUCTION-TIME program permutation: a separate
+            // compiled image fragment program (NOT a runtime source-uniform branch).
+            const useImageProgram = config.source === "image";
+            const fragmentSrc = useImageProgram ? IMAGE_FRAGMENT_SRC : FRAGMENT_SRC;
             const {
                 program: prog,
                 vs,
                 fs,
                 uniforms,
                 geometry,
-            } = createGlProgram(gl, VERTEX_SRC, FRAGMENT_SRC);
+            } = createGlProgram(gl, VERTEX_SRC, fragmentSrc);
+
+            // The image texture (unit 0), armed via the leaf (the ONE shared primitive).
+            const imageTeardown = useImageProgram
+                ? armWebGL2ImageTexture(gl, prog, imageCoord)
+                : null;
 
             // BG.W-VIZ-RESIZE-ADOPT — upload-only. The aurora decorative WASH backs at
             // the SUB-2× `resolveAuroraWashDpr` (1.5×) ceiling, threaded to the LEAF sizer
@@ -347,6 +365,7 @@ export function createAurora(
                     gl.deleteShader(fs);
                     gl.deleteBuffer(geometry.buf);
                     gl.deleteVertexArray(geometry.vao);
+                    imageTeardown?.(); // BG.W-AUR-IMAGE-SOURCE — release the image texture
                     // The WEBGL_lose_context release is the substrate's job.
                 },
             };
@@ -437,6 +456,9 @@ export function createAurora(
         return Promise.resolve();
     }
 
+    // BG.W-AUR-IMAGE-SOURCE — kick the initial decode (no-op on a palette config).
+    imageCoord.ensureDecoded(config);
+
     if (options.mode !== "capture" && shouldInitEagerly(options)) {
         armRuntime();
     }
@@ -450,6 +472,7 @@ export function createAurora(
             // correct.
             config = cfg;
             setConfig?.(cfg);
+            imageCoord.ensureDecoded(cfg); // BG.W-AUR-IMAGE-SOURCE — a `src` swap re-decodes
             // A config change may raise a drift uniform (slider drag) — re-arm a
             // parked loop so the new motion is rendered. wake() re-parks
             // immediately if the new config is still steady-state.

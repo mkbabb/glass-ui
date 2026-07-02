@@ -1428,6 +1428,12 @@ export const GATES = [
         note: "BG.W-AUR-METAL-FINISH — metal as a MUTUALLY-EXCLUSIVE MEDIUM (uMedium 8/9), dual-ported GLSL+WGSL. M1 ladder widen (AuroraMedium +metal/+metal-gradient, MEDIUM_ID metal:8/metal-gradient:9, kuwahara stays 7, both shader hosts dispatch mutually-exclusively); M2 metal FOLDS (tensor re-plumbs gradient via vec4+packGrad ZERO-new-taps + two-term BRDF streak×crest + coherence gate + height-normal, both backends); M3 the cursor-synth catch crosses to WGSL (reads u.cursor, NO uLightDir); M4 GL fence (guarded else-if smooth-default byte-unchanged, mediumKuwahara/structureTensorField grep-locked, 576-byte struct via cursor.z/.w pad); M5 the achromatic-warm catch fence. Born-RED → GREEN + a 5-bite self-test. Device-free; the binding metal-FOLDS localContrast/cursor-raked-WGSL/no-cold-catch π rides W-REFLECT3 + proof:ba-gestalt aurora.",
     },
     {
+        id: "proof:aur-image",
+        cmd: "proof:aur-image",
+        tags: ["local", "ci", "release"],
+        note: "BG.W-AUR-IMAGE-SOURCE — the blurred-image source arm. Device-free SOURCE parse (born-RED→GREEN + 6 self-test bites). I1 ONE shared texture-upload primitive (textureUpload.ts decode + both explicit-flag legs; WebGL2 leaf auroraImageSource.ts + WGPU wgpuSetup.ts route through it; no raw texImage2D/copyExternalImageToTexture outside it); I2 source:'palette'|'image' is a CONSTRUCTION-TIME program permutation (separate compiled programs, no uSource branch); I3 bounded fixed 24-tap zone-blur kernel (3×8, compile-time const loop bound, both backends); I4 one-colour-source proxy (vividness floor source-agnostic + linear-light + shared procedural-color chunk) — the real chromium-vs-webkit capture-pair parity rides W-REFLECT3; I5 palette-default byte-identity (source OPTIONAL, palette programs sampler-free, image WGPU lane is its own 288-byte struct, palette 576 untouched); I6 deriveAurora scheme/lBand luminance option (ASK-GU-AURORA-SCHEME-LUMA) acted-on. The binding photo-dissolves-into-drift π both engines both modes rides W-REFLECT3 + proof:ba-gestalt aurora.",
+    },
+    {
         id: "proof:precept-current",
         cmd: "proof:precept-current",
         tags: ["local", "ci"],

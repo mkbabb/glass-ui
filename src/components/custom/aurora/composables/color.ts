@@ -154,14 +154,54 @@ export interface DeriveAuroraOptions {
      * precedent: `proof:aurora-atoms-roundtrip` stays GREEN by construction).
      */
     avoidHues?: readonly (readonly [number, number])[];
+    /**
+     * BG.W-AUR-IMAGE-SOURCE (ASK-GU-AURORA-SCHEME-LUMA) — the luminance SCHEME preset. A
+     * derived palette's L band anchors the whole ramp's luminosity; the default
+     * `"light"` band ([0.35, 0.95]) reads as a light-pastel field, which composites to a
+     * flat gray behind glass in a DARK app shell (the same luminous-dark identity concern
+     * `W-DARK-MATERIAL` owns). `"dark"` shifts the band toward the luminous-dark identity
+     * (`DERIVE_L_BAND_DARK`, a deeper base + a lower apex) so a derived-from-seed field
+     * reads as a rich luminous-dark wash, not a washed-pale composite. Additive +
+     * default-unset → byte-identical derive (the `WarpMode`-additive-widen precedent).
+     * A raw `lBand` override wins over `scheme` (the escape hatch).
+     */
+    scheme?: "light" | "dark";
+    /**
+     * BG.W-AUR-IMAGE-SOURCE — an explicit L band `[min, max]` (OKLCh L units) that OVERRIDES
+     * both the default band AND `scheme`. The single retune knob for a consumer whose
+     * derived field needs a bespoke luminosity window. Clamped into [0, 1] defensively.
+     */
+    lBand?: readonly [number, number];
 }
 
 /**
  * Painterly L band — a deep base, a near-white atmospheric apex. The derived L
  * ramp is clamped into this window so no stop reads as pure black or blown white,
- * matching the authored presets' "deep → cream" shape.
+ * matching the authored presets' "deep → cream" shape. The `"light"` (default) scheme.
  */
 const DERIVE_L_BAND: readonly [number, number] = [0.35, 0.95];
+
+/**
+ * BG.W-AUR-IMAGE-SOURCE (ASK-GU-AURORA-SCHEME-LUMA) — the luminous-dark L band. A deeper
+ * base + a lower apex so a `scheme:"dark"` derived field reads as a rich luminous-dark
+ * wash (never washing to a flat pale-gray composite behind glass in a dark shell), the
+ * `W-DARK-MATERIAL` luminous-dark identity in the derive path.
+ */
+const DERIVE_L_BAND_DARK: readonly [number, number] = [0.18, 0.72];
+
+/** Resolve the L band from an explicit override, else the scheme preset, else the default. */
+function resolveDeriveLBand(
+    lBand: readonly [number, number] | undefined,
+    scheme: "light" | "dark" | undefined,
+): readonly [number, number] {
+    if (lBand) {
+        return [
+            Math.max(0, Math.min(1, lBand[0])),
+            Math.max(0, Math.min(1, lBand[1])),
+        ];
+    }
+    return scheme === "dark" ? DERIVE_L_BAND_DARK : DERIVE_L_BAND;
+}
 
 /**
  * Seed ONE color into a harmonious, gamut-safe N-stop aurora palette.
@@ -195,10 +235,14 @@ export function deriveAurora(
         chromaEasing = "bell",
         temperatureShift = 0,
         avoidHues,
+        scheme,
+        lBand,
     } = options;
 
     const n = Math.max(2, Math.min(MAX_STOPS, Math.round(stopCount)));
-    const [lMin, lMax] = DERIVE_L_BAND;
+    // BG.W-AUR-IMAGE-SOURCE — the L band is scheme/override-resolved (default `"light"` =
+    // the unchanged [0.35, 0.95], so an unset config derives byte-identically).
+    const [lMin, lMax] = resolveDeriveLBand(lBand, scheme);
 
     // L ramp: spread the anchor L symmetrically by lightnessSpread, then clamp the
     // window into the painterly band. The window is shifted (not squashed) when an
