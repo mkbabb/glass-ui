@@ -85,6 +85,44 @@ const PAINT_SCHEMA = { type: 'object', additionalProperties: false,
 
 const batched3 = (a) => { const o = []; for (let i = 0; i < a.length; i += 3) o.push(a.slice(i, i + 3)); return o }
 const byId = (waves) => { const m = {}; for (const w of waves) m[w.id] = w; return m }
+// LENIENT wave-identity matcher — a wave has 2-3 name forms (cursor short id '3.5' · 'BG.W-GLASS-REGISTER-UNIFY' ·
+// bare 'W-…' token). Exact string equality across agents bit twice (wf_fb17de53 + wf_111cba22); match on the
+// W-token when both carry one, else exact-or-containment.
+const wTok = (s) => (String(s || '').match(/W-[A-Z0-9][A-Z0-9-]+/) || [null])[0]
+const sameWave = (a, b) => {
+  if (!a || !b) return false
+  if (a === b) return true
+  const ta = wTok(a), tb = wTok(b)
+  if (ta && tb) return ta === tb
+  return a.includes(b) || b.includes(a)
+}
+
+// PER-SWEEP DISK HYDRATION — the cursor (EXECUTION-PROGRESS.md) is the ONLY durable state; in-memory status
+// accumulation proved lossy across the paint-edge/child-workflow boundary (wf_111cba22 spin: DONE waves
+// re-picked). Every sweep re-reads disk truth. MONOTONIC rules: disk DONE always wins; disk PAINT-PENDING
+// applies unless the wave is a queued fix (in-memory PENDING with _fix>0) or mid-BUILD; NOTHING ever
+// downgrades to PENDING from hydration (FAIL/BLOCKED are run-local).
+const HYDRATE_SCHEMA = { type: 'object', additionalProperties: false, required: ['rows'],
+  properties: { rows: { type: 'array', items: { type: 'object', additionalProperties: false, required: ['names', 'status'],
+    properties: { names: { type: 'array', items: { type: 'string' }, description: 'ALL name forms on the row: the short id cell (e.g. 3.5, F8.2, BH.B2-export-reshape) AND the wave-name cell (e.g. BG.W-GLASS-REGISTER-UNIFY)' },
+      status: { type: 'string', enum: ['PENDING', 'BUILDING', 'PAINT-PENDING', 'DONE', 'BLOCKED', 'FAIL-PAINT', 'DEFERRED'] } } } } } }
+
+async function hydrateFromCursor(waves, label) {
+  const h = await agent(`Read ${EXEC}/EXECUTION-PROGRESS.md — BOTH the §1 master table AND the §2 ledger table. Return EVERY row's status with ALL its name forms (the short id cell AND the wave-name cell — e.g. names:["F8.2","BG.W-COMPOSITED-GESTALT-GATE"]). A row whose status cell carries DONE (with or without a SHA/paint note) is DONE; PAINT-PENDING likewise; PENDING/BUILDING/BLOCKED/DEFERRED as written. Report every row — completeness over brevity. READ-ONLY: edit nothing. ${FENCE}`,
+    { schema: HYDRATE_SCHEMA, model: 'sonnet', label: `hydrate/${label}`, phase: 'Build' }).catch(() => null)
+  if (!h || !h.rows) { log(`hydrate/${label}: FAILED (keeping in-memory statuses this sweep)`); return 0 }
+  let applied = 0
+  for (const w of waves) {
+    const row = h.rows.find(r => (r.names || []).some(n => sameWave(n, w.id)))
+    if (!row) continue
+    if (row.status === 'DONE' && w.status !== 'DONE') { w.status = 'DONE'; applied++ }
+    else if (row.status === 'PAINT-PENDING' && w.status !== 'PAINT-PENDING') {
+      const queuedFix = w.status === 'PENDING' && (w._fix || 0) > 0
+      if (!queuedFix && w.status !== 'BUILDING') { w.status = 'PAINT-PENDING'; applied++ }
+    } else if (row.status === 'BLOCKED' && w.status !== 'BLOCKED') { w.status = 'BLOCKED'; applied++ }
+  }
+  return applied
+}
 // STAGE-0 (DEV-B §3.1): a [P] wave landed device-free-green + committed [paint-pending] is DONE-BUILDING for
 // ORDERING purposes — its paint is decoupled, not its build. Downstream builds must not stall on its paint.
 const doneBuilding = (w) => w.status === 'DONE' || w.status === 'PAINT-PENDING'
@@ -168,6 +206,9 @@ const SWEEP_CAP = 600   // runaway backstop (well above ~140 waves × fix-retrie
 let lastSweepSig = ''   // SPIN-BREAKER: identical batch + zero status delta across sweeps = a wedged status machine
 
 while (guard++ < SWEEP_CAP) {
+  // Every sweep starts from DISK truth (the lossy-in-memory lesson — wf_111cba22 spin).
+  const hydrated = await hydrateFromCursor(waves, `sweep-${guard}`)
+  if (hydrated) log(`Sweep ${guard}: hydrated ${hydrated} status(es) from the cursor`)
   const map = byId(waves)
   // STAGE-0 (DEV-B §3.1-4): PAINT-PENDING is NOT a build-frontier blocker — the paint edge drains it.
   const buildFrontierLeft = waves.some(w => ['PENDING', 'BUILDING', 'FAIL', 'FAIL-PAINT'].includes(w.status))
@@ -208,10 +249,13 @@ BUILD this wave from first principles. Implement its Files per its Gate + π row
       .then(r => ({ w, r })).catch(() => ({ w, r: null, error: true }))))
 
   // ----- INTEGRATE (one orchestrator-agent applies the batch onto tranche/BG, re-runs gates, commits, writes cursor) -----
+  // CRITICAL: `b.w` crossed the parallel()/journal boundary and may be a DESERIALIZED COPY of the wave node
+  // (the wf_111cba22 root cause — mutations through it silently vanish). ALWAYS re-resolve the LIVE node.
+  const liveNode = (b) => waves.find(x => sameWave(x.id, (b.w && b.w.id) || '')) || b.w
   // STEP-0.5 ALREADY-LANDED NO-OPS: a build whose convergenceNote says "already landed" is the engine re-picking
-  // a DONE wave (in-memory status drift). Mark it _noop → DONE directly + exclude from integrate; breaks the loop.
-  for (const b of builds) if (b.r && /already[\s-]*landed/i.test(b.r.convergenceNote || '')) b.w._noop = true
-  const ok = builds.filter(b => b.r && b.r.buildPassed && !b.error && !b.w._noop)
+  // a DONE wave (status drift). Mark the LIVE node _noop → DONE directly + exclude from integrate; breaks the loop.
+  for (const b of builds) if (b.r && /already[\s-]*landed/i.test(b.r.convergenceNote || '')) liveNode(b)._noop = true
+  const ok = builds.filter(b => b.r && b.r.buildPassed && !b.error && !liveNode(b)._noop)
   let integ = null
   if (ok.length) {
     integ = await agent(`You are the INTEGRATOR. Apply this build batch onto the main \`tranche/BG\` working tree at ${REPO}, in seq order, and commit ONE per wave. You OWN the index + the four hot files (${HOT.join(', ')}).
@@ -221,14 +265,15 @@ BUILDS: ${JSON.stringify(ok.map(b => ({ wave: b.w.id, intent: b.w.intent, ws: b.
 ${FENCE}`, { schema: INTEGRATE_SCHEMA, model: 'opus', label: `integrate/${batch[0].id}`, phase: 'Build' }).catch(() => null)
   }
 
-  // apply integrate results to in-memory status
+  // apply integrate results to the LIVE nodes (lenient id match; never through the parallel()-copied b.w)
   const res = (integ && integ.results) || []
   for (const b of builds) {
-    if (b.w._noop) { b.w.status = 'DONE'; continue }   // STEP-0.5 already-landed no-op → DONE (break the drift loop)
-    const r = res.find(x => x.wave === b.w.id)
-    if (!b.r || !b.r.buildPassed || b.error) { b.w.status = 'FAIL'; continue }
-    if (!r || !r.integrated || !r.gateGreen) { b.w.status = 'FAIL'; continue }
-    b.w.status = r.nextStatus === 'DONE' ? 'DONE' : 'PAINT-PENDING'
+    const w = liveNode(b)
+    if (w._noop) { w.status = 'DONE'; continue }   // STEP-0.5 already-landed no-op → DONE (break the drift loop)
+    const r = res.find(x => sameWave(x.wave, w.id))
+    if (!b.r || !b.r.buildPassed || b.error) { w.status = 'FAIL'; continue }
+    if (!r || !r.integrated || !r.gateGreen) { w.status = 'FAIL'; continue }
+    w.status = r.nextStatus === 'DONE' ? 'DONE' : 'PAINT-PENDING'
   }
 
   // ----- PAINT EDGE (STAGE-0, DEV-B §3.2 — the decoupled dual-engine flip, wired as a scheduled edge not a human ritual) -----
@@ -239,17 +284,15 @@ ${FENCE}`, { schema: INTEGRATE_SCHEMA, model: 'opus', label: `integrate/${batch[
     // bg-paint reads the cursor's PAINT-PENDING set, dual-engine-captures (real Chrome.app + Safari.app, both
     // modes, C-SAFARI non-skippable), flips PASS→DONE (writes the cursor) + leaves FAIL→PAINT-PENDING with a mustFix DELTA.
     await workflow({ scriptPath: `${EXEC}/bg-paint.wf.js` }).catch((e) => { log(`paint edge errored: ${e && e.message}`); return null })
-    // RE-HYDRATE from the cursor the paint workflow just wrote.
-    const reload = await agent(`Re-read ${EXEC}/EXECUTION-PROGRESS.md and return, for each of these waves that was PAINT-PENDING before the paint run, its CURRENT status (DONE if the paint judge PASSed + flipped it; PAINT-PENDING if it left a FAIL DELTA): ${paintPending.map(w => w.id).join(', ')}. ${FENCE}`,
-      { schema: { type: 'object', additionalProperties: false, required: ['rows'], properties: { rows: { type: 'array', items: { type: 'object', additionalProperties: false, required: ['wave', 'status'], properties: { wave: { type: 'string' }, status: { type: 'string', enum: ['DONE', 'PAINT-PENDING'] } } } } } }, model: 'opus', label: 'paint-reload', phase: 'Build' }).catch(() => null)
-    const rows = (reload && reload.rows) || []
+    // RE-HYDRATE from the cursor the paint workflow just wrote (the ONE hydration path — the bespoke
+    // paint-reload agent died with wf_111cba22: it omitted rows and its id forms mismatched).
+    await hydrateFromCursor(waves, `post-paint-${guard}`)
     for (const w of paintPending) {
-      const r = rows.find(x => x.wave === w.id)
-      if (r && r.status === 'DONE') { w.status = 'DONE'; continue }
-      // still PAINT-PENDING after a paint run = a FAIL verdict → FAIL-PAINT + bounded fix-agent recovery
+      if (w.status === 'DONE') continue                       // the judge flipped it — hydration picked it up
+      // still PAINT-PENDING on disk after a paint run over it = a FAIL/held verdict → bounded fix recovery
       w._fix = (w._fix || 0) + 1
       if (w._fix > MAX_FIX) { w.status = 'BLOCKED'; log(`${w.id} BLOCKED — ${MAX_FIX} paint fixes exhausted; escalate.`) }
-      else { w.status = 'PENDING'; w._mustFix = w._mustFix || []; log(`${w.id} paint FAIL → fix ${w._fix}/${MAX_FIX} (re-queued for a FIX agent — NOT the builder — reading the DELTA mustFix)`) }
+      else { w.status = 'PENDING'; log(`${w.id} paint FAIL → fix ${w._fix}/${MAX_FIX} (re-queued for a FIX agent reading the DELTA mustFix — STEP 0.4)`) }
     }
   }
 
