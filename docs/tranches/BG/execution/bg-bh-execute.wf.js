@@ -119,6 +119,9 @@ async function hydrateFromCursor(waves, label) {
     else if (row.status === 'PAINT-PENDING' && w.status !== 'PAINT-PENDING') {
       const queuedFix = w.status === 'PENDING' && (w._fix || 0) > 0
       if (!queuedFix && w.status !== 'BUILDING') { w.status = 'PAINT-PENDING'; applied++ }
+    } else if (row.status === 'PENDING' && w.status === 'PAINT-PENDING') {
+      // the ONE sanctioned downgrade: the paint judge flipped a FAIL → PENDING-with-DELTA (fix owed)
+      w.status = 'PENDING'; applied++
     } else if (row.status === 'BLOCKED' && w.status !== 'BLOCKED') { w.status = 'BLOCKED'; applied++ }
   }
   return applied
@@ -290,15 +293,18 @@ ${FENCE} Return INTEGRATE_SCHEMA (a results array with this ONE wave).`,
     // bg-paint reads the cursor's PAINT-PENDING set, dual-engine-captures (real Chrome.app + Safari.app, both
     // modes, C-SAFARI non-skippable), flips PASS→DONE (writes the cursor) + leaves FAIL→PAINT-PENDING with a mustFix DELTA.
     await workflow({ scriptPath: `${EXEC}/bg-paint.wf.js` }).catch((e) => { log(`paint edge errored: ${e && e.message}`); return null })
-    // RE-HYDRATE from the cursor the paint workflow just wrote (the ONE hydration path — the bespoke
-    // paint-reload agent died with wf_111cba22: it omitted rows and its id forms mismatched).
+    // RE-HYDRATE from the cursor the paint workflow just wrote — the JUDGE now owns BOTH verdict flips
+    // (PASS→DONE, FAIL→PENDING-with-DELTA). An UNJUDGED wave stays PAINT-PENDING on disk and must NOT be
+    // requeued (the wf_49422741 lesson: inferring FAIL from still-PAINT-PENDING re-picked unjudged landed
+    // waves into build batches). The engine infers NOTHING here; hydration reads the judge's flips, and a
+    // judged-FAIL wave re-enters the build frontier as PENDING where STEP 0.4 finds its DELTA.
     await hydrateFromCursor(waves, `post-paint-${guard}`)
     for (const w of paintPending) {
-      if (w.status === 'DONE') continue                       // the judge flipped it — hydration picked it up
-      // still PAINT-PENDING on disk after a paint run over it = a FAIL/held verdict → bounded fix recovery
-      w._fix = (w._fix || 0) + 1
-      if (w._fix > MAX_FIX) { w.status = 'BLOCKED'; log(`${w.id} BLOCKED — ${MAX_FIX} paint fixes exhausted; escalate.`) }
-      else { w.status = 'PENDING'; log(`${w.id} paint FAIL → fix ${w._fix}/${MAX_FIX} (re-queued for a FIX agent reading the DELTA mustFix — STEP 0.4)`) }
+      if (w.status === 'PENDING') {                            // the judge flipped it FAIL→PENDING
+        w._fix = (w._fix || 0) + 1
+        if (w._fix > MAX_FIX) { w.status = 'BLOCKED'; log(`${w.id} BLOCKED — ${MAX_FIX} paint fixes exhausted; escalate.`) }
+        else log(`${w.id} paint FAIL → fix ${w._fix}/${MAX_FIX} (judge-flipped; a FIX agent reads the DELTA via STEP 0.4)`)
+      }
     }
   }
 
