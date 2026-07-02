@@ -20,6 +20,13 @@ Invariant 11 (no out-of-band lineage publish): every `@mkbabb/glass-ui` publish 
 
 ## §1 PRE-TAG close-battery (the irreversible-tag precondition)
 
+**1.0 — worktree hygiene + the Stage-0 witness (BEFORE 1.1):** run `node scripts/worktree-gc.mjs --gate` —
+RED if `.claude/worktrees/` exceeds 20 dirs / 20 GB (a bloated worktree tree at the cut ABORTS the tag; fix by
+pruning `--prune`, never by moving anything). AND the engine boot log MUST carry the Stage-0 witness line
+("doneBuilding = {DONE, PAINT-PENDING} … cutReady = buildComplete ∧ paintComplete") — a run without it built
+against the deadlocked engine and its cut is VOID. (The standing `proof:worktree-hygiene` gates.mjs row
+[`local`-only] registers with the first F8 gate-touching wave — the integrator owns gates.mjs.)
+
 Run BEFORE every tag in this cut (4.3.0, 4.4.0, 5.0.0 alike). The 4.0.0 lesson is binding: BA's `FINAL.md §3` claimed "`--run local` green" while `ci ⊂ local` carried 18 reds AND never ran the union siblings-absent — the close-class lie this kills.
 
 **1.1 — siblings-intact tripwire BEFORE.** `node scripts/verify-siblings-intact.mjs` (exit 0 required). REDs if any real repo sits in a `/tmp/sibling-park`/`-stash` (a park-not-restored) or a constellation sibling is missing from `~/Programming`. This is the standing fence against the 2026-06-20 orphan incident.

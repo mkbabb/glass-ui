@@ -23,6 +23,7 @@ export const meta = {
 const REPO = '/Users/mkbabb/Programming/glass-ui'
 const EXEC = `${REPO}/docs/tranches/BG/execution`
 const MAX_FIX = (typeof args === 'object' && args?.maxFix) || 2
+const PAINT_DRAIN_THRESHOLD = 3   // STAGE-0 (DEV-B §3.2): fire the paint edge when the PAINT-PENDING backlog reaches this, or when the build frontier drains
 const RESUME = (typeof args === 'object' && args?.resumeFromRunId) || null
 const HOT = ['scripts/gates.mjs', 'package.json', 'src/index.ts', 'CLAUDE.md']
 
@@ -45,7 +46,7 @@ const DAG_SCHEMA = { type: 'object', additionalProperties: false, required: ['wa
         preconds: { type: 'array', items: { type: 'string' } },
         interleaveClass: { type: 'string', description: "BG: '-' ; BH: 'C'|'WS1'..'WS12'|'WS12-LAST'" },
         mutatesSrc: { type: 'boolean' },
-        status: { type: 'string', enum: ['PENDING', 'BUILDING', 'PAINT-PENDING', 'DONE', 'BLOCKED', 'FAIL'] },
+        status: { type: 'string', enum: ['PENDING', 'BUILDING', 'PAINT-PENDING', 'DONE', 'BLOCKED', 'FAIL', 'FAIL-PAINT'] },
       } } } } }
 
 const BUILD_SCHEMA = { type: 'object', additionalProperties: false,
@@ -84,7 +85,10 @@ const PAINT_SCHEMA = { type: 'object', additionalProperties: false,
 
 const batched3 = (a) => { const o = []; for (let i = 0; i < a.length; i += 3) o.push(a.slice(i, i + 3)); return o }
 const byId = (waves) => { const m = {}; for (const w of waves) m[w.id] = w; return m }
-const allDone = (waves, ws) => waves.filter(w => w.tranche === 'BG' && w.ws === ws).every(w => w.status === 'DONE')
+// STAGE-0 (DEV-B §3.1): a [P] wave landed device-free-green + committed [paint-pending] is DONE-BUILDING for
+// ORDERING purposes — its paint is decoupled, not its build. Downstream builds must not stall on its paint.
+const doneBuilding = (w) => w.status === 'DONE' || w.status === 'PAINT-PENDING'
+const allDone = (waves, ws) => waves.filter(w => w.tranche === 'BG' && w.ws === ws).every(doneBuilding)
 
 function interleaveReady(w, waves) {
   if (w.tranche === 'BG') return true                       // BG order is the precond DAG
@@ -97,7 +101,7 @@ function interleaveReady(w, waves) {
 
 function ready(w, waves, map) {
   if (w.status !== 'PENDING') return false
-  if (!w.preconds.every(p => map[p] && map[p].status === 'DONE')) return false
+  if (!w.preconds.every(p => map[p] && doneBuilding(map[p]))) return false
   return interleaveReady(w, waves)
 }
 
@@ -131,9 +135,13 @@ ${FENCE}`
 phase('Load')
 log(RESUME ? 'Resuming — re-hydrating cursor + agent cache' : 'Fresh boot — loading the wave DAG')
 
+// STAGE-0 (DEV-B §3.4): the worktree-GC tripwire runs at boot (WARN on RED; the pre-cut battery RED aborts the tag).
+await agent(`Run \`node scripts/worktree-gc.mjs --report\` at ${REPO} and report its one-line census verbatim. If it prints RED, ALSO run \`node scripts/worktree-gc.mjs --prune\` (scope-fenced to .claude/worktrees; it runs verify-siblings-intact first) and report the freed bytes. ${FENCE}`,
+  { model: 'sonnet', label: 'worktree-gc', phase: 'Load' }).then(r => r && log(String(r).slice(0, 300))).catch(() => log('worktree-gc boot step failed (non-blocking WARN)'))
+
 const loaded = await agent(`You are the DAG LOADER for the BG+BH execution engine. Read these and return the full wave DAG.
 READ: ${EXEC}/bg-build-map.md (the ~110 BG waves — id·intent·files·gate·paint-class[H/P]·preconds), ${EXEC}/bh-interleave-map.md (the ~30 BH waves + their interleave class C/WSn/WS12-LAST + hard-collision files), and ${EXEC}/EXECUTION-PROGRESS.md (the durable cursor — the live status per wave).
-RETURN the DAG_SCHEMA: one node per wave (BG + BH) with id, tranche, ws, seq (build-order ordinal — Stage-0=0, WS12 last, B4f=BH.B4f highest), intent, files (the write-set — the file-disjoint key), deviceFreeGate (proof:*), paintClass (H headless-only | P paint-gated), preconds (the wave ids that must be DONE first — cross-WS + intra-band order; for BH encode the named intra-WS12 edges B5c→B4f, {B2.6,B4e,B4b-content}→B4f, B2.1-mech→B2.1-swap, B2.2→B7, B5b→B5c as preconds), interleaveClass ('-' for BG; 'C'|'WS1'..'WS12'|'WS12-LAST' for BH; B4f='WS12-LAST'), mutatesSrc (true if it edits src/demo/styles/scripts — gets a worktree), and status (READ from EXECUTION-PROGRESS.md; default PENDING; a PAINT-PENDING row STAYS PAINT-PENDING — paint is DECOUPLED to a dedicated paint workflow, so a [P]-wave committed [paint-pending] is DONE-building and MUST NOT re-enter the build frontier). Set fresh=true iff no row is DONE.
+RETURN the DAG_SCHEMA: one node per wave (BG + BH) with id, tranche, ws, seq (build-order ordinal — Stage-0=0, WS12 last, B4f=BH.B4f highest), intent, files (the write-set — the file-disjoint key), deviceFreeGate (proof:*), paintClass (H headless-only | P paint-gated), preconds (the wave ids that must be DONE first — cross-WS + intra-band order; for BH encode the named intra-WS12 edges B5c→B4f, {B2.6,B4e,B4b-content}→B4f, B2.1-mech→B2.1-swap, B2.2→B7, B5b→B5c as preconds), interleaveClass ('-' for BG; 'C'|'WS1'..'WS12'|'WS12-LAST' for BH; B4f='WS12-LAST'), mutatesSrc (true if it edits src/demo/styles/scripts — gets a worktree), and status (READ from EXECUTION-PROGRESS.md; default PENDING; a PAINT-PENDING row stays PAINT-PENDING and does NOT re-enter the BUILD frontier, but it IS doneBuilding for interleave/precond ORDERING, and the PAINT EDGE (workflow(bg-paint.wf.js)) drains it to DONE or FAIL-PAINT). Set fresh=true iff no row is DONE.
 The B4f node's preconds MUST include every WS12 wave id + B5c + B2.6 + B4e + B4b-content (the absolute-last sentinel). Be COMPLETE — every wave in both maps appears exactly once.
 ${FENCE}`, { schema: DAG_SCHEMA, model: 'opus', label: 'dag-loader', phase: 'Load' }).catch(() => null)
 
@@ -145,13 +153,17 @@ log(`DAG loaded: ${waves.length} waves · ${waves.filter(w => w.status === 'DONE
 // ============================ THE WAVE-FRONTIER SWEEP ============================
 
 phase('Build')
+// STAGE-0 WITNESS — the engine must be paint-decoupled before any build cycle opens (RESPEC-GESTALT ruling #9).
+log(`Stage-0 witness: doneBuilding = {DONE, PAINT-PENDING} (allDone/ready/frontier); cutReady = buildComplete ∧ paintComplete; paint edge = workflow(bg-paint.wf.js) after each sweep (threshold ${PAINT_DRAIN_THRESHOLD}); FAIL-PAINT→FIX-AGENT recovery armed (MAX_FIX=${MAX_FIX}); worktree-GC tripwire wired at boot.`)
+if (typeof doneBuilding !== 'function' || typeof PAINT_DRAIN_THRESHOLD === 'undefined') { log('STAGE-0 NOT APPLIED — engine still deadlocks. Abort — apply DEV-B §3.1-3.2 first.'); return { ok: false, reason: 'stage-0-unapplied' } }
 let guard = 0
 const SWEEP_CAP = 600   // runaway backstop (well above ~140 waves × fix-retries)
 
 while (guard++ < SWEEP_CAP) {
   const map = byId(waves)
-  const pendingLeft = waves.some(w => ['PENDING', 'PAINT-PENDING', 'FAIL'].includes(w.status))
-  if (!pendingLeft) { log('All waves DONE — frontier reached the cut.'); break }
+  // STAGE-0 (DEV-B §3.1-4): PAINT-PENDING is NOT a build-frontier blocker — the paint edge drains it.
+  const buildFrontierLeft = waves.some(w => ['PENDING', 'BUILDING', 'FAIL', 'FAIL-PAINT'].includes(w.status))
+  if (!buildFrontierLeft && !waves.some(w => w.status === 'PAINT-PENDING')) { log('All waves DONE — frontier reached the cut.'); break }
 
   const readyNow = waves.filter(w => ready(w, waves, map))
   const batch = composeBatch(readyNow)
@@ -200,36 +212,26 @@ ${FENCE}`, { schema: INTEGRATE_SCHEMA, model: 'opus', label: `integrate/${batch[
     b.w.status = r.nextStatus === 'DONE' ? 'DONE' : 'PAINT-PENDING'
   }
 
-  // ----- PAINT JUDGE (NON-AUTHORING — fresh agents, fed only route+harness, never the builder's claim) -----
-  const paintWaves = []  // PAINT DECOUPLED: the build lands [P] waves [paint-pending] device-free; a dedicated paint workflow runs the dual-engine/C-SAFARI capture + flips them DONE (the in-cycle judge is retired here to keep build cycles fast + unblocked by the heavy capture)
-  if (paintWaves.length) {
-    log(`Paint-judge [${paintWaves.map(w => w.id).join(' · ')}] — dual-engine, non-authoring`)
-    const verdicts = await parallel(paintWaves.map(w => () =>
-      agent(`You are a NON-AUTHORING PAINT JUDGE. You did NOT build this wave; you receive ONLY its route + harness, never the builder's claim.
-WAVE ${w.id} (${w.tranche}/${w.ws}). Read its π targets from ${EXEC}/bg-build-map.md + the bar in ${EXEC}/real-paint-protocol.md.
-Serve the BUILT demo dist: FIRST \`npm run demo:dist:build\` (builds the demo SPA to dist-demo/, ~1.2s, exit 0) THEN \`npm run demo:dist:serve\` in the background (serves the BUILT bytes on http://localhost:5200/ — NOT the :5199 dev server, which renders bare-shell route content in WebKit). Navigate the wave's paint targets on :5200. Capture REAL Chrome.app AND REAL Safari.app/WebKit 26, BOTH modes (light+dark), on a REAL GPU (not headless SwiftShader) — use the ?capture= harness + \`screencapture\` window-mode. Save the PNGs under ${REPO}/docs/tranches/BG/audit/visual/${w.id}-DELTA.md + the per-mode captures on disk. READ the pixels against the proof:ba-gestalt per-surface criteria. Return PAINT_SCHEMA: verdict PASS only when every surface in BOTH engines + BOTH modes reads correct AND every declared capture path RESOLVES ON DISK (the anti-evasion floor). If FAIL, give defectLocalization (region→defect) + mustFix[]. C-SAFARI (the Metal-Safari.app capture) is the ★★★ chronic — non-skippable; it is the single likeliest miss.
-${FENCE}`, { schema: PAINT_SCHEMA, model: 'opus', label: `${w.id}/judge`, phase: 'Build' })
-        .then(v => ({ w, v })).catch(() => ({ w, v: { verdict: 'FAIL', capturePathsResolve: false }, error: true }))))
-
-    // ----- CLOSE (PASS) or FIX (FAIL) — a CLOSER agent writes the cursor + capture deltas -----
-    for (const { w, v } of verdicts) {
-      if (v && v.verdict === 'PASS' && v.capturePathsResolve) {
-        w.status = 'DONE'
-      } else {
-        // fix loop — a FIX agent (NOT the builder) re-implements at root, then re-integrate+re-judge next sweep
-        w._fix = (w._fix || 0) + 1
-        if (w._fix > MAX_FIX) { w.status = 'BLOCKED'; log(`${w.id} BLOCKED — ${MAX_FIX} fixes exhausted; escalate.`) }
-        else {
-          w.status = 'PENDING'   // re-enters the frontier; the build prompt will carry the mustFix on retry
-          w._mustFix = (v && v.mustFix) || []
-          w._defect = (v && v.defectLocalization) || []
-          log(`${w.id} paint FAIL → fix ${w._fix}/${MAX_FIX} (re-queued)`)
-        }
-      }
+  // ----- PAINT EDGE (STAGE-0, DEV-B §3.2 — the decoupled dual-engine flip, wired as a scheduled edge not a human ritual) -----
+  const paintPending = waves.filter(w => w.status === 'PAINT-PENDING')
+  const frontierLeftNow = waves.some(w => ['PENDING', 'BUILDING', 'FAIL', 'FAIL-PAINT'].includes(w.status))
+  if (paintPending.length >= PAINT_DRAIN_THRESHOLD || (!frontierLeftNow && paintPending.length)) {
+    log(`Paint edge — workflow(bg-paint.wf.js) over ${paintPending.length} PAINT-PENDING wave(s)`)
+    // bg-paint reads the cursor's PAINT-PENDING set, dual-engine-captures (real Chrome.app + Safari.app, both
+    // modes, C-SAFARI non-skippable), flips PASS→DONE (writes the cursor) + leaves FAIL→PAINT-PENDING with a mustFix DELTA.
+    await workflow({ scriptPath: `${EXEC}/bg-paint.wf.js` }).catch((e) => { log(`paint edge errored: ${e && e.message}`); return null })
+    // RE-HYDRATE from the cursor the paint workflow just wrote.
+    const reload = await agent(`Re-read ${EXEC}/EXECUTION-PROGRESS.md and return, for each of these waves that was PAINT-PENDING before the paint run, its CURRENT status (DONE if the paint judge PASSed + flipped it; PAINT-PENDING if it left a FAIL DELTA): ${paintPending.map(w => w.id).join(', ')}. ${FENCE}`,
+      { schema: { type: 'object', additionalProperties: false, required: ['rows'], properties: { rows: { type: 'array', items: { type: 'object', additionalProperties: false, required: ['wave', 'status'], properties: { wave: { type: 'string' }, status: { type: 'string', enum: ['DONE', 'PAINT-PENDING'] } } } } } }, model: 'opus', label: 'paint-reload', phase: 'Build' }).catch(() => null)
+    const rows = (reload && reload.rows) || []
+    for (const w of paintPending) {
+      const r = rows.find(x => x.wave === w.id)
+      if (r && r.status === 'DONE') { w.status = 'DONE'; continue }
+      // still PAINT-PENDING after a paint run = a FAIL verdict → FAIL-PAINT + bounded fix-agent recovery
+      w._fix = (w._fix || 0) + 1
+      if (w._fix > MAX_FIX) { w.status = 'BLOCKED'; log(`${w.id} BLOCKED — ${MAX_FIX} paint fixes exhausted; escalate.`) }
+      else { w.status = 'PENDING'; w._mustFix = w._mustFix || []; log(`${w.id} paint FAIL → fix ${w._fix}/${MAX_FIX} (re-queued for a FIX agent — NOT the builder — reading the DELTA mustFix)`) }
     }
-    // persist the verdict statuses to the cursor via a short closer
-    await agent(`Update ${EXEC}/EXECUTION-PROGRESS.md: set these wave rows to their status + (for DONE) the capture-delta path. Commit the capture DELTA.md files for the PASS waves. ${JSON.stringify(verdicts.map(x => ({ wave: x.w.id, status: x.w.status, verdict: x.v && x.v.verdict })))}
-${FENCE}`, { model: 'opus', label: `close/${paintWaves[0].id}`, phase: 'Build' }).catch(() => null)
   }
 
   log(`Sweep ${guard}: DONE ${waves.filter(w => w.status === 'DONE').length}/${waves.length} · PAINT-PENDING ${waves.filter(w => w.status === 'PAINT-PENDING').length} · FAIL/BLOCKED ${waves.filter(w => ['FAIL', 'BLOCKED'].includes(w.status)).length}`)
@@ -240,7 +242,11 @@ ${FENCE}`, { model: 'opus', label: `close/${paintWaves[0].id}`, phase: 'Build' }
 phase('Cut')
 const done = waves.filter(w => w.status === 'DONE').length
 const blocked = waves.filter(w => w.status === 'BLOCKED').map(w => w.id)
-const cutReady = waves.filter(w => w.tranche === 'BG').every(w => w.status === 'DONE') && waves.filter(w => w.interleaveClass === 'WS12-LAST').every(w => w.status === 'DONE')
+// STAGE-0 (DEV-B §3.1-5): the tag stays coupled to painted truth while the frontier is unblocked by pending paint.
+const buildComplete = waves.filter(w => w.tranche === 'BG').every(doneBuilding)
+  && waves.filter(w => w.interleaveClass === 'WS12-LAST').every(doneBuilding)
+const paintComplete = !waves.some(w => ['PAINT-PENDING', 'FAIL-PAINT'].includes(w.status))
+const cutReady = buildComplete && paintComplete
 
 log(cutReady
   ? 'ALL waves DONE. Run the joint 5.0.0 close-battery (--run full siblings-absent, in-repo worktree) per publish-and-cut.md, then HALT — the tag-push is USER-GATED (4.3.0→4.4.0→5.0.0). Do NOT git push --tags.'
