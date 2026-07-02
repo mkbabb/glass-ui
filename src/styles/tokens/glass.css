@@ -95,12 +95,11 @@
        a richer wash via the @media arm in light-dark.css — the cost is amortised
        by the extra device pixels. */
     --glass-blur-overlay-radius:  13px;
-    /* Dock blur radius — 9px (BA.W-GLASS-CAL, off 11), paired with the 0.42
-       opacity below: a crisp glass pill (the iOS Control Center register), not a
-       feathered wash. The dock composes `blur()` only (no saturate); the
-       `prefers-reduced-transparency` bracket at glass.css maps it to the
-       opacity-only register. */
-    --glass-blur-dock-radius:     9px;
+    /* BG.W-CLOSEFIX-9SITE — the `--glass-blur-dock` chain (radius + composite +
+       `--glass-saturate-dock` + the `--blur-dock` @theme bridge) is RETIRED (clean
+       break, no alias). The dock now paints blur via `--dock-surface-blur:
+       var(--glass-blur-resting)` (the unified 8px material, BG.W-GLASS-BLUR-PEER),
+       so its own rung token was orphaned. */
 
     /* ── Per-rung SATURATE — the CANONICAL named saturate register (BC.W-GLASS-
        LEGIBILITY-MEASURED, the speedtest-AX BC-W10 fold) ───────────────────────
@@ -126,13 +125,9 @@
     --glass-saturate-resting:  1.4;
     --glass-saturate-floating: 1.6;
     --glass-saturate-overlay:  1.6;
-    /* W-NAV-DOCK-FIX — the dock's named light-concentration saturate. The dock is a
-       calm chrome strip (the wash/quiet/resting register 1.4, NOT the floating 1.6).
-       Mirrors the dark arm's dock saturate; the single retune knob in both modes. The
-       light dock was the ONLY light surface with no saturate companion — over the flat
-       warm-cream page the un-saturated backdrop-filter pulled the cream toward neutral
-       (the flat-slab gray read). */
-    --glass-saturate-dock:     1.4;
+    /* BG.W-CLOSEFIX-9SITE — `--glass-saturate-dock` RETIRED with the `--glass-blur-dock`
+       chain (its sole reader). The dock reads `--glass-saturate-resting` through the
+       `--glass-blur-resting` peer now. */
 
     /* AX.W54 — each blur radius is scaled by the ONE `--glass-level` scalar (in
        lockstep with the opacity seam above): level=1 byte-identical; level=0 →
@@ -156,17 +151,9 @@
        substrate). wash/quiet/resting already sit at 1.05 — untouched. */
     --glass-blur-floating: blur(calc(var(--glass-blur-floating-radius) * var(--glass-level))) saturate(var(--glass-saturate-floating));
     --glass-blur-overlay:  blur(calc(var(--glass-blur-overlay-radius) * var(--glass-level))) saturate(var(--glass-saturate-overlay));
-    /* Dock blur composes blur() only — no saturate. */
-    /* W-NAV-DOCK-FIX — the dock concentrates light like every other tier (apple-glass
-       §4): the saturate lifts the warm-cream chroma THROUGH the plate, the small
-       brightness is the light-concentration the quiet rung carries. The blur RADIUS is
-       untouched (the W-GLASS-CAL dial). Compositor-only (backdrop-filter is a paint op);
-       the prefers-reduced-transparency bracket maps --glass-blur-dock: none, so the
-       saturate drops with the blur (no separate carve owed). */
-    --glass-blur-dock:
-        blur(calc(var(--glass-blur-dock-radius) * var(--glass-level)))
-        saturate(var(--glass-saturate-dock))
-        brightness(1.02);
+    /* BG.W-CLOSEFIX-9SITE — the composed `--glass-blur-dock` token RETIRED (orphaned by
+       BG.W-GLASS-BLUR-PEER's `--dock-surface-blur: var(--glass-blur-resting)` re-point).
+       The dock reads the unified 8px resting material; there is no dock-own blur rung. */
 
     /* BG.W-GLASS-BLUR-PEER — the GLASS BUTTON blur is the unified RESTING peer.
        `--glass-blur-btn` is now a thin ALIAS of `--glass-blur-resting` (the 8px

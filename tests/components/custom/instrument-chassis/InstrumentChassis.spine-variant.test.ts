@@ -104,15 +104,16 @@ describe("InstrumentChassis spine variant canon", () => {
         expect(cssSource).toMatch(beforeRetireRegex);
     });
 
-    it("carries the dock blur radius dialed back by BA.W-GLASS-CAL B1 (9px) + the BD dock base alpha (0.50)", () => {
-        // The AL-W3-α T10 retune set the dock blur radius to 11px; BA.W-GLASS-CAL B1
-        // dialed the whole blur ladder back ~15-20% (within the AV.W7-F2 8-15px band),
-        // pulling the dock radius 11px → 9px. proof:glass-cal owns the band assertion;
-        // this companion re-points off the superseded 11px literal to the current value.
-        // BD.W-DOCK-CORE (D3) lifted the dock base alpha 0.42 → 0.50 (margin-insurance
-        // for the warm-chromatic darken — the base composite chroma closes a notch
-        // before any tint engages); stays the lightest chrome tier (below resting 0.65).
-        expect(tokensSource).toMatch(/--glass-blur-dock-radius\s*:\s*9px\s*;/);
+    it("reads the dock backdrop off the unified resting peer — the --glass-blur-dock chain retired (BG.W-CLOSEFIX-9SITE) + the BD dock base alpha (0.50)", () => {
+        // BG.W-GLASS-BLUR-PEER re-pointed the dock backdrop onto --glass-blur-resting
+        // (8px, the ONE unified glass material); BG.W-CLOSEFIX-9SITE then FULLY RETIRED
+        // the --glass-blur-dock chain (composite + saturate + radius + the --blur-dock
+        // bridge). The dock paints blur via --dock-surface-blur: var(--glass-blur-resting)
+        // (shell.css), so its own rung is gone. BD.W-DOCK-CORE (D3) lifted the dock base
+        // alpha 0.42 → 0.50 (margin-insurance for the warm-chromatic darken); it stays
+        // the lightest chrome tier (below resting 0.65) and is UNTOUCHED by the retire.
+        expect(tokensSource).not.toMatch(/--glass-blur-dock-radius\s*:/);
+        expect(tokensSource).toMatch(/--glass-blur-resting-radius\s*:\s*8px\s*;/);
         expect(tokensSource).toMatch(/--glass-opacity-dock\s*:\s*0\.50\s*;/);
     });
 });

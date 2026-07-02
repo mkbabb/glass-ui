@@ -70,13 +70,16 @@ const DEEP_SATURATE_FLOOR = 1.6;
 // menu-row resolve the SAME radius leg, proof:glass-cal) — the deep tier still NEVER reads
 // these (it is a separate --glass-blur-deep-* family), so the calm-vs-deep fence holds;
 // this row tracks the calm ladder, not a "reach-Apple" un-dial.
+// `glass-blur-dock-radius` RETIRED at BG.W-CLOSEFIX-9SITE (the whole dock-blur chain
+// orphaned by the BG.W-GLASS-BLUR-PEER resting re-point) — D3 no longer tracks it; the
+// deep tier never read it (a SEPARATE --glass-blur-deep-* family), so the calm-vs-deep
+// fence is unaffected.
 const FROZEN_BASE_RADII = {
     "glass-blur-wash-radius": 1,
     "glass-blur-quiet-radius": 8,
     "glass-blur-resting-radius": 8,
     "glass-blur-floating-radius": 13,
     "glass-blur-overlay-radius": 13,
-    "glass-blur-dock-radius": 9,
 };
 
 function squish(src) {

@@ -54,14 +54,17 @@ function stripAllComments(src) {
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 
-// The six radius primitives + their pre-wave (HEAD) values + the AV.W7-F2 band.
+// The five surviving radius primitives + their pre-wave (HEAD) values + the AV.W7-F2
+// band. `glass-blur-dock-radius` RETIRED at BG.W-CLOSEFIX-9SITE (the whole dock-blur
+// chain orphaned by BG.W-GLASS-BLUR-PEER's `--dock-surface-blur: var(--glass-blur-
+// resting)` re-point) — B1 no longer parses it; the dock's blur radius is the resting
+// 8px peer, asserted via `detectPeerLock` (peers.dock) + `detectDockBlurRetired`.
 const PRE_WAVE_RADII = {
     "glass-blur-wash-radius": 1,
     "glass-blur-quiet-radius": 10,
     "glass-blur-resting-radius": 12,
     "glass-blur-floating-radius": 16,
     "glass-blur-overlay-radius": 15,
-    "glass-blur-dock-radius": 11,
 };
 const BAND_LO = 8;
 const BAND_HI = 15;
@@ -293,26 +296,10 @@ export function detectBlur() {
             violations.push(`B3: the --glass-saturate-${sat} default drifted off ${satDefault} (the named knob must default to the W52-D19 bake so the composed blur is byte-identical — a drifted default is a saturate dial-back the radius-only fence forbids)`);
         }
     }
-    // The dark-arm companions (W-DARK-MATERIAL) preserved — radius-only.
-    // W-NAV-DOCK-FIX — the dark dock saturate was re-pointed onto the NAMED knob
-    // `saturate(var(--glass-saturate-dock))` (the SAME named-knob substitution the
-    // light/dark content tiers already ride above; the gate accepts that sanctioned
-    // shape). The brightness companion (the iOS-dark luminosity lift) + the radius ×
-    // --glass-level axis stay intact, and the `--glass-saturate-dock` default stays at
-    // the W52-D19 1.30 bake (byte-identical composed blur). A baked literal, a dropped
-    // brightness companion, a missing --glass-level scale, or a drifted default reds.
-    const darkArm = stripCss(readFile("src/styles/tokens/dark-arm.css"));
-    const darkCompanionShapeOk =
-        /--glass-blur-dock:\s*blur\(calc\(var\(--glass-blur-dock-radius\) \* var\(--glass-level\)\)\) saturate\(var\(--glass-saturate-dock\)\) brightness\(1\.12\)/.test(darkArm);
-    const darkDockSatDefaultOk = /--glass-saturate-dock:\s*1\.30\s*;/.test(darkArm);
-    const darkCompanionOk = darkCompanionShapeOk && darkDockSatDefaultOk;
-    facts.companions.darkArm = darkCompanionOk;
-    if (!darkCompanionShapeOk) {
-        violations.push("B3: the W-DARK-MATERIAL dark dock blur companion drifted — it must read saturate(var(--glass-saturate-dock)) brightness(1.12) with the radius × --glass-level axis intact (the named-knob substitution; the radius pull preserves the dark luminosity lift)");
-    }
-    if (!darkDockSatDefaultOk) {
-        violations.push("B3: the --glass-saturate-dock default drifted off 1.30 (the named knob must default to the W52-D19 bake so the composed dark dock blur is byte-identical)");
-    }
+    // BG.W-CLOSEFIX-9SITE — the dark-arm `--glass-blur-dock` companion assert RETIRED
+    // with the chain (the dock reads the dark `--glass-blur-resting` peer now). The
+    // dark content/floating/overlay companions stay locked below (the calm-vs-deep
+    // fence); the retired chain's absence is asserted by `detectDockBlurRetired`.
 
     // BD.W-GLASS-ABROGATE-GRAY — the calm-vs-deep fence: every LIFTED content/floating/overlay
     // saturate default stays STRICTLY BELOW the deep-tier ceiling --glass-saturate-deep (1.8,
@@ -514,12 +501,81 @@ export function detectSpringClock() {
     return { facts, violations };
 }
 
+// ── R — the `--glass-blur-dock` chain is fully RETIRED (BG.W-CLOSEFIX-9SITE) ─────────
+// The dock's own blur rung was orphaned by BG.W-GLASS-BLUR-PEER (`--dock-surface-blur:
+// var(--glass-blur-resting)`), so this wave FULLY RETIRES the chain — composite +
+// `--glass-saturate-dock` + `--glass-blur-dock-radius` + the `--blur-dock` @theme
+// bridge — across glass.css / dark-arm.css / bridges.css (clean break, no alias).
+// Born-RED on HEAD (the chain present); GREEN after the retirement. Comments are
+// stripped first so the retirement-NOTE prose that names the dead tokens is not a hit.
+const RETIRED_DOCK_BLUR_MEMBERS = [
+    { file: "src/styles/tokens/glass.css", re: /--glass-blur-dock-radius\s*:/, what: "--glass-blur-dock-radius (radius)" },
+    { file: "src/styles/tokens/glass.css", re: /--glass-saturate-dock\s*:/, what: "--glass-saturate-dock (light saturate)" },
+    { file: "src/styles/tokens/glass.css", re: /--glass-blur-dock\s*:/, what: "--glass-blur-dock (light composite)" },
+    { file: "src/styles/tokens/dark-arm.css", re: /--glass-saturate-dock\s*:/, what: "--glass-saturate-dock (dark saturate)" },
+    { file: "src/styles/tokens/dark-arm.css", re: /--glass-blur-dock\s*:/, what: "--glass-blur-dock (dark composite)" },
+    { file: "src/styles/theme/bridges.css", re: /--blur-dock\s*:/, what: "--blur-dock (@theme bridge)" },
+];
+
+// The chain-retired detector — takes an optional { srcByFile } map (self-test), else
+// reads the live comment-stripped src. A surviving declaration of ANY member reds.
+export function detectDockBlurRetired({ srcByFile } = {}) {
+    const violations = [];
+    const facts = { survivors: [] };
+    const cache = new Map();
+    const readStripped = (rel) => {
+        if (srcByFile && rel in srcByFile) return stripAllComments(srcByFile[rel]);
+        if (!cache.has(rel)) cache.set(rel, stripAllComments(readFile(rel)));
+        return cache.get(rel);
+    };
+    for (const { file, re, what } of RETIRED_DOCK_BLUR_MEMBERS) {
+        if (re.test(readStripped(file))) {
+            facts.survivors.push(what);
+            violations.push(
+                `R: ${what} survives in ${file} — the --glass-blur-dock chain must be FULLY RETIRED (BG.W-CLOSEFIX-9SITE; the dock reads --dock-surface-blur → --glass-blur-resting)`,
+            );
+        }
+    }
+    return { facts, violations };
+}
+
+// The retirement self-test bite — a synthetic src carrying the chain MUST red every
+// member, and a clean src MUST pass (proves the detector is not vacuously green).
+export function selfTestDockBlurRetired() {
+    const fails = [];
+    const chainSrc = {
+        "src/styles/tokens/glass.css":
+            "--glass-blur-dock-radius: 9px; --glass-saturate-dock: 1.4; --glass-blur-dock: blur(calc(var(--glass-blur-dock-radius) * var(--glass-level))) saturate(var(--glass-saturate-dock)) brightness(1.02);",
+        "src/styles/tokens/dark-arm.css":
+            "--glass-saturate-dock: 1.30; --glass-blur-dock: blur(calc(var(--glass-blur-dock-radius) * var(--glass-level))) saturate(var(--glass-saturate-dock)) brightness(1.12);",
+        "src/styles/theme/bridges.css": "--blur-dock: var(--glass-blur-dock-radius);",
+    };
+    const chain = detectDockBlurRetired({ srcByFile: chainSrc });
+    if (chain.violations.length !== RETIRED_DOCK_BLUR_MEMBERS.length) {
+        fails.push(
+            `self-test R: the synthetic chain-present src flagged ${chain.violations.length}/${RETIRED_DOCK_BLUR_MEMBERS.length} members (the retirement detector is under-firing)`,
+        );
+    }
+    const cleanSrc = {
+        "src/styles/tokens/glass.css": "/* --glass-blur-dock chain RETIRED */ --dock-surface-blur: var(--glass-blur-resting);",
+        "src/styles/tokens/dark-arm.css": "/* dark --glass-blur-dock RETIRED */",
+        "src/styles/theme/bridges.css": "/* --blur-dock bridge RETIRED */",
+    };
+    const clean = detectDockBlurRetired({ srcByFile: cleanSrc });
+    if (clean.violations.length) {
+        fails.push(`self-test R: a clean (retired) src unexpectedly RED (${clean.violations.join("; ")})`);
+    }
+    return fails;
+}
+
 export function detect() {
     const blur = detectBlur();
     const peer = detectPeerLock();
     const disco = detectDisco();
     const spring = detectSpringClock();
+    const dockRetired = detectDockBlurRetired();
     const peerSelfTest = selfTestPeerLock().map((f) => `SELF-TEST ${f}`);
+    const retireSelfTest = selfTestDockBlurRetired().map((f) => `SELF-TEST ${f}`);
     return {
         violations: [
             ...blur.violations,
@@ -527,8 +583,16 @@ export function detect() {
             ...peerSelfTest,
             ...disco.violations,
             ...spring.violations,
+            ...dockRetired.violations,
+            ...retireSelfTest,
         ],
-        facts: { blur: blur.facts, peer: { ...peer.facts, selfTestFails: selfTestPeerLock() }, disco: disco.facts, spring: spring.facts },
+        facts: {
+            blur: blur.facts,
+            peer: { ...peer.facts, selfTestFails: selfTestPeerLock() },
+            disco: disco.facts,
+            spring: spring.facts,
+            dockBlurRetired: { ...dockRetired.facts, selfTestFails: selfTestDockBlurRetired() },
+        },
     };
 }
 
@@ -555,6 +619,7 @@ function run() {
     console.log(`  fence held        : gold-shimmer=${facts.disco.goldShimmerStays ? "✓" : "✗"} specular=${facts.disco.specularStays ? "✓" : "✗"}`);
     console.log(`  spring clocks     : ${Object.entries(facts.spring.durations).map(([k, v]) => `${k}=${v}s`).join(" ")}`);
     console.log(`  off-clock springs : ${Object.values(facts.spring.swept).reduce((n, a) => n + a.length, 0)} in swept files`);
+    console.log(`  dock-blur retired : ${facts.dockBlurRetired.survivors.length === 0 ? "yes ✓" : `NO ✗ (${facts.dockBlurRetired.survivors.join(", ")})`}`);
 
     if (violations.length) {
         console.log("\nVIOLATIONS:");

@@ -93,6 +93,13 @@ export const CSS_MONOLITHS = {
         order: [
             "material.css",
             "ladder.css",
+            // BG.W-CLOSEFIX-9SITE — ladder.css's glass-tier paper-grain `::after` overlay
+            // (the always-present texture + the opacity-only engage + the PRM carve + the
+            // `.dark` soft-light arm) carved into grain-overlay.css, an adjacent same-@layer
+            // components block @import-ed IMMEDIATELY AFTER ladder.css (the grain block was
+            // the tail of ladder.css; the SOLE writer of the `.glass-*::after` overlay, so
+            // the relocation is cascade-order-invariant — the dist is byte-isomorphic).
+            "grain-overlay.css",
             // BC.W-ACCENT-TONE — the contrast-floored 3-channel tonal-accent register
             // (.accent-tone: one --tone → idle/active/edge/ink), @import-ed AFTER
             // ladder.css (it reads the warm-cream --card surface the ladder mints) and

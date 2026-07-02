@@ -48,7 +48,9 @@ const probeClasses = [
     "ease-apple",
     "duration-panel",
     "duration-fast",
-    "blur-dock",
+    // BG.W-CLOSEFIX-9SITE — the `blur-dock` Tailwind utility probe DROPPED with the
+    // `--blur-dock` @theme bridge it read (the whole `--glass-blur-dock` chain retired;
+    // zero utility consumers — the dock reads `--dock-surface-blur`).
     // P.W4 Lane B inline-absorb: "blur-glass-subtle" was a pre-L.W1 utility
     // retired when the 5-rung glass-blur ladder (wash / quiet / resting /
     // floating / overlay) shipped at v1.0. The proof now verifies the

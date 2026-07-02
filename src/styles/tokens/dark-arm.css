@@ -278,12 +278,10 @@
     --glass-blur-resting:  blur(calc(var(--glass-blur-resting-radius) * var(--glass-level))) saturate(var(--glass-saturate-resting)) brightness(1.14);
     --glass-blur-floating: blur(calc(var(--glass-blur-floating-radius) * var(--glass-level))) saturate(var(--glass-saturate-floating)) brightness(1.10);
     --glass-blur-overlay:  blur(calc(var(--glass-blur-overlay-radius) * var(--glass-level))) saturate(var(--glass-saturate-overlay)) brightness(1.06);
-    /* W-NAV-DOCK-FIX — re-point the dark dock saturate to the named --glass-saturate-dock
-       knob (the single retune point in BOTH modes; the dark value 1.30 is declared here
-       so the descendant var() substitutes the dark value — the substitution-vs-redeclare
-       discipline). Value unchanged. */
-    --glass-saturate-dock: 1.30;
-    --glass-blur-dock:     blur(calc(var(--glass-blur-dock-radius) * var(--glass-level))) saturate(var(--glass-saturate-dock)) brightness(1.12);
+    /* BG.W-CLOSEFIX-9SITE — the dark `--glass-blur-dock` chain (`--glass-saturate-dock`
+       + the composite) RETIRED with its light-arm sibling (clean break, no alias). The
+       dark dock reads the dark `--glass-blur-resting` (its saturate + luminosity lift)
+       through the `--dock-surface-blur: var(--glass-blur-resting)` peer. */
 
     /* BB.W-DEEP-GLASS — the DARK arm of the OPT-IN deep tier (the luminous-dark
        deep mirror, the W-DARK-MATERIAL scope-2 "dark glass glows where light

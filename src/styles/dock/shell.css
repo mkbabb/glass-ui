@@ -23,9 +23,9 @@
            other tier — the flat-slab gray-read root stays closed, proof:no-gray
            dock witnesses follow this source), and it composes `--glass-level` so
            the `prefers-reduced-transparency` → `--glass-level: 0` a11y bracket
-           firms the dock to `blur(0)` unchanged. The `--glass-blur-dock` tier
-           identity stays defined (its dark-arm pair + the gate's B3 shape assert);
-           the dock simply reads the peer instead of its own rung. */
+           firms the dock to `blur(0)` unchanged. The `--glass-blur-dock` tier is
+           RETIRED (BG.W-CLOSEFIX-9SITE — the chain orphaned by this peer re-point);
+           the dock reads the unified resting material, there is no dock-own rung. */
         --dock-surface-blur: var(--glass-blur-resting);
         /* J.W3.C — vertical-rail max-block + horizontal max-inline caps
            live as semantic tokens (defaults in `tokens.css`). When
@@ -450,61 +450,4 @@
         margin: 0 auto;
     }
 
-    /* AX.W45 D13-a — the PERSISTENT region (the iOS Now-Playing / Stage-Manager
-       idiom done STRUCTURALLY). The `#persistent` slot lives in-flow as a root flex
-       SIBLING of the morph-region (`.dock-layers`) in BOTH collapsed AND expanded —
-       NEVER `:inert`, NEVER a crossfade pane, NEVER a `registerGroup` morph target.
-       It is a stable always-present rail beside the expand-on-demand content region,
-       so a consumer keeps a control visible while collapsed WITHOUT hand-duplicating
-       it into both the `#default` and `#collapsed` slots. The region co-laid by the
-       root flex/grid; the morph scalar `--dock-morph-t` co-drives only its chrome
-       (it inherits the root padding/radius morph), it is NOT a morph TARGET. It holds
-       steady (no jitter) while the morph-region's aperture animates on the ONE
-       spring. `align-items: center` keeps it on the dock's centerline; the
-       `--dock-layer-gap` separates it from the morph region (same rhythm both
-       orientations). */
-    .dock-persistent {
-        display: flex;
-        align-items: center;
-        flex-shrink: 0;
-        gap: var(--dock-layer-gap, 0.375rem);
-    }
-
-    .glass-dock:not(.vertical) .dock-persistent {
-        flex-direction: row;
-    }
-
-    .glass-dock.vertical .dock-persistent {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    /* The persistent region + the morph region share the dock's gap rhythm. The
-       region renders only when the consumer authors a `#persistent` slot
-       (GlassDock.vue guards it with `v-if="$slots.persistent"`), so a dock with no
-       persistent controls is byte-identical to before (no empty flex item). */
-    .glass-dock:not(.vertical) .dock-persistent + .dock-layers {
-        margin-inline-start: var(--dock-layer-gap, 0.375rem);
-    }
-
-    .glass-dock.vertical .dock-persistent + .dock-layers {
-        margin-block-start: var(--dock-layer-gap, 0.375rem);
-    }
-
-    /* AZ.W-DOCK-TAXONOMY (move 2) — the VERTICAL dock's layer panes lay their content
-       out as a COLUMN. The dock body is now the SAME orientation-agnostic
-       `.dock-layers` full/summary morph pair the horizontal dock uses (the prior
-       static `.dock-layer--vertical-body` single-stack RETIRED — a vertical dock now
-       collapses its block axis too). The base `.dock-layer { display: flex;
-       align-items: center }` is row by default; here the full/summary panes flip to a
-       stretched column stack carrying the dock's `--dock-layer-gap` rhythm, so
-       authored item groups + `<DockSeparator>` rules read with the correct vertical
-       cadence. The block-axis morph aperture is owned by `.dock-layers` (layers.css —
-       `.glass-dock.vertical[data-morphing] .dock-layers` morphs `block-size`). */
-    .glass-dock.vertical .dock-layer {
-        flex-direction: column;
-        align-items: stretch;
-        gap: var(--dock-layer-gap, 0.375rem);
-        min-width: 0;
-    }
 }

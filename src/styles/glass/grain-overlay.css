@@ -1,0 +1,79 @@
+/* glass/grain-overlay.css
+   The glass-tier paper-grain `::after` overlay (BB.W-LIQUIDHOVER — the always-present
+   texture + the opacity-only engage + the PRM/reduced-motion carve + the `.dark`
+   soft-light arm).
+   Carved from glass/ladder.css at BG.W-CLOSEFIX-9SITE to hold the no-god-module 500-line
+   bound (the five-rung surface ladder + the W55 bright-bucket @container + the calm-tier
+   re-point + the contrast-color ink-flip + the opaque escape + the under-shadow modifier
+   stay in ladder.css; the rim/accent group is glass/rim.css). @import-ed by glass.css in
+   cascade order IMMEDIATELY AFTER ladder.css and BEFORE accent-tone.css — the SAME @layer
+   components; the grain `::after` is the SOLE writer of the `.glass-*::after` overlay so
+   the relocation is cascade-order-invariant (the grain block was the tail of ladder.css;
+   the dist is byte-isomorphic).
+   See docs/precepts/design-idioms.md §cohesion-aware partials. */
+@layer components {
+    /* Grain noise overlay — reuses paper texture SVG, no extra assets.
+       BB.W-LIQUIDHOVER — the disco-grain pop (T8-F6) killed at the COMPOSITION CLASS:
+       the `background-image` is ALWAYS PRESENT (decoded once at rest, NEVER toggled to
+       `none`), and any STATE-driven grain engagement cross-fades the `opacity` ONLY on
+       the thin `--glass-grain-engage-duration` (~120ms linear) clock. A `background-
+       image: none → var(--paper-clean-texture)` engage decodes-and-appears in one frame
+       (the pop); the opacity cross-fade is a compositor-cheap interpolation with the
+       image constant — the only sanctioned grain engage. The `transition` lives HERE so
+       a hover/active grain lift (wherever a glass surface raises grain on interaction)
+       reads as a smooth fade by construction, not a discrete swap. */
+    .glass-wash::after,
+    .glass-quiet::after,
+    .glass-resting::after,
+    .glass-floating::after,
+    .glass-overlay::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        /* The grain texture is the `background-image` longhand (NOT the `background`
+           shorthand) so the image stays a STABLE always-present layer the engage
+           never re-declares — the structural anti-pop: opacity is the only animated
+           channel, the image is never `none → image`. */
+        background-image: var(--paper-clean-texture);
+        background-repeat: repeat;
+        background-size: var(--paper-texture-size);
+        opacity: var(--glass-grain-opacity);
+        /* The opacity cross-fade engage — plain ~120ms linear direct-write (no spring,
+           no overshoot — instant-but-smooth per the ask). Under the PRM / reduced-
+           transparency brackets the clock collapses to 0ms (the a11y bracket below). */
+        transition: opacity var(--glass-grain-engage-duration, 120ms) linear;
+        pointer-events: none;
+        mix-blend-mode: overlay;
+    }
+
+    /* BB.W-LIQUIDHOVER — the grain engage collapses to INSTANT under reduced motion (a
+       grain that cross-fades on hover under reduce is still motion; accessibility is
+       absolute). The reduced-transparency / forced-colors brackets already zero
+       `--glass-grain-opacity` (a11y-fallback.css), so the grain is inert there; this
+       bracket covers the reduced-MOTION case where the grain still paints but must not
+       animate. */
+    @media (prefers-reduced-motion: reduce) {
+        .glass-wash::after,
+        .glass-quiet::after,
+        .glass-resting::after,
+        .glass-floating::after,
+        .glass-overlay::after {
+            transition: none;
+        }
+    }
+
+    /* The unified rim (AW.W22) + the BB.W-GLASS-ACCENT per-INSTANCE chromatic-RIM
+       tint group (the rim-ink + --glass-material-rim ring + the per-rung
+       --glass-border-accent border, light + dark arms) lives in glass/rim.css
+       (carved at BB.W-CARVE4 — the next adjacent @layer components block, the SOLE
+       writer of --glass-material-rim/--glass-border-accent). */
+
+    .dark .glass-wash::after,
+    .dark .glass-quiet::after,
+    .dark .glass-resting::after,
+    .dark .glass-floating::after,
+    .dark .glass-overlay::after {
+        mix-blend-mode: soft-light;
+    }
+}

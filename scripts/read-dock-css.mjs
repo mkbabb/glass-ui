@@ -19,6 +19,10 @@ import { resolve } from "node:path";
 // dock.css + the cascade the carve preserves bit-for-bit).
 export const DOCK_PARTIAL_ORDER = [
     "shell.css",
+    // BG.W-CLOSEFIX-9SITE — shell.css's `#persistent` region + vertical layer-stack
+    // body carved into shell-regions.css to hold the no-god-module 500-line bound,
+    // @import-ed IMMEDIATELY AFTER shell.css (the tail of shell.css; byte-isomorphic).
+    "shell-regions.css",
     "morph.css",
     "adaptive-legibility.css",
     "density.css",

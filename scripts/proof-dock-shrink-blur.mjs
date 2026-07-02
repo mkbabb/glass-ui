@@ -9,7 +9,8 @@
 // glass-dock-codebase.md §2.4). The FIX gates the self-blur to `[data-morphing]`: at
 // REST (no `[data-morphing]`) the dock's own pixels are CRISP; ONLY mid-morph does the
 // 3px decongest bloom (the iOS-27 materialization, preserved as the gesture-only
-// effect). The backdrop blur (`--glass-blur-dock-radius: 9px`, the glass material) is
+// effect). The backdrop blur (the dock's `--dock-surface-blur` → `--glass-blur-resting`
+// 8px material, BG.W-CLOSEFIX-9SITE — the dock-own `--glass-blur-dock-radius` retired) is
 // UNTOUCHED.
 //
 // The device-free SOURCE/MECHANISM arm (tags ["local","ci","release"]). The PAINT arm
@@ -26,8 +27,9 @@
 //   S2 — the decongest is morph-gated: the 3px + `filter: blur(...)` decongest lives
 //        ONLY under `.glass-dock[data-morphing]`. Born-RED: HEAD keys it off the bare
 //        `.glass-dock`. Self-test bite: a decongest blur on the bare `.glass-dock` reds.
-//   S3 — the backdrop blur untouched: `--glass-blur-dock-radius: 9px` byte-unchanged
-//        (the glass material). Self-test bite: a planted edit reds.
+//   S3 — the backdrop blur untouched: the dock's `--dock-surface-blur` →
+//        `--glass-blur-resting-radius: 8px` byte-unchanged (the glass material;
+//        BG.W-CLOSEFIX-9SITE re-point). Self-test bite: a planted edit reds.
 //   S4 — the PRM carve preserved: the PRM block zeroes the self-blur under reduce.
 //
 // Run: node scripts/proof-dock-shrink-blur.mjs
@@ -51,6 +53,11 @@ const MORPH_CSS = "src/styles/dock/morph.css";
 // BD P10b — the PRM reveal-blur carve moved into this sibling partial (isomorphic carve).
 const ADAPTIVE_CSS = "src/styles/dock/adaptive-legibility.css";
 const GLASS_TOKENS = "src/styles/tokens/glass.css";
+// BG.W-CLOSEFIX-9SITE — the dock's ACTUAL backdrop-blur source is `--dock-surface-blur`
+// in shell.css (re-pointed onto `--glass-blur-resting` at BG.W-GLASS-BLUR-PEER; the
+// dock-own `--glass-blur-dock-radius` was retired). S3 follows this source, mirroring
+// proof-no-gray:748.
+const DOCK_SHELL = "src/styles/dock/shell.css";
 
 // Parse top-level rule blocks: { selector, body, line }.
 function parseRules(source) {
@@ -146,26 +153,44 @@ function detectS1S2SelfTest() {
     return bareFlags(BARE_BAD) === true && bareFlags(GATED_GOOD) === false;
 }
 
-// ── S3 — the backdrop blur untouched (--glass-blur-dock-radius: 9px byte-frozen) ──
+// ── S3 — the backdrop blur untouched (BG.W-CLOSEFIX-9SITE re-point) ──
+// The dock's backdrop blur is the glass MATERIAL and is fenced from this wave (which
+// touches only the own-pixel self-blur). Since BG.W-CLOSEFIX-9SITE retired the dock-own
+// `--glass-blur-dock-radius`, S3 now follows the dock's ACTUAL source: shell.css's
+// `--dock-surface-blur: var(--glass-blur-resting)` → glass.css's
+// `--glass-blur-resting-radius` (the unified 8px material). A drift off 8px reds.
+const RESTING_BACKDROP_PX = "8px";
 export function detectS3() {
     const violations = [];
     const facts = {};
+    const shell = readRel(DOCK_SHELL);
     const glass = readRel(GLASS_TOKENS);
-    const m = /--glass-blur-dock-radius:\s*([^;]+);/.exec(glass);
+    // 1. resolve the dock's backdrop source token (must be an alias of a --glass-blur-*).
+    const srcTok = /--dock-surface-blur:\s*var\(\s*--(glass-blur-[a-z]+)\b/.exec(shell)?.[1] ?? null;
+    facts.backdropSource = srcTok;
+    if (!srcTok) {
+        violations.push(
+            "S3: --dock-surface-blur (the dock backdrop source) not found in shell.css — the dock lost its glass-material blur peer",
+        );
+        return { violations, facts };
+    }
+    // 2. follow the peer to its radius primitive (--glass-blur-<tier>-radius).
+    const radTok = `--${srcTok}-radius`;
+    const m = new RegExp(`${radTok}:\\s*([^;]+);`).exec(glass);
     facts.backdropBlur = m ? m[1].trim() : null;
-    // The wave touches ONLY the own-pixel self-blur; the backdrop (glass material) is 9px.
-    facts.unchanged = facts.backdropBlur === "9px";
+    // The wave touches ONLY the own-pixel self-blur; the backdrop (glass material) is 8px.
+    facts.unchanged = facts.backdropBlur === RESTING_BACKDROP_PX;
     if (!facts.unchanged)
         violations.push(
-            `S3: --glass-blur-dock-radius is not the byte-frozen 9px (found ${facts.backdropBlur ?? "absent"}) — the wave touched the backdrop blur (the glass material), which is fenced`,
+            `S3: ${radTok} (the dock's backdrop material via --dock-surface-blur) is not the byte-frozen ${RESTING_BACKDROP_PX} (found ${facts.backdropBlur ?? "absent"}) — the wave touched the backdrop blur (the glass material), which is fenced`,
         );
     return { violations, facts };
 }
 // S3 self-test bite — a planted edit MUST flag.
 function detectS3SelfTest() {
-    const PLANTED = `--glass-blur-dock-radius: 12px;`;
-    const m = /--glass-blur-dock-radius:\s*([^;]+);/.exec(PLANTED);
-    return Boolean(m) && m[1].trim() !== "9px";
+    const PLANTED = `--glass-blur-resting-radius: 12px;`;
+    const m = /--glass-blur-resting-radius:\s*([^;]+);/.exec(PLANTED);
+    return Boolean(m) && m[1].trim() !== RESTING_BACKDROP_PX;
 }
 
 // ── S4 — the PRM carve preserved (the self-blur zeroed under reduce) ──
@@ -227,7 +252,7 @@ function run() {
         status,
         gate: "proof:dock-shrink-blur",
         command: COMMAND,
-        note: "BC.W-DOCK-SHRINK-BLUR device-free SOURCE arm (S1 resting self-blur zero — the bare .glass-dock is crisp · S2 the decongest is morph-gated — the 3px bloom lives ONLY under [data-morphing] · S3 the backdrop blur --glass-blur-dock-radius:9px byte-untouched, the glass material · S4 the PRM carve zeroes the self-blur under reduce). The PAINT arm (the crisp collapsed pill before/after + the mid-morph bloom-present capture) is the orchestrator's W-DOCK-SHRINK-BLUR-DELTA.",
+        note: "BC.W-DOCK-SHRINK-BLUR device-free SOURCE arm (S1 resting self-blur zero — the bare .glass-dock is crisp · S2 the decongest is morph-gated — the 3px bloom lives ONLY under [data-morphing] · S3 the backdrop blur untouched — the dock's --dock-surface-blur → --glass-blur-resting 8px material, BG.W-CLOSEFIX-9SITE re-point (the dock-own --glass-blur-dock chain retired) · S4 the PRM carve zeroes the self-blur under reduce). The PAINT arm (the crisp collapsed pill before/after + the mid-morph bloom-present capture) is the orchestrator's W-DOCK-SHRINK-BLUR-DELTA.",
         facts,
         violations,
     });

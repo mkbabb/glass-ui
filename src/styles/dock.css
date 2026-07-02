@@ -40,6 +40,12 @@
    @import in cascade order; each opens its own `@layer components` so the layered
    cascade is preserved bit-for-bit (the carve-isomorphism gate is the witness). */
 @import "./dock/shell.css";
+/* BG.W-CLOSEFIX-9SITE — the `#persistent` region + vertical layer-stack body carved out
+   of shell.css's tail to hold the no-god-module 500-line bound. @import-ed IMMEDIATELY
+   AFTER dock/shell.css and BEFORE dock/morph.css, in the SAME @layer components — the
+   persistent-region block was the tail of shell.css (disjoint selectors), so the carve
+   is isomorphic (same layer, same source order → ZERO visual delta). */
+@import "./dock/shell-regions.css";
 @import "./dock/morph.css";
 @import "./dock/adaptive-legibility.css";
 @import "./dock/density.css";

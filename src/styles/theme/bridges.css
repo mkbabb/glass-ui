@@ -331,7 +331,9 @@
     --blur-glass-resting:  var(--glass-blur-resting-radius);
     --blur-glass-floating: var(--glass-blur-floating-radius);
     --blur-glass-overlay:  var(--glass-blur-overlay-radius);
-    --blur-dock:           var(--glass-blur-dock-radius);
+    /* BG.W-CLOSEFIX-9SITE — the `--blur-dock` @theme bridge (→ the `blur-dock`/
+       `backdrop-blur-dock` Tailwind utility) RETIRED with the `--glass-blur-dock` chain
+       it read (zero utility consumers; the dock reads `--dock-surface-blur`). */
 
     /* ═══════════════════════════════════════════════
        Easing → ease-* utilities

@@ -1826,3 +1826,36 @@ NEW: `useLiquidReveal(surfaceRef, { trigger, preset })` (`@mkbabb/glass-ui/motio
 bloom JS leaf (the dialog-from-button / dock-from-pill case), composing the kf `ElementMorph` +
 `springTimingFunction`. The CSS `.glass-reveal` recipe is the zero-JS everywhere floor; the JS leaf is
 the source-rect refinement.
+
+## BG — the glass standardization cut (clean breaks)
+
+### The `--glass-blur-dock` chain RETIRES (BG.W-CLOSEFIX-9SITE — clean break, no alias)
+
+The dock-own blur register — `--glass-blur-dock` (light + dark composite), `--glass-saturate-dock`
+(light + dark), `--glass-blur-dock-radius`, and the `--blur-dock` `@theme` bridge (→ the `blur-dock` /
+`backdrop-blur-dock` Tailwind utility) — is RETIRED wholesale. It was orphaned at BG.W-GLASS-BLUR-PEER,
+which re-pointed the dock's backdrop onto the ONE unified glass material via `--dock-surface-blur:
+var(--glass-blur-resting)` (the 8px resting peer). The dock now paints its blur through that peer; there
+is no dock-own rung.
+
+**Consumer impact:** none for the token cascade (the chain had zero external readers — the dock reads
+the resting peer, and the `blur-dock` Tailwind utility had zero consumers). A consumer who authored
+`class="blur-dock"` / `class="backdrop-blur-dock"` directly (there were none in the constellation) re-points
+to `backdrop-blur-glass-resting` (the 8px material) or overrides the `--glass-blur-resting-radius` primitive.
+A consumer who overrode `:root { --glass-blur-dock-radius: … }` to retune the dock blur now overrides
+`--glass-blur-resting-radius` (the substitution-vs-composite discipline — the dock shares the resting
+material).
+
+```css
+/* before (v4.2.0) — retune the dock blur */
+:root { --glass-blur-dock-radius: 12px; }
+/* after (BG) — the dock reads the unified resting material */
+:root { --glass-blur-resting-radius: 12px; }
+```
+
+### `ladder.css` / `shell.css` carves (BG.W-CLOSEFIX-9SITE — no-god-module, no consumer impact)
+
+`glass/ladder.css`'s grain `::after` overlay tail carves into `glass/grain-overlay.css`, and `dock/shell.css`'s
+`#persistent` region + vertical layer-stack tail carves into `dock/shell-regions.css` (each @import-ed
+IMMEDIATELY AFTER its parent in the SAME `@layer components`, cascade-order-invariant → the `/styles`
+draw is unchanged). Internal carves to hold the 500-line no-god-module bound; zero API/paint delta.

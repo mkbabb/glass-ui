@@ -37,13 +37,15 @@ const DOCK_ROUTE = "/dock/overview";
 const BLOB_ROUTE = "/substrates/blob";
 
 // The dialed-back radii (BA.W-GLASS-CAL Unit 1) the resolved :root tokens must read.
+// --glass-blur-dock-radius RETIRED at BG.W-CLOSEFIX-9SITE (the dock reads the resting
+// 8px peer via --dock-surface-blur; the dock-own chain is gone). The live dock plate
+// blur is asserted below off the composited .glass-dock backdrop-filter (≥7px).
 const EXPECT_RADII: Record<string, number> = {
     "--glass-blur-wash-radius": 1,
     "--glass-blur-quiet-radius": 8,
     "--glass-blur-resting-radius": 8,
     "--glass-blur-floating-radius": 13,
     "--glass-blur-overlay-radius": 13,
-    "--glass-blur-dock-radius": 9,
 };
 
 async function setScheme(page: Page, scheme: (typeof SCHEMES)[number]) {
@@ -135,8 +137,9 @@ test.describe("BA.W-GLASS-CAL — the blur dial-back + the disco retirement (π)
             await setScheme(page, scheme);
             // No dock control composes the disco grain background-image on hover (the
             // primary tier collapsed). We sample the dock-tab-button primary if present;
-            // either way the dock plate composes a real glass blur (the dialed-back dock
-            // radius 9px through --glass-blur-dock).
+            // either way the dock plate composes a real glass blur — the unified 8px
+            // resting material via --dock-surface-blur (BG.W-CLOSEFIX-9SITE retired the
+            // dock-own --glass-blur-dock chain).
             const dockBlur = await page.evaluate(() => {
                 const el = document.querySelector(".glass-dock");
                 if (!el) return null;
