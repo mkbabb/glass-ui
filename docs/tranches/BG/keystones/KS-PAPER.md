@@ -134,7 +134,9 @@ path (the Fable design arm can sweep bake parameters, not just alpha), and house
   the amplitude — payload never bends the percept.
 - *Retina crispness.* The tile bakes at 2× density (512² rendered at `background-size: 256px`), features sized
   in CSS px (§Q2), `image-rendering` default (forcing `pixelated` would reintroduce the hiDPI grey-averaging —
-  SOTA F19 REJECT). An `image-set()` 1×/2× pair ships only if a P1 capture shows softness (unlikely at α ≤ 0.21).
+  SOTA F19 REJECT). `image-set()` is DROPPED by default (a 1×/2× pair is two base64 blobs in one token — double
+  payload, no cache win on a data-URI); if a P1 capture shows softness the remedy is a re-bake
+  (density/wavelength), never a second blob.
 - *Is a baked tile "less pure" than resolution-independent SVG?* The SVG's purity is exactly what shipped the
   metallic read three times — different engines rendered different pixels from the same source. Determinism IS
   the purity that matters for an identity texture.
@@ -154,8 +156,10 @@ path (the Fable design arm can sweep bake parameters, not just alpha), and house
   the orchestrator — a sharpening, not a scope change.)*
 
 **Final form (Q1):** one committed warm raster tooth tile, baked once by a committed seeded baker, hash-gated,
-base64 in the SAME `--paper-grain-tooth` token (`paper.css:44`), same multiply/screen blend law, deferred
-partition, byte-budgeted. The lighting path survives only as the capture-gated layered `--paper-grain-relief`
+shipped as an inline base64 **data-URI** in the SAME `--paper-grain-tooth` token (`paper.css:44`) — the
+committed PNG is the hash/provenance anchor, the data-URI is the SHIPPED form (engine-invariant,
+cache-independent, zero-consumer-edit migration; the ≤ 32 KiB ceiling binds the base64 LENGTH; `image-set()`
+dropped by default) — same multiply/screen blend law, deferred partition, byte-budgeted. The lighting path survives only as the capture-gated layered `--paper-grain-relief`
 enhancement, default absent, expected dropped.
 
 ### Q2 — the amplitude/scale numbers under the subtlety ceiling (both engines, both modes)
@@ -180,11 +184,11 @@ calibrated starting anchors + the method, not assertions):**
 
 | axis | proposed value | derivation / method |
 |---|---|---|
-| tile size / render | **512² baked · `--paper-grain-tile: 140px → 256px`** | 2× density for retina; the sole `--paper-grain-tile` readers are `paper.css:45,55,80` (verified — no external consumer breaks) |
+| tile size / render | **512² baked · `--paper-grain-tile: 140px → 256px`** | 2× density for retina; def `paper.css:45`, sole readers `:55,:80` (re-verified at `29f280c8`); constellation grep CLEAN — zero words/atlas `--paper-grain-tile` consume, the tile period is INTERNAL-only |
 | dominant tooth wavelength | **~3–5 CSS px** (6–10 tile px), + a fine fiber band one octave up at ≤ half amplitude | the coarse band GOLDEN §0.2 proved survives hiDPI averaging; the dual-band character bakes free of beat risk (baked once, not two live filters) |
 | tile luminance | **mean L\* ≈ 0.92 · baked σ_L ≈ 26–30/255** | bounded amplitude at source: at multiply α ≈ 0.16 over the washed plate, composite σ lands in the gate band (σ_composite ≈ α · σ_tile · L_plate) — the method is the measurement, the arithmetic is the seed |
 | tile chroma / hue | **mean C ≈ 0.045 (OKLab) · H ≈ 85° ecru** (`#F3EAD3`-class) | 2-3× the 0.020 floor at source; composite dilutes toward the floor at deployment alpha (WS9 M2) |
-| emboss (directional relief) | lit-bias along **azimuth 290.56°**, directional amplitude **≤ ~35%** of total tooth amplitude; anisotropy energy ratio **≤ 1.4×** isotropic | hemisphere coherence with the key spine (§4.2) without the brushed-metal streak — the anisotropy bound is a bakeable, gate-decodable statistic |
+| emboss (directional relief) | lit-bias along **azimuth 290.56°**, directional amplitude **≤ ~35%** of total tooth amplitude; anisotropy energy ratio **≤ 1.4×** isotropic | hemisphere coherence with the key spine (§4.2) without the brushed-metal streak — BOTH directional statistics are DECLARED in the baker's stats sidecar (hash-bound to the tile) and gate-ASSERTED there; a pixel re-derivation of a ≤35% directional component in a low-α field sits below the decode noise floor, so pixels carry only a coarse sign-of-projection confirm (§4.1.H arm 8) |
 | deployment alpha | **light: sweep {0.12, 0.16, 0.21}, anchor ≈ 0.16 · dark: sweep {0.08, 0.12, 0.16}, anchor ≈ 0.12** | the disk 0.21/0.16 (`glass-fx.css:31`, `dark-arm.css:247`) was tuned for a contrast-stretched speckle; a bounded baked tile shifts the anchor DOWN — screen-on-ink bites harder than multiply-on-cream, so dark steps below light (the landed ×1/√φ instinct, `dark-arm.css:242-246`) |
 | **the painted band (the LAW)** | **std ∈ [4.5, ~7] light** on the washed plate, live route node · dark band re-measured at P1 (anchor: the same no-squint/no-dirt logic on the screen arm) · **mean-L drift < 5%** · composite chroma within [floor, ceiling] | GOLDEN §8 + challenge/3 R2 + the letterpress law; measured in BOTH engines (Chrome + REAL Safari via `wkshot.m`), BOTH modes, on `:5199` |
 
@@ -260,6 +264,11 @@ default absent, expected dropped); the baked-statistics table + painted-band law
 compact warm-duotone SVG because `scale-paper.css` is in the CRITICAL cascade — `critical-partition.mjs:157`);
 the exact 6-consumer migration map re-verified on disk at HEAD; the resolution of the row's "retire
 `--paper-clean/-aged-texture`" against the atlas by-name fence (NAME-retire vs VALUE-retire, below).
+**Scope provenance for the net-new utilities:** the `.paper-deboss` rider + the grain-on-headline clip enter
+through the FOLDED 14.2 `BG.W-PAPER-SUFFUSE` (the cursor row's fold note `F4.1+14.1+14.2`,
+`EXECUTION-PROGRESS.md:81`) — both are WS9 deliverables verbatim (`BG-WS9-paper-deep/SPEC-pass2.md` §1 "The
+letterpress DEBOSS rider" + §2 "The grain-on-headline textured-ink register") — elaborated here, never
+self-inserted scope; the `--paper-grain-relief` enhancement stays a fold-candidate (note 1).
 
 **Preconditions (§0 — land FIRST, in order):**
 1. **GU-1 `--glass-key-direction` mint** — the full `GU-1-glass-key-fill.md` recipe VERBATIM: mint
@@ -283,14 +292,14 @@ capture may move; the BAND is the law.
 
 | deliverable | path | delta |
 |---|---|---|
-| the baker | `scripts/bake-paper-tooth.mjs` (NEW, committed) | seeded (house `mulberry32`/`hashString` discipline), parameter table at top, emits the tile + a stats sidecar (σ, chroma, hue, anisotropy ratio, hemisphere bias) the gate re-derives |
-| the tile | committed asset + base64 into `--paper-grain-tooth` (`paper.css:44`) | REPLACES the grey `saturate=0` speckle VALUE; token NAME unchanged (every consumer + gate keeps its anchor); born-RED hash |
-| tile period | `--paper-grain-tile` (`paper.css:45`) `140px → 256px` | sole readers `paper.css:45,55,80` (verified); no external consumer |
+| the baker | `scripts/bake-paper-tooth.mjs` (NEW, committed) | seeded (house `mulberry32`/`hashString` discipline), parameter table at top, emits the tile + a stats sidecar (σ, chroma, hue, anisotropy ratio, hemisphere bias) the gate ASSERTS — the sidecar is hash-bound to the tile (arm 1) and is the assertion target for the directional arms (arm 8); the gate never re-derives directional statistics from pixels |
+| the tile | the baker's OUTPUT PNG committed (the hash anchor) + shipped as an inline base64 **data-URI** in `--paper-grain-tooth` (`paper.css:44`) — the data-URI is the SHIPPED form (§3.Q1; `image-set()` dropped by default) | REPLACES the grey `saturate=0` speckle VALUE; token NAME unchanged (every consumer + gate keeps its anchor); born-RED hash |
+| tile period | `--paper-grain-tile` (`paper.css:45`) `140px → 256px` | def `:45`, sole readers `:55,:80` (re-verified); constellation grep clean — internal-only |
 | alpha | `--paper-grain-opacity` light (`glass-fx.css:31`) / dark (`dark-arm.css:247`) | re-derived per the P1 sweep (anchors 0.16/0.12); comment cites the painted band + this spec |
 | blend law | `paper.css:48-92` | UNTOUCHED — multiply (light) / screen (dark); the always-present `background-image` longhand + opacity-only engage discipline survives the swap byte-for-byte (design-idioms §12 anti-pop) |
 | the enhancement (IF accepted) | `--paper-grain-relief` (NEW token, `paper.css`, default `none`) layered above the raster in the same `background-image` stack | full WS9 M-fence set (sRGB pin · HEX ecru · `azimuth='290.56'` · elevation 55 · LOW surfaceScale · `kernelUnitLength` tested); never load-bearing; expected DROPPED |
-| deboss rider | a `.paper-deboss` utility (`paper.css`) | static inset/text-shadow pair pressed INTO the tooth, offsets derived from the key travel vector (x = `calc(y-offset * var(--glass-key-direction))`), dark on the light-side wall + warm lift opposite (WS9 anchor: "dark top-left + warm highlight bottom-right"); PRM-safe (static); signs gate-checked, eye-verified at P1 |
-| grain-on-headline | the `@supports (background-clip: text)` display-clip utility | headline-only at display scale, solid-ink fallback (this one IS a real, honest `@supports`); lets the atlas consume-and-delete its `recipes.css:507` masthead fork |
+| deboss rider | a `.paper-deboss` utility (`paper.css`) | static inset/text-shadow pair pressed INTO the tooth, offsets derived from the key travel vector (x = `calc(y-offset * var(--glass-key-direction))`), dark on the light-side wall + warm lift opposite (WS9 anchor: "dark top-left + warm highlight bottom-right"); PRM-safe (static); signs gate-checked, eye-verified at P1; scope: the folded 14.2 (WS9 deboss-rider ¶ — §4.1 provenance) |
+| grain-on-headline | the `@supports (background-clip: text)` display-clip utility | headline-only at display scale, solid-ink fallback (this one IS a real, honest `@supports`); the utility clips the TOOTH; the atlas masthead fork (`sci-report/atlas/src/platform/design/recipes.css:~424-449` — WS9's `:507` cite has drifted) clips `--paper-aged-texture`, NOT the tooth, so its consume-and-delete is a deliberate RE-POINT (aged → the utility's tooth read) carried on the F8 notice; scope: the folded 14.2 (WS9 grain-on-headline ¶) |
 | payload | `profile:budget` rebaseline | the recorded byte figure; ceiling ≤ 32 KiB base64; tooth stays in the DEFERRED partition (`critical-partition.mjs:67`) |
 
 **C · The A2 register split (the rename + the lockstep, re-verified at HEAD):**
@@ -310,12 +319,22 @@ capture may move; the BAND is the law.
   grain-always-present positive clause + the `.grain-x`/`.grain-y` none→image-swap fixtures),
   `proof-glass-cal.mjs` (the D3 disco-grain NEGATIVE detector — left on the deleted name it goes vacuously
   green), `proof-paper-grid.mjs` (comment). Old name DEFINITION-ABSENT repo-wide.
+- **The known-consumer-constellation probe (the inv-11 corollary, RECORDED — not an atlas-only assertion):**
+  atlas — zero `--paper-clean-texture` consume (verified). **words/frontend SELF-HOSTS the name**
+  (`theme.css:168`, its own 60px/0.9-freq value) and reads it at ~8 sites (`App.vue:94`, `WordList.vue:216`,
+  `index.css:163-183`, `card-base.css:27`, `hovercard.css:25`, `Login/Signup.vue:5`) while importing
+  `@mkbabb/glass-ui/styles` (pin `^3.0.0`). Post-rename: words's OWN reads survive (local definition), but
+  its local `--paper-clean-texture` override of glass-ui's GLASS surfaces silently stops applying once the
+  ladder reads `--glass-grain-fine` — a GRACEFUL degradation (each surface falls back to the library
+  whisper; words is two majors behind and adopts on its own bump), disclosed by the §J MIGRATION row.
+  Known and recorded, never a silent unknown.
 
 **D · The `--paper-aged-texture` resolution (the row's "retire" vs the atlas fence).** The row says "retire
 `--paper-clean/-aged-texture`"; the atlas consumes `--paper-aged-texture` LIVE by name
-(`atlas/src/platform/design/recipes.css:511`; `PaperBackdrop.vue:8,32` in-repo). Resolution — **the grey
-turbulence VALUES retire from both tokens; only the CLEAN name retires**: clean → renamed `--glass-grain-fine`
-(zero atlas consume, verified); aged → **NAME KEPT, VALUE re-authored** onto a warm aged-stock rung. Because
+(`sci-report/atlas/src/platform/design/recipes.css:373,424,444,456,474`; `PaperBackdrop.vue:8,32` in-repo).
+Resolution — **the grey turbulence VALUES retire from both tokens; only the CLEAN name retires**: clean →
+renamed `--glass-grain-fine` (constellation probe recorded at §4.1.C — atlas zero consume; words self-hosts +
+degrades gracefully); aged → **NAME KEPT, VALUE re-authored** onto a warm aged-stock rung. Because
 `scale-paper.css` lives in the CRITICAL token cascade (`critical-partition.mjs:157`) the aged rung must NOT
 become a raster payload: re-author it as a **compact warm-DUOTONE SVG** (feTurbulence → `feComponentTransfer`
 `tableValues` ramp black→umber/white→ecru, `color-interpolation-filters='sRGB'` pinned, NO lighting primitive
@@ -331,9 +350,15 @@ draw-on) is PRM-gated.
 
 **F · Coverage (grain as MATERIAL, not buried backdrop — the shipped props, zero new mechanism):**
 `ShowcaseFrame :grain` wired on `foundations/typography.vue` (the paper HOME wears zero grain today — the
-headline miss, GOLDEN §3); `Card :grain` on math-paper's worksheet card (already composes `paper-grain-overlay
-paper-grid` — `math-paper.vue:21`) + paper-glass's opaque specimens. The suffusion is the opt-in claimed
-surface set; the universal plane stays retired (§3.Q3).
+headline miss, GOLDEN §3). **ONE tooth per node (the double-tooth trap, named):** math-paper's worksheet is
+the bare `<article>` at `math-paper.vue:11-22` (NOT a `<Card>`) already carrying the explicit
+`paper-grain-overlay` class — verify-once coverage, ZERO edit; do NOT wire `Card :grain`/a second grain
+source onto it (`paper-grain-overlay` and a glass-tier grain style the SAME single `::after`, so a second
+source cascade-collides or stacks the alpha out of the painted band). Paper-glass's opaque specimens are
+Card-rooted with `grain` default `true` (`Card.vue:178`) — post-A2-split that `::after` is the NEUTRAL
+`--glass-grain-fine` whisper, so a specimen CLAIMING paper opts into the tooth via
+`paper-grain-overlay`/`.paper-texture` explicitly: one grain source per node, always. The suffusion is the
+opt-in claimed surface set; the universal plane stays retired (§3.Q3).
 
 **G · The through-glass spike (build precondition).** Capture the tooth read THROUGH a `.glass-material` tile
 over a saturated field, both modes — "paper felt through glass" proven in pixels; the standing π arm keeps it
@@ -357,9 +382,18 @@ proof:paper (paper-texture-single + warm floor/ceiling + spine congruence), both
       AND hue in the warm band H ∈ [60°, 100°] — warm ONCE, never compounded brassy
  7. REGISTER FENCE: --glass-grain-opacity == 0.025 (light) AND 0.045 (dark), per-mode π (never a flat ==);
       --glass-grain-fine decodes NEUTRAL (chroma ≈ 0); no paper-tooth var() on any glass-stratum selector
- 8. ONE KEY: decoded tile hemisphere bias leans 290.56° ±1° == atan2 of --glass-key-direction;
-      anisotropy energy ratio <= 1.4× (the brushed-metal bound); deboss offset signs agree;
-      IF the relief enhancement ships: its azimuth literal within ±1° + sRGB pin present (linearRGB → RED)
+ 8. ONE KEY (method-specified — the SIDECAR is the assertion target, never a pixel re-derivation):
+      (a) SIDECAR: the baker's DECLARED hemisphere-bias azimuth (stats sidecar, hash-bound to the
+          committed tile by arm 1) == 290.56° ±1° AND sign-agrees with --glass-key-direction;
+      (b) SIDECAR: the declared directional/isotropic energy ratio <= 1.4× (the brushed-metal bound) —
+          no pixel re-derivation attempted (a ≤35%-amplitude directional component of a low-α field
+          sits below the decode noise floor; the hash binding carries the claim);
+      (c) PIXEL CONFIRM (coarse, above the noise floor): the mean luminance-gradient projection of the
+          decoded tile onto the key vector has the CORRECT SIGN; ±10° azimuth on the coarse band is the
+          outer tolerance — sign-of-projection is the binding pixel claim, ±1° lives ONLY on literals;
+      (d) deboss offset signs agree with the key travel vector;
+      (e) IF the relief enhancement ships: its azimuth LITERAL within ±1° (a string check — the one
+          honest ±1° home) + sRGB pin present (linearRGB → RED)
  9. rename lockstep: --paper-clean-texture DEFINITION-ABSENT; the 3 gate re-points landed (a planted
       old-name read REDs — self-test bite)
 10. THROUGH-GLASS: tooth chroma >= floor read through a .glass-material tile over a saturated field
@@ -387,27 +421,30 @@ per-surface runtime adaptation; ours is a gate-locked token spine — machine-pr
 (`PAPER-sota.md §5`).
 
 **Sharpened vs the folded row:** raster-primary does NOT dissolve the spine — it CHANGES the third witness
-from an SVG literal to a **decodable tile statistic**. The spine arm gains a device-free check no SVG version
-could have: decode the committed tile and measure its directional luminance statistics.
+from an SVG literal to a **hash-bound baked statistic**. The spine arm gains a device-free check no SVG
+version could have: assert the baker's DECLARED directional statistics (the stats sidecar, hash-bound to the
+committed tile) plus a coarse sign-of-projection pixel confirm — never a ±1° pixel decode (§4.1.H arm 8).
 
 **The `proof:meta` `glass-key-spine` arm (born-RED → promoted to `ci`):**
 1. `--glass-key-direction == -0.375` minted in the keystone block with the two-magnitudes fence comment;
 2. the three under-shadow tiers derive X via `calc(Npx * var(--glass-key-direction))` (Y/blur/spread/α
    byte-identical); `dock/overflow.css:143` re-pointed; `--glass-under-shadow-spine` untouched
    (intentionally omnidirectional — the holdout ledger's INTENTIONALLY-OMNIDIRECTIONAL class);
-3. HEMISPHERE-COHERENCE: sign(`--glass-key-lit-x`), sign(`--glass-key-direction`), the tile's decoded
-   hemisphere bias, and (if shipped) the relief azimuth literal ALL agree upper-right — "one key" is
-   hemisphere-coherence, not angle-identity (the 24° soft-FILL vs cel-KEY gap is deliberate,
-   `SPEC-pass2.md:9`);
-4. the azimuth↔token numeric lock: any hardcoded relief/deboss literal within ±1° of
-   `atan2(-1, 0.375)·180/π mod 360 ≈ 290.56°`;
+3. HEMISPHERE-COHERENCE: sign(`--glass-key-lit-x`), sign(`--glass-key-direction`), the tile's
+   SIDECAR-DECLARED hemisphere bias (+ the arm-8c sign-of-projection pixel confirm), and (if shipped) the
+   relief azimuth literal ALL agree upper-right — "one key" is hemisphere-coherence, not angle-identity
+   (the 24° soft-FILL vs cel-KEY gap is deliberate, `SPEC-pass2.md:9`);
+4. the azimuth↔token numeric lock: any hardcoded relief/deboss LITERAL within ±1° of
+   `atan2(-1, 0.375)·180/π mod 360 ≈ 290.56°` (literals only — the ±1° never applies to a pixel decode);
 5. the deboss pair's offset signs consistent with the key travel vector.
 
 **DesignSync (the distinct capture axis the plan names):** one annotated canvas — a glass card (bevel +
 under-shadow) beside a toothed paper patch beside a debossed mark, the light vector overlaid — both modes,
 both engines. The verdict question: *do the two materials read as one lit world?*
 
-**Preconds:** 14.0/GU-1 token (landed as 14.1 §0). Protected-set check: value-only; no identity value moves.
+**Preconds:** the GU-1 token (landed as 14.1 §0 — the cursor carries NO row 14.0; the orphaned "14.0"
+precond reference is recorded in fold-candidate note 5). Protected-set check: value-only; no identity value
+moves.
 
 ### §4.3 · 14.3-adjacent congruence — the contract 14.1 leaves for `W-HANDMARK-PERFECT` (KS-HANDMARK owns the wave)
 
@@ -464,7 +501,11 @@ over-correction (too brassy) structurally RED.
   source with margin; the `in srgb` surface-tint fence untouched (no `--surface-tint-*` edit anywhere here).
 - **Protected set (SYNTHESIS-PASS1 §4)** — no identity value moves except the paper-register's own tokens
   (the library's identity evolving at its home, the sanctioned path); DOCK_SPRING/4.10/glass-level machinery
-  untouched; foreign-tree fence: the atlas is notified via the F8 ledger, never edited.
+  untouched; foreign-tree fence: the atlas is notified via the F8 ledger, never edited. Disambiguation:
+  `--paper-grain-opacity` (the §3.Q2 alpha move) is the grain DEPLOYMENT calibration knob —
+  `dark-arm.css:245-246`'s √φ "opacity ladder" framing notwithstanding, it is NOT the protected
+  glass-tier/`--surface-tint-*` identity alpha ladders (`SYNTHESIS-PASS1.md:111`); re-deriving it against
+  the new tile is the sanctioned in-home evolution (the deployment α necessarily moves with the source).
 - **Fable arm + DesignSync per visual wave** — §4.1.A/I and §4.2's capture axis; the Fable design arm holds
   final-number authority against captures (the model-routing directive).
 - **C-PAINT (the disease cure)** — every device-free arm above is necessary-not-sufficient; the binding
@@ -513,6 +554,9 @@ A fresh dual-engine (Chrome + REAL Safari), both-modes capture set over the DS s
    surfaces; confirm an owning row exists or fold one.
 4. **`profile:budget` rebaseline** for the tile payload rides 14.1 (no new row; noted so the close expects
    the delta).
+5. **The orphaned "14.0" reference:** 17.5's cursor precond names "14.0 GU-1 token" but the cursor carries
+   NO row 14.0 — this spec folds GU-1 into 14.1 §0 precondition 1 (the full `GU-1-glass-key-fill.md` recipe).
+   Recorded so the fold is explicit; the orchestrator may reconcile the 17.5 precond text.
 
 ## Open questions (P1 / Fable design arm)
 
@@ -524,3 +568,33 @@ A fresh dual-engine (Chrome + REAL Safari), both-modes capture set over the DS s
 4. The PAPER-WARM-CEILING final number (0.055 proposed off the LX.2 landed max 0.0449 + headroom).
 5. `--paper-grain-tile` 140 → 256px: confirm no demo composition visually keyed to the 140px period (grep is
    clean; the eye check rides P1).
+
+---
+
+## REVISION — KS-B critic pass applied (2026-07-01, HEAD `29f280c8`)
+
+Surgical edits per `critique/PAPER-crit.md` (all 7 must-fixes); the greenfield loop record is untouched:
+
+1. **M1 (arm-8 decode)** — arm 8 method-specified: the baker's DECLARED sidecar statistics (hemisphere-bias
+   azimuth ±1°, anisotropy ratio ≤ 1.4×) are the assertion targets, hash-bound to the tile by arm 1; the
+   pixel claim is demoted to a coarse sign-of-projection confirm (±10° outer tolerance on the coarse band);
+   ±1° survives ONLY on literals (the relief azimuth string). Propagated into §3.Q2 (emboss row), §4.1.B
+   (baker row), §4.2 (sharpened ¶ + arms 3/4).
+2. **M2 (constellation probe)** — the inv-11-corollary probe RECORDED in §4.1.C: words/frontend self-hosts +
+   consumes `--paper-clean-texture` (~8 sites, pin `^3.0.0`; graceful degradation of its glass-surface
+   override, disclosed via §J); atlas zero clean consume. §4.1.D re-points to the probe.
+3. **M3 (scope provenance)** — deboss + grain-on-headline cited to the folded 14.2 `BG.W-PAPER-SUFFUSE`
+   (`EXECUTION-PROGRESS.md:81` fold note `F4.1+14.1+14.2`) + the WS9 SPEC-pass2 ¶s, in the §4.1 header +
+   both table rows.
+4. **M4 (source form)** — the inline base64 **data-URI** is the pinned SHIPPED form (committed PNG = hash
+   anchor; ceiling binds the base64 length; `image-set()` dropped by default). §3.Q1 + §4.1.B.
+5. **M5 (double tooth)** — §4.1.F names the exact node (the bare `<article>`, `math-paper.vue:11-22`) and
+   binds the ONE-tooth-per-node rule (verify-once, zero edit; no `Card :grain` over the explicit class).
+6. **M6 (protected set)** — §5 disambiguates `--paper-grain-opacity` as the grain DEPLOYMENT knob, not the
+   protected identity alpha ladders.
+7. **m7 (citations)** — (a) `sci-report/atlas/...` path fixed + the verified consume lines (373,424,444,
+   456,474); (b) the masthead fork corrected to `~424-449` clipping AGED, with the consume-and-delete stated
+   as a re-point onto the utility's tooth read (F8 notice); (c) the orphaned "14.0" precond recorded
+   (fold-candidate 5 + §4.2 preconds); (d) the tile-period sibling grep run + recorded (internal-only).
+   NOTE: the critic's `paper.css:56,82` reader lines did NOT reproduce at HEAD `29f280c8` — a fresh grep
+   confirms def `:45`, readers `:55,:80` (the spec's original cites stand, now marked re-verified).

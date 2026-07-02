@@ -123,3 +123,13 @@ ONE `proof:viz` family gate. The DEFERRAL §D carriers home here.
 - **CRIT-1 §5:** the F8/WS12 coherence-capstone rows 17.1–17.6 are RE-EXAMINED in the fold: collapse any
   pair that shares a capture run; the capstone must not exceed ~4 rows unless each row owns a distinct
   capture axis.
+
+---
+
+## CORRECTIONS (2026-07-01, post-KS-B — orchestrator; disk-verified)
+
+**R6′ — DOCK_SPRING: the R6 literal was STALE.** Disk truth (verified at `src/components/custom/dock/constants.ts:85-88` + `src/composables/motion/springPresets.ts:101-103`): `DOCK_SPRING = springPreset("dock")` = **{response: 0.68, dampingFraction: 0.64}** — the BD-ANIM-IOS27-TUNE landed this; CRIT-3's `{0.32, 0.7}` citation was a stale doc-read, and R6 inherited it. The FENCE stands, restated: DOCK_SPRING is byte-fenced as the DERIVATION (`springPreset("dock")`, one table row, no second authority) + the CURRENT shipped value; NO new retune without an explicit fence-lift. The coherence audit's GC-FC5(c) was directionally right: `motion-canon.md:195` + `tunable-anim.md:63` carry the stale `{0.32,0.7}` — BH.B4c carries the canon-literal RECONCILE (a doc-truth fix, NOT a retune; R6's deletion of that deliverable is REVERSED in this corrected form).
+
+**R1 — enforcement: the fold wrote row 4.3 BACKWARDS.** The folded cursor's 4.3 read "SOLE owner — 10.5 must NOT double-own" (the opposite of R1) while 10.5 correctly listed the delete. Corrected: **10.5 owns the `useDockContextSilhouette` DELETE + `AppSwitcher.vue` retire + the baseline-#8 drain; 4.3 is a DEFINITION-ABSENT verify + dock-side clearance, precond 10.5.** KS-MOTION-DISNEY's contrary assignment is OVERRULED (noted at its foot).
+
+**KS-B ratifications:** W-SPRING-TIDY = Option A (the JS SPRING_PRESETS table stays 9 — the 3 `timeline-*` rows are live ScrubberTimeline authorities; regen gains `emitCss:false` so only the dead `--spring-timeline-*` CSS twins die). `useElementMorph` `spawn` channel ships ONLY with a real consumer (key reserved-but-absent; J-inv-10). 17.4 adopts the dated `CANON_PENDING_RECONCILE` bridge (removed at the submodule bump). F5.3's disclosure arrival ease stays DELIBERATELY open for Fable-at-build on the 3-surface × 2-candidate DesignSync card set. Drawer/sheet fling-squish (wire the EXISTING `useLiquidFlex` off `DRAWER_SNAP`) folds as a CLAUSE on F5.1 (overhead floor). Travel-arc register + native CSS `spring()` = successor seeds. Ambient-axis KEEPS (live readers — the KS-GLASS revision already re-verified).
