@@ -523,15 +523,24 @@ export function publishStyleAssets(): Plugin {
             //     (a declaration boundary) AND not part of `-webkit-backdrop-filter`
             //     (the `[^-]` guard), and
             //   - a trailing `;` (a real declaration terminator).
-            // The value `[^;{})]+` excludes `)` so a greedy match cannot spill across an
+            // The value excludes a bare `)` so a greedy match cannot spill across an
             // `@supports` prelude's `) or (` operators (the corruption class). A value
             // with a `var(...)`/`blur(Npx)` contains balanced parens, so to allow those
-            // we match a value with NESTED single-level parens explicitly:
-            // `(?:[^;{}()]|\([^)]*\))+` — runs of non-paren text OR one balanced paren
-            // group — terminated by `;`. This admits `var(--glass-blur-wash)` and
-            // `blur(10px)` but still STOPS at the `;` before any query operator.
+            // we match a value with BALANCED NESTED parens up to THREE levels:
+            // `(?:[^;{}()]|<G3>)+` where `<G3>` is a paren group that may itself contain
+            // paren groups two more deep — runs of non-paren text OR one balanced (nesting)
+            // paren group — terminated by `;`. This admits `var(--glass-blur-wash)` (1
+            // level), `blur(var(--top-layer-backdrop-blur, 8px))` (2 levels — the Safari
+            // `blur(var())` case, BG.W-GLASS-REGISTER-UNIFY: the prior single-level
+            // `\([^()]*\)` STOPPED at the inner `(` of a `blur(var(…))`, so the whole
+            // declaration NEVER matched → NO `-webkit-` pair reached the shipped dist →
+            // Safari ≤17 painted no blur on the `.glass-top-layer` entry), and
+            // `blur(calc(var(--r) * var(--l)))` (3 levels) but still STOPS at the `;`
+            // before any query operator. The `-webkit-backdrop-filter:` (M4a alias-parity)
+            // arm is emitted from the SAME resolved `value.trim()`, so its value tracks the
+            // unprefixed one exactly. Locked by `proof:glass`'s safari-blur-var arm.
             const bdfDeclRe =
-                /([{};]|\n)(\s*)backdrop-filter\s*:\s*((?:[^;{}()]|\([^()]*\))+);/g;
+                /([{};]|\n)(\s*)backdrop-filter\s*:\s*((?:[^;{}()]|\((?:[^()]|\((?:[^()]|\([^()]*\))*\))*\))+);/g;
             for (const file of distCssFiles) {
                 const path = resolve(distStyles, file);
                 const src = readFileSync(path, "utf-8");

@@ -266,7 +266,17 @@
        `color-mix(in oklab, …, --glass-tint-source --glass-tint-strength)` wrapper
        the rungs reach for, ZERO-delta at `--glass-tint-strength: 0%` — so W55's
        adaptive darken can reach the dock (the G2 over-light surface) without a
-       second hand-rolled recipe. */
+       second hand-rolled recipe.
+
+       BG.W-GLASS-REGISTER-UNIFY note — this `:root`-baked oklab tint IS the
+       substitution trap the `@utility glass-fill` HOME (glass/surfaces.css, R9) kills:
+       the outer tint here resolves --glass-tint-source/-strength at `:root` (0%), so a
+       descendant `.glass-dock` that re-points the tint under the W55 bright bucket does
+       NOT re-tint through this token. The dock/shell/morph surfaces already escape it by
+       composing the element-level oklab tint AT the element (dock/shell.css,
+       dock/morph.css) — the applied `glass-fill` shape. De-tinting this `:root` token
+       onto the plain opacity footprint is the sibling-gate-coordinated atomic step
+       (proof:dialog-glass DG1 pins `--glass-bg-dialog` to the same wrapper form). */
     --glass-bg-dock:     color-mix(in oklab, color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-dock)) * var(--glass-level)) * 100%), transparent), var(--glass-tint-source) var(--glass-tint-strength));
     --glass-bg-chassis:  color-mix(in srgb, var(--card) calc((1 - (1 - var(--glass-opacity-chassis)) * var(--glass-level)) * 100%), transparent);
     /* BC.W-DIALOG-GLASS — the dialog plate bg, composed the SAME oklab-tint-wrapped
