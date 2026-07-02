@@ -119,6 +119,14 @@ W-HANDMARK-PERFECT` (+14.4 pencil-boil). *(14.5 cross-repo-asks → F8.)*
 - `10.15 W-GOO-BARBELL-CSS`.
 - `10.27 W-GOD-MODULE-STRUCTURAL` (NEW): decompose the dock ONCE; the 2 live-RED CSS carves in-wave; **ratchet CONTRACT
   change** (new baseline needs a companion carve-successor id, OR cap+FAIL); shader-literal exemption. BEFORE F6.2 rename.
+- `F6.7 W-SEAL-DISC` (SPEEDTEST-AX-INBOUND #1; paint-class P; files completion-seal/*): CompletionSeal `shape="disc"`
+  (joins {check|ring|wordmark}) + `personalBest:boolean` (earned-gold garnish; may mint `--seal-best`) + the
+  disc→ring→check draw SEQUENCING; kf5 `fromDrawSVG` decide-at-build over the CSS `stroke-dashoffset` floor;
+  `proof:completion-seal` extended in place. Gates speedtest AX W3's seal consume — rides 5.0.0.
+- `F6.8 W-LIQUID-FILL` (SPEEDTEST-AX-INBOUND #5; paint-class P; files slider/progress + a shared glass css): extract
+  Slider's glass-cylinder fill (`Slider.vue:184-217`) as the ONE shared liquid-fill register — `Progress
+  variant="liquid"` + `.glass-liquid-fill`; Slider RE-READS it (consumer #1; the speedtest meter #2 — the
+  ≥2-consumer bar met honestly); phase-color composable with zero per-site glass knowledge; `proof:liquid-fill` new.
 - **BH-grammar (land BEFORE BH row 7):** `BH.W-AXIS-GRAMMAR` (mint `_shared/axes.ts`; homonym kills; `Surface` 3→4 doc
   fix; `/axes` barrel) · `BH.W-SIZE-UNIFY` (`default`→`md`; `density`→`size`) · `BH.W-MOTION-AXIS` (VISUAL; ONE `motion` axis).
 
