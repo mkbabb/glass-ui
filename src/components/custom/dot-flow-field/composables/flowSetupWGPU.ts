@@ -11,9 +11,11 @@
 // FlowSetupDeps interface + the px-min/count/floor-ground helpers live in useFlowParticles.ts;
 // this leaf owns ONLY the WebGPU path.
 
-import type { WebGPUCanvasFrame } from "../../../../composables/glass/webgpu/useWebGPUCanvas";
+import type {
+    WebGPUCanvasFrame,
+    BackingSize,
+} from "../../../../composables/glass/webgpu/useWebGPUCanvas";
 import { oklchToLinear } from "../../../../composables/color";
-import { resolveBudgetDpr } from "../../aurora/constants/budget";
 import { FLOW_FIELD_COMPUTE_WGSL } from "../shaders/flow-field.compute.wgsl";
 import {
     FLOW_FIELD_RENDER_WGSL,
@@ -283,16 +285,10 @@ export function createFlowWGPUSetup(
         const trailScratch = new Float32Array(12);
         let lastTime = -1;
 
-        function resize(): void {
-            const dpr = resolveBudgetDpr();
-            const cssW = canvas.clientWidth || 320;
-            const cssH = canvas.clientHeight || 320;
-            const w = Math.max(1, Math.round(cssW * dpr));
-            const h = Math.max(1, Math.round(cssH * dpr));
-            if (canvas.width !== w || canvas.height !== h) {
-                canvas.width = w;
-                canvas.height = h;
-            }
+        // BG.W-VIZ-RESIZE-ADOPT — upload-only. The LEAF sized the backing store; the
+        // closure recomputes the grid geometry + rebuilds the trail FBOs off the leaf-set
+        // `canvas.width/height` (WGPU's swap chain auto-resizes to the backing).
+        function resize(_s?: BackingSize): void {
             if (!isFlow) {
                 const g = flowGridGeometry(config.gridPitch, cssMin(canvas));
                 geometry = { ...g, count: Math.min(g.count, seed.length / 4) };
@@ -305,7 +301,7 @@ export function createFlowWGPUSetup(
             const dt = lastTime < 0 ? 0 : Math.min(Math.max(timeSec - lastTime, 0), 0.05);
             lastTime = timeSec;
 
-            const aspect = (canvas.clientWidth || 320) / Math.max(canvas.clientHeight || 320, 1);
+            const aspect = canvas.width / Math.max(canvas.height, 1);
             const drawCount = isFlow ? count : geometry.count;
             const pointer = getPointer?.();
 

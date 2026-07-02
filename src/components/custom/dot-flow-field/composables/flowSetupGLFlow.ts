@@ -5,7 +5,10 @@
 // setup and this advected-population setup are colocated siblings sharing flowGLProgram's
 // compile/link/probe/half-float helpers.
 
-import type { WebGLCanvasFrame } from "../../../../composables/glass/webgl/useWebGLCanvas";
+import type {
+    WebGLCanvasFrame,
+    BackingSize,
+} from "../../../../composables/glass/webgl/useWebGLCanvas";
 import { oklchToLinear } from "../../../../composables/color";
 import { resolveBudgetDpr } from "../../aurora/constants/budget";
 import {
@@ -176,16 +179,10 @@ export function createFlowGLFlow(
         let ping = 0;
         let lastTime = -1;
 
-        function resize(): void {
-            const dpr = resolveBudgetDpr();
-            const cssW = canvas.clientWidth || 320;
-            const cssH = canvas.clientHeight || 320;
-            const w = Math.max(1, Math.round(cssW * dpr));
-            const h = Math.max(1, Math.round(cssH * dpr));
-            if (canvas.width !== w || canvas.height !== h) {
-                canvas.width = w;
-                canvas.height = h;
-            }
+        // BG.W-VIZ-RESIZE-ADOPT — upload-only. The LEAF sized the backing store; the
+        // closure rebuilds the trail FBOs to the new backing (`rebuildTrail` reads the
+        // leaf-set `canvas.width/height`).
+        function resize(_s?: BackingSize): void {
             rebuildTrail();
         }
 

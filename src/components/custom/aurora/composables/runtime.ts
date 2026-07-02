@@ -23,7 +23,10 @@
 import { VERTEX_SRC } from "../constants/shaders/aurora.vert";
 import { FRAGMENT_SRC } from "../constants/shaders/aurora.frag";
 import { resolveAuroraWashDpr } from "../constants/budget";
-import { createGpuSubstrate } from "../../../../composables/glass/webgpu/useGpuSubstrate";
+import {
+    createGpuSubstrate,
+    type BackingSize,
+} from "../../../../composables/glass/webgpu/useGpuSubstrate";
 import { isSoftwareWebGLRenderer } from "../constants/renderMode";
 import type { AuroraConfig, AuroraInstance } from "../constants/presets";
 import { createGlProgram } from "./glSetup";
@@ -245,6 +248,9 @@ export function createAurora(
         ? inertHandle
         : createGpuSubstrate(canvas, {
         mode: options.mode === "capture" ? "capture" : "live",
+        // BG.W-VIZ-RESIZE-ADOPT — the leaf owns backing-store measurement + sizing
+        // (round(gBCR × dprPolicy)); every viz `resize` is upload-only.
+        dprPolicy: resolveAuroraWashDpr,
         contextAttrs: {
             antialias: false,
             alpha: true,
@@ -280,40 +286,16 @@ export function createAurora(
                 geometry,
             } = createGlProgram(gl, VERTEX_SRC, FRAGMENT_SRC);
 
-            function resize() {
-                // BB.W-PERF-PRODUCER A′-5 — the aurora decorative WASH backs at the
-                // SUB-2× `AV_AURORA_DPR_MAX` (1.5×) ceiling, distinct from the focal
-                // goo-blob's `AV_DPR_MAX` (2×). The heavily-blurred drift wash is
-                // visually indistinguishable at 1.5×, which quarters the GPU
-                // memory + per-composite raster (the value.js LP1 ~21.8MB trace). The
-                // focal goo-blob KEEPS `resolveBudgetDpr()` (2×) — its silhouette is
-                // sharp. CPU-side backing-store dimension only; `aurora.frag` is
-                // byte-fenced (the GL fence is absolute).
-                const dpr = resolveAuroraWashDpr();
-                // Measure the LAID-OUT box via getBoundingClientRect, not
-                // clientWidth/clientHeight. A canvas inside a `content-visibility:
-                // auto` ancestor reports clientHeight 0 while that ancestor is in
-                // the skipped state (the subtree is not laid out), and the arm
-                // path can call `resize()` inside that window — sizing the backing
-                // buffer to a 1px sliver that then stretches as a black band over
-                // the rest of the box. getBoundingClientRect reflects the real
-                // border-box even across a skip, so the buffer always tracks the
-                // displayed size. Fall back up the ancestor chain only when our own
-                // rect is still zero (truly un-laid-out), never to the 300×150 HTML
-                // default.
-                const rect = canvas.getBoundingClientRect();
-                const parentRect = canvas.parentElement?.getBoundingClientRect();
-                const cw = rect.width || parentRect?.width || 1;
-                const ch = rect.height || parentRect?.height || 1;
-                const w = Math.max(1, Math.round(cw * dpr));
-                const h = Math.max(1, Math.round(ch * dpr));
-                // Skip the realloc when the buffer already matches — a no-op resize
-                // would needlessly clear the drawing buffer on every observer tick.
-                if (canvas.width !== w || canvas.height !== h) {
-                    canvas.width = w;
-                    canvas.height = h;
-                }
-                gl.viewport(0, 0, w, h);
+            // BG.W-VIZ-RESIZE-ADOPT — upload-only. The aurora decorative WASH backs at
+            // the SUB-2× `resolveAuroraWashDpr` (1.5×) ceiling, threaded to the LEAF sizer
+            // as the `dprPolicy` at the createGpuSubstrate call-site below (distinct from
+            // the focal goo-blob's 2× — the heavily-blurred drift wash is visually
+            // indistinguishable at 1.5×, quartering the per-composite raster). The leaf
+            // measures the LAID-OUT box (gBCR + the bounded ancestor walk, never
+            // clientWidth/300×150) and sizes the backing to round(gBCR × dprPolicy); the
+            // closure only uploads the viewport. `aurora.frag` is byte-fenced.
+            function resize(s?: BackingSize) {
+                gl.viewport(0, 0, s?.w ?? canvas.width, s?.h ?? canvas.height);
                 gl.useProgram(prog);
             }
 
@@ -345,14 +327,10 @@ export function createAurora(
             };
             setConfig(config);
 
-            // Belt and suspenders — initial layout can race the first frame. (The
-            // substrate calls `resize()` once on build + on every observed resize;
-            // this extra rAF-chained double-resize defends the first-paint layout
-            // race exactly as the pre-substrate runtime did.)
-            requestAnimationFrame(() => {
-                resize();
-                requestAnimationFrame(resize);
-            });
+            // BG.W-VIZ-RESIZE-ADOPT — the first-paint layout-race defense (the
+            // rAF-chained double-resize) is now OWNED by the leaf's `presize()` (it
+            // measures + re-measures on a double-rAF for ALL consumers, sourced from the
+            // ONE sizer), so the per-viz belt-and-suspenders is retired.
 
             return {
                 frame: loop.frame,

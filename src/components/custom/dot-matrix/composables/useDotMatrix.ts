@@ -25,6 +25,7 @@ import {
     type GpuBackend,
 } from "../../../../composables/glass/webgpu/useGpuSubstrate";
 import { usePointerVelocityField } from "../../../../composables/motion/usePointerVelocityField";
+import { resolveBudgetDpr } from "../../aurora/constants/budget";
 import type { OklchStop } from "../../../../composables/color";
 import type { DotMatrixConfig, DotPointerMode } from "../constants";
 import { createDotWGPUSetup, createDotGLSetup } from "./useDotSphere";
@@ -186,6 +187,9 @@ export function useDotMatrix(
             handle = createGpuSubstrate(canvas, {
                 mode,
                 respectReducedMotion: config.respectReducedMotion,
+                // BG.W-VIZ-RESIZE-ADOPT — the leaf owns backing-store measurement +
+                // sizing (round(gBCR × dprPolicy)); both setups' `resize` are upload-only.
+                dprPolicy: resolveBudgetDpr,
                 setupWGPU: createDotWGPUSetup(setupDeps),
                 setupGL: createDotGLSetup(setupDeps),
             });

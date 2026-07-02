@@ -11,6 +11,7 @@ import type { OklchStop } from "../../../../composables/color";
 import type { FlowFieldConfig } from "../constants";
 import { FLOW_MAX_LATTICE } from "./uniformBridgeWGPU";
 import { type FlowPointerState } from "./uniformBridgeWGPU";
+import { resolveBudgetDpr } from "../../aurora/constants/budget";
 
 // Re-export flowGridGeometry through the hub so the backend leaves read it from one seam.
 export { flowGridGeometry } from "./uniformBridgeWGPU";
@@ -37,9 +38,12 @@ export interface FlowSetupDeps {
     getPointer?: () => FlowPointerState;
 }
 
-/** A px-min reader (the lattice density rides the min CSS dimension). */
+/** A px-min reader (the lattice density rides the min CSS dimension). BG.W-VIZ-RESIZE-ADOPT
+ *  — derived from the LEAF-sized backing store (`round(gBCR × dpr)`) divided back to CSS px,
+ *  never `clientWidth` (which reads 0 under a `content-visibility: auto` skip). */
 export function cssMin(canvas: HTMLCanvasElement): number {
-    return Math.min(canvas.clientWidth || 320, canvas.clientHeight || 320);
+    const dpr = Math.max(resolveBudgetDpr(), 1);
+    return Math.min(canvas.width || 1, canvas.height || 1) / dpr;
 }
 
 /** The flow mote count, clamped to the storage/state cap. */

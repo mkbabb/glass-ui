@@ -28,6 +28,7 @@ import {
     type GpuBackend,
 } from "../../../../composables/glass/webgpu/useGpuSubstrate";
 import { usePointerVelocityField } from "../../../../composables/motion/usePointerVelocityField";
+import { resolveBudgetDpr } from "../../aurora/constants/budget";
 import type { OklchStop } from "../../../../composables/color";
 import type { FourierFieldConfig } from "../constants";
 import { SCRUB_GAIN, FOLLOW_LEAN, MAX_PHASORS } from "../constants";
@@ -244,8 +245,9 @@ export function useFourierField(
     const getHeadUnit = (): { x: number; y: number } | null => {
         const canvas = canvasRef.value;
         if (!canvas) return null;
-        const w = canvas.clientWidth || 0;
-        const h = canvas.clientHeight || 0;
+        // BG.W-VIZ-RESIZE-ADOPT — read the LEAF-sized backing store, never clientWidth.
+        const w = canvas.width || 0;
+        const h = canvas.height || 0;
         if (w <= 0 || h <= 0) return null;
         const aspect = w / h;
         const m = getHeadModel();
@@ -311,6 +313,9 @@ export function useFourierField(
             handle = createGpuSubstrate(canvas, {
                 mode,
                 respectReducedMotion: config.respectReducedMotion,
+                // BG.W-VIZ-RESIZE-ADOPT — the leaf owns backing measurement + sizing
+                // (round(gBCR × dprPolicy)); both setups' `resize` are upload-only.
+                dprPolicy: resolveBudgetDpr,
                 setupWGPU: createFourierWGPUSetup({
                     canvas,
                     config,

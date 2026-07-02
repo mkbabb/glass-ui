@@ -7,7 +7,10 @@
 // pass → submit. It owns NO scheduling — the canvas lifecycle leaf delivers the frame; the
 // `onFrame` hook advances the shared pointer field (the no-own-rAF discipline).
 
-import type { WebGPUCanvasFrame } from "../../../../composables/glass/webgpu/useWebGPUCanvas";
+import type {
+    WebGPUCanvasFrame,
+    BackingSize,
+} from "../../../../composables/glass/webgpu/useWebGPUCanvas";
 import type { OklchStop } from "../../../../composables/color";
 import { resolveBudgetDpr } from "../../aurora/constants/budget";
 import { FOURIER_FIELD_COMPUTE_WGSL } from "../shaders/fourier-field.compute.wgsl";
@@ -221,17 +224,9 @@ export function createFourierWGPUSetup(
             device.queue.writeBuffer(phasorBuffer, 0, packPhasorTable(spectrum));
         }
 
-        function resize(): void {
-            const dpr = resolveBudgetDpr();
-            const cssW = canvas.clientWidth || 320;
-            const cssH = canvas.clientHeight || 320;
-            const w = Math.max(1, Math.round(cssW * dpr));
-            const h = Math.max(1, Math.round(cssH * dpr));
-            if (canvas.width !== w || canvas.height !== h) {
-                canvas.width = w;
-                canvas.height = h;
-            }
-        }
+        // BG.W-VIZ-RESIZE-ADOPT — upload-only. The LEAF sized the backing store; the WGPU
+        // swap chain auto-resizes to it — no-op.
+        function resize(_s?: BackingSize): void {}
 
         function frame(timeSec: number): void {
             onFrame?.(timeSec);
@@ -258,12 +253,11 @@ export function createFourierWGPUSetup(
             );
             device.queue.writeBuffer(computeUniform, 0, computeScratch.buffer);
 
-            const cssMin = Math.min(
-                canvas.clientWidth || 320,
-                canvas.clientHeight || 320,
-            );
-            const aspect =
-                (canvas.clientWidth || 320) / Math.max(canvas.clientHeight || 320, 1);
+            // BG.W-VIZ-RESIZE-ADOPT — the box in CSS px derives from the LEAF-sized backing
+            // store (round(gBCR × dpr) ÷ dpr), never clientWidth.
+            const cssMin =
+                Math.min(canvas.width, canvas.height) / Math.max(resolveBudgetDpr(), 1);
+            const aspect = canvas.width / Math.max(canvas.height, 1);
             const trailModel = trailWidthToModel(config.trailWidth, fit.scale, cssMin);
 
             // D6b — lean the view-fit CENTER toward the cursor (the 2-D follow). The render

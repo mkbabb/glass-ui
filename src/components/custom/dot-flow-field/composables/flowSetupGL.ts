@@ -9,9 +9,11 @@
 // GL compile/link/probe helpers live in flowGLProgram.ts; the `flow` channel in
 // flowSetupGLFlow.ts; the shared deps/constants/helpers in useFlowParticles.ts.
 
-import type { WebGLCanvasFrame } from "../../../../composables/glass/webgl/useWebGLCanvas";
+import type {
+    WebGLCanvasFrame,
+    BackingSize,
+} from "../../../../composables/glass/webgl/useWebGLCanvas";
 import { oklchToLinear } from "../../../../composables/color";
-import { resolveBudgetDpr } from "../../aurora/constants/budget";
 import {
     FLOW_FIELD_VERT_GLSL,
     FLOW_FIELD_FRAG_GLSL,
@@ -76,23 +78,15 @@ export function createFlowGLSetup(
         const uWaves = u("uWaves[0]");
         const uPalette = u("uPalette[0]");
 
-        function resize(): void {
-            const dpr = resolveBudgetDpr();
-            const cssW = canvas.clientWidth || 320;
-            const cssH = canvas.clientHeight || 320;
-            const w = Math.max(1, Math.round(cssW * dpr));
-            const h = Math.max(1, Math.round(cssH * dpr));
-            if (canvas.width !== w || canvas.height !== h) {
-                canvas.width = w;
-                canvas.height = h;
-            }
-            gl.viewport(0, 0, canvas.width, canvas.height);
+        // BG.W-VIZ-RESIZE-ADOPT — upload-only (the leaf sized the backing store).
+        function resize(s?: BackingSize): void {
+            gl.viewport(0, 0, s?.w ?? canvas.width, s?.h ?? canvas.height);
         }
 
         function frame(timeSec: number): void {
             onFrame?.(timeSec);
             const min = cssMin(canvas);
-            const aspect = (canvas.clientWidth || 320) / Math.max(canvas.clientHeight || 320, 1);
+            const aspect = canvas.width / Math.max(canvas.height, 1);
             const geometry = flowGridGeometry(config.gridPitch, min);
             const pxPerDomain = min / (2 * FLOW_DOMAIN_HALF);
             const dotRadiusDomain = config.dotSize / Math.max(pxPerDomain, 1e-4);

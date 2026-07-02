@@ -15,9 +15,9 @@
 
 import type {
     WebGPUCanvasFrame,
+    BackingSize,
 } from "../../../../composables/glass/webgpu/useWebGPUCanvas";
 import { AURORA_WGSL } from "../constants/shaders/aurora.wgsl";
-import { resolveAuroraWashDpr } from "../constants/budget";
 import {
     advanceCursor,
     cursorIsLive,
@@ -131,23 +131,10 @@ export function createAuroraWGPUSetup(
 
         const scratch = createAuroraWGPUUniformScratch();
 
-        function resize(): void {
-            // BB.W-PERF-PRODUCER A′-5 mirror — the aurora wash backs at the SUB-2×
-            // ceiling (the consumer owns its DPR policy; the leaf does not bake it).
-            const dpr = resolveAuroraWashDpr();
-            const rect = canvas.getBoundingClientRect();
-            const parentRect = canvas.parentElement?.getBoundingClientRect();
-            const cw = rect.width || parentRect?.width || 1;
-            const ch = rect.height || parentRect?.height || 1;
-            const w = Math.max(1, Math.round(cw * dpr));
-            const h = Math.max(1, Math.round(ch * dpr));
-            // The swap chain auto-resizes to the backing store; only the canvas
-            // dimension changes (no context.configure on resize).
-            if (canvas.width !== w || canvas.height !== h) {
-                canvas.width = w;
-                canvas.height = h;
-            }
-        }
+        // BG.W-VIZ-RESIZE-ADOPT — upload-only. The LEAF sizer already set the backing
+        // store (round(gBCR × resolveAuroraWashDpr), the call-site dprPolicy); the WGPU
+        // swap chain auto-resizes to it on the next frame, so the WGSL leg is a no-op.
+        function resize(_s?: BackingSize): void {}
 
         function frame(timeSec: number): void {
             // BC.W-VIZ-AURORA (T5) — FEED the shared pointer field one tick (the one-loop

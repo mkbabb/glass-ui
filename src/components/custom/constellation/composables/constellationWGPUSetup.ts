@@ -13,8 +13,10 @@
 // the wash-class clamp that produced the upscaled blur is GONE for constellation) so the
 // SDF circles sample at device resolution.
 
-import type { WebGPUCanvasFrame } from "../../../../composables/glass/webgpu/useWebGPUCanvas";
-import { resolveBudgetDpr } from "../../aurora/constants/budget";
+import type {
+    WebGPUCanvasFrame,
+    BackingSize,
+} from "../../../../composables/glass/webgpu/useWebGPUCanvas";
 import { CONSTELLATION_POINTS_WGSL } from "../shaders/constellation-points.wgsl";
 import { CONSTELLATION_LINES_WGSL } from "../shaders/constellation-lines.wgsl";
 import {
@@ -184,20 +186,11 @@ export function createConstellationWGPUSetup(
         const nodeScratch = createNodeScratch();
         const edgeScratch = createEdgeScratch();
 
-        function resize(): void {
-            // The focal lattice KEEPS the 2× budget cap (sharp discs; the wash-class sub-2×
-            // clamp that produced the upscaled blur is GONE). The swap chain auto-resizes to
-            // the backing store (no context.configure on resize).
-            const dpr = resolveBudgetDpr();
-            const cssW = canvas.clientWidth || 320;
-            const cssH = canvas.clientHeight || 320;
-            const w = Math.max(1, Math.round(cssW * dpr));
-            const h = Math.max(1, Math.round(cssH * dpr));
-            if (canvas.width !== w || canvas.height !== h) {
-                canvas.width = w;
-                canvas.height = h;
-            }
-            onResize?.(canvas.width, canvas.height);
+        // BG.W-VIZ-RESIZE-ADOPT — upload-only. The LEAF sized the backing store (the focal
+        // lattice KEEPS the 2× budget cap via the call-site dprPolicy; the WGPU swap chain
+        // auto-resizes to it); the closure only notifies the renderer of the new dims.
+        function resize(s?: BackingSize): void {
+            onResize?.(s?.w ?? canvas.width, s?.h ?? canvas.height);
         }
 
         function frame(timeSec: number): void {

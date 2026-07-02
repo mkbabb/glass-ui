@@ -9,8 +9,10 @@
 // Float32Arrays the WGPU path uploads (one pack, two backends). The renderer's `resolveFrame`
 // (the ONE JS math source + the shared pointer `tick`) is substrate-agnostic.
 
-import type { WebGLCanvasFrame } from "../../../../composables/glass/webgl/useWebGLCanvas";
-import { resolveBudgetDpr } from "../../aurora/constants/budget";
+import type {
+    WebGLCanvasFrame,
+    BackingSize,
+} from "../../../../composables/glass/webgl/useWebGLCanvas";
 import {
     CONSTELLATION_POINTS_VERT_GLSL,
     CONSTELLATION_POINTS_FRAG_GLSL,
@@ -133,18 +135,11 @@ export function createConstellationGLSetup(
         const nodeScratch = createNodeScratch();
         const edgeScratch = createEdgeScratch();
 
-        function resize(): void {
-            const dpr = resolveBudgetDpr();
-            const cssW = canvas.clientWidth || 320;
-            const cssH = canvas.clientHeight || 320;
-            const w = Math.max(1, Math.round(cssW * dpr));
-            const h = Math.max(1, Math.round(cssH * dpr));
-            if (canvas.width !== w || canvas.height !== h) {
-                canvas.width = w;
-                canvas.height = h;
-            }
-            gl.viewport(0, 0, canvas.width, canvas.height);
-            onResize?.(canvas.width, canvas.height);
+        // BG.W-VIZ-RESIZE-ADOPT — upload-only. The LEAF sized the backing store; the
+        // closure uploads the viewport + notifies the renderer of the new backing dims.
+        function resize(s?: BackingSize): void {
+            gl.viewport(0, 0, s?.w ?? canvas.width, s?.h ?? canvas.height);
+            onResize?.(s?.w ?? canvas.width, s?.h ?? canvas.height);
         }
 
         function frame(timeSec: number): void {

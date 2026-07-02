@@ -13,8 +13,10 @@
 // WGPU setup only swaps the upload+draw leg (the typed-struct buffer write + the
 // render-pass) for the GL `uploadBlobUniforms` leg.
 
-import type { WebGPUCanvasFrame } from "../../../../composables/glass/webgpu/useWebGPUCanvas";
-import { resolveBudgetDpr } from "../../aurora/constants/budget";
+import type {
+    WebGPUCanvasFrame,
+    BackingSize,
+} from "../../../../composables/glass/webgpu/useWebGPUCanvas";
 import { METABALL_WGSL } from "../shaders/metaball.wgsl";
 import {
     BLOB_WGPU_UNIFORM_BYTES,
@@ -124,22 +126,12 @@ export function createBlobWGPUSetup(
 
         const scratch = createBlobWGPUUniformScratch();
 
-        function resize(): void {
-            // The focal goo-blob KEEPS resolveBudgetDpr() (2×) — its silhouette is sharp
-            // (distinct from the aurora wash's sub-2× ceiling). The CSS box stays the
-            // same; the swap chain auto-resizes to the backing store (no context.configure
-            // on resize). The `half` quality axis halves the backing buffer.
-            const dpr = resolveBudgetDpr();
-            const qScale = config.quality === "half" ? 0.5 : 1.0;
-            const cssW = canvas.clientWidth || config.geometry.canvasSize;
-            const cssH = canvas.clientHeight || config.geometry.canvasSize;
-            const w = Math.max(1, Math.round(cssW * dpr * qScale));
-            const h = Math.max(1, Math.round(cssH * dpr * qScale));
-            if (canvas.width !== w || canvas.height !== h) {
-                canvas.width = w;
-                canvas.height = h;
-            }
-        }
+        // BG.W-VIZ-RESIZE-ADOPT — upload-only. The LEAF sizer already set the backing
+        // store (round(gBCR × the renderer's `blobDprPolicy`, which folds the `half`
+        // quality axis); WGPU's swap chain auto-resizes to the backing on the next
+        // `getCurrentTexture`, and `frame()` reads `canvas.width/height` directly, so the
+        // WGSL leg has nothing to upload — the closure is an intentional no-op.
+        function resize(_s?: BackingSize): void {}
 
         function frame(timeSec: number): void {
             const frameState = resolveFrame(timeSec);

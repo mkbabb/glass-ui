@@ -8,10 +8,12 @@
 // fragment field, so the parity is `verified` not `degraded`). It owns NO scheduling — the
 // canvas lifecycle leaf delivers the frame.
 
-import type { WebGLCanvasFrame } from "../../../../composables/glass/webgl/useWebGLCanvas";
+import type {
+    WebGLCanvasFrame,
+    BackingSize,
+} from "../../../../composables/glass/webgl/useWebGLCanvas";
 import type { OklchStop } from "../../../../composables/color";
 import { oklchToLinear } from "../../../../composables/color";
-import { resolveBudgetDpr } from "../../aurora/constants/budget";
 import {
     CONCENTRIC_VERT_GLSL,
     CONCENTRIC_FRAG_GLSL,
@@ -105,26 +107,16 @@ export function createConcentricGLSetup(
         const uTune = u("uTune");
         const uPalette = u("uPalette[0]");
 
-        function resize(): void {
-            const dpr = resolveBudgetDpr();
-            const cssW = canvas.clientWidth || 320;
-            const cssH = canvas.clientHeight || 320;
-            const w = Math.max(1, Math.round(cssW * dpr));
-            const h = Math.max(1, Math.round(cssH * dpr));
-            if (canvas.width !== w || canvas.height !== h) {
-                canvas.width = w;
-                canvas.height = h;
-            }
-            gl.viewport(0, 0, canvas.width, canvas.height);
+        // BG.W-VIZ-RESIZE-ADOPT — upload-only (the leaf sized the backing store).
+        function resize(s?: BackingSize): void {
+            gl.viewport(0, 0, s?.w ?? canvas.width, s?.h ?? canvas.height);
         }
 
         function frame(timeSec: number): void {
             // Advance the shared pointer field + inject the transient cursor center (the
             // no-own-rAF discipline — the renderer's loop feeds the push-API).
             onFrame?.(timeSec);
-            const cssW = canvas.clientWidth || 320;
-            const cssH = canvas.clientHeight || 320;
-            const aspect = cssW / Math.max(cssH, 1);
+            const aspect = canvas.width / Math.max(canvas.height, 1);
 
             gl.useProgram(program);
             gl.bindVertexArray(vao);

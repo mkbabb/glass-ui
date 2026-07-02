@@ -6,8 +6,10 @@
 // begin a render pass against the swap-chain view, draw 3 vertices, submit. It owns NO
 // scheduling — the canvas lifecycle leaf delivers the frame.
 
-import type { WebGPUCanvasFrame } from "../../../../composables/glass/webgpu/useWebGPUCanvas";
-import { resolveBudgetDpr } from "../../aurora/constants/budget";
+import type {
+    WebGPUCanvasFrame,
+    BackingSize,
+} from "../../../../composables/glass/webgpu/useWebGPUCanvas";
 import { PAPER_GRID_WGSL } from "../shaders/paper-grid.wgsl";
 import type { PaperGridConfig } from "../constants";
 import type { Vec2 } from "./paperGrid";
@@ -102,30 +104,19 @@ export function createPaperGridWGPUSetup(
             entries: [{ binding: 0, resource: { buffer: uniformBuffer } }],
         });
 
-        function resize(): void {
-            // A wash-class field — the aurora sub-2× DPR ceiling fits; the Golus AA reads the
-            // ACTUAL backing-store pixel, so a capped DPR keeps the lines crisp.
-            const dpr = resolveBudgetDpr();
-            const cssW = canvas.clientWidth || 320;
-            const cssH = canvas.clientHeight || 320;
-            const w = Math.max(1, Math.round(cssW * dpr));
-            const h = Math.max(1, Math.round(cssH * dpr));
-            if (canvas.width !== w || canvas.height !== h) {
-                canvas.width = w;
-                canvas.height = h;
-            }
-        }
+        // BG.W-VIZ-RESIZE-ADOPT — upload-only. The LEAF sized the backing store (the Golus
+        // AA reads the ACTUAL backing pixel; the capped DPR rides the call-site dprPolicy);
+        // the WGPU swap chain auto-resizes to it — no-op.
+        function resize(_s?: BackingSize): void {}
 
         function frame(timeSec: number): void {
             // Advance the shared pointer field + derive the transient cursor (the no-own-rAF
             // discipline — the renderer's loop feeds the push-API).
             onFrame?.(timeSec);
-            const cssW = canvas.clientWidth || 320;
-            const cssH = canvas.clientHeight || 320;
-            const aspect = cssW / Math.max(cssH, 1);
+            const aspect = canvas.width / Math.max(canvas.height, 1);
             // The grid scale derives from the backing-store extent so the cell pitch is honest
             // in device px (the Golus derivative reads the actual pixel).
-            const viewExtentPx = canvas.height || Math.round(cssH * resolveBudgetDpr());
+            const viewExtentPx = canvas.height || 1;
             packPaperGridUniforms(scratch, config, timeSec, aspect, viewExtentPx, getCursor(), getAmp());
             device.queue.writeBuffer(uniformBuffer, 0, scratch.buffer);
 

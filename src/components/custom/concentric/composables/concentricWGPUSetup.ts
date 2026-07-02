@@ -6,9 +6,11 @@
 // begin a render pass against the swap-chain view, draw 3 vertices, submit. It owns NO
 // scheduling — the canvas lifecycle leaf delivers the frame.
 
-import type { WebGPUCanvasFrame } from "../../../../composables/glass/webgpu/useWebGPUCanvas";
+import type {
+    WebGPUCanvasFrame,
+    BackingSize,
+} from "../../../../composables/glass/webgpu/useWebGPUCanvas";
 import type { OklchStop } from "../../../../composables/color";
-import { resolveBudgetDpr } from "../../aurora/constants/budget";
 import { CONCENTRIC_WGSL } from "../shaders/concentric.wgsl";
 import type { ConcentricConfig } from "../constants";
 import type { Vec2 } from "./levelField";
@@ -111,26 +113,15 @@ export function createConcentricWGPUSetup(
             entries: [{ binding: 0, resource: { buffer: uniformBuffer } }],
         });
 
-        function resize(): void {
-            // A wash-class field — the aurora sub-2× DPR ceiling fits (the swap chain
-            // auto-resizes to the backing store).
-            const dpr = resolveBudgetDpr();
-            const cssW = canvas.clientWidth || 320;
-            const cssH = canvas.clientHeight || 320;
-            const w = Math.max(1, Math.round(cssW * dpr));
-            const h = Math.max(1, Math.round(cssH * dpr));
-            if (canvas.width !== w || canvas.height !== h) {
-                canvas.width = w;
-                canvas.height = h;
-            }
-        }
+        // BG.W-VIZ-RESIZE-ADOPT — upload-only. The LEAF sized the backing store; the WGPU
+        // swap chain auto-resizes to it — no-op.
+        function resize(_s?: BackingSize): void {}
 
         function frame(timeSec: number): void {
             // Advance the shared pointer field + inject the transient cursor center (the
             // no-own-rAF discipline — the renderer's loop feeds the push-API).
             onFrame?.(timeSec);
-            const aspect =
-                (canvas.clientWidth || 320) / Math.max(canvas.clientHeight || 320, 1);
+            const aspect = canvas.width / Math.max(canvas.height, 1);
             packConcentricUniforms(
                 scratch,
                 config,

@@ -22,6 +22,7 @@ import {
     type GpuBackend,
 } from "../../../../composables/glass/webgpu/useGpuSubstrate";
 import { usePointerVelocityField } from "../../../../composables/motion/usePointerVelocityField";
+import { resolveBudgetDpr } from "../../aurora/constants/budget";
 import type { OklchStop } from "../../../../composables/color";
 import type { ConcentricConfig } from "../constants";
 import type { Vec2 } from "./levelField";
@@ -148,7 +149,7 @@ export function useConcentric(
         const lead = 0.1;
         const accLead = 0.04;
         const canvas = canvasRef.value;
-        const aspect = (canvas?.clientWidth || 320) / Math.max(canvas?.clientHeight || 320, 1);
+        const aspect = (canvas?.width || 1) / Math.max(canvas?.height || 1, 1);
         cursor = {
             x: ((sp.x * 2 - 1) + vel.x * lead + acc.x * accLead) * aspect,
             y: -(sp.y * 2 - 1) - vel.y * lead - acc.y * accLead,
@@ -177,6 +178,9 @@ export function useConcentric(
             handle = createGpuSubstrate(canvas, {
                 mode,
                 respectReducedMotion: config.respectReducedMotion,
+                // BG.W-VIZ-RESIZE-ADOPT — the leaf owns backing measurement + sizing
+                // (round(gBCR × dprPolicy)); both setups' `resize` are upload-only.
+                dprPolicy: resolveBudgetDpr,
                 setupWGPU: createConcentricWGPUSetup({
                     canvas,
                     config,

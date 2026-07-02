@@ -29,6 +29,7 @@ import { onScopeDispose, ref, type Ref } from "vue";
 import {
     createGpuSubstrate,
     type GpuBackend,
+    type BackingSize,
 } from "../../../../composables/glass/webgpu/useGpuSubstrate";
 import type { WebGPUCanvasFrame } from "../../../../composables/glass/webgpu/useWebGPUCanvas";
 import type { WebGLCanvasFrame } from "../../../../composables/glass/webgl/useWebGLCanvas";
@@ -264,17 +265,10 @@ export function useGooDotMatrix(
         return function setupWGPU(device, context, format) {
             const res = createGooDotWGPUResources(device, format);
 
-            function resize(): void {
-                const dpr = resolveBudgetDpr();
-                const cssW = canvas.clientWidth || getField().geometry.canvasSize;
-                const cssH = canvas.clientHeight || getField().geometry.canvasSize;
-                const w = Math.max(1, Math.round(cssW * dpr));
-                const h = Math.max(1, Math.round(cssH * dpr));
-                if (canvas.width !== w || canvas.height !== h) {
-                    canvas.width = w;
-                    canvas.height = h;
-                }
-            }
+            // BG.W-VIZ-RESIZE-ADOPT — upload-only. The LEAF sizer set the backing store
+            // (round(gBCR × the call-site dprPolicy); the WGPU swap chain auto-resizes to
+            // it and `frame()` reads `canvas.width/height` directly — no-op.
+            function resize(_s?: BackingSize): void {}
 
             function frame(timeSec: number): void {
                 const frameState = resolveFrame(timeSec);
@@ -363,17 +357,9 @@ export function useGooDotMatrix(
             const res = createGooDotGLResources(gl);
             const { prog, vao, locs, dU } = res;
 
-            function resize(): void {
-                const dpr = resolveBudgetDpr();
-                const cssW = canvas.clientWidth || getField().geometry.canvasSize;
-                const cssH = canvas.clientHeight || getField().geometry.canvasSize;
-                const w = Math.max(1, Math.round(cssW * dpr));
-                const h = Math.max(1, Math.round(cssH * dpr));
-                if (canvas.width !== w || canvas.height !== h) {
-                    canvas.width = w;
-                    canvas.height = h;
-                }
-                gl.viewport(0, 0, canvas.width, canvas.height);
+            // BG.W-VIZ-RESIZE-ADOPT — upload-only (the leaf sized the backing store).
+            function resize(s?: BackingSize): void {
+                gl.viewport(0, 0, s?.w ?? canvas.width, s?.h ?? canvas.height);
             }
 
             function frame(timeSec: number): void {
@@ -464,6 +450,9 @@ export function useGooDotMatrix(
             wrapperRef.value = canvas.parentElement ?? canvas;
             handle = createGpuSubstrate(canvas, {
                 mode,
+                // BG.W-VIZ-RESIZE-ADOPT — the leaf owns backing measurement + sizing
+                // (round(gBCR × dprPolicy)); both setups' `resize` are upload-only.
+                dprPolicy: resolveBudgetDpr,
                 contextAttrs: {
                     alpha: true,
                     premultipliedAlpha: true,

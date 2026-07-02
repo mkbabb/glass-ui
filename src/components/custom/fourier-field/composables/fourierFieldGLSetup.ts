@@ -8,7 +8,10 @@
 // parity is `verified` (the same SDF over the same evaluator). NEVER reached on a capable
 // engine. It owns NO scheduling — the canvas lifecycle leaf delivers the frame.
 
-import type { WebGLCanvasFrame } from "../../../../composables/glass/webgl/useWebGLCanvas";
+import type {
+    WebGLCanvasFrame,
+    BackingSize,
+} from "../../../../composables/glass/webgl/useWebGLCanvas";
 import type { OklchStop } from "../../../../composables/color";
 import { oklchToLinear } from "../../../../composables/color";
 import { resolveBudgetDpr } from "../../aurora/constants/budget";
@@ -127,17 +130,9 @@ export function createFourierGLSetup(
             fit = computeFourierFit(spectrum);
         }
 
-        function resize(): void {
-            const dpr = resolveBudgetDpr();
-            const cssW = canvas.clientWidth || 320;
-            const cssH = canvas.clientHeight || 320;
-            const w = Math.max(1, Math.round(cssW * dpr));
-            const h = Math.max(1, Math.round(cssH * dpr));
-            if (canvas.width !== w || canvas.height !== h) {
-                canvas.width = w;
-                canvas.height = h;
-            }
-            gl.viewport(0, 0, canvas.width, canvas.height);
+        // BG.W-VIZ-RESIZE-ADOPT — upload-only (the leaf sized the backing store).
+        function resize(s?: BackingSize): void {
+            gl.viewport(0, 0, s?.w ?? canvas.width, s?.h ?? canvas.height);
         }
 
         function frame(timeSec: number): void {
@@ -183,10 +178,11 @@ export function createFourierGLSetup(
                 }
             }
 
-            const cssW = canvas.clientWidth || 320;
-            const cssH = canvas.clientHeight || 320;
-            const cssMin = Math.min(cssW, cssH);
-            const aspect = cssW / Math.max(cssH, 1);
+            // BG.W-VIZ-RESIZE-ADOPT — the box in CSS px derives from the LEAF-sized
+            // backing store (round(gBCR × dpr) ÷ dpr), never clientWidth.
+            const aspect = canvas.width / Math.max(canvas.height, 1);
+            const cssMin =
+                Math.min(canvas.width, canvas.height) / Math.max(resolveBudgetDpr(), 1);
             const trailModel = trailWidthToModel(config.trailWidth, fit.scale, cssMin);
             const palette = getPalette();
             const stopCount = Math.min(palette.length, MAX_FOURIER_STOPS);

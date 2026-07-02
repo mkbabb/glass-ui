@@ -19,6 +19,7 @@ import {
     createGpuSubstrate,
     type GpuBackend,
 } from "../../../../composables/glass/webgpu/useGpuSubstrate";
+import { resolveBudgetDpr } from "../../aurora/constants/budget";
 import {
     seedField,
     stepField,
@@ -219,18 +220,22 @@ export function useConstellation(
 
         // ── The per-frame resolve (the ONE JS math source + the shared pointer tick) ──
         const resolveFrame = (timeSec: number): ConstellationRenderState | null => {
-            const w = canvas.clientWidth || canvas.offsetWidth || BASE_WIDTH;
-            const h = canvas.clientHeight || canvas.offsetHeight || 720;
+            const dpr = Math.min(
+                (typeof window !== "undefined" && window.devicePixelRatio) || 1,
+                2,
+            );
+            // BG.W-VIZ-RESIZE-ADOPT — the field lays out in CSS px derived from the
+            // LEAF-sized backing store (round(gBCR × dpr) ÷ dpr), never clientWidth
+            // (which reads 0 under a content-visibility skip).
+            const w = canvas.width ? canvas.width / dpr : BASE_WIDTH;
+            const h = canvas.height ? canvas.height / dpr : 720;
             const k = w / BASE_WIDTH;
             field.canvas = canvas;
             const kFloorRaw = parseFloat(
                 getComputedStyle(canvas).getPropertyValue("--constellation-k-floor"),
             );
             field.kFloor = Number.isFinite(kFloorRaw) ? kFloorRaw : undefined;
-            field.dpr = Math.min(
-                (typeof window !== "undefined" && window.devicePixelRatio) || 1,
-                2,
-            );
+            field.dpr = dpr;
 
             // Lay out / re-fit the field on a size change (the first sized frame seeds it).
             if (field.w !== w || field.h !== h) {
@@ -304,7 +309,7 @@ export function useConstellation(
             }
 
             // ── Resolve the uniforms (the ONE color source — readPalette JS-side) ──
-            const dpr = field.dpr;
+            // BG.W-VIZ-RESIZE-ADOPT — `dpr` is the field-layout dpr computed above.
             const kVis = kVisOf(field);
             const resW = canvas.width || Math.round(w * dpr);
             const resH = canvas.height || Math.round(h * dpr);
@@ -377,6 +382,9 @@ export function useConstellation(
         handle = createGpuSubstrate(canvas, {
             mode: "live",
             respectReducedMotion: true,
+            // BG.W-VIZ-RESIZE-ADOPT — the leaf owns backing measurement + sizing
+            // (round(gBCR × dprPolicy)); both setups' `resize` are upload-only.
+            dprPolicy: resolveBudgetDpr,
             setupWGPU: createConstellationWGPUSetup({ canvas, ...setupDeps }),
             setupGL: createConstellationGLSetup({ canvas, ...setupDeps }),
         });

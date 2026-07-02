@@ -26,6 +26,7 @@ import {
     type GpuBackend,
 } from "../../../../composables/glass/webgpu/useGpuSubstrate";
 import { usePointerVelocityField } from "../../../../composables/motion/usePointerVelocityField";
+import { resolveBudgetDpr } from "../../aurora/constants/budget";
 import type { OklchStop } from "../../../../composables/color";
 import type { FlowFieldConfig } from "../constants";
 import { createFlowWGPUSetup, createFlowGLSetup } from "./useFlowParticles";
@@ -200,6 +201,9 @@ export function useDotFlowField(
             handle = createGpuSubstrate(canvas, {
                 mode,
                 respectReducedMotion: config.respectReducedMotion,
+                // BG.W-VIZ-RESIZE-ADOPT — the leaf owns backing measurement + sizing
+                // (round(gBCR × dprPolicy)); every setup's `resize` is upload-only.
+                dprPolicy: resolveBudgetDpr,
                 setupWGPU: createFlowWGPUSetup({
                     ...setupDeps,
                     config: effective,

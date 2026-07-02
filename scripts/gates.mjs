@@ -2035,6 +2035,12 @@ export const GATES = [
         note: "BC.W-VIZ-CONSTELLATION — the constellation WebGPU-migration SOURCE gate (born-RED on the pre-migration HEAD → GREEN at close). The lattice re-homes off the Canvas2D substrate (the low-res ctx.arc() discs) onto the WebGPU instanced-points+lines substrate (the §E 'WebGPU everywhere, no canvas' mandate). C1 WebGPU substrate, no Canvas2D (useConstellation composes createGpuSubstrate + no useCanvas2D import; no getContext(\"2d\")/ctx.arc/ctx.fill; constellationDraw.ts DELETED); C2 crisp SDF circle (the points WGSL length(...)−1.0 SDF + fwidth-smoothstep AA + DPR-aware *uDpr; the GLSL twin matches); C3 instanced-points+instanced-lines, no point-list/line-list (6×N instanced quads); C4 ONE math source + typed-struct SoT (constellationField.ts the single JS evaluator; uniformBridgeWGPU.ts the struct↔buffer SoT). The binding live Metal-GPU paint (crispness + drift + pointer + Safari + PRM-freeze) rides tests-visual/constellation.spec.ts (W-REFLECT3). Bite: a surviving Canvas2D draw / a point-list topology / a forked field math → RED.",
     },
     {
+        id: "proof:viz",
+        cmd: "proof:viz",
+        tags: ["local", "ci", "release"],
+        note: "BG.W-VIZ-RESIZE-ADOPT — viz-resize-UPLOAD-ONLY source gate (born-RED on HEAD → GREEN at the hard-adopt). The ONE backing-store sizer `sizeBacking` (createCanvasLifecycle.ts) measures the LAID-OUT gBCR (never clientWidth) and sizes the backing to round(gBCR × dpr); every one of the 9 procedural viz threads `dprPolicy` + its resize/render closure is UPLOAD-ONLY (no self-measure, no canvas.width= self-size — the leaf owns sizing). V1 one-sizer-gBCR-round · V2 no clientWidth||-self-measure · V3 no canvas.width=-self-size (auroraFallbackGround.ts offscreen-raster EXEMPT) · V4 dprPolicy threaded at all 9 createGpuSubstrate call-sites · V5 sizeAndUpload routes sizeBacking(canvas, dprPolicy)→options.resize(s). Device-free SOURCE arm; the live per-viz backing==round(gBCR×dpr) + meanByte>floor SPA-nav paint on Chrome AND Safari rides the orchestrator real-Metal capture (the cardinal split). Bite: a planted clientWidth||320 / canvas.width= / dprPolicy-less createGpuSubstrate / clientWidth-sizeBacking → RED (--selftest).",
+    },
+    {
         id: "proof:viz-dotflow",
         cmd: "proof:viz-dotflow",
         tags: ["local", "ci", "release"],

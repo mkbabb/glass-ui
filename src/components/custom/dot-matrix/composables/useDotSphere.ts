@@ -17,7 +17,10 @@
 // anywhere (§E). Both setups invoke `onFrame(t)` from inside their frame callback (the
 // shared pointer field push-step — the no-own-rAF discipline).
 
-import type { WebGPUCanvasFrame } from "../../../../composables/glass/webgpu/useWebGPUCanvas";
+import type {
+    WebGPUCanvasFrame,
+    BackingSize,
+} from "../../../../composables/glass/webgpu/useWebGPUCanvas";
 import type { WebGLCanvasFrame } from "../../../../composables/glass/webgl/useWebGLCanvas";
 import type { OklchStop } from "../../../../composables/color";
 import { oklchToLinear } from "../../../../composables/color";
@@ -162,17 +165,10 @@ export function createDotWGPUSetup(
 
         const scratch = createDotRenderScratch();
 
-        function resize(): void {
-            const dpr = resolveBudgetDpr();
-            const cssW = canvas.clientWidth || 320;
-            const cssH = canvas.clientHeight || 320;
-            const w = Math.max(1, Math.round(cssW * dpr));
-            const h = Math.max(1, Math.round(cssH * dpr));
-            if (canvas.width !== w || canvas.height !== h) {
-                canvas.width = w;
-                canvas.height = h;
-            }
-        }
+        // BG.W-VIZ-RESIZE-ADOPT — upload-only. The LEAF sizer set the backing store
+        // (round(gBCR × resolveBudgetDpr), the call-site dprPolicy); the WGPU swap chain
+        // auto-resizes to it, and `frame()` reads `canvas.width/height` directly — no-op.
+        function resize(_s?: BackingSize): void {}
 
         function frame(timeSec: number): void {
             onFrame?.(timeSec);
@@ -306,17 +302,11 @@ export function createDotGLSetup(
         const uStopCount = u("uStopCount");
         const uPalette = u("uPalette[0]");
 
-        function resize(): void {
-            const dpr = resolveBudgetDpr();
-            const cssW = canvas.clientWidth || 320;
-            const cssH = canvas.clientHeight || 320;
-            const w = Math.max(1, Math.round(cssW * dpr));
-            const h = Math.max(1, Math.round(cssH * dpr));
-            if (canvas.width !== w || canvas.height !== h) {
-                canvas.width = w;
-                canvas.height = h;
-            }
-            gl.viewport(0, 0, canvas.width, canvas.height);
+        // BG.W-VIZ-RESIZE-ADOPT — upload-only. The LEAF sizer set the backing store
+        // (round(gBCR × resolveBudgetDpr), the call-site dprPolicy); the closure only
+        // uploads the viewport.
+        function resize(s?: BackingSize): void {
+            gl.viewport(0, 0, s?.w ?? canvas.width, s?.h ?? canvas.height);
         }
 
         function frame(timeSec: number): void {

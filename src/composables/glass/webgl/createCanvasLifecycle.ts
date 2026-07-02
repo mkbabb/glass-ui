@@ -146,21 +146,30 @@ export interface CanvasLifecycleOptions {
     /**
      * Upload the backing geometry to the viewport/uniforms.
      *
-     * BD.W-SUBSTRATE-SIZE-UNIFY (G1): the leaf now MEASURES + sizes the backing store
-     * (via `sizeBacking`, the ONE sizer) and passes the freshly-computed `BackingSize`
-     * here so the consumer can never re-derive a wrong one. The arg is OPTIONAL only so
-     * a legacy consumer that still self-measures keeps compiling during the consumer
-     * cut-over; a consumer SHOULD read `s` and skip its own gBCR/DPR block. When the
-     * leaf owns sizing (`dprPolicy` provided) the buffer is already correct on entry —
-     * the consumer body shrinks to `gl.viewport(0,0,s.w,s.h)` / `uploadResolution`.
+     * BD.W-SUBSTRATE-SIZE-UNIFY (G1): the leaf MEASURES + sizes the backing store (via
+     * `sizeBacking`, the ONE sizer) and passes the freshly-computed `BackingSize` here so
+     * the consumer can never re-derive a wrong one. When the leaf owns sizing (`dprPolicy`
+     * provided) the buffer is already correct on entry — the consumer body is UPLOAD-ONLY,
+     * shrinking to `gl.viewport(0,0,s.w,s.h)` / `uploadResolution` (a WGPU swap-chain leg
+     * is a no-op — it auto-resizes to the backing the leaf set).
+     *
+     * BG.W-VIZ-RESIZE-ADOPT: every GL/WGPU procedural viz has HARD-ADOPTED the leaf sizer
+     * (all 9 pass `dprPolicy` + read `s` upload-only; ZERO viz self-measures the backing —
+     * `proof:viz` enforces `backing == round(gBCR × dpr)` with no surviving `canvas.width =`
+     * self-size). The arg stays optional ONLY for the un-migrated `useCanvas2D` leg + the
+     * substrate contract tests; dropping the `?` (the flag-day) is booked to their adopt.
      */
     resize: (s?: BackingSize) => void;
     /**
      * The consumer's DPR policy, handed to the leaf's `sizeBacking`. When PRESENT the
      * leaf owns the backing-store MEASUREMENT + sizing (the G1 inversion) and the live
      * `BackingSize` rides every `resize` call. When ABSENT the leaf falls back to the
-     * legacy behaviour (the consumer's `resize()` self-measures) — the migration seam
-     * so a consumer can adopt the leaf sizer one viz at a time without a flag-day break.
+     * legacy behaviour (the consumer's `resize()` self-measures) — the migration seam.
+     *
+     * BG.W-VIZ-RESIZE-ADOPT: the GL/WGPU substrate (the `createGpuSubstrate` picker + both
+     * legs) is UNIVERSALLY on this seam now — every one of the 9 procedural viz threads its
+     * budget DPR here (`resolveBudgetDpr` / `resolveAuroraWashDpr`), so the STANDARD is
+     * `dprPolicy`-present; the ABSENT branch survives only for `useCanvas2D`.
      */
     dprPolicy?: DprPolicy;
     /**

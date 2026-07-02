@@ -1,5 +1,8 @@
 import { watch, onUnmounted, type Ref } from "vue";
-import { createGpuSubstrate } from "../../../../composables/glass/webgpu/useGpuSubstrate";
+import {
+    createGpuSubstrate,
+    type BackingSize,
+} from "../../../../composables/glass/webgpu/useGpuSubstrate";
 import { useIntersectionPause } from "../../../../composables/motion/useIntersectionPause";
 import { usePointerVelocityField } from "../../../../composables/motion/usePointerVelocityField";
 import { resolveBudgetDpr } from "../../aurora/constants/budget";
@@ -309,27 +312,18 @@ export function useMetaballRenderer(
         return false;
     }
 
-    /** The DPR-aware backing-store resize (shared math; the WebGL2 path also sets the
-     *  viewport, the WGSL path's render-pass carries the full canvas by default). */
-    function resizeBacking(canvas: HTMLCanvasElement): { w: number; h: number } {
-        // AV.W7 F6 — the DPR≤2 clamp is the named `AV_DPR_MAX` ceiling. The `half`
-        // quality axis halves the backing buffer (~4× fragment savings; the soft FBM/AA
-        // edge hides the interpolation). `full` (default) renders at the clamped DPR.
-        const dpr = resolveBudgetDpr();
-        const qScale = config.quality === "half" ? 0.5 : 1.0;
-        const cssW = canvas.clientWidth || config.geometry.canvasSize;
-        const cssH = canvas.clientHeight || config.geometry.canvasSize;
-        const w = Math.max(1, Math.round(cssW * dpr * qScale));
-        const h = Math.max(1, Math.round(cssH * dpr * qScale));
-        if (canvas.width !== w || canvas.height !== h) {
-            canvas.width = w;
-            canvas.height = h;
-        }
-        return { w, h };
-    }
+    // BG.W-VIZ-RESIZE-ADOPT — the DPR policy the LEAF sizer consumes. The focal
+    // goo-blob KEEPS resolveBudgetDpr() (2×, sharp silhouette — distinct from aurora's
+    // sub-2× wash ceiling); the `half` quality axis halves the backing buffer (~4×
+    // fragment savings, the soft FBM/AA edge hides the interpolation). The leaf measures
+    // the LAID-OUT box (gBCR, never clientWidth/300×150) and sizes the backing to
+    // round(gBCR × dprPolicy) — the consumer no longer self-measures.
+    const blobDprPolicy = (): number =>
+        resolveBudgetDpr() * (config.quality === "half" ? 0.5 : 1.0);
 
     function start(canvas: HTMLCanvasElement) {
         canvasHandle = createGpuSubstrate(canvas, {
+            dprPolicy: blobDprPolicy,
             contextAttrs: {
                 alpha: true,
                 premultipliedAlpha: true,
@@ -356,9 +350,10 @@ export function useMetaballRenderer(
             setupGL: (gl) => {
                 const { prog, vs, fs, vao, buf, locs } = buildMetaballProgram(gl);
 
-                function resize() {
-                    const { w, h } = resizeBacking(canvas);
-                    gl.viewport(0, 0, w, h);
+                // BG.W-VIZ-RESIZE-ADOPT — upload-only: the leaf already sized the backing
+                // (round(gBCR × blobDprPolicy)); the closure only uploads the viewport.
+                function resize(s?: BackingSize) {
+                    gl.viewport(0, 0, s?.w ?? canvas.width, s?.h ?? canvas.height);
                 }
 
                 function drawFrame(timeSec: number) {

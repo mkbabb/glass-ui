@@ -110,11 +110,10 @@ export function usePaperGrid(
         }
 
         // Map the normalized pointer (0..1, y-down) → domain (-1..1, y-up) → grid space.
+        // BG.W-VIZ-RESIZE-ADOPT — read the LEAF-sized backing store, never clientWidth.
         const canvas = canvasRef.value;
-        const cssH = canvas?.clientHeight || 320;
-        const cssW = canvas?.clientWidth || 320;
-        const aspect = cssW / Math.max(cssH, 1);
-        const viewExtentPx = (canvas?.height || Math.round(cssH * resolveBudgetDpr())) || 320;
+        const aspect = (canvas?.width || 1) / Math.max(canvas?.height || 1, 1);
+        const viewExtentPx = canvas?.height || 320;
         const gridScale = gridScaleFor(viewExtentPx, config.cellSize);
 
         const sp = pointer.smoothedPosition.value;
@@ -166,6 +165,9 @@ export function usePaperGrid(
             handle = createGpuSubstrate(canvas, {
                 mode,
                 respectReducedMotion: config.respectReducedMotion,
+                // BG.W-VIZ-RESIZE-ADOPT — the leaf owns backing measurement + sizing
+                // (round(gBCR × dprPolicy)); both setups' `resize` are upload-only.
+                dprPolicy: resolveBudgetDpr,
                 setupWGPU: createPaperGridWGPUSetup({
                     canvas,
                     config,
