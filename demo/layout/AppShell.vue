@@ -45,7 +45,6 @@ import SidebarDock from "./SidebarDock.vue";
 import BottomDock from "./BottomDock.vue";
 import CommandPalette from "../eggs/CommandPalette.vue";
 import KonamiAurora from "../eggs/KonamiAurora.vue";
-import FRedrawOverlay from "../eggs/FRedrawOverlay.vue";
 import { useKonami } from "../eggs/useKonami";
 import "./dock-nav.css";
 
@@ -62,11 +61,6 @@ const showKonami = ref(false);
 useKonami(() => {
     showKonami.value = true;
 });
-// E1 — the ℱ-wordmark Fourier redraw (the wordmark dispatches this event).
-const showFRedraw = ref(false);
-function onFRedraw() {
-    showFRedraw.value = true;
-}
 
 // ── BA.W-DOCK-MORPH-INSITU — the in-situ V↔H orientation morph demonstration ──
 // R8-2: the shell docks must DEMONSTRATE the dock's liquid-glass V↔H morph
@@ -300,13 +294,9 @@ onMounted(() => {
             preventDefault: true,
         },
     );
-
-    // E1 — the wordmark dispatches this when long-pressed / double-clicked.
-    window.addEventListener("glass-ui-demo:f-redraw", onFRedraw);
 });
 
 onBeforeUnmount(() => {
-    window.removeEventListener("glass-ui-demo:f-redraw", onFRedraw);
     window.removeEventListener("glass-ui-demo:toggle-dock-morph", onToggleMorphStage);
 });
 </script>
@@ -409,10 +399,11 @@ onBeforeUnmount(() => {
         <BottomDock />
     </div>
 
-    <!-- Easter eggs (each PRM-fenced; each composes shipped machinery). -->
+    <!-- Easter eggs (each PRM-fenced; each composes shipped machinery). The ℱ-wordmark
+         Fourier-redraw overlay was RETIRED at BG.W-DOCK-PERSISTENT-CUT with its wordmark
+         trigger — the persistent brand egg is gone from both docks. -->
     <CommandPalette v-model:open="showPalette" />
     <KonamiAurora v-if="showKonami" @done="showKonami = false" />
-    <FRedrawOverlay v-if="showFRedraw" @done="showFRedraw = false" />
 
     <!-- BA.W-DOCK-MORPH-INSITU — the in-situ V↔H orientation-morph demonstration.
          A focused stage that OPENS over the live shell (the real shell backdrop reads

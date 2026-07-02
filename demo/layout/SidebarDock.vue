@@ -35,7 +35,6 @@ import { CATEGORIES } from "../stories/manifest";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
 import { useContextualDockLayers } from "../composables/useContextualDockLayers";
 import { useConfiguratorOpen } from "../configurator/useConfiguratorOpen";
-import { useLongPress } from "../eggs/useLongPress";
 
 const props = withDefaults(
     defineProps<{
@@ -73,15 +72,15 @@ const activeCategoryId = computed<string | null>(() => {
 // carries a reference category; the `!c.reference` guard stays as a harmless
 // forward filter, but no category sets it today.)
 //
-// AZ.W-SHELL-IDENTITY (D1) — Foundations is EXCLUDED from the DockIconButton nav
-// loop: the ℱ wordmark home control (#persistent slot, RouterLink to="/" →
-// firstStoryPath() = /foundations/intro) IS the single Foundations affordance.
-// The prior render stacked TWO Foundations entries — the ℱ AND the Foundations
-// category's Compass DockIconButton — with no divider (the user's "duplicated
-// compass," R3-12). The ℱ-as-Foundations is the dedup; a <DockSeparator>
-// demarcates it below the home control.
+// BG.W-DOCK-PERSISTENT-CUT (D8) — the persistent ℱ brand wordmark + its Fourier
+// egg are REMOVED (the iOS-26 HIG "glass is the floating NAVIGATION layer, never
+// content" — the brand egg is the vanity the content-first tab bar avoids). With
+// the wordmark gone, Foundations REJOINS the roving category tablist as a normal
+// chip: the `c.id !== "foundations"` filter — the ℱ-as-Foundations dedup that
+// depended on the now-deleted wordmark — is DROPPED. One Foundations entry, one
+// tab-stop, aria-current, no duplicate (the `!c.reference` forward filter stays).
 const primaryCategories = computed(() =>
-    CATEGORIES.filter((c) => !c.reference && c.id !== "foundations"),
+    CATEGORIES.filter((c) => !c.reference),
 );
 
 function go(categoryId: string): void {
@@ -170,25 +169,6 @@ const railContext = computed<string | undefined>({
     },
 });
 
-// E1 — the ℱ wordmark redraws itself as a Fourier epicycle curve. A long-press
-// (or dbl-click) fires the redraw; a short tap falls through to the RouterLink
-// home navigation. The overlay lives at the shell root (AppShell listens for the
-// event), so the dispatch is a window CustomEvent.
-function fireRedraw(): void {
-    window.dispatchEvent(new CustomEvent("glass-ui-demo:f-redraw"));
-}
-const { handlers: wordmarkPress, fired: redrawFired } = useLongPress(fireRedraw);
-
-function onWordmarkClick(e: MouseEvent): void {
-    // The long-press already fired the egg — swallow this click so it doesn't
-    // ALSO navigate home. A genuine short tap falls through to navigate.
-    if (redrawFired()) {
-        e.preventDefault();
-        return;
-    }
-    emit("navigate");
-}
-
 // AZ.W-SHELL-CONFIG — the gear-hosted demo configurator open control. The
 // floating FAB is GONE; the open is rehomed onto this trailing dock gear (the
 // dock-as-configurator-chrome idiom — GlassDock + DockIconButton). It dispatches
@@ -241,8 +221,8 @@ function onFacetKeydown(e: KeyboardEvent, index: number): void {
          0 (a collapsed dock parked them in the inert/pointer-events:none #default layer
          until a ~400ms hover-dwell — the user's dead-click). Both hosts (desktop fixed
          column + mobile Sheet) are unified on the always-expanded register; the collapse
-         affordance is the BottomDock's job, not the category rail's. The ℱ home stays in
-         #persistent. -->
+         affordance is the BottomDock's job, not the category rail's. The persistent ℱ
+         brand wordmark is GONE (BG.W-DOCK-PERSISTENT-CUT); Foundations is a normal chip. -->
     <GlassDock
         orientation="vertical"
         always-expanded
@@ -250,67 +230,10 @@ function onFacetKeydown(e: KeyboardEvent, index: number): void {
         aria-label="Category navigation"
         data-testid="sidebar-dock-collapsible"
     >
-        <!-- The brand wordmark is the home-left anchor — it lives in the
-             #persistent region so it stays put as the category set scrolls.
-             Long-press / double-click it to redraw the ℱ as a Fourier epicycle
-             curve (E1). The dark-mode toggle is NOT here — per the dock nav-pattern
-             (home-top, utility controls at the trailing END behind a divider) it
-             rides the #collapsed trailing section at the BOTTOM of the rail (below).
-
-             AZ.W-SHELL-IDENTITY — the ℱ IS the single Foundations affordance (the
-             Compass category-nav dup is dropped). It renders AS a DockIconButton
-             (as-child onto the RouterLink) so it carries the SAME first-class
-             dock-control glass hover register the category controls do (the bg →
-             --dock-control-hover-bg glass tier + the travelling specular gleam +
-             --scale-hover-dock lift, R3-6 / W-REGISTER-IOS) — NOT a bare transparent
-             circle (R3-15 / D3). A <DockSeparator> demarcates it below (D1). The
-             optical-center transform (.demo-sidebar-home > span in dock-nav.css)
-             re-seats the italic script-ℱ ink-mass on the box center (D2). -->
-        <template #persistent>
-            <DockIconButton
-                as-child
-                class="demo-sidebar-home"
-                aria-label="glass-ui home"
-            >
-                <RouterLink
-                    to="/"
-                    class="focus-ring tap-squish"
-                    @click="onWordmarkClick"
-                    @dblclick="fireRedraw"
-                    @pointerdown="wordmarkPress.onpointerdown"
-                    @pointerup="wordmarkPress.onpointerup"
-                    @pointerleave="wordmarkPress.onpointerleave"
-                    @pointercancel="wordmarkPress.onpointercancel"
-                >
-                    <span
-                        aria-hidden="true"
-                        class="font-display italic leading-none text-viz-fourier select-none"
-                        style="
-                            font-variation-settings: 'WONK' 1, 'SOFT' 0;
-                            font-optical-sizing: auto;
-                        "
-                    >
-                        &#x2131;
-                    </span>
-                </RouterLink>
-            </DockIconButton>
-            <!-- Demarcate the home control from the category nav below (D1) — the
-                 home-top nav-pattern divider, the same idiom as the reference-shelf
-                 separator. BB.W-DOCK-RAIL-SEAT-FINAL — this ℱ-home separator IS the
-                 rail's anchor seam again (R8-1 verbatim: "placed where the dividing line
-                 for the ℱ is"). The five-attempt whack-a-mole that moved the anchor DOWN
-                 the column (BA.W-SHELL-RAIL-RESEAT → the utility seam, abandoning the
-                 verbatim ask to dodge the title collision) is UN-DONE: the seam line
-                 anchors at THIS divider (the measured `--dock-rail-seam-offset` at the
-                 ℱ-home separator's Y, NEVER the forbidden `inset-block-start: 50%`
-                 midline workaround #4). The title no longer collides because the CHIP
-                 FAN is decoupled from the seam Y and seated in the rail's LOWER gutter
-                 (dock-nav.css), clear of <main> by topology at EVERY y — so the anchor
-                 can return to the ℱ divider without the band-agnostic graze. This is the
-                 ONLY anchored separator in the dock (the `<DockSection>` anchor-id below
-                 is nulled so no second `[data-rail-anchor]` competes). -->
-            <DockSeparator :anchor="true" />
-        </template>
+        <!-- BG.W-DOCK-PERSISTENT-CUT — the persistent ℱ brand wordmark + its
+             anchored home separator are GONE (D8). Foundations is now a normal
+             category chip in the roving tablist below, so there is no home-left
+             anchor to demarcate; the dock opens directly on the category section. -->
 
         <!-- BA.W-DOCK-SECTIONS — the tripartite section model RETURNS to the shell
              WITHOUT inflation (R8-9 "the docks COMPLETELY lack sections"). <DockSection>

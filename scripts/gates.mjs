@@ -1873,6 +1873,12 @@ export const GATES = [
         note: "BC.W-AX-DOCK-COCKPIT — the [data-preset=cockpit] dock preset (cross-repo speedtest-AX A-9): a fixed 2.75rem control floor + --dock-label-ratio beside the density rungs, closing the dock-oversize chronic. The FEATURE_EXEMPT census preserved (proof:dock-unify). Bite: a cockpit preset off the 2.75rem floor / a missing --dock-label-ratio → RED.",
     },
     {
+        id: "proof:dock-persistent-cut",
+        cmd: "proof:dock-persistent-cut",
+        tags: ["local", "ci", "release"],
+        note: "BG.W-DOCK-PERSISTENT-CUT (D8) — remove the persistent ℱ brand wordmark + its long-press Fourier-redraw egg atop the SidebarDock (iOS-26 HIG: glass is the floating NAVIGATION layer, never content — the brand vanity the content-first tab bar avoids). Device-free SOURCE arm (pure FS): P1 comment-stripped SidebarDock.vue carries ZERO ℱ-egg tokens (useLongPress/fireRedraw/wordmarkPress/redrawFired/#persistent slot/ℱ glyph U+2131/glass-ui-demo:f-redraw dispatch; a provenance COMMENT does not flag — the strip fence); P2 the `c.id !== \"foundations\"` filter GONE + `!c.reference` survives (Foundations rejoins the roving tablist, one tab-stop); P3 BottomDock.vue's #persistent PanelLeft category-Sheet trigger SURVIVES (the load-bearing mobile nav is not deleted — 'atop BOTH docks' is imprecise, BottomDock has no ℱ); P4 demo/eggs/useLongPress.ts + FRedrawOverlay.vue DEFINITION-ABSENT (zero-consumer leaves); P5 comment-stripped AppShell.vue carries ZERO FRedrawOverlay refs (import/mount + onFRedraw/showFRedraw + the f-redraw listener); P6 demo/eggs/fGlyphPoints.ts SURVIVES (shared with the substrates band's fourier-paths.ts — a co-deletion forbidden). Born-RED on HEAD (the ℱ slot + egg + filter present). Bite: a re-added useLongPress import / a #persistent ℱ slot / a re-added foundations filter / a deleted BottomDock PanelLeft / a surviving egg leaf / an AppShell FRedrawOverlay import / a co-deleted fGlyphPoints → the matching clause RED; a bare comment mentioning ℱ does NOT flag (the strip fence).",
+    },
+    {
         id: "proof:tabs-ios",
         cmd: "proof:tabs-ios",
         tags: ["local", "ci", "release"],
