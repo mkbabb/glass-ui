@@ -266,3 +266,97 @@ Note: the 10th roster surface (cross-repo = foreign slides consumer) is out of i
 Captures:
 - DELTA: `docs/tranches/BG/audit/visual/BG.W-COMPOSITED-GESTALT-GATE-DELTA.md`
 - 36 PNGs + JSONs: `docs/tranches/BG/audit/visual/BG.W-COMPOSITED-GESTALT-GATE-DELTA-assets/{dock,aurora,glass-feedback,shell,dark-register,tabs-segmented,page-band,configurators-goo,motion-fourier}-{chrome,safari}-{light,dark}-desktop-full.png` (+ `analysis.json` · `chrome-results.json`)
+
+---
+
+## 2026-07-02 — F2 glass-definition + F1 field-aurora + F8 gestalt re-judge (rows 12.5 / 3.5 / F2.1 / F8.2)
+
+allPass: **false** — 2 PASS, 2 FAIL. GLASS-DEFAULT-DEFINITION holds row F2.1 at PAINT-PENDING (a dead-knob substitution-vs-inheritance trap paints the defined edge/floor transparent); COMPOSITED-GESTALT-GATE re-judge holds row F8.2 at PAINT-PENDING (the warmth disease is CURED 36/36 but 9 kernel trips are probe-geometry artifacts owing a roster recalibration, not a paint change).
+
+| Wave | Row | Verdict | Cursor |
+|------|-----|---------|--------|
+| BG.W-GATE-FIELD-AURORA | 12.5 | PASS | DONE (`56b9b97b`, already flipped) |
+| BG.W-GLASS-REGISTER-UNIFY | 3.5 | PASS | DONE (`4e60a6c7`, already flipped) |
+| BG.W-GLASS-DEFAULT-DEFINITION | F2.1 | FAIL | PAINT-PENDING (held) |
+| BG.W-COMPOSITED-GESTALT-GATE | F8.2 | FAIL | PAINT-PENDING (held) |
+
+Provenance across the batch: Chrome = CDP on `ANGLE Metal Renderer: Apple M5 Max` (real Metal, not SwiftShader); WebKit = off-screen WKWebView on system `WebKit.framework` / `Apple GPU` (no `Version/` token). Engine + GPU decoded IN-PIXEL from the magenta badge per leg. All captures over BUILT bytes on `:5200` (vite preview of the demo dist, NOT the `:5199` dev server) via the C18 `?capture=` harness. `verify-siblings-intact.mjs --quiet` exits 0 before AND after this synthesis; no `/tmp/sibling-park|stash`; servers + throwaway Chrome torn down by each paint agent; operated only under glass-ui.
+
+Cursor state confirmed at synthesis: rows 12.5 + 3.5 already read DONE (the paint agents flipped them in-run); rows F2.1 + F8.2 remain PAINT-PENDING. No cursor edit owed by synthesis.
+
+---
+
+### PASSED -> DONE
+
+#### 12.5 — BG.W-GATE-FIELD-AURORA (paint subject `56b9b97b`; DELTA + 12 PNGs + probes committed `d6b39bb9`)
+
+The light-arm eyebrow AA lift is real in paint. The pass subject: `.section-label:not(.section-label--tinted)` over the recessive `[data-paper-field]` warm shell field now clears AA 4.5:1 in LIGHT mode — the polish closing sibling BG.W-FIELD-AURORA (row 2.2, DONE) mustFix #3 (was borderline 4.15:1).
+
+- Measured WCAG contrast (eyebrow ink = CSS-deterministic getComputedStyle; field = per-engine per-mode PNG pixel median, worst-case min): /foundations/colors light Chrome **5.78** / Safari **6.42**; /foundations/typography light Chrome **5.74** / Safari **6.42** — AA ✓. Dark byte-untouched (rule scoped `:root:not(.dark)`): colors/typography Chrome 6.50 / Safari 7.18 (no regression).
+- Light ink resolves oklab(0.45765) → sRGB [101,84,67], L0.458 H66.8° warm amber (no gray/green) — the `color-mix(in oklab, --neutral-5, --foreground 22%)` lift FIRED (raw `--muted-foreground` #7c6650 darkened). Dark ink = raw #aca091, byte-untouched.
+- 12 PNGs (3 routes [/foundations/colors · /foundations/typography · /foundations/intro] × light+dark × Chrome+Safari) all 2880×1800, content-real, resolve on disk; in-pixel badges decoded (Chrome ENGINE CHROME / ANGLE Metal Apple M5 Max; Safari ENGINE WEBKIT / Apple GPU). Gestalt both engines both modes: recessive warm-cream field calm (no conic banding, no oversaturation), eyebrow is the dimmest legible secondary, hero fits envelope, dock reads.
+- /foundations/intro is a FOCAL section-landing (`shellFieldActive=false` → no `[data-paper-field]`), so the light-arm lift rule intentionally does not apply there (its eyebrow is over its own focal hero field — the sibling wave's concern); captured content-real for completeness.
+- Record-only (outside paint-judge scope): the value.js `1.2.0→1.1.1` gate-literal pin + `field-aurora-aa`/`wcagContrastRatio` gate script are NOT in HEAD — consistent with the row's own AMEND note (gate-authoring PRUNED into landed 2.2; peer born-RED window closes at BH.B2-export-reshape). `proof:peer-conformance` GREEN at HEAD (1.2.0 == PINNED_LATEST). The PAINT subject (utilities.css eyebrow rule, `56b9b97b`) IS landed and is what this capture binds.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-GATE-FIELD-AURORA-DELTA.md`
+- 12 PNGs: `docs/tranches/BG/audit/visual/BG.W-GATE-FIELD-AURORA-paint/{chrome,safari}-foundations_{colors,typography,intro}-{light,dark}.png`
+- Probes: `BG.W-GATE-FIELD-AURORA-paint/pixel-analysis.json` · `BG.W-GATE-FIELD-AURORA-paint/chrome-results.json`
+
+#### 3.5 — BG.W-GLASS-REGISTER-UNIFY (cursor flip + DELTA + 16 PNGs `4e60a6c7` / `a0bfa59a`)
+
+The unified single-recipe glass fill reads correct across all 5 tiers, both engines, both modes, over BUILT `:5200`.
+
+- Unified fill: every tier resolves the ONE `color-mix(in oklab, rung, tint-source strength)` seam; monotonic warm alpha ladder 0.44→0.96; Card composes `@utility glass-fill` (bg == `.glass-quiet`); tier specimens render the ladder over the field/paper-grain in both engines.
+- Bright bucket: dock self-darkens legibly over the bright field.
+- Safari webkit-blur INTACT: `backdrop-filter` blur radii match source exactly (1/8/8/13/20@2dppx px); field/grain reads THROUGH the tiers in real WebKit.
+- No-gray dock: OKLab chroma C=**0.0173**/H67.6° light, C=**0.0263**/H64.1° dark (warm-amber, zero neutral); tiers H58-70°.
+- Gestalt: recessive aurora (no conic/oversaturation), hero fits envelope, calm grain, luminous warm-amber transmissive dark register. Chrome↔Safari full parity (only benign diff: dock collapse-state, orthogonal to glass-fill). Supplementary `proof:glass` GREEN (glass-fill-home + safari-blur-var arms).
+- 16 PNGs (4 routes [/foundations/paper-glass · /substrates/glass-material · /display/card · /dock/overview] × light+dark × Chrome+Safari) all 2880×1800, in-pixel badge-decoded, resolve on disk.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-GLASS-REGISTER-UNIFY-DELTA.md`
+- 16 PNGs: `docs/tranches/BG/audit/visual/BG.W-GLASS-REGISTER-UNIFY-paint/glass-register-{chrome,safari}-{paper-glass,glass-material,card,dock-overview}-{light,dark}.png`
+
+---
+
+### FAILED -> PAINT-PENDING (held at rows F2.1, F8.2)
+
+#### F2.1 — BG.W-GLASS-DEFAULT-DEFINITION (no cursor flip, no commit — held at PAINT-PENDING)
+
+Device-free `proof:glass` (defined-control-floor DF1-DF6) is GREEN, but the paint is broken — the exact source-green/paint-broken gap the judge exists to catch. 16 PNGs (4 routes [/display/buttons · /forms/inputs · /forms/select · /substrates/glass-material] × light+dark × Chrome+Safari) @2880×1800 on disk, in-pixel badge decoded.
+
+DEFECT (engine- + mode-independent CSS substitution-vs-inheritance trap): the wave sets `--glass-definition: 1` on the control cohort (`.btn-glass`/`.input-pill`/`.control-surface`) to engage a warm floor-fill (`--glass-floor-fill`) + a stronger warm rim (`--glass-border-defined`), but BOTH legs paint TRANSPARENT. The two tokens are declared at `:root` (`tokens/glass.css:368,372`) where `--glass-definition=0`; CSS var() substitutes at the DECLARING element, so they compute to transparent and inherit down already-resolved. The cohort rule (`glass/defined.css:46`) flips the scalar but never RE-DECLARES the two tokens, so the flip is inert (dead knob). Computed-DOM on every cohort element both modes: `--glass-floor-fill` = `color-mix(in srgb, --card calc(0 * 15%), transparent)`; painted floor gradient = `linear-gradient(color(srgb 0 0 0 / 0), …)` transparent; border color = `color(srgb 0 0 0 / 0)` (1.5px input / 1px select — width reserved, color dead).
+
+VISUAL: light mode (the target case) FAILS — /display/buttons glass buttons read as pale lozenges (the page's own disavowed anti-pattern); /forms/inputs + /forms/select read as soft warm pills with no crisp edge. Dark mode reads defined only via strong warm-dark-plate vs near-black-page CONTRAST (masks the dead mechanism, does not exercise it). The transmissive NEGATIVE arm PASSES: /substrates/glass-material content tiers stay transmissive over the field (`--glass-definition=0`, the flip does not bleed).
+
+mustFix (for a build-fix-agent):
+1. Re-declare `--glass-floor-fill` + `--glass-border-defined` ON the `.glass-defined`/`.btn-glass`/`.input-pill`/`.control-surface` cohort rule (beside `--glass-definition:1`) OR inline the color-mix reading `var(--glass-definition)` at the element, so the scalar reaches paint (card@15% floor + foreground@14% warm rim at definition=1). Keep the transmissive negative arm (glass-material, definition=0) byte-transmissive. Then re-capture all 4 routes both modes.
+2. GATE BLIND SPOT: `proof:glass` DF2 labels the floor leg "dead-knob-proof" but only source-checks the token declaration references the scalar; it does not assert the scalar reaches paint. Extend DF2/DF3 (or the paint π) to assert computed floor/border non-transparent at definition=1 so this trap cannot green again.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-GLASS-DEFAULT-DEFINITION-DELTA.md`
+- 16 PNGs: `docs/tranches/BG/audit/visual/glass-default-definition-paint/gdd-{buttons,inputs,select,glass-material}-{chrome,safari}-{light,dark}.png`
+- Results: `glass-default-definition-paint/chrome-results-gdd.json`
+
+#### F8.2 — BG.W-COMPOSITED-GESTALT-GATE re-judge (FAIL evidence in DELTA; NO cursor flip — held at PAINT-PENDING)
+
+Fresh re-judge over BUILT `:5200` bytes at HEAD (`a0bfa59a`), post paint-fix `5eb1933d` + roster recalibration. 56 fresh PNGs (14 wave routes × Chrome+Safari × light+dark) all 2880×1800, all `isRealPng`, all resolve on disk; in-pixel badge decoded (Chrome ANGLE Metal Apple M5 Max on all 28; WebKit Apple GPU off-screen).
+
+The WARMTH DISEASE IS CURED. On the stated warmth pass condition (chroma-weighted warm-fraction band, dominant-hue family, not gray/cerulean/magenta) the set is **36/36 PASS** both engines both modes — every enrolled field reads dominantFamily=warm, warmFraction≥0.897, zero cold/magenta/grey/metallic. The prior FAIL's class-A disease (11/36 warm; pink/lavender/purple ambient StoryHero heroes + flat near-black dark void) is gone: substrate heroes now render warm peach-gold (light) / luminous warm-amber (dark), recessive, no conic, no oversaturation, heroes fit envelope — verified numerically (analysis.json) AND visually (crops).
+
+WHY FAIL: the full operative `warmIdentityVerdict` kernel (which bundles the anti-artifact topBar/edgeCast delta predicates + the roster's own topDelta≤0.12 expect-band) reads **27/36**. The 9 residual trips are ALL pixel-verified PROBE-GEOMETRY artifacts, NOT paint/warmth defects — so NO src/demo/style paint change is owed:
+- topBar ×7 (dock chrome-L/D + safari-D; page-band all 4): the roster topbar box (tx=0.52, ty=0, th=0.05, narrowed at the paint-fix to dodge the top-left engine badge) samples the plain page-top MARGIN (white light / near-black dark) which diverges in pure luminance from the field (a bright dock glass pill; the warm aurora hero that starts BELOW the margin) — no aberrant colored slab, no cold cast, no metallic bar.
+- edgeCast ×2 (configurators-goo + dark-register, chrome-LIGHT only; Safari + both-dark PASS the same probe): the field's left 0.02 edge column overlaps a large black masthead heading letter ("Blob"/"Material") over a warm field, and Chrome text raster places the anti-aliased glyph edge inside the column while WebKit does not.
+
+These exceed the roster's declared bands on 4 surfaces (dock 1/4, page-band 0/4, configurators-goo 3/4, dark-register 3/4; the other 5 surfaces are 4/4), so the operative all-FAIL→all-PASS roster flip is not achieved.
+
+mustFix (for a build/roster-agent — the paint-judge fence forbids the judge from performing it):
+1. ROSTER PROBE RECALIBRATION — re-point the topbar box into the field's own top band below the page margin (OR re-scope/relax topDelta with rationale); inset the field probes (configurators-goo + dark-register) x right / y down off the masthead heading glyph. `bg-gestalt-roster.md`.
+2. Re-run the non-authoring dual-engine judge AFTER recalibration; expectation 36/36 kernel → operative all-PASS → cursor flip. NO src/demo paint change owed (composited warmth is already 36/36).
+
+PRESERVE: the cured warm identity (36/36 warm both engines both modes); the device-free `proof:warm-identity` kernel + roster wiring stay GREEN.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-COMPOSITED-GESTALT-GATE-DELTA.md`
+- 56 PNGs + probes: `docs/tranches/BG/audit/visual/BG.W-COMPOSITED-GESTALT-GATE-paint/{route}-{chrome,safari}-{light,dark}-desktop-full.png` (+ `_inspect-*` crops · `analysis.json` · `chrome-results.json`)
