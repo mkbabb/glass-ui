@@ -26,12 +26,15 @@
         border: 1px solid var(--glass-border-accent);
         border-radius: var(--radius-card);
         box-shadow: var(--glass-material-rim), var(--card-focus-shadow);
-        /* AY.W-A11Y-PERF O-4 — upgrade `layout style` → include `paint` so the
-           maximal-glass nested backdrop-filter sample (a glass Button in this card)
-           does not escape the card box (the standard nested-backdrop-cost mitigation;
-           `contain: paint` clips DESCENDANTS only — the card's own rim/drop-shadow is
-           NOT clipped, device-verified). */
-        contain: layout style paint;
+        /* AY.W-A11Y-PERF O-4 — the nested-backdrop-cost `contain: paint` clip (a
+           glass Button in this card must not escape the card box) is RETIRED off
+           this per-class dialect onto the ONE narrowed clip register in
+           material.css (BG.W-GLASS-CLIP-DISCIPLINE — `.glass-card` is in the
+           INCLUDED set). The prior `contain: layout style paint` narrowed to
+           PAINT-only there (the `layout`/`style` axes dropped — paint is what
+           clips the descendant backdrop sample; `layout` would make the card a
+           containing block for abs/fixed descendants). Do NOT re-declare `contain`
+           here — the single register is the clip home. */
         transition:
             box-shadow var(--duration-fast) var(--ease-standard),
             border-color var(--duration-fast) var(--ease-standard);
@@ -72,11 +75,12 @@
         border: 1.5px solid var(--glass-border-wash);
         background: var(--glass-bg-wash);
         backdrop-filter: var(--glass-blur-wash);
-        /* AY.W-A11Y-PERF O-4 — paint containment so the glass button's own
-           backdrop-filter sample stays inside the box when it nests in a glass card /
-           dialog / dock (the nested-backdrop-cost mitigation; clips descendants only,
-           the button's own rim/shadow is unaffected — device-verified). */
-        contain: paint;
+        /* AY.W-A11Y-PERF O-4 — the glass button's paint containment (its own
+           backdrop-filter sample stays inside the box when it nests in a glass
+           card / dialog / dock) is RETIRED off this per-class dialect onto the ONE
+           narrowed clip register in material.css (BG.W-GLASS-CLIP-DISCIPLINE —
+           `.glass-btn` is in the INCLUDED set beside `.glass-card`). Do NOT
+           re-declare `contain` here — the single register is the clip home. */
         color: var(--muted-foreground);
         /* AX.W52 §6 doctrine — the surface legs ride the bezier `--ease-standard`;
            the `scale` leg is reconciled onto `--spring-smooth` (was `--spring-snappy`)

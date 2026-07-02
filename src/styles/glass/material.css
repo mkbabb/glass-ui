@@ -48,6 +48,51 @@
         position: relative;
     }
 
+    /* ── BG.W-GLASS-CLIP-DISCIPLINE — the ONE paint-box clip register ───────────
+       The scattered per-class clip DIALECTS — `.glass-card` → `contain: layout
+       style paint` and `.glass-btn` → `contain: paint` (both surfaces.css) — are
+       RETIRED into this ONE `contain: paint` register on a NARROWED CONTENT +
+       `.glass-card` + glass-atom selector, so every composing content surface
+       inherits ONE discipline instead of two divergent per-class values.
+
+       THE NARROWING (the blast-radius fence — do NOT re-widen):
+       • INCLUDED — the CONTENT tiers (`.glass-wash`/`.glass-quiet`/`.glass-
+         resting`, the tier the real <Card> composes via
+         surfaceClass('glass','resting')) + the `.glass-card` convenience
+         shorthand + the `.glass-btn` glass-atom. `.glass-card`/`.glass-btn` are
+         the AY.W-A11Y-PERF O-4 nested-backdrop-cost surfaces — a glass Button's
+         own backdrop sample must not escape its card box (proof:nested-backdrop-
+         budget reads `contain:paint` on BOTH).
+       • EXCLUDED — the OVERLAY BAND (`.glass-floating`/`.glass-overlay` — reka
+         Dialog/Sheet/Popover/Command/DropdownMenu/HoverCard) carries NO clip: a
+         PopperArrow / submenu / Select-scroll that does NOT portal-to-body paints
+         PAST the rounded corner and a clip would SEVER it (the Popper-arrow-
+         survives cell).
+       • EXCLUDED — the 4 DOCK CONTROLS (`.dock-icon-button`/`.dock-tab-button`/
+         `.dock-select-trigger`/`.dock-dropdown-trigger`) carry NO clip: the
+         BA.W-DOCK-GEOMETRY freed cross-axis + the 1.1× hover plate + the
+         `--dock-control-safe-inset` must stay un-clipped (proof:dock-plate-
+         clearance).
+
+       `contain: paint` clips DESCENDANTS only — the surface's OWN rim / drop-
+       shadow / focus-ring is NOT clipped (device-verified). It is PAINT-only
+       (never `layout`, which would make the box a containing block for
+       abs/fixed descendants — the pre-empt of the overlay-clip class the blast-
+       radius note names). Each clipped surface carries a `border-radius`
+       (`.glass-card` → `--radius-card`, `.glass-btn` → `--radius-pill`, the
+       ladder rungs inherit the host's rounded box; the `::before`/`::after`
+       pseudos carry `border-radius: inherit`) so the clip FOLLOWS the corner (a
+       clip with no radius trims to a SHARP RECT — the bug proof:glass-clip's
+       radius-alongside arm reds). `overflow: hidden` stays FORBIDDEN (it would
+       clip the focus ring). */
+    .glass-wash,
+    .glass-quiet,
+    .glass-resting,
+    .glass-card,
+    .glass-btn {
+        contain: paint;
+    }
+
     /* (b) The rim — UNIFORM across all rungs (ONE `--glass-edge-light` token,
        not a per-rung family). The floating/overlay tiers previously wired it
        into their box-shadow stack; it now rides the material group as a

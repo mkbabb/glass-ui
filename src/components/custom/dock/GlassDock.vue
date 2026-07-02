@@ -595,16 +595,12 @@ defineExpose({
             so a dock with no persistent controls is byte-identical to before.
         -->
         <!--
-            BD.W-DOCK-PUNCH-CHANNEL — the kinetic cartoon CAST caster. An inert
-            aria-hidden child (NOT a pseudo — the dock's `::before`/`::after` are both
-            occupied by the grain + the morph chrome) carrying the SHIPPED
-            `--shadow-cartoon-md/lg` rung that SLIDES opposite the morph as the box
-            punches (shape.css `.glass-dock > .cartoon-cast`). Paint-only, behind the
-            plate, PRM-static. Always rendered (the rest cast is the bold offset ink the
-            plate floats above).
+            BG.W-GLASS-CLIP-DISCIPLINE (absorbs W-DOCK-CAST-RETIRE) — the kinetic
+            `.cartoon-cast` offset-shadow child is RETIRED from the dock (the
+            self-defeating maroon-halo mechanism, D3). The dock's elevation is
+            carried by `--shadow-dock` + `--glass-key` (shape.css). The box PUNCH
+            keeps its `--dock-punch-stretch` squash on the `scale:` channel.
         -->
-        <span class="cartoon-cast" aria-hidden="true"></span>
-
         <div v-if="$slots.persistent" class="dock-persistent">
             <slot name="persistent" />
         </div>

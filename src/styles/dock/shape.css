@@ -205,46 +205,26 @@
         --dock-punch-stretch: calc(1 + 0.22 * var(--motion-weight, 1));
     }
 
-    /* ── BD.W-DOCK-PUNCH-CHANNEL — the kinetic cartoon CAST ────────────────────────
-       The bold 1940s offset-shadow made kinetic: the inert `.cartoon-cast` child
-       (BD.W-CARTOON-CASTER — a real DOM child, NOT a pseudo, since the dock's `::before`/
-       `::after` are both occupied by the grain + the morph chrome) carries the SHIPPED
-       `--shadow-cartoon-md/lg` rung and SLIDES opposite the morph as the box punches.
-       The travel reads `--motion-weight` (PRM → 0 → static) so the cast deepens + slides
-       through the punch then snaps home at settle. Plain per-mode `.dark` arms (the
-       light-dark() inset-shadow trap avoided — the cast is a plain offset shadow, no
-       inset fragment). Behind the plate (z-index -1), pointer-inert, paint-only. */
-    .glass-dock > .cartoon-cast {
-        position: absolute;
-        inset: 0;
-        z-index: -1;
-        border-radius: inherit;
-        pointer-events: none;
-        /* the warm-cream rest cast — the bold offset ink the plate floats above */
-        box-shadow: var(--shadow-cartoon-md);
-        /* the derived travel — opposite-morph slide, gated by the loud weight × the punch
-           presence. At rest (punch 1) the travel is 0; mid-punch it slides out + deepens. */
-        --cast-travel: calc(
-            7px * var(--motion-weight, 1) *
-                clamp(0, calc((var(--dock-punch-stretch, 1) - 1) / 0.22), 1)
-        );
-        translate: calc(-1 * var(--cast-travel)) var(--cast-travel);
-        transition:
-            translate calc(var(--duration-normal) * 1.15) var(--ease-cartoon-punch),
-            box-shadow var(--duration-normal) var(--ease-standard);
-    }
-    /* mid-punch the cast deepens to the LOUD rung (a plain per-mode arm below adds the
-       dark-mode rung — the light-dark() inset trap avoided). */
-    .glass-dock[data-punching] > .cartoon-cast {
-        box-shadow: var(--shadow-cartoon-lg);
-    }
+    /* ── BG.W-GLASS-CLIP-DISCIPLINE (absorbs W-DOCK-CAST-RETIRE) — the dock cast
+       is RETIRED ───────────────────────────────────────────────────────────────
+       The kinetic `.cartoon-cast` offset-shadow CHILD is GONE from the dock (the
+       block + the `<span class="cartoon-cast">` in GlassDock.vue deleted together,
+       atomically). It was the self-defeating maroon-halo mechanism the D3 defect
+       named; the dock's elevation is carried by `--shadow-dock` (the omni drop-
+       shadow painted from the dock box, so it escapes the radius correctly + in-
+       gamut) + `--glass-key` (the cel rim) — both KEPT. `--dock-punch-stretch`
+       still drives the box PUNCH on the `scale:` channel above (the KEPT squash),
+       so retiring the cast leaves no orphan reader. The shared `.cartoon-cast`
+       base rule (cards.css) + its glass-atom / btn-punch consumers are UNTOUCHED
+       — only the DOCK cast is retired.
+
+       The dock-scope PRM carve (the cards.css / glass-atom.css pattern): under
+       `prefers-reduced-motion: reduce` the dock's LOUD `--motion-weight: 1` driver
+       (above) collapses to 0, so the punch amplitude flattens to 1 (no
+       deformation) — the morph still CONFIRMS, the cartoon overshoot is off. */
     @media (prefers-reduced-motion: reduce) {
-        /* PRM — the cast is static (no travel); the offset ink stays (a legibility
-           asset). `--motion-weight: 0` already zeroes `--cast-travel`; pin the
-           transition off too so a residual frame cannot slide. */
-        .glass-dock > .cartoon-cast {
-            transition: none;
-            translate: 0 0;
+        .glass-dock {
+            --motion-weight: 0;
         }
     }
 }
