@@ -146,6 +146,25 @@
         color: var(--section-label-accent, var(--section-color-7));
     }
 
+    /* BG.W-GATE-FIELD-AURORA (EYEBROW-LIGHT-POLISH, +3.12) — the light-arm twin
+       of the dark eyebrow fix (b3d65eec). The mono-caption eyebrow reads
+       `--muted-foreground` (= `--neutral-5`, L40, calibrated AA-vs-PAGE), which
+       composites to only ~4.15:1 over the recessive warm shell field
+       (`[data-paper-field]`, BG.W-FIELD-AURORA) in LIGHT mode — below the
+       10-14px 4.5 bar (dark already clears 6.73, Safari 4.80). Over the warm
+       field ONLY + LIGHT ONLY, warm-mix the eyebrow ink toward `--foreground`
+       (the SAME 22%-toward-`--foreground` recipe the demo header-cluster twin
+       runs, mixed off the RAW `--neutral-5` so a cluster re-point of
+       `--muted-foreground` never double-darkens) so the neutral eyebrow clears
+       AA 4.5 within the warm-no-gray identity. Dark (`.dark`), non-field
+       contexts, the page-muted calibration, AND the `--tinted` accent eyebrow
+       (its own `--section-color-7` identity) are BYTE-UNTOUCHED. */
+    :root:not(.dark)
+        [data-paper-field]
+        .section-label:not(.section-label--tinted) {
+        color: color-mix(in oklab, var(--neutral-5), var(--foreground) 22%);
+    }
+
     /* Font-feature helpers */
     .tabular-nums {
         font-variant-numeric: tabular-nums;
