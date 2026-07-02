@@ -57,7 +57,14 @@ BOOKED. **[P]** in the class cell = paint owed at that wave's OWN non-authoring 
 > non-authoring validator on a SECOND wave route (`BG.W-CARTOON-INK-GAMUT` → `/foundations/shadows`): all four
 > PNGs (Chrome `ANGLE Metal Apple M5 Max` + WebKit `Apple GPU`, both modes) render full route content + the
 > in-pixel badge at 2880×1800; WebKit `data-capture-ready` landed at 4500ms; blank-WebKit does NOT reproduce.
-> `docs/tranches/BG/audit/visual/pipeline-validation/PIPELINE-VALIDATION-DELTA.md`. **BD cut fork facts:** the
+> `docs/tranches/BG/audit/visual/pipeline-validation/PIPELINE-VALIDATION-DELTA.md`. **RE-CONFIRMED AGAIN
+> (2026-07-02)** by a fresh non-authoring validator on the CANONICAL field-aurora route
+> (`BG.W-GATE-FIELD-AURORA` → `/substrates/aurora`, the live-WebGL aurora surface — a stronger exercise than
+> the static-token routes): all four PNGs (Chrome `ANGLE Metal Apple M5 Max` + WebKit `Apple GPU`, both modes)
+> render FULL route content + the in-pixel badge at 2880×1800; WebKit ready @4500ms; decoder readback over the
+> aurora field probe reads warm content (meanChroma 0.041–0.051 > 0.02 floor) with Chrome↔Safari parity
+> (Δchroma ≤0.006); blank-WebKit does NOT reproduce.
+> `docs/tranches/BG/audit/visual/pipeline-validation/PIPELINE-VALIDATION-FIELD-AURORA-DELTA.md`. **BD cut fork facts:** the
 > canonical BD cut is the `v4.2.0` tag object (`git rev-list -1 v4.2.0`); `998136bb` is the master fork point.
 
 ---
@@ -66,7 +73,7 @@ BOOKED. **[P]** in the class cell = paint owed at that wave's OWN non-authoring 
 
 | seq | wave | fam | class | status | gate arm | fable / designSync | preconds | source |
 |----|------|:---:|:-----:|:------:|----------|--------------------|----------|--------|
-| 12.5 | BG.W-GATE-FIELD-AURORA (the sole active F1 wave) | F1 | P | PAINT-PENDING (this-commit) | `proof:route` · the value.js `^1.1.1` gate-LITERAL pin (`proof-peer-conformance.mjs:41/46` `1.2.0→1.1.1` — the MR-4 clause `bh-interleave:40` + `publish-and-cut:56` depend on) + `field-aurora-aa` (`wcagContrastRatio` hard-import, the floor-lift's binding witness) + the symmetric light-arm eyebrow lift (+3.12 folded) | light-eyebrow polish / `/foundations` eyebrow | — (WS1 landed) | AMEND: gate-authoring PRUNED into landed 2.2; the WS7→WS12 peer born-RED window closes at BH.B2-export-reshape |
+| 12.5 | BG.W-GATE-FIELD-AURORA (the sole active F1 wave) | F1 | P | DONE `56b9b97b` (paint: dual-engine PASS Chrome `ANGLE Metal M5 Max` + Safari `Apple GPU`, both modes — light-arm eyebrow over the recessive `[data-paper-field]` shell field clears AA **5.74–6.42:1** (was borderline 4.15), warm ink L0.458/H66.8° no-gray, dark byte-untouched 6.5–7.18; 12 PNGs 2880×1800 on disk; `docs/tranches/BG/audit/visual/BG.W-GATE-FIELD-AURORA-DELTA.md` + `…-paint/*.png`) | `proof:route` · the value.js `^1.1.1` gate-LITERAL pin (`proof-peer-conformance.mjs:41/46` `1.2.0→1.1.1` — the MR-4 clause `bh-interleave:40` + `publish-and-cut:56` depend on) + `field-aurora-aa` (`wcagContrastRatio` hard-import, the floor-lift's binding witness) + the symmetric light-arm eyebrow lift (+3.12 folded) | light-eyebrow polish / `/foundations` eyebrow | — (WS1 landed) | AMEND: gate-authoring PRUNED into landed 2.2; the WS7→WS12 peer born-RED window closes at BH.B2-export-reshape |
 | 3.1 | BG.W-CARTOON-INK-GAMUT | F2 | P | DONE `3857b33` (paint: dual-engine PASS Chrome+Safari, both modes — warm-in-gamut stamp H 67–84°, no gray/maroon; `docs/tranches/BG/audit/visual/BG.W-CARTOON-INK-GAMUT-DELTA.md` + `…/cartoon-ink-gamut-paint/*.png`) | `proof:glass` · no-gray cartoon-ink-warm-in-gamut | cartoon-ink cel register / `/foundations` glass tiers | — | KEEP |
 | 0.7 | BG.W-DOCK-BLUR-RETIRE-CARVE (renamed off CLOSEFIX-9SITE) | F2 | H | DONE `20f2eabe` | `proof:glass` clauses: `--glass-blur-dock` source-absent · dist byte-identical · `ladder.css`<500 · `shell.css`<500 (the KILLED `proof:retired-token-consumers` sibling-probe is NEVER minted) | — (grain-tail liquid-hover π at its own non-authoring close) | STAGE-0 (3.6 landed) | GC-FC3 strip of CLOSEFIX-9SITE; carves ladder 527→470, shell 510→459, retires the `--glass-blur-dock` chain; bbnf ask re-bases on MIGRATION + `crossrepo-asks:bh >=4` |
 | 3.3 | BG.W-GLASS-CLIP-DISCIPLINE | F2 | P | DONE `3c0eadc5` (paint: dual-engine PASS Chrome+Safari, both modes — no clip lozenge on glass surfaces + dock plate clears its 40px track cell (32px plate, content-box+4px inset), overlay-band clip violations=0; `docs/tranches/BG/audit/visual/BG.W-GLASS-CLIP-DISCIPLINE-DELTA.md` + `…/BG.W-GLASS-CLIP-DISCIPLINE-DELTA-assets/*.png`) | `proof:glass` · glass-clip + dock-plate-clearance | clip-discipline / `/containers` | — | KEEP; absorbs 3.2 W-DOCK-CAST-RETIRE (delete ONLY `shape.css:208-249` dead `.cartoon-cast`; `cards.css:359` stays LIVE) |
