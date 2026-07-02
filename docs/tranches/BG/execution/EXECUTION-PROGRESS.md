@@ -22,6 +22,9 @@ composited-whole paint gate, the Fable/DesignSync arm).
   **F8** Close/Cut (`proof:build` machine · `proof:meta` process · `proof:warm-identity` paint — there is NO
   `proof:close`) · **F9** Substrates/Viz (`proof:viz` + `proof:gpu-substrate-single`).
 - **Authoritative count.** 76 active rows — BG **64** waves (F1 1 · F2 9 · F3 9 · F4 2 · F5 5 · F6 7 · F7 7 · F8 15 · F9 9, the AMENDED-GESTALT-PLAN §0 figure exactly) + 12 BH rows carrying the BH **14** bands + 3 grammar waves (several bands ride consolidated super-rows) — plus 31 ledger rows (29 DONE · 3.6 PAINT-PENDING seed · 2.7 DEFERRED) + 6 KEEP-BOOKED. Net-NEGATIVE
+- **Keystone bindings.** The nine `KS-*.md` specs under `docs/tranches/BG/keystones/` are the BINDING
+  detailed specs for their named waves (`KEYSTONES-FOLD.md` — the family→spec→waves map + KF-1..KF-7
+  rulings; precedence: cursor row → RULINGS-PASS2 incl. §CORRECTIONS → KS spec).
   gate count: the committed in-tranche floor is **360 → ~250** (B5e prune, zero behavioral loss, `--list` count
   DROPS); **~40–60 family-table gates is the recorded DIRECTION**, census-gated (F8.1), executed as far as the
   subsumption census proves safe within the tranche. All other gate-count mentions back-point here.
@@ -134,7 +137,7 @@ BOOKED. **[P]** in the class cell = paint owed at that wave's OWN non-authoring 
 | BH.B5-gate-consolidate | BH.B5 · gate-consolidate (B5a+B5b+B5c+**B5e ADDED**) | F8 | H | PENDING `[WS3]/[WS12]` | `--list` byte-identical (B5b) THEN count DROPS (B5e — family-π collapse + the 14 doc-presence clause deletes + the 2 readers dissolved to regen-freshness); `gate-manifest-sound` + `claude-deletable` (B5c-MINTED born-RED) + `gen-ci-fresh` GREEN; B5d detector-kit stays a DEFERRED clause | — | full BG close | GC-FC4; the net-negative instrument (360→~250) |
 | BH.B4f-claude-delete | BH.B4f · claude-delete (ABSOLUTE LAST) | F8 | H | PENDING `[WS12-LAST]` | `proof:claude-deletable` GREEN (file gone + zero live readers over all 6 alias forms); gated on `--run full` /tmp siblings-absent dry-run AFTER all homes authored + all 16 readers re-pointed-OR-DELETED | — | all F8 homes + readers | `rm CLAUDE.md` is the last act by construction |
 | BH.B6+B7-asks | BH.B6+B7 · prompts + cross-repo asks | F8 | H | PENDING `[C]/[WS12]` | `proof:crossrepo-asks:bh` GREEN (`>=4` covered-floor: muster+speedtest `/api` + atlas `--ring` + bbnf-buddy `--glass-blur-dock`); prompts dogfooded by B2/B3/B5 dispatches; `W5-viz-disposition` clause (NOT `W4`) | — | full BG close | B6 folds into B7 |
-| 19.1 | BG.W-CUT (5.0.0 tag-fire — HALTS at human gate) | F8 | P | PENDING | `--run ship` FULL union siblings-absent BEFORE the irreversible tag + real-Safari webkit.glass/goo==pass + `worktree-gc` under threshold + `RATCHET_BASELINES == {}` (the VISIBLE drain chain); mechanical CONSUMEs asserted-true (peer floors LANDED at export-reshape, NOT re-written here) | — | `cutReady = buildComplete ∧ paintComplete` | KEEP |
+| 19.1 | BG.W-CUT (5.0.0 tag-fire — HALTS at human gate) | F8 | P | PENDING | BOTH cut arms by their real names (KF-5): `--run ship` (the Mac/Metal ceremony — writes SHIP-ATTESTATION.json, Arm A) + `--run full` (the deduped union incl. `proof:ship-attestation`, Arm B) siblings-absent BEFORE the irreversible tag + real-Safari webkit.glass/goo==pass + `worktree-gc` under threshold + `RATCHET_BASELINES == {}` (the VISIBLE drain chain); mechanical CONSUMEs asserted-true (peer floors LANDED at export-reshape, NOT re-written here) | — | `cutReady = buildComplete ∧ paintComplete` | KEEP |
 
 ## §1b — KEEP-BOOKED (off the active frontier; honest re-entry triggers)
 
