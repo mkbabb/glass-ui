@@ -23,6 +23,20 @@
      BG.W-PAINT-IS-THE-GATE). The gate reads + pixel-reads whatever this roster declares;
      there is no hand-maintained per-tranche surface array to drift.
 
+  THE COMPOSITED-GESTALT RE-DERIVATION (BG.W-COMPOSITED-GESTALT-GATE). This roster is now
+  read by TWO gates over the SAME enrolled surface set. `proof:ba-gestalt` reads it with
+  the mean-L box (a MEAN over the FIELD probe — the Stage-0 kernel). `proof:warm-identity`
+  is the PRIMARY paint BATTERY: it reads the SAME rows with the DOMINANT-HUE HISTOGRAM (the
+  chroma-weighted hue family over the FIELD probe, both modes on BOTH engines — chromium +
+  the derived `-safari-` WebKit twin), because a warm token composited over an achromatic
+  page still reads GREY to the eye while the MEAN passes (the greenfield GF1 near-gray
+  Button re-diagnosed by hand). So the ba-gestalt roster becomes ONE enrolled surface set
+  in the warm-identity battery, NOT the sole oracle; its vacuous mean-L box is superseded by
+  the dominant-hue kernel for the composited-WHOLE read. The two gates COMPOSE — a roster
+  row flips FAIL→PASS only when its fresh warm capture passes BOTH the ba-gestalt band AND
+  the warm-identity dominant-hue band; a PASS over a grey/cerulean/metallic composite REDs
+  `proof:warm-identity`'s anti-evasion.
+
   BORN-RED by construction: every verdict below is FAIL, anchored to the 4.2.0 Metal
   ground the BG.W-PAINT-IS-THE-GATE wave captured (the aberrant full-width top bar / the
   gray→metallic field / the flat near-black dark void). There is NO PASS replacement and

@@ -335,3 +335,156 @@ export function pngRegionDelta(absPath, regionA, regionB) {
     if (!a || !b) return null;
     return { ...regionStatsDelta(a, b), regionA: a, regionB: b };
 }
+
+// ── BG.W-COMPOSITED-GESTALT-GATE — the DOMINANT-HUE histogram (measure the WHOLE) ──
+// The Stage-0 kernel is a MEAN over a box (pngRegionStats' scalar meanL/meanChroma). A
+// mean is fooled by a warm-token-over-achromatic-page COMPOSITE: the mean a/b of a warm
+// plate + a flat grey field averages toward neutral, so a "near-gray" composited whole
+// (the greenfield GF1 — a shipped Button rest fill oklab chroma 0.0138 read "NEAR-GRAY"
+// over a flat page, re-diagnosed BY HAND because the mean-L box could not see it) reads
+// as an acceptable mean while the EYE reads grey. The SHARPER kernel bins the region's
+// per-pixel OKLab hue (chroma-WEIGHTED) into a histogram + reports the DOMINANT hue
+// FAMILY: a two-peaked warm+cold field no longer averages to a passing neutral (its
+// dominant family is whichever peak carries the most chroma-weight), and a flat
+// achromatic page has NO colour weight → the dominant family is NEUTRAL, not warm → the
+// composited-reads-grey defect is caught at the whole, not the part. ONE colour source
+// (oklabFromRgb) + ONE decoder (decodePngRgba) — no second math, no second inflate.
+
+/**
+ * Classify an OKLab a/b pair (+ its chroma) into a hue FAMILY. A sample BELOW
+ * `chromaFloor` is NEUTRAL regardless of angle — the grey-slab discriminator: the
+ * historical oklab(0.695 0.002 0.006) slab has chroma 0.0063 at a warm-ISH 71.6° angle,
+ * so ANGLE ALONE would mis-read it warm; the chroma floor sends it NEUTRAL (the CLAUDE.md
+ * "chroma alone cannot separate grey from cream" fact made a gate predicate). Above the
+ * floor the OKLab hue angle θ = atan2(b, a) ∈ [0,360) buckets into warm (the amber/gold/
+ * warm-red identity arc [15,115], where the warm-cream `--foreground` H62-75° lives),
+ * green, cold (cyan/blue/violet — the cerulean field-warmth catch, GB-5), or magenta.
+ * @param {number} a OKLab a
+ * @param {number} b OKLab b
+ * @param {number} chroma OKLab chroma √(a²+b²)
+ * @param {number} [chromaFloor=0.010]
+ * @returns {{family:"neutral"|"warm"|"green"|"cold"|"magenta", angleDeg:number, warm:boolean}}
+ */
+export function hueFamily(a, b, chroma, chromaFloor = 0.01) {
+    let angleDeg = (Math.atan2(b, a) * 180) / Math.PI;
+    if (angleDeg < 0) angleDeg += 360;
+    if (!(chroma >= chromaFloor)) return { family: "neutral", angleDeg, warm: false };
+    let family;
+    if (angleDeg >= 15 && angleDeg <= 115) family = "warm";
+    else if (angleDeg > 115 && angleDeg <= 200) family = "green";
+    else if (angleDeg > 200 && angleDeg <= 330) family = "cold";
+    else family = "magenta"; // (330,360] ∪ [0,15)
+    return { family, angleDeg, warm: family === "warm" };
+}
+
+/**
+ * The DOMINANT-HUE histogram over a set of OKLab samples. PURE over an array of
+ * {a, b, chroma} (so a gate self-test feeds synthetic pixels with NO PNG — the
+ * text-patch discipline, no committed binary fixture). Accumulates chroma-WEIGHT per
+ * family (a saturated pixel dominates the histogram; a near-neutral pixel barely moves
+ * it) + a `bins`-slot hue histogram (default 12 × 30°). The dominant family is the
+ * max-weight COLOURED family UNLESS the coloured pixels are a small fraction of the
+ * region (`colouredFraction < neutralCeiling`) — then NEUTRAL dominates (a flat
+ * achromatic field has no dominant hue). warm = dominantFamily === "warm";
+ * warmFraction = warmWeight / (all coloured weight) — a two-peaked warm+cold field's
+ * warmFraction drops below the floor even when warm barely wins the argmax (the mean
+ * can't see that; the histogram can).
+ * @param {{a:number,b:number,chroma:number}[]} samples
+ * @param {{bins?:number, chromaFloor?:number, neutralCeiling?:number}} [opts]
+ * @returns {{dominantFamily:string, warm:boolean, warmFraction:number, coldFraction:number, neutralFraction:number, colouredFraction:number, angleDegPeak:number, hist:number[], samples:number}}
+ */
+export function dominantHue(samples, opts = {}) {
+    const bins = opts.bins ?? 12;
+    const chromaFloor = opts.chromaFloor ?? 0.01;
+    // The coloured-fraction floor below which the region has NO dominant hue (neutral).
+    const neutralCeiling = opts.neutralCeiling ?? 0.35;
+    const weight = { warm: 0, green: 0, cold: 0, magenta: 0 };
+    const hist = new Array(bins).fill(0);
+    let coloured = 0;
+    let n = 0;
+    for (const s of samples) {
+        n++;
+        const hf = hueFamily(s.a, s.b, s.chroma, chromaFloor);
+        if (hf.family === "neutral") continue;
+        coloured++;
+        weight[hf.family] += s.chroma;
+        const bin = Math.min(bins - 1, Math.floor((hf.angleDeg / 360) * bins));
+        hist[bin] += s.chroma;
+    }
+    const totalWeight = weight.warm + weight.green + weight.cold + weight.magenta;
+    const colouredFraction = n ? coloured / n : 0;
+    let peakBin = 0;
+    for (let i = 1; i < bins; i++) if (hist[i] > hist[peakBin]) peakBin = i;
+    const angleDegPeak = totalWeight > 0 ? (peakBin + 0.5) * (360 / bins) : 0;
+    let dominantFamily = "neutral";
+    if (colouredFraction >= neutralCeiling && totalWeight > 0)
+        dominantFamily = Object.entries(weight).sort((x, y) => y[1] - x[1])[0][0];
+    return {
+        dominantFamily,
+        warm: dominantFamily === "warm",
+        warmFraction: totalWeight ? weight.warm / totalWeight : 0,
+        coldFraction: totalWeight ? weight.cold / totalWeight : 0,
+        neutralFraction: n ? 1 - colouredFraction : 1,
+        colouredFraction,
+        angleDegPeak,
+        hist,
+        samples: n,
+    };
+}
+
+/**
+ * The DOMINANT-HUE histogram over a captured PNG REGION (BG.W-COMPOSITED-GESTALT-GATE).
+ * Decodes the region via the SINGLE decoder (decodePngRgba — no second IDAT inflate),
+ * collects each pixel's OKLab {a,b,chroma}, and runs dominantHue. Returns the histogram
+ * stats + the region mean L/chroma/a/b (the chroma-ceiling + delta axes). null when the
+ * PNG is undecodable or the region empty — the caller treats null as a degenerate read.
+ * @param {string} absPath
+ * @param {{x:number,y:number,w:number,h:number}} region fractional box ∈ [0,1]
+ * @param {{bins?:number, chromaFloor?:number, neutralCeiling?:number}} [opts]
+ * @returns {{dominantFamily:string, warm:boolean, warmFraction:number, coldFraction:number, neutralFraction:number, meanL:number, meanChroma:number, meanA:number, meanB:number, angleDegPeak:number, samples:number} | null}
+ */
+export function pngRegionHueHistogram(absPath, region, opts = {}) {
+    const dec = decodePngRgba(absPath);
+    if (!dec) return null;
+    const { w, h, channels, pixels } = dec;
+    const clamp01 = (v) => Math.max(0, Math.min(1, v));
+    const x0 = Math.floor(clamp01(region.x) * w);
+    const y0 = Math.floor(clamp01(region.y) * h);
+    const x1 = Math.min(w, Math.ceil(clamp01(region.x + region.w) * w));
+    const y1 = Math.min(h, Math.ceil(clamp01(region.y + region.h) * h));
+    if (x1 <= x0 || y1 <= y0) return null;
+    const samples = [];
+    let sumL = 0,
+        sumChroma = 0,
+        sumA = 0,
+        sumB = 0,
+        n = 0;
+    for (let y = y0; y < y1; y++) {
+        const rowBase = y * w * channels;
+        for (let x = x0; x < x1; x++) {
+            const i = rowBase + x * channels;
+            const ok = oklabFromRgb(pixels[i], pixels[i + 1], pixels[i + 2]);
+            samples.push({ a: ok.a, b: ok.b, chroma: ok.chroma });
+            sumL += ok.L;
+            sumChroma += ok.chroma;
+            sumA += ok.a;
+            sumB += ok.b;
+            n++;
+        }
+    }
+    if (!n) return null;
+    const dom = dominantHue(samples, opts);
+    return {
+        dominantFamily: dom.dominantFamily,
+        warm: dom.warm,
+        warmFraction: dom.warmFraction,
+        coldFraction: dom.coldFraction,
+        neutralFraction: dom.neutralFraction,
+        angleDegPeak: dom.angleDegPeak,
+        meanL: sumL / n,
+        meanChroma: sumChroma / n,
+        meanA: sumA / n,
+        meanB: sumB / n,
+        samples: n,
+    };
+}

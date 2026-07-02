@@ -161,7 +161,12 @@ function localizeFail(p) {
 }
 
 const VALID_VERDICTS = new Set(["FAIL", "PASS"]);
-const COLUMNS = [
+// EXPORTED (BG.W-COMPOSITED-GESTALT-GATE) — proof:warm-identity reuses this roster parse
+// + the probe parse rather than re-implementing a second markdown-table reader (the DRY
+// discipline; the ba-gestalt roster IS the enrolled surface set the warm-identity battery
+// reads). Importing this module for these pure functions never runs the gate (the
+// import.meta.url run-guard below).
+export const COLUMNS = [
     "surface",
     "routes",
     "capture-light",
@@ -177,7 +182,7 @@ const COLUMNS = [
  * block + per-cell prose can name a column without tripping the parse). Returns the
  * data rows (header + separator dropped) as objects keyed by COLUMNS.
  */
-function parseRoster(src) {
+export function parseRoster(src) {
     const noComments = src.replace(/<!--[\s\S]*?-->/g, "");
     const rows = [];
     let inTable = false;
@@ -253,7 +258,7 @@ function verifyCapture(repoRelPath) {
 // `topDelta` predicate, the gate feeds OKLab ΔE(top-bar, field) as `topDelta`.
 // expect cell: `meanL=0.85..0.99;meanChroma>=0.02;meanChroma<=0.18;topDelta<=0.10`.
 /** @returns {{field:{x:number,y:number,w:number,h:number}, topbar:{x:number,y:number,w:number,h:number}|null}|null} */
-function parseProbe(cell) {
+export function parseProbe(cell) {
     const m = {};
     for (const part of cell.split(/[,;]/)) {
         const kv = part.trim().match(/^(t?[xywh])\s*=\s*([0-9.]+)$/);

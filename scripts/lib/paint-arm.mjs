@@ -27,6 +27,19 @@ import { oklabFromRgb } from "../reflect-capture-verify.mjs";
 
 export { oklabFromRgb } from "../reflect-capture-verify.mjs";
 
+// BG.W-COMPOSITED-GESTALT-GATE — the paint-arm color probe gains the DOMINANT-HUE mode.
+// The old probe read a MEAN-L box (paintBand/bandForTier below); the composited-gestalt
+// gate reads a DOMINANT-HUE HISTOGRAM over a route REGION (measure the WHOLE, not the
+// part — a warm token over a flat achromatic page still reads grey, GF1). The histogram
+// + hue-family classifier live in the ONE colour-math home (reflect-capture-verify.mjs —
+// no import cycle); paint-arm RE-EXPORTS them so the probe surface is one place, and adds
+// warmIdentityVerdict (the widened-predicate band, the twin of paintBand) below.
+export {
+    hueFamily,
+    dominantHue,
+    pngRegionHueHistogram,
+} from "../reflect-capture-verify.mjs";
+
 /**
  * Parse a CSS resolved-color string (the getComputedStyle backgroundColor form) to an
  * {r,g,b,alpha} record (r/g/b ∈ 0-255, alpha ∈ [0,1]). Handles the three forms a real
@@ -241,4 +254,102 @@ export function bandForTier(selector, mode = "light", opts = {}) {
     else if (selector === ".glass-floating") alpha = dark ? 0.9 : 0.86; // the L6 overlay clamp
     else alpha = dark || opts.darkenTolerant ? 0.82 : 0.72; // the translucent content register
     return { L: /** @type {[number,number]} */ (L), chroma: 0.004, alpha };
+}
+
+// ── BG.W-COMPOSITED-GESTALT-GATE — the WARM-IDENTITY widened-predicate band ───────
+// The dominant-hue-histogram twin of paintBand. Where paintBand reads a MEAN over a box
+// (fooled by a warm plate + a grey field averaging neutral), warmIdentityVerdict reads
+// the histogram stats (dominant family + warmFraction) so the composited WHOLE must read
+// warm, not the part. SIX named widened predicates (the spec's list: hue band + chroma
+// ceiling + edge-cast + top-bar-present + corner-clip-absent + route-navigates):
+//   1. hueBand       — the dominant hue family is warm (chroma-weight above a floor gives
+//                      the region a dominant hue at all; a flat achromatic page → NEUTRAL
+//                      → not warm) AND warmFraction ≥ floor (a two-peaked warm+cold field,
+//                      whose MEAN is neutral, still REDs — the histogram's value).
+//   2. chromaCeiling — meanChroma ≤ ceiling (the D2 metallic/over-saturated over-correction).
+//   3. edgeCast      — edge↔field OKLab ΔE ≤ ceiling (no divergent cold cast at the edge).
+//   4. topBar        — top-bar↔field OKLab ΔE ≤ ceiling (the top bar composes INTO the
+//                      field — the D5 aberrant-slab, present-and-composed).
+//   5. cornerClip    — corner L ≥ floor (no hard rounded-clip black-notch corner).
+//   6. routeNavigates — captureReal === true (a real dimension-correct PNG — the served-
+//                      app sentinel proxy; a blank/error page reads degenerate).
+// hueBand + chromaCeiling ALWAYS evaluate (they DEFINE warm-identity); the widened four
+// evaluate ONLY when their stat is finite/present (so a self-test may exercise a subset).
+
+/**
+ * The warm-identity band verdict (BG.W-COMPOSITED-GESTALT-GATE). PURE over a stats
+ * object (so a gate self-test feeds synthetic stats with no PNG — the born-RED synthetic
+ * gray/cerulean routes). Returns {pass, reasons, predicates}. `stats` carries the
+ * histogram (dominantFamily/warm/warmFraction/meanChroma) plus the optional delta axes
+ * (edgeDelta/topDelta/cornerL) + captureReal. `band` overrides the default bounds.
+ * @param {{dominantFamily?:string, warm?:boolean, warmFraction?:number, meanChroma?:number, edgeDelta?:number, topDelta?:number, cornerL?:number, captureReal?:boolean} | null} stats
+ * @param {{warmFractionFloor?:number, chromaCeiling?:number, edgeCastCeiling?:number, topBarCeiling?:number, cornerClipFloor?:number}} [band]
+ * @returns {{pass:boolean, reasons:string[], predicates:Record<string,boolean>}}
+ */
+export function warmIdentityVerdict(stats, band = {}) {
+    const reasons = [];
+    /** @type {Record<string, boolean>} */
+    const predicates = {};
+    const B = {
+        warmFractionFloor: band.warmFractionFloor ?? 0.55,
+        chromaCeiling: band.chromaCeiling ?? 0.3,
+        edgeCastCeiling: band.edgeCastCeiling ?? 0.16,
+        topBarCeiling: band.topBarCeiling ?? 0.14,
+        cornerClipFloor: band.cornerClipFloor ?? 0.04,
+    };
+    if (!stats)
+        return {
+            pass: false,
+            reasons: ["no stats (degenerate read — region missing or PNG undecodable)"],
+            predicates,
+        };
+    // 1. hueBand — dominant family warm AND warmFraction floor
+    const warmDom = stats.warm === true;
+    const warmFrac = Number.isFinite(stats.warmFraction) ? Number(stats.warmFraction) : 0;
+    predicates.hueBand = warmDom && warmFrac >= B.warmFractionFloor;
+    if (!predicates.hueBand)
+        reasons.push(
+            `[hueBand] dominant hue family is ${stats.dominantFamily ?? "?"} (warmFraction ${warmFrac.toFixed(2)} vs floor ${B.warmFractionFloor}) — the composited region does not read WARM (a grey/cerulean/metallic field, not the warm-cream identity)`,
+        );
+    // 2. chromaCeiling
+    if (Number.isFinite(stats.meanChroma)) {
+        predicates.chromaCeiling = Number(stats.meanChroma) <= B.chromaCeiling;
+        if (!predicates.chromaCeiling)
+            reasons.push(
+                `[chromaCeiling] meanChroma ${Number(stats.meanChroma).toFixed(4)} > ${B.chromaCeiling} — the field over-saturates (the gray→metallic over-correction), not warm-translucent glass`,
+            );
+    }
+    // 3. edgeCast
+    if (Number.isFinite(stats.edgeDelta)) {
+        predicates.edgeCast = Number(stats.edgeDelta) <= B.edgeCastCeiling;
+        if (!predicates.edgeCast)
+            reasons.push(
+                `[edgeCast] edge↔field OKLab ΔE ${Number(stats.edgeDelta).toFixed(3)} > ${B.edgeCastCeiling} — a divergent colour cast bleeds from the edge (a cold rim / a clip artifact)`,
+            );
+    }
+    // 4. topBar (present-and-composed)
+    if (Number.isFinite(stats.topDelta)) {
+        predicates.topBar = Number(stats.topDelta) <= B.topBarCeiling;
+        if (!predicates.topBar)
+            reasons.push(
+                `[topBar] top-bar↔field OKLab ΔE ${Number(stats.topDelta).toFixed(3)} > ${B.topBarCeiling} — the top bar reads as a divergent slab (the D5 aberrant top bar), not composed INTO the field`,
+            );
+    }
+    // 5. cornerClip (absent)
+    if (Number.isFinite(stats.cornerL)) {
+        predicates.cornerClip = Number(stats.cornerL) >= B.cornerClipFloor;
+        if (!predicates.cornerClip)
+            reasons.push(
+                `[cornerClip] corner L ${Number(stats.cornerL).toFixed(3)} < ${B.cornerClipFloor} — a hard rounded-clip corner reads as a black notch (a corner-clip artifact)`,
+            );
+    }
+    // 6. routeNavigates
+    if (stats.captureReal !== undefined) {
+        predicates.routeNavigates = stats.captureReal === true;
+        if (!predicates.routeNavigates)
+            reasons.push(
+                `[routeNavigates] the capture is not a real dimension-correct PNG — the route did not navigate/render (a blank/error page, a truncated capture)`,
+            );
+    }
+    return { pass: reasons.length === 0, reasons, predicates };
 }
