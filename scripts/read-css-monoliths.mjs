@@ -140,6 +140,12 @@ export const CSS_MONOLITHS = {
             // order-after so the re-point lands beside the rung it rides) and
             // BEFORE the squircle/a11y overrides (which still win by :root level).
             "deep.css",
+            // BG.W-GLASS-DEFAULT-DEFINITION (GA-1) — the .glass-defined DEFINED-tier
+            // decoration (rim + floor-fill + control-cohort default flip), a token-
+            // substitution decoration ON a base rung (the .glass-opaque/.glass-deep
+            // precedent), @import-ed IMMEDIATELY AFTER deep.css (same @layer components,
+            // source-order-after so the cohort fills win over control-surfaces.css).
+            "defined.css",
             "progress-rail.css",
             "squircle.css",
             "a11y-fallback.css",

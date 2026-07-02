@@ -35,6 +35,12 @@
         --glass-level: 0.3;
         --glass-tint-source: var(--glass-tint-ink);
         --glass-tint-strength: var(--glass-tint-strength-aa);
+        /* BG.W-GLASS-DEFAULT-DEFINITION (GA-1) — definition is the MID rung of the SAME
+           a11y ladder `--glass-level: 0.3` rides: an explicit "more contrast" request
+           lifts every glass surface to the DEFINED tier library-wide (a read-carrying
+           warm rim + the warm-cream floor), joining the level+tint escape as ONE
+           coordinated bracket, not a third fork. */
+        --glass-definition: 1;
     }
 }
 

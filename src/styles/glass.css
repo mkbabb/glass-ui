@@ -78,6 +78,13 @@
    `--lq-enter-*` channel substrate the `.glass-reveal` TRANSITION floor speaks). */
 @import "./glass/liquid-enter.css";
 @import "./glass/deep.css";
+/* BG.W-GLASS-DEFAULT-DEFINITION (GA-1) — the .glass-defined DEFINED-tier decoration
+   (rim + warm-cream floor-fill + the control-cohort default flip), a token-substitution
+   decoration ON a base rung (the .glass-opaque/.glass-deep precedent), @import-ed
+   IMMEDIATELY AFTER deep.css (same @layer components, source-order-after so its cohort
+   fills win over control-surfaces.css/surfaces.css at equal specificity) and BEFORE the
+   squircle/a11y overrides (which still win by :root level). */
+@import "./glass/defined.css";
 @import "./glass/progress-rail.css";
 @import "./glass/squircle.css";
 @import "./glass/a11y-fallback.css";

@@ -348,6 +348,29 @@
     --glass-border-dock:     color-mix(in srgb, var(--foreground) 8%, transparent);
     --glass-border:          var(--glass-border-quiet);
 
+    /* ── The DEFINED control tier (BG.W-GLASS-DEFAULT-DEFINITION · GA-1) ───────
+       Glass is the maximal default (AX.W54), but its blur is imperceptible over a
+       FLAT page — a bare <Button>/.input-pill reads as a near-gray shape (chroma
+       0.0138, BD GOLDEN, root cause `--glass-tint-strength: 0%`). The DEFINED tier
+       gives a CONTROL a read-carrying warm rim + a warm-cream floor over ANY backdrop,
+       on the ONE --glass-level/edge machinery (NOT a fork). Both legs read the ONE
+       `@property --glass-definition` scalar (property-regs.css; 0 = transmissive,
+       1 = defined), so the scalar is genuinely load-bearing (dead-knob-proof). The
+       transmissive --glass-bg-* ladder above is BYTE-UNTOUCHED — a content surface
+       stays transmissive; `.glass-defined` (glass/defined.css) engages the floor.
+
+       --glass-floor-fill is an ALPHA-OF-`--card` PLATE leg (this file's own --glass-bg-*
+       compose idiom), NOT a chroma tint — so `in srgb` is CORRECT here (the oklab/srgb
+       fence is tint-vs-plate, and this is plate). At definition 0 the floor resolves to
+       fully transparent (the no-op floor for a content tier); at definition 1 it is the
+       ≤15% warm-cream backplate a control floats over a flat white page. */
+    --glass-floor-fill-max:  15%;
+    --glass-floor-fill:      color-mix(in srgb, var(--card) calc(var(--glass-definition) * var(--glass-floor-fill-max)), transparent);
+    /* The read-carrying warm rim rung — a LIFTED alpha of the warm hairline (14% at
+       full definition, scaled by --glass-definition), DISTINCT from the ≤5% content
+       hairline above; --foreground H≈56° so the defined rim reads WARM, never gray. */
+    --glass-border-defined:  color-mix(in srgb, var(--foreground) calc(var(--glass-definition) * 14%), transparent);
+
     /* ── The control REST register (BA.W-SURFACE-AXIS scope 7) ────────────────
        ONE shared resting surface for the FORM family — Input/Textarea/Select/
        Combobox/NumberField/TagsInput — so the whole control band is ONE material

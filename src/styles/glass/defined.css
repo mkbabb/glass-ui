@@ -1,0 +1,67 @@
+/* glass/defined.css
+   BG.W-GLASS-DEFAULT-DEFINITION (GA-1) — the DEFINED glass tier.
+
+   Glass is the maximal default (AX.W54), but the blur is imperceptible over a FLAT page
+   — a bare <Button>/.input-pill reads as a near-gray shape (chroma 0.0138, BD GOLDEN).
+   This tier splits glass into TWO registers on the ONE existing --glass-level/edge
+   machinery (NOT a fork of the cascade, NOT a competing backdrop-filter, NOT a parallel
+   recipe):
+     · transmissive (today's maximal glass) — the DEFAULT for surfaces WITH a colorful
+       backdrop (cards over the field, overlays over content, the dock over aurora).
+       BYTE-UNTOUCHED.
+     · defined — a `.glass-defined` TOKEN-SUBSTITUTION decoration on a base rung (the
+       .glass-opaque/.glass-deep precedent) that reads as a SHAPE over ANY backdrop by
+       composing three things the material ALREADY owns: (a) a stronger warm rim
+       (--glass-border-defined), (b) a warm-cream floor-fill (--glass-floor-fill) layered
+       UNDER the transmissive plate, (c) the shipped W-BUTTON-GLASS lit register
+       (specular + --glass-btn-* depth stack, unchanged). ONE engage scalar,
+       @property --glass-definition (property-regs.css; 0 = transmissive, 1 = defined) —
+       both legs read it, so the scalar is genuinely load-bearing (dead-knob-proof) and a
+       host dials definition on any ancestor.
+
+   The DEFAULT flip (the wave's PURPOSE): the control cohort — Button glass variants
+   (.btn-glass) · .input-pill (Input/Textarea/NumberField) · .control-surface
+   (SelectTrigger) — is DEFINED by default, so a control reads as a control over a flat
+   page (the AX.W54 over-reach transposition BD §3.3 invited). A CONTENT surface composes
+   NO .glass-defined and stays transmissive (the negative arm — the flip does not bleed).
+   Menu ROWS stay transmissive inside an already-defined panel (KS-GLASS §3.2 decided
+   sub-question — a row inside a defined panel needs state fills, not its own floor).
+
+   @import-ed after deep.css in glass.css (a decoration ON a base rung, the deep.css
+   sibling); the tokens live in tokens/glass.css. */
+@layer components {
+    /* The floor layers UNDER the plate via TWO image layers: CSS image layers always
+       paint OVER background-color, so a two-image plate-over-floor is the ONLY ordering
+       that reads plate-over-floor. The base rung paints its plate via the `background:`
+       SHORTHAND (→ background-COLOR), so `background-color: transparent` is LOAD-BEARING
+       — un-zeroed the composite would be plate(image) ⊕ floor(image) ⊕ plate(color), the
+       plate counted TWICE. Zeroed, the stack is EXACTLY one plate over one floor (the
+       calibration target). Each family maps --glass-defined-plate to its OWN fill token
+       so the floor sits under the fill it actually paints; a bare `.glass-*` rung +
+       .glass-defined falls back to the ladder-rung plate (--glass-plate-tinted). */
+    .glass-defined,
+    .btn-glass,
+    .input-pill,
+    .control-surface {
+        --glass-definition: 1;
+        background-color: transparent;
+        background-image:
+            linear-gradient(
+                var(--glass-defined-plate, var(--glass-plate-tinted)),
+                var(--glass-defined-plate, var(--glass-plate-tinted))
+            ),
+            linear-gradient(var(--glass-floor-fill), var(--glass-floor-fill));
+        border-color: var(--glass-border-defined);
+    }
+
+    /* Per-family plate mapping — the floor layers under the fill each family PAINTS
+       (btn-glass composes its own tinted --glass-fill; the form controls read the shared
+       --control-surface-bg REST register). */
+    .btn-glass {
+        --glass-defined-plate: var(--glass-fill);
+    }
+    .input-pill,
+    .control-surface {
+        --glass-defined-plate: var(--control-surface-bg);
+    }
+}

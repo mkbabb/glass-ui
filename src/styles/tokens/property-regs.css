@@ -353,6 +353,21 @@
     initial-value: 1;
 }
 
+/* BG.W-GLASS-DEFAULT-DEFINITION (GA-1) — the DEFINED-tier engage scalar (the
+   `--glass-level`/`--glass-depth` TWIN). Glass over a FLAT page reads near-gray (chroma
+   0.0138); the defined tier gives a CONTROL a warm rim + warm-cream floor. BOTH legs
+   read this scalar — the floor-fill α + the `--glass-border-defined` rim α
+   (tokens/glass.css) — so it is genuinely load-bearing (dead-knob-proof). `inherits:
+   true` (a host dials definition on any ancestor); `initial-value: 0` is fully
+   TRANSMISSIVE (content default, ladder byte-untouched); `.glass-defined`
+   (glass/defined.css) + `prefers-contrast: more` set it to 1. SEPARATE from
+   `--glass-level`/`--glass-depth`/`--glass-tint-*`. */
+@property --glass-definition {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+}
+
 /* AX.W51 D18 — the master comfortable-sizing scalar registered typed. The
    `<number>` syntax guarantees `calc(<base> * var(--ui-scale))` is always valid (a
    malformed override CLAMPS to the initial value 1, not an invalidated calc — the

@@ -270,20 +270,197 @@ export function safariBlurVarViolations(viteText) {
     return { violations, facts };
 }
 
+// ── the defined-control-floor predicate (pure) — BG.W-GLASS-DEFAULT-DEFINITION · GA-1
+// Glass is the maximal default (AX.W54), but the blur is imperceptible over a FLAT
+// page — a bare <Button>/.input-pill reads as a near-gray shape (chroma 0.0138, BD
+// GOLDEN). The DEFINED tier gives a CONTROL a read-carrying warm rim + a warm-cream
+// floor over ANY backdrop, on the ONE --glass-level/edge machinery. This arm asserts
+// the mechanism + the control-cohort default flip, device-free over the SOURCE:
+//   DF1 — @property --glass-definition registered typed INHERITING <number>, initial 0
+//         (the transmissive default; the one load-bearing engage scalar §3.2).
+//   DF2 — --glass-floor-fill composes color-mix(in srgb, var(--card)
+//         calc(var(--glass-definition) * …), transparent) — the alpha-of-`--card` PLATE
+//         leg reading the scalar (dead-knob-proof) — AND --glass-floor-fill-max is a
+//         NON-ZERO % (the floor actually engages at definition 1).
+//   DF3 — --glass-border-defined is a LIFTED warm rim reading var(--glass-definition) +
+//         var(--foreground) with a multiplier STRICTLY ABOVE the ≤5% content hairline.
+//   DF4 — the `.glass-defined` recipe zeroes `background-color: transparent`
+//         (LOAD-BEARING — the base rung paints its plate via background-COLOR, so the
+//         two-image plate-over-floor only orders correctly with the color zeroed) AND
+//         layers the floor UNDER the plate via TWO linear-gradient image layers, one
+//         reading --glass-floor-fill.
+//   DF5 — the control cohort (.btn-glass · .input-pill · .control-surface — the gate's
+//         three witnesses <Button>/.input-pill/SelectTrigger) is DEFINED by default:
+//         each is a co-member of a rule setting `--glass-definition: 1`.
+//   DF6 — the NEGATIVE arm: a plain content tier (.glass-card/.glass-resting/
+//         .glass-quiet/.glass-wash) is NOT a co-member of any `--glass-definition: 1`
+//         rule — the default flip must NOT bleed onto content (content stays
+//         transmissive; the floor is sub-perceptual over a real field).
+// Born-RED at HEAD (no @property, no floor token, no .glass-defined, no cohort flip).
+export function definedControlFloorViolations(glassCss, tokensCss) {
+    const violations = [];
+    const facts = {};
+    const glass = squish(stripCss(glassCss || ""));
+    const tokens = squish(stripCss(tokensCss || ""));
+
+    // Collect every rule whose body sets `--glass-definition: 1` (the defined cohort).
+    // A CSS rule body has no nested braces (the @layer wrapper aside), so the innermost
+    // `selector { body }` match is robust to the @layer nesting + selector ordering.
+    const definedRules = [];
+    const ruleRe = /([^{}]+)\{([^{}]*)\}/g;
+    let m;
+    while ((m = ruleRe.exec(glass))) {
+        if (/--glass-definition\s*:\s*1\b/.test(m[2])) {
+            definedRules.push({ selector: m[1].trim(), body: m[2] });
+        }
+    }
+    const cohortSelectors = definedRules.map((r) => r.selector).join(" || ");
+    const cohortBodies = definedRules.map((r) => r.body).join(" ");
+    const hasClass = (cls) => new RegExp(`\\.${cls}(?![\\w-])`).test(cohortSelectors);
+
+    // DF1 — the @property registration.
+    const propMatch = /@property\s+--glass-definition\s*\{([^}]*)\}/.exec(tokens);
+    facts.propertyRegistered = !!propMatch;
+    if (!propMatch) {
+        violations.push(
+            "DF1: `@property --glass-definition` is NOT registered in the tokens cascade — the ONE defined-tier engage scalar must be a typed inheriting <number> (property-regs.css)",
+        );
+    } else {
+        const pbody = propMatch[1];
+        facts.propertyInherits = /inherits\s*:\s*true/.test(pbody);
+        facts.propertyInitialZero = /initial-value\s*:\s*0\b/.test(pbody);
+        facts.propertyNumber = /syntax\s*:\s*"\s*<number>\s*"/.test(pbody);
+        if (!facts.propertyNumber) {
+            violations.push('DF1: `@property --glass-definition` syntax is not `"<number>"`');
+        }
+        if (!facts.propertyInherits) {
+            violations.push(
+                "DF1: `@property --glass-definition` is not `inherits: true` — a host must dial definition on any ancestor (the --glass-level/--glass-depth cascading-scalar idiom)",
+            );
+        }
+        if (!facts.propertyInitialZero) {
+            violations.push(
+                "DF1: `@property --glass-definition` initial-value is not `0` — the transmissive default (content tier) must be fully transmissive; `.glass-defined` engages the floor",
+            );
+        }
+    }
+
+    // DF2 — the floor-fill token: alpha-of-`--card` plate leg reading the scalar.
+    const floorFill = /--glass-floor-fill\s*:\s*([^;]+);/.exec(tokens);
+    facts.floorFillComposes =
+        !!floorFill &&
+        /color-mix\(\s*in\s+srgb/.test(floorFill[1]) &&
+        /var\(--card\)/.test(floorFill[1]) &&
+        /var\(--glass-definition\)/.test(floorFill[1]);
+    if (!facts.floorFillComposes) {
+        violations.push(
+            "DF2: `--glass-floor-fill` does not compose `color-mix(in srgb, var(--card) calc(var(--glass-definition) * …), transparent)` — it must be the alpha-of-`--card` PLATE leg reading the `--glass-definition` scalar (an in-oklab mix, a missing --card, or a dropped scalar breaks the plate/dead-knob-proof)",
+        );
+    }
+    const floorMax = /--glass-floor-fill-max\s*:\s*(\d+(?:\.\d+)?)%/.exec(tokens);
+    facts.floorFillMaxPct = floorMax ? Number(floorMax[1]) : null;
+    if (facts.floorFillMaxPct === null) {
+        violations.push("DF2: `--glass-floor-fill-max` (the calibration knob) is not declared as a %");
+    } else if (facts.floorFillMaxPct <= 0) {
+        violations.push(
+            `DF2: --glass-floor-fill-max is ${facts.floorFillMaxPct}% — a 0% floor never engages (the floor must be a NON-ZERO warm-cream backplate at definition 1)`,
+        );
+    }
+
+    // DF3 — the defined rim: a lifted warm alpha above the ≤5% content hairline.
+    const rim = /--glass-border-defined\s*:\s*([^;]+);/.exec(tokens);
+    const rimMul = rim ? /var\(--glass-definition\)\s*\*\s*(\d+(?:\.\d+)?)%/.exec(rim[1]) : null;
+    facts.rimReadsScalar = !!rim && /var\(--glass-definition\)/.test(rim[1]) && /var\(--foreground\)/.test(rim[1]);
+    facts.rimMulPct = rimMul ? Number(rimMul[1]) : null;
+    if (!rim) {
+        violations.push("DF3: `--glass-border-defined` is not declared — the defined tier needs a read-carrying warm rim rung");
+    } else {
+        if (!facts.rimReadsScalar) {
+            violations.push(
+                "DF3: `--glass-border-defined` must read `var(--foreground)` (the warm ink) scaled by `var(--glass-definition)` — a static literal cannot flip with the scalar or the warm ink",
+            );
+        }
+        if (facts.rimMulPct === null) {
+            violations.push("DF3: `--glass-border-defined` has no `var(--glass-definition) * N%` multiplier — the rim alpha must scale with definition");
+        } else if (facts.rimMulPct <= 5) {
+            violations.push(
+                `DF3: --glass-border-defined lifts to ${facts.rimMulPct}% — the defined rim must clear the ≤5% content hairline (glass.css --glass-border-* is 4-5%); a hairline-tier defined rim is not read-carrying`,
+            );
+        }
+    }
+
+    // DF4 — the recipe: transparent background-color (load-bearing) + two-image floor-under-plate.
+    facts.recipeZeroesBg = /background-color\s*:\s*transparent/.test(cohortBodies);
+    const gradientCount = (cohortBodies.match(/linear-gradient\(/g) || []).length;
+    facts.recipeTwoImageLayers = gradientCount >= 2;
+    facts.recipeReadsFloor = /background-image\s*:[^;]*var\(--glass-floor-fill\)/.test(cohortBodies);
+    if (definedRules.length === 0) {
+        violations.push(
+            "DF4/DF5: NO rule sets `--glass-definition: 1` — the `.glass-defined` decoration + the control-cohort default flip are ABSENT (born-RED near-gray control state)",
+        );
+    } else {
+        if (!facts.recipeZeroesBg) {
+            violations.push(
+                "DF4: the `.glass-defined` recipe does not `background-color: transparent` — LOAD-BEARING (critic M1): the base rung paints its plate via the `background:` SHORTHAND → background-COLOR, so an un-zeroed color counts the plate TWICE (plate-image ⊕ floor-image ⊕ plate-color); zeroing orders exactly ONE plate over ONE floor",
+            );
+        }
+        if (!facts.recipeTwoImageLayers) {
+            violations.push(
+                "DF4: the `.glass-defined` recipe does not layer TWO `linear-gradient()` image layers — the floor must sit UNDER the plate (CSS image layers paint OVER background-color; a two-image plate-over-floor is the only correct ordering)",
+            );
+        }
+        if (!facts.recipeReadsFloor) {
+            violations.push("DF4: the `.glass-defined` recipe's background-image does not read `var(--glass-floor-fill)` — the floor leg is missing");
+        }
+    }
+
+    // DF5 — the control cohort default flip (the three gate witnesses).
+    const cohort = ["glass-defined", "btn-glass", "input-pill", "control-surface"];
+    const missing = cohort.filter((c) => !hasClass(c));
+    facts.cohortPresent = cohort.filter((c) => hasClass(c));
+    if (definedRules.length > 0 && missing.length) {
+        violations.push(
+            `DF5: the control cohort is not DEFINED by default — ${missing.join(", ")} do not compose the .glass-defined recipe (each of .btn-glass/.input-pill/.control-surface — <Button>/.input-pill/SelectTrigger — must set --glass-definition:1 so a control reads as a control over a flat page)`,
+        );
+    }
+
+    // DF6 — the negative arm: content tiers stay transmissive (the flip must not bleed).
+    const contentTiers = ["glass-card", "glass-resting", "glass-quiet", "glass-wash"];
+    const bled = contentTiers.filter((c) => hasClass(c));
+    facts.contentTiersBled = bled;
+    if (bled.length) {
+        violations.push(
+            `DF6: a plain content tier (${bled.join(", ")}) is a co-member of a --glass-definition:1 rule — the default flip must NOT bleed onto content (a content surface stays transmissive; the floor is the CONTROL register only)`,
+        );
+    }
+
+    return { violations, facts };
+}
+
 export function detect() {
     const decide = decideViolations(readFile(GLASS_DEEP_FILE));
-    const glassFill = glassFillHomeViolations(readMonolith(ROOT, "glass"));
+    const glassMonolith = readMonolith(ROOT, "glass");
+    const tokensMonolith = readMonolith(ROOT, "tokens");
+    const glassFill = glassFillHomeViolations(glassMonolith);
     const safari = safariBlurVarViolations(readFile(VITE_STYLE_ASSETS));
+    const defined = definedControlFloorViolations(glassMonolith, tokensMonolith);
     // the self-test bites run EVERY run (the "proven every run" discipline) — a
     // bite that loses its teeth REDs the gate, so the anti-gameability arm can
     // never silently rot.
     const biteFails = selfTest();
     return {
-        violations: [...decide.violations, ...glassFill.violations, ...safari.violations, ...biteFails],
+        violations: [
+            ...decide.violations,
+            ...glassFill.violations,
+            ...safari.violations,
+            ...defined.violations,
+            ...biteFails,
+        ],
         facts: {
             deepGlassDecided: decide.facts,
             glassFillHome: glassFill.facts,
             safariBlurVar: safari.facts,
+            definedControlFloor: defined.facts,
             selfTestOk: biteFails.length === 0,
         },
     };
@@ -386,6 +563,46 @@ function selfTest() {
         );
     }
 
+    // ── defined-control-floor bites (DF) — BG.W-GLASS-DEFAULT-DEFINITION ───────────
+    const goodDefinedGlass =
+        "@layer components { .glass-defined, .btn-glass, .input-pill, .control-surface { --glass-definition: 1; background-color: transparent; background-image: linear-gradient(var(--glass-defined-plate, var(--glass-plate-tinted)), var(--glass-defined-plate, var(--glass-plate-tinted))), linear-gradient(var(--glass-floor-fill), var(--glass-floor-fill)); border-color: var(--glass-border-defined); } .btn-glass { --glass-defined-plate: var(--glass-fill); } }";
+    const goodDefinedTokens =
+        '@property --glass-definition { syntax: "<number>"; inherits: true; initial-value: 0; } :root { --glass-floor-fill-max: 15%; --glass-floor-fill: color-mix(in srgb, var(--card) calc(var(--glass-definition) * var(--glass-floor-fill-max)), transparent); --glass-border-defined: color-mix(in srgb, var(--foreground) calc(var(--glass-definition) * 14%), transparent); }';
+    // sanity — the good fixture MUST be clean (else a bite would false-pass).
+    if (definedControlFloorViolations(goodDefinedGlass, goodDefinedTokens).violations.length !== 0) {
+        fails.push(
+            "self-test defined-control-floor: the synthetic GOOD fixture is NOT clean (the predicate over-fires — a real bite could false-pass)",
+        );
+    }
+    // bite DF5 — a cohort member (.btn-glass) DROPPED from the defined recipe must flag.
+    const missingCohort = goodDefinedGlass.replace(".glass-defined, .btn-glass, .input-pill, .control-surface", ".glass-defined, .input-pill, .control-surface");
+    if (!definedControlFloorViolations(missingCohort, goodDefinedTokens).violations.some((v) => /DF5/.test(v))) {
+        fails.push(
+            "self-test DF5: a cohort member missing the .glass-defined class (.btn-glass dropped) was NOT flagged (the default-flip detector has no teeth)",
+        );
+    }
+    // bite DF2 — a floor-fill-max at 0% (the floor never engages) must flag.
+    const floorAtZero = goodDefinedTokens.replace("--glass-floor-fill-max: 15%", "--glass-floor-fill-max: 0%");
+    if (!definedControlFloorViolations(goodDefinedGlass, floorAtZero).violations.some((v) => /DF2/.test(v))) {
+        fails.push(
+            "self-test DF2: a --glass-floor-fill-max of 0% (dead floor) was NOT flagged (the floor-engages detector has no teeth)",
+        );
+    }
+    // bite DF3 — a defined rim at the ≤5% content hairline must flag.
+    const rimAtHairline = goodDefinedTokens.replace("var(--glass-definition) * 14%", "var(--glass-definition) * 4%");
+    if (!definedControlFloorViolations(goodDefinedGlass, rimAtHairline).violations.some((v) => /DF3/.test(v))) {
+        fails.push(
+            "self-test DF3: a --glass-border-defined at the 4% content-hairline tier was NOT flagged (the read-carrying-rim detector has no teeth)",
+        );
+    }
+    // bite DF6 — a content tier (.glass-card) bled into the defined cohort must flag.
+    const contentBled = goodDefinedGlass.replace(".glass-defined, .btn-glass", ".glass-defined, .glass-card, .btn-glass");
+    if (!definedControlFloorViolations(contentBled, goodDefinedTokens).violations.some((v) => /DF6/.test(v))) {
+        fails.push(
+            "self-test DF6: a content tier (.glass-card) bled into a --glass-definition:1 rule was NOT flagged (the no-bleed negative arm has no teeth)",
+        );
+    }
+
     return fails;
 }
 
@@ -442,6 +659,23 @@ function run() {
     console.log("proof:glass — arm: safari-blur-var (BG.W-GLASS-REGISTER-UNIFY)");
     console.log(
         `  SW blur(var())    : regex=${sw.regexFound ? "found" : "MISSING"}   matches-blur(var())=${sw.matchesBlurVar ? "✓" : "✗"}   matches-1-level=${sw.matchesSimple ? "✓" : "✗"}   no-prelude-corruption=${sw.matchesPrelude === false ? "✓" : "✗"}`,
+    );
+    const df = facts.definedControlFloor ?? {};
+    console.log("proof:glass — arm: defined-control-floor (BG.W-GLASS-DEFAULT-DEFINITION · GA-1)");
+    console.log(
+        `  DF1 @property     : registered=${df.propertyRegistered ? "✓" : "✗"} inherits=${df.propertyInherits ? "✓" : "✗"} initial-0=${df.propertyInitialZero ? "✓" : "✗"}`,
+    );
+    console.log(
+        `  DF2 floor-fill    : plate-leg=${df.floorFillComposes ? "✓" : "✗"}  max=${df.floorFillMaxPct ?? "?"}%`,
+    );
+    console.log(
+        `  DF3 defined rim   : reads-scalar=${df.rimReadsScalar ? "✓" : "✗"}  lift=${df.rimMulPct ?? "?"}% (>5)`,
+    );
+    console.log(
+        `  DF4 recipe        : bg-transparent=${df.recipeZeroesBg ? "✓" : "✗"}  two-image=${df.recipeTwoImageLayers ? "✓" : "✗"}  reads-floor=${df.recipeReadsFloor ? "✓" : "✗"}`,
+    );
+    console.log(
+        `  DF5/6 cohort      : defined=[${(df.cohortPresent ?? []).join(", ")}]  content-bled=${(df.contentTiersBled ?? []).length ? "✗ " + df.contentTiersBled.join(", ") : "✓ none"}`,
     );
     console.log(`  self-test bites   : ${facts.selfTestOk ? "all teeth ✓" : "✗ BROKE"}`);
 
