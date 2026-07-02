@@ -2,21 +2,13 @@
 // The shell-prop derivation (variant/shape/orientation/density/collapse surface +
 // the container-query style + the discriminated-union prop types) lives in
 // ./composables/useDockShellProps; the morph-window timing family (the
-// isTransitioning flag lifecycle) lives in ./composables/useDockMorphWindow. This
-// SFC composes the dual-layer grid, the axis-aware expand/collapse transition, and
-// the pointer/focus hold machinery.
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, shallowRef, useId, useSlots, useTemplateRef, watch } from "vue";
-import { useTouchGate } from "../../../composables/dom/useTouchGate";
-// BD.W-DOCK-CORE (A13 / II.2) — the SHIPPED fission engine, WIRED into a first-class
-// `<GlassDock split>` facility (the engine is 100%, assembly was 0%). A CONSUMING seam
-// BESIDE the morph engine (box-INVIOLATE — it does NOT import/edit dockMorphContext/
-// DOCK_SPRING; it morphs surviving controls off the dock body).
-import {
-    useDockFission,
-    DOCK_SPLIT_SIGNATURES,
-    type DockFissionPieceHandle,
-    type DockSplitPlacement,
-} from "./composables/useDockFission";
+// isTransitioning flag lifecycle) lives in ./composables/useDockMorphWindow. The
+// collapsed-pill touch-gate lives in ./composables/useDockTouchGate; the fission
+// split-facility wiring lives in ./composables/useDockFissionWiring
+// (BG.W-DOCK-DECOMPOSE — the F6.5 one-writer-per-concern carve). This SFC composes
+// the dual-layer grid, the axis-aware expand/collapse transition, and the
+// pointer/focus hold machinery.
+import { computed, onMounted, ref, useId, useSlots, useTemplateRef, watch } from "vue";
 // AZ.W-ADAPTIVE-AUTO Arm 2 (H3 arm a) — the sampled-luminance observer is wired ON by
 // DEFAULT for the dock (the surface the user reported unreadable over light, and the
 // one most often over a live/bright backdrop). It REFINES the W55 declarative bucket +
@@ -37,6 +29,8 @@ import { useDockShellProps, type DockProps } from "./composables/useDockShellPro
 import { useDockMorphWindow } from "./composables/useDockMorphWindow";
 import { useDockClickIntegrity } from "./composables/useDockClickIntegrity";
 import { useDockItemDrag } from "./composables/useDockItemDrag";
+import { useDockTouchGate } from "./composables/useDockTouchGate";
+import { useDockFissionWiring } from "./composables/useDockFissionWiring";
 
 /* AZ R4-RAIL attrs contract — the `.glass-dock-frame` shell is STRUCTURAL chrome
    (the rail's non-clipping positioning context), never the consumer's surface.
@@ -48,13 +42,9 @@ import { useDockItemDrag } from "./composables/useDockItemDrag";
 defineOptions({ inheritAttrs: false });
 
 /* AZ.W-DOCK-TAXONOMY (arm a) — the prop contract is ONE shape (DockProps, in
-   useDockShellProps). The `variant` discriminant is gone: there is no
-   `variant="rail" | "instrument-strip"` second-way to express "vertical" — that is
-   `orientation="vertical"` alone — and the collapse↔expand surface
-   (`collapseDelay`/`startCollapsed`/`layout`) applies on BOTH orientations (a
-   vertical dock morphs its `height`, a horizontal dock its `width`; the single
-   opt-out is `alwaysExpanded`, default false). Defaults are applied at each read
-   site in `useDockShellProps` via `?? default`. */
+   useDockShellProps): no `variant` discriminant, "vertical" is `orientation="vertical"`
+   alone, and collapse↔expand applies on BOTH orientations (single opt-out
+   `alwaysExpanded`). Defaults resolve at each read site via `?? default`. */
 const props = defineProps<DockProps>();
 
 /* BD.W-DOCK-CORE (A12) — the draggable-items reorder emit (additive; fires only on a
@@ -97,7 +87,6 @@ if (props.autoLuminance !== false) {
 }
 
 const isTransitioning = ref(false);
-const touchGate = useTouchGate(collapseDelay.value);
 const dockId = `glass-dock-${useId()}`;
 
 const {
@@ -138,20 +127,11 @@ provideDockContext({
 
 const visualExpanded = computed(() => alwaysExpanded.value || expanded.value);
 
-/* AZ.W-RAIL-EXTEND (R4-1) — the `#rail` chrome PERSISTENCE shell.
-   The `.glass-dock` root carries `contain: paint` + `backdrop-filter` + (on a
-   vertical always-expanded rail) `overflow-y: auto` — ALL THREE hard-clip every
-   descendant to the dock's border box, so an absolutely-positioned `#rail` slot
-   rendered as a dock CHILD can NEVER paint beyond the edge (it gets swallowed at the
-   bottom — the R4-1 "black blob clipped at the dock edge"). The only correct escape
-   is to render the rail as a SIBLING of `.glass-dock`, anchored to a thin
-   non-clipping positioning wrapper (`.glass-dock-frame`). The wrapper is present
-   ONLY when a `#rail` is authored, so a dock with no rail is byte-identical to
-   before (no extra DOM). When wrapped, the dock's flow/position-mode lives on the
-   shell (the dock shrink-wraps inside it); the `.glass-dock` keeps its own
-   fixed/sticky behaviour for the no-rail path. Rail consumers are inline vertical
-   docks (SidebarDock, the dock/rail story), so the shell stays `inline-flex`/inline
-   flow. */
+/* AZ.W-RAIL-EXTEND (R4-1) — the `#rail` chrome PERSISTENCE shell. The dock's
+   `contain: paint`/`backdrop-filter`/overflow clip swallows a dock-CHILD rail, so the
+   rail renders as a `.glass-dock` SIBLING anchored to the non-clipping
+   `.glass-dock-frame` wrapper (present ONLY when a `#rail` is authored → no-rail docks
+   are byte-identical). See the CLAUDE.md dock-rail section for the full clip rationale. */
 const slots = useSlots();
 const hasRail = computed(() => !!slots.rail);
 
@@ -184,18 +164,11 @@ const outerActiveLayer = computed<string>(() =>
    wiring that lets a collapsible vertical dock shrink — the machinery the old
    `variant="rail"` force-pin denied. */
 const outerLayerAxis = computed<"horizontal" | "vertical">(() => orientation.value);
-/* AX.W01 redress (KEPT) — the OUTER collapse is a CLIP-APERTURE morph. Both panes
-   (`--full` + `--summary`) are grid-stacked behind the root clip; the ACTIVE pane
-   is in-flow (`position:relative; width:max-content`) and the INACTIVE one is
-   `position:absolute; inset:0` (stretched, out of flow). `.dock-layers` therefore
-   shrink-wraps the ACTIVE pane — so its size differs between collapsed/expanded
-   only AFTER Vue flushes the `.collapsed`↔`.expanded` class flip that swaps which
-   pane is active. The orchestrator pins the container at `from` immediately (box
-   holds, child stagger holds at t=0) and measures `to` one rAF later — post-flush
-   — when the container shrink-wraps to the TARGET pane's natural width. Size +
-   padding + radius + color + child stagger all co-morph off the one
-   `--dock-morph-t` scalar. The inner `<DockLayerGroup>` pane-swap shares the SAME
-   pane topology and registers as a SECOND morph target on the SAME spring. */
+/* AX.W01 redress (KEPT) — the OUTER collapse is a CLIP-APERTURE morph: both panes
+   grid-stack behind the root clip, `.dock-layers` shrink-wraps the ACTIVE pane, and
+   the orchestrator pins at `from` then measures `to` one rAF post-flush; size/pad/
+   radius/color/stagger co-morph off the one `--dock-morph-t` scalar. A nested
+   `<DockLayerGroup>` registers as a SECOND target on the SAME spring. (dockMorphContext) */
 const { context: dockMorphContext, onOuterTransitionEnd: onLayersTransitionEnd } =
     useDockMorphOrchestrator({
         rootEl: dockEl,
@@ -204,23 +177,15 @@ const { context: dockMorphContext, onOuterTransitionEnd: onLayersTransitionEnd }
         outerAxis: outerLayerAxis,
     });
 
-/* AX.W02 — PROVIDE the single morph orchestrator through the optional DI seam. A
-   nested `<DockLayerGroup>` injects it and DEFERS its pane-swap morph to this one
-   engine (no second spring); a `<DockLayerGroup>` rendered outside any
-   `<GlassDock>` reads `null` and self-orchestrates as before (the standalone demo
-   path). `createOptionalContext` is correct: a missing provider is a
-   befitting-silent standalone-render path, not a library-internal violation. */
+/* AX.W02 — PROVIDE the single morph orchestrator through the optional DI seam: a
+   nested `<DockLayerGroup>` injects it + defers its pane-swap (no second spring); one
+   rendered outside any `<GlassDock>` reads `null` + self-orchestrates (standalone demo). */
 provideDockMorphContext(dockMorphContext);
 
 /* BD.W-DOCK-CORE (the width-seizure cure) — measure the two convex-blend endpoints
-   ONCE per content change (a ResizeObserver on `.dock-layers`), writing
-   `--dock-expanded-px`/`--dock-collapsed-px` on the dock root. The visible size is a
-   ratio-FREE blend of those two stable endpoints off `--dock-morph-t` (shape.css),
-   so the prior unbounded `from/to` per-swap ratio (the ~2451px `scaleX(56)`
-   detonation) is gone by construction. The collapsed endpoint falls back to the
-   resolved `--dock-morph-min` icon-square floor (the summary box is a pane INSIDE
-   `.dock-layers`, so no separate ref is needed); the expanded endpoint is floored at
-   `max(measured, collapsed)` — the freshness guard against a 0-measurement. */
+   ONCE per content change (`--dock-expanded-px`/`--dock-collapsed-px`); the visible
+   size is a ratio-FREE blend off `--dock-morph-t` (shape.css), so the unbounded
+   per-swap ratio is gone by construction. See dockMorphMeasure for the floors. */
 useDockExpandedSize({
     rootEl: dockEl,
     contentEl: layersEl,
@@ -228,17 +193,11 @@ useDockExpandedSize({
     expanded: visualExpanded,
 });
 
-/* AX.W01 — the route-morph `view-transition-name` seam (PRESERVED). The dock
-   COLLAPSE VT fork is RETIRED (the box morph runs on the single spring scalar
-   above; VT crossfades rasterized pixels — the wrong primitive for a layout
-   morph). But the per-instance `glass-dock-${useId()}` NAMED-ELEMENT seam is KEPT,
-   moved to the dock ROOT, for the consumer's PAGE/route geometry-morph (fourier's
-   J+K critical-path route morph; invariant η — the `proof:vt-names` gate polices
-   the app-unique `useId()` mint-source). `dockId` is app-scoped, so two co-mounted
-   docks mint DISTINCT names and never collide their route-morph snapshots. The
-   name is no longer the dock's OWN collapse mechanism — only the route
-   geometry-morph the consumer drives. Always applied (the route-morph is engine-
-   gated by the consumer's own `startViewTransition`, not by the dock). */
+/* AX.W01 — the route-morph `view-transition-name` seam (PRESERVED). The dock COLLAPSE
+   VT fork is RETIRED; the per-instance `glass-dock-${useId()}` NAMED-ELEMENT seam is
+   KEPT on the dock ROOT for the consumer's PAGE/route geometry-morph (app-scoped so
+   co-mounted docks never collide; `proof:vt-names` polices the `useId()` mint). The
+   route-morph is engine-gated by the consumer's own `startViewTransition`. */
 const rootVtStyle = computed<Record<string, string>>(() => ({
     "view-transition-name": dockId.replace(/[^a-zA-Z0-9_-]/g, "-"),
 }));
@@ -271,60 +230,21 @@ onMounted(() => {
     }
 });
 
-/* AZ.W-DOCK-TAXONOMY — the touch gate (tap-to-expand on a collapsed floating pill)
-   applies to ANY collapsible dock, not just the horizontal one. A vertical dock now
-   collapses too, so the gate must distinguish a tap from a vertical scroll on its
-   pill as well. */
-function shouldGateTouch(): boolean {
-    return !alwaysExpanded.value;
-}
-
-/* AT.W6-dock-b — shape B′ touch-gate. The gate's job is to DISTINGUISH a tap
-   from a vertical scroll on the floating collapsed pill (the 150ms pending
-   window + the >10px scroll-check inside `useTouchGate`), NOT to SWALLOW the
-   tap. We therefore do NOT `preventDefault()`/`stopPropagation()` the activating
-   `touchstart`/`touchend`: the browser's native tap→click compatibility event is
-   allowed to flow to the tapped control, so a SINGLE tap on a collapsed dock
-   control BOTH expands the dock (here) AND activates that control (via the
-   native click) — the iOS Now-Playing mini-bar single-tap-play contract. No
-   `elementFromPoint`, no synthetic dispatch: the fix rides the browser's own
-   tap→click. (Swallowing the tap was the root cause of the double-tap field
-   defect — a prevented touch sequence emits no compatibility click, so the
-   control under the finger fired nothing and the user had to tap twice.) A
-   scroll gesture cancels the pending tap inside the gate and never emits a
-   tap-click, so vertical scrolling on the pill stays browser-owned. */
-function onTouchStart(event: TouchEvent): void {
-    if (!shouldGateTouch() || visualExpanded.value) return;
-    const root = dockEl.value;
-    const touch = event.touches[0];
-    if (!root || !touch) return;
-
-    // Arm the tap/scroll discrimination; the return value is consumed by the
-    // gate's own state — the tap is never preventDefault-ed (shape B′).
-    touchGate.handleTouchStart(root, touch.clientY);
-}
-
-function onTouchMove(event: TouchEvent): void {
-    if (!shouldGateTouch()) return;
-    touchGate.handleScrollCheck(event);
-}
-
-function onTouchEnd(): void {
-    if (!shouldGateTouch()) return;
-    const wasActive = touchGate.isActive.value;
-    touchGate.handleTouchEnd();
-    if (!wasActive && touchGate.isActive.value && !visualExpanded.value) {
-        // Expand on the resolved tap, but let the native compatibility click
-        // reach the control — no preventDefault, no stopPropagation (shape B′).
-        expand();
-    }
-}
-
-watch(touchGate.isActive, (isActive) => {
-    if (!isActive && expanded.value && !isPinned.value && !alwaysExpanded.value) {
-        collapse();
-    }
-});
+/* BG.W-DOCK-DECOMPOSE — the collapsed-pill tap-to-expand touch gate (shape B′). The
+   gate owns its own `useTouchGate` + the tap/scroll discrimination + the
+   collapse-on-deactivate watch; the SFC only binds the handlers + reaches
+   `deactivate()` on a collapse flip. */
+const { onTouchStart, onTouchMove, onTouchEnd, deactivate: touchDeactivate } =
+    useDockTouchGate({
+        collapseDelay: collapseDelay.value,
+        rootEl: dockEl,
+        alwaysExpanded,
+        visualExpanded,
+        expanded,
+        isPinned,
+        expand,
+        collapse,
+    });
 
 watch(visualExpanded, (isExpanded) => {
     markTransitioning();
@@ -334,115 +254,31 @@ watch(visualExpanded, (isExpanded) => {
         // lands on a swapped-in control is swallowed by the integrity guard.
         markExpandFlip();
     } else {
-        touchGate.deactivate();
+        touchDeactivate();
     }
 });
 
-/* BD.W-DOCK-CORE (A13 / II.2) — the fission split facility. Armed ONLY when
-   `:splittable` (additive default-off → byte-identical to HEAD otherwise). The fission
-   spring rides the SAME re-tuned WEIGHTY `DOCK_SPRING` register (no second clock), BESIDE
-   the morph engine. */
-const splitSignature = shallowRef(
-    DOCK_SPLIT_SIGNATURES[props.splitContext ?? "nav"],
-);
-watch(
-    () => props.splitContext,
-    (ctx) => {
-        splitSignature.value = DOCK_SPLIT_SIGNATURES[ctx ?? "nav"];
-    },
-);
-
-/* BD.W-DOCK-CORE (II.2 — F-1) — the placement the detached pieces fly to form the
-   sibling island dock (beside/above/below). A Ref the fission reads as the ONE coherent
-   travel vector for the whole cluster (NOT per-piece radial scatter). */
-const splitPlacement = shallowRef<DockSplitPlacement>(
-    props.splitPlacement ?? "beside",
-);
-watch(
-    () => props.splitPlacement,
-    (p) => {
-        splitPlacement.value = p ?? "beside";
-    },
-);
-
-/* BD.W-DOCK-CORE (II.2 — F-1) — the fission scalars (`--dock-split-t`/`--island-*`/
-   `--seam-tension`) + the `[data-fissioning]`/`[data-fissioned]` state hooks are written on
-   the `.glass-dock-frame` (NOT the `.glass-dock` root) so BOTH the pieces INSIDE the dock
-   AND the sibling island/neck bridge (a frame child, outside the dock's `contain: paint`)
-   inherit the cascading scalars from their common ancestor. The frame is the fission scope. */
-const fission = props.splittable
-    ? useDockFission({
-          rootEl: frameEl,
-          signature: splitSignature,
-          placement: splitPlacement,
-      })
-    : null;
-
-/* BD.W-DOCK-CORE (II.2 — F-1) — the live fissioned flag the template reads to render the
-   sibling island plate + the goo neck. */
-const isFissioned = fission ? fission.fissioned : computed(() => false);
-
-/* Auto-register every child marked `data-dock-splittable` as a fission PIECE. The
-   detach vector is the child's FLIP-measured center relative to the dock center — a
-   radial bloom for `search`, a lateral peel for `media`, the inward (negative-radial)
-   merge for `nav` (the placement reads the vector). The vector is a GETTER so a live
-   re-measure re-resolves per read (the dock geometry can shift on density/orientation). */
-const pieceHandles: DockFissionPieceHandle[] = [];
-
-function dockCenter(): { x: number; y: number } {
-    const el = dockEl.value;
-    if (!el) return { x: 0, y: 0 };
-    const r = el.getBoundingClientRect();
-    return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
-}
-
-function registerSplittablePieces(): void {
-    const root = dockEl.value;
-    if (!root || !fission) return;
-    // Clear any prior registration (a re-register after a layout shift).
-    for (const h of pieceHandles.splice(0)) h.release();
-    const marked = Array.from(
-        root.querySelectorAll<HTMLElement>("[data-dock-splittable]"),
-    );
-    const ctx = props.splitContext ?? "nav";
-    marked.forEach((el, rank) => {
-        el.classList.add("dock-fission-piece");
-        const handle = fission.registerPiece({
-            el: ref(el),
-            rank,
-            vector: () => {
-                const c = dockCenter();
-                const r = el.getBoundingClientRect();
-                const ex = r.left + r.width / 2;
-                const ey = r.top + r.height / 2;
-                let dx = ex - c.x;
-                let dy = ey - c.y;
-                // Normalize to a unit-ish vector (the orchestrator scales by --piece-reach).
-                const mag = Math.hypot(dx, dy) || 1;
-                dx /= mag;
-                dy /= mag;
-                // nav = INWARD merge: the negative radial (pieces fold toward center).
-                if (ctx === "nav") {
-                    dx = -dx;
-                    dy = -dy;
-                }
-                // media = LATERAL peel: bias to the cross (inline) axis.
-                if (ctx === "media") dy *= 0.25;
-                return { dx, dy };
-            },
-        });
-        pieceHandles.push(handle);
-    });
-}
-
-if (fission) {
-    onMounted(() => {
-        nextTick(registerSplittablePieces);
-    });
-    onBeforeUnmount(() => {
-        for (const h of pieceHandles.splice(0)) h.release();
-    });
-}
+/* BG.W-DOCK-DECOMPOSE — the fission split facility (A13 / II.2). Armed ONLY when
+   `:splittable` (additive default-off → byte-identical to HEAD otherwise). The
+   split-signature/placement refs, the piece auto-registration + detach vectors, the
+   drag-to-split pointer state, and the imperative split/merge/toggle surface all live
+   in the wiring leaf — a CONSUMING seam BESIDE the morph engine (box-INVIOLATE; it
+   never writes `--dock-morph-t`, only the fission's own `--dock-split-t` cohort). */
+const {
+    fissioned: isFissioned,
+    onDockPointerMove,
+    onDockPointerDown,
+    onDockPointerUp,
+    split,
+    merge,
+    toggleSplit,
+} = useDockFissionWiring({
+    rootEl: dockEl,
+    frameEl,
+    splittable: props.splittable === true,
+    splitContext: () => props.splitContext,
+    splitPlacement: () => props.splitPlacement,
+});
 
 /* BD.W-DOCK-CORE (A12) — the draggable-ITEMS axis. Armed ONLY when `:draggable-items`;
    a non-draggable dock mints ZERO gesture (the `enabled()` gate keeps the listener off).
@@ -457,54 +293,6 @@ const itemDrag = useDockItemDrag({
 });
 const itemsDragging = itemDrag.dragging;
 
-function onDockPointerMove(event: PointerEvent): void {
-    fission?.onPointerMove(event);
-    // BD.W-DOCK-CORE (A12 / II.3) — the drag IS the split gesture. While a pointer is
-    // held down on a split-eligible control, a pull PAST the threshold COMMITS the
-    // fission (morph-more-on-move: the seam-tension feed above already stretches the necks
-    // as the pull accelerates). Compositor-only (the fission translates via transform).
-    if (dragOrigin) {
-        const dx = event.clientX - dragOrigin.x;
-        const dy = event.clientY - dragOrigin.y;
-        if (Math.hypot(dx, dy) > DRAG_SPLIT_THRESHOLD_PX && fission && !fission.fissioned.value) {
-            split();
-        }
-    }
-}
-
-/* BD.W-DOCK-CORE (A12) — the drag-to-split pointer state. A pointerdown on a
-   `[data-dock-splittable]` control arms the drag origin; a pull past the threshold (in
-   onDockPointerMove) commits the fission; pointerup disarms. The keyboard path
-   (Enter/Space on a split-eligible control) is the consumer's `toggleSplit()` call. */
-const DRAG_SPLIT_THRESHOLD_PX = 36;
-let dragOrigin: { x: number; y: number } | null = null;
-
-function onDockPointerDown(event: PointerEvent): void {
-    if (!fission) return;
-    const target = event.target as HTMLElement | null;
-    if (target?.closest("[data-dock-splittable]")) {
-        dragOrigin = { x: event.clientX, y: event.clientY };
-    }
-}
-function onDockPointerUp(): void {
-    dragOrigin = null;
-}
-
-/** Imperative split/merge/toggle — re-measure pieces, then run the fission spring. */
-function split(): void {
-    if (!fission) return;
-    registerSplittablePieces();
-    fission.split();
-}
-function merge(): void {
-    fission?.merge();
-}
-function toggleSplit(): void {
-    if (!fission) return;
-    registerSplittablePieces();
-    fission.toggle();
-}
-
 defineExpose({
     expanded,
     isPinned,
@@ -518,7 +306,7 @@ defineExpose({
     split,
     merge,
     toggleSplit,
-    fissioned: fission ? fission.fissioned : computed(() => false),
+    fissioned: isFissioned,
 });
 </script>
 

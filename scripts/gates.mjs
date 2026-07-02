@@ -194,6 +194,12 @@ export const GATES = [
         note: "AZ.W-DOCK-TAXONOMY (H2 arm-a) — ONE GlassDock on ONE orientation axis. Device-free static src-scan: T1 no live variant=rail/instrument-strip call-site, T2 the CLOSED rail-noun allowlist ({.dock-layer-rail, DockRail-reserved} — a new rail-named construct REDs), T3 no vertical alwaysExpanded force-pin (a vertical dock collapses/morphs height), T4 ONE DockProps shape (no variant discriminant). Born-RED executed on T1+T2. Bite: re-introduce variant=rail or a third rail noun → RED.",
     },
     {
+        id: "proof:dock-decompose",
+        cmd: "proof:dock-decompose",
+        tags: ["local", "ci", "release"],
+        note: "BG.W-DOCK-DECOMPOSE — the GlassDock.vue god-SFC decomposition gate (KS-DOCK 4.4; the concrete realization of the spec's proof:dock ratchet-drain + colocation + single-writer arms). D1 ratchet-drain: GlassDock.vue ≤ 500 lines AND its proof:no-god-module RATCHET baseline #2 row is drained. D2 colocation: the two carved leaves (composables/useDockTouchGate.ts + composables/useDockFissionWiring.ts) exist AND GlassDock.vue imports both. D3 single-writer: zero --dock-morph-t/--dock-morph-v write in the SFC or either carved gesture leaf (the collapse morph scalar stays the orchestrator's, dockMorphContext). Pure FS, device-free (paint-class H, byte-identical paint). Born-RED on HEAD (707>500 + leaves absent + row present) → GREEN on the carve + a 6-bite self-test (each synthetic sabotage REDs its clause; the comment-mention fence does NOT flag).",
+    },
+    {
         id: "proof:dock-contextual-layers",
         cmd: "proof:dock-contextual-layers",
         tags: ["local", "ci", "release"],

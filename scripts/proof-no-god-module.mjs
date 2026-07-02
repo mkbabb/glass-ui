@@ -136,7 +136,15 @@ const RATCHET_BASELINES = {
     // The MONOTONIC drain holds — each row only DRAINS as its carve lands; a row that
     // shrinks below its baseline reds (the gate's stale-row guard). No backwards-compat.
     "styles/glass/liquid-morph.css": 850,
-    "components/custom/dock/GlassDock.vue": 711,
+    // BG.W-DOCK-DECOMPOSE DRAINED GlassDock.vue (711 → 495): the collapsed-pill
+    // touch-gate (useTouchGate + tap/scroll discrimination + collapse-on-deactivate
+    // watch) carved into composables/useDockTouchGate.ts, and the fission split-facility
+    // wiring (split-signature/placement refs + piece auto-registration + detach vectors
+    // + drag-to-split pointer state + imperative split/merge/toggle) carved into
+    // composables/useDockFissionWiring.ts — the F6.5 one-writer-per-concern seams (each
+    // carved leaf is single-consumer-by-design, NEVER a --dock-morph-t/--dock-morph-v
+    // writer; the morph scalar stays the orchestrator's). The SFC IMPORTS both. Row
+    // DELETED in this same diff (the monotonic drain — the file is now ≤ 500).
     "composables/glass/webgl/createCanvasLifecycle.ts": 695,
     "composables/glass/webgpu/useWebGPUCanvas.ts": 606,
     "components/custom/dock/composables/useDockFission.ts": 604,
