@@ -55,6 +55,15 @@ export interface UseDockOrientationMorphOptions {
 export interface UseDockOrientationMorphReturn {
     /** The current target orientation. Set via `toggle()`/`morphTo()`. */
     orientation: Readonly<Ref<DockMorphOrientation>>;
+    /**
+     * BG.W-DOCK-INPLACE-MORPH (F-ARM-3) — the LOCAL discrete orientation the in-place
+     * adapter reads: a pure `f(t)` at the 0.5 crossing (vertical below, horizontal at/
+     * above). The topology flip (flex column→row) is hidden in the occluding goo neck,
+     * and a mid-flight reversal just re-crosses 0.5 cleanly. DISTINCT from the eager
+     * `orientation` target ref (which commits at press): `boundOrientation` is where the
+     * box ACTUALLY is, so the in-place layout swaps under the goo.
+     */
+    boundOrientation: ComputedRef<DockMorphOrientation>;
     /** The live normalized scalar (0 = vertical, 1 = horizontal). */
     t: Readonly<Ref<number>>;
     /** True while the spring is in flight (the host arms `data-morphing`). */
@@ -69,6 +78,15 @@ export interface UseDockOrientationMorphReturn {
     horizontalOpacity: ComputedRef<Record<string, string>>;
     /** The teardrop squish scalar (the bridge reads it for the liquid swell). */
     stretch: ComputedRef<number>;
+    /**
+     * BG.W-DOCK-INPLACE-MORPH (F-ARM-2) — the bridge opacity output, gated to the
+     * OCCLUDED midpoint window (0 at both endpoints, smootherstep-ramped through
+     * `t∈0.18..0.82`). The in-place consumer binds it onto the `.dock-morph-bridge`
+     * `--dock-bridge-opacity` so the teardrop neck only paints where it covers the
+     * reflow; the endpoint frames show the real dock alone. PRM zeros it via the CSS
+     * carve (belt-and-suspenders — under reduce `runTo` pins with zero motion frames).
+     */
+    bridgeStyle: ComputedRef<Record<string, string>>;
     /** Morph to the explicit orientation (a no-op if already there). */
     morphTo(next: DockMorphOrientation): void;
     /** Toggle V↔H. The bidirectional driver — the SAME scalar both ways. */
@@ -133,39 +151,61 @@ export function useDockOrientationMorph(
         maxStretch: maxStretchOf,
     });
 
+    // ── F-ARM-1 · the analytic-velocity weight channel (12-laws squish) ──
+    // The morph's liquid weight is the spring's OWN analytic velocity, not a
+    // frame-rate-coupled `|Δt|` sample: `SpringProgress.play` passes `(value, velocity)`
+    // per frame, so the squish + the `--motion-weight` boost read the closed-form
+    // velocity (identical at 60/120Hz — the F-ARM-1 fence). `--dock-morph-v` is the
+    // saturating term `clamp(0, |velocity|/V_NORM, 1)` the live-π reads (`--stretch`
+    // tracks it — the weight signature). V_NORM is a build-time constant (the M5
+    // no-wall-clock discipline — never a live max).
+    const V_NORM = 4;
+
+    // The live weight scalars (updated per frame in `writeScalar`, read by the bridge +
+    // the showcase `stretch` output). Refs so the computed outputs re-evaluate.
+    const morphV = ref(0);
+    const stretchVal = ref(1);
+
     // ── The ONE spring — the dock's single-scalar morph clock (DOCK_SPRING) ──
+    // BG.W-DOCK-INPLACE-MORPH keeps the driver's OWN raw `SpringProgress` (the sibling
+    // drain of the four remaining morph springs onto the `useDockSpring` factory is
+    // BOOKED to its own wave per proof:dock-engine-unify's census — migrating it HERE
+    // would re-point proof:morph-showcase's M3 raw-spring idiom out of this wave's file
+    // scope). The F-ARM-1 analytic-velocity channel rides the SAME
+    // `play((value, velocity) => …)` callback the raw `SpringProgress` already emits, so
+    // the 12-laws weight reads the closed-form velocity with no factory dependency.
     let spring: SpringProgress | null = null;
 
-    function writeScalar(value: number): void {
+    function writeScalar(value: number, velocity: number): void {
         t.value = value;
-        // Drive BOTH liquid-flex spans off the ONE scalar (determinism). `drive`
-        // records the |Δt| travel so the squish swells on a fast frame and relaxes as
-        // the spring settles — the squish is the scalar's DERIVATIVE, not a wall-clock.
+        // Drive BOTH liquid-flex spans off the ONE scalar (the size endpoints for the
+        // two-DOM-dock showcase; byte-identical `sizeStyle`). The squish + weight are
+        // re-sourced off the ANALYTIC velocity below (no `|Δt|` channel survives —
+        // F-ARM-1), so the flex `stretch`/`flexVel` are no longer read for `--stretch`.
         verticalFlex.drive(value);
         horizontalFlex.drive(value);
+        // The saturating analytic-velocity term (the 12-laws weight signature).
+        const v = Math.min(Math.abs(velocity) / V_NORM, 1);
+        morphV.value = v;
         const r = rootEl.value;
         if (r) {
+            // BD.W-MOTION-WEIGHT (§2c) — fold the analytic velocity into the transient
+            // `--motion-weight` boost on the SAME dock root the cap getter reads, so a
+            // fast V↔H morph deepens its own squish and self-extinguishes to rest as it
+            // settles (write the weight FIRST so the site-local cap sees the boost).
+            writeVelocityWeight(r, v);
+            // BC.W-DOCK-ARBITRARY (A4) — the volume-preserving squish, capped at the
+            // effective `--dock-morph-max-stretch` (read AFTER the weight write). The
+            // ONE squish source, no forked deformation math; the plate deforms like
+            // liquid as it changes shape (`scale: var(--stretch) calc(1/--stretch)`).
+            const cap = maxStretchOf();
+            const s = 1 + (cap - 1) * v;
+            stretchVal.value = s;
             r.style.setProperty("--dock-morph-t", `${value}`);
-            // BC.W-DOCK-ARBITRARY (A4) — write the volume-preserving squish onto the
-            // dock scope so the shape-morph register (dock/shape.css) deforms the plate
-            // like liquid as it changes shape: `scale: var(--stretch) calc(1/--stretch)`
-            // along the morph axis, capped at `--dock-morph-max-stretch` by useLiquidFlex
-            // (the ONE squish source — no forked deformation math). Equal for both flex
-            // spans (same scalar derivative), so the max is the value to write.
-            r.style.setProperty(
-                "--stretch",
-                `${Math.max(verticalFlex.stretch.value, horizontalFlex.stretch.value)}`,
-            );
-            // BD.W-MOTION-WEIGHT (§2c) — fold the live travel velocity into a
-            // transient `--motion-weight` boost on the SAME dock root the cap getter
-            // reads, so a fast V↔H morph deepens its own squish (and any cartoon
-            // register it composes) and self-extinguishes back to rest as it settles.
-            // Both flex spans ride the SAME scalar derivative, so the max velocity is
-            // the value to write.
-            writeVelocityWeight(
-                r,
-                Math.max(verticalFlex.flexVel.value, horizontalFlex.flexVel.value),
-            );
+            r.style.setProperty("--dock-morph-v", v.toFixed(4));
+            r.style.setProperty("--stretch", `${s}`);
+        } else {
+            stretchVal.value = 1;
         }
     }
 
@@ -186,10 +226,10 @@ export function useDockOrientationMorph(
 
     function runTo(targetT: number): void {
         // PRM — snap to the target with ZERO motion frames (HG3). The deterministic
-        // pin writes the scalar + both spans + the crossfade to the endpoint in one
-        // synchronous step; no spring runs, so there are no in-between motion frames
-        // and the goo teardrop never paints (the morph reads as an instant cut). This
-        // is the explicit PRM path — robust regardless of the engine's own PRM seek.
+        // pin writes the scalar + both spans to the endpoint in one synchronous step;
+        // no spring runs, so there are no in-between motion frames and the goo teardrop
+        // never paints (the morph reads as an instant cut). The explicit PRM path —
+        // robust regardless of the engine's own PRM seek.
         if (prefersReducedMotion()) {
             pin(targetT);
             return;
@@ -212,8 +252,10 @@ export function useDockOrientationMorph(
             active.target = targetT;
             morphing.value = true;
             if (r) r.setAttribute("data-morphing", "");
-            active.play((value: number) => {
-                writeScalar(value);
+            // F-ARM-1 — the play callback carries the closed-form (value, velocity), so
+            // `writeScalar` re-sources the squish + weight off the analytic velocity.
+            active.play((value: number, velocity: number) => {
+                writeScalar(value, velocity);
                 if (active.settled) {
                     morphing.value = false;
                     const rr = rootEl.value;
@@ -242,11 +284,11 @@ export function useDockOrientationMorph(
         disposeSpring(); // no spring — an exact, reproducible pin
         morphing.value = false;
         orientation.value = v >= 0.5 ? "horizontal" : "vertical";
-        // Write the scalar + both flex spans + the crossfade to exactly `v`. Using
-        // `drive` twice (zero |Δt| the second call) settles the squish to ~1 so the
-        // pinned frame is the at-rest silhouette for that t, not a transient swell.
-        writeScalar(v);
-        writeScalar(v);
+        // Write the scalar + both flex spans to exactly `v` with ZERO velocity — the
+        // endpoint is squish-free (`--stretch` → 1, `--dock-morph-v` → 0). Drive twice
+        // so the flex spans settle to the at-rest silhouette for that t.
+        writeScalar(v, 0);
+        writeScalar(v, 0);
         const r = rootEl.value;
         if (r) r.removeAttribute("data-morphing");
     }
@@ -266,6 +308,23 @@ export function useDockOrientationMorph(
         return u * u * (3 - 2 * u);
     }
 
+    // BG.W-DOCK-INPLACE-MORPH (F-ARM-2) — the bridge-opacity gate: 0 at both endpoints,
+    // smootherstep-ramped up to 1 across the OCCLUDED midpoint window `t∈0.18..0.82`, so
+    // the teardrop neck paints ONLY where it covers the topology reflow (the endpoint
+    // frames show the real dock alone). A pure `f(t)` — no clock (the M5 scalar-binding).
+    function bridgeGate(x: number): number {
+        const LO = 0.18;
+        const HI = 0.82;
+        const MID = 0.5;
+        if (x <= LO || x >= HI) return 0;
+        if (x < MID) {
+            const u = (x - LO) / (MID - LO);
+            return u * u * (3 - 2 * u);
+        }
+        const u = (HI - x) / (HI - MID);
+        return u * u * (3 - 2 * u);
+    }
+
     const verticalStyle = computed(() => verticalFlex.sizeStyle.value);
     const horizontalStyle = computed(() => horizontalFlex.sizeStyle.value);
     const verticalOpacity = computed<Record<string, string>>(() => ({
@@ -274,11 +333,17 @@ export function useDockOrientationMorph(
     const horizontalOpacity = computed<Record<string, string>>(() => ({
         opacity: String(fadeIn(t.value)),
     }));
-    // The teardrop squish — the MAX of the two flex squishes (both ride the SAME
-    // scalar derivative, so they are equal; the max is defensive). The bridge reads it.
-    const stretch = computed(() =>
-        Math.max(verticalFlex.stretch.value, horizontalFlex.stretch.value),
+    // The teardrop squish — the analytic-velocity 12-laws stretch written per frame
+    // (F-ARM-1), re-sourced off the spring's own velocity (the `|Δt|` channel retired).
+    const stretch = computed(() => stretchVal.value);
+    // The LOCAL discrete orientation the in-place adapter reads (F-ARM-3).
+    const boundOrientation = computed<DockMorphOrientation>(() =>
+        t.value >= 0.5 ? "horizontal" : "vertical",
     );
+    // The bridge opacity output — the consumer binds it onto `--dock-bridge-opacity`.
+    const bridgeStyle = computed<Record<string, string>>(() => ({
+        "--dock-bridge-opacity": bridgeGate(t.value).toFixed(4),
+    }));
 
     // Seat the scalar on the root when it mounts (so a static t=0 paints correctly).
     watch(
@@ -293,6 +358,7 @@ export function useDockOrientationMorph(
 
     return {
         orientation,
+        boundOrientation,
         t,
         morphing,
         verticalStyle,
@@ -300,6 +366,7 @@ export function useDockOrientationMorph(
         verticalOpacity,
         horizontalOpacity,
         stretch,
+        bridgeStyle,
         morphTo,
         toggle,
         pin,

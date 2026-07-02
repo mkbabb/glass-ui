@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, useTemplateRef, watch } from "vue";
 import { useRoute } from "vue-router";
-import { ArrowLeftRight, X } from "@lucide/vue";
 import {
     Dialog,
     DialogContent,
@@ -10,22 +9,10 @@ import {
     DialogTitle,
 } from "@glass/components/ui/dialog";
 import { Aurora } from "@glass/components/custom/aurora";
-import { Button } from "@glass/components/ui/button";
-import { Switch } from "@glass/components/ui/switch";
-import {
-    Compass,
-    Shapes,
-    Boxes,
-    Database,
-    Bell,
-} from "@lucide/vue";
 import {
     GooFilter,
-    DockIconButton,
-    GlassDock,
     useDockOrientationMorph,
 } from "@glass/components/custom/dock";
-import { startViewTransition } from "@glass/composables/motion/useViewTransition";
 import {
     formatCombo,
     formatComboParts,
@@ -62,89 +49,61 @@ useKonami(() => {
     showKonami.value = true;
 });
 
-// ── BA.W-DOCK-MORPH-INSITU — the in-situ V↔H orientation morph demonstration ──
-// R8-2: the shell docks must DEMONSTRATE the dock's liquid-glass V↔H morph
-// in-situ, over the real shell backdrop (BA-DSM-3: not the showcase's flat plate).
-// The shell is fixed nav chrome — physically morphing the SidebarDock into the
-// BottomDock would break navigation on every route — so the in-situ demonstration
-// is a focused morph stage that OPENS over the live shell: the morph control in each
-// shell dock's trailing utility group toggles this stage, the SAME `useDockOrientationMorph`
-// AZ driver (the shell is its binary consumer #2) drives the ONE `--dock-morph-t`
-// scalar, and the §7-shipped VIEW-TRANSITION crossfade is the default register. The
-// perf-gated liquid teardrop (the existing morph-bridge.css SVG-goo) is the optional
-// register, gated on the recorded perf number (scope 5). NO second morph engine, NO
-// parallel clock, NO orientation `ref` shadow of the driver's `orientation`.
-const morphStageOpen = ref(false);
-const morphStageEl = useTemplateRef<HTMLElement>("morphStageEl");
+// ── BG.W-DOCK-INPLACE-MORPH — the in-dock button flips the REAL nav dock V↔H IN
+// PLACE via the liquid teardrop (D13, THE HEADLINE). The modal stage + the synthetic
+// two-dock View-Transitions crossfade are DELETED (no `role="dialog"`, esc moot). The
+// in-dock `ArrowLeftRight` control (SidebarDock/BottomDock, dispatching the ONE
+// `glass-ui-demo:toggle-dock-morph` window event) drives the SAME `useDockOrientationMorph`
+// driver bound to the REAL `<aside>` shell-dock box (the shell is its binary consumer
+// #2). The vertical left-column dock reshapes into a fixed-floating TOP-LEADING
+// horizontal bar (the corner the two orientations SHARE, so the goo occludes minimal
+// travel — F-ARM-3), the topology flip hidden under the dock-anchored goo teardrop
+// (`#dock-morph-goo`, F-ARM-2). ONE scalar, ONE spring (the DOCK_SPRING clock the
+// driver owns), both directions, interruptible, PRM-snap. NO second engine, NO parallel
+// clock (the driver's raw-spring→useDockSpring drain is booked to its own wave).
+const asideEl = useTemplateRef<HTMLElement>("asideEl");
 
-// The synthetic stage docks the driver morphs (the two-dock contract the shell's
-// one-dock-per-orientation topology cannot host directly — the showcase's two-dock
-// pattern transplanted into the shell stage, the §Triumvirate named-successor path).
-const morphEntries = [
-    { id: "foundations", label: "Foundations", icon: Compass },
-    { id: "primitives", label: "Primitives", icon: Shapes },
-    { id: "containers", label: "Containers", icon: Boxes },
-    { id: "data", label: "Data", icon: Database },
-    { id: "feedback", label: "Feedback", icon: Bell },
-];
-
-// The dock footprints (px) — the morph spans for the liquid size morph.
+// The dock footprints (px) — the morph spans the liquid teardrop reshapes across.
 const V_FULL_H = 296;
 const H_FULL_W = 332;
 
 const morph = useDockOrientationMorph({
-    rootEl: morphStageEl,
+    rootEl: asideEl,
     verticalSize: V_FULL_H,
     horizontalSize: H_FULL_W,
 });
 
-// ── The SHIPPED default — the §7 arm-c View-Transitions crossfade ──
-// The orientation state the VT crossfade swaps. The synthetic-dock swap (vertical ↔
-// horizontal) is wrapped in `startViewTransition`, so the compositor crossfades the
-// before/after snapshots — budget-clearing, deterministic, bidirectional.
-const vtOrientation = ref<"vertical" | "horizontal">("vertical");
-
-// The liquid-teardrop preview — OFF by default (the VT crossfade ships). ON shows the
-// perf-gated metaball-bridge morph. The ship decision rides the recorded §7 number.
-const liquidPreview = ref(false);
-
-const morphFacing = computed(() => {
-    const cur = liquidPreview.value ? morph.orientation.value : vtOrientation.value;
-    return cur === "vertical" ? "horizontal" : "vertical";
-});
-
-// The goo filter is gated to the occluded MIDPOINT window — a pure f(--dock-morph-t),
-// no clock (M5 scalar-binding).
-const morphGooFilter = computed(() =>
-    morph.t.value > 0.18 && morph.t.value < 0.82
-        ? "url(#shell-dock-morph-goo)"
-        : "none",
+// The SETTLED orientation — committed at the spring SETTLE, NOT the live 0.5 crossing
+// (F-ARM-3.4): the `<main>` gutter reflow + the aside's fixed-floating position toggle
+// once per full cycle, so a rapid mid-flight V→H→V wiggle nets ZERO reflow. During the
+// flight the real dock dissolves under the goo (the Dynamic-Island merge-then-reshape),
+// re-materializing in the settled orientation as the neck fades. It is a STATIC reserve
+// toggle (a data-attr), never an animated height (`proof:no-layout-animation` holds).
+const settledOrientation = ref<"vertical" | "horizontal">("vertical");
+watch(
+    () => morph.morphing.value,
+    (isMorphing) => {
+        if (!isMorphing) settledOrientation.value = morph.boundOrientation.value;
+    },
 );
 
-function toggleShellMorph(): void {
-    if (liquidPreview.value) {
-        morph.toggle();
-    } else {
-        startViewTransition(() => {
-            vtOrientation.value =
-                vtOrientation.value === "vertical" ? "horizontal" : "vertical";
-        });
-    }
-}
+// The dock-anchored goo teardrop references the canonical `#dock-morph-goo` mount
+// (`GooFilter`, blur 16 / slope 14 / offset −7, mounted ONCE at the shell root — F6).
+// Gated to the occluded MIDPOINT window: a pure `f(--dock-morph-t)`, no clock (M5).
+const morphGooFilter = computed(() =>
+    morph.t.value > 0.18 && morph.t.value < 0.82 ? "url(#dock-morph-goo)" : "none",
+);
 
-function openMorphStage(): void {
-    morphStageOpen.value = true;
-}
-function closeMorphStage(): void {
-    morphStageOpen.value = false;
-}
-function onToggleMorphStage(): void {
-    morphStageOpen.value = !morphStageOpen.value;
+// The in-dock control fires the ONE window event → the REAL dock flips in place.
+function onToggleShellMorph(): void {
+    morph.toggle();
 }
 
 // DETERMINISTIC CAPTURE SEAM — the π/Playwright arm pins EXACT t values (the
-// frame-series) + drives toggle/morphTo (both directions). The scalar is the ONE
-// source; pinning yields a frame-reproducible silhouette (no wall-clock).
+// frame-series) + drives toggle/morphTo (both directions) on the REAL shell dock. The
+// scalar is the ONE source; pinning yields a frame-reproducible silhouette (no
+// wall-clock). Re-pointed off the deleted modal (open/close/setPreview are no-ops —
+// there is no stage to open; the flip is in place).
 onMounted(() => {
     (
         window as unknown as {
@@ -158,28 +117,21 @@ onMounted(() => {
             };
         }
     ).__shellDockMorph = {
-        open: openMorphStage,
-        close: closeMorphStage,
-        setPreview: (on) => {
-            liquidPreview.value = on;
-        },
+        open: () => {},
+        close: () => {},
+        setPreview: () => {},
         setMorphT: (value) => {
-            morphStageOpen.value = true;
-            if (!liquidPreview.value) liquidPreview.value = true;
             void nextTick(() => morph.pin(value));
+            settledOrientation.value = value >= 0.5 ? "horizontal" : "vertical";
         },
         toggle: () => {
-            morphStageOpen.value = true;
-            if (!liquidPreview.value) liquidPreview.value = true;
             void nextTick(() => morph.toggle());
         },
         morphTo: (o) => {
-            morphStageOpen.value = true;
-            if (!liquidPreview.value) liquidPreview.value = true;
             void nextTick(() => morph.morphTo(o));
         },
     };
-    window.addEventListener("glass-ui-demo:toggle-dock-morph", onToggleMorphStage);
+    window.addEventListener("glass-ui-demo:toggle-dock-morph", onToggleShellMorph);
 });
 
 // `<main>` owns route scroll now (the shell itself is a fixed viewport frame),
@@ -212,8 +164,9 @@ watch(
 // BG.W-ROUTE-TRANSITION — the categoryId no-op `startViewTransition` watch + its dead
 // `document.documentElement.dataset.categorySwitch` write are DELETED (the dataset flag
 // had ZERO readers, and the VT body was an intentional no-op — a confounding mechanism
-// the bare keyed atomic swap makes redundant). The functional `toggleShellMorph` VT
-// (the dock-morph crossfade) is KEPT.
+// the bare keyed atomic swap makes redundant). BG.W-DOCK-INPLACE-MORPH then deleted the
+// LAST `startViewTransition` in this shell (the dock-morph crossfade) — the V↔H flip is
+// now the in-place liquid teardrop, so AppShell imports no `startViewTransition` at all.
 
 // BG.W-FIELD-AURORA (M2) — the per-route WARM FIELD hue feeds the ONE shell
 // `<Aurora>` (the retired `.paper-field` CSS plane's successor). `warmFieldHue`
@@ -297,7 +250,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-    window.removeEventListener("glass-ui-demo:toggle-dock-morph", onToggleMorphStage);
+    window.removeEventListener("glass-ui-demo:toggle-dock-morph", onToggleShellMorph);
 });
 </script>
 
@@ -342,9 +295,44 @@ onBeforeUnmount(() => {
     >
         <!-- Fixed vertical sidebar rail dock (off-canvas below the mobile
              breakpoint — see dock-nav.css; the BottomDock owns the off-canvas
-             Sheet trigger). -->
-        <aside class="demo-sidebar-rail">
+             Sheet trigger).
+             BG.W-DOCK-INPLACE-MORPH — this `<aside>` IS the REAL shell-dock box the
+             `useDockOrientationMorph` driver reshapes in place. `--dock-morph-t`/
+             `--stretch` are written onto it; `[data-shell-dock-orientation]` (settled)
+             flips the vertical column ↔ the fixed-floating TOP-LEADING horizontal bar;
+             `[data-dock-morphing]` dissolves the real dock under the goo teardrop
+             during the flight (the merge-then-reshape). -->
+        <aside
+            ref="asideEl"
+            class="demo-sidebar-rail"
+            :data-shell-dock-orientation="settledOrientation"
+            :data-dock-morphing="morph.morphing.value ? '' : undefined"
+            :style="{
+                '--dock-bridge-v-h': `${V_FULL_H}px`,
+                '--dock-bridge-h-w': `${H_FULL_W}px`,
+            }"
+        >
             <SidebarDock />
+            <!-- The dock-anchored liquid teardrop that occludes the V↔H topology flip.
+                 It overlays the REAL dock box (top-leading-anchored via the `--inplace`
+                 modifier), references the canonical `#dock-morph-goo` mount, and paints
+                 ONLY in the occluded midpoint window (`--dock-bridge-opacity`, gated by
+                 the driver's `bridgeStyle`). No modal, no synthetic dock, no VT. -->
+            <div
+                v-if="morph.morphing.value"
+                class="dock-morph-bridge dock-morph-bridge--inplace"
+                :style="{ '--stretch': String(morph.stretch.value), ...morph.bridgeStyle.value }"
+                aria-hidden="true"
+                data-testid="shell-dock-morph-bridge"
+            >
+                <div
+                    class="dock-morph-bridge-goo"
+                    :style="{ '--dock-bridge-goo-filter': morphGooFilter }"
+                >
+                    <div class="dock-morph-bridge-plate dock-morph-bridge-plate--vertical" />
+                    <div class="dock-morph-bridge-plate dock-morph-bridge-plate--horizontal" />
+                </div>
+            </div>
         </aside>
 
         <div class="flex min-h-0 min-w-0 flex-1 flex-col">
@@ -353,9 +341,15 @@ onBeforeUnmount(() => {
                  `tabindex="-1"` (BG.W-ROUTE-TRANSITION P4-F) lets the route-settle
                  watch move focus here, so the atomic keyed swap doesn't strand focus
                  at <body> + keyboard tab order resets to the new page. -->
+            <!-- BG.W-DOCK-INPLACE-MORPH — when the shell dock settles HORIZONTAL it
+                 becomes a fixed-floating TOP-LEADING bar (out of flow); `<main>` reclaims
+                 the column automatically (flex) and reserves a top gutter for the floating
+                 bar via `[data-shell-dock-orientation]` (a STATIC reserve committed at
+                 settle, the `pt` mirror of the existing bottom-dock reserve). -->
             <main
                 ref="mainEl"
                 tabindex="-1"
+                :data-shell-dock-orientation="settledOrientation"
                 class="demo-main-scroller smooth-scroll relative flex-1 min-h-0 min-w-0 overflow-y-auto px-4 pt-6 pb-28 md:px-8 md:pt-10 md:pb-32"
             >
                 <!-- BG.W-ROUTE-TRANSITION (P4-F) — the SR route-change announce. The
@@ -405,237 +399,11 @@ onBeforeUnmount(() => {
     <CommandPalette v-model:open="showPalette" />
     <KonamiAurora v-if="showKonami" @done="showKonami = false" />
 
-    <!-- BA.W-DOCK-MORPH-INSITU — the in-situ V↔H orientation-morph demonstration.
-         A focused stage that OPENS over the live shell (the real shell backdrop reads
-         through the dim — BA-DSM-3, not the showcase's flat plate). The shell docks'
-         trailing morph control toggles it; the SAME useDockOrientationMorph AZ driver
-         (the shell is consumer #2) writes the ONE --dock-morph-t scalar; the §7 VT
-         crossfade is the shipped default, the liquid-teardrop bridge the perf-gated
-         register. NO second engine, ONE scalar both directions. -->
-    <Transition name="morph-stage-fade">
-        <div
-            v-if="morphStageOpen"
-            class="demo-dock-morph-overlay"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Dock vertical-horizontal morph"
-            data-testid="shell-dock-morph-overlay"
-            @keydown.esc="closeMorphStage"
-        >
-            <div class="demo-dock-morph-panel">
-                <header class="demo-dock-morph-head">
-                    <div class="flex flex-col gap-1">
-                        <h2 class="text-subheading">Liquid-glass dock morph</h2>
-                        <p class="text-small text-muted-foreground max-w-prose">
-                            The dock flows from <strong>vertical</strong> to
-                            <strong>horizontal</strong> and back — bidirectional and
-                            deterministic on the one
-                            <code class="rounded bg-muted px-1">--dock-morph-t</code>
-                            scalar. The shipped morph is a View-Transitions crossfade;
-                            flip <strong>Liquid teardrop</strong> on to preview the
-                            metaball-bridge register.
-                        </p>
-                    </div>
-                    <DockIconButton
-                        type="button"
-                        class="tap-squish"
-                        aria-label="Close the dock morph demonstration"
-                        @click="closeMorphStage"
-                    >
-                        <X class="h-4 w-4" aria-hidden="true" />
-                    </DockIconButton>
-                </header>
-
-                <div class="demo-dock-morph-controls">
-                    <!-- BC.W-STORYBOOK-META — the morph toggle composes the shipped
-                         glass <Button> (the dogfood SHELL sweep — GAP-5), not a raw
-                         `btn-pill` chain. The data-testid is preserved so the
-                         in-situ dock-morph wiring stays byte-stable. -->
-                    <Button
-                        type="button"
-                        variant="secondary"
-                        size="sm"
-                        class="gap-2"
-                        data-testid="shell-morph-toggle"
-                        @click="toggleShellMorph"
-                    >
-                        <ArrowLeftRight class="size-4" aria-hidden="true" />
-                        Morph to {{ morphFacing }}
-                    </Button>
-                    <!-- The liquid-teardrop toggle composes the shipped <Switch>
-                         (the dogfood SHELL sweep — GAP-5), not a raw
-                         `<input type="checkbox">`. The data-testid is preserved. -->
-                    <label class="flex items-center gap-2 text-small">
-                        <Switch
-                            v-model="liquidPreview"
-                            data-testid="shell-liquid-preview-toggle"
-                            aria-label="Liquid teardrop preview"
-                        />
-                        Liquid teardrop (preview)
-                    </label>
-                    <span
-                        class="text-mono-caption text-muted-foreground"
-                        data-testid="shell-morph-readout"
-                    >
-                        mode = {{ liquidPreview ? "liquid" : "view-transition" }} · t =
-                        {{ morph.t.value.toFixed(3) }}
-                    </span>
-                </div>
-
-                <!-- The morph stage — the ONE root the scalar inherits from. -->
-                <div
-                    ref="morphStageEl"
-                    class="demo-dock-morph-stage"
-                    data-testid="shell-dock-morph-stage"
-                >
-                    <!-- The §7-shipped View-Transitions crossfade (the default). -->
-                    <template v-if="!liquidPreview">
-                        <GlassDock
-                            v-if="vtOrientation === 'vertical'"
-                            orientation="vertical"
-                            always-expanded
-                            class="demo-dock-morph-pane relative z-10"
-                            aria-label="Vertical dock"
-                            data-testid="shell-dock-morph-vt-vertical"
-                        >
-                            <DockIconButton
-                                v-for="e in morphEntries"
-                                :key="e.id"
-                                type="button"
-                                class="text-muted-foreground"
-                                :aria-label="e.label"
-                            >
-                                <component :is="e.icon" />
-                            </DockIconButton>
-                        </GlassDock>
-                        <GlassDock
-                            v-else
-                            orientation="horizontal"
-                            always-expanded
-                            class="demo-dock-morph-pane relative z-10"
-                            aria-label="Horizontal dock"
-                            data-testid="shell-dock-morph-vt-horizontal"
-                        >
-                            <DockIconButton
-                                v-for="e in morphEntries"
-                                :key="e.id"
-                                type="button"
-                                class="text-muted-foreground"
-                                :aria-label="e.label"
-                            >
-                                <component :is="e.icon" />
-                            </DockIconButton>
-                        </GlassDock>
-                    </template>
-
-                    <!-- The perf-gated liquid-teardrop preview (the existing
-                         morph-bridge.css SVG-goo — M5-deterministic). -->
-                    <template v-else>
-                        <svg class="absolute size-0" aria-hidden="true">
-                            <defs>
-                                <filter
-                                    id="shell-dock-morph-goo"
-                                    x="-10%"
-                                    y="-10%"
-                                    width="120%"
-                                    height="120%"
-                                >
-                                    <feGaussianBlur
-                                        in="SourceGraphic"
-                                        stdDeviation="7"
-                                        result="blur"
-                                    />
-                                    <feColorMatrix
-                                        in="blur"
-                                        mode="matrix"
-                                        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9"
-                                        result="goo"
-                                    />
-                                    <feComposite in="SourceGraphic" in2="goo" operator="atop" />
-                                </filter>
-                            </defs>
-                        </svg>
-
-                        <div
-                            class="dock-morph-bridge"
-                            :style="{
-                                '--stretch': String(morph.stretch.value),
-                                '--dock-bridge-v-h': `${V_FULL_H}px`,
-                                '--dock-bridge-h-w': `${H_FULL_W}px`,
-                            }"
-                            aria-hidden="true"
-                            data-testid="shell-dock-morph-bridge"
-                        >
-                            <div
-                                class="dock-morph-bridge-goo"
-                                :style="{ '--dock-bridge-goo-filter': morphGooFilter }"
-                            >
-                                <div
-                                    class="dock-morph-bridge-plate dock-morph-bridge-plate--vertical"
-                                />
-                                <div
-                                    class="dock-morph-bridge-plate dock-morph-bridge-plate--horizontal"
-                                />
-                            </div>
-                        </div>
-
-                        <GlassDock
-                            orientation="vertical"
-                            always-expanded
-                            class="demo-dock-morph-pane demo-dock-morph-pane--liquid relative z-10"
-                            :style="{
-                                ...morph.verticalStyle.value,
-                                ...morph.verticalOpacity.value,
-                            }"
-                            v-bind="{ inert: morph.t.value > 0.5 || undefined }"
-                            aria-label="Vertical dock (morph source)"
-                            data-testid="shell-dock-morph-vertical"
-                        >
-                            <DockIconButton
-                                v-for="e in morphEntries"
-                                :key="e.id"
-                                type="button"
-                                class="text-muted-foreground"
-                                :aria-label="e.label"
-                            >
-                                <component :is="e.icon" />
-                            </DockIconButton>
-                        </GlassDock>
-
-                        <GlassDock
-                            orientation="horizontal"
-                            always-expanded
-                            class="demo-dock-morph-pane demo-dock-morph-pane--liquid absolute z-10"
-                            :style="{
-                                ...morph.horizontalStyle.value,
-                                ...morph.horizontalOpacity.value,
-                            }"
-                            v-bind="{ inert: morph.t.value <= 0.5 || undefined }"
-                            aria-label="Horizontal dock (morph target)"
-                            data-testid="shell-dock-morph-horizontal"
-                        >
-                            <DockIconButton
-                                v-for="e in morphEntries"
-                                :key="e.id"
-                                type="button"
-                                class="text-muted-foreground"
-                                :aria-label="e.label"
-                            >
-                                <component :is="e.icon" />
-                            </DockIconButton>
-                        </GlassDock>
-                    </template>
-                </div>
-            </div>
-            <button
-                type="button"
-                class="demo-dock-morph-scrim"
-                aria-label="Close"
-                tabindex="-1"
-                @click="closeMorphStage"
-            />
-        </div>
-    </Transition>
+    <!-- BG.W-DOCK-INPLACE-MORPH — the modal stage + the synthetic two-dock
+         View-Transitions crossfade are DELETED (D13). The V↔H flip is now the REAL
+         `<aside>` shell dock reshaping IN PLACE via the liquid teardrop (see the `<aside
+         ref="asideEl">` above + `useDockOrientationMorph`). No `role="dialog"`, esc moot,
+         no `startViewTransition` on the morph path. -->
 
     <!-- The glass-ui demo Configurator — a right-side Sheet, opened by the
          SidebarDock gear control or the `,` shortcut (AZ.W-SHELL-CONFIG: the
@@ -673,106 +441,51 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-/* BA.W-DOCK-MORPH-INSITU — the in-situ morph stage overlay. It opens OVER the live
-   shell: the dim is light enough that the real shell backdrop (the shell aurora field +
-   the route page + the shell docks) reads THROUGH it (BA-DSM-3 — the morph is staged
-   over the real shell, not a flat plate). */
-.demo-dock-morph-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 60;
-    display: grid;
-    place-items: center;
-    padding: 1.5rem;
-}
+/* BG.W-DOCK-INPLACE-MORPH — the REAL shell dock flips V↔H IN PLACE (F-ARM-3). The
+   `<aside class="demo-sidebar-rail">` is styled by dock-nav.css as the in-flow vertical
+   left column; these rules add the HORIZONTAL settled state + the flight treatment. All
+   are static reserves / compositor properties (no animated height — the goo teardrop IS
+   the liquid transition; `proof:no-layout-animation` holds). The aside is in THIS
+   component's template, so the scoped hash lands on it; `:deep()` reaches the child
+   SidebarDock's own dock box. */
 
-/* The dim scrim — light enough the live shell reads through (BA-DSM-3). The house
-   modal-scrim recipe (color-mix over the background, NOT hsl(var()/α) — the A5-1
-   complete-hsl double-wrap trap). */
-.demo-dock-morph-scrim {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    border: 0;
-    cursor: default;
-    background: color-mix(in srgb, var(--background) 40%, transparent);
-    backdrop-filter: blur(2px);
-}
-
-.demo-dock-morph-panel {
+/* The morphing aside lifts above <main> so the dock-anchored teardrop can grow rightward
+   from the shared top-leading corner into the reclaimed column without being clipped. */
+.demo-sidebar-rail[data-dock-morphing] {
     position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-    width: min(100%, 44rem);
-    max-height: min(100%, 40rem);
-    padding: 1.5rem;
-    border-radius: var(--radius-card);
-    border: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
-    /* A glass panel — reads the dim shell behind it (the maximal default register). */
-    background: var(--glass-bg-floating, color-mix(in oklab, var(--card), white 6%));
-    backdrop-filter: var(--glass-blur-floating, blur(20px));
-    box-shadow: var(--shadow-floating, 0 12px 40px color-mix(in srgb, var(--shadow-color) 22%, transparent));
+    z-index: 45;
+    overflow: visible;
 }
 
-.demo-dock-morph-head {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1rem;
-}
-
-.demo-dock-morph-controls {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 1rem;
-}
-
-/* The morph stage — the ONE root the scalar inherits from. A static themed wash so
-   the glass docks read against a non-flat surface (the rich live substrate is the
-   shell behind the panel; this stage is the focused demonstration surface). */
-.demo-dock-morph-stage {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 20rem;
-    overflow: hidden;
-    border-radius: var(--radius-card);
-    padding: 2rem;
-    background:
-        radial-gradient(
-            70% 55% at 28% 22%,
-            color-mix(in oklab, var(--primary), transparent 82%),
-            transparent 70%
-        ),
-        radial-gradient(
-            60% 60% at 78% 80%,
-            color-mix(in oklab, var(--accent, var(--primary)), transparent 84%),
-            transparent 72%
-        ),
-        linear-gradient(
-            140deg,
-            color-mix(in oklab, var(--card), var(--foreground) 4%),
-            var(--card)
-        );
-    view-transition-name: shell-dock-morph-stage;
-}
-
-.demo-dock-morph-pane--liquid {
-    overflow: hidden;
-    transform-origin: center;
-}
-
-/* The overlay enter/exit — a gentle fade (PRM-gated by the global motion gate). */
-.morph-stage-fade-enter-active,
-.morph-stage-fade-leave-active {
-    transition: opacity var(--duration-3, 0.2s) var(--ease-standard, ease);
-}
-.morph-stage-fade-enter-from,
-.morph-stage-fade-leave-to {
+/* During the flight the real dock dissolves under the goo (the Dynamic-Island
+   merge-then-reshape); the goo bridge (a direct child of the aside, NOT inside the dock
+   box) stays painted and carries the visible V→H reshape. */
+.demo-sidebar-rail[data-dock-morphing] :deep(.demo-sidebar-dock) {
     opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--spring-smooth-duration, 0.36s) var(--ease-out, ease);
+}
+
+/* HORIZONTAL settled state (committed at settle) — the fixed-floating TOP-LEADING bar,
+   the mirror of the bottom-center story dock. The vertical left column and this top bar
+   SHARE the top-leading corner, so the corner-pinned reshape's travel is minimal. */
+.demo-sidebar-rail[data-shell-dock-orientation="horizontal"] {
+    position: fixed;
+    inset-block-start: var(--demo-nav-top-inset, 1rem);
+    inset-inline-start: var(--demo-nav-rail-inset, 1rem);
+    inset-inline-end: auto;
+    z-index: 40;
+}
+
+/* The internal dock flows as a ROW when settled horizontal (the occluded topology flip);
+   DockSection is display:contents, so forcing the flex axis lays the icons horizontally. */
+.demo-sidebar-rail[data-shell-dock-orientation="horizontal"] :deep(.demo-sidebar-dock) {
+    flex-direction: row;
+    align-items: center;
+/* <main> reserves a top gutter for the floating top bar when the dock settled horizontal
+   (a static reserve, the pt mirror of the pb-28 bottom-dock reserve; the column reclaim is
+   automatic via flex the moment the aside goes fixed). */
+.demo-main-scroller[data-shell-dock-orientation="horizontal"] {
+    padding-block-start: calc(var(--demo-nav-top-inset, 1rem) + 3.5rem);
 }
 </style>

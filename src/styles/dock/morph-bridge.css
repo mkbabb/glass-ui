@@ -161,6 +161,38 @@
         scale: var(--stretch, 1) calc(1 / var(--stretch, 1));
     }
 
+    /* BG.W-DOCK-INPLACE-MORPH (F-ARM-2, RE-ANCHORED) — the IN-PLACE modifier. The base
+       `.dock-morph-bridge-goo` is SCREEN-CENTERED (the AZ two-DOM-dock morph-showcase
+       stage byte-untouched, so `proof:morph-showcase` stays GREEN by construction). The
+       in-place teardrop flips the REAL nav dock over its OWN box, so the goo re-anchors
+       to the TOP-LEADING corner the vertical column and the horizontal bar SHARE — the
+       corner never moves, only the opposite extent grows/shrinks, so the travel the neck
+       must occlude is minimal (R2 — a centered neck could not cover an L-travel). */
+    .dock-morph-bridge--inplace .dock-morph-bridge-goo {
+        top: 0;
+        left: 0;
+        translate: 0 0;
+        /* size to the corner-anchored V/H union (NOT a centered union) */
+        width: calc(
+            max(var(--dock-bridge-h-w, 18rem), var(--dock-bridge-v-w, 3.25rem)) + 1.25rem
+        );
+        height: calc(
+            max(var(--dock-bridge-v-h, 16rem), var(--dock-bridge-h-h, 3.25rem)) + 1.25rem
+        );
+    }
+
+    /* Both plates neck toward the SHARED top-leading corner (the corner-pinned reshape),
+       and the waist widens (`--morph-neck-frac` 0.62→0.74) so at the softer+wider blur-16
+       canonical `#dock-morph-goo` (blur 7→16, slope 20→14, offset −9→−7) the merge stays a
+       fat two-pills-fusing teardrop — never the lone over-fused dot the tight 0.62 waist
+       risked at the deeper blur (R3, the 3-axis softening). GEOMETRY only — the static
+       feGaussianBlur/feColorMatrix graph is UNTOUCHED (the one-mount canon). */
+    .dock-morph-bridge--inplace .dock-morph-bridge-plate {
+        top: 0;
+        left: 0;
+        --morph-neck-frac: 0.74;
+    }
+
     /* PRM — the bridge is removed; the morph snaps to the target dock (the spring's
        respectReducedMotion jumps the scalar 0→1 in one frame, the docks land at their
        endpoints, the goo teardrop never paints). */

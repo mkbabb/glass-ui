@@ -20,16 +20,25 @@
 //        second SpringProgress/rAF/setInterval morph clock is minted on the shell
 //        morph path (the no-second-engine floor). RED at HEAD: the shell carries no
 //        morph control (no useDockOrientationMorph, no --dock-morph-t).
-//   M2 — the same scalar drives both directions (bidirectional, no clip-path morph
-//        across the topology flip — the AX.W42 fold-7 NO-GO). RED at HEAD: no morph.
+//   M2 — (BG.W-DOCK-INPLACE-MORPH — INVERTED) the in-place liquid teardrop is the ONLY
+//        V↔H register. The D13 headline DELETES the modal stage (role="dialog",
+//        @keydown.esc, morphStageOpen) + the synthetic two-dock startViewTransition
+//        crossfade (vtOrientation) + the modal-local #shell-dock-morph-goo inline filter;
+//        the REAL dock flips IN PLACE via the teardrop referencing the canonical
+//        #dock-morph-goo mount (still bidirectional on the ONE scalar, still no clip-path
+//        topology morph — the AX.W42 fold-7 NO-GO). RED at the pre-wave HEAD (the modal +
+//        vtOrientation + #shell-dock-morph-goo all present); GREEN on the delete, IN
+//        LOCKSTEP with the AppShell VT-crossfade delete.
 //   M3 — the layering/contextual switch is exercised in-situ (the
 //        useContextualDockLayers resolver + the section/layer switch wired ON the
 //        shell against W-DOCK-SECTIONS's section chassis), not story-only. RED at
 //        HEAD only in the pre-W-DOCK-SECTIONS tree (the chassis carries it at HEAD).
-//   M4 — the teardrop-vs-crossfade ship decision rides the recorded perf number. The
-//        DELTA carries the in-situ 4×-throttle p50 + the over-16.7ms fraction; the
-//        shipped register is the VT crossfade UNLESS the teardrop clears in-situ. RED
-//        at HEAD: no in-situ morph, no trace.
+//   M4 — (BG.W-DOCK-INPLACE-MORPH — RETIRED) there is no perf-gated teardrop-vs-crossfade
+//        ship decision. The pass-2 M4 gated the teardrop as the perf-OPTIONAL register
+//        behind a VT-crossfade default; the teardrop is now the ONLY register (M2), so the
+//        crossfade-vs-teardrop ship fork + the liquidPreview toggle are GONE. The witness
+//        is the ABSENCE of the perf-gated fork. RED at the pre-wave HEAD (liquidPreview +
+//        vtOrientation present); GREEN on the delete.
 //   M5 — the BA-VJS-1 nested-group measure orders the inner target ahead of the outer
 //        measure (valuejs-fold A-1). The onSwap outer measure composes the nested
 //        target's max-content contribution into the OUTER `to` measure, AND no
@@ -58,7 +67,6 @@ const MORPH_CTX = "src/components/custom/dock/composables/dockMorphContext.ts";
 // the M5 BA-VJS-1 nested-ordering assert reads the orchestrator + the leaf together.
 const MORPH_MEASURE = "src/components/custom/dock/composables/dockMorphMeasure.ts";
 const CONSTANTS = "src/components/custom/dock/constants.ts";
-const DELTA = "docs/tranches/BA/audit/visual/W-DOCK-MORPH-INSITU-DELTA.md";
 
 function read(rel) {
     const p = resolve(ROOT, rel);
@@ -72,6 +80,75 @@ function stripComments(src) {
         .replace(/<!--[\s\S]*?-->/g, (m) => m.replace(/[^\n]/g, " "))
         .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "))
         .replace(/\/\/[^\n]*/g, "");
+}
+
+// BG.W-DOCK-INPLACE-MORPH — the M2/M4 morph-register predicates as a PURE helper, so
+// detect() reads the REAL AppShell through it AND the self-test bites synthetic strings
+// through the SAME regexes (a diseased modal MUST flag; a teardrop-only shell MUST pass).
+// The caller passes a comment-STRIPPED source (a prose mention of role="dialog" in a
+// deletion note is not a live modal).
+export function morphRegisterFacts(src) {
+    return {
+        // Bidirectional on the ONE scalar (toggle, or both-direction morphTo).
+        bidirectional:
+            /morph\.toggle\s*\(/.test(src) ||
+            (/morph\.morphTo\s*\(\s*["']horizontal["']/.test(src) &&
+                /morph\.morphTo\s*\(\s*["']vertical["']/.test(src)),
+        // No clip-path interpolation across the topology flip (AX.W42 fold-7 NO-GO).
+        noClipMorph: !(
+            /clip-path[^;]*var\(\s*--dock-morph-t/.test(src) ||
+            /transition:[^;]*clip-path/.test(src)
+        ),
+        // The modal stage is DELETED — no raw role="dialog", no morphStageOpen state.
+        noModalStage:
+            !/role\s*=\s*["']dialog["']/.test(src) && !/morphStageOpen/.test(src),
+        // The synthetic two-dock VT crossfade is DELETED — no vtOrientation shadow, no
+        // modal-local #shell-dock-morph-goo inline filter.
+        noSyntheticVt:
+            !/vtOrientation/.test(src) && !/#shell-dock-morph-goo/.test(src),
+        // The in-place teardrop is the register — the .dock-morph-bridge references the
+        // canonical #dock-morph-goo mount (F6 goo-id re-point).
+        teardropRegister:
+            /dock-morph-bridge/.test(src) && /url\(#dock-morph-goo\)/.test(src),
+        // No perf-gated ship fork — no liquidPreview toggle, no vtOrientation default.
+        noPerfGatedFork:
+            !/liquidPreview/.test(src) && !/vtOrientation/.test(src),
+    };
+}
+
+// The self-test bite (the born-RED discipline): a synthetic DISEASED AppShell (the modal
+// + the synthetic VT crossfade + the modal-local goo + the liquidPreview fork) MUST flag
+// every M2/M4 predicate, and a synthetic HEALTHY teardrop-only shell MUST pass them — so
+// a regression that re-introduces the modal/VT crossfade re-reds the gate.
+export function selfTest() {
+    const failures = [];
+    const diseased = `
+        const morphStageOpen = ref(false);
+        const vtOrientation = ref("vertical");
+        const liquidPreview = ref(false);
+        <div v-if="morphStageOpen" role="dialog" @keydown.esc="closeMorphStage">
+        <filter id="shell-dock-morph-goo"></filter>
+        startViewTransition(() => { vtOrientation.value = "horizontal"; });
+    `;
+    const healthy = `
+        const morph = useDockOrientationMorph({ rootEl: asideEl });
+        function onToggleShellMorph() { morph.toggle(); }
+        const morphGooFilter = computed(() => "url(#dock-morph-goo)");
+        <div class="dock-morph-bridge dock-morph-bridge--inplace" />
+    `;
+    const d = morphRegisterFacts(diseased);
+    if (d.noModalStage) failures.push("self-test: diseased modal did NOT flag noModalStage");
+    if (d.noSyntheticVt) failures.push("self-test: diseased VT crossfade did NOT flag noSyntheticVt");
+    if (d.noPerfGatedFork)
+        failures.push("self-test: diseased liquidPreview fork did NOT flag noPerfGatedFork");
+    const h = morphRegisterFacts(healthy);
+    if (!h.noModalStage) failures.push("self-test: teardrop-only shell false-flagged noModalStage");
+    if (!h.noSyntheticVt) failures.push("self-test: teardrop-only shell false-flagged noSyntheticVt");
+    if (!h.teardropRegister)
+        failures.push("self-test: teardrop-only shell did NOT recognize the #dock-morph-goo register");
+    if (!h.bidirectional)
+        failures.push("self-test: teardrop-only shell did NOT recognize morph.toggle bidirectionality");
+    return failures;
 }
 
 export function detect() {
@@ -93,7 +170,6 @@ export function detect() {
     const morphCtx = stripComments(read(MORPH_CTX) + "\n" + read(MORPH_MEASURE));
     const morphCtxOnly = stripComments(read(MORPH_CTX));
     const constants = stripComments(read(CONSTANTS));
-    const deltaRaw = read(DELTA); // not comment-stripped — prose is the content
 
     // ── M1 — the shell morph is driven by the ONE --dock-morph-t scalar ─────────
     // AppShell binds the AZ driver (consumer #2) and its handler reaches the driver's
@@ -124,23 +200,26 @@ export function detect() {
         /setInterval\s*\([^)]*morph/i.test(appShell);
     assert("M1 — no second morph engine/clock minted on the shell morph path", !shellSecondEngine);
 
-    // ── M2 — the same scalar drives both directions (no clip-path topology morph) ─
-    // The shell morph is bidirectional on the driver's toggle/morphTo (one scalar, no
-    // separate forward/back path). And no clip-path interpolation across the
-    // orientation flip on the shell morph path (the AX.W42 fold-7 NO-GO).
-    const bidirectional =
-        /morph\.toggle\s*\(/.test(appShell) ||
-        (/morph\.morphTo\s*\(\s*["']horizontal["']/.test(appShell) &&
-            /morph\.morphTo\s*\(\s*["']vertical["']/.test(appShell));
-    assert("M2 — the shell morph is bidirectional on the one scalar (toggle/morphTo)", bidirectional);
-    const shellClipMorph =
-        /clip-path[^;]*var\(\s*--dock-morph-t/.test(appShell) ||
-        /transition:[^;]*clip-path/.test(appShell);
-    assert("M2 — no clip-path interpolation across the orientation flip (topology limit)", !shellClipMorph);
-    // The §7 VT crossfade is the shipped default (startViewTransition wraps the swap).
-    const vtDefault =
-        /startViewTransition\s*\(/.test(appShell) && /vtOrientation/.test(appShell);
-    assert("M2 — the §7 View-Transitions crossfade is the shipped default register", vtDefault);
+    // ── M2 (BG.W-DOCK-INPLACE-MORPH — INVERTED) — the in-place teardrop is the ONLY
+    //    V↔H register: no modal, no synthetic two-dock View-Transitions crossfade ──────
+    // The morph is bidirectional on the ONE scalar + no clip-path topology morph
+    // (unchanged), AND the modal + the synthetic-dock VT crossfade + the modal-local goo
+    // filter are DELETED, the teardrop referencing the canonical #dock-morph-goo mount.
+    const m2 = morphRegisterFacts(appShell);
+    assert("M2 — the shell morph is bidirectional on the one scalar (toggle/morphTo)", m2.bidirectional);
+    assert("M2 — no clip-path interpolation across the orientation flip (topology limit)", m2.noClipMorph);
+    assert(
+        'M2 — the V↔H modal stage is DELETED (no role="dialog", no morphStageOpen)',
+        m2.noModalStage,
+    );
+    assert(
+        "M2 — the synthetic two-dock View-Transitions crossfade is DELETED (no vtOrientation, no #shell-dock-morph-goo)",
+        m2.noSyntheticVt,
+    );
+    assert(
+        "M2 — the in-place liquid teardrop is the shipped register (references the canonical #dock-morph-goo)",
+        m2.teardropRegister,
+    );
 
     // ── M3 — the layering/contextual switch is exercised in-situ ────────────────
     // The shell docks consume the useContextualDockLayers resolver + wire the
@@ -164,17 +243,15 @@ export function detect() {
     assert("M3 — the SidebarDock exercises the in-situ layering/contextual switch", shellLayering(sidebar));
     assert("M3 — the BottomDock exercises the in-situ layering/contextual switch", shellLayering(bottom));
 
-    // ── M4 — the ship decision rides the recorded perf number ───────────────────
-    // The DELTA carries the in-situ 4×-throttle perf trace (p50 + over-16.7ms
-    // fraction) and the consequent shipped register (the crossfade floor vs the
-    // teardrop). The decision is the mechanical fall — the NUMBER decides.
-    const deltaExists = deltaRaw.length > 0;
-    const deltaHasPerf =
-        /p50/i.test(deltaRaw) &&
-        /16\.7/.test(deltaRaw) &&
-        /(view-transition|crossfade|teardrop)/i.test(deltaRaw);
-    assert("M4 — the DELTA exists (the in-situ π readback home)", deltaExists);
-    assert("M4 — the DELTA records the §7 4×-throttle perf number + the shipped register", deltaHasPerf);
+    // ── M4 (BG.W-DOCK-INPLACE-MORPH — RETIRED) — no perf-gated ship decision ────────
+    // The pass-2 M4 gated the teardrop as the perf-OPTIONAL register behind a VT-crossfade
+    // default; the teardrop is now the ONLY V↔H register (M2), so there is no
+    // crossfade-vs-teardrop ship fork + no liquidPreview toggle to gate it. The witness is
+    // the ABSENCE of the perf-gated fork.
+    assert(
+        "M4 — the perf-gated teardrop-vs-crossfade ship fork is RETIRED (no liquidPreview, no vtOrientation)",
+        m2.noPerfGatedFork,
+    );
 
     // ── M5 — the nested-group size is the measure-ONCE convex blend (no per-swap rAF) ────
     // BD.W-DOCK-CORE deleted the per-swap nested-measure ordering (nestedTargetsWithin/
@@ -225,6 +302,13 @@ export function detect() {
         !ctxForksSpring,
     );
 
+    // The self-test bite — a synthetic diseased modal MUST flag, a teardrop-only shell
+    // MUST pass; a broken detector reds the gate (the born-RED discipline).
+    for (const f of selfTest()) {
+        facts[f] = false;
+        violations.push(f);
+    }
+
     return { facts, violations };
 }
 
@@ -252,13 +336,13 @@ function run() {
         `  M1 shell morph on the ONE --dock-morph-t scalar : ${ok("M1 — AppShell binds useDockOrientationMorph (the AZ driver, consumer #2)", "M1 — the shell morph handler reaches the driver's toggle/morphTo/pin (not a shadow engine)", "M1 — the SidebarDock carries the in-situ morph control", "M1 — the BottomDock carries the in-situ morph control", "M1 — no second morph engine/clock minted on the shell morph path") ? "YES" : "NO"}`,
     );
     console.log(
-        `  M2 bidirectional, topology-occluded, VT default : ${ok("M2 — the shell morph is bidirectional on the one scalar (toggle/morphTo)", "M2 — no clip-path interpolation across the orientation flip (topology limit)", "M2 — the §7 View-Transitions crossfade is the shipped default register") ? "YES" : "NO"}`,
+        `  M2 in-place teardrop-only (no modal, no VT)     : ${ok("M2 — the shell morph is bidirectional on the one scalar (toggle/morphTo)", "M2 — no clip-path interpolation across the orientation flip (topology limit)", 'M2 — the V↔H modal stage is DELETED (no role="dialog", no morphStageOpen)', "M2 — the synthetic two-dock View-Transitions crossfade is DELETED (no vtOrientation, no #shell-dock-morph-goo)", "M2 — the in-place liquid teardrop is the shipped register (references the canonical #dock-morph-goo)") ? "YES" : "NO"}`,
     );
     console.log(
         `  M3 in-situ layering/contextual switch wired     : ${ok("M3 — the SidebarDock exercises the in-situ layering/contextual switch", "M3 — the BottomDock exercises the in-situ layering/contextual switch") ? "YES" : "NO"}`,
     );
     console.log(
-        `  M4 ship decision rides the recorded perf number : ${ok("M4 — the DELTA exists (the in-situ π readback home)", "M4 — the DELTA records the §7 4×-throttle perf number + the shipped register") ? "YES" : "NO"}`,
+        `  M4 perf-gated ship fork RETIRED (teardrop-only)  : ${ok("M4 — the perf-gated teardrop-vs-crossfade ship fork is RETIRED (no liquidPreview, no vtOrientation)") ? "YES" : "NO"}`,
     );
     console.log(
         `  M5 ratio-free measure-once blend (spring preset-fenced): ${ok("M5 — the deleted per-swap nested-measure machinery (nestedTargetsWithin/forceNestedMaxContent/measureAndArmMorph) does NOT survive — the ratio-free measure-once blend replaced it", "M5 — the size endpoints are captured ONCE by the useDockExpandedSize ResizeObserver (--dock-expanded-px/--dock-collapsed-px), not a per-swap rAF measure", "M5 — DOCK_SPRING derives from the single-source springPreset(\"dock\") (the structural fence — no forked literal)", "M5 — the morph context does not fork a spring literal (the spring is the imported preset-derived DOCK_SPRING)") ? "YES" : "NO"}`,
