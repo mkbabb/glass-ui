@@ -482,6 +482,8 @@ onBeforeUnmount(() => {
 .demo-sidebar-rail[data-shell-dock-orientation="horizontal"] :deep(.demo-sidebar-dock) {
     flex-direction: row;
     align-items: center;
+}
+
 /* <main> reserves a top gutter for the floating top bar when the dock settled horizontal
    (a static reserve, the pt mirror of the pb-28 bottom-dock reserve; the column reclaim is
    automatic via flex the moment the aside goes fixed). */
