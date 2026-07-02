@@ -115,6 +115,15 @@ The 4 asks (all in-repo-witnessed):
 
 **Recommendation: publish 4.3.0 FIRST, then 4.4.0 (GU-1 + GU-3 ASK A), THEN 5.0.0 — three monotone tags on master, do NOT fold the 4.x tail into the major.**
 
+> **EARLY-4.3.0 OPTION (ATLAS-M directed, 2026-07-01 — USER-GATED, staged not fired).** The atlas asks
+> to pull the 4.3.0 tag FORWARD of the BG build (their `GLASS-BG-BH.md` Tier-1.1): the contents are
+> BUILT (`28cf1cd1` Δ1 bare DockIconButton — now doubly-leveraged as their M.W1-B crest-button form —
+> + Δ2 E14 reparent+`@settle` + Δ3 `side`), and one early cut drains K-A-DOCK + K-REPOINT. The
+> choreography is the §0 reconcile executed early: merge `release/4.3.0`→master → `--run full`
+> siblings-absent → tag → release.yml. Optional rider: the Drawer PORTAL-ATTRS fix (cursor 10.2's
+> ATLAS-M clause) once built. The trigger is the USER's publish hinge — see
+> `docs/tranches/BG/coordination/ATLAS-M-INBOUND.md` item 1.
+
 The reasoning (each grounded in a binding constraint):
 
 - **GU-1 is a `^4`-reachable additive delta — folding it into 5.0.0 strands its consumer.** GU-1 (`glass-key-fill` — 3 value-only edits) ships on the 4.4.0-line so the atlas consumes it **fallback-first off `^4.1.0` WITHOUT taking the major break** (the `/api` drop + `--ring` rename). That is the entire design of GU-1 being a minor. Fold it into 5.0.0 and the atlas can only reach it by swallowing the restructure — defeating the additive intent. GU-1's own doc + BG `FINAL.md §6` both mandate "4.4.0-line AFTER 4.3.0 publishes." GU-3 ASK A (StatusDot forced-colors opt-in) rides the SAME 4.4.0 minor, behind GU-1.
