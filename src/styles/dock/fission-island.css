@@ -1,0 +1,110 @@
+/* dock/fission-island.css — BG.W-DOCK-FISSION-WIRE — the fission ASSEMBLY leaf, carved
+ * off fission-bridge.css (the no-god-module drain — fission-bridge.css dropped under the
+ * 500-line bound). @import-ed by dock.css IMMEDIATELY AFTER fission-bridge.css, into the
+ * SAME `@layer components`, so the cascade is order-preserving (these unique-selector
+ * assembly rules follow the scalars/goo-host/piece rules; no property battle, no visual
+ * delta). It carries the goo NECK filament + the SECOND-DOCK island plate — the visible
+ * assembly the ONE `--island-t`/`--island-dx`/`--island-dy` scalar cohort drives. */
+
+@layer components {
+    /* ── BD.W-DOCK-CORE (II.2 — F-1, THE HEADLINE ASSEMBLY) — the goo NECK + the ISLAND ──
+       The prior build animated a scalar + goo over an EMPTY bridge while nothing detached
+       (the F-1 DECISIVE FAIL). These two REAL elements are the visible assembly: a goo NECK
+       filament stretches from the source dock edge along the placement vector, and a SECOND
+       DOCK plate (the island) materializes at the cluster's landing — beside/above/below.
+       Both ride the ONE `--island-t` scalar + the `--island-dx/dy` placement vector the
+       orchestrator writes; both are inside the goo'd bridge so they fuse as a metaball.
+       Compositor-only (transform/scale/opacity/filter) + PRM-carved. */
+
+    /* The goo NECK — a warm-cream gel filament anchored at the dock-box center, stretching
+       OUTWARD along the placement vector toward the island as `--island-t` rises, thinning
+       (scaleY) as it stretches (the metaball throat). At rest (island-t 0) it is a zero-
+       length nub (scaleX 0) — invisible. The goo filter on the bridge fuses its near end
+       into the source pill and its far end into the island → one continuous liquid neck. */
+    .dock-fission-neck {
+        position: absolute;
+        /* anchored at the dock-box CENTER; the placement vector + reach place its far end. */
+        inset: 50%;
+        inline-size: var(--dock-island-reach, 9rem);
+        block-size: 1.4rem;
+        margin-block-start: -0.7rem;
+        margin-inline-start: 0;
+        border-radius: 999px;
+        pointer-events: none;
+        /* the warm-cream gel — the SAME floating-glass register the piece neck uses (NO hue
+           injected; warm-cream identity holds). */
+        background: radial-gradient(
+            130% 130% at 50% 40%,
+            var(--glass-bg-floating, color-mix(in oklab, var(--card), white 8%)) 0%,
+            var(--glass-bg-resting, var(--card)) 70%,
+            color-mix(in oklab, var(--card), var(--foreground) 6%) 100%
+        );
+        /* GROW along the placement vector: the neck's far end travels `reach × island-t` in
+           the (dx,dy) direction; scaleX grows it from the center outward, scaleY thins it as
+           it stretches (the gel throat). transform-origin at the center so it grows OUT. */
+        --neck-len: calc(var(--island-t, 0) * 1);
+        translate:
+            calc(var(--island-dx, 1) * var(--dock-island-reach, 9rem) * var(--island-t, 0) * 0.5)
+            calc(var(--island-dy, 0) * var(--dock-island-reach, 9rem) * var(--island-t, 0) * 0.5);
+        /* orient the neck filament ALONG the placement vector — atan2() returns an <angle>
+           directly (no *1rad multiply, which would be an angle×angle type error → invalid →
+           `rotate: none`). The neck base extends along +x (inline-size), so rotating by the
+           vector angle aims it at the island (beside = 0°, below = 90°, above = -90°). */
+        rotate: atan2(var(--island-dy, 0), var(--island-dx, 1));
+        scale:
+            calc(0.04 + 0.96 * var(--neck-len))
+            calc(1 - 0.55 * clamp(0, var(--neck-len), 1));
+        transform-origin: center;
+        /* The neck blooms in early (0→0.08) and HOLDS at a faint residual once separated
+           (the metaball connection reads even at the held split — never a hard cut). */
+        opacity: calc(
+            clamp(0, var(--island-t, 0) / 0.08, 1) *
+                (0.35 + 0.65 * (1 - clamp(0, calc((var(--island-t, 0) - 0.55) / 0.45), 1)))
+        );
+        will-change: transform, opacity;
+        z-index: 0;
+    }
+
+    /* The SECOND DOCK — the island plate. A real warm-cream glass-floating surface that
+       SCALES UP from a point at the cluster's landing position (placement vector × reach),
+       carrying the detached pieces. It is the "becomes its own dock beside/above/below"
+       read (the user's A13). The six-layer glass composite (fill + rim + shadow) reads off
+       the library `.glass-floating` token cohort — NO second material recipe. */
+    .dock-fission-island {
+        position: absolute;
+        inset: 50%;
+        /* content-driven: the island shrink-wraps the migrated controls (the `#split`
+           slot) with a generous warm-cream pad — a real second dock pill. A bare island
+           (no slot) falls back to a min size so the empty plate still reads. */
+        inline-size: max-content;
+        min-inline-size: 3rem;
+        block-size: auto;
+        min-block-size: 2.6rem;
+        display: grid;
+        place-items: center;
+        padding-inline: 0.75rem;
+        padding-block: 0.5rem;
+        border-radius: var(--radius-dock, 9999px);
+        pointer-events: auto;
+        /* the warm-cream glass plate — the SAME tier the dock body reads (six-layer
+           composite via the token cohort; warm material, never gray — BA.W-NO-GRAY). */
+        background: var(--glass-bg-floating, color-mix(in oklab, var(--card), white 6%));
+        border: 1px solid var(--glass-border-floating, color-mix(in oklab, var(--foreground) 12%, transparent));
+        box-shadow:
+            0 0.5rem 1.5rem -0.5rem color-mix(in srgb, var(--shadow-color, var(--foreground)) 22%, transparent),
+            inset 0 1px 0 0 color-mix(in oklab, white 22%, transparent);
+        /* fly along the placement vector to the landing + scale up off island-t (a small
+           overshoot-friendly pop the spring drives). The `inset: 50%` anchors the island's
+           top-left at the dock-box center, so the translate SELF-CENTERS the box (-50% -50%)
+           AND carries it along the placement vector to its landing — ONE combined translate
+           (compositor-only). transform-origin at the dock center so it BUDS OFF the pill. */
+        translate:
+            calc(-50% + var(--island-dx, 1) * var(--dock-island-reach, 9rem) * var(--island-t, 0))
+            calc(-50% + var(--island-dy, 0) * var(--dock-island-reach, 9rem) * var(--island-t, 0));
+        scale: clamp(0, calc(var(--island-t, 0) * 1.05), 1.05);
+        transform-origin: center;
+        opacity: clamp(0, calc((var(--island-t, 0) - 0.08) / 0.25), 1);
+        will-change: transform, opacity;
+        z-index: 1;
+    }
+}

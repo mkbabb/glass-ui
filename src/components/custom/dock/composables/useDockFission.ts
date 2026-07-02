@@ -1,48 +1,41 @@
-// BE.W-DOCK-FISSION — useDockFission: the n-ary detach orchestrator.
+// BE.W-DOCK-FISSION / BG.W-DOCK-FISSION-WIRE — useDockFission: the n-ary detach orchestrator.
 //
-// THE DEFECT THIS FIXES (the user's #1 — the island WAIST). The prototype rested as
-// two abutting stadium blobs (zero overlap) so the always-on goo could only fuse the
-// OVERLAPPING alpha — two tangent caps leave a concave waist by construction. The
-// gestalt correction (audit §W2): the rest state is ONE glass pill, goo OFF; the split
-// CARVES it — the surviving controls DETACH along a context-specific signature, each
+// THE DEFECT (the user's #1 — the island WAIST). The rest state is ONE glass pill, goo
+// OFF; the split CARVES it — the surviving controls DETACH along a context signature, each
 // bridged to the body by a stretching goo neck that visibly RESISTS the pointer pull.
 //
-// THE LOAD-BEARING REUSE (no second engine, no new spring family — the HONESTY
-// correction the spec folds in). This orchestrator CLONES the
-// `dockMorphContext.ts:258-289` one-spring/one-scalar loop shape:
-//   • ONE `SpringProgress` on `DOCK_SPRING` (the `--spring-dock` register reused; NO
-//     bespoke spring constant minted — F1), `play()`ing ONE rAF loop that writes
-//     `--dock-split-t` to the dock root once/frame (the single-property-write idiom).
-//   • A re-toggle mid-flight RE-BASES the live solver from its current velocity (the
-//     `dockMorphContext.ts:255-256` `inheritedVelocity` interruptible contract) — a
-//     mid-flight re-grab joins the same trajectory (iOS interruptible).
-//   • F2 bidirectional: the scalar runs 0→1 to split AND 1→0 to re-merge on the SAME
-//     loop (the target flips; the same spring drives both directions).
-//   • The squish recoil rides `useLiquidFlex` (the `"tanh"` law, capped LOW ≤1.08 — the
-//     anti-taffy fence); the seam-tension rides `usePointerVelocityField`, FED from
-//     INSIDE this loop's frame callback (`tick(delta)` — NO second rAF, F4).
-//   • PRM seats every piece SYNCHRONOUSLY at its `to` (the `dockMorphContext.ts:179-185,
-//     202-212` `prefersReducedMotion()`/`settleTarget` sync-seat precedent — F5) and
-//     `field.tick(0)` zeroes the tension → an instant cut, vestibular-safe.
+// THE LOAD-BEARING REUSE (no second engine, no new spring family):
+//   • ONE spring on `DOCK_SPRING`, routed through the band's SOLE `new SpringProgress`
+//     factory `useDockSpring` (BG.W-DOCK-ENGINE-UNIFY) — no bespoke spring constant (F1).
+//     `playTo` writes `--dock-split-t` once/frame + owns the velocity-continuous re-base,
+//     so a mid-flight toggle joins the SAME trajectory (iOS interruptible).
+//   • F2 bidirectional: the scalar runs 0→1 to split AND 1→0 to re-merge on the SAME loop.
+//   • The squish recoil rides `useLiquidFlex` (`"tanh"`, capped LOW ≤1.08 — anti-taffy);
+//     the seam-tension rides `usePointerVelocityField`, FED from INSIDE this loop's frame
+//     callback (`tick(delta)` — NO second rAF, F4).
+//   • PRM seats every piece SYNCHRONOUSLY at its `to` + `field.tick(0)` zeroes the tension
+//     → an instant cut, vestibular-safe (F5).
 //
-// THE PER-CONTEXT goo-SIGNATURE is DATA, not three code paths (F3, the FLOOR). The
+// THE PER-CONTEXT goo-SIGNATURE is DATA, not three code paths (F3, the FLOOR): the
 // orchestrator reads a `DockSplitSignature` descriptor (search=radial / media=lateral /
-// nav=inward-merge) and computes each piece's `--split-dx`/`--split-dy`/`--i`/`--neck-t`
-// off it — ONE recipe (`fission-bridge.css`) paints whatever vector the pieces carry,
-// never three hardcoded silhouettes.
+// nav=inward-merge, in `dockFissionSignatures.ts`); ONE `fission-bridge.css` recipe paints
+// whatever vector the pieces carry, never three hardcoded silhouettes.
 //
-// A CONSUMING SEAM BESIDE THE MORPH ENGINE (the box-inviolate fence — the
-// `useDockSearch.ts:16-20` precedent). It does NOT import/edit `dockMorphContext`/
-// `dockMorphMeasure`/`DOCK_SPRING` (the dock's own collapse/expand+V↔H morph mechanism
-// is W-DOCK-MORPH-FAMILY's); it morphs surviving controls off a dock body BESIDE it.
-//
-// VUE + keyframes.js (the heavy peer) — it statically reaches `SpringProgress`, so the
-// SFC composing it rides the keyframes-bearing `/dock` chunk (the `useDockSearch`
-// precedent), NEVER the vueuse-free root barrel.
+// A CONSUMING SEAM BESIDE THE MORPH ENGINE (box-inviolate): it does NOT edit
+// `dockMorphContext`/`dockMorphMeasure` — it shares only the `useDockSpring` factory + the
+// `DOCK_SPRING` clock, morphing surviving controls off a dock body BESIDE it. It reaches
+// keyframes.js via the factory, so a composing SFC rides the keyframes-bearing `/dock`
+// chunk (the `useDockSearch` precedent), NEVER the vueuse-free root barrel.
 
 import { onScopeDispose, ref, type Ref } from "vue";
-import { SpringProgress } from "@mkbabb/keyframes.js";
 import { DOCK_SPRING } from "../constants";
+// BG.W-DOCK-FISSION-WIRE — the DECIDE: the fission spring is ROUTED through the ONE
+// `useDockSpring` factory (the band's sole `new SpringProgress` site). The orchestrator
+// no longer hand-rolls the create/re-base/dispose dance — it hands the factory the
+// byte-fenced `DOCK_SPRING` clock + its per-frame writer (no bespoke spring family, no
+// second `new SpringProgress`; the interruptible velocity-continuous re-base lives once
+// in the factory).
+import { useDockSpring, type DockSpring } from "./useDockSpring";
 import {
     useLiquidFlex,
     type UseLiquidFlexReturn,
@@ -51,117 +44,27 @@ import {
     usePointerVelocityField,
     type UsePointerVelocityField,
 } from "../../../../composables/motion/usePointerVelocityField";
-// BD.W-MORPH-FIELD-WELD — useDockFission is the `radialBurst`/`lateralPeel`/`inwardMerge`
-// RECIPE over the unified WELD. Its public API is box-INVIOLATE (the `--neck-t`/`--island-t`
-// drives, the `DockSplitSignature` descriptor, the orchestrator loop all UNCHANGED); the
-// goo `<filter>` it bridges through is the ONE shell-root `<GooFilter>` mount's
-// `#dock-fission-goo`. The per-context gooey magnitude (`neckHold`) now SOURCES from the
-// SHARED `MORPH_SIGNATURES` rows — ONE waist DATA source library-wide (search→radialBurst,
-// media→lateralPeel, nav→inwardMerge), not a per-fork literal cohort.
-import { MORPH_SIGNATURES } from "../../../../composables/motion/useMorphField";
+// BG.W-DOCK-FISSION-WIRE — the fission SIGNATURE data (the `radialBurst`/`lateralPeel`/
+// `inwardMerge` goo-signature MAP + the placement vectors + their types) lives in the
+// colocated `dockFissionSignatures` leaf (the no-god-module drain). The orchestrator
+// READS the descriptor (box-INVIOLATE — the `--neck-t`/`--island-t` drives + the loop
+// UNCHANGED); the leaf's symbols are re-exported below so the public `/dock` surface is
+// byte-identical.
+import { PLACEMENT_VECTOR } from "./dockFissionSignatures";
+import type {
+    DockSplitContext,
+    DockSplitPlacement,
+    DockSplitSignature,
+} from "./dockFissionSignatures";
 
-/** The three named fission CONTEXTS — each maps to a goo signature (F3). */
-export type DockSplitContext = "search" | "media" | "nav";
-
-/** The detach vector family a context selects. */
-export type DockSplitVector = "radial" | "lateral" | "inward-merge";
-
-/**
- * BD.W-DOCK-CORE (II.2 — F-1 the headline fix). The placement axis the detached
- * pieces TRAVEL ALONG to form the sibling island dock. The prior build let each
- * piece scatter on its own radial center → it read as inline jitter inside the one
- * pill, NOT a detach. A single COHERENT placement vector flies the whole piece
- * cluster off the source plate so a second dock visibly materializes beside/above/
- * below (the iOS-27 split read).
- */
-export type DockSplitPlacement = "beside" | "above" | "below";
-
-/** The unit placement vector each `splitPlacement` flies the cluster along. */
-export const PLACEMENT_VECTOR: Readonly<
-    Record<DockSplitPlacement, { dx: number; dy: number }>
-> = {
-    beside: { dx: 1, dy: 0 }, // the cluster flies to the right → island lands beside
-    above: { dx: 0, dy: -1 }, // up → island above
-    below: { dx: 0, dy: 1 }, // down → island below
-};
-
-/** The squish-peak register — WHEN the `useLiquidFlex` swell peaks in the travel. */
-export type DockSplitSquishPeak = "late" | "long" | "coalesce";
-
-/**
- * The per-context goo-SIGNATURE descriptor (F3 — the FLOOR, DATA not three code paths).
- * The orchestrator reads this to compute each piece's vector + stagger + neck phase; the
- * ONE `fission-bridge.css` recipe paints whatever the pieces carry.
- */
-export interface DockSplitSignature {
-    /** The context this signature serves. */
-    context: DockSplitContext;
-    /** The detach-vector family. */
-    vector: DockSplitVector;
-    /**
-     * How long the goo neck HOLDS before it snaps (0..1 of `--split-t`). High = the
-     * tense radial pop (neck holds to ~0.55 then snaps); the neck-break offset.
-     */
-    neckHold: number;
-    /**
-     * The per-piece stagger-rank resolver — returns piece `i`'s ordinal in the break
-     * SEQUENCE (innermost-first for radial, outside-in for lateral). The orchestrator
-     * phase-shifts each piece's `--neck-t` by `staggerStep * rank` so the N necks break
-     * in sequence, never simultaneously (the `--split-stagger * rank(i)` idiom).
-     */
-    staggerRank: (i: number, count: number) => number;
-    /** WHEN the `useLiquidFlex` squish swell peaks across the travel. */
-    squishPeak: DockSplitSquishPeak;
-}
-
-/** The canonical per-context signature MAP (F3 — search/media/nav, descriptor-driven). */
-export const DOCK_SPLIT_SIGNATURES: Readonly<
-    Record<DockSplitContext, DockSplitSignature>
-> = {
-    // search = RADIAL BURST — controls fly outward like a bloom; neck NECKS LATE (the
-    // tense radial pop); innermost-first (an outward ripple, not a simultaneous scatter).
-    search: {
-        context: "search",
-        vector: "radial",
-        // BD.W-MORPH-FIELD-WELD — the gooey neck-hold SOURCES from the shared weld row
-        // (radialBurst — the tense radial pop). ONE waist-DATA source, not a fork literal.
-        neckHold: MORPH_SIGNATURES.radialBurst.neckHold,
-        staggerRank: (i, count) => {
-            // innermost-first: rank by distance from the center index.
-            const mid = (count - 1) / 2;
-            return Math.round(Math.abs(i - mid));
-        },
-        squishPeak: "late",
-    },
-    // media = LATERAL PEEL — the now-playing center piece stays (the anchor); flanking
-    // transport peels along the cross axis; LONG tapering neck tail; outside-in.
-    media: {
-        context: "media",
-        vector: "lateral",
-        // the lateral peel — the gooey neck-hold off the shared `lateralPeel` weld row.
-        neckHold: MORPH_SIGNATURES.lateralPeel.neckHold,
-        staggerRank: (i, count) => {
-            // outside-in: the outermost piece breaks first.
-            const mid = (count - 1) / 2;
-            return Math.round(mid - Math.abs(i - mid));
-        },
-        squishPeak: "long",
-    },
-    // nav = INWARD MERGE — the NEGATIVE radial (inward); the bridge runs BACKWARD (the
-    // merge-to-ONE generalized to N collapsing inward); `--stretch` PEAKS at coalescence.
-    nav: {
-        context: "nav",
-        vector: "inward-merge",
-        // the inward merge-to-ONE — the gooey neck-hold off the shared `inwardMerge` row.
-        neckHold: MORPH_SIGNATURES.inwardMerge.neckHold,
-        staggerRank: (i, count) => {
-            // simultaneous-ish inward coalesce: a gentle outside-in so the rim folds in.
-            const mid = (count - 1) / 2;
-            return Math.round(mid - Math.abs(i - mid));
-        },
-        squishPeak: "coalesce",
-    },
-};
+export { PLACEMENT_VECTOR, DOCK_SPLIT_SIGNATURES } from "./dockFissionSignatures";
+export type {
+    DockSplitContext,
+    DockSplitVector,
+    DockSplitPlacement,
+    DockSplitSquishPeak,
+    DockSplitSignature,
+} from "./dockFissionSignatures";
 
 /** The per-piece DIRECTION-VECTOR + rank a control registers (the MorphTarget twin). */
 export interface DockFissionPieceRegistration {
@@ -302,9 +205,15 @@ export function useDockFission(options: UseDockFissionOptions): UseDockFissionRe
     /** The spring's TARGET (0 merged, 1 split) — the direction lives in the target. */
     let target = 0;
 
-    // ONE spring, the dock's single clock for the split. Created per episode carrying the
-    // prior episode's velocity (the iOS interruptible re-base). Disposed on settle/teardown.
-    let spring: SpringProgress | null = null;
+    // ONE spring, the dock's single clock for the split — routed through the band's sole
+    // `new SpringProgress` factory (`useDockSpring`, BG.W-DOCK-ENGINE-UNIFY). It reads the
+    // byte-fenced `DOCK_SPRING` clock (no bespoke spring family); `playTo` owns the
+    // create-carrying-prior-velocity / self-dispose dance (the iOS interruptible re-base),
+    // so the orchestrator never hand-rolls a `new SpringProgress`.
+    const dockSpring: DockSpring = useDockSpring({
+        response: DOCK_SPRING.response,
+        dampingFraction: DOCK_SPRING.dampingFraction,
+    });
 
     // The seam-tension field — fed from INSIDE this driver's loop via `tick(delta)` (the
     // no-own-rAF discipline, F4). It owns the cached-PRM gate + the velocity derivation.
@@ -330,13 +239,6 @@ export function useDockFission(options: UseDockFissionOptions): UseDockFissionRe
             typeof window.matchMedia === "function" &&
             window.matchMedia("(prefers-reduced-motion: reduce)").matches
         );
-    }
-
-    function disposeSpring(): void {
-        if (spring) {
-            spring.dispose();
-            spring = null;
-        }
     }
 
     /**
@@ -386,27 +288,19 @@ export function useDockFission(options: UseDockFissionOptions): UseDockFissionRe
             p.flex.drive(neckT);
 
             // The per-piece DETACH VECTOR is the piece's OWN registered vector (the
-            // box-INVIOLATE `registerPiece({ vector })` contract). It may be a getter, so
-            // it RE-RESOLVES per write — the live FLIP-measured center the consumer feeds
-            // (`GlassDock.vue` resolves each piece's radial/inward/lateral direction off
-            // the current `getBoundingClientRect`). The COHERENT cluster read (F-1 — the
-            // pieces fly as one toward the sibling island, not a scatter inside the pill)
-            // is carried by the ROOT's `--island-dx`/`--island-dy` placement vector above;
-            // the per-piece vector adds the bridge/fan the consumer measured.
+            // box-INVIOLATE `registerPiece({ vector })` contract). A getter RE-RESOLVES per
+            // write off the live FLIP-measured center; the COHERENT cluster read (F-1) is
+            // carried by the ROOT's `--island-dx`/`--island-dy` placement vector above.
             const v = p.vectorOf();
 
             el.style.setProperty("--split-dx", String(v.dx));
             el.style.setProperty("--split-dy", String(v.dy));
             el.style.setProperty("--i", String(p.rank));
             el.style.setProperty("--neck-t", String(neckT));
-            // The NECK SPECULAR-SWEEP angle (BE.W-METABALL-BRIDGE2 B3 / BE.W-DOCK-JUBILANCE
-            // §3a) — the catch-light bends ALONG the filament as it stretches: the conic
-            // angle advances with neck-t (the light grazes the throat as it thins) and the
-            // pointer tension biases it (a fast pull skews the grazing angle — the light
-            // bends under tension). A function of the SAME scalar (no second clock); the
-            // fission-bridge.css ::after sweep reads it (falls back to a neck-t-derived
-            // angle un-wired). ONE write off the SAME loop. The full sweep is 0..1 → 0..360°
-            // + a small tension skew so the refractive read tracks the pull.
+            // The NECK SPECULAR-SWEEP angle (BE.W-METABALL-BRIDGE2 B3) — the catch-light
+            // bends ALONG the filament as it stretches: the conic angle advances with neck-t
+            // (the fission-bridge.css ::after sweep reads it) + a small pointer-tension skew.
+            // A function of the SAME scalar (no second clock); ONE write off the SAME loop.
             const sweepAngle = (neckT * 360 + tension * 60) % 360;
             el.style.setProperty("--neck-specular-angle", `${sweepAngle.toFixed(1)}deg`);
             // The piece's own --stretch (the volume-preserving squish — read reciprocally
@@ -473,23 +367,11 @@ export function useDockFission(options: UseDockFissionOptions): UseDockFissionRe
 
         // PRM — there is NO morph to play; seat synchronously at the target (F5).
         if (prefersReducedMotion()) {
-            disposeSpring();
+            dockSpring.dispose();
             seatSync();
             return;
         }
 
-        const inheritedVelocity =
-            spring !== null && !spring.settled ? spring.velocity : 0;
-        disposeSpring();
-        spring = new SpringProgress({
-            response: DOCK_SPRING.response,
-            dampingFraction: DOCK_SPRING.dampingFraction,
-            initial: t.value,
-            respectReducedMotion: true,
-        });
-        const activeSpring = spring;
-        activeSpring.reset(t.value, inheritedVelocity);
-        activeSpring.target = target;
         r.setAttribute("data-fissioning", "");
         // BD.W-DOCK-CORE (F-1) — the persistent split STATE hook (the island/neck CSS
         // engages off `[data-fissioned]`). Set the instant a split begins (so the island
@@ -504,34 +386,44 @@ export function useDockFission(options: UseDockFissionOptions): UseDockFissionRe
         if (target < SPLIT_THRESHOLD) r.setAttribute("data-merging", "");
         else r.removeAttribute("data-merging");
         lastFrameTs = 0;
-        activeSpring.play((tValue: number) => {
-            const rr = root();
-            if (!rr) return;
-            t.value = tValue;
-            rr.style.setProperty("--dock-split-t", String(tValue));
+        // The interruptible re-base lives in `useDockSpring.playTo` — a still-live prior
+        // episode seeds the fresh spring from its current (value, velocity), so a
+        // mid-flight toggle joins the SAME trajectory (the iOS interruptible contract).
+        // ONE `--dock-split-t` write per frame; the field is ticked from INSIDE this
+        // callback (one-loop, F4); the settle cleanup runs in `onSettle`.
+        dockSpring.playTo(t.value, target, {
+            onFrame: (tValue: number) => {
+                const rr = root();
+                if (!rr) return;
+                t.value = tValue;
+                rr.style.setProperty("--dock-split-t", String(tValue));
 
-            // Feed the velocity field ONE renderer frame from INSIDE this callback — NO
-            // second rAF (F4). The delta is derived from the spring's own frame cadence.
-            const now =
-                typeof performance !== "undefined" ? performance.now() : Date.now();
-            const delta = lastFrameTs === 0 ? 16 : now - lastFrameTs;
-            lastFrameTs = now;
-            field.tick(delta);
+                // Feed the velocity field ONE renderer frame from INSIDE this callback —
+                // NO second rAF (F4). The delta is derived from the spring's frame cadence.
+                const now =
+                    typeof performance !== "undefined"
+                        ? performance.now()
+                        : Date.now();
+                const delta = lastFrameTs === 0 ? 16 : now - lastFrameTs;
+                lastFrameTs = now;
+                field.tick(delta);
 
-            writePieces(tValue);
-
-            if (activeSpring.settled) {
+                writePieces(tValue);
+            },
+            onSettle: () => {
+                const rr = root();
                 fissioned.value = target >= SPLIT_THRESHOLD;
-                if (target < SPLIT_THRESHOLD) {
-                    rr.removeAttribute("data-fissioning");
-                    rr.removeAttribute("data-fissioned");
-                    rr.style.removeProperty("--seam-tension");
+                if (rr) {
+                    if (target < SPLIT_THRESHOLD) {
+                        rr.removeAttribute("data-fissioning");
+                        rr.removeAttribute("data-fissioned");
+                        rr.style.removeProperty("--seam-tension");
+                    }
+                    // The merge-splash one-shot is spent once the merge settles — clear the
+                    // gate so the flash does not re-paint at rest (the §6 calm one-shot).
+                    rr.removeAttribute("data-merging");
                 }
-                // The merge-splash one-shot is spent once the merge settles — clear the
-                // gate so the flash does not re-paint at rest (the §6 calm one-shot).
-                rr.removeAttribute("data-merging");
-                disposeSpring();
-            }
+            },
         });
     }
 
@@ -585,7 +477,7 @@ export function useDockFission(options: UseDockFissionOptions): UseDockFissionRe
     }
 
     function dispose(): void {
-        disposeSpring();
+        dockSpring.dispose();
         field.dispose();
     }
 

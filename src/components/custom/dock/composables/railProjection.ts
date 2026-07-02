@@ -45,7 +45,10 @@ export interface RailProjectionGeometry {
     fadeStart?: number;
     /** The slot-span the fade runs over. Default 2.5. */
     fadeRange?: number;
-    /** The far floor alpha. Default 0. */
+    /** The far floor alpha — a LEGIBLE whisper floor, NOT 0 (BG.W-DOCK-FISSION-WIRE, the
+     *  C-DOCK "rail facets fade to 0" defect). The receding φ-tier facets must stay readable
+     *  (the R-7 macOS-Dock-stack model: all items visible, receding by tier, never to 0).
+     *  Default 0.2. */
     fadeMinAlpha?: number;
     /** The per-slot scale recession (the depth read). Default 0.06. */
     scaleStep?: number;
@@ -58,7 +61,10 @@ const DEFAULT_GEOMETRY: Required<RailProjectionGeometry> = {
     tierRatio: 1.618,
     fadeStart: 0.5,
     fadeRange: 2.5,
-    fadeMinAlpha: 0,
+    // BG.W-DOCK-FISSION-WIRE — the legible whisper floor (was 0: the receding facets faded
+    // to invisible — the C-DOCK "rail facets fade to 0" defect). 0.2 keeps every tier
+    // readable (the macOS-Dock-stack model: all items visible, receding by tier).
+    fadeMinAlpha: 0.2,
     scaleStep: 0.06,
     scaleClampSlots: 4,
 } as const;

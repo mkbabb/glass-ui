@@ -147,7 +147,12 @@ const RATCHET_BASELINES = {
     // DELETED in this same diff (the monotonic drain — the file is now ≤ 500).
     "composables/glass/webgl/createCanvasLifecycle.ts": 695,
     "composables/glass/webgpu/useWebGPUCanvas.ts": 606,
-    "components/custom/dock/composables/useDockFission.ts": 604,
+    // BG.W-DOCK-FISSION-WIRE DRAINED useDockFission.ts (604 → ≤ 500): the fission SIGNATURE
+    // data (the per-context goo-signature MAP + the placement vectors + their types) carved
+    // into the colocated composables/dockFissionSignatures.ts (the orchestrator READS the
+    // descriptor, re-exports it for the byte-identical public surface), AND the spring
+    // routed through the ONE useDockSpring factory (the create/re-base/dispose dance no
+    // longer hand-rolled). Row DELETED in this same diff (the monotonic drain — file ≤ 500).
     // BH.B2.4a DRAINED CarouselContent.vue (577 → 375): the embla scroll/select wiring +
     // the DRIVER-vs-OBSERVER autoplay seam + the barbell geometry carved into the colocated
     // ui/carousel/composables/useCarouselWorm.ts (the SFC keeps template + style + the refs).
@@ -159,7 +164,11 @@ const RATCHET_BASELINES = {
     // carved WHOLE into the adjacent scheme-spring.css (239), @import-ed
     // IMMEDIATELY AFTER scheme-motion.css at the same cascade slot. The row is
     // DELETED in this same diff (the monotonic drain — the file is now ≤ 500).
-    "styles/dock/fission-bridge.css": 552,
+    // BG.W-DOCK-FISSION-WIRE DRAINED fission-bridge.css (552 → ≤ 500): the fission ASSEMBLY
+    // (the goo NECK filament + the SECOND-DOCK island plate) carved WHOLE into the colocated
+    // dock/fission-island.css, @import-ed by dock.css IMMEDIATELY AFTER fission-bridge.css
+    // into the SAME @layer components (order-preserving, unique selectors — no visual
+    // delta). Row DELETED in this same diff (the monotonic drain — the file is now ≤ 500).
     "components/custom/dock/composables/useDockContextSilhouette.ts": 551,
     "composables/glass/useGlassBackdropLuminance.ts": 542,
     "components/custom/goo-blob/composables/useBlobSatellites.ts": 533,

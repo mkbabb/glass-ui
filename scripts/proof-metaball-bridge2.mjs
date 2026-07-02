@@ -289,7 +289,10 @@ function detectB5() {
     // The neck rides the SAME spring loop — the orchestrator writes --neck-t off the
     // SpringProgress play() callback (NOT a CSS @keyframes/transition clock).
     facts.neckTWrittenByJs = /setProperty\(\s*["']--neck-t["']/.test(ts);
-    facts.springWritesScalar = /\.play\(/.test(ts) && /setProperty\(\s*["']--dock-split-t["']/.test(ts);
+    // BG.W-DOCK-FISSION-WIRE — the fission spring is ROUTED through the ONE `useDockSpring`
+    // factory, so the loop is entered via `.playTo(` (the factory owns the raw `.play(`).
+    // Accept either — the ONE `--dock-split-t` write inside the loop is the binding witness.
+    facts.springWritesScalar = /\.play(To)?\(/.test(ts) && /setProperty\(\s*["']--dock-split-t["']/.test(ts);
     // The anti-evasion bite: a bespoke @keyframes/transition driving --neck-t (a second
     // clock) in the CSS reds B5.
     facts.hasSecondNeckClock =

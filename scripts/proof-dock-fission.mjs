@@ -49,6 +49,17 @@ const COMMAND = "npm run proof:dock-fission";
 
 const FISSION_TS =
     "src/components/custom/dock/composables/useDockFission.ts";
+// BG.W-DOCK-FISSION-WIRE — the fission SIGNATURE data (the DOCK_SPLIT_SIGNATURES MAP +
+// placement vectors) carved into this colocated leaf (the no-god-module drain). The F3
+// map-presence asserts FOLLOW the carve into the leaf; the orchestrator READS the
+// descriptor (F3 read-check stays on FISSION_TS). The dock CSS assembly (goo NECK +
+// island) likewise carved into fission-island.css, @import-ed into the SAME layer.
+const FISSION_SIGNATURES_TS =
+    "src/components/custom/dock/composables/dockFissionSignatures.ts";
+const FISSION_ISLAND_CSS = "src/styles/dock/fission-island.css";
+const RAIL_PROJECTION_TS =
+    "src/components/custom/dock/composables/railProjection.ts";
+const DOCK_SPRING_TS = "src/components/custom/dock/composables/useDockSpring.ts";
 const FISSION_CSS = "src/styles/dock/fission-bridge.css";
 // P7 unified GlassGooFilter + DockGooFilter + the inline showcase/pager mounts into ONE
 // GooFilter.vue (the DRY win — a single goo <filter> graph; the per-scale presets carry
@@ -73,7 +84,13 @@ function detectF1() {
     const ts = stripComments(readRel(FISSION_TS));
     const facts = {};
     facts.fissionExists = ts.length > 0;
+    // BG.W-DOCK-FISSION-WIRE — the DECIDE routes the fission spring through the band's SOLE
+    // `new SpringProgress` factory `useDockSpring`, so the one-spring substrate is reached
+    // via the factory import (the direct `SpringProgress` import is retired). Accept EITHER
+    // (a direct import survives the fence too — no bespoke spring is minted either way).
     facts.importsSpringProgress = /import\s*\{[^}]*\bSpringProgress\b[^}]*\}\s*from\s*["']@mkbabb\/keyframes\.js["']/.test(ts);
+    facts.importsUseDockSpring = /import\s*\{[^}]*\buseDockSpring\b[^}]*\}\s*from\s*["']\.\/useDockSpring["']/.test(ts);
+    facts.oneSpringSubstrate = facts.importsSpringProgress || facts.importsUseDockSpring;
     facts.importsDockSpring = /import\s*\{[^}]*\bDOCK_SPRING\b[^}]*\}\s*from\s*["']\.\.\/constants["']/.test(ts);
     facts.readsDockSpring =
         /response:\s*DOCK_SPRING\.response/.test(ts) &&
@@ -86,8 +103,8 @@ function detectF1() {
 
     if (!facts.fissionExists)
         violations.push("F1: useDockFission.ts is ABSENT");
-    if (facts.fissionExists && !facts.importsSpringProgress)
-        violations.push("F1: the orchestrator does not import SpringProgress from @mkbabb/keyframes.js (the one-spring substrate)");
+    if (facts.fissionExists && !facts.oneSpringSubstrate)
+        violations.push("F1: the orchestrator does not reach the ONE SpringProgress substrate — it must import useDockSpring (the band's sole `new SpringProgress` factory) OR SpringProgress directly");
     if (facts.fissionExists && !(facts.importsDockSpring && facts.readsDockSpring))
         violations.push("F1: the spring is not constructed off DOCK_SPRING (response/dampingFraction) — a bespoke spring family or a re-tune");
     if (facts.fissionExists && facts.mintsBespokeSpring)
@@ -118,12 +135,19 @@ function detectF2() {
 function detectF3() {
     const violations = [];
     const ts = stripComments(readRel(FISSION_TS));
+    // BG.W-DOCK-FISSION-WIRE — the DATA MAP moved to the colocated signatures leaf; the
+    // presence asserts FOLLOW the carve (read leaf-OR-orchestrator, the "asserts follow
+    // the composition into the carved leaf" precedent). The orchestrator READ-checks stay
+    // on FISSION_TS (the orchestrator is the reader).
+    const data = stripComments(
+        readRel(FISSION_TS) + "\n" + readRel(FISSION_SIGNATURES_TS),
+    );
     const facts = {};
     // The signature MAP must enumerate all three contexts with their distinct vectors.
-    facts.hasSignatureMap = /DOCK_SPLIT_SIGNATURES\s*[:=]/.test(ts);
-    facts.hasRadial = /vector:\s*["']radial["']/.test(ts);
-    facts.hasLateral = /vector:\s*["']lateral["']/.test(ts);
-    facts.hasInwardMerge = /vector:\s*["']inward-merge["']/.test(ts);
+    facts.hasSignatureMap = /DOCK_SPLIT_SIGNATURES\s*[:=]/.test(data);
+    facts.hasRadial = /vector:\s*["']radial["']/.test(data);
+    facts.hasLateral = /vector:\s*["']lateral["']/.test(data);
+    facts.hasInwardMerge = /vector:\s*["']inward-merge["']/.test(data);
     // The orchestrator must READ the signature to compute the vectors (descriptor-driven),
     // not a `if (context === 'search')`-style hardcoded code path.
     facts.readsSignature = /signature\.value/.test(ts) || /sig\.(vector|staggerRank|neckHold|squishPeak)/.test(ts);
@@ -262,6 +286,132 @@ function detectGooMount() {
     return { violations, facts };
 }
 
+// ── W1 (BG.W-DOCK-FISSION-WIRE) — the rail-facet fade floor is a LEGIBLE whisper, not 0 ──
+// The receding φ-tier facets must stay readable (the C-DOCK "rail facets fade to 0"
+// defect). railProjection's DEFAULT_GEOMETRY.fadeMinAlpha must be a legible floor (≥ 0.15),
+// NOT 0. Born-RED on HEAD (fadeMinAlpha: 0).
+function detectW1FadeFloor() {
+    const violations = [];
+    const ts = stripComments(readRel(RAIL_PROJECTION_TS));
+    const facts = {};
+    facts.railProjectionExists = ts.length > 0;
+    const m = ts.match(/fadeMinAlpha:\s*([0-9]*\.?[0-9]+)\s*,/);
+    facts.fadeMinAlphaDefault = m ? Number(m[1]) : null;
+    facts.legibleFloor = facts.fadeMinAlphaDefault !== null && facts.fadeMinAlphaDefault >= 0.15;
+    if (!facts.railProjectionExists)
+        violations.push("W1: railProjection.ts is ABSENT — the φ-tier facet projection math is missing");
+    else if (facts.fadeMinAlphaDefault === null)
+        violations.push("W1: railProjection's DEFAULT_GEOMETRY has no fadeMinAlpha default");
+    else if (!facts.legibleFloor)
+        violations.push(`W1: the rail-facet fade floor is ${facts.fadeMinAlphaDefault} — the receding φ-tier facets fade to (near-)invisible (the C-DOCK "fade to 0" defect). Lift fadeMinAlpha to a LEGIBLE whisper (≥ 0.15)`);
+    return { violations, facts };
+}
+
+// ── W2 (BG.W-DOCK-FISSION-WIRE) — the fission spring is ROUTED through the ONE factory ──
+// The DECIDE keeps the fission WIRED (not retired) AND routes its spring through the band's
+// SOLE `new SpringProgress` factory `useDockSpring`. The orchestrator imports the factory,
+// PLAYS it (`.playTo(`), reads the byte-fenced DOCK_SPRING clock, and mints NO `new
+// SpringProgress` of its own. Born-RED on HEAD (the orchestrator hand-rolled `new
+// SpringProgress` directly).
+function detectW2SpringRouted() {
+    const violations = [];
+    const ts = stripComments(readRel(FISSION_TS));
+    const factory = stripComments(readRel(DOCK_SPRING_TS));
+    const facts = {};
+    facts.importsUseDockSpring = /import\s*\{[^}]*\buseDockSpring\b[^}]*\}\s*from\s*["']\.\/useDockSpring["']/.test(ts);
+    facts.playsFactory = /\.playTo\(/.test(ts);
+    facts.readsDockSpring =
+        /response:\s*DOCK_SPRING\.response/.test(ts) &&
+        /dampingFraction:\s*DOCK_SPRING\.dampingFraction/.test(ts);
+    // The orchestrator mints NO `new SpringProgress` of its own — the factory owns it.
+    facts.noOwnNewSpring = !/new\s+SpringProgress\(/.test(ts);
+    // The factory it routes through is the REAL sole-site factory (a sanity floor — the
+    // factory must itself own the `new SpringProgress`).
+    facts.factoryOwnsSpring = /new\s+SpringProgress\(/.test(factory);
+    facts.routed =
+        facts.importsUseDockSpring &&
+        facts.playsFactory &&
+        facts.readsDockSpring &&
+        facts.noOwnNewSpring &&
+        facts.factoryOwnsSpring;
+    if (!facts.importsUseDockSpring)
+        violations.push("W2: the orchestrator does not import useDockSpring (the band's sole `new SpringProgress` factory) — the DECIDE routes the fission spring through it");
+    if (!facts.playsFactory)
+        violations.push("W2: the orchestrator does not play the factory (`dockSpring.playTo(...)`) — the spring is not routed through useDockSpring");
+    if (facts.importsUseDockSpring && !facts.readsDockSpring)
+        violations.push("W2: the routed spring is not constructed off DOCK_SPRING.response/dampingFraction — a re-tune or bespoke clock");
+    if (!facts.noOwnNewSpring)
+        violations.push("W2: the orchestrator STILL hand-rolls `new SpringProgress` — the factory (useDockSpring) must own the sole `new SpringProgress` site");
+    if (!facts.factoryOwnsSpring)
+        violations.push("W2: useDockSpring does not own a `new SpringProgress` — the factory is not the real sole-site spring owner");
+    return { violations, facts };
+}
+
+// ── W3 (BG.W-DOCK-FISSION-WIRE) — the goo bridge is DRY onto ONE GooFilter ──
+// The fission bridge references EXACTLY ONE goo `<filter>` id (`#dock-fission-goo`), the id
+// the ONE unified `GooFilter.vue` mount carries — never a second inline goo graph or a
+// forked goo id (the P7 DRY win locked). A `<defs>`/`<filter>`/`feGaussianBlur` re-mint in
+// the fission CSS (a duplicate goo graph) reds.
+function detectW3DryGoo() {
+    const violations = [];
+    const css = stripComments(readRel(FISSION_CSS) + "\n" + readRel(FISSION_ISLAND_CSS));
+    const vue = stripComments(readRel(GOO_FILTER));
+    const facts = {};
+    // Every goo url() the fission bridge references, de-duped.
+    const gooUrls = [...css.matchAll(/url\(\s*#([a-z0-9-]*goo[a-z0-9-]*)\s*\)/gi)].map(
+        (m) => m[1],
+    );
+    facts.gooUrlIds = [...new Set(gooUrls)];
+    facts.exactlyOneGooId = facts.gooUrlIds.length === 1;
+    facts.gooIdIsDockFission = facts.gooUrlIds[0] === "dock-fission-goo";
+    // The fission CSS must NOT re-mint its own goo `<filter>` graph (a duplicate mount).
+    facts.noForkedGooGraph = !/feGaussianBlur|feColorMatrix|<filter\b/.test(css);
+    // The ONE GooFilter mount carries the dock-fission-goo preset (the id the bridge targets).
+    facts.gooFilterCarriesId = vue.length > 0 && /dock-fission-goo/.test(vue);
+    facts.dryGoo =
+        facts.exactlyOneGooId &&
+        facts.gooIdIsDockFission &&
+        facts.noForkedGooGraph &&
+        facts.gooFilterCarriesId;
+    if (!facts.exactlyOneGooId)
+        violations.push(`W3: the fission bridge references ${facts.gooUrlIds.length} distinct goo id(s) [${facts.gooUrlIds.join(", ")}] — it must DRY onto EXACTLY ONE (#dock-fission-goo)`);
+    else if (!facts.gooIdIsDockFission)
+        violations.push(`W3: the fission bridge references goo id #${facts.gooUrlIds[0]} — it must be #dock-fission-goo (the ONE GooFilter preset)`);
+    if (!facts.noForkedGooGraph)
+        violations.push("W3: the fission CSS re-mints a goo `<filter>` graph (feGaussianBlur/feColorMatrix) — the goo mount is the ONE GooFilter.vue, NEVER an inline duplicate");
+    if (!facts.gooFilterCarriesId)
+        violations.push("W3: the unified GooFilter.vue does not carry the `dock-fission-goo` preset the bridge targets");
+    return { violations, facts };
+}
+
+// ── W4 (BG.W-DOCK-FISSION-WIRE) — the DECIDE: the fission is WIRED to a real src consumer ──
+// The wire-≥2-real-or-retire DECIDE (BB.W-NDA-DECIDE shape): the fission is KEPT because it
+// is WIRED — the `useDockFissionWiring` seam instantiates the engine, and `GlassDock.vue`
+// composes that seam behind the `:splittable` facility (the real binary src consumer; the
+// demo stories are the ≥2). A retire would DELETE the engine; a wire keeps it live.
+function detectW4Wire() {
+    const violations = [];
+    const wiring = stripComments(
+        readRel("src/components/custom/dock/composables/useDockFissionWiring.ts"),
+    );
+    const sfc = stripComments(readRel("src/components/custom/dock/GlassDock.vue"));
+    const facts = {};
+    facts.wiringComposesEngine =
+        wiring.length > 0 && /useDockFission\s*\(/.test(wiring);
+    facts.sfcComposesWiring =
+        sfc.length > 0 && /useDockFissionWiring\s*\(/.test(sfc);
+    facts.sfcHasSplittable = /\bsplittable\b/.test(sfc);
+    facts.wired =
+        facts.wiringComposesEngine && facts.sfcComposesWiring && facts.sfcHasSplittable;
+    if (!facts.wiringComposesEngine)
+        violations.push("W4: useDockFissionWiring does not instantiate useDockFission() — the fission engine has no wiring seam (the DECIDE keeps it WIRED, not dead)");
+    if (!facts.sfcComposesWiring)
+        violations.push("W4: GlassDock.vue does not compose useDockFissionWiring() — the fission engine reaches no real src consumer");
+    if (!facts.sfcHasSplittable)
+        violations.push("W4: GlassDock.vue exposes no `:splittable` facility — the fission wire has no consumer-facing entry (wire ≥2 real or retire)");
+    return { violations, facts };
+}
+
 // ── self-tests (each planted defect MUST red) ──
 function selfTests() {
     const out = {};
@@ -291,6 +441,29 @@ function selfTests() {
         const body = "transition: inline-size 0.4s var(--spring-dock);";
         return /transition:[^;]*(inline-size|block-size|\bwidth\b|\bheight\b|\binset\b)/.test(body);
     })();
+    // (f) a fadeMinAlpha of 0 (the fade-to-invisible defect) reds W1.
+    out.f = (() => {
+        const body = "fadeMinAlpha: 0,";
+        const m = body.match(/fadeMinAlpha:\s*([0-9]*\.?[0-9]+)\s*,/);
+        const val = m ? Number(m[1]) : null;
+        return !(val !== null && val >= 0.15); // the bite fires (RED) when the floor is 0.
+    })();
+    // (g) a hand-rolled `new SpringProgress` in the orchestrator reds W2.
+    out.g = (() => {
+        const body = "spring = new SpringProgress({ response: DOCK_SPRING.response });";
+        return /new\s+SpringProgress\(/.test(body); // the bite fires when the orchestrator mints its own.
+    })();
+    // (h) a second inline goo `<filter>` graph in the fission CSS reds W3.
+    out.h = (() => {
+        const body = ".x { filter: url(#dock-fission-goo); } .y filter: url(#other-goo);";
+        const ids = [...new Set([...body.matchAll(/url\(\s*#([a-z0-9-]*goo[a-z0-9-]*)\s*\)/gi)].map((m) => m[1]))];
+        return ids.length !== 1; // the bite fires (RED) when a second goo id appears.
+    })();
+    // (i) a wiring seam that composes nothing (the engine unwired → retire, not wire) reds W4.
+    out.i = (() => {
+        const emptyWiring = "// the wiring seam that never instantiates the engine";
+        return /useDockFission\s*\(/.test(emptyWiring) === false; // fires (RED) when no compose.
+    })();
     return out;
 }
 
@@ -302,6 +475,11 @@ export function detect() {
     const f5 = detectF5();
     const f6 = detectF6();
     const goo = detectGooMount();
+    // BG.W-DOCK-FISSION-WIRE clauses.
+    const w1 = detectW1FadeFloor();
+    const w2 = detectW2SpringRouted();
+    const w3 = detectW3DryGoo();
+    const w4 = detectW4Wire();
 
     const st = selfTests();
     const stViolations = [];
@@ -316,6 +494,10 @@ export function detect() {
         ...f5.violations,
         ...f6.violations,
         ...goo.violations,
+        ...w1.violations,
+        ...w2.violations,
+        ...w3.violations,
+        ...w4.violations,
         ...stViolations,
     ];
     return {
@@ -328,6 +510,10 @@ export function detect() {
             f5: f5.facts,
             f6: f6.facts,
             goo: goo.facts,
+            w1: w1.facts,
+            w2: w2.facts,
+            w3: w3.facts,
+            w4: w4.facts,
             selfTests: st,
         },
     };
@@ -342,18 +528,22 @@ function run() {
         status,
         gate: "proof:dock-fission",
         command: COMMAND,
-        note: "BE.W-DOCK-FISSION device-free SOURCE arm (F1 ONE SpringProgress off DOCK_SPRING writing --dock-split-t, no bespoke spring family · F2 bidirectional split/merge on the ONE scalar · F3 the per-context goo-SIGNATURE descriptor-driven (radial/lateral/inward-merge), NOT three code paths · F4 pointer-reactive --seam-tension off usePointerVelocityField fed from INSIDE the ONE loop, capped LOW, no second rAF · F5 PRM=instant sync-seat + field.tick(0) · F6 compositor-only — fission-bridge.css animates NO layout property · GOO the library mount sRGB + generous region + non-zero host). The LIVE per-context frame-series + the seam-tension resist + box-INVIOLATE are the orchestrator's W-DOCK-FISSION-DELTA (tests-visual/dock-fission.spec.ts).",
+        note: "BE.W-DOCK-FISSION + BG.W-DOCK-FISSION-WIRE device-free SOURCE arm (F1 the ONE SpringProgress substrate — via the useDockSpring factory OR a direct import — off DOCK_SPRING writing --dock-split-t, no bespoke spring family · F2 bidirectional split/merge on the ONE scalar · F3 the per-context goo-SIGNATURE descriptor-driven (radial/lateral/inward-merge), the MAP in the colocated dockFissionSignatures leaf, NOT three code paths · F4 pointer-reactive --seam-tension off usePointerVelocityField fed from INSIDE the ONE loop, capped LOW, no second rAF · F5 PRM=instant sync-seat + field.tick(0) · F6 compositor-only — the fission CSS animates NO layout property · GOO the library mount sRGB + generous region + non-zero host · W1 the rail-facet fade floor is a LEGIBLE whisper (≥0.15), not 0 · W2 the DECIDE routes the spring through the SOLE useDockSpring factory (no own new SpringProgress) · W3 the goo bridge is DRY onto ONE #dock-fission-goo GooFilter · W4 the fission is WIRED to a real src consumer, GlassDock :splittable). The LIVE per-context frame-series + the seam-tension resist + box-INVIOLATE + the no-goo-regression carousel/pager paint are the orchestrator's W-DOCK-FISSION-WIRE-DELTA (tests-visual/dock-fission.spec.ts).",
         facts,
         violations,
     });
     console.log(`proof:dock-fission — ${status.toUpperCase()}`);
-    console.log(`  F1 one-spring: exists=${facts.f1.fissionExists} springprogress=${facts.f1.importsSpringProgress} dock-spring=${facts.f1.readsDockSpring} writes-split-t=${facts.f1.writesSplitT} no-bespoke=${!facts.f1.mintsBespokeSpring}`);
+    console.log(`  F1 one-spring: exists=${facts.f1.fissionExists} substrate=${facts.f1.oneSpringSubstrate}(factory=${facts.f1.importsUseDockSpring}/direct=${facts.f1.importsSpringProgress}) dock-spring=${facts.f1.readsDockSpring} writes-split-t=${facts.f1.writesSplitT} no-bespoke=${!facts.f1.mintsBespokeSpring}`);
     console.log(`  F2 bidirectional: split=${facts.f2.hasSplit} merge=${facts.f2.hasMerge} targets-1=${facts.f2.targetsOne} targets-0=${facts.f2.targetsZero}`);
     console.log(`  F3 signature: map=${facts.f3.hasSignatureMap} radial/lateral/inward=${facts.f3.hasRadial}/${facts.f3.hasLateral}/${facts.f3.hasInwardMerge} reads-sig=${facts.f3.readsSignature} no-hardcode-switch=${!facts.f3.hasHardcodedContextSwitch}`);
     console.log(`  F4 seam-tension: field=${facts.f4.usesPointerField} writes-tension=${facts.f4.writesSeamTension} ticked=${facts.f4.fieldTicked} cap=${facts.f4.hasTensionCap} no-second-raf=${!facts.f4.hasSecondRaf}`);
     console.log(`  F5 prm: probe=${facts.f5.hasPrmProbe} sync-seat=${facts.f5.hasSyncSeat} tick0=${facts.f5.fieldTickZero}`);
     console.log(`  F6 compositor: css=${facts.f6.cssExists} neck-clip=${facts.f6.hasNeckClip} translate+scale=${facts.f6.usesTranslate && facts.f6.usesScaleStretch} no-layout-anim=${!facts.f6.animatesLayout} no-backdrop-url=${!facts.f6.usesBackdropFilterUrl}`);
     console.log(`  GOO mount: exists=${facts.goo.gooMountExists} sRGB=${facts.goo.hasSrgb} region=${facts.goo.hasGenerousRegion} graph=${facts.goo.hasGooGraph} non-zero=${facts.goo.nonZeroHost}`);
+    console.log(`  W1 fade-floor: fadeMinAlpha=${facts.w1.fadeMinAlphaDefault} legible=${facts.w1.legibleFloor}`);
+    console.log(`  W2 spring-routed: useDockSpring=${facts.w2.importsUseDockSpring} playTo=${facts.w2.playsFactory} reads-dock-spring=${facts.w2.readsDockSpring} no-own-new=${facts.w2.noOwnNewSpring} factory-owns=${facts.w2.factoryOwnsSpring}`);
+    console.log(`  W3 dry-goo: ids=[${facts.w3.gooUrlIds.join(",")}] one-id=${facts.w3.exactlyOneGooId} is-dock-fission=${facts.w3.gooIdIsDockFission} no-forked-graph=${facts.w3.noForkedGooGraph} filter-carries-id=${facts.w3.gooFilterCarriesId}`);
+    console.log(`  W4 wired: wiring-composes=${facts.w4.wiringComposesEngine} sfc-composes=${facts.w4.sfcComposesWiring} splittable=${facts.w4.sfcHasSplittable}`);
     console.log(`  self-tests: ${Object.entries(facts.selfTests).map(([k, v]) => `${k}=${v ? "OK" : "BROKE"}`).join(" ")}`);
     if (violations.length) {
         console.log("\nVIOLATIONS:");

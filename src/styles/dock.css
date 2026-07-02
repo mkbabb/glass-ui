@@ -65,6 +65,11 @@
    (`.liquid-island-*`) stays demo-only (liquid-morph.css); this file owns only the
    `.dock-fission-bridge`/`.dock-fission-piece` BEHAVIOR. */
 @import "./dock/fission-bridge.css";
+/* BG.W-DOCK-FISSION-WIRE — the fission ASSEMBLY leaf (goo NECK + SECOND-DOCK island),
+   carved off fission-bridge.css for the no-god-module drain. @import-ed IMMEDIATELY AFTER
+   it into the SAME `@layer components`, so the neck/island assembly rules keep their
+   cascade position (unique selectors, order-preserving — no visual delta). */
+@import "./dock/fission-island.css";
 /* BC.W-AX-DOCK-CTA-SEAT — the [data-cta-pending] CTA-receive landing seat (the static
    resting-geometry reserve + the plain transition:opacity FLIP reveal). Last in the
    dock cascade — a net-new surface around the byte-untouched useDockCtaReceive morph. */
