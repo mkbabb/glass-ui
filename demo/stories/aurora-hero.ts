@@ -27,8 +27,14 @@ import { cssToOklch } from "@glass/composables/color";
  *  a pastel-wash L/C the static radial blooms used. */
 export type HeroStop = { L: number; C: number; h: number };
 
-/** The brand section-ramp hues this demo's heros paint with (tokens.css §colors). */
-const BASE_HERO_PALETTES = {
+/** The RAW authored brand section-ramp hues this demo's heros paint with
+ *  (tokens.css §colors). The L/C is hand-set for the pastel-wash band; the `h`
+ *  carries the raw brand hue and is WARM-PROJECTED below (BASE_HERO_PALETTES) — a
+ *  raw rose/indigo/purple stop reads COLD/magenta as a composited ambient StoryHero
+ *  backdrop, the warm-identity dominant-hue FAIL the composited-gestalt gate catches
+ *  (BG.W-COMPOSITED-GESTALT-GATE). Folding every stop into [25,95]° lands the ambient
+ *  hero field warm in BOTH modes while keeping the three palettes distinct. */
+const RAW_BASE_HERO_PALETTES = {
     /** hero.vue / intro.vue — rose → indigo → amber (section-color-0/2/5). */
     "rose-indigo-amber": [
         { L: 0.78, C: 0.13, h: 359.8 }, // rose      (--section-color-0)
@@ -178,6 +184,22 @@ const CATEGORY_HERO_PALETTES = Object.fromEntries(
         sectionColorToHeroPalette(CATEGORY_PALETTE_HUES[key]),
     ]),
 ) as Record<CategoryPaletteKey, HeroStop[]>;
+
+/** The BASE hero palettes with every stop's hue WARM-PROJECTED into [25,95]°
+ *  (BG.W-COMPOSITED-GESTALT-GATE — mustFix #1). `warmProjectHue` is the SAME source
+ *  the chassis field (`warm-field.ts`) + the per-category palettes above already read,
+ *  so the ambient StoryHero backdrop reads warm-cream in lockstep with the field (no
+ *  teal/navy/magenta composited whole — a raw rose 359.8° / indigo 265.5° / purple
+ *  305.9° stop read cold as the full-bleed hero field). Built HERE (below
+ *  `warmProjectHue` + `WARM_LO`/`WARM_HI`) — a raw-literal call above would hit their
+ *  temporal dead zone at module eval. The three palette KEYS are preserved so every
+ *  consumer (the StoryHero default, intro, auth-shell) is byte-unchanged in its wiring. */
+const BASE_HERO_PALETTES = Object.fromEntries(
+    Object.entries(RAW_BASE_HERO_PALETTES).map(([key, stops]) => [
+        key,
+        stops.map((s) => ({ ...s, h: warmProjectHue(s.h) })),
+    ]),
+) as Record<keyof typeof RAW_BASE_HERO_PALETTES, HeroStop[]>;
 
 const HERO_PALETTES = {
     ...BASE_HERO_PALETTES,

@@ -20,22 +20,26 @@
 // is NOT a transparent tile; it self-stages.
 import { computed, ref, useTemplateRef } from "vue";
 import { Aurora, type AuroraConfig } from "@glass/components/custom/aurora";
-import { PRESETS } from "../aurora/presets";
+import { heroAuroraConfig } from "../aurora-hero";
 
 withDefaults(
     defineProps<{
         /** How far back the shared field recedes behind the demos. */
         opacityCeiling?: number;
         /**
-         * The staged aurora field. Defaults to a COLORFUL preset (OPENAI_SKY — vibrant
-         * cerulean) so the dock's warm-cream glass reads as LIQUID glass over a rich
-         * field, NOT a faint ghost over the calm Dawn wash (the Pass-E dock-staging
-         * finding: the §L1 lens needs a colorful backdrop to bend + concentrate). A
-         * consumer may stage a different preset.
+         * The staged aurora field. Defaults to the WARM colorful dock hero field
+         * (`heroAuroraConfig("cat-dock")` — a coral/amber warm-projected drift, chroma
+         * 0.13) so the dock's warm-cream glass reads as LIQUID glass over a rich field
+         * that BELONGS to the warm-cream identity (the §L1 lens needs a colorful
+         * backdrop to bend + concentrate — warmth is the identity, not blue). The prior
+         * OPENAI_SKY cerulean default read the dock FIELD cold/blue, contradicting the
+         * warm identity the composited-gestalt gate enforces (BG.W-COMPOSITED-GESTALT-
+         * GATE — the aurora-studio doctrine: "warm-cream Dawn is the DEFAULT lead; the
+         * blue Sky is a named non-default preset"). A consumer may stage a different config.
          */
         config?: AuroraConfig;
     }>(),
-    { opacityCeiling: 0.55, config: () => PRESETS.OPENAI_SKY },
+    { opacityCeiling: 0.55, config: () => heroAuroraConfig("cat-dock") },
 );
 
 // BC.W-ADAPTIVE-RECONCILE — thread the shared aurora <canvas> to the docks staged over
