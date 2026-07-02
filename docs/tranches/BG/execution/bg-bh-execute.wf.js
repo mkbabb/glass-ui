@@ -256,14 +256,20 @@ BUILD this wave from first principles. Implement its Files per its Gate + π row
   // a DONE wave (status drift). Mark the LIVE node _noop → DONE directly + exclude from integrate; breaks the loop.
   for (const b of builds) if (b.r && /already[\s-]*landed/i.test(b.r.convergenceNote || '')) liveNode(b)._noop = true
   const ok = builds.filter(b => b.r && b.r.buildPassed && !b.error && !liveNode(b)._noop)
-  let integ = null
-  if (ok.length) {
-    integ = await agent(`You are the INTEGRATOR. Apply this build batch onto the main \`tranche/BG\` working tree at ${REPO}, in seq order, and commit ONE per wave. You OWN the index + the four hot files (${HOT.join(', ')}).
-For EACH build below: (1) \`git apply\` its \`patch\` to the main tree (the batch is file-disjoint — no conflict; a conflict means STOP and report integrated:false for that wave); (2) apply its gatesRegistration rows into scripts/gates.mjs + sharedFileRequests into the named hot file (serially); (3) RE-RUN its deviceFreeProof.gate (\`node scripts/gates.mjs --run <tag>\` or the proof script) on the INTEGRATED tree — do NOT trust the worktree self-report; (4) if green AND paintClass==='H' → \`git commit\` the wave (message \`<tranche> <ws> (<wave>): <intent> — gate <proof:*> GREEN\`) and set nextStatus DONE with the SHA; if green AND paintClass==='P' → COMMIT the src+gate (same message + ' [paint-pending]') and set nextStatus PAINT-PENDING; if the gate REDs → revert that wave's apply and set nextStatus FAIL.
-Then UPDATE ${EXEC}/EXECUTION-PROGRESS.md — flip each wave's row to its nextStatus with the commit SHA. Run \`node scripts/verify-siblings-intact.mjs --quiet\` first (the tripwire). Return INTEGRATE_SCHEMA.
-BUILDS: ${JSON.stringify(ok.map(b => ({ wave: b.w.id, intent: b.w.intent, ws: b.w.ws, paintClass: b.w.paintClass, gate: b.r.deviceFreeProof.gate, patch: b.r.patch, gatesRegistration: b.r.gatesRegistration || [], sharedFileRequests: b.r.sharedFileRequests || [] })))}
-${FENCE}`, { schema: INTEGRATE_SCHEMA, model: 'opus', label: `integrate/${batch[0].id}`, phase: 'Build' }).catch(() => null)
+  // PER-WAVE SEQUENTIAL INTEGRATORS (the zombie-agent lesson — runs 1+3 both wedged inside ONE long agent;
+  // a small single-wave integrator bounds the blast radius to one wave, and folding the cursor flip into the
+  // SAME commit makes each integration atomic on disk).
+  const integResults = []
+  for (const b of ok.sort((x, y) => x.w.seq - y.w.seq)) {
+    const one = await agent(`You are the INTEGRATOR for ONE wave. Apply this build onto the main \`tranche/BG\` working tree at ${REPO} and commit it ATOMICALLY. You OWN the index + the four hot files (${HOT.join(', ')}). Run \`node scripts/verify-siblings-intact.mjs --quiet\` first (the tripwire).
+(1) Save the \`patch\` text to a temp file under ${REPO}/.claude/ and \`git apply\` it (a conflict means STOP — report integrated:false; do NOT hand-resolve). (2) Apply gatesRegistration into scripts/gates.mjs + each sharedFileRequests edit into its named hot file. (3) RE-RUN the deviceFreeProof.gate on the INTEGRATED tree (npm run <gate> or node scripts/gates.mjs — do NOT trust the worktree self-report) + \`npx vue-tsc --noEmit\` if src/ changed. (4) UPDATE ${EXEC}/EXECUTION-PROGRESS.md: flip THIS wave's row to DONE (paintClass H) or PAINT-PENDING (paintClass P) — you will know the SHA only after committing, so write the row status first with the marker \`(this-commit)\`, commit, then \`git commit --amend\` is FORBIDDEN — instead leave the marker; the next hydration reads status not SHA. (5) \`git commit\` EVERYTHING in one commit — message \`<tranche> <ws> (<wave>): <intent> — gate <proof:*> GREEN\` + \` [paint-pending]\` when paintClass==='P'. (6) If the gate REDs on the integrated tree: \`git checkout -- .\` + clean the patch's new files (revert the apply), do NOT commit, report integrated:false, gateGreen:false, nextStatus FAIL.
+BUILD: ${JSON.stringify({ wave: b.w.id, intent: b.w.intent, ws: b.w.ws, paintClass: b.w.paintClass, gate: b.r.deviceFreeProof.gate, patch: b.r.patch, gatesRegistration: b.r.gatesRegistration || [], sharedFileRequests: b.r.sharedFileRequests || [] })}
+${FENCE} Return INTEGRATE_SCHEMA (a results array with this ONE wave).`,
+      { schema: INTEGRATE_SCHEMA, model: 'opus', label: `integrate/${b.w.id}`, phase: 'Build' }).catch(() => null)
+    if (one && one.results) integResults.push(...one.results)
+    else { integResults.push({ wave: b.w.id, integrated: false, gateGreen: false, nextStatus: 'FAIL', note: 'integrator died/null' }); log(`integrate/${b.w.id}: agent died — wave FAIL (build journaled for recovery)`) }
   }
+  const integ = { results: integResults }
 
   // apply integrate results to the LIVE nodes (lenient id match; never through the parallel()-copied b.w)
   const res = (integ && integ.results) || []
