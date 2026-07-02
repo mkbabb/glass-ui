@@ -607,13 +607,19 @@ async function run() {
     // `measureTo` + the BA-VJS-1 nested ordering) carved into the sibling
     // `dockMorphMeasure.ts`; the orchestrator IMPORTS + composes them (the PRM probe
     // + the `nextTick(() => seatTargetSync(…))` branch stay in dockMorphContext.ts).
-    // F3 reads the CONCATENATION so the asserts FOLLOW the composition into the leaf
+    // BG.W-DOCK-ENGINE-UNIFY — the raw `new SpringProgress` create/re-base/dispose
+    // dance is factored into the ONE `useDockSpring` factory (the band's sole
+    // `new SpringProgress` site); the orchestrator DRIVES a `DockSpring` handle. F3
+    // reads the CONCATENATION so its `--dock-morph-t SpringProgress arms
+    // respectReducedMotion` assert FOLLOWS the composition into the factory leaf
     // (the proof:webgl-substrate-single precedent — the substrate-exists asserts
     // follow the composition into the carved leaf, never RED on the relocation).
     const orchestratorTs =
         read("src/components/custom/dock/composables/dockMorphContext.ts") +
         "\n" +
-        read("src/components/custom/dock/composables/dockMorphMeasure.ts");
+        read("src/components/custom/dock/composables/dockMorphMeasure.ts") +
+        "\n" +
+        read("src/components/custom/dock/composables/useDockSpring.ts");
     const layerTransitionTs = read(
         "src/components/custom/dock/composables/useLayerTransition.ts",
     );

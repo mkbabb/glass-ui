@@ -470,9 +470,18 @@ function readSources(ROOT) {
         glassDock: read("src/components/custom/dock/GlassDock.vue"),
         dockLayerGroup: read("src/components/custom/dock/DockLayerGroup.vue"),
         // AY.W-DOCK2 (D4) — the two FLIP engines the drift-guard compares.
-        dockMorphContext: read(
-            "src/components/custom/dock/composables/dockMorphContext.ts",
-        ),
+        // BG.W-DOCK-ENGINE-UNIFY — dockMorphContext no longer instantiates its own
+        // `new SpringProgress`; it drives the ONE `useDockSpring` factory (the band's
+        // sole `new SpringProgress` site). The FLIP_MARKERS (`new SpringProgress(` +
+        // `respectReducedMotion: true`) FOLLOW the composition into the factory leaf,
+        // so the orchestrator source is read as the CONCATENATION (dockMorphContext +
+        // useDockSpring) — the proof:webgl-substrate-single carve precedent. The
+        // scalar-write + `data-morphing` arm + `DOCK_SPRING.*` config-pass stay in
+        // dockMorphContext, so the drift-guard still asserts the full dance is present.
+        dockMorphContext:
+            read("src/components/custom/dock/composables/dockMorphContext.ts") +
+            "\n" +
+            read("src/components/custom/dock/composables/useDockSpring.ts"),
         useLayerTransition: read(
             "src/components/custom/dock/composables/useLayerTransition.ts",
         ),

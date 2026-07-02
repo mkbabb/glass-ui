@@ -1,16 +1,20 @@
 import { onUnmounted, readonly, ref, watch } from "vue";
 import type { Ref } from "vue";
-import { SpringProgress } from "@mkbabb/keyframes.js";
 import { createOptionalContext } from "../../../../composables/context";
 import { DOCK_MORPH_LABEL, DOCK_SPRING } from "../constants";
 // BD.W-DOCK-CORE — the width-seizure cure. The per-swap FLIP measure pipeline
 // (measureAndArmMorph/seatTargetSync/rebaseSiblingSpans/forceNestedMaxContent/
 // measureTo/armRootMorphSpan/clearRootMorphSpan/morphMinFloorPx) is DELETED. The
-// orchestrator now ONLY arms `[data-morphing]`, runs ONE `SpringProgress` writing
+// orchestrator now ONLY arms `[data-morphing]`, runs ONE dock spring writing
 // the `--dock-morph-t` 0→1 scalar, and swaps the per-target crossfade classes; the
 // VISIBLE size rides the ratio-free `--dock-live` convex blend of two measure-ONCE
 // endpoints (`useDockExpandedSize` + layers.css), so the unbounded `from/to` ratio
 // that detonated the width (`scaleX(~56)` ≈ 2451px) is GONE by construction.
+// BG.W-DOCK-ENGINE-UNIFY — the raw `new SpringProgress` create/re-base/dispose dance
+// is factored into the ONE `useDockSpring` factory (the band's sole `new SpringProgress`
+// site); this orchestrator drives a `DockSpring` handle, arming the attrs + writing the
+// scalar, NEVER instantiating a spring itself.
+import { useDockSpring } from "./useDockSpring";
 import { dimOf } from "./dockMorphMeasure";
 
 /**
@@ -31,8 +35,9 @@ import { dimOf } from "./dockMorphMeasure";
  * mid-flight re-bases the live solver onto a fresh spring CARRYING the prior
  * velocity (the iOS interruptible-physics continuity).
  *
- * LIGHT-surface only: `SpringProgress` owns its own rAF via `.play(onFrame)` and
- * carries no static value.js edge — never import `AnimationGroup` / `./engine`.
+ * LIGHT-surface only: the `useDockSpring` factory's `SpringProgress` owns its own
+ * rAF via `.play(onFrame)` and carries no static value.js edge — the factory never
+ * imports `AnimationGroup` / `./engine`.
  *
  * `DOCK_SPRING` is byte-fenced — it lives in `../constants`.
  */
@@ -108,8 +113,8 @@ export interface UseDockMorphOrchestratorReturn {
 }
 
 /**
- * The ONE morph engine for a dock instance. Owns a single `SpringProgress` that
- * glides the one `--dock-morph-t` scalar 0→1 on a layer swap; the size is a
+ * The ONE morph engine for a dock instance. Drives a single `useDockSpring` handle
+ * that glides the one `--dock-morph-t` scalar 0→1 on a layer swap; the size is a
  * ratio-free blend of the measure-ONCE endpoints (layers.css). Crossfade classes
  * (the 3-state a11y hit-test contract) swap on the swap; the spring is the clock.
  */
@@ -118,23 +123,20 @@ export function useDockMorphOrchestrator(
 ): UseDockMorphOrchestratorReturn {
     const { rootEl, outerEl, outerActiveLayer, outerAxis } = options;
 
-    // The single live morph driver. A re-toggle mid-flight RE-BASES it onto a
-    // fresh spring carrying the prior velocity (iOS interruptible-physics). The
-    // normalized scalar runs 0→1; the per-frame value IS `--dock-morph-t` on the
-    // root. ONE spring is the dock's single clock.
-    let spring: SpringProgress | null = null;
+    // The single live morph driver — the ONE `useDockSpring` handle. A re-toggle
+    // mid-flight RE-BASES it onto a fresh spring carrying the prior velocity (iOS
+    // interruptible-physics), owned by the factory. The normalized scalar runs
+    // 0→1; the per-frame value IS `--dock-morph-t` on the root. ONE dock spring is
+    // the dock's single clock; the raw `new SpringProgress` lives in the factory.
+    const dockSpring = useDockSpring({
+        response: DOCK_SPRING.response,
+        dampingFraction: DOCK_SPRING.dampingFraction,
+    });
 
     const targets = new Set<MorphTarget>();
 
     function root(): HTMLElement | null {
         return rootEl.value;
-    }
-
-    function disposeSpring() {
-        if (spring) {
-            spring.dispose();
-            spring = null;
-        }
     }
 
     /** Whether ANY target is still mid-morph (the root keeps `[data-morphing]`). */
@@ -155,33 +157,21 @@ export function useDockMorphOrchestrator(
             r.removeAttribute("data-morphing");
             r.removeAttribute("data-punching");
         }
-        disposeSpring();
+        dockSpring.dispose();
     }
 
     /**
      * Ensure the ONE shared spring is running 0→1, writing `--dock-morph-t` once
-     * per frame. Every episode gets a FRESH spring that starts from rest CARRYING
-     * the prior spring's velocity (iOS interruptible continuity) and `play()`s a
-     * GUARANTEED-running loop — the idempotent-target trap (a re-arm at value≈1
-     * leaving the closed-form clock frozen) cannot bite a fresh instance, so the
-     * scalar genuinely GLIDES 0→1 over the ~285–320ms DOCK_SPRING clock.
-     * `respectReducedMotion` jumps the scalar 0→1 in one frame under PRM.
+     * per frame. `dockSpring.playTo(0, 1, …)` mints a FRESH spring that starts from
+     * rest CARRYING the prior spring's velocity (iOS interruptible continuity) and
+     * `play()`s a GUARANTEED-running loop — the idempotent-target trap (a re-arm at
+     * value≈1 leaving the closed-form clock frozen) cannot bite a fresh instance, so
+     * the scalar genuinely GLIDES 0→1 over the ~285–320ms DOCK_SPRING clock. The
+     * factory's `respectReducedMotion` jumps the scalar 0→1 in one frame under PRM.
      */
     function ensureSpringRunning() {
         const r = root();
         if (!r) return;
-        const inheritedVelocity =
-            spring !== null && !spring.settled ? spring.velocity : 0;
-        disposeSpring();
-        spring = new SpringProgress({
-            response: DOCK_SPRING.response,
-            dampingFraction: DOCK_SPRING.dampingFraction,
-            initial: 0,
-            respectReducedMotion: true,
-        });
-        const activeSpring = spring;
-        activeSpring.reset(0, inheritedVelocity);
-        activeSpring.target = 1;
         r.setAttribute("data-morphing", "");
         // BD.W-DOCK-PUNCH-CHANNEL — arm the dedicated cartoon-punch for ONE episode.
         // `[data-punching]` lifts `--dock-punch-stretch` to its overshoot target; the
@@ -190,26 +180,30 @@ export function useDockMorphOrchestrator(
         // back to 1 (the RETURN — never latched). Cleared partway through the glide so
         // the return completes by settle. PRM zeroes `--motion-weight` → amplitude 1.
         r.setAttribute("data-punching", "");
-        // Seat the scalar at 0 SYNCHRONOUSLY now (before `play()`'s first rAF) so
-        // the single frame between this arm and the first spring frame reads 0 (the
-        // collapsed footprint), eliminating a 1-frame endpoint-flash before the glide.
+        // Seat the scalar at 0 SYNCHRONOUSLY now (before the factory's `play()` first
+        // rAF) so the single frame between this arm and the first spring frame reads 0
+        // (the collapsed footprint), eliminating a 1-frame endpoint-flash before the
+        // glide.
         r.style.setProperty("--dock-morph-t", "0");
-        activeSpring.play((tValue: number) => {
-            const rr = root();
-            if (rr) {
-                rr.style.setProperty("--dock-morph-t", `${tValue}`);
-                // Clear the punch hook past the curve's overshoot peak so it transitions
-                // BACK to the rest 1 before the morph settles (the never-latch fence).
-                if (tValue > 0.5 && rr.hasAttribute("data-punching")) {
-                    rr.removeAttribute("data-punching");
+        dockSpring.playTo(0, 1, {
+            onFrame: (tValue: number) => {
+                const rr = root();
+                if (rr) {
+                    rr.style.setProperty("--dock-morph-t", `${tValue}`);
+                    // Clear the punch hook past the curve's overshoot peak so it
+                    // transitions BACK to the rest 1 before the morph settles (the
+                    // never-latch fence).
+                    if (tValue > 0.5 && rr.hasAttribute("data-punching")) {
+                        rr.removeAttribute("data-punching");
+                    }
                 }
-            }
-            if (activeSpring.settled) {
+            },
+            onSettle: () => {
                 const rrr = root();
                 if (rrr) rrr.removeAttribute("data-punching");
                 for (const tt of targets) settleTarget(tt);
                 maybeSettleRoot();
-            }
+            },
         });
     }
 
@@ -250,7 +244,7 @@ export function useDockMorphOrchestrator(
     function removeTarget(t: MorphTarget) {
         t.stop();
         targets.delete(t);
-        if (!anyMorphing()) disposeSpring();
+        if (!anyMorphing()) dockSpring.dispose();
     }
 
     // The OUTER collapse↔expand pair is the first registered target.
@@ -282,7 +276,10 @@ export function useDockMorphOrchestrator(
         ) {
             return;
         }
-        if (spring && spring.settled) {
+        // The factory self-disposes on settle, so a settled morph leaves the handle
+        // parked (`!dockSpring.live`). A stray `@transitionend` while no morph is live
+        // is the vestigial defensive settle (idempotent when already idle).
+        if (!dockSpring.live) {
             settleTarget(outerTarget);
             maybeSettleRoot();
         }
@@ -291,7 +288,7 @@ export function useDockMorphOrchestrator(
     onUnmounted(() => {
         for (const t of targets) t.stop();
         targets.clear();
-        disposeSpring();
+        dockSpring.dispose();
     });
 
     return {

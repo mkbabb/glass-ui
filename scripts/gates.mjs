@@ -1800,6 +1800,12 @@ export const GATES = [
         note: "BC.W-DOCK-ENGINE — the buttery COMPOSITOR-ONLY dock morph engine (the dock fleet rides it). E1 every morph-geometry/chrome leg (inline-size/block-size/padding/bg/border-color) is JS-driven via the --dock-morph-t/--dock-expand-t scalar, NEVER a generic transition (the interaction transform/scale channel is the KEEP carve). E2 the CONSUME-side JS envelope (computed from the DOCK_SPRING analytic damped-oscillator, NEVER parsing the byte-frozen --spring-dock linear()): midpoint travel >= 0.40, max dead-flat plateau < 0.35 (kills the BB ~16% stall), monotone rise. E3 compositor promotion (will-change:transform) ONLY on armed states (rail hover/active/held + collapsed-hover), NEVER resting (P5). E5 the Atlas A-9 --dock-control-glyph-size knob declared at :root + per [data-density] + coarse (the substitution-vs-inheritance dead-knob closed). Fences: proof:no-layout-animation LOCKED + proof:spring-tokens-synced (dock 0.32/0.7 byte-frozen). Bite: a generic-duration morph leg / a >0.35 plateau / a resting will-change / a missing glyph-knob register → RED.",
     },
     {
+        id: "proof:dock-engine-unify",
+        cmd: "proof:dock-engine-unify",
+        tags: ["local", "ci", "release"],
+        note: "BG.W-DOCK-ENGINE-UNIFY — the ONE useDockSpring factory + the busy-signal single-source. U1 the factory (composables/useDockSpring.ts) is the band's SOLE new SpringProgress site (exactly-one, PRM-armed, LIGHT-surface fence, exports useDockSpring). U2 dockMorphContext CONSUMES it (zero raw new SpringProgress, imports+calls the factory, passes DOCK_SPRING.response/dampingFraction, still writes --dock-morph-t + arms data-morphing). U3 the busy signal is [data-morphing]-single (set/read/clear the attr, NO boolean morphing=ref shadow). The dir-wide raw-spring census is a PROGRESS fact (the 4 sibling morph surfaces drain onto the factory in their own waves). Born-RED at HEAD (factory absent + dockMorphContext raw spring) -> GREEN + a 5-bite self-test. The binding PAINT is proof:dock-engine's live --dock-morph-t envelope + the proof:ba-gestalt dock verdict. Bite: a raw new SpringProgress re-introduced in the orchestrator (U2 dual-path) / a non-PRM-armed or two-spring factory (U1) / a boolean morphing=ref busy shadow (U3) -> RED.",
+    },
+    {
         id: "proof:dock-arbitrary",
         cmd: "proof:dock-arbitrary",
         tags: ["local", "ci", "release"],
