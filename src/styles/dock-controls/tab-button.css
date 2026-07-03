@@ -17,9 +17,9 @@
            knob (parallel to DockIconButton's --dock-control-size) merged
            here from the prior DockTabButton.vue scoped style block. The
            density rungs that set `--dock-tab-h` per tier live in dock.css
-           (the `.glass-dock[data-density="…"]` blocks) — Q.W3
+           (the `.glass-dock[data-size="…"]` blocks) — Q.W3
            Lane A consolidated them out of utilities.css, closing the
-           cascade-order split-brain. When a parent <GlassDock density="…">
+           cascade-order split-brain. When a parent <GlassDock size="…">
            sets `--dock-tab-h`, the tab-button reserves that row even when
            the glyph + padding sum would ride lower. Falls through to
            `--dock-tab-min-height` (kept for audacious-tier callers) and

@@ -10,7 +10,7 @@
 // `orientation` (a "vertical dock" was expressible TWO ways — `variant="rail"` OR
 // `orientation="vertical"`) and overloaded the "rail" noun. The discriminated union
 // `DockVariantProps | DockRailProps` collapses to ONE `DockProps` interface;
-// "rail-ness" is now `orientation="vertical"` + a shape/density choice, and the
+// "rail-ness" is now `orientation="vertical"` + a shape/size choice, and the
 // collapse/morph machinery applies on BOTH orientations (a vertical dock morphs its
 // `height`, a horizontal dock its `width`). `instrument-strip`'s chassis paint
 // RETIRED with no live consumer (the ≥2-consumer bar; the cross-repo speedtest
@@ -18,7 +18,11 @@
 
 import { computed, type ComputedRef } from "vue";
 
-export type DockDensity = "compact" | "comfortable" | "spacious" | "audacious";
+// BH.W-SIZE-UNIFY — the dock scale axis IS the shared Size ordinal (no
+// separate `density` — the size/density collision the wave kills). compact→sm,
+// comfortable→md, spacious→lg, audacious→xl; `xl` is legal here (the dock is the
+// sole HEAD Size-`xl` consumer, axes.ts §sub-range-law).
+export type DockSize = "sm" | "md" | "lg" | "xl";
 
 /**
  * The ONE GlassDock prop shape (AZ.W-DOCK-TAXONOMY — the discriminated union is
@@ -71,10 +75,10 @@ export interface DockProps {
      */
     orientation?: "horizontal" | "vertical";
     /**
-     * Density controls dock padding, gaps, layer height, and inherited
-     * dock control sizing. Root CSS variables can override each density.
+     * Size controls dock padding, gaps, layer height, and inherited
+     * dock control sizing. Root CSS variables can override each rung.
      */
-    density?: DockDensity;
+    size?: DockSize;
     /**
      * Overflow strategy when the expanded content exceeds the dock's
      * axis cap (`--dock-max-inline-size` horizontally,
@@ -228,7 +232,7 @@ export interface DockShellProps {
     layoutValue: ComputedRef<"linear" | "grid">;
     shape: ComputedRef<"pill" | "rounded" | "card">;
     orientation: ComputedRef<"horizontal" | "vertical">;
-    density: ComputedRef<DockDensity>;
+    size: ComputedRef<DockSize>;
     scrollClass: ComputedRef<string | null>;
     alwaysExpanded: ComputedRef<boolean>;
     fitContent: ComputedRef<boolean>;
@@ -278,7 +282,7 @@ export function useDockShellProps(props: DockProps): DockShellProps {
     const shape = computed(() => props.shape ?? "pill");
     /* The SINGLE layout axis (AZ.W-DOCK-TAXONOMY — no `variant` second-way). */
     const orientation = computed(() => props.orientation ?? "horizontal");
-    const density = computed(() => props.density ?? "comfortable");
+    const size = computed(() => props.size ?? "md");
     /* BG.W-DOCK-CAP-SCROLL-FADE — a capped axis is ALWAYS a scroll axis (no
        opt-in). A HORIZONTAL dock's inline axis is content-driven, so it wears
        the `.dock-scroll-x` port INTRINSICALLY — the CSS `overflow-x: auto`
@@ -318,7 +322,7 @@ export function useDockShellProps(props: DockProps): DockShellProps {
         layoutValue,
         shape,
         orientation,
-        density,
+        size,
         scrollClass,
         alwaysExpanded,
         fitContent,

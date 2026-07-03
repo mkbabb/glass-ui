@@ -59,7 +59,7 @@ function goTo(p: number) {
         <div class="flex items-center gap-1">
             <Button
                 variant="ghost"
-                size="icon"
+                iconOnly
                 :disabled="clampedPage <= 1"
                 @click="goTo(1)"
                 aria-label="First page"
@@ -68,7 +68,7 @@ function goTo(p: number) {
             </Button>
             <Button
                 variant="ghost"
-                size="icon"
+                iconOnly
                 :disabled="clampedPage <= 1"
                 @click="goTo(clampedPage - 1)"
                 aria-label="Previous page"
@@ -81,7 +81,7 @@ function goTo(p: number) {
                 <Button
                     v-else
                     :variant="p === clampedPage ? 'default' : 'ghost'"
-                    size="icon"
+                    iconOnly
                     class="tabular-nums"
                     @click="goTo(p)"
                 >
@@ -91,7 +91,7 @@ function goTo(p: number) {
 
             <Button
                 variant="ghost"
-                size="icon"
+                iconOnly
                 :disabled="clampedPage >= totalPages"
                 @click="goTo(clampedPage + 1)"
                 aria-label="Next page"
@@ -100,7 +100,7 @@ function goTo(p: number) {
             </Button>
             <Button
                 variant="ghost"
-                size="icon"
+                iconOnly
                 :disabled="clampedPage >= totalPages"
                 @click="goTo(totalPages)"
                 aria-label="Last page"

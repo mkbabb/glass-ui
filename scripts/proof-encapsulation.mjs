@@ -743,6 +743,199 @@ function detectAxisGrammar(overrides = {}) {
     return { facts, violations };
 }
 
+// ── BH.W-SIZE-UNIFY — the size/density collision is killed onto the Size axis. ──
+// The library had TWO axes meaning the same scale thing — a component `size` prop
+// (with a `default` middle rung) AND a chrome `density` prop (`DockDensity` /
+// `ConfiguratorDensity` / a `density:` CVA variant, adjective rungs). This arm
+// asserts the ONE clean-break: the middle rung is `md` (not `default`), NO
+// component exposes a `density` prop and NO `*Density` type survives, every scale
+// rung ∈ Size (`xs|sm|md|lg|xl` — no `default`/`comfortable`/`spacious`/`audacious`/
+// `mobile`/`compact`/`base` adjective), Button's `icon`/`icon-sm` SHAPE rungs split
+// onto the `iconOnly` boolean, and chip's `cell` SHAPE rung moves onto a `shape`
+// axis (a silhouette is never a scale rung — the axes.ts sub-range law). Pure FS,
+// device-free (a rename changes ZERO pixels — the byte-identical-paint discipline).
+// Born-RED on HEAD (ControlSize `"sm"|"default"|"lg"`, Button `default`/`icon`/
+// `icon-sm`, chip `cell`, `DockDensity`/`ConfiguratorDensity` present) → GREEN + a
+// bite per clause. Asserts:
+//   S1 — DENSITY-ABSENT: no `type \w*Density`, no `density?:`/`density:` prop or
+//        CVA-variant key anywhere in components/ (the collision axis is gone).
+//   S2 — SIZE-PROP-PRESENT: the dock (useDockShellProps.ts) + configurator
+//        (Configurator.vue) declare a `size?:` prop where the `density` prop was.
+//   S3 — NO-ADJECTIVE-RUNG: no `size:` CVA block, `type \w*Size` union, or inline
+//        `size?:` string union carries a banned scale-adjective rung.
+//   S4 — CONTROL-SIZE-MD: `ControlSize` resolves exactly `sm|md|lg` (no `default`).
+//   S5 — BUTTON-ICON-SPLIT: button `size:` CVA carries NO `icon`/`icon-sm` rung AND
+//        the file declares an `iconOnly` boolean variant.
+//   S6 — CHIP-SHAPE: chipVariants `size:` carries NO `cell` rung AND a `shape:` axis
+//        with a `cell` member exists.
+const CONTROL_SIZE = resolve(SRC, "components/ui/_shared/useControlSize.ts");
+const BUTTON_INDEX = resolve(SRC, "components/ui/button/index.ts");
+const CHIP_VARIANTS = resolve(
+    SRC,
+    "components/custom/selectable-chip/chipVariants.ts",
+);
+const DOCK_SHELL = resolve(
+    SRC,
+    "components/custom/dock/composables/useDockShellProps.ts",
+);
+const CONFIG_ROOT = resolve(SRC, "components/custom/configurator/Configurator.vue");
+const COMPONENTS_DIR = resolve(SRC, "components");
+
+// The adjective rungs banned from any `size`-shaped union — a scale axis speaks the
+// Size ordinal, never an adjective. `base` is a `default` synonym; the contextual
+// `control`/`dock` rungs (DarkModeToggle) are NOT scale adjectives and stay legal.
+const BANNED_SIZE_RUNGS = new Set([
+    "default",
+    "comfortable",
+    "spacious",
+    "audacious",
+    "mobile",
+    "compact",
+    "base",
+]);
+
+// Every string-literal / identifier key in a flat `{ … }` block body (no nested
+// braces — CVA size/shape blocks are flat key:string maps).
+function blockKeys(body) {
+    return [...body.matchAll(/(?:^|[,{]\s*)(['"]?)([A-Za-z_$][\w$-]*)\1\s*:/g)].map(
+        (m) => m[2],
+    );
+}
+// The body of the FIRST `<name>: { … }` flat block (comment-stripped); null when absent.
+function flatBlockBody(src, name) {
+    const m = stripComments(src).match(
+        new RegExp(`\\b${name}\\s*\\??\\s*:\\s*\\{([^{}]*)\\}`),
+    );
+    return m ? m[1] : null;
+}
+
+// overrides: { controlText, buttonText, chipText, dockText, configText, sources }
+// `sources` is a { relPath: text } map merged over the real components/ tree for
+// the S1/S3 blanket scan (a self-test injects a synthetic offender file).
+function detectSizeGrammar(overrides = {}) {
+    const violations = [];
+    const facts = {};
+
+    const controlSrc = overrides.controlText ?? read(CONTROL_SIZE);
+    const buttonSrc = overrides.buttonText ?? read(BUTTON_INDEX);
+    const chipSrc = overrides.chipText ?? read(CHIP_VARIANTS);
+    const dockSrc = overrides.dockText ?? read(DOCK_SHELL);
+    const configSrc = overrides.configText ?? read(CONFIG_ROOT);
+
+    // The scanned source map: the real components/ tree with per-file overrides so
+    // a self-test can sabotage a specific file (or inject a synthetic one).
+    const pathFor = {
+        [CONTROL_SIZE]: controlSrc,
+        [BUTTON_INDEX]: buttonSrc,
+        [CHIP_VARIANTS]: chipSrc,
+        [DOCK_SHELL]: dockSrc,
+        [CONFIG_ROOT]: configSrc,
+    };
+    const sources = [];
+    for (const f of walkSrc(COMPONENTS_DIR)) {
+        const rel = f.slice(SRC.length + 1);
+        const over = overrides.sources && overrides.sources[rel];
+        sources.push({ rel, text: over ?? pathFor[f] ?? read(f) });
+    }
+    if (overrides.sources)
+        for (const [rel, text] of Object.entries(overrides.sources))
+            if (!sources.some((s) => s.rel === rel)) sources.push({ rel, text });
+
+    // ── S1 — DENSITY-ABSENT (the collision axis is gone). ──
+    const densityTypeHits = [];
+    const densityPropHits = [];
+    for (const { rel, text } of sources) {
+        const clean = stripComments(text);
+        if (/\b(?:export\s+)?type\s+[A-Za-z_$][\w$]*Density\b/.test(clean))
+            densityTypeHits.push(rel);
+        if (/\bdensity\s*\??\s*:/.test(clean)) densityPropHits.push(rel);
+    }
+    facts.densityAbsent = { densityTypeHits, densityPropHits };
+    if (densityTypeHits.length || densityPropHits.length)
+        violations.push(
+            `S1 — the density axis must be GONE (folded onto Size): \`*Density\` types in [${densityTypeHits.join(", ") || "none"}], \`density:\` props/keys in [${densityPropHits.join(", ") || "none"}]`,
+        );
+
+    // ── S2 — SIZE-PROP-PRESENT (the dock + configurator carry a `size` prop). ──
+    const dockHasSize = /\bsize\s*\??\s*:/.test(stripComments(dockSrc));
+    const configHasSize = /\bsize\s*\??\s*:/.test(stripComments(configSrc));
+    facts.sizeProp = { dockHasSize, configHasSize };
+    if (!(dockHasSize && configHasSize))
+        violations.push(
+            `S2 — the dock (useDockShellProps.ts=${dockHasSize}) + configurator (Configurator.vue=${configHasSize}) must declare a \`size\` prop (the density prop re-pointed)`,
+        );
+
+    // ── S3 — NO-ADJECTIVE-RUNG (every scale rung ∈ Size). ──
+    const adjectiveHits = [];
+    const pushHit = (rel, where, rung) => {
+        if (BANNED_SIZE_RUNGS.has(rung)) adjectiveHits.push(`${rel}:${where}:${rung}`);
+    };
+    for (const { rel, text } of sources) {
+        const clean = stripComments(text);
+        // (a) `type \w*Size = "a" | "b";` unions
+        for (const m of clean.matchAll(
+            /\btype\s+[A-Za-z_$][\w$]*Size\s*=\s*([^;]+);/g,
+        ))
+            for (const lit of m[1].matchAll(/["']([^"']+)["']/g))
+                pushHit(rel, "type-union", lit[1]);
+        // (b) `size: { … }` CVA blocks — the rung KEYS
+        for (const m of clean.matchAll(/\bsize\s*\??\s*:\s*\{([^{}]*)\}/g))
+            for (const k of blockKeys(m[1])) pushHit(rel, "cva-key", k);
+        // (c) inline `size?: "a" | "b"` string unions
+        for (const m of clean.matchAll(
+            /\bsize\s*\??\s*:\s*("[^"]*"(?:\s*\|\s*"[^"]*")*)/g,
+        ))
+            for (const lit of m[1].matchAll(/"([^"]+)"/g))
+                pushHit(rel, "inline-union", lit[1]);
+    }
+    facts.adjectiveRungs = adjectiveHits;
+    if (adjectiveHits.length)
+        violations.push(
+            `S3 — a \`size\` axis carries a banned scale-adjective rung (must be xs|sm|md|lg|xl): ${adjectiveHits.join(", ")}`,
+        );
+
+    // ── S4 — CONTROL-SIZE-MD (the middle rung is `md`, not `default`). ──
+    const controlMembers = unionMembers(controlSrc, "ControlSize");
+    const controlOk =
+        Array.isArray(controlMembers) &&
+        controlMembers.length === 3 &&
+        ["sm", "md", "lg"].every((r) => controlMembers.includes(r)) &&
+        !controlMembers.includes("default");
+    facts.controlSize = { controlMembers };
+    if (!controlOk)
+        violations.push(
+            `S4 — ControlSize must resolve exactly [sm, md, lg] (no \`default\` middle rung) — got ${JSON.stringify(controlMembers)}`,
+        );
+
+    // ── S5 — BUTTON-ICON-SPLIT (icon/icon-sm → iconOnly boolean). ──
+    const btnSizeBody = flatBlockBody(buttonSrc, "size");
+    const btnSizeKeys = btnSizeBody ? blockKeys(btnSizeBody) : [];
+    const btnHasIconRung =
+        btnSizeKeys.includes("icon") || btnSizeKeys.includes("icon-sm");
+    const btnHasIconOnly = /\biconOnly\s*:/.test(stripComments(buttonSrc));
+    facts.buttonIcon = { btnSizeKeys, btnHasIconRung, btnHasIconOnly };
+    if (btnHasIconRung || !btnHasIconOnly)
+        violations.push(
+            `S5 — button size must carry NO icon/icon-sm rung (present=${btnHasIconRung}, keys=${JSON.stringify(btnSizeKeys)}) AND declare an \`iconOnly\` boolean variant (${btnHasIconOnly})`,
+        );
+
+    // ── S6 — CHIP-SHAPE (cell → shape axis). ──
+    const chipSizeBody = flatBlockBody(chipSrc, "size");
+    const chipSizeKeys = chipSizeBody ? blockKeys(chipSizeBody) : [];
+    const chipSizeHasCell = chipSizeKeys.includes("cell");
+    const chipShapeBody = flatBlockBody(chipSrc, "shape");
+    const chipShapeHasCell = chipShapeBody
+        ? blockKeys(chipShapeBody).includes("cell")
+        : false;
+    facts.chipShape = { chipSizeKeys, chipSizeHasCell, chipShapeHasCell };
+    if (chipSizeHasCell || !chipShapeHasCell)
+        violations.push(
+            `S6 — chip size must carry NO \`cell\` rung (present=${chipSizeHasCell}) AND a \`shape\` axis with a \`cell\` member (${chipShapeHasCell})`,
+        );
+
+    return { facts, violations };
+}
+
 // ── The detector — runs over a SOURCE MAP so a self-test can sabotage inputs.
 // overrides: { driverText?, godModuleSource?, leafExists?, leafSource? }.
 function detect(overrides = {}) {
@@ -1199,6 +1392,71 @@ function selfTest() {
         "G6 the /axes barrel is absent",
     );
 
+    // ── BH.W-SIZE-UNIFY — the S1–S6 bites over detectSizeGrammar. ──
+    const liveButtonSz = read(BUTTON_INDEX);
+    const liveChipSz = read(CHIP_VARIANTS);
+    const liveControlSz = read(CONTROL_SIZE);
+    const sabS = (overrides, prefix, name) => {
+        const { violations } = detectSizeGrammar(overrides);
+        if (violations.some((x) => x.startsWith(prefix))) flagged++;
+        else
+            throw new Error(
+                `[proof:encapsulation self-test] size-grammar bite FAILED to flag: ${name}`,
+            );
+    };
+    const sabNotS = (overrides, prefix, name) => {
+        const { violations } = detectSizeGrammar(overrides);
+        if (!violations.some((x) => x.startsWith(prefix))) flagged++;
+        else
+            throw new Error(
+                `[proof:encapsulation self-test] size-grammar fence bite WRONGLY flagged: ${name}`,
+            );
+    };
+    // S1: a `*Density` type survives (the collision axis re-introduced).
+    sabS(
+        { sources: { "components/_selftest-density-type.ts": 'export type FooDensity = "a" | "b";' } },
+        "S1",
+        "S1 a *Density type survives",
+    );
+    // S1: a `density?:` prop survives (the collision axis re-introduced).
+    sabS(
+        { sources: { "components/_selftest-density-prop.vue": "defineProps<{ density?: string }>()" } },
+        "S1",
+        "S1 a density prop survives",
+    );
+    // S2: the dock drops its `size` prop (the density re-point never landed).
+    sabS(
+        { dockText: "export interface DockProps { orientation?: string; }" },
+        "S2",
+        "S2 the dock drops its size prop",
+    );
+    // S3: a size rung re-adds the `default` scale adjective.
+    sabS(
+        { buttonText: liveButtonSz.replace("md: 'h-(--control-h-md)',", "default: 'h-(--control-h-md)',") },
+        "S3",
+        "S3 a size rung re-adds the `default` adjective",
+    );
+    // S4: ControlSize re-adds the `default` middle rung.
+    sabS(
+        { controlText: liveControlSz.replace('export type ControlSize = "sm" | "md" | "lg";', 'export type ControlSize = "sm" | "default" | "lg";') },
+        "S4",
+        "S4 ControlSize re-adds `default`",
+    );
+    // S5: button re-adds an `icon` SHAPE rung to the size axis.
+    sabS(
+        { buttonText: liveButtonSz.replace("md: 'h-(--control-h-md)',", "md: 'h-(--control-h-md)',\n        icon: 'h-(--control-h-md) w-(--control-h-md) p-0',") },
+        "S5",
+        "S5 button re-adds an `icon` size rung",
+    );
+    // S6: chip drops its `shape` axis (the `cell` silhouette has nowhere to live).
+    sabS(
+        { chipText: liveChipSz.replace("shape: {", "xshape: {") },
+        "S6",
+        "S6 chip drops its shape axis",
+    );
+    // S-fence: the migrated tree carries ZERO size/density-collision violation.
+    sabNotS({}, "S", "S the migrated tree (no size/density collision)");
+
     return flagged;
 }
 
@@ -1221,12 +1479,16 @@ function run() {
     // BH.W-AXIS-GRAMMAR — the ONE axis-grammar home + the homonym kills.
     const { facts: axisFacts, violations: axisViolations } =
         detectAxisGrammar();
+    // BH.W-SIZE-UNIFY — the size/density collision folded onto the Size axis.
+    const { facts: sizeFacts, violations: sizeViolations } =
+        detectSizeGrammar();
     const facts = {
         ...blobFacts,
         colocate: colocateFacts,
         aliasKill: aliasFacts,
         deshadcn: deshadcnFacts,
         axisGrammar: axisFacts,
+        sizeGrammar: sizeFacts,
     };
     const violations = [
         ...blobViolations,
@@ -1234,6 +1496,7 @@ function run() {
         ...aliasViolations,
         ...deshadcnViolations,
         ...axisViolations,
+        ...sizeViolations,
     ];
     const status = violations.length === 0 ? "pass" : "fail";
 
@@ -1296,7 +1559,13 @@ function run() {
         `    axis-grammar                  : ${axisViolations.length === 0 ? "GREEN" : "RED"} (axes.ts=${axisFacts.axesMinted.axesExists}, SURFACES=${JSON.stringify(axisFacts.surfaceFourMember.surfacesTuple)}, GlassPanel variant-killed=${!axisFacts.glassPanelHomonym.gpHasVariantProp}+renderTier=${axisFacts.glassPanelHomonym.gpHasRenderTierProp}, TabsIndicator plate=${axisFacts.tabsHomonym.tabsHasPlateProp}, /axes=${axisFacts.flatBarrel.flatExists})`,
     );
     console.log(
-        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (blob E1×2+E1-fence+E2×2+E3×2+E4+E4-fence + colocate C1×2+C1-fence+C2×2+C3+C3-fence + alias-kill A1+A2+fence + deshadcn DS1×3+DS1-fence+DS2+DS3×2+DS3-regex+DS4+DS-clean + axis-grammar G1+G2+G3+G3-fence+G4+G4-fence+G5+G6)`,
+        "  BH.W-SIZE-UNIFY (S1 density-absent · S2 size-prop · S3 no-adjective-rung · S4 ControlSize-md · S5 button-iconOnly · S6 chip-shape):",
+    );
+    console.log(
+        `    size-grammar                  : ${sizeViolations.length === 0 ? "GREEN" : "RED"} (density-gone=${sizeFacts.densityAbsent.densityTypeHits.length === 0 && sizeFacts.densityAbsent.densityPropHits.length === 0}, ControlSize=${JSON.stringify(sizeFacts.controlSize.controlMembers)}, adjective-rungs=${sizeFacts.adjectiveRungs.length}, button-iconOnly=${sizeFacts.buttonIcon.btnHasIconOnly}, chip-shape=${sizeFacts.chipShape.chipShapeHasCell})`,
+    );
+    console.log(
+        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (blob E1×2+E1-fence+E2×2+E3×2+E4+E4-fence + colocate C1×2+C1-fence+C2×2+C3+C3-fence + alias-kill A1+A2+fence + deshadcn DS1×3+DS1-fence+DS2+DS3×2+DS3-regex+DS4+DS-clean + axis-grammar G1+G2+G3+G3-fence+G4+G4-fence+G5+G6 + size-grammar S1x2+S2+S3+S4+S5+S6+S-fence)`,
     );
 
     if (violations.length) {
@@ -1326,5 +1595,6 @@ export {
     detectAliasKill,
     detectDeshadcn,
     detectAxisGrammar,
+    detectSizeGrammar,
     selfTest,
 };

@@ -52,7 +52,7 @@ const open = ref(true);
                     <div class="flex items-center justify-between">
                         <p class="font-display text-base">Build artifacts</p>
                         <CollapsibleTrigger as-child>
-                            <Button variant="ghost" size="icon">
+                            <Button variant="ghost" iconOnly>
                                 <ChevronDown
                                     class="size-4 transition-transform"
                                     :class="open ? 'rotate-180' : ''"

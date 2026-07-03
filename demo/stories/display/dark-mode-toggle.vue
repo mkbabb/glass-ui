@@ -15,7 +15,7 @@ import { GlassDock } from "@glass/components/custom/dock";
 // Standalone rungs only — `dock` is excluded here because it inherits its
 // size from a GlassDock host (demonstrated in its own section below).
 const sizes = ["sm", "md", "lg", "control"] as const;
-const dockDensities = ["compact", "comfortable", "audacious"] as const;
+const dockSizes = ["sm", "md", "xl"] as const;
 const disableTransitions = ref(false);
 </script>
 
@@ -42,15 +42,15 @@ const disableTransitions = ref(false);
             <ShowcaseFrame pad="lg">
                 <div class="flex flex-wrap items-end gap-6">
                     <div
-                        v-for="d in dockDensities"
+                        v-for="d in dockSizes"
                         :key="d"
                         class="flex flex-col items-center gap-2"
                     >
-                        <GlassDock :density="d" always-expanded>
+                        <GlassDock :size="d" always-expanded>
                             <DarkModeToggle size="dock" />
                         </GlassDock>
                         <code class="fira-code text-mono-caption text-muted-foreground">
-                            density="{{ d }}"
+                            size="{{ d }}"
                         </code>
                     </div>
                 </div>

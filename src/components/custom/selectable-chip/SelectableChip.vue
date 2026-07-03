@@ -34,6 +34,8 @@ const props = defineProps<ToggleProps & {
     tone?: string;
     /** The structural size rung. Default `md`. */
     size?: ChipVariants["size"];
+    /** The silhouette shape. `pill` (default) | `cell` (square tile). */
+    shape?: ChipVariants["shape"];
     class?: HTMLAttributes["class"];
 }>();
 
@@ -46,14 +48,14 @@ const { toneStyle } = useAccentTone(() => props.tone ?? "var(--primary)");
 
 const forwarded = useForwardPropsEmits(
     () => {
-        const { class: _class, tone: _tone, size: _size, ...rest } = props;
+        const { class: _class, tone: _tone, size: _size, shape: _shape, ...rest } = props;
         return rest;
     },
     emits,
 );
 
 const chipClass = computed(() =>
-    cn(chipVariants({ size: props.size }), props.class),
+    cn(chipVariants({ size: props.size, shape: props.shape }), props.class),
 );
 
 // The chip is the ≥3rd `--glass-fill-tint` consumer — the translucent

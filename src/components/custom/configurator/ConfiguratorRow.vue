@@ -3,7 +3,7 @@ import { computed, type HTMLAttributes } from "vue";
 import { RotateCcw } from "@lucide/vue";
 import { Label } from "../../ui/label";
 import { cn } from "../../../utils/cn";
-import { useOptionalConfiguratorDensity, type ConfiguratorDensity } from "./density";
+import { useOptionalConfiguratorSize, type ConfiguratorSize } from "./size";
 
 /**
  * <ConfiguratorRow> — labeled control row for a single field inside a
@@ -16,19 +16,19 @@ import { useOptionalConfiguratorDensity, type ConfiguratorDensity } from "./dens
  * etc.). The reset button is opt-in via `canReset`; emits a `reset`
  * event the consumer wires to its own field-clear path.
  *
- * # Density axis (N.W2 Lane A)
+ * # Size axis (BH.W-SIZE-UNIFY)
  *
- * The row honors a four-rung density axis (`mobile` | `compact` |
- * `comfortable` | `spacious`). Resolution order:
+ * The row honors a three-rung size axis (`sm` | `md` | `lg`).
+ * Resolution order:
  *
- * 1. Local `density` prop (highest priority).
- * 2. `<Configurator>` inject (`CONFIGURATOR_DENSITY_KEY`).
+ * 1. Local `size` prop (highest priority).
+ * 2. `<Configurator>` inject (`CONFIGURATOR_SIZE_KEY`).
  * 3. `undefined` — the row keeps its baked-in `gap-1.5 py-2` recipe and
- *    emits no `data-density` attribute (pre-N.W2 visual preserved).
+ *    emits no `data-size` attribute (bare-row visual preserved).
  *
- * When density resolves to a value, the root gets `data-density="…"`
+ * When size resolves to a value, the root gets `data-size="…"`
  * and the token-driven CSS rule overrides the Tailwind gap. The
- * `"comfortable"` rung is functionally identical to the no-density
+ * `"md"` rung is functionally identical to the no-size
  * fallback; it exists so consumers can be explicit.
  *
  * # ConfiguratorRow vs LabeledField — recorded divergence (AZ.W-METRIC-UNIFY §B)
@@ -37,7 +37,7 @@ import { useOptionalConfiguratorDensity, type ConfiguratorDensity } from "./dens
  * interchangeable — they emphasize DIFFERENT features:
  *  - **ConfiguratorRow** (this) — for TOKEN / PRESET controls. Carries the
  *    token-`name` reference, the opt-in `reset` affordance (`canReset`), and the
- *    four-rung `density` axis (local-prop-over-inject). No a11y for/id wiring.
+ *    three-rung `size` axis (local-prop-over-inject). No a11y for/id wiring.
  *  - **LabeledField** — for FORM fields. Carries the `for`/`id` label↔control
  *    a11y wiring (`controlId`/`labelId`/`errorId`), the `tooltip`, the `required`
  *    asterisk, and the `aria-live` `error` region.
@@ -57,12 +57,12 @@ const props = defineProps<{
     /** Show the reset affordance (top-right). */
     canReset?: boolean;
     /**
-     * Density rung. Overrides the value injected by an ancestor
+     * Size rung. Overrides the value injected by an ancestor
      * `<Configurator>` when set. Omit to follow the inject (or to fall
      * back to the pre-N.W2 `gap-1.5 py-2` recipe when there is no
      * ancestor configurator).
      */
-    density?: ConfiguratorDensity;
+    size?: ConfiguratorSize;
     class?: HTMLAttributes["class"];
 }>();
 
@@ -70,14 +70,14 @@ const emit = defineEmits<{
     (e: "reset"): void;
 }>();
 
-// Prop wins over inject. Inject is a ComputedRef so reactive density
+// Prop wins over inject. Inject is a ComputedRef so reactive size
 // swaps (e.g., viewport-driven host) propagate without remount. The
 // optional helper returns `null` when no ancestor `<Configurator>`;
-// the trailing `?? undefined` keeps the `:data-density` binding from
+// the trailing `?? undefined` keeps the `:data-size` binding from
 // emitting an attribute in the bare-row case (pre-N.W2 visual).
-const injectedDensity = useOptionalConfiguratorDensity();
-const resolvedDensity = computed<ConfiguratorDensity | undefined>(
-    () => props.density ?? injectedDensity?.value ?? undefined,
+const injectedSize = useOptionalConfiguratorSize();
+const resolvedSize = computed<ConfiguratorSize | undefined>(
+    () => props.size ?? injectedSize?.value ?? undefined,
 );
 </script>
 
@@ -85,7 +85,7 @@ const resolvedDensity = computed<ConfiguratorDensity | undefined>(
     <div
         data-slot="configurator-row"
         :class="cn('configurator-row flex flex-col gap-1.5 py-2', props.class)"
-        :data-density="resolvedDensity"
+        :data-size="resolvedSize"
     >
         <div class="flex items-baseline justify-between gap-3">
             <div class="flex min-w-0 items-baseline gap-2">
@@ -144,47 +144,42 @@ const resolvedDensity = computed<ConfiguratorDensity | undefined>(
 /*
  * Density-axis gap overrides. `comfortable` matches the pre-N.W2 Tailwind
  * `gap-1.5` (0.375rem) exactly, so its rule is a no-op restatement for
- * explicit-density consumers; the bare row (no data-density attribute)
+ * explicit-size consumers; the bare row (no data-size attribute)
  * picks up its gap from the `gap-1.5` Tailwind utility above.
  *
  * Block padding follows the same density ladder so the row breathes the
  * same way the gap does. `comfortable` keeps the prior `py-2` (0.5rem).
  */
-.configurator-row[data-density="mobile"] {
-    gap: var(--configurator-row-gap-mobile);
-    padding-block: var(--configurator-row-py-mobile);
-}
-
-.configurator-row[data-density="compact"] {
+.configurator-row[data-size="sm"] {
     gap: var(--configurator-row-gap-compact);
     padding-block: var(--configurator-row-py-compact);
 }
 
-.configurator-row[data-density="comfortable"] {
+.configurator-row[data-size="md"] {
     gap: var(--configurator-row-gap-comfortable);
     padding-block: var(--configurator-row-py-comfortable);
 }
 
-.configurator-row[data-density="spacious"] {
+.configurator-row[data-size="lg"] {
     gap: var(--configurator-row-gap-spacious);
     padding-block: var(--configurator-row-py-spacious);
 }
 
 /*
  * Container-style-query companion (AS.W4 — @container style(--density)).
- * Lets a row react to an ANCESTOR's `--density` custom property with no
- * `data-density` markup contract — a host that sets `--density: compact`
+ * Lets a row react to an ANCESTOR's `--configurator-size` custom property with no
+ * `data-size` markup contract — a host that sets `--configurator-size: sm`
  * on any wrapping element retunes every descendant row's gap/padding.
  * In Tailwind v4 every element is a custom-property style-query container
- * by default, so `style(--density: X)` matches the nearest ancestor that
- * declares `--density` (no explicit container-name needed).
+ * by default, so `style(--configurator-size: X)` matches the nearest ancestor that
+ * declares `--configurator-size` (no explicit container-name needed).
  *
  * Specificity: the inner `.configurator-row` selector (scoped to
- * `[data-v]`, so 0,2,0) sits just BELOW the `[data-density]` attribute
+ * `[data-v]`, so 0,2,0) sits just BELOW the `[data-size]` attribute
  * rules above (0,3,0) and just ABOVE the baked-in `gap-1.5`/`py-2` Tailwind
  * utilities (0,1,0) — so the container path overrides the bare recipe, yet
- * a row carrying BOTH the attribute and a `--density` ancestor lands on the
- * attribute rule (identical token, identical paint). `[data-density]` stays
+ * a row carrying BOTH the attribute and a `--configurator-size` ancestor lands on the
+ * attribute rule (identical token, identical paint). `[data-size]` stays
  * the SOLE fallback (inv 47 — not a dead mirror).
  *
  * No `@supports` wrapper: unlike the sibling scroll-state recipe (which probes
@@ -193,30 +188,24 @@ const resolvedDensity = computed<ConfiguratorDensity | undefined>(
  * is a style container by default), so there is no clean declaration test for
  * style-query support. Instead this relies on `@container style()`'s own
  * graceful degradation: an engine without style-query support parses the
- * unknown `@container style(--density: …)` as an invalid at-rule, drops the
- * whole block, and keeps the `[data-density]` attribute base. (The earlier
+ * unknown `@container style(--configurator-size: …)` as an invalid at-rule, drops the
+ * whole block, and keeps the `[data-size]` attribute base. (The earlier
  * `@supports (container-type: inline-size)` wrapper was wrong — it probed
  * SIZE-query support, a distinct feature with a distinct support timeline.)
  */
-@container style(--density: mobile) {
-    .configurator-row {
-        gap: var(--configurator-row-gap-mobile);
-        padding-block: var(--configurator-row-py-mobile);
-    }
-}
-@container style(--density: compact) {
+@container style(--configurator-size: sm) {
     .configurator-row {
         gap: var(--configurator-row-gap-compact);
         padding-block: var(--configurator-row-py-compact);
     }
 }
-@container style(--density: comfortable) {
+@container style(--configurator-size: md) {
     .configurator-row {
         gap: var(--configurator-row-gap-comfortable);
         padding-block: var(--configurator-row-py-comfortable);
     }
 }
-@container style(--density: spacious) {
+@container style(--configurator-size: lg) {
     .configurator-row {
         gap: var(--configurator-row-gap-spacious);
         padding-block: var(--configurator-row-py-spacious);

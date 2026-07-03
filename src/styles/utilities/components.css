@@ -135,22 +135,22 @@
        register for densely-packed dock clusters. The selectors compose with
        `.metric-badge--label-stacked` so the inline ladder remains untouched
        — these are stacked-only refinements. */
-    .metric-pill[data-density="spacious"].metric-badge--label-stacked {
+    .metric-pill:not([data-dense]).metric-badge--label-stacked {
         --metric-badge-padding-block-stacked: 0.5rem;
         --metric-badge-padding-inline: 0.75rem;
     }
 
-    .metric-pill[data-density="comfortable"].metric-badge--label-stacked {
+    .metric-pill[data-dense].metric-badge--label-stacked {
         --metric-badge-padding-block-stacked: 0.25rem;
         --metric-badge-padding-inline: 0.5rem;
     }
 
-    /* AS.W4 — @container style(--density) companion. A pill nested under a host
-       that sets `--density: comfortable | spacious` on a wrapping element picks
-       up the matching padding register with no `data-density` markup contract;
+    /* BH.W-SIZE-UNIFY — the metric-pill padding density is the `dense` boolean
+       (was the `density` axis); the two `[data-dense]`/`:not([data-dense])`
+       attribute rules above are the SOLE register (the `@container style(--density)`
        the attribute rules above stay the SOLE fallback (inv 47).
        The inner `.metric-pill.metric-badge--label-stacked` selector (0,2,0) sits
-       just BELOW the `.metric-pill[data-density]…` attribute rules (0,3,0) — so a
+       just BELOW the `.metric-pill[data-dense]` attribute rules — so a
        pill carrying BOTH the attribute and a `--density` ancestor lands on the
        attribute rule (same tokens, identical paint), while a pill with only the
        ancestor token still resolves the right register (no competing rule sets
@@ -163,21 +163,9 @@
        clean declaration test for style-query support. This relies on
        `@container style()`'s own graceful degradation: an engine without
        style-query support parses the unknown at-rule as invalid, drops the
-       block, and keeps the `[data-density]` attribute base. (The earlier
+       block, and keeps the `[data-dense]` attribute base. (The earlier
        `@supports (container-type: inline-size)` wrapper was wrong — it probed
        SIZE-query support, a distinct feature with a distinct support timeline.) */
-    @container style(--density: spacious) {
-        .metric-pill.metric-badge--label-stacked {
-            --metric-badge-padding-block-stacked: 0.5rem;
-            --metric-badge-padding-inline: 0.75rem;
-        }
-    }
-    @container style(--density: comfortable) {
-        .metric-pill.metric-badge--label-stacked {
-            --metric-badge-padding-block-stacked: 0.25rem;
-            --metric-badge-padding-inline: 0.5rem;
-        }
-    }
 
     .metric-badge__label {
         letter-spacing: 0.18em;
@@ -202,7 +190,7 @@
         letter-spacing: 0.1em;
     }
 
-    /* Q.W3 Lane A — the `.glass-dock[data-density="…"]` density rungs that
+    /* Q.W3 Lane A — the `.glass-dock[data-size="…"]` size rungs that
        set `--dock-tab-h` + `--dock-label-size` were consolidated into
        `dock.css` (their canonical dock-styles home). They formerly lived
        here and resolved only by the index.css import order (utilities.css

@@ -170,7 +170,7 @@ onBeforeUnmount(() => {
     mql?.removeEventListener("change", onChange);
 });
 
-const density = computed(() => (isNarrow.value ? "mobile" : "comfortable"));
+const size = computed(() => (isNarrow.value ? "sm" : "md"));
 </script>
 
 <template>
@@ -182,7 +182,7 @@ const density = computed(() => (isNarrow.value ? "mobile" : "comfortable"));
             <ShowcaseFrame pad="lg" tier="quiet">
                 <Configurator
                     class="h-[min(70vh,560px)]"
-                    :density="density"
+                    :size="size"
                     :presets="presets"
                     :active-preset="cfg.activePreset.value"
                     gallery-placement="top"

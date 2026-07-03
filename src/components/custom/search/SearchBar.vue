@@ -53,7 +53,7 @@ const props = withDefaults(
         modelValue: "",
         placeholder: "Search…",
         tag: "div",
-        size: "default",
+        size: "md",
         surface: "glass",
         variant: "inline",
     },

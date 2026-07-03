@@ -15,7 +15,7 @@ export { default as ToggleChip } from "./ToggleChip.vue";
  * (`../selectable-chip/chipVariants`). ToggleChip keeps its `variant` ergonomics
  * (`chip` inline pill / `cell` square card) but RE-POINTS onto the shared
  * `chipVariants` `size` axis — `chip` → the `md` stadium rung, `cell` → the
- * `cell` card exception. Clean break (no alias): the prior 4px `rounded-sm`
+ * `cell` shape exception. Clean break (no alias): the prior 4px `rounded-sm`
  * grab-bag + the `rounded-[0.625rem]→0px` cell + the per-state
  * `color-mix(…--primary…)` literals are GONE; the recipe is now the shared
  * `.glass-chip .glass-capsule .glass-capsule-hover .accent-tone` lens — the SAME
@@ -29,9 +29,9 @@ export const toggleChipVariants = cva("", {
     variants: {
         variant: {
             /** Inline "chip" — the stadium pill at the `md` rung. */
-            chip: chipVariants({ size: "md" }),
+            chip: chipVariants({ size: "md", shape: "pill" }),
             /** "Cell" — the square icon+label card (the `--radius-card` exception). */
-            cell: chipVariants({ size: "cell" }),
+            cell: chipVariants({ size: "md", shape: "cell" }),
         },
     },
     defaultVariants: {

@@ -65,7 +65,7 @@ function toggleCompose(): void {
             splittable
             split-context="search"
             split-placement="below"
-            density="comfortable"
+            size="md"
             class="tb-glass-dock"
         >
             <div class="tb-row">

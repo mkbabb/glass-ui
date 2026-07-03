@@ -231,12 +231,12 @@
            surfaces (a routed gear, no dock ancestor) that read it directly.
        Fine pointer byte-identical (`--ui-scale` stays 1).
 
-       AP.W3 R0G-6 — selector is `.glass-dock[data-density]`, not bare `.glass-dock`:
+       AP.W3 R0G-6 — selector is `.glass-dock[data-size]`, not bare `.glass-dock`:
        the always-present density setter (0,2,0) would shadow a bare (0,1,0) rule. The
        presence-selector (0,2,0) wins by source order, lifting `--dock-local-scale` +
        the floor so the cascade re-resolves at touch scale. */
     @media (pointer: coarse) {
-        .glass-dock[data-density] {
+        .glass-dock[data-size] {
             /* R5-2 — the coarse-register DEFAULT lives in the FALLBACK, NOT a
                hard-pin. The coarse dock painted ~22% too big (the global
                --ui-coarse-scale 1.5 → an ~80px collapsed pill). The dock-layer
@@ -278,7 +278,7 @@
                the resolution element moves so the lifted --dock-scale flows in.
                BB.W-PERF-PRODUCER A′-6 — --dock-icon-glyph is now a RATIO of the
                density-painted --dock-layer-height (offsets-sizing.css + the density.css
-               [data-density] re-resolve). This coarse block @imports AFTER density.css
+               [data-size] re-resolve). This coarse block @imports AFTER density.css
                in the SAME @layer at the SAME specificity, so its --dock-icon-glyph
                source-order-WINS on coarse pointers — it MUST carry the density-aware
                formula too (the flat `1.25rem * --dock-scale` here would re-freeze the
@@ -306,7 +306,7 @@
             --dock-collapsed-padding: calc(0.25rem * var(--dock-scale));
             --dock-layer-tab-size: calc(1.75rem * var(--dock-scale));
             /* --dock-collapsed-summary-min-size derives from --dock-layer-height (the
-               density-resolved control height on .glass-dock[data-density]) — but its
+               density-resolved control height on .glass-dock[data-size]) — but its
                :root definition reads --dock-layer-height at :root, where density.css
                never sets it, so it froze at the inline 2.5rem fallback × 0.85 = 34px
                (the pre-existing freeze, independent of R5-2). Re-resolving it HERE reads

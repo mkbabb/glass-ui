@@ -9,7 +9,7 @@ import { Button } from "../button";
  * GlassCarouselPager — audacious carousel pager substrate.
  *
  * A canonical chevron-prev + counter-pill + chevron-next + state-toggle row.
- * Composes `<Button variant="outline" size="icon">` chevrons with a glass-card
+ * Composes `<Button variant="outline" iconOnly>` chevrons with a glass-card
  * counter pill and an optional toggle slot for collapse/expand affordances.
  *
  * Standalone: accepts `:index` / `:total` props and emits `@prev` / `@next` /
@@ -99,7 +99,7 @@ const NextIcon = computed(() =>
     >
         <Button
             variant="outline"
-            size="icon"
+            iconOnly
             :disabled="!canPrev"
             :aria-label="
                 orientation === 'vertical' ? 'Previous slide (up)' : 'Previous slide'
@@ -120,7 +120,7 @@ const NextIcon = computed(() =>
 
         <Button
             variant="outline"
-            size="icon"
+            iconOnly
             :disabled="!canNext"
             :aria-label="
                 orientation === 'vertical' ? 'Next slide (down)' : 'Next slide'

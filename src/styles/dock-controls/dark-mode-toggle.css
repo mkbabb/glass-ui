@@ -83,7 +83,7 @@
            reads below, so the pad and the glyph stay LOCKED (a consumer retinting
            `--dock-control-glyph-size` moves both in lockstep — no drift between the
            box pad and the painted glyph). `--dock-control-size` AND
-           `--dock-control-glyph-size` both INHERIT from `.glass-dock[data-density]`,
+           `--dock-control-glyph-size` both INHERIT from `.glass-dock[data-size]`,
            where the coarse `--dock-scale` re-declare (overflow.css) re-resolves them
            in lockstep — so the calc reads the coarse-scaled values on a coarse
            pointer too (the AZ.R5-TOKENS substitution-vs-inheritance trap closed for

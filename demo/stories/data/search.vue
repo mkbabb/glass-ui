@@ -258,9 +258,9 @@ function formatMatches(indices: number[]): string {
                     />
                     <SearchBar
                         v-model="queryControl"
-                        size="default"
+                        size="md"
                         surface="glass"
-                        placeholder="size=default..."
+                        placeholder="size=md..."
                         data-testid="search-query-default"
                     />
                     <SearchBar

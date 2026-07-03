@@ -36,7 +36,7 @@ const props = withDefaults(
         placeholder?: string;
         typeLabel?: (item: SearchableItem) => string;
     }>(),
-    { variant: "inline", size: "default", surface: "glass", placeholder: "Search…" },
+    { variant: "inline", size: "md", surface: "glass", placeholder: "Search…" },
 );
 
 const inputRef = ref<HTMLInputElement | null>(null);
@@ -138,12 +138,12 @@ function repaintHighlight(container: HTMLElement | null) {
                         @keydown="state.onKeydown" @focus="state.isOpen.value = true"
                     />
                     <Button v-if="state.query.value && state.results.value.length > 0"
-                        type="button" variant="ghost" size="icon" class="size-(--search-button-size)"
+                        type="button" variant="ghost" iconOnly class="size-(--search-button-size)"
                         :title="state.isExpanded.value ? 'Collapse' : 'Expand'" @click="state.toggleExpanded()">
                         <Maximize2 v-if="!state.isExpanded.value" class="size-(--search-icon-size)" />
                         <Minimize2 v-else class="size-(--search-icon-size)" />
                     </Button>
-                    <Button v-if="state.query.value" type="button" variant="ghost" size="icon" class="size-(--search-button-size)"
+                    <Button v-if="state.query.value" type="button" variant="ghost" iconOnly class="size-(--search-button-size)"
                         title="Clear search" @click="state.close()">
                         <X class="size-(--search-icon-size)" />
                     </Button>
@@ -187,7 +187,7 @@ function repaintHighlight(container: HTMLElement | null) {
                         :value="state.query.value"
                         @input="state.query.value = ($event.target as HTMLInputElement).value"
                         @keydown="state.onKeydown" />
-                    <Button type="button" variant="ghost" size="icon" class="size-(--search-button-size)" title="Collapse" @click="state.toggleExpanded()">
+                    <Button type="button" variant="ghost" iconOnly class="size-(--search-button-size)" title="Collapse" @click="state.toggleExpanded()">
                         <Minimize2 class="size-(--search-icon-size)" />
                     </Button>
                 </div>

@@ -43,7 +43,7 @@
 //        in-dock toggle SVG + the --dark-mode-toggle-padding inset BOTH read the ONE
 //        --dock-control-glyph-size knob (clamped to --dock-icon-glyph, NOT the
 //        un-padded box edge nor a 0-pad fallback); the knob RE-DECLARES under the
-//        coarse --dock-scale re-declare (overflow.css) AND per [data-density]
+//        coarse --dock-scale re-declare (overflow.css) AND per [data-size]
 //        (density.css) AND at :root (sizing.css) — the substitution-vs-inheritance
 //        dead-knob trap closed on all three registers. Self-test bites: a planted
 //        `--dark-mode-toggle-padding: 0` reds; a :root-only glyph token absent from the
@@ -551,13 +551,13 @@ export function detectE5() {
     if (!facts.padSubtractsKnob)
         violations.push("E5: the in-dock --dark-mode-toggle-padding inset does not subtract --dock-control-glyph-size from --dock-control-size (dark-mode-toggle.css) — the box pad + glyph are not locked, or the pre-AY 0-pad fallback survives");
 
-    // (c) the knob RE-DECLARES at :root (sizing.css) AND per [data-density]
+    // (c) the knob RE-DECLARES at :root (sizing.css) AND per [data-size]
     //     (density.css) AND in the coarse @media block (overflow.css) — the
     //     substitution-vs-inheritance dead-knob closed on all three registers.
     facts.knobAtRoot = /--dock-control-glyph-size:\s*var\(--dock-icon-glyph/.test(sizing);
-    // density: the re-declare must be INSIDE the .glass-dock[data-density] block (the
+    // density: the re-declare must be INSIDE the .glass-dock[data-size] block (the
     // same block that re-resolves --dock-icon-glyph).
-    const densityBlock = (density.match(/\.glass-dock\[data-density\]\s*\{[\s\S]*?\}/) || [""])[0];
+    const densityBlock = (density.match(/\.glass-dock\[data-size\]\s*\{[\s\S]*?\}/) || [""])[0];
     facts.knobPerDensity = /--dock-control-glyph-size:\s*var\(--dock-icon-glyph/.test(densityBlock);
     // coarse: the re-declare must be INSIDE the @media (pointer: coarse) block.
     const coarseBlock = (overflow.match(/@media\s*\(\s*pointer:\s*coarse\s*\)\s*\{[\s\S]*\}\s*\}/) || [""])[0];
@@ -566,7 +566,7 @@ export function detectE5() {
     if (!facts.knobAtRoot)
         violations.push("E5: --dock-control-glyph-size is not declared at :root (sizing.css) defaulting to --dock-icon-glyph");
     if (!facts.knobPerDensity)
-        violations.push("E5: --dock-control-glyph-size does not RE-DECLARE inside .glass-dock[data-density] (density.css) — it freezes at the :root --dock-scale while --dock-icon-glyph lifts per density (the dead-knob trap)");
+        violations.push("E5: --dock-control-glyph-size does not RE-DECLARE inside .glass-dock[data-size] (density.css) — it freezes at the :root --dock-scale while --dock-icon-glyph lifts per density (the dead-knob trap)");
     if (!facts.knobOnCoarse)
         violations.push("E5: --dock-control-glyph-size does not RE-DECLARE in the @media (pointer: coarse) block (overflow.css) — the glyph clamp freezes at the :root scale on coarse (the AZ.R5-TOKENS substitution-vs-inheritance trap)");
 
@@ -579,7 +579,7 @@ function detectE5SelfTest() {
     const zeroPadFlagged = !(
         /--dark-mode-toggle-padding:\s*calc\([\s\S]*var\(--dock-control-glyph-size/.test(zeroPad)
     );
-    const rootOnlyOverflow = `@media (pointer: coarse) { .glass-dock[data-density] { --dock-icon-glyph: 1rem; } }`;
+    const rootOnlyOverflow = `@media (pointer: coarse) { .glass-dock[data-size] { --dock-icon-glyph: 1rem; } }`;
     const coarseBlock = (rootOnlyOverflow.match(/@media\s*\(\s*pointer:\s*coarse\s*\)\s*\{[\s\S]*\}\s*\}/) || [""])[0];
     const coarseMissingFlagged = !/--dock-control-glyph-size:\s*var\(--dock-icon-glyph/.test(coarseBlock);
     return zeroPadFlagged === true && coarseMissingFlagged === true;

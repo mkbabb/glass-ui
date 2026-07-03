@@ -3,9 +3,9 @@ import { computed, type HTMLAttributes } from "vue";
 import { cn } from "../../../utils/cn";
 import { FadingScroll } from "../fading-scroll";
 import {
-    provideConfiguratorDensity,
-    type ConfiguratorDensity,
-} from "./density";
+    provideConfiguratorSize,
+    type ConfiguratorSize,
+} from "./size";
 
 /**
  * Scroll behavior for the controls column.
@@ -87,11 +87,11 @@ const props = withDefaults(
         /**
          * Row-level density axis (N.W2 Lane A). Cascades to descendant
          * `<ConfiguratorRow>` children via provide/inject. A row may
-         * override locally by setting its own `density` prop (prop wins
-         * over inject). Default `"comfortable"` preserves the prior
+         * override locally by setting its own `size` prop (prop wins
+         * over inject). Default `"md"` preserves the prior
          * `gap-1.5 py-2` recipe exactly.
          */
-        density?: ConfiguratorDensity;
+        size?: ConfiguratorSize;
         /**
          * Which side the aside sits on at `lg`+ width. Default `"right"`
          * (the inspector idiom). `"left"` flips the visual column via
@@ -120,15 +120,15 @@ const props = withDefaults(
     }>(),
     {
         scrollMode: "auto",
-        density: "comfortable",
+        size: "md",
         asideSide: "right",
         galleryPlacement: "aside",
     },
 );
 
-// Provide the density to descendant <ConfiguratorRow>s. Rows still accept
-// their own `density` prop; the prop wins over inject (see ConfiguratorRow).
-provideConfiguratorDensity(computed(() => props.density));
+// Provide the size to descendant <ConfiguratorRow>s. Rows still accept
+// their own `size` prop; the prop wins over inject (see ConfiguratorRow).
+provideConfiguratorSize(computed(() => props.size));
 
 const emit = defineEmits<{
     /** Fired when the user picks a preset chip from the default `presets` slot. */

@@ -33,7 +33,7 @@ const props = withDefaults(
         playing?: boolean;
         /** The Button variant. Defaults to the glass `default` register. */
         variant?: ButtonVariants["variant"];
-        /** The Button size rung. Defaults to the content-width `default`. */
+        /** The Button size rung. Defaults to `md`. */
         size?: ButtonVariants["size"];
         /** Disabled passthrough. */
         disabled?: boolean;
@@ -42,7 +42,7 @@ const props = withDefaults(
         label: "Play",
         playing: undefined,
         variant: "default",
-        size: "default",
+        size: "md",
     },
 );
 
@@ -50,13 +50,6 @@ const emit = defineEmits<{ play: [] }>();
 
 // Icon-only when the label is an explicit empty string.
 const iconOnly = computed(() => props.label === "");
-// The resolved size: a bare icon-only control reads the `icon` rung so it stays
-// a content-driven square that can NEVER collide with the fixed `.glass-btn`
-// primitive (it composes <Button>'s own sizing, not `.glass-btn`).
-const resolvedSize = computed(() =>
-    props.size === "default" && iconOnly.value ? "icon" : props.size,
-);
-
 const accessibleLabel = computed(() =>
     props.playing === true ? "Pause" : iconOnly.value ? "Play" : undefined,
 );
@@ -69,7 +62,8 @@ function onClick(): void {
 <template>
     <Button
         :variant="variant"
-        :size="resolvedSize"
+        :size="size"
+        :icon-only="iconOnly"
         :disabled="disabled"
         :aria-label="accessibleLabel"
         :aria-pressed="playing === undefined ? undefined : playing"

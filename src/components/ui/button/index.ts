@@ -183,26 +183,46 @@ export const buttonVariants = cva(
         ai: 'glass-wash btn-glass glass-capsule glass-capsule-hover text-(--accent-ai-ink) [--glass-accent:oklch(0.78_0.14_75)] [--glass-accent-strength:34%]',
         link: 'text-primary underline-offset-4 hover:underline active:opacity-80 active:scale-100',
       },
+      // BH.W-SIZE-UNIFY — the size axis is the SHARED ordinal (xs/sm/md/lg ∈ Size);
+      // the middle rung is `md` (was `default`). The icon-only geometry split off
+      // the old `icon`/`icon-sm` rungs onto the ORTHOGONAL `iconOnly` boolean, so a
+      // silhouette (square) is never a scale rung (the axes.ts sub-range law).
+      // AX.W51 D18 — the control HEIGHT rungs read the `--control-h-*` cohort (the
+      // scaled register, each `max(scaled, --control-floor)` with the WCAG-44px
+      // coarse clamp), so the height grows on the ONE comfort axis.
       size: {
-        // AW.W26 — `has-[>svg]:px-3` tightens the horizontal padding when the
-        // button hosts an icon (icon+label), matching the shadcn-2025 size
-        // idiom; the icon-only sizes stay `p-0`.
-        // AX.W51 D18 — the control HEIGHT rungs read the `--control-h-*` cohort
-        // (the scaled h-7/h-9/h-10/h-11 register, each `max(scaled, --control-floor)`
-        // with the WCAG-44px coarse clamp) instead of the raw `h-N` literal, so the
-        // height grows on the ONE comfort axis. The `xs` rung's quieter font reads
-        // `--control-text-sm` (the scaled `text-xs` register).
-        default: 'h-(--control-h-md) px-4 py-2 has-[>svg]:px-3',
-        xs: 'h-(--control-h-xs) rounded-pill px-2 text-[length:var(--control-text-sm)]',
-        sm: 'h-(--control-h-sm) rounded-pill px-3',
-        lg: 'h-(--control-h-lg) rounded-pill px-8 has-[>svg]:px-5',
-        icon: 'h-(--control-h-md) w-(--control-h-md) p-0',
-        'icon-sm': 'h-(--control-h-xs) w-(--control-h-xs) p-0',
+        xs: 'h-(--control-h-xs)',
+        sm: 'h-(--control-h-sm)',
+        md: 'h-(--control-h-md)',
+        lg: 'h-(--control-h-lg)',
+      },
+      // The icon-only SHAPE axis (square, p-0). Default OFF; `<Button iconOnly>` is
+      // the old `size="icon"` (md square), `<Button iconOnly size="xs">` the old
+      // `size="icon-sm"`.
+      iconOnly: {
+        true: 'p-0',
+        false: '',
       },
     },
+    compoundVariants: [
+      // The LABEL geometry (was baked into the old size rungs) — applied only when
+      // NOT icon-only. `has-[>svg]:px-3` tightens the horizontal padding when a
+      // label button hosts an icon (icon+label), the shadcn-2025 idiom; the `xs`
+      // rung's quieter font reads `--control-text-sm` (the scaled `text-xs`).
+      { iconOnly: false, size: 'xs', class: 'rounded-pill px-2 text-[length:var(--control-text-sm)]' },
+      { iconOnly: false, size: 'sm', class: 'rounded-pill px-3' },
+      { iconOnly: false, size: 'md', class: 'px-4 py-2 has-[>svg]:px-3' },
+      { iconOnly: false, size: 'lg', class: 'rounded-pill px-8 has-[>svg]:px-5' },
+      // The icon-only SQUARE width per rung (was the `icon`/`icon-sm` rungs).
+      { iconOnly: true, size: 'xs', class: 'w-(--control-h-xs)' },
+      { iconOnly: true, size: 'sm', class: 'w-(--control-h-sm)' },
+      { iconOnly: true, size: 'md', class: 'w-(--control-h-md)' },
+      { iconOnly: true, size: 'lg', class: 'w-(--control-h-lg)' },
+    ],
     defaultVariants: {
       variant: 'default',
-      size: 'default',
+      size: 'md',
+      iconOnly: false,
     },
   },
 )

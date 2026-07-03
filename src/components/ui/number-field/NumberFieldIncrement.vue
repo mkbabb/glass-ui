@@ -21,7 +21,7 @@ const forwarded = useForwardProps(delegatedProps)
   <NumberFieldIncrement data-slot="increment" v-bind="forwarded" as-child>
     <Button
       variant="ghost"
-      size="icon"
+      iconOnly
       :class="cn('absolute top-1/2 -translate-y-1/2 right-0 disabled:cursor-not-allowed disabled:opacity-20', props.class)"
     >
       <slot>

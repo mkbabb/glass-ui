@@ -88,17 +88,17 @@ const CONTAINERS_STOP = 2;
                 </p>
                 <div class="flex items-center gap-3">
                     <IconTooltip text="Inline help">
-                        <Button variant="ghost" size="icon">
+                        <Button variant="ghost" iconOnly>
                             <CircleHelp class="size-5" />
                         </Button>
                     </IconTooltip>
                     <IconTooltip text="Surface details">
-                        <Button variant="ghost" size="icon">
+                        <Button variant="ghost" iconOnly>
                             <Info class="size-5" />
                         </Button>
                     </IconTooltip>
                     <IconTooltip text="Run the magic sparkles">
-                        <Button variant="glass" size="icon">
+                        <Button variant="glass" iconOnly>
                             <Sparkles class="size-5" />
                         </Button>
                     </IconTooltip>

@@ -10,11 +10,11 @@ export const avatarVariants = cva(
     variants: {
       size: {
         // AX.W51 D18 — the `sm` avatar is a control-register surface (the h-10
-        // rung), so it reads the `--control-h-md` comfort cohort. The `base`/`lg`
+        // rung), so it reads the `--control-h-md` comfort cohort. The `md`/`lg`
         // avatars are DISPLAY surfaces (64/128px hero glyphs, not touch targets),
         // off the comfort axis by the no-overfit scope discipline.
         sm: 'h-(--control-h-md) w-(--control-h-md) text-xs',
-        base: 'h-16 w-16 text-2xl',
+        md: 'h-16 w-16 text-2xl',
         lg: 'h-32 w-32 text-5xl',
       },
       shape: {

@@ -45,7 +45,7 @@ const opaqueVariants = [
 
 const glassVariants = ["glass", "glass-wash"] as const;
 
-const sizes = ["xs", "sm", "default", "lg"] as const;
+const sizes = ["xs", "sm", "md", "lg"] as const;
 </script>
 
 <template>

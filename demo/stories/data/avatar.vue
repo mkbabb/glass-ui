@@ -22,7 +22,7 @@ const people: Member[] = [
     { id: "g", name: "Donald Knuth",   initials: "DK", tone: "11" },
 ];
 
-const sizes = ["sm", "base", "lg"] as const;
+const sizes = ["sm", "md", "lg"] as const;
 </script>
 
 <template>
@@ -48,7 +48,7 @@ const sizes = ["sm", "base", "lg"] as const;
         <div>
             <p class="text-admin-label mb-4 text-muted-foreground">Shapes · fallbacks · tones</p>
             <div class="flex flex-wrap items-center gap-4">
-                <Avatar v-for="p in people" :key="p.id" size="base" shape="circle">
+                <Avatar v-for="p in people" :key="p.id" size="md" shape="circle">
                     <AvatarFallback
                         :class="
                             cn(
@@ -62,7 +62,7 @@ const sizes = ["sm", "base", "lg"] as const;
                         {{ p.initials }}
                     </AvatarFallback>
                 </Avatar>
-                <Avatar size="base" shape="square">
+                <Avatar size="md" shape="square">
                     <AvatarFallback class="bg-muted fira-code text-foreground">
                         ℱ
                     </AvatarFallback>

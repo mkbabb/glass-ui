@@ -116,7 +116,7 @@ function setApi(api: CarouselApi | undefined) {
         <StorySection heading="Carousel pager + dots substrate" gap="md">
             <p class="text-sm text-muted-foreground">
                 <code class="rounded bg-muted px-1">&lt;CarouselPager&gt;</code> composes
-                <code class="rounded bg-muted px-1">&lt;Button variant="ghost" size="icon"&gt;</code> chevrons
+                <code class="rounded bg-muted px-1">&lt;Button variant="ghost" iconOnly&gt;</code> chevrons
                 with a "X / N" counter in the
                 <code class="rounded bg-muted px-1">.glass-pager-ring</code> glass pill chassis;
                 <code class="rounded bg-muted px-1">&lt;PagerDots&gt;</code> renders the same dark/light-safe

@@ -108,7 +108,7 @@
        tile-min` is now IN the cascade (DK4-b) so the grid tile scales with the
        control + glyph; it is a proportional `calc(control-size + tile-pad)` so the
        icon-to-tile margin is ONE knob, not a per-density literal. */
-    .glass-dock[data-density="compact"] {
+    .glass-dock[data-size="sm"] {
         /* BD.W-DOCK-CORE (A11) — the OUTER pill pad floors lifted ~+50% for the generous
            warm-cream liquid breath (the sliver-pill defect). The inner
            `--dock-control-safe-inset` plate clearance is untouched (a distinct axis). */
@@ -166,7 +166,7 @@
 
     /* Comfortable density — the GlassDock default. Sits between compact
        and spacious. */
-    .glass-dock[data-density="comfortable"] {
+    .glass-dock[data-size="md"] {
         /* BD.W-DOCK-CORE (A11) — the generous liquid-pill pad: inline 0.5 → 0.75rem (+8px
            total breath), block 0.375 → 0.5rem (softer). The vertical sliver-around-40px
            becomes a soft warm-cream capsule. */
@@ -217,7 +217,7 @@
         --dock-tab-h: calc(38px * var(--dock-scale));
     }
 
-    .glass-dock[data-density="spacious"] {
+    .glass-dock[data-size="lg"] {
         /* BD.W-DOCK-CORE (A11) — the spacious rung breathes in lockstep (~+33%). */
         --dock-padding-block: calc(
             var(--dock-density-spacious-padding-block, 0.625rem) * var(--dock-scale)
@@ -267,7 +267,7 @@
        a primary surface, not a tray. Tab buttons set their own min-height so
        consumer-bumped fonts no longer drift the button height — the
        `--dock-tab-min-height` token reserves the row regardless of glyph rise. */
-    .glass-dock[data-density="audacious"] {
+    .glass-dock[data-size="xl"] {
         --dock-padding-block: calc(
             var(--dock-density-audacious-padding-block, 0.5rem) * var(--dock-scale)
         );
@@ -324,9 +324,9 @@
 
        It is a NAMED preset, NOT a 5th density rung — the density axis stays FOUR rungs
        (`proof:dock-unify`'s density census is unaffected). The preset is a geometry
-       OVERRIDE composing WITH a `data-density` base: `[data-preset="cockpit"]` wins the
+       OVERRIDE composing WITH a `data-size` base: `[data-preset="cockpit"]` wins the
        control-size/layer-height/chrome by source-order (this block comes AFTER the rungs),
-       so a `<GlassDock data-density="comfortable" data-preset="cockpit">` resolves the
+       so a `<GlassDock data-size="md" data-preset="cockpit">` resolves the
        cockpit geometry. An ancestor `[data-preset="cockpit"]` scope re-declares these
        tokens too (the substitution-vs-inheritance discipline) so descendant docks inherit.
 
@@ -387,7 +387,7 @@
         --dock-label-ratio: 0.42;
         /* RE-RESOLVE the density-painted glyph tokens against the cockpit
            `--dock-layer-height` (the same substitution-vs-inheritance trap the
-           `.glass-dock[data-density]` re-resolve below fixes — a `[data-preset]`
+           `.glass-dock[data-size]` re-resolve below fixes — a `[data-preset]`
            scope paints its OWN `--dock-layer-height`, so the `:root`-derived glyph
            would freeze at the fallback). Identical formula to the density re-resolve;
            only the resolution element moves so the cockpit height flows into the glyph. */
@@ -401,7 +401,7 @@
     /* BB.W-PERF-PRODUCER A′-6 — RE-RESOLVE the glyph token inside the density-painted
        scope. `--dock-icon-glyph` (offsets-sizing.css) is a RATIO of
        `--dock-layer-height`, but density.css paints `--dock-layer-height` ONLY on
-       `.glass-dock[data-density]` — the `:root` `--dock-icon-glyph` definition reads
+       `.glass-dock[data-size]` — the `:root` `--dock-icon-glyph` definition reads
        `--dock-layer-height` at `:root` (the inline fallback ladder), so it would
        FREEZE at the fallback rather than track the per-rung painted height (the SAME
        substitution-vs-inheritance trap the R5-1 sweep fixed for
@@ -412,7 +412,7 @@
        only the resolution element moves. The WCAG floor + the `--dock-icon-glyph-ratio`
        knob ride through unchanged; the `.dark-mode-toggle-button > svg` mirror reads
        the same re-resolved token so both glyphs track the density axis. */
-    .glass-dock[data-density] {
+    .glass-dock[data-size] {
         --dock-icon-glyph: max(
             calc(var(--dock-layer-height, calc(2.5rem * var(--dock-scale))) * var(--dock-icon-glyph-ratio)),
             var(--dock-icon-glyph-floor)
@@ -443,12 +443,12 @@
        the prior 479/719px viewport cadence as box widths (30rem ≈ 480px,
        45rem ≈ 720px at the 16px root). */
     @container dock (max-width: 29.9375rem) {
-        .glass-dock[data-density="audacious"] .dock-label {
+        .glass-dock[data-size="xl"] .dock-label {
             --dock-label-size: 14px;
         }
     }
     @container dock (min-width: 30rem) and (max-width: 44.9375rem) {
-        .glass-dock[data-density="audacious"] .dock-label {
+        .glass-dock[data-size="xl"] .dock-label {
             --dock-label-size: 15px;
         }
     }

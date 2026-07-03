@@ -57,16 +57,23 @@ export const chipVariants = cva(
                 sm: "inline-flex items-center justify-center gap-1 px-2.5 py-1 text-caption",
                 md: "inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 text-small",
                 lg: "inline-flex items-center justify-center gap-2 px-5 py-2 text-base",
-                /**
-                 * The CELL exception — a square icon+label TILE (a card, not a
-                 * pill). `.glass-chip--cell` re-points the silhouette to
-                 * `--radius-card`; the material + motion are the shared register.
-                 */
+            },
+            /**
+             * The SHAPE axis (BH.W-SIZE-UNIFY) — a silhouette word is NEVER a scale
+             * rung (the axes.ts sub-range law). `pill` (default) is the stadium
+             * capsule; `cell` is the square icon+label TILE (a card, not a pill):
+             * `.glass-chip--cell` re-points the silhouette to `--radius-card`, the
+             * material + motion stay the shared register. Composed WITH `size`; the
+             * cell geometry overrides the inline-flex pill padding at the element.
+             */
+            shape: {
+                pill: "",
                 cell: "glass-chip--cell flex flex-col items-center justify-center gap-1.5 px-2 py-2.5 text-micro",
             },
         },
         defaultVariants: {
             size: "md",
+            shape: "pill",
         },
     },
 );

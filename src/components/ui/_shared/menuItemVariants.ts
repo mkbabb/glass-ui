@@ -88,17 +88,18 @@ export const menuItemVariants = cva(
                 start: "pl-7 pr-2",
                 "start-wide": "pl-8 pr-2",
             },
-            // Vertical rhythm. `comfortable` is the default (py-1.5).
-            // `audacious` matches the dock-tier audacious density rail (py-2.5).
-            density: {
-                comfortable: "py-1.5",
-                audacious: "py-2.5",
+            // Vertical rhythm (BH.W-SIZE-UNIFY — the size axis, was `density`).
+            // `md` is the default (py-1.5); `lg` matches the taller dock-tier rail
+            // (py-2.5). A menu row is a control — the scale rung is `size`.
+            size: {
+                md: "py-1.5",
+                lg: "py-2.5",
             },
         },
         defaultVariants: {
             surface: "glass",
             indicator: "none",
-            density: "comfortable",
+            size: "md",
         },
     },
 );

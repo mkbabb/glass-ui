@@ -37,22 +37,22 @@ const CONTAINERS_STOP = 2;
             <p class="section-label">label · sides</p>
             <div class="flex flex-wrap items-center gap-6">
                 <HoverPopover content="Settings" side="top">
-                    <Button variant="ghost" size="icon">
+                    <Button variant="ghost" iconOnly>
                         <Settings class="size-5" />
                     </Button>
                 </HoverPopover>
                 <HoverPopover content="Back" side="bottom">
-                    <Button variant="ghost" size="icon">
+                    <Button variant="ghost" iconOnly>
                         <ArrowLeft class="size-5" />
                     </Button>
                 </HoverPopover>
                 <HoverPopover content="Retake" side="right">
-                    <Button variant="ghost" size="icon">
+                    <Button variant="ghost" iconOnly>
                         <RotateCcw class="size-5" />
                     </Button>
                 </HoverPopover>
                 <HoverPopover content="Stop" side="left">
-                    <Button variant="ghost" size="icon">
+                    <Button variant="ghost" iconOnly>
                         <Square class="size-5" />
                     </Button>
                 </HoverPopover>

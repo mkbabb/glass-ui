@@ -40,7 +40,7 @@ import { GlassDock } from "@glass/components/custom/dock";
                 />
             </div>
             <p class="text-mono-caption text-muted-foreground">
-                Defaults bake `labelPosition="stacked"` + `density="spacious"` +
+                Defaults bake `labelPosition="stacked"` + `dense=false` +
                 `size="lg"`. The pill lands at the 2.625rem floor declared by
                 `--metric-badge-min-height-stacked`; row 1 carries the label,
                 row 2 baseline-aligns amount + unit.
@@ -49,7 +49,7 @@ import { GlassDock } from "@glass/components/custom/dock";
 
         <!-- Density toggle. -->
         <section class="flex flex-col gap-3">
-            <p class="section-label">density · spacious vs comfortable</p>
+            <p class="section-label">padding · spacious (default) vs dense</p>
             <div class="flex flex-wrap items-end gap-6">
                 <div class="flex flex-col gap-2">
                     <span class="text-admin-label text-muted-foreground">spacious (default)</span>
@@ -57,7 +57,6 @@ import { GlassDock } from "@glass/components/custom/dock";
                         label="LATENCY"
                         :value="36"
                         unit="ms"
-                        density="spacious"
                         color="var(--viz-fourier)"
                     />
                 </div>
@@ -67,7 +66,7 @@ import { GlassDock } from "@glass/components/custom/dock";
                         label="LATENCY"
                         :value="36"
                         unit="ms"
-                        density="comfortable"
+                        dense
                         color="var(--viz-fourier)"
                     />
                 </div>
@@ -79,7 +78,7 @@ import { GlassDock } from "@glass/components/custom/dock";
             <p class="section-label">cluster · GlassDock containerName host</p>
             <GlassDock
                 position="inline"
-                density="spacious"
+                size="lg"
                 :always-expanded="true"
                 :start-collapsed="false"
                 :fit-content="true"

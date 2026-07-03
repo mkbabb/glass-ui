@@ -108,12 +108,12 @@ html.no-transition *:not([data-allow-motion])::after {
    coarse pointers the small icon-button/trigger surfaces OUTSIDE the dock lift
    to the WCAG 2.5.5 (44px) minimum — ONE amendment retiring the per-consumer
    `min-h-[44px]` one-liners. Token-driven (`--touch-target`); fine-pointer
-   byte-identical. Targets `Button size="icon"` (via the `data-size="icon"`
+   byte-identical. Targets `Button iconOnly` (via the `data-icon-only`
    attr Button.vue reflects), ExpandableContainer + SegmentedTabs (responsive
    mobile Select) triggers.
    `min-block/inline-size` only RAISES — a larger explicit size is never lost. */
 @media (pointer: coarse) {
-    [data-size="icon"],
+    [data-icon-only],
     [data-part="trigger"],
     .segmented-tabs__trigger {
         min-block-size: var(--touch-target, 2.75rem);

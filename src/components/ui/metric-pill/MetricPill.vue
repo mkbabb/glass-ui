@@ -22,7 +22,6 @@ import { cn, type MetricValue } from "../../../utils";
  */
 type MetricPillSize = "sm" | "md" | "lg" | "xl";
 type MetricPillLabelPosition = "inline" | "stacked";
-type MetricPillDensity = "comfortable" | "spacious";
 
 const props = withDefaults(
     defineProps<{
@@ -39,14 +38,14 @@ const props = withDefaults(
         size?: MetricPillSize;
         /** Defaults to `stacked` — the 2-row label-above-value reading. */
         labelPosition?: MetricPillLabelPosition;
-        /** Defaults to `spacious` — chassis-strip block padding. */
-        density?: MetricPillDensity;
+        /** BH.W-SIZE-UNIFY — the tighter chassis-strip padding (was
+         *  `density="comfortable"`). Default OFF = the spacious rhythm. */
+        dense?: boolean;
         class?: HTMLAttributes["class"];
     }>(),
     {
         size: "lg",
         labelPosition: "stacked",
-        density: "spacious",
     },
 );
 
@@ -72,7 +71,7 @@ const composedClass = computed(() =>
         :size="size"
         :label-position="labelPosition"
         :class="composedClass"
-        :data-density="density"
+        :data-dense="dense || undefined"
         data-cast
     />
 </template>

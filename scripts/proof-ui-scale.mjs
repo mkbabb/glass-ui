@@ -224,13 +224,13 @@ add(
 // global --ui-coarse-scale 1.5 painted; the --dock-mobile-scale knob wins it.)
 add(
     "dock-coarse-honors-global",
-    /@media\s*\(pointer:\s*coarse\)\s*\{[\s\S]*?\.glass-dock\[data-density\]\s*\{[\s\S]*?--dock-local-scale:\s*var\(\s*--dock-mobile-scale,\s*var\(--dock-coarse-scale,/s.test(
+    /@media\s*\(pointer:\s*coarse\)\s*\{[\s\S]*?\.glass-dock\[data-size\]\s*\{[\s\S]*?--dock-local-scale:\s*var\(\s*--dock-mobile-scale,\s*var\(--dock-coarse-scale,/s.test(
         dockOverflow,
     ) && !/--dock-scale:\s*var\(--dock-mobile-scale/.test(dockOverflow),
     "the dock coarse block sets --dock-local-scale: var(--dock-mobile-scale, var(--dock-coarse-scale, …)) (the knob over the compact coarse default), NOT a parallel --dock-scale: 1.5 (no double-scale)",
 );
 // R5-1 — THE KNOB-REACHES-GEOMETRY WITNESS (born-RED on the pre-fix tree). The
-// coarse block must RE-DECLARE --dock-scale on the SAME .glass-dock[data-density]
+// coarse block must RE-DECLARE --dock-scale on the SAME .glass-dock[data-size]
 // element that lifts --dock-local-scale, so the descendant --dock-local-scale lift
 // re-flows into --dock-scale (custom-property substitution resolves --dock-scale at
 // its declaring element — the :root definition froze --dock-local-scale at 1, so the
@@ -239,10 +239,10 @@ add(
 // IDENTICAL to the :root one by construction.
 add(
     "dock-coarse-redeclares-scale",
-    /@media\s*\(pointer:\s*coarse\)\s*\{[\s\S]*?\.glass-dock\[data-density\]\s*\{[\s\S]*?--dock-scale:\s*calc\(\s*var\(--ui-scale\)\s*\*\s*var\(--dock-local-scale,\s*1\)\)/s.test(
+    /@media\s*\(pointer:\s*coarse\)\s*\{[\s\S]*?\.glass-dock\[data-size\]\s*\{[\s\S]*?--dock-scale:\s*calc\(\s*var\(--ui-scale\)\s*\*\s*var\(--dock-local-scale,\s*1\)\)/s.test(
         dockOverflow,
     ),
-    "the coarse block RE-DECLARES --dock-scale: calc(var(--ui-scale) * var(--dock-local-scale, 1)) on .glass-dock[data-density] so the --dock-mobile-scale knob reaches the geometry cascade (R5-1 — the substitution-vs-inheritance re-declare; the live π readback ratifies the painted size delta)",
+    "the coarse block RE-DECLARES --dock-scale: calc(var(--ui-scale) * var(--dock-local-scale, 1)) on .glass-dock[data-size] so the --dock-mobile-scale knob reaches the geometry cascade (R5-1 — the substitution-vs-inheritance re-declare; the live π readback ratifies the painted size delta)",
 );
 // R5-2 — the dock-layer compact coarse register is MINTED at :root (overridable).
 add(

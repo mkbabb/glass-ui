@@ -121,7 +121,7 @@ function derive() {
                     <div class="flex items-center gap-1.5">
                         <Button
                             variant="glass"
-                            size="icon"
+                            iconOnly
                             class="h-6 w-6"
                             :disabled="!canStepDown"
                             aria-label="Fewer stops"
@@ -136,7 +136,7 @@ function derive() {
                         </span>
                         <Button
                             variant="glass"
-                            size="icon"
+                            iconOnly
                             class="h-6 w-6"
                             :disabled="!canStepUp"
                             aria-label="More stops"

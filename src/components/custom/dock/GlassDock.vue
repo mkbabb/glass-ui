@@ -67,7 +67,7 @@ const {
     layoutValue,
     shape,
     orientation,
-    density,
+    size,
     scrollClass,
     alwaysExpanded,
     fitContent,
@@ -351,7 +351,7 @@ defineExpose({
               : position === 'sticky' ? 'dock-sticky'
               : 'dock-inline',
         ]"
-        :data-density="density"
+        :data-size="size"
         :data-held="isHeld || undefined"
         :data-search="search || undefined"
         :data-container-name="containerName || undefined"

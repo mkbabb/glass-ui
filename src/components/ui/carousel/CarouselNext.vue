@@ -11,7 +11,6 @@ const props = withDefaults(defineProps<{
 }
 & WithClassAsProps>(), {
   variant: 'outline',
-  size: 'icon',
 })
 
 const { orientation, canScrollNext, scrollNext } = useCarousel()
@@ -30,6 +29,7 @@ const { orientation, canScrollNext, scrollNext } = useCarousel()
     )"
     :variant="variant"
     :size="size"
+    icon-only
     @click="scrollNext"
   >
     <slot>

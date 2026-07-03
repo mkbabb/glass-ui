@@ -53,7 +53,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                     >
                         <Tooltip>
                             <TooltipTrigger as-child>
-                                <Button variant="ghost" size="icon">
+                                <Button variant="ghost" iconOnly>
                                     <Bold class="size-4" />
                                 </Button>
                             </TooltipTrigger>
@@ -61,7 +61,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                         </Tooltip>
                         <Tooltip>
                             <TooltipTrigger as-child>
-                                <Button variant="ghost" size="icon">
+                                <Button variant="ghost" iconOnly>
                                     <Italic class="size-4" />
                                 </Button>
                             </TooltipTrigger>
@@ -69,7 +69,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                         </Tooltip>
                         <Tooltip>
                             <TooltipTrigger as-child>
-                                <Button variant="ghost" size="icon">
+                                <Button variant="ghost" iconOnly>
                                     <Underline class="size-4" />
                                 </Button>
                             </TooltipTrigger>

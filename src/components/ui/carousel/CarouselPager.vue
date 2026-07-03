@@ -63,7 +63,7 @@ const NextIcon = computed(() =>
     >
         <Button
             variant="ghost"
-            size="icon"
+            iconOnly
             :disabled="!canScrollPrev"
             :aria-label="orientation === 'vertical' ? 'Previous slide (up)' : 'Previous slide'"
             data-slot="carousel-pager-prev"
@@ -87,7 +87,7 @@ const NextIcon = computed(() =>
 
         <Button
             variant="ghost"
-            size="icon"
+            iconOnly
             :disabled="!canScrollNext"
             :aria-label="orientation === 'vertical' ? 'Next slide (down)' : 'Next slide'"
             data-slot="carousel-pager-next"

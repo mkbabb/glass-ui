@@ -174,7 +174,7 @@
     --dock-menubar-reserve: 4rem;
 
     /* AX.W45 — the dock geometry multiplier. `--dock-scale` threads the WHOLE
-       `.glass-dock[data-density]` geometry cascade (box, padding, gap, tab,
+       `.glass-dock[data-size]` geometry cascade (box, padding, gap, tab,
        tile-min, glyph) via `calc(<base> * --dock-scale)`, so a single knob grows
        every dock axis in lockstep. The WCAG 2.5.5 44px floor survives as a `max(…,
        44px)` clamp INSIDE the scaled control-size.
@@ -200,7 +200,7 @@
        dock-layer coarse default (--dock-coarse-scale, below) is the fallback the
        coarse block reads; a consumer setting --dock-mobile-scale on ANY ancestor
        wins the fallback (R5-1 — the knob must reach the geometry cascade, not be
-       shadowed by a hard-pin on .glass-dock[data-density]). The coarse block in
+       shadowed by a hard-pin on .glass-dock[data-size]). The coarse block in
        dock/overflow.css RE-DECLARES --dock-scale so the descendant --dock-local-scale
        lift re-flows into it (the substitution-vs-inheritance trap). */
     --dock-mobile-scale: initial;
@@ -219,7 +219,7 @@
        component layer); this is a DEFAULT, not a ceiling.
 
        BB.W-PERF-PRODUCER A′-6 — the glyph rides the per-DENSITY box, not a flat rem.
-       The value.js D5-1 companion trace: `density="spacious"` grew the shelf + pad +
+       The value.js D5-1 companion trace: `size="lg"` grew the shelf + pad +
        gap but the glyph stayed 1.25rem (it rode `--dock-scale` only, NOT the
        per-density `--dock-layer-height` axis density.css scales). Now the glyph is a
        RATIO of `--dock-layer-height` (`--dock-icon-glyph-ratio`, default 0.5 → a
@@ -228,10 +228,10 @@
        PRESERVED transitively — `--dock-layer-height` already rides it (density.css).
        The WCAG glyph-floor holds via `max(…, --dock-icon-glyph-floor)` (a 16px floor
        so a sub-1 density/coarse register can never drop the glyph below the legible
-       minimum). NOTE: `--dock-layer-height` is painted ONLY on `.glass-dock[data-density]`
+       minimum). NOTE: `--dock-layer-height` is painted ONLY on `.glass-dock[data-size]`
        (density.css) — at `:root` it is the inline fallback below, so this `:root`
        declaration resolves the fallback ladder; density.css RE-RESOLVES `--dock-icon-glyph`
-       inside each `[data-density]` scope so the density-painted height flows in (the
+       inside each `[data-size]` scope so the density-painted height flows in (the
        substitution-vs-inheritance trap the overflow.css R5-1 sweep documents). The
        toggle mirror `.dark-mode-toggle-button > svg` reads the SAME `--dock-icon-glyph`
        so both glyphs move onto the density axis together. */
@@ -248,7 +248,7 @@
        `--dock-scale`-keyed `--dock-icon-glyph` the nav icons paint so the docked
        toggle is optically uniform out of the box. Like `--dock-icon-glyph` this
        `:root` declaration resolves the fallback ladder; density.css RE-RESOLVES it
-       inside each `[data-density]` scope and overflow.css RE-DECLARES it in the
+       inside each `[data-size]` scope and overflow.css RE-DECLARES it in the
        coarse block, so the density-painted + coarse-scaled `--dock-icon-glyph` flows
        in (the substitution-vs-inheritance trap closed on all three registers — a
        `:root`-only knob would freeze at the `:root` `--dock-scale` while the glyph
@@ -433,7 +433,7 @@
     --dock-label-ratio: 0.5088;
 
     /* AQ.W3 §7 — canonical WCAG 2.5.5 (44px) touch-target floor for the
-       NON-dock coarse-pointer surfaces (`Button size="icon"`,
+       NON-dock coarse-pointer surfaces (`Button iconOnly`,
        ExpandableContainer triggers, SegmentedTabs responsive mobile trigger). One
        named rung the `@media (pointer: coarse)` block in utilities.css reads,
        retiring the per-consumer one-liner `min-h-[44px]` patches. Equals

@@ -323,7 +323,7 @@
         /* AX.W45 D13-b — H/V PROPORTION PARITY. The hardcoded `gap: 0.25rem` + the
            density-blind `--dock-vertical-padding` override are DELETED. The vertical
            dock now reads the SAME `--dock-layer-gap` / `--dock-padding-*` density
-           cascade the horizontal dock tunes, so `density="spacious"` paints a LARGER
+           cascade the horizontal dock tunes, so `size="lg"` paints a LARGER
            gap than `compact` on BOTH axes (the density axis was dead on the vertical
            dock). ONE token ladder, both orientations; the `--dock-scale` multiplier
            threads it for free (the cascade is `calc(* --dock-scale)`-keyed). */

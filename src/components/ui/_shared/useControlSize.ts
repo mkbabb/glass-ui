@@ -12,7 +12,7 @@
 // text` element-override pair: `controlSizeClass(size)` re-points them per rung,
 // and the `.input-pill` recipe (glass/surfaces.css) reads `var(--control-pill-h,
 // var(--control-h-md))` / `var(--control-pill-text, var(--control-text))` — so a
-// bare control (size unset / "default") is byte-identical to HEAD (the override is
+// bare control (size unset / "md") is byte-identical to HEAD (the override is
 // absent, the cohort default wins), and a `size="lg"`/`"sm"` retunes the height +
 // font on the cohort. ONE substitution rung, no recipe fork (the same
 // substitution-over-redeclaration discipline `--glass-bg-dock`/`--dock-scale`
@@ -25,28 +25,28 @@
  *
  *   sm      — the quieter/secondary control: the `--control-h-sm` height +
  *             `--control-text-sm` font (shorter + quieter).
- *   default — the canonical golden pill: the `--control-h-md` height +
+ *   md      — the canonical golden pill: the `--control-h-md` height +
  *             `--control-text` font (byte-identical to HEAD).
  *   lg      — the primary/emphatic control: the `--control-h-lg` height with the
  *             base `--control-text` font (taller, same workhorse weight — matching
  *             Button's `lg`, where only the height grows).
  */
-export type ControlSize = "sm" | "default" | "lg";
+export type ControlSize = "sm" | "md" | "lg";
 
 /**
  * Resolve a `ControlSize` to the element-level token-override class string the
- * `.input-pill` recipe reads. The `default` rung emits NO override (so the recipe
+ * `.input-pill` recipe reads. The `md` rung emits NO override (so the recipe
  * falls back to the cohort `--control-h-md` / `--control-text` — byte-identical to
  * HEAD); `sm`/`lg` re-point `--control-pill-h` / `--control-pill-text` to the
  * chosen cohort rung.
  *
- *   controlSizeClass()        → ""                                              (golden default)
+ *   controlSizeClass()        → ""                                              (golden md rung)
  *   controlSizeClass("sm")    → "[--control-pill-h:var(--control-h-sm)] [--control-pill-text:var(--control-text-sm)]"
  *   controlSizeClass("lg")    → "[--control-pill-h:var(--control-h-lg)]"
  *
- * @param size the control-size rung (`default` · `sm` · `lg`)
+ * @param size the control-size rung (`sm` · `md` · `lg`)
  */
-export function controlSizeClass(size: ControlSize = "default"): string {
+export function controlSizeClass(size: ControlSize = "md"): string {
     if (size === "sm")
         return "[--control-pill-h:var(--control-h-sm)] [--control-pill-text:var(--control-text-sm)]";
     if (size === "lg") return "[--control-pill-h:var(--control-h-lg)]";
@@ -64,13 +64,13 @@ export function controlSizeClass(size: ControlSize = "default"): string {
  *   --switch-track-w = --switch-track-h × 11/6      (the iOS track aspect)
  *   --switch-throw   = --switch-track-w − --switch-thumb − 0.25rem
  *
- * The `default` rung (`--control-h-md`) resolves the HEAD `h-6 w-11` track +
+ * The `md` rung (`--control-h-md`) resolves the HEAD `h-6 w-11` track +
  * `h-5 w-5` thumb + `translate-x-5` throw EXACTLY (byte-identical). `sm`/`lg`
  * re-point the anchor `--switch-track-h` so the whole quad scales in lockstep.
  *
- * @param size the control-size rung (`default` · `sm` · `lg`)
+ * @param size the control-size rung (`sm` · `md` · `lg`)
  */
-export function switchSizeClass(size: ControlSize = "default"): string {
+export function switchSizeClass(size: ControlSize = "md"): string {
     if (size === "sm")
         return "[--switch-track-h:calc(var(--control-h-sm)*0.6)]";
     if (size === "lg")

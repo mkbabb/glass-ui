@@ -8,11 +8,11 @@ export type {
     ConfiguratorScrollMode,
 } from "./Configurator.vue";
 export {
-    CONFIGURATOR_DENSITY_KEY,
-    provideConfiguratorDensity,
-    useOptionalConfiguratorDensity,
-    type ConfiguratorDensity,
-} from "./density";
+    CONFIGURATOR_SIZE_KEY,
+    provideConfiguratorSize,
+    useOptionalConfiguratorSize,
+    type ConfiguratorSize,
+} from "./size";
 export {
     useConfiguratorState,
     type ConfiguratorCloneMode,

@@ -69,7 +69,7 @@ export const toggleVariants = cva(
       },
       size: {
         // AX.W51 D18 — the height rungs read the `--control-h-*` comfort cohort.
-        default: 'h-(--control-h-md) px-3',
+        md: 'h-(--control-h-md) px-3',
         sm: 'h-(--control-h-sm) px-2.5',
         lg: 'h-(--control-h-lg) px-5',
       },
@@ -81,11 +81,11 @@ export const toggleVariants = cva(
       // card. CVA emits `compoundVariants` classes after the `variants`
       // classes, so this `h-auto` wins the source-order race against the
       // size token's `h-10`/`h-9`/`h-11` and the card sizes to its content.
-      { variant: 'card', size: ['default', 'sm', 'lg'], class: 'h-auto' },
+      { variant: 'card', size: ['md', 'sm', 'lg'], class: 'h-auto' },
     ],
     defaultVariants: {
       variant: 'default',
-      size: 'default',
+      size: 'md',
     },
   },
 )

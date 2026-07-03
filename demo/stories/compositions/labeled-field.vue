@@ -91,7 +91,7 @@ const revealLabel = computed(() => (revealed.value ? "Hide password" : "Show pas
                         <template #action>
                             <Button
                                 variant="ghost"
-                                size="icon"
+                                iconOnly
                                 aria-label="Clear search"
                                 :disabled="!search"
                                 @click="search = ''"
@@ -116,7 +116,7 @@ const revealLabel = computed(() => (revealed.value ? "Hide password" : "Show pas
                         <template #action>
                             <Button
                                 variant="ghost"
-                                size="icon"
+                                iconOnly
                                 :aria-label="revealLabel"
                                 @click="revealed = !revealed"
                             >

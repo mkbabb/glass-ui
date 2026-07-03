@@ -173,11 +173,11 @@ function run() {
     facts.glyphFloorMinted = /--dock-icon-glyph-floor:/.test(offsetsFlat);
     // The flat-rem form must be GONE from the :root declaration (the bite).
     facts.glyphNotFlatRem = !/--dock-icon-glyph:\s*calc\(1\.25rem\s*\*\s*var\(--dock-scale\)\)/.test(offsetsFlat);
-    // density.css RE-RESOLVES the glyph inside the painted [data-density] scope (the substitution trap).
+    // density.css RE-RESOLVES the glyph inside the painted [data-size] scope (the substitution trap).
     const density = stripComments(read(PATHS.densityCss));
     const densityFlat = flatten(density);
     facts.glyphReResolvedPerDensity =
-        /\.glass-dock\[data-density\]\s*\{[^}]*--dock-icon-glyph:[^}]*--dock-layer-height/.test(densityFlat);
+        /\.glass-dock\[data-size\]\s*\{[^}]*--dock-icon-glyph:[^}]*--dock-layer-height/.test(densityFlat);
     // overflow.css coarse re-declare must ALSO be density-aware (not the stale flat rem that would source-order-win).
     const overflow = stripComments(read(PATHS.overflowCss));
     const overflowFlat = flatten(overflow);
@@ -194,7 +194,7 @@ function run() {
         facts.glyphCoarseDensityAware;
     if (!facts.glyphRidesDensity) {
         violations.push(
-            `A′-6 W2: --dock-icon-glyph must ride the per-density --dock-layer-height (ratio knob --dock-icon-glyph-ratio + the WCAG floor), re-resolved inside the painted [data-density] scope (density.css) AND density-aware in the coarse overflow.css re-declare — found rootRatio=${facts.glyphRidesDensityRoot} ratioMinted=${facts.glyphRatioMinted} floorMinted=${facts.glyphFloorMinted} notFlatRem=${facts.glyphNotFlatRem} perDensityReResolve=${facts.glyphReResolvedPerDensity} coarseDensityAware=${facts.glyphCoarseDensityAware}`,
+            `A′-6 W2: --dock-icon-glyph must ride the per-density --dock-layer-height (ratio knob --dock-icon-glyph-ratio + the WCAG floor), re-resolved inside the painted [data-size] scope (density.css) AND density-aware in the coarse overflow.css re-declare — found rootRatio=${facts.glyphRidesDensityRoot} ratioMinted=${facts.glyphRatioMinted} floorMinted=${facts.glyphFloorMinted} notFlatRem=${facts.glyphNotFlatRem} perDensityReResolve=${facts.glyphReResolvedPerDensity} coarseDensityAware=${facts.glyphCoarseDensityAware}`,
         );
     }
 

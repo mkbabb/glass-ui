@@ -62,7 +62,7 @@ function cliPaths() {
         UTILITIES_ROOT: resolve(ROOT, "src/styles/utilities.css"),
         CHASSIS: resolve(ROOT, "src/styles/instrument-chassis.css"),
         MARKERS: resolve(ROOT, "src/components/custom/timeline/ContinuousMarkers.vue"),
-        DENSITY: resolve(ROOT, "src/components/custom/configurator/density.ts"),
+        DENSITY: resolve(ROOT, "src/components/custom/configurator/size.ts"),
         BARREL_BLOB: resolve(ROOT, "src/components/custom/goo-blob/index.ts"),
         BARREL_CONSTELLATION: resolve(
             ROOT,
@@ -219,10 +219,10 @@ function run() {
         violations.push("the dom/ barrel does not document the *Controls-vs-Return convention");
     }
 
-    // ── density colocation verify (no move; just confirm the sibling).
+    // ── size colocation verify (no move; just confirm the sibling).
     facts.densityColocated = existsSync(P.DENSITY);
     if (!facts.densityColocated) {
-        violations.push("configurator/density.ts is not colocated as a sibling");
+        violations.push("configurator/size.ts is not colocated as a sibling");
     }
 
     // ── 6. BARREL-PARITY snapshot. A god-module carved into a free-function

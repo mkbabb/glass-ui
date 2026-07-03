@@ -12,6 +12,9 @@ import { vSpecular } from '../../../composables/glass'
 interface Props extends PrimitiveProps {
   variant?: ButtonVariants['variant']
   size?: ButtonVariants['size']
+  // BH.W-SIZE-UNIFY — the icon-only SHAPE axis (square p-0), orthogonal to the
+  // scale `size` rung. `<Button iconOnly>` replaces the retired `size="icon"`.
+  iconOnly?: ButtonVariants['iconOnly']
   class?: HTMLAttributes['class']
   // BB.W-SURFACE-AXIS-COMPLETE — the shared {glass·veil·opaque} surface-decoration
   // axis (the R8-12 "buttons" close), threaded as the ORTHOGONAL cross-cutting
@@ -229,9 +232,10 @@ const liquidDecoration = computed(() =>
     data-slot="button"
     :data-variant="variant"
     :data-size="size"
+    :data-icon-only="iconOnly || undefined"
     :data-surface="surface"
     v-bind="hostAttrs"
-    :class="cn(buttonVariants({ variant, size }), surfaceDecoration, liquidDecoration, punchDecoration, props.class)"
+    :class="cn(buttonVariants({ variant, size, iconOnly }), surfaceDecoration, liquidDecoration, punchDecoration, props.class)"
     :style="hostStyle"
     @pointerdown="press.press"
     @pointerup="press.release"
