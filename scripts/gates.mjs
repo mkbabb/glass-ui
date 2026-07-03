@@ -200,6 +200,12 @@ export const GATES = [
         note: "BG.W-DOCK-DECOMPOSE — the GlassDock.vue god-SFC decomposition gate (KS-DOCK 4.4; the concrete realization of the spec's proof:dock ratchet-drain + colocation + single-writer arms). D1 ratchet-drain: GlassDock.vue ≤ 500 lines AND its proof:no-god-module RATCHET baseline #2 row is drained. D2 colocation: the two carved leaves (composables/useDockTouchGate.ts + composables/useDockFissionWiring.ts) exist AND GlassDock.vue imports both. D3 single-writer: zero --dock-morph-t/--dock-morph-v write in the SFC or either carved gesture leaf (the collapse morph scalar stays the orchestrator's, dockMorphContext). Pure FS, device-free (paint-class H, byte-identical paint). Born-RED on HEAD (707>500 + leaves absent + row present) → GREEN on the carve + a 6-bite self-test (each synthetic sabotage REDs its clause; the comment-mention fence does NOT flag).",
     },
     {
+        id: "proof:encapsulation",
+        cmd: "proof:encapsulation",
+        tags: ["local", "ci"],
+        note: "BG.W-BLOB-KINEMATICS-LEAF — the stateless-leaf encapsulation gate (F9 kinematics carve; ratchet-drain row 10). E1 ratchet-drain: useBlobSatellites.ts ≤ 500 lines AND its proof:no-god-module RATCHET row is drained. E2 colocation: composables/satelliteKinematics.ts exists + exports createSatellite/orbitPos/randomizeOrbit + the driver imports all three. E3 stateless-leaf: no SpringProgress/keyframes fork, no mulberry32/hashString rng ownership, no vue reactivity, no module-level mutable state. E4 single-definition: the three fns live in the leaf AND are DEFINITION-ABSENT from the driver (the carve is real, no dual-path copy). Pure FS, device-free (paint-class H, byte-identical paint). Born-RED on HEAD (leaf absent + driver 533>500 + row present) → GREEN + a 9-bite self-test (each synthetic sabotage REDs its clause; comment-mention fences do NOT flag).",
+    },
+    {
         id: "proof:dock-contextual-layers",
         cmd: "proof:dock-contextual-layers",
         tags: ["local", "ci", "release"],

@@ -171,7 +171,13 @@ const RATCHET_BASELINES = {
     // delta). Row DELETED in this same diff (the monotonic drain — the file is now ≤ 500).
     "components/custom/dock/composables/useDockContextSilhouette.ts": 551,
     "composables/glass/useGlassBackdropLuminance.ts": 542,
-    "components/custom/goo-blob/composables/useBlobSatellites.ts": 533,
+    // BG.W-BLOB-KINEMATICS-LEAF DRAINED useBlobSatellites.ts (533 → 427): the stateless
+    // orbit/eccentricity/wobble math (createSatellite/orbitPos/randomizeOrbit) carved into
+    // the colocated composables/satelliteKinematics.ts leaf (a pure math family — no
+    // closure state, no SpringProgress fork); the driver KEEPS the satellite pool + the
+    // phase state-machine + the pure numeric helpers (randRange/clamp01/lerp) and IMPORTS
+    // the three kinematics functions. Row DELETED in this same diff (the monotonic drain —
+    // the file is now ≤ 500). Locked by proof:encapsulation.
     "components/custom/goo-blob/shaders/metaball.wgsl.ts": 529,
     // BH.B2.4a DRAINED PagerDots.vue (509 → 433): the worm geometry (centerOf/restSize) +
     // the useGooMorph instance + the active/shown travel/settle driver carved into the
