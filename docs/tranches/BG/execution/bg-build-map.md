@@ -98,6 +98,11 @@ consolidation reading the frozen `{0.32, 0.7}`; `proof:dock-engine` E4 byte-froz
 (`C≥0.02`); RETIRE the self-cancelling `feTurbulence`; `feDiffuseLighting` `@supports`-gated enhancement. `14.3
 W-HANDMARK-PERFECT` (+14.4 pencil-boil). *(14.5 cross-repo-asks → F8.)*
 
+**NO-MASKING-FALLBACK edict rows (USER 07-03; the primary paints or fails LOUD; no legacy ladders on target engines):**
+- `NF.1 W-FALLBACK-EXCISE` (F3; P; MINTS proof:no-masking-fallback + the dormant-state manifest; precond 4.1): the mechanical purge — `var(--dock-expand-t,1)` fleet→bare var, stale-literal single-source, useDockMorphWindow inverted-ladder dies, vestigial transitionend arms delete; zero paint delta.
+- `NF.2 W-LEGACY-LADDER-COLLAPSE` (F2; P; proof:no-masking-fallback Arm E): the 11 pre-target @supports/JS ladders collapse onto modern CSS + the F2.2 light-dark() witness-table COLLAPSE (orchestrator ruling) under dual-engine paint re-verify; a11y STATE escapes fenced-keep.
+- `NF.3 W-GLASS-SIGNAL-TRUTH` (F2; P; proof:glass signal-truth arm; precond 3.5): the dead glass channels become writer-true or die — the .glass-clear mandatory scrim floor, the band-driver decision, ONE backdrop-hue channel, the writer-fired witness stamp.
+
 **IOS27-MOTION-TRUTH repair rows (USER 07-03; born-RED paint repairs, all preconds DONE):**
 - `F1.R1 W-ROUTE-ENTER-VISIBLE` (F1; P; proof:route route-enter-visible arm; precond 2.1): the route entrance VISIBLE in paint — pre-resolve the chunk before the swap, rise 16-24px on --spring-snappy, StoryHeader band stagger; ≥8 painted rise frames.
 - `F5.R1 W-OVERLAY-ENTER-PAINT` (F5; P; proof:motion overlay-enter-paint arm; precond F5.1): the .glass-reveal enter gets a real from-state (@starting-style or the F5.1 leaf armed on Dialog/Sheet/Popover); scrim couples to launch; ≥6 enter frames.
