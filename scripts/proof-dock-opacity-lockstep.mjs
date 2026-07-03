@@ -112,14 +112,24 @@ function transitionValue(body) {
     return m ? m[1].replace(/\s+/g, " ").trim() : null;
 }
 
-const BASE_RULE_RE = /\.dock-layer\s*,\s*\.dock-layer-item-host\s*\{/;
+// BG.W-DOCK-CONSUMER-FENCE — the `.dock-layer{,-item-host}` internal-part rules gained a
+// dock-root ANCESTRY anchor (`:where(.glass-dock, .dock-layer-group) …`, specificity 0,0,0)
+// so a bare consumer `.dock-layer` element outside a dock is never hidden/repositioned. This
+// reader FOLLOWS the anchor: each selector in the comma pair may carry an OPTIONAL leading
+// `:where(...)` anchor. The gate's INTENT (the base + active transition-body reads) is
+// unchanged — only the selector prefix moved.
+const ANCHOR = /(?::where\([^)]*\)\s*)?/.source;
+const BASE_RULE_RE = new RegExp(
+    `${ANCHOR}\\.dock-layer\\s*,\\s*${ANCHOR}\\.dock-layer-item-host\\s*\\{`,
+);
 // AX.W02 — the active-pane vocabulary UNIFIED: the outer `.layer-active` triple
 // retired, both surfaces now drive crossfade off `.is-active`. The active rule is
 // `.dock-layer.is-active, .dock-layer-item-host.is-active`. The gate's INTENT is
 // unchanged (the active pane carries NO opacity transition arm — only the leaving
 // pane fades); only the selector name moved off `.layer-active`.
-const ACTIVE_RULE_RE =
-    /\.dock-layer\.is-active\s*,\s*\.dock-layer-item-host\.is-active\s*\{/;
+const ACTIVE_RULE_RE = new RegExp(
+    `${ANCHOR}\\.dock-layer\\.is-active\\s*,\\s*${ANCHOR}\\.dock-layer-item-host\\.is-active\\s*\\{`,
+);
 
 // The pure detector. Takes the comment-stripped dock.css, returns {facts,violations}.
 //

@@ -99,7 +99,13 @@
        edge: a thin rule between the switcher column and the dock body. The
        hover/active affordance reads the `--dock-layer-rail-{hover,active}` glass
        tints, so the whole rail ladder is tunable from §sizing. */
-    .dock-layer-rail {
+    /* BG.W-DOCK-CONSUMER-FENCE — the switcher-rail + stack + pane internal parts carry
+       the dock-root ANCESTRY anchor (`:where(.glass-dock, .dock-layer-group)`, specificity
+       0,0,0) so a consumer element with a coincidental `.dock-layer-*` class OUTSIDE a dock
+       is never painted/repositioned. Every internal part here lives under `.dock-layer-group`
+       (a standalone `<DockLayerGroup>` too) — byte-identical match, same cascade/source order.
+       The `.dock-layer-group`-keyed rules ABOVE stay bare (the component-root identity). */
+    :where(.glass-dock, .dock-layer-group) .dock-layer-rail {
         display: flex;
         flex-direction: column;
         flex-shrink: 0;
@@ -149,11 +155,11 @@
        `.dock-layer-tab-indicator` (the reka TabsIndicator) now carries the
        active affordance; the rail is `position: relative` so the indicator's
        absolute placement is rail-local. */
-    .dock-layer-rail {
+    :where(.glass-dock, .dock-layer-group) .dock-layer-rail {
         position: relative;
     }
 
-    .dock-layer-rail .dock-layer-tab {
+    :where(.glass-dock, .dock-layer-group) .dock-layer-rail .dock-layer-tab {
         position: relative;
         display: inline-flex;
         align-items: center;
@@ -194,13 +200,13 @@
        `width`/`flex-shrink`, the un-floored SVG collapsed to a 4px sliver
        (F2-R3-1). This rule floors BOTH axes to 1rem (16px) and pins
        `flex-shrink: 0` so the glyph never re-squishes inside the flex tab. */
-    .dock-layer-rail .dock-layer-tab svg {
+    :where(.glass-dock, .dock-layer-group) .dock-layer-rail .dock-layer-tab svg {
         width: 1rem;
         height: 1rem;
         flex-shrink: 0;
     }
 
-    .dock-layer-rail .dock-layer-tab:hover {
+    :where(.glass-dock, .dock-layer-group) .dock-layer-rail .dock-layer-tab:hover {
         background: var(
             --dock-layer-rail-hover,
             color-mix(in srgb, var(--accent) 30%, transparent)
@@ -215,7 +221,7 @@
        nav-glyph contrast canon), deferring the exact accent to W-REGISTER-IOS's
        root via `--dock-rail-active-accent` (defaults to the dock foreground, NOT
        a saturated brand `--primary`). */
-    .dock-layer-rail .dock-layer-tab[data-state="active"] {
+    :where(.glass-dock, .dock-layer-group) .dock-layer-rail .dock-layer-tab[data-state="active"] {
         color: var(--dock-rail-active-accent, var(--dock-fg-on-aurora, var(--foreground)));
     }
 
@@ -223,7 +229,7 @@
        `.dock-layer-tab` (the rail tab is not in the `.dock-icon-button` family).
        The roving tabindex means only the active tab is in the tab order; a
        focus-visible tab paints the shared dock ring. */
-    .dock-layer-rail [role="tab"]:focus-visible {
+    :where(.glass-dock, .dock-layer-group) .dock-layer-rail [role="tab"]:focus-visible {
         box-shadow: var(--focus-ring-shadow);
         outline: none;
     }
@@ -250,7 +256,7 @@
        indicator glides between tabs on the house spring, never a fixed-linear timer.
        The binding outcome: NO `--dock-motion-resize` survives on the rail (recorded
        in W-DOCK2-DELTA.md). */
-    .dock-layer-rail .dock-layer-tab-indicator {
+    :where(.glass-dock, .dock-layer-group) .dock-layer-rail .dock-layer-tab-indicator {
         position: absolute;
         left: 0;
         top: 0;
@@ -282,7 +288,7 @@
         transform: translateX(var(--reka-tabs-indicator-position));
     }
 
-    .dock-layer-stack {
+    :where(.glass-dock, .dock-layer-group) .dock-layer-stack {
         position: relative;
         display: grid;
         /* AW.W2 — the morph axis (width for a horizontal group, height for a
@@ -297,7 +303,7 @@
     /* Base layout — the crossfade + hit-test contract is shared with
        `.dock-layer` above (see "Layer crossfade + hit-test contract"). The
        default state is inactive: absolute + inset:0. */
-    .dock-layer-item-host {
+    :where(.glass-dock, .dock-layer-group) .dock-layer-item-host {
         grid-area: 1 / 1;
         display: flex;
         align-items: center;
@@ -307,7 +313,7 @@
         inset: 0;
     }
 
-    .dock-layer-item-host.is-active {
+    :where(.glass-dock, .dock-layer-group) .dock-layer-item-host.is-active {
         position: relative;
         inset: auto;
         width: max-content;

@@ -34,7 +34,17 @@
        scrolls horizontally with a mask-fade. `min-width: 0` lets the
        grid item shrink under the cap (default min-content is the
        child's intrinsic width which would prevent the clamp). */
-    .dock-layers {
+    /* BG.W-DOCK-CONSUMER-FENCE — the internal-part rules carry a dock-root ANCESTRY
+       anchor at ZERO specificity cost (`:where(.glass-dock, .dock-layer-group)`), so a
+       consumer element carrying a coincidental `.dock-layers`/`.dock-layer`-family class
+       OUTSIDE a dock is never matched (the namespace-leak `visibility:hidden` /
+       `position:absolute` that silently hid consumer UI). `.dock-layers` + `.dock-layer`
+       live under `.glass-dock`; `.dock-layer-item-host` lives under `.dock-layer-group`
+       (a standalone `<DockLayerGroup>` too) — the OR-anchor matches EVERY internal use,
+       byte-identical (`:where()` is specificity 0,0,0 → same cascade, same source order).
+       Rules keyed on `.glass-dock`/`.dock-layer-group` ITSELF (the component roots) stay
+       bare (the identity-collision is the consumer's, out of scope). */
+    :where(.glass-dock, .dock-layer-group) .dock-layers {
         display: grid;
         min-width: 0;
     }
@@ -174,20 +184,20 @@
        paintable through the fade, then flips it hidden (the a11y-006 hit-test
        anchor); the spring-settle clears the morph state so the hold releases in
        lockstep. The base rule keeps NO opacity transition (the scalar IS the clock). */
-    .dock-layer,
-    .dock-layer-item-host {
+    :where(.glass-dock, .dock-layer-group) .dock-layer,
+    :where(.glass-dock, .dock-layer-group) .dock-layer-item-host {
         transition: visibility 0s linear var(--duration-normal);
     }
 
-    .dock-layer:not(.is-active):not(.is-leaving),
-    .dock-layer-item-host:not(.is-active):not(.is-leaving) {
+    :where(.glass-dock, .dock-layer-group) .dock-layer:not(.is-active):not(.is-leaving),
+    :where(.glass-dock, .dock-layer-group) .dock-layer-item-host:not(.is-active):not(.is-leaving) {
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
     }
 
-    .dock-layer.is-active,
-    .dock-layer-item-host.is-active {
+    :where(.glass-dock, .dock-layer-group) .dock-layer.is-active,
+    :where(.glass-dock, .dock-layer-group) .dock-layer-item-host.is-active {
         opacity: 1;
         visibility: visible;
         pointer-events: auto;
@@ -208,8 +218,8 @@
        stays painted (visibility:visible) + untouchable (pointer-events:none) through
        the fade; the base-rule `visibility 0s linear var(--duration-normal)` hold
        flips it hidden once the morph state clears on spring-settle. */
-    .dock-layer.is-leaving,
-    .dock-layer-item-host.is-leaving {
+    :where(.glass-dock, .dock-layer-group) .dock-layer.is-leaving,
+    :where(.glass-dock, .dock-layer-group) .dock-layer-item-host.is-leaving {
         opacity: 0;
         visibility: visible;
         pointer-events: none;
@@ -228,7 +238,7 @@
        clock, every axis — the W01/W02 single-scalar thesis FINISHED for opacity. */
 
     /* ── Base layout — distinct per surface ─────────────────────────── */
-    .dock-layer {
+    :where(.glass-dock, .dock-layer-group) .dock-layer {
         display: flex;
         align-items: center;
         grid-area: 1 / 1;
@@ -257,11 +267,11 @@
         min-height: var(--dock-layer-height, 2.5rem);
     }
 
-    .dock-layer.is-active {
+    :where(.glass-dock, .dock-layer-group) .dock-layer.is-active {
         position: relative;
     }
 
-    .dock-layer:not(.is-active) {
+    :where(.glass-dock, .dock-layer-group) .dock-layer:not(.is-active) {
         position: absolute;
         inset: 0;
     }
