@@ -230,8 +230,18 @@ export async function emitComponentUtilities(
     const distIndex = resolve(distStyles, "index.css");
     if (!existsSync(distIndex)) return;
     const indexSrc = readFileSync(distIndex, "utf-8");
-    const compImport = '@import "./components.css";';
+    // LAYERED import (VALUEJS-R D8-1, 2026-07-03): an UNLAYERED components.css lands the bare
+    // Tailwind utility corpus (.hidden et al.) at the cascade TAIL in every /styles consumer,
+    // beating their own @layer utilities responsive rules (value.js boot-blocked at >=lg).
+    // layer(components) is cascade-inert for glass-ui itself (our @layer order is declared
+    // upstream in this same index) and restores consumer-cascade sanity.
+    const compImport = '@import "./components.css" layer(components);';
+    const legacyImport = '@import "./components.css";';
     if (indexSrc.includes(compImport)) return;
+    if (indexSrc.includes(legacyImport)) {
+        writeFileSync(distIndex, indexSrc.replace(legacyImport, compImport), "utf-8");
+        return;
+    }
     const sourceAt = atSourceIndex(indexSrc);
     const comment =
         "/* P9 — component-utility rules (rounded-panel, text-muted-foreground,\n" +
