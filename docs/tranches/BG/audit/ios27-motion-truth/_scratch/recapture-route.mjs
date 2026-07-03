@@ -1,0 +1,47 @@
+import { chromium } from "playwright-core";
+import fs from "node:fs";
+import path from "node:path";
+const OUT = "/Users/mkbabb/Programming/glass-ui/docs/tranches/BG/audit/ios27-motion-truth/live/route-page-build";
+fs.rmSync(OUT, { recursive: true, force: true });
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const browser = await chromium.connectOverCDP("http://127.0.0.1:9345");
+const ctx = browser.contexts()[0];
+const page = ctx.pages()[0] ?? (await ctx.newPage());
+await page.emulateMedia({ colorScheme: "light", reducedMotion: "no-preference" });
+await page.goto("http://localhost:5200/foundations/colors", { waitUntil: "networkidle" });
+await page.waitForSelector("main");
+await sleep(2200);
+fs.mkdirSync(OUT, { recursive: true });
+const client = await page.context().newCDPSession(page);
+const frames = [];
+const markers = [];
+client.on("Page.screencastFrame", (ev) => {
+    frames.push({ data: ev.data, ts: ev.metadata.timestamp });
+    client.send("Page.screencastFrameAck", { sessionId: ev.sessionId }).catch(() => {});
+});
+await client.send("Page.startScreencast", { format: "jpeg", quality: 85, maxWidth: 1480, maxHeight: 1000, everyNthFrame: 1 });
+await sleep(200);
+markers.push({ name: "navigate", ts: Date.now() / 1000 });
+await page.evaluate(() => {
+    document.querySelector("#app").__vue_app__.config.globalProperties.$router.push("/display/buttons");
+});
+await sleep(3000);
+await client.send("Page.stopScreencast").catch(() => {});
+const t0 = frames[0].ts;
+const meta = [];
+frames.forEach((f, i) => {
+    const ms = Math.round((f.ts - t0) * 1000);
+    const name = `frame-${String(i).padStart(3, "0")}-t${String(ms).padStart(5, "0")}ms.jpg`;
+    fs.writeFileSync(path.join(OUT, name), Buffer.from(f.data, "base64"));
+    meta.push({ i, ms, name });
+});
+const deltas = meta.slice(1).map((m, i) => m.ms - meta[i].ms);
+const sorted = [...deltas].sort((a, b) => a - b);
+const median = sorted[Math.floor(sorted.length / 2)] ?? 0;
+const jank = meta.slice(1).map((m, i) => ({ afterFrame: meta[i].name, gapMs: deltas[i] })).filter((g) => g.gapMs > Math.max(50, median * 2.5));
+const summary = { facility: "route-page-build", frameCount: frames.length, durationMs: meta.at(-1).ms, medianGapMs: median, approxFps: Math.round(1000 / median), jankGaps: jank, markers: markers.map((m) => ({ name: m.name, ms: Math.round((m.ts - t0) * 1000) })), destination: "/display/buttons" };
+fs.writeFileSync(path.join(OUT, "frames.json"), JSON.stringify(summary, null, 2));
+console.log(JSON.stringify({ frameCount: summary.frameCount, durationMs: summary.durationMs, median, jank }, null, 1));
+const finalUrl = await page.evaluate(() => location.pathname);
+console.log("final route:", finalUrl);
+await browser.close();

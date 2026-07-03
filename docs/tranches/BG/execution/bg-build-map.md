@@ -98,6 +98,11 @@ consolidation reading the frozen `{0.32, 0.7}`; `proof:dock-engine` E4 byte-froz
 (`C≥0.02`); RETIRE the self-cancelling `feTurbulence`; `feDiffuseLighting` `@supports`-gated enhancement. `14.3
 W-HANDMARK-PERFECT` (+14.4 pencil-boil). *(14.5 cross-repo-asks → F8.)*
 
+**IOS27-MOTION-TRUTH repair rows (USER 07-03; born-RED paint repairs, all preconds DONE):**
+- `F1.R1 W-ROUTE-ENTER-VISIBLE` (F1; P; proof:route route-enter-visible arm; precond 2.1): the route entrance VISIBLE in paint — pre-resolve the chunk before the swap, rise 16-24px on --spring-snappy, StoryHeader band stagger; ≥8 painted rise frames.
+- `F5.R1 W-OVERLAY-ENTER-PAINT` (F5; P; proof:motion overlay-enter-paint arm; precond F5.1): the .glass-reveal enter gets a real from-state (@starting-style or the F5.1 leaf armed on Dialog/Sheet/Popover); scrim couples to launch; ≥6 enter frames.
+- `F5.R2 W-DRAWER-PAINT-BIND` (F5; P; proof:motion drawer-paint-bind arm; P0 of the drawer chain): repair the writeScalar→contentEl→translateY sever so DRAWER_SNAP paints; live-gesture π, never a settled capture.
+
 **F5 — Motion** (`proof:motion`).
 - `10.5 W-DEAD-COMPOSABLE-CUT` **(owned ONCE — R1; subsumes 12.1 W-SPIKE-DELETE + 12.2 W-JUBILANCE-DECIDE; corrects
   the false `useCelebrationBurst` KEEP)**: DELETE `useHaptic`, `useCelebrationBurst`(+`jubilance.css`),
@@ -117,6 +122,9 @@ W-HANDMARK-PERFECT` (+14.4 pencil-boil). *(14.5 cross-repo-asks → F8.)*
   timeline/Slider partials + std140-builder; drains ratchet #3/4/9/13. AFTER WS5.
 - `10.19 W-DEAD-SWEEP` (10.19+10.20; runs FIRST for net-negative) · `10.23 W-DESHADCN` (10.23+15.1–15.5, ONE concern).
 - `10.15 W-GOO-BARBELL-CSS`.
+- `F3.R1 W-DOCK-GLYPH-RIGID` (IOS27-MOTION-TRUTH repair; P; proof:dock glyph-rigid arm; precond 4.1+4.3): rigid content over a morphing plate (inverse counter-scale or clip-aperture); collapsed rest = the B4 1:1 circle + undistorted glyph; per-frame glyph-bbox aspect ±5%.
+- `F3.R2 W-DOCK-PANE-OVERLAP` (IOS27-MOTION-TRUTH repair; P; proof:dock pane-overlap arm; precond 4.1): overlapped crossfade on the ONE --dock-morph-t (no blank-plate dead-zone, monotonic box FLIP between pre-measured endpoints).
+- `F3.R3 W-SHELL-MORPH-PAINT-REPAIR` (IOS27-MOTION-TRUTH repair; P; proof:dock shell-morph-paint screencast arm; precond 4.9+4.10; 4.10 stays VERBATIM-DONE): the in-place V↔H morph TRUE IN PAINT — ≥12 painted travel frames/leg, no stall >100ms; CDP screencast both routes both directions; a scalar probe may NOT stand in.
 - `10.27 W-GOD-MODULE-STRUCTURAL` (NEW): decompose the dock ONCE; the 2 live-RED CSS carves in-wave; **ratchet CONTRACT
   change** (new baseline needs a companion carve-successor id, OR cap+FAIL); shader-literal exemption. BEFORE F6.2 rename.
 - `4.12 W-DOCK-CONSUMER-FENCE` (DNS-REPORTS-INBOUND; H; LANDED 00621130): internal-part CSS anchored
