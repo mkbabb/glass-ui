@@ -312,6 +312,13 @@ function run() {
 
     const indexSrc = readFileSync(INDEX, "utf8");
     const sfcSrc = readFileSync(SFC, "utf8");
+    // BG.W-LIQUID-FILL — the continuous glass fill (backdrop-filter blur + rim) was
+    // EXTRACTED into the shared `.glass-liquid-fill` register the `.slider-range`
+    // composes; this reader FOLLOWS the carve into the leaf (the BB.W-CARVE4 "asserts
+    // follow the composition into the carved leaf" precedent).
+    const registerCss = existsSync(resolve(ROOT, "src/styles/glass/liquid-fill.css"))
+        ? readFileSync(resolve(ROOT, "src/styles/glass/liquid-fill.css"), "utf8")
+        : "";
 
     // (1) KEYSET
     const keys = parseVariantKeys(indexSrc);
@@ -408,12 +415,25 @@ function run() {
     else if (!focusOnTrack) violations.push("the `:focus-within .slider-track` rule does not resolve `box-shadow: var(--focus-ring-shadow)` — the track focus ring must ride the canonical focus register");
 
     // The continuous glass fill: the `.slider-range` carries the W52 material blur
-    // (the knob rides ON it — continuous with the track, not an offset disc).
+    // (the knob rides ON it — continuous with the track, not an offset disc). Since
+    // BG.W-LIQUID-FILL the blur lives in the shared `.glass-liquid-fill` register the
+    // range COMPOSES (in the template) + BRIDGES onto (`--liquid-fill-blur`); the
+    // fact is satisfied by EITHER the historical inline `backdrop-filter` on
+    // `.slider-range` OR the carve: the range composes the register AND the register
+    // itself carries the `backdrop-filter`.
     const rangeMatch = css.match(/(^|\})\s*\.slider-range\s*\{([^}]*)\}/);
-    const rangeBlur = rangeMatch ? /backdrop-filter\s*:/.test(rangeMatch[2]) : false;
+    const inlineRangeBlur = rangeMatch ? /backdrop-filter\s*:/.test(rangeMatch[2]) : false;
+    const composesRegister = /class=["'][^"']*\bslider-range glass-liquid-fill\b/.test(
+        sfcSrc,
+    );
+    const registerHasBlur = /backdrop-filter\s*:\s*var\(\s*--liquid-fill-blur/.test(
+        registerCss,
+    );
+    const rangeBlur = inlineRangeBlur || (composesRegister && registerHasBlur);
     facts.rangeHasBackdropFilter = rangeBlur;
+    facts.rangeComposesLiquidFillRegister = composesRegister;
     if (!rangeMatch) violations.push("base `.slider-range { … }` block not found");
-    else if (!rangeBlur) violations.push("standard .slider-range carries no `backdrop-filter` — the continuous glass fill the knob rides must be glass material");
+    else if (!rangeBlur) violations.push("standard .slider-range carries no glass fill — it must set `backdrop-filter` inline OR compose the shared `.glass-liquid-fill` register (which carries the blur — BG.W-LIQUID-FILL)");
 
     // (4) SQUIRCLE-SPECTRUM — the spectrum thumb is the track-height squircle:
     //     a `corner-shape: var(--corner-shape-thumb)` decl ONLY inside an

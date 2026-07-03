@@ -1,0 +1,65 @@
+/* ════════════════════════════════════════════════════════════════════════
+   .glass-liquid-fill — the ONE shared liquid-fill register (BG.W-LIQUID-FILL).
+
+   The warm glass-cylinder fill — a continuous rounded pill of warm tinted glass
+   over a track — factored ONCE out of the Slider's `.slider-range` composite so
+   EVERY meter/fill consumer COMPOSES it instead of re-forking the
+   backdrop-blur + rim + under-shadow recipe. Fewer-sharper-primitives: ONE
+   liquid-fill recipe, N surfaces.
+
+   ≥2 consumers by construction (the overfitting bar cleared by extraction):
+     · #1  Slider's `.slider-range` RE-READS it (the reference implementation —
+           the glass cylinder you pull; it bridges its own `--slider-range-*`
+           consumer-override tokens onto the register's knobs).
+     · #2  `<Progress variant="liquid">` — the glass meter (the speedtest fill
+           meter consumes it on the 5.0.0 bump).
+
+   PHASE-COLOUR COMPOSABLE, ZERO PER-SITE GLASS KNOWLEDGE. A surface tints the
+   fill by setting the ONE `--liquid-fill-tint` knob (a phase hue, a brand colour,
+   the warm-cream default) — it never touches `backdrop-filter`, the rim, or the
+   under-shadow. The register owns every glass mechanic; the surface owns only the
+   colour. The four knobs (all optional, warm-glass defaults):
+     · --liquid-fill-tint      — the fill hue (default the warm-cream capsule amber).
+     · --liquid-fill-strength  — the tint mix % against the warm 0-alpha leg (88%).
+     · --liquid-fill-blur      — the backdrop blur rung (the quiet ~2px-equiv radius).
+     · --liquid-fill-shadow    — the under-shadow leg (the glass-thickness floor).
+
+   @layer components, @import-ed in glass.css AFTER the glass-capsule register (so
+   the `--glass-bg-*`/`--glass-*-rim`/`--glass-under-shadow-*`/`--glass-capsule-warm`
+   tokens resolve) and BEFORE the consuming slider/progress recipes.
+
+   Compositor-only + Safari-native by construction (the §7 floor): the blur routes
+   `--glass-blur-quiet` (which SCALES by `--glass-level`, so the opaque escape /
+   prefers-reduced-transparency / forced-colors flatten it with the rest of the
+   band); no `backdrop-filter: url()`, no SVG goo, no WebGL. The 0-alpha mix leg is
+   a WARM `oklch(… / 0)`, NEVER bare `transparent` (the WebKit black-premultiply
+   hole, build-trap-(d)).
+   ════════════════════════════════════════════════════════════════════════ */
+
+@layer components {
+    .glass-liquid-fill {
+        border-radius: var(--radius-pill);
+        /* The warm tinted glass fill — the tint mixes against a warm 0-alpha leg so
+           the cylinder is a warm tinted `.glass-atom` over the field, not a flat bar.
+           `--liquid-fill-tint` is the ONE phase-colour knob (default the warm-cream
+           capsule amber — the lib identity; the brand/phase hue is the consumer's). */
+        background: color-mix(
+            in oklab,
+            var(--liquid-fill-tint, var(--glass-capsule-warm))
+                var(--liquid-fill-strength, 88%),
+            oklch(0.9 0.05 75 / 0)
+        );
+        /* The blur routes the `--glass-blur-quiet` rung (the ~2px-equivalent radius
+           that SCALES by `--glass-level`), not a literal blur off the level knob. */
+        backdrop-filter: var(--liquid-fill-blur, var(--glass-blur-quiet));
+        -webkit-backdrop-filter: var(--liquid-fill-blur, var(--glass-blur-quiet));
+        /* The unified edge rim (W52) reads the cylinder's curvature; the under-shadow
+           lays the glass-thickness floor at the leading edge. */
+        box-shadow:
+            var(--glass-material-rim),
+            var(--liquid-fill-shadow, var(--glass-under-shadow-quiet));
+        transition:
+            background var(--duration-fast) var(--ease-standard),
+            box-shadow var(--duration-fast) var(--ease-standard);
+    }
+}

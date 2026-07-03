@@ -3,15 +3,18 @@ import { type HTMLAttributes, watchEffect } from "vue";
 import type { ProgressRootProps } from "reka-ui";
 import ProgressDefault from "./ProgressDefault.vue";
 import ProgressGradient from "./ProgressGradient.vue";
+import ProgressLiquid from "./ProgressLiquid.vue";
 import ProgressSectioned from "./ProgressSectioned.vue";
 import type { ProgressSegment } from "./useProgressGeometry";
 
-type ProgressVariant = "default" | "gradient" | "sectioned";
+type ProgressVariant = "default" | "gradient" | "liquid" | "sectioned";
 
 /**
- * Progress — the thin variant dispatcher over three orthogonal designs:
+ * Progress — the thin variant dispatcher over four orthogonal designs:
  *   - `default`   → ProgressDefault   (plain rail + translateX intake-pulse)
  *   - `gradient`  → ProgressGradient  (lifecycle motion grammar + indeterminate)
+ *   - `liquid`    → ProgressLiquid    (the shared .glass-liquid-fill glass cylinder;
+ *                                      the phase-colour meter — BG.W-LIQUID-FILL)
  *   - `sectioned` → ProgressSectioned (phase-bus cells + spring active fill)
  *
  * The dispatcher carries an EXPLICIT prop-boundary contract: incompatible prop
@@ -31,6 +34,9 @@ const props = withDefaults(
              * 'default'   = bg-secondary rail + bg-primary indicator.
              * 'gradient'  = rail respects --progress-track; indicator respects
              *               --progress-fill; the W4 lifecycle motion grammar layers on.
+             * 'liquid'    = the shared .glass-liquid-fill glass-cylinder meter
+             *               (BG.W-LIQUID-FILL) — the fill tints off --progress-fill
+             *               (or --liquid-fill-tint) with zero per-site glass knowledge.
              * 'sectioned' = phase-bus (AB.W3.T2). N colour-coded cells with gradient
              *               seams; the active cell carries a spring fill. The per-cell
              *               state map is the truth — NOT `modelValue`.
@@ -115,6 +121,11 @@ watchEffect(() => {
         v-else-if="props.variant === 'gradient'"
         :model-value="props.modelValue"
         :indeterminate="props.indeterminate"
+        :class="props.class"
+    />
+    <ProgressLiquid
+        v-else-if="props.variant === 'liquid'"
+        :model-value="props.modelValue"
         :class="props.class"
     />
     <ProgressDefault v-else :model-value="props.modelValue" :class="props.class" />

@@ -154,6 +154,27 @@ onUnmounted(stopAnimated);
             </div>
         </StorySection>
 
+        <!-- liquid variant — the shared .glass-liquid-fill glass-cylinder meter
+             (BG.W-LIQUID-FILL). The SAME warm-glass fill the Slider re-reads; the
+             phase colour rides --progress-fill (here the legendre violet) with zero
+             per-site glass knowledge. -->
+        <StorySection label="liquid variant (shared glass-cylinder fill)">
+            <p class="font-mono text-xs text-muted-foreground">
+                <code>variant="liquid"</code> routes to ProgressLiquid — the ONE
+                <code>.glass-liquid-fill</code> register the Slider re-reads. The tint
+                rides <code>--progress-fill</code> (or <code>--liquid-fill-tint</code>);
+                the register owns the blur / rim / under-shadow.
+            </p>
+            <div class="grid gap-4">
+                <Progress variant="liquid" :model-value="determinate" />
+                <Progress
+                    variant="liquid"
+                    :model-value="72"
+                    :style="{ '--progress-fill': 'var(--viz-legendre)' }"
+                />
+            </div>
+        </StorySection>
+
         <!-- Sectioned variant — per-segment colour cells,
              spring active fill, transition-gradient seams. -->
         <StorySection label="sectioned variant (phase bus)">

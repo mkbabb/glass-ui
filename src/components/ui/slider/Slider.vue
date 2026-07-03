@@ -175,7 +175,7 @@ const isTouchActive = computed(() => touchGate.isActive.value)
     v-bind="forwarded"
   >
     <SliderTrack class="slider-track">
-      <SliderRange class="slider-range" />
+      <SliderRange class="slider-range glass-liquid-fill" />
     </SliderTrack>
     <SliderThumb
       v-for="(_, key) in modelValue"
@@ -226,49 +226,33 @@ const isTouchActive = computed(() => touchGate.isActive.value)
         border-color var(--duration-fast) var(--ease-standard);
 }
 
-/* ── The continuous GLASS fill (standard) ──
+/* ── The continuous GLASS fill (standard) — the shared liquid-fill register ──
    The fill is ONE continuous glass rounded-pill spanning the FULL thick-track
    height, pulled left/right; the inscribed round knob is seated INSIDE it so the
    fill flows straight under the knob (the value point) — ONE continuous cylinder,
-   not a detached disc on a bar. The range carries the W52 liquid-glass material
-   (backdrop blur + the unified edge rim) tinted to `--primary`, so the filled
-   portion is a glass cylinder over the muted track, not a flat bar. The reka
-   SliderThumb is styled below as the inscribed knob (a11y/keyboard/focus stay
-   native on it). */
+   not a detached disc on a bar. The reka SliderThumb is styled below as the
+   inscribed knob (a11y/keyboard/focus stay native on it).
+
+   BG.W-LIQUID-FILL — the glass-cylinder recipe (warm tint + backdrop blur + the
+   unified edge rim + under-shadow) is EXTRACTED into the shared `.glass-liquid-fill`
+   register (`src/styles/glass/liquid-fill.css`) the range COMPOSES via the template
+   class — the SAME register `<Progress variant="liquid">` reads (fewer-sharper-
+   primitives: ONE liquid-fill recipe, N surfaces). The Slider owns ONLY its layout
+   (position/height) + the token BRIDGE below — the glass mechanics live ONCE in the
+   register. The consumer-override tokens `--slider-range-bg`/`-blur`/`-shadow` are
+   PRESERVED, mapped onto the register's `--liquid-fill-*` knobs (the lib default is
+   the warm `--glass-capsule-warm` material, the brand color is the consumer's
+   choice — presets-in-consumers). The state legs (hover/held/active/release/spectrum
+   below) are unchanged; they override the composed base as before. */
 .slider-range {
     position: absolute;
     height: 100%;
-    border-radius: var(--radius-pill);
-    /* BD.W-GLASS-ATOM-REGISTER — the DEFAULT range tint flips from the dark muddy
-       `--primary` bar (live `oklab(0.216 …)`, C≈0.006) to the WARM glass floor:
-       the cylinder is a warm tinted `.glass-atom` over the field, not a dark bar.
-       This is a REFINE (the wrong default), not a re-invent — the blur/rim below
-       are byte-untouched. `--slider-range-bg` stays the consumer's LOUD override
-       (presets-in-consumers: the lib default is the warm material, the brand color
-       is the consumer's choice). The warm source is the shared `--glass-capsule-warm`
-       amber; the 0-alpha leg is warm `oklch(… / 0)`, NEVER bare `transparent` (the
-       WebKit black-premultiply hole, build-trap-(d)). */
-    background: color-mix(
-      in oklab,
-      var(--slider-range-bg, var(--glass-capsule-warm)) 88%,
-      oklch(0.9 0.05 75 / 0)
-    );
-    /* AY.W-GLASS — the range blur routes the `--glass-blur-quiet` rung (the
-       ~2px-equivalent radius that SCALES by `--glass-level`), not a literal
-       `blur(2px)` off the level knob: when a consumer sets `--glass-level: 0`
-       (the opaque escape, prefers-reduced-transparency, or forced-colors) the
-       range flattens to `blur(0)` with the rest of the band. A consumer's
-       explicit `--slider-range-blur` override still wins. */
-    backdrop-filter: var(--slider-range-blur, var(--glass-blur-quiet));
-    -webkit-backdrop-filter: var(--slider-range-blur, var(--glass-blur-quiet));
-    /* The unified edge rim (W52) reads the cylinder's curvature; under-shadow
-       lays the glass-thickness floor at the leading edge. */
-    box-shadow:
-        var(--glass-material-rim),
-        var(--slider-range-shadow, var(--glass-under-shadow-quiet));
-    transition:
-        background var(--duration-fast) var(--ease-standard),
-        box-shadow var(--duration-fast) var(--ease-standard);
+    /* The token bridge — the Slider's own consumer-override API mapped onto the
+       shared liquid-fill knobs. Each keeps the SAME default the extracted recipe
+       had, so the composed paint is byte-identical to the prior inline fill. */
+    --liquid-fill-tint: var(--slider-range-bg, var(--glass-capsule-warm));
+    --liquid-fill-blur: var(--slider-range-blur, var(--glass-blur-quiet));
+    --liquid-fill-shadow: var(--slider-range-shadow, var(--glass-under-shadow-quiet));
 }
 
 /* ── The INVISIBLE thumb (standard) — you pull the TRACK itself ──

@@ -70,6 +70,14 @@
    tinted` seam + the `--glass-rim-*`/`--glass-shadow-floating` tokens resolve) and
    BEFORE the consuming recipes (segmented-tabs.css et al, imported by index.css). */
 @import "./glass/glass-capsule.css";
+/* BG.W-LIQUID-FILL — the ONE shared liquid-fill register (`.glass-liquid-fill`):
+   the warm glass-cylinder fill extracted from the Slider's `.slider-range` so the
+   Slider AND `<Progress variant="liquid">` COMPOSE it (fewer-sharper-primitives).
+   @import-ed AFTER glass-capsule.css (same `@layer components`, so the
+   `--glass-capsule-warm`/`--glass-blur-quiet`/`--glass-material-rim`/
+   `--glass-under-shadow-quiet` tokens resolve) and BEFORE the consuming
+   slider/progress recipes. */
+@import "./glass/liquid-fill.css";
 @import "./glass/surface-axis.css";
 @import "./glass/reveal.css";
 /* BD.W-LIQUID-ENTRANCE-GENERAL — the UNIVERSAL `.liquid-enter` mount recipe

@@ -125,6 +125,13 @@ export const CSS_MONOLITHS = {
             // (it composes the control REST register the prior partial mints) and
             // BEFORE surface-axis.css; same @layer components, source-order-after.
             "glass-capsule.css",
+            // BG.W-LIQUID-FILL — the ONE shared .glass-liquid-fill register (the warm
+            // glass-cylinder fill extracted from Slider's `.slider-range`, re-read by
+            // the Slider AND `<Progress variant="liquid">`), @import-ed AFTER
+            // glass-capsule.css (same @layer components; it reads the same
+            // `--glass-capsule-warm`/`--glass-blur-quiet`/`--glass-material-rim`/
+            // `--glass-under-shadow-quiet` tokens) and BEFORE surface-axis.css.
+            "liquid-fill.css",
             "surface-axis.css",
             "reveal.css",
             // BD.W-LIQUID-ENTRANCE-GENERAL — the universal liquid-enter mount recipe

@@ -206,8 +206,20 @@ add(
 add(
     "slider",
     "slider-range-routes-rung",
-    /backdrop-filter:\s*var\(--slider-range-blur,\s*var\(--glass-blur-quiet\)\)/.test(slider),
-    ".slider-range backdrop-filter routes var(--slider-range-blur, var(--glass-blur-quiet)) (scales by --glass-level)",
+    // BG.W-LIQUID-FILL — the glass-cylinder fill (incl. the blur) is EXTRACTED into
+    // the shared `.glass-liquid-fill` register the range composes; this reader FOLLOWS
+    // the carve into the leaf (the BB.W-CARVE4 "asserts follow the composition into the
+    // carved leaf" precedent). The `--slider-range-blur` consumer override now BRIDGES
+    // onto the register's `--liquid-fill-blur` knob, defaulting the SAME
+    // `--glass-blur-quiet` rung (scales by --glass-level), so the load-bearing fact is
+    // preserved. Either the historical inline form OR the extracted bridge satisfies it.
+    /backdrop-filter:\s*var\(--slider-range-blur,\s*var\(--glass-blur-quiet\)\)/.test(
+        slider,
+    ) ||
+        /--liquid-fill-blur:\s*var\(--slider-range-blur,\s*var\(--glass-blur-quiet\)\)/.test(
+            slider,
+        ),
+    ".slider-range routes var(--slider-range-blur, var(--glass-blur-quiet)) — inline OR bridged onto the shared liquid-fill register (scales by --glass-level)",
 );
 add(
     "slider",
