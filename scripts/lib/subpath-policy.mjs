@@ -109,7 +109,7 @@ export const TIERS = [
 // the symbol-fidelity existence check.
 // ===========================================================================
 
-// The 11 curated barrels at src/ top level (`index` → the root "." key).
+// The 12 curated barrels at src/ top level (`index` → the root "." key).
 export const CURATED = {
     index: "src/index.ts",
     api: "src/api/index.ts",
@@ -122,6 +122,9 @@ export const CURATED = {
     "motion-core": "src/motion-core.ts",
     sidebar: "src/sidebar.ts",
     "infinite-scroll": "src/infinite-scroll.ts",
+    // BH.W-AXIS-GRAMMAR — the types-only `/axes` discovery subpath (the honest
+    // `/api` successor: the four grammar axes + their frozen tuples, GENERATED).
+    axes: "src/axes.ts",
 };
 
 // The 7 composable subpaths whose entry source is a nested leaf (name ≠ leaf).

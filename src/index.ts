@@ -116,7 +116,9 @@ export * from "./components/ui/table";
 // indicator default that painted the R10-2 oval blob). The standardized tab family
 // is `SegmentedTabs` (`@mkbabb/glass-ui/tabs`, TWO materials). The reka substrate
 // files (`components/ui/tabs/*`) remain INTERNAL solely for the dock-rail consumer
-// (`DockLayerGroup.vue` + `<TabsIndicator :surface="false">`, the AZ hairline);
+// (`DockLayerGroup.vue` + `<TabsIndicator :plate="false">`, the AZ hairline;
+// BH.W-AXIS-GRAMMAR renamed the boolean `surface` prop to `plate` — the
+// surface-decoration-axis noun de-collision);
 // they are NOT re-exported from any public barrel.
 export * from "./components/ui/tags-input";
 export * from "./components/ui/toast";
@@ -266,6 +268,18 @@ export {
     type UseCharStaggerOptions,
     type UseCharStaggerReturn,
 } from "./composables/motion/useCharStagger";
+
+// BH.W-AXIS-GRAMMAR — the four grammar axis types published on the root barrel
+// (the ONE axis home is `_shared/axes.ts`; the `/axes` subpath is the discovery
+// front door). Types-only re-export — no runtime import, so the vueuse-FREE
+// root-barrel discipline is preserved (proof:vueuse-free-root unaffected).
+export type {
+    Size,
+    Orientation,
+    Motion,
+    Surface,
+    SurfaceTier,
+} from "./components/ui/_shared/axes";
 
 // Core utilities
 export * from "./utils";

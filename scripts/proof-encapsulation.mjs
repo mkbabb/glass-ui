@@ -536,6 +536,213 @@ function detectDeshadcn(overrides = {}) {
     return { facts, violations };
 }
 
+// ── BH.W-AXIS-GRAMMAR — the ONE axis-grammar home + the homonym kills. ──
+// `_shared/axes.ts` mints the four axis unions (Size/Orientation/Motion + the
+// re-exported Surface/SurfaceTier) as the SINGLE grammar vocabulary — the model
+// `useSurfaceAxis` set (a union + a resolver + a `[data-surface]` seam) copied to
+// the missing three. The visual-rung HOMONYMS are killed: GlassPanel `variant`→
+// `tier: SurfaceTier` + its render-backend `tier`→`renderTier: GlassTier` (the
+// Card/GlassPanel tier collision); the `ui/tabs/TabsIndicator` BOOLEAN `surface`→
+// `plate` (the surface-decoration-axis noun collision). Pure FS, device-free (a
+// rename changes ZERO pixels — the BB.W-CARVE4 byte-identical-paint discipline).
+// Born-RED on HEAD (axes.ts absent + GlassPanel `variant`/`GlassPanelVariant`
+// present + no `renderTier` + TabsIndicator boolean `surface`) → GREEN + a bite
+// per clause. Asserts:
+//   G1 — AXES-MINTED: axes.ts exists AND exports the four tuples
+//        (SIZES/ORIENTATIONS/MOTIONS/SURFACES) + the derived Size/Orientation/
+//        Motion types AND re-exports Surface + SurfaceTier from ./useSurfaceAxis.
+//   G2 — SURFACE-4-MEMBER: SURFACES is exactly [glass,veil,opaque,clear] (four)
+//        AND ≡ the `useSurfaceAxis` `type Surface` union (a drift REDs).
+//   G3 — MEMBERSHIP-FENCE: axes.ts exports ONLY axis unions/tuples + the two
+//        re-exported surface types — the anti-grab-bag clause (a function /
+//        component / default export REDs).
+//   G4 — HOMONYM-KILL GlassPanel: GlassPanel.vue declares NO `variant` prop, HAS
+//        a `tier` prop + a `renderTier` prop, AND `GlassPanelVariant` is
+//        DEFINITION-ABSENT (folded onto SurfaceTier).
+//   G5 — HOMONYM-KILL TabsIndicator: ui/tabs/TabsIndicator.vue declares NO boolean
+//        `surface` prop AND HAS a boolean `plate` prop.
+//   G6 — /axes BARREL: src/axes.ts exists AND re-exports the axes module (the
+//        types-only `/axes` subpath front door).
+const AXES = resolve(SRC, "components/ui/_shared/axes.ts");
+const SURFACE_AXIS = resolve(SRC, "components/ui/_shared/useSurfaceAxis.ts");
+const GLASS_PANEL = resolve(SRC, "components/custom/glass-panel/GlassPanel.vue");
+const TABS_INDICATOR = resolve(SRC, "components/ui/tabs/TabsIndicator.vue");
+const FLAT_AXES = resolve(SRC, "axes.ts");
+
+const AXIS_TUPLES = ["SIZES", "ORIENTATIONS", "MOTIONS", "SURFACES"];
+const AXIS_TYPE_NAMES = ["Size", "Orientation", "Motion"];
+const CANON_SURFACES = ["glass", "veil", "opaque", "clear"];
+// The ONLY names `_shared/axes.ts` may export — the four tuples, the three derived
+// unions, + the two re-exported surface types. Anything else is a grab-bag stray.
+const AXIS_EXPORT_ALLOW = new Set([
+    "Surface",
+    "SurfaceTier",
+    "Size",
+    "Orientation",
+    "Motion",
+    "SIZES",
+    "ORIENTATIONS",
+    "MOTIONS",
+    "SURFACES",
+]);
+
+// The string members of a `NAME = [ "a", "b" ] as const` tuple (comment-stripped);
+// null when the tuple is absent.
+function tupleMembers(src, name) {
+    const m = stripComments(src).match(
+        new RegExp(`${name}\\s*=\\s*\\[([^\\]]*)\\]`),
+    );
+    if (!m) return null;
+    return [...m[1].matchAll(/["']([^"']+)["']/g)].map((x) => x[1]);
+}
+
+// The string members of a `type NAME = "a" | "b";` union (comment-stripped); null
+// when the union is absent.
+function unionMembers(src, name) {
+    const m = stripComments(src).match(
+        new RegExp(`type\\s+${name}\\s*=\\s*([^;]+);`),
+    );
+    if (!m) return null;
+    return [...m[1].matchAll(/["']([^"']+)["']/g)].map((x) => x[1]);
+}
+
+// Every exported identifier from a module (comment-stripped): block exports
+// (`export { A }` / `export type { A } from …`) + named-declaration exports
+// (`export const/type/function/… NAME`) + a `default` sentinel. Used by the
+// membership fence (a stray export is a grab-bag leak).
+function collectAxesExports(src) {
+    const clean = stripComments(src);
+    const names = new Set();
+    const hasDefault = /export\s+default\b/.test(clean);
+    for (const b of clean.matchAll(/export\s+(?:type\s+)?\{([^}]*)\}/g)) {
+        for (const raw of b[1].split(",")) {
+            const part = raw.trim();
+            if (!part) continue;
+            const id = part
+                .replace(/^type\s+/, "")
+                .split(/\s+as\s+/)
+                .pop()
+                .trim();
+            if (id) names.add(id);
+        }
+    }
+    for (const m of clean.matchAll(
+        /export\s+(?:async\s+)?(?:const|let|var|function|class|interface|type|enum)\s+([A-Za-z_$][\w$]*)/g,
+    ))
+        names.add(m[1]);
+    return { names: [...names], hasDefault };
+}
+
+// overrides: { axesText?, axesExists?, surfaceText?, glassPanelText?, tabsText?,
+//              flatText?, flatExists? } — a self-test sabotages any input.
+function detectAxisGrammar(overrides = {}) {
+    const violations = [];
+    const facts = {};
+
+    const axesExists = overrides.axesExists ?? existsSync(AXES);
+    const axesSrc = overrides.axesText ?? read(AXES);
+    const surfaceSrc = overrides.surfaceText ?? read(SURFACE_AXIS);
+    const glassPanelSrc = overrides.glassPanelText ?? read(GLASS_PANEL);
+    const tabsSrc = overrides.tabsText ?? read(TABS_INDICATOR);
+    const flatExists = overrides.flatExists ?? existsSync(FLAT_AXES);
+    const flatSrc = overrides.flatText ?? read(FLAT_AXES);
+
+    // ── G1 — AXES-MINTED: the four tuples + three types + the surface re-export. ──
+    const axesClean = stripComments(axesSrc);
+    const tuplesPresent = AXIS_TUPLES.every((n) => exportsSymbol(axesSrc, n));
+    const typesPresent = AXIS_TYPE_NAMES.every((n) => exportsSymbol(axesSrc, n));
+    const reexportsSurface =
+        /export\s+type\s*\{[^}]*\bSurface\b[^}]*\}\s*from\s*["']\.\/useSurfaceAxis["']/.test(
+            axesClean,
+        ) &&
+        /export\s+type\s*\{[^}]*\bSurfaceTier\b[^}]*\}\s*from\s*["']\.\/useSurfaceAxis["']/.test(
+            axesClean,
+        );
+    facts.axesMinted = {
+        axesExists,
+        tuplesPresent,
+        typesPresent,
+        reexportsSurface,
+    };
+    if (!(axesExists && tuplesPresent && typesPresent && reexportsSurface))
+        violations.push(
+            `G1 — _shared/axes.ts must exist (${axesExists}) AND export SIZES/ORIENTATIONS/MOTIONS/SURFACES (${tuplesPresent}) + the Size/Orientation/Motion types (${typesPresent}) + re-export Surface/SurfaceTier from ./useSurfaceAxis (${reexportsSurface})`,
+        );
+
+    // ── G2 — SURFACE-4-MEMBER: SURFACES ≡ the useSurfaceAxis Surface union. ──
+    const surfacesTuple = tupleMembers(axesSrc, "SURFACES");
+    const surfaceUnion = unionMembers(surfaceSrc, "Surface");
+    const four = Array.isArray(surfacesTuple) && surfacesTuple.length === 4;
+    const canonical = four && CANON_SURFACES.every((m) => surfacesTuple.includes(m));
+    const equiv =
+        Array.isArray(surfacesTuple) &&
+        Array.isArray(surfaceUnion) &&
+        surfacesTuple.length === surfaceUnion.length &&
+        surfacesTuple.every((m) => surfaceUnion.includes(m)) &&
+        surfaceUnion.every((m) => surfacesTuple.includes(m));
+    facts.surfaceFourMember = { surfacesTuple, surfaceUnion, four, canonical, equiv };
+    if (!(four && canonical && equiv))
+        violations.push(
+            `G2 — SURFACES must be the 4-member [glass,veil,opaque,clear] (got ${JSON.stringify(surfacesTuple)}) AND ≡ the useSurfaceAxis Surface union (${JSON.stringify(surfaceUnion)})`,
+        );
+
+    // ── G3 — MEMBERSHIP-FENCE: axes.ts exports ONLY axis vocabulary. ──
+    const { names: axesExportNames, hasDefault } = collectAxesExports(axesSrc);
+    const strays = axesExportNames.filter((n) => !AXIS_EXPORT_ALLOW.has(n));
+    facts.membershipFence = { axesExportNames, strays, hasDefault };
+    if (axesExists && (strays.length || hasDefault))
+        violations.push(
+            `G3 — _shared/axes.ts exports ONLY axis unions/tuples + the two surface types (grab-bag strays: ${strays.join(", ") || "none"}, default export: ${hasDefault}) — the anti-grab-bag membership fence`,
+        );
+
+    // ── G4 — HOMONYM-KILL GlassPanel: variant→tier, backend tier→renderTier. ──
+    const gpClean = stripComments(glassPanelSrc);
+    const gpHasVariantProp = /\bvariant\s*\??\s*:/.test(gpClean);
+    const gpHasTierProp = /\btier\s*\??\s*:/.test(gpClean);
+    const gpHasRenderTierProp = /\brenderTier\s*\??\s*:/.test(gpClean);
+    const gpVariantTypeAbsent = !definesSymbol(glassPanelSrc, "GlassPanelVariant");
+    facts.glassPanelHomonym = {
+        gpHasVariantProp,
+        gpHasTierProp,
+        gpHasRenderTierProp,
+        gpVariantTypeAbsent,
+    };
+    if (
+        !(
+            !gpHasVariantProp &&
+            gpHasTierProp &&
+            gpHasRenderTierProp &&
+            gpVariantTypeAbsent
+        )
+    )
+        violations.push(
+            `G4 — GlassPanel.vue must kill the tier homonym: NO variant prop (present=${gpHasVariantProp}), a tier prop (${gpHasTierProp}) + a renderTier prop (${gpHasRenderTierProp}), GlassPanelVariant DEFINITION-ABSENT (${gpVariantTypeAbsent})`,
+        );
+
+    // ── G5 — HOMONYM-KILL TabsIndicator: boolean surface→plate. ──
+    const tabsClean = stripComments(tabsSrc);
+    const tabsHasSurfaceProp = /\bsurface\s*\??\s*:\s*boolean/.test(tabsClean);
+    const tabsHasPlateProp = /\bplate\s*\??\s*:\s*boolean/.test(tabsClean);
+    facts.tabsHomonym = { tabsHasSurfaceProp, tabsHasPlateProp };
+    if (!(!tabsHasSurfaceProp && tabsHasPlateProp))
+        violations.push(
+            `G5 — ui/tabs/TabsIndicator.vue must kill the surface homonym: NO boolean surface prop (present=${tabsHasSurfaceProp}), a boolean plate prop (${tabsHasPlateProp})`,
+        );
+
+    // ── G6 — /axes BARREL: the flat types-only subpath front door. ──
+    const flatReexports =
+        /from\s*["']\.\/components\/ui\/_shared\/axes["']/.test(
+            stripComments(flatSrc),
+        );
+    facts.flatBarrel = { flatExists, flatReexports };
+    if (!(flatExists && flatReexports))
+        violations.push(
+            `G6 — src/axes.ts must exist (${flatExists}) AND re-export ./components/ui/_shared/axes (${flatReexports})`,
+        );
+
+    return { facts, violations };
+}
+
 // ── The detector — runs over a SOURCE MAP so a self-test can sabotage inputs.
 // overrides: { driverText?, godModuleSource?, leafExists?, leafSource? }.
 function detect(overrides = {}) {
@@ -915,6 +1122,83 @@ function selfTest() {
     // DS-clean (fence): the full swept + renamed tree → zero deshadcn violation.
     sabNotD(cleanD(), "DS", "the swept + renamed + named tree");
 
+    // ── BH.W-AXIS-GRAMMAR — the G1–G6 bites over detectAxisGrammar. ──
+    const liveAxes = read(AXES);
+    const liveGlassPanel = read(GLASS_PANEL);
+    const liveTabs = read(TABS_INDICATOR);
+    const sabG = (overrides, prefix, name) => {
+        const { violations } = detectAxisGrammar(overrides);
+        if (violations.some((x) => x.startsWith(prefix))) flagged++;
+        else
+            throw new Error(
+                `[proof:encapsulation self-test] axis-grammar bite FAILED to flag: ${name}`,
+            );
+    };
+    const sabNotG = (overrides, prefix, name) => {
+        const { violations } = detectAxisGrammar(overrides);
+        if (!violations.some((x) => x.startsWith(prefix))) flagged++;
+        else
+            throw new Error(
+                `[proof:encapsulation self-test] axis-grammar fence bite WRONGLY flagged: ${name}`,
+            );
+    };
+    // G1: axes.ts drops the SIZES tuple (the vocabulary is incomplete).
+    sabG(
+        { axesText: liveAxes.replace(/export const SIZES[^\n]*\n/, "") },
+        "G1",
+        "G1 axes.ts drops the SIZES tuple",
+    );
+    // G2: SURFACES drifts to a 3-member set (clear dropped — off the Surface union).
+    sabG(
+        {
+            axesText: liveAxes.replace(
+                /SURFACES\s*=\s*\[[^\]]*\]/,
+                'SURFACES = ["glass", "veil", "opaque"]',
+            ),
+        },
+        "G2",
+        "G2 SURFACES drifts off the Surface union (3-member)",
+    );
+    // G3: a grab-bag function export planted in axes.ts (the anti-grab-bag fence).
+    sabG(
+        { axesText: `${liveAxes}\nexport function computeSize() { return 0; }\n` },
+        "G3",
+        "G3 a grab-bag function export in axes.ts",
+    );
+    // G3 (fence): the clean axes-only vocabulary does NOT trip the membership fence.
+    sabNotG({}, "G3", "G3 the clean axes-only vocabulary");
+    // G4: GlassPanel re-mints the `variant` surface-rung prop (the homonym returns).
+    sabG(
+        {
+            glassPanelText: liveGlassPanel.replace(
+                /export interface GlassPanelProps \{/,
+                "export interface GlassPanelProps {\n    variant?: SurfaceTier;",
+            ),
+        },
+        "G4",
+        "G4 GlassPanel re-mints a variant prop",
+    );
+    // G4 (fence): a bare COMMENT mention of `variant` in GlassPanel does NOT flag.
+    sabNotG(
+        { glassPanelText: `// variant is the retired homonym\n${liveGlassPanel}` },
+        "G4",
+        "G4 comment-mention fence (a note is not a prop)",
+    );
+    // G5: TabsIndicator re-mints the boolean `surface` prop (the homonym returns).
+    sabG(
+        {
+            tabsText: liveTabs.replace(/\bplate\?:\s*boolean/, "surface?: boolean"),
+        },
+        "G5",
+        "G5 TabsIndicator re-mints a boolean surface prop",
+    );
+    // G6: the flat /axes barrel is absent (the subpath front door never landed).
+    sabG(
+        { flatExists: false, flatText: "" },
+        "G6",
+        "G6 the /axes barrel is absent",
+    );
+
     return flagged;
 }
 
@@ -934,17 +1218,22 @@ function run() {
     // BG.W-DESHADCN — the de-shadcn sweep + the --ring→--focus-ring-color break + ToastClose name.
     const { facts: deshadcnFacts, violations: deshadcnViolations } =
         detectDeshadcn();
+    // BH.W-AXIS-GRAMMAR — the ONE axis-grammar home + the homonym kills.
+    const { facts: axisFacts, violations: axisViolations } =
+        detectAxisGrammar();
     const facts = {
         ...blobFacts,
         colocate: colocateFacts,
         aliasKill: aliasFacts,
         deshadcn: deshadcnFacts,
+        axisGrammar: axisFacts,
     };
     const violations = [
         ...blobViolations,
         ...colocateViolations,
         ...aliasViolations,
         ...deshadcnViolations,
+        ...axisViolations,
     ];
     const status = violations.length === 0 ? "pass" : "fail";
 
@@ -1001,7 +1290,13 @@ function run() {
         `    DS4 ToastClose default name   : ${deshadcnFacts.toastClose.bindsAriaLabel && deshadcnFacts.toastClose.hasDefaultName ? "GREEN" : "RED"} (aria-label=${deshadcnFacts.toastClose.bindsAriaLabel}, default=${deshadcnFacts.toastClose.hasDefaultName})`,
     );
     console.log(
-        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (blob E1×2+E1-fence+E2×2+E3×2+E4+E4-fence + colocate C1×2+C1-fence+C2×2+C3+C3-fence + alias-kill A1+A2+fence + deshadcn DS1×3+DS1-fence+DS2+DS3×2+DS3-regex+DS4+DS-clean)`,
+        "  BH.W-AXIS-GRAMMAR (G1 axes-minted · G2 surface-4-member · G3 membership-fence · G4 GlassPanel-tier · G5 TabsIndicator-plate · G6 /axes-barrel):",
+    );
+    console.log(
+        `    axis-grammar                  : ${axisViolations.length === 0 ? "GREEN" : "RED"} (axes.ts=${axisFacts.axesMinted.axesExists}, SURFACES=${JSON.stringify(axisFacts.surfaceFourMember.surfacesTuple)}, GlassPanel variant-killed=${!axisFacts.glassPanelHomonym.gpHasVariantProp}+renderTier=${axisFacts.glassPanelHomonym.gpHasRenderTierProp}, TabsIndicator plate=${axisFacts.tabsHomonym.tabsHasPlateProp}, /axes=${axisFacts.flatBarrel.flatExists})`,
+    );
+    console.log(
+        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (blob E1×2+E1-fence+E2×2+E3×2+E4+E4-fence + colocate C1×2+C1-fence+C2×2+C3+C3-fence + alias-kill A1+A2+fence + deshadcn DS1×3+DS1-fence+DS2+DS3×2+DS3-regex+DS4+DS-clean + axis-grammar G1+G2+G3+G3-fence+G4+G4-fence+G5+G6)`,
     );
 
     if (violations.length) {
@@ -1030,5 +1325,6 @@ export {
     detectOneCarve,
     detectAliasKill,
     detectDeshadcn,
+    detectAxisGrammar,
     selfTest,
 };

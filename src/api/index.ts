@@ -69,12 +69,12 @@ export type { ScrollCardProps, ScrollCardHeaderProps } from "../components/ui/ca
 // consumer types `<Sheet surface="opaque">` / `<Popover surface="veil">`
 // against `Surface`; the discovery layer publishes the union.
 export type { Surface } from "../components/ui/_shared";
-// `GlassPanelVariant` is the 5-rung glass-ladder surface vocabulary
-// (wash/quiet/resting/floating/overlay) parallel to `CardTier` — distinct because
-// GlassPanel paints the glass substrate directly while Card composes the same
-// ladder via the `tier` prop. (AZ.W-PRUNE2 RESTORE — keyframes.js binds
-// `@mkbabb/glass-ui/glass-panel`, so the surface + its api seat are live again.)
-export type { GlassPanelVariant } from "../components/custom/glass-panel";
+// BH.W-AXIS-GRAMMAR — the 5-rung glass-ladder surface vocabulary is `SurfaceTier`
+// (the ONE grammar home, `_shared/axes.ts`). `GlassPanelVariant` was value-
+// identical to it and is DELETED (the tier homonym kill, clean break); GlassPanel
+// now types its visual-rung prop `tier: SurfaceTier`. The four grammar axes
+// (Size/Orientation/Motion/Surface) publish via the `/axes` subpath.
+export type { SurfaceTier } from "../components/ui/_shared";
 export type { InstrumentChassisPhase } from "../components/custom/instrument-chassis";
 export type { ToastVariant } from "../components/ui/toast";
 
@@ -160,10 +160,10 @@ export type {
 // stay HERE for proof:search-custom (see the BC.W-SEARCH-CUSTOM record below).
 
 // ── Props triad ────────────────────────────────────────────────────────────
-// `GlassPanelProps` — the props shape sibling of the already-promoted
-// `GlassPanelVariant`; consumers wrapping `<GlassPanel>` (chrome composers,
-// preset panels) type their forwarded prop bag against this. (AZ.W-PRUNE2
-// RESTORE — re-published with the GlassPanel surface for the keyframes consumer.)
+// `GlassPanelProps` — the props shape of `<GlassPanel>` (its visual-rung prop is
+// `tier: SurfaceTier`, its backend `renderTier: GlassTier`); consumers wrapping
+// `<GlassPanel>` (chrome composers, preset panels) type their forwarded prop bag
+// against this. (AZ.W-PRUNE2 RESTORE — re-published for the keyframes consumer.)
 export type { GlassPanelProps } from "../components/custom/glass-panel";
 export type { SpaViewProps } from "../components/custom/spa-view";
 

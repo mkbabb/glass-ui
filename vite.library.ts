@@ -4,7 +4,7 @@ import { resolve } from "node:path";
 /**
  * The library entry map. Two tiers:
  *
- *  1. The 11 MULTI-LINE CURATED barrels — hand-listed below. These carry real
+ *  1. The 12 MULTI-LINE CURATED barrels — hand-listed below. These carry real
  *     curation logic, not a single mirror line: `index` (the vueuse-FREE root
  *     barrel — L.W1 Lane A SCC closure), `api` (the types/constants discovery
  *     layer), `tokens`, `forms`/`dark`/`keyboard`/`carousel` (the vueuse-bearing
@@ -39,6 +39,8 @@ export function libraryEntries(rootDir: string) {
         "motion-core": resolve(rootDir, "src/motion-core.ts"),
         sidebar: resolve(rootDir, "src/sidebar.ts"),
         "infinite-scroll": resolve(rootDir, "src/infinite-scroll.ts"),
+        // BH.W-AXIS-GRAMMAR — the types-only `/axes` discovery subpath.
+        axes: resolve(rootDir, "src/axes.ts"),
     };
 
     // Tier 2 — batch-resolve every `src/subpaths/*.ts` trivial mirror barrel.

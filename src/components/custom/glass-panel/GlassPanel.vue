@@ -8,28 +8,19 @@ import {
     type GlassFilterState,
 } from "../../../composables/glass/useGlassRenderer";
 import { cn } from "../../../utils/cn";
-// BA.W-SURFACE-AXIS — GlassPanel gains the SHARED {glass·veil·opaque} surface
-// decoration axis (it had `tier`/`variant` only, no surface — the IG-B4 divergence
-// from Card). `surface` is ORTHOGONAL to `variant` (the 5-rung CSS-tier selector)
-// and `tier` (the renderer preference), exactly as on Card. The `:data-surface`
-// binding drives the CSS seam (veil strips the border/rim, opaque sets level:0).
-import { surfaceClass, type Surface } from "../../ui/_shared/useSurfaceAxis";
+// BH.W-AXIS-GRAMMAR — the tier/variant HOMONYM killed. GlassPanel's visual-rung
+// prop is `tier: SurfaceTier` (the ONE surface-rung word, ≡ the deleted
+// GlassPanelVariant); the renderer-backend preference is `renderTier: GlassTier`.
+// `surface` stays the SHARED {glass·veil·opaque·clear} decoration axis, ORTHOGONAL
+// to `tier` (the 5-rung CSS-tier selector) and `renderTier` (the renderer
+// preference), exactly as on Card. The `:data-surface` binding drives the CSS seam.
+import { surfaceClass } from "../../ui/_shared/useSurfaceAxis";
+// The grammar TYPES come from the ONE axis home (`_shared/axes.ts`); the
+// `surfaceClass` VALUE resolver stays on the leaf (axes.ts is types-only — the
+// membership fence). `Surface`/`SurfaceTier` re-export through axes.ts unchanged.
+import type { Surface, SurfaceTier } from "../../ui/_shared/axes";
 
-/**
- * Surface-tier vocabulary for the CSS rendering branch. Mirrors the v0.8
- * five-rung ladder declared in `tokens.css §8` and consumed by the
- * `.glass-{wash,quiet,resting,floating,overlay}` utility classes.
- *
- * v0.8.6 — `default | medium | elevated` retired (per audit U.W0.C-b §21).
- */
-export type GlassPanelVariant =
-    | "wash"
-    | "quiet"
-    | "resting"
-    | "floating"
-    | "overlay";
-
-const VARIANT_CLASS: Record<GlassPanelVariant, string> = {
+const TIER_CLASS: Record<SurfaceTier, string> = {
     wash: "glass-wash",
     quiet: "glass-quiet",
     resting: "glass-resting",
@@ -38,21 +29,22 @@ const VARIANT_CLASS: Record<GlassPanelVariant, string> = {
 };
 
 export interface GlassPanelProps {
-    /** Force a specific rendering tier */
-    tier?: GlassTier;
+    /** Force a specific renderer BACKEND (svg-filter | css | fallback tier). */
+    renderTier?: GlassTier;
     /** Blur radius (default: 16) */
     blur?: number;
     /** Refraction strength 0-1 (default: 0.3) */
     refraction?: number;
     /** Chromatic aberration strength 0-1 (default: 0) */
     chromaticAberration?: boolean;
-    /** Glass surface tier for the CSS rendering branch (v0.8 5-rung ladder). */
-    variant?: GlassPanelVariant;
+    /** Glass surface tier for the CSS rendering branch (the 5-rung ladder). */
+    tier?: SurfaceTier;
     /** Surface decoration register (BA.W-SURFACE-AXIS) — the SHARED
-     *  {glass·veil·opaque} axis. `glass` (default) renders the variant's plain
+     *  {glass·veil·opaque·clear} axis. `glass` (default) renders the tier's plain
      *  glass rung; `veil` overlays the borderless/rimless text-legibility plate;
-     *  `opaque` sets `--glass-level:0` (the solid-card escape). Orthogonal to
-     *  `variant`/`tier`, exactly as `surface` is on `<Card>`. */
+     *  `opaque` sets `--glass-level:0` (the solid-card escape); `clear` the
+     *  maximally-translucent scrim-coupled register. Orthogonal to
+     *  `tier`/`renderTier`, exactly as `surface` is on `<Card>`. */
     surface?: Surface;
     /** Additional classes */
     class?: string;
@@ -62,13 +54,13 @@ const props = withDefaults(defineProps<GlassPanelProps>(), {
     blur: 16,
     refraction: 0.3,
     chromaticAberration: false,
-    variant: "resting",
+    tier: "resting",
     surface: "glass",
 });
 
 const panelRef = ref<HTMLElement | null>(null);
-const renderer = useGlassRenderer({ preferredTier: props.tier });
-const activeTier = computed(() => props.tier ?? renderer.tier.value);
+const renderer = useGlassRenderer({ preferredTier: props.renderTier });
+const activeTier = computed(() => props.renderTier ?? renderer.tier.value);
 
 // BA.W-SURFACE-AXIS — the shared surface decoration class for the active tier.
 // `surfaceClass` returns `glass-${tier} <decoration>`; GlassPanel composes its
@@ -81,8 +73,8 @@ const surfaceDecoration = computed(() =>
 
 const cssClass = computed(() => {
     // SVG-filter tier: the JS displacement filter overlays whichever rung the
-    // variant selects — the `data-variant` attr (below) drives the per-rung
-    // `--glass-bg-{variant}` background in the scoped CSS, so the filter no
+    // tier selects — the `data-tier` attr (below) drives the per-rung
+    // `--glass-bg-{tier}` background in the scoped CSS, so the filter no
     // longer forces the lightest `wash` rung onto every panel.
     if (activeTier.value === "svg-filter") {
         return cn(
@@ -93,7 +85,7 @@ const cssClass = computed(() => {
     }
 
     // No-backdrop-filter fallback: same per-rung resolution, keyed off
-    // `data-variant` so a 5-rung ladder reads even without the blur.
+    // `data-tier` so a 5-rung ladder reads even without the blur.
     if (activeTier.value === "fallback") {
         return cn(
             "glass-panel glass-panel--fallback",
@@ -106,7 +98,7 @@ const cssClass = computed(() => {
     // surface decoration (veil/opaque) on top.
     return cn(
         "glass-panel",
-        VARIANT_CLASS[props.variant],
+        TIER_CLASS[props.tier],
         surfaceDecoration.value,
         props.class,
     );
@@ -135,7 +127,7 @@ onBeforeUnmount(() => {
     <div
         ref="panelRef"
         :class="cssClass"
-        :data-variant="props.variant"
+        :data-tier="props.tier"
         :data-surface="props.surface"
     >
         <slot />
@@ -148,45 +140,45 @@ onBeforeUnmount(() => {
 }
 
 /* SVG-filter substrate — the displacement map overlays whichever rung the
-   `variant` selects. Each `data-variant` reads its own `--glass-bg-{variant}`
+   `tier` selects. Each `data-tier` reads its own `--glass-bg-{tier}`
    so the five-rung ladder reads under the Chromium-default svg-filter tier
-   (pre-fix every variant collapsed onto the single lightest `wash` rung). */
-.glass-panel--svg[data-variant="wash"] {
+   (pre-fix every tier collapsed onto the single lightest `wash` rung). */
+.glass-panel--svg[data-tier="wash"] {
     background: var(--glass-bg-wash);
 }
-.glass-panel--svg[data-variant="quiet"] {
+.glass-panel--svg[data-tier="quiet"] {
     background: var(--glass-bg-quiet);
 }
-.glass-panel--svg[data-variant="resting"] {
+.glass-panel--svg[data-tier="resting"] {
     background: var(--glass-bg-resting);
 }
-.glass-panel--svg[data-variant="floating"] {
+.glass-panel--svg[data-tier="floating"] {
     background: var(--glass-bg-floating);
 }
-.glass-panel--svg[data-variant="overlay"] {
+.glass-panel--svg[data-tier="overlay"] {
     background: var(--glass-bg-overlay);
 }
 
 /* No-backdrop-filter fallback — the opaque substrate consumers see when blur
-   is unavailable, still resolved per-rung (pre-fix every variant collapsed
+   is unavailable, still resolved per-rung (pre-fix every tier collapsed
    onto the single `floating` rung). The border tracks the rung too. */
-.glass-panel--fallback[data-variant="wash"] {
+.glass-panel--fallback[data-tier="wash"] {
     background: var(--glass-bg-wash);
     border: 1px solid var(--glass-border-wash);
 }
-.glass-panel--fallback[data-variant="quiet"] {
+.glass-panel--fallback[data-tier="quiet"] {
     background: var(--glass-bg-quiet);
     border: 1px solid var(--glass-border-quiet);
 }
-.glass-panel--fallback[data-variant="resting"] {
+.glass-panel--fallback[data-tier="resting"] {
     background: var(--glass-bg-resting);
     border: 1px solid var(--glass-border-resting);
 }
-.glass-panel--fallback[data-variant="floating"] {
+.glass-panel--fallback[data-tier="floating"] {
     background: var(--glass-bg-floating);
     border: 1px solid var(--glass-border-floating);
 }
-.glass-panel--fallback[data-variant="overlay"] {
+.glass-panel--fallback[data-tier="overlay"] {
     background: var(--glass-bg-overlay);
     border: 1px solid var(--glass-border-overlay);
 }
