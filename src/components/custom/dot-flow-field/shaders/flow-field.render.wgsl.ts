@@ -19,6 +19,7 @@ import {
     OETF_WGSL,
     OKLCH_MATRICES_WGSL,
 } from "../../aurora/constants/shaders/procedural-color.wgsl";
+import { FLOW_PRESENT_KNEE } from "../composables/uniformBridgeWGPU";
 
 export const FLOW_FIELD_RENDER_WGSL = /* wgsl */ `
 const PI: f32 = 3.141592653589793;
@@ -224,7 +225,9 @@ fn fs_decay(in: FSQ) -> @location(0) vec4<f32> {
 @fragment
 fn fs_present(in: FSQ) -> @location(0) vec4<f32> {
   let trail = textureSample(tex, samp, in.uv).rgb;
-  let mapped = trail / (trail + vec3<f32>(0.85)); // Reinhard — hot cores, not white wash
+  // Reinhard — hot cores, not white wash. The knee is the FLOW_PRESENT_KNEE rest-contrast
+  // lever (BG.W-DOTFLOW-REBUILD — the ONE source the GLSL present pass splices identically).
+  let mapped = trail / (trail + vec3<f32>(${FLOW_PRESENT_KNEE.toFixed(2)}));
   if (u.p.y < 0.5) {
     let rgb = clamp(linearToSrgb(mapped), vec3<f32>(0.0), vec3<f32>(1.0));
     let a = clamp(max(mapped.r, max(mapped.g, mapped.b)), 0.0, 1.0);

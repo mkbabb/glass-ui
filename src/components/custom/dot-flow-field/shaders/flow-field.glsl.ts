@@ -23,6 +23,7 @@ import {
     OETF_GLSL,
     OKLCH_MATRICES_GLSL,
 } from "../../../../composables/glass/webgl/shaders/procedural-color.glsl";
+import { FLOW_PRESENT_KNEE } from "../composables/uniformBridgeWGPU";
 
 /** The full-screen-triangle vertex shader (the substrate's standard fullscreen pass). */
 export const FLOW_FIELD_VERT_GLSL = /* glsl */ `#version 300 es
@@ -499,8 +500,10 @@ ${OETF_GLSL}
 
 void main() {
   vec3 trail = texture(uTrail, vUv).rgb;
-  // soft tone-map the accumulated additive trail (Reinhard — hot cores, not white wash).
-  vec3 mapped = trail / (trail + vec3(0.85));
+  // soft tone-map the accumulated additive trail (Reinhard — hot cores, not white wash). The
+  // knee is the FLOW_PRESENT_KNEE rest-contrast lever (BG.W-DOTFLOW-REBUILD — spliced from the
+  // ONE source so the WGSL present pass tone-maps identically; the faint-at-rest fix).
+  vec3 mapped = trail / (trail + vec3(${FLOW_PRESENT_KNEE.toFixed(2)}));
   if (uHasGround < 0.5) {
     // compose OVER the page's warm field: emit the lit ribbons premultiplied, no floor.
     vec3 rgb = clamp(linearToSrgb(mapped), vec3(0.0), vec3(1.0));

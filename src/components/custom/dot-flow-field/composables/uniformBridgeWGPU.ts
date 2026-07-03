@@ -198,6 +198,17 @@ export function createFlowRenderScratch(): FlowUniformScratch {
 /** The base resting brightness (the calm-lattice floor before the band lights a dot). */
 export const FLOW_BASE_BRIGHT = 0.22;
 
+/**
+ * BG.W-DOTFLOW-REBUILD — the present-composite Reinhard tone-map knee `trail/(trail+knee)`,
+ * the flow register's REST-CONTRAST lever (the faint-at-rest fix). LOWER = the mid-tones
+ * saturate faster, so the warm-fire ribbons pop off the deep warm floor AT REST instead of
+ * washing out toward it (the "faint at rest, 10% structure" defect). The SINGLE source both
+ * present passes splice — the GLSL `FLOW_FIELD_PRESENT_FRAG_GLSL` + the WGSL
+ * `FLOW_FIELD_TRAIL_WGSL` `fs_present` — so the tone-map stays byte-identical across backends
+ * (no WGSL↔GLSL knee drift). Strengthened off the prior hardcoded 0.85 magic literal.
+ */
+export const FLOW_PRESENT_KNEE = 0.6;
+
 /** The drift-driven size pulse (a subtle breathing; never a re-seed). */
 export const FLOW_SIZE_PULSE = 0.4;
 
