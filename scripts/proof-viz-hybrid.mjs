@@ -293,7 +293,15 @@ function clausePaintWiring(over) {
     const composable = stripComments(
         over?.useGooDotMatrix ?? read(resolve(DIR, "composables/useGooDotMatrix.ts")),
     );
-    // The accel/flick-burst leg consumes the shared field (the §T7 bloom).
+    // BG.W-GOODOT-SETUP-SPLIT — the setupWGPU/setupGL draw closures (the field/dot-grid uniform
+    // PACK + the two-pass draw) carved into the sibling gooDotFrame.ts leaf; the pack-wiring
+    // assert FOLLOWS the carve into the leaf (the reader-gate-follows-the-carve precedent). The
+    // pointer-field legs (usePointerVelocityField/tick/accel) stay in the composable resolveFrame.
+    const frame = stripComments(
+        over?.gooDotFrame ?? read(resolve(DIR, "composables/gooDotFrame.ts")),
+    );
+    const packSrc = `${composable}\n${frame}`;
+    // The accel/flick-burst leg consumes the shared field (the §T7 bloom) — in the composable.
     if (!/usePointerVelocityField\s*\(/.test(composable))
         viol.push("6 paint: useGooDotMatrix does not call usePointerVelocityField( — the shared accel/flick-burst leg is unwired (BC.W-VIZ-INTERACTION)");
     if (!/\.tick\s*\(/.test(composable))
@@ -301,11 +309,12 @@ function clausePaintWiring(over) {
     const readsAccel = /\.acceleration\b/.test(composable) || /\.burst\b/.test(composable);
     if (!readsAccel)
         viol.push("6 paint: useGooDotMatrix does not read the pointer acceleration/burst — the flick bloom is the field's unique contribution (velocity-only reds)");
-    // The dot-cursor influence reaches the buffer (the bloom/cursor drive).
-    if (!/packGooDotUniforms\s*\(/.test(composable))
-        viol.push("6 paint: useGooDotMatrix does not pack the dot-grid uniforms — the dot-grid output does not reach the buffer");
-    if (!/packBlobWGPUUniforms\s*\(/.test(composable) && !/uploadBlobUniforms\s*\(/.test(composable))
-        viol.push("6 paint: useGooDotMatrix does not pack the FIELD uniforms (packBlobWGPUUniforms / uploadBlobUniforms) — the field does not reach the buffer (the dots would not be field-driven)");
+    // The dot-cursor influence + field reach the buffer (the pack+draw — in the composable OR the
+    // carved gooDotFrame.ts leaf).
+    if (!/packGooDotUniforms\s*\(/.test(packSrc))
+        viol.push("6 paint: useGooDotMatrix/gooDotFrame does not pack the dot-grid uniforms — the dot-grid output does not reach the buffer");
+    if (!/packBlobWGPUUniforms\s*\(/.test(packSrc) && !/uploadBlobUniforms\s*\(/.test(packSrc))
+        viol.push("6 paint: useGooDotMatrix/gooDotFrame does not pack the FIELD uniforms (packBlobWGPUUniforms / uploadBlobUniforms) — the field does not reach the buffer (the dots would not be field-driven)");
     return viol;
 }
 
@@ -377,6 +386,15 @@ function selfTest() {
     });
     if (!velOnly.some((v) => v.startsWith("6")))
         fails.push("self-test: a velocity-only wiring did NOT red clause 6");
+
+    // (6b) BG.W-GOODOT-SETUP-SPLIT — the pack-wiring FOLLOWED the carve into gooDotFrame.ts; a
+    // leaf that drops the field/dot-grid pack (the draw deleted, not re-homed) reds clause 6 even
+    // when the composable is otherwise correct.
+    const packDroppedLeaf = runAll({
+        gooDotFrame: "export function buildGooDotWGPUSetup(){ return () => {}; }\n// no pack, no draw",
+    });
+    if (!packDroppedLeaf.some((v) => v.startsWith("6")))
+        fails.push("self-test: a gooDotFrame.ts that drops the field/dot-grid pack did NOT red clause 6");
 
     return fails;
 }

@@ -1,7 +1,15 @@
 #!/usr/bin/env node
-// proof:viz — TWO disjoint arms on ONE gate:
+// proof:viz — THREE disjoint arms on ONE gate:
 //   • BG.W-VIZ-RESIZE-ADOPT (V1-V5) — the viz-resize-UPLOAD-ONLY source gate
 //     (born-RED on HEAD — every viz self-measured the backing → GREEN at the hard-adopt).
+//   • BG.W-GOODOT-SETUP-SPLIT (G1-G3) — the F9 no-god-module setup-split source gate:
+//     useGooDotMatrix.ts (508 at the BD base) drained its two `setupWGPU`/`setupGL` builders +
+//     their per-frame two-pass draw into the colocated `gooDotFrame.ts` leaf (which CALLS the
+//     `gooDotSetup.ts` one-time RESOURCE construction), keeping ONLY the sim + the SHARED
+//     field-advance + the demand gate + the lifecycle handle. Born-RED on HEAD (the builders are
+//     inline in the composable AND `gooDotFrame.ts` does not exist); GREEN at the carve. Bites:
+//     an inline `function buildWGPUSetup(` reds G2, a re-folded `uploadBlobUniforms(` in the
+//     composable reds G3, a `gooDotFrame.ts` missing the WGPU-builder export reds G1.
 //   • BG.W-VIZ-PREVIEW-LIVE (P1-P4) — the per-STORY distinct-preview-still source gate:
 //     the /substrates bento painted 11 IDENTICAL frozen aurora stills (every card shared
 //     the ONE category `fieldStill`); the cure is a per-story dispatch off the colocated
@@ -268,6 +276,61 @@ function runAll(over = {}) {
             "P4: vizPreviewStill is not a memoized data-URI raster (each story rasters ONCE — proto2 #6)",
         );
 
+    // ══ GOO-DOT SETUP-SPLIT ARM (BG.W-GOODOT-SETUP-SPLIT) — the F9 no-god-module carve ══
+    // useGooDotMatrix.ts (508 at the BD base) drained its two `setupWGPU`/`setupGL` builders +
+    // their per-frame two-pass draw into the colocated `gooDotFrame.ts` leaf (which CALLS the
+    // `gooDotSetup.ts` one-time RESOURCE construction). The composable keeps ONLY the sim + the
+    // SHARED field-advance + the demand gate + the lifecycle handle. Born-RED on HEAD: the two
+    // builders are inline in the composable AND `gooDotFrame.ts` does not exist.
+    const GOODOT_COMPOSABLE = "goo-dot-matrix/composables/useGooDotMatrix.ts";
+    const GOODOT_FRAME = "goo-dot-matrix/composables/gooDotFrame.ts";
+    const gooComposable = files[GOODOT_COMPOSABLE] ?? "";
+    const gooFrame = files[GOODOT_FRAME] ?? "";
+
+    // G1 — the setup builders live in the colocated LEAF, exported (born-RED: absent on HEAD).
+    if (
+        !/export\s+function\s+buildGooDotWGPUSetup\s*\(/.test(gooFrame) ||
+        !/export\s+function\s+buildGooDotGLSetup\s*\(/.test(gooFrame)
+    )
+        fails.push(
+            "G1: the goo-dot setup builders (buildGooDotWGPUSetup/buildGooDotGLSetup) are not exported from gooDotFrame.ts — the F9 setup-split has not landed (born-RED: on HEAD both are inline in useGooDotMatrix.ts)",
+        );
+
+    // G2 — the composable defines NO inline setup builder AND composes the carved pair (born-RED:
+    // on HEAD it defines `function buildWGPUSetup`/`function buildGLSetup` inline, imports neither).
+    if (/\bfunction\s+build(WGPU|GL)Setup\s*\(/.test(gooComposable))
+        fails.push(
+            "G2: useGooDotMatrix.ts still defines an inline setup builder (`function buildWGPUSetup`/`function buildGLSetup`) — the setup must be carved into the gooDotFrame.ts leaf",
+        );
+    if (
+        !/buildGooDotWGPUSetup/.test(gooComposable) ||
+        !/buildGooDotGLSetup/.test(gooComposable)
+    )
+        fails.push(
+            "G2: useGooDotMatrix.ts does not compose the carved builders (buildGooDotWGPUSetup/buildGooDotGLSetup) — the drain is not wired",
+        );
+
+    // G3 — the per-frame draw internals are OUT of the composable and IN the leaf (a DRAIN, not a
+    // delete). Born-RED: on HEAD every draw-internal below lives in the composable.
+    for (const tok of [
+        /\bbeginRenderPass\b/,
+        /\buploadBlobUniforms\s*\(/,
+        /\bpackBlobWGPUUniforms\s*\(/,
+        /\bcreateGooDot(?:WGPU|GL)Resources\s*\(/,
+    ])
+        if (tok.test(gooComposable))
+            fails.push(
+                `G3: useGooDotMatrix.ts still carries a per-frame draw internal (${tok.source}) — the draw belongs in the gooDotFrame.ts leaf`,
+            );
+    if (
+        !/\bbeginRenderPass\b/.test(gooFrame) ||
+        !/\buploadBlobUniforms\s*\(/.test(gooFrame) ||
+        !/\bpackBlobWGPUUniforms\s*\(/.test(gooFrame)
+    )
+        fails.push(
+            "G3: the gooDotFrame.ts leaf does not carry the per-frame draw (beginRenderPass / uploadBlobUniforms / packBlobWGPUUniforms) — the carve deleted the draw instead of re-homing it",
+        );
+
     return fails;
 }
 
@@ -356,6 +419,33 @@ function selfTest() {
     if (!i.some((v) => v.startsWith("P4")))
         fails.push("self-test: a GL-arming preview still did NOT red P4");
 
+    // ── GOO-DOT SETUP-SPLIT bites (BG.W-GOODOT-SETUP-SPLIT) ──
+    const gooComposable = "goo-dot-matrix/composables/useGooDotMatrix.ts";
+    const gooFrame = "goo-dot-matrix/composables/gooDotFrame.ts";
+
+    // (j) a composable re-inlining `function buildWGPUSetup(` reds G2 (the drain undone).
+    const j = runAll({
+        [gooComposable]:
+            "import { buildGooDotWGPUSetup, buildGooDotGLSetup } from './gooDotFrame';\nfunction buildWGPUSetup() { return () => {}; }",
+    });
+    if (!j.some((v) => v.startsWith("G2")))
+        fails.push("self-test: a re-inlined `function buildWGPUSetup(` did NOT red G2");
+
+    // (k) a composable that re-folds a per-frame draw internal (`uploadBlobUniforms(`) reds G3.
+    const k = runAll({
+        [gooComposable]:
+            "import { buildGooDotWGPUSetup, buildGooDotGLSetup } from './gooDotFrame';\nfunction f(gl) { uploadBlobUniforms(gl, prog); }",
+    });
+    if (!k.some((v) => v.startsWith("G3")))
+        fails.push("self-test: a re-folded `uploadBlobUniforms(` in the composable did NOT red G3");
+
+    // (l) a leaf missing the buildGooDotWGPUSetup export reds G1 (the setup-split half-landed).
+    const l = runAll({
+        [gooFrame]: "export function buildGooDotGLSetup() { return () => {}; }",
+    });
+    if (!l.some((v) => v.startsWith("G1")))
+        fails.push("self-test: a gooDotFrame.ts missing the WGPU-builder export did NOT red G1");
+
     return fails;
 }
 
@@ -367,7 +457,7 @@ function main() {
 
     const artifact = {
         gate: "proof:viz",
-        wave: "BG.W-VIZ-RESIZE-ADOPT + BG.W-VIZ-PREVIEW-LIVE",
+        wave: "BG.W-VIZ-RESIZE-ADOPT + BG.W-VIZ-PREVIEW-LIVE + BG.W-GOODOT-SETUP-SPLIT",
         stamp: snapshotStamp(),
         ok,
         violations: viol,
@@ -377,14 +467,14 @@ function main() {
     writeGateArtifact(out, artifact);
 
     console.log(
-        "proof:viz — viz-resize-UPLOAD-ONLY (BG.W-VIZ-RESIZE-ADOPT) + per-story preview stills (BG.W-VIZ-PREVIEW-LIVE)",
+        "proof:viz — viz-resize-UPLOAD-ONLY (BG.W-VIZ-RESIZE-ADOPT) + per-story preview stills (BG.W-VIZ-PREVIEW-LIVE) + goo-dot setup-split (BG.W-GOODOT-SETUP-SPLIT)",
     );
     if (viol.length) {
         console.error("  RED:");
         for (const v of viol) console.error("    ✗ " + v);
     } else {
         console.log(
-            "  GREEN (V1 one-sizer-gBCR · V2 no-self-measure · V3 no-self-size · V4 dprPolicy×9 · V5 leaf-routes · P1 registry≥11 · P2 pairwise-distinct · P3 card-dispatch · P4 device-free-memoized)",
+            "  GREEN (V1 one-sizer-gBCR · V2 no-self-measure · V3 no-self-size · V4 dprPolicy×9 · V5 leaf-routes · P1 registry≥11 · P2 pairwise-distinct · P3 card-dispatch · P4 device-free-memoized · G1 leaf-exports-builders · G2 composable-drained · G3 draw-in-leaf)",
         );
     }
     if (isSelftest) {

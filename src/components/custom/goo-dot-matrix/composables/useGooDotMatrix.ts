@@ -29,10 +29,7 @@ import { onScopeDispose, ref, type Ref } from "vue";
 import {
     createGpuSubstrate,
     type GpuBackend,
-    type BackingSize,
 } from "../../../../composables/glass/webgpu/useGpuSubstrate";
-import type { WebGPUCanvasFrame } from "../../../../composables/glass/webgpu/useWebGPUCanvas";
-import type { WebGLCanvasFrame } from "../../../../composables/glass/webgl/useWebGLCanvas";
 import { usePointerVelocityField } from "../../../../composables/motion/usePointerVelocityField";
 import { useIntersectionPause } from "../../../../composables/motion/useIntersectionPause";
 import { resolveBudgetDpr } from "../../aurora/constants/budget";
@@ -43,28 +40,23 @@ import {
     useBlobSatellites,
     type BlobConfig,
 } from "../../goo-blob";
-import { packBlobWGPUUniforms } from "../../goo-blob/composables/uniformBridgeWGPU";
-import {
-    uploadBlobUniforms,
-    type BlobFrameState,
-} from "../../goo-blob/composables/uploadBlobUniforms";
+import type { BlobFrameState } from "../../goo-blob/composables/uploadBlobUniforms";
 import type { GooDotConfig } from "../constants";
 import {
-    packGooDotUniforms,
     pointerModeSign,
     restingDotPointer,
-    WELD_LO,
-    WELD_HI,
     type GooDotPointerState,
 } from "./uniformBridgeWGPU";
-// The one-time GPU/GL RESOURCE construction is carved into the sibling gooDotSetup.ts leaf
-// (the no-god-module re-drain); the per-frame pack+draw closures (the field/dot-grid uniform
-// writes + the draw) stay HERE so the SHARED field SoT + the dot-grid extend read at the call site.
+// The GPU/GL setup is carved off the composable (BG.W-GOODOT-SETUP-SPLIT, the F9 no-god-module
+// re-drain): the per-frame `setupWGPU`/`setupGL` draw closures live in the gooDotFrame.ts leaf
+// (which calls the one-time RESOURCE construction in gooDotSetup.ts). The composable hands the
+// builders a `GooDotFrameContext` (the sim + the SHARED field-advance + the dot-push + the demand
+// gate); the field SoT reads there.
 import {
-    GOO_DOT_LABEL,
-    createGooDotWGPUResources,
-    createGooDotGLResources,
-} from "./gooDotSetup";
+    buildGooDotWGPUSetup,
+    buildGooDotGLSetup,
+    type GooDotFrameContext,
+} from "./gooDotFrame";
 
 /** A calm 0..1 breathing pulse on the sim clock — the Move 4b lattice-squash drive (the same
  * slow-throb register the field's `breath` carries, kept JS-side so the squash rides one source). */
@@ -252,186 +244,19 @@ export function useGooDotMatrix(
         );
     }
 
-    // ── The WGPU setup (Register A: the dot-stamp fragment over the spliced field) ──
-    // The one-time pipeline/buffer/bind-group build lives in the carved gooDotSetup.ts leaf;
-    // the per-frame pack+draw closure stays HERE (the field SoT + dot-grid extend at the call site).
-    function buildWGPUSetup(
-        canvas: HTMLCanvasElement,
-    ): (
-        device: GPUDevice,
-        context: GPUCanvasContext,
-        format: GPUTextureFormat,
-    ) => WebGPUCanvasFrame {
-        return function setupWGPU(device, context, format) {
-            const res = createGooDotWGPUResources(device, format);
-
-            // BG.W-VIZ-RESIZE-ADOPT — upload-only. The LEAF sizer set the backing store
-            // (round(gBCR × the call-site dprPolicy); the WGPU swap chain auto-resizes to
-            // it and `frame()` reads `canvas.width/height` directly — no-op.
-            function resize(_s?: BackingSize): void {}
-
-            function frame(timeSec: number): void {
-                const frameState = resolveFrame(timeSec);
-                // Field lanes (binding0) — the goo-blob SoT, REUSED.
-                packBlobWGPUUniforms(
-                    res.fieldScratch,
-                    canvas,
-                    getField(),
-                    pointer,
-                    satellites,
-                    frameState,
-                );
-                device.queue.writeBuffer(res.fieldBuffer, 0, res.fieldScratch.buffer);
-                // Dot-grid lanes (binding1) — the extend.
-                packGooDotUniforms(
-                    res.dotScratch,
-                    config,
-                    { w: canvas.width || 1, h: canvas.height || 1 },
-                    resolveBudgetDpr(),
-                    dotPush,
-                );
-                device.queue.writeBuffer(res.dotBuffer, 0, res.dotScratch.buffer);
-
-                const groundOn = config.fieldGround === "warm";
-                const view = context.getCurrentTexture().createView();
-                const encoder = device.createCommandEncoder({ label: `${GOO_DOT_LABEL} frame` });
-
-                // Move 4a — pass 1: the warm ground (loadOp:"clear"), ONLY when fieldGround:"warm".
-                // The dot pass then loads OVER it; transparent skips straight to the clear dot pass.
-                if (groundOn) {
-                    res.groundScratch[0] = frameState.simTimeMs / 1000;
-                    res.groundScratch[1] = (canvas.width || 1) / (canvas.height || 1);
-                    device.queue.writeBuffer(res.groundBuffer, 0, res.groundScratch.buffer);
-                    const gPass = encoder.beginRenderPass({
-                        colorAttachments: [
-                            {
-                                view,
-                                clearValue: { r: 0, g: 0, b: 0, a: 0 },
-                                loadOp: "clear",
-                                storeOp: "store",
-                            },
-                        ],
-                    });
-                    gPass.setPipeline(res.groundPipeline);
-                    gPass.setBindGroup(0, res.groundBindGroup);
-                    gPass.draw(3, 1, 0, 0);
-                    gPass.end();
-                }
-
-                // Pass 2: the dot stamp. Loads over the ground if present, else clears.
-                const pass = encoder.beginRenderPass({
-                    colorAttachments: [
-                        {
-                            view,
-                            clearValue: { r: 0, g: 0, b: 0, a: 0 },
-                            loadOp: groundOn ? "load" : "clear",
-                            storeOp: "store",
-                        },
-                    ],
-                });
-                pass.setPipeline(res.pipeline);
-                pass.setBindGroup(0, res.bindGroup);
-                pass.draw(3, 1, 0, 0);
-                pass.end();
-                device.queue.submit([encoder.finish()]);
-            }
-
-            return {
-                frame,
-                shouldContinue,
-                resize,
-                teardown: () => {
-                    res.fieldBuffer.destroy();
-                    res.dotBuffer.destroy();
-                    res.groundBuffer.destroy();
-                },
-            };
-        };
-    }
-
-    // ── The GL setup (Register A: the dot-stamp fragment; the WebGL2 fallback) ──
-    function buildGLSetup(
-        canvas: HTMLCanvasElement,
-    ): (gl: WebGL2RenderingContext) => WebGLCanvasFrame {
-        return function setupGL(gl) {
-            const res = createGooDotGLResources(gl);
-            const { prog, vao, locs, dU } = res;
-
-            // BG.W-VIZ-RESIZE-ADOPT — upload-only (the leaf sized the backing store).
-            function resize(s?: BackingSize): void {
-                gl.viewport(0, 0, s?.w ?? canvas.width, s?.h ?? canvas.height);
-            }
-
-            function frame(timeSec: number): void {
-                const frameState = resolveFrame(timeSec);
-                const groundOn = config.fieldGround === "warm";
-
-                // Move 4a — pass 1: the warm ground (the WebGL2 tail). Clear, blend OFF, draw the
-                // opaque gradient quad; the dot pass then blends over it.
-                if (groundOn) {
-                    gl.disable(gl.BLEND);
-                    gl.clearColor(0, 0, 0, 0);
-                    gl.clear(gl.COLOR_BUFFER_BIT);
-                    gl.useProgram(res.ground.prog);
-                    gl.bindVertexArray(res.ground.vao);
-                    gl.uniform1f(res.ground.uTime, frameState.simTimeMs / 1000);
-                    gl.drawArrays(gl.TRIANGLES, 0, 6);
-                    gl.bindVertexArray(null);
-                    gl.enable(gl.BLEND);
-                    gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
-                }
-
-                // Pass 2: the dot stamp.
-                gl.useProgram(prog);
-                // The dot-grid uniforms (set BEFORE the field upload — which issues the draw).
-                const dpr = resolveBudgetDpr();
-                gl.uniform1f(dU.mode, config.variant === "dot-dither" ? 1 : 0);
-                gl.uniform1f(
-                    dU.pix,
-                    Math.max(config.dotPixelSize * dpr, 4),
-                );
-                gl.uniform1f(dU.floor, config.fieldFloor);
-                gl.uniform1f(dU.bright, config.dotBrightFloor);
-                gl.uniform1f(dU.min, config.dotMin);
-                gl.uniform1f(dU.max, config.dotMax);
-                gl.uniform1f(dU.pr, config.pointerRadius);
-                gl.uniform1f(dU.pm, pointerModeSign(config.pointerMode));
-                gl.uniform1f(dU.pa, config.interactive ? dotPush.active : 0);
-                gl.uniform2f(dU.cursor, dotPush.x, dotPush.y);
-                gl.uniform1f(dU.bloom, dotPush.bloom);
-                // The liquid-field lanes (Move 1/2/4b — the N named scalars).
-                gl.uniform1f(dU.shadowGate, groundOn ? 1 : 0);
-                gl.uniform1f(dU.presenceFloor, config.presenceFloor);
-                gl.uniform1f(dU.weldLo, WELD_LO);
-                gl.uniform1f(dU.weldHi, WELD_HI);
-                gl.uniform1f(dU.time, dotPush.timeSec);
-                gl.uniform1f(dU.weldSwell, config.weldSwell);
-                gl.uniform1f(dU.weldSpecular, config.weldSpecular);
-                gl.uniform1f(dU.flowAmt, config.flowAmt);
-                gl.uniform1f(dU.latticeSquash, dotPush.latticeSquash);
-                // The field uniforms + the draw (the REUSED goo-blob upload path).
-                uploadBlobUniforms(gl, prog, vao, locs, canvas, getField(), pointer, satellites, frameState);
-            }
-
-            return {
-                frame,
-                shouldContinue,
-                resize,
-                teardown: () => {
-                    gl.deleteProgram(res.prog);
-                    gl.deleteShader(res.vs);
-                    gl.deleteShader(res.fs);
-                    gl.deleteBuffer(res.buf);
-                    gl.deleteVertexArray(res.vao);
-                    gl.deleteProgram(res.ground.prog);
-                    gl.deleteShader(res.ground.vs);
-                    gl.deleteShader(res.ground.fs);
-                    gl.deleteBuffer(res.ground.buf);
-                    gl.deleteVertexArray(res.ground.vao);
-                },
-            };
-        };
-    }
+    // ── The setup context (BG.W-GOODOT-SETUP-SPLIT) ──
+    // The closed-over runtime state the carved gooDotFrame.ts draw closures read each frame:
+    // the sim systems + the SHARED field-advance + the dot-push + the demand gate. The two
+    // `setupWGPU`/`setupGL` builders own the resource construction (gooDotSetup.ts) + the draw.
+    const frameCtx: GooDotFrameContext = {
+        config,
+        getField,
+        pointer,
+        satellites,
+        dotPush,
+        resolveFrame,
+        shouldContinue,
+    };
 
     // Park a scrolled-offscreen surface (the IntersectionObserver fallback seam).
     useIntersectionPause(
@@ -460,8 +285,8 @@ export function useGooDotMatrix(
                     preserveDrawingBuffer: false,
                 },
                 respectReducedMotion: config.respectReducedMotion,
-                setupWGPU: buildWGPUSetup(canvas),
-                setupGL: buildGLSetup(canvas),
+                setupWGPU: buildGooDotWGPUSetup(canvas, frameCtx),
+                setupGL: buildGooDotGLSetup(canvas, frameCtx),
             });
             void handle.armAsync();
         }

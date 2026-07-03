@@ -181,7 +181,10 @@ const RATCHET_BASELINES = {
     "components/custom/dot-flow-field/shaders/flow-field.glsl.ts": 517,
     "components/custom/tabs/SegmentedTabs.vue": 512,
     "components/custom/goo-blob/shaders/metaball.frag.ts": 510,
-    "components/custom/goo-dot-matrix/composables/useGooDotMatrix.ts": 508,
+    // BG.W-GOODOT-SETUP-SPLIT DRAINED useGooDotMatrix.ts (497 → 322): the two setupWGPU/setupGL
+    // draw builders carved into the sibling composables/gooDotFrame.ts (249, calls the
+    // byte-identical gooDotSetup.ts creators); the composable keeps the sim + shared field-advance
+    // + demand gate + lifecycle handle. Row DELETED in this same diff (the monotonic drain — ≤ 500).
     // BH.B2.4a DRAINED useBloomUp.ts (507 → 449): the pure field-channel resolution + write
     // helpers (resolveField/resolveHue/clampStrength/prefersReducedMotion + the field hue/
     // strength/release writes) carved into the sibling composables/motion/bloomUpField.ts;

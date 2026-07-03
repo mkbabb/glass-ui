@@ -1,11 +1,10 @@
 // BC.W-CARVE6 — the goo-dot-matrix GPU/GL RESOURCE construction, carved out of
 // useGooDotMatrix.ts to hold the 500-line no-god-module bound. A cohesive sub-concern: the
 // one-time pipeline/buffer/bind-group build (WGPU) + the program/VAO/uniform-location wiring
-// (WebGL2). The composable keeps the per-frame pack+draw closures (the field/dot-grid uniform
-// writes + the draw call) so the SHARED field SoT (packBlobWGPUUniforms / uploadBlobUniforms)
-// and the dot-grid extend (packGooDotUniforms) stay visible at the call site; these builders
-// own only the scaffolding the frame reads. The construction is byte-faithful — same buffers,
-// same layout, same locations — just re-homed.
+// (WebGL2). The per-frame `setupWGPU`/`setupGL` draw closures live in the sibling gooDotFrame.ts
+// leaf (BG.W-GOODOT-SETUP-SPLIT — the second carve, holding the 500-line bound), which CALLS
+// these creators ONCE on setup then reads the returned resources each frame. The construction is
+// byte-faithful — same buffers, same layout, same locations — just re-homed.
 
 import { compileShader, linkProgram } from "../../../../composables/glass/webgl/compile";
 import {
