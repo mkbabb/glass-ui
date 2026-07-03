@@ -200,14 +200,20 @@ export interface CanvasLifecycleOptions {
     /** `rootMargin` for the leaf-composed IO park (G3). Default `"256px"` (pre-warm). */
     intersectionRootMargin?: string;
     /**
-     * BD.W-SUBSTRATE-REVEAL-BLOOM (G6) — the cold-first-paint reveal seam. When set, the
-     * leaf toggles a `--substrate-reveal-t` 0→1 scalar on the canvas at the cold-arm
-     * paint (ONCE, never on an IO/CV re-reveal of an already-seen viz). The shader reads
-     * it to ramp luminance/saturation/drift — a FIELD bloom (the canvas rect stays
-     * `scale(1)`, no box-zoom gutter). Gated on the Band-0 `--ease-cartoon-punch` +
-     * `--motion-weight` tokens (NOT shipped today); absent, this is a no-op so the
-     * substrate paints exactly as before. PRM → the scalar is set to its settled `1`
-     * immediately (zero ramp).
+     * BG.W-VIZ-REVEAL-BLOOM — the one-shot cold-first-VISIBLE entrance bloom. When set,
+     * the leaf sets a one-shot `data-substrate-reveal` ATTRIBUTE on the canvas at the
+     * moment it FIRST becomes visible (a dedicated one-shot IntersectionObserver — NOT
+     * at `arm()`, which a content-skipped / below-fold viz would burn on an invisible
+     * paint). The CANVAS-targeted CSS `@keyframes substrate-reveal-bloom` (`viz-reveal.css`)
+     * then ramps `filter: brightness()/saturate()` from a dim floor, OVERSHOOTS past 1.0
+     * on the `--ease-cartoon-punch` linear() curve (the EFFECTS-channel sanctioned
+     * overshoot — opacity clamps at 1.0, only `filter: brightness` can exceed the
+     * settle), and settles to the canvas's own no-resting-filter rest — a FIELD bloom
+     * (the canvas rect stays `scale(1)`, no box-zoom gutter). The `revealFired` guard
+     * keeps it ONE-SHOT: an IO/CV re-reveal of an already-seen viz is a silent re-attach
+     * → ZERO second bloom on scroll-off-and-back. PRM → the leaf skips the attr AND the
+     * CSS animation sits inside `@media (prefers-reduced-motion: no-preference)`, so the
+     * field paints settled from frame 0 (zero ramp). Default `false` (opt-in per viz).
      */
     revealBloom?: boolean;
 }
@@ -532,33 +538,56 @@ export function createCanvasLifecycle(
         io = null;
     }
 
-    // ── BD.W-SUBSTRATE-REVEAL-BLOOM (G6) — the cold-first-paint reveal seam ─────
-    // A ONE-SHOT `--substrate-reveal-t` 0→1 scalar the shader reads to ramp the field
-    // from within (FIELD bloom, the canvas rect stays scale(1) — no box-zoom gutter).
-    // Fires ONCE at the cold arm; an IO/CV re-reveal of an already-seen viz is a silent
-    // re-attach (zero second bloom). Gated on Band-0 tokens — when `revealBloom` is off
-    // (today) it is a no-op. PRM → set to the settled 1 immediately (zero ramp).
+    // ── BG.W-VIZ-REVEAL-BLOOM — the one-shot cold-first-VISIBLE entrance bloom ──
+    // A ONE-SHOT `data-substrate-reveal` ATTRIBUTE the CANVAS-targeted CSS
+    // `@keyframes substrate-reveal-bloom` (viz-reveal.css) reads to ramp
+    // `filter: brightness()/saturate()` from a dim floor, OVERSHOOT past 1.0 on the
+    // `--ease-cartoon-punch` linear() curve (opacity clamps at 1.0 — only filter:
+    // brightness CAN overshoot), then settle to the canvas's own no-resting-filter
+    // rest (FIELD bloom, the canvas rect stays scale(1) — no box-zoom gutter).
+    // Compositor-only (EFFECTS-channel, W-MOTION-CANON P1). Fires at FIRST-VISIBLE (a
+    // dedicated one-shot IntersectionObserver), NEVER at arm() — a viz arming while
+    // content-skipped / below-fold would burn its one-shot on an invisible paint and
+    // never materialize on scroll-in. The `revealFired` guard keeps it ONE-SHOT: an
+    // IO/CV re-reveal of an already-seen viz is a silent re-attach → ZERO second bloom
+    // on scroll-off-and-back. PRM → the leaf skips the attr entirely (the CSS animation
+    // also sits inside `@media (prefers-reduced-motion: no-preference)`) → instant
+    // settled field, zero ramp.
     let revealFired = false;
+    let revealIo: IntersectionObserver | null = null;
     function fireRevealBloom(): void {
-        if (!options.revealBloom || revealFired) return;
+        if (revealFired) return;
         revealFired = true;
-        if (typeof canvas.style === "undefined") return;
-        if (reducedMotion) {
-            canvas.style.setProperty("--substrate-reveal-t", "1");
+        revealIo?.disconnect();
+        revealIo = null;
+        if (disposed || typeof canvas.setAttribute !== "function") return;
+        canvas.setAttribute("data-substrate-reveal", "");
+    }
+    function armRevealBloom(): void {
+        if (!options.revealBloom || revealFired || reducedMotion) return;
+        if (typeof canvas.setAttribute !== "function") return;
+        // Gate the bloom on the FIRST-VISIBLE transition. A dedicated one-shot IO at the
+        // real viewport edge (threshold 0, no pre-warm margin) — distinct from the G3
+        // park IO (which pre-warms at 256px). On the first intersection it fires + self-
+        // disconnects; an env with no IntersectionObserver best-effort fires next paint.
+        if (typeof IntersectionObserver === "undefined") {
+            if (typeof requestAnimationFrame !== "undefined")
+                requestAnimationFrame(() => {
+                    if (!disposed) fireRevealBloom();
+                });
+            else fireRevealBloom();
             return;
         }
-        // The shader catches up from t=0; the leaf only flips the scalar at the seam.
-        // The actual 0→1.12→1.0 keyframe + the --ease-cartoon-punch curve live in the
-        // recipe the Band-0 wave lands; here the leaf seeds the start + lets the
-        // transition (declared in CSS on the canvas) drive the settle.
-        canvas.style.setProperty("--substrate-reveal-t", "0");
-        if (typeof requestAnimationFrame !== "undefined") {
-            requestAnimationFrame(() => {
-                if (!disposed) canvas.style.setProperty("--substrate-reveal-t", "1");
-            });
-        } else {
-            canvas.style.setProperty("--substrate-reveal-t", "1");
-        }
+        revealIo = new IntersectionObserver(
+            (entries) => {
+                const entry = entries[entries.length - 1];
+                if (!entry) return;
+                if (entry.isIntersecting || entry.intersectionRatio > 0)
+                    fireRevealBloom();
+            },
+            { threshold: 0 },
+        );
+        revealIo.observe(canvas);
     }
 
     function build(): void {
@@ -635,8 +664,9 @@ export function createCanvasLifecycle(
         bindIntersectionPark();
         armed = true;
         startTime = performance.now();
-        // G6 — the cold-first-paint reveal bloom (ONCE; gated on Band-0 tokens, no-op until then).
-        fireRevealBloom();
+        // BG.W-VIZ-REVEAL-BLOOM — arm the one-shot entrance bloom (fires at FIRST-VISIBLE
+        // via a dedicated IO, NEVER here at arm; no-op when `revealBloom` is off / under PRM).
+        armRevealBloom();
         // Under reduced-motion paint ONE static frame SYNCHRONOUSLY at arm (call
         // `tick()` in-line: it paints once and parks because `!reducedMotion` gates
         // the reschedule), so an arm under `reduce` never schedules a deferred tick
@@ -667,6 +697,8 @@ export function createCanvasLifecycle(
         reducedMq?.removeEventListener("change", onReducedMotionChange);
         unbindContentVisibility();
         unbindIntersectionPark();
+        revealIo?.disconnect();
+        revealIo = null;
         ro?.disconnect();
         ro = null;
         options.unbindContextEvents?.();

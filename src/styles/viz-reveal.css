@@ -1,0 +1,43 @@
+/* BG.W-VIZ-REVEAL-BLOOM — the one-shot cold-first-VISIBLE procedural-viz entrance.
+ *
+ * A procedural-viz CANVAS blooms into being: `filter: brightness()/saturate()` ramps
+ * from a dim floor, OVERSHOOTS past 1.0, then settles to the canvas's own no-resting-
+ * filter rest — a FIELD bloom (the canvas rect stays scale(1), no box-zoom gutter).
+ *
+ * THE OVERSHOOT is the whole point + the reason this is `filter: brightness`, not
+ * `opacity`: opacity clamps at 1.0, so it CANNOT overshoot. The `--ease-cartoon-punch`
+ * linear() curve peaks at 1.22 progress, so the single from→to `filter` interval
+ * EXTRAPOLATES past the settle value — brightness lands ≈1.13 at the peak (the ~+13%
+ * field bloom measured on both engines), then monotone-settles to brightness(1). This
+ * is the EFFECTS-channel sanctioned overshoot (W-MOTION-CANON P1); compositor-only.
+ *
+ * THE TARGET is the CANVAS ([data-substrate-reveal]) — NOT a `.viz-canvas-host`
+ * wrapper: goo-blob's resting `drop-shadow` filter lives on ITS wrapper, so targeting
+ * the canvas never collides with a resting wrapper filter. NO `animation-fill-mode`
+ * that PERMANENTLY holds a settle filter — the animation reverts to the canvas's own
+ * (no) filter post-settle (brightness(1) saturate(1) == no filter, a seamless revert).
+ *
+ * THE LEAF (createCanvasLifecycle.ts) sets the one-shot `data-substrate-reveal` attr
+ * the moment the canvas FIRST becomes visible (a dedicated one-shot IntersectionObserver
+ * — never at arm(), which a content-skipped / below-fold viz would burn invisibly). The
+ * `revealFired` guard keeps it ONE-SHOT → ZERO second bloom on scroll-off-and-back.
+ *
+ * PRM — the `animation:` line sits inside `@media (prefers-reduced-motion: no-preference)`
+ * AND the leaf skips the attr under reduce, so the field paints settled from frame 0
+ * (no dim floor, no luminance ramp — instant settled). The vestibular floor. */
+
+@keyframes substrate-reveal-bloom {
+    from {
+        filter: brightness(0.4) saturate(0.7);
+    }
+    to {
+        filter: brightness(1) saturate(1);
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    canvas[data-substrate-reveal] {
+        animation: substrate-reveal-bloom var(--substrate-reveal-duration)
+            var(--ease-cartoon-punch);
+    }
+}

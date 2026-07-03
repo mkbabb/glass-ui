@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// proof:viz — THREE disjoint arms on ONE gate:
+// proof:viz — FOUR disjoint arms on ONE gate:
 //   • BG.W-VIZ-RESIZE-ADOPT (V1-V5) — the viz-resize-UPLOAD-ONLY source gate
 //     (born-RED on HEAD — every viz self-measured the backing → GREEN at the hard-adopt).
 //   • BG.W-GOODOT-SETUP-SPLIT (G1-G3) — the F9 no-god-module setup-split source gate:
@@ -16,6 +16,20 @@
 //     `demo/stories/vizPreviewStill.ts` registry so per-card pixel-hash differs BY
 //     CONSTRUCTION over ZERO live GL contexts (born-RED on HEAD — the registry + the
 //     SectionPreviewCard import do not exist). The LIVE per-card-pixel-hash paint is the
+//     orchestrator's real-device capture, NOT this gate (the cardinal source/paint split).
+//   • BG.W-VIZ-REVEAL-BLOOM (R1-R8) — the one-shot cold-first-VISIBLE entrance-bloom
+//     source gate. A procedural-viz CANVAS blooms into being: `@keyframes
+//     substrate-reveal-bloom` (viz-reveal.css) ramps `filter: brightness()/saturate()`
+//     from a dim floor, OVERSHOOTS past 1.0 on the `--ease-cartoon-punch` linear() curve
+//     (the EFFECTS-channel sanctioned overshoot — opacity clamps at 1.0, only
+//     filter:brightness can exceed the settle), then settles to the canvas's own
+//     no-resting-filter rest. The LEAF (createCanvasLifecycle.ts) sets a one-shot
+//     `data-substrate-reveal` attr at FIRST-VISIBLE (a dedicated one-shot IO — never at
+//     arm(), which a content-skipped viz would burn invisibly), `revealFired`-guarded
+//     (zero second bloom). Born-RED on HEAD: the keyframe + `--substrate-reveal-duration`
+//     token do NOT exist, the leaf writes the DEAD `--substrate-reveal-t` scalar the
+//     never-landed shader was to read, and no viz opts in. useVizChoreography.ts stays
+//     DEFINITION-ABSENT. The deterministic brightness-overshoot PAINT rides the
 //     orchestrator's real-device capture, NOT this gate (the cardinal source/paint split).
 //
 // The cure for the substrate-plumbing chronic (the un-adopted leaf sizer): the ONE
@@ -81,6 +95,14 @@ const LEAF = resolve(
 // this gate with the resize-upload-only arm (V1-V5); the two are disjoint file sets.
 const CARD = resolve(ROOT, "demo/stories/SectionPreviewCard.vue");
 const STILL = resolve(ROOT, "demo/stories/vizPreviewStill.ts");
+// BG.W-VIZ-REVEAL-BLOOM — the one-shot cold-first-VISIBLE entrance bloom (R1-R8).
+// The CSS-filter recipe + its minted duration token + the LEAF attr mechanism +
+// the aurora opt-in anchor + the useVizChoreography DEFINITION-ABSENT verify.
+const REVEAL_CSS = resolve(ROOT, "src/styles/viz-reveal.css");
+const MOTION_CSS = resolve(ROOT, "src/styles/tokens/scheme-motion.css");
+const VIZ_CHOREO = resolve(ROOT, "src/composables/glass/useVizChoreography.ts");
+// The reference/paint-anchor viz that must opt into the bloom (R7).
+const AURORA_REVEAL_ANCHOR = "aurora/composables/runtime.ts";
 
 // The 9 procedural viz whose resize/render is HARD-ADOPTED upload-only.
 const VIZ_DIRS = [
@@ -331,6 +353,119 @@ function runAll(over = {}) {
             "G3: the gooDotFrame.ts leaf does not carry the per-frame draw (beginRenderPass / uploadBlobUniforms / packBlobWGPUUniforms) — the carve deleted the draw instead of re-homing it",
         );
 
+    // ══ REVEAL-BLOOM ARM (BG.W-VIZ-REVEAL-BLOOM) — the one-shot cold-first-VISIBLE ══
+    // procedural-viz entrance. A CSS @keyframes ramps `filter: brightness()` from a dim
+    // floor, OVERSHOOTS past 1.0 via the --ease-cartoon-punch linear() curve (the
+    // EFFECTS-channel sanctioned overshoot — opacity clamps at 1.0, only filter:brightness
+    // can exceed the settle), then settles to the canvas's own no-resting-filter rest. The
+    // LEAF sets a one-shot `data-substrate-reveal` attr at FIRST-VISIBLE (a dedicated IO),
+    // never at arm(). Born-RED on HEAD: the keyframe + the token do NOT exist, the leaf
+    // writes the DEAD `--substrate-reveal-t` scalar the never-landed shader was to read,
+    // and no viz opts in.
+    const revealCss = stripComments(
+        over.__reveal !== undefined ? over.__reveal : (read(REVEAL_CSS) ?? ""),
+    );
+    const motionCss = stripComments(
+        over.__motion !== undefined ? over.__motion : (read(MOTION_CSS) ?? ""),
+    );
+    const choreoExists =
+        over.__choreo !== undefined ? over.__choreo : existsSync(VIZ_CHOREO);
+
+    // R1 — the @keyframes substrate-reveal-bloom animates `filter: brightness()`.
+    if (!/@keyframes\s+substrate-reveal-bloom\b/.test(revealCss))
+        fails.push(
+            "R1: `@keyframes substrate-reveal-bloom` is absent from viz-reveal.css — the reveal recipe does not exist (born-RED on HEAD)",
+        );
+    else if (!/filter\s*:\s*brightness\s*\(/.test(revealCss))
+        fails.push(
+            "R1: `@keyframes substrate-reveal-bloom` does not animate `filter: brightness()` — only filter:brightness can overshoot past the 1.0 settle (opacity clamps at 1.0)",
+        );
+
+    // R2 — the recipe targets the CANVAS (goo-blob's resting drop-shadow lives on its
+    //      WRAPPER; a host-target would collide) AND rides --ease-cartoon-punch (the ONLY
+    //      curve that carries brightness past 1.0).
+    if (!/canvas\[data-substrate-reveal\]/.test(revealCss))
+        fails.push(
+            "R2: the reveal recipe does not target `canvas[data-substrate-reveal]` — it must target the CANVAS, not a `.viz-canvas-host` wrapper (the goo-blob wrapper drop-shadow collision)",
+        );
+    if (!/var\(--ease-cartoon-punch\)/.test(revealCss))
+        fails.push(
+            "R2: the reveal `animation` does not ride `var(--ease-cartoon-punch)` — the overshoot past 1.0 comes ONLY from that linear() curve; a plain ease cannot bloom",
+        );
+
+    // R3 — the duration is the minted token (token-first), read as a var() (not inline `Nms`).
+    if (!/--substrate-reveal-duration\s*:/.test(motionCss))
+        fails.push(
+            "R3: `--substrate-reveal-duration` is not minted in scheme-motion.css — the entrance rate must be ONE consumer knob, not an inline literal",
+        );
+    if (!/var\(--substrate-reveal-duration\)/.test(revealCss))
+        fails.push(
+            "R3: the reveal `animation` does not read `var(--substrate-reveal-duration)` — the duration must be the token, not an inline `ms`",
+        );
+
+    // R4 — the animation is PRM-gated: no `animation:` may sit BEFORE the
+    //      no-preference gate (an unconditional bloom runs under reduce).
+    {
+        const prmIdx = revealCss.search(
+            /@media\s*\(\s*prefers-reduced-motion\s*:\s*no-preference\s*\)/,
+        );
+        const animMatches = [...revealCss.matchAll(/animation\s*:/g)];
+        if (prmIdx < 0)
+            fails.push(
+                "R4: no `@media (prefers-reduced-motion: no-preference)` gate around the reveal — PRM must snap the field to instant-settled (no luminance ramp)",
+            );
+        if (animMatches.length === 0)
+            fails.push(
+                "R4: the reveal recipe declares no `animation:` — the bloom never runs",
+            );
+        else if (prmIdx >= 0 && animMatches.some((m) => m.index < prmIdx))
+            fails.push(
+                "R4: an `animation:` sits BEFORE the no-preference gate (unconditional) — the bloom must NOT run under `prefers-reduced-motion: reduce`",
+            );
+    }
+
+    // R5 — the LEAF drives the one-shot via the `data-substrate-reveal` ATTRIBUTE and does
+    //      NOT write the DEAD `--substrate-reveal-t` scalar (the never-landed shader read).
+    if (!/data-substrate-reveal/.test(leaf))
+        fails.push(
+            "R5: createCanvasLifecycle.ts does not set the `data-substrate-reveal` attr — the reveal has not migrated to the CSS-filter attr path (born-RED: on HEAD the leaf writes the dead scalar)",
+        );
+    if (/--substrate-reveal-t\b/.test(leaf))
+        fails.push(
+            "R5: createCanvasLifecycle.ts still writes the DEAD `--substrate-reveal-t` scalar — no shader ever read it (the no-op mechanism); the attr path is the SOLE reveal source",
+        );
+
+    // R6 — the leaf fires at FIRST-VISIBLE, not at arm(): the reveal path composes a
+    //      dedicated one-shot IntersectionObserver (`revealIo`) + the `revealFired` guard.
+    if (!/armRevealBloom/.test(leaf))
+        fails.push(
+            "R6: createCanvasLifecycle.ts has no `armRevealBloom` — the first-visible reveal gate is absent (a bloom fired at arm() burns its one-shot on a content-skipped invisible paint)",
+        );
+    if (!/revealIo\b/.test(leaf))
+        fails.push(
+            "R6: the reveal path has no dedicated one-shot `revealIo` IntersectionObserver — the bloom must gate on the FIRST-VISIBLE transition, not fire at arm()",
+        );
+    if (!/revealFired\b/.test(leaf))
+        fails.push(
+            "R6: the reveal has no `revealFired` one-shot guard — an IO/CV re-reveal would fire a second bloom on scroll-off-and-back",
+        );
+
+    // R7 — the reference/paint-anchor viz (aurora) OPTS IN (`revealBloom: true`), so the
+    //      mechanism is ENGAGED, not shipped-but-unconsumed shelf-ware.
+    const auroraSrc = files[AURORA_REVEAL_ANCHOR] ?? "";
+    if (!/revealBloom\s*:\s*true/.test(auroraSrc))
+        fails.push(
+            "R7: the aurora runtime (the reference/paint-anchor viz) does not pass `revealBloom: true` — the entrance bloom is shipped-but-unconsumed shelf-ware (born-RED: on HEAD no viz opts in)",
+        );
+
+    // R8 — useVizChoreography.ts is DEFINITION-ABSENT (the wave's explicit verify — the dead
+    //      viz-entrance-choreography leaf, deleted at BG.W-DEAD-COMPOSABLE-CUT; the reveal-
+    //      bloom is the CSS-filter successor, NOT a re-mint).
+    if (choreoExists)
+        fails.push(
+            "R8: src/composables/glass/useVizChoreography.ts EXISTS — the dead viz-entrance-choreography leaf must stay DEFINITION-ABSENT (the CSS-filter reveal-bloom is its successor)",
+        );
+
     return fails;
 }
 
@@ -446,6 +581,73 @@ function selfTest() {
     if (!l.some((v) => v.startsWith("G1")))
         fails.push("self-test: a gooDotFrame.ts missing the WGPU-builder export did NOT red G1");
 
+    // ── REVEAL-BLOOM bites (BG.W-VIZ-REVEAL-BLOOM) ──
+    // A valid reveal recipe the bites break ONE witness at a time.
+    const validReveal =
+        "@keyframes substrate-reveal-bloom { from { filter: brightness(0.4); } to { filter: brightness(1); } }\n" +
+        "@media (prefers-reduced-motion: no-preference) { canvas[data-substrate-reveal] { animation: substrate-reveal-bloom var(--substrate-reveal-duration) var(--ease-cartoon-punch); } }";
+
+    // (m) a reveal css with NO @keyframes reds R1.
+    const m = runAll({
+        __reveal:
+            "@media (prefers-reduced-motion: no-preference) { canvas[data-substrate-reveal] { animation: foo var(--substrate-reveal-duration) var(--ease-cartoon-punch); } }",
+    });
+    if (!m.some((v) => v.startsWith("R1")))
+        fails.push("self-test: a reveal css with no @keyframes did NOT red R1");
+
+    // (n) a reveal recipe targeting a HOST (not the canvas) reds R2 (the goo-blob collision).
+    const n = runAll({
+        __reveal: validReveal.replace(
+            "canvas[data-substrate-reveal]",
+            ".viz-canvas-host[data-substrate-reveal]",
+        ),
+    });
+    if (!n.some((v) => v.startsWith("R2")))
+        fails.push("self-test: a reveal recipe targeting a host (not the canvas) did NOT red R2");
+
+    // (o) an INLINE-duration reveal recipe (no var(--substrate-reveal-duration)) reds R3.
+    const o = runAll({
+        __reveal: validReveal.replace(
+            "var(--substrate-reveal-duration)",
+            "1100ms",
+        ),
+    });
+    if (!o.some((v) => v.startsWith("R3")))
+        fails.push("self-test: an inline-duration reveal recipe did NOT red R3");
+
+    // (p) an unconditional `animation:` BEFORE the PRM gate reds R4.
+    const p = runAll({
+        __reveal:
+            "@keyframes substrate-reveal-bloom { from { filter: brightness(0.4); } to { filter: brightness(1); } }\n" +
+            "canvas[data-substrate-reveal] { animation: substrate-reveal-bloom var(--substrate-reveal-duration) var(--ease-cartoon-punch); }\n" +
+            "@media (prefers-reduced-motion: no-preference) { canvas { color: red; } }",
+    });
+    if (!p.some((v) => v.startsWith("R4")))
+        fails.push("self-test: an unconditional reveal animation before the PRM gate did NOT red R4");
+
+    // (q) a leaf writing the DEAD `--substrate-reveal-t` scalar reds R5.
+    const q = runAll({ __leaf: "canvas.style.setProperty('--substrate-reveal-t','1');" });
+    if (!q.some((v) => v.startsWith("R5")))
+        fails.push("self-test: a leaf writing the dead --substrate-reveal-t scalar did NOT red R5");
+
+    // (r) a leaf with the attr but NO armRevealBloom/revealIo reds R6 (fire-at-first-visible gone).
+    const r = runAll({ __leaf: "canvas.setAttribute('data-substrate-reveal','');" });
+    if (!r.some((v) => v.startsWith("R6")))
+        fails.push("self-test: a leaf with no armRevealBloom/revealIo did NOT red R6");
+
+    // (s) the aurora anchor with NO `revealBloom: true` reds R7 (shipped-but-unconsumed).
+    const s = runAll({
+        [AURORA_REVEAL_ANCHOR]:
+            "handle = createGpuSubstrate(canvas, { dprPolicy: resolveBudgetDpr });",
+    });
+    if (!s.some((v) => v.startsWith("R7")))
+        fails.push("self-test: the aurora anchor with no revealBloom:true did NOT red R7");
+
+    // (t) a PRESENT useVizChoreography.ts reds R8 (the dead leaf must stay DEFINITION-ABSENT).
+    const t = runAll({ __choreo: true });
+    if (!t.some((v) => v.startsWith("R8")))
+        fails.push("self-test: a present useVizChoreography.ts did NOT red R8");
+
     return fails;
 }
 
@@ -457,7 +659,7 @@ function main() {
 
     const artifact = {
         gate: "proof:viz",
-        wave: "BG.W-VIZ-RESIZE-ADOPT + BG.W-VIZ-PREVIEW-LIVE + BG.W-GOODOT-SETUP-SPLIT",
+        wave: "BG.W-VIZ-RESIZE-ADOPT + BG.W-VIZ-PREVIEW-LIVE + BG.W-GOODOT-SETUP-SPLIT + BG.W-VIZ-REVEAL-BLOOM",
         stamp: snapshotStamp(),
         ok,
         violations: viol,
@@ -467,14 +669,14 @@ function main() {
     writeGateArtifact(out, artifact);
 
     console.log(
-        "proof:viz — viz-resize-UPLOAD-ONLY (BG.W-VIZ-RESIZE-ADOPT) + per-story preview stills (BG.W-VIZ-PREVIEW-LIVE) + goo-dot setup-split (BG.W-GOODOT-SETUP-SPLIT)",
+        "proof:viz — viz-resize-UPLOAD-ONLY (BG.W-VIZ-RESIZE-ADOPT) + per-story preview stills (BG.W-VIZ-PREVIEW-LIVE) + goo-dot setup-split (BG.W-GOODOT-SETUP-SPLIT) + reveal-bloom (BG.W-VIZ-REVEAL-BLOOM)",
     );
     if (viol.length) {
         console.error("  RED:");
         for (const v of viol) console.error("    ✗ " + v);
     } else {
         console.log(
-            "  GREEN (V1 one-sizer-gBCR · V2 no-self-measure · V3 no-self-size · V4 dprPolicy×9 · V5 leaf-routes · P1 registry≥11 · P2 pairwise-distinct · P3 card-dispatch · P4 device-free-memoized · G1 leaf-exports-builders · G2 composable-drained · G3 draw-in-leaf)",
+            "  GREEN (V1 one-sizer-gBCR · V2 no-self-measure · V3 no-self-size · V4 dprPolicy×9 · V5 leaf-routes · P1 registry≥11 · P2 pairwise-distinct · P3 card-dispatch · P4 device-free-memoized · G1 leaf-exports-builders · G2 composable-drained · G3 draw-in-leaf · R1 keyframe-filter-brightness · R2 canvas-target+cartoon-punch · R3 duration-token · R4 PRM-gated · R5 attr-not-dead-scalar · R6 first-visible-IO · R7 aurora-opts-in · R8 viz-choreography-absent)",
         );
     }
     if (isSelftest) {

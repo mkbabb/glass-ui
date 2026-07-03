@@ -155,7 +155,7 @@ export interface WebGLCanvasOptions {
     composeIntersectionPark?: boolean;
     /** `rootMargin` for the leaf IO park (G3). */
     intersectionRootMargin?: string;
-    /** Fire the cold-first-paint reveal bloom (G6, gated on Band-0 tokens). Default `false`. */
+    /** Fire the one-shot cold-first-VISIBLE entrance bloom (BG.W-VIZ-REVEAL-BLOOM — the `data-substrate-reveal` attr). Default `false`. */
     revealBloom?: boolean;
     /**
      * Build the program + geometry on a fresh context. Called on `arm()` AND on

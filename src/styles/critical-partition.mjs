@@ -68,6 +68,7 @@ export const DEFERRED_PARTIALS = Object.freeze([
     "floating-panel.css",
     "transitions.css",
     "animations.css",
+    "viz-reveal.css",
     "scroll-driven.css",
     "scroll-choreography.css",
     "scroll-chrome.css",

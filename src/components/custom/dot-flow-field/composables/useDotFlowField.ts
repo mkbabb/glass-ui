@@ -204,6 +204,8 @@ export function useDotFlowField(
                 // BG.W-VIZ-RESIZE-ADOPT — the leaf owns backing measurement + sizing
                 // (round(gBCR × dprPolicy)); every setup's `resize` is upload-only.
                 dprPolicy: resolveBudgetDpr,
+                // BG.W-VIZ-REVEAL-BLOOM — the one-shot cold-first-VISIBLE entrance bloom.
+                revealBloom: true,
                 setupWGPU: createFlowWGPUSetup({
                     ...setupDeps,
                     config: effective,

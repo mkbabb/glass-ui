@@ -181,6 +181,8 @@ export function useConcentric(
                 // BG.W-VIZ-RESIZE-ADOPT — the leaf owns backing measurement + sizing
                 // (round(gBCR × dprPolicy)); both setups' `resize` are upload-only.
                 dprPolicy: resolveBudgetDpr,
+                // BG.W-VIZ-REVEAL-BLOOM — the one-shot cold-first-VISIBLE entrance bloom.
+                revealBloom: true,
                 setupWGPU: createConcentricWGPUSetup({
                     canvas,
                     config,

@@ -257,6 +257,8 @@ export function createAurora(
         // BG.W-VIZ-RESIZE-ADOPT — the leaf owns backing-store measurement + sizing
         // (round(gBCR × dprPolicy)); every viz `resize` is upload-only.
         dprPolicy: resolveAuroraWashDpr,
+        // BG.W-VIZ-REVEAL-BLOOM — the one-shot cold-first-VISIBLE entrance bloom.
+        revealBloom: true,
         contextAttrs: {
             antialias: false,
             alpha: true,

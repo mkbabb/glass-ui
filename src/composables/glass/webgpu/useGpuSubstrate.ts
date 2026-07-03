@@ -106,10 +106,11 @@ export interface GpuSubstrateOptions {
     /** `rootMargin` for the leaf IO park (G3). Default `"256px"`. */
     intersectionRootMargin?: string;
     /**
-     * G6 — fire the cold-first-paint reveal bloom (a one-shot `--substrate-reveal-t`
-     * 0→1 the shader reads to ramp the field from within). Gated on the Band-0
-     * `--ease-cartoon-punch` + `--motion-weight` tokens; a no-op until they land.
-     * Default `false`.
+     * BG.W-VIZ-REVEAL-BLOOM — fire the one-shot cold-first-VISIBLE entrance bloom (a
+     * one-shot `data-substrate-reveal` attr on the canvas the CSS `@keyframes
+     * substrate-reveal-bloom` reads to ramp `filter: brightness()` from a dim floor,
+     * overshoot past 1.0 on `--ease-cartoon-punch`, then settle). Fires at first-visible,
+     * one-shot (zero second bloom), PRM-instant. Default `false` (opt-in per viz).
      */
     revealBloom?: boolean;
     /** WebGPU `context.configure` alpha mode (default `"premultiplied"`). */

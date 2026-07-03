@@ -324,6 +324,9 @@ export function useMetaballRenderer(
     function start(canvas: HTMLCanvasElement) {
         canvasHandle = createGpuSubstrate(canvas, {
             dprPolicy: blobDprPolicy,
+            // BG.W-VIZ-REVEAL-BLOOM — the one-shot cold-first-VISIBLE entrance bloom (the
+            // reveal targets the CANVAS; the wrapper's resting drop-shadow is untouched).
+            revealBloom: true,
             contextAttrs: {
                 alpha: true,
                 premultipliedAlpha: true,
