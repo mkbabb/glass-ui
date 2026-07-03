@@ -1,6 +1,16 @@
 <script setup lang="ts">
 // StoryHeader — the ONE ordered header cluster (BB.W-HIERARCHY2).
 //
+// ADOPTED as the unified page-header (BG.W-CHASSIS-ADOPT-OR-RETIRE). The four
+// candidate header/chassis primitives were decided adopt-or-retire: DemoFrame
+// (zero-importer aspirational cel chassis) + StorySectionHeader (zero-importer
+// section-header) were RETIRED; this StoryHeader (live-imported by StoryPage +
+// StoryHero) + VizStudio (the viz-studio chassis) were ADOPTED. This is THE header
+// cluster — the eyebrow → subpath → display <h1> → blurb reading order — every
+// StoryPage/StoryHero composes; a per-story inline `<header>` restating the page
+// identity is the redundant page-duplicate the chassis hero already carries.
+// Machine-locked by proof:demo.
+//
 // THE READING-ORDER INVERSION FIX (A4-INVERSION). On a HERO page the descriptor
 // (the mono eyebrow + the dense blurb) used to render in StoryPage's chrome
 // <header> ABOVE the giant display <h1> inside the card — a focal INVERSION (the

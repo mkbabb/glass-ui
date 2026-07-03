@@ -2212,6 +2212,12 @@ export const GATES = [
         note: "BC.W-STORYBOOK-META — the storybook META chassis: the AppShell + StoryPage + the section header read as ONE coherent storybook (the meta-level IA, the page-band surface enrolled in the gestalt roster). The LAST page band. Bite: an incoherent meta-chassis / a missing page-band roster row → RED.",
     },
     {
+        id: "proof:demo",
+        cmd: "proof:demo",
+        tags: ["local", "ci"],
+        note: "BG.W-CHASSIS-ADOPT-OR-RETIRE — the demo-chassis adopt-or-retire lock: DemoFrame + StorySectionHeader RETIRED (zero-importer substrate, J inv-10), StoryHeader + VizStudio ADOPTED (live-imported chassis). D1 retires realized (files DEFINITION-ABSENT) · D2 adopts realized (present + ≥1 live importer) · D3 no dangling ref/@import to a retired chassis (comment-stripped) · D4 the decision ledger complete + a comment-strip distinguishing self-test bite. Bite: a retired file survives / an adopted chassis loses its importer / a live <DemoFrame> tag dangles → RED.",
+    },
+    {
         id: "proof:bp-lazy",
         cmd: "proof:bp-lazy",
         tags: ["ci", "release"],

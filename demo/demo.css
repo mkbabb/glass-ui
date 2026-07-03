@@ -107,12 +107,6 @@
    source; a hand-extracted src critical.css would RED). */
 @import "../src/styles/index.css";
 @import "./stories/story-hero.css";
-/* W-STORY-PAGE-STANDARD — the WARM-CEL CHASSIS geometry + motion (the box-model
-   inversion: the φ ladder + the HOISTED φ² stage + the mount-clock cel-slam).
-   Loaded AFTER story-hero.css so the `--story-page-*` rhythm + the
-   `--ease-cartoon-punch` / `--motion-weight` / `--shadow-cartoon-*` shared tokens
-   resolve; the cel CONSUMES them, never re-mints them. */
-@import "./stories/_chassis/demo-frame.css";
 /* the LIQUID-DOCK prototype surfaces are DEMO-ONLY (off the library bundle; the driving
    composable was DEFINITION-ABSENT'd at BG.W-DEAD-COMPOSABLE-CUT and this sheet moved
    into demo/ — the god-module baseline drained). Loaded here after the library so the

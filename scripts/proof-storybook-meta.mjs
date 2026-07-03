@@ -442,13 +442,20 @@ function detectDogfoodMints(overrides = {}) {
     const spcComposesIconChip = /<IconChip\b/.test(spc);
     const spcSecondPrimitive = /fira-code/.test(spc) || /glass-resting|glass-quiet|<Card\b/.test(spc);
     const spcTwoPrimitives = spcComposesIconChip && spcSecondPrimitive;
+    // BG.W-CHASSIS-ADOPT-OR-RETIRE — StorySectionHeader RETIRED (zero-importer). Its
+    // section-header role folds onto StorySection's canonical <h2 text-subheading>
+    // heading rung + the StoryPage chassis hero identity (proof:demo D2/proof:page-
+    // hierarchy R2). When the file is ABSENT the SSH sub-clause is vacuously
+    // satisfied; the <SectionPreviewCard> bento dogfood stays the load-bearing M9d
+    // assert. A re-added SSH file WITHOUT IconChip STILL reds (sshRetired is false on
+    // a non-empty ssh) — the anti-inline-chip fence survives the retirement.
+    const sshRetired = ssh.length === 0;
     return {
         pass:
-            sshExists &&
-            sshComposesIconChip &&
-            sshNoChipRePaste &&
+            (sshRetired || (sshExists && sshComposesIconChip && sshNoChipRePaste)) &&
             spcExists &&
             spcTwoPrimitives,
+        sshRetired,
         sshExists,
         sshComposesIconChip,
         sshNoChipRePaste,
@@ -709,8 +716,8 @@ add(
     "m9d-dogfood-mints",
     m9d.pass,
     m9d.pass
-        ? "<StorySectionHeader> exists + composes the shipped <IconChip> (the import + the tag, NO inline-style chip re-paste — proof:icon-chip D4); <SectionPreviewCard> composes ≥2 primitives (the IconChip POP + the fira-code subpath chip / glass card surface — the bento dogfood exemplar). The 42nd-paste preventer minted; the survivors' home"
-        : `the dogfood mints are incomplete (ssh-exists=${m9d.sshExists} ssh-composes-iconchip=${m9d.sshComposesIconChip} ssh-no-repaste=${m9d.sshNoChipRePaste} spc-exists=${m9d.spcExists} spc-two-primitives=${m9d.spcTwoPrimitives})`,
+        ? `the dogfood bento mint holds — <SectionPreviewCard> composes ≥2 primitives (the IconChip POP + the fira-code subpath chip / glass card surface — the bento dogfood exemplar).${m9d.sshRetired ? " <StorySectionHeader> is RETIRED (BG.W-CHASSIS-ADOPT-OR-RETIRE — zero-importer; the section-header role folds onto StorySection's <h2 text-subheading> rung); a re-added SSH SFC must still compose the shipped <IconChip>, NO inline-style chip re-paste." : " <StorySectionHeader> exists + composes the shipped <IconChip> (the import + the tag, NO inline-style chip re-paste — proof:icon-chip D4)."}`
+        : `the dogfood mints are incomplete (ssh-retired=${m9d.sshRetired} ssh-exists=${m9d.sshExists} ssh-composes-iconchip=${m9d.sshComposesIconChip} ssh-no-repaste=${m9d.sshNoChipRePaste} spc-exists=${m9d.spcExists} spc-two-primitives=${m9d.spcTwoPrimitives})`,
 );
 
 // M10
