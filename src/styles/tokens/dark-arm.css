@@ -109,8 +109,15 @@
        (4.60:1 as ink over --card / 5.03:1 as a plate vs page). */
     --destructive: hsl(0 80% 60%);
     --destructive-foreground: hsl(48 10% 90%);
-    --ring: hsl(48 10% 70%);
+    /* BG.W-DESHADCN — the dark arm of the renamed house focus-accent register
+       (off the shadcn `--ring` token; the value is byte-identical to the prior
+       dark `--ring` mid-tone). */
+    --focus-ring-color: hsl(48 10% 70%);
     --shadow: hsl(0 0% 5%);
+
+    /* BG.W-DESHADCN — the `ai` label ink, dark arm (lifted off the light 0.55 to
+       clear the deep canvas; the plain per-mode pair). */
+    --accent-ai-ink: oklch(0.80 0.13 75);
 
     /* Section palette — brightened for dark backgrounds (oklch; AV.W16 TW2 —
        mirrors the light-dark() dark halves above; hue preserved) */

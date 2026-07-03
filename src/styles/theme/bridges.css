@@ -80,7 +80,11 @@
        bg-border-soft utilities). Auto-dark via --border. */
     --color-border-soft: var(--border-soft);
     --color-input: var(--input);
-    --color-ring: var(--ring);
+    /* BG.W-DESHADCN — the shadcn `--color-ring` @theme bridge (the `ring`/
+       `outline-ring`/`text-ring` utility surface) is DELETED, clean break. The
+       house focus accent is the `--focus-ring-color` token / the `.focus-ring`
+       box-shadow utility; the lone `outline-ring` reader (MetricBadge) re-points
+       onto `outline-(color:--focus-ring-color)`. */
     --color-background: var(--background);
     --color-foreground: var(--foreground);
 

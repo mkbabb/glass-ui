@@ -105,7 +105,9 @@ const showLabel = computed(() =>
   <div
     :class="cn(
       'metric-badge cursor-pointer',
-      'focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2',
+      // BG.W-DESHADCN — off the shadcn `outline-ring` (the deleted `--color-ring`
+      // theme bridge) onto the renamed house `--focus-ring-color` token.
+      'focus-visible:outline-2 focus-visible:outline-(color:--focus-ring-color) focus-visible:outline-offset-2',
       labelPosition && `metric-badge--label-${labelPosition}`,
       $props.class,
     )"

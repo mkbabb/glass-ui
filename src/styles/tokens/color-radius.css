@@ -99,18 +99,29 @@
     --primary-foreground: var(--neutral-0);
     --destructive: hsl(0 72% 50%);
     --destructive-foreground: var(--neutral-0);
-    --ring: hsl(24 10% 10%);
+    /* BG.W-DESHADCN — the house focus-accent register. RENAMED off the shadcn
+       `--ring` token (clean break, no alias — the de-shadcn break). Every
+       `.focus-ring`/`--focus-ring-shadow` reader + the input-fold + the
+       configurator crown resolve THIS token; the theme-bridge `--color-ring`
+       (the shadcn `ring`/`outline-ring` utility surface) is DELETED. */
+    --focus-ring-color: hsl(24 10% 10%);
     --shadow: hsl(24 10% 10%);
     --shadow-color: var(--foreground);
+
+    /* BG.W-DESHADCN — the `ai` button label ink (token-first, off the raw
+       `text-amber-700` tailwind palette). Warm-amber, calibrated to read on the
+       light glass surface; the dark arm lifts it in dark-arm.css (the plain
+       per-mode pair idiom). Read as `text-(--accent-ai-ink)`. */
+    --accent-ai-ink: oklch(0.55 0.13 75);
 
     /* AQ.W2 §4 — native-control accent. `accent-color` is an inherited
        built-in <color>, so per the §2b resolve-late discipline it reads a
        dedicated UNREGISTERED token set per-mode (NOT light-dark()) and is
        re-specified inside `.dark` — otherwise the accent freezes to the
        light shade at the cascade root. Light: muted-black checkmarks /
-       sliders on warm cream. Dark arm (`.dark`) reads `--ring` (mid-tone),
-       not the near-white dark `--primary`, so a checkbox's white checkmark
-       keeps contrast headroom (accent-color.md §5). */
+       sliders on warm cream. Dark arm (`.dark`) reads `--focus-ring-color`
+       (mid-tone), not the near-white dark `--primary`, so a checkbox's white
+       checkmark keeps contrast headroom (accent-color.md §5). */
     --accent-color: var(--primary);
 
     /* Border hairline at whisper alpha — the canonical rung for

@@ -80,8 +80,10 @@
     --opacity-icon-muted: 0.8;
 
     --focus-ring-width: 2px;
-    --focus-ring-shadow: 0 0 0 var(--focus-ring-width) color-mix(in srgb, var(--ring) 30%, transparent),
-        0 0 8px color-mix(in srgb, var(--ring) 15%, transparent);
+    /* BG.W-DESHADCN — reads the renamed house `--focus-ring-color` (off the shadcn
+       `--ring`); this is the SOLE `--focus-ring-color` reader (the one retint knob). */
+    --focus-ring-shadow: 0 0 0 var(--focus-ring-width) color-mix(in srgb, var(--focus-ring-color) 30%, transparent),
+        0 0 8px color-mix(in srgb, var(--focus-ring-color) 15%, transparent);
     --focus-ring: var(--focus-ring-shadow);
 
     /* BB.W-INVALID-RING — the destructive twin of --focus-ring-shadow. The

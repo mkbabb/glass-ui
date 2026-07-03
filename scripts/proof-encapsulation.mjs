@@ -387,6 +387,155 @@ function detectAliasKill(overrides = {}) {
     return { facts, violations };
 }
 
+// ── BG.W-DESHADCN — the de-shadcn HEAD-mode sweep + the --ring→--focus-ring-color
+//    break + the ToastClose default name. reka = BEHAVIOUR / glass-ui = 100% of the
+//    MATERIAL. This arm closes the leak classes proof:no-shadcn-default's NEUTRAL-token
+//    vocabulary (bg-background/border-input/ring-ring/ring-2/ring-offset/rounded-md/
+//    shadow-sm) does NOT reach — it is DISJOINT from that gate (no double-cover):
+//      DS1 RING-BREAK: the shadcn `--ring` token + the `--color-ring` @theme bridge are
+//           DEFINITION-ABSENT from src/styles AND the house `--focus-ring-color` register
+//           is defined (the clean-break rename — no legacy alias, the de-shadcn break).
+//      DS2 RING-CONSUMER-REPOINT: no src/ file reads the retired bare `var(--ring)` token
+//           NOR the shadcn ring-COLOR utility (`bg-ring`/`text-ring`/`border-ring`/
+//           `outline-ring` — off the deleted `--color-ring` bridge; `ring-ring` stays
+//           proof:no-shadcn-default's). Every focus consumer resolves the renamed token
+//           / the `.focus-ring` box-shadow.
+//      DS3 PALETTE-SWEEP (HEAD-mode, the ui/ 233-file sweep): ZERO raw-tailwind PALETTE
+//           utility (`text-red-300`, `bg-amber-500`, `dark:text-amber-400`, …) survives
+//           in any ui/ component's live class strings — the material is 100% token-first.
+//      DS4 TOASTCLOSE-NAME: ToastClose.vue ships a DEFAULT overridable `aria-label`
+//           (the bare decorative <X> button owes a discernible name — the speedtest
+//           ASK-GU-A11Y-AXE-CARVEOUTS (A) real defect).
+//    Pure FS, device-free (paint-class P — the visible delta is the ToastClose glyph ink
+//    + the aria; the token rename is byte-identical paint). Born-RED on HEAD (--ring
+//    defined ×3 + --color-ring bridge + var(--ring) readers + ToastClose red palette +
+//    button ai amber palette + bare-<X> no name) → GREEN + a self-test bite per clause.
+const STYLES_DIR = resolve(SRC, "styles");
+const UI_DIR = resolve(SRC, "components/ui");
+const TOAST_CLOSE = resolve(UI_DIR, "toast/ToastClose.vue");
+
+// The Tailwind default PALETTE (color families) + the color-capable utility PREFIXES.
+const PALETTE_FAMILIES =
+    "red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose|slate|gray|zinc|neutral|stone";
+const PALETTE_PREFIXES =
+    "text|bg|border|from|to|via|ring|fill|stroke|decoration|outline|shadow|accent|caret|divide|placeholder";
+// A raw-palette UTILITY (any variant prefix): `dark:text-amber-400`, `group-[.x]:text-red-300`,
+// `text-red-50/50`. Boundary-guarded so `--my-text-red-300x` and a house `text-foreground`
+// never match. Scale 50 | 100-900 | 950 → `\d{2,3}`.
+const RAW_PALETTE_RE = new RegExp(
+    `(?<![\\w-])(?:${PALETTE_PREFIXES})-(?:${PALETTE_FAMILIES})-\\d{2,3}(?![\\w-])`,
+);
+// The retired shadcn `--ring` DECLARATION (two dashes — `--focus-ring`/`--invalid-ring`
+// carry a single dash before `ring`, so they never match). Comment-stripped.
+const RING_DEF_RE = /(?<![\w-])--ring\s*:/;
+const COLOR_RING_DEF_RE = /(?<![\w-])--color-ring\s*:/;
+const FOCUS_RING_COLOR_DEF_RE = /(?<![\w-])--focus-ring-color\s*:/;
+// A bare `var(--ring)` / `var(--ring, …)` read (NOT `var(--focus-ring-color)` — single
+// dash before `ring` — NOR `var(--ring-…)` — a hyphen, not `,`/`)`, after `--ring`).
+const RING_TOKEN_USE_RE = /var\(\s*--ring\s*[,)]/;
+// The shadcn ring-COLOR utility off the deleted `--color-ring` bridge: `bg-ring`,
+// `text-ring`, `border-ring`, `outline-ring`, … — NOT `ring-ring` (proof:no-shadcn-default
+// owns that), NOT `focus-ring`/`invalid-ring` (a different prefix).
+const RING_COLOR_UTIL_RE =
+    /(?<![\w-])(?:bg|text|border|outline|divide|from|to|via)-ring(?![\w-])/;
+
+// Strip // + /* */ + <!-- --> comments to spaces (a PROSE mention — a clean-break note
+// naming the `text-red-300` it retired — is provenance, never a live class).
+function stripAllComments(src) {
+    return src
+        .replace(/<!--[\s\S]*?-->/g, (m) => m.replace(/[^\n]/g, " "))
+        .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "))
+        .replace(/\/\/[^\n]*/g, "");
+}
+
+// Collect every file under `dir` matching `extRe` (recursive).
+function walkExt(dir, extRe) {
+    const out = [];
+    if (!existsSync(dir)) return out;
+    for (const name of readdirSync(dir)) {
+        const p = resolve(dir, name);
+        if (statSync(p).isDirectory()) out.push(...walkExt(p, extRe));
+        else if (extRe.test(name)) out.push(p);
+    }
+    return out;
+}
+
+// D2 live scan — src/ files that still read the retired `var(--ring)` OR the ring-color utility.
+function scanRingConsumers() {
+    const hits = [];
+    for (const f of walkExt(SRC, /\.(css|ts|vue)$/)) {
+        const clean = stripAllComments(read(f));
+        if (RING_TOKEN_USE_RE.test(clean) || RING_COLOR_UTIL_RE.test(clean))
+            hits.push(f.slice(SRC.length + 1));
+    }
+    return hits;
+}
+
+// D3 live scan — ui/ files carrying a raw-tailwind PALETTE utility. Returns {count, hits}.
+function scanUiPalette() {
+    const files = walkExt(UI_DIR, /\.(ts|vue)$/);
+    const hits = [];
+    for (const f of files) {
+        const clean = stripAllComments(read(f));
+        if (RAW_PALETTE_RE.test(clean)) hits.push(f.slice(UI_DIR.length + 1));
+    }
+    return { count: files.length, hits };
+}
+
+// overrides: { styleText?, ringConsumers?, uiPalette?, toastCloseText? } — a self-test sabotages any.
+function detectDeshadcn(overrides = {}) {
+    const violations = [];
+    const facts = {};
+
+    // ── DS1 — RING-BREAK: --ring + --color-ring absent from src/styles, --focus-ring-color present. ──
+    const styleText =
+        overrides.styleText ??
+        walkExt(STYLES_DIR, /\.css$/)
+            .map((f) => stripAllComments(read(f)))
+            .join("\n");
+    const ringDefined = RING_DEF_RE.test(styleText);
+    const colorRingDefined = COLOR_RING_DEF_RE.test(styleText);
+    const focusRingColorDefined = FOCUS_RING_COLOR_DEF_RE.test(styleText);
+    facts.ringBreak = { ringDefined, colorRingDefined, focusRingColorDefined };
+    if (ringDefined || colorRingDefined || !focusRingColorDefined)
+        violations.push(
+            `DS1 — the shadcn --ring token (present=${ringDefined}) + --color-ring @theme bridge (present=${colorRingDefined}) must be DEFINITION-ABSENT from src/styles AND --focus-ring-color must be defined (present=${focusRingColorDefined}) — the clean-break rename, no legacy alias`,
+        );
+
+    // ── DS2 — RING-CONSUMER-REPOINT: no src/ file reads var(--ring) / the ring-color utility. ──
+    const ringConsumers = overrides.ringConsumers ?? scanRingConsumers();
+    facts.ringConsumers = ringConsumers;
+    if (ringConsumers.length)
+        violations.push(
+            `DS2 — ${ringConsumers.join(", ")} still read the retired var(--ring) token / the shadcn ring-color utility — re-point onto var(--focus-ring-color) / .focus-ring`,
+        );
+
+    // ── DS3 — PALETTE-SWEEP (HEAD-mode, ui/): zero raw-tailwind palette utility. ──
+    const uiPalette = overrides.uiPalette ?? scanUiPalette();
+    facts.uiPalette = { count: uiPalette.count, hits: uiPalette.hits };
+    if (uiPalette.hits.length)
+        violations.push(
+            `DS3 — ${uiPalette.hits.join(", ")} carry a raw-tailwind PALETTE utility (text-red-NN/bg-amber-NN/…) — the material is 100% token-first; re-point onto a house token`,
+        );
+    if (uiPalette.count < 40)
+        violations.push(
+            `DS3 — the ui/ sweep walked only ${uiPalette.count} files (need ≥ 40 — the sweep must reach the surface)`,
+        );
+
+    // ── DS4 — TOASTCLOSE-NAME: ToastClose.vue binds a default overridable aria-label. ──
+    const toastCloseText =
+        overrides.toastCloseText ?? stripAllComments(read(TOAST_CLOSE));
+    const bindsAriaLabel = /:aria-label=/.test(toastCloseText);
+    const hasDefaultName = /['"`]Dismiss['"`]/.test(toastCloseText);
+    facts.toastClose = { bindsAriaLabel, hasDefaultName };
+    if (!(bindsAriaLabel && hasDefaultName))
+        violations.push(
+            `DS4 — ToastClose.vue must bind a DEFAULT overridable aria-label (bindsAriaLabel=${bindsAriaLabel}, hasDefaultName=${hasDefaultName}) — the bare <X> button owes a discernible name`,
+        );
+
+    return { facts, violations };
+}
+
 // ── The detector — runs over a SOURCE MAP so a self-test can sabotage inputs.
 // overrides: { driverText?, godModuleSource?, leafExists?, leafSource? }.
 function detect(overrides = {}) {
@@ -678,6 +827,94 @@ function selfTest() {
     // Fence: file absent + zero referers (the swept, fully re-pointed tree) → no violation.
     sabNotA({ aliasExists: false, referers: [] }, "the swept + re-pointed tree");
 
+    // ── BG.W-DESHADCN — the DS1/DS2/DS3/DS4 bites over detectDeshadcn. ──
+    const sabD = (overrides, prefix, name) => {
+        const { violations } = detectDeshadcn(overrides);
+        if (violations.some((x) => x.startsWith(prefix))) flagged++;
+        else
+            throw new Error(
+                `[proof:encapsulation self-test] deshadcn bite FAILED to flag: ${name}`,
+            );
+    };
+    const sabNotD = (overrides, prefix, name) => {
+        const { violations } = detectDeshadcn(overrides);
+        if (!violations.some((x) => x.startsWith(prefix))) flagged++;
+        else
+            throw new Error(
+                `[proof:encapsulation self-test] deshadcn fence bite WRONGLY flagged: ${name}`,
+            );
+    };
+    // A clean baseline the sabotage overlays (the live tree at close).
+    const cleanD = () => ({
+        styleText: "  --focus-ring-color: hsl(24 10% 10%);\n",
+        ringConsumers: [],
+        uiPalette: { count: 234, hits: [] },
+        toastCloseText: ':aria-label="ariaLabel"  ariaLabel ?? "Dismiss"',
+    });
+    // DS1: a re-added `--ring:` declaration (the retired token survives).
+    sabD(
+        { ...cleanD(), styleText: "  --ring: hsl(24 10% 10%);\n  --focus-ring-color: hsl(24 10% 10%);\n" },
+        "DS1",
+        "DS1 the shadcn --ring declaration survives",
+    );
+    // DS1: a re-added `--color-ring:` @theme bridge.
+    sabD(
+        { ...cleanD(), styleText: "  --color-ring: var(--focus-ring-color);\n  --focus-ring-color: hsl(24 10% 10%);\n" },
+        "DS1",
+        "DS1 the --color-ring @theme bridge survives",
+    );
+    // DS1: --focus-ring-color missing (the rename never landed the house token).
+    sabD(
+        { ...cleanD(), styleText: "  --shadow: hsl(24 10% 10%);\n" },
+        "DS1",
+        "DS1 --focus-ring-color absent",
+    );
+    // DS1 (fence): a bare COMMENT mention of --ring does NOT re-arm (comment-stripped upstream).
+    sabNotD(
+        { ...cleanD(), styleText: "  --focus-ring-color: hsl(24 10% 10%);\n" },
+        "DS1",
+        "DS1 clean rename (no --ring, no --color-ring, --focus-ring-color present)",
+    );
+    // DS2: a src/ file still reads the retired var(--ring) token.
+    sabD(
+        { ...cleanD(), ringConsumers: ["styles/tokens/scale-paper.css"] },
+        "DS2",
+        "DS2 a file still reads var(--ring)",
+    );
+    // DS3: a ui/ file carries a raw-tailwind palette utility (the ToastClose red).
+    sabD(
+        { ...cleanD(), uiPalette: { count: 234, hits: ["toast/ToastClose.vue"] } },
+        "DS3",
+        "DS3 a ui/ file carries a raw palette utility",
+    );
+    // DS3 (live regex bite): the RE flags a synthetic red-palette + a renamed emerald-500 evasion
+    // AND SPARES the house `text-foreground`/`bg-card`/`opacity-0` non-palette tokens.
+    if (
+        RAW_PALETTE_RE.test("group-[.destructive]:text-red-300 hover:text-red-50") &&
+        RAW_PALETTE_RE.test("dark:text-amber-400") &&
+        RAW_PALETTE_RE.test("bg-emerald-500") &&
+        !RAW_PALETTE_RE.test("text-foreground bg-card opacity-0 focus-ring rounded-button")
+    )
+        flagged++;
+    else
+        throw new Error(
+            "[proof:encapsulation self-test] DS3 palette regex FAILED the distinguishing bite (must flag red/amber/emerald palette, spare foreground/card/opacity/focus-ring)",
+        );
+    // DS3 (count floor): a too-thin sweep reds (the sweep must reach the surface).
+    sabD(
+        { ...cleanD(), uiPalette: { count: 3, hits: [] } },
+        "DS3",
+        "DS3 the ui/ sweep walked < 40 files",
+    );
+    // DS4: ToastClose without a default aria-label (the bare <X>).
+    sabD(
+        { ...cleanD(), toastCloseText: "<ToastClose><X /></ToastClose>" },
+        "DS4",
+        "DS4 ToastClose ships no default aria-label",
+    );
+    // DS-clean (fence): the full swept + renamed tree → zero deshadcn violation.
+    sabNotD(cleanD(), "DS", "the swept + renamed + named tree");
+
     return flagged;
 }
 
@@ -694,11 +931,20 @@ function run() {
         detectColocate();
     // BG.W-DEAD-SWEEP — the selectableChipVariants alias-kill negative guard.
     const { facts: aliasFacts, violations: aliasViolations } = detectAliasKill();
-    const facts = { ...blobFacts, colocate: colocateFacts, aliasKill: aliasFacts };
+    // BG.W-DESHADCN — the de-shadcn sweep + the --ring→--focus-ring-color break + ToastClose name.
+    const { facts: deshadcnFacts, violations: deshadcnViolations } =
+        detectDeshadcn();
+    const facts = {
+        ...blobFacts,
+        colocate: colocateFacts,
+        aliasKill: aliasFacts,
+        deshadcn: deshadcnFacts,
+    };
     const violations = [
         ...blobViolations,
         ...colocateViolations,
         ...aliasViolations,
+        ...deshadcnViolations,
     ];
     const status = violations.length === 0 ? "pass" : "fail";
 
@@ -740,7 +986,22 @@ function run() {
         `  BG.W-DEAD-SWEEP alias-kill      : ${aliasViolations.length === 0 ? "GREEN" : "RED"} (selectableChipVariants.ts absent=${!aliasFacts.aliasExists}, referers=${aliasFacts.aliasReferers.length})`,
     );
     console.log(
-        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (blob E1×2+E1-fence+E2×2+E3×2+E4+E4-fence + colocate C1×2+C1-fence+C2×2+C3+C3-fence + alias-kill A1+A2+fence)`,
+        "  BG.W-DESHADCN (DS1 ring-break · DS2 ring-consumers · DS3 palette-sweep · DS4 ToastClose-name):",
+    );
+    console.log(
+        `    DS1 ring-break                : ${!deshadcnFacts.ringBreak.ringDefined && !deshadcnFacts.ringBreak.colorRingDefined && deshadcnFacts.ringBreak.focusRingColorDefined ? "GREEN" : "RED"} (--ring=${deshadcnFacts.ringBreak.ringDefined}, --color-ring=${deshadcnFacts.ringBreak.colorRingDefined}, --focus-ring-color=${deshadcnFacts.ringBreak.focusRingColorDefined})`,
+    );
+    console.log(
+        `    DS2 ring-consumers            : ${deshadcnFacts.ringConsumers.length === 0 ? "GREEN" : "RED"} (${deshadcnFacts.ringConsumers.length} readers of var(--ring)/ring-color-util)`,
+    );
+    console.log(
+        `    DS3 ui/ palette-sweep         : ${deshadcnFacts.uiPalette.hits.length === 0 && deshadcnFacts.uiPalette.count >= 40 ? "GREEN" : "RED"} (${deshadcnFacts.uiPalette.count} ui/ files swept, ${deshadcnFacts.uiPalette.hits.length} raw-palette hits)`,
+    );
+    console.log(
+        `    DS4 ToastClose default name   : ${deshadcnFacts.toastClose.bindsAriaLabel && deshadcnFacts.toastClose.hasDefaultName ? "GREEN" : "RED"} (aria-label=${deshadcnFacts.toastClose.bindsAriaLabel}, default=${deshadcnFacts.toastClose.hasDefaultName})`,
+    );
+    console.log(
+        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (blob E1×2+E1-fence+E2×2+E3×2+E4+E4-fence + colocate C1×2+C1-fence+C2×2+C3+C3-fence + alias-kill A1+A2+fence + deshadcn DS1×3+DS1-fence+DS2+DS3×2+DS3-regex+DS4+DS-clean)`,
     );
 
     if (violations.length) {
@@ -763,4 +1024,11 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     run();
 }
 
-export { detect, detectColocate, detectOneCarve, detectAliasKill, selfTest };
+export {
+    detect,
+    detectColocate,
+    detectOneCarve,
+    detectAliasKill,
+    detectDeshadcn,
+    selfTest,
+};

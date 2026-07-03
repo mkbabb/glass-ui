@@ -27,7 +27,9 @@ const core: { name: string; cssVar: string; utility: string }[] = [
     { name: "secondary", cssVar: "--secondary", utility: "bg-secondary" },
     { name: "accent", cssVar: "--accent", utility: "bg-accent" },
     { name: "destructive", cssVar: "--destructive", utility: "bg-destructive" },
-    { name: "ring", cssVar: "--ring", utility: "bg-ring" },
+    // BG.W-DESHADCN — the shadcn `--ring`/`bg-ring` token retired onto the house
+    // `--focus-ring-color` / the `.focus-ring` box-shadow utility.
+    { name: "focus-ring-color", cssVar: "--focus-ring-color", utility: "focus-ring" },
 ];
 
 // 13-stop chapter palette. W1-D ships --section-color-0..12 and bg-section-N.

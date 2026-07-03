@@ -129,14 +129,16 @@
            the `.dark` fallback floor below (§2c). */
         --destructive:             light-dark(hsl(0 72% 50%), hsl(0 80% 60%));
         --destructive-foreground:  light-dark(var(--neutral-0), hsl(48 10% 90%));
-        --ring:                    light-dark(hsl(24 10% 10%), hsl(48 10% 70%));
+        /* BG.W-DESHADCN — the light-dark() arm of the renamed house focus-accent
+           register (off the shadcn `--ring`; both halves byte-identical). */
+        --focus-ring-color:        light-dark(hsl(24 10% 10%), hsl(48 10% 70%));
         --shadow:                  light-dark(hsl(24 10% 10%), hsl(0 0% 5%));
 
         /* §4 native-control accent — the per-mode arms (dark reads the
-           mid-tone ring for checkmark-glyph contrast headroom, NOT the
+           mid-tone focus accent for checkmark-glyph contrast headroom, NOT the
            near-white dark primary). Joins the light-dark() collapse; still
            re-specified as `accent-color` inside `.dark` per §2b. */
-        --accent-color:            light-dark(var(--primary), var(--ring));
+        --accent-color:            light-dark(var(--primary), var(--focus-ring-color));
 
         /* Section palette — jewel tones brightened L for dark (oklch pairs;
            AV.W16 TW2 — hue preserved, L evened) */

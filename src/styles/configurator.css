@@ -248,7 +248,9 @@
  * Composes with the capsule's own rim; the cast deepens to `-lg` in the SFC. */
 .configurator-preset-tile.is-active {
     box-shadow:
-        inset 0 0 0 2px var(--ring),
+        /* BG.W-DESHADCN — the active-tile crown reads the renamed house
+           `--focus-ring-color` (off the shadcn `--ring`; value unchanged). */
+        inset 0 0 0 2px var(--focus-ring-color),
         var(--shadow-cartoon-lg);
 }
 

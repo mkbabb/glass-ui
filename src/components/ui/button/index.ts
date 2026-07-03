@@ -175,8 +175,12 @@ export const buttonVariants = cva(
         // DELETED). The amber reads in the catch-light core + rim glint (the same
         // accent axis `gold-audacious` uses), not a flat amber slab. The accent is a
         // warm oklch (build-trap-(d) safe — a warm color, never bare `transparent`).
-        // The amber ink stays for the label; the glass warmth carries the surface.
-        ai: 'glass-wash btn-glass glass-capsule glass-capsule-hover text-amber-700 dark:text-amber-400 [--glass-accent:oklch(0.78_0.14_75)] [--glass-accent-strength:34%]',
+        // BG.W-DESHADCN — the label ink de-shadcns off the raw-tailwind
+        // `text-amber-700 dark:text-amber-400` palette onto the token-first
+        // per-mode `--accent-ai-ink` register (tokens/glass.css light /
+        // dark-arm.css dark) — one identity token, mode-adaptive by the cascade,
+        // no raw-palette utility. The glass warmth carries the surface.
+        ai: 'glass-wash btn-glass glass-capsule glass-capsule-hover text-(--accent-ai-ink) [--glass-accent:oklch(0.78_0.14_75)] [--glass-accent-strength:34%]',
         link: 'text-primary underline-offset-4 hover:underline active:opacity-80 active:scale-100',
       },
       size: {
