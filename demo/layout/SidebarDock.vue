@@ -13,7 +13,7 @@
 // genuine NEW deliverable is the active-category restyle: the affordance moves
 // from the bare `.is-active` colour shift onto the NCSU-red accent + a
 // left-edge accent rule + W25 `tap-squish` press feedback.
-import { computed } from "vue";
+import { computed, useTemplateRef } from "vue";
 import {
     DockIconButton,
     DockSection,
@@ -21,6 +21,8 @@ import {
     GlassDock,
     type DockSectionDescriptor,
 } from "@glass/components/custom/dock";
+import { BorderProgress } from "@glass/components/custom/border-progress";
+import type { BorderProgressCoverage } from "@glass/components/custom/border-progress";
 import {
     Tooltip,
     TooltipContent,
@@ -32,6 +34,10 @@ import { cn } from "@glass/utils/cn";
 import { CATEGORIES } from "../stories/manifest";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
 import { useShellNavDock } from "../shell/useShellNavDock";
+import {
+    useShellDockOrientation,
+    useShellScrollProgress,
+} from "../shell/useShellScrollProgress";
 import { useConfiguratorOpen } from "../configurator/useConfiguratorOpen";
 
 const props = withDefaults(
@@ -132,6 +138,41 @@ const { open: configOpen } = useConfiguratorOpen();
 function openConfigurator(): void {
     window.dispatchEvent(new CustomEvent("glass-ui-demo:toggle-configurator"));
 }
+
+// ── BG.W-DOCK-SCROLL-PROGRESS — the scroll progress IS the dock's border ─────
+// The standalone route-scroller bar is retired; the page-scroll position wears the
+// dock's own EDGE via `<BorderProgress>` (the masked, radius-following,
+// @property-animated progress-as-border) mounted as an inset-0 overlay hugging the
+// dock plate. Decorative-informational: `aria-hidden` (the scroll position stays
+// reachable via the scroller itself). Coverage is STATE-DRIVEN, one register per
+// dock form:
+//   · vertical rail (the settled left column) → `inline-end-edge` — the
+//     content-facing edge fills top→bottom with the scroll (the scrollbar
+//     metaphor as the dock's own border);
+//   · the V↔H morph settled HORIZONTAL top bar → `bottom-edge` (the content-facing
+//     edge of the floating bar);
+//   · a COLLAPSED pill → `full-ring` (the circle wears the whole ring — the
+//     natural morph). The shell dock is always-expanded, so this arm is
+//     dormant-but-wired here and live for any collapsing consumer.
+// The ink is the calm warm-ink two-stop ramp (NOT the 13-stop brand rainbow — the
+// dock is chrome, and a rainbow border is a second color event; the warm ink flips
+// modes for free). Thickness + pill radius ride the `--border-progress-*` cascade
+// tokens (dock-nav.css) — the ring follows the dock's stadium with zero
+// measurement.
+const SCROLL_RING_STOPS: readonly string[] = [
+    "color-mix(in srgb, var(--foreground) 45%, transparent)",
+    "var(--foreground)",
+];
+const scrollProgress = useShellScrollProgress();
+const dockOrientation = useShellDockOrientation();
+const dockRef = useTemplateRef<InstanceType<typeof GlassDock>>("dockRef");
+const ringCoverage = computed<BorderProgressCoverage>(() => {
+    const dock = dockRef.value;
+    if (dock && !dock.expanded) return "full-ring";
+    return dockOrientation.value === "horizontal"
+        ? "bottom-edge"
+        : "inline-end-edge";
+});
 </script>
 
 <template>
@@ -142,7 +183,13 @@ function openConfigurator(): void {
          column + mobile Sheet) are unified on the always-expanded register; the collapse
          affordance is the BottomDock's job, not the category rail's. The persistent ℱ
          brand wordmark is GONE (BG.W-DOCK-PERSISTENT-CUT); Foundations is a normal chip. -->
+    <!-- BG.W-DOCK-SCROLL-PROGRESS — the progress-host wrapper shrink-wraps the dock
+         so the `<BorderProgress>` ring (an inset-0 sibling overlay) hugs the dock
+         plate's own box in every settled form; the ring dissolves in lockstep with
+         the dock under the [data-dock-morphing] goo window (dock-nav.css). -->
+    <div class="demo-dock-progress-host min-h-0">
     <GlassDock
+        ref="dockRef"
         orientation="vertical"
         always-expanded
         class="demo-sidebar-dock min-h-0"
@@ -337,4 +384,18 @@ function openConfigurator(): void {
              contextual facets are carried by the in-flow `<DockSection>` category nav above
              (the dock's own tabs/sections facility) — no orphaned carousel. -->
     </GlassDock>
+
+    <!-- The page-scroll progress as the dock's own BORDER (BG.W-DOCK-SCROLL-PROGRESS).
+         An inset-0 overlay hugging the dock plate; masked to the border band only, so
+         the dock's glass + controls read through untouched. Decorative (aria-hidden);
+         PRM-safe by construction (the fill is scroll-COUPLED position feedback — a
+         static fill at the current value, no autonomous sweep animation). -->
+    <BorderProgress
+        class="demo-dock-scroll-ring"
+        :value="scrollProgress"
+        :coverage="ringCoverage"
+        :stops="SCROLL_RING_STOPS"
+        aria-hidden="true"
+    />
+    </div>
 </template>

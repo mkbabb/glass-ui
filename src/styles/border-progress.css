@@ -37,7 +37,14 @@
     pointer-events: none;
     /* The spectrum conic, swept to --border-progress-fill. The colored arc runs
        from the top (12 o'clock) clockwise to the fill fraction; past it is
-       transparent so the resting band shows ONLY the filled spectrum. */
+       transparent so the resting band shows ONLY the filled spectrum.
+       BG.W-DOCK-SCROLL-PROGRESS — the SFC's `--border-progress-spectrum` stops
+       position at `calc(var(--border-progress-fill) * f)` (the spectrum spans the
+       FILLED arc), so the `transparent var(--fill)` front lands exactly at the
+       last stop — a hard fill edge that SWEEPS as the registered fill
+       interpolates (fixed-position stops clamped the transparent front past the
+       spectrum tail and the ring painted FULL at every value — the inert-fill
+       defect). */
     background:
         conic-gradient(
             from 0deg,
@@ -58,22 +65,59 @@
     mask-composite: exclude;
 }
 
-/* THE COVERAGE AXIS — ONE conic-mask mechanism, two coverage masks (NOT a second
-   recipe). `bottom-edge` adds a SECOND mask layer scoping the painted band to the
-   bottom edge only; it composes WITH the border-band cut-out above (the mask
-   stack intersects), so the bottom register reuses the exact conic + radius
-   cut-out — the dock-orientation `dim`-idiom discipline (no parallel fork). */
+/* THE COVERAGE AXIS — ONE conic-mask mechanism, coverage-scoped masks (NOT a
+   second recipe). An edge coverage adds a BAND-SCOPE mask layer over the
+   border-band cut-out, so every edge register reuses the exact paint + radius
+   cut-out — the dock-orientation `dim`-idiom discipline (no parallel fork).
+
+   THE LAYER ORDER IS LOAD-BEARING (BG.W-DOCK-SCROLL-PROGRESS — the interior-slab
+   fix, live-verified): mask layers composite BOTTOM-UP (the LAST layer is the
+   destination), so the stack must be band-scope (top, `intersect`) over
+   padding-box (`exclude`) over border-box (bottom) — `intersect(band,
+   exclude(padding, border))` = the band ∩ the border ring. The prior order
+   (band LAST, with the 2-value composite list cycling `exclude` onto it) resolved
+   `exclude(padding, intersect(border, band))` — the PADDING BOX joined the mask
+   and the "edge band" painted the whole interior as a slab. */
 .border-progress[data-coverage="bottom-edge"] .border-progress__ring {
     -webkit-mask:
+        linear-gradient(to top, #fff 0, #fff var(--border-progress-width, 12px), transparent var(--border-progress-width, 12px)),
         linear-gradient(#fff 0 0) padding-box,
-        linear-gradient(#fff 0 0) border-box,
-        linear-gradient(to top, #fff 0, #fff var(--border-progress-width, 12px), transparent var(--border-progress-width, 12px));
-    -webkit-mask-composite: xor, source-in;
+        linear-gradient(#fff 0 0) border-box;
+    -webkit-mask-composite: source-in, xor, source-over;
     mask:
+        linear-gradient(to top, #fff 0, #fff var(--border-progress-width, 12px), transparent var(--border-progress-width, 12px)),
         linear-gradient(#fff 0 0) padding-box,
-        linear-gradient(#fff 0 0) border-box,
-        linear-gradient(to top, #fff 0, #fff var(--border-progress-width, 12px), transparent var(--border-progress-width, 12px));
-    mask-composite: exclude, intersect;
+        linear-gradient(#fff 0 0) border-box;
+    mask-composite: intersect, exclude, add;
+}
+
+/* THE INLINE-END-EDGE COVERAGE (BG.W-DOCK-SCROLL-PROGRESS) — the vertical
+   leading-edge band a dock/rail wears as its scroll-position register. The SAME
+   border-band cut-out + a third band-scope mask layer (the `bottom-edge` twin,
+   `to left` for the inline-end side); the PAINT swaps to a LINEAR `to bottom`
+   gradient so the value maps LINEARLY along the block axis (the scrollbar
+   metaphor — a conic maps a single edge nonlinearly through the corner angles).
+   The SAME fill-scaled spectrum stop list drives it (percent positions on the
+   gradient line = the block axis), so ONE spectrum source feeds every coverage. */
+.border-progress[data-coverage="inline-end-edge"] .border-progress__ring {
+    background: linear-gradient(
+        to bottom,
+        var(--border-progress-spectrum, var(--section-color-7)),
+        transparent var(--border-progress-fill, 0%),
+        transparent 100%
+    );
+    /* band-scope over padding-box over border-box (bottom-up compositing — see
+       the layer-order note on the bottom-edge rule above). */
+    -webkit-mask:
+        linear-gradient(to left, #fff 0, #fff var(--border-progress-width, 12px), transparent var(--border-progress-width, 12px)),
+        linear-gradient(#fff 0 0) padding-box,
+        linear-gradient(#fff 0 0) border-box;
+    -webkit-mask-composite: source-in, xor, source-over;
+    mask:
+        linear-gradient(to left, #fff 0, #fff var(--border-progress-width, 12px), transparent var(--border-progress-width, 12px)),
+        linear-gradient(#fff 0 0) padding-box,
+        linear-gradient(#fff 0 0) border-box;
+    mask-composite: intersect, exclude, add;
 }
 
 /* The content box — the host's own surface (a glass card, a chassis). It is

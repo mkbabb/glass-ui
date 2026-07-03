@@ -126,11 +126,19 @@
     border-radius: 0;
 }
 
-/* Every background substrate fills the container behind the card. */
+/* Every background substrate fills the container behind the card.
+   BG.W-CORNER-ALIAS-KILL — the CORNER-BACKPLATE DISCIPLINE: a boxed backplate
+   layer under a rounded host FOLLOWS the host's rendered corner
+   (`border-radius: inherit` off the rounded `.story-hero` container) so it can
+   never paint a square corner behind the radius curve, even if a future variant
+   un-clips the host (the `.story-hero` `overflow: hidden` stays the belt; the
+   inherited radius is the braces). The bleed arm resets to 0 (a viewport layer
+   has no host corner to follow). */
 .story-hero-bg {
     position: absolute;
     inset: 0;
     z-index: -10;
+    border-radius: inherit;
 }
 
 /* The full-bleed substrate escapes to the viewport — the live field IS the page
@@ -143,6 +151,10 @@
     inset: 0;
     z-index: -5;
     pointer-events: none;
+    /* The bleed layer is the whole-viewport field — no host corner to follow
+       (BG.W-CORNER-ALIAS-KILL; it teleports to <body> in StoryHero.vue so no
+       transformed route ancestor can ever trap it back to the article box). */
+    border-radius: 0;
 }
 
 /* B16 — the constellation hero reads STRONGER over the full-bleed background.
@@ -728,7 +740,13 @@
    rounded card and NOT a crisp grid blurred through a `backdrop-filter` glass plate.
    Static under reduced-motion by construction (a grid does not animate). */
 .grid-bg {
-    background-color: var(--background);
+    /* BG.W-CORNER-ALIAS-KILL — NO opaque `background-color`. The grid is a
+       translucent TEXTURE over the ONE shell warm field (BG.W-FIELD-AURORA owns
+       the page background); an opaque `var(--background)` base here was a SECOND
+       page background that white-out the field wherever the layer painted (the
+       trapped square plate behind the rounded landing card = the white corner
+       wedges). The line inks are `--foreground`-derived, so they read over the
+       warm field in both modes with no base plate. */
     background-image:
         repeating-linear-gradient(
             to right,

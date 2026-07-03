@@ -49,10 +49,22 @@
      * `@keyframes` on the keyed component — it lands on EVERY route root (StoryPage,
      * SectionLanding, hero, intro, auth-shell, NotFound), closing the old
      * `.story-page-article`-only selector gap. The iOS-NavStack vertical settle: a
-     * SPATIAL spring rise (snappy, P2/P4), fade COUPLED to the transform (P3), `both`
-     * fill-mode so the from-state holds before the first frame (no flash-of-final). */
+     * SPATIAL spring rise (snappy, P2/P4), fade COUPLED to the transform (P3),
+     * `backwards` fill-mode so the from-state holds before the first frame (no
+     * flash-of-final).
+     *
+     * BG.W-CORNER-ALIAS-KILL — the fill is `backwards`, NEVER `both`/`forwards`.
+     * The route root is the universal ancestor: a `both` fill keeps APPLYING the
+     * `to` keyframe's transform forever (the engine reports a filled identity
+     * `matrix(1,0,0,1,0,0)` — a computed transform ≠ `none`), which makes the
+     * route root a PERMANENT fixed-position containing block (CSS Transforms
+     * §containing-block) and silently re-parents every `position: fixed`
+     * descendant (the full-bleed field wash trapped to the article box — the
+     * white square-corner wedge behind every rounded card). `to` ≡ base
+     * (opacity 1 / transform none), so `backwards` is paint-identical at rest
+     * and RELEASES the transform channel at settle. */
     .route-enter {
-        animation: gl-route-enter var(--spring-snappy-duration) var(--spring-snappy) both;
+        animation: gl-route-enter var(--spring-snappy-duration) var(--spring-snappy) backwards;
     }
 
     /* ── Dialog scale (bouncy spring in, ease out) ── */
@@ -277,9 +289,11 @@
         }
 
         /* P6 — route-enter KEEPS the fade, DROPS the spatial rise (the vestibular
-           floor; the page settles to its terminal state with zero transform frames). */
+           floor; the page settles to its terminal state with zero transform frames).
+           `backwards` fill (BG.W-CORNER-ALIAS-KILL — the same release discipline;
+           opacity-only here, but ONE fill register across both arms). */
         .route-enter {
-            animation: gl-route-fade var(--duration-fast) var(--ease-out) both;
+            animation: gl-route-fade var(--duration-fast) var(--ease-out) backwards;
         }
     }
 }

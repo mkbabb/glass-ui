@@ -669,3 +669,134 @@ The metal MEDIUM (uMedium 8/9) is now SURFACED and REACHABLE — the prior block
 Captures:
 - DELTA: `docs/tranches/BG/audit/visual/BG.W-AUR-METAL-FINISH-DELTA.md`
 - PNGs: `docs/tranches/BG/audit/visual/BG.W-AUR-METAL-FINISH-assets/{chrome,safari}-metal{,-gradient}-{light,dark}.png` · `stagecrop-metal-{light,dark}.png` · `strip-safari-metal-{light,dark}.png` · `fresh-{chrome,safari}-smooth-{light,dark}.png` (+ `chrome-metal-results.json` · `chrome-results.json`)
+
+---
+
+## 2026-07-03 — F4/F5/F6/F9 batch (rows 14.1 / F5.1 / 10.1 / 10.2 / W-DESHADCN / F6.7 / 6.6)
+
+allPass: **false** — 6 PASS, 1 FAIL. The DotFlowField showcase white-out (Chrome/Metal) + dead-black (Safari/WebKit) holds row 6.6 at PAINT-PENDING; the other six waves flip (or confirm) PAINT-PENDING -> DONE.
+
+| Wave | Row | Verdict | Cursor |
+|------|-----|---------|--------|
+| BG.W-PAPER-TEXTURE-UNIFY | 14.1 | PASS | DONE |
+| BG.W-MOTION-SPINE | F5.1 | PASS | DONE |
+| BG.W-SCROLL-SHRINK-UNIFY | 10.1 | PASS | DONE |
+| BG.W-SHEET-INSET-ROOT | 10.2 | PASS | DONE |
+| BG.W-DESHADCN | W-DESHADCN | PASS | DONE |
+| BG.W-SEAL-DISC | F6.7 | PASS | DONE |
+| BG.W-DOTFLOW-REBUILD | 6.6 | FAIL | PAINT-PENDING (held) |
+
+Provenance across the batch: Chrome = real Chrome via CDP on `ANGLE Metal Renderer: Apple M5 Max` (real Metal, not SwiftShader); Safari = off-screen WKWebView on system `WebKit.framework` / `Apple GPU`. Engine + GPU decoded IN-PIXEL from the magenta badge per leg. All captures over BUILT bytes on `:5200` (vite preview of the demo dist, NOT the `:5199` dev server) via the C18 `?capture=` harness. `node scripts/verify-siblings-intact.mjs --quiet` exits 0 before AND after this synthesis run (and each per-wave judge run); no sibling tree touched.
+
+---
+
+### PASSED -> DONE
+
+#### 14.1 — BG.W-PAPER-TEXTURE-UNIFY (cursor flip `6db21b08`)
+
+Dual-engine non-authoring paint over all 4 paper routes (`/foundations/paper-glass`, `/foundations/paper-texture`, `/substrates/paper-grid`, `/compositions/math-paper`) × Chrome + Safari × light + dark, over BUILT `:5200` (fresh `demo:dist:build` from HEAD `880326cf`). All 16 PNGs (2880×1800) resolve on disk; engine badges decoded for provenance. `proof:paper` GREEN (6 arms A–F, mean tooth C 0.0474) + self-test.
+
+- **NO-METALLIC:** on paper-texture the DARK (umber) AND light (ecru) tooth fibers BOTH resolve warm in OKLab (H 65–77°, C 0.018–0.023) in every engine/mode — a metallic sheen would neutralize the dark fibers to gray (C→0); they don't. Warm in both `multiply`(light) and `screen`(dark) arms.
+- **WARM FLOOR at PAINT:** composite tooth C 0.018–0.022 at warm hue (SOURCE C 0.0474 dilutes through the low-alpha overlay to a warm ~0.02 composite, not gray).
+- **NO-DOUBLE-WARM CEILING (LX.2):** WARM cascade-retint card C ≤ 0.034, a calm ecru, not an oversaturated slab.
+- **NO-SQUINT:** a clear diagonal fiber weave (OKLab L std 0.004–0.0065), perceptible + calm.
+- **CROSS-ENGINE PARITY:** CLEAN-tooth mean-RGB Chrome vs Safari maxΔ 2.7 (light) / 2.2 (dark) — ~1%, engine-invariant raster.
+- Computed-DOM: tooth `mix-blend-mode` multiply(light)/screen(dark), 3-layer warm weave, `feTurbulence` relief `@supports`-demoted, `--glass-grain-opacity` .025/.045 untouched. Recessive shell aurora no-conic/no-oversaturation, grain calm (opt-in only), heroes fit envelopes. `paper-grid` `glLive=2` is BY DESIGN (focal AA-grid studio + suffusion-preset instance, per manifest), not a leaked context. The COOL retint card is an intentional `--paper-*` hue override demo (H 205–248°).
+
+OPEN (non-blocking, does NOT gate the paint — flagged for tranche-owner routing): the `.paper-grid-breathe` SPEEDTEST clause (ASK-GU-PAPER-GRID-BREATHE / SPEEDTEST-AX-INBOUND #3) is ABSENT from `src/styles` — ungated by `proof:paper`/`proof:paper-grid`, source-booked to the B5 curlFBM-consumer wave (per `flow.glsl.ts`/`flow.wgsl.ts` markers), and a non-painting opt-in register applied on no route (`breatheRuleDefined=false` across all 16 computed-DOM probes). It exhibits on zero painted surfaces, so its absence is a source/feature-completeness deferral, not a paint defect.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-PAPER-TEXTURE-UNIFY-DELTA.md`
+- 16 PNGs + analysis: `docs/tranches/BG/audit/visual/BG.W-PAPER-TEXTURE-UNIFY-paint/{chrome,safari}-{foundations_paper-glass,foundations_paper-texture,substrates_paper-grid,compositions_math-paper}-{light,dark}.png` (+ `pixel-analysis.json`)
+
+#### F5.1 — BG.W-MOTION-SPINE (cursor flip `e70bf4f2`)
+
+Dual-engine (Chrome real-Metal M5 Max + Safari WebKit/Apple GPU), both modes, non-authoring paint judge over BUILT `:5200`. Gate `proof:motion` GREEN (0 violations; S1 single-runner `useElementMorph`, S2 press-tower). All 52 PNGs resolve on disk.
+
+- **SURFACE 1 `/motion/reveal`** — `useLiquidReveal` FLIP inversion (direction "in", 1→0). Chrome CDP frame-series on `.glass-reveal` (identical light+dark): scale 0.708→1, opacity 0.6119→1, blur 1.55px→0, transform-origin 0px −56px (anchored at trigger), `transition-property:none` (lockSpatialTransition driver-lock engaged). Snappy arrives ~340ms. Pixel-confirmed in-frame (trigger flips to "Conceal", "Materialized" surface blooms). v-reveal stagger rows render both engines/modes.
+- **SURFACE 2 `/motion/springs`** — full motion card set renders both engines/modes (Springs title in violet `--motion-accent`, register controls, animated demo card, TRANSLATEX/ROTATE/LIGHTNESS metric cards). `useNumericTransition` drives demoX 315→360.02 (spring overshoot)→360 settle. `glContextCount:0` (one-GL-per-route fence).
+- **SURFACE 3 `/dock/cta-receive`** — seat armed from mount (`data-cta-pending`, "SEAT ARMED"). `useDockCtaReceive` FORWARD play (direction "out", 0→1). Chrome CDP frame-series on `.cta-receive-vehicle` (identical light+dark): scale 0.586→0.276 + translate toward dock (69,88→121,153), opacity 0.4285→0, blur 2.29→4px, then hand-off at 1500ms (CTA ABSENT, `received=true`, `targetLit=true`). Pixel-confirmed: mid-flight CTA ghost shrinks+fades toward star seat; received frame shows CTA gone (→Replay), seat lit with `--dock-selected-accent` ring. Recessive aurora (soft warm peach light / copper dark, no conic banding, no oversaturation) both Chrome real-GL + Safari. `canvasCount:1` (one offscreen-paused aurora).
+- Compositor-only (transform/opacity/filter only). `animationTimeline` supported.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-MOTION-SPINE-DELTA.md`
+- 52 PNGs + probe: `docs/tranches/BG/audit/visual/BG.W-MOTION-SPINE-assets/` (reveal-bloom / springs-cards / cta-flight frame-series both engines both modes + `chrome-probe.json`)
+
+#### 10.1 — BG.W-SCROLL-SHRINK-UNIFY (cursor flip `2a26eee9`)
+
+Dual-engine (Chrome ANGLE-Metal Apple M5 Max + Safari/WebKit Apple GPU), both modes, all 3 routes (`/display/card`, `/motion/scroll-choreography`, `/compositions/hero`). Engine badges decode correctly on every capture. 12 binding PNGs (+ growth variants) resolve on disk.
+
+- **BINDING PAINT (LIVE, non-`?capture` route):** ScrollCard header shrink PAINTS compositor-only — title scale animates 1→0.695 on scroll (width 1235→858.3, exactly the 0.695 `--card-title-shrink-ratio`), `animName=title-collapse`, `animTimeline=--card-scroll`, in BOTH ScrollCard examples. The shared `@keyframes title-collapse` DRY-fold holds (card supplies 0.695, page/hero supply 0.82 per built CSS `.story-hero-shrink{--title-collapse-scale:.82}`).
+- **COMPOSITOR-ONLY / CLS~0 / no-reflow — MEASURED on live `getAnimations()`:** `/motion/scroll-choreography` = 11 scroll-bound anims, 0 layout-prop violations; `/compositions/hero` = 11 scroll-bound anims, 0 violations. page-hero shrink-lift (`title-collapse` scale + `story-hero-shrink-lift` translate) + column cascade (`gl-cascade-build` ViewTimeline, opacity+transform) all wired scale/translate/opacity only.
+- **CAPTURE-HARNESS NOTE (recorded, NOT a defect):** the `?capture` harness sets `html[data-capture]` and applies a global `animation:none!important` freeze (confirmed via CDP `CSS.getMatchedStylesForNode` on the marked card-title) so static `?capture` screenshots correctly show the terminal REST state; the choreography rule DOES match (`transform-origin:0px 0px` applies). Paint therefore verified on the LIVE route where the freeze is absent.
+- Visual rest (both engines/modes): card tiers render (calm grain, luminous warm-dark in dark, no oversaturation); scroll-choreography shows SCROLL()/VIEW()/TIMELINE-SCOPE SUPPORTED chips all GREEN in BOTH engines (native substrate runs in WebKit 26) + Cascade 1..4 blocks with motion-violet accent + recessive calm backdrop; hero ℱ Real scenes fits its envelope (ordered eyebrow→title→blurb cluster, faint recessive constellation dots). Gates GREEN: `proof:no-layout-animation` LOCKED (56 keyframes + 261 transition legs, 0 off-allowlist), `proof:encapsulation`, `proof:page-chassis` (no-lenis-gsap-fence green).
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-SCROLL-SHRINK-UNIFY-DELTA.md`
+- PNGs: `docs/tranches/BG/audit/visual/BG.W-SCROLL-SHRINK-UNIFY-paint/sss-{display_card,motion_scroll-choreography,compositions_hero}-{chrome,safari}-{light,dark}-rest.png`
+
+#### 10.2 — BG.W-SHEET-INSET-ROOT (cursor flip `0d68aba5`)
+
+Dual-engine non-authoring judge. 12 captures over BUILT `:5200` bytes: 3 routes (`/containers/sheet`, `/compositions/configurator`, `/containers/drawer`) × 2 modes × 2 engines — Chrome (real ANGLE-Metal M5 Max via CDP) + Safari (system WebKit/Apple GPU via off-screen WKWebView). Because the paint IS the OPEN overlay (Sheet is trigger-controlled; no route auto-opens), each capture CLICKED the trigger by accessible name; under `html[data-capture]` all animations are killed (`capture.css`) so the clicked overlay JUMPS to its settled edge-pinned frame. Engine badges decoded on every PNG (both real Metal, not SwiftShader).
+
+- **Sheet gestalt:** Right Sheet (Open Right) edge-pinned to the right edge, full-height, `top===0`, `inset:0 0 0 1056px`, translucent glass (bg α0.808 light / 0.894 dark, backdrop blur(13px) saturate(1.6) light / +brightness(1.1) dark W-DARK-MATERIAL companion), teleported to `<body>`, `role=dialog`, NO fixed-breaking (transform/filter/contain/will-change) ancestor over the portaled content, scrim dims the page behind.
+- **Configurator gear→Sheet drawer:** the dock GEAR ("Open the glass-ui demo configurator") opens the PresetEditor as the SAME right-edge `[data-slot=sheet-content][data-side=right]` (Appearance section w/ DarkModeToggle sun/moon + Glass-level/UI-scale sliders + Reduce-motion; Preset section; footer) — confirms the exact "gear→Sheet drawer" gestalt; same `inset 0 0 0 1056px`, `top===0`.
+- **Drawer:** `.glass-drawer` inset:0 (full-vp container), content rides `translateY(calc((1 - var(--glass-drawer-t,1))*100%))` whose CSS fallback 1 keeps it OPEN even where the off-screen WKWebView throttles the rAF spring (Safari captures render open), grip handle + Close footer pinned bottom.
+- **SHIPPED-CSS + GATE CORROBORATION (the emission-inverse):** the precompiled rule SHIPS in the built bundle — `:where([data-slot=sheet-content][data-side=right]){width:75%;height:100%;top:0;bottom:0;right:0}` (all four sides + base `position:fixed;z-index:var(--z-modal)`); `sheetVariants` CVA geometry STRIPPED (0 fixed/inset-x/z-modal in `sheet/*.ts`); `proof:emission` GREEN 16/16 re-run, incl. sheet-cva-geometry-stripped, sheet-positioning-in-built-css, sheet-content-mints-data-slot-side, overlay-content-forwards-portal-attrs (SheetContent + DrawerContent — W7 `inheritAttrs:false` + `...$attrs`), sheet-inset-self-test-bites, sheet-inset-pi-spec-exists.
+- All 12 capture PNGs resolve on disk at 2880×1800. Cross-engine parity confirmed (WebKit plate reads a hair more solid — the classic backdrop-filter compositing difference — but inset + glass gestalt faithful).
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-SHEET-INSET-ROOT-DELTA.md`
+- 12 PNGs + probe: `docs/tranches/BG/audit/visual/BG.W-SHEET-INSET-ROOT-paint/{chrome,safari}-{sheet,configurator,drawer}-{light,dark}.png` (+ `chrome-results.json`)
+
+#### W-DESHADCN — BG.W-DESHADCN (cursor flip `6dddda04`)
+
+Dual-engine, both modes, 13 routes (`/forms/{inputs,textarea,checks,slider,number-field,select,combobox,multi-select,toggle,toggle-chip,selectable-chip,label}` + `/feedback/toast`), 52 captures all resolving on disk (2880×1800, valid PNG sig, ≥1.7MB). Provenance decoded: Chrome badge `ANGLE Metal Renderer: Apple M5 Max` (real Metal not SwiftShader); Safari badge WEBKIT / Apple GPU (real WebKit).
+
+- **DECISIVE COMPUTATIONAL CRITERION MET:** the focus ring resolves `--focus-ring-color` — in all 26 Chrome captures the focused control's box-shadow color numerically equals `--focus-ring-color` (light `#1c1917`→srgb 0.1098,0.0980,0.0902; dark `#bab7ab`→srgb 0.7294,0.7176,0.6706; Δ<0.002/channel), and the legacy shadcn `--ring` resolves to EMPTY in both modes (the `--ring`→`--focus-ring-color` clean break is real; zero `var(--ring)` in src).
+- **PAINTED six-state matrix verified per route:** inputs (rest + invalid destructive ring+red label+error text, both engines both modes, dark ring survives luminous-dark plate); checks (rest/checked/indeterminate/disabled across checkbox+radio+switch, dark selection = chromatic legendre-violet `--primary`); slider (track/amber-fill/iOS-knob/range/OKLCH-spectrum/disabled); select (control-surface trigger pills+chevron over dark page); toggle-chip (chip multi + cell exclusive, selected/rest); selectable-chip (per-tone idle-legible, selected bold); toast (glass trigger pills + destructive red variant, ruby feedback identity). Hover/active are pointer-only interaction states not statically capturable; the `.control-surface:hover/:active` + press rules present in source and material-coherent at rest across all routes.
+- **SPEEDTEST clause confirmed on disk:** `ToastClose.vue` ships default `aria-label` "Dismiss" via `()=>(attrs['aria-label'])??'Dismiss'`, overridable.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-DESHADCN-DELTA.md`
+- 52 PNGs + probe: `docs/tranches/BG/audit/visual/BG.W-DESHADCN-assets/{route}-{chrome,safari}-{light,dark}.png` (+ `chrome-results.json`)
+
+#### F6.7 — BG.W-SEAL-DISC (cursor flip `41bc5b87`)
+
+Dual-engine (Chrome real-Metal M5 Max + Safari WebKit/Apple GPU), both modes, non-authoring paint judge. Route `/feedback/completion-seal` built-bytes on `:5200` via the C18 `?capture=` harness (poll `data-capture-ready`). Gate `proof:completion-seal` GREEN (CS1–CS7 + CS6 self-test bites RED).
+
+- Engine badges decoded in-pixel on all 4 PNGs (CHROME/ANGLE-Metal-M5-Max + WEBKIT/Apple-GPU) — real Metal, not SwiftShader.
+- 7 `.completion-seal` nodes, all `data-drawn`+`data-play`, `role=status`, 96×96. `stroke-dashoffset` computes to 0 (`--seal-draw:100%`) → the draw REACHED 0→full and holds static (both fill); `getAnimations()=0` post-settle (one-shot, no loop).
+- `shape="disc"` reads as the composed earned-coin: translucent gold FACE + drawn gold RING around + gold CHECK inside (disc→ring→check sequencing, all layers fully drawn), in both engines+modes.
+- Earned-gold ink resolved oklch(0.751 0.147 84.2) light / oklch(0.784 0.143 86) dark (gold hue ~84–86°).
+- `personalBest` garnish is a distinct brighter+more-saturated LIFT within the gold family: oklch(0.89 0.183 96.1) light / oklch(0.898 0.182 97.4) dark (ΔL +0.14, ΔC +0.036) — visibly brighter coin in-pixel, never a new hue (Q2).
+- Re-inked completion register (`--phase-complete-color` → `--section-color-8`) resolves ruby oklch(0.52 0.176 8.4)/oklch(0.709 0.142 2.3) — token-first lockstep confirmed.
+- Backdrop recessive (warm paper/dark-material, no conic, no oversaturation, 1 calm canvas); hero heading+blurb fit envelope; cross-engine gestalt parity.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-SEAL-DISC-DELTA.md`
+- 4 PNGs + probe: `docs/tranches/BG/audit/visual/completion-seal-{chrome,safari}-{light,dark}-desktop-full.png` (+ `completion-seal-chrome-results.json`)
+
+---
+
+### FAILED -> PAINT-PENDING (held)
+
+#### 6.6 — BG.W-DOTFLOW-REBUILD (cursor held PAINT-PENDING, src SHAs `7b82c7fc` preserved; recorded `cc12a6c5`)
+
+Dual-engine, both modes FAIL. Route `/substrates/dot-flow-field` renders `FLOW_PRESET_AURORA_CURRENT` (the `mode:flow` default; "calm halftone" toggle OFF at capture). The DotFlowField showcase does NOT read as the reference warm-fire flowing dot-wave:
+
+- **Chrome/Metal** (real Apple M5 Max ANGLE-Metal, badge decoded in-pixel — NOT SwiftShader) paints a blown-out flat WHITE field (showcase-canvas-region census: meanLuma 253.9 dark / 254.1 light, stdLuma 2–5 ≈flat, ~0.6–1.5% chromatic; motes render white, spilling past the rounded-card clip; white from t≈800ms and stable).
+- **Safari/WebKit** paints a dead near-BLACK field (meanLuma 4.5, 0% chromatic, no structure).
+- Reference intent is a deep warm-near-black floor (background L:0.11 ≈ luma 28/255) with warm-fire ribbons advecting through — a mid-luma high-structure warm-chromatic field; neither capture is that.
+- **Root cause localized:** `FLOW_PRESENT_KNEE=0.6` (BG.W-DOTFLOW-REBUILD F7c faint-at-rest fix, `uniformBridgeWGPU.ts`, spliced into `flow-field.glsl.ts` + `flow-field.render.wgsl.ts` present passes) over-corrected into a real-GPU additive white-out on Chrome (particleCount 12000 + speedGlow 1.35 saturates `trail/(trail+0.6)`→1); the WebGL2 float-trail/state-texture pipeline (`flowSetupGLFlow.ts` two-FBO + state ping-pong, RGBA16F half-res trail) paints black on WebKit (likely missing/undetected `EXT_color_buffer_float` / `EXT_float_blend` for additive blend into a float target).
+- **Isolated to the viz:** the route's Aurora HERO backdrop rendered correctly warm+structured on BOTH engines (hero census chrome-dark meanLuma 62.5/stdLuma 50.0/13.8% warm; safari-dark 59.5/47.9), proving the capture pipeline, WKWebView-WebGL compositing, and the warm-fire fence (zero teal-navy anywhere, warm ≈100% of chromatic) all sound.
+- Gate `proof:viz-dotflow` is GREEN (F1–F7 structural: `cs_flow` present, WARM_FIRE_RAMP no-teal, knee named ≤0.7 + spliced) — a headless-green/visually-broken gap; the gate checks source, not the composited pixels.
+
+**mustFix (for a build-fix-agent — NOT this synthesis agent, NOT this judge):**
+1. **Chrome/Metal white-out** — re-balance `FLOW_PRESENT_KNEE` vs actual trail magnitude (raise knee and/or scale additive deposit/`speedGlow`/trail gain and/or clamp pre-tonemap trail) so ribbons pop off the deep warm floor without clipping to white; target mid-range mean luma, high stdLuma, warm hue surviving. Files: `src/components/custom/dot-flow-field/composables/uniformBridgeWGPU.ts` (`FLOW_PRESENT_KNEE`), `shaders/flow-field.glsl.ts`, `shaders/flow-field.render.wgsl.ts`.
+2. **Safari/WebKit dead-black** — audit `flowSetupGLFlow.ts` two-FBO trail + state-texture ping-pong RGBA16F targets for WebKit color-renderable+blendable float support (`EXT_color_buffer_float` + `EXT_float_blend` detection; a missing ext silently no-ops additive accumulation) and provide a detected-degrade fallback rather than a black frame.
+3. **Re-verify BOTH engines BOTH modes** paint the reference flowing warm-fire dot-wave (mid-luma warm-chromatic field with visible advected streamline structure, zero teal-navy) before re-flipping to PAINT-PENDING for re-judge; diagnostic = showcase-canvas-region census (device box x498 y480 2066×920 at y=240 scroll): PASS wants mid meanLuma, stdLuma ≫ flat-plate ~2–5 floor, warm ~100% of chromatic, teal ~0, on all four engine×mode captures.
+
+Captures:
+- DELTA (carries `defectLocalization` + `mustFix`): `docs/tranches/BG/audit/visual/BG.W-DOTFLOW-REBUILD-DELTA.md`
+- 8 route PNGs + 2 evidence crops: `docs/tranches/BG/audit/visual/BG.W-DOTFLOW-REBUILD-paint/dotflow-{showcase-,}{chrome,safari}-{light,dark}.png` · `EVIDENCE-showcase-chrome-dark-white.png` · `EVIDENCE-showcase-safari-dark-black.png`

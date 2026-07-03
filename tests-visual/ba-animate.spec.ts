@@ -12,13 +12,12 @@
 //       (the incoming route content carries the fade-slide-enter-active class
 //       during the swap — the entrance the HEAD swap proved ABSENT). Not zero
 //       (hard-cut), not a per-element cascade.
-//   (b) the scroll-progress bar tracks the route scroller — the bar resolves the
-//       .scroll-progress recipe (a scaleX transform-origin + a non-empty
-//       animation-name) and its --scroll-progress-scroller binds the named
-//       --demo-main-progress timeline on the <main> scroller (NOT root); the bar's
-//       resolved scaleX advances as the <main> scroller scrolls (or, where the
-//       headless compositor does not reflect the scroll() timeline into computed
-//       style, the structural binding + a live <main> scroll delta stands).
+//   (b) the dock scroll-progress ring tracks the route scroller
+//       (BG.W-DOCK-SCROLL-PROGRESS — the standalone `.demo-scroll-progress` bar is
+//       RETIRED onto the dock's own BORDER): the SidebarDock `<BorderProgress>`
+//       overlay wears the `inline-end-edge` coverage, is aria-hidden decorative,
+//       and its registered `--border-progress-fill` sweeps to ~100% as the <main>
+//       scroller reaches the bottom; the retired bar is DEFINITION-ABSENT.
 //   (c) the count-up tweens then snaps under PRM — on the /data/metric-cell route
 //       the audacious figure's textContent tweens UP toward its target on
 //       scroll-into-view (0/low → 912) on the no-preference engine, AND the same
@@ -101,72 +100,58 @@ test("(a) a route change fires exactly ONE page-enter transition", async ({
     expect(peak).toBeLessThanOrEqual(3);
 });
 
-// ── (b) the scroll-progress bar is recipe-bound to the route scroller ─────────
-test("(b) the scroll-progress bar binds the named <main> timeline + scaleX tracks", async ({
+// ── (b) the dock wears the scroll progress as its BORDER (BG.W-DOCK-SCROLL-PROGRESS)
+test("(b) the dock scroll-progress ring tracks the route scroller; the standalone bar is gone", async ({
     page,
 }) => {
     await page.goto("/data/metric-cell", { waitUntil: "networkidle" });
     await page.waitForTimeout(300);
 
     const reg = await page.evaluate(() => {
-        const bar = document.querySelector<HTMLElement>(".demo-scroll-progress");
+        const ring = document.querySelector<HTMLElement>(".demo-dock-scroll-ring");
         const main = document.querySelector<HTMLElement>(".demo-main-scroller");
-        if (!bar || !main) return null;
-        const cs = getComputedStyle(bar);
-        const mcs = getComputedStyle(main);
+        if (!ring || !main) return null;
+        const cs = getComputedStyle(ring);
         return {
-            origin: cs.transformOrigin,
-            animationName: cs.animationName,
-            scrollerVar: cs.getPropertyValue("--scroll-progress-scroller").trim(),
-            timelineName:
-                mcs.getPropertyValue("scroll-timeline-name").trim() ||
-                (mcs as unknown as { scrollTimelineName?: string }).scrollTimelineName ||
-                "",
+            coverage: ring.getAttribute("data-coverage"),
+            fill: parseFloat(cs.getPropertyValue("--border-progress-fill")) || 0,
+            // the retired standalone bar must be DEFINITION-ABSENT in the DOM
+            barSurvives: !!document.querySelector(".demo-scroll-progress"),
+            hidden: ring.getAttribute("aria-hidden"),
         };
     });
     expect(reg).not.toBeNull();
-    // The recipe is bound: a scaleX transform-origin + the named scroller var
-    // pointed at the <main> timeline (NOT root), and the <main> declares it.
-    expect(reg!.scrollerVar).toContain("--demo-main-progress");
-    expect(reg!.scrollerVar).not.toBe("root");
-    expect(reg!.origin.startsWith("0px")).toBeTruthy();
+    // The standalone route-scroller bar is RETIRED (clean break, no alias).
+    expect(reg!.barSurvives).toBe(false);
+    // The vertical rail wears the inline-end-edge coverage (the scrollbar
+    // metaphor as the dock's own border) and is decorative (aria-hidden).
+    expect(reg!.coverage).toBe("inline-end-edge");
+    expect(reg!.hidden).toBe("true");
 
-    // scaleX track: scroll the <main> scroller and read the bar's resolved scaleX.
-    // Headless Chromium-new with --use-gl reflects scroll() timelines into the
-    // computed transform; where it does not, the binding above + a live scroll
-    // delta on <main> is the structural truth.
-    const before = await page.evaluate(() => {
-        const bar = document.querySelector<HTMLElement>(".demo-scroll-progress");
-        return scaleXFromCS(bar);
-        function scaleXFromCS(el: HTMLElement | null): number {
-            if (!el) return -1;
-            const t = getComputedStyle(el).transform;
-            const m = t.match(/matrix\(([^)]+)\)/);
-            return m ? parseFloat(m[1].split(",")[0]) : 1;
-        }
-    });
+    // Scroll the route scroller to the bottom → the registered fill sweeps to ~100%.
+    const before = reg!.fill;
     const scrolled = await page.evaluate(() => {
         const main = document.querySelector<HTMLElement>(".demo-main-scroller");
         if (!main) return 0;
-        main.scrollTop = main.scrollHeight; // jump to the bottom
+        main.scrollTop = main.scrollHeight;
         return main.scrollTop;
     });
-    await page.waitForTimeout(250);
+    await page.waitForTimeout(300);
     const after = await page.evaluate(() => {
-        const bar = document.querySelector<HTMLElement>(".demo-scroll-progress");
-        if (!bar) return -1;
-        const t = getComputedStyle(bar).transform;
-        const m = t.match(/matrix\(([^)]+)\)/);
-        return m ? parseFloat(m[1].split(",")[0]) : 1;
+        const ring = document.querySelector<HTMLElement>(".demo-dock-scroll-ring");
+        return ring
+            ? parseFloat(
+                  getComputedStyle(ring).getPropertyValue(
+                      "--border-progress-fill",
+                  ),
+              ) || 0
+            : -1;
     });
-
-    // The scroller genuinely moved (the route owns scroll on <main>).
+    // The scroller genuinely moved (the route owns scroll on <main>) …
     expect(scrolled).toBeGreaterThan(0);
-    // The compositor scroll() timeline advanced the bar's scaleX (before→after),
-    // OR (headless not reflecting the timeline) the binding stands as the
-    // structural truth — accept either, fail only if the bar is structurally
-    // unbound (caught above) or scaleX went BACKWARD (a wrong-direction bind).
-    expect(after).toBeGreaterThanOrEqual(before - 0.01);
+    // … and the dock ring's fill tracked it to the bottom (≈100%).
+    expect(after).toBeGreaterThan(before);
+    expect(after).toBeGreaterThan(90);
 });
 
 // ── (c) the count-up tweens then snaps under PRM ──────────────────────────────

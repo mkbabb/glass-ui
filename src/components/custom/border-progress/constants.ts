@@ -10,11 +10,16 @@
 /**
  * The coverage axis — `full-ring` sweeps the entire border perimeter,
  * `bottom-edge` paints ONLY the bottom border band (the literal C2 case: "the
- * bottom progressbar should serve as a thicker, dynamic BORDER"). The two
- * coverages share the ONE conic-mask mechanism (a `coverage`-scoped mask
- * region — NOT a second recipe).
+ * bottom progressbar should serve as a thicker, dynamic BORDER"), and
+ * `inline-end-edge` (BG.W-DOCK-SCROLL-PROGRESS) paints ONLY the inline-end
+ * vertical band, filled TOP→BOTTOM linearly by the value — the scroll-position
+ * register a vertical dock/rail wears (the scrollbar metaphor; a conic maps a
+ * single edge nonlinearly, so the edge coverage swaps the PAINT to a linear
+ * gradient while keeping the SAME border-band mask cut-out). All coverages
+ * share the ONE mask mechanism (a `coverage`-scoped mask region — NOT a second
+ * recipe).
  */
-export type BorderProgressCoverage = "full-ring" | "bottom-edge";
+export type BorderProgressCoverage = "full-ring" | "bottom-edge" | "inline-end-edge";
 
 /**
  * The thickness envelope (px). AMENDED 6-8px → 10-14px (speedtest AW v3 relay

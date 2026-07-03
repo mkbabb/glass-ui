@@ -266,6 +266,22 @@ const cardTier = computed<CardTier>(() => {
     if (liveBackdrop.value) return isHero.value ? "quiet" : "wash";
     return isHero.value ? "floating" : "resting";
 });
+
+// ── BG.W-CORNER-ALIAS-KILL — the bleed layer escapes the route subtree ────────
+// A `.story-hero-bg--bleed` layer is `position: fixed; inset: 0` and MUST size to
+// the VIEWPORT — but mounted inside the route article it is silently re-parented
+// whenever ANY ancestor carries a transform/filter/containment (the `.route-enter`
+// entrance held a filled identity transform FOREVER → the "viewport" wash sized to
+// the ARTICLE box: an opaque square-cornered plate behind the rounded card — the
+// white corner wedges). The bleeding arm therefore TELEPORTS to `<body>`: a
+// viewport-fixed field layer NEVER rides inside a (transiently transformed) route
+// subtree — correct from frame 0, immune to any future ancestor promotion. The
+// boxed arm keeps its in-place `-z-10` seat (`:disabled`). Every token the layers
+// read (`--grid-*`, `--story-paper-wash`, the substrate knobs) is `:root`-declared,
+// so the teleport loses nothing from the cascade.
+const bgTeleported = computed(() =>
+    liveBackdrop.value ? fullBleed.value : bgFullBleed.value,
+);
 </script>
 
 <template>
@@ -277,7 +293,13 @@ const cardTier = computed<CardTier>(() => {
         <!-- Per-page background substrate. A full-bleed hero pins it
              `position: fixed; inset: 0` (the `.story-hero-bg--bleed` modifier) so
              the live field IS the page background behind the header AND content;
-             a contained page keeps it boxed behind the card (`-z-10` inset). -->
+             a contained page keeps it boxed behind the card (`-z-10` inset).
+             BG.W-CORNER-ALIAS-KILL — a BLEEDING arm teleports to <body>: a
+             viewport-fixed layer inside the route subtree is silently re-parented
+             by ANY transformed/contained ancestor (the trapped square-cornered
+             wash behind the rounded card — the white corner wedges); the boxed
+             arm stays in place (`:disabled`). -->
+        <Teleport to="body" :disabled="!bgTeleported">
         <Aurora
             v-if="kind === 'aurora'"
             :config="auroraConfig"
@@ -333,6 +355,7 @@ const cardTier = computed<CardTier>(() => {
             "
             aria-hidden="true"
         />
+        </Teleport>
 
         <!-- Full-bleed hero — the content floats DIRECTLY over the live field on a
              thin readability plate (no card box, no double-wash). The W55

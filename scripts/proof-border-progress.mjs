@@ -84,6 +84,12 @@ function cliPaths() {
         SUBPATH: resolve(ROOT, "src/subpaths/border-progress.ts"),
         API_INDEX: resolve(ROOT, "src/api/index.ts"),
         PKG: resolve(ROOT, "package.json"),
+        // BG.W-DOCK-SCROLL-PROGRESS — the W7 dock-consumer arm reads the demo shell
+        // (the reference adoption: the page-scroll progress IS the leftside dock's
+        // border; the standalone bar is DEFINITION-ABSENT).
+        SIDEBAR_DOCK: resolve(ROOT, "demo/layout/SidebarDock.vue"),
+        APP_SHELL: resolve(ROOT, "demo/layout/AppShell.vue"),
+        DOCK_NAV: resolve(ROOT, "demo/layout/dock-nav.css"),
         ARTIFACT: gateArtifactPath(
             "GLASS_UI_BORDER_PROGRESS_ARTIFACT",
             "BB-border-progress",
@@ -386,6 +392,91 @@ export function detectBorderProgress(inputs) {
             "W5: src/styles/index.css does not @import ./border-progress.css (the consumption partial)",
         );
 
+    // ── W7 — the dock-consumer arm (BG.W-DOCK-SCROLL-PROGRESS) ────────────────
+    // The page-scroll progress IS the leftside dock's BORDER: the ring's fill
+    // genuinely SWEEPS, the vertical-edge coverage ships, the shell dock wears the
+    // ring across its three settled forms, and the standalone bar is
+    // DEFINITION-ABSENT (clean break, no alias).
+    const sidebarDock = inputs.sidebarDock ?? "";
+    const appShell = inputs.appShell ?? "";
+    const dockNav = inputs.dockNav ?? "";
+
+    // W7a — the fill actually sweeps: the SFC's spectrum stop positions scale by
+    // the registered fill (`calc(var(--border-progress-fill) * f)`), so the
+    // `transparent var(--fill)` front lands AT the spectrum tail. Fixed-position
+    // stops (`0..100%`) clamp the transparent front past the tail and the ring
+    // paints FULL at every value — the inert-fill defect (live-verified at 42%).
+    const fillScaledStops = /calc\(var\(--border-progress-fill/.test(vue);
+    // W7b — the vertical-edge coverage ships: the union widens + the coverage-
+    // scoped mask exists + its PAINT is the LINEAR block-axis gradient (a conic
+    // maps a single edge nonlinearly).
+    const edgeCoverageUnion = /["']inline-end-edge["']/.test(constants);
+    const edgeBlock =
+        /\[data-coverage="inline-end-edge"\][^{]*\{([^{}]*)\}/.exec(css)?.[1] ?? "";
+    const edgeCoverageMask = /mask-composite/.test(edgeBlock);
+    const edgeCoverageLinear = /linear-gradient\(\s*to bottom/.test(edgeBlock);
+    // W7c — the shell dock wears the ring: SidebarDock mounts <BorderProgress>
+    // bound to the provided shell scroll fraction, with the THREE coverage states
+    // wired (vertical rail → inline-end-edge · settled horizontal bar →
+    // bottom-edge · collapsed pill → full-ring).
+    const dockMounts = /<BorderProgress\b/.test(sidebarDock);
+    const dockReadsFraction = /useShellScrollProgress\(\)/.test(sidebarDock);
+    const dockCoverageStates =
+        /inline-end-edge/.test(sidebarDock) &&
+        /bottom-edge/.test(sidebarDock) &&
+        /full-ring/.test(sidebarDock);
+    const shellProvidesFraction =
+        /SHELL_SCROLL_PROGRESS/.test(appShell) && /provide\(/.test(appShell);
+    // W7d — the standalone bar is DEFINITION-ABSENT: no live `.demo-scroll-progress`
+    // CSS rule and no live class usage in the shell (comments stripped above).
+    const barRuleSurvives = /\.demo-scroll-progress[^{}]*\{/.test(dockNav);
+    const barClassSurvives = /class="[^"]*demo-scroll-progress/.test(appShell);
+    // W7e — props defer to the cascade when unset (the token-first seam the dock
+    // ring rides: `--border-progress-radius: var(--radius-pill)` follows the pill
+    // host with zero measurement).
+    const propsDeferToCascade =
+        /props\.width\s*!=\s*null/.test(vue) && /props\.radius\s*!=\s*null/.test(vue);
+    const dockRadiusToken = /--border-progress-radius:\s*var\(--radius-pill/.test(
+        dockNav,
+    );
+    facts.w7 = {
+        fillScaledStops,
+        edgeCoverageUnion,
+        edgeCoverageMask,
+        edgeCoverageLinear,
+        dockMounts,
+        dockReadsFraction,
+        dockCoverageStates,
+        shellProvidesFraction,
+        barAbsent: !barRuleSurvives && !barClassSurvives,
+        propsDeferToCascade,
+        dockRadiusToken,
+    };
+    if (!fillScaledStops)
+        violations.push(
+            "W7a: the spectrum stop positions do not scale by the registered fill (`calc(var(--border-progress-fill) * f)` absent from BorderProgress.vue) — fixed-position stops clamp the transparent front past the tail and the ring paints FULL at every value (the inert-fill defect)",
+        );
+    if (!(edgeCoverageUnion && edgeCoverageMask && edgeCoverageLinear))
+        violations.push(
+            'W7b: the `inline-end-edge` coverage is not shipped (union widened + a `[data-coverage="inline-end-edge"]` coverage-scoped mask + the LINEAR block-axis paint)',
+        );
+    if (!(dockMounts && dockReadsFraction && dockCoverageStates))
+        violations.push(
+            "W7c: the shell dock does not wear the scroll-progress border (SidebarDock must mount <BorderProgress> off useShellScrollProgress() with the inline-end-edge / bottom-edge / full-ring coverage states wired)",
+        );
+    if (!shellProvidesFraction)
+        violations.push(
+            "W7c: AppShell does not provide the shell scroll fraction (SHELL_SCROLL_PROGRESS)",
+        );
+    if (barRuleSurvives || barClassSurvives)
+        violations.push(
+            "W7d: the standalone `.demo-scroll-progress` bar SURVIVES (a live CSS rule or class usage) — it retired onto the dock border (clean break, no alias)",
+        );
+    if (!(propsDeferToCascade && dockRadiusToken))
+        violations.push(
+            "W7e: the radius/width props do not defer to the cascade when unset (or the dock ring does not ride `--border-progress-radius: var(--radius-pill)`) — the token-first follow-the-host seam",
+        );
+
     return { facts, violations };
 }
 
@@ -412,6 +503,12 @@ function readInputs(P) {
         constantsExists: existsSync(P.CONSTANTS),
         helperExists: existsSync(P.HELPER),
         dirExists: existsSync(P.DIR),
+        // W7 (BG.W-DOCK-SCROLL-PROGRESS) — the demo-shell consumer surface. HTML
+        // comments strip too (the retire notes NAME the retired bar in prose; only
+        // a LIVE usage may count).
+        sidebarDock: stripTs(read(P.SIDEBAR_DOCK)).replace(/<!--[\s\S]*?-->/g, " "),
+        appShell: stripTs(read(P.APP_SHELL)).replace(/<!--[\s\S]*?-->/g, " "),
+        dockNav: stripCss(read(P.DOCK_NAV)),
     };
 }
 
@@ -423,7 +520,10 @@ function selfTest() {
             data-coverage data-milestone
             emit("milestone", { milestone: ms, value })
             milestones?: readonly BorderProgressMilestone[]
-            var(--border-progress-fill)`,
+            var(--border-progress-fill)
+            calc(var(--border-progress-fill, 0%) * 0.5000)
+            props.width != null
+            props.radius != null`,
         vueRaw: "",
         // The sync shell — value.js-FREE (BC.W-AX-BP-LAZY); the dynamic boundary only.
         helper: `import("./spectrum-walk")`,
@@ -436,7 +536,7 @@ function selfTest() {
             import { sampleColorRamp } from "@mkbabb/value.js";
             sampleColorRamp(a, b, n, { space: "oklch", hueMethod: "shorter" })`,
         walkRaw: ``,
-        constants: `export type BorderProgressCoverage = "full-ring" | "bottom-edge";
+        constants: `export type BorderProgressCoverage = "full-ring" | "bottom-edge" | "inline-end-edge";
             export const BORDER_PROGRESS_WIDTH_MIN = 10;
             export const BORDER_PROGRESS_WIDTH_MAX = 14;
             export const BORDER_PROGRESS_WIDTH_DEFAULT = 12;
@@ -449,6 +549,11 @@ function selfTest() {
             mask-composite: exclude;
         }
         .border-progress[data-coverage="bottom-edge"] .border-progress__ring { mask-composite: exclude, intersect; }
+        .border-progress[data-coverage="inline-end-edge"] .border-progress__ring {
+            background: linear-gradient( to bottom, var(--s), transparent var(--border-progress-fill), transparent );
+            mask: linear-gradient(to left, #fff 0 12px, transparent 12px), linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0) border-box;
+            mask-composite: intersect, exclude, add;
+        }
         @media (prefers-reduced-motion: no-preference) { .border-progress[data-milestone] .x { animation: pulse; } }`,
         propertyRegs: `@property --border-progress-fill { syntax: "<percentage>"; inherits: false; initial-value: 0%; }`,
         indexCss: `@import "./border-progress.css";`,
@@ -459,6 +564,12 @@ function selfTest() {
         constantsExists: true,
         helperExists: true,
         dirExists: true,
+        // W7 — the demo-shell dock-consumer corpus (BG.W-DOCK-SCROLL-PROGRESS).
+        sidebarDock: `<BorderProgress class="demo-dock-scroll-ring" :coverage="ringCoverage" />
+            const scrollProgress = useShellScrollProgress();
+            return dock && !dock.expanded ? "full-ring" : o === "horizontal" ? "bottom-edge" : "inline-end-edge";`,
+        appShell: `provide(SHELL_SCROLL_PROGRESS, shellScrollProgress);`,
+        dockNav: `.demo-dock-progress-host > .demo-dock-scroll-ring { --border-progress-radius: var(--radius-pill, 9999px); }`,
     };
     const baseGreen = detectBorderProgress(good).violations.length === 0;
 
@@ -545,6 +656,35 @@ function selfTest() {
                     "",
                 ),
             }).violations.length > 0,
+    });
+    // Bite H (W7a) — fixed-position spectrum stops (the inert-fill defect: the
+    // transparent front clamps past the 0..100% tail → the ring paints FULL at
+    // every value) reds.
+    bites.push({
+        name: "inert-fill-fixed-stops",
+        red:
+            detectBorderProgress({
+                ...good,
+                vue: good.vue.replace(/calc\(var\(--border-progress-fill[^)]*\)[^)]*\)/, "50.00%"),
+            }).violations.some((v) => /W7a/.test(v)),
+    });
+    // Bite I (W7d) — a LIVE `.demo-scroll-progress` bar rule re-appearing reds.
+    bites.push({
+        name: "standalone-bar-revives",
+        red:
+            detectBorderProgress({
+                ...good,
+                dockNav: good.dockNav + "\n.demo-scroll-progress { position: sticky; }",
+            }).violations.some((v) => /W7d/.test(v)),
+    });
+    // Bite J (W7c) — the collapsed full-ring coverage arm dropped from the dock reds.
+    bites.push({
+        name: "no-collapsed-full-ring",
+        red:
+            detectBorderProgress({
+                ...good,
+                sidebarDock: good.sidebarDock.replace(/"full-ring"/, '"x"'),
+            }).violations.some((v) => /W7c/.test(v)),
     });
 
     return { baseGreen, bites };
@@ -634,6 +774,22 @@ function run() {
     );
     console.log(
         `  W6 self-test bites RED             : ${yn(facts.w6.allBite && facts.w6.baseGreen)}`,
+    );
+    console.log(
+        `  W7 dock-consumer (BG.W-DOCK-SCROLL-PROGRESS): fill-sweeps:${yn(
+            facts.w7.fillScaledStops,
+        )}  edge-coverage:${yn(
+            facts.w7.edgeCoverageUnion &&
+                facts.w7.edgeCoverageMask &&
+                facts.w7.edgeCoverageLinear,
+        )}  dock-wears-ring:${yn(
+            facts.w7.dockMounts &&
+                facts.w7.dockReadsFraction &&
+                facts.w7.dockCoverageStates &&
+                facts.w7.shellProvidesFraction,
+        )}  bar-absent:${yn(facts.w7.barAbsent)}  defer-to-cascade:${yn(
+            facts.w7.propsDeferToCascade && facts.w7.dockRadiusToken,
+        )}`,
     );
 
     if (violations.length > 0) {

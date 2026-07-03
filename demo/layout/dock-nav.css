@@ -182,24 +182,12 @@
     }
 }
 
-/* ── BA.W-ANIMATE Tier B — the route-scroller scroll-progress bar ───────────
-   The `.scroll-progress` recipe (src/styles/scroll-driven.css) drives a 0..1
-   scaleX bar off a native `scroll()` timeline on the compositor. BG.W-SCROLL-
-   PROGRESS-RAIL (D5): the bar is a position:sticky CHILD of `.demo-main-scroller`
-   (the ROUTE owns scroll on `<main>`, the shell is a fixed viewport frame), so the
-   bar's `--scroll-progress-timeline: scroll(nearest block)` resolves to that
-   scroller automatically — no named scroll-timeline + no `<dashed-ident>` fragment
-   in scroll()'s scroller slot (the HEAD invalid `scroll(var(--scroll-progress-
-   scroller) block)` that computed animation-timeline to `auto` → scaleX(1) full-
-   width). This is a demo-scoped geometry/color rule with no token home (the bar
-   position + ink are demo chrome, not a library token) — the §FileBounds modify-carve.
-
-   PRM-safe + off-main-thread by construction: the animated grow sits under
-   `@media (prefers-reduced-motion: no-preference)` + `@supports (animation-timeline:
-   scroll())`, and the recipe's UNCONDITIONAL `transform: scaleX(0)` is the invisible
-   terminal rest on any unsupported / invalid / PRM path. No JS attach (the
-   useScrollProgress fallback short-circuits under native support — the dual-path
-   single-writer rule). */
+/* ── BG.W-DOCK-SCROLL-PROGRESS — the route scroller (the bar RETIRED onto the dock) ──
+   The standalone `.demo-scroll-progress` sticky bar is RETIRED (clean break, no
+   alias): the page-scroll position is now a BORDER ITEM on the leftside dock (the
+   `.demo-dock-scroll-ring` `<BorderProgress>` overlay below). The `.scroll-progress`
+   LIBRARY recipe (src/styles/scroll-driven.css) stays — its consumer is the
+   /motion/scroll-vt story. */
 .demo-main-scroller {
     /* BC.W-DROPDOWN-FIX — the no-shift discipline. This route scroller hosts the
        portaled picker overlays (Select / DropdownMenu); reka's body scroll-lock
@@ -228,31 +216,36 @@
     scroll-padding-block-start: var(--dock-content-safe-inset, 2.5rem);
     scroll-padding-inline-start: var(--dock-content-safe-inset, 2.5rem);
 }
-.demo-scroll-progress {
-    /* BG.W-SCROLL-PROGRESS-RAIL — the bar is a position:sticky CHILD of
-       `.demo-main-scroller`, so `scroll(nearest block)` resolves to that scroller
-       (the ROUTE owns scroll, not `root`). A FULL-value var — NEVER the retired
-       `scroll(var(--scroll-progress-scroller) block)` fragment (a named timeline in
-       scroll()'s scroller slot is invalid → animation-timeline:auto → scaleX(1)). */
-    --scroll-progress-timeline: scroll(nearest block);
-    position: sticky;
-    inset-block-start: 0;
-    z-index: 1;
-    /* The bar pins to the top edge of the scroll-region's content column, full
-       width, a thin warm-ink hairline that fills left→right as the route scrolls. */
-    height: 2px;
-    width: 100%;
-    margin-block-end: -2px;
-    border-radius: var(--radius-pill, 9999px);
-    background: linear-gradient(
-        90deg,
-        color-mix(in oklab, var(--primary), transparent 10%),
-        var(--primary)
-    );
-    /* No opacity rest — the recipe's UNCONDITIONAL `transform: scaleX(0)` is the
-       invisible rest on any unsupported/invalid/PRM path (the bar shows ONLY as it
-       fills; a faint always-on hairline read as a permanent rule, not progress). */
+/* ── BG.W-DOCK-SCROLL-PROGRESS — the dock's scroll-progress BORDER ring ───────
+   The `<BorderProgress>` overlay SidebarDock mounts as an inset-0 sibling of its
+   `<GlassDock>` inside the shrink-wrapping `.demo-dock-progress-host`. The ring is
+   masked to the border band only (the dock's glass + controls read through); the
+   pill radius + the 10-14px envelope thickness ride the `--border-progress-*`
+   cascade tokens (the props-defer-to-cascade seam — the ring follows the dock's
+   stadium with zero measurement). */
+.demo-dock-progress-host {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+.demo-dock-progress-host > .demo-dock-scroll-ring {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
     pointer-events: none;
+    /* Follow the dock plate: the vertical rail + the settled horizontal bar are
+       both `shape-pill` (stadium), and a collapsed pill is the same register. */
+    --border-progress-radius: var(--radius-pill, 9999px);
+    /* The thick+rounded read (the 10-14px envelope), tuned against the ~67px
+       vertical pill so the band reads as the dock's own edge, not a bar. */
+    --border-progress-width: 11px;
+    /* Continuity across the V↔H morph: the ring dissolves in lockstep with the
+       dock under the goo window (below) — never a pop across the topology flip. */
+    transition: opacity 180ms var(--ease-out, ease-out);
+}
+[data-dock-morphing] .demo-dock-progress-host > .demo-dock-scroll-ring {
+    opacity: 0;
 }
 
 /* ════════════════════════════════════════════════════════════════════════

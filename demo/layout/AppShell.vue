@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, useTemplateRef, watch } from "vue";
+import { computed, nextTick, onBeforeUnmount, onMounted, provide, ref, useTemplateRef, watch } from "vue";
 import { useRoute } from "vue-router";
 import {
     Dialog,
@@ -20,6 +20,10 @@ import {
     useRegisteredShortcuts,
 } from "@glass/composables/keyboard";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
+import {
+    SHELL_DOCK_ORIENTATION,
+    SHELL_SCROLL_PROGRESS,
+} from "../shell/useShellScrollProgress";
 import { warmFieldHue } from "../stories/warm-field";
 import {
     shellAuroraConfig as buildShellAuroraConfig,
@@ -144,6 +148,48 @@ onMounted(() => {
 const route = useRoute();
 const mainEl = ref<HTMLElement | null>(null);
 
+// ── BG.W-DOCK-SCROLL-PROGRESS — the scroll fraction the dock ring wears ──────
+// The standalone `.demo-scroll-progress` bar is RETIRED (clean break); the page
+// scroll position is now a BORDER ITEM on the leftside dock (SidebarDock mounts
+// `<BorderProgress>` reading this fraction). ONE writer: a rAF-coalesced passive
+// scroll listener on the route scroller + a route-settle recompute (the scroller
+// persists across the keyed route swap, so the listener attaches once).
+const shellScrollProgress = ref(0);
+provide(SHELL_SCROLL_PROGRESS, shellScrollProgress);
+provide(SHELL_DOCK_ORIENTATION, settledOrientation);
+
+let scrollRafId = 0;
+function computeShellScrollProgress(): void {
+    const el = mainEl.value;
+    if (!el) return;
+    const span = el.scrollHeight - el.clientHeight;
+    shellScrollProgress.value =
+        span > 0 ? Math.min(1, Math.max(0, el.scrollTop / span)) : 0;
+}
+function onShellScroll(): void {
+    if (scrollRafId) return;
+    scrollRafId = requestAnimationFrame(() => {
+        scrollRafId = 0;
+        computeShellScrollProgress();
+    });
+}
+watch(
+    mainEl,
+    (el, _prev, onCleanup) => {
+        if (!el) return;
+        el.addEventListener("scroll", onShellScroll, { passive: true });
+        window.addEventListener("resize", onShellScroll, { passive: true });
+        computeShellScrollProgress();
+        onCleanup(() => {
+            el.removeEventListener("scroll", onShellScroll);
+            window.removeEventListener("resize", onShellScroll);
+            if (scrollRafId) cancelAnimationFrame(scrollRafId);
+            scrollRafId = 0;
+        });
+    },
+    { immediate: true },
+);
+
 // BG.W-ROUTE-TRANSITION (P4-F) — the SR route-change announce. The atomic keyed swap
 // has no skeleton `aria-busy`, so the live region is the only route-change signal AT
 // receives; it also strands focus at <body>, so on settle we move focus into <main
@@ -157,6 +203,9 @@ watch(
         routeAnnounce.value = String(route.meta?.title ?? "");
         void nextTick(() => {
             mainEl.value?.focus({ preventScroll: true });
+            // BG.W-DOCK-SCROLL-PROGRESS — the new page's scroll span settles
+            // post-swap; recompute so the dock ring reads 0 at the new top.
+            computeShellScrollProgress();
         });
     },
 );
@@ -359,22 +408,19 @@ onBeforeUnmount(() => {
                 <p class="sr-only" aria-live="polite" role="status">
                     {{ routeAnnounce }}
                 </p>
-                <!-- BA.W-ANIMATE Tier B / BG.W-SCROLL-PROGRESS-RAIL — the route-scroller
-                     scroll-progress bar. The `.scroll-progress` recipe (scroll-driven.css)
-                     drives a 0..1 scaleX fill off a native scroll() timeline on the
-                     compositor; `.demo-scroll-progress` is a position:sticky CHILD of this
-                     `.demo-main-scroller`, so `--scroll-progress-timeline: scroll(nearest
-                     block)` resolves to this scroller (the ROUTE owns scroll, not `root`).
-                     PRM-safe + zero-JS by construction (the animated grow sits under the
-                     PRM + @supports(animation-timeline) gate; the unconditional scaleX(0)
-                     is the invisible rest). -->
-                <div class="demo-scroll-progress scroll-progress" aria-hidden="true" />
+                <!-- BG.W-DOCK-SCROLL-PROGRESS — the standalone scroll-progress bar is
+                     RETIRED (clean break, no alias): the page-scroll position is now a
+                     BORDER ITEM on the leftside dock (SidebarDock wears the
+                     `<BorderProgress>` ring off the provided shell scroll fraction).
+                     The `.scroll-progress` LIBRARY recipe stays (its consumer is the
+                     /motion/scroll-vt story). -->
                 <!-- BG.W-ROUTE-TRANSITION (M1) — the route swap is a BARE KEYED ATOMIC
                      SWAP: NO Vue <Transition>, NO Suspense, NO v-if/skeleton/no-match
                      branch chain. A keyed `<component>` unmounts the old + mounts the new
                      in ONE patch — `<main>` carries exactly the new page at every settle
-                     (children.length === 2: this component + the sticky scroll-progress
-                     bar), exactly one route root, h1 === dest, with NO leave hook to
+                     (the SR announce + this component; the standalone scroll-progress
+                     bar retired at BG.W-DOCK-SCROLL-PROGRESS — the dock ring wears the
+                     scroll position), exactly one route root, h1 === dest, with NO leave hook to
                      wedge (the `.scroll-build`×<Transition>-leave collision that froze the
                      route is structurally impossible). The liquid enter is the on-mount
                      `.route-enter` @keyframes (transitions.css) — it lands on the keyed

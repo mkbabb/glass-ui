@@ -29,8 +29,6 @@ import { cn } from "../../../utils/cn";
 import { spectrumStops } from "./composables/useBorderSpectrum";
 import {
     BORDER_PROGRESS_DEFAULT_SPECTRUM,
-    BORDER_PROGRESS_WIDTH_DEFAULT,
-    BORDER_PROGRESS_RADIUS_DEFAULT,
     type BorderProgressCoverage,
     type BorderProgressMilestone,
     type BorderProgressMilestoneEvent,
@@ -53,9 +51,16 @@ export interface BorderProgressProps {
      * `var(--…)` token anchors pass through to the live cascade.
      */
     stops?: readonly string[];
-    /** The ring thickness in px (default within the 10-14px envelope). */
+    /**
+     * The ring thickness in px (default within the 10-14px envelope). UNSET, the
+     * ring defers to the `--border-progress-width` cascade token (fallback 12px).
+     */
     width?: number;
-    /** The host border-radius in px the ring follows. Default 16. */
+    /**
+     * The host border-radius in px the ring follows. UNSET, the ring defers to
+     * the `--border-progress-radius` cascade token (fallback 16px) — so a pill
+     * host themes the ring with `--border-progress-radius: var(--radius-pill)`.
+     */
     radius?: number;
     /**
      * Phase-edge boundaries. The ring fires `milestone` + (PRM-gated) pulses when
@@ -103,13 +108,22 @@ const resolveSpectrum = () => {
 };
 resolveSpectrum();
 watch(() => props.stops, resolveSpectrum);
+// THE FILL-SCALED STOP LIST (BG.W-DOCK-SCROLL-PROGRESS — the sweep made real).
+// The stops position at `calc(var(--border-progress-fill) * f)` so the spectrum
+// spans the FILLED extent and the `transparent var(--border-progress-fill)` front
+// in the gradient lands exactly at the last stop — a hard fill edge that SWEEPS as
+// the registered <percentage> fill interpolates. The prior fixed `0..100%`
+// positions were the inert-fill defect: CSS clamps a non-decreasing stop list, so
+// `transparent var(--fill)` (fill < 100%) clamped UP past the 100% spectrum tail
+// and the ring painted the FULL perimeter at EVERY value (live-verified at 42% —
+// the fill never swept).
 const spectrumStopList = computed(() => {
     const s = spectrum.value;
     const n = s.length;
-    if (n === 1) return `${s[0]}, ${s[0]}`;
-    return s
-        .map((color, i) => `${color} ${((i / (n - 1)) * 100).toFixed(2)}%`)
-        .join(", ");
+    const at = (f: number) =>
+        `calc(var(--border-progress-fill, 0%) * ${f.toFixed(4)})`;
+    if (n === 1) return `${s[0]} 0%, ${s[0]} ${at(1)}`;
+    return s.map((color, i) => `${color} ${at(i / (n - 1))}`).join(", ");
 });
 
 // The milestone-edge state (the `data-milestone` PRM-gated pulse). The ring pulses
@@ -136,14 +150,24 @@ watch(fraction, (nv, ov) => {
     lastFraction.value = nv;
 });
 
+// PROPS DEFER TO THE CASCADE WHEN UNSET (BG.W-DOCK-SCROLL-PROGRESS — token-first):
+// the inline `--border-progress-width`/`--border-progress-radius` customs are
+// written ONLY when the prop is provided, so an unset prop lets an ancestor theme
+// the ring off the tokens (`--border-progress-radius: var(--radius-pill)` follows a
+// pill host with zero measurement); the CSS `var(…, 12px)`/`var(…, 16px)` fallbacks
+// (border-progress.css) keep the JS defaults byte-identical for the bare mount.
 const rootStyle = computed<CSSProperties>(
     () =>
         ({
             // The @property-animated fill drives the conic sweep (it INTERPOLATES;
             // a bare unregistered var() snaps — the §18 registered-property idiom).
             "--border-progress-fill": `${(fraction.value * 100).toFixed(3)}%`,
-            "--border-progress-width": `${props.width ?? BORDER_PROGRESS_WIDTH_DEFAULT}px`,
-            "--border-progress-radius": `${props.radius ?? BORDER_PROGRESS_RADIUS_DEFAULT}px`,
+            ...(props.width != null
+                ? { "--border-progress-width": `${props.width}px` }
+                : {}),
+            ...(props.radius != null
+                ? { "--border-progress-radius": `${props.radius}px` }
+                : {}),
             "--border-progress-spectrum": spectrumStopList.value,
         }) as CSSProperties,
 );

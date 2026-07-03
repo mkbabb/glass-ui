@@ -78,6 +78,9 @@ const SPECULAR_POINTER_FILE = "src/composables/glass/useSpecularPointer.ts";
 const DARK_ARM_FILE = "src/styles/tokens/dark-arm.css";
 const LIGHT_DARK_FILE = "src/styles/tokens/light-dark.css";
 const GLASS_SURFACES_FILE = "src/styles/glass/surfaces.css";
+const TRANSITIONS_FILE = "src/styles/transitions.css";
+const STORY_HERO_CSS_FILE = "demo/stories/story-hero.css";
+const STORY_HERO_SFC_FILE = "demo/stories/StoryHero.vue";
 
 function stripCss(src) {
     return src.replace(/\/\*[\s\S]*?\*\//g, " ");
@@ -760,6 +763,101 @@ export function darkArmColorReversalViolations(darkArmText, lightDarkText, surfa
     return { violations, facts };
 }
 
+// ── ARM: corner-backplate (BG.W-CORNER-ALIAS-KILL — the white corner wedge) ───
+// The user's chronic: an opaque light backplate painting to the SQUARE corner box
+// behind a rounded host's radius curve (the white wedges on the landing/hero card
+// over the warm field). The paint-proven mechanism was COMPOUND, so the arm locks
+// each layer of the class fix (pure over the three source texts — the self-test
+// runs it against synthetic mutants):
+//
+//   CB1 — the route root's entrance fill is `backwards`, NEVER `both`/`forwards`.
+//         `.route-enter` is the universal ancestor; a `both` fill keeps applying
+//         the `to` keyframe's transform FOREVER (a computed transform ≠ none), so
+//         the route root becomes a PERMANENT fixed-position containing block and
+//         every `position: fixed` descendant (the full-bleed field wash) silently
+//         re-parents to the ARTICLE box — an opaque square-cornered plate behind
+//         the rounded card.
+//   CB2 — the bleed background arms TELEPORT to <body> (StoryHero.vue): a
+//         viewport-fixed field layer never rides inside the (transiently
+//         transformed) route subtree — immune to any future ancestor promotion.
+//   CB3 — `.grid-bg` paints NO opaque `background-color`: the grid is a
+//         translucent TEXTURE over the ONE shell warm field, not a second opaque
+//         page background (the two-backgrounds collision).
+//   CB4 — the corner-backplate discipline: the boxed `.story-hero-bg` layer
+//         carries `border-radius: inherit` (follows the host's rendered corner
+//         even un-clipped), the `--bleed` arm resets `border-radius: 0`, and the
+//         `.story-hero` host keeps its `overflow: hidden` + radius clip.
+export function cornerBackplateViolations(transitions, heroCss, heroSfc) {
+    const violations = [];
+    const facts = {};
+    const tSrc = stripCss(transitions);
+    const cSrc = stripCss(heroCss);
+
+    // CB1 — every `.route-enter` animation shorthand fills `backwards`.
+    const routeBlocks = [...tSrc.matchAll(/\.route-enter\s*\{([^{}]*)\}/g)].map(
+        (m) => m[1],
+    );
+    const animLines = routeBlocks
+        .flatMap((b) => [...b.matchAll(/animation\s*:\s*([^;]+);/g)])
+        .map((m) => m[1]);
+    facts.routeEnterAnimCount = animLines.length;
+    facts.routeEnterAllBackwards =
+        animLines.length > 0 &&
+        animLines.every(
+            (l) => /\bbackwards\b/.test(l) && !/\b(both|forwards)\b/.test(l),
+        );
+    if (!facts.routeEnterAllBackwards) {
+        violations.push(
+            "CB1 (route-root fill releases): a `.route-enter` animation shorthand fills `both`/`forwards` (or is missing `backwards`) — a filled transform on the route root is a PERMANENT fixed-position containing block that traps every fixed descendant to the article box (the white square-corner wedge class)",
+        );
+    }
+
+    // CB2 — the StoryHero bleed arms teleport to <body>.
+    facts.bleedTeleports =
+        /<Teleport\s+to="body"/.test(heroSfc) && /bgTeleported/.test(heroSfc);
+    if (!facts.bleedTeleports) {
+        violations.push(
+            "CB2 (bleed escapes the route subtree): StoryHero.vue does not mount its bleed background arms via `<Teleport to=\"body\">` — a viewport-fixed field layer inside the route subtree is one transformed ancestor away from the trapped square-cornered wash",
+        );
+    }
+
+    // CB3 — `.grid-bg` carries no opaque background-color plate.
+    const gridBlock = /\.grid-bg\s*\{([^{}]*)\}/.exec(cSrc)?.[1] ?? "";
+    facts.gridBgFound = gridBlock.length > 0;
+    facts.gridBgNoOpaqueBase = facts.gridBgFound && !/background-color\s*:/.test(gridBlock);
+    if (!facts.gridBgNoOpaqueBase) {
+        violations.push(
+            "CB3 (the wash is a texture): `.grid-bg` declares a `background-color` — an opaque base on the full-bleed wash is a SECOND page background that whites-out the shell warm field (and, trapped, painted the square plate behind the rounded card)",
+        );
+    }
+
+    // CB4 — the boxed backplate radius discipline + the host clip.
+    const bgBase = /\.story-hero-bg\s*\{([^{}]*)\}/.exec(cSrc)?.[1] ?? "";
+    const bgBleed = /\.story-hero-bg--bleed\s*\{([^{}]*)\}/.exec(cSrc)?.[1] ?? "";
+    const heroHost = /\.story-hero\s*\{([^{}]*)\}/.exec(cSrc)?.[1] ?? "";
+    facts.boxedRadiusInherit = /border-radius\s*:\s*inherit/.test(bgBase);
+    facts.bleedRadiusReset = /border-radius\s*:\s*0/.test(bgBleed);
+    facts.hostClips =
+        /overflow\s*:\s*hidden/.test(heroHost) && /border-radius\s*:/.test(heroHost);
+    if (!facts.boxedRadiusInherit) {
+        violations.push(
+            "CB4 (corner-backplate discipline): `.story-hero-bg` does not carry `border-radius: inherit` — a boxed backplate under a rounded host must follow the host's rendered corner",
+        );
+    }
+    if (!facts.bleedRadiusReset) {
+        violations.push(
+            "CB4 (bleed radius reset): `.story-hero-bg--bleed` does not reset `border-radius: 0` — a viewport layer has no host corner to follow",
+        );
+    }
+    if (!facts.hostClips) {
+        violations.push(
+            "CB4 (host clip): `.story-hero` no longer clips with a radius (`overflow: hidden` + `border-radius`) — the boxed backplate's belt is gone",
+        );
+    }
+
+    return { violations, facts };
+}
+
 export function detect() {
     const decide = decideViolations(readFile(GLASS_DEEP_FILE));
     const glassMonolith = readMonolith(ROOT, "glass");
@@ -773,6 +871,11 @@ export function detect() {
         readFile(LIGHT_DARK_FILE),
         readFile(GLASS_SURFACES_FILE),
     );
+    const cornerBackplate = cornerBackplateViolations(
+        readFile(TRANSITIONS_FILE),
+        readFile(STORY_HERO_CSS_FILE),
+        readFile(STORY_HERO_SFC_FILE),
+    );
     // the self-test bites run EVERY run (the "proven every run" discipline) — a
     // bite that loses its teeth REDs the gate, so the anti-gameability arm can
     // never silently rot.
@@ -785,6 +888,7 @@ export function detect() {
             ...defined.violations,
             ...dynamics.violations,
             ...reversal.violations,
+            ...cornerBackplate.violations,
             ...biteFails,
         ],
         facts: {
@@ -794,6 +898,7 @@ export function detect() {
             definedControlFloor: defined.facts,
             glassDynamics: dynamics.facts,
             darkArmColorReversal: reversal.facts,
+            cornerBackplate: cornerBackplate.facts,
             selfTestOk: biteFails.length === 0,
         },
     };
@@ -1103,6 +1208,65 @@ function selfTest() {
         );
     }
 
+    // ── corner-backplate bites (BG.W-CORNER-ALIAS-KILL) ─────────────────────
+    const goodTransitions =
+        ".route-enter { animation: gl-route-enter 0.34s linear backwards; }";
+    const goodHeroCss =
+        ".story-hero { position: relative; overflow: hidden; border-radius: var(--radius-card); } " +
+        ".story-hero-bg { position: absolute; inset: 0; border-radius: inherit; } " +
+        ".story-hero-bg--bleed { position: fixed; inset: 0; border-radius: 0; } " +
+        ".grid-bg { background-image: repeating-linear-gradient(to right, red 0 1px, transparent 1px 5rem); }";
+    const goodHeroSfc = '<Teleport to="body" :disabled="!bgTeleported">…</Teleport>';
+    // bite CB1 — a `both`-filled route-enter (the permanent containing-block trap) must flag.
+    if (
+        !cornerBackplateViolations(
+            ".route-enter { animation: gl-route-enter 0.34s linear both; }",
+            goodHeroCss,
+            goodHeroSfc,
+        ).violations.some((v) => /CB1/.test(v))
+    ) {
+        fails.push(
+            "self-test CB1: a `both`-filled .route-enter was NOT flagged (the containing-block-trap detector has no teeth)",
+        );
+    }
+    // bite CB2 — a StoryHero with NO body-teleport for the bleed arms must flag.
+    if (
+        !cornerBackplateViolations(goodTransitions, goodHeroCss, "<Aurora class=\"story-hero-bg--bleed\" />").violations.some(
+            (v) => /CB2/.test(v),
+        )
+    ) {
+        fails.push(
+            "self-test CB2: a StoryHero without the <Teleport to=\"body\"> bleed escape was NOT flagged",
+        );
+    }
+    // bite CB3 — an opaque background-color re-added to .grid-bg must flag.
+    if (
+        !cornerBackplateViolations(
+            goodTransitions,
+            goodHeroCss.replace(
+                ".grid-bg { ",
+                ".grid-bg { background-color: var(--background); ",
+            ),
+            goodHeroSfc,
+        ).violations.some((v) => /CB3/.test(v))
+    ) {
+        fails.push(
+            "self-test CB3: an opaque `.grid-bg` background-color was NOT flagged (the second-page-background detector has no teeth)",
+        );
+    }
+    // bite CB4 — the boxed backplate radius-inherit stripped must flag.
+    if (
+        !cornerBackplateViolations(
+            goodTransitions,
+            goodHeroCss.replace("border-radius: inherit; ", ""),
+            goodHeroSfc,
+        ).violations.some((v) => /CB4/.test(v))
+    ) {
+        fails.push(
+            "self-test CB4: a `.story-hero-bg` without `border-radius: inherit` was NOT flagged (the corner-backplate discipline has no teeth)",
+        );
+    }
+
     return fails;
 }
 
@@ -1207,6 +1371,20 @@ function run() {
     );
     console.log(
         `  DA4 shadows→.dark : surfaces.css ".dark … box-shadow"=${da.surfacesShadowArm ? "✓" : "✗"} (the positive example survives)`,
+    );
+    const cb = facts.cornerBackplate ?? {};
+    console.log("proof:glass — arm: corner-backplate (BG.W-CORNER-ALIAS-KILL)");
+    console.log(
+        `  CB1 fill releases : route-enter backwards=${cb.routeEnterAllBackwards ? "✓" : "✗"} (${cb.routeEnterAnimCount ?? 0} anim lines — no permanent fixed-containing-block)`,
+    );
+    console.log(
+        `  CB2 bleed escapes : teleport-to-body=${cb.bleedTeleports ? "✓" : "✗"} (the viewport wash never rides the route subtree)`,
+    );
+    console.log(
+        `  CB3 wash=texture  : grid-bg-no-opaque-base=${cb.gridBgNoOpaqueBase ? "✓" : "✗"} (one page background — the shell field)`,
+    );
+    console.log(
+        `  CB4 backplate     : boxed-radius-inherit=${cb.boxedRadiusInherit ? "✓" : "✗"}  bleed-radius-0=${cb.bleedRadiusReset ? "✓" : "✗"}  host-clips=${cb.hostClips ? "✓" : "✗"}`,
     );
     console.log(`  self-test bites   : ${facts.selfTestOk ? "all teeth ✓" : "✗ BROKE"}`);
 
