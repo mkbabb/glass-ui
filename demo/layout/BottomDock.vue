@@ -13,7 +13,6 @@
 // RouterLink carries aria-current="page". Dogfoods the dock + glass atoms +
 // iOS-26 across the 3 viewports.
 import { computed, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
 import {
     ArrowLeftRight,
     ChevronLeft,
@@ -29,7 +28,6 @@ import {
     DockTabButton,
     GlassDock,
     type DockSectionDescriptor,
-    type DockStackItem,
 } from "@glass/components/custom/dock";
 import {
     Sheet,
@@ -48,7 +46,7 @@ import {
 import { FadingScroll } from "@glass/components/custom/fading-scroll";
 import SidebarDock from "./SidebarDock.vue";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
-import { useContextualDockLayers } from "../composables/useContextualDockLayers";
+import { useShellNavDock } from "../shell/useShellNavDock";
 
 const { current, next, prev, nextCategory, prevCategory, goTo } =
     useStoryNavigation();
@@ -73,33 +71,16 @@ function goToStory(storyId: string): void {
     if (loc) goTo(loc.category.id, storyId);
 }
 
-// AZ.W-RAIL3 — the FLOATING CAROUSEL rail. The third-rail redirect (USER-AUDIT R6):
-// the contextual facets MOVE OUT of the dock body (the in-dock <DockLayerGroup>
-// inflated the horizontal dock to ~3 rows — R6-1) and re-home as the rail's content:
-// a floating cyclable strip of detached glass chips on the visible hairline OUTSIDE
-// the dock box. The dock body returns to a single ~52px row. The route→facet RESOLVER
-// (`useContextualDockLayers`) is KEPT — only its RENDER TARGET moves (the in-dock
-// layer group → the rail strip), the SAME redirect the SidebarDock carries.
-const route = useRoute();
-const router = useRouter();
-const { layers: contextLayers } = useContextualDockLayers(route);
-
-// The chips ARE the route facets (Motion → Engines/Text FX/Entrance, …). The strip
-// renders only when the section carries >1 facet (a single-facet section shows the
-// bare arrow controls). The chip click navigates to that facet's first story — the
-// SAME router navigation the prev/next arrows drive (one registry).
-const railItems = computed<DockStackItem[]>(() =>
-    contextLayers.value.length > 1
-        ? contextLayers.value.map((l) => ({
-              id: l.id,
-              label: l.label,
-              icon: typeof l.icon === "string" ? undefined : l.icon,
-              // W-NAV-DOCK-FIX — the per-facet context hue (the mode="facets" carousel's
-              // --glass-accent rim; a --section-color-N library identity).
-              accent: l.accent,
-          }))
-        : [],
-);
+// BG.W-SHELL-DOCK-DRY — the shared facet-rail loop + the morph-button wiring are
+// factored ONCE into `useShellNavDock` (the SidebarDock + BottomDock were byte-
+// duplicating the route→facet resolver wire, the railItems map, the SHELL-HOLD
+// railContext writable computed, the arrow-roving keydown, and the morph-event
+// dispatch). The composable stays ⟂ to the desktop↔mobile responsive SWAP (a pure
+// `dock-nav.css` media query — a SEPARATE axis from the user-driven V↔H morph, it must
+// not fight the 768px breakpoint). The BottomDock is the persistent bar, so it passes
+// no `onNavigate` (a facet click just changes route); the in-category story-nav loop +
+// the dock's own `sections` descriptors stay LOCAL.
+const { railItems, railContext, onFacetKeydown, openDockMorph } = useShellNavDock();
 
 // BA.W-DOCK-SECTIONS — the declarative tripartite descriptor. The deleted section
 // model returns WITHOUT inflation: <DockSection> GROUPS the EXISTING in-flow controls —
@@ -112,38 +93,6 @@ const sections = computed<DockSectionDescriptor[]>(() => [
     { kind: "section", id: "story-nav", label: "Story navigation", layers: railItems.value },
     { kind: "nav", id: "category-jump", label: "Category navigation" },
 ]);
-const activeStoryId = computed<string | undefined>(
-    () => route.meta.storyId as string | undefined,
-);
-const railContext = computed<string | undefined>({
-    get: () => {
-        const here = contextLayers.value.find((l) =>
-            l.entries.some((e) => e.storyId === activeStoryId.value),
-        );
-        return (here ?? contextLayers.value[0])?.id;
-    },
-    set: (id) => {
-        // BA.W-SHELL-HOLD (FD-FS-4) — the page must HOLD. The `set` navigates ONLY on
-        // a genuine user chip activation, NEVER from a non-interactive v-model echo of
-        // the `get` fallback. The equality short-circuit IS the user-activation
-        // discriminator: a real chip click on a facet writes an id DIFFERENT from the
-        // one `get` already resolved (so it falls through and navigates), while any
-        // echo re-writes the value `get` just returned (id === railContext.value →
-        // short-circuit, no `router.push`). A chip click on the already-active facet
-        // is a legitimate no-op (you are already there) — the only suppressed real
-        // click, and it would navigate to the page you are on.
-        if (id === undefined || id === railContext.value) {
-            return;
-        }
-        const facet = contextLayers.value.find((l) => l.id === id);
-        const first = facet?.entries[0];
-        const categoryId = route.meta.categoryId as string | undefined;
-        if (first && categoryId) {
-            void router.push(`/${categoryId}/${first.storyId}`);
-        }
-    },
-});
-
 const sheetOpen = ref(false);
 
 const loc = computed(() => current.value);
@@ -159,31 +108,6 @@ const hasNext = computed(() =>
         : false,
 );
 
-// BA.W-DOCK-MORPH-INSITU — the in-situ V↔H orientation-morph control. It opens the
-// shell's focused morph stage (AppShell hosts the state + the useDockOrientationMorph
-// driver — the shell is the AZ driver's binary consumer #2). It dispatches the SAME
-// `glass-ui-demo:toggle-dock-morph` window event the SidebarDock control fires — ONE
-// event path, no parallel open machinery, no second morph engine.
-function openDockMorph(): void {
-    window.dispatchEvent(new CustomEvent("glass-ui-demo:toggle-dock-morph"));
-}
-
-// W-NAV-DOCK-FIX F8 — arrow-key roving across the facet tablist (the a11y contract; the
-// active chip is the only tab-stop, arrows move + activate). The horizontal rail roves on
-// Left/Right; Home/End jump to the ends. Activating writes `railContext` (the ONE registry).
-function onFacetKeydown(e: KeyboardEvent, index: number): void {
-    const items = railItems.value;
-    if (items.length === 0) return;
-    let next = -1;
-    if (e.key === "ArrowRight" || e.key === "ArrowDown") next = (index + 1) % items.length;
-    else if (e.key === "ArrowLeft" || e.key === "ArrowUp")
-        next = (index - 1 + items.length) % items.length;
-    else if (e.key === "Home") next = 0;
-    else if (e.key === "End") next = items.length - 1;
-    else return;
-    e.preventDefault();
-    railContext.value = items[next]?.id;
-}
 </script>
 
 <template>

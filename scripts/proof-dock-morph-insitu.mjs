@@ -61,6 +61,10 @@ const COMMAND = "npm run proof:dock-morph-insitu";
 const APPSHELL = "demo/layout/AppShell.vue";
 const SIDEBAR = "demo/layout/SidebarDock.vue";
 const BOTTOM = "demo/layout/BottomDock.vue";
+// BG.W-SHELL-DOCK-DRY — the shared facet-rail loop (the useContextualDockLayers wire)
+// + the morph-button wiring (the toggle-dock-morph dispatch) were factored out of both
+// shell SFCs into this composable; M1/M3 FOLLOW the carve into it.
+const SHELL = "demo/shell/useShellNavDock.ts";
 const MORPH_CTX = "src/components/custom/dock/composables/dockMorphContext.ts";
 // BB.W-CARVE4 — the measure helpers (nestedTargetsWithin/forceNestedMaxContent/
 // measureTo + the outerEl.contains nested-ordering) carved into this sibling leaf;
@@ -163,6 +167,11 @@ export function detect() {
     const appShell = stripComments(read(APPSHELL));
     const sidebar = stripComments(read(SIDEBAR));
     const bottom = stripComments(read(BOTTOM));
+    // BG.W-SHELL-DOCK-DRY — the carved leaf both shell docks now consume for the shared
+    // facet-rail loop + the morph-button dispatch (M1/M3 follow the composition into it).
+    const shell = stripComments(read(SHELL));
+    const shellDispatchesMorph = /toggle-dock-morph/.test(shell);
+    const shellWiresResolver = /useContextualDockLayers/.test(shell);
     // BB.W-CARVE4 — read the orchestrator + the carved measure leaf together so the
     // M5 nested-ordering asserts FOLLOW the composition into the leaf (the rAF-block
     // `const nested = nestedTargetsWithin` wiring stays in dockMorphContext.ts; the
@@ -184,9 +193,18 @@ export function detect() {
         "M1 — the shell morph handler reaches the driver's toggle/morphTo/pin (not a shadow engine)",
         reachesDriverApi,
     );
-    // The shell docks carry the morph control that opens the demonstration.
-    const sidebarControl = /toggle-dock-morph/.test(sidebar) && /ArrowLeftRight/.test(sidebar);
-    const bottomControl = /toggle-dock-morph/.test(bottom) && /ArrowLeftRight/.test(bottom);
+    // The shell docks carry the morph control that opens the demonstration — an
+    // ArrowLeftRight button whose handler dispatches the toggle-dock-morph event. The
+    // dispatch may live INLINE in the SFC OR (BG.W-SHELL-DOCK-DRY) in the `openDockMorph`
+    // the SFC destructures from `useShellNavDock` (follow-the-carve).
+    const morphControl = (code) =>
+        /ArrowLeftRight/.test(code) &&
+        (/toggle-dock-morph/.test(code) ||
+            (/useShellNavDock\b/.test(code) &&
+                /\bopenDockMorph\b/.test(code) &&
+                shellDispatchesMorph));
+    const sidebarControl = morphControl(sidebar);
+    const bottomControl = morphControl(bottom);
     assert("M1 — the SidebarDock carries the in-situ morph control", sidebarControl);
     assert("M1 — the BottomDock carries the in-situ morph control", bottomControl);
     // No SECOND morph clock minted on the shell morph path — the only morph engine on
@@ -232,12 +250,19 @@ export function detect() {
     // retirement: it requires the LIVE `DockStack` rail surface, not the retired
     // `DockRail` (a stale `DockRail` requirement here would force the retired component
     // back into the shell, contradicting the BC clean break).
+    // BG.W-SHELL-DOCK-DRY — the resolver wire + railItems map were factored into
+    // `useShellNavDock`; FOLLOW the carve. The SFC reaches the resolver directly OR via
+    // the composable it consumes; it still binds `railContext` + renders the rail surface
+    // (the `<DockSection :sections>` grouping / the `demo-facet-rail` tablist).
     function shellLayering(code) {
+        const reachesResolver =
+            /useContextualDockLayers\s*\(/.test(code) ||
+            (/useShellNavDock\b/.test(code) && shellWiresResolver);
         return (
-            /useContextualDockLayers\s*\(/.test(code) &&
+            reachesResolver &&
             /railContext/.test(code) &&
             /DockSection/.test(code) &&
-            /DockStack/.test(code)
+            (/DockStack/.test(code) || /demo-facet-rail/.test(code))
         );
     }
     assert("M3 — the SidebarDock exercises the in-situ layering/contextual switch", shellLayering(sidebar));

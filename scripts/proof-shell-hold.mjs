@@ -64,6 +64,8 @@ function cliPaths() {
         ROOT,
         SIDEBAR: resolve(ROOT, "demo/layout/SidebarDock.vue"),
         BOTTOM: resolve(ROOT, "demo/layout/BottomDock.vue"),
+        // BG.W-SHELL-DOCK-DRY — the carved leaf holding the shared railContext guard.
+        SHELL: resolve(ROOT, "demo/shell/useShellNavDock.ts"),
         ARTIFACT: gateArtifactPath("GLASS_UI_SHELL_HOLD_ARTIFACT", "BA-shell-hold"),
     };
     return _cliPaths;
@@ -241,8 +243,29 @@ export function detectGuardOnFile(file) {
 export function detectShellHold(fs) {
     const violations = [];
     const facts = {};
-    const sidebar = detectGuardOnFile({ name: "SidebarDock.vue", text: fs.sidebarText });
-    const bottom = detectGuardOnFile({ name: "BottomDock.vue", text: fs.bottomText });
+    // BG.W-SHELL-DOCK-DRY — the railContext `set` guard was factored into the shared
+    // `useShellNavDock` composable. FOLLOW the carve: when a shell dock has NO inline
+    // `set` arm but consumes `useShellNavDock`, the guard SITE is the composable — the
+    // guard lives ONCE, both docks inherit it. The legacy in-SFC `set` path stays checked
+    // directly (any future in-dock consumer). This mirrors the "asserts follow the
+    // composition into the carved leaf" precedent.
+    const guardFor = (name, text) => {
+        const sfcStripped = stripComments(text ?? "", "vue");
+        const sfcHasSetArm = extractSetBody(sfcStripped).length > 0;
+        const consumesShell = /useShellNavDock\b/.test(sfcStripped);
+        if (!sfcHasSetArm && consumesShell && typeof fs.shellText === "string") {
+            const res = detectGuardOnFile({
+                name: `${name} → useShellNavDock.ts`,
+                text: fs.shellText,
+            });
+            res.facts.guardSite = "useShellNavDock.ts";
+            res.facts.consumesShell = true;
+            return res;
+        }
+        return detectGuardOnFile({ name, text });
+    };
+    const sidebar = guardFor("SidebarDock.vue", fs.sidebarText);
+    const bottom = guardFor("BottomDock.vue", fs.bottomText);
     facts.sidebar = sidebar.facts;
     facts.bottom = bottom.facts;
     violations.push(...sidebar.violations, ...bottom.violations);
@@ -255,6 +278,7 @@ function loadFs() {
     return {
         sidebarText: read(P.SIDEBAR),
         bottomText: read(P.BOTTOM),
+        shellText: read(P.SHELL),
     };
 }
 

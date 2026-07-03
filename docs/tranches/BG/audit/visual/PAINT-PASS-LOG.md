@@ -360,3 +360,72 @@ PRESERVE: the cured warm identity (36/36 warm both engines both modes); the devi
 Captures:
 - DELTA: `docs/tranches/BG/audit/visual/BG.W-COMPOSITED-GESTALT-GATE-DELTA.md`
 - 56 PNGs + probes: `docs/tranches/BG/audit/visual/BG.W-COMPOSITED-GESTALT-GATE-paint/{route}-{chrome,safari}-{light,dark}-desktop-full.png` (+ `_inspect-*` crops · `analysis.json` · `chrome-results.json`)
+
+---
+
+## 2026-07-02 — WS2 dock batch + F8.2 re-judge #2 (rows 4.5 / 4.7 / F8.2)
+
+allPass: **false** — 2 PASS, 1 FAIL. The two WS2 dock waves paint clean and flip to DONE; the composited-gestalt gate holds at PAINT-PENDING (warmth CURED, but the operative roster kernel still trips on probe-geometry residuals a paint-judge may not recalibrate).
+
+| Wave | Row | Verdict | Cursor |
+|------|-----|---------|--------|
+| BG.W-DOCK-FISSION-WIRE | 4.5 | PASS | DONE (`a54a2c93`) |
+| BG.W-DOCK-CAP-SCROLL-FADE | 4.7 | PASS | DONE (`6ce764ff`) |
+| BG.W-COMPOSITED-GESTALT-GATE | F8.2 | FAIL | PAINT-PENDING (held) |
+
+Provenance across the batch: Chrome = headed Chrome.app 149 via CDP on `ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Max)` (real Metal, not SwiftShader); WebKit = repo-local off-screen `wkshot` WKWebView / `Apple GPU` (no `Version/` token — load-bearing C-SAFARI). Engine + GPU decoded IN-PIXEL from the magenta badge per leg. All captures over BUILT bytes on `:5200` (vite preview of the demo dist, not the `:5199` dev server). `verify-siblings-intact` exit 0 before + after; no `/tmp` park/stash; only the DELTAs + PNGs + this log edited.
+
+---
+
+### PASSED -> DONE
+
+#### 4.5 — BG.W-DOCK-FISSION-WIRE (cursor flip + DELTA + 14 PNGs `a54a2c93`)
+
+The fission-bloom reads correct across both routes, both engines, both modes, over BUILT `:5200`. 14 PNGs (2880×1800) resolve on disk.
+
+- REST = ONE crisp `.glass-floating` pill, goo OFF: computed `.dock-fission-bridge` `filter:none`, `data-fissioning` absent, `--dock-split-t:0`.
+- ISLAND split (liquid-playground, island mode + reka-slider scrub) driven to `--dock-split-t=0.62` FISSIONS the pill into two goo-necked islands — "Timer / Laundry 8:24" + "Now Playing / Shiro Sagisu" — bridge `filter:url("#dock-fission-goo")`, 2 blob pieces, correct in BOTH modes.
+- W1 fade-floor LIVE-confirmed: facet carousel fanned, `--dock-facet-tier-opacity` min **0.20** / max 1.0 across 16 chips (receding φ-tier facets legible, NOT 0), 8 distinct `--glass-accent` hues, fan rides the `#rail` gutter box-INVIOLATE.
+- dock-gallery Dynamic-Island Call tile + AppSwitcher reference the ONE `#dock-fission-goo` (2 bridges / 5 pieces; Call-tile bridge `filter:url("#dock-fission-goo")`). Gate `proof:dock-fission` GREEN corroborated live (source `fadeMinAlpha=0.2` == painted 0.20).
+- Gestalt guardrails PASS: `[data-glass-field]` warm stage a smooth warm gradient (no conic banding, no aurora artifact), grain calm, hero titles fit envelope, dark = luminous transmissive material. Non-defect note (demo-scoped): the field's strong warm-orange saturation is the demo's deliberate "field warms toward the album color" backdrop, orthogonal to `useDockFission` + `fission-bridge.css`.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-DOCK-FISSION-WIRE-DELTA.md`
+- 14 PNGs: `docs/tranches/BG/audit/visual/BG.W-DOCK-FISSION-WIRE-paint/{chrome,safari}-{dock-gallery,liquid-playground}-{light,dark}.png` + `chrome-{island-split,facet-fan,gallery-call-fission}-{light,dark}.png`
+
+#### 4.7 — BG.W-DOCK-CAP-SCROLL-FADE (cursor flip + DELTA + 13 assets `6ce764ff`)
+
+Dual-engine PASS — Chrome 149 (Apple M5 Max Metal via headed CDP) + Safari/WebKit (native WKWebView + Playwright WebKit 26.4) over BUILT dist-demo on `:5200`, both routes (`/dock/overview`, `/dock/layers`), both modes. All 8 provenance-badged capture PNGs resolve on disk (2880×1800; badges decoded CHROME/Apple M5 Max Metal + WEBKIT/Apple GPU).
+
+- Criterion 1 (FadingScroll feather at BOTH scroll ports): the feather is animation-driven (`@keyframes gl-fade-start-in`/`-out` on `scroll(self inline|block)` timelines interpolating registered `@property --fade-start`/`--fade-end`). The C18 harness sets `animation:none !important`, which structurally freezes the fade at 0px in the capture PNGs — an intrinsic capture-mode/animation conflict, NOT a defect (the mask SEAM is present; only the width-driver is off). Verified LIVE (non-capture, both engines, both modes): H-port `demo-bottom-dock__tabs` (scrollW 1289 > clientW 629) reads start SHARP 0px / end FEATHER 16px at rest and both 16px mid-scroll with 2 active ScrollTimeline animations; WebKit resolves `linear-gradient(to right, transparent 0px, black 16px, black calc(100%-16px), transparent 100%)`. V-port sidebar-dock (short-viewport overflow scrollH 710 > clientH 445) feathers both top+bottom 16px. Pixel-confirmed soft edges Chrome + WebKit.
+- Criterion 2 (no clip lozenge): hovered dock-icon-button (scale 1.1) reads as a clean fully-rounded pill with clearance on all sides (`plate-hover-light.png`), NOT a flat-topped lozenge; content-box + `--dock-control-safe-inset` 4px keeps the painted plate inside the row against the `overflow-x` scroll-port clip.
+- Criterion 3 (plate clears track cell): cell 40px, padding 4px, `background-clip: content-box` → 32px plate inside the 40px hit-cell (WCAG hit-box preserved); zero slicing across all 8 captures.
+- Generic gestalt: recessive warm aurora (no conic banding / no oversaturation), warm-brown transmissive dark glass (W-DARK-MATERIAL), calm grain, hero fits envelope, `mainChildren 3`, `glContextCount 2` (overview) / 1 (layers). Gate `proof:dock-plate-clearance` GREEN.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-DOCK-CAP-SCROLL-FADE-DELTA.md`
+- 13 assets: `docs/tranches/BG/audit/visual/BG.W-DOCK-CAP-SCROLL-FADE-assets/{chrome,safari}-dock-{overview,layers}-{light,dark}.png` + `live-fade-*` / `webkit-*fade-*` / `plate-hover-light.png`
+
+---
+
+### FAILED -> PAINT-PENDING (held at row F8.2)
+
+#### F8.2 — BG.W-COMPOSITED-GESTALT-GATE re-judge #2 (no cursor flip, no commit — held at PAINT-PENDING)
+
+Second non-authoring dual-engine re-judge over BUILT `:5200` bytes at HEAD `6ce764ff` (3 dock waves past the prior re-judge). VERDICT: **FAIL** — held PAINT-PENDING (cursor row F8.2 unchanged; the FAIL path). 56 fresh PNGs (14 wave routes × chrome+safari × light+dark) all 2880×1800, all `isRealPng`, all resolve on disk; in-pixel badge decoded (Chrome ANGLE Metal Apple M5 Max on all 28; WebKit Apple GPU off-screen). Computed-DOM sanity `main.children.length=3` on all 28 chrome routes (shell rendered, not blank), `glContextCount` 0–3 per route, non-empty body text everywhere.
+
+The WARMTH DISEASE STAYS CURED on a moved HEAD. On the stated warmth pass condition (chroma-weighted warm-fraction band, dominant-hue family, not gray/cerulean/magenta) the set is **36/36 PASS** both engines both modes — `warmFraction ≥ 0.907`, chroma in-band, zero cold/magenta/gray/metallic. The 4.2.0 class-A disease (cerulean/lavender heroes, near-black void, gray→metallic field) is GONE; the paint-fix `5eb1933d` holds at current HEAD (recessive warm-amber aurora, no conic banding, no oversaturation, pixel-viewed both modes).
+
+WHY FAIL: the full operative `warmIdentityVerdict` kernel (bundling the anti-artifact topBar/edgeCast delta predicates + the roster's topDelta expect-band) reads **27/36** — byte-identical to the prior re-judge, re-confirmed on the moved HEAD. The operative all-FAIL→all-PASS roster flip is NOT achieved. The 9 residuals are ALL pixel-verified PROBE-GEOMETRY artifacts (cropped the exact probe boxes), NOT paint/warmth defects — so NO src/demo/style paint change is owed:
+- topBar ×7 (dock chrome-L .203 / chrome-D .471 / safari-D .396; page-band .224 / .339 / .166 / .287): the roster topbar box (tx=0.52, ty=0.00, th=0.05) samples the plain page-TOP MARGIN (white light / near-black dark) — a pure L divergence from the field, no aberrant colored/metallic slab. It PERSISTED after `BG.W-DOCK-PERSISTENT-CUT` removed the ℱ brand + Fourier egg, proving it is the page margin, not the removed chrome.
+- edgeCast ×2 (configurators-goo .172 + dark-register .179, chrome-LIGHT only; Safari + both-dark PASS the same probe): the field's left 0.02 edge column clips a black masthead heading glyph (the "b" of Blob / "M" of Material) over a warm field.
+
+mustFix (for a build/roster-agent — the paint-judge fence forbids the judge from performing it):
+1. ROSTER PROBE RECALIBRATION — re-point the topbar box into the field's own top band below the page margin (OR re-scope/relax the topDelta band with recorded rationale); inset the configurators-goo + dark-register field probes x right / y down off the masthead heading glyph. `bg-gestalt-roster.md`.
+2. Re-run the non-authoring dual-engine judge AFTER recalibration; expectation 36/36 kernel → operative all-PASS → cursor flip. NO src/demo paint change owed (composited warmth is already 36/36).
+
+PRESERVE: the cured warm identity (36/36 warm both engines both modes); the device-free `proof:warm-identity` kernel + roster wiring stay GREEN.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-COMPOSITED-GESTALT-GATE-DELTA.md`
+- 56 PNGs + probes: `docs/tranches/BG/audit/visual/BG.W-COMPOSITED-GESTALT-GATE-rejudge/{route}-{chrome,safari}-{light,dark}-desktop-full.png` (+ `_inspect-*` crops · `analysis.json` · `chrome-results.json`)

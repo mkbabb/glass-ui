@@ -62,6 +62,11 @@ function cliPaths() {
     _cliPaths = {
         ROOT,
         COMPOSABLE: resolve(ROOT, "demo/composables/useContextualDockLayers.ts"),
+        // BG.W-SHELL-DOCK-DRY — the shared facet-rail loop (the seam wire + the railItems
+        // map) was factored out of both shell SFCs into this composable; the W2 asserts
+        // FOLLOW the carve into it (the "asserts follow the composition into the carved
+        // leaf" precedent).
+        SHELL: resolve(ROOT, "demo/shell/useShellNavDock.ts"),
         MANIFEST: resolve(ROOT, "demo/stories/dock-layer-contexts.ts"),
         SIDEBAR: resolve(ROOT, "demo/layout/SidebarDock.vue"),
         BOTTOM: resolve(ROOT, "demo/layout/BottomDock.vue"),
@@ -176,6 +181,23 @@ export function detectContextual(fs) {
     }
 
     // ── W2 — the shell docks CONSUME it AND RENDER it ──
+    // BG.W-SHELL-DOCK-DRY — the shared facet-rail loop (the `useContextualDockLayers`
+    // wire + the `railItems = contextLayers.value.map(...)` map) was factored out of both
+    // shell SFCs into the `useShellNavDock` composable. The W2 asserts FOLLOW the carve
+    // into the leaf: a shell dock now CONSUMES the seam by importing `useShellNavDock`
+    // (which wires it) + RENDERS it by destructuring `railItems` from that composable.
+    // The legacy direct-in-SFC path stays accepted for any future in-dock consumer.
+    const shellSrc =
+        typeof fs.shellComposableText === "string"
+            ? stripComments(fs.shellComposableText, "code")
+            : "";
+    const shellWiresSeam = /useContextualDockLayers/.test(shellSrc);
+    const shellMapsRail = /railItems\b[\s\S]*?contextLayers(?:\.value)?\s*\.map\b/.test(
+        shellSrc,
+    );
+    facts.shellComposablePresent = shellSrc.length > 0;
+    facts.shellWiresSeam = shellWiresSeam;
+    facts.shellMapsRail = shellMapsRail;
     for (const [name, text, key] of [
         ["SidebarDock.vue", fs.sidebarText, "sidebar"],
         ["BottomDock.vue", fs.bottomText, "bottom"],
@@ -185,8 +207,10 @@ export function detectContextual(fs) {
             continue;
         }
         const live = stripComments(text, "vue");
-        // (a) imports/consumes the seam
-        const importsSeam = /useContextualDockLayers/.test(live);
+        // (a) imports/consumes the seam — directly OR (BG.W-SHELL-DOCK-DRY) via the
+        //     `useShellNavDock` composable that now wires it (follow-the-carve).
+        const consumesViaShell = /useShellNavDock\b/.test(live) && shellWiresSeam;
+        const importsSeam = /useContextualDockLayers/.test(live) || consumesViaShell;
         // (b) binds its return to a RENDERED contextual target driven by the layer
         //     set — NOT an import-only no-op decoy. AZ.W-RAIL3 MOVED the render target
         //     OUT of the dock body; BC.W-DOCK-STACK-RAIL then RETIRED the divider-carousel
@@ -215,7 +239,11 @@ export function detectContextual(fs) {
         // <DockStack>/the role="tablist" chips) AND a `<DockSection :sections>` grouping
         // carrying it. The anti-decoy intent holds: the contextLayers must reach a rendered
         // surface via the railItems descriptor (never an unbound import).
-        const seamMappedToRail = /railItems\b[\s\S]*?contextLayers(?:\.value)?\s*\.map\b/.test(live);
+        const seamMappedToRail =
+            /railItems\b[\s\S]*?contextLayers(?:\.value)?\s*\.map\b/.test(live) ||
+            // BG.W-SHELL-DOCK-DRY — the map now lives in `useShellNavDock`; the SFC
+            // destructures the mapped `railItems` off it (follow-the-carve).
+            (/useShellNavDock\b/.test(live) && shellMapsRail && /\brailItems\b/.test(live));
         const railItemsRendered =
             /v-for\s*=\s*["'][^"']*\bin\s+railItems\b/.test(live) ||
             (/<DockSection\b[\s\S]*?:sections\s*=/.test(live) && /layers:\s*railItems(?:\.value)?/.test(live));
@@ -228,7 +256,7 @@ export function detectContextual(fs) {
         facts[`${key}RendersContextual`] = rendersContextual;
         if (!importsSeam) {
             violations.push(
-                `W2: \`${name}\` does not consume \`useContextualDockLayers\` — the shell dock is still route-blind (the HEAD gap: no route context)`,
+                `W2: \`${name}\` does not consume \`useContextualDockLayers\` (directly or via the \`useShellNavDock\` composable) — the shell dock is still route-blind (the HEAD gap: no route context)`,
             );
         }
         if (!rendersContextual) {
@@ -246,6 +274,7 @@ function loadFs() {
     const readMaybe = (p) => (existsSync(p) ? readFileSync(p, "utf8") : undefined);
     return {
         composableText: readMaybe(P.COMPOSABLE),
+        shellComposableText: readMaybe(P.SHELL),
         manifestText: readMaybe(P.MANIFEST),
         sidebarText: readMaybe(P.SIDEBAR),
         bottomText: readMaybe(P.BOTTOM),

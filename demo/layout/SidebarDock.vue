@@ -14,14 +14,12 @@
 // from the bare `.is-active` colour shift onto the NCSU-red accent + a
 // left-edge accent rule + W25 `tap-squish` press feedback.
 import { computed } from "vue";
-import { useRoute, useRouter } from "vue-router";
 import {
     DockIconButton,
     DockSection,
     DockSeparator,
     GlassDock,
     type DockSectionDescriptor,
-    type DockStackItem,
 } from "@glass/components/custom/dock";
 import {
     Tooltip,
@@ -33,7 +31,7 @@ import { ArrowLeftRight, Settings2 } from "@lucide/vue";
 import { cn } from "@glass/utils/cn";
 import { CATEGORIES } from "../stories/manifest";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
-import { useContextualDockLayers } from "../composables/useContextualDockLayers";
+import { useShellNavDock } from "../shell/useShellNavDock";
 import { useConfiguratorOpen } from "../configurator/useConfiguratorOpen";
 
 const props = withDefaults(
@@ -88,33 +86,18 @@ function go(categoryId: string): void {
     emit("navigate");
 }
 
-// AZ.W-RAIL3 — the FLOATING CAROUSEL rail. The third-rail redirect (USER-AUDIT R6):
-// the contextual facets MOVE OUT of the dock body (where the in-dock <DockLayerGroup>
-// inflated the dock box ~2×) and re-home as the rail's content — a floating, cyclable
-// strip of detached glass chips on the visible hairline OUTSIDE the dock box. The dock
-// returns to its tight icon pill (the box is INVIOLATE). The route→facet RESOLVER
-// (`useContextualDockLayers`) is KEPT — the correct route-keyed seam — only its RENDER
-// TARGET moves (the in-dock layer group → the rail strip).
-const route = useRoute();
-const router = useRouter();
-const { layers: contextLayers } = useContextualDockLayers(route);
-
-// The chips ARE the route facets (Substrates → Fields/Creatures, Forms →
-// Text/Selection/Toggles, …). Each chip's id is the facet id; its label + glyph are
-// the facet descriptor. The strip renders only when the section carries >1 facet (a
-// single-facet or unmapped section shows the bare icon pill — no carousel clutter).
-const railItems = computed<DockStackItem[]>(() =>
-    contextLayers.value.length > 1
-        ? contextLayers.value.map((l) => ({
-              id: l.id,
-              label: l.label,
-              icon: typeof l.icon === "string" ? undefined : l.icon,
-              // W-NAV-DOCK-FIX — the per-facet context hue (the mode="facets" carousel's
-              // --glass-accent rim; a --section-color-N library identity).
-              accent: l.accent,
-          }))
-        : [],
-);
+// BG.W-SHELL-DOCK-DRY — the shared facet-rail loop + the morph-button wiring are
+// factored ONCE into `useShellNavDock` (the SidebarDock + BottomDock were byte-
+// duplicating the route→facet resolver wire, the railItems map, the SHELL-HOLD
+// railContext writable computed, the arrow-roving keydown, and the morph-event
+// dispatch). The composable stays ⟂ to the desktop↔mobile responsive SWAP (that is a
+// pure `dock-nav.css` media query, a SEPARATE axis from the user-driven V↔H morph — it
+// must not fight the 768px breakpoint). SidebarDock passes `onNavigate` so a facet
+// activation closes the mobile off-canvas Sheet host it reuses; the category-nav loop
+// (`go`) + the dock's own `sections` descriptors stay LOCAL.
+const { railItems, railContext, onFacetKeydown, openDockMorph } = useShellNavDock({
+    onNavigate: () => emit("navigate"),
+});
 
 // BA.W-DOCK-SECTIONS — the declarative tripartite descriptor. The deleted in-dock
 // section model returns WITHOUT inflation: <DockSection> GROUPS the EXISTING in-flow
@@ -132,43 +115,6 @@ const sections = computed<DockSectionDescriptor[]>(() => [
     { kind: "nav", id: "utility", label: "Utilities" },
 ]);
 
-// The active facet — the one whose entries contain the current story (so the carousel
-// highlight tracks where you are). Selecting a chip navigates to that facet's first
-// story. ONE registry: the rail writes the SAME navigation state the category nav does
-// (a writable computed over the router), no parallel store.
-const activeStoryId = computed<string | undefined>(
-    () => route.meta.storyId as string | undefined,
-);
-const railContext = computed<string | undefined>({
-    get: () => {
-        const here = contextLayers.value.find((l) =>
-            l.entries.some((e) => e.storyId === activeStoryId.value),
-        );
-        return (here ?? contextLayers.value[0])?.id;
-    },
-    set: (id) => {
-        // BA.W-SHELL-HOLD (FD-FS-4) — the page must HOLD. The `set` navigates ONLY on
-        // a genuine user chip activation, NEVER from a non-interactive v-model echo of
-        // the `get` fallback. The equality short-circuit IS the user-activation
-        // discriminator: a real chip click on a facet writes an id DIFFERENT from the
-        // one `get` already resolved (so it falls through and navigates), while any
-        // echo re-writes the value `get` just returned (id === railContext.value →
-        // short-circuit, no `router.push`). A chip click on the already-active facet
-        // is a legitimate no-op (you are already there) — the only suppressed real
-        // click, and it would navigate to the page you are on.
-        if (id === undefined || id === railContext.value) {
-            return;
-        }
-        const facet = contextLayers.value.find((l) => l.id === id);
-        const first = facet?.entries[0];
-        const categoryId = route.meta.categoryId as string | undefined;
-        if (first && categoryId) {
-            void router.push(`/${categoryId}/${first.storyId}`);
-            emit("navigate");
-        }
-    },
-});
-
 // AZ.W-SHELL-CONFIG — the gear-hosted demo configurator open control. The
 // floating FAB is GONE; the open is rehomed onto this trailing dock gear (the
 // dock-as-configurator-chrome idiom — GlassDock + DockIconButton). It dispatches
@@ -185,33 +131,6 @@ const { open: configOpen } = useConfiguratorOpen();
 
 function openConfigurator(): void {
     window.dispatchEvent(new CustomEvent("glass-ui-demo:toggle-configurator"));
-}
-
-// BA.W-DOCK-MORPH-INSITU — the in-situ V↔H orientation-morph control. It opens the
-// shell's focused morph stage (AppShell hosts the state + the useDockOrientationMorph
-// driver — the shell is the AZ driver's binary consumer #2). It dispatches the SAME
-// `glass-ui-demo:toggle-dock-morph` window event the BottomDock control fires — ONE
-// event path, no parallel open machinery, no second morph engine.
-function openDockMorph(): void {
-    window.dispatchEvent(new CustomEvent("glass-ui-demo:toggle-dock-morph"));
-}
-
-// W-NAV-DOCK-FIX F8 — arrow-key roving across the facet tablist (the a11y contract for
-// a `role="tablist"`; the active chip is the only tab-stop, arrows move + activate). The
-// vertical rail roves on Up/Down; Home/End jump to the ends. Activating a facet writes
-// `railContext` (the ONE registry — navigates to the facet's first story).
-function onFacetKeydown(e: KeyboardEvent, index: number): void {
-    const items = railItems.value;
-    if (items.length === 0) return;
-    let next = -1;
-    if (e.key === "ArrowDown" || e.key === "ArrowRight") next = (index + 1) % items.length;
-    else if (e.key === "ArrowUp" || e.key === "ArrowLeft")
-        next = (index - 1 + items.length) % items.length;
-    else if (e.key === "Home") next = 0;
-    else if (e.key === "End") next = items.length - 1;
-    else return;
-    e.preventDefault();
-    railContext.value = items[next]?.id;
 }
 </script>
 
