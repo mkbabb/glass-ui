@@ -429,3 +429,161 @@ PRESERVE: the cured warm identity (36/36 warm both engines both modes); the devi
 Captures:
 - DELTA: `docs/tranches/BG/audit/visual/BG.W-COMPOSITED-GESTALT-GATE-DELTA.md`
 - 56 PNGs + probes: `docs/tranches/BG/audit/visual/BG.W-COMPOSITED-GESTALT-GATE-rejudge/{route}-{chrome,safari}-{light,dark}-desktop-full.png` (+ `_inspect-*` crops · `analysis.json` · `chrome-results.json`)
+
+---
+
+## 2026-07-03 — F2 glass-definition re-paint + F3 dock + F9 viz/aurora batch + F8.2 close (rows F2.1 / 4.9 / 4.10 / 6.1 / 6.3 / 6.5 / W-AUR-METAL-FINISH / W-AUR-IMAGE-SOURCE / F8.2)
+
+allPass: **false** — 8 PASS, 1 FAIL. The two chronically-held FAILs from the prior batches both CLOSE this round: `BG.W-GLASS-DEFAULT-DEFINITION` (F2.1) flips PASS as the dead-knob fix REACHES PAINT, and `BG.W-COMPOSITED-GESTALT-GATE` (F8.2) closes PASS at HEAD via the dominant-hue-over-a-region kernel (16/16 all-warm). The single remaining FAIL is `BG.W-AUR-METAL-FINISH` — a bounded DEMO-SURFACING gap (the built metal medium uMedium 8/9 is un-reachable in the studio picker), held at PENDING for a build-fix-agent.
+
+| Wave | Row | Verdict | Cursor |
+|------|-----|---------|--------|
+| BG.W-GLASS-DEFAULT-DEFINITION | F2.1 | PASS | DONE (`f42b45ab`) |
+| BG.W-SHELL-DOCK-DRY | 4.9 | PASS | DONE (`7ef0cef4`) |
+| BG.W-DOCK-INPLACE-MORPH | 4.10 | PASS | DONE (`5ebcf652`) |
+| BG.W-VIZ-RESIZE-ADOPT | 6.1 | PASS | DONE (`e7fe1bca`) |
+| BG.W-VIZ-DEMIGRATE | 6.3 | PASS | DONE (`413db370`) |
+| BG.W-VIZ-PREVIEW-LIVE | 6.5 | PASS | DONE (`5e0a040c`) |
+| BG.W-AUR-METAL-FINISH | W-AUR-METAL-FINISH | FAIL | PENDING (held) |
+| BG.W-AUR-IMAGE-SOURCE | W-AUR-IMAGE-SOURCE | PASS | DONE (`1b2bdd84`) |
+| BG.W-COMPOSITED-GESTALT-GATE | F8.2 | PASS | DONE (`7db2abb4`) |
+
+Provenance across the batch: Chrome = CDP on `ANGLE Metal Renderer: Apple M5 Max` (real Metal, not SwiftShader); WebKit/Safari = off-screen WKWebView on system `WebKit.framework` / `Apple GPU` (no `Version/` token -> load-bearing C-SAFARI Tier-1). Engine + GPU + MODE decoded IN-PIXEL from the magenta badge per leg, not taken on the capturer's word. All captures over BUILT bytes on `:5200` (vite preview of the demo dist, NOT the `:5199` dev server) via the C18 `?capture=` harness. `verify-siblings-intact.mjs --quiet` exits 0 before AND after this synthesis; no `/tmp/sibling-park|stash`; servers + throwaway Chrome torn down by each paint agent; operated only under glass-ui.
+
+Cursor state confirmed at synthesis: all 8 PASS rows already read DONE (the paint agents flipped them in-run at the listed commits); `W-AUR-METAL-FINISH` remains PENDING (commit `7689623a`). No cursor edit owed by synthesis. Note: the §1 frontier planning row for F8.2 (line 150) intentionally stays PENDING — it is a distinct roster-recalibration/gate-family concern owned by F8.1, outside the PAINT-PENDING->DONE mandate; the operative §2-ledger row (line 225) reads DONE with the PAINT PASS recorded.
+
+---
+
+### PASSED -> DONE
+
+#### F2.1 — BG.W-GLASS-DEFAULT-DEFINITION (cursor flip + DELTA overwrite `f42b45ab`)
+
+The chronic FAIL is CLOSED — the dead-knob fix (commit `baebe05a`) LANDED and REACHES PAINT, the exact inversion of the prior 2026-07-02 FAIL DELTA (the substitution-vs-inheritance trap that painted the defined edge/floor transparent). Dual-engine (Chrome CDP + Safari WKWebView) over BUILT `:5200`, both routes [/display/buttons · /substrates/glass-material], both modes.
+
+- DEFINED-TIER positive arm (/display/buttons, `.btn-glass` cohort, 25 el): Chrome `getComputedStyle` shows `--glass-definition=1` with `--glass-floor-fill` re-resolving `color-mix(in srgb, #fdf5ec calc(1 * 15%), transparent)` (`floorScalarIsZero=false`, both modes) — the warm-cream floor paints as the real second background-image gradient layer (srgb .992 .961 .925 / 0.15 light; .208 .165 .133 / 0.15 dark), warm rim α 0.14. Pixel floor delta pill-vs-flat-page: Chrome light −3.9..−4.2 L, Safari light −8.3..−8.4 L, Chrome dark +24..+44 L — direction consistent (deeper cream over flat white, lifted warm-dark over flat black). The pills read as defined controls with an edge, not the pale lozenge the page copy disavows.
+- TRANSMISSIVE negative arm (/substrates/glass-material, content tiers, 26 el): `--glass-definition=0`, `backgroundImage=none`, border α 0.04 — the definition flip does NOT bleed into content surfaces; the five glass tiers stay transmissive over the live aurora field (recessive/calm, no conic banding, no oversaturation) in both engines/modes.
+- Provenance: all 8 badge-decoded (Chrome = ANGLE Metal Renderer Apple M5 Max; Safari = Apple GPU), correct MODE + 2880×1800px. `captureReady=true`, `mainChildren=3`, `glContextCount=1` on the field route. Device-free gate `proof:glass` GREEN incl. DF7 reaches-paint (cohort re-declares floor=✓ rim=✓). All 8 PNGs resolve on disk (2880×1800).
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-GLASS-DEFAULT-DEFINITION-DELTA.md`
+- 8 PNGs: `docs/tranches/BG/audit/visual/BG.W-GLASS-DEFAULT-DEFINITION-paint/gdd-{display_buttons,substrates_glass-material}-{chrome,safari}-{light,dark}.png`
+- Results: `BG.W-GLASS-DEFAULT-DEFINITION-paint/chrome-results-gdd.json`
+
+#### 4.9 — BG.W-SHELL-DOCK-DRY (cursor flip `7ef0cef4`; paint subject `6bef3107`)
+
+The DRY unification of the two demo shell docks (SidebarDock vertical rail + BottomDock horizontal story bar) onto ONE `demo/shell/useShellNavDock` composable paints correctly and IDENTICALLY across engines/modes on /dock/overview over BUILT `:5200` (dist-demo built after the HEAD commit, no uncommitted src/demo — provably fresh HEAD bytes).
+
+- Both consumers mount + paint: Chrome computed-DOM `bottomDockPresent:true` + `sidebarDockPresent:true` (both modes); visually the vertical SidebarDock category rail with its trailing morph/settings control group AND the horizontal BottomDock persistent story bar render in all 4 frames.
+- The shared `useShellNavDock` facet rail renders identically — same DockStack `mode=facets` chips (Liquid Morph / Dock Gallery / Overview[active-highlighted] / Dock Layers / Vertical Dock) in every capture, `railContext` active-facet tracking correct, `openDockMorph` ⇄ swap-control paints in both docks.
+- Computed-DOM consistent both modes: `glContexts:1` (recessive DockStage aurora, one-GL-per-route budget held), `mainChildrenLen:3`, `animTimelineSupported:true`, `runningAnims:0` (settled static capture), `bodyTextLen ~4918` (full route paint).
+- Gestalt: recessive warm aurora field, no conic banding, no oversaturation, calm grain, Overview hero fits its envelope, dark register luminous. Gate `proof:dock` P1 landing-semantics build-proof GREEN.
+- 4 PNGs 2880×1800 resolve on disk, badge-decoded.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-SHELL-DOCK-DRY-DELTA.md`
+- 4 PNGs: `docs/tranches/BG/audit/visual/BG.W-SHELL-DOCK-DRY-paint/shelldock-{chrome,safari}-{light,dark}.png`
+
+#### 4.10 — BG.W-DOCK-INPLACE-MORPH (cursor flip + DELTA + 8 PNGs `5ebcf652`)
+
+The D13 headline is PAINTED-TRUE and FIRES. Fresh `demo:dist:build` from HEAD served on BUILT `:5200`; captured /dock/overview + /dock/morph-showcase in Chrome (real ANGLE Metal Renderer Apple M5 Max) and Safari (off-screen system WebKit, Apple GPU), light+dark = 8 PNGs, all 2880×1800@2x, all resolve on disk, in-pixel engine badges decode correctly (WebKit wraps both blurbs to fewer lines than Chrome — real distinct-engine font-metric divergence).
+
+- Static computed-DOM (all 4 frames): `asidePresent=true` + `sidebarDockInsideAside=true` (the real `.glass-dock` IS a child of `aside.demo-sidebar-rail` — no synthetic clone), `asideOrientation=vertical` (settled), `dockMorphGooPresent=true` + `shellDockMorphGooAbsent=true` (teardrop re-anchored to the canonical `#dock-morph-goo`; modal-local `#shell-dock-morph-goo` DELETED), `morphStageModalAbsent=true`, `glContextCount=1` on /dock/overview (budget held), `mainChildrenLen=3`, `runningAnims=0`.
+- Interactive CDP runtime probe (the airtight proof beyond the static snapshot): firing the in-dock `glass-ui-demo:toggle-dock-morph` trigger flipped the REAL aside vertical→horizontal (`flipped=true`); `--dock-morph-t` drove 0→1.073 across 23 distinct frames (a continuous scalar spring field with the snappy overshoot, NOT the historical one-frame VT crossfade stuck at 0.000 — the "does not work / only teardrop preview works" defect is dead); the analytic-velocity 12-laws squish engaged (`--dock-morph-v` vPeak 1.0 → `--stretch` peak 1.227); the `.dock-morph-bridge--inplace` teardrop MOUNTED during flight with `url(#dock-morph-goo)` engaged in the occluded midpoint window.
+- Gestalt: recessive warm aurora field smooth (no conic banding, no oversaturation, grain calm) both modes; both heroes (Overview / Vertical↔Horizontal Morph) fit their envelope; dock cards + vertical dock pill paint as liquid glass over the live field; the morph-showcase weld story renders T=0.000 rest + Morph trigger + the scalar-field-weld blurb. Gate `proof:dock-morph-insitu` M1-M5 device-free GREEN.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-DOCK-INPLACE-MORPH-DELTA.md`
+- 8 PNGs: `docs/tranches/BG/audit/visual/BG.W-DOCK-INPLACE-MORPH-paint/inplacemorph-{dock_overview,dock_morph-showcase}-{chrome,safari}-{light,dark}.png`
+- Results: `BG.W-DOCK-INPLACE-MORPH-paint/interactive-runtime.json` · `BG.W-DOCK-INPLACE-MORPH-paint/chrome-results-inplacemorph.json`
+
+#### 6.1 — BG.W-VIZ-RESIZE-ADOPT (cursor flip `e7fe1bca`)
+
+Dual-engine paint verified over the BUILT `:5200` C18 `?capture` harness. Preconditions: `proof:viz` GREEN + `proof:viz:selftest` (every planted defect RED) + `npm run typecheck` (vue-tsc) exit 0 clean.
+
+- Binding computational truth — each of the 9 substrate vizzes' canvas backing store == `round(getBoundingClientRect × effectiveDpr)`, uniform on both axes (no stretch), integer-crisp (no blur), effDpr within the per-viz policy cap: Chrome (real Chrome.app, ANGLE Metal / Apple M5 Max) 0/18 FAIL fresh-boot + 0/18 FAIL after real `$router.push` SPA-nav; WebKit-engine DOM probe 0/18 + 0/18; real Safari system-WebKit pixel snapshots crisp/non-stretched for all 9 both modes.
+- Hard-adopt demonstrated across engines: backing tracks each engine's OWN gBCR (e.g. constellation full-page bg 2304×12407 on Chrome vs 2304×11901 on WebKit, both d2). The dpr split is by-design: full-bleed background wash caps d≈1.5 (aurora sub-2x cap), focal demo canvases d≈2.
+- Visual: recessive aurora (satFrac=0 — no conic banding, no oversaturation), grain calm (paper-grid device-pixel-crisp faint grid), hero fits envelope (all display heroes crisp+contained). 36 PNGs (18 Chrome + 18 Safari) + badge crops + JSON verdicts all resolve on disk.
+- Non-blocking observation (OUT of resize scope, recorded in DELTA): dot-flow-field static capture of the idle interactive-vortex default shows additive-trail near-white bloom on Chrome-dark (luminance accumulation, satFrac=0, dots crisp, backing correct) — a static-capture-of-interactive-mode characteristic the viz's own copy names, NOT a backing/stretch/blur defect.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-VIZ-RESIZE-ADOPT-DELTA.md`
+- PNGs + results: `docs/tranches/BG/audit/visual/BG.W-VIZ-RESIZE-ADOPT-paint/` (`chrome-results-vrz.json` · `webkit-results-vrz.json` · `pixel-stats-vrz.json`)
+
+#### 6.3 — BG.W-VIZ-DEMIGRATE (cursor flip `413db370`)
+
+Dual-engine paint verified for /substrates/fourier-field + /substrates/constellation, BOTH modes. Gates GREEN: `proof:constellation-gen` (G1-G6+UNIT, `DEFAULT_PARALLAX===0` holds at `constants.ts:146`) + `proof:gpu-substrate-single` (`fourier-field:no-migrate`, `constellation:no-migrate`).
+
+- Chrome (real Chrome.app / ANGLE-Metal M5 Max, C18 CDP): both viz render correctly both modes — fourier epicycle chain + reconstruction curve; constellation proximity-graph lattice tiles (full + 0.4 recessed); hero fits envelope, recessive backgrounds calm (no conic/oversaturation), grain calm; engine badge decoded in every PNG.
+- Safari off-screen WKWebView: page/chassis/glass/dock render correctly both modes, viz canvases MOUNT with LIVE webgl2 contexts (no GL-init failure), WEBKIT/Apple-GPU badge decoded. The off-screen-WKWebView viz-animation blank was ROOT-CAUSED (not hand-waved) to the `document.hidden`/no-rAF harness limitation (`createCanvasLifecycle:373-377` parks the rAF loop on `document.hidden`; forcing `visibilityState:visible` still blanks — an off-screen view has no display link to drive rAF). RESOLVED via rAF-driving Playwright headless WebKit (SAFARI/Apple-GPU badge): both viz render correctly both modes, statistically identical to Chrome — constellation full-tile interior edgeJumps 4040 (Chrome) vs 3940 (WebKit) vs 0 (blank off-screen ref); fourier region 162-206 distinct color buckets vs 62 blank.
+- NO regression: the SOURCE de-migration + `.wgsl` delete + gate-code NON_MIGRATING flip are deliberately scoped to wave-7/G7; the viz render correctly on their existing substrate path at this commit. 23 capture PNGs resolve on disk.
+- Observation for G7 (not a defect, out of this wave's scope): constellation story prose says "Canvas2D substrate" while source still composes `createGpuSubstrate` — G7's source de-migration reconciles the prose to reality.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-VIZ-DEMIGRATE-DELTA.md`
+- PNGs: `docs/tranches/BG/audit/visual/BG.W-VIZ-DEMIGRATE-paint/demigrate-{viz-,}substrates_{fourier-field,constellation}-{chrome,pwwebkit,safari}-{light,dark}.png` · `pixel-analysis.json`
+
+#### 6.5 — BG.W-VIZ-PREVIEW-LIVE (cursor flip `5e0a040c`)
+
+Dual-engine (Chrome/ANGLE-Metal Apple M5 Max + Safari/system-WebKit Apple GPU), BOTH modes, over the BUILT demo dist on `:5200` via the C18 `?capture=/substrates` harness. Gate: `proof:viz` GREEN [V1-V5 + P1 registry≥11 · P2 pairwise-distinct · P3 card-dispatch · P4 device-free-memoized]; `proof:viz --selftest` — every planted defect RED.
+
+- Operative criterion (11-cards-11-hashes): the /substrates bento renders 11 per-story preview cards, each a DISTINCT recognizable viz-signature still. Chrome element-level per-card RENDERED-pixel hashes = 11/11 distinct in BOTH light and dark; 11 distinct data-URI sha1 payloads in both modes. Montage confirms each reads as its signature: nuclei(aurora) · metaball(blob) · graph(constellation) · epicycle(fourier) · glass-plate+specular(glass-material) · glass-ladder(glass-panel) · flow-ribbons(dot-flow-field) · concentric-rings(concentric) · warp-grid(paper-grid) · phyllotaxis-dot-sphere(dot-matrix) · dot-halftone(goo-dot). All hues warm-cream band (25-95°), zero teal/navy.
+- One-GL-per-route budget held: computed-DOM `stillCount=11`, `glContextCount=1` — the single live context is the story-hero recessive background aurora, NOT added by the cards; all 11 stills are `data:image` URIs so the preview cards add ZERO GL/GPU contexts (exactly the wave's claim).
+- Standing gestalt (both engines both modes): recessive aurora (faint warm-cream light / warm-ember olive-amber dark), no conic banding, no oversaturation; grain calm; hero "Substrates" display H1 fits envelope; dark field warm-ember not charcoal void. All 10 capture PNGs resolve on disk.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-VIZ-PREVIEW-LIVE-DELTA.md`
+- PNGs: `docs/tranches/BG/audit/visual/BG.W-VIZ-PREVIEW-LIVE-paint/vpl-substrates-{chrome,safari}-{light,dark}.png` (+ `vpl-substrates-chrome-{light,dark}-badge.png` · `vpl-stills-montage-{light,dark}.png`)
+
+#### W-AUR-IMAGE-SOURCE — BG.W-AUR-IMAGE-SOURCE (cursor flip `1b2bdd84`)
+
+Dual-engine paint verified on /substrates/aurora, BUILT `:5200` (C18 harness). Chrome (real Chrome 149 / ANGLE Apple M5 Max Metal) + Safari (off-screen WKWebView / Apple GPU), both light+dark.
+
+- All 4 quadrants of the route's palette-default surface read correct with cross-engine parity: recessive warm-cream painterly aurora (light) / luminous-dark transmissive field (dark), NO conic banding, NO oversaturation (measured `oversatFrac=0`), calm grain, the audacious "Aurora" hero fits its envelope (1066×206, no clip), violet `--motion-accent` masthead, preset thumbnail cards baking, dock+sidebar chrome all paint.
+- DOM probe: `data-capture-ready` set, `main.children=3`, `glContextCount.live=2` [webgpu,webgpu] (live AuroraStage + `usePresetThumbnails` baker — studio-designed, unchanged by this wave), entrance anims settled.
+- BUILD sound: `proof:aur-image` GREEN (I1 ONE shared `textureUpload.ts` primitive both backends, I2 construction-time palette|image programs [no `uSource`], I3 24-tap zone-blur, I5 palette byte-identical, I6 `deriveAurora` scheme/lBand acted-on) + 6-bite selftest + vue-tsc clean. Image-source machinery driven functional in Chrome both modes: Source→Image flip, 145KB PNG decode+upload, aurora stays healthy (`oversatFrac=0`, no black minL 0.40/0.27, warm identity) and alive (frame a→b drift ~5.9/255).
+- The VISIBLE photo-dissolve π is near-identical to palette baseline (delta ~6.4 ≈ natural drift) BY DESIGN: `runtime.ts:292 useImageProgram` is construction-time (evaluated at setupGL/arm); the deep config watch re-uploads uniforms+wakes but does NOT rebuild the program, so a live in-place toggle keeps the palette program running. The dual-engine photo-dissolve live-π genuinely requires a construction-time `source:image` mount (no such demo surface exists) and rides W-REFLECT3 exactly as the wave spec declares — NOT a paint defect. All 14 capture PNGs resolve on disk.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-AUR-IMAGE-SOURCE-DELTA.md`
+- PNGs: `docs/tranches/BG/audit/visual/BG.W-AUR-IMAGE-SOURCE-paint/{chrome,safari}-aurora-{light,dark}.png` (+ `stage-{palette,image}-{light,dark}{,-a}.png`)
+
+#### F8.2 — BG.W-COMPOSITED-GESTALT-GATE close (cursor flip + DELTA + 16 PNGs `7db2abb4`)
+
+Non-authoring dual-engine PAINT close at HEAD `1b2bdd84` (21 commits past the prior re-judge `6ce764ff`; the dock + aurora waves landed). The chronic F8.2 FAIL is CLOSED. Method: C18 over BUILT `:5200` (`npm run demo:dist:build` → vite preview :5200). Chrome = real headed Chrome 149 via `chromium.connectOverCDP`, `--use-angle=metal`, GL_RENDERER=ANGLE Metal Renderer Apple M5 Max on all 8 chrome captures; Safari = repo-local off-screen WKWebView (WEBKIT/Apple GPU). 4 wave routes (/foundations/intro · /substrates/aurora · /dock/overview · /compositions/configurator) × 2 engines × 2 modes = 16 PNGs, all resolve on disk `isRealPng` 2880×1800.
+
+- PAINT KERNEL: dominant-hue histogram over each route's composited FIELD REGION (the mandate: not a mean-L box) via `pngRegionHueHistogram` + `warmIdentityVerdict`. Result 16/16 all-warm: every capture `dominantFamily=warm`, `warmFraction=1.000`, `coldFraction=0`, in-field meanChroma 0.029-0.074 (far under the 0.30 oversaturation ceiling — recessive warm-translucent, no gray→metallic). Under the region method every composite ALSO passes the FULL kernel (edge↔field OKLab ΔE 0.009-0.091 all ≤0.16; corner L 0.151-0.170 all ≥0.04; captureReal true).
+- Visual confirm: warm peach-cream (light) / luminous warm-amber (dark) heroes; recessive aurora with NO conic banding, NO oversaturation; warm DockStage; warm DesignSync category cards; luminous (not void) dark register; grain calm; hero fits envelope. The operative all-warm born-RED (GROUND_EVIDENCE 6/6 4.2.0 Metal captures read cold/magenta) FLIPPED GREEN.
+- Computed-DOM (chrome-results.json): `main.children=3` on all 8 routes; `glContextCount` 1 (foundations/configurator) / 2 (aurora/dock) — GL routes carry canvases, one-context-per-route budget respected, none runaway; `captureReady=true`, mode matches, bodyText 1379-4918 chars non-empty; `getAnimations()=0` at rest.
+- The prior re-judge's 9 residuals (dock/page-band topBar ×7, configgoo/darkreg edgeCast ×2) were entirely mean-L delta boxes against the page-top margin / a masthead heading glyph edge — geometry OUTSIDE the composited route region and explicitly out of the dominant-hue-over-a-region mandate; moot under this method. Recorded non-defects (NOT gating): the configurator/aurora-studio bottom LIVE-SPECIMEN band is a driven demo range showing a selected aurora medium, frame-dependent between engines + LOW-chroma (no oversaturation); the "Aurora Studio" violet masthead + PRESETS rainbow swatch row are by-design `--motion-accent` / palette-range events.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-COMPOSITED-GESTALT-GATE-DELTA.md`
+- 16 PNGs + probes: `docs/tranches/BG/audit/visual/BG.W-COMPOSITED-GESTALT-GATE-close/{foundations-intro,substrates-aurora,dock-overview,compositions-configurator}-{chrome,safari}-{light,dark}-desktop-full.png` (+ `analysis.json` · `chrome-results.json`)
+
+---
+
+### FAILED -> PAINT-PENDING (held at row W-AUR-METAL-FINISH)
+
+#### W-AUR-METAL-FINISH — BG.W-AUR-METAL-FINISH (cursor flipped PAINT-PENDING -> PENDING `7689623a`; NO paint fix by the judge — routes to build-fix-agent)
+
+The computational/gate arm is fully GREEN, and the /substrates/aurora ROUTE is healthy in all 4 dual-engine/dual-mode captures — but the wave's HEADLINE visual criterion (aurora metal cards read as lit metal) is UNVERIFIABLE because the built metal medium (uMedium 8/9) is un-surfaced in the running demo. This is a bounded DEMO-SURFACING gap.
+
+GREEN (build + route health):
+- `proof:aur-metal` PASS (metal dual-ports as the mutually-exclusive medium uMedium 8/9; tensor re-plumbs its gradient with zero new taps; two-term BRDF folds; cursor-synth catch crosses to WGSL with no phantom `uLightDir`; warm-catch fence holds) + its 5-bite self-test passes in-gate; vue-tsc clean (exit 0); sibling aurora gates GREEN (aur-kuwahara, aurora-tensor-field 8 tests, aurora-oilpastel-medium budget gzip 57409/58500, composable-return-types).
+- Route-health 4/4: real GPU both engines (Chrome ANGLE Metal Renderer Apple M5 Max, WebGPU; Safari WEBKIT/Apple GPU), hero fits envelope, recessive warm-cream(light)/luminous-dark(dark) field, NO conic banding, NO oversaturation, calm grain, motion-purple masthead; `glContextCount=2` webgpu (stage + preset-thumbnail baker, the studio's pre-existing footprint).
+
+BLOCKER: Chrome CDP enumeration of the studio Medium picker returns exactly [Smooth, Watercolor, Pastel, Oil, Crayon, Van Gogh, Oil Pastel] — no Metal, no Brushed Metal, no Kuwahara. There is no picker entry, no metal preset, and no capture-param path, so neither Chrome interaction nor off-screen Safari can render metal; ZERO metal PNGs exist. Per the paint bar (PASS only when every surface reads correct AND every capture resolves on disk), a PASS would certify a lit-metal read never observed. Same class the prior W-AUR-KUWAHARA-DELTA + RESEARCH.md §275 flag; metal src SHAs preserved (gate GREEN). No src/demo/style/script edited (record-don't-fix).
+
+Defect localization:
+- `demo/stories/aurora/sections/AuroraCompositionSection.vue` — the local MEDIA record (~lines 25-33) offers only 7 mediums, MISSING the built metal (uMedium 8), metal-gradient/Brushed Metal (uMedium 9), and kuwahara (uMedium 7). The studio can never reach the metal medium the wave built.
+- `demo/stories/aurora/config/options.ts` — the Metal-bearing `mediumOptions` list is consumed only for preset LABEL derivation in `presets.ts` (MEDIUM_LABEL map), never wired into a rendered picker.
+- `demo/stories/aurora/presets.ts` — no `medium:'metal'`/`'metal-gradient'` preset exists (only VANGOGH forces a medium), and `demo/main.ts` bootCaptureMode passes no medium override — so there is no non-interactive path for the off-screen Safari engine to render metal for capture.
+
+mustFix (for a build-fix-agent):
+1. Add Metal→'metal', Brushed Metal→'metal-gradient' (and Kuwahara→'kuwahara') to the studio medium picker in `AuroraCompositionSection.vue` — ideally source the picker off the canonical `mediumOptions` so the UI cannot drift behind the shipped medium enum again.
+2. Add a deterministic non-interactive surfacing path — a `medium:'metal'` preset in `presets.ts` + PRESET_KEYS (mirroring VANGOGH) so the C18 `?capture` harness renders metal in BOTH Chrome and off-screen Safari, or a `?...&aurmedium=metal` capture param read by the aurora story.
+3. Re-run the dual-engine paint (Chrome+Safari, both modes) over the metal render and verify localContrast FOLDS (height-field relight), cursor-raked highlight (WGSL cursor-synth catch, anisotropic streak along edge-tangent), NO cold catch-light (warm catch r≥g≥b); also verify metal-gradient (uMedium 9, twinkle-in-place flake sparkle).
+
+Captures (route-health only — no metal render exists to capture):
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-AUR-METAL-FINISH-DELTA.md`
+- 4 route-health PNGs: `docs/tranches/BG/audit/visual/BG.W-AUR-METAL-FINISH-assets/{chrome,safari}-aurora-{light,dark}.png` (+ `chrome-results.json` · the `BG.W-AUR-METAL-FINISH-chrome-capture.mjs` capture script)
