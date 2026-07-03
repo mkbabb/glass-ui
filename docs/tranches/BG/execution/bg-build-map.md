@@ -119,6 +119,8 @@ W-HANDMARK-PERFECT` (+14.4 pencil-boil). *(14.5 cross-repo-asks → F8.)*
 - `10.15 W-GOO-BARBELL-CSS`.
 - `10.27 W-GOD-MODULE-STRUCTURAL` (NEW): decompose the dock ONCE; the 2 live-RED CSS carves in-wave; **ratchet CONTRACT
   change** (new baseline needs a companion carve-successor id, OR cap+FAIL); shader-literal exemption. BEFORE F6.2 rename.
+- `4.12 W-DOCK-CONSUMER-FENCE` (DNS-REPORTS-INBOUND; H; LANDED 00621130): internal-part CSS anchored
+  `:where(.glass-dock,.dock-layer-group)` + the synthetic body-pointerdown dismissal deleted; `proof:dock-consumer-fence`.
 - `F6.7 W-SEAL-DISC` (SPEEDTEST-AX-INBOUND #1; paint-class P; files completion-seal/*): CompletionSeal `shape="disc"`
   (joins {check|ring|wordmark}) + `personalBest:boolean` (earned-gold garnish; may mint `--seal-best`) + the
   disc→ring→check draw SEQUENCING; kf5 `fromDrawSVG` decide-at-build over the CSS `stroke-dashoffset` floor;
