@@ -71,6 +71,7 @@ import { readMonolith } from "./read-css-monoliths.mjs";
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const GLASS_DEEP_FILE = "src/styles/tokens/glass-deep.css";
 const VITE_STYLE_ASSETS = "vite.style-assets.ts";
+const SPECULAR_POINTER_FILE = "src/composables/glass/useSpecularPointer.ts";
 
 function stripCss(src) {
     return src.replace(/\/\*[\s\S]*?\*\//g, " ");
@@ -475,6 +476,121 @@ export function definedControlFloorViolations(glassCss, tokensCss) {
     return { violations, facts };
 }
 
+// ── the glass-dynamics predicate (pure) — BG.W-GLASS-DYNAMICS ────────────────
+// WS3 demoted the blur ladder (quiet/resting → 8px), so the plate needs a stronger
+// READ-CARRIER to still read as GLASS at rest. This wave strengthens the neutral
+// specular hairline on the `.glass-material::before` recipe (material.css), mints the
+// iOS-27 backdrop-HUE sample seam (the 2nd of the ≤2 chromatic pairs), and couples the
+// specular magnitude to the `--glass-btn-press-t` press spring (soft-gated) — both the
+// CSS half (material.css) and the JS half (useSpecularPointer.ts). The REFERENCE FENCE:
+// the RESTING hairline is NEUTRAL — prismatic is reserved for WS6.
+//   GD1 — the resting NEUTRAL specular hairline: the base `::before` carries an inset
+//         `box-shadow` rim AND its `opacity` floors on a non-zero `--glass-specular-
+//         rest-hairline` (the read-carrier at the demoted blur). Born-RED (HEAD carries
+//         a bare `opacity: var(--specular-intensity, 0)`, no rest rim on the pseudo).
+//   GD2 — the resting hairline is NEUTRAL (the fence): the box-shadow reads the RAW
+//         warm-cream `hsl(40 35% 92%)`, NEVER `--glass-specular-core`/`--glass-accent`/
+//         `--glass-backdrop-hue` (a chromatic resting hairline is forbidden; prismatic
+//         → WS6).
+//   GD3 — the backdrop-HUE sample seam (bounded, neutral default): `--glass-specular-
+//         core` folds `var(--glass-backdrop-hue, transparent) var(--glass-backdrop-hue-
+//         strength, 0%)` so an unwired surface reads the warm-cream core byte-identical
+//         (a `color-mix(in oklab, X, transparent 0%) === X` no-op), the fence + the
+//         2nd-chromatic-pair mint at once. Born-RED (HEAD core has no backdrop-hue).
+//   GD4 — the press-couple (soft-gated), reading the ONE `--glass-btn-press-t` channel:
+//         the CSS base `--specular-intensity` reads it inside a `max(…)` (the release-
+//         settle returns), AND useSpecularPointer.ts folds an optional `press` scalar
+//         onto the SAME channel (never a forked press var). Born-RED (HEAD reads a bare
+//         rest token + the leaf has no press param).
+export function glassDynamicsViolations(glassCss, specularPointerText) {
+    const violations = [];
+    const facts = {};
+    const glass = squish(stripCss(glassCss || ""));
+    const js = specularPointerText || "";
+
+    // Extract the BASE `.glass-material::before` recipe (the block carrying the
+    // `--glass-specular-core` disc/conic recipe). CSS rule bodies carry no nested `{}`
+    // (gradients use `()`), so the `sel { body }` match is robust to the @layer wrapper.
+    let baseBlock = "";
+    for (const m of glass.matchAll(/([^{}]*)\{([^{}]*)\}/g)) {
+        if (/\.glass-material::before/.test(m[1]) && /--glass-specular-core\s*:/.test(m[2])) {
+            baseBlock = m[2];
+            break;
+        }
+    }
+    facts.baseBlockFound = baseBlock.length > 0;
+    if (!baseBlock) {
+        violations.push(
+            "GD: could not locate the base `.glass-material::before` specular recipe (the block carrying `--glass-specular-core`) in the glass cascade — the wave's read-carrier edits live here",
+        );
+        return { violations, facts };
+    }
+
+    // GD1 — the resting NEUTRAL specular hairline (the read-carrier).
+    const boxShadowMatch = /box-shadow\s*:\s*inset[^;]*;/.exec(baseBlock);
+    facts.hasHairlineBoxShadow = !!boxShadowMatch;
+    const opacityMatch = /opacity\s*:\s*([^;]*);/.exec(baseBlock);
+    const opacityVal = opacityMatch ? opacityMatch[1] : "";
+    facts.opacityFloorsHairline =
+        /max\(/.test(opacityVal) && /--glass-specular-rest-hairline/.test(opacityVal);
+    if (!boxShadowMatch) {
+        violations.push(
+            "GD1: the base `.glass-material::before` recipe carries no `box-shadow: inset …` — the resting NEUTRAL specular hairline (the read-carrier at the demoted blur) is ABSENT (born-RED: HEAD paints no rest rim on the pseudo)",
+        );
+    }
+    if (!facts.opacityFloorsHairline) {
+        violations.push(
+            "GD1: the `::before` `opacity` does not `max(var(--specular-intensity …), var(--glass-specular-rest-hairline …))` — the rest hairline never lights (a bare `opacity: var(--specular-intensity, 0)` reds; the read-carrier floor is missing)",
+        );
+    }
+
+    // GD2 — the resting hairline is NEUTRAL (the REFERENCE FENCE; prismatic → WS6).
+    const boxShadow = boxShadowMatch ? boxShadowMatch[0] : "";
+    facts.hairlineNeutral =
+        /hsl\(40 35% 92%\)/.test(boxShadow) &&
+        !/--glass-accent|--glass-backdrop-hue|--glass-specular-core/.test(boxShadow);
+    if (boxShadowMatch && !facts.hairlineNeutral) {
+        violations.push(
+            "GD2: the resting hairline `box-shadow` is NOT neutral — it must read the RAW warm-cream `hsl(40 35% 92%)`, NEVER `--glass-specular-core`/`--glass-accent`/`--glass-backdrop-hue` (the REFERENCE FENCE: the resting hairline stays NEUTRAL, prismatic reserved for WS6)",
+        );
+    }
+
+    // GD3 — the backdrop-HUE sample seam (bounded, neutral default).
+    const coreMatch = /--glass-specular-core\s*:\s*([^;]*);/.exec(baseBlock);
+    const coreVal = coreMatch ? coreMatch[1] : "";
+    facts.backdropHueSeam =
+        /--glass-backdrop-hue\s*,\s*transparent/.test(coreVal) &&
+        /--glass-backdrop-hue-strength\s*,\s*0%/.test(coreVal);
+    if (!facts.backdropHueSeam) {
+        violations.push(
+            "GD3: `--glass-specular-core` does not fold the backdrop-HUE sample seam `var(--glass-backdrop-hue, transparent) var(--glass-backdrop-hue-strength, 0%)` (the 2nd chromatic pair) — the seam must be present AND default NEUTRAL (transparent + 0% → the outer mix is a byte-identical no-op at rest, the fence)",
+        );
+    }
+
+    // GD4 — the press-couple (soft-gated), CSS + JS halves reading the ONE channel.
+    const intensityMatch = /--specular-intensity\s*:\s*max\(([^;]*)\)\s*;/.exec(baseBlock);
+    facts.cssPressCouple = !!intensityMatch && /--glass-btn-press-t/.test(intensityMatch[1]);
+    if (!facts.cssPressCouple) {
+        violations.push(
+            "GD4: the base `--specular-intensity` does not read `--glass-btn-press-t` inside a `max(…)` — the press-COUPLED release-settle (soft-gated) is missing (born-RED: HEAD reads a bare `var(--glass-specular-intensity-rest, 0)`)",
+        );
+    }
+    facts.jsPressCouple = /options\.press/.test(js) && /"--glass-btn-press-t"/.test(js);
+    facts.jsNoForkedPress = !/"--specular-press"|"--press-t"/.test(js);
+    if (!facts.jsPressCouple) {
+        violations.push(
+            "GD4: useSpecularPointer.ts does not fold an optional `press` scalar onto `--glass-btn-press-t` — the JS half of the press-couple is missing (soft-gated: an omitted `press` emits no key)",
+        );
+    }
+    if (!facts.jsNoForkedPress) {
+        violations.push(
+            "GD4: useSpecularPointer.ts writes a FORKED press channel (`--specular-press`/`--press-t`) — the press-couple must reuse the ONE `--glass-btn-press-t` channel, never a second drive",
+        );
+    }
+
+    return { violations, facts };
+}
+
 export function detect() {
     const decide = decideViolations(readFile(GLASS_DEEP_FILE));
     const glassMonolith = readMonolith(ROOT, "glass");
@@ -482,6 +598,7 @@ export function detect() {
     const glassFill = glassFillHomeViolations(glassMonolith);
     const safari = safariBlurVarViolations(readFile(VITE_STYLE_ASSETS));
     const defined = definedControlFloorViolations(glassMonolith, tokensMonolith);
+    const dynamics = glassDynamicsViolations(glassMonolith, readFile(SPECULAR_POINTER_FILE));
     // the self-test bites run EVERY run (the "proven every run" discipline) — a
     // bite that loses its teeth REDs the gate, so the anti-gameability arm can
     // never silently rot.
@@ -492,6 +609,7 @@ export function detect() {
             ...glassFill.violations,
             ...safari.violations,
             ...defined.violations,
+            ...dynamics.violations,
             ...biteFails,
         ],
         facts: {
@@ -499,6 +617,7 @@ export function detect() {
             glassFillHome: glassFill.facts,
             safariBlurVar: safari.facts,
             definedControlFloor: defined.facts,
+            glassDynamics: dynamics.facts,
             selfTestOk: biteFails.length === 0,
         },
     };
@@ -657,6 +776,98 @@ function selfTest() {
         );
     }
 
+    // ── glass-dynamics bites (GD) — BG.W-GLASS-DYNAMICS ───────────────────────────
+    const goodDynGlass =
+        "@layer components { .glass-material::before, .glass-wash::before {" +
+        " --specular-intensity: max( var(--glass-specular-intensity-rest, 0), calc(var(--glass-specular-intensity-active, 0.16) * var(--glass-btn-press-t, 0)) );" +
+        " --glass-specular-core: color-mix( in oklab, color-mix( in oklab, hsl(40 35% 92%), var(--glass-accent) var(--glass-accent-strength) ), var(--glass-backdrop-hue, transparent) var(--glass-backdrop-hue-strength, 0%) );" +
+        " background: radial-gradient(circle, transparent);" +
+        " box-shadow: inset 0 0 0 var(--glass-specular-hairline-width, 0.75px) color-mix(in srgb, hsl(40 35% 92%) var(--glass-specular-hairline-ink, 70%), transparent);" +
+        " opacity: max( var(--specular-intensity, 0), var(--glass-specular-rest-hairline, 0.07) ); } }";
+    const goodDynJs =
+        'export function useSpecularPointer(options = {}) { const specularStyle = computed(() => { if (options.press == null) return pointerStyle.value; const t = toValue(options.press); return { ...pointerStyle.value, "--glass-btn-press-t": (Number.isFinite(t) ? t : 0).toFixed(4) }; }); }';
+    // sanity — the good fixture MUST be clean (else a bite could false-pass).
+    if (glassDynamicsViolations(goodDynGlass, goodDynJs).violations.length !== 0) {
+        fails.push(
+            "self-test glass-dynamics: the synthetic GOOD fixture is NOT clean (the predicate over-fires — a real bite could false-pass): " +
+                glassDynamicsViolations(goodDynGlass, goodDynJs).violations.join(" | "),
+        );
+    }
+    // bite GD1 — a recipe WITHOUT the box-shadow hairline must flag.
+    const noHairline = goodDynGlass.replace(/box-shadow\s*:\s*inset[^;]*;/, "");
+    if (!glassDynamicsViolations(noHairline, goodDynJs).violations.some((v) => /GD1/.test(v))) {
+        fails.push(
+            "self-test GD1: a recipe missing the resting `box-shadow: inset` hairline was NOT flagged (the read-carrier detector has no teeth)",
+        );
+    }
+    // bite GD1 — a bare `opacity: var(--specular-intensity, 0)` (no rest floor) must flag.
+    const noFloor = goodDynGlass.replace(
+        /opacity\s*:\s*max\([^;]*\);/,
+        "opacity: var(--specular-intensity, 0);",
+    );
+    if (!glassDynamicsViolations(noFloor, goodDynJs).violations.some((v) => /GD1/.test(v))) {
+        fails.push(
+            "self-test GD1: a bare `opacity: var(--specular-intensity, 0)` (no rest-hairline floor) was NOT flagged (the floor detector has no teeth)",
+        );
+    }
+    // bite GD2 — a CHROMATIC resting hairline (reads --glass-specular-core) must flag.
+    const chromaticHairline = goodDynGlass.replace(
+        "color-mix(in srgb, hsl(40 35% 92%) var(--glass-specular-hairline-ink, 70%), transparent)",
+        "var(--glass-specular-core)",
+    );
+    if (!glassDynamicsViolations(chromaticHairline, goodDynJs).violations.some((v) => /GD2/.test(v))) {
+        fails.push(
+            "self-test GD2: a chromatic resting hairline (box-shadow reads --glass-specular-core) was NOT flagged (the neutral-fence has no teeth; prismatic must stay reserved for WS6)",
+        );
+    }
+    // bite GD3 — a NON-neutral backdrop-hue default (strength 10% not 0%) must flag.
+    const notNeutralSeam = goodDynGlass.replace(
+        "var(--glass-backdrop-hue-strength, 0%)",
+        "var(--glass-backdrop-hue-strength, 10%)",
+    );
+    if (!glassDynamicsViolations(notNeutralSeam, goodDynJs).violations.some((v) => /GD3/.test(v))) {
+        fails.push(
+            "self-test GD3: a backdrop-hue seam defaulting to a non-zero strength (10%) was NOT flagged (the neutral-default fence has no teeth)",
+        );
+    }
+    // bite GD3 — the seam ABSENT (core carries no --glass-backdrop-hue) must flag.
+    const noSeam = goodDynGlass.replace(
+        ", var(--glass-backdrop-hue, transparent) var(--glass-backdrop-hue-strength, 0%) )",
+        " )",
+    );
+    if (!glassDynamicsViolations(noSeam, goodDynJs).violations.some((v) => /GD3/.test(v))) {
+        fails.push(
+            "self-test GD3: a core with NO backdrop-hue fold was NOT flagged (the seam-present detector has no teeth)",
+        );
+    }
+    // bite GD4 — a bare `--specular-intensity` (no press-t couple) must flag.
+    const noCssPress = goodDynGlass.replace(
+        /--specular-intensity\s*:\s*max\([^;]*\);/,
+        "--specular-intensity: var(--glass-specular-intensity-rest, 0);",
+    );
+    if (!glassDynamicsViolations(noCssPress, goodDynJs).violations.some((v) => /GD4/.test(v))) {
+        fails.push(
+            "self-test GD4: a base --specular-intensity with no --glass-btn-press-t couple was NOT flagged (the CSS press-couple detector has no teeth)",
+        );
+    }
+    // bite GD4 — a JS leaf that does NOT fold the press channel must flag.
+    const noJsPress = goodDynJs.replace(/if \(options\.press == null\)[\s\S]*?\}\);/, "return pointerStyle.value; });");
+    if (!glassDynamicsViolations(goodDynGlass, noJsPress).violations.some((v) => /GD4/.test(v))) {
+        fails.push(
+            "self-test GD4: a JS leaf that does NOT fold `press` onto --glass-btn-press-t was NOT flagged (the JS press-couple detector has no teeth)",
+        );
+    }
+    // bite GD4 — a JS leaf that FORKS the press channel (writes --specular-press) must flag.
+    const forkedJsPress = goodDynJs.replace(
+        '"--glass-btn-press-t": (Number.isFinite(t) ? t : 0).toFixed(4)',
+        '"--glass-btn-press-t": t, "--specular-press": t',
+    );
+    if (!glassDynamicsViolations(goodDynGlass, forkedJsPress).violations.some((v) => /GD4/.test(v))) {
+        fails.push(
+            "self-test GD4: a JS leaf that FORKS a second press channel (--specular-press) was NOT flagged (the one-channel fence has no teeth)",
+        );
+    }
+
     return fails;
 }
 
@@ -733,6 +944,20 @@ function run() {
     );
     console.log(
         `  DF7 reaches-paint : cohort re-declares floor=${df.cohortRedeclaresFloor ? "✓" : "✗"}  rim=${df.cohortRedeclaresRim ? "✓" : "✗"} (substitution-trap fix)`,
+    );
+    const gd = facts.glassDynamics ?? {};
+    console.log("proof:glass — arm: glass-dynamics (BG.W-GLASS-DYNAMICS)");
+    console.log(
+        `  GD1 rest hairline : box-shadow=${gd.hasHairlineBoxShadow ? "✓" : "✗"}  opacity-floor=${gd.opacityFloorsHairline ? "✓" : "✗"} (the read-carrier at the demoted blur)`,
+    );
+    console.log(
+        `  GD2 neutral fence : hairline-neutral=${gd.hairlineNeutral ? "✓" : "✗"} (raw hsl(40 35% 92%); prismatic reserved for WS6)`,
+    );
+    console.log(
+        `  GD3 backdrop-hue  : seam=${gd.backdropHueSeam ? "✓" : "✗"} (bounded, neutral default — the 2nd chromatic pair)`,
+    );
+    console.log(
+        `  GD4 press-couple  : css=${gd.cssPressCouple ? "✓" : "✗"}  js=${gd.jsPressCouple ? "✓" : "✗"}  no-fork=${gd.jsNoForkedPress ? "✓" : "✗"} (the ONE --glass-btn-press-t channel, soft-gated)`,
     );
     console.log(`  self-test bites   : ${facts.selfTestOk ? "all teeth ✓" : "✗ BROKE"}`);
 

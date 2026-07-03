@@ -1,4 +1,12 @@
-import { onScopeDispose, ref, type CSSProperties } from "vue";
+import {
+    computed,
+    onScopeDispose,
+    ref,
+    toValue,
+    type ComputedRef,
+    type CSSProperties,
+    type MaybeRefOrGetter,
+} from "vue";
 import { createSpecularWriter } from "./useSpecularTracking";
 
 /**
@@ -25,16 +33,37 @@ import { createSpecularWriter } from "./useSpecularTracking";
  * centred 50% and `--specular-angle` to its `0deg` static rest). The composable
  * disposes the core (cancel the pending rAF + drop the cached PRM listener) on scope
  * teardown.
+ *
+ * BG.W-GLASS-DYNAMICS — the OPTIONAL press-couple (absorbs 13.5, soft-gated by F5.1).
+ * A consumer may pass `press` (a 0..1 press scalar — a `useSpringPress` `.value`, or
+ * any press signal); it is folded reactively into the emitted style as the ONE
+ * `--glass-btn-press-t` channel the `.glass-material::before` specular magnitude reads
+ * (material.css). Reusing the SINGLE press channel (never a forked `--*-press-t`) keeps
+ * ONE drive, two legs — the gleam SWELLS + SETTLES with the press spring. The merge is
+ * a `computed` so the press tracks the spring INDEPENDENTLY of pointer moves (a press
+ * settles while the pointer is still). SOFT-GATED: when `press` is OMITTED the emitted
+ * style carries NO press channel (the CSS `--glass-btn-press-t` default 0 holds — no
+ * hard F5.1 dependency), and the position/angle write is byte-identical to before.
  */
+export interface UseSpecularPointerOptions {
+    /** Optional 0..1 press scalar (soft-gated) folded into `--glass-btn-press-t`. */
+    press?: MaybeRefOrGetter<number>;
+}
+
 export interface UseSpecularPointer {
-    /** Bind to the host element's `:style`. Carries `--mouse-x/--mouse-y` + `--specular-angle`. */
-    specularStyle: ReturnType<typeof ref<CSSProperties>>;
+    /**
+     * Bind to the host element's `:style`. Carries `--mouse-x/--mouse-y` +
+     * `--specular-angle` (+ the press-coupled `--glass-btn-press-t` when `press` is
+     * supplied).
+     */
+    specularStyle: ComputedRef<CSSProperties>;
     /** Bind to the host's `@pointermove`. Schedules the rAF-coalesced position+angle write (PRM-gated). */
     onPointerMove: (event: PointerEvent) => void;
 }
 
-export function useSpecularPointer(): UseSpecularPointer {
-    const specularStyle = ref<CSSProperties>({});
+export function useSpecularPointer(options: UseSpecularPointerOptions = {}): UseSpecularPointer {
+    // The pointer-driven leg (position + angle) — the ONE rAF-coalesced write.
+    const pointerStyle = ref<CSSProperties>({});
 
     const writer = createSpecularWriter((x, y) => {
         // The angle-from-center, derived from the SAME percentage the core computed
@@ -43,10 +72,22 @@ export function useSpecularPointer(): UseSpecularPointer {
         // the top edge → ~0deg, right edge → ~90deg. The glint arc seats where the
         // pointer grazes the rim.
         const angle = (Math.atan2(y - 50, x - 50) * 180) / Math.PI + 90;
-        specularStyle.value = {
+        pointerStyle.value = {
             "--mouse-x": `${x.toFixed(2)}%`,
             "--mouse-y": `${y.toFixed(2)}%`,
             "--specular-angle": `${angle.toFixed(1)}deg`,
+        } as CSSProperties;
+    });
+
+    // Merge the OPTIONAL press scalar onto the SAME `--glass-btn-press-t` channel the
+    // CSS specular reads. Reactive so the press settles independently of pointer moves;
+    // soft-gated so an omitted `press` emits NO press key (the CSS default 0 wins).
+    const specularStyle = computed<CSSProperties>(() => {
+        if (options.press == null) return pointerStyle.value;
+        const t = toValue(options.press);
+        return {
+            ...pointerStyle.value,
+            "--glass-btn-press-t": (Number.isFinite(t) ? t : 0).toFixed(4),
         } as CSSProperties;
     });
 
