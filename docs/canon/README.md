@@ -28,6 +28,7 @@ system + THIS index — there is no auto-loaded project manual after B4f.
 |-------|------|--------------------------------------------------|
 | structure | `structure.md` (GENERATED) | §Structure |
 | dependencies | `dependencies.md` | §Dependencies |
+| deps-currency | `deps-currency.md` | BH.B5a — dep-currency + shadcn-vue verdict (`proof:deps-currency`) |
 | build-and-gates | `build-and-gates.md` | §Build / Gate hygiene |
 | conventions | `conventions.md` | §Conventions |
 | design-axes | `design-axes.md` | §Design Axes |

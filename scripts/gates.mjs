@@ -638,6 +638,12 @@ export const GATES = [
         note: "no src/ .ts/.vue file > 500 lines (excludes __tests__/); warns at 300. THE RATCHET: `RATCHET_BASELINES` grandfathers a known over-bound file at its frozen count (a reported fact, not a violation) so the gate is CI-GREEN before its carve while reddening any GROWTH past the baseline, any NEW file past 500 with no row, AND any stale row (a file that shrank under bound must drop its row — the ratchet only drains). Close state: violations==[] AND baselines drained to ∅. Bite: append a line to a grandfathered file (past its baseline) or push a fresh file past 500 → RED.",
     },
     {
+        id: "proof:deps-currency",
+        cmd: "proof:deps-currency",
+        tags: ["local", "ci"],
+        note: "BH.B5a-deps-currency — the build-infra god-module carve + the deps/shadcn-vue verdict. Splits vite.style-assets.ts (566L, uncovered by proof:no-god-module which walks src/ only) into three cohesive sub-plugins the orchestrator composes IN ORDER byte-identically: vite.style-fold.ts (copy+SFC-fold+font-inline+webkit), vite.utility-emit.ts (P9 component-utility rules), vite.critical-split.ts (BB.W-CSS-CRITICAL partition). S1 orchestrator <=200L; S2 the three sub-plugins exist + each <=500L; S3 each exports its fns; S4 publishStyleAssets stays exported + both vite configs import it (plugin surface unchanged); S5 the orchestrator imports all three + re-defines no carved body (real carve, not a copy). D1 docs/canon/deps-currency.md records the currency posture AS a markdown table + the shadcn-vue verdict (keep components.json for `add`, no `shadcn-vue update`, baseColor slate->stone); D2 components.json baseColor off slate. Device-free pure-FS (paint-class H, byte-identical build). Born-RED on HEAD (575L god-module + sub-plugins absent + baseColor slate + doc absent) -> GREEN + an 11-bite self-test.",
+    },
+    {
         id: "proof:composable-return-types",
         cmd: "proof:composable-return-types",
         tags: ["local", "ci"],
