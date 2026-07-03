@@ -130,6 +130,13 @@ const REFLOW_PROPS = [
 ];
 
 const LEAF = "src/composables/motion/useDockCtaReceive.ts";
+// BG.W-MOTION-SPINE — the ONE FLIP/morph runner the leaf now COMPOSES. The kf substrate
+// (ElementMorph + springTimingFunction + springPreset + the rAF loop) carved OUT of the
+// leaf into this runner; R1/R3's substrate-compose FOLLOWS the carve into it (the
+// BB.W-CARVE4 reader precedent). The cta-specific terminal seat (PRM snap + the no-target
+// snap) stays in the wrapper (opacity 0 + handOff), so R4's PRM branch-body check is
+// verified in the leaf unchanged.
+const SPINE = "src/composables/motion/useElementMorph.ts";
 const BARREL = "src/composables/motion/index.ts";
 const DEMO = "demo/stories/dock/cta-receive.vue";
 // BC.W-AX-DOCK-CTA-SEAT (R6) — the landing-seat surfaces.
@@ -146,30 +153,38 @@ function checkLeaf(rawLeaf, { fail }) {
     const src = stripComments(rawLeaf);
 
     // R1 — the kf substrate + compositor-only.
-    const importsMorph = /\bElementMorph\b/.test(src);
-    const importsSpring = /\bspringTimingFunction\b/.test(src);
-    const fromKf = /from\s+["']@mkbabb\/keyframes\.js["']/.test(src);
+    // BG.W-MOTION-SPINE — the leaf COMPOSES the ONE runner (`useElementMorph`) that owns the
+    // kf substrate + the rAF loop; the substrate-compose FOLLOWS the carve into the spine.
+    // The direct-in-leaf form (pre-spine + the self-test synthetic bodies) still satisfies.
+    const composesSpine = /\buseElementMorph\b/.test(src);
+    const spineSrc = composesSpine ? stripComments(read(SPINE) ?? "") : "";
+    const morphSrc = `${src}\n${spineSrc}`;
+    const importsMorph = /\bElementMorph\b/.test(morphSrc);
+    const importsSpring = /\bspringTimingFunction\b/.test(morphSrc);
+    const fromKf =
+        /from\s+["']@mkbabb\/keyframes\.js["']/.test(morphSrc) ||
+        (composesSpine && /from\s+["']\.\/useElementMorph["']/.test(src));
     if (!importsMorph)
-        fail("R1", "useDockCtaReceive does not reference the kf ElementMorph (the rect-delta morph core)");
+        fail("R1", "useDockCtaReceive does not reference the kf ElementMorph (the rect-delta morph core) — nor compose the useElementMorph runner that does");
     if (!importsSpring)
-        fail("R1", "useDockCtaReceive does not reference springTimingFunction (the spring curve is not the kf {fn,css} pair)");
+        fail("R1", "useDockCtaReceive does not reference springTimingFunction (the spring curve is not the kf {fn,css} pair) — nor compose the useElementMorph runner that does");
     if (!fromKf)
-        fail("R1", "useDockCtaReceive does not import the kf substrate from @mkbabb/keyframes.js");
+        fail("R1", "useDockCtaReceive does not import the kf substrate from @mkbabb/keyframes.js or the useElementMorph runner");
     // The anti-evasion: NO hand-rolled rAF spring integrator (the reuse is the wired
-    // substrate, not a re-fork — mirrors proof:liquid-reveal / proof:drag-morph D1).
+    // substrate). The compositor-only floor — NO layout-property write on the receive path.
+    // Both scans FOLLOW the carve into the spine (the real morph writer).
     if (
-        /requestAnimationFrame\s*\(\s*function|requestAnimationFrame\s*\(\s*\(/.test(src) &&
-        /\bstiffness\b|\bvelocity\s*[+\-*]|\bdamping\b\s*\*/.test(src)
+        /requestAnimationFrame\s*\(\s*function|requestAnimationFrame\s*\(\s*\(/.test(morphSrc) &&
+        /\bstiffness\b|\bvelocity\s*[+\-*]|\bdamping\b\s*\*/.test(morphSrc)
     )
-        fail("R1", "useDockCtaReceive hand-rolls a rAF spring integrator (the kf substrate is the single physics source — no re-fork)");
-    // The compositor-only floor — NO layout-property write on the receive path.
+        fail("R1", "the receive path hand-rolls a rAF spring integrator (the kf substrate is the single physics source — no re-fork)");
     for (const p of REFLOW_PROPS) {
         const setProp = new RegExp(`setProperty\\(\\s*["']${p}["']`);
         const styleKey = new RegExp(`\\.style\\.${p.replace(/-/g, "")}\\s*=`);
-        if (setProp.test(src))
-            fail("R1", `useDockCtaReceive writes the layout property "${p}" via setProperty (compositor-only floor: transform/opacity/filter ONLY)`);
-        if (styleKey.test(src))
-            fail("R1", `useDockCtaReceive writes the layout property "${p}" on .style (compositor-only floor)`);
+        if (setProp.test(morphSrc))
+            fail("R1", `the receive path writes the layout property "${p}" via setProperty (compositor-only floor: transform/opacity/filter ONLY)`);
+        if (styleKey.test(morphSrc))
+            fail("R1", `the receive path writes the layout property "${p}" on .style (compositor-only floor)`);
     }
 
     // R2 — the byte-fence: no dock morph orchestrator / DOCK_SPRING edit.
@@ -180,14 +195,16 @@ function checkLeaf(rawLeaf, { fail }) {
     if (/\bDOCK_SPRING\b/.test(src))
         fail("R2", "useDockCtaReceive imports DOCK_SPRING (the dock spring register is byte-fenced — the receive seam samples its OWN register from SPRING_PRESETS)");
 
-    // R3 — the same sampled register (no second clock).
-    if (!/\bspringPreset\b/.test(src))
-        fail("R3", "useDockCtaReceive does not read springPreset (the spring must be sampled from the shared SPRING_PRESETS table, not a hand (response, ζ))");
+    // R3 — the same sampled register (no second clock). The springPreset sampling FOLLOWS
+    // the carve into the spine (the runner reads springPreset(name) from SPRING_PRESETS).
+    if (!/\bspringPreset\b/.test(morphSrc))
+        fail("R3", "the receive path does not read springPreset (the spring must be sampled from the shared SPRING_PRESETS table via the useElementMorph runner, not a hand (response, ζ))");
     // A hand-tuned inline spring literal reds (the W-GLASS-CAL fence). Match an object
     // literal carrying BOTH response: <num> AND dampingFraction: <num> as numeric
-    // literals (the sampled value is destructured FROM springPreset, never authored).
-    if (/response\s*:\s*0?\.\d+[\s\S]{0,80}?dampingFraction\s*:\s*0?\.\d+/.test(src))
-        fail("R3", "useDockCtaReceive carries an inline hand-tuned { response: 0.NN, dampingFraction: 0.NN } spring literal (the W-GLASS-CAL clock fence — sample from SPRING_PRESETS)");
+    // literals (the sampled value is destructured FROM springPreset, never authored). The
+    // scan FOLLOWS the carve — a literal smuggled into the runner reds too.
+    if (/response\s*:\s*0?\.\d+[\s\S]{0,80}?dampingFraction\s*:\s*0?\.\d+/.test(morphSrc))
+        fail("R3", "the receive path carries an inline hand-tuned { response: 0.NN, dampingFraction: 0.NN } spring literal (the W-GLASS-CAL clock fence — sample from SPRING_PRESETS)");
 
     // R4 — PRM seats deterministically.
     const hasPrmCheck = /prefersReducedMotion\s*\(\s*\)/.test(src);

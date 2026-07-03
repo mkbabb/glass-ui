@@ -107,6 +107,11 @@ const REFLOW_PROPS = [
 ];
 
 const LEAF = "src/composables/motion/useLiquidReveal.ts";
+// BG.W-MOTION-SPINE — the ONE FLIP/morph runner the leaf now COMPOSES. The kf substrate
+// (ElementMorph + springTimingFunction + the rAF loop) carved OUT of the leaf into this
+// runner; the R1 substrate-compose FOLLOWS the carve into it (the BB.W-CARVE4 reader
+// precedent — "the reader gates that read a carved symbol by name FOLLOW the carve").
+const SPINE = "src/composables/motion/useElementMorph.ts";
 const RECIPE = "src/styles/glass/reveal.css";
 const ANIM = "src/styles/animations.css";
 const ANIMATE_UTIL = "src/styles/utilities/animate.css";
@@ -138,45 +143,46 @@ const fail = (clause, msg) => fails.push(`[${clause}] ${msg}`);
         fail("R1", `${LEAF} does not exist (the source-rect bloom leaf has no home)`);
     } else {
         const src = stripComments(raw);
-        // The bloom is the kf shared-element FLIP substrate — `flipShared` (the
-        // convenience wrapper) OR `ElementMorph` (the core `flipShared` wraps; the
-        // §scope-1-sanctioned "equivalent forward ElementMorph over the trigger→
-        // surface rect delta"). The reveal drives the FLIP INVERSION (surface starts
-        // at the trigger, blooms to settled), which ElementMorph gives directly —
-        // flipShared's forward play is the wrong direction for a reveal, so the leaf
-        // composes ElementMorph. Either kf FLIP member satisfies the substrate-compose.
-        const importsFlip = /\bflipShared\b/.test(src) || /\bElementMorph\b/.test(src);
-        const importsSpring = /\bspringTimingFunction\b/.test(src);
-        // The import must be from the kf surface (directly or via the glass-ui
-        // /motion re-export — both reach the same dormant substrate). A
-        // hand-rolled requestAnimationFrame spring loop is the anti-evasion bite.
+        const spineSrc = stripComments(read(SPINE) ?? "");
+        // BG.W-MOTION-SPINE — the leaf COMPOSES the ONE runner (`useElementMorph`), which
+        // owns the kf substrate. The substrate-compose FOLLOWS the carve into the spine (the
+        // BB.W-CARVE4 reader precedent). The direct-in-leaf form (pre-spine) still satisfies;
+        // the delegated form satisfies via (leaf composes useElementMorph) AND (spine holds
+        // ElementMorph + springTimingFunction) — a severed compose (no `useElementMorph`
+        // reference) does NOT get the spine's substrate.
+        const composesSpine = /\buseElementMorph\b/.test(src);
+        const morphSrc = composesSpine ? `${src}\n${spineSrc}` : src;
+        const importsFlip = /\bflipShared\b/.test(morphSrc) || /\bElementMorph\b/.test(morphSrc);
+        const importsSpring = /\bspringTimingFunction\b/.test(morphSrc);
+        // The import must reach the kf surface — directly (keyframes.js / the /motion suite
+        // re-export) OR via the spine the leaf composes (the runner imports it from kf).
         const fromKf =
-            /from\s+["']@mkbabb\/keyframes\.js["']/.test(src) ||
-            /from\s+["']\.\.\/suite["']/.test(src) ||
-            /from\s+["']\.\/suite["']/.test(src);
+            /from\s+["']@mkbabb\/keyframes\.js["']/.test(morphSrc) ||
+            /from\s+["']\.\.\/suite["']/.test(morphSrc) ||
+            /from\s+["']\.\/suite["']/.test(morphSrc) ||
+            (composesSpine && /from\s+["']\.\/useElementMorph["']/.test(src));
         if (!importsFlip)
-            fail("R1", "useLiquidReveal does not reference the kf shared-element FLIP (flipShared / ElementMorph)");
+            fail("R1", "useLiquidReveal does not reference the kf shared-element FLIP (flipShared / ElementMorph) — nor compose the useElementMorph runner that does");
         if (!importsSpring)
-            fail("R1", "useLiquidReveal does not reference springTimingFunction (the spring curve is not the kf {fn,css} pair)");
+            fail("R1", "useLiquidReveal does not reference springTimingFunction (the spring curve is not the kf {fn,css} pair) — nor compose the useElementMorph runner that does");
         if (!fromKf)
-            fail("R1", "useLiquidReveal does not import the kf substrate from @mkbabb/keyframes.js or the /motion suite re-export");
-        // The anti-evasion: NO hand-rolled rAF spring integrator (the reuse is the
-        // wired substrate, not a re-fork — mirrors proof:drag-morph D1).
-        if (/requestAnimationFrame\s*\(\s*function|requestAnimationFrame\s*\(\s*\(/.test(src) &&
-            /\bvelocity\b|\bstiffness\b|\bdamping\b\s*\*/.test(src))
-            fail("R1", "useLiquidReveal hand-rolls a rAF spring integrator (the kf substrate is the single physics source — no re-fork)");
-        // The compositor-only floor — NO layout-property write on the reveal path.
-        // Scan style.setProperty / inline-style object writes for a reflow prop.
-        for (const p of REFLOW_PROPS) {
-            // setProperty("width", …) or a JS-style key `width:` / `"width":` write.
-            const setProp = new RegExp(`setProperty\\(\\s*["']${p}["']`);
-            const styleKey = new RegExp(`\\b(?:style\\.)?${p.replace(/-/g, "")}\\s*=`);
-            if (setProp.test(src))
-                fail("R1", `useLiquidReveal writes the layout property "${p}" via setProperty (compositor-only floor: transform/opacity/backdrop-filter ONLY)`);
-            // camelCase inline write (e.g. el.style.fontSize = …) — only flag a
-            // direct DOM-style assignment, not a measured rect read.
-            if (/\.style\./.test(src) && styleKey.test(src))
-                fail("R1", `useLiquidReveal writes a layout property "${p}" on .style (compositor-only floor)`);
+            fail("R1", "useLiquidReveal does not import the kf substrate from @mkbabb/keyframes.js, the /motion suite, or the useElementMorph runner");
+        // The compositor-only floor — NO layout-property write on the reveal path. The real
+        // writer is the runner now, so the scan FOLLOWS the carve: the leaf AND (when it
+        // delegates) the spine must both be free of reflow-property writes. A hand-rolled rAF
+        // spring integrator is the anti-evasion bite (the reuse is the wired substrate).
+        for (const scanSrc of composesSpine ? [src, spineSrc] : [src]) {
+            if (/requestAnimationFrame\s*\(\s*function|requestAnimationFrame\s*\(\s*\(/.test(scanSrc) &&
+                /\bvelocity\b|\bstiffness\b|\bdamping\b\s*\*/.test(scanSrc))
+                fail("R1", "the reveal path hand-rolls a rAF spring integrator (the kf substrate is the single physics source — no re-fork)");
+            for (const p of REFLOW_PROPS) {
+                const setProp = new RegExp(`setProperty\\(\\s*["']${p}["']`);
+                const styleKey = new RegExp(`\\b(?:style\\.)?${p.replace(/-/g, "")}\\s*=`);
+                if (setProp.test(scanSrc))
+                    fail("R1", `the reveal path writes the layout property "${p}" via setProperty (compositor-only floor: transform/opacity/filter ONLY)`);
+                if (/\.style\./.test(scanSrc) && styleKey.test(scanSrc))
+                    fail("R1", `the reveal path writes a layout property "${p}" on .style (compositor-only floor)`);
+            }
         }
     }
 }

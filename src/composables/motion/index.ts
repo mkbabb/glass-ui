@@ -31,15 +31,18 @@ export * from "./useLiquidPress";
 // gesture. Statically reaches `@mkbabb/keyframes.js` (via `Draggable`), so it rides
 // the heavy-peer `/motion` barrel — NOT `/motion-core`.
 export * from "./useDragMorph";
-// BB.W-LIQUID-REVEAL — the iOS-27 bloom-from-source-rect open primitive. Composes
-// the UNCONSUMED kf `ElementMorph` + `springTimingFunction` (the {fn,css} spring
-// pair) into the three-channel liquid reveal (scale+fade+backdrop-blur-settle from
-// the trigger's origin), compositor-only + PRM-snap. Statically reaches
-// `@mkbabb/keyframes.js`, so it rides the heavy-peer `/motion` barrel — NOT
-// `/motion-core` (the SCC-trap discipline; the kf-bearing leaf cannot ship on the
-// engine-free surface). The CSS `.glass-reveal` recipe is the zero-JS floor the ≥8
-// overlays compose; this leaf is the source-rect REFINEMENT (the dialog-from-button,
-// the dock-from-pill).
+// BG.W-MOTION-SPINE — the ONE compositor FLIP/morph runner (`useElementMorph` +
+// `asElement` + `lockSpatialTransition`). ONE `new ElementMorph`, ONE rAF `step()`, ONE
+// PRM snap, ONE compositor-only invariant, sampled from `SPRING_PRESETS`. The reveal + cta
+// leaves below COLLAPSE onto it — each a ≤20-line-config wrapper that declares the
+// direction + channels + endpoints, never a second rAF loop (useBloomUp's fold is booked).
+// Keyframes-bearing (via `ElementMorph`) → the heavy-peer `/motion` barrel, NOT /motion-core.
+export * from "./useElementMorph";
+// BB.W-LIQUID-REVEAL — the iOS-27 bloom-from-source-rect open primitive. Now a THIN
+// wrapper over `useElementMorph` (BG.W-MOTION-SPINE): a `direction: "in"` FLIP inversion
+// blooming FROM the trigger (scale+fade+filter-blur-settle), compositor-only + PRM-snap.
+// The CSS `.glass-reveal` recipe is the zero-JS floor the ≥8 overlays compose; this leaf
+// is the source-rect REFINEMENT (the dialog-from-button, the dock-from-pill).
 export * from "./useLiquidReveal";
 // BB.B2 W-DOCKMORPH-CTA — the external-CTA-MORPHS-INTO-dock seam. Composes the SAME
 // kf `ElementMorph` + `springTimingFunction` substrate useLiquidReveal activates,

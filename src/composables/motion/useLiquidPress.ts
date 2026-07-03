@@ -74,6 +74,15 @@ export interface UseLiquidPressOptions extends UseSpringPressOptions {
      */
     pressVar?: string;
     /**
+     * BG.W-MOTION-SPINE — the press-tower collapse toggle. `true` (default) is the coupled
+     * squishy register: `useLiquidFlex`'s volume-preserving X/Y reciprocal deform rides the
+     * spring value (the Card `:pressable` register). `false` is the BARE mode — the press
+     * drive (`pressVar`) + a UNIFORM shrink `scale`, no reciprocal deform, no `--flex-vel`
+     * (the calmer no-overshoot register a dock control rides). ONE wrapper, two registers —
+     * so `useSpringPress`-alone is no longer a second public press face for one behaviour.
+     */
+    squish?: boolean;
+    /**
      * Below this travel threshold the inline `scale` is OMITTED from `pressStyle` so the
      * surface's at-rest CVA/utility transforms (a hover `scale`) win unimpeded; the JS
      * reciprocal scale wins ONLY while the press is engaged (the single-source press,
@@ -139,6 +148,11 @@ export function useLiquidPress(
     const maxStretch = options.maxStretch ?? 1.04;
     const pressVar = options.pressVar ?? "--press-t";
     const engageThreshold = options.engageThreshold ?? 0.001;
+    // BG.W-MOTION-SPINE — the press-tower collapse: squish ON (default) is the coupled
+    // reciprocal deform; OFF is the bare uniform-shrink press (the calmer register). The
+    // toggle is what lets THIS wrapper serve BOTH press registers, so `useSpringPress`
+    // stops being a second public press face for one behaviour.
+    const squishOn = options.squish !== false;
 
     // The spring press driver — interruptible by construction (the kf SpringProgress
     // target re-seat carries velocity), PRM-aware (respectReducedMotion snaps the value).
@@ -156,31 +170,38 @@ export function useLiquidPress(
     // The volume-preserving reciprocal squish — SQUISH-ONLY (a press surface has no size
     // span), so it reads the spring value as the `"linear"`-law travel fraction, capped
     // LOW. The SAME drive calls carry the release (no free-running timer — the M5
-    // determinism `useLiquidFlex` documents).
-    const squish = useLiquidFlex({
-        from: 0,
-        to: 1,
-        axis: "width",
-        // BD.W-MOTION-WEIGHT — the cap is weight-coupled SITE-LOCALLY: `effectiveCap`
-        // reads the live `--motion-weight` off the pressed element and returns the
-        // `maxStretch` cap at rest 0.618, 1.0 at weight 0 (the observer/PRM fence). No
-        // element → the static cap (still correct at rest weight). The reciprocal
-        // squish is the GENTLE press register.
-        maxStretch: () => effectiveCap(options.el?.value ?? null, maxStretch),
-        squishLaw: "linear",
-    });
+    // determinism `useLiquidFlex` documents). Built ONLY on the squishy register — the bare
+    // mode (`squish: false`) presses on a uniform shrink alone (the calmer register).
+    const squish = squishOn
+        ? useLiquidFlex({
+              from: 0,
+              to: 1,
+              axis: "width",
+              // BD.W-MOTION-WEIGHT — the cap is weight-coupled SITE-LOCALLY: `effectiveCap`
+              // reads the live `--motion-weight` off the pressed element and returns the
+              // `maxStretch` cap at rest 0.618, 1.0 at weight 0 (the observer/PRM fence). No
+              // element → the static cap (still correct at rest weight). The reciprocal
+              // squish is the GENTLE press register.
+              maxStretch: () => effectiveCap(options.el?.value ?? null, maxStretch),
+              squishLaw: "linear",
+          })
+        : null;
 
     // Feed the live spring value as the squish travel via a WATCH (the side-effect site —
     // NOT inside a computed getter, which would mutate `useLiquidFlex`'s travel ref during
     // render). `flush: 'sync'` so the squish tracks the spring frame-for-frame.
-    watch(() => press.value.value, (t) => squish.squish(t), {
-        immediate: true,
-        flush: "sync",
-    });
+    if (squish) {
+        watch(() => press.value.value, (t) => squish.squish(t), {
+            immediate: true,
+            flush: "sync",
+        });
+    }
 
     const pressStyle = computed<CSSProperties>(() => {
         const t = press.value.value;
-        const stretch = squish.stretch.value;
+        // The reciprocal stretch (squishy register) or a flat 1 (bare mode — a uniform
+        // shrink, no reciprocal deform).
+        const stretch = squish ? squish.stretch.value : 1;
         // The uniform press shrink couples WITH the reciprocal squish: X reads
         // `shrink·stretch`, Y reads `shrink/stretch` (volume preserved on the travel
         // axis). The shrink rides the consumer's press-scale magnitude (default 0.03 →
@@ -193,14 +214,15 @@ export function useLiquidPress(
             // The ONE press drive scalar the coupled brightness/specular leg reads. The
             // var NAME is consumer-chosen so a surface routes it onto its own gleam token.
             [pressVar]: t.toFixed(4),
-            // BD.W-MOTION-WEIGHT (§2c) — the saturating press velocity term, emitted so
-            // the surface CSS can ride the local `--motion-weight: calc(0.618 + 0.382 *
-            // var(--flex-vel))` boost (the GENTLE press register). 0 at rest;
-            // self-extinguishing as the spring settles. The primitive stays
-            // element-less — this is a pure projection of the term `useLiquidFlex`
-            // already computes.
-            "--flex-vel": squish.flexVel.value.toFixed(4),
         } as CSSProperties;
+        // BD.W-MOTION-WEIGHT (§2c) — the saturating press velocity term, emitted (squishy
+        // register only) so the surface CSS can ride the local `--motion-weight` boost. 0 at
+        // rest; self-extinguishing as the spring settles. A pure projection of the term
+        // `useLiquidFlex` already computes.
+        if (squish) {
+            (style as Record<string, string>)["--flex-vel"] =
+                squish.flexVel.value.toFixed(4);
+        }
         // Emit the JS reciprocal `scale` ONLY while the press is engaged (past the
         // sub-perceptual threshold) — at rest the inline `scale` is OMITTED so the
         // surface's hover/rest transforms win unimpeded. The inline value wins over a CVA

@@ -20,10 +20,25 @@
 // NAME-COLLISION FENCE (proof:liquid-morph, the BC dock-morph teardrop gate, is DISTINCT
 // from useLiquidMorph and MUST survive untouched).
 //
-// SELF-PROVING: the detector runs a second time against a synthetic state that re-plants a
-// dead composable (file present + a live import), and asserts it FLAGS — so the gate's
-// teeth cannot silently rot (the born-RED→GREEN discipline, the house comment-strip-free
-// pure-detector pattern).
+// BG.W-MOTION-SPINE ADDS TWO CLAUSE FAMILIES (the F5.1 runner-single collapse):
+//   • S1 — the ONE FLIP/morph runner. `useElementMorph.ts` is the SOLE owner of the rAF
+//     `step()` loop over `new ElementMorph` (sampled from SPRING_PRESETS via
+//     springPreset/springTimingFunction) + the `lockSpatialTransition` driver-lock seam +
+//     the hoisted `asElement` resolver. The reveal + cta family (useLiquidReveal,
+//     useDockCtaReceive) COMPOSE it and own NO second runner (no `new ElementMorph`, no
+//     `requestAnimationFrame`, no `springTimingFunction` re-sample) — the HOLLOW-falsifier
+//     the `proof:flip-one` gate would have carried, folded here. (useBloomUp's fold onto
+//     the spine is BOOKED — see the BLOOM_WRAPPERS note.)
+//   • S2 — the press-tower collapse (R16 WATCH-3). `useLiquidPress` composes `useSpringPress`
+//     (the interruptible velocity-continuous re-seat, via `useSpring` → kf `SpringProgress`)
+//     and exposes the `squish?: boolean` toggle so ONE wrapper serves BOTH press registers.
+//     Button.vue PRESERVES the byte-identical `--glass-btn-press-t` drive on its DIRECT
+//     `useSpringPress` composition (the `proof:button-glass` B2 fence held).
+//
+// SELF-PROVING: the detector runs against synthetic states that (a) re-plant a dead
+// composable (file present + a live import) and (b) re-fork the rAF/ElementMorph runner into
+// a bloom wrapper, and asserts BOTH FLAG — so the gate's teeth cannot silently rot (the
+// born-RED→GREEN discipline, the house comment-strip-free pure-detector pattern).
 //
 // Device-free. Tags ["local","ci","release"].
 
@@ -67,6 +82,19 @@ const DEAD_GATES = [
     "scripts/proof-celebration-burst.mjs",
     "scripts/proof-viz-choreography.mjs",
     "scripts/proof-dock-context.mjs",
+];
+
+// ── The BG.W-MOTION-SPINE runner-single surface (S1) ────────────────────────────
+// The ONE FLIP/morph runner + the bloom leaves that COLLAPSE onto it. The two shipped in
+// this cut are useLiquidReveal + useDockCtaReceive (the reveal + cta family); useBloomUp's
+// fold is BOOKED (its 4th color channel + no-mount-flash prime couple tightly into
+// proof:bloom-up's per-channel W3/W4 asserts, which must follow the carve into the spine's
+// abstracted shape — a bounded successor, its own gate-widen). Until then useBloomUp keeps
+// its own runner and is NOT on this runner-single watch (it is not one of the folded leaves).
+const SPINE_PATH = "src/composables/motion/useElementMorph.ts";
+const BLOOM_WRAPPERS = [
+    "src/composables/motion/useLiquidReveal.ts",
+    "src/composables/motion/useDockCtaReceive.ts",
 ];
 
 // ── The import corpus — every src/ + demo/ .ts/.vue/.mjs source (the grep surface for a
@@ -159,6 +187,61 @@ function detect({ existsFn, readFn, corpus }) {
             V.push(`M6: retired subject-gate still present (${g}) — its subject composable is DEFINITION-ABSENT`);
     }
 
+    // ── S1 — the ONE FLIP/morph runner (BG.W-MOTION-SPINE) ──────────────────────────
+    const spine = readFn(SPINE_PATH);
+    if (!existsFn(SPINE_PATH)) {
+        V.push(`S1: ${SPINE_PATH} (the ONE FLIP/morph runner) is missing`);
+    } else {
+        if (!/new\s+ElementMorph\b/.test(spine))
+            V.push("S1: the spine must construct the ONE `new ElementMorph` (the compositor rect-delta)");
+        if (!/requestAnimationFrame\s*\(/.test(spine))
+            V.push("S1: the spine must own the ONE rAF `step()` loop");
+        if (!/springTimingFunction\s*\(/.test(spine))
+            V.push("S1: the spine must sample the spring curve via `springTimingFunction` (never a hand curve)");
+        if (!/springPreset\s*\(/.test(spine))
+            V.push("S1: the spine must sample the (response, ζ) from SPRING_PRESETS via `springPreset()`");
+        if (!/export\s+function\s+lockSpatialTransition\b/.test(spine))
+            V.push("S1: the spine must export `lockSpatialTransition` (the §3.1 driver-lock seam)");
+        if (!/export\s+function\s+asElement\b/.test(spine))
+            V.push("S1: the spine must export the hoisted `asElement` resolver (the binding-verification cure — every bloom leaf imports it)");
+    }
+    // The three bloom leaves COMPOSE the spine + own NO second runner.
+    for (const w of BLOOM_WRAPPERS) {
+        if (!existsFn(w)) {
+            V.push(`S1: bloom wrapper missing (${w})`);
+            continue;
+        }
+        const src = readFn(w);
+        if (!/\buseElementMorph\b/.test(src))
+            V.push(`S1: ${w} must COMPOSE useElementMorph (the ONE runner) — a wrapper cannot re-fork the morph engine`);
+        if (/new\s+ElementMorph\b/.test(src))
+            V.push(`S1: ${w} constructs its OWN \`new ElementMorph\` — the runner is single-sourced in useElementMorph.ts (no second FLIP engine)`);
+        if (/requestAnimationFrame\s*\(/.test(src))
+            V.push(`S1: ${w} runs its OWN \`requestAnimationFrame\` loop — the rAF runner is single-sourced (compose the spine, do not re-fork it)`);
+        if (/springTimingFunction\s*\(/.test(src))
+            V.push(`S1: ${w} re-samples \`springTimingFunction\` — the spring sample is the spine's ONE source`);
+    }
+
+    // ── S2 — the press-tower collapse (BG.W-MOTION-SPINE / R16 WATCH-3) ─────────────
+    const lp = readFn("src/composables/motion/useLiquidPress.ts");
+    if (!/useSpringPress\s*\(/.test(lp))
+        V.push("S2: useLiquidPress must compose `useSpringPress` (the interruptible velocity-continuous re-seat — the iOS press contract)");
+    if (!/\bsquish\?\s*:\s*boolean/.test(lp))
+        V.push("S2: useLiquidPress must expose the `squish?: boolean` collapse toggle (the ONE wrapper serving BOTH press registers — bare + squishy)");
+    if (!/options\.squish\s*!==\s*false/.test(lp))
+        V.push("S2: useLiquidPress must BRANCH on the squish toggle (the bare-mode path — `options.squish !== false`), not ignore it");
+    // The interruptible re-seat chain: useSpringPress → useSpring → kf SpringProgress.
+    const sp = readFn("src/composables/motion/useSpringPress.ts");
+    if (!/\buseSpring\b/.test(sp))
+        V.push("S2: useSpringPress must compose `useSpring` (the SpringProgress velocity-continuous re-seat — a play() mid-flight retargets, never restarts)");
+    // Button preserves the byte-identical --glass-btn-press-t drive on the DIRECT
+    // useSpringPress composition (WATCH-3 — the proof:button-glass B2 direct-composition fence).
+    const btn = readFn("src/components/ui/button/Button.vue");
+    if (!/useSpringPress\s*\(/.test(btn))
+        V.push("S2: Button.vue must KEEP composing `useSpringPress` DIRECTLY (the proof:button-glass B2 fence — WATCH-3; Button is NOT routed through useLiquidPress)");
+    if (!/--glass-btn-press-t/.test(btn))
+        V.push("S2: Button.vue must PRESERVE the byte-identical `--glass-btn-press-t` press drive (WATCH-3 — the gleam/specular coupling reads it)");
+
     return V;
 }
 
@@ -189,6 +272,24 @@ if (!selfTestFlags) {
     process.exit(1);
 }
 
+// ── The S1 self-test bite — re-fork the rAF/ElementMorph runner into a bloom wrapper and
+//    assert the runner-single clause FLAGS it (BG.W-MOTION-SPINE teeth). ─────────────
+const FORK_TARGET = "src/composables/motion/useLiquidReveal.ts";
+const forkRead = (rel) =>
+    rel === FORK_TARGET
+        ? // a synthetic wrapper that re-forks the engine: a live requestAnimationFrame loop
+          // over its OWN `new ElementMorph` — no useElementMorph compose (the dual-path shelf-ware)
+          'let raf = 0;\nfunction play(el){ const m = new ElementMorph(a, b); raf = requestAnimationFrame(() => m.apply(el, 0.5)); }\n'
+        : diskRead(rel);
+const forkViolations = detect({ existsFn: diskExists, readFn: forkRead, corpus });
+const s1SelfTestFlags = forkViolations.length > violations.length;
+if (!s1SelfTestFlags) {
+    console.error(
+        "proof:motion — S1 SELF-TEST FAILED: the detector did NOT flag a bloom wrapper that re-forked the rAF/ElementMorph runner. The runner-single teeth are gone; do not trust a GREEN.",
+    );
+    process.exit(1);
+}
+
 // ── Report ──────────────────────────────────────────────────────────────────────
 console.log("proof:motion — the F5 dead-composable cut is COMPLETE (BG.W-DEAD-COMPOSABLE-CUT)");
 console.log(`  dead composables      : ${DEAD.map((d) => d.name).join(", ")}`);
@@ -197,7 +298,11 @@ console.log(`  gutted DATA leaf      : morphSignatures.ts (MORPH_SIGNATURES on t
 console.log(`  evidence docs deleted : ${DEAD_EVIDENCE.length}`);
 console.log(`  retired gates deleted : ${DEAD_GATES.length}`);
 console.log(`  name-collision fence  : proof-liquid-morph.mjs ${diskExists("scripts/proof-liquid-morph.mjs") ? "PRESENT (untouched)" : "MISSING"}`);
-console.log(`  self-test (bite proof): OK — a re-planted dead composable is flagged`);
+console.log("proof:motion — the F5.1 motion spine is single-sourced (BG.W-MOTION-SPINE)");
+console.log(`  ONE FLIP/morph runner : ${SPINE_PATH} ${diskExists(SPINE_PATH) ? "PRESENT" : "MISSING"} (lockSpatialTransition + asElement + ONE rAF/ElementMorph)`);
+console.log(`  bloom leaves collapsed: ${BLOOM_WRAPPERS.length} (useLiquidReveal · useDockCtaReceive — each ≤20-line-config, no second runner; useBloomUp fold BOOKED)`);
+console.log(`  press-tower collapse  : useLiquidPress squish?-toggle + Button --glass-btn-press-t drive preserved (WATCH-3)`);
+console.log(`  self-test (bite proof): OK — a re-planted dead composable AND a re-forked rAF/ElementMorph runner both flag`);
 console.log(`  corpus scanned        : ${corpus.length} src/+demo/ sources`);
 console.log(`  violations            : ${violations.length}`);
 for (const m of violations) console.error(`  CUT-INCOMPLETE   ${m}`);
@@ -212,6 +317,9 @@ writeGateArtifact(ARTIFACT, {
     deadGates: DEAD_GATES,
     corpusScanned: corpus.length,
     selfTestFlagged: selfTestFlags,
+    s1SelfTestFlagged: s1SelfTestFlags,
+    spine: SPINE_PATH,
+    bloomWrappers: BLOOM_WRAPPERS,
     violations,
     green: violations.length === 0,
 });
