@@ -60,7 +60,7 @@ CSS `--spring-*` + the JS `MOTION_CURVES.<name>` are the two generated twins.
 | snappy | `--spring-snappy` | 0.42, 0.78 | ≤0.08; 90%-travel ∈ [0.55,0.70] of clock | table or override | snap | preview |
 | bouncy | `--spring-bouncy` | 0.5, 0.55 | ∈ [0.12,0.18] (the Apple band) | table or override | snap | preview |
 | gentle | `--spring-gentle` | 0.7, 1.0 | 0 (critically-damped, no overshoot) | table or override | snap | preview |
-| dock | `--spring-dock` | 0.32, 0.7 (value.js/kf-fenced KEEP) | ≤0.06 | table (FROZEN with the dock row) | snap | preview |
+| dock | `--spring-dock` | 0.68, 0.64 (BD.W-ANIM-IOS27-TUNE weighty-gooey) | ≤0.08 (+7.3% liquid overshoot) | table (`springPreset("dock")` — ONE row, no fence) | snap | preview |
 | press | `--spring-press` | 0.15, 0.86 (iOS interactiveSpring) | ≤0.08 | table or override | snap (zero transform frames) | preview |
 
 ## Kind 2 — CLOCK (DERIVED-not-tunable)
@@ -73,7 +73,7 @@ Generated from the spring; the registry records READ-ONLY. NO live control.
 | snappy | `--spring-snappy-duration` | 0.34s | DERIVED | truncating re-introduces tail-jank (W-GLASS-CAL fence) |
 | bouncy | `--spring-bouncy-duration` | 0.57s | DERIVED | re-derives on the SPRING-EASE ζ change |
 | gentle | `--spring-gentle-duration` | 0.44s | DERIVED | — |
-| dock | `--spring-dock-duration` | 0.28s | DERIVED | FROZEN with the dock row |
+| dock | `--spring-dock-duration` | 0.66s | DERIVED | re-derives with the dock row |
 | press | `--spring-press-duration` | 0.11s | DERIVED | minted with the press row |
 
 ## Kind 3 — EASING curve
@@ -112,7 +112,7 @@ them is kind 1.
 |---|---|---|---|---|
 | button press | `--glass-btn-press-t` | 0 | [0,1] | the spring (kind 1) + the surface CSS |
 | card press | `--card-press-t` | 0 | [0,1] | spring + recipe |
-| dock morph | `--dock-morph-t` | 0 | [0,1] | `DOCK_SPRING` (value.js-fenced) |
+| dock morph | `--dock-morph-t` | 0 | [0,1] | `DOCK_SPRING` (`springPreset("dock")`) |
 | dock expand | `--dock-expand-t` | 0 | [0,1] | the dock morph scalar |
 | border-progress | `--border-progress-fill` | 0% | [0%,100%] | the value-axis + `useBorderSpectrum` |
 | progress crescendo | `--progress-crescendo` | 0 | [0,1] | the progress value |

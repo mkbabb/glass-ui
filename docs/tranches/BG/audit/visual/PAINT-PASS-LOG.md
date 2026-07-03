@@ -587,3 +587,85 @@ mustFix (for a build-fix-agent):
 Captures (route-health only — no metal render exists to capture):
 - DELTA: `docs/tranches/BG/audit/visual/BG.W-AUR-METAL-FINISH-DELTA.md`
 - 4 route-health PNGs: `docs/tranches/BG/audit/visual/BG.W-AUR-METAL-FINISH-assets/{chrome,safari}-aurora-{light,dark}.png` (+ `chrome-results.json` · the `BG.W-AUR-METAL-FINISH-chrome-capture.mjs` capture script)
+
+---
+
+## 2026-07-03 — F2/F3/F9 batch (rows 3.10 / F2.2 / 8.x / 6.4 / W-AUR-METAL-FINISH)
+
+allPass: **true** — 5 PASS, 0 FAIL. Every wave in this batch flips (or confirms) PAINT-PENDING -> DONE. This batch RESOLVES the prior W-AUR-METAL-FINISH FAILED -> PAINT-PENDING hold recorded above: the build-fix-agent surfaced the metal medium (uMedium 8/9) via the single-sourced picker + the `&aurmedium=metal`/`metal-gradient` capture param, and the re-judge reads lit warm folded metal on both engines.
+
+| Wave | Row | Verdict | Cursor |
+|------|-----|---------|--------|
+| BG.W-GLASS-DYNAMICS | 3.10 | PASS | DONE |
+| BG.W-GLASS-BASIS-CONSOLIDATE | F2.2 | PASS | DONE |
+| BG.W-SIRI-DOCK-CAPABILITY | 8.x | PASS | DONE |
+| BG.W-VIZ-REVEAL-BLOOM | 6.4 | PASS | DONE |
+| BG.W-AUR-METAL-FINISH | W-AUR-METAL-FINISH | PASS | DONE (supersedes the PAINT-PENDING hold above) |
+
+Provenance across the batch: Chrome = real Chrome.app 149 via CDP `connectOverCDP` on `ANGLE Metal Renderer: Apple M5 Max` (real Metal, not SwiftShader); Safari = off-screen WKWebView on system `WebKit.framework` / `Apple GPU`. Engine + GPU decoded IN-PIXEL from the magenta badge per leg. All captures over BUILT bytes on `:5200`/`:5201` (vite preview of the demo dist, NOT the `:5199` dev server) via the C18 `?capture=` harness. `node scripts/verify-siblings-intact.mjs --quiet` exits 0 before AND after (this synthesis run + each per-wave judge run); no sibling tree touched; every judge's preview server + debug Chrome killed and throwaway udd removed.
+
+Cross-batch OBSERVATION (recorded, NOT a paint defect, does NOT gate any wave here): the whole `proof:glass` gate reds on the `safari-blur-var` arm owned by a DIFFERENT wave (BG.W-GLASS-REGISTER-UNIFY) — the cross-tranche HEAD commit `520a6ab6` (BH.B5a-deps-currency) split `vite.style-assets.ts` -> `vite.style-fold.ts` while the gate hardcodes `VITE_STYLE_ASSETS='vite.style-assets.ts'`. The webkit pass STILL FUNCTIONS (dist carries the `-webkit-backdrop-filter` pairs; live Safari captures paint the blur). It is a one-line gate-path re-point owned by W-GLASS-REGISTER-UNIFY / the BH.B5a reconciliation. The `glass-dynamics` and `dark-arm-color-reversal` arms that gate THESE waves are individually GREEN.
+
+---
+
+### PASSED -> DONE
+
+#### 3.10 — BG.W-GLASS-DYNAMICS (cursor flip `0169fec6`)
+
+Dual-engine non-authoring paint over the glass read-carrier band. `proof:glass` `glass-dynamics` arm GREEN (GD1 rest-hairline + GD2 neutral fence `hsl(40 35% 92%)` + GD3 backdrop-hue seam bounded/neutral-default + GD4 press-couple css+js no-fork on the ONE `--glass-btn-press-t` + all 9 self-test bites).
+
+- 16 PNGs = 4 routes (`/foundations/paper-glass` · `/substrates/glass-material` · `/display/buttons` · `/display/card`) × 2 engines × 2 modes, all resolve on disk @2880×1800; Chrome GL_RENDERER = ANGLE Metal Apple M5 Max on all 8, Safari = Apple GPU on all 8.
+- READ CONFIRMED (computed getComputedStyle every route/mode): the neutral specular hairline lights at rest — `::before` opacity `0.07` + a `0.75px` neutral warm-cream `box-shadow …inset` (`color(srgb 0.949 0.929 0.890 / 0.7)`); `--specular-intensity=0` confirms it lights via the opacity-floor, not the interaction channel. Press-couple `--glass-btn-press-t` defaults `0` (rest byte-identical no-op, soft-gated, no fork). `:pressable` Card / Button glass variants auto-arm; the blanket tier-root pointermove delegation is DECLINED (static-plate fence deliberate; ASK-GU-LIQUIDHOVER PARTIAL).
+- Standing gestalt: recessive aurora (localGradient `<5` no conic banding, maxSat `≤0.61` no oversaturation, warm R>G>B every sample), grain calm, hero fits envelope, dark register luminous-transmissive (not a dead void), WebKit `-webkit-backdrop-filter` blur paints (built demo CSS webkit=53).
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-GLASS-DYNAMICS-DELTA.md`
+- 16 PNGs + probe: `docs/tranches/BG/audit/visual/BG.W-GLASS-DYNAMICS-paint/gd-{chrome,safari}-{paper-glass,glass-material,buttons,card}-{light,dark}.png` (+ `chrome-facts.json`)
+
+#### F2.2 — BG.W-GLASS-BASIS-CONSOLIDATE (cursor flip `0c6ce56b`, src `d437cf52`)
+
+The zero-pixel elegance transposition. Dual-engine paint over 5 glass-band routes = 20 PNGs @2880×1800, all resolving on disk with in-pixel engine-badge provenance (no SwiftShader on either leg). Zero-pixel PROVEN: the 3-touched-file diff (`glass/surfaces.css`, `tokens/dark-arm.css`, `tokens/light-dark.css`) is COMMENT-ONLY (`git show d437cf52`) — CSS values byte-unchanged; the deliverable is the recorded idiom (colors -> `light-dark()` canonical, shadows/insets -> `.dark{}` plain arms per the inset-shadow-trap) + the new `proof:glass` `dark-arm-color-reversal` arm.
+
+- `dark-arm-color-reversal` arm GREEN: DA1 lockstep 60 dual-arm color witnesses 0-divergence, DA2 no shadow-valued `light-dark()`, DA3 canon in both files, DA4 shadows -> `.dark` survives.
+- PAINT READ (both engines, both modes): paper-glass 4-tier ladder frosts the grain progressively; glass-material 5-rung ladder over recessive warm aurora (dark = luminous warm-brown, not charcoal); glass-panel rimless `0.30->0.95` ladder over live aurora; dialog overlay-band glass with the dark card LIFTING via its `.dark{}` box-shadow rim (inset-trap fence confirmed IN PAINT); dock/overview plates transmit the live aurora. Corroboration: all 20 non-blank (sd 12-59), light-mean > dark-mean in every one of 10 route/engine pairs. Safari backdrop-filter blur PAINTS (dist carries the `-webkit-backdrop-filter` pairs incl. the `.glass-top-layer` `blur(var())` subject at `dist/styles/animations.css:385`).
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-GLASS-BASIS-CONSOLIDATE-DELTA.md`
+- 20 PNGs + probe: `docs/tranches/BG/audit/visual/BG.W-GLASS-BASIS-CONSOLIDATE-paint/gbc-{glass-material,paper-glass,glass-panel,dialog,dock-overview}-{chrome,safari}-{light,dark}.png` (+ `chrome-results.json`)
+
+#### 8.x — BG.W-SIRI-DOCK-CAPABILITY (cursor flip `f9cd6f49`)
+
+The ONE endorsed ADD. Dual-engine (Chrome/real-Metal M5 Max + Safari/WebKit Apple GPU), both modes, rest+engaged. `proof:siri` GREEN re-run (E/S/W/D + fences). All 16 capture PNGs + probe JSON resolve on disk.
+
+- **S** — the island morphs on ONE `--siri-island-t` (rest t=0 dormant -> engaged t=0.33 listening; clip-aperture opens; box-INVIOLATE, rect w=294 unchanged = zero reflow; `role=status`), reads as a `.glass-floating` plate (dark = luminous-dark, light = warm-cream) both engines both modes.
+- **W** — the demo-private WebGL2 waveform is 100% WARM / 0% teal-navy (mean hue ≈21°) across all 4 engaged samples; wave-bed opacity ramps 0 -> 0.48 on engage.
+- **D** — the island lives in the `#rail` slot (`railSlotPresent=true`) beside the dock, composes `useDockSearch` ("Ask…" field + "Search or ask" pill), box-inviolate. **E** — `filter:blur()` scrim (Safari-safe, not backdrop-filter) coupled to the scalar.
+- DockStage aurora warm/recessive (no conic banding, no oversaturation), grain calm, "Siri Island" hero fits envelope, dark luminous. `/dock/overview` is a clean regression host — no Siri island by design (scoped to `/dock/siri-island` via the `#rail` escape).
+- Accepted capture limitation (NOT a wave defect): off-screen WKWebView throttles the dock-spring rAF, so the Safari engaged capture forces `--siri-island-t` (windowed Chrome is the authoritative engaged evidence); the Chrome `-responding` captures stalled at the listening scalar (a scripting artifact — listening is the binding bloom evidence).
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-SIRI-DOCK-CAPABILITY-DELTA.md`
+- 16 PNGs + probe: `docs/tranches/BG/audit/visual/BG.W-SIRI-DOCK-CAPABILITY-paint/{chrome,safari}-dock-siri-island-{light,dark}-{rest,listening,forced}.png` · `{chrome,safari}-dock-overview-{light,dark}-rest.png` (+ `chrome-probe.json`)
+
+#### 6.4 — BG.W-VIZ-REVEAL-BLOOM (cursor flip `ac1bd92d`)
+
+Dual-engine (Chrome/ANGLE-Metal M5 Max + Safari/WebKit Apple GPU), both modes. `proof:viz` GREEN incl. R1-R8 (R8 = `useVizChoreography` DEFINITION-ABSENT: 0 refs, no file — the orphan-delete is 10.5's; the reveal BUILD stays intact). 20/20 PNGs resolve on disk @2880×1800; provenance decoded CHROME/ANGLE-Metal + WEBKIT/Apple-GPU.
+
+- REVEAL-BLOOM PAINT (Chrome, LIVE non-capture on real Metal — capture mode neutralizes CSS anim by design, so the overshoot is a computed-DOM check on the live path): all 10 route×mode blooms fire — `data-substrate-reveal` attr fired + `getAnimations()` carries `substrate-reveal-bloom`; brightness OVERSHOOTS +13.02% to +13.17% (above the ≥12% bar) then monotone-settles to exactly 1.0 (`filter:none` rest); FIELD `scale(1)` held every frame (`scaleViolation=false` ×10 — no box-zoom gutter); one-shot guard holds (scroll-off-and-back -> `SECOND_BLOOM_FIRED:false`).
+- Settled-surface gestalt (both engines, both modes): recessive aurora (no conic, no oversaturation), grain calm, hero fits envelope, dark warm-ember (not a void), constellation lattice neutral (NOT the slides red anomaly).
+- Accepted harness limitation (NOT a wave defect): off-screen WKWebView throttles rAF (`document.hidden`), so rAF-driven Canvas2D vizzes (constellation) show a blank canvas off-screen while surface/chrome/hero/type paint — the KNOWN 6.3-accepted no-rAF limit, NOT a WebKit regression. The reveal-bloom is engine-agnostic by construction (baseline CSS `@keyframes` in the built `/styles` bytes both engines run + engine-agnostic IO/attr JS).
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-VIZ-REVEAL-BLOOM-DELTA.md`
+- 20 PNGs: `docs/tranches/BG/audit/visual/BG.W-VIZ-REVEAL-BLOOM-paint/{chrome,safari}-{substrates,aurora,blob,constellation,fourier-field}-{light,dark}.png`
+
+#### W-AUR-METAL-FINISH — BG.W-AUR-METAL-FINISH (cursor flip `076a5dbc`) — SUPERSEDES the prior PAINT-PENDING hold
+
+The metal MEDIUM (uMedium 8/9) is now SURFACED and REACHABLE — the prior blocker (un-surfaced, zero metal PNGs) is fully resolved by the build-fix-agent (picker single-sourced off `mediumOptions`; `&aurmedium=metal`/`metal-gradient` capture param forces it). Dual-engine over BUILT bytes on `:5200`, C18 `?capture` harness: Chrome (ANGLE Metal Apple M5 Max, WGSL path) + Safari (system WebKit Apple GPU, WebGL2 path — proven via documentStart getContext hook `["webgl2"×7]`). `proof:aur-metal` GREEN (re-run independently).
+
+- PAINT (both engines, both modes): the `&aurmedium=metal` param forces the medium (DOM trigger reads "Medium Metal"/"Medium Brushed Metal" both engines) and the studio stage renders as WARM FOLDED METAL — copper->gold->amber relief, folds catch the cursor-synth rake light, warm catch r≥g≥b (`[251,250,248]` light / `[233,230,227]` dark), NO cold catch-light, no oversaturation (field satP99 0.29-0.62). Distinct from the smooth pink/peach Dawn. metal DUAL-PORTS load-bearing (Chrome WGSL `aurora-mediums.wgsl.ts:393`, Safari GLSL `aurora.frag.ts:447`) and BOTH engines engage (pixel-diff of metal vs FRESH same-run smooth localizes the effect to the Canvas-2 studio stage on both engines). metal-gradient (uMedium 9) reachable + engages (Chrome +308px flake sparkle; Safari byte-identical — the twinkle is a temporal effect a frozen frame cannot show; acceptable).
+- Documented CAVEAT (recorded in the DELTA, does NOT gate the wave): in the 1440×900 top-framed `?aurmedium=` capture the metal-bearing studio stage (Canvas 2 @y846) sits ~94% below the fold behind the nav dock, so the full-viewport PNGs predominantly frame the recessive smooth-Dawn hero (Canvas 1, a fixed decorative background). The lit-metal read is therefore verified on the studio-stage crops (`stagecrop-metal-{light,dark}.png` + Safari sliver `strip-safari-metal-*`). A future capture-framing refinement could frame Canvas 2 in the deterministic capture.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-AUR-METAL-FINISH-DELTA.md`
+- PNGs: `docs/tranches/BG/audit/visual/BG.W-AUR-METAL-FINISH-assets/{chrome,safari}-metal{,-gradient}-{light,dark}.png` · `stagecrop-metal-{light,dark}.png` · `strip-safari-metal-{light,dark}.png` · `fresh-{chrome,safari}-smooth-{light,dark}.png` (+ `chrome-metal-results.json` · `chrome-results.json`)

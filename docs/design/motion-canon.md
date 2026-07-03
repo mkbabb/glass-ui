@@ -192,9 +192,11 @@ table — every other `(response, ζ)` read derives via `springPreset(name)`:
   SETTLE register's response/ζ), the floor every `useSpring` caller may override.
 - **`useSpringPress`** `(0.25, 0.7)` — the press-squish primitive default (a crisp
   short-response press settle, W-PRESS-UNIFY).
-- **`DOCK_SPRING`** `(0.32, 0.7)` — the dock expand/collapse morph register
-  (`dock/constants.ts`); value.js-fenced (kf is the named 2nd consumer), retuned by
-  `BC.W-SPRING-EASE`.
+- **`DOCK_SPRING`** `(0.68, 0.64)` — the dock expand/collapse morph register
+  (`dock/constants.ts`); the WEIGHTY iOS-27 gooey-morph re-tune (BD.W-ANIM-IOS27-TUNE),
+  DERIVED from the `dock` `SPRING_PRESETS` row via `springPreset("dock")` (the
+  no-second-authority fence — ONE table row feeds the CSS token, the JS-driven morph,
+  and the const; not a frozen hand-value).
 - **`DRAWER_SNAP`** `(0.4, 0.82)` — the drawer detent-snap register
   (`drawer/constants.ts`).
 
