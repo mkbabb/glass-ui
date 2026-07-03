@@ -58,3 +58,69 @@ the corner-backplate arm is fully green.
 
 Per real-paint-protocol §3 the building agent does NOT flip any gestalt roster row;
 this DELTA + captures are the build-side evidence for the fresh-agent pixel-read.
+
+---
+
+## NON-AUTHORING DUAL-ENGINE VERDICT — the wave's THREE routes (2026-07-03)
+
+A fresh non-authoring paint judge (did NOT build this wave) captured the wave's
+declared surfaces `[/display/card, /substrates/glass-material, /display/buttons]` —
+the corner close-ups over a saturated field, BOTH modes — over the **BUILT** demo
+bytes served on `:5200` (`demo:dist:build` → `demo:dist:serve`, NOT the `:5199` dev
+server), across BOTH engines: real **Chrome.app** via CDP `:9456` (GL_RENDERER
+probe = `ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Max)` — real Metal, NOT
+SwiftShader) + real system **WebKit** via off-screen WKWebView (`wkshot-live.m`
+re-built from source; in-pixel `WEBKIT / Apple GPU` badge at `@2x 2880×1800`).
+
+### The captures (all resolve on disk, this dir)
+
+| route | Chrome light/dark | WebKit light/dark |
+|---|---|---|
+| `/display/card` | `card-chrome-{light,dark}-full.png` | `card-webkit-{light,dark}-full.png` |
+| `/substrates/glass-material` | `glass-material-chrome-{light,dark}-full.png` | `glass-material-webkit-{light,dark}-full.png` |
+| `/display/buttons` | `buttons-chrome-{light,dark}-full.png` | `buttons-webkit-{light,dark}-full.png` |
+
+Corner close-ups on the exact defect surface (a rounded card top corner over a
+**saturated field**): `buttons-field-chrome-{light,dark}-corner{TL,TR}.png` (the
+blue "Launch sequence" field CTA) + `card-{,field-}chrome-{light,dark}-corner{TL,TR}.png`
+(the orange tier-gallery field) + `glass-material-{,field-}chrome-{light,dark}-corner{TL,TR}.png`.
+Audit JSON: `chrome-audit.json`, `chrome-field-audit.json`.
+
+### The pixel read — NO white square-corner wedge, both engines, both modes
+
+**Pixel forensics on the corner triangle** (the square-corner region behind the
+radius curve, where a white backplate wedge would appear). Scanning the extreme
+corner triangle of each saturated-field card:
+
+| corner clip | meanL | maxL | white-wedge px | corner-triangle sample (r,g,b) |
+|---|---|---|---|---|
+| buttons blue field, light TL/TR | 0.771 / 0.780 | 0.903 / 0.912 | **0 / 0** | `(243,228,203)` `(245,228,218)` — warm cream page shows through |
+| buttons blue field, dark TL/TR | 0.408 / 0.400 | 0.629 / 0.625 | **0 / 0** | `(39,28,18)` `(30,19,15)` — near-black warm page shows through |
+| card orange field, light TL/TR | 0.642 / 0.670 | 0.724 / 0.729 | **0 / 0** | `(211,122,53)` `(214,127,63)` — the ORANGE field paints to the corner |
+| card orange field, dark TL/TR | 0.475 / 0.455 | 0.598 / 0.587 | **0 / 0** | `(213,125,59)` `(216,128,64)` — the ORANGE field paints to the corner |
+
+`white-wedge px = 0` in EVERY corner triangle (a white wedge = a near-white L>0.93,
+low-chroma <0.05 pixel where the field/page color belongs). Every sampled corner
+pixel is warm-CHROMATIC (R>G>B), the field/page color right up to the radius curve —
+never a neutral square backplate. The full-page reads confirm it directly: the
+`/display/card` orange tier-showcase field, the `/display/buttons` blue CTA field,
+and the `/substrates/glass-material` recessive-aurora hero all show their rounded
+top corners revealing the field/page through the curve with no light box artifact.
+
+### The computed DOM read — the corner-backplate discipline holds at the CLASS level
+
+The `::before` / backplate audit across all six route×mode captures found the ONLY
+opaque-`::before` surfaces are `dock-icon-button` capsules where the host is a full
+pill (`hostBR = 9999px`) AND the `::before` radius INHERITS it (`beforeBR = 9999px`,
+`hostBR == beforeBR`) — the exact discipline (every backplate inherits the host
+radius, one rule not per-site patches). No rounded host anywhere carries a
+square-corner (`0px`) `::before` behind its radius. `glContexts` present, route
+content renders full (routeChildren ≥ 2, GL substrate live on the aurora routes,
+recessive/no-conic/no-oversaturation).
+
+### VERDICT: **PASS**
+
+The class-level corner-backplate discipline reaches PAINT. Both engines (Chrome
+Metal + Safari WebKit), both modes, all three wave routes: glass/card corners show
+NO white square-corner wedge behind the radius over a saturated field. The aliasing
+chronic (USER 2026-07-03) is killed. All capture PNGs resolve on disk.
