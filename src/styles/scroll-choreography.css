@@ -166,12 +166,20 @@
                 transform: translateY(0);
             }
         }
+        /* BG.W-SCROLL-SHRINK-UNIFY (D14) — the per-column stagger. The stagger is a
+           range PERCENTAGE (view()-timeline units), NOT a time: the prior
+           `--scroll-cascade-column-stagger` default was `60ms`, so
+           `calc(45% + 60ms * 0)` mixed `%` with `ms` (an INVALID calc — the whole
+           animation-range was dropped) AND multiplied by a literal `0` (every column
+           read the SAME range end, zero stagger). Now the offset is a `%` scaled by the
+           consumer-set `--col` index, so column N ends its build `N × stagger` later —
+           the even/odd column cascade the Codrops nuance intends. */
         .scroll-cascade.scroll-cascade--columns > * {
             animation-range: entry 0%
                 entry
                 calc(
                     var(--scroll-cascade-range-end, 45%) +
-                        var(--scroll-cascade-column-stagger, 60ms) * 0
+                        var(--scroll-cascade-column-stagger, 6%) * var(--col, 0)
                 );
         }
         .scroll-cascade.scroll-cascade--columns > *:nth-child(even) {

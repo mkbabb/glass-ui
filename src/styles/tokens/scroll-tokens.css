@@ -40,10 +40,13 @@
        --scroll-reveal-rise 6px to a perceptible SOTA build; the range-end is the
        reveal window (a touch tighter than the bare reveal so each section lands
        crisply rather than dragging a long fade tail). The column-stagger delay is
-       the opt-in .scroll-cascade--columns grid-variant knob. */
+       the opt-in .scroll-cascade--columns grid-variant knob (BG.W-SCROLL-SHRINK-UNIFY
+       D14 — a range PERCENTAGE, NOT a time: it is ADDED to the `%` range-end and
+       scaled by the per-child `--col` index, so a `60ms` time would make the calc
+       invalid `% + ms`). */
     --scroll-cascade-rise: 1.25rem;
     --scroll-cascade-range-end: 45%;
-    --scroll-cascade-column-stagger: 60ms;
+    --scroll-cascade-column-stagger: 6%;
     /* .scroll-pin — the fixed-stage-advances-time scroll-pinned register. The stage
        height is the Nvh temporal space the sticky stage advances its phases across.
        The phase windows the stage's internal phases key off (grid-reveal 0..reveal-end,

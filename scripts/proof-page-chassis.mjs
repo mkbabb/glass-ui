@@ -210,9 +210,14 @@ const shrinkScrollTimeline = /animation-timeline:\s*scroll\(\)/.test(heroCss);
 // the literal 0).
 const shrinkRange =
     /animation-range:\s*0\s+(?:\d+px|var\(--hero-condense-range[^)]*\))/.test(heroCss);
-// the @keyframes story-hero-shrink body animates ONLY transform/opacity (compositor).
+// BG.W-SCROLL-SHRINK-UNIFY — the hero scale leg is DECOMPOSED onto the SHARED
+// `@keyframes title-collapse` (the DRY fold; the hero keeps its own
+// `story-hero-shrink-lift` translate leg). PC1 reads the shared scale keyframe body
+// and asserts it animates ONLY the compositor `scale` (no layout key — the
+// proof:no-layout-animation floor). The re-point is ATOMIC with the story-hero.css
+// rename (a re-point ahead of the rename would find no `@keyframes title-collapse`).
 const kfBody = (() => {
-    const i = heroCss.indexOf("@keyframes story-hero-shrink");
+    const i = heroCss.indexOf("@keyframes title-collapse");
     if (i < 0) return "";
     const open = heroCss.indexOf("{", i);
     let depth = 0;
@@ -243,7 +248,7 @@ add(
     "PC1-scroll-shrink-compositor-only",
     pc1,
     pc1
-        ? "the .story-hero-shrink register exists (position: sticky + animation-timeline: scroll() + animation-range: 0 Npx), the @keyframes story-hero-shrink animates ONLY transform/opacity (compositor-only — no layout key, the proof:no-layout-animation floor), gated by @supports (animation-timeline: scroll()) + prefers-reduced-motion: no-preference (PRM → static large hero) — the CSS-native scroll-shrink, NO Lenis/GSAP"
+        ? "the .story-hero-shrink register exists (position: sticky + animation-timeline: scroll() + animation-range: 0 Npx), the SHARED @keyframes title-collapse (BG.W-SCROLL-SHRINK-UNIFY — the DRY scale-leg fold; the hero keeps its own story-hero-shrink-lift translate leg) animates ONLY the compositor scale (no layout key, the proof:no-layout-animation floor), gated by @supports (animation-timeline: scroll()) + prefers-reduced-motion: no-preference (PRM → static large hero) — the CSS-native scroll-shrink, NO Lenis/GSAP"
         : `scroll-shrink register wrong (class: ${hasShrinkClass}, sticky: ${shrinkSticky}, scroll() timeline: ${shrinkScrollTimeline}, animation-range: ${shrinkRange}, compositor-only kf: ${shrinkCompositorOnly}, @supports+PRM gated: ${shrinkGated})`,
 );
 

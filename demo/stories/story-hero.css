@@ -469,8 +469,11 @@
     z-index: 2;
     transform-origin: left top;
     /* The condense register knobs (the single retune seam). A gentle settle (0.82) +
-       a sooner-and-holds range + the eyebrow/blurb FADE (reclaiming visual room). */
-    --hero-condense-scale: 0.82;
+       a sooner-and-holds range + the eyebrow/blurb FADE (reclaiming visual room).
+       BG.W-SCROLL-SHRINK-UNIFY — the scale settle rides `--title-collapse-scale` (the
+       SHARED scale token the card + page/hero large-title collapse both read via the
+       ONE `@keyframes title-collapse`; the page/hero supply 0.82, the card 0.695). */
+    --title-collapse-scale: 0.82;
     --hero-condense-range: 160px;
     --hero-condense-fade-range: 120px;
 }
@@ -536,30 +539,45 @@
 
 @supports (animation-timeline: scroll()) {
     @media (prefers-reduced-motion: no-preference) {
-        /* The cluster condenses GENTLY: transform: scale(1 → ~0.82) (a settle, NOT a
-           half-zoom), coupled with a slight upward translate so the shrunk header hugs
-           the top. COMPOSITOR-ONLY — scale + translate, NEVER font-size/width/height
-           (the text lays out ONCE; the proof:no-layout-animation floor, BB.W-CARD-
-           COMPOSITE). The scroll-shrink rides the cluster WRAPPER (not the entrance-
-           animated children), so it never collides with the 3-stage GRAVITY entrance on
-           the eyebrow/title/blurb — two disjoint registers, one wrapper. */
-        @keyframes story-hero-shrink {
-            from {
-                transform: scale(1) translateY(0);
-            }
+        /* The cluster condenses GENTLY: scale(1 → ~0.82) (a settle, NOT a half-zoom),
+           coupled with a slight upward translate so the shrunk header hugs the top.
+           COMPOSITOR-ONLY — scale + translate, NEVER font-size/width/height (the text
+           lays out ONCE; the proof:no-layout-animation floor, BB.W-CARD-COMPOSITE). The
+           scroll-shrink rides the cluster WRAPPER (not the entrance-animated children),
+           so it never collides with the 3-stage GRAVITY entrance on the
+           eyebrow/title/blurb — two disjoint registers, one wrapper.
+
+           BG.W-SCROLL-SHRINK-UNIFY — the SCALE leg is DECOMPOSED onto the SHARED
+           `@keyframes title-collapse` (byte-identical to the card's copy in
+           src/styles/card-scroll.css — the DRY fold; the page/hero supply
+           `--title-collapse-scale: 0.82`, the card 0.695). The hero keeps its OWN tiny
+           translate leg (`story-hero-shrink-lift`) — the `scale:`/`translate:` LONGHANDS
+           stack independently (the scroll-choreography.css `.scroll-pin` idiom), so the
+           two keyframes compose to the same final transform as the prior combined
+           `transform: scale() translateY()` with ZERO clobber. */
+        @keyframes title-collapse {
             to {
-                transform: scale(var(--hero-condense-scale, 0.82)) translateY(-0.25rem);
+                scale: var(--title-collapse-scale, 0.82);
+            }
+        }
+        @keyframes story-hero-shrink-lift {
+            to {
+                translate: 0 -0.25rem;
             }
         }
 
         /* The condense completes within the first ~160px of scroll then HOLDS the
            condensed state (animation-fill-mode: forwards). The native scroll() timeline
            is the <main> route-scroller (the nearest scroll-container ancestor) — NO JS,
-           NO Lenis/GSAP (the binding fence). */
+           NO Lenis/GSAP (the binding fence). The scale + lift ride the ONE scroll()
+           timeline over the ONE condense window (the per-animation timeline/range lists
+           pair them positionally so neither clobbers the other). */
         .story-hero-shrink {
-            animation: story-hero-shrink linear both;
-            animation-timeline: scroll();
-            animation-range: 0 var(--hero-condense-range, 160px);
+            animation: title-collapse linear both,
+                story-hero-shrink-lift linear both;
+            animation-timeline: scroll(), scroll();
+            animation-range: 0 var(--hero-condense-range, 160px),
+                0 var(--hero-condense-range, 160px);
             animation-fill-mode: forwards;
         }
 

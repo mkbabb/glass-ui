@@ -175,6 +175,11 @@
 @import "./viz-reveal.css";
 @import "./scroll-driven.css";
 @import "./scroll-choreography.css";
+/* BG.W-SCROLL-SHRINK-UNIFY — the EXTERNALIZED <CardHeader shrink> scroll-shrink
+   choreography (lifted out of the CardHeader.vue <style scoped> block into ONE
+   global, un-hashed home; the shared @keyframes title-collapse SCALE leg). A
+   scroll-choreography partial — bucketed DEFERRED in critical-partition.mjs. */
+@import "./card-scroll.css";
 @import "./scroll-chrome.css";
 @import "./view-transition.css";
 @import "./utilities.css";

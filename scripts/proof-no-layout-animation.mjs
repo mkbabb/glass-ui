@@ -494,31 +494,56 @@ let keyframesScanned = 0;
 let transitionsScanned = 0;
 let transitionClassesScanned = 0;
 
-// ── W4 (BB.W-SCROLL-CARD) — the scoped-slot source-companion clause. The
-//    CardHeader shrink choreography reaches the consumer-SLOTTED <CardTitle>/
-//    <CardDescription> via `:slotted()` (the precise Vue scoped-CSS slotted-
-//    content selector, the MetricRow.vue idiom) — NOT the bare
-//    `.card-header--shrink > [data-slot="card-title"]` direct-child form (which
-//    rewrites to require CardHeader's `data-v-…` scope hash on a child it never
-//    carries — the 2-of-3-lanes-dead defect) and NOT the `:deep()` sledgehammer
-//    (which leaks the choreography into UNRELATED nested cards). The COMMENT-
-//    STRIPPED CardHeader <style> must (a) use `:slotted(` on the title/desc
-//    lanes AND (b) carry ZERO bare-direct-child `> [data-slot]` selector AND
-//    (c) carry ZERO `:deep([data-slot]` selector. ──
+// ── W4 (BG.W-SCROLL-SHRINK-UNIFY) — the EXTERNALIZED-global source-companion
+//    clause (the INVERSION of the BB.W-SCROLL-CARD scoped-slot clause). The
+//    <CardHeader shrink> choreography is EXTERNALIZED out of the CardHeader.vue
+//    <style scoped> block into the global, un-hashed src/styles/card-scroll.css.
+//    A global stylesheet carries no Vue `data-v-…` scope hash, so it reaches the
+//    light-DOM slotted <CardTitle>/<CardDescription> via the PLAIN descendant
+//    selector `.card-header--shrink > [data-slot=…]` — the CORRECT global-file
+//    form (no `:slotted()`/`:deep()` scope escape needed; the scoped-block idiom
+//    is INVERTED: a `:slotted()` in the SFC now means the lanes leaked BACK). The
+//    clause asserts (a) card-scroll.css EXISTS + defines the SHARED `@keyframes
+//    title-collapse` + reaches [data-slot=card-title] AND [data-slot=card-
+//    description] via a `.card-header--shrink` descendant selector, AND (b)
+//    CardHeader.vue's <style> carries ZERO shrink choreography (the lanes GONE —
+//    no `@keyframes card-*-shrink`/`title-collapse`, no `:slotted([data-slot])`). ──
 const cardHeaderFile = resolve(ROOT, "src/components/ui/card/CardHeader.vue");
-let slottedSourceOk = false;
-let slottedFacts = { usesSlotted: false, noBareDirectChild: false, noDeepDataSlot: false };
+const cardScrollFile = resolve(ROOT, "src/styles/card-scroll.css");
+const SHRINK_KEYFRAME_RE =
+    /@keyframes\s+(card-header-shrink|card-header-bg-lift|card-desc-shrink|title-collapse)\b/;
+let externalizedSourceOk = false;
+let externalizedFacts = {
+    cardScrollExists: false,
+    hasTitleCollapse: false,
+    reachesTitleSlot: false,
+    reachesDescSlot: false,
+    cardHeaderShrinkLanesGone: false,
+};
+if (existsSync(cardScrollFile)) {
+    const cs = strip(readFileSync(cardScrollFile, "utf8"));
+    externalizedFacts.cardScrollExists = true;
+    externalizedFacts.hasTitleCollapse = /@keyframes\s+title-collapse\b/.test(cs);
+    // the PLAIN descendant selector (global file — no scope hash to require)
+    externalizedFacts.reachesTitleSlot =
+        /\.card-header--shrink[^{}]*\[data-slot="card-title"\]/.test(cs);
+    externalizedFacts.reachesDescSlot =
+        /\.card-header--shrink[^{}]*\[data-slot="card-description"\]/.test(cs);
+}
 if (existsSync(cardHeaderFile)) {
     const chRaw = readFileSync(cardHeaderFile, "utf8");
     const chStyle = strip(styleBodyOf(cardHeaderFile, chRaw));
-    const usesSlotted = /:slotted\(\s*\[data-slot="card-(title|description)"\]\s*\)/.test(chStyle);
-    // the bare direct-child form on a data-slot child (the dead-lane defect)
-    const noBareDirectChild = !/--shrink\s*>\s*\[data-slot=/.test(chStyle);
-    // the :deep() sledgehammer on a data-slot child (the W-CARD-COMPOSITE stopgap, now retired)
-    const noDeepDataSlot = !/:deep\(\s*\[data-slot=/.test(chStyle);
-    slottedFacts = { usesSlotted, noBareDirectChild, noDeepDataSlot };
-    slottedSourceOk = usesSlotted && noBareDirectChild && noDeepDataSlot;
+    // the lanes are GONE from the SFC: no :slotted([data-slot]) escape AND no
+    // shrink-family @keyframes survive in the (comment-stripped) <style> body.
+    externalizedFacts.cardHeaderShrinkLanesGone =
+        !/:slotted\(\s*\[data-slot=/.test(chStyle) && !SHRINK_KEYFRAME_RE.test(chStyle);
 }
+externalizedSourceOk =
+    externalizedFacts.cardScrollExists &&
+    externalizedFacts.hasTitleCollapse &&
+    externalizedFacts.reachesTitleSlot &&
+    externalizedFacts.reachesDescSlot &&
+    externalizedFacts.cardHeaderShrinkLanesGone;
 
 for (const file of corpusFiles) {
     const raw = readFileSync(file, "utf8");
@@ -613,20 +638,32 @@ for (const kf of parseKeyframes("self-test", SELF_TEST_SOURCE)) {
 const selfTestBites =
     selfHits.size === 1 && selfHits.has("__self_test_padding_anim__/padding-top");
 
-// ── W4 self-test bite (anti-evasion): the scoped-slot detector MUST flag a
-//    bare-direct-child selector AND a :deep([data-slot]) selector, and PASS a
-//    `:slotted([data-slot])` one — the reflow-vs-precise-idiom partition for the
-//    scoped-slot fix is exact (a re-introduced > [data-slot] / :deep([data-slot])
-//    reds; the :slotted() form greens). ──
-const slottedReGood = `.card-header--shrink > :slotted([data-slot="card-title"]) { animation: x; }`;
-const slottedReBareBad = `.card-header--shrink > [data-slot="card-title"] { animation: x; }`;
-const slottedReDeepBad = `.card-header--shrink > :deep([data-slot="card-title"]) { animation: x; }`;
+// ── W4 self-test bite (anti-evasion, BG.W-SCROLL-SHRINK-UNIFY): the externalized
+//    detector MUST (a) accept the correct global card-scroll.css (defines the shared
+//    @keyframes title-collapse + reaches the title/desc slots via a PLAIN descendant
+//    selector), (b) flag a card-scroll.css that DROPS the shared keyframe, and (c)
+//    flag a CardHeader.vue <style> that RE-CARRIES the shrink lanes (`:slotted` +
+//    the shrink-family @keyframes — the regression BACK to the scoped block), while
+//    passing an empty SFC style. The externalized-vs-scoped partition is exact. ──
+const extGoodCardScroll = `@keyframes title-collapse { to { scale: var(--title-collapse-scale, 0.82); } }
+.card-header--shrink > [data-slot="card-title"] { animation: title-collapse; }
+.card-header--shrink > [data-slot="card-description"] { animation: card-desc-shrink; }`;
+const extBadCardScroll = `.card-header--shrink > [data-slot="card-title"] { animation: linear both; }`;
+const extRegressedSfc = `.card-header--shrink > :slotted([data-slot="card-title"]) { animation: title-collapse; }
+@keyframes title-collapse { to { scale: 0.82; } }`;
+const w4HasTitleCollapse = (s) => /@keyframes\s+title-collapse\b/.test(s);
+const w4ReachesTitle = (s) => /\.card-header--shrink[^{}]*\[data-slot="card-title"\]/.test(s);
+const w4LanesGone = (s) => !/:slotted\(\s*\[data-slot=/.test(s) && !SHRINK_KEYFRAME_RE.test(s);
 const slottedBiteOk =
-    /:slotted\(\s*\[data-slot="card-(title|description)"\]\s*\)/.test(slottedReGood) &&
-    !/--shrink\s*>\s*\[data-slot=/.test(slottedReGood) &&
-    !/:deep\(\s*\[data-slot=/.test(slottedReGood) &&
-    /--shrink\s*>\s*\[data-slot=/.test(slottedReBareBad) &&
-    /:deep\(\s*\[data-slot=/.test(slottedReDeepBad);
+    // (a) the correct externalized card-scroll passes the presence + reach asserts
+    w4HasTitleCollapse(extGoodCardScroll) &&
+    w4ReachesTitle(extGoodCardScroll) &&
+    // (b) a card-scroll that dropped the shared keyframe FAILS the presence assert
+    !w4HasTitleCollapse(extBadCardScroll) &&
+    // (c) a regressed SFC re-carrying the shrink lanes FAILS the lanes-gone assert
+    !w4LanesGone(extRegressedSfc) &&
+    // an empty SFC style passes the lanes-gone assert (the externalized rest state)
+    w4LanesGone("");
 
 // ── BB.W-MOTION-CANON self-test bites: the transition arm + the <Transition>-class
 //    arm have NO precedent assertion at HEAD (born-RED here, proven every run). The
@@ -809,18 +846,18 @@ add(
         .join(", ") || "none"}`,
 );
 add(
-    "W4-slotted-source-assert",
-    slottedSourceOk,
-    slottedSourceOk
-        ? "CardHeader shrink lanes re-target the slotted title/description via :slotted() — the bare > [data-slot] direct-child form AND the :deep([data-slot]) sledgehammer are GONE (the scoped-slot defect fixed, the precise Vue idiom)"
-        : `CardHeader scoped-slot assert FAILED: ${JSON.stringify(slottedFacts)} (need usesSlotted=true, noBareDirectChild=true, noDeepDataSlot=true)`,
+    "W4-externalized-source-assert",
+    externalizedSourceOk,
+    externalizedSourceOk
+        ? "the <CardHeader shrink> choreography is EXTERNALIZED to the global un-hashed src/styles/card-scroll.css (the shared @keyframes title-collapse SCALE leg + the PLAIN `.card-header--shrink > [data-slot=…]` descendant selectors, the correct global-file form) AND the CardHeader.vue <style> shrink lanes are GONE (no :slotted, no shrink @keyframes) — the encapsulation restore + the DRY scale-keyframe fold, the scoped-slot idiom INVERTED"
+        : `CardHeader externalized-global assert FAILED: ${JSON.stringify(externalizedFacts)} (need cardScrollExists=true, hasTitleCollapse=true, reachesTitleSlot=true, reachesDescSlot=true, cardHeaderShrinkLanesGone=true)`,
 );
 add(
-    "W4-slotted-self-test-bite",
+    "W4-externalized-self-test-bite",
     slottedBiteOk,
     slottedBiteOk
-        ? "the scoped-slot detector flags a bare > [data-slot] AND a :deep([data-slot]) selector, and passes a :slotted([data-slot]) one — the precise-idiom partition bites"
-        : "scoped-slot self-test partition broke (the :slotted/bare/deep detector mis-classified the synthetic selectors)",
+        ? "the externalized detector accepts the correct global card-scroll (shared title-collapse + plain descendant reach), flags a card-scroll dropping the shared keyframe, AND flags a CardHeader.vue <style> re-carrying the shrink lanes (:slotted + shrink @keyframes) — the externalized-vs-scoped partition bites"
+        : "externalized self-test partition broke (the card-scroll presence / SFC-lanes-gone detector mis-classified the synthetic sources)",
 );
 
 // ── BB.W-MOTION-CANON — the codification + the transition/PRM enforcement arms ──
@@ -908,7 +945,7 @@ writeGateArtifact(ARTIFACT, {
     filesScanned: corpusFiles.length,
     violations,
     allowlisted: allowedHits,
-    slottedSource: slottedFacts,
+    externalizedSource: externalizedFacts,
     facts: {
         transitionsScanned,
         transitionClassesScanned,
