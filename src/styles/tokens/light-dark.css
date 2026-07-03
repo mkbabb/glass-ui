@@ -63,10 +63,24 @@
 
    FALLBACK (§2c): this whole block is `@supports`-gated, so an engine
    WITHOUT `light-dark()` skips it and the retained `.dark` class block (the
-   SOLE fallback floor) drives dark exactly as at HEAD. `light-dark()` is the
+   fallback floor) drives dark exactly as at HEAD. `light-dark()` is the
    enhancement OVER the class — not a parallel alias. Baseline Newly
    Available; the fallback floor is the pre-existing class block (net-zero
    new fallback LOC).
+
+   IDIOM-REVERSAL — the CANONICAL single source for COLOR
+   (BG.W-GLASS-BASIS-CONSOLIDATE, R16 MN-1). colors → `light-dark()` only is
+   now the CANON: this block is the single source of truth for every paired
+   COLOR token. The `.dark {}` color re-declarations (dark-arm.css) are the
+   fallback-floor LOCKSTEP WITNESSES only — they MUST byte-agree with the dark
+   arg here, never a second value (two arms painting two different dark colors
+   is the bug; `proof:glass` clause DA1 reds a divergence). SHADOWS and INSETS
+   go the OTHER way: `.dark {}` plain arms ONLY, NEVER folded into
+   `light-dark()` — a `light-dark()` wrapping shadow fragments computes the
+   WHOLE box-shadow to `none` (the inset-shadow trap; `proof:glass` DA2 reds a
+   shadow-valued light-dark()). One mechanism per token TYPE. This SUPERSEDES
+   the plain per-mode pair idiom for COLOR tokens (the reversal is INTENTIONAL,
+   recorded here).
    ═══════════════════════════════════════════════ */
 @supports (color: light-dark(white, black)) {
     :root {

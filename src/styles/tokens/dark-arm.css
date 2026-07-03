@@ -15,6 +15,18 @@
    `--background`/`*-foreground` aliases) are DELETED — they auto-track the
    `--neutral-*` ladder + `--foreground` resolved above; only EXPLICIT-color
    dark values (and the non-color overrides §2d) stay.
+
+   IDIOM-REVERSAL (BG.W-GLASS-BASIS-CONSOLIDATE, R16 MN-1) — one mechanism per
+   token TYPE. COLOR tokens: light-dark.css is the CANONICAL single source; the
+   `.dark {}` color values below are the fallback-floor LOCKSTEP WITNESSES —
+   they MUST byte-agree with the light-dark() dark arg, never a second value
+   (`proof:glass` clause DA1 reds a divergence). SHADOW / INSET /
+   inheritance-sensitive tokens (the rims, the specular, the cartoon/modal
+   shadows, the recess ink) are the PRIMARY residents here as plain `.dark {}`
+   arms — NEVER `light-dark()` (a `light-dark()` wrapping shadow fragments
+   computes the WHOLE box-shadow to `none`, the inset-shadow trap; `proof:glass`
+   DA2 reds a shadow-valued light-dark()). This SUPERSEDES the plain per-mode
+   pair idiom for COLOR tokens (the reversal is INTENTIONAL, recorded here).
    ═══════════════════════════════════════════════ */
 .dark {
     /* §1 — hard-pin native chrome to dark regardless of OS preference. §4 —

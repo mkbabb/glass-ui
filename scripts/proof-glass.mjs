@@ -6,6 +6,9 @@
 // grows one clause per F2 wave (the family-gate consolidation, R3 taxonomy).
 // BG.W-GLASS-REGISTER-UNIFY adds two arms: `glass-fill-home` (the R9 tint-recipe
 // HOME) and `safari-blur-var` (the Safari `blur(var())` webkit-prefix assert).
+// BG.W-GLASS-BASIS-CONSOLIDATE adds `dark-arm-color-reversal` (the R16 MN-1 idiom
+// reversal — colors → light-dark() canonical, the .dark {} color arm as lockstep
+// witnesses; shadows/insets → .dark {} plain arms, never light-dark()).
 //
 // ── ARM: glass-fill-home (BG.W-GLASS-REGISTER-UNIFY · R9) ────────────────────
 // The tint-recipe HOME is the applied `@utility glass-fill` (glass/surfaces.css) —
@@ -72,6 +75,9 @@ const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const GLASS_DEEP_FILE = "src/styles/tokens/glass-deep.css";
 const VITE_STYLE_ASSETS = "vite.style-assets.ts";
 const SPECULAR_POINTER_FILE = "src/composables/glass/useSpecularPointer.ts";
+const DARK_ARM_FILE = "src/styles/tokens/dark-arm.css";
+const LIGHT_DARK_FILE = "src/styles/tokens/light-dark.css";
+const GLASS_SURFACES_FILE = "src/styles/glass/surfaces.css";
 
 function stripCss(src) {
     return src.replace(/\/\*[\s\S]*?\*\//g, " ");
@@ -591,6 +597,169 @@ export function glassDynamicsViolations(glassCss, specularPointerText) {
     return { violations, facts };
 }
 
+// ── the dark-arm-color-reversal predicate (pure) — BG.W-GLASS-BASIS-CONSOLIDATE ─
+// The idiom REVERSAL, machine-enforced (R16 MN-1). The house pre-BG idiom held a
+// COLOR token in TWO arms — the `light-dark()` enhancement (light-dark.css) AND the
+// `.dark {}` plain re-declaration (dark-arm.css) — as the "plain per-mode pair".
+// BG makes light-dark() the CANONICAL single source for COLOR; the `.dark {}` color
+// values become fallback-floor LOCKSTEP WITNESSES that MUST byte-agree with the
+// light-dark() dark arg (a divergence paints two different dark colors — the bug the
+// reversal forbids). SHADOW/INSET tokens go the OTHER way: they stay `.dark {}` plain
+// arms and are NEVER folded into `light-dark()`, because a `light-dark()` wrapping
+// shadow FRAGMENTS computes the whole box-shadow to `none` (the MEMORY inset-shadow
+// trap). One mechanism per token TYPE — colors → light-dark(); shadows/insets → .dark {}.
+//
+//   DA1 — lockstep integrity (the single-source guarantee): EVERY token declared in
+//         BOTH the `.dark {}` block (dark-arm.css) AND as a `light-dark()` (light-
+//         dark.css) MUST byte-agree (dark-arm value == light-dark dark-arg). A
+//         divergence REDs. This generalizes proof:no-gray's single-token
+//         `dark-foreground-arms-lockstep` to the WHOLE ~60-token color basis, so the
+//         reversal's "light-dark() canonical, .dark {} agrees" is provably zero-pixel.
+//   DA2 — reversal boundary (the no-color-feeds-inset bite): NO `light-dark()` in
+//         light-dark.css holds a shadow/inset value — every light-dark() is a pure
+//         `<color>` (no `inset`, no `px` length). A shadow/inset token folded into
+//         light-dark() re-arms the whole-box-shadow-none trap; the fence keeps
+//         shadows/insets as `.dark {}` plain arms.
+//   DA3 — canon recorded: the intentional idiom-reversal canon row is present in BOTH
+//         light-dark.css AND dark-arm.css (the "supersedes the plain per-mode pair
+//         idiom" + the wave id). Born-RED at HEAD (no canon) -> GREEN at the record.
+//   DA4 — shadows kept as `.dark {}`: surfaces.css retains a `.dark … { box-shadow: … }`
+//         arm — the POSITIVE example that the reversal did NOT over-fold shadow arms
+//         into light-dark(). Ties surfaces.css into the gate with teeth.
+//
+// Pure so the self-test can run it against synthetic mutated copies.
+export function darkArmColorReversalViolations(darkArmText, lightDarkText, surfacesText) {
+    const violations = [];
+    const facts = {};
+    const darkRaw = darkArmText || "";
+    const ldRaw = lightDarkText || "";
+    const surfRaw = surfacesText || "";
+    const dark = stripCss(darkRaw);
+    const ld = stripCss(ldRaw);
+    const surf = stripCss(surfRaw);
+
+    const norm = (v) => v.replace(/\s+/g, " ").trim().toLowerCase();
+
+    // Parse every `--tok: light-dark(LIGHT, DARK);` decl (brace-matched, nested-paren-safe).
+    const parseLightDark = (text) => {
+        const out = [];
+        const re = /(--[a-z0-9-]+)\s*:\s*light-dark\(/gi;
+        let m;
+        while ((m = re.exec(text))) {
+            const token = m[1];
+            const open = text.indexOf("light-dark(", m.index) + "light-dark(".length;
+            let depth = 1;
+            let i = open;
+            let commaTop = -1;
+            for (; i < text.length && depth > 0; i++) {
+                const c = text[i];
+                if (c === "(") depth++;
+                else if (c === ")") depth--;
+                else if (c === "," && depth === 1 && commaTop === -1) commaTop = i;
+            }
+            if (depth !== 0 || commaTop === -1) continue;
+            const lightArg = text.slice(open, commaTop).trim();
+            const darkArg = text.slice(commaTop + 1, i - 1).trim();
+            const value = `light-dark(${text.slice(open, i - 1)})`;
+            out.push({ token, lightArg, darkArg, value });
+        }
+        return out;
+    };
+
+    // Extract the `.dark { … }` rule body (brace-matched) so we read token
+    // declarations that live ONLY in the class arm.
+    const darkBlockBody = (text) => {
+        const start = text.indexOf(".dark");
+        if (start < 0) return "";
+        const open = text.indexOf("{", start);
+        if (open < 0) return "";
+        let depth = 1;
+        let i = open + 1;
+        for (; i < text.length && depth > 0; i++) {
+            if (text[i] === "{") depth++;
+            else if (text[i] === "}") depth--;
+        }
+        return text.slice(open + 1, i - 1);
+    };
+    const darkTokenVal = (body, token) => {
+        const re = new RegExp(`(?:^|[;{\\s])${token.replace(/-/g, "\\-")}\\s*:\\s*([^;]+);`);
+        const m = body.match(re);
+        return m ? m[1].trim() : null;
+    };
+
+    const ldDecls = parseLightDark(ld);
+    const block = darkBlockBody(dark);
+    facts.lightDarkTokens = ldDecls.length;
+
+    if (!block) {
+        violations.push(
+            "DA: could not locate the `.dark { … }` block in dark-arm.css — the fallback-floor lockstep witnesses live here",
+        );
+    }
+    if (ldDecls.length === 0) {
+        violations.push(
+            "DA: no `light-dark()` color declarations found in light-dark.css — the canonical single source of COLOR is missing",
+        );
+    }
+
+    // DA1 — lockstep integrity across the dual-arm overlap.
+    let dualArmCount = 0;
+    const diverged = [];
+    for (const d of ldDecls) {
+        const dv = block ? darkTokenVal(block, d.token) : null;
+        if (dv === null) continue; // single-sourced (light-dark() only) — the canonical goal, fine
+        dualArmCount++;
+        if (norm(dv) !== norm(d.darkArg)) {
+            diverged.push({ token: d.token, dark: dv, ld: d.darkArg });
+        }
+    }
+    facts.dualArmCount = dualArmCount;
+    facts.divergedCount = diverged.length;
+    for (const d of diverged) {
+        violations.push(
+            `DA1 (lockstep): ${d.token} — the .dark {} fallback-floor value "${d.dark}" DIVERGES from the light-dark() dark arg "${d.ld}". The two arms paint two different dark colors (a @supports-split engine vs a class-toggle engine desync). The fallback floor MUST byte-agree with the single source, or be deleted.`,
+        );
+    }
+
+    // DA2 — reversal boundary: no light-dark() value is a shadow/inset (the trap fence).
+    // A pure <color> never contains `inset` or a `px` length; a shadow/inset value does.
+    const shadowValued = ldDecls.filter((d) => /\binset\b|\dpx|\spx\b/i.test(d.value));
+    facts.shadowValuedLightDark = shadowValued.map((d) => d.token);
+    for (const d of shadowValued) {
+        violations.push(
+            `DA2 (no-color-feeds-inset): ${d.token} is declared via light-dark() with a shadow/inset value "${d.value}" — a light-dark() wrapping shadow fragments computes the WHOLE box-shadow to none (the inset-shadow trap). Shadows/insets stay .dark {} plain arms; only pure colors fold into light-dark().`,
+        );
+    }
+
+    // DA3 — the intentional idiom-reversal canon, recorded in BOTH files. The
+    // canon lives in a wrapped comment, so match whitespace-tolerantly (newlines +
+    // comment-indent between words).
+    const canonRe = /supersedes\s+the\s+plain\s+per-mode\s+pair\s+idiom/i;
+    const waveRe = /BASIS-CONSOLIDATE/;
+    facts.canonInLightDark = canonRe.test(ldRaw) && waveRe.test(ldRaw);
+    facts.canonInDarkArm = canonRe.test(darkRaw) && waveRe.test(darkRaw);
+    if (!facts.canonInLightDark) {
+        violations.push(
+            "DA3 (canon): light-dark.css does not record the idiom-REVERSAL canon (the `supersedes the plain per-mode pair idiom` row for BG.W-GLASS-BASIS-CONSOLIDATE) — the reversal must be recorded as INTENTIONAL where the single COLOR source lives",
+        );
+    }
+    if (!facts.canonInDarkArm) {
+        violations.push(
+            "DA3 (canon): dark-arm.css does not record the reciprocal idiom-REVERSAL canon (the `supersedes the plain per-mode pair idiom` row for BG.W-GLASS-BASIS-CONSOLIDATE) — the fallback-floor arm must name its lockstep-witness role",
+        );
+    }
+
+    // DA4 — shadows kept as `.dark {}` plain arms (the positive example survives).
+    facts.surfacesShadowArm = /\.dark[^{}]*\{[^{}]*box-shadow\s*:/.test(surf);
+    if (!facts.surfacesShadowArm) {
+        violations.push(
+            "DA4 (shadows stay .dark {}): surfaces.css no longer carries a `.dark … { box-shadow: … }` arm — the reversal KEEPS shadow/inset dark values as `.dark {}` plain arms (never light-dark()); the positive example must survive",
+        );
+    }
+
+    return { violations, facts };
+}
+
 export function detect() {
     const decide = decideViolations(readFile(GLASS_DEEP_FILE));
     const glassMonolith = readMonolith(ROOT, "glass");
@@ -599,6 +768,11 @@ export function detect() {
     const safari = safariBlurVarViolations(readFile(VITE_STYLE_ASSETS));
     const defined = definedControlFloorViolations(glassMonolith, tokensMonolith);
     const dynamics = glassDynamicsViolations(glassMonolith, readFile(SPECULAR_POINTER_FILE));
+    const reversal = darkArmColorReversalViolations(
+        readFile(DARK_ARM_FILE),
+        readFile(LIGHT_DARK_FILE),
+        readFile(GLASS_SURFACES_FILE),
+    );
     // the self-test bites run EVERY run (the "proven every run" discipline) — a
     // bite that loses its teeth REDs the gate, so the anti-gameability arm can
     // never silently rot.
@@ -610,6 +784,7 @@ export function detect() {
             ...safari.violations,
             ...defined.violations,
             ...dynamics.violations,
+            ...reversal.violations,
             ...biteFails,
         ],
         facts: {
@@ -618,6 +793,7 @@ export function detect() {
             safariBlurVar: safari.facts,
             definedControlFloor: defined.facts,
             glassDynamics: dynamics.facts,
+            darkArmColorReversal: reversal.facts,
             selfTestOk: biteFails.length === 0,
         },
     };
@@ -868,6 +1044,65 @@ function selfTest() {
         );
     }
 
+    // ── dark-arm-color-reversal bites (DA1-DA4) — BG.W-GLASS-BASIS-CONSOLIDATE ──
+    const goodDark =
+        `.dark {\n` +
+        `  --foreground: hsl(30 14% 90%);\n` +
+        `  --gold: oklch(0.784 0.143 86.0);\n` +
+        `  /* a shadow/inset token stays a plain .dark {} arm — NEVER light-dark() */\n` +
+        `  --glass-rim-top: inset 0 1px 0 hsl(0 0% 100% / 0.40);\n` +
+        `}\n` +
+        `/* BG.W-GLASS-BASIS-CONSOLIDATE — supersedes the plain per-mode pair idiom for COLOR tokens */`;
+    const goodLd =
+        `@supports (color: light-dark(white, black)) {\n:root {\n` +
+        `  --foreground: light-dark(hsl(24 10% 10%), hsl(30 14% 90%));\n` +
+        `  --gold: light-dark(oklch(0.751 0.147 84.2), oklch(0.784 0.143 86.0));\n` +
+        `}\n}\n` +
+        `/* IDIOM-REVERSAL BG.W-GLASS-BASIS-CONSOLIDATE — supersedes the plain per-mode pair idiom for COLOR tokens */`;
+    const goodSurf = `.dark .glass-pager-ring { box-shadow: var(--glass-edge-light-dark); }`;
+
+    // bite DA-good — the clean fixture must produce ZERO violations (no clause over-fires).
+    if (darkArmColorReversalViolations(goodDark, goodLd, goodSurf).violations.length !== 0) {
+        fails.push(
+            "self-test DA: the GOOD reversal fixture is NOT clean (a clause over-fires — a real bite could false-pass): " +
+                darkArmColorReversalViolations(goodDark, goodLd, goodSurf).violations.join(" | "),
+        );
+    }
+    // bite DA1 — a DIVERGENT .dark fallback value (the two-arms-two-colors bug) must flag.
+    const divergedDark = goodDark.replace("--foreground: hsl(30 14% 90%);", "--foreground: hsl(30 14% 88%);");
+    if (!darkArmColorReversalViolations(divergedDark, goodLd, goodSurf).violations.some((v) => /DA1/.test(v))) {
+        fails.push(
+            "self-test DA1: a divergent .dark fallback-floor value (dark-arm != light-dark dark-arg) was NOT flagged (the lockstep-integrity detector has no teeth)",
+        );
+    }
+    // bite DA2 — a shadow-valued light-dark() (the inset-shadow trap) must flag.
+    const shadowLd = goodLd.replace(
+        "--gold: light-dark(oklch(0.751 0.147 84.2), oklch(0.784 0.143 86.0));",
+        "--gold: light-dark(oklch(0.751 0.147 84.2), oklch(0.784 0.143 86.0));\n  --glass-rim: light-dark(inset 0 1px 0 white, inset 0 1px 0 black);",
+    );
+    if (!darkArmColorReversalViolations(goodDark, shadowLd, goodSurf).violations.some((v) => /DA2/.test(v))) {
+        fails.push(
+            "self-test DA2: a shadow-valued light-dark() (a token folded into light-dark() with an inset fragment) was NOT flagged (the inset-shadow-trap fence has no teeth)",
+        );
+    }
+    // bite DA3 — an ABSENT reversal canon (in either file) must flag.
+    const noCanonDark = goodDark.replace(/\/\*[^*]*supersedes[\s\S]*?\*\//, "/* (canon removed) */");
+    if (!darkArmColorReversalViolations(noCanonDark, goodLd, goodSurf).violations.some((v) => /DA3/.test(v))) {
+        fails.push(
+            "self-test DA3: an absent reversal canon in dark-arm.css was NOT flagged (the canon-recorded detector has no teeth)",
+        );
+    }
+    // bite DA4 — surfaces.css missing its `.dark … box-shadow` arm must flag.
+    if (
+        !darkArmColorReversalViolations(goodDark, goodLd, ".x { color: red }").violations.some((v) =>
+            /DA4/.test(v),
+        )
+    ) {
+        fails.push(
+            "self-test DA4: surfaces.css missing its `.dark … box-shadow` arm was NOT flagged (the shadows-stay-.dark detector has no teeth)",
+        );
+    }
+
     return fails;
 }
 
@@ -958,6 +1193,20 @@ function run() {
     );
     console.log(
         `  GD4 press-couple  : css=${gd.cssPressCouple ? "✓" : "✗"}  js=${gd.jsPressCouple ? "✓" : "✗"}  no-fork=${gd.jsNoForkedPress ? "✓" : "✗"} (the ONE --glass-btn-press-t channel, soft-gated)`,
+    );
+    const da = facts.darkArmColorReversal ?? {};
+    console.log("proof:glass — arm: dark-arm-color-reversal (BG.W-GLASS-BASIS-CONSOLIDATE · R16 MN-1)");
+    console.log(
+        `  DA1 lockstep      : dual-arm=${da.dualArmCount ?? "?"} witnesses  diverged=${(da.divergedCount ?? 0) === 0 ? "✓ none" : "✗ " + da.divergedCount} (each .dark {} color byte-agrees with its light-dark() dark arg)`,
+    );
+    console.log(
+        `  DA2 no-color-inset: shadow-valued light-dark()=${(da.shadowValuedLightDark ?? []).length === 0 ? "✓ none" : "✗ " + (da.shadowValuedLightDark ?? []).join(", ")} (the inset-shadow-trap fence)`,
+    );
+    console.log(
+        `  DA3 canon         : light-dark.css=${da.canonInLightDark ? "✓" : "✗"}  dark-arm.css=${da.canonInDarkArm ? "✓" : "✗"} (the intentional reversal recorded in both)`,
+    );
+    console.log(
+        `  DA4 shadows→.dark : surfaces.css ".dark … box-shadow"=${da.surfacesShadowArm ? "✓" : "✗"} (the positive example survives)`,
     );
     console.log(`  self-test bites   : ${facts.selfTestOk ? "all teeth ✓" : "✗ BROKE"}`);
 

@@ -444,6 +444,11 @@
             box-shadow var(--duration-fast) var(--ease-standard),
             border-color var(--duration-fast) var(--ease-standard);
     }
+    /* SHADOWS stay `.dark {}` (BG.W-GLASS-BASIS-CONSOLIDATE idiom-reversal). This
+       dark box-shadow arm is a PLAIN per-mode arm, NEVER a `light-dark()` — a
+       `light-dark()` wrapping shadow fragments computes the whole box-shadow to
+       `none` (the inset-shadow trap). Colors go the other way (light-dark()
+       canonical); shadows/insets stay here. proof:glass DA4 asserts this arm survives. */
     .dark .glass-pager-ring {
         box-shadow:
             var(--glass-edge-light-dark),
