@@ -538,6 +538,42 @@ const CRAYON = cfg({
     paperGrain: 0.024,
 });
 
+// ── METAL ─────────────────────────────────────────────────────────────────
+// BG.W-AUR-METAL-FINISH — the warm folded-metal hero (the medium-forcing preset,
+// mirroring VANGOGH). The metal medium re-lights the field's luma as a HEIGHT
+// field, so a warm gold/bronze/copper ramp with a strong luma range gives the
+// folds real relief to catch the cursor-synth light. `metalPolish` lifts the
+// specular catch; `metalHeightScale` deepens the relief tilt. This preset is the
+// deterministic named baseline the studio picker + the capture path render.
+const METAL = cfg({
+    palette: [
+        { L: 0.40, C: 0.09, h: 52  },  // deep bronze shadow
+        { L: 0.58, C: 0.13, h: 60  },  // copper
+        { L: 0.73, C: 0.15, h: 78  },  // brass / gold
+        { L: 0.86, C: 0.10, h: 88  },  // warm gold highlight
+        { L: 0.95, C: 0.03, h: 84  },  // near-white catch
+    ],
+    nuclei: [
+        { x: 0.20, y: 0.28, radius: 0.46, paletteBias: 0.00, valueBias:  0.02, driftRadius: 0.010, driftPhase: 0.2 },
+        { x: 0.58, y: 0.22, radius: 0.42, paletteBias: 0.30, valueBias:  0.05, driftRadius: 0.011, driftPhase: 1.5 },
+        { x: 0.84, y: 0.46, radius: 0.44, paletteBias: 0.58, valueBias: -0.03, driftRadius: 0.010, driftPhase: 2.8 },
+        { x: 0.30, y: 0.78, radius: 0.44, paletteBias: 0.82, valueBias:  0.00, driftRadius: 0.011, driftPhase: 4.0 },
+        { x: 0.74, y: 0.82, radius: 0.40, paletteBias: 1.00, valueBias:  0.06, driftRadius: 0.010, driftPhase: 5.3 },
+    ],
+    softmaxBeta: 3.6,
+    valueVariance: 0.13,
+    warpAmount: 0.50,
+    warpScale: 1.5,
+    warpDrift: 0.008,
+    noiseOctaves: 4,
+    medium: "metal",
+    metalPolish: 1.6,
+    metalHeightScale: 1.3,
+    breathDepth: 0.05,
+    breathPeriod: 46,
+    saturation: 1.02,
+});
+
 export const PRESETS = {
     OPENAI_SKY,
     OPENAI_DAWN,
@@ -551,6 +587,7 @@ export const PRESETS = {
     OILPASTEL_RAINBOW,
     OILPASTEL_OCEAN,
     CRAYON,
+    METAL,
     SPEEDTEST,
 } as const;
 
@@ -582,6 +619,7 @@ export const PRESET_META: Record<PresetKey, PresetMeta> = {
     OILPASTEL_RAINBOW: meta("Oil Pastel Rainbow", "oil-pastel", "creamy · full spectrum"),
     OILPASTEL_OCEAN:   meta("Oil Pastel Ocean", "oil-pastel", "creamy · cool"),
     CRAYON:            meta("Crayon",       "crayon",     "dry tooth · no sheen"),
+    METAL:             meta("Metal",        "metal",      "warm folded · cursor-raked catch"),
     SPEEDTEST:         meta("Speedtest",    "smooth",     "6 nuclei · 6-hue"),
 };
 

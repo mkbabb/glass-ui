@@ -9,28 +9,28 @@ import type {
     AuroraMedium,
     AuroraZoneArrangement,
 } from "@glass/components/custom/aurora";
+import { mediumOptions } from "../config/options";
 
 /**
- * The Composition section — the medium + zones ATOMS. The medium picker is the
- * full 7-medium enum (smooth · watercolor · pastel · oil · crayon · van-gogh ·
- * oil-pastel); the Texture slider is STRUCTURALLY ABSENT on a smooth medium
- * (v-if, not disabled-and-ignored — no dead affordance). Zones is a count +
- * an arrangement character. The `data-atom` anchors (`medium`, `zones-count`)
- * are the studio gate's route.
+ * The Composition section — the medium + zones ATOMS. The medium picker is
+ * SINGLE-SOURCED off the canonical `mediumOptions` enum (config/options.ts) — the
+ * full medium ladder (smooth · watercolor · pastel · oil · crayon · van-gogh ·
+ * oil-pastel · kuwahara · metal · brushed-metal), so the studio picker can NEVER
+ * drift behind the shipped medium enum (BG.W-AUR-METAL-FINISH — the demo-surfacing
+ * fix: the prior truncated local map hid the metal mediums the shader built). The
+ * Texture slider is STRUCTURALLY ABSENT on a smooth medium (v-if, not
+ * disabled-and-ignored — no dead affordance). Zones is a count + an arrangement
+ * character. The `data-atom` anchors (`medium`, `zones-count`) are the studio
+ * gate's route.
  */
 const props = defineProps<{
     atoms: AuroraAtoms;
 }>();
 
-const MEDIA: Record<string, AuroraMedium> = {
-    Smooth: "smooth",
-    Watercolor: "watercolor",
-    Pastel: "pastel",
-    Oil: "oil",
-    Crayon: "crayon",
-    "Van Gogh": "vangogh",
-    "Oil Pastel": "oil-pastel",
-};
+// label → medium value, derived from the ONE canonical enum (never a local truncation).
+const MEDIA = Object.fromEntries(
+    mediumOptions.map((o) => [o.label, o.value]),
+) as Record<string, AuroraMedium>;
 const ARRANGEMENTS: Record<string, AuroraZoneArrangement> = {
     Scattered: "scattered",
     Composed: "composed",

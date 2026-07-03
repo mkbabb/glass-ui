@@ -33,6 +33,17 @@
 //   M5 (e) — the warm-catch fence. METAL_CATCH_WARM is the achromatic-warm anchor
 //        (r ≥ g ≥ b, r high) in BOTH backends; no cold-hue catch. Self-test bite: a
 //        cold catch literal (b > r) REDs.
+//   M6 (f) — the DEMO-SURFACING anti-drift lock (the paint-judge fix). The shipped
+//        metal medium (uMedium 8/9) MUST be REACHABLE in the running studio — a paint
+//        judge cannot verify a medium no surface renders (the born blocker: the studio
+//        Medium picker used a truncated local map that stopped at oil-pastel, so
+//        Metal/Brushed-Metal were un-surfaced). Two reach paths are locked: (1) the
+//        studio Medium picker SINGLE-SOURCES off the canonical mediumOptions enum (it
+//        can never drift behind the shipped ladder), and (2) a deterministic
+//        &aurmedium=… capture-param forces the medium so BOTH engines render it with
+//        ZERO interaction (off-screen Safari has none). A named warm-folded METAL preset
+//        is the baseline the picker + capture path load. Self-test bites: a truncated
+//        local picker REDs · dropping the &aurmedium force REDs.
 
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -55,6 +66,12 @@ const PATHS = {
     bridge: resolve(AURORA, "composables/uniformBridge.ts"),
     wgpuBridge: resolve(AURORA, "composables/uniformBridgeWGPU.ts"),
     glSetup: resolve(AURORA, "composables/glSetup.ts"),
+    // M6 — the demo-surfacing reach paths (the paint-judge fix). The studio picker +
+    // the deterministic capture path + the named metal baseline.
+    demoOptions: resolve(ROOT, "demo/stories/aurora/config/options.ts"),
+    demoComposition: resolve(ROOT, "demo/stories/aurora/sections/AuroraCompositionSection.vue"),
+    demoStudio: resolve(ROOT, "demo/stories/substrates/aurora.vue"),
+    demoPresets: resolve(ROOT, "demo/stories/aurora/presets.ts"),
 };
 
 const ARTIFACT = gateArtifactPath("GLASS_UI_AUR_METAL_ARTIFACT", "BG-W-AUR-METAL-FINISH");
@@ -213,6 +230,30 @@ function detect(f) {
     else if (!facts.m5GlslWarm || !facts.m5WgslWarm)
         violations.push("M5 — METAL_CATCH_WARM is not the achromatic-warm anchor (r ≥ g ≥ b, r high) — a cold chrome-blue catch is forbidden (the warm-cream identity)");
 
+    // ── M6 (f) — the DEMO-SURFACING anti-drift lock ──────────────────────────────
+    // The shipped metal medium must be REACHABLE in the running studio (a paint judge
+    // cannot verify a medium no surface renders). (1) The picker SINGLE-SOURCES off the
+    // canonical mediumOptions enum; (2) a &aurmedium=… capture-param forces the medium
+    // for zero-interaction dual-engine capture; (3) a named warm-folded METAL preset is
+    // the baseline. The canonical enum itself must carry the metal members.
+    facts.m6EnumMetal = /value:\s*"metal"/.test(f.demoOptions);
+    facts.m6EnumMetalGradient = /value:\s*"metal-gradient"/.test(f.demoOptions);
+    facts.m6PickerImportsEnum = /import\s*\{[^}]*\bmediumOptions\b[^}]*\}\s*from/.test(f.demoComposition);
+    facts.m6PickerDerivesFromEnum = /mediumOptions\s*\.\s*map\s*\(/.test(f.demoComposition);
+    facts.m6CaptureParam = /route\.query\.aurmedium\b/.test(f.demoStudio)
+        && /studio\.config\.medium\s*=/.test(f.demoStudio);
+    facts.m6MetalPreset = /\bconst\s+METAL\s*=\s*cfg\(/.test(f.demoPresets)
+        && /^\s*METAL,\s*$/m.test(f.demoPresets)
+        && /METAL:\s*meta\(/.test(f.demoPresets);
+    if (!facts.m6EnumMetal || !facts.m6EnumMetalGradient)
+        violations.push("M6 — the canonical demo mediumOptions enum (config/options.ts) is missing a metal/metal-gradient value (the single-source the studio picker reads must carry the shipped mediums)");
+    if (!facts.m6PickerImportsEnum || !facts.m6PickerDerivesFromEnum)
+        violations.push("M6 — AuroraCompositionSection.vue does not single-source its medium picker off the canonical mediumOptions enum (a truncated local map hides the shipped metal medium — the studio can never reach it)");
+    if (!facts.m6CaptureParam)
+        violations.push("M6 — substrates/aurora.vue has no &aurmedium capture-param force (the deterministic dual-engine path — off-screen Safari has zero interaction, so a picker click alone cannot render metal for capture)");
+    if (!facts.m6MetalPreset)
+        violations.push("M6 — the warm-folded METAL preset is absent from presets.ts / PRESETS / PRESET_META (the deterministic named baseline the picker + capture path render)");
+
     return { violations, facts };
 }
 
@@ -227,6 +268,10 @@ function main() {
         bridge: read(PATHS.bridge),
         wgpuBridge: read(PATHS.wgpuBridge),
         glSetup: read(PATHS.glSetup),
+        demoOptions: read(PATHS.demoOptions),
+        demoComposition: read(PATHS.demoComposition),
+        demoStudio: read(PATHS.demoStudio),
+        demoPresets: read(PATHS.demoPresets),
     };
 
     const { violations, facts } = detect(files);
@@ -274,6 +319,25 @@ function main() {
         const r = detect({ ...files, wgslMediums: bad });
         bites.push({ name: "M1 frag-only-metal reds", reds: r.violations.some((v) => v.startsWith("M1")) });
     }
+    // Bite 6 (M6) — a truncated local medium picker (the pre-fix drift that hid metal)
+    // REDs: drop the mediumOptions single-source, revert to a hardcoded partial map.
+    {
+        const bad = files.demoComposition
+            .replace(/import\s*\{[^}]*\bmediumOptions\b[^}]*\}\s*from[^;]*;/, "")
+            .replace(
+                /const\s+MEDIA\s*=[\s\S]*?as\s+Record<string,\s*AuroraMedium>;/,
+                'const MEDIA: Record<string, AuroraMedium> = { Smooth: "smooth" };',
+            );
+        const r = detect({ ...files, demoComposition: bad });
+        bites.push({ name: "M6 truncated-picker reds", reds: r.violations.some((v) => v.startsWith("M6")) });
+    }
+    // Bite 7 (M6) — dropping the &aurmedium capture-param force REDs (off-screen Safari
+    // would have no deterministic path to render metal for capture).
+    {
+        const bad = files.demoStudio.replace(/route\.query\.aurmedium\b/, "route.query.disabled");
+        const r = detect({ ...files, demoStudio: bad });
+        bites.push({ name: "M6 no-capture-param reds", reds: r.violations.some((v) => v.startsWith("M6")) });
+    }
 
     facts.selfTest = bites;
     const biteFailures = bites.filter((b) => !b.reds).map((b) => b.name);
@@ -295,7 +359,7 @@ function main() {
         process.exit(1);
     }
     console.log(
-        "[proof:aur-metal] PASS — metal DUAL-PORTS as the mutually-exclusive medium (uMedium 8/9); the tensor re-plumbs its gradient (ZERO new taps); the two-term BRDF FOLDS; the cursor-synth catch crosses to WGSL (no phantom uLightDir); the smooth default + kuwahara are byte-unchanged; the warm-catch fence holds",
+        "[proof:aur-metal] PASS — metal DUAL-PORTS as the mutually-exclusive medium (uMedium 8/9); the tensor re-plumbs its gradient (ZERO new taps); the two-term BRDF FOLDS; the cursor-synth catch crosses to WGSL (no phantom uLightDir); the smooth default + kuwahara are byte-unchanged; the warm-catch fence holds; the studio surfaces the metal medium (picker single-sourced off the canonical enum + the deterministic &aurmedium capture path + the warm-folded METAL preset)",
     );
 }
 

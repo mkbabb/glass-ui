@@ -108,11 +108,24 @@ async function bootCaptureMode(
     // 3 · Resolve the initial navigation, mount, then navigate to the capture
     //     target. Mounting after `isReady()` + pushing the target is the robust
     //     order (the `/` redirect resolves first, then we land the real route).
+    //     Forward any EXTRA capture params (everything except `capture`/`mode`) onto
+    //     the pushed route as query — history-mode push drops the OUTER search string,
+    //     so a story cannot read window.location.search; it reads useRoute().query.
+    //     (BG.W-AUR-METAL-FINISH — the &aurmedium=… deterministic medium force flows
+    //     through here; general, so a future per-story capture param needs no edit.)
+    const extra = new URLSearchParams();
+    for (const [k, v] of params) {
+        if (k !== "capture" && k !== "mode") extra.set(k, v);
+    }
+    const extraStr = extra.toString();
+    const target = extraStr
+        ? `${route}${route.includes("?") ? "&" : "?"}${extraStr}`
+        : route;
     await router.isReady();
     appInstance.mount("#app");
-    if (router.currentRoute.value.fullPath !== route) {
-        await router.push(route).catch((e) => {
-            console.error("[capture] route push failed", route, e);
+    if (router.currentRoute.value.fullPath !== target) {
+        await router.push(target).catch((e) => {
+            console.error("[capture] route push failed", target, e);
         });
     }
 

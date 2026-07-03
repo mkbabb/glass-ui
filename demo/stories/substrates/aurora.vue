@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
 import {
     useConfiguratorState,
     type ConfiguratorPreset,
@@ -16,6 +17,7 @@ import {
     PRESET_META,
     type PresetKey,
 } from "../aurora/presets";
+import { mediumOptions } from "../aurora/config/options";
 import { usePresetThumbnails } from "../aurora/usePresetThumbnails";
 
 /**
@@ -68,8 +70,28 @@ function selectPreset(key: PresetKey) {
 const thumbs = usePresetThumbnails({ widthCss: 320, heightCss: 200 });
 
 const activeLayer = ref<string>("medium");
+const route = useRoute();
 
 onMounted(() => {
+    // BG.W-AUR-METAL-FINISH — the deterministic capture-surfacing param. The C18
+    // capture harness (?capture=/substrates/aurora&mode=X) renders the default smooth
+    // Dawn lead; an &aurmedium=metal|metal-gradient|kuwahara override forces the opt-in
+    // medium so BOTH engines (Chrome + off-screen Safari) render it with ZERO
+    // interaction. The capture boot forwards the outer param onto the route query
+    // (history-mode push drops the outer search string), so the story reads it here.
+    const q = route.query.aurmedium;
+    const forced = typeof q === "string" ? q : undefined;
+    const forcedOpt = forced
+        ? mediumOptions.find((o) => o.value === forced)
+        : undefined;
+    if (forcedOpt) {
+        // The metal variants ride the warm-metal baseline (the folds catch the light);
+        // kuwahara / any other medium forces on the current lead preset.
+        if (forcedOpt.value === "metal" || forcedOpt.value === "metal-gradient")
+            studio.selectPreset("METAL");
+        studio.config.medium = forcedOpt.value;
+    }
+
     const unregLeft = registerShortcut(
         "ArrowLeft",
         () => studio.cyclePreset(-1),
