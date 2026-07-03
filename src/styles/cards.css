@@ -122,11 +122,18 @@
         background-image: none;
     }
 
-    /* Paper texture overlay */
+    /* Paper texture overlay — a PAPER surface reads the ONE warm raster tooth
+       (BG.W-PAPER-TEXTURE-UNIFY), not the grey `--paper-clean-texture` whisper.
+       The tooth carries its warmth at SOURCE, so the `background-blend-mode`
+       multiply (light) / screen (dark) sinks/lifts the WARM fiber into the plate.
+       Reads the paper tile period (`--paper-grain-tile`), not the 200px glass-
+       grain whisper size. The `--paper-clean-texture` name is retained only for
+       the disjoint GLASS-grain system (glass/grain-overlay.css / dock/shell.css)
+       — the register fence (paper is warm material, glass is a neutral whisper). */
     .paper-texture {
-        background-image: var(--paper-clean-texture);
+        background-image: var(--paper-grain-tooth);
         background-repeat: repeat;
-        background-size: var(--paper-texture-size);
+        background-size: var(--paper-grain-tile);
         background-blend-mode: multiply;
     }
 

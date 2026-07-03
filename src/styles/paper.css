@@ -1,48 +1,99 @@
 /*
- * paper.css — Paper-texture primitives (BD.W-PAPER-MORPHISM, the texture+blend
- * redesign — the grain/grit must be PLAINLY VISIBLE; if you squint, it FAILS).
+ * paper.css — Paper-texture primitives (BG.W-PAPER-TEXTURE-UNIFY — ONE warm
+ * raster tooth PRIMARY; feTurbulence RETIRED as the primary, DEMOTED to an
+ * `@supports`-gated relief enhancement).
  *
  * Two composable Tailwind `@utility` declarations:
  *   - paper-underpaint: fixed, app-root, fullscreen tooth texture at z-index -1
  *   - paper-grain-overlay: ::after tooth overlay for individual surfaces
  *
- * THE FIX (the headline): the prior `feTurbulence bf=0.65 4-oct` + `feBlend
- * multiply in2=SourceGraphic` cloud was a self-cancelling no-op — a fine cloud
- * averaged to grey on hiDPI, and `overlay`/`soft-light` collapse to IDENTITY
- * against a near-white cream wash (L≈0.98) / near-black ink wash (the blends only
- * bite mid-grey backdrops; the paper register lives on the poles). Measured std
- * 0.02–0.86 — invisible by math.
+ * THE HISTORY the design is immune to (KS-PAPER §1.1): the paper register was
+ * built three times on procedural SVG noise; the user rejected the SVG-noise
+ * path TWICE ("disgusting metallic"). The class recurred a third time (D-2): the
+ * grey `saturate=0` tooth borrowed ALL its warmth from the substrate, so once
+ * the universal warm plane was retired, multiply desaturated surfaces below the
+ * C 0.02 warm floor and the tooth read metallic-gray. Two structural causes: (a)
+ * `feDiffuseLighting` computes normals from a noise bump-map → an anisotropic
+ * brushed-metal sheen ("specular IS the metal"); (b) grey-at-source warmth was
+ * borrowed, never baked.
  *
- * THE TEXTURE — `--paper-grain-tooth`: a COARSE anisotropic grey-RGB speckle
- * (`baseFrequency='0.04 0.09'` = grain direction, 2 octaves), KEEP the RGB
- * (`feColorMatrix saturate=0` → grey, never zero it), per-channel
- * `feComponentTransfer` slope-1.8/intercept-(-0.4) CONTRAST-STRETCH (the
- * letterpress bite) + `feFuncA slope=0 intercept=1` (FULL OPAQUE alpha — the
- * grey speckle is painted straight, the blend carries the darken/lighten; NOT the
- * lens-A luminance→alpha matrix that gives a near-empty texture). `<filter
- * color-interpolation-filters='sRGB'>` pins sRGB (identical Chrome↔Safari,
- * deterministic seed). NO `feBlend` mud op. Tile 140px (coarse tooth reads as
- * STRUCTURE, survives hiDPI, divides cleanly DPR 1/2/3).
+ * THE FIX — warmth BAKED AT SOURCE, no lighting primitive (KS-PAPER §3.Q1):
+ * `--paper-grain-tooth` is now a WARM RASTER tooth — a deterministic, engine-
+ * invariant, warm-ecru fiber weave composed from crossed `repeating-linear-
+ * gradient` fibers (two fine crossed bands at incommensurate periods + one
+ * coarse raking band; every stop a warm-ecru/umber `oklch()`, mean C ≈ 0.045,
+ * 2-3× the 0.020 warm floor). It reads warm over ANY substrate — bare, dark, or
+ * washed — the D-2 substrate-warmth dependency SEVERED. It has NO lighting
+ * primitive, NO normals, NO specular term: a warm raster cannot read metallic
+ * (KS-PAPER R2). All periods divide the 140px tile evenly → seamless repeat.
  *
- * THE BLEND LAW (the decisive, physically-true move): `multiply` (light — ink
+ * THE DEMOTED feTurbulence — `--paper-grain-relief` (default `none`): the
+ * procedural noise survives ONLY as a capability-gated ENHANCEMENT, layered
+ * ABOVE the raster in the same `background-image` stack, NEVER load-bearing. It
+ * is a WARM-DUOTONE feTurbulence (the grey noise mapped umber→ecru through an
+ * `feComponentTransfer` `table` ramp) with NO `feDiffuseLighting`/lighting term
+ * (the metallic primitive is retired) at a partial layer alpha — a subtle warm
+ * fiber grain, never the sheen. sRGB-pinned, deterministic seed. Gated behind
+ * `@supports (backdrop-filter: blur(1px))` (the library's capable-engine probe)
+ * so a lean engine paints the always-warm raster alone.
+ *
+ * THE BLEND LAW (UNTOUCHED — the physically-true move): `multiply` (light — ink
  * sinks into the paper's pits → darken) / `screen` (dark — fiber catches light →
  * lighten). Baseline, sRGB-safe, identical both engines. Plain per-mode arms.
+ * The always-present `background-image` longhand + opacity-only engage discipline
+ * (design-idioms §12 anti-pop) survives the swap: opacity is the only engaged
+ * channel; the image is never `none → image`.
  *
- * THE ALPHA: `--paper-grain-opacity` re-calibrated to the JND floor (light 0.22 /
- * dark 0.16 — glass-fx.css / dark-arm.css; the inversion the measurements force:
- * multiply on cream is gentle → MORE, screen on ink bites hard → LESS).
- *
- * The LIBRARY FENCE: `--glass-grain-opacity` (0.025/0.045) is BYTE-UNTOUCHED — the
- * calm glass identity stands; paper is loud, glass is a whisper. That separation
- * IS the design.
+ * THE LIBRARY FENCE: `--glass-grain-opacity` (0.025/0.045) is BYTE-UNTOUCHED —
+ * the calm glass whisper stands; paper is warm material, glass is a whisper. That
+ * separation IS the design (the register fence, KS-PAPER §3.Q3).
  */
 
-/* The ONE coarse-tooth texture — DRY single source, both utilities resolve it.
-   Painted onto a rect at full alpha (`feFuncA slope=0 intercept=1`); the
-   mix-blend-mode carries the visibility. sRGB-pinned, deterministic seed. */
+/* The ONE warm-ecru raster tooth — DRY single source, both utilities resolve it.
+   Deterministic, engine-invariant (no procedural noise), warm at SOURCE (every
+   stop a warm-ecru/umber oklch, C ≥ 0.02); the mix-blend-mode carries the
+   darken/lighten. All three fiber periods (2.8px / 3.5px / 7px) divide the 140px
+   tile → seamless repeat; the two fine bands run incommensurate (LCM 14px) so the
+   weave reads organic, not a clean grid. */
 :root {
-    --paper-grain-tooth: url("data:image/svg+xml,%3Csvg width='140' height='140' viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='t' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04 0.09' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='1.8' intercept='-0.4'/%3E%3CfeFuncG type='linear' slope='1.8' intercept='-0.4'/%3E%3CfeFuncB type='linear' slope='1.8' intercept='-0.4'/%3E%3CfeFuncA type='linear' slope='0' intercept='1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23t)'/%3E%3C/svg%3E");
+    --paper-grain-tooth:
+        repeating-linear-gradient(
+            28deg,
+            oklch(0.9 0.045 84 / 0.5) 0,
+            oklch(0.62 0.052 60 / 0.5) 1.4px,
+            oklch(0.9 0.045 84 / 0.5) 2.8px
+        ),
+        repeating-linear-gradient(
+            -64deg,
+            oklch(0.88 0.04 82 / 0.38) 0,
+            oklch(0.6 0.05 58 / 0.38) 1.75px,
+            oklch(0.88 0.04 82 / 0.38) 3.5px
+        ),
+        repeating-linear-gradient(
+            10deg,
+            oklch(0.85 0.05 78 / 0.28) 0,
+            oklch(0.7 0.055 66 / 0.28) 3.5px,
+            oklch(0.85 0.05 78 / 0.28) 7px
+        );
     --paper-grain-tile: 140px;
+    /* The demoted feTurbulence relief is DROPPED by default — the everywhere
+       floor is the warm raster ALONE (KS-PAPER §3.Q1: the enhancement is never
+       load-bearing; DROP unless a capable engine warrants it). */
+    --paper-grain-relief: none;
+}
+
+/* feTurbulence DEMOTED — the warm-duotone fine-grain relief, gated behind the
+   library's capable-engine probe (`backdrop-filter`) and layered ABOVE the
+   raster. NO `feDiffuseLighting`/lighting term (the metallic primitive is
+   retired): the grey fractalNoise is mapped umber→ecru through an
+   `feComponentTransfer` `table` ramp and painted at a PARTIAL layer alpha, so it
+   reads as a subtle warm fiber grain over the raster, never a brushed-metal
+   sheen. sRGB-pinned, deterministic seed. On a lean engine the block is skipped
+   and the always-warm raster paints alone. */
+@supports (backdrop-filter: blur(1px)) {
+    :root {
+        --paper-grain-relief: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='r' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='table' tableValues='0.31 0.96'/%3E%3CfeFuncG type='table' tableValues='0.25 0.9'/%3E%3CfeFuncB type='table' tableValues='0.15 0.78'/%3E%3CfeFuncA type='linear' slope='0.42' intercept='0.12'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23r)'/%3E%3C/svg%3E");
+    }
 }
 
 @utility paper-underpaint {
@@ -50,7 +101,12 @@
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    background-image: var(--paper-grain-tooth);
+    /* Two ALWAYS-PRESENT layers: the demoted relief (default `none` — paints
+       nothing) ABOVE the warm raster tooth. The layer count is stable (anti-pop);
+       on a lean engine `--paper-grain-relief` stays `none` so only the raster
+       paints, byte-identical in effect to a single-layer raster. A single
+       background-size applies to both layers. */
+    background-image: var(--paper-grain-relief), var(--paper-grain-tooth);
     background-repeat: repeat;
     background-size: var(--paper-grain-tile) var(--paper-grain-tile);
     opacity: var(--paper-grain-opacity, var(--glass-grain-opacity));
@@ -75,7 +131,10 @@
         inset: 0;
         border-radius: inherit;
         pointer-events: none;
-        background-image: var(--paper-grain-tooth);
+        /* The relief (default `none`) ABOVE the warm raster tooth — two
+           always-present layers, the anti-pop discipline (opacity is the only
+           engaged channel; the image is never `none → image`). */
+        background-image: var(--paper-grain-relief), var(--paper-grain-tooth);
         background-repeat: repeat;
         background-size: var(--paper-grain-tile) var(--paper-grain-tile);
         opacity: var(--paper-grain-opacity, var(--glass-grain-opacity));
