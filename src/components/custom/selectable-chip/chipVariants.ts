@@ -5,10 +5,12 @@ import { type VariantProps, cva } from "class-variance-authority";
  *
  * The chip family (ToggleChip · SelectableChip + the toggle-group children)
  * collapses to ONE `chipVariants({ size })`: a stadium-pill warm-glass LENS that
- * PUNCHES when you pick it. Survival of the fittest — `selectableChipVariants`
+ * PUNCHES when you pick it. Survival of the fittest — the SelectableChip size axis
  * (`sm`/`md`/`lg`) + the `ToggleChip` `chip`/`cell` axis collapse here (clean
- * break, no alias — the no-legacy law). The three SFCs stay DISTINCT (bool toggle
- * vs tonal picker vs glyph tile) but render the SAME register.
+ * break, no alias — the no-legacy law; the `selectableChipVariants`/
+ * `SelectableChipVariants` re-point shim was SWEPT at BG.W-DEAD-SWEEP, every
+ * consumer reads `chipVariants`/`ChipVariants` directly). The three SFCs stay
+ * DISTINCT (bool toggle vs tonal picker vs glyph tile) but render the SAME register.
  *
  * The recipe is STRUCTURE + the shared-register hooks: it COMPOSES the read-only
  * shared registers, never re-forks a parallel glass/cartoon/motion system —

@@ -199,14 +199,6 @@ const KEEP_ALLOWLIST = new Map([
         "EXTENSION-POINT — the sectioned-progress track-color override (= var(--secondary)); the frosted-track register reads --glass-bg-quiet, this is the consumer recolor knob.",
     ],
     [
-        "--corner-shape-card",
-        "EXTENSION-POINT — the `round`-default member of the --corner-shape-* override family; a consumer dials a surface to a squircle (or back) by re-pointing its --corner-shape-<surface> alias (radius.css documents it); the squircle members ARE consumed.",
-    ],
-    [
-        "--corner-shape-pill",
-        "EXTENSION-POINT — the `round`-default member of the --corner-shape-* override family (the pill surface); twin of --corner-shape-card.",
-    ],
-    [
         "--motion-stagger-tight",
         "EXTENSION-POINT — a stagger-cadence canon consumers read via inline-style calc()/getComputedStyle at runtime (scheme-motion.css documents it); an external-JS consumer surface.",
     ],

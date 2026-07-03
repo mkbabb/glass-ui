@@ -42,7 +42,7 @@
 // E3; a module-level `let` in the leaf REDs E3; a re-declared `function
 // createSatellite` in the driver REDs E4 (a comment mention does NOT).
 
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import {
@@ -328,6 +328,65 @@ function detectColocate(overrides = {}) {
     return { facts, violations };
 }
 
+// ── BG.W-DEAD-SWEEP — the selectableChipVariants alias-kill negative guard. ──
+// The `selectableChipVariants`/`SelectableChipVariants` re-point shim (a self-admitted
+// back-compat rename the no-legacy law forbids — the chip family collapsed to the ONE
+// congruent `chipVariants` recipe at BD.W-CHIP-CONGRUENT-GLASS) is DELETED. The
+// encapsulation boundary is the negative assertion: the shim file is DEFINITION-ABSENT
+// AND no src/ module still imports/exports from its module spec (the re-point is
+// complete — SelectableChip.vue / the barrel / api/index.ts read `chipVariants`/
+// `ChipVariants` directly). Born-RED on HEAD (the file present + 3 referers) → GREEN on
+// the delete + re-point. Pure over an injected input map so a self-test can re-add it.
+const CHIP_ALIAS = resolve(SRC, "components/custom/selectable-chip/selectableChipVariants.ts");
+// The MODULE-SPEC path (a quoted `.../selectableChipVariants` import specifier), NOT a
+// bare symbol mention — a `` `selectableChipVariants` `` provenance comment carries no
+// quoted module path, so this scopes to a live `from "…/selectableChipVariants"`.
+const ALIAS_SPEC_RE = /["'][^"']*\/selectableChipVariants["']/;
+
+// Recursively collect every `.ts`/`.vue` file under `dir` (the src tree).
+function walkSrc(dir) {
+    const out = [];
+    for (const name of readdirSync(dir)) {
+        const p = resolve(dir, name);
+        const st = statSync(p);
+        if (st.isDirectory()) out.push(...walkSrc(p));
+        else if (/\.(ts|vue)$/.test(name)) out.push(p);
+    }
+    return out;
+}
+
+// The set of src/ files that still reference the deleted shim's module spec.
+function scanAliasReferers() {
+    const referers = [];
+    for (const f of walkSrc(SRC)) {
+        if (f === CHIP_ALIAS) continue; // the shim itself (if a self-test re-planted it)
+        const clean = stripComments(read(f));
+        if (ALIAS_SPEC_RE.test(clean)) referers.push(f.slice(SRC.length + 1));
+    }
+    return referers;
+}
+
+// overrides: { aliasExists?, referers? } — a self-test sabotages either.
+function detectAliasKill(overrides = {}) {
+    const violations = [];
+    const facts = {};
+    // A1 — the shim file is DEFINITION-ABSENT (deleted; the no-legacy law).
+    const aliasExists = overrides.aliasExists ?? existsSync(CHIP_ALIAS);
+    facts.aliasExists = aliasExists;
+    if (aliasExists)
+        violations.push(
+            "A1 — selectableChipVariants.ts alias shim still exists (a back-compat rename the no-legacy law forbids — delete it; SelectableChip reads chipVariants directly)",
+        );
+    // A2 — no src/ module imports/exports from the deleted shim spec (re-point complete).
+    const referers = overrides.referers ?? scanAliasReferers();
+    facts.aliasReferers = referers;
+    if (referers.length)
+        violations.push(
+            `A2 — ${referers.join(", ")} still reference the deleted selectableChipVariants module spec (re-point onto ./chipVariants — the ChipVariants/chipVariants name)`,
+        );
+    return { facts, violations };
+}
+
 // ── The detector — runs over a SOURCE MAP so a self-test can sabotage inputs.
 // overrides: { driverText?, godModuleSource?, leafExists?, leafSource? }.
 function detect(overrides = {}) {
@@ -591,6 +650,34 @@ function selfTest() {
         "C3 comment-mention fence (a note is not a definition)",
     );
 
+    // ── BG.W-DEAD-SWEEP — the alias-kill A1/A2 bites over detectAliasKill. ──
+    const sabA = (overrides, prefix, name) => {
+        const { violations } = detectAliasKill(overrides);
+        if (violations.some((x) => x.startsWith(prefix))) flagged++;
+        else
+            throw new Error(
+                `[proof:encapsulation self-test] alias-kill bite FAILED to flag: ${name}`,
+            );
+    };
+    const sabNotA = (overrides, name) => {
+        const { violations } = detectAliasKill(overrides);
+        if (violations.length === 0) flagged++;
+        else
+            throw new Error(
+                `[proof:encapsulation self-test] alias-kill fence bite WRONGLY flagged: ${name}`,
+            );
+    };
+    // A1: the shim file re-planted on disk (born-RED demonstration).
+    sabA({ aliasExists: true, referers: [] }, "A1", "A1 selectableChipVariants.ts re-planted");
+    // A2: a src/ module still imports the deleted shim spec (a half-done re-point).
+    sabA(
+        { aliasExists: false, referers: ["components/custom/selectable-chip/index.ts"] },
+        "A2",
+        "A2 a straggler still imports the shim spec",
+    );
+    // Fence: file absent + zero referers (the swept, fully re-pointed tree) → no violation.
+    sabNotA({ aliasExists: false, referers: [] }, "the swept + re-pointed tree");
+
     return flagged;
 }
 
@@ -605,8 +692,14 @@ function run() {
     // BG.W-COLOCATE — the WS4 carve fold (ratchet #3/4/9/13) joins the same gate.
     const { facts: colocateFacts, violations: colocateViolations } =
         detectColocate();
-    const facts = { ...blobFacts, colocate: colocateFacts };
-    const violations = [...blobViolations, ...colocateViolations];
+    // BG.W-DEAD-SWEEP — the selectableChipVariants alias-kill negative guard.
+    const { facts: aliasFacts, violations: aliasViolations } = detectAliasKill();
+    const facts = { ...blobFacts, colocate: colocateFacts, aliasKill: aliasFacts };
+    const violations = [
+        ...blobViolations,
+        ...colocateViolations,
+        ...aliasViolations,
+    ];
     const status = violations.length === 0 ? "pass" : "fail";
 
     writeGateArtifact(ARTIFACT, {
@@ -644,7 +737,10 @@ function run() {
         );
     }
     console.log(
-        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (blob E1×2+E1-fence+E2×2+E3×2+E4+E4-fence + colocate C1×2+C1-fence+C2×2+C3+C3-fence)`,
+        `  BG.W-DEAD-SWEEP alias-kill      : ${aliasViolations.length === 0 ? "GREEN" : "RED"} (selectableChipVariants.ts absent=${!aliasFacts.aliasExists}, referers=${aliasFacts.aliasReferers.length})`,
+    );
+    console.log(
+        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (blob E1×2+E1-fence+E2×2+E3×2+E4+E4-fence + colocate C1×2+C1-fence+C2×2+C3+C3-fence + alias-kill A1+A2+fence)`,
     );
 
     if (violations.length) {
@@ -667,4 +763,4 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     run();
 }
 
-export { detect, detectColocate, detectOneCarve, selfTest };
+export { detect, detectColocate, detectOneCarve, detectAliasKill, selfTest };

@@ -93,17 +93,22 @@
 
     /* Semantic per-surface SHAPE aliases — the rounded-vs-squircle POLICY (a
        RADIUS-THRESHOLD policy: the superellipse only READS at a LARGE radius
-       ~--radius-xl/12px and up). ROUND set = card, pill (small controls + data
-       cards + stadium pills — the superellipse is imperceptible, dropping it is
-       free). SQUIRCLE set = bigdock, dialog, sheet, panel, hero (the large-radius
-       glass overlays where the iOS-26 silhouette reads — the blur halo + cartoon
-       under-shadow follow the shape). ALL ride the ONE --corner-k-squircle vocab.
-       W56b (USER-DECISION R1) extended the family off big-dock-only onto the large
-       glass overlays; @supports-gated in glass/squircle.css over the `border-radius`
-       round CONTRACT. A consumer dials any surface back to round (or opts one in) by
-       re-pointing its `--corner-shape-<surface>` alias. */
-    --corner-shape-card:    round;
-    --corner-shape-pill:    round;
+       ~--radius-xl/12px and up). The SQUIRCLE set = bigdock, dialog, sheet, panel,
+       hero (the large-radius glass overlays where the iOS-26 silhouette reads — the
+       blur halo + cartoon under-shadow follow the shape); ALL ride the ONE
+       --corner-k-squircle vocab. W56b (USER-DECISION R1) extended the family off
+       big-dock-only onto the large glass overlays; @supports-gated in
+       glass/squircle.css over the `border-radius` round CONTRACT. A consumer dials
+       any squircle surface back to round (or opts one in) by re-pointing its
+       `--corner-shape-<surface>` alias.
+       The ROUND set (card, pill — the small controls + data cards + stadium pills)
+       carries NO shape alias: the CSS `corner-shape` INITIAL VALUE is `round`, and
+       glass.css writes no `corner-shape` on .glass-card/.glass-btn/.btn-pill (the
+       CARD-REHOMED policy), so those surfaces are round BY DEFAULT — the dead
+       `--corner-shape-card`/`-pill: round` no-op knobs were SWEPT (BG.W-DEAD-SWEEP,
+       net-negative; the round policy is identical, expressed structurally not by a
+       dead token). A consumer wanting a squircle card mints its own alias and adds
+       the surface to squircle.css's @supports block. */
     --corner-shape-bigdock: superellipse(var(--corner-k-squircle));
     --corner-shape-dialog:  superellipse(var(--corner-k-squircle));
     --corner-shape-sheet:   superellipse(var(--corner-k-squircle));

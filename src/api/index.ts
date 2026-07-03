@@ -233,13 +233,16 @@ export type {
 } from "../components/custom/icon-chip";
 
 // ── SelectableChip / accent-tone (BC.W-ACCENT-TONE) ──────────────────────────
-// The contrast-floored tonal-accent register's public types. `SelectableChipVariants`
-// is the CVA-derived size axis a consumer wrapping <SelectableChip> types against.
-// `UseAccentToneOptions`/`UseAccentToneReturn` are the contrast-safe-ink composable's
-// option + return shapes (the value.js-bearing `safeAccentColor` ink resolver). The
-// value.js-bearing runtime values ride `/selectable-chip` + the `/color` leaf ONLY
-// (OFF the value.js-free root barrel — the SCC-trap discipline); the types ride here.
-export type { SelectableChipVariants } from "../components/custom/selectable-chip";
+// The contrast-floored tonal-accent register's public types. `ChipVariants` is the
+// ONE congruent chip recipe's CVA-derived size axis (the BD.W-CHIP-CONGRUENT-GLASS
+// shared register — the `selectableChipVariants`/`SelectableChipVariants` alias was
+// SWEPT at BG.W-DEAD-SWEEP, clean break, no alias) a consumer wrapping <SelectableChip>
+// types against. `UseAccentToneOptions`/`UseAccentToneReturn` are the contrast-safe-ink
+// composable's option + return shapes (the value.js-bearing `safeAccentColor` ink
+// resolver). The value.js-bearing runtime values ride `/selectable-chip` + the `/color`
+// leaf ONLY (OFF the value.js-free root barrel — the SCC-trap discipline); the types
+// ride here.
+export type { ChipVariants } from "../components/custom/selectable-chip";
 export type {
     UseAccentToneOptions,
     UseAccentToneReturn,

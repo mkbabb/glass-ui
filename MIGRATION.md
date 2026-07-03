@@ -1,5 +1,28 @@
 # MIGRATION—v0.9.x → v1.0 → v2.0
 
+> **BG.W-DEAD-SWEEP — the `selectableChipVariants` alias + the `--corner-shape-card`/
+> `-pill` dead tokens SWEPT. Clean break, no alias ("No legacy code").** Two net-negative
+> cuts:
+> - **`selectableChipVariants` → `chipVariants`, `SelectableChipVariants` → `ChipVariants`.**
+>   The `selectableChipVariants.ts` re-point shim (a self-admitted back-compat rename over
+>   the ONE congruent `chipVariants` recipe — BD.W-CHIP-CONGRUENT-GLASS) is DELETED. The
+>   `@mkbabb/glass-ui/selectable-chip` subpath now exports `chipVariants` (value) +
+>   `ChipVariants` (type); `@mkbabb/glass-ui/api` exports the `ChipVariants` type (was
+>   `SelectableChipVariants`). MIGRATE: rename `selectableChipVariants` → `chipVariants`
+>   and `SelectableChipVariants` → `ChipVariants` at each import site (the recipe body is
+>   byte-identical — it always WAS `chipVariants` under the alias). `<SelectableChip>`
+>   itself is unchanged.
+> - **`--corner-shape-card` / `--corner-shape-pill` DELETED.** They were dead `round`
+>   no-op knobs (zero `var()` readers; the CSS `corner-shape` INITIAL VALUE is `round`, so
+>   a card/pill with no declaration is already round). The "cards/pills stay round" policy
+>   is UNCHANGED — glass.css writes no `corner-shape` on `.glass-card`/`.glass-btn`/
+>   `.btn-pill`, so they inherit the round default (the CARD-REHOMED policy). The SQUIRCLE
+>   members `--corner-shape-{bigdock,dialog,sheet,panel,hero}` are LIVE and untouched.
+>   MIGRATE: a consumer who was re-pointing `--corner-shape-card`/`-pill` mints the alias
+>   itself and adds the surface to `glass/squircle.css`'s `@supports` block (presets-in-
+>   consumers). `proof:squircle-language`'s policy clause is re-pointed onto the NEGATIVE
+>   GUARD — a re-mint of either token reds (the net-negative cannot silently reverse).
+
 > **BG.W-DOCK-CAP-SCROLL-FADE — the `<GlassDock overflow="scroll">` opt-in RETIRED.
 > Clean break, no alias ("No legacy code").** The `overflow` prop is now
 > `"grow" | "wrap"` (the `"scroll"` member is GONE). A capped dock axis is

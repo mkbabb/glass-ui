@@ -31,12 +31,16 @@
 // THE SOURCE ASSERTS (device-free, run + hard-RED on every runner):
 //   1. TOKEN-AXIS-EXISTS — theme.css mints the k-primitives
 //      (--corner-k-squircle:2 + --corner-k-soft + --corner-k-sharp) AND the
-//      semantic --corner-shape-{card,pill,panel,bigdock,dialog,sheet,hero} aliases.
-//   2. POLICY (W56b — the radius-threshold map) — the ROUND set is card/pill ONLY
-//      (they resolve `round`); the SQUIRCLE set is
-//      bigdock/dialog/sheet/panel/hero (each resolves a `superellipse(...)` riding
-//      var(--corner-k-squircle), NOT round, NOT an inline literal). The
-//      rounded-vs-squircle map is encoded in the tokens.
+//      SQUIRCLE semantic aliases --corner-shape-{panel,bigdock,dialog,sheet,hero}.
+//   2. POLICY (W56b + BG.W-DEAD-SWEEP — the NEGATIVE GUARD) — the ROUND set
+//      (card/pill) is expressed STRUCTURALLY, not by a token: the dead
+//      --corner-shape-card/-pill `round` no-op knobs (no var() reader; the CSS
+//      `corner-shape` initial value IS `round`) were SWEPT at BG.W-DEAD-SWEEP, so
+//      the guard INVERTS — they must STAY ABSENT (a re-mint reds, a dead-knob
+//      resurrection). The "cards stay round" policy is PRESERVED by the CARD-REHOMED
+//      clause (5) over the CSS default, not by a mint-assert. The SQUIRCLE set
+//      bigdock/dialog/sheet/panel/hero each resolves a `superellipse(...)` riding
+//      var(--corner-k-squircle), NOT round, NOT an inline literal.
 //   3. BIGDOCK-READS-TOKEN (the bite) — dock.css's big-dock site reads
 //      `corner-shape: var(--corner-shape-bigdock)` (NOT a bare `squircle` keyword)
 //      so the shape is as overridable as the radius. A re-hardcoded keyword → RED.
@@ -160,12 +164,13 @@ export function detectSquircleLanguage({ themeCss, dockCss, glassCss }) {
     const shapeHero = tokenValue(themeCss, "--corner-shape-hero");
     facts.shapeCard = shapeCard;
     facts.shapePill = shapePill;
+    // BG.W-DEAD-SWEEP negative guard — the swept round-tokens must stay absent.
+    facts.cardTokenSwept = shapeCard === null;
+    facts.pillTokenSwept = shapePill === null;
     facts.shapePanel = shapePanel;
     facts.shapeBigdock = shapeBigdock;
     facts.shapeHero = shapeHero;
     for (const [name, v] of [
-        ["--corner-shape-card", shapeCard],
-        ["--corner-shape-pill", shapePill],
         ["--corner-shape-panel", shapePanel],
         ["--corner-shape-bigdock", shapeBigdock],
         ["--corner-shape-hero", shapeHero],
@@ -174,17 +179,23 @@ export function detectSquircleLanguage({ themeCss, dockCss, glassCss }) {
             violations.push(`theme.css: ${name} semantic shape alias is not minted`);
     }
 
-    // ── 2. POLICY (W56b — the radius-threshold map) ──────────────────────
-    // The ROUND set is card/pill ONLY (the small surfaces); the SQUIRCLE set is
-    // the LARGE-RADIUS GLASS FAMILY bigdock/dialog/sheet/panel/hero — each must
-    // resolve a `superellipse(...)` riding var(--corner-k-squircle).
-    if (shapeCard !== null && shapeCard !== "round")
+    // ── 2. POLICY (W56b + BG.W-DEAD-SWEEP — the NEGATIVE GUARD) ──────────
+    // The ROUND set (card/pill) is expressed STRUCTURALLY, not by a token: the
+    // dead `--corner-shape-card`/`-pill: round` no-op knobs (no `var()` reader; the
+    // CSS `corner-shape` initial value IS `round`) were SWEPT at BG.W-DEAD-SWEEP.
+    // The "cards stay round" policy is PRESERVED — but by the CARD-REHOMED clause (5,
+    // glass.css writes NO corner-shape on .glass-card/.glass-btn/.btn-pill) over the
+    // CSS default, NOT by a mint-assert. So the guard INVERTS: the swept tokens must
+    // STAY ABSENT (a re-mint is a dead-knob resurrection — the net-negative reverses).
+    // The SQUIRCLE set (bigdock/dialog/sheet/panel/hero) still resolves a
+    // `superellipse(...)` riding var(--corner-k-squircle) (below).
+    if (shapeCard !== null)
         violations.push(
-            `policy: --corner-shape-card must be \`round\` (data cards stay round per the radius-threshold policy); got ${shapeCard}`,
+            `dead-sweep negative guard: --corner-shape-card was SWEPT at BG.W-DEAD-SWEEP (a dead \`round\` no-op knob — cards inherit the round CSS default; the round policy lives in the CARD-REHOMED clause). It must stay ABSENT; a re-mint reds. Got ${shapeCard}`,
         );
-    if (shapePill !== null && shapePill !== "round")
+    if (shapePill !== null)
         violations.push(
-            `policy: --corner-shape-pill must be \`round\` (pills/buttons stay round); got ${shapePill}`,
+            `dead-sweep negative guard: --corner-shape-pill was SWEPT at BG.W-DEAD-SWEEP (a dead \`round\` no-op knob — pills inherit the round CSS default). It must stay ABSENT; a re-mint reds. Got ${shapePill}`,
         );
     // The SQUIRCLE set (W56b): each large-radius glass surface resolves a
     // superellipse riding the ONE --corner-k-squircle vocabulary (no inline literal).
@@ -370,6 +381,58 @@ export function detectSource(sources) {
     });
 }
 
+// ── The BG.W-DEAD-SWEEP negative-guard self-test (anti-vacuity). ─────────────
+// The guard must FIRE when a swept `--corner-shape-card`/`-pill` round-token is
+// re-minted in ANY form (a dead-knob resurrection reverses the net-negative) AND
+// stay SILENT while the tokens are absent (the swept tree). Runs over the LIVE
+// stripped sources + a synthetic sabotage (the proof:encapsulation bite playbook —
+// read live, prepend a sabotage, assert the specific violation string). The prepend
+// carries no comments, so it is safe to inject into already-stripped text.
+export function selfTest({ themeCss, dockCss, glassCss }) {
+    let flagged = 0;
+    const CARD_SWEPT = "--corner-shape-card was SWEPT";
+    const PILL_SWEPT = "--corner-shape-pill was SWEPT";
+    const hits = (v, needle) => v.some((x) => x.includes(needle));
+
+    // Bite A — re-add `--corner-shape-card: round` → the card negative guard reds.
+    const sabCard = detectSquircleLanguage({
+        themeCss: ":root { --corner-shape-card: round; }\n" + themeCss,
+        dockCss,
+        glassCss,
+    });
+    if (!hits(sabCard.violations, CARD_SWEPT))
+        throw new Error(
+            "[proof:squircle-language self-test] bite FAILED to flag: a re-minted --corner-shape-card (dead-knob resurrection)",
+        );
+    flagged++;
+
+    // Bite B — re-add `--corner-shape-pill` in ANY form (a superellipse re-mint, not
+    // only `round`) → the pill negative guard reds (the guard is presence, not value).
+    const sabPill = detectSquircleLanguage({
+        themeCss:
+            ":root { --corner-shape-pill: superellipse(var(--corner-k-squircle)); }\n" +
+            themeCss,
+        dockCss,
+        glassCss,
+    });
+    if (!hits(sabPill.violations, PILL_SWEPT))
+        throw new Error(
+            "[proof:squircle-language self-test] bite FAILED to flag: a re-minted --corner-shape-pill",
+        );
+    flagged++;
+
+    // Fence bite — the LIVE (swept) tree carries NEITHER negative-guard violation
+    // (the round policy survives via the CARD-REHOMED clause + the CSS default).
+    const clean = detectSquircleLanguage({ themeCss, dockCss, glassCss });
+    if (hits(clean.violations, CARD_SWEPT) || hits(clean.violations, PILL_SWEPT))
+        throw new Error(
+            "[proof:squircle-language self-test] fence bite WRONGLY flagged: the swept tree must carry no card/pill negative-guard violation",
+        );
+    flagged++;
+
+    return flagged;
+}
+
 // ── The π render arm (fail-CLOSED Playwright cornerShape readback) ──────────
 // Mirrors proof-constellation-warp-live.mjs: when the tests-visual workspace
 // resolves a Playwright runner, the live cornerShape readback runs and a wrong
@@ -434,11 +497,18 @@ function run() {
     // primitives + the --corner-k-*/--corner-shape-* squircle axis live in
     // theme/radius.css, so the theme arm reads composed too (else the k-primitive
     // + shape-alias witnesses mis-assert against the thin @import root).
-    const { facts, violations } = detectSource({
-        themeCss: readMonolith(ROOT, "theme"),
-        dockCss: readDockCss(ROOT),
-        glassCss: readMonolith(ROOT, "glass"),
-    });
+    // Strip once — the detector + the BG.W-DEAD-SWEEP negative-guard self-test both
+    // read the same stripped sources (the self-test sabotages this exact input).
+    const stripped = {
+        themeCss: stripBlockComments(readMonolith(ROOT, "theme")),
+        dockCss: stripBlockComments(readDockCss(ROOT)),
+        glassCss: stripBlockComments(readMonolith(ROOT, "glass")),
+    };
+    const { facts, violations } = detectSquircleLanguage(stripped);
+
+    // The negative-guard self-test throws on vacuity (a swept token silently
+    // re-mintable, or the swept tree wrongly flagged) — a hard RED before the gate.
+    const selfTestCount = selfTest(stripped);
 
     const pi = piArm(WORKSPACE);
     // fail-CLOSED: a PRESENT π arm that REDs fails the gate.
@@ -451,6 +521,7 @@ function run() {
         status,
         severity: "contract",
         command: "npm run proof:squircle-language",
+        selfTestChecks: selfTestCount,
         facts,
         violations,
         piArm: { ran: pi.ran, status: pi.status, note: pi.note },
@@ -461,8 +532,8 @@ function run() {
     );
     console.log(`  --corner-k-squircle (=2)  : ${facts.kSquircle ?? "(missing)"}`);
     console.log(
-        `  card/pill = round         : ${
-            facts.shapeCard === "round" && facts.shapePill === "round" ? "YES" : "NO"
+        `  card/pill SWEPT (absent)  : ${
+            facts.cardTokenSwept && facts.pillTokenSwept ? "YES" : "NO (dead-knob re-mint!)"
         }`,
     );
     console.log(
@@ -488,6 +559,9 @@ function run() {
         `  card squircle re-homed    : ${facts.glassCardSquircle ? "NO (leak!)" : "YES"}`,
     );
     console.log(`  π render arm              : ${pi.status.toUpperCase()} — ${pi.note}`);
+    console.log(
+        `  dead-sweep self-test      : OK — ${selfTestCount} bite(s) (card re-mint · pill re-mint · swept-tree fence)`,
+    );
     if (violations.length > 0) {
         console.log("\nVIOLATIONS:");
         for (const v of violations) console.log(`  ✗ ${v}`);

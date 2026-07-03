@@ -25,7 +25,7 @@ import { computed } from "vue";
 import { Toggle, type ToggleEmits, type ToggleProps, useForwardPropsEmits } from "reka-ui";
 import { cn } from "../../../utils";
 import { useAccentTone } from "../../../composables/color";
-import { selectableChipVariants, type SelectableChipVariants } from "./selectableChipVariants";
+import { chipVariants, type ChipVariants } from "./chipVariants";
 
 const props = defineProps<ToggleProps & {
     /** The accent COLOUR identity — a complete `<color>` (e.g. `var(--section-color-7)`
@@ -33,7 +33,7 @@ const props = defineProps<ToggleProps & {
      *  SEMANTIC choice is a prop; the strength MAGNITUDES are tokens (no over-prop). */
     tone?: string;
     /** The structural size rung. Default `md`. */
-    size?: SelectableChipVariants["size"];
+    size?: ChipVariants["size"];
     class?: HTMLAttributes["class"];
 }>();
 
@@ -53,7 +53,7 @@ const forwarded = useForwardPropsEmits(
 );
 
 const chipClass = computed(() =>
-    cn(selectableChipVariants({ size: props.size }), props.class),
+    cn(chipVariants({ size: props.size }), props.class),
 );
 
 // The chip is the ≥3rd `--glass-fill-tint` consumer — the translucent
