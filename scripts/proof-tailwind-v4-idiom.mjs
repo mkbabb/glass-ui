@@ -121,15 +121,11 @@ const SCALE_FAMILIES = [
         // `duration-spring-smooth` Tailwind utility, so there is no `--ease-*`/
         // duration bridge use case (the same raw-var register as --spring-dock).
         //
-        // The three --spring-timeline-{head,fill,press} curves + their matching
-        // --spring-timeline-*-duration clocks (BD.W-SCRUBBER-TIMELINE — GENERATED in
-        // regen-spring-tokens.mjs from the SAME SPRING_PRESETS table, the timeline-*
-        // rows) are the SAME raw-var register as --spring-dock: the ScrubberTimeline
-        // JS half samples them via `springPreset("timeline-head"|"timeline-fill"|
-        // "timeline-press")` (springPresets.ts — the no-second-authority root the
-        // generator + the MOTION_CURVES twin both derive from), never a per-element
-        // `ease-spring-timeline-head` Tailwind utility, so there is no --ease-*/
-        // duration bridge use case.
+        // BG.W-SPRING-REGISTER-TIDY — the three --spring-timeline-{head,fill,press}
+        // curves + their -duration clocks were DROPPED (the dead CSS twins died when the
+        // 3 per-component timeline rows drained OFF the global SPRING_PRESETS into the
+        // ScrubberTimeline.vue LOCAL map, table→6). No CSS var() consumer read them (the
+        // JS half now holds the (response, ζ) inline), so no holdout entry is owed.
         holdout: [
             "--spring-dock",
             "--spring-deck",
@@ -139,12 +135,6 @@ const SCALE_FAMILIES = [
             "--spring-gentle-duration",
             "--spring-dock-duration",
             "--spring-press-duration",
-            "--spring-timeline-head",
-            "--spring-timeline-fill",
-            "--spring-timeline-press",
-            "--spring-timeline-head-duration",
-            "--spring-timeline-fill-duration",
-            "--spring-timeline-press-duration",
         ],
     },
     {

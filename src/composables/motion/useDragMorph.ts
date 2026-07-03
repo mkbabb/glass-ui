@@ -33,9 +33,9 @@
 // The squish rides the SHARED `useLiquidFlex` `"tanh"` velocity register (the
 // metaball/morph-showcase law), capped at the live `--tab-indicator-max-stretch`
 // getter (≤1.08, the anti-taffy-pull bar). The spring is the iOS-canonical drag
-// register — the `snappy` SPRING_PRESETS row (response 0.35 / ζ 0.65, the CONTROL
-// register; brackets the audit-confirmed 0.3/0.6) — NEVER a new clock (the
-// W-GLASS-CAL spring fence holds; `useDragMorph` reuses a preset, never invents one).
+// register — the `snappy` SPRING_PRESETS row (response 0.48 / ζ 0.74 at
+// BD.W-ANIM-IOS27-TUNE, the CONTROL register) — NEVER a new clock (the W-GLASS-CAL
+// spring fence holds; `useDragMorph` reuses a preset, never invents one).
 //
 // COMPOSITOR-ONLY. The follow maps the spring's live position onto a
 // `transform: translate` on the morph axis — NEVER `inline-size`/`left`/`top`/
@@ -169,9 +169,9 @@ export function useDragMorph<V = string>(
     const position = ref(0);
 
     // The spring physics core — the iOS-canonical drag register (the `snappy`
-    // CONTROL preset, response 0.35 / ζ 0.65). A SPRING_PRESETS row, NEVER a new
-    // clock (the W-GLASS-CAL fence). `respectReducedMotion` snaps to target with
-    // zero in-between frames under PRM (the instant-snap half).
+    // CONTROL preset, response 0.48 / ζ 0.74 at BD.W-ANIM-IOS27-TUNE). A SPRING_PRESETS
+    // row, NEVER a new clock (the W-GLASS-CAL fence). `respectReducedMotion` snaps to
+    // target with zero in-between frames under PRM (the instant-snap half).
     const { response, dampingFraction } = springPreset("snappy");
     // The gesture spring is LAZY — created on the first `reattach` that finds a real
     // element (the dock `ensureSpring` precedent). A `useDragMorph` host that never

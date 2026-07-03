@@ -103,17 +103,18 @@ export function generateDurationBlock() {
 
 export const BLOCK_START_MARKER =
     "    /* ═══════════════════════════════════════════════\n       §2  EASING — Spring curves via linear()";
-// BC.W-SPRING-EASE — `press` joins the register family (the minted iOS interactive
-// row), so the block-match alternation widens to it. The regex enumerates the SAME
-// six names the PRESETS table carries — a name added to the table must be added here
-// (the gen WRITE + the sync gate READ both anchor on this alternation).
+// The regex enumerates the SAME six names the PRESETS table carries — a name added to
+// the table must be added here (the gen WRITE + the sync gate READ both anchor on this
+// alternation). BG.W-SPRING-REGISTER-TIDY drained the three per-component `timeline-*`
+// rows OUT of the global table (table→6, presets-in-consumers → ScrubberTimeline-local),
+// so the dead `--spring-timeline-*` CSS twins die and the alternation narrows to the 6.
 export const SPRING_LINES_RE =
-    /(    --spring-(?:smooth|snappy|bouncy|gentle|dock|press|timeline-head|timeline-fill|timeline-press): linear\([^)]+\);\n?)+/m;
+    /(    --spring-(?:smooth|snappy|bouncy|gentle|dock|press): linear\([^)]+\);\n?)+/m;
 // BA.W-GLASS-CAL Unit 3 — the per-spring DURATION block. A SEPARATE contiguous
 // block (immediately after the `linear()` easing block) so SPRING_LINES_RE keeps
 // matching only the easing lines; this regex owns the duration lines.
 export const SPRING_DURATION_LINES_RE =
-    /(    --spring-(?:smooth|snappy|bouncy|gentle|dock|press|timeline-head|timeline-fill|timeline-press)-duration: [\d.]+s;\n?)+/m;
+    /(    --spring-(?:smooth|snappy|bouncy|gentle|dock|press)-duration: [\d.]+s;\n?)+/m;
 
 export function main() {
     const source = readFileSync(tokensPath, "utf8");

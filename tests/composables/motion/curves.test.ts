@@ -23,6 +23,9 @@ import {
 } from "@glass/composables/motion/curves";
 import { springTimingFunction } from "@mkbabb/keyframes.js";
 
+// BG.W-SPRING-REGISTER-TIDY — the global SPRING_PRESETS table is the canonical SIX; the
+// 3 per-component ScrubberTimeline registers (head/fill/press) drained OUT to a
+// ScrubberTimeline-LOCAL map (presets-in-consumers), so they are NOT MOTION_CURVES rows.
 const SPRING_TOKENS = [
     "--spring-smooth",
     "--spring-snappy",
@@ -30,11 +33,6 @@ const SPRING_TOKENS = [
     "--spring-gentle",
     "--spring-dock",
     "--spring-press",
-    // BD.W-TIMELINE-RAIL-UNIFY — the 3 ScrubberTimeline spring presets (head/fill/press),
-    // declared after the 6 base presets in SPRING_PRESETS, so emitted last among springs.
-    "--spring-timeline-head",
-    "--spring-timeline-fill",
-    "--spring-timeline-press",
 ] as const;
 
 const BEZIER_CANONICAL = [
@@ -123,7 +121,7 @@ describe("MOTION_CURVES — the CSS↔JS curve table", () => {
         expect(motionCurve("--spring-snappy").token).toBe("--spring-snappy");
     });
 
-    it("the canonical list is the 15 canonical rows in declaration order", () => {
+    it("the canonical list is the 12 canonical rows in declaration order", () => {
         expect(MOTION_CURVES_CANONICAL.map((c) => c.token)).toEqual([
             ...SPRING_TOKENS,
             ...BEZIER_CANONICAL,

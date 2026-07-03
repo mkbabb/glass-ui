@@ -1,4 +1,4 @@
-// The five glass-ui named-spring (response, dampingFraction) pairs — THE single
+// The six glass-ui named-spring (response, dampingFraction) pairs — THE single
 // source of the iOS-canonical register vocabulary (AY.W-MOTION2).
 //
 // This module is the no-second-authority root: BOTH `scripts/regen-spring-tokens.mjs`
@@ -20,10 +20,7 @@ export type SpringPresetName =
     | "bouncy"
     | "gentle"
     | "dock"
-    | "press"
-    | "timeline-head"
-    | "timeline-fill"
-    | "timeline-press";
+    | "press";
 
 /** One named-spring row: the analytic (response, dampingFraction) pair + its register doc. */
 export interface SpringPresetRow {
@@ -109,25 +106,16 @@ export const SPRING_PRESETS: readonly SpringPresetRow[] = [
         dampingFraction: 0.8,
         comment: "PRESS register — the iOS interactive tap (useSpringPress + --glass-btn-press-t): a hair of inertial carry (sub-200ms iOS window) + a tiny alive rebound (+1.5%); the interruptible re-seat keeps the gesture continuous. BD.W-ANIM-IOS27-TUNE",
     },
-    {
-        name: "timeline-head",
-        response: 0.34,
-        dampingFraction: 0.74,
-        comment: "TIMELINE-HEAD register — the ScrubberTimeline warm-glass lozenge travel (LEG-2): the head LAGS the pointer a hair then settles with a whisper of fling-overshoot (+3.2%). The fast head clock the fill trails. BD.W-TIMELINE-RAIL-UNIFY",
-    },
-    {
-        name: "timeline-fill",
-        response: 0.46,
-        dampingFraction: 0.82,
-        comment: "TIMELINE-FILL register — the ScrubberTimeline lane fill (LEG-2): a slower clock than the head so the fill TRAILS the bead (the lane reads as liquid trailing), settling with a hint of carry (+1.1%). BD.W-TIMELINE-RAIL-UNIFY",
-    },
-    {
-        name: "timeline-press",
-        response: 0.22,
-        dampingFraction: 0.7,
-        comment: "TIMELINE-PRESS register — the ScrubberTimeline grab-anticipation (LEG-2): the head's pointerdown squash on the cartoon-punch clock, a crisp short-response press settle (+4.6%) feeding the --scale-press dip. BD.W-TIMELINE-RAIL-UNIFY",
-    },
 ] as const;
+//
+// PER-COMPONENT REGISTERS (presets-in-consumers) — the 3 ScrubberTimeline legs
+// (head/fill/press) are NO LONGER global SPRING_PRESETS rows (BG.W-SPRING-REGISTER-TIDY,
+// table→6). They were per-component registers folded into the global table for ONE
+// consumer, bloating the generated CSS (9 `linear()` curves + 9 duration clocks) + the
+// MOTION_CURVES twin. They now live LOCAL to ScrubberTimeline.vue as documented
+// per-primitive defaults (JS-only, no CSS `--spring-*` token) and are sanctioned in the
+// proof:motion-one-clock SPRING_DEFAULTS_ALLOWLIST (TIMELINE_HEAD/FILL/PRESS) — the
+// canon's per-primitive-default seam (motion-canon.md §P7), NOT a second register TABLE.
 
 /** Lookup one preset row by name (used by `MOTION_CURVES` spring rows). */
 export function springPreset(name: SpringPresetName): SpringPresetRow {

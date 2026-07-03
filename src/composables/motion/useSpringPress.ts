@@ -14,23 +14,23 @@ import { ref } from "vue";
 import { useSpring, type UseSpringOptions, type SpringRef } from "./useSpring";
 import { springPreset } from "./springPresets";
 
-// BC.W-SPRING-EASE — the press defaults read the minted `press` SPRING_PRESETS
-// row (the Apple `interactiveSpring`, response 0.15 / ζ 0.86) — the ONE source,
-// never a local literal. The old hand-defaults (0.25 / 0.7) were slower + less
-// crisp than the iOS interactive register; re-pointing onto the table answers the
-// press in the sub-100ms iOS window with a tiny alive rebound, drift-proof.
+// The press defaults read the `press` SPRING_PRESETS row (the iOS interactive tap,
+// response 0.2 / ζ 0.8 at BD.W-ANIM-IOS27-TUNE) — the ONE source, never a local
+// literal. The row answers the press in the sub-200ms iOS window with a hair of
+// inertial carry + a tiny alive rebound (+1.5%), drift-proof (a retune edits the
+// table row, this default re-derives).
 const PRESS = springPreset("press");
 
 export interface UseSpringPressOptions extends UseSpringOptions {
     /**
-     * Spring `response`. Default `0.15s` — the `press` SPRING_PRESETS row (the
-     * Apple `interactiveSpring`): the sub-100ms iOS tap-press window, faster than
-     * the generic `useSpring` 0.5s so the feedback lands under the 100ms threshold.
+     * Spring `response`. Default `0.2s` — the `press` SPRING_PRESETS row (the iOS
+     * interactive tap): the sub-200ms iOS tap-press window, faster than the generic
+     * `useSpring` 0.5s so the feedback lands with a hair of inertial carry.
      */
     response?: number;
     /**
-     * Spring `dampingFraction`. Default `0.86` — the `press` row's ζ: a tiny
-     * sub-perceptual rebound (springy/alive) that does NOT ring.
+     * Spring `dampingFraction`. Default `0.8` — the `press` row's ζ: a tiny
+     * sub-perceptual rebound (+1.5%, springy/alive) that does NOT ring.
      */
     dampingFraction?: number;
 }

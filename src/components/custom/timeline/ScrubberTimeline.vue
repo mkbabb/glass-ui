@@ -3,17 +3,19 @@ import { computed, ref, watch } from "vue";
 import { useSpring } from "../../../composables/motion/useSpring";
 import { useLiquidFlex } from "../../../composables/motion/useLiquidFlex";
 import { useSpringPress } from "../../../composables/motion/useSpringPress";
-import { springPreset } from "../../../composables/motion/springPresets";
 import { vSpecular } from "../../../composables/glass";
 
-// BD.W-TIMELINE-RAIL-UNIFY (LEG-2) — the head/fill/press clocks are NAMED
-// SPRING_PRESETS rows (`timeline-head`/`-fill`/`-press`), the SINGLE source the
-// regen CSS `--spring-timeline-*` tokens + the `MOTION_CURVES` JS twins also
-// derive from. Read the (response, ζ) off the table via `springPreset(name)` —
-// NEVER a hand-inlined literal (the no-second-authority fence, proof:motion-one-clock M1).
-const HEAD_SPRING = springPreset("timeline-head");
-const FILL_SPRING = springPreset("timeline-fill");
-const PRESS_SPRING = springPreset("timeline-press");
+// BG.W-SPRING-REGISTER-TIDY — the head/fill/press clocks are ScrubberTimeline-LOCAL
+// per-primitive spring defaults (presets-in-consumers). They are JS-only registers
+// (no CSS `--spring-*` token, no MOTION_CURVES twin) that serve THIS ONE surface, so
+// they live HERE, not in the global SPRING_PRESETS vocabulary (which drained back to
+// the canonical 6 — the register-sprawl fix). Each (response, ζ) pair is byte-preserved
+// off the retired `timeline-*` rows (no motion delta) and is a sanctioned per-primitive
+// default on the proof:motion-one-clock SPRING_DEFAULTS_ALLOWLIST (TIMELINE_HEAD/FILL/
+// PRESS) + motion-canon.md §P7 — the canon's per-primitive seam, NOT a second table.
+const HEAD_SPRING = { response: 0.34, dampingFraction: 0.74 }; // head travel — fast clock the fill trails; whisper of fling-overshoot
+const FILL_SPRING = { response: 0.46, dampingFraction: 0.82 }; // lane fill — slower clock, TRAILS the bead (liquid trailing)
+const PRESS_SPRING = { response: 0.22, dampingFraction: 0.7 }; // grab-anticipation — pointerdown squash feeding --scale-press
 
 /**
  * <ScrubberTimeline> — single-track normalized 0..1 scrubber.

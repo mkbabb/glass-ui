@@ -41,6 +41,17 @@ const DOCK_MORPH_CONTEXT_TS = resolve(
     "src/components/custom/dock/constants.ts",
 );
 
+// BG.W-SPRING-REGISTER-TIDY — the single-source table + the ScrubberTimeline-LOCAL home.
+const SPRING_PRESETS_TS = resolve(ROOT_DIR, "src/composables/motion/springPresets.ts");
+const SCRUBBER_TIMELINE_VUE = resolve(
+    ROOT_DIR,
+    "src/components/custom/timeline/ScrubberTimeline.vue",
+);
+// The global register vocabulary is the canonical SIX; the 3 per-component
+// ScrubberTimeline registers (head/fill/press) live per-component, NOT in the table.
+const CANONICAL_SPRING_COUNT = 6;
+const RETIRED_TIMELINE_NAMES = ["timeline-head", "timeline-fill", "timeline-press"];
+
 // BD.W-ANIM-IOS27-TUNE — the dock-spring const the band assert checks. Mirrors
 // DOCK_SPRING in dock/constants.ts + the `dock` PRESETS row. RE-CALIBRATED to the
 // iOS-27 weighty-gooey-inertial pole (0.68, 0.64) — slow inertial mass, a graceful
@@ -255,6 +266,81 @@ export function detectComments() {
     return { facts, violations };
 }
 
+// ── BG.W-SPRING-REGISTER-TIDY — the register-sprawl drain (born-RED on HEAD's 9-row
+//    table + the 6 dead --spring-timeline-* CSS twins → GREEN once the 3 per-component
+//    registers move to the ScrubberTimeline-LOCAL map). A PURE detector so the self-test
+//    can inject synthetic states (a re-added timeline row / a re-added CSS twin / a
+//    vanished local map) and assert each FLAGS — the teeth-are-real discipline.
+export function detectRegisterTidy({ presetsSrc, css, scrubberSrc }) {
+    const violations = [];
+    const facts = {};
+
+    // (a) the global SPRING_PRESETS table drained to the canonical SIX — no `timeline-*`
+    //     ROW survives, no `timeline-*` member in the SpringPresetName TYPE union, and
+    //     the table carries exactly the canonical count (not 9).
+    const rowNames = [...presetsSrc.matchAll(/name:\s*"([a-z-]+)"/g)].map((m) => m[1]);
+    facts.presetRowNames = rowNames;
+    const strayRows = rowNames.filter((n) => RETIRED_TIMELINE_NAMES.includes(n));
+    if (strayRows.length) {
+        violations.push(
+            `springPresets.ts: the global SPRING_PRESETS table still carries the per-component register row(s) [${strayRows.join(", ")}] — they MOVE to the ScrubberTimeline-LOCAL map (BG.W-SPRING-REGISTER-TIDY, table→${CANONICAL_SPRING_COUNT})`,
+        );
+    }
+    if (/\|\s*"timeline-(?:head|fill|press)"/.test(presetsSrc)) {
+        violations.push(
+            "springPresets.ts: the SpringPresetName type union still NAMES a `timeline-*` member — the per-component register is drained off the global vocabulary",
+        );
+    }
+    const rowCount = [...presetsSrc.matchAll(/dampingFraction:\s*[0-9]/g)].length;
+    facts.globalRowCount = rowCount;
+    if (rowCount > CANONICAL_SPRING_COUNT) {
+        violations.push(
+            `springPresets.ts: the global SPRING_PRESETS table has ${rowCount} rows (>${CANONICAL_SPRING_COUNT}) — it must drain back to the canonical ${CANONICAL_SPRING_COUNT} (per-component registers live per-component)`,
+        );
+    }
+
+    // (b) the dead `--spring-timeline-*` CSS twins die — no `linear()` curve, no
+    //     `-duration` clock (the JS half holds the (response, ζ); no CSS var() reader).
+    const twins = [
+        ...new Set([...css.matchAll(/--spring-timeline-[a-z-]+/g)].map((m) => m[0])),
+    ];
+    facts.deadTimelineTwins = twins;
+    if (twins.length) {
+        violations.push(
+            `scheme-spring.css: ${twins.length} dead --spring-timeline-* CSS twin(s) survive [${twins.join(", ")}] — no CSS var() consumer reads them; the regen dropped them at table→${CANONICAL_SPRING_COUNT}`,
+        );
+    }
+
+    // (c) the values MOVED, they did not vanish — the ScrubberTimeline-LOCAL map holds
+    //     the 3 per-primitive spring defaults (the no-motion-delta bar) and NO LONGER
+    //     re-sources them off the retired global rows.
+    const hasLocalMap =
+        /HEAD_SPRING\s*=\s*\{[^}]*response/.test(scrubberSrc) &&
+        /FILL_SPRING\s*=\s*\{[^}]*response/.test(scrubberSrc) &&
+        /PRESS_SPRING\s*=\s*\{[^}]*response/.test(scrubberSrc);
+    facts.scrubberLocalMap = hasLocalMap;
+    if (!hasLocalMap) {
+        violations.push(
+            "ScrubberTimeline.vue: the 3 per-component timeline spring defaults (HEAD/FILL/PRESS_SPRING) are not the LOCAL presets-in-consumers home — the values must MOVE here as local (response, ζ) literals, not vanish (no-motion-delta)",
+        );
+    }
+    if (/springPreset\(\s*["']timeline-/.test(scrubberSrc)) {
+        violations.push(
+            "ScrubberTimeline.vue: still reads springPreset(\"timeline-*\") — the global row is retired; read the LOCAL map",
+        );
+    }
+
+    return { violations, facts };
+}
+
+function detectRegisterTidyReal() {
+    return detectRegisterTidy({
+        presetsSrc: readFileSync(SPRING_PRESETS_TS, "utf8"),
+        css: readFileSync(tokensPath, "utf8"),
+        scrubberSrc: readFileSync(SCRUBBER_TIMELINE_VUE, "utf8"),
+    });
+}
+
 export function detect() {
     const source = readFileSync(tokensPath, "utf8");
     const committedMatch = source.match(SPRING_LINES_RE);
@@ -282,19 +368,89 @@ export function detect() {
     // did committed-vs-generated drift before).
     const band = detectBand();
     const comments = detectComments();
+    // BG.W-SPRING-REGISTER-TIDY — the register-sprawl drain (table→6 + dead twins die +
+    // the ScrubberTimeline-LOCAL move).
+    const tidy = detectRegisterTidyReal();
 
     return {
-        violations: [...violations, ...band.violations, ...comments.violations],
+        violations: [
+            ...violations,
+            ...band.violations,
+            ...comments.violations,
+            ...tidy.violations,
+        ],
         committed,
         generated,
         bandFacts: band.facts,
         commentFacts: comments.facts,
+        tidyFacts: tidy.facts,
     };
+}
+
+// ── BG.W-SPRING-REGISTER-TIDY self-test — the register-tidy clause proves its own bite
+//    every run: three synthetic regressions (a re-added timeline ROW, a re-added dead CSS
+//    twin, a vanished LOCAL map) MUST each flag; a clean state MUST NOT.
+function registerTidySelfTest() {
+    const failures = [];
+    const cleanPresets =
+        'export type SpringPresetName = | "smooth" | "press";\n' +
+        'export const SPRING_PRESETS = [{ name: "smooth", response: 0.58, dampingFraction: 0.8 }, { name: "press", response: 0.2, dampingFraction: 0.8 }];';
+    const cleanCss = "  --spring-smooth: linear(0, 1);\n  --spring-press-duration: 0.16s;";
+    const cleanScrubber =
+        "const HEAD_SPRING = { response: 0.34, dampingFraction: 0.74 };\n" +
+        "const FILL_SPRING = { response: 0.46, dampingFraction: 0.82 };\n" +
+        "const PRESS_SPRING = { response: 0.22, dampingFraction: 0.7 };";
+
+    // clean → no violations.
+    if (
+        detectRegisterTidy({ presetsSrc: cleanPresets, css: cleanCss, scrubberSrc: cleanScrubber })
+            .violations.length !== 0
+    )
+        failures.push("self-test tidy: a CLEAN drained state false-flagged (over-reach)");
+
+    // bite 1 — a re-added timeline ROW in the global table reds.
+    const rowRegression = detectRegisterTidy({
+        presetsSrc:
+            cleanPresets +
+            '\n{ name: "timeline-head", response: 0.34, dampingFraction: 0.74 };',
+        css: cleanCss,
+        scrubberSrc: cleanScrubber,
+    });
+    if (rowRegression.violations.length === 0)
+        failures.push("self-test tidy bite-1: a re-added global `timeline-head` register row did NOT flag");
+
+    // bite 2 — a re-added dead `--spring-timeline-*` CSS twin reds.
+    const twinRegression = detectRegisterTidy({
+        presetsSrc: cleanPresets,
+        css: cleanCss + "\n  --spring-timeline-head: linear(0, 1);",
+        scrubberSrc: cleanScrubber,
+    });
+    if (twinRegression.violations.length === 0)
+        failures.push("self-test tidy bite-2: a re-added dead --spring-timeline-head CSS twin did NOT flag");
+
+    // bite 3 — a ScrubberTimeline that re-sources off the retired global row (map gone) reds.
+    const mapRegression = detectRegisterTidy({
+        presetsSrc: cleanPresets,
+        css: cleanCss,
+        scrubberSrc: 'const HEAD_SPRING = springPreset("timeline-head");',
+    });
+    if (mapRegression.violations.length === 0)
+        failures.push("self-test tidy bite-3: a vanished ScrubberTimeline-LOCAL map (springPreset(\"timeline-*\")) did NOT flag");
+
+    return failures;
 }
 
 function run() {
     const { ROOT, ARTIFACT } = cliPaths();
-    const { violations, committed, generated, bandFacts, commentFacts } = detect();
+    const { violations, committed, generated, bandFacts, commentFacts, tidyFacts } = detect();
+    const tidySelfTestFailures = registerTidySelfTest();
+    if (tidySelfTestFailures.length) {
+        for (const f of tidySelfTestFailures) console.error(`proof:spring-tokens-synced — ${f}`);
+        console.error(
+            "proof:spring-tokens-synced — SELF-TEST FAILED: the register-tidy clause's teeth are gone; do not trust a GREEN.",
+        );
+        process.exit(1);
+    }
     const status = violations.length === 0 ? "pass" : "fail";
 
     // First diverging line (for a human-actionable artefact, not the whole block).
@@ -320,6 +476,8 @@ function run() {
             firstDiff,
             band: bandFacts,
             comments: commentFacts,
+            registerTidy: tidyFacts,
+            registerTidySelfTest: "OK — a re-added timeline row / dead CSS twin / vanished local map all flag",
         },
         violations,
     });
@@ -336,6 +494,12 @@ function run() {
         console.log(
             `  stale dock-spring comments: ${commentFacts.staleHits.length}`,
         );
+    }
+    if (tidyFacts) {
+        console.log(
+            `  register tidy (BG)        : global rows ${tidyFacts.globalRowCount} (canon ${CANONICAL_SPRING_COUNT}), dead --spring-timeline-* twins ${tidyFacts.deadTimelineTwins.length}, ScrubberTimeline local map ${tidyFacts.scrubberLocalMap ? "present ✓" : "MISSING ✗"}`,
+        );
+        console.log("  register tidy self-test   : OK (row / twin / local-map bites all flag)");
     }
     if (firstDiff) {
         console.log(`  first divergence at block line ${firstDiff.line}:`);

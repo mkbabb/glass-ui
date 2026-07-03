@@ -147,6 +147,26 @@ export const SPRING_DEFAULTS_ALLOWLIST = [
         pair: [0.4, 0.82],
         reason: "the drawer detent-snap register (drawer/constants.ts) — the per-primitive snap settle.",
     },
+    // BG.W-SPRING-REGISTER-TIDY — the 3 ScrubberTimeline per-leg spring defaults MOVED
+    // OFF the global SPRING_PRESETS table (table→6, presets-in-consumers) into a
+    // ScrubberTimeline.vue LOCAL map. Each is a single documented per-primitive default
+    // pair (JS-only, no CSS `--spring-*` token) — sanctioned HERE the canon's §P7 way,
+    // NOT a second register table. Byte-preserved off the retired timeline-* rows.
+    {
+        name: "TIMELINE_HEAD",
+        pair: [0.34, 0.74],
+        reason: "the ScrubberTimeline warm-glass lozenge head-travel default (ScrubberTimeline.vue) — a per-surface JS-only register; the fast head clock the fill trails.",
+    },
+    {
+        name: "TIMELINE_FILL",
+        pair: [0.46, 0.82],
+        reason: "the ScrubberTimeline lane-fill trailing default (ScrubberTimeline.vue) — a slower clock than the head so the fill TRAILS the bead (liquid trailing).",
+    },
+    {
+        name: "TIMELINE_PRESS",
+        pair: [0.22, 0.7],
+        reason: "the ScrubberTimeline grab-anticipation press default (ScrubberTimeline.vue) — the pointerdown squash feeding the --scale-press dip.",
+    },
 ];
 
 // ── The CLOCK-FENCE PENDING bridge (M3a — the verify-not-edit precedent the
