@@ -88,3 +88,60 @@ scroll position drives the value — kept; recorded in USER-0703-FIX-NOTES.md).
 
 Per real-paint-protocol §3 the building agent does NOT flip any gestalt roster row;
 this DELTA + captures are the build-side evidence for the fresh-agent pixel-read.
+
+---
+
+## NON-AUTHORING VERDICT — 2026-07-03 (fresh dual-engine pixel-read)
+
+**VERDICT: PASS.** Independently captured on BUILT bytes (`demo:dist:build` →
+`demo:dist:serve` on :5200), both engines, both modes, all three criteria routes,
+at scroll 0 AND scroll ~45% (the fill is scroll-coupled, so a scroll-0-only capture
+paints nothing — the judge drove the `.demo-main-scroller` to 45% to read the sweep).
+
+Captures under `BG.W-DOCK-SCROLL-PROGRESS-judge/` (32 PNGs, all resolve on disk):
+- CHROME (CDP, badge-decoded **CHROME · ANGLE Metal · Apple M5 Max**):
+  `chrome-{dock_overview,substrates_aurora,foundations_intro}__{light,dark}-{scroll0,scroll45}.png`
+- SAFARI (off-screen system-WebKit `wkshot-live`, badge-decoded **SAFARI/WEBKIT · Apple GPU**,
+  scroll-0): `webkit-{dock_overview,substrates_aurora,foundations_intro}__{light,dark}.png`
+- SAFARI scroll-driven (Playwright WebKit core, the mask-composite engine family — to
+  read the band at a NON-ZERO fill the off-screen tool cannot reach):
+  `webkit-pw-{dock_overview,foundations_intro}__{light,dark}-scroll45.png`
+- Probes: `chrome-probe.json`, `webkit-pw-probe.json`
+
+### Computed DOM checks (all 6 route×mode, both engines agree)
+| check | Chrome | WebKit | verdict |
+|---|---|---|---|
+| standalone `.demo-scroll-progress` | absent | absent | RETIRED ✓ |
+| `.demo-dock-scroll-ring` present, `aria-hidden="true"` | ✓ | ✓ | decorative border ✓ |
+| ringRect ≡ dockRect | `12,16 67×713/720` identical | identical | ring hugs the dock plate ✓ |
+| coverage | `inline-end-edge` | `inline-end-edge` | vertical always-expanded rail ✓ |
+| radius | `9999px` | `9999px` | pill-following (defers to cascade) ✓ |
+| width | `11px` | (same token) | in the 10-14 envelope ✓ |
+| mask-composite | `intersect, exclude, add` | `intersect, exclude, add` | band ∩ ring (corrected order) ✓ |
+| fill @scroll0 → @scroll45 | `0%` → `45.0%` | `0%` → `44.9%` | scroll-coupled sweep ✓ |
+| ringAnimCount (incl. under PRM=reduce) | 0 | 0 | PRM-static, no autonomous sweep ✓ |
+
+### Pixel reads
+- **Dock border band paints, band-ONLY, no slab** — both engines, both modes: the
+  warm-ink band sits on the content-facing (inner-right) edge of the SidebarDock,
+  filling TOP→BOTTOM to the ~45% front then stopping; the dock's glass + icons read
+  through untouched (no interior slab bleed). This confirms the 3-layer mask composite
+  is correct on SYSTEM WEBKIT for the `inline-end-edge` coverage the shell wears (the
+  build-side booked WebKit concern is resolved for the shipped coverage).
+- **Mode flip for free**: light = dark warm-ink band; dark = light-cream band. The
+  band brightness reverses with `--foreground`, no `.dark` re-declaration.
+- **Recessive backdrops on the non-dock routes**: aurora reads a calm warm-brown
+  gradient (no conic banding, no oversaturation, grain calm); foundations reads the
+  warm-cream paper. Hero display type fits its envelope on both.
+- **Collapsed full-ring arm**: the shell dock is always-expanded (W-NAV-DOCK-FIX), so
+  the `full-ring` collapsed arm is DORMANT-BUT-WIRED here (`ringCoverage` switches on
+  `dock.expanded`); this is correct by design for the shell — a collapsing consumer
+  binds it live. Not a defect (matches the wave's own recorded design + the criteria
+  "the shell dock is always-expanded by design → this arm dormant-but-correct here").
+
+### Gate
+`proof:border-progress` **PASS** — W7 (BG dock consumer): fill-sweeps ✓ · edge-coverage ✓
+· dock-wears-ring ✓ · bar-absent ✓ · defer-to-cascade ✓. (`proof:demo` also PASS.)
+
+Every surface reads correct in BOTH engines + BOTH modes; every capture PNG resolves
+on disk. **PASS.**
