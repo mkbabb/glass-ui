@@ -38,11 +38,7 @@
  * floating-CHROME collapse recipe — a late-mount surface decoration) and
  * `completion-seal.css` (the one-shot earned-gold feedback seal — a focal opt-in
  * surface that mounts on a completion event) are BOTH deferred: neither paints
- * an above-the-fold first-paint chrome pixel. The BD-added `motion/morph-field.css`
- * (the ONE `useMorphField` goo recipe — the body/neck/waist silhouette + the
- * dedicated squish channel) is likewise DEFERRED: it is gated to `[data-morphing]`
- * and paints only while a morph drive is live (a late-mount compositor decoration),
- * never a steady-state first-paint chrome pixel.
+ * an above-the-fold first-paint chrome pixel.
  *
  * The `paper.css` partial is bucketed DEFERRED — the paper underpaint/grain
  * utilities pair with glass for paper-on-glass compositions that mount with the
@@ -72,8 +68,6 @@ export const DEFERRED_PARTIALS = Object.freeze([
     "floating-panel.css",
     "transitions.css",
     "animations.css",
-    "motion/morph-field.css",
-    "jubilance.css",
     "scroll-driven.css",
     "scroll-choreography.css",
     "scroll-chrome.css",
@@ -168,11 +162,10 @@ export const DEFERRED_SOURCE_DIRECTIVE = '@source "../*.js";';
  * RE-BASE (BD greenfield band — re-measured over the SETTLED BD cascade): the
  * critical subset grew to raw 561233 / gzip 174231 — AGAIN not a component-recipe
  * leak into the critical BUCKET (the critical bucket is STILL the SAME 6 documented
- * token+glass+type partials; w2 partials-disjoint + w4 hold, and the two recipe-shaped
- * BD additions that COULD have leaked do NOT: `motion/morph-field.css` is bucketed
- * DEFERRED, `glass-atom.css`/`glass-chip.css` are @import-ed by the DEFERRED
- * `icon-chip.css` (not by `glass.css`), and `liquid-morph.css` is demo-only — it is
- * @import-ed by NO src partial). The growth is the legitimate BD GREENFIELD enrichment
+ * token+glass+type partials; w2 partials-disjoint + w4 hold, and the recipe-shaped
+ * BD additions that COULD have leaked do NOT: `glass-atom.css`/`glass-chip.css` are
+ * @import-ed by the DEFERRED `icon-chip.css` (not by `glass.css`), and `liquid-morph.css`
+ * is demo-only — it is @import-ed by NO src partial). The growth is the legitimate BD GREENFIELD enrichment
  * of the critical TOKEN CASCADE + glass ladder, which lives in the critical tokens/* +
  * glass/* sub-partials by construction: the NEW `tokens/property-regs.css` (the
  * @property registrations a bare var() interpolates over), the `tokens/scheme-motion.css`

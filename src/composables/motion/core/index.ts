@@ -65,11 +65,10 @@ export * from "../useLiquidFlex";
 // `/motion-core` surface AND the root barrel (the `useLiquidFlex` precedent). ≥2
 // consumers: PagerDots (worm) + CarouselContent (slide plate) + the deck demo.
 export * from "../useGooMorph";
-// BD.W-MORPH-FIELD-WELD — the ONE blend/morph WELD primitive (the WELD layer over N warm
-// bodies the goo/dock/fission/V↔H recipes consume). Composes `useLiquidFlex` + Vue only
-// (engine-FREE + vueuse-FREE), so it ships on `/motion-core` AND the root barrel (the
-// `useLiquidFlex` precedent — it underlies the root-exported `useGooMorph`).
-export * from "../useMorphField";
+// BG.W-DEAD-COMPOSABLE-CUT — the morph SIGNATURE DATA (the dead `useMorphField()` weld's
+// only live surface). `MORPH_SIGNATURES` + the signature types are pure DATA the goo /
+// dock-fission recipes read. Vue-free, so it ships on `/motion-core` AND the root barrel.
+export * from "../morphSignatures";
 // BB.B4 (W-VIZ-POINTER) — the shared viz-pointer-physics field (pointer position +
 // derived velocity + the ACCEL term), fed by the renderer's frame `tick` (NO own
 // rAF), frozen under PRM (`tick(0)`). Imports `vue` only — engine-FREE + vueuse-FREE,
@@ -109,15 +108,6 @@ export * from "../useScrollTrigger";
 // the engine-free /motion-core surface (the useScrollTrigger precedent). The dock-search
 // consumer (BC.W-DOCK-SEARCH) + the demo scroll-system header reach it here.
 export * from "../useScrollChrome";
-// BE.W-HAPTIC-COUPLE — useHaptic: the library's ONE haptic primitive (a thin,
-// feature-detected navigator.vibrate wrapper with a bounded named-pattern register
-// coupled to the platform's confirm-moments). Imports `vue` ONLY — engine-FREE +
-// vueuse-FREE — so it ships on the engine-free /motion-core surface (and reaches the
-// root barrel through it, the useLiquidFlex/usePointerVelocityField precedent). A
-// keyframes/vueuse import would force the heavy peer onto /motion-core (the SCC-trap,
-// H1-fenced). It lives IN core/ (the only leaf that does — the spec's home) so it is
-// exported by its local path, not the sibling-up `../` form.
-export * from "./useHaptic";
 // BD.W-MOTION-WEIGHT — the consumer-side velocity→weight write home + the
 // site-local effective-cap derivation (the spike-corrected mechanism: derive the
 // cap AT the consuming element off the live `--motion-weight`, NEVER a :root calc

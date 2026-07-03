@@ -367,21 +367,6 @@ export type {
     UseScrollChromeReturn,
 } from "../composables/motion/useScrollChrome";
 
-// ── useHaptic — the feature-detected body-confirm primitive (BE.W-HAPTIC-COUPLE) ──
-// `HapticPattern` — the bounded named register (`tap`/`snap`/`detent`/`completion`/
-// `error`, every total ≤ 100ms — the calm haptic register); `UseHapticOptions` — its
-// options ({ enabled }); `UseHapticReturn` — its return ({ supported, pulse }).
-// `useHaptic` is a thin, feature-detected `navigator.vibrate` wrapper coupled to the
-// platform's confirm-moments. Engine-FREE + vueuse-FREE (vue-only), so it ships on
-// `@mkbabb/glass-ui/motion-core` + the root barrel; feature-detects to a clean no-op on
-// iOS Safari + SSR (never a throw). NO PRM auto-suppress (a haptic is not a vestibular
-// trigger — the suppression axis is the consumer `enabled` opt-out).
-export type {
-    HapticPattern,
-    UseHapticOptions,
-    UseHapticReturn,
-} from "../composables/motion/core/useHaptic";
-
 // ── useDockSearch — the DOCK-as-native-dynamic-search-bar seam (BC.W-DOCK-SEARCH) ──
 // `UseDockSearchOptions` — the seam options ({ dockState (the composed state machine),
 // items | onSearch (sync XOR the pluggable async source), debounceMs, maxResults,

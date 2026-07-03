@@ -15,7 +15,7 @@
 //       STATE-DRIVEN :inert — the GlassDock precedent).
 //
 // Device-free SOURCE detector over the SFC (demo/stories/dock/liquid-playground.vue) +
-// the CSS (src/styles/glass/liquid-morph.css). Tags ["local","ci","release"]. The
+// the CSS (demo/stories/dock/liquid-morph.css). Tags ["local","ci","release"]. The
 // RENDERED-DOM proof (the axe-clean a11y tree, the live announcer, the focus ring paint)
 // is the orchestrator's π — this gate proves the SOURCE shape born-RED→GREEN.
 //
@@ -30,7 +30,9 @@ const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const COMMAND = "npm run proof:dock-a11y";
 
 const SFC = "demo/stories/dock/liquid-playground.vue";
-const CSS = "src/styles/glass/liquid-morph.css";
+// BG.W-DEAD-COMPOSABLE-CUT — liquid-morph.css MOVED src/styles/glass/ → demo/stories/dock/
+// (the god-module baseline drained; the sheet is demo-only, co-located with its consumer).
+const CSS = "demo/stories/dock/liquid-morph.css";
 
 const stripHtml = (s) =>
     s.replace(/<!--[\s\S]*?-->/g, (m) => m.replace(/[^\n]/g, " "));

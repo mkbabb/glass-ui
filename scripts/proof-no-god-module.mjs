@@ -124,18 +124,21 @@ const RATCHET_BASELINES = {
     //       cascade-partial CSS file (splitting breaks the GL/cascade fence):
     //       metaball.wgsl.ts (the ONE metaball WGSL program), metaball.frag.ts (the ONE
     //       GL fragment program), flow-field.glsl.ts (the shared GLSL chunk the GL leaves
-    //       both link), liquid-morph.css / property-regs.css / scheme-motion.css /
-    //       fission-bridge.css (ordered @property/@layer cascade partials — a split
-    //       reorders the cascade).
+    //       both link), property-regs.css / scheme-motion.css / fission-bridge.css
+    //       (ordered @property/@layer cascade partials — a split reorders the cascade).
     //   (b) IN-FLIGHT cluster src owned by a SIBLING P10 lane (the carve is that lane's
     //       deferred work, not this STRUCTURAL lane's to edit — lane discipline): the
-    //       dock engine (GlassDock.vue, useDockFission.ts, useDockContextSilhouette.ts),
+    //       dock engine (GlassDock.vue, useDockFission.ts),
     //       the glass canvas/luminance (createCanvasLifecycle.ts, useWebGPUCanvas.ts,
     //       useGlassBackdropLuminance.ts), goo (useBlobSatellites.ts, useGooDotMatrix.ts),
     //       carousel/pager/tabs SFCs, useBloomUp.ts, api/index.ts.
     // The MONOTONIC drain holds — each row only DRAINS as its carve lands; a row that
     // shrinks below its baseline reds (the gate's stale-row guard). No backwards-compat.
-    "styles/glass/liquid-morph.css": 850,
+    // BG.W-DEAD-COMPOSABLE-CUT DRAINED liquid-morph.css (850 → 0 in src/): the dead
+    // useLiquidMorph spike was DEFINITION-ABSENT'd and this demo-face CSS MOVED to
+    // demo/stories/dock/liquid-morph.css (co-located with its only consumer,
+    // liquid-playground.vue) — the file left src/, so the baseline row DELETED in this
+    // same diff (the monotonic drain — the src/ path is now absent).
     // BG.W-DOCK-DECOMPOSE DRAINED GlassDock.vue (711 → 495): the collapsed-pill
     // touch-gate (useTouchGate + tap/scroll discrimination + collapse-on-deactivate
     // watch) carved into composables/useDockTouchGate.ts, and the fission split-facility
@@ -169,7 +172,10 @@ const RATCHET_BASELINES = {
     // dock/fission-island.css, @import-ed by dock.css IMMEDIATELY AFTER fission-bridge.css
     // into the SAME @layer components (order-preserving, unique selectors — no visual
     // delta). Row DELETED in this same diff (the monotonic drain — the file is now ≤ 500).
-    "components/custom/dock/composables/useDockContextSilhouette.ts": 551,
+    // BG.W-DEAD-COMPOSABLE-CUT DRAINED useDockContextSilhouette.ts (551 → gone): the BE
+    // dock-context-silhouette state machine had ZERO live consumer (its only demo
+    // AppSwitcher.vue reads useBloomUp, not this) and was DEFINITION-ABSENT'd. Row
+    // DELETED in this same diff (the monotonic drain — the file is now absent from disk).
     "composables/glass/useGlassBackdropLuminance.ts": 542,
     // BG.W-BLOB-KINEMATICS-LEAF DRAINED useBlobSatellites.ts (533 → 427): the stateless
     // orbit/eccentricity/wobble math (createSatellite/orbitPos/randomizeOrbit) carved into

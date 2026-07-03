@@ -909,7 +909,7 @@ export const CATEGORIES: Category[] = [
                 "dock",
                 "liquid-playground",
                 "Liquid Morph",
-                "The dock as the primary control interface — a glass dock pill that EXPANDS into a Maps Places sheet, SPLITS into two Dynamic-Island activity islands (timer + now-playing, goo-bridged), and grows into the full Apple Music player. One generalized useLiquidMorph engine over the real dock spring + the SVG-goo metaball bridge, plus the accent-facet CONTEXT carousel — a hairline strip of accent-tinted facet chips fanning in a REAL dock's gutter (box-INVIOLATE), shown in BOTH a horizontal and a vertical dock via <DockStack mode=\"facets\">.",
+                "The dock as the primary control interface — a glass dock pill that EXPANDS into a Maps Places sheet, SPLITS into two Dynamic-Island activity islands (timer + now-playing, goo-bridged), and grows into the full Apple Music player. Composes the shipped useBloomUp source-rect bloom + the SVG-goo metaball bridge over the real dock spring, plus the accent-facet CONTEXT carousel — a hairline strip of accent-tinted facet chips fanning in a REAL dock's gutter (box-INVIOLATE), shown in BOTH a horizontal and a vertical dock via <DockStack mode=\"facets\">.",
             ),
             s(
                 "dock",

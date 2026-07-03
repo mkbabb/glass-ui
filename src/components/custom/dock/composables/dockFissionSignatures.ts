@@ -9,7 +9,7 @@
 // BD.W-MORPH-FIELD-WELD — the per-context gooey magnitude (`neckHold`) SOURCES from
 // the SHARED `MORPH_SIGNATURES` rows — ONE waist DATA source library-wide
 // (search→radialBurst, media→lateralPeel, nav→inwardMerge), not a per-fork literal.
-import { MORPH_SIGNATURES } from "../../../../composables/motion/useMorphField";
+import { MORPH_SIGNATURES } from "../../../../composables/motion/morphSignatures";
 
 /** The three named fission CONTEXTS — each maps to a goo signature (F3). */
 export type DockSplitContext = "search" | "media" | "nav";

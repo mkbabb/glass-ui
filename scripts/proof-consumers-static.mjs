@@ -227,31 +227,15 @@ rootAllowed.add("useGooMorph");
 rootAllowed.add("GooBarbellRefs");
 rootAllowed.add("UseGooMorphParams");
 rootAllowed.add("UseGooMorphReturn");
-// BD.W-MORPH-FIELD-WELD — useMorphField is the ONE blend/morph WELD primitive every morph
-// consumes (the goo neck · every dock animation · general component morph). Composes
-// `useLiquidFlex` + `vue` ONLY — engine-FREE + vueuse-FREE, root-barrel safe per the
-// `useGooMorph` precedent (on /motion-core + the root). The MORPH_SIGNATURES register +
-// the morph type cohort ride with it.
-rootAllowed.add("useMorphField");
+// BG.W-DEAD-COMPOSABLE-CUT — the dead `useMorphField()` weld was DEFINITION-ABSENT'd; only
+// its SIGNATURE DATA survives (morphSignatures.ts). The DATA is Vue-free — engine-FREE +
+// vueuse-FREE, root-barrel safe per the `useGooMorph` precedent (on /motion-core + the
+// root). Only the live DATA symbols ride the barrel now (the function + its domain types
+// are gone).
 rootAllowed.add("MORPH_SIGNATURES");
 rootAllowed.add("MorphSignature");
 rootAllowed.add("MorphSignatureName");
 rootAllowed.add("MorphVector");
-rootAllowed.add("MorphTier");
-rootAllowed.add("MorphSilhouette");
-rootAllowed.add("MorphFieldRect");
-rootAllowed.add("BodySpec");
-rootAllowed.add("MorphFieldOptions");
-rootAllowed.add("MorphFieldHandle");
-// BE.W-HAPTIC-COUPLE — useHaptic is the library's ONE haptic primitive (a thin,
-// feature-detected navigator.vibrate wrapper coupled to the platform's confirm-moments).
-// Imports `vue` only — engine-FREE + vueuse-FREE, root-barrel safe per the `useMorphField`
-// precedent (on /motion-core + the root); feature-detects to a clean no-op on iOS Safari +
-// SSR (never a throw).
-rootAllowed.add("useHaptic");
-rootAllowed.add("HapticPattern");
-rootAllowed.add("UseHapticOptions");
-rootAllowed.add("UseHapticReturn");
 // L.W1 SCC-trap closure — the 4 vueuse-bearing ui families (input/, textarea/,
 // combobox/, carousel/) are subpath-only (`/forms`, `/carousel`): the curated root
 // barrel re-exports the 37 vueuse-FREE ui packages but NOT these. The `ui/index.ts`

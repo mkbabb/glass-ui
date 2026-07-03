@@ -1878,3 +1878,22 @@ material).
 `#persistent` region + vertical layer-stack tail carves into `dock/shell-regions.css` (each @import-ed
 IMMEDIATELY AFTER its parent in the SAME `@layer components`, cascade-order-invariant → the `/styles`
 draw is unchanged). Internal carves to hold the 500-line no-god-module bound; zero API/paint delta.
+
+### The dead-composable cut (BG.W-DEAD-COMPOSABLE-CUT — clean break, no alias)
+
+Five F5-motion composables (+ their paired CSS, tests, "≥2-consumer" evidence docs, and subject
+gates) shipped with 0-1 real binary consumers — the shelf-ware the fewer-sharper-primitives law
+forbids. They are DEFINITION-ABSENT (a clean cut; there is no replacement primitive because there
+was no real consumer to serve). The dead `useMorphField()` WELD (zero callers) is GUTTED to its
+motion-named SIGNATURE DATA.
+
+| removed | prior surface | disposition |
+|---|---|---|
+| `useHaptic` (+ `HapticPattern`/`UseHapticOptions`/`UseHapticReturn`) | root barrel · `/motion-core` · `/api` | REMOVED — no replacement. A consumer wanting a body-confirm buzz calls `navigator.vibrate` directly behind its own feature-detect. |
+| `useCelebrationBurst` (+ `CelebrationBurstPreset`/`UseCelebrationBurstOptions`/`UseCelebrationBurstReturn` + `jubilance.css` + `.glass-celebration-petal`) | `/motion` · `/api` types | REMOVED — no replacement. |
+| `useVizChoreography` | internal (`composables/glass/`, never exported) | REMOVED — no consumer impact (unexported). |
+| `useLiquidMorph` (+ `src/styles/glass/liquid-morph.css`) | never exported; the liquid-dock demo | REMOVED — the demo (`liquid-playground.vue`) composes the shipped `useBloomUp` source-rect bloom + the SVG-goo bridge; `liquid-morph.css` MOVED to `demo/stories/dock/` (demo-only, off the library bundle). |
+| `useDockContextSilhouette` (+ `AppSwitcher`'s stale reference) | never exported (`custom/dock/composables/`) | REMOVED — no live consumer (the founding demo reads `useBloomUp`); a future dock context→silhouette need re-enters through the shipped dock-morph family. |
+| `useMorphField()` (the weld function + `MorphTier`/`MorphSilhouette`/`MorphFieldRect`/`BodySpec`/`MorphFieldOptions`/`MorphFieldHandle`) | root barrel · `/motion-core` | GUTTED — the weld body had ZERO callers. Its live surface — `MORPH_SIGNATURES` + `MorphSignature`/`MorphSignatureName`/`MorphVector` — MOVES to `composables/motion/morphSignatures.ts` and STAYS on the barrel (byte-identical DATA). |
+
+**Consumer re-pin (`MORPH_SIGNATURES`):** none — the import path is unchanged (the root barrel + `/motion-core` still re-export `MORPH_SIGNATURES` and the three signature types). Only the `useMorphField` function symbol + its function-domain types leave the surface. Machine-locked by `proof:motion` (the DEFINITION-ABSENCE + the gut + the name-collision fence against `proof:liquid-morph`, the DISTINCT BC dock-morph gate).

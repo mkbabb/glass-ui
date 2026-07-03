@@ -230,26 +230,17 @@ export {
     type UseGooMorphReturn,
 } from "./composables/motion/useGooMorph";
 
-// BD.W-MORPH-FIELD-WELD — the ONE blend/morph WELD primitive every morph consumes (the
-// goo neck · every dock animation · general component morph). The WELD layer over N warm
-// bodies, reading the consumer's EXISTING drive scalar (NO rename), the gap-fraction k
-// threshold (the scale-blind-goo fix), the dedicated --morph-squish channel, the 3-tier
-// caps ladder. `useGooMorph`/`useDockFission`/`useDockOrientationMorph` are thin recipes
-// over it. Composes `useLiquidFlex` + `vue` ONLY — engine-FREE + vueuse-FREE, root-barrel
-// safe + on `@mkbabb/glass-ui/motion-core` (the `useLiquidFlex` precedent).
+// BG.W-DEAD-COMPOSABLE-CUT — the morph SIGNATURE DATA (the dead `useMorphField()` weld's
+// only live surface; the weld body had ZERO callers so it was DEFINITION-ABSENT'd).
+// `MORPH_SIGNATURES` + the three signature types are pure DATA the goo / dock-fission
+// recipes read — Vue-free, so they stay root-barrel safe + on `@mkbabb/glass-ui/motion-core`
+// (the `useGooMorph` precedent). The function + its function-domain types are gone.
 export {
-    useMorphField,
     MORPH_SIGNATURES,
     type MorphSignature,
     type MorphSignatureName,
     type MorphVector,
-    type MorphTier,
-    type MorphSilhouette,
-    type MorphFieldRect,
-    type BodySpec,
-    type MorphFieldOptions,
-    type MorphFieldHandle,
-} from "./composables/motion/useMorphField";
+} from "./composables/motion/morphSignatures";
 
 // BB.B4 (W-VIZ-POINTER) — the shared viz-pointer-physics field (pointer position +
 // derived velocity + the ACCEL term). The viz renderer FEEDS it via its frame `tick`
@@ -275,18 +266,6 @@ export {
     type UseCharStaggerOptions,
     type UseCharStaggerReturn,
 } from "./composables/motion/useCharStagger";
-
-// BE.W-HAPTIC-COUPLE — the library's ONE haptic primitive (a thin, feature-detected
-// navigator.vibrate wrapper coupled to the platform's confirm-moments). Imports `vue`
-// only — engine-FREE + vueuse-FREE and root-barrel safe per the `useCharStagger`
-// precedent; also reachable via `@mkbabb/glass-ui/motion-core`. Feature-detects to a
-// clean no-op on iOS Safari + SSR (never a throw).
-export {
-    useHaptic,
-    type HapticPattern,
-    type UseHapticOptions,
-    type UseHapticReturn,
-} from "./composables/motion/core/useHaptic";
 
 // Core utilities
 export * from "./utils";

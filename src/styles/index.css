@@ -172,17 +172,6 @@
 @import "./floating-panel.css";
 @import "./transitions.css";
 @import "./animations.css";
-/* BD.W-MORPH-FIELD-WELD — the ONE morph-field recipe (the body/neck/waist silhouette + the
-   dedicated @property --morph-squish channel + the welling concave waist clip-path + the
-   1940s ink-cast). The `useMorphField` weld writes the drive-derived channels once/frame;
-   this sheet paints them. The cross-engine clip-path waist FLOOR + the [data-morphing] goo
-   gate live here. */
-@import "./motion/morph-field.css";
-/* BE.W-CELEBRATE-BURST — the earned glass-petal radial-bloom recipe (the
-   .glass-celebration-petal warm-cream frosted-glass material + the overlay anchor).
-   @import-ed after animations.css per the wave spec (the petal motion is the JS rAF
-   step's compositor writes; this recipe is the static frosted material the petals wear). */
-@import "./jubilance.css";
 @import "./scroll-driven.css";
 @import "./scroll-choreography.css";
 @import "./scroll-chrome.css";

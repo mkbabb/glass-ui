@@ -40,7 +40,7 @@
 
 import { onScopeDispose, type Ref } from "vue";
 import { useLiquidFlex } from "./useLiquidFlex";
-import { MORPH_SIGNATURES } from "./useMorphField";
+import { MORPH_SIGNATURES } from "./morphSignatures";
 
 // BD.W-MORPH-FIELD-WELD — useGooMorph is the `lateralNeck` RECIPE over the unified WELD.
 // It keeps its public API + the `--goo-t` drive (NO rename) + its barbell rAF projection,
