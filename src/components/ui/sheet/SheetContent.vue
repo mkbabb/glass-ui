@@ -124,6 +124,8 @@ const dragHandlers = computed(() =>
       :class="cn(sheetVariants({ side }), surfaceDecoration, props.spring ? 'transition-none' : '', props.class)"
       v-bind="{ ...forwarded, ...$attrs }"
       :style="springStyle"
+      data-slot="sheet-content"
+      :data-side="side"
       :data-surface="props.surface ?? 'glass'"
       :data-spring="props.spring ? (typeof props.spring === 'string' ? props.spring : 'smooth') : undefined"
       :data-drag-dismiss="props.spring && props.dragDismiss ? '' : undefined"

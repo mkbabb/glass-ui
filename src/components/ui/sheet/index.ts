@@ -22,16 +22,24 @@ export const sheetVariants = cva(
   // BB.W-CARD-PAD — the overlay-band golden padding ladder: the inline anchor is
   // --spacing(6) = 24px, the block axis lifts by sqrt-phi (`*1.272`) so the
   // heading clears the top edge. `gap-4` between sections STAYS.
-  'fixed z-modal gap-4 glass-floating [--overlay-pad-inline:--spacing(6)] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] px-(--overlay-pad-inline) py-(--overlay-pad-block) transition ease-in-out sheet-animate',
+  // BG.W-SHEET-INSET-ROOT — the CVA carries ONLY DECORATION. The STRUCTURAL
+  // positioning (position/inset/size/z-index) is STRIPPED off these class strings
+  // and lives in the PRECOMPILED src/styles/sheet.css rule keyed off
+  // [data-slot="sheet-content"][data-side] — a Tailwind arbitrary/layout utility
+  // dies in a consumer's content-scan (the D7 configurator-drawer break, the P9
+  // emission class), so an overlay Content's geometry must ship as attribute-selector
+  // CSS, never a load-bearing utility. SheetContent.vue mints the data-slot/data-side
+  // hooks the shipped rule keys off. Locked by proof:emission (overlay-band inverse).
+  'gap-4 glass-floating [--overlay-pad-inline:--spacing(6)] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] px-(--overlay-pad-inline) py-(--overlay-pad-block) transition ease-in-out sheet-animate',
   {
     variants: {
       side: {
-        top: 'inset-x-0 top-0 border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top',
+        top: 'border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top',
         bottom:
-            'inset-x-0 bottom-0 border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom',
-        left: 'inset-y-0 left-0 h-full w-3/4 border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-sm',
+            'border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom',
+        left: 'border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left',
         right:
-            'inset-y-0 right-0 h-full w-3/4 border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm',
+            'border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right',
       },
     },
     defaultVariants: {

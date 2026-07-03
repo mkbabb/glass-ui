@@ -30,6 +30,15 @@ import { useDrawerSnap } from './composables/useDrawerSnap'
  * drops outside-pointer-capture + the focus trap, but a painted scrim would still
  * visually occlude the live surface, so the overlay is opt-out at the content level.
  */
+// BG.W-SHEET-INSET-ROOT (portal-attrs) — reka DialogPortal roots a Teleport, which
+// cannot carry Vue's default attr-fallthrough, so a consumer's aria-label/aria-labelledby/
+// data-testid on <DrawerContent> would be DROPPED. Turn off auto-inherit and spread
+// `...$attrs` explicitly onto the forwarded content node (the SheetContent discipline), so
+// the a11y name reaches the teleported drawer content. Locked by proof:emission (W7).
+defineOptions({
+  inheritAttrs: false,
+})
+
 const props = withDefaults(
   defineProps<
     DialogContentProps & {
@@ -113,7 +122,7 @@ const snapStyle = computed<CSSProperties | undefined>(() => {
     <DrawerOverlay v-if="props.showOverlay" />
     <DialogContent
       :ref="setContentEl"
-      v-bind="forwarded"
+      v-bind="{ ...forwarded, ...$attrs }"
       data-glass-drawer
       :data-glass-drawer-snap-points="hasSnapPoints ? 'true' : undefined"
       :data-glass-drawer-direction="direction"

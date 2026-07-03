@@ -29,7 +29,7 @@
  * DEFERRED (./styles/deferred) — the below-the-fold + late-mount tail: every
  * component recipe + the transitions/animations/scroll-driven/scroll-chrome/
  * view-transition grammar + utilities + the menu/configurator/instrument-chassis/
- * hover-popover/drawer/segmented-tabs/select/icon-chip/border-progress/
+ * hover-popover/drawer/segmented-tabs/select/sheet/icon-chip/border-progress/
  * completion-seal component partials, PLUS the folded SFC `<style scoped>`
  * payload (`../glass-ui.css`) and the emitted Tailwind component-utility surface
  * (`components.css`). These decorate components that mount after first paint or
@@ -82,6 +82,7 @@ export const DEFERRED_PARTIALS = Object.freeze([
     "drawer.css",
     "segmented-tabs.css",
     "select.css",
+    "sheet.css",
     "icon-chip.css",
     "border-progress.css",
     "completion-seal.css",

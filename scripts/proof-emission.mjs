@@ -421,6 +421,172 @@ add(
         : `a W5 ghost self-test bite FAILED to trip (dashed-box ${dashedBoxBite}, removed-dash ${removedDashBite}, cloned-seed ${clonedSeedBite}, per-frame-radius ${perFrameRadiusBite}) — the detector does not bite its defect`,
 );
 
+// ════════════════════════════════════════════════════════════════════════════════════
+// W6 — the OVERLAY-BAND EMISSION INVERSE (BG.W-SHEET-INSET-ROOT).
+//
+// W1-W5 assert a named structural utility is BACKED (present) in the built CSS. The
+// overlay-band INVERSE is the same class read from the other side: an overlay Content's
+// STRUCTURAL POSITIONING (position/inset/size/z-index — the D7 configurator-drawer
+// break) must NOT live as load-bearing CVA arbitrary utilities that silently die in a
+// consumer's Tailwind content-scan (the exact BA-VJS P9 failure the whole gate is about).
+// The FIX is the emission discipline applied to the overlay band: the geometry is
+// STRIPPED off the `sheetVariants` CVA (decoration stays) and SHIPS as a precompiled
+// `[data-slot="sheet-content"][data-side]` rule in dist/glass-ui.css (via the /styles
+// cascade partial src/styles/sheet.css) — the positioning paints in EVERY consumer
+// regardless of JIT reach. The SFC mints `data-slot`+`data-side` so the shipped rule has
+// its hook. Born-RED against HEAD (the CVA carries `fixed inset-y-0 right-0 h-full w-3/4`;
+// no sheet-content rule ships; the SFC mints no data-slot).
+// ════════════════════════════════════════════════════════════════════════════════════
+const sheetCvaSrc = strip(read("src/components/ui/sheet/index.ts"));
+// The STRUCTURAL positioning tokens forbidden on the CVA (they must live in the shipped
+// [data-slot] rule, not a consumer-JIT-dependent utility). Decoration (border-*, the
+// padding tokens, glass-floating, sheet-animate, the slide-in/out data-state pairs) STAYS.
+const SHEET_GEOMETRY = [
+    /\bfixed\b/,
+    /\binset-x-0\b/,
+    /\binset-y-0\b/,
+    /\bh-full\b/,
+    /\bw-3\/4\b/,
+    /\bz-modal\b/,
+    /\bsm:max-w-sm\b/,
+];
+const sheetGeometryHits = SHEET_GEOMETRY.filter((re) => re.test(sheetCvaSrc)).map(
+    (re) => re.source,
+);
+const sheetCvaGeometryStripped = sheetGeometryHits.length === 0;
+facts.sheetGeometryHits = sheetGeometryHits;
+add(
+    "sheet-cva-geometry-stripped",
+    sheetCvaGeometryStripped,
+    sheetCvaGeometryStripped
+        ? "the sheetVariants CVA carries ONLY decoration — every structural positioning token (fixed/inset/h-full/w-3/4/z-modal/sm:max-w-sm) is STRIPPED off the class strings (the geometry ships as the precompiled [data-slot=sheet-content][data-side] rule, never a consumer-JIT-dependent utility)"
+        : `the sheetVariants CVA STILL carries load-bearing structural positioning utilities (${sheetGeometryHits.join(", ")}) — these die in a consumer's content-scan (the D7 configurator-drawer break); move them to the shipped src/styles/sheet.css [data-slot=sheet-content][data-side] rule`,
+);
+// The POSITIVE backing (mirrors W2/W3): the shipped [data-slot=sheet-content] rule ships
+// in the built /styles cascade — position:fixed on the base + the per-side inset on the
+// data-side variant. Whitespace/`:where(`-wrapper/minifier tolerant.
+const sheetBasePosInDist =
+    /:?\s*(?:where\()?\[data-slot=["']?sheet-content["']?\]\)?[^{}]*\{[^}]*position\s*:\s*fixed/.test(
+        distCss,
+    );
+const sheetSideInsetInDist =
+    /\[data-slot=["']?sheet-content["']?\]\[data-side=["']?(?:right|left|top|bottom)["']?\]/.test(
+        distCss,
+    );
+const sheetPositioningInDist = sheetBasePosInDist && sheetSideInsetInDist;
+facts.sheetBasePosInDist = sheetBasePosInDist;
+facts.sheetSideInsetInDist = sheetSideInsetInDist;
+add(
+    "sheet-positioning-in-built-css",
+    sheetPositioningInDist,
+    sheetPositioningInDist
+        ? "the overlay-band structural positioning SHIPS in dist (a [data-slot=sheet-content] position:fixed base rule + [data-slot=sheet-content][data-side=…] per-side inset rules, from src/styles/sheet.css) — the Sheet positions in EVERY consumer regardless of Tailwind content-scan reach (the D7 root fix)"
+        : `the overlay-band positioning is ABSENT from the built /styles cascade (base position:fixed ${sheetBasePosInDist ? "✓" : "✗"}, per-side inset ${sheetSideInsetInDist ? "✓" : "✗"}) — src/styles/sheet.css did not ship the precompiled [data-slot=sheet-content][data-side] rule (run npm run build; born-RED against HEAD where the rule does not exist)`,
+);
+// The SFC mints the [data-slot=sheet-content] + [data-side] hooks the shipped rule keys off.
+const sheetContentSrc = strip(read("src/components/ui/sheet/SheetContent.vue"));
+const sheetMintsDataSlot = /data-slot\s*=\s*["'](?:'?sheet-content'?)["']/.test(sheetContentSrc);
+const sheetMintsDataSide = /:?data-side\s*=/.test(sheetContentSrc);
+facts.sheetMintsDataSlot = sheetMintsDataSlot;
+facts.sheetMintsDataSide = sheetMintsDataSide;
+add(
+    "sheet-content-mints-data-slot-side",
+    sheetMintsDataSlot && sheetMintsDataSide,
+    sheetMintsDataSlot && sheetMintsDataSide
+        ? "SheetContent.vue mints data-slot=\"sheet-content\" + :data-side on the portaled content node — the hook the shipped [data-slot=sheet-content][data-side] positioning rule keys off"
+        : `SheetContent.vue does not mint the positioning hooks (data-slot ${sheetMintsDataSlot}, data-side ${sheetMintsDataSide}) — the shipped rule has nothing to select`,
+);
+
+// ════════════════════════════════════════════════════════════════════════════════════
+// W7 — the PORTAL-ATTRS clause (ATLAS-M M30-F5/G23 — a11y-load-bearing).
+//
+// A portal-rooted overlay Content SFC teleports its content OUT of the consumer's
+// subtree (reka DialogPortal → a Teleport root). A Teleport root cannot carry Vue's
+// default attr-fallthrough, so a consumer's `aria-label`/`aria-labelledby`/`data-testid`
+// on `<SheetContent aria-label=…>` is DROPPED unless the SFC explicitly forwards `$attrs`
+// onto the real content node. The discipline: `inheritAttrs: false` + a `...$attrs`
+// spread in the `v-bind` on the forwarded DialogContent. SheetContent already does this;
+// DrawerContent did NOT (born-RED — the a11y name never reached the drawer content node).
+// ════════════════════════════════════════════════════════════════════════════════════
+function forwardsAttrs(rel) {
+    const src = strip(read(rel));
+    const hasInheritFalse = /inheritAttrs\s*:\s*false/.test(src);
+    const spreadsAttrs = /\.\.\.\$attrs/.test(src);
+    return { hasInheritFalse, spreadsAttrs, forwards: hasInheritFalse && spreadsAttrs };
+}
+const OVERLAY_CONTENT_SFCS = [
+    { id: "SheetContent", rel: "src/components/ui/sheet/SheetContent.vue", inBounds: true },
+    { id: "DrawerContent", rel: "src/components/ui/drawer/DrawerContent.vue", inBounds: true },
+    // DialogContent is the same-class SIBLING (a portal-rooted overlay Content) OUT of
+    // W-SHEET-INSET-ROOT File Bounds. RECORDED here (the card-spacing-base-setter census
+    // precedent) — booked to the same fix-class, not asserted by this in-bounds wave.
+    { id: "DialogContent", rel: "src/components/ui/dialog/DialogContent.vue", inBounds: false },
+];
+const portalAttrsCensus = OVERLAY_CONTENT_SFCS.map((s) => ({
+    ...s,
+    ...forwardsAttrs(s.rel),
+}));
+facts.portalAttrsCensus = portalAttrsCensus;
+const inBoundsPortal = portalAttrsCensus.filter((s) => s.inBounds);
+const allInBoundsForward = inBoundsPortal.every((s) => s.forwards);
+add(
+    "overlay-content-forwards-portal-attrs",
+    allInBoundsForward,
+    allInBoundsForward
+        ? `every IN-BOUNDS portal-rooted overlay Content SFC forwards $attrs to the content node (${inBoundsPortal
+              .map((s) => s.id)
+              .join(", ")} — inheritAttrs:false + a ...$attrs spread, so a consumer's aria-label/aria-labelledby/data-testid reaches the portaled node); 1 sibling (DialogContent) RECORDED + booked out-of-bounds`
+        : `an in-bounds overlay Content SFC drops portal $attrs: ${inBoundsPortal
+              .filter((s) => !s.forwards)
+              .map((s) => `${s.id}(inheritAttrs:false ${s.hasInheritFalse}, ...$attrs ${s.spreadsAttrs})`)
+              .join(", ")} — a consumer's aria-label never reaches the teleported content node`,
+);
+
+// ════════════════════════════════════════════════════════════════════════════════════
+// W6+W7 self-test bites — each planted defect MUST trip its detector (the anti-gameability
+// floor). The inverse detector distinguishes stripped-decoration from re-introduced
+// geometry; the portal detector distinguishes a forwarding SFC from a dropping one.
+// ════════════════════════════════════════════════════════════════════════════════════
+// A re-introduced geometry CVA (the D7 regression) must trip the geometry-present arm.
+const plantedGeometryCva =
+    "cva('fixed z-modal inset-y-0 right-0 h-full w-3/4 gap-4 glass-floating sheet-animate')";
+const plantedGeometryHits = SHEET_GEOMETRY.some((re) => re.test(plantedGeometryCva));
+// A stripped decoration-only CVA must NOT trip it (border + slide are decoration, kept).
+const plantedStrippedCva =
+    "cva('gap-4 glass-floating px-(--overlay-pad-inline) sheet-animate', { variants: { side: { right: 'border-l data-[state=open]:slide-in-from-right' } } })";
+const plantedStrippedClean = !SHEET_GEOMETRY.some((re) => re.test(plantedStrippedCva));
+// A portal Content SFC that DROPS $attrs (no ...$attrs spread) must read not-forwarding.
+const plantedDropAttrs = "defineOptions({ inheritAttrs: false }); <DialogContent v-bind=\"forwarded\" />";
+const plantedDropForwards =
+    /inheritAttrs\s*:\s*false/.test(plantedDropAttrs) && /\.\.\.\$attrs/.test(plantedDropAttrs);
+// A portal Content SFC that FORWARDS (inheritAttrs:false + ...$attrs) must read forwarding.
+const plantedForwardAttrs =
+    "defineOptions({ inheritAttrs: false }); <DialogContent v-bind=\"{ ...forwarded, ...$attrs }\" />";
+const plantedForwards =
+    /inheritAttrs\s*:\s*false/.test(plantedForwardAttrs) && /\.\.\.\$attrs/.test(plantedForwardAttrs);
+const sheetInsetSelfTest =
+    plantedGeometryHits && plantedStrippedClean && !plantedDropForwards && plantedForwards;
+facts.sheetInsetSelfTest = {
+    plantedGeometryHits,
+    plantedStrippedClean,
+    plantedDropForwards,
+    plantedForwards,
+};
+add(
+    "sheet-inset-self-test-bites",
+    sheetInsetSelfTest,
+    sheetInsetSelfTest
+        ? "the W6/W7 detectors BITE every planted defect: a re-introduced `fixed inset-y-0 h-full w-3/4` CVA reds the inverse arm, a decoration-only CVA passes clean, a `v-bind=\"forwarded\"` (no ...$attrs) drops portal-attrs, and an `inheritAttrs:false + ...$attrs` spread forwards them"
+        : `a W6/W7 self-test bite FAILED (geometry-planted ${plantedGeometryHits}, stripped-clean ${plantedStrippedClean}, drop-detected ${!plantedDropForwards}, forward-detected ${plantedForwards})`,
+);
+
+// ── The sheet-inset π readback spec is wired (the BINDING close) ─────────────────────
+add(
+    "sheet-inset-pi-spec-exists",
+    existsSync(resolve(ROOT, "tests-visual/sheet-inset.spec.ts")),
+    "tests-visual/sheet-inset.spec.ts exists (the π readback — the opened Sheet's live top===0 + onScreen all-4 + no transform/contain ancestor over the portaled content, both modes; the BINDING visual truth of the D7 configurator-drawer fix)",
+);
+
 // ── The π readback spec is wired (the BINDING close) ────────────────────────────────
 add(
     "pi-readback-spec-exists",

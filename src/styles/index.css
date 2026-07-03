@@ -153,8 +153,14 @@
  *                             bracket CVA class so the bound SHIPS in dist/glass-ui.css
  *                             regardless of consumer JIT reach. A structural utility
  *                             never depends on a content-scan; locked by proof:emission.
+ *  17. sheet.css             — BG.W-SHEET-INSET-ROOT the PRECOMPILED Sheet
+ *                             positioning (the `[data-slot="sheet-content"][data-side]`
+ *                             position/inset/size rules) — the overlay-band emission
+ *                             INVERSE: moved off the dead CVA geometry utilities that
+ *                             broke the D7 configurator drawer so the positioning SHIPS
+ *                             regardless of consumer JIT reach; locked by proof:emission.
  *
- * Per-package component CSS lives at (12)-(16) (loaded after utilities so
+ * Per-package component CSS lives at (12)-(17) (loaded after utilities so
  * component-local recipes can override). New per-package CSS files append
  * to that tail.
  */
@@ -196,6 +202,13 @@
 @import "./drawer.css";
 @import "./segmented-tabs.css";
 @import "./select.css";
+/* BG.W-SHEET-INSET-ROOT — the overlay-band Sheet structural positioning, precompiled
+   (the emission INVERSE): a [data-slot="sheet-content"][data-side] rule so the Sheet's
+   position/inset/size ships in dist/glass-ui.css regardless of a consumer's Tailwind
+   content-scan reach (off the dead CVA geometry utilities that broke the D7 configurator
+   drawer). :where()-wrapped so a consumer sizing utility still wins. Locked by
+   proof:emission (overlay-band inverse clause). */
+@import "./sheet.css";
 /* BA.W-ICON-CHIP — the <IconChip> section-color pop recipe + the three axes
    (duotone/bloom/reveal). A component partial; the token arms (--section-color-N
    / --muted) auto-flip under .dark so the chip is mode-robust by construction. */
