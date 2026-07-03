@@ -19,9 +19,11 @@
 // content}; this wave delivers the card SHELL + the budget-safe preview seam.
 //
 // A demo-private chassis primitive — NOT a library export.
+import { computed } from "vue";
 import { cn } from "@glass/utils/cn";
 import { IconChip } from "@glass/components/custom/icon-chip";
 import type { IconChipIcon } from "@glass/components/custom/icon-chip";
+import { vizPreviewStill } from "./vizPreviewStill";
 
 interface SectionPreviewCardProps {
     /** The target route — the card navigates here on click. */
@@ -45,6 +47,14 @@ interface SectionPreviewCardProps {
 }
 
 const props = defineProps<SectionPreviewCardProps>();
+
+// BG.W-VIZ-PREVIEW-LIVE — the per-STORY distinct preview still. On a /substrates
+// viz route the card rasters its OWN recognizable Canvas2D still (keyed off the
+// route `to`, module-memoized, ZERO GL contexts — the auroraFallbackGround pattern)
+// and renders THAT, superseding the shared category field slot so the 11 cards read
+// as 11 DISTINCT previews (per-card pixel-hash differs). A non-viz route resolves
+// null → the card falls back to its `#preview` slot (the component-specimen path).
+const vizStill = computed(() => vizPreviewStill(props.to));
 </script>
 
 <template>
@@ -88,12 +98,22 @@ const props = defineProps<SectionPreviewCardProps>();
              is the ONE link. `container-type: size` lets the specimen scale-to-fit
              its stage at every card width (the ≥45%-occupancy fold). -->
         <div
-            v-if="$slots.preview"
+            v-if="vizStill || $slots.preview"
             class="section-preview-card-preview"
             inert
             aria-hidden="true"
         >
-            <slot name="preview" />
+            <!-- BG.W-VIZ-PREVIEW-LIVE — the per-story distinct viz still (a device-free
+                 Canvas2D raster served as a `data:` URI, ZERO GL contexts) WINS over
+                 the shared category field slot for a known /substrates viz route. -->
+            <img
+                v-if="vizStill"
+                class="section-preview-card-viz-still"
+                :src="vizStill"
+                alt=""
+                draggable="false"
+            />
+            <slot v-else name="preview" />
         </div>
 
         <p v-if="blurb" class="text-small text-muted-foreground">{{ blurb }}</p>
@@ -211,6 +231,19 @@ const props = defineProps<SectionPreviewCardProps>();
         inset 0 0 0 1px oklch(1 0 0 / 0.22),
         inset 0 -8px 14px -8px oklch(0.4 0.06 var(--field-h) / 0.3);
 }
+/* BG.W-VIZ-PREVIEW-LIVE — the per-story viz still fills the stage edge-to-edge. The
+   φ-ratio raster + the φ-ratio stage make `cover` an exact fit; `image-rendering:
+   auto` bilinear-smooths the small raster so it reads as a continuous specimen. */
+.section-preview-card-viz-still {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+    image-rendering: auto;
+    user-select: none;
+}
+
 .dark .section-preview-card-preview {
     /* warm-EMBER dark floor — lower L, KEEP chroma (C 0.05 ≥ the warm floor),
        L ∈ [0.25,0.6] so it GLOWS amber/terracotta, NEVER charcoal/gray. */

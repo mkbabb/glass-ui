@@ -1,6 +1,14 @@
 #!/usr/bin/env node
-// BG.W-VIZ-RESIZE-ADOPT — proof:viz, the viz-resize-UPLOAD-ONLY source gate
-// (born-RED on HEAD — every viz self-measured the backing → GREEN at the hard-adopt).
+// proof:viz — TWO disjoint arms on ONE gate:
+//   • BG.W-VIZ-RESIZE-ADOPT (V1-V5) — the viz-resize-UPLOAD-ONLY source gate
+//     (born-RED on HEAD — every viz self-measured the backing → GREEN at the hard-adopt).
+//   • BG.W-VIZ-PREVIEW-LIVE (P1-P4) — the per-STORY distinct-preview-still source gate:
+//     the /substrates bento painted 11 IDENTICAL frozen aurora stills (every card shared
+//     the ONE category `fieldStill`); the cure is a per-story dispatch off the colocated
+//     `demo/stories/vizPreviewStill.ts` registry so per-card pixel-hash differs BY
+//     CONSTRUCTION over ZERO live GL contexts (born-RED on HEAD — the registry + the
+//     SectionPreviewCard import do not exist). The LIVE per-card-pixel-hash paint is the
+//     orchestrator's real-device capture, NOT this gate (the cardinal source/paint split).
 //
 // The cure for the substrate-plumbing chronic (the un-adopted leaf sizer): the ONE
 // backing-store sizer `sizeBacking` (createCanvasLifecycle.ts) MEASURES the LAID-OUT box
@@ -60,6 +68,11 @@ const LEAF = resolve(
     ROOT,
     "src/composables/glass/webgl/createCanvasLifecycle.ts",
 );
+// BG.W-VIZ-PREVIEW-LIVE — the per-story preview-still surface (the SectionPreviewCard
+// dispatch + its colocated distinct-still registry). The preview arm (P1-P4) shares
+// this gate with the resize-upload-only arm (V1-V5); the two are disjoint file sets.
+const CARD = resolve(ROOT, "demo/stories/SectionPreviewCard.vue");
+const STILL = resolve(ROOT, "demo/stories/vizPreviewStill.ts");
 
 // The 9 procedural viz whose resize/render is HARD-ADOPTED upload-only.
 const VIZ_DIRS = [
@@ -186,6 +199,75 @@ function runAll(over = {}) {
             "V5: the leaf does not hand the live `BackingSize` to `options.resize(s)`",
         );
 
+    // ══ PREVIEW ARM (BG.W-VIZ-PREVIEW-LIVE) — 11 DISTINCT per-story preview stills ══
+    // The /substrates bento painted 11 IDENTICAL frozen aurora stills (every card
+    // shared the ONE category `fieldStill`). The cure is a per-STORY dispatch: the
+    // card rasters its OWN distinct recognizable still (7 leaf-signature / 2 SDF-approx
+    // / 2 glass-over-field) off the colocated registry — per-card pixel-hash differs by
+    // construction, over ZERO live GL contexts (a still is a parked frame).
+    const still = stripComments(
+        over.__still !== undefined ? over.__still : (read(STILL) ?? ""),
+    );
+    const card = stripComments(
+        over.__card !== undefined ? over.__card : (read(CARD) ?? ""),
+    );
+
+    // P1 — the per-story still registry exists with ≥11 route→descriptor entries.
+    const entries = [
+        ...still.matchAll(/"(\/substrates\/[a-z0-9-]+)"\s*:\s*\{([^}]*)\}/g),
+    ];
+    if (entries.length < 11)
+        fails.push(
+            `P1: the vizPreviewStill registry has ${entries.length} route entries (<11) — the per-story dispatch is absent (born-RED: on HEAD the module + registry do not exist)`,
+        );
+
+    // P2 — every descriptor is pairwise-DISTINCT. A shared (pattern,hue,seed) triple
+    // → a shared generator + inputs → the SAME still → the shared-placeholder
+    // regression the "per-card pixel-hash differs" bar forbids.
+    const seen = new Map();
+    for (const [, route, body] of entries) {
+        const pat = (body.match(/pattern\s*:\s*"([a-z-]+)"/) || [])[1] ?? "";
+        const hue = (body.match(/hue\s*:\s*(-?\d+)/) || [])[1] ?? "";
+        const seed = (body.match(/seed\s*:\s*(-?\d+)/) || [])[1] ?? "";
+        if (!pat)
+            fails.push(`P2: ${route} declares no \`pattern\` — the generator is undefined`);
+        const key = `${pat}|${hue}|${seed}`;
+        if (seen.has(key))
+            fails.push(
+                `P2: ${route} shares the still descriptor \`${key}\` with ${seen.get(key)} — two cards would paint the SAME still`,
+            );
+        else seen.set(key, route);
+    }
+
+    // P3 — the card dispatches per-STORY off its route (imports + reads the registry),
+    // NOT the shared per-category field smear.
+    if (!/from\s+["']\.\/vizPreviewStill["']/.test(card))
+        fails.push(
+            "P3: SectionPreviewCard does not import `./vizPreviewStill` — the per-story dispatch is not wired (born-RED: the HEAD card renders only the shared category slot)",
+        );
+    if (!/vizPreviewStill\s*\(/.test(card))
+        fails.push(
+            "P3: SectionPreviewCard does not call `vizPreviewStill(...)` off its route — no per-story still is rendered",
+        );
+
+    // P4 — the still is DEVICE-FREE (a memoized Canvas2D raster → data URI, ZERO live
+    // GL/WebGPU contexts — the ≤1-live-context budget; a still is a parked frame).
+    if (
+        /getContext\(\s*["'](?:webgl2?|webgpu)["']/.test(still) ||
+        /createGpuSubstrate|requestAdapter/.test(still)
+    )
+        fails.push(
+            "P4: vizPreviewStill arms a live GL/WebGPU context — a preview still must be a device-free Canvas2D raster (the ≤1-live-context budget)",
+        );
+    if (!/getContext\(\s*["']2d["']\s*\)/.test(still))
+        fails.push(
+            "P4: vizPreviewStill does not raster on a 2D canvas — the still must be the device-free auroraFallbackGround pattern",
+        );
+    if (!/new Map\b/.test(still) || !/toDataURL/.test(still))
+        fails.push(
+            "P4: vizPreviewStill is not a memoized data-URI raster (each story rasters ONCE — proto2 #6)",
+        );
+
     return fails;
 }
 
@@ -236,6 +318,44 @@ function selfTest() {
     if (!e.some((v) => v.startsWith("V1")))
         fails.push("self-test: a clientWidth-measuring sizeBacking did NOT red V1");
 
+    // ── PREVIEW ARM bites (BG.W-VIZ-PREVIEW-LIVE) ──
+    const validStill =
+        'export const VIZ_PREVIEW_STILLS = {\n' +
+        '  "/substrates/aurora": { pattern: "nuclei", hue: 58, seed: 101 },\n' +
+        '};\nconst cache = new Map();\ncanvas.getContext("2d");\ncanvas.toDataURL("image/png");';
+
+    // (f) two registry entries with the SAME (pattern,hue,seed) descriptor red P2.
+    const f = runAll({
+        __still:
+            'export const VIZ_PREVIEW_STILLS = {\n' +
+            '  "/substrates/aurora": { pattern: "nuclei", hue: 58, seed: 101 },\n' +
+            '  "/substrates/blob": { pattern: "nuclei", hue: 58, seed: 101 },\n' +
+            '};\nconst cache = new Map();\ncanvas.getContext("2d");\ncanvas.toDataURL("x");',
+    });
+    if (!f.some((v) => v.startsWith("P2")))
+        fails.push("self-test: two cards sharing one still descriptor did NOT red P2");
+
+    // (g) a registry under 11 entries reds P1 (the per-story dispatch incomplete).
+    const g = runAll({ __still: validStill });
+    if (!g.some((v) => v.startsWith("P1")))
+        fails.push("self-test: a <11-entry preview registry did NOT red P1");
+
+    // (h) a card that does not import the registry reds P3 (the shared-smear regression).
+    const h = runAll({
+        __card:
+            "<script setup lang=\"ts\">const props = defineProps<{ to: string }>();</script>\n<template><div /></template>",
+    });
+    if (!h.some((v) => v.startsWith("P3")))
+        fails.push("self-test: a card not importing vizPreviewStill did NOT red P3");
+
+    // (i) a still that arms a live GL context reds P4 (the ≤1-live-context budget).
+    const i = runAll({
+        __still:
+            'export const VIZ_PREVIEW_STILLS = {};\nconst cache = new Map();\ncanvas.getContext("webgl2");\ncanvas.toDataURL("x");',
+    });
+    if (!i.some((v) => v.startsWith("P4")))
+        fails.push("self-test: a GL-arming preview still did NOT red P4");
+
     return fails;
 }
 
@@ -247,7 +367,7 @@ function main() {
 
     const artifact = {
         gate: "proof:viz",
-        wave: "BG.W-VIZ-RESIZE-ADOPT",
+        wave: "BG.W-VIZ-RESIZE-ADOPT + BG.W-VIZ-PREVIEW-LIVE",
         stamp: snapshotStamp(),
         ok,
         violations: viol,
@@ -257,14 +377,14 @@ function main() {
     writeGateArtifact(out, artifact);
 
     console.log(
-        "proof:viz — viz-resize-UPLOAD-ONLY: the leaf owns backing==round(gBCR × dpr); every viz uploads, none self-measures (BG.W-VIZ-RESIZE-ADOPT)",
+        "proof:viz — viz-resize-UPLOAD-ONLY (BG.W-VIZ-RESIZE-ADOPT) + per-story preview stills (BG.W-VIZ-PREVIEW-LIVE)",
     );
     if (viol.length) {
         console.error("  RED:");
         for (const v of viol) console.error("    ✗ " + v);
     } else {
         console.log(
-            "  GREEN (V1 one-sizer-gBCR · V2 no-self-measure · V3 no-self-size · V4 dprPolicy×9 · V5 leaf-routes)",
+            "  GREEN (V1 one-sizer-gBCR · V2 no-self-measure · V3 no-self-size · V4 dprPolicy×9 · V5 leaf-routes · P1 registry≥11 · P2 pairwise-distinct · P3 card-dispatch · P4 device-free-memoized)",
         );
     }
     if (isSelftest) {
