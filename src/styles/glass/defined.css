@@ -44,6 +44,27 @@
     .input-pill,
     .control-surface {
         --glass-definition: 1;
+        /* The substitution-vs-inheritance fix (the --dock-scale re-declare / --glass-bg-dock
+           pre-substituted-seam precedent — CLAUDE.md "The substitution-vs-inheritance trap").
+           --glass-floor-fill + --glass-border-defined are composed at :root, where
+           --glass-definition is 0 — and a custom property's inner var() substitutes at the
+           element that DECLARES it, so the :root copies resolve TRANSPARENT (calc(0 * N%)) and
+           inherit DOWN already-resolved. Flipping --glass-definition: 1 here would be a DEAD KNOB
+           (the floor/rim keep their :root-resolved transparent value). RE-DECLARE both on this
+           definition-1 rule so their var(--glass-definition) re-resolves against THIS element's
+           value (card@15% floor + foreground@14% rim actually paint). The :root copies stay the
+           transmissive default (definition 0 -> transparent) for a content surface. Both legs
+           still read the scalar (dead-knob-proof); --glass-floor-fill-max stays the one knob. */
+        --glass-floor-fill: color-mix(
+            in srgb,
+            var(--card) calc(var(--glass-definition) * var(--glass-floor-fill-max)),
+            transparent
+        );
+        --glass-border-defined: color-mix(
+            in srgb,
+            var(--foreground) calc(var(--glass-definition) * 14%),
+            transparent
+        );
         background-color: transparent;
         background-image:
             linear-gradient(

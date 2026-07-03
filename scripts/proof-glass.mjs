@@ -296,7 +296,17 @@ export function safariBlurVarViolations(viteText) {
 //         .glass-quiet/.glass-wash) is NOT a co-member of any `--glass-definition: 1`
 //         rule — the default flip must NOT bleed onto content (content stays
 //         transmissive; the floor is sub-perceptual over a real field).
-// Born-RED at HEAD (no @property, no floor token, no .glass-defined, no cohort flip).
+//   DF7 — the substitution-trap fix REACHES PAINT: the `--glass-definition: 1` cohort
+//         rule RE-DECLARES --glass-floor-fill + --glass-border-defined (each reading
+//         var(--glass-definition)) so they re-resolve at the element (definition 1 ->
+//         card@15% / foreground@14% actually paint). A custom property's inner var()
+//         substitutes at the DECLARING element, so the :root copies (definition 0)
+//         resolve TRANSPARENT and inherit down already-resolved — the flip is a DEAD
+//         KNOB (the control reads as a pale lozenge) without the re-declare. The
+//         device-free proxy for the paint-judge "scalar reaches paint" mustFix.
+// Born-RED at HEAD (no @property, no floor token, no .glass-defined, no cohort flip;
+// and — at the paint-DELTA re-open — the cohort flips the scalar but does NOT re-declare
+// the tokens, so DF7 is the born-RED clause the fix greens).
 export function definedControlFloorViolations(glassCss, tokensCss) {
     const violations = [];
     const facts = {};
@@ -434,6 +444,34 @@ export function definedControlFloorViolations(glassCss, tokensCss) {
         );
     }
 
+    // DF7 — the substitution-vs-inheritance fix REACHES PAINT (the dead-knob close).
+    // DF2/DF3 verify the :root token FORMULAS, but a custom property's inner var()
+    // substitutes at the DECLARING element — so --glass-floor-fill/--glass-border-defined
+    // composed at :root (where --glass-definition is 0) resolve TRANSPARENT and inherit
+    // down already-resolved. The definition-1 cohort rule flipping the scalar is a DEAD
+    // KNOB unless it ALSO re-declares the two color tokens (so they re-resolve against the
+    // element's own --glass-definition: 1). This is the device-free proxy for "the scalar
+    // reaches paint" — the paint-judge DELTA's mustFix. Each re-declaration must read
+    // var(--glass-definition) (stays scalar-driven, never a hardcoded strength).
+    const floorRedecl = /--glass-floor-fill\s*:\s*([^;]+);/.exec(cohortBodies);
+    const rimRedecl = /--glass-border-defined\s*:\s*([^;]+);/.exec(cohortBodies);
+    facts.cohortRedeclaresFloor =
+        !!floorRedecl && /var\(--glass-definition\)/.test(floorRedecl[1]) && /var\(--card\)/.test(floorRedecl[1]);
+    facts.cohortRedeclaresRim =
+        !!rimRedecl && /var\(--glass-definition\)/.test(rimRedecl[1]) && /var\(--foreground\)/.test(rimRedecl[1]);
+    if (definedRules.length > 0) {
+        if (!facts.cohortRedeclaresFloor) {
+            violations.push(
+                "DF7: the `--glass-definition: 1` cohort rule does not RE-DECLARE `--glass-floor-fill: color-mix(… var(--card) … var(--glass-definition) …)` — the :root copy resolves TRANSPARENT (calc(0 * N%)) and inherits down already-resolved, so the flip is a DEAD KNOB (the floor never paints, the control reads as a pale lozenge). Re-declare the token on the definition-1 scope (the --dock-scale re-declare precedent) so it re-resolves at strength.",
+            );
+        }
+        if (!facts.cohortRedeclaresRim) {
+            violations.push(
+                "DF7: the `--glass-definition: 1` cohort rule does not RE-DECLARE `--glass-border-defined: color-mix(… var(--foreground) … var(--glass-definition) …)` — the :root copy resolves transparent at the DECLARING element (substitution-vs-inheritance trap), so the defined rim never paints. Re-declare it on the definition-1 scope so the warm rim re-resolves.",
+            );
+        }
+    }
+
     return { violations, facts };
 }
 
@@ -565,7 +603,7 @@ function selfTest() {
 
     // ── defined-control-floor bites (DF) — BG.W-GLASS-DEFAULT-DEFINITION ───────────
     const goodDefinedGlass =
-        "@layer components { .glass-defined, .btn-glass, .input-pill, .control-surface { --glass-definition: 1; background-color: transparent; background-image: linear-gradient(var(--glass-defined-plate, var(--glass-plate-tinted)), var(--glass-defined-plate, var(--glass-plate-tinted))), linear-gradient(var(--glass-floor-fill), var(--glass-floor-fill)); border-color: var(--glass-border-defined); } .btn-glass { --glass-defined-plate: var(--glass-fill); } }";
+        "@layer components { .glass-defined, .btn-glass, .input-pill, .control-surface { --glass-definition: 1; --glass-floor-fill: color-mix(in srgb, var(--card) calc(var(--glass-definition) * var(--glass-floor-fill-max)), transparent); --glass-border-defined: color-mix(in srgb, var(--foreground) calc(var(--glass-definition) * 14%), transparent); background-color: transparent; background-image: linear-gradient(var(--glass-defined-plate, var(--glass-plate-tinted)), var(--glass-defined-plate, var(--glass-plate-tinted))), linear-gradient(var(--glass-floor-fill), var(--glass-floor-fill)); border-color: var(--glass-border-defined); } .btn-glass { --glass-defined-plate: var(--glass-fill); } }";
     const goodDefinedTokens =
         '@property --glass-definition { syntax: "<number>"; inherits: true; initial-value: 0; } :root { --glass-floor-fill-max: 15%; --glass-floor-fill: color-mix(in srgb, var(--card) calc(var(--glass-definition) * var(--glass-floor-fill-max)), transparent); --glass-border-defined: color-mix(in srgb, var(--foreground) calc(var(--glass-definition) * 14%), transparent); }';
     // sanity — the good fixture MUST be clean (else a bite would false-pass).
@@ -600,6 +638,22 @@ function selfTest() {
     if (!definedControlFloorViolations(contentBled, goodDefinedTokens).violations.some((v) => /DF6/.test(v))) {
         fails.push(
             "self-test DF6: a content tier (.glass-card) bled into a --glass-definition:1 rule was NOT flagged (the no-bleed negative arm has no teeth)",
+        );
+    }
+    // bite DF7 — a cohort that flips --glass-definition:1 but does NOT re-declare the
+    // floor/rim tokens (the dead-knob substitution trap the paint-DELTA caught) must flag.
+    const deadKnob = goodDefinedGlass
+        .replace(
+            "--glass-floor-fill: color-mix(in srgb, var(--card) calc(var(--glass-definition) * var(--glass-floor-fill-max)), transparent); ",
+            "",
+        )
+        .replace(
+            "--glass-border-defined: color-mix(in srgb, var(--foreground) calc(var(--glass-definition) * 14%), transparent); ",
+            "",
+        );
+    if (!definedControlFloorViolations(deadKnob, goodDefinedTokens).violations.some((v) => /DF7/.test(v))) {
+        fails.push(
+            "self-test DF7: a cohort that flips --glass-definition:1 but does NOT re-declare --glass-floor-fill/--glass-border-defined (the dead-knob substitution trap) was NOT flagged (the reaches-paint detector has no teeth)",
         );
     }
 
@@ -676,6 +730,9 @@ function run() {
     );
     console.log(
         `  DF5/6 cohort      : defined=[${(df.cohortPresent ?? []).join(", ")}]  content-bled=${(df.contentTiersBled ?? []).length ? "✗ " + df.contentTiersBled.join(", ") : "✓ none"}`,
+    );
+    console.log(
+        `  DF7 reaches-paint : cohort re-declares floor=${df.cohortRedeclaresFloor ? "✓" : "✗"}  rim=${df.cohortRedeclaresRim ? "✓" : "✗"} (substitution-trap fix)`,
     );
     console.log(`  self-test bites   : ${facts.selfTestOk ? "all teeth ✓" : "✗ BROKE"}`);
 
