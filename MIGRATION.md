@@ -1843,6 +1843,29 @@ opt-in CLASS renames). One-line rename per call site:
 `<Button :liquid>` re-points internally (no consumer change). Off-Chromium the lens still degrades to
 the un-gated blur+tint base (the `@supports (backdrop-filter: url(#…))` floor, PRESERVED).
 
+### Refraction gains a Tier-1 WebGL2 FLOOR — the SOTA degrade ladder (BG.W-GLASS-REFRACT-WEBGL — additive, no consumer break)
+
+The `.glass-lens` refraction now sits on a three-rung SOTA degrade ladder, so the depth-refraction reads
+on EVERY engine — not just Chromium:
+
+- **Tier-0 (CSS box-shadow)** — the `--glass-edge-dispersion` rung, the un-gated floor.
+- **Tier-1 (WebGL2)** — `src/composables/glass/webgl/shaders/glass-refract.glsl.ts` (NEW), the universal
+  Safari-safe primary. The prior refraction rode the CSS-SVG `#glass-refract` `feDisplacementMap` filter,
+  which is **DEAD on Safari/WebKit + Firefox 2026** (a `backdrop-filter: url()` displacement never
+  rasterizes there → the refraction silently collapsed to a flat blur on half the web). The WebGL2
+  fragment pass renders the SAME edge-concentrated squircle depth-refraction + the absolute-rim chromatic
+  split (`ca = inward · rim · uChromatic · CHROMATIC_SCALE`, `CHROMATIC_SCALE = 0.0045`) on any WebGL2
+  engine.
+- **Tier-2 (WGSL)** — `glassShader.wgsl` where `navigator.gpu` is present (the highest fidelity).
+
+**Nothing to do — the ladder is internal.** No public class/prop/token changes: `.glass-lens` and the
+`--glass-refract*` axis are byte-identical. The new **`--glass-chromatic-strength`** scalar (typed
+`@property <number>`, `initial-value: 0` — no fringe by default) threads the Tier-1/Tier-2 `uChromatic`
+uniform; a consumer opts into the rim dispersion by raising it (e.g. `--glass-chromatic-strength: 0.25`)
+and leaves it 0 for the depth-only lens. The `--glass-chromatic-strength` float scalar is a SIBLING of the
+Tier-0 `--glass-edge-dispersion` box-shadow rung (they do NOT collide — one is a GL-uniform float, the
+other a CSS box-shadow).
+
 ### `popover-animate` / `slide-in-from-side` → `.glass-reveal` (BB.W-LIQUID-REVEAL — clean break, no alias)
 
 The reka-overlay enter `@utility popover-animate` (the fixed-bezier `zoom-in-95` + `fade-in-0`) AND

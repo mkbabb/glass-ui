@@ -9,6 +9,14 @@
 // BG.W-GLASS-BASIS-CONSOLIDATE adds `dark-arm-color-reversal` (the R16 MN-1 idiom
 // reversal — colors → light-dark() canonical, the .dark {} color arm as lockstep
 // witnesses; shadows/insets → .dark {} plain arms, never light-dark()).
+// BG.W-GLASS-REFRACT-WEBGL adds `refract-webgl` (the C-SAFARI Tier-1 WebGL2 refraction
+// floor gate — born-RED with the shader ABSENT → GREEN once `glass-refract.glsl.ts`
+// lands: RW1 the fence operator is `uChromatic` not the spike's `uDispersion`
+// (refraction=depth, hue=an absolute rim offset), RW2 ONE pinned CHROMATIC_SCALE=0.0045
+// named const across BOTH stacks read by the `ca=` operator (the drift-at-root fence),
+// RW3 the canonical GLSL rim form + the SHAPE-aligned split, RW4 refraction reads
+// uRefractionStrength through the squircle lens, RW5 ONE `sampleBG` sampler wrapper /
+// ≥2 sites — the Tier-2 discipline transposed to WebGL2).
 //
 // ── ARM: glass-fill-home (BG.W-GLASS-REGISTER-UNIFY · R9) ────────────────────
 // The tint-recipe HOME is the applied `@utility glass-fill` (glass/surfaces.css) —
@@ -22,8 +30,9 @@
 // (no `@utility glass-fill`) -> GREEN at the mint.
 //
 // ── ARM: safari-blur-var (BG.W-GLASS-REGISTER-UNIFY) ─────────────────────────
-// `vite.style-assets.ts` injects the `-webkit-backdrop-filter:` pair into the
-// shipped dist so Safari <=17 (webkit-only) paints the blur. Its `bdfDeclRe`
+// `vite.style-fold.ts` (carved from vite.style-assets.ts at BH.B5a) injects the
+// `-webkit-backdrop-filter:` pair into the shipped dist so Safari <=17 (webkit-only)
+// paints the blur. Its `bdfDeclRe`
 // matcher MUST match a `backdrop-filter: blur(var(--x, 8px));` declaration (the
 // nested-paren `blur(var())` form — the `.glass-top-layer` entry) so the pair
 // reaches the dist, WHILE still NOT matching an `@supports` prelude condition (the
@@ -73,7 +82,11 @@ import { readMonolith } from "./read-css-monoliths.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const GLASS_DEEP_FILE = "src/styles/tokens/glass-deep.css";
-const VITE_STYLE_ASSETS = "vite.style-assets.ts";
+// BH.B5a-deps-currency carved vite.style-assets.ts into three sub-plugin modules;
+// the `-webkit-backdrop-filter` injector (`bdfDeclRe`) now lives in vite.style-fold.ts
+// (its own comment: "Locked by `proof:glass`'s safari-blur-var arm"). The reader
+// FOLLOWS the carve into the leaf (the house reader-follows-carve discipline).
+const VITE_STYLE_ASSETS = "vite.style-fold.ts";
 const SPECULAR_POINTER_FILE = "src/composables/glass/useSpecularPointer.ts";
 const DARK_ARM_FILE = "src/styles/tokens/dark-arm.css";
 const LIGHT_DARK_FILE = "src/styles/tokens/light-dark.css";
@@ -81,6 +94,11 @@ const GLASS_SURFACES_FILE = "src/styles/glass/surfaces.css";
 const TRANSITIONS_FILE = "src/styles/transitions.css";
 const STORY_HERO_CSS_FILE = "demo/stories/story-hero.css";
 const STORY_HERO_SFC_FILE = "demo/stories/StoryHero.vue";
+const GLASS_REFRACT_SHADER_FILE =
+    "src/composables/glass/webgl/shaders/glass-refract.glsl.ts";
+// The pinned cross-stack chromatic scale (must match the exported CHROMATIC_SCALE
+// in glass-refract.glsl.ts + the WGSL twin — the drift-at-root fence).
+const CHROMATIC_SCALE_LITERAL = "0.0045";
 
 function stripCss(src) {
     return src.replace(/\/\*[\s\S]*?\*\//g, " ");
@@ -222,7 +240,7 @@ export function glassFillHomeViolations(glassCss) {
 }
 
 // ── the safari-blur-var predicate (pure) — BG.W-GLASS-REGISTER-UNIFY ──────────
-// Extract the live `bdfDeclRe` webkit-backdrop matcher from vite.style-assets.ts
+// Extract the live `bdfDeclRe` webkit-backdrop matcher from vite.style-fold.ts
 // and FUNCTIONALLY test it: it MUST match `backdrop-filter: blur(var(--x, 8px));`
 // (the nested-paren `blur(var())` form) so the `-webkit-` pair reaches the dist,
 // MUST still match the 1-level `var(--token)` form (superset), and MUST NOT match
@@ -235,7 +253,7 @@ export function safariBlurVarViolations(viteText) {
     facts.regexFound = Boolean(m);
     if (!m) {
         violations.push(
-            "safari-blur-var: could not locate the `bdfDeclRe` webkit-backdrop matcher in vite.style-assets.ts — the Safari blur-prefix pass is the gate's subject (its absence breaks the shipped-dist webkit pairing)",
+            "safari-blur-var: could not locate the `bdfDeclRe` webkit-backdrop matcher in vite.style-fold.ts — the Safari blur-prefix pass is the gate's subject (its absence breaks the shipped-dist webkit pairing)",
         );
         return { violations, facts };
     }
@@ -858,6 +876,158 @@ export function cornerBackplateViolations(transitions, heroCss, heroSfc) {
     return { violations, facts };
 }
 
+// ── ARM: refract-webgl (BG.W-GLASS-REFRACT-WEBGL — the C-SAFARI Tier-1 floor) ───
+// The Tier-1 WebGL2 refraction floor is the universal Safari-safe primary of the
+// SOTA degrade ladder (Tier-0 CSS box-shadow → Tier-1 WebGL2 here → Tier-2 WGSL).
+// This arm scans `glass-refract.glsl.ts` (born-RED: the file is ABSENT at HEAD →
+// GREEN once the compliant shader lands) + locks the RESPEC-AMENDED operator fence:
+//
+//   RW1 — the fence operator is `uChromatic`, NOT the spike's invented `uDispersion`
+//         (refraction = DEPTH not hue): the shader declares `uniform float uChromatic`
+//         AND carries NO `uDispersion` uniform/identifier NOR a per-channel
+//         `(1.0 ± u…)` UV-fraction chromatic re-roll (the future-rainbow class).
+//   RW2 — ONE pinned `CHROMATIC_SCALE = 0.0045` named const, present in BOTH the JS
+//         `export const CHROMATIC_SCALE` AND a GLSL `const float CHROMATIC_SCALE`, and
+//         the `ca =` operator READS the named const — NO bare `0.003`/`0.004`/`0.0045`
+//         chromatic literal in the operator line (the drift-at-root fence).
+//   RW3 — the canonical rim form is the GLSL source-of-truth
+//         `rim = 1.0 - smoothstep(0.0, 0.16, edge)` (NOT the Tier-2 `edge = prof`
+//         squircle weight), AND the chromatic split is the SHAPE-aligned
+//         `ca = inward * rim * uChromatic * CHROMATIC_SCALE`.
+//   RW4 — refraction = DEPTH: the displacement reads `uRefractionStrength` (a squircle
+//         UV-offset), so depth + hue are DISJOINT channels (the squircleProfile lens
+//         carries the bend, the absolute rim-offset carries the fringe).
+//   RW5 — ONE sampler-read wrapper `sampleBG` (the Tier-2 discipline): exactly one
+//         `texture(`/`textureLod(` call in the whole source (inside `sampleBG`), and
+//         ≥2 `sampleBG(` call-sites (the blur + the ≥2-distinct GL-refraction bar).
+export function refractWebglViolations(src) {
+    const violations = [];
+    const facts = {};
+
+    if (!src) {
+        violations.push(
+            `refract-webgl: ${GLASS_REFRACT_SHADER_FILE} is ABSENT — the C-SAFARI Tier-1 WebGL2 refraction floor must exist (the Tier-0 CSS-SVG #glass-refract filter is DEAD on Safari/WebKit + Firefox 2026)`,
+        );
+        return { violations, facts };
+    }
+
+    // strip JS line/block comments so a commented note never satisfies a scan.
+    const bare = src
+        .replace(/\/\*[\s\S]*?\*\//g, " ")
+        .replace(/(^|[^:])\/\/[^\n]*/g, "$1 ");
+
+    // RW1 — the operator is uChromatic, not an invented uDispersion / UV-fraction.
+    facts.declaresUChromatic = /uniform\s+float\s+uChromatic\b/.test(bare);
+    facts.hasDispersionReroll = /\buDispersion\b/.test(bare);
+    // a per-channel UV-FRACTION chromatic split `uv * (1.0 ± u…)` fakes refraction as
+    // hue — the future-rainbow class the fence forbids (depth is an ABSOLUTE offset).
+    facts.hasUvFractionSplit =
+        /\(\s*1\.0?\s*[-+]\s*u[A-Za-z]/.test(bare) &&
+        /\buChromatic\b|\bchromat/i.test(bare) &&
+        !/uRefractionStrength/.test(
+            (/(\(\s*1\.0?\s*[-+]\s*u[A-Za-z][^)]*\))/.exec(bare) || [])[0] || "",
+        );
+    if (!facts.declaresUChromatic) {
+        violations.push(
+            "RW1: glass-refract.glsl.ts does not declare `uniform float uChromatic` — the fence operator is `uChromatic`, NOT the spike's invented `uDispersion` (refraction = depth, hue = the absolute rim offset)",
+        );
+    }
+    if (facts.hasDispersionReroll) {
+        violations.push(
+            "RW1: a `uDispersion` uniform/identifier survives — the operator was re-rolled off the canonical `uChromatic`; refraction = DEPTH not hue (a `(1±uDispersion)` UV-fraction is the future-rainbow class)",
+        );
+    }
+    if (facts.hasUvFractionSplit) {
+        violations.push(
+            "RW1: a per-channel `(1.0 ± u…)` UV-fraction chromatic split fakes refraction as hue — the chromatic split must be the ABSOLUTE rim offset `ca = inward * rim * uChromatic * CHROMATIC_SCALE`",
+        );
+    }
+
+    // RW2 — ONE pinned CHROMATIC_SCALE = 0.0045 named const in BOTH stacks + the
+    // operator reads the const (no bare chromatic literal in the ca= line).
+    facts.jsConst = new RegExp(
+        `export\\s+const\\s+CHROMATIC_SCALE\\s*=\\s*${CHROMATIC_SCALE_LITERAL}\\b`,
+    ).test(bare);
+    facts.glslConst = new RegExp(
+        `const\\s+float\\s+CHROMATIC_SCALE\\s*=\\s*\\$\\{CHROMATIC_SCALE\\}|const\\s+float\\s+CHROMATIC_SCALE\\s*=\\s*${CHROMATIC_SCALE_LITERAL}`,
+    ).test(bare);
+    facts.namedScale = facts.jsConst && facts.glslConst;
+    // the ca= operator line reads the named const, never a bare drift literal.
+    const caLine = /\bca\s*=\s*[^;]*/.exec(bare)?.[0] ?? "";
+    facts.caReadsNamedConst =
+        caLine.length > 0 && /CHROMATIC_SCALE/.test(caLine);
+    facts.caBareLiteral =
+        caLine.length > 0 && /\b0\.00[345]\b/.test(caLine);
+    if (!facts.namedScale) {
+        violations.push(
+            `RW2: the ONE pinned CHROMATIC_SCALE = ${CHROMATIC_SCALE_LITERAL} named const is not present in BOTH the JS export AND the GLSL const (js=${facts.jsConst} glsl=${facts.glslConst}) — the drift-at-root fence pins the scalar once across both stacks`,
+        );
+    }
+    if (!facts.caReadsNamedConst) {
+        violations.push(
+            "RW2: the `ca =` chromatic operator does not read the named `CHROMATIC_SCALE` const — the absolute rim offset must ride the pinned scalar",
+        );
+    }
+    if (facts.caBareLiteral) {
+        violations.push(
+            "RW2: the `ca =` operator carries a bare `0.003`/`0.004`/`0.0045` chromatic literal — the drift-at-root fence forbids a raw magnitude in the operator (read CHROMATIC_SCALE)",
+        );
+    }
+
+    // RW3 — the canonical GLSL source-of-truth rim form + the SHAPE-aligned split.
+    facts.canonicalRim =
+        /rim\s*=\s*1\.0\s*-\s*smoothstep\(\s*0\.0\s*,\s*0\.16\s*,\s*edge\s*\)/.test(
+            bare,
+        );
+    facts.shapeAlignedOperator =
+        /ca\s*=\s*inward\s*\*\s*rim\s*\*\s*uChromatic\s*\*\s*CHROMATIC_SCALE/.test(
+            bare,
+        );
+    if (!facts.canonicalRim) {
+        violations.push(
+            "RW3: the canonical rim form `rim = 1.0 - smoothstep(0.0, 0.16, edge)` (the GLSL source-of-truth edge-band, NOT the Tier-2 `edge = prof` squircle weight) is absent",
+        );
+    }
+    if (!facts.shapeAlignedOperator) {
+        violations.push(
+            "RW3: the chromatic operator is not the SHAPE-aligned `ca = inward * rim * uChromatic * CHROMATIC_SCALE` (the rim-band mask × the fence operator × the pinned scale)",
+        );
+    }
+
+    // RW4 — refraction = DEPTH: the displacement reads uRefractionStrength.
+    facts.refractionIsDepth =
+        /uniform\s+float\s+uRefractionStrength\b/.test(bare) &&
+        /disp\s*=\s*[^;]*uRefractionStrength/.test(bare) &&
+        /squircleProfile\s*\(/.test(bare);
+    if (!facts.refractionIsDepth) {
+        violations.push(
+            "RW4: refraction is not a DEPTH channel — the displacement must read `uRefractionStrength` through the `squircleProfile` lens (a pure UV offset), disjoint from the hue rim-offset",
+        );
+    }
+
+    // RW5 — ONE sampler-read wrapper `sampleBG`, ≥2 sample sites.
+    facts.rawTextureReads = (bare.match(/\btextureLod\s*\(|\btexture\s*\(/g) || [])
+        .length;
+    facts.hasSampleBGWrapper =
+        /vec3\s+sampleBG\s*\(\s*vec2[^)]*\)\s*\{/.test(bare);
+    // sampleBG call-sites exclude the wrapper's OWN definition line.
+    const sampleBGCalls = (bare.match(/\bsampleBG\s*\(/g) || []).length;
+    facts.sampleBGCallSites = Math.max(0, sampleBGCalls - 1); // minus the def
+    facts.oneWrapper = facts.rawTextureReads === 1 && facts.hasSampleBGWrapper;
+    if (!facts.oneWrapper) {
+        violations.push(
+            `RW5: the backdrop is not read through EXACTLY ONE sampleBG wrapper (rawTextureReads=${facts.rawTextureReads}, hasWrapper=${facts.hasSampleBGWrapper}) — a second raw texture()/textureLod() outside the wrapper breaks the Tier-2 1-wrapper discipline`,
+        );
+    }
+    if (facts.sampleBGCallSites < 2) {
+        violations.push(
+            `RW5: only ${facts.sampleBGCallSites} sampleBG( call-site(s) — the ≥2-distinct-refraction-site bar (base pass-through + the blur/chromatic taps) is unmet`,
+        );
+    }
+
+    return { violations, facts };
+}
+
 export function detect() {
     const decide = decideViolations(readFile(GLASS_DEEP_FILE));
     const glassMonolith = readMonolith(ROOT, "glass");
@@ -876,6 +1046,7 @@ export function detect() {
         readFile(STORY_HERO_CSS_FILE),
         readFile(STORY_HERO_SFC_FILE),
     );
+    const refractWebgl = refractWebglViolations(readFile(GLASS_REFRACT_SHADER_FILE));
     // the self-test bites run EVERY run (the "proven every run" discipline) — a
     // bite that loses its teeth REDs the gate, so the anti-gameability arm can
     // never silently rot.
@@ -889,6 +1060,7 @@ export function detect() {
             ...dynamics.violations,
             ...reversal.violations,
             ...cornerBackplate.violations,
+            ...refractWebgl.violations,
             ...biteFails,
         ],
         facts: {
@@ -899,6 +1071,7 @@ export function detect() {
             glassDynamics: dynamics.facts,
             darkArmColorReversal: reversal.facts,
             cornerBackplate: cornerBackplate.facts,
+            refractWebgl: refractWebgl.facts,
             selfTestOk: biteFails.length === 0,
         },
     };
@@ -1267,6 +1440,95 @@ function selfTest() {
         );
     }
 
+    // ── refract-webgl bites (BG.W-GLASS-REFRACT-WEBGL) ───────────────────────
+    // A self-contained GOOD Tier-1 shader fixture the bites mutate — teeth prove
+    // every RW clause fires on the exact regression it guards.
+    const goodRefract = [
+        "export const CHROMATIC_SCALE = 0.0045;",
+        "export const GLASS_REFRACT_FRAG_GLSL = `#version 300 es",
+        "precision highp float;",
+        "uniform sampler2D uBackdrop;",
+        "uniform float uChromatic;",
+        "uniform float uRefractionStrength;",
+        "const float CHROMATIC_SCALE = 0.0045;",
+        "vec3 sampleBG(vec2 uv) { return textureLod(uBackdrop, uv, 0.0).rgb; }",
+        "float squircleProfile(float x) { return sqrt(sqrt(max(0.0, 1.0 - x))); }",
+        "void mainImage() {",
+        "  vec3 base = sampleBG(vec2(0.5));",
+        "  vec2 dir = vec2(1.0, 0.0);",
+        "  float prof = squircleProfile(0.5);",
+        "  vec2 disp = dir * prof * (uRefractionStrength * 0.04 / 1.5);",
+        "  vec2 refrUv = vec2(0.5) + disp;",
+        "  float edge = 0.1;",
+        "  float rim = 1.0 - smoothstep(0.0, 0.16, edge);",
+        "  vec2 inward = dir;",
+        "  vec2 ca = inward * rim * uChromatic * CHROMATIC_SCALE;",
+        "  vec3 c = sampleBG(refrUv + ca);",
+        "}`;",
+    ].join("\n");
+
+    // bite 0 — the GOOD fixture is clean (the predicate does not over-fire).
+    if (refractWebglViolations(goodRefract).violations.length !== 0) {
+        fails.push(
+            "self-test refract-webgl: the synthetic GOOD Tier-1 shader is NOT clean (a clause over-fires — a real bite could false-pass): " +
+                refractWebglViolations(goodRefract).violations.join(" | "),
+        );
+    }
+
+    // bite RW-absent — an ABSENT shader file must be flagged (born-RED teeth).
+    if (refractWebglViolations("").violations.length === 0) {
+        fails.push(
+            "self-test refract-webgl: an ABSENT glass-refract.glsl.ts was NOT flagged (the born-RED file-present detector has no teeth)",
+        );
+    }
+
+    // bite RW1 — a `uDispersion` re-roll must be flagged.
+    if (
+        !refractWebglViolations(
+            goodRefract.replace(/uChromatic/g, "uDispersion"),
+        ).violations.some((v) => /RW1/.test(v))
+    ) {
+        fails.push(
+            "self-test RW1: a `uDispersion` re-roll off `uChromatic` was NOT flagged (the operator-is-uChromatic fence has no teeth)",
+        );
+    }
+
+    // bite RW2 — a bare chromatic literal in the ca= operator must be flagged.
+    if (
+        !refractWebglViolations(
+            goodRefract.replace("uChromatic * CHROMATIC_SCALE", "uChromatic * 0.004"),
+        ).violations.some((v) => /RW2/.test(v))
+    ) {
+        fails.push(
+            "self-test RW2: a bare `0.004` chromatic literal in the operator was NOT flagged (the drift-at-root fence has no teeth)",
+        );
+    }
+
+    // bite RW3 — a stripped canonical rim form must be flagged.
+    if (
+        !refractWebglViolations(
+            goodRefract.replace("1.0 - smoothstep(0.0, 0.16, edge)", "0.5"),
+        ).violations.some((v) => /RW3/.test(v))
+    ) {
+        fails.push(
+            "self-test RW3: a stripped canonical `rim = 1.0 - smoothstep(0.0, 0.16, edge)` was NOT flagged (the source-of-truth rim fence has no teeth)",
+        );
+    }
+
+    // bite RW5 — a second raw texture() outside the wrapper must be flagged.
+    if (
+        !refractWebglViolations(
+            goodRefract.replace(
+                "vec3 base = sampleBG(vec2(0.5));",
+                "vec3 base = texture(uBackdrop, vec2(0.5)).rgb;",
+            ),
+        ).violations.some((v) => /RW5/.test(v))
+    ) {
+        fails.push(
+            "self-test RW5: a second raw texture() outside the sampleBG wrapper was NOT flagged (the one-wrapper discipline has no teeth)",
+        );
+    }
+
     return fails;
 }
 
@@ -1385,6 +1647,23 @@ function run() {
     );
     console.log(
         `  CB4 backplate     : boxed-radius-inherit=${cb.boxedRadiusInherit ? "✓" : "✗"}  bleed-radius-0=${cb.bleedRadiusReset ? "✓" : "✗"}  host-clips=${cb.hostClips ? "✓" : "✗"}`,
+    );
+    const rw = facts.refractWebgl ?? {};
+    console.log("proof:glass — arm: refract-webgl (BG.W-GLASS-REFRACT-WEBGL — the C-SAFARI Tier-1 floor)");
+    console.log(
+        `  RW1 operator      : uChromatic=${rw.declaresUChromatic ? "✓" : "✗"}  no-uDispersion=${rw.hasDispersionReroll === false ? "✓" : "✗"}  no-uv-fraction=${rw.hasUvFractionSplit === false ? "✓" : "✗"}`,
+    );
+    console.log(
+        `  RW2 scale         : CHROMATIC_SCALE=${CHROMATIC_SCALE_LITERAL} js+glsl=${rw.namedScale ? "✓" : "✗"}  ca-reads-const=${rw.caReadsNamedConst ? "✓" : "✗"}  no-bare-literal=${rw.caBareLiteral === false ? "✓" : "✗"}`,
+    );
+    console.log(
+        `  RW3 canonical rim : rim-form=${rw.canonicalRim ? "✓" : "✗"}  shape-aligned-ca=${rw.shapeAlignedOperator ? "✓" : "✗"}`,
+    );
+    console.log(
+        `  RW4 depth channel : refraction-reads-uRefractionStrength=${rw.refractionIsDepth ? "✓" : "✗"} (squircle lens, disjoint from hue)`,
+    );
+    console.log(
+        `  RW5 one wrapper   : raw-reads=${rw.rawTextureReads ?? "?"} sampleBG-sites=${rw.sampleBGCallSites ?? "?"}  one-wrapper=${rw.oneWrapper ? "✓" : "✗"}`,
     );
     console.log(`  self-test bites   : ${facts.selfTestOk ? "all teeth ✓" : "✗ BROKE"}`);
 
