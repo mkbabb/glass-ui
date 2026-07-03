@@ -62,6 +62,12 @@ const SFC = "src/components/custom/tabs/SegmentedTabs.vue";
 const CONSTANTS = "src/components/custom/tabs/constants.ts";
 const SCALE_PAPER = "src/styles/tokens/scale-paper.css";
 const TAB_DRAG = "src/components/custom/tabs/composables/useTabDragMorph.ts";
+// BG.W-COLOCATE — the roving-tabindex machine carved OUT of the SFC into this
+// colocated composable (ratchet-drain #13). The L5 function-def checks FOLLOW the
+// carve into the leaf (the "asserts follow the composition into the carved leaf"
+// precedent); the SFC keeps the template wiring (`:tabindex`/`@keydown`).
+const ROVING_FOCUS =
+    "src/components/custom/tabs/composables/useTabRovingFocus.ts";
 const USE_DRAG_MORPH = "src/composables/motion/useDragMorph.ts";
 const ASKS = "docs/tranches/BC/coordination/asks-and-consumes.md";
 
@@ -283,16 +289,26 @@ export function detectKfConsumeBooked(asksRaw, useDragMorphRaw) {
 //   click (the drag writes the SAME model → the same aria flip). A drag that gates
 //   selection behind the pull (removing the click path) reds; a drag-snap that does not
 //   write the model reds.
-export function detectAdditiveA11y(sfcRaw, tabDragRaw) {
+export function detectAdditiveA11y(sfcRaw, tabDragRaw, rovingRaw) {
     const violations = [];
     const facts = {};
     const sfc = stripJs(sfcRaw ?? readFile(SFC));
     const tabDrag = stripJs(tabDragRaw ?? readFile(TAB_DRAG));
+    // The function DEFINITIONS live in the carved `useTabRovingFocus` leaf; the SFC
+    // keeps the template wiring. The check reads (SFC OR the leaf) so the carve is
+    // followed (BG.W-COLOCATE — ratchet-drain #13).
+    const roving = stripJs(rovingRaw ?? readFile(ROVING_FOCUS));
 
     // (b) the roving-tabindex + arrow-key nav is present + ungated (the keyboard-
     // operable floor — the drag is a pointer ENHANCEMENT, never the sole mechanism).
-    facts.hasRovingTabindex = /:tabindex="rovingTabindex/.test(sfc) && /function\s+rovingTabindex/.test(sfc);
-    facts.hasStripKeydown = /@keydown="onStripKeydown"/.test(sfc) && /function\s+onStripKeydown/.test(sfc);
+    facts.hasRovingTabindex =
+        /:tabindex="rovingTabindex/.test(sfc) &&
+        (/function\s+rovingTabindex/.test(sfc) ||
+            /function\s+rovingTabindex/.test(roving));
+    facts.hasStripKeydown =
+        /@keydown="onStripKeydown"/.test(sfc) &&
+        (/function\s+onStripKeydown/.test(sfc) ||
+            /function\s+onStripKeydown/.test(roving));
     if (!facts.hasRovingTabindex) {
         violations.push("L5: the roving-tabindex wiring (:tabindex=\"rovingTabindex(idx)\") is gone — the keyboard-operable selection floor must survive (WCAG 2.1.1; the drag has no keyboard equivalent)");
     }

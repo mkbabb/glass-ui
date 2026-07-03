@@ -119,8 +119,22 @@ function run() {
         facts.substrateExists = false;
     } else {
         const sub = stripComments(readFileSync(SUBSTRATE, "utf8"));
+        // BG.W-COLOCATE — the DOM-observer plumbing (content-visibility +
+        // visibilitychange) is carved into the sibling `visibility.ts` leaf the scheduler
+        // composes; the machinery-presence reads the UNION (createCanvasLifecycle ∪
+        // visibility) so the assert follows the composition into the carved leaf.
+        const visibilityPath =
+            existsSync(LIFECYCLE_LEAF) &&
+            LIFECYCLE_LEAF.replace("createCanvasLifecycle.ts", "visibility.ts");
+        const visibilitySrc =
+            visibilityPath && existsSync(visibilityPath)
+                ? readFileSync(visibilityPath, "utf8")
+                : "";
         const leaf =
-            existsSync(LIFECYCLE_LEAF) && stripComments(readFileSync(LIFECYCLE_LEAF, "utf8"));
+            existsSync(LIFECYCLE_LEAF) &&
+            stripComments(
+                `${readFileSync(LIFECYCLE_LEAF, "utf8")}\n${visibilitySrc}`,
+            );
         facts.substrateExists = true;
         facts.leafExists = Boolean(leaf);
         facts.pickerExists = existsSync(PICKER);

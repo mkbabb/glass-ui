@@ -190,7 +190,17 @@ function run() {
         // Cross-check: the leaf the wrapper composes actually owns the machinery
         // (the composition is not pointing at an empty shell).
         if (existsSync(LIFECYCLE_LEAF)) {
-            const leaf = stripComments(readFileSync(LIFECYCLE_LEAF, "utf8"));
+            // BG.W-COLOCATE — the DOM-observer plumbing (content-visibility +
+            // visibilitychange) is carved into the sibling `visibility.ts` leaf the
+            // scheduler composes; the machinery check reads the UNION (createCanvasLifecycle
+            // ∪ visibility) so the assert follows the composition into the carved leaf.
+            const readSibling = (name) => {
+                const p = LIFECYCLE_LEAF.replace("createCanvasLifecycle.ts", name);
+                return existsSync(p) ? readFileSync(p, "utf8") : "";
+            };
+            const leaf = stripComments(
+                `${readFileSync(LIFECYCLE_LEAF, "utf8")}\n${readSibling("visibility.ts")}`,
+            );
             facts.leafOwnsMachinery =
                 /new\s+Set</.test(leaf) &&
                 /\bisRunning\b/.test(leaf) &&

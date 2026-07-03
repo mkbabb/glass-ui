@@ -66,7 +66,20 @@ function run() {
     if (!existsSync(SUBSTRATE)) {
         violations.push("the useWebGLCanvas substrate is absent");
     } else {
-        const sub = stripComments(readFileSync(SUBSTRATE, "utf8"));
+        // BG.W-COLOCATE — the DOM-observer plumbing (the content-visibility offscreen-park
+        // F1 + the tab-visibility owner F4) is carved into the sibling `visibility.ts` leaf
+        // the scheduler composes; the reduced-motion re-monitor G1 stays in the scheduler.
+        // Read the UNION (createCanvasLifecycle ∪ visibility) so F1/F4/G1 follow the carve.
+        const visibilityPath = SUBSTRATE.replace(
+            "createCanvasLifecycle.ts",
+            "visibility.ts",
+        );
+        const visibilitySrc = existsSync(visibilityPath)
+            ? readFileSync(visibilityPath, "utf8")
+            : "";
+        const sub = stripComments(
+            `${readFileSync(SUBSTRATE, "utf8")}\n${visibilitySrc}`,
+        );
 
         facts.hasContentVisibilityListener = /contentvisibilityautostatechange/.test(sub);
         // The listener must DRIVE the off-screen park (suspend/resume the loop).

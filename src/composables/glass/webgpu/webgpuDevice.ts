@@ -89,3 +89,52 @@ export function isSoftwareWebGPUAdapter(adapter: GPUAdapter): boolean {
         return false;
     }
 }
+
+/**
+ * The bound on the adapter/device acquisition (ms). The adapter/device request can
+ * resolve NEITHER way on a hanging host (a headless / virtualized-Metal + some-Chrome
+ * class). A REAL cold acquire on a healthy Metal-3 host was live-measured at ~3478ms
+ * (the FIRST device request on a cold GPU process) — well over the prior tight 2500ms
+ * ceiling, which converted a slow-but-fine cold acquire into a FALSE hang so the WGSL
+ * primary was never exercised (every viz silently downgraded to WebGL2 forever — the
+ * Safari-primary surface the "broken TOTALLY" reports live on, masked by the
+ * always-winning fallback). 6000ms lets the real cold acquire through while a genuine
+ * wedge (a device that never settles) still falls to the WebGL2 net before the user
+ * perceives a permanent blank. With the SHARED device warm the ceiling is hit at most
+ * ONCE per page, not N-times-per-canvas — a single ≤6s race, never N.
+ *
+ * BG.W-COLOCATE — carved into this device-acquisition-support leaf beside the typed
+ * failure signal it throws (ratchet-drain #4). The substrate re-imports + re-exports it.
+ */
+export const WEBGPU_ACQUIRE_TIMEOUT_MS = 6000;
+
+/**
+ * Race a WebGPU acquisition promise against a timeout. On a hang the timeout wins and
+ * rejects with the recognized typed `acquire-timeout` signal (the picker falls to the
+ * WebGL2 net on it, exactly like a no-adapter host). The timer is cleared the instant
+ * the acquisition settles (resolve OR reject), so a healthy device leaves no dangling
+ * timeout. SSR-safe: with no `setTimeout` the bare promise passes through (a non-DOM
+ * runtime has no WebGPU surface to hang anyway).
+ *
+ * `label` is the acquisition-step name used in the timeout message (the caller in the
+ * substrate passes the concrete step name — the bootstrap tokens stay in the substrate
+ * per proof:gpu-substrate-single clause A).
+ */
+export function withAcquireTimeout<T>(
+    promise: Promise<T>,
+    label: string,
+): Promise<T> {
+    if (typeof setTimeout === "undefined") return promise;
+    let timer: ReturnType<typeof setTimeout>;
+    const timeout = new Promise<never>((_resolve, reject) => {
+        timer = setTimeout(() => {
+            reject(
+                new WebGPUInitError(
+                    "acquire-timeout",
+                    `[useWebGPUCanvas] ${label}() did not settle within ${WEBGPU_ACQUIRE_TIMEOUT_MS}ms — falling to the WebGL2 net`,
+                ),
+            );
+        }, WEBGPU_ACQUIRE_TIMEOUT_MS);
+    });
+    return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
+}

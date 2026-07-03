@@ -414,7 +414,20 @@ function run() {
 
     // ── (C) cross-check: the leaf the THREE backends compose actually owns the machinery.
     if (existsSync(c.LIFECYCLE_LEAF)) {
-        const leaf = stripComments(readFileSync(c.LIFECYCLE_LEAF, "utf8"));
+        // BG.W-COLOCATE — the DOM-observer plumbing (content-visibility +
+        // visibilitychange) is carved into the sibling `visibility.ts` leaf the
+        // scheduler composes; the machinery check reads the UNION (createCanvasLifecycle
+        // ∪ visibility) so the assert follows the composition into the carved leaf.
+        const visibilityPath = c.LIFECYCLE_LEAF.replace(
+            "createCanvasLifecycle.ts",
+            "visibility.ts",
+        );
+        const visibilitySrc = existsSync(visibilityPath)
+            ? readFileSync(visibilityPath, "utf8")
+            : "";
+        const leaf = stripComments(
+            `${readFileSync(c.LIFECYCLE_LEAF, "utf8")}\n${visibilitySrc}`,
+        );
         facts.leafOwnsMachinery =
             /new\s+Set</.test(leaf) &&
             /\bisRunning\b/.test(leaf) &&

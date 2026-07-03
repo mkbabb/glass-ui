@@ -9,13 +9,7 @@
 // styles/index.css); this SFC owns the toggle markup + the anchor/JS indicator-
 // position seam. The `overflow` axis (→ <FadingScroll>) and the `:multi-select`
 // prop (→ ToggleGroup) RETIRED — clean break, no alias (see MIGRATION.md).
-import {
-    ref,
-    computed,
-    onMounted,
-    onBeforeUnmount,
-    type HTMLAttributes,
-} from "vue";
+import { ref, computed, type HTMLAttributes } from "vue";
 import { cn } from "../../../utils";
 import {
     Tooltip,
@@ -32,6 +26,8 @@ import {
 } from "../../ui/select";
 import { useTabIndicator } from "./composables/useTabIndicator";
 import { useTabDragMorph } from "./composables/useTabDragMorph";
+import { useTabResponsive } from "./composables/useTabResponsive";
+import { useTabRovingFocus } from "./composables/useTabRovingFocus";
 
 // WAAPI keyframes can't dereference custom properties — resolve literals at
 // runtime via the cascade root.
@@ -167,44 +163,24 @@ function pillHoverClass(option: SegmentedTabOption): string | false {
 const jsSliderActive = computed(() => !ANCHOR_SUPPORTED && !isUnderline.value);
 const jsSingleSlider = jsSliderActive;
 
-// ── Responsive collapse ──
-
-const responsiveCfg = computed<SegmentedTabsResponsive | null>(() => {
-    if (props.responsive === false) return null;
-    if (props.responsive === true) return {};
-    return props.responsive;
+// ── Responsive collapse (package-private composable — BG.W-COLOCATE) ──
+//
+// The `<Select>`-below-the-breakpoint fold + its `matchMedia` lifecycle live in the
+// colocated `useTabResponsive` composable (carved to hold the no-god-module bound,
+// the `useTabIndicator`/`useTabDragMorph` sibling pattern). The SFC binds
+// `stripValue`/`stripOptions`/`showMobileSelect` + feeds `stripValue`/`stripOptions`
+// to the indicator + roving-focus concerns below.
+const {
+    responsiveCfg,
+    stripValue,
+    stripOptions,
+    mobileAriaLabel,
+    showMobileSelect,
+} = useTabResponsive({
+    responsive: () => props.responsive,
+    options: computed(() => props.options),
+    model,
 });
-const breakpoint = computed(() => responsiveCfg.value?.breakpoint ?? "640px");
-const desktopOptions = computed(
-    () => responsiveCfg.value?.desktopOptions ?? props.options,
-);
-// SSR/desktop-first default; the matchMedia listener corrects on mount.
-const isDesktop = ref(true);
-let mql: MediaQueryList | null = null;
-function onMql(e: MediaQueryListEvent | MediaQueryList) {
-    isDesktop.value = e.matches;
-}
-
-// The active value the strip renders — when the model points at a mobile-only
-// option (absent from `desktopOptions`), fall back to the first desktop option.
-const stripValue = computed(() => {
-    if (!responsiveCfg.value) return model.value;
-    const opts = desktopOptions.value;
-    if (opts.some((o) => o.value === model.value)) return model.value;
-    return (opts[0]?.value ?? model.value) as string;
-});
-const stripOptions = computed(() =>
-    responsiveCfg.value ? desktopOptions.value : props.options,
-);
-const mobileAriaLabel = computed(
-    () =>
-        responsiveCfg.value?.ariaLabel ??
-        props.options.find((o) => o.value === model.value)?.label ??
-        "Select",
-);
-const showMobileSelect = computed(
-    () => !!responsiveCfg.value && !isDesktop.value,
-);
 
 // ── JS-measured indicator + travel-squish (package-private composable) ──
 
@@ -286,104 +262,21 @@ function onMobileUpdate(value: unknown) {
     if (typeof value === "string") model.value = value;
 }
 
-// ── BB.W-DRAG-MORPH — the roving-tabindex keyboard contract (the owed prerequisite) ──
+// ── The roving-tabindex keyboard contract (package-private composable — BG.W-COLOCATE) ──
 //
-// The WAI-ARIA tablist/toolbar roving-tabindex: EXACTLY ONE tab in the focus order
-// (the active tab `tabindex="0"`, the rest `-1`), arrow keys move focus + activate
-// (selection-follows-focus, the canonical pattern — for the `pill` ToggleGroup
-// register arrows still move focus and activate; the variant's role decides the
-// announce). The arrow AXIS is derived off `isVertical` (ArrowRight/Left horizontal,
-// ArrowDown/Up vertical), Home/End jump, wrapping at the ends, skipping disabled.
-// This is NOT gated behind `:draggable` — it is the keyboard contract the strip
-// ALWAYS owed (a draggable tab that is keyboard-broken is the worse failure); the
-// drag only makes it acute. The keyboard activation IS a selection → the existing
-// click `select(...)` path (with its `squishOnTravel`).
-
-// The active index in the rendered strip — the ONE tabstop. Falls back to 0 so a
-// strip whose model points off the desktop subset still has a single focusable tab.
-const activeIndex = computed(() => {
-    const idx = stripOptions.value.findIndex((o) => o.value === stripValue.value);
-    return idx >= 0 ? idx : 0;
+// The WAI-ARIA tablist/toolbar roving-tabindex (EXACTLY ONE tabstop; axis-derived
+// arrows move focus + activate; Home/End jump; wrapping; disabled-skip) lives in the
+// colocated `useTabRovingFocus` composable (carved to hold the no-god-module bound).
+// It is NOT gated behind `:draggable` — EVERY strip owes it. The keyboard activation
+// IS a selection → the SFC's `select(...)` path (with its `squishOnTravel`), passed in.
+const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
+    stripOptions,
+    stripValue,
+    isVertical,
+    buttonRefs,
+    select,
 });
 
-// The roving tabindex for option `idx`: `0` for the active tab, `-1` otherwise.
-function rovingTabindex(idx: number): number {
-    return idx === activeIndex.value ? 0 : -1;
-}
-
-// Move focus to (and activate) the next enabled tab in `dir` (+1/-1), wrapping.
-function focusEnabled(fromIdx: number, dir: 1 | -1) {
-    const n = stripOptions.value.length;
-    if (n === 0) return;
-    for (let step = 1; step <= n; step++) {
-        const idx = (fromIdx + dir * step + n * step) % n;
-        const option = stripOptions.value[idx];
-        if (option && !option.disabled) {
-            buttonRefs.value[idx]?.focus();
-            select(option.value, idx);
-            return;
-        }
-    }
-}
-
-// Move focus to (and activate) the first/last enabled tab.
-function focusEdge(edge: "first" | "last") {
-    const n = stripOptions.value.length;
-    const range = edge === "first"
-        ? Array.from({ length: n }, (_, i) => i)
-        : Array.from({ length: n }, (_, i) => n - 1 - i);
-    for (const idx of range) {
-        const option = stripOptions.value[idx];
-        if (option && !option.disabled) {
-            buttonRefs.value[idx]?.focus();
-            select(option.value, idx);
-            return;
-        }
-    }
-}
-
-function onStripKeydown(e: KeyboardEvent) {
-    const from = activeIndex.value;
-    // Axis-derived next/prev keys: vertical strips navigate on the BLOCK axis
-    // (ArrowDown/Up), horizontal on the INLINE axis (ArrowRight/Left).
-    const nextKey = isVertical.value ? "ArrowDown" : "ArrowRight";
-    const prevKey = isVertical.value ? "ArrowUp" : "ArrowLeft";
-    switch (e.key) {
-        case nextKey:
-            e.preventDefault();
-            focusEnabled(from, 1);
-            break;
-        case prevKey:
-            e.preventDefault();
-            focusEnabled(from, -1);
-            break;
-        case "Home":
-            e.preventDefault();
-            focusEdge("first");
-            break;
-        case "End":
-            e.preventDefault();
-            focusEdge("last");
-            break;
-        default:
-            break;
-    }
-}
-
-// ── Lifecycle ──
-
-onMounted(() => {
-    if (responsiveCfg.value && typeof window !== "undefined" && window.matchMedia) {
-        mql = window.matchMedia(`(min-width: ${breakpoint.value})`);
-        isDesktop.value = mql.matches;
-        mql.addEventListener("change", onMql);
-    }
-});
-
-onBeforeUnmount(() => {
-    mql?.removeEventListener("change", onMql);
-    mql = null;
-});
 </script>
 
 <template>

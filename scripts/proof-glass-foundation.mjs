@@ -35,6 +35,12 @@ import { readMonolith } from "./read-css-monoliths.mjs";
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 
 const OBSERVER_FILE = "src/composables/glass/useGlassBackdropLuminance.ts";
+// BG.W-COLOCATE — the ambient-hue histogram (the value.js color source + the
+// accumulate/resolve math + the gray-null identity) carved into this colocated leaf
+// (ratchet-drain #9); the value.js-import + gray-null A1 checks FOLLOW the carve into
+// the leaf (the "asserts follow the composition into the carved leaf" precedent). The
+// observer keeps the sampling loop + the getImageData/canvas + the accumulate CALL.
+const HISTOGRAM_LEAF_FILE = "src/composables/glass/ambientHueHistogram.ts";
 const SURFACE_AXIS_FILE = "src/components/ui/_shared/useSurfaceAxis.ts";
 
 function stripCss(src) {
@@ -75,6 +81,13 @@ function detectAmbientHue() {
         violations.push(`A1: the observer file ${OBSERVER_FILE} is absent`);
         return { violations, facts };
     }
+    // The histogram math (value.js source + accumulate/resolve + gray-null) lives in
+    // the carved colocated leaf; the observer COMPOSES it (BG.W-COLOCATE). The
+    // value.js-import + gray-null checks read (observer ∪ leaf) so they follow the
+    // carve, while the FREE-RIDER fence (getImageData/canvas ONE-pass) + the
+    // accumulate/resolve CALL stay pinned to the observer's own source.
+    const histogramLeaf = stripTs(readFile(HISTOGRAM_LEAF_FILE));
+    const srcWithLeaf = `${src}\n${histogramLeaf}`;
 
     // the token is WRITTEN onto the target (the setProperty call).
     facts.writesAmbientHue =
@@ -89,7 +102,7 @@ function detectAmbientHue() {
     // path) — NOT a hand-rolled rgb→oklch matrix. The exact primitives are imported.
     facts.importsValueJsPrimitives =
         /import\s*\{[^}]*\b(srgbToOKLab|rawOklabToOklch)\b[^}]*\}\s*from\s*["']@mkbabb\/value\.js["']/.test(
-            src,
+            srcWithLeaf,
         );
     if (!facts.importsValueJsPrimitives) {
         violations.push(
@@ -101,7 +114,7 @@ function detectAmbientHue() {
     // bite: a local re-definition of the guarded primitive.
     facts.handRolledMatrix =
         /\b(function|const)\s+(srgbToOKLab|rawOklabToOklch|oklabToOklch)\b/.test(
-            src,
+            srcWithLeaf,
         );
     if (facts.handRolledMatrix) {
         violations.push(
@@ -134,7 +147,7 @@ function detectAmbientHue() {
     // gray-null are present (the correct null identity: a gray room tints nothing).
     facts.accumulatesHistogram = /accumulateHuePixel\s*\(/.test(src);
     facts.resolvesAmbientHue = /resolveAmbientHue\s*\(/.test(src);
-    facts.grayNullIdentity = /["']transparent["']/.test(src);
+    facts.grayNullIdentity = /["']transparent["']/.test(srcWithLeaf);
     if (!facts.accumulatesHistogram || !facts.resolvesAmbientHue) {
         violations.push(
             "A1: the hue histogram helpers (accumulateHuePixel / resolveAmbientHue) are not present — the free-rider accumulation + the modal-hue resolve are missing",

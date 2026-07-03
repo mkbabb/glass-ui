@@ -90,6 +90,20 @@ const LEAF = resolve(
     ROOT,
     "src/composables/glass/webgl/createCanvasLifecycle.ts",
 );
+// BG.W-COLOCATE — the ONE sizer (`sizeBacking`, V1/V5) is carved into `backingSize.ts`
+// and the reveal-bloom attr mechanism (`data-substrate-reveal`/`armRevealBloom`, R5/R6)
+// into `visibility.ts`; the scheduler composes both. The V1/V5/R5/R6 leaf reads use the
+// UNION so they follow the carve into the leaves (the "asserts follow the composition"
+// precedent). `sizeAndUpload`'s `sizeBacking(canvas, dprPolicy)` call (V5) stays in the
+// scheduler; the union is a superset so the call still resolves.
+const BACKING_LEAF = resolve(
+    ROOT,
+    "src/composables/glass/webgl/backingSize.ts",
+);
+const VISIBILITY_LEAF = resolve(
+    ROOT,
+    "src/composables/glass/webgl/visibility.ts",
+);
 // BG.W-VIZ-PREVIEW-LIVE — the per-story preview-still surface (the SectionPreviewCard
 // dispatch + its colocated distinct-still registry). The preview arm (P1-P4) shares
 // this gate with the resize-upload-only arm (V1-V5); the two are disjoint file sets.
@@ -168,7 +182,9 @@ function vizFiles(overrides = {}) {
 function runAll(over = {}) {
     const fails = [];
     const leaf = stripComments(
-        over.__leaf !== undefined ? over.__leaf : (read(LEAF) ?? ""),
+        over.__leaf !== undefined
+            ? over.__leaf
+            : `${read(LEAF) ?? ""}\n${read(BACKING_LEAF) ?? ""}\n${read(VISIBILITY_LEAF) ?? ""}`,
     );
     const files = vizFiles(
         Object.fromEntries(

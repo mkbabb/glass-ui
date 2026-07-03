@@ -104,6 +104,14 @@ function cliPaths() {
             ROOT,
             "src/components/custom/tabs/composables/useTabDragMorph.ts",
         ),
+        // BG.W-COLOCATE — the roving-tabindex keyboard machine (arrow-axis + Home/End)
+        // carved into this colocated composable (ratchet-drain #13); the D5 arrow-axis
+        // checks FOLLOW the carve into the leaf (the SFC keeps the `@keydown`/`:tabindex`
+        // template wiring).
+        USE_TAB_ROVING_FOCUS_TS: resolve(
+            ROOT,
+            "src/components/custom/tabs/composables/useTabRovingFocus.ts",
+        ),
         DOCK_LAYER_GROUP_VUE: resolve(
             ROOT,
             "src/components/custom/dock/DockLayerGroup.vue",
@@ -176,6 +184,12 @@ export function detectDragMorph(sources) {
     // composable; the D4 tabs-consumer check reads it (the SFC keeps the `draggable`
     // prop, the click path, and the roving tabindex — those checks stay on the SFC).
     const tabDragMorph = stripBlockComments(sources.useTabDragMorphTs ?? "");
+    // BG.W-COLOCATE — the roving-tabindex keyboard machine (arrow-axis + Home/End)
+    // carved into the colocated composable; the D5 arrow-axis / Home-End checks read
+    // (SFC ∪ leaf) so the assert follows the composition (ratchet-drain #13). The SFC
+    // keeps the `@keydown`/`:tabindex` template wiring.
+    const tabRovingFocus = stripBlockComments(sources.useTabRovingFocusTs ?? "");
+    const tabKeyboard = `${segmentedTabs}\n${tabRovingFocus}`;
     const dockLayerGroup = stripHtmlComments(
         stripBlockComments(sources.dockLayerGroupVue ?? ""),
     );
@@ -408,18 +422,18 @@ export function detectDragMorph(sources) {
     // horizontal-only set). The keydown handler must consult the orientation —
     // a reference to `isVertical` (or `ArrowDown`/`ArrowUp`) near the keydown logic.
     const axisDerivedArrows =
-        /ArrowDown/.test(segmentedTabs) &&
-        /ArrowUp/.test(segmentedTabs) &&
-        /ArrowRight/.test(segmentedTabs) &&
-        /ArrowLeft/.test(segmentedTabs) &&
-        /isVertical/.test(segmentedTabs);
+        /ArrowDown/.test(tabKeyboard) &&
+        /ArrowUp/.test(tabKeyboard) &&
+        /ArrowRight/.test(tabKeyboard) &&
+        /ArrowLeft/.test(tabKeyboard) &&
+        /isVertical/.test(tabKeyboard);
     if (hasKeydown && !axisDerivedArrows) {
         violations.push(
             "D5: the keydown arrow axis is not derived off `isVertical` (it must handle ArrowRight/Left horizontal AND ArrowDown/Up vertical — a hardcoded horizontal-only set leaves the vertical strip keyboard-dead).",
         );
     }
     // Home/End jumps.
-    const hasHomeEnd = /["']Home["']/.test(segmentedTabs) && /["']End["']/.test(segmentedTabs);
+    const hasHomeEnd = /["']Home["']/.test(tabKeyboard) && /["']End["']/.test(tabKeyboard);
     if (hasKeydown && !hasHomeEnd) {
         violations.push(
             "D5: the keydown handler does not handle Home/End (the first/last-tab jumps).",
@@ -528,6 +542,7 @@ function run() {
         motionIndexTs: safeRead(P.MOTION_INDEX_TS),
         segmentedTabsVue: safeRead(P.SEGMENTED_TABS_VUE),
         useTabDragMorphTs: safeRead(P.USE_TAB_DRAG_MORPH_TS),
+        useTabRovingFocusTs: safeRead(P.USE_TAB_ROVING_FOCUS_TS),
         dockLayerGroupVue: safeRead(P.DOCK_LAYER_GROUP_VUE),
     });
 

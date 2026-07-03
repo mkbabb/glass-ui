@@ -117,6 +117,217 @@ function importsFromLeaf(src, names) {
 const RATCHET_ROW_RE =
     /"components\/custom\/goo-blob\/composables\/useBlobSatellites\.ts"\s*:\s*\d+/;
 
+// ── BG.W-COLOCATE — the WS4 carve fold (ratchet-drain #3/4/9/13). Four god-modules
+//    carved under the 500-line bound into COLOCATED leaves the host COMPOSES. The
+//    encapsulation boundary per carve:
+//      C1 — RATCHET-DRAIN: the host is ≤ 500 lines AND its proof:no-god-module ratchet
+//           row is drained (gone).
+//      C2 — COLOCATION: each carved leaf exists on disk AND exports its declared
+//           symbols AND the host IMPORTS the leaf back (a real `import … from "<spec>"`,
+//           not just a re-export — the host composes it).
+//      C3 — SINGLE-DEFINITION: the leaf's primary carved symbol is DEFINITION-ABSENT
+//           from the host (the carve is real — no dual-path copy left behind).
+//    Pure FS, device-free (a mechanical carve changes ZERO pixels — paint-class H). Born-
+//    RED on HEAD (leaves absent + hosts > 500 + rows present) → GREEN on the carve.
+const COLOCATE_CARVES = [
+    {
+        name: "createCanvasLifecycle",
+        host: "src/composables/glass/webgl/createCanvasLifecycle.ts",
+        ratchetKey: "composables/glass/webgl/createCanvasLifecycle.ts",
+        leaves: [
+            {
+                path: "src/composables/glass/webgl/backingSize.ts",
+                spec: "./backingSize",
+                exports: ["sizeBacking", "BackingSize", "DprPolicy"],
+                imports: ["sizeBacking"],
+                absent: "sizeBacking",
+            },
+            {
+                path: "src/composables/glass/webgl/visibility.ts",
+                spec: "./visibility",
+                exports: ["createCanvasVisibility"],
+                imports: ["createCanvasVisibility"],
+                absent: "createCanvasVisibility",
+            },
+        ],
+    },
+    {
+        name: "useWebGPUCanvas",
+        host: "src/composables/glass/webgpu/useWebGPUCanvas.ts",
+        ratchetKey: "composables/glass/webgpu/useWebGPUCanvas.ts",
+        leaves: [
+            {
+                path: "src/composables/glass/webgpu/webgpuDevice.ts",
+                spec: "./webgpuDevice",
+                exports: ["withAcquireTimeout", "WEBGPU_ACQUIRE_TIMEOUT_MS"],
+                imports: ["withAcquireTimeout"],
+                absent: "withAcquireTimeout",
+            },
+            {
+                path: "src/composables/glass/webgpu/webgpuCanvasTypes.ts",
+                spec: "./webgpuCanvasTypes",
+                exports: [
+                    "WebGPUCanvasFrame",
+                    "WebGPUCanvasOptions",
+                    "WebGPUCanvasHandle",
+                    "WebGPUSuspendReason",
+                ],
+                imports: ["WebGPUCanvasOptions"],
+                absent: "WebGPUCanvasOptions",
+            },
+        ],
+    },
+    {
+        name: "useGlassBackdropLuminance",
+        host: "src/composables/glass/useGlassBackdropLuminance.ts",
+        ratchetKey: "composables/glass/useGlassBackdropLuminance.ts",
+        leaves: [
+            {
+                path: "src/composables/glass/ambientHueHistogram.ts",
+                spec: "./ambientHueHistogram",
+                exports: [
+                    "makeHueHistogram",
+                    "accumulateHuePixel",
+                    "resolveAmbientHue",
+                ],
+                imports: ["accumulateHuePixel"],
+                absent: "accumulateHuePixel",
+            },
+        ],
+    },
+    {
+        name: "SegmentedTabs",
+        host: "src/components/custom/tabs/SegmentedTabs.vue",
+        ratchetKey: "components/custom/tabs/SegmentedTabs.vue",
+        leaves: [
+            {
+                path: "src/components/custom/tabs/composables/useTabResponsive.ts",
+                spec: "./composables/useTabResponsive",
+                exports: ["useTabResponsive"],
+                imports: ["useTabResponsive"],
+                absent: "useTabResponsive",
+            },
+            {
+                path: "src/components/custom/tabs/composables/useTabRovingFocus.ts",
+                spec: "./composables/useTabRovingFocus",
+                exports: ["useTabRovingFocus"],
+                imports: ["useTabRovingFocus"],
+                absent: "useTabRovingFocus",
+            },
+        ],
+    },
+];
+
+// A quoted `src/`-relative ratchet key followed by `: <number>` (a live row, not a
+// comment mention — the comments were stripped).
+function ratchetRowFor(godSrc, key) {
+    const esc = key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    return new RegExp(`"${esc}"\\s*:\\s*\\d+`).test(godSrc);
+}
+
+// The leaf exports `name` — an `export {function,const,class,interface,type,let,var}
+// name` declaration OR an `export { … name … }` / `export type { … name … }` block.
+function exportsSymbol(src, name) {
+    const clean = stripComments(src);
+    if (
+        new RegExp(
+            `export\\s+(async\\s+)?(function|const|class|interface|type|let|var)\\s+${name}\\b`,
+        ).test(clean)
+    )
+        return true;
+    const blocks = clean.match(/export\s*(type\s*)?\{[^}]*\}/g) || [];
+    return blocks.some((b) => new RegExp(`\\b${name}\\b`).test(b));
+}
+
+// The host IMPORTS every `name` from `spec` — a real `import … from "<spec>"` (value OR
+// `import type`), NOT a bare `export … from` re-export (the host must COMPOSE the leaf).
+function importsFromSpec(hostSrc, spec, names) {
+    const clean = stripComments(hostSrc);
+    const esc = spec.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const re = new RegExp(
+        `import[^;]*?\\{([^}]*)\\}[^;]*?from\\s*["']${esc}["']`,
+        "g",
+    );
+    const seen = new Set();
+    let m;
+    while ((m = re.exec(clean))) {
+        for (const n of names)
+            if (new RegExp(`\\b${n}\\b`).test(m[1])) seen.add(n);
+    }
+    return names.every((n) => seen.has(n));
+}
+
+// The host DEFINES `name` (a live `function`/`const`/`class`/`interface`/`type`
+// declaration — the dual-path copy). An `import { name }` / `export { name }` does NOT
+// match (they carry no declaration keyword before the symbol).
+function definesSymbol(src, name) {
+    return new RegExp(
+        `(function|const|class|interface|type)\\s+${name}\\b`,
+    ).test(stripComments(src));
+}
+
+// ── The colocate detector — pure over an injected input map (so a self-test can
+//    sabotage a single carve's host / leaf / god-module without touching disk).
+//    inputs = { hostText, godSrc, leaf: { <path>: { exists, text } } }.
+function detectOneCarve(carve, inputs) {
+    const violations = [];
+    // C1 — ratchet-drain: host ≤ 500 AND no ratchet row.
+    const hostLines = lineCount(inputs.hostText);
+    const rowPresent = ratchetRowFor(inputs.godSrc, carve.ratchetKey);
+    if (!(hostLines <= HARD_LIMIT && !rowPresent))
+        violations.push(
+            `C1 [${carve.name}] host is ${hostLines} lines (≤ ${HARD_LIMIT} required) AND its ratchet row must be drained (rowPresent=${rowPresent})`,
+        );
+    for (const leaf of carve.leaves) {
+        const l = inputs.leaf[leaf.path] ?? { exists: false, text: "" };
+        // C2 — colocation: leaf exists + exports all + host imports it back.
+        const leafExportsAll = leaf.exports.every((n) =>
+            exportsSymbol(l.text, n),
+        );
+        const hostImports = importsFromSpec(
+            inputs.hostText,
+            leaf.spec,
+            leaf.imports,
+        );
+        if (!(l.exists && leafExportsAll && hostImports))
+            violations.push(
+                `C2 [${carve.name}] ${leaf.path} must exist (${l.exists}) + export ${leaf.exports.join("/")} (${leafExportsAll}) + be imported back into the host from "${leaf.spec}" (${hostImports})`,
+            );
+        // C3 — single-definition: the carved symbol is DEFINITION-ABSENT from the host.
+        if (definesSymbol(inputs.hostText, leaf.absent))
+            violations.push(
+                `C3 [${carve.name}] the host RE-DEFINES ${leaf.absent} (a dual-path copy) — the carve must be real (the symbol lives ONLY in ${leaf.path})`,
+            );
+    }
+    return violations;
+}
+
+// Live: read every carve's host + leaves + the god-module from disk.
+function detectColocate(overrides = {}) {
+    const violations = [];
+    const facts = {};
+    const godSrc = overrides.godModuleSource ?? read(GOD_MODULE);
+    for (const carve of COLOCATE_CARVES) {
+        const hostText = read(resolve(ROOT, carve.host));
+        const leaf = {};
+        for (const l of carve.leaves) {
+            const p = resolve(ROOT, l.path);
+            leaf[l.path] = { exists: existsSync(p), text: read(p) };
+        }
+        const carveViolations = detectOneCarve(carve, {
+            hostText,
+            godSrc,
+            leaf,
+        });
+        facts[carve.name] = {
+            hostLines: lineCount(hostText),
+            clean: carveViolations.length === 0,
+        };
+        violations.push(...carveViolations);
+    }
+    return { facts, violations };
+}
+
 // ── The detector — runs over a SOURCE MAP so a self-test can sabotage inputs.
 // overrides: { driverText?, godModuleSource?, leafExists?, leafSource? }.
 function detect(overrides = {}) {
@@ -287,6 +498,99 @@ function selfTest() {
         "E4 comment-mention fence (a note is not a definition)",
     );
 
+    // ── BG.W-COLOCATE — the C1/C2/C3 bites over the createCanvasLifecycle carve ──
+    const cc = COLOCATE_CARVES[0]; // createCanvasLifecycle → backingSize + visibility
+    const ccHost = read(resolve(ROOT, cc.host));
+    const ccGod = read(GOD_MODULE);
+    const ccLeaf = {};
+    for (const l of cc.leaves) {
+        const p = resolve(ROOT, l.path);
+        ccLeaf[l.path] = { exists: existsSync(p), text: read(p) };
+    }
+    const cleanInputs = () => ({ hostText: ccHost, godSrc: ccGod, leaf: ccLeaf });
+    const sabC = (inputs, prefix, name) => {
+        const v = detectOneCarve(cc, inputs);
+        if (v.some((x) => x.startsWith(prefix))) flagged++;
+        else
+            throw new Error(
+                `[proof:encapsulation self-test] colocate bite FAILED to flag: ${name}`,
+            );
+    };
+    const sabNotC = (inputs, prefix, name) => {
+        const v = detectOneCarve(cc, inputs);
+        if (!v.some((x) => x.startsWith(prefix))) flagged++;
+        else
+            throw new Error(
+                `[proof:encapsulation self-test] colocate fence bite WRONGLY flagged: ${name}`,
+            );
+    };
+    // C1: the host re-grows past the 500-line bound.
+    sabC(
+        { ...cleanInputs(), hostText: "x\n".repeat(601) + ccHost },
+        "C1",
+        "C1 createCanvasLifecycle re-grows > 500",
+    );
+    // C1: a surviving / re-added ratchet row for the carved host.
+    sabC(
+        {
+            ...cleanInputs(),
+            godSrc: `const RATCHET_BASELINES = { "composables/glass/webgl/createCanvasLifecycle.ts": 736 };`,
+        },
+        "C1",
+        "C1 the ratchet row survives",
+    );
+    // C1 (fence): a bare comment mention of the drain does NOT re-arm the row.
+    sabNotC(
+        {
+            ...cleanInputs(),
+            godSrc: `// BG.W-COLOCATE DRAINED createCanvasLifecycle.ts (736 -> 457)\nconst RATCHET_BASELINES = {};`,
+        },
+        "C1",
+        "C1 comment-mention fence (a drain note is not a live row)",
+    );
+    // C2: the carved leaf is absent from disk.
+    sabC(
+        {
+            ...cleanInputs(),
+            leaf: {
+                ...ccLeaf,
+                [cc.leaves[1].path]: { exists: false, text: "" },
+            },
+        },
+        "C2",
+        "C2 the visibility leaf is absent",
+    );
+    // C2: the host drops the leaf import (no composition).
+    sabC(
+        {
+            ...cleanInputs(),
+            hostText: ccHost.replace(
+                /import\s*\{[^}]*\}\s*from\s*["']\.\/backingSize["'];/,
+                "",
+            ),
+        },
+        "C2",
+        "C2 the host drops the backingSize import",
+    );
+    // C3: the host RE-DEFINES the carved symbol (the dual-path copy).
+    sabC(
+        {
+            ...cleanInputs(),
+            hostText: `function createCanvasVisibility() { return {}; }\n${ccHost}`,
+        },
+        "C3",
+        "C3 the host re-defines createCanvasVisibility (dual-path)",
+    );
+    // C3 (fence): a bare comment mention of the symbol in the host does NOT flag.
+    sabNotC(
+        {
+            ...cleanInputs(),
+            hostText: `// sizeBacking is the ONE sizer\n${ccHost}`,
+        },
+        "C3",
+        "C3 comment-mention fence (a note is not a definition)",
+    );
+
     return flagged;
 }
 
@@ -297,7 +601,12 @@ function run() {
     );
 
     const selfTestCount = selfTest();
-    const { facts, violations } = detect();
+    const { facts: blobFacts, violations: blobViolations } = detect();
+    // BG.W-COLOCATE — the WS4 carve fold (ratchet #3/4/9/13) joins the same gate.
+    const { facts: colocateFacts, violations: colocateViolations } =
+        detectColocate();
+    const facts = { ...blobFacts, colocate: colocateFacts };
+    const violations = [...blobViolations, ...colocateViolations];
     const status = violations.length === 0 ? "pass" : "fail";
 
     writeGateArtifact(ARTIFACT, {
@@ -311,7 +620,7 @@ function run() {
     });
 
     console.log(
-        "proof:encapsulation — useBlobSatellites kinematics carved to a stateless leaf (ratchet #10 drained; no SpringProgress fork)",
+        "proof:encapsulation — the colocated-leaf encapsulation gate (BG.W-BLOB-KINEMATICS-LEAF ratchet #10 + BG.W-COLOCATE ratchet #3/4/9/13)",
     );
     console.log(
         `  E1 ratchet-drain (≤500, no row) : ${facts["E1 — useBlobSatellites.ts is ≤ 500 lines AND its proof:no-god-module RATCHET baseline row is drained"]} (lines=${facts.driverLines}, rowPresent=${facts.ratchetRowPresent})`,
@@ -326,7 +635,16 @@ function run() {
         `  E4 single-definition (no copy)  : ${facts["E4 — createSatellite/orbitPos/randomizeOrbit are DEFINED in the leaf AND DEFINITION-ABSENT from the driver (the carve is real, no dual-path copy)"]}`,
     );
     console.log(
-        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (E1×2 + E1-fence + E2×2 + E3×2 + E4 + E4-fence)`,
+        "  BG.W-COLOCATE carves (C1 ≤500+row-drained · C2 leaf+import · C3 no-dual-path):",
+    );
+    for (const carve of COLOCATE_CARVES) {
+        const f = colocateFacts[carve.name];
+        console.log(
+            `    ${carve.clean === false ? "" : ""}${carve.name.padEnd(26)}: ${f.clean ? "GREEN" : "RED"} (host ${f.hostLines} lines → ${carve.leaves.map((l) => l.path.split("/").pop()).join(" + ")})`,
+        );
+    }
+    console.log(
+        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (blob E1×2+E1-fence+E2×2+E3×2+E4+E4-fence + colocate C1×2+C1-fence+C2×2+C3+C3-fence)`,
     );
 
     if (violations.length) {
@@ -349,4 +667,4 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     run();
 }
 
-export { detect, selfTest };
+export { detect, detectColocate, detectOneCarve, selfTest };

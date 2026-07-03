@@ -43,13 +43,33 @@ import {
 } from "../webgl/createCanvasLifecycle";
 
 export type { BackingSize, DprPolicy } from "../webgl/createCanvasLifecycle";
-// The typed INIT-FAILURE signal + the software/CPU-adapter classifier are carved into the
-// sibling webgpuDevice.ts leaf (the no-god-module re-drain); they carry NO bootstrap token
+// The typed INIT-FAILURE signal + the software/CPU-adapter classifier + the acquire
+// timeout race + its ceiling are carved into the sibling webgpuDevice.ts leaf (the
+// no-god-module re-drain; BG.W-COLOCATE ratchet-drain #4). They carry NO bootstrap token
 // (proof:gpu-substrate-single clause A — navigator.gpu/getContext/requestAdapter stay here).
-import { WebGPUInitError, isSoftwareWebGPUAdapter } from "./webgpuDevice";
-// Re-export WebGPUInitError so the picker + the package barrel reach it through this
-// substrate unchanged (the barrel re-exports it from "./useWebGPUCanvas").
-export { WebGPUInitError } from "./webgpuDevice";
+import {
+    WebGPUInitError,
+    isSoftwareWebGPUAdapter,
+    withAcquireTimeout,
+    WEBGPU_ACQUIRE_TIMEOUT_MS,
+} from "./webgpuDevice";
+// Re-export so the picker + the package barrel reach them through this substrate
+// unchanged (the barrel re-exports from "./useWebGPUCanvas").
+export { WebGPUInitError, WEBGPU_ACQUIRE_TIMEOUT_MS } from "./webgpuDevice";
+// The public TYPE surface is carved into the colocated webgpuCanvasTypes.ts leaf
+// (BG.W-COLOCATE ratchet-drain #4); re-exported so `useGpuSubstrate` + the barrel
+// reach it through this substrate unchanged.
+export type {
+    WebGPUSuspendReason,
+    WebGPUCanvasFrame,
+    WebGPUCanvasOptions,
+    WebGPUCanvasHandle,
+} from "./webgpuCanvasTypes";
+import type {
+    WebGPUCanvasFrame,
+    WebGPUCanvasOptions,
+    WebGPUCanvasHandle,
+} from "./webgpuCanvasTypes";
 
 /**
  * The ONE `navigator.gpu` capability probe (the single-bootstrap rule — mirrors
@@ -64,48 +84,6 @@ export function supportsWebGPU(): boolean {
         "gpu" in navigator &&
         navigator.gpu != null
     );
-}
-
-/**
- * The bound on the adapter/device acquisition (ms). `requestAdapter()` /
- * `requestDevice()` can resolve NEITHER way on a hanging host (a headless / virtualized-
- * Metal + some-Chrome class). A REAL cold acquire on a healthy Metal-3 host was live-
- * measured at ~3478ms (the FIRST `requestDevice` on a cold GPU process) — well over the
- * prior tight 2500ms ceiling, which converted a slow-but-fine cold acquire into a FALSE
- * hang so the WGSL primary was never exercised (every viz silently downgraded to WebGL2
- * forever — the Safari-primary surface the "broken TOTALLY" reports live on, masked by the
- * always-winning fallback). 6000ms lets the real cold acquire through while a genuine wedge
- * (a device that never settles) still falls to the WebGL2 net before the user perceives a
- * permanent blank. With the SHARED device warm (`acquireSharedDevice`) the ceiling is hit
- * at most ONCE per page, not N-times-per-canvas — a single ≤6s race, never N.
- */
-export const WEBGPU_ACQUIRE_TIMEOUT_MS = 6000;
-
-/**
- * Race a WebGPU acquisition promise against a timeout. On a hang the timeout wins and
- * rejects with the recognized typed `acquire-timeout` signal (the picker falls to the
- * WebGL2 net on it, exactly like a no-adapter host). The timer is cleared the instant the
- * acquisition settles (resolve OR reject), so a healthy device leaves no dangling timeout.
- * SSR-safe: with no `setTimeout` the bare promise passes through (a non-DOM runtime has no
- * WebGPU surface to hang anyway).
- */
-function withAcquireTimeout<T>(
-    promise: Promise<T>,
-    label: "requestAdapter" | "requestDevice",
-): Promise<T> {
-    if (typeof setTimeout === "undefined") return promise;
-    let timer: ReturnType<typeof setTimeout>;
-    const timeout = new Promise<never>((_resolve, reject) => {
-        timer = setTimeout(() => {
-            reject(
-                new WebGPUInitError(
-                    "acquire-timeout",
-                    `[useWebGPUCanvas] ${label}() did not settle within ${WEBGPU_ACQUIRE_TIMEOUT_MS}ms — falling to the WebGL2 net`,
-                ),
-            );
-        }, WEBGPU_ACQUIRE_TIMEOUT_MS);
-    });
-    return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
 }
 
 // ── The PROCESS-SHARED device warm (D3a — pay the cold acquire ONCE, not per-canvas). ──
@@ -197,116 +175,6 @@ function acquireSharedDevice(
     });
     sharedDevicePromise = warm;
     return warm;
-}
-
-// Lockstep with createCanvasLifecycle's CanvasSuspendReason (the AX.W16 F6
-// "off-screen-io" key — the IntersectionObserver fallback's OWN reason, distinct from
-// the content-visibility path's "off-screen").
-export type WebGPUSuspendReason =
-    | "tab-hidden"
-    | "off-screen"
-    | "off-screen-io"
-    | "manual";
-
-/**
- * The per-frame hooks a consumer's `setup(device, context, format)` returns. The
- * consumer owns the WGSL pipeline + bind groups + the per-frame command-encoder
- * record/submit; the substrate owns the schedule.
- */
-export interface WebGPUCanvasFrame {
-    /**
-     * Draw one frame at `timeSec`: the consumer records a command encoder, begins a
-     * render pass against the current swap-chain texture view
-     * (`context.getCurrentTexture().createView()`), draws, and submits.
-     */
-    frame: (timeSec: number) => void;
-    /** Demand-gate: is there live motion to render next frame? `false` → park. */
-    shouldContinue: () => boolean;
-    /**
-     * Upload the backing geometry. BD.W-SUBSTRATE-SIZE-UNIFY: when a `dprPolicy` is
-     * supplied the leaf sizes the backing + passes the live `BackingSize` here (the
-     * WGSL swap chain auto-tracks the backing, so the consumer body shrinks to an aspect
-     * upload). The arg is optional so a legacy self-measuring consumer keeps compiling.
-     */
-    resize: (s?: BackingSize) => void;
-    /** Frame time from elapsed seconds — the consumer owns frozen/reduced-motion. */
-    time?: (elapsedSec: number) => number;
-    /** Release per-instance GPU resources (pipelines/buffers/bind groups). Runs on dispose + before a restore re-setup. */
-    teardown?: () => void;
-}
-
-export interface WebGPUCanvasOptions {
-    /** `context.configure` alpha mode (the consumer's — default `"premultiplied"`). */
-    alphaMode?: GPUCanvasAlphaMode;
-    /** Extra device-request options (features/limits). */
-    deviceDescriptor?: GPUDeviceDescriptor;
-    /** Adapter-request options (e.g. `powerPreference`). */
-    adapterOptions?: GPURequestAdapterOptions;
-    /** `"capture"` pre-seeds the `manual` suspension (renderAt-only). Default `"live"`. */
-    mode?: "live" | "capture";
-    /**
-     * Honor `prefers-reduced-motion: reduce` by painting ONE static frame then
-     * parking the loop. The shared lifecycle core live-monitors the query via a
-     * `matchMedia` `change` listener and re-arms (one static frame) on un-reduce.
-     * Default `true` for live mode, `false` for capture mode.
-     */
-    respectReducedMotion?: boolean;
-    /**
-     * BD.W-SUBSTRATE-SIZE-UNIFY (G1/G2) — the consumer's DPR policy. When PRESENT the
-     * leaf sizes the backing SYNCHRONOUSLY at mount (via `presize`, BEFORE the async
-     * device acquire — the ≤6s blurry-flash close) and hands the live `BackingSize` to
-     * `resize(s)`. When ABSENT the legacy path runs (the consumer self-measures).
-     */
-    dprPolicy?: DprPolicy;
-    /** Compose the leaf IO park (G3). Default `false` (opt-in; see createCanvasLifecycle). */
-    composeIntersectionPark?: boolean;
-    /** `rootMargin` for the leaf IO park (G3). */
-    intersectionRootMargin?: string;
-    /** Fire the one-shot cold-first-VISIBLE entrance bloom (BG.W-VIZ-REVEAL-BLOOM — the `data-substrate-reveal` attr). Default `false`. */
-    revealBloom?: boolean;
-    /**
-     * Build the WGSL pipeline + bind groups on the resolved device. Called on the
-     * async arm AND on every device-restore. Returns the per-frame hooks.
-     */
-    setup: (
-        device: GPUDevice,
-        context: GPUCanvasContext,
-        format: GPUTextureFormat,
-    ) => WebGPUCanvasFrame;
-    /** Surface a device-init / validation failure (no WebGPU adapter, a `setup` throw). */
-    onInitError?: (error: unknown) => void;
-}
-
-export interface WebGPUCanvasHandle {
-    /**
-     * Run the expensive ASYNC init (adapter + device + context.configure + `setup`)
-     * THEN arm the loop. Resolves once armed (or rejects-via-`onInitError` on a
-     * device-unavailable / `setup` failure). Idempotent; a no-op post-dispose.
-     */
-    armAsync: () => Promise<void>;
-    /**
-     * Synchronous `arm` — a no-op until `armAsync` has resolved the device (the
-     * uniform-handle parity with the synchronous backends; the picker calls
-     * `armAsync` for the WebGPU path). Idempotent.
-     */
-    arm: () => void;
-    /** BD.W-SUBSTRATE-SIZE-UNIFY (G2) — size the backing + start the leaf RO synchronously, before the async acquire. */
-    presize: () => void;
-    suspend: (reason?: WebGPUSuspendReason) => void;
-    resume: (reason?: WebGPUSuspendReason) => void;
-    /** Re-arm a parked loop (a setter that re-introduced motion calls this). */
-    wake: () => void;
-    /** Draw one frame at `timeSec` out-of-loop (capture / thumbnail). */
-    renderAt: (timeSec: number) => void;
-    dispose: () => void;
-    /** The live device (null before armAsync / after dispose / mid-loss). */
-    readonly device: GPUDevice | null;
-    /**
-     * The live `prefers-reduced-motion: reduce` state. The shared lifecycle core
-     * owns + re-monitors it; consumers read it (e.g. a viz freezes its frame time
-     * at the authored offset while this is `true`).
-     */
-    readonly reducedMotion: boolean;
 }
 
 export function createWebGPUCanvas(

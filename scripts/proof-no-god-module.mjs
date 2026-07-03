@@ -148,8 +148,25 @@ const RATCHET_BASELINES = {
     // carved leaf is single-consumer-by-design, NEVER a --dock-morph-t/--dock-morph-v
     // writer; the morph scalar stays the orchestrator's). The SFC IMPORTS both. Row
     // DELETED in this same diff (the monotonic drain — the file is now ≤ 500).
-    "composables/glass/webgl/createCanvasLifecycle.ts": 695,
-    "composables/glass/webgpu/useWebGPUCanvas.ts": 606,
+    // BG.W-COLOCATE DRAINED createCanvasLifecycle.ts (736 → 457): the ONE backing-store
+    // sizer (sizeBacking + BackingSize/DprPolicy) carved into the colocated backingSize.ts,
+    // and the DOM-observer plumbing (tab-visibility owner + content-visibility offscreen-park
+    // + the leaf ResizeObserver/presize + the IntersectionObserver park + the one-shot
+    // first-visible reveal bloom) carved into visibility.ts — the scheduler (the suspend Set +
+    // rAF tick/wake gate + the live reduced-motion re-monitor + the context-loss circuit-breaker)
+    // COMPOSES both leaves, driving them through injected suspend/resume/resize/wake callbacks.
+    // The reader gates (proof:viz V1/V5/R5/R6, proof:offscreen-pause F1/F4, proof:webgl-substrate-
+    // single + proof:gpu-substrate-single + proof:constellation-substrate-single leaf-machinery)
+    // FOLLOW the carve into the leaves via the UNION read. Row DELETED in this same diff (the
+    // monotonic drain — the file is now ≤ 500). Locked by proof:encapsulation.
+    // BG.W-COLOCATE DRAINED useWebGPUCanvas.ts (606 → 474): the acquire-timeout race +
+    // WEBGPU_ACQUIRE_TIMEOUT_MS carved into the webgpuDevice.ts device-support leaf (beside the
+    // typed WebGPUInitError it throws), and the public TYPE surface (WebGPUCanvasFrame/Options/
+    // Handle + WebGPUSuspendReason) carved into webgpuCanvasTypes.ts; the substrate re-imports +
+    // re-exports both so the picker + barrel reach them unchanged. The WebGPU bootstrap
+    // (navigator.gpu/getContext("webgpu")/requestAdapter) STAYS in the substrate (clause A). Row
+    // DELETED in this same diff (the monotonic drain — the file is now ≤ 500). Locked by
+    // proof:encapsulation.
     // BG.W-DOCK-FISSION-WIRE DRAINED useDockFission.ts (604 → ≤ 500): the fission SIGNATURE
     // data (the per-context goo-signature MAP + the placement vectors + their types) carved
     // into the colocated composables/dockFissionSignatures.ts (the orchestrator READS the
@@ -176,7 +193,14 @@ const RATCHET_BASELINES = {
     // dock-context-silhouette state machine had ZERO live consumer (its only demo
     // AppSwitcher.vue reads useBloomUp, not this) and was DEFINITION-ABSENT'd. Row
     // DELETED in this same diff (the monotonic drain — the file is now absent from disk).
-    "composables/glass/useGlassBackdropLuminance.ts": 542,
+    // BG.W-COLOCATE DRAINED useGlassBackdropLuminance.ts (534 → 438): the ambient-hue
+    // histogram (the value.js srgbToOKLab/rawOklabToOklch color source + makeHueHistogram/
+    // accumulateHuePixel/resolveAmbientHue + the AMBIENT_* constants + the gray-null identity)
+    // carved into the colocated ambientHueHistogram.ts; the observer COMPOSES it (keeps the
+    // sampling loop + the getImageData/canvas + the accumulate CALL). The value.js import moved
+    // WITH the histogram so proof:single-color-core follows; proof:glass-foundation A1 reads the
+    // UNION. Row DELETED in this same diff (the monotonic drain — the file is now ≤ 500). Locked
+    // by proof:encapsulation.
     // BG.W-BLOB-KINEMATICS-LEAF DRAINED useBlobSatellites.ts (533 → 427): the stateless
     // orbit/eccentricity/wobble math (createSatellite/orbitPos/randomizeOrbit) carved into
     // the colocated composables/satelliteKinematics.ts leaf (a pure math family — no
@@ -191,7 +215,14 @@ const RATCHET_BASELINES = {
     // the SFC keeps the interaction layer (dot maps + keyboard focus recovery) + template +
     // style. Row DELETED in this same diff (the monotonic drain — the file is now ≤ 500).
     "components/custom/dot-flow-field/shaders/flow-field.glsl.ts": 517,
-    "components/custom/tabs/SegmentedTabs.vue": 512,
+    // BG.W-COLOCATE DRAINED SegmentedTabs.vue (512 → 405): the responsive-collapse concern
+    // (the <Select>-below-the-breakpoint fold + its matchMedia lifecycle) carved into the
+    // colocated composables/useTabResponsive.ts, and the WAI-ARIA roving-tabindex keyboard
+    // machine (the axis-derived arrows + Home/End + wrapping + disabled-skip) carved into
+    // composables/useTabRovingFocus.ts — the SFC IMPORTS both + keeps the template wiring. The
+    // reader gates (proof:liquid-tab L5, proof:drag-morph D5) FOLLOW the carve into the leaves.
+    // Row DELETED in this same diff (the monotonic drain — the file is now ≤ 500). Locked by
+    // proof:encapsulation.
     "components/custom/goo-blob/shaders/metaball.frag.ts": 510,
     // BG.W-GOODOT-SETUP-SPLIT DRAINED useGooDotMatrix.ts (497 → 322): the two setupWGPU/setupGL
     // draw builders carved into the sibling composables/gooDotFrame.ts (249, calls the
