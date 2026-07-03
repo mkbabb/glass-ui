@@ -136,3 +136,23 @@ export {
     type UseDockFissionOptions,
     type UseDockFissionReturn,
 } from "./composables/useDockFission";
+
+// BG.W-SIRI-DOCK-CAPABILITY — Siri as a DOCK CAPABILITY (NOT a subpath/api entry). The
+// `<SiriDockCapability>` glass island + `useSiriDock` seam reach consumers ONLY via the
+// `/dock` subpath (the island lives beside the dock via the `.glass-dock-frame`/`#rail`
+// escape, box-inviolate; the `SiriWaveform` GL is demo-private). The morph forms are the
+// `SIRI_FORMS` DATA ladder (√φ); the seam composes `useDockSpring`+`useLiquidReveal`+
+// `useDockSearch` — one of each, no second engine.
+export { default as SiriDockCapability } from "./SiriDockCapability.vue";
+export {
+    useSiriDock,
+    type UseSiriDockOptions,
+    type UseSiriDockReturn,
+} from "./composables/useSiriDock";
+export {
+    SIRI_FORMS,
+    SIRI_SQRT_PHI,
+    siriFormOf,
+    type SiriForm,
+    type SiriFormDescriptor,
+} from "./constants";

@@ -80,6 +80,12 @@
    CONSUMES the W55 tint seam + the menu-row recipe, re-authors neither. */
 @import "./dock/search.css";
 
+/* BG.W-SIRI-DOCK-CAPABILITY — the Siri glass island + the `--siri-island-t`-coupled
+   descend scrim (the island lives BESIDE the dock via the `.glass-dock-frame`/`#rail`
+   escape, box-inviolate; the morph is compositor-only on the ONE `--siri-island-t`
+   scalar). @import-ed at the dock cascade tail (its own `@layer components`). */
+@import "./dock/siri.css";
+
 /* AX.W01 — the SINGLE morph scalar. `useLayerTransition` writes it once per frame
    to the `.glass-dock` root; EVERY morph axis (box size, padding, radius, scale,
    background/border color, child stagger) is a pure `calc()` read off it — one

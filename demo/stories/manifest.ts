@@ -296,6 +296,7 @@ const SUBPATHS: Record<string, string> = {
     "dock/sections": "@mkbabb/glass-ui/dock",
     "dock/cta-receive": "@mkbabb/glass-ui/dock",
     "dock/dock-search": "@mkbabb/glass-ui/dock",
+    "dock/siri-island": "@mkbabb/glass-ui/dock",
     // Data — the ledger surfaces.
     "data/table": "@mkbabb/glass-ui/data-table",
     "data/data-table": "@mkbabb/glass-ui/data-table",
@@ -969,6 +970,18 @@ export const CATEGORIES: Category[] = [
                 "dock-search",
                 "Dock Search",
                 "The dock IS the search bar — tap the collapsed pill and it morphs continuously (the dock's own --dock-morph-t glide, not a hard swap) into a search field; type and the fuzzy dropdown ranks live with subsequence-match highlighting plus a ghost-text completion of the top match; arrow keys walk the results, Enter routes, a select scrolls-to-and-warms the windowed section below. useDockSearch composes the shipped useFuzzySearch matcher, the virtual-section window, and the scroll-to subuse — the dock owns the gesture, the consumer plugs the data source.",
+            ),
+            // BG.W-SIRI-DOCK-CAPABILITY — Siri as a DOCK CAPABILITY via the
+            // .glass-dock-frame/#rail escape (box-inviolate). The "Search or ask" pill
+            // composes the EXISTING useDockSearch pipeline; tapping it blooms the glass
+            // island FROM the pill (useLiquidReveal) and glides through four forms on
+            // ONE --siri-island-t scalar (useDockSpring). The WebGL2 waveform is
+            // demo-private. This story REPLACES the retired "Dynamic Island Call" clone.
+            s(
+                "dock",
+                "siri-island",
+                "Siri Island",
+                "Siri as a dock capability — tap Search or ask and a glass island blooms from the dock pill (useLiquidReveal) and morphs through four forms (dormant → listening → thinking → responding) on ONE --siri-island-t scalar (useDockSpring, the ONE dock spring). The island lives beside the dock via the .glass-dock-frame/#rail escape — box-inviolate. Ask a question and the SAME useDockSearch pipeline ranks the answer; a demo-private WebGL2 pass paints the warm prismatic waveform.",
             ),
         ],
     },

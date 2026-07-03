@@ -71,3 +71,13 @@ export {
     type UseDockFissionOptions,
     type UseDockFissionReturn,
 } from "./useDockFission";
+
+// BG.W-SIRI-DOCK-CAPABILITY — the Siri-as-a-dock-capability seam. Composes the ONE
+// `useDockSpring` factory (form morph) + `useLiquidReveal` (source-rect bloom) + the
+// existing `useDockSearch` pipeline — no second engine. NOT a subpath/api export (the
+// capability reaches consumers via the `/dock` subpath only).
+export {
+    useSiriDock,
+    type UseSiriDockOptions,
+    type UseSiriDockReturn,
+} from "./useSiriDock";

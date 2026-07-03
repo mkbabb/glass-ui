@@ -1,0 +1,259 @@
+/* BG.W-SIRI-DOCK-CAPABILITY — the Siri glass island + the `--siri-island-t`-coupled
+ * descend scrim. Siri is a DOCK CAPABILITY: the island lives BESIDE the dock via the
+ * `.glass-dock-frame`/`#rail` escape (box-inviolate), morphs through four forms on ONE
+ * `--siri-island-t` scalar (dormant pill → listening orb → thinking capsule → responding
+ * panel, the √φ silhouette ladder), and the route behind it recedes via the descend scrim.
+ *
+ * COMPOSITOR-ONLY (proof:no-layout-animation). Every morph axis is `transform`/`opacity`/
+ * `filter`/`clip-path` — NEVER a layout property. The island reserves its PEAK footprint
+ * (the responding panel) as a STATIC size and the visible silhouette morphs via a
+ * `clip-path: inset()` aperture keyed to `--siri-island-t` (the box never reflows). The
+ * `--siri-island-t` scalar is written by `useSiriDock` off the ONE `useDockSpring` factory,
+ * which JUMPS it under `prefers-reduced-motion: reduce` (no in-between motion frames) — so
+ * the crossfade is scalar-driven (no CSS transition on the forms) and PRM-snap by construction.
+ */
+
+/* The ONE Siri-island morph scalar. `--siri-island-t` is the 0..1 master scalar
+   `useSiriDock` glides (via the ONE `useDockSpring` factory — no second spring) through
+   the four forms' √φ ladder slots (0 dormant, ⅓ listening, ⅔ thinking, 1 responding).
+   The island reads it for the clip-aperture morph + the overlapping content crossfade,
+   and the `--siri-island-t`-COUPLED descend scrim (`.siri-scrim`) reads it to ramp the
+   `filter: blur()` + dim on the route's OWN pixels. Registered typed so a bare `var()`
+   INTERPOLATES the morph rather than snapping (the `--dock-morph-t` precedent); `inherits:
+   true` (the cascading-scalar idiom — the island writes it on its own root AND a scrim
+   ancestor reads it). `initial-value: 0` is the safe dormant rest. Colocated here (not
+   property-regs.css) — the grandfathered-over-bound regs file may not grow (the
+   no-god-module ratchet); the scalar lives with its recipe. */
+@property --siri-island-t {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+}
+
+@layer components {
+    /* §SIRI — the Siri capability tokens (the ONE knob home; a consumer retints via
+       `:root` overrides — presets-in-consumers). Warm-dominant by identity (the underglow
+       hue sits in the warm amber-cream family, never a cool Siri-rainbow). */
+    :root {
+        /* the dormant-pill base width; the peak (responding panel) reserve is `× √φ³`. */
+        --siri-unit: 9.5rem;
+        --siri-form-peak-scale: 2.058; /* √φ³ — the responding-panel silhouette rung */
+        --siri-panel-block: 6.75rem; /* the peak (responding) block reserve */
+        --siri-pill-block: 2.9rem; /* the dormant pill block (the small revealed region) */
+        --siri-radius: 1.75rem;
+
+        /* the warm under-glow — a warm amber-cream bloom (the "lit from within" register).
+           A complete `<color>`; a consumer retints via `:root { --siri-underglow: … }`. */
+        --siri-underglow: oklch(0.86 0.1 68);
+        --siri-underglow-max: 0.55; /* the peak glow alpha at full engage */
+
+        /* the descend scrim — the route's OWN pixels blur + dim as Siri rises (Safari-safe
+           `filter: blur()`, never a `backdrop-filter`). Two dim modes: global (a top-layer
+           Siri, the whole route recedes) + local (a bounded panel dims its own region). */
+        --siri-scrim-blur: 12px; /* the peak blur radius on the content's own pixels */
+        --siri-scrim-ink: var(--overlay-scrim-ink, oklch(0.2 0.02 60));
+        --siri-scrim-dim-global: 0.42; /* the peak dim alpha, global (top-layer) mode */
+        --siri-scrim-dim-local: 0.22; /* the peak dim alpha, local (bounded) mode */
+    }
+
+    /* ── the island ─────────────────────────────────────────────────────────────────
+       A `.glass-floating` plate (the W-REGISTER-IOS "selected reads as glass" tier) that
+       reserves its PEAK footprint and morphs the visible silhouette via `clip-path`. It
+       sits BESIDE the dock (the demo/#rail positions it) — box-inviolate: it reads the
+       dock pill as its bloom source, never touches the dock's box. */
+    .siri-island {
+        position: relative;
+        display: block;
+        /* the STATIC peak reserve — the box never reflows through the morph (the morph is
+           the `clip-path` aperture, not a size animation). */
+        inline-size: calc(var(--siri-unit) * var(--siri-form-peak-scale));
+        block-size: var(--siri-panel-block);
+        border-radius: var(--siri-radius);
+        /* the CLIP-APERTURE — the visible silhouette morphs from a centred pill (dormant,
+           t=0 → a large inset) to the full panel (responding, t=1 → inset 0). Compositor-
+           only; `round` keeps the rounded corners across the morph. */
+        clip-path: inset(
+            calc((1 - var(--siri-island-t, 0)) * (50% - var(--siri-pill-block) / 2))
+                calc((1 - var(--siri-island-t, 0)) * 30%)
+            round var(--siri-radius)
+        );
+        /* the bloom grows UP from the dock pill (transform-origin at the bottom — the
+           iOS-27 "rises from the source" feel). `useLiquidReveal` writes the enter
+           transform; at rest this is identity. */
+        transform-origin: bottom center;
+        /* the plate lift as it engages — a sub-perceptual warm elevation (compositor). */
+        box-shadow:
+            var(--shadow-floating),
+            0 0 calc(2.5rem * var(--siri-island-t, 0))
+                color-mix(in oklab, var(--siri-underglow), transparent 70%);
+        overflow: clip;
+        pointer-events: auto;
+    }
+
+    /* the warm under-glow — a radial warm bloom behind the content that ramps its alpha
+       with `--siri-island-t` (dormant is a faint whisper, responding a warm halo). */
+    .siri-underglow {
+        position: absolute;
+        inset: -12%;
+        pointer-events: none;
+        background: radial-gradient(
+            60% 120% at 50% 100%,
+            color-mix(
+                in oklab,
+                var(--siri-underglow),
+                transparent
+                    calc(100% - var(--siri-underglow-max) * var(--siri-island-t, 0) * 100%)
+            ),
+            transparent 72%
+        );
+        opacity: clamp(0.08, var(--siri-island-t, 0), 1);
+    }
+
+    /* the aperture — the overlapping form layers stack here, clipped by the island's own
+       `overflow: clip` + `clip-path`. */
+    .siri-aperture {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+    }
+
+    /* the waveform bed — the demo-private `<SiriWaveform :level>` rides here; its opacity
+       ramps up as the island engages so the waveform lights up on listening/thinking. */
+    .siri-wave-bed {
+        position: absolute;
+        inset: 0;
+        overflow: clip;
+        border-radius: inherit;
+        /* visible only past the dormant slot — the waveform is the engaged-island heart. */
+        opacity: clamp(0, calc(var(--siri-island-t, 0) * 2.2 - 0.25), 1);
+    }
+    .siri-wave-bed > :is(canvas, div, svg) {
+        inline-size: 100%;
+        block-size: 100%;
+        display: block;
+    }
+
+    /* ── the four form CONTENT layers ───────────────────────────────────────────────
+       one per `SIRI_FORMS` descriptor. Each carries its scalar `--siri-slot` (0, ⅓, ⅔, 1)
+       and its √φ `--siri-scale`; the crossfade reads the DISTANCE from the live
+       `--siri-island-t` to the layer's slot (a triangular window ≈ one slot wide) so
+       exactly the active form reads and its neighbours fade. Compositor-only (opacity +
+       scale) — no CSS transition (the scalar IS the clock, PRM-jumped by the spring). */
+    .siri-form {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.55rem;
+        padding-inline: 1.1rem;
+        color: var(--foreground);
+        text-align: center;
+        /* the distance from the live scalar to this layer's slot (abs via max, no abs()). */
+        --siri-dist: max(
+            calc(var(--siri-island-t, 0) - var(--siri-slot, 0)),
+            calc(var(--siri-slot, 0) - var(--siri-island-t, 0))
+        );
+        /* the triangular crossfade window (≈ one slot spacing, 0.34). */
+        opacity: clamp(0, calc(1 - var(--siri-dist) / 0.34), 1);
+        /* the √φ silhouette breathing — the active form settles to its ladder scale, the
+           inactive forms tuck slightly smaller (compositor scale, transform-origin center). */
+        transform: scale(calc(1 - var(--siri-dist) * 0.35))
+            translateY(calc(var(--siri-dist) * 0.45rem));
+        /* stack every form on the grid cell so they overlap in the aperture. */
+        grid-area: 1 / 1;
+    }
+
+    .siri-form-label {
+        font-size: calc(var(--type-caption, 0.8rem) * clamp(1, var(--siri-scale, 1), 1.3));
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        white-space: nowrap;
+    }
+
+    /* the dormant pill reads the mono caption (the "Search or ask" affordance voice). */
+    .siri-form--dormant .siri-form-label {
+        color: var(--muted-foreground);
+        font-weight: 500;
+    }
+
+    /* the thinking form's caption pulses (a PRM-carved shimmer — the "…" processing beat). */
+    .siri-form--thinking .siri-form-label::after {
+        content: "";
+    }
+
+    /* the responding form is a real content panel (wider ink register). */
+    .siri-form--responding {
+        padding-inline: 1.4rem;
+        font-size: var(--type-small, 0.9rem);
+    }
+
+    /* ── the descend scrim (the blur-engage arm) ────────────────────────────────────
+       The consumer wraps the route content in `.siri-scrim`; as Siri rises the wrapper
+       blurs + dims the route's OWN pixels via `filter: blur()` (Safari-safe — never a
+       `backdrop-filter`, which mis-composites on WebKit). The wrapper is OVERSIZED (a
+       sub-perceptual `scale` past 1) so the blurred edge never reveals a transparent
+       gutter. Two dim modes select the recede depth. */
+    .siri-scrim {
+        /* the blur on the content's OWN pixels — Safari-safe. Ramps with the scalar. */
+        filter: blur(calc(var(--siri-scrim-blur) * var(--siri-island-t, 0)));
+        /* OVERSIZE — a blurred box shrinks its visible content by the blur radius; the
+           sub-perceptual scale past 1 keeps the blurred edge off the layout gutter. */
+        transform: scale(calc(1 + 0.02 * var(--siri-island-t, 0)));
+        transform-origin: center;
+    }
+    .siri-scrim::after {
+        /* the dim overlay on top of the (blurred) content — reads `--siri-island-t` × the
+           mode's peak dim. `pointer-events: none` so the receded route stays inspectable. */
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 5;
+        background: color-mix(
+            in oklab,
+            var(--siri-scrim-ink),
+            transparent
+                calc(
+                    100% - var(--siri-scrim-dim, var(--siri-scrim-dim-local)) *
+                        var(--siri-island-t, 0) * 100%
+                )
+        );
+    }
+    /* the two dim modes — GLOBAL (a top-layer Siri, the whole route recedes; also the
+       dialog `::backdrop` register) + LOCAL (a bounded panel dims its own region). */
+    dialog.siri-scrim::backdrop {
+        background: color-mix(
+            in oklab,
+            var(--siri-scrim-ink),
+            transparent
+                calc(100% - var(--siri-scrim-dim-global) * var(--siri-island-t, 0) * 100%)
+        );
+    }
+    .siri-scrim[data-siri-scrim="global"] {
+        --siri-scrim-dim: var(--siri-scrim-dim-global);
+    }
+    .siri-scrim[data-siri-scrim="local"] {
+        --siri-scrim-dim: var(--siri-scrim-dim-local);
+    }
+
+    /* ── PRM carve (P6 — keep the fade, drop the spatial + the scrim scale) ──────────
+       The forms already crossfade on the scalar (PRM-jumped by the spring, no CSS
+       transition). This carve drops the spatial `transform`/breathing + the scrim
+       oversize scale under reduce so nothing translates/scales; opacity + blur survive
+       (blur is a static effect at each scalar value, not a vestibular motion trigger). */
+    @media (prefers-reduced-motion: reduce) {
+        .siri-form {
+            transform: none;
+        }
+        .siri-underglow,
+        .siri-island {
+            transition: none;
+            animation: none;
+        }
+        .siri-scrim {
+            transform: none;
+        }
+    }
+}

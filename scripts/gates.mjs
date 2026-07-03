@@ -2193,6 +2193,12 @@ export const GATES = [
         note: "BC.W-DOCK-SEARCH — the dock becomes a fuzzy SEARCH bar: useDockSearch composes the SHIPPED /search VSCode-scorer pipeline (useFuzzySearch — NO re-fork) + GlassDock, so the dock morphs into a command/search surface that filters as you type. Bite: a re-forked scorer / a dock-local search engine → RED.",
     },
     {
+        id: "proof:siri",
+        cmd: "proof:siri",
+        tags: ["local", "ci"],
+        note: "BG.W-SIRI-DOCK-CAPABILITY — Siri as a DOCK CAPABILITY via the .glass-dock-frame/#rail escape (box-inviolate), NOT a subpath/api entry. ONE gate 4 arms: E the --siri-island-t-coupled descend scrim (filter: blur() on the route's OWN pixels — never backdrop-filter, OVERSIZED, two dim modes, PRM-carved); S the 4-form √φ island on ONE --siri-island-t scalar, the useSiriDock seam composing useDockSpring (ZERO new SpringProgress) + useLiquidReveal, clip-aperture crossfade, warm under-glow, role=status, box-inviolate; W the demo-private WebGL2 warm-OKLab waveform (no WGSL, push-API level→uLevel); D the integration story off the #rail escape composing the EXISTING useDockSearch + the shipped <SiriDockCapability> + demo-private <SiriWaveform>. + the ruling-4 no-subpath/no-api fences + per-arm self-test bites. The binding PAINT is the proof:bg-gestalt Siri verdict + tests-visual; this gate proves the CAPABILITY structure. Bite: a backdrop-filter scrim / a raw new SpringProgress / a WGSL waveform / a cool teal-navy color event / a re-forked matcher / a published siri subpath → RED.",
+    },
+    {
         id: "proof:viz-configurator-suite",
         cmd: "proof:viz-configurator-suite",
         tags: ["local", "ci"],
