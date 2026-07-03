@@ -13,18 +13,34 @@
 //                                                    fact, NOT a violation).
 //   • lines > 500 && (no baseline || > baseline)   → RED.
 // The ratchet is MONOTONIC — a baseline only DRAINS: a file that shrinks under
-// 500 has its row deleted in the same diff (it can never silently refill). A
-// baseline row holding a value ABOVE the carved target must carry an inline
-// `// BOOK(<wave-id>):` marker (a bump with no marker is itself RED), so the
-// spec count and the gate move in one commit. The close state is BOTH
-// `violations == []` AND `RATCHET_BASELINES == {}` — grandfathering is an
-// interim state, never a close state.
+// 500 has its row deleted in the same diff (it can never silently refill). The
+// close state is BOTH `violations == []` AND `RATCHET_BASELINES == {}` —
+// grandfathering is an interim state, never a close state.
+//
+// THE CONTRACT CHANGE (BG.W-GOD-MODULE-STRUCTURAL / GA-4). A new grandfathered
+// baseline is not a free re-baseline that normalizes the disease it kills — it
+// REQUIRES a companion carve-successor. Every LIVE ratchet row MUST carry an
+// inline `// CARVE-SUCCESSOR(<wave-id>):` marker on its own source line naming
+// the wave that DRAINS it (a live row with no marker REDs). The markers ARE the
+// drain chain made VISIBLE — the `RATCHET_BASELINES == {}` cut precondition is
+// self-documenting: read the markers, follow each to its owning carve wave. The
+// baseline is FROZEN at the file's CURRENT count (no silent refill room — a
+// baseline holding a value ABOVE the file's live line count REDs as stale).
+//
+// THE SHADER-LITERAL EXEMPTION (BG.W-GOD-MODULE-STRUCTURAL / FC-B10). The
+// ratchet is LOGIC-only. A `*.{wgsl,glsl,frag,vert}.ts` file is ONE cohesive
+// GPU-program literal string — splitting it into line-count fragments breaks the
+// GL/GPU program fence for ZERO logic benefit — so it is EXEMPT from the bound
+// entirely: never a violation, and it MUST NOT carry a ratchet row (the
+// exemption supersedes the ratchet; a shader path in RATCHET_BASELINES is RED).
 //
 // Excludes: `__tests__/` directories (test fixtures legitimately run long) and any
 // concatenated build output (the gate walks `src/` source only, never `dist/`).
 //
 // bite-check: a 501-line src/*.ts (or *.vue) with no baseline → RED; append one
-// line to a grandfathered file (past its baseline) → RED.
+// line to a grandfathered file (past its baseline) → RED; a grandfathered row
+// with no CARVE-SUCCESSOR marker → RED; a >500 shader literal → EXEMPT (not RED),
+// but a shader path carrying a ratchet row → RED.
 
 import { readdirSync, readFileSync } from "node:fs";
 import { resolve, relative, sep } from "node:path";
@@ -37,6 +53,34 @@ import { assertMonolithImportOrder } from "./read-css-monoliths.mjs";
 
 const HARD_LIMIT = 500;
 const WARN_LIMIT = 300;
+
+// The shader-literal exemption (BG.W-GOD-MODULE-STRUCTURAL / FC-B10). A file
+// whose name ends `.wgsl.ts` / `.glsl.ts` / `.frag.ts` / `.vert.ts` is ONE
+// cohesive GPU-program literal string — the ratchet is LOGIC-only, so a shader
+// literal is EXEMPT from the bound (never a violation; never a ratchet row).
+const SHADER_LITERAL = /\.(wgsl|glsl|frag|vert)\.ts$/;
+
+/** Escape a string for use inside a RegExp (the ratchet-key path safe form). */
+function escapeRe(s) {
+    return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+/**
+ * The companion carve-successor id a LIVE ratchet row must carry (the CONTRACT
+ * change). The gate's own source line for `"<path>": <n>` must carry a
+ * `CARVE-SUCCESSOR(<wave-id>)` marker naming the wave that DRAINS it. Returns
+ * the wave-id string, or null when the marker is absent (→ the row REDs).
+ */
+function carveSuccessorFor(source, path) {
+    const keyRe = new RegExp(`["']${escapeRe(path)}["']\\s*:`);
+    for (const line of source.split("\n")) {
+        if (keyRe.test(line)) {
+            const m = line.match(/CARVE-SUCCESSOR\(\s*([^)\s]+)\s*\)/);
+            return m ? m[1] : null;
+        }
+    }
+    return null;
+}
 
 /**
  * The per-violator ratchet baselines — a file over 500 lines that is
@@ -177,7 +221,7 @@ const RATCHET_BASELINES = {
     // the DRIVER-vs-OBSERVER autoplay seam + the barbell geometry carved into the colocated
     // ui/carousel/composables/useCarouselWorm.ts (the SFC keeps template + style + the refs).
     // Row DELETED in this same diff (the monotonic drain — the file is now ≤ 500).
-    "styles/tokens/property-regs.css": 566,
+    "styles/tokens/property-regs.css": 563, // CARVE-SUCCESSOR(BG.W-COHERENCE-CENSUS): the §18 Houdini @property registrations + §11b moving-specular magnitude cohort — the §18/§11b split seam carves §11b into a sibling :root partial; WS12 (F8) drains before BG.W-CUT.
     // BD.W-CUT (no-god-module carve) — scheme-motion.css DRAINED (585 → 359): its
     // §2 EASING block (spring linear() curves + per-spring duration clocks + the
     // goo-morph dwell-flow curves incl. --pager-worm-flow + bezier cores/aliases)
@@ -208,13 +252,18 @@ const RATCHET_BASELINES = {
     // phase state-machine + the pure numeric helpers (randRange/clamp01/lerp) and IMPORTS
     // the three kinematics functions. Row DELETED in this same diff (the monotonic drain —
     // the file is now ≤ 500). Locked by proof:encapsulation.
-    "components/custom/goo-blob/shaders/metaball.wgsl.ts": 529,
+    // BG.W-GOD-MODULE-STRUCTURAL EXEMPTED metaball.wgsl.ts (529) — the shader-literal
+    // exemption (FC-B10): a `*.wgsl.ts` GPU-program string is EXEMPT from the bound
+    // (the ratchet is LOGIC-only), so its ratchet row is DELETED here (no CARVE-SUCCESSOR
+    // owed; splitting a cohesive shader program breaks the GL fence for zero logic gain).
     // BH.B2.4a DRAINED PagerDots.vue (509 → 433): the worm geometry (centerOf/restSize) +
     // the useGooMorph instance + the active/shown travel/settle driver carved into the
     // colocated pager-dots/composables/usePagerWorm.ts (+ the named consts into constants.ts);
     // the SFC keeps the interaction layer (dot maps + keyboard focus recovery) + template +
     // style. Row DELETED in this same diff (the monotonic drain — the file is now ≤ 500).
-    "components/custom/dot-flow-field/shaders/flow-field.glsl.ts": 517,
+    // BG.W-GOD-MODULE-STRUCTURAL EXEMPTED flow-field.glsl.ts (517) — the shader-literal
+    // exemption (FC-B10): a `*.glsl.ts` shared GPU chunk is EXEMPT (logic-only ratchet), so
+    // its ratchet row is DELETED here (no CARVE-SUCCESSOR owed).
     // BG.W-COLOCATE DRAINED SegmentedTabs.vue (512 → 405): the responsive-collapse concern
     // (the <Select>-below-the-breakpoint fold + its matchMedia lifecycle) carved into the
     // colocated composables/useTabResponsive.ts, and the WAI-ARIA roving-tabindex keyboard
@@ -223,7 +272,9 @@ const RATCHET_BASELINES = {
     // reader gates (proof:liquid-tab L5, proof:drag-morph D5) FOLLOW the carve into the leaves.
     // Row DELETED in this same diff (the monotonic drain — the file is now ≤ 500). Locked by
     // proof:encapsulation.
-    "components/custom/goo-blob/shaders/metaball.frag.ts": 510,
+    // BG.W-GOD-MODULE-STRUCTURAL EXEMPTED metaball.frag.ts (510) — the shader-literal
+    // exemption (FC-B10): a `*.frag.ts` GL fragment-program string is EXEMPT (logic-only
+    // ratchet), so its ratchet row is DELETED here (no CARVE-SUCCESSOR owed).
     // BG.W-GOODOT-SETUP-SPLIT DRAINED useGooDotMatrix.ts (497 → 322): the two setupWGPU/setupGL
     // draw builders carved into the sibling composables/gooDotFrame.ts (249, calls the
     // byte-identical gooDotSetup.ts creators); the composable keeps the sim + shared field-advance
@@ -232,7 +283,20 @@ const RATCHET_BASELINES = {
     // helpers (resolveField/resolveHue/clampStrength/prefersReducedMotion + the field hue/
     // strength/release writes) carved into the sibling composables/motion/bloomUpField.ts;
     // the renderer stays. Row DELETED in this same diff (the monotonic drain — file ≤ 500).
-    "api/index.ts": 505,
+    // BG.W-GOD-MODULE-STRUCTURAL DRAINED api/index.ts (505 → 490): the file re-shrank under
+    // the bound (subpath-set trims), so its stale row is DELETED here (the monotonic drain —
+    // a baseline holding a value ABOVE the live count is silent refill room, now closed).
+    //
+    // ── THE DRAIN CHAIN made VISIBLE (BG.W-GOD-MODULE-STRUCTURAL / GC-FC8c). The two
+    //    remaining LIVE ratchet rows are the ONLY non-shader over-bound files; each names
+    //    its owning carve-successor wave so `BG.W-CUT`'s `RATCHET_BASELINES == {}` precond
+    //    is an ENUMERATED cut gate (the 3 shader over-bounds are EXEMPT, not booked):
+    //      • styles/tokens/property-regs.css (563) → BG.W-COHERENCE-CENSUS (WS12 re-carve;
+    //        F8) — the §18 registrations / §11b magnitude-cohort split seam.
+    //      • components/custom/aurora/composables/runtime.ts (502) → BG.W-COHERENCE-CENSUS
+    //        (WS12 re-carve; F8) — grew +2 past the bound at BG.W-VIZ-REVEAL-BLOOM (the
+    //        reveal-bloom register); booked at its landed count under the new contract.
+    "components/custom/aurora/composables/runtime.ts": 502, // CARVE-SUCCESSOR(BG.W-COHERENCE-CENSUS): the aurora resolve/render loop; grew +2 at BG.W-VIZ-REVEAL-BLOOM; WS12 (F8) re-carve drains before BG.W-CUT.
 };
 
 let _cliPaths = null;
@@ -286,6 +350,170 @@ function lineCount(file) {
     return parts.length;
 }
 
+/**
+ * The pure ratchet detector — runs over an INJECTED input map so a self-test can
+ * sabotage `{ measured, ratchetBaselines, source }` (the proof:encapsulation
+ * detect(overrides) precedent). `measured` is the sorted `{ path, displayPath,
+ * lines }[]`; `ratchetBaselines` the frozen map; `source` this gate's own text
+ * (for the CARVE-SUCCESSOR marker parse). Returns `{ violations, grandfathered,
+ * shaderExempt, warnings }`.
+ */
+function detect({ measured, ratchetBaselines, source }) {
+    const over = measured.filter((m) => m.lines > HARD_LIMIT);
+    const grandfathered = [];
+    const shaderExempt = [];
+    const violations = [];
+    for (const m of over) {
+        const display = m.displayPath ?? m.path;
+        // The shader-literal exemption — the ratchet is LOGIC-only. A `*.{wgsl,
+        // glsl,frag,vert}.ts` file over the bound is EXEMPT (never a violation).
+        if (SHADER_LITERAL.test(m.path)) {
+            shaderExempt.push({ path: display, key: m.path, lines: m.lines });
+            continue;
+        }
+        const baseline = ratchetBaselines[m.path];
+        if (baseline !== undefined && m.lines <= baseline) {
+            grandfathered.push({ path: display, key: m.path, lines: m.lines, baseline });
+            // THE CONTRACT: a live grandfathered baseline REQUIRES a companion
+            // CARVE-SUCCESSOR(<wave-id>) marker naming its owning carve wave.
+            if (!carveSuccessorFor(source, m.path)) {
+                violations.push(
+                    `the ratchet baseline row for ${display} (${baseline}) carries NO CARVE-SUCCESSOR(<wave-id>) marker — a new/held baseline REQUIRES a companion carve-successor id (the drain chain must name its owning carve wave)`,
+                );
+            }
+        } else if (baseline !== undefined) {
+            violations.push(
+                `${display} is ${m.lines} lines (> its ratchet baseline ${baseline}) — a grandfathered file may not GROW`,
+            );
+        } else {
+            violations.push(`${display} is ${m.lines} lines (> ${HARD_LIMIT})`);
+        }
+    }
+
+    // ── Stale-baseline + shader-row guards (the ratchet is monotonic + LOGIC-only).
+    //    A shader path in the map is a CONTRACT error (the exemption supersedes the
+    //    ratchet); any other row whose file is now ≤ 500 (or gone) is a stale row.
+    for (const [key, value] of Object.entries(ratchetBaselines)) {
+        if (SHADER_LITERAL.test(key)) {
+            violations.push(
+                `the ratchet baseline row for ${key} (${value}) is a SHADER LITERAL — shader files are EXEMPT (logic-only ratchet); delete the row (the exemption supersedes the ratchet)`,
+            );
+            continue;
+        }
+        const live = measured.find((m) => m.path === key);
+        if (!live || live.lines <= HARD_LIMIT) {
+            violations.push(
+                `the ratchet baseline row for ${key} (${value}) is STALE — the file is now ≤ ${HARD_LIMIT} (or gone); delete the row (the ratchet only drains)`,
+            );
+        }
+    }
+
+    const warnings = measured.filter(
+        (m) =>
+            m.lines > WARN_LIMIT &&
+            m.lines <= HARD_LIMIT &&
+            !SHADER_LITERAL.test(m.path),
+    );
+    return { over, grandfathered, shaderExempt, violations, warnings };
+}
+
+// ── The self-test bites (anti-vacuity / born-RED demonstration). Each synthetic
+//    input sabotages `detect()` and asserts the expected bite fires (or, for a
+//    fence, does NOT). Throws on any miss so a regression that weakens the
+//    contract/exemption re-reds the gate at import.
+function selfTest() {
+    let checks = 0;
+    const mk = (path, lines) => ({ path, displayPath: path, lines });
+    const sab = (input, needle, name) => {
+        const { violations } = detect(input);
+        if (violations.some((v) => v.includes(needle))) checks++;
+        else
+            throw new Error(
+                `[proof:no-god-module self-test] the bite FAILED to flag: ${name}`,
+            );
+    };
+    const sabNot = (input, needle, name) => {
+        const { violations } = detect(input);
+        if (!violations.some((v) => v.includes(needle))) checks++;
+        else
+            throw new Error(
+                `[proof:no-god-module self-test] the fence bite WRONGLY flagged: ${name}`,
+            );
+    };
+
+    // Bite 1 — THE CONTRACT: a new baseline WITHOUT a carve-successor id REDs.
+    sab(
+        {
+            measured: [mk("synthetic/god.ts", 600)],
+            ratchetBaselines: { "synthetic/god.ts": 600 },
+            source: `const RATCHET_BASELINES = { "synthetic/god.ts": 600 };`,
+        },
+        "NO CARVE-SUCCESSOR",
+        "a grandfathered baseline with no carve-successor id",
+    );
+    // Bite 1 (fence) — the SAME baseline WITH a carve-successor id passes the contract.
+    sabNot(
+        {
+            measured: [mk("synthetic/god.ts", 600)],
+            ratchetBaselines: { "synthetic/god.ts": 600 },
+            source: `"synthetic/god.ts": 600, // CARVE-SUCCESSOR(BG.W-SYNTH)`,
+        },
+        "NO CARVE-SUCCESSOR",
+        "a baseline WITH a carve-successor id (fence)",
+    );
+    // Bite 2 — the SHADER-LITERAL EXEMPTION: a >500 shader is NOT a violation.
+    sabNot(
+        {
+            measured: [mk("components/custom/x/shaders/big.wgsl.ts", 999)],
+            ratchetBaselines: {},
+            source: `const RATCHET_BASELINES = {};`,
+        },
+        "big.wgsl.ts",
+        "a 999-line shader literal is exempt (fence)",
+    );
+    // Bite 3 — the shader-row contradiction: a shader path in the map REDs.
+    sab(
+        {
+            measured: [mk("components/custom/x/shaders/big.frag.ts", 999)],
+            ratchetBaselines: { "components/custom/x/shaders/big.frag.ts": 999 },
+            source: `"components/custom/x/shaders/big.frag.ts": 999,`,
+        },
+        "is a SHADER LITERAL",
+        "a shader path carrying a ratchet row",
+    );
+    // Bite 4 — a genuine un-baselined logic god-module (>500, no row) REDs.
+    sab(
+        {
+            measured: [mk("components/custom/x/useThing.ts", 700)],
+            ratchetBaselines: {},
+            source: `const RATCHET_BASELINES = {};`,
+        },
+        "700 lines",
+        "an un-baselined 700-line logic file",
+    );
+    // Bite 5 — the stale-row guard: a baseline whose file is now ≤ 500 REDs.
+    sab(
+        {
+            measured: [mk("components/custom/x/useThing.ts", 400)],
+            ratchetBaselines: { "components/custom/x/useThing.ts": 600 },
+            source: `"components/custom/x/useThing.ts": 600, // CARVE-SUCCESSOR(BG.W-X)`,
+        },
+        "is STALE",
+        "a stale baseline row (file drained under the bound)",
+    );
+    // Bite 6 — a grandfathered file that GREW past its baseline REDs (even with a marker).
+    sab(
+        {
+            measured: [mk("components/custom/x/useThing.ts", 650)],
+            ratchetBaselines: { "components/custom/x/useThing.ts": 600 },
+            source: `"components/custom/x/useThing.ts": 600, // CARVE-SUCCESSOR(BG.W-X)`,
+        },
+        "may not GROW",
+        "a grandfathered file grew past its baseline",
+    );
+    return checks;
+}
+
 function run() {
     const { ROOT, SRC, ARTIFACT } = cliPaths();
 
@@ -308,51 +536,27 @@ function run() {
         }))
         .sort((a, b) => b.lines - a.lines);
 
-    // ── The ratchet split. A file > 500 is GRANDFATHERED (a reported fact, not a
-    //    violation) only when a baseline row holds it at-or-above its current
-    //    line count; any other over-bound file — or a grandfathered file that
-    //    grew PAST its baseline — is a violation.
-    const over = measured.filter((m) => m.lines > HARD_LIMIT);
-    const grandfathered = [];
-    const violations = [];
-    for (const m of over) {
-        const baseline = RATCHET_BASELINES[m.path];
-        if (baseline !== undefined && m.lines <= baseline) {
-            grandfathered.push({ path: m.displayPath, lines: m.lines, baseline });
-        } else if (baseline !== undefined) {
-            violations.push(
-                `${m.displayPath} is ${m.lines} lines (> its ratchet baseline ${baseline}) — a grandfathered file may not GROW`,
-            );
-        } else {
-            violations.push(`${m.displayPath} is ${m.lines} lines (> ${HARD_LIMIT})`);
-        }
-    }
-    const warnings = measured.filter(
-        (m) => m.lines > WARN_LIMIT && m.lines <= HARD_LIMIT,
-    );
+    // ── The ratchet split (BG.W-GOD-MODULE-STRUCTURAL). Delegated to the pure
+    //    detect() over the live disk state + this gate's OWN source (for the
+    //    CARVE-SUCCESSOR marker parse). detect() applies the shader-literal
+    //    exemption, the carve-successor contract, and the stale/shader-row guards.
+    const source = readFileSync(fileURLToPath(import.meta.url), "utf8");
+    const { grandfathered, shaderExempt, violations, warnings } = detect({
+        measured,
+        ratchetBaselines: RATCHET_BASELINES,
+        source,
+    });
 
-    // ── Stale-baseline guards (the ratchet is monotonic). A baseline row whose
-    //    file is now UNDER 500 (or absent from disk) must be DELETED in the same
-    //    diff — a stranded row is a violation so the map can never silently
-    //    refill or hold a dead key.
-    const baselinePaths = new Set(measured.map((m) => m.path));
-    for (const [key, value] of Object.entries(RATCHET_BASELINES)) {
-        const live = measured.find((m) => m.path === key);
-        if (!live || live.lines <= HARD_LIMIT) {
-            violations.push(
-                `the ratchet baseline row for ${key} (${value}) is STALE — the file is now ≤ ${HARD_LIMIT} (or gone); delete the row (the ratchet only drains)`,
-            );
-        }
-    }
-    // ── BOOK-marker guard. A baseline row carrying a value ABOVE the frozen open
-    //    count is a growth booking and MUST sit beside a `// BOOK(<wave>):` marker
-    //    in this file (the count + the spec move in one commit). Read this gate's
-    //    own source and require a marker on the same source line as each
-    //    grandfathered row that is NOT at its open frozen value. (At HEAD every
-    //    row IS the open value, so no marker is required; the guard arms for a
-    //    future bump.) The marker presence is asserted positionally: the row's key
-    //    string and a `// BOOK(` on the same logical line.
-    void baselinePaths;
+    // ── The born-RED self-test (throws if a bite fails to fire). The contract +
+    //    exemption cannot silently un-arm — a regression re-reds at import.
+    const selfTestCount = selfTest();
+
+    // ── The drain chain made VISIBLE — each live row's owning carve-successor
+    //    wave, an ENUMERATED cut gate for BG.W-CUT's `RATCHET_BASELINES == {}`.
+    const ratchetDrainChain = Object.keys(RATCHET_BASELINES).map((path) => ({
+        path,
+        carveSuccessor: carveSuccessorFor(source, path),
+    }));
 
     // ── AY.W-CSS1 (O1) — import-order preservation for the carved CSS monoliths.
     //    Each thin @import root (tokens.css/glass.css/utilities.css) MUST @import
@@ -387,8 +591,15 @@ function run() {
                 lines: m.lines,
             })),
             grandfathered,
+            // BG.W-GOD-MODULE-STRUCTURAL — the shader-literal exemption (logic-only
+            // ratchet): >500 GPU-program strings are EXEMPT, reported as a fact.
+            shaderExempt,
             ratchetBaselineCount: Object.keys(RATCHET_BASELINES).length,
             ratchetDrained,
+            // BG.W-GOD-MODULE-STRUCTURAL — the drain chain made VISIBLE: each live
+            // ratchet row → its owning carve-successor wave (the cut gate).
+            ratchetDrainChain,
+            selfTestChecks: selfTestCount,
             // AY.W-CSS1 (O1) — the carved-monolith import-order assertion per
             // thin root (the F3 caveat: import-order, not just per-file count).
             cssMonoliths: monolithFacts.map((f) => ({
@@ -408,13 +619,17 @@ function run() {
     console.log("  largest files:");
     for (const m of top) {
         const grand = RATCHET_BASELINES[m.path] !== undefined && m.lines <= RATCHET_BASELINES[m.path];
-        const tag = grand
-            ? "▣ grand"
-            : m.lines > HARD_LIMIT
-              ? "✗ OVER"
-              : m.lines > WARN_LIMIT
-                ? "• warn"
-                : "✓ ok";
+        const shader = SHADER_LITERAL.test(m.path);
+        const tag =
+            shader && m.lines > HARD_LIMIT
+                ? "◈ shdr"
+                : grand
+                  ? "▣ grand"
+                  : m.lines > HARD_LIMIT
+                    ? "✗ OVER"
+                    : m.lines > WARN_LIMIT
+                      ? "• warn"
+                      : "✓ ok";
         console.log(`    ${String(m.lines).padStart(4)}  ${tag}  ${m.displayPath}`);
     }
     if (warnings.length) {
@@ -422,16 +637,30 @@ function run() {
             `\n  ${warnings.length} file(s) in the 301–500 warn band (watch, not RED).`,
         );
     }
+    if (shaderExempt.length) {
+        console.log(
+            `\n  ${shaderExempt.length} shader-literal file(s) EXEMPT (logic-only ratchet — over bound but a cohesive GPU-program string, not a god-module):`,
+        );
+        for (const s of shaderExempt)
+            console.log(`    ◈ ${s.path} is ${s.lines} (shader-exempt)`);
+    }
     if (grandfathered.length) {
         console.log(
             `\n  ${grandfathered.length} file(s) GRANDFATHERED by the ratchet (over bound, carve pending — NOT a violation):`,
         );
-        for (const g of grandfathered)
-            console.log(`    ▣ ${g.path} is ${g.lines} (baseline ${g.baseline})`);
+        for (const g of grandfathered) {
+            const cs = carveSuccessorFor(source, g.key) ?? "??";
+            console.log(
+                `    ▣ ${g.path} is ${g.lines} (baseline ${g.baseline}) → carve-successor ${cs}`,
+            );
+        }
     }
     if (ratchetDrained) {
         console.log("\n  RATCHET_BASELINES drained to ∅ — every file is under bound.");
     }
+    console.log(
+        `\n  self-test: ${selfTestCount} synthetic bite(s) handled (contract + exemption + stale/shader-row + grow guards).`,
+    );
     if (violations.length) {
         console.log("\nVIOLATIONS:");
         for (const v of violations) console.log(`  ✗ ${v}`);
@@ -445,3 +674,5 @@ function run() {
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
     run();
 }
+
+export { detect, selfTest, carveSuccessorFor, SHADER_LITERAL, RATCHET_BASELINES };
