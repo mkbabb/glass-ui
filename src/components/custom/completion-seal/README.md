@@ -15,6 +15,27 @@ is the visual seal of the same completion event the chassis phase bus marks.
   stroke draws via the registered `--seal-draw` `<percentage>` (`tokens/property-regs.css
   §18`, `inherits: false`, `initial-value: 100%` — the safe fully-drawn fallback) on a
   `stroke-dashoffset` wipe. You watch the gold draw itself, not appear.
+- **The `disc` shape is the composed earned-COIN — disc→ring→check (BG.W-SEAL-DISC).**
+  `shape="disc"` renders THREE layers off the ONE gold-draw mechanism: a filled
+  translucent glass-gold disc FACE materializes (opacity fade), then the ring RE-USES the
+  ring geometry to stroke-draw around it, then the check RE-USES the check path to
+  draw-in inside. The layers stagger on `animation-delay` off the token-first
+  `--seal-ring-delay`/`--seal-check-delay` sequencing clocks (each defaulting to the
+  per-spring `--spring-snappy-duration`) — no fourth recipe, one mechanism, three
+  sequenced passes. `check`/`ring`/`wordmark` stay the single-mark register.
+- **`personalBest` is the earned-gold garnish.** `:personalBest` arms `[data-best]`,
+  which re-points `--seal-ink` onto `--seal-best` — a colour LIFT within the gold family
+  (`--color-gold-light`, the brighter earned gold), NOT a new token. Gold is EARNED (Q2);
+  a personal-best coin reads a touch brighter, never a new hue. The seal mints no new gold
+  literal — `--seal-best` composes the gold register, so the earned-gold register keeps
+  its ONE home.
+- **`fromDrawSVG` decide-at-build → the CSS stroke-dashoffset floor is KEPT.** kf5's
+  `fromDrawSVG` was evaluated and DECLINED (BG.W-SEAL-DISC): the check already
+  stroke-draws via the compositor-only `--seal-draw` wipe, and `fromDrawSVG`/`DrawSVG`
+  are reachable only via an async `loadAnimationEngine()` indirection (not statically
+  exported) — awkward + jsdom-unsafe for a mount-triggered one-shot, for zero gestalt
+  gain over the CSS-native draw. The CSS floor stays the mechanism; the seal imports no
+  kf draw engine (the PRM-native, compositor-only, jsdom-safe floor).
 - **It is GOLD — the earned-gold completion register (Q2).** `--seal-ink` defaults to
   `var(--phase-complete-color, var(--color-gold))` — the W-PHASE-PALETTE completion ink,
   NOT the running phase spectrum. Gold is EARNED at completion (the personal-best / done
@@ -60,12 +81,13 @@ const done = ref(false);
 
 ## Props
 
-| prop    | type                                | default   | meaning                                                  |
-| ------- | ----------------------------------- | --------- | -------------------------------------------------------- |
-| `shape` | `"check" \| "ring" \| "wordmark"`   | `"check"` | the seal glyph the gold stroke draws                     |
-| `label` | `string`                            | —         | the accessible completion announcement (`role="status"`) |
-| `play`  | `boolean`                           | —         | the draw trigger; unset plays on mount                   |
-| `class` | `string`                            | —         | pass-through class on the root                            |
+| prop           | type                                        | default   | meaning                                                  |
+| -------------- | ------------------------------------------- | --------- | -------------------------------------------------------- |
+| `shape`        | `"check" \| "ring" \| "disc" \| "wordmark"` | `"check"` | the seal glyph the gold stroke draws                     |
+| `label`        | `string`                                    | —         | the accessible completion announcement (`role="status"`) |
+| `play`         | `boolean`                                   | —         | the draw trigger; unset plays on mount                   |
+| `personalBest` | `boolean`                                   | `false`   | the earned-gold garnish — arms `[data-best]` (brighter gold) |
+| `class`        | `string`                                    | —         | pass-through class on the root                            |
 
 ## The motion tokens (off the `@property` register)
 

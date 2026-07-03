@@ -31,10 +31,21 @@ function fireAgain() {
                 </p>
             </div>
 
-            <!-- The three glyph registers, each re-firing on replay. The seal is the
+            <!-- The four glyph registers, each re-firing on replay. The seal is the
                  visual seal of the W-PHASE-PALETTE completion event; the ink reads
-                 the earned-gold register. -->
-            <div :key="replay" class="grid grid-cols-3 gap-8">
+                 the earned-gold register. The `disc` shape is the composed earned-coin —
+                 the face materializes, the ring draws around it, then the check draws
+                 in (disc→ring→check). -->
+            <div :key="replay" class="grid grid-cols-4 gap-8">
+                <div class="grid place-items-center gap-3">
+                    <CompletionSeal
+                        shape="disc"
+                        play
+                        label="Run complete"
+                        class="h-24 w-24"
+                    />
+                    <span class="text-small text-muted-foreground">disc</span>
+                </div>
                 <div class="grid place-items-center gap-3">
                     <CompletionSeal
                         shape="check"
@@ -57,7 +68,7 @@ function fireAgain() {
                     <CompletionSeal
                         shape="wordmark"
                         play
-                        label="Personal best"
+                        label="Task complete"
                         class="h-24 w-24"
                     />
                     <span class="text-small text-muted-foreground">
@@ -65,6 +76,44 @@ function fireAgain() {
                     </span>
                 </div>
             </div>
+
+            <!-- The personal-best garnish: the disc coin reads a touch brighter (the
+                 earned-gold LIFT) when the result beat the user's historical best. -->
+            <StorySection heading="Personal best (earned-gold lift)" gap="md">
+                <p class="text-small text-muted-foreground">
+                    A result that beat the historical best arms
+                    <code>:personalBest</code> — the coin ink lifts onto the
+                    brighter earned gold. Gold is EARNED, never a new hue.
+                </p>
+                <div
+                    :key="`best-${replay}`"
+                    class="grid grid-cols-2 place-items-center gap-8"
+                >
+                    <div class="grid place-items-center gap-3">
+                        <CompletionSeal
+                            shape="disc"
+                            play
+                            label="Run complete"
+                            class="h-24 w-24"
+                        />
+                        <span class="text-small text-muted-foreground">
+                            standard
+                        </span>
+                    </div>
+                    <div class="grid place-items-center gap-3">
+                        <CompletionSeal
+                            shape="disc"
+                            play
+                            personal-best
+                            label="Personal best"
+                            class="h-24 w-24"
+                        />
+                        <span class="text-small text-muted-foreground">
+                            personal best
+                        </span>
+                    </div>
+                </div>
+            </StorySection>
 
             <!-- The completion-register lockstep: a consumer re-inking
                  --phase-complete-color re-inks the seal (here a ruby completion

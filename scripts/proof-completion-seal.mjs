@@ -29,6 +29,17 @@
 //         stroke-dashoffset / transform / filter (NO layout property — the
 //         proof:no-layout-animation mirror); the motion sits inside a
 //         (prefers-reduced-motion: no-preference) gate (the PRM-snap arm).
+//   CS7 — THE `disc` SHAPE + `personalBest` GARNISH + disc→ring→check SEQUENCING
+//         (BG.W-SEAL-DISC / SPEEDTEST-AX #1). `disc` joins the shape union and the SFC
+//         COMPOSES the 3-layer earned-coin (a filled FACE + the ring RE-USE + the check
+//         RE-USE, ONE mechanism, no fourth recipe); `personalBest` arms `[data-best]`
+//         re-pointing `--seal-ink` onto `--seal-best`, which COMPOSES the gold FAMILY
+//         (no new gold literal, never a phase spectrum — the Q2 earned-gold ONE-home
+//         fence); the sequencing is the `completion-seal-disc-in` FACE keyframe + the
+//         staggered `--seal-ring-delay`/`--seal-check-delay` delays. The kf5
+//         `fromDrawSVG` DECIDE-AT-BUILD verdict is the CSS `stroke-dashoffset` floor —
+//         the seal imports NO async draw engine (compositor-only, jsdom-safe, PRM-native;
+//         the check already stroke-draws via `--seal-draw`).
 //
 // The BINDING painted truth is the π readback (tests-visual/completion-seal.spec.ts —
 // the seal draws 0→full, settles, glints, the ink resolves gold, the override re-inks,
@@ -134,7 +145,7 @@ export function detectCompletionSeal(inputs) {
     } = inputs;
 
     const violations = [];
-    const facts = { cs1: {}, cs2: {}, cs3: {}, cs4: {}, cs5: {} };
+    const facts = { cs1: {}, cs2: {}, cs3: {}, cs4: {}, cs5: {}, cs7: {} };
 
     // ── CS1 — the seal exists ONCE with the colocation + publication ──────────
     const subpathMirror =
@@ -357,6 +368,97 @@ export function detectCompletionSeal(inputs) {
             "CS5: a layout property animates in a completion-seal @keyframes (the proof:no-layout-animation mirror — the draw rides stroke-dashoffset/transform/filter ONLY)",
         );
 
+    // ── CS7 — the disc shape + personalBest garnish + disc→ring→check sequencing ──
+    // BG.W-SEAL-DISC (SPEEDTEST-AX #1). The seal gains a `disc` shape — the composed
+    // earned-coin gesture — a `personalBest` earned-gold garnish, and the sequencing
+    // draw. The kf5 `fromDrawSVG` decide-at-build verdict is the CSS stroke-dashoffset
+    // floor (no async draw engine imported — the compositor-only, jsdom-safe floor).
+
+    // (a) the `disc` member joins the shape union (constants.ts).
+    const discInUnion = /CompletionSealShape[^=]*=\s*[^;]*["']disc["']/.test(
+        constants,
+    );
+    // (b) the SFC COMPOSES the 3-layer disc gesture off ONE mechanism — a disc FACE +
+    //     the ring RE-USE + the check RE-USE, gated on the disc branch.
+    const sfcComposesDisc =
+        /completion-seal__disc/.test(vue) &&
+        /completion-seal__ring/.test(vue) &&
+        /completion-seal__check/.test(vue) &&
+        /shape\s*===\s*["']disc["']/.test(vue);
+    // (c) `personalBest` prop exists AND wires the [data-best] seam.
+    const personalBestProp = /personalBest/.test(vue) && /data-best/.test(vue);
+    // (d) --seal-best COMPOSES the gold FAMILY (no new gold literal — the earned-gold
+    //     register has ONE home; Q2 no-re-author), AND [data-best] re-points the ink.
+    const sealBestReadsGold = /--seal-best\s*:\s*var\(\s*--(color-)?gold/.test(
+        css,
+    );
+    const sealBestPhaseSpectrum =
+        /--seal-best\s*:[^;]*var\(\s*--viz-/.test(css) ||
+        /--seal-best\s*:[^;]*var\(\s*--chart-(ping|download|upload|jitter|phase)/.test(
+            css,
+        );
+    const bestRePointsInk =
+        /\[data-best\][\s\S]{0,160}--seal-ink\s*:\s*var\(\s*--seal-best/.test(
+            css,
+        );
+    const sealBestComposesGold =
+        sealBestReadsGold && bestRePointsInk && !sealBestPhaseSpectrum;
+    // (e) the disc→ring→check SEQUENCING is wired — the disc FACE materialize keyframe +
+    //     the two staggered delays READ (the ring after the face, the check after the
+    //     ring; the same-clock passes staggered on animation-delay — no fourth recipe).
+    const discSequenced =
+        /@keyframes\s+completion-seal-disc-in/.test(css) &&
+        /var\(\s*--seal-ring-delay/.test(css) &&
+        /var\(\s*--seal-check-delay/.test(css);
+    // (f) the kf5 `fromDrawSVG` DECIDE-AT-BUILD verdict — the CSS stroke-dashoffset floor
+    //     is KEPT; the seal imports NO async draw engine (fromDrawSVG/DrawSVG/
+    //     loadAnimationEngine reachable only via loadAnimationEngine() indirection —
+    //     awkward + jsdom-unsafe for a mount-triggered one-shot, zero gestalt gain).
+    const reachesDrawEngine =
+        /fromDrawSVG|DrawSVG|loadAnimationEngine/.test(vue) ||
+        /fromDrawSVG|DrawSVG|loadAnimationEngine/.test(composable);
+    const drawSvgCssFloor = !reachesDrawEngine;
+
+    facts.cs7 = {
+        discInUnion,
+        sfcComposesDisc,
+        personalBestProp,
+        sealBestReadsGold,
+        sealBestPhaseSpectrum,
+        bestRePointsInk,
+        sealBestComposesGold,
+        discSequenced,
+        drawSvgCssFloor,
+    };
+    if (!discInUnion)
+        violations.push(
+            "CS7: `disc` is not a member of the CompletionSealShape union (constants.ts) — BG.W-SEAL-DISC adds the composed earned-coin shape beside check/ring/wordmark",
+        );
+    if (!sfcComposesDisc)
+        violations.push(
+            "CS7: the SFC does not COMPOSE the 3-layer disc gesture (a `.completion-seal__disc` FACE + the `.completion-seal__ring` RE-USE + the `.completion-seal__check` RE-USE, gated on `shape === 'disc'`) — the disc is the composed disc→ring→check, ONE mechanism, not a fourth recipe",
+        );
+    if (!personalBestProp)
+        violations.push(
+            "CS7: the `personalBest` prop is missing or does not wire the `[data-best]` seam (the earned-gold garnish)",
+        );
+    if (sealBestPhaseSpectrum)
+        violations.push(
+            "CS7: --seal-best reads the running phase spectrum (--viz-*/--chart-{phase}) — the personal-best garnish is EARNED-gold, NEVER the phase spectrum (the Q2 fence)",
+        );
+    if (!sealBestComposesGold)
+        violations.push(
+            "CS7: the personalBest garnish does not COMPOSE the gold family — `--seal-best` must read `var(--color-gold*)`/`var(--gold*)` (a brighter earned gold, NOT a new literal — the earned-gold register has ONE home) AND `[data-best]` must re-point `--seal-ink: var(--seal-best)`",
+        );
+    if (!discSequenced)
+        violations.push(
+            "CS7: the disc→ring→check SEQUENCING is not wired (the `completion-seal-disc-in` FACE-materialize keyframe + the `--seal-ring-delay`/`--seal-check-delay` staggered delays READ) — the disc gesture must stagger the same-clock passes on animation-delay",
+        );
+    if (!drawSvgCssFloor)
+        violations.push(
+            "CS7: the seal reaches an async kf draw engine (fromDrawSVG/DrawSVG/loadAnimationEngine) — the BG.W-SEAL-DISC decide-at-build verdict is the CSS `stroke-dashoffset` floor (compositor-only + jsdom-safe + PRM-native; the check already stroke-draws via `--seal-draw`, the async engine adds indirection for zero gestalt gain)",
+        );
+
     return { facts, violations };
 }
 
@@ -383,10 +485,13 @@ function readInputs(P) {
 // ── CS6 self-test: the false-witness bites (each planted defect must RED) ─────
 function selfTest() {
     const good = {
-        vue: `data-play data-shape role="status"`,
+        vue: `data-play data-shape data-best role="status" personalBest shape === 'disc' completion-seal__disc completion-seal__ring completion-seal__check`,
         composable: `useCompletionSeal`,
-        constants: `export type CompletionSealShape = "check" | "ring" | "wordmark";`,
+        constants: `export type CompletionSealShape = "check" | "ring" | "disc" | "wordmark";`,
         css: `.completion-seal { --seal-ink: var(--phase-complete-color, var(--color-gold)); transform: scale(var(--seal-scale)); }
+        .completion-seal[data-best] { --seal-best: var(--color-gold-light); --seal-ink: var(--seal-best); }
+        .completion-seal[data-shape="disc"] { --seal-ring-delay: var(--spring-snappy-duration); --seal-check-delay: calc(var(--spring-snappy-duration) * 2); }
+        .completion-seal__disc { fill: var(--seal-disc-fill, color-mix(in oklab, var(--seal-ink), transparent 82%)); }
         .completion-seal__mark {
             stroke: var(--seal-ink);
             stroke-dashoffset: calc(100 - var(--seal-draw) / 1%);
@@ -396,6 +501,9 @@ function selfTest() {
             .completion-seal[data-play] { animation: completion-seal-settle var(--spring-bouncy-duration) var(--spring-bouncy) both; }
             .completion-seal[data-play] .completion-seal__mark { animation: completion-seal-draw var(--spring-snappy-duration) var(--ease-out) both; }
         }
+        .completion-seal[data-shape="disc"][data-play] .completion-seal__ring { animation: completion-seal-draw var(--spring-snappy-duration) var(--ease-out) var(--seal-ring-delay) both; }
+        .completion-seal[data-shape="disc"][data-play] .completion-seal__check { animation: completion-seal-draw var(--spring-snappy-duration) var(--ease-out) var(--seal-check-delay) both; }
+        @keyframes completion-seal-disc-in { from { opacity: 0; } to { opacity: 1; } }
         @keyframes completion-seal-draw { from { --seal-draw: 0%; } to { --seal-draw: 100%; } }
         @keyframes completion-seal-settle { from { --seal-scale: 0.92; } to { --seal-scale: 1; } }
         @keyframes completion-seal-glint { 0% { --seal-glint: 0; } 45% { --seal-glint: 1; } 100% { --seal-glint: 0; } }`,
@@ -496,6 +604,66 @@ function selfTest() {
                 ),
             }).violations.length > 0,
     });
+    // Bite H — dropping `disc` from the union reds CS7.
+    bites.push({
+        name: "disc-not-in-union",
+        red:
+            detectCompletionSeal({
+                ...good,
+                constants: good.constants.replace(` | "disc"`, ""),
+            }).violations.length > 0,
+    });
+    // Bite I — dropping the disc FACE layer (no composition) reds CS7.
+    bites.push({
+        name: "disc-not-composed",
+        red:
+            detectCompletionSeal({
+                ...good,
+                vue: good.vue.replace("completion-seal__disc", "x-removed"),
+            }).violations.length > 0,
+    });
+    // Bite J — dropping `personalBest` reds CS7.
+    bites.push({
+        name: "no-personal-best",
+        red:
+            detectCompletionSeal({
+                ...good,
+                vue: good.vue.replace("personalBest", "x-removed"),
+            }).violations.length > 0,
+    });
+    // Bite K — a phase-spectrum --seal-best reds CS7 (the earned-gold fence).
+    bites.push({
+        name: "seal-best-phase-spectrum",
+        red:
+            detectCompletionSeal({
+                ...good,
+                css: good.css.replace(
+                    "--seal-best: var(--color-gold-light)",
+                    "--seal-best: var(--viz-legendre)",
+                ),
+            }).violations.length > 0,
+    });
+    // Bite L — dropping the disc-in FACE keyframe (no sequencing) reds CS7.
+    bites.push({
+        name: "disc-not-sequenced",
+        red:
+            detectCompletionSeal({
+                ...good,
+                css: good.css.replace(
+                    /@keyframes completion-seal-disc-in \{[^}]*\}[^}]*\}/,
+                    "",
+                ),
+            }).violations.length > 0,
+    });
+    // Bite M — reaching the async kf draw engine reds CS7 (the CSS-floor verdict).
+    bites.push({
+        name: "reaches-draw-engine",
+        red:
+            detectCompletionSeal({
+                ...good,
+                composable: good.composable + `\nimport { fromDrawSVG } from "kf";`,
+            }).violations.length > 0,
+    });
 
     return { baseGreen, bites };
 }
@@ -573,6 +741,16 @@ function run() {
                 !facts.cs5.hasInfiniteLoop &&
                 facts.cs5.prmGated &&
                 !facts.cs5.animatesLayoutProp,
+        )}`,
+    );
+    console.log(
+        `  CS7 disc shape + best + sequencing  : ${yn(
+            facts.cs7.discInUnion &&
+                facts.cs7.sfcComposesDisc &&
+                facts.cs7.personalBestProp &&
+                facts.cs7.sealBestComposesGold &&
+                facts.cs7.discSequenced &&
+                facts.cs7.drawSvgCssFloor,
         )}`,
     );
     console.log(

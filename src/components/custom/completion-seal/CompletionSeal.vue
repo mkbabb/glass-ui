@@ -3,6 +3,7 @@
         class="completion-seal"
         :class="cn(props.class)"
         :data-shape="shape"
+        :data-best="props.personalBest ? '' : undefined"
         :data-play="playing ? '' : undefined"
         :data-drawn="drawn ? '' : undefined"
         role="status"
@@ -14,10 +15,35 @@
             aria-hidden="true"
             focusable="false"
         >
+            <!-- The disc gesture — the composed earned-coin: a filled disc FACE
+                 materializes, then the ring RE-USES the ring geometry to draw around it,
+                 then the check RE-USES the check path to draw in. The three layers
+                 stagger on animation-delay (disc→ring→check) off the ONE gold-draw
+                 mechanism — no fourth recipe. -->
+            <template v-if="shape === 'disc'">
+                <circle
+                    class="completion-seal__disc"
+                    :cx="COMPLETION_SEAL_DISC.cx"
+                    :cy="COMPLETION_SEAL_DISC.cy"
+                    :r="COMPLETION_SEAL_DISC.r"
+                />
+                <circle
+                    class="completion-seal__mark completion-seal__ring"
+                    :cx="COMPLETION_SEAL_RING.cx"
+                    :cy="COMPLETION_SEAL_RING.cy"
+                    :r="COMPLETION_SEAL_RING.r"
+                    pathLength="100"
+                />
+                <path
+                    class="completion-seal__mark completion-seal__check"
+                    :d="COMPLETION_SEAL_PATHS.check"
+                    pathLength="100"
+                />
+            </template>
             <!-- The ring glyph — a <circle>; the gold stroke draws around the
                  completion (a seal around the event). -->
             <circle
-                v-if="shape === 'ring'"
+                v-else-if="shape === 'ring'"
                 class="completion-seal__mark"
                 :cx="COMPLETION_SEAL_RING.cx"
                 :cy="COMPLETION_SEAL_RING.cy"
@@ -44,6 +70,7 @@ import { cn } from "../../../utils/cn";
 import { useCompletionSeal } from "./composables/useCompletionSeal";
 import {
     COMPLETION_SEAL_DEFAULT_SHAPE,
+    COMPLETION_SEAL_DISC,
     COMPLETION_SEAL_PATHS,
     COMPLETION_SEAL_RING,
     COMPLETION_SEAL_VIEWBOX,
@@ -53,7 +80,7 @@ import {
 defineOptions({ name: "CompletionSeal" });
 
 export interface CompletionSealProps {
-    /** The seal glyph — `check` (default) | `ring` | `wordmark`. */
+    /** The seal glyph — `check` (default) | `ring` | `disc` | `wordmark`. */
     shape?: CompletionSealShape;
     /**
      * The accessible completion announcement (the `role="status"`/`aria-live` text — a
@@ -66,6 +93,13 @@ export interface CompletionSealProps {
      * the canonical completion moment).
      */
     play?: boolean;
+    /**
+     * The earned-gold garnish (BG.W-SEAL-DISC) — the result exceeded the user's
+     * historical best. Arms `[data-best]`, which re-points `--seal-ink` onto the brighter
+     * `--seal-best` earned-gold register (a colour LIFT within the gold family — gold is
+     * EARNED, Q2). Compositor-only; the base seal ink stays the completion register.
+     */
+    personalBest?: boolean;
     /** Pass-through class on the root. */
     class?: string;
 }

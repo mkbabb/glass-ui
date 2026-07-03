@@ -37,6 +37,39 @@
     transform: scale(var(--seal-scale, 1));
 }
 
+/* The PERSONAL-BEST earned-gold garnish (BG.W-SEAL-DISC) — a result that beat the user's
+   historical best re-points the seal ink onto the brighter earned-gold register. The seal
+   mints NO new gold literal — `--seal-best` COMPOSES the gold FAMILY (`--color-gold-light`,
+   the brighter earned gold), so a consumer re-tuning the gold family re-tunes the
+   best-garnish in lockstep (the earned-gold register has ONE home; the Q2 no-re-author
+   fence). Gold is EARNED — the personal-best coin reads a touch brighter, never a new
+   hue. */
+.completion-seal[data-best] {
+    --seal-best: var(--color-gold-light, var(--gold-light));
+    --seal-ink: var(--seal-best);
+}
+
+/* The DISC gesture — the composed earned-coin (disc→ring→check). The three layers stagger
+   on animation-delay off ONE gold-draw mechanism; the sequencing clocks are token-first
+   (a consumer retunes the cadence). The disc FACE lands, then the ring draws around it,
+   then the check draws inside. */
+.completion-seal[data-shape="disc"] {
+    --seal-ring-delay: var(--spring-snappy-duration, 0.34s);
+    --seal-check-delay: calc(var(--spring-snappy-duration, 0.34s) * 2);
+}
+
+/* The disc FACE — the earned-coin the ring draws around. A translucent glass-gold coin
+   (the warm-cream liquid-glass identity — NOT an opaque slab) so the ring + check read as
+   saturated gold ON the whisper-gold face. The fill defaults visible so a non-animating /
+   PRM / non-supporting seal shows the settled coin. Token-first (`--seal-disc-fill`). */
+.completion-seal__disc {
+    fill: var(
+        --seal-disc-fill,
+        color-mix(in oklab, var(--seal-ink), transparent 82%)
+    );
+    stroke: none;
+}
+
 /* The hero-scale gold-draw glyph — an SVG <path>/<circle> stroked in `--seal-ink`. The
    stroke INKS itself via the `--seal-draw` wipe (a stroke-dashoffset paint, never a
    fade). The glint reads the W-AX-METAL-GLOW catch-light (composed, not re-authored). */
@@ -78,17 +111,44 @@
    fully-drawn mark, the @property initial-values). The draw is NOT a loop — a single
    pass each on the stroke-reveal + the settle + the glint. */
 @media (prefers-reduced-motion: no-preference) {
+    /* Every shape's coin lands with the settle overshoot (the root scale, all shapes). */
     .completion-seal[data-play] {
         animation: completion-seal-settle var(--spring-bouncy-duration, 0.57s)
             var(--spring-bouncy) both;
     }
-    .completion-seal[data-play] .completion-seal__mark {
+    /* The single-mark shapes (check / ring / wordmark) — the ONE draw + settle-glint. */
+    .completion-seal:not([data-shape="disc"])[data-play] .completion-seal__mark {
         animation:
             completion-seal-draw var(--spring-snappy-duration, 0.34s)
                 var(--ease-out, ease-out) both,
             completion-seal-glint var(--spring-snappy-duration, 0.34s)
                 var(--ease-out, ease-out)
                 var(--spring-snappy-duration, 0.34s) both;
+    }
+
+    /* The disc gesture — the three layers stagger disc→ring→check on the ONE draw
+       mechanism (the staggered animation-delays sequence same-clock passes; no fourth
+       recipe). The FACE fades in (opacity), the ring draws around it, then the check
+       draws inside + glints once on its own arrival. */
+    .completion-seal[data-shape="disc"][data-play] .completion-seal__disc {
+        animation: completion-seal-disc-in var(--spring-snappy-duration, 0.34s)
+            var(--ease-out, ease-out) both;
+    }
+    .completion-seal[data-shape="disc"][data-play] .completion-seal__ring {
+        animation: completion-seal-draw var(--spring-snappy-duration, 0.34s)
+            var(--ease-out, ease-out) var(--seal-ring-delay, 0.34s) both;
+    }
+    .completion-seal[data-shape="disc"][data-play] .completion-seal__check {
+        animation:
+            completion-seal-draw var(--spring-snappy-duration, 0.34s)
+                var(--ease-out, ease-out) var(--seal-check-delay, 0.68s) both,
+            completion-seal-glint var(--spring-snappy-duration, 0.34s)
+                var(--ease-out, ease-out)
+                calc(
+                    var(--seal-check-delay, 0.68s) +
+                        var(--spring-snappy-duration, 0.34s)
+                )
+                both;
     }
 }
 
@@ -100,6 +160,20 @@
     }
     to {
         --seal-draw: 100%;
+    }
+}
+
+/* The disc FACE materialize (BG.W-SEAL-DISC) — the earned-coin face fades in before the
+   ring draws around it (the first beat of the disc→ring→check gesture). Compositor-only
+   (opacity — a paint channel, NO layout property). `both` fill holds the settled visible
+   face; under PRM (this whole @media block is inert) the face is the static visible coin
+   (the disc's CSS default opacity 1). */
+@keyframes completion-seal-disc-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
     }
 }
 

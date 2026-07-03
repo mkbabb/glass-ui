@@ -12,13 +12,20 @@
  * The seal glyph axis — the mark the gold stroke draws:
  *  - `check` (default) — a checkmark (the canonical "done" garnish).
  *  - `ring`  — a ring/circle around the completion (a seal around the event).
+ *  - `disc`  — the composed earned-coin gesture: a filled gold disc FACE with the ring
+ *    stroke-draw affirmation around it and the check draw-in inside, SEQUENCED
+ *    disc→ring→check (the hero completion coin — BG.W-SEAL-DISC / SPEEDTEST-AX #1).
  *  - `wordmark` — a self-contained seal mark (a stylized seal glyph).
  *
- * All three share the ONE gold-draw mechanism (the `--seal-draw` stroke-reveal on the
- * `--seal-ink` gold stroke) — a `shape`-scoped path, NOT a second recipe. The seal is
- * the GOLD-DRAW completion register, distinct from the HandMark hand-voice family.
+ * `check`/`ring`/`wordmark` share the ONE gold-draw mechanism (the `--seal-draw`
+ * stroke-reveal on the `--seal-ink` gold stroke) — a `shape`-scoped path, NOT a second
+ * recipe. `disc` COMPOSES that same mechanism across three layers (the disc face fades
+ * in, then the ring RE-USES the ring geometry to draw around, then the check RE-USES the
+ * check path to draw in) — no fourth recipe, the layers stagger on animation-delay off
+ * the `--seal-ring-delay`/`--seal-check-delay` seam. The seal is the GOLD-DRAW completion
+ * register, distinct from the HandMark hand-voice family.
  */
-export type CompletionSealShape = "check" | "ring" | "wordmark";
+export type CompletionSealShape = "check" | "ring" | "disc" | "wordmark";
 
 /** The default seal glyph — the checkmark "done" garnish. */
 export const COMPLETION_SEAL_DEFAULT_SHAPE: CompletionSealShape = "check";
@@ -32,11 +39,12 @@ export const COMPLETION_SEAL_VIEWBOX = "0 0 64 64";
 
 /**
  * The per-shape SVG path/element the gold stroke draws. `check`/`wordmark` are <path>
- * `d`-strings; `ring` is drawn as a <circle> (the SFC branches on shape). Authored in
- * the 64×64 viewBox, `pathLength="100"` normalized at the element.
+ * `d`-strings; `ring` is drawn as a <circle> and `disc` COMPOSES the ring geometry + the
+ * check path (the SFC branches on shape), so neither authors its own path here. Authored
+ * in the 64×64 viewBox, `pathLength="100"` normalized at the element.
  */
 export const COMPLETION_SEAL_PATHS: Record<
-    Exclude<CompletionSealShape, "ring">,
+    Exclude<CompletionSealShape, "ring" | "disc">,
     string
 > = {
     // The checkmark — a clean two-segment tick centred in the box.
@@ -47,9 +55,18 @@ export const COMPLETION_SEAL_PATHS: Record<
 
 /**
  * The `ring` glyph geometry (a <circle>) — the centre + radius in the 64×64 viewBox.
- * A near-perimeter ring so the seal reads hero-scale.
+ * A near-perimeter ring so the seal reads hero-scale. The `disc` shape REUSES this same
+ * circle for its stroke-draw affirmation ring (one geometry, two reads).
  */
 export const COMPLETION_SEAL_RING = { cx: 32, cy: 32, r: 24 } as const;
+
+/**
+ * The `disc` glyph FACE geometry (a filled <circle>) — the earned-coin face the ring
+ * draws around. Inset 3px inside the ring radius so the drawn ring reads as a clean rim
+ * around the coin (the disc→ring→check gesture: face → rim → mark). The check path
+ * (COMPLETION_SEAL_PATHS.check) fits inside this radius.
+ */
+export const COMPLETION_SEAL_DISC = { cx: 32, cy: 32, r: 21 } as const;
 
 /**
  * The SPRING register the draw rides (SPRING-EASE / W-MOTION-CANON P2 enter-bouncy):
