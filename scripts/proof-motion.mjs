@@ -35,6 +35,19 @@
 //     Button.vue PRESERVES the byte-identical `--glass-btn-press-t` drive on its DIRECT
 //     `useSpringPress` composition (the `proof:button-glass` B2 fence held).
 //
+// BG.W-DRAWER-PAINT-BIND (F5.R2) ADDS the drawer model↔paint bind arm (D1-D4). The
+// `useDrawerSnap` engine wrote `--glass-drawer-t` to a STALE reka `$el` snapshot (captured
+// when `<Presence>` had not yet mounted the sheet), so `writeScalar` "never fired" on the
+// live element and the scalar stayed un-written — and because the CSS default was `1`
+// (full-open) the sheet SILENTLY seated open, MASKING the dead writer (the live-gesture π
+// the settled-capture harness could not see). D1/D2 lock the NO-MASKING-FALLBACK edict
+// (the un-written default is the CSS CLOSED state 0, never full-open — a dead writer fails
+// LOUD offscreen); D3 locks the LIVE content resolution (a `() => HTMLElement | null` getter
+// resolved per write, reached from the proven-live handle, not the snapshotted `$el`); D4
+// locks the open-seat slide-in (seed the spring CLOSED so DRAWER_SNAP paints, not a settled
+// no-op at the seat). Its self-test re-introduces the masking `initial-value: 1` and asserts
+// the arm flags it.
+//
 // SELF-PROVING: the detector runs against synthetic states that (a) re-plant a dead
 // composable (file present + a live import) and (b) re-fork the rAF/ElementMorph runner into
 // a bloom wrapper, and asserts BOTH FLAG — so the gate's teeth cannot silently rot (the
@@ -242,6 +255,58 @@ function detect({ existsFn, readFn, corpus }) {
     if (!/--glass-btn-press-t/.test(btn))
         V.push("S2: Button.vue must PRESERVE the byte-identical `--glass-btn-press-t` press drive (WATCH-3 — the gleam/specular coupling reads it)");
 
+    // ── D — the drawer model↔paint bind (BG.W-DRAWER-PAINT-BIND / F5.R2) ────────────
+    // The snap engine's `--glass-drawer-t` scalar must actually PAINT. On HEAD the writer
+    // wrote to a stale reka `$el` snapshot (never the live sheet), so the scalar stayed
+    // un-written and — because the CSS default was `1` (full-open) — the sheet SILENTLY
+    // seated open, MASKING the dead writer. This arm locks the repair: (D1/D2) the
+    // un-written default is the CSS CLOSED state (0), never the masking full-open `1`
+    // (the NO-MASKING-FALLBACK edict — a dead writer must fail LOUD, offscreen); (D3) the
+    // writer resolves the content element LIVE per write (a getter, not a snapshotted
+    // ref), reached from the proven-live handle; (D4) the open path seeds the spring
+    // CLOSED so DRAWER_SNAP paints a real slide-in, not a settled no-op at the seat.
+    const drawerCss = readFn("src/styles/drawer.css");
+    const drawerContent = readFn("src/components/ui/drawer/DrawerContent.vue");
+    const drawerSnap = readFn("src/components/ui/drawer/composables/useDrawerSnap.ts");
+
+    // D1 — the `@property --glass-drawer-t` registered default is the CLOSED state (0),
+    //      never the masking full-open fallback (1).
+    const propBlock = drawerCss.match(/@property\s+--glass-drawer-t\s*\{[^}]*\}/);
+    if (!propBlock) {
+        V.push("D1: drawer.css is missing the `@property --glass-drawer-t` registration");
+    } else {
+        if (/initial-value\s*:\s*1\b/.test(propBlock[0]))
+            V.push("D1: `@property --glass-drawer-t` initial-value is 1 (the masking full-open fallback that hid the dead writer) — the NO-MASKING-FALLBACK edict requires the CLOSED state 0");
+        if (!/initial-value\s*:\s*0\b/.test(propBlock[0]))
+            V.push("D1: `@property --glass-drawer-t` initial-value must be 0 (the CSS CLOSED / fail-loud state)");
+    }
+
+    // D2 — the content transform reads NO masking `1` fallback (a dead writer must read
+    //      offscreen/closed, not full-open).
+    if (/--glass-drawer-t\s*,\s*1\b/.test(drawerContent))
+        V.push("D2: DrawerContent.vue transform reads `var(--glass-drawer-t, 1)` — the masking full-open fallback; the un-written fallback must be `0` (the CSS CLOSED state)");
+
+    // D3 — the writer reaches the LIVE content element (the SEVER repair). The composable
+    //      option is a live GETTER (not a snapshotted Ref) resolved per write, and
+    //      DrawerContent passes a live resolver — NOT the dead `$el` function-ref snapshot.
+    if (!/contentEl\s*:\s*\(\)\s*=>\s*HTMLElement\s*\|\s*null/.test(drawerSnap))
+        V.push("D3: useDrawerSnap's `contentEl` option must be a LIVE getter `() => HTMLElement | null` (reka forwards its root through a <Presence> swap — a snapshotted Ref captures a stale comment node, the model↔paint SEVER)");
+    if (/contentEl\.value\b/.test(drawerSnap))
+        V.push("D3: useDrawerSnap still reads `contentEl.value` (a snapshotted ref) — resolve the element LIVE via `contentEl()` on every write");
+    if (!/\bcontentEl\(\)/.test(drawerSnap))
+        V.push("D3: useDrawerSnap must resolve the content element LIVE via `contentEl()` (the fresh-per-write reach into the portaled sheet)");
+    if (!/closest\(\s*['"]\[data-glass-drawer\]['"]\s*\)/.test(drawerContent))
+        V.push("D3: DrawerContent.vue must resolve the live content root from the handle (`handleEl.closest('[data-glass-drawer]')`) — the proven-live ref, not reka's stale `$el` snapshot");
+    if (/instanceof\s+HTMLElement\s*\?\s*el\s*:\s*null/.test(drawerContent))
+        V.push("D3: DrawerContent.vue still snapshots reka's `$el` (`el instanceof HTMLElement ? el : null`) — the stale function-ref binding is the sever; resolve LIVE from the handle");
+
+    // D4 — the open path seeds the spring at the CLOSED endpoint so DRAWER_SNAP paints a
+    //      real slide-in (not a settled no-op at the seat), and seats the closed base.
+    if (!/ensureSpring\(\s*0\s*\)/.test(drawerSnap))
+        V.push("D4: the open path must seed the spring CLOSED via `ensureSpring(0)` so DRAWER_SNAP paints a slide-in from closed (an `initial: currentFraction()` seed leaves the spring settled at the seat — a no-op, no paint)");
+    if (!/writeScalar\(\s*0\s*\)/.test(drawerSnap))
+        V.push("D4: the open path must seat the CLOSED base via `writeScalar(0)` (the fail-loud starting frame)");
+
     return V;
 }
 
@@ -290,6 +355,23 @@ if (!s1SelfTestFlags) {
     process.exit(1);
 }
 
+// ── The D self-test bite — re-introduce the masking full-open fallback (--glass-drawer-t
+//    initial-value: 1) and assert the drawer-paint-bind arm FLAGS it (the NO-MASKING teeth
+//    are real; the `1` fallback is what silently hid the dead writer at HEAD). ─────────
+const drawerCssDisk = diskRead("src/styles/drawer.css");
+const maskRead = (rel) =>
+    rel === "src/styles/drawer.css"
+        ? drawerCssDisk.replace(/initial-value\s*:\s*0\b/, "initial-value: 1")
+        : diskRead(rel);
+const maskViolations = detect({ existsFn: diskExists, readFn: maskRead, corpus });
+const dSelfTestFlags = maskViolations.length > violations.length;
+if (!dSelfTestFlags) {
+    console.error(
+        "proof:motion — D SELF-TEST FAILED: the detector did NOT flag a re-introduced masking full-open fallback (--glass-drawer-t initial-value: 1). The NO-MASKING-FALLBACK / drawer-paint-bind teeth are gone; do not trust a GREEN.",
+    );
+    process.exit(1);
+}
+
 // ── Report ──────────────────────────────────────────────────────────────────────
 console.log("proof:motion — the F5 dead-composable cut is COMPLETE (BG.W-DEAD-COMPOSABLE-CUT)");
 console.log(`  dead composables      : ${DEAD.map((d) => d.name).join(", ")}`);
@@ -302,7 +384,11 @@ console.log("proof:motion — the F5.1 motion spine is single-sourced (BG.W-MOTI
 console.log(`  ONE FLIP/morph runner : ${SPINE_PATH} ${diskExists(SPINE_PATH) ? "PRESENT" : "MISSING"} (lockSpatialTransition + asElement + ONE rAF/ElementMorph)`);
 console.log(`  bloom leaves collapsed: ${BLOOM_WRAPPERS.length} (useLiquidReveal · useDockCtaReceive — each ≤20-line-config, no second runner; useBloomUp fold BOOKED)`);
 console.log(`  press-tower collapse  : useLiquidPress squish?-toggle + Button --glass-btn-press-t drive preserved (WATCH-3)`);
-console.log(`  self-test (bite proof): OK — a re-planted dead composable AND a re-forked rAF/ElementMorph runner both flag`);
+console.log("proof:motion — the drawer model↔paint bind PAINTS (BG.W-DRAWER-PAINT-BIND / F5.R2)");
+console.log(`  --glass-drawer-t default: CLOSED (initial-value 0) — the masking full-open '1' fallback that hid the dead writer is GONE (NO-MASKING-FALLBACK edict)`);
+console.log(`  live content resolve  : useDrawerSnap.contentEl is a () => HTMLElement | null getter (fresh per write; DrawerContent reaches it via handle.closest('[data-glass-drawer]'))`);
+console.log(`  open-seat slide-in    : writeScalar(0) + ensureSpring(0) → DRAWER_SNAP {0.4,0.82} settles from CLOSED, no settled no-op`);
+console.log(`  self-test (bite proof): OK — a re-planted dead composable, a re-forked rAF/ElementMorph runner, AND a re-introduced masking --glass-drawer-t: 1 all flag`);
 console.log(`  corpus scanned        : ${corpus.length} src/+demo/ sources`);
 console.log(`  violations            : ${violations.length}`);
 for (const m of violations) console.error(`  CUT-INCOMPLETE   ${m}`);
@@ -318,6 +404,7 @@ writeGateArtifact(ARTIFACT, {
     corpusScanned: corpus.length,
     selfTestFlagged: selfTestFlags,
     s1SelfTestFlagged: s1SelfTestFlags,
+    dSelfTestFlagged: dSelfTestFlags,
     spine: SPINE_PATH,
     bloomWrappers: BLOOM_WRAPPERS,
     violations,

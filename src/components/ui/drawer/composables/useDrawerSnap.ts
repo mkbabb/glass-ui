@@ -21,8 +21,15 @@ import { DRAWER_FLING_VELOCITY, DRAWER_SNAP } from "../constants";
 import type { DrawerSnapContext } from "./drawerSnapContext";
 
 export interface UseDrawerSnapOptions {
-    /** The content sheet element (the `--glass-drawer-t` host + the drag bound box). */
-    contentEl: Ref<HTMLElement | null>;
+    /**
+     * Resolve the content sheet element LIVE (the `--glass-drawer-t` host + the drag
+     * bound box). A GETTER, never a snapshotted ref — reka's `DialogContent` forwards
+     * its root element THROUGH a `<Presence>` swap, so a `$el` captured at first mount
+     * is a stale comment placeholder and the writer's `if (el)` guard skips forever
+     * (the F5.R2 model↔paint SEVER — `writeScalar` "never fires"). Resolving the element
+     * fresh on every write reaches the painted sheet the instant `<Presence>` mounts it.
+     */
+    contentEl: () => HTMLElement | null;
     /** The handle element (the grip the user drags to cycle detents). */
     handleEl: Ref<HTMLElement | null>;
     /** The provided snap seam (the ladder, open ref, direction, snap-fraction writeback). */
@@ -95,7 +102,7 @@ export function useDrawerSnap(options: UseDrawerSnapOptions): UseDrawerSnapRetur
     // PORTAL SIBLING and the page-wrapper is OUTSIDE the portal — neither is a
     // descendant of the content, so only a `:root` (inherited) write reaches them.
     function writeScalar(t: number) {
-        const el = contentEl.value;
+        const el = contentEl();
         if (el) el.style.setProperty("--glass-drawer-t", `${t}`);
         document.documentElement.style.setProperty("--stage-t", `${t}`);
     }
@@ -113,12 +120,14 @@ export function useDrawerSnap(options: UseDrawerSnapOptions): UseDrawerSnapRetur
         document.documentElement.style.removeProperty("--stage-t");
     }
 
-    function ensureSpring(): SpringProgress {
+    function ensureSpring(initial?: number): SpringProgress {
         if (spring) return spring;
         spring = new SpringProgress({
             response: DRAWER_SNAP.response,
             dampingFraction: DRAWER_SNAP.dampingFraction,
-            initial: currentFraction(),
+            // Seed at the caller's endpoint when given (the open path seeds CLOSED so
+            // the settle is a real slide-in); else the live resting fraction.
+            initial: initial ?? currentFraction(),
             respectReducedMotion: true,
         });
         spring.play((t) => writeScalar(t));
@@ -141,6 +150,10 @@ export function useDrawerSnap(options: UseDrawerSnapOptions): UseDrawerSnapRetur
     /** Settle the spring toward `fraction`, writing back the active-snap-point. */
     function settleTo(fraction: number) {
         const s = ensureSpring();
+        // Re-arm the per-frame callback — a drag's `spring.stop()` detaches it, so a
+        // settle after a gesture must re-bind to resume the rAF loop and PAINT the
+        // trajectory (idempotent: no second loop). Then the target re-seats + resumes.
+        s.play((t) => writeScalar(t));
         s.target = fraction;
         ctx.activeSnapPoint.value = fraction;
     }
@@ -179,7 +192,7 @@ export function useDrawerSnap(options: UseDrawerSnapOptions): UseDrawerSnapRetur
     function dragSpan(): number {
         // The travel span (px) one full fraction of the sheet covers. For a bottom/
         // top sheet that is the content block-size; for a side lens, the inline-size.
-        const el = contentEl.value;
+        const el = contentEl();
         if (!el) return 1;
         const r = el.getBoundingClientRect();
         return isSideAxis(ctx.direction.value) ? r.width || 1 : r.height || 1;
@@ -224,8 +237,12 @@ export function useDrawerSnap(options: UseDrawerSnapOptions): UseDrawerSnapRetur
         dragging.value = false;
 
         const ladder = effectiveLadder(ctx.snapPoints.value, ctx.direction.value);
-        // Where the scalar currently sits (read the live painted scalar).
+        // Where the scalar currently sits (read the live painted scalar the drag wrote
+        // directly). Re-seat the (stopped) spring at that live position so the release
+        // settle animates FROM where the finger left the sheet — not the stale pre-drag
+        // value the suspended spring still holds (which would jump the sheet on release).
         const live = readScalar();
+        ensureSpring().reset(live, 0);
         // The useDockState-style velocity decision: a fling past the threshold
         // advances a detent in the drag direction; a slow release snaps to nearest.
         let target: number;
@@ -245,7 +262,7 @@ export function useDrawerSnap(options: UseDrawerSnapOptions): UseDrawerSnapRetur
     }
 
     function readScalar(): number {
-        const el = contentEl.value;
+        const el = contentEl();
         if (!el) return currentFraction();
         const v = el.style.getPropertyValue("--glass-drawer-t");
         const n = Number.parseFloat(v);
@@ -284,10 +301,17 @@ export function useDrawerSnap(options: UseDrawerSnapOptions): UseDrawerSnapRetur
         ctx.open,
         (isOpen) => {
             if (isOpen) {
-                // The content may not be mounted yet — defer to the next tick via a
-                // microtask so the contentEl ref is populated before the first write.
+                // The content mounts on this same flush; defer one microtask so the
+                // live resolver reaches the freshly-portaled sheet. Seat the CLOSED
+                // start (t=0 — the fail-loud base: a dead writer leaves the sheet
+                // offscreen, NEVER a masked full-open) then seed the spring at CLOSED
+                // and settle to the opening detent, so DRAWER_SNAP paints a real
+                // slide-in from closed rather than a settled no-op at the seat. Even
+                // if the sheet is a beat late, the spring's rAF loop resolves the live
+                // element on its next frame — the timing is robust by construction.
                 queueMicrotask(() => {
                     writeScalar(0);
+                    ensureSpring(0);
                     settleTo(currentFraction());
                 });
             } else {

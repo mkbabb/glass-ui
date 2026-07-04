@@ -18,12 +18,17 @@
  */
 
 /* The snap-fraction scalar the house `useDrawerSnap` engine writes per frame. The
- * content root's inline `transform` reads it (DrawerContent.vue) — typed so the
- * default (1 = fully open) keeps a no-snap content-sized sheet seated open. */
+ * content root's inline `transform` reads it (DrawerContent.vue). BG.W-DRAWER-PAINT-BIND
+ * (NO-MASKING-FALLBACK edict, USER 07-03) — the registered default is `0` (the CSS
+ * CLOSED state / offscreen), NEVER `1`. A `1` initial seated the sheet FULL-OPEN
+ * whenever the engine's `writeScalar` was dead, silently MASKING the model↔paint sever
+ * (the sheet looked open while the scalar was never written). At `0` an un-written
+ * sheet reads offscreen — the dead writer fails LOUD (the sheet is invisible), never
+ * hidden. The live engine seats + slides the sheet in from this closed base. */
 @property --glass-drawer-t {
     syntax: "<number>";
     inherits: false;
-    initial-value: 1;
+    initial-value: 0;
 }
 
 /* BD.W-OVERLAY-STAGE-COUPLE — `--stage-t`, the ONE registered STAGING scalar (0 =

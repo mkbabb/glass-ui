@@ -70,23 +70,22 @@ const surfaceDecoration = computed(() =>
 
 // BB.W-DRAWER-ABROGATE — bind the house snap engine. The snap seam is OPTIONAL (a
 // `<DrawerContent>` outside a `<Drawer>` renders bare); when present the engine owns
-// the `--glass-drawer-t` scalar + the handle drag gesture. reka's `DialogContent` is
-// a component (not a bare element), so the template ref resolves the component
-// instance — `setContentEl` unwraps the forwarded root element (`$el`) the engine
-// writes its scalar onto.
-const contentEl = ref<HTMLElement | null>(null)
+// the `--glass-drawer-t` scalar + the handle drag gesture.
+//
+// BG.W-DRAWER-PAINT-BIND (F5.R2) — the content element is resolved LIVE from the
+// proven-live `handleEl` string-ref, NOT snapshotted off reka's `DialogContent.$el`.
+// reka forwards its root through a `<Presence>` swap, so a `$el` captured when the
+// function-ref first fires is a stale comment placeholder that never refreshes when
+// `<Presence>` mounts the real element — the writer wrote to a dead ref forever (the
+// model↔paint SEVER: `--glass-drawer-t` stayed unwritten, the sheet never moved). The
+// handle mounts WITH the sheet, so `handleEl.closest([data-glass-drawer])` is always
+// the live content root the transform + the `--glass-drawer-t` scalar share.
 const handleEl = ref<HTMLElement | null>(null)
-function setContentEl(instance: unknown): void {
-  if (!instance) {
-    contentEl.value = null
-    return
-  }
-  const el = (instance as { $el?: unknown }).$el ?? instance
-  contentEl.value = el instanceof HTMLElement ? el : null
-}
+const resolveContentEl = (): HTMLElement | null =>
+  (handleEl.value?.closest('[data-glass-drawer]') as HTMLElement | null) ?? null
 const snapCtx = useOptionalDrawerSnapContext()
 const snap = snapCtx
-  ? useDrawerSnap({ contentEl, handleEl, ctx: snapCtx })
+  ? useDrawerSnap({ contentEl: resolveContentEl, handleEl, ctx: snapCtx })
   : null
 
 // Whether a real detent ladder is in play (the snap-fill-viewport CSS rule keys off
@@ -105,15 +104,18 @@ const direction = computed(() => snapCtx?.direction.value ?? 'bottom')
 const snapStyle = computed<CSSProperties | undefined>(() => {
   if (!snapCtx) return undefined
   // `1 - t` of the sheet remains off the open edge; for a side lens it is the inline
-  // axis. The CSS `--glass-drawer-t` default (1) keeps a no-snap sheet fully open.
+  // axis. BG.W-DRAWER-PAINT-BIND (NO-MASKING-FALLBACK edict) — the un-written fallback
+  // is `0` (the CSS CLOSED state, the design), NEVER `1`: a `1` fallback seated the
+  // sheet FULL-OPEN whenever the writer was dead, silently masking the sever. At `0`
+  // an un-written sheet reads offscreen (fail LOUD); the live writer seats + slides it.
   const dir = direction.value
   if (dir === 'bottom')
-    return { transform: 'translateY(calc((1 - var(--glass-drawer-t, 1)) * 100%))' }
+    return { transform: 'translateY(calc((1 - var(--glass-drawer-t, 0)) * 100%))' }
   if (dir === 'top')
-    return { transform: 'translateY(calc((var(--glass-drawer-t, 1) - 1) * 100%))' }
+    return { transform: 'translateY(calc((var(--glass-drawer-t, 0) - 1) * 100%))' }
   if (dir === 'left')
-    return { transform: 'translateX(calc((var(--glass-drawer-t, 1) - 1) * 100%))' }
-  return { transform: 'translateX(calc((1 - var(--glass-drawer-t, 1)) * 100%))' }
+    return { transform: 'translateX(calc((var(--glass-drawer-t, 0) - 1) * 100%))' }
+  return { transform: 'translateX(calc((1 - var(--glass-drawer-t, 0)) * 100%))' }
 })
 </script>
 
@@ -121,7 +123,6 @@ const snapStyle = computed<CSSProperties | undefined>(() => {
   <DialogPortal>
     <DrawerOverlay v-if="props.showOverlay" />
     <DialogContent
-      :ref="setContentEl"
       v-bind="{ ...forwarded, ...$attrs }"
       data-glass-drawer
       :data-glass-drawer-snap-points="hasSnapPoints ? 'true' : undefined"
