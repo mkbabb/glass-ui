@@ -299,11 +299,19 @@
 }
 
 /* The route-enter keyframes — unlayered (pure `@keyframes`, layer-agnostic, the
-   animations.css convention). Referenced by the `.route-enter` recipe above. */
+   animations.css convention). Referenced by the `.route-enter` recipe above.
+
+   BG.W-ROUTE-ENTER-VISIBLE (fix b) — the rise lifts 0.75rem (12px) → 1.25rem (20px),
+   the perceptible 16–24px band the §2.6 fix names. 12px was sub-perceptual once the
+   route-chunk stall (now pre-resolved off the beat, router.ts fix a) is out of the
+   clock — the surviving rise-tail read as a plain fade. 20px on --spring-snappy +
+   `backwards` (P2/P4 — the SPATIAL leg on the spring, the from-state held before the
+   first composited frame) makes the decelerating vertical settle READ in paint. The
+   distance is the sole change; the spring clock + fill register are untouched. */
 @keyframes gl-route-enter {
     from {
         opacity: 0;
-        transform: translateY(0.75rem);
+        transform: translateY(1.25rem);
     }
     to {
         opacity: 1;

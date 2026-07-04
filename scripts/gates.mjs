@@ -732,6 +732,12 @@ export const GATES = [
         note: "BG.W-ROUTE-TRANSITION (re-scoped hygiene) — under the bare keyed swap the Vue 'non-element root' <Transition> warning cannot fire, so this asserts every ROUTED SFC (manifest rows + SectionLanding + NotFound) has an ELEMENT root that can carry the .route-enter on-mount entrance class (flags a text-only / interpolation-only / empty / teleport-only root). 7-bite self-test incl. the planted text-root flag. Bite: a routed module with a non-element root → RED",
     },
     {
+        id: "proof:route-enter-visible",
+        cmd: "proof:route-enter-visible",
+        tags: ["local", "ci", "release"],
+        note: "BG.W-ROUTE-ENTER-VISIBLE (IOS27-MOTION-TRUTH §2.6, class P) — the route entrance is VISIBLE in paint. 2.1's `gl-route-enter` beat was EATEN: the dynamic-import stall landed INSIDE the animation clock (start-time is style-resolve) and the surviving 12px-rise tail was sub-perceptual. Device-free SOURCE assert the three §2.6 fixes are PRESENT so a future edit cannot silently re-eat the beat — R1 (fix a) the route chunk pre-resolved BEFORE the swap on EVERY navigation (`router.beforeResolve` awaits the lazy `() => import()`, NO one-shot `firstResolved` gate — the W-NAV-DOCK-FIX first-nav-only guard SUPERSEDED); R2 (fix b) the `.route-enter` rise is a perceptible 16–24px on `--spring-snappy` + `backwards`, the reduced-motion arm re-points onto gl-route-fade (fade-keeps/rise-drops — P6); R3 (fix c) the StoryHeader eyebrow→subpath→title→blurb bands stagger 30–120ms each with a REAL translateY leg (the subpath chip's cluster-rise rule was the dead-class gap this wave closed). Comment-stripped scan + a 7-bite self-test (a 12px rise / one-shot beforeResolve / dropped `backwards` / a missing subpath rule / a translateY-less keyframe each flag; a clean tree + a deletion-record comment pass). The binding painted rise/stagger truth rides the BG gestalt roster. Bite: re-gate the chunk-resolve behind firstResolved → R1 RED; drop the rise below 16px → R2 RED; delete the subpath cluster-rise rule → R3 RED",
+    },
+    {
         id: "proof:no-paper-field",
         cmd: "proof:no-paper-field",
         tags: ["local", "ci", "release"],

@@ -107,14 +107,18 @@ router.afterEach((to) => {
     shellFieldActive.value = !to.meta?.focal;
 });
 
-// W-NAV-DOCK-FIX (defect 7) — eager-resolve the lazy component of the FIRST navigation
-// so the initial mount never paints an empty <RouterView> (the "Pick a story" flash).
-// Subsequent navigations are gated by the AppShell placeholder guard. A one-shot guard
-// that removes itself after the first resolve (no per-nav cost).
-let firstResolved = false;
+// BG.W-ROUTE-ENTER-VISIBLE (fix a) — pre-resolve the route chunk BEFORE the swap on
+// EVERY navigation, so the dynamic-import stall PRECEDES the entrance beat instead of
+// landing INSIDE the `.route-enter` animation clock (the stall-eaten window that made
+// 2.1's `gl-route-enter` rise sub-perceptual: the animation start-time is style-resolve,
+// so a ~120ms chunk stall arrived past snappy's half-clock and the surviving 12px-rise
+// tail read as a plain fade). Awaiting the lazy `component: () => import()` in
+// `beforeResolve` means the swap commits with the chunk ALREADY warm — frame 0 of the
+// new route paints the `from` state and the whole rise reads. This SUPERSEDES the
+// W-NAV-DOCK-FIX one-shot (which only warmed the FIRST navigation — the initial-flash
+// fix — and left every subsequent swap stall-eaten): the guard is now every-nav, and a
+// warm chunk resolves synchronously so there is no per-nav cost after the first visit.
 router.beforeResolve(async (to) => {
-    if (firstResolved) return true;
-    firstResolved = true;
     const comps = to.matched
         .map((r) => r.components?.default)
         .filter(

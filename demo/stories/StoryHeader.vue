@@ -28,18 +28,28 @@
 // blurb). The descriptor is shown ONCE.
 //
 // THE 3-STAGE GRAVITY ENTRANCE (A4-ENTRANCE). The cluster arrives as a tight
-// 3-stage fade-rise that REINFORCES the reading order — the eyebrow leads, the
-// title settles, the blurb fades last (a ~per-stage stagger). Each stage is
-// COMPOSITOR-ONLY (transform: translateY + coupled opacity, NEVER font-size /
-// margin / top — the W-MOTION-CANON P5 floor) on the no-overshoot SETTLE register
-// (--ease-out; the audacious title NEVER bounces — P2), clocked on the per-element
-// duration. The stagger is the keyframe `animation-delay` per stage (a
-// deterministic CSS stagger, NO setTimeout cascade). Under
+// fade-rise that REINFORCES the reading order — the eyebrow leads, the subpath
+// chip follows, the title settles, the blurb fades last (a ~per-stage stagger).
+// Each stage is COMPOSITOR-ONLY (transform: translateY + coupled opacity, NEVER
+// font-size / margin / top — the W-MOTION-CANON P5 floor) on the no-overshoot
+// SETTLE register (--ease-out; the audacious title NEVER bounces — P2), clocked on
+// the per-element duration. The stagger is the keyframe `animation-delay` per stage
+// (a deterministic CSS stagger, NO setTimeout cascade). Under
 // prefers-reduced-motion: reduce the cluster paints its static terminal state with
 // ZERO in-between frames (the keyframes live inside the no-preference gate; see
 // story-hero.css). The class hooks the entrance; the keyframes are owned by
 // story-hero.css (the .story-hero-cluster-* register that EXTENDS the shipped
-// .story-hero-title--enter GRAVITY precedent to the eyebrow + blurb).
+// .story-hero-title--enter GRAVITY precedent to the eyebrow + subpath + blurb).
+//
+// BG.W-ROUTE-ENTER-VISIBLE (fix c). This cluster IS the route-entrance reading-order
+// cascade the §2.6 fix names: on a route swap the whole page rises via the
+// `.route-enter` @keyframes (transitions.css, the perceptible 20px rise on
+// --spring-snappy + `backwards`, its chunk pre-resolved off the beat in router.ts),
+// and INSIDE it these bands stagger 30–120ms (eyebrow 0 → subpath 30 → title 60 →
+// blurb 120) each with a real translateY leg — never a bare opacity fade. Every band
+// carrying `story-header-cluster--enter` has a matching keyframe rule in
+// story-hero.css (the subpath chip's rule was the missing one — the dead-class gap
+// this wave closed).
 //
 // A demo-private chassis primitive — NOT a library export.
 import { cn } from "@glass/utils/cn";

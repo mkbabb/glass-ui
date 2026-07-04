@@ -677,6 +677,19 @@
         animation-timeline: auto, scroll();
         animation-range: normal, 0 var(--hero-condense-fade-range, 120px);
     }
+    /* BG.W-ROUTE-ENTER-VISIBLE (fix c) — the subpath chip JOINS the reading-order
+       cascade. It carried `story-header-cluster--enter` (StoryHeader.vue) but had NO
+       matching keyframe rule, so it appeared STATIC while the eyebrow/title/blurb rose
+       — a dead class + a broken 4-band cascade. It now rides the SAME
+       story-hero-cluster-rise on the SAME clock, staggered ~30ms (between the eyebrow's
+       0 and the title's 60) so the eyebrow→subpath→title→blurb bands read top-to-bottom.
+       No D5 scroll-fade here (the subpath is the route identity — it PERSISTS through the
+       scroll-shrink, never fades). */
+    .story-hero-cluster .story-header-subpath.story-header-cluster--enter {
+        animation: story-hero-cluster-rise var(--spring-smooth-duration, 0.36s)
+            var(--ease-out, ease-out) both;
+        animation-delay: 30ms;
+    }
     /* The display title SETTLES — stage 1, ~60ms after the eyebrow. It keeps its OWN
        .story-hero-title--enter keyframe (the audacious-type GRAVITY register, 0.62s
        --ease-out); the cluster adds ONLY the stage delay so it settles after the
