@@ -208,9 +208,9 @@
         transition:
             opacity var(--duration-fast) var(--ease-out)
                 calc(var(--dock-stack-stagger) * var(--i, 0)),
-            scale var(--spring-dock-duration, var(--duration-normal)) var(--spring-dock, var(--ease-out))
+            scale var(--spring-dock-duration) var(--spring-dock)
                 calc(var(--dock-stack-stagger) * var(--i, 0)),
-            translate var(--spring-dock-duration, var(--duration-normal)) var(--spring-dock, var(--ease-out))
+            translate var(--spring-dock-duration) var(--spring-dock)
                 calc(var(--dock-stack-stagger) * var(--i, 0)),
             filter var(--duration-fast) var(--ease-out)
                 calc(var(--dock-stack-stagger) * var(--i, 0)),

@@ -36,7 +36,7 @@ import {
     effectiveCap,
     writeVelocityWeight,
 } from "../../../../composables/motion/core/writeVelocityWeight";
-import { DOCK_SPRING } from "../constants";
+import { DOCK_MORPH_MAX_STRETCH, DOCK_SPRING } from "../constants";
 
 export type DockMorphOrientation = "vertical" | "horizontal";
 
@@ -111,10 +111,16 @@ export function useDockOrientationMorph(
     const morphing = ref(false);
 
     // BC.W-DOCK-ARBITRARY (A4) — the shape-morph squish cap reads the
-    // `--dock-morph-max-stretch` cascade token (the lifted iOS-27 register, default
-    // 1.14 — BD.W-MOTION-WEIGHT C1·R3 drift fix: the prior 1.08 fallback was stale).
-    // Resolved per-read off the live root so a consumer override re-resolves the cap
-    // without reconstructing the primitive (the useLiquidFlex getter contract).
+    // `--dock-morph-max-stretch` cascade token (the lifted iOS-27 register). Resolved
+    // per-read off the live root so a consumer override re-resolves the cap without
+    // reconstructing the primitive (the useLiquidFlex getter contract).
+    //
+    // BG.NF.1 W-FALLBACK-EXCISE — the cap default is the single-sourced
+    // `DOCK_MORPH_MAX_STRETCH` (constants.ts, mirroring the token), NEVER a bare
+    // drift-prone literal duplicated at the read (the 1.08→1.14 drift the prior literal
+    // carried). An absent root is the honest not-mounted case → the constant; a MOUNTED
+    // root whose token is unreadable is a real bug → fail loud (dev warn) then the
+    // constant, no silent literal mask.
     //
     // BD.W-MOTION-WEIGHT — the cap is then derived SITE-LOCALLY off the live
     // `--motion-weight` read at the SAME root (the spike-corrected mechanism — NEVER
@@ -124,12 +130,21 @@ export function useDockOrientationMorph(
     // `--*-stretch-k` coefficient cohort.
     const maxStretchOf = (): number => {
         const r = rootEl.value;
-        if (!r) return 1.14;
+        if (!r) return DOCK_MORPH_MAX_STRETCH;
         const raw = getComputedStyle(r)
             .getPropertyValue("--dock-morph-max-stretch")
             .trim();
         const n = raw ? Number.parseFloat(raw) : NaN;
-        const capToken = Number.isFinite(n) && n >= 1 ? n : 1.14;
+        let capToken: number;
+        if (Number.isFinite(n) && n >= 1) {
+            capToken = n;
+        } else {
+            if (import.meta.env?.DEV)
+                console.warn(
+                    "[glass-ui] dock: --dock-morph-max-stretch unreadable on a mounted dock root — the token cascade did not reach it (falling back to the single-sourced cap).",
+                );
+            capToken = DOCK_MORPH_MAX_STRETCH;
+        }
         return effectiveCap(r, capToken);
     };
 

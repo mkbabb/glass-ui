@@ -244,15 +244,14 @@ const morphHost = useOptionalDockMorphContext();
 
 let currentLayer: Readonly<Ref<string>>;
 let leavingLayer: Readonly<Ref<string | null>>;
-let onTransitionEnd: (e: TransitionEvent) => void;
 
 if (morphHost) {
     const handle = morphHost.registerGroup({ containerEl, activeLayer, axis });
     currentLayer = handle.currentLayer;
     leavingLayer = handle.leavingLayer;
-    // The orchestrator owns the spring; there is no per-group transitionend to
-    // resolve. A defensive no-op keeps the `@transitionend` binding parity.
-    onTransitionEnd = () => {};
+    // BG.NF.1 W-FALLBACK-EXCISE — the orchestrator owns the spring; the vestigial
+    // `@transitionend` binding + its defensive no-op are excised (the CSS-transition
+    // morph died at the spring migration — no legacy parity shim).
     onBeforeUnmount(() => handle.release());
 } else {
     const self = useLayerTransition({
@@ -271,7 +270,6 @@ if (morphHost) {
     });
     currentLayer = readonly(self.currentLayer);
     leavingLayer = readonly(self.leavingLayer) as Readonly<Ref<string | null>>;
-    onTransitionEnd = self.onTransitionEnd;
 }
 
 /* AQ.W6 §Design 7 — on a View-Transitions engine the layer-stack size morph +
@@ -427,12 +425,7 @@ function onRailFocusOut(e: FocusEvent) {
                 <TabsIndicator class="dock-layer-tab-indicator" :plate="false" />
             </TabsList>
         </Tabs>
-        <div
-            ref="containerEl"
-            class="dock-layer-stack"
-            :style="stackVtStyle"
-            @transitionend="onTransitionEnd"
-        >
+        <div ref="containerEl" class="dock-layer-stack" :style="stackVtStyle">
             <slot />
         </div>
     </div>

@@ -146,7 +146,7 @@
         border-radius: calc(
             var(--radius-pill) +
                 (var(--dock-card-radius) - var(--radius-pill)) *
-                var(--dock-expand-t, 1)
+                var(--dock-expand-t)
         );
 
         /* F1 — the card-tier elevation morph ("material thickens as glass flexes
@@ -163,7 +163,7 @@
            the full floating stack grounds the multi-row silhouette. The per-layer
            recipe mirrors `--shadow-dock-wrap` (= `--shadow-xl` + `--glass-material-rim`
            + `--glass-under-shadow-vivid`) so the token stays the source-of-record. */
-        --dock-wrap-elev: calc(var(--dock-expand-t, 1) * 100%);
+        --dock-wrap-elev: calc(var(--dock-expand-t) * 100%);
         box-shadow:
             var(--glass-edge-light),
             var(--shadow-dock-override, var(--shadow-dock)),

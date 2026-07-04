@@ -27,6 +27,31 @@
             min-block-size: var(--dock-touch-target, 2.75rem);
             min-inline-size: var(--dock-touch-target, 2.75rem);
         }
+
+        /* ATLAS-N C3 (NF.1 rider) — the compact/dense DOCK-TRIGGER 44px tap floor via a
+           HIT-SLOP, not a box grow. The select/dropdown triggers size off
+           `min-height: auto` + padding (NOT `--dock-control-size`), so on a compact/dense
+           rung a coarse-pointer trigger paints ~32×24 — below the WCAG-2.5.5 chrome floor
+           (the atlas census `.dock-trigger.dock-dropdown-trigger` = 32×24). A centred
+           `::after` hit-slop extends the POINTER target to `--dock-touch-target` in each
+           axis WITHOUT painting or growing the box (the atlas N-SPEC §4.5 chrome-floor
+           idiom — `--dock-control-floor`/`--dock-touch-target` names survive per Q4). The
+           slop is a transparent child of the button, so a tap anywhere within it fires the
+           button; `max(100%, …)` is SELF-LIMITING — a trigger already ≥ floor gets a slop
+           exactly its own size (no-op), so the rule never shrinks nor over-grows a target. */
+        :is(.dock-trigger, .dock-select-trigger, .dock-dropdown-trigger) {
+            position: relative;
+        }
+        :is(.dock-trigger, .dock-select-trigger, .dock-dropdown-trigger)::after {
+            content: "";
+            position: absolute;
+            inset-block-start: 50%;
+            inset-inline-start: 50%;
+            inline-size: max(100%, var(--dock-touch-target, 2.75rem));
+            block-size: max(100%, var(--dock-touch-target, 2.75rem));
+            transform: translate(-50%, -50%);
+            /* transparent — the slop extends the tap area, never the paint. */
+        }
     }
 
     /* AX.W06 F2/F3 — the HOISTED refined rail nav-item polish. The demo's

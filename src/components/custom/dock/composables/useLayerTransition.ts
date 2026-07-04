@@ -68,8 +68,6 @@ export interface UseLayerTransitionOptions {
 }
 
 export interface UseLayerTransitionReturn {
-    /** Attach to `@transitionend` on the container (kept for call-site parity). */
-    onTransitionEnd(e: TransitionEvent): void;
     /** The currently active layer id (post-swap). */
     currentLayer: Ref<string>;
     /** The layer id currently fading out, or null. */
@@ -401,23 +399,10 @@ export function useLayerTransition(
         });
     });
 
-    // Kept for call-site parity (`@transitionend` on the container). The morph no
-    // longer runs on a CSS transition, so there is no size-morph transitionend to
-    // consume; this is a defensive settle if a stray transition fires after the
-    // spring has already settled.
-    function onTransitionEnd(e: TransitionEvent) {
-        const el = containerEl.value;
-        if (!el) return;
-        if (e.target !== el) return;
-        if (e.propertyName !== morphAxisProp.value && e.propertyName !== dim.value)
-            return;
-        if (spring && spring.settled) settle(el, morphRoot(el));
-    }
-
     onUnmounted(() => {
         disposeSpring();
         repositionQueue.length = 0;
     });
 
-    return { onTransitionEnd, currentLayer, leavingLayer, morphing, deferReposition };
+    return { currentLayer, leavingLayer, morphing, deferReposition };
 }

@@ -15,7 +15,6 @@ import { DOCK_MORPH_LABEL, DOCK_SPRING } from "../constants";
 // site); this orchestrator drives a `DockSpring` handle, arming the attrs + writing the
 // scalar, NEVER instantiating a spring itself.
 import { useDockSpring } from "./useDockSpring";
-import { dimOf } from "./dockMorphMeasure";
 
 /**
  * AX.W02 — ONE morph orchestrator per dock. The dock is a single morph stack
@@ -101,6 +100,17 @@ export interface UseDockMorphOrchestratorOptions {
     outerActiveLayer: Ref<string>;
     /** The outer pair morphs the inline axis (a horizontal dock). */
     outerAxis: Ref<"horizontal" | "vertical">;
+    /**
+     * BG.NF.1 W-FALLBACK-EXCISE — a NOTIFY seam (NOT a busy-flag shadow): the
+     * orchestrator calls `onMorphActiveChange(true)` when the outer morph spring ARMS
+     * (alongside `setAttribute("data-morphing")`) and `(false)` when it SETTLES
+     * (alongside `removeAttribute`), so a consumer (GlassDock) can drive its OWN
+     * `isTransitioning` off the morph's OWN spring settle — the CSS-transition-era
+     * wrong-clock settle timer + dead `@transitionend` resolver are excised. The
+     * orchestrator holds NO parallel boolean (the single busy signal stays the
+     * `[data-morphing]` attr + the factory's `.live` — proof:dock-engine-unify U3).
+     */
+    onMorphActiveChange?: (active: boolean) => void;
 }
 
 export interface UseDockMorphOrchestratorReturn {
@@ -108,8 +118,6 @@ export interface UseDockMorphOrchestratorReturn {
     context: DockMorphContext;
     /** The outer pair's post-swap active layer id (call-site parity). */
     outerCurrentLayer: Readonly<Ref<string>>;
-    /** Defensive settle on a stray `@transitionend` (call-site parity). */
-    onOuterTransitionEnd(e: TransitionEvent): void;
 }
 
 /**
@@ -168,6 +176,10 @@ export function useDockMorphOrchestrator(
             r.removeAttribute("data-punching");
             r.style.removeProperty("--dock-morph-t");
         }
+        // BG.NF.1 W-FALLBACK-EXCISE — notify the settle (alongside clearing the single
+        // `[data-morphing]` busy signal) so a consumer's `isTransitioning` resolves from
+        // the spring's OWN settle, not a wrong-clock timer. No parallel flag is held.
+        options.onMorphActiveChange?.(false);
         dockSpring.dispose();
     }
 
@@ -183,6 +195,9 @@ export function useDockMorphOrchestrator(
     function ensureSpringRunning() {
         const r = root();
         if (!r) return;
+        // BG.NF.1 W-FALLBACK-EXCISE — notify the arm alongside setting the single
+        // `[data-morphing]` busy signal (the consumer drives its own isTransitioning).
+        options.onMorphActiveChange?.(true);
         r.setAttribute("data-morphing", "");
         // BD.W-DOCK-PUNCH-CHANNEL — arm the dedicated cartoon-punch for ONE episode.
         // `[data-punching]` lifts `--dock-punch-stretch` to its overshoot target; the
@@ -277,25 +292,6 @@ export function useDockMorphOrchestrator(
         },
     };
 
-    function onOuterTransitionEnd(e: TransitionEvent) {
-        const el = outerEl.value;
-        if (!el || e.target !== el) return;
-        if (
-            e.propertyName !== "width" &&
-            e.propertyName !== "height" &&
-            e.propertyName !== dimOf(outerAxis.value)
-        ) {
-            return;
-        }
-        // The factory self-disposes on settle, so a settled morph leaves the handle
-        // parked (`!dockSpring.live`). A stray `@transitionend` while no morph is live
-        // is the vestigial defensive settle (idempotent when already idle).
-        if (!dockSpring.live) {
-            settleTarget(outerTarget);
-            maybeSettleRoot();
-        }
-    }
-
     onUnmounted(() => {
         for (const t of targets) t.stop();
         targets.clear();
@@ -305,6 +301,5 @@ export function useDockMorphOrchestrator(
     return {
         context,
         outerCurrentLayer: readonly(outerTarget.currentLayer),
-        onOuterTransitionEnd,
     };
 }

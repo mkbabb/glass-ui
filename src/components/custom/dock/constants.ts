@@ -88,11 +88,24 @@ export const DOCK_SPRING = {
 } as const;
 
 /**
- * The CSS properties whose `transitionend` the dock-morph window watches to know a
- * resize-morph has settled (`useDockMorphWindow.ts`). A `transitionend` on any other
- * property is ignored.
+ * BG.NF.1 W-FALLBACK-EXCISE — the JS token-mirror constants (the NO-MASKING-FALLBACK
+ * single-source floor). The dock composables read a live root token but need a value
+ * when the root is not yet mounted; that value lives HERE ONCE (never a bare drift-prone
+ * literal duplicated at the read site — the 1.14/44 that had already drifted 1.08→1.14).
  */
-export const RESIZE_MORPH_PROPS = new Set(["width", "height", "padding", "transform"]);
+
+/**
+ * The shape-morph squish cap — mirrors `--dock-morph-max-stretch` (density.css). The
+ * lifted iOS-27 register (BD.W-MOTION-WEIGHT C1·R3 drift fix: the prior 1.08 was stale).
+ */
+export const DOCK_MORPH_MAX_STRETCH = 1.14;
+
+/**
+ * The collapsed-endpoint floor in px — mirrors `--dock-morph-min`'s `2.75rem` = the
+ * WCAG 2.5.5 touch floor at the 16px root (density.css). Used until the collapsed
+ * state has been captured at rest.
+ */
+export const DOCK_TAP_FLOOR_PX = 44;
 
 // ── BG.W-SIRI-DOCK-CAPABILITY — the Siri-island form ladder (forms-are-DATA) ──────
 

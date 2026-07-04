@@ -99,7 +99,7 @@
                     var(--dock-expanded-px, 0px) -
                         var(--dock-collapsed-px, var(--dock-expanded-px, 0px))
                 ) *
-                clamp(0, var(--dock-expand-t, 1), 1)
+                clamp(0, var(--dock-expand-t), 1)
         );
         --dock-size-scale: clamp(
             0.06,
@@ -131,7 +131,7 @@
        small-subtree inheriting alias the stagger reads (the inheritance-bomb guard
        only concerns the `:root`-wide write, which never happens). */
     .glass-dock[data-morphing] .dock-layer-stack {
-        --dock-expand-t: var(--dock-morph-t, 1);
+        --dock-expand-t: var(--dock-morph-t);
     }
 
     /* Horizontal dock content grows visibly when the active layer's natural
@@ -306,7 +306,7 @@
         --child-reveal: clamp(
             0,
             calc(
-                (var(--dock-expand-t, 1) - var(--dock-stagger-onset)) /
+                (var(--dock-expand-t) - var(--dock-stagger-onset)) /
                     var(--dock-stagger-window)
             ),
             1

@@ -36,7 +36,7 @@ const FRAME_MS = 1000 / 60;
 // ── STRUCTURE fixtures ────────────────────────────────────────────────────────
 // A GREEN GlassDock: one orchestrator, one provide, NO own useLayerTransition.
 const GREEN_GLASSDOCK = `
-const { context: dockMorphContext, onOuterTransitionEnd } = useDockMorphOrchestrator({ rootEl: dockEl });
+const { context: dockMorphContext, morphing } = useDockMorphOrchestrator({ rootEl: dockEl });
 provideDockMorphContext(dockMorphContext);
 `;
 // A GREEN DockLayerGroup: injects the optional context, registers on the nested

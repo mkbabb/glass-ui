@@ -1,13 +1,14 @@
 <script setup lang="ts">
 // The shell-prop derivation (variant/shape/orientation/density/collapse surface +
 // the container-query style + the discriminated-union prop types) lives in
-// ./composables/useDockShellProps; the morph-window timing family (the
-// isTransitioning flag lifecycle) lives in ./composables/useDockMorphWindow. The
-// collapsed-pill touch-gate lives in ./composables/useDockTouchGate; the fission
-// split-facility wiring lives in ./composables/useDockFissionWiring
-// (BG.W-DOCK-DECOMPOSE — the F6.5 one-writer-per-concern carve). This SFC composes
-// the dual-layer grid, the axis-aware expand/collapse transition, and the
-// pointer/focus hold machinery.
+// ./composables/useDockShellProps; the `isTransitioning` flag resolves from the
+// morph orchestrator's OWN spring settle (`morphing`, dockMorphContext) —
+// BG.NF.1 W-FALLBACK-EXCISE excised the CSS-transition-era wrong-clock settle timer +
+// dead `@transitionend` resolver (useDockMorphWindow). The collapsed-pill touch-gate
+// lives in ./composables/useDockTouchGate; the fission split-facility wiring lives in
+// ./composables/useDockFissionWiring (BG.W-DOCK-DECOMPOSE — the F6.5
+// one-writer-per-concern carve). This SFC composes the dual-layer grid, the
+// axis-aware expand/collapse transition, and the pointer/focus hold machinery.
 import { computed, onMounted, ref, useId, useSlots, useTemplateRef, watch } from "vue";
 // AZ.W-ADAPTIVE-AUTO Arm 2 (H3 arm a) — the sampled-luminance observer is wired ON by
 // DEFAULT for the dock (the surface the user reported unreadable over light, and the
@@ -26,7 +27,6 @@ import {
 } from "./composables/dockMorphContext";
 import { useDockExpandedSize } from "./composables/dockMorphMeasure";
 import { useDockShellProps, type DockProps } from "./composables/useDockShellProps";
-import { useDockMorphWindow } from "./composables/useDockMorphWindow";
 import { useDockClickIntegrity } from "./composables/useDockClickIntegrity";
 import { useDockItemDrag } from "./composables/useDockItemDrag";
 import { useDockTouchGate } from "./composables/useDockTouchGate";
@@ -172,13 +172,20 @@ const outerLayerAxis = computed<"horizontal" | "vertical">(() => orientation.val
    the orchestrator pins at `from` then measures `to` one rAF post-flush; size/pad/
    radius/color/stagger co-morph off the one `--dock-morph-t` scalar. A nested
    `<DockLayerGroup>` registers as a SECOND target on the SAME spring. (dockMorphContext) */
-const { context: dockMorphContext, onOuterTransitionEnd: onLayersTransitionEnd } =
-    useDockMorphOrchestrator({
-        rootEl: dockEl,
-        outerEl: layersEl,
-        outerActiveLayer,
-        outerAxis: outerLayerAxis,
-    });
+const { context: dockMorphContext } = useDockMorphOrchestrator({
+    rootEl: dockEl,
+    outerEl: layersEl,
+    outerActiveLayer,
+    outerAxis: outerLayerAxis,
+    // BG.NF.1 W-FALLBACK-EXCISE — `isTransitioning` resolves from the morph's OWN
+    // spring settle: the orchestrator notifies arm→true / settle→false (alongside the
+    // single `[data-morphing]` busy signal). The CSS-transition-era wrong-clock settle
+    // timer + dead `@transitionend` resolver (useDockMorphWindow) are excised — no
+    // legacy timer, no plausibly-settled fallback.
+    onMorphActiveChange: (active) => {
+        isTransitioning.value = active;
+    },
+});
 
 /* AX.W02 — PROVIDE the single morph orchestrator through the optional DI seam: a
    nested `<DockLayerGroup>` injects it + defers its pane-swap (no second spring); one
@@ -204,14 +211,6 @@ useDockExpandedSize({
 const rootVtStyle = computed<Record<string, string>>(() => ({
     "view-transition-name": dockId.replace(/[^a-zA-Z0-9_-]/g, "-"),
 }));
-
-/* The morph-WINDOW timing family — the `isTransitioning` flag lifecycle (the
-   morph generation, the spring-settle fallback timer, and the resize-morph
-   `transitionend` resolver). Owns its own unmount cleanup. */
-const { markTransitioning, onDockTransitionDone } = useDockMorphWindow(
-    dockEl,
-    isTransitioning,
-);
 
 /* R5-TAP (R5-3) — the CLICK-INTEGRITY guard. Scopes the collapsed-tap / hover-
    approach pass-through to the TAPPED ELEMENT'S IDENTITY (captured at pointerdown)
@@ -250,11 +249,11 @@ const { onTouchStart, onTouchMove, onTouchEnd, deactivate: touchDeactivate } =
     });
 
 watch(visualExpanded, (isExpanded) => {
-    markTransitioning();
     if (isExpanded) {
         // R5-TAP (R5-3) — a collapsed→expanded flip (tap-to-expand or hover/focus
-        // approach) opens the morph-settle window; a click that races the FLIP and
+        // approach) marks the click-integrity window; a click that races the FLIP and
         // lands on a swapped-in control is swallowed by the integrity guard.
+        // (`isTransitioning` is owned by the `dockMorphing` spring-settle watch above.)
         markExpandFlip();
     } else {
         touchDeactivate();
@@ -369,8 +368,6 @@ defineExpose({
         @pointerdown="splittable ? onDockPointerDown($event) : undefined"
         @pointerup="splittable ? onDockPointerUp() : undefined"
         @pointercancel="splittable ? onDockPointerUp() : undefined"
-        @transitionend="onDockTransitionDone"
-        @transitioncancel="onDockTransitionDone"
     >
         <!--
             AX.W45 D13-a — the PERSISTENT region. The `#persistent` slot is a root
@@ -410,11 +407,7 @@ defineExpose({
             and the `summary` pane out-of-flow (no morph fires), so a vertical nav
             column that opts out of collapse reads exactly as before.
         -->
-        <div
-            ref="layersEl"
-            class="dock-layers"
-            @transitionend="onLayersTransitionEnd"
-        >
+        <div ref="layersEl" class="dock-layers">
             <!-- BC.W-DOCK-VERTICAL-FIX — `inert` reads `visualExpanded`, the SAME
                  signal the `is-active` class reads (NOT the raw `expanded`). The bug:
                  an `alwaysExpanded`/mid-flip vertical dock has `visualExpanded` true

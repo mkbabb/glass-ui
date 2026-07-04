@@ -4,68 +4,73 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import GlassDock from "@glass/components/custom/dock/GlassDock.vue";
 
 /**
- * GlassDock `isTransitioning` concurrency contract (the morph-generation settle
- * guard). The VT/FLIP timing-parity gates (`proof:dock-motion-parity` +
- * `proof:dock-motion-single-source`) were RETIRED at AX.W01 with the
- * View-Transitions COLLAPSE fork they policed; the single-scalar `--dock-morph-t`
- * morph is ONE clock on every engine, so there is no VT≡FLIP curve to keep in
- * parity. The `morphGeneration` settle guard SURVIVES that rebuild — it owns the
- * `isTransitioning` flag's lifetime against the settle-timer fallback — so this
- * runtime test stays as its standalone coverage.
+ * GlassDock `isTransitioning` — the spring-settle-driven busy flag (BG.NF.1
+ * W-FALLBACK-EXCISE). The CSS-transition-era `useDockMorphWindow` (a wrong-clock
+ * `max(2×--duration-normal, 600ms)` settle TIMER + a DEAD `@transitionend` resolver
+ * that could NEVER fire — the morph runs on the `--dock-morph-t` spring, NOT a CSS
+ * width/padding transition) is EXCISED. `isTransitioning` now resolves from the morph
+ * orchestrator's OWN spring settle: the orchestrator notifies `onMorphActiveChange(true)`
+ * when the outer collapse/expand spring ARMS (alongside setting the single
+ * `[data-morphing]` busy signal) and `(false)` when it SETTLES.
  *
- * `isTransitioning` must track the ACTUAL morph. Two failure modes ruled out here:
- *
- *  1. SKIP-FAST-FORWARD — a SHORTER decorative property finishing first must NOT
- *     drop the flag while the resize morph is still in flight.
- *
- *  2. QUEUE / STALE-CLEAR on rapid re-trigger — a rapid A→B→A
- *     (collapse→expand→collapse faster than one morph completes) must keep the
- *     flag true across the whole chain; a leftover `transitionend` from the
- *     SUPERSEDED morph must not reopen/clear the live one (the morph-generation
- *     guard).
+ * Two contracts covered:
+ *  1. NO transitionend LADDER — a stray `transitionend` on the root is INERT (the
+ *     excised resolver cannot clear the flag); ONLY the spring's own settle does. This
+ *     is the born-RED regression test the excision must keep GREEN.
+ *  2. NO stale-clear on rapid re-trigger — a rapid A→B→A (collapse→expand→collapse
+ *     faster than one morph completes) keeps the flag true across the whole chain; it
+ *     resolves once the morph spring settles (the interruptible re-base + the single
+ *     `[data-morphing]`/settle lifecycle).
  *
  * `isTransitioning` / `expand` / `collapse` are read off the proxied component
  * instance — @vue/test-utils auto-unwraps the `defineExpose`d ref, so
- * `wrapper.vm.isTransitioning` is the unwrapped boolean.
+ * `wrapper.vm.isTransitioning` is the unwrapped boolean. Fake timers drive the real
+ * `SpringProgress` rAF loop to settle deterministically.
  */
 
 function dispatchTransitionEnd(root: Element, propertyName: string): void {
-    // jsdom/happy-dom don't fire real transitionend; synthesize one whose
-    // `target` is the root so the dock's `event.target !== dockEl` guard passes.
+    // Synthesize a `transitionend` whose `target` is the root — the shape the retired
+    // resolver would have consumed. Post-excision it MUST be inert (no handler exists).
     const event = new Event("transitionend", { bubbles: true });
     Object.defineProperty(event, "propertyName", { value: propertyName });
     root.dispatchEvent(event);
 }
 
-describe("GlassDock isTransitioning concurrency (AT.W6-dock-c)", () => {
+describe("GlassDock isTransitioning — spring-settle source (BG.NF.1 W-FALLBACK-EXCISE)", () => {
     beforeEach(() => vi.useFakeTimers());
     afterEach(() => vi.useRealTimers());
 
-    it("does NOT skip-fast-forward: a standard-motion property ending mid-morph keeps the flag set", async () => {
+    it("a stray transitionend is INERT — only the spring's own settle clears the flag", async () => {
         const wrapper = mount(GlassDock, { props: { startCollapsed: true } });
         const vm = wrapper.vm as unknown as Record<string, unknown>;
         const root = wrapper.get(".glass-dock").element;
 
         (vm.expand as () => void)();
         await wrapper.vm.$nextTick();
+        // The morph spring armed → the orchestrator notified onMorphActiveChange(true).
         expect(vm.isTransitioning).toBe(true);
 
-        // A shorter standard-motion property completes first — must be ignored.
+        // The excised ladder is GONE: NO transitionend (decorative OR resize-morph
+        // property) can resolve the flag — the dock morph runs on a spring, not a CSS
+        // transition, so a stray transitionend must not skip-fast-forward the flag.
         dispatchTransitionEnd(root, "box-shadow");
         dispatchTransitionEnd(root, "background-color");
+        dispatchTransitionEnd(root, "width");
         expect(vm.isTransitioning).toBe(true);
 
-        // The resize morph's own property completing DOES resolve the flag.
-        dispatchTransitionEnd(root, "width");
+        // The spring's OWN settle (its rAF loop, flushed here) resolves it — the single
+        // honest source, no legacy timer, no plausibly-settled transitionend fallback.
+        vi.runAllTimers();
         expect(vm.isTransitioning).toBe(false);
     });
 
-    it("rapid A→B→A never queues or stale-clears: the flag stays true until the LAST morph resolves", async () => {
+    it("rapid A→B→A never stale-clears: the flag stays true across the chain, false at settle", async () => {
         const wrapper = mount(GlassDock, { props: { startCollapsed: true } });
         const vm = wrapper.vm as unknown as Record<string, unknown>;
         const root = wrapper.get(".glass-dock").element;
 
-        // A → B → A faster than one morph completes (collapse→expand→collapse).
+        // A → B → A faster than one morph completes (collapse→expand→collapse). Each
+        // flip RE-BASES the ONE spring (interruptible), re-arming the busy signal.
         (vm.expand as () => void)();
         await wrapper.vm.$nextTick();
         (vm.collapse as () => void)();
@@ -74,28 +79,27 @@ describe("GlassDock isTransitioning concurrency (AT.W6-dock-c)", () => {
         await wrapper.vm.$nextTick();
         expect(vm.isTransitioning).toBe(true);
 
-        // The live morph's own resize property resolves it cleanly.
+        // A stale transitionend mid-chain cannot reopen/clear it (the resolver is gone).
         dispatchTransitionEnd(root, "width");
-        expect(vm.isTransitioning).toBe(false);
+        expect(vm.isTransitioning).toBe(true);
 
-        // A LATE, stale resize transitionend after the flag already settled must
-        // not reopen it (the generation already advanced past it).
-        dispatchTransitionEnd(root, "width");
+        // The final morph spring settles → the flag resolves exactly once.
+        vi.runAllTimers();
         expect(vm.isTransitioning).toBe(false);
     });
 
-    it("the timer fallback only fires for the LIVE generation (a superseded morph's timer is inert)", async () => {
+    it("a superseded morph does not leak a busy flag — expand→collapse settles to false once", async () => {
         const wrapper = mount(GlassDock, { props: { startCollapsed: true } });
         const vm = wrapper.vm as unknown as Record<string, unknown>;
 
         (vm.expand as () => void)();
         await wrapper.vm.$nextTick();
-        (vm.collapse as () => void)(); // supersedes the expand morph — its timer is now stale
+        (vm.collapse as () => void)(); // supersedes the expand morph (interruptible re-base)
         await wrapper.vm.$nextTick();
         expect(vm.isTransitioning).toBe(true);
 
-        // Flushing all timers: the superseded morph's timer no-ops (generation
-        // moved on); the live morph's timer clears the flag exactly once.
+        // Flushing the rAF loop: the spring lifecycle clears the flag — no superseded
+        // morph leaves it stuck true, no wrong-clock timer re-opens it.
         vi.runAllTimers();
         expect(vm.isTransitioning).toBe(false);
     });

@@ -87,7 +87,7 @@
         filter: blur(
             calc(
                 var(--dock-reveal-blur) *
-                    clamp(0, calc((0.5 - var(--dock-expand-t, 1)) / 0.5), 1)
+                    clamp(0, calc((0.5 - var(--dock-expand-t)) / 0.5), 1)
             )
         );
     }
@@ -124,7 +124,7 @@
                 var(--glass-bg-dock, var(--glass-bg-resting)),
                 var(--glass-tint-source) var(--glass-tint-strength)
             )
-                calc(var(--dock-expand-t, 1) * 100%),
+                calc(var(--dock-expand-t) * 100%),
             color-mix(
                 in oklab,
                 var(--glass-bg-wash),
@@ -134,7 +134,7 @@
         border-color: color-mix(
             in srgb,
             var(--glass-border-dock, var(--glass-border-resting))
-                calc(var(--dock-expand-t, 1) * 100%),
+                calc(var(--dock-expand-t) * 100%),
             var(--glass-border-floating)
         );
     }
@@ -161,7 +161,7 @@
                 var(--glass-bg-dock, var(--glass-bg-wash)),
                 var(--glass-tint-source) var(--glass-tint-strength)
             )
-                calc(var(--dock-expand-t, 1) * 100%),
+                calc(var(--dock-expand-t) * 100%),
             color-mix(
                 in oklab,
                 var(--glass-bg-wash),
@@ -171,7 +171,7 @@
         border-color: color-mix(
             in srgb,
             var(--glass-border-dock, var(--glass-border-wash))
-                calc(var(--dock-expand-t, 1) * 100%),
+                calc(var(--dock-expand-t) * 100%),
             var(--glass-border-floating)
         );
     }
@@ -216,7 +216,7 @@
         padding-inline: calc(
             var(--dock-pad-collapsed) +
                 (var(--dock-padding-inline, 0.5rem) - var(--dock-pad-collapsed)) *
-                var(--dock-expand-t, 1)
+                var(--dock-expand-t)
         );
     }
 
@@ -245,7 +245,7 @@
         padding-block: calc(
             var(--dock-pad-collapsed) +
                 (var(--dock-padding-block, 0.375rem) - var(--dock-pad-collapsed)) *
-                var(--dock-expand-t, 1)
+                var(--dock-expand-t)
         );
     }
 

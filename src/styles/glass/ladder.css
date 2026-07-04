@@ -274,7 +274,7 @@
             calc(
                 var(--glass-tint-strength-floor) +
                 (var(--glass-tint-strength-aa) - var(--glass-tint-strength-floor)) *
-                max(0, (var(--glass-backdrop-luma, 0) - var(--glass-backdrop-luma-knee, 0.6)) / (1 - var(--glass-backdrop-luma-knee, 0.6)))
+                max(0, (var(--glass-backdrop-luma, 0) - var(--glass-backdrop-luma-knee)) / (1 - var(--glass-backdrop-luma-knee)))
             ),
             var(--glass-tint-strength-aa)
         );
@@ -351,7 +351,7 @@
             calc(
                 var(--glass-tint-strength-floor) +
                 (var(--glass-tint-strength-aa) - var(--glass-tint-strength-floor)) *
-                max(0, (var(--glass-backdrop-luma, 0) - var(--glass-backdrop-luma-knee, 0.6)) / (1 - var(--glass-backdrop-luma-knee, 0.6)))
+                max(0, (var(--glass-backdrop-luma, 0) - var(--glass-backdrop-luma-knee)) / (1 - var(--glass-backdrop-luma-knee)))
             ),
             var(--glass-tint-strength-aa)
         );

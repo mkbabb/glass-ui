@@ -1,4 +1,5 @@
 import { onScopeDispose, watch, type Ref } from "vue";
+import { DOCK_TAP_FLOOR_PX } from "../constants";
 
 /**
  * BD.W-DOCK-CORE (the width-seizure cure) — the dock morph SIZE measure.
@@ -75,11 +76,20 @@ export interface UseDockExpandedSizeOptions {
  * the live root token, used until the collapsed state has been captured at rest.
  */
 function collapsedFloorPx(root: HTMLElement | null): number {
-    const FALLBACK = 44; // the WCAG 2.5.5 touch floor (~2.75rem at the 16px root)
-    if (!root || typeof getComputedStyle !== "function") return FALLBACK;
+    // BG.NF.1 W-FALLBACK-EXCISE — the floor is the single-sourced `DOCK_TAP_FLOOR_PX`
+    // (constants.ts, mirroring `--dock-morph-min`'s 2.75rem), NEVER a bare drift-prone
+    // literal duplicated at the read. A missing root (not yet mounted) is the honest
+    // not-mounted case → the constant; a MOUNTED root whose token is unreadable is a
+    // real bug → fail loud (dev warn) then the constant, no silent literal mask.
+    if (!root || typeof getComputedStyle !== "function") return DOCK_TAP_FLOOR_PX;
     const raw = getComputedStyle(root).getPropertyValue("--dock-morph-min").trim();
     const n = Number.parseFloat(raw);
-    return Number.isFinite(n) && n > 0 ? n : FALLBACK;
+    if (Number.isFinite(n) && n > 0) return n;
+    if (import.meta.env?.DEV)
+        console.warn(
+            "[glass-ui] dock: --dock-morph-min unreadable on a mounted dock root — the token cascade did not reach it (falling back to the WCAG tap floor).",
+        );
+    return DOCK_TAP_FLOOR_PX;
 }
 
 /**
