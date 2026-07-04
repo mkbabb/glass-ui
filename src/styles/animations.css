@@ -301,6 +301,57 @@
     }
 }
 
+/* ── .glass-reveal EXIT (BG.W-OVERLAY-ENTER-PAINT / F5.R1) ──────────────────
+ *
+ * The reka-portaled-overlay (Dialog/Popover/DropdownMenu/…) EXIT MUST be a
+ * @keyframes animation, NOT a CSS transition. reka-ui's `usePresence` gates the
+ * unmount on `getComputedStyle(node).animationName`: it dispatches ANIMATION_OUT
+ * and awaits `animationstart`/`animationend`, with NO `transitionend` path — so a
+ * transition-only exit is torn down (~11ms, <1 frame) before it can paint (the
+ * paint-judge FAIL: Dialog+Popover exit painted 0 frames). The Sheet exit paints
+ * only because its `sheet-animate` (`animate-out`) is a keyframe reka can await;
+ * this gives the `.glass-reveal` recipe (glass/reveal.css) the SAME kind.
+ *
+ * `glass-reveal-out` is the enter bloom REVERSED: scale 1 → (0.88 × squish),
+ * opacity 1 → 0, filter blur(0) → blur — the SAME three coupled channels, on the
+ * no-overshoot `--ease-out` clock (a closing surface must never overshoot past
+ * gone, §6/W-MOTION-CANON P2). NO `translate` (the base/Dialog has none; a side
+ * popover's slide-out stays a transition — a different property that coexists,
+ * never clobbering a center Dialog's `-translate-x-1/2 -translate-y-1/2`). The
+ * `to` values MIRROR the `.glass-reveal[data-state="closed"]` static end-state so
+ * a non-supporting engine still lands correctly. Compositor-only (scale/opacity/
+ * filter — the proof:no-layout-animation floor). The custom-property `var()`s
+ * resolve on the animated `.glass-reveal` element (they are declared on its base
+ * rule). */
+@keyframes glass-reveal-out {
+    from {
+        scale: 1 1;
+        opacity: 1;
+        filter: blur(0);
+    }
+    to {
+        scale: calc(var(--glass-reveal-enter-scale, 0.88) * var(--lq-stretch-x, 1.06))
+            calc(var(--glass-reveal-enter-scale, 0.88) * var(--lq-stretch-y, 0.945));
+        opacity: 0;
+        filter: blur(var(--glass-reveal-blur, 4px));
+    }
+}
+
+/* The reduced-motion EXIT — fade ONLY (no transform/blur frames, the vestibular
+ * floor, WCAG 2.3.3). Still a keyframe reka can await (a transition-only fade
+ * would be torn down the same way, and the surface would vanish rather than fade),
+ * so the fade PAINTS under `prefers-reduced-motion: reduce`. The reveal.css PRM
+ * carve swaps `animation-name` to this while snapping scale/translate/filter to
+ * their endpoints. */
+@keyframes glass-reveal-out-reduced {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
 /* ── §TOP-LAYER ENTRY/EXIT (AQ.W5 §Design 2) ───────────────────────────────
  *
  * A pure-CSS entry/exit grammar for NATIVE top-layer surfaces — `[popover]`

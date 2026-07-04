@@ -115,11 +115,38 @@
            LONGHAND (two factors, ONE longhand — never a second transform: shorthand
            that would clobber a Dialog's centering translate). The deform stays
            anisotropic (the long axis swells AS it blooms, the short pinches);
-           it settles to `1 1` at open. */
+           it settles to `1 1` at open. These static values are the EXIT end-state
+           (the `glass-reveal-out` keyframe's `to` MIRRORS them) + the non-supporting-
+           engine fallback. */
         scale: calc(var(--glass-reveal-enter-scale, 0.88) * var(--lq-stretch-x, 1.06))
             calc(var(--glass-reveal-enter-scale, 0.88) * var(--lq-stretch-y, 0.945));
         opacity: 0;
         filter: blur(var(--glass-reveal-blur));
+        /* THE EXIT IS A KEYFRAME ANIMATION, NOT A TRANSITION (BG.W-OVERLAY-ENTER-PAINT /
+           F5.R1 repair — the paint-judge FAIL: Dialog+Popover exit painted 0 frames).
+           reka-ui `usePresence` gates the portaled-overlay unmount on
+           `getComputedStyle(node).animationName` — it dispatches ANIMATION_OUT + awaits
+           `animationstart`/`animationend` and has NO `transitionend` path, so a
+           transition-only exit is TORN DOWN (~11ms, <1 frame) before it can paint. The
+           Sheet is immune ONLY because its `sheet-animate` (`animate-out`) is a
+           @keyframes animation reka awaits — so the reveal exit rides the SAME kind:
+           `@keyframes glass-reveal-out` (scale 1→squish, opacity 1→0, filter blur(0)→
+           blur — the SAME channels the enter blooms, REVERSED). With `animationName ≠
+           none` AND the enter being a TRANSITION (so the mounted-state animationName is
+           `none` ≠ the closed `glass-reveal-out` → reka's `isAnimating` is true), reka
+           dispatches ANIMATION_OUT and the exit paints its full ≥4-frame recede. The
+           clock is the no-overshoot `--ease-out` on the fast `--duration-fast` (≤150ms).
+           Compositor-only (scale/opacity/filter — the proof:no-layout-animation floor). */
+        animation: glass-reveal-out var(--duration-fast) var(--ease-out) both;
+        /* The side-popover `translate` slide-out stays a TRANSITION — a DIFFERENT
+           property, so it coexists with the scale/opacity/filter animation (no cascade
+           fight) and never touches a center Dialog's `-translate-x-1/2 -translate-y-1/2`
+           centering (a Dialog has no `data-side`, so `translate` never changes → no
+           transition runs). scale/opacity/filter are DROPPED from the exit transition
+           list (the animation owns them, so no transition competes with — and per the
+           cascade would override — the keyframe); the ENTER still rides the base rule's
+           full transition-property (unchanged). */
+        transition-property: translate, display, overlay;
         transition-timing-function: var(--ease-out);
         transition-duration: var(--duration-fast);
     }
@@ -195,5 +222,11 @@
         scale: none;
         translate: none;
         filter: blur(0);
+        /* The exit fades ONLY (no transform/blur frames — the vestibular floor). Swap the
+           keyframe for the fade-only reduced variant reka can STILL await (a transition-
+           only fade would be torn down the same way, so the surface would just vanish; the
+           fade-only keyframe keeps the fade PAINTING). The duration/timing/fill inherit
+           from the closed rule's `animation` shorthand — only the name swaps. */
+        animation-name: glass-reveal-out-reduced;
     }
 }

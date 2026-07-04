@@ -408,6 +408,63 @@ function detect({ existsFn, readFn, corpus }) {
             );
     }
 
+    // ── O5 — the EXIT PAINTS (BG.W-OVERLAY-ENTER-PAINT / F5.R1 repair) ───────────────
+    // The paint-judge FAIL: the enter bloom paints, but the Dialog+Popover EXIT painted
+    // 0 frames — the `.glass-reveal[data-state="closed"]` exit was a CSS TRANSITION
+    // (`animation-name: none`), and reka-ui's `usePresence` gates the portaled-overlay
+    // unmount on `getComputedStyle(node).animationName` (it awaits animationstart/
+    // animationend, with NO transitionend path), so a transition-only exit is torn down
+    // (~11ms, <1 frame) before it can paint. The Sheet is immune only because its
+    // `sheet-animate` is a @keyframes animation reka awaits. The repair gives the exit
+    // the SAME kind: a `@keyframes glass-reveal-out` reka can await, applied on the closed
+    // rule (`animationName ≠ none`) so `usePresence` dispatches ANIMATION_OUT and the exit
+    // paints its full ≥4-frame recede. This arm is born-RED on the HEAD transition-only
+    // exit (no `animation` on the closed rule, no `glass-reveal-out` keyframe).
+
+    // Brace-match the BASE `.glass-reveal[data-state="closed"]` rule body (the exit leg).
+    // The regex requires `{` right after the closed attr (with optional whitespace), so
+    // the per-side `.glass-reveal[data-state="closed"][data-side="…"]` variants (which
+    // carry `[data-side` before their `{`) do NOT match — the FIRST match is the base
+    // exit rule inside @layer components.
+    const closedRuleBody = (() => {
+        const m = reveal.match(/\.glass-reveal\[data-state="closed"\]\s*\{/);
+        if (!m) return null;
+        let i = m.index + m[0].length;
+        let depth = 1;
+        const start = i;
+        for (; i < reveal.length && depth > 0; i++) {
+            if (reveal[i] === "{") depth++;
+            else if (reveal[i] === "}") depth--;
+        }
+        return reveal.slice(start, i - 1);
+    })();
+
+    if (closedRuleBody == null) {
+        V.push('O5: .glass-reveal[data-state="closed"] exit rule not found in reveal.css (the LIQUID-ENTER recipe has no closed/exit state)');
+    } else if (!/animation\s*:\s*glass-reveal-out\b/.test(closedRuleBody)) {
+        V.push(
+            'O5: the .glass-reveal[data-state="closed"] EXIT is not a keyframe animation reka can await — it must apply `animation: glass-reveal-out …`. reka `usePresence` reads `getComputedStyle(node).animationName`; a transition-only exit resolves `none` and is torn down (<1 frame) before it paints (the paint-judge Dialog+Popover 0-exit-frame FAIL). Give the exit a @keyframes animation (the SAME mechanism that makes the Sheet exit paint).',
+        );
+    }
+
+    // O5b — the `@keyframes glass-reveal-out` exists AND fades opacity → 0 (the exit fade
+    //       reka's animationend gates, the SAME channels the enter blooms, reversed).
+    const revealOutKf = anim.match(/@keyframes\s+glass-reveal-out\s*\{([\s\S]*?)\n\}/);
+    if (!revealOutKf) {
+        V.push("O5b: animations.css has no `@keyframes glass-reveal-out` (the awaited exit animation reka's usePresence gates the unmount on) — a transition-only exit is torn down before it paints");
+    } else if (!/opacity\s*:\s*0\b/.test(revealOutKf[1])) {
+        V.push("O5b: `@keyframes glass-reveal-out` does not fade `opacity: 0` (the exit must recede to gone — the coupled fade, the reversed enter bloom)");
+    }
+
+    // O5c — the PRM carve keeps the exit PAINTING (fade only): the reduced-motion closed
+    //       rule swaps `animation-name` to `glass-reveal-out-reduced` AND that fade-only
+    //       keyframe exists — the vestibular floor (no transform/blur frames, but the fade
+    //       still paints; a transition-only fade would be torn down the same way).
+    if (!/animation-name\s*:\s*glass-reveal-out-reduced\b/.test(reveal))
+        V.push("O5c: the reduced-motion `.glass-reveal[data-state=\"closed\"]` carve does not swap `animation-name: glass-reveal-out-reduced` — under PRM a transition-only fade is torn down (the surface vanishes); keep the fade painting via a keyframe reka awaits");
+    if (!/@keyframes\s+glass-reveal-out-reduced\s*\{/.test(anim))
+        V.push("O5c: animations.css has no `@keyframes glass-reveal-out-reduced` (the PRM fade-only exit reka awaits — the vestibular floor)");
+
     return V;
 }
 
@@ -491,6 +548,26 @@ if (!oSelfTestFlags) {
     process.exit(1);
 }
 
+// ── The O5 self-test bite — revert the .glass-reveal EXIT to a transition-only recede
+//    (drop the closed-rule `animation: glass-reveal-out …;`, the HEAD state reka's
+//    usePresence tore down before it could paint — Dialog+Popover 0 exit frames) and
+//    assert the exit-paints arm FLAGS it (the born-RED teeth are real). ─────────────────
+const stripExitAnimRead = (rel) =>
+    rel === "src/styles/glass/reveal.css"
+        ? // drop the base closed-rule `animation: glass-reveal-out …;` — the exit reverts to
+          //   the transition-only recede reka tears down before it paints (`animation-name`
+          //   on the PRM carve is a different token, untouched)
+          revealDisk.replace(/animation:\s*glass-reveal-out[^;]*;/g, "/* stripped exit animation */")
+        : diskRead(rel);
+const stripExitViolations = detect({ existsFn: diskExists, readFn: stripExitAnimRead, corpus });
+const o5SelfTestFlags = stripExitViolations.length > violations.length;
+if (!o5SelfTestFlags) {
+    console.error(
+        "proof:motion — O5 SELF-TEST FAILED: the detector did NOT flag a .glass-reveal EXIT reverted to a transition-only recede (the HEAD 0-exit-frame state reka tears down before it paints). The overlay-exit-paint teeth are gone; do not trust a GREEN.",
+    );
+    process.exit(1);
+}
+
 // ── Report ──────────────────────────────────────────────────────────────────────
 console.log("proof:motion — the F5 dead-composable cut is COMPLETE (BG.W-DEAD-COMPOSABLE-CUT)");
 console.log(`  dead composables      : ${DEAD.map((d) => d.name).join(", ")}`);
@@ -512,7 +589,8 @@ console.log("proof:motion — the overlay .glass-reveal enter PAINTS a real from
 console.log(`  enter from-state      : .glass-reveal[data-state="open"] @starting-style = scale(bloom×squish) + opacity 0 + filter blur — the reka portaled enter interpolates on the snappy clock (≥6 frames), not the HEAD one-frame pop`);
 console.log(`  side-slide from-state : data-side[open] @starting-style translate (the side popover slides FROM its edge, not a pop-in-place)`);
 console.log(`  scrim couples to launch: dialog.glass-top-layer[open]::backdrop ENTER on var(--top-layer-backdrop-in ~0.15s) + --ease-out — ≥80% dim within ~100ms; the base ::backdrop stays the released-with-panel EXIT clock`);
-console.log(`  self-test (bite proof): OK — a re-planted dead composable, a re-forked rAF/ElementMorph runner, a re-introduced masking --glass-drawer-t: 1, AND a .glass-reveal open rule stripped of its @starting-style from-state all flag`);
+console.log(`  exit PAINTS (O5)      : .glass-reveal[data-state="closed"] rides @keyframes glass-reveal-out (scale/opacity/filter, --ease-out, the enter bloom REVERSED) — reka usePresence awaits animationName≠none so the exit paints ≥4 frames, not the transition-only 0-frame tear-down (the Sheet-immune mechanism); PRM → glass-reveal-out-reduced fade-only`);
+console.log(`  self-test (bite proof): OK — a re-planted dead composable, a re-forked rAF/ElementMorph runner, a re-introduced masking --glass-drawer-t: 1, a .glass-reveal open rule stripped of its @starting-style from-state, AND a .glass-reveal exit reverted to transition-only all flag`);
 console.log(`  corpus scanned        : ${corpus.length} src/+demo/ sources`);
 console.log(`  violations            : ${violations.length}`);
 for (const m of violations) console.error(`  CUT-INCOMPLETE   ${m}`);
@@ -530,6 +608,7 @@ writeGateArtifact(ARTIFACT, {
     s1SelfTestFlagged: s1SelfTestFlags,
     dSelfTestFlagged: dSelfTestFlags,
     oSelfTestFlagged: oSelfTestFlags,
+    o5SelfTestFlagged: o5SelfTestFlags,
     spine: SPINE_PATH,
     bloomWrappers: BLOOM_WRAPPERS,
     violations,
