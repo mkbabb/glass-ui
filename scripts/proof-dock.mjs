@@ -121,6 +121,20 @@ const DOCK_MORPH_CONTEXT_TS = resolve(
     ROOT,
     "src/components/custom/dock/composables/dockMorphContext.ts",
 );
+// ── The PANE-OVERLAP arm sources (BG.W-DOCK-PANE-OVERLAP; F3.R2) ──
+// The overlapped crossfade lives in DockLayerGroup.vue's unlayered SFC `<style>` block
+// (it wins over the `@layer components` sequential base ramps in dock/layers.css); the
+// standalone-stack box-FLIP monotonic reserve+clip-reveal drive lives in
+// useLayerTransition.ts (the standalone engine — a nested group defers to the
+// orchestrator's convex-blend box).
+const DOCK_LAYER_GROUP_VUE = resolve(
+    ROOT,
+    "src/components/custom/dock/DockLayerGroup.vue",
+);
+const USE_LAYER_TRANSITION_TS = resolve(
+    ROOT,
+    "src/components/custom/dock/composables/useLayerTransition.ts",
+);
 // The two morph-region CONTENT children that carry the inverse-scale (the plate
 // scales, these do NOT). Both must carry the inverse on both axes.
 const RIGID_CONTENT_CHILDREN = [".dock-persistent", ".dock-layers"];
@@ -280,9 +294,176 @@ function detectSettleOrder(morphContextSrc) {
     };
 }
 
+// ── PANE-OVERLAP P1/P2 — the OVERLAPPED pane-swap crossfade (BG.W-DOCK-PANE-OVERLAP). ──
+// The DockLayerGroup.vue SFC `<style>` must express BOTH ramps on the ONE `--dock-morph-t`
+// scalar, scoped to `.dock-layer-item-host` (the inner group pane) + gated on an ancestor
+// `[data-morphing]` — so both panes are CO-PRESENT mid-swap (no blank-plate dead-zone):
+//   P1 entering (`.is-active`): a RAMP-UP that engages PAST t=0 — the canonical form
+//      `clamp(0, calc((var(--dock-morph-t) - <onset>) / <window>), 1)` with a NON-ZERO
+//      onset (so it engages by ~t≈0.15, not a static `opacity:1` HEAD painted).
+//   P2 leaving (`.is-leaving`): a persist-then-fade `1 - clamp(0, calc(var(--dock-morph-t)
+//      / <window>), 1)` with window ≥ 0.5 — so the leaving pane is still >0.3 alpha when
+//      the entering pane crosses ~0.3 (the OVERLAP: leaving persists PAST where entering
+//      engages). A bare `calc(1 - var(--dock-morph-t))` (HEAD) reaches 0 at t=1 with no
+//      persist window and no overlap — flagged.
+function detectPaneOverlap(vueSrc) {
+    // Read only the `<style>` block(s) (the crossfade is CSS). Strip comments so a
+    // rationale mention never false-greens.
+    const styleBlocks = [...vueSrc.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)]
+        .map((m) => stripComments(m[1]))
+        .join("\n");
+    const facts = {};
+
+    // Split into rule blocks (selector { body }).
+    const blocks = [];
+    const ruleRe = /([^{}]+)\{([^{}]*)\}/g;
+    let m;
+    while ((m = ruleRe.exec(styleBlocks)) !== null) {
+        blocks.push({ selector: m[1], body: m[2] });
+    }
+    // A pane-crossfade rule targets `.dock-layer-item-host.<state>`, is gated on an
+    // ancestor `[data-morphing]`, and sets `opacity`.
+    const isPaneRule = (sel, state) =>
+        /\[data-morphing\]/.test(sel) &&
+        new RegExp(`\\.dock-layer-item-host\\.${state}\\b`).test(sel);
+
+    // P1 — the entering ramp: an `opacity` `clamp(0, calc((var(--dock-morph-t) - <onset>)
+    // …), 1)` with a strictly-positive onset (engages past t=0). The onset guards against
+    // a static `opacity:1` or a zero-onset ramp.
+    let enterRamp = false;
+    let enterOnset = null;
+    for (const b of blocks) {
+        if (!isPaneRule(b.selector, "is-active")) continue;
+        const om = b.body.match(
+            /opacity\s*:\s*clamp\(\s*0\s*,\s*calc\(\s*\(\s*var\(\s*--dock-morph-t\s*\)\s*-\s*([\d.]+)\s*\)\s*\/\s*[\d.]+\s*\)\s*,\s*1\s*\)/,
+        );
+        if (om) {
+            const onset = parseFloat(om[1]);
+            if (onset > 0) {
+                enterRamp = true;
+                enterOnset = onset;
+            }
+        }
+    }
+    facts.enterRamp = enterRamp;
+    facts.enterOnset = enterOnset;
+
+    // P2 — the leaving persist: `opacity: calc(1 - clamp(0, calc(var(--dock-morph-t) /
+    // <window>), 1))` with window ≥ 0.5 (persists past where the entering pane engages —
+    // the OVERLAP). A bare `calc(1 - var(--dock-morph-t))` or a window < 0.5 does not
+    // overlap.
+    let leaveOverlap = false;
+    let leaveWindow = null;
+    for (const b of blocks) {
+        if (!isPaneRule(b.selector, "is-leaving")) continue;
+        const lm = b.body.match(
+            /opacity\s*:\s*calc\(\s*1\s*-\s*clamp\(\s*0\s*,\s*calc\(\s*var\(\s*--dock-morph-t\s*\)\s*\/\s*([\d.]+)\s*\)\s*,\s*1\s*\)\s*\)/,
+        );
+        if (lm) {
+            const win = parseFloat(lm[1]);
+            leaveWindow = win;
+            if (win >= 0.5) leaveOverlap = true;
+        }
+    }
+    facts.leaveOverlap = leaveOverlap;
+    facts.leaveWindow = leaveWindow;
+
+    // The OVERLAP invariant: the leaving pane must still be > 0.3 alpha at the t where
+    // the entering pane crosses 0.3 (no dead-zone). Compute the crossings from the parsed
+    // onset/window and assert co-presence.
+    let coPresent = false;
+    if (enterRamp && leaveOverlap && enterOnset != null && leaveWindow != null) {
+        // entering(t) = clamp(0,(t-onset)/win_e,1); we only need t where entering==0.3.
+        // Its window is not captured above (only the onset), so re-parse the enter win.
+        let enterWin = null;
+        for (const b of blocks) {
+            if (!isPaneRule(b.selector, "is-active")) continue;
+            const om = b.body.match(
+                /opacity\s*:\s*clamp\(\s*0\s*,\s*calc\(\s*\(\s*var\(\s*--dock-morph-t\s*\)\s*-\s*[\d.]+\s*\)\s*\/\s*([\d.]+)\s*\)\s*,\s*1\s*\)/,
+            );
+            if (om) enterWin = parseFloat(om[1]);
+        }
+        if (enterWin != null) {
+            const tEnter03 = enterOnset + 0.3 * enterWin; // entering hits 0.3 here
+            const leaveAt = 1 - Math.min(1, tEnter03 / leaveWindow); // leaving alpha then
+            facts.enterWin = enterWin;
+            facts.tEnter03 = Number(tEnter03.toFixed(4));
+            facts.leaveAlphaAtEnter03 = Number(leaveAt.toFixed(4));
+            coPresent = leaveAt > 0.3;
+        }
+    }
+    facts.coPresent = coPresent;
+
+    return { p1: enterRamp, p2: leaveOverlap && coPresent, facts };
+}
+
+// ── PANE-OVERLAP P3 — the standalone-stack box FLIP is monotonic (BG.W-DOCK-PANE-OVERLAP
+// §2.2 vocab b). ──
+// The SFC `<style>` must reveal the reserved box via a `clip-path: inset()` aperture off
+// `--dock-stack-reveal` (content-RIGID, no per-frame layout write), and
+// useLayerTransition.ts must (a) reserve `Math.max(fromSize, toSize)` on
+// `--dock-stack-morph-reserve` (one layout solve — the box can never dip below the
+// smaller endpoint) and (b) drive `--dock-stack-reveal = box(t)/max` with a CLAMPED `t`
+// (the convex `clamp(0,t,1)` cap absorbs the spring overshoot).
+function detectBoxFlipMonotonic(vueSrc, tsSrc) {
+    const style = [...vueSrc.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)]
+        .map((m) => stripComments(m[1]))
+        .join("\n");
+    const ts = stripComments(tsSrc);
+    const facts = {};
+
+    // (CSS) the stack reveals via `clip-path: inset(...)` reading `--dock-stack-reveal`,
+    // gated on `[style*="--dock-stack-morph-reserve"]` (the standalone-only presence
+    // gate), and reserves the axis off `--dock-stack-morph-reserve` — NO `scale`/
+    // `transform` on the stack (content-rigid; a scale would distort glyphs).
+    const clipReveal =
+        /clip-path\s*:\s*inset\([^;]*var\(\s*--dock-stack-reveal/.test(style) &&
+        /\[style\*=["']--dock-stack-morph-reserve["']\]/.test(style) &&
+        /(?:inline-size|block-size)\s*:\s*var\(\s*--dock-stack-morph-reserve\s*\)/.test(
+            style,
+        );
+    // Anti-distortion: the reserved-stack rule must NOT scale the box (a `scale`/
+    // `transform: scale` on the reserved stack squishes the pane content).
+    const noStackScale =
+        !/\[style\*=["']--dock-stack-morph-reserve["']\][\s\S]{0,200}?(?:^|\s)(?:scale\s*:|transform\s*:\s*scale)/m.test(
+            style,
+        );
+    facts.clipReveal = clipReveal;
+    facts.noStackScale = noStackScale;
+
+    // (TS) the engine reserves the MAX endpoint + drives a clamped reveal fraction.
+    const reservesMax =
+        /Math\.max\(\s*fromSize\s*,\s*toSize\s*\)/.test(ts) &&
+        /setProperty\(\s*["']--dock-stack-morph-reserve["']/.test(ts);
+    // The reveal drive: a `setProperty("--dock-stack-reveal", …)` whose value is a
+    // box(t)/max fraction computed off a CLAMPED t (the `t < 0 ? 0 : t > 1 ? 1 : t`
+    // convex cap — the overshoot-absorbing bound).
+    const clampedReveal =
+        /setProperty\(\s*["']--dock-stack-reveal["']/.test(ts) &&
+        /t\s*<\s*0\s*\?\s*0\s*:\s*t\s*>\s*1\s*\?\s*1\s*:\s*t/.test(ts) &&
+        /fromSize\s*\+\s*\(\s*toSize\s*-\s*fromSize\s*\)\s*\*\s*clamped/.test(ts);
+    // The vars are cleared on settle (the box hands back to the natural shrink-wrap).
+    const clearsOnSettle =
+        /removeProperty\(\s*["']--dock-stack-morph-reserve["']\s*\)/.test(ts) &&
+        /removeProperty\(\s*["']--dock-stack-reveal["']\s*\)/.test(ts);
+    facts.reservesMax = reservesMax;
+    facts.clampedReveal = clampedReveal;
+    facts.clearsOnSettle = clearsOnSettle;
+
+    return {
+        ok:
+            clipReveal &&
+            noStackScale &&
+            reservesMax &&
+            clampedReveal &&
+            clearsOnSettle,
+        facts,
+    };
+}
+
 // overrides: { silhouetteExists?, testExists?, gateScriptExists?, manifestSrc?,
 //              packageSrc?, dockCorpus?, constantsSrc?, dockContextExists?,
-//              shapeSrc?, morphContextSrc? }.
+//              shapeSrc?, morphContextSrc?, layerGroupVueSrc?, layerTransitionTsSrc? }.
 function detect(overrides = {}) {
     const violations = [];
     const facts = {};
@@ -305,6 +486,10 @@ function detect(overrides = {}) {
     const shapeSrc = overrides.shapeSrc ?? read(DOCK_SHAPE_CSS);
     const morphContextSrc =
         overrides.morphContextSrc ?? read(DOCK_MORPH_CONTEXT_TS);
+    const layerGroupVueSrc =
+        overrides.layerGroupVueSrc ?? read(DOCK_LAYER_GROUP_VUE);
+    const layerTransitionTsSrc =
+        overrides.layerTransitionTsSrc ?? read(USE_LAYER_TRANSITION_TS);
 
     // ── D1 — SILHOUETTE-COMPOSABLE-ABSENT ──
     facts.silhouetteExists = silhouetteExists;
@@ -371,6 +556,26 @@ function detect(overrides = {}) {
     assert(
         "G2 — dockMorphContext.maybeSettleRoot removes the data-morphing/data-punching attrs BEFORE the --dock-morph-t scalar, so the box-scale + inverse rules stop matching before the registered property reverts (no one-frame collapsed-look flash at settle)",
         settle.ok,
+    );
+
+    // ── P1/P2 — PANE-OVERLAP: the OVERLAPPED pane-swap crossfade (BG.W-DOCK-PANE-OVERLAP) ──
+    const overlap = detectPaneOverlap(layerGroupVueSrc);
+    facts.paneOverlap = overlap.facts;
+    assert(
+        "P1 — DockLayerGroup.vue's SFC <style> ramps the ENTERING pane (.dock-layer-item-host.is-active) opacity UP off `--dock-morph-t` with a strictly-positive onset (engages by ~t≈0.15, NOT the static opacity:1 HEAD painted), gated on an ancestor [data-morphing]",
+        overlap.p1,
+    );
+    assert(
+        "P2 — the LEAVING pane (.dock-layer-item-host.is-leaving) opacity PERSISTS to t≈0.6 (a `1 - clamp(0, --dock-morph-t / window≥0.5, 1)` form, NOT the bare `calc(1 - --dock-morph-t)` HEAD gone-at-t=1) so it OVERLAPS the entering ramp — both panes co-present >0.3 alpha mid-swap, no blank-plate dead-zone",
+        overlap.p2,
+    );
+
+    // ── P3 — PANE-OVERLAP: the standalone-stack box FLIP is monotonic (vocab b) ──
+    const boxFlip = detectBoxFlipMonotonic(layerGroupVueSrc, layerTransitionTsSrc);
+    facts.boxFlipMonotonic = boxFlip.facts;
+    assert(
+        "P3 — the standalone box FLIP interpolates MONOTONICALLY between the two pre-measured endpoints: useLayerTransition reserves Math.max(from,to) on `--dock-stack-morph-reserve` + drives a clamped `--dock-stack-reveal=box(t)/max`, and the SFC <style> reveals the reserved box via a content-RIGID `clip-path: inset()` aperture (no stack `scale`, no per-frame layout write; cleared on settle) — the box never dips below the smaller endpoint",
+        boxFlip.ok,
     );
 
     return { facts, violations };
@@ -445,6 +650,47 @@ function selfTest() {
         }
         dockSpring.dispose();
     }`;
+    // A clean synthetic DockLayerGroup.vue `<style>` — the overlapped crossfade (P1/P2) +
+    // the standalone-stack content-rigid clip-reveal box (P3 CSS half). The P1/P2-GREEN
+    // reference.
+    const CLEAN_LAYER_GROUP_VUE = `
+<template><div class="dock-layer-group"></div></template>
+<style>
+:where(.glass-dock, .dock-layer-group)[data-morphing] .dock-layer-item-host.is-active {
+    opacity: clamp(0, calc((var(--dock-morph-t) - 0.15) / 0.5), 1);
+}
+:where(.glass-dock, .dock-layer-group)[data-morphing] .dock-layer-item-host.is-leaving {
+    opacity: calc(1 - clamp(0, calc(var(--dock-morph-t) / 0.6), 1));
+}
+.dock-layer-group.horizontal .dock-layer-stack[style*="--dock-stack-morph-reserve"] {
+    inline-size: var(--dock-stack-morph-reserve);
+    clip-path: inset(0 calc((1 - var(--dock-stack-reveal, 1)) * 100%) 0 0);
+    will-change: clip-path;
+}
+.dock-layer-group.vertical .dock-layer-stack[style*="--dock-stack-morph-reserve"] {
+    block-size: var(--dock-stack-morph-reserve);
+    clip-path: inset(0 0 calc((1 - var(--dock-stack-reveal, 1)) * 100%) 0);
+    will-change: clip-path;
+}
+</style>`;
+    // A clean synthetic useLayerTransition.ts armSpring/settle — reserves the MAX + drives
+    // a clamped reveal + clears on settle. The P3-TS-GREEN reference.
+    const CLEAN_LAYER_TRANSITION = `
+    function clearMorphVars(el) {
+        el.style.removeProperty("--dock-morph-from");
+        el.style.removeProperty("--dock-stack-morph-reserve");
+        el.style.removeProperty("--dock-stack-reveal");
+    }
+    function armSpring(el, root, id, fromSize, toSize) {
+        const maxSize = Math.max(fromSize, toSize);
+        el.style.setProperty("--dock-stack-morph-reserve", maxSize + "px");
+        activeSpring.play((t) => {
+            const clamped = t < 0 ? 0 : t > 1 ? 1 : t;
+            const boxSize = fromSize + (toSize - fromSize) * clamped;
+            const reveal = maxSize > 0 ? boxSize / maxSize : 1;
+            el.style.setProperty("--dock-stack-reveal", reveal + "");
+        });
+    }`;
     const base = {
         silhouetteExists: false,
         testExists: false,
@@ -456,6 +702,8 @@ function selfTest() {
         dockContextExists: true,
         shapeSrc: CLEAN_SHAPE,
         morphContextSrc: CLEAN_MORPH_CONTEXT,
+        layerGroupVueSrc: CLEAN_LAYER_GROUP_VUE,
+        layerTransitionTsSrc: CLEAN_LAYER_TRANSITION,
     };
 
     // Sanity: the clean synthetic baseline is fully GREEN (no confound).
@@ -682,6 +930,162 @@ function selfTest() {
         "G2 HEAD settle order (scalar removed before the attrs) reds",
     );
 
+    // ── P1 — the entering-ramp bites (BG.W-DOCK-PANE-OVERLAP §2.2 vocab a) ──
+    // P1: the HEAD shape — the entering pane is STATICALLY opacity:1 (no ramp) → the
+    // sequential blank-plate dead-zone (born-RED premise).
+    sab(
+        {
+            ...base,
+            layerGroupVueSrc: `
+<style>
+:where(.glass-dock, .dock-layer-group)[data-morphing] .dock-layer-item-host.is-active {
+    opacity: 1;
+    transition: visibility 0s;
+}
+:where(.glass-dock, .dock-layer-group)[data-morphing] .dock-layer-item-host.is-leaving {
+    opacity: calc(1 - clamp(0, calc(var(--dock-morph-t) / 0.6), 1));
+}
+.dock-layer-group.horizontal .dock-layer-stack[style*="--dock-stack-morph-reserve"] {
+    inline-size: var(--dock-stack-morph-reserve);
+    clip-path: inset(0 calc((1 - var(--dock-stack-reveal, 1)) * 100%) 0 0);
+}
+</style>`,
+        },
+        "P1",
+        "P1 HEAD entering pane statically opacity:1 (no ramp-up) reds",
+    );
+    // P1 (evasion): a ZERO-onset ramp (engages at t=0, not the ~t≈0.15 overlap start).
+    sab(
+        {
+            ...base,
+            layerGroupVueSrc: `
+<style>
+:where(.glass-dock, .dock-layer-group)[data-morphing] .dock-layer-item-host.is-active {
+    opacity: clamp(0, calc((var(--dock-morph-t) - 0) / 0.5), 1);
+}
+:where(.glass-dock, .dock-layer-group)[data-morphing] .dock-layer-item-host.is-leaving {
+    opacity: calc(1 - clamp(0, calc(var(--dock-morph-t) / 0.6), 1));
+}
+.dock-layer-group.horizontal .dock-layer-stack[style*="--dock-stack-morph-reserve"] {
+    inline-size: var(--dock-stack-morph-reserve);
+    clip-path: inset(0 calc((1 - var(--dock-stack-reveal, 1)) * 100%) 0 0);
+}
+</style>`,
+        },
+        "P1",
+        "P1 zero-onset entering ramp (engages at t=0, no overlap start) reds",
+    );
+
+    // ── P2 — the leaving-overlap bites (BG.W-DOCK-PANE-OVERLAP §2.2 vocab a) ──
+    // P2: the HEAD shape — the leaving pane is the bare `calc(1 - --dock-morph-t)` (gone
+    // at t=1, no persist window → no overlap, the blank-plate dead-zone).
+    sab(
+        {
+            ...base,
+            layerGroupVueSrc: `
+<style>
+:where(.glass-dock, .dock-layer-group)[data-morphing] .dock-layer-item-host.is-active {
+    opacity: clamp(0, calc((var(--dock-morph-t) - 0.15) / 0.5), 1);
+}
+:where(.glass-dock, .dock-layer-group)[data-morphing] .dock-layer-item-host.is-leaving {
+    opacity: calc(1 - var(--dock-morph-t));
+}
+.dock-layer-group.horizontal .dock-layer-stack[style*="--dock-stack-morph-reserve"] {
+    inline-size: var(--dock-stack-morph-reserve);
+    clip-path: inset(0 calc((1 - var(--dock-stack-reveal, 1)) * 100%) 0 0);
+}
+</style>`,
+        },
+        "P2",
+        "P2 HEAD leaving pane bare calc(1 - --dock-morph-t) (no persist window, no overlap) reds",
+    );
+    // P2 (evasion): a persist window < 0.5 (fades too fast — the leaving pane is <0.3
+    // alpha before the entering pane reaches 0.3, the dead-zone survives).
+    sab(
+        {
+            ...base,
+            layerGroupVueSrc: `
+<style>
+:where(.glass-dock, .dock-layer-group)[data-morphing] .dock-layer-item-host.is-active {
+    opacity: clamp(0, calc((var(--dock-morph-t) - 0.15) / 0.5), 1);
+}
+:where(.glass-dock, .dock-layer-group)[data-morphing] .dock-layer-item-host.is-leaving {
+    opacity: calc(1 - clamp(0, calc(var(--dock-morph-t) / 0.2), 1));
+}
+.dock-layer-group.horizontal .dock-layer-stack[style*="--dock-stack-morph-reserve"] {
+    inline-size: var(--dock-stack-morph-reserve);
+    clip-path: inset(0 calc((1 - var(--dock-stack-reveal, 1)) * 100%) 0 0);
+}
+</style>`,
+        },
+        "P2",
+        "P2 leaving persist window < 0.5 (fades too fast, no overlap co-presence) reds",
+    );
+
+    // ── P3 — the box-FLIP-monotonic bites (BG.W-DOCK-PANE-OVERLAP §2.2 vocab b) ──
+    // P3: the HEAD shape — the TS engine writes no `--dock-stack-*` reserve/reveal (the
+    // box JUMPS on the class flip → the plate dips below both endpoints).
+    sab(
+        {
+            ...base,
+            layerTransitionTsSrc: `
+    function clearMorphVars(el) {
+        el.style.removeProperty("--dock-morph-from");
+    }
+    function armSpring(el, root, id, fromSize, toSize) {
+        activeSpring.play((t) => {
+            root.style.setProperty("--dock-morph-t", t + "");
+        });
+    }`,
+        },
+        "P3",
+        "P3 HEAD engine writes no --dock-stack-* reserve/reveal (box jumps, dips below endpoints) reds",
+    );
+    // P3 (evasion): the SFC SCALES the reserved stack instead of clipping it (distorts
+    // the pane content — the W-DOCK-GLYPH-RIGID violation).
+    sab(
+        {
+            ...base,
+            layerGroupVueSrc: `
+<style>
+:where(.glass-dock, .dock-layer-group)[data-morphing] .dock-layer-item-host.is-active {
+    opacity: clamp(0, calc((var(--dock-morph-t) - 0.15) / 0.5), 1);
+}
+:where(.glass-dock, .dock-layer-group)[data-morphing] .dock-layer-item-host.is-leaving {
+    opacity: calc(1 - clamp(0, calc(var(--dock-morph-t) / 0.6), 1));
+}
+.dock-layer-group.horizontal .dock-layer-stack[style*="--dock-stack-morph-reserve"] {
+    inline-size: var(--dock-stack-morph-reserve);
+    transform: scaleX(var(--dock-stack-reveal, 1));
+}
+</style>`,
+        },
+        "P3",
+        "P3 SFC scales the reserved stack (content-distorting, not the rigid clip aperture) reds",
+    );
+    // P3 (evasion): the engine drives the reveal off an UN-clamped t (the >1 spring
+    // overshoot inflates the box past the reserved max — non-monotonic).
+    sab(
+        {
+            ...base,
+            layerTransitionTsSrc: `
+    function clearMorphVars(el) {
+        el.style.removeProperty("--dock-stack-morph-reserve");
+        el.style.removeProperty("--dock-stack-reveal");
+    }
+    function armSpring(el, root, id, fromSize, toSize) {
+        const maxSize = Math.max(fromSize, toSize);
+        el.style.setProperty("--dock-stack-morph-reserve", maxSize + "px");
+        activeSpring.play((t) => {
+            const boxSize = fromSize + (toSize - fromSize) * t;
+            el.style.setProperty("--dock-stack-reveal", (boxSize / maxSize) + "");
+        });
+    }`,
+        },
+        "P3",
+        "P3 engine drives reveal off an un-clamped t (overshoot inflates past max, non-monotonic) reds",
+    );
+
     return flagged;
 }
 
@@ -723,7 +1127,16 @@ function run() {
         `  G2 settle drops residual first  : ${violations.every((v) => !v.startsWith("G2"))} (attrIdx=${facts.glyphRigidSettle?.attrIdx}, scalarIdx=${facts.glyphRigidSettle?.scalarIdx})`,
     );
     console.log(
-        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×3 + D3-fence×2 + D4×2 + D4-fence + D5×2 + G1×5 + G2)`,
+        `  P1 entering pane ramps up       : ${violations.every((v) => !v.startsWith("P1"))} (onset=${facts.paneOverlap?.enterOnset})`,
+    );
+    console.log(
+        `  P2 leaving pane overlaps        : ${violations.every((v) => !v.startsWith("P2"))} (window=${facts.paneOverlap?.leaveWindow}, leaveAlphaAtEnter03=${facts.paneOverlap?.leaveAlphaAtEnter03})`,
+    );
+    console.log(
+        `  P3 box FLIP monotonic (rigid)   : ${violations.every((v) => !v.startsWith("P3"))} (clip=${facts.boxFlipMonotonic?.clipReveal}, reserveMax=${facts.boxFlipMonotonic?.reservesMax}, clamped=${facts.boxFlipMonotonic?.clampedReveal})`,
+    );
+    console.log(
+        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×3 + D3-fence×2 + D4×2 + D4-fence + D5×2 + G1×5 + G2 + P1×2 + P2×2 + P3×3)`,
     );
 
     if (violations.length) {

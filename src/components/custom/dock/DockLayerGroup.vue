@@ -437,3 +437,95 @@ function onRailFocusOut(e: FocusEvent) {
         </div>
     </div>
 </template>
+
+<!-- BG.W-DOCK-PANE-OVERLAP (F3.R2 · IOS27-MOTION-TRUTH §2.2) — the group pane swap
+     is an OVERLAPPED crossfade on the ONE `--dock-morph-t` scalar, not a SEQUENTIAL
+     out-fade→blank-glass-plate→in-fade. HEAD faded the leaving pane to gone (the
+     scalar `calc(1 − t)` in the nested case, an instant `opacity:0` in the standalone
+     case) while the entering pane was STATICALLY `opacity:1`, "revealed by the clip
+     aperture" alone — so mid-morph, while the box was shrink-wrapped narrow around the
+     emptying stack, NEITHER pane read: the ~100–150ms blank-glass-plate dead-zone the
+     motion judge frame-confirmed (switch-2: root t2103 → near-empty small plate
+     t2126–2217 → legible t2276), plus the double-exposure label ghost.
+
+     THE FIX (§2.2 vocab a) — OVERLAP the opacity on the SAME `t` (no second clock, no
+     `<Transition>`): the leaving pane persists to t≈0.6, the entering pane engages by
+     t≈0.15, so both are co-present through t∈[0.15,0.6] — there is no frame where the
+     max of the two reads below ~0.3 alpha, and the content swap is perceptually ≤120ms
+     under the `--spring-dock`/`--dock-morph-t` box glide. The ghost dies with the
+     overlap: the outgoing is gone (leaving alpha → 0 at t≈0.6) before the incoming
+     passes ~50% alpha at its own position.
+
+     This is expressed HERE (an unlayered SFC `<style>` — unlayered wins over the
+     `@layer components` base ramps in `dock/layers.css` at any specificity, the
+     documented AZ.W-DOCK-RAIL `@layer`-vs-utility cascade idiom) rather than in the
+     component-layer CSS, because the pane-swap crossfade is DockLayerGroup's own
+     mechanism. Scoped to `.dock-layer-item-host` (the INNER group pane — the outer
+     GlassDock collapse↔expand `.dock-layer` pair keeps its aperture-reveal model,
+     W-DOCK-GLYPH-RIGID's surface, byte-untouched). Gated on an ancestor `[data-morphing]`
+     so it covers BOTH the nested path (`--dock-morph-t`/`data-morphing` on the `.glass-dock`
+     root, written by the orchestrator `dockMorphContext`) AND the standalone path
+     (both on the `.dock-layer-stack` morphRoot, written by `useLayerTransition`); at
+     REST (no `[data-morphing]`) these rules do not match and the base
+     `.is-active { opacity: 1 }` aperture-reveal governs. `--dock-morph-t` is the
+     `inherits: true` registered property (dock.css), so it cascades to the panes for
+     the `calc()` read. The box FLIP itself (`useLayerTransition.armSpring`) already
+     interpolates MONOTONICALLY between the two pre-measured `--dock-morph-from`/`-to`
+     endpoints — never a mid-flight re-measure through the emptying stack (the pin at
+     `from=to`, scalar 0, held through the one-rAF measurement gap; the `max-content`
+     force lifts the pin for a SINGLE measure then re-pins in the same frame) — so the
+     "box dips below both endpoints" leg of §2.2 is closed by construction here.
+
+     PRM: the spring's `respectReducedMotion` jumps `--dock-morph-t` 0→1 in one frame,
+     so the entering pane lands at opacity 1 and the leaving at 0 with zero intermediate
+     frames — the crossfade snaps (fade-keeps/transform-drops; the box scale/translate
+     the global PRM gate already strips). -->
+<style>
+:where(.glass-dock, .dock-layer-group)[data-morphing]
+    .dock-layer-item-host.is-active,
+:where(.glass-dock, .dock-layer-group) [data-morphing]
+    .dock-layer-item-host.is-active {
+    /* entering pane — engages by t≈0.15, full by t≈0.65 (co-present with the
+       leaving pane through the swap; overrides the base static opacity:1). */
+    opacity: clamp(0, calc((var(--dock-morph-t) - 0.15) / 0.5), 1);
+}
+
+:where(.glass-dock, .dock-layer-group)[data-morphing]
+    .dock-layer-item-host.is-leaving,
+:where(.glass-dock, .dock-layer-group) [data-morphing]
+    .dock-layer-item-host.is-leaving {
+    /* leaving pane — persists to t≈0.6, then gone (overrides the base `calc(1 − t)` /
+       instant `opacity:0`); stays painted + untouchable through the fade (the base
+       `.is-leaving` rule keeps `visibility:visible; pointer-events:none`). */
+    opacity: calc(1 - clamp(0, calc(var(--dock-morph-t) / 0.6), 1));
+}
+
+/* BG.W-DOCK-PANE-OVERLAP (§2.2 vocab b) — the STANDALONE-stack box FLIP is monotonic
+   between the two pre-measured endpoints. `useLayerTransition` (the standalone driver —
+   a nested group defers to the orchestrator's convex-blend box, already monotonic, and
+   NEVER carries these vars) reserves the MAX endpoint on the morph axis (one layout
+   solve → the grid shrink-wrap is CAPPED, so the box can never dip BELOW the smaller
+   endpoint) + writes a compositor `--dock-stack-reveal` fraction per frame; here the
+   reserve applies + a `clip-path: inset()` APERTURE reveals the reserved box from the
+   leading edge, so the plate glides A→B without the mid-flight shrink-wrap collapse HEAD
+   painted. Content-RIGID (the aperture reveals, it does NOT scale the panes — glyphs
+   never distort, the W-DOCK-GLYPH-RIGID discipline preserved on the standalone path).
+   Compositor-only (`clip-path`, never a per-frame layout write — the
+   `proof:no-layout-animation` floor). The VAR PRESENCE is the gate (the engine writes
+   them only for the standalone path); the vars are absent at rest, so at settle the box
+   hands back to the natural grid shrink-wrap. */
+.dock-layer-group.horizontal
+    .dock-layer-stack[style*="--dock-stack-morph-reserve"] {
+    inline-size: var(--dock-stack-morph-reserve);
+    /* reveal from the LEADING (inline-start) edge: clip the trailing remainder. */
+    clip-path: inset(0 calc((1 - var(--dock-stack-reveal, 1)) * 100%) 0 0);
+    will-change: clip-path;
+}
+.dock-layer-group.vertical
+    .dock-layer-stack[style*="--dock-stack-morph-reserve"] {
+    block-size: var(--dock-stack-morph-reserve);
+    /* reveal from the TOP (block-start) edge: clip the bottom remainder. */
+    clip-path: inset(0 0 calc((1 - var(--dock-stack-reveal, 1)) * 100%) 0);
+    will-change: clip-path;
+}
+</style>

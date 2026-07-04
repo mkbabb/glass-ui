@@ -172,6 +172,11 @@ export function useLayerTransition(
     function clearMorphVars(el: HTMLElement) {
         el.style.removeProperty("--dock-morph-from");
         el.style.removeProperty("--dock-morph-to");
+        // BG.W-DOCK-PANE-OVERLAP (§2.2 vocab b) — clear the standalone-stack box FLIP
+        // reserve + compositor clip-reveal drive on settle, so the box hands back to the
+        // shrink-wrap grid layout at its true settled size.
+        el.style.removeProperty("--dock-stack-morph-reserve");
+        el.style.removeProperty("--dock-stack-reveal");
     }
 
     /**
@@ -254,6 +259,31 @@ export function useLayerTransition(
         root.setAttribute("data-morphing", "");
         morphing.value = true; // A′-4 — Popper re-positions queue while in flight
 
+        // BG.W-DOCK-PANE-OVERLAP (§2.2 vocab b) — the box FLIP interpolates
+        // MONOTONICALLY between the two PRE-MEASURED endpoints, never a mid-flight
+        // re-measure through the emptying stack. HEAD's standalone stack had ZERO CSS
+        // consumer of `--dock-morph-from`/`-to` (the BD.W-DOCK-CORE convex-blend rules
+        // are `.glass-dock`-scoped and never match a standalone `.dock-layer-group`), so
+        // the box JUMPED to the new pane's shrink-wrap on the class flip — the plate
+        // dip-below-both-endpoints §2.2 named. The fix reserves the MAX endpoint once
+        // (one layout solve — the grid shrink-wrap is capped so it can never dip below
+        // the smaller endpoint) and drives a compositor CLIP-REVEAL `--dock-stack-reveal`
+        // fraction (`box(t)/max`) on the SAME `--dock-morph-t` scalar the crossfade
+        // rides. The SFC `<style>` reveals the reserved box via a `clip-path: inset()`
+        // aperture (content RIGID — no `scale` on the pane, so glyphs never distort,
+        // the W-DOCK-GLYPH-RIGID discipline preserved for the standalone path too) that
+        // interpolates from the leading edge. `box(t) = from + (to − from)·clamp(0,t,1)`
+        // is bounded in [min(from,to), max] every frame → `reveal ∈
+        // [min(from,to)/max, 1]` monotonic (the convex `clamp(0,t,1)` cap absorbs the
+        // >1 spring overshoot peak, the BD.W-DOCK-CORE size-term discipline; never a
+        // per-frame layout write — the `proof:no-layout-animation` floor). The reserve
+        // is the morph AXIS only. When nested in a `.glass-dock` the orchestrator owns
+        // the box (this engine is not the driver) and these vars go unread — the
+        // convex-blend box rules there are monotonic-by-construction, so this is the
+        // standalone-only leg.
+        const maxSize = Math.max(fromSize, toSize);
+        el.style.setProperty("--dock-stack-morph-reserve", `${maxSize}px`);
+
         if (!live) {
             disposeSpring();
             spring = new SpringProgress({
@@ -270,6 +300,14 @@ export function useLayerTransition(
         activeSpring.play((t: number) => {
             if (id !== transitionId) return;
             root.style.setProperty("--dock-morph-t", `${t}`);
+            // The compositor clip-reveal drive — the box size fraction at this frame,
+            // clamped so the >1 spring overshoot peak never inflates the box past the
+            // reserved max (the convex `clamp(0,t,1)` cap, the BD.W-DOCK-CORE size-term
+            // discipline). `reveal = box(t)/max`, monotonic in [min(from,to)/max, 1].
+            const clamped = t < 0 ? 0 : t > 1 ? 1 : t;
+            const boxSize = fromSize + (toSize - fromSize) * clamped;
+            const reveal = maxSize > 0 ? boxSize / maxSize : 1;
+            el.style.setProperty("--dock-stack-reveal", `${reveal}`);
             if (activeSpring.settled) settle(el, root);
         });
     }
