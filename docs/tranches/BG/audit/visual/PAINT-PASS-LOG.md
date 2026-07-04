@@ -891,3 +891,85 @@ Source disposition PASS, PAINT FAIL on the ONE adopted-VizStudio route. 5 routes
 Captures:
 - DELTA (carries `defectLocalization` + `mustFix`): `docs/tranches/BG/audit/visual/BG.W-CHASSIS-ADOPT-OR-RETIRE-DELTA.md`
 - 20 PNGs: `docs/tranches/BG/audit/visual/BG.W-CHASSIS-ADOPT-OR-RETIRE-paint/{chrome__,safari_}*_{light,dark}.png`
+
+---
+
+## 2026-07-03 — F2 glass-consumer-band + dock-legibility + signal-truth + F6 motion-axis batch (rows 3.8 / 3.9 / NF.3 / F6.3)
+
+allPass: **false** — 3 PASS, 1 FAIL. The unified fill-tint plate/rim fold (3.8), the dock AA re-anchor at the calm saturate floor (3.9), and the BH Motion-axis gesture sweep (F6.3) all flip PASS to DONE. The single FAIL is `BG.W-GLASS-SIGNAL-TRUTH` (NF.3) — its own ST3 writer-witness exposes the dock sampled-luminance observer DEAD on the whole dock band (the dead-observer≡calm-backdrop mask the witness was built to catch), held at PENDING with `defectLocalization` + `mustFix[]` for a build-fix-agent.
+
+| Wave | Row | Verdict | Cursor |
+|------|-----|---------|--------|
+| BG.W-GLASS-CONSUMER-BAND | 3.8 | PASS | DONE (`9eb5dee9`) |
+| BG.W-DOCK-LEGIBILITY-RECAL | 3.9 | PASS | DONE (`4940a712`) |
+| BG.W-GLASS-SIGNAL-TRUTH | NF.3 | FAIL | PENDING (held, `5ecfc7c2`) |
+| BH.W-MOTION-AXIS | F6.3 | PASS | DONE (`f2683796`) |
+
+Provenance across the batch: Chrome = CDP on `ANGLE Metal Renderer: Apple M5 Max` (real Metal, not SwiftShader); WebKit/Safari = off-screen WKWebView on system `WebKit.framework` / `Apple GPU`. Engine + GPU + MODE decoded IN-PIXEL from the badge per leg. All captures over BUILT bytes on `:5200` (vite preview of the demo dist, NOT the `:5199` dev server) via the C18 `?capture=` harness. `verify-siblings-intact.mjs --quiet` exits 0 before AND after this synthesis; no `/tmp/sibling-park|stash`; servers + throwaway Chrome torn down by each paint agent; operated only under glass-ui.
+
+Cursor state confirmed at synthesis: all 3 PASS rows already read DONE (the paint agents flipped them in-run at the listed commits); NF.3 remains PENDING (paint FAIL recorded, `5ecfc7c2`, src SHAs preserved). No cursor edit owed by synthesis.
+
+---
+
+### PASSED -> DONE
+
+#### 3.8 — BG.W-GLASS-CONSUMER-BAND (cursor flip `9eb5dee9`)
+
+The fill-tint consumer fold onto the shared `--glass-fill-tinted` plate/rim pair is REAL in the served bytes. Dual-engine non-authoring judge over BUILT demo dist on `:5200`, routes /display/badge · /forms/selectable-chip · /foundations/icons, both modes, Chrome (ANGLE-Metal Apple M5 Max, CDP 9477, `deviceScaleFactor:2`) + Safari (WebKit Apple GPU, `/tmp/wkshot-live` off-screen harness). 12/12 PNGs resolve on disk `isRealPng` 2880×1800; provenance decoded off the top-left engine badge on every PNG; `data-capture-ready` polled per route.
+
+- THE FOLD IS REAL IN THE SERVED BYTES: `--glass-fill-tinted` declared exactly once (`tokens/glass.css:345` + built `index-CL6y4Gsr.css`), read 4× (`.glass-atom[data-surface=glass]` ×2 + `.glass-chip` ×2); ZERO forked `--glass-atom-tinted`/`--glass-chip-tinted` tokens (DEFINITION-ABSENT, comment-only survivor).
+- PER-INSTANCE DATA HUE OVER THE SHARED PLATE (computational + pixel-read): SelectableChip glass instances carry distinct `--glass-fill-tint` at 12% strength — React violet `oklch(0.532 0.18 317.5)`, Svelte rose `oklch(0.579 0.201 30.4)`, Qwik green `oklch(0.556 0.103 128.8)`. Dark-mode peak-chroma plate scan shows three distinct hues rose≠violet≠olive with engine parity (Svelte-rose plate near-byte-identical Safari [128,81,67] / Chrome [128,86,71]), NO WebKit desaturation-to-gray (the `oklch(L C H / 0)` 0-alpha discipline held).
+- Byte-identical no-op at the `@property` defaults (transparent + 0%): `:root --glass-fill-tinted` resolves `color-mix(in oklab, rgba(0,0,0,0) 0%, oklch(90% .05 75/0))`; IconChip default POP is its own section-hue srgb backplate with the glass-fill plate at the 0% no-op (correct-by-design opt-in `icon-chip-glass` register); loud opaque Badge variants are the W54-allowlisted saturated-pill register.
+- Recessive backdrop / calm gestalt on every route: `main.children==2`, 1 canvas, no conic banding, no oversaturation, hero fits envelope, body ink untinted, chip labels contrast-legible both modes.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-GLASS-CONSUMER-BAND-DELTA.md`
+- 12 PNGs: `docs/tranches/BG/audit/visual/BG.W-GLASS-CONSUMER-BAND-pngs/{chrome,safari}-{badge,selectable-chip,icons}-{light,dark}.png`
+
+#### 3.9 — BG.W-DOCK-LEGIBILITY-RECAL (cursor flip `4940a712`)
+
+The dock AA re-anchor at the calm `saturate(1.2)` floor — once the unified plate tint carries the anti-gray load — paints calm-not-metallic. Dual-engine non-authoring judge over BUILT `:5200` (C18 pipeline: demo:dist built + served; Chrome CDP :9477, Safari `/tmp/wkshot-live` WKWebView), both routes [/dock/overview · /dock/layers], both modes. 8/8 PNGs resolve on disk `isRealPng` 2880×1800, PNG magic verified, ≥1.68MB (non-blank); engine badges decoded (Chrome=ANGLE Metal M5 Max, Safari=WebKit/Apple GPU).
+
+- COMPUTED (getComputedStyle over every `.glass-dock` plate, both routes both modes): light plates compose `blur(8px) saturate(1.2)` — saturate 1.2 ∈ [1.15,1.25], the calm floor OFF the metallic ≥1.4 ceiling; dark plates compose `saturate(1.3) brightness(1.14)` — saturate 1.3 ≥ 1.2 luminous-dark read; `--glass-tint-source → --glass-tint-ink-dock` (warm oklch ink) with `--glass-tint-strength` clamping toward the AA ceiling (20% light bright-bucket / 12% dark) — the unified plate tint is the PRIMARY anti-gray darken-over-light device, which is why saturate could drop to the calm secondary floor. Blur radius byte-locked 8px. `glContextCount` 1-2 (one-GL-per-route), `mainChildren=2`.
+- VISUAL: dock plates read as calm-not-metallic translucent glass over the recessive warm aurora field in every capture — field transmits through, warm-ink rims silhouette the plates, all glyphs+labels legible, NO metallic sheen/oversaturated specular. Field pixel sample: warm hue 19-21° (uniform → no conic banding), HSV saturation 34% light / 44% dark (moderate, not neon). Chrome and Safari consistent (WebKit a hair softer, expected engine diff; no engine-specific defect). Hero fits envelope.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-DOCK-LEGIBILITY-RECAL-DELTA.md`
+- 8 PNGs: `docs/tranches/BG/audit/visual/BG.W-DOCK-LEGIBILITY-RECAL-paint/{chrome,safari}-{overview,layers}-{light,dark}.png`
+
+#### F6.3 — BH.W-MOTION-AXIS (cursor flip `f2683796`)
+
+The 7-boolean motion scatter collapses onto the ONE `Motion` axis, paint-verified across Card/Tab/Slider/Dialog. Device-free `proof:encapsulation` motion-axis GREEN (bool-props=0, motion-typed-missing=0, data-motion-missing=0, weight-off=true, PRM-clamp=true, kept-missing=0; 55 self-test bites; exit 0). Dual-engine capture Chrome (ANGLE Metal Apple M5 Max) + Safari (WebKit Apple GPU), both modes, all 4 surfaces; engine badges decoded per-PNG. 20 PNGs resolve on disk with valid PNG magic.
+
+- 12/12 CDP computed checks PASS both modes verifying the three-rung Motion sweep: full (tab `.segmented-indicator` drag-armed via `.glass-drag-grabbable`; slider `--motion-weight=0.618` live not 0; 19 static cards with 0 spurious `data-pressable` — press derives from interactivity; dialog `main.children=2`, horizontal overflow=0), reduced (tab drag unbinds under PRM, PRM=true, strip still operable; slider functional), off (`--motion-weight:0` off-write is the M4 source fact).
+- Gestalt correct: recessive warm-cream / near-black aurora with no conic banding or oversaturation, calm grain, hero fits envelope, dark register luminous-transmissive, destructive-red intact.
+- One traced non-defect: an initial dark-reduced grabbable flicker was a capture-harness artifact (the `.dark` post-mount toggle does not re-run the resolver's non-reactive `matchMedia` snapshot); setting PRM+mode on the context BEFORE navigation is deterministic 3/3 both modes — the built mount-under-PRM behavior is correct.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BH.W-MOTION-AXIS-DELTA.md`
+- 20 PNGs: `docs/tranches/BG/audit/visual/BH.W-MOTION-AXIS-assets/{chrome,safari}-{card,tabs,slider,dialog}-{light,dark}.png` (+ `chrome-{tabs,slider}-reduced-{light,dark}.png`)
+
+---
+
+### FAILED -> PENDING (held at row NF.3)
+
+#### NF.3 — BG.W-GLASS-SIGNAL-TRUTH (cursor held PENDING with DELTA, src SHAs preserved; recorded `5ecfc7c2`)
+
+Dual-engine non-authoring paint judge: FAIL. 12 PNGs (Chrome ANGLE-Metal M5 Max + Safari WebKit Apple GPU, both modes, all 3 routes [/dock/overview · /substrates/glass-material · /display/buttons]) resolve on disk at 2880×1800; engine badges decoded (CHROME/ANGLE + WEBKIT/Apple GPU) — real engines, no masked fallback.
+
+Scorecard:
+- ST2 (one hue channel one writer) **PASS** — dead `--glass-backdrop-hue` ABSENT across all routes/modes/engines; only the real-writer `--glass-ambient-hue`/`--glass-ambient-strength` remain.
+- ST3 (observer `data-backdrop-sampled` witness fires) **FAIL** — the crux: across 12 GlassDocks on the flagship /dock/overview (both modes, both engines) the observer NEVER stamps `data-backdrop-sampled`, NEVER writes `--glass-backdrop-luma`, NEVER writes `--glass-ambient-hue`; docks 0,1,2,3,11 are onScreen with real dims, the DockStage aurora canvas is 1928×4809 live, PRM off, zero console errors — yet inline luma reads (none) on every dock. Only the glass-material demo card (explicit `live:true`) fires. This is precisely the dead-observer≡calm-backdrop mask the ST3 witness was engineered to expose, and it exposed it: the wave's own promise ("the ambient-hue catch-light WHERE the dock observer fires") is unfulfilled on its own flagship dock route.
+- ST1 (clear-scrim floor) source-green but no `.glass-clear` plate renders on any wave route (not pixel-exercised — non-blocking gap recorded).
+- ST4 (bucket-drives-band) **PARTIAL** — declarative floor paints, luma-clamp refinement dead since no writer fires.
+
+**defectLocalization (for a build-fix-agent — NOT this synthesis agent):** `GlassDock.vue:86-89` wires `useGlassBackdropLuminance(dockEl, {backgroundCanvas})` with NO live flag and no `data-glass-sample=live` on the dock root, so `isLive()` (`useGlassBackdropLuminance.ts:218-221`) is false; even the mount `sampleStatic` fallback (`:369-372`, `:418-426`) produces zero writes on the built dock band. Contrast `glass-material.vue:63-65` (`live:true`) which fires.
+
+**mustFix:**
+1. BLOCKING (ST3): revive the GlassDock sampled-luminance observer on the dock band so docks stamp `data-backdrop-sampled` + write `--glass-backdrop-luma`/`--glass-ambient-hue`, both modes both engines. Localize `GlassDock.vue:86-89` (no live/`data-glass-sample`) + `useGlassBackdropLuminance.ts:218-221` (`isLive` false) + `:369-372`/`:418-426` (mount `sampleStatic` write not landing on dock targets).
+2. NON-BLOCKING gap (ST1): no `.glass-clear` / `[data-surface=clear]` plate renders on any of the 3 wave routes, so the static clear-scrim floor `calc(12%+luma*28%)` is source-correct + gate-green but never pixel-verified — record as source-only or add a clear specimen to a captured route.
+3. Re-verify BOTH engines BOTH modes read the observer firing (`data-backdrop-sampled` set, `--glass-ambient-hue` written) before re-flipping the row for re-judge.
+
+Captures:
+- DELTA (carries `defectLocalization` + `mustFix`): `docs/tranches/BG/audit/visual/BG.W-GLASS-SIGNAL-TRUTH-DELTA.md`
+- 12 PNGs: `docs/tranches/BG/audit/visual/BG.W-GLASS-SIGNAL-TRUTH-paint/BG.W-GLASS-SIGNAL-TRUTH-{chrome,safari}-{dock-overview,glass-material,display-buttons}-{light,dark}.png`
