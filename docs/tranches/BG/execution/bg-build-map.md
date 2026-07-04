@@ -98,6 +98,8 @@ consolidation reading the frozen `{0.32, 0.7}`; `proof:dock-engine` E4 byte-froz
 (`C≥0.02`); RETIRE the self-cancelling `feTurbulence`; `feDiffuseLighting` `@supports`-gated enhancement. `14.3
 W-HANDMARK-PERFECT` (+14.4 pencil-boil). *(14.5 cross-repo-asks → F8.)*
 
+- `F9.R1 W-BLOB-SATELLITE-SHADE` (VALUEJS-R GAP-1 hard ask; F9; P; proof:viz/blob-color-equivalence; precond 6.9): the per-satellite `uSatColor[]` GL color-seam widen + `bodyLightness`/`lightnessFloor` on deriveBlobPalette; byte-identical default; the BA arm-B book discharged; rides 5.0.0.
+
 **NO-MASKING-FALLBACK edict rows (USER 07-03; the primary paints or fails LOUD; no legacy ladders on target engines):**
 - `NF.1 W-FALLBACK-EXCISE` (F3; P; MINTS proof:no-masking-fallback + the dormant-state manifest; precond 4.1): the mechanical purge — `var(--dock-expand-t,1)` fleet→bare var, stale-literal single-source, useDockMorphWindow inverted-ladder dies, vestigial transitionend arms delete; zero paint delta.
 - `NF.2 W-LEGACY-LADDER-COLLAPSE` (F2; P; proof:no-masking-fallback Arm E): the 11 pre-target @supports/JS ladders collapse onto modern CSS + the F2.2 light-dark() witness-table COLLAPSE (orchestrator ruling) under dual-engine paint re-verify; a11y STATE escapes fenced-keep.

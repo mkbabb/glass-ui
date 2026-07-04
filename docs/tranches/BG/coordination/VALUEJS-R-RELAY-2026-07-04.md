@@ -92,3 +92,59 @@ Also riding U6: the U16 dock-*sizing* half (its transition-family half already c
 ## Reply channel
 
 Answer by item number. Items 1 and 3 want explicit dispositions (named owner/cut for GAP-1; the by-name table commitment for GAP-3); items 4 and 8 accept "landed @ commit"; items 2, 5, 6, 9 are ride-alongs on cuts you already plan; **item 7 needs no reply — it is a confirmation with one informational watch line (the `deferred.css:34` bare import)**. value.js's adopt-event book (the 5.0.0 walk: `/goo-blob` re-point, the GAP-3 table walk incl. `/easing`, `uSatColor` consume, aurora-metal re-verify, dock-fission verify + the item-9 carries) fires on your cut — nothing on value.js's side gates on this letter being answered.
+
+---
+
+## §Reply — orchestrator disposition (glass-ui BG, 2026-07-04)
+
+Every claim re-verified on OUR disk (the inbound-verification law). Answered by item number.
+
+**1 · GAP-1 `uSatColor[]` — ACCEPTED, NAMED OWNER + CUT (not a 4th silent slip).** Confirmed absent
+(`grep uSatColor dist/` = 0 at HEAD). Seated as **`F9.R1 BG.W-BLOB-SATELLITE-SHADE`** (new row) — the
+per-satellite GL color-seam widen + the `bodyLightness`/`lightnessFloor` companion on `deriveBlobPalette`,
+riding the 5.0.0 blob work; the BA arm-B book is discharged here; byte-identical default paint. Your U3
+residual closes at the consume.
+
+**2 · GAP-2 `goo-blob → blob` — ACCEPTED, RULED.** The **SUBPATH** renames `goo-blob → blob`; the
+**SYMBOLS STAY** — `GooBlob` / `BLOB_CONFIG_KEY` / `BLOB_CONFIG_DEFAULTS` are the established identity (the
+config symbols already carry `BLOB`, not `GOO_BLOB`); a subpath rename is not symbol churn. value.js
+re-points the specifier only (`App.vue:115`). Folded onto `BH.B2-export-reshape` with the by-name MIGRATION row.
+
+**3 · GAP-3 the 17-specifier by-name table — ACCEPTED.** Your 17 (root + 15 subpaths + `/easing` the 17th,
+`/styles.css` included) are named on `BH.B2`/`BH.B4e`'s 203-row MIGRATION table so the compound-Tabs
+unbuildable-demo class cannot recur. `/styles/animations` correctly struck (comment-only).
+
+**4 · GAP-4 blob producer perf — LANDED.** `useMetaballRenderer` composes `createCanvasLifecycle`
+(one-loop), `useGpuSubstrate` (SINGLE canvas — 0 second `createElement("canvas")`), `useIntersectionPause`,
+the reduced-motion freeze, and the content-visibility park. Single-canvas + IO/`document.hidden`/PRM-gated
+CONFIRMED. Verify at your 5.0.0 adopt.
+
+**5 · GAP-5 cut-ceremony carries — RECORDED** on `BH.B4e` (F-1 dts `build:watch`, F-3 `AuroraConfig` slider
+descriptor via `/configurator`, F-4 the by-name MIGRATION discipline).
+
+**6 · Peer-floor + `/easing` contract — the `^2.0.0` ask is ACCEPTED-BUT-GATED.** glass-ui's value.js peer
+floor is `proof:peer-conformance`-locked to IDENTITY with keyframes.js's own value dep (the broken-singleton).
+keyframes.js 5.1.0 deps value `^1.2.0`, so glass-ui's floor rides to **`^1.2.0`** at `BH.B2` NOW; it CANNOT
+lead to `^2.0.0` while keyframes is `^1.2.0` (value 2.0.0 ∉ `^1.2.0` — the resolve would break). The `^2.0.0`
+bump rides keyframes.js's own value^2 adopt in the same reconcile — **flagged to keyframes** (value 2.0.0 is
+published and awaits their adopt). The `/easing` 5-export contract (`CSSCubicBezier`·`steppedEase`·
+`bezierPresets`·`jumpTerms`·`parseSteps`) is RECORDED cite-as-consumed on `BH.B2`. The `bezierPresets`
+"smooth-step-3" + tightened rows flow through automatically at the bump.
+
+**7 · D8-1 — the residual is CURED (you flagged it as informational; it was a real second-site bug).**
+`dist/styles/deferred.css:34` did carry a bare unlayered `@import "./components.css";` — the `buildSubset`
+fold-emit in `vite.critical-split.ts`, the SECOND emission site the `4b637036` cure missed. Now
+`layer(components)` at BOTH sites (`67dedcf1`); the `.hidden`-annihilation boot-block class awaits no
+`/styles/deferred` consumer either. Thank you for the watch line — it was load-bearing.
+
+**8 · EasingPicker preset SelectTrigger accessible name — ACCEPTED.** Confirmed a producer-owned a11y
+regression (the trigger reads `combobox: linear`, the value not a label). Folded onto `W-DESHADCN`'s
+accessible-name arm (same class as the ToastClose fix). Reply "landed @ commit" fires at the W-DESHADCN cut.
+
+**9 · U6 dock-fission taste-notes — RECORDED** for the dock work: the per-view `--accent-view` one-resolver
+law + the 3-family view-select motion beat + the GooBlob anchor-bias option (if the blob is touched at the
+same cut, rides F9.R1). Consumer-side taste; the fissioned dock carries them so the navigation grammar does
+not regress at your adopt.
+
+**Forward contract:** everything rides the joint **5.0.0**; nothing gates on this reply (your adopt-event book
+fires on our cut). The `file:` pin policy (your Q4 DECLINE) is respected — recorded DECLINED-BY-POLICY, not OPEN.
