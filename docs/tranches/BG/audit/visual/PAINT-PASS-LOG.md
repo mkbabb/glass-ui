@@ -973,3 +973,87 @@ Scorecard:
 Captures:
 - DELTA (carries `defectLocalization` + `mustFix`): `docs/tranches/BG/audit/visual/BG.W-GLASS-SIGNAL-TRUTH-DELTA.md`
 - 12 PNGs: `docs/tranches/BG/audit/visual/BG.W-GLASS-SIGNAL-TRUTH-paint/BG.W-GLASS-SIGNAL-TRUTH-{chrome,safari}-{dock-overview,glass-material,display-buttons}-{light,dark}.png`
+
+---
+
+## 2026-07-04 — F1 route-entrance + F3 dock-morph-truth batch (rows F1.R1 / F3.R1 / F3.R2)
+
+allPass: **false** — 1 PASS, 2 FAIL. The route-entrance repair (F1.R1) flips PASS to DONE; both F3 dock-morph-truth waves FAIL and are held PENDING with `defectLocalization` + `mustFix[]` for a build-fix-agent. The two FAILs are the exact headless-green/visually-broken gap this dual-engine screencast pass was owed — both waves carry a GREEN `proof:dock` gate over paint that breaks on the number the gate cannot see (the CSS-rule-TEXT-only blind spot).
+
+| Wave | Row | Verdict | Cursor |
+|------|-----|---------|--------|
+| BG.W-ROUTE-ENTER-VISIBLE | F1.R1 | PASS | DONE (`a25d719d`) |
+| BG.W-DOCK-GLYPH-RIGID | F3.R1 | FAIL | PENDING (held, `e45a3056`) |
+| BG.W-DOCK-PANE-OVERLAP | F3.R2 | FAIL | PENDING (held, `9347b945`) |
+
+Provenance across the batch: Chrome = CDP on `ANGLE Metal Renderer: Apple M5 Max` (real Metal, not SwiftShader), Chrome 149; WebKit/Safari = off-screen WKWebView on system `WebKit.framework` 26.4 / Apple GPU. Engine + GPU + MODE decoded IN-PIXEL from the badge per leg. All 3 DELTAs + every referenced capture resolve on disk (route-enter: 12 PNGs; glyph-rigid: 4 punch PNGs + 2 Safari 2880×1800 + 4 frame-series JSON; pane-overlap: 6 PNGs + 2 JSON). `verify-siblings-intact.mjs --quiet` exits 0 before AND after this synthesis; no `/tmp/sibling-park|stash`; each paint agent tore down its `demo:dist:serve` + throwaway Chrome; operated only under glass-ui; zero `src`/`demo`/`styles`/`scripts` edits.
+
+Cursor state confirmed at synthesis: F1.R1 already reads `P | DONE` (PAINT DONE note, `a25d719d`); F3.R1 reads `P | PENDING — paint FAIL` (`e45a3056`, src SHAs preserved); F3.R2 reads `P | PENDING — paint FAIL` (`9347b945`, src SHAs preserved). No cursor edit owed by synthesis — the paint agents flipped each row in-run.
+
+---
+
+### PASSED -> DONE
+
+#### F1.R1 — BG.W-ROUTE-ENTER-VISIBLE (cursor flip `a25d719d`)
+
+The 2.1 `gl-route-enter` beat that was EATEN in paint (route-chunk stalls landing inside snappy's half-clock → the page arrived fully-placed in one frame) is REPAIRED in the served bytes. Dual-engine non-authoring judge (Chrome ANGLE-Metal Apple M5 Max + Safari off-screen WKWebView/Metal), both modes. Entrance BEATS verified via the computed-DOM path the criteria name (`getAnimations()`/`animationName`/computed transform) driving real SPA navs through the Vue router on the LIVE non-capture demo (the `?capture=` harness de-promotes `.route-enter` to settled pixels, so the static PNGs carry the SETTLED gestalt; the beats ride the computed-DOM path).
+
+- **R1 (chunk pre-resolved every nav):** first painted frame after swap = `{translateY:20px, opacity:0}` — the FROM state, NOT settled layout. `router.beforeResolve` awaits `Promise.all(comps.map(c=>c()))` with NO `firstResolved` one-shot (SUPERSEDED). `proof:route-enter-visible` R1=true.
+- **R2 (perceptible rise on snappy, PRM fade-only):** `gl-route-enter` from `translateY(1.25rem)`=20px (in the 16–24px band, on `--spring-snappy`+`backwards`); live rise decelerates 20→12→−0.26 (overshoot)→0 = a real spring curve. Under PRM (`emulateMedia reduce`): `wrapperAnims=["gl-route-fade"]`, `maxWrapperTranslateY:0` (rise DROPPED), `fadeStillHappens:true` (fade KEPT) — P6 holds.
+- **R3 (StoryHeader bands, real translateY leg, reading-order stagger):** all 4 bands fire `story-hero-cluster-rise`/`title-rise` with 24px translateY legs; opacity-0.5 cross eyebrow(62ms)→subpath(176ms)→title(247ms), `ordered:true`. The subpath chip — the dead-class the wave closed — fires `story-hero-cluster-rise` across all 3 route pairs (foundations/intro↔colors, substrates/aurora↔dock/overview, compositions/configurator↔display/buttons). Present + rising all 3 pairs.
+- **π (≥8 painted rise frames + first-frame≠settled):** `paintedRiseFrames=55` over a 65-frame series (wrapper 8, eyebrow 34, subpath 35, title 48, blurb 35); `firstFrameWrapTY=20`. Structural: `mainChildren=2` (clean mount), `glContextCount=1` (one-GL-per-route budget), `runningAnims=0` after settle.
+- **Gestalt (static PNGs both engines both modes):** aurora DockStage field recessive warm-peach(light)/warm-terracotta(dark), NO conic banding, NO oversaturation, warm-cream identity holds; dark register luminous-transmissive; hero fits envelope; StoryHeader cluster reads eyebrow→subpath(DISPLAY·BUTTONS)→title→blurb top-to-bottom; grain calm; engine badge decodes in-pixel. 12 captures `real=true`, body σ(L) 0.034–0.187, mode-differentiated meanL (light 0.85–0.92 vs dark 0.27–0.54), warm chroma 0.032–0.068.
+
+`proof:route-enter-visible` GREEN (R1/R2/R3 true, 7/7 self-test bites).
+
+CAPTURE-TOOLING NOTE (not a wave defect): Chrome foundations/colors-dark + display/buttons-dark captured at 1440×900 via the Playwright screenshot path because CDP `Page.captureScreenshot` reproducibly stalled on those two heavy dark WebGL routes (a Chrome-CDP limitation, not a route defect); Safari captured both cleanly at 2880×1800, DOM probe confirmed both settled+correct, and their entrance rode the live computed-DOM path (pair 3 →display/buttons `ordered:true`). All 12 captures real content, correct mode, decodable.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-ROUTE-ENTER-VISIBLE-DELTA.md`
+- 12 PNGs: `docs/tranches/BG/audit/visual/route-enter/{chrome,safari}-{colors,overview,buttons}-{light,dark}.png`
+
+---
+
+### FAILED -> PENDING
+
+#### F3.R1 — BG.W-DOCK-GLYPH-RIGID (cursor held PENDING with DELTA, src SHAs preserved; recorded `e45a3056`)
+
+Dual-engine paint judge of the dock collapse/expand morph on `/dock/overview` (Chrome ANGLE-Metal Apple M5 Max, Chrome 149 + WebKit 26.4), both modes. FAIL. The collapsed-REST clause PASSES on Chrome (58–59px square, aspect 1.0, `border-radius:9999px`, undistorted 20×20 glyph, `morphing=null`, `scale=1` — the standing sliver-at-rest bug IS fixed on Chrome), but the mid-morph glyph-rigidity clause and the WebKit settle-latency both FAIL. 6 punch PNGs + 2 Safari 2880×1800 + 4 frame-series JSON resolve on disk; Safari statics badge-provenanced (ENGINE WEBKIT).
+
+Scorecard:
+- **(b) collapsed REST — PASS on Chrome:** 58–59px square, aspect 1.0, `border-radius:9999px`, undistorted glyph, `scale=1`. Evidence: `punch-{light,dark}-01-collapsed-rest.png`.
+- **PRIMARY FAIL — the ±5% mid-morph glyph-rigidity clause** (IOS27-MOTION-TRUTH §"in ANY frame, mid-morph AND rest"): per-frame glyph-bbox aspect reaches **1.4884 (+48.8%, ≈10× the ±5% bar)** for the ENTIRE `[data-punching]` window (~t0→107ms, first 6–9 morph frames) on BOTH engines, BOTH modes, BOTH directions (collapse+expand). Root cause (math airtight, measured==derived): the `.dock-persistent`/`.dock-layers` counter-scale in `shape.css` inverts ONLY `--dock-size-scale`, leaving `--stretch × --dock-punch-stretch` uncompensated → effective glyph aspect `(stretch×punch)² = 1.22² = 1.4884`. The author comment deliberately excluded punch/stretch calling it "sub-perceptual" — +48.8% is not. Painted evidence: `punch-{light,dark}-02-midmorph-glyph-stretched.png` show a visibly wide/squashed home glyph.
+- **SECONDARY FAIL — WebKit settle-latency:** `[data-morphing]` + `scale:0.196 1` (a 44×59 aspect-0.75 sliver-at-rest) persists ~800–1000ms past collapse before seating the 59×59 circle; Chrome settles cleanly.
+- **Gate blind spot:** `proof:dock` G1 checks the CSS rule TEXT only (asserts the inverse decl exists) and cannot see the `(stretch×punch)²` residual — GREEN gate over broken paint, the exact headless-green/visually-broken gap this non-local screencast witness was owed.
+
+**mustFix (for a build-fix-agent — NOT this synthesis agent):**
+1. Neutralize the punch/stretch residual on the rigid content (invert the FULL morph-axis factor `1/(size×stretch×punch)` with Y=stretch×punch, OR clip-aperture the plate over the reserved footprint) so `glyphAspect ∈ [0.95,1.05]` every frame incl `[data-punching]`, both engines/modes. Source: `src/styles/dock/shape.css` (content counter-scale rules ~line 205; root box-scale 156–164).
+2. Drop the morph residual promptly on WebKit so collapsed rest is the 59×59 circle within one settle beat. Source: `src/components/custom/dock/composables/dockMorphContext.ts` (`maybeSettleRoot`, WebKit settle timing).
+3. Upgrade `proof:dock` G1 to the painted-measure (born-RED per-frame glyph-bbox screencast) so the residual REDs on the number.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-DOCK-GLYPH-RIGID-DELTA.md`
+- 6 PNGs: `docs/tranches/BG/audit/visual/glyph-rigid/punch-{light,dark}-0{1,2}-*.png` + `glyph-rigid-safari-{light,dark}-desktop.png` (2880×1800)
+- 4 JSON: `docs/tranches/BG/audit/visual/glyph-rigid/frameseries-{chrome,webkit}-{light,dark}.json`
+
+#### F3.R2 — BG.W-DOCK-PANE-OVERLAP (cursor held PENDING with DELTA, src SHAs preserved; recorded `9347b945`)
+
+Dual-engine paint judge of the DockLayerGroup pane-swap on `/dock/layers` (Chrome CDP real Metal M5 Max + Safari off-screen WKWebView), both modes. FAIL. The OVERLAPPED OPACITY CROSSFADE is CORRECT and PASSES (P1 entering engages t≈0.15 · P2 leaving persists t≈0.6 · CO 3 co-present >0.3-alpha frames · DZ no dead-zone · SWAP overlapped handoff — all green both modes; the sequential-out→blank→in dead-zone + double-exposure ghost §2.2 named are closed on the opacity axis). But the BOX FLIP criterion FAILS in both modes on both nested cases. 6 PNGs + 2 JSON resolve on disk.
+
+Scorecard:
+- **Opacity crossfade — PASS both modes:** P1/P2/CO/DZ/SWAP all green.
+- **STRUCTURAL FACT:** on `/dock/layers` EVERY DockLayerGroup is nested-in-a-`<GlassDock>` (`standaloneGroupCount=0`), so `useLayerTransition`'s `--dock-stack-morph-reserve`/clip-reveal (the P3 claim's standalone path) never engages on this route; the box is the orchestrator `--dock-live` convex blend.
+- **P3 box FLIP — FAIL:** a pure LAYER SWAP on an already-expanded dock (`--dock-expand-t`=1 at rest) makes the VISIBLE plate box COLLAPSE to the 53.68px collapsed-pill then re-expand — `restPlateW 269.12→minPlateW 53.68` (`dipRatioOfRest 0.199`, 31 dip frames), the §2.2 "box dips below both endpoints" defect MORE extreme (full collapse). Reproduces in NON-capture mode (not a `?capture` artifact). Root cause: `dockMorphContext.onSwap`→`ensureSpringRunning` seats `--dock-morph-t:0` (the collapsed endpoint) + springs 0→1, so `--dock-expand-t` (morph.css `= --dock-morph-t`) cycles 0→1 → the layers.css `--dock-live` convex blend plays a spurious collapse→expand on a pane swap.
+- **SCOPE gap:** the builder's P3 standalone-reserve/clip-reveal box-FLIP claim is never exercised on `/dock/layers` (`standaloneGroupCount=0`), so `proof:dock`'s P3 arm greened on a path this route does not paint; the actual painted box is the orchestrator convex blend carrying the collapse defect.
+
+Engine note: WebKit frame-series unmeasurable (off-screen WKWebView throttles rAF → the `SpringProgress` `--dock-morph-t` glide freezes at 0), so the binding computational box-FLIP truth is the Chrome CDP on-screen Metal measure (engine-agnostic CSS/spring cascade); the WebKit leg supplies settled-paint provenance + engine badge.
+
+**mustFix (for a build-fix-agent — NOT this synthesis agent):**
+1. Decouple the layer-swap crossfade scalar from the collapse/expand box scalar (OR gate the `--dock-morph-t:0` seat to genuine collapse/expand transitions only) so a pure layer swap does NOT cycle `--dock-expand-t` 0→1 on an already-expanded nested dock. Source: `dockMorphContext.onSwap`→`ensureSpringRunning` + morph.css `--dock-expand-t` derivation + layers.css `--dock-live` convex blend.
+2. Ensure the box FLIP interpolates MONOTONICALLY between the pane endpoints (~212–269px) — no dip below both endpoints, no full collapse to the 53.68px pill.
+3. Verify on the all-nested `/dock/layers` route (the P3 standalone path is not exercised here) — the fix must land on the orchestrator convex-blend path this route actually paints.
+
+Captures:
+- DELTA (carries `defectLocalization` + `mustFix`): `docs/tranches/BG/audit/visual/BG.W-DOCK-PANE-OVERLAP-DELTA.md`
+- 6 PNGs: `docs/tranches/BG/audit/visual/BG.W-DOCK-PANE-OVERLAP-paint/paneloverlap-{layers,midswap}-{chrome,safari}-{light,dark}.png`
+- 2 JSON: `docs/tranches/BG/audit/visual/BG.W-DOCK-PANE-OVERLAP-paint/{chrome-frameseries,verdict}.json`
