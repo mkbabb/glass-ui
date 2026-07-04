@@ -800,3 +800,94 @@ Dual-engine, both modes FAIL. Route `/substrates/dot-flow-field` renders `FLOW_P
 Captures:
 - DELTA (carries `defectLocalization` + `mustFix`): `docs/tranches/BG/audit/visual/BG.W-DOTFLOW-REBUILD-DELTA.md`
 - 8 route PNGs + 2 evidence crops: `docs/tranches/BG/audit/visual/BG.W-DOTFLOW-REBUILD-paint/dotflow-{showcase-,}{chrome,safari}-{light,dark}.png` · `EVIDENCE-showcase-chrome-dark-white.png` · `EVIDENCE-showcase-safari-dark-black.png`
+
+---
+
+## 2026-07-03 — batch (rows F2.4 / 13.2 / F6.8 / F7.2 / 16.1)
+
+allPass: **false** — 4 PASS, 1 FAIL. The `/substrates/aurora` DOUBLE-HEADER identity inversion holds row F7.2 (BG.W-CHASSIS-ADOPT-OR-RETIRE) at PENDING; the other four flip DONE.
+
+| Wave | Row | Verdict | Cursor |
+|------|-----|---------|--------|
+| BG.W-CORNER-ALIAS-KILL | F2.4 | PASS | DONE |
+| BG.W-GLASS-REFRACT-WEBGL | 13.2 | PASS | DONE |
+| BG.W-LIQUID-FILL | F6.8 | PASS | DONE |
+| BG.W-CHASSIS-ADOPT-OR-RETIRE | F7.2 | FAIL | PENDING (held — DELTA on disk routes to build-fix-agent) |
+| BG.W-DOCK-SCROLL-PROGRESS | 16.1 | PASS | DONE |
+
+Provenance across the batch: Chrome = CDP on `ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Max)` (real Metal, not SwiftShader); WebKit = off-screen WKWebView on system `WebKit.framework` / `Apple GPU` (C-SAFARI Tier-1). Engine + GPU decoded IN-PIXEL from the badge per leg. All captures over BUILT bytes on `:5200` (vite preview of the demo dist, NOT the `:5199` dev server). Every declared capture path resolves on disk (40 CORNER + 12 REFRACT + 10 LIQUID + 20 CHASSIS + 34 DOCK-SCROLL). `verify-siblings-intact --quiet` exit 0 across the batch; each judge killed its `demo:dist:serve` + throwaway Chrome.
+
+---
+
+### PASSED -> DONE
+
+#### F2.4 — BG.W-CORNER-ALIAS-KILL (cursor flip `3fcad1a0`; USER defect 2026-07-03 — the aliasing chronic)
+
+The white square-corner backplate wedge behind rounded card/glass corners is killed at the CLASS level — every backplate/`::before` inherits the host radius; verified cross-engine over a saturated field, all 3 wave routes [/display/card · /substrates/glass-material · /display/buttons], both modes.
+
+- Corner-triangle pixel forensics (the square-corner region behind the radius): **white-wedge px = 0** in EVERY corner clip across buttons (blue field) + card (orange field), both modes. Corner-triangle pixels are warm-CHROMATIC (R>G>B) field/page color right up to the curve — card orange field `(211,122,53)` light / `(213,125,59)` dark; buttons cream page `(243,228,203)` light / near-black `(39,28,18)` dark. Never a neutral near-white square backplate.
+- Computed DOM `::before` audit across all 6 route×mode captures: the ONLY opaque-`::before` surfaces are pill dock-icon-button capsules where `hostBR == beforeBR == 9999px` (radius INHERITED). No rounded host carries a `0px` square-corner `::before` behind its radius — the class-level discipline holds.
+- Full-page reads: rounded top corners reveal the field/page through the curve with no light box artifact, in Chrome Metal AND Safari WebKit, both modes.
+- 40 PNGs on disk (@2880×1800 WebKit / 1440×900 Chrome full + corner close-ups).
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-CORNER-ALIAS-KILL-DELTA.md`
+- PNGs: `docs/tranches/BG/audit/visual/BG.W-CORNER-ALIAS-KILL-paint/` (`{card,glass-material,buttons}-{chrome,webkit}-{light,dark}-full.png` + `*-cornerTR.png` close-ups)
+
+#### 13.2 — BG.W-GLASS-REFRACT-WEBGL (cursor flip `4f258b53`; C-SAFARI Tier-1 WebGL2 FLOOR — PRIMARY)
+
+The refraction floor paints FULL on capable (Chromium `.glass-lens` resolves `url(#glass-refract)`) with a graceful flat-blur fall on the WebKit tail — the "full on capable, graceful flat-blur fall on the tail" ladder the criteria requires. 3 routes [/substrates/glass-material · /display/buttons · /dock/overview], both modes, both engines = 12 PNGs.
+
+- Hero CTA fits its envelope (`btn-glass` 200×44, `overflowsViewport=false`, lit glass transmitting the staged blue live field — not a pale lozenge).
+- Dock plate translucent glass (bg alpha 0.52 light / 0.56 dark) both engines both modes.
+- Aurora recessive (pixel means warm-cream R>G>B, no conic banding, no oversaturation) — light gm ~(0.89–0.95, 0.75–0.85, 0.59–0.71); dark gm warm-amber luminous-dark ~(0.45–0.58, 0.36–0.44, 0.22–0.28). Grain calm.
+- LOAD-BEARING (recorded in DELTA): the WebGL2 fragment module `glass-refract.glsl.ts` is SOURCE-integrated with ZERO live importers at this commit — the FBO `uBackdrop` bind + `--glass-chromatic-strength` @property reg are explicitly DEFERRED to BG.W-GLASS-BACKDROP-SAMPLE (13.3 booked). Today's LIVE floor is the Tier-0 CSS-SVG `#glass-refract` lens + the graceful flat-blur fall; the WebGL2 primary becomes the universal floor when the FBO keystone lands (a distinct wave's verdict, not this wave's regression).
+- Observed-benign (recorded, non-blocking): `glContextCount=2` on /display/buttons + /dock/overview is the demo-page double live-field composition (page aurora + staged/DockStage field), a story composition not a library one-GL-per-route violation; both fields render calm/recessive. `proof:glass` GREEN incl. refract-webgl RW1–RW5 + self-test teeth.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-GLASS-REFRACT-WEBGL-DELTA.md`
+- 12 PNGs: `docs/tranches/BG/audit/visual/BG.W-GLASS-REFRACT-WEBGL-assets/{chrome_,safari_}*.png` (+ `chrome-probes.json`)
+
+#### F6.8 — BG.W-LIQUID-FILL (cursor flip `98b76451`; SPEEDTEST-AX-INBOUND #5)
+
+The ONE shared `.glass-liquid-fill` glass-cylinder register paints over the track on BOTH the Slider `.slider-range` and `<Progress variant="liquid">`, both engines, both modes = 10 PNGs. The extracted register is COMPOSED, dual path dead.
+
+- SLIDER /forms/slider: `.slider-range` className resolves to `slider-range glass-liquid-fill`; 11/11 slider ranges carry `.glass-liquid-fill` (`glassLiquidFillCount === sliderRangeCount === 11`, no fork). Warm-cream amber oklab tint `oklab(0.88 0.0258 0.0965 / 0.88)`, `--glass-material-rim` + `--glass-under-shadow-quiet`, pill radius 9999px. Rim tint re-resolves warm-dark→warm-light between modes. The `spectrum` variant opts out of blur by design (not a defect).
+- PROGRESS /feedback/progress variant="liquid": `.progress-liquid-fill` className composes the shared register; 2 liquid bars, both carry the glass mechanics. Phase-colour composable (zero glass knowledge): tint rides `--liquid-fill-tint` seeded off `--progress-fill` (default dark-ink light / legendre-violet dark; a demo bar overrides to `--viz-legendre` → violet cylinder both modes). Same rim + under-shadow + pill radius as the Slider (the ONE register).
+- Backdrop-filter emission note (investigated, NOT a fix owed): `getComputedStyle().backdropFilter` reports `none` on Chrome because the built lightningcss CSS emits only `-webkit-backdrop-filter` (drops the unprefixed alias); WebKit consumes it natively and Chromium honors it for rendering. The criterion's load-bearing deliverables (warm oklab tint, rim, under-shadow, pill radius) are visibly painted in every engine/mode. `proof:liquid-fill` GREEN (W1–W4 + self-test).
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-LIQUID-FILL-DELTA.md`
+- 10 PNGs: `docs/tranches/BG/audit/visual/BG.W-LIQUID-FILL-paint/{chrome,safari}-{forms-slider,feedback-progress}-{light,dark}.png` (+ `safari-feedback-progress-{light,dark}-tall.png`)
+
+#### 16.1 — BG.W-DOCK-SCROLL-PROGRESS (cursor flip `8412deab`; USER RE-SPEC 2026-07-03)
+
+The page-scroll progress IS the leftside SidebarDock's BORDER (`<BorderProgress>` consumer #3); the standalone storybook scroll bar is RETIRED. Verified at scroll 0 AND scroll ~45% (the fill is scroll-coupled — a scroll-0-only capture paints nothing), 3 routes [/dock/overview · /substrates/aurora · /foundations/intro], both modes, both engines.
+
+- COMPUTED (both engines, all 6 route×mode agree): standalone `.demo-scroll-progress` absent · `.demo-dock-scroll-ring` present, `aria-hidden` · `ringRect ≡ dockRect` exactly (12,16 67×713/720) · coverage inline-end-edge · radius 9999px (pill-following) · width 11px (10–14 envelope) · mask-composite `intersect, exclude, add` (band ∩ ring, corrected order) · fill 0% → ~45% scroll-coupled · `ringAnimCount 0` even under `prefers-reduced-motion:reduce` (PRM-static; fill 45% preserved, 0 autonomous animations).
+- PIXEL: the warm-ink band paints band-ONLY on the content-facing (inner-right) dock edge, filling top → ~45% front then stopping, no interior slab bleed — confirmed on SYSTEM WebKit (resolves the booked WebKit mask concern for the shipped inline-end-edge coverage). Mode flip for free: light = dark warm-ink band, dark = light-cream band. Aurora/foundations backdrops recessive/calm; hero display type fits envelope. Collapsed full-ring arm dormant-but-wired (shell dock always-expanded by design — matches spec, not a defect). `proof:border-progress` PASS incl. W7; `proof:demo` PASS.
+- 32 capture PNGs + 2 probe JSONs on disk.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-DOCK-SCROLL-PROGRESS-DELTA.md` (§NON-AUTHORING VERDICT)
+- PNGs + probes: `docs/tranches/BG/audit/visual/BG.W-DOCK-SCROLL-PROGRESS-judge/` (`{chrome,webkit,webkit-pw}-*-scroll45.png` + `{chrome,webkit-pw}-probe.json`)
+
+---
+
+### FAILED -> PENDING (held)
+
+#### F7.2 — BG.W-CHASSIS-ADOPT-OR-RETIRE (cursor held PENDING with DELTA, src SHAs preserved; recorded `3d836372`)
+
+Source disposition PASS, PAINT FAIL on the ONE adopted-VizStudio route. 5 routes, both engines, both modes = 20/20 PNGs on disk.
+
+- SOURCE DISPOSITION (PASS): RETIRE realized — `_chassis/` dir, `DemoFrame.vue`, `StorySectionHeader.vue`, `demo-frame.css` all DEFINITION-ABSENT; no `demo-frame` `@import`. ADOPT realized — `StoryHeader.vue` live-imported by StoryPage/StoryHero; `VizStudio.vue` live-imported by aurora.vue. `proof:demo` GREEN (D1/D2/D3/D4 + 5 self-test bites). Surviving DemoFrame/StorySectionHeader mentions are comment-only provenance.
+- COMPUTED-DOM: StoryHeader unified cluster renders exactly ONCE on all 5 routes (`cluster=1`, `eyebrow=1`, `subpath=1`, `blurb=1`, `h1=1`, `dupEyebrow=false`). foundations/intro, glass-material, paper-grid, dot-flow-field all read CLEAN (`inlineHdr=0`) in BOTH engines + BOTH modes.
+- PAINT DEFECT (engine+mode invariant, 4/4 aurora captures): `/substrates/aurora` — the ONLY adopted-VizStudio route — paints a DOUBLE-HEADER identity inversion, violating the verbatim criterion "rendered ONCE, 0 inline `<header>`". Two competing display-scale titles stack: (1) StoryHeader cluster [eyebrow SUBSTRATES·AURORA → subpath chip → display `<h1>` "Aurora" → blurb], then (2) a SECOND inline `<header>` (`aurora.vue:143-153`, VizStudio `#masthead` slot) restating "SUBSTRATES · AURORA STUDIO" + a purple `text-display-3` "Aurora Studio". `inlineHdr=1` on aurora vs `0` on the 4 clean routes.
+
+**mustFix (for a build-fix-agent — NOT this synthesis agent):**
+1. Drop or reconcile the aurora `#masthead` inline header so one display-scale identity paints ONCE on `/substrates/aurora`. This is a `demo/stories/substrates/aurora.vue` change (`:143-153`), NOT a `src/` change.
+2. Re-verify BOTH engines BOTH modes read one designed page identity (`inlineHdr=0`) before re-flipping the row for re-judge.
+
+Captures:
+- DELTA (carries `defectLocalization` + `mustFix`): `docs/tranches/BG/audit/visual/BG.W-CHASSIS-ADOPT-OR-RETIRE-DELTA.md`
+- 20 PNGs: `docs/tranches/BG/audit/visual/BG.W-CHASSIS-ADOPT-OR-RETIRE-paint/{chrome__,safari_}*_{light,dark}.png`

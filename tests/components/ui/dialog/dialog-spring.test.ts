@@ -1,11 +1,13 @@
-// W13 — Dialog spring entrance opt-in.
+// W13 — Dialog spring entrance opt-in (BH.W-MOTION-AXIS re-pointed).
 //
-// Validates the surface contract: when `spring` is set, DialogContent emits
-// the `data-spring` hook + inline transform/opacity driven by useSpringMount;
-// when `spring` is unset, the spring-clocked `.glass-reveal` LIQUID-ENTER path is
-// composed (BB.W-LIQUID-REVEAL — off the retired `popover-animate` bezier zoom-95).
-// The composable's drag-dismiss + continuity properties are exercised at
-// `useSpringMount.test.ts` against the underlying useSpring engine directly.
+// The `spring` boolean RETIRED onto the ONE `motion` axis + a distinct `springPreset`
+// prop (the curve choice carved off motion INTENSITY). Validates the surface contract:
+// when `springPreset` is set, DialogContent emits the `data-spring` hook + inline
+// transform/opacity driven by useSpringMount; when `springPreset` is unset, the
+// spring-clocked `.glass-reveal` LIQUID-ENTER path is composed (BB.W-LIQUID-REVEAL — off
+// the retired `popover-animate` bezier zoom-95). The composable's drag-dismiss +
+// continuity properties are exercised at `useSpringMount.test.ts` against the underlying
+// useSpring engine directly.
 
 import { mount } from "@vue/test-utils";
 import { defineComponent, h, nextTick } from "vue";
@@ -13,9 +15,9 @@ import { describe, expect, it } from "vitest";
 
 import { Dialog, DialogContent, DialogTrigger } from "@glass/components/ui/dialog/index";
 
-type SpringValue = boolean | "smooth" | "snappy" | "bouncy" | "gentle";
+type PresetValue = "smooth" | "snappy" | "bouncy" | "gentle";
 
-function mountDialog(spring?: SpringValue) {
+function mountDialog(springPreset?: PresetValue) {
     const Host = defineComponent({
         components: { Dialog, DialogContent, DialogTrigger },
         setup() {
@@ -25,7 +27,7 @@ function mountDialog(spring?: SpringValue) {
                     h(
                         DialogContent,
                         {
-                            ...(spring !== undefined ? { spring } : {}),
+                            ...(springPreset !== undefined ? { springPreset } : {}),
                             class: "test-dialog",
                         },
                         () => h("p", "body"),
@@ -45,8 +47,8 @@ function findDialog(): HTMLElement | null {
     return document.querySelector(".test-dialog") as HTMLElement | null;
 }
 
-describe("DialogContent — W13 spring entrance", () => {
-    it("does not emit the data-spring attribute when spring is unset", async () => {
+describe("DialogContent — W13 spring entrance (BH.W-MOTION-AXIS)", () => {
+    it("does not emit the data-spring attribute when springPreset is unset", async () => {
         const wrapper = mountDialog();
         await nextTick();
         await nextTick();
@@ -60,8 +62,8 @@ describe("DialogContent — W13 spring entrance", () => {
         wrapper.unmount();
     });
 
-    it("emits data-spring=\"smooth\" by default when spring=true", async () => {
-        const wrapper = mountDialog(true);
+    it("emits data-spring=\"smooth\" when springPreset=\"smooth\"", async () => {
+        const wrapper = mountDialog("smooth");
         await nextTick();
         await nextTick();
         const portal = findDialog();
@@ -73,7 +75,7 @@ describe("DialogContent — W13 spring entrance", () => {
         wrapper.unmount();
     });
 
-    it("emits data-spring=\"bouncy\" when spring=\"bouncy\" is passed", async () => {
+    it("emits data-spring=\"bouncy\" when springPreset=\"bouncy\" is passed", async () => {
         const wrapper = mountDialog("bouncy");
         await nextTick();
         await nextTick();
@@ -83,8 +85,8 @@ describe("DialogContent — W13 spring entrance", () => {
         wrapper.unmount();
     });
 
-    it("writes an inline transform + opacity + animation override under spring", async () => {
-        const wrapper = mountDialog(true);
+    it("writes an inline transform + opacity + animation override under springPreset", async () => {
+        const wrapper = mountDialog("smooth");
         await nextTick();
         await nextTick();
         const portal = findDialog();

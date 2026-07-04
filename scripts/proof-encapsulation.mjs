@@ -936,6 +936,208 @@ function detectSizeGrammar(overrides = {}) {
     return { facts, violations };
 }
 
+// ── BH.W-MOTION-AXIS — the four-boolean motion scatter is killed onto the Motion axis. ──
+// The library expressed "opt into physics" as an unnamed four-boolean scatter
+// (`draggable`/`pressable`/`spring`/`liquidDrag` — 7 prop instances across 6 SFCs).
+// The liquid-weight-universal law means physics is the DEFAULT, so the collapse is a
+// single `motion?: Motion` opt-DOWN axis (`full` default → `reduced` → `off`). This arm
+// asserts the §GQ-4 contract: NO component PROP exports the four booleans, every carrier
+// declares `motion?: Motion` + binds `:data-motion`, the resolver writes `--motion-weight:
+// 0` on `off`, PRM clamps DOWN (never escalates), and the kept gesture CONTRACTS
+// (`keepDockOpen`/`dragDismiss`/`responsive`) survive. Pure FS, device-free (the collapse
+// resolves the SAME physics the booleans did — byte-identical paint at the `full`
+// default). Born-RED on HEAD (the four booleans as props) → GREEN + a bite per clause.
+//
+// THE PROPS-NOT-OPTION-FIELDS FENCE (named so the arm cannot born-RED on legitimate
+// holders): the boolean-word scan is scoped to component PROP surfaces — `.vue` files'
+// `defineProps`/`withDefaults` interfaces ONLY. The 8 internal composables that own those
+// words as OPTION-interface fields at HEAD (`useDrawerSnap.spring` · `useDockFission`/
+// `useTabDragMorph`.draggable · `dockMorphContext`/`useDockItemDrag`/
+// `useDockOrientationMorph`/`useLayerTransition`/`useDockSpring`'s local `spring`) are
+// `.ts` files under `composables/` — EXCLUDED from the grep surface by construction; NONE
+// is a public prop, NONE renames. The self-test proves the fence BOTH directions (a
+// re-minted `pressable` PROP flags; a `spring` OPTION field on a synthetic composable
+// passes). Asserts:
+//   M1 — BOOLEAN-PROPS-GONE: no `.vue` `defineProps` interface declares
+//        `draggable`/`pressable`/`spring`/`liquidDrag` as a prop (a native HTML
+//        `draggable=` template attr / a `.ts` composable option field does NOT count).
+//   M2 — MOTION-TYPED: each of the 6 carriers declares a `motion?: Motion` prop.
+//   M3 — DATA-MOTION-WRITE: each carrier binds `:data-motion` in its template.
+//   M4 — MOTION-WEIGHT-OFF: the `useMotionAxis` resolver writes `--motion-weight: 0`
+//        on the `off` rung (the live scalar the cartoon channels already read).
+//   M5 — PRM-PRECEDENCE: `resolveMotion` clamps a prop DOWN under PRM (full/reduced →
+//        reduced) — no code path lets the prop escalate ABOVE PRM.
+//   M6 — KEPT-CONTRACTS: `keepDockOpen`/`dragDismiss`/`responsive` survive as distinct
+//        props (the inverse-over-unification fence — a gesture CONTRACT is not motion
+//        intensity).
+const MOTION_AXIS_LEAF = resolve(SRC, "components/ui/_shared/useMotionAxis.ts");
+// The six carriers the §4.5 disk-grep names (4 boolean names across 6 SFCs).
+const MOTION_CARRIERS = [
+    { rel: "components/ui/card/Card.vue", name: "Card" },
+    { rel: "components/ui/slider/Slider.vue", name: "Slider" },
+    { rel: "components/ui/dialog/DialogContent.vue", name: "DialogContent" },
+    { rel: "components/ui/sheet/SheetContent.vue", name: "SheetContent" },
+    { rel: "components/custom/tabs/SegmentedTabs.vue", name: "SegmentedTabs" },
+    { rel: "components/custom/dock/DockLayerGroup.vue", name: "DockLayerGroup" },
+];
+const MOTION_BOOLEANS = ["draggable", "pressable", "spring", "liquidDrag"];
+// The kept gesture contracts (NOT motion intensity) — must survive the collapse.
+const KEPT_CONTRACTS = [
+    { prop: "keepDockOpen", rel: "components/ui/slider/Slider.vue" },
+    { prop: "dragDismiss", rel: "components/ui/sheet/SheetContent.vue" },
+    { prop: "responsive", rel: "components/custom/tabs/SegmentedTabs.vue" },
+];
+
+// A PROP declaration of `name` in a `.vue` file's `defineProps`/`withDefaults`
+// interface — `name?:`/`name:` followed by a TYPE IDENTIFIER (comment-stripped). Three
+// non-prop shapes are EXCLUDED by construction: (a) a native HTML `draggable="x"` / a
+// `:draggable="x"` v-bind has NO `:` AFTER the word; (b) an inline composable OPTION
+// passed in the .vue script (`draggable: () => …`) is a VALUE — the `:` is followed by
+// `(`/`'`/`"`/`[`, not a type identifier, so the type-start class rejects it; (c) a
+// `.ts` composable is not scanned at all. The prop-type start must be a type identifier
+// (`boolean`/`Motion`/`SpringPreset`/…) — an uppercase or lowercase-primitive word.
+function declaresProp(src, name) {
+    // `?:` marks a prop (optional-field syntax); a bare `name:` requires an identifier
+    // type NOT immediately followed by `=>` (which would be an inline arrow VALUE).
+    const clean = stripComments(src);
+    // Optional-prop form `name?: <TypeIdent>` — the `?` before `:` is prop-shape.
+    if (new RegExp(`\\b${name}\\s*\\?\\s*:\\s*[A-Za-z_$]`).test(clean)) return true;
+    // Non-optional `name: <TypeIdent>` NOT part of an inline `() =>`/value — the type
+    // token is a bare identifier and the next non-space is a type continuation
+    // (`|`/`&`/`<`/`;`/`}`/`,`/end), never `=>` (an arrow value) or `(` (a call value).
+    const m = new RegExp(`\\b${name}\\s*:\\s*([A-Za-z_$][\\w$]*)\\s*(=>|[^\\w$])`).exec(
+        clean,
+    );
+    if (m && m[2].trim() !== "=>" && m[2] !== "(") return true;
+    return false;
+}
+
+// overrides: { leafText?, leafExists?, sources? } — `sources` is a { rel: text } map
+// merged over the real components/ tree; a self-test injects a synthetic offender/holder.
+function detectMotionAxis(overrides = {}) {
+    const violations = [];
+    const facts = {};
+
+    const leafExists = overrides.leafExists ?? existsSync(MOTION_AXIS_LEAF);
+    const leafSrc =
+        overrides.leafText ?? (leafExists ? read(MOTION_AXIS_LEAF) : "");
+
+    // The scanned .vue component prop surface — the real ui/ + custom/ tree with
+    // per-file overrides so a self-test can sabotage a specific file or inject one.
+    const vueSources = [];
+    for (const f of walkSrc(COMPONENTS_DIR)) {
+        if (!f.endsWith(".vue")) continue; // props live in .vue; .ts composables excluded.
+        const rel = f.slice(SRC.length + 1);
+        const over = overrides.sources && overrides.sources[rel];
+        vueSources.push({ rel, text: over ?? read(f) });
+    }
+    if (overrides.sources)
+        for (const [rel, text] of Object.entries(overrides.sources))
+            if (rel.endsWith(".vue") && !vueSources.some((s) => s.rel === rel))
+                vueSources.push({ rel, text });
+
+    // Per-carrier text (over-ridable) for the M2/M3/M6 per-file asserts.
+    const carrierText = {};
+    for (const c of MOTION_CARRIERS) {
+        const over =
+            overrides.sources && overrides.sources[c.rel];
+        carrierText[c.rel] = over ?? read(resolve(SRC, c.rel));
+    }
+
+    // ── M1 — BOOLEAN-PROPS-GONE (no .vue defineProps declares the four booleans). ──
+    const boolPropHits = [];
+    for (const { rel, text } of vueSources) {
+        for (const b of MOTION_BOOLEANS)
+            if (declaresProp(text, b)) boolPropHits.push(`${rel}:${b}`);
+    }
+    facts.boolPropsGone = { hits: boolPropHits, scanned: vueSources.length };
+    if (boolPropHits.length)
+        violations.push(
+            `M1 — no .vue component may declare a \`draggable\`/\`pressable\`/\`spring\`/\`liquidDrag\` PROP (folded onto \`motion\`): ${boolPropHits.join(", ")}`,
+        );
+
+    // ── M2 — MOTION-TYPED (each carrier declares `motion?: Motion`). ──
+    const missingMotion = [];
+    for (const c of MOTION_CARRIERS) {
+        const clean = stripComments(carrierText[c.rel]);
+        // `motion?: Motion` AND the `Motion` type imported from the axes home.
+        const hasMotionProp = /\bmotion\s*\??\s*:\s*Motion\b/.test(clean);
+        const importsMotion =
+            /import\s+type\s*\{[^}]*\bMotion\b[^}]*\}\s*from\s*["'][^"']*axes["']/.test(
+                clean,
+            );
+        if (!(hasMotionProp && importsMotion))
+            missingMotion.push(
+                `${c.name}(prop=${hasMotionProp},import=${importsMotion})`,
+            );
+    }
+    facts.motionTyped = { missing: missingMotion };
+    if (missingMotion.length)
+        violations.push(
+            `M2 — every carrier must declare a \`motion?: Motion\` prop (Motion imported from axes): ${missingMotion.join(", ")}`,
+        );
+
+    // ── M3 — DATA-MOTION-WRITE (each carrier binds `:data-motion`). ──
+    const missingDataMotion = [];
+    for (const c of MOTION_CARRIERS) {
+        const clean = stripComments(carrierText[c.rel]);
+        if (!/:data-motion\s*=/.test(clean)) missingDataMotion.push(c.name);
+    }
+    facts.dataMotionWrite = { missing: missingDataMotion };
+    if (missingDataMotion.length)
+        violations.push(
+            `M3 — every carrier must bind \`:data-motion\` on its root (the F5.2 two-door calm selector hook): ${missingDataMotion.join(", ")}`,
+        );
+
+    // ── M4 — MOTION-WEIGHT-OFF (the resolver writes `--motion-weight: 0` on `off`). ──
+    const cleanLeaf = stripComments(leafSrc);
+    const writesWeightOff =
+        /--motion-weight/.test(cleanLeaf) &&
+        /["']off["']/.test(cleanLeaf) &&
+        /useMotionAxis/.test(cleanLeaf);
+    facts.motionWeightOff = { leafExists, writesWeightOff };
+    if (!(leafExists && writesWeightOff))
+        violations.push(
+            `M4 — useMotionAxis.ts must exist AND write \`--motion-weight: 0\` on the \`off\` rung (leaf=${leafExists}, write=${writesWeightOff})`,
+        );
+
+    // ── M5 — PRM-PRECEDENCE (resolveMotion clamps DOWN under PRM, never escalates). ──
+    const hasResolveMotion = /export\s+function\s+resolveMotion\b/.test(
+        cleanLeaf,
+    );
+    // The clamp: `off` short-circuits (returns off) AND the PRM branch forces
+    // full/reduced → "reduced" (a live `matchMedia('(prefers-reduced-motion: reduce)')`
+    // read gating a return of "reduced"). No branch returns a rung ABOVE the requested.
+    const prmClampsDown =
+        /return\s+["']off["']/.test(cleanLeaf) &&
+        /prefers-reduced-motion/.test(cleanLeaf) &&
+        /return\s+prmActive\(\)\s*\?\s*["']reduced["']/.test(cleanLeaf);
+    facts.prmPrecedence = { hasResolveMotion, prmClampsDown };
+    if (!(hasResolveMotion && prmClampsDown))
+        violations.push(
+            `M5 — resolveMotion must clamp DOWN under PRM (full/reduced → reduced) + preserve \`off\`, never escalate above PRM (resolveMotion=${hasResolveMotion}, prmClampsDown=${prmClampsDown})`,
+        );
+
+    // ── M6 — KEPT-CONTRACTS (the distinct gesture contracts survive as PROPS). ──
+    // `declaresProp` (the same prop-shape detector M1 uses) — so a `keepDockOpen: true`
+    // withDefaults VALUE does not count as a surviving contract; only the `keepDockOpen?:
+    // boolean` PROP declaration does (the contract must stay a real prop, not a value).
+    const missingContracts = [];
+    for (const c of KEPT_CONTRACTS) {
+        const over = overrides.sources && overrides.sources[c.rel];
+        const text = over ?? read(resolve(SRC, c.rel));
+        if (!declaresProp(text, c.prop))
+            missingContracts.push(`${c.prop}@${c.rel.split("/").pop()}`);
+    }
+    facts.keptContracts = { missing: missingContracts };
+    if (missingContracts.length)
+        violations.push(
+            `M6 — the kept gesture contracts (keepDockOpen/dragDismiss/responsive — NOT motion intensity) must survive: missing ${missingContracts.join(", ")}`,
+        );
+
+    return { facts, violations };
+}
+
 // ── The detector — runs over a SOURCE MAP so a self-test can sabotage inputs.
 // overrides: { driverText?, godModuleSource?, leafExists?, leafSource? }.
 function detect(overrides = {}) {
@@ -1457,6 +1659,134 @@ function selfTest() {
     // S-fence: the migrated tree carries ZERO size/density-collision violation.
     sabNotS({}, "S", "S the migrated tree (no size/density collision)");
 
+    // ── BH.W-MOTION-AXIS — the M1–M6 bites over detectMotionAxis. ──
+    const liveMotionLeaf = read(MOTION_AXIS_LEAF);
+    const liveCard = read(resolve(SRC, "components/ui/card/Card.vue"));
+    const sabM = (overrides, prefix, name) => {
+        const { violations } = detectMotionAxis(overrides);
+        if (violations.some((x) => x.startsWith(prefix))) flagged++;
+        else
+            throw new Error(
+                `[proof:encapsulation self-test] motion-axis bite FAILED to flag: ${name}`,
+            );
+    };
+    const sabNotM = (overrides, prefix, name) => {
+        const { violations } = detectMotionAxis(overrides);
+        if (!violations.some((x) => x.startsWith(prefix))) flagged++;
+        else
+            throw new Error(
+                `[proof:encapsulation self-test] motion-axis fence bite WRONGLY flagged: ${name}`,
+            );
+    };
+    // M1: a re-minted `pressable` PROP on a synthetic .vue (the collapse un-does).
+    sabM(
+        {
+            sources: {
+                "components/_selftest-pressable.vue":
+                    "defineProps<{ pressable?: boolean }>()",
+            },
+        },
+        "M1",
+        "M1 a re-minted `pressable` prop on a .vue",
+    );
+    // M1: a re-minted `draggable` PROP on a synthetic .vue.
+    sabM(
+        {
+            sources: {
+                "components/_selftest-draggable.vue":
+                    "withDefaults(defineProps<{ draggable?: boolean }>(), {})",
+            },
+        },
+        "M1",
+        "M1 a re-minted `draggable` prop on a .vue",
+    );
+    // M1 (the props-not-option-fields fence — the CARDINAL bite): a `spring` OPTION
+    // field on a synthetic COMPOSABLE (`.ts` under composables/) must NOT flag — the
+    // arm scans .vue prop surfaces ONLY, so a legitimate internal option holder passes.
+    sabNotM(
+        {
+            sources: {
+                "components/custom/dock/composables/_selftest-fission.ts":
+                    "interface FissionOpts { spring?: SpringProgress; draggable?: () => boolean; }",
+            },
+        },
+        "M1",
+        "M1 fence — a `spring`/`draggable` OPTION field on a .ts composable passes",
+    );
+    // M1 (the native-attr fence): a template `<img draggable="false">` native HTML attr
+    // is NOT a prop declaration (no `:` after the word) — must NOT flag.
+    sabNotM(
+        {
+            sources: {
+                "components/_selftest-native-drag.vue":
+                    '<template><img draggable="false" :draggable="x" /></template>',
+            },
+        },
+        "M1",
+        "M1 fence — a native `draggable=` template attr is not a prop",
+    );
+    // M2: a carrier drops its `motion: Motion` prop (the collapse never landed).
+    sabM(
+        {
+            sources: {
+                "components/ui/card/Card.vue": liveCard
+                    .replace(/\bmotion\s*\?:\s*Motion;/, "")
+                    .replace(
+                        /import type \{ Motion \} from "\.\.\/_shared\/axes";/,
+                        "",
+                    ),
+            },
+        },
+        "M2",
+        "M2 Card drops its `motion: Motion` prop",
+    );
+    // M3: a carrier drops its `:data-motion` bind (the F5.2 hook never landed).
+    sabM(
+        {
+            sources: {
+                "components/ui/card/Card.vue": liveCard.replace(
+                    /:data-motion="[^"]*"/,
+                    "",
+                ),
+            },
+        },
+        "M3",
+        "M3 Card drops its :data-motion bind",
+    );
+    // M4: the resolver stops writing `--motion-weight: 0` on `off`.
+    sabM(
+        { leafText: liveMotionLeaf.replace(/--motion-weight/g, "--x-dead") },
+        "M4",
+        "M4 the resolver drops the --motion-weight off-write",
+    );
+    // M5: the resolver escalates a prop ABOVE PRM (drops the PRM clamp branch).
+    sabM(
+        {
+            leafText: liveMotionLeaf.replace(
+                /return prmActive\(\) \? "reduced" : requested;/,
+                "return requested;",
+            ),
+        },
+        "M5",
+        "M5 the resolver escalates above PRM (no clamp)",
+    );
+    // M6: a kept contract (`keepDockOpen`) is folded away (the inverse-over-unify smell).
+    // Rename EVERY `keepDockOpen` token (prop decl + withDefaults value + readers) so no
+    // prop-shape declaration survives — the contract genuinely gone.
+    sabM(
+        {
+            sources: {
+                "components/ui/slider/Slider.vue": read(
+                    resolve(SRC, "components/ui/slider/Slider.vue"),
+                ).replace(/keepDockOpen/g, "xkeepDockOpen"),
+            },
+        },
+        "M6",
+        "M6 the keepDockOpen contract is folded away",
+    );
+    // M-fence: the migrated tree carries ZERO motion-axis violation.
+    sabNotM({}, "M", "M the migrated tree (no boolean-scatter, motion axis clean)");
+
     return flagged;
 }
 
@@ -1482,6 +1812,9 @@ function run() {
     // BH.W-SIZE-UNIFY — the size/density collision folded onto the Size axis.
     const { facts: sizeFacts, violations: sizeViolations } =
         detectSizeGrammar();
+    // BH.W-MOTION-AXIS — the four-boolean motion scatter folded onto the Motion axis.
+    const { facts: motionFacts, violations: motionViolations } =
+        detectMotionAxis();
     const facts = {
         ...blobFacts,
         colocate: colocateFacts,
@@ -1489,6 +1822,7 @@ function run() {
         deshadcn: deshadcnFacts,
         axisGrammar: axisFacts,
         sizeGrammar: sizeFacts,
+        motionAxis: motionFacts,
     };
     const violations = [
         ...blobViolations,
@@ -1497,6 +1831,7 @@ function run() {
         ...deshadcnViolations,
         ...axisViolations,
         ...sizeViolations,
+        ...motionViolations,
     ];
     const status = violations.length === 0 ? "pass" : "fail";
 
@@ -1565,7 +1900,13 @@ function run() {
         `    size-grammar                  : ${sizeViolations.length === 0 ? "GREEN" : "RED"} (density-gone=${sizeFacts.densityAbsent.densityTypeHits.length === 0 && sizeFacts.densityAbsent.densityPropHits.length === 0}, ControlSize=${JSON.stringify(sizeFacts.controlSize.controlMembers)}, adjective-rungs=${sizeFacts.adjectiveRungs.length}, button-iconOnly=${sizeFacts.buttonIcon.btnHasIconOnly}, chip-shape=${sizeFacts.chipShape.chipShapeHasCell})`,
     );
     console.log(
-        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (blob E1×2+E1-fence+E2×2+E3×2+E4+E4-fence + colocate C1×2+C1-fence+C2×2+C3+C3-fence + alias-kill A1+A2+fence + deshadcn DS1×3+DS1-fence+DS2+DS3×2+DS3-regex+DS4+DS-clean + axis-grammar G1+G2+G3+G3-fence+G4+G4-fence+G5+G6 + size-grammar S1x2+S2+S3+S4+S5+S6+S-fence)`,
+        "  BH.W-MOTION-AXIS (M1 booleans-gone · M2 motion-typed · M3 data-motion · M4 weight-off · M5 PRM-clamp · M6 kept-contracts):",
+    );
+    console.log(
+        `    motion-axis                   : ${motionViolations.length === 0 ? "GREEN" : "RED"} (bool-props=${motionFacts.boolPropsGone.hits.length}, motion-typed-missing=${motionFacts.motionTyped.missing.length}, data-motion-missing=${motionFacts.dataMotionWrite.missing.length}, weight-off=${motionFacts.motionWeightOff.writesWeightOff}, PRM-clamp=${motionFacts.prmPrecedence.prmClampsDown}, kept-missing=${motionFacts.keptContracts.missing.length})`,
+    );
+    console.log(
+        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (blob E1×2+E1-fence+E2×2+E3×2+E4+E4-fence + colocate C1×2+C1-fence+C2×2+C3+C3-fence + alias-kill A1+A2+fence + deshadcn DS1×3+DS1-fence+DS2+DS3×2+DS3-regex+DS4+DS-clean + axis-grammar G1+G2+G3+G3-fence+G4+G4-fence+G5+G6 + size-grammar S1x2+S2+S3+S4+S5+S6+S-fence + motion-axis M1×2+M1-fence×2+M2+M3+M4+M5+M6+M-fence)`,
     );
 
     if (violations.length) {
@@ -1596,5 +1937,6 @@ export {
     detectDeshadcn,
     detectAxisGrammar,
     detectSizeGrammar,
+    detectMotionAxis,
     selfTest,
 };

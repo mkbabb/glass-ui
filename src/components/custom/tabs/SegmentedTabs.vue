@@ -28,6 +28,9 @@ import { useTabIndicator } from "./composables/useTabIndicator";
 import { useTabDragMorph } from "./composables/useTabDragMorph";
 import { useTabResponsive } from "./composables/useTabResponsive";
 import { useTabRovingFocus } from "./composables/useTabRovingFocus";
+// BH.W-MOTION-AXIS — the `draggable` boolean dies onto the ONE `motion` axis.
+import type { Motion } from "../../ui/_shared/axes";
+import { useMotionAxis } from "../../ui/_shared/useMotionAxis";
 
 // WAAPI keyframes can't dereference custom properties — resolve literals at
 // runtime via the cascade root.
@@ -94,16 +97,18 @@ export interface SegmentedTabsProps {
      */
     responsive?: boolean | SegmentedTabsResponsive;
     /**
-     * BC.W-LIQUID-TAB — the LIQUID TAB. The `pill` indicator is a physical lozenge
-     * you can GRAB and PULL: it follows the finger ~1:1, squishes on drag velocity,
-     * and flings to the nearest tab on release (`useDragMorph`). DEFAULT `true` — the
-     * pull is the iOS-27 primary affordance, ADDITIVE OVER the click/keyboard path
-     * (which stays byte-identical + fully operable — the drag is a pointer
-     * ENHANCEMENT, never the sole selection mechanism, WCAG 2.1.1). A consumer who
-     * wants click-only opts out with `:draggable="false"`. No-op on `underline` (the
-     * ink hairline has no indicator element to deform — `dragEnabled` gates it).
+     * BH.W-MOTION-AXIS — the ONE motion-weight axis (the `draggable` boolean's
+     * clean-break successor). `full` (default) arms the LIQUID TAB: the `pill` indicator
+     * is a physical lozenge you can GRAB and PULL — it follows the finger ~1:1, squishes
+     * on drag velocity, and flings to the nearest tab on release (`useDragMorph`),
+     * ADDITIVE OVER the click/keyboard path (which stays byte-identical + fully operable
+     * — the drag is a pointer ENHANCEMENT, never the sole selection mechanism, WCAG
+     * 2.1.1). `reduced`/`off` opt DOWN to the click-only strip (the drag unbinds; the
+     * roving-tabindex keyboard contract stays — motion off, meaning never off). No-op on
+     * `underline` (the ink hairline has no indicator element to deform). PRM forces
+     * `full → reduced` regardless (a11y absolute).
      */
-    draggable?: boolean;
+    motion?: Motion;
     class?: HTMLAttributes["class"];
 }
 
@@ -111,11 +116,12 @@ const props = withDefaults(defineProps<SegmentedTabsProps>(), {
     variant: "pill",
     orientation: "horizontal",
     responsive: false,
-    // BC.W-LIQUID-TAB — the pull is the pill DEFAULT (additive over the byte-identical
-    // click/keyboard path; underline stays no-op by `dragEnabled = draggable &&
-    // !isUnderline`). A consumer opts out with `:draggable="false"`.
-    draggable: true,
 });
+
+// BH.W-MOTION-AXIS — the resolved motion state. `armed` (resolved `full`) gates the
+// drag enrichment (the SAME iOS-27 default the `draggable: true` boolean carried, now
+// the `full` register); `dataMotion`/`hostStyle` are the zero-delta-at-full binds.
+const motionAxis = useMotionAxis(() => props.motion);
 
 // Vue 3.5 defineModel — single-select string. (The multi-select array model
 // retired with the `:multi-select` prop; a multi-pressed strip is a ToggleGroup.)
@@ -209,7 +215,10 @@ const { dragEnabled, drag } = useTabDragMorph({
     indicatorRef,
     isVertical,
     isUnderline,
-    draggable: () => props.draggable,
+    // BH.W-MOTION-AXIS — the drag arms on the resolved `full` register (the internal
+    // composable option keeps its `draggable` OPTION-field name — the gate greps public
+    // component PROPS only; a composable option is explicitly excluded).
+    draggable: () => motionAxis.armed.value,
     stripOptions,
     buttonRefs,
     model,
@@ -312,6 +321,8 @@ const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
         ref="containerRef"
         :role="isUnderline ? 'tablist' : 'group'"
         :aria-orientation="isUnderline ? (isVertical ? 'vertical' : 'horizontal') : undefined"
+        :data-motion="motionAxis.dataMotion.value"
+        :style="motionAxis.hostStyle.value"
         :class="cn(
             'segmented-tabs',
             `segmented-tabs--${variant}`,

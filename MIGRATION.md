@@ -1,5 +1,37 @@
 # MIGRATION—v0.9.x → v1.0 → v2.0
 
+> **BH.W-MOTION-AXIS — the four-boolean motion scatter → the ONE `motion` axis. Clean
+> break, no alias ("No legacy code").** The `draggable` / `pressable` / `spring` /
+> `liquidDrag` booleans (7 prop instances across 6 SFCs — `Card` · `Slider` ·
+> `DialogContent` · `SheetContent` · `SegmentedTabs` · `DockLayerGroup`) are COLLAPSED onto
+> a single `motion?: "full" | "reduced" | "off"` axis (default `full` — physics is the
+> DEFAULT, the axis is an opt-DOWN per the liquid-weight-universal law). `motion="reduced"`
+> degrades the JS gesture physics to their CSS floor (the same state `prefers-reduced-motion`
+> produces); `motion="off"` unbinds the enrichment AND writes `--motion-weight: 0` (the
+> functional interaction — click/keyboard/drag-handle — stays). PRM forces `full → reduced`
+> regardless (a11y absolute).
+> - **`<SegmentedTabs draggable>` / `<DockLayerGroup draggable>` → the `motion="full"`
+>   DEFAULT.** The drag is now the DEFAULT (a click-only strip opts DOWN with
+>   `motion="reduced"`). DockLayerGroup's drag flips default-ON (the boolean defaulted
+>   `false`) — the pull is an enrichment over the always-present click/keyboard model write.
+> - **`<Card pressable>` → interactivity + `motion`.** A Card presses IFF it renders
+>   interactive (`as="button"` / `as="a"` / `href` / `role="button"` on the root) AND
+>   `motion !== "off"`. MIGRATE: a former `<Card pressable @click>` becomes
+>   `<Card as="button" @click>` (a static plate never presses — the derivation, not a
+>   default). A former `<Card pressable="false">` is a bare `<Card>` (already static).
+> - **`<Slider liquidDrag>` → `motion`.** `liquidDrag="false"` → `motion="reduced"` (or
+>   `"off"`); the default `full` is byte-identical to the prior `liquidDrag: true`.
+> - **`<DialogContent spring>` / `<SheetContent spring>` → `springPreset` + `motion`.** The
+>   `spring` boolean carried BOTH the on/off AND the preset; it splits: `springPreset?:
+>   "smooth" | "snappy" | "bouncy" | "gentle"` is the curve choice (a distinct concern from
+>   motion intensity), and `motion` gates the engine. `spring={true}` → `springPreset="smooth"`;
+>   `spring="bouncy"` → `springPreset="bouncy"`; unset `spring` → unset `springPreset` (the
+>   `.glass-reveal` / `sheet-animate` CSS floor, byte-identical). Sheet's `dragDismiss` now
+>   engages the spring engine on its own (it needs it) — it no longer requires `spring`.
+> - **The kept gesture CONTRACTS are UNTOUCHED** (`keepDockOpen` · `dragDismiss` ·
+>   `responsive`) — a gesture contract is a role/behavior, not motion intensity.
+> Machine-locked by `proof:encapsulation` · `motion-axis` arm (M1-M6).
+
 > **BG.W-DEAD-SWEEP — the `selectableChipVariants` alias + the `--corner-shape-card`/
 > `-pill` dead tokens SWEPT. Clean break, no alias ("No legacy code").** Two net-negative
 > cuts:

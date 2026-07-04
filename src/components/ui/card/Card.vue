@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, type HTMLAttributes, type CSSProperties } from "vue";
+import { computed, useAttrs, type HTMLAttributes, type CSSProperties } from "vue";
 import { Primitive, type PrimitiveProps } from "reka-ui";
 import { cn } from "../../../utils";
 import { vSpecular } from "../../../composables/glass";
@@ -14,6 +14,12 @@ import { useStalePropWarning } from "../_shared/useStalePropWarning";
 // only for the `veil` decoration. The `:data-surface="surface"` binding (below)
 // is what the CSS seam reads — Card was already the reference axis.
 import { surfaceClass } from "../_shared/useSurfaceAxis";
+// BH.W-MOTION-AXIS — the ONE motion-weight axis (the four-boolean scatter collapse).
+// Card's `pressable` boolean dies onto `motion`: the press CAPABILITY now derives
+// from interactivity (an interactive `as`/`href`/`role` root) AND `motion !== "off"`
+// — a bare static plate never presses because it has no interaction to enrich.
+import type { Motion } from "../_shared/axes";
+import { useMotionAxis } from "../_shared/useMotionAxis";
 
 /**
  * The glass surface ladder. Maps 1:1 to `.glass-{tier}` in glass.css after the
@@ -84,8 +90,8 @@ export type CardSpecular = "off" | "subtle" | "full";
  * `--glass-accent`) + selected metal-shimmer (A-3, `.metal-*-border`) decoration
  * through the SHARED BUILT seams — it mints NO new sub-system. The shape mirrors
  * the `surface` axis exactly: a data-attr the CSS seam reads, ORTHOGONAL to
- * `tier`/`surface`/`pressable` (a `variant="selection" surface="glass"
- * tier="resting" pressable` card is valid). The hue is a CONSUMER value
+ * `tier`/`surface`/`motion` (a `variant="selection" surface="glass"
+ * tier="resting" as="button"` card is valid). The hue is a CONSUMER value
  * (`data-hue`/`data-hue-strength` per-instance); NO consumer hue enters a token.
  */
 export type CardVariant = "selection";
@@ -127,25 +133,27 @@ interface Props extends PrimitiveProps {
      *  hero/chrome opt-in); `full` runs the brighter pre-tune rung set for a busy
      *  backdrop. Only `glass` surfaces wire it; `cartoon` owns its own sticker lift. */
     specular?: CardSpecular;
-    /** BB.W-PRESS-UNIFY — the interactive PRESS register, default **OFF**. A bare
-     *  Card is a static content PLATE and never presses (a press on a static surface
-     *  is the visual-load-bearing anti-pattern). A `:pressable` Card is a TAPPABLE
-     *  LIST-CARD (a selectable result row, a navigable tile) — it gains the ONE
-     *  interruptible coupled spring-press (`useLiquidPress`): the reciprocal X/Y squish
-     *  + a sub-perceptual brightness lift on the `--card-press-t` drive, on the
-     *  `--spring-snappy`-class clock, INTERRUPTIBLE (a rapid re-tap re-seats the spring
-     *  velocity-continuously), PRM-instant (the press snaps with zero in-between
-     *  frames). Card is the SECOND binary the dead `useSpringPress` primitive reaches
-     *  (Button is the first — direct; Card via `useLiquidPress` which composes it — the
-     *  J-inv-10 ≥2-consumer bar met; the dock control is the booked third). The press is
-     *  compositor-only (`scale` + a custom property); the `.glass-press` CSS `:active`
+    /** BH.W-MOTION-AXIS — the ONE motion-weight axis (the `pressable` boolean's
+     *  clean-break successor). `full` (default) — the FULL liquid register, gesture
+     *  enrichments armed (zero-delta at default). `reduced` — the JS press physics
+     *  degrade to the `.tap-squish` `:active` CSS floor (the SAME state PRM produces).
+     *  `off` — the press unbinds AND `--motion-weight: 0` zeroes the cartoon channels;
+     *  the click still selects. PRM forces `full → reduced` regardless (a11y absolute).
+     *
+     *  The press CAPABILITY derives from INTERACTIVITY, not this axis: a Card presses
+     *  IFF it renders interactive (`as="button"`/`as="a"`/`href`/`role="button"` on the
+     *  root) AND `motion !== "off"`. A bare static `<Card>` never presses because it has
+     *  no interaction to enrich — the "static plate never presses" fence holds by
+     *  DERIVATION, not by a default. The press is `useLiquidPress` (the interruptible
+     *  coupled spring-press — Card is the SECOND `useSpringPress` binary, Button first),
+     *  compositor-only (`scale` + `--card-press-t`); the `.glass-press` CSS `:active`
      *  scale is the no-JS / SSR floor. */
-    pressable?: boolean;
+    motion?: Motion;
     /** BC.W-SELECTION-CARD — the selection decoration axis (the ONE new Atlas
      *  component). `selection` ROUTES the per-instance data-hue rim (A-2) +
      *  the selected metal-shimmer border (A-3) through the BUILT seams; default
      *  UNSET (a bare Card is byte-identical to HEAD). ORTHOGONAL to
-     *  `tier`/`surface`/`pressable`. */
+     *  `tier`/`surface`/`motion`. */
     variant?: CardVariant;
     /** BC.W-SELECTION-CARD — the chosen state of a `variant="selection"` card.
      *  When `true` the card composes the earned `.metal-${metal}-border` swept
@@ -178,10 +186,31 @@ const props = withDefaults(defineProps<Props>(), {
     grain: true,
     grid: false,
     specular: "off",
-    pressable: false,
     metal: "gold",
     as: "div",
 });
+
+// BH.W-MOTION-AXIS — the resolved motion state (PRM-clamped; `armed` gates the JS
+// enrichment, `dataMotion`/`hostStyle` are the zero-delta-at-`full` binds).
+const motionAxis = useMotionAxis(() => props.motion);
+
+// BH.W-MOTION-AXIS — the press CAPABILITY derives from INTERACTIVITY, not the axis.
+// A Card presses IFF it renders interactive (an explicit `as`/`href`/`role` signal —
+// NEVER listener-sniffing, so an analytics `@click` on a static card does not make it
+// press) AND `motion !== "off"`. `href`/`role` fall through Card's transparent
+// `$attrs` (Card has no `inheritAttrs:false`), so they are read off `useAttrs()`.
+const attrs = useAttrs();
+const isInteractive = computed(() => {
+    const asTag = props.as;
+    if (asTag === "button" || asTag === "a") return true;
+    if (attrs.href != null) return true;
+    const role = attrs.role;
+    if (role === "button" || role === "link") return true;
+    return false;
+});
+const pressable = computed(
+    () => isInteractive.value && motionAxis.resolved.value !== "off",
+);
 
 // BB.W-LIQUIDHOVER — the pointer-anchored moving-specular gleam routes through the
 // SAME tier-root seam as the interactive controls (the `v-specular` directive wrapping
@@ -278,11 +307,14 @@ const metalBorderClass = computed<string | false>(() =>
 const hostStyle = computed<CSSProperties | undefined>(() => {
     const specular = specularArmed.value ? specularTokenStyle.value : undefined;
     const accent = selectionStyle.value;
+    // BH.W-MOTION-AXIS — the `--motion-weight: 0` off-write (undefined at full/reduced,
+    // the zero-delta no-op floor) merges into the host style beside specular/accent.
+    const motion = motionAxis.hostStyle.value as CSSProperties | undefined;
     const base =
-        specular || Object.keys(accent).length
-            ? { ...(specular ?? {}), ...accent }
+        specular || Object.keys(accent).length || motion
+            ? { ...(specular ?? {}), ...accent, ...(motion ?? {}) }
             : undefined;
-    if (!props.pressable) return base;
+    if (!pressable.value) return base;
     return { ...(base ?? {}), ...press.pressStyle.value };
 });
 
@@ -305,6 +337,7 @@ useStalePropWarning("Card", ["flush"]);
         :data-grain="grain"
         :data-grid="grid"
         :data-pressable="pressable || undefined"
+        :data-motion="motionAxis.dataMotion.value"
         :data-variant="variant || undefined"
         :data-selected="
             variant === 'selection' && selected ? 'true' : undefined

@@ -24,6 +24,9 @@ import {
     useDragMorph,
     type DragMorphSnapTarget,
 } from "../../../composables/motion/useDragMorph";
+// BH.W-MOTION-AXIS — the `draggable` boolean dies onto the ONE `motion` axis.
+import type { Motion } from "../../ui/_shared/axes";
+import { useMotionAxis } from "../../ui/_shared/useMotionAxis";
 
 /**
  * <DockLayerGroup> — a stack of <DockLayer> children with crossfade +
@@ -46,19 +49,29 @@ const props = withDefaults(
         /** Rail placement relative to the layer stack. */
         railPosition?: "start" | "end";
         /**
-         * BB.W-DRAG-MORPH — pull-to-switch. When `true` (ADDITIVE, default `false`),
-         * the switcher-rail indicator becomes draggable: pull along the rail axis to
-         * the next layer chip, fling-to-nearest on release writes `activeLayer`
-         * (`useDragMorph`, consumer #2). The reka roving tabindex / Arrow keys stay.
+         * BH.W-MOTION-AXIS — the ONE motion-weight axis (the `draggable` boolean's
+         * clean-break successor). `full` (default) arms pull-to-switch: the switcher-rail
+         * indicator is draggable — pull along the rail axis to the next layer chip, the
+         * fling-to-nearest on release writes `activeLayer` (`useDragMorph`, consumer #2).
+         * This is the liquid-weight-universal default flipping ON (the boolean defaulted
+         * `false`; the pull is now the register default, an enrichment over the always-
+         * present click/keyboard model write — a 5.0.0 free break, MIGRATION row).
+         * `reduced`/`off` opt DOWN to the click/keyboard-only rail (the drag unbinds; the
+         * reka roving tabindex + Arrow keys stay — motion off, meaning never off). PRM
+         * forces `full → reduced` regardless (a11y absolute).
          */
-        draggable?: boolean;
+        motion?: Motion;
     }>(),
     {
         showRail: true,
         railPosition: "start",
-        draggable: false,
     },
 );
+
+// BH.W-MOTION-AXIS — the resolved motion state. `armed` (resolved `full`) arms the
+// pull-to-switch drag (the SAME gate the `props.draggable` boolean was; the default
+// flips ON per the liquid-weight-universal law).
+const motionAxis = useMotionAxis(() => props.motion);
 
 const activeLayer = defineModel<string>("active", { required: true });
 const dock = useOptionalDockContext();
@@ -191,21 +204,27 @@ const railDrag = useDragMorph<string>({
     axis: () => railDragAxis.value,
     snapTargets: resolveRailSnapTargets,
     onSnap: (id) => {
-        if (props.draggable && activeLayer.value !== id) activeLayer.value = id;
+        if (motionAxis.armed.value && activeLayer.value !== id)
+            activeLayer.value = id;
     },
 });
 
 watch(
-    () => [layers.value.length, railOrientation.value, props.draggable] as const,
+    () =>
+        [
+            layers.value.length,
+            railOrientation.value,
+            motionAxis.armed.value,
+        ] as const,
     () => {
         resolveRailDom();
-        if (props.draggable) nextTick(() => railDrag.refresh());
+        if (motionAxis.armed.value) nextTick(() => railDrag.refresh());
     },
 );
 
 onMounted(() => {
     resolveRailDom();
-    if (props.draggable) nextTick(() => railDrag.refresh());
+    if (motionAxis.armed.value) nextTick(() => railDrag.refresh());
 });
 
 /* AX.W02 — DEFER to the dock's single morph orchestrator when nested in a
@@ -329,7 +348,8 @@ function onRailFocusOut(e: FocusEvent) {
         ref="groupEl"
         class="dock-layer-group"
         :class="[axis, `rail-${railPosition}`]"
-        :style="groupReserveStyle"
+        :data-motion="motionAxis.dataMotion.value"
+        :style="[groupReserveStyle, motionAxis.hostStyle.value]"
     >
         <!-- AY.W-DOCK2 (D5 persistence) — BOOKED: AY.W-GOD1. The switcher rail lives
              inside the layer-group, which sits in the dock's clipped `--full` pane, so
@@ -370,10 +390,12 @@ function onRailFocusOut(e: FocusEvent) {
                 class="dock-layer-rail"
                 :class="[
                     railPosition,
-                    props.draggable && 'glass-drag-grabbable',
-                    props.draggable && railDrag.dragging.value && 'glass-drag-lift',
+                    motionAxis.armed.value && 'glass-drag-grabbable',
+                    motionAxis.armed.value &&
+                        railDrag.dragging.value &&
+                        'glass-drag-lift',
                 ]"
-                :style="props.draggable ? railDrag.dragStyle.value : undefined"
+                :style="motionAxis.armed.value ? railDrag.dragStyle.value : undefined"
                 :indicator="false"
                 @focusin="onRailFocusIn"
                 @focusout="onRailFocusOut"

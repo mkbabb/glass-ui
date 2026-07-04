@@ -8,6 +8,9 @@ import { useDragVelocity } from '../../../composables/dom/useDragVelocity'
 import { useOptionalDockContext } from '../../custom/dock/composables/dockContext'
 import { useDockHold } from '../../custom/dock/composables/useDockHold'
 import { sliderVariants, type SliderVariants } from './index'
+// BH.W-MOTION-AXIS — the `liquidDrag` boolean dies onto the ONE `motion` axis.
+import type { Motion } from '../_shared/axes'
+import { useMotionAxis } from '../_shared/useMotionAxis'
 
 const props = withDefaults(defineProps<SliderRootProps & {
   class?: HTMLAttributes['class']
@@ -23,13 +26,16 @@ const props = withDefaults(defineProps<SliderRootProps & {
    */
   keepDockOpen?: boolean
   /**
-   * BD.W-GLASS-ATOM-REGISTER — the liquid weight-train on the fill: anticipation
-   * dip on grab → BOUNDED saturating smear while pulling (the cel cast lagging by
-   * `--motion-weight × velocity`) → follow-through overshoot on release. Composes
-   * the `useDragVelocity` bridge (writes `--atom-drag-v`, no-idle-rAF teardown).
-   * PRM collapses it to the plain squish floor. Default: true.
+   * BH.W-MOTION-AXIS — the ONE motion-weight axis (the `liquidDrag` boolean's
+   * clean-break successor). `full` (default) arms the BD.W-GLASS-ATOM-REGISTER liquid
+   * weight-train on the fill: anticipation dip on grab → BOUNDED saturating smear while
+   * pulling (the cel cast lagging by `--motion-weight × velocity`) → follow-through
+   * overshoot on release (the `useDragVelocity` bridge writes `--atom-drag-v`). `reduced`
+   * degrades to the plain non-uniform squish floor (the SAME state PRM produces). `off`
+   * unbinds the velocity bridge AND writes `--motion-weight: 0`; the drag still sets the
+   * value. PRM forces `full → reduced` regardless (a11y absolute).
    */
-  liquidDrag?: boolean
+  motion?: Motion
 }>(), {
   // Vue casts an ABSENT boolean prop to `false`, not `undefined` — so the prior
   // `props.keepDockOpen ?? true` never reached `true` for the common
@@ -37,7 +43,6 @@ const props = withDefaults(defineProps<SliderRootProps & {
   // hold). `withDefaults` resolves an absent prop to `true`; an explicit
   // `:keep-dock-open="false"` still disarms. (AX.W03.)
   keepDockOpen: true,
-  liquidDrag: true,
 })
 const emits = defineEmits<SliderRootEmits>()
 
@@ -46,7 +51,7 @@ const s = computed<NonNullable<SliderVariants['size']>>(() => props.size ?? 'md'
 const keepDockOpen = computed(() => props.keepDockOpen)
 
 const delegatedProps = computed(() => {
-  const { class: _, variant: __, size: ___, keepDockOpen: ____, liquidDrag: _____, ...delegated } = props
+  const { class: _, variant: __, size: ___, keepDockOpen: ____, motion: _____, ...delegated } = props
   // BOTH recipes inscribe the thumb within the capsule so it never overshoots the
   // rounded ends — reka-ui's `contain` alignment enforces the containment law. The
   // standard slider paints NO VISIBLE THUMB at all (the filled glass track's leading
@@ -99,11 +104,13 @@ useDockHold(getRootEl, { enabled: () => keepDockOpen.value })
    `--atom-drag-v` (0..1, saturating `tanh`) on the resolved host during the drag
    window only; the rAF tears DOWN on `pointerup` (the no-idle-cost contract). The
    `.slider-range` smear + the cel cast lag read the var in scoped CSS. The bridge
-   honors PRM (pins the var at 0, never opens the rAF) and is gated off when
-   `liquidDrag` is disabled (the host resolver returns the same element as the hold).
-   The same resolver getter sidesteps the onMounted-ordering trap. */
-const liquidDrag = computed(() => props.liquidDrag)
-useDragVelocity({ host: () => (liquidDrag.value ? getRootEl() : null) })
+   honors PRM (pins the var at 0, never opens the rAF) and is gated off when the
+   resolved `motion` is not `full` (the host resolver returns the same element as the
+   hold). The same resolver getter sidesteps the onMounted-ordering trap.
+   BH.W-MOTION-AXIS — `motion.armed` is the PROP door (full → armed), the bridge's own
+   PRM pin is the OS door; both close to the plain-squish floor. */
+const motionAxis = useMotionAxis(() => props.motion)
+useDragVelocity({ host: () => (motionAxis.armed.value ? getRootEl() : null) })
 
 /* N.W0 Lane A1 — useTouchGate scroll-vs-drag arbitration (a SEPARATE
    concern from the hold: it decides whether a touch is a drag or a
@@ -172,6 +179,8 @@ const isTouchActive = computed(() => touchGate.isActive.value)
     :data-size="s"
     :data-held="isHeld || undefined"
     :data-touch-active="isTouchActive || undefined"
+    :data-motion="motionAxis.dataMotion.value"
+    :style="motionAxis.hostStyle.value"
     v-bind="forwarded"
   >
     <SliderTrack class="slider-track">

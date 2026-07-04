@@ -13,6 +13,10 @@ import { X } from "@lucide/vue"
 import { cn } from '../../../utils'
 import { useSpringMount, type SpringPreset } from '../../../composables/motion/useSpringMount'
 import ModalOverlay from '../_shared/ModalOverlay.vue'
+// BH.W-MOTION-AXIS — the `spring` boolean dies onto the ONE `motion` axis (the preset
+// carves off onto the distinct `springPreset` prop; motion gates the JS entrance).
+import type { Motion } from '../_shared/axes'
+import { useMotionAxis } from '../_shared/useMotionAxis'
 // BA.W-SURFACE-AXIS — Dialog's binary `variant: glass|opaque` string RETIRES onto
 // the SHARED {glass·veil·opaque} `surface` axis (clean break, no alias — the prior
 // `variant` was Dialog-local and never matched the Card grammar; MIGRATION.md row).
@@ -50,17 +54,25 @@ const props = withDefaults(
      */
     scrimAnimation?: string;
     /**
-     * Opt into iOS spring-physics entrance via `useSpringMount` (W13). When
-     * truthy, the dialog content scales+fades via a `useSpring`-driven
-     * transform instead of the default `popover-animate` cubic transition.
-     * Pass `true` for the canonical `smooth` preset, or name one of
-     * `'smooth' | 'snappy' | 'bouncy' | 'gentle'` to pick a different
-     * (response, ζ) pair (matches the `--spring-*` tokens).
-     *
-     * PRM: `useSpring`'s `respectReducedMotion` snaps the spring to target
-     * immediately — entrance becomes a no-op transform.
+     * BH.W-MOTION-AXIS — the ONE motion-weight axis (the `spring` boolean's clean-break
+     * successor). `full` (default) is the FULL liquid register: the default entrance is
+     * the spring-clocked `.glass-reveal` CSS bloom (byte-identical to HEAD's unset
+     * `spring`); an explicit `springPreset` opts into the JS `useSpringMount` entrance.
+     * `reduced`/`off` opt DOWN — the JS spring entrance unbinds and the `.glass-reveal`
+     * CSS floor stands (the SAME state PRM produces). PRM forces `full → reduced`
+     * regardless (a11y absolute).
      */
-    spring?: boolean | SpringPreset;
+    motion?: Motion;
+    /**
+     * BH.W-MOTION-AXIS — the JS spring entrance PRESET (the curve choice carved OFF the
+     * retired `spring` boolean; a distinct concern from motion INTENSITY). UNSET (default)
+     * keeps the `.glass-reveal` CSS bloom (byte-identical to HEAD's unset `spring`);
+     * naming one of `'smooth' | 'snappy' | 'bouncy' | 'gentle'` opts into the
+     * `useSpringMount` JS entrance (the W13 iOS spring-physics scale+fade). Ignored when
+     * `motion === "off"` (the CSS floor stands). PRM snaps the spring to target (no-op
+     * transform).
+     */
+    springPreset?: SpringPreset;
     /**
      * Render the default top-right close (X) button (default `true`).
      * Set `false` when the consumer composes its own header / dismiss control
@@ -82,9 +94,17 @@ const props = withDefaults(
 const emits = defineEmits<DialogContentEmits>()
 
 const delegatedProps = computed(() => {
-  const { class: _, surface: _su, scrimAnimation: _sa, spring: _sp, showClose: _sc, stage: _st, ...delegated } = props
+  const { class: _, surface: _su, scrimAnimation: _sa, motion: _mo, springPreset: _spp, showClose: _sc, stage: _st, ...delegated } = props
   return delegated
 })
+
+// BH.W-MOTION-AXIS — the resolved motion state. The JS spring entrance arms iff a
+// `springPreset` is named AND the resolved motion is not `off` (a preset-less dialog
+// keeps the `.glass-reveal` CSS bloom — byte-identical to HEAD's unset `spring`).
+const motionAxis = useMotionAxis(() => props.motion)
+const springActive = computed(
+  () => props.springPreset != null && motionAxis.resolved.value !== 'off',
+)
 
 // BD.W-OVERLAY-STAGE-COUPLE — the centered modal flips `--stage-t` 0→1 on open (the
 // drawer drives it per-frame; a dialog has no detent, so it transitions the ONE
@@ -161,11 +181,11 @@ const variantClasses = computed(() =>
 // (without dragHandlers — Dialog has no drag-dismiss gesture). The position
 // 0→1 drives an inverse-scale + opacity so the dialog grows-in from 95% with
 // a soft bouncy overshoot when preset = 'bouncy'.
-const rootContext = props.spring ? injectDialogRootContext() : null
-const springMount = props.spring && rootContext
+const rootContext = springActive.value ? injectDialogRootContext() : null
+const springMount = springActive.value && rootContext
   ? useSpringMount({
       open: rootContext.open,
-      preset: typeof props.spring === 'string' ? props.spring : 'smooth',
+      preset: props.springPreset ?? 'smooth',
     })
   : null
 
@@ -213,6 +233,8 @@ const plateStyle: CSSProperties = {
 
 const contentStyle = computed<CSSProperties>(() => ({
   ...plateStyle,
+  // BH.W-MOTION-AXIS — the `--motion-weight: 0` off-write (undefined at full/reduced).
+  ...((motionAxis.hostStyle.value as CSSProperties | undefined) ?? {}),
   ...(springStyle.value ?? {}),
 }))
 </script>
@@ -227,10 +249,11 @@ const contentStyle = computed<CSSProperties>(() => ({
     />
     <DialogContent
       v-bind="forwarded"
-      :class="cn(baseClasses, props.spring ? '' : defaultMotionClasses, variantClasses, props.class)"
+      :class="cn(baseClasses, springActive ? '' : defaultMotionClasses, variantClasses, props.class)"
       :style="contentStyle"
       :data-surface="props.surface"
-      :data-spring="props.spring ? (typeof props.spring === 'string' ? props.spring : 'smooth') : undefined"
+      :data-motion="motionAxis.dataMotion.value"
+      :data-spring="springActive ? (props.springPreset ?? 'smooth') : undefined"
     >
       <slot />
 

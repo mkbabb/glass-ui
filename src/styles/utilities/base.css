@@ -287,7 +287,9 @@
     }
 
     /* ── Glass-press — the interactive press register (BB.W-PRESS-UNIFY) ──
-       The CSS half of the `<Card :pressable>` / interactive-glass press. Two
+       The CSS half of the interactive-glass press (an interactive Card at
+       `motion !== "off"` per BH.W-MOTION-AXIS — the `pressable` boolean's successor
+       is interactivity + the motion axis). Two
        coupled legs on ONE `--card-press-t` drive (the `useLiquidPress` writes the
        JS-driven value; the CSS `:active` is the no-JS / SSR floor):
 

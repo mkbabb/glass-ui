@@ -132,10 +132,12 @@ const chapterBody: Record<string, string> = {
         >
             <div class="glass-card flex flex-col gap-4 rounded-[var(--radius-card)] p-5">
                 <div class="flex flex-wrap items-center gap-3">
+                    <!-- BH.W-MOTION-AXIS — the drag is the `motion="full"` DEFAULT
+                         (the retired `draggable` boolean's successor); a click-only
+                         strip opts DOWN via `motion="reduced"`. -->
                     <SegmentedTabs
                         v-model="liquidView"
                         :options="viewOptions"
-                        draggable
                     />
                     <span class="text-xs text-muted-foreground"
                         >selected: {{ liquidView }} — drag the pill</span
