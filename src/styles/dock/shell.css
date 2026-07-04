@@ -26,6 +26,32 @@
            firms the dock to `blur(0)` unchanged. The `--glass-blur-dock` tier is
            RETIRED (BG.W-CLOSEFIX-9SITE — the chain orphaned by this peer re-point);
            the dock reads the unified resting material, there is no dock-own rung. */
+        /* BG.W-DOCK-LEGIBILITY-RECAL — re-anchor the dock's saturate at 1.2 now the
+           UNIFIED PLATE TINT is the PRIMARY anti-gray. HEAD had the dock riding the
+           content-tier `--glass-saturate-resting` (1.4) through the resting peer — the
+           C-GRAY "over-corrected to metallic" saturate the M4 revert condemns (real
+           liquid glass concentrates light ~1.1-1.25×). The plate-tint self-engage
+           (dock/adaptive-legibility.css) is now the PRIMARY anti-gray device, so saturate
+           no longer carries the whole load and drops off the metallic ceiling to the calm
+           1.2 SECONDARY floor.
+
+           THE SUBSTITUTION-VS-INHERITANCE RETUNE PATH (the recurring trap, honoured): the
+           `:root` `--glass-blur-resting` composes its `saturate(var(--glass-saturate-
+           resting))` AT `:root` — the inner `var()` is fixed at 1.4 there, so re-declaring
+           the `--glass-saturate-resting` KNOB on a descendant does NOT re-resolve the
+           inherited composed blur (the exact --glass-bg-{tier}/--glass-opacity-{tier}
+           documented trap). So the dock RE-DECLARES the COMPOSED `--glass-blur-resting`
+           here — the SAME recipe (the `--glass-blur-resting-radius` 8px primitive ×
+           `--glass-level`, so the `prefers-reduced-transparency` → `--glass-level: 0`
+           bracket firms to `blur(0)` unchanged AND the proof:glass-cal 8px PEER LOCK holds
+           by construction — the radius leg is byte-identical), with the pinned
+           `saturate(1.2)`. `--dock-surface-blur: var(--glass-blur-resting)` reads the
+           re-composed dock-scoped value; the content-tier resting plate keeps `:root`'s
+           1.4. The DARK dock read-weight is PRESERVED by the `.dark .glass-dock` arm below
+           (the 1.30 glow — the light 1.2 anchor never bleeds into the luminous-dark
+           register). Machine-locked by proof:no-gray's dock-saturate-anchored-recal
+           witnesses. */
+        --glass-blur-resting: blur(calc(var(--glass-blur-resting-radius) * var(--glass-level))) saturate(1.2);
         --dock-surface-blur: var(--glass-blur-resting);
         /* J.W3.C — vertical-rail max-block + horizontal max-inline caps
            live as semantic tokens (defaults in `tokens.css`). When
@@ -165,6 +191,20 @@
            perimeter; the navigation band reads its rim from the SAME corrected token
            source as cards/dialogs (no dock-local dark rim re-paste). */
         box-shadow: var(--glass-rim-top), var(--glass-rim-bottom), var(--shadow-dock-override, var(--shadow-dock));
+    }
+
+    /* BG.W-DOCK-LEGIBILITY-RECAL — PRESERVE the dark-dock read-weight. The light dock
+       re-composes its blur at saturate 1.2 (the calm secondary anti-gray floor above); the
+       LUMINOUS-DARK register earns a higher saturate glow + the luminosity brightness lift
+       (the W-DARK-MATERIAL "dark glass glows where light passes" model), so the dark dock
+       RE-DECLARES the composed `--glass-blur-resting` back to the dark `:root` recipe
+       (`saturate(1.30) brightness(1.14)`) — otherwise the light `.glass-dock` re-compose
+       (which wins over the dark `:root` value by cascade order) would strip the dark glow
+       to 1.2. This is the plain per-mode pair, the house idiom; the SAME radius primitive
+       (8px × `--glass-level`, peer-lock byte-identical). The dark content-tier resting
+       plate keeps the dark `:root` value untouched (this override is `.glass-dock`-scoped). */
+    .dark .glass-dock {
+        --glass-blur-resting: blur(calc(var(--glass-blur-resting-radius) * var(--glass-level))) saturate(1.30) brightness(1.14);
     }
 
     /* AW.W2 — the box IS the reveal aperture (clip-reveal one-clock morph).

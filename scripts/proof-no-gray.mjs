@@ -786,6 +786,99 @@ add(
     `the light --glass-border-dock = ${dockBorderPct}% warm-ink (≥ 6% — the floating-chrome silhouette floor; the dock floats over an UNKNOWN backdrop so it earns a readable warm rim, never the sub-threshold 4% that read edgeless)`,
 );
 
+// ── BG.W-DOCK-LEGIBILITY-RECAL — the dock saturate RE-ANCHOR (once the unified plate tint
+// is the PRIMARY anti-gray, saturate is the SECONDARY floor pinned at ~1.2, OFF the metallic
+// ceiling) ──────────────────────────────────────────────────────────────────────────────
+// HEAD had the dock riding the CONTENT-TIER `--glass-saturate-resting` (1.4) through the
+// `--dock-surface-blur → --glass-blur-resting` peer — the C-GRAY "over-corrected to metallic"
+// saturate the M4 revert condemns (real liquid glass concentrates light ~1.1-1.25×). The
+// dock now RE-COMPOSES `--glass-blur-resting` AT the `.glass-dock` scope with the pinned
+// saturate — the SUBSTITUTION-VS-INHERITANCE retune path: the `:root` composed blur baked its
+// inner `saturate(var(--glass-saturate-resting))` at `:root` (1.4), so a descendant KNOB
+// re-declaration does NOT re-resolve the inherited composed blur (the documented --glass-bg-
+// {tier} trap, empirically confirmed — a naive knob override paints 1.4). The re-compose reads
+// the SAME `--glass-blur-resting-radius` 8px primitive × `--glass-level`, so the peer-lock
+// radius leg is byte-identical and the a11y bracket firms to blur(0) unchanged. These
+// witnesses read the RE-COMPOSED dock-scoped saturate off dock/shell.css's `.glass-dock`
+// `--glass-blur-resting` (NOT the `:root` content-tier value witness #2 above reads), assert
+// it sits in the calm [1.15, 1.25] band (a metallic ≥ 1.4 re-anchor OR the HEAD naive-knob /
+// no-recompose state — both RED), the dark read-weight is preserved, AND the PRIMARY anti-gray
+// (the plate-tint self-engage) is genuinely present. Born-RED on HEAD (no dock-scoped
+// re-compose → the dock rides the metallic 1.4 through the peer).
+const SAT_RECAL_LO = 1.15;
+const SAT_RECAL_HI = 1.25;
+/** Read the saturate() literal out of a `.glass-dock`-scoped composed `--glass-blur-resting`
+ *  re-declaration (the RETUNE-PATH re-compose, NOT a bare knob — a knob override never
+ *  re-resolves the :root-composed blur, so only a composed re-declaration counts). */
+const dockScopedRecomposeSat = (block) => {
+    // The re-composed blur MUST read the shared radius primitive (the peer-lock 8px leg) AND
+    // carry a saturate() literal — a bare `--glass-saturate-resting: N` knob does NOT count
+    // (it is the documented no-op trap; the paint stays 1.4). The blur() interior nests a
+    // `calc(var(--glass-blur-resting-radius) * var(--glass-level))`, so match the radius
+    // primitive presence + the trailing saturate() literal non-greedily up to the `;`.
+    const decl = /--glass-blur-resting:\s*([^;]+);/.exec(block)?.[1] ?? "";
+    if (!/blur\(\s*calc\([^;]*var\(--glass-blur-resting-radius\)/.test(decl)) return null;
+    const m = /saturate\(\s*([0-9.]+)\s*\)/.exec(decl);
+    return m ? Number(m[1]) : null;
+};
+// 1. The light dock RE-COMPOSES its blur at saturate ∈ [1.15, 1.25] on the `.glass-dock`
+//    scope — off the metallic ceiling, the calm SECONDARY anti-gray floor, radius-leg intact.
+const dockLightBlock =
+    /(?:^|[^.\w-])\.glass-dock\s*\{([\s\S]*?)\n {4}\}/m.exec(dockShell)?.[1] ?? "";
+const dockScopedSatLight = dockScopedRecomposeSat(dockLightBlock);
+add(
+    "dock-saturate-anchored-recal",
+    dockScopedSatLight !== null &&
+        dockScopedSatLight >= SAT_RECAL_LO &&
+        dockScopedSatLight <= SAT_RECAL_HI,
+    `the light dock RE-COMPOSES --glass-blur-resting at saturate ${dockScopedSatLight ?? "?"} on the .glass-dock scope, over the SAME --glass-blur-resting-radius 8px primitive (∈ [${SAT_RECAL_LO}, ${SAT_RECAL_HI}] — the calm SECONDARY anti-gray floor, real-liquid-glass ~1.1-1.25×; the plate-tint self-engage is the PRIMARY device, so saturate drops OFF the metallic ≥1.4 ceiling HEAD rode through the content-tier resting peer; a bare knob override would NOT re-resolve the :root-composed blur — the retune path is the composed re-declaration)`,
+);
+// 2. The DARK dock read-weight is preserved — the `.dark .glass-dock` arm re-composes the
+//    blur at saturate ≥ 1.2 (the luminous-dark glow the light 1.2 anchor must not bleed away).
+const dockDarkBlock =
+    /\.dark\s+\.glass-dock\s*\{([\s\S]*?)\n {4}\}/m.exec(dockShell)?.[1] ?? "";
+const dockScopedSatDark = dockScopedRecomposeSat(dockDarkBlock);
+add(
+    "dock-saturate-dark-read-weight-preserved",
+    dockScopedSatDark !== null && dockScopedSatDark >= 1.2,
+    `the dark dock read-weight is preserved — .dark .glass-dock RE-COMPOSES --glass-blur-resting at saturate ${dockScopedSatDark ?? "?"} (≥ 1.2, the luminous-dark glow; the light 1.2 re-compose wins over the dark :root value by cascade order, so the dark arm restates the glow — the plain per-mode pair)`,
+);
+// 3. The PRIMARY anti-gray is the unified PLATE TINT (the adaptive-legibility self-engage),
+//    NOT saturate. The saturate re-anchor is only sound BECAUSE the plate tint carries the
+//    anti-gray load — so assert the `:where(.glass-dock)` self-engage genuinely re-points
+//    the tint source to the warm-chromatic dock ink (the primary device is live).
+const adaptiveLegibility = strip(read("src/styles/dock/adaptive-legibility.css"));
+const plateTintPrimary =
+    /:where\(\.glass-dock\)\s*\{[\s\S]*?--glass-tint-source:\s*var\(--glass-tint-ink-dock\)/.test(
+        adaptiveLegibility,
+    ) &&
+    /--glass-tint-strength:\s*clamp\(/.test(adaptiveLegibility);
+add(
+    "dock-plate-tint-is-primary-anti-gray",
+    plateTintPrimary,
+    `the PRIMARY anti-gray is the unified plate tint — the :where(.glass-dock) self-engage (dock/adaptive-legibility.css) re-points --glass-tint-source → the warm-chromatic dock ink AND clamps --glass-tint-strength toward the AA ceiling (the darken-over-light device that lets saturate drop to the calm 1.2 floor; the recal is UNSOUND without it)`,
+);
+// Self-test bite — the detector MUST flag (a) a synthetic METALLIC re-compose (1.4, the
+// HEAD content-tier value the wave reverts off), (b) a BARE-KNOB override (the documented
+// no-op trap — `--glass-saturate-resting: 1.2` alone never re-resolves the :root-composed
+// blur, so the paint stays 1.4; only a COMPOSED re-declaration counts), and (c) NO re-compose
+// (the HEAD ride-the-content-tier state). A passing self-test proves the band + the
+// composed-re-declaration requirement are load-bearing, not vacuously green.
+const satRecalInBand = (v) => v !== null && v >= SAT_RECAL_LO && v <= SAT_RECAL_HI;
+const metallicRejected = !satRecalInBand(
+    dockScopedRecomposeSat(
+        `--glass-blur-resting: blur(calc(var(--glass-blur-resting-radius) * var(--glass-level))) saturate(1.4);`,
+    ),
+);
+const bareKnobRejected =
+    dockScopedRecomposeSat(`--glass-saturate-resting: 1.2;`) === null;
+const missingRecomposeRejected = dockScopedRecomposeSat(``) === null;
+add(
+    "dock-saturate-anchored-recal--self-test",
+    metallicRejected && bareKnobRejected && missingRecomposeRejected,
+    `the detector flags a synthetic metallic 1.4 re-compose (rejected=${metallicRejected}), a bare-knob override (the no-op trap; rejected=${bareKnobRejected}), AND no re-compose (rejected=${missingRecomposeRejected}) — the recal band [${SAT_RECAL_LO}, ${SAT_RECAL_HI}] + the composed-re-declaration requirement are load-bearing, never vacuously green at the HEAD metallic-ride state`,
+);
+
 // ── BD.W-DOCK-CORE — the warm-CHROMATIC dock tint ink (D1–D4). HEAD's dock self-engage
 // mixed the thin plate toward the near-black --foreground (C ≈ 0.0062) → it darkened L with
 // chroma DEAD-FLAT (the gray dock at the AA engage). The dock-SCOPED ink lifts the chroma
