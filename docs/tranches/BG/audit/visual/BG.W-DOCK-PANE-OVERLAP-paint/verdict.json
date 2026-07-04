@@ -1,0 +1,468 @@
+{
+  "generatedAt": "2026-07-04T07:00:34.932Z",
+  "wave": "BG.W-DOCK-PANE-OVERLAP",
+  "route": "/dock/layers",
+  "modes": {
+    "light": {
+      "gl": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Max, Unspecified Version)",
+      "standaloneGroupCount": 0,
+      "rules": {
+        "overlap": true,
+        "enter": true,
+        "reserve": true
+      },
+      "cases": {
+        "standalone-rail": {
+          "case": "standalone-rail",
+          "mode": "light",
+          "note": "always-expanded rail group (nested in GlassDock)",
+          "pre": {
+            "expandT": "1",
+            "plateW": 269.12,
+            "activeIdx": 0
+          },
+          "totalFrames": 133,
+          "morphFrames": 127,
+          "sawMorph": true,
+          "checks": {
+            "P1_entering_engages": {
+              "pass": true,
+              "enterEngaged": true,
+              "enterRampsUp": true,
+              "enterAt015to022": [
+                {
+                  "t": 0.1477,
+                  "o": 0
+                },
+                {
+                  "t": 0.187,
+                  "o": 0.074
+                },
+                {
+                  "t": 0.2237,
+                  "o": 0.147
+                }
+              ],
+              "maxEnterHigh": 1
+            },
+            "P2_leaving_persists": {
+              "pass": true,
+              "leaveRampsDown": true,
+              "leaveNear06": [
+                {
+                  "t": 0.4073,
+                  "o": 0.321
+                },
+                {
+                  "t": 0.453,
+                  "o": 0.245
+                },
+                {
+                  "t": 0.4941,
+                  "o": 0.176
+                }
+              ],
+              "maxLeaveLow": 1
+            },
+            "CO_co_presence": {
+              "pass": true,
+              "coFrameCount": 3,
+              "sample": [
+                {
+                  "t": 0.3167,
+                  "enter": 0.333,
+                  "leave": 0.472
+                },
+                {
+                  "t": 0.3557,
+                  "enter": 0.411,
+                  "leave": 0.407
+                },
+                {
+                  "t": 0.4073,
+                  "enter": 0.515,
+                  "leave": 0.321
+                }
+              ]
+            },
+            "DZ_no_dead_zone": {
+              "pass": true,
+              "deadZoneFrameCount": 0,
+              "sample": []
+            },
+            "P3_box_flip_no_dip": {
+              "pass": false,
+              "restPlateW": 269.12,
+              "minPlateW": 53.68,
+              "maxPlateW": 269.12,
+              "dipFrameCount": 31,
+              "worstDipW": 53.68,
+              "dipRatioOfRest": 0.199
+            },
+            "EXPANDT_no_spurious_collapse": {
+              "pass": false,
+              "preExpanded": true,
+              "expandTmin": 0,
+              "note": "layer swap spuriously cycles --dock-expand-t 0->1 -> plate collapses then re-expands"
+            },
+            "SWAP_overlapped_handoff": {
+              "pass": true,
+              "enterReaches50AtT": 0.4073,
+              "leaveOpacityWhenEnter50": 0.321
+            }
+          },
+          "pass": false
+        },
+        "nested-collapsible": {
+          "case": "nested-collapsible",
+          "mode": "light",
+          "note": "collapsible group (nested in GlassDock)",
+          "pre": {
+            "expandT": "1",
+            "plateW": 269.12,
+            "activeIdx": 0
+          },
+          "totalFrames": 133,
+          "morphFrames": 127,
+          "sawMorph": true,
+          "checks": {
+            "P1_entering_engages": {
+              "pass": true,
+              "enterEngaged": true,
+              "enterRampsUp": true,
+              "enterAt015to022": [
+                {
+                  "t": 0.1514,
+                  "o": 0.003
+                },
+                {
+                  "t": 0.1882,
+                  "o": 0.076
+                },
+                {
+                  "t": 0.2346,
+                  "o": 0.169
+                }
+              ],
+              "maxEnterHigh": 1
+            },
+            "P2_leaving_persists": {
+              "pass": true,
+              "leaveRampsDown": true,
+              "leaveNear06": [
+                {
+                  "t": 0.4158,
+                  "o": 0.307
+                },
+                {
+                  "t": 0.4609,
+                  "o": 0.232
+                },
+                {
+                  "t": 0.5058,
+                  "o": 0.157
+                }
+              ],
+              "maxLeaveLow": 1
+            },
+            "CO_co_presence": {
+              "pass": true,
+              "coFrameCount": 3,
+              "sample": [
+                {
+                  "t": 0.3251,
+                  "enter": 0.35,
+                  "leave": 0.458
+                },
+                {
+                  "t": 0.3704,
+                  "enter": 0.441,
+                  "leave": 0.383
+                },
+                {
+                  "t": 0.4158,
+                  "enter": 0.532,
+                  "leave": 0.307
+                }
+              ]
+            },
+            "DZ_no_dead_zone": {
+              "pass": true,
+              "deadZoneFrameCount": 0,
+              "sample": []
+            },
+            "P3_box_flip_no_dip": {
+              "pass": false,
+              "restPlateW": 269.12,
+              "minPlateW": 53.68,
+              "maxPlateW": 269.12,
+              "dipFrameCount": 30,
+              "worstDipW": 53.68,
+              "dipRatioOfRest": 0.199
+            },
+            "EXPANDT_no_spurious_collapse": {
+              "pass": false,
+              "preExpanded": true,
+              "expandTmin": 0,
+              "note": "layer swap spuriously cycles --dock-expand-t 0->1 -> plate collapses then re-expands"
+            },
+            "SWAP_overlapped_handoff": {
+              "pass": true,
+              "enterReaches50AtT": 0.4158,
+              "leaveOpacityWhenEnter50": 0.307
+            }
+          },
+          "pass": false
+        }
+      }
+    },
+    "dark": {
+      "gl": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Max, Unspecified Version)",
+      "standaloneGroupCount": 0,
+      "rules": {
+        "overlap": true,
+        "enter": true,
+        "reserve": true
+      },
+      "cases": {
+        "standalone-rail": {
+          "case": "standalone-rail",
+          "mode": "dark",
+          "note": "always-expanded rail group (nested in GlassDock)",
+          "pre": {
+            "expandT": "1",
+            "plateW": 269.12,
+            "activeIdx": 0
+          },
+          "totalFrames": 132,
+          "morphFrames": 127,
+          "sawMorph": true,
+          "checks": {
+            "P1_entering_engages": {
+              "pass": true,
+              "enterEngaged": true,
+              "enterRampsUp": true,
+              "enterAt015to022": [
+                {
+                  "t": 0.1451,
+                  "o": 0
+                },
+                {
+                  "t": 0.1866,
+                  "o": 0.073
+                },
+                {
+                  "t": 0.2287,
+                  "o": 0.157
+                }
+              ],
+              "maxEnterHigh": 1
+            },
+            "P2_leaving_persists": {
+              "pass": true,
+              "leaveRampsDown": true,
+              "leaveNear06": [
+                {
+                  "t": 0.4073,
+                  "o": 0.321
+                },
+                {
+                  "t": 0.4525,
+                  "o": 0.246
+                },
+                {
+                  "t": 0.4976,
+                  "o": 0.171
+                }
+              ],
+              "maxLeaveLow": 1
+            },
+            "CO_co_presence": {
+              "pass": true,
+              "coFrameCount": 3,
+              "sample": [
+                {
+                  "t": 0.3167,
+                  "enter": 0.333,
+                  "leave": 0.472
+                },
+                {
+                  "t": 0.361,
+                  "enter": 0.422,
+                  "leave": 0.398
+                },
+                {
+                  "t": 0.4073,
+                  "enter": 0.515,
+                  "leave": 0.321
+                }
+              ]
+            },
+            "DZ_no_dead_zone": {
+              "pass": true,
+              "deadZoneFrameCount": 0,
+              "sample": []
+            },
+            "P3_box_flip_no_dip": {
+              "pass": false,
+              "restPlateW": 269.12,
+              "minPlateW": 53.68,
+              "maxPlateW": 269.12,
+              "dipFrameCount": 31,
+              "worstDipW": 53.68,
+              "dipRatioOfRest": 0.199
+            },
+            "EXPANDT_no_spurious_collapse": {
+              "pass": false,
+              "preExpanded": true,
+              "expandTmin": 0,
+              "note": "layer swap spuriously cycles --dock-expand-t 0->1 -> plate collapses then re-expands"
+            },
+            "SWAP_overlapped_handoff": {
+              "pass": true,
+              "enterReaches50AtT": 0.4073,
+              "leaveOpacityWhenEnter50": 0.321
+            }
+          },
+          "pass": false
+        },
+        "nested-collapsible": {
+          "case": "nested-collapsible",
+          "mode": "dark",
+          "note": "collapsible group (nested in GlassDock)",
+          "pre": {
+            "expandT": "1",
+            "plateW": 269.12,
+            "activeIdx": 0
+          },
+          "totalFrames": 132,
+          "morphFrames": 127,
+          "sawMorph": true,
+          "checks": {
+            "P1_entering_engages": {
+              "pass": true,
+              "enterEngaged": true,
+              "enterRampsUp": true,
+              "enterAt015to022": [
+                {
+                  "t": 0.1477,
+                  "o": 0
+                },
+                {
+                  "t": 0.1839,
+                  "o": 0.068
+                },
+                {
+                  "t": 0.2291,
+                  "o": 0.158
+                }
+              ],
+              "maxEnterHigh": 1
+            },
+            "P2_leaving_persists": {
+              "pass": true,
+              "leaveRampsDown": true,
+              "leaveNear06": [
+                {
+                  "t": 0.4069,
+                  "o": 0.322
+                },
+                {
+                  "t": 0.453,
+                  "o": 0.245
+                },
+                {
+                  "t": 0.4976,
+                  "o": 0.171
+                }
+              ],
+              "maxLeaveLow": 1
+            },
+            "CO_co_presence": {
+              "pass": true,
+              "coFrameCount": 3,
+              "sample": [
+                {
+                  "t": 0.311,
+                  "enter": 0.322,
+                  "leave": 0.482
+                },
+                {
+                  "t": 0.3566,
+                  "enter": 0.413,
+                  "leave": 0.406
+                },
+                {
+                  "t": 0.4069,
+                  "enter": 0.514,
+                  "leave": 0.322
+                }
+              ]
+            },
+            "DZ_no_dead_zone": {
+              "pass": true,
+              "deadZoneFrameCount": 0,
+              "sample": []
+            },
+            "P3_box_flip_no_dip": {
+              "pass": false,
+              "restPlateW": 269.12,
+              "minPlateW": 53.68,
+              "maxPlateW": 269.12,
+              "dipFrameCount": 31,
+              "worstDipW": 53.68,
+              "dipRatioOfRest": 0.199
+            },
+            "EXPANDT_no_spurious_collapse": {
+              "pass": false,
+              "preExpanded": true,
+              "expandTmin": 0,
+              "note": "layer swap spuriously cycles --dock-expand-t 0->1 -> plate collapses then re-expands"
+            },
+            "SWAP_overlapped_handoff": {
+              "pass": true,
+              "enterReaches50AtT": 0.4069,
+              "leaveOpacityWhenEnter50": 0.322
+            }
+          },
+          "pass": false
+        }
+      }
+    }
+  },
+  "overallPass": false,
+  "summary": {
+    "light": {
+      "standalone-rail": {
+        "pass": false,
+        "fails": [
+          "P3_box_flip_no_dip",
+          "EXPANDT_no_spurious_collapse"
+        ]
+      },
+      "nested-collapsible": {
+        "pass": false,
+        "fails": [
+          "P3_box_flip_no_dip",
+          "EXPANDT_no_spurious_collapse"
+        ]
+      }
+    },
+    "dark": {
+      "standalone-rail": {
+        "pass": false,
+        "fails": [
+          "P3_box_flip_no_dip",
+          "EXPANDT_no_spurious_collapse"
+        ]
+      },
+      "nested-collapsible": {
+        "pass": false,
+        "fails": [
+          "P3_box_flip_no_dip",
+          "EXPANDT_no_spurious_collapse"
+        ]
+      }
+    }
+  }
+}
