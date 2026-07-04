@@ -393,6 +393,20 @@
             var(--background) calc(var(--top-layer-backdrop-dim, 0.5) * 100%),
             transparent
         );
+        /* SCRIM COUPLES TO LAUNCH (BG.W-OVERLAY-ENTER-PAINT / F5.R1) — the ENTER dim
+           rides its OWN launch-coupled clock (`--top-layer-backdrop-in`, a fast
+           no-overshoot `--ease-out`) so the scrim reaches ≥80% of its target dim
+           within ~100ms of launch, coupled to the panel window rather than trailing
+           the panel on the slower `--duration-normal`/`--ease-standard` clock (the
+           HEAD defect: the scrim decoupled + dimmed over ~400ms AFTER the panel
+           seated). This ENTER transition is read from the [open] after-change state;
+           the base `::backdrop` transition stays the EXIT clock — released cleanly
+           WITH the panel, no overshoot past gone. The `@starting-style` from-state
+           makes the dim interpolate from transparent (the discrete allow-discrete
+           display/overlay legs stay). */
+        transition: display var(--top-layer-backdrop-in, 0.15s) allow-discrete,
+                    overlay var(--top-layer-backdrop-in, 0.15s) allow-discrete,
+                    background-color var(--top-layer-backdrop-in, 0.15s) var(--ease-out);
         @starting-style {
             background-color: color-mix(in srgb, var(--background) 0%, transparent);
         }

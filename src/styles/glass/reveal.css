@@ -83,6 +83,26 @@
         scale: 1 1;
         opacity: 1;
         filter: blur(0);
+        /* THE REAL FROM-STATE (BG.W-OVERLAY-ENTER-PAINT / F5.R1) — reka mounts the
+           portaled Dialog/Sheet/Popover content already `data-state="open"` at first
+           paint, so the `[closed]→[open]` transition had NO prior computed style and
+           the whole enter landed in ONE ~44ms frame (the opacity/blur pop). An
+           `@starting-style` block binds the BEFORE-FIRST-PAINT style of a newly-
+           inserted element REGARDLESS of the data-state timing (the §TOP-LAYER
+           `.glass-top-layer` grammar applied to the data-state recipe), so the enter
+           now interpolates FROM the closed values on the snappy clock (≥6 intermediate
+           frames). The from-state MIRRORS the closed snapshot below exactly — the enter
+           blooms from where the exit recedes to. The transition/timing is inherited
+           from the base `.glass-reveal` rule (snappy SPATIAL, ease-out EFFECTS); the
+           closed rule's fast un-sprung exit clock is NOT reached on enter. Under PRM
+           the base carve drops scale/translate/filter from `transition-property`, so
+           only the opacity from-state animates (fade survives, zero transform frames). */
+        @starting-style {
+            scale: calc(var(--glass-reveal-enter-scale, 0.88) * var(--lq-stretch-x, 1.06))
+                calc(var(--glass-reveal-enter-scale, 0.88) * var(--lq-stretch-y, 0.945));
+            opacity: 0;
+            filter: blur(var(--glass-reveal-blur));
+        }
     }
 
     /* CLOSED — both the resting CLOSED snapshot AND the EXIT leg. The exit reads
@@ -111,11 +131,34 @@
        side-anchored popover (with `data-side`) sets `translate`; the open settled
        value is `0 0` (per side, so it slides home from the edge). A center-anchored
        Dialog has no `data-side` and is never reached here. */
-    .glass-reveal[data-side="top"][data-state="open"],
-    .glass-reveal[data-side="bottom"][data-state="open"],
-    .glass-reveal[data-side="left"][data-state="open"],
+    /* Each side-anchored open variant seats `translate: 0 0` (slid home) AND carries an
+       `@starting-style` translate from-state at its edge — so the enter SLIDES in from
+       the anchor edge (reka mounts already `open`, so without the from-state the side
+       popover would pop in place). The from-state MIRRORS the matching closed exit-slide
+       below (enter blooms from where the exit recedes to). */
+    .glass-reveal[data-side="top"][data-state="open"] {
+        translate: 0 0;
+        @starting-style {
+            translate: 0 var(--glass-reveal-slide);
+        }
+    }
+    .glass-reveal[data-side="bottom"][data-state="open"] {
+        translate: 0 0;
+        @starting-style {
+            translate: 0 calc(-1 * var(--glass-reveal-slide));
+        }
+    }
+    .glass-reveal[data-side="left"][data-state="open"] {
+        translate: 0 0;
+        @starting-style {
+            translate: var(--glass-reveal-slide) 0;
+        }
+    }
     .glass-reveal[data-side="right"][data-state="open"] {
         translate: 0 0;
+        @starting-style {
+            translate: calc(-1 * var(--glass-reveal-slide)) 0;
+        }
     }
     .glass-reveal[data-state="closed"][data-side="top"] {
         translate: 0 var(--glass-reveal-slide);

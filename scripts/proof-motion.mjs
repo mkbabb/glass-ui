@@ -48,6 +48,21 @@
 // no-op at the seat). Its self-test re-introduces the masking `initial-value: 1` and asserts
 // the arm flags it.
 //
+// BG.W-OVERLAY-ENTER-PAINT (F5.R1) ADDS the overlay-enter-paint arm (O1-O4). The zero-JS
+// `.glass-reveal` enter never composited a from-state — reka mounts the portaled
+// Dialog/Sheet/Popover content already `data-state="open"` at first paint, so the
+// `[closed]→[open]` transition had NO prior computed style and the whole enter landed in
+// ONE ~44ms frame (the opacity/blur pop), while the modal scrim ran its OWN slower clock,
+// decoupled from the panel launch. O1 locks the real from-state (an `@starting-style` block
+// on `.glass-reveal[data-state="open"]` — the §TOP-LAYER `.glass-top-layer` grammar applied
+// to the data-state recipe); O2 locks the COUPLED scale + opacity 0 + filter-blur from-state
+// (≥6 intermediate frames on the snappy clock); O3 locks the side-anchored `translate`
+// from-state (a side popover SLIDES from its edge, not a pop-in-place); O4 locks the scrim
+// coupling (the native `[open]::backdrop` gets a launch-coupled ENTER clock on `--ease-out`
+// / `--top-layer-backdrop-in` so the dim reaches its target within ~100ms, the base rule
+// staying the released-with-panel EXIT clock). Its self-test strips the `@starting-style`
+// from-state (the HEAD one-frame-pop state) and asserts the arm flags it.
+//
 // SELF-PROVING: the detector runs against synthetic states that (a) re-plant a dead
 // composable (file present + a live import) and (b) re-fork the rAF/ElementMorph runner into
 // a bloom wrapper, and asserts BOTH FLAG — so the gate's teeth cannot silently rot (the
@@ -307,6 +322,92 @@ function detect({ existsFn, readFn, corpus }) {
     if (!/writeScalar\(\s*0\s*\)/.test(drawerSnap))
         V.push("D4: the open path must seat the CLOSED base via `writeScalar(0)` (the fail-loud starting frame)");
 
+    // ── O — the overlay-enter-paint arm (BG.W-OVERLAY-ENTER-PAINT / F5.R1) ──────────
+    // The zero-JS `.glass-reveal` enter never composited a from-state: reka mounts the
+    // portaled Dialog/Sheet/Popover content already `data-state="open"` at first paint,
+    // so the `[closed]→[open]` transition had NO prior computed style and the whole enter
+    // landed in ONE ~44ms frame (the opacity/blur pop), while the scrim ran its OWN slower
+    // clock, decoupled from the panel launch. The repair (glass/reveal.css +
+    // animations.css): (O1) `.glass-reveal[data-state="open"]` gets a real from-state via
+    // an `@starting-style` block (the §TOP-LAYER `.glass-top-layer` grammar applied to the
+    // data-state recipe), so the enter interpolates FROM the closed values on the snappy
+    // clock; (O2) that from-state is the COUPLED scale + opacity 0 + filter-blur trio
+    // (≥6 intermediate frames); (O3) the side-anchored variants carry a `translate`
+    // from-state so a side popover SLIDES from its edge; (O4) the native modal scrim
+    // (`dialog.glass-top-layer[open]::backdrop`) gets a launch-coupled ENTER clock on
+    // `--ease-out` so the dim reaches its target within the panel window, the base rule
+    // staying the EXIT clock.
+    const stripCss = (s) => s.replace(/\/\*[\s\S]*?\*\//g, "");
+    const reveal = stripCss(readFn("src/styles/glass/reveal.css"));
+    const anim = stripCss(readFn("src/styles/animations.css"));
+
+    // Brace-match the `.glass-reveal[data-state="open"]` rule body (the @starting-style
+    // block nests inside it).
+    const openRuleBody = (() => {
+        const m = reveal.match(/\.glass-reveal\[data-state="open"\]\s*\{/);
+        if (!m) return null;
+        let i = m.index + m[0].length;
+        let depth = 1;
+        const start = i;
+        for (; i < reveal.length && depth > 0; i++) {
+            if (reveal[i] === "{") depth++;
+            else if (reveal[i] === "}") depth--;
+        }
+        return reveal.slice(start, i - 1);
+    })();
+
+    if (openRuleBody == null) {
+        V.push('O1: .glass-reveal[data-state="open"] rule not found in reveal.css (the LIQUID-ENTER recipe has no open state)');
+    } else if (!/@starting-style\s*\{/.test(openRuleBody)) {
+        V.push(
+            'O1: .glass-reveal[data-state="open"] carries NO @starting-style block — reka mounts the portaled content already `open`, so with no from-state the whole enter lands in ONE frame (the opacity/blur pop). Give the enter a real from-state (the §TOP-LAYER grammar).',
+        );
+    } else {
+        // O2 — the enter @starting-style provides the COUPLED SPATIAL+EFFECTS from-state:
+        //      a scale (bloom), opacity 0 (fade), and a filter blur (light-bending decongest).
+        const ss = openRuleBody.match(/@starting-style\s*\{([\s\S]*?)\}/);
+        const ssBody = ss ? ss[1] : "";
+        if (!/\bscale\s*:/.test(ssBody))
+            V.push('O2: the enter @starting-style sets no `scale` from-state (the bloom-from-small — scale (0.88 × squish) → 1; without it the enter does not grow)');
+        if (!/opacity\s*:\s*0\b/.test(ssBody))
+            V.push('O2: the enter @starting-style sets no `opacity: 0` from-state (the coupled fade — the surface must materialize, not appear at full opacity)');
+        if (!/filter\s*:\s*blur\(/.test(ssBody))
+            V.push('O2: the enter @starting-style sets no `filter: blur(...)` from-state (the iOS light-bending decongest — the surface must clarify AS it blooms)');
+    }
+
+    // O3 — the side-anchored open variants carry a `translate` @starting-style from-state
+    //      so a side popover SLIDES from its edge (reka mounts at `translate: 0 0` — with
+    //      no from-state the side popover pops in place, never slides).
+    const sideSlideFromState =
+        /\.glass-reveal\[data-side="(?:top|bottom|left|right)"\]\[data-state="open"\][\s\S]*?@starting-style\s*\{[^{}]*translate\s*:/.test(
+            reveal,
+        );
+    if (!sideSlideFromState)
+        V.push(
+            'O3: no side-anchored .glass-reveal[data-side][data-state="open"] rule provides a `translate` @starting-style from-state (a side popover mounts at `translate: 0 0` with no from-state — it pops in place instead of sliding from its edge)',
+        );
+
+    // O4 — the scrim couples to launch: the native modal `[open]::backdrop` gets its OWN
+    //      launch-coupled ENTER transition on `--ease-out` reading the `--top-layer-
+    //      backdrop-in` fast clock — distinct from the slower `--ease-standard`/`--duration-
+    //      normal` EXIT clock on the base rule, so the dim reaches its target within ~100ms
+    //      of launch (the panel window) rather than trailing ~400ms behind it.
+    const openBackdropIdx = anim.search(/dialog\.glass-top-layer\[open\]::backdrop\s*\{/);
+    if (openBackdropIdx < 0) {
+        V.push("O4: dialog.glass-top-layer[open]::backdrop rule not found in animations.css (the modal scrim launch coupling has no home)");
+    } else {
+        const region = anim.slice(openBackdropIdx, openBackdropIdx + 700);
+        const hasEnterTransition = /transition\s*:[^;]*var\(--ease-out\)/.test(region);
+        if (!hasEnterTransition)
+            V.push(
+                "O4: the modal scrim [open]::backdrop carries no launch-coupled ENTER transition on `--ease-out` (the scrim must reach ≥80% dim within ~100ms of launch, released with the exit — at HEAD it decoupled onto the base --ease-standard clock and trailed ~400ms)",
+            );
+        if (!/var\(--top-layer-backdrop-in/.test(region))
+            V.push(
+                "O4: the modal scrim [open]::backdrop ENTER does not read the launch-coupled `--top-layer-backdrop-in` clock (couple the dim to the panel launch window, not the slow --duration-normal exit)",
+            );
+    }
+
     return V;
 }
 
@@ -372,6 +473,24 @@ if (!dSelfTestFlags) {
     process.exit(1);
 }
 
+// ── The O self-test bite — strip the enter @starting-style from the .glass-reveal open
+//    rule (the state HEAD shipped) and assert the overlay-enter-paint arm FLAGS it: the
+//    reka portaled enter reverts to the one-frame pop (the born-RED teeth are real). ────
+const revealDisk = diskRead("src/styles/glass/reveal.css");
+const stripStartingRead = (rel) =>
+    rel === "src/styles/glass/reveal.css"
+        ? // remove every `@starting-style { … }` block (the from-states are non-nested)
+          revealDisk.replace(/@starting-style\s*\{[^{}]*\}/g, "/* stripped @starting-style */")
+        : diskRead(rel);
+const stripViolations = detect({ existsFn: diskExists, readFn: stripStartingRead, corpus });
+const oSelfTestFlags = stripViolations.length > violations.length;
+if (!oSelfTestFlags) {
+    console.error(
+        "proof:motion — O SELF-TEST FAILED: the detector did NOT flag a .glass-reveal open rule stripped of its @starting-style from-state (the HEAD one-frame-pop state). The overlay-enter-paint teeth are gone; do not trust a GREEN.",
+    );
+    process.exit(1);
+}
+
 // ── Report ──────────────────────────────────────────────────────────────────────
 console.log("proof:motion — the F5 dead-composable cut is COMPLETE (BG.W-DEAD-COMPOSABLE-CUT)");
 console.log(`  dead composables      : ${DEAD.map((d) => d.name).join(", ")}`);
@@ -389,6 +508,11 @@ console.log(`  --glass-drawer-t default: CLOSED (initial-value 0) — the maskin
 console.log(`  live content resolve  : useDrawerSnap.contentEl is a () => HTMLElement | null getter (fresh per write; DrawerContent reaches it via handle.closest('[data-glass-drawer]'))`);
 console.log(`  open-seat slide-in    : writeScalar(0) + ensureSpring(0) → DRAWER_SNAP {0.4,0.82} settles from CLOSED, no settled no-op`);
 console.log(`  self-test (bite proof): OK — a re-planted dead composable, a re-forked rAF/ElementMorph runner, AND a re-introduced masking --glass-drawer-t: 1 all flag`);
+console.log("proof:motion — the overlay .glass-reveal enter PAINTS a real from-state (BG.W-OVERLAY-ENTER-PAINT / F5.R1)");
+console.log(`  enter from-state      : .glass-reveal[data-state="open"] @starting-style = scale(bloom×squish) + opacity 0 + filter blur — the reka portaled enter interpolates on the snappy clock (≥6 frames), not the HEAD one-frame pop`);
+console.log(`  side-slide from-state : data-side[open] @starting-style translate (the side popover slides FROM its edge, not a pop-in-place)`);
+console.log(`  scrim couples to launch: dialog.glass-top-layer[open]::backdrop ENTER on var(--top-layer-backdrop-in ~0.15s) + --ease-out — ≥80% dim within ~100ms; the base ::backdrop stays the released-with-panel EXIT clock`);
+console.log(`  self-test (bite proof): OK — a re-planted dead composable, a re-forked rAF/ElementMorph runner, a re-introduced masking --glass-drawer-t: 1, AND a .glass-reveal open rule stripped of its @starting-style from-state all flag`);
 console.log(`  corpus scanned        : ${corpus.length} src/+demo/ sources`);
 console.log(`  violations            : ${violations.length}`);
 for (const m of violations) console.error(`  CUT-INCOMPLETE   ${m}`);
@@ -405,6 +529,7 @@ writeGateArtifact(ARTIFACT, {
     selfTestFlagged: selfTestFlags,
     s1SelfTestFlagged: s1SelfTestFlags,
     dSelfTestFlagged: dSelfTestFlags,
+    oSelfTestFlagged: oSelfTestFlags,
     spine: SPINE_PATH,
     bloomWrappers: BLOOM_WRAPPERS,
     violations,
