@@ -147,3 +147,40 @@ the ROOT register. (f) The **Card as-child root fix**, the **compact 44px tap-fl
 **theme-only styles entry** are filed as new asks (§C C2/C3/C4) — all non-blocking, atlas
 degrades gracefully meanwhile. (g) The **4.3.0 merge** stays the parked, user-gated §0
 reconcile onto master at the cut — not fired mid-BG (§D).
+
+---
+
+## §E — orchestrator adjudication + relay-back (2026-07-04)
+
+Every claim re-verified on OUR disk (the inbound-verification law): A3 `.text-gilt` CONFIRMED
+dead (absent from `src/` AND `dist/glass-ui.css` + `dist/styles/*` — atlas carries it at 2 live
+sites; MIGRATION.md had NO row) · C4 `./styles/theme` CONFIRMED absent · C2 Card is already a reka
+`Primitive` (`as:"div"` default, forwards `as`) so the fix is a single-root guarantee, not a new API.
+
+**Folded as row clauses (built by the engine):**
+- **A3** → `BH.B4e-cut-authoring`: the `## 5.0.0` MIGRATION row `.text-gilt → .gold-shimmer` / `.metal-gold`.
+- **C4** → `BH.B2-export-reshape`: a `./styles/theme` token/theme-only subpath (theme CSS without the JS runtime).
+- **C3** → `NF.1` rider (the dock CSS wave): a 44px effective tap floor on the compact/dense control rung via a `@media(pointer:coarse)` hit-slop — the `--dock-control-floor`/`--dock-touch-target` token names survive per Q4.
+
+**C1 (dock scroll-progress — per-item stepper API) — ORCHESTRATOR RULING.** The two 07-03 specs
+reconcile as DISTINCT axes, not a conflict: the USER-07-03 re-spec made the OVERALL barometer the
+dock's BORDER (`<BorderProgress>` on the SidebarDock frame, shipped + dual-engine PASS at 16.1) —
+that is authoritative for the overall progress and is NOT reopened. The atlas per-item `[0,1]`-scalar
+stepper-rail is a SEPARATE affordance. `<BorderProgress>` already accepts a consumer-fed `value`
+(the dock never reads the page — the host injects, matching the atlas contract), so the overall axis
+is covered consumer-fed today. The per-item stepper-rail progress is BOOKED, not built now: it lands
+only on the ≥2-consumer bar (atlas + a second binary consumer) to avoid speculative surface — glass-ui
+does not mint a per-item dock-progress API for one consumer. Interim: atlas feeds the overall
+barometer via `<BorderProgress value>` and keeps its per-item rail consumer-local until the bar is met.
+
+**C2 (Card as-child directive-root) — ACCEPTED, BOOKED.** A single-root guarantee so a directive
+lands on one resolved root; non-blocking (atlas degrades via `:as`). Booked to a post-frontier F6
+component-shape fix (no closed row is reopened; the 10.2 PORTAL-ATTRS single-root idiom is the home
+pattern). atlas retires its `:as` workaround on consume.
+
+**Relay-back to atlas-N:** A1/A2 DONE (grammar renames, byte-identical paint — pin the landing
+commits). A3+C4+C3 folded onto WS12/dock rows, ride 5.0.0. C1: the overall barometer is the dock
+BORDER (shipped, consumer-fed `value`); the per-item stepper API is booked on a ≥2-consumer bar —
+feed the border meanwhile. C2 booked (single-root Card). B1 @settle drains at the 4.3.0 reconcile.
+B2 viz-subset MANIFEST is a named view over BH.B4-canon's primitives register. All ride the joint
+5.0.0; no publish pressure; the linear 4.2→4.3→4.4→5.0 drain stands.
