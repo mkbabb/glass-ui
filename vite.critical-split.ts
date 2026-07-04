@@ -56,7 +56,18 @@ export function emitCriticalDeferredSplit(distStyles: string): void {
         const partialImports = partials
             .map((p) => `@import "./${p}";`)
             .join("\n");
-        const foldImports = folds.map((f) => `@import "${f}";`).join("\n");
+        // components.css imports LAYERED (VALUEJS-R D8-1 residual, 2026-07-04): the deferred
+        // subset's fold must carry the SAME layer(components) qualifier the monolith emission
+        // (vite.utility-emit.ts) uses — a bare unlayered components.css lands the .hidden utility
+        // corpus at any /styles/deferred consumer's cascade tail (the boot-block class 4b637036 cured
+        // for index.css). Mirror the cure at this second emission site.
+        const foldImports = folds
+            .map((f) =>
+                f.endsWith("components.css")
+                    ? `@import "${f}" layer(components);`
+                    : `@import "${f}";`,
+            )
+            .join("\n");
         const blocks = [header, partialImports, foldImports]
             .filter((b) => b.length > 0)
             .join("\n");
