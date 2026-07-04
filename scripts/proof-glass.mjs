@@ -91,6 +91,11 @@ const SPECULAR_POINTER_FILE = "src/composables/glass/useSpecularPointer.ts";
 const DARK_ARM_FILE = "src/styles/tokens/dark-arm.css";
 const LIGHT_DARK_FILE = "src/styles/tokens/light-dark.css";
 const GLASS_SURFACES_FILE = "src/styles/glass/surfaces.css";
+// BG.W-GLASS-CONSUMER-BAND — the tokens home for the SHARED `--glass-fill-tinted`
+// plate + the two consumer recipes (`.glass-atom`/`.glass-chip`) that fold onto it.
+const TOKENS_GLASS_FILE = "src/styles/tokens/glass.css";
+const GLASS_ATOM_FILE = "src/styles/glass/glass-atom.css";
+const GLASS_CHIP_FILE = "src/styles/glass/glass-chip.css";
 const TRANSITIONS_FILE = "src/styles/transitions.css";
 const STORY_HERO_CSS_FILE = "demo/stories/story-hero.css";
 const STORY_HERO_SFC_FILE = "demo/stories/StoryHero.vue";
@@ -233,6 +238,113 @@ export function glassFillHomeViolations(glassCss) {
     if (consumers < 1) {
         violations.push(
             "A1: `@utility glass-fill` has ZERO `@apply glass-fill` consumers in the glass cascade — a minted HOME with no consumer is substrate-without-consumer (J-inv-10); a surface must APPLY it",
+        );
+    }
+
+    return { violations, facts };
+}
+
+// ── the consumer-band predicate (pure) — BG.W-GLASS-CONSUMER-BAND ─────────────
+// The fill-tint CONSUMERS (Badge-glass · SelectableChip · IconChip-glass, via the
+// `.glass-atom`/`.glass-chip` recipes) FOLD onto ONE shared per-instance PLATE recipe
+// `--glass-fill-tinted` (tokens/glass.css) reading the `--glass-fill-tint`/`--glass-
+// fill-strength` axis — instead of each carrying its own forked `color-mix(in oklab,
+// …)` re-spell. The `.glass-atom` fork was worse than a duplicate: it mixed a FIXED
+// `--glass-capsule-warm` cream regardless of the per-instance hue, so a `destructive`/
+// `success`/`info` glass badge dropped its semantic tint. Three clauses:
+//   C1 — `--glass-fill-tinted` is declared EXACTLY ONCE (the shared plate HOME) and
+//        reads BOTH `--glass-fill-tint` AND `--glass-fill-strength` in an `in oklab`
+//        color-mix (the data-hue-at-strength seam; a fixed-source or in-srgb form REDs).
+//   C2 — BOTH `.glass-atom` and `.glass-chip` READ `var(--glass-fill-tinted)` (the
+//        `background-image` plate layer) — the load-bearing fold.
+//   C3 — the anti-fork bite: NEITHER recipe declares a forked per-instance tint token
+//        (`--glass-atom-tinted`/`--glass-chip-tinted`) NOR an inline `color-mix(in oklab,
+//        …--glass-fill-strength…)` re-spell — a re-introduced fork REDs.
+// Born-RED at HEAD (the two forks + no shared token) -> GREEN at the fold.
+export function consumerBandViolations(tokensCss, atomCss, chipCss) {
+    const violations = [];
+    const facts = {};
+    const tokens = stripCss(tokensCss || "");
+    const tokensSq = squish(tokens);
+    const atom = stripCss(atomCss || "");
+    const atomSq = squish(atom);
+    const chip = stripCss(chipCss || "");
+    const chipSq = squish(chip);
+
+    // C1 — the shared plate token declared ONCE, reading BOTH axis legs in an oklab mix.
+    const declCount = (tokens.match(/--glass-fill-tinted\s*:/g) || []).length;
+    facts.plateDeclCount = declCount;
+    if (declCount === 0) {
+        violations.push(
+            "C1: `--glass-fill-tinted` (the shared per-instance PLATE recipe) is NOT declared in tokens/glass.css — the fold home is missing; the two forked `--glass-atom-tinted`/`--glass-chip-tinted` re-spells cannot collapse onto ONE plate",
+        );
+    } else if (declCount > 1) {
+        violations.push(
+            `C1: \`--glass-fill-tinted\` is declared ${declCount} times — the shared plate is declared ONCE (a second declaration re-forks the recipe home)`,
+        );
+    }
+    // The shared plate must read the data hue (`--glass-fill-tint`) AT the strength
+    // (`--glass-fill-strength`) in an `in oklab` mix — the CORRECT data-hue seam. A
+    // fixed-source form (the `.glass-atom` fork mixed `--glass-capsule-warm`) or an
+    // in-srgb space breaks the fold's intent.
+    const plateReadsAxis =
+        /--glass-fill-tinted\s*:\s*color-mix\(\s*in\s+oklab\s*,\s*var\(--glass-fill-tint[^;]*var\(--glass-fill-strength/.test(
+            tokensSq,
+        );
+    facts.plateReadsAxis = plateReadsAxis;
+    if (declCount >= 1 && !plateReadsAxis) {
+        violations.push(
+            "C1: `--glass-fill-tinted` does not read `color-mix(in oklab, var(--glass-fill-tint …) var(--glass-fill-strength …), …)` — the shared plate must tint toward the per-instance DATA hue at the bounded strength (a fixed `--glass-capsule-warm` source, an in-srgb space, or a dropped strength leg breaks the fold: the data hue would never reach the plate)",
+        );
+    }
+
+    // C2 — both recipes READ the shared plate as their `background-image` layer.
+    const atomReadsPlate =
+        /background-image\s*:\s*linear-gradient\(\s*var\(--glass-fill-tinted\)/.test(atomSq);
+    facts.atomReadsPlate = atomReadsPlate;
+    if (!atomReadsPlate) {
+        violations.push(
+            "C2: `.glass-atom` does not read `background-image: linear-gradient(var(--glass-fill-tinted) …)` — the atom must compose the SHARED plate (the fold), not a local re-spell",
+        );
+    }
+    const chipReadsPlate =
+        /background-image\s*:\s*linear-gradient\(\s*var\(--glass-fill-tinted\)/.test(chipSq);
+    facts.chipReadsPlate = chipReadsPlate;
+    if (!chipReadsPlate) {
+        violations.push(
+            "C2: `.glass-chip` does not read `background-image: linear-gradient(var(--glass-fill-tinted) …)` — the chip must compose the SHARED plate (the fold), not a local re-spell",
+        );
+    }
+
+    // C3 — the anti-fork bite: NEITHER recipe re-declares a forked per-instance tint
+    // token, NOR carries an inline `color-mix(in oklab, …--glass-fill-strength…)` fill
+    // re-spell. A re-introduced fork (the exact class this wave collapses) REDs.
+    const forkedTokens = [];
+    if (/--glass-atom-tinted\s*:/.test(atom)) forkedTokens.push("--glass-atom-tinted");
+    if (/--glass-chip-tinted\s*:/.test(chip)) forkedTokens.push("--glass-chip-tinted");
+    facts.forkedTokens = forkedTokens;
+    if (forkedTokens.length) {
+        violations.push(
+            `C3: forked per-instance tint token(s) survive (${forkedTokens.join(", ")}) — the fold DELETES these onto the shared \`--glass-fill-tinted\`; a re-declared fork is the N-pastes anti-pattern`,
+        );
+    }
+    // An inline oklab color-mix that reads `--glass-fill-strength` (a re-spelled plate)
+    // in either recipe is a fork even if the token name changed — scoped to the
+    // strength-reading form so the unrelated `.glass-chip::after` bloom / `.accent-tone`
+    // mixes are NOT caught.
+    const respellRe = /color-mix\(\s*in\s+oklab\s*,[^;{}]*var\(--glass-fill-strength/g;
+    const atomRespells = (atomSq.match(respellRe) || []).length;
+    const chipRespells = (chipSq.match(respellRe) || []).length;
+    facts.atomRespells = atomRespells;
+    facts.chipRespells = chipRespells;
+    if (atomRespells > 0) {
+        violations.push(
+            `C3: \`.glass-atom\` carries ${atomRespells} inline \`color-mix(in oklab, … var(--glass-fill-strength …))\` fill re-spell(s) — the plate compose lives ONCE in \`--glass-fill-tinted\`; a recipe re-spell reds`,
+        );
+    }
+    if (chipRespells > 0) {
+        violations.push(
+            `C3: \`.glass-chip\` carries ${chipRespells} inline \`color-mix(in oklab, … var(--glass-fill-strength …))\` fill re-spell(s) — the plate compose lives ONCE in \`--glass-fill-tinted\`; a recipe re-spell reds`,
         );
     }
 
@@ -1033,6 +1145,11 @@ export function detect() {
     const glassMonolith = readMonolith(ROOT, "glass");
     const tokensMonolith = readMonolith(ROOT, "tokens");
     const glassFill = glassFillHomeViolations(glassMonolith);
+    const consumerBand = consumerBandViolations(
+        readFile(TOKENS_GLASS_FILE),
+        readFile(GLASS_ATOM_FILE),
+        readFile(GLASS_CHIP_FILE),
+    );
     const safari = safariBlurVarViolations(readFile(VITE_STYLE_ASSETS));
     const defined = definedControlFloorViolations(glassMonolith, tokensMonolith);
     const dynamics = glassDynamicsViolations(glassMonolith, readFile(SPECULAR_POINTER_FILE));
@@ -1055,6 +1172,7 @@ export function detect() {
         violations: [
             ...decide.violations,
             ...glassFill.violations,
+            ...consumerBand.violations,
             ...safari.violations,
             ...defined.violations,
             ...dynamics.violations,
@@ -1066,6 +1184,7 @@ export function detect() {
         facts: {
             deepGlassDecided: decide.facts,
             glassFillHome: glassFill.facts,
+            consumerBand: consumerBand.facts,
             safariBlurVar: safari.facts,
             definedControlFloor: defined.facts,
             glassDynamics: dynamics.facts,
@@ -1151,6 +1270,75 @@ function selfTest() {
     ) {
         fails.push(
             "self-test A1: a `@utility glass-fill` with ZERO `@apply glass-fill` consumers was NOT flagged (the ≥1-consumer detector has no teeth)",
+        );
+    }
+
+    // ── consumer-band bites (C1/C2/C3) — BG.W-GLASS-CONSUMER-BAND ──────────────
+    const goodTokens =
+        ":root { --glass-fill-tinted: color-mix(in oklab, var(--glass-fill-tint, oklch(0.9 0.05 75 / 0)) var(--glass-fill-strength, 0%), oklch(0.9 0.05 75 / 0)); }";
+    const goodAtom =
+        ".glass-atom[data-surface=\"glass\"] { background-image: linear-gradient(var(--glass-fill-tinted), var(--glass-fill-tinted)); }";
+    const goodChip =
+        ".glass-chip { background-image: linear-gradient(var(--glass-fill-tinted), var(--glass-fill-tinted)); }";
+    // sanity — the GREEN triple must pass (a false-RED detector is as bad as a
+    // toothless one).
+    if (consumerBandViolations(goodTokens, goodAtom, goodChip).violations.length !== 0) {
+        fails.push(
+            "self-test C: the GREEN consumer-band triple (shared plate + both recipes reading it, no fork) was FLAGGED (the detector false-REDs a correct fold)",
+        );
+    }
+    // bite C1a — a MISSING shared plate token reds home-missing.
+    if (consumerBandViolations("/* no plate */", goodAtom, goodChip).violations.length === 0) {
+        fails.push(
+            "self-test C1: a tokens cascade with NO `--glass-fill-tinted` was NOT flagged (the shared-plate-missing detector has no teeth)",
+        );
+    }
+    // bite C1b — a DOUBLED shared plate reds declared-once.
+    if (consumerBandViolations(goodTokens + " " + goodTokens, goodAtom, goodChip).violations.length === 0) {
+        fails.push(
+            "self-test C1: a DOUBLED `--glass-fill-tinted` was NOT flagged (the declared-once detector has no teeth)",
+        );
+    }
+    // bite C1c — the `.glass-atom` FORK shape (a fixed `--glass-capsule-warm` source
+    // that DROPS the per-instance hue) reds the axis-read: the plate must tint toward
+    // `--glass-fill-tint`, not a fixed warm cream.
+    const fixedSourcePlate =
+        ":root { --glass-fill-tinted: color-mix(in oklab, var(--glass-capsule-warm) calc(var(--atom-tint-floor) + var(--glass-fill-strength)), oklch(0.9 0.05 75 / 0)); }";
+    if (consumerBandViolations(fixedSourcePlate, goodAtom, goodChip).violations.length === 0) {
+        fails.push(
+            "self-test C1: a shared plate reading a FIXED `--glass-capsule-warm` source (the `.glass-atom` fork that dropped the data hue) was NOT flagged (the data-hue-reads-axis detector has no teeth)",
+        );
+    }
+    // bite C1d — an in-srgb (not oklab) plate reds the perceptual-family fence.
+    const srgbPlate =
+        ":root { --glass-fill-tinted: color-mix(in srgb, var(--glass-fill-tint) var(--glass-fill-strength), oklch(0.9 0.05 75 / 0)); }";
+    if (consumerBandViolations(srgbPlate, goodAtom, goodChip).violations.length === 0) {
+        fails.push(
+            "self-test C1: an in-srgb `--glass-fill-tinted` plate was NOT flagged (the oklab-family detector has no teeth)",
+        );
+    }
+    // bite C2a — a recipe NOT reading the shared plate (a bare fill) reds the fold.
+    const bareAtom = ".glass-atom[data-surface=\"glass\"] { background-image: none; }";
+    if (consumerBandViolations(goodTokens, bareAtom, goodChip).violations.length === 0) {
+        fails.push(
+            "self-test C2: a `.glass-atom` NOT reading `var(--glass-fill-tinted)` was NOT flagged (the recipes-read-the-plate detector has no teeth)",
+        );
+    }
+    // bite C3a — a re-introduced forked `--glass-atom-tinted` token reds the anti-fork.
+    const forkedAtom =
+        ".glass-atom { --glass-atom-tinted: color-mix(in oklab, var(--glass-capsule-warm) var(--glass-fill-strength), oklch(0.9 0.05 75 / 0)); background-image: linear-gradient(var(--glass-fill-tinted), var(--glass-fill-tinted)); }";
+    if (consumerBandViolations(goodTokens, forkedAtom, goodChip).violations.length === 0) {
+        fails.push(
+            "self-test C3: a re-declared forked `--glass-atom-tinted` token was NOT flagged (the anti-fork detector has no teeth)",
+        );
+    }
+    // bite C3b — an inline `color-mix(in oklab, … --glass-fill-strength …)` re-spell
+    // in a recipe (even under a renamed token) reds the anti-fork.
+    const respellChip =
+        ".glass-chip { --x: color-mix(in oklab, var(--glass-fill-tint) var(--glass-fill-strength), oklch(0.9 0.05 75 / 0)); background-image: linear-gradient(var(--glass-fill-tinted), var(--glass-fill-tinted)); }";
+    if (consumerBandViolations(goodTokens, goodAtom, respellChip).violations.length === 0) {
+        fails.push(
+            "self-test C3: an inline strength-reading `color-mix(in oklab, …)` fill re-spell in `.glass-chip` was NOT flagged (the inline-respell detector has no teeth)",
         );
     }
 
@@ -1580,6 +1768,17 @@ function run() {
     console.log("proof:glass — arm: glass-fill-home (BG.W-GLASS-REGISTER-UNIFY · R9)");
     console.log(
         `  A1 home           : @utility glass-fill ×${gf.homeCount ?? 0}   oklab-seam=${gf.composesSeam ? "✓" : "✗"}   paints-value=${gf.paintsFill ? "✓" : "✗"}   @apply consumers=${gf.consumers ?? 0}`,
+    );
+    const cbnd = facts.consumerBand ?? {};
+    console.log("proof:glass — arm: consumer-band (BG.W-GLASS-CONSUMER-BAND)");
+    console.log(
+        `  C1 shared plate   : --glass-fill-tinted ×${cbnd.plateDeclCount ?? 0}  reads-axis=${cbnd.plateReadsAxis ? "✓" : "✗"} (data-hue @ strength, in oklab)`,
+    );
+    console.log(
+        `  C2 recipes read   : glass-atom=${cbnd.atomReadsPlate ? "✓" : "✗"}  glass-chip=${cbnd.chipReadsPlate ? "✓" : "✗"} (the fold onto the ONE plate)`,
+    );
+    console.log(
+        `  C3 no fork        : forked-tokens=${(cbnd.forkedTokens ?? []).length ? "✗ " + cbnd.forkedTokens.join(", ") : "✓ none"}  inline-respells=atom:${cbnd.atomRespells ?? 0}/chip:${cbnd.chipRespells ?? 0}`,
     );
     const sw = facts.safariBlurVar ?? {};
     console.log("proof:glass — arm: safari-blur-var (BG.W-GLASS-REGISTER-UNIFY)");

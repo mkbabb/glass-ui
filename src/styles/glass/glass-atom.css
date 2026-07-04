@@ -49,17 +49,17 @@
             var(--accent-fill-strength-in, 0%),
             var(--atom-tint-floor)
         );
-        /* The quiet register's tint application — the plate body mixes toward the
-           per-instance data hue ON TOP of the capsule's warm composite. At the
-           `@property` defaults (`--glass-fill-tint: transparent` / strength 0%)
-           this is the byte-identical no-op floor; the warm floor above keeps the
-           idle body warm even at a transparent tint. The mix is `in oklab` (the
-           perceptual glass-tint family — NOT the in-srgb brand fence). */
-        --glass-atom-tinted: color-mix(
-            in oklab,
-            var(--glass-capsule-warm) calc(var(--atom-tint-floor) + var(--glass-fill-strength)),
-            oklch(0.9 0.05 75 / 0)
-        );
+        /* The quiet register's tint application reads the SHARED per-instance PLATE
+           recipe `--glass-fill-tinted` (BG.W-GLASS-CONSUMER-BAND, tokens/glass.css) —
+           NOT a forked `color-mix` re-spell. The plate tints toward the per-instance
+           DATA hue (`--glass-fill-tint` at `--glass-fill-strength`), so a semantic
+           badge (`destructive`/`success`/`info`) reaches its hue — closing the prior
+           `.glass-atom` fork that mixed a FIXED `--glass-capsule-warm` cream regardless
+           of the data hue (the comment claimed "toward the per-instance data hue" while
+           the code ignored it). At the `@property` defaults this is the byte-identical
+           no-op (`color-mix(in oklab, X, transparent 0%)` ≡ X); the capsule's own warm
+           floor above keeps the idle body warm. ONE plate, ONE rim (`--glass-material-
+           rim`, the capsule carries it) — the shared plate/rim pair. */
         /* The motion register — the press/hover deform rides
            `--motion-weight × --ease-cartoon-punch`. The atom inherits the rest
            `--motion-weight: 0.618`; the loud register (`data-cast`, below) pushes
@@ -117,8 +117,8 @@
        `transparent` (challenge #1 R4 / #2 R4 — the WebKit desaturation fix). */
     .glass-atom[data-surface="glass"] {
         background-image: linear-gradient(
-            var(--glass-atom-tinted),
-            var(--glass-atom-tinted)
+            var(--glass-fill-tinted),
+            var(--glass-fill-tinted)
         );
     }
 

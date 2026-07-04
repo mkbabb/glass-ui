@@ -58,11 +58,13 @@ const chipClass = computed(() =>
     cn(chipVariants({ size: props.size, shape: props.shape }), props.class),
 );
 
-// The chip is the ≥3rd `--glass-fill-tint` consumer — the translucent
-// `.glass-capsule` body tints toward the SAME `:tone` hue so the lens reads as
-// COLORED warm glass (the `.glass-chip` recipe applies the axis; a default tone
-// keeps the no-op warm floor). The strength is a calm stop (body ink stays
-// legible); `--glass-fill-tint` rides on top of `toneStyle`'s `--tone`/ink.
+// The chip writes the SHARED `--glass-fill-tint`/`--glass-fill-strength` axis (the
+// per-instance plate hue); the `.glass-chip` recipe reads it through the ONE shared
+// plate `--glass-fill-tinted` (BG.W-GLASS-CONSUMER-BAND — the fold onto the plate/rim
+// pair, tokens/glass.css), so the translucent `.glass-capsule` body tints toward the
+// `:tone` hue (COLORED warm glass) with the capsule's shared `--glass-material-rim`.
+// A default tone keeps the no-op warm floor; the strength is a calm stop (body ink
+// stays legible). `--glass-fill-tint` rides on top of `toneStyle`'s `--tone`/ink.
 const chipStyle = computed<CSSProperties>(() => ({
     ...toneStyle.value,
     "--glass-fill-tint": props.tone ?? "var(--primary)",

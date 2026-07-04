@@ -90,8 +90,11 @@ const chipStyle = computed<CSSProperties>(() => {
         "--icon-chip-size": `${props.size ?? DEFAULT_SIZE}px`,
     };
     // The quiet glass register tints the `.glass-atom` warm capsule toward the
-    // event hue via the shared `--glass-fill-tint` axis (BD.W-GLASS-ATOM-REGISTER /
-    // BE.W-TINTED-CHIP) — never a forked tint. The strength dials a calm colored
+    // event hue via the shared `--glass-fill-tint` axis (BG.W-GLASS-CONSUMER-BAND —
+    // the fold onto the plate/rim pair: `.glass-atom` reads the ONE shared plate
+    // `--glass-fill-tinted` off this axis, so the event hue reaches the plate over
+    // the capsule's shared `--glass-material-rim`; the prior `.glass-atom` fork mixed
+    // a FIXED warm cream and dropped the event hue). The strength dials a calm colored
     // glass; the body ink stays legible (the W-ON-GLASS-FG floor).
     if (props.glass) {
         style["--glass-fill-tint"] = eventColor.value;

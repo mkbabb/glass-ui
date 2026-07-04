@@ -86,21 +86,17 @@
            bolder warm-clearing stop so a selected default chip is tonal, not gray. */
         --accent-band-strength: max(18%, calc(var(--chip-tint-floor) + 10%));
 
-        /* ── The per-instance fill tint (BE.W-TINTED-CHIP CONSUME) ──
-           The translucent capsule body tints toward the consumer data hue ON TOP
-           of the W55 legibility composite. At the `@property` defaults
-           (`--glass-fill-tint: transparent` / strength 0%) this is the byte-
-           identical no-op (`color-mix(in oklab, X, transparent 0%)` ≡ X — the warm
-           floor above keeps the idle body warm even at a transparent tint). The
-           mix is `in oklab` (the perceptual glass-tint family). The 0-alpha stop is
-           warm `oklch(… / 0)`, never bare `transparent` (the WebKit black-
-           premultiply hole). */
-        --glass-chip-tinted: color-mix(
-            in oklab,
-            var(--glass-fill-tint, oklch(0.9 0.05 75 / 0))
-                var(--glass-fill-strength, 0%),
-            oklch(0.9 0.05 75 / 0)
-        );
+        /* ── The per-instance fill tint (BG.W-GLASS-CONSUMER-BAND CONSUME) ──
+           The translucent capsule body tints toward the consumer data hue via the
+           SHARED per-instance PLATE recipe `--glass-fill-tinted` (tokens/glass.css) —
+           NOT a forked `color-mix` re-spell (the chip read the SAME seam the atom
+           does, so this fold is net-neutral: both read the ONE plate). At the
+           `@property` defaults (`--glass-fill-tint: transparent` / strength 0%) it is
+           the byte-identical no-op (`color-mix(in oklab, X, transparent 0%)` ≡ X — the
+           warm floor above keeps the idle body warm even at a transparent tint). The
+           shared plate is `in oklab` over a warm `oklch(… / 0)` 0-alpha stop (never
+           bare `transparent` — the WebKit black-premultiply hole). ONE plate, ONE rim
+           (`--glass-material-rim`, the capsule carries it). */
 
         /* ── The ONE scale write (hover/press/punch, single source of truth) ──
            Folds the on-flood overshoot into ONE `scale` so it never collides with
@@ -132,8 +128,8 @@
            tinted layer is the warm 0-alpha no-op (invisible) and the capsule's warm
            body reads. */
         background-image: linear-gradient(
-            var(--glass-chip-tinted),
-            var(--glass-chip-tinted)
+            var(--glass-fill-tinted),
+            var(--glass-fill-tinted)
         );
     }
     .dark .glass-chip {

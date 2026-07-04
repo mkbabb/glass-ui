@@ -323,6 +323,31 @@
        component) — the fill is read on the surface, never written into a `--glass-bg-*`
        token here. The `@property` registration is below (the typed no-op floor). */
 
+    /* ── BG.W-GLASS-CONSUMER-BAND — the SHARED per-instance PLATE recipe (the fold
+       home) ───────────────────────────────────────────────────────────────────────
+       `--glass-fill-tinted` is the ONE `color-mix(in oklab, …)` per-instance data-hue
+       plate the fill-tint CONSUMERS (Badge-glass · SelectableChip · IconChip-glass via
+       `.glass-atom`/`.glass-chip`) READ instead of each re-spelling it — the DRY fold
+       of the two forked `--glass-atom-tinted`/`--glass-chip-tinted` inline re-spells
+       onto ONE plate. It reads the `--glass-fill-tint`/`--glass-fill-strength` axis
+       DIRECTLY (the data hue at the bounded strength), so a consumer's `:tone`/`:section`
+       hue reaches the plate — closing the `.glass-atom` fork that mixed a FIXED
+       `--glass-capsule-warm` cream regardless of the per-instance hue (a `destructive`/
+       `success`/`info` glass badge got NO semantic tint). It is the LATER `background-
+       image` layer over the `.glass-capsule` warm-transmissive body (the proven
+       `.paper-grid` coexistence seam — paints OVER the translucent fill, UNDER content);
+       the capsule's own warm floor carries the idle warmth so this layer is the data-hue
+       event alone. At the `@property` defaults (transparent + 0%) it is the byte-
+       identical no-op (`color-mix(in oklab, X, transparent 0%)` ≡ X). The 0-alpha stop
+       is warm `oklch(… / 0)`, NEVER bare `transparent` (the WebKit black-premultiply
+       hole, build-trap-(d)). Pairs with the SHARED rim `--glass-material-rim` the
+       capsule carries — the plate/rim pair every consumer composes. */
+    --glass-fill-tinted: color-mix(
+        in oklab,
+        var(--glass-fill-tint, oklch(0.9 0.05 75 / 0)) var(--glass-fill-strength, 0%),
+        oklch(0.9 0.05 75 / 0)
+    );
+
     /* Composed borders — foreground-tinted. BC.W-BLACK-BAR D2 — the perimeter
        hairline is RETIRED as the silhouette device. The old 11-22% warm-ink rung
        borders rode --foreground (oklab L 0.216, near-black warm ink); over a

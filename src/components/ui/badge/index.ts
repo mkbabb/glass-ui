@@ -64,6 +64,13 @@ export const badgeVariants = cva(
       // shared `--glass-fill-tint` axis. `glass` composes the warm-glass body; the
       // variant `bg-*` opaque plate is retired by the `.badge-atom--glass` rule so
       // the warm capsule + the data-hue tint paint the surface.
+      // BG.W-GLASS-CONSUMER-BAND — the glass register reads the SHARED plate/rim
+      // pair: the `.glass-atom` body composes `--glass-fill-tinted` (the ONE
+      // per-instance data-hue plate, tokens/glass.css) reading this `--glass-fill-
+      // tint` axis, so a semantic badge (destructive/success/info) now carries its
+      // hue on the plate (the prior fork mixed a FIXED warm cream). The rim is the
+      // capsule's shared `--glass-material-rim`; ONE plate, ONE rim — no per-variant
+      // re-spell.
       surface: {
         loud: '',
         glass: 'badge-atom--glass glass-capsule glass-atom',
