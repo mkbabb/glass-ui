@@ -168,6 +168,57 @@
             );
     }
 
+    /* ── BG.W-DOCK-GLYPH-RIGID — RIGID CONTENT over the morphing PLATE ─────────────
+       THE DEFECT (IOS27-MOTION-TRUTH §2.1/§4.5): the box-scale rule above scales the
+       WHOLE `.glass-dock` subtree — INCLUDING the glyphs — by `--dock-size-scale` on
+       the morph axis. On collapse that factor drives 1 → 0.06, so every dock glyph
+       gets scaleX-squished to a compressed SLIVER mid-morph (horizontal), and the
+       collapsed REST used to paint a permanently-compressed glyph in a rounded square
+       rather than the AY.W-DOCK-NAV B4 1:1 circle + undistorted glyph.
+
+       THE FIX (spec vocab (a)): the two direct-child CONTENT containers
+       (`.dock-persistent` + `.dock-layers`) carry the PER-FRAME INVERSE of the root
+       morph-axis footprint scale — `scale: calc(1 / max(var(--dock-size-scale), 0.06))`
+       on that axis, identity on the cross axis — so the PLATE scales and the content
+       does NOT. The `max(…, 0.06)` guard is the SAME div-by-zero clamp floor the
+       box-scale rides (layers.css `--dock-size-scale` is clamped `[0.06, 1]`); it is a
+       math fence, NOT a masking fallback — `--dock-size-scale` is written under
+       `[data-morphing]` so the endpoint always resolves (the box-scale and this inverse
+       read the ONE live value). The content children default `transform-origin: 50%
+       50%`, the SAME centre the root scales from (`transform-origin: center center`,
+       layers.css), so the inverse un-does the plate's outward scale about the shared
+       centroid — the glyph reads its intrinsic size at the correct position, per-frame,
+       on the ONE compositor channel (ZERO layout, `proof:no-layout-animation` holds).
+
+       ONLY the footprint factor `--dock-size-scale` is inverted — NOT the
+       `--stretch`/`--dock-punch-stretch` volume-preserving squish. Those cap LOW
+       (~1.14 / ~1.22) and ARE the sub-perceptual liquid deformation the whole plate
+       (content included) is MEANT to carry; inverting them would fight the liquid
+       squish. The footprint factor is the ONLY one that reaches 0.06 and distorts.
+
+       SCOPED to `[data-morphing]` (the residual transform lives ONLY mid-morph): at
+       settle `[data-morphing]` clears → the box-scale rule above drops to `scale: none`
+       (spec vocab (b)) AND this inverse drops to `scale: none` too, so the
+       collapsed/expanded REST paints the TRUE box with content byte-rigid (no residual
+       counter-scale, no compositing cost at rest). Horizontal inverts X; vertical
+       inverts Y (the inverse-axis twin, mirroring the box-scale per-orientation split
+       above). The `:not(.vertical)` / `.vertical` split is byte-parallel to the box
+       scale so the inverse always lands on the same axis the plate scaled. */
+    .glass-dock[data-morphing]:not(.vertical) > .dock-persistent,
+    .glass-dock[data-morphing]:not(.vertical) > .dock-layers,
+    .glass-dock[data-punching]:not(.vertical) > .dock-persistent,
+    .glass-dock[data-punching]:not(.vertical) > .dock-layers {
+        scale: calc(1 / max(var(--dock-size-scale, 1), 0.06)) 1;
+        will-change: transform;
+    }
+    .glass-dock[data-morphing].vertical > .dock-persistent,
+    .glass-dock[data-morphing].vertical > .dock-layers,
+    .glass-dock[data-punching].vertical > .dock-persistent,
+    .glass-dock[data-punching].vertical > .dock-layers {
+        scale: 1 calc(1 / max(var(--dock-size-scale, 1), 0.06));
+        will-change: transform;
+    }
+
     /* ── BD.W-DOCK-PUNCH-CHANNEL — the dedicated cartoon-punch DRIVER ──────────────
        The size blend above is monotone + bounded (correct, boring, bulletproof). The
        PUNCH is the audacious half: a SEPARATE one-shot transition on

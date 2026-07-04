@@ -153,9 +153,20 @@ export function useDockMorphOrchestrator(
     function maybeSettleRoot() {
         const r = root();
         if (r) {
-            r.style.removeProperty("--dock-morph-t");
+            // BG.W-DOCK-GLYPH-RIGID (spec vocab (b)) — DROP the morph attrs BEFORE the
+            // scalar so at settle the residual `scale:` lives ONLY under `[data-morphing]`.
+            // The box-size scale (shape.css `.glass-dock[data-morphing]…{scale}`) AND the
+            // glyph-rigid inverse-scale on the content children (`.dock-persistent`/
+            // `.dock-layers`, the per-frame inverse of `--dock-size-scale`) both gate on
+            // `[data-morphing]`/`[data-punching]`; clearing the attrs FIRST stops both
+            // rules matching, so removing the registered `--dock-morph-t` (which reverts to
+            // its `@property initial-value: 0`) cannot flash a one-frame collapsed-look
+            // scale on the already-settled true box. All four mutations coalesce into ONE
+            // style recalc (one synchronous task, no paint between), so the settle seats
+            // `scale: none` over the TRUE collapsed/expanded box with the glyph rigid.
             r.removeAttribute("data-morphing");
             r.removeAttribute("data-punching");
+            r.style.removeProperty("--dock-morph-t");
         }
         dockSpring.dispose();
     }
