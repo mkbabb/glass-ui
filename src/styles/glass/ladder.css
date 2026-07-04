@@ -330,10 +330,22 @@
            clamp resolves EXACTLY `--glass-tint-strength-floor` (the GLASS-IDENTITY calm
            identity, byte-equal); rising luma ramps the lift CONTINUOUSLY; the clamp floors
            at the 4% identity and ceilings at the bounded AA — never an unconditional 20%
-           slab (the AZ grey-slab is the OPPOSITE of this earned, measured track). This
-           RETIRES the discrete `@container --glass-backdrop: light` bucket as the strength
-           driver — the continuous calc subsumes it (the bucket survives only as a no-
-           `@property` degrade fallback). */
+           slab (the AZ grey-slab is the OPPOSITE of this earned, measured track).
+
+           BG.W-GLASS-SIGNAL-TRUTH (M7) — THE BAND-DRIVER DECISION (reconciled to ONE):
+           the declarative `@container --glass-backdrop: light` bucket below is THE BAND
+           DRIVER (a consumer/shell writes `--glass-backdrop: light` on an ancestor where
+           it KNOWS the backdrop is bright — the AA darken then reaches every descendant
+           content tier), and this CONTINUOUS `--glass-backdrop-luma` clamp is the DYNAMIC
+           REFINEMENT layer that engages WHERE A LUMA WRITER FIRES — the dock (its own
+           `useGlassBackdropLuminance` observer, wired ON) and any band surface a consumer
+           wires the observer to. On a content-tier Card with no wired observer + no
+           ancestor bucket, `--glass-backdrop-luma` reads the registered initial 0 → the
+           clamp resolves the calm floor (the honest calm identity — a plate over an
+           UNKNOWN backdrop stays warm, never a false darken). The prior claim that this
+           clamp "RETIRES the bucket as THE driver" was the contradictory-canon half the
+           M7 audit named (glass-fx.css declared the bucket the default path); the bucket
+           is the band driver, the clamp is the refinement — no double-ownership. */
         --glass-tint-strength: clamp(
             var(--glass-tint-strength-floor),
             calc(

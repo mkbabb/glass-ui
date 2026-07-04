@@ -342,6 +342,16 @@ export function useGlassBackdropLuminance(
         // self-engage re-point reads it; ZERO new compositing seam). A gray backdrop
         // writes `transparent` — the room tints nothing (the correct null identity).
         el.style.setProperty("--glass-ambient-hue", result.ambientHue);
+        // BG.W-GLASS-SIGNAL-TRUTH (M8) — the WRITER-FIRED WITNESS. A dead/silently-
+        // failed observer is otherwise INDISTINGUISHABLE from a calm backdrop (both
+        // resolve the luma clamp's initial 0 → the calm floor, so the G2 "unreadable
+        // over very light materials" defect silently reverts). Stamp `[data-backdrop-
+        // sampled]` + the paired `--glass-backdrop-sampled: 1` on the FIRST real write
+        // so a π/gate can RED a wired-but-never-written channel (the dead-observer≡calm-
+        // backdrop mask). This never animates a layout property (the compositor-only
+        // floor); it is a signal-truth stamp, set once per target.
+        el.setAttribute("data-backdrop-sampled", "");
+        el.style.setProperty("--glass-backdrop-sampled", "1");
         if (writeBucket) {
             const next: GlassBackdropBucket =
                 value >= lightThreshold ? "light" : "dark";

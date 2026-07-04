@@ -208,12 +208,16 @@
            `color-mix(in srgb, <core> N%, transparent)` (=== the prior `<core> / 0.NN`),
            so the geometry + falloff is byte-identical at rest. */
         /* BG.W-GLASS-DYNAMICS — the iOS-27 backdrop-HUE sample seam (the 2nd of the
-           ≤2 chromatic pairs, beside W-GLASS-ACCENT). `useGlassBackdropLuminance`'s
-           companion write `--glass-backdrop-hue` (the field's dominant hue) folds into
-           the INTERACTION catch-light core at a BOUNDED `--glass-backdrop-hue-strength`,
-           so a dock/card catch-light picks up the field hue SUB-PERCEPTUALLY over a live
-           aurora. NEUTRAL BY DEFAULT — the `--glass-backdrop-hue: transparent` +
-           `--glass-backdrop-hue-strength: 0%` fallbacks make the OUTER mix
+           ≤2 chromatic pairs, beside W-GLASS-ACCENT). BG.W-GLASS-SIGNAL-TRUTH (M9) —
+           ONE hue channel, ONE writer: the seam reads `--glass-ambient-hue` (the REAL
+           observer write — `useGlassBackdropLuminance` writes a sampled `oklch()` modal
+           hue there, tokens/glass.css §BE.W-AMBIENT-TINT), NOT the never-written
+           `--glass-backdrop-hue` the prior comment falsely claimed the observer wrote.
+           So a dock/card catch-light picks up the field hue SUB-PERCEPTUALLY over a live
+           aurora WHERE THE OBSERVER IS WIRED, at the bounded `--glass-ambient-strength`
+           (the companion write-strength knob the observer's target owns). NEUTRAL BY
+           DEFAULT — the `--glass-ambient-hue` registered initial `transparent` +
+           `--glass-ambient-strength` initial `0%` make the OUTER mix
            `color-mix(in oklab, X, transparent 0%) === X` byte-identical, so an unwired
            surface reads the warm-cream core exactly (the REFERENCE FENCE: no chromatic
            pickup until the observer writes the hue). The REST hairline (the `box-shadow`
@@ -226,7 +230,7 @@
                 hsl(40 35% 92%),
                 var(--glass-accent) var(--glass-accent-strength)
             ),
-            var(--glass-backdrop-hue, transparent) var(--glass-backdrop-hue-strength, 0%)
+            var(--glass-ambient-hue) var(--glass-ambient-strength)
         );
         background:
             conic-gradient(
@@ -454,10 +458,23 @@
        THROUGH the dim — see-through AND legible, one element, no pseudo collision. */
     [data-surface="clear"],
     .glass-clear {
-        /* The dynamic scrim strength — DERIVED from the sampled backdrop luma
-           (dims MORE over a bright grid). `0.5` is the safe mid-scrim fallback. */
+        /* BG.W-GLASS-SIGNAL-TRUTH (M6) — the MANDATORY scrim is a STATIC FLOOR the
+           sampled luma can only LIFT, never `var(--glass-backdrop-luma, 0.5) * 40%`
+           whose `, 0.5` fallback is DEAD (a registered `@property` initial 0 —
+           property-regs.css — is never guaranteed-invalid, so the fallback CANNOT
+           fire on a target engine, and the unwired resolve was `calc(0 * 40%) = 0%`:
+           the scrim the canon calls FORBIDDEN-to-omit painted NOTHING). Now: an
+           UNWIRED clear plate paints `--glass-clear-scrim-floor` (12% — the mandatory
+           minimum a scrim-less clear surface can never drop below); a wired observer
+           adds the luma-driven ramp on top (`--glass-clear-scrim-ramp` 28% — floor +
+           ramp caps at the prior 40% ceiling over a bright grid, luma→1). Bare
+           `var(--glass-backdrop-luma)` reads the registered initial 0 unwired (floor
+           alone), lifts CONTINUOUSLY as the observer writes. */
+        --glass-clear-scrim-floor: 12%;
+        --glass-clear-scrim-ramp: 28%;
         --glass-clear-scrim-strength: calc(
-            var(--glass-backdrop-luma, 0.5) * 40%
+            var(--glass-clear-scrim-floor) +
+            var(--glass-backdrop-luma) * var(--glass-clear-scrim-ramp)
         );
         background:
             color-mix(

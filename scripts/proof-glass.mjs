@@ -88,6 +88,12 @@ const GLASS_DEEP_FILE = "src/styles/tokens/glass-deep.css";
 // FOLLOWS the carve into the leaf (the house reader-follows-carve discipline).
 const VITE_STYLE_ASSETS = "vite.style-fold.ts";
 const SPECULAR_POINTER_FILE = "src/composables/glass/useSpecularPointer.ts";
+// BG.W-GLASS-SIGNAL-TRUTH — the sampled-luminance observer (the SOLE `--glass-
+// backdrop-luma`/`--glass-ambient-hue` writer). The signal-truth arm reads it to
+// assert the writer-fired witness (`data-backdrop-sampled` / `--glass-backdrop-
+// sampled: 1`) stamps on write (M8) + the real hue-channel write (M9).
+const BACKDROP_LUMINANCE_FILE =
+    "src/composables/glass/useGlassBackdropLuminance.ts";
 const DARK_ARM_FILE = "src/styles/tokens/dark-arm.css";
 const LIGHT_DARK_FILE = "src/styles/tokens/light-dark.css";
 const GLASS_SURFACES_FILE = "src/styles/glass/surfaces.css";
@@ -687,22 +693,33 @@ export function glassDynamicsViolations(glassCss, specularPointerText) {
     const boxShadow = boxShadowMatch ? boxShadowMatch[0] : "";
     facts.hairlineNeutral =
         /hsl\(40 35% 92%\)/.test(boxShadow) &&
-        !/--glass-accent|--glass-backdrop-hue|--glass-specular-core/.test(boxShadow);
+        !/--glass-accent|--glass-backdrop-hue|--glass-ambient-hue|--glass-specular-core/.test(boxShadow);
     if (boxShadowMatch && !facts.hairlineNeutral) {
         violations.push(
-            "GD2: the resting hairline `box-shadow` is NOT neutral — it must read the RAW warm-cream `hsl(40 35% 92%)`, NEVER `--glass-specular-core`/`--glass-accent`/`--glass-backdrop-hue` (the REFERENCE FENCE: the resting hairline stays NEUTRAL, prismatic reserved for WS6)",
+            "GD2: the resting hairline `box-shadow` is NOT neutral — it must read the RAW warm-cream `hsl(40 35% 92%)`, NEVER `--glass-specular-core`/`--glass-accent`/`--glass-ambient-hue`/`--glass-backdrop-hue` (the REFERENCE FENCE: the resting hairline stays NEUTRAL, prismatic reserved for WS6)",
         );
     }
 
-    // GD3 — the backdrop-HUE sample seam (bounded, neutral default).
+    // GD3 — the backdrop-HUE sample seam (bounded, neutral default). BG.W-GLASS-
+    // SIGNAL-TRUTH (M9) — the seam reads the REAL-writer channel `--glass-ambient-hue`
+    // (the observer's live write), NOT the never-written `--glass-backdrop-hue`; ONE
+    // hue channel, ONE writer. The strength is the companion `--glass-ambient-strength`.
     const coreMatch = /--glass-specular-core\s*:\s*([^;]*);/.exec(baseBlock);
     const coreVal = coreMatch ? coreMatch[1] : "";
     facts.backdropHueSeam =
-        /--glass-backdrop-hue\s*,\s*transparent/.test(coreVal) &&
-        /--glass-backdrop-hue-strength\s*,\s*0%/.test(coreVal);
+        /--glass-ambient-hue\b/.test(coreVal) &&
+        /--glass-ambient-strength\b/.test(coreVal);
+    // the DEAD-CHANNEL fence: the seam must NOT read the never-written
+    // `--glass-backdrop-hue`/`-strength` names (the M9 excision — a re-introduction reds).
+    facts.noDeadHueChannel = !/--glass-backdrop-hue\b/.test(coreVal);
     if (!facts.backdropHueSeam) {
         violations.push(
-            "GD3: `--glass-specular-core` does not fold the backdrop-HUE sample seam `var(--glass-backdrop-hue, transparent) var(--glass-backdrop-hue-strength, 0%)` (the 2nd chromatic pair) — the seam must be present AND default NEUTRAL (transparent + 0% → the outer mix is a byte-identical no-op at rest, the fence)",
+            "GD3: `--glass-specular-core` does not fold the backdrop-HUE sample seam via the REAL-writer channel `var(--glass-ambient-hue) var(--glass-ambient-strength)` (BG.W-GLASS-SIGNAL-TRUTH M9 — ONE hue channel, ONE writer; the observer writes `--glass-ambient-hue`, so the seam must read it, not the never-written `--glass-backdrop-hue`)",
+        );
+    }
+    if (!facts.noDeadHueChannel) {
+        violations.push(
+            "GD3: `--glass-specular-core` still reads the DEAD `--glass-backdrop-hue` channel (0 writers — the observer writes `--glass-ambient-hue`) — the M9 excision requires the dead name gone (a writer-LESS channel does not ship)",
         );
     }
 
@@ -724,6 +741,163 @@ export function glassDynamicsViolations(glassCss, specularPointerText) {
     if (!facts.jsNoForkedPress) {
         violations.push(
             "GD4: useSpecularPointer.ts writes a FORKED press channel (`--specular-press`/`--press-t`) — the press-couple must reuse the ONE `--glass-btn-press-t` channel, never a second drive",
+        );
+    }
+
+    return { violations, facts };
+}
+
+// ── the glass-SIGNAL-TRUTH predicate (pure) — BG.W-GLASS-SIGNAL-TRUTH (NF.3) ────
+// The dead glass adaptive-signal channels become writer-true or die (NO-MASKING-
+// FALLBACK-EDICT §2a M6-M9). Four arms, all pure over the glass monolith
+// (material.css + ladder.css, squished) + the observer's TS text:
+//   ST1 (M6) — the `.glass-clear` MANDATORY scrim is a STATIC FLOOR the luma can
+//              only LIFT (`calc(<floor>% + var(--glass-backdrop-luma) * <ramp>%)`)
+//              and the DEAD `var(--glass-backdrop-luma, 0.5)` fallback is GONE — an
+//              unwired clear plate paints the floor scrim, never `calc(0·40%) = 0%`.
+//   ST2 (M9) — the catch-light seam reads the REAL-writer hue channel `--glass-
+//              ambient-hue` (the observer's live write), NEVER the never-written
+//              `--glass-backdrop-hue`; ONE hue channel, one writer.
+//   ST3 (M8) — the observer stamps the WRITER-FIRED WITNESS on write: the
+//              `data-backdrop-sampled` attribute + the paired `--glass-backdrop-
+//              sampled: 1`, so a dead-observer≡calm-backdrop mask is observable.
+//   ST4 (M7) — the band-driver canon is RECONCILED to ONE: the contradictory
+//              "the clamp RETIRES the bucket as THE driver" claim is GONE from
+//              ladder.css, and BOTH glass-fx.css + ladder.css record the ONE
+//              decision (the bucket is the band driver, the clamp is the refinement).
+// Born-RED on HEAD (the `, 0.5` fallback, the `--glass-backdrop-hue` seam, no witness
+// stamp, the contradictory canon) → GREEN on the wave's edits.
+export function glassSignalTruthViolations(glassCss, luminanceText) {
+    const violations = [];
+    const facts = {};
+    const glass = squish(stripCss(glassCss || ""));
+    // ST4 reads the canon COMMENTS (the reconcile is a documented decision), so keep
+    // a comment-bearing copy squished-but-not-stripped for that arm alone.
+    const glassWithComments = squish(glassCss || "");
+    const js = luminanceText || "";
+
+    // ── ST1 (M6) — the `.glass-clear` scrim static floor ─────────────────────────
+    // Locate the `--glass-clear-scrim-strength` declaration (the block carrying it).
+    const scrimMatch =
+        /--glass-clear-scrim-strength\s*:\s*calc\(([^;]*)\)\s*;/.exec(glass);
+    facts.scrimStrengthFound = !!scrimMatch;
+    const scrimVal = scrimMatch ? scrimMatch[1] : "";
+    // the STATIC-FLOOR form: floor% + luma * ramp% (a floor term the luma can only lift).
+    facts.scrimHasStaticFloor =
+        /--glass-clear-scrim-floor\b/.test(scrimVal) &&
+        /--glass-clear-scrim-ramp\b/.test(scrimVal) &&
+        /var\(--glass-backdrop-luma\)/.test(scrimVal);
+    // the DEAD `, 0.5` (or any bare-numeric) fallback on the registered luma is GONE.
+    facts.scrimNoDeadFallback = !/var\(--glass-backdrop-luma\s*,/.test(scrimVal);
+    // the floor + ramp tokens are declared (a real static minimum + a real ramp).
+    facts.scrimFloorDeclared = /--glass-clear-scrim-floor\s*:\s*\d/.test(glass);
+    facts.scrimRampDeclared = /--glass-clear-scrim-ramp\s*:\s*\d/.test(glass);
+    if (!facts.scrimStrengthFound) {
+        violations.push(
+            "ST1: could not locate `--glass-clear-scrim-strength: calc(…)` in the glass cascade — the `.glass-clear` MANDATORY scrim declaration (material.css) is the M6 edit site",
+        );
+    } else {
+        if (!facts.scrimHasStaticFloor) {
+            violations.push(
+                "ST1: the `.glass-clear` scrim strength is not a STATIC FLOOR the luma can only LIFT — it must be `calc(var(--glass-clear-scrim-floor) + var(--glass-backdrop-luma) * var(--glass-clear-scrim-ramp))` (M6: an unwired clear plate paints the floor scrim, never `calc(0 * 40%) = 0%`)",
+            );
+        }
+        if (!facts.scrimNoDeadFallback) {
+            violations.push(
+                "ST1: the `.glass-clear` scrim still carries a DEAD `var(--glass-backdrop-luma, <literal>)` fallback — the registered `@property` initial 0 is never guaranteed-invalid, so the fallback CANNOT fire (M6: collapse to bare `var(--glass-backdrop-luma)`, the floor term owns the unwired minimum)",
+            );
+        }
+        if (!facts.scrimFloorDeclared || !facts.scrimRampDeclared) {
+            violations.push(
+                "ST1: the `--glass-clear-scrim-floor` (mandatory minimum) + `--glass-clear-scrim-ramp` (luma lift) tokens are not both declared with a numeric value — the static floor + the ramp must be real magnitudes",
+            );
+        }
+    }
+
+    // ── ST2 (M9) — the catch-light seam reads the REAL-writer hue channel ────────
+    const coreMatch = /--glass-specular-core\s*:\s*([^;]*);/.exec(glass);
+    const coreVal = coreMatch ? coreMatch[1] : "";
+    facts.coreFound = !!coreMatch;
+    facts.seamReadsAmbientHue =
+        /--glass-ambient-hue\b/.test(coreVal) &&
+        /--glass-ambient-strength\b/.test(coreVal);
+    facts.seamNoDeadHue = !/--glass-backdrop-hue\b/.test(coreVal);
+    if (!facts.coreFound) {
+        violations.push(
+            "ST2: could not locate the `--glass-specular-core` catch-light seam (material.css) — the M9 hue-channel edit site is absent",
+        );
+    } else {
+        if (!facts.seamReadsAmbientHue) {
+            violations.push(
+                "ST2: the `--glass-specular-core` catch-light seam does not read the REAL-writer hue channel `var(--glass-ambient-hue) var(--glass-ambient-strength)` (M9: ONE hue channel, ONE writer — the observer writes `--glass-ambient-hue`)",
+            );
+        }
+        if (!facts.seamNoDeadHue) {
+            violations.push(
+                "ST2: the `--glass-specular-core` seam still reads the DEAD `--glass-backdrop-hue` channel (0 writers — writer-LESS) — the M9 excision requires the dead name gone",
+            );
+        }
+    }
+    // the DEAD channel is GONE from the WHOLE glass cascade (no reader survives).
+    facts.deadHueChannelGoneCascade = !/var\(--glass-backdrop-hue\b/.test(glass);
+    if (!facts.deadHueChannelGoneCascade) {
+        violations.push(
+            "ST2: a `var(--glass-backdrop-hue)` read survives elsewhere in the glass cascade — the never-written channel has NO reachable writer and must not ship (M9)",
+        );
+    }
+
+    // ── ST3 (M8) — the observer stamps the WRITER-FIRED WITNESS on write ─────────
+    facts.observerFound = js.length > 0;
+    // the witness stamp lives inside the `write(result)` fn — assert both the data-attr
+    // AND the paired custom property are set (the two witness shapes the edict names).
+    facts.witnessDataAttr =
+        /setAttribute\(\s*["']data-backdrop-sampled["']/.test(js);
+    facts.witnessCustomProp =
+        /setProperty\(\s*["']--glass-backdrop-sampled["']\s*,\s*["']1["']\s*\)/.test(js);
+    // the witness sits in the same write path as the real luma/hue writes (not a stub).
+    facts.witnessInWritePath =
+        /setProperty\(\s*["']--glass-backdrop-luma["']/.test(js) &&
+        /setProperty\(\s*["']--glass-ambient-hue["']/.test(js);
+    if (!facts.observerFound) {
+        violations.push(
+            "ST3: could not read the sampled-luminance observer (useGlassBackdropLuminance.ts) — the M8 writer-fired-witness edit site is absent",
+        );
+    } else {
+        if (!facts.witnessDataAttr) {
+            violations.push(
+                "ST3: the observer does not stamp the `data-backdrop-sampled` witness attribute on write — a dead/silently-failed observer is otherwise indistinguishable from a calm backdrop (M8: the writer-fired witness must fire)",
+            );
+        }
+        if (!facts.witnessCustomProp) {
+            violations.push(
+                "ST3: the observer does not set the paired `--glass-backdrop-sampled: 1` custom property on write — the witness pair (data-attr + custom prop) is the M8 fired-witness (a wired-but-never-written channel must be observable)",
+            );
+        }
+        if (!facts.witnessInWritePath) {
+            violations.push(
+                "ST3: the witness stamp is not in the SAME `write()` path as the real `--glass-backdrop-luma`/`--glass-ambient-hue` writes — the witness must fire on the real write, not a decoupled stub",
+            );
+        }
+    }
+
+    // ── ST4 (M7) — the band-driver canon reconciled to ONE ───────────────────────
+    // the contradictory "the clamp RETIRES the bucket as THE driver" claim is GONE.
+    facts.noRetiresBucketAsDriver =
+        !/RETIRES the discrete `?@container[^]*?bucket as the strength\s*driver/i.test(
+            glassWithComments,
+        ) && !/clamp subsumes it/i.test(glassWithComments);
+    // the ONE reconciled decision is recorded (the band-driver decision marker present).
+    facts.bandDriverRecorded =
+        /BG\.W-GLASS-SIGNAL-TRUTH \(M7\)/.test(glassWithComments) &&
+        /BAND\s*DRIVER/i.test(glassWithComments);
+    if (!facts.noRetiresBucketAsDriver) {
+        violations.push(
+            "ST4: the contradictory canon `\"the continuous clamp RETIRES the @container bucket as THE strength driver\"` still stands (glass/ladder.css) — the M7 band-driver decision reconciles to ONE (the bucket is the band driver, the clamp is the refinement); the double-ownership claim must go",
+        );
+    }
+    if (!facts.bandDriverRecorded) {
+        violations.push(
+            "ST4: the M7 band-driver decision is not recorded — the reconciled ONE text (the declarative bucket IS the BAND DRIVER, the continuous luma clamp is the refinement where a writer fires) must be documented with the `BG.W-GLASS-SIGNAL-TRUTH (M7)` marker",
         );
     }
 
@@ -1153,6 +1327,10 @@ export function detect() {
     const safari = safariBlurVarViolations(readFile(VITE_STYLE_ASSETS));
     const defined = definedControlFloorViolations(glassMonolith, tokensMonolith);
     const dynamics = glassDynamicsViolations(glassMonolith, readFile(SPECULAR_POINTER_FILE));
+    const signalTruth = glassSignalTruthViolations(
+        glassMonolith,
+        readFile(BACKDROP_LUMINANCE_FILE),
+    );
     const reversal = darkArmColorReversalViolations(
         readFile(DARK_ARM_FILE),
         readFile(LIGHT_DARK_FILE),
@@ -1176,6 +1354,7 @@ export function detect() {
             ...safari.violations,
             ...defined.violations,
             ...dynamics.violations,
+            ...signalTruth.violations,
             ...reversal.violations,
             ...cornerBackplate.violations,
             ...refractWebgl.violations,
@@ -1188,6 +1367,7 @@ export function detect() {
             safariBlurVar: safari.facts,
             definedControlFloor: defined.facts,
             glassDynamics: dynamics.facts,
+            glassSignalTruth: signalTruth.facts,
             darkArmColorReversal: reversal.facts,
             cornerBackplate: cornerBackplate.facts,
             refractWebgl: refractWebgl.facts,
@@ -1422,7 +1602,7 @@ function selfTest() {
     const goodDynGlass =
         "@layer components { .glass-material::before, .glass-wash::before {" +
         " --specular-intensity: max( var(--glass-specular-intensity-rest, 0), calc(var(--glass-specular-intensity-active, 0.16) * var(--glass-btn-press-t, 0)) );" +
-        " --glass-specular-core: color-mix( in oklab, color-mix( in oklab, hsl(40 35% 92%), var(--glass-accent) var(--glass-accent-strength) ), var(--glass-backdrop-hue, transparent) var(--glass-backdrop-hue-strength, 0%) );" +
+        " --glass-specular-core: color-mix( in oklab, color-mix( in oklab, hsl(40 35% 92%), var(--glass-accent) var(--glass-accent-strength) ), var(--glass-ambient-hue) var(--glass-ambient-strength) );" +
         " background: radial-gradient(circle, transparent);" +
         " box-shadow: inset 0 0 0 var(--glass-specular-hairline-width, 0.75px) color-mix(in srgb, hsl(40 35% 92%) var(--glass-specular-hairline-ink, 70%), transparent);" +
         " opacity: max( var(--specular-intensity, 0), var(--glass-specular-rest-hairline, 0.07) ); } }";
@@ -1462,24 +1642,24 @@ function selfTest() {
             "self-test GD2: a chromatic resting hairline (box-shadow reads --glass-specular-core) was NOT flagged (the neutral-fence has no teeth; prismatic must stay reserved for WS6)",
         );
     }
-    // bite GD3 — a NON-neutral backdrop-hue default (strength 10% not 0%) must flag.
-    const notNeutralSeam = goodDynGlass.replace(
-        "var(--glass-backdrop-hue-strength, 0%)",
-        "var(--glass-backdrop-hue-strength, 10%)",
+    // bite GD3 (M9) — a seam reading the DEAD `--glass-backdrop-hue` channel must flag.
+    const deadHueSeam = goodDynGlass.replace(
+        "var(--glass-ambient-hue) var(--glass-ambient-strength)",
+        "var(--glass-backdrop-hue, transparent) var(--glass-backdrop-hue-strength, 0%)",
     );
-    if (!glassDynamicsViolations(notNeutralSeam, goodDynJs).violations.some((v) => /GD3/.test(v))) {
+    if (!glassDynamicsViolations(deadHueSeam, goodDynJs).violations.some((v) => /GD3/.test(v))) {
         fails.push(
-            "self-test GD3: a backdrop-hue seam defaulting to a non-zero strength (10%) was NOT flagged (the neutral-default fence has no teeth)",
+            "self-test GD3: a seam reading the DEAD `--glass-backdrop-hue` channel (0 writers) was NOT flagged (the M9 real-writer-channel fence has no teeth)",
         );
     }
-    // bite GD3 — the seam ABSENT (core carries no --glass-backdrop-hue) must flag.
+    // bite GD3 — the seam ABSENT (core carries no --glass-ambient-hue fold) must flag.
     const noSeam = goodDynGlass.replace(
-        ", var(--glass-backdrop-hue, transparent) var(--glass-backdrop-hue-strength, 0%) )",
+        ", var(--glass-ambient-hue) var(--glass-ambient-strength) )",
         " )",
     );
     if (!glassDynamicsViolations(noSeam, goodDynJs).violations.some((v) => /GD3/.test(v))) {
         fails.push(
-            "self-test GD3: a core with NO backdrop-hue fold was NOT flagged (the seam-present detector has no teeth)",
+            "self-test GD3: a core with NO ambient-hue fold was NOT flagged (the seam-present detector has no teeth)",
         );
     }
     // bite GD4 — a bare `--specular-intensity` (no press-t couple) must flag.
@@ -1507,6 +1687,67 @@ function selfTest() {
     if (!glassDynamicsViolations(goodDynGlass, forkedJsPress).violations.some((v) => /GD4/.test(v))) {
         fails.push(
             "self-test GD4: a JS leaf that FORKS a second press channel (--specular-press) was NOT flagged (the one-channel fence has no teeth)",
+        );
+    }
+
+    // ── signal-truth bites (ST1-ST4) — BG.W-GLASS-SIGNAL-TRUTH (NF.3) ─────────────
+    const goodSignalGlass =
+        "@layer components { .glass-clear {" +
+        " --glass-clear-scrim-floor: 12%; --glass-clear-scrim-ramp: 28%;" +
+        " --glass-clear-scrim-strength: calc( var(--glass-clear-scrim-floor) + var(--glass-backdrop-luma) * var(--glass-clear-scrim-ramp) ); }" +
+        " .glass-material::before {" +
+        " --glass-specular-core: color-mix( in oklab, color-mix( in oklab, hsl(40 35% 92%), var(--glass-accent) var(--glass-accent-strength) ), var(--glass-ambient-hue) var(--glass-ambient-strength) ); }" +
+        " /* BG.W-GLASS-SIGNAL-TRUTH (M7) — the declarative bucket IS the BAND DRIVER; the continuous luma clamp is the refinement where a writer fires. */ }";
+    const goodSignalJs =
+        'function write(result) { const el = target.value; if (!el) return;' +
+        ' el.style.setProperty("--glass-backdrop-luma", result.luma.toFixed(3));' +
+        ' el.style.setProperty("--glass-ambient-hue", result.ambientHue);' +
+        ' el.setAttribute("data-backdrop-sampled", "");' +
+        ' el.style.setProperty("--glass-backdrop-sampled", "1"); }';
+    // sanity — the GOOD fixture must be CLEAN (else a bite could false-pass).
+    if (glassSignalTruthViolations(goodSignalGlass, goodSignalJs).violations.length !== 0) {
+        fails.push(
+            "self-test signal-truth: the synthetic GOOD fixture is NOT clean (the predicate over-fires — a real bite could false-pass): " +
+                glassSignalTruthViolations(goodSignalGlass, goodSignalJs).violations.join(" | "),
+        );
+    }
+    // bite ST1 — the DEAD `var(--glass-backdrop-luma, 0.5)` fallback must flag.
+    const deadScrimFallback = goodSignalGlass.replace(
+        "--glass-clear-scrim-strength: calc( var(--glass-clear-scrim-floor) + var(--glass-backdrop-luma) * var(--glass-clear-scrim-ramp) )",
+        "--glass-clear-scrim-strength: calc( var(--glass-backdrop-luma, 0.5) * 40% )",
+    );
+    if (!glassSignalTruthViolations(deadScrimFallback, goodSignalJs).violations.some((v) => /ST1/.test(v))) {
+        fails.push(
+            "self-test ST1: a `.glass-clear` scrim with the DEAD `var(--glass-backdrop-luma, 0.5)` fallback (no static floor) was NOT flagged (the M6 static-floor fence has no teeth)",
+        );
+    }
+    // bite ST2 — a seam reading the DEAD `--glass-backdrop-hue` channel must flag.
+    const deadSignalHue = goodSignalGlass.replace(
+        "var(--glass-ambient-hue) var(--glass-ambient-strength)",
+        "var(--glass-backdrop-hue, transparent) var(--glass-backdrop-hue-strength, 0%)",
+    );
+    if (!glassSignalTruthViolations(deadSignalHue, goodSignalJs).violations.some((v) => /ST2/.test(v))) {
+        fails.push(
+            "self-test ST2: a catch-light seam reading the DEAD `--glass-backdrop-hue` channel (0 writers) was NOT flagged (the M9 real-writer-channel fence has no teeth)",
+        );
+    }
+    // bite ST3 — an observer that does NOT stamp the witness must flag.
+    const noWitnessJs = goodSignalJs
+        .replace('el.setAttribute("data-backdrop-sampled", "");', "")
+        .replace('el.style.setProperty("--glass-backdrop-sampled", "1");', "");
+    if (!glassSignalTruthViolations(goodSignalGlass, noWitnessJs).violations.some((v) => /ST3/.test(v))) {
+        fails.push(
+            "self-test ST3: an observer that does NOT stamp the `data-backdrop-sampled`/`--glass-backdrop-sampled:1` witness was NOT flagged (the M8 writer-fired-witness fence has no teeth)",
+        );
+    }
+    // bite ST4 — the contradictory "clamp RETIRES the bucket as THE driver" claim must flag.
+    const contradictoryCanon = goodSignalGlass.replace(
+        "/* BG.W-GLASS-SIGNAL-TRUTH (M7) — the declarative bucket IS the BAND DRIVER; the continuous luma clamp is the refinement where a writer fires. */",
+        "/* This RETIRES the discrete @container --glass-backdrop: light bucket as the strength driver — the continuous calc subsumes it. */",
+    );
+    if (!glassSignalTruthViolations(contradictoryCanon, goodSignalJs).violations.some((v) => /ST4/.test(v))) {
+        fails.push(
+            "self-test ST4: the contradictory `\"clamp RETIRES the bucket as THE driver\"` canon (the double-ownership claim) was NOT flagged (the M7 band-driver reconcile fence has no teeth)",
         );
     }
 
@@ -1818,6 +2059,20 @@ function run() {
     );
     console.log(
         `  GD4 press-couple  : css=${gd.cssPressCouple ? "✓" : "✗"}  js=${gd.jsPressCouple ? "✓" : "✗"}  no-fork=${gd.jsNoForkedPress ? "✓" : "✗"} (the ONE --glass-btn-press-t channel, soft-gated)`,
+    );
+    const st = facts.glassSignalTruth ?? {};
+    console.log("proof:glass — arm: signal-truth (BG.W-GLASS-SIGNAL-TRUTH · NF.3)");
+    console.log(
+        `  ST1 clear scrim   : static-floor=${st.scrimHasStaticFloor ? "✓" : "✗"}  no-dead-0.5=${st.scrimNoDeadFallback ? "✓" : "✗"}  floor+ramp-declared=${st.scrimFloorDeclared && st.scrimRampDeclared ? "✓" : "✗"} (M6: unwired plate paints the floor, never 0%)`,
+    );
+    console.log(
+        `  ST2 hue channel   : reads-ambient-hue=${st.seamReadsAmbientHue ? "✓" : "✗"}  no-dead-backdrop-hue=${st.deadHueChannelGoneCascade ? "✓" : "✗"} (M9: ONE hue channel, ONE writer)`,
+    );
+    console.log(
+        `  ST3 writer witness: data-attr=${st.witnessDataAttr ? "✓" : "✗"}  --sampled:1=${st.witnessCustomProp ? "✓" : "✗"}  in-write-path=${st.witnessInWritePath ? "✓" : "✗"} (M8: dead-observer≡calm-backdrop mask observable)`,
+    );
+    console.log(
+        `  ST4 band-driver   : no-retires-claim=${st.noRetiresBucketAsDriver ? "✓" : "✗"}  decision-recorded=${st.bandDriverRecorded ? "✓" : "✗"} (M7: bucket=driver, clamp=refinement — canon reconciled to ONE)`,
     );
     const da = facts.darkArmColorReversal ?? {};
     console.log("proof:glass — arm: dark-arm-color-reversal (BG.W-GLASS-BASIS-CONSOLIDATE · R16 MN-1)");
