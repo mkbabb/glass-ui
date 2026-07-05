@@ -4,10 +4,10 @@
 // sync ARIA. A screen reader announces nothing when a field paints invalid.
 // This composable is the single canonical bridge: it keeps `aria-invalid` in
 // step with native validity, mirroring the native "after first interaction"
-// timing so a pristine required-empty field is NOT flagged on mount, and — in
-// fallback mode (engines without `:user-invalid`) — ALSO toggles the
-// `.user-invalid-fallback` / `.user-valid-fallback` classes the W4.1 CSS rungs
-// key off.
+// timing so a pristine required-empty field is NOT flagged on mount. The legacy
+// fallback-class toggle (for engines without `:user-invalid`) was COLLAPSED at
+// BG.NF.2 W-LEGACY-LADDER-COLLAPSE — `:user-invalid` is Baseline on the target
+// set (Chrome 119+/Safari 16.5+), so the aria-invalid bridge is the whole job.
 //
 // vueuse-free by construction: native `addEventListener`/`removeEventListener`
 // only (no `@vueuse/core`), so it is root-barrel safe per the L.W1 SCC-trap
@@ -20,18 +20,13 @@
 // blur on an invalid field, `"false"` once corrected, synced for all controls
 // on submit.
 
-export interface UseUserInvalidAriaOptions {
-    /**
-     * Also toggle the `.user-invalid-fallback` / `.user-valid-fallback`
-     * classes the W4.1 CSS rungs key off (for engines without `:user-invalid`
-     * support).
-     *
-     * Default: auto — `true` only when `CSS.supports('selector(:user-invalid)')`
-     * resolves `false`. Pass an explicit boolean to force the path (e.g. for a
-     * test that stubs feature detection).
-     */
-    fallbackClasses?: boolean;
-}
+/**
+ * Options for {@link useUserInvalidAria}. Empty since the legacy
+ * `fallbackClasses` knob was retired at BG.NF.2 W-LEGACY-LADDER-COLLAPSE
+ * (`:user-invalid` is Baseline on the target set); the shape is kept as the
+ * canonical options seam for future extension.
+ */
+export interface UseUserInvalidAriaOptions {}
 
 export interface UseUserInvalidAriaReturn {
     /**
@@ -49,14 +44,6 @@ type ValidatableControl = (HTMLInputElement | HTMLTextAreaElement | HTMLSelectEl
     checkValidity: () => boolean;
 };
 
-function supportsUserInvalid(): boolean {
-    return (
-        typeof CSS !== "undefined" &&
-        typeof CSS.supports === "function" &&
-        CSS.supports("selector(:user-invalid)")
-    );
-}
-
 /**
  * The `:user-invalid` → `aria-invalid` bridge. Wired on `blur` (capture —
  * show error on field-exit), `input` (clear error on correction), and
@@ -67,10 +54,8 @@ function supportsUserInvalid(): boolean {
  * write can at worst clear a stale error, never mint a false one.
  */
 export function useUserInvalidAria(
-    opts: UseUserInvalidAriaOptions = {},
+    _opts: UseUserInvalidAriaOptions = {},
 ): UseUserInvalidAriaReturn {
-    const fallback = opts.fallbackClasses ?? !supportsUserInvalid();
-
     const bind = (root: HTMLElement): (() => void) => {
         // Per-control first-interaction set — `aria-invalid="true"` only after
         // the user has blurred/submitted, mirroring native `:user-invalid`.
@@ -81,10 +66,6 @@ export function useUserInvalidAria(
             if (!c?.checkValidity) return;
             const ok = c.checkValidity();
             c.setAttribute("aria-invalid", ok ? "false" : "true");
-            if (fallback) {
-                c.classList.toggle("user-invalid-fallback", !ok);
-                c.classList.toggle("user-valid-fallback", ok);
-            }
         };
 
         const onBlur = (e: Event): void => {

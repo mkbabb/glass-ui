@@ -188,8 +188,9 @@ export type {
 
 // ── User-invalid ARIA bridge ─────────────────────────────────────────────────
 // `UseUserInvalidAriaReturn` — canonical composable-return shape (the `{ bind }`
-// handle). `UseUserInvalidAriaOptions` ships paired so a consumer wrapping
-// `useUserInvalidAria` can forward the `fallbackClasses` knob.
+// handle). `UseUserInvalidAriaOptions` ships paired as the (currently empty)
+// options seam — the legacy `fallbackClasses` knob was retired at BG.NF.2
+// W-LEGACY-LADDER-COLLAPSE (`:user-invalid` is Baseline on the target set).
 export type {
     UseUserInvalidAriaOptions,
     UseUserInvalidAriaReturn,

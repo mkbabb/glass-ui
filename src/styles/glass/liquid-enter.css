@@ -200,25 +200,10 @@
     }
 }
 
-/* ── The Safari < 17.2 `linear()` floor (DELTA-ASSAY §3) ──
-   `linear()` spring/punch curves UNPARSE before Safari 17.2 → the `animation`
-   timing falls to the UA default, killing the overshoot. Supply a cubic-bezier
-   floor so the entrance still reads bouncy (not a dead linear ramp) on legacy
-   WebKit. Plain @keyframes + scale/translate/opacity/filter longhands are
-   themselves Safari-15-safe; only the spring CURVE needs the floor. */
-@supports not (animation-timing-function: linear(0, 1)) {
-    @layer components {
-        @media (prefers-reduced-motion: no-preference) {
-            .liquid-enter {
-                animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
-            }
-            .liquid-enter.is-cel,
-            .liquid-enter.is-cel > .cartoon-cast {
-                animation-timing-function: cubic-bezier(0.5, -0.2, 0.4, 1.4);
-            }
-        }
-    }
-}
+/* The Safari < 17.2 `linear()` cubic-bezier floor was COLLAPSED at BG.NF.2
+   W-LEGACY-LADDER-COLLAPSE — both targets (current Chrome + current Safari)
+   parse `linear()` spring curves, so the `--spring-*` tokens are the sole
+   timing source; the bezier degrade arm served no target engine. */
 
 /* ── REDUCED-MOTION CARVE (the vestibular floor — WCAG 2.3.3 · design.md P6) ──
    Under `prefers-reduced-motion: reduce` the entrance keeps the FADE and drops the

@@ -62,24 +62,17 @@
  * consumed via `var(…, fallback)` so the recipes stay GREEN. */
 :root {
     /* The spring-shaped compositor cascade ease — the `--spring-gentle` twin
-       (ζ ≈ 0.85, a `springLinearStops` `linear()` stop-set). Degrades to the
-       no-overshoot `--ease-out` where `linear()` is unsupported (Safari < 17.2 —
-       the house precedent). `--spring-gentle` SHIPS (scheme-motion.css). */
-    --ease-scroll-spring: var(--spring-gentle, var(--ease-out, ease-out));
+       (ζ ≈ 0.85, a `springLinearStops` `linear()` stop-set), which SHIPS
+       unconditionally (scheme-motion.css). The Safari < 17.2 `--ease-out` degrade
+       arm was COLLAPSED at BG.NF.2 W-LEGACY-LADDER-COLLAPSE — both targets parse
+       `linear()`, so the spring twin is the sole source. */
+    --ease-scroll-spring: var(--spring-gentle);
     /* The pin reveal/expand windows as 0..1 fractions (the `--pin-t` recipes read
        a NUMBER for the calc, not the `%` the dead timeline used). 1/φ² + 0.9. */
     --scroll-pin-phase-reveal-end-frac: 0.382;
     --scroll-pin-phase-expand-end-frac: 0.9;
     /* The volume-preserving squash depth — 1 − 1/φ⁴. */
     --scroll-pin-squash-floor: 0.944;
-}
-
-@supports not (animation-timing-function: linear(0, 1)) {
-    :root {
-        /* Where `linear()` is unsupported the spring twin cannot resolve — fall to
-           the no-overshoot settle bezier (a scrubbed spring without the stop-set). */
-        --ease-scroll-spring: var(--ease-out, ease-out);
-    }
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────

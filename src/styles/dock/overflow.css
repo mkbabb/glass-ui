@@ -75,29 +75,28 @@
        `mask-image` reads the `--fade-start`/`--fade-end` customs the SAME
        `gl-fade-start-in`/`gl-fade-end-out` keyframes `<FadingScroll>` uses drive
        off the `scroll(self inline)` timeline (reached by name — ZERO new recipe).
-       The mask + its driver are co-gated on `animation-timeline: scroll()` so a
-       gap engine gets NO mask (never a permanently-opaque mask over the plate) —
-       the port scrolls plain; the start edge feathers only past `scroll > 0` and
-       the end edge only while trailing overflow remains. NOT PRM-gated (the fade
-       is a legibility cue: it stops interpolating under reduce, the discrete
+       The `@supports (animation-timeline: scroll())` co-gate was COLLAPSED at
+       BG.NF.2 W-LEGACY-LADDER-COLLAPSE (its shell.css block-axis sibling too) —
+       scroll-driven animations are Baseline on the target set, so this is the
+       un-gated mechanism; the start edge feathers only past `scroll > 0` and the
+       end edge only while trailing overflow remains. NOT PRM-gated (the fade is a
+       legibility cue: it stops interpolating under reduce, the discrete
        edge-presence stays correct). */
-    @supports (animation-timeline: scroll()) {
-        .glass-dock.dock-scroll-x .dock-layer--full {
-            mask-image: linear-gradient(
-                to right,
-                transparent 0,
-                black var(--fade-start, 0px),
-                black calc(100% - var(--fade-end, 0px)),
-                transparent 100%
-            );
-            animation:
-                gl-fade-start-in linear both,
-                gl-fade-end-out linear both;
-            animation-timeline: scroll(self inline), scroll(self inline);
-            animation-range:
-                0 var(--fade-scroll-width),
-                calc(100% - var(--fade-scroll-width)) 100%;
-        }
+    .glass-dock.dock-scroll-x .dock-layer--full {
+        mask-image: linear-gradient(
+            to right,
+            transparent 0,
+            black var(--fade-start, 0px),
+            black calc(100% - var(--fade-end, 0px)),
+            transparent 100%
+        );
+        animation:
+            gl-fade-start-in linear both,
+            gl-fade-end-out linear both;
+        animation-timeline: scroll(self inline), scroll(self inline);
+        animation-range:
+            0 var(--fade-scroll-width),
+            calc(100% - var(--fade-scroll-width)) 100%;
     }
 
     /* The VERTICAL block-axis scroll port lives in shell.css (the unconditional

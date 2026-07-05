@@ -83,9 +83,10 @@
     }
 
     /* Elevate one rung on descendant KEYBOARD focus (`:focus-visible`, not
-       pointer). Scoped to `.glass-card`. `:has()` Baseline Widely; the
-       `@supports not selector(:has(*))` class fallback (below) ships anyway
-       (focus-elevation is UX-critical — child-state-styling MANDATORY clause). */
+       pointer). Scoped to `.glass-card`. `:has()` is Baseline on the target set
+       (Chrome 105+/Safari 15.4+) so this is the SOLE focus-elevation mechanism —
+       the legacy `@supports not selector(:has(*))` `.is-focus-within` class
+       fallback was COLLAPSED at BG.NF.2 (its toggler never existed on disk). */
     .glass-card:has(:focus-visible) {
         --card-focus-shadow: var(--shadow-md);
         --card-focus-border: var(--glass-border-floating);

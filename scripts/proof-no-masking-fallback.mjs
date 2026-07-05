@@ -193,10 +193,35 @@ for (const rel of NO_TRANSITIONEND_LADDER) {
 }
 
 // ── Arm E — WRITER-OWED + LADDER CENSUS (registered-owed, well-formed) ───────────
+// NF.2 tightening: a `collapsed` ladder row NAMES its `file` + the `absent`
+// signature(s); Arm E asserts each signature is GONE from disk (comments stripped
+// so a documentary mention never counts). Born-RED where the ladder still lives →
+// GREEN at the delete. A `collapse-owed`/`escalated`/`writer-owed` row is
+// owner-registered only (tracked, not silently ignored).
 const armERows = [];
 for (const row of [...WRITER_OWED, ...LADDER_OWED]) {
     const label = row.name ?? row.site;
-    const ok = Boolean(row.owedBy && String(row.owedBy).trim());
+    const hasOwner = Boolean(row.owedBy && String(row.owedBy).trim());
+    if (row.verdict === "collapsed") {
+        const src = read(row.file);
+        // A file gone entirely reads as fully-collapsed (nothing to detect).
+        const stripped = src === null ? "" : stripComments(src);
+        const stillPresent = (row.absent ?? []).filter((sig) => stripped.includes(sig));
+        const ok = hasOwner && stillPresent.length === 0;
+        armERows.push({ site: label, owedBy: row.owedBy ?? null, verdict: row.verdict, stillPresent, ok });
+        if (!hasOwner)
+            violations.push(
+                `Arm E — a collapsed ladder row (${label}) has NO named owner (owedBy).`,
+            );
+        if (stillPresent.length)
+            violations.push(
+                `Arm E — ${label} is verdict:collapsed but the pre-target ladder signature(s) [${stillPresent.join(
+                    ", ",
+                )}] are STILL PRESENT on disk (${row.file}) — delete the legacy arm (target = current Chrome + current Safari).`,
+            );
+        continue;
+    }
+    const ok = hasOwner;
     armERows.push({ site: label, owedBy: row.owedBy ?? null, verdict: row.verdict ?? "writer-owed", ok });
     if (!ok)
         violations.push(
@@ -237,6 +262,19 @@ bite(
     (() => {
         const row = { site: "phantom.css @supports not (x)", verdict: "collapse-owed" };
         return !(row.owedBy && String(row.owedBy).trim());
+    })(),
+);
+// B5b — Arm E (NF.2): a synthetic collapsed row whose ladder signature is STILL
+// present in its (stripped) source MUST flag; a documentary comment mention MUST
+// NOT (the detector reads the live rule, not the doc). One bite proves both.
+bite(
+    "E-present-ladder-flags",
+    (() => {
+        const sig = "@supports not ((backdrop-filter";
+        const live = "@supports not ((backdrop-filter: blur(1px)) or (x)) { .p {} }";
+        const docOnly = "/* retired: @supports not ((backdrop-filter … */ .p {}";
+        const stripped = (s) => stripComments(s);
+        return stripped(live).includes(sig) && !stripped(docOnly).includes(sig);
     })(),
 );
 // B6 — the FALSE-POSITIVE FENCE: the raw detector WOULD count an identity-rest

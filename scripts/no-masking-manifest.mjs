@@ -122,18 +122,106 @@ export const WRITER_OWED = [
     },
 ];
 
-// ── Arm E — the legacy-ladder census (collapse owed to NF.2) ────────────────────
-// The pre-target `@supports not (…)` / prefixed / JS API-presence ladders. NF.1
-// SEEDS this register (the Arm E census the gate reads); NF.2 W-LEGACY-LADDER-COLLAPSE
-// deletes each `collapse-owed` row + tightens the arm to assert zero remain. An
-// `a11y-state` row (forced-colors/prefers-contrast/reduced-*) is a FENCED KEEP.
+// ── Arm E — the legacy-ladder census (BG.NF.2 W-LEGACY-LADDER-COLLAPSE) ──────────
+// The pre-target `@supports not (…)` / positive-`@supports` / JS API-presence
+// ladders (target = current Chrome + current Safari/WebKit). NF.1 SEEDED this
+// register; NF.2 COLLAPSES each row onto modern CSS and TIGHTENS the arm: a
+// `collapsed` row names its `file` + the ladder `absent` signature(s) — Arm E reds
+// if any signature is STILL PRESENT on disk (comments stripped, so a documentary
+// mention never counts). Born-RED on HEAD (the ladders live) → GREEN at the
+// deletes. A `collapse-owed`/`escalated` row is owner-registered (green, tracked-
+// not-ignored); an `a11y-state` row (forced-colors/prefers-contrast/reduced-*) is a
+// FENCED KEEP and never enrolled here.
 export const LADDER_OWED = [
-    { site: "src/styles/utilities/a11y-fallback.css GUARD-1/GUARD-2", verdict: "collapse-owed", owedBy: "NF.2" },
-    { site: "src/styles/utilities/a11y-fallback.css @supports not selector(:has(*))", verdict: "collapse-owed", owedBy: "NF.2" },
-    { site: "src/styles/glass/liquid-enter.css linear() Safari<17.2 floor", verdict: "collapse-owed", owedBy: "NF.2" },
-    { site: "src/styles/scroll-choreography.css linear() Safari<17.2 floor", verdict: "collapse-owed", owedBy: "NF.2" },
-    { site: "src/styles/control-surfaces.css .user-invalid-fallback (aria BRIDGE half KEEPS)", verdict: "collapse-owed", owedBy: "NF.2" },
-    { site: "src/composables/motion/useRAFLoop.ts MQL addListener shim", verdict: "collapse-owed", owedBy: "NF.2" },
+    {
+        site: "glass/a11y-fallback.css GUARD-1 (no-blur) + GUARD-2 (webkit-only) backdrop-filter @supports arms",
+        file: "src/styles/glass/a11y-fallback.css",
+        absent: ["@supports not ((backdrop-filter", "-webkit-backdrop-filter: blur(1px)) and (not"],
+        verdict: "collapsed",
+        owedBy: "NF.2",
+        note: "engines supporting NEITHER the unprefixed NOR the webkit backdrop-filter form are years pre-target; proof:webkit-backdrop re-points at the build-emitted -webkit- dist prefix pair (O-2a, the real mechanism).",
+    },
+    {
+        site: "glass/a11y-fallback.css @supports not selector(:has(*)) + the phantom .is-focus-within toggler comment",
+        file: "src/styles/glass/a11y-fallback.css",
+        absent: ["@supports not selector(:has(*))", "is-focus-within"],
+        verdict: "collapsed",
+        owedBy: "NF.2",
+        note: ":has() is Chrome 105+/Safari 15.4+ (far pre-target) AND doubly-dead — no .is-focus-within toggler exists on disk (the comment lied); .glass-card:has(:focus-visible) is the sole mechanism.",
+    },
+    {
+        site: "glass/liquid-enter.css @supports not (animation-timing-function: linear(0, 1)) — the Safari<17.2 bezier floor",
+        file: "src/styles/glass/liquid-enter.css",
+        absent: ["@supports not (animation-timing-function: linear(0, 1))"],
+        verdict: "collapsed",
+        owedBy: "NF.2",
+        note: "both targets parse linear() spring curves; the cubic-bezier floor serves no target engine.",
+    },
+    {
+        site: "scroll-choreography.css @supports not (animation-timing-function: linear(0, 1)) — the Safari<17.2 bezier floor",
+        file: "src/styles/scroll-choreography.css",
+        absent: ["@supports not (animation-timing-function: linear(0, 1))"],
+        verdict: "collapsed",
+        owedBy: "NF.2",
+        note: "linear() is the sole timing source on the target set; the --ease-scroll-spring bezier degrade arm collapses.",
+    },
+    {
+        site: "glass/control-surfaces.css .user-invalid-fallback / .user-valid-fallback selector members",
+        file: "src/styles/glass/control-surfaces.css",
+        absent: [".user-invalid-fallback", ".user-valid-fallback"],
+        verdict: "collapsed",
+        owedBy: "NF.2",
+        note: ":user-invalid is Chrome 119+/Safari 16.5+; the class members collapse. The [aria-invalid=\"true\"] member (programmatic-invalid axis) + the aria BRIDGE half of useUserInvalidAria KEEP — a11y, not a ladder. proof:input-invalid-aria re-points to the two-member group.",
+    },
+    {
+        site: "composables/dom/useUserInvalidAria.ts fallback-class auto-arm (supportsUserInvalid + the toggle)",
+        file: "src/composables/dom/useUserInvalidAria.ts",
+        absent: ["supportsUserInvalid", "user-invalid-fallback"],
+        verdict: "collapsed",
+        owedBy: "NF.2",
+        note: "the CSS.supports('selector(:user-invalid)')-gated fallback-class toggle never runs on a target engine; the aria-invalid bridge (the a11y half) KEEPS.",
+    },
+    {
+        site: "composables/motion/useRAFLoop.ts MQL addListener/removeListener shim (LegacyMediaQueryList)",
+        file: "src/composables/motion/useRAFLoop.ts",
+        absent: ["addListener", "LegacyMediaQueryList"],
+        verdict: "collapsed",
+        owedBy: "NF.2",
+        note: "MediaQueryList.addEventListener('change') is Safari 14+; the addListener shim serves no target engine (addEventListener is the sole path).",
+    },
+    {
+        site: "dock/shell.css dock scroll-fade @supports (animation-timeline: scroll()) co-gate (vertical block axis)",
+        file: "src/styles/dock/shell.css",
+        absent: ["@supports (animation-timeline: scroll())"],
+        verdict: "collapsed",
+        owedBy: "NF.2",
+        note: "the Safari-26 scroll() floor is RATIFIED by 4.7's dual-engine paint PASS (WebKit 26.4 drove the ScrollTimelines live); the scroll-fade mask+driver un-gate onto the target set.",
+    },
+    {
+        site: "dock/overflow.css dock scroll-fade @supports (animation-timeline: scroll()) co-gate (inline axis)",
+        file: "src/styles/dock/overflow.css",
+        absent: ["@supports (animation-timeline: scroll())"],
+        verdict: "collapsed",
+        owedBy: "NF.2",
+        note: "the co-gate collapses with its shell.css sibling — scroll-driven animations are the un-gated mechanism on the target set.",
+    },
+    {
+        // L5 — the F2.2 light-dark() COLOR witness table. The 60 `.dark {}` color
+        // witnesses byte-agree with the light-dark() dark arg (proof:glass DA1 GREEN),
+        // so the collapse is ZERO-PIXEL on the target set. BUT it is NOT a clean
+        // rider deletion: ~5 device-free gates read those `.dark {}` witnesses as
+        // their source-of-truth (proof:no-gray `dark-foreground-arms-lockstep`,
+        // proof:dark-material, proof:metal-shimmer bronze/silver/gold, proof:suffuse
+        // gold, proof:glass-cal primary), and the "arms-lockstep" witnesses are
+        // SEMANTICALLY about the two-arm relationship the collapse dissolves. So the
+        // execution owes a COORDINATED cross-gate re-point (read the light-dark() dark
+        // arg) — F2.2 W-GLASS-BASIS-CONSOLIDATE's own domain, not this ladder wave.
+        // Registered here (tracked, not silently ignored) as the Arm E principle.
+        site: "tokens/dark-arm.css light-dark() COLOR witness table (F2.2) — cross-gate-entangled",
+        verdict: "escalated",
+        owedBy: "F2.2 W-GLASS-BASIS-CONSOLIDATE",
+        note: "collapse is zero-pixel on targets (proof:glass DA1 proves byte-agreement) but entangled with ~5 gates that read the .dark {} witnesses as source-of-truth; needs a coordinated cross-gate re-point, not a rider deletion.",
+    },
 ];
 
 /** Strip `/* … *​/` block comments AND `//` line comments (URL-safe `://` preserved). */

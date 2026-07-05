@@ -69,11 +69,6 @@ export interface RAFLoopControls {
 
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 
-type LegacyMediaQueryList = MediaQueryList & {
-    addListener?: (listener: (event: MediaQueryListEvent) => void) => void;
-    removeListener?: (listener: (event: MediaQueryListEvent) => void) => void;
-};
-
 function getRequestAnimationFrame(): typeof requestAnimationFrame | null {
     return typeof globalThis.requestAnimationFrame === "function"
         ? globalThis.requestAnimationFrame.bind(globalThis)
@@ -235,7 +230,7 @@ export function useRAFLoop(
         const win = getWindow();
         const mediaQuery =
             typeof win?.matchMedia === "function"
-                ? (win.matchMedia(REDUCED_MOTION_QUERY) as LegacyMediaQueryList)
+                ? win.matchMedia(REDUCED_MOTION_QUERY)
                 : null;
 
         if (mediaQuery) {
@@ -245,18 +240,12 @@ export function useRAFLoop(
             };
 
             isReducedMotion.value = mediaQuery.matches;
-            if (typeof mediaQuery.addEventListener === "function") {
-                mediaQuery.addEventListener("change", onReducedMotionChange);
-                removeReducedMotionListener = () =>
-                    mediaQuery.removeEventListener(
-                        "change",
-                        onReducedMotionChange,
-                    );
-            } else if (typeof mediaQuery.addListener === "function") {
-                mediaQuery.addListener(onReducedMotionChange);
-                removeReducedMotionListener = () =>
-                    mediaQuery.removeListener?.(onReducedMotionChange);
-            }
+            // `MediaQueryList.addEventListener('change')` is the sole path (Safari
+            // 14+, Baseline on the target set) — the legacy `addListener` shim was
+            // COLLAPSED at BG.NF.2 W-LEGACY-LADDER-COLLAPSE.
+            mediaQuery.addEventListener("change", onReducedMotionChange);
+            removeReducedMotionListener = () =>
+                mediaQuery.removeEventListener("change", onReducedMotionChange);
         }
     }
 

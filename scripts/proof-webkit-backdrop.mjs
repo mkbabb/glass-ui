@@ -4,17 +4,18 @@
 // H-2: glass-ui authors the UNPREFIXED `backdrop-filter` only in source (the
 // single-source-of-truth discipline). Without the O-2a build pass the shipped
 // `dist/styles/*.css` ships the unprefixed form only, and a Safari ≤17 engine (which
-// supports ONLY the `-webkit-` form) paints NO blur AND the `@supports not` opaque
-// fallback does NOT fire — a transparent glass surface with floating text. This gate
-// reads the SHIPPED dist (the build-output artefact the consumer actually receives, NOT
-// the source) and asserts:
+// supports ONLY the `-webkit-` form) paints NO blur. This gate reads the SHIPPED dist
+// (the build-output artefact the consumer actually receives, NOT the source) and asserts:
 //   1. COUNT-PARITY: every unprefixed `backdrop-filter: <v>;` DECLARATION (in a rule
 //      body) is immediately preceded by a `-webkit-backdrop-filter: <v2>;` whose value
 //      equals <v> (the SAME blur radius — a webkit pair painting a different value is a
 //      defect).
-//   2. @SUPPORTS-TRAP: glass.css carries BOTH guards — the existing no-blur
-//      `@supports not (… or …)` AND the new webkit-only `@supports ((-webkit-backdrop-
-//      filter: blur(1px)) and (not (backdrop-filter: blur(1px))))`.
+//
+// The `@supports`-guard-trap arm was RETIRED at BG.NF.2 W-LEGACY-LADDER-COLLAPSE: the
+// source-side GUARD-1 (no-blur opaque plate) / GUARD-2 (webkit-only restatement) arms
+// served pre-target engines (Safari ≤17) and were deleted (`glass/a11y-fallback.css`).
+// The REAL webkit mechanism is the build-emitted `-webkit-` prefix pair this gate
+// asserts by COUNT-PARITY — not a live `@supports` restatement.
 //
 // Born-RED at HEAD (1 webkit / 15 backdrop-filter before O-2a). After O-2a the build
 // pass makes it parity → exit 0. Bite: remove the build-injection pass → parity breaks.
@@ -91,49 +92,14 @@ for (const file of cssFiles) {
     }
 }
 
-// @supports-trap: glass.css must carry BOTH guards. AY.W-CSS1 carved glass.css
-// into a thin @import root over dist/styles/glass/*.css partials, so the a11y
-// `@supports` guards live in the partials (glass/a11y-fallback.css) — concatenate
-// the root + every @import'ed partial before the guard scan.
-function readDistGlassMonolith() {
-    const rootPath = resolve(DIST_STYLES, "glass.css");
-    if (!existsSync(rootPath)) return "";
-    const root = readFileSync(rootPath, "utf-8");
-    let acc = root;
-    const importRe = /@import\s+["'](\.\/glass\/[a-z0-9_-]+\.css)["']\s*;/gi;
-    let im;
-    while ((im = importRe.exec(root)) !== null) {
-        const partialPath = resolve(DIST_STYLES, im[1]);
-        if (existsSync(partialPath)) acc += "\n" + readFileSync(partialPath, "utf-8");
-    }
-    return acc;
-}
-const glassCss = readDistGlassMonolith();
-const hasNoBlurGuard =
-    /@supports\s+not\s*\(\(\s*backdrop-filter\s*:\s*blur\(1px\)\s*\)\s+or\s+\(\s*-webkit-backdrop-filter\s*:\s*blur\(1px\)\s*\)\)/.test(
-        glassCss,
-    );
-const hasWebkitOnlyGuard =
-    /@supports\s*\(\(\s*-webkit-backdrop-filter\s*:\s*blur\(1px\)\s*\)\s+and\s+\(\s*not\s*\(\s*backdrop-filter\s*:\s*blur\(1px\)\s*\)\s*\)\)/.test(
-        glassCss,
-    );
-if (!hasNoBlurGuard) {
-    violations.push(
-        "dist/styles/glass.css: missing the no-blur `@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)))` guard",
-    );
-}
-if (!hasWebkitOnlyGuard) {
-    violations.push(
-        "dist/styles/glass.css: missing the webkit-only `@supports ((-webkit-backdrop-filter: blur(1px)) and (not (backdrop-filter: blur(1px))))` guard (the Safari-17 trap-close confirmation)",
-    );
-}
+// The `@supports`-guard-trap arm RETIRED at BG.NF.2 W-LEGACY-LADDER-COLLAPSE (the
+// GUARD-1/GUARD-2 pre-target arms were deleted from source) — the build-emitted
+// `-webkit-` prefix pair asserted by COUNT-PARITY above is the sole real mechanism.
 
 console.log("proof:webkit-backdrop — the shipped-dist `-webkit-backdrop-filter` parity gate");
 console.log(`  dist css files scanned : ${cssFiles.length}`);
 console.log(`  unprefixed decls       : ${totalUnprefixed}`);
 console.log(`  webkit-paired          : ${totalPaired}`);
-console.log(`  @supports no-blur guard: ${hasNoBlurGuard ? "✓" : "✗"}`);
-console.log(`  @supports webkit-only  : ${hasWebkitOnlyGuard ? "✓" : "✗"}`);
 
 if (violations.length > 0) {
     console.error(`\n[proof:webkit-backdrop] RED — ${violations.length} violation(s):`);
@@ -145,6 +111,6 @@ if (totalUnprefixed === 0) {
 }
 
 console.log(
-    `\n[proof:webkit-backdrop] GREEN — all ${totalUnprefixed} shipped backdrop-filter declarations carry a matching -webkit- pair; both @supports guards present.`,
+    `\n[proof:webkit-backdrop] GREEN — all ${totalUnprefixed} shipped backdrop-filter declarations carry a matching -webkit- pair (the build-emitted prefix is the sole webkit mechanism; the legacy @supports guards were collapsed at BG.NF.2).`,
 );
 process.exit(0);

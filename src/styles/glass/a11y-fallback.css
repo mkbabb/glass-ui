@@ -173,79 +173,16 @@
     }
 }
 
-/* ── @supports fallbacks for non-backdrop-filter browsers ── */
-@layer components {
-    /* GUARD 1 — the NO-BLUR-AT-ALL engine (supports NEITHER the unprefixed NOR the
-       webkit form): paint an opaque-leaning plate so text stays legible without any
-       blur. AY.W-A11Y-PERF O-2b note: this is the floor for the theoretical
-       neither-supported case. The Safari ≤17 webkit-only trap (supports the `-webkit-`
-       form, so this `@supports not (… or …)` is FALSE and the fallback does NOT fire)
-       is closed at the SOURCE OF THE PREFIX: O-2a's build pass guarantees the shipped
-       dist carries the `-webkit-backdrop-filter:` pair, so a Safari-17 engine renders
-       the BLUR off the prefixed rule (it no longer falls through to a transparent
-       unprefixed-only surface). The trap closes where the prefix is emitted, not here. */
-    @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-        .glass-wash {
-            background: color-mix(in srgb, var(--card) 80%, transparent);
-        }
-        .glass-quiet {
-            background: color-mix(in srgb, var(--card) 88%, transparent);
-        }
-        .glass-resting {
-            background: color-mix(in srgb, var(--card) 94%, transparent);
-        }
-        .glass-floating {
-            background: color-mix(in srgb, var(--card) 98%, transparent);
-        }
-        .glass-overlay {
-            background: var(--card);
-        }
-        .glass-btn {
-            background: color-mix(in srgb, var(--background) 92%, transparent);
-        }
-    }
-
-    /* GUARD 2 — the WEBKIT-ONLY engine (supports `-webkit-backdrop-filter` but NOT the
-       unprefixed `backdrop-filter` — Safari ≤17). With O-2a's build-emitted prefix the
-       shipped rung carries the `-webkit-backdrop-filter:` pair, so this engine PAINTS
-       the blur off that prefixed declaration. This guard exists to DOCUMENT-and-confirm
-       that path (and would re-assert the translucent glass identity if a future change
-       ever stripped the rung bg under this engine) — it re-states the rungs' translucent
-       glass-mix so a webkit-only engine that DID get the prefix keeps the glass look,
-       never the opaque GUARD-1 plate. The `proof:webkit-backdrop` gate asserts the
-       shipped dist carries BOTH guards. */
-    @supports ((-webkit-backdrop-filter: blur(1px)) and (not (backdrop-filter: blur(1px)))) {
-        .glass-wash {
-            background: color-mix(in oklab, var(--glass-bg-wash), var(--glass-tint-source) var(--glass-tint-strength));
-        }
-        .glass-quiet {
-            background: color-mix(in oklab, var(--glass-bg-quiet), var(--glass-tint-source) var(--glass-tint-strength));
-        }
-        .glass-resting {
-            background: color-mix(in oklab, var(--glass-bg-resting), var(--glass-tint-source) var(--glass-tint-strength));
-        }
-        .glass-floating {
-            background: color-mix(in oklab, var(--glass-bg-floating), var(--glass-tint-source) var(--glass-tint-strength));
-        }
-        .glass-overlay {
-            background: color-mix(in oklab, var(--glass-bg-overlay), var(--glass-tint-source) var(--glass-tint-strength));
-        }
-        .glass-btn {
-            background: var(--glass-bg-wash);
-        }
-    }
-}
-
-/* ── :has() focus-elevation fallback (AQ.W3 §W3.1a) ──────────────────────
-   SOLE fallback for engines without `:has()`. `.is-focus-within` is toggled
-   by a ≤6-LOC focusin/focusout guard in `Card.vue` that runs ONLY when
-   `!CSS.supports('selector(:has(*))')` (modern engines run zero JS). The
-   class redefines the SAME `--card-focus-*` rungs as the `:has()` rule, so the
-   override values have one source. NOT a live+dead alias — `:has()` is the
-   enhancement, this the documented degradation path. */
-@supports not selector(:has(*)) {
-    .glass-card.is-focus-within {
-        --card-focus-shadow: var(--shadow-md);
-        --card-focus-border: var(--glass-border-floating);
-    }
-}
+/* ── Legacy backdrop-filter + :has() capability ladders COLLAPSED
+   (BG.NF.2 W-LEGACY-LADDER-COLLAPSE — the NO-MASKING-FALLBACK floor).
+   The former GUARD-1 (no-blur opaque plate) + GUARD-2 (webkit-only glass-mix
+   restatement) `@supports` arms served engines supporting NEITHER form / the
+   webkit-only form (Safari ≤17) — years pre-target (target = current Chrome +
+   current Safari). `backdrop-filter` is Baseline on that set, and the real
+   webkit path is the BUILD-EMITTED `-webkit-backdrop-filter:` prefix pair
+   (`vite.style-assets.ts` O-2a), asserted in the shipped dist by
+   `proof:webkit-backdrop`, NOT a live source-side restatement. The
+   `@supports not selector(:has(*))` `.is-focus-within` arm (AQ.W3) collapsed
+   too — `:has()` is Chrome 105+/Safari 15.4+ AND its `Card.vue` toggler never
+   existed on disk (an orphan behind a lying comment); `.glass-card:has(:focus-
+   visible)` (`glass/surfaces.css`) is the sole focus-elevation mechanism. */

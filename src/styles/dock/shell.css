@@ -306,28 +306,28 @@
        scroll port: the `mask-image` reads the `--fade-start`/`--fade-end` customs
        the SAME `gl-fade-start-in`/`gl-fade-end-out` keyframes `<FadingScroll>`
        uses drive off the `scroll(self block)` timeline (reached by name — ZERO
-       new recipe). The mask + its driver are co-gated on
-       `animation-timeline: scroll()` so a gap engine gets NO mask over the
-       backdrop-filter plate (never a permanently-opaque mask) — the port scrolls
-       plain. NOT PRM-gated (a legibility cue). */
-    @supports (animation-timeline: scroll()) {
-        .glass-dock.vertical.always-expanded:not([data-morphing]),
-        .glass-dock.vertical.expanded:not([data-morphing]) {
-            mask-image: linear-gradient(
-                to bottom,
-                transparent 0,
-                black var(--fade-start, 0px),
-                black calc(100% - var(--fade-end, 0px)),
-                transparent 100%
-            );
-            animation:
-                gl-fade-start-in linear both,
-                gl-fade-end-out linear both;
-            animation-timeline: scroll(self block), scroll(self block);
-            animation-range:
-                0 var(--fade-scroll-width),
-                calc(100% - var(--fade-scroll-width)) 100%;
-        }
+       new recipe). The `@supports (animation-timeline: scroll())` co-gate was
+       COLLAPSED at BG.NF.2 W-LEGACY-LADDER-COLLAPSE — scroll-driven animations
+       are Baseline on the target set (the Safari-26 `scroll()` floor RATIFIED by
+       4.7's dual-engine paint PASS, WebKit 26.4 driving the ScrollTimelines
+       live), so this is the un-gated mechanism. NOT PRM-gated (a legibility
+       cue). */
+    .glass-dock.vertical.always-expanded:not([data-morphing]),
+    .glass-dock.vertical.expanded:not([data-morphing]) {
+        mask-image: linear-gradient(
+            to bottom,
+            transparent 0,
+            black var(--fade-start, 0px),
+            black calc(100% - var(--fade-end, 0px)),
+            transparent 100%
+        );
+        animation:
+            gl-fade-start-in linear both,
+            gl-fade-end-out linear both;
+        animation-timeline: scroll(self block), scroll(self block);
+        animation-range:
+            0 var(--fade-scroll-width),
+            calc(100% - var(--fade-scroll-width)) 100%;
     }
 
     .glass-dock::after {

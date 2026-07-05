@@ -100,33 +100,35 @@
     }
 
     /* AQ.W4 §W4.1 — validity vocabulary on `.input-pill` (Input + Textarea).
-       The forgiving `:where(:user-invalid, .user-invalid-fallback,
-       [aria-invalid="true"])` group is ONE rule covering THREE trigger surfaces:
-       native constraint-validation (`:user-invalid`), the `useUserInvalidAria`
-       fallback class for engines without `:user-invalid` (css §3.2; NOT a
-       live+dead alias — the class is the SOLE fallback), AND (AW.W18) the
-       imperative `[aria-invalid="true"]` attribute. The `[aria-invalid]` arm
-       serves APP-DRIVEN validity — a custom key match, an async server check —
-       where there is no native constraint to trip `:user-invalid`, so the app
-       sets the ARIA attribute and the library's own ring paints with no
-       `:deep()` re-paint at the consumer. The destructive/success tints reuse
-       the semantic tokens via `color-mix` per the house pattern (W2). Non-color
+       The `:where(:user-invalid, [aria-invalid="true"])` group is ONE rule
+       covering TWO trigger surfaces: native constraint-validation
+       (`:user-invalid`, Baseline Chrome 119+/Safari 16.5+ on the target set) AND
+       (AW.W18) the imperative `[aria-invalid="true"]` attribute. The
+       `[aria-invalid]` arm serves APP-DRIVEN validity — a custom key match, an
+       async server check — where there is no native constraint to trip
+       `:user-invalid`, so the app sets the ARIA attribute and the library's own
+       ring paints with no `:deep()` re-paint at the consumer. The legacy
+       `.user-invalid-fallback` / `.user-valid-fallback` class members (for
+       engines without `:user-invalid`) were COLLAPSED at BG.NF.2
+       W-LEGACY-LADDER-COLLAPSE — the aria-BRIDGE half of `useUserInvalidAria`
+       KEEPS (a11y, not a ladder). The destructive/success tints reuse the
+       semantic tokens via `color-mix` per the house pattern (W2). Non-color
        reinforcement is the error TEXT (W4.5 `error` slot) + the `required`
        asterisk — the border/bg shift is the supplementary cue, never the sole
        one. `:user-valid` is intentionally subtle (border only, no bg fill) so
        a long valid form is not a wall of green. */
-    .input-pill:where(:user-invalid, .user-invalid-fallback, [aria-invalid="true"]) {
+    .input-pill:where(:user-invalid, [aria-invalid="true"]) {
         border-color: var(--destructive);
         background: color-mix(in srgb, var(--destructive) 8%, var(--glass-bg-quiet));
     }
-    .input-pill:where(:user-valid, .user-valid-fallback) {
+    .input-pill:where(:user-valid) {
         border-color: var(--success);
     }
     /* Invalid + keyboard-focused → destructive ring (overrides the accent
        `:focus-visible` ring above by order + the extra invalid compound). The
        `[aria-invalid]` arm rides the same widened group so an app-driven
        invalid field shows the destructive ring on focus too. */
-    .input-pill:where(:user-invalid, .user-invalid-fallback, [aria-invalid="true"]):focus-visible {
+    .input-pill:where(:user-invalid, [aria-invalid="true"]):focus-visible {
         border-color: var(--destructive);
         /* BB.W-INVALID-RING — the shared destructive ring register (the
            --focus-ring-shadow sibling). The byte-identical recipe is now ONE

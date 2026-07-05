@@ -4,12 +4,13 @@
 // ── AW.W18 (the base, UNCHANGED in spirit) ────────────────────────────────────
 // The slides `DeckGate` drives validity imperatively (a custom key match, not a
 // native `required`/`pattern`), so it sets `aria-invalid="true"` — but the
-// shipped `.input-pill` invalid ring keyed ONLY off `:user-invalid` +
-// `.user-invalid-fallback` (the browser-constraint path), so the gate had to
-// re-paint the ring with a `:deep(input[aria-invalid])`. W18 widened the library
-// ring to honor `[aria-invalid="true"]` so any app-driven form gets the
-// destructive ring with NO consumer `:deep()`. The base asserts: every
-// `.input-pill` invalid rule carries ALL THREE trigger members AND at least one
+// shipped `.input-pill` invalid ring keyed ONLY off `:user-invalid` (the
+// browser-constraint path), so the gate had to re-paint the ring with a
+// `:deep(input[aria-invalid])`. W18 widened the library ring to honor
+// `[aria-invalid="true"]` so any app-driven form gets the destructive ring with
+// NO consumer `:deep()`. The base asserts: every `.input-pill` invalid rule
+// carries BOTH trigger members (`:user-invalid` + `[aria-invalid="true"]` — the
+// legacy `.user-invalid-fallback` member COLLAPSED at BG.NF.2) AND at least one
 // resolves the destructive recipe.
 //
 // ── BB.W-INVALID-RING (the extension — no new gate key) ───────────────────────
@@ -33,7 +34,7 @@
 //        inline (the anti-evasion bite — a fifth re-paste reds). RED at HEAD:
 //        SelectTrigger + surfaces.css carry the inline 35% recipe; ComboboxInput
 //        carries no ring at all.
-//   W3 — the three-member trigger group holds where the surface supports it. The
+//   W3 — the two-member trigger group holds where the surface supports it. The
 //        .input-pill group stays (the AW.W18 assert), SelectTrigger + TagsInput
 //        carry the widened group (or the documented `[aria-invalid]` attr floor).
 //        RED at HEAD: SelectTrigger carries the attr arm only; TagsInput none.
@@ -104,7 +105,11 @@ export function detectInvalidRing(sources) {
     const combobox = stripVueComments(comboboxVue);
     const tags = stripVueComments(tagsVue);
 
-    // ── AW.W18 base — the .input-pill three-member group + destructive intact ──
+    // ── AW.W18 base — the .input-pill two-member group + destructive intact ──
+    // The `.user-invalid-fallback` legacy member COLLAPSED at BG.NF.2
+    // W-LEGACY-LADDER-COLLAPSE (`:user-invalid` is Baseline on the target set), so
+    // the group is now the TWO load-bearing members: native `:user-invalid` + the
+    // programmatic `[aria-invalid="true"]` axis (the aria-BRIDGE keep).
     const ruleRe =
         /\.input-pill:where\(([^)]*:user-invalid[^)]*)\)([^{]*)\{([^}]*)\}/g;
     const rules = [...glass.matchAll(ruleRe)];
@@ -114,8 +119,8 @@ export function detectInvalidRing(sources) {
             "no `.input-pill:where(:user-invalid, …)` invalid-ring rule found",
         );
     }
-    const REQUIRED = [":user-invalid", ".user-invalid-fallback", '[aria-invalid="true"]'];
-    let allHaveThreeMembers = rules.length > 0;
+    const REQUIRED = [":user-invalid", '[aria-invalid="true"]'];
+    let allHaveMembers = rules.length > 0;
     // "destructive intact" now means: the ring rule resolves the destructive
     // affordance — EITHER via the shared `var(--invalid-ring)` token OR directly
     // `var(--destructive)` (the at-rest border/bg arm). After the wave the ring
@@ -126,7 +131,7 @@ export function detectInvalidRing(sources) {
         const group = m[1];
         for (const member of REQUIRED) {
             if (!group.includes(member)) {
-                allHaveThreeMembers = false;
+                allHaveMembers = false;
                 violations.push(
                     `the .input-pill invalid-ring selector group is missing \`${member}\` (group: \`${group.trim()}\`)`,
                 );
@@ -135,7 +140,7 @@ export function detectInvalidRing(sources) {
         if (/var\(--destructive\)/.test(m[3]) || /var\(--invalid-ring\)/.test(m[3]))
             destructiveIntact = true;
     }
-    facts.allHaveThreeMembers = allHaveThreeMembers;
+    facts.allHaveMembers = allHaveMembers;
     facts.destructiveRecipeIntact = destructiveIntact;
     if (rules.length > 0 && !destructiveIntact) {
         violations.push(
@@ -246,13 +251,14 @@ export function detectInvalidRing(sources) {
         );
     }
 
-    // ── W3 — the three-member trigger group holds where supported ─────────────
+    // ── W3 — the two-member trigger group holds where supported ───────────────
     facts.w3 = {};
-    // .input-pill is the AW.W18 three-member assert (allHaveThreeMembers above).
-    facts.w3.inputPillThreeMember = allHaveThreeMembers;
+    // .input-pill is the AW.W18 group assert (allHaveMembers above — the two
+    // load-bearing members after the BG.NF.2 `.user-invalid-fallback` collapse).
+    facts.w3.inputPillMembers = allHaveMembers;
     // SelectTrigger + TagsInput must carry the widened group (`:user-invalid` +
     // `[aria-invalid]`), not the attr-only subset. The §Divergence-decisions
-    // table widens onto the three-member set wherever the surface supports it;
+    // table widens onto the two-member set wherever the surface supports it;
     // `:user-invalid` (the `user-invalid:` Tailwind variant) is the propagated
     // member, and the `aria-invalid:`/`[aria-invalid]` attr is the floor.
     facts.w3.selectHasAria = /aria-invalid:/.test(select);
@@ -271,9 +277,9 @@ export function detectInvalidRing(sources) {
             "W3: TagsInput must carry the widened trigger group (`aria-invalid:` + `user-invalid:`), not the attr-only subset",
         );
     }
-    if (!facts.w3.inputPillThreeMember) {
+    if (!facts.w3.inputPillMembers) {
         violations.push(
-            "W3: the .input-pill three-member trigger group (AW.W18) must hold",
+            "W3: the .input-pill two-member trigger group (`:user-invalid` + `[aria-invalid=\"true\"]`, AW.W18 / BG.NF.2) must hold",
         );
     }
 
@@ -303,7 +309,7 @@ function selfTest() {
     // (for the respell bite).
     const goodSelect = `<template><div class="aria-invalid:shadow-(--invalid-ring) user-invalid:shadow-(--invalid-ring) aria-invalid:border-(--destructive)" /></template>`;
     const goodScale = `:root { --invalid-ring-tint: 35%; --invalid-ring: 0 0 0 var(--focus-ring-width) color-mix(in srgb, var(--destructive) var(--invalid-ring-tint), transparent); }`;
-    const goodGlass = `.input-pill:where(:user-invalid, .user-invalid-fallback, [aria-invalid="true"]):focus-visible { border-color: var(--destructive); box-shadow: var(--invalid-ring); }`;
+    const goodGlass = `.input-pill:where(:user-invalid, [aria-invalid="true"]):focus-visible { border-color: var(--destructive); box-shadow: var(--invalid-ring); }`;
     const goodCombobox = `<div class="has-[[aria-invalid='true']]:shadow-(--invalid-ring)" />`;
     const goodTags = `<div class="aria-invalid:shadow-(--invalid-ring) user-invalid:shadow-(--invalid-ring) aria-invalid:border-(--destructive) user-invalid:border-(--destructive)" />`;
 
@@ -386,7 +392,7 @@ function run() {
         "proof:input-invalid-aria — the ONE shared aria-invalid ring register (AW.W18 + BB.W-INVALID-RING)",
     );
     console.log(
-        `  AW.W18 .input-pill three-member group: ${yn(facts.allHaveThreeMembers)}   (rules: ${facts.invalidRuleCount ?? 0})`,
+        `  AW.W18 .input-pill two-member group  : ${yn(facts.allHaveMembers)}   (rules: ${facts.invalidRuleCount ?? 0})`,
     );
     console.log(`  AW.W18 destructive recipe intact     : ${yn(facts.destructiveRecipeIntact)}`);
     console.log(
@@ -409,8 +415,8 @@ function run() {
         )}`,
     );
     console.log(
-        `  W3 three-member group where supported : ${yn(
-            facts.w3?.inputPillThreeMember &&
+        `  W3 two-member group where supported  : ${yn(
+            facts.w3?.inputPillMembers &&
                 facts.w3?.selectHasAria &&
                 facts.w3?.selectHasUserInvalid &&
                 facts.w3?.tagsHasAria &&
