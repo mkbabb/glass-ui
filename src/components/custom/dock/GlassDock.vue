@@ -45,7 +45,17 @@ defineOptions({ inheritAttrs: false });
    useDockShellProps): no `variant` discriminant, "vertical" is `orientation="vertical"`
    alone, and collapse↔expand applies on BOTH orientations (single opt-out
    `alwaysExpanded`). Defaults resolve at each read site via `?? default`. */
-const props = defineProps<DockProps>();
+/* BG.W-GLASS-SIGNAL-TRUTH (NF.3, paint re-open) — `autoLuminance` MUST default TRUE
+   via `withDefaults`, NOT via a bare optional `boolean` type. Vue's boolean-prop
+   CASTING resolves an ABSENT `boolean`-typed prop (no default) to `false`, NOT
+   `undefined` — so the old `props.autoLuminance !== false` guard read `false !== false`
+   → the sampled-luminance observer was NEVER wired on ANY dock (0 of 12 stamped the
+   writer-fired witness; the whole dock adaptive-luminance band was dead library-wide,
+   not just the demo). The explicit `autoLuminance: true` default makes an unpassed dock
+   default-ON (the documented H3 arm-a intent) while `:auto-luminance="false"` still opts
+   out — the ONE place the boolean default resolves (the other shell defaults stay the
+   `?? default` read-site pattern in useDockShellProps). */
+const props = withDefaults(defineProps<DockProps>(), { autoLuminance: true });
 
 /* BD.W-DOCK-CORE (A12) — the draggable-items reorder emit (additive; fires only on a
    committed pull when `:draggable-items` is armed). The consumer wires it to its own

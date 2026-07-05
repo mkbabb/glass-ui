@@ -116,6 +116,23 @@ export interface UseGlassBackdropLuminanceControls {
 
 const PRM_QUERY = "(prefers-reduced-motion: reduce)";
 const SAMPLE_DOWNSAMPLE = 32;
+// BG.W-GLASS-SIGNAL-TRUTH (NF.3, paint mustFix #2) — the animated field-canvas
+// readback carries REAL painted content only when the source WebGL `<canvas>` actually
+// rendered a frame AND kept its drawing buffer (`preserveDrawingBuffer`). An
+// unrendered / composited-and-cleared / software-raster-fallback field reads
+// fully-transparent (mean alpha ≈ 0); compositing THAT over white yields a DEGENERATE
+// luma ≈ 1.0 + a `transparent` ambient hue — the "witness fires but the value is a lie"
+// state the NF.3 paint-DELTA flagged. Below this mean-alpha floor the readback is not a
+// valid sample: `sampleAnimated` returns null so `sampleNow` falls to the static
+// stack-walk (a REAL warm backdrop proxy). Fail-explicit, never a masking fake value.
+const FIELD_ALPHA_FLOOR = 0.02;
+// The bounded ambient-bias strength the observer WRITES when it samples a real (non-
+// transparent) modal hue — the companion write-strength knob material.css names "the
+// observer's target owns". ≤ 8% (sub-perceptual under the W55 --glass-tint-strength-aa
+// 20% bound; tokens/glass.css §BE.W-AMBIENT-TINT). A `transparent` (gray/null) sample
+// keeps the 0% no-op floor. Without this write the sampled hue rides a frozen 0%
+// strength — a half-dead channel (a hue written but never READ), the state NF.3 forbids.
+const AMBIENT_STRENGTH_ENGAGED = "8%";
 
 /** The per-sample result — the luminance AND the ambient hue (the FREE rider). */
 interface SampleResult {
@@ -329,6 +346,7 @@ export function useGlassBackdropLuminance(
                 SAMPLE_DOWNSAMPLE,
             ).data;
             let sum = 0;
+            let alphaSum = 0;
             let n = 0;
             const hist = makeHueHistogram();
             for (let i = 0; i < data.length; i += 4) {
@@ -338,14 +356,20 @@ export function useGlassBackdropLuminance(
                 const g = data[i + 1]! * a + 255 * (1 - a);
                 const b = data[i + 2]! * a + 255 * (1 - a);
                 sum += relLuminance(r, g, b);
+                alphaSum += a;
                 // BE.W-AMBIENT-TINT — the hue histogram, a FREE rider in the SAME
                 // loop (no second getImageData, no second canvas, no second pass).
                 accumulateHuePixel(hist, r, g, b, a);
                 n++;
             }
-            return n > 0
-                ? { luma: sum / n, ambientHue: resolveAmbientHue(hist) }
-                : null;
+            // BG.W-GLASS-SIGNAL-TRUTH (NF.3 mustFix #2) — an all-transparent readback
+            // (mean alpha below the floor) carries NO painted field content (an
+            // unrendered / cleared-after-composite / software-raster field). It is NOT a
+            // valid sample: returning null lets `sampleNow` fall to the static stack-walk
+            // (a real warm backdrop) instead of writing a degenerate luma ≈ 1.0 +
+            // `transparent` hue. Fail-explicit over a masking fake value.
+            if (n === 0 || alphaSum / n < FIELD_ALPHA_FLOOR) return null;
+            return { luma: sum / n, ambientHue: resolveAmbientHue(hist) };
         } catch {
             // fail-explicit: befitting — a tainted/cross-origin canvas throws on
             // getImageData; the null return SURFACES the miss to the caller, which
@@ -410,6 +434,18 @@ export function useGlassBackdropLuminance(
         // self-engage re-point reads it; ZERO new compositing seam). A gray backdrop
         // writes `transparent` — the room tints nothing (the correct null identity).
         el.style.setProperty("--glass-ambient-hue", result.ambientHue);
+        // BG.W-GLASS-SIGNAL-TRUTH (NF.3 mustFix #2) — WIRE THE AMBIENT BIAS ON. The
+        // catch-light seam (material.css `--glass-specular-core`) reads the sampled hue
+        // AT `--glass-ambient-strength` — "the companion write-strength knob the
+        // observer's target owns". A real (non-`transparent`) modal hue engages the
+        // bounded strength so the ambient catch-light actually READS where the observer
+        // fires; a gray/null (`transparent`) sample keeps the 0% no-op floor. Without
+        // this write the hue rides a frozen 0% strength (a hue written but never read —
+        // the half-dead channel NF.3 forbids).
+        el.style.setProperty(
+            "--glass-ambient-strength",
+            result.ambientHue === "transparent" ? "0%" : AMBIENT_STRENGTH_ENGAGED,
+        );
         // BG.W-GLASS-SIGNAL-TRUTH (M8) — the WRITER-FIRED WITNESS. A dead/silently-
         // failed observer is otherwise INDISTINGUISHABLE from a calm backdrop (both
         // resolve the luma clamp's initial 0 → the calm floor, so the G2 "unreadable

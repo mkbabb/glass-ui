@@ -94,6 +94,12 @@ const SPECULAR_POINTER_FILE = "src/composables/glass/useSpecularPointer.ts";
 // sampled: 1`) stamps on write (M8) + the real hue-channel write (M9).
 const BACKDROP_LUMINANCE_FILE =
     "src/composables/glass/useGlassBackdropLuminance.ts";
+// BG.W-GLASS-SIGNAL-TRUTH (NF.3 paint re-open) — the dock SFC that WIRES the observer.
+// The ST7 arm reads it to assert the observer is default-ON (the `autoLuminance` boolean
+// prop defaults TRUE via `withDefaults`), the device-free lock for the paint-DELTA's
+// blocking mustFix (0 of 12 docks fired because Vue casts an absent `boolean` prop to
+// `false`, so the `props.autoLuminance !== false` guard was a dead binding).
+const GLASSDOCK_FILE = "src/components/custom/dock/GlassDock.vue";
 const DARK_ARM_FILE = "src/styles/tokens/dark-arm.css";
 const LIGHT_DARK_FILE = "src/styles/tokens/light-dark.css";
 const GLASS_SURFACES_FILE = "src/styles/glass/surfaces.css";
@@ -905,7 +911,7 @@ export function glassDynamicsViolations(glassCss, specularPointerText) {
 //              decision (the bucket is the band driver, the clamp is the refinement).
 // Born-RED on HEAD (the `, 0.5` fallback, the `--glass-backdrop-hue` seam, no witness
 // stamp, the contradictory canon) → GREEN on the wave's edits.
-export function glassSignalTruthViolations(glassCss, luminanceText) {
+export function glassSignalTruthViolations(glassCss, luminanceText, glassDockText) {
     const violations = [];
     const facts = {};
     const glass = squish(stripCss(glassCss || ""));
@@ -1121,6 +1127,47 @@ export function glassSignalTruthViolations(glassCss, luminanceText) {
             violations.push(
                 "ST6: the loop-arm `applyMotionState()` does not gate `loop.start()` on `wantsLiveLoop()` (or still reads the resolution-requiring `isLive()`) — the arm must key off live INTENT so the loop starts even when the field canvas resolves post-mount; the per-tick `isLive()` re-check inside the loop is the only correct `isLive()` reader.",
             );
+        }
+    }
+
+    // ── ST7 (M8 runtime, part 3) — the observer is default-ON: the `autoLuminance`
+    // boolean prop defaults TRUE via `withDefaults`, NOT a bare optional boolean ────
+    // The paint-DELTA's BLOCKING mustFix: 0 of 12 docks fired the witness because the
+    // dock guarded the observer on `props.autoLuminance !== false` while `autoLuminance`
+    // was a bare optional `boolean` prop with NO `withDefaults` default. Vue's
+    // BOOLEAN-PROP CASTING resolves an ABSENT `boolean`-typed prop to `false` (NOT
+    // `undefined`), so `false !== false` → the sampled-luminance observer was NEVER wired
+    // on any default dock (the whole adaptive-luminance band dead library-wide — ST5/ST6
+    // source-green but never REACHED at runtime). The fix makes the default TRUE via
+    // `withDefaults(defineProps<…>(), { autoLuminance: true })` so an unpassed dock is
+    // default-ON while `:auto-luminance="false"` still opts out. This arm is the
+    // device-free lock: the observer must be wired AND the boolean default must be
+    // explicitly true. Born-RED at HEAD (bare `defineProps` + the `!== false` guard).
+    // Run ST7 only when a dock text is PASSED (the real gate + the dedicated ST7 bites);
+    // the ST1-ST6 self-test invocations omit the arg (undefined) and skip ST7 — a
+    // `readFile()` that returns "" (an ABSENT GlassDock.vue) still fires ST7.
+    if (glassDockText !== undefined) {
+        const dock = glassDockText || "";
+        facts.dockFound = dock.length > 0;
+        facts.dockWiresObserver = /useGlassBackdropLuminance\s*\(/.test(dock);
+        facts.autoLuminanceDefaultsTrue =
+            /withDefaults\s*\(\s*defineProps\b/.test(dock) &&
+            /autoLuminance\s*:\s*true\b/.test(dock);
+        if (!facts.dockFound) {
+            violations.push(
+                "ST7: could not read GlassDock.vue — the dock observer default-ON wiring is the M8 blocking-mustFix edit site (the paint-DELTA: 0 of 12 docks fired the witness)",
+            );
+        } else {
+            if (!facts.dockWiresObserver) {
+                violations.push(
+                    "ST7: GlassDock.vue does not wire `useGlassBackdropLuminance(` — the dock is the observer's sole binary consumer (H3 arm a); an unwired dock is a dead adaptive-luminance band",
+                );
+            }
+            if (!facts.autoLuminanceDefaultsTrue) {
+                violations.push(
+                    "ST7: `autoLuminance` does not default TRUE via `withDefaults(defineProps<…>(), { autoLuminance: true })` — a bare optional `boolean` prop guarded by `props.autoLuminance !== false` is a DEAD binding: Vue's boolean-prop CASTING resolves an ABSENT `boolean` prop to `false` (NOT `undefined`), so `false !== false` never wires the observer (the paint-DELTA: 0 of 12 docks stamped the witness — the whole dock adaptive-luminance band dead library-wide). Set the default explicitly true.",
+                );
+            }
         }
     }
 
@@ -1574,6 +1621,7 @@ export function detect() {
     const signalTruth = glassSignalTruthViolations(
         glassMonolith,
         readFile(BACKDROP_LUMINANCE_FILE),
+        readFile(GLASSDOCK_FILE),
     );
     const reversal = darkArmColorReversalViolations(
         readFile(DARK_ARM_FILE),
@@ -2060,6 +2108,36 @@ function selfTest() {
         );
     }
 
+    // ── ST7 bites — the dock observer default-ON wiring (the paint-DELTA blocking fix) ─
+    // the GOOD dock: wires the observer AND defaults `autoLuminance` true via withDefaults.
+    const goodSignalDock =
+        "const props = withDefaults(defineProps<DockProps>(), { autoLuminance: true });" +
+        " if (props.autoLuminance !== false) { useGlassBackdropLuminance(dockEl, { backgroundCanvas: () => props.backgroundCanvas }); }";
+    // sanity — the GOOD dock fixture must be CLEAN under ST7.
+    if (glassSignalTruthViolations(goodSignalGlass, goodSignalJs, goodSignalDock).violations.some((v) => /ST7/.test(v))) {
+        fails.push(
+            "self-test ST7: the synthetic GOOD dock (withDefaults({autoLuminance:true}) + wired observer) was FLAGGED (the detector false-REDs a correct default-ON dock)",
+        );
+    }
+    // bite ST7-cast — the HEAD form (bare `defineProps` + the `!== false` guard, no
+    // withDefaults default) is the Vue boolean-cast-false dead binding — must flag.
+    const castTrapDock =
+        "const props = defineProps<DockProps>();" +
+        " if (props.autoLuminance !== false) { useGlassBackdropLuminance(dockEl, { backgroundCanvas: () => props.backgroundCanvas }); }";
+    if (!glassSignalTruthViolations(goodSignalGlass, goodSignalJs, castTrapDock).violations.some((v) => /ST7/.test(v))) {
+        fails.push(
+            "self-test ST7: the HEAD boolean-cast-false form (bare `defineProps<DockProps>()` + `props.autoLuminance !== false`, NO `withDefaults({autoLuminance:true})`) was NOT flagged (the M8 blocking-mustFix dead-guard fence has no teeth — this is the exact state that left 0 of 12 docks firing)",
+        );
+    }
+    // bite ST7-unwired — a dock that does NOT wire the observer at all must flag.
+    const unwiredDock =
+        "const props = withDefaults(defineProps<DockProps>(), { autoLuminance: true });";
+    if (!glassSignalTruthViolations(goodSignalGlass, goodSignalJs, unwiredDock).violations.some((v) => /ST7/.test(v))) {
+        fails.push(
+            "self-test ST7: a dock that does NOT call `useGlassBackdropLuminance(` was NOT flagged (the observer-wired fence has no teeth)",
+        );
+    }
+
     // ── dark-arm-color-reversal bites (DA1-DA4) — BG.W-GLASS-BASIS-CONSOLIDATE ──
     const goodDark =
         `.dark {\n` +
@@ -2443,6 +2521,9 @@ function run() {
     );
     console.log(
         `  ST6 loop-arm      : wantsLiveLoop=${st.wantsLiveFound ? "✓" : "✗"}  provided-is-intent=${st.wantsLiveReadsProvidedSource ? "✓" : "✗"}  arm-reads-intent=${st.armReadsIntent && st.armDropsIsLive ? "✓" : "✗"} (M8 runtime.2: the loop arms on live INTENT so it starts even when the field canvas resolves post-mount — 0/12→12/12 docks fire)`,
+    );
+    console.log(
+        `  ST7 default-ON    : dock-wires-observer=${st.dockWiresObserver ? "✓" : "✗"}  autoLuminance-defaults-true=${st.autoLuminanceDefaultsTrue ? "✓" : "✗"} (M8 runtime.3: withDefaults({autoLuminance:true}) — the Vue boolean-cast-false dead-guard closed; the paint 0/12→12/12)`,
     );
     console.log(
         `  ST4 band-driver   : no-retires-claim=${st.noRetiresBucketAsDriver ? "✓" : "✗"}  decision-recorded=${st.bandDriverRecorded ? "✓" : "✗"} (M7: bucket=driver, clamp=refinement — canon reconciled to ONE)`,
