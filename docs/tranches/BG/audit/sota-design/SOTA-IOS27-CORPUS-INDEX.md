@@ -28,6 +28,8 @@ ships that only paints on one engine — the graceful base IS the design on a ga
 NO-MASKING-FALLBACK CROSS-ENGINE-GAP category), never a JS polyfill or a legacy ladder. Every SOTA
 refinement is expressed through general CSS the target engines SHARE, driven by our own kf/value facilities.
 
+**The buttery-smooth bar, DOUBLED (USER 07-05).** The future SOTA-iOS27 audit inherits the buttery-smooth bar at DOUBLED strength — per-gesture verdicts judge OUR frame series against the reference ladders (`ios27-motion-truth/ref/`) at the FRAME-GAP level (cadence histograms, not just choreography), both engines both modes; the pass may not close on mechanism-present, only on reads-buttery; the 07-05 verdict is its opening ground truth (residual = cadence + F3.R3's broken settled-horizontal endpoint).
+
 ## The 3 folded SOTA rows are Safari-July-2026-safe (verified)
 - `F2.5 W-GLASS-DEPTH-TIER` — a `--glass-depth` custom-property default mapping. Pure CSS var. ✓
 - `F5.4 W-BACKDROP-BLUR-ENGAGE` — `filter`/`backdrop-filter` blur read off a CSS scalar. `backdrop-filter`
