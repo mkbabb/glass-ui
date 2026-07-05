@@ -37,8 +37,10 @@
 //        stack routes through `<FadingScroll>` (the one port, not a bespoke scroll); no
 //        displayed member resolves a ghost/dimmed alpha (every member reads
 //        `--glass-bg-floating`, not a low-alpha shadow). Self-test bite: a default ≠ 3 reds.
-//   S5 — clears content by topology. The stack rail seats in the gutter (the demo
-//        `.demo-sidebar-rail` off-canvas seat); no rail re-seats over <main>. Self-test
+//   S5 — clears content by topology. BG.W-DOCK-RAIL-REINVENT (F3.R4): the rest stack is
+//        ENTIRELY CONTAINED in the dock box (`inset-inline-end: 0`, chipOverMain:false by
+//        CONSTRUCTION — the demo `.demo-sidebar-rail` lower-gutter re-seat is RETIRED, the
+//        containment is stronger); the fan is a transient absolute gutter sibling. Self-test
 //        bite: a content-band overlay seat reds.
 //   S6 — the ≥2-consumer bar + one-registry. `<DockStack>` is bound on ≥2 shell consumers
 //        (SidebarDock + BottomDock) + the /dock/rail story; the members write the
@@ -245,18 +247,28 @@ export function detectS4() {
 export function detectS5() {
     const violations = [];
     const facts = {};
-    // The stack seats in the gutter, NOT a content-band overlay. The demo .demo-sidebar-rail
-    // re-seats the stack slot into the lower gutter (chipOverMain: false). The library
-    // stack-rail.css seats the vertical stack off the trailing edge (its own gutter, never
-    // over <main> which is inline-start of the dock).
-    const navCss = stripCss(readRel("demo/layout/dock-nav.css"));
-    facts.demoGutterSeat = /\.demo-sidebar-rail[^{]*\.dock-(stack|hairline-slot)/.test(navCss);
-    if (!facts.demoGutterSeat)
-        violations.push("S5: the demo `.demo-sidebar-rail` does not re-seat the stack into its gutter — the off-canvas chipOverMain:false topology is missing (the headline graze-clearance)");
-
-    // The library slot seats at the dock EDGE (inset-inline-start: 100% on the vertical
-    // trailing gutter), not a content-band overlay.
     const css = stripCss(readRel(STACK_CSS));
+
+    // BG.W-DOCK-RAIL-REINVENT (F3.R4) — the demo `.demo-sidebar-rail` lower-gutter RE-SEAT is
+    // RETIRED (it forced the OLD always-OUTSIDE stack into the aside's lower gutter to clear
+    // <main>). The reinvented topology clears content by CONTAINMENT — the rest stack is
+    // ENTIRELY CONTAINED in the dock box (zero gutter presence, chipOverMain:false BY
+    // CONSTRUCTION, STRONGER than the old off-canvas seat), and the fan is transient (crosses
+    // the edge on hover only, cleared from the content side by `--dock-content-safe-inset`).
+    // So S5 FOLLOWS the reinvent: it asserts the library slot seats CONTAINED at the dock edge
+    // (`inset-inline-end: 0`), NOT the retired always-OUTSIDE `inset-inline-start: 100%` and
+    // NOT a demo re-seat that would clobber the containment on the shell.
+    // `stripCss` blanks block comments, so the doc mention of the retired `100%` anchor
+    // never false-matches (only a LIVE declaration would).
+    facts.containedSeat =
+        /\.glass-dock-frame\[data-has-rail\]\.vertical\s+\.dock-hairline-slot\s*\{[^}]*inset-inline-end:\s*0\b/.test(
+            css,
+        ) && !/inset-inline-start:\s*100%/.test(css);
+    if (!facts.containedSeat)
+        violations.push("S5: the reinvented CONTAINED rest topology is missing — the vertical `.dock-hairline-slot` must seat contained at the dock edge (`inset-inline-end: 0`, the BG.W-DOCK-RAIL-REINVENT inversion), never the retired always-OUTSIDE `inset-inline-start: 100%` (chipOverMain:false is now by CONTAINMENT, not a demo lower-gutter re-seat)");
+
+    // The library slot seats at the dock EDGE as an absolute gutter sibling (the fan crosses
+    // the edge OUTSIDE the dock box), not a content-band overlay.
     facts.slotSeatsAtEdge = /\.dock-hairline-slot\s*\{[\s\S]*?position:\s*absolute/.test(css);
     if (!facts.slotSeatsAtEdge)
         violations.push("S5: the `.dock-hairline-slot` is not an absolute gutter sibling — the stack must seat beyond the dock edge, never over a content band");
@@ -416,7 +428,7 @@ async function run() {
     console.log(`  S2 stack-once: exists=${facts.s2.dockStackExists} frame-no-clip(contain/backdrop/overflow)=${facts.s2.frameContains}/${facts.s2.frameBackdrop}/${facts.s2.frameOverflow} rail-slot=${facts.s2.railSlotPresent}`);
     console.log(`  S3 compositor: animates-layout=${facts.s3.animatesLayoutAxis} spring-dock=${facts.s3.usesSpringDock} staggered=${facts.s3.staggered} prm=${facts.s3.prmCarved}`);
     console.log(`  S4 stack: visibleCount=${facts.s4.visibleCountDefault} fading-scroll=${facts.s4.usesFadingScroll} member-floating=${facts.s4.memberReadsFloating}`);
-    console.log(`  S5 topology: demo-gutter=${facts.s5.demoGutterSeat} slot-at-edge=${facts.s5.slotSeatsAtEdge}`);
+    console.log(`  S5 topology: contained-seat=${facts.s5.containedSeat} slot-at-edge=${facts.s5.slotSeatsAtEdge}`);
     console.log(`  S6 consumers=${facts.s6.consumerCount} selected-is-model=${facts.s6.selectedIsModel} no-shadow=${!facts.s6.hasSelectionShadow}`);
     console.log(`  born-RED: reconstructed=${facts.bornRed.reconstructed} dockRail@head=${facts.bornRed.dockRailAtHead}`);
     console.log(`  self-tests: ${Object.entries(facts.selfTests).map(([k, v]) => `${k}=${v ? "OK" : "BROKE"}`).join(" ")}`);

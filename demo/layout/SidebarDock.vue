@@ -23,6 +23,7 @@ import {
     DockIconButton,
     DockSection,
     DockSeparator,
+    DockStack,
     GlassDock,
     type DockSectionDescriptor,
 } from "@glass/components/custom/dock";
@@ -106,7 +107,7 @@ function go(categoryId: string): void {
 // must not fight the 768px breakpoint). SidebarDock passes `onNavigate` so a facet
 // activation closes the mobile off-canvas Sheet host it reuses; the category-nav loop
 // (`go`) + the dock's own `sections` descriptors stay LOCAL.
-const { railItems, railContext, onFacetKeydown, openDockMorph } = useShellNavDock({
+const { railItems, railContext, openDockMorph } = useShellNavDock({
     onNavigate: () => emit("navigate"),
 });
 
@@ -256,76 +257,13 @@ const ringCoverage = computed<BorderProgressCoverage>(() => {
                         </TooltipContent>
                     </Tooltip>
 
-                    <!-- W-NAV-DOCK-FIX F8 / GOLDEN M3-c — the CONTEXTUAL FACET RAIL. The
-                         route→facet resolver (`useContextualDockLayers` → `railItems`) was
-                         a DEAD computed (never rendered); it now drives a real roving
-                         tablist of facet chips, seated below the categories behind a
-                         <DockSeparator> seam, rendered ONLY when the section carries >1
-                         facet (a single-facet section shows no rail — no clutter). Each
-                         chip is a <DockIconButton :active> so it COMPOSES the SHARED
-                         `.glass-capsule` register (the ONE warm lifted-lozenge recipe) —
-                         the selected chip re-points `--glass-capsule-fill` toward its facet
-                         accent (the post-fence WARM `--section-color-N`), NEVER a parallel
-                         selected-fill. The active chip TRAVELS on a `data-active` flip with
-                         the capsule's own glide+lift; a one-shot warm accent-flood rides the
-                         `--dock-facet-flood` envelope (dock-nav.css). Clicking a chip writes
-                         `railContext` (the ONE registry — the SAME router navigation the
-                         category nav drives). role="tablist"/role="tab" + aria-selected +
-                         arrow-key roving = the real affordance; the flood is aria-hidden
-                         decoration. -->
-                    <template v-if="railItems.length > 1">
-                        <DockSeparator />
-                        <div
-                            class="demo-facet-rail demo-facet-rail--vertical"
-                            role="tablist"
-                            aria-orientation="vertical"
-                            aria-label="Section facets"
-                            data-testid="sidebar-facet-rail"
-                        >
-                            <Tooltip
-                                v-for="(facet, fi) in railItems"
-                                :key="facet.id"
-                            >
-                                <TooltipTrigger as-child>
-                                    <DockIconButton
-                                        type="button"
-                                        role="tab"
-                                        class="demo-facet-chip tap-squish"
-                                        :active="facet.id === railContext"
-                                        :aria-selected="facet.id === railContext"
-                                        :aria-label="facet.label"
-                                        :tabindex="facet.id === railContext ? 0 : -1"
-                                        :style="
-                                            facet.accent
-                                                ? { '--dock-facet-accent': facet.accent }
-                                                : undefined
-                                        "
-                                        @click="railContext = facet.id"
-                                        @keydown="onFacetKeydown($event, fi)"
-                                    >
-                                        <component
-                                            :is="facet.icon"
-                                            v-if="facet.icon"
-                                            class="h-4 w-4"
-                                            aria-hidden="true"
-                                        />
-                                        <span
-                                            v-else
-                                            class="demo-facet-chip__dot"
-                                            aria-hidden="true"
-                                        />
-                                    </DockIconButton>
-                                </TooltipTrigger>
-                                <TooltipContent
-                                    v-if="showTooltips"
-                                    side="right"
-                                    :side-offset="10"
-                                >
-                                    {{ facet.label }}
-                                </TooltipContent>
-                            </Tooltip>
-                        </div>
-                    </template>
+                    <!-- BG.W-DOCK-RAIL-REINVENT (F3.R4) — the CONTEXTUAL FACET RAIL is now
+                         the CONTAINED reinvented `<DockStack mode="facets">` in the `#rail`
+                         slot below (persistent shell chrome, box-INVIOLATE): at rest a
+                         contained core + the `--dock-rail-hairline` warm-ink line adjacent
+                         to the categories, fanning OUT across the dock edge on hover/focus.
+                         The prior always-visible in-flow `demo-facet-rail` tablist is RETIRED
+                         (clean break) onto that ONE reinvented rail — no double facet-nav. -->
                 </TooltipProvider>
             </template>
 
@@ -383,11 +321,28 @@ const ringCoverage = computed<BorderProgressCoverage>(() => {
             </template>
         </DockSection>
 
-        <!-- BD.W-DOCK-CORE (A1) — the broken `mode="facets"` carousel rail is REMOVED
-             (clean break, no alias). The half-rendered facet carousel collided with the
-             dock content (the user's "erroneous BROKEN RAIL element"). The section's
-             contextual facets are carried by the in-flow `<DockSection>` category nav above
-             (the dock's own tabs/sections facility) — no orphaned carousel. -->
+        <!-- BG.W-DOCK-RAIL-REINVENT (F3.R4) — the reinvented CONTAINED rail restored to the
+             persistent shell chrome (the BD.W-DOCK-CORE A1 removal REVERSED under the
+             inverted topology). At rest the stack is ENTIRELY CONTAINED in the dock box —
+             the `mode="facets"` core reads as a normal dock icon seated at the trailing edge
+             + the `--dock-rail-hairline` warm-ink line; on hover/focus the facet chips FAN
+             OUT across the dock edge into the gutter (asymmetric-golden, box-INVIOLATE
+             deltaW=deltaH=0). Each chip carries its per-facet `--glass-accent` context hue.
+             Clicking writes `railContext` (the ONE registry — the SAME router navigation).
+             Rendered only when the section carries >1 facet (single-facet routes show no
+             rail — no clutter). This is the ground the BD-removed broken carousel could not
+             stand on: the new topology never collides with the dock content. -->
+        <template #rail>
+            <DockStack
+                v-if="railItems.length > 1"
+                v-model:selected="railContext"
+                mode="facets"
+                :items="railItems"
+                core-label="Section facets"
+                position="end"
+                data-testid="sidebar-facet-rail"
+            />
+        </template>
     </GlassDock>
 
     <!-- The page-scroll progress as the dock's own BORDER (BG.W-DOCK-SCROLL-PROGRESS).

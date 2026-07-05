@@ -862,7 +862,12 @@ function onAuroraInitError(err: Error): void {
                         <Bookmark class="size-4" aria-hidden="true" />
                     </DockIconButton>
 
-                    <!-- THE FACET CAROUSEL — fans in the gutter beside the column. -->
+                    <!-- THE FACET CAROUSEL — fans in the gutter beside the column. This
+                         instance paints the `wrap` DISPLAY-OPTION (BG.W-DOCK-RAIL-REINVENT
+                         F3.R4): the 8-member facet set exceeds `visible-count=4`, so `wrap`
+                         WRAPS the fan into a second rank instead of scrolling (the horizontal
+                         twin above scrolls through the ONE FadingScroll port — both display
+                         options painted, box-INVIOLATE either way). -->
                     <template #rail>
                         <DockStack
                             v-model:selected="railContext"
@@ -871,6 +876,7 @@ function onAuroraInitError(err: Error): void {
                             :core="Folder"
                             core-label="Switch context"
                             :visible-count="4"
+                            wrap
                             position="end"
                             data-testid="liquid-rail-facets-vertical"
                         />

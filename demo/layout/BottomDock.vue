@@ -25,6 +25,7 @@ import {
     DockIconButton,
     DockSection,
     DockSeparator,
+    DockStack,
     DockTabButton,
     GlassDock,
     type DockSectionDescriptor,
@@ -80,7 +81,7 @@ function goToStory(storyId: string): void {
 // not fight the 768px breakpoint). The BottomDock is the persistent bar, so it passes
 // no `onNavigate` (a facet click just changes route); the in-category story-nav loop +
 // the dock's own `sections` descriptors stay LOCAL.
-const { railItems, railContext, onFacetKeydown, openDockMorph } = useShellNavDock();
+const { railItems, railContext, openDockMorph } = useShellNavDock();
 
 // BA.W-DOCK-SECTIONS — the declarative tripartite descriptor. The deleted section
 // model returns WITHOUT inflation: <DockSection> GROUPS the EXISTING in-flow controls —
@@ -185,68 +186,13 @@ const hasNext = computed(() =>
             <DockSection :sections="sections" aria-label="Story dock sections">
                 <template #story-nav>
                     <TooltipProvider :delay-duration="250">
-                        <!-- W-NAV-DOCK-FIX F8 / GOLDEN M3-c — the CONTEXTUAL FACET RAIL (the
-                             horizontal twin of the SidebarDock rail). The route→facet
-                             resolver (`useContextualDockLayers` → `railItems`) was a DEAD
-                             computed; it now drives a real roving tablist of facet chips
-                             leading the story-nav zone, rendered ONLY when the section
-                             carries >1 facet. Each chip is a <DockIconButton :active> that
-                             COMPOSES the SHARED `.glass-capsule` register — the selected chip
-                             re-points `--glass-capsule-fill` toward its WARM facet accent
-                             (the post-fence `--section-color-N`), travels on the capsule's
-                             glide+lift, and fires a one-shot warm accent-flood
-                             (`--dock-facet-flood`, dock-nav.css). Clicking writes
-                             `railContext` (the ONE registry). role="tablist"/role="tab" +
-                             aria-selected + arrow-key roving is the affordance. -->
-                        <template v-if="railItems.length > 1">
-                            <div
-                                class="demo-facet-rail demo-facet-rail--horizontal"
-                                role="tablist"
-                                aria-orientation="horizontal"
-                                aria-label="Section facets"
-                                data-testid="bottom-facet-rail"
-                            >
-                                <Tooltip
-                                    v-for="(facet, fi) in railItems"
-                                    :key="facet.id"
-                                >
-                                    <TooltipTrigger as-child>
-                                        <DockIconButton
-                                            type="button"
-                                            role="tab"
-                                            class="demo-facet-chip tap-squish"
-                                            :active="facet.id === railContext"
-                                            :aria-selected="facet.id === railContext"
-                                            :aria-label="facet.label"
-                                            :tabindex="facet.id === railContext ? 0 : -1"
-                                            :style="
-                                                facet.accent
-                                                    ? { '--dock-facet-accent': facet.accent }
-                                                    : undefined
-                                            "
-                                            @click="railContext = facet.id"
-                                            @keydown="onFacetKeydown($event, fi)"
-                                        >
-                                            <component
-                                                :is="facet.icon"
-                                                v-if="facet.icon"
-                                                class="h-4 w-4"
-                                                aria-hidden="true"
-                                            />
-                                            <span
-                                                v-else
-                                                class="demo-facet-chip__dot"
-                                                aria-hidden="true"
-                                            />
-                                        </DockIconButton>
-                                    </TooltipTrigger>
-                                    <TooltipContent side="top" :side-offset="10">
-                                        {{ facet.label }}
-                                    </TooltipContent>
-                                </Tooltip>
-                            </div>
-                            <DockSeparator />
-                        </template>
+                        <!-- BG.W-DOCK-RAIL-REINVENT (F3.R4) — the CONTEXTUAL FACET RAIL is now
+                             the CONTAINED reinvented `<DockStack mode="facets">` in the `#rail`
+                             slot below (persistent shell chrome, box-INVIOLATE): at rest a
+                             contained core + the `--dock-rail-hairline` line at the dock's top
+                             edge, fanning UP across the edge on hover/focus. The prior
+                             always-visible in-flow `demo-facet-rail` tablist is RETIRED (clean
+                             break) onto that ONE reinvented rail — no double facet-nav. -->
 
                         <!-- W-NAV-DOCK-FIX (defect 2) — prev/next are PERSISTENT four-state
                              controls, never DOM-absent mid-row. Disabled (not removed) at a
@@ -371,14 +317,27 @@ const hasNext = computed(() =>
                 </template>
             </DockSection>
 
-            <!-- BD.W-DOCK-CORE (A1) — the broken `mode="facets"` carousel rail is REMOVED
-                 (clean break, no alias). The half-rendered facet carousel collided with the
-                 dock content (the user's "erroneous BROKEN RAIL element"). The in-category
-                 nav-facet context is already carried by the in-flow `<DockSection>` tabs +
-                 the `nav`-zone category-jump group above (the dock's own tabs facility) — no
-                 orphaned carousel. The macOS-fan `mode="stack"` <DockStack> survives in
-                 stories that genuinely want the hover-expand stack; it is the facets carousel
-                 that was broken, removed from the SHELL nav dock specifically. -->
+            <!-- BG.W-DOCK-RAIL-REINVENT (F3.R4) — the reinvented CONTAINED rail restored to
+                 the persistent shell chrome (the BD.W-DOCK-CORE A1 removal REVERSED under the
+                 inverted topology). At rest the `mode="facets"` stack is ENTIRELY CONTAINED
+                 in the horizontal dock — the core reads as a normal dock control at the top-
+                 trailing corner + the `--dock-rail-hairline` line; on hover/focus the facet
+                 chips FAN UP across the top edge into the gutter (asymmetric-golden,
+                 box-INVIOLATE deltaW=deltaH=0, staying on-screen above the bottom-anchored
+                 bar). Each chip carries its per-facet `--glass-accent` context hue. Clicking
+                 writes `railContext` (the ONE registry). Rendered only when >1 facet — the
+                 new topology never collides with the dock content. -->
+            <template #rail>
+                <DockStack
+                    v-if="railItems.length > 1"
+                    v-model:selected="railContext"
+                    mode="facets"
+                    :items="railItems"
+                    core-label="Section facets"
+                    position="end"
+                    data-testid="bottom-facet-rail"
+                />
+            </template>
         </GlassDock>
     </nav>
 </template>

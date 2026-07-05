@@ -60,6 +60,14 @@ const DOCK_STACK = `${DOCK_DIR}/DockStack.vue`;
 const RAIL_PROJECTION = `${DOCK_DIR}/composables/railProjection.ts`;
 const STACK_CSS = "src/styles/dock/stack-rail.css";
 
+// The SHELL consumers + the demo wrap-surface (the F3.R4 paint-FIX arm — the primitive is
+// device-free-correct T1-T5, but the paint verdict FAILED on WHERE the rail paints: the
+// named shell docks rendered NO <DockStack>, and no demo exercised the `wrap` axis).
+const SIDEBAR = "demo/layout/SidebarDock.vue";
+const BOTTOM = "demo/layout/BottomDock.vue";
+const LIQUID_PLAYGROUND = "demo/stories/dock/liquid-playground.vue";
+const RAIL_STORY = "demo/stories/dock/rail.vue";
+
 // the HEAD tree BEFORE this wave (the always-OUTSIDE topology — the born-RED anchor).
 const PRE_FIX_COMMIT = "HEAD";
 
@@ -280,6 +288,60 @@ export function detectT5() {
     return { violations, facts };
 }
 
+// ── T6 — the SHELL CONSUMERS wire the reinvented rail + the wrap axis is PAINTED ──
+// (F3.R4 paint-FIX). The device-free T1-T5 verify the PRIMITIVE; the paint verdict FAILED
+// on WHERE it paints — the named shell docks (SidebarDock + BottomDock) rendered NO
+// <DockStack> (the #rail slot was a BD-removal comment; the user's fold names "the two shell
+// docks" as ≥2-consumers at birth), and no demo exercised the `wrap` display-option. This
+// clause closes both: (a) both shell docks author a `#rail` <DockStack mode="facets"> over
+// railItems/railContext, (b) the retired in-flow `demo-facet-rail` tablist is GONE from the
+// shells (no double facet-nav), (c) ≥1 demo passes `wrap` (T4's axis reaches a rendered
+// instance). Born-RED on HEAD's un-wired shell.
+function shellWiresRail(code) {
+    return (
+        /import\s*\{[^}]*\bDockStack\b[^}]*\}\s*from\s*["']@glass\/components\/custom\/dock["']/.test(code) &&
+        /#rail/.test(code) &&
+        /<DockStack\b/.test(code) &&
+        /mode\s*=\s*"facets"/.test(code) &&
+        /:items\s*=\s*"railItems"/.test(code) &&
+        /v-model:selected\s*=\s*"railContext"/.test(code)
+    );
+}
+export function detectT6() {
+    const violations = [];
+    const facts = {};
+    const sidebar = stripVue(readRel(SIDEBAR));
+    const bottom = stripVue(readRel(BOTTOM));
+    const lp = stripVue(readRel(LIQUID_PLAYGROUND));
+    const railStory = stripVue(readRel(RAIL_STORY));
+
+    // (a) both shell docks import + render the reinvented rail in the #rail slot.
+    facts.sidebarWiresRail = shellWiresRail(sidebar);
+    facts.bottomWiresRail = shellWiresRail(bottom);
+    if (!facts.sidebarWiresRail)
+        violations.push('T6: SidebarDock.vue does not wire the reinvented rail into its `#rail` slot (import DockStack + `<DockStack mode="facets" :items="railItems" v-model:selected="railContext">`) — the contained rail must be persistent shell chrome (fold-dock.md:69,106-107; the F3.R4 paint criterion-7 miss)');
+    if (!facts.bottomWiresRail)
+        violations.push('T6: BottomDock.vue does not wire the reinvented rail into its `#rail` slot — the contained rail must be persistent shell chrome (criterion-7)');
+
+    // (b) the retired in-flow `demo-facet-rail` tablist is GONE from the shells (no double
+    // facet-nav — the reinvented #rail rail is the ONE facet surface).
+    facts.sidebarNoOldTablist = !/demo-facet-rail/.test(sidebar);
+    facts.bottomNoOldTablist = !/demo-facet-rail/.test(bottom);
+    if (!facts.sidebarNoOldTablist)
+        violations.push("T6: SidebarDock.vue still renders the retired in-flow `demo-facet-rail` tablist — the reinvented `#rail` rail supersedes it (no double facet-nav)");
+    if (!facts.bottomNoOldTablist)
+        violations.push("T6: BottomDock.vue still renders the retired in-flow `demo-facet-rail` tablist — the reinvented `#rail` rail supersedes it");
+
+    // (c) the `wrap` display-option (T4) reaches ≥1 rendered instance (criterion-4 "both
+    // painted" — visibleCount scrolls, wrap wraps).
+    facts.wrapPainted =
+        /<DockStack\b[^>]*\bwrap\b/.test(lp) || /<DockStack\b[^>]*\bwrap\b/.test(railStory);
+    if (!facts.wrapPainted)
+        violations.push("T6: no demo passes `wrap` to a `<DockStack>` — the wrap display-option (T4) is defined in code but reaches no rendered instance (the F3.R4 paint criterion-4 miss)");
+
+    return { violations, facts };
+}
+
 // ── self-tests (the detector bites its planted fixtures) ──
 function selfTests() {
     const out = {};
@@ -302,6 +364,23 @@ function selfTests() {
     out.t4 = (() => !/wrap\?:\s*boolean/.test("visibleCount?: number;"))();
     // T5 — a re-clipped frame reds.
     out.t5 = (() => /contain\s*:/.test("display: inline-flex; contain: paint;"))();
+    // T6a — a shell WITHOUT the #rail <DockStack> wiring reds.
+    out.t6a = (() =>
+        !shellWiresRail(
+            '<template><GlassDock><DockSection :sections="sections" /></GlassDock></template>',
+        ))();
+    // T6b — a shell WITH the full reinvented #rail wiring passes (the detector is not
+    // hollow — it greens the real shape).
+    out.t6b = (() =>
+        shellWiresRail(
+            'import { DockStack } from "@glass/components/custom/dock"; ' +
+                '<template #rail><DockStack mode="facets" :items="railItems" v-model:selected="railContext" /></template>',
+        ))();
+    // T6c — a demo with NO `wrap` on any <DockStack> reds the wrap-painted arm.
+    out.t6c = (() => {
+        const noWrap = '<DockStack mode="facets" :items="facets" :visible-count="4" />';
+        return !/<DockStack\b[^>]*\bwrap\b/.test(noWrap);
+    })();
     return out;
 }
 
@@ -330,6 +409,7 @@ export async function detect() {
     const t3 = detectT3();
     const t4 = detectT4();
     const t5 = detectT5();
+    const t6 = detectT6();
     const realize = await detectRealize();
     const bornRed = await reconstructBornRed();
 
@@ -350,6 +430,7 @@ export async function detect() {
         ...t3.violations,
         ...t4.violations,
         ...t5.violations,
+        ...t6.violations,
         ...realizeViolations,
         ...bornRedViolations,
         ...stViolations,
@@ -362,6 +443,7 @@ export async function detect() {
             t3: t3.facts,
             t4: t4.facts,
             t5: t5.facts,
+            t6: t6.facts,
             extendsRealize: realize.facts,
             bornRed,
             selfTests: st,
@@ -378,7 +460,7 @@ async function run() {
         status,
         gate: "proof:dock-rail-reinvent",
         command: COMMAND,
-        note: "BG.W-DOCK-RAIL-REINVENT device-free SOURCE arm — the dock rail topology INVERTED (USER 07-05 + IMG_1880; supersedes the BE always-OUTSIDE read). EXTENDS proof:dock-rail-realize (R1-R5 + S1-S6 re-asserted GREEN). T1 COLLAPSED CONTAINMENT (the `inset-*: 100%` always-OUTSIDE anchor GONE, the core seats CONTAINED at the dock edge). T2 the CONTAINED HAIRLINE (--dock-rail-hairline 1-1.5px + a warm-ink --foreground color-mix, drawn by .dock-stack::before — no-gray). T3 the asymmetric-GOLDEN overhang (--dock-rail-overhang calc carries φ² 2.618 off the shared --dock-rail-golden source; DockStack writes it from RAIL_GOLDEN_SQ; the fan reads OUTWARD + INWARD). T4 the wrap display-options axis (additive default-off, visibleCount 3 kept). T5 box-INVIOLATE (frame no-clip) + ONE engine (--spring-dock, the KEPT PURE railProjection φ-math, no second SFC). Born-RED on HEAD's always-OUTSIDE topology. The LIVE collapsed-containment + fan-crossing PAINT (the φ² asymmetry, box-equality, both engines both modes) is the orchestrator's W-DOCK-RAIL-REINVENT-DELTA (the Fable non-authoring judge reads the three IMG_1880 fan-states).",
+        note: "BG.W-DOCK-RAIL-REINVENT device-free SOURCE arm — the dock rail topology INVERTED (USER 07-05 + IMG_1880; supersedes the BE always-OUTSIDE read). EXTENDS proof:dock-rail-realize (R1-R5 + S1-S6 re-asserted GREEN). T1 COLLAPSED CONTAINMENT (the `inset-*: 100%` always-OUTSIDE anchor GONE, the core seats CONTAINED at the dock edge). T2 the CONTAINED HAIRLINE (--dock-rail-hairline 1-1.5px + a warm-ink --foreground color-mix, drawn by .dock-stack::before — no-gray). T3 the asymmetric-GOLDEN overhang (--dock-rail-overhang calc carries φ² 2.618 off the shared --dock-rail-golden source; DockStack writes it from RAIL_GOLDEN_SQ; the fan reads OUTWARD + INWARD). T4 the wrap display-options axis (additive default-off, visibleCount 3 kept). T5 box-INVIOLATE (frame no-clip) + ONE engine (--spring-dock, the KEPT PURE railProjection φ-math, no second SFC). T6 (F3.R4 paint-FIX arm) the SHELL CONSUMERS wire the reinvented rail: both SidebarDock + BottomDock author a `#rail` <DockStack mode=\"facets\"> over railItems/railContext (the criterion-7 miss — the named shell docks rendered NO rail), the retired in-flow `demo-facet-rail` tablist is GONE (no double facet-nav), and ≥1 demo passes `wrap` (the criterion-4 miss — the wrap axis reaches a rendered instance). Born-RED on HEAD's always-OUTSIDE topology + the un-wired shell. The LIVE collapsed-containment + fan-crossing PAINT (the φ² asymmetry, box-equality, both engines both modes, NOW on the SHELL docks) is the orchestrator's W-DOCK-RAIL-REINVENT-DELTA (the Fable non-authoring judge reads the three IMG_1880 fan-states).",
         facts,
         violations,
     });
@@ -388,6 +470,7 @@ async function run() {
     console.log(`  T3 golden: overhang-calc=${facts.t3.overhangIsCalc} phi²=${facts.t3.overhangHasPhiSq} reads-golden=${facts.t3.overhangReadsGolden} fan-outward=${facts.t3.fanReadsOverhang} fan-inward=${facts.t3.fanReadsMinor} dockstack-writes=${facts.t3.dockStackWritesGolden} proj-exports=${facts.t3.projectionExportsGolden}`);
     console.log(`  T4 display: wrap-prop=${facts.t4.hasWrapProp} default-false=${facts.t4.wrapDefaultFalse} wrap-css=${facts.t4.wrapCss} visibleCount=${facts.t4.visibleCountDefault}`);
     console.log(`  T5 one-engine: frame-no-clip=${facts.t5.frameNoClip} spring-dock=${facts.t5.ridesSpringDock} projection-pure=${facts.t5.projectionPure} consumed=${facts.t5.projectionConsumed} no-2nd-sfc=${facts.t5.newRailSfcs.length === 0}`);
+    console.log(`  T6 shell-consumers: sidebar-rail=${facts.t6.sidebarWiresRail} bottom-rail=${facts.t6.bottomWiresRail} sidebar-no-old-tablist=${facts.t6.sidebarNoOldTablist} bottom-no-old-tablist=${facts.t6.bottomNoOldTablist} wrap-painted=${facts.t6.wrapPainted}`);
     console.log(`  extends proof:dock-rail-realize: violations=${facts.extendsRealize ? "(folded)" : "n/a"}`);
     console.log(`  born-RED: reconstructed=${facts.bornRed.reconstructed} outside-anchor@head=${facts.bornRed.outsideAnchorAtHead}`);
     console.log(`  self-tests: ${Object.entries(facts.selfTests).map(([k, v]) => `${k}=${v ? "OK" : "BROKE"}`).join(" ")}`);

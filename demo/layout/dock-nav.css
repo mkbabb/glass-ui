@@ -30,8 +30,6 @@
     --demo-nav-bottom-inset: calc(0.75rem + env(safe-area-inset-bottom, 0px));
     /* The fixed sidebar rail column width. */
     --demo-nav-rail-w: 4.5rem;
-    /* W-NAV-DOCK-FIX F8 — the contextual facet-rail gap (the chip run spacing). */
-    --demo-facet-gap: 0.25rem;
 }
 
 /* ── Sidebar fixed-rail occupancy ──────────────────────────────────────────
@@ -52,54 +50,18 @@
     margin: 0;
 }
 
-/* ── BC.W-DOCK-STACK-RAIL — the macOS hover-expand STACK seats in the LOWER gutter
-   (chipOverMain:false on EVERY route, the chronic chip-graze dead by TOPOLOGY) ──
-   The divider-carousel + its seam-locator (`--dock-rail-seam-offset`) are RETIRED; the
-   demo's old `.dock-hairline-extend*` chip-strip overrides go with them (clean break, no
-   dead orphan). The stack-rail's library geometry (stack-rail.css) hangs the vertical
-   dock's stack off the TRAILING (inline-end) edge. But the fixed sidebar aside is 4.5rem
-   (~82px) wide, fully occupied by the ~58px dock centered in it — the side gutters are too
-   narrow for the fan, AND the trailing gutter abuts <main>. So the demo re-seats the
-   stack slot into the LOWER gutter (the dead rail space below the controls, within the
-   aside's own column width), the fan rising UP, capped at the rail width — it can never
-   reach <main>/the title/a form field at ANY y. The chip-graze that revoked the BA
-   dock/shell PASS is dead by structure (the fan never shares an x-band with <main>), not
-   by chasing a seam Y. The library box stays INVIOLATE (this is demo-shell topology only;
-   presets-in-consumers). */
-.demo-sidebar-rail .glass-dock-frame[data-has-rail].vertical .dock-hairline-slot {
-    /* Re-seat the slot from the trailing edge into the LOWER gutter: span the dock's own
-       inline width (centered), anchored to the frame bottom, fanning up — clear of <main>
-       (which is to the inline-end of the aside). */
-    inset-inline-start: 0;
-    inset-inline-end: 0;
-    inline-size: 100%;
-    inset-block-start: auto;
-    inset-block-end: 0;
-    block-size: auto;
-    align-items: center;
-    justify-content: flex-end;
-}
-.demo-sidebar-rail .dock-hairline-slot .dock-stack.vertical {
-    /* In the lower gutter the stack is a VERTICAL icon column (not the library's trailing
-       row), bottom-aligned, capped at the rail width so a member can never reach <main>. */
-    flex-direction: column;
-    align-items: center;
-    max-inline-size: var(--demo-nav-rail-w, 4.5rem);
-}
-.demo-sidebar-rail .dock-hairline-slot .dock-stack.vertical .dock-stack-fan {
-    flex-direction: column;
-    align-items: center;
-    max-inline-size: var(--demo-nav-rail-w, 4.5rem);
-    max-block-size: min(40vh, 18rem);
-}
-/* The members tuck DOWN toward the core (the dock floor) at rest and rise on expand —
-   the lower-gutter fan axis (overriding the library's inline tuck). */
-.demo-sidebar-rail .dock-hairline-slot .dock-stack.vertical .dock-stack-member {
-    translate: 0 var(--dock-rail-extend-length);
-}
-.demo-sidebar-rail .dock-hairline-slot .dock-stack.vertical.is-expanded .dock-stack-member {
-    translate: 0 0;
-}
+/* ── BG.W-DOCK-RAIL-REINVENT (F3.R4) — the reinvented CONTAINED rail paints the LIBRARY
+   default topology; the demo re-seat is RETIRED (clean break, no dead orphan) ──
+   The BE-era `.demo-sidebar-rail … .dock-hairline-slot` / `.dock-stack.vertical` re-seat
+   forced the OLD always-OUTSIDE stack into the LOWER gutter (fanning UP off the dock floor)
+   because the old topology floated the WHOLE stack outside the dock box, abutting <main>.
+   The reinvented topology (stack-rail.css) INVERTS that: at REST the stack is ENTIRELY
+   CONTAINED in the dock box (zero gutter presence — just the core + the `--dock-rail-hairline`
+   line), and the fan is TRANSIENT (crossing the trailing edge only on hover/focus). So the
+   demo no longer overrides the slot at all — the library default paints, and the transient
+   fan reach is cleared from the content side by `--dock-content-safe-inset` (the
+   `.demo-main-scroller` scroll-padding below), NOT by re-seating the whole rail. The library
+   box stays INVIOLATE (deltaW=deltaH=0). */
 
 /* ── Active-category — the SHIPPED iOS luminance-lift rail polish (AX.W06 demo ==
    shipped; de-red'd at AZ.W-REGISTER-IOS) ────────────────────────────────────
@@ -249,110 +211,16 @@
 }
 
 /* ════════════════════════════════════════════════════════════════════════
-   W-NAV-DOCK-FIX F8 / GOLDEN M3-c — the CONTEXTUAL FACET RAIL (the switch made liquid)
-   ───────────────────────────────────────────────────────────────────────
-   The route→facet resolver (`useContextualDockLayers`) was a DEAD computed; the rail
-   renders it as a real roving tablist of facet chips. Each chip is a <DockIconButton>
-   that COMPOSES the SHARED `.glass-capsule` register (the ONE warm lifted-lozenge
-   recipe — the demo NEVER forks a parallel selected-fill). The demo adds ONLY the
-   demo-private axes the library box cannot know: the rail run layout, the WARM accent
-   override on the selected chip's `--glass-capsule-fill`, and the one-shot accent-flood
-   on the `data-active` flip (the liquid SWITCH weight). Compositor-only + Safari-native.
+   BG.W-DOCK-RAIL-REINVENT (F3.R4) — the in-flow `.demo-facet-rail`/`.demo-facet-chip`
+   tablist recipe is RETIRED (clean break, no dead orphan) ──────────────────
+   The BE-era always-visible facet tablist inside the dock box is superseded by the
+   reinvented CONTAINED `<DockStack mode="facets">` rail in the shell docks' `#rail` slot
+   (the contained core + `--dock-rail-hairline`, fanning across the edge on hover). The
+   facet-chip layout / `--glass-capsule-fill` accent / one-shot `demo-facet-flood` recipe
+   moved onto the library `<DockStack>` facet mode (the per-facet `--glass-accent` rim), so
+   these demo-local `.demo-facet-*` rules + the `demo-facet-flood` keyframes are DELETED — no
+   double facet-nav, no orphan CSS.
    ════════════════════════════════════════════════════════════════════════ */
-.demo-facet-rail {
-    display: flex;
-    align-items: center;
-    gap: var(--demo-facet-gap, 0.25rem);
-    min-inline-size: 0;
-}
-.demo-facet-rail--vertical {
-    flex-direction: column;
-}
-.demo-facet-rail--horizontal {
-    flex-direction: row;
-}
-
-/* The selected facet chip re-points the SHARED `.glass-capsule` fill toward its WARM
-   facet accent (the post-fence `--section-color-N`, passed inline as
-   `--dock-facet-accent`). It is a SUB-PERCEPTUAL warm bias over the capsule's own
-   lifted-plate composite — the accent rides a small `color-mix` toward the hue, NEVER a
-   saturated plate flood (the W-REGISTER-IOS "selected reads as glass, never a brand
-   flood" floor; the warm-cream identity holds). Unset accent ⇒ the capsule's default
-   selected glass tier (`--dock-control-active-bg`) reads through untouched. */
-.demo-facet-chip[data-active] {
-    --glass-capsule-fill: color-mix(
-        in oklab,
-        var(--dock-control-active-bg, var(--glass-bg-floating)),
-        var(--dock-facet-accent, transparent) 24%
-    );
-}
-
-/* The fallback dot for an icon-less facet (a small warm pip so the chip reads as a
-   selectable affordance, not an empty plate). At rest it is the muted ink; selected it
-   firms toward the accent. */
-.demo-facet-chip__dot {
-    inline-size: 0.5rem;
-    block-size: 0.5rem;
-    border-radius: var(--radius-pill, 9999px);
-    background: color-mix(
-        in oklab,
-        var(--muted-foreground),
-        var(--dock-facet-accent, transparent) 40%
-    );
-}
-.demo-facet-chip[data-active] .demo-facet-chip__dot {
-    background: var(--dock-facet-accent, var(--foreground));
-}
-
-/* The one-shot WARM ACCENT-FLOOD — the liquid SWITCH weight (GOLDEN M3-c, the T4
-   EFFECTS-after-SPATIAL signature). On the `data-active` flip a plus-lighter wash off
-   the facet accent blooms then CLEARS — a `::after` overlay that fades in fast and out
-   slow on the cartoon-punch clock, trailing the chip's own capsule glide. Decorative
-   (aria-hidden / pointer-events:none); the real affordance is `aria-selected`. The flood
-   restarts each time `data-active` is set (the `animation` re-fires on the attribute
-   add). Compositor-only opacity — Safari-native, no goo, no backdrop-filter:url. */
-.demo-facet-chip {
-    position: relative;
-}
-.demo-facet-chip[data-active]::after {
-    content: "";
-    position: absolute;
-    inset: -2px;
-    z-index: 0;
-    border-radius: inherit;
-    pointer-events: none;
-    background: radial-gradient(
-        circle at center,
-        color-mix(in oklab, var(--dock-facet-accent, var(--primary)), transparent 35%),
-        transparent 72%
-    );
-    mix-blend-mode: plus-lighter;
-    opacity: 0;
-    animation: demo-facet-flood var(--duration-slow, 0.5s)
-        var(--ease-cartoon-punch, cubic-bezier(0.5, -0.2, 0.4, 1.2)) 1;
-}
-@keyframes demo-facet-flood {
-    0% {
-        opacity: 0;
-        scale: 0.86;
-    }
-    35% {
-        opacity: 0.85;
-        scale: 1.04;
-    }
-    100% {
-        opacity: 0;
-        scale: 1;
-    }
-}
-@media (prefers-reduced-motion: reduce) {
-    /* PRM — the flood is motion; retire it (the selected state still reads via the
-       capsule fill + the firm accent). */
-    .demo-facet-chip[data-active]::after {
-        animation: none;
-        opacity: 0;
-    }
-}
 
 /* ════════════════════════════════════════════════════════════════════════
    BD.W-SHELL-ROUTE-BLOOM (V-b) — the route-bloom SKELETON layout (kills the void)
