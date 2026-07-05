@@ -100,6 +100,8 @@ W-HANDMARK-PERFECT` (+14.4 pencil-boil). *(14.5 cross-repo-asks → F8.)*
 
 - `F9.R1 W-BLOB-SATELLITE-SHADE` (VALUEJS-R GAP-1 hard ask; F9; P; proof:viz/blob-color-equivalence; precond 6.9): the per-satellite `uSatColor[]` GL color-seam widen + `bodyLightness`/`lightnessFloor` on deriveBlobPalette; byte-identical default; the BA arm-B book discharged; rides 5.0.0.
 
+- `F9.R2 W-WATERCOLOR-RAF` (VALUEJS-S L3, P0; F9; H; proof:offscreen-pause): rebuild useWatercolorBlob's zombie animate-rAF on the library's useRAFLoop (pauseWhenHidden+PRM); no second loop.
+
 **SOTA-DESIGN fold rows (USER 07-04; recovered liquid-anim audit — the 5 new high-leverage findings; the other 8 validated existing waves):**
 - `F2.5 W-GLASS-DEPTH-TIER` (F2; P; proof:glass depth-tier arm; precond F2.3): map `--glass-depth` onto the tier ladder so overlay/menu default thicker than content (menu>popover>button by construction); zero new machinery.
 - `F5.4 W-BACKDROP-BLUR-ENGAGE` (F5; P; proof:motion blur-engage arm; precond F5.R2): the drag-driven blur reads off the live gesture scalar (--glass-drawer-t/--stage-t/--dock-expand-t), not a fixed duration; the iOS-27 blur-tracks-the-finger signature.

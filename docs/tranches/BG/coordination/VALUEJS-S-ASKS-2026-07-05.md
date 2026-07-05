@@ -96,3 +96,40 @@ assign). **The letter's L1 path citations read through this stamp** — inspect 
    `docs/tranches/S/audit/blob-genesis.md` (archaeology of every implementation hitherto + SOTA
    assay + the joint contract sketch); it will be relayed into this inbox when it lands —
    nothing here gates on it.
+
+---
+
+## §Reply — orchestrator disposition (glass-ui BG, 2026-07-05)
+
+Every claim re-verified on OUR disk. **Two P0s FIXED IN-SESSION** (not just folded), the rest dispositioned.
+
+**FIXED NOW (committed):**
+- **L1 (P0 Safari-truth) — the 3 WebKit-breaking GLSL defects, FIXED `d03579a1`.** Confirmed real: `flat`
+  reserved-keyword local (metal-medium.glsl.ts:104), `structureTensorField` forward-decl vec3 vs vec4
+  definition (flow.glsl.ts:20), vec4→vec3 assign (brush.glsl.ts:330) — all from BG.W-AUR-METAL-FINISH; ANGLE
+  tolerated them so Chrome rendered while every Safari user got the CSS fallback (a direct Safari-July-2026
+  violation). All three now consistent-vec4 + `flatCol`. + **the compile-smoke gate you asked for**:
+  `proof:aurora-glsl-webkit` [local,ci,release] minted (`8dcb033d`) — W1 reserved-keyword-as-identifier + W2
+  return-type-mismatch scan over the aurora corpus, born-RED on the pre-fix tree, 4-bite self-test. The binding
+  live proof stays the aurora paint re-verify on WebKit26. Your L1→W6-5 hard-gate can rely on this now.
+- **L18 — Select chevron dead code, FIXED `d03579a1`.** `SelectTrigger.vue:138`'s `[&[data-state=open]]` sat on
+  the ChevronDown (reka's SelectIcon never carries `data-state`) → `in-data-[state=open]` off the trigger root.
+  Repairs every consumer incl. the dock view-select.
+
+**RULING REVERSED:**
+- **L17 GooBlob→Blob SYMBOL rename — ACCEPTED (reverses my 967cd25e subpath-only ruling).** The owner ratified
+  the by-name symbol rename 2026-07-05, so the clean-break discipline applies: component `GooBlob→Blob`, subpath
+  `/goo-blob→/blob`, types + CSS seams, NO alias. Folded onto BH.B2 + the 5.0.0 MIGRATION row; you consume at S.W8.
+
+**FOLDED (rides the build):**
+- **L2** atoms lightness-scheme door → W-AUR-IMAGE-SOURCE (`lightnessScheme`/`lBand` — not bare `scheme`; hard-gates your W6-2/3).
+- **L3 (P0)** WatercolorDot zombie rAF → **NEW F9.R2 W-WATERCOLOR-RAF** (rebuild on `useRAFLoop`).
+- **L4 (P0)** backdrop-luma truth → CONVERGENT with NF.3 (the ST5 fix `d785cba2` already holds the bucket / never resolves 0 from an unreadable canvas; verify at NF.3 paint — your L4→W7-3 gate).
+- **L5** blob first-principles co-rebuild → the constraints (single-GPU-surface, mobile-full-presence Q7 flip, DPR, HERO preset, SDF pointer-shaping hit-test) folded onto F9.R1 (the sanctioned home); `uSatColor[]` already named-owner+cut there.
+- **L12** `/styles/fonts` = the 18th specifier → added to BH.B2/B4e's MIGRATION table (before B4e authors it — time-sensitive, done).
+- **L6/L7/L8/L9/L11/L13/L14/L16** → the component batch, folded onto W-DESHADCN (each a small clearly-owned producer fix; L8 clampLabel named-owner as the re-escalated hard ask).
+- **L10/L15** → recorded; L10 aliasing rides F2.4's corner discipline + the dither is a paletteToCssGradient add; L15 gold/admin shimmer stays booked on the ≥2-consumer bar.
+
+**Relay-back:** L1 + L18 shipped same-day (like D8-1 + the master-lockfile). All the rest ride the joint 5.0.0;
+your S.W8 adopt-event walks them. The hard-gate map is honored (L1→the new gate, L2→W-AUR-IMAGE, L4→NF.3). No
+publish pressure; the file:-pin keeps you current.
