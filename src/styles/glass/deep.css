@@ -41,4 +41,35 @@
     .glass-deep {
         --glass-blur-floating: var(--glass-blur-deep);
     }
+
+    /* ── The tier-ladder depth MAP (BG.W-GLASS-DEPTH-TIER) ──────────────────────
+       Map --glass-depth onto the tier ladder so the deep register's thickness
+       tracks surface PROMINENCE by construction: the overlay/menu rungs default a
+       HIGHER depth than the content rungs (menu > popover > button). Each rung sets
+       the ONE --glass-depth scalar from its named grade (tokens/glass-deep.css) — a
+       pure per-rung DEFAULT, NOT a new blur recipe. So a deep surface inherits its
+       tier's depth: a `deep` Card (glass-floating glass-deep) resolves the popover
+       grade (~15px), the hero CTA button (glass-wash btn-glass glass-deep) resolves
+       the content grade (~14px), a deep overlay/modal reaches the full 16px ceiling
+       — thickness tracks prominence by construction, ZERO new machinery.
+
+       D5-SAFE: no rung reads var(--glass-blur-deep) here — --glass-depth only DRIVES
+       the deep LERP (glass-deep.css), so a NON-deep tier surface is BYTE-UNCHANGED
+       (a plain popover stays the calm 13px; the calm ladder never reads --glass-depth)
+       and only a `.glass-deep`-composed surface consumes the graded depth.
+
+       SUBSTITUTION-vs-INHERITANCE (the recorded seam): zero-specificity :where() so
+       a consumer overrides the default at the element (`--glass-depth` inline / a
+       higher-specificity rule). To retune a whole band from an ancestor, override the
+       named grade token (`--glass-depth-popover: …`) — the tier rules read it, so it
+       cascades in (the per-band twin of the global --glass-depth ancestor dial). */
+    :where(.glass-overlay) {
+        --glass-depth: var(--glass-depth-menu);
+    }
+    :where(.glass-floating) {
+        --glass-depth: var(--glass-depth-popover);
+    }
+    :where(.glass-card, .glass-resting, .glass-quiet, .glass-wash) {
+        --glass-depth: var(--glass-depth-content);
+    }
 }

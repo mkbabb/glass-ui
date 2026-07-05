@@ -108,4 +108,33 @@
     --glass-blur-deep:
         blur(var(--glass-blur-deep-active-radius))
         saturate(var(--glass-saturate-deep-active));
+
+    /* ── The tier-depth MAP — thickness tracks surface PROMINENCE (BG.W-GLASS-DEPTH-TIER) ──
+       iOS-27 grammar: larger glass = thicker material AUTOMATICALLY — a control
+       flexing into a menu GAINS depth as part of the morph (WWDC25). glass-ui's deep
+       tier was opt-in per class at a UNIFORM --glass-depth: 1, so thickness did NOT
+       track prominence (a deep button read as thick as a deep menu). This MAP grades
+       the ONE --glass-depth scalar onto the tier ladder: the more-prominent overlay/
+       menu rungs default a HIGHER depth than the content rungs, so ANY deep surface
+       resolves its thickness BY CONSTRUCTION — menu > popover > button.
+
+       ZERO new machinery: the deep recipe already LERPs blur+saturate on --glass-depth
+       (D1), so a grade is a pure per-rung DEFAULT of the EXISTING scalar — no new blur
+       family, no new @property, no new compositing seam. The three grades span the
+       decided deep band [depth 0 ≡ the calm floating 13px floor, depth 1 ≡ the 16px
+       Apple-deep ceiling], so a content-tier deep control still clears the calm
+       floating floor (depth > 0) while only the menu/overlay rung reaches the full
+       ceiling: content ~14px < popover ~15px < menu 16px, saturate 1.67 < 1.74 < 1.8.
+
+       The grades are NAMED (not magic literals) so a consumer retunes a WHOLE BAND
+       from ONE ancestor override (`--glass-depth-popover: …`) — the per-band twin of
+       the global `--glass-depth` ancestor dial; the tier rules (glass/deep.css) read
+       these, so the override cascades in. */
+    --glass-depth-content: 0.35; /* content/button deep (wash/quiet/resting base) — the
+                                    LEAST-prominent deep rung: ~14.05px / saturate ~1.67. */
+    --glass-depth-popover: 0.7;  /* popover/dialog/menu-content + Card deep (floating
+                                    base) — the mid rung: ~15.1px / saturate ~1.74. */
+    --glass-depth-menu:    1;    /* menu/modal (overlay base) — the MOST-prominent deep
+                                    rung, at the full Apple-deep ceiling (16px / 1.8);
+                                    == the resting --glass-depth initial-value. */
 }

@@ -196,6 +196,144 @@ export function decideViolations(text) {
     return { violations, facts };
 }
 
+// ── the depth-tier predicate (pure) — BG.W-GLASS-DEPTH-TIER ───────────────────
+// iOS-27 grammar: larger glass = thicker material AUTOMATICALLY (a control flexing
+// into a menu GAINS depth as part of the morph — WWDC25). glass-ui's deep tier was
+// opt-in per class at a UNIFORM --glass-depth: 1, so thickness did NOT track surface
+// prominence. This wave maps the ONE inheriting --glass-depth scalar onto the tier
+// ladder so the deep register's thickness tracks prominence BY CONSTRUCTION —
+// overlay/menu rungs default a HIGHER depth than content rungs (menu > popover >
+// button). ZERO new machinery: a per-rung DEFAULT of the EXISTING scalar the deep
+// recipe already LERPs on (D1). Two files — the named grade tokens live in
+// tokens/glass-deep.css (glassDeepText), the tier-ladder MAP in glass/deep.css
+// (part of the glass monolith).
+//   DT1 — the three named grade tokens are declared in glass-deep.css as numeric
+//         values: --glass-depth-content, --glass-depth-popover, --glass-depth-menu.
+//   DT2 — MONOTONE by prominence: content < popover < menu, each in [0,1], content > 0
+//         (a deep content control still clears the calm floating floor at depth 0 —
+//         only the menu/overlay rung reaches the full ceiling at depth 1).
+//   DT3 — the tier-ladder MAP: the overlay rung sets --glass-depth to the menu grade,
+//         the floating rung to the popover grade, the content band to the content grade
+//         (overlay/menu default HIGHER than content — the finding's core).
+//   DT4 — ZERO new machinery + D5-safe: NO --glass-depth-setting tier rule reads
+//         var(--glass-blur-deep) or re-points a --glass-blur-* token (a base-tier deep
+//         leak the opt-in fence forbids — the map is a SCALAR default only), AND the
+//         deep recipe still READS var(--glass-depth) so the grade is load-bearing.
+// Born-RED at HEAD (no grade tokens, no tier map). A --self-test bite proves each
+// clause has teeth (a flat/reversed map, a missing grade, a blur-leak, a missing map).
+export function depthTierViolations(glassDeepText, glassCss) {
+    const violations = [];
+    const facts = {};
+    const deep = stripCss(glassDeepText || "");
+    const glass = squish(stripCss(glassCss || ""));
+
+    // DT1 — the named grade tokens (numeric).
+    const grade = (name) => {
+        const m = new RegExp(`--glass-depth-${name}\\s*:\\s*([0-9.]+)`).exec(deep);
+        return m ? Number(m[1]) : null;
+    };
+    const content = grade("content");
+    const popover = grade("popover");
+    const menu = grade("menu");
+    facts.grades = { content, popover, menu };
+    const missing = [];
+    if (content === null) missing.push("--glass-depth-content");
+    if (popover === null) missing.push("--glass-depth-popover");
+    if (menu === null) missing.push("--glass-depth-menu");
+    if (missing.length) {
+        violations.push(
+            `DT1: the tier-depth grade token(s) ${missing.join(", ")} are not declared in glass-deep.css — the ONE --glass-depth scalar maps onto the tier ladder via named per-band grades (zero new machinery)`,
+        );
+    }
+
+    // DT2 — MONOTONE by prominence (overlay/menu HIGHER than content).
+    if (content !== null && popover !== null && menu !== null) {
+        facts.gradesInRange = [content, popover, menu].every((v) => v >= 0 && v <= 1);
+        facts.gradesMonotone = content < popover && popover < menu;
+        if (!facts.gradesInRange) {
+            violations.push(
+                `DT2: a tier-depth grade is outside [0,1] (content=${content}, popover=${popover}, menu=${menu}) — --glass-depth is a 0..1 LERP scalar`,
+            );
+        }
+        if (!facts.gradesMonotone) {
+            violations.push(
+                `DT2: the tier-depth grades are NOT strictly increasing by prominence (content=${content} < popover=${popover} < menu=${menu} required) — overlay/menu rungs must default a HIGHER depth than content (menu > popover > button)`,
+            );
+        }
+        if (!(content > 0)) {
+            violations.push(
+                `DT2: --glass-depth-content is ${content} — a deep content control at depth 0 collapses to the calm floating floor (no "deep" read); the content grade must be > 0`,
+            );
+        }
+        if (!(menu <= 1)) {
+            violations.push(
+                `DT2: --glass-depth-menu is ${menu} — the deep register ceiling is depth 1 (the decided 16px); the menu grade must be ≤ 1`,
+            );
+        }
+    }
+
+    // DT3 — the tier-ladder MAP: each band sets --glass-depth from its grade. CSS rule
+    // bodies carry no nested braces (gradients use `()`), so the innermost `sel { body }`
+    // match is robust to the @layer wrapper (the definedControlFloor precedent). Only
+    // rules whose body sets --glass-depth are the tier-map rules (the `.glass-deep`
+    // floating re-point sets --glass-blur-floating, so it is NOT collected here).
+    const depthRules = [];
+    const ruleRe = /([^{}]+)\{([^{}]*)\}/g;
+    let rm;
+    while ((rm = ruleRe.exec(glass))) {
+        if (/--glass-depth\s*:/.test(rm[2])) depthRules.push({ sel: rm[1].trim(), body: rm[2] });
+    }
+    const bandRule = (clsRe) => depthRules.find((r) => clsRe.test(r.sel));
+    const overlayRule = bandRule(/\.glass-overlay\b/);
+    const floatingRule = bandRule(/\.glass-floating\b/);
+    const contentRule = bandRule(/\.glass-(resting|quiet|wash|card)\b/);
+    facts.overlayMapsMenu =
+        !!overlayRule && /--glass-depth\s*:\s*var\(--glass-depth-menu\)/.test(overlayRule.body);
+    facts.floatingMapsPopover =
+        !!floatingRule && /--glass-depth\s*:\s*var\(--glass-depth-popover\)/.test(floatingRule.body);
+    facts.contentMapsContent =
+        !!contentRule && /--glass-depth\s*:\s*var\(--glass-depth-content\)/.test(contentRule.body);
+    if (!facts.overlayMapsMenu) {
+        violations.push(
+            "DT3: no tier rule maps the .glass-overlay rung to `--glass-depth: var(--glass-depth-menu)` (glass/deep.css) — the overlay/menu band must default the highest deep grade",
+        );
+    }
+    if (!facts.floatingMapsPopover) {
+        violations.push(
+            "DT3: no tier rule maps the .glass-floating rung to `--glass-depth: var(--glass-depth-popover)` — the popover band must default the mid deep grade",
+        );
+    }
+    if (!facts.contentMapsContent) {
+        violations.push(
+            "DT3: no tier rule maps the content band (.glass-resting/.glass-quiet/.glass-wash/.glass-card) to `--glass-depth: var(--glass-depth-content)` — the content/button band must default the lowest deep grade (so menu > popover > button)",
+        );
+    }
+
+    // DT4 — ZERO new machinery + D5-safe: no --glass-depth-setting tier rule reads
+    // var(--glass-blur-deep) (a base-tier deep leak proof:glass-depth D5 forbids) OR
+    // re-points a --glass-blur-* token (the map is a SCALAR default only); AND the deep
+    // recipe still reads var(--glass-depth) (the grade is load-bearing, not a dead knob).
+    const leakRule = depthRules.find(
+        (r) => /var\(--glass-blur-deep\)/.test(r.body) || /--glass-blur-[a-z]+\s*:/.test(r.body),
+    );
+    facts.noBlurLeak = !leakRule;
+    if (leakRule) {
+        violations.push(
+            `DT4: a tier-depth map rule (${leakRule.sel}) reads var(--glass-blur-deep) or re-points a --glass-blur-* token — the map is a --glass-depth SCALAR default ONLY (a base-tier blur re-point is the deep-into-content leak proof:glass-depth D5 forbids; zero new machinery = no new blur recipe)`,
+        );
+    }
+    const deepActiveRadius =
+        /--glass-blur-deep-active-radius\s*:\s*([^;]+);/.exec(squish(deep))?.[1] ?? "";
+    facts.deepRecipeReadsDepth = /var\(--glass-depth\)/.test(deepActiveRadius);
+    if (!facts.deepRecipeReadsDepth) {
+        violations.push(
+            "DT4: the deep recipe (--glass-blur-deep-active-radius) does not read var(--glass-depth) — the tier-depth grade would be a DEAD KNOB (the deep blur must be driven by the scalar the map grades)",
+        );
+    }
+
+    return { violations, facts };
+}
+
 // ── the glass-fill-home predicate (pure) — BG.W-GLASS-REGISTER-UNIFY · R9 ─────
 // Given the concatenated glass cascade text, assert the `@utility glass-fill` HOME
 // is declared ONCE, composes the W55 oklab seam over the per-element rung, paints
@@ -1448,6 +1586,7 @@ export function detect() {
         readFile(STORY_HERO_SFC_FILE),
     );
     const refractWebgl = refractWebglViolations(readFile(GLASS_REFRACT_SHADER_FILE));
+    const depthTier = depthTierViolations(readFile(GLASS_DEEP_FILE), glassMonolith);
     // the self-test bites run EVERY run (the "proven every run" discipline) — a
     // bite that loses its teeth REDs the gate, so the anti-gameability arm can
     // never silently rot.
@@ -1464,6 +1603,7 @@ export function detect() {
             ...reversal.violations,
             ...cornerBackplate.violations,
             ...refractWebgl.violations,
+            ...depthTier.violations,
             ...biteFails,
         ],
         facts: {
@@ -1477,6 +1617,7 @@ export function detect() {
             darkArmColorReversal: reversal.facts,
             cornerBackplate: cornerBackplate.facts,
             refractWebgl: refractWebgl.facts,
+            depthTier: depthTier.facts,
             selfTestOk: biteFails.length === 0,
         },
     };
@@ -2126,6 +2267,64 @@ function selfTest() {
         );
     }
 
+    // ── depth-tier bites (BG.W-GLASS-DEPTH-TIER) ────────────────────────────────
+    const goodDeepGrades =
+        "DEEP-GLASS-DECIDED: retired-at-16px-cost-0B\n:root { " +
+        "--glass-blur-deep-radius: 16px; " +
+        "--glass-blur-deep-active-radius: calc((13px + 3px * var(--glass-depth)) * var(--glass-level)); " +
+        "--glass-depth-content: 0.35; --glass-depth-popover: 0.7; --glass-depth-menu: 1; }";
+    const goodDepthMap =
+        "@layer components { .glass-deep { --glass-blur-floating: var(--glass-blur-deep); } " +
+        ":where(.glass-overlay) { --glass-depth: var(--glass-depth-menu); } " +
+        ":where(.glass-floating) { --glass-depth: var(--glass-depth-popover); } " +
+        ":where(.glass-card, .glass-resting, .glass-quiet, .glass-wash) { --glass-depth: var(--glass-depth-content); } }";
+    // positive: the well-formed grade table + tier map must PASS clean.
+    if (depthTierViolations(goodDeepGrades, goodDepthMap).violations.length !== 0) {
+        fails.push(
+            "self-test depth-tier: the well-formed grade+map fixture unexpectedly RED — " +
+                depthTierViolations(goodDeepGrades, goodDepthMap).violations.join(" | "),
+        );
+    }
+    // bite DT1 — a missing grade token must flag.
+    const missingGrade = goodDeepGrades.replace("--glass-depth-popover: 0.7; ", "");
+    if (!depthTierViolations(missingGrade, goodDepthMap).violations.some((v) => /DT1/.test(v))) {
+        fails.push("self-test DT1: a missing --glass-depth-popover grade was NOT flagged");
+    }
+    // bite DT2 — a flat map (content == menu, no gradient) must flag not-increasing.
+    const flatGrades = goodDeepGrades.replace("--glass-depth-menu: 1;", "--glass-depth-menu: 0.35;");
+    if (!depthTierViolations(flatGrades, goodDepthMap).violations.some((v) => /DT2/.test(v))) {
+        fails.push("self-test DT2: a flat (content==menu) grade table was NOT flagged (no prominence gradient)");
+    }
+    // bite DT2 — a reversed map (content > menu) must flag.
+    const reversedGrades = goodDeepGrades
+        .replace("--glass-depth-content: 0.35;", "--glass-depth-content: 1;")
+        .replace("--glass-depth-menu: 1;", "--glass-depth-menu: 0.35;");
+    if (!depthTierViolations(reversedGrades, goodDepthMap).violations.some((v) => /DT2/.test(v))) {
+        fails.push("self-test DT2: a reversed (content>menu) grade table was NOT flagged");
+    }
+    // bite DT3 — a glass cascade with grades but NO tier map must flag.
+    const noMap = "@layer components { .glass-deep { --glass-blur-floating: var(--glass-blur-deep); } }";
+    if (!depthTierViolations(goodDeepGrades, noMap).violations.some((v) => /DT3/.test(v))) {
+        fails.push("self-test DT3: a missing tier-ladder map (grades but no --glass-depth rungs) was NOT flagged");
+    }
+    // bite DT4 — a tier-map rule that re-points a base-tier blur to the deep family
+    // (the deep-into-content leak proof:glass-depth D5 forbids) must flag.
+    const leakMap = goodDepthMap.replace(
+        ":where(.glass-overlay) { --glass-depth: var(--glass-depth-menu); }",
+        ":where(.glass-overlay) { --glass-depth: var(--glass-depth-menu); --glass-blur-overlay: var(--glass-blur-deep); }",
+    );
+    if (!depthTierViolations(goodDeepGrades, leakMap).violations.some((v) => /DT4/.test(v))) {
+        fails.push("self-test DT4: a tier-map rule leaking var(--glass-blur-deep) was NOT flagged (the D5 fence has no teeth)");
+    }
+    // bite DT4 — a deep recipe that drops var(--glass-depth) (the grade a dead knob) must flag.
+    const deadKnobGrades = goodDeepGrades.replace(
+        "--glass-blur-deep-active-radius: calc((13px + 3px * var(--glass-depth)) * var(--glass-level));",
+        "--glass-blur-deep-active-radius: calc(16px * var(--glass-level));",
+    );
+    if (!depthTierViolations(deadKnobGrades, goodDepthMap).violations.some((v) => /DT4/.test(v))) {
+        fails.push("self-test DT4: a deep recipe that drops var(--glass-depth) (a dead-knob grade) was NOT flagged");
+    }
+
     return fails;
 }
 
@@ -2292,6 +2491,18 @@ function run() {
     );
     console.log(
         `  RW5 one wrapper   : raw-reads=${rw.rawTextureReads ?? "?"} sampleBG-sites=${rw.sampleBGCallSites ?? "?"}  one-wrapper=${rw.oneWrapper ? "✓" : "✗"}`,
+    );
+    const dt = facts.depthTier ?? {};
+    const dtg = dt.grades ?? {};
+    console.log("proof:glass — arm: depth-tier (BG.W-GLASS-DEPTH-TIER — --glass-depth mapped onto the tier ladder)");
+    console.log(
+        `  DT1/2 grades      : content=${dtg.content ?? "?"} < popover=${dtg.popover ?? "?"} < menu=${dtg.menu ?? "?"}  monotone=${dt.gradesMonotone ? "✓" : "✗"} in-range=${dt.gradesInRange ? "✓" : "✗"} (overlay/menu > content by construction)`,
+    );
+    console.log(
+        `  DT3 tier map      : overlay→menu=${dt.overlayMapsMenu ? "✓" : "✗"}  floating→popover=${dt.floatingMapsPopover ? "✓" : "✗"}  content→content=${dt.contentMapsContent ? "✓" : "✗"}`,
+    );
+    console.log(
+        `  DT4 zero-machinery: no-blur-leak=${dt.noBlurLeak ? "✓" : "✗"}  deep-recipe-reads-depth=${dt.deepRecipeReadsDepth ? "✓" : "✗"} (scalar default only; the grade is load-bearing)`,
     );
     console.log(`  self-test bites   : ${facts.selfTestOk ? "all teeth ✓" : "✗ BROKE"}`);
 
