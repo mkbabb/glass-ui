@@ -18,6 +18,15 @@
 // off-screen suspend it drives) → clause F1 reddens; drop the IO `off-screen`
 // wiring in a runtime → clause F4 reddens; drop the substrate matchMedia `change`
 // re-monitor → clause G1 reddens. Each makes the loop run while it should park.
+//
+// BG.W-WATERCOLOR-RAF (clause W1) — the CSS/SVG watercolor-dot is NOT on the WebGL
+// substrate, but its animate-mode transform wobble ran a hand-rolled self-scheduling
+// `requestAnimationFrame(tick)` that NEVER parked (a hidden tab kept it looping) and
+// NEVER froze under reduced-motion — the zombie-rAF class. The rebuild rides the
+// library's ONE `useRAFLoop` (pauseWhenHidden + respectReducedMotion). Clause W1
+// asserts the composable composes `useRAFLoop` with both gates named AND carries no
+// raw `requestAnimationFrame`/`cancelAnimationFrame` of its own; a self-test bite
+// proves the raw-rAF detector is not hollow.
 
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -48,6 +57,12 @@ function cliPaths() {
             ROOT,
             "src/components/custom/goo-blob/composables/useMetaballRenderer.ts",
         ),
+        // BG.W-WATERCOLOR-RAF — the CSS/SVG watercolor blob's animate-mode wobble
+        // rides the library's ONE useRAFLoop, not a hand-rolled zombie rAF (W1).
+        WATERCOLOR: resolve(
+            ROOT,
+            "src/components/custom/watercolor-dot/useWatercolorBlob.ts",
+        ),
         ARTIFACT: gateArtifactPath(
             "GLASS_UI_OFFSCREEN_PAUSE_ARTIFACT",
             "AV-offscreen-pause",
@@ -57,7 +72,7 @@ function cliPaths() {
 }
 
 function run() {
-    const { ROOT, SUBSTRATE, AURORA, BLOB, ARTIFACT } = cliPaths();
+    const { ROOT, SUBSTRATE, AURORA, BLOB, WATERCOLOR, ARTIFACT } = cliPaths();
     const violations = [];
     const facts = {};
 
@@ -176,6 +191,68 @@ function run() {
         }
     }
 
+    // ── W1 (BG.W-WATERCOLOR-RAF) — the CSS/SVG watercolor blob's animate-mode wobble
+    //         rides the library's ONE useRAFLoop (pauseWhenHidden + respectReducedMotion),
+    //         NOT a hand-rolled self-scheduling requestAnimationFrame (the zombie rAF).
+    /** The zombie-rAF signature: a composable owning its own raw rAF loop. */
+    function hasZombieRaf(src) {
+        return (
+            /\brequestAnimationFrame\s*\(/.test(src) ||
+            /\bcancelAnimationFrame\s*\(/.test(src)
+        );
+    }
+    if (!existsSync(WATERCOLOR)) {
+        violations.push("the watercolor-dot useWatercolorBlob composable is absent");
+    } else {
+        const wc = stripComments(readFileSync(WATERCOLOR, "utf8"));
+        facts.watercolorComposesRafLoop = /\buseRAFLoop\s*\(/.test(wc);
+        facts.watercolorHasZombieRaf = hasZombieRaf(wc);
+        facts.watercolorParksHidden = /pauseWhenHidden/.test(wc);
+        facts.watercolorRespectsPRM = /respectReducedMotion/.test(wc);
+        if (!facts.watercolorComposesRafLoop) {
+            violations.push(
+                "useWatercolorBlob does not compose useRAFLoop (W1) — the animate wobble is not on the library's ONE rAF loop",
+            );
+        }
+        if (facts.watercolorHasZombieRaf) {
+            violations.push(
+                "useWatercolorBlob still hand-rolls requestAnimationFrame/cancelAnimationFrame (W1) — the zombie rAF survives (a second loop that runs while the tab is hidden AND ignores reduced-motion)",
+            );
+        }
+        if (facts.watercolorComposesRafLoop && !facts.watercolorParksHidden) {
+            violations.push(
+                "useWatercolorBlob's useRAFLoop does not name `pauseWhenHidden` (W1) — a backgrounded tab keeps the wobble running",
+            );
+        }
+        if (facts.watercolorComposesRafLoop && !facts.watercolorRespectsPRM) {
+            violations.push(
+                "useWatercolorBlob's useRAFLoop does not name `respectReducedMotion` (W1) — the wobble ignores prefers-reduced-motion",
+            );
+        }
+    }
+
+    // ── Self-test bite (anti-evasion — the raw-rAF detector MUST flag a synthetic
+    //    zombie-rAF composable; proven every run).
+    {
+        const fakeZombie = `function tick(now){ transform.value = f(now); rafId = requestAnimationFrame(tick) }`;
+        const flagged = hasZombieRaf(stripComments(fakeZombie));
+        // A rebuilt-shape synthetic (useRAFLoop, no raw rAF) MUST NOT flag — the
+        // detector separates the zombie loop from the honest useRAFLoop compose.
+        const fakeHonest = `useRAFLoop((t) => tick(t.now), { pauseWhenHidden: true, respectReducedMotion: true })`;
+        const honestFlagged = hasZombieRaf(stripComments(fakeHonest));
+        facts.watercolorSelfTest = { zombieFlagged: flagged, honestFlagged };
+        if (!flagged) {
+            violations.push(
+                "SELF-TEST W1 bite did not flag a synthetic zombie-rAF composable — the detector is hollow",
+            );
+        }
+        if (honestFlagged) {
+            violations.push(
+                "SELF-TEST W1 bite false-flagged an honest useRAFLoop compose — the detector over-reaches",
+            );
+        }
+    }
+
     const status = violations.length === 0 ? "pass" : "fail";
     writeGateArtifact(ARTIFACT, {
         generatedAt: snapshotStamp(),
@@ -197,6 +274,9 @@ function run() {
     );
     console.log(
         `  G1 reduced-motion lift     : ${facts.reducedMotionReMonitored ? "yes ✓ (re-monitored)" : "NO ✗"}   (blob init-once dropped: ${facts.blobInitOnceReducedMotion ? "NO ✗" : "yes ✓"})`,
+    );
+    console.log(
+        `  W1 watercolor on useRAFLoop: ${facts.watercolorComposesRafLoop && !facts.watercolorHasZombieRaf ? "yes ✓ (no zombie rAF)" : "NO ✗"}   (parks hidden: ${facts.watercolorParksHidden ? "yes ✓" : "NO ✗"}, PRM: ${facts.watercolorRespectsPRM ? "yes ✓" : "NO ✗"})`,
     );
     if (violations.length) {
         console.log("\nVIOLATIONS:");

@@ -1,5 +1,13 @@
-import { ref, onUnmounted, watch, type Ref } from "vue";
+import { ref, watch, type Ref } from "vue";
 import { mulberry32, hashString, randomRadii, radiiToCSS } from "./prng";
+// BG.W-WATERCOLOR-RAF — the animate-mode wobble rides the library's ONE rAF loop
+// (`useRAFLoop`), NEVER a hand-rolled self-scheduling `requestAnimationFrame(tick)`.
+// The loop parks the frame schedule when the tab is backgrounded (`pauseWhenHidden`)
+// and freezes under `prefers-reduced-motion` (`respectReducedMotion`, live-monitored),
+// so the zombie rAF — a wobble loop that ran forever in a hidden tab AND ignored
+// reduce — is retired. The loop owns its teardown via `onScopeDispose`, so no manual
+// `cancelAnimationFrame` survives here.
+import { useRAFLoop } from "../../../composables/motion/useRAFLoop";
 
 export interface UseWatercolorBlobOptions {
     /** Enable the rAF animation loop (drives a COMPOSITOR transform wobble). */
@@ -46,8 +54,10 @@ const CHANNEL_AMP: Record<(typeof CHANNELS)[number], number> = {
  * `border-radius` write under the SVG filter forces the filter graph to RE-RASTERIZE
  * every frame, which flashes Safari). In `animate` mode the liveness rides a seeded
  * COMPOSITOR `transform` wobble (scale/skew/rotate) the compositor handles WITHOUT
- * touching the cached filter — the HandMark static-filter idiom. `nudge()` retargets
- * the wobble for a quick jiggle on hover.
+ * touching the cached filter — the HandMark static-filter idiom. The wobble is driven
+ * by the library's ONE `useRAFLoop` (BG.W-WATERCOLOR-RAF) — parked when the tab is
+ * hidden, frozen under `prefers-reduced-motion` — never a hand-rolled zombie rAF.
+ * `nudge()` retargets the wobble for a quick jiggle on hover.
  */
 export function useWatercolorBlob(
     color: Ref<string> | (() => string),
@@ -108,7 +118,6 @@ export function useWatercolorBlob(
         });
     }
 
-    let rafId: number | null = null;
     let lastNow = 0;
     const current = channels.map(() => 0);
 
@@ -145,8 +154,8 @@ export function useWatercolorBlob(
 
         // The COMPOSITOR transform wobble — never a per-frame border-radius paint
         // under the filter (the §H Safari flash fix; the seeded silhouette is static).
+        // No self-reschedule — `useRAFLoop` owns the cadence + the park/PRM gate.
         transform.value = composeTransform();
-        rafId = requestAnimationFrame(tick);
     }
 
     /**
@@ -166,13 +175,14 @@ export function useWatercolorBlob(
         }
     };
 
-    rafId = requestAnimationFrame(tick);
-
-    onUnmounted(() => {
-        if (rafId !== null) {
-            cancelAnimationFrame(rafId);
-            rafId = null;
-        }
+    // The ONE rAF loop drives the wobble. `pauseWhenHidden` parks the schedule when
+    // the tab is backgrounded; `respectReducedMotion` (live-monitored) freezes it to a
+    // single static frame under `prefers-reduced-motion: reduce`. The loop registers
+    // `onScopeDispose`, so it tears its own frame down when the host unmounts — no
+    // hand-rolled `cancelAnimationFrame`.
+    useRAFLoop((timing) => tick(timing.now), {
+        pauseWhenHidden: true,
+        respectReducedMotion: true,
     });
 
     return { borderRadius, hoverBorderRadius, transform, nudge };

@@ -847,7 +847,7 @@ export const GATES = [
         id: "proof:offscreen-pause",
         cmd: "proof:offscreen-pause",
         tags: ["local", "ci"],
-        note: "AV.W7 — the useWebGLCanvas substrate parks its RAF when the host is content-hidden (contentvisibilityautostatechange/F1) OR scrolled offscreen (IntersectionObserver off-screen seam/F4) OR the tab is backgrounded (document.hidden/F4) OR prefers-reduced-motion is live + re-monitored (G1, one static frame then park). A SEAM assertion (reads the visibility/PRM state), not a live-frame gate. Bite: remove the content-visibility hook / the off-screen IO wiring / the matchMedia change re-monitor → RED",
+        note: "AV.W7 — the useWebGLCanvas substrate parks its RAF when the host is content-hidden (contentvisibilityautostatechange/F1) OR scrolled offscreen (IntersectionObserver off-screen seam/F4) OR the tab is backgrounded (document.hidden/F4) OR prefers-reduced-motion is live + re-monitored (G1, one static frame then park). A SEAM assertion (reads the visibility/PRM state), not a live-frame gate. Bite: remove the content-visibility hook / the off-screen IO wiring / the matchMedia change re-monitor → RED + W1 (BG.W-WATERCOLOR-RAF): the CSS/SVG watercolor-dot's animate wobble rides the library's ONE useRAFLoop (pauseWhenHidden + respectReducedMotion), NOT a hand-rolled zombie rAF; born-RED on the HEAD raw-requestAnimationFrame loop → GREEN at the rebuild + a self-test bite (a synthetic zombie-rAF MUST flag, an honest useRAFLoop compose MUST NOT). Bite: re-add a raw requestAnimationFrame/cancelAnimationFrame in useWatercolorBlob, or drop pauseWhenHidden/respectReducedMotion → RED.",
     },
     {
         id: "proof:constellation-substrate-single",
