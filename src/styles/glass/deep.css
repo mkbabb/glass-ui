@@ -34,11 +34,50 @@
  * BEFORE the a11y @media brackets (which still win by the :root level re-point).
  */
 @layer components {
-    /* The deep decoration: re-point the floating rung's blur token to the deep
-       family. The base `.glass-floating` rule (`backdrop-filter:
-       var(--glass-blur-floating)`) then paints the deep `blur(16px) saturate(1.5)`
-       at `--glass-depth: 1` — the Apple-deep register, opt-in. */
+    /* The deep decoration: COMPUTE the deep LERP here (at the consuming element) +
+       re-point the floating rung's blur token to it.
+
+       THE FREEZE-FIX (BG.W-GLASS-DEPTH-TIER — the C18 dual-engine painted dead-knob,
+       2026-07-05). The LERP intermediates read `var(--glass-depth)`, a REGISTERED
+       `@property` (`inherits: true; initial-value: 1`). Per the CSS Properties &
+       Values API a `var()` to a registered custom property inside ANOTHER custom
+       property is eager-substituted with the referenced property's COMPUTED value AT
+       THE DECLARING ELEMENT. So these intermediates MUST be declared HERE (on
+       `.glass-deep`), NOT at `:root` (tokens/glass-deep.css) — at `:root` the tier
+       grade is not yet in scope and `--glass-depth` computes to its `initial-value` 1,
+       freezing the whole calc at the depth-1 endpoint (every deep surface paints the
+       16px / 1.8 ceiling, tier grade inert). The tier map below sets `--glass-depth`
+       per tier ON THE BASE RUNG the `.glass-deep` decoration composes with (same
+       element), so declared here `var(--glass-depth)` resolves to the element's LIVE
+       tier grade and the ladder PAINTS: content ~14px < popover ~15px < menu 16px.
+
+       The composition is IDENTICAL to the retired `:root` form — same endpoints
+       (`--glass-blur-floating-radius` depth-0 floor / `--glass-blur-deep-radius`
+       depth-1 ceiling, `--glass-saturate-floating` / `--glass-saturate-deep`), same
+       `* var(--glass-level)` clarity scale (so the opaque escape + the a11y brackets
+       reach the deep plate through the ONE level path; at `--glass-level: 0` the deep
+       blur resolves blur(0)). Only the DECLARING SELECTOR moved (:root → .glass-deep).
+       The base `.glass-floating` rule (`backdrop-filter: var(--glass-blur-floating)`)
+       then paints the deep blur — the Apple-deep register, opt-in. */
     .glass-deep {
+        --glass-blur-deep-active-radius:
+            calc(
+                (
+                    var(--glass-blur-floating-radius)
+                    + (var(--glass-blur-deep-radius) - var(--glass-blur-floating-radius))
+                    * var(--glass-depth)
+                )
+                * var(--glass-level)
+            );
+        --glass-saturate-deep-active:
+            calc(
+                var(--glass-saturate-floating)
+                + (var(--glass-saturate-deep) - var(--glass-saturate-floating))
+                * var(--glass-depth)
+            );
+        --glass-blur-deep:
+            blur(var(--glass-blur-deep-active-radius))
+            saturate(var(--glass-saturate-deep-active));
         --glass-blur-floating: var(--glass-blur-deep);
     }
 

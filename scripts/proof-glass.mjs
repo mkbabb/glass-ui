@@ -221,13 +221,20 @@ export function decideViolations(text) {
 //   DT3 — the tier-ladder MAP: the overlay rung sets --glass-depth to the menu grade,
 //         the floating rung to the popover grade, the content band to the content grade
 //         (overlay/menu default HIGHER than content — the finding's core).
-//   DT4 — ZERO new machinery + D5-safe: NO --glass-depth-setting tier rule reads
-//         var(--glass-blur-deep) or re-points a --glass-blur-* token (a base-tier deep
-//         leak the opt-in fence forbids — the map is a SCALAR default only), AND the
-//         deep recipe still READS var(--glass-depth) so the grade is load-bearing.
+//   DT4 — ZERO new machinery + D5-safe + the FREEZE-GUARD: NO --glass-depth-setting
+//         tier rule reads var(--glass-blur-deep) or re-points a --glass-blur-* token (a
+//         base-tier deep leak the opt-in fence forbids — the map is a SCALAR default
+//         only); the deep LERP still READS var(--glass-depth) (load-bearing, not a dead
+//         knob); the LERP that reads the REGISTERED @property --glass-depth is declared
+//         at/below the tier-grade site (.glass-deep), NEVER at :root (where --glass-depth
+//         eager-substitutes to its @property initial-value 1 and FREEZES the calc at the
+//         depth-1 endpoint — the C18 dual-engine painted dead-knob, 2026-07-05); AND the
+//         LERP evaluated at the three grades is a STRICTLY-increasing blur ladder (a flat
+//         result — the deep==floating endpoint, or the frozen-at-:root paint — reds).
 // Born-RED at HEAD (no grade tokens, no tier map). A --self-test bite proves each
-// clause has teeth (a flat/reversed map, a missing grade, a blur-leak, a missing map).
-export function depthTierViolations(glassDeepText, glassCss) {
+// clause has teeth (a flat/reversed map, a missing grade, a blur-leak, a missing map,
+// the LERP-at-:root freeze).
+export function depthTierViolations(glassDeepText, glassCss, tokensGlassText) {
     const violations = [];
     const facts = {};
     const deep = stripCss(glassDeepText || "");
@@ -315,10 +322,9 @@ export function depthTierViolations(glassDeepText, glassCss) {
         );
     }
 
-    // DT4 — ZERO new machinery + D5-safe: no --glass-depth-setting tier rule reads
-    // var(--glass-blur-deep) (a base-tier deep leak proof:glass-depth D5 forbids) OR
-    // re-points a --glass-blur-* token (the map is a SCALAR default only); AND the deep
-    // recipe still reads var(--glass-depth) (the grade is load-bearing, not a dead knob).
+    // DT4 (a) — no --glass-depth-setting tier rule reads var(--glass-blur-deep) OR
+    // re-points a --glass-blur-* token (a base-tier deep leak proof:glass-depth D5
+    // forbids; the map is a --glass-depth SCALAR default only).
     const leakRule = depthRules.find(
         (r) => /var\(--glass-blur-deep\)/.test(r.body) || /--glass-blur-[a-z]+\s*:/.test(r.body),
     );
@@ -328,13 +334,77 @@ export function depthTierViolations(glassDeepText, glassCss) {
             `DT4: a tier-depth map rule (${leakRule.sel}) reads var(--glass-blur-deep) or re-points a --glass-blur-* token — the map is a --glass-depth SCALAR default ONLY (a base-tier blur re-point is the deep-into-content leak proof:glass-depth D5 forbids; zero new machinery = no new blur recipe)`,
         );
     }
-    const deepActiveRadius =
-        /--glass-blur-deep-active-radius\s*:\s*([^;]+);/.exec(squish(deep))?.[1] ?? "";
+
+    // DT4 (b)+(c) — locate the deep LERP declaration across BOTH the token family
+    // (:root, tokens/glass-deep.css) AND the glass monolith (.glass-deep, glass/deep.css)
+    // and inspect its DECLARING SELECTOR. squish(deep) preserves the :root{} structure
+    // the pre-fix / regression form uses; `glass` is already the squished monolith. The
+    // non-nested `sel { body }` rule regex is robust to the @layer wrapper (the DT3 /
+    // definedControlFloor precedent — CSS rule bodies carry no nested braces).
+    const lerpRules = [];
+    const combinedText = `${squish(deep)} ${glass}`;
+    const lerpRuleRe = /([^{}]+)\{([^{}]*)\}/g;
+    let lrm;
+    while ((lrm = lerpRuleRe.exec(combinedText))) {
+        if (/--glass-blur-deep-active-radius\s*:/.test(lrm[2])) {
+            lerpRules.push({ sel: lrm[1].trim(), body: lrm[2] });
+        }
+    }
+    const lerpRule = lerpRules[0];
+    const deepActiveRadius = /--glass-blur-deep-active-radius\s*:\s*([^;]+);/.exec(
+        lerpRule?.body ?? "",
+    )?.[1] ?? "";
+    // (b) load-bearing: the LERP reads var(--glass-depth) (else the grade is a dead knob).
     facts.deepRecipeReadsDepth = /var\(--glass-depth\)/.test(deepActiveRadius);
     if (!facts.deepRecipeReadsDepth) {
         violations.push(
             "DT4: the deep recipe (--glass-blur-deep-active-radius) does not read var(--glass-depth) — the tier-depth grade would be a DEAD KNOB (the deep blur must be driven by the scalar the map grades)",
         );
+    }
+    // (c) FREEZE-GUARD: the LERP reads the REGISTERED @property --glass-depth, whose var()
+    // inside another custom property is eager-substituted with its COMPUTED value AT THE
+    // DECLARING ELEMENT (CSS Properties & Values API). Declared at :root, --glass-depth is
+    // its @property initial-value (1), so the LERP FREEZES at the depth-1 endpoint and every
+    // deep surface paints the 16px ceiling regardless of tier grade (a deep button reads as
+    // thick as a deep menu — the painted dead-knob). It MUST be declared on .glass-deep, the
+    // tier-grade site, so it resolves per-element.
+    const lerpSel = lerpRule?.sel ?? "";
+    facts.lerpDeclaringSelector = lerpSel;
+    const lerpAtRoot = /(^|[\s,{])(:root|html)\b/.test(lerpSel);
+    facts.lerpAtConsumingElement = !!lerpSel && !lerpAtRoot && /\.glass-deep\b/.test(lerpSel);
+    if (lerpRule && lerpAtRoot) {
+        violations.push(
+            `DT4: the deep LERP (--glass-blur-deep-active-radius) is declared at \`${lerpSel}\` (a :root/html block) — it reads the REGISTERED @property --glass-depth, which eager-substitutes to its initial-value (1) at :root, FREEZING the LERP at the depth-1 endpoint (every deep surface paints the 16px ceiling regardless of tier grade — the painted dead-knob). Declare it on \`.glass-deep\` (glass/deep.css), the tier-grade site, so --glass-depth resolves per-element`,
+        );
+    } else if (lerpRule && !facts.lerpAtConsumingElement) {
+        violations.push(
+            `DT4: the deep LERP (--glass-blur-deep-active-radius) is declared at \`${lerpSel}\`, not on \`.glass-deep\` — the LERP reading the REGISTERED @property --glass-depth must be declared at/below the tier-grade site so it resolves per-element (never frozen at the :root @property initial-value)`,
+        );
+    }
+
+    // DT4 (d) NUMERIC LADDER — evaluate the LERP at the three grades from the ENDPOINTS
+    // (floating depth-0 floor / deep depth-1 ceiling); the three resolved blur radii must
+    // be STRICTLY increasing (a flat/reversed ladder — the deep endpoint == the floating
+    // endpoint, or the grades collapsed — means the depth grade does not differentiate
+    // thickness: menu > popover > button must PAINT). The device-free numeric mirror of the
+    // painted-flat defect (distinct from the freeze-guard, which catches the :root scope).
+    const numFrom = (re, text) => {
+        const m = new RegExp(re).exec(text || "");
+        return m ? Number(m[1]) : null;
+    };
+    const floatingRadius =
+        numFrom(/--glass-blur-floating-radius\s*:\s*([0-9.]+)px/, stripCss(tokensGlassText || "")) ??
+        13;
+    const deepRadius = numFrom(/--glass-blur-deep-radius\s*:\s*([0-9.]+)px/, deep);
+    if (deepRadius !== null && content !== null && popover !== null && menu !== null) {
+        const lerp = (g) => floatingRadius + (deepRadius - floatingRadius) * g;
+        const ladder = [lerp(content), lerp(popover), lerp(menu)];
+        facts.depthBlurLadder = ladder;
+        if (!(ladder[0] < ladder[1] && ladder[1] < ladder[2])) {
+            violations.push(
+                `DT4: the deep blur ladder evaluated at the three grades is NOT strictly increasing (content=${ladder[0].toFixed(2)}px, popover=${ladder[1].toFixed(2)}px, menu=${ladder[2].toFixed(2)}px) — a flat/reversed ladder means the depth grade does not differentiate thickness (the deep endpoint == the floating endpoint, or the grades collapsed); menu > popover > button must paint`,
+            );
+        }
     }
 
     return { violations, facts };
@@ -1634,7 +1704,7 @@ export function detect() {
         readFile(STORY_HERO_SFC_FILE),
     );
     const refractWebgl = refractWebglViolations(readFile(GLASS_REFRACT_SHADER_FILE));
-    const depthTier = depthTierViolations(readFile(GLASS_DEEP_FILE), glassMonolith);
+    const depthTier = depthTierViolations(readFile(GLASS_DEEP_FILE), glassMonolith, tokensMonolith);
     // the self-test bites run EVERY run (the "proven every run" discipline) — a
     // bite that loses its teeth REDs the gate, so the anti-gameability arm can
     // never silently rot.
@@ -2346,21 +2416,25 @@ function selfTest() {
     }
 
     // ── depth-tier bites (BG.W-GLASS-DEPTH-TIER) ────────────────────────────────
+    // The endpoints + grades live at :root (tokens/glass-deep.css); the deep LERP is
+    // computed at the CONSUMING .glass-deep rule (glass/deep.css) — the freeze-fix.
     const goodDeepGrades =
         "DEEP-GLASS-DECIDED: retired-at-16px-cost-0B\n:root { " +
         "--glass-blur-deep-radius: 16px; " +
-        "--glass-blur-deep-active-radius: calc((13px + 3px * var(--glass-depth)) * var(--glass-level)); " +
         "--glass-depth-content: 0.35; --glass-depth-popover: 0.7; --glass-depth-menu: 1; }";
     const goodDepthMap =
-        "@layer components { .glass-deep { --glass-blur-floating: var(--glass-blur-deep); } " +
+        "@layer components { .glass-deep { " +
+        "--glass-blur-deep-active-radius: calc((13px + 3px * var(--glass-depth)) * var(--glass-level)); " +
+        "--glass-blur-floating: var(--glass-blur-deep); } " +
         ":where(.glass-overlay) { --glass-depth: var(--glass-depth-menu); } " +
         ":where(.glass-floating) { --glass-depth: var(--glass-depth-popover); } " +
         ":where(.glass-card, .glass-resting, .glass-quiet, .glass-wash) { --glass-depth: var(--glass-depth-content); } }";
-    // positive: the well-formed grade table + tier map must PASS clean.
-    if (depthTierViolations(goodDeepGrades, goodDepthMap).violations.length !== 0) {
+    const goodDeepTokens = ":root { --glass-blur-floating-radius: 13px; }";
+    // positive: the well-formed grade table + tier map + LERP-on-.glass-deep must PASS clean.
+    if (depthTierViolations(goodDeepGrades, goodDepthMap, goodDeepTokens).violations.length !== 0) {
         fails.push(
             "self-test depth-tier: the well-formed grade+map fixture unexpectedly RED — " +
-                depthTierViolations(goodDeepGrades, goodDepthMap).violations.join(" | "),
+                depthTierViolations(goodDeepGrades, goodDepthMap, goodDeepTokens).violations.join(" | "),
         );
     }
     // bite DT1 — a missing grade token must flag.
@@ -2395,12 +2469,43 @@ function selfTest() {
         fails.push("self-test DT4: a tier-map rule leaking var(--glass-blur-deep) was NOT flagged (the D5 fence has no teeth)");
     }
     // bite DT4 — a deep recipe that drops var(--glass-depth) (the grade a dead knob) must flag.
-    const deadKnobGrades = goodDeepGrades.replace(
+    const deadKnobMap = goodDepthMap.replace(
         "--glass-blur-deep-active-radius: calc((13px + 3px * var(--glass-depth)) * var(--glass-level));",
         "--glass-blur-deep-active-radius: calc(16px * var(--glass-level));",
     );
-    if (!depthTierViolations(deadKnobGrades, goodDepthMap).violations.some((v) => /DT4/.test(v))) {
+    if (!depthTierViolations(goodDeepGrades, deadKnobMap, goodDeepTokens).violations.some((v) => /DT4/.test(v))) {
         fails.push("self-test DT4: a deep recipe that drops var(--glass-depth) (a dead-knob grade) was NOT flagged");
+    }
+    // bite DT4-FREEZE — the deep LERP declared at :root (where the REGISTERED @property
+    // --glass-depth eager-substitutes to its initial-value 1, FREEZING the calc at the
+    // depth-1 endpoint — the C18 dual-engine painted dead-knob) must flag. This is the
+    // exact HEAD/regression shape: LERP in the :root token family, map with no LERP.
+    const frozenGrades =
+        "DEEP-GLASS-DECIDED: retired-at-16px-cost-0B\n:root { " +
+        "--glass-blur-deep-radius: 16px; " +
+        "--glass-blur-deep-active-radius: calc((13px + 3px * var(--glass-depth)) * var(--glass-level)); " +
+        "--glass-depth-content: 0.35; --glass-depth-popover: 0.7; --glass-depth-menu: 1; }";
+    const frozenMap =
+        "@layer components { .glass-deep { --glass-blur-floating: var(--glass-blur-deep); } " +
+        ":where(.glass-overlay) { --glass-depth: var(--glass-depth-menu); } " +
+        ":where(.glass-floating) { --glass-depth: var(--glass-depth-popover); } " +
+        ":where(.glass-card, .glass-resting, .glass-quiet, .glass-wash) { --glass-depth: var(--glass-depth-content); } }";
+    if (!depthTierViolations(frozenGrades, frozenMap, goodDeepTokens).violations.some((v) => /DT4/.test(v))) {
+        fails.push(
+            "self-test DT4-FREEZE: the deep LERP declared at :root (eager-substituting the registered @property --glass-depth to its initial-value 1 → frozen at the depth-1 endpoint) was NOT flagged (the registered-@property freeze-guard has no teeth)",
+        );
+    }
+    // bite DT4-LADDER — a flat blur ladder (deep endpoint == floating endpoint) must flag,
+    // even with the LERP correctly on .glass-deep — the numeric mirror of the painted-flat
+    // defect (the depth grade cannot differentiate thickness if the endpoints coincide).
+    const flatLadderGrades = goodDeepGrades.replace(
+        "--glass-blur-deep-radius: 16px;",
+        "--glass-blur-deep-radius: 13px;",
+    );
+    if (!depthTierViolations(flatLadderGrades, goodDepthMap, goodDeepTokens).violations.some((v) => /DT4/.test(v))) {
+        fails.push(
+            "self-test DT4-LADDER: a flat blur ladder (deep endpoint == floating 13px) was NOT flagged (the strictly-increasing numeric-ladder arm has no teeth)",
+        );
     }
 
     return fails;
@@ -2584,6 +2689,9 @@ function run() {
     );
     console.log(
         `  DT4 zero-machinery: no-blur-leak=${dt.noBlurLeak ? "✓" : "✗"}  deep-recipe-reads-depth=${dt.deepRecipeReadsDepth ? "✓" : "✗"} (scalar default only; the grade is load-bearing)`,
+    );
+    console.log(
+        `  DT4 freeze-guard  : lerp-at=${dt.lerpDeclaringSelector || "?"}  per-element=${dt.lerpAtConsumingElement ? "✓" : "✗"}  ladder=${dt.depthBlurLadder ? dt.depthBlurLadder.map((n) => n.toFixed(2) + "px").join(" < ") : "?"} (the LERP resolves --glass-depth per-tier, never frozen at :root — the C18 painted dead-knob close)`,
     );
     console.log(`  self-test bites   : ${facts.selfTestOk ? "all teeth ✓" : "✗ BROKE"}`);
 

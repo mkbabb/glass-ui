@@ -73,41 +73,27 @@
                                            apple-glass.md §4); the deep saturate never
                                            exceeds it (the warm-cream identity bound). */
 
-    /* The deep blur RADIUS — LERPed from the calm floating radius (depth 0) to the
-       Apple-deep radius (depth 1) on `--glass-depth`, THEN scaled by the ONE
-       `--glass-level` clarity scalar (the W54 seam reaches the deep plate, so the
-       opaque escape + the a11y brackets compose: at `--glass-level: 0` the deep
-       blur resolves blur(0), the same solid floor). NOT a parallel recipe — the
-       deep blur COMPOSES `var(--glass-level)` exactly like every calm rung, and
-       reads `var(--glass-depth)` so a host dials the depth on any ancestor. */
-    --glass-blur-deep-active-radius:
-        calc(
-            (
-                var(--glass-blur-floating-radius)
-                + (var(--glass-blur-deep-radius) - var(--glass-blur-floating-radius))
-                * var(--glass-depth)
-            )
-            * var(--glass-level)
-        );
-    /* The deep SATURATE — LERPed from the calm floating saturate (1.18, depth 0)
-       to the deep saturate (depth 1) on `--glass-depth`. The saturate is the
-       light-concentration lift (chroma-only — it LIFTS the backdrop's existing
-       chroma, it does NOT inject a hue; the warm-cream `--card` base is the same). */
-    --glass-saturate-deep-active:
-        calc(
-            var(--glass-saturate-floating)
-            + (var(--glass-saturate-deep) - var(--glass-saturate-floating)) * var(--glass-depth)
-        );
-
-    /* The composed deep backdrop-filter — the SEPARATE deep family. The calm
-       ladder never reads this; `.glass-deep` (glass/deep.css) is its only
-       consumer. The brightness companion mirrors the calm floating arm's
-       light-concentration (the calm floating carries saturate only; the deep
-       tier adds a small brightness lift for the thicker-glass read — still no
-       hue inject). */
-    --glass-blur-deep:
-        blur(var(--glass-blur-deep-active-radius))
-        saturate(var(--glass-saturate-deep-active));
+    /* ── The deep LERP is COMPUTED AT THE CONSUMING `.glass-deep` ELEMENT, not here
+       (BG.W-GLASS-DEPTH-TIER freeze-fix) ────────────────────────────────────────
+       The deep blur/saturate LERP intermediates — `--glass-blur-deep-active-radius`,
+       `--glass-saturate-deep-active`, `--glass-blur-deep` — are NOT declared in this
+       `:root` block. They live on the `.glass-deep` rule (glass/deep.css). WHY: they
+       read `var(--glass-depth)` (AND `var(--glass-level)`), and BOTH are REGISTERED
+       `@property`s (property-regs.css §glass-level / §deep, `inherits: true`,
+       `initial-value: 1`). A `var()` reference to a REGISTERED custom property inside
+       ANOTHER custom property is eager-substituted with the referenced property's
+       COMPUTED value AT THE DECLARING ELEMENT (CSS Properties & Values API). Declared
+       here at `:root`, `--glass-depth` computes to its `@property` `initial-value` 1,
+       so the LERP would BAKE `calc(… * 1)` and inherit that FROZEN string down — every
+       deep surface would paint the depth-1 (16px / saturate 1.8) ceiling REGARDLESS of
+       its tier grade (the painted DEAD-KNOB the C18 dual-engine judge caught 2026-07-05:
+       a deep BUTTON read as thick as a deep MENU). The tier map (glass/deep.css
+       `:where()` rules) sets `--glass-depth` PER TIER on the base rung; the LERP must
+       therefore be declared on `.glass-deep` — the SAME element, at/below the tier-grade
+       site — so `var(--glass-depth)` resolves to the element's LIVE tier grade and the
+       ladder PAINTS (content ~14px < popover ~15px < menu 16px). Only the ENDPOINTS +
+       GRADES stay here (they are literals — no registered-`@property` read — so their
+       `:root` declaration is safe); the COMPOSITION moves to the consuming element. */
 
     /* ── The tier-depth MAP — thickness tracks surface PROMINENCE (BG.W-GLASS-DEPTH-TIER) ──
        iOS-27 grammar: larger glass = thicker material AUTOMATICALLY — a control
