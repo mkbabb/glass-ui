@@ -534,11 +534,70 @@ function detect({ existsFn, readFn, corpus }) {
     if (!/\.motion-calm\s*\{[^}]*--transition-liquid-spatial\s*:\s*var\(\s*--ease-standard\s*\)/.test(schemeMotion))
         V.push("LW4: the `.motion-calm { --transition-liquid-spatial: var(--ease-standard) }` opt-out is missing from tokens/scheme-motion.css — the calm register must be an EXPLICIT opt-out, not the accidental default");
 
-    // LW5 — the PRM carve re-aliases the token to the no-overshoot bezier under reduce
-    //       (the vestibular floor; mirrors the --ease-cartoon-punch PRM re-alias).
-    const prmBlock = schemeMotion.match(/@media\s*\(\s*prefers-reduced-motion:\s*reduce\s*\)\s*\{[\s\S]*?\n\}/);
-    if (!prmBlock || !/--transition-liquid-spatial\s*:\s*var\(\s*--ease-standard\s*\)/.test(prmBlock[0]))
-        V.push("LW5: the PRM `@media (prefers-reduced-motion: reduce)` carve in scheme-motion.css does not re-alias --transition-liquid-spatial to var(--ease-standard) — under reduce the interactive spatial legs must lose their overshoot (the vestibular floor; mirrors the --ease-cartoon-punch PRM re-alias)");
+    // LW5 — the PRM carve re-aliases --transition-liquid-spatial to the no-overshoot bezier
+    //       under reduce (the vestibular floor) AND WINS the cascade. The re-alias must live
+    //       in scheme-spring.css (the LAST-imported token partial — the base default's home)
+    //       at a byte position AFTER the base `:root` default, so at equal `:root` specificity
+    //       the LATER source-order declaration wins under `prefers-reduced-motion: reduce`.
+    //       The F5.2 paint-judge FAIL was exactly this source-order cascade contest: the
+    //       re-alias lived in scheme-motion.css (imported FIRST) and LOST to scheme-spring's
+    //       base default, so the spring overshoot survived under reduce (the vestibular-floor
+    //       break). A gate that only checked EXISTENCE missed it — this arm checks the WINNING
+    //       ORDER (born-RED on the pre-fix tree, where the re-alias sat in scheme-motion.css).
+    const prmSpringRealias = schemeSpring.match(
+        /@media\s*\([^)]*prefers-reduced-motion:\s*reduce[^)]*\)\s*\{[\s\S]*?--transition-liquid-spatial\s*:\s*var\(\s*--ease-standard\s*\)[\s\S]*?\n\}/,
+    );
+    if (!prmSpringRealias) {
+        V.push(
+            "LW5: scheme-spring.css has NO `@media (prefers-reduced-motion: reduce) { :root { --transition-liquid-spatial: var(--ease-standard) } }` re-alias — the PRM carve must live in the LAST-imported partial (this file, the base default's home) so it WINS the source-order cascade under reduce. A re-alias parked in an earlier-imported partial (scheme-motion.css) loses to this file's base default and the overshoot survives under reduce (the vestibular-floor break the F5.2 paint judge found).",
+        );
+    } else if (liquidDecl && liquidDecl.index >= prmSpringRealias.index) {
+        V.push(
+            "LW5: the PRM re-alias of --transition-liquid-spatial appears BEFORE the base `:root` default in scheme-spring.css — at equal `:root` specificity the LATER declaration wins under reduce, so the PRM carve must come AFTER the base default (else the overshoot survives under reduce — the cascade the paint judge failed).",
+        );
+    }
+    // LW5b — the stale re-alias must NOT still live in scheme-motion.css (the losing-cascade
+    //        HEAD home): a surviving copy there is the inert no-op the paint judge caught, AND
+    //        the no-dual-path discipline forbids two homes (one wins, one is dead). Scoped to
+    //        the PRM `@media` block only — the `.motion-calm` class opt-out (LW4) is a distinct
+    //        selector and stays in scheme-motion.css untouched.
+    if (
+        /@media\s*\([^)]*prefers-reduced-motion:\s*reduce[^)]*\)\s*\{[\s\S]*?--transition-liquid-spatial\s*:\s*var\(\s*--ease-standard\s*\)[\s\S]*?\n\}/.test(
+            schemeMotion,
+        )
+    )
+        V.push(
+            "LW5b: the --transition-liquid-spatial PRM re-alias still lives in scheme-motion.css (imported BEFORE scheme-spring.css) — it LOSES the cascade to scheme-spring's base default (the inert no-op the F5.2 paint judge caught). MOVE it into scheme-spring.css after the base default (the no-dual-path discipline — one home, the winning one).",
+        );
+
+    // ── R2 — the dock-hover-press spring wiring (BG.W-LIQUID-WEIGHT-DEFAULT / F5.2 row 2) ──
+    // The paint-judge row-2 FAIL: the dock control press was the CSS `:active` no-overshoot
+    // squish only — no interruptible spring, no `--dock-press-t` coupling (`--dock-press-t`
+    // appeared only as a comment in useLiquidPress.ts, never written). The repair binds
+    // `useLiquidPress` (springPreset('press'), squish on) on DockIconButton writing
+    // `--dock-press-t`, which the `.dock-icon-button` CSS reads to couple the darken/specular
+    // feedback to the spring physics (the `::before` gleam settles with the alive rebound on
+    // release via the material press-couple; a sub-perceptual brightness deepen rides the same
+    // drive) — the binary CSS `:active` staying the no-JS / PRM floor. Born-RED on HEAD
+    // (DockIconButton composes no `useLiquidPress`; the dock CSS reads no `--dock-press-t`).
+    const dockBtn = readFn("src/components/custom/dock/DockIconButton.vue");
+    const dockCtrlCss = readFn("src/styles/dock-controls/icon-button.css");
+
+    if (!/\buseLiquidPress\s*\(/.test(dockBtn))
+        V.push("R2: DockIconButton.vue does not compose `useLiquidPress` — the dock control press must be the ONE interruptible spring-press (the velocity-continuous re-seat), not the CSS `:active` no-overshoot floor alone (the paint-judge row-2 dock-hover-press FAIL)");
+    if (!/springPreset\s*\(\s*["']press["']\s*\)/.test(dockBtn))
+        V.push("R2: DockIconButton.vue does not read `springPreset('press')` — the dock press must ride the PRESS SPRING_PRESETS row (response 0.2 / ζ 0.8 — the ≤2-frame answer + the +1.5% alive rebound), the ONE source, never a local literal");
+    if (!/pressVar\s*:\s*["']--dock-press-t["']/.test(dockBtn))
+        V.push("R2: DockIconButton.vue's useLiquidPress does not write the `--dock-press-t` drive (pressVar) — the coupled darken/specular leg reads it (useLiquidPress.ts names it the dock's press var)");
+    // The CSS couples --dock-press-t to the darken/specular feedback (the spring-settling
+    // legs), and registers the drive typed so the calc interpolates + the unwired/SSR floor is 0.
+    if (!/--dock-press-t/.test(dockCtrlCss))
+        V.push("R2: dock-controls/icon-button.css does not read `--dock-press-t` — the darken/specular feedback must couple to the spring drive (the gleam settles with the alive rebound on release, the material `::before` press-couple the dock feeds); the CSS `:active` stays the no-JS / PRM floor");
+    const dockPressProp = dockCtrlCss.match(/@property\s+--dock-press-t\s*\{[^}]*\}/);
+    if (!dockPressProp)
+        V.push("R2: dock-controls/icon-button.css is missing the `@property --dock-press-t { … }` registration — an unwired/SSR dock control must read the static rest 0 (the no-JS floor), and the typed <number> lets the coupled calc interpolate");
+    else if (!/initial-value\s*:\s*0\b/.test(dockPressProp[0]))
+        V.push("R2: `@property --dock-press-t` initial-value must be 0 (the CSS rest / no-JS floor — an unwired dock control reads no press deepen)");
 
     return V;
 }
@@ -666,6 +725,47 @@ if (!lwSelfTestFlags) {
     process.exit(1);
 }
 
+// ── The LW-cascade self-test bite — strip the PRM re-alias from scheme-spring.css (revert to
+//    the HEAD losing-cascade state where the re-alias lived only in scheme-motion.css, imported
+//    BEFORE, so the overshoot survived under reduce) and assert the LW5 winning-order arm FLAGS
+//    it (the cascade teeth the settled-source gate previously lacked — the F5.2 paint-judge
+//    FAIL class). ───────────────────────────────────────────────────────────────────────────
+const schemeSpringDiskLW = diskRead("src/styles/tokens/scheme-spring.css");
+const stripCascadeRead = (rel) =>
+    rel === "src/styles/tokens/scheme-spring.css"
+        ? // drop the PRM @media re-alias of --transition-liquid-spatial (the winning home)
+          schemeSpringDiskLW.replace(
+              /@media\s*\([^)]*prefers-reduced-motion:\s*reduce[^)]*\)\s*\{[\s\S]*?--transition-liquid-spatial\s*:\s*var\(\s*--ease-standard\s*\)[\s\S]*?\n\}/,
+              "/* stripped PRM re-alias */",
+          )
+        : diskRead(rel);
+const stripCascadeViolations = detect({ existsFn: diskExists, readFn: stripCascadeRead, corpus });
+const lwCascadeSelfTestFlags = stripCascadeViolations.length > violations.length;
+if (!lwCascadeSelfTestFlags) {
+    console.error(
+        "proof:motion — LW-CASCADE SELF-TEST FAILED: the detector did NOT flag scheme-spring.css stripped of its PRM `--transition-liquid-spatial` re-alias (the HEAD losing-cascade state — the overshoot survives under reduce). The winning-order teeth are gone; do not trust a GREEN.",
+    );
+    process.exit(1);
+}
+
+// ── The R2 self-test bite — sever DockIconButton's useLiquidPress composition (the HEAD
+//    unwired state the paint judge failed on row 2) and assert the dock-press arm FLAGS it
+//    (the row-2 wiring teeth are real). ────────────────────────────────────────────────────
+const dockBtnDiskR2 = diskRead("src/components/custom/dock/DockIconButton.vue");
+const stripDockPressRead = (rel) =>
+    rel === "src/components/custom/dock/DockIconButton.vue"
+        ? // rename the composition so the R2 detector sees no `useLiquidPress(` / `pressVar`
+          dockBtnDiskR2.replace(/useLiquidPress/g, "useNoPress").replace(/pressVar/g, "noVar")
+        : diskRead(rel);
+const stripDockViolations = detect({ existsFn: diskExists, readFn: stripDockPressRead, corpus });
+const r2SelfTestFlags = stripDockViolations.length > violations.length;
+if (!r2SelfTestFlags) {
+    console.error(
+        "proof:motion — R2 SELF-TEST FAILED: the detector did NOT flag DockIconButton severed of its `useLiquidPress` press wiring (the HEAD unwired dock-hover-press state the paint judge failed). The row-2 teeth are gone; do not trust a GREEN.",
+    );
+    process.exit(1);
+}
+
 // ── Report ──────────────────────────────────────────────────────────────────────
 console.log("proof:motion — the F5 dead-composable cut is COMPLETE (BG.W-DEAD-COMPOSABLE-CUT)");
 console.log(`  dead composables      : ${DEAD.map((d) => d.name).join(", ")}`);
@@ -691,8 +791,9 @@ console.log(`  exit PAINTS (O5)      : .glass-reveal[data-state="closed"] rides 
 console.log(`  self-test (bite proof): OK — a re-planted dead composable, a re-forked rAF/ElementMorph runner, a re-introduced masking --glass-drawer-t: 1, a .glass-reveal open rule stripped of its @starting-style from-state, AND a .glass-reveal exit reverted to transition-only all flag`);
 console.log("proof:motion — the interactive-transition DEFAULT is spring-derived (BG.W-LIQUID-WEIGHT-DEFAULT / F5.2)");
 console.log(`  liquid-weight-default : --transition-liquid-spatial = ${GENERATED_LIQUID_SPATIAL.replace(/^--transition-liquid-spatial:\s*/, "")} (spring-derived, GENERATED drift-proof) — the base atoms (.interactive-item · .tap-squish · btn-interactive) read it on their SPATIAL scale leg; weight is the VOCABULARY, not a per-site --motion-weight opt-in (the inversion off the HEAD bare --ease-standard)`);
-console.log(`  calm opt-out + PRM    : .motion-calm → var(--ease-standard) (explicit opt-out) + the PRM carve re-aliases the same (no overshoot under reduce — the vestibular floor)`);
-console.log(`  self-test (LW bite)   : OK — a .interactive-item scale leg reverted to var(--ease-standard) (the HEAD zero-weight default) flags`);
+console.log(`  calm opt-out + PRM    : .motion-calm → var(--ease-standard) (explicit opt-out) + the PRM carve re-aliases the same — homed in scheme-spring.css AFTER the base default (the LAST-imported partial) so it WINS the source-order cascade under reduce (the F5.2 vestibular-floor fix — no overshoot under reduce)`);
+console.log(`  dock-hover-press (R2) : DockIconButton composes useLiquidPress(springPreset('press'), squish) writing --dock-press-t — the interruptible spring press; the dock CSS couples the specular gleam (via --glass-btn-press-t) + a sub-perceptual brightness deepen to the spring, the :active register the no-JS/PRM floor`);
+console.log(`  self-test (LW bites)  : OK — a .interactive-item scale leg reverted to var(--ease-standard), scheme-spring stripped of its PRM re-alias (losing-cascade), AND DockIconButton severed of useLiquidPress all flag`);
 console.log(`  corpus scanned        : ${corpus.length} src/+demo/ sources`);
 console.log(`  violations            : ${violations.length}`);
 for (const m of violations) console.error(`  CUT-INCOMPLETE   ${m}`);
@@ -712,6 +813,8 @@ writeGateArtifact(ARTIFACT, {
     oSelfTestFlagged: oSelfTestFlags,
     o5SelfTestFlagged: o5SelfTestFlags,
     lwSelfTestFlagged: lwSelfTestFlags,
+    lwCascadeSelfTestFlagged: lwCascadeSelfTestFlags,
+    r2SelfTestFlagged: r2SelfTestFlags,
     transitionLiquidSpatial: GENERATED_LIQUID_SPATIAL,
     spine: SPINE_PATH,
     bloomWrappers: BLOOM_WRAPPERS,

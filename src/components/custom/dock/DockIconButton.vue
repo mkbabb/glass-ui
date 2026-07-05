@@ -3,11 +3,14 @@ import {
     computed,
     type ButtonHTMLAttributes,
     type Component,
+    type CSSProperties,
     type HTMLAttributes,
 } from "vue";
 import { Primitive } from "reka-ui";
 import { cn } from "../../../utils";
 import { vSpecular } from "../../../composables/glass";
+import { useLiquidPress } from "../../../composables/motion/useLiquidPress";
+import { springPreset } from "../../../composables/motion/springPresets";
 
 /**
  * <DockIconButton> — fixed-square icon button for use inside GlassDock.
@@ -113,6 +116,38 @@ const stateAttrs = computed(() => ({
 const hostAttrs = computed(() =>
     !props.asChild && props.as === "button" ? { type: props.type } : {},
 );
+
+// BG.W-LIQUID-WEIGHT-DEFAULT (F5.2, row 2) — the dock control press is the ONE
+// interruptible spring-press (the paint-judge dock-hover-press repair). `useLiquidPress`
+// composes `useSpringPress` → `useSpring` → kf `SpringProgress`, so a rapid re-press re-seats
+// the LIVE (position, velocity) — the iOS velocity-continuous contract, NOT a CSS `:active`
+// restart. It reads the `press` SPRING_PRESETS row (response 0.2 / ζ 0.8 — the ≤2-frame
+// answer + the +1.5% alive rebound; the ONE source, never a local literal) and writes the
+// `--dock-press-t` 0..1 drive the dock-controls CSS reads to COUPLE the darken/specular
+// feedback to the spring physics (the `::before` gleam settles with the alive rebound on
+// release — dock-controls/icon-button.css). `shrinkDepth: 0.04` makes the JS reciprocal
+// squish AGREE with the CSS `:active { scale: var(--scale-press-dock) }` = 0.96 floor (the
+// JS is the ENHANCEMENT: a volume-preserving reciprocal deform over the same shrink). The
+// CSS `:active` register stays the no-JS / PRM floor — `useLiquidPress` is PRM-instant +
+// compositor-only by construction (the DOCK_SPRING {0.68,0.64} morph clock is untouched;
+// this is the DISTINCT press register, springPreset('press')).
+const PRESS = springPreset("press");
+const press = useLiquidPress({
+    squish: true,
+    response: PRESS.response,
+    dampingFraction: PRESS.dampingFraction,
+    pressVar: "--dock-press-t",
+    shrinkDepth: 0.04,
+    maxStretch: 1.03,
+});
+
+// The press `:style` overrides the CSS `:active`/hover `scale` only while ENGAGED (the
+// single-source press — the inline reciprocal squish beats the stylesheet), then yields
+// back to the cascade at rest (`pressStyle` omits `scale` below the engage threshold, so
+// hover + selected-active scale win at rest). It carries the `--dock-press-t` drive +
+// `--flex-vel`. The `v-specular` directive writes `--mouse-x/y` imperatively on the SAME
+// element (a distinct key set), so the two coexist — the Button.vue precedent.
+const hostStyle = computed<CSSProperties>(() => ({ ...press.pressStyle.value }));
 </script>
 
 <template>
@@ -122,6 +157,11 @@ const hostAttrs = computed(() =>
         :as-child="asChild"
         v-bind="{ ...hostAttrs, ...stateAttrs }"
         :class="classes"
+        :style="hostStyle"
+        @pointerdown="press.press"
+        @pointerup="press.release"
+        @pointercancel="press.release"
+        @pointerleave="press.release"
     >
         <slot />
     </Primitive>

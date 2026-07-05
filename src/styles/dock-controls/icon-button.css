@@ -11,6 +11,18 @@
    the dock-controls.css root. */
 
 @layer components {
+    /* BG.W-LIQUID-WEIGHT-DEFAULT (F5.2, row 2) — the dock press drive typed registration.
+       `useLiquidPress` (DockIconButton) writes it 0→1 on the press spring; the coupled
+       darken/specular legs read it via `calc()` (typed <number> so the calc interpolates),
+       and an unwired / SSR / no-JS dock control reads the static rest 0 (the no-JS floor —
+       the `:active` register carries the press without it). Inherits so the material
+       `::before` catch-light (a descendant pseudo) reads the host's press scalar. */
+    @property --dock-press-t {
+        syntax: "<number>";
+        inherits: true;
+        initial-value: 0;
+    }
+
     .dock-icon-button {
         display: inline-flex;
         align-items: center;
@@ -58,6 +70,27 @@
                `--dock-active-shadow` — the AX.W09-retired hover `--glass-highlight`
                specular no longer rides it. */
                 box-shadow var(--dock-motion-fast);
+
+        /* BG.W-LIQUID-WEIGHT-DEFAULT (F5.2, row 2) — the dock control press couples to
+           the ONE interruptible press spring. DockIconButton composes `useLiquidPress`
+           (springPreset('press'), squish on) writing the `--dock-press-t` 0..1 drive; the
+           CSS reads it on TWO coupled feedback legs so a tap reads as a spring-settling iOS
+           press (the paint-judge dock-hover-press repair), while the binary `:active`
+           register below stays the no-JS / PRM floor:
+
+           • the SPECULAR leg — the dock press drive aliases onto the shared
+             `--glass-btn-press-t` the material `::before` catch-light reads (glass/
+             material.css `--specular-intensity: max(rest, active·--glass-btn-press-t)`),
+             so on RELEASE the gleam SETTLES with the spring's alive rebound instead of
+             snapping to rest (the material comment's "a dock control writes it" intent, now
+             wired). At rest `--dock-press-t` is 0 → `--glass-btn-press-t` 0 → byte-identical
+             (no second specular recipe — the DRY reuse of the built material gleam).
+           • the DARKEN leg — a sub-perceptual `filter: brightness()` deepen on the SAME
+             drive so the plate reads as pressing IN (not just shrinking), settling on the
+             spring; `filter` is compositor-safe (`proof:no-layout-animation` greens it),
+             and `brightness(1)` at rest is a no-op. */
+        --glass-btn-press-t: var(--dock-press-t, 0);
+        filter: brightness(calc(1 - var(--dock-press-t, 0) * 0.04));
 
         /* AT.W7-dock-b — glass icon-hover. The icon-button hover reads as a glass
            surface, not a flat `--muted` plate: a translucent card-tinted fill is

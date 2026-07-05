@@ -253,3 +253,29 @@
        orchestration ON this curve (a documented recipe, not a new primitive). */
     --ease-convergence: var(--spring-gentle);
 }
+
+/* ═══════════════════════════════════════════════
+   BG.W-LIQUID-WEIGHT-DEFAULT (F5.2) — the PRM re-alias of the interactive-spatial DEFAULT.
+
+   Under `prefers-reduced-motion: reduce` the base interactive scale legs
+   (`.interactive-item` / `.tap-squish` / the `btn-interactive` @utility) lose their spring
+   overshoot for the flat no-overshoot `--ease-standard` bezier — the vestibular floor. The
+   springs keep their OWN `respectReducedMotion` endpoint-snap; this re-alias strips the
+   overshoot CURVE from the CSS scale legs library-wide (the same belt-and-suspenders shape
+   as `--ease-cartoon-punch`'s PRM re-alias + the `.motion-calm` opt-out).
+
+   WHY IT LIVES HERE (the cascade fix — the F5.2 paint-judge FAIL): the base default
+   `:root { --transition-liquid-spatial: var(--spring-smooth) }` (above) and this PRM
+   re-alias both target `:root`, so they carry EQUAL specificity — at a MATCH (reduce
+   active) the LATER source-order declaration wins. scheme-spring.css is @import-ed LAST of
+   the token partials (tokens.css, immediately after scheme-motion.css), so a PRM re-alias
+   parked in scheme-motion.css (imported FIRST) LOSES to THIS file's base default and the
+   overshoot survives under reduce. Homing the re-alias here, AFTER the base default, makes
+   it the LAST `:root` declaration of the token — so under reduce it wins and the overshoot
+   is stripped, exactly as required. Do NOT move it back to scheme-motion.css (it would lose
+   the cascade — the no-op the paint judge caught). */
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --transition-liquid-spatial: var(--ease-standard);
+    }
+}

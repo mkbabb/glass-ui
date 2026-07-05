@@ -389,11 +389,13 @@
     :root {
         --motion-weight: 0;
         --ease-cartoon-punch: var(--ease-standard);
-        /* BG.W-LIQUID-WEIGHT-DEFAULT (F5.2) — the interactive-spatial DEFAULT loses
-           its overshoot under reduce (the vestibular floor). The springs keep their
-           own respectReducedMotion endpoint-snap; this re-alias removes the overshoot
-           CURVE from the CSS scale legs library-wide (the same belt-and-suspenders
-           shape as the --ease-cartoon-punch re-alias above + the `.motion-calm` opt-out). */
-        --transition-liquid-spatial: var(--ease-standard);
+        /* BG.W-LIQUID-WEIGHT-DEFAULT (F5.2) — the interactive-spatial DEFAULT loses its
+           overshoot under reduce (the vestibular floor). The re-alias is homed in
+           scheme-spring.css BESIDE its base `--transition-liquid-spatial: var(--spring-*)`
+           default (NOT here): both target `:root` at equal specificity, and scheme-spring.css
+           is @import-ed LAST of the token partials, so a re-alias parked in THIS earlier-
+           imported partial LOSES the source-order cascade to scheme-spring's base default and
+           the overshoot survives under reduce (the F5.2 paint-judge FAIL). The winning home is
+           the last-imported partial, after the base default — see scheme-spring.css. */
     }
 }
