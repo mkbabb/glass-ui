@@ -1,131 +1,143 @@
 # BG.W-DOTFLOW-REBUILD — paint DELTA (dual-engine, non-authoring re-judge)
 
-**Verdict: FAIL (re-judge of the paint-fix commit `6dce9b5b`).** The `<DotFlowField>` viz
-still does NOT read as the reference flowing-dot-wave in EITHER engine or EITHER mode. On
-**Chrome/Metal** it paints a **flat bright plate** (light-lavender-gray white-out, meanLuma
-≈ 207, near-zero structure, ZERO warm-fire chroma) with faint white motes clumping ONLY at
-the card's right margin; on **Safari/WebKit** it paints a **dead near-BLACK plate** (meanLuma
-≈ 4.7, zero structure, zero chroma). The reference warm-fire advected dot-wave (motes advected
-along undulating streamlines, warm-fire velocity ramp ember→amber→gold, over a deep
-warm-near-black floor) is **absent on the live composite in all four captures**.
+**Verdict: FAIL** (re-judge of the WGSL paint-fix HEAD `e6bdd0f8` — `flowSetupWGPU.ts`
+trail `rgba16float → rgba8unorm` + `FLOW_TRAIL_DEPOSIT 0.18→0.05` + `trailHalfLife 0.3`).
+The `<DotFlowField>` viz still does NOT read as the reference flowing-dot-wave (IMG_1836) in
+EITHER engine or EITHER mode:
 
-The paint-fix reduced the Chrome blow-out slightly (253 → 207 meanLuma) and made a few motes
-distinguishable at the right margin, but the field still washes to a flat bright plate and the
-warm-fire hue is not surviving (0% chromatic). Safari is effectively the same dead-black as the
-prior FAIL. **This is NOT resolved.**
+- **Chrome / Metal WebGPU** — the trail-format flip **helped** (structure + warm-fire hue now
+  survive on the LEFT half), but the frame reads as a **smeared marbled warm-fire trail-CLOUD**,
+  not discrete beaded dots on evenly-spaced streamlines, AND the **right ~40% washes to a flat
+  bright ~200-luma plate** (the white-out flood, now confined to the right rather than the whole
+  frame). meanLuma 161–178 (too bright — the reference wants a deep warm floor), p99 204–207
+  (near white-out), column-luma profile L→R 144→201 (light) / 126→196 (dark) — the right end is a
+  washed plate.
+- **Safari / WebKit WebGPU** — **DEAD BLACK** in BOTH modes (canvas OKLab meanL ≈ 0.11, meanChroma
+  ≈ 0.012, zero structure, zero flow, zero dots). The `rgba8unorm` trail flip did NOT revive the
+  WebKit-WebGPU path. The Aurora hero renders fine on the SAME WKWebView (the working control),
+  so this is DotFlowField-WGSL-pipeline-specific.
 
-- Wave: `BG.W-DOTFLOW-REBUILD` (row 6.6, F9). src SHAs `6dce9b5b` / `7b82c7fc` PRESERVED (repo HEAD `a3a9b58b`).
-- Route: `/substrates/dot-flow-field` (renders `FLOW_PRESET_AURORA_CURRENT`, the `mode:"flow"`
-  default; the "calm halftone (field)" toggle OFF at capture, interactive ON).
-- Gate `proof:viz-dotflow`: **GREEN** (F1-F7 structural + F7d self-test). The classic
-  headless-green / visually-broken gap — the gate verifies SOURCE structure (`FLOW_PRESENT_KNEE`,
-  `FLOW_TRAIL_DEPOSIT`, `FLOW_MOTE_BASE`, `FLOW_TRAIL_CEIL`, RGBA8 trail), NOT the composited
-  pixel result. The gate is not the arbiter; the live dual-engine composite is, and it is broken.
+The RE-OPENED user verdict (07-05, "a TOTAL MESS, completely unusable") stands: the paint-fix
+addressed the flood-control SYMPTOM on the Chrome path, not the STRUCTURE. **The first-principles
+rebuild the criteria demands has NOT been done** — the src still ships `FLOW_PRESET_AURORA_CURRENT`
+`mode:"flow"` (a free-advected mote population braided by an additive-trail feedback buffer), the
+EXACT gestalt the PASS-BAR explicitly forbids ("NOT a free-advected mote cloud braided by an
+additive trail buffer"). No Jobard–Lefer evenly-spaced streamline placement, no arc-length-beaded
+dot chains, no dSep-separation, no retirement of the additive-trail flood machinery.
+
+- Wave: `BG.W-DOTFLOW-REBUILD` (row 6.6, F9). repo HEAD `e6bdd0f8`. src SHAs `6dce9b5b` / `7b82c7fc` preserved in lineage.
+- Route: `/substrates/dot-flow-field` (renders `FLOW_PRESET_AURORA_CURRENT`, `mode:"flow"`; calm-halftone toggle OFF, interactive ON at capture).
+- Gate `proof:viz-dotflow`: **GREEN** (F1–F7d structural + the rgba16float-reintroduction self-test bite). The classic headless-green / visually-broken gap — the gate verifies SOURCE constants (`FLOW_TRAIL_DEPOSIT`, `FLOW_PRESENT_KNEE`, the rgba8unorm trail), NOT the composited pixel result. The gate is not the arbiter; the live dual-engine composite is, and it is broken.
+
+## PASS-BAR scorecard (binding gestalt π toward IMG_1836)
+
+| criterion | Chrome/Metal | Safari/WebKit | verdict |
+|-----------|--------------|---------------|---------|
+| ≥8 distinct SMOOTH streamlines, individually-resolvable dots, EVEN spacing (Jobard–Lefer) | smeared trail-cloud — 0 traceable beaded streamlines | dead black — 0 | **FAIL** |
+| p99 luminance BELOW white-out | p99 204–207, right-half washed to ~200 plate | n/a (black) | **FAIL** |
+| mean ABOVE dead-black | mean 161–178 (over-bright) | mean OKLab L ≈ 0.11 (dead-black) | **FAIL** |
+| warm-cream / warm-fire default, teal-navy purge held | warm 99–100%, teal 0–1% ✓ | (black, chroma ≈ 0) | PASS (palette) / moot |
+| pointer-sweep bends lines continuously | moot (no streamlines) | moot (black) | not reachable |
+| PRM = one deterministic tick(0) static frame | not reached (primary gestalt fails) | not reached | moot |
+
+Palette/teal-navy-purge is the ONE criterion that holds on Chrome (warm-fire 99–100%, teal ≈ 0)
+— but the gestalt, the luminance band, and the streamline topology all fail, and Safari paints
+nothing.
 
 ## Method (proven C18, this session)
 
-- Built bytes on `:5200` (`npm run demo:dist:build` + `npm run demo:dist:serve`), NOT `:5199` dev.
-- `?capture=/substrates/dot-flow-field&mode=<m>`, poll `data-capture-ready`.
-- Chrome via Playwright `connectOverCDP` over real `Google Chrome.app` (Chrome 149) + real Metal
-  GPU — throwaway-webgl2 `GL_RENDERER` = `ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Max,
-  Unspecified Version)` (NOT SwiftShader), engine badge decoded in-pixel (`ENGINE CHROME`).
-- Safari via off-screen system-WebKit WKWebView (`.wkshot-bin` for the hero, `.wkshot-scroll-bin`
-  — the below-fold scroll variant — for the showcase). Badge decoded in-pixel (`ENGINE WEBKIT`,
-  `GPU Apple GPU`). Scroll: the demo `MAIN.demo-main-scroller` scrolled 988px so the 460px
-  showcase canvas sits near the top of the 1440×900 viewport.
-- The showcase canvas region is the below-fold specimen (`ShowcaseFrame tier="field"` →
-  `.rounded-card` 460px canvas), not the hero (the hero backdrop is a `StoryHero` `<Aurora>`,
-  which rendered warm + structured on both engines — the working control).
+- `node scripts/verify-siblings-intact.mjs --quiet` → exit 0 (before + after).
+- Built bytes on `:5200` (`npm run demo:dist:build` exit 0 + `npm run demo:dist:serve` — vite preview, NOT `:5199` dev).
+- `?capture=/substrates/dot-flow-field&mode=<m>`, poll `data-capture-ready`, ~4s viz warm-up, then scroll the below-fold showcase canvas near the viewport top.
+- **Chrome** via Playwright `connectOverCDP :9477` over real windowed `Google Chrome.app` (Chrome 149) + real Metal GPU. `GL_RENDERER = ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Max, Unspecified Version)` (NOT SwiftShader). Live context probe on the DotFlowField canvas: `{wgpu:true, gl2:false}` → **the judged Chrome path is WebGPU/WGSL**.
+- **Safari** via off-screen system-WebKit WKWebView (`.wkshot-scroll-bin`, compiled from `docs/tranches/BG/audit/wkshot-live-scroll.m` — scrolls the demo `MAIN.demo-main-scroller` so the 460px showcase canvas sits near the top). Badge decoded in-pixel: `ENGINE WEBKIT`, `GPU Apple GPU`. Prior session probe confirmed WebKit also binds `webgpu` (not `webgl2`) on this canvas → **the judged Safari path is WebGPU/WGSL too.**
 
 ## Captures on disk (all resolve — `docs/tranches/BG/audit/visual/BG.W-DOTFLOW-REBUILD-paint/`)
 
 | PNG | engine / mode | subject | verdict |
 |-----|---------------|---------|---------|
-| `refetch-chrome-showcase-dark.png`  | Chrome / dark  | **the DotFlowField showcase** | **FAIL — flat bright plate** |
-| `refetch-chrome-showcase-light.png` | Chrome / light | **the DotFlowField showcase** | **FAIL — flat bright plate** |
-| `refetch-safari-showcase-dark.png`  | Safari / dark  | **the DotFlowField showcase** | **FAIL — dead black** |
-| `refetch-safari-showcase-light.png` | Safari / light | **the DotFlowField showcase** | **FAIL — dead black** |
-| `refetch-chrome-canvas-dark.png`  | Chrome / dark  | canvas element crop | flat bright |
-| `refetch-chrome-canvas-light.png` | Chrome / light | canvas element crop | flat bright |
-| `refetch-chrome-dark.png` / `-light.png`   | Chrome / both | hero (Aurora backdrop) | hero OK (control) |
-| `refetch-safari-dark.png` / `-light.png`   | Safari / both | hero (Aurora backdrop) | hero OK (control) |
-| `refetch-chrome-census.json` | — | Chrome composited-PNG census | — |
+| `rejudge-chrome-canvas-light.png` | Chrome / light | DotFlowField canvas crop | **FAIL — trail-cloud + right white-out** |
+| `rejudge-chrome-canvas-dark.png`  | Chrome / dark  | DotFlowField canvas crop | **FAIL — trail-cloud + right white-out** |
+| `rejudge-chrome-light.png` / `rejudge-chrome-dark.png` | Chrome / both | full page (badge) | — |
+| `rejudge-safari-showcase-light.png` | Safari / light | full page (badge) — canvas DEAD BLACK | **FAIL — dead black** |
+| `rejudge-safari-showcase-dark.png`  | Safari / dark  | full page (badge) — canvas DEAD BLACK | **FAIL — dead black** |
 
-## Pixel census (showcase canvas region — composited screenshot pixels, NOT the WebGL drawImage)
+## Pixel census
 
-| capture | meanLuma /255 | stdLuma | chromatic % | warm % | teal % | reads as |
-|---------|---------------|---------|-------------|--------|--------|----------|
-| chrome-dark  | **207.3** | 2.9 | 0.0 | — | 0 | flat bright plate (white-out) |
-| chrome-light | **207.3** | 2.9 | 0.0 | — | 0 | flat bright plate (white-out) |
-| safari-dark  | **4.7**   | 0.0 | 0.0 | — | 0 | dead black |
-| safari-light | **4.7**   | 0.0 | 0.0 | — | 0 | dead black |
+Chrome canvas crop (2066×920 composited screenshot pixels):
 
-Reference intent (`FLOW_PRESET_AURORA_CURRENT`): a deep warm-near-black floor (luma ≈ 28/255)
-with warm-fire ribbons advecting through it — a mid-luma, HIGH-stdLuma (visible ribbon
-structure), warm-chromatic field, zero teal. Every capture is either flat-bright (Chrome) or
-flat-black (Safari) with near-zero stdLuma and ZERO chroma — a flat plate, not a flowing field.
+| capture | meanLuma /255 | stdLuma | p99 | col-luma L→R | warm% | teal% | reads as |
+|---------|---------------|---------|-----|--------------|-------|-------|----------|
+| chrome-light | 178.1 | 29.1 | 207 | 144→201 | 99 | 1 | trail-cloud on left, white plate on right |
+| chrome-dark  | 161.0 | 32.3 | 204 | 126→196 | 100 | 0 | trail-cloud on left, white plate on right |
 
-## defectLocalization (the decisive new finding — the paint-fix targeted the WRONG path)
+Safari canvas region (OKLab, `pngRegionStats` over the black rectangle):
 
-**BOTH judged engines run the WebGPU/WGSL path, NOT the WebGL2 GLSL path.** Probed live on
-both: the showcase canvas has a bound `webgpu` context and no `webgl2` context
-(`{gpu:true, gl2:false, wgpu:true}`) on Chrome 149/M5 Max **AND** on Safari 26 WKWebView. So:
+| capture | meanL | meanChroma | reads as |
+|---------|-------|-----------|----------|
+| safari-light | 0.116 | 0.012 | dead black |
+| safari-dark  | 0.113 | 0.012 | dead black |
 
-- **The RGBA8-trail Safari-fix in `flowSetupGLFlow.ts` (the WebGL2 GLSL path) is a NO-OP on both
-  engines judged here** — it never executes. The WGSL path's trail is still
-  `flowSetupWGPU.ts:147` `trailFormat = "rgba16float"` (unbounded float — the exact
-  additive-flood substrate the fix was meant to bound, still present on the path that actually
-  runs).
-- **Chrome/Metal WGSL — white-out.** The shared constants (`FLOW_PRESENT_KNEE = 0.7`,
-  `FLOW_TRAIL_DEPOSIT = 0.18`, `FLOW_MOTE_BASE = 0.12`, `FLOW_TRAIL_CEIL = 1.0`) DO splice into
-  `shaders/flow-field.render.wgsl.ts` `fs_present` / mote pass, but on the real Metal WebGPU
-  device the additive RGBA16F trail + dense population (`particleCount 12000`, `speedGlow 1.35`)
-  still saturate `t/(t+0.7)` toward 1.0 across the whole frame → a flat bright plate. The
-  pre-tone-map `min(trail, 1.0)` clamp + the 0.18 deposit gain do NOT tame the flood on this
-  path; the field reads bright, not warm-fire-over-dark, and the warm-fire hue does not survive
-  (0% chromatic — everything clips to white/gray). Motes are only distinguishable where the
-  trail is thinnest (the right margin).
-- **Safari/WebKit WGSL — dead black.** The WGSL compute-advect + RGBA16F trail ping-pong +
-  present produces NO visible output on WebKit's WebGPU (meanLuma 4.7, 0% chroma). The Aurora
-  hero renders fine on the same WKWebView, so this is specific to the DotFlowField WGSL
-  pipeline — a likely WebKit-WebGPU divergence in the `rgba16float` storage/render-target
-  additive-blend, the compute storage-buffer advection, or the two-pass trail ping-pong (the
-  WGSL twin of the very failure the WebGL2 RGBA8 fix addressed — but on the WGSL path it was
-  never addressed).
+Reference intent: a deep warm-near-black floor with **≥8 evenly-spaced smooth streamlines**, each a
+chain of individually-resolvable dots — a mid-luma, structure-bearing warm-fire field where the
+dots BEAD along level curves. Every capture is either a smeared bright cloud (Chrome) or flat black
+(Safari), with 0 traceable evenly-spaced beaded streamlines.
+
+## defectLocalization
+
+1. **STRUCTURAL — the rebuild was never built.** HEAD `e6bdd0f8` landed a constant-tune paint-fix
+   (WGSL trail `rgba8unorm`, deposit `0.05`, `trailHalfLife 0.3`) on the SAME `mode:"flow"`
+   advected-mote + additive-trail architecture. The RE-OPENED criteria demand a FIRST-PRINCIPLES
+   rebuild to Jobard–Lefer evenly-spaced streamline placement over curlFBM (dSep-separated,
+   arc-length-beaded dot chains, additive-trail flood machinery RETIRED). That rebuild is absent
+   — the free-advected mote cloud the criteria forbid is exactly what still ships
+   (`demo/stories/substrates/presets.ts` `FLOW_PRESET_AURORA_CURRENT`; the renderer under
+   `src/components/custom/dot-flow-field/`).
+2. **Chrome/Metal WGSL — right-half white-out + wrong topology.** The rgba8unorm bounded trail
+   tamed the whole-frame flood but the additive deposit still accumulates a flat bright plate over
+   the right ~40% (col-luma 144→201), and the LEFT-half structure reads as a smeared marbled trail
+   smear, not discrete beaded streamlines. `shaders/flow-field.render.wgsl.ts` `fs_present`
+   tone-map + the additive mote/deposit pass, and the dense `particleCount:12000` +
+   `speedGlow:1.35`, produce a cloud, not level-curve dot-chains.
+3. **Safari/WebKit WGSL — dead black in both modes.** The WGSL compute-advect + rgba8unorm trail
+   ping-pong + present composite produces NO visible output on WebKit-WebGPU (canvas OKLab L 0.11,
+   chroma 0.01). The Aurora hero renders on the same WKWebView, so the black is specific to the
+   DotFlowField WGSL pipeline — a likely WebKit-WebGPU divergence in the storage-buffer compute
+   advection, the two-pass trail ping-pong, the additive-blend on the rgba8unorm render target, or
+   the present-canvas `alphaMode`. `flowSetupWGPU.ts` + `shaders/flow-field.*.wgsl.ts`.
 
 ## mustFix (owed to the build-fix agent — STEP 0.4)
 
-1. **Fix the WGSL path, not (only) the WebGL2 GLSL path.** Both target engines (Chrome/Metal +
-   Safari 26) run WebGPU. The RGBA8-trail Safari-fix in `flowSetupGLFlow.ts` never executes on
-   them. Bring the flood-control + additive-blendable-trail discipline to the WGSL path:
-   `flowSetupWGPU.ts` (`trailFormat = "rgba16float"` at `:147` — consider an 8-bit-unorm /
-   bounded-format trail, or a clamped deposit, matching the WebGL2 RGBA8 decision) +
-   `shaders/flow-field.render.wgsl.ts` (`fs_present` tone-map + the additive mote/deposit pass).
-2. **Kill the Chrome/Metal WGSL white-out.** Re-balance so the warm-fire ribbons POP off the
-   deep warm floor WITHOUT clipping the whole frame to a flat bright plate — tune the present
-   knee / deposit gain / pre-tone-map clamp against the ACTUAL WGSL trail magnitude on a real
-   Metal WebGPU device (not the WebGL2 path), and re-verify the composited mean luma lands
-   mid-range (NOT ~207) with high stdLuma (visible ribbon structure) and warm-fire hue surviving
-   (motes read ember/amber/gold, not white/gray).
-3. **Make the WGSL trail/state pipeline PAINT on Safari/WebKit WebGPU.** DotFlowField is
-   dead-black on WebKit-WebGPU while the Aurora hero renders fine. Audit the WGSL RGBA16F trail
-   ping-pong + compute-advected storage buffer + present composite for a WebKit-WebGPU
-   divergence (float render-target additive-blend support, storage-texture/buffer usage flags,
-   the `alphaMode` of the present canvas configure). Degrade gracefully (a bounded-format trail,
-   or a detected WebGL2 fall) rather than a black frame.
-4. **Re-verify BOTH engines BOTH modes** paint the reference flowing warm-fire dot-wave
-   (mid-luma warm-chromatic field with visible advected streamline structure, zero teal) on the
-   WGSL path before re-flipping to PAINT-PENDING for a re-judge. The showcase-canvas census is
-   the diagnostic: PASS wants meanLuma roughly mid-range, stdLuma WELL above the ~2-5 flat-plate
-   floor, warm % of chromatic ≈ 100, teal ≈ 0, on all four (engine × mode) captures.
+1. **Do the first-principles rebuild the criteria name.** Replace the free-advected-mote +
+   additive-trail-flood architecture with Jobard–Lefer (1997) evenly-spaced streamline placement
+   over the curlFBM field: seed streamlines, integrate them (RK), enforce dSep separation, and bead
+   individually-resolvable dots along each streamline at even arc-length. The frame must read as
+   ≥8 distinct smooth undulating/interweaving streamlines (level curves), the dots drifting slowly
+   ALONG their own line — NOT a mote cloud. Retire the additive-trail flood buffer where the
+   streamline topology supersedes it (W-PRUNE-CONSOLIDATE — no dual path).
+2. **Make it PAINT on Safari/WebKit WebGPU.** DotFlowField is dead-black on WebKit-WebGPU in both
+   modes while Aurora renders fine. Audit the WGSL compute/storage/trail/present pipeline for the
+   WebKit-WebGPU divergence (storage-buffer usage flags, additive-blend on the trail render target,
+   the two-pass ping-pong, present `alphaMode`); OR fall to the WebGL2 channel on WebKit if the
+   WGSL path cannot be made to paint the same gestalt. A dead-black frame is not acceptable.
+3. **Kill the Chrome/Metal right-half white-out + over-bright mean.** Whatever the final render
+   (streamline dots), the composite must land mid-luma with a deep warm floor and NO washed bright
+   plate — p99 below white-out, mean well above dead-black, column-luma roughly EVEN across the
+   frame (not a L→R brightening ramp), warm-fire hue surviving.
+4. **Keep the palette fence.** The warm-fire / warm-cream default + teal-navy purge holds on Chrome
+   today (warm 99–100%, teal 0–1%) — preserve it through the rebuild (the IMG_1836 teal-on-navy
+   skin ships ONLY as a demo preset).
+5. **Re-verify BOTH engines BOTH modes** paint the reference flowing evenly-spaced streamline-dot
+   wave on the actually-running WebGPU/WGSL path (the census diagnostic: ≥8 traceable beaded
+   streamlines, even col-luma, warm-fire hue, teal ≈ 0, Safari NOT black) before re-flipping to
+   PAINT-PENDING for a re-judge.
 
 ## Notes for the re-judge
 
 - The capture harness, `:5200` built bytes, and both engines are proven this session (the Aurora
-  hero is the working control on both). Re-run the same set: the below-fold showcase needs the
-  scroll (Chrome via Playwright scroll of `.demo-main-scroller`; Safari via `.wkshot-scroll-bin`,
-  the scroll-variant harness under `docs/tranches/BG/audit/wkshot-live-scroll.m`).
-- The single decisive fact this re-judge adds over the prior FAIL: **the judged engines run
-  WGSL, so the fix must land on the WGSL path.** A WebGL2-only fix will keep passing the gate and
-  keep failing the paint on any WebGPU-capable device (which is the whole target fleet on
-  macOS 26 / Metal).
+  hero on the same route is the working control on both). Re-run the same set: the below-fold
+  showcase needs the scroll (Chrome via Playwright scroll of `.demo-main-scroller`; Safari via
+  `.wkshot-scroll-bin`).
+- **Both judged engines run WGSL/WebGPU** (Chrome/Metal M5 Max AND Safari 26 WKWebView) — any fix
+  MUST land on the WGSL path (a WebGL2-only fix keeps passing the gate and keeps failing the paint
+  on the whole macOS-26/Metal target fleet).
