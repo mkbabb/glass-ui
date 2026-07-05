@@ -141,8 +141,10 @@ export const COMPOSABLE_SUBPATHS = {
 // The non-JS export keys — verbatim, never derived.
 export const CSS_FONT_EXPORTS = {
     "./styles": "./dist/styles/index.css",
-    "./styles/critical": "./dist/styles/critical.css",
-    "./styles/deferred": "./dist/styles/deferred.css",
+    // BG.W-CSS-MINIFY (F8.4) — the `./styles/critical` + `./styles/deferred`
+    // split exports RETIRED: after the publish-time minify the ~13KB saving was
+    // not worth its wave + gate + manifest + two exports. The `./styles` union
+    // stays the one byte-complete entry (a splitter consumer folds onto it).
     "./styles/fonts": "./dist/styles/fonts.css",
     "./styles.css": "./dist/glass-ui.css",
     "./fonts/*": "./dist/fonts/*",

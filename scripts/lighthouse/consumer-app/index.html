@@ -2,22 +2,18 @@
 <!--
   BC.W-LIGHTHOUSE — the minimal bare-consumer app. This is the SMALLEST
   representative consumer: it imports the PUBLISHED `@mkbabb/glass-ui` bundle +
-  the published `/styles` split (from the built `dist/`, the contract-v2
+  the published `/styles` cascade (from the built `dist/`, the contract-v2
   dev-resolution model) and mounts ONE glass surface (a Card + a Button over a
   page wash). It proves the PUBLISHED artefact's first-paint reach — the demo
   imports library SOURCE; a consumer imports the BUNDLE, and only this harness
   sees the published `/styles` the way a real app does.
 
-  BC.W-CSS-CRITICAL load-order proof (main.ts): the CRITICAL subset
-  (`@mkbabb/glass-ui/styles/critical` — token cascade + glass ladder +
-  typography + theme) is imported SYNCHRONOUSLY so it render-blocks EARLY (the
-  one render-blocking <link Vite emits into this <head>), and the DEFERRED tail
-  (`@mkbabb/glass-ui/styles/deferred`) loads NON-blocking after first paint.
-  The above-the-fold Card+Button paints from the critical subset alone
-  (`.glass-card`/`.glass-btn` are in critical's glass.css) — FOUC-safe: the
-  deferred tail decorates only late-mount surfaces, shifting ZERO above-the-fold
-  pixel. The consumer-facing first-paint wire is the critical subset (~150KiB
-  gzip), not the whole ~316KiB-gzip monolith.
+  BG.W-CSS-MINIFY (F8.4): the harness imports the ONE byte-complete
+  `@mkbabb/glass-ui/styles` union (the minified cascade) synchronously — the
+  render-blocking <link Vite emits into this <head>. The BC.W-CSS-CRITICAL
+  critical/deferred split retired: after the publish-time minify the ~13KB
+  saving was not worth the split, so the bare consumer pays the minified
+  monolith's first paint — the single-import wire a real app uses.
 -->
 <html lang="en">
     <head>

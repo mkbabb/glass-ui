@@ -21,49 +21,14 @@
              needed; the demo dogfoods exactly what a consumer of
              `@mkbabb/glass-ui/styles/fonts` receives. -->
 
-        <!-- BB.W-CSS-CRITICAL — the render-blocking /styles split loader recipe
-             (the reference consumer pattern; the canon lives in CLAUDE.md
-             §"Consumer wiring"). The CRITICAL subset (the token cascade + the
-             5-rung glass ladder + typography + theme — the above-the-fold paint
-             surface) loads render-blocking-EARLY; the DEFERRED tail (the
-             component recipes + the SFC scoped payload + the components.css
-             utility surface) loads NON-blocking via the `media="print"
-             onload="this.media='all'"` swap idiom, so first paint is no longer
-             gated on the long component-CSS tail. The deferred tail's late
-             arrival shifts NO above-the-fold pixel (FOUC-safe by the
-             byte-complete + boundary-design construction `proof:css-critical`
-             asserts).
-
-             The demo's DEV server bundles the library SOURCE cascade through
-             demo.css (`@import "../src/styles/index.css"`, the union for HMR
-             simplicity), so this split is the PRODUCTION-consumer reference:
-             in a real consumer of the published package these two <link>s
-             resolve `@mkbabb/glass-ui/styles/critical` + `…/styles/deferred`
-             (built from this branch's `publishStyleAssets` two-subset emit),
-             and the render-block win is measured under the W-LIGHTHOUSE
-             production-preview protocol (see
-             docs/tranches/BB/audit/visual/W-CSS-CRITICAL-DELTA.md). A consumer
-             that wants one-import simplicity keeps the union
-             `@mkbabb/glass-ui/styles` instead — the byte-complete union entry,
-             NOT a back-compat alias.
-
-        <link
-            rel="stylesheet"
-            href="<node_modules>/@mkbabb/glass-ui/dist/styles/critical.css"
-        />
-        <link
-            rel="stylesheet"
-            media="print"
-            onload="this.media='all'"
-            href="<node_modules>/@mkbabb/glass-ui/dist/styles/deferred.css"
-        />
-        <noscript>
-            <link
-                rel="stylesheet"
-                href="<node_modules>/@mkbabb/glass-ui/dist/styles/deferred.css"
-            />
-        </noscript>
-        -->
+        <!-- BG.W-CSS-MINIFY (F8.4) — the /styles cascade is the ONE byte-complete
+             union entry `@mkbabb/glass-ui/styles` (the minified cascade). The
+             BB.W-CSS-CRITICAL critical/deferred split loader recipe retired here:
+             after the publish-time minify the ~13KB saving was not worth the
+             split's wave + gate + manifest + two exports, so a consumer imports
+             the single `@mkbabb/glass-ui/styles` entry. The demo's DEV server
+             bundles the library SOURCE cascade through demo.css
+             (`@import "../src/styles/index.css"`, the union for HMR simplicity). -->
     </head>
     <body>
         <div id="app"></div>

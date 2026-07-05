@@ -31,27 +31,11 @@ export default defineConfig({
     plugins: [vue()],
     resolve: {
         alias: [
-            // The render-blocking-EARLY critical subset + the non-blocking
-            // deferred tail (BC.W-CSS-CRITICAL load-order proof). A real
-            // consumer who wants the split imports `./styles/critical`
-            // render-blocking + `./styles/deferred` non-blocking; the harness
-            // dogfoods that consumer-owned strategy so the published split's
-            // first-paint reach is the binding wire (presets-in-consumers — the
-            // library ships the two partitioned files, the consumer picks the
-            // load order). The `./styles` union stays the one-import path.
-            // Exact-match RegExp anchors (a string `find` does prefix
-            // replacement, so `/styles/critical` would otherwise resolve through
-            // the broader `/styles` alias). The optional `(\\?.*)?$` keeps the
-            // `?url` query so the deferred tail emits as a real, separately-
-            // cacheable, non-render-blocking asset.
-            {
-                find: /^@mkbabb\/glass-ui\/styles\/critical$/,
-                replacement: resolve(ROOT, "dist/styles/critical.css"),
-            },
-            {
-                find: /^@mkbabb\/glass-ui\/styles\/deferred(\?.*)?$/,
-                replacement: resolve(ROOT, "dist/styles/deferred.css") + "$1",
-            },
+            // BG.W-CSS-MINIFY (F8.4) — the harness imports the ONE byte-complete
+            // `./styles` union (the minified cascade). The BC.W-CSS-CRITICAL
+            // critical/deferred split retired: after the publish-time minify the
+            // ~13KB saving was not worth the split, so the bare consumer pays the
+            // minified monolith's first paint — the binding published wire.
             {
                 find: /^@mkbabb\/glass-ui\/styles$/,
                 replacement: resolve(ROOT, "dist/styles/index.css"),

@@ -1,15 +1,20 @@
 import { cpSync, existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
+import { minifyCss } from "./scripts/lib/minify-css.mjs";
+
 /**
  * vite.style-fold — the STYLE-FOLD sub-plugin of publishStyleAssets
  * (BH.B5a-deps-currency god-module carve). Owns the `/styles` cascade
  * materialization: cpSync `src/styles`+`src/fonts` → `dist/`, fold the SFC
  * scoped bundle into `dist/styles/index.css`, then post-process the shipped
  * copy (base64-inline the fonts + inject the `-webkit-backdrop-filter` prefix
- * pair). The orchestrator (`vite.style-assets.ts`) composes these in order; the
- * component-utility emit (`vite.utility-emit.ts`) and the critical/deferred
- * partition (`vite.critical-split.ts`) are the two sibling sub-plugins.
+ * pair + minify LAST). The orchestrator (`vite.style-assets.ts`) composes these
+ * in order; the component-utility emit (`vite.utility-emit.ts`) is the sibling
+ * sub-plugin. (BG.W-CSS-MINIFY / F8.4 pruned the critical/deferred partition
+ * sub-plugin `vite.critical-split.ts` — minify made the split's ~13KB saving
+ * not worth its wave + gate + manifest + two exports; the `./styles` union is
+ * the one byte-complete entry.)
  *
  * The `./styles` export in package.json publishes `dist/styles/index.css`,
  * whose `@font-face` rules reference woff2 faces under the package. Under the
@@ -234,5 +239,41 @@ export function injectWebkitBackdrop(distStyles: string): void {
             },
         );
         if (changed) writeFileSync(path, out, "utf-8");
+    }
+}
+
+/**
+ * minifyStyleAssets — BG.W-CSS-MINIFY (F8.4): minify EVERY published `.css`
+ * partial under the `dist/styles` subtree (strip comments + collapse whitespace
+ * to a single line) so the shipped `/styles` cascade drops its authoring
+ * comments + indentation while `src/styles/*.css` KEEP their comments (this is a
+ * PUBLISH-TIME pass, not a source rewrite).
+ *
+ * The minify is DELIBERATELY conservative + string-aware (`scripts/lib/
+ * minify-css.mjs` `minifyCss`): the dist partials are copied RAW so they still
+ * carry Tailwind-v4 SOURCE directives (`@theme`/`@utility`/`@apply`/`@source`/
+ * `@layer`) the consumer's Tailwind processes, PLUS the `injectWebkitBackdrop`
+ * pairs and the `@supports` no-masking fallbacks — a structural minifier
+ * (lightningcss/esbuild) would prune the "redundant" webkit prefix, drop a
+ * "dead" `@supports` branch, or choke on the non-standard at-rules. The lexical
+ * pass touches only comments + whitespace and preserves the `@source "../*.js"`
+ * `/*`-in-string byte (the atSourceIndex trap).
+ *
+ * Runs LAST (after cpSync + SFC-fold + component-utility emit + font-inline +
+ * webkit-inject) so it minifies the COMPLETE shipped cascade — and so the
+ * `injectWebkitBackdrop` newline/`;`-boundary regex reads the un-collapsed text
+ * first. Recursive (the `glass/`, `dock-controls/`, `tokens/`, … subdir
+ * partials ship + are `@import`-referenced, so they are minified too).
+ * Idempotent by construction (a cpSync-fresh dist is minified once per build).
+ */
+export function minifyStyleAssets(distStyles: string): void {
+    if (!existsSync(distStyles)) return;
+    const entries = readdirSync(distStyles, { recursive: true }) as string[];
+    for (const rel of entries) {
+        if (!rel.endsWith(".css")) continue;
+        const path = resolve(distStyles, rel);
+        const src = readFileSync(path, "utf-8");
+        const min = minifyCss(src);
+        if (min !== src) writeFileSync(path, min, "utf-8");
     }
 }

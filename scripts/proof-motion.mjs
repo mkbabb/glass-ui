@@ -188,11 +188,11 @@ function detect({ existsFn, readFn, corpus }) {
         V.push("M2: jubilance.css still @import-ed in styles/index.css");
     if (/@import\s+["']\.\/motion\/morph-field\.css["']/.test(indexCss))
         V.push("M2: motion/morph-field.css still @import-ed in styles/index.css");
-    const partition = readFn("src/styles/critical-partition.mjs");
-    if (/["']jubilance\.css["']/.test(partition))
-        V.push("M2: jubilance.css still enrolled in critical-partition DEFERRED_PARTIALS");
-    if (/["']motion\/morph-field\.css["']/.test(partition))
-        V.push("M2: motion/morph-field.css still enrolled in critical-partition DEFERRED_PARTIALS");
+    // The critical-partition DEFERRED_PARTIALS enrolment check retired with the
+    // partition itself (BG.W-CSS-MINIFY / F8.4 pruned the BB.W-CSS-CRITICAL
+    // critical/deferred split — src/styles/critical-partition.mjs is
+    // DEFINITION-ABSENT). The `@import`-in-index.css arm above is the surviving
+    // dead-CSS-enrolment witness; the union `./styles` cascade is the one path.
 
     // M3 — the GUT: MORPH_SIGNATURES survives on morphSignatures.ts + the root barrel.
     if (!existsFn("src/composables/motion/morphSignatures.ts"))

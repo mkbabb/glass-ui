@@ -658,8 +658,6 @@
             "import": "./dist/watercolor-dot.js"
         },
         "./styles": "./dist/styles/index.css",
-        "./styles/critical": "./dist/styles/critical.css",
-        "./styles/deferred": "./dist/styles/deferred.css",
         "./styles/fonts": "./dist/styles/fonts.css",
         "./styles.css": "./dist/glass-ui.css",
         "./fonts/*": "./dist/fonts/*"
@@ -706,7 +704,6 @@
         "demo:dist:build": "vite build --config demo/vite.demo-dist.config.ts",
         "demo:dist:serve": "vite preview --config demo/vite.demo-dist.config.ts --port 5200",
         "proof:no-layout-animation": "node scripts/proof-no-layout-animation.mjs",
-        "proof:css-critical": "node scripts/proof-css-critical.mjs",
         "proof:lighthouse": "node scripts/proof-lighthouse.mjs",
         "proof:perf-producer": "node scripts/proof-perf-producer.mjs",
         "proof:phantom-classes": "node scripts/proof-phantom-classes.mjs",
@@ -993,6 +990,7 @@
         "proof:gen-ci-fresh": "node scripts/proof-gen-ci-fresh.mjs",
         "proof:gate-manifest-sound": "node scripts/proof-gate-manifest-sound.mjs",
         "proof:ba-gestalt": "node scripts/proof-ba-gestalt.mjs",
+        "proof:build": "node scripts/proof-build.mjs",
         "proof:warm-identity": "node scripts/proof-warm-identity.mjs",
         "proof:bc-fold-ledger": "node scripts/proof-bc-fold-ledger.mjs",
         "proof:bg-deferred-ledger": "node scripts/proof-bg-deferred-ledger.mjs",

@@ -3,10 +3,13 @@
 //
 // Two deliverables, one gate:
 //   (A) the build-infra GOD-MODULE carve: vite.style-assets.ts (566 lines) split
-//       into three cohesive sub-plugin modules the orchestrator composes IN ORDER
+//       into cohesive sub-plugin modules the orchestrator composes IN ORDER
 //       (byte-identical build — the paint-class H mechanical carve): style-fold
-//       (copy + SFC-fold + font-inline + webkit), utility-emit (P9 component-utility
-//       RULES), critical-split (BB.W-CSS-CRITICAL critical/deferred partition).
+//       (copy + SFC-fold + font-inline + webkit + minify), utility-emit (P9
+//       component-utility RULES). (BG.W-CSS-MINIFY / F8.4 pruned the third
+//       sub-plugin critical-split — the BB.W-CSS-CRITICAL critical/deferred
+//       partition — after the publish-time minify made the split's saving not
+//       worth its wave + gate + manifest + two exports.)
 //       proof:no-god-module walks src/ ONLY, so a repo-root build god-module rides
 //       past it — THIS gate is the build-infra bound.
 //   (B) the deps-currency + shadcn-vue verdict recorded in docs/canon, and the
@@ -19,16 +22,16 @@
 //
 // Asserts:
 //   S1 — vite.style-assets.ts is a THIN orchestrator (≤ 200 lines), not the god-module.
-//   S2 — the three sub-plugins exist on disk AND each is ≤ 500 lines.
+//   S2 — the two sub-plugins exist on disk AND each is ≤ 500 lines.
 //   S3 — each sub-plugin EXPORTS its function(s): style-fold →
-//        copyStyleAssets/foldSfcBundle/inlineFonts/injectWebkitBackdrop/atSourceIndex;
-//        utility-emit → emitComponentUtilities; critical-split → emitCriticalDeferredSplit.
+//        copyStyleAssets/foldSfcBundle/inlineFonts/injectWebkitBackdrop/atSourceIndex/
+//        minifyStyleAssets; utility-emit → emitComponentUtilities.
 //   S4 — publishStyleAssets stays exported from the orchestrator AND both configs
 //        (vite.config.ts + vite.iter.config.ts) still import it (byte-identical plugin
 //        surface — the two configs never changed).
-//   S5 — the orchestrator COMPOSES the three sub-plugins (imports all three) AND does
-//        NOT re-DEFINE the carved bodies (emitComponentUtilities/emitCriticalDeferredSplit
-//        are DEFINITION-ABSENT from vite.style-assets.ts — the carve is real, no copy).
+//   S5 — the orchestrator COMPOSES the two sub-plugins (imports both) AND does
+//        NOT re-DEFINE the carved bodies (emitComponentUtilities is
+//        DEFINITION-ABSENT from vite.style-assets.ts — the carve is real, no copy).
 //   D1 — docs/canon/deps-currency.md exists + records the currency posture AS a markdown
 //        TABLE (the dependencies.md table-form lesson) + the shadcn-vue verdict.
 //   D2 — components.json baseColor is NOT `slate` (the warm-base fix landed).
@@ -52,7 +55,6 @@ const SUB_LIMIT = 500;
 const ORCHESTRATOR = resolve(ROOT, "vite.style-assets.ts");
 const STYLE_FOLD = resolve(ROOT, "vite.style-fold.ts");
 const UTILITY_EMIT = resolve(ROOT, "vite.utility-emit.ts");
-const CRITICAL_SPLIT = resolve(ROOT, "vite.critical-split.ts");
 const VITE_CONFIG = resolve(ROOT, "vite.config.ts");
 const VITE_ITER_CONFIG = resolve(ROOT, "vite.iter.config.ts");
 const COMPONENTS_JSON = resolve(ROOT, "components.json");
@@ -109,11 +111,6 @@ function detect(overrides = {}) {
         ((overrides.utilityEmitExists ?? existsSync(UTILITY_EMIT))
             ? read(UTILITY_EMIT)
             : "");
-    const criticalSplitSrc =
-        overrides.criticalSplitSource ??
-        ((overrides.criticalSplitExists ?? existsSync(CRITICAL_SPLIT))
-            ? read(CRITICAL_SPLIT)
-            : "");
     const viteConfigSrc = overrides.viteConfigText ?? read(VITE_CONFIG);
     const viteIterSrc = overrides.viteIterConfigText ?? read(VITE_ITER_CONFIG);
     const componentsJson = overrides.componentsJson ?? read(COMPONENTS_JSON);
@@ -127,36 +124,28 @@ function detect(overrides = {}) {
         orchestratorLines > 0 && orchestratorLines <= ORCHESTRATOR_LIMIT,
     );
 
-    // ── S2 — the three sub-plugins exist AND each ≤ 500 lines. ──
+    // ── S2 — the two sub-plugins exist AND each ≤ 500 lines. ──
     const styleFoldExists =
         overrides.styleFoldExists ??
         (overrides.styleFoldSource !== undefined || existsSync(STYLE_FOLD));
     const utilityEmitExists =
         overrides.utilityEmitExists ??
         (overrides.utilityEmitSource !== undefined || existsSync(UTILITY_EMIT));
-    const criticalSplitExists =
-        overrides.criticalSplitExists ??
-        (overrides.criticalSplitSource !== undefined ||
-            existsSync(CRITICAL_SPLIT));
     const subLines = {
         styleFold: lineCount(styleFoldSrc),
         utilityEmit: lineCount(utilityEmitSrc),
-        criticalSplit: lineCount(criticalSplitSrc),
     };
     facts.subPlugins = {
         styleFoldExists,
         utilityEmitExists,
-        criticalSplitExists,
         ...subLines,
     };
     assert(
-        "S2 — the three sub-plugins (vite.style-fold/utility-emit/critical-split) exist AND each is ≤ 500 lines",
+        "S2 — the two sub-plugins (vite.style-fold/utility-emit) exist AND each is ≤ 500 lines",
         styleFoldExists &&
             utilityEmitExists &&
-            criticalSplitExists &&
             subLines.styleFold <= SUB_LIMIT &&
-            subLines.utilityEmit <= SUB_LIMIT &&
-            subLines.criticalSplit <= SUB_LIMIT,
+            subLines.utilityEmit <= SUB_LIMIT,
     );
 
     // ── S3 — each sub-plugin EXPORTS its function(s). ──
@@ -165,20 +154,16 @@ function detect(overrides = {}) {
         exportsFn(styleFoldSrc, "foldSfcBundle") &&
         exportsFn(styleFoldSrc, "inlineFonts") &&
         exportsFn(styleFoldSrc, "injectWebkitBackdrop") &&
-        exportsFn(styleFoldSrc, "atSourceIndex");
+        exportsFn(styleFoldSrc, "atSourceIndex") &&
+        exportsFn(styleFoldSrc, "minifyStyleAssets");
     const utilityEmitExports = exportsFn(utilityEmitSrc, "emitComponentUtilities");
-    const criticalSplitExports = exportsFn(
-        criticalSplitSrc,
-        "emitCriticalDeferredSplit",
-    );
     facts.subExports = {
         styleFoldExports,
         utilityEmitExports,
-        criticalSplitExports,
     };
     assert(
-        "S3 — each sub-plugin exports its function(s) (style-fold: copy/fold/inline/webkit/atSource; utility-emit: emitComponentUtilities; critical-split: emitCriticalDeferredSplit)",
-        styleFoldExports && utilityEmitExports && criticalSplitExports,
+        "S3 — each sub-plugin exports its function(s) (style-fold: copy/fold/inline/webkit/atSource/minify; utility-emit: emitComponentUtilities)",
+        styleFoldExports && utilityEmitExports,
     );
 
     // ── S4 — publishStyleAssets stays exported AND both configs import it. ──
@@ -195,30 +180,24 @@ function detect(overrides = {}) {
         orchestratorExportsPlugin && configUsesPlugin,
     );
 
-    // ── S5 — the orchestrator COMPOSES the three sub-plugins AND re-DEFINES no carved
+    // ── S5 — the orchestrator COMPOSES the two sub-plugins AND re-DEFINES no carved
     // body (the carve is real, not a copy). ──
     const importsStyleFold = /from\s*"\.\/vite\.style-fold"/.test(orchestratorSrc);
     const importsUtilityEmit = /from\s*"\.\/vite\.utility-emit"/.test(
         orchestratorSrc,
     );
-    const importsCriticalSplit = /from\s*"\.\/vite\.critical-split"/.test(
+    const redefinesCarvedBody = definesFn(
         orchestratorSrc,
+        "emitComponentUtilities",
     );
-    const redefinesCarvedBody =
-        definesFn(orchestratorSrc, "emitComponentUtilities") ||
-        definesFn(orchestratorSrc, "emitCriticalDeferredSplit");
     facts.composition = {
         importsStyleFold,
         importsUtilityEmit,
-        importsCriticalSplit,
         redefinesCarvedBody,
     };
     assert(
-        "S5 — the orchestrator imports all three sub-plugins AND re-defines no carved body (emitComponentUtilities/emitCriticalDeferredSplit DEFINITION-ABSENT — a real carve, not a copy)",
-        importsStyleFold &&
-            importsUtilityEmit &&
-            importsCriticalSplit &&
-            !redefinesCarvedBody,
+        "S5 — the orchestrator imports both sub-plugins AND re-defines no carved body (emitComponentUtilities DEFINITION-ABSENT — a real carve, not a copy)",
+        importsStyleFold && importsUtilityEmit && !redefinesCarvedBody,
     );
 
     // ── D1 — the deps-currency + shadcn verdict doc exists + carries a markdown table
@@ -277,13 +256,13 @@ function selfTest() {
     const S1 =
         "S1 — vite.style-assets.ts is a thin orchestrator (≤ 200 lines), not the 566-line god-module";
     const S2 =
-        "S2 — the three sub-plugins (vite.style-fold/utility-emit/critical-split) exist AND each is ≤ 500 lines";
+        "S2 — the two sub-plugins (vite.style-fold/utility-emit) exist AND each is ≤ 500 lines";
     const S3 =
-        "S3 — each sub-plugin exports its function(s) (style-fold: copy/fold/inline/webkit/atSource; utility-emit: emitComponentUtilities; critical-split: emitCriticalDeferredSplit)";
+        "S3 — each sub-plugin exports its function(s) (style-fold: copy/fold/inline/webkit/atSource/minify; utility-emit: emitComponentUtilities)";
     const S4 =
         "S4 — publishStyleAssets stays exported from the orchestrator AND both vite configs import it (byte-identical plugin surface)";
     const S5 =
-        "S5 — the orchestrator imports all three sub-plugins AND re-defines no carved body (emitComponentUtilities/emitCriticalDeferredSplit DEFINITION-ABSENT — a real carve, not a copy)";
+        "S5 — the orchestrator imports both sub-plugins AND re-defines no carved body (emitComponentUtilities DEFINITION-ABSENT — a real carve, not a copy)";
     const D1 =
         "D1 — docs/canon/deps-currency.md exists + records the currency posture AS a markdown table + the shadcn-vue verdict (keep components.json, baseColor→stone)";
     const D2 =
@@ -294,7 +273,7 @@ function selfTest() {
     // S2: a sub-plugin absent.
     sab({ styleFoldExists: false, styleFoldSource: "" }, S2, "S2 style-fold absent");
     // S2: a sub-plugin over the 500-line bound.
-    sab({ criticalSplitSource: "y\n".repeat(501) }, S2, "S2 critical-split over 500 lines");
+    sab({ utilityEmitSource: "y\n".repeat(501) }, S2, "S2 utility-emit over 500 lines");
     // S3: a sub-plugin drops an export.
     sab(
         { utilityEmitSource: "// no emitComponentUtilities export" },
@@ -307,10 +286,9 @@ function selfTest() {
     sab(
         {
             orchestratorText:
-                'import { copyStyleAssets, foldSfcBundle, inlineFonts, injectWebkitBackdrop } from "./vite.style-fold";\n' +
+                'import { copyStyleAssets, foldSfcBundle, inlineFonts, injectWebkitBackdrop, minifyStyleAssets } from "./vite.style-fold";\n' +
                 'import { x } from "./vite.utility-emit";\n' +
-                'import { y } from "./vite.critical-split";\n' +
-                "function emitCriticalDeferredSplit() {}\n" +
+                "function emitComponentUtilities() {}\n" +
                 "export function publishStyleAssets() {}\n",
         },
         S5,
@@ -363,20 +341,20 @@ function run() {
     });
 
     console.log(
-        "proof:deps-currency — style-assets god-module carved (3 sub-plugins) + deps/shadcn verdict recorded",
+        "proof:deps-currency — style-assets god-module carved (2 sub-plugins) + deps/shadcn verdict recorded",
     );
     console.log(`  S1 thin orchestrator (≤200)   : ${facts.orchestratorLines} lines`);
     console.log(
-        `  S2 sub-plugins exist + ≤500   : fold=${facts.subPlugins.styleFold} emit=${facts.subPlugins.utilityEmit} split=${facts.subPlugins.criticalSplit}`,
+        `  S2 sub-plugins exist + ≤500   : fold=${facts.subPlugins.styleFold} emit=${facts.subPlugins.utilityEmit}`,
     );
     console.log(
-        `  S3 sub-plugin exports         : fold=${facts.subExports.styleFoldExports} emit=${facts.subExports.utilityEmitExports} split=${facts.subExports.criticalSplitExports}`,
+        `  S3 sub-plugin exports         : fold=${facts.subExports.styleFoldExports} emit=${facts.subExports.utilityEmitExports}`,
     );
     console.log(
         `  S4 plugin surface unchanged   : exported=${facts.pluginSurface.orchestratorExportsPlugin} bothConfigs=${facts.pluginSurface.configUsesPlugin}`,
     );
     console.log(
-        `  S5 real carve (no copy)       : imports3=${facts.composition.importsStyleFold && facts.composition.importsUtilityEmit && facts.composition.importsCriticalSplit} redefines=${facts.composition.redefinesCarvedBody}`,
+        `  S5 real carve (no copy)       : imports2=${facts.composition.importsStyleFold && facts.composition.importsUtilityEmit} redefines=${facts.composition.redefinesCarvedBody}`,
     );
     console.log(
         `  D1 deps-currency doc + table  : table=${facts.docArm.docTable} shadcn=${facts.docArm.docShadcn} verdict=${facts.docArm.docVerdict}`,
