@@ -880,6 +880,44 @@ export function glassSignalTruthViolations(glassCss, luminanceText) {
         }
     }
 
+    // ── ST5 (M8 runtime completeness) — the live-gate CONSIDERS a resolvable field
+    // canvas, not the data-attr/option ALONE ─────────────────────────────────────
+    // The paint-DELTA caught the source-green witness NEVER firing at runtime: the
+    // dock hands the DockStage aurora canvas but no `live` flag, so a data-attr-only
+    // `isLive()` left the `sampleAnimated` LIVE path UNREACHABLE and the observer was
+    // DEAD on the whole dock band (0 of 12 docks stamped the witness). A resolvable
+    // field canvas IS the live signal — `isLive()` must reach `resolveSourceCanvas(
+    // options.backgroundCanvas)` so a canvas-fed surface samples its field + fires the
+    // witness. The device-free proxy for the paint-judge "the dock observer fires"
+    // mustFix; a regression back to attr-only re-reds. Bounded to the `isLive` body so
+    // the `sampleAnimated`'s own `resolveSourceCanvas` call cannot false-GREEN it.
+    const isLiveBody = (() => {
+        const idx = js.indexOf("function isLive");
+        if (idx < 0) return "";
+        const open = js.indexOf("{", idx);
+        if (open < 0) return "";
+        let depth = 1;
+        let i = open + 1;
+        for (; i < js.length && depth > 0; i++) {
+            if (js[i] === "{") depth++;
+            else if (js[i] === "}") depth--;
+        }
+        return js.slice(open + 1, i - 1);
+    })();
+    facts.isLiveFound = isLiveBody.length > 0;
+    facts.liveConsidersCanvas = /resolveSourceCanvas\s*\(/.test(isLiveBody);
+    if (facts.observerFound) {
+        if (!facts.isLiveFound) {
+            violations.push(
+                "ST5: could not locate the observer's `isLive()` gate (useGlassBackdropLuminance.ts) — the live-path decision is the M8 witness-fires-on-the-dock edit site",
+            );
+        } else if (!facts.liveConsidersCanvas) {
+            violations.push(
+                "ST5: the observer's `isLive()` does not CONSIDER a resolvable field canvas (`resolveSourceCanvas(options.backgroundCanvas)`) — a surface handed (or auto-discovering) a live field canvas but no `live` flag (the dock) never enters the `sampleAnimated` live path, so the observer is DEAD on the whole dock band (the paint-DELTA ST3: 0 of 12 docks fired the writer-fired witness). A resolvable field canvas IS the live signal.",
+            );
+        }
+    }
+
     // ── ST4 (M7) — the band-driver canon reconciled to ONE ───────────────────────
     // the contradictory "the clamp RETIRES the bucket as THE driver" claim is GONE.
     facts.noRetiresBucketAsDriver =
@@ -1699,7 +1737,10 @@ function selfTest() {
         " --glass-specular-core: color-mix( in oklab, color-mix( in oklab, hsl(40 35% 92%), var(--glass-accent) var(--glass-accent-strength) ), var(--glass-ambient-hue) var(--glass-ambient-strength) ); }" +
         " /* BG.W-GLASS-SIGNAL-TRUTH (M7) — the declarative bucket IS the BAND DRIVER; the continuous luma clamp is the refinement where a writer fires. */ }";
     const goodSignalJs =
-        'function write(result) { const el = target.value; if (!el) return;' +
+        'function isLive() { if (options.live !== undefined) return options.live;' +
+        ' if (target.value?.dataset.glassSample === "live") return true;' +
+        ' return resolveSourceCanvas(options.backgroundCanvas) !== null; }' +
+        ' function write(result) { const el = target.value; if (!el) return;' +
         ' el.style.setProperty("--glass-backdrop-luma", result.luma.toFixed(3));' +
         ' el.style.setProperty("--glass-ambient-hue", result.ambientHue);' +
         ' el.setAttribute("data-backdrop-sampled", "");' +
@@ -1748,6 +1789,18 @@ function selfTest() {
     if (!glassSignalTruthViolations(contradictoryCanon, goodSignalJs).violations.some((v) => /ST4/.test(v))) {
         fails.push(
             "self-test ST4: the contradictory `\"clamp RETIRES the bucket as THE driver\"` canon (the double-ownership claim) was NOT flagged (the M7 band-driver reconcile fence has no teeth)",
+        );
+    }
+
+    // bite ST5 — an `isLive()` gate that does NOT consider a resolvable canvas (the
+    // attr-only form that left the whole dock band a DEAD observer) must flag.
+    const attrOnlyLiveJs = goodSignalJs.replace(
+        " return resolveSourceCanvas(options.backgroundCanvas) !== null; }",
+        " return false; }",
+    );
+    if (!glassSignalTruthViolations(goodSignalGlass, attrOnlyLiveJs).violations.some((v) => /ST5/.test(v))) {
+        fails.push(
+            "self-test ST5: an `isLive()` that does NOT reach `resolveSourceCanvas(options.backgroundCanvas)` (the attr-only form that left a canvas-fed dock's `sampleAnimated` path unreachable → the dead-observer band) was NOT flagged (the M8 runtime-completeness fence has no teeth)",
         );
     }
 
@@ -2070,6 +2123,9 @@ function run() {
     );
     console.log(
         `  ST3 writer witness: data-attr=${st.witnessDataAttr ? "✓" : "✗"}  --sampled:1=${st.witnessCustomProp ? "✓" : "✗"}  in-write-path=${st.witnessInWritePath ? "✓" : "✗"} (M8: dead-observer≡calm-backdrop mask observable)`,
+    );
+    console.log(
+        `  ST5 live-path     : isLive-considers-canvas=${st.liveConsidersCanvas ? "✓" : "✗"} (M8 runtime: a canvas-fed dock enters sampleAnimated + the witness fires — the dead-observer band closed)`,
     );
     console.log(
         `  ST4 band-driver   : no-retires-claim=${st.noRetiresBucketAsDriver ? "✓" : "✗"}  decision-recorded=${st.bandDriverRecorded ? "✓" : "✗"} (M7: bucket=driver, clamp=refinement — canon reconciled to ONE)`,

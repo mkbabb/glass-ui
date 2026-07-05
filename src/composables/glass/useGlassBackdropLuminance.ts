@@ -214,10 +214,51 @@ export function useGlassBackdropLuminance(
         return downCtx;
     }
 
-    /** Is the LIVE re-sample loop requested? (the data-attr or the explicit option) */
+    /**
+     * Robust CSS-color → sRGB `[r,g,b,a]`. `parseRgb` is the fast path for the
+     * legacy `rgb()/rgba()` serialization; ANY other valid CSS color form — the
+     * MODERN `oklch()` / `color(srgb …)` / `hsl()` tokens the warm-cream demo basis
+     * resolves to — is normalized by painting it onto the 1×1 corner of the reused 2D
+     * canvas and reading the composited pixel back (`getImageData` ALWAYS returns
+     * integer sRGB whatever the source space). BG.W-GLASS-SIGNAL-TRUTH: without this
+     * `sampleStatic` returned null on a `color(srgb …)`/`oklch(…)` backdrop and wrote
+     * NOTHING — the static floor was a DEAD channel (the dock over the field never
+     * stamped the witness). The static floor is now writer-true over ANY backdrop.
+     */
+    function normalizeToRgb(
+        css: string,
+    ): [number, number, number, number] | null {
+        const fast = parseRgb(css);
+        if (fast) return fast;
+        const ctx = getDownContext();
+        if (!ctx) return null;
+        try {
+            ctx.clearRect(0, 0, 1, 1);
+            ctx.fillStyle = "rgba(0,0,0,0)";
+            ctx.fillStyle = css; // an unparseable value is a no-op (keeps transparent)
+            ctx.fillRect(0, 0, 1, 1);
+            const d = ctx.getImageData(0, 0, 1, 1).data;
+            return [d[0]!, d[1]!, d[2]!, d[3]! / 255];
+        } catch {
+            return null;
+        }
+    }
+
+    /**
+     * Is the LIVE re-sample loop requested? The explicit `live` option / the
+     * `data-glass-sample="live"` attr force it; it is ALSO true when a field canvas
+     * is RESOLVABLE (handed via `backgroundCanvas` OR auto-discovered off the shell
+     * `[data-glass-field-canvas]`). BG.W-GLASS-SIGNAL-TRUTH (ST3/ST5): the dock hands
+     * the DockStage aurora canvas but no `live` flag — without the canvas leg the
+     * `sampleAnimated` path is UNREACHABLE and the observer is DEAD on the whole dock
+     * band (0 of 12 docks fired the writer-fired witness). A resolvable field canvas
+     * IS the live signal: the surface samples the painted field (real luma + ambient
+     * hue) rather than a coarse static stack-walk, and the witness lands.
+     */
     function isLive(): boolean {
         if (options.live !== undefined) return options.live;
-        return target.value?.dataset.glassSample === "live";
+        if (target.value?.dataset.glassSample === "live") return true;
+        return resolveSourceCanvas(options.backgroundCanvas) !== null;
     }
 
     /**
@@ -305,7 +346,7 @@ export function useGlassBackdropLuminance(
             if (node === el || el.contains(node)) continue;
             const bgRaw = getComputedStyle(node).backgroundColor;
             const concrete = resolveTokenColor(bgRaw, el);
-            const rgba = parseRgb(concrete);
+            const rgba = normalizeToRgb(concrete);
             if (!rgba) continue;
             if (rgba[3] < 0.5) continue; // a near-transparent layer is not the backdrop
             return staticResult(rgba);
@@ -315,7 +356,7 @@ export function useGlassBackdropLuminance(
             getComputedStyle(document.body).backgroundColor,
             el,
         );
-        const bodyRgba = parseRgb(bodyBg);
+        const bodyRgba = normalizeToRgb(bodyBg);
         return bodyRgba ? staticResult(bodyRgba) : null;
     }
 
