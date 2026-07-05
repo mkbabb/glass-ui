@@ -101,6 +101,24 @@ export function generateDurationBlock() {
     return lines.join("\n");
 }
 
+// BG.W-LIQUID-WEIGHT-DEFAULT (F5.2) — the interactive-spatial transition DEFAULT.
+//
+// `--transition-liquid-spatial` is the curve the base interactive-atom recipes
+// (`.interactive-item` / `.tap-squish` / the `btn-interactive` @utility) read on their
+// SPATIAL (scale/translate/rotate) leg, so weight is a property of the transition
+// VOCABULARY — not a per-site `--motion-weight` checklist. It is spring-DERIVED: an
+// alias to the canon interactive scale register (the §6 motion canon's ONE
+// button/interactive scale spring). GENERATING it HERE records the "which spring is
+// the interactive-spatial default" mapping in the ONE motion-token source (drift-proof,
+// the exemplar pattern) — a hand-edit to some off-register value is restored on re-run.
+// The `.motion-calm` opt-out (scheme-motion.css) + the PRM carve re-alias it to the
+// no-overshoot bezier; the EFFECTS legs keep their own `--ease-standard` (P1 split).
+export const INTERACTIVE_SPATIAL_SPRING = "smooth";
+
+export function generateInteractiveSpatialBlock() {
+    return `    --transition-liquid-spatial: var(--spring-${INTERACTIVE_SPATIAL_SPRING});`;
+}
+
 export const BLOCK_START_MARKER =
     "    /* ═══════════════════════════════════════════════\n       §2  EASING — Spring curves via linear()";
 // The regex enumerates the SAME six names the PRESETS table carries — a name added to
@@ -115,6 +133,12 @@ export const SPRING_LINES_RE =
 // matching only the easing lines; this regex owns the duration lines.
 export const SPRING_DURATION_LINES_RE =
     /(    --spring-(?:smooth|snappy|bouncy|gentle|dock|press)-duration: [\d.]+s;\n?)+/m;
+// BG.W-LIQUID-WEIGHT-DEFAULT (F5.2) — the ONE `--transition-liquid-spatial` line the
+// gen WRITE + the drift-check READ both anchor on. It resolves to a `--spring-*`
+// register (the interactive-spatial default is a spring alias — the gate asserts it is
+// never a bare `--ease-*` bezier).
+export const INTERACTIVE_SPATIAL_LINE_RE =
+    /    --transition-liquid-spatial: var\(--spring-[a-z]+\);\n?/m;
 
 export function main() {
     const source = readFileSync(tokensPath, "utf8");
@@ -136,20 +160,28 @@ export function main() {
                 `--spring-*-duration lines may have moved or are missing from the §2 EASING block.`,
         );
     }
+    if (!INTERACTIVE_SPATIAL_LINE_RE.test(source)) {
+        throw new Error(
+            `--transition-liquid-spatial line matched nothing — the interactive-spatial ` +
+                `default (BG.W-LIQUID-WEIGHT-DEFAULT) may have moved or is missing from scheme-spring.css.`,
+        );
+    }
 
     const block = generateBlock() + "\n";
     const durationBlock = generateDurationBlock() + "\n";
+    const interactiveSpatialBlock = generateInteractiveSpatialBlock() + "\n";
     // The replacements are idempotent when the PRESETS table is unchanged — a
     // no-op rewrite is correct (the regen is also a sync-verifier), so we do NOT
     // throw on `next === source`; the match-presence checks above are the guard.
     const next = source
         .replace(SPRING_LINES_RE, block)
-        .replace(SPRING_DURATION_LINES_RE, durationBlock);
+        .replace(SPRING_DURATION_LINES_RE, durationBlock)
+        .replace(INTERACTIVE_SPATIAL_LINE_RE, interactiveSpatialBlock);
 
     writeFileSync(tokensPath, next);
 
     console.log(
-        `regen-spring-tokens: rewrote ${PRESETS.length} --spring-* tokens + ${PRESETS.length} --spring-*-duration clocks in`,
+        `regen-spring-tokens: rewrote ${PRESETS.length} --spring-* tokens + ${PRESETS.length} --spring-*-duration clocks + the --transition-liquid-spatial default in`,
         tokensPath,
     );
     for (const preset of PRESETS) {

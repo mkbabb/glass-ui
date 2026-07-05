@@ -205,7 +205,11 @@
             color var(--duration-fast) var(--ease-standard),
             border-color var(--duration-fast) var(--ease-standard),
             box-shadow var(--duration-fast) var(--ease-standard),
-            scale var(--duration-fast) var(--ease-standard);
+            /* BG.W-LIQUID-WEIGHT-DEFAULT (F5.2) — the SPATIAL scale leg rides the
+               spring-derived `--transition-liquid-spatial` DEFAULT (the inversion:
+               weight is now the vocabulary, not a per-site --motion-weight opt-in;
+               was the bare `--ease-standard` bezier). `.motion-calm` opts back out. */
+            scale var(--duration-fast) var(--transition-liquid-spatial);
     }
     .interactive-item:hover {
         background-color: color-mix(in srgb, var(--accent) 50%, transparent);
@@ -272,7 +276,11 @@
             box-shadow var(--duration-fast) var(--ease-standard),
             color var(--duration-fast) var(--ease-standard),
             opacity var(--duration-fast) var(--ease-standard),
-            scale var(--duration-fast) var(--spring-smooth);
+            /* BG.W-LIQUID-WEIGHT-DEFAULT (F5.2) — the scale leg reads the shared
+               `--transition-liquid-spatial` vocabulary token (byte-identical at the
+               default — it resolves to `--spring-smooth` — but now `.motion-calm`
+               opts the press out of overshoot in lockstep with the atoms above). */
+            scale var(--duration-fast) var(--transition-liquid-spatial);
         transform-origin: center center;
     }
     .tap-squish:active {

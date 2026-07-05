@@ -74,9 +74,18 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { resolve, extname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+// BG.W-LIQUID-WEIGHT-DEFAULT (F5.2) — the LW arm diffs the committed
+// --transition-liquid-spatial line against the regen's ONE source (drift-proof).
+// generateInteractiveSpatialBlock() is a PURE string (no keyframes.js call), so the
+// import is cheap; proof:spring-tokens-synced imports the same module in CI.
+import { generateInteractiveSpatialBlock } from "./regen-spring-tokens.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const COMMAND = "npm run proof:motion";
+// The drift-proof expected committed line for --transition-liquid-spatial (trimmed of
+// its 4-space indent). The regen owns the "which spring is the interactive-spatial
+// default" mapping; the LW arm asserts the committed scheme-spring.css matches.
+const GENERATED_LIQUID_SPATIAL = generateInteractiveSpatialBlock().trim();
 
 // ── The dead composables (DEFINITION-ABSENT) ───────────────────────────────────
 const DEAD = [
@@ -465,6 +474,72 @@ function detect({ existsFn, readFn, corpus }) {
     if (!/@keyframes\s+glass-reveal-out-reduced\s*\{/.test(anim))
         V.push("O5c: animations.css has no `@keyframes glass-reveal-out-reduced` (the PRM fade-only exit reka awaits — the vestibular floor)");
 
+    // ── LW — the liquid-weight-default inversion (BG.W-LIQUID-WEIGHT-DEFAULT / F5.2) ──
+    // The DEFAULT interactive-transition SPATIAL register is spring-derived, not a bare
+    // `--ease-standard` bezier. HEAD: `.interactive-item`'s scale leg rode `--ease-standard`
+    // (zero weight) — weight was a per-site `--motion-weight` allowlist, never the default.
+    // This wave INVERTS it: weight becomes a property of the transition VOCABULARY.
+    // `--transition-liquid-spatial` (spring-derived, GENERATED drift-proof by
+    // regen-spring-tokens.mjs) is read on the SPATIAL (scale) leg of the base interactive
+    // atoms, so every interactive surface inherits weight by default; `.motion-calm` is the
+    // EXPLICIT opt-out; the PRM carve re-aliases it to the no-overshoot bezier. Born-RED on
+    // HEAD (token absent + `.interactive-item` on a bezier + no `.motion-calm`).
+    const schemeSpring = readFn("src/styles/tokens/scheme-spring.css");
+    const schemeMotion = readFn("src/styles/tokens/scheme-motion.css");
+    const baseCss = readFn("src/styles/utilities/base.css");
+    const btnCss = readFn("src/styles/utilities/btn.css");
+
+    // LW1 — the token is minted AND its default resolves to a SPRING register
+    //       (var(--spring-*)), NEVER a bare `--ease-*` bezier (a bezier default would
+    //       defeat the inversion — the base register must be spring-derived).
+    const liquidDecl = schemeSpring.match(/--transition-liquid-spatial\s*:\s*([^;]+);/);
+    if (!liquidDecl) {
+        V.push("LW1: --transition-liquid-spatial is not minted in tokens/scheme-spring.css (the interactive-spatial DEFAULT curve — the liquid-weight inversion has no token; run `node scripts/regen-spring-tokens.mjs`)");
+    } else if (!/var\(\s*--spring-[a-z]+\s*\)/.test(liquidDecl[1])) {
+        V.push(`LW1: --transition-liquid-spatial default ('${liquidDecl[1].trim()}') does NOT resolve to a spring register var(--spring-*) — the base interactive-transition register must be spring-derived, not a bare bezier (the inversion is defeated by a bezier default)`);
+    }
+
+    // LW2 — the token is GENERATED drift-proof (the committed line matches
+    //       regen-spring-tokens.mjs output — the ONE mapping source, the exemplar pattern).
+    if (liquidDecl && !schemeSpring.includes(GENERATED_LIQUID_SPATIAL)) {
+        V.push(`LW2: the committed --transition-liquid-spatial line does not match regen-spring-tokens.mjs output ('${GENERATED_LIQUID_SPATIAL}') — run 'node scripts/regen-spring-tokens.mjs' + commit (the drift-proof exemplar; a hand-edit drifts)`);
+    }
+
+    // LW3 — the base interactive-atom recipes read var(--transition-liquid-spatial) on
+    //       their SPATIAL (scale) leg. Born-RED: HEAD's `.interactive-item` scale rode
+    //       `--ease-standard`. The scan brace-matches each recipe body then checks the
+    //       `scale … var(--transition-liquid-spatial)` transition leg is present.
+    const readsLiquidScale = (css, selectorRe) => {
+        const m = css.match(selectorRe);
+        if (!m) return false;
+        let i = m.index + m[0].length;
+        let depth = 1;
+        const start = i;
+        for (; i < css.length && depth > 0; i++) {
+            if (css[i] === "{") depth++;
+            else if (css[i] === "}") depth--;
+        }
+        const body = css.slice(start, i - 1);
+        return /scale\s+[^,;]*var\(\s*--transition-liquid-spatial\s*\)/.test(body);
+    };
+    if (!readsLiquidScale(baseCss, /\.interactive-item\s*\{/))
+        V.push("LW3: .interactive-item's scale (SPATIAL) leg does not ride var(--transition-liquid-spatial) in utilities/base.css — the base interactive DEFAULT still carries zero weight (HEAD rode --ease-standard; the inversion is not applied)");
+    if (!readsLiquidScale(baseCss, /\.tap-squish\s*\{/))
+        V.push("LW3: .tap-squish's scale (SPATIAL) leg does not ride var(--transition-liquid-spatial) in utilities/base.css — the press vocabulary must read the opt-out token so `.motion-calm` reaches the Card press in lockstep");
+    if (!readsLiquidScale(btnCss, /@utility\s+btn-interactive\s*\{/))
+        V.push("LW3: the btn-interactive @utility's scale leg does not ride var(--transition-liquid-spatial) in utilities/btn.css — the named interactive-atom @utility must join the ONE spatial vocabulary (else `.motion-calm` cannot opt the button lift out of overshoot)");
+
+    // LW4 — the .motion-calm opt-out swaps the token to the calm bezier (the EXPLICIT
+    //       opt-out — a consumer wanting calm adds .motion-calm; born-RED: absent on HEAD).
+    if (!/\.motion-calm\s*\{[^}]*--transition-liquid-spatial\s*:\s*var\(\s*--ease-standard\s*\)/.test(schemeMotion))
+        V.push("LW4: the `.motion-calm { --transition-liquid-spatial: var(--ease-standard) }` opt-out is missing from tokens/scheme-motion.css — the calm register must be an EXPLICIT opt-out, not the accidental default");
+
+    // LW5 — the PRM carve re-aliases the token to the no-overshoot bezier under reduce
+    //       (the vestibular floor; mirrors the --ease-cartoon-punch PRM re-alias).
+    const prmBlock = schemeMotion.match(/@media\s*\(\s*prefers-reduced-motion:\s*reduce\s*\)\s*\{[\s\S]*?\n\}/);
+    if (!prmBlock || !/--transition-liquid-spatial\s*:\s*var\(\s*--ease-standard\s*\)/.test(prmBlock[0]))
+        V.push("LW5: the PRM `@media (prefers-reduced-motion: reduce)` carve in scheme-motion.css does not re-alias --transition-liquid-spatial to var(--ease-standard) — under reduce the interactive spatial legs must lose their overshoot (the vestibular floor; mirrors the --ease-cartoon-punch PRM re-alias)");
+
     return V;
 }
 
@@ -568,6 +643,29 @@ if (!o5SelfTestFlags) {
     process.exit(1);
 }
 
+// ── The LW self-test bite — revert .interactive-item's scale leg to --ease-standard
+//    (the HEAD zero-weight state) and assert the liquid-weight-default arm FLAGS it
+//    (the born-RED teeth are real; --ease-standard on the base spatial leg is exactly the
+//    zero-weight default this wave inverts). ──────────────────────────────────────────
+const baseCssDiskLW = diskRead("src/styles/utilities/base.css");
+const revertLiquidRead = (rel) =>
+    rel === "src/styles/utilities/base.css"
+        ? // revert the FIRST `scale … var(--transition-liquid-spatial)` leg (the
+          //   `.interactive-item` atom) back to the bare --ease-standard bezier HEAD shipped
+          baseCssDiskLW.replace(
+              /(scale\s+[^,;]*)var\(\s*--transition-liquid-spatial\s*\)/,
+              "$1var(--ease-standard)",
+          )
+        : diskRead(rel);
+const revertLiquidViolations = detect({ existsFn: diskExists, readFn: revertLiquidRead, corpus });
+const lwSelfTestFlags = revertLiquidViolations.length > violations.length;
+if (!lwSelfTestFlags) {
+    console.error(
+        "proof:motion — LW SELF-TEST FAILED: the detector did NOT flag a .interactive-item scale leg reverted to var(--ease-standard) (the HEAD zero-weight default this wave inverts). The liquid-weight-default teeth are gone; do not trust a GREEN.",
+    );
+    process.exit(1);
+}
+
 // ── Report ──────────────────────────────────────────────────────────────────────
 console.log("proof:motion — the F5 dead-composable cut is COMPLETE (BG.W-DEAD-COMPOSABLE-CUT)");
 console.log(`  dead composables      : ${DEAD.map((d) => d.name).join(", ")}`);
@@ -591,6 +689,10 @@ console.log(`  side-slide from-state : data-side[open] @starting-style translate
 console.log(`  scrim couples to launch: dialog.glass-top-layer[open]::backdrop ENTER on var(--top-layer-backdrop-in ~0.15s) + --ease-out — ≥80% dim within ~100ms; the base ::backdrop stays the released-with-panel EXIT clock`);
 console.log(`  exit PAINTS (O5)      : .glass-reveal[data-state="closed"] rides @keyframes glass-reveal-out (scale/opacity/filter, --ease-out, the enter bloom REVERSED) — reka usePresence awaits animationName≠none so the exit paints ≥4 frames, not the transition-only 0-frame tear-down (the Sheet-immune mechanism); PRM → glass-reveal-out-reduced fade-only`);
 console.log(`  self-test (bite proof): OK — a re-planted dead composable, a re-forked rAF/ElementMorph runner, a re-introduced masking --glass-drawer-t: 1, a .glass-reveal open rule stripped of its @starting-style from-state, AND a .glass-reveal exit reverted to transition-only all flag`);
+console.log("proof:motion — the interactive-transition DEFAULT is spring-derived (BG.W-LIQUID-WEIGHT-DEFAULT / F5.2)");
+console.log(`  liquid-weight-default : --transition-liquid-spatial = ${GENERATED_LIQUID_SPATIAL.replace(/^--transition-liquid-spatial:\s*/, "")} (spring-derived, GENERATED drift-proof) — the base atoms (.interactive-item · .tap-squish · btn-interactive) read it on their SPATIAL scale leg; weight is the VOCABULARY, not a per-site --motion-weight opt-in (the inversion off the HEAD bare --ease-standard)`);
+console.log(`  calm opt-out + PRM    : .motion-calm → var(--ease-standard) (explicit opt-out) + the PRM carve re-aliases the same (no overshoot under reduce — the vestibular floor)`);
+console.log(`  self-test (LW bite)   : OK — a .interactive-item scale leg reverted to var(--ease-standard) (the HEAD zero-weight default) flags`);
 console.log(`  corpus scanned        : ${corpus.length} src/+demo/ sources`);
 console.log(`  violations            : ${violations.length}`);
 for (const m of violations) console.error(`  CUT-INCOMPLETE   ${m}`);
@@ -609,6 +711,8 @@ writeGateArtifact(ARTIFACT, {
     dSelfTestFlagged: dSelfTestFlags,
     oSelfTestFlagged: oSelfTestFlags,
     o5SelfTestFlagged: o5SelfTestFlags,
+    lwSelfTestFlagged: lwSelfTestFlags,
+    transitionLiquidSpatial: GENERATED_LIQUID_SPATIAL,
     spine: SPINE_PATH,
     bloomWrappers: BLOOM_WRAPPERS,
     violations,

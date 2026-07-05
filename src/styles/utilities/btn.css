@@ -263,14 +263,20 @@
    button scale register the §6 doctrine records and the gate asserts across
    `.btn-pill`/`.tap-squish`/`.glass-btn`/`btn-interactive`. The surface legs
    stay on the bezier `--ease-standard` (a colour cross-fade reads as a wobble
-   on a spring); only the `scale` transform leg springs. */
+   on a spring); only the `scale` transform leg springs.
+
+   BG.W-LIQUID-WEIGHT-DEFAULT (F5.2) — the `scale` leg now reads the shared
+   `--transition-liquid-spatial` vocabulary token (byte-identical at the default —
+   it resolves to `--spring-smooth` — while the settle clock stays `--spring-smooth-
+   duration`), so a `.motion-calm` scope opts the button lift out of overshoot in
+   lockstep with the base interactive atoms. */
 @utility btn-interactive {
     /* AQ.W3 §W3.2 identity base */
     scale: 1;
     transition:
         background-color var(--duration-fast) var(--ease-standard),
         color var(--duration-fast) var(--ease-standard),
-        scale var(--spring-smooth-duration) var(--spring-smooth),
+        scale var(--spring-smooth-duration) var(--transition-liquid-spatial),
         opacity var(--duration-fast) var(--ease-standard);
 
     &:hover {
@@ -294,7 +300,7 @@
         transition:
             background-color var(--duration-fast) var(--ease-standard),
             color var(--duration-fast) var(--ease-standard),
-            scale var(--spring-smooth-duration) var(--spring-smooth),
+            scale var(--spring-smooth-duration) var(--transition-liquid-spatial),
             opacity var(--duration-fast) var(--ease-standard),
             box-shadow var(--duration-fast) var(--ease-standard);
     }

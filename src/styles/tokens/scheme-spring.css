@@ -128,6 +128,29 @@
     --spring-dock-duration: 0.66s;
     --spring-press-duration: 0.16s;
 
+    /* ── INTERACTIVE-SPATIAL TRANSITION DEFAULT (BG.W-LIQUID-WEIGHT-DEFAULT / F5.2) ──
+       Generated from `scripts/regen-spring-tokens.mjs` — DO NOT hand-edit.
+
+       The base interactive-atom recipes (`.interactive-item` / `.tap-squish` in
+       utilities/base.css + the `btn-interactive` @utility) read this on their
+       SPATIAL (scale/translate/rotate) leg, so EVERY interactive surface inherits
+       spring WEIGHT by default — weight is a property of the transition VOCABULARY,
+       not a per-site `--motion-weight` checklist (the inversion: the prior default
+       was a bare `--ease-standard` bezier with ZERO weight).
+
+       Spring-DERIVED — an alias to the canon interactive scale register (`smooth`,
+       the ONE button/interactive scale spring the §6 motion canon records). It is
+       GENERATED here so the "which spring is the interactive-spatial default" mapping
+       lives in the ONE motion-token source (drift-proof, the same exemplar pattern the
+       `--spring-*` curves ride — a hand-edit drifts, re-run the generator to restore).
+
+       The EFFECTS legs (color/opacity/box-shadow) KEEP the bezier `--ease-standard`
+       (motion-canon P1 spatial/effects split — a colour cross-fade on a spring reads
+       as a wobble); this token is SPATIAL-only. `.motion-calm` (scheme-motion.css) is
+       the EXPLICIT opt-out (→ var(--ease-standard)); the PRM carve re-aliases it the
+       same way (no overshoot under reduce — the vestibular floor). */
+    --transition-liquid-spatial: var(--spring-smooth);
+
     /* ── DECK SLIDE-TRANSITION CURVE (BC.W-DECK) ──
        The full-viewport keyboard-paged deck's slide transition rides the SAME
        `--spring-smooth` register the deck's `DECK_SPRING` samples (the calm-settle

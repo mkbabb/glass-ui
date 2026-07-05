@@ -347,6 +347,21 @@
 }
 
 /* ═══════════════════════════════════════════════
+   BG.W-LIQUID-WEIGHT-DEFAULT (F5.2) — the calm opt-out
+
+   The DEFAULT interactive-transition SPATIAL register is now spring-derived
+   (`--transition-liquid-spatial` = the `smooth` spring, generated in scheme-spring.css),
+   so every interactive surface inherits weight on its scale/translate/rotate legs by
+   default — weight is a property of the transition VOCABULARY, not a per-site
+   `--motion-weight` checklist. A surface that wants the flat no-weight register opts
+   OUT explicitly via `.motion-calm` (the `<Card>` calm register, a data-dense table,
+   any consumer scope). The swap is scoped to the SPATIAL token; the EFFECTS legs keep
+   their `--ease-standard` bezier either way (the motion-canon P1 split). */
+.motion-calm {
+    --transition-liquid-spatial: var(--ease-standard);
+}
+
+/* ═══════════════════════════════════════════════
    BD.W-MOTION-WEIGHT / BD.W-CARTOON-PUNCH — the PRM carve
 
    ONE assignment zeroes ALL of the goo that rides on top of the springs. Because
@@ -364,5 +379,11 @@
     :root {
         --motion-weight: 0;
         --ease-cartoon-punch: var(--ease-standard);
+        /* BG.W-LIQUID-WEIGHT-DEFAULT (F5.2) — the interactive-spatial DEFAULT loses
+           its overshoot under reduce (the vestibular floor). The springs keep their
+           own respectReducedMotion endpoint-snap; this re-alias removes the overshoot
+           CURVE from the CSS scale legs library-wide (the same belt-and-suspenders
+           shape as the --ease-cartoon-punch re-alias above + the `.motion-calm` opt-out). */
+        --transition-liquid-spatial: var(--ease-standard);
     }
 }
