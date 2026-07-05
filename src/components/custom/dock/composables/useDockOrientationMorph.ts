@@ -33,7 +33,7 @@ import { computed, onScopeDispose, ref, watch, type ComputedRef, type Ref } from
 import { SpringProgress } from "@mkbabb/keyframes.js";
 import { useLiquidFlex } from "../../../../composables/motion/useLiquidFlex";
 import {
-    effectiveCap,
+    MOTION_WEIGHT_REST,
     writeVelocityWeight,
 } from "../../../../composables/motion/core/writeVelocityWeight";
 import { DOCK_MORPH_MAX_STRETCH, DOCK_SPRING } from "../constants";
@@ -111,42 +111,51 @@ export function useDockOrientationMorph(
     const morphing = ref(false);
 
     // BC.W-DOCK-ARBITRARY (A4) — the shape-morph squish cap reads the
-    // `--dock-morph-max-stretch` cascade token (the lifted iOS-27 register). Resolved
-    // per-read off the live root so a consumer override re-resolves the cap without
-    // reconstructing the primitive (the useLiquidFlex getter contract).
+    // `--dock-morph-max-stretch` cascade token (the lifted iOS-27 register), the
+    // single-sourced default `DOCK_MORPH_MAX_STRETCH` (constants.ts, mirroring the token)
+    // when the mounted root's token is unreadable — NEVER a bare drift-prone literal (the
+    // BG.NF.1 W-FALLBACK-EXCISE contract). A consumer override still re-resolves the cap
+    // (the token is re-read at each gesture start).
     //
-    // BG.NF.1 W-FALLBACK-EXCISE — the cap default is the single-sourced
-    // `DOCK_MORPH_MAX_STRETCH` (constants.ts, mirroring the token), NEVER a bare
-    // drift-prone literal duplicated at the read (the 1.08→1.14 drift the prior literal
-    // carried). An absent root is the honest not-mounted case → the constant; a MOUNTED
-    // root whose token is unreadable is a real bug → fail loud (dev warn) then the
-    // constant, no silent literal mask.
-    //
-    // BD.W-MOTION-WEIGHT — the cap is then derived SITE-LOCALLY off the live
-    // `--motion-weight` read at the SAME root (the spike-corrected mechanism — NEVER
-    // a :root calc token): `effectiveCap` returns `cap_token` at rest weight 0.618
-    // (byte-identical feel) and 1.0 at weight 0 (the observer/PRM fence). The
-    // (weight/0.618) factor reads the EXISTING cap token directly — zero new
-    // `--*-stretch-k` coefficient cohort.
-    const maxStretchOf = (): number => {
+    // BG.W-SHELL-MORPH-PAINT-REPAIR (F3.R3) — the token is PRE-WARMED once per gesture
+    // (read in `runTo`/`pin`, OFF the per-frame path), so the morph write does ZERO
+    // `getComputedStyle`. The prior `maxStretchOf` read the token AND the
+    // `--motion-weight`/`--flex-vel` boost back off the DOM INSIDE `writeScalar` — a
+    // read-AFTER-write layout thrash EVERY frame (the "measure storm" the IOS27-MOTION-
+    // TRUTH capture timed at ~295ms right after toggle; it ate the initial fast-rise
+    // frames so the travelling teardrop never painted — ZERO painted travel frames). The
+    // cap token is a static cascade value; reading it once per gesture is stall-free and
+    // the per-frame effective cap is then a pure `f(v)` (no DOM), byte-identical feel.
+    let capTokenCached = DOCK_MORPH_MAX_STRETCH;
+    function readCapToken(): number {
         const r = rootEl.value;
         if (!r) return DOCK_MORPH_MAX_STRETCH;
         const raw = getComputedStyle(r)
             .getPropertyValue("--dock-morph-max-stretch")
             .trim();
         const n = raw ? Number.parseFloat(raw) : NaN;
-        let capToken: number;
-        if (Number.isFinite(n) && n >= 1) {
-            capToken = n;
-        } else {
-            if (import.meta.env?.DEV)
-                console.warn(
-                    "[glass-ui] dock: --dock-morph-max-stretch unreadable on a mounted dock root — the token cascade did not reach it (falling back to the single-sourced cap).",
-                );
-            capToken = DOCK_MORPH_MAX_STRETCH;
-        }
-        return effectiveCap(r, capToken);
-    };
+        if (Number.isFinite(n) && n >= 1) return n;
+        if (import.meta.env?.DEV)
+            console.warn(
+                "[glass-ui] dock: --dock-morph-max-stretch unreadable on a mounted dock root — the token cascade did not reach it (falling back to the single-sourced cap).",
+            );
+        return DOCK_MORPH_MAX_STRETCH;
+    }
+
+    // BD.W-MOTION-WEIGHT — the SITE-LOCAL effective cap, derived off the live velocity
+    // term `v`. This is the arithmetic twin of `effectiveCap` (writeVelocityWeight.ts):
+    // the weight/flexVel it would read back off the DOM are exactly the values
+    // `writeVelocityWeight` JUST wrote (`weight = REST + (1 − REST)·v`, `flexVel = v`), so
+    // the per-frame cap needs NO `getComputedStyle` read-back (the F3.R3 measure-storm
+    // excision). Byte-identical to the prior `effectiveCap(r, capToken)` result at every
+    // `v`: `cap_token` at rest (v=0, feel unchanged) and 1.0 at v=0 with capToken 1.
+    function effectiveCapFromVelocity(capToken: number, v: number): number {
+        if (capToken <= 1) return 1;
+        const weight = MOTION_WEIGHT_REST + (1 - MOTION_WEIGHT_REST) * v;
+        const blended = weight + (1 - weight) * v;
+        const cap = 1 + (capToken - 1) * (blended / MOTION_WEIGHT_REST);
+        return cap < 1 ? 1 : cap;
+    }
 
     // The vertical dock height-collapse span: full → 0 as t: 0 → 1. We interpolate the
     // SAME `--dock-morph-t` scalar through `useLiquidFlex` with the size flipped so the
@@ -157,13 +166,13 @@ export function useDockOrientationMorph(
         from: options.verticalSize,
         to: 0,
         axis: "height",
-        maxStretch: maxStretchOf,
+        maxStretch: () => capTokenCached,
     });
     const horizontalFlex = useLiquidFlex({
         from: 0,
         to: options.horizontalSize,
         axis: "width",
-        maxStretch: maxStretchOf,
+        maxStretch: () => capTokenCached,
     });
 
     // ── F-ARM-1 · the analytic-velocity weight channel (12-laws squish) ──
@@ -210,10 +219,14 @@ export function useDockOrientationMorph(
             // settles (write the weight FIRST so the site-local cap sees the boost).
             writeVelocityWeight(r, v);
             // BC.W-DOCK-ARBITRARY (A4) — the volume-preserving squish, capped at the
-            // effective `--dock-morph-max-stretch` (read AFTER the weight write). The
-            // ONE squish source, no forked deformation math; the plate deforms like
-            // liquid as it changes shape (`scale: var(--stretch) calc(1/--stretch)`).
-            const cap = maxStretchOf();
+            // effective `--dock-morph-max-stretch`. The ONE squish source, no forked
+            // deformation math; the plate deforms like liquid as it changes shape
+            // (`scale: var(--stretch) calc(1/--stretch)`).
+            // BG.W-SHELL-MORPH-PAINT-REPAIR (F3.R3) — the cap is now a pure `f(v)` off the
+            // PRE-WARMED `capTokenCached`, so the per-frame write does ZERO
+            // `getComputedStyle` (the measure storm that stalled the in-gesture paint is
+            // gone). Byte-identical to the prior `maxStretchOf()` DOM read-back.
+            const cap = effectiveCapFromVelocity(capTokenCached, v);
             const s = 1 + (cap - 1) * v;
             stretchVal.value = s;
             r.style.setProperty("--dock-morph-t", `${value}`);
@@ -249,6 +262,13 @@ export function useDockOrientationMorph(
             pin(targetT);
             return;
         }
+        // BG.W-SHELL-MORPH-PAINT-REPAIR (F3.R3) — PRE-WARM the cap token ONCE here, off
+        // the gesture path (a single `getComputedStyle` read before the spring's frames
+        // start), so `writeScalar` never reads the DOM per frame. This is the
+        // "pre-warm the endpoint measures off the gesture path" fix — the read runs in the
+        // click handler, not inside the 60fps `play` callback where a read-after-write
+        // forced-reflow stalled the initial fast-rise teardrop frames.
+        capTokenCached = readCapToken();
         const r = rootEl.value;
         // The interruptible re-base — a mid-flight toggle re-seats the live spring from
         // its CURRENT velocity onto the new target so the trajectory stays continuous.
@@ -296,6 +316,9 @@ export function useDockOrientationMorph(
 
     function pin(value: number): void {
         const v = value < 0 ? 0 : value > 1 ? 1 : value;
+        // F3.R3 — pre-warm the cap once here too (the deterministic capture seam is off
+        // the per-frame path), so `writeScalar` stays `getComputedStyle`-free.
+        capTokenCached = readCapToken();
         disposeSpring(); // no spring — an exact, reproducible pin
         morphing.value = false;
         orientation.value = v >= 0.5 ? "horizontal" : "vertical";
@@ -323,20 +346,27 @@ export function useDockOrientationMorph(
         return u * u * (3 - 2 * u);
     }
 
-    // BG.W-DOCK-INPLACE-MORPH (F-ARM-2) — the bridge-opacity gate: 0 at both endpoints,
-    // smootherstep-ramped up to 1 across the OCCLUDED midpoint window `t∈0.18..0.82`, so
-    // the teardrop neck paints ONLY where it covers the topology reflow (the endpoint
-    // frames show the real dock alone). A pure `f(t)` — no clock (the M5 scalar-binding).
+    // BG.W-DOCK-INPLACE-MORPH (F-ARM-2) + BG.W-SHELL-MORPH-PAINT-REPAIR (F3.R3) — the
+    // bridge-opacity gate: 0 at both endpoints, but a FULL-opacity PLATEAU (not a razor
+    // triangle) across the OCCLUDED core `t∈[RUP,RDN]`, so the travelling teardrop reads
+    // LEGIBLY across the whole `0.16<t<0.86` window — ≥12 painted travel frames — instead
+    // of flashing for the single frame at t≈0.5 (the F3.R3 paint FAIL: the prior triangle
+    // peaked only at the exact midpoint, so even with the frames painting the teardrop was
+    // sub-legible on every non-midpoint frame). Smootherstep ramps at the shoulders keep
+    // the enter/exit gentle; the flat core is the legible hold that covers the topology
+    // reflow. A pure `f(t)` — no clock (the M5 scalar-binding).
     function bridgeGate(x: number): number {
-        const LO = 0.18;
-        const HI = 0.82;
-        const MID = 0.5;
+        const LO = 0.16; // enter the occluded window (the vertical dock still shows below)
+        const RUP = 0.32; // reach full opacity — the teardrop is up
+        const RDN = 0.72; // hold FULL through here (the legible plateau, width ≥ 0.2)
+        const HI = 0.86; // out (the settled horizontal dock shows above)
         if (x <= LO || x >= HI) return 0;
-        if (x < MID) {
-            const u = (x - LO) / (MID - LO);
+        if (x < RUP) {
+            const u = (x - LO) / (RUP - LO);
             return u * u * (3 - 2 * u);
         }
-        const u = (HI - x) / (HI - MID);
+        if (x <= RDN) return 1;
+        const u = (HI - x) / (HI - RDN);
         return u * u * (3 - 2 * u);
     }
 

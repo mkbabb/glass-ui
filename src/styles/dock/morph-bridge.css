@@ -125,7 +125,14 @@
         clip-path: inset(
             var(--dock-bridge-v-neck) 0 var(--dock-bridge-v-neck) 0 round 999px
         );
-        opacity: calc(1 - clamp(0, calc((var(--dock-morph-t, 0) - 0.5) * 2), 1));
+        /* BG.W-SHELL-MORPH-PAINT-REPAIR (F3.R3) — the vertical plate HOLDS full opacity
+           past the midpoint (to t=0.60, fading out by t=0.95), so it OVERLAPS the
+           horizontal plate's early ramp-in: across the occluded core [0.40,0.60] BOTH
+           plates are ~fully present, so the goo fuses a DENSE continuous travelling mass
+           (the "fat two-pills-fusing teardrop"), not a thin crossfade that pinches to a
+           faint neck at the shoulders (the prior 0.5-centred `*2` crossfade left the
+           fused mass sub-legible on the travel frames — the F3.R3 paint FAIL). */
+        opacity: calc(1 - clamp(0, calc((var(--dock-morph-t, 0) - 0.6) / 0.35), 1));
         /* squish Y on travel (the tall plate stretches along its collapse axis) */
         scale: calc(1 / var(--stretch, 1)) var(--stretch, 1);
     }
@@ -156,7 +163,11 @@
         clip-path: inset(
             0 var(--dock-bridge-h-neck) 0 var(--dock-bridge-h-neck) round 999px
         );
-        opacity: clamp(0, calc(var(--dock-morph-t, 0) * 2), 1);
+        /* BG.W-SHELL-MORPH-PAINT-REPAIR (F3.R3) — the wide plate reaches full opacity
+           EARLY (by t=0.40, from a t=0.05 onset), so it overlaps the vertical plate's
+           hold-past-midpoint (above): [0.40,0.60] is the dense fused-mass core. The
+           symmetric arm of the vertical densification. */
+        opacity: clamp(0, calc((var(--dock-morph-t, 0) - 0.05) / 0.35), 1);
         /* squish X on travel (the wide plate stretches along its growth axis) */
         scale: var(--stretch, 1) calc(1 / var(--stretch, 1));
     }

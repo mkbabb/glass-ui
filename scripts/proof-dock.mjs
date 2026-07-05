@@ -105,6 +105,30 @@
 //        two content-inverse factors (`--stretch`, `--dock-size-scale`) are UNREGISTERED
 //        so they inherit by default (no G4 arm owed).
 //
+// ── The SHELL-MORPH-PAINT arm (BG.W-SHELL-MORPH-PAINT-REPAIR; F3.R3) ──
+// The in-place V↔H shell-dock morph read BORKED in paint (IOS27-MOTION-TRUTH §2.3): ZERO
+// painted travel frames — a ~1.3s no-visible-change window (incl. a ~295ms stall right
+// after toggle) then a single-frame hard swap. Two root causes, both in the two owned
+// files (useDockOrientationMorph.ts + morph-bridge.css), both device-free-detectable:
+//   S1 — the MEASURE STORM: `writeScalar` (the per-frame morph write) read
+//        `getComputedStyle` back off the DOM every frame (via `maxStretchOf()`'s cap-token
+//        read + the `effectiveCap` motion-weight read-back) AFTER writing inline props —
+//        a read-after-write forced style/layout flush that stalled the initial fast-rise,
+//        so the teardrop frames never composited. The fix pre-warms the cap token once per
+//        gesture (`capTokenCached = readCapToken()` in runTo/pin) and computes the
+//        per-frame cap arithmetically (`effectiveCapFromVelocity(capTokenCached, v)`, a
+//        pure `f(v)`), so the write path does ZERO getComputedStyle.
+//   S2 — the RAZOR TRIANGLE: `bridgeGate(t)` (the `--dock-bridge-opacity` output) peaked
+//        only at t≈0.5, so the teardrop was legibly opaque for ~1 frame. The fix holds a
+//        FULL-opacity plateau across the occluded core (`return 1` for t∈[RUP,RDN], width
+//        ≥ 0.2), so the teardrop reads legibly across the whole travel window.
+//   S3 — the THIN CROSSFADE: the two bridge plates crossfaded AT 0.5, so the fused mass
+//        thinned to a faint neck on the shoulders. The fix WIDENS the overlap (the vertical
+//        plate holds full past the midpoint, the horizontal reaches full early) into ONE
+//        dense continuous travelling mass, compositor-only (no *-size animates the scalar).
+// This arm asserts the SOURCE mechanism; the binding ≥12-painted-travel-frames / no-stall
+// screencast π rides the paint judge (device-free here, the non-authoring fence).
+//
 // Self-test bites (born-RED demonstration): a re-added silhouette composable REDs
 // D1; a re-added test REDs D2; a surviving gate script / a re-added
 // `proof:dock-context` manifest row / a re-added package script each RED D3 while
@@ -177,6 +201,19 @@ const USE_LAYER_TRANSITION_TS = resolve(
 // gates the derivation `:not([data-pane-swap])` (morph.css) + arms `data-pane-swap` on the
 // nested swap only (dockMorphContext).
 const DOCK_MORPH_CSS = resolve(ROOT, "src/styles/dock/morph.css");
+// ── The SHELL-MORPH-PAINT arm sources (BG.W-SHELL-MORPH-PAINT-REPAIR; F3.R3) ──
+// The in-place V↔H shell morph paints ZERO travel frames because (S1) the per-frame
+// morph write reads `getComputedStyle` back off the DOM (a read-after-write layout
+// thrash — the ~295ms "measure storm" that ate the initial fast-rise teardrop frames)
+// and (S2) the bridge-opacity gate is a razor TRIANGLE (the teardrop is legibly opaque
+// only at the exact t≈0.5 midpoint, so even the frames that DO paint show a sub-legible
+// flash, never a travelling teardrop). The driver lives in useDockOrientationMorph.ts;
+// the travelling-teardrop plate opacities live in morph-bridge.css.
+const ORIENTATION_MORPH_TS = resolve(
+    ROOT,
+    "src/components/custom/dock/composables/useDockOrientationMorph.ts",
+);
+const MORPH_BRIDGE_CSS = resolve(ROOT, "src/styles/dock/morph-bridge.css");
 // The two morph-region CONTENT children that carry the inverse-scale (the plate
 // scales, these do NOT). Both must carry the inverse on both axes.
 const RIGID_CONTENT_CHILDREN = [".dock-persistent", ".dock-layers"];
@@ -671,10 +708,185 @@ function detectPaneSwapBoxHold(morphContextSrc, morphCssSrc) {
     };
 }
 
+// ── SHELL-MORPH-PAINT S1 — the per-frame morph write does ZERO getComputedStyle. ──
+// (BG.W-SHELL-MORPH-PAINT-REPAIR; F3.R3). The IOS27-MOTION-TRUTH capture timed a ~295ms
+// stall "right after toggle" that ate the initial fast-rise teardrop frames — the
+// "measure storm". Its root was the per-frame cap read: `writeScalar` called a
+// `maxStretchOf()` helper that ran `getComputedStyle(root).getPropertyValue(…)` (twice,
+// via the cap token + the `effectiveCap` motion-weight read-back) AFTER writing inline
+// custom properties that frame — a read-after-write forced style/layout flush on EVERY
+// spring frame. The repair PRE-WARMS the cap token once per gesture (a `readCapToken()`
+// called in `runTo`/`pin`, off the animation path) into `capTokenCached`, and computes
+// the per-frame effective cap ARITHMETICALLY via `effectiveCapFromVelocity(capTokenCached,
+// v)` (a pure `f(v)`, no DOM). So `writeScalar` (and the spring's `play` callback) does
+// ZERO `getComputedStyle` — the measure storm is gone, the fast-rise teardrop frames
+// paint. Asserts: (a) the `writeScalar` body carries no `getComputedStyle`; (b) the
+// per-frame cap is the pure `effectiveCapFromVelocity(` (NOT a `maxStretchOf()` DOM read
+// — the HEAD form); (c) the pure helper itself has no `getComputedStyle`; (d) the token
+// is still CONSULTED but PRE-WARMED off the gesture path (`capTokenCached = readCapToken()`
+// present, and `readCapToken` reads the `--dock-morph-max-stretch` token) — the A4 cap
+// thread survives, moved off the per-frame path.
+function detectMorphMeasureStorm(orientSrc) {
+    const src = stripComments(orientSrc);
+    const facts = {};
+    // Extract the writeScalar body (4-space-indented function, closes on `\n    }`).
+    // The `(?::[^{]*)?` tolerates a TS return-type annotation (`: void`) before `{`.
+    const wsM = src.match(
+        /function\s+writeScalar\s*\([^)]*\)\s*(?::[^{]*)?\{([\s\S]*?)\n\s{4}\}/,
+    );
+    const writeScalarBody = wsM ? wsM[1] : null;
+    // (a) no getComputedStyle in the per-frame write path.
+    const writeScalarNoDomRead =
+        writeScalarBody != null && !/getComputedStyle/.test(writeScalarBody);
+    // (b) the per-frame cap is the pure arithmetic helper (NOT the HEAD maxStretchOf()
+    // DOM read-back). A re-introduced `maxStretchOf(` inside writeScalar reds here.
+    const perFramePureCap =
+        writeScalarBody != null &&
+        /effectiveCapFromVelocity\s*\(/.test(writeScalarBody) &&
+        !/maxStretchOf\s*\(/.test(writeScalarBody);
+    // (c) the pure cap helper carries no DOM read (it is `f(v)`, not a getComputedStyle).
+    const capHelperM = src.match(
+        /function\s+effectiveCapFromVelocity\s*\([^)]*\)\s*(?::[^{]*)?\{([\s\S]*?)\n\s{4}\}/,
+    );
+    const capHelperPure =
+        capHelperM != null && !/getComputedStyle/.test(capHelperM[1]);
+    // (d) the token is PRE-WARMED off the gesture path: a cached read assignment exists
+    // AND the reader consults the `--dock-morph-max-stretch` token (the A4 thread kept).
+    const preWarmCached = /capTokenCached\s*=\s*readCapToken\s*\(\s*\)/.test(src);
+    const readCapM = src.match(
+        /function\s+readCapToken\s*\([^)]*\)\s*(?::[^{]*)?\{([\s\S]*?)\n\s{4}\}/,
+    );
+    const tokenStillConsulted =
+        readCapM != null &&
+        /getComputedStyle/.test(readCapM[1]) &&
+        /--dock-morph-max-stretch/.test(readCapM[1]);
+    facts.writeScalarNoDomRead = writeScalarNoDomRead;
+    facts.perFramePureCap = perFramePureCap;
+    facts.capHelperPure = capHelperPure;
+    facts.preWarmCached = preWarmCached;
+    facts.tokenStillConsulted = tokenStillConsulted;
+    return {
+        ok:
+            writeScalarNoDomRead &&
+            perFramePureCap &&
+            capHelperPure &&
+            preWarmCached &&
+            tokenStillConsulted,
+        facts,
+    };
+}
+
+// ── SHELL-MORPH-PAINT S2 — the bridge-opacity gate is a legible PLATEAU, not a razor
+// triangle (BG.W-SHELL-MORPH-PAINT-REPAIR; F3.R3). ──
+// `bridgeGate(t)` (the `--dock-bridge-opacity` output) was a triangle peaking ONLY at the
+// exact t≈0.5 midpoint (smootherstep 0→1 on the way up, 1→0 on the way down), so the
+// travelling teardrop was legibly opaque for ~1 frame at 0.5 and near-transparent on
+// every other travel frame — the paint judge read "no teardrop". The repair holds FULL
+// opacity across the occluded core `t∈[RUP,RDN]` (a trapezoid): smootherstep ramp up to
+// 1 by RUP, a flat `return 1` plateau through RDN, ramp down to 0 by HI. So the teardrop
+// reads LEGIBLY across the whole window — ≥12 painted travel frames. Asserts the body
+// carries a bare `return 1` plateau AND the plateau width (RDN − RUP) is a legible ≥ 0.2.
+function detectBridgeGatePlateau(orientSrc) {
+    const src = stripComments(orientSrc);
+    const facts = {};
+    const bgM = src.match(
+        /function\s+bridgeGate\s*\([^)]*\)\s*(?::[^{]*)?\{([\s\S]*?)\n\s{4}\}/,
+    );
+    const body = bgM ? bgM[1] : null;
+    // The flat plateau — a bare `return 1;` (the HEAD triangle has no bare-1 return).
+    const hasPlateau = body != null && /\breturn\s+1\s*;/.test(body);
+    // The plateau boundary constants RUP (ramp-up end) + RDN (ramp-down start).
+    const rupM = body ? body.match(/\bRUP\s*=\s*([\d.]+)/) : null;
+    const rdnM = body ? body.match(/\bRDN\s*=\s*([\d.]+)/) : null;
+    const rup = rupM ? parseFloat(rupM[1]) : null;
+    const rdn = rdnM ? parseFloat(rdnM[1]) : null;
+    const plateauWidth = rup != null && rdn != null ? rdn - rup : null;
+    const wideEnough = plateauWidth != null && plateauWidth >= 0.2;
+    facts.hasPlateau = hasPlateau;
+    facts.rup = rup;
+    facts.rdn = rdn;
+    facts.plateauWidth =
+        plateauWidth != null ? Number(plateauWidth.toFixed(4)) : null;
+    return { ok: hasPlateau && wideEnough, facts };
+}
+
+// ── SHELL-MORPH-PAINT S3 — the two bridge plates OVERLAP into a dense fused teardrop +
+// the reshape is compositor-only (BG.W-SHELL-MORPH-PAINT-REPAIR; F3.R3). ──
+// The travelling teardrop is the two `.dock-morph-bridge-plate--{vertical,horizontal}`
+// plates fused by the goo. At HEAD they crossfaded AT 0.5 (vertical faded from 0.5,
+// horizontal reached full at 0.5), so their sum thinned to a faint neck on the shoulders
+// of the plateau — the fused mass read sub-legible on the travel frames. The repair
+// WIDENS the overlap: the vertical plate HOLDS full opacity past the midpoint (a
+// `1 - clamp(0, (t - holdUntil) / span, 1)` with holdUntil ≥ 0.55) and the horizontal
+// plate reaches full EARLY (a `clamp(0, (t - onset) / span, 1)` reaching 1 by ≤ 0.45), so
+// across the overlap window BOTH plates are ~fully present → one dense continuous mass.
+// Also asserts compositor-only: no size property (`width`/`height`/`inline-size`/
+// `block-size`) VALUE reads `--dock-morph-t`/`--stretch` (the boxes are static reserves;
+// only clip-path/scale/opacity animate — the proof:no-layout-animation floor).
+function detectBridgePlateOverlap(bridgeCssSrc) {
+    const src = stripComments(bridgeCssSrc);
+    const facts = {};
+    // Split into rule blocks (selector { body }).
+    const blocks = [];
+    const ruleRe = /([^{}]+)\{([^{}]*)\}/g;
+    let m;
+    while ((m = ruleRe.exec(src)) !== null) {
+        blocks.push({ selector: m[1], body: m[2] });
+    }
+    const findPlate = (mod) =>
+        blocks.find((b) =>
+            new RegExp(
+                `\\.dock-morph-bridge-plate--${mod}\\b`,
+            ).test(b.selector),
+        );
+    const vRule = findPlate("vertical");
+    const hRule = findPlate("horizontal");
+    // Vertical: `1 - clamp(0, calc((var(--dock-morph-t,0) - <holdUntil>) / <span>), 1)`.
+    let holdUntil = null;
+    if (vRule) {
+        const om = vRule.body.match(
+            /opacity\s*:\s*calc\(\s*1\s*-\s*clamp\(\s*0\s*,\s*calc\(\s*\(\s*var\(\s*--dock-morph-t[^)]*\)\s*-\s*([\d.]+)\s*\)\s*\/\s*[\d.]+\s*\)\s*,\s*1\s*\)\s*\)/,
+        );
+        if (om) holdUntil = parseFloat(om[1]);
+    }
+    // Horizontal: `clamp(0, calc((var(--dock-morph-t,0) - <onset>) / <span>), 1)`.
+    let reachesFull = null;
+    if (hRule) {
+        const om = hRule.body.match(
+            /opacity\s*:\s*clamp\(\s*0\s*,\s*calc\(\s*\(\s*var\(\s*--dock-morph-t[^)]*\)\s*-\s*([\d.]+)\s*\)\s*\/\s*([\d.]+)\s*\)\s*,\s*1\s*\)/,
+        );
+        if (om) reachesFull = parseFloat(om[1]) + parseFloat(om[2]);
+    }
+    const verticalHolds = holdUntil != null && holdUntil >= 0.55;
+    const horizontalEarly = reachesFull != null && reachesFull <= 0.45;
+    const overlap =
+        holdUntil != null && reachesFull != null
+            ? holdUntil - reachesFull
+            : null;
+    const overlaps = overlap != null && overlap >= 0.15;
+    // Compositor-only: no *-size property value reads the live scalar/derivative.
+    const noSizeAnimatesScalar =
+        !/(?:^|[\s;{])(?:width|height|inline-size|block-size)\s*:\s*[^;]*var\(\s*--(?:dock-morph-t|stretch)\b/m.test(
+            src,
+        );
+    facts.holdUntil = holdUntil;
+    facts.reachesFull = reachesFull;
+    facts.overlap = overlap != null ? Number(overlap.toFixed(4)) : null;
+    facts.noSizeAnimatesScalar = noSizeAnimatesScalar;
+    return {
+        ok:
+            verticalHolds &&
+            horizontalEarly &&
+            overlaps &&
+            noSizeAnimatesScalar,
+        facts,
+    };
+}
+
 // overrides: { silhouetteExists?, testExists?, gateScriptExists?, manifestSrc?,
 //              packageSrc?, dockCorpus?, constantsSrc?, dockContextExists?,
 //              shapeSrc?, morphContextSrc?, layerGroupVueSrc?, layerTransitionTsSrc?,
-//              morphCssSrc? }.
+//              morphCssSrc?, orientMorphSrc?, bridgeCssSrc? }.
 function detect(overrides = {}) {
     const violations = [];
     const facts = {};
@@ -702,6 +914,8 @@ function detect(overrides = {}) {
     const layerTransitionTsSrc =
         overrides.layerTransitionTsSrc ?? read(USE_LAYER_TRANSITION_TS);
     const morphCssSrc = overrides.morphCssSrc ?? read(DOCK_MORPH_CSS);
+    const orientMorphSrc = overrides.orientMorphSrc ?? read(ORIENTATION_MORPH_TS);
+    const bridgeCssSrc = overrides.bridgeCssSrc ?? read(MORPH_BRIDGE_CSS);
 
     // ── D1 — SILHOUETTE-COMPOSABLE-ABSENT ──
     facts.silhouetteExists = silhouetteExists;
@@ -812,6 +1026,30 @@ function detect(overrides = {}) {
     assert(
         "P4 — a NESTED DockLayerGroup pane swap HOLDS the plate box (never collapses to the pill): dock/morph.css scopes the `--dock-expand-t` derivation arms `:not([data-pane-swap])` (expanded/always-expanded/collapsed all guarded, none unguarded), and dockMorphContext distinguishes the outer collapse/expand target (isOuter) from a nested pane-swap target, arming `data-pane-swap` ONLY on the nested swap (`ensureSpringRunning(!t.isOuter)`) + clearing it on settle — so the box + chrome hold the expanded endpoint while `--dock-morph-t` still glides the crossfade",
         boxHold.ok,
+    );
+
+    // ── S1 — SHELL-MORPH: the per-frame morph write does ZERO getComputedStyle (F3.R3) ──
+    const measureStorm = detectMorphMeasureStorm(orientMorphSrc);
+    facts.shellMorphMeasureStorm = measureStorm.facts;
+    assert(
+        "S1 — useDockOrientationMorph's per-frame morph write (`writeScalar` + the spring `play` callback) does ZERO `getComputedStyle`: the `--dock-morph-max-stretch` cap is PRE-WARMED once per gesture (`capTokenCached = readCapToken()` in runTo/pin, off the animation path) and the per-frame effective cap is the pure `effectiveCapFromVelocity(capTokenCached, v)` — the HEAD read-after-write layout thrash (the ~295ms measure storm that ate the initial fast-rise teardrop frames) is gone, so the travelling teardrop frames actually paint (a re-introduced `maxStretchOf()` DOM read in `writeScalar` reds)",
+        measureStorm.ok,
+    );
+
+    // ── S2 — SHELL-MORPH: the bridge-opacity gate is a legible PLATEAU (F3.R3) ──
+    const bridgePlateau = detectBridgeGatePlateau(orientMorphSrc);
+    facts.shellMorphBridgePlateau = bridgePlateau.facts;
+    assert(
+        "S2 — `bridgeGate(t)` (the `--dock-bridge-opacity` output) holds FULL opacity across the occluded core (a `return 1` plateau of width RDN−RUP ≥ 0.2), NOT the HEAD razor triangle that peaked only at the exact t≈0.5 midpoint — so the travelling teardrop reads LEGIBLY across the whole 0.16<t<0.86 window (≥12 painted travel frames), never a single-frame flash",
+        bridgePlateau.ok,
+    );
+
+    // ── S3 — SHELL-MORPH: the two bridge plates OVERLAP into a dense fused mass (F3.R3) ──
+    const bridgeOverlap = detectBridgePlateOverlap(bridgeCssSrc);
+    facts.shellMorphBridgeOverlap = bridgeOverlap.facts;
+    assert(
+        "S3 — the two morph-bridge plates OVERLAP into a dense fused teardrop: the vertical plate HOLDS full opacity past the midpoint (holdUntil ≥ 0.55) and the horizontal plate reaches full EARLY (by ≤ 0.45), so across the overlap window (≥ 0.15 wide) BOTH plates are ~fully present (one dense continuous travelling mass, not the HEAD 0.5-centred crossfade that thinned to a faint neck) — AND the reshape is compositor-only (no width/height/*-size property value reads `--dock-morph-t`/`--stretch`; the plate boxes are static reserves)",
+        bridgeOverlap.ok,
     );
 
     return { facts, violations };
@@ -996,6 +1234,75 @@ function selfTest() {
         --dock-expand-t: var(--dock-morph-t);
     }
 }`;
+    // A clean synthetic useDockOrientationMorph.ts — the SHELL-MORPH-PAINT S1/S2 GREEN
+    // reference: `writeScalar` computes the per-frame cap via the pure
+    // `effectiveCapFromVelocity(capTokenCached, v)` (ZERO getComputedStyle), the cap is
+    // PRE-WARMED once per gesture in `runTo` (`capTokenCached = readCapToken()`), and
+    // `bridgeGate` holds a FULL-opacity plateau across the occluded core (RUP..RDN).
+    const CLEAN_ORIENT_MORPH = `
+    let capTokenCached = DOCK_MORPH_MAX_STRETCH;
+    function readCapToken() {
+        const r = rootEl.value;
+        if (!r) return DOCK_MORPH_MAX_STRETCH;
+        const raw = getComputedStyle(r).getPropertyValue("--dock-morph-max-stretch").trim();
+        const n = raw ? Number.parseFloat(raw) : NaN;
+        return Number.isFinite(n) && n >= 1 ? n : DOCK_MORPH_MAX_STRETCH;
+    }
+    function effectiveCapFromVelocity(capToken, v) {
+        if (capToken <= 1) return 1;
+        const weight = MOTION_WEIGHT_REST + (1 - MOTION_WEIGHT_REST) * v;
+        const blended = weight + (1 - weight) * v;
+        return 1 + (capToken - 1) * (blended / MOTION_WEIGHT_REST);
+    }
+    function writeScalar(value, velocity) {
+        t.value = value;
+        const v = Math.min(Math.abs(velocity) / V_NORM, 1);
+        const r = rootEl.value;
+        if (r) {
+            writeVelocityWeight(r, v);
+            const cap = effectiveCapFromVelocity(capTokenCached, v);
+            const s = 1 + (cap - 1) * v;
+            r.style.setProperty("--dock-morph-t", value + "");
+            r.style.setProperty("--stretch", s + "");
+        }
+    }
+    function bridgeGate(x) {
+        const LO = 0.16;
+        const RUP = 0.32;
+        const RDN = 0.72;
+        const HI = 0.86;
+        if (x <= LO || x >= HI) return 0;
+        if (x < RUP) {
+            const u = (x - LO) / (RUP - LO);
+            return u * u * (3 - 2 * u);
+        }
+        if (x <= RDN) return 1;
+        const u = (HI - x) / (HI - RDN);
+        return u * u * (3 - 2 * u);
+    }
+    function runTo(targetT) {
+        capTokenCached = readCapToken();
+    }`;
+    // A clean synthetic morph-bridge.css — the SHELL-MORPH-PAINT S3 GREEN reference: the
+    // vertical plate HOLDS full opacity to t=0.6, the horizontal reaches full by t=0.4
+    // (overlap 0.2), and no *-size property animates the scalar (static box reserves).
+    const CLEAN_BRIDGE_CSS = `
+@layer components {
+    .dock-morph-bridge-plate--vertical {
+        width: var(--dock-bridge-v-w, 3.25rem);
+        height: var(--dock-bridge-v-h, 16rem);
+        clip-path: inset(var(--dock-bridge-v-neck) 0 var(--dock-bridge-v-neck) 0 round 999px);
+        opacity: calc(1 - clamp(0, calc((var(--dock-morph-t, 0) - 0.6) / 0.35), 1));
+        scale: calc(1 / var(--stretch, 1)) var(--stretch, 1);
+    }
+    .dock-morph-bridge-plate--horizontal {
+        width: var(--dock-bridge-h-w, 18rem);
+        height: var(--dock-bridge-h-h, 3.25rem);
+        clip-path: inset(0 var(--dock-bridge-h-neck) 0 var(--dock-bridge-h-neck) round 999px);
+        opacity: clamp(0, calc((var(--dock-morph-t, 0) - 0.05) / 0.35), 1);
+        scale: var(--stretch, 1) calc(1 / var(--stretch, 1));
+    }
+}`;
     const base = {
         silhouetteExists: false,
         testExists: false,
@@ -1010,6 +1317,8 @@ function selfTest() {
         layerGroupVueSrc: CLEAN_LAYER_GROUP_VUE,
         layerTransitionTsSrc: CLEAN_LAYER_TRANSITION,
         morphCssSrc: CLEAN_MORPH_CSS,
+        orientMorphSrc: CLEAN_ORIENT_MORPH,
+        bridgeCssSrc: CLEAN_BRIDGE_CSS,
     };
 
     // Sanity: the clean synthetic baseline is fully GREEN (no confound).
@@ -1612,6 +1921,171 @@ function selfTest() {
         "P4 the collapsed derivation arm left unguarded (half-guard, per-arm coverage) reds",
     );
 
+    // ── S1 — the measure-storm bite (BG.W-SHELL-MORPH-PAINT-REPAIR F3.R3) ──
+    // S1: the HEAD form — `writeScalar` calls a `maxStretchOf()` helper that reads
+    // `getComputedStyle` back off the DOM EVERY frame (the read-after-write layout thrash,
+    // the ~295ms measure storm). A re-introduction reds on BOTH the getComputedStyle in the
+    // write path AND the absent pure `effectiveCapFromVelocity` cap.
+    sab(
+        {
+            ...base,
+            orientMorphSrc: `
+    const maxStretchOf = () => {
+        const r = rootEl.value;
+        if (!r) return DOCK_MORPH_MAX_STRETCH;
+        return getComputedStyle(r).getPropertyValue("--dock-morph-max-stretch");
+    };
+    function writeScalar(value, velocity) {
+        t.value = value;
+        const v = Math.min(Math.abs(velocity) / V_NORM, 1);
+        const r = rootEl.value;
+        if (r) {
+            const cap = maxStretchOf();
+            r.style.setProperty("--dock-morph-t", value + "");
+        }
+    }
+    function bridgeGate(x) {
+        const LO = 0.16;
+        const RUP = 0.32;
+        const RDN = 0.72;
+        const HI = 0.86;
+        if (x <= LO || x >= HI) return 0;
+        if (x <= RDN) return 1;
+        return 0;
+    }`,
+        },
+        "S1",
+        "S1 HEAD writeScalar reads getComputedStyle per frame (the maxStretchOf() measure storm) reds",
+    );
+    // S1 (evasion): the token read is DELETED entirely (no pre-warm) — the A4 cap thread
+    // is severed, not moved. The pure per-frame path is present but the token is never
+    // consulted, so a consumer override is dead. Must still red (tokenStillConsulted false).
+    sab(
+        {
+            ...base,
+            orientMorphSrc: `
+    let capTokenCached = DOCK_MORPH_MAX_STRETCH;
+    function effectiveCapFromVelocity(capToken, v) {
+        return 1 + (capToken - 1) * v;
+    }
+    function writeScalar(value, velocity) {
+        t.value = value;
+        const v = Math.min(Math.abs(velocity) / V_NORM, 1);
+        const cap = effectiveCapFromVelocity(capTokenCached, v);
+    }
+    function bridgeGate(x) {
+        const RUP = 0.32;
+        const RDN = 0.72;
+        if (x <= RUP) return 0;
+        if (x <= RDN) return 1;
+        return 0;
+    }
+    function runTo(t) {}`,
+        },
+        "S1",
+        "S1 the cap token pre-warm deleted (no capTokenCached=readCapToken, the A4 thread severed) reds",
+    );
+
+    // ── S2 — the bridge-gate razor-triangle bite (BG.W-SHELL-MORPH-PAINT-REPAIR F3.R3) ──
+    // S2: the HEAD triangle — `bridgeGate` peaks ONLY at the exact midpoint (no bare
+    // `return 1` plateau), so the teardrop flashes for ~1 frame at t≈0.5. (Carries the
+    // S1-green pure-cap path so ONLY S2 reds — no confound.)
+    sab(
+        {
+            ...base,
+            orientMorphSrc: `
+    let capTokenCached = DOCK_MORPH_MAX_STRETCH;
+    function readCapToken() {
+        const r = rootEl.value;
+        return getComputedStyle(r).getPropertyValue("--dock-morph-max-stretch") || DOCK_MORPH_MAX_STRETCH;
+    }
+    function effectiveCapFromVelocity(capToken, v) {
+        return 1 + (capToken - 1) * v;
+    }
+    function writeScalar(value, velocity) {
+        t.value = value;
+        const v = Math.min(Math.abs(velocity) / V_NORM, 1);
+        const cap = effectiveCapFromVelocity(capTokenCached, v);
+    }
+    function bridgeGate(x) {
+        const LO = 0.18;
+        const HI = 0.82;
+        const MID = 0.5;
+        if (x <= LO || x >= HI) return 0;
+        if (x < MID) {
+            const u = (x - LO) / (MID - LO);
+            return u * u * (3 - 2 * u);
+        }
+        const u = (HI - x) / (HI - MID);
+        return u * u * (3 - 2 * u);
+    }
+    function runTo(t) {
+        capTokenCached = readCapToken();
+    }`,
+        },
+        "S2",
+        "S2 HEAD bridgeGate razor triangle (no return-1 plateau, peaks only at t=0.5) reds",
+    );
+    // S2 (evasion): a plateau exists but is TOO NARROW (RDN−RUP < 0.2) — the teardrop is
+    // only fleetingly legible, still not a travelling teardrop.
+    sab(
+        {
+            ...base,
+            orientMorphSrc: CLEAN_ORIENT_MORPH.replace(
+                "const RUP = 0.32;\n        const RDN = 0.72;",
+                "const RUP = 0.46;\n        const RDN = 0.54;",
+            ),
+        },
+        "S2",
+        "S2 the plateau too narrow (RDN−RUP < 0.2, a fleeting flash) reds",
+    );
+
+    // ── S3 — the bridge plate-overlap bite (BG.W-SHELL-MORPH-PAINT-REPAIR F3.R3) ──
+    // S3: the HEAD crossfade — the plates crossfade AT the midpoint (vertical fades from
+    // 0.5, horizontal reaches full at 0.5), so the fused mass thins to a faint neck on the
+    // shoulders; the overlap window is measure-zero.
+    sab(
+        {
+            ...base,
+            bridgeCssSrc: `
+@layer components {
+    .dock-morph-bridge-plate--vertical {
+        width: var(--dock-bridge-v-w, 3.25rem);
+        opacity: calc(1 - clamp(0, calc((var(--dock-morph-t, 0) - 0.5) / 0.5), 1));
+        scale: calc(1 / var(--stretch, 1)) var(--stretch, 1);
+    }
+    .dock-morph-bridge-plate--horizontal {
+        width: var(--dock-bridge-h-w, 18rem);
+        opacity: clamp(0, calc((var(--dock-morph-t, 0) - 0.0) / 0.5), 1);
+        scale: var(--stretch, 1) calc(1 / var(--stretch, 1));
+    }
+}`,
+        },
+        "S3",
+        "S3 HEAD 0.5-centred crossfade (vertical fades from 0.5, horizontal full at 0.5 — no overlap, thin neck) reds",
+    );
+    // S3 (evasion): the plates OVERLAP correctly, but a plate animates its box SIZE off
+    // the live scalar (`width: … var(--dock-morph-t)`) — the per-frame reflow the
+    // compositor-only floor forbids. Must red on noSizeAnimatesScalar.
+    sab(
+        {
+            ...base,
+            bridgeCssSrc: `
+@layer components {
+    .dock-morph-bridge-plate--vertical {
+        width: calc(var(--dock-bridge-v-w, 3.25rem) * var(--dock-morph-t, 0));
+        opacity: calc(1 - clamp(0, calc((var(--dock-morph-t, 0) - 0.6) / 0.35), 1));
+    }
+    .dock-morph-bridge-plate--horizontal {
+        width: var(--dock-bridge-h-w, 18rem);
+        opacity: clamp(0, calc((var(--dock-morph-t, 0) - 0.05) / 0.35), 1);
+    }
+}`,
+        },
+        "S3",
+        "S3 a plate animates its box width off --dock-morph-t (per-frame reflow, not compositor-only) reds",
+    );
+
     return flagged;
 }
 
@@ -1671,7 +2145,16 @@ function run() {
         `  P4 nested pane swap HOLDS box   : ${violations.every((v) => !v.startsWith("P4"))} (cssGuarded=${facts.paneSwapBoxHold?.expandArmGuarded && facts.paneSwapBoxHold?.collapseArmGuarded && facts.paneSwapBoxHold?.noUnguardedDerivation}, isOuter=${facts.paneSwapBoxHold?.hasIsOuter}, swapFlag=${facts.paneSwapBoxHold?.swapPassesFlag}, paneSwapAttr=${facts.paneSwapBoxHold?.setsPaneSwap && facts.paneSwapBoxHold?.clearsPaneSwap})`,
     );
     console.log(
-        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×3 + D3-fence×2 + D4×2 + D4-fence + D5×2 + G1×6 + G4 + G2 + G3 + P1×2 + P2×2 + P3×3 + P4×4)`,
+        `  S1 shell morph no measure-storm : ${violations.every((v) => !v.startsWith("S1"))} (writeScalarNoDomRead=${facts.shellMorphMeasureStorm?.writeScalarNoDomRead}, pureCap=${facts.shellMorphMeasureStorm?.perFramePureCap}, preWarmed=${facts.shellMorphMeasureStorm?.preWarmCached})`,
+    );
+    console.log(
+        `  S2 bridge teardrop plateau      : ${violations.every((v) => !v.startsWith("S2"))} (plateau=${facts.shellMorphBridgePlateau?.hasPlateau}, width=${facts.shellMorphBridgePlateau?.plateauWidth})`,
+    );
+    console.log(
+        `  S3 bridge plates overlap dense  : ${violations.every((v) => !v.startsWith("S3"))} (holdUntil=${facts.shellMorphBridgeOverlap?.holdUntil}, reachesFull=${facts.shellMorphBridgeOverlap?.reachesFull}, overlap=${facts.shellMorphBridgeOverlap?.overlap}, compositorOnly=${facts.shellMorphBridgeOverlap?.noSizeAnimatesScalar})`,
+    );
+    console.log(
+        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×3 + D3-fence×2 + D4×2 + D4-fence + D5×2 + G1×6 + G4 + G2 + G3 + P1×2 + P2×2 + P3×3 + P4×4 + S1×2 + S2×2 + S3×2)`,
     );
 
     if (violations.length) {
