@@ -23,7 +23,12 @@ import {
     OETF_GLSL,
     OKLCH_MATRICES_GLSL,
 } from "../../../../composables/glass/webgl/shaders/procedural-color.glsl";
-import { FLOW_PRESENT_KNEE } from "../composables/uniformBridgeWGPU";
+import {
+    FLOW_PRESENT_KNEE,
+    FLOW_TRAIL_DEPOSIT,
+    FLOW_MOTE_BASE,
+    FLOW_TRAIL_CEIL,
+} from "../composables/uniformBridgeWGPU";
 
 /** The full-screen-triangle vertex shader (the substrate's standard fullscreen pass). */
 export const FLOW_FIELD_VERT_GLSL = /* glsl */ `#version 300 es
@@ -459,11 +464,15 @@ void main() {
   float mask = 1.0 - smoothstep(0.55, 1.0, r);
   if (mask < 0.002) discard;
   float core = mask * mask;
-  float bright = (0.35 + vSpeedNorm * uSpeedGlow) * vFade;
+  // BG.W-DOTFLOW-REBUILD paint-fix — a LOW base so slow motes recede into the deep floor
+  // (the reference's bright-jets-over-dark-floor), speed drives the pop.
+  float bright = (${FLOW_MOTE_BASE.toFixed(2)} + vSpeedNorm * uSpeedGlow) * vFade;
   vec3 lin = samplePaletteLin(vSpeedNorm) * bright;
   vec3 rgb = clamp(linearToSrgb(lin), vec3(0.0), vec3(1.0));
   float a = core * clamp(bright, 0.0, 1.0);
-  fragColor = vec4(rgb * a, a);   // additive premultiplied (the trail braids the ribbons)
+  // additive premultiplied (the trail braids the ribbons); the FLOW_TRAIL_DEPOSIT gain keeps a
+  // DENSE population from accumulating to a uniform white flood (the Chrome/Metal white-out fix).
+  fragColor = vec4(rgb * a, a) * ${FLOW_TRAIL_DEPOSIT.toFixed(2)};
 }`;
 
 /**
@@ -500,10 +509,14 @@ ${OETF_GLSL}
 
 void main() {
   vec3 trail = texture(uTrail, vUv).rgb;
+  // BG.W-DOTFLOW-REBUILD paint-fix — clamp the accumulated trail to FLOW_TRAIL_CEIL BEFORE the
+  // tone-map so the (unbounded) float trail never runs a texel toward 255 — a bounded input the
+  // WebGL2 RGBA8 trail already carries, mirrored here for the WebGPU rgba16float path.
+  vec3 t = min(trail, vec3(${FLOW_TRAIL_CEIL.toFixed(2)}));
   // soft tone-map the accumulated additive trail (Reinhard — hot cores, not white wash). The
   // knee is the FLOW_PRESENT_KNEE rest-contrast lever (BG.W-DOTFLOW-REBUILD — spliced from the
   // ONE source so the WGSL present pass tone-maps identically; the faint-at-rest fix).
-  vec3 mapped = trail / (trail + vec3(${FLOW_PRESENT_KNEE.toFixed(2)}));
+  vec3 mapped = t / (t + vec3(${FLOW_PRESENT_KNEE.toFixed(2)}));
   if (uHasGround < 0.5) {
     // compose OVER the page's warm field: emit the lit ribbons premultiplied, no floor.
     vec3 rgb = clamp(linearToSrgb(mapped), vec3(0.0), vec3(1.0));

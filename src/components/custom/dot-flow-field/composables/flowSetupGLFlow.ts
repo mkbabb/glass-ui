@@ -53,15 +53,25 @@ export function createFlowGLFlow(
         const cols = stateCols(count);
 
         // ── float-render capability probe (R-A): prefer RGBA32F, fall to RGBA16F ──
+        // The STATE texture is a float RT written with BLEND DISABLED (a full-frame overwrite of
+        // pos/speed/life — float precision, no blend), so EXT_color_buffer_float renderability is
+        // all it needs (Safari/WebKit grants it).
         gl.getExtension("EXT_color_buffer_float");
         gl.getExtension("EXT_color_buffer_half_float");
         gl.getExtension("OES_texture_float_linear");
         const stateInternal = probeRenderable(gl, gl.RGBA32F, gl.FLOAT)
             ? { internal: gl.RGBA32F, type: gl.FLOAT }
             : { internal: gl.RGBA16F, type: gl.HALF_FLOAT };
-        const trailInternal = probeRenderable(gl, gl.RGBA16F, gl.HALF_FLOAT)
-            ? { internal: gl.RGBA16F, type: gl.HALF_FLOAT }
-            : { internal: gl.RGBA8, type: gl.UNSIGNED_BYTE };
+        // BG.W-DOTFLOW-REBUILD paint-fix — the TRAIL is RGBA8 (UNSIGNED_BYTE), NEVER a float RT.
+        // The mote pass draws ADDITIVELY (`blendFunc(ONE, ONE)`) into the trail, and additive
+        // blend into a float target requires EXT_float_blend — which WebKit does NOT grant. A
+        // RGBA16F trail is framebuffer-COMPLETE on Safari (probeRenderable → true) yet NOT
+        // additive-blendable there, so the mote accumulation silently no-ops and the field paints
+        // dead-black (the Safari defect). RGBA8 is universally additive-blendable AND bounds the
+        // accumulation at 1.0 (the fixed-point store caps the Chrome/Metal white-out) — ONE trail
+        // target, both engines paint the same warm-fire flow. No masking fallback: the primary IS
+        // the RGBA8 accumulator, not a float RT that dies silently on one engine.
+        const trailInternal = { internal: gl.RGBA8, type: gl.UNSIGNED_BYTE };
 
         // ── programs ──
         const stateProg = linkGL(gl, FLOW_FIELD_QUAD_VERT_GLSL, FLOW_FIELD_STATE_GLSL);

@@ -19,7 +19,12 @@ import {
     OETF_WGSL,
     OKLCH_MATRICES_WGSL,
 } from "../../aurora/constants/shaders/procedural-color.wgsl";
-import { FLOW_PRESENT_KNEE } from "../composables/uniformBridgeWGPU";
+import {
+    FLOW_PRESENT_KNEE,
+    FLOW_TRAIL_DEPOSIT,
+    FLOW_MOTE_BASE,
+    FLOW_TRAIL_CEIL,
+} from "../composables/uniformBridgeWGPU";
 
 export const FLOW_FIELD_RENDER_WGSL = /* wgsl */ `
 const PI: f32 = 3.141592653589793;
@@ -128,7 +133,9 @@ fn vs_main(
     // life fades the mote over its last third (the trail's tail / overlapping-action).
     flowFade = clamp(life * 3.0, 0.0, 1.0);
     ramp = speedNorm;
-    bright = (0.35 + speedNorm * u.f0.x) * flowFade;
+    // BG.W-DOTFLOW-REBUILD paint-fix — a LOW base (FLOW_MOTE_BASE) so slow motes recede into the
+    // deep floor and speed carries the warm-fire pop (splices the ONE mote-base source).
+    bright = (${FLOW_MOTE_BASE.toFixed(2)} + speedNorm * u.f0.x) * flowFade;
     // a speed bloom (the cartoon "more" on WGPU — faster motes read as hot speed-cores) +
     // the √φ stretch lever scales the bloom (the squash-stretch as an isotropic core here).
     sizeWorld = u.r1.x * (1.0 + speedNorm * (u.f0.w + 1.0));
@@ -171,10 +178,12 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
   let rgb = clamp(linearToSrgb(lin), vec3<f32>(0.0), vec3<f32>(1.0));
 
   if (mode == 1) {
-    // flow: additive premultiplied — a soft glowing core, alpha rides speed·life.
+    // flow: additive premultiplied — a soft glowing core, alpha rides speed·life. The
+    // FLOW_TRAIL_DEPOSIT gain keeps a DENSE population from flooding the trail to white
+    // (the Chrome/Metal white-out fix; ONE deposit source across both backends).
     let coreAlpha = mask * mask; // a tighter hot core (less white wash — H2 cap)
     let a = coreAlpha * clamp(bright, 0.0, 1.0);
-    return vec4<f32>(rgb * a, a);
+    return vec4<f32>(rgb * a, a) * ${FLOW_TRAIL_DEPOSIT.toFixed(2)};
   }
   // field: a floor alpha so even an off-band dot stays a faint lattice point.
   let alpha = mask * clamp(bright * 0.8 + 0.12, 0.0, 1.0);
@@ -225,9 +234,13 @@ fn fs_decay(in: FSQ) -> @location(0) vec4<f32> {
 @fragment
 fn fs_present(in: FSQ) -> @location(0) vec4<f32> {
   let trail = textureSample(tex, samp, in.uv).rgb;
+  // BG.W-DOTFLOW-REBUILD paint-fix — clamp the (unbounded rgba16float) trail to FLOW_TRAIL_CEIL
+  // BEFORE the tone-map so the WebGPU path carries the SAME bounded input the WebGL2 RGBA8 trail
+  // clamps at, no engine-specific white-out.
+  let t = min(trail, vec3<f32>(${FLOW_TRAIL_CEIL.toFixed(2)}));
   // Reinhard — hot cores, not white wash. The knee is the FLOW_PRESENT_KNEE rest-contrast
   // lever (BG.W-DOTFLOW-REBUILD — the ONE source the GLSL present pass splices identically).
-  let mapped = trail / (trail + vec3<f32>(${FLOW_PRESENT_KNEE.toFixed(2)}));
+  let mapped = t / (t + vec3<f32>(${FLOW_PRESENT_KNEE.toFixed(2)}));
   if (u.p.y < 0.5) {
     let rgb = clamp(linearToSrgb(mapped), vec3<f32>(0.0), vec3<f32>(1.0));
     let a = clamp(max(mapped.r, max(mapped.g, mapped.b)), 0.0, 1.0);

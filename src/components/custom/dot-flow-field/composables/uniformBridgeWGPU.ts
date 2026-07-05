@@ -205,9 +205,46 @@ export const FLOW_BASE_BRIGHT = 0.22;
  * washing out toward it (the "faint at rest, 10% structure" defect). The SINGLE source both
  * present passes splice — the GLSL `FLOW_FIELD_PRESENT_FRAG_GLSL` + the WGSL
  * `FLOW_FIELD_TRAIL_WGSL` `fs_present` — so the tone-map stays byte-identical across backends
- * (no WGSL↔GLSL knee drift). Strengthened off the prior hardcoded 0.85 magic literal.
+ * (no WGSL↔GLSL knee drift).
+ *
+ * BG.W-DOTFLOW-REBUILD paint-fix — the prior 0.6 knee over-corrected the additive path into a
+ * full-frame WHITE saturation on the real-GPU dense-population trail (`trail/(trail+0.6)` → 1.0
+ * everywhere). Raised to 0.7 (the gate ceiling — the DARKEST warm floor a stronger-rest knee
+ * allows) AND paired with the FLOW_TRAIL_DEPOSIT flood-control gain + the FLOW_TRAIL_CEIL
+ * pre-tone-map clamp (the real levers — the knee alone cannot un-flood an unbounded additive
+ * accumulation). The floor stays deep-warm, the ribbons pop, nothing clips to 255.
  */
-export const FLOW_PRESENT_KNEE = 0.6;
+export const FLOW_PRESENT_KNEE = 0.7;
+
+/**
+ * BG.W-DOTFLOW-REBUILD paint-fix — the additive mote-deposit gain, the flood-control lever
+ * (the Chrome/Metal white-out fix). Each mote's premultiplied contribution to the trail buffer
+ * is scaled by this BEFORE the additive blend, so a DENSE population (12000 motes advecting
+ * over a half-res trail) does NOT accumulate to a uniform white flood the Reinhard tone-map
+ * clips to 255. LOW enough that a single mote's streak reads as a faint warm line over the
+ * deep floor, and only overlapping streamline knots reach the bright warm-fire cores. The ONE
+ * source both mote passes splice (GLSL `FLOW_FIELD_POINT_FRAG_GLSL` + WGSL `fs_main` flow arm)
+ * — no per-backend deposit drift.
+ */
+export const FLOW_TRAIL_DEPOSIT = 0.18;
+
+/**
+ * BG.W-DOTFLOW-REBUILD paint-fix — the mote base brightness (the deposit floor for a ZERO-speed
+ * mote). LOW so the slow eddies recede into the deep warm floor and the fast jets carry the
+ * warm-fire ribbons (the reference's bright-jets-over-dark-floor character); the speed term
+ * (`+ speedNorm * speedGlow`) drives the pop. Replaces the flooding hardcoded 0.35 mote base.
+ * The ONE source both mote passes splice.
+ */
+export const FLOW_MOTE_BASE = 0.12;
+
+/**
+ * BG.W-DOTFLOW-REBUILD paint-fix — the pre-tone-map trail clamp ceiling. The present pass clamps
+ * `trail` to this BEFORE the Reinhard map, so the WebGPU rgba16float trail (which accumulates
+ * UNBOUNDED) behaves identically to the WebGL2 RGBA8 trail (which clamps at 1.0 by the fixed-
+ * point store). ONE bounded input across both backends → no engine-specific white-out. The ONE
+ * source both present passes splice.
+ */
+export const FLOW_TRAIL_CEIL = 1.0;
 
 /** The drift-driven size pulse (a subtle breathing; never a re-seed). */
 export const FLOW_SIZE_PULSE = 0.4;

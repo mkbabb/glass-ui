@@ -439,6 +439,74 @@ function clauseFlowRegister(over) {
         viol.push(
             "F7c rest-contrast: the WGSL present pass does not reference FLOW_PRESENT_KNEE — the named rest-contrast lever is unwired",
         );
+
+    // ── F7d — the WHITE-OUT / DEAD-BLACK paint-fix (BG.W-DOTFLOW-REBUILD, born-RED on the ──
+    // pre-fix tree). The BD source landed the trail pipeline; the paint judge found it painted a
+    // full-frame WHITE on Chrome/Metal (the dense additive trail floods, Reinhard clips to 255)
+    // AND dead-BLACK on Safari/WebKit (additive blend into a FLOAT trail RT silently no-ops — no
+    // EXT_float_blend). This arm locks the fix: the named deposit/base flood-control levers
+    // (spliced into BOTH mote passes, no bare 0.35), the pre-tone-map trail clamp (BOTH present
+    // passes), and the RGBA8 (universally-blendable + bounded) WebGL2 trail target.
+    const depM = bridge?.match(/export const FLOW_TRAIL_DEPOSIT\s*=\s*([\d.]+)/);
+    const deposit = depM ? Number(depM[1]) : null;
+    if (deposit == null)
+        viol.push(
+            "F7d paint-fix: uniformBridgeWGPU.ts exports no named FLOW_TRAIL_DEPOSIT — the additive mote-deposit flood-control gain (the white-out fix) is an unnamed magic literal",
+        );
+    else if (deposit >= 0.5)
+        viol.push(
+            `F7d paint-fix: FLOW_TRAIL_DEPOSIT ${deposit} >= 0.5 — the additive deposit must stay LOW so a dense population does not flood the trail to a uniform white (the Chrome/Metal white-out)`,
+        );
+    const baseM = bridge?.match(/export const FLOW_MOTE_BASE\s*=\s*([\d.]+)/);
+    const moteBase = baseM ? Number(baseM[1]) : null;
+    if (moteBase == null)
+        viol.push(
+            "F7d paint-fix: uniformBridgeWGPU.ts exports no named FLOW_MOTE_BASE — the mote deposit floor (replacing the flooding hardcoded 0.35) is an unnamed magic literal",
+        );
+    else if (moteBase > 0.2)
+        viol.push(
+            `F7d paint-fix: FLOW_MOTE_BASE ${moteBase} > 0.2 — a LOW base keeps the slow eddies in the deep floor (the reference's bright-jets-over-dark-floor); speed carries the pop`,
+        );
+    if (bridge != null && !/export const FLOW_TRAIL_CEIL\s*=/.test(bridge))
+        viol.push(
+            "F7d paint-fix: uniformBridgeWGPU.ts exports no named FLOW_TRAIL_CEIL — the pre-tone-map trail clamp (bounding the unbounded float trail across backends) is missing",
+        );
+    // Both mote passes splice the named deposit (no per-backend drift) + carry no bare 0.35 base.
+    if (glsl != null && !/\$\{FLOW_TRAIL_DEPOSIT/.test(glsl))
+        viol.push(
+            "F7d paint-fix: the GLSL mote pass does not splice ${FLOW_TRAIL_DEPOSIT} — the deposit flood-control gain is unwired on WebGL2 (the live captured path)",
+        );
+    if (renderWgsl != null && !/\$\{FLOW_TRAIL_DEPOSIT/.test(renderWgsl))
+        viol.push(
+            "F7d paint-fix: the WGSL mote pass does not splice ${FLOW_TRAIL_DEPOSIT} — the deposit flood-control gain is unwired on WebGPU",
+        );
+    if (glsl != null && /0\.35\s*\+\s*vSpeedNorm/.test(glsl))
+        viol.push(
+            "F7d paint-fix: the GLSL mote pass still carries the flooding hardcoded 0.35 base (0.35 + vSpeedNorm) — splice the named FLOW_MOTE_BASE",
+        );
+    if (renderWgsl != null && /0\.35\s*\+\s*speedNorm/.test(renderWgsl))
+        viol.push(
+            "F7d paint-fix: the WGSL mote pass still carries the flooding hardcoded 0.35 base (0.35 + speedNorm) — splice the named FLOW_MOTE_BASE",
+        );
+    // Both present passes clamp the trail BEFORE the tone-map (the bounded-input fix — no white-out).
+    if (glsl != null && !/min\s*\(\s*trail\s*,/.test(glsl))
+        viol.push(
+            "F7d paint-fix: the GLSL present pass does not clamp the trail (min(trail, …)) before the tone-map — the unbounded accumulation can white-out",
+        );
+    if (renderWgsl != null && !/min\s*\(\s*trail\s*,/.test(renderWgsl))
+        viol.push(
+            "F7d paint-fix: the WGSL present pass does not clamp the trail (min(trail, …)) before the tone-map — the unbounded accumulation can white-out",
+        );
+    // The WebGL2 trail RT is RGBA8 (universally additive-blendable — the Safari dead-black fix),
+    // NOT a float RT gated on probeRenderable(RGBA16F) (blend-unsafe on WebKit without EXT_float_blend).
+    if (glFlow != null && !/trailInternal\s*=\s*\{\s*internal:\s*gl\.RGBA8/.test(glFlow))
+        viol.push(
+            "F7d paint-fix: flowSetupGLFlow.ts does not build the trail as an RGBA8 target — the additive-blend trail must be RGBA8 (blendable everywhere), never a float RT that dies silently on WebKit",
+        );
+    if (glFlow != null && /trailInternal\s*=\s*probeRenderable\s*\(\s*gl\s*,\s*gl\.RGBA16F/.test(glFlow))
+        viol.push(
+            "F7d paint-fix: flowSetupGLFlow.ts still gates the trail on a float RGBA16F RT (probeRenderable) — additive blend into a float target silently no-ops on WebKit (the Safari dead-black)",
+        );
     return viol;
 }
 
@@ -548,6 +616,39 @@ function selfTest() {
     });
     if (!weakKnee.some((v) => v.startsWith("F7c")))
         fails.push("self-test: a weak FLOW_PRESENT_KNEE=0.85 (> 0.7) did NOT red F7c");
+    // (j) a re-flooded FLOW_TRAIL_DEPOSIT (>= 0.5) reds F7d (the white-out flood-control floor).
+    const floodedDeposit = runAll({
+        bridge: liveBridge.replace(
+            /export const FLOW_TRAIL_DEPOSIT\s*=\s*[\d.]+/,
+            "export const FLOW_TRAIL_DEPOSIT = 0.9",
+        ),
+    });
+    if (!floodedDeposit.some((v) => v.startsWith("F7d")))
+        fails.push("self-test: a flooded FLOW_TRAIL_DEPOSIT=0.9 (>= 0.5) did NOT red F7d");
+    // (k) a bare 0.35 mote base (no named FLOW_MOTE_BASE splice) reds F7d.
+    const bareMoteBase = runAll({
+        glsl: "float bright = (0.35 + vSpeedNorm * uSpeedGlow) * vFade;",
+        renderWgsl: "bright = (0.35 + speedNorm * u.f0.x) * flowFade;",
+    });
+    if (!bareMoteBase.some((v) => v.startsWith("F7d")))
+        fails.push("self-test: a bare 0.35 mote base (no named FLOW_MOTE_BASE splice) did NOT red F7d");
+    // (l) a float RGBA16F trail RT reintroduction reds F7d (the Safari dead-black regression).
+    const liveGlFlow = read(resolve(DIR, "composables/flowSetupGLFlow.ts"));
+    const floatTrail = runAll({
+        glFlow: liveGlFlow.replace(
+            /const trailInternal = \{ internal: gl\.RGBA8[^;]*;/,
+            "const trailInternal = probeRenderable(gl, gl.RGBA16F, gl.HALF_FLOAT) ? { internal: gl.RGBA16F, type: gl.HALF_FLOAT } : { internal: gl.RGBA8, type: gl.UNSIGNED_BYTE };",
+        ),
+    });
+    if (!floatTrail.some((v) => v.startsWith("F7d")))
+        fails.push("self-test: a float RGBA16F trail RT reintroduction did NOT red F7d");
+    // (m) a present pass with NO pre-tone-map trail clamp reds F7d (the deposit splice IS present,
+    //     so the missing min(trail, …) clamp is the isolated bite).
+    const noClamp = runAll({
+        glsl: "float dep = ${FLOW_TRAIL_DEPOSIT}; FLOW_FIELD_FRAG_GLSL; vec3 mapped = trail / (trail + vec3(FLOW_PRESENT_KNEE));",
+    });
+    if (!noClamp.some((v) => v.startsWith("F7d")))
+        fails.push("self-test: a present pass with no min(trail, …) clamp did NOT red F7d");
     return fails;
 }
 
