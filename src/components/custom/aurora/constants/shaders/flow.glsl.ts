@@ -16,8 +16,10 @@
 // AW.W7 WebGPU multi-pass fold; this is the single-pass small-tap approximation.
 export const AURORA_FLOW_GLSL = /* glsl */ `// ── Flow field ────────────────────────────────────────────────────────────
 // Structure-tensor prototype (body defined post-sampleBase in the mediums block).
-// Returns vec3(dir.x, dir.y, coherence) — the minor-eigenvector tangent + A.
-vec3 structureTensorField(vec2 p, float t, vec2 fallbackDir);
+// Returns vec4(dir.x, dir.y, coherence, packedGrad) — the minor-eigenvector tangent + A + the
+// metal-gradient .w lane (BG.W-AUR-METAL-FINISH widened vec3→vec4). The forward decl MUST match
+// the vec4 definition or WebKit's compiler rejects the mismatched signature (L1b).
+vec4 structureTensorField(vec2 p, float t, vec2 fallbackDir);
 
 vec2 flowField(vec2 p, float t) {
   vec2 dir = vec2(1.0, 0.0);

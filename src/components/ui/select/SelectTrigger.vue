@@ -135,7 +135,7 @@ const fontRungStyle = computed(() => {
            panel) so trigger + panel move as ONE liquid gesture. The `rotate`
            longhand (not `transform`) composes with any other transform. Reads the
            SHIPPED `--ease-cartoon-punch` (PRM re-aliases it to non-overshoot). -->
-      <ChevronDown class="[transition:rotate_var(--spring-snappy-duration)_var(--ease-cartoon-punch)] [&[data-state=open]]:rotate-180 h-4 w-4 shrink-0 opacity-(--select-chevron-opacity)" />
+      <ChevronDown class="[transition:rotate_var(--spring-snappy-duration)_var(--ease-cartoon-punch)] in-data-[state=open]:rotate-180 h-4 w-4 shrink-0 opacity-(--select-chevron-opacity)" />
     </SelectIcon>
   </SelectTrigger>
 </template>

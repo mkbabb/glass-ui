@@ -327,7 +327,9 @@ StrokeHit bestOil(vec2 p, float cellSize, float lenMul, float halfWMul,
       vec2 f;
       float coh = 1.0;
       if (uStrokeOrient == 1) {
-        vec3 tf = structureTensorField(center, t, safeDir(flow));
+        // vec4 (the metal-finish widen) — .xy tangent + .z coherence; the .w gradient lane
+        // is unused here. A vec3 local would be a type-mismatch WebKit rejects (L1c).
+        vec4 tf = structureTensorField(center, t, safeDir(flow));
         f = safeDir(tf.xy);
         coh = tf.z;
       } else {

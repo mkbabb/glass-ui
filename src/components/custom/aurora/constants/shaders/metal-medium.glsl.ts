@@ -100,8 +100,10 @@ vec3 mediumMetal(vec3 col, vec2 p, float t) {
 vec3 mediumMetalGradient(vec3 col, vec2 p, float t) {
   vec4 stf = structureTensorField(p, t, flowField(p, t));
   // Pre-flatten toward luma (the smoother gradient-metallic base) — same BRDF, calmer body.
-  vec3 flat = mix(col, vec3(dot(col, W_LUMA)), METAL_GRADIENT_FLATTEN);
-  vec3 metal = metalShade(flat, p, stf);
+  // NB: flat is a GLSL reserved interpolation qualifier — WebKit's compiler REJECTS it as an
+  // identifier (ANGLE tolerates it); named flatCol so the WebKit aurora shader compiles (L1a).
+  vec3 flatCol = mix(col, vec3(dot(col, W_LUMA)), METAL_GRADIENT_FLATTEN);
+  vec3 metal = metalShade(flatCol, p, stf);
   // The height-field normal facing (recomputed from the same packed gradient — ZERO taps).
   vec2 grad = unpackGrad(stf.w);
   float facing = normalize(vec3(grad * (METAL_HEIGHT_SCALE * uMetalHeightScale), 1.0)).z;
