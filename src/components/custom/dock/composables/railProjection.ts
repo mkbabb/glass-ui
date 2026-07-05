@@ -1,14 +1,32 @@
-// BE.W-DOCK-RAIL-REALIZE — railProjection: the PURE φ-tier / ring-carousel projection
-// math, harvested out of the deleted `useLiquidRail` spike (the no-dual-path
-// W-PRUNE-CONSOLIDATE discipline — the spike is harvested, then deleted wholesale).
+// BE.W-DOCK-RAIL-REALIZE + BG.W-DOCK-RAIL-REINVENT — railProjection: the PURE φ-tier /
+// ring-carousel projection math, harvested out of the deleted `useLiquidRail` spike (the
+// no-dual-path W-PRUNE-CONSOLIDATE discipline — the spike is harvested, then deleted
+// wholesale).
 //
 // This is the ONLY thing worth keeping from the spike: the negative-safe signed
 // shortest-arc ring offset + the φ-tiered slot span. It is a STATELESS function — no
 // spring loop, no rAF, no DOM measure, no SpringProgress (DockStack already speaks the
-// ONE `--spring-dock` clock; the facet mode rides the dock's own CSS spring, NOT a
-// re-forked JS spring). The facet-carousel mode calls `projectFacets()` once per render
-// to lay out the chips; the at-rest fan is a pure CSS-transition over the projected
-// resting transforms (the macOS-stack discipline the live `.dock-stack` already uses).
+// ONE `--spring-dock` clock; the fan rides the dock's own CSS spring, NOT a re-forked JS
+// spring). The facet-carousel mode calls `projectFacets()` once per render to lay out the
+// chips; the at-rest fan is a pure CSS-transition over the projected resting transforms
+// (the macOS-stack discipline the live `.dock-stack` already uses).
+//
+// BG.W-DOCK-RAIL-REINVENT — the topology INVERTED (the BE always-outside floating core →
+// the collapsed-CONTAINED hairline; the hover/click macOS-STACK fan-out CROSSES the dock
+// edge, asymmetric-golden). The fan overhangs OUTWARD (into the gutter) by ~φ²
+// (`RAIL_GOLDEN_SQ`, IMG_1880's asymmetric fan-states) more than it reaches INWARD over
+// the dock. That crossing weight lives ONCE here as `RAIL_GOLDEN_SQ` (the shared source);
+// DockStack writes it to `--dock-rail-golden` so the CSS `--dock-rail-overhang` calc reads
+// ONE φ² source (never a flat resolved rebake — the W-CARD-PAD φ-ladder fence). DISTINCT
+// from the φ=1.618 `tierRatio` recession (the depth read); φ² is the CROSSING asymmetry.
+
+/** φ² — the golden-SQUARE the reinvented rail fan CROSSES the dock edge by: the fan
+ *  overhangs OUTWARD (into the gutter) ~φ² (2.618) more than it reaches INWARD (back over
+ *  the dock plate). The SINGLE source the CSS `--dock-rail-overhang` calc mirrors
+ *  (`calc(var(--dock-rail-overhang-minor) * var(--dock-rail-golden, 2.618))`) — one φ²
+ *  constant, the W-CARD-PAD φ-ladder fence. Distinct from the φ (1.618) `tierRatio` that
+ *  drives the depth recession. */
+export const RAIL_GOLDEN_SQ = 2.618;
 
 /** The signed shortest-arc offset on a wrap ring (the "negative-infinity modulus" — a
  *  naive `raw % N` breaks the backward wrap). Wraps to `[-N/2, N/2)`. */

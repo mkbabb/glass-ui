@@ -1961,6 +1961,12 @@ export const GATES = [
         note: "BE.W-DOCK-RAIL-REALIZE — the RAIL-AS-HAIRLINE (user defect #4). The standalone vertical glass CAPSULE (.liquid-rail-dock + useLiquidRail, a 2nd dock + a 3rd rail engine) is DELETED wholesale (no legacy); the rail is now a `mode=\"facets\"` RENDER MODE on the shipped <DockStack> — a hairline strip of accent-tinted facet chips fanning in a real dock's gutter, box-INVIOLATE. EXTENDS proof:dock-stack-rail (S1-S6 re-asserted GREEN). R1 the facet mode exists ONCE on DockStack (mode=stack|facets, default stack byte-identical; NO second component). R2 the per-facet --glass-accent FLOOR (each chip writes its own context hue off the per-instance chromatic-rim axis). R3 the fork DEFINITION-ABSENT (useLiquidRail.ts + liquid-rail.css gone, demo.css @import gone, box-INVIOLATE — the .glass-dock-frame escape un-clipped, the fan on the ONE --spring-dock clock, the projection helper PURE). R4 ONE registry — the facet click writes the consumer v-model, no shadow. R5 the CLAUDE.md doc-reconcile (proof:rail3/rail3.spec/--dock-rail-seam-offset/proof:rail-extend GONE; the facet mode documented). Born-RED on the capsule-fork tree (9b301f4a). Bite: a 2nd rail SFC / a flat-fill facet / a surviving useLiquidRail / a re-clipped frame / a stale proof:rail3 CLAUDE.md ref → RED.",
     },
     {
+        id: "proof:dock-rail-reinvent",
+        cmd: "proof:dock-rail-reinvent",
+        tags: ["local", "ci", "release"],
+        note: "BG.W-DOCK-RAIL-REINVENT — the dock rail topology INVERTED (USER 07-05 + IMG_1880; supersedes the BE always-OUTSIDE read). EXTENDS proof:dock-rail-realize (R1-R5 + proof:dock-stack-rail S1-S6 re-asserted GREEN). T1 collapsed-containment (the inset-*:100% always-OUTSIDE anchor GONE, core seats CONTAINED at the dock edge). T2 the warm-ink --dock-rail-hairline drawn by .dock-stack::before (no-gray). T3 the asymmetric-GOLDEN --dock-rail-overhang calc (phi^2 2.618 off the shared --dock-rail-golden <- RAIL_GOLDEN_SQ; the fan reads OUTWARD+INWARD). T4 the wrap display-options axis (additive default-off, visibleCount 3 kept). T5 box-INVIOLATE frame-no-clip + ONE engine (--spring-dock, the KEPT PURE railProjection phi-math, no 2nd SFC). Born-RED on HEAD's always-OUTSIDE topology; 5-bite self-test. Bite: a re-added 100% anchor / a dark-band hairline / a missing phi^2 / a missing wrap / a re-clipped frame -> RED.",
+    },
+    {
         id: "proof:dock-cockpit",
         cmd: "proof:dock-cockpit",
         tags: ["ci", "release"],

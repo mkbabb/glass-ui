@@ -1,5 +1,5 @@
-/* dock/stack-rail.css — BC.W-DOCK-STACK-RAIL — the macOS hover-expand STACK rail
- * (the clean-break rebuild; the divider-carousel chip-strip RETIRED).
+/* dock/stack-rail.css — BC.W-DOCK-STACK-RAIL + BE.W-DOCK-RAIL-REALIZE +
+ * BG.W-DOCK-RAIL-REINVENT — the macOS hover-expand STACK rail.
  *
  * THE KEPT CHASSIS (glass-dock-codebase.md §2.5 — "that part STAYS"). The `.glass-dock`
  * root carries `contain: paint` + `backdrop-filter` + (on a vertical dock) `overflow` —
@@ -8,39 +8,61 @@
  * `#rail` as a SIBLING of `.glass-dock` inside the `.glass-dock-frame` (a `display:contents`
  * shell that becomes a NON-clipping positioning context only when `data-has-rail`). The
  * `.dock-hairline-slot` is `position: absolute` relative to THAT shell — outside the dock's
- * containment — so the stack VISIBLY extends beyond the dock edge into its own gutter. No
+ * containment — so the stack paints in the dock's gutter WITHOUT touching the dock box. No
  * `contain`, no `backdrop-filter`, no `overflow` on the shell → nothing clips it. This is
- * the load-bearing chassis the rebuild reuses; the box stays INVIOLATE (the slot feeds NO
- * size into the dock's intrinsic box).
+ * the load-bearing chassis; the box stays INVIOLATE (the slot feeds NO size into the dock's
+ * intrinsic box — `deltaW = deltaH = 0`).
  *
- * THE STACK (the verbatim spec — rail-spec-contradicted-divider-carousel). A `<DockStack>`
- * is one stack: a CORE anchor item (the always-visible dock(1) glyph) + N members. On
- * hover/focus of the core, the members FAN OUT next to the rail — a column (vertical dock)
- * / row (horizontal dock) of FULLY-VISIBLE glass icons springing open beside the line,
- * each a `--glass-bg-floating` glass icon (NEVER a shadowed half-tucked chip). The fan-out
- * is compositor-only (scale/translate/opacity/filter — the `proof:no-layout-animation`
- * floor, NO animated width/height/inset), staggered by `--dock-stack-stagger * var(--i)`.
+ * THE REINVENTED TOPOLOGY (BG.W-DOCK-RAIL-REINVENT — USER 07-05 + IMG_1880; the BE
+ * always-OUTSIDE floating core INVERTED). At REST the stack is ENTIRELY CONTAINED inside
+ * the dock box: the CORE reads as a normal dock icon seated at the dock EDGE in the dock's
+ * own control run (the `--dock-stack-member-size` cell), distinguished ONLY by the thin
+ * `--dock-rail-hairline` warm-ink line adjacent to it. ZERO gutter presence at rest (the
+ * fan members are opacity 0, folded onto the core — the painted stack is the core alone,
+ * inside the dock plate bbox). On HOVER/CLICK the members FAN OUT as a macOS-STACK,
+ * CROSSING the dock edge asymmetric-GOLDEN: the fan overhangs OUTWARD (into the gutter)
+ * ~φ² (`--dock-rail-overhang`, 2.618 × the minor reach — IMG_1880's asymmetric fan-states)
+ * MORE than it reaches INWARD (`--dock-rail-overhang-minor`) over the dock. The crossing is
+ * compositor-only (scale/translate/opacity/filter — NO animated width/height/inset), on the
+ * ONE `--spring-dock` clock, staggered, PRM-carved.
  *
- * CLEARS CONTENT BY TOPOLOGY (THE HEADLINE — ba-dock-shell-gestalt-fail-revoked +
- * ba-chip-graze). The stack lives BEYOND the dock edge in its own gutter (the
- * `chipOverMain: false` topology), the fan extending AWAY from content, never over
- * `<main>` / the `<h1>` / a form field at any y. The chip-graze that revoked the dock/shell
- * PASS cannot recur.
+ * THE STACK. A `<DockStack>` is one stack: a CORE anchor item (the always-visible dock(1)
+ * glyph) + N members. Each member is a FULLY-VISIBLE `--glass-bg-floating` glass icon
+ * (NEVER a shadowed half-tucked chip). `visibleCount` (3) members fan before the fan
+ * overflows; an >visibleCount set either SCROLLS through `<FadingScroll>` (the one
+ * scroll-fade port) or WRAPS into a second rank (`wrap`).
  *
  * @import-ed by dock.css into the SAME `@layer components` as the other partials. */
 @layer components {
     :root {
-        /* The beyond-edge extent — how far the stack reaches into the gutter past the dock
-           edge. Rides `--dock-scale` so it tracks the coarse-pointer density thread. (KEPT
-           token, re-conceived from the divider-carousel's symmetric overrun to the stack's
-           one-way gutter reach.) */
-        --dock-rail-extend-length: calc(2.5rem * var(--dock-scale, 1));
+        /* BG.W-DOCK-RAIL-REINVENT — the CONTAINED rail line: a ~1.5px warm-ink hairline
+           drawn at the dock edge adjacent to the collapsed core (the .dock-separator /
+           --border-hairline family — no new color event, no-gray). It is the STATIC rail
+           structure; the scroll-progress ink is the DISTINCT sibling whisper (16.1). */
+        --dock-rail-hairline: 1.5px;
+        --dock-rail-hairline-ink: color-mix(in srgb, var(--foreground) 15%, transparent);
         /* The macOS-stack tuning tokens (re-expressed via @theme — Tailwind-first, NEVER a
            raw macOS-dock CSS paste). */
         --dock-stack-stagger: 28ms; /* the per-member fan delay (× var(--i)) */
         --dock-stack-gap: calc(0.375rem * var(--dock-scale, 1));
         --dock-stack-member-size: calc(2rem * var(--dock-scale, 1));
         --dock-stack-fold: 0.4; /* the at-rest fold scale (the members tuck behind the core) */
+        /* The asymmetric-golden crossing. The fan STRIP (visible members × member-size) is
+           SPLIT across the rail axis φ²: it overhangs OUTWARD (into the gutter) ~φ² (2.618)
+           MORE than it reaches INWARD (back over the dock). The φ² constant is EXPRESSED in
+           the calc (off the shared `--dock-rail-golden` source DockStack writes from
+           RAIL_GOLDEN_SQ; the W-CARD-PAD φ-ladder fence — never a flat resolved rebake). The
+           element-level derivation lives on `.dock-stack` (it reads the per-scope visible
+           count). This :root `--dock-rail-extend-length` literal is the fan's transient
+           OUTWARD reach the content-gutter (density.css `--dock-content-safe-inset`) keys off
+           at the default 3-visible — the rest state is now interior, so the collision equation
+           reads the FAN reach only. */
+        --dock-rail-fan-length: calc(
+            3 * var(--dock-stack-member-size) + 2 * var(--dock-stack-gap)
+        );
+        --dock-rail-extend-length: calc(
+            var(--dock-rail-fan-length) * 2.618 / 3.618
+        );
         /* BE.W-DOCK-RAIL-REALIZE — the facet-carousel accent strength. The per-facet
            `--glass-accent` hue rides the THIN rim/glint at this bounded whisper (the
            BB.W-GLASS-ACCENT ≤55% rim ceiling — the warm-cream core + the AA legibility
@@ -83,9 +105,8 @@
 
     /* The chrome-slot wrapper — a `position: absolute` sibling of `.glass-dock`, anchored
        to the dock-frame (NOT the dock box), so the dock's clip never reaches it. It paints
-       nothing itself; `<DockStack>` owns the core + fan. The slot seats at the dock EDGE
-       (the `position` start/end), NOT a `[data-rail-anchor]` divider seam (the seam-locator
-       RETIRED). It is pass-through; the controls re-arm pointer events. */
+       nothing itself; `<DockStack>` owns the core + fan. It is pass-through; the controls
+       re-arm pointer events. */
     .dock-hairline-slot {
         position: absolute;
         display: flex;
@@ -98,29 +119,33 @@
         pointer-events: auto;
     }
 
-    /* VERTICAL (column) dock — the stack hangs off the TRAILING (inline-end) edge in its
-       gutter, the core seated at the dock's block-end (the macOS-stack anchor: the
-       bottom-most member at the dock floor, the rest fanning up the rail). The slot starts
-       at the dock's trailing edge + the extend reach, clear of <main> (which is to the
-       inline-start). */
+    /* BG.W-DOCK-RAIL-REINVENT — CONTAINED rest seat (the topology INVERSION; born-RED on
+       HEAD's `inset-inline-start: 100%` always-OUTSIDE anchor). The slot seats at the dock's
+       cross-EDGE INSIDE the box, sized to the core cell; the fan (absolute inside) CROSSES
+       the edge OUTWARD on expand (the non-clipping frame paints it in the gutter). No layout
+       property grows — box-INVIOLATE. */
+
+    /* VERTICAL (column) dock — the rail axis is the TRAILING (inline-end) edge; the core
+       seats at the trailing-block-end inner corner (the macOS-stack floor), the fan crosses
+       OUTWARD into the trailing gutter. */
     .glass-dock-frame[data-has-rail].vertical .dock-hairline-slot {
-        inset-inline-start: 100%;
-        inset-inline-end: auto;
-        inset-block-end: 0;
-        inset-block-start: auto;
-        inline-size: var(--dock-rail-extend-length);
-        block-size: 100%;
-    }
-    /* HORIZONTAL (row) dock — the stack rises off the TOP (block-start) edge in its gutter
-       (a viewport-bottom dock keeps the fan ON-SCREEN above the row), the core at the dock's
-       inline-end, the members fanning up. Clear of <main> (which is above the dock). */
-    .glass-dock-frame[data-has-rail]:not(.vertical) .dock-hairline-slot {
-        inset-block-end: 100%;
-        inset-block-start: auto;
         inset-inline-end: 0;
         inset-inline-start: auto;
-        block-size: var(--dock-rail-extend-length);
-        inline-size: 100%;
+        inset-block-end: 0;
+        inset-block-start: auto;
+        inline-size: var(--dock-stack-member-size);
+        block-size: auto;
+    }
+    /* HORIZONTAL (row) dock — the rail axis is the TOP (block-start) edge; the core seats
+       at the top-inline-end inner corner, the fan crosses OUTWARD (UP) into the gutter above
+       (a viewport-bottom dock keeps the fan ON-SCREEN above the row). */
+    .glass-dock-frame[data-has-rail]:not(.vertical) .dock-hairline-slot {
+        inset-block-start: 0;
+        inset-block-end: auto;
+        inset-inline-end: 0;
+        inset-inline-start: auto;
+        block-size: var(--dock-stack-member-size);
+        inline-size: auto;
     }
 
     /* ── The stack ────────────────────────────────────────────────────────────────── */
@@ -128,55 +153,100 @@
         position: relative;
         display: flex;
         gap: var(--dock-stack-gap);
-        /* the core anchors at the gutter end nearest the dock; the fan extends AWAY into
-           the gutter (clear of content). */
+        /* the fan STRIP length (visible members × cell + gaps) — the crossing SPLITS this
+           across the axis. Reads the per-scope `--dock-stack-visible` (DockStack writes it),
+           defaulting 3. */
+        --dock-rail-fan-length: calc(
+            var(--dock-stack-visible, 3) * var(--dock-stack-member-size) +
+                (var(--dock-stack-visible, 3) - 1) * var(--dock-stack-gap)
+        );
+        /* the φ² crossing SPLIT, sourced ONCE from RAIL_GOLDEN_SQ (DockStack writes
+           `--dock-rail-golden` inline). Re-declared element-level so the JS write is LIVE
+           (a :root-only declaration would freeze at the identity — the AX.W55 dead-knob
+           class). The 2.618 fallback mirrors the JS constant. minor = strip / (1 + φ²);
+           overhang = minor × φ² (⇒ overhang:minor = φ², minor + overhang = strip). */
+        --dock-rail-overhang-minor: calc(
+            var(--dock-rail-fan-length) / (1 + var(--dock-rail-golden, 2.618))
+        );
+        --dock-rail-overhang: calc(
+            var(--dock-rail-overhang-minor) * var(--dock-rail-golden, 2.618)
+        );
+        /* the fan's total cross-span: INWARD (minor) + OUTWARD (overhang) == the strip. */
+        --dock-rail-fan-span: calc(
+            var(--dock-rail-overhang) + var(--dock-rail-overhang-minor)
+        );
     }
-    /* Vertical dock — the stack is a ROW: core nearest the dock edge, members fanning out
-       (inline) into the trailing gutter. Anchored block-end (the bottom-most member at the
-       dock floor — the macOS-stack anchor topology). */
+    /* Vertical dock — the core anchors at the trailing (block-end) corner. */
     .dock-stack.vertical {
-        flex-direction: row;
         align-items: flex-end;
+        justify-content: flex-end;
     }
-    /* Horizontal dock — the stack is a COLUMN: core nearest the dock edge (block-end),
-       members fanning UP into the gutter above the row. */
+    /* Horizontal dock — the core anchors at the top-trailing corner. */
     .dock-stack.horizontal {
-        flex-direction: column-reverse;
-        align-items: center;
+        align-items: flex-start;
+        justify-content: flex-end;
+    }
+
+    /* THE CONTAINED HAIRLINE (BG.W-DOCK-RAIL-REINVENT) — a thin warm-ink line at the dock
+       edge adjacent to the collapsed core, the ONLY rail structure at rest. It is drawn on
+       the stack root (== the core cell) so it seats beside the core, INSIDE the dock. */
+    .dock-stack::before {
+        content: "";
+        position: absolute;
+        background: var(--dock-rail-hairline-ink);
+        pointer-events: none;
+        z-index: 0;
+    }
+    .dock-stack.vertical::before {
+        inline-size: var(--dock-rail-hairline);
+        inset-block: 0;
+        inset-inline-end: 0;
+    }
+    .dock-stack.horizontal::before {
+        block-size: var(--dock-rail-hairline);
+        inset-inline: 0;
+        inset-block-start: 0;
     }
 
     /* The CORE anchor — the always-visible dock(1) glyph. A floating glass plate (it is
        chrome OUTSIDE the dock substrate, so it carries its OWN glass register, not the
-       transparent in-dock recipe). */
+       transparent in-dock recipe). It stays in flow so `.dock-stack` shrink-wraps to it
+       (the contained rest box). */
     .dock-stack-core {
         flex: 0 0 auto;
-        z-index: 1;
+        z-index: 2;
     }
 
-    /* The fanned members — the FadingScroll port (the one scroll-fade port). The fan's
-       main-axis extent caps at `--dock-stack-visible` members; an >visibleCount stack
-       scrolls (the port feathers the overflow). */
+    /* THE FAN — an ABSOLUTE strip anchored to the rail axis, CROSSING the dock edge. It is
+       removed from `.dock-stack` flow so the rest box is the core alone (contained). It caps
+       at the golden fan-span (minor inward + overhang outward) and routes overflow through
+       `<FadingScroll>` (the one scroll-fade port) OR wraps into a second rank. */
     .dock-stack-fan {
+        position: absolute;
         display: flex;
         gap: var(--dock-stack-gap);
-        /* scoped main-axis budget — the fan shows `--dock-stack-visible` members then
-           scrolls (the n-stack reachable by scrolling the rail, not the dock box). */
+        z-index: 1;
     }
+    /* Vertical dock — the fan is a ROW crossing the trailing edge: its OUTER (inline-end)
+       edge sits `overhang` OUTSIDE the axis; the span reaches `minor` INWARD (over the dock).
+       So the fanned bbox overhangs outward:inward = overhang:minor = φ². */
     .dock-stack.vertical .dock-stack-fan {
         flex-direction: row;
         align-items: flex-end;
-        max-inline-size: calc(
-            var(--dock-stack-visible, 3) * var(--dock-stack-member-size) +
-                (var(--dock-stack-visible, 3) - 1) * var(--dock-stack-gap)
-        );
+        inset-inline-end: calc(-1 * var(--dock-rail-overhang));
+        inset-block-end: 0;
+        inline-size: var(--dock-rail-fan-span);
+        block-size: auto;
     }
+    /* Horizontal dock — the fan is a COLUMN crossing the top edge: its OUTER (block-start)
+       edge sits `overhang` ABOVE the axis, the span reaches `minor` DOWN (over the dock). */
     .dock-stack.horizontal .dock-stack-fan {
-        flex-direction: column-reverse;
+        flex-direction: column;
         align-items: center;
-        max-block-size: calc(
-            var(--dock-stack-visible, 3) * var(--dock-stack-member-size) +
-                (var(--dock-stack-visible, 3) - 1) * var(--dock-stack-gap)
-        );
+        inset-block-start: calc(-1 * var(--dock-rail-overhang));
+        inset-inline-end: 0;
+        block-size: var(--dock-rail-fan-span);
+        inline-size: auto;
     }
 
     /* Each member — a FULLY-VISIBLE glass icon (the `--glass-bg-floating` tier + the
@@ -199,9 +269,10 @@
         color: color-mix(in srgb, var(--dock-fg-on-aurora, var(--foreground)) 88%, transparent);
         /* THE FAN-OUT — compositor-only (scale/translate/opacity/filter), NO animated
            width/height/inset (proof:no-layout-animation). At rest each member is folded
-           behind the core: scaled-down, translated toward the rail (the dock edge),
-           transparent, and a slight materialize blur. The hover-expand springs them OUT
-           staggered by `--dock-stack-stagger * var(--i)` in reading order. */
+           behind the core (INWARD, into the dock): scaled-down, translated toward the dock
+           interior, transparent, and a slight materialize blur. The hover-expand springs
+           them OUT (OUTWARD, across the edge) staggered by `--dock-stack-stagger * var(--i)`
+           in reading order. */
         opacity: 0;
         scale: var(--dock-stack-fold);
         filter: blur(1px);
@@ -217,13 +288,15 @@
             background-color var(--duration-fast) var(--ease-standard),
             box-shadow var(--duration-fast) var(--ease-standard);
     }
-    /* Vertical dock — at rest the members tuck toward the dock edge (inline-start). */
+    /* Vertical dock — at rest the members tuck INWARD (into the dock, inline-start) behind
+       the core; on expand they cross OUTWARD to their fan positions. */
     .dock-stack.vertical .dock-stack-member {
-        translate: calc(-1 * var(--dock-rail-extend-length)) 0;
+        translate: calc(-1 * var(--dock-rail-overhang)) 0;
     }
-    /* Horizontal dock — at rest the members tuck DOWN toward the dock edge (block-end). */
+    /* Horizontal dock — at rest the members tuck DOWN (into the dock, block-end) behind the
+       core; on expand they cross OUTWARD (up) to their fan positions. */
     .dock-stack.horizontal .dock-stack-member {
-        translate: 0 var(--dock-rail-extend-length);
+        translate: 0 var(--dock-rail-overhang);
     }
     /* EXPANDED — the members spring OUT to their fanned positions (full scale, in place,
        opaque, crisp). The stagger lives in the per-member transition-delay. */
@@ -232,6 +305,12 @@
         scale: 1;
         translate: 0 0;
         filter: blur(0);
+    }
+    /* DISPLAY-OPTIONS — `wrap` WRAPS the >visibleCount fan into a second rank instead of
+       scrolling (the user's "number of elements to show, wrapping"). Additive default-off;
+       the scroll path (no `data-wrap`) is byte-identical to the FadingScroll port. */
+    .dock-stack-fan[data-wrap] {
+        flex-wrap: wrap;
     }
     .dark .dock-stack-fan .dock-stack-member {
         box-shadow:
@@ -279,7 +358,8 @@
        byte-identical to the stack member; the facet hue is the consumer's context color
        (presets-in-consumers — never a library token). The active facet stays on the
        selected-as-glass `--dock-control-active-bg` tier (W-REGISTER-IOS — the lift is the
-       glass tier, the accent is the rim DECORATION; the two are disjoint). */
+       glass tier, the accent is the rim DECORATION; the two are disjoint). The reinvented
+       CONTAINMENT/CROSSING topology + the hairline are SHARED (facets inherit the fan). */
     .dock-stack-fan .dock-facet-chip {
         /* the accent-composed rim — the warm catch-light ink mixed toward the facet hue
            (the rim.css `--glass-material-rim` seam, inlined for the chip). At 0% it is the

@@ -6,11 +6,24 @@ import FadingScroll from "../fading-scroll/FadingScroll.vue";
 import { useOptionalDockContext } from "./composables/dockContext";
 import { HOVER_INTENT_MS } from "./constants";
 import type { DockStackItem } from "./constants";
-import { projectFacets } from "./composables/railProjection";
+import { projectFacets, RAIL_GOLDEN_SQ } from "./composables/railProjection";
 
 /**
- * <DockStack> — BC.W-DOCK-STACK-RAIL + BE.W-DOCK-RAIL-REALIZE. The ONE rail engine on
- * the KEPT `.glass-dock-frame` non-clipping escape, with TWO render modes:
+ * <DockStack> — BC.W-DOCK-STACK-RAIL + BE.W-DOCK-RAIL-REALIZE + BG.W-DOCK-RAIL-REINVENT.
+ * The ONE rail engine on the KEPT `.glass-dock-frame` non-clipping escape, with TWO render
+ * modes.
+ *
+ * BG.W-DOCK-RAIL-REINVENT — the TOPOLOGY is INVERTED (USER 07-05 + IMG_1880). At REST the
+ * stack is ENTIRELY CONTAINED inside the dock box — the core reads as a normal dock icon
+ * seated in the dock's own control run, distinguished ONLY by a `--dock-rail-hairline`
+ * warm-ink line adjacent to it (ZERO gutter presence). On HOVER/CLICK the members FAN OUT
+ * as a macOS-STACK, CROSSING the dock edge asymmetric-golden — the fan overhangs OUTWARD
+ * (into the gutter) ~φ² (2.618) MORE than it reaches INWARD, the crossing weight sourced
+ * ONCE from `RAIL_GOLDEN_SQ` (written to `--dock-rail-golden`, read by the CSS
+ * `--dock-rail-overhang` calc). The dock box stays INVIOLATE (`deltaW = deltaH = 0`) — the
+ * fan is an absolute-positioned compositor-only transform over the non-clipping frame.
+ * ONE engine (a re-shape of `<DockStack>` — no second component, no second spring; the fan
+ * rides the SAME `--spring-dock` clock).
  *
  *   • `mode="stack"` (DEFAULT — the BC byte-identical path). The macOS Dock
  *     hover-expand STACK: a `core` anchor glyph + N members that FAN OUT on hover/focus
@@ -60,8 +73,15 @@ const props = withDefaults(
         core?: Component;
         /** The core's accessible label (the stack's name). */
         coreLabel?: string;
-        /** Members visible at rest before scrolling (the verbatim "3 configurable"). */
+        /** Members visible in the fan before it overflows (the verbatim "3 configurable"). */
         visibleCount?: number;
+        /**
+         * BG.W-DOCK-RAIL-REINVENT — the DISPLAY-OPTIONS axis (the user's "number of elements
+         * to show, wrapping"). When `false` (default) a >`visibleCount` fan SCROLLS through
+         * the ONE `<FadingScroll>` port; when `true` it WRAPS into a second rank instead of
+         * scrolling. Additive default-off (the scroll path is byte-identical).
+         */
+        wrap?: boolean;
         /** Which dock edge the stack anchors to. */
         position?: "start" | "end";
     }>(),
@@ -69,6 +89,7 @@ const props = withDefaults(
         mode: "stack",
         coreLabel: "Open stack",
         visibleCount: 3,
+        wrap: false,
         position: "end",
     },
 );
@@ -167,9 +188,19 @@ function select(item: DockStackItem): void {
 <template>
     <div
         class="dock-stack"
-        :class="[orientation, `at-${position}`, `mode-${mode}`, { 'is-expanded': expanded }]"
+        :class="[orientation, `at-${position}`, `mode-${mode}`, { 'is-expanded': expanded, 'is-wrap': wrap }]"
         :data-orientation="orientation"
         :data-mode="mode"
+        :style="{
+            // BG.W-DOCK-RAIL-REINVENT — the φ² crossing weight, sourced ONCE from
+            // RAIL_GOLDEN_SQ. The element-level `--dock-rail-overhang` calc (stack-rail.css)
+            // reads it, so JS and CSS share ONE φ² constant (the CSS 2.618 fallback mirrors it).
+            '--dock-rail-golden': RAIL_GOLDEN_SQ,
+            // the visible-member budget the fan STRIP length (and thus the golden crossing
+            // reaches) derive from — declared on the root so the .dock-stack overhang calc
+            // reads it (a fan-only write would not reach the ancestor derivation).
+            '--dock-stack-visible': visibleBudget,
+        }"
         @pointerenter="onPointerEnter"
         @pointerleave="onPointerLeave"
         @focusin="onFocusIn"
@@ -198,8 +229,8 @@ function select(item: DockStackItem): void {
         <FadingScroll
             :axis="orientation === 'vertical' ? 'x' : 'y'"
             class="dock-stack-fan"
-            :style="{ '--dock-stack-visible': visibleBudget }"
-            :data-scrolls="scrolls || undefined"
+            :data-scrolls="(scrolls && !wrap) || undefined"
+            :data-wrap="wrap || undefined"
         >
             <DockIconButton
                 v-for="(item, i) in members"
