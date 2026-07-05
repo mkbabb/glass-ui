@@ -352,6 +352,9 @@ function clauseFlowRegister(over) {
     const glFlow = stripComments(
         over?.glFlow ?? read(resolve(DIR, "composables/flowSetupGLFlow.ts")),
     );
+    const wgpuSetup = stripComments(
+        over?.wgpuSetup ?? read(resolve(DIR, "composables/flowSetupWGPU.ts")),
+    );
     const bridge = stripComments(
         over?.bridge ?? read(resolve(DIR, "composables/uniformBridgeWGPU.ts")),
     );
@@ -446,7 +449,13 @@ function clauseFlowRegister(over) {
     // AND dead-BLACK on Safari/WebKit (additive blend into a FLOAT trail RT silently no-ops — no
     // EXT_float_blend). This arm locks the fix: the named deposit/base flood-control levers
     // (spliced into BOTH mote passes, no bare 0.35), the pre-tone-map trail clamp (BOTH present
-    // passes), and the RGBA8 (universally-blendable + bounded) WebGL2 trail target.
+    // passes), and the RGBA8 (universally-blendable + bounded) trail target — on BOTH backends.
+    //
+    // The paint RE-JUDGE (BG.W-DOTFLOW-REBUILD-DELTA) proved the decisive gap: BOTH judged
+    // engines (Chrome 149/Metal + Safari 26 WKWebView) run the WebGPU/WGSL path, so the WebGL2
+    // RGBA8 fix NEVER EXECUTED on them — flowSetupWGPU.ts still declared an unbounded rgba16float
+    // trail (the flood + WebKit dead-black substrate). The final F7d witnesses (below) lock the
+    // WGSL trail to rgba8unorm too — the fix now lands on the path that actually runs.
     const depM = bridge?.match(/export const FLOW_TRAIL_DEPOSIT\s*=\s*([\d.]+)/);
     const deposit = depM ? Number(depM[1]) : null;
     if (deposit == null)
@@ -506,6 +515,23 @@ function clauseFlowRegister(over) {
     if (glFlow != null && /trailInternal\s*=\s*probeRenderable\s*\(\s*gl\s*,\s*gl\.RGBA16F/.test(glFlow))
         viol.push(
             "F7d paint-fix: flowSetupGLFlow.ts still gates the trail on a float RGBA16F RT (probeRenderable) — additive blend into a float target silently no-ops on WebKit (the Safari dead-black)",
+        );
+
+    // ── F7d — the WGSL-path trail RT (the paint RE-JUDGE decisive gap; born-RED on HEAD). ──
+    // The paint judge proved BOTH target engines (Chrome 149/Metal M5 + Safari 26 WKWebView)
+    // run the WebGPU/WGSL path, NOT the WebGL2 GLSL path — so the RGBA8 fix above (flowSetupGLFlow.ts)
+    // NEVER EXECUTES on the judged fleet, while flowSetupWGPU.ts still declared an UNBOUNDED
+    // rgba16float trail: a flat bright plate on Chrome/Metal (the additive accumulation clamps
+    // UNIFORM at present) + dead-black on WebKit-WebGPU (a float render-target's additive blend
+    // diverges there). The WGSL trail MUST be rgba8unorm — the WGSL twin of the WebGL2 RGBA8
+    // decision: universally additive-blendable AND bounded [0,1] by the fixed-point store.
+    if (wgpuSetup != null && !/trailFormat\s*:\s*GPUTextureFormat\s*=\s*["']rgba8unorm["']/.test(wgpuSetup))
+        viol.push(
+            "F7d paint-fix: flowSetupWGPU.ts does not build the WGSL trail as rgba8unorm — the ACTUALLY-RUNNING WebGPU trail must be rgba8unorm (additive-blendable on WebKit-WebGPU + bounded by the fixed-point store), the WGSL twin of the WebGL2 RGBA8 trail",
+        );
+    if (wgpuSetup != null && /trailFormat\s*:\s*GPUTextureFormat\s*=\s*["']rgba16float["']/.test(wgpuSetup))
+        viol.push(
+            "F7d paint-fix: flowSetupWGPU.ts still declares the WGSL trail as rgba16float — additive blend into a float render-target diverges on WebKit-WebGPU (the DotFlowField dead-black) AND accumulates UNBOUNDED (the Chrome/Metal flat-bright-plate after the present clamp); use rgba8unorm",
         );
     return viol;
 }
@@ -649,6 +675,17 @@ function selfTest() {
     });
     if (!noClamp.some((v) => v.startsWith("F7d")))
         fails.push("self-test: a present pass with no min(trail, …) clamp did NOT red F7d");
+    // (n) an rgba16float WGSL trail RT reintroduction reds F7d (the paint RE-JUDGE bite — the
+    //     ACTUALLY-RUNNING WebGPU path's dead-black-on-WebKit + flood-on-Metal regression).
+    const liveWgpuSetup = read(resolve(DIR, "composables/flowSetupWGPU.ts"));
+    const floatWgslTrail = runAll({
+        wgpuSetup: liveWgpuSetup.replace(
+            /trailFormat: GPUTextureFormat = "rgba8unorm"/,
+            'trailFormat: GPUTextureFormat = "rgba16float"',
+        ),
+    });
+    if (!floatWgslTrail.some((v) => v.startsWith("F7d")))
+        fails.push("self-test: an rgba16float WGSL trail RT reintroduction did NOT red F7d");
     return fails;
 }
 

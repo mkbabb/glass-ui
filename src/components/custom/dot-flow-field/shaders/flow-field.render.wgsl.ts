@@ -234,9 +234,11 @@ fn fs_decay(in: FSQ) -> @location(0) vec4<f32> {
 @fragment
 fn fs_present(in: FSQ) -> @location(0) vec4<f32> {
   let trail = textureSample(tex, samp, in.uv).rgb;
-  // BG.W-DOTFLOW-REBUILD paint-fix — clamp the (unbounded rgba16float) trail to FLOW_TRAIL_CEIL
-  // BEFORE the tone-map so the WebGPU path carries the SAME bounded input the WebGL2 RGBA8 trail
-  // clamps at, no engine-specific white-out.
+  // BG.W-DOTFLOW-REBUILD paint-fix — clamp the trail to FLOW_TRAIL_CEIL BEFORE the tone-map. The
+  // WGSL trail is now an RGBA8 render-target (bounded [0,1] by the fixed-point store — the
+  // paint re-judge fix for the Chrome/Metal flood + the WebKit-WebGPU dead-black), so this clamp
+  // is a defensive floor that keeps the tone-map input identical across both backends (the
+  // WebGL2 RGBA8 trail clamps at the SAME ceiling), no engine-specific white-out.
   let t = min(trail, vec3<f32>(${FLOW_TRAIL_CEIL.toFixed(2)}));
   // Reinhard — hot cores, not white wash. The knee is the FLOW_PRESENT_KNEE rest-contrast
   // lever (BG.W-DOTFLOW-REBUILD — the ONE source the GLSL present pass splices identically).

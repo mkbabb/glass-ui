@@ -89,6 +89,13 @@ export const FLOW_PRESET_AURORA_CURRENT: FlowFieldConfig = {
     particleCount: 12000,
     speedScale: 1.05, // push the modal speed toward the ramp middle (the full spread paints)
     speedGlow: 1.35,
+    // BG.W-DOTFLOW-REBUILD paint re-judge — a SHORTER trail streak than the √φ default (0.55s):
+    // over a dense 12000-mote population, a long trail accumulates a full-frame flood (every
+    // pixel eventually visited), so the streamline structure washes out. A ~0.3s half-life clears
+    // the floor between streamlines fast enough that only the LIVE coherent currents stay lit —
+    // the ribbons read as flowing streaks over a deep floor (presets-in-consumers; the library
+    // DEFAULT keeps the √φ ladder).
+    trailHalfLife: 0.3,
 };
 
 /**

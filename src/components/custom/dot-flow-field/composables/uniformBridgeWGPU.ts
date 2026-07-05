@@ -225,8 +225,17 @@ export const FLOW_PRESENT_KNEE = 0.7;
  * deep floor, and only overlapping streamline knots reach the bright warm-fire cores. The ONE
  * source both mote passes splice (GLSL `FLOW_FIELD_POINT_FRAG_GLSL` + WGSL `fs_main` flow arm)
  * — no per-backend deposit drift.
+ *
+ * BG.W-DOTFLOW-REBUILD paint RE-JUDGE — the prior 0.18 gain STILL flooded the real-Metal WGSL
+ * path (the actually-running path on Chrome 149/M5 + Safari 26 — a flat bright plate, meanLuma
+ * 207, near-zero structure). Re-balanced to 0.05 against the ACTUAL bounded-RGBA8 WGSL trail
+ * magnitude: a single mote pass now deposits a faint warm mark that decays into the deep floor,
+ * only the coherent streamline knots (motes overlapping every frame) build to the saturated
+ * warm-fire cores, so the ribbons POP off a deep floor with real ribbon structure (high
+ * stdLuma) instead of washing the whole frame uniform. Pairs with the RGBA8 bound (the
+ * accumulation caps at 1.0 per blend, so decayed floor pixels actually go dark).
  */
-export const FLOW_TRAIL_DEPOSIT = 0.18;
+export const FLOW_TRAIL_DEPOSIT = 0.05;
 
 /**
  * BG.W-DOTFLOW-REBUILD paint-fix — the mote base brightness (the deposit floor for a ZERO-speed

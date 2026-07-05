@@ -4,8 +4,16 @@
 // WebGPU primary path. It builds the particle STORAGE buffer (lattice-seeded for `field`,
 // scattered+life-staggered for `flow`), the COMPUTE pipeline (mode-branched: anchored-spring
 // vs advect+vortex+respawn), the instanced-billboard RENDER pipeline, and — for `flow` — a
-// half-res RGBA16F TRAIL ping-pong (decay-blit prev → additive motes → present-composite over
+// half-res RGBA8 TRAIL ping-pong (decay-blit prev → additive motes → present-composite over
 // the warm floor + corner-bloom). Each `frame(t)` records ONE command encoder.
+//
+// BG.W-DOTFLOW-REBUILD paint re-judge — the WGSL trail is RGBA8 (NOT rgba16float): the paint
+// judge found both target engines (Chrome 149 / Metal M5 + Safari 26 WKWebView) run THIS
+// WebGPU path, where the unbounded rgba16float trail flooded to a flat bright plate on
+// Chrome/Metal (the additive accumulation clamps UNIFORM at present) AND dead-blacked on
+// WebKit-WebGPU (additive blend into a float render-target diverges there while Aurora renders
+// fine). RGBA8 is the WGSL twin of the WebGL2 RGBA8 decision — universally additive-blendable
+// AND bounded [0,1] by the fixed-point store — ONE bounded-blendable trail across both backends.
 //
 // Carved from useFlowParticles.ts at the WGPU/WebGL2 backend seam (no-god-module). The shared
 // FlowSetupDeps interface + the px-min/count/floor-ground helpers live in useFlowParticles.ts;
@@ -142,9 +150,15 @@ export function createFlowWGPUSetup(
             ],
         });
 
-        // ── The flow TRAIL ping-pong (half-res RGBA16F) + the decay/present pipelines ──
+        // ── The flow TRAIL ping-pong (half-res RGBA8) + the decay/present pipelines ──
         // `field` renders straight to the swapchain (no trail); `flow` accumulates ribbons.
-        const trailFormat: GPUTextureFormat = "rgba16float";
+        // RGBA8 (unorm) is additive-blendable on EVERY WebGPU engine (the WebKit-WebGPU
+        // dead-black fix — a float render-target's additive blend diverges there) AND the
+        // fixed-point store BOUNDS the accumulation at 1.0 (the Chrome/Metal white-out fix —
+        // an unbounded rgba16float trail floods, the present clamp then reads UNIFORM). This
+        // is the WGSL twin of the WebGL2 RGBA8 trail decision (flowSetupGLFlow.ts) — ONE
+        // bounded-blendable trail format across both backends (BG.W-DOTFLOW-REBUILD paint re-judge).
+        const trailFormat: GPUTextureFormat = "rgba8unorm";
         const additive = {
             color: {
                 srcFactor: "one" as const,
