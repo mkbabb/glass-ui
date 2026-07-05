@@ -29,6 +29,17 @@ import type { Vec2 } from "./levelField";
 import { createConcentricWGPUSetup } from "./concentricWGPUSetup";
 import { createConcentricGLSetup } from "./concentricGLSetup";
 
+// BG.W-CONCENTRIC-LEVELCURVES — the CONTINUOUS pointer-HEAVE envelope constants.
+// The critically-damped engage/release time constant (ms): the cursor well grows IN on
+// pointer-enter and settles OUT on leave with real weight — NEVER a first-frame snap on
+// enter, NEVER a pop-on-leave. Frame-rate-independent (the `1 - exp(-dt/TAU)` step).
+const WELL_ENGAGE_TAU_MS = 150;
+// The BOUNDED velocity-HEAVE ceiling — a fast flick (or a large consumer `velocityHeave`
+// knob) can never blow the well out past this (the velocity-scaled weight stays bounded).
+const WELL_SCALE_MAX = 2.2;
+// The far-off-screen resting cursor — the Gaussian peak contributes nothing (exp(-d2/…)≈0).
+const CURSOR_PARKED: Vec2 = { x: 1e6, y: 1e6 };
+
 export interface UseConcentricOptions {
     config: ConcentricConfig;
     /** Resolve the field-value palette as OKLCh (the demo themes it; default warm-identity). */
@@ -75,7 +86,7 @@ export function useConcentric(
 
     // The transient cursor in DOMAIN space the setups read each frame (the cursor gravity
     // well). At rest it sits far off-screen so the Gaussian peak contributes nothing.
-    let cursor: Vec2 = { x: 1e6, y: 1e6 };
+    let cursor: Vec2 = { ...CURSOR_PARKED };
     const getCursor = (): Vec2 => cursor;
     // The spring-eased traveling-wave envelope amplitude — ramps 0→1 on mount (the liquid-weight
     // ease-in with a slight overshoot), snaps to 0 under PRM (one static survey frame).
@@ -85,7 +96,14 @@ export function useConcentric(
     // (a fast sweep heaves the terrain, at rest it settles to 1×). JS-side so it costs no uniform
     // lane; the well-engage rides a smoothstep so the heave grows with real weight (PRM → 1×).
     let wellScale = 1;
-    const getWellScale = (): number => wellScale;
+    // BG.W-CONCENTRIC-LEVELCURVES — the CONTINUOUS engage/release envelope (0..1). It ramps
+    // toward 1 on pointer-enter and toward 0 on leave, critically-damped and frame-rate-
+    // independent, so the topography HEAVE grows in and settles out with real weight — the
+    // fix for the snap-on-enter POP + the pop-on-leave. It GATES the effective well depth.
+    let wellEngage = 0;
+    // The effective well multiplier the setups read = the velocity-heave × the engage envelope.
+    // At rest OR fully released it resolves 0 (no bulge); fully engaged at rest it resolves 1.
+    const getWellScale = (): number => wellScale * wellEngage;
     let lastFrameSec = 0;
 
     // Bind the pointer listeners on the canvas. A first hover wakes a parked loop on the
@@ -124,49 +142,73 @@ export function useConcentric(
         lastFrameSec = timeSec;
         pointer.tick(deltaMs);
 
-        // Drive the spring-eased traveling-wave envelope amplitude (the liquid-weight inertia).
+        // PRM → deterministic freeze: one static survey frame, the heave OFF (no live velocity,
+        // no engage ramp) — the tick(0) discipline mirrored onto the cursor + envelope.
         if (handle?.reducedMotion) {
             amp = 0;
             wellScale = 1;
-        } else {
-            const target = 1.06;
-            amp += (target - amp) * 0.04;
-            if (amp > 1) amp = 1 + (amp - 1) * 0.85;
+            wellEngage = 0;
+            cursor = { ...CURSOR_PARKED };
+            return;
         }
 
-        if (!config.interactive || !pointer.active.value) {
-            cursor = { x: 1e6, y: 1e6 };
+        // Drive the spring-eased traveling-wave envelope amplitude (the liquid-weight inertia).
+        const ampTarget = 1.06;
+        amp += (ampTarget - amp) * 0.04;
+        if (amp > 1) amp = 1 + (amp - 1) * 0.85;
+
+        // The CONTINUOUS engage/release envelope — critically-damped toward 1 (engaged) or 0
+        // (released), frame-rate-independent so a 60/120Hz renderer settles identically. This
+        // is the SOLE gate on the well depth (getWellScale = wellScale × wellEngage), so the
+        // bulge grows in on enter and DEFLATES IN PLACE on leave — never a snap or a pop.
+        const engaged = config.interactive && pointer.active.value;
+        const engageTarget = engaged ? 1 : 0;
+        const engageK = 1 - Math.exp(-deltaMs / WELL_ENGAGE_TAU_MS);
+        wellEngage += (engageTarget - wellEngage) * engageK;
+
+        if (!config.interactive) {
+            cursor = { ...CURSOR_PARKED };
             wellScale = 1;
             return;
         }
-        // Map the normalized pointer (0..1, y-down) → domain space (-1..1, y-up). The
-        // velocity LEADS the well a hair (the gravity trails the cursor — liquid weight).
-        const sp = pointer.smoothedPosition.value;
-        const vel = pointer.velocity.value;
-        // The ACCELERATION axis (the second derivative) — the flick-anticipation that leads the
-        // well a HAIR further on a fast direction-change (the impulse the steady velocity misses).
-        const acc = pointer.acceleration.value;
-        const lead = 0.1;
-        const accLead = 0.04;
-        const canvas = canvasRef.value;
-        const aspect = (canvas?.width || 1) / Math.max(canvas?.height || 1, 1);
-        cursor = {
-            x: ((sp.x * 2 - 1) + vel.x * lead + acc.x * accLead) * aspect,
-            y: -(sp.y * 2 - 1) - vel.y * lead - acc.y * accLead,
-        };
 
-        // The velocity-HEAVE — pointer SPEED scales the well depth/radius (morph-more-on-move).
-        // A smoothstep on the velocity magnitude gives the heave real weight (a pre-dip→overshoot
-        // feel the monotone spring can't), saturating so a flick can't blow the well out.
-        const speed = Math.hypot(vel.x, vel.y);
-        const s = Math.min(speed / 1.2, 1); // normalize a fast sweep toward the ceiling
-        const ramp = s * s * (3 - 2 * s); // smoothstep — C1-smooth engage
-        // The flick-BURST — a DISTINCT one-shot impulse a fast FLICK injects (the transient the
-        // velocity ramp can't carry: the burst decays on its own register, so a quick stab heaves
-        // the topography deeper for an instant then settles — velocity AND acceleration, not only
-        // the steady speed). The burst rides ON TOP of the velocity heave.
-        const burst = pointer.burst.value;
-        wellScale = 1 + config.velocityHeave * ramp + config.velocityHeave * 0.6 * burst;
+        if (engaged) {
+            // Map the normalized pointer (0..1, y-down) → domain space (-1..1, y-up). The
+            // velocity LEADS the well a hair (the gravity trails the cursor — liquid weight).
+            const sp = pointer.smoothedPosition.value;
+            const vel = pointer.velocity.value;
+            // The ACCELERATION axis (the second derivative) — the flick-anticipation that leads
+            // the well a HAIR further on a fast direction-change (the impulse steady velocity misses).
+            const acc = pointer.acceleration.value;
+            const lead = 0.1;
+            const accLead = 0.04;
+            const canvas = canvasRef.value;
+            const aspect = (canvas?.width || 1) / Math.max(canvas?.height || 1, 1);
+            cursor = {
+                x: ((sp.x * 2 - 1) + vel.x * lead + acc.x * accLead) * aspect,
+                y: -(sp.y * 2 - 1) - vel.y * lead - acc.y * accLead,
+            };
+
+            // The velocity-HEAVE — pointer SPEED scales the well depth/radius (morph-more-on-move).
+            // A smoothstep on the velocity magnitude gives the heave real weight (a pre-dip→overshoot
+            // feel the monotone spring can't), saturating so a flick can't blow the well out.
+            const speed = Math.hypot(vel.x, vel.y);
+            const s = Math.min(speed / 1.2, 1); // normalize a fast sweep toward the ceiling
+            const ramp = s * s * (3 - 2 * s); // smoothstep — C1-smooth engage
+            // The flick-BURST — a DISTINCT one-shot impulse a fast FLICK injects (the transient the
+            // velocity ramp can't carry: the burst decays on its own register). It rides ON TOP of
+            // the velocity heave, BOUNDED at WELL_SCALE_MAX so no impulse can blow the well out.
+            const burst = pointer.burst.value;
+            wellScale = Math.min(
+                1 + config.velocityHeave * ramp + config.velocityHeave * 0.6 * burst,
+                WELL_SCALE_MAX,
+            );
+        } else {
+            // Released — KEEP the last cursor position so the bulge deflates IN PLACE via the
+            // engage envelope decaying to 0 (a cursor snap-to-parked would zero the Gaussian in
+            // ONE frame = the pop-on-leave). Relax the velocity multiplier back to rest too.
+            wellScale += (1 - wellScale) * engageK;
+        }
     }
 
     let handle: ReturnType<typeof createGpuSubstrate> | null = null;

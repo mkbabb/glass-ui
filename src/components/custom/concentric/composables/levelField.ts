@@ -53,6 +53,13 @@ function valueNoise(x: number, y: number): number {
     return lerp(lerp(a, b, ux), lerp(c, d, ux), uy);
 }
 
+/** The Hermite smoothstep the shader's `smoothstepEdge` uses — mirrored here so the JS oracle's
+ *  cursor-heave term transcribes the WGSL/GLSL feathered Gaussian EXACTLY (the L6 parity). */
+function smoothstepEdge(e0: number, e1: number, x: number): number {
+    const t = Math.max(0, Math.min(1, (x - e0) / Math.max(e1 - e0, 1e-6)));
+    return t * t * (3 - 2 * t);
+}
+
 /** The level-set sample params (the round-trip anchor; mirrors the shader uniforms). */
 export interface LevelFieldParams {
     /** The traveling-wave front direction. */
@@ -103,7 +110,13 @@ export function sampleHeight(p: Vec2, t: number, q: LevelFieldParams): number {
         const dx = p.x - q.cursor.x;
         const dy = p.y - q.cursor.y;
         const d2 = dx * dx + dy * dy;
-        H += q.cursorWell * Math.exp(-d2 / 0.22);
+        // The cursor HEAVE — the feathered Gaussian bulge (a Gaussian peak × a smoothstep
+        // falloff → C1-smooth, NOT a hard-edged quad). Transcribes the WGSL/GLSL sampleHeight
+        // cursor term EXACTLY (the L6 numeric-parity source; the well depth carries the
+        // engage envelope + velocity-heave scale, packed JS-side into q.cursorWell).
+        const g0 = Math.exp(-d2 / 0.22);
+        const fall = smoothstepEdge(0.0, 0.55, Math.exp(-d2 / 0.6));
+        H += q.cursorWell * g0 * fall;
     }
     return H;
 }

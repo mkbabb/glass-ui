@@ -343,6 +343,68 @@ function clauseStory(srcOverride) {
     return viol;
 }
 
+// ── LEVELCURVE arm (BG.W-CONCENTRIC-LEVELCURVES) — the "very buggy" repair: smooth nested
+//    level curves + a continuous critically-damped pointer heave + anti-artifact contours. It
+//    EXTENDS L1-L6 in place (the extraction stays the IQ contourInk over the ONE sampleHeight).
+//      LC1 — the pointer heave is CONTINUOUS: a critically-damped engage/release envelope
+//            (no first-frame snap on enter, no pop on leave) GATING the cursor-well depth.
+//      LC2 — the velocity-scaled heave is BOUNDED (a flick/large knob cannot blow the well out).
+//      LC3 — anti-artifact: the contour-index `fN` fed to contourInk is a CONTINUOUS function
+//            of H in BOTH shaders (a floor()-of-the-field inside fN tears the contour + explodes
+//            fwidth(fN) at each band edge — the torn/stair-stepped arcs), reading the ONE H (no
+//            second field sampler).
+function clauseLevelCurves(srcOverride) {
+    const viol = [];
+    const use = stripComments(
+        srcOverride?.["useConcentric"] ?? read(resolve(DIR, "composables/useConcentric.ts")),
+    );
+    const wgsl = stripComments(
+        srcOverride?.["wgsl"] ?? read(resolve(DIR, "shaders/concentric.wgsl.ts")),
+    );
+    const glsl = stripComments(
+        srcOverride?.["glsl"] ?? read(resolve(DIR, "shaders/concentric.glsl.ts")),
+    );
+
+    // LC1 — the CONTINUOUS pointer-heave engage/release envelope.
+    const hasEngage = /wellEngage/.test(use);
+    if (!hasEngage)
+        viol.push("LC1-heave: useConcentric.ts declares no `wellEngage` engage/release envelope (the snap-on-enter/pop-on-leave fix — the heave must grow in + settle out with weight)");
+    // Frame-rate-independent critical damping: `wellEngage += … (1 - Math.exp(-deltaMs/…))`, NOT
+    // a bare `wellEngage = active ? 1 : 0` snap.
+    const frameRateIndep =
+        /wellEngage\s*\+=/.test(use) && /1\s*-\s*Math\.exp\(\s*-\s*deltaMs/.test(use);
+    if (hasEngage && !frameRateIndep)
+        viol.push("LC1-heave: the engage envelope is not critically-damped/frame-rate-independent (needs `wellEngage += (target - wellEngage) * (1 - Math.exp(-deltaMs/TAU))` — a bare `= active ? 1 : 0` snap IS the pop)");
+    // The envelope GATES the effective well depth (getWellScale multiplies it in).
+    if (hasEngage && !/wellScale\s*\*\s*wellEngage/.test(use))
+        viol.push("LC1-heave: the well factor (getWellScale) does not multiply `wellEngage` — the envelope must gate the cursor-well depth or the heave still snaps/pops");
+
+    // LC2 — the velocity-scaled heave is BOUNDED.
+    if (!(/WELL_SCALE_MAX/.test(use) && /Math\.min\(/.test(use)))
+        viol.push("LC2-bound: the velocity-heave `wellScale` is not bounded (needs `Math.min(1 + …, WELL_SCALE_MAX)` — an unbounded burst/consumer `velocityHeave` knob blows the well out)");
+
+    // LC3 — anti-artifact: the contour-index fN is a CONTINUOUS f(H) in BOTH shaders.
+    const fieldCall = /(?:sampleHeight|heightField|valueNoise)\s*\(/;
+    for (const [name, src, re] of [
+        ["concentric.glsl.ts", glsl, /float\s+fN\s*=\s*([^;]*);/],
+        ["concentric.wgsl.ts", wgsl, /let\s+fN\s*=\s*([^;]*);/],
+    ]) {
+        const m = (src ?? "").match(re);
+        if (!m) {
+            viol.push(`LC3-artifact: ${name} has no contour-index \`fN = …\` assignment (the two-tier level index fed to contourInk)`);
+            continue;
+        }
+        const rhs = m[1];
+        if (/floor\s*\(/.test(rhs))
+            viol.push(`LC3-artifact: ${name} contour-index fN carries a floor() discontinuity (\`${rhs.trim()}\`) — it tears the contour + explodes fwidth(fN) at each band edge (the torn/stair-stepped arcs); the per-contour wobble must be a CONTINUOUS f(H)`);
+        if (fieldCall.test(rhs))
+            viol.push(`LC3-artifact: ${name} contour-index fN re-samples the field (a second field sampler) instead of reading the already-computed H — the ONE sampleHeight source only`);
+        if (!/\bH\b/.test(rhs))
+            viol.push(`LC3-artifact: ${name} contour-index fN does not read the sampled height H (the level index must be H·levels + a continuous wobble)`);
+    }
+    return viol;
+}
+
 function runAll(overrides = {}) {
     return [
         ...clauseColocation(overrides.colocation ?? {}),
@@ -353,6 +415,7 @@ function runAll(overrides = {}) {
         ...clauseL4PureOpaque(overrides.l4),
         ...clauseL5WarmDivergent(overrides.l5),
         ...clauseL6Transcription(overrides.l6),
+        ...clauseLevelCurves(overrides.lc),
         ...clauseFallback(overrides.fallback),
         ...clauseStory(overrides.story),
     ];
@@ -421,6 +484,45 @@ function selfTest() {
     // (g) a missing story.
     const noStory = runAll({ story: { story: false } });
     if (noStory.length === 0) fails.push("self-test: a missing story did NOT red");
+
+    // ── LEVELCURVE arm bites (BG.W-CONCENTRIC-LEVELCURVES) ──
+    // (lc-a) LC1 — a planted snap-on-enter (the engage envelope present but NOT critically-damped:
+    //        `wellEngage = active ? 1 : 0` instead of the frame-rate-independent exp step).
+    const snapOnEnter = runAll({
+        lc: {
+            useConcentric:
+                "const WELL_SCALE_MAX = 2.2; let wellScale = 1; let wellEngage = 0; " +
+                "function onFrame(){ wellEngage = pointer.active.value ? 1 : 0; wellScale = Math.min(1, WELL_SCALE_MAX); } " +
+                "const getWellScale = () => wellScale * wellEngage;",
+        },
+    });
+    if (snapOnEnter.length === 0) fails.push("self-test: a planted snap-on-enter (non-damped engage) did NOT red");
+    // (lc-b) LC3 — a planted un-AA'd/torn band: the floor()-of-the-field discontinuity in fN.
+    const floorBand = runAll({
+        lc: {
+            glsl: "float fN = H * levels + uTopo.w * sin(floor(H * levels) * 2.4 + t * 0.7);",
+            wgsl: "let fN = H * levels + u.topo.w * sin(floor(H * levels) * 2.4 + t * 0.7);",
+        },
+    });
+    if (floorBand.length === 0) fails.push("self-test: a planted floor()-discontinuity contour band did NOT red");
+    // (lc-c) LC3 — a planted second field sampler in the contour index (fN re-samples the field).
+    const secondField = runAll({
+        lc: {
+            glsl: "float fN = sampleHeight(p, t) * levels;",
+            wgsl: "let fN = sampleHeight(p, t) * levels;",
+        },
+    });
+    if (secondField.length === 0) fails.push("self-test: a planted second field sampler in fN did NOT red");
+    // (lc-d) LC2 — a planted unbounded velocity heave (no Math.min/WELL_SCALE_MAX clamp).
+    const unbounded = runAll({
+        lc: {
+            useConcentric:
+                "let wellScale = 1; let wellEngage = 0; " +
+                "function onFrame(deltaMs){ wellEngage += (1 - wellEngage) * (1 - Math.exp(-deltaMs / 150)); wellScale = 1 + velocityHeave * ramp; } " +
+                "const getWellScale = () => wellScale * wellEngage;",
+        },
+    });
+    if (unbounded.length === 0) fails.push("self-test: a planted unbounded velocity heave did NOT red");
 
     return fails;
 }

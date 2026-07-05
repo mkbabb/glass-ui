@@ -173,7 +173,11 @@ void main() {
   fill *= mix(1.0 - uTune.y, 1.0 + uTune.y, shade);
 
   // ── 3. TWO-TIER INDEX/MINOR CONTOUR — isIndex a pure f(level); hw FED to the frozen contourInk.
-  float fN = H * levels + uTopo.w * sin(floor(H * levels) * 2.4 + t * 0.7);
+  // The per-contour wobble is a CONTINUOUS function of H (NOT floor(H·levels)): a floor() inside
+  // fN jumps at every band boundary → tears the contour + explodes fwidth(fN) there (the stair-
+  // stepped/torn-arc artifact). The smooth phase keeps fN monotone (perturbAmp·2.4 < 1) so the
+  // nested bands stay unbroken + the IQ AA holds at every DPR.
+  float fN = H * levels + uTopo.w * sin(H * levels * 2.4 + t * 0.7);
   float indexEvery = max(uLine.w, 1.0);
   float lvl = floor(fN);
   float isIndex = fract(lvl / indexEvery) < (0.5 / indexEvery) ? 1.0 : 0.0;

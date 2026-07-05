@@ -198,7 +198,10 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
 
   // ── 3. TWO-TIER INDEX/MINOR CONTOUR — isIndex a pure f(level) (floor + mod + select, NOT a
   //    state buffer); the per-level half-width hw is FED to the byte-frozen contourInk.
-  let fN = H * levels + u.topo.w * sin(floor(H * levels) * 2.4 + t * 0.7);
+  //    The per-contour wobble is a CONTINUOUS function of H (NOT floor(H·levels)): a floor()
+  //    inside fN jumps at every band boundary → tears the contour + explodes fwidth(fN) there
+  //    (the torn-arc artifact). The smooth phase keeps fN monotone (perturbAmp·2.4 < 1).
+  let fN = H * levels + u.topo.w * sin(H * levels * 2.4 + t * 0.7);
   let indexEvery = max(u.line.w, 1.0);
   let lvl = floor(fN);
   let isIndex = select(0.0, 1.0, fract(lvl / indexEvery) < (0.5 / indexEvery));
