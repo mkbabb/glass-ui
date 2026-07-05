@@ -91,6 +91,19 @@
 //        the true collapsed circle seats within one beat on EVERY engine — the box is
 //        clamped-complete at arrival, and holding `[data-morphing]` through the
 //        spring's engine-variable ring-down painted a ~1s sliver-at-rest on WebKit.
+//   G4 — PUNCH-INHERITS-TO-CONTENT (F3.R1 paint-repair #2 — the INHERITANCE gap):
+//        the `@property --dock-punch-stretch` registration in shape.css MUST declare
+//        `inherits: true`. G1 checks the content-inverse rule TEXT, but the inverse
+//        reads `var(--dock-punch-stretch)` on a CHILD (`.dock-persistent`/`.dock-layers`)
+//        while the punch value is DECLARED on the dock ROOT — so a `inherits: false`
+//        registration hands the child the `initial-value: 1` (not the root's live
+//        overshoot 1.22), the full-inverse silently collapses to the size-only inverse,
+//        and the glyph carries the whole `(--dock-punch-stretch)²` = 1.4884 (+48.8%)
+//        residual. This is exactly the F3.R1 paint FAIL the G1 text-check could not see;
+//        G4 binds the registration so a re-introduced `inherits: false` REDs on the
+//        NUMBER (the property flag), not on a present-but-inert CSS string. The other
+//        two content-inverse factors (`--stretch`, `--dock-size-scale`) are UNREGISTERED
+//        so they inherit by default (no G4 arm owed).
 //
 // Self-test bites (born-RED demonstration): a re-added silhouette composable REDs
 // D1; a re-added test REDs D2; a surviving gate script / a re-added
@@ -102,7 +115,9 @@
 // on a content child / on an axis / not gated on the morph window / inverting ONLY
 // `--dock-size-scale` (the F3.R1 size-only residual) / missing the punch factor REDs
 // G1; a settle that removes the scalar BEFORE the attrs REDs G2; an `onFrame` with no
-// `tValue >= 1` arrival-settle guard REDs G3.
+// `tValue >= 1` arrival-settle guard REDs G3; a `@property --dock-punch-stretch`
+// registered `inherits: false` (the child reads the initial 1, not the root's live
+// punch) REDs G4 while an `inherits: true` registration does NOT.
 
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
@@ -327,6 +342,36 @@ function detectGlyphRigid(shapeSrc) {
         if (!xOk || !yOk) ok = false;
     }
     return { ok, facts };
+}
+
+// ── GLYPH-RIGID G4 — detect the punch channel INHERITS to the rigid content. ──
+// The content-inverse rule (G1) reads `var(--dock-punch-stretch)` on a CHILD
+// (`.dock-persistent`/`.dock-layers`), while the punch value is DECLARED on the dock
+// ROOT (`.glass-dock`). A registered `@property` inherits to descendants ONLY when it
+// declares `inherits: true`; a `inherits: false` registration hands the child the
+// `initial-value` (1), NOT the root's live overshoot (1.22), so the full-inverse
+// collapses to the size-only inverse and the glyph carries the `(--dock-punch-stretch)²`
+// = 1.4884 (+48.8%) residual (the F3.R1 paint FAIL). Parse the
+// `@property --dock-punch-stretch { … }` block and assert its `inherits:` is `true`.
+// (The other two content-inverse factors — `--stretch`, `--dock-size-scale` — are
+// UNREGISTERED, so they inherit by default; only the registered punch channel needs
+// the explicit `inherits: true`.)
+function detectPunchInherits(shapeSrc) {
+    const src = stripComments(shapeSrc);
+    // Find the @property --dock-punch-stretch { … } block (the registration).
+    const blockM = src.match(
+        /@property\s+--dock-punch-stretch\s*\{([^}]*)\}/,
+    );
+    const present = Boolean(blockM);
+    let inheritsValue = null;
+    if (present) {
+        const inhM = blockM[1].match(/inherits\s*:\s*(true|false)\b/);
+        inheritsValue = inhM ? inhM[1] : null;
+    }
+    return {
+        ok: present && inheritsValue === "true",
+        facts: { present, inheritsValue },
+    };
 }
 
 // ── GLYPH-RIGID G2 — detect the settle drops the morph attrs BEFORE the scalar. ──
@@ -652,6 +697,14 @@ function detect(overrides = {}) {
         arrival.ok,
     );
 
+    // ── G4 — PUNCH-INHERITS-TO-CONTENT (BG.W-DOCK-GLYPH-RIGID F3.R1 paint-repair #2) ──
+    const punchInherits = detectPunchInherits(shapeSrc);
+    facts.glyphRigidPunchInherits = punchInherits.facts;
+    assert(
+        "G4 — the `@property --dock-punch-stretch` registration declares `inherits: true`, so the rigid-content inverse rule (G1) reads the dock ROOT's live punch overshoot at the CHILD (`.dock-persistent`/`.dock-layers`) and CANCELS it — a `inherits: false` registration hands the child the initial `1`, the full-inverse collapses to the size-only inverse, and the glyph carries the `(--dock-punch-stretch)²` = 1.4884 (+48.8%) residual (the F3.R1 paint FAIL the G1 text-check cannot see)",
+        punchInherits.ok,
+    );
+
     // ── P1/P2 — PANE-OVERLAP: the OVERLAPPED pane-swap crossfade (BG.W-DOCK-PANE-OVERLAP) ──
     const overlap = detectPaneOverlap(layerGroupVueSrc);
     facts.paneOverlap = overlap.facts;
@@ -718,6 +771,11 @@ function selfTest() {
     // morph-axis component inverts the FULL `size × stretch × punch` factor, the cross
     // component carries `stretch × punch`, so the glyph aspect is EXACTLY 1.0).
     const CLEAN_SHAPE = `
+@property --dock-punch-stretch {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 1;
+}
 @layer components {
     .glass-dock[data-morphing]:not(.vertical) > .dock-persistent,
     .glass-dock[data-morphing]:not(.vertical) > .dock-layers,
@@ -1055,6 +1113,42 @@ function selfTest() {
         "G1 inverse misses the --dock-punch-stretch factor (cartoon overshoot residual on the glyph) reds",
     );
 
+    // ── G4 — the punch-inherits bite (BG.W-DOCK-GLYPH-RIGID F3.R1 paint-repair #2) ──
+    // G4: the F3.R1 INHERITANCE gap — the full-inverse content rule TEXT is present
+    // (G1 stays GREEN, no confound), but `@property --dock-punch-stretch` is registered
+    // `inherits: false`, so the child reads the initial `1` (not the root's live 1.22),
+    // the full-inverse collapses to the size-only inverse, and the glyph carries the
+    // `(--dock-punch-stretch)²` = 1.4884 (+48.8%) residual (the exact painted FAIL the
+    // G1 text-check could not see). A re-introduction of `inherits: false` MUST red on
+    // the property flag.
+    sab(
+        {
+            ...base,
+            shapeSrc: `
+@property --dock-punch-stretch {
+    syntax: "<number>";
+    inherits: false;
+    initial-value: 1;
+}
+@layer components {
+    .glass-dock[data-morphing]:not(.vertical) > .dock-persistent,
+    .glass-dock[data-morphing]:not(.vertical) > .dock-layers,
+    .glass-dock[data-punching]:not(.vertical) > .dock-persistent,
+    .glass-dock[data-punching]:not(.vertical) > .dock-layers {
+        scale: calc(1 / (max(var(--dock-size-scale, 1), 0.06) * var(--stretch, 1) * var(--dock-punch-stretch, 1))) calc(var(--stretch, 1) * var(--dock-punch-stretch, 1));
+    }
+    .glass-dock[data-morphing].vertical > .dock-persistent,
+    .glass-dock[data-morphing].vertical > .dock-layers,
+    .glass-dock[data-punching].vertical > .dock-persistent,
+    .glass-dock[data-punching].vertical > .dock-layers {
+        scale: calc(var(--stretch, 1) * var(--dock-punch-stretch, 1)) calc(1 / (max(var(--dock-size-scale, 1), 0.06) * var(--stretch, 1) * var(--dock-punch-stretch, 1)));
+    }
+}`,
+        },
+        "G4",
+        "G4 @property --dock-punch-stretch registered inherits:false (child reads initial 1, full-inverse collapses to size-only, +48.8% glyph residual) reds",
+    );
+
     // ── G2 — the settle-order bites (BG.W-DOCK-GLYPH-RIGID vocab (b)) ──
     // G2: the HEAD settle order — scalar removed BEFORE the attrs (born-RED premise).
     // (Carries the G3-green onFrame arrival guard so ONLY G2 reds — no confound.)
@@ -1322,6 +1416,9 @@ function run() {
         `  G3 settle at scalar arrival     : ${violations.every((v) => !v.startsWith("G3"))} (arrivalGuard=${facts.glyphRigidArrivalSettle?.hasArrivalGuard}, firesSettle=${facts.glyphRigidArrivalSettle?.firesSettle})`,
     );
     console.log(
+        `  G4 punch inherits to content    : ${violations.every((v) => !v.startsWith("G4"))} (inherits=${facts.glyphRigidPunchInherits?.inheritsValue}, present=${facts.glyphRigidPunchInherits?.present})`,
+    );
+    console.log(
         `  P1 entering pane ramps up       : ${violations.every((v) => !v.startsWith("P1"))} (onset=${facts.paneOverlap?.enterOnset})`,
     );
     console.log(
@@ -1331,7 +1428,7 @@ function run() {
         `  P3 box FLIP monotonic (rigid)   : ${violations.every((v) => !v.startsWith("P3"))} (clip=${facts.boxFlipMonotonic?.clipReveal}, reserveMax=${facts.boxFlipMonotonic?.reservesMax}, clamped=${facts.boxFlipMonotonic?.clampedReveal})`,
     );
     console.log(
-        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×3 + D3-fence×2 + D4×2 + D4-fence + D5×2 + G1×6 + G2 + G3 + P1×2 + P2×2 + P3×3)`,
+        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×3 + D3-fence×2 + D4×2 + D4-fence + D5×2 + G1×6 + G4 + G2 + G3 + P1×2 + P2×2 + P3×3)`,
     );
 
     if (violations.length) {

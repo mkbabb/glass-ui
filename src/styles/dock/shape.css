@@ -35,12 +35,24 @@
    register overshoots PAST the spring fence), it has ZERO JS owners (CSS-only, driven
    by the transition below), and a fission split fired mid-collapse cannot clobber it
    (the 6-owner `--stretch` last-writer race the shared channel would have introduced —
-   the dedicated channel REMOVES it, a net improvement to fission). `inherits: false` —
-   the punch is the dock root's OWN deformation, never cascaded to children. A
+   the dedicated channel REMOVES it, a net improvement to fission).
+
+   BG.W-DOCK-GLYPH-RIGID (F3.R1 paint-repair) — `inherits: true` is LOAD-BEARING.
+   The rigid-content contract (the inverse-scale rule on `.dock-persistent`/`.dock-layers`
+   below) reads `var(--dock-punch-stretch)` on a CHILD to CANCEL the punch the plate
+   carries — so the glyph reads 1:1 while the plate deforms. The punch value is DECLARED
+   on the dock root (`.glass-dock`), so the child can only read the root's live overshoot
+   (1.22 at the peak) if the property INHERITS; a `inherits: false` registration hands the
+   child the `initial-value: 1` instead, the full-inverse silently collapses back to the
+   size-only inverse, and the glyph carries the whole `(--dock-punch-stretch)²` = 1.4884
+   (+48.8%) residual (the F3.R1 paint-judge FAIL). Cascading the punch to descendants is
+   SAFE here because EVERY `.glass-dock` re-declares `--dock-punch-stretch: 1` at its own
+   root (below), so a nested dock resets the channel — the punch never leaks between docks;
+   and shape.css is the ONLY CSS reader (no unrelated descendant acts on the value). A
    non-supporting engine reads the safe 1 fallback (no punch, just the bounded size). */
 @property --dock-punch-stretch {
     syntax: "<number>";
-    inherits: false;
+    inherits: true;
     initial-value: 1;
 }
 
