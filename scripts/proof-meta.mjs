@@ -65,33 +65,29 @@ import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { ROOT } from "./constellation.mjs";
 import { gateArtifactPath, writeGateArtifact } from "./gate-output.mjs";
+// The SHARED detector kit (BG.W-GATE-FAMILY-CONSOLIDATE, F8.1). proof:meta is the
+// kit's FIRST live consumer — the inlined rowCells / isSeparatorRow / isWaveId /
+// isVisualClass helpers this file used to carry are now imported from the ONE
+// home (scripts/lib/detect/), the DRY the consolidation rests on.
+import {
+    rowCells,
+    isSeparatorRow,
+    isWaveId,
+    isVisualClass,
+    DETECT_KIT_ROSTER,
+} from "./lib/detect/index.mjs";
+import {
+    DETECTOR_KIT,
+    DIRECTION,
+    PAINT_ORACLE,
+    PROTECT_SET,
+    validateConsolidation,
+} from "./gate-family-manifest.mjs";
+import { GATES, gatesFor } from "./gates.mjs";
 
 const CURSOR = join(ROOT, "docs/tranches/BG/execution/EXECUTION-PROGRESS.md");
 const CANON = join(ROOT, "docs/tranches/BG/canon/fable-design-arm.md");
 const LEDGER = join(ROOT, "docs/tranches/BG/DIRECTIVE-LEDGER.md");
-
-// ── Markdown table parsing — BY HEADER NAME (column order is FREE) ─────────────
-// Split a pipe-row into trimmed inner cells (drop the outer-pipe empties). An
-// escaped `\|` is a LITERAL pipe inside a cell, not a delimiter.
-function rowCells(ln) {
-    const cells = ln.split(/(?<!\\)\|/).map((c) => c.replace(/\\\|/g, "|").trim());
-    return cells.filter((_, idx) => idx > 0 && idx < cells.length - 1);
-}
-
-/** A markdown separator row (`|---|---|`) carries only dashes/colons. */
-function isSeparatorRow(cells) {
-    return cells.length > 0 && cells.every((c) => /^:?-+:?$/.test(c));
-}
-
-/** A cell is a real BG/BH wave id (skips legend/prose/§1b/§2 rows). */
-function isWaveId(cell) {
-    return /^B[GH]\.[WB]/.test(cell);
-}
-
-/** A class cell is VISUAL iff it carries a standalone paint `P` token. */
-function isVisualClass(cls) {
-    return /(^|[^A-Za-z])P([^A-Za-z]|$)/.test(cls);
-}
 
 /**
  * The `fable / designSync` cell names BOTH halves iff it is non-empty, not `—`,
@@ -214,8 +210,67 @@ function fableArmPresent() {
     return { clause: "fable-arm-present", visualCount, failures };
 }
 
+// ── The `gate-family-consolidate` clause (BG.W-GATE-FAMILY-CONSOLIDATE, F8.1) ──
+// The gate-machine transposition: the detector kit is REAL + consumed, the
+// consolidation census holds against the LIVE gate registry (protect set intact,
+// proof:warm-identity wired PRIMARY), and the census doc records the direction.
+const META = join(ROOT, "scripts/proof-meta.mjs");
+
+/** A repo-relative path resolves on disk (the injected IO for the pure validator). */
+function repoFileExists(rel) {
+    return existsSync(join(ROOT, rel));
+}
+
+function gateFamilyConsolidate() {
+    const failures = [];
+
+    // A — the detector kit is REAL on disk (barrel + every roster module), and its
+    //     named exports are CALLABLE (a stub file would resolve but not export).
+    if (!repoFileExists(DETECTOR_KIT.barrel)) {
+        failures.push(`detector-kit barrel absent — ${DETECTOR_KIT.barrel}`);
+    }
+    for (const [mod, exports] of Object.entries(DETECT_KIT_ROSTER)) {
+        const rel = `${DETECTOR_KIT.dir}/${mod}`;
+        if (!repoFileExists(rel)) failures.push(`detector-kit module absent — ${rel}`);
+        void exports; // the export set is asserted callable below
+    }
+    // The barrel's primitives are load-bearing here (proof:meta calls them) — a
+    // severed/empty export reds this file's own fable scan, so the callable proof
+    // is that these imports resolved to functions.
+    for (const [name, fn] of [
+        ["rowCells", rowCells],
+        ["isSeparatorRow", isSeparatorRow],
+        ["isWaveId", isWaveId],
+        ["isVisualClass", isVisualClass],
+    ]) {
+        if (typeof fn !== "function") {
+            failures.push(`detector-kit export \`${name}\` is not callable (a stub/severed barrel).`);
+        }
+    }
+
+    // B — proof:meta is a REAL consumer of the kit (the ≥1-consumer bar): its own
+    //     source imports from scripts/lib/detect/ (not a re-inlined fork).
+    if (repoFileExists("scripts/proof-meta.mjs")) {
+        const self = readFileSync(META, "utf8");
+        if (!/from\s+["']\.\/lib\/detect\/index\.mjs["']/.test(self)) {
+            failures.push(
+                "proof:meta does not import from ./lib/detect/index.mjs — the kit must be CONSUMED (the shelf-ware fence), not re-inlined.",
+            );
+        }
+    }
+
+    // C — the consolidation census holds against the LIVE gate registry.
+    const liveGateIds = new Set(GATES.map((g) => g.id));
+    const releaseGateIds = new Set(gatesFor("release").map((g) => g.id));
+    for (const v of validateConsolidation({ liveGateIds, releaseGateIds, fileExists: repoFileExists })) {
+        failures.push(v);
+    }
+
+    return { clause: "gate-family-consolidate", visualCount: 0, failures };
+}
+
 // The family runner — each F8 close wave appends its clause here.
-const CLAUSES = [fableArmPresent];
+const CLAUSES = [fableArmPresent, gateFamilyConsolidate];
 
 function runClauses() {
     return CLAUSES.map((fn) => fn());
@@ -268,7 +323,42 @@ function selfTest() {
         bites.push(["internal-slash → NO-flag", !flagged]);
     }
 
-    console.log("proof:meta — SELF-TEST (fable-arm-present detector, 6 bites)");
+    // ── gate-family-consolidate detector bites (the validateConsolidation kernel) ──
+    const CLEAN = {
+        liveGateIds: new Set([...PROTECT_SET, PAINT_ORACLE.primary, ...PAINT_ORACLE.enrolled]),
+        releaseGateIds: new Set([PAINT_ORACLE.primary]),
+        fileExists: () => true,
+    };
+    // bite 7 — the clean synthetic state passes (no false-red).
+    {
+        const clean = validateConsolidation(CLEAN).length === 0;
+        bites.push(["consolidate-clean → NO-flag", clean]);
+    }
+    // bite 8 — a FOLDED protect member MUST flag (the true-positive/dead-knob fence).
+    {
+        const folded = new Set(CLEAN.liveGateIds);
+        folded.delete("proof:dock-plate-clearance");
+        const flagged = validateConsolidation({ ...CLEAN, liveGateIds: folded }).some((v) =>
+            v.includes("proof:dock-plate-clearance"),
+        );
+        bites.push(["folded-protect-member → FLAG", flagged]);
+    }
+    // bite 9 — proof:warm-identity NOT release-tagged MUST flag (the PRIMARY-oracle fence).
+    {
+        const flagged = validateConsolidation({ ...CLEAN, releaseGateIds: new Set() }).some((v) =>
+            v.includes(PAINT_ORACLE.primary),
+        );
+        bites.push(["warm-identity-not-release → FLAG", flagged]);
+    }
+    // bite 10 — a missing detector-kit module MUST flag (the shelf-ware fence).
+    {
+        const flagged = validateConsolidation({ ...CLEAN, fileExists: () => false }).some((v) =>
+            v.includes("detector-kit"),
+        );
+        bites.push(["missing-detect-kit → FLAG", flagged]);
+    }
+
+    console.log("proof:meta — SELF-TEST (fable-arm-present + gate-family-consolidate detectors, 10 bites)");
     let allFlag = true;
     for (const [name, ok] of bites) {
         console.log(`  ${ok ? "OK    " : "MISS  "}  ${name}`);
@@ -290,7 +380,9 @@ function selfTest() {
         );
         process.exit(1);
     }
-    console.log("\n[proof:meta] SELF-TEST GREEN — all 6 bites behave, the real cursor passes fable-arm-present.");
+    console.log(
+        "\n[proof:meta] SELF-TEST GREEN — all 10 bites behave, the real cursor passes fable-arm-present + gate-family-consolidate.",
+    );
     process.exit(0);
 }
 
