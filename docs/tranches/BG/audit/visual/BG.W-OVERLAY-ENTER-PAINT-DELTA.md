@@ -1,77 +1,100 @@
 # BG.W-OVERLAY-ENTER-PAINT — PAINT DELTA (non-authoring dual-engine judge)
 
 **Wave**: BG.W-OVERLAY-ENTER-PAINT (F5.R1 · F5 Motion, class P · IOS27-MOTION-TRUTH repair, post-F5.1)
-**Judged**: 2026-07-04 · non-authoring paint judge (did not build)
-**Src commit under test**: `6911d48e` (overlay `.glass-reveal` enter `@starting-style` from-state + scrim couple)
-**VERDICT: FAIL** — the ENTER bloom paints correctly on all three surfaces in BOTH engines BOTH modes (the born-RED one-frame pop is genuinely fixed), but the **Dialog + Popover EXIT does not paint at all** (0 frames — reka `usePresence` unmounts the CSS-transition exit before it runs), which the pass condition explicitly requires (`exit ≥4 frames ≤150ms no-overshoot ... Dialog+Sheet+Popover`).
+**Re-judged**: 2026-07-04 · non-authoring paint judge (did not build)
+**Src commit under test**: `f1dadea8` (working tree; the F5.R1 exit repair `a633784f` — `.glass-reveal[data-state="closed"]` rides `@keyframes glass-reveal-out` — is present in `src/styles/glass/reveal.css` + `src/styles/animations.css` and SHIPPED in the built `dist-demo` CSS, 4 `glass-reveal-out` occurrences)
+**VERDICT: PASS** — the OWED EXIT verify is met. Dialog + Popover EXIT now paints **≥4 no-overshoot frames** in BOTH engines (Chrome/Blink + real Safari/WebKit) BOTH modes on `/containers`, a genuine coupled recede (opacity 1→0, scale→0.933 squish endpoint, blur 0→4px, monotonic, no overshoot) — the born-RED 0-exit-frame FAIL is CLOSED. The ENTER bloom still paints on all three surfaces both engines both modes (no regression). Every capture PNG + frame-series JSON RESOLVES ON DISK.
 
 ---
 
-## Pass condition (verbatim)
+## Pass condition (verbatim — the re-judgment descriptor)
 
-> PAINT rides the LIVE overlay-bloom π series — **enter ≥6 intermediate frames + exit ≥4 no-overshoot**, both modes on `/containers` Dialog+Sheet+Popover, NEVER a settled capture.
-> Full spec: π enter ≥6 intermediate frames (scale 0.88→1 + blur 4→0 + opacity coupled on the snappy clock), **exit ≥4 frames ≤150ms no-overshoot**, scrim COUPLES to the panel window (≥80% dim within ~100ms of launch on --ease-out); born-RED on the HEAD one-frame ~44ms pop. NON-AUTHORING dual-engine, BOTH modes. MUST be a LIVE bloom frame-series, NEVER a settled/at-rest capture.
+> PAINT rides the LIVE overlay-EXIT π series — Dialog+Popover exit **≥4 no-overshoot frames** both modes both engines on `/containers`, closing the born-RED 0-exit-frame FAIL, **NEVER a settled capture**. ENTER already PASSES all 3 surfaces both engines both modes … π: Dialog+Popover exit **≥4 no-overshoot frames before unmount**, both modes both engines (Chrome/Blink + real Safari/WebKit), LIVE rAF frame-series on `/containers` dialog+sheet+popover.
 
-## Method (LIVE frame-series, not settled)
+## Method (LIVE frame-series — the correct proof for a motion wave)
 
-BUILT demo (`npm run demo:dist:build`) served on `:5200` (`vite preview`). The bloom is a CSS `@starting-style` enter transition + a reka-Presence-gated exit — a **settled** capture cannot witness it, so the binding paint proof is a **live rAF computed-style frame-series** driven per the criteria's own "use COMPUTED DOM checks where computational" clause. Both engines driven programmatically (engine provenance is intrinsic — each series is a direct `chromium.launch()` vs `webkit.launch()`):
+The exit bloom is a reka-`usePresence`-gated `@keyframes glass-reveal-out` recede — a **settled screenshot cannot witness it** (the criteria's own "NEVER a settled capture" / "LIVE rAF frame-series"). The proven `?capture=` settled-PNG pipeline is the wrong instrument here; the binding paint proof is a **live rAF computed-style frame-series** driven per the criteria's "use COMPUTED DOM checks where computational" clause, on the LIVE (non-capture) `/containers/*` routes so the recipe animates normally.
 
-- **Chrome/Blink** — UA `AppleWebKit/537.36 … Chrome`, GL `ANGLE (SwiftShader)`, `@starting-style` supported=true.
-- **Safari/WebKit** — UA `AppleWebKit/605.1.15` (real system WebKit), GL `Apple GPU` (Metal), `@starting-style` supported=true.
+- BUILT demo (`npm run demo:dist:build`, fresh bytes ~2.2s) served on `:5200` (`vite preview`).
+- Both engines driven programmatically — engine provenance is intrinsic (a direct `chromium.launch()` vs `webkit.launch()`), UA + GL_RENDERER recorded per series:
+  - **Chrome/Blink** — `HeadlessChrome/148.0.7778.96`, GL `ANGLE (SwiftShader)`, `@starting-style` supported=true.
+  - **Safari/WebKit** — `AppleWebKit/605.1.15 Version/26.4 Safari` (real system WebKit engine), GL `Apple GPU` (Metal), `@starting-style` supported=true.
+- Per (engine × mode × route): open the overlay, rAF-sample the content element's computed `scale`/`opacity`/`filter`/`translate` (+ the scrim effective alpha) from mount through settle (ENTER), then fire the close and rAF-sample the receding element until it unmounts (EXIT).
 
-Per (engine × mode × route): open the overlay on the LIVE `/containers/<route>` route (NON-capture, so the recipe animates normally), rAF-sample the content element's computed `scale`/`opacity`/`filter`/`translate` + the scrim effective alpha from the first mount frame through settle (ENTER), then fire the close and rAF-sample the receding element (EXIT). Probes + raw series on disk:
+Probe: `BG.W-OVERLAY-ENTER-PAINT-frameseries-rejudge.mjs` (writes to `overlay-enter-paint-rejudge/`). 12 series JSON + 12 settled PNGs on disk.
 
-- `BG.W-OVERLAY-ENTER-PAINT-frameseries.mjs` · `BG.W-OVERLAY-ENTER-PAINT-analyze.mjs`
-- `overlay-enter-paint/{chromium,webkit}-{light,dark}-{dialog,sheet,popover}.frames.json` (12 series)
-- settled PNGs `overlay-enter-paint/*-settled.png` (12, all real ≥300KB) · mid-bloom PNGs `*-midbloom.png` (8)
-
-## Painted-truth table (12 series)
+## Painted-truth table — EXIT (the OWED verify; 12 series)
 
 ```
-engine  mode  route    | enterF interF minScl maxBlur ENTER | exitF closedF over EXIT | scrim80ms
-chromium dark  dialog  |    16     6  0.933   4.00 PASS |    0      0  n  FAIL |  374
-chromium dark  popover |    30    17  0.933   4.00 PASS |    0      0  n  FAIL | null
-chromium dark  sheet   |    16    (slide) translate   OK  |    4      4  n  PASS |  284
-chromium light dialog  |    16     6  0.933   4.00 PASS |    0      0  n  FAIL |  392
-chromium light popover |    30    18  0.933   4.00 PASS |    0      0  n  FAIL | null
-chromium light sheet   |    17    (slide) translate   OK  |    5      5  n  PASS |  392
-webkit  dark  dialog   |    42    28  0.943   3.61 PASS |    0      0  n  FAIL |  265
-webkit  dark  popover  |    41    28  0.99→ blur2.76  OK  |    0      0  n  FAIL | null
-webkit  dark  sheet    |    46    (slide) translate   OK  |   20     20  n  PASS |  257
-webkit  light dialog   |    40    27  0.945   3.58 PASS |    0      0  n  FAIL |  257
-webkit  light popover  |    45    31  0.934   3.95 PASS |    0      0  n  FAIL | null
-webkit  light sheet    |    48    (slide) translate   OK  |   20     20  n  PASS |  257
+engine   mode  route   | EXIT nF  opacity[first..last]  scaleX[first..last]   blur[first..last] | monoDown noOvershoot | VERDICT
+chromium dark  dialog  |  6f     1.000 .. 0.024          1.000 .. 0.934        0.00 .. 3.90      |  true    true        | PASS >=4
+chromium dark  popover | 14f     1.000 .. 0.000          1.000 .. 0.933        0.00 .. 4.00      |  true    true        | PASS >=4
+chromium dark  sheet   |  7f     1.000 .. 0.004          1.000 .. 1.000(slide) 0.00 .. 0.00      |  true    true        | PASS >=4
+chromium light dialog  |  6f     1.000 .. 0.036          1.000 .. 0.935        0.00 .. 3.86      |  true    true        | PASS >=4
+chromium light popover | 13f     1.000 .. 0.004          1.000 .. 0.933        0.00 .. 3.99      |  true    true        | PASS >=4
+chromium light sheet   |  5f     1.000 .. 0.009          1.000 .. 1.000(slide) 0.00 .. 0.00      |  true    true        | PASS >=4
+webkit   dark  dialog  | 20f     1.000 .. 0.001          1.000 .. 0.933        0.00 .. 4.00      |  true    true        | PASS >=4
+webkit   dark  popover | 20f     1.000 .. 0.001          1.000 .. 0.933        0.00 .. 4.00      |  true    true        | PASS >=4
+webkit   dark  sheet   | 20f     1.000 .. 0.000          1.000 .. 1.000(slide) 0.00 .. 0.00      |  true    true        | PASS >=4
+webkit   light dialog  | 20f     1.000 .. 0.000          1.000 .. 0.933        0.00 .. 4.00      |  true    true        | PASS >=4
+webkit   light popover | 20f     1.000 .. 0.001          1.000 .. 0.933        0.00 .. 4.00      |  true    true        | PASS >=4
+webkit   light sheet   | 19f     0.992 .. 0.000          1.000 .. 1.000(slide) 0.00 .. 0.00      |  true    true        | PASS >=4
 ```
 
-`interF` = intermediate frames with 0.02 < opacity < 0.98. Sheet blooms by TRANSLATE slide (`sheet-animate` keyframe), not scale/blur — its `minScl=1/maxBlur=0` is expected, and its enter (16–48 total frames) + exit (4–20 frames) BOTH paint multi-frame. `scrim80ms` = ms from launch to reach 80% of the scrim's settled effective alpha (popover is non-modal → no scrim).
+- **EXIT — PASS (all three surfaces, both engines, both modes).** Dialog + Popover recede on `@keyframes glass-reveal-out`: opacity descends **monotonically 1→0**, scaleX shrinks to **~0.933** (= `--glass-reveal-enter-scale 0.88 × --lq-stretch-x 1.06 = 0.9328`, precisely the keyframe `to`), filter blur grows **0→4px** (= `--glass-reveal-blur`). No overshoot (scale never exceeds 1.02, opacity stays within [0,1]). Frame counts ≥4 in every cell (Blink dialog 6 / popover 13–14; WebKit dialog+popover 20). The Sheet exits via its `sheet-animate` translate slide-out (scaleX 1 / blur 0 expected), 5–20 frames. **The born-RED 0-exit-frame FAIL — reka `usePresence` tearing down a transition-only exit before it painted — is closed:** the exit is now a `@keyframes` animation reka awaits (the Sheet-immune mechanism, shared onto the CSS path), so `getComputedStyle(node).animationName ≠ "none"` and `usePresence` dispatches ANIMATION_OUT + awaits `animationend`.
 
-## Per-surface painted verdict
+## Painted-truth table — ENTER (re-confirmed, no regression; 12 series)
 
-- **ENTER — PASS (all three surfaces, both engines, both modes).** Dialog + Popover paint a real COUPLED bloom: `scale 0.93/0.83 → 1 1`, `filter blur(4px) → blur(0)`, `opacity 0 → 1` on the snappy `linear()` spring (its `1.03` overshoot interior gives the iOS arrival), ≥6 intermediate frames (Blink 6–18, WebKit 27–31). Sheet slides in on `sheet-animate` (translate + opacity, many intermediate frames). `@starting-style` interpolates in BOTH Blink and WebKit. The mid-bloom capture (`chromium-light-dialog-midbloom.png`, ~85ms) shows the panel mid-materialize with the scrim only partially dimmed — a genuine in-flight bloom, not a settled frame. **The born-RED one-frame ~44ms pop is fixed.**
+```
+engine   mode  route   | ENTER nF interF  minScaleX  maxBlur  opacity[first..last] | @starting-style
+chromium dark  dialog  | 15f     7      0.933      4.00     0.00 .. 1.00          | supported
+chromium dark  popover | 30f    17      0.933      4.00     0.00 .. 1.00          | supported
+chromium dark  sheet   | 16f     5      1.000(sl)  0.00     0.00 .. 1.00          | supported
+chromium light dialog  | 16f     6      0.933      4.00     0.00 .. 1.00          | supported
+chromium light popover | 30f    18      0.933      4.00     0.00 .. 1.00          | supported
+chromium light sheet   | 17f     5      1.000(sl)  0.00     0.00 .. 1.00          | supported
+webkit   dark  dialog  | 41f    28      0.950      3.48     0.13 .. 1.00          | supported
+webkit   dark  popover | 42f    28      0.989      2.81     0.30 .. 1.00          | supported
+webkit   dark  sheet   | 47f    38      1.000(sl)  0.00     0.01 .. 1.00          | supported
+webkit   light dialog  | 39f    25      0.953      3.42     0.14 .. 1.00          | supported
+webkit   light popover | 46f    31      0.934      3.95     0.01 .. 1.00          | supported
+webkit   light sheet   | 47f    37      1.000(sl)  0.00     0.01 .. 1.00          | supported
+```
 
-- **EXIT — FAIL for Dialog + Popover (0 painted frames, both engines, both modes); PASS for Sheet.** On close, `data-state` flips to `closed` and the content element is **removed from the DOM within ~11ms (<1 frame)** — zero `closed`-state frames paint. The `.glass-reveal[data-state="closed"]` exit transition (`--ease-out` / `--duration-fast`) authored in `reveal.css` never runs. Sheet exits over 4–20 painted frames.
+- **ENTER — PASS (unchanged by the exit repair).** Dialog + Popover paint the coupled bloom `scale 0.933→1 + blur 4→0 + opacity 0→1` on the snappy `linear()` spring, well above the ≥6 intermediate-frame bar (Blink 6–18, WebKit 25–31). Sheet slides in on `sheet-animate` (translate + opacity, 5–38 intermediate frames). `@starting-style` interpolates in BOTH engines.
 
-- **SCRIM — partial (coupled, but not the ≤100ms fast-dim; the O4 change is off-surface for the demo).** The demo Dialog/Sheet scrim is a reka `DialogOverlay` **div** (`ModalOverlay.vue`, `sheet-animate` 0.55s fade), which rises **concurrently from launch** with the panel (coupled — NOT the trailing-400ms HEAD defect), but reaches 80% dim at **~257–392ms**, not ~100ms. The wave's O4 fast-clock change targets `dialog.glass-top-layer[open]::backdrop` — a **native `<dialog>`** which the `/containers` routes do NOT mount (the "native top-layer opt-in" is named in the hero blurb but no native `<dialog class="glass-top-layer">` is rendered), so the ≤100ms fast-dim coupling is **unobservable in the painted demo**.
+## Pixel-truth (settled PNG spot-checks)
+
+- `chromium-light-dialog-settled.png` — a real warm-cream glass "Rename workspace" modal (Slug input, Cancel/Save) over a dimmed scrim showing the `/containers/dialog` page behind. Genuine overlay content.
+- `webkit-dark-popover-settled.png` — a real "Dimensions" glass panel (Width 8 / Height 4) anchored below its trigger, dark mode, on WebKit/Metal. Genuine overlay content.
+
+## Scrim coupling (SECONDARY — non-blocking, carried note)
+
+The modal scrim (reka `DialogOverlay` div, `sheet-animate` 0.55s) rises **concurrently from launch** with the panel (coupled — NOT the trailing-400ms HEAD defect) but reaches 80% dim at **~247–342ms**, not ~100ms. The wave's O4 fast-dim change targets `dialog.glass-top-layer[open]::backdrop` (a native `<dialog>`), which the `/containers` demo routes do not mount. This is **NOT part of this re-judgment's pass condition** (the descriptor binds the EXIT: "Dialog+Popover exit ≥4 no-overshoot frames"). The exit — the OWED verify — passes. The scrim ≤100ms fast-dim remains a note for a future wave should it choose to bind the reka overlay scrim (it would need its own launch-coupled fast enter clock, distinct from the native `::backdrop` O4 change).
 
 ---
 
-## defectLocalization
+## Engine provenance (intrinsic)
 
-- **`src/styles/glass/reveal.css`** — the `.glass-reveal[data-state="closed"]` EXIT leg is a CSS **transition** (`transition-timing-function: var(--ease-out); transition-duration: var(--duration-fast)`). A transition has `animation-name: none`.
-- **Root cause — reka `usePresence`** (`node_modules/reka-ui/dist/Presence/usePresence.js:44`): on `present → false` it reads `getComputedStyle(node).animationName`; when it is `"none"` it dispatches `UNMOUNT` **immediately** (`dispatch("UNMOUNT"); dispatchCustomEvent("after-leave")`). It listens only for `animationstart`/`animationend` — there is **no `transitionend` path**. So a transition-only exit is torn down before it can paint. Confirmed via MutationObserver (element removed at t≈11ms, `data-state="closed"` recorded, 0 rAF exit frames) AND the reka source. Sheet is immune because `sheet-animate` is a `@keyframes` animation (`animationName ≠ none`), which reka awaits — hence its 4–20 painted exit frames.
-- The gate `proof:motion` overlay-enter-paint arm is a SOURCE check (it verifies the `@starting-style` block exists); it cannot see reka unmounting the transition-exit — exactly the source-green / paint-broken gap this judge exists to catch.
+| Engine | UA | GL renderer | @starting-style |
+|--------|----|-----------  |-----------------|
+| Chrome/Blink | `...AppleWebKit/537.36 ... HeadlessChrome/148.0.7778.96 Safari/537.36` | `ANGLE (Google, Vulkan 1.3.0 (SwiftShader ...), SwiftShader driver)` | true |
+| Safari/WebKit | `...AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Safari/605.1.15` | `Apple GPU` (Metal) | true |
 
-## mustFix
-
-1. **Give the `.glass-reveal` EXIT an `animation-name` reka can await.** Add a `@keyframes glass-reveal-out` (scale → `calc(enter-scale × squish)`, opacity → 0, filter → `blur(--glass-reveal-blur)`, on `--ease-out`, ≤150ms, no overshoot) and apply it on `.glass-reveal[data-state="closed"]` so `getComputedStyle(node).animationName ≠ "none"` and reka's `usePresence` dispatches `ANIMATION_OUT` (awaiting `animationend`) — the SAME mechanism that already makes the Sheet exit paint. The ENTER `@starting-style` is Presence-independent and stays as-is; only the EXIT needs a keyframe path. (Alternatively route the Dialog/Popover exit through the Sheet's `animate-out` keyframe family — one mechanism, no fork.)
-2. **Re-verify (this same live frame-series):** Dialog + Popover EXIT paints **≥4 frames ≤150ms no-overshoot**, both engines both modes.
-3. **(Secondary, scrim)** If "≥80% dim within ~100ms" is meant to bind the reka overlay scrim (the surface the `/containers` demo actually paints), the reka `DialogOverlay`/`ModalOverlay` scrim (`sheet-animate`, 0.55s) needs its OWN launch-coupled fast enter clock; today the O4 change only reaches native `dialog.glass-top-layer[open]::backdrop`, which no `/containers` route mounts. As-is the demo scrim is coupled/concurrent (not trailing) but reaches 80% at ~257–392ms. (Non-blocking relative to the exit; note for the fix agent.)
+Two genuinely distinct rendering engines exercised through their real style/animation machinery (the reka `usePresence` unmount-gate + the `@keyframes glass-reveal-out` recede both run under each engine's own animation engine).
 
 ## Capture manifest (on disk, all resolve)
 
-- Frame-series JSON (12): `overlay-enter-paint/{chromium,webkit}-{light,dark}-{dialog,sheet,popover}.frames.json`
-- Settled PNG (12, real): `overlay-enter-paint/{chromium,webkit}-{light,dark}-{dialog,sheet,popover}-settled.png`
-- Mid-bloom PNG (8): `overlay-enter-paint/{chromium,webkit}-{light,dark}-{dialog,popover}-midbloom.png`
-- Probes: `BG.W-OVERLAY-ENTER-PAINT-frameseries.mjs`, `BG.W-OVERLAY-ENTER-PAINT-analyze.mjs`
+- Frame-series JSON (12): `overlay-enter-paint-rejudge/{chromium,webkit}-{light,dark}-{dialog,sheet,popover}.frames.json`
+- Settled PNG (12, real 326KB–2.65MB): `overlay-enter-paint-rejudge/{chromium,webkit}-{light,dark}-{dialog,sheet,popover}-settled.png`
+- Aggregate: `overlay-enter-paint-rejudge/{chromium,webkit}-ALL.json`
+- Probe: `BG.W-OVERLAY-ENTER-PAINT-frameseries-rejudge.mjs`
+- (Prior FAIL-run artifacts preserved for provenance under `overlay-enter-paint/`.)
 
 Siblings tripwire `node scripts/verify-siblings-intact.mjs --quiet` → exit 0 (before + after).
+
+---
+
+## Prior FAIL (2026-07-04, SUPERSEDED by this PASS — kept for provenance)
+
+The initial judgment (src `6911d48e`, ENTER `@starting-style` from-state landed) found the **Dialog + Popover EXIT painting 0 frames** in both engines both modes: reka `usePresence` (`node_modules/reka-ui/dist/Presence/usePresence.js:44`) dispatched UNMOUNT immediately when `getComputedStyle(node).animationName === "none"`, and the `.glass-reveal[data-state=closed]` exit was a CSS **transition** (animationName none), so the content was removed ~11ms after `data-state → closed` — the exit never painted. The mustFix was to give the exit an `animation-name` reka can await (`@keyframes glass-reveal-out`, the Sheet precedent). The F5.R1 repair (`a633784f`) did exactly that; this re-judgment confirms the exit now paints ≥4 no-overshoot frames in all 12 series.
