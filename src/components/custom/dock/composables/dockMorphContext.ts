@@ -184,6 +184,18 @@ export function useDockMorphOrchestrator(
     }
 
     /**
+     * Seat EVERY target + the shared root at their settled state — the ONE settle
+     * path both `onSettle` (the spring's natural 2%-band ring-down) AND the
+     * early-arrival drop (`onFrame` at `tValue ≥ 1`) call. Drops each target's
+     * leaving pane, then the root morph attrs + scalar via `maybeSettleRoot`
+     * (which owns the attrs-BEFORE-scalar order, spec vocab (b)).
+     */
+    function settleAll() {
+        for (const tt of targets) settleTarget(tt);
+        maybeSettleRoot();
+    }
+
+    /**
      * Ensure the ONE shared spring is running 0→1, writing `--dock-morph-t` once
      * per frame. `dockSpring.playTo(0, 1, …)` mints a FRESH spring that starts from
      * rest CARRYING the prior spring's velocity (iOS interruptible continuity) and
@@ -214,21 +226,41 @@ export function useDockMorphOrchestrator(
         dockSpring.playTo(0, 1, {
             onFrame: (tValue: number) => {
                 const rr = root();
-                if (rr) {
-                    rr.style.setProperty("--dock-morph-t", `${tValue}`);
-                    // Clear the punch hook past the curve's overshoot peak so it
-                    // transitions BACK to the rest 1 before the morph settles (the
-                    // never-latch fence).
-                    if (tValue > 0.5 && rr.hasAttribute("data-punching")) {
-                        rr.removeAttribute("data-punching");
-                    }
+                if (!rr) return;
+                rr.style.setProperty("--dock-morph-t", `${tValue}`);
+                // Clear the punch hook past the curve's overshoot peak so it
+                // transitions BACK to the rest 1 before the morph settles (the
+                // never-latch fence).
+                if (tValue > 0.5 && rr.hasAttribute("data-punching")) {
+                    rr.removeAttribute("data-punching");
+                }
+                // BG.W-DOCK-GLYPH-RIGID (F3.R1 secondary) — SETTLE AT VISIBLE ARRIVAL,
+                // not at the spring's ~1s analytic ring-down. The DOCK spring
+                // (response 0.68, ζ 0.64) overshoots past 1 then rings down over its
+                // full 2%-band settle (~1s wall-clock); on an engine whose settle runs
+                // long (WebKit under the glass-blur compositing load) `[data-morphing]`
+                // lingered ~800–1000ms, holding the box in its reserved-expanded ×
+                // collapsed-scale state — a narrow scaled-reserve plate, NOT the resting
+                // circle — a ~1s sliver-at-rest (the F3.R1 paint FAIL). But the VISIBLE
+                // morph is COMPLETE at arrival (`tValue ≥ 1`): the box size clamps
+                // `clamp(0, --dock-expand-t, 1)` so it never grows past the endpoint, the
+                // punch has returned (cleared above), and both crossfade panes are at
+                // their endpoints (entering opacity 1, leaving 0, matching their base rest
+                // rules). So drop the morph state at arrival on EVERY engine
+                // (deterministic — keyed off the scalar, NOT the engine-variable
+                // ring-down): the TRUE collapsed/expanded box (inline-size → auto, the
+                // AY.W-DOCK-NAV B4 aspect-ratio circle) seats within one beat. `settleAll`
+                // → `maybeSettleRoot` still drops the attrs BEFORE the scalar (spec
+                // vocab (b), the G2 order) and disposes the spring (idempotent; the
+                // still-live-mid-flight re-toggle before arrival re-bases as before). A
+                // ζ ≥ 1 config (no overshoot) never crosses 1 and falls back to the
+                // natural `onSettle` — no regression for a critically-damped register.
+                if (tValue >= 1 && rr.hasAttribute("data-morphing")) {
+                    settleAll();
                 }
             },
             onSettle: () => {
-                const rrr = root();
-                if (rrr) rrr.removeAttribute("data-punching");
-                for (const tt of targets) settleTarget(tt);
-                maybeSettleRoot();
+                settleAll();
             },
         });
     }

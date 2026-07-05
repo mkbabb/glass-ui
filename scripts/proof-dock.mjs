@@ -49,32 +49,48 @@
 //        the dead silhouette engine but is a DISTINCT live consumer; an
 //        over-eager cut deleting it is forbidden.
 //
-// ── The GLYPH-RIGID morph arm (BG.W-DOCK-GLYPH-RIGID; F3.R1) ────────────────────
+// ── The GLYPH-RIGID morph arm (BG.W-DOCK-GLYPH-RIGID; F3.R1 + the paint-repair) ──
 // The dock morph paints RIGID content over a MORPHING plate. The box-size morph
 // (shape.css `.glass-dock[data-morphing]…{scale}`) scales the WHOLE `.glass-dock`
-// subtree by `--dock-size-scale` on the morph axis (1 → 0.06 on collapse), which
-// scaleX-squishes every glyph to a compressed SLIVER mid-morph and left the
-// collapsed REST a compressed glyph in a rounded square (not the AY.W-DOCK-NAV B4
-// 1:1 circle). The FIX is an inner CONTENT layer carrying the per-frame INVERSE of
-// the root morph-axis footprint scale (`scale: calc(1 / max(var(--dock-size-scale),
-// 0.06)) …` on `.dock-persistent`/`.dock-layers`, compositor-only), so the plate
-// scales and the glyphs do NOT; at settle the residual scale lives ONLY under
-// `[data-morphing]` (the orchestrator clears the attrs BEFORE the scalar so the
-// true collapsed/expanded box seats `scale: none`). This arm asserts the SOURCE
-// mechanism (the binding per-frame glyph-bbox ±5% screencast π rides the paint
-// judge — device-free here):
-//   G1 — INVERSE-SCALE-CONTENT-LAYER: shape.css declares the inverse-scale rule on
-//        BOTH content children (`.dock-persistent` AND `.dock-layers`), on BOTH
-//        orientation axes (horizontal inverts X, vertical inverts Y), gated on the
-//        morph window (`[data-morphing]`/`[data-punching]`), inverting the footprint
-//        factor `--dock-size-scale` (NOT `--stretch`/`--dock-punch-stretch` — those
-//        are the sub-perceptual volume-preserving squish the content is MEANT to
-//        carry), with the `max(…, 0.06)` div-by-zero clamp floor.
+// subtree by the FULL morph-axis factor `--dock-size-scale × --stretch ×
+// --dock-punch-stretch` (X on horizontal), reciprocal `1 / (--stretch ×
+// --dock-punch-stretch)` (Y), which stretches every glyph mid-morph. The FIX is an
+// inner CONTENT layer carrying the per-frame INVERSE of the FULL factor (`scale:
+// calc(1 / (max(var(--dock-size-scale),0.06) × var(--stretch) ×
+// var(--dock-punch-stretch))) calc(var(--stretch) × var(--dock-punch-stretch))` on
+// `.dock-persistent`/`.dock-layers`, compositor-only), so the plate scales/squishes
+// and the glyph reads EXACTLY 1:1 in every frame. THE F3.R1 PAINT-REPAIR: the prior
+// build inverted ONLY `--dock-size-scale`, cancelling the footprint but leaving the
+// punch/stretch UNcompensated in BOTH axes → glyph aspect `(--stretch ×
+// --dock-punch-stretch)²` = 1.22² = +48.8% at the punch peak (the paint-judge FAIL).
+// The full inverse removes it (aspect ≡ 1.0). At settle the residual scale lives ONLY
+// under `[data-morphing]`/`[data-punching]` (the orchestrator clears the attrs BEFORE
+// the scalar so the true collapsed/expanded box seats `scale: none`); AND the settle
+// fires at the scalar's VISIBLE ARRIVAL (`tValue >= 1`), not the spring's ~1s
+// analytic ring-down, so a collapsed dock never paints the reserved-expanded ×
+// collapsed-scale sliver for ~1s on a slow-settling engine (the WebKit paint FAIL).
+// This arm asserts the SOURCE mechanism (the binding per-frame glyph-bbox ±5%
+// screencast π rides the paint judge — device-free here):
+//   G1 — FULL-INVERSE-SCALE-CONTENT-LAYER: shape.css declares the FULL inverse-scale
+//        rule on BOTH content children (`.dock-persistent` AND `.dock-layers`), on
+//        BOTH orientation axes, gated on the morph window
+//        (`[data-morphing]`/`[data-punching]`): the morph-axis component is `1 /
+//        (max(var(--dock-size-scale),0.06) × var(--stretch) ×
+//        var(--dock-punch-stretch))` (the FULL inverse — NOT just the footprint
+//        factor; the size-only inverse leaves the +48.8% punch residual and REDs) and
+//        the cross-axis component is `var(--stretch) × var(--dock-punch-stretch)` (the
+//        squish-carry that cancels the plate's reciprocal cross-squish → aspect 1.0).
 //   G2 — SETTLE-DROPS-RESIDUAL: dockMorphContext.ts `maybeSettleRoot` removes the
 //        `data-morphing`/`data-punching` attrs BEFORE removing the `--dock-morph-t`
 //        scalar, so the box-scale + inverse rules stop matching before the
 //        registered property reverts to its `initial-value` — no one-frame
 //        collapsed-look flash on the settled true box (spec vocab (b)).
+//   G3 — ARRIVAL-SETTLE (F3.R1 secondary): dockMorphContext.ts `onFrame` drops the
+//        morph state at the scalar's arrival (`tValue >= 1`) via the shared settle
+//        path (which routes through `maybeSettleRoot`, preserving the G2 order), so
+//        the true collapsed circle seats within one beat on EVERY engine — the box is
+//        clamped-complete at arrival, and holding `[data-morphing]` through the
+//        spring's engine-variable ring-down painted a ~1s sliver-at-rest on WebKit.
 //
 // Self-test bites (born-RED demonstration): a re-added silhouette composable REDs
 // D1; a re-added test REDs D2; a surviving gate script / a re-added
@@ -83,8 +99,10 @@
 // `import { useDockContextSilhouette }` in the dock tree REDs D4 while a bare
 // comment mention does NOT (the strip fence); a missing `DOCK_CONTEXT_LABEL` or a
 // deleted `dockContext.ts` REDs D5 (the over-cut); a shape.css MISSING the inverse
-// on a content child / on an axis / not gated on the morph window / inverting the
-// wrong factor REDs G1; a settle that removes the scalar BEFORE the attrs REDs G2.
+// on a content child / on an axis / not gated on the morph window / inverting ONLY
+// `--dock-size-scale` (the F3.R1 size-only residual) / missing the punch factor REDs
+// G1; a settle that removes the scalar BEFORE the attrs REDs G2; an `onFrame` with no
+// `tValue >= 1` arrival-settle guard REDs G3.
 
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
@@ -202,13 +220,21 @@ function collectDockCorpus() {
     return out;
 }
 
-// ── GLYPH-RIGID G1 — detect the inverse-scale content-layer rule. ──
-// For each content child on each orientation axis, find a rule whose SELECTOR list
-// carries `.glass-dock[data-morphing]…{axis}…> <child>` (the morph-window gate + the
-// axis qualifier + the direct-child content selector) AND whose BODY inverts the
-// footprint factor via `1 / max(var(--dock-size-scale)…, 0.06)` on a `scale:` decl.
-// The horizontal axis is `:not(.vertical)` inverting X (first scale component);
-// vertical is `.vertical` inverting Y (second component).
+// ── GLYPH-RIGID G1 — detect the FULL-inverse-scale content-layer rule. ──
+// The box-scale (shape.css above) applies the FULL morph-axis factor to the whole
+// `.glass-dock` subtree — `--dock-size-scale × --stretch × --dock-punch-stretch` on the
+// morph axis, `1 / (--stretch × --dock-punch-stretch)` on the cross. A child multiplies
+// its parent's `scale`, so the rigid content must invert the FULL factor: the morph-axis
+// component `1 / (max(var(--dock-size-scale…),0.06) × var(--stretch) ×
+// var(--dock-punch-stretch))` cancels the plate's morph-axis scale (→ 1) and the
+// cross-axis component `var(--stretch) × var(--dock-punch-stretch)` cancels the plate's
+// reciprocal cross-squish (→ 1) — effective glyph aspect ≡ 1.0. Inverting ONLY
+// `--dock-size-scale` (the F3.R1 born-RED premise) cancels the footprint but leaves the
+// `(--stretch × --dock-punch-stretch)²` = +48.8% glyph residual, so it FAILS this clause.
+// For each content child on each axis, find a `[data-morphing]`/`[data-punching]`-gated
+// direct-child rule whose two `scale:` components are (fullInverse, squishCarry) in the
+// axis order: horizontal `:not(.vertical)` → [inverse (X), carry (Y)]; vertical
+// `.vertical` → [carry (X), inverse (Y)].
 function detectGlyphRigid(shapeSrc) {
     const src = stripComments(shapeSrc);
     // Split into rule blocks (selector { body }). A coarse split on `}` is enough
@@ -219,16 +245,52 @@ function detectGlyphRigid(shapeSrc) {
     while ((m = ruleRe.exec(src)) !== null) {
         blocks.push({ selector: m[1], body: m[2] });
     }
-    // The inverse decl: a `scale:` that carries `1 / max(var(--dock-size-scale…,0.06)`.
-    // (Whitespace-insensitive; the `--dock-size-scale` fallback + the 0.06 floor.)
-    const invertsFootprint = (body) =>
-        /scale\s*:/.test(body) &&
-        /1\s*\/\s*max\(\s*var\(\s*--dock-size-scale[^)]*\)\s*,\s*0\.06\s*\)/.test(
-            body,
-        );
-    // A block is the HORIZONTAL inverse for `child` iff its selector targets the
-    // child as a direct child under a `[data-morphing]`/`[data-punching]` +
-    // `:not(.vertical)` dock, and the FIRST scale component is the inverse (X).
+    // Split a `scale:` value into its two top-level components, paren-aware (each
+    // component is a `calc(…)` that holds nested parens; a naive whitespace split would
+    // shatter them).
+    const splitTopLevel = (value) => {
+        const parts = [];
+        let depth = 0;
+        let cur = "";
+        for (const ch of value) {
+            if (ch === "(") {
+                depth++;
+                cur += ch;
+            } else if (ch === ")") {
+                depth--;
+                cur += ch;
+            } else if (/\s/.test(ch) && depth === 0) {
+                if (cur.trim()) parts.push(cur.trim());
+                cur = "";
+            } else {
+                cur += ch;
+            }
+        }
+        if (cur.trim()) parts.push(cur.trim());
+        return parts;
+    };
+    // The FULL-inverse component: a reciprocal `1 / ( … )` of the product of the
+    // footprint floor `max(var(--dock-size-scale…),0.06)` AND both squish factors
+    // `var(--stretch)` AND `var(--dock-punch-stretch)` (the size-only `1 / max(…)`
+    // form — no `1 / (` wrap, no stretch/punch — the F3.R1 residual, FAILS here).
+    const isFullInverse = (comp) =>
+        /1\s*\/\s*\(/.test(comp) &&
+        /max\(\s*var\(\s*--dock-size-scale[^)]*\)\s*,\s*0\.06\s*\)/.test(comp) &&
+        /var\(\s*--stretch\b/.test(comp) &&
+        /var\(\s*--dock-punch-stretch\b/.test(comp);
+    // The cross-axis squish-carry: the product `var(--stretch) × var(--dock-punch-stretch)`
+    // — carries BOTH squish factors, is NOT itself a reciprocal, and does NOT re-introduce
+    // the footprint factor (a bare `1` identity — the size-only cross axis — FAILS: it
+    // leaves the plate's `1 / (stretch × punch)` cross-squish uncompensated on the glyph).
+    const isSquishCarry = (comp) =>
+        /var\(\s*--stretch\b/.test(comp) &&
+        /var\(\s*--dock-punch-stretch\b/.test(comp) &&
+        !/1\s*\/\s*\(/.test(comp) &&
+        !/--dock-size-scale/.test(comp);
+    // A block is the axis inverse for `child` iff its selector targets the child as a
+    // direct child under a `[data-morphing]`/`[data-punching]` dock with the axis
+    // qualifier, and its two `scale:` components are (fullInverse, squishCarry) in the
+    // axis order.
     const findAxisRule = (child, axis) => {
         const axisQual = axis === "x" ? ":not(.vertical)" : ".vertical";
         for (const b of blocks) {
@@ -237,24 +299,21 @@ function detectGlyphRigid(shapeSrc) {
                 /\.glass-dock\[data-morphing\]/.test(sel) ||
                 /\.glass-dock\[data-punching\]/.test(sel);
             const hasAxis = sel.includes(axisQual);
-            const hasChild =
-                new RegExp(`>\\s*${child.replace(".", "\\.")}\\b`).test(sel);
+            const hasChild = new RegExp(
+                `>\\s*${child.replace(".", "\\.")}\\b`,
+            ).test(sel);
             if (!gated || !hasAxis || !hasChild) continue;
-            if (!invertsFootprint(b.body)) continue;
-            // The axis component check: horizontal must invert the FIRST scale
-            // component (X free, Y = 1); vertical the SECOND (X = 1, Y free). Read
-            // the `scale:` value and confirm the inverse sits on the right axis.
             const scaleM = b.body.match(/scale\s*:\s*([^;]+);/);
             if (!scaleM) continue;
-            const scaleVal = scaleM[1].trim();
-            // Horizontal: `<inverse> 1` — inverse first, identity `1` last.
-            // Vertical:   `1 <inverse>` — identity `1` first, inverse last.
-            const idxInverse = scaleVal.indexOf("--dock-size-scale");
-            const idxOne = scaleVal.search(/(^|\s)1(\s|$)/);
-            if (idxInverse < 0 || idxOne < 0) continue;
-            const inverseFirst = idxInverse < idxOne;
-            if (axis === "x" && inverseFirst) return true; // X inverted, Y = 1
-            if (axis === "y" && !inverseFirst) return true; // X = 1, Y inverted
+            const parts = splitTopLevel(scaleM[1].trim());
+            if (parts.length !== 2) continue;
+            const [first, second] = parts;
+            // Horizontal: [fullInverse (X), squishCarry (Y)].
+            if (axis === "x" && isFullInverse(first) && isSquishCarry(second))
+                return true;
+            // Vertical:   [squishCarry (X), fullInverse (Y)].
+            if (axis === "y" && isSquishCarry(first) && isFullInverse(second))
+                return true;
         }
         return false;
     };
@@ -291,6 +350,33 @@ function detectSettleOrder(morphContextSrc) {
     return {
         ok: present && idxMorph < idxScalar,
         facts: { attrIdx: idxMorph, scalarIdx: idxScalar, present },
+    };
+}
+
+// ── GLYPH-RIGID G3 — the settle fires at the scalar's VISIBLE ARRIVAL (F3.R1 secondary). ──
+// The DOCK spring (response 0.68, ζ 0.64) overshoots past 1 then rings down over its full
+// ~1s 2%-band settle; holding `[data-morphing]` through that engine-variable tail kept the
+// box in its reserved-expanded × collapsed-scale sliver state for the whole tail — a
+// ~800–1000ms sliver-at-rest on a slow-settling engine (the WebKit paint FAIL). The box is
+// VISUALLY complete at the scalar's arrival (`tValue >= 1`, the clamped size seated), so
+// `onFrame` must drop the morph state there — via the shared `settleAll()` (which routes
+// through `maybeSettleRoot`, preserving the G2 attrs-before-scalar order) — so the true
+// collapsed/expanded box seats within one beat on EVERY engine (deterministic off the
+// scalar, not the engine-variable ring-down).
+function detectArrivalSettle(morphContextSrc) {
+    const src = stripComments(morphContextSrc);
+    // The arrival guard `tValue >= 1` — the per-frame writer drops the morph state at the
+    // scalar's visible arrival (not only the spring's natural `onSettle` ring-down).
+    const hasArrivalGuard = /tValue\s*>=\s*1\b/.test(src);
+    // …firing a settle: the shared `settleAll()` (which routes through `maybeSettleRoot`,
+    // preserving the G2 order) OR an inline attr-drop + `maybeSettleRoot`.
+    const firesSettle =
+        /settleAll\s*\(\s*\)/.test(src) ||
+        (/removeAttribute\(\s*["']data-morphing["']\s*\)/.test(src) &&
+            /maybeSettleRoot\s*\(\s*\)/.test(src));
+    return {
+        ok: hasArrivalGuard && firesSettle,
+        facts: { hasArrivalGuard, firesSettle },
     };
 }
 
@@ -558,6 +644,14 @@ function detect(overrides = {}) {
         settle.ok,
     );
 
+    // ── G3 — ARRIVAL-SETTLE (BG.W-DOCK-GLYPH-RIGID F3.R1 secondary) ──
+    const arrival = detectArrivalSettle(morphContextSrc);
+    facts.glyphRigidArrivalSettle = arrival.facts;
+    assert(
+        "G3 — dockMorphContext.onFrame drops the morph state at the scalar's VISIBLE ARRIVAL (`tValue >= 1`) via the shared settle path, so the true collapsed circle seats within one beat on EVERY engine (not the spring's ~1s ring-down that painted a WebKit sliver-at-rest)",
+        arrival.ok,
+    );
+
     // ── P1/P2 — PANE-OVERLAP: the OVERLAPPED pane-swap crossfade (BG.W-DOCK-PANE-OVERLAP) ──
     const overlap = detectPaneOverlap(layerGroupVueSrc);
     facts.paneOverlap = overlap.facts;
@@ -619,27 +713,30 @@ function selfTest() {
             stripped: `export { useDockState } from "./useDockState";`,
         },
     ];
-    // A clean synthetic shape.css carrying the inverse-scale content-layer on both
-    // children, both axes, gated on the morph window — the G1-GREEN reference.
+    // A clean synthetic shape.css carrying the FULL inverse-scale content-layer on both
+    // children, both axes, gated on the morph window — the G1-GREEN reference (the
+    // morph-axis component inverts the FULL `size × stretch × punch` factor, the cross
+    // component carries `stretch × punch`, so the glyph aspect is EXACTLY 1.0).
     const CLEAN_SHAPE = `
 @layer components {
     .glass-dock[data-morphing]:not(.vertical) > .dock-persistent,
     .glass-dock[data-morphing]:not(.vertical) > .dock-layers,
     .glass-dock[data-punching]:not(.vertical) > .dock-persistent,
     .glass-dock[data-punching]:not(.vertical) > .dock-layers {
-        scale: calc(1 / max(var(--dock-size-scale, 1), 0.06)) 1;
+        scale: calc(1 / (max(var(--dock-size-scale, 1), 0.06) * var(--stretch, 1) * var(--dock-punch-stretch, 1))) calc(var(--stretch, 1) * var(--dock-punch-stretch, 1));
         will-change: transform;
     }
     .glass-dock[data-morphing].vertical > .dock-persistent,
     .glass-dock[data-morphing].vertical > .dock-layers,
     .glass-dock[data-punching].vertical > .dock-persistent,
     .glass-dock[data-punching].vertical > .dock-layers {
-        scale: 1 calc(1 / max(var(--dock-size-scale, 1), 0.06));
+        scale: calc(var(--stretch, 1) * var(--dock-punch-stretch, 1)) calc(1 / (max(var(--dock-size-scale, 1), 0.06) * var(--stretch, 1) * var(--dock-punch-stretch, 1)));
         will-change: transform;
     }
 }`;
-    // A clean synthetic maybeSettleRoot that drops the attrs BEFORE the scalar — the
-    // G2-GREEN reference.
+    // A clean synthetic orchestrator: maybeSettleRoot drops the attrs BEFORE the scalar
+    // (the G2-GREEN reference) AND onFrame drops the morph state at the scalar's arrival
+    // `tValue >= 1` via the shared settleAll (the G3-GREEN reference).
     const CLEAN_MORPH_CONTEXT = `
     function maybeSettleRoot() {
         const r = root();
@@ -649,6 +746,28 @@ function selfTest() {
             r.style.removeProperty("--dock-morph-t");
         }
         dockSpring.dispose();
+    }
+    function settleAll() {
+        for (const tt of targets) settleTarget(tt);
+        maybeSettleRoot();
+    }
+    function ensureSpringRunning() {
+        dockSpring.playTo(0, 1, {
+            onFrame: (tValue) => {
+                const rr = root();
+                if (!rr) return;
+                rr.style.setProperty("--dock-morph-t", tValue + "");
+                if (tValue > 0.5 && rr.hasAttribute("data-punching")) {
+                    rr.removeAttribute("data-punching");
+                }
+                if (tValue >= 1 && rr.hasAttribute("data-morphing")) {
+                    settleAll();
+                }
+            },
+            onSettle: () => {
+                settleAll();
+            },
+        });
     }`;
     // A clean synthetic DockLayerGroup.vue `<style>` — the overlapped crossfade (P1/P2) +
     // the standalone-stack content-rigid clip-reveal box (P3 CSS half). The P1/P2-GREEN
@@ -825,39 +944,24 @@ function selfTest() {
         "D5 dockContext.ts co-deleted (the anti-over-cut fence)",
     );
 
-    // ── G1 — the inverse-scale content-layer bites (BG.W-DOCK-GLYPH-RIGID) ──
-    // G1: the HEAD-shape — no inverse rule at all (the born-RED premise).
+    // ── G1 — the FULL-inverse-scale content-layer bites (BG.W-DOCK-GLYPH-RIGID) ──
+    // G1: the HEAD-shape — no inverse rule at all (the original born-RED premise).
     sab(
         {
             ...base,
             shapeSrc: `@layer components {
     .glass-dock[data-morphing]:not(.vertical) {
-        scale: calc(var(--dock-size-scale, 1)) calc(1 / var(--stretch, 1));
+        scale: calc(var(--dock-size-scale, 1) * var(--stretch, 1) * var(--dock-punch-stretch, 1)) calc(1 / (var(--stretch, 1) * var(--dock-punch-stretch, 1)));
     }
 }`,
         },
         "G1",
         "G1 HEAD shape (box scales the whole subtree, no content-layer inverse) reds",
     );
-    // G1: the inverse present on .dock-layers but MISSING on .dock-persistent.
-    sab(
-        {
-            ...base,
-            shapeSrc: `@layer components {
-    .glass-dock[data-morphing]:not(.vertical) > .dock-layers,
-    .glass-dock[data-punching]:not(.vertical) > .dock-layers {
-        scale: calc(1 / max(var(--dock-size-scale, 1), 0.06)) 1;
-    }
-    .glass-dock[data-morphing].vertical > .dock-layers,
-    .glass-dock[data-punching].vertical > .dock-layers {
-        scale: 1 calc(1 / max(var(--dock-size-scale, 1), 0.06));
-    }
-}`,
-        },
-        "G1",
-        "G1 inverse missing on .dock-persistent (only .dock-layers covered) reds",
-    );
-    // G1: the inverse present horizontal but MISSING the vertical axis.
+    // G1: the F3.R1 SIZE-ONLY residual — inverts ONLY --dock-size-scale, leaving the
+    // (--stretch × --dock-punch-stretch)² = +48.8% glyph residual (the paint-judge FAIL
+    // this repair removes). The CRITICAL new born-RED bite: a re-introduction of the
+    // size-only inverse REDs on the number, not just on a missing CSS string.
     sab(
         {
             ...base,
@@ -868,50 +972,92 @@ function selfTest() {
     .glass-dock[data-punching]:not(.vertical) > .dock-layers {
         scale: calc(1 / max(var(--dock-size-scale, 1), 0.06)) 1;
     }
+    .glass-dock[data-morphing].vertical > .dock-persistent,
+    .glass-dock[data-morphing].vertical > .dock-layers,
+    .glass-dock[data-punching].vertical > .dock-persistent,
+    .glass-dock[data-punching].vertical > .dock-layers {
+        scale: 1 calc(1 / max(var(--dock-size-scale, 1), 0.06));
+    }
 }`,
         },
         "G1",
-        "G1 inverse missing the vertical axis (horizontal-only) reds",
+        "G1 the F3.R1 SIZE-ONLY residual (inverts only --dock-size-scale, +48.8% punch residual) reds",
     );
-    // G1: the inverse NOT gated on the morph window (a resting-state scale — wrong).
+    // G1: the FULL inverse present on .dock-layers but MISSING on .dock-persistent.
+    sab(
+        {
+            ...base,
+            shapeSrc: `@layer components {
+    .glass-dock[data-morphing]:not(.vertical) > .dock-layers,
+    .glass-dock[data-punching]:not(.vertical) > .dock-layers {
+        scale: calc(1 / (max(var(--dock-size-scale, 1), 0.06) * var(--stretch, 1) * var(--dock-punch-stretch, 1))) calc(var(--stretch, 1) * var(--dock-punch-stretch, 1));
+    }
+    .glass-dock[data-morphing].vertical > .dock-layers,
+    .glass-dock[data-punching].vertical > .dock-layers {
+        scale: calc(var(--stretch, 1) * var(--dock-punch-stretch, 1)) calc(1 / (max(var(--dock-size-scale, 1), 0.06) * var(--stretch, 1) * var(--dock-punch-stretch, 1)));
+    }
+}`,
+        },
+        "G1",
+        "G1 full inverse missing on .dock-persistent (only .dock-layers covered) reds",
+    );
+    // G1: the FULL inverse present horizontal but MISSING the vertical axis.
+    sab(
+        {
+            ...base,
+            shapeSrc: `@layer components {
+    .glass-dock[data-morphing]:not(.vertical) > .dock-persistent,
+    .glass-dock[data-morphing]:not(.vertical) > .dock-layers,
+    .glass-dock[data-punching]:not(.vertical) > .dock-persistent,
+    .glass-dock[data-punching]:not(.vertical) > .dock-layers {
+        scale: calc(1 / (max(var(--dock-size-scale, 1), 0.06) * var(--stretch, 1) * var(--dock-punch-stretch, 1))) calc(var(--stretch, 1) * var(--dock-punch-stretch, 1));
+    }
+}`,
+        },
+        "G1",
+        "G1 full inverse missing the vertical axis (horizontal-only) reds",
+    );
+    // G1: the FULL inverse NOT gated on the morph window (a resting-state scale — wrong).
     sab(
         {
             ...base,
             shapeSrc: `@layer components {
     .glass-dock:not(.vertical) > .dock-persistent,
     .glass-dock:not(.vertical) > .dock-layers {
-        scale: calc(1 / max(var(--dock-size-scale, 1), 0.06)) 1;
+        scale: calc(1 / (max(var(--dock-size-scale, 1), 0.06) * var(--stretch, 1) * var(--dock-punch-stretch, 1))) calc(var(--stretch, 1) * var(--dock-punch-stretch, 1));
     }
     .glass-dock.vertical > .dock-persistent,
     .glass-dock.vertical > .dock-layers {
-        scale: 1 calc(1 / max(var(--dock-size-scale, 1), 0.06));
+        scale: calc(var(--stretch, 1) * var(--dock-punch-stretch, 1)) calc(1 / (max(var(--dock-size-scale, 1), 0.06) * var(--stretch, 1) * var(--dock-punch-stretch, 1)));
     }
 }`,
         },
         "G1",
-        "G1 inverse not gated on [data-morphing]/[data-punching] (a resting scale) reds",
+        "G1 full inverse not gated on [data-morphing]/[data-punching] (a resting scale) reds",
     );
-    // G1: the inverse targets the WRONG factor (--stretch, not --dock-size-scale).
+    // G1: the inverse MISSES the punch factor (inverts size × stretch but not
+    // --dock-punch-stretch) — the cartoon overshoot residual survives on the glyph.
     sab(
         {
             ...base,
             shapeSrc: `@layer components {
     .glass-dock[data-morphing]:not(.vertical) > .dock-persistent,
     .glass-dock[data-morphing]:not(.vertical) > .dock-layers {
-        scale: calc(1 / max(var(--stretch, 1), 0.06)) 1;
+        scale: calc(1 / (max(var(--dock-size-scale, 1), 0.06) * var(--stretch, 1))) calc(var(--stretch, 1));
     }
     .glass-dock[data-morphing].vertical > .dock-persistent,
     .glass-dock[data-morphing].vertical > .dock-layers {
-        scale: 1 calc(1 / max(var(--stretch, 1), 0.06));
+        scale: calc(var(--stretch, 1)) calc(1 / (max(var(--dock-size-scale, 1), 0.06) * var(--stretch, 1)));
     }
 }`,
         },
         "G1",
-        "G1 inverse targets the wrong factor (--stretch, not --dock-size-scale) reds",
+        "G1 inverse misses the --dock-punch-stretch factor (cartoon overshoot residual on the glyph) reds",
     );
 
     // ── G2 — the settle-order bites (BG.W-DOCK-GLYPH-RIGID vocab (b)) ──
     // G2: the HEAD settle order — scalar removed BEFORE the attrs (born-RED premise).
+    // (Carries the G3-green onFrame arrival guard so ONLY G2 reds — no confound.)
     sab(
         {
             ...base,
@@ -924,10 +1070,56 @@ function selfTest() {
             r.removeAttribute("data-punching");
         }
         dockSpring.dispose();
+    }
+    function settleAll() {
+        for (const tt of targets) settleTarget(tt);
+        maybeSettleRoot();
+    }
+    function ensureSpringRunning() {
+        dockSpring.playTo(0, 1, {
+            onFrame: (tValue) => {
+                if (tValue >= 1 && root().hasAttribute("data-morphing")) settleAll();
+            },
+            onSettle: () => { settleAll(); },
+        });
     }`,
         },
         "G2",
         "G2 HEAD settle order (scalar removed before the attrs) reds",
+    );
+
+    // ── G3 — the arrival-settle bite (BG.W-DOCK-GLYPH-RIGID F3.R1 secondary) ──
+    // G3: the HEAD onFrame — no `tValue >= 1` arrival guard, so the morph state drops ONLY
+    // at the spring's ~1s ring-down onSettle (the WebKit ~1s sliver-at-rest premise). The
+    // G2-green maybeSettleRoot (attrs-before-scalar) is kept so ONLY G3 reds — no confound.
+    sab(
+        {
+            ...base,
+            morphContextSrc: `
+    function maybeSettleRoot() {
+        const r = root();
+        if (r) {
+            r.removeAttribute("data-morphing");
+            r.removeAttribute("data-punching");
+            r.style.removeProperty("--dock-morph-t");
+        }
+        dockSpring.dispose();
+    }
+    function ensureSpringRunning() {
+        dockSpring.playTo(0, 1, {
+            onFrame: (tValue) => {
+                const rr = root();
+                if (rr) rr.style.setProperty("--dock-morph-t", tValue + "");
+            },
+            onSettle: () => {
+                for (const tt of targets) settleTarget(tt);
+                maybeSettleRoot();
+            },
+        });
+    }`,
+        },
+        "G3",
+        "G3 HEAD onFrame with no `tValue >= 1` arrival-settle guard (morph state drops only at the ~1s ring-down) reds",
     );
 
     // ── P1 — the entering-ramp bites (BG.W-DOCK-PANE-OVERLAP §2.2 vocab a) ──
@@ -1127,6 +1319,9 @@ function run() {
         `  G2 settle drops residual first  : ${violations.every((v) => !v.startsWith("G2"))} (attrIdx=${facts.glyphRigidSettle?.attrIdx}, scalarIdx=${facts.glyphRigidSettle?.scalarIdx})`,
     );
     console.log(
+        `  G3 settle at scalar arrival     : ${violations.every((v) => !v.startsWith("G3"))} (arrivalGuard=${facts.glyphRigidArrivalSettle?.hasArrivalGuard}, firesSettle=${facts.glyphRigidArrivalSettle?.firesSettle})`,
+    );
+    console.log(
         `  P1 entering pane ramps up       : ${violations.every((v) => !v.startsWith("P1"))} (onset=${facts.paneOverlap?.enterOnset})`,
     );
     console.log(
@@ -1136,7 +1331,7 @@ function run() {
         `  P3 box FLIP monotonic (rigid)   : ${violations.every((v) => !v.startsWith("P3"))} (clip=${facts.boxFlipMonotonic?.clipReveal}, reserveMax=${facts.boxFlipMonotonic?.reservesMax}, clamped=${facts.boxFlipMonotonic?.clampedReveal})`,
     );
     console.log(
-        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×3 + D3-fence×2 + D4×2 + D4-fence + D5×2 + G1×5 + G2 + P1×2 + P2×2 + P3×3)`,
+        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×3 + D3-fence×2 + D4×2 + D4-fence + D5×2 + G1×6 + G2 + G3 + P1×2 + P2×2 + P3×3)`,
     );
 
     if (violations.length) {
