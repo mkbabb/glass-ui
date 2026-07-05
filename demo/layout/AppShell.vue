@@ -77,18 +77,24 @@ const morph = useDockOrientationMorph({
     horizontalSize: H_FULL_W,
 });
 
-// The SETTLED orientation — committed at the spring SETTLE, NOT the live 0.5 crossing
-// (F-ARM-3.4): the `<main>` gutter reflow + the aside's fixed-floating position toggle
-// once per full cycle, so a rapid mid-flight V→H→V wiggle nets ZERO reflow. During the
-// flight the real dock dissolves under the goo (the Dynamic-Island merge-then-reshape),
-// re-materializing in the settled orientation as the neck fades. It is a STATIC reserve
-// toggle (a data-attr), never an animated height (`proof:no-layout-animation` holds).
+// The SETTLED orientation — tracks the 0.5-crossing `boundOrientation` (a pure `f(t)`),
+// NOT the spring SETTLE (BG.W-SHELL-MORPH-PAINT-REPAIR F3.R3). The `<main>` column reclaim
+// + top-gutter reserve, the aside's fixed-floating position toggle, AND (via SidebarDock's
+// `:orientation` bind) the GlassDock's own row-relayout ALL commit AT the occluded midpoint
+// (t≈0.5, where the goo teardrop is at its full-opacity plateau AND the real dock is
+// opacity:0 under `[data-dock-morphing]`) — never NAKED at settle (bo=0), the paint FAIL
+// the judge caught. `boundOrientation` is already the driver's crossing `f(t)`; a mid-flight
+// V→H→V wiggle re-crosses 0.5 under the SAME goo window, so no reflow ever paints uncovered.
+// It stays a writable ref (the capture seam + the provide type) fed by a watch on the
+// crossing. STILL a STATIC reserve toggle (a data-attr), never an animated height
+// (`proof:no-layout-animation` holds).
 const settledOrientation = ref<"vertical" | "horizontal">("vertical");
 watch(
-    () => morph.morphing.value,
-    (isMorphing) => {
-        if (!isMorphing) settledOrientation.value = morph.boundOrientation.value;
+    () => morph.boundOrientation.value,
+    (o) => {
+        settledOrientation.value = o;
     },
+    { immediate: true },
 );
 
 // The dock-anchored goo teardrop references the canonical `#dock-morph-goo` mount
@@ -523,12 +529,13 @@ onBeforeUnmount(() => {
     z-index: 40;
 }
 
-/* The internal dock flows as a ROW when settled horizontal (the occluded topology flip);
-   DockSection is display:contents, so forcing the flex axis lays the icons horizontally. */
-.demo-sidebar-rail[data-shell-dock-orientation="horizontal"] :deep(.demo-sidebar-dock) {
-    flex-direction: row;
-    align-items: center;
-}
+/* BG.W-SHELL-MORPH-PAINT-REPAIR (F3.R3) — the internal dock flows as a ROW when settled
+   horizontal because SidebarDock binds `:orientation="dockOrientation"` on the GlassDock
+   (it drops `.glass-dock.vertical`'s column grid for the base `display:inline-flex` row —
+   a genuine wide-short top bar). The prior `:deep(.demo-sidebar-dock){ flex-direction: row }`
+   workaround was insufficient (it re-flowed the root but left GlassDock's internal vertical
+   structure a tall rail that occluded the re-margined content — the paint FAIL); the bound
+   orientation prop is the real fix, so the workaround is deleted (no dead override). */
 
 /* <main> reserves a top gutter for the floating top bar when the dock settled horizontal
    (a static reserve, the pt mirror of the pb-28 bottom-dock reserve; the column reclaim is

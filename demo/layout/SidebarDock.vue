@@ -1,9 +1,14 @@
 <script setup lang="ts">
-// SidebarDock — the demo's fixed vertical category-rail dock (AW.W28.b).
+// SidebarDock — the demo's category-rail dock (AW.W28.b).
 //
-// A vertical, always-expanded GlassDock (AZ.W-DOCK-TAXONOMY — `orientation="vertical"`
-// + `always-expanded`; the prior `variant="rail"` discriminant is retired, "rail-ness"
-// is now orientation + the vertical-dock surface). It is a FIXED icon+label nav rail:
+// An always-expanded GlassDock whose `orientation` TRACKS the shell's settled V↔H morph
+// (BG.W-SHELL-MORPH-PAINT-REPAIR F3.R3 — `:orientation="dockOrientation"`, the injected
+// `SHELL_DOCK_ORIENTATION` the in-place morph commits at the occluded 0.5-crossing). At
+// rest it is the vertical left rail; when the shell settles horizontal the SAME GlassDock
+// lays out as a wide-short top bar (it drops `.glass-dock.vertical`'s column grid), so the
+// content re-margin clears it instead of sliding UNDER a persistent vertical rail. The prior
+// hardcoded `orientation="vertical"` is retired — a static vertical prop pinned the column
+// grid forever (the content-occlusion paint FAIL). It is a FIXED icon+label nav rail:
 // it opts OUT of the (now orientation-agnostic) collapse machinery via `always-expanded`,
 // so there is no collapse↔expand affordance here. The only "expand" is the mobile
 // off-canvas Sheet host the BottomDock owns; this component is the rail body it
@@ -190,7 +195,7 @@ const ringCoverage = computed<BorderProgressCoverage>(() => {
     <div class="demo-dock-progress-host min-h-0">
     <GlassDock
         ref="dockRef"
-        orientation="vertical"
+        :orientation="dockOrientation"
         always-expanded
         class="demo-sidebar-dock min-h-0"
         aria-label="Category navigation"

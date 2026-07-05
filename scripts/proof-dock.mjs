@@ -214,6 +214,19 @@ const ORIENTATION_MORPH_TS = resolve(
     "src/components/custom/dock/composables/useDockOrientationMorph.ts",
 );
 const MORPH_BRIDGE_CSS = resolve(ROOT, "src/styles/dock/morph-bridge.css");
+// ── The SHELL-MORPH-PAINT ENDPOINT arm sources (BG.W-SHELL-MORPH-PAINT-REPAIR; F3.R3
+// paint-repair) ──
+// The travel-frame repair (S1/S2/S3) LANDED, but the paint judge FAILED the wave on the
+// SETTLED ENDPOINT: (S4) the shell committed the settled orientation (and so the `<main>`
+// column re-margin) at the spring SETTLE (`morphing → false`, bridge opacity 0), so the
+// discrete reclaim jumped NAKED with the teardrop fully gone — not hidden at the occluded
+// midpoint; and (S5) the shell dock hardcoded `orientation="vertical"` on its `<GlassDock>`,
+// so the "horizontal" settled dock stayed a vertical rail (`.glass-dock.vertical`'s column
+// grid) that OCCLUDED the re-margined content column. The shell wiring lives in the demo
+// layout (the binary consumer #2 of `useDockOrientationMorph`): AppShell.vue drives the
+// settled-orientation commit; SidebarDock.vue owns the `<GlassDock>` orientation prop.
+const DEMO_APP_SHELL = resolve(ROOT, "demo/layout/AppShell.vue");
+const DEMO_SIDEBAR_DOCK = resolve(ROOT, "demo/layout/SidebarDock.vue");
 // The two morph-region CONTENT children that carry the inverse-scale (the plate
 // scales, these do NOT). Both must carry the inverse on both axes.
 const RIGID_CONTENT_CHILDREN = [".dock-persistent", ".dock-layers"];
@@ -883,10 +896,65 @@ function detectBridgePlateOverlap(bridgeCssSrc) {
     };
 }
 
+// ── SHELL-MORPH-PAINT S4 — the settled shell orientation commits AT the 0.5-crossing
+// (BG.W-SHELL-MORPH-PAINT-REPAIR; F3.R3 paint-repair). ──
+// The paint judge caught the discrete `<main>` column re-margin firing AT SETTLE
+// (`morphing → false`, bridge opacity 0) — a NAKED reclaim with the goo teardrop fully
+// gone. The FIX drives the shell's `settledOrientation` off `morph.boundOrientation` (the
+// driver's pure `f(t)` at the 0.5 crossing) via a watch on THAT source, so the reclaim
+// (and the aside fixed-flip + the dock row-relayout) commit at the occluded midpoint where
+// the teardrop covers the flip. Asserts (a) a `watch` whose SOURCE reads
+// `morph.boundOrientation.value` drives `settledOrientation`, AND (b) the HEAD settle-commit
+// form is ABSENT — no `watch(() => morph.morphing.value, …)` handler that assigns
+// `settledOrientation` (the settle-driven reclaim that painted the naked jump).
+function detectShellSettleDrive(appShellSrc) {
+    const src = stripComments(appShellSrc);
+    const facts = {};
+    // (a) POSITIVE — the settled orientation is driven off the 0.5-crossing boundOrientation.
+    const boundWatch =
+        /watch\(\s*\(\s*\)\s*=>\s*morph\.boundOrientation\.value/.test(src);
+    const writesSettled = /settledOrientation\.value\s*=/.test(src);
+    // (b) NEGATIVE — the HEAD settle-commit is gone (a `watch` on `morph.morphing` that
+    // assigns `settledOrientation` = the naked-at-settle reclaim). The lazy `[\s\S]*?`
+    // requires the morphing-watch SOURCE to precede a `settledOrientation` assignment; the
+    // fixed shell has no `watch(() => morph.morphing.value …)` at all.
+    const settleCommit =
+        /watch\(\s*\(\s*\)\s*=>\s*morph\.morphing\.value[\s\S]*?settledOrientation\.value\s*=/.test(
+            src,
+        );
+    facts.boundWatch = boundWatch;
+    facts.writesSettled = writesSettled;
+    facts.noSettleCommit = !settleCommit;
+    return { ok: boundWatch && writesSettled && !settleCommit, facts };
+}
+
+// ── SHELL-MORPH-PAINT S5 — the shell dock's GlassDock orientation is BOUND, not hardcoded
+// vertical (BG.W-SHELL-MORPH-PAINT-REPAIR; F3.R3 paint-repair). ──
+// The paint judge found the settled "horizontal" dock stayed a vertical RAIL: SidebarDock
+// hardcoded `orientation="vertical"` on its `<GlassDock>`, so `.glass-dock.vertical`'s
+// column grid pinned it tall-and-narrow (67×654) and the re-margined content slid UNDER it
+// (the left ~50-90px of every line occluded). The FIX binds `:orientation="dockOrientation"`
+// (the injected SHELL_DOCK_ORIENTATION the morph commits at 0.5), so the settled-horizontal
+// dock drops the column grid for the base row layout — a genuine wide-short top bar the
+// `<main>` top-gutter reserve clears. Asserts (a) the bound `:orientation="dockOrientation"`
+// prop is present AND (b) the hardcoded `orientation="vertical"` is GONE. The `(?<![\w-])`
+// lookbehind FENCES `aria-orientation="vertical"` (the facet-rail's a11y attr) — only a bare
+// GlassDock `orientation="vertical"` prop reds.
+function detectSidebarDockOrientationBound(sidebarSrc) {
+    const src = stripComments(sidebarSrc);
+    const facts = {};
+    const bound = /:orientation\s*=\s*"dockOrientation"/.test(src);
+    const hardcodedVertical = /(?<![\w-])orientation\s*=\s*"vertical"/.test(src);
+    facts.orientationBound = bound;
+    facts.noHardcodedVertical = !hardcodedVertical;
+    return { ok: bound && !hardcodedVertical, facts };
+}
+
 // overrides: { silhouetteExists?, testExists?, gateScriptExists?, manifestSrc?,
 //              packageSrc?, dockCorpus?, constantsSrc?, dockContextExists?,
 //              shapeSrc?, morphContextSrc?, layerGroupVueSrc?, layerTransitionTsSrc?,
-//              morphCssSrc?, orientMorphSrc?, bridgeCssSrc? }.
+//              morphCssSrc?, orientMorphSrc?, bridgeCssSrc?, appShellSrc?,
+//              sidebarDockSrc? }.
 function detect(overrides = {}) {
     const violations = [];
     const facts = {};
@@ -916,6 +984,8 @@ function detect(overrides = {}) {
     const morphCssSrc = overrides.morphCssSrc ?? read(DOCK_MORPH_CSS);
     const orientMorphSrc = overrides.orientMorphSrc ?? read(ORIENTATION_MORPH_TS);
     const bridgeCssSrc = overrides.bridgeCssSrc ?? read(MORPH_BRIDGE_CSS);
+    const appShellSrc = overrides.appShellSrc ?? read(DEMO_APP_SHELL);
+    const sidebarDockSrc = overrides.sidebarDockSrc ?? read(DEMO_SIDEBAR_DOCK);
 
     // ── D1 — SILHOUETTE-COMPOSABLE-ABSENT ──
     facts.silhouetteExists = silhouetteExists;
@@ -1050,6 +1120,22 @@ function detect(overrides = {}) {
     assert(
         "S3 — the two morph-bridge plates OVERLAP into a dense fused teardrop: the vertical plate HOLDS full opacity past the midpoint (holdUntil ≥ 0.55) and the horizontal plate reaches full EARLY (by ≤ 0.45), so across the overlap window (≥ 0.15 wide) BOTH plates are ~fully present (one dense continuous travelling mass, not the HEAD 0.5-centred crossfade that thinned to a faint neck) — AND the reshape is compositor-only (no width/height/*-size property value reads `--dock-morph-t`/`--stretch`; the plate boxes are static reserves)",
         bridgeOverlap.ok,
+    );
+
+    // ── S4 — SHELL-MORPH ENDPOINT: the settled orientation commits at the 0.5-crossing ──
+    const settleDrive = detectShellSettleDrive(appShellSrc);
+    facts.shellSettleDrive = settleDrive.facts;
+    assert(
+        "S4 — AppShell drives the shell dock's SETTLED orientation off `morph.boundOrientation` (the driver's pure `f(t)` at the 0.5 crossing) via a `watch(() => morph.boundOrientation.value, …)` → `settledOrientation`, NOT the HEAD settle-commit `watch(() => morph.morphing.value, …)` that flipped it at spring settle (bridge opacity 0) — so the discrete `<main>` column re-margin + the aside fixed-flip commit AT the occluded midpoint where the goo teardrop covers the flip, never NAKED at settle (the paint FAIL). A re-introduced morphing-settle-commit reds",
+        settleDrive.ok,
+    );
+
+    // ── S5 — SHELL-MORPH ENDPOINT: the shell dock's GlassDock orientation is BOUND ──
+    const dockOrientationBound = detectSidebarDockOrientationBound(sidebarDockSrc);
+    facts.shellDockOrientationBound = dockOrientationBound.facts;
+    assert(
+        "S5 — SidebarDock binds `:orientation=\"dockOrientation\"` on its `<GlassDock>` (the injected SHELL_DOCK_ORIENTATION the morph commits at 0.5), so the settled-horizontal shell dock actually lays out as a wide-short top BAR (drops `.glass-dock.vertical`'s column grid) that the `<main>` top-gutter reserve clears — NOT the HEAD hardcoded `orientation=\"vertical\"` that pinned the column grid into a tall RAIL occluding the re-margined content (the `aria-orientation=\"vertical\"` facet-rail attr is fenced by the lookbehind). A re-introduced hardcoded vertical prop reds",
+        dockOrientationBound.ok,
     );
 
     return { facts, violations };
@@ -1303,6 +1389,30 @@ function selfTest() {
         scale: var(--stretch, 1) calc(1 / var(--stretch, 1));
     }
 }`;
+    // A clean synthetic AppShell.vue script — the SHELL-MORPH-PAINT S4 GREEN reference: the
+    // settled orientation tracks `morph.boundOrientation` (the 0.5-crossing) via a watch on
+    // THAT source, and there is NO `watch(() => morph.morphing.value …)` settle-commit.
+    const CLEAN_APP_SHELL = `
+<script setup>
+const settledOrientation = ref("vertical");
+watch(
+    () => morph.boundOrientation.value,
+    (o) => {
+        settledOrientation.value = o;
+    },
+    { immediate: true },
+);
+provide(SHELL_DOCK_ORIENTATION, settledOrientation);
+</` + `script>`;
+    // A clean synthetic SidebarDock.vue — the SHELL-MORPH-PAINT S5 GREEN reference: the
+    // GlassDock orientation is BOUND (`:orientation="dockOrientation"`), and the facet rail's
+    // `aria-orientation="vertical"` is PRESENT (proving the lookbehind fence does NOT flag it).
+    const CLEAN_SIDEBAR_DOCK = `
+<template>
+    <GlassDock ref="dockRef" :orientation="dockOrientation" always-expanded class="demo-sidebar-dock">
+        <div class="demo-facet-rail--vertical" role="tablist" aria-orientation="vertical"></div>
+    </GlassDock>
+</template>`;
     const base = {
         silhouetteExists: false,
         testExists: false,
@@ -1319,6 +1429,8 @@ function selfTest() {
         morphCssSrc: CLEAN_MORPH_CSS,
         orientMorphSrc: CLEAN_ORIENT_MORPH,
         bridgeCssSrc: CLEAN_BRIDGE_CSS,
+        appShellSrc: CLEAN_APP_SHELL,
+        sidebarDockSrc: CLEAN_SIDEBAR_DOCK,
     };
 
     // Sanity: the clean synthetic baseline is fully GREEN (no confound).
@@ -2086,6 +2198,64 @@ function selfTest() {
         "S3 a plate animates its box width off --dock-morph-t (per-frame reflow, not compositor-only) reds",
     );
 
+    // ── S4 — the settle-commit bite (BG.W-SHELL-MORPH-PAINT-REPAIR F3.R3 paint-repair) ──
+    // S4: the HEAD form — AppShell commits `settledOrientation` at the spring SETTLE (a
+    // `watch(() => morph.morphing.value, …)` handler assigning it under `!isMorphing`), so the
+    // `<main>` column re-margin fires NAKED with the bridge opacity 0 (not hidden at the
+    // occluded midpoint). Must red (boundWatch false AND settleCommit true).
+    sab(
+        {
+            ...base,
+            appShellSrc: `
+<script setup>
+const settledOrientation = ref("vertical");
+watch(
+    () => morph.morphing.value,
+    (isMorphing) => {
+        if (!isMorphing) settledOrientation.value = morph.boundOrientation.value;
+    },
+);
+provide(SHELL_DOCK_ORIENTATION, settledOrientation);
+</` + `script>`,
+        },
+        "S4",
+        "S4 HEAD settle-commit (settledOrientation flipped at morphing→false, the naked re-margin at bridge opacity 0) reds",
+    );
+
+    // ── S5 — the hardcoded-vertical bite (BG.W-SHELL-MORPH-PAINT-REPAIR F3.R3 paint-repair) ──
+    // S5: the HEAD form — SidebarDock hardcodes `orientation="vertical"` on its `<GlassDock>`,
+    // so the settled "horizontal" dock stays a vertical RAIL (`.glass-dock.vertical`'s column
+    // grid) that occludes the re-margined content. Must red (bound false AND hardcodedVertical).
+    sab(
+        {
+            ...base,
+            sidebarDockSrc: `
+<template>
+    <GlassDock ref="dockRef" orientation="vertical" always-expanded class="demo-sidebar-dock">
+        <div role="tablist" aria-orientation="vertical"></div>
+    </GlassDock>
+</template>`,
+        },
+        "S5",
+        "S5 HEAD hardcoded orientation=\"vertical\" (GlassDock keeps the column grid → the vertical rail that occluded the content) reds",
+    );
+    // S5 (fence): a BOUND `:orientation` with `aria-orientation="vertical"` (facet rail) +
+    // the `--vertical` class present must NOT flag — the lookbehind fences the aria attr.
+    sabNot(
+        {
+            ...base,
+            sidebarDockSrc: `
+<template>
+    <GlassDock :orientation="dockOrientation" always-expanded>
+        <nav role="tablist" aria-orientation="vertical"></nav>
+        <div class="demo-facet-rail--vertical" aria-orientation="vertical"></div>
+    </GlassDock>
+</template>`,
+        },
+        "S5",
+        "S5 the aria-orientation=\"vertical\" / --vertical class fence (a bound :orientation with the a11y attr present must NOT flag)",
+    );
+
     return flagged;
 }
 
@@ -2154,7 +2324,13 @@ function run() {
         `  S3 bridge plates overlap dense  : ${violations.every((v) => !v.startsWith("S3"))} (holdUntil=${facts.shellMorphBridgeOverlap?.holdUntil}, reachesFull=${facts.shellMorphBridgeOverlap?.reachesFull}, overlap=${facts.shellMorphBridgeOverlap?.overlap}, compositorOnly=${facts.shellMorphBridgeOverlap?.noSizeAnimatesScalar})`,
     );
     console.log(
-        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×3 + D3-fence×2 + D4×2 + D4-fence + D5×2 + G1×6 + G4 + G2 + G3 + P1×2 + P2×2 + P3×3 + P4×4 + S1×2 + S2×2 + S3×2)`,
+        `  S4 settle at 0.5-crossing       : ${violations.every((v) => !v.startsWith("S4"))} (boundWatch=${facts.shellSettleDrive?.boundWatch}, writesSettled=${facts.shellSettleDrive?.writesSettled}, noSettleCommit=${facts.shellSettleDrive?.noSettleCommit})`,
+    );
+    console.log(
+        `  S5 dock orientation bound       : ${violations.every((v) => !v.startsWith("S5"))} (bound=${facts.shellDockOrientationBound?.orientationBound}, noHardcodedVertical=${facts.shellDockOrientationBound?.noHardcodedVertical})`,
+    );
+    console.log(
+        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×3 + D3-fence×2 + D4×2 + D4-fence + D5×2 + G1×6 + G4 + G2 + G3 + P1×2 + P2×2 + P3×3 + P4×4 + S1×2 + S2×2 + S3×2 + S4 + S5 + S5-fence)`,
     );
 
     if (violations.length) {
