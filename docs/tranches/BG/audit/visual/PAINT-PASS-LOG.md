@@ -1131,3 +1131,87 @@ Captures:
 - PNGs: `docs/tranches/BG/audit/visual/overlay-enter-paint/chromium-light-dialog-midbloom.png` · `overlay-enter-paint/webkit-dark-popover-settled.png` (+ the full 34-file series under `overlay-enter-paint/`)
 - Frame series: `overlay-enter-paint/chromium-light-dialog.frames.json` · `overlay-enter-paint/webkit-light-dialog.frames.json`
 - Harness: `BG.W-OVERLAY-ENTER-PAINT-frameseries.mjs` · `BG.W-OVERLAY-ENTER-PAINT-analyze.mjs`
+
+---
+
+## 2026-07-04 — NO-MASKING-FALLBACK ladder + IOS27-MOTION-TRUTH re-judge batch (rows NF.2 / NF.3 / F3.R1 / F5.R1)
+
+allPass: **false** — 2 PASS, 2 FAIL. LEGACY-LADDER-COLLAPSE (the zero-delta legacy-fallback purge) and OVERLAY-ENTER-PAINT (re-judge, exit repair landed) both PASS -> DONE. GLASS-SIGNAL-TRUTH re-judge #2 (the dead dock observer STILL dead in paint) holds row NF.3 at PENDING; DOCK-GLYPH-RIGID re-verification #2 (the full-inverse repair inert against a `@property{inherits:false}` boundary) holds row F3.R1 at PENDING. Both FAILs carry a `defectLocalization` + `mustFix[]` in their DELTA for a build-fix-agent.
+
+| Wave | Row | Verdict | Cursor |
+|------|-----|---------|--------|
+| BG.W-LEGACY-LADDER-COLLAPSE | NF.2 | PASS | DONE |
+| BG.W-GLASS-SIGNAL-TRUTH (re-judge #2) | NF.3 | FAIL | PENDING (paint FAIL, fix owed) |
+| BG.W-DOCK-GLYPH-RIGID (re-verification #2) | F3.R1 | FAIL | PENDING (paint FAIL, fix owed) |
+| BG.W-OVERLAY-ENTER-PAINT (re-judge) | F5.R1 | PASS | DONE |
+
+Provenance across the batch: Chrome = CDP on `ANGLE Metal Renderer: Apple M5 Max` (real Metal, not SwiftShader) on the LEGACY-LADDER / SIGNAL-TRUTH / DOCK-GLYPH settled-capture legs, and `ANGLE-SwiftShader` on the OVERLAY-ENTER LIVE-rAF frame-series harness (the motion judge that cannot use a settled PNG); WebKit = off-screen WKWebView on system `WebKit.framework` / `Apple GPU` (no `Version/` token -> load-bearing C-SAFARI Tier-1) + real Safari 26.4 (`AppleWebKit/605.1.15 Version/26.4`) on the DOCK-GLYPH keystones + the OVERLAY-ENTER re-judge. Engine + GPU decoded IN-PIXEL from the badge per leg. All captures over BUILT bytes on `:5200`/`:5199-dist` (vite preview of the demo dist, NOT the `:5199` dev server); the LIVE-rAF motion legs run on the LIVE non-capture route because `capture.css` freezes animation. `verify-siblings-intact.mjs --quiet` exits 0 before AND after this synthesis; no `/tmp/sibling-park|stash`; servers + throwaway Chrome torn down by each paint agent; operated only under glass-ui.
+
+Cursor state confirmed at synthesis: row NF.2 reads DONE (paint agent flipped PAINT-PENDING -> DONE, `f1dadea8`); row F5.R1 reads DONE (flipped PAINT-PENDING -> DONE, `675c98b7`); row NF.3 reads PENDING (flipped PAINT-PENDING -> PENDING, paint FAIL, src SHAs preserved, `e4e7c787`); row F3.R1 reads PENDING (flipped PAINT-PENDING -> PENDING, paint FAIL, src SHAs preserved, `86ed68bc`). No cursor edit owed by synthesis.
+
+---
+
+### PASSED -> DONE
+
+#### NF.2 — BG.W-LEGACY-LADDER-COLLAPSE (commit `f1dadea8`)
+
+The NO-MASKING-FALLBACK legacy-ladder purge is verified zero-delta / no-regression: every one of the 9 collapsed fallback ladders is a PRE-target fallback whose feature is NATIVELY supported on the target engines, so the deleted arms are provably dead and the modern survivors are the sole painters. Dual-engine (Chrome 149 / Metal M5 Max + Safari 26.4 / WebKit-26 Apple GPU), BOTH modes, 4 surfaces.
+
+- 16 captures @2880×1800 [/containers (overlay liquid-enter) · /compositions/form-validation (invalid/valid ring) · /dock/overview (dock scroll-fade) · /motion/scroll-choreography (motion register)] × light+dark × Chrome+Safari, all resolve on disk, in-pixel engine badge (ENGINE/GPU/VIEW/MODE) decoded on every one.
+- The deleted arms are provably dead: live `CSS.supports` on Chrome = `:user-invalid`/`:has()`/`animation-timeline:scroll()`/`linear()`/`field-sizing` all TRUE, and BOTH engines paint the in-page feature-detect chips SCROLL()/VIEW()/TIMELINE-SCOPE SUPPORTED green.
+- The modern survivors are LIVE + painting (non-capture live probe): 6 live `scroll()` timelines + 10 running anims on /motion/scroll-choreography; dock scroll-fade `--fade-start`/`--fade-end` 0px/16px on `scroll(self inline)`.
+- The collapsed signatures (`.user-invalid-fallback`/`.user-valid-fallback`/`.is-focus-within`/`@supports not selector(:has)`) = 0 across all 3586 loaded CSS rules; the modern invalid ring reads `var(--invalid-ring)` (destructive red, both modes) and the `aria-invalid` bridge (a11y KEEP) fires on blur.
+- Visual: recessive warm aurora calm (no conic/oversaturation), grain calm, audacious hero fits its envelope, glass translucent (light) / luminous-transmissive (dark) on both engines. `runningAnims:0`/`scrollTimelineCount:0` in the capture-mode probe are intended `capture.css` settle-to-endstate artifacts (confirmed via the live probe), not defects; the collapsible-dock 1-vs-4-glyph rest variance is an unrelated demo hover state.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-LEGACY-LADDER-COLLAPSE-DELTA.md`
+- 16 PNGs: `docs/tranches/BG/audit/visual/BG.W-LEGACY-LADDER-COLLAPSE-paint/BG.W-LEGACY-LADDER-COLLAPSE-{chrome,safari}-{containers,form-validation,dock-overview,scroll-choreography}-{light,dark}.png`
+
+#### F5.R1 — BG.W-OVERLAY-ENTER-PAINT re-judge (commit `675c98b7`)
+
+The OWED EXIT verify is MET. After the F5.R1 repair (`.glass-reveal[data-state="closed"]` now rides `@keyframes glass-reveal-out`, shipped in the built dist-demo CSS), the Dialog+Popover EXIT paints ≥4 no-overshoot frames in BOTH engines BOTH modes on `/containers` — closing the born-RED 0-exit-frame FAIL the prior judge found (reka `usePresence` unmounting a transition-only exit before it painted; see the 2026-07-04 overlay/drawer batch above where this same row logged FAIL).
+
+- METHOD: LIVE rAF computed-style frame-series on the LIVE (non-capture) `/containers/{dialog,sheet,popover}` routes over a fresh `demo:dist:build` served on :5200 — the correct instrument for a motion wave (the settled-PNG pipeline cannot witness an exit animation; the criteria demand LIVE rAF frame-series, NEVER a settled capture). Two genuinely distinct engines: Chrome/Blink (HeadlessChrome-148, ANGLE-SwiftShader) and real Safari/WebKit (AppleWebKit/605.1.15 Version/26.4, Apple GPU/Metal); `@starting-style` supported in both.
+- EXIT (12/12 series PASS): opacity descends monotonically 1->0, scaleX shrinks to ~0.933 (= `--glass-reveal-enter-scale` 0.88 × `--lq-stretch-x` 1.06, exactly the keyframe `to`), filter blur grows 0->4px (= `--glass-reveal-blur`), no overshoot. Frame counts: Blink dialog 6f / popover 13-14f / sheet 5-7f; WebKit dialog+popover+sheet 19-20f — all ≥4. Sheet exits via its translate slide-out (scaleX 1 / blur 0 expected).
+- ENTER un-regressed (12/12 PASS): coupled bloom scale 0.933->1 + blur 4->0 + opacity 0->1, ≥6 intermediate frames both engines both modes (Blink 6-18, WebKit 25-31). Settled PNG spot-checks confirm real overlay content renders (warm-cream glass Dialog on Blink/light; Dimensions glass Popover on WebKit/dark).
+- SECONDARY (non-blocking, NOT part of this EXIT pass condition): the modal scrim is coupled/concurrent from launch (not the trailing-400ms HEAD defect) but reaches 80% dim at ~247-342ms, not ~100ms — the wave's O4 fast-dim targets a native `<dialog class=glass-top-layer>::backdrop` the `/containers` routes never mount, so it is off-surface for the demo. Recorded for a future wave.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-OVERLAY-ENTER-PAINT-DELTA.md`
+- 12 frame-series JSON + 12 settled PNGs (real 326KB-2.65MB): `docs/tranches/BG/audit/visual/overlay-enter-paint-rejudge/{chromium,webkit}-{light,dark}-{dialog,sheet,popover}.frames.json` · `…-settled.png`
+
+---
+
+### FAILED -> PENDING (rows NF.3, F3.R1 — paint FAIL, fix owed)
+
+#### NF.3 — BG.W-GLASS-SIGNAL-TRUTH re-judge #2 (cursor flipped PAINT-PENDING -> PENDING, paint FAIL; src SHAs preserved; recorded `e4e7c787`)
+
+The M8/ST5 runtime fix (reactive `backgroundCanvas` getter + `isLive`-considers-canvas + `normalizeToRgb` static floor) landed in source and `proof:glass` is GREEN device-free, but it did NOT change the PAINTED outcome — the born-RED FAIL this wave was built to close STILL reproduces in paint. Dual-engine (Chrome ANGLE-Metal M5 Max + Safari WebKit Apple GPU, no SwiftShader), both modes.
+
+- **CENTRAL FAIL (ST3):** on `/dock/overview` (the flagship route the criteria name), 0 of 12 GlassDocks fire the writer-fired witness — both modes, both engines. Every dock: `data-glass-sample=null`, `isLive()=false`, inline `--glass-backdrop-luma=(none)` [computed 0 = the `@property` initial, not a real write], `--glass-ambient-hue=rgba(0,0,0,0)`, `--glass-ambient-strength=0%`, `data-backdrop-sampled` absent. Polled at `data-capture-ready` AND +3s (identical); PRM false; zero console errors — not a timing artifact. The "ambient-hue catch-light where the dock observer fires" is unfulfilled on its own flagship route.
+- **CONTROL (proves the composable works):** on `/substrates/glass-material` the demo glass-card wired with explicit `live:true` + a handed `backgroundCanvas` DOES stamp the witness (`--glass-backdrop-sampled:1`, `data-backdrop-sampled` present) both modes both engines — so the write path is intact; the failure is dock-specific.
+- Other criteria: ST2 PASS (dead `--glass-backdrop-hue` resolves empty/absent at `:root` all routes/modes/engines — one hue channel, one writer). ST1 N/A (no `.glass-clear` plate renders on either wave route; source-green + gate-green but not pixel-exercised). ST4 PARTIAL (the declarative `@container` bucket FLOOR paints — docks read as translucent glass over the warm DockStage aurora, no conic/oversaturation, grain calm, hero fits envelope — but the observer refinement never engages because ST3 is dead).
+
+Root-cause localization (for the build-fix-agent, recorded in the DELTA): (1) primary — `isLive()` is evaluated ONLY at mount (`useGlassBackdropLuminance.ts:459-467`); DockStage's `backgroundCanvas=computed(()=>auroraRef.value?.canvasRef??null)` (`DockStage.vue:53-55`) is null when the dock's setup runs (the Aurora child mounts AFTER), so `isLive()=false`, `loop.start()` never fires, and no watcher re-arms when `canvasRef` flips null->canvas post-mount. (2) secondary — even the static mount write (`sampleStatic` -> bodyBg `rgba(0,0,0,0)` -> `normalizeToRgb [0,0,0,0]` -> luma 0 -> write) never lands the witness on any of the 12 docks. (3) contributing — auto-discovery can't rescue (SHELL_FIELD_CANVAS_SELECTOR resolves nothing in capture mode; neither DockStage aurora canvas carries `data-glass-field-canvas`). (4) even the working control card writes luma 0 / hue transparent (`drawImage` of a WebGL canvas without `preserveDrawingBuffer` reads black) — so when the dock observer IS made to fire, the animated readback must ALSO be verified to yield a real nonzero warm luma+hue.
+
+mustFix (for a build-fix-agent — NOT this synthesis agent): (1) re-arm the observer when the reactive `backgroundCanvas` getter resolves null->canvas post-mount (a watcher on the getter that starts the live loop), so `sampleAnimated` becomes reachable for docks; (2) verify the animated readback yields a real nonzero warm field luma+hue (address the `preserveDrawingBuffer`/black-drawImage floor); (3) bind the live root-vs-witness differential as the born-RED π (the device-free `proof:glass` arm greens while the paint stays dead). PRESERVE: ST2 (one hue channel, one writer), the ST4 declarative-bucket floor, the working control-card write path.
+
+Captures:
+- DELTA (carries `defectLocalization` + `mustFix[]`): `docs/tranches/BG/audit/visual/BG.W-GLASS-SIGNAL-TRUTH-DELTA.md`
+- 12 PNGs (2 wave routes /dock/overview + /substrates/glass-material + the /display/buttons context, × light+dark × Chrome+Safari @2880×1800, git-tracked): `docs/tranches/BG/audit/visual/BG.W-GLASS-SIGNAL-TRUTH-paint/BG.W-GLASS-SIGNAL-TRUTH-{chrome,safari}-{dock-overview,glass-material,display-buttons}-{light,dark}.png`
+
+#### F3.R1 — BG.W-DOCK-GLYPH-RIGID re-verification #2 (cursor flipped PAINT-PENDING -> PENDING, paint FAIL; src SHAs preserved; recorded `86ed68bc`)
+
+The integrated F3.R1 full-inverse repair is INERT in paint: the composited dock glyph aspect STILL reaches **1.4884 (+48.84%)** through the `[data-punching]` overshoot on Chrome 149 ANGLE-Metal AND WebKit 26.4, light AND dark, collapse AND expand — byte-identical to the prior FAIL, ~10× the wave's own ±5% per-frame bar.
+
+- **ROOT CAUSE (proven live via `liveprobe-inherit.mjs`):** `--dock-punch-stretch` is registered `@property {inherits:false; initial-value:1}` (`src/styles/dock/shape.css:41-45`, confirmed in built CSS). The F3.R1 content counter-scale rule on `.dock-persistent`/`.dock-layers` reads `var(--dock-punch-stretch,1)` at the CHILD, which resolves to the initial `1` (measured `child_punch=1`) not the root's overshoot (measured `root_punch=1.22`). At the punch peak the child's computed scale is identity (`childScale="1"`), so the punch factor is never compensated and the glyph inherits the full root box-scale 1.22/0.8197 = 1.4884. The CSS-string "full inverse" silently degrades to the size-only inverse it was meant to replace; the fix cannot reach the `@property` inheritance boundary. `.dock-persistent` IS a direct child of `.glass-dock` (combinator matches), so this is an inheritance defect, not a selector/authoring slip.
+- **PASSING sub-clauses:** collapsed/expanded REST on BOTH engines = clean 1:1 circle (58-59×58-59, aspect 1.0), undistorted 20×20 glyph, border-radius 9999px, `morphing=null`. The SECONDARY G3 arrival-settle DID land — WebKit collapsed rest reads the clean 59×59 circle `morphing=null` at +600ms, the prior ~1s sliver-at-rest tail gone. But the PRIMARY per-frame ±5% clause fails decisively, so overall FAIL.
+- **GATE-GAP:** `proof:dock` G1 checks the CSS rule TEXT (both scale components present) and cannot see the `inherits:false` resolution, so it greens while the composited glyph distorts.
+
+mustFix (for a build-fix-agent): make the punch/stretch factor readable by the rigid content (an `inherits:true` twin OR a separate dock-WRITTEN inheriting inverse scalar OR a clip-aperture plate morph over the reserved footprint) so per-frame glyph aspect ∈ [0.95,1.05] EVERY frame incl. the overshoot, both engines both modes; + bind the live root-vs-child computed `--dock-punch-stretch` differential (or the per-frame glyph-bbox frame-series) as the born-RED π (the gate's G1 checks rule TEXT only and cannot see the `inherits:false` resolution). PRESERVE: the passing collapsed/expanded REST 1:1 circle + the landed G3 arrival-settle.
+
+Captures:
+- DELTA (carries `defectLocalization` + `mustFix`): `docs/tranches/BG/audit/visual/BG.W-DOCK-GLYPH-RIGID-DELTA.md`
+- PNGs + witnesses under `docs/tranches/BG/audit/visual/glyph-rigid/`: `glyph-rigid-safari-{light,dark}-desktop.png` · `punch-{light,dark}-02-midmorph-glyph-stretched.png` · `punch-{light,dark}-01-collapsed-rest.png`
+- Frame series (worst=1.4884): `glyph-rigid/frameseries-{chrome,webkit}-{light,dark}.json`
+- Live probe: `glyph-rigid/liveprobe-inherit.mjs` (root_punch=1.22 vs child_punch=1, childScale=1)

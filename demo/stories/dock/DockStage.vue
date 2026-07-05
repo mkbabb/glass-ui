@@ -59,11 +59,24 @@ const backgroundCanvas = computed<HTMLCanvasElement | null>(
     <div class="dock-stage">
         <!-- The ONE shared field behind the whole demo column. Offscreen-paused by
              construction (the <Aurora> useIntersectionPause + content-visibility
-             seam). aria-hidden — purely decorative staging. -->
+             seam). aria-hidden — purely decorative staging.
+
+             BG.W-GLASS-SIGNAL-TRUTH (mustFix 2) — `preserveDrawingBuffer: true` on the
+             SAMPLED field. A live WebGL canvas clears its drawing buffer after the
+             browser composites, so the dock's `useGlassBackdropLuminance` observer
+             reads BLACK (luma 0 / hue transparent) off `drawImage(auroraCanvas)` —
+             the "witness fires but the value is a lie" state the NF.3 paint-DELTA
+             flagged. Preserving the buffer keeps the last rendered warm frame readable,
+             so the sampled luma + ambient hue are REAL. The `data-glass-field-canvas`
+             marker also lets a non-dock content surface over the stage auto-discover
+             this field (the SHELL_FIELD_CANVAS_SELECTOR reconcile). The render is
+             UNCHANGED — preservation only affects readback. -->
         <Aurora
             ref="auroraRef"
             :config="config"
             :opacity-ceiling="opacityCeiling"
+            :runtime-options="{ preserveDrawingBuffer: true }"
+            data-glass-field-canvas
             class="dock-stage-field"
             aria-hidden="true"
         />

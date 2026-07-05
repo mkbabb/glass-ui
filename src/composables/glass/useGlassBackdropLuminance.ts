@@ -262,6 +262,33 @@ export function useGlassBackdropLuminance(
     }
 
     /**
+     * Does the config INTEND the live re-sample loop? This is the ARMING predicate,
+     * DISTINCT from `isLive()` (the per-sample READBACK decision). The loop must arm
+     * on live INTENT even before the field canvas RESOLVES: the aurora `<canvas>`
+     * mounts a beat AFTER the surface (the DockStage field paints post-mount), so a
+     * mount-time `isLive()` that REQUIRES `resolveSourceCanvas() !== null` reads false
+     * at the single mount sample, never `loop.start()`s, and — with NO watcher on the
+     * getter's resolution — stays DEAD forever. BG.W-GLASS-SIGNAL-TRUTH (M8 runtime,
+     * the paint-DELTA re-open): the ST5 fix (isLive considers a resolvable canvas) was
+     * NECESSARY but not SUFFICIENT — 0 of 12 docks fired the witness because the arm
+     * still keyed off the un-resolved mount instant. A PROVIDED source (a getter /
+     * canvas / selector) signals live intent NOW; the running loop's per-tick
+     * `isLive()` re-check then picks up the field the instant it paints (and
+     * `sampleAnimated` writes the real warm luma + ambient hue). No new watcher, no
+     * second raf — the throttled loop IS the re-check.
+     */
+    function wantsLiveLoop(): boolean {
+        if (options.live !== undefined) return options.live;
+        if (target.value?.dataset.glassSample === "live") return true;
+        // A CONFIGURED source — even one that resolves null THIS instant (the field
+        // canvas not yet mounted) — is live intent. `!= null` admits a getter /
+        // canvas / selector but not an explicit `backgroundCanvas: null` (no source).
+        if (options.backgroundCanvas != null) return true;
+        // No explicit source: a discoverable shell field canvas IS the live signal.
+        return resolveSourceCanvas(undefined) !== null;
+    }
+
+    /**
      * Sample the ANIMATED backdrop: downsample the known source canvas under the
      * surface's bounding box → mean relative luminance + the ambient-hue histogram
      * (a FREE rider over the SAME pixel pass). Returns null if no source.
@@ -431,7 +458,7 @@ export function useGlassBackdropLuminance(
         {
             pause: () => loop.pause(),
             resume: () => {
-                if (isLive() && !prefersReduced) loop.resume();
+                if (wantsLiveLoop() && !prefersReduced) loop.resume();
             },
         },
         { rootMargin: "200px" },
@@ -446,7 +473,9 @@ export function useGlassBackdropLuminance(
         if (prefersReduced) {
             loop.stop();
             sampleNow(); // one static frame under reduce (the substrate freezes too)
-        } else if (isLive()) {
+        } else if (wantsLiveLoop()) {
+            // Arm on live INTENT — the loop's per-tick isLive() re-check picks up the
+            // field canvas the instant it resolves (BG.W-GLASS-SIGNAL-TRUTH M8 runtime).
             loop.start();
         }
     }

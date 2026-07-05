@@ -918,6 +918,74 @@ export function glassSignalTruthViolations(glassCss, luminanceText) {
         }
     }
 
+    // ── ST6 (M8 runtime, part 2) — the loop ARMS on live INTENT, not a RESOLVED
+    // canvas at the single mount instant ─────────────────────────────────────────
+    // The ST5 fix (isLive considers a resolvable canvas) was NECESSARY but not
+    // SUFFICIENT: `isLive()` is evaluated ONCE at the mount `watch` (flush:post), when
+    // the DockStage aurora `<canvas>` is still unresolved (the field paints a beat AFTER
+    // the surface), so `isLive()===false`, `loop.start()` never fires, and — with NO
+    // watcher on the getter's resolution — the observer stays DEAD forever (the paint-
+    // DELTA re-open: the M8/ST5 fix did NOT change the paint; 0 of 12 docks fired). The
+    // ARM must key off live INTENT (a PROVIDED source signals live NOW, even before it
+    // resolves); the running loop's per-tick `isLive()` re-check then picks up the field
+    // the instant it paints. This arm asserts a `wantsLiveLoop()` INTENT predicate exists,
+    // treats a provided `options.backgroundCanvas` as intent WITHOUT requiring
+    // resolveSourceCanvas to return non-null, AND is the predicate the loop-arm
+    // (`applyMotionState`'s `loop.start()`) reads — not the resolution-requiring
+    // `isLive()`. Born-RED at HEAD (no wantsLiveLoop; the arm reads isLive()).
+    const braceBody = (marker) => {
+        const idx = js.indexOf(marker);
+        if (idx < 0) return "";
+        const open = js.indexOf("{", idx);
+        if (open < 0) return "";
+        let depth = 1;
+        let i = open + 1;
+        for (; i < js.length && depth > 0; i++) {
+            if (js[i] === "{") depth++;
+            else if (js[i] === "}") depth--;
+        }
+        return js.slice(open + 1, i - 1);
+    };
+    // strip JS comments so a docstring mentioning `isLive()` / `wantsLiveLoop()` cannot
+    // false-signal the code-shape detectors (the gate analyzes CODE, not commentary).
+    const stripJs = (s) =>
+        s.replace(/\/\*[\s\S]*?\*\//g, " ").replace(/\/\/[^\n]*/g, " ");
+    const wantsBody = stripJs(braceBody("function wantsLiveLoop"));
+    const applyBody = stripJs(braceBody("function applyMotionState"));
+    facts.wantsLiveFound = wantsBody.length > 0;
+    // the intent predicate treats a PROVIDED source as live WITHOUT requiring
+    // resolution — a null-check on `options.backgroundCanvas` (`!= null`/`!== undefined`),
+    // NOT `resolveSourceCanvas(options.backgroundCanvas)` (which requires the canvas to
+    // resolve THIS instant — the exact mount-race that left the band dead).
+    facts.wantsLiveReadsProvidedSource =
+        /options\.backgroundCanvas\s*!=\s*null/.test(wantsBody) ||
+        /options\.backgroundCanvas\s*!==?\s*undefined/.test(wantsBody);
+    // the loop ARM (`applyMotionState`) reads the INTENT predicate, and NOT the
+    // resolution-requiring `isLive()` at the `loop.start()` guard.
+    facts.armFound = applyBody.length > 0;
+    facts.armReadsIntent = /wantsLiveLoop\s*\(/.test(applyBody);
+    facts.armDropsIsLive = !/isLive\s*\(/.test(applyBody);
+    if (facts.observerFound) {
+        if (!facts.wantsLiveFound) {
+            violations.push(
+                "ST6: the observer has NO `wantsLiveLoop()` INTENT predicate — the loop arms off `isLive()` at the single mount instant (when the DockStage aurora canvas is still unresolved), so `loop.start()` never fires and the observer is DEAD on the whole dock band (the paint-DELTA re-open: the M8/ST5 fix did NOT change the paint, 0 of 12 docks fired). Add a `wantsLiveLoop()` that treats a PROVIDED source as live intent.",
+            );
+        } else if (!facts.wantsLiveReadsProvidedSource) {
+            violations.push(
+                "ST6: `wantsLiveLoop()` does not treat a PROVIDED `options.backgroundCanvas` as live intent (a `!= null`/`!== undefined` provided-source check) — it must arm the loop even before the field canvas RESOLVES (the aurora `<canvas>` mounts a beat after the surface); requiring `resolveSourceCanvas() !== null` at mount is the exact mount-race that left the dock band dead.",
+            );
+        }
+        if (!facts.armFound) {
+            violations.push(
+                "ST6: could not locate the loop-arm `applyMotionState()` — the `loop.start()` decision is the M8-runtime edit site (it must read `wantsLiveLoop()`)",
+            );
+        } else if (!facts.armReadsIntent || !facts.armDropsIsLive) {
+            violations.push(
+                "ST6: the loop-arm `applyMotionState()` does not gate `loop.start()` on `wantsLiveLoop()` (or still reads the resolution-requiring `isLive()`) — the arm must key off live INTENT so the loop starts even when the field canvas resolves post-mount; the per-tick `isLive()` re-check inside the loop is the only correct `isLive()` reader.",
+            );
+        }
+    }
+
     // ── ST4 (M7) — the band-driver canon reconciled to ONE ───────────────────────
     // the contradictory "the clamp RETIRES the bucket as THE driver" claim is GONE.
     facts.noRetiresBucketAsDriver =
@@ -1736,10 +1804,21 @@ function selfTest() {
         " .glass-material::before {" +
         " --glass-specular-core: color-mix( in oklab, color-mix( in oklab, hsl(40 35% 92%), var(--glass-accent) var(--glass-accent-strength) ), var(--glass-ambient-hue) var(--glass-ambient-strength) ); }" +
         " /* BG.W-GLASS-SIGNAL-TRUTH (M7) — the declarative bucket IS the BAND DRIVER; the continuous luma clamp is the refinement where a writer fires. */ }";
+    const goodWantsLive =
+        ' function wantsLiveLoop() { if (options.live !== undefined) return options.live;' +
+        ' if (target.value?.dataset.glassSample === "live") return true;' +
+        ' if (options.backgroundCanvas != null) return true;' +
+        ' return resolveSourceCanvas(undefined) !== null; }';
+    const goodApplyMotion =
+        ' function applyMotionState() { prefersReduced = prmMql.matches;' +
+        ' if (prefersReduced) { loop.stop(); sampleNow(); }' +
+        ' else if (wantsLiveLoop()) { loop.start(); } }';
     const goodSignalJs =
         'function isLive() { if (options.live !== undefined) return options.live;' +
         ' if (target.value?.dataset.glassSample === "live") return true;' +
         ' return resolveSourceCanvas(options.backgroundCanvas) !== null; }' +
+        goodWantsLive +
+        goodApplyMotion +
         ' function write(result) { const el = target.value; if (!el) return;' +
         ' el.style.setProperty("--glass-backdrop-luma", result.luma.toFixed(3));' +
         ' el.style.setProperty("--glass-ambient-hue", result.ambientHue);' +
@@ -1801,6 +1880,42 @@ function selfTest() {
     if (!glassSignalTruthViolations(goodSignalGlass, attrOnlyLiveJs).violations.some((v) => /ST5/.test(v))) {
         fails.push(
             "self-test ST5: an `isLive()` that does NOT reach `resolveSourceCanvas(options.backgroundCanvas)` (the attr-only form that left a canvas-fed dock's `sampleAnimated` path unreachable → the dead-observer band) was NOT flagged (the M8 runtime-completeness fence has no teeth)",
+        );
+    }
+
+    // bite ST6-missing — an observer with NO `wantsLiveLoop` predicate (the HEAD form,
+    // where the arm keys off the un-resolved-at-mount `isLive()`) must flag.
+    const noIntentJs = goodSignalJs
+        .replace(goodWantsLive, "")
+        .replace(
+            "else if (wantsLiveLoop()) { loop.start(); }",
+            "else if (isLive()) { loop.start(); }",
+        );
+    if (!glassSignalTruthViolations(goodSignalGlass, noIntentJs).violations.some((v) => /ST6/.test(v))) {
+        fails.push(
+            "self-test ST6: an observer with NO `wantsLiveLoop()` intent predicate + an `applyMotionState` that arms off `isLive()` (the HEAD mount-race form that left 0 of 12 docks firing) was NOT flagged (the M8-runtime loop-arm fence has no teeth)",
+        );
+    }
+    // bite ST6-arm — a `wantsLiveLoop` present but the loop-arm STILL reads the
+    // resolution-requiring `isLive()` must flag (the arm keyed off the wrong predicate).
+    const armIsLiveJs = goodSignalJs.replace(
+        "else if (wantsLiveLoop()) { loop.start(); }",
+        "else if (isLive()) { loop.start(); }",
+    );
+    if (!glassSignalTruthViolations(goodSignalGlass, armIsLiveJs).violations.some((v) => /ST6/.test(v))) {
+        fails.push(
+            "self-test ST6: an `applyMotionState()` that arms `loop.start()` off `isLive()` rather than `wantsLiveLoop()` (the resolution-requiring predicate at the single mount instant) was NOT flagged (the arm-reads-intent fence has no teeth)",
+        );
+    }
+    // bite ST6-intent — a `wantsLiveLoop` that does NOT treat a provided source as
+    // intent (drops the `options.backgroundCanvas != null` check) must flag.
+    const noProvidedCheckJs = goodSignalJs.replace(
+        " if (options.backgroundCanvas != null) return true;",
+        "",
+    );
+    if (!glassSignalTruthViolations(goodSignalGlass, noProvidedCheckJs).violations.some((v) => /ST6/.test(v))) {
+        fails.push(
+            "self-test ST6: a `wantsLiveLoop()` that does NOT treat a PROVIDED `options.backgroundCanvas` as live intent (only `resolveSourceCanvas` which requires resolution) was NOT flagged (the provided-source-is-intent fence has no teeth)",
         );
     }
 
@@ -2126,6 +2241,9 @@ function run() {
     );
     console.log(
         `  ST5 live-path     : isLive-considers-canvas=${st.liveConsidersCanvas ? "✓" : "✗"} (M8 runtime: a canvas-fed dock enters sampleAnimated + the witness fires — the dead-observer band closed)`,
+    );
+    console.log(
+        `  ST6 loop-arm      : wantsLiveLoop=${st.wantsLiveFound ? "✓" : "✗"}  provided-is-intent=${st.wantsLiveReadsProvidedSource ? "✓" : "✗"}  arm-reads-intent=${st.armReadsIntent && st.armDropsIsLive ? "✓" : "✗"} (M8 runtime.2: the loop arms on live INTENT so it starts even when the field canvas resolves post-mount — 0/12→12/12 docks fire)`,
     );
     console.log(
         `  ST4 band-driver   : no-retires-claim=${st.noRetiresBucketAsDriver ? "✓" : "✗"}  decision-recorded=${st.bandDriverRecorded ? "✓" : "✗"} (M7: bucket=driver, clamp=refinement — canon reconciled to ONE)`,
