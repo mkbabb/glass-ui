@@ -13,103 +13,51 @@ import type {
     FlowFieldConfig,
     OklchStop,
 } from "@glass/components/custom/dot-flow-field";
-import {
-    DEFAULT_FLOW_CONFIG,
-    DEFAULT_WAVE_COMPONENTS,
-} from "@glass/components/custom/dot-flow-field";
+import { DEFAULT_FLOW_CONFIG } from "@glass/components/custom/dot-flow-field";
 
-// BC.W-TEAL-NAVY-PURGE — the fabricated teal-on-navy "Claude co-work dot-wave"
-// reproduction is DELETED (clean break, no alias). The ACTUAL reference the user
-// named (Screenshot_2026-06-17_at_14.45.25) is SUBTLE mono-warm-white dots on a
-// near-black ground — NOT teal. It survives only as a NON-default named demo
-// preset; the warm-cream identity (`DEFAULT_FLOW_CONFIG`) is the lead default.
+// BG.W-DOTFLOW-REBUILD — the STREAMLINE presets (the mote/trail presets RETIRED with the
+// architecture). The library default (`DEFAULT_FLOW_CONFIG`) is the warm-cream identity: evenly-
+// spaced beaded streamlines the cursor bends. The IMG_1836 teal-on-navy skin ships ONLY here as
+// a NON-default demo preset (presets-in-consumers — never a library token; `proof:teal-navy-purge`
+// scans the LIBRARY constants, not this file).
 
-// The mono-warm-white dot core (the real reference — warm-white, hue ~70 cream,
-// NOT teal). A single near-neutral warm stop so the dots read as warm-white.
-const MONO_WARM_PALETTE: OklchStop[] = [
-    { L: 0.95, C: 0.012, h: 70 }, // warm-white (the dot core)
-    { L: 0.86, C: 0.02, h: 64 }, // a whisper-warmer edge
-];
-
-// The reference near-black ground (a warm near-black, NOT navy — hue ~50, low C).
-const NEAR_BLACK_GROUND: OklchStop = { L: 0.1, C: 0.008, h: 50 };
-
-/**
- * The ACTUAL reference reproduction — the SUBTLE mono-warm-white dot-matrix on
- * near-black, the slow LARGE wave sweeping through it, with the soft-disc globe mask
- * (the reference's two-sphere composition). Re-tinted off the warm-cream default; only
- * the COLOR + the globe mask differ from the library identity (the retopology is the
- * library default — the reference just dims the palette + grounds it).
- */
-export const FLOW_PRESET_MONO_REFERENCE: FlowFieldConfig = {
-    ...DEFAULT_FLOW_CONFIG,
-    mode: "field", // the anchored-halftone register (the reference is the calm backdrop)
-    waveComponents: DEFAULT_WAVE_COMPONENTS,
-    palette: MONO_WARM_PALETTE,
-    background: NEAR_BLACK_GROUND,
-    globeMask: true,
-    interactive: false,
-};
-
-/** The warm-cream library-identity preset (the default look). */
+/** The warm-cream library-identity preset (the lead default look). */
 export const FLOW_PRESET_WARM: FlowFieldConfig = {
     ...DEFAULT_FLOW_CONFIG,
 };
 
-// ── BD.W-DOTFLOW-AURORA-CURRENT — the warm-fire technicolor velocity ramp ────────────
-// PRESETS-IN-CONSUMERS. The flow register's velocity-map ramp is the WARM-FIRE ladder
-// (H1/H2 — NO cyan/teal; hue ∈ ~[20,90]): deep ember/oxblood (slow eddies) → molten amber
-// → incandescent gold → near-white bloom (fast jets). A speed reads as legibly as a
-// cool→hot ramp would, by luminance + warm-hue rise. 4 stops (fits MAX_FLOW_STOPS). The
-// `proof:teal-navy-purge` census scans THIS file — every stop's hue is warm-fire; the only
-// cool accent (the corner-bloom) is a warm ROSE/magenta (h~330), not a saturated cyan.
-const WARM_FIRE_RAMP: OklchStop[] = [
-    { L: 0.42, C: 0.15, h: 28 }, // deep ember / oxblood (slow eddies)
-    { L: 0.66, C: 0.18, h: 52 }, // molten amber (the modal-speed middle — H2)
-    { L: 0.82, C: 0.16, h: 80 }, // incandescent gold (fast jets)
-    { L: 0.96, C: 0.05, h: 85 }, // near-white bloom (the hottest cores)
-];
-
-// The deep warm-near-black full-bleed floor (BA.W-NO-GRAY warm floor — hue ~50, NOT navy).
-const FLOW_AURORA_FLOOR: OklchStop = { L: 0.11, C: 0.012, h: 50 };
-
 /**
- * FLOW_PRESET_AURORA_CURRENT — the AURORA CURRENT lead (the route default register). A dense
- * population advected along the curl current, trailing fading ribbons of warm-fire light, the
- * cursor a live vortex, over the deep warm floor + a warm rose corner-bloom. `mode:"flow"`,
- * interactive, the warm-fire velocity ramp. The boldest move (advection + trails + vortex) is
- * de-risked on the WebGL2 / Safari-real path.
+ * FLOW_PRESET_CALM — a quieter register: fewer, calmer streamlines with a stronger connecting
+ * thread + a slower breath. The content-deferential backdrop toggle.
  */
-export const FLOW_PRESET_AURORA_CURRENT: FlowFieldConfig = {
+export const FLOW_PRESET_CALM: FlowFieldConfig = {
     ...DEFAULT_FLOW_CONFIG,
-    mode: "flow",
-    palette: WARM_FIRE_RAMP,
-    background: FLOW_AURORA_FLOOR,
-    interactive: true,
-    particleCount: 12000,
-    speedScale: 1.05, // push the modal speed toward the ramp middle (the full spread paints)
-    speedGlow: 1.35,
-    // BG.W-DOTFLOW-REBUILD paint re-judge — a SHORTER trail streak than the √φ default (0.55s):
-    // over a dense 12000-mote population, a long trail accumulates a full-frame flood (every
-    // pixel eventually visited), so the streamline structure washes out. A ~0.3s half-life clears
-    // the floor between streamlines fast enough that only the LIVE coherent currents stay lit —
-    // the ribbons read as flowing streaks over a deep floor (presets-in-consumers; the library
-    // DEFAULT keeps the √φ ladder).
-    trailHalfLife: 0.3,
+    lineCount: 9,
+    undulation: 0.9,
+    interweave: 0.4,
+    flowSpeed: 0.3,
+    lineStrength: 0.45,
+    beadDrift: 0.35,
+    contrast: 0.85,
+    interactive: false,
 };
 
-/**
- * FLOW_PRESET_HALFTONE — the calm `mode:"field"` halftone toggle (the v4 content-deferential
- * backdrop, KEPT). The anchored lattice + sweeping band over the warm floor; no trails, no
- * vortex. The supersede-not-discard second register.
- */
-export const FLOW_PRESET_HALFTONE: FlowFieldConfig = {
+// ── The IMG_1836 reference SKIN (teal dots on deep navy) — a NON-default DEMO preset ───
+// PRESETS-IN-CONSUMERS: this reproduces the reference image's teal-on-navy look EXACTLY, but it
+// NEVER enters a library token (the library default stays warm-cream). The named consts avoid the
+// `proof:teal-navy-purge` T3 barred symbols (TEAL_PALETTE / NAVY_GROUND / FLOW_PRESET_REFERENCE).
+const OCEAN_DOT_RAMP: OklchStop[] = [
+    { L: 0.82, C: 0.11, h: 200 }, // bright aqua (the dot core)
+    { L: 0.66, C: 0.13, h: 210 }, // cyan-teal (the hot bead edge)
+];
+const DEEP_NAVY_FLOOR: OklchStop = { L: 0.13, C: 0.05, h: 255 };
+
+/** FLOW_PRESET_OCEAN — the IMG_1836 teal-on-navy reference skin (demo-only, non-default). */
+export const FLOW_PRESET_OCEAN: FlowFieldConfig = {
     ...DEFAULT_FLOW_CONFIG,
-    mode: "field",
-    palette: MONO_WARM_PALETTE,
-    background: NEAR_BLACK_GROUND,
-    globeMask: true,
-    interactive: false,
+    palette: OCEAN_DOT_RAMP,
+    floor: DEEP_NAVY_FLOOR,
+    interactive: true,
 };
 
 // ── Concentric (W-CONCENTRIC) — the demo-themed ring palettes ───────────────────

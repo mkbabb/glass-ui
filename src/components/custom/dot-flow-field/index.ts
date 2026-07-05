@@ -7,26 +7,18 @@ export {
 export {
     type FlowFieldConfig,
     DEFAULT_FLOW_CONFIG,
-    DEFAULT_WAVE_COMPONENTS,
     WARM_IDENTITY_PALETTE,
-    MAX_PARTICLES,
-    MAX_WAVE_COMPONENTS,
+    WARM_NEAR_BLACK_FLOOR,
     MAX_FLOW_STOPS,
 } from "./constants";
 export {
-    type WaveComponent,
     type Vec2,
-    sampleVelocity,
-    gerstnerVelocity,
+    type StreamFieldParams,
+    sampleStreamField,
     curlFBM,
-    pointerVortex,
-    type VortexParams,
-    buildWaveLadder,
-    gridOrigin,
-    sampleHeight,
-    sampleDisplacement,
-    waveBand,
-    FLOW_GRAVITY,
-    FLOW_DOMAIN_HALF,
+    potentialFBM,
+    beadPhase,
+    FLOW_LINE_SPACING,
+    CURL_EPS,
 } from "./composables/flowField";
 export type { OklchStop } from "../../../composables/color";

@@ -1,10 +1,11 @@
 <script setup lang="ts">
-// DotFlowField — the AURORA CURRENT (BD.W-DOTFLOW-AURORA-CURRENT). The DEFAULT register is
-// `mode:"flow"`: a dense population ADVECTED along the divergence-free curl current, trailing
-// fading ribbons of WARM-FIRE light (a velocity-map: slow ember → molten amber → incandescent
-// gold → near-white bloom), the cursor a live VORTEX, over a deep warm-near-black floor + a
-// warm rose corner-bloom (NO cyan/teal — the warm-fire fence). The calm `mode:"field"`
-// anchored halftone (the v4 content-deferential backdrop, KEPT) toggles beside it.
+// DotFlowField — the STREAMLINE field (BG.W-DOTFLOW-REBUILD). Discrete warm-cream dots strung
+// along EVENLY-SPACED SMOOTH STREAMLINES of a curl-warped stream function — undulating +
+// interweaving like the level curves of a procedural function, the dots drifting slowly ALONG
+// their own line, over a deep warm-near-black floor. The cursor bends the streamlines (a smooth
+// gaussian domain-push — no snap, no vortex chaos). ONE fullscreen-fragment pass, WebGPU-first
+// with a byte-identical WebGL2 fallback (the free-advected-mote + additive-trail architecture is
+// RETIRED). The library default is warm-cream; the IMG_1836 teal-on-navy skin is a demo preset.
 import { computed, reactive, ref } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
@@ -15,35 +16,38 @@ import {
     DotFlowField,
     type FlowFieldConfig,
 } from "@glass/components/custom/dot-flow-field";
-import { FLOW_PRESET_AURORA_CURRENT, FLOW_PRESET_HALFTONE } from "./presets";
+import { FLOW_PRESET_WARM, FLOW_PRESET_CALM, FLOW_PRESET_OCEAN } from "./presets";
 
-// The studio model — a live config the controls drive (commit-on-write). The DEFAULT is the
-// AURORA CURRENT (flow); the toggle swaps to the calm halftone (field) register.
-const useHalftone = ref(false);
+// The studio model — a live config the controls drive. The DEFAULT is the warm-cream streamline
+// field; the toggles swap to the calmer register + the IMG_1836 ocean skin (demo-only).
+const useCalm = ref(false);
+const useOcean = ref(false);
 const paused = ref(false);
 const interactive = ref(true);
 
-const config = reactive<FlowFieldConfig>({ ...FLOW_PRESET_AURORA_CURRENT });
+const config = reactive<FlowFieldConfig>({ ...FLOW_PRESET_WARM });
 
-// Switch the whole config between the AURORA CURRENT (flow) and the halftone (field).
-function applyPreset(halftone: boolean): void {
-    const src = halftone ? FLOW_PRESET_HALFTONE : FLOW_PRESET_AURORA_CURRENT;
+// Re-apply the config from the active toggles (warm | calm base, warm | ocean skin).
+function applyConfig(): void {
+    const base = useCalm.value ? FLOW_PRESET_CALM : FLOW_PRESET_WARM;
+    const src = useOcean.value ? { ...base, ...FLOW_PRESET_OCEAN } : base;
     Object.assign(config, JSON.parse(JSON.stringify(src)));
-    config.interactive = halftone ? false : interactive.value;
+    config.interactive = useCalm.value ? false : interactive.value;
 }
 
 const liveConfig = computed<FlowFieldConfig>(() => ({ ...config }));
 
-// Re-apply on the toggle.
-function onTogglePreset(v: boolean): void {
-    useHalftone.value = v;
-    applyPreset(v);
+function onToggleCalm(v: boolean): void {
+    useCalm.value = v;
+    applyConfig();
 }
-
-// Toggle the cursor-vortex interaction (the velocity-drag + flick-shockwave response).
+function onToggleOcean(v: boolean): void {
+    useOcean.value = v;
+    applyConfig();
+}
 function onToggleInteractive(v: boolean): void {
     interactive.value = v;
-    if (!useHalftone.value) config.interactive = v;
+    if (!useCalm.value) config.interactive = v;
 }
 </script>
 
@@ -51,23 +55,24 @@ function onToggleInteractive(v: boolean): void {
     <StoryPage>
         <StorySection
             heading="Dot flow field"
-            label="AURORA CURRENT · advected motes · warm-fire trails · cursor vortex"
-            blurb="A dense population of motes ADVECTED along a divergence-free curl current, each trailing a fading ribbon of WARM-FIRE light — the ribbon hue mapped to the mote's SPEED (a 1940s-technicolor velocity-map: slow eddies ember/oxblood → fast jets molten amber → incandescent gold → near-white bloom), the whole field breathing on a slow clock, the CURSOR a live VORTEX that motes bend around and spiral off — over a deep warm-near-black floor with a warm rose corner-bloom (NO cyan/teal). The current undulates as a Gerstner/Tessendorf curl-noise field (Tessendorf 2001 · Bridson 2007). A feedback-fade TRAIL buffer braids the ribbons; low turn-rate inertia gives the motes liquid weight (they ease into the current's arcs, never jitter). WebGPU runs a compute-advected storage buffer + a half-res RGBA16F trail; the WebGL2 channel (the live path on most hosts) runs a state-texture GPGPU ping-pong + a two-FBO trail — the SAME advected-population gestalt on both engines. Drag the cursor: a slow drag DRAGS the streamlines along the gesture (and keeps spinning a beat after you stop), a fast flick SHOVES a radial shockwave. ONE GL context — the one-GL-per-route budget held. Toggle to the calm anchored halftone (the field register)."
+            label="evenly-spaced beaded streamlines · curl-warped · cursor-bent"
+            blurb="Discrete warm-cream dots strung along EVENLY-SPACED SMOOTH STREAMLINES of a curl field — the level curves of a procedural stream function ψ (Jobard–Lefer 1997 evenly-spaced placement = evenly-spaced iso-contours of ψ; the streamlines of a divergence-free flow v = ∇⊥ψ ARE ψ's level sets — Bridson 2007). Each line undulates + interweaves, DOMAIN-WARPED by the shared curlFBM operator, while a monotone ramp keeps the lines evenly spaced and never-crossing by construction. The dots drift slowly ALONG their own streamline; the cursor bends the whole field as a smooth gaussian domain-push (no snap, no vortex chaos) via usePointerVelocityField (velocity AND acceleration/burst). ONE fullscreen-fragment pass — WebGPU-first with a byte-identical WebGL2 fallback (no compute particles, no additive-trail flood, no white-out possible). ONE GL context — the one-GL-per-route budget held. Toggle the calm register or the IMG_1836 ocean skin (teal dots on deep navy — a demo preset; the library default stays warm-cream)."
         >
             <div class="flex flex-wrap items-center gap-4">
                 <Label class="flex items-center gap-2">
-                    <Switch
-                        :model-value="useHalftone"
-                        @update:model-value="onTogglePreset"
-                    />
-                    <span class="text-sm">calm halftone (field) — off = AURORA CURRENT (flow) default</span>
+                    <Switch :model-value="useCalm" @update:model-value="onToggleCalm" />
+                    <span class="text-sm">calm register (fewer, slower streamlines)</span>
+                </Label>
+                <Label class="flex items-center gap-2">
+                    <Switch :model-value="useOcean" @update:model-value="onToggleOcean" />
+                    <span class="text-sm">ocean skin (IMG_1836 teal-on-navy — demo preset)</span>
                 </Label>
                 <Label class="flex items-center gap-2">
                     <Switch
                         :model-value="interactive"
                         @update:model-value="onToggleInteractive"
                     />
-                    <span class="text-sm">interactive (cursor vortex — drag + flick)</span>
+                    <span class="text-sm">interactive (cursor bends the streamlines)</span>
                 </Label>
                 <Label class="flex items-center gap-2">
                     <Switch v-model="paused" />
@@ -87,13 +92,12 @@ function onToggleInteractive(v: boolean): void {
 
             <p class="text-sm text-muted-foreground">
                 Under <code class="font-mono text-xs">prefers-reduced-motion: reduce</code>
-                the substrate pre-rolls the trail then paints ONE static frame and parks —
-                the braided ribbons hold, the cursor vortex inert. The trail buffer is the
-                ribbon: each frame the previous frame draws back at the derived decay
-                (<code class="font-mono text-xs">trailHalfLife</code>), then the motes draw
-                additively over it. The mote's speed reads its hue + brightness
-                (<code class="font-mono text-xs">samplePaletteLin(speedNorm)</code>) — the
-                warm-fire velocity-map, never a chaotic per-particle flicker.
+                the substrate paints ONE deterministic static frame and parks — the streamlines
+                hold their pose, the cursor bend inert. The streamlines are the iso-contours of
+                <code class="font-mono text-xs">sampleStreamField</code> (the ONE math source both
+                the WGSL and GLSL fragments transcribe); the dots bead at the crossings with a
+                drifting transverse bead-line, so they flow ALONG their own line — never a chaotic
+                per-particle flicker.
             </p>
         </StorySection>
     </StoryPage>

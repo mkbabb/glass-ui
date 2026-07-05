@@ -278,7 +278,6 @@ export type {
 // /dot-flow-field subpath).
 export type {
     FlowFieldConfig,
-    WaveComponent,
     DotFlowFieldHandle,
     UseDotFlowFieldOptions,
 } from "../components/custom/dot-flow-field";

@@ -1,403 +1,231 @@
-// BC.W-VIZ-DOTFLOW — the typed-struct SOURCE OF TRUTH for the WebGPU compute + render
-// uniform buffers (the anchored-lattice retopology).
+// BG.W-DOTFLOW-REBUILD — the typed-struct SOURCE OF TRUTH for the STREAMLINE render uniforms.
 //
-// The WGSL `FlowUniforms` (compute) + `RenderUniforms` (render) structs and the JS
-// `ArrayBuffer` write offsets are generated from the SAME layout tables here, so a
-// std140-vs-WGSL alignment mismatch (the parity-ΔE-blowout trap) is structurally
-// impossible — the field order + the byte offsets are ONE declaration.
+// ONE derivation (`deriveStreamUniforms`) maps the author `FlowFieldConfig` → the flat scalar
+// set BOTH backends read: the WGPU packer (`packFlowUniforms`) writes them into the 13-vec4
+// std140 buffer the WGSL `struct U` reads by lane; the WebGL2 setup uploads the SAME scalars via
+// `gl.uniform*`. So the field the WGSL fragment and the GLSL fragment (and the JS round-trip)
+// evaluate is byte-identical — a std140-vs-WGSL alignment / transcription drift is structurally
+// impossible (the field order + the byte offsets are ONE declaration).
 //
-// Both buffers pack every scalar into a vec4 lane + each wave row + each palette stop into
-// a vec4 so the array stride is the natural 16 bytes (no std140 stride surprise).
+// The compute + storage-particle + trail-ping-pong buffers are GONE (the streamline render is a
+// single fullscreen-fragment pass — no compute uniforms, no particle seed).
 
 import type { OklchStop } from "../../../../composables/color";
 import { oklchToLinear } from "../../../../composables/color";
-import type { WaveComponent } from "./flowField";
-import { FLOW_DOMAIN_HALF as FLOW_DOMAIN_HALF_MATH } from "./flowField";
-import { MAX_WAVE_COMPONENTS, MAX_FLOW_STOPS, type FlowFieldConfig } from "../constants";
+import { MAX_FLOW_STOPS, type FlowFieldConfig } from "../constants";
+import type { StreamFieldParams } from "./flowField";
+import { FLOW_LINE_SPACING } from "./flowField";
 
-/** The domain half-extent (the lattice spans [-half, half]²; mirrors flowField.ts). */
-export const FLOW_DOMAIN_HALF = FLOW_DOMAIN_HALF_MATH;
-
-// ── The deterministic lattice geometry (cols / rows / count from a px pitch) ────
-// `gridPitch` is in CSS-px; the lattice spans the [-half, half] domain over the MIN CSS
-// dimension. cols = ceil(domainExtentPx / pitchPx); count = cols² (a square lattice). The
-// count is clamped to the storage-buffer cap. The compute kernel + the render pass + the
-// JS seed ALL read this ONE geometry so the index→origin mapping is identical everywhere.
-export interface FlowGridGeometry {
-    cols: number;
-    count: number;
-    /** The lattice pitch in DOMAIN units (the px pitch mapped to the domain). */
-    pitchDomain: number;
-}
-
-/** Compile-time lattice cap (mirrors the WGSL storage-buffer array bound). */
-export const FLOW_MAX_LATTICE = 16384;
-
-export function flowGridGeometry(
-    gridPitchPx: number,
-    canvasCssMin: number,
-): FlowGridGeometry {
-    const domainExtentPx = canvasCssMin || 320;
-    const pitch = Math.max(gridPitchPx, 4);
-    // cols across the visible MIN dimension, +2 margin cells so the lattice fills past the
-    // edges (the wider axis is covered by the same square lattice — the aspect crops it).
-    const cols = Math.min(
-        Math.max(Math.ceil(domainExtentPx / pitch) + 2, 4),
-        128,
-    );
-    const count = Math.min(cols * cols, FLOW_MAX_LATTICE);
-    // pitch in domain units: the domain extent (2·half) spans `cols` cells.
-    const pitchDomain = (2 * FLOW_DOMAIN_HALF) / Math.max(cols, 1);
-    return { cols, count, pitchDomain };
-}
-
-// ── COMPUTE uniform layout (BD.W-DOTFLOW-AURORA-CURRENT) ────────────────────────
-//   p0    : vec4<f32>  off   0  (uTime, uDt, uWindSpeed, uCurlStrength)
-//   p1    : vec4<f32>  off  16  (uGridPitch, uDisplaceAmp, uSpringK, uGridCols)  [field]
-//   ints  : vec4<i32>  off  32  (uWaveCount, uParticleCount, uGridColsI, uMode)
-//   f0    : vec4<f32>  off  48  (uTurnRate, uSpeedScale, uLifetimeSec, uDomainHalf) [flow]
-//   f1    : vec4<f32>  off  64  (uVortexRadius, uVortexSpin, uDragGain, uBurstShove)
-//   ptr   : vec4<f32>  off  80  (cursor.x, cursor.y, vel.x, vel.y)
-//   ptr2  : vec4<f32>  off  96  (burst, pointerActive, edgeBias, _pad)
-//   waves : array<vec4<f32>, 8>  off 112  (amplitude, wavelength, directionDeg, phase)
-//   total : 112 + 8*16 = 240 bytes
-export const FLOW_COMPUTE_UNIFORM_BYTES = 112 + MAX_WAVE_COMPONENTS * 16;
-
-const C_OFF = {
-    p0: 0,
-    p1: 4,
-    ints: 8, // viewed as Int32
-    f0: 12,
-    f1: 16,
-    ptr: 20,
-    ptr2: 24,
-    waves: 28, // 8 rows × 4 words
-} as const;
-
-/** The live pointer/vortex state the renderer feeds the compute kernel each frame. */
+/** The live pointer state the renderer feeds the stream field each frame (domain space). */
 export interface FlowPointerState {
-    /** Cursor in domain space ([-half,half]²). */
+    /** Cursor in domain space (x aspect-scaled: [-aspect,aspect] × [-1,1]). */
     cursorX: number;
     cursorY: number;
-    /** Pointer velocity in domain units / sec. */
-    velX: number;
-    velY: number;
-    /** Flick-burst impulse (0..1). */
-    burst: number;
+    /** The velocity-scaled push strength (0 at rest). */
+    strength: number;
     /** Pointer active (1) / inert (0). */
     active: number;
 }
 
-/** A rest (pointer-inert) state — the vortex is off. */
+/** A rest (pointer-inert) state — the streamlines sit un-bent. */
 export const FLOW_POINTER_REST: FlowPointerState = {
     cursorX: 0,
     cursorY: 0,
-    velX: 0,
-    velY: 0,
-    burst: 0,
+    strength: 0,
     active: 0,
 };
+
+/** Fixed spatial/temporal constants the derivation reads (the proportion ladder). */
+export const FLOW_UND_FREQ = 4.0; // ~2-3 undulation crests across the width
+export const FLOW_WEAVE_FREQ = 3.0; // the interweave spatial frequency
+export const FLOW_WEAVE_ANGLE_DEG = 35; // the 2nd-direction weave angle
+export const FLOW_CURL_SCALE = 1.6; // the curl-noise domain scale
+export const FLOW_CURL_DRIFT_MUL = 0.25; // curlDrift = flowSpeed × this
+export const FLOW_UND_SPEED_MUL = 0.8; // undSpeed = flowSpeed × this
+export const FLOW_WEAVE_SPEED_MUL = 1.1; // weaveSpeed = flowSpeed × this
+
+/** The full derived scalar set the WGPU buffer + the GL uniforms + the JS round-trip read. */
+export interface StreamUniforms {
+    time: number;
+    aspect: number;
+    /** p-space size of one device pixel (2 / backingHeightPx) — drives the AA feather. */
+    px: number;
+    flowSlope: number;
+    undAmp: number;
+    undFreq: number;
+    undSpeed: number;
+    weaveAmp: number;
+    weaveFreq: number;
+    weaveSpeed: number;
+    weaveDirX: number;
+    weaveDirY: number;
+    curlWarp: number;
+    curlScale: number;
+    curlDrift: number;
+    lineSpacing: number;
+    /** thread half-width in p-space (already dpr-corrected to CSS px). */
+    lineHalfWidth: number;
+    lineStrength: number;
+    beadSlope: number;
+    beadDrift: number;
+    /** bead dot radius in p-space (already dpr-corrected to CSS px). */
+    beadRadius: number;
+    contrast: number;
+    pointerX: number;
+    pointerY: number;
+    pointerStrength: number;
+    pointerRadius: number;
+    pointerActive: number;
+    stopCount: number;
+    /** floor.rgb (linear-sRGB). */
+    floorLin: [number, number, number];
+    /** palette stops baked to linear-sRGB (MAX_FLOW_STOPS entries). */
+    paletteLin: [number, number, number][];
+}
+
+/**
+ * The ONE derivation: author `FlowFieldConfig` → the flat scalar set both backends read.
+ * `aspect` = backingW/backingH; `backingHeightPx` sizes the AA feather; `dpr` maps the CSS-px
+ * dot/thread sizes to p-space. `pointer` is the live cursor (rest = un-bent).
+ */
+export function deriveStreamUniforms(
+    config: FlowFieldConfig,
+    timeSec: number,
+    aspect: number,
+    backingHeightPx: number,
+    dpr: number,
+    palette: OklchStop[],
+    pointer: FlowPointerState = FLOW_POINTER_REST,
+): StreamUniforms {
+    const flowSpeed = config.flowSpeed;
+    // flowSlope: #contours over y∈[-1,1] ≈ 2·flowSlope / lineSpacing → flowSlope ≈ lineCount/2.
+    const flowSlope = Math.max(config.lineCount, 2) / 2;
+    const px = 2 / Math.max(backingHeightPx, 1);
+    // CSS-px in p-space: px × dpr = 2 / cssHeightPx (a dot/thread stays a constant CSS size).
+    const cssPx = px * Math.max(dpr, 1);
+    const weaveRad = (FLOW_WEAVE_ANGLE_DEG * Math.PI) / 180;
+
+    const stopCount = Math.min(Math.max(palette.length, 1), MAX_FLOW_STOPS);
+    const paletteLin: [number, number, number][] = [];
+    for (let i = 0; i < MAX_FLOW_STOPS; i++) {
+        const stop = palette[Math.min(i, stopCount - 1)] ?? palette[0];
+        const lin = oklchToLinear(stop);
+        paletteLin.push([lin[0], lin[1], lin[2]]);
+    }
+    const floor = oklchToLinear(config.floor);
+
+    return {
+        time: timeSec,
+        aspect,
+        px,
+        flowSlope,
+        undAmp: config.undulation,
+        undFreq: FLOW_UND_FREQ,
+        undSpeed: flowSpeed * FLOW_UND_SPEED_MUL,
+        weaveAmp: config.interweave,
+        weaveFreq: FLOW_WEAVE_FREQ,
+        weaveSpeed: flowSpeed * FLOW_WEAVE_SPEED_MUL,
+        weaveDirX: Math.cos(weaveRad),
+        weaveDirY: Math.sin(weaveRad),
+        curlWarp: config.curlWarp,
+        curlScale: FLOW_CURL_SCALE,
+        curlDrift: flowSpeed * FLOW_CURL_DRIFT_MUL,
+        lineSpacing: FLOW_LINE_SPACING,
+        lineHalfWidth: config.lineWidth * cssPx * 0.5,
+        lineStrength: config.lineStrength,
+        // beadSlope: #beads across the width (span 2·aspect) = 2·aspect·beadSlope → beadSlope.
+        beadSlope: config.beadDensity / Math.max(2 * aspect, 1e-3),
+        beadDrift: config.beadDrift,
+        beadRadius: config.dotSize * cssPx * 0.5,
+        contrast: config.contrast,
+        pointerX: config.interactive ? pointer.cursorX : 0,
+        pointerY: config.interactive ? pointer.cursorY : 0,
+        pointerStrength: config.interactive ? pointer.strength : 0,
+        pointerRadius: config.pointerRadius,
+        pointerActive: config.interactive && pointer.active > 0.5 ? 1 : 0,
+        stopCount,
+        floorLin: [floor[0], floor[1], floor[2]],
+        paletteLin,
+    };
+}
+
+/** Project the derived render uniforms onto the field-only `StreamFieldParams` (the JS twin the
+ *  WGSL/GLSL `sampleStreamField` transcribe — the S3 round-trip anchor). */
+export function toStreamFieldParams(u: StreamUniforms): StreamFieldParams {
+    return {
+        time: u.time,
+        flowSlope: u.flowSlope,
+        undAmp: u.undAmp,
+        undFreq: u.undFreq,
+        undSpeed: u.undSpeed,
+        weaveAmp: u.weaveAmp,
+        weaveFreq: u.weaveFreq,
+        weaveSpeed: u.weaveSpeed,
+        weaveDirX: u.weaveDirX,
+        weaveDirY: u.weaveDirY,
+        curlWarp: u.curlWarp,
+        curlScale: u.curlScale,
+        curlDrift: u.curlDrift,
+        pointerX: u.pointerX,
+        pointerY: u.pointerY,
+        pointerStrength: u.pointerStrength,
+        pointerRadius: u.pointerRadius,
+        pointerActive: u.pointerActive,
+    };
+}
+
+// ── The WGPU uniform buffer (13 × vec4<f32> = 208 bytes) ─────────────────────────
+//   v0     (time, aspect, px, flowSlope)
+//   v1     (undAmp, undFreq, undSpeed, _)
+//   v2     (weaveAmp, weaveFreq, weaveSpeed, _)
+//   v3     (weaveDirX, weaveDirY, curlWarp, curlScale)
+//   v4     (curlDrift, lineSpacing, lineHalfWidth, lineStrength)
+//   v5     (beadSlope, beadDrift, beadRadius, contrast)
+//   v6     (pointerX, pointerY, pointerStrength, pointerRadius)
+//   v7     (pointerActive, stopCount, _, _)
+//   floorC (floor.rgb, _)
+//   palette array<vec4, 4>
+export const FLOW_WGPU_UNIFORM_BYTES = 13 * 16;
 
 export interface FlowUniformScratch {
     buffer: ArrayBuffer;
     f32: Float32Array;
-    i32: Int32Array;
 }
 
-export function createFlowComputeScratch(): FlowUniformScratch {
-    const buffer = new ArrayBuffer(FLOW_COMPUTE_UNIFORM_BYTES);
-    return { buffer, f32: new Float32Array(buffer), i32: new Int32Array(buffer) };
+export function createFlowScratch(): FlowUniformScratch {
+    const buffer = new ArrayBuffer(FLOW_WGPU_UNIFORM_BYTES);
+    return { buffer, f32: new Float32Array(buffer) };
 }
 
-/** Pack the compute uniforms in place. `count` is the live mote/lattice count (flow mode
- *  uses particleCount; field mode uses the lattice geometry count). */
-export function packFlowComputeUniforms(
+/** Pack the derived stream uniforms into the WGPU std140 buffer, lane-for-lane with `struct U`. */
+export function packFlowUniforms(
     scratch: FlowUniformScratch,
-    config: FlowFieldConfig,
-    timeSec: number,
-    dt: number,
-    geometry: FlowGridGeometry,
-    count: number,
-    pointer: FlowPointerState = FLOW_POINTER_REST,
+    u: StreamUniforms,
 ): FlowUniformScratch {
-    const { f32, i32 } = scratch;
-    const isFlow = config.mode === "flow";
-
-    f32[C_OFF.p0 + 0] = timeSec;
-    f32[C_OFF.p0 + 1] = dt;
-    f32[C_OFF.p0 + 2] = config.windSpeed;
-    f32[C_OFF.p0 + 3] = config.curlStrength;
-
-    f32[C_OFF.p1 + 0] = geometry.pitchDomain;
-    f32[C_OFF.p1 + 1] = config.displaceAmp;
-    f32[C_OFF.p1 + 2] = config.springK;
-    f32[C_OFF.p1 + 3] = geometry.cols;
-
-    const waveCount = Math.min(config.waveComponents.length, MAX_WAVE_COMPONENTS);
-    i32[C_OFF.ints + 0] = waveCount;
-    i32[C_OFF.ints + 1] = count;
-    i32[C_OFF.ints + 2] = geometry.cols;
-    i32[C_OFF.ints + 3] = isFlow ? 1 : 0; // uMode
-
-    // flow advection levers.
-    f32[C_OFF.f0 + 0] = config.turnRate;
-    f32[C_OFF.f0 + 1] = config.speedScale;
-    f32[C_OFF.f0 + 2] = config.lifetimeSec;
-    f32[C_OFF.f0 + 3] = FLOW_DOMAIN_HALF;
-
-    // the cursor vortex.
-    f32[C_OFF.f1 + 0] = config.vortexRadius;
-    f32[C_OFF.f1 + 1] = config.vortexSpin;
-    f32[C_OFF.f1 + 2] = config.dragGain;
-    f32[C_OFF.f1 + 3] = config.burstShove;
-
-    // the live pointer state.
-    f32[C_OFF.ptr + 0] = pointer.cursorX;
-    f32[C_OFF.ptr + 1] = pointer.cursorY;
-    f32[C_OFF.ptr + 2] = pointer.velX;
-    f32[C_OFF.ptr + 3] = pointer.velY;
-    f32[C_OFF.ptr2 + 0] = pointer.burst;
-    f32[C_OFF.ptr2 + 1] = pointer.active;
-    f32[C_OFF.ptr2 + 2] = config.edgeBias;
-    f32[C_OFF.ptr2 + 3] = 0;
-
-    packWaves(f32, C_OFF.waves, config.waveComponents);
-    return scratch;
-}
-
-// ── RENDER uniform layout (BD.W-DOTFLOW-AURORA-CURRENT) ─────────────────────────
-//   r0      : vec4<f32>  off   0  (uTime, uContrast, uBaseBright, uDomainHalf)
-//   r1      : vec4<f32>  off  16  (uDotSize, uSizePulse, uAspect, uGridPitch)
-//   r2      : vec4<f32>  off  32  (uWaveBandCenter, uWaveBandWidth, uGlobeMask, uMode)
-//   ints    : vec4<i32>  off  48  (uStopCount, uParticleCount, _pad, _pad)
-//   bg      : vec4<f32>  off  64  (background.rgb, hasBackground)
-//   f0      : vec4<f32>  off  80  (uSpeedGlow, uSpeedNorm, uShadowOffset, uStretchAmp)
-//   palette : array<vec4<f32>, 4>  off  96  (linear-sRGB rgb + _pad)
-//   total   : 96 + 4*16 = 160 bytes
-export const FLOW_RENDER_UNIFORM_BYTES = 96 + MAX_FLOW_STOPS * 16;
-
-/** The speed normalizer (the modal mote speed maps to the ramp MIDDLE — H2: so the full
- *  ember→gold→white spread paints, not a unimodal-amber blowout). */
-export const FLOW_SPEED_NORM = 0.022;
-
-const R_OFF = {
-    r0: 0,
-    r1: 4,
-    r2: 8,
-    ints: 12,
-    bg: 16,
-    f0: 20,
-    palette: 24, // 4 stops × 4 words
-} as const;
-
-export function createFlowRenderScratch(): FlowUniformScratch {
-    const buffer = new ArrayBuffer(FLOW_RENDER_UNIFORM_BYTES);
-    return { buffer, f32: new Float32Array(buffer), i32: new Int32Array(buffer) };
-}
-
-/** The base resting brightness (the calm-lattice floor before the band lights a dot). */
-export const FLOW_BASE_BRIGHT = 0.22;
-
-/**
- * BG.W-DOTFLOW-REBUILD — the present-composite Reinhard tone-map knee `trail/(trail+knee)`,
- * the flow register's REST-CONTRAST lever (the faint-at-rest fix). LOWER = the mid-tones
- * saturate faster, so the warm-fire ribbons pop off the deep warm floor AT REST instead of
- * washing out toward it (the "faint at rest, 10% structure" defect). The SINGLE source both
- * present passes splice — the GLSL `FLOW_FIELD_PRESENT_FRAG_GLSL` + the WGSL
- * `FLOW_FIELD_TRAIL_WGSL` `fs_present` — so the tone-map stays byte-identical across backends
- * (no WGSL↔GLSL knee drift).
- *
- * BG.W-DOTFLOW-REBUILD paint-fix — the prior 0.6 knee over-corrected the additive path into a
- * full-frame WHITE saturation on the real-GPU dense-population trail (`trail/(trail+0.6)` → 1.0
- * everywhere). Raised to 0.7 (the gate ceiling — the DARKEST warm floor a stronger-rest knee
- * allows) AND paired with the FLOW_TRAIL_DEPOSIT flood-control gain + the FLOW_TRAIL_CEIL
- * pre-tone-map clamp (the real levers — the knee alone cannot un-flood an unbounded additive
- * accumulation). The floor stays deep-warm, the ribbons pop, nothing clips to 255.
- */
-export const FLOW_PRESENT_KNEE = 0.7;
-
-/**
- * BG.W-DOTFLOW-REBUILD paint-fix — the additive mote-deposit gain, the flood-control lever
- * (the Chrome/Metal white-out fix). Each mote's premultiplied contribution to the trail buffer
- * is scaled by this BEFORE the additive blend, so a DENSE population (12000 motes advecting
- * over a half-res trail) does NOT accumulate to a uniform white flood the Reinhard tone-map
- * clips to 255. LOW enough that a single mote's streak reads as a faint warm line over the
- * deep floor, and only overlapping streamline knots reach the bright warm-fire cores. The ONE
- * source both mote passes splice (GLSL `FLOW_FIELD_POINT_FRAG_GLSL` + WGSL `fs_main` flow arm)
- * — no per-backend deposit drift.
- *
- * BG.W-DOTFLOW-REBUILD paint RE-JUDGE — the prior 0.18 gain STILL flooded the real-Metal WGSL
- * path (the actually-running path on Chrome 149/M5 + Safari 26 — a flat bright plate, meanLuma
- * 207, near-zero structure). Re-balanced to 0.05 against the ACTUAL bounded-RGBA8 WGSL trail
- * magnitude: a single mote pass now deposits a faint warm mark that decays into the deep floor,
- * only the coherent streamline knots (motes overlapping every frame) build to the saturated
- * warm-fire cores, so the ribbons POP off a deep floor with real ribbon structure (high
- * stdLuma) instead of washing the whole frame uniform. Pairs with the RGBA8 bound (the
- * accumulation caps at 1.0 per blend, so decayed floor pixels actually go dark).
- */
-export const FLOW_TRAIL_DEPOSIT = 0.05;
-
-/**
- * BG.W-DOTFLOW-REBUILD paint-fix — the mote base brightness (the deposit floor for a ZERO-speed
- * mote). LOW so the slow eddies recede into the deep warm floor and the fast jets carry the
- * warm-fire ribbons (the reference's bright-jets-over-dark-floor character); the speed term
- * (`+ speedNorm * speedGlow`) drives the pop. Replaces the flooding hardcoded 0.35 mote base.
- * The ONE source both mote passes splice.
- */
-export const FLOW_MOTE_BASE = 0.12;
-
-/**
- * BG.W-DOTFLOW-REBUILD paint-fix — the pre-tone-map trail clamp ceiling. The present pass clamps
- * `trail` to this BEFORE the Reinhard map, so the WebGPU rgba16float trail (which accumulates
- * UNBOUNDED) behaves identically to the WebGL2 RGBA8 trail (which clamps at 1.0 by the fixed-
- * point store). ONE bounded input across both backends → no engine-specific white-out. The ONE
- * source both present passes splice.
- */
-export const FLOW_TRAIL_CEIL = 1.0;
-
-/** The drift-driven size pulse (a subtle breathing; never a re-seed). */
-export const FLOW_SIZE_PULSE = 0.4;
-
-/** A px-size in CSS-px → the same domain units the WGSL `uDotSize` expects. */
-function dotSizeDomain(dotSizePx: number, canvasCssMin: number): number {
-    const pxPerDomain = (canvasCssMin || 320) / (2 * FLOW_DOMAIN_HALF);
-    return dotSizePx / Math.max(pxPerDomain, 1e-4);
-}
-
-/** Pack the render uniforms in place. */
-export function packFlowRenderUniforms(
-    scratch: FlowUniformScratch,
-    config: FlowFieldConfig,
-    timeSec: number,
-    aspect: number,
-    canvasCssMin: number,
-    geometry: FlowGridGeometry,
-    palette: OklchStop[],
-): FlowUniformScratch {
-    const { f32, i32 } = scratch;
-    f32[R_OFF.r0 + 0] = timeSec;
-    f32[R_OFF.r0 + 1] = config.contrast;
-    f32[R_OFF.r0 + 2] = FLOW_BASE_BRIGHT;
-    f32[R_OFF.r0 + 3] = FLOW_DOMAIN_HALF;
-
-    f32[R_OFF.r1 + 0] = dotSizeDomain(config.dotSize, canvasCssMin);
-    f32[R_OFF.r1 + 1] = FLOW_SIZE_PULSE;
-    f32[R_OFF.r1 + 2] = aspect;
-    f32[R_OFF.r1 + 3] = geometry.pitchDomain;
-
-    f32[R_OFF.r2 + 0] = config.waveBandCenter;
-    f32[R_OFF.r2 + 1] = config.waveBandWidth;
-    f32[R_OFF.r2 + 2] = config.globeMask ? 1 : 0;
-    f32[R_OFF.r2 + 3] = config.mode === "flow" ? 1 : 0; // uMode
-
-    // flow velocity-map levers.
-    f32[R_OFF.f0 + 0] = config.speedGlow;
-    f32[R_OFF.f0 + 1] = FLOW_SPEED_NORM;
-    f32[R_OFF.f0 + 2] = config.shadowOffset;
-    f32[R_OFF.f0 + 3] = config.stretchAmp;
-
-    const stopCount = Math.min(palette.length, MAX_FLOW_STOPS);
-    i32[R_OFF.ints + 0] = stopCount;
-    i32[R_OFF.ints + 1] = geometry.count;
-    i32[R_OFF.ints + 2] = 0;
-    i32[R_OFF.ints + 3] = 0;
-
-    // background (linear-sRGB) + hasBackground flag.
-    if (config.background === "transparent") {
-        f32[R_OFF.bg + 0] = 0;
-        f32[R_OFF.bg + 1] = 0;
-        f32[R_OFF.bg + 2] = 0;
-        f32[R_OFF.bg + 3] = 0;
-    } else {
-        const lin = oklchToLinear(config.background);
-        f32[R_OFF.bg + 0] = lin[0];
-        f32[R_OFF.bg + 1] = lin[1];
-        f32[R_OFF.bg + 2] = lin[2];
-        f32[R_OFF.bg + 3] = 1;
-    }
-
-    // palette stops baked to LINEAR-sRGB (the WGSL render samples in linear).
+    const f = scratch.f32;
+    // v0
+    f[0] = u.time; f[1] = u.aspect; f[2] = u.px; f[3] = u.flowSlope;
+    // v1
+    f[4] = u.undAmp; f[5] = u.undFreq; f[6] = u.undSpeed; f[7] = 0;
+    // v2
+    f[8] = u.weaveAmp; f[9] = u.weaveFreq; f[10] = u.weaveSpeed; f[11] = 0;
+    // v3
+    f[12] = u.weaveDirX; f[13] = u.weaveDirY; f[14] = u.curlWarp; f[15] = u.curlScale;
+    // v4
+    f[16] = u.curlDrift; f[17] = u.lineSpacing; f[18] = u.lineHalfWidth; f[19] = u.lineStrength;
+    // v5
+    f[20] = u.beadSlope; f[21] = u.beadDrift; f[22] = u.beadRadius; f[23] = u.contrast;
+    // v6
+    f[24] = u.pointerX; f[25] = u.pointerY; f[26] = u.pointerStrength; f[27] = u.pointerRadius;
+    // v7
+    f[28] = u.pointerActive; f[29] = u.stopCount; f[30] = 0; f[31] = 0;
+    // floorC
+    f[32] = u.floorLin[0]; f[33] = u.floorLin[1]; f[34] = u.floorLin[2]; f[35] = 0;
+    // palette (4 stops)
     for (let i = 0; i < MAX_FLOW_STOPS; i++) {
-        const base = R_OFF.palette + i * 4;
-        const stop = palette[Math.min(i, stopCount - 1)] ?? palette[0];
-        const lin = oklchToLinear(stop);
-        f32[base + 0] = lin[0];
-        f32[base + 1] = lin[1];
-        f32[base + 2] = lin[2];
-        f32[base + 3] = 0;
+        const base = 36 + i * 4;
+        const s = u.paletteLin[i] ?? u.paletteLin[0];
+        f[base] = s[0]; f[base + 1] = s[1]; f[base + 2] = s[2]; f[base + 3] = 0;
     }
     return scratch;
-}
-
-/** Pack the shared wave-component table (both buffers carry it identically). */
-function packWaves(
-    f32: Float32Array,
-    base: number,
-    waves: readonly WaveComponent[],
-): void {
-    for (let i = 0; i < MAX_WAVE_COMPONENTS; i++) {
-        const o = base + i * 4;
-        const w = waves[i];
-        if (w) {
-            f32[o + 0] = w.amplitude;
-            f32[o + 1] = w.wavelength;
-            f32[o + 2] = w.direction;
-            f32[o + 3] = w.phase;
-        } else {
-            f32[o + 0] = 0;
-            f32[o + 1] = 1;
-            f32[o + 2] = 0;
-            f32[o + 3] = 0;
-        }
-    }
-}
-
-/** The byte size of one lattice dot in the storage buffer (vec4<f32>). */
-export const FLOW_PARTICLE_BYTES = 16;
-
-/**
- * Seed the lattice storage buffer: each dot starts AT its anchor origin (the restoring
- * spring needs no initial offset). `(pos.x, pos.y, height=0, |disp|=0)` per index — the
- * compute kernel re-derives the origin from `gridOrigin(index, cols, pitch)` each frame,
- * so the seed only needs the starting position (the lattice settles on the first frames).
- */
-export function seedLatticeBuffer(geometry: FlowGridGeometry): Float32Array {
-    const { cols, count, pitchDomain } = geometry;
-    const data = new Float32Array(count * 4);
-    const half = ((cols - 1) * pitchDomain) / 2;
-    for (let i = 0; i < count; i++) {
-        const col = i % cols;
-        const row = Math.floor(i / cols);
-        const o = i * 4;
-        data[o + 0] = col * pitchDomain - half;
-        data[o + 1] = row * pitchDomain - half;
-        data[o + 2] = 0;
-        data[o + 3] = 0;
-    }
-    return data;
-}
-
-/**
- * BD.W-DOTFLOW-AURORA-CURRENT — seed the FLOW mote buffer: each mote scattered across the
- * domain, life STAGGERED across [0, lifetimeSec) so deaths/respawns don't synchronize (the
- * field never blinks). `(pos.x, pos.y, speed=0, life)` per index. A deterministic hash so
- * the capture path reproduces.
- */
-export function seedFlowBuffer(count: number, lifetimeSec: number): Float32Array {
-    const data = new Float32Array(count * 4);
-    const half = FLOW_DOMAIN_HALF;
-    // a small deterministic LCG so the scatter is reproducible (capture path).
-    let s = 0x9e3779b9 >>> 0;
-    const rnd = (): number => {
-        s = (s * 1664525 + 1013904223) >>> 0;
-        return s / 0xffffffff;
-    };
-    for (let i = 0; i < count; i++) {
-        const o = i * 4;
-        data[o + 0] = (rnd() * 2 - 1) * half;
-        data[o + 1] = (rnd() * 2 - 1) * half;
-        data[o + 2] = 0;
-        data[o + 3] = rnd() * Math.max(lifetimeSec, 1e-3);
-    }
-    return data;
 }

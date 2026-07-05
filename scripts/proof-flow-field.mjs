@@ -1,35 +1,24 @@
 #!/usr/bin/env node
-// BB.W-VIZ-SUITE (W-FLOWFIELD) — proof:flow-field, the dot-flow-field source gate
-// (born-RED on the bare tree → GREEN at close).
-//
-// The dot-flow-field is the FIRST NEW WebGPU-first viz of Batch V — born on the proven
-// substrate (W-GPU-SUBSTRATE + the aurora/goo-blob WGSL migrations). This gate machine-
-// locks the WebGPU-first-with-fallback shape + the curlFBM/pointer-velocity consume + the
-// colocation/publication + the reference-aesthetic readback clause + the JS↔WGSL
-// round-trip (the single-math-source bar). The binding live-π / own-surface DELTA capture
-// (the gestalt bar) rides W-REFLECT3 (tests-visual/flow-field.spec.ts).
+// BB.W-VIZ-SUITE (W-FLOWFIELD) → BG.W-DOTFLOW-REBUILD — proof:flow-field, the dot-flow-field
+// source gate (the colocation + WebGPU-first + single-math-source + fallback lock; kept GREEN
+// through the STREAMLINE rebuild — the mote/trail architecture retired, the streamline field the
+// new single source; the born-RED architecture lock is proof:viz-dotflow).
 //
 // SOURCE PREDICATES (each falsifiable, each device-free):
-//   1. COLOCATION — the feature-dir carries composables/ + constants.ts +
-//      shaders/{compute.wgsl,render.wgsl,fallback} + README.md (the proof:colocation
-//      layout the README marker enrolls).
-//   2. COMPOSES-SUBSTRATE — DotFlowField.vue / useDotFlowField.ts compose useGpuSubstrate
-//      (the picker), NOT createWebGLCanvas / navigator.gpu directly (clause A of the
-//      parity gate, scoped to this viz).
-//   3. ROUND-TRIP — the analytic ∇⊥ψ evaluator (flowField.ts sampleVelocity) is the
-//      SINGLE math source: the WGSL compute kernel transcribes the SAME Gerstner-sum +
-//      curl constants (a structural transcription check — the shared constants/structure
-//      match, the device-free form of the JS↔WGSL clause).
-//   4. CURL-CONSUME + FALLBACK — the viz consumes the SHARED curlFBM operator (BB.B1)
-//      AND the pointer-velocity reader (B4); the Canvas2D/WebGL2 fallback exists + its
-//      parity status is declared verified in the parity table.
-//   5. WARM-IDENTITY — the DEFAULT palette in constants.ts is warm-cream identity (NO
-//      teal/navy literal — the demo owns the reference; presets-in-consumers).
-//   6. STORY — a demo/stories/substrates/dot-flow-field.vue story covers the export
-//      (proof:storybook-complete green).
+//   1. COLOCATION — the feature-dir carries composables/ + constants.ts + shaders/{wgsl,glsl}
+//      + README.md (the proof:colocation layout the README marker enrolls).
+//   2. COMPOSES-SUBSTRATE — DotFlowField.vue / useDotFlowField.ts compose useGpuSubstrate (the
+//      picker), NOT createWebGLCanvas / navigator.gpu directly.
+//   3. ROUND-TRIP — the stream-field evaluator (flowField.ts sampleStreamField) is the SINGLE
+//      math source: the WGSL fullscreen fragment (flow-field.wgsl.ts) transcribes the SAME field
+//      (the ramp + undulation + curl-warp) + the shared curl basis (a structural transcription).
+//   4. CURL-CONSUME + FALLBACK — the shared curlFBM chunk (flow.glsl.ts) + the pointer-velocity
+//      reader exist; the WebGL2 fallback (flow-field.glsl.ts) exists + the parity row resolves.
+//   5. WARM-IDENTITY — the DEFAULT palette in constants.ts is warm-cream (NO teal/navy literal).
+//   6. STORY — a demo/stories/substrates/dot-flow-field.vue story covers the export.
 //
-// SELF-TEST BITE (--selftest): a synthetic broken tree (a teal literal injected into the
-// library constants; a navigator.gpu direct call) MUST red — born-RED proof on a green HEAD.
+// SELF-TEST BITE (--selftest): a synthetic broken tree (a teal literal; a navigator.gpu direct
+// call; a broken round-trip; a missing story) MUST red.
 
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -62,9 +51,8 @@ function clauseColocation(overrides = {}) {
         "README.md",
         "composables/flowField.ts",
         "composables/useDotFlowField.ts",
-        "composables/useFlowParticles.ts",
-        "shaders/flow-field.compute.wgsl.ts",
-        "shaders/flow-field.render.wgsl.ts",
+        "composables/uniformBridgeWGPU.ts",
+        "shaders/flow-field.wgsl.ts",
         "shaders/flow-field.glsl.ts",
     ];
     for (const rel of must) {
@@ -82,7 +70,6 @@ function clauseComposesSubstrate(srcOverride) {
         srcOverride?.["useDotFlowField"] ??
         read(resolve(DIR, "composables/useDotFlowField.ts"));
     const both = stripComments(sfc) + "\n" + stripComments(composable);
-    // The viz must NOT bootstrap a context directly.
     if (/navigator\s*\.\s*gpu\s*\.\s*requestAdapter/.test(both))
         viol.push("composes: a direct navigator.gpu.requestAdapter call — the viz must compose useGpuSubstrate");
     if (/getContext\(\s*["']webgl2["']/.test(both))
@@ -98,44 +85,40 @@ function clauseRoundTrip(srcOverride) {
         srcOverride?.["flowField"] ?? read(resolve(DIR, "composables/flowField.ts")),
     );
     const wgsl = stripComments(
-        srcOverride?.["compute"] ??
-            read(resolve(DIR, "shaders/flow-field.compute.wgsl.ts")),
+        srcOverride?.["wgsl"] ?? read(resolve(DIR, "shaders/flow-field.wgsl.ts")),
     );
-    // The single-math-source check: the WGSL kernel transcribes the SAME Gerstner sum
-    // (ω = √(g·k), the (∂h/∂y, −∂h/∂x) curl) AND the same curl-noise basis (FBM_ROT,
-    // CURL_EPS 0.012) the JS evaluator carries. A structural transcription match.
+    // The single-math-source check: the WGSL fullscreen fragment transcribes the SAME stream
+    // field (the flowSlope·wy ramp + the two traveling undulations + the curlFBM domain warp) +
+    // the same curl-noise basis (FBM_ROT, CURL_EPS 0.012) the JS evaluator carries.
     const sharedTokens = [
-        ["sampleVelocity in JS", () => /function sampleVelocity/.test(js)],
-        ["sampleVelocity in WGSL", () => /fn sampleVelocity/.test(wgsl)],
-        ["gerstner ω=√(g·k) in JS", () => /Math\.sqrt\(\s*FLOW_GRAVITY\s*\*\s*k\s*\)/.test(js)],
-        ["gerstner ω=√(g·k) in WGSL", () => /sqrt\(\s*FLOW_GRAVITY\s*\*\s*k\s*\)/.test(wgsl)],
-        ["curl ∇⊥h (dhdy,−dhdx) in JS", () => /x:\s*dhdy\s*,\s*y:\s*-?\s*dhdx/.test(js)],
-        ["curl ∇⊥h (dhdy,−dhdx) in WGSL", () => /vec2<f32>\(\s*dhdy\s*,\s*-\s*dhdx\s*\)/.test(wgsl)],
+        ["sampleStreamField in JS", () => /function sampleStreamField/.test(js)],
+        ["sampleStreamField in WGSL", () => /fn sampleStreamField/.test(wgsl)],
+        ["ramp flowSlope·wy in JS", () => /flowSlope\s*\*\s*wy/.test(js)],
+        ["ramp flowSlope·wy in WGSL", () => /v0\.w\s*\*\s*wy/.test(wgsl)],
+        ["curl-warp domain in JS", () => /curlFBM\(/.test(js)],
+        ["curl-warp domain in WGSL", () => /curlFBM\(/.test(wgsl)],
         ["CURL_EPS 0.012 in JS", () => /CURL_EPS\s*=\s*0\.012/.test(js)],
         ["CURL_EPS 0.012 in WGSL", () => /CURL_EPS\s*[:=]\s*[^;]*0\.012/.test(wgsl)],
         ["FBM_ROT 0.8/0.6 in JS", () => /0\.8\s*\*\s*px\s*-\s*0\.6\s*\*\s*py/.test(js)],
         ["FBM_ROT 0.8/0.6 in WGSL", () => /mat2x2<f32>\(0\.8,\s*0\.6,\s*-0\.6,\s*0\.8\)/.test(wgsl)],
     ];
     for (const [label, fn] of sharedTokens) {
-        if (!fn()) viol.push(`round-trip: ${label} — the WGSL kernel must transcribe the SAME flowField.ts math (the single source)`);
+        if (!fn()) viol.push(`round-trip: ${label} — the WGSL fragment must transcribe the SAME flowField.ts math (the single source)`);
     }
     return viol;
 }
 
 function clauseCurlAndFallback(srcOverride) {
     const viol = [];
-    // The SHARED curlFBM operator (BB.B1) must exist (the ≥3-consumer chunk source); the
-    // viz transcribes the SAME curl operator definition. The pointer-velocity reader (B4)
-    // is available for the interactive axis.
+    // The SHARED curlFBM chunk (BB.B1) exists; the pointer-velocity reader (B4) is available.
     if (!existsSync(FLOW_GLSL_CHUNK))
         viol.push("curl: the shared curlFBM operator (flow.glsl.ts) is missing");
     if (!existsSync(resolve(ROOT, "src/composables/motion/usePointerVelocityField.ts")))
         viol.push("pointer: usePointerVelocityField (B4) is missing");
-    // The fallback path exists.
+    // The WebGL2 fallback path exists.
     if (!existsSync(resolve(DIR, "shaders/flow-field.glsl.ts")))
-        viol.push("fallback: shaders/flow-field.glsl.ts (the Canvas2D fallback) is missing");
-    // The parity table declares the flow-field row verified (or degraded — a recorded
-    // honest status), resolving on disk.
+        viol.push("fallback: shaders/flow-field.glsl.ts (the WebGL2 fragment fallback) is missing");
+    // The parity table declares the flow-field row verified/degraded + its paths resolve on disk.
     const table = srcOverride?.["parity"] ?? read(PARITY_TABLE);
     const m = (table ?? "").match(/```json\s*([\s\S]*?)```/);
     if (!m) {
@@ -166,15 +149,12 @@ function clauseWarmIdentity(srcOverride) {
     const consts = stripComments(
         srcOverride?.["constants"] ?? read(resolve(DIR, "constants.ts")),
     );
-    // The warm-identity default — NO teal/navy literal in the LIBRARY constants. The
-    // reference teal palette (hue ~195-205) + the navy ground (hue ~255) live in the DEMO
-    // preset, never here. Detect an OklchStop with a teal/navy hue.
     const stopRe = /h\s*:\s*(\d+(?:\.\d+)?)/g;
     let m;
     while ((m = stopRe.exec(consts))) {
         const h = Number(m[1]);
         if (h >= 180 && h <= 280)
-            viol.push(`warm-identity: a teal/navy hue (h=${h}) in the LIBRARY constants.ts — the reference palette belongs in the DEMO preset (presets-in-consumers)`);
+            viol.push(`warm-identity: a teal/navy hue (h=${h}) in the LIBRARY constants.ts — the reference skin belongs in the DEMO preset (presets-in-consumers)`);
     }
     if (!/WARM_IDENTITY_PALETTE/.test(consts))
         viol.push("warm-identity: constants.ts does not declare WARM_IDENTITY_PALETTE");
@@ -224,9 +204,9 @@ function selfTest() {
         },
     });
     if (directGpu.length === 0) fails.push("self-test: a direct navigator.gpu.requestAdapter did NOT red");
-    // (c) a broken round-trip (WGSL kernel missing the gerstner ω term).
+    // (c) a broken round-trip (WGSL fragment missing the ramp + curl warp).
     const brokenRT = runAll({
-        roundTrip: { compute: "fn sampleVelocity() {}\n// no gerstner, no curl" },
+        roundTrip: { wgsl: "fn sampleStreamField() {}\n// no ramp, no curl" },
     });
     if (brokenRT.length === 0) fails.push("self-test: a broken JS↔WGSL round-trip did NOT red");
     // (d) a missing story.
@@ -243,7 +223,7 @@ function main() {
 
     const artifact = {
         gate: "proof:flow-field",
-        wave: "BB.W-VIZ-SUITE.d W-FLOWFIELD",
+        wave: "BB.W-VIZ-SUITE.d W-FLOWFIELD → BG.W-DOTFLOW-REBUILD",
         stamp: snapshotStamp(),
         ok,
         violations: viol,

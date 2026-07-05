@@ -6,26 +6,23 @@ import { DEFAULT_FLOW_CONFIG } from "./constants";
 import type { OklchStop } from "../../../composables/color";
 
 /**
- * DotFlowField — TWO registers, ONE component (BG.W-DOTFLOW-REBUILD, over the
- * BD.W-DOTFLOW-AURORA-CURRENT source). The DEFAULT `mode:"flow"` is the AURORA CURRENT: a
- * dense population ADVECTED along the divergence-free curl current, each mote trailing a
- * fading ribbon of warm-fire light (the ribbon hue mapped to the mote SPEED), the cursor a
- * live VORTEX, over a deep warm-near-black floor + a warm rose corner-bloom (NO cyan/teal).
- * The calm `mode:"field"` register is the kept anchored dot-matrix a slow LARGE wave sweeps
- * through — no advection, no re-seed, a broad bright iso-band lighting the dots it passes.
+ * DotFlowField — the STREAMLINE field (BG.W-DOTFLOW-REBUILD). Discrete warm-cream dots strung
+ * along EVENLY-SPACED SMOOTH STREAMLINES of a curl-warped stream function ψ — undulating +
+ * interweaving like the level curves of a procedural function, the dots drifting slowly ALONG
+ * their own line, over a deep warm-near-black floor. The cursor bends the streamlines (a smooth
+ * gaussian domain-push — no snap, no vortex chaos). The reference is IMG_1836.
  *
- * The current undulates as the low-frequency Gerstner/Tessendorf sum-of-sines curl-noise
- * field (`composables/flowField.ts` — the SINGLE math source both backends transcribe).
- * WebGPU-FIRST: the compute pass advects the storage buffer (the sole earner) into a half-res
- * RGBA16F trail; the WebGL2 channel (the live path on most hosts) runs a state-texture GPGPU
- * ping-pong + a two-FBO feedback-fade trail — the SAME advected-population gestalt on both
- * engines (no Canvas2D — the §E "no canvas" mandate). It composes `useDotFlowField` → the
- * `createGpuSubstrate` picker over the ONE canvas lifecycle leaf (offscreen-pause, live-PRM
+ * ONE fullscreen-fragment pass evaluating `composables/flowField.ts sampleStreamField` (the
+ * SINGLE math source both backends transcribe): the streamlines are the iso-contours of ψ
+ * (Bridson 2007 — v = ∇⊥ψ; Jobard–Lefer 1997 even spacing = even Δ level step), beaded at the
+ * crossings with a drifting transverse bead-line. WebGPU-FIRST via `createGpuSubstrate` with a
+ * byte-identical WebGL2 fragment fallback — NO compute particles, NO additive-trail flood, NO
+ * white-out possible (the free-advected-mote + trail-ping-pong architecture is RETIRED). It
+ * composes `useDotFlowField` over the ONE canvas lifecycle leaf (offscreen-pause, live-PRM
  * freeze, the shared pointer field) — it never bootstraps its own context.
  *
- * The DEFAULT palette is the warm-cream library identity; the warm-fire velocity ramp, the
- * mono-dim-on-near-black reference + the globe mask are DEMO presets (presets-in-consumers —
- * never a library token). The teal-on-navy is GONE entirely (clean break).
+ * The DEFAULT palette + floor are the warm-cream library identity; the IMG_1836 teal-on-navy
+ * skin is a DEMO preset (presets-in-consumers — never a library token).
  */
 const {
     config = DEFAULT_FLOW_CONFIG,
@@ -61,13 +58,12 @@ watch(
     { immediate: true },
 );
 
-// The CSS background (the demo's dark navy ground; default transparent so it reads over
-// the page).
+// The CSS ground mirrors the shader's warm-near-black floor — a first-paint fallback so the
+// wrapper shows the deep floor before the canvas arms (the shader paints the same floor opaque).
 const bgStyle = computed(() => {
-    const bg = config.background;
-    if (bg === "transparent") return undefined;
+    const f = config.floor;
     // OKLCh → a CSS oklch() ground (the browser resolves it; no library token).
-    return `oklch(${bg.L} ${bg.C} ${bg.h})`;
+    return `oklch(${f.L} ${f.C} ${f.h})`;
 });
 
 defineExpose({

@@ -1,76 +1,40 @@
 #!/usr/bin/env node
-// BC.W-VIZ-DOTFLOW — proof:viz-dotflow, the RETOPOLOGIZED dot-flow-field source gate
-// (born-RED on the bare BB tree → GREEN at the retopology).
+// BG.W-DOTFLOW-REBUILD — proof:viz-dotflow, the STREAMLINE dot-flow-field SOURCE gate
+// (born-RED on the pre-rebuild tree → GREEN at the first-principles streamline rebuild).
 //
-// The cure for the BB dot-flow noise defect (USER-DEFECTS §E: "absolutely awful — does not
-// form waves/shapes, a mess of NOISE. Must be SUBTLE, form LARGER + more SWEEPING waves").
-// The free-advecting particle cloud → an ANCHORED DOT-MATRIX + a restoring spring +
-// brightness-shape modulation; the coherence regime inverted (octaves 6→2-3, λ₀ 2.4→2.5×,
-// curl 0.6→0.12, windSpeed 1.0→0.3); the Canvas2D fallback retired for a pure WebGL2
-// fragment; the teal-on-navy fabricated reference GONE (warm-cream identity default).
+// THE REBUILD (USER 07-05 — "a TOTAL MESS, completely unusable"; the flood-control constant-tune
+// on the mote/trail architecture did NOT satisfy — no streamlines read, Safari dead-black,
+// Chrome white-out). The free-advected-mote + additive-trail-flood architecture
+// (BD.W-DOTFLOW-AURORA-CURRENT) is RETIRED WHOLE (compute pass, storage particles, two-pass
+// trail ping-pong — W-PRUNE-CONSOLIDATE, no dual path). The frame is rebuilt to the IMG_1836
+// reference: discrete dots strung along EVENLY-SPACED SMOOTH STREAMLINES of a curl-warped stream
+// function — the iso-contours (Bridson 2007: v = ∇⊥ψ → the streamlines ARE ψ's level curves;
+// Jobard–Lefer 1997: even spacing = even Δ level step), beaded at the crossings with a drifting
+// transverse bead-line, over a deep warm floor. ONE fullscreen-fragment pass (the aurora.wgsl
+// shape — paints identically on WebKit-WebGPU + Chrome/Metal; no compute, no trail, no white-out).
 //
-// This gate is the DEVICE-FREE SOURCE arm (born-RED → GREEN, tagged ["local","ci","release"]).
-// The LIVE-GPU gestalt paint (the stable lattice + the ONE sweeping band, both modes) rides
-// the orchestrator's real-Metal capture (tests-visual/flow-field.spec.ts + the DELTA), NOT
-// this device-free gate — the cardinal split (CI proves the SOURCE topology/regime, the
-// local close proves the PAINT).
+// This is the DEVICE-FREE SOURCE arm (born-RED → GREEN, tagged ["local","ci","release"]). The
+// binding live-GPU gestalt paint (the traceable evenly-spaced beaded streamlines, both engines
+// both modes) is the paint judge's dual-engine re-judge — NOT this device-free gate (the
+// cardinal split: CI proves the SOURCE architecture, the local close proves the PAINT).
 //
-// FALSIFIABLE SOURCE WITNESSES (each born-RED at HEAD pre-wave; the comment-strip +
-// pure-detector house pattern):
+// SOURCE WITNESSES (each falsifiable; the comment-strip + pure-detector house pattern):
+//   S1 — the mote/trail/compute architecture is RETIRED (ABSENT). The compute/render/trail-fork
+//        files are DEFINITION-ABSENT; the constants carry no mote/trail/vortex schema; the WGSL
+//        carries no @compute/cs_flow/trail; the GLSL carries no state-texture/trail/point-sprite.
+//   S2 — the STREAMLINE field is present. flowField.ts exports sampleStreamField/StreamFieldParams
+//        /curlFBM; both shaders declare the fragment sampleStreamField + the fullscreen pass.
+//   S3 — the ONE math source transcribes (JS↔WGSL↔GLSL) + the iso-contour beaded render. The
+//        stream field (ramp + 2 undulations + curl-warp + pointer bend) + the shared curl basis
+//        transcribe in all three; both shaders render the even iso-contour + the bead crossing.
+//   S4 — fullscreen fragment, NO compute / NO instanced billboards. The WGPU setup draws the
+//        3-vertex triangle with no compute pass / no storage-particle buffer; the GL setup draws
+//        the fullscreen triangle with no trail FBO / no point-sprite.
+//   S5 — warm-identity default + NO teal/navy in the LIBRARY constants (the palette fence).
+//   S6 — the pointer BENDS the streamlines (velocity AND accel/burst — the user's ask).
 //
-//   F1 — ANCHORED TOPOLOGY, NO RESEED. flow-field.compute.wgsl carries NO `reseed(` call
-//        and NO `pos = pos + v*dt` forward-Euler advection; it carries `gridOrigin(` + the
-//        restoring `mix(pos, anchorTarget, 1 - exp(-springK*dt))` pull. Born-RED: HEAD has
-//        the reseed branch + the advection. Bite: a planted `reseed(` re-paste reds; a
-//        planted `pos = pos + v * dt` reds.
-//
-//   F2 — COHERENT REGIME. buildWaveLadder defaults octaves ≤ 3 AND λ₀ ≥ 2.0 (the LARGE-wave
-//        band — λ₀ as a multiple of the view extent); DEFAULT_FLOW_CONFIG.windSpeed ≤ 0.4
-//        AND curlStrength ≤ 0.2 (the subtle band). Born-RED: HEAD octaves 6, λ₀ 2.4
-//        (absolute, not view-relative), windSpeed 1.0, curl 0.6. Bite: octaves > 4 OR curl
-//        > 0.3 reds.
-//
-//   F3 — ONE MATH SOURCE round-trips. gridOrigin/sampleHeight/sampleDisplacement/waveBand
-//        exist in flowField.ts as PURE exports AND the WGSL compute + the GLSL fragment
-//        transcribe them (the shared-structure transcription check); a fixed-sample numeric
-//        round-trip of the JS evaluator agrees with the transcribed structure. Bite: a
-//        hand-edited WGSL curl domain-scale that drifts from the JS ×0.55 reds.
-//
-//   F4 — NO CANVAS2D VIZ. flow-field.glsl.ts carries NO `createCpuFlowField` / Canvas2D
-//        `getContext("2d")` path; it exports the FRAGMENT shader (FLOW_FIELD_FRAG_GLSL), and
-//        useDotFlowField does NOT bind useCanvas2D — it composes createGpuSubstrate with a
-//        setupGL WebGL2 fragment arm. Born-RED: HEAD has the Canvas2D fallback + the
-//        useCanvas2D bind. Bite: a planted `getContext("2d")` in the viz reds.
-//
-//   F5 — WARM-CREAM IDENTITY DEFAULT + NO TEAL/NAVY. constants.ts has NO teal/navy literal
-//        (an OklchStop with `h in [180,280]`); DEFAULT_FLOW_CONFIG.palette ===
-//        WARM_IDENTITY_PALETTE; presets.ts has NO TEAL_DOTS/NAVY_GROUND symbol. Born-RED if
-//        the teal preset survives. Bite: a planted teal stop in the library reds.
-//
-//   F6 — POINTER WIRED. useDotFlowField composes usePointerVelocityField AND feeds .tick(
-//        from the frame callback AND reads BOTH velocity AND acceleration/burst (the user's
-//        "velocity AND acceleration" ask). Bite: a velocity-only wiring reds.
-//
-// BG.W-DOTFLOW-REBUILD — the ADVECTION FLOW register lock + the faint-at-rest fix (the F7
-// arm, born-RED on the pre-rebuild tree → GREEN at the rebuild):
-//
-//   F7a — THE ADVECTION FLOW REGISTER (compute STAYS WebGPU, the sole earner + the WebGL2
-//        GPGPU state-texture + two-FBO trail). `cs_flow` exists in the compute WGSL; the GLSL
-//        exports `FLOW_FIELD_STATE_GLSL` (the state-texture advect) + `FLOW_FIELD_TRAIL_FRAG_GLSL`
-//        (the trail); `flowSetupGLFlow.ts` carries the two-FBO trail ping-pong + the state
-//        ping-pong. (Structural lock — a future prune of the flow register reds.)
-//   F7b — THE WARM-FIRE VELOCITY RAMP. presets.ts declares `WARM_FIRE_RAMP` + the
-//        `mode:"flow"` `FLOW_PRESET_AURORA_CURRENT` lead; the ramp carries NO teal/navy stop
-//        (h ∈ [180,280]) — the warm-fire fence, scoped to the ramp block (the concentric-theme
-//        teal in the SAME file is NOT this ramp).
-//   F7c — STRONGER REST CONTRAST (the born-RED arm). The present tone-map knee is a NAMED
-//        `FLOW_PRESENT_KNEE` ≤ 0.7 (stronger than the prior hardcoded 0.85 magic that read
-//        faint at rest), SPLICED into BOTH present passes — no bare `+ vec3(0.85)` /
-//        `+ vec3<f32>(0.85)` magic literal survives, and both present passes reference the
-//        named knee (the DRY single source, the tone-map parity). Born-RED: HEAD has the
-//        hardcoded 0.85 ×2 + no named knee. Bite: a bare 0.85 knee (no named splice) reds.
-//
-// + a self-test bite per clause (each planted defect REDs its clause).
+// + a self-test bite per clause (each planted defect REDs its clause) + a BORN-RED anchor bite
+//   (synthetic HEAD-like mote/trail/compute source REDs — the gate would have RED at HEAD).
 
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -94,14 +58,11 @@ function stripComments(src) {
         .replace(/(^|[^:])\/\/[^\n]*/g, "$1");
 }
 
-// Extract a WGSL function's brace-balanced body by name (e.g. `fn cs_field(...) { … }`).
-// Returns "" when the function is absent. Comment-stripped input expected.
-function extractFnBody(src, fnName) {
-    const sig = new RegExp(`fn\\s+${fnName}\\s*\\(`);
-    const m = sig.exec(src);
+// Extract a function's brace-balanced body by name (WGSL `fn NAME(...)` / GLSL `float NAME(...)`).
+function extractFnBody(src, sigRe) {
+    const m = sigRe.exec(src ?? "");
     if (!m) return "";
-    // find the opening brace after the signature.
-    let i = src.indexOf("{", m.index);
+    let i = (src ?? "").indexOf("{", m.index);
     if (i < 0) return "";
     let depth = 0;
     const start = i;
@@ -116,576 +77,273 @@ function extractFnBody(src, fnName) {
     return src.slice(start);
 }
 
-// ── F1: anchored topology, no reseed ────────────────────────────────────────────
-function clauseTopology(over) {
-    const viol = [];
-    const wgsl = stripComments(
-        over?.compute ?? read(resolve(DIR, "shaders/flow-field.compute.wgsl.ts")),
-    );
-    // The compute kernel is now DUAL-MODE: `cs_field` is the ANCHORED-LATTICE register (the F1
-    // subject — no advection, no reseed) and `cs_flow` is the AURORA-CURRENT register (the legit
-    // forward-Euler advection of the RE-INVENT flow mode). F1's reseed/advection witnesses are
-    // SCOPED to the cs_field brace-span (a whole-file grep false-trips the legit cs_flow
-    // integrator `pos = pos + v * dt * 60.0`). When cs_field is absent the gate falls back to the
-    // whole file (born-RED pre-split state).
-    const fieldBody = extractFnBody(wgsl, "cs_field") || wgsl;
-    if (/\breseed\s*\(/.test(fieldBody))
-        viol.push(
-            "F1 topology: cs_field still calls reseed( — the anchored lattice has NO re-seed (delete the free-advection re-spawn branch)",
-        );
-    // The advection integrand `pos = pos + v * dt` (any spacing) — the free-walker step. Scoped to
-    // cs_field; the cs_flow current legitimately advects (its own RE-INVENT register).
-    if (/\bpos\s*=\s*pos\s*\+\s*v\s*\*\s*dt\b/.test(fieldBody))
-        viol.push(
-            "F1 topology: cs_field still integrates pos = pos + v*dt (forward-Euler advection) — the anchored lattice does NOT advect, it eases to its anchor target",
-        );
-    if (!/\bgridOrigin\s*\(/.test(wgsl))
-        viol.push(
-            "F1 topology: the compute kernel does not derive the lattice origin via gridOrigin( — the anchored grid is missing",
-        );
-    // The framerate-independent critically-damped pull: BOTH the mix(pos, …) blend AND the
-    // `1 - exp(-springK*dt)` rate must be present (the two may sit on separate lines —
-    // `let k = 1 - exp(-springK*dt); pos = mix(pos, anchorTarget, k);`).
-    const hasMix = /mix\s*\(\s*pos\s*,/.test(wgsl);
-    const hasSpringRate = /1\.0\s*-\s*exp\s*\(\s*-\s*springK\s*\*\s*dt\s*\)/.test(wgsl);
-    if (!hasMix || !hasSpringRate)
-        viol.push(
-            `F1 topology: the compute kernel carries no restoring spring (mix(pos,…):${hasMix} · 1-exp(-springK*dt):${hasSpringRate}) — the framerate-independent pull-to-anchor is missing`,
-        );
-    return viol;
-}
+const files = (over) => ({
+    flowField: stripComments(over?.flowField ?? read(resolve(DIR, "composables/flowField.ts"))),
+    wgsl: stripComments(over?.wgsl ?? read(resolve(DIR, "shaders/flow-field.wgsl.ts"))),
+    glsl: stripComments(over?.glsl ?? read(resolve(DIR, "shaders/flow-field.glsl.ts"))),
+    constants: stripComments(over?.constants ?? read(resolve(DIR, "constants.ts"))),
+    setupWgpu: stripComments(over?.setupWgpu ?? read(resolve(DIR, "composables/flowSetupWGPU.ts"))),
+    setupGl: stripComments(over?.setupGl ?? read(resolve(DIR, "composables/flowSetupGL.ts"))),
+    useDotFlowField: stripComments(
+        over?.useDotFlowField ?? read(resolve(DIR, "composables/useDotFlowField.ts")),
+    ),
+    bridge: stripComments(over?.bridge ?? read(resolve(DIR, "composables/uniformBridgeWGPU.ts"))),
+    presets: stripComments(over?.presets ?? read(PRESETS)),
+});
 
-// ── F2: coherent regime ─────────────────────────────────────────────────────────
-function clauseRegime(over) {
+// ── S1: the mote/trail/compute architecture is RETIRED (ABSENT) ──────────────────
+const RETIRED_FILES = [
+    "shaders/flow-field.compute.wgsl.ts",
+    "shaders/flow-field.render.wgsl.ts",
+    "composables/flowSetupGLFlow.ts",
+    "composables/useFlowParticles.ts",
+];
+function clauseRetired(over) {
     const viol = [];
-    const js = stripComments(
-        over?.flowField ?? read(resolve(DIR, "composables/flowField.ts")),
-    );
-    const consts = stripComments(
-        over?.constants ?? read(resolve(DIR, "constants.ts")),
-    );
-    // buildWaveLadder default octaves ≤ 3.
-    const octM = js.match(/function buildWaveLadder\([^)]*octaves\s*=\s*(\d+)/);
-    const octaves = octM ? Number(octM[1]) : null;
-    if (octaves == null)
-        viol.push("F2 regime: buildWaveLadder has no default octaves parameter");
-    else if (octaves > 3)
-        viol.push(
-            `F2 regime: buildWaveLadder default octaves ${octaves} > 3 — the coherent regime is ≤ 3 octaves (no fine chatter)`,
-        );
-    // buildWaveLadder default λ₀ multiple ≥ 2.0 (the LARGE-wave band).
-    const lamM = js.match(/lambda0Mul\s*=\s*([\d.]+)/);
-    const lam0 = lamM ? Number(lamM[1]) : null;
-    if (lam0 == null)
-        viol.push(
-            "F2 regime: buildWaveLadder has no lambda0Mul (λ₀ as a view-extent multiple) — the LARGE-wave regime knob is missing",
-        );
-    else if (lam0 < 2.0)
-        viol.push(
-            `F2 regime: buildWaveLadder default λ₀ multiple ${lam0} < 2.0 — the LARGE dominant wave needs λ₀ ≥ 2× the view`,
-        );
-    // The DEFAULT_FLOW_CONFIG subtle band.
-    const wsM = consts.match(/windSpeed\s*:\s*([\d.]+)/);
-    const ws = wsM ? Number(wsM[1]) : null;
-    if (ws == null) viol.push("F2 regime: DEFAULT_FLOW_CONFIG has no windSpeed");
-    else if (ws > 0.4)
-        viol.push(
-            `F2 regime: DEFAULT_FLOW_CONFIG.windSpeed ${ws} > 0.4 — the subtle slow-sweep band is ≤ 0.4`,
-        );
-    const curlM = consts.match(/curlStrength\s*:\s*([\d.]+)/);
-    const curl = curlM ? Number(curlM[1]) : null;
-    if (curl == null) viol.push("F2 regime: DEFAULT_FLOW_CONFIG has no curlStrength");
-    else if (curl > 0.2)
-        viol.push(
-            `F2 regime: DEFAULT_FLOW_CONFIG.curlStrength ${curl} > 0.2 — the subtle organic-break band is ≤ 0.2`,
-        );
-    return viol;
-}
-
-// ── F3: one math source round-trips (structural transcription) ──────────────────
-function clauseRoundTrip(over) {
-    const viol = [];
-    const js = stripComments(
-        over?.flowField ?? read(resolve(DIR, "composables/flowField.ts")),
-    );
-    const wgsl = stripComments(
-        over?.compute ?? read(resolve(DIR, "shaders/flow-field.compute.wgsl.ts")),
-    );
-    const glsl = stripComments(
-        over?.glsl ?? read(resolve(DIR, "shaders/flow-field.glsl.ts")),
-    );
-    const checks = [
-        ["gridOrigin in JS", () => /export function gridOrigin/.test(js)],
-        ["sampleHeight in JS", () => /export function sampleHeight/.test(js)],
-        ["sampleDisplacement in JS", () => /export function sampleDisplacement/.test(js)],
-        ["waveBand in JS", () => /export function waveBand/.test(js)],
-        ["gridOrigin in WGSL", () => /fn gridOrigin/.test(wgsl)],
-        ["sampleHeight in WGSL", () => /fn sampleHeight/.test(wgsl)],
-        ["sampleDisplacement in WGSL", () => /fn sampleDisplacement/.test(wgsl)],
-        ["sampleHeight in GLSL", () => /float sampleHeight/.test(glsl)],
-        ["waveBand in GLSL", () => /float waveBand/.test(glsl)],
-        // The coarse ×0.55 curl domain-scale transcribes identically (the §3.2 inversion).
-        ["curl ×0.55 in JS", () => /p\.x\s*\*\s*0\.55/.test(js)],
-        ["curl ×0.55 in WGSL", () => /p\.x\s*\*\s*0\.55/.test(wgsl)],
-        ["curl ×0.55 in GLSL", () => /p\.x\s*\*\s*0\.55/.test(glsl)],
-        // The tanh soft-clamp on the displacement transcribes (bounds the sub-cell offset).
-        ["tanh soft-clamp in JS", () => /Math\.tanh\s*\(\s*mag\s*\)/.test(js)],
-        ["tanh soft-clamp in WGSL", () => /tanh\s*\(\s*mag\s*\)/.test(wgsl)],
-        ["tanh soft-clamp in GLSL", () => /tanh\s*\(\s*mag\s*\)/.test(glsl)],
-    ];
-    for (const [label, fn] of checks) {
-        if (!fn())
+    // The retired files are DEFINITION-ABSENT (born-RED — they existed at HEAD). The
+    // self-test cannot re-create them, so this is a pure structural lock; the CONSTRUCT
+    // witnesses below carry the override-driven born-RED anchor.
+    if (!over) {
+        for (const rel of RETIRED_FILES)
+            if (existsSync(resolve(DIR, rel)))
+                viol.push(
+                    `S1 retired: ${rel} SURVIVES — the mote/trail/compute architecture is retired WHOLE (W-PRUNE-CONSOLIDATE, no dual path)`,
+                );
+    }
+    const f = files(over);
+    // the constants carry NO mote/trail/vortex schema (a clean break to the streamline shape).
+    for (const [field, label] of [
+        [/\bmode\s*:\s*["']flow["']/, "mode:'flow' discriminator"],
+        [/\bparticleCount\s*:/, "particleCount"],
+        [/\btrailHalfLife\s*:/, "trailHalfLife"],
+        [/\bvortex(Radius|Spin)\s*:/, "vortex*"],
+    ]) {
+        if (field.test(f.constants))
             viol.push(
-                `F3 round-trip: ${label} — the WGSL/GLSL must transcribe the SAME flowField.ts math (the single source)`,
+                `S1 retired: constants.ts still carries the mote/trail ${label} — the streamline schema retires it`,
             );
+    }
+    // the WGSL carries no @compute / cs_flow / trail present-composite.
+    if (/@compute\b/.test(f.wgsl) || /\bcs_flow\b/.test(f.wgsl) || /FLOW_FIELD_TRAIL_WGSL/.test(f.wgsl))
+        viol.push(
+            "S1 retired: the WGSL still carries a @compute / cs_flow / trail pass — the streamline render is ONE fullscreen fragment, no compute, no trail",
+        );
+    // the GLSL carries no state-texture GPGPU / trail FBO / point-sprite mote pass.
+    for (const [re, label] of [
+        [/FLOW_FIELD_STATE_GLSL/, "FLOW_FIELD_STATE_GLSL (state-texture GPGPU advect)"],
+        [/FLOW_FIELD_TRAIL_FRAG_GLSL/, "FLOW_FIELD_TRAIL_FRAG_GLSL (trail FBO)"],
+        [/FLOW_FIELD_POINT_VERT_GLSL/, "FLOW_FIELD_POINT_VERT_GLSL (point-sprite mote)"],
+    ]) {
+        if (re.test(f.glsl))
+            viol.push(`S1 retired: the GLSL still exports ${label} — the mote/trail channel retires`);
     }
     return viol;
 }
 
-// ── F4: no Canvas2D viz ─────────────────────────────────────────────────────────
-function clauseNoCanvas2D(over) {
+// ── S2: the STREAMLINE field is present ──────────────────────────────────────────
+function clausePresent(over) {
     const viol = [];
-    const glsl = stripComments(
-        over?.glsl ?? read(resolve(DIR, "shaders/flow-field.glsl.ts")),
-    );
-    const composable = stripComments(
-        over?.useDotFlowField ??
-            read(resolve(DIR, "composables/useDotFlowField.ts")),
-    );
-    const particles = stripComments(
-        over?.useFlowParticles ??
-            read(resolve(DIR, "composables/useFlowParticles.ts")),
-    );
-    if (/createCpuFlowField/.test(glsl) || /createCpuFlowField/.test(particles))
-        viol.push(
-            "F4 no-canvas: createCpuFlowField (the Canvas2D point-cloud) survives — retire it for the WebGL2 fragment fallback (clean break, no alias)",
-        );
-    const all = glsl + "\n" + composable + "\n" + particles;
-    if (/getContext\s*\(\s*["']2d["']\s*\)/.test(all))
-        viol.push(
-            "F4 no-canvas: a getContext('2d') Canvas2D path survives in the viz — no canvas anywhere (§E)",
-        );
-    if (/\buseCanvas2D\b/.test(composable))
-        viol.push(
-            "F4 no-canvas: useDotFlowField still binds useCanvas2D — it must compose createGpuSubstrate (the setupGL WebGL2 fragment arm)",
-        );
-    if (!/FLOW_FIELD_FRAG_GLSL/.test(glsl))
-        viol.push(
-            "F4 no-canvas: flow-field.glsl.ts does not export the FLOW_FIELD_FRAG_GLSL fragment shader (the fragment fallback is missing)",
-        );
+    const f = files(over);
+    if (!/export function sampleStreamField/.test(f.flowField))
+        viol.push("S2 present: flowField.ts does not export sampleStreamField (the ONE stream-field math source)");
+    if (!/export interface StreamFieldParams/.test(f.flowField))
+        viol.push("S2 present: flowField.ts does not export the StreamFieldParams derived-scalar interface");
+    if (!/export function curlFBM/.test(f.flowField))
+        viol.push("S2 present: flowField.ts does not export the shared curlFBM operator (the Bridson curl-noise domain warp)");
+    if (!/fn sampleStreamField/.test(f.wgsl) || !/fn fs_main/.test(f.wgsl) || !/fn vs_main/.test(f.wgsl))
+        viol.push("S2 present: the WGSL flow-field pass is missing sampleStreamField / fs_main / vs_main (the fullscreen streamline fragment)");
+    if (!/float sampleStreamField/.test(f.glsl) || !/FLOW_FIELD_FRAG_GLSL/.test(f.glsl))
+        viol.push("S2 present: the GLSL flow-field pass is missing sampleStreamField / FLOW_FIELD_FRAG_GLSL (the fullscreen streamline fragment)");
     return viol;
 }
 
-// ── F5: warm-cream identity default + no teal/navy ──────────────────────────────
+// ── S3: ONE math source transcribes + the iso-contour beaded render ──────────────
+function clauseRoundTrip(over) {
+    const viol = [];
+    const f = files(over);
+    // the stream field transcribes (ramp + 2 undulations + curl-warp + pointer bend) in all three.
+    const jsBody = extractFnBody(f.flowField, /export function sampleStreamField\s*\(/);
+    const wgslBody = extractFnBody(f.wgsl, /fn sampleStreamField\s*\(/);
+    const glslBody = extractFnBody(f.glsl, /float sampleStreamField\s*\(/);
+    const fieldChecks = [
+        ["ramp · wy (JS)", () => /flowSlope\s*\*\s*wy/.test(jsBody)],
+        ["ramp · wy (WGSL)", () => /v0\.w\s*\*\s*wy/.test(wgslBody)],
+        ["ramp · wy (GLSL)", () => /uFlowSlope\s*\*\s*wy/.test(glslBody)],
+        ["curl-warp domain (JS)", () => /curlFBM\(/.test(jsBody)],
+        ["curl-warp domain (WGSL)", () => /curlFBM\(/.test(wgslBody)],
+        ["curl-warp domain (GLSL)", () => /curlFBM\(/.test(glslBody)],
+        ["two undulations sin×2 (JS)", () => (jsBody.match(/Math\.sin\(/g) || []).length >= 2],
+        ["two undulations sin×2 (WGSL)", () => (wgslBody.match(/\bsin\(/g) || []).length >= 2],
+        ["two undulations sin×2 (GLSL)", () => (glslBody.match(/\bsin\(/g) || []).length >= 2],
+        ["pointer bend (JS)", () => /pointerActive\s*>\s*0\.5/.test(jsBody)],
+        ["pointer bend (WGSL)", () => /v7\.x\s*>\s*0\.5/.test(wgslBody)],
+        ["pointer bend (GLSL)", () => /uPointerActive\s*>\s*0\.5/.test(glslBody)],
+    ];
+    for (const [label, fn] of fieldChecks) {
+        if (!fn())
+            viol.push(`S3 round-trip: ${label} — the WGSL/GLSL must transcribe the SAME sampleStreamField math (the single source)`);
+    }
+    // the shared curl basis transcribes (hash21/valueNoise/potentialFBM) in all three.
+    for (const [label, src, re] of [
+        ["hash21 JS", f.flowField, /function hash21/],
+        ["valueNoise JS", f.flowField, /function valueNoise/],
+        ["potentialFBM JS", f.flowField, /function potentialFBM/],
+        ["hash21 WGSL", f.wgsl, /fn hash21/],
+        ["potentialFBM WGSL", f.wgsl, /fn potentialFBM/],
+        ["hash21 GLSL", f.glsl, /float hash21/],
+        ["potentialFBM GLSL", f.glsl, /float potentialFBM/],
+    ]) {
+        if (!re.test(src))
+            viol.push(`S3 round-trip: ${label} — the shared curl-noise basis must transcribe across all three paths`);
+    }
+    // the iso-contour beaded render (even contour + the bead-crossing dot) in both shaders.
+    for (const [label, src] of [["WGSL", f.wgsl], ["GLSL", f.glsl]]) {
+        if (!/round\(hp\)/.test(src))
+            viol.push(`S3 round-trip: the ${label} render has no even-Δ iso-contour (round(hp)) — the streamline spacing is the Jobard–Lefer even level step`);
+        if (!/sqrt\(dContour\s*\*\s*dContour\s*\+\s*dBead\s*\*\s*dBead\)/.test(src))
+            viol.push(`S3 round-trip: the ${label} render has no bead crossing (sqrt(dContour²+dBead²)) — the dots bead at the streamline∩bead intersection`);
+        if (!/(beadSlope|uBeadSlope)/.test(src) || !/(v5\.y|uBeadDrift)/.test(src))
+            viol.push(`S3 round-trip: the ${label} render has no drifting bead phase (beadSlope − time·beadDrift) — the dots must march ALONG their own line`);
+    }
+    return viol;
+}
+
+// ── S4: fullscreen fragment, NO compute / NO instanced billboards ────────────────
+function clauseFullscreenFragment(over) {
+    const viol = [];
+    const f = files(over);
+    // the WGPU setup draws the 3-vertex fullscreen triangle, no compute, no storage particles.
+    if (!/\.draw\(\s*3\b/.test(f.setupWgpu))
+        viol.push("S4 fragment: flowSetupWGPU.ts does not draw the 3-vertex fullscreen triangle (draw(3, …))");
+    for (const [re, label] of [
+        [/createComputePipeline/, "createComputePipeline"],
+        [/dispatchWorkgroups/, "dispatchWorkgroups"],
+        [/beginComputePass/, "beginComputePass"],
+        [/read-only-storage/, "a read-only-storage particle buffer"],
+    ]) {
+        if (re.test(f.setupWgpu))
+            viol.push(`S4 fragment: flowSetupWGPU.ts still carries ${label} — the streamline render is ONE fullscreen fragment, no compute, no storage particles`);
+    }
+    // the GL setup draws the fullscreen triangle, no trail FBO, no point-sprite.
+    if (!/drawArrays\(\s*gl\.TRIANGLES\s*,\s*0\s*,\s*3\s*\)/.test(f.setupGl))
+        viol.push("S4 fragment: flowSetupGL.ts does not draw the fullscreen triangle (drawArrays(TRIANGLES, 0, 3))");
+    for (const [re, label] of [
+        [/createFramebuffer/, "a trail FBO (createFramebuffer)"],
+        [/gl\.POINTS/, "a point-sprite mote draw (gl.POINTS)"],
+        [/FLOW_FIELD_STATE_GLSL/, "the state-texture GPGPU pass"],
+    ]) {
+        if (re.test(f.setupGl))
+            viol.push(`S4 fragment: flowSetupGL.ts still carries ${label} — the streamline render is ONE fullscreen fragment, no trail, no motes`);
+    }
+    return viol;
+}
+
+// ── S5: warm-identity default + NO teal/navy in the LIBRARY constants ────────────
 function clauseWarmIdentity(over) {
     const viol = [];
-    const consts = stripComments(
-        over?.constants ?? read(resolve(DIR, "constants.ts")),
-    );
-    const presets = stripComments(over?.presets ?? read(PRESETS));
+    const f = files(over);
     const stopRe = /h\s*:\s*(\d+(?:\.\d+)?)/g;
     let m;
-    while ((m = stopRe.exec(consts))) {
+    while ((m = stopRe.exec(f.constants))) {
         const h = Number(m[1]);
         if (h >= 180 && h <= 280)
             viol.push(
-                `F5 warm-identity: a teal/navy hue (h=${h}) in the LIBRARY constants.ts — the reference palette belongs in the DEMO preset (presets-in-consumers)`,
+                `S5 warm-identity: a teal/navy hue (h=${h}) in the LIBRARY constants.ts — the reference skin belongs in the DEMO preset (presets-in-consumers)`,
             );
     }
-    if (!/WARM_IDENTITY_PALETTE/.test(consts))
-        viol.push("F5 warm-identity: constants.ts does not declare WARM_IDENTITY_PALETTE");
-    if (!/palette\s*:\s*WARM_IDENTITY_PALETTE/.test(consts))
-        viol.push(
-            "F5 warm-identity: DEFAULT_FLOW_CONFIG.palette is not WARM_IDENTITY_PALETTE (the default must be warm-cream)",
-        );
-    // The teal-on-navy fabricated reference is GONE entirely (clean break, no alias).
-    if (presets != null && /\bTEAL_DOTS\b|\bNAVY_GROUND\b|TEAL_PALETTE/.test(presets))
-        viol.push(
-            "F5 warm-identity: a TEAL_DOTS/NAVY_GROUND/TEAL_PALETTE symbol survives in presets.ts — the teal-on-navy fabricated reference is DELETED (clean break, no alias — BC.W-TEAL-NAVY-PURGE)",
-        );
+    if (!/WARM_IDENTITY_PALETTE/.test(f.constants))
+        viol.push("S5 warm-identity: constants.ts does not declare WARM_IDENTITY_PALETTE");
+    if (!/palette\s*:\s*WARM_IDENTITY_PALETTE/.test(f.constants))
+        viol.push("S5 warm-identity: DEFAULT_FLOW_CONFIG.palette is not WARM_IDENTITY_PALETTE (the default must be warm-cream)");
+    if (!/floor\s*:\s*WARM_NEAR_BLACK_FLOOR/.test(f.constants))
+        viol.push("S5 warm-identity: DEFAULT_FLOW_CONFIG.floor is not WARM_NEAR_BLACK_FLOOR (the default ground must be a warm near-black, not navy)");
     return viol;
 }
 
-// ── F6: pointer wired (velocity AND acceleration/burst) ─────────────────────────
+// ── S6: the pointer BENDS the streamlines (velocity AND accel/burst) ─────────────
 function clausePointer(over) {
     const viol = [];
-    const composable = stripComments(
-        over?.useDotFlowField ??
-            read(resolve(DIR, "composables/useDotFlowField.ts")),
-    );
-    if (!/usePointerVelocityField\s*\(/.test(composable))
-        viol.push(
-            "F6 pointer: useDotFlowField does not call usePointerVelocityField( — the shared pointer field is unwired (BC.W-VIZ-INTERACTION)",
-        );
-    if (!/\.tick\s*\(/.test(composable))
-        viol.push(
-            "F6 pointer: useDotFlowField does not feed .tick( from the frame callback (the no-own-rAF push-step is missing)",
-        );
-    const readsVelocity = /\.velocity\b/.test(composable) || /\.speed\b/.test(composable);
-    const readsAccel = /\.acceleration\b/.test(composable) || /\.burst\b/.test(composable);
+    const f = files(over);
+    const c = f.useDotFlowField;
+    if (!/usePointerVelocityField\s*\(/.test(c))
+        viol.push("S6 pointer: useDotFlowField does not compose usePointerVelocityField( — the shared pointer field is unwired");
+    if (!/\.tick\s*\(/.test(c))
+        viol.push("S6 pointer: useDotFlowField does not feed .tick( from the frame callback (the no-own-rAF push-step is missing)");
+    const readsVelocity = /\.velocity\b/.test(c) || /\.speed\b/.test(c);
+    const readsAccel = /\.acceleration\b/.test(c) || /\.burst\b/.test(c);
     if (!readsVelocity)
-        viol.push("F6 pointer: useDotFlowField does not read the pointer velocity/speed");
+        viol.push("S6 pointer: useDotFlowField does not read the pointer velocity/speed");
     if (!readsAccel)
-        viol.push(
-            "F6 pointer: useDotFlowField reads velocity but not acceleration/burst — the user's ask is 'velocity AND acceleration' (the flick burst)",
-        );
+        viol.push("S6 pointer: useDotFlowField reads velocity but not acceleration/burst — the ask is 'velocity AND acceleration' (the flick burst)");
+    if (!/pointerStrength/.test(c) || !/(active|pointer\.active)/.test(c))
+        viol.push("S6 pointer: useDotFlowField does not derive the velocity-scaled bend strength / active gate (the streamline bend seam)");
     return viol;
 }
 
-// ── F7: the advection FLOW register + the faint-at-rest / stronger-rest-contrast fix ──────
-// BG.W-DOTFLOW-REBUILD. The BD.W-DOTFLOW-AURORA-CURRENT source landed the advected FLOW
-// register; this wave LANDS it (the paint carrier) + fixes the faint-at-rest read by naming
-// the present tone-map knee (the rest-contrast lever) as ONE stronger source both backends
-// splice. F7a/F7b are structural locks (the flow register + the warm-fire ramp cannot
-// silently regress); F7c is the born-RED arm (HEAD carries the hardcoded 0.85 magic knee ×2).
-function clauseFlowRegister(over) {
-    const viol = [];
-    const compute = stripComments(
-        over?.compute ?? read(resolve(DIR, "shaders/flow-field.compute.wgsl.ts")),
-    );
-    const glsl = stripComments(
-        over?.glsl ?? read(resolve(DIR, "shaders/flow-field.glsl.ts")),
-    );
-    const renderWgsl = stripComments(
-        over?.renderWgsl ?? read(resolve(DIR, "shaders/flow-field.render.wgsl.ts")),
-    );
-    const glFlow = stripComments(
-        over?.glFlow ?? read(resolve(DIR, "composables/flowSetupGLFlow.ts")),
-    );
-    const wgpuSetup = stripComments(
-        over?.wgpuSetup ?? read(resolve(DIR, "composables/flowSetupWGPU.ts")),
-    );
-    const bridge = stripComments(
-        over?.bridge ?? read(resolve(DIR, "composables/uniformBridgeWGPU.ts")),
-    );
-    const presets = stripComments(over?.presets ?? read(PRESETS));
-
-    // ── F7a — the advection FLOW register (WebGPU compute sole-earner + WebGL2 GPGPU) ──
-    if (!/fn cs_flow\s*\(/.test(compute))
-        viol.push(
-            "F7a flow-register: the compute kernel has no `fn cs_flow` — the advection register (the WebGPU sole-earner) is missing",
-        );
-    if (!/FLOW_FIELD_STATE_GLSL/.test(glsl))
-        viol.push(
-            "F7a flow-register: flow-field.glsl.ts does not export FLOW_FIELD_STATE_GLSL — the WebGL2 GPGPU state-texture advect pass is missing",
-        );
-    if (!/FLOW_FIELD_TRAIL_FRAG_GLSL/.test(glsl))
-        viol.push(
-            "F7a flow-register: flow-field.glsl.ts does not export FLOW_FIELD_TRAIL_FRAG_GLSL — the two-FBO feedback-fade trail pass is missing",
-        );
-    // The WebGL2 flow channel ping-pongs TWO trail FBOs + TWO state textures (the GPGPU
-    // state-texture + two-FBO trail the wave carries).
-    if (!/trailFbo\s*:\s*\[/.test(glFlow) || !/trailTex\s*:\s*\[/.test(glFlow))
-        viol.push(
-            "F7a flow-register: flowSetupGLFlow.ts carries no two-FBO trail ping-pong (trailFbo/trailTex pair) — the GPGPU feedback-fade trail is missing",
-        );
-    if (!/stateTex\s*:\s*\[/.test(glFlow))
-        viol.push(
-            "F7a flow-register: flowSetupGLFlow.ts carries no state-texture ping-pong (stateTex pair) — the GPGPU advect state is missing",
-        );
-
-    // ── F7b — the warm-fire velocity ramp is the demo flow preset (no teal/navy) ──
-    if (presets != null) {
-        if (!/WARM_FIRE_RAMP/.test(presets))
-            viol.push(
-                "F7b warm-fire: presets.ts declares no WARM_FIRE_RAMP — the flow register's velocity ramp is missing",
-            );
-        if (!/FLOW_PRESET_AURORA_CURRENT/.test(presets))
-            viol.push(
-                'F7b warm-fire: presets.ts declares no FLOW_PRESET_AURORA_CURRENT (the mode:"flow" lead)',
-            );
-        // Scope the teal/navy scan to the WARM_FIRE_RAMP array block ONLY (the concentric
-        // theme's legitimate teal in the SAME file is a DIFFERENT viz — not this ramp).
-        const rampBlock = presets.match(
-            /WARM_FIRE_RAMP\s*:[^=]*=\s*\[([\s\S]*?)\]/,
-        );
-        if (rampBlock) {
-            const hueRe = /h\s*:\s*(\d+(?:\.\d+)?)/g;
-            let m;
-            while ((m = hueRe.exec(rampBlock[1]))) {
-                const h = Number(m[1]);
-                if (h >= 180 && h <= 280)
-                    viol.push(
-                        `F7b warm-fire: WARM_FIRE_RAMP carries a teal/navy stop (h=${h}) — the velocity ramp is warm-fire (hue ∈ ~[10,100]), NO cyan/teal`,
-                    );
-            }
-        }
-    }
-
-    // ── F7c — STRONGER REST CONTRAST (the born-RED arm; the faint-at-rest fix) ──
-    const kneeM = bridge?.match(/export const FLOW_PRESENT_KNEE\s*=\s*([\d.]+)/);
-    const knee = kneeM ? Number(kneeM[1]) : null;
-    if (knee == null)
-        viol.push(
-            "F7c rest-contrast: uniformBridgeWGPU.ts exports no named FLOW_PRESENT_KNEE — the present tone-map knee (the rest-contrast lever) is an unnamed magic literal",
-        );
-    else if (knee > 0.7)
-        viol.push(
-            `F7c rest-contrast: FLOW_PRESENT_KNEE ${knee} > 0.7 — the faint-at-rest fix needs a STRONGER (lower) Reinhard knee so the warm-fire ribbons pop off the deep floor at rest`,
-        );
-    // Neither present pass may carry the bare hardcoded 0.85 Reinhard knee (the faint-at-rest
-    // magic) — it must splice the named FLOW_PRESENT_KNEE.
-    if (/trail\s*\+\s*vec3\s*\(\s*0\.85/.test(glsl))
-        viol.push(
-            "F7c rest-contrast: the GLSL present pass still carries the hardcoded 0.85 Reinhard knee — splice the named FLOW_PRESENT_KNEE (the faint-at-rest lever)",
-        );
-    if (/trail\s*\+\s*vec3<f32>\s*\(\s*0\.85/.test(renderWgsl))
-        viol.push(
-            "F7c rest-contrast: the WGSL present pass still carries the hardcoded 0.85 Reinhard knee — splice the named FLOW_PRESENT_KNEE (the faint-at-rest lever)",
-        );
-    // Both present passes reference the named knee (the DRY single source, the tone-map parity).
-    if (glsl != null && !/FLOW_PRESENT_KNEE/.test(glsl))
-        viol.push(
-            "F7c rest-contrast: the GLSL present pass does not reference FLOW_PRESENT_KNEE — the named rest-contrast lever is unwired",
-        );
-    if (renderWgsl != null && !/FLOW_PRESENT_KNEE/.test(renderWgsl))
-        viol.push(
-            "F7c rest-contrast: the WGSL present pass does not reference FLOW_PRESENT_KNEE — the named rest-contrast lever is unwired",
-        );
-
-    // ── F7d — the WHITE-OUT / DEAD-BLACK paint-fix (BG.W-DOTFLOW-REBUILD, born-RED on the ──
-    // pre-fix tree). The BD source landed the trail pipeline; the paint judge found it painted a
-    // full-frame WHITE on Chrome/Metal (the dense additive trail floods, Reinhard clips to 255)
-    // AND dead-BLACK on Safari/WebKit (additive blend into a FLOAT trail RT silently no-ops — no
-    // EXT_float_blend). This arm locks the fix: the named deposit/base flood-control levers
-    // (spliced into BOTH mote passes, no bare 0.35), the pre-tone-map trail clamp (BOTH present
-    // passes), and the RGBA8 (universally-blendable + bounded) trail target — on BOTH backends.
-    //
-    // The paint RE-JUDGE (BG.W-DOTFLOW-REBUILD-DELTA) proved the decisive gap: BOTH judged
-    // engines (Chrome 149/Metal + Safari 26 WKWebView) run the WebGPU/WGSL path, so the WebGL2
-    // RGBA8 fix NEVER EXECUTED on them — flowSetupWGPU.ts still declared an unbounded rgba16float
-    // trail (the flood + WebKit dead-black substrate). The final F7d witnesses (below) lock the
-    // WGSL trail to rgba8unorm too — the fix now lands on the path that actually runs.
-    const depM = bridge?.match(/export const FLOW_TRAIL_DEPOSIT\s*=\s*([\d.]+)/);
-    const deposit = depM ? Number(depM[1]) : null;
-    if (deposit == null)
-        viol.push(
-            "F7d paint-fix: uniformBridgeWGPU.ts exports no named FLOW_TRAIL_DEPOSIT — the additive mote-deposit flood-control gain (the white-out fix) is an unnamed magic literal",
-        );
-    else if (deposit >= 0.5)
-        viol.push(
-            `F7d paint-fix: FLOW_TRAIL_DEPOSIT ${deposit} >= 0.5 — the additive deposit must stay LOW so a dense population does not flood the trail to a uniform white (the Chrome/Metal white-out)`,
-        );
-    const baseM = bridge?.match(/export const FLOW_MOTE_BASE\s*=\s*([\d.]+)/);
-    const moteBase = baseM ? Number(baseM[1]) : null;
-    if (moteBase == null)
-        viol.push(
-            "F7d paint-fix: uniformBridgeWGPU.ts exports no named FLOW_MOTE_BASE — the mote deposit floor (replacing the flooding hardcoded 0.35) is an unnamed magic literal",
-        );
-    else if (moteBase > 0.2)
-        viol.push(
-            `F7d paint-fix: FLOW_MOTE_BASE ${moteBase} > 0.2 — a LOW base keeps the slow eddies in the deep floor (the reference's bright-jets-over-dark-floor); speed carries the pop`,
-        );
-    if (bridge != null && !/export const FLOW_TRAIL_CEIL\s*=/.test(bridge))
-        viol.push(
-            "F7d paint-fix: uniformBridgeWGPU.ts exports no named FLOW_TRAIL_CEIL — the pre-tone-map trail clamp (bounding the unbounded float trail across backends) is missing",
-        );
-    // Both mote passes splice the named deposit (no per-backend drift) + carry no bare 0.35 base.
-    if (glsl != null && !/\$\{FLOW_TRAIL_DEPOSIT/.test(glsl))
-        viol.push(
-            "F7d paint-fix: the GLSL mote pass does not splice ${FLOW_TRAIL_DEPOSIT} — the deposit flood-control gain is unwired on WebGL2 (the live captured path)",
-        );
-    if (renderWgsl != null && !/\$\{FLOW_TRAIL_DEPOSIT/.test(renderWgsl))
-        viol.push(
-            "F7d paint-fix: the WGSL mote pass does not splice ${FLOW_TRAIL_DEPOSIT} — the deposit flood-control gain is unwired on WebGPU",
-        );
-    if (glsl != null && /0\.35\s*\+\s*vSpeedNorm/.test(glsl))
-        viol.push(
-            "F7d paint-fix: the GLSL mote pass still carries the flooding hardcoded 0.35 base (0.35 + vSpeedNorm) — splice the named FLOW_MOTE_BASE",
-        );
-    if (renderWgsl != null && /0\.35\s*\+\s*speedNorm/.test(renderWgsl))
-        viol.push(
-            "F7d paint-fix: the WGSL mote pass still carries the flooding hardcoded 0.35 base (0.35 + speedNorm) — splice the named FLOW_MOTE_BASE",
-        );
-    // Both present passes clamp the trail BEFORE the tone-map (the bounded-input fix — no white-out).
-    if (glsl != null && !/min\s*\(\s*trail\s*,/.test(glsl))
-        viol.push(
-            "F7d paint-fix: the GLSL present pass does not clamp the trail (min(trail, …)) before the tone-map — the unbounded accumulation can white-out",
-        );
-    if (renderWgsl != null && !/min\s*\(\s*trail\s*,/.test(renderWgsl))
-        viol.push(
-            "F7d paint-fix: the WGSL present pass does not clamp the trail (min(trail, …)) before the tone-map — the unbounded accumulation can white-out",
-        );
-    // The WebGL2 trail RT is RGBA8 (universally additive-blendable — the Safari dead-black fix),
-    // NOT a float RT gated on probeRenderable(RGBA16F) (blend-unsafe on WebKit without EXT_float_blend).
-    if (glFlow != null && !/trailInternal\s*=\s*\{\s*internal:\s*gl\.RGBA8/.test(glFlow))
-        viol.push(
-            "F7d paint-fix: flowSetupGLFlow.ts does not build the trail as an RGBA8 target — the additive-blend trail must be RGBA8 (blendable everywhere), never a float RT that dies silently on WebKit",
-        );
-    if (glFlow != null && /trailInternal\s*=\s*probeRenderable\s*\(\s*gl\s*,\s*gl\.RGBA16F/.test(glFlow))
-        viol.push(
-            "F7d paint-fix: flowSetupGLFlow.ts still gates the trail on a float RGBA16F RT (probeRenderable) — additive blend into a float target silently no-ops on WebKit (the Safari dead-black)",
-        );
-
-    // ── F7d — the WGSL-path trail RT (the paint RE-JUDGE decisive gap; born-RED on HEAD). ──
-    // The paint judge proved BOTH target engines (Chrome 149/Metal M5 + Safari 26 WKWebView)
-    // run the WebGPU/WGSL path, NOT the WebGL2 GLSL path — so the RGBA8 fix above (flowSetupGLFlow.ts)
-    // NEVER EXECUTES on the judged fleet, while flowSetupWGPU.ts still declared an UNBOUNDED
-    // rgba16float trail: a flat bright plate on Chrome/Metal (the additive accumulation clamps
-    // UNIFORM at present) + dead-black on WebKit-WebGPU (a float render-target's additive blend
-    // diverges there). The WGSL trail MUST be rgba8unorm — the WGSL twin of the WebGL2 RGBA8
-    // decision: universally additive-blendable AND bounded [0,1] by the fixed-point store.
-    if (wgpuSetup != null && !/trailFormat\s*:\s*GPUTextureFormat\s*=\s*["']rgba8unorm["']/.test(wgpuSetup))
-        viol.push(
-            "F7d paint-fix: flowSetupWGPU.ts does not build the WGSL trail as rgba8unorm — the ACTUALLY-RUNNING WebGPU trail must be rgba8unorm (additive-blendable on WebKit-WebGPU + bounded by the fixed-point store), the WGSL twin of the WebGL2 RGBA8 trail",
-        );
-    if (wgpuSetup != null && /trailFormat\s*:\s*GPUTextureFormat\s*=\s*["']rgba16float["']/.test(wgpuSetup))
-        viol.push(
-            "F7d paint-fix: flowSetupWGPU.ts still declares the WGSL trail as rgba16float — additive blend into a float render-target diverges on WebKit-WebGPU (the DotFlowField dead-black) AND accumulates UNBOUNDED (the Chrome/Metal flat-bright-plate after the present clamp); use rgba8unorm",
-        );
-    return viol;
-}
-
-function runAll(over = {}) {
+function runAll(over = null) {
     return [
-        ...clauseTopology(over),
-        ...clauseRegime(over),
+        ...clauseRetired(over),
+        ...clausePresent(over),
         ...clauseRoundTrip(over),
-        ...clauseNoCanvas2D(over),
+        ...clauseFullscreenFragment(over),
         ...clauseWarmIdentity(over),
         ...clausePointer(over),
-        ...clauseFlowRegister(over),
     ];
 }
 
 // ── Self-test: a synthetic broken tree MUST red ──
 function selfTest() {
     const fails = [];
-    // (a) a planted reseed/advection re-paste INSIDE cs_field reds F1 (the scoped witness — the
-    //     anchored register must NOT advect or re-seed; the bite injects into cs_field's body).
-    const liveCompute = read(resolve(DIR, "shaders/flow-field.compute.wgsl.ts"));
-    const reseedPlanted = runAll({
-        compute: liveCompute.replace(
-            /fn cs_field\(([^)]*)\)\s*\{/,
-            "fn cs_field($1) {\n  let r = reseed(1.0, 2.0);\n  pos = pos + v * dt;",
-        ),
+    const base = {
+        flowField: read(resolve(DIR, "composables/flowField.ts")),
+        wgsl: read(resolve(DIR, "shaders/flow-field.wgsl.ts")),
+        glsl: read(resolve(DIR, "shaders/flow-field.glsl.ts")),
+        constants: read(resolve(DIR, "constants.ts")),
+        setupWgpu: read(resolve(DIR, "composables/flowSetupWGPU.ts")),
+        setupGl: read(resolve(DIR, "composables/flowSetupGL.ts")),
+        useDotFlowField: read(resolve(DIR, "composables/useDotFlowField.ts")),
+        bridge: read(resolve(DIR, "composables/uniformBridgeWGPU.ts")),
+        presets: read(PRESETS),
+    };
+    const bite = (over, prefix, label) => {
+        if (!runAll({ ...base, ...over }).some((v) => v.startsWith(prefix)))
+            fails.push(`self-test: ${label} did NOT red ${prefix}`);
+    };
+    // (a) the clean tree passes with an `over` snapshot (proves the override path is sound).
+    if (runAll({ ...base }).length)
+        fails.push("self-test: the clean override snapshot unexpectedly RED (the override path is broken)");
+    // (b) a re-introduced @compute / cs_flow in the WGSL reds S1.
+    bite({ wgsl: base.wgsl + "\n@compute @workgroup_size(64) fn cs_flow() {}" }, "S1", "a planted @compute cs_flow");
+    // (c) a re-introduced particleCount mote field in constants reds S1.
+    bite({ constants: base.constants + "\nexport const X = { particleCount: 12000 };" }, "S1", "a planted particleCount mote field");
+    // (d) removing sampleStreamField from the WGSL reds S2.
+    bite({ wgsl: base.wgsl.replace(/fn sampleStreamField/g, "fn disabledStreamField") }, "S2", "a WGSL missing sampleStreamField");
+    // (e) removing the curlFBM warp call from the WGSL field reds S3.
+    bite({ wgsl: base.wgsl.replace(/let c = curlFBM\(/, "let c = vec2<f32>(0.0, 0.0); let _x = notCurl(") }, "S3", "a WGSL field without the curlFBM warp");
+    // (f) removing the bead crossing from the GLSL render reds S3.
+    bite({ glsl: base.glsl.replace(/sqrt\(dContour \* dContour \+ dBead \* dBead\)/, "dContour") }, "S3", "a GLSL render without the bead crossing");
+    // (g) a re-introduced dispatchWorkgroups in the WGPU setup reds S4.
+    bite({ setupWgpu: base.setupWgpu + "\nfunction z(){ pass.dispatchWorkgroups(1); }" }, "S4", "a planted dispatchWorkgroups");
+    // (h) a teal stop in the library constants reds S5.
+    bite({ constants: base.constants + "\nexport const T = { L: 0.7, C: 0.12, h: 205 };" }, "S5", "a teal hue in the library constants");
+    // (i) a velocity-only pointer wiring reds S6.
+    bite({ useDotFlowField: "const f = usePointerVelocityField(); f.tick(d); use(f.velocity.value); const pointerStrength = 1; const active = 1;" }, "S6", "a velocity-only pointer wiring");
+    // (j) the BORN-RED anchor — synthetic HEAD-like mote/trail/compute source REDs (the gate
+    //     would have been RED at HEAD; the paint judge confirmed the pre-rebuild architecture).
+    const headLike = runAll({
+        flowField: "export function sampleVelocity() {}\nfunction pointerVortex() {}",
+        wgsl: "@compute @workgroup_size(64)\nfn cs_flow() {}\nconst FLOW_FIELD_TRAIL_WGSL = '';",
+        glsl: "export const FLOW_FIELD_STATE_GLSL = '';\nexport const FLOW_FIELD_TRAIL_FRAG_GLSL = '';\nexport const FLOW_FIELD_POINT_VERT_GLSL = '';",
+        constants: "export const DEFAULT_FLOW_CONFIG = { mode: 'flow', particleCount: 12000, trailHalfLife: 0.3, vortexRadius: 0.3 };",
+        setupWgpu: "device.createComputePipeline(); cpass.dispatchWorkgroups(1); pass.draw(6, count);",
+        setupGl: "const fbo = gl.createFramebuffer(); gl.drawArrays(gl.POINTS, 0, count);",
+        useDotFlowField: "const f = usePointerVelocityField(); f.tick(d);",
+        bridge: base.bridge,
+        presets: base.presets,
     });
-    if (!reseedPlanted.some((v) => v.startsWith("F1")))
-        fails.push("self-test: a planted reseed(/advection INSIDE cs_field did NOT red F1");
-    // (a2) the LEGIT cs_flow forward-Euler advection must NOT red F1 (the scope is real — a
-    //      whole-file grep would false-trip the cs_flow current register).
-    const flowAdvectionOnly = clauseTopology({ compute: liveCompute });
-    if (flowAdvectionOnly.some((v) => /advect/i.test(v)))
-        fails.push("self-test: the LEGIT cs_flow advection false-tripped F1 (the cs_field scope leaked)");
-    // (b) octaves > 4 reds F2.
-    const liveFlow = read(resolve(DIR, "composables/flowField.ts"));
-    const octBroken = runAll({
-        flowField: liveFlow.replace(/octaves\s*=\s*3/, "octaves = 6"),
-    });
-    if (!octBroken.some((v) => v.startsWith("F2")))
-        fails.push("self-test: octaves=6 did NOT red F2");
-    // (c) a drifted WGSL curl scale reds F3.
-    const curlDrift = runAll({
-        compute: liveCompute.replace(/p\.x \* 0\.55/g, "p.x * 1.7"),
-    });
-    if (!curlDrift.some((v) => v.startsWith("F3")))
-        fails.push("self-test: a drifted WGSL curl ×1.7 did NOT red F3");
-    // (d) a getContext('2d') in the viz reds F4.
-    const liveGlsl = read(resolve(DIR, "shaders/flow-field.glsl.ts"));
-    const c2dPlanted = runAll({
-        glsl: liveGlsl + "\nconst ctx = canvas.getContext('2d');",
-    });
-    if (!c2dPlanted.some((v) => v.startsWith("F4")))
-        fails.push("self-test: a planted getContext('2d') did NOT red F4");
-    // (e) a teal stop in the library reds F5.
-    const liveConsts = read(resolve(DIR, "constants.ts"));
-    const tealPlanted = runAll({
-        constants: liveConsts + "\nconst X = { L: 0.8, C: 0.11, h: 195 };",
-    });
-    if (!tealPlanted.some((v) => v.startsWith("F5")))
-        fails.push("self-test: a teal hue in the library did NOT red F5");
-    // (f) a velocity-only pointer wiring reds F6.
-    const velOnly = runAll({
-        useDotFlowField:
-            "const f = usePointerVelocityField(); f.tick(d); use(f.velocity.value);",
-    });
-    if (!velOnly.some((v) => v.startsWith("F6")))
-        fails.push("self-test: a velocity-only wiring did NOT red F6");
-    // (g) a compute kernel WITHOUT cs_flow reds F7a (the advection register removed).
-    const liveCompute2 = read(resolve(DIR, "shaders/flow-field.compute.wgsl.ts"));
-    const noFlow = runAll({
-        compute: liveCompute2.replace(/fn cs_flow\s*\(/g, "fn cs_disabled_flow("),
-    });
-    if (!noFlow.some((v) => v.startsWith("F7a")))
-        fails.push("self-test: a compute kernel with no cs_flow did NOT red F7a");
-    // (h) a teal stop planted INSIDE the WARM_FIRE_RAMP block reds F7b (scoped to the ramp).
-    const livePresets = read(PRESETS);
-    const tealRamp = runAll({
-        presets: livePresets.replace(
-            /(const WARM_FIRE_RAMP[^=]*=\s*\[)/,
-            "$1\n    { L: 0.5, C: 0.11, h: 210 }, // planted teal",
-        ),
-    });
-    if (!tealRamp.some((v) => v.startsWith("F7b")))
-        fails.push("self-test: a teal stop inside WARM_FIRE_RAMP did NOT red F7b");
-    // (h2) the concentric-theme teal (h:210 etc.) in the SAME presets file must NOT red F7b
-    //      (the ramp-scoping is real — a whole-file teal grep would false-trip it).
-    const cleanPresets = clauseFlowRegister({ presets: livePresets });
-    if (cleanPresets.some((v) => v.startsWith("F7b")))
-        fails.push(
-            "self-test: the concentric-theme teal false-tripped F7b (the WARM_FIRE_RAMP scope leaked)",
-        );
-    // (i) a bare 0.85 knee (no named FLOW_PRESENT_KNEE splice) reds F7c.
-    const bareKnee = runAll({
-        glsl: "vec3 mapped = trail / (trail + vec3(0.85));",
-        renderWgsl: "let mapped = trail / (trail + vec3<f32>(0.85));",
-    });
-    if (!bareKnee.some((v) => v.startsWith("F7c")))
-        fails.push("self-test: a bare 0.85 present knee (no named splice) did NOT red F7c");
-    // (i2) a too-high named knee (> 0.7) reds F7c (the stronger-contrast floor).
-    const liveBridge = read(resolve(DIR, "composables/uniformBridgeWGPU.ts"));
-    const weakKnee = runAll({
-        bridge: liveBridge.replace(
-            /export const FLOW_PRESENT_KNEE\s*=\s*[\d.]+/,
-            "export const FLOW_PRESENT_KNEE = 0.85",
-        ),
-    });
-    if (!weakKnee.some((v) => v.startsWith("F7c")))
-        fails.push("self-test: a weak FLOW_PRESENT_KNEE=0.85 (> 0.7) did NOT red F7c");
-    // (j) a re-flooded FLOW_TRAIL_DEPOSIT (>= 0.5) reds F7d (the white-out flood-control floor).
-    const floodedDeposit = runAll({
-        bridge: liveBridge.replace(
-            /export const FLOW_TRAIL_DEPOSIT\s*=\s*[\d.]+/,
-            "export const FLOW_TRAIL_DEPOSIT = 0.9",
-        ),
-    });
-    if (!floodedDeposit.some((v) => v.startsWith("F7d")))
-        fails.push("self-test: a flooded FLOW_TRAIL_DEPOSIT=0.9 (>= 0.5) did NOT red F7d");
-    // (k) a bare 0.35 mote base (no named FLOW_MOTE_BASE splice) reds F7d.
-    const bareMoteBase = runAll({
-        glsl: "float bright = (0.35 + vSpeedNorm * uSpeedGlow) * vFade;",
-        renderWgsl: "bright = (0.35 + speedNorm * u.f0.x) * flowFade;",
-    });
-    if (!bareMoteBase.some((v) => v.startsWith("F7d")))
-        fails.push("self-test: a bare 0.35 mote base (no named FLOW_MOTE_BASE splice) did NOT red F7d");
-    // (l) a float RGBA16F trail RT reintroduction reds F7d (the Safari dead-black regression).
-    const liveGlFlow = read(resolve(DIR, "composables/flowSetupGLFlow.ts"));
-    const floatTrail = runAll({
-        glFlow: liveGlFlow.replace(
-            /const trailInternal = \{ internal: gl\.RGBA8[^;]*;/,
-            "const trailInternal = probeRenderable(gl, gl.RGBA16F, gl.HALF_FLOAT) ? { internal: gl.RGBA16F, type: gl.HALF_FLOAT } : { internal: gl.RGBA8, type: gl.UNSIGNED_BYTE };",
-        ),
-    });
-    if (!floatTrail.some((v) => v.startsWith("F7d")))
-        fails.push("self-test: a float RGBA16F trail RT reintroduction did NOT red F7d");
-    // (m) a present pass with NO pre-tone-map trail clamp reds F7d (the deposit splice IS present,
-    //     so the missing min(trail, …) clamp is the isolated bite).
-    const noClamp = runAll({
-        glsl: "float dep = ${FLOW_TRAIL_DEPOSIT}; FLOW_FIELD_FRAG_GLSL; vec3 mapped = trail / (trail + vec3(FLOW_PRESENT_KNEE));",
-    });
-    if (!noClamp.some((v) => v.startsWith("F7d")))
-        fails.push("self-test: a present pass with no min(trail, …) clamp did NOT red F7d");
-    // (n) an rgba16float WGSL trail RT reintroduction reds F7d (the paint RE-JUDGE bite — the
-    //     ACTUALLY-RUNNING WebGPU path's dead-black-on-WebKit + flood-on-Metal regression).
-    const liveWgpuSetup = read(resolve(DIR, "composables/flowSetupWGPU.ts"));
-    const floatWgslTrail = runAll({
-        wgpuSetup: liveWgpuSetup.replace(
-            /trailFormat: GPUTextureFormat = "rgba8unorm"/,
-            'trailFormat: GPUTextureFormat = "rgba16float"',
-        ),
-    });
-    if (!floatWgslTrail.some((v) => v.startsWith("F7d")))
-        fails.push("self-test: an rgba16float WGSL trail RT reintroduction did NOT red F7d");
+    // the HEAD-like source must RED S1 (retired-construct present) AND S2 (streamline absent).
+    if (!headLike.some((v) => v.startsWith("S1")) || !headLike.some((v) => v.startsWith("S2")))
+        fails.push("self-test: the BORN-RED anchor (synthetic HEAD-like mote/trail/compute source) did NOT red S1+S2");
     return fails;
 }
 
@@ -697,26 +355,25 @@ function main() {
 
     const artifact = {
         gate: "proof:viz-dotflow",
-        wave: "BC.W-VIZ-DOTFLOW",
+        wave: "BG.W-DOTFLOW-REBUILD",
         stamp: snapshotStamp(),
         ok,
         violations: viol,
         selfTestFailures: selfFails,
     };
-    const out = gateArtifactPath(
-        "GLASS_UI_VIZ_DOTFLOW_ARTIFACT",
-        "proof-viz-dotflow.json",
-    );
+    const out = gateArtifactPath("GLASS_UI_VIZ_DOTFLOW_ARTIFACT", "proof-viz-dotflow.json");
     writeGateArtifact(out, artifact);
 
     console.log(
-        "proof:viz-dotflow — the dot-flow-field: the AURORA CURRENT (advected flow) over the kept anchored halftone (BC.W-VIZ-DOTFLOW + BG.W-DOTFLOW-REBUILD)",
+        "proof:viz-dotflow — the dot-flow-field: evenly-spaced beaded STREAMLINES over a curl-warped field (BG.W-DOTFLOW-REBUILD)",
     );
     if (viol.length) {
         console.error("  RED:");
         for (const v of viol) console.error("    ✗ " + v);
     } else {
-        console.log("  GREEN (F1 topology · F2 regime · F3 round-trip · F4 no-canvas · F5 warm-identity · F6 pointer · F7 flow-register+rest-contrast)");
+        console.log(
+            "  GREEN (S1 retired · S2 present · S3 round-trip · S4 fullscreen-fragment · S5 warm-identity · S6 pointer)",
+        );
     }
     if (isSelftest) {
         if (selfFails.length) {

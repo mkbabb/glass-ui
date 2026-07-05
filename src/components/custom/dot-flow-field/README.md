@@ -1,26 +1,13 @@
 # DotFlowField
 
-**Two registers, one component** (the dock `dim`-idiom discipline — one schema, two
-orthogonal lever sets, no fork). Select with `config.mode`:
+**The streamline field** (BG.W-DOTFLOW-REBUILD). Discrete warm-cream dots strung along
+**evenly-spaced smooth STREAMLINES** of a curl-warped stream function — undulating +
+interweaving like the level curves of a procedural function, the dots drifting slowly **ALONG
+their own line**, over a deep warm-near-black floor. The cursor **bends the streamlines** (a
+smooth gaussian domain-push — no snap, no vortex chaos). The reference is IMG_1836.
 
-- **`mode:"flow"` — the AURORA CURRENT (the default).** A dense population of motes
-  **advected** along a divergence-free curl current, each trailing a **fading ribbon of
-  WARM-FIRE light** — the ribbon hue mapped to the mote's **speed** (a 1940s-technicolor
-  velocity-map: slow ember/oxblood → molten amber → incandescent gold → near-white bloom),
-  the **cursor a live VORTEX** that motes bend around and spiral off, over a deep
-  warm-near-black floor + a warm rose corner-bloom (**NO cyan/teal**). A feedback-fade trail
-  buffer braids the ribbons; low turn-rate inertia gives the motes liquid weight (BD.W-DOTFLOW-AURORA-CURRENT).
-
-- **`mode:"field"` — the calm anchored halftone (KEPT).** A regular lattice of soft dots a
-  single LARGE wave sweeps slowly through; each dot only breathes a hair off its anchor while
-  a broad bright iso-band crosses the field like a tide. The v4 content-deferential backdrop
-  (BC.W-VIZ-DOTFLOW, untouched under its math fence).
-
-Cross-engine: WebGPU runs a compute-advected storage buffer + a half-res RGBA16F trail;
-the **WebGL2 channel (the live path on most hosts)** runs a state-texture GPGPU ping-pong +
-a two-FBO RGBA16F trail + point-sprite motes — the SAME advected-population gestalt on both.
-
-`@mkbabb/glass-ui/dot-flow-field` · subpath leaf · WebGPU-first with a real WebGL2 channel.
+`@mkbabb/glass-ui/dot-flow-field` · subpath leaf · WebGPU-first with a byte-identical WebGL2
+fragment fallback.
 
 ## Quick start
 
@@ -32,88 +19,69 @@ import { DotFlowField, DEFAULT_FLOW_CONFIG } from "@mkbabb/glass-ui/dot-flow-fie
 <DotFlowField :config="myConfig" v-model:paused="paused" />
 ```
 
-The DEFAULT palette is the warm-cream library identity. The mono-dim-on-near-black reference
-+ the globe mask are DEMO presets (presets-in-consumers — see
-`demo/stories/substrates/presets.ts`); they NEVER enter a library token. The teal-on-navy
-"reference" was a FABRICATED prior reference and is GONE entirely (clean break, no alias).
+The DEFAULT palette + floor are the warm-cream library identity. The IMG_1836 teal-on-navy
+skin ships ONLY as a DEMO preset (`FLOW_PRESET_OCEAN` in `demo/stories/substrates/presets.ts`,
+presets-in-consumers — it NEVER enters a library token).
 
-## The retopology (BC.W-VIZ-DOTFLOW)
+## The math (cited, first-principles)
 
-The BB field was a free-advecting particle cloud — the textbook "mess of noise". This wave
-inverts BOTH the topology AND the coherence regime, keeping the cited Bridson/Tessendorf/
-Gerstner math:
+The streamlines of a divergence-free 2D flow `v = ∇⊥ψ` ARE the iso-contours (level curves) of
+the stream function ψ (**Bridson, Houser, Nordenstam, *Curl-Noise for Procedural Fluid Flow*,
+SIGGRAPH 2007**). So **evenly-spaced streamlines** (**Jobard & Lefer, *Creating Evenly-Spaced
+Streamlines of Arbitrary Density*, 1997**) = evenly-spaced iso-contours of ψ at a constant
+level step Δ — separated by construction, arc-length-beaded by a transverse phase.
 
-1. **Anchored dot-matrix + restoring spring (the topology fix).** Each dot stores its
-   ORIGIN `o` (a deterministic lattice cell center via `gridOrigin`) and its live position
-   `p`. Per frame it eases toward `o + sampleDisplacement(o,t)·displaceAmp` with a
-   framerate-independent critically-damped pull `p ← mix(p, target, 1 - exp(-springK·dt))`.
-   NO wrap, NO re-seed — the lattice is permanent.
-2. **The sweeping band (the gestalt).** Each dot's brightness + radius read a scalar field
-   sampled AT THE ANCHOR — the low-frequency Gerstner height `sampleHeight(o,t)`: a
-   `smoothstep` band (`waveBand`) centered `waveBandCenter` width `waveBandWidth` is the
-   moving bright stripe that sweeps the lattice. `|disp|` modulates a subtle size pulse.
-3. **The coherent regime (the noise→sweeping fix).** `buildWaveLadder` is re-authored to the
-   LOW-frequency band: 3 octaves (was 6), λ₀ at 2.5× the view extent (one dominant wave),
-   amplitude persistence ×0.38, the λ falloff floored so the finest λ ≥ ⅓ view. The defaults
-   drop `windSpeed` 1.0→0.3 (slow sweep) and `curlStrength` 0.6→0.12 (a faint organic break
-   at a coarse ×0.55 domain scale). ONE or TWO low-frequency waves slowly translate across
-   the view.
+`ψ(p,t)` is a monotone **ramp** (`flowSlope·wy` — the even-spacing + NON-crossing guarantee:
+the ramp gradient dominates every undulation, so `∂ψ/∂y > 0` everywhere → the level curves
+never fold or cross) plus two traveling undulations, sampled at a coordinate **domain-warped by
+the shared `curlFBM` operator** (the Bridson curl-noise warp — the streamlines flow +
+interweave over the curlFBM field) + a **gaussian cursor push** (the streamline bend). The
+ONE math source is `composables/flowField.ts sampleStreamField` (pure, node-testable); the WGSL
+fragment (`shaders/flow-field.wgsl.ts`) + the GLSL fragment (`shaders/flow-field.glsl.ts`)
+transcribe it byte-for-byte, splicing the shared `procedural-color` OKLCh chunk (ONE color
+source). `proof:viz-dotflow` clause S3 round-trips JS↔WGSL↔GLSL.
 
-## The cited-SOTA math
+## The render (iso-contour beading)
 
-The single math source is `composables/flowField.ts` (pure + testable; the WGSL compute
-kernel + the WebGL2 fragment shader transcribe it line-for-line). New pure exports the
-retopology owns:
+Per fragment: `dContour` is the world distance to the nearest even-Δ iso-contour of ψ (the
+streamline); `dBead` is the distance to the nearest **drifting transverse bead-line**
+(`p.x·beadSlope − t·beadDrift`, so the beads march ALONG the flow as time advances); the **dot**
+sits at the streamline∩bead crossing (`sqrt(dContour² + dBead²) < beadRadius`) and a faint
+connecting **thread** traces the streamline. The output is opaque over the warm floor — bounded
+`[0,1]`, so **no white-out is possible** (the whole additive-trail-flood architecture is gone).
 
-- **`gridOrigin(index, cols, pitch)`** — the deterministic lattice (the WGSL/GLSL
-  `instance_index → origin` mapping matches JS exactly).
-- **`sampleHeight(o, t, waves, windSpeed)`** — the scalar Gerstner height (the brightness
-  driver), normalized to ≈[-1,1] by the total amplitude.
-- **`sampleDisplacement(o, t, waves, windSpeed, curlStrength)`** — the divergence-free ∇⊥h +
-  a faint coarse curl break, tanh soft-clamped so the magnitude rides into [0,1) (the
-  sub-cell cap is never blown).
-- **`waveBand(h, center, width)`** — the sweeping bright-stripe `smoothstep` band.
+## Substrate (born WebGPU-first; ONE fullscreen fragment)
 
-The Tessendorf/Gerstner sum-of-sines (`h(p,t) = Σ_i A_i·sin(k_i·(D_i·p) − ω_i·t + φ_i)`,
-`ω_i = √(g·k_i)` the deep-water dispersion) + the Bridson divergence-free curl (`v = ∇⊥ψ`)
-are the cited SOTA; `proof:viz-dotflow` clause F3 round-trips JS↔WGSL↔GLSL at a fixed sample
-set.
+DotFlowField renders through ONE fullscreen-fragment pass (the aurora.wgsl shape — the pipeline
+that paints identically on WebKit-WebGPU + Chrome/Metal), picked by `useDotFlowField` via
+`createGpuSubstrate` over the ONE `createCanvasLifecycle` leaf:
 
-## Substrate (born WebGPU-first; "no canvas anywhere")
+- **`shaders/flow-field.wgsl.ts` — the WebGPU-FIRST primary.** A single render pipeline over the
+  full-screen triangle + one uniform buffer (the `uniformBridgeWGPU` typed-struct
+  source-of-truth). NO compute pass, NO storage particles, NO trail ping-pong.
+- **`shaders/flow-field.glsl.ts` — the WebGL2 fragment fallback.** The SAME streamline gestalt
+  as one opaque fullscreen draw (the ~5-10% tail). NO state-texture GPGPU, NO trail FBO, NO
+  point-sprites.
 
-DotFlowField renders through ONE of two GPU backends, picked ONCE at mount by
-`useDotFlowField` via `createGpuSubstrate` (the WebGPU-first dual-substrate picker over the
-ONE `createCanvasLifecycle` leaf):
+Both compose the SAME `createCanvasLifecycle` leaf (offscreen-pause + live-PRM one-static-frame
+freeze + the demand loop), so the lifecycle wiring (`DockBackgroundToggle` pause/resume, pointer
+`wake`) is substrate-agnostic.
 
-- **`shaders/flow-field.compute.wgsl.ts` + `flow-field.render.wgsl.ts` — the WebGPU-FIRST
-  primary.** The compute pass (`@compute @workgroup_size(64)`) pulls the anchored lattice to
-  its sub-cell displacement target with the restoring spring; the render pass draws instanced
-  billboard quads lit by the sweeping band, tinting the soft dots through the shared
-  `procedural-color.wgsl.ts` OKLCh ramp (ONE color source).
-- **`shaders/flow-field.glsl.ts` — the WebGL2 FRAGMENT fallback** (the genuinely-absent
-  ~5-10% tail). The Canvas2D point-cloud is GONE — the retopology made the dot-lattice +
-  brightness model fragment-friendly, so the fallback is a pure WebGL2 fullscreen-fragment
-  pass evaluating the SAME `flowField.ts` field (splicing the GLSL color twin). Parity flips
-  **`degraded → verified`** — the same field, no compute particles.
+## Interaction
 
-Both backends compose the SAME `createCanvasLifecycle` leaf (offscreen-pause + live-PRM-
-freeze + the demand loop), so the lifecycle wiring (`DockBackgroundToggle` pause/resume,
-pointer `wake`) is substrate-agnostic.
+When `config.interactive`, the cursor bends the streamlines: `useDotFlowField` composes the
+SHARED `usePointerVelocityField` (NEVER a second rAF — fed `.tick(delta)` from inside the
+renderer's frame callback) and reads BOTH the steady-drag VELOCITY and the flick BURST (the
+accel axis) into the velocity-scaled bend strength. PRM freezes the field (`tick(0)`) and the
+substrate paints ONE deterministic static frame then parks.
 
-## Interaction (BC.W-VIZ-INTERACTION)
-
-When `config.interactive`, the lattice ripples toward the cursor: `useDotFlowField` composes
-the SHARED `usePointerVelocityField` (NEVER a second rAF — fed `.tick(delta)` from inside the
-renderer's frame callback) and reads BOTH the steady-drag VELOCITY (a local displacement
-ripple through the lattice) AND the flick BURST (the accel axis — a brief brightness bloom).
-PRM freezes the field (`tick(0)`).
-
-Machine-locked by `proof:viz-dotflow` (F1 anchored topology + no reseed · F2 coherent regime
-· F3 JS↔WGSL↔GLSL round-trip · F4 no Canvas2D viz · F5 warm-cream identity + no teal/navy ·
-F6 pointer wired) + the binding π readback (`tests-visual/flow-field.spec.ts` — the coherent
-sweeping lattice, lattice stability, the sweeping band, PRM freeze, on-host paint, both
-modes) + `proof:viz-interaction` (the pointer-field wiring) + `proof:webgpu-everywhere`
-(WGSL-primary, no Canvas2D) + the `proof:ba-gestalt` viz verdict.
+Machine-locked by `proof:viz-dotflow` (S1 mote/trail/compute retired · S2 streamline present ·
+S3 JS↔WGSL↔GLSL round-trip + iso-contour beaded render · S4 fullscreen-fragment, no compute ·
+S5 warm-cream identity + no teal/navy · S6 pointer bends the streamlines) + `proof:flow-field`
+(colocation + composes-substrate + single-math-source + fallback + warm-identity + story) + the
+binding dual-engine π (`tests-visual/flow-field.spec.ts` + the paint judge's re-judge — the
+traceable evenly-spaced beaded streamlines, both engines both modes) + the `proof:ba-gestalt`
+viz verdict.
 
 ## API
 
@@ -126,15 +94,19 @@ modes) + `proof:viz-interaction` (the pointer-field wiring) + `proof:webgpu-ever
 
 ### `FlowFieldConfig`
 
-`waveComponents`, `windSpeed`, `curlStrength`, `gridPitch`, `dotSize`, `displaceAmp`,
-`springK`, `waveBandCenter`, `waveBandWidth`, `contrast`, `coherence`, `globeMask`,
-`palette`, `background`, `interactive`, `respectReducedMotion`. (MIGRATION: `particleCount →
-gridPitch` — the lattice density is now DETERMINISTIC off the pitch; `windDirection` /
-`dotSizeVelocity` dropped — free-advection-only. Clean break, no alias.) Published on
-`@mkbabb/glass-ui/api`.
+`lineCount`, `undulation`, `interweave`, `curlWarp`, `flowSpeed`, `lineWidth`, `lineStrength`,
+`beadDensity`, `beadDrift`, `dotSize`, `contrast`, `palette`, `floor`, `pointerStrength`,
+`pointerRadius`, `interactive`, `respectReducedMotion`. Published on `@mkbabb/glass-ui/api`.
+
+**MIGRATION (clean break, no alias — the mote/trail schema retired):** `mode` /
+`particleCount` / `trailHalfLife` / `trailScale` / `turnRate` / `speedScale` / `speedGlow` /
+`lifetimeSec` / `edgeBias` / `contentMask` / `vortex*` / `dragGain` / `burstShove` /
+`shadowOffset` / `stretchAmp` / `waveComponents` / `windSpeed` / `curlStrength` / `gridPitch` /
+`displaceAmp` / `springK` / `waveBand*` / `coherence` / `globeMask` / `background` are GONE;
+the config is the streamline register (`lineCount`/`undulation`/`beadDensity`/… + `floor`).
 
 ### `useDotFlowField(canvasRef, options)`
 
 The public composable — composes the `createGpuSubstrate` picker (WebGPU primary OR WebGL2
 fragment fallback), wires the shared pointer field + offscreen-pause, and returns the uniform
-`DotFlowFieldHandle` (`pause` / `resume` / `wake` / `renderAt` / `reducedMotion` / `dispose`).
+`DotFlowFieldHandle` (`backend`/`pause`/`resume`/`wake`/`renderAt`/`reducedMotion`/`dispose`).

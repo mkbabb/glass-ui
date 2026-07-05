@@ -65,7 +65,7 @@ re-recorded there if the empirical capture demands a re-tune.
       "viz": "dot-flow-field",
       "subpath": "/dot-flow-field",
       "status": "verified",
-      "primary": "src/components/custom/dot-flow-field/shaders/flow-field.compute.wgsl.ts",
+      "primary": "src/components/custom/dot-flow-field/shaders/flow-field.wgsl.ts",
       "fallback": "src/components/custom/dot-flow-field/shaders/flow-field.glsl.ts",
       "rank": 3,
       "subWave": "BB.W-VIZ-SUITE.d W-FLOWFIELD",
