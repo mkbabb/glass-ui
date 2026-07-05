@@ -100,6 +100,11 @@ W-HANDMARK-PERFECT` (+14.4 pencil-boil). *(14.5 cross-repo-asks → F8.)*
 
 - `F9.R1 W-BLOB-SATELLITE-SHADE` (VALUEJS-R GAP-1 hard ask; F9; P; proof:viz/blob-color-equivalence; precond 6.9): the per-satellite `uSatColor[]` GL color-seam widen + `bodyLightness`/`lightnessFloor` on deriveBlobPalette; byte-identical default; the BA arm-B book discharged; rides 5.0.0.
 
+**SOTA-DESIGN fold rows (USER 07-04; recovered liquid-anim audit — the 5 new high-leverage findings; the other 8 validated existing waves):**
+- `F2.5 W-GLASS-DEPTH-TIER` (F2; P; proof:glass depth-tier arm; precond F2.3): map `--glass-depth` onto the tier ladder so overlay/menu default thicker than content (menu>popover>button by construction); zero new machinery.
+- `F5.4 W-BACKDROP-BLUR-ENGAGE` (F5; P; proof:motion blur-engage arm; precond F5.R2): the drag-driven blur reads off the live gesture scalar (--glass-drawer-t/--stage-t/--dock-expand-t), not a fixed duration; the iOS-27 blur-tracks-the-finger signature.
+- `F8.8 W-APCA-CONTRAST` (F8; H; paint-arm helper; precond 3.5): APCA Lc as a parallel witness alongside WCAG-2 AA on composited translucent plates (the 2026 SOTA glass-legibility metric).
+
 **NO-MASKING-FALLBACK edict rows (USER 07-03; the primary paints or fails LOUD; no legacy ladders on target engines):**
 - `NF.1 W-FALLBACK-EXCISE` (F3; P; MINTS proof:no-masking-fallback + the dormant-state manifest; precond 4.1): the mechanical purge — `var(--dock-expand-t,1)` fleet→bare var, stale-literal single-source, useDockMorphWindow inverted-ladder dies, vestigial transitionend arms delete; zero paint delta.
 - `NF.2 W-LEGACY-LADDER-COLLAPSE` (F2; P; proof:no-masking-fallback Arm E): the 11 pre-target @supports/JS ladders collapse onto modern CSS + the F2.2 light-dark() witness-table COLLAPSE (orchestrator ruling) under dual-engine paint re-verify; a11y STATE escapes fenced-keep.
