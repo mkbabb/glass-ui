@@ -125,6 +125,9 @@ const tokenColors = createTokenColorCache();
 const resolvedColor = ref(color);
 const resolvedRim = ref(cfg!.surface.rimColor);
 const resolvedStops = ref<string[]>([...cfg!.color.paletteStops]);
+// F9.R1 (BG.W-BLOB-SATELLITE-SHADE) — the un-wrapped per-satellite explicit shades
+// (mirrors `resolvedStops`; EMPTY → the GL seam stays OFF, byte-identical to HEAD).
+const resolvedSatColors = ref<string[]>([...(cfg!.color.satelliteColors ?? [])]);
 
 function refreshResolvedColors(): void {
     const el = wrapperRef.value;
@@ -134,6 +137,9 @@ function refreshResolvedColors(): void {
     resolvedColor.value = tokenColors.resolve(color, el);
     resolvedRim.value = tokenColors.resolve(live.surface.rimColor, el);
     resolvedStops.value = live.color.paletteStops.map((s) => tokenColors.resolve(s, el));
+    resolvedSatColors.value = (live.color.satelliteColors ?? []).map((s) =>
+        tokenColors.resolve(s, el),
+    );
 }
 
 // AX.W16 (arm 1) — CAPTURE the renderer return (the prior code DISCARDED it, which is
@@ -146,6 +152,7 @@ const renderer = useMetaballRenderer({
     color: resolvedColor,
     rimColor: resolvedRim,
     paletteStops: resolvedStops,
+    satelliteColors: resolvedSatColors,
     mood,
     pointer,
     satellites: satelliteSystem,
@@ -185,7 +192,13 @@ watch(colorRef, (c) => {
 watch(
     () => {
         const c = liveConfig();
-        return [c.color.paletteStops.join("|"), c.surface.rimColor];
+        // F9.R1 — a post-mount satelliteColors change (a consumer deriving satellite
+        // shades from the body hue) re-resolves into the Ref the renderer paints from.
+        return [
+            c.color.paletteStops.join("|"),
+            (c.color.satelliteColors ?? []).join("|"),
+            c.surface.rimColor,
+        ];
     },
     () => refreshResolvedColors(),
     { deep: true },

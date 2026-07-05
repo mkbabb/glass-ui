@@ -31,6 +31,12 @@ export interface UseMetaballRendererOptions {
      * (AX.W16). EMPTY falls back to the base color (uStopCount <= 1).
      */
     paletteStops: Ref<string[]>;
+    /**
+     * F9.R1 (BG.W-BLOB-SATELLITE-SHADE) — the OPTIONAL per-satellite explicit shades,
+     * ALREADY un-wrapped to CONCRETE strings by the SFC (mirroring `paletteStops`).
+     * Absent/EMPTY → the derived palette shade (the GL seam stays OFF, byte-identical).
+     */
+    satelliteColors?: Ref<string[]>;
     mood: BlobMoodSystem;
     pointer: BlobPointer;
     satellites: BlobSatelliteSystem;
@@ -88,6 +94,7 @@ export function useMetaballRenderer(
         color,
         rimColor,
         paletteStops,
+        satelliteColors,
         mood,
         pointer,
         satellites,
@@ -285,6 +292,8 @@ export function useMetaballRenderer(
             resolveColor,
             rimColor: rimColor.value,
             paletteStops: paletteStops.value,
+            // F9.R1 — the per-satellite explicit shades (absent → the GL seam stays OFF).
+            satColors: satelliteColors?.value,
         };
     }
 

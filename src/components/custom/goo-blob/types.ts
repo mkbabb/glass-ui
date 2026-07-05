@@ -177,6 +177,10 @@ export interface BlobColor {
     // bare <GooBlob> paints the cream bead. Derive one from a seed via
     // `deriveBlobPalette` (`/color`).
     paletteStops: string[];
+    // F9.R1 (BG.W-BLOB-SATELLITE-SHADE) — OPTIONAL per-satellite explicit shades
+    // (index-aligned; derive via `deriveBlobPalette`). UNSET/EMPTY → the derived palette
+    // shade (byte-identical to HEAD, the GL seam OFF); a set entry paints that satellite.
+    satelliteColors?: string[];
     hueRange: number;
     satShift: number;
     brightnessShift: number;

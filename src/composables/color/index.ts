@@ -258,6 +258,23 @@ export interface DeriveBlobPaletteOptions {
      * the constellation focal share (the set-cohesion accent identity).
      */
     chromaCeiling?: number;
+    /**
+     * BG.W-BLOB-SATELLITE-SHADE (F9.R1 — the `uSatColor[]` companion) — pin the BODY
+     * stop's OKLCh lightness. The default ramp centres L on the seed
+     * (`anchor.L - lightnessSpread/2` at the body, climbing `lightnessSpread` to the
+     * lightest satellite). When set, the body stop (t=0) anchors at exactly this L and
+     * the satellites still climb `lightnessSpread` from it — so a consumer picks the
+     * body luminance directly (the deep-body read) without moving the seed hue/chroma.
+     * `undefined` (the default) leaves the derivation byte-identical to HEAD.
+     */
+    bodyLightness?: number;
+    /**
+     * BG.W-BLOB-SATELLITE-SHADE (F9.R1) — the OKLCh-lightness FLOOR on every derived
+     * stop. Replaces the hardcoded `0.05` low clamp, so a consumer guarantees no stop
+     * reads darker than this (a body/satellite that never collapses toward black). The
+     * `0.98` high clamp is untouched. `undefined` → the byte-identical `0.05` floor.
+     */
+    lightnessFloor?: number;
 }
 
 /**
@@ -282,13 +299,22 @@ export function deriveBlobPalette(
         hueSpread = 24,
         chromaBump = 0.03,
         chromaCeiling,
+        bodyLightness,
+        lightnessFloor,
     } = options;
+
+    // BG.W-BLOB-SATELLITE-SHADE — the BODY-stop L anchor. When `bodyLightness` is set,
+    // the body (t=0) sits at exactly that L; otherwise the ramp centres on the seed
+    // (`anchor.L - lightnessSpread/2` — the byte-identical HEAD baseline, same eval order).
+    const baseL = bodyLightness !== undefined ? bodyLightness : anchor.L - lightnessSpread / 2;
+    // The low clamp (default 0.05, the HEAD floor) is the `lightnessFloor` knob.
+    const lowClamp = lightnessFloor !== undefined ? lightnessFloor : 0.05;
 
     const n = Math.max(2, Math.min(4, Math.round(stopCount)));
     const stops: OklchStop[] = [];
     for (let i = 0; i < n; i++) {
         const t = n === 1 ? 0 : i / (n - 1); // 0 = deep body, 1 = lighter satellite
-        const L = anchor.L - lightnessSpread / 2 + lightnessSpread * t;
+        const L = baseL + lightnessSpread * t;
         // Midpoint chroma-bump: a bell (peaks at t=0.5) keeps a vivid pair off grey.
         let C = Math.max(0, anchor.C + chromaBump * Math.sin(Math.PI * t));
         // AY.W-COHERE E1 — the warm-register chroma cap. Applied AFTER the bump,
@@ -297,7 +323,7 @@ export function deriveBlobPalette(
         // re-map). `undefined` → byte-identical to HEAD.
         if (chromaCeiling !== undefined) C = Math.min(C, chromaCeiling);
         const h = deriveHue(anchor.h, harmony, hueSpread, t);
-        stops.push(gamutMapStop({ L: Math.min(0.98, Math.max(0.05, L)), C, h }));
+        stops.push(gamutMapStop({ L: Math.min(0.98, Math.max(lowClamp, L)), C, h }));
     }
     return stops;
 }

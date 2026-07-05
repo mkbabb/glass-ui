@@ -271,10 +271,17 @@ export function createGooDotGLResources(
     const satPosLocs: (WebGLUniformLocation | null)[] = [];
     const satRadLocs: (WebGLUniformLocation | null)[] = [];
     const satOpLocs: (WebGLUniformLocation | null)[] = [];
+    // F9.R1 (BG.W-BLOB-SATELLITE-SHADE) — mirror the goo-blob per-satellite explicit-shade
+    // loc cache so the REUSED uploadBlobUniforms writes them (unused in the dot-render
+    // shader → getUniformLocation null → a harmless no-op, byte-identical to HEAD).
+    const satColorLocs: (WebGLUniformLocation | null)[] = [];
+    const satColorAmtLocs: (WebGLUniformLocation | null)[] = [];
     for (let i = 0; i < MAX_SATS; i++) {
         satPosLocs.push(gl.getUniformLocation(prog, `uSatPos[${i}]`));
         satRadLocs.push(gl.getUniformLocation(prog, `uSatRadius[${i}]`));
         satOpLocs.push(gl.getUniformLocation(prog, `uSatOpacity[${i}]`));
+        satColorLocs.push(gl.getUniformLocation(prog, `uSatColor[${i}]`));
+        satColorAmtLocs.push(gl.getUniformLocation(prog, `uSatColorAmt[${i}]`));
     }
     const trailPosLocs: (WebGLUniformLocation | null)[] = [];
     const trailRadLocs: (WebGLUniformLocation | null)[] = [];
@@ -291,6 +298,8 @@ export function createGooDotGLResources(
         satPosLocs,
         satRadLocs,
         satOpLocs,
+        satColorLocs,
+        satColorAmtLocs,
         trailPosLocs,
         trailRadLocs,
         paletteLocs,

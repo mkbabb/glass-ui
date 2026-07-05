@@ -32,6 +32,10 @@ export interface MetaballUniformLocations {
     satPosLocs: (WebGLUniformLocation | null)[];
     satRadLocs: (WebGLUniformLocation | null)[];
     satOpLocs: (WebGLUniformLocation | null)[];
+    // F9.R1 (BG.W-BLOB-SATELLITE-SHADE) — the per-satellite explicit-shade + weight
+    // element locations (the GL color-seam widen).
+    satColorLocs: (WebGLUniformLocation | null)[];
+    satColorAmtLocs: (WebGLUniformLocation | null)[];
     trailPosLocs: (WebGLUniformLocation | null)[];
     trailRadLocs: (WebGLUniformLocation | null)[];
     paletteLocs: (WebGLUniformLocation | null)[];
@@ -53,6 +57,14 @@ export interface BlobFrameState {
     rimColor: string;
     /** The multi-stop palette (CONCRETE strings; EMPTY → falls back to base). */
     paletteStops: string[];
+    /**
+     * F9.R1 (BG.W-BLOB-SATELLITE-SHADE) — the per-satellite explicit shades (CONCRETE
+     * strings, index-aligned to the satellite array; EMPTY/undefined → the derived
+     * palette shade, byte-identical to HEAD). A set entry tints that satellite's
+     * smin-field neighbourhood toward the shade; an unset/empty entry leaves it on the
+     * derived base. The GL color-seam value.js's hero blob derives satellite shades into.
+     */
+    satColors?: string[];
 }
 
 /**
@@ -72,8 +84,17 @@ export function uploadBlobUniforms(
     satellites: BlobSatelliteSystem,
     frame: BlobFrameState,
 ): void {
-    const { U, satPosLocs, satRadLocs, satOpLocs, trailPosLocs, trailRadLocs, paletteLocs } =
-        locs;
+    const {
+        U,
+        satPosLocs,
+        satRadLocs,
+        satOpLocs,
+        satColorLocs,
+        satColorAmtLocs,
+        trailPosLocs,
+        trailRadLocs,
+        paletteLocs,
+    } = locs;
     const { params, rgb, simTimeMs, timeSec, resolveColor, rimColor, paletteStops } = frame;
 
     // AY.W-BLOB2 — the BlobConfig atom destructure. The flat ~50-knob
@@ -115,6 +136,30 @@ export function uploadBlobUniforms(
             gl.uniform3f(loc, p[0], p[1], p[2]);
         } else {
             gl.uniform3f(loc, rgb[0], rgb[1], rgb[2]);
+        }
+    }
+
+    // F9.R1 (BG.W-BLOB-SATELLITE-SHADE) — the per-satellite explicit shade (the GL
+    // color-seam widen). DEFAULT OFF: no satColors → uSatColorActive 0 → the shader's
+    // blendSatColor early-returns → BYTE-IDENTICAL to HEAD. When a consumer supplies
+    // explicit shades (index-aligned to the satellite array), upload each + the per-
+    // satellite blend weight (1 where a shade is set, 0 where the satellite stays on the
+    // derived palette). The shade strings arrive CONCRETE (the SFC un-wrapped any
+    // var()-token), resolved through the SAME `resolveColor` memo as uBaseColor/uPalette.
+    const satColors = frame.satColors ?? [];
+    const satColorActive = satColors.some((c) => !!c) ? 1 : 0;
+    gl.uniform1i(U.uSatColorActive, satColorActive);
+    for (let i = 0; i < MAX_SATS; i++) {
+        const colLoc = satColorLocs[i] ?? null;
+        const amtLoc = satColorAmtLocs[i] ?? null;
+        const css = satColors[i];
+        if (css) {
+            const c = resolveColor(css);
+            gl.uniform3f(colLoc, c[0], c[1], c[2]);
+            gl.uniform1f(amtLoc, 1.0);
+        } else {
+            gl.uniform3f(colLoc, rgb[0], rgb[1], rgb[2]);
+            gl.uniform1f(amtLoc, 0.0);
         }
     }
 

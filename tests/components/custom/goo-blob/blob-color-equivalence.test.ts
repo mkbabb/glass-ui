@@ -11,6 +11,7 @@ import {
 import {
     applyFakeSss,
     applyIridescence,
+    blendSatColor,
     blobColorChain,
     gamutClampOklch,
     inGamut,
@@ -23,6 +24,11 @@ import {
     srgbToOklab,
     type Vec3,
 } from "./metaball-color.glsl-port";
+
+// F9.R1 (BG.W-BLOB-SATELLITE-SHADE) — the REAL src `deriveBlobPalette` (the `/color`
+// leaf), for the bodyLightness/lightnessFloor companion assertions. Born-RED on HEAD:
+// the options are ignored until the src wire lands.
+import { deriveBlobPalette } from "../../../../src/composables/color";
 
 /**
  * AU.W7 — the 8-assertion CPU-equivalence gate for the goo-blob OKLCh shader path
@@ -292,5 +298,127 @@ describe("goo-blob OKLCh color path ≡ value.js Ottosson core (AU.W7, DEC-AT-7)
         expect(plain[1]).toBeLessThan(a[1]);
         // the bump lifts it back up.
         expect(bumped[1]).toBeGreaterThan(plain[1]);
+    });
+
+    // (12) F9.R1 — the per-satellite explicit-shade blend (the GL color-seam widen).
+    describe("(12) per-satellite explicit-shade blend (blendSatColor)", () => {
+        const base: Vec3 = oklabToOklch(srgbToOklab(hexToRgb01("#3a7bd5")));
+
+        it("(12a) OFF (active=false) returns the base UNCHANGED — byte-identical default", () => {
+            // The default path is the shader's `if (uSatColorActive == 0) return oklch;`
+            // early-return: NO OKLab round-trip, so the value is bit-for-bit the input.
+            const out = blendSatColor(base, false, [
+                { rgb: hexToRgb01("#ff9900"), weight: 1 },
+            ]);
+            expect(out[0]).toBe(base[0]);
+            expect(out[1]).toBe(base[1]);
+            expect(out[2]).toBe(base[2]);
+        });
+
+        it("(12b) weight=1 fully resolves the satellite shade in OKLCh", () => {
+            const sat = hexToRgb01("#ff9900");
+            const out = blendSatColor(base, true, [{ rgb: sat, weight: 1 }]);
+            const want = oklabToOklch(srgbToOklab(sat)); // the satellite shade in OKLCh
+            expect(maxAbsDelta(out, want)).toBeLessThanOrEqual(1e-12);
+        });
+
+        it("(12c) 0<weight<1 lands the OKLab midpoint (the samplePaletteOklch mix convention)", () => {
+            const sat = hexToRgb01("#ff9900");
+            const out = blendSatColor(base, true, [{ rgb: sat, weight: 0.5 }]);
+            // Reference: mix the two endpoints in OKLab at 0.5, then → OKLCh.
+            const baseLab = oklchToOklab(base);
+            const satLab = srgbToOklab(sat);
+            const mid: Vec3 = [
+                baseLab[0] + (satLab[0] - baseLab[0]) * 0.5,
+                baseLab[1] + (satLab[1] - baseLab[1]) * 0.5,
+                baseLab[2] + (satLab[2] - baseLab[2]) * 0.5,
+            ];
+            const want = oklabToOklch(mid);
+            expect(maxAbsDelta(out, want)).toBeLessThanOrEqual(1e-12);
+            // and it genuinely moved (the seam is load-bearing, not a no-op).
+            expect(Math.abs(out[0] - base[0]) + Math.abs(out[1] - base[1])).toBeGreaterThan(1e-3);
+        });
+
+        it("(12d) SELF-TEST — the loop is SEQUENTIAL (a later satellite mixes over the earlier)", () => {
+            // Two full-weight satellites: the SECOND wins (it mixes over the first's
+            // result at weight 1). A wrong impl that mixed only the first, or averaged
+            // both, would diverge — the sequential-order bite.
+            const first = hexToRgb01("#ff0000");
+            const second = hexToRgb01("#0000ff");
+            const out = blendSatColor(base, true, [
+                { rgb: first, weight: 1 },
+                { rgb: second, weight: 1 },
+            ]);
+            const wantSecond = oklabToOklch(srgbToOklab(second));
+            expect(maxAbsDelta(out, wantSecond)).toBeLessThanOrEqual(1e-12);
+            // and it is NOT the first shade (the order is real).
+            const wantFirst = oklabToOklch(srgbToOklab(first));
+            expect(maxAbsDelta(out, wantFirst)).toBeGreaterThan(1e-2);
+        });
+
+        it("(12e) SELF-TEST — every satellite weight 0 is an exact no-op (fades with distance)", () => {
+            // A satellite whose fragment sits far from it resolves weight 0; the blend
+            // must leave the base OKLab exactly unmoved (mix(x, y, 0) === x).
+            const out = blendSatColor(base, true, [
+                { rgb: hexToRgb01("#ff9900"), weight: 0 },
+                { rgb: hexToRgb01("#00ff00"), weight: 0 },
+            ]);
+            // active=true DOES round-trip through OKLab (unlike OFF), so allow FP epsilon.
+            expect(maxAbsDelta(out, base)).toBeLessThanOrEqual(1e-12);
+        });
+    });
+
+    // (13) F9.R1 — the deriveBlobPalette bodyLightness/lightnessFloor companion. Born-RED
+    // on HEAD (the options are ignored → the pins/floors never fire).
+    describe("(13) deriveBlobPalette bodyLightness/lightnessFloor (the uSatColor companion)", () => {
+        const seed = { L: 0.6, C: 0.1, h: 60 } as const;
+        const SPREAD = 0.18; // the derivation default
+
+        it("(13a) UNSET is byte-identical to the seed-centred default (bodyLightness = anchor.L - spread/2)", () => {
+            // The default baseL is `anchor.L - lightnessSpread/2`; passing that exact
+            // value for bodyLightness must reproduce the default stops bit-for-bit —
+            // proving both the pin semantics AND that unset === the seed-centred baseline.
+            const def = deriveBlobPalette({ ...seed });
+            const pinnedToDefault = deriveBlobPalette(
+                { ...seed },
+                { bodyLightness: 0.6 - SPREAD / 2 },
+            );
+            expect(def.length).toBe(pinnedToDefault.length);
+            for (let i = 0; i < def.length; i++) {
+                expect(def[i]!.L).toBe(pinnedToDefault[i]!.L);
+                expect(def[i]!.C).toBe(pinnedToDefault[i]!.C);
+                expect(def[i]!.h).toBe(pinnedToDefault[i]!.h);
+            }
+        });
+
+        it("(13b) bodyLightness pins the body stop darker → the body reads deeper", () => {
+            const def = deriveBlobPalette({ ...seed });
+            const darker = deriveBlobPalette({ ...seed }, { bodyLightness: 0.3 });
+            // The body stop (index 0) is strictly darker when pinned low.
+            expect(darker[0]!.L).toBeLessThan(def[0]!.L);
+            // The satellites still climb from the pinned body (monotone up the ramp).
+            for (let i = 1; i < darker.length; i++) {
+                expect(darker[i]!.L).toBeGreaterThan(darker[i - 1]!.L);
+            }
+        });
+
+        it("(13c) lightnessFloor raises every stop's low clamp (no stop goes below the floor)", () => {
+            // A LOW-chroma seed keeps every derived stop in-gamut, so gamutMapStop is a
+            // near-identity and the floor holds directly. Pin the body far below the
+            // floor so the clamp is load-bearing.
+            const lowChroma = { L: 0.6, C: 0.05, h: 40 } as const;
+            const FLOOR = 0.7;
+            const floored = deriveBlobPalette(
+                { ...lowChroma },
+                { bodyLightness: 0.2, lightnessFloor: FLOOR },
+            );
+            for (const stop of floored) {
+                expect(stop.L).toBeGreaterThanOrEqual(FLOOR - 1e-9);
+            }
+            // SELF-TEST — WITHOUT the floor the pinned-low body drops below it (so the
+            // floor genuinely did work, not a vacuous pass).
+            const unfloored = deriveBlobPalette({ ...lowChroma }, { bodyLightness: 0.2 });
+            expect(unfloored[0]!.L).toBeLessThan(FLOOR);
+        });
     });
 });

@@ -66,10 +66,16 @@ export function buildMetaballProgram(gl: WebGL2RenderingContext): MetaballProgra
     const satPosLocs: (WebGLUniformLocation | null)[] = [];
     const satRadLocs: (WebGLUniformLocation | null)[] = [];
     const satOpLocs: (WebGLUniformLocation | null)[] = [];
+    // F9.R1 (BG.W-BLOB-SATELLITE-SHADE) — the per-satellite explicit-shade + its blend
+    // weight (the GL color-seam widen; uSatColor[MAX_SATS] / uSatColorAmt[MAX_SATS]).
+    const satColorLocs: (WebGLUniformLocation | null)[] = [];
+    const satColorAmtLocs: (WebGLUniformLocation | null)[] = [];
     for (let i = 0; i < MAX_SATS; i++) {
         satPosLocs.push(gl.getUniformLocation(prog, `uSatPos[${i}]`));
         satRadLocs.push(gl.getUniformLocation(prog, `uSatRadius[${i}]`));
         satOpLocs.push(gl.getUniformLocation(prog, `uSatOpacity[${i}]`));
+        satColorLocs.push(gl.getUniformLocation(prog, `uSatColor[${i}]`));
+        satColorAmtLocs.push(gl.getUniformLocation(prog, `uSatColorAmt[${i}]`));
     }
 
     // Per-trail-element locations (mirrors the satellite plumbing; the
@@ -96,6 +102,16 @@ export function buildMetaballProgram(gl: WebGL2RenderingContext): MetaballProgra
         fs,
         vao,
         buf,
-        locs: { U, satPosLocs, satRadLocs, satOpLocs, trailPosLocs, trailRadLocs, paletteLocs },
+        locs: {
+            U,
+            satPosLocs,
+            satRadLocs,
+            satOpLocs,
+            satColorLocs,
+            satColorAmtLocs,
+            trailPosLocs,
+            trailRadLocs,
+            paletteLocs,
+        },
     };
 }

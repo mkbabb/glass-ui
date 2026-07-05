@@ -106,6 +106,18 @@ uniform vec2 uSatPos[MAX_SATS];
 uniform float uSatRadius[MAX_SATS];
 uniform float uSatOpacity[MAX_SATS];
 
+// F9.R1 (BG.W-BLOB-SATELLITE-SHADE) — the per-satellite EXPLICIT-SHADE seam (the GL
+// color-seam widen the value.js hero blob asked for; the BA-VJS-5 / C-1 residual, the
+// W-GOO-REDRESS arm-B book discharged). uSatColorActive == 0 is the DEFAULT (the derived
+// palette shade — byte-identical to HEAD): blendSatColor() early-returns and touches
+// nothing. When a consumer supplies explicit per-satellite shades (uSatColor[i], GAMMA
+// sRGB, at uSatColorAmt[i] weight — typically 1) the fragment blends the base palette
+// OKLCh toward each satellite's shade, weighted by that satellite's smin-field proximity
+// at this pixel. The body keeps the derived base (the ask is per-SATELLITE).
+uniform int uSatColorActive;
+uniform vec3 uSatColor[MAX_SATS];
+uniform float uSatColorAmt[MAX_SATS];
+
 // Pointer trail (W10) — a decaying-radius pseudopod toward the cursor. uTrail is a
 // COMPILE-TIME-SIZED array (GLSL ES 3.00 forbids a uniform-sized array) with a
 // DYNAMIC break on uTrailCount, mirroring the satellite loop. Later samples paint

@@ -261,6 +261,9 @@ export const UNIFORM_NAMES = [
     "uColorNoiseSpeed",
     "uStopCount",
     "uSatCount",
+    // F9.R1 (BG.W-BLOB-SATELLITE-SHADE) — the per-satellite explicit-shade active flag
+    // (the uSatColor[]/uSatColorAmt[] arrays cache their locations in buildMetaballProgram).
+    "uSatColorActive",
     "uTrailCount",
     "uVelocity",
     "uStretch",

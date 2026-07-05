@@ -228,6 +228,31 @@ vec3 samplePaletteOklch(float t) {
     return lch;
 }
 
+// F9.R1 (BG.W-BLOB-SATELLITE-SHADE) — the per-satellite explicit-shade blend. The GL
+// color-seam widen value.js's hero blob asked for (the BA-VJS-5 / C-1 residual, the
+// W-GOO-REDRESS arm-B book discharged). DEFAULT OFF: uSatColorActive == 0 returns oklch
+// UNCHANGED (uniform control flow, zero cost, byte-identical to HEAD). When ON, each
+// satellite carrying a positive uSatColorAmt tints the fragments in its smin-field
+// neighbourhood toward its explicit shade — mixed in OKLab (the samplePaletteOklch
+// convention; no hue wrap). The proximity weight rides the SAME opacity-inflated distance
+// the sceneDistG satellite term uses, so a fading satellite's tint fades with it. The
+// body keeps the derived palette base (no uBodyColor fork — the ask is per-SATELLITE).
+vec3 blendSatColor(vec3 oklch, vec2 uv) {
+    if (uSatColorActive == 0) return oklch;
+    vec3 lab = oklchToOklab(oklch);
+    for (int i = 0; i < MAX_SATS; i++) {
+        if (i >= uSatCount) break;
+        float amt = clamp(uSatColorAmt[i], 0.0, 1.0);
+        if (amt <= 0.0) continue;
+        // Proximity: 1 well inside satellite i, fading to 0 across the smin band. The
+        // opacity-inflated distance matches sceneDistG's satellite term.
+        float di = sdCircle(uv, uSatPos[i], uSatRadius[i]) + (1.0 - uSatOpacity[i]) * 0.3;
+        float w = (1.0 - smoothstep(-uSatRadius[i], uSmoothK, di)) * amt;
+        lab = mix(lab, srgbToOklab(uSatColor[i]), clamp(w, 0.0, 1.0));
+    }
+    return oklabToOklch(lab);
+}
+
 void main() {
     vec2 uv = vUv - 0.5;
 
@@ -303,6 +328,8 @@ void main() {
     // body/satellites by the color noise field — or uBaseColor when single-stop.
     float colorNoise = fbm(uv * uColorNoiseFreq + uTime * uColorNoiseSpeed, 3);
     vec3 oklch = samplePaletteOklch(colorNoise);
+    // F9.R1 — per-satellite explicit shade (default no-op at uSatColorActive == 0).
+    oklch = blendSatColor(oklch, uv);
 
     oklch.z += (colorNoise - 0.5) * uHueRange * (PI / 180.0);     // hue swing, radians
     oklch.y = max(oklch.y + (colorNoise - 0.5) * uSatShift, 0.0); // chroma swing

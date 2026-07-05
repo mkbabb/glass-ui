@@ -325,4 +325,43 @@ export function oklabLerpStop(a: Vec3, b: Vec3, t: number, bump: number): Vec3 {
     return [lch[0], lch[1] + bump * bell, lch[2]];
 }
 
+// ── F9.R1 (BG.W-BLOB-SATELLITE-SHADE) — the per-satellite explicit-shade blend ──
+// The color half of the shader `blendSatColor` (metaball.frag.ts). One satellite carries
+// a GAMMA-sRGB shade + an effective mix weight (the shader's `w = (1 - smoothstep(-r, k,
+// d)) * amt` proximity term — a scalar INPUT here; the SDF geometry is asserted at the
+// live/render layer, not this color port). The blend is in OKLab (the samplePaletteOklch
+// convention — no hue wrap). DEFAULT OFF: `active === false` returns the base OKLCh
+// UNCHANGED with ZERO conversion (the shader's `if (uSatColorActive == 0) return oklch;`
+// early-return — the byte-identical guarantee, NOT an OKLab round-trip).
+
+/** One satellite's explicit shade + its effective (proximity × amt) mix weight. */
+export interface SatShade {
+    /** GAMMA-sRGB shade [r, g, b] in [0,1]. */
+    rgb: Vec3;
+    /** The effective per-satellite mix weight (the shader's `w`, folded proximity × amt). */
+    weight: number;
+}
+
+/**
+ * Blend a base OKLCh toward the explicit per-satellite shades, in OKLab. `active`
+ * mirrors the shader `uSatColorActive`: false returns the base UNCHANGED (byte-identical
+ * default). true folds each satellite's shade in sequentially (`mix(lab, satLab, w)`,
+ * clamped) — the SEQUENTIAL order matters (a later satellite mixes over the earlier
+ * result, matching the shader's loop). Returns the blended OKLCh.
+ */
+export function blendSatColor(oklch: Vec3, active: boolean, sats: SatShade[]): Vec3 {
+    if (!active) return oklch;
+    let lab = oklchToOklab(oklch);
+    for (const s of sats) {
+        const w = clamp01(s.weight);
+        const satLab = srgbToOklab(s.rgb);
+        lab = [
+            lab[0] + (satLab[0] - lab[0]) * w,
+            lab[1] + (satLab[1] - lab[1]) * w,
+            lab[2] + (satLab[2] - lab[2]) * w,
+        ];
+    }
+    return oklabToOklch(lab);
+}
+
 export type { Vec3 };
