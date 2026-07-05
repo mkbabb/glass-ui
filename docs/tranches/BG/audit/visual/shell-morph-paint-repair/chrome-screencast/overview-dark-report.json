@@ -1,0 +1,105 @@
+{
+  "route": "/dock/overview",
+  "mode": "dark",
+  "tag": "overview-dark",
+  "kind": "dock",
+  "seam": {
+    "hasAside": true,
+    "hasSeam": true,
+    "asideRect": {
+      "w": 91,
+      "h": 900,
+      "l": 0,
+      "t": 0
+    }
+  },
+  "leg1Trigger": 1783245453558,
+  "leg2Trigger": 1783245455586,
+  "totalFrames": 215,
+  "totalSamples": 546,
+  "settledH": {
+    "so": "horizontal",
+    "asidePos": "fixed",
+    "asideW": 701,
+    "asideH": 135,
+    "asideL": 16,
+    "asideT": 16,
+    "mainL": 0,
+    "morphing": false
+  },
+  "settledV": {
+    "so": "vertical",
+    "asidePos": "static",
+    "asideW": 91,
+    "asideH": 900,
+    "asideL": 0,
+    "asideT": 0,
+    "mainL": 91,
+    "morphing": false
+  },
+  "restSamples": 103,
+  "restBridgeVisible": 0,
+  "settleBridgeVisible": 0,
+  "leg1": {
+    "frameCount": 94,
+    "distinctTravel": 21,
+    "teardropWinCount": 11,
+    "teardropWithBridge": 11,
+    "maxBridgeOpacity": 1,
+    "maxGap": 33,
+    "gapsOver33": 0,
+    "gapsOver50": 0,
+    "gapsOver100": 0,
+    "firstRespLatency": 40,
+    "reMargin": {
+      "fromL": 91,
+      "toL": 0,
+      "at_t": 0.638655,
+      "at_bo": 1,
+      "at_bridge": true,
+      "at_so": "horizontal",
+      "at_morphing": true,
+      "ts_after_trigger": 182
+    },
+    "fps": 73.3,
+    "gapHistogram": {
+      "0-16": 60,
+      "17-33": 33,
+      "34-50": 0,
+      "51-100": 0,
+      ">100": 0
+    }
+  },
+  "leg2": {
+    "frameCount": 86,
+    "distinctTravel": 20,
+    "teardropWinCount": 11,
+    "teardropWithBridge": 11,
+    "maxBridgeOpacity": 1,
+    "maxGap": 35,
+    "gapsOver33": 1,
+    "gapsOver50": 0,
+    "gapsOver100": 0,
+    "firstRespLatency": 39,
+    "reMargin": {
+      "fromL": 0,
+      "toL": 91,
+      "at_t": 0.329358,
+      "at_bo": 1,
+      "at_bridge": true,
+      "at_so": "vertical",
+      "at_morphing": true,
+      "ts_after_trigger": 187
+    },
+    "fps": 67,
+    "gapHistogram": {
+      "0-16": 49,
+      "17-33": 35,
+      "34-50": 1,
+      "51-100": 0,
+      ">100": 0
+    }
+  },
+  "savedL1": 7,
+  "savedL2": 7
+}
