@@ -1057,3 +1057,77 @@ Captures:
 - DELTA (carries `defectLocalization` + `mustFix`): `docs/tranches/BG/audit/visual/BG.W-DOCK-PANE-OVERLAP-DELTA.md`
 - 6 PNGs: `docs/tranches/BG/audit/visual/BG.W-DOCK-PANE-OVERLAP-paint/paneloverlap-{layers,midswap}-{chrome,safari}-{light,dark}.png`
 - 2 JSON: `docs/tranches/BG/audit/visual/BG.W-DOCK-PANE-OVERLAP-paint/{chrome-frameseries,verdict}.json`
+
+---
+
+## 2026-07-04 — NO-MASKING-FALLBACK + IOS27-MOTION-TRUTH overlay/drawer batch (rows NF.1 / F5.R1 / F5.R2)
+
+allPass: **false** — 2 PASS, 1 FAIL. The overlay EXIT-does-not-paint defect holds row F5.R1 at PENDING (paint FAIL, fix owed); the Dialog/Popover `.glass-reveal` close is a CSS transition reka `usePresence` tears down before it can paint.
+
+| Wave | Row | Verdict | Cursor |
+|------|-----|---------|--------|
+| BG.W-FALLBACK-EXCISE | NF.1 | PASS | DONE |
+| BG.W-OVERLAY-ENTER-PAINT | F5.R1 | FAIL | PENDING (paint FAIL, fix owed) |
+| BG.W-DRAWER-PAINT-BIND | F5.R2 | PASS | DONE |
+
+Provenance across the batch: Chrome = CDP on `ANGLE Metal Renderer: Apple M5 Max` (real Metal, not SwiftShader) on FALLBACK-EXCISE / `ANGLE-SwiftShader` on the two LIVE-rAF motion judges (headless frame-series harness); WebKit = off-screen WKWebView on system `WebKit.framework` / `Apple GPU` (no `Version/` token -> load-bearing C-SAFARI Tier-1). Engine + GPU decoded IN-PIXEL from the badge per leg. All captures over BUILT bytes on `:5200` (vite preview of the demo dist, NOT the `:5199` dev server). `verify-siblings-intact.mjs --quiet` exits 0 before AND after this synthesis; no `/tmp/sibling-park|stash`; servers + throwaway Chrome torn down by each paint agent; operated only under glass-ui.
+
+Cursor state confirmed at synthesis: row NF.1 reads DONE (paint agent flipped PAINT-PENDING -> DONE, `71f6d19b`); row F5.R2 reads DONE (flipped PAINT-PENDING -> DONE, `c0176542`); row F5.R1 reads PENDING (flipped PAINT-PENDING -> PENDING, paint FAIL, src SHAs preserved, `dba0ddb4`). No cursor edit owed by synthesis.
+
+---
+
+### PASSED -> DONE
+
+#### NF.1 — BG.W-FALLBACK-EXCISE (commit `71f6d19b`)
+
+The NO-MASKING-FALLBACK zero-delta dock purge is fail-VISIBLE in paint: every dock reads a plausibly-expanded/collapsed REAL glass state, NEVER unset chrome — a broken class binding can no longer be masked away. Dual-engine (Chrome ANGLE-Metal M5 Max via CDP + Safari/WebKit off-screen WKWebView system Metal), BOTH modes, over the BUILT demo dist on `:5200`.
+
+- 16/16 PNGs `isRealPng=true`, dims correct: 3 routes (/dock/overview · /dock/morph-showcase · /dock/layers) desktop 2880×1800 + coarse-pointer mobile 402×874@3x for the C3 tap-floor leg.
+- COMPUTED-DOM fail-VISIBLE purge: `--dock-expand-t` resolves to `"1"` on 46/46 docks across all 3 routes × 2 modes (never empty/unset — the masking-away read is structurally impossible post-purge); `--dock-morph-t=0.000` real scalar painted on the morph route; every dock plate paints a real translucent glass bg (srgb .../0.52 light, .../0.56 dark), non-degenerate box, 0 transparent/sliver/flagged; the collapse<->expand frame-series (17 samples ×2 modes) stays plausibly-painted at every frame.
+- C3 tap-floor (forced `pointer:coarse` via CDP, mobile 402×874@3x): `matchMedia coarse=true`, `--dock-touch-target=2.75rem`(44px); in-dock `.dock-icon-button` visible min box 46.8×46.8px (density clamp); `.dock-select/dropdown-trigger` (visible box 25.3px tall — the census 32×24 defect) gets a transparent centered `::after` hit-slop H=44/W>=75.7 -> effective tap >=44px both axes, both modes.
+- Visual: recessive warm aurora (soft gradient, no conic banding/oversaturation), calm grain, docks read as liquid glass over a live field, dark register luminous-transmissive, hero fits envelope. Provenance badges decoded: CHROME/ANGLE Metal M5 Max, WEBKIT/Apple GPU. Sibling+minted gates GREEN on the integrated tree: `proof:no-masking-fallback` (exit 0, 6 self-test bites flagged), `proof:dock-engine-unify` (exit 0, U3 busy-single set/read/clear=true, no bool shadow), `proof:dock-morph-family` (exit 0, F6 OK).
+- Non-blocking observation (NOT a defect, out of scope for the zero-delta purge): /dock/overview's collapsible feature dock rendered expanded (4-icon pill) in Chrome but collapsed (perfect-circle home glyph) in WebKit — a benign cross-engine capture-timing difference of the hover-to-expand default; both are valid real glass states, neither unset chrome — precisely the fail-VISIBLE property this wave guarantees.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-FALLBACK-EXCISE-DELTA.md`
+- 16 PNGs: `docs/tranches/BG/audit/visual/BG.W-FALLBACK-EXCISE-paint/fallback-excise-{dock_overview,dock_morph-showcase,dock_layers}-{chrome,safari}-{light,dark}.png` (+ `fallback-excise-{dock_overview,dock_layers}-coarse-{light,dark}.png`)
+- Probes: `BG.W-FALLBACK-EXCISE-paint/chrome-probe.json` · `BG.W-FALLBACK-EXCISE-paint/coarse-probe.json`
+
+#### F5.R2 — BG.W-DRAWER-PAINT-BIND (commit `c0176542`)
+
+The drawer model<->paint SEVER is repaired in paint: `--glass-drawer-t` is WRITTEN across the whole gesture (the born-RED dead-writer CLEARED). DUAL-ENGINE PASS (Chrome/Blink ANGLE-SwiftShader + system Safari/WebKit.framework Metal, BOTH modes), LIVE-GESTURE rAF frame-series over BUILT `:5200` on /compositions/drawer-live-behind — NEVER a settled capture.
+
+- All 3 π criteria clear both engines/modes: (1) open-at-half -> `translateY(50%)` EXACT (scalar 0.5, ty 450/900, 0% err vs ±2%); (2) 1:1 drag ratio 1.000 (Δty 160px for a 160px finger; WebKit perfect 13.33px steps); (3) release-snap animates >=6 frames no-overshoot-past-viewport (Chrome 40/36 distinct, WebKit ~9/10, smooth settle 0.678->0.500, min ~0.494 = the SANCTIONED ~3% DRAWER_SNAP{0.5,0.74} BD-retune liquid give [spec-cited {0.4,0.82} superseded], max 0.678<1.0 so no shoot past full).
+- NO-MASKING-FALLBACK verified in source: `@property --glass-drawer-t` `initial-value:0` + `transform var(--glass-drawer-t,0)`.
+- Visual (all 4 engine×mode PNGs, 2880×1800, isRealPng): sheet seated at 50% with the page LIVE + visible through the translucent glass (refutes BOTH the offscreen dead-writer AND a full-open masking-fallback), warm-cream/luminous-dark identity, recessive backdrop no conic/oversaturation, hero fits envelope.
+- OBSERVATION (out of this wave's 3 criteria — routed to W-ANIMATION-CONGRUENCE 17.4 + W-OVERLAY-ENTER-PAINT F5.R1): the open-settle + button-driven external re-snap POP instantly (0 intermediate frames at 120fps, PRM off) — ONLY the manual drag-RELEASE animates. Asymmetry is code-path (`onPointerUp` calls `ensureSpring().reset(live,0)` which re-seats the spring timeline; the open-watch `ensureSpring(0)+settleTo` and the `activeSnapPoint` watch set `.target` without a re-seat). NOT a defect of this wave (open-at-half is a SEAT/position check — met; the animation check is the drag-release snap — met).
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-DRAWER-PAINT-BIND-DELTA.md`
+- 8 PNGs: `docs/tranches/BG/audit/visual/drawer-chrome-{light,dark}-{seated-half,drag-peak,post-snap}.png` · `docs/tranches/BG/audit/visual/drawer-safari-{light,dark}-open.png`
+
+---
+
+### FAILED -> PENDING (row F5.R1, paint FAIL, fix owed)
+
+#### F5.R1 — BG.W-OVERLAY-ENTER-PAINT (cursor flipped PAINT-PENDING -> PENDING, paint FAIL; src SHAs preserved; recorded `dba0ddb4`)
+
+Non-authoring dual-engine paint judge, LIVE rAF frame-series (Chrome/Blink ANGLE-SwiftShader + real Safari/WebKit Apple-GPU-Metal, BOTH modes, /containers dialog+sheet+popover). ENTER passes decisively; EXIT does not paint for Dialog + Popover — the exit criterion is UNMET, so the wave FAILS.
+
+- **ENTER — PASS all 3 surfaces both engines both modes.** Dialog+Popover paint a real coupled bloom: scale 0.93/0.83->1, filter blur(4px)->blur(0), opacity 0->1 on the snappy `linear()` spring (1.03 overshoot interior = iOS arrival), >=6 intermediate frames (Blink 6-18, WebKit 27-31). Sheet slides via `sheet-animate` (translate). `@starting-style` interpolates in BOTH Blink and WebKit. The born-RED one-frame ~44ms pop is genuinely fixed; the ~85ms mid-bloom capture shows the panel mid-materialize with the scrim only partially dimmed — a true in-flight bloom, not settled.
+- **EXIT — FAIL for Dialog + Popover** (0 painted frames, both engines both modes); Sheet PASS (4-20 frames). Root cause (mechanically confirmed via MutationObserver + reka source): reka-ui `usePresence` (`node_modules/reka-ui/dist/Presence/usePresence.js:44`) dispatches UNMOUNT immediately when `getComputedStyle(node).animationName === "none"`. The `.glass-reveal[data-state=closed]` exit is a CSS TRANSITION (animationName none), so the Dialog/Popover content is removed ~11ms after `data-state->closed` — the exit transition never paints. The pass condition explicitly requires "exit paints >=4 frames >=... <=150ms no-overshoot, Dialog+Sheet+Popover" — UNMET. Sheet is immune because `sheet-animate` is a `@keyframes` animation reka awaits.
+- **SECONDARY (scrim):** the demo scrim is the reka DialogOverlay div (`sheet-animate` 0.55s), coupled/concurrent with the panel from launch (NOT the trailing-400ms HEAD defect) but reaches 80% dim at ~257-392ms not ~100ms. The wave's O4 `dialog.glass-top-layer[open]::backdrop` fast-clock targets a native `<dialog>` the /containers routes never mount, so the <=100ms fast-dim is unobservable in the painted demo.
+
+Gate blind spot: `proof:motion` overlay-enter-paint arm is a SOURCE check (verifies the `@starting-style` block exists) and cannot see reka unmounting the transition-exit — the source-green/paint-broken gap this judge caught.
+
+**mustFix (for a build-fix-agent — NOT this synthesis agent):**
+1. Give the `.glass-reveal` EXIT a `@keyframes glass-reveal-out` (scale/opacity/filter on `--ease-out` <=150ms) applied on `[data-state=closed]` so `animationName != none` and reka `usePresence` awaits `animationend` (the Sheet precedent) — the ENTER `@starting-style` stays as-is. Re-verify Dialog+Popover exit paints >=4 frames <=150ms no-overshoot both engines both modes.
+2. (Secondary, optional) surface the scrim fast-dim on the actual /containers Dialog path — the O4 native-`<dialog>::backdrop` clock is unobservable there; couple the reka DialogOverlay div dim to reach >=80% within ~100ms of launch if the fast-dim is to be witnessed in the painted demo.
+
+PRESERVE (do not regress): the passing ENTER coupled-bloom (scale/blur/opacity on the snappy clock, `@starting-style` interpolating both engines), the working Sheet exit (`sheet-animate` keyframe).
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-OVERLAY-ENTER-PAINT-DELTA.md`
+- PNGs: `docs/tranches/BG/audit/visual/overlay-enter-paint/chromium-light-dialog-midbloom.png` · `overlay-enter-paint/webkit-dark-popover-settled.png` (+ the full 34-file series under `overlay-enter-paint/`)
+- Frame series: `overlay-enter-paint/chromium-light-dialog.frames.json` · `overlay-enter-paint/webkit-light-dialog.frames.json`
+- Harness: `BG.W-OVERLAY-ENTER-PAINT-frameseries.mjs` · `BG.W-OVERLAY-ENTER-PAINT-analyze.mjs`
