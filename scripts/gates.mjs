@@ -197,12 +197,18 @@ export const GATES = [
         id: "proof:dock-decompose",
         cmd: "proof:dock-decompose",
         tags: ["local", "ci", "release"],
+        closeDisease: false,
+        closeDiseaseReason:
+            "matches RATCHET_BUDGET only via a synthetic godModuleSource self-test FIXTURE (it tests proof:no-god-module's detector); it does not read the live line budget — the god-module bookkeeping is proof:no-god-module's charge",
         note: "BG.W-DOCK-DECOMPOSE — the GlassDock.vue god-SFC decomposition gate (KS-DOCK 4.4; the concrete realization of the spec's proof:dock ratchet-drain + colocation + single-writer arms). D1 ratchet-drain: GlassDock.vue ≤ 500 lines AND its proof:no-god-module RATCHET baseline #2 row is drained. D2 colocation: the two carved leaves (composables/useDockTouchGate.ts + composables/useDockFissionWiring.ts) exist AND GlassDock.vue imports both. D3 single-writer: zero --dock-morph-t/--dock-morph-v write in the SFC or either carved gesture leaf (the collapse morph scalar stays the orchestrator's, dockMorphContext). Pure FS, device-free (paint-class H, byte-identical paint). Born-RED on HEAD (707>500 + leaves absent + row present) → GREEN on the carve + a 6-bite self-test (each synthetic sabotage REDs its clause; the comment-mention fence does NOT flag).",
     },
     {
         id: "proof:encapsulation",
         cmd: "proof:encapsulation",
         tags: ["local", "ci"],
+        closeDisease: false,
+        closeDiseaseReason:
+            "same as dock-decompose — a synthetic RATCHET_BASELINES self-test fixture for the no-god-module detector, not a live budget read",
         note: "The colocated-leaf encapsulation gate — covers BOTH the BG.W-BLOB-KINEMATICS-LEAF ratchet #10 arm (E1-E4) AND the BG.W-COLOCATE WS4 carve fold (ratchet #3/4/9/13). BLOB arm (F9 kinematics carve; ratchet-drain row 10): E1 ratchet-drain (useBlobSatellites.ts ≤ 500 lines AND its proof:no-god-module RATCHET row drained) · E2 colocation (composables/satelliteKinematics.ts exists + exports createSatellite/orbitPos/randomizeOrbit + the driver imports all three) · E3 stateless-leaf (no SpringProgress/keyframes fork, no mulberry32/hashString rng ownership, no vue reactivity, no module-level mutable state) · E4 single-definition (the three fns live in the leaf AND are DEFINITION-ABSENT from the driver). COLOCATE arm (WS4 carve fold; ratchet #3/4/9/13): C1 ratchet-drain (host ≤ 500 lines AND its proof:no-god-module row drained) · C2 colocation (each carved leaf exists + exports its symbols + the host imports it back) · C3 single-definition (the carved symbol is DEFINITION-ABSENT from the host, no dual-path copy) — over the 4 carves createCanvasLifecycle→{backingSize,visibility}, useWebGPUCanvas→{webgpuDevice(+timeout),webgpuCanvasTypes}, useGlassBackdropLuminance→ambientHueHistogram, SegmentedTabs→{useTabResponsive,useTabRovingFocus}. Pure FS, device-free (paint-class H, byte-identical paint). Born-RED on HEAD → GREEN + a 16-bite self-test (9 blob + 7 colocate; each synthetic sabotage REDs its clause, comment-mention fences do NOT flag). BH.W-AXIS-GRAMMAR axis-grammar arm: G1 axes-minted (`_shared/axes.ts` mints SIZES/ORIENTATIONS/MOTIONS/SURFACES + the Size/Orientation/Motion types + the Surface/SurfaceTier re-export) · G2 surface-4-member (SURFACES ≡ the useSurfaceAxis Surface union) · G3 membership-fence (axis vocabulary ONLY — no function/component/default) · G4 GlassPanel variant→tier + renderTier (GlassPanelVariant DEFINITION-ABSENT) · G5 TabsIndicator boolean surface→plate · G6 the flat `/axes` subpath barrel; +8 self-test bites (G1+G2+G3+G3-fence+G4+G4-fence+G5+G6, total 37).",
     },
     {
@@ -450,7 +456,19 @@ export const GATES = [
         id: "proof:close-battery-parity",
         cmd: "proof:close-battery-parity",
         tags: ["local"],
+        closeDisease: true,
+        closeDiseaseArtifact: "BB-close-battery-parity",
+        closeDiseaseArtifactEnv: "GLASS_UI_CLOSE_BATTERY_PARITY_ARTIFACT",
         note: "BB.W-CLOSE-BATTERY — the full-set close-battery lock (born-RED → GREEN at the close-path wiring). Asserts the close/release path runs `gates.mjs --run full` (the deduped union local ∪ ci ∪ release) siblings-absent BEFORE the irreversible tag, NOT `--run local`/`--run release` alone (the BA over-claim: `ci ⊂ local` carried 18 reds AND the close never ran the union). 4 clauses: C1 the `--run full` union mode exists + is the deduped union; C2 release.sh runs `--run full`; C3 release.yml runs `--run full`; C4 the `proof:full` script + the CLAUDE.md close-battery canon. + the self-test bite (a synthetic `--run local`-only close path MUST flag). DEVICE-FREE meta-gate (imports gatesFor — it cannot be in the set it walks); `local`-tagged (the proof:gate-manifest-sound precedent), promoted to the close set by the BB close. Bite: re-point the release path to `--run local`/`--run release`, or narrow the full union → RED.",
+    },
+    {
+        id: "proof:close-sweep",
+        cmd: "proof:close-sweep",
+        tags: ["local"],
+        closeDisease: false,
+        closeDiseaseReason:
+            "the armed WITNESS itself — it imports gates.mjs to derive SWEEP_SET + spawns the sweep; it cannot be a swept member without recursion (the close-battery-parity meta-gate precedent)",
+        note: "BG.W-CLOSE-SWEEP — the standing closeDisease-manifest completeness sweep (the THIRD born-RED-by-design gate beside proof:ba-gestalt + proof:ship-attestation; DO NOT fix mid-tranche). SWEEP_SET = GATES.filter(g => g.closeDisease===true) — DERIVED, not a hand-list (a future close-disease gate is a member the moment it registers the flag). `--run sweep`/`--run sweep-fast` is a spawn-ALL dispatch delegating to proof-close-sweep.mjs (names EVERY red, dual-signal exit+JSON, unlink-before/read-after — the DEFECT-A/B stale-JSON fix). 5 clauses: C1 the dispatch exists; C2 SWEEP_SET derived + the completeness floor (forward: a flagged member matches ≥1 BOOKKEEPING_SIGNATURE; inverse: every signature-match carries an EXPLICIT closeDisease decision — the forgot-the-flag catch); C3 the parent-tracked build-and-gates.md canon; C4 the commit-msg hook's env-gated sweep-fast arm beside the B0 ledger arm; C5 each member's declared (env,cache) PATH-MATCHes its source gateArtifactPath() call. Born-RED anchored to R1–R4 (the fast sweep reds at HEAD); GREENs when R1–R4 clear + all wiring lands. [\"local\"] (a ci tag would re-seed R3). 9-bite hermetic --selftest. Bite: drop the dispatch / an un-decided signature-match / an artifact drift / a missing hook arm → RED.",
     },
     {
         id: "proof:ship-attestation",
@@ -635,6 +653,9 @@ export const GATES = [
         id: "proof:no-god-module",
         cmd: "proof:no-god-module",
         tags: ["local", "ci"],
+        closeDisease: true,
+        closeDiseaseArtifact: "AV-no-god-module",
+        closeDiseaseArtifactEnv: "GLASS_UI_NO_GOD_MODULE_ARTIFACT",
         note: "no src/ .ts/.vue file > 500 lines (excludes __tests__/); warns at 300. THE RATCHET: `RATCHET_BASELINES` grandfathers a known over-bound file at its frozen count (a reported fact, not a violation) so the gate is CI-GREEN before its carve while reddening any GROWTH past the baseline, any NEW file past 500 with no row, AND any stale row (a file that shrank under bound must drop its row — the ratchet only drains). Close state: violations==[] AND baselines drained to ∅. Bite: append a line to a grandfathered file (past its baseline) or push a fresh file past 500 → RED.",
     },
     {
@@ -970,12 +991,18 @@ export const GATES = [
         id: "proof:gate-script-parity",
         cmd: "proof:gate-script-parity",
         tags: ["local", "ci"],
+        closeDisease: true,
+        closeDiseaseArtifact: "AX-gate-script-parity",
+        closeDiseaseArtifactEnv: "GLASS_UI_GATE_SCRIPT_PARITY_ARTIFACT",
         note: "AX.W00 — the proof-script ↔ package.json BIJECTION meta-gate. Asserts (A) no orphan proof-*.mjs (every file is registered, modulo the finite owner-attributed KNOWN_ORPHANS AW baseline), (B) no dangling proof:* reference (every referenced .mjs exists, modulo KNOWN_DANGLING), (C) every gates.mjs row cmd resolves to a real package.json script. Device-free FS/JSON. Bite: drop a proof:* registration whose .mjs exists + is not allowlisted → RED (orphan); add a gates.mjs row with a ghost cmd → RED.",
     },
     {
         id: "proof:tag-parity",
         cmd: "proof:tag-parity",
         tags: ["local", "ci"],
+        closeDisease: true,
+        closeDiseaseArtifact: "AY-tag-parity",
+        closeDiseaseArtifactEnv: "GATE_TAG_PARITY_OUT",
         note: "AY.W-LEG1 (the AX.W27a tag-parity meta-assert, NEVER written) — the manifest tags↔aggregate assertion, SEPARATE from the file↔key bijection (proof:gate-script-parity owns that). Asserts every load-bearing STATIC src-scan gate (cmd → scripts/proof-*.mjs, NOT sibling, does NOT spawn a browser) carries `ci`, UNLESS it is a DETECTED Playwright live-verification gate (local-only by the cardinal-lesson architecture, cross-checked against the gates.mjs:30-44 header) OR in the reasoned JUSTIFIED_LOCAL_ONLY allowlist (active-tranche AY meta-gates + the gen-ci-fresh drift meta-step). Born RED against proof:no-legacy-commentary until W-CSS1 promotes it; proof:fail-explicit promoted HERE, proof:no-god-module already ci. Self-proving: a synthetic static-no-ci flags, a synthetic playwright-no-ci does not. Bite: flip a band-dependency static gate back to local-only, or add a new static src-scan gate without ci → RED.",
     },
     {
@@ -1081,6 +1108,9 @@ export const GATES = [
         id: "proof:component-orphan",
         cmd: "proof:component-orphan",
         tags: ["local", "ci"],
+        closeDisease: false,
+        closeDiseaseReason:
+            "a registration-completeness gate (export↔story), close-disease-ADJACENT but not a close-battery meta-gate — a wave-diff clobber is caught by its OWN born-RED, not a shared close red; proof:storybook-complete owns the export-surface member seat",
         note: "AY.W-SB1 — the component-orphan institutional gate (route-prune != component-retire): every PUBLISHED custom pkg + flat subpath + root-barrel composable has >=2 non-self consumers OR a docs/consumer-evidence doc. Self-proving. Bite: a 0-consumer publish with no evidence doc -> RED",
     },
     {
@@ -1105,6 +1135,9 @@ export const GATES = [
         id: "proof:instrument-scope",
         cmd: "proof:instrument-scope",
         tags: ["local"],
+        closeDisease: false,
+        closeDiseaseReason:
+            "reads src/index.ts + demo/stories to verify its OWN component's retire/export wiring, not the fleet completeness bookkeeping",
         note: "AY.W-IC1 — the instrument-chassis scope decision executed + machine-locked. Bite: a re-expanded scope -> RED",
     },
     {
@@ -1123,6 +1156,9 @@ export const GATES = [
         id: "proof:storybook-complete",
         cmd: "proof:storybook-complete",
         tags: ["local", "ci"],
+        closeDisease: true,
+        closeDiseaseArtifact: "AW-storybook-complete",
+        closeDiseaseArtifactEnv: "GLASS_UI_STORYBOOK_COMPLETE_ARTIFACT",
         note: "AX.W18 — the storybook export→story totality gate (the third IA triad member with storybook-ia + no-orphan-demo-route): every public component-export surface is DEMONSTRATED by ≥1 story (the export→story map is total). Bite: a public export with no story → RED.",
     },
     {
@@ -1495,6 +1531,9 @@ export const GATES = [
         id: "proof:icon-chip",
         cmd: "proof:icon-chip",
         tags: ["local", "ci"],
+        closeDisease: false,
+        closeDiseaseReason:
+            "reads src/index.ts + demo/stories to verify its OWN component's export/story wiring, not the fleet-wide export-surface completeness (proof:storybook-complete's charge)",
         note: "BA.W-ICON-CHIP — the <IconChip> section-color POP primitive (born-RED -> GREEN; POP-1/POP-2/POP-3; the chip recipe was a hand-rolled inline :style paste copy-pasted across icons.vue/empty-states.vue/auth-shell.vue + the MetricCell glyph-tint, NO owning primitive). Device-free SOURCE arm (the BINDING painted truth is the π readback tests-visual/icon-chip.spec.ts + the W-ICON-CHIP-DELTA capture — the rendered chip byte-faithful to the reference register in BOTH modes + the proof:ba-gestalt verdict): W1 the primitive OWNS the color-mix(... var(--section-color-N)/tone 25% ...) backplate + full-chroma glyph recipe (positive token+25%-stop assert, not a name check); W2 the chip<=glyph ratio is enforced IN the component (the max(... * --icon-chip-glyph-ratio, ...) floor so a tiny size cannot collapse the plate under the glyph — d2 structural); W3 the three axes prop-gated + disco-FREE (duotone fill / smooth-glass bloom referencing NO sparkle-sweep/btn-audacious/disco-grain / reveal composing vReveal + a PRM guard); W4 the four pastes GONE (zero inline color-mix(in srgb, var(--section-color-${...}) outside icon-chip/ — the COMPLETE-consolidation floor); W5 published (./icon-chip export {types,import} + typesVersions + src/subpaths/icon-chip.ts + IconChip/IconChipProps on src/api/index.ts); W6 born >=2 live consumers (icons + empty-states + auth-shell + MetricCell). The chip is the ONE event vehicle so proof:suffuse asserts against one component not N pastes. Bite: re-paste the inline recipe, oversize the plate off the ratio floor, re-introduce a retired disco utility on the bloom, or drop a consumer below 2 -> RED.",
     },
     {
@@ -1659,12 +1698,19 @@ export const GATES = [
         id: "proof:gen-ci-fresh",
         cmd: "proof:gen-ci-fresh",
         tags: ["local", "release"],
+        closeDisease: true,
         note: "AX.W62 Gate 4 (ci.yml drift kill) — asserts .github/workflows/ci.yml is byte-identical to `gates.mjs --emit-ci` (the ci-tagged set is the single source; ci.yml is a GENERATED artefact). A ci.yml meta-step (not ci-tagged here, to avoid double-render); in the RELEASE set so a drifted ci.yml refuses to publish. Bite: hand-edit ci.yml or add a ci gate without re-emitting → RED.",
     },
     {
         id: "proof:gate-manifest-sound",
         cmd: "proof:gate-manifest-sound",
         tags: ["local"],
+        closeDisease: true,
+        closeDiseaseSlow: true,
+        closeDiseaseArtifact: "AZ-gate-manifest-sound",
+        closeDiseaseArtifactEnv: "GLASS_UI_GATE_MANIFEST_SOUND_ARTIFACT",
+        closeDiseaseReason:
+            "the 112s close-only member — excluded from SWEEP_SET_FAST (closeDiseaseSlow); rides gates:sweep + proof:full",
         note: "AZ.W-GATES + BB.W-DEAD-SWEEP — the gate-manifest soundness meta-gate (10 clauses + clean-tree): well-formed id/cmd rows, the parity pre-pass, the NON-:5199 live-demo default sweep (BA.W-GESTALT-GATE widened the URL-string regex; BB.W-DEAD-SWEEP closed the URL-string-only blind spot with a bare-port `?? <port>` arm against the recorded SERVICE_PORT_ALLOWLIST 9337/9347 — a future GLASS_UI_DEMO_URL ?? 5175 bare-port reds), the content-hash freshness model, clause-10 proof:gate-manifested (every package.json proof:* key resolves to a gatesFor() row OR the COMPOSITE_OR_RUNNER allowlist). Device-free; ci-promotable. Bite: a cmd-less row / any non-:5199 live-demo default (URL or bare-port) / an unmanifested proof:* key → RED.",
     },
     {
@@ -1833,6 +1879,9 @@ export const GATES = [
         id: "proof:split-chars",
         cmd: "proof:split-chars",
         tags: ["local", "ci"],
+        closeDisease: false,
+        closeDiseaseReason:
+            "reads src/index.ts + demo/stories to verify its OWN component's root-barrel export, not the fleet completeness bookkeeping",
         note: "BC.W-SPLIT-CHARS — the per-glyph split JS partner useCharStagger + <SplitChars> with --char-index/--char-total + the MANDATORY accessible full-text label (aria) — the engine-free JS partner to the shipped .char-stagger CSS, placed in /motion-core (root-barrel-safe, engine-free), the ≥2-consumer bar. Bite: a split without the accessible full-text label / a non-/motion-core placement / a value.js or engine import on the leaf → RED.",
     },
     {
@@ -2251,6 +2300,9 @@ export const GATES = [
         id: "proof:no-dead-token",
         cmd: "proof:no-dead-token",
         tags: ["ci"],
+        closeDisease: true,
+        closeDiseaseArtifact: "no-dead-token",
+        closeDiseaseArtifactEnv: "GLASS_UI_NO_DEAD_TOKEN_ARTIFACT",
         note: "BB.W-DEAD-SWEEP — the dead-CSS-token floor: every --* declared in src/styles is consumed (var()/Tailwind shorthand/@container style()/typed @property/JS setProperty/Tailwind theme-namespace) OR on a rationale'd KEEP_ALLOWLIST; the named dead set absent from source + (producer-gated) dist. Device-free source detector. Bite: re-add a dead token or a bare-rationale allowlist entry → RED.",
     },
     {
@@ -2448,6 +2500,20 @@ function runMode(mode) {
         }
     }
     console.log(`\n[gates] '${mode}' set PASSED (${set.length} gates).`);
+}
+
+// ── BG.W-CLOSE-SWEEP — the `--run sweep`/`--run sweep-fast` spawn-all dispatch ──
+// Delegates to proof-close-sweep.mjs's --sweep/--sweep-fast mode (ONE sweep
+// implementation, no fork): it names EVERY red (NOT runMode's fail-fast). `sweep`
+// runs the full closeDisease set (incl. the 112s gate-manifest-sound); `sweep-fast`
+// runs the 7 sub-second members (the commit-hook + per-wave discipline arm).
+function runSweep(fast) {
+    const res = spawnSync(
+        process.execPath,
+        [resolve(ROOT, "scripts/proof-close-sweep.mjs"), fast ? "--sweep-fast" : "--sweep"],
+        { cwd: ROOT, stdio: "inherit" },
+    );
+    process.exit(res.status ?? 1);
 }
 
 // ── BG.W-SHIP-DISCIPLINE-LIVE-PRECONDITION — runShip() (Arm A, Mac-only, FAIL-CLOSED) ──
@@ -2732,6 +2798,8 @@ if (isMain) {
     // branches BEFORE the gate-tag path so `gatesFor("pi")` is never consulted.
     if (arg === "--run" && argv[3] === "ship") runShip();
     else if (arg === "--run" && argv[3] === "pi") runPi();
+    else if (arg === "--run" && (argv[3] === "sweep" || argv[3] === "sweep-fast"))
+        runSweep(argv[3] === "sweep-fast");
     else if (arg === "--run") runMode(argv[3]);
     else if (arg === "--verify-ci") verifyCi();
     else if (arg === "--emit-ci") emitCi();
@@ -2745,7 +2813,7 @@ if (isMain) {
         );
     } else {
         console.error(
-            "usage: gates.mjs --run <local|ci|release|full|pi|ship> | --verify-ci | --emit-ci | --list <mode|pi>",
+            "usage: gates.mjs --run <local|ci|release|full|pi|ship|sweep|sweep-fast> | --verify-ci | --emit-ci | --list <mode|pi>",
         );
         process.exit(2);
     }

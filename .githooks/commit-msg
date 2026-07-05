@@ -24,3 +24,20 @@ node scripts/proof-live-verified-ledger.mjs --tranche="$TRANCHE" || {
     echo "   hook — run \`npm run proof:live-verified-ledger:ba\` &c. to see them.)"
     exit 1
 }
+
+# BG.W-CLOSE-SWEEP — the standing closeDisease sweep-fast arm (APPENDS to the B0
+# ledger arm above under the SAME GLASS_UI_ACTIVE_TRANCHE env-gate). Runs the 7
+# sub-second closeDisease members node-direct (spawn-all, names EVERY red — the
+# 112s gate-manifest-sound is the T2/close-only member, excluded from FAST), so a
+# hot-file wave-commit under an active tranche cannot re-mint the close disease
+# (green own gate / leave a shared close gate RED). Env-gated, NOT hot-file-fires:
+# a fires-always hook would block the integrator's own P-CLOSE carves while R1–R4
+# are dirty. The commit-per-wave cadence exercises it by construction.
+node scripts/proof-close-sweep.mjs --sweep-fast || {
+    echo ""
+    echo "commit blocked: a closeDisease close-gate is RED (the standing sweep-fast, see above)."
+    echo "  A wave greened its own gate while leaving a SHARED close gate RED — fix the named"
+    echo "  member(s) before committing, or (if this is the P-CLOSE fix-in-progress) the sweep"
+    echo "  clears as R1–R4 land. Run \`npm run gates:sweep-fast\` to re-check."
+    exit 1
+}
