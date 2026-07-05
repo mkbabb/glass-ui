@@ -30,8 +30,33 @@
 // A story may compose `heading` alone, `label` alone, both, or neither (a
 // bare body section). When both are present the eyebrow caption sits above
 // the semantic <h2>.
-import { computed, type HTMLAttributes } from "vue";
+//
+// # Section entrance — the two disjoint sibling registers (BG.W-SECTION-TYPEWRITER-FADEUP)
+//
+// A section enters as TWO congruent-but-disjoint registers, NOT one:
+//   - the HEADING types itself in per-glyph — `<SplitChars :stagger=false>`
+//     DROPS the mount-bound `.char-stagger` `fade-in`, and an IO-gated JS reveal
+//     (`useSectionReveal`, injected from the page chassis) OWNS the entrance:
+//     the `.story-section__heading` glyphs rise on the `--char-stagger-step`
+//     cascade as the heading crosses into view (story-hero.css). A per-CHARACTER
+//     stagger cannot ride a native `view()` timeline, so it is JS-gated.
+//   - the BODY fades up as a native `.scroll-cascade` `view()` cascade — the
+//     `.story-section__body` wrapper IS the reused choreography register; each
+//     body child builds in on its own view() timeline (no JS, no setTimeout).
+// The `#heading` slot is the no-typewriter escape (richer heading markup renders
+// verbatim, un-armed). No page provider / no-JS / PRM → the heading is VISIBLE
+// and the body is static (the reveal is progressive enhancement, never a
+// load-bearing hide — the FOUC-safe floor).
+import {
+    computed,
+    inject,
+    onMounted,
+    ref,
+    type HTMLAttributes,
+} from "vue";
 import { cn } from "@glass/utils/cn";
+import { SplitChars } from "@glass/components/custom/split-chars";
+import { SECTION_REVEAL_KEY } from "./useSectionReveal";
 
 interface StorySectionProps {
     /**
@@ -65,6 +90,16 @@ const gapClass = computed(() => {
             return "gap-3";
     }
 });
+
+// The per-glyph heading reveal — arm the `.story-section__heading` node with the
+// page's ONE shared observer (injected). Absent a provider the register is null
+// and the heading renders VISIBLE (the safe degrade). The `#heading` slot escape
+// never renders this <h2>, so it is never armed.
+const headingEl = ref<HTMLElement | null>(null);
+const register = inject(SECTION_REVEAL_KEY, null);
+onMounted(() => {
+    if (register && headingEl.value) register(headingEl.value);
+});
 </script>
 
 <template>
@@ -74,15 +109,36 @@ const gapClass = computed(() => {
         <p v-else-if="label" class="section-label">{{ label }}</p>
         <!-- The canonical section heading — a semantic <h2> at the text-subheading
              rung. The `#heading` slot escape lets a story pass richer heading
-             markup while keeping the canonical rung on its root <h2>. -->
+             markup (rendered verbatim, un-armed) while keeping the canonical rung.
+             The plain-string `heading` path types itself in per-glyph: the h2
+             carries `story-section__heading` + wraps `<SplitChars :stagger=false>`
+             so the IO-gated reveal (useSectionReveal) owns the entrance, NOT the
+             mount-bound `.char-stagger` recipe. -->
         <slot v-if="$slots.heading" name="heading" />
-        <h2 v-else-if="heading" class="text-subheading">{{ heading }}</h2>
+        <h2
+            v-else-if="heading"
+            ref="headingEl"
+            class="text-subheading story-section__heading"
+        >
+            <SplitChars :text="heading" :stagger="false" />
+        </h2>
         <!-- The blurb is SUPPORTING demo chrome, not long-form prose — the
              `text-small` workhorse rung (W-SB-TYPE: bias the story chrome DOWN to
              the documented ladder; `text-prose` read WAY too large for a caption). -->
         <p v-if="blurb" class="text-small text-muted-foreground max-w-prose">
             {{ blurb }}
         </p>
-        <slot />
+        <!-- The BODY is the reused `.scroll-cascade` view()-timeline register (the
+             disjoint sibling of the heading's per-glyph reveal). Each body child
+             builds in on its own timeline as it enters — no JS, no setTimeout,
+             compositor-only + PRM-carved by the shared recipe. The wrapper keeps
+             `flex flex-col gap-*` so the layout is byte-neutral vs the prior bare
+             `<slot />` (the header→body gap + inter-child gaps are the same rung). -->
+        <div
+            v-if="$slots.default"
+            :class="cn('story-section__body scroll-cascade flex flex-col', gapClass)"
+        >
+            <slot />
+        </div>
     </section>
 </template>

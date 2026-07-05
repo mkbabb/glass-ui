@@ -2282,7 +2282,7 @@ export const GATES = [
         id: "proof:demo",
         cmd: "proof:demo",
         tags: ["local", "ci"],
-        note: "BG.W-CHASSIS-ADOPT-OR-RETIRE — the demo-chassis adopt-or-retire lock: DemoFrame + StorySectionHeader RETIRED (zero-importer substrate, J inv-10), StoryHeader + VizStudio ADOPTED (live-imported chassis). D1 retires realized (files DEFINITION-ABSENT) · D2 adopts realized (present + ≥1 live importer) · D3 no dangling ref/@import to a retired chassis (comment-stripped) · D4 the decision ledger complete + a comment-strip distinguishing self-test bite. Bite: a retired file survives / an adopted chassis loses its importer / a live <DemoFrame> tag dangles → RED.",
+        note: "BG.W-CHASSIS-ADOPT-OR-RETIRE — the demo-chassis adopt-or-retire lock: DemoFrame + StorySectionHeader RETIRED (zero-importer substrate, J inv-10), StoryHeader + VizStudio ADOPTED (live-imported chassis). D1 retires realized (files DEFINITION-ABSENT) · D2 adopts realized (present + ≥1 live importer) · D3 no dangling ref/@import to a retired chassis (comment-stripped) · D4 the decision ledger complete + a comment-strip distinguishing self-test bite. Bite: a retired file survives / an adopted chassis loses its importer / a live <DemoFrame> tag dangles → RED. + BG.W-SECTION-TYPEWRITER-FADEUP: T1 SplitChars stagger-drop · T2 --char-stagger-step DRY (off * 30ms) · T3 useSectionReveal wired (4 sweep hooks + FOUC arm + provide key) · T4 StorySection two-register + gl-char-rise CSS + page provides singleton, no double-cascade — each born-RED with a HEAD-recreating self-test bite.",
     },
     {
         id: "proof:bp-lazy",

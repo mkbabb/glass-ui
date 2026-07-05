@@ -48,10 +48,34 @@
 //        exactly one verdict ∈ {adopt, retire}, a non-empty rationale, and ≥1 file
 //        (the decision is recorded IN the gate — the anti-re-litigation floor).
 //
+//   T1 — SplitChars carries `stagger?: boolean` and DROPS the mount-bound
+//        `.char-stagger` recipe when false (the "no mount-fire-before-reveal"
+//        mechanism — the IO-gated reveal must own the entrance). (born-RED: HEAD's
+//        SplitChars applies `.char-stagger` unconditionally, no `stagger` prop.)
+//   T2 — `--char-stagger-step` is minted ONCE (scheme-motion.css) and the
+//        `.char-stagger` recipe reads `var(--char-stagger-step)` — the hardcoded
+//        `* 30ms` per-glyph literal is GONE (DRY single-source). (born-RED: no
+//        token, the `* 30ms` literal live.)
+//   T3 — the demo-private `useSectionReveal` exists with the FOUR sweep hooks
+//        (scroll · scrollend · route-settle rAF · bounded mount re-sweep), the
+//        SYNCHRONOUS `data-reveal-armed` FOUC arm + the no-IO `data-revealed`
+//        VISIBLE floor, and the `SECTION_REVEAL_KEY` provide seam. (born-RED: the
+//        file is DEFINITION-ABSENT on HEAD.)
+//   T4 — StorySection composes the two disjoint sibling registers (the
+//        `story-section__heading` `<SplitChars :stagger=false>` heading × the
+//        `.story-section__body scroll-cascade` body, injecting the register), the
+//        demo `gl-char-rise` reveal CSS is present (keyframe + FOUC floor +
+//        `--char-stagger-step` reveal + PRM arm), AND StoryPage provides the ONE
+//        observer while its page-level `.story-sections` no longer carries
+//        `.scroll-cascade` (the no-double-bind). (born-RED: none of it on HEAD.)
+//
 // Self-test bites: a synthetic retired file that still "exists" REDs D1; a synthetic
 // live `<DemoFrame>` tag REDs D3; a synthetic adopted file with zero importers REDs
 // D2; a synthetic decision with an empty rationale REDs D4; a jargon-in-a-comment
-// mention of a retired name does NOT red D3 (the comment-strip distinguishing bite).
+// mention of a retired name does NOT red D3 (the comment-strip distinguishing bite);
+// + one bite per T-clause that recreates the HEAD state (the born-RED proof): the
+// unconditional-`.char-stagger` SplitChars REDs T1, the `* 30ms` literal REDs T2,
+// the absent `useSectionReveal` REDs T3, the heading-register-less StorySection REDs T4.
 
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { resolve } from "node:path";
@@ -67,6 +91,21 @@ const COMMAND = "npm run proof:demo";
 const SELF_TEST = process.argv.includes("--self-test");
 
 const DEMO_DIR = resolve(ROOT, "demo");
+
+// ── The section-entrance congruence clauses (BG.W-SECTION-TYPEWRITER-FADEUP). ──
+// The `getAnimations()`-per-node congruence π (heading per-glyph reveal × body
+// cascade firing CONGRUENTLY) is the browser-side paint verdict; these T-clauses
+// are the device-free STRUCTURAL floor that proves the mechanism is WIRED on disk
+// so the π has something real to read. Born-RED on HEAD (none of it exists).
+const SEC = {
+    splitChars: "src/components/custom/split-chars/SplitChars.vue",
+    schemeMotion: "src/styles/tokens/scheme-motion.css",
+    typoUtil: "src/styles/typography/utilities.css",
+    reveal: "demo/stories/useSectionReveal.ts",
+    storySection: "demo/stories/StorySection.vue",
+    storyHeroCss: "demo/stories/story-hero.css",
+    storyPage: "demo/stories/StoryPage.vue",
+};
 
 // ── The DECISION LEDGER — the adopt/retire verdict + rationale per chassis. ──────
 // This table IS the recorded decision (D4 asserts it complete). Each `files[]` is
@@ -155,6 +194,13 @@ function detect(overrides = {}) {
         overrides.existsOverride && rel in overrides.existsOverride
             ? overrides.existsOverride[rel]
             : existsSync(resolve(ROOT, rel));
+    // Raw source read (comments PRESERVED — the T-clauses assert on live source
+    // strings, not usage/import shapes). `srcOverride` lets a self-test bite feed
+    // a synthetic (HEAD-recreating) file body.
+    const readSrc = (rel) =>
+        overrides.srcOverride && rel in overrides.srcOverride
+            ? overrides.srcOverride[rel]
+            : read(rel);
 
     // The live demo corpus — comment-STRIPPED (imports/usages only, prose fenced out).
     const vueCorpus =
@@ -266,6 +312,87 @@ function detect(overrides = {}) {
         missing.length === 0 && malformed.length === 0,
     );
 
+    // ── The section-entrance congruence clauses (BG.W-SECTION-TYPEWRITER-FADEUP). ──
+    const splitCharsSrc = readSrc(SEC.splitChars);
+    const schemeMotionSrc = readSrc(SEC.schemeMotion);
+    const typoSrc = readSrc(SEC.typoUtil);
+    const revealSrc = readSrc(SEC.reveal);
+    const storySectionSrc = readSrc(SEC.storySection);
+    const storyHeroSrc = readSrc(SEC.storyHeroCss);
+    const storyPageSrc = readSrc(SEC.storyPage);
+
+    // T1 — SplitChars `stagger?:boolean` DROPS `.char-stagger` (no mount-fire-before-reveal).
+    const t1StaggerProp = /\bstagger\?\s*:\s*boolean/.test(splitCharsSrc);
+    const t1Conditional =
+        /props\.stagger\s*&&\s*["']char-stagger["']/.test(splitCharsSrc) &&
+        // the UNCONDITIONAL HEAD form (`cn("char-stagger", …)`) is GONE.
+        !/cn\(\s*["']char-stagger["']/.test(splitCharsSrc);
+    facts.t1 = { staggerProp: t1StaggerProp, dropsWhenFalse: t1Conditional };
+    assert(
+        "T1 — SplitChars `stagger?:boolean` DROPS .char-stagger (no mount-fire-before-reveal)",
+        t1StaggerProp && t1Conditional,
+    );
+
+    // T2 — `--char-stagger-step` minted once + read by the recipe (DRY, off `* 30ms`).
+    const t2Minted = /--char-stagger-step\s*:/.test(schemeMotionSrc);
+    const t2Reads =
+        /animation-delay:\s*calc\(\s*var\(--char-index[^)]*\)\s*\*\s*var\(--char-stagger-step\)/.test(
+            typoSrc,
+        );
+    // the hardcoded per-glyph literal (`var(--char-index …) * 30ms`) is GONE.
+    const t2NoLiteral = !/var\(--char-index[^)]*\)\s*\*\s*30ms/.test(typoSrc);
+    facts.t2 = { minted: t2Minted, reads: t2Reads, noLiteral: t2NoLiteral };
+    assert(
+        "T2 — --char-stagger-step minted once + single-sourced (off the * 30ms literal)",
+        t2Minted && t2Reads && t2NoLiteral,
+    );
+
+    // T3 — useSectionReveal exists w/ the 4 sweep hooks + FOUC arm + provide key.
+    const revealExists = fileExists(SEC.reveal);
+    const t3Hooks =
+        /addEventListener\(\s*["']scroll["']/.test(revealSrc) && // (i)
+        /addEventListener\(\s*["']scrollend["']/.test(revealSrc) && // (ii)
+        /onRouteSettle/.test(revealSrc) && // (iii)
+        (revealSrc.match(/requestAnimationFrame/g) || []).length >= 3; // (iv) mount re-sweep
+    const t3Fouc =
+        /data-reveal-armed/.test(revealSrc) && /data-revealed/.test(revealSrc);
+    const t3Key = /SECTION_REVEAL_KEY/.test(revealSrc);
+    facts.t3 = { exists: revealExists, hooks: t3Hooks, fouc: t3Fouc, key: t3Key };
+    assert(
+        "T3 — useSectionReveal exists w/ 4 sweep hooks + FOUC-safe arm + provide key",
+        revealExists && t3Hooks && t3Fouc && t3Key,
+    );
+
+    // T4 — StorySection two-register + demo gl-char-rise CSS + page provides singleton, no double-cascade.
+    const t4Heading =
+        /story-section__heading/.test(storySectionSrc) &&
+        /<SplitChars[\s\S]*?:stagger="false"/.test(storySectionSrc) &&
+        /SECTION_REVEAL_KEY/.test(storySectionSrc);
+    const t4Body =
+        /story-section__body[^"']*scroll-cascade/.test(storySectionSrc) ||
+        /scroll-cascade[^"']*story-section__body/.test(storySectionSrc);
+    const t4Css =
+        /@keyframes\s+gl-char-rise/.test(storyHeroSrc) &&
+        /\[data-reveal-armed\][\s\S]*?:not\(\[data-revealed\]\)/.test(storyHeroSrc) &&
+        /\[data-revealed\][\s\S]*?--char-stagger-step/.test(storyHeroSrc) &&
+        /prefers-reduced-motion:\s*reduce/.test(storyHeroSrc);
+    const t4Provide = /provide\(\s*SECTION_REVEAL_KEY/.test(storyPageSrc);
+    // the page-level .story-sections must NOT keep .scroll-cascade (no double-bind).
+    const t4NoDouble =
+        !/class="scroll-cascade\s+story-sections/.test(storyPageSrc) &&
+        !/class="story-sections[^"]*\bscroll-cascade/.test(storyPageSrc);
+    facts.t4 = {
+        heading: t4Heading,
+        body: t4Body,
+        css: t4Css,
+        provide: t4Provide,
+        noDoubleCascade: t4NoDouble,
+    };
+    assert(
+        "T4 — StorySection two-register + gl-char-rise CSS + page provides singleton, no double-cascade",
+        t4Heading && t4Body && t4Css && t4Provide && t4NoDouble,
+    );
+
     return { facts, violations };
 }
 
@@ -361,6 +488,50 @@ function selfTest() {
         "D4 — the decision ledger is complete (4 named chassis, verdict + rationale + files)",
         "D4 empty rationale",
     );
+
+    // ── T-clause bites — each recreates the HEAD state (the born-RED proof). ──
+    // T1: the unconditional-`.char-stagger` SplitChars (no `stagger` prop) → REDs T1.
+    sab(
+        {
+            srcOverride: {
+                [SEC.splitChars]:
+                    `defineProps<{ text: string; as?: string }>();\n` +
+                    `const hostClass = computed(() => cn("char-stagger", props.class));`,
+            },
+        },
+        "T1 — SplitChars `stagger?:boolean` DROPS .char-stagger (no mount-fire-before-reveal)",
+        "T1 unconditional .char-stagger (HEAD form)",
+    );
+    // T2: the hardcoded `* 30ms` per-glyph literal + no token → REDs T2.
+    sab(
+        {
+            srcOverride: {
+                [SEC.schemeMotion]: `:root { --motion-stagger-tight: 40ms; }`,
+                [SEC.typoUtil]:
+                    `.char-stagger > .char { animation-delay: calc(var(--char-index, 0) * 30ms); }`,
+            },
+        },
+        "T2 — --char-stagger-step minted once + single-sourced (off the * 30ms literal)",
+        "T2 hardcoded * 30ms literal (HEAD form)",
+    );
+    // T3: the DEFINITION-ABSENT useSectionReveal → REDs T3.
+    sab(
+        { existsOverride: { [SEC.reveal]: false }, srcOverride: { [SEC.reveal]: "" } },
+        "T3 — useSectionReveal exists w/ 4 sweep hooks + FOUC-safe arm + provide key",
+        "T3 useSectionReveal DEFINITION-ABSENT (HEAD form)",
+    );
+    // T4: a StorySection with no heading register (the HEAD `{{ heading }}` form) → REDs T4.
+    sab(
+        {
+            srcOverride: {
+                [SEC.storySection]:
+                    `<h2 v-else-if="heading" class="text-subheading">{{ heading }}</h2>\n<slot />`,
+            },
+        },
+        "T4 — StorySection two-register + gl-char-rise CSS + page provides singleton, no double-cascade",
+        "T4 heading-register-less StorySection (HEAD form)",
+    );
+
     return flagged;
 }
 
@@ -406,7 +577,19 @@ function run() {
         `  D4 ledger complete        : ${facts["D4 — the decision ledger is complete (4 named chassis, verdict + rationale + files)"]}`,
     );
     console.log(
-        `  self-test (bite proof)    : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×2 incl. comment-strip + D4)`,
+        `  T1 SplitChars stagger-drop: ${facts["T1 — SplitChars `stagger?:boolean` DROPS .char-stagger (no mount-fire-before-reveal)"]}`,
+    );
+    console.log(
+        `  T2 --char-stagger-step DRY: ${facts["T2 — --char-stagger-step minted once + single-sourced (off the * 30ms literal)"]}`,
+    );
+    console.log(
+        `  T3 useSectionReveal wired : ${facts["T3 — useSectionReveal exists w/ 4 sweep hooks + FOUC-safe arm + provide key"]}`,
+    );
+    console.log(
+        `  T4 two-register + no-2×    : ${facts["T4 — StorySection two-register + gl-char-rise CSS + page provides singleton, no double-cascade"]}`,
+    );
+    console.log(
+        `  self-test (bite proof)    : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×2 incl. comment-strip + D4 + T1-T4)`,
     );
     if (violations.length) {
         console.log("\nVIOLATIONS:");

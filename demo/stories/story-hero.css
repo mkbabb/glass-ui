@@ -815,3 +815,64 @@
     border-top: 1px solid var(--configurator-divider);
     padding-top: var(--story-section-delimiter-gap, 1.5rem);
 }
+
+/* ─────────────────────────────────────────────────────────────────────────
+ * BG.W-SECTION-TYPEWRITER-FADEUP — the per-glyph section-heading reveal.
+ *
+ * The `.story-section__heading` (a `<StorySection heading>` `<h2>`) wraps a
+ * `<SplitChars :stagger=false>`, so the shipped `.char-stagger` mount `fade-in`
+ * is DROPPED and this IO-gated reveal OWNS the entrance. `useSectionReveal`
+ * arms the node with `data-reveal-armed` SYNCHRONOUSLY on mount (pre-paint) and
+ * flips it to `data-revealed` as it crosses into view; the body sibling rides the
+ * native `.scroll-cascade` view() cascade (the disjoint congruent register).
+ *
+ * The `--char-stagger-step` (scheme-motion.css, 30ms) is the SINGLE-SOURCE
+ * per-glyph increment — shared with the `.char-stagger` recipe (DRY). The rise
+ * rides the per-spring `--spring-smooth`/`--spring-smooth-duration` clock; the
+ * keyframe animates ONLY `opacity` + `transform` (compositor-only).
+ * ───────────────────────────────────────────────────────────────────────── */
+
+/* `:stagger=false` drops `.char-stagger`, so restate the glyph inline-block the
+   translate needs (the transform has no effect on an inline element). */
+.story-section__heading .char {
+    display: inline-block;
+}
+
+/* The INVERTED FOUC-safe floor — armed but NOT-yet-revealed → hide the glyphs.
+   Absent `data-reveal-armed` (no JS / no provider) the heading stays VISIBLE. */
+.story-section__heading[data-reveal-armed]:not([data-revealed]) .char {
+    opacity: 0;
+    transform: translateY(0.4em);
+}
+
+/* The reveal — each glyph rises on the spring clock, staggered per `--char-index`
+   by the single-source `--char-stagger-step`; `backwards` holds the from-state
+   through the delay so a late glyph never flashes at its settled position. */
+.story-section__heading[data-revealed] .char {
+    animation: gl-char-rise var(--spring-smooth-duration) var(--spring-smooth, ease)
+        backwards;
+    animation-delay: calc(var(--char-index, 0) * var(--char-stagger-step));
+}
+
+@keyframes gl-char-rise {
+    from {
+        opacity: 0;
+        transform: translateY(0.4em);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* PRM — the reveal is a legibility-neutral flourish, so under reduce the heading
+   is terminally VISIBLE with zero transform/animation frames (fade-keeps is moot
+   here — the char text must read; the vestibular floor drops the rise). */
+@media (prefers-reduced-motion: reduce) {
+    .story-section__heading[data-reveal-armed]:not([data-revealed]) .char,
+    .story-section__heading[data-revealed] .char {
+        opacity: 1;
+        transform: none;
+        animation: none;
+    }
+}

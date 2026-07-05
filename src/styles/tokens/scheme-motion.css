@@ -149,6 +149,16 @@
     --motion-stagger-default: 80ms;
     --motion-stagger-relaxed: 120ms;
 
+    /* Per-GLYPH stagger increment (BG.W-SECTION-TYPEWRITER-FADEUP). The DENSER
+       cadence for a per-CHARACTER cascade (a word/heading typing itself in) —
+       tighter than the per-ROW `--motion-stagger-*` tiers because dozens of
+       glyphs ride it and a row-scale gap would drag the tail past the eye. The
+       single source the `.char-stagger` recipe (typography/utilities.css) AND
+       the demo's `.story-section__heading` per-glyph reveal (story-hero.css)
+       both read — DRY, retune the whole per-glyph rhythm from ONE `:root`
+       override. Was a hardcoded `30ms` literal at both sites. */
+    --char-stagger-step: 30ms;
+
     /* ═══════════════════════════════════════════════
        §2.W BD.W-MOTION-WEIGHT — the GOVERNING motion scalar (rest decl)
 

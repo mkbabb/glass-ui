@@ -44,9 +44,22 @@ const props = withDefaults(
         /** Host tag/component (reka-ui Primitive `as`; default `"span"`) — set
          *  `as="h1"` to render the kinetic word as a heading. */
         as?: string | Component;
+        /**
+         * Whether to compose the shipped `.char-stagger` host recipe (default
+         * `true` → byte-identical to the historical behaviour). Set `false` to
+         * DROP `.char-stagger` so the recipe's mount-bound `fade-in` never fires
+         * — the load-bearing reason is "no mount-fire-before-reveal": when a
+         * caller owns the entrance itself (an IntersectionObserver-gated reveal,
+         * a replay harness), the `.char-stagger` `animation: fade-in … backwards`
+         * that binds on MOUNT would flash the glyphs in before the caller's
+         * reveal claims them. `:stagger=false` yields the bare `.char` spans
+         * (still carrying `--char-index`/`--char-total`) so the caller's own CSS
+         * owns the per-glyph entrance. The word stays ONE accessible name either
+         * way (the a11y contract is on the wrapper, not the recipe class). */
+        stagger?: boolean;
         class?: HTMLAttributes["class"];
     }>(),
-    { by: "char", as: "span" },
+    { by: "char", as: "span", stagger: true },
 );
 
 // The DOM host. `<Primitive>` is a component, so a plain `ref` captures its
@@ -87,7 +100,14 @@ watch(
     },
 );
 
-const hostClass = computed(() => cn("char-stagger", props.class));
+// `.char-stagger` composes the shipped mount-bound `fade-in` recipe; a caller
+// that owns the entrance (an IO-gated reveal) drops it via `:stagger=false` so
+// the recipe never fires before the reveal claims the glyphs. The `.char` spans
+// + `--char-index` are minted by `useCharStagger` regardless — only the recipe
+// CLASS is conditional (the split is structural, the animation is opt-out).
+const hostClass = computed(() =>
+    cn(props.stagger && "char-stagger", props.class),
+);
 </script>
 
 <template>

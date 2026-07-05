@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, provide, watch } from "vue";
 import { cn } from "@glass/utils/cn";
 import { TooltipProvider } from "@glass/components/ui/tooltip";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
+import { SECTION_REVEAL_KEY, useSectionReveal } from "./useSectionReveal";
 import StoryHero from "./StoryHero.vue";
 import StoryHeader from "./StoryHeader.vue";
 
@@ -62,6 +63,21 @@ const variant = computed<"hero" | "page">(() =>
 const subpath = computed(() => current.value?.story.subpath ?? null);
 const heroScale = computed(() => current.value?.story.heroScale ?? "4");
 const depth = computed(() => current.value?.story.depth);
+
+// BG.W-SECTION-TYPEWRITER-FADEUP — the ONE shared section-reveal observer, minted
+// ONCE at the page chassis + provided to every descendant StorySection (which
+// injects it and arms its own heading on mount). The scroller is the AppShell
+// `<main>.demo-main-scroller` route port (resolved lazily — the DOM exists by the
+// time a section mounts). A route change is fed through `onRouteSettle` (in-app
+// nav lands top:0 with no scroll event; the rAF sweep reveals any above-fold
+// section); the F5/reload adverse-order strand is closed inside the composable.
+const { register, onRouteSettle } = useSectionReveal(() =>
+    typeof document === "undefined"
+        ? null
+        : document.querySelector<HTMLElement>("main.demo-main-scroller"),
+);
+provide(SECTION_REVEAL_KEY, register);
+watch(current, () => onRouteSettle());
 </script>
 
 <template>
@@ -221,8 +237,14 @@ const depth = computed(() => current.value?.story.depth);
                      rhythm (`--story-page-section-gap`, was the hardcoded `gap-10`)
                      so every page's section cadence is the SAME measured rhythm
                      (axis-3; the meta-gate asserts ≥ this minimum, no cramped page). -->
+                <!-- BG.W-SECTION-TYPEWRITER-FADEUP — the page-level `.story-sections`
+                     DROPS `.scroll-cascade`: the cascade moved DOWN into each
+                     StorySection's `.story-section__body` so the two disjoint
+                     sibling registers (heading per-glyph reveal × body cascade)
+                     never double-bind a whole-section slide over a per-child one.
+                     The delimiter seam + the section-gap rhythm are unchanged. -->
                 <section
-                    class="scroll-cascade story-sections flex flex-col"
+                    class="story-sections flex flex-col"
                     :style="{ gap: 'var(--story-page-section-gap)' }"
                     :class="
                         cn(
