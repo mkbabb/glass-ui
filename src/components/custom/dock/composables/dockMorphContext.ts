@@ -74,6 +74,15 @@ interface MorphTarget {
     activeLayer: Ref<string>;
     currentLayer: Ref<string>;
     leavingLayer: Ref<string | null>;
+    /**
+     * BG.W-DOCK-PANE-OVERLAP (F3.R2, box axis) — `true` for the OUTER collapse↔expand
+     * pair (which OWNS the plate box: `--dock-morph-t: 0` is that axis's COLLAPSED
+     * endpoint), `false` for a nested `<DockLayerGroup>` pane-swap target. A pane swap
+     * on an already-expanded dock is a same-expand-state crossfade — it must NOT seat
+     * the shared box scalar at the collapsed endpoint (the paint-judge FAIL: the plate
+     * dipped to the 53.68px pill mid-swap). The flag drives the box-HOLD `data-pane-swap`.
+     */
+    isOuter: boolean;
     stop: () => void;
 }
 
@@ -174,6 +183,9 @@ export function useDockMorphOrchestrator(
             // `scale: none` over the TRUE collapsed/expanded box with the glyph rigid.
             r.removeAttribute("data-morphing");
             r.removeAttribute("data-punching");
+            // BG.W-DOCK-PANE-OVERLAP (F3.R2) — drop the box-HOLD marker in the SAME recalc
+            // as the morph attrs + scalar, so no post-settle frame reads a stale hold.
+            r.removeAttribute("data-pane-swap");
             r.style.removeProperty("--dock-morph-t");
         }
         // BG.NF.1 W-FALLBACK-EXCISE — notify the settle (alongside clearing the single
@@ -204,20 +216,36 @@ export function useDockMorphOrchestrator(
      * the scalar genuinely GLIDES 0→1 over the ~285–320ms DOCK_SPRING clock. The
      * factory's `respectReducedMotion` jumps the scalar 0→1 in one frame under PRM.
      */
-    function ensureSpringRunning() {
+    function ensureSpringRunning(paneSwap = false) {
         const r = root();
         if (!r) return;
         // BG.NF.1 W-FALLBACK-EXCISE — notify the arm alongside setting the single
         // `[data-morphing]` busy signal (the consumer drives its own isTransitioning).
         options.onMorphActiveChange?.(true);
         r.setAttribute("data-morphing", "");
-        // BD.W-DOCK-PUNCH-CHANNEL — arm the dedicated cartoon-punch for ONE episode.
-        // `[data-punching]` lifts `--dock-punch-stretch` to its overshoot target; the
-        // CSS transition on `--ease-cartoon-punch` carries it there on the punch curve
-        // (the ~4% pre-dip + ~22% overshoot), and clearing the hook below transitions it
-        // back to 1 (the RETURN — never latched). Cleared partway through the glide so
-        // the return completes by settle. PRM zeroes `--motion-weight` → amplitude 1.
-        r.setAttribute("data-punching", "");
+        // BG.W-DOCK-PANE-OVERLAP (F3.R2, box axis) — a NESTED pane swap HOLDS the box.
+        // The plate box + chrome are driven off `--dock-expand-t` (morph.css), which for a
+        // collapse/expand tracks `--dock-morph-t` (seated at 0 → the collapsed endpoint).
+        // A pane swap leaves the dock's expand STATE unchanged, so seating the shared
+        // scalar at 0 spuriously collapsed the plate to the 53.68px pill mid-swap (the
+        // paint-judge FAIL). `data-pane-swap` gates morph.css's `--dock-expand-t`
+        // derivation `:not([data-pane-swap])` so the box + chrome HOLD at the class
+        // endpoint (expanded) while `--dock-morph-t` still glides 0→1 for the overlapped
+        // crossfade + the inner stagger (both read `--dock-morph-t` directly, untouched).
+        // The cartoon box-punch is skipped too — a held box has no footprint to punch;
+        // the OUTER collapse/expand keeps it (byte-identical to HEAD).
+        if (paneSwap) {
+            r.setAttribute("data-pane-swap", "");
+        } else {
+            r.removeAttribute("data-pane-swap");
+            // BD.W-DOCK-PUNCH-CHANNEL — arm the dedicated cartoon-punch for ONE episode.
+            // `[data-punching]` lifts `--dock-punch-stretch` to its overshoot target; the
+            // CSS transition on `--ease-cartoon-punch` carries it there on the punch curve
+            // (the ~4% pre-dip + ~22% overshoot), and clearing the hook below transitions it
+            // back to 1 (the RETURN — never latched). Cleared partway through the glide so
+            // the return completes by settle. PRM zeroes `--motion-weight` → amplitude 1.
+            r.setAttribute("data-punching", "");
+        }
         // Seat the scalar at 0 SYNCHRONOUSLY now (before the factory's `play()` first
         // rAF) so the single frame between this arm and the first spring frame reads 0
         // (the collapsed footprint), eliminating a 1-frame endpoint-flash before the
@@ -279,17 +307,24 @@ export function useDockMorphOrchestrator(
         // size rides the `--dock-live` blend off the scalar below; NO measurement.
         t.leavingLayer.value = oldLayer;
         t.currentLayer.value = newLayer;
-        ensureSpringRunning();
+        // BG.W-DOCK-PANE-OVERLAP (F3.R2) — a NESTED pane-swap target (NOT the outer
+        // collapse↔expand pair) HOLDS the box: the swap is a same-expand-state crossfade,
+        // never a box collapse. Only the outer pair owns the collapse/expand box axis.
+        ensureSpringRunning(!t.isOuter);
     }
 
-    /** Register a morph target; returns its watch-stop. */
-    function addTarget(reg: DockMorphGroupRegistration): MorphTarget {
+    /** Register a morph target; returns its watch-stop. `isOuter` marks the collapse↔expand pair. */
+    function addTarget(
+        reg: DockMorphGroupRegistration,
+        isOuter = false,
+    ): MorphTarget {
         const t: MorphTarget = {
             containerEl: reg.containerEl,
             axis: reg.axis,
             activeLayer: reg.activeLayer,
             currentLayer: ref(reg.activeLayer.value),
             leavingLayer: ref<string | null>(null),
+            isOuter,
             stop: () => {},
         };
         t.stop = watch(reg.activeLayer, (newLayer, oldLayer) => {
@@ -305,12 +340,17 @@ export function useDockMorphOrchestrator(
         if (!anyMorphing()) dockSpring.dispose();
     }
 
-    // The OUTER collapse↔expand pair is the first registered target.
-    const outerTarget = addTarget({
-        containerEl: outerEl,
-        activeLayer: outerActiveLayer,
-        axis: outerAxis,
-    });
+    // The OUTER collapse↔expand pair is the first registered target — the ONLY target
+    // that owns the plate box (`isOuter: true`, so its swap drives the collapse/expand box
+    // morph; a nested pane swap HOLDS the box — BG.W-DOCK-PANE-OVERLAP F3.R2).
+    const outerTarget = addTarget(
+        {
+            containerEl: outerEl,
+            activeLayer: outerActiveLayer,
+            axis: outerAxis,
+        },
+        true,
+    );
 
     // The provided seam a nested group registers through.
     const context: DockMorphContext = {

@@ -53,12 +53,26 @@
         --dock-expand-t: 0;
     }
 
-    .glass-dock.expanded[data-morphing],
-    .glass-dock.always-expanded[data-morphing] {
+    /* BG.W-DOCK-PANE-OVERLAP (F3.R2, box axis) — the `[data-morphing]` derivation arms
+       are gated `:not([data-pane-swap])`. During a NESTED `<DockLayerGroup>` pane swap the
+       orchestrator arms `[data-pane-swap]` (dockMorphContext.ensureSpringRunning), so these
+       arms DO NOT match and `--dock-expand-t` falls back to the static class endpoint above
+       (`.expanded` → 1). The plate box (`--dock-live`, layers.css) + the root chrome
+       (bg/border/padding/blur, below) therefore HOLD at the expanded look while
+       `--dock-morph-t` still glides 0→1 for the overlapped crossfade + the inner stagger
+       (both read `--dock-morph-t` directly, unaffected by this pin). A pane swap on an
+       already-expanded nested dock no longer collapses the plate to the 53.68px pill (the
+       §2.2 box-dips-below-both-endpoints defect). The OUTER collapse↔expand pair carries no
+       `[data-pane-swap]`, so its box morph is byte-identical to HEAD. The inner
+       `.dock-layer-stack`/`.dock-layer--summary` `--dock-expand-t` writes are DESCENDANT
+       overrides (still `[data-morphing]`-gated, unscoped) so the stagger/summary reveal is
+       untouched. */
+    .glass-dock.expanded[data-morphing]:not([data-pane-swap]),
+    .glass-dock.always-expanded[data-morphing]:not([data-pane-swap]) {
         --dock-expand-t: var(--dock-morph-t);
     }
 
-    .glass-dock.collapsed[data-morphing] {
+    .glass-dock.collapsed[data-morphing]:not([data-pane-swap]) {
         --dock-expand-t: calc(1 - var(--dock-morph-t));
     }
 

@@ -168,6 +168,15 @@ const USE_LAYER_TRANSITION_TS = resolve(
     ROOT,
     "src/components/custom/dock/composables/useLayerTransition.ts",
 );
+// ── The NESTED box-hold arm source (BG.W-DOCK-PANE-OVERLAP P4; F3.R2 fix) ──
+// The `/dock/layers` route hosts ONLY nested DockLayerGroups (standaloneGroupCount 0), so
+// the box is owned by the orchestrator's convex-blend `--dock-live` (layers.css) off the
+// directional `--dock-expand-t` derived in dock/morph.css. A pane swap seats `--dock-morph-t`
+// at the collapsed 0 endpoint; without the box-HOLD the `.expanded[data-morphing]` arm drove
+// `--dock-expand-t` to 0 and the plate collapsed to the pill (the F3.R2 paint FAIL). The fix
+// gates the derivation `:not([data-pane-swap])` (morph.css) + arms `data-pane-swap` on the
+// nested swap only (dockMorphContext).
+const DOCK_MORPH_CSS = resolve(ROOT, "src/styles/dock/morph.css");
 // The two morph-region CONTENT children that carry the inverse-scale (the plate
 // scales, these do NOT). Both must carry the inverse on both axes.
 const RIGID_CONTENT_CHILDREN = [".dock-persistent", ".dock-layers"];
@@ -592,9 +601,80 @@ function detectBoxFlipMonotonic(vueSrc, tsSrc) {
     };
 }
 
+// ── PANE-OVERLAP P4 — a NESTED pane swap HOLDS the plate box (BG.W-DOCK-PANE-OVERLAP F3.R2). ──
+// The `/dock/layers` route is ALL nested (standaloneGroupCount 0), so the orchestrator owns the
+// box via the convex-blend `--dock-live` (layers.css) off the directional `--dock-expand-t`
+// (dock/morph.css). A pane swap seats `--dock-morph-t` at the collapsed 0 endpoint; HEAD's
+// `.expanded[data-morphing]` arm unconditionally derived `--dock-expand-t: var(--dock-morph-t)`,
+// so the box collapsed to the pill mid-swap (the paint-judge FAIL: 269→53.68px dip). The FIX
+// decouples the collapse/expand box scalar from the pane-swap crossfade:
+//   (CSS, morph.css) the `[data-morphing]` --dock-expand-t derivation arms are scoped
+//     `:not([data-pane-swap])`, so during a pane swap --dock-expand-t holds the static class
+//     endpoint (expanded → 1) and the box + chrome HOLD, while --dock-morph-t still glides.
+//   (TS, dockMorphContext) the orchestrator distinguishes the OUTER collapse/expand target
+//     (isOuter) from nested pane-swap targets and arms `data-pane-swap` ONLY on a nested swap
+//     (`ensureSpringRunning(!t.isOuter)`), clearing it on settle.
+function detectPaneSwapBoxHold(morphContextSrc, morphCssSrc) {
+    const ts = stripComments(morphContextSrc);
+    const css = stripComments(morphCssSrc);
+    const facts = {};
+
+    // (CSS) BOTH the expanded/always-expanded arm AND the collapsed arm — the ROOT
+    // class-qualified `--dock-expand-t` derivation arms (the box drivers) — carry the
+    // `:not([data-pane-swap])` guard.
+    const expandArmGuarded =
+        /\.glass-dock\.expanded\[data-morphing\]:not\(\[data-pane-swap\]\)/.test(
+            css,
+        ) &&
+        /\.glass-dock\.always-expanded\[data-morphing\]:not\(\[data-pane-swap\]\)/.test(
+            css,
+        );
+    const collapseArmGuarded =
+        /\.glass-dock\.collapsed\[data-morphing\]:not\(\[data-pane-swap\]\)/.test(
+            css,
+        );
+    // Anti-evasion: NO ROOT class-qualified `--dock-expand-t` derivation arm may be UNGUARDED
+    // (a bare `.glass-dock.expanded[data-morphing] { … }` re-introduces the collapse on a pane
+    // swap). Scans for `.glass-dock.{expanded|always-expanded|collapsed}[data-morphing]` NOT
+    // immediately followed by `:not([data-pane-swap])` at a selector boundary (`,` or `{`).
+    const noUnguardedDerivation =
+        !/\.glass-dock\.(?:always-expanded|expanded|collapsed)\[data-morphing\](?!:not\(\[data-pane-swap\]\))\s*(?:,|\{)/.test(
+            css,
+        );
+    facts.expandArmGuarded = expandArmGuarded;
+    facts.collapseArmGuarded = collapseArmGuarded;
+    facts.noUnguardedDerivation = noUnguardedDerivation;
+
+    // (TS) the orchestrator distinguishes outer vs nested (`isOuter`), passes the box-hold
+    // flag off it (`ensureSpringRunning(!t.isOuter)`), SETS `data-pane-swap` on the nested
+    // swap, and CLEARS it (on the outer arm + settle). The flag is CONDITIONAL on isOuter —
+    // a hardcoded unconditional set would break the outer collapse/expand.
+    const hasIsOuter = /\bisOuter\b/.test(ts);
+    const swapPassesFlag = /ensureSpringRunning\(\s*!\s*\w+\.isOuter\s*\)/.test(ts);
+    const setsPaneSwap = /setAttribute\(\s*["']data-pane-swap["']/.test(ts);
+    const clearsPaneSwap = /removeAttribute\(\s*["']data-pane-swap["']/.test(ts);
+    facts.hasIsOuter = hasIsOuter;
+    facts.swapPassesFlag = swapPassesFlag;
+    facts.setsPaneSwap = setsPaneSwap;
+    facts.clearsPaneSwap = clearsPaneSwap;
+
+    return {
+        ok:
+            expandArmGuarded &&
+            collapseArmGuarded &&
+            noUnguardedDerivation &&
+            hasIsOuter &&
+            swapPassesFlag &&
+            setsPaneSwap &&
+            clearsPaneSwap,
+        facts,
+    };
+}
+
 // overrides: { silhouetteExists?, testExists?, gateScriptExists?, manifestSrc?,
 //              packageSrc?, dockCorpus?, constantsSrc?, dockContextExists?,
-//              shapeSrc?, morphContextSrc?, layerGroupVueSrc?, layerTransitionTsSrc? }.
+//              shapeSrc?, morphContextSrc?, layerGroupVueSrc?, layerTransitionTsSrc?,
+//              morphCssSrc? }.
 function detect(overrides = {}) {
     const violations = [];
     const facts = {};
@@ -621,6 +701,7 @@ function detect(overrides = {}) {
         overrides.layerGroupVueSrc ?? read(DOCK_LAYER_GROUP_VUE);
     const layerTransitionTsSrc =
         overrides.layerTransitionTsSrc ?? read(USE_LAYER_TRANSITION_TS);
+    const morphCssSrc = overrides.morphCssSrc ?? read(DOCK_MORPH_CSS);
 
     // ── D1 — SILHOUETTE-COMPOSABLE-ABSENT ──
     facts.silhouetteExists = silhouetteExists;
@@ -725,6 +806,14 @@ function detect(overrides = {}) {
         boxFlip.ok,
     );
 
+    // ── P4 — PANE-OVERLAP: a NESTED pane swap HOLDS the plate box (F3.R2 fix) ──
+    const boxHold = detectPaneSwapBoxHold(morphContextSrc, morphCssSrc);
+    facts.paneSwapBoxHold = boxHold.facts;
+    assert(
+        "P4 — a NESTED DockLayerGroup pane swap HOLDS the plate box (never collapses to the pill): dock/morph.css scopes the `--dock-expand-t` derivation arms `:not([data-pane-swap])` (expanded/always-expanded/collapsed all guarded, none unguarded), and dockMorphContext distinguishes the outer collapse/expand target (isOuter) from a nested pane-swap target, arming `data-pane-swap` ONLY on the nested swap (`ensureSpringRunning(!t.isOuter)`) + clearing it on settle — so the box + chrome hold the expanded endpoint while `--dock-morph-t` still glides the crossfade",
+        boxHold.ok,
+    );
+
     return { facts, violations };
 }
 
@@ -794,13 +883,15 @@ function selfTest() {
 }`;
     // A clean synthetic orchestrator: maybeSettleRoot drops the attrs BEFORE the scalar
     // (the G2-GREEN reference) AND onFrame drops the morph state at the scalar's arrival
-    // `tValue >= 1` via the shared settleAll (the G3-GREEN reference).
+    // `tValue >= 1` via the shared settleAll (the G3-GREEN reference). The P4-GREEN
+    // reference: the nested-vs-outer isOuter distinction + the `data-pane-swap` box-HOLD.
     const CLEAN_MORPH_CONTEXT = `
     function maybeSettleRoot() {
         const r = root();
         if (r) {
             r.removeAttribute("data-morphing");
             r.removeAttribute("data-punching");
+            r.removeAttribute("data-pane-swap");
             r.style.removeProperty("--dock-morph-t");
         }
         dockSpring.dispose();
@@ -809,7 +900,16 @@ function selfTest() {
         for (const tt of targets) settleTarget(tt);
         maybeSettleRoot();
     }
-    function ensureSpringRunning() {
+    function ensureSpringRunning(paneSwap = false) {
+        const r = root();
+        if (!r) return;
+        r.setAttribute("data-morphing", "");
+        if (paneSwap) {
+            r.setAttribute("data-pane-swap", "");
+        } else {
+            r.removeAttribute("data-pane-swap");
+            r.setAttribute("data-punching", "");
+        }
         dockSpring.playTo(0, 1, {
             onFrame: (tValue) => {
                 const rr = root();
@@ -826,7 +926,13 @@ function selfTest() {
                 settleAll();
             },
         });
-    }`;
+    }
+    function onSwap(t, newLayer, oldLayer) {
+        t.leavingLayer.value = oldLayer;
+        t.currentLayer.value = newLayer;
+        ensureSpringRunning(!t.isOuter);
+    }
+    const outerTarget = addTarget({ containerEl: outerEl }, true);`;
     // A clean synthetic DockLayerGroup.vue `<style>` — the overlapped crossfade (P1/P2) +
     // the standalone-stack content-rigid clip-reveal box (P3 CSS half). The P1/P2-GREEN
     // reference.
@@ -868,6 +974,28 @@ function selfTest() {
             el.style.setProperty("--dock-stack-reveal", reveal + "");
         });
     }`;
+    // A clean synthetic dock/morph.css — the `--dock-expand-t` derivation arms scoped
+    // `:not([data-pane-swap])` (the P4-GREEN reference; the box HOLDS during a pane swap).
+    const CLEAN_MORPH_CSS = `
+@layer components {
+    .glass-dock.expanded,
+    .glass-dock.always-expanded {
+        --dock-expand-t: 1;
+    }
+    .glass-dock.collapsed {
+        --dock-expand-t: 0;
+    }
+    .glass-dock.expanded[data-morphing]:not([data-pane-swap]),
+    .glass-dock.always-expanded[data-morphing]:not([data-pane-swap]) {
+        --dock-expand-t: var(--dock-morph-t);
+    }
+    .glass-dock.collapsed[data-morphing]:not([data-pane-swap]) {
+        --dock-expand-t: calc(1 - var(--dock-morph-t));
+    }
+    .glass-dock[data-morphing] .dock-layer-stack {
+        --dock-expand-t: var(--dock-morph-t);
+    }
+}`;
     const base = {
         silhouetteExists: false,
         testExists: false,
@@ -881,6 +1009,7 @@ function selfTest() {
         morphContextSrc: CLEAN_MORPH_CONTEXT,
         layerGroupVueSrc: CLEAN_LAYER_GROUP_VUE,
         layerTransitionTsSrc: CLEAN_LAYER_TRANSITION,
+        morphCssSrc: CLEAN_MORPH_CSS,
     };
 
     // Sanity: the clean synthetic baseline is fully GREEN (no confound).
@@ -1372,6 +1501,117 @@ function selfTest() {
         "P3 engine drives reveal off an un-clamped t (overshoot inflates past max, non-monotonic) reds",
     );
 
+    // ── P4 — the NESTED box-HOLD bites (BG.W-DOCK-PANE-OVERLAP F3.R2, box axis) ──
+    // P4: the HEAD morph.css — the `.expanded[data-morphing]` derivation arm is UNGUARDED (no
+    // `:not([data-pane-swap])`), so a pane swap drives `--dock-expand-t: var(--dock-morph-t)`
+    // (starts at 0) and the box collapses to the pill — the paint-judge FAIL premise.
+    sab(
+        {
+            ...base,
+            morphCssSrc: `
+@layer components {
+    .glass-dock.expanded,
+    .glass-dock.always-expanded { --dock-expand-t: 1; }
+    .glass-dock.collapsed { --dock-expand-t: 0; }
+    .glass-dock.expanded[data-morphing],
+    .glass-dock.always-expanded[data-morphing] {
+        --dock-expand-t: var(--dock-morph-t);
+    }
+    .glass-dock.collapsed[data-morphing] {
+        --dock-expand-t: calc(1 - var(--dock-morph-t));
+    }
+}`,
+        },
+        "P4",
+        "P4 HEAD morph.css (--dock-expand-t derivation arm unguarded, box collapses on a pane swap) reds",
+    );
+    // P4: the HEAD orchestrator — no isOuter distinction, no data-pane-swap; every swap seats
+    // the box scalar at the collapsed 0 endpoint (the box collapses on a nested pane swap).
+    sab(
+        {
+            ...base,
+            morphContextSrc: `
+    function maybeSettleRoot() {
+        const r = root();
+        if (r) {
+            r.removeAttribute("data-morphing");
+            r.removeAttribute("data-punching");
+            r.style.removeProperty("--dock-morph-t");
+        }
+        dockSpring.dispose();
+    }
+    function ensureSpringRunning() {
+        const r = root();
+        if (!r) return;
+        r.setAttribute("data-morphing", "");
+        r.setAttribute("data-punching", "");
+        dockSpring.playTo(0, 1, {});
+    }
+    function onSwap(t, newLayer, oldLayer) {
+        t.currentLayer.value = newLayer;
+        ensureSpringRunning();
+    }
+    const outerTarget = addTarget({ containerEl: outerEl });`,
+        },
+        "P4",
+        "P4 HEAD orchestrator (no isOuter, no data-pane-swap — every swap collapses the box) reds",
+    );
+    // P4: the orchestrator writes data-pane-swap UNCONDITIONALLY (not off isOuter) — the flag
+    // must be derived from isOuter, else the OUTER collapse/expand box morph is broken (the box
+    // would HOLD and never collapse). A hardcoded set fails the `ensureSpringRunning(!t.isOuter)`
+    // conditional check.
+    sab(
+        {
+            ...base,
+            morphContextSrc: `
+    function maybeSettleRoot() {
+        const r = root();
+        if (r) {
+            r.removeAttribute("data-morphing");
+            r.removeAttribute("data-punching");
+            r.removeAttribute("data-pane-swap");
+            r.style.removeProperty("--dock-morph-t");
+        }
+        dockSpring.dispose();
+    }
+    function ensureSpringRunning() {
+        const r = root();
+        if (!r) return;
+        r.setAttribute("data-morphing", "");
+        r.setAttribute("data-pane-swap", "");
+        dockSpring.playTo(0, 1, {});
+    }
+    function onSwap(t, newLayer, oldLayer) {
+        t.currentLayer.value = newLayer;
+        ensureSpringRunning();
+    }
+    const outerTarget = addTarget({ containerEl: outerEl });`,
+        },
+        "P4",
+        "P4 orchestrator sets data-pane-swap unconditionally (not off isOuter — breaks the outer collapse/expand) reds",
+    );
+    // P4: only the EXPANDED arm guarded, the COLLAPSED arm left UNGUARDED — proves per-arm
+    // coverage (a half-guard still lets a collapsed-dock pane swap read the collapse endpoint).
+    sab(
+        {
+            ...base,
+            morphCssSrc: `
+@layer components {
+    .glass-dock.expanded, .glass-dock.always-expanded { --dock-expand-t: 1; }
+    .glass-dock.collapsed { --dock-expand-t: 0; }
+    .glass-dock.expanded[data-morphing]:not([data-pane-swap]),
+    .glass-dock.always-expanded[data-morphing]:not([data-pane-swap]) {
+        --dock-expand-t: var(--dock-morph-t);
+    }
+    .glass-dock.collapsed[data-morphing] {
+        --dock-expand-t: calc(1 - var(--dock-morph-t));
+    }
+}`,
+        },
+        "P4",
+        "P4 the collapsed derivation arm left unguarded (half-guard, per-arm coverage) reds",
+    );
+
     return flagged;
 }
 
@@ -1428,7 +1668,10 @@ function run() {
         `  P3 box FLIP monotonic (rigid)   : ${violations.every((v) => !v.startsWith("P3"))} (clip=${facts.boxFlipMonotonic?.clipReveal}, reserveMax=${facts.boxFlipMonotonic?.reservesMax}, clamped=${facts.boxFlipMonotonic?.clampedReveal})`,
     );
     console.log(
-        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×3 + D3-fence×2 + D4×2 + D4-fence + D5×2 + G1×6 + G4 + G2 + G3 + P1×2 + P2×2 + P3×3)`,
+        `  P4 nested pane swap HOLDS box   : ${violations.every((v) => !v.startsWith("P4"))} (cssGuarded=${facts.paneSwapBoxHold?.expandArmGuarded && facts.paneSwapBoxHold?.collapseArmGuarded && facts.paneSwapBoxHold?.noUnguardedDerivation}, isOuter=${facts.paneSwapBoxHold?.hasIsOuter}, swapFlag=${facts.paneSwapBoxHold?.swapPassesFlag}, paneSwapAttr=${facts.paneSwapBoxHold?.setsPaneSwap && facts.paneSwapBoxHold?.clearsPaneSwap})`,
+    );
+    console.log(
+        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×3 + D3-fence×2 + D4×2 + D4-fence + D5×2 + G1×6 + G4 + G2 + G3 + P1×2 + P2×2 + P3×3 + P4×4)`,
     );
 
     if (violations.length) {
