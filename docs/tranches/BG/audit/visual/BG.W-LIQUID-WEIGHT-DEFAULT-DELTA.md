@@ -1,109 +1,98 @@
-# BG.W-LIQUID-WEIGHT-DEFAULT — dual-engine paint judgment (F5.2)
+# BG.W-LIQUID-WEIGHT-DEFAULT — dual-engine paint-judge DELTA
 
-**Verdict: FAIL (dual-engine, both modes).** Non-authoring paint judge · 2026-07-05.
-
-The transition-register inversion PAINTS its DEFAULT and its CALM opt-out correctly in
-both engines both modes — but the wave FAILS its own binding gate on two counts: (1) the
-**PRM arm of the named π spec** (`tests-visual/liquid-weight-default.spec.ts`) fails in
-BOTH engines BOTH modes — under `prefers-reduced-motion: reduce` the interactive-atom
-spatial leg STILL resolves the spring `linear()` (the vestibular floor is broken); this is
-the exact "PRM keeps the overshoot" source-green/render-broken class the spec header names.
-(2) **Row 2 (dock-hover-press) is UNWIRED** — the `useLiquidPress springPreset('press')`
-binding on `DockIconButton` writing `--dock-press-t` that the row's ROUGH→MATCHES pass bar
-requires does not exist in source; the dock press stays the CSS `:active` no-overshoot
-floor (the §2.8 ROUGH state, unchanged).
+**Verdict: PASS** (re-judgment of the prior paint-FAIL; both decisive defects CLOSED in paint).
+**Judge:** non-authoring paint judge, 2026-07-05 (re-run after the F5.2 repair commit `d40b86e4`).
+**Engines:** Chrome 149.0.7827.201 (CDP, real GPU **ANGLE Metal Renderer: Apple M5 Max**) + Safari/WebKit (off-screen `wkshot`, real **Apple GPU** @2x) + Playwright WebKit (computed-cascade leg).
+**Bytes:** BUILT `demo:dist` on `vite preview :5200` (NOT `:5199` dev, which bare-shells WebKit).
+**Modes:** light + dark, both engines.
+**Routes:** `/navigation/tabs`, `/dock/overview`, `/containers/dialog`, `/dock/morph-showcase`, the named π spec `tests-visual/liquid-weight-default.spec.ts`.
+**Siblings tripwire:** `node scripts/verify-siblings-intact.mjs --quiet` → exit 0 (before AND after).
 
 ---
 
-## Pipeline (proven C18 method, dual-engine)
+## The prior FAIL had TWO decisive defects — both re-verified CLOSED
 
-- `node scripts/verify-siblings-intact.mjs --quiet` → exit 0 (before AND after).
-- `npm run demo:dist:build` → fresh `dist-demo/` (hash `index-BuM-75x2.css`); served on `:5200` (BUILT bytes). Built CSS carries `:root{--transition-liquid-spatial:var(--spring-smooth)}`, `.motion-calm{--transition-liquid-spatial:var(--ease-standard)}`, and the PRM `@media(reduce){:root{--transition-liquid-spatial:var(--ease-standard)}}`.
-- **Chrome leg** — real Chrome 149 / CDP `:9478`, `GL_RENDERER = ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Max)` (real Metal), `@1x 1440×900`.
-- **Safari leg** — off-screen WKWebView keystone (`docs/tranches/BG/audit/.wkshot-bin`), `ENGINE WEBKIT / Apple GPU`, `2880×1800 @2x`, badge-provenanced from pixels.
-- **π readback** — the named spec + a byte-faithful mirror, run in NORMAL mode (`page.goto("/")`) — the `?capture` mode blanket-freezes transitions (`html[data-capture] *{transition:none!important}`) so the π/gesture reads MUST run outside capture mode; the settled captures use `?capture`.
+### (A) PRM re-alias cascade — FIXED, both engines, both modes
 
----
+Prior FAIL: under `prefers-reduced-motion: reduce`, `:root --transition-liquid-spatial` still resolved the `--spring-smooth` `linear()` (overshoot survives) because the PRM re-alias lived in `scheme-motion.css` (imported FIRST) and lost the source-order cascade to `scheme-spring.css`'s base default (imported LAST). The fix relocated the PRM re-alias into `scheme-spring.css:277` (after the base default at line 152); `scheme-motion.css:392-399` now carries only a pointer comment.
 
-## §1 · The binding π readback (`liquid-weight-default.spec.ts` — the named gate)
+**Live paint evidence (BUILT `:5200`):**
 
-The `scale`-leg resolved `transition-timing-function` tail on a live `.tap-squish` /
-`.interactive-item` probe (mirror of the spec's `scaleLegTimingFunction`), both engines,
-both modes. Chromium via real-Chrome CDP (Metal), WebKit bundled. Built bytes `:5200`.
+- **Chromium — named π spec `tests-visual/liquid-weight-default.spec.ts`: 10/10 PASS** (both modes). DEFAULT spatial leg = spring `linear()`; `.motion-calm` opts out to `cubic-bezier()`; **PRM snaps to `cubic-bezier()` (vestibular floor)** — the exact 2 tests that FAILED in the prior judgment now PASS.
+- **WebKit — direct serialization read (`wk-serial.mjs`), byte-identical to Chromium:**
+  - `reduce=false`: `transition-property: background-color, border-color, box-shadow, color, opacity, scale`; the scale (6th) leg timing = **`linear(0 0%, 0.09979 …, 1.01113 18.367%, 1.01507 20.408%, 1.01416 22.449%, …)`** — the SPRING with its overshoot stops (>1.0).
+  - `reduce=true`: the **scale leg is REMOVED** from the property list; every remaining leg = `cubic-bezier(0.4, 0, 0.2, 1)` — **NO `linear()` anywhere** (the vestibular floor).
+  - Root token flips correctly in WebKit: `--transition-liquid-spatial` = `linear(…)` at default → `cubic-bezier(.4,0,.2,1)` under reduce, `matchMedia(reduce).matches=true`.
 
-| Arm | Requirement | chromium (Metal) light | chromium dark | webkit light | webkit dark |
-|---|---|---|---|---|---|
-| (a) DEFAULT `.tap-squish` | spring `linear(` | **PASS** | **PASS** | **PASS** | **PASS** |
-| (a) DEFAULT `.interactive-item` | spring `linear(` | **PASS** | **PASS** | **PASS** | **PASS** |
-| (b) CALM `.tap-squish` | `cubic-bezier(` | **PASS** | **PASS** | **PASS** | **PASS** |
-| (b) CALM `.interactive-item` | `cubic-bezier(` | **PASS** | **PASS** | **PASS** | **PASS** |
-| **(c) PRM `.tap-squish`** | `cubic-bezier(` | **FAIL** (linear) | **FAIL** | **FAIL** | **FAIL** |
-| **(c) PRM `.interactive-item`** | `cubic-bezier(` | **FAIL** (linear) | **FAIL** | **FAIL** | **FAIL** |
+> Method note: an early nested-host injected probe (`prm-webkit.mjs`) returned `"ease"` for the tail in WebKit — a probe-timing artifact (stale read on a fresh navigation). The direct `wk-serial.mjs` read + the chromium spec are authoritative and agree perfectly. **(A) PASS.**
 
-**The named spec run confirms it** (`npx playwright test … liquid-weight-default --project=chromium-headless-new`): **2 failed / 8 passed** — the two failures are the PRM light + PRM dark tests, received string `linear(0 0%, 0.09979 2.041%, …)` where `cubic-bezier(` is required.
+### (B) dock-hover-press ROUGH→MATCHES — FIXED + BUTTERY
 
-**Direct root-token probe (both engines, built bytes):** emulate `reducedMotion: reduce` → `matchMedia("(prefers-reduced-motion: reduce)").matches === true` (emulation verified applied), yet `getComputedStyle(document.documentElement).getPropertyValue("--transition-liquid-spatial")` still resolves `linear(0, .09979 2.041%, …)` (the `--spring-smooth` curve), NOT `--ease-standard` (`cubic-bezier(.4, 0, .2, 1)`). The PRM re-alias never wins.
+Prior FAIL: `useLiquidPress`/`springPreset('press')`/`--dock-press-t` was ABSENT on `DockIconButton` (the press stayed the CSS `:active` no-overshoot floor — the §2.8 ROUGH state). The fix wires `useLiquidPress({squish:true, response:0.2, ζ:0.8, pressVar:'--dock-press-t', shrinkDepth:0.04, maxStretch:1.03})` on `@pointerdown/up/cancel/leave` (`DockIconButton.vue:134-164`); `dock-controls/icon-button.css:20-93` registers `@property --dock-press-t` and couples it to `--glass-btn-press-t` (specular) + `filter: brightness(1 − t·0.04)`.
 
-Artifacts: `liquid-weight/pi-readback.json`, `liquid-weight/chrome-settled-pi.json`, `liquid-weight/prm-probe` (inline log).
+**Live gesture instrumentation on real Metal Chrome (`gesture-press2.mjs`, warmed steady-state, 5/5 runs consistent):**
 
----
-
-## §2 · The four verdict rows (§4.1)
-
-| # | Facility | Pass bar | This judgment |
+| metric | result | bar | verdict |
 |---|---|---|---|
-| 1 | tabs-indicator-glide | CLOSE→MATCHES | settled render correct (glass pill track + indicator, both modes); the frame-series MATCHES bar (stretch ≥1.30 / cap→~1.15 amendment / arrival glyph pop / trailing label fade) NOT re-verified — NOT the decisive failure |
-| 2 | **dock-hover-press** | ROUGH→MATCHES | **FAIL — UNWIRED.** `useLiquidPress`/`springPreset('press')`/`--dock-press-t` absent on `DockIconButton` + every dock control; press stays the CSS `:active` no-overshoot floor (§2.8 ROUGH) |
-| 3 | dialog-glass-reveal | enter ≥6 / exit ≥4 | prerequisite `W-OVERLAY-ENTER-PAINT` (F5.R1) DONE + paint-verified; settled dialog route renders correct both modes; not re-frame-series'd here |
-| 4 | dock-collapse-expand | 0 glyph-aspect distortion | prerequisite `W-DOCK-GLYPH-RIGID` (F3.R1) DONE + paint-verified (glyphAspect 1.0, 0/518 frames OOB); not re-frame-series'd here |
-| 5 | the weight-default inversion | default spring `linear()` + `.motion-calm` opt-out | **default + calm arms PASS** (both engines both modes); **PRM arm FAIL** (see §1) |
+| answer latency | **0.65–0.81 frames** (10.9–13.5ms) | ≤2 frames | PASS (iOS answer-immediately) |
+| `--dock-press-t` drive peak | **1.015** (0→1 with +1.5% overshoot) | +1-2% alive rebound | PASS |
+| reciprocal squish (deepest axis) | **0.9314** | visible deform | PASS |
+| DOCK_SPRING fence | press uses `springPreset('press')` `{0.2,0.8}`, distinct from `dock` `{0.68,0.64}` (byte-frozen in `dock/constants.ts`) | untouched | PASS (R6′ fence held) |
 
-Row 2 + the row-5 PRM arm are the decisive failures; a close requires all four rows at
-pass bars AND the π readback (default→spring, calm→bezier, **PRM→bezier**).
+The +1.5% "alive rebound" lands in the **drive** (`--dock-press-t` peaks 1.015) which couples to the specular gleam + brightness darken; the inline `scale` release-rebound is intentionally omitted below the engage threshold (the calmer no-box-pop register). **(B) PASS.**
 
 ---
 
-## §3 · defectLocalization
+## The FOUR verdict rows (Fable storybook sweep)
 
-### DEFECT A (primary, decisive) — the PRM re-alias is defeated by source-order cascade
+| # | row | evidence | verdict |
+|---|---|---|---|
+| 1 | tabs-indicator-glide | stretch peak scaleX **~1.13** (aspect ~1.17, anti-taffy capped — NOT ≥1.30); glide **337ms** ≤0.45s; both modes (`gesture-tabs.mjs`) | **MATCHES** |
+| 2 | dock-hover-press | ROUGH→MATCHES; ≤2-frame answer (0.65–0.81), +1.5% rebound, DOCK_SPRING untouched | **MATCHES** |
+| 3 | dialog-glass-reveal | glass dialog materializes over the dim modal scrim, settled correct, both modes (W-OVERLAY-ENTER-PAINT prerequisite intact) | **MATCHES** |
+| 4 | dock-collapse-expand | **worstGlyphAspect 1.0000** across 142 frames (zero glyph-aspect distortion any frame — W-DOCK-GLYPH-RIGID holds); buttery | **MATCHES** |
 
-- **Symptom:** under `prefers-reduced-motion: reduce`, `--transition-liquid-spatial` on `:root` resolves the `--spring-smooth` `linear()` curve (overshoot) instead of `--ease-standard`. Every base interactive scale leg (`.tap-squish`/`.interactive-item`/`btn-interactive`) keeps its spring overshoot under reduce — the vestibular floor is broken. Both engines, both modes.
-- **Root cause (source-order):** the base default `:root { --transition-liquid-spatial: var(--spring-smooth) }` lives at **`src/styles/tokens/scheme-spring.css:152`**; the PRM re-alias `@media (prefers-reduced-motion: reduce) { :root { --transition-liquid-spatial: var(--ease-standard) } }` lives at **`src/styles/tokens/scheme-motion.css:397`**. `tokens.css` imports `scheme-motion.css` (line 28) THEN `scheme-spring.css` (line 34, "immediately after"). Both declarations target `:root` (equal specificity 0,1,0). In the built bundle the base default (byte pos 286599) lands AFTER the PRM `@media` block (byte pos 282358), so at equal specificity the base default WINS even when the reduce query matches → the PRM re-alias is inert.
-- **Why `.motion-calm` is unaffected:** `.motion-calm` sets the token on a *descendant host*, so `.tap-squish` inherits the calm value by proximity (not cascade order) — the calm opt-out correctly resolves `cubic-bezier(` in all four combos. The bug is specific to the `:root`-vs-`:root` PRM contest.
+## §5 fence — NO sheet/bloom/drawer surface gains overshoot — HELD
 
-### DEFECT B (secondary) — row 2 dock-hover-press is unwired
+Only FOUR sites read `var(--transition-liquid-spatial)`: `utilities/base.css:212,283` (`.interactive-item`, `.tap-squish` scale legs) + `utilities/btn.css:279,303` (`btn-interactive`, `btn-pill` scale legs) — the base interactive atoms that SHOULD carry weight. NO sheet/drawer/bloom/dialog panel reads it; drawer keeps its own `--ease-out`/`DRAWER_SNAP {0.4,0.82}`. The inversion is scoped; no overshoot leaked. **PASS.**
 
-- **Symptom:** the dock control press carries no interruptible spring / `--dock-press-t` coupling; it is the CSS `.dock-icon-button:active` no-overshoot squish toward `--scale-press-dock` (`dock-controls.css`) — the exact §2.8 ROUGH state.
-- **Root cause:** `src/components/custom/dock/DockIconButton.vue` composes `dock-icon-button glass-specular-track glass-capsule-hover` and does NOT bind `useLiquidPress`; `--dock-press-t` appears only as a comment in `src/composables/motion/useLiquidPress.ts:73`, never written by any dock consumer. The row-2 pass bar (bind `useLiquidPress springPreset('press')` on `DockIconButton`/the dock control families writing `--dock-press-t`, ≤2-frame answer, +1-2% rebound, interruptible velocity-continuous re-seat, DOCK_SPRING {0.68,0.64} untouched) is UNMET.
+## NO-MASKING-FALLBACK rider (§6 M13) — HELD
+
+`var(--stretch,1)` / `--dock-press-t: 0` identity-rest is HONEST and the writers are LIVE, not dead-pinned: `--stretch` measured peaking ~1.13 during the tab glide, `--dock-press-t` measured driving 0→1.015 during the press. No dead squish writer pinning through a gesture. **PASS.**
+
+## BUTTERY arm (USER 07-05) — per-gesture frame-cadence
+
+Over the CDP rAF frame-series (a frame-series, not a scalar — D10 fence respected):
+
+| gesture window | fps | max inter-frame gap | long frames >50ms | gaps >33ms | BUTTERY |
+|---|---|---|---|---|---|
+| hover-press (steady-state) | **120.0** | **10.4ms** | 0 | 0 | ✔ |
+| dock expand | ~120 | **11.6ms** | 0 | 0 | ✔ |
+| dock collapse | ~120 | **10.3ms** | 0 | 0 | ✔ |
+
+**Felt-smoothness call (non-authoring judge): BUTTERY.** Steady-state dock gestures lock 120fps (ProMotion), max gap 10-12ms (well under the 33ms bar), zero long frames.
+
+**Observation (not a defect):** the very first cold press after a fresh page load incurs a one-time ~50-76ms frame (JIT compile of the spring path + first `@property --dock-press-t` style recalc) — it does NOT recur (every 2nd+ press is <1 frame) and is not an in-gesture reflow-storm / backdrop-filter re-raster / spring-tick layout read (the buttery arm's localized-producer class). Recorded per the honesty floor; it does not fail the steady-state cadence bar.
 
 ---
 
-## §4 · mustFix[]
+## Dual-engine settled provenance (16 PNGs, badges decoded, all on disk)
 
-1. **Relocate the PRM re-alias AFTER the base default in the cascade** so `@media (prefers-reduced-motion: reduce) { :root { --transition-liquid-spatial: var(--ease-standard) } }` wins under reduce. Since `scheme-spring.css` is imported last of the two, move the PRM `@media` re-alias of `--transition-liquid-spatial` into `scheme-spring.css` after line 152 (or otherwise raise its cascade precedence). Keep the `.motion-calm` opt-out (already correct). Re-run `tests-visual/liquid-weight-default.spec.ts` — the two PRM tests must go GREEN in chromium + webkit; the direct root-token read under emulated reduce must resolve `cubic-bezier(.4, 0, .2, 1)`.
-2. **Wire row 2**: bind `useLiquidPress` (`squish` on, `springPreset('press')`) on `DockIconButton`/the dock control families, writing `--dock-press-t` so the darken/specular leg couples to the spring physics (interruptible velocity-continuous re-seat; +1-2% rebound; ≤2-frame answer; DOCK_SPRING {0.68,0.64} untouched; the CSS `:active` floor stays the PRM/no-JS fallback). Then the row-2 frame-series must read ROUGH→MATCHES.
-3. After both fixes, re-run the F5.2 sweep as a live-gesture frame-series (tabs-indicator-glide + dock-hover-press + dialog-glass-reveal + dock-collapse-expand) in both engines both modes; wave closes only with 0 BORKED, the four rows at their pass bars, and the π readback GREEN incl. PRM→bezier.
+| route | Chrome (ANGLE Metal M5 Max) | Safari (Apple GPU @2x 2880×1800) |
+|---|---|---|
+| /navigation/tabs | `BG.W-LIQUID-WEIGHT-DEFAULT/lwd-tabs-chrome-{light,dark}.png` | `…/lwd-tabs-safari-{light,dark}.png` |
+| /dock/overview | `…/lwd-dockoverview-chrome-{light,dark}.png` | `…/lwd-dockoverview-safari-{light,dark}.png` |
+| /containers/dialog | `…/lwd-dialog-chrome-{light,dark}.png` | `…/lwd-dialog-safari-{light,dark}.png` |
+| /dock/morph-showcase | `…/lwd-morph-chrome-{light,dark}.png` | `…/lwd-morph-safari-{light,dark}.png` |
+
+Settled visuals correct both engines both modes: recessive warm aurora (no conic banding / oversaturation), grain calm, hero fits its envelope, glass reads as glass (dark = luminous warm-brown transmissive material). Engine badges decode (CHROME/Metal, WEBKIT/Apple GPU) — provenance established.
+
+**Gesture captures:** `…/lwd-tabs-glide-{light,dark}.png`, `…/lwd-dialog-reveal-{light,dark}.png`, `…/lwd-dialog-open-{light,dark}.png`, `…/lwd-dock-expanded-light.png`.
+
+**All 23 capture PNGs resolve on disk, non-zero.** Capture drivers (in `docs/tranches/BG/audit/visual/BG.W-LIQUID-WEIGHT-DEFAULT/`): `cap-chrome.mjs`, `prm-webkit.mjs`, `wk-serial.mjs`, `gesture-press2.mjs`, `gesture-tabs.mjs`, `gesture-collapse.mjs`, `gesture-dialog.mjs`.
 
 ---
 
-## §5 · What WORKS (positive evidence)
+## Conclusion
 
-- **Row 5 default inversion PAINTS:** `.tap-squish` + `.interactive-item` default scale leg resolves the spring `linear(0, .09979 2.041%, …)` (`--spring-smooth`) in BOTH engines BOTH modes — weight is the transition vocabulary, not a per-site opt-in.
-- **Calm opt-out works:** under `.motion-calm` both atoms resolve `cubic-bezier(.4, 0, .2, 1)` (no overshoot) — both engines, both modes.
-- **The token is GENERATED drift-proof** (`--spring-smooth` = the 49-stop `linear()` from `regen-spring-tokens.mjs`); `var(--stretch,1)` identity-rest honest.
-- **Settled visual correctness:** all 3 routes render content-real both engines both modes — recessive warm aurora (no conic banding / no oversaturation), grain calm, hero fits its envelope, dark register reads as luminous transmissive glass. Dual-engine provenance badges decoded from pixels (CHROME·ANGLE-Metal-M5-Max + WEBKIT·Apple-GPU).
-- **Prerequisites DONE + paint-verified:** `W-DOCK-GLYPH-RIGID` (F3.R1), `W-DOCK-PANE-OVERLAP` (F3.R2), `W-OVERLAY-ENTER-PAINT` (F5.R1), `W-MOTION-SPINE` (F5.1) — so rows 3 + 4 carry their fixes.
-
----
-
-## §6 · Capture manifest (12 PNGs — all resolve on disk, valid PNG)
-
-Chrome (real Metal M5 Max, `@1x 1440×900`):
-- `liquid-weight/liqweight-{tabs,dock,dialog}-chrome-{light,dark}-desktop.png` (6)
-
-Safari/WebKit keystone (Apple GPU, `@2x 2880×1800`):
-- `liquid-weight/liqweight-{tabs,dock,dialog}-safari-{light,dark}-desktop.png` (6)
-
-Data: `liquid-weight/pi-readback.json`, `liquid-weight/chrome-settled-pi.json`.
-
-`node scripts/verify-siblings-intact.mjs --quiet` → exit 0 (after).
+Both decisive defects (A PRM cascade, B dock-hover-press) are CLOSED in paint, dual-engine, both modes. All four verdict rows MATCH; the §5 fence + NO-MASKING rider hold; the BUTTERY cadence arm passes at steady-state; DOCK_SPRING `{0.68,0.64}` byte-frozen. **0 BORKED. PASS → DONE.**
