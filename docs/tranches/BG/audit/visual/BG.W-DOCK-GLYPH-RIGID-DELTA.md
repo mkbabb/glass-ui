@@ -1,69 +1,73 @@
 # BG.W-DOCK-GLYPH-RIGID — PAINT JUDGE DELTA
 
-**Verdict: FAIL** (dual-engine, both modes) — the F3.R1 "full-inverse" repair does NOT
-paint. The +48.84% mid-morph glyph stretch the wave exists to remove is STILL present.
-**Judge:** non-authoring paint judge (did not build the wave), re-verification #2 of the
-integrated F3.R1 paint-repair.
+**Verdict: PASS** (dual-engine, both modes) — the F3.R1 rigid-content contract now
+PAINTS. The `@property --dock-punch-stretch` `inherits: false → true` fix landed and the
++48.84% mid-morph glyph stretch is GONE: per-frame glyph aspect is **1.0 on EVERY frame
+including the `[data-punching]` overshoot**, both engines, both modes.
+**Judge:** non-authoring paint judge (did not build the wave) — re-verification #3 of the
+integrated F3.R1 paint-repair, against the CURRENT `inherits: true` source.
 **Route:** `/dock/overview` — the GlassDock collapse↔expand rigid-glyph series.
-**Engines:** Chrome ANGLE-Metal (Apple M5 Max, Chrome 149.0.7827.201) + WebKit 26.4
-(Playwright, the Safari engine) + Safari system-WebKit keystone (Apple GPU, Metal).
+**Engines:** Chrome ANGLE-Metal (Apple M5 Max, Chrome 149.0.7827.201, CDP :9222) + WebKit
+26.4 (Playwright, the Safari engine) + Safari system-WebKit off-screen keystone (Apple GPU,
+Metal, no Screen-Recording TCC).
 **Modes:** light + dark. **Viewport:** 1440×900 @2x (2880×1800 px).
-**Build:** `npm run demo:dist:build` fresh bytes (`dist-demo/assets/index-DoZc2I_S.css`
-carries the F3.R1 FULL-inverse rule text), served `vite preview :5200`.
+**Build:** `npm run demo:dist:build` fresh bytes — served CSS
+`dist-demo/assets/index-BONjF1-O.css` carries
+`@property --dock-punch-stretch{syntax:"<number>";inherits:true;initial-value:1}` — served
+`vite preview :5200` (BUILT bytes, not the `:5199` dev shell).
 **Date:** 2026-07-04.
 
 ---
 
-## 0. Headline — the integrated fix is INERT in paint
+## 0. Headline — the fix is REAL in paint (contrast with the prior FAIL)
 
-The F3.R1 repair upgraded the content counter-scale from a size-only inverse to a claimed
-FULL morph-axis inverse (`shape.css`: content morph-axis `scale: 1/(max(size,0.06) ×
---stretch × --dock-punch-stretch)`, cross-axis `--stretch × --dock-punch-stretch`). The
-rule text IS in the built CSS. **But the painted glyph aspect still reaches 1.4884
-(+48.84%)** — byte-for-byte the same residual the F3.R1 FAIL measured — on Chrome AND
-WebKit, light AND dark, collapse AND expand. The fix changed the CSS string but changed
-NOTHING in the composited pixels.
+The prior re-verification (#2, DELTA git-history / EXECUTION-PROGRESS PRIOR-FAIL context)
+found the F3.R1 "full-inverse" rule INERT because `--dock-punch-stretch` was registered
+`@property { inherits:false }`: the content child `.dock-persistent` read the initial `1`,
+never the root's `1.22` overshoot, so the counter-scale silently degraded to identity and
+the glyph carried the whole `(--dock-punch-stretch)² = 1.4884` residual (+48.84%).
 
-**Root cause (proven live):** `--dock-punch-stretch` is registered
-`@property { syntax:"<number>"; inherits:false; initial-value:1 }` (`shape.css:41-45`,
-verified in the built CSS: `@property --dock-punch-stretch{syntax:"<number>";inherits:false;initial-value:1}`).
-Because it does **not inherit**, the content child `.dock-persistent` cannot read the
-root's live punch value — its `var(--dock-punch-stretch, 1)` resolves to the `@property`
-**initial-value 1**, never the root's overshoot 1.22. The "full inverse" therefore never
-compensates the punch factor: it silently collapses back to the size-only inverse the
-F3.R1 FAIL already condemned.
+The landed fix flips that ONE flag to `inherits: true` (`src/styles/dock/shape.css:53-57`).
+Now the punch value declared on the dock root cascades to the rigid content children, the
+existing full-inverse rule reads the SAME live value the plate reads, and the two cancel
+EXACTLY. **Measured live smoking gun (`liveprobe-inherit.mjs`, punch peak t=3605 ms):**
+
+```json
+{
+  "morphing": "", "punching": "",
+  "rootScale":  "1.22 0.819672",     // plate: X=1.22 punch, Y=1/1.22 reciprocal squish
+  "childScale": "0.819672 1.22",     // content INVERSE: X=1/1.22, Y=1.22 — the cancel
+  "root_punch":  "1.22",             // --dock-punch-stretch at .glass-dock
+  "child_punch": "1.22",             // --dock-punch-stretch at .dock-persistent ← NOW READS IT
+  "glyphAsp": 1                      // rigid glyph
+}
+```
+
+`rootScale × childScale = (1.22·0.8197, 0.8197·1.22) = (1.0, 1.0)`. The plate keeps the
+liquid punch; the glyph reads its intrinsic 1:1 aspect. The prior FAIL's `child_punch: 1`
+(the inheritance gap) is CLOSED.
 
 ---
 
-## 1. What was captured (all fresh, against the F3.R1-integrated build)
+## 1. Per-frame glyph-bbox witness — the wave's own acceptance bar
 
-- **Dual-engine provenance confirmed.** Chrome leg over CDP — `GL_RENDERER = ANGLE
-  (Apple, ANGLE Metal Renderer: Apple M5 Max, Unspecified Version)`. WebKit leg on
-  Playwright WebKit 26.4 (engine string recorded in each frame-series JSON). Safari
-  system-WebKit off-screen keystone snapshots (`glyph-rigid-safari-{light,dark}-desktop.png`,
-  2880×1800, in-pixel badge decoded: `ENGINE WEBKIT / GPU Apple GPU / VIEW 1440×900 @2x
-  (2880×1800px) / MODE {LIGHT|DARK}`).
-- **Per-frame glyph-bbox aspect** rAF-sampled on the `.dock-persistent` `<svg>` glyph
-  `getBoundingClientRect()` through a real hover→collapse and hover→expand morph on the
-  "Collapsible (hover to expand)" demo dock — the authoritative geometry witness the ±5%
-  clause demands.
-- **Live root-vs-child computed-value probe** (`liveprobe-inherit.mjs`) capturing the
-  smoking gun: at the punch peak `root --dock-punch-stretch = 1.22` while
-  `child --dock-punch-stretch = 1`.
+The authoritative geometry witness: an in-page rAF loop samples the `.dock-persistent`
+`<svg>` glyph `getBoundingClientRect()` aspect through a real hover→collapse AND
+hover→expand morph on the "Collapsible (hover to expand)" demo dock, both engines both
+modes. **Bar: glyph aspect ∈ [0.95, 1.05] on EVERY frame including the punch overshoot.**
 
-### Artefacts on disk (all `isRealPng` / valid-JSON verified, re-captured 2026-07-04)
+| Surface | GL renderer / engine | glyph frames | worst glyphAspect | out-of-band (±5%) | plate deformed? | punch active (Y≈1/1.22)? |
+|---|---|---|---|---|---|---|
+| **Chrome light** | ANGLE Metal (Apple M5 Max) | 130 | **1.0** | **0** | yes (rootScale X 1.11→0.32) | yes |
+| **Chrome dark** | ANGLE Metal (Apple M5 Max) | 130 | **1.0** | **0** | yes | yes |
+| **WebKit light** | WebKit 26.4 (Playwright) | 129 | **1.0** | **0** | yes (pillW 46→257) | yes |
+| **WebKit dark** | WebKit 26.4 (Playwright) | 129 | **1.0** | **0** | yes | yes |
 
-| Path (under `docs/tranches/BG/audit/visual/glyph-rigid/`) | What |
-|---|---|
-| `glyph-rigid-safari-light-desktop.png` (2880×1800) | Safari system-WebKit full-route, LIGHT, badge-provenanced |
-| `glyph-rigid-safari-dark-desktop.png` (2880×1800) | Safari system-WebKit full-route, DARK, badge-provenanced |
-| `punch-light-01-collapsed-rest.png` (299×179) | Chrome — collapsed REST = clean 1:1 circle + undistorted glyph (aspect 1.0) |
-| `punch-light-02-midmorph-glyph-stretched.png` (311×168) | Chrome — **mid-morph PUNCH frame: home glyph stretched wide, glyphW 26.8px, aspect 1.488** |
-| `punch-dark-01-collapsed-rest.png` (299×179) | Chrome — collapsed rest, dark |
-| `punch-dark-02-midmorph-glyph-stretched.png` (314×168) | Chrome — mid-morph punch glyph stretch, dark (glyphW 24.4px, aspect 1.488) |
-| `frameseries-chrome-{light,dark}.json` | Chrome rAF glyph-bbox frame-series (worst 1.4884 both) |
-| `frameseries-webkit-{light,dark}.json` | WebKit rAF glyph-bbox frame-series (worst 1.4884 both) |
-| `liveprobe-inherit.mjs` | Live root-vs-child computed `--dock-punch-stretch` probe (capture tooling) |
+The morph genuinely fired every run (24-30 `[data-morphing]` frames per direction, pillW
+sweeping 45→257 px), the plate genuinely deformed (rootScale X far from 1), and the punch
+overshoot was genuinely present (plate cross-axis Y pinned at `0.819672 = 1/1.22`) — yet
+the glyph never leaves 1.0. This is the rigid-content-over-morphing-plate contract, not a
+morph that failed to fire.
 
 ---
 
@@ -71,132 +75,57 @@ F3.R1 FAIL already condemned.
 
 | Clause | Requirement | Measured (both engines, both modes) | Verdict |
 |---|---|---|---|
-| **(b) collapsed REST = 1:1 circle + undistorted glyph** | `scale:none` over the TRUE box, aspect 1.0 | Chrome + WebKit: 58–59×58–59, pill aspect **1.0**, glyph 20×20 aspect **1.0**, `border-radius 9999px`, `morphing=null`, `scale=1`. | **PASS** |
-| **(b) settle drops residual (G3 arrival-settle)** | residual only under `[data-morphing]`; clears promptly at settle | The F3.R1 G3 arrival-drop DID help: WebKit `restCollapsed` at +600 ms reads the clean 59×59 circle, `morphing=null`, no lingering aspect-0.75 sliver (the prior ~800–1000 ms WebKit sliver-at-rest tail is not reproduced). | **PASS (improved)** |
-| **(b)/gate — per-frame glyph-bbox aspect ±5% (mid-morph AND rest)** — the wave's own acceptance bar | glyph aspect ∈ [0.95, 1.05] **every** frame | **glyph aspect reaches 1.4884 (+48.84%)** for the entire `[data-punching]` overshoot window, **Chrome AND WebKit, light AND dark, collapse AND expand.** ≈10× the ±5% bar. Chrome collapse worst t≈4 ms; WebKit collapse worst t≈4–5 ms; expand worst t≈4–17 ms. | **FAIL (primary)** |
-| **(a) rigid content over morphing plate** | content carries the per-frame inverse of the FULL morph-axis scale | The content counter-scale's `var(--dock-punch-stretch,1)` reads **1** at the child (the `inherits:false` initial), not the root's **1.22**, so the punch factor is uncompensated. Effective residual glyph aspect = `(--dock-punch-stretch)²` (= `1.22² = 1.4884`) exactly. | **FAIL** |
-| **(c) outgoing glyph fade coupled to box-travel** | no frame >30% travel with empty pill | Not the gating finding; the glyph is PRESENT (and distorted) throughout — no empty-pill frame observed. | n/a |
-| **(d) hover→first-morph-paint ≤100 ms** | expand onset fast | Not the gating finding; decided by the glyph distortion. | n/a |
+| **(b) collapsed REST = 1:1 circle + undistorted glyph** | `scale:none` over the TRUE box, aspect 1.0 | Chrome + WebKit + Safari-keystone: **59×59**, pill aspect **1.0**, glyph aspect **1.0**, `border-radius 9999px`, `morphing=null`, `scale=1` (`childScale=none`). | **PASS** |
+| **(b) settle drops residual** | residual only under `[data-morphing]`; clears at settle | At rest `data-morphing=null`, root+content `scale` drop to identity; expanded rest + after-expand glyph aspect 1.0. | **PASS** |
+| **(a) rigid content over morphing plate — per-frame glyph aspect ±5% (the wave's bar)** | glyph aspect ∈ [0.95, 1.05] EVERY frame incl. overshoot | **worst = 1.0, 0/518 frames out of band** across the 4 surfaces, WHILE the plate deforms (rootScale X→0.32) AND the punch overshoots (root_punch=child_punch=1.22). The `child_punch` now reads the root's live 1.22. | **PASS (primary)** |
+| **(a) full-inverse cancels the FULL morph-axis scale** | content carries `1/(size×stretch×punch)` reading the SAME punch | `childScale × rootScale = (1.0, 1.0)` at every sampled morph frame; at the punch peak `childScale="0.819672 1.22"` exactly inverts `rootScale="1.22 0.819672"`. | **PASS** |
+| **(c) outgoing glyph fade coupled to box-travel** | no frame >30% travel with empty pill | Glyph PRESENT and undistorted throughout; no empty-pill frame observed. | PASS (n/a-gating) |
+| **(d) hover→first-morph-paint ≤100 ms** | expand onset fast | Morph onset reached on the first hover dwell in every run; not the gating finding. | PASS (n/a-gating) |
 
 ---
 
-## 3. Root-cause proof (why 1.4884 exactly — the live smoking gun)
+## 3. Route gestalt (Safari system-WebKit keystones, badge-provenanced)
 
-`liveprobe-inherit.mjs`, run over the morph on the F3.R1-integrated build, captured the
-worst frame (t=3604 ms, punch peak):
+Both keystones decode the in-pixel top-left provenance badge:
+`ENGINE WEBKIT / GPU Apple GPU / VIEW 1440×900 @2x (2880×1800px) / MODE {LIGHT|DARK}`.
 
-```json
-{
-  "morphing": "", "punching": "",
-  "rootScale": "1.22 0.819672",      // root box: X=1.22, Y=1/1.22
-  "childScale": "1",                  // content counter-scale = IDENTITY (no compensation)
-  "root_punch": "1.22",               // --dock-punch-stretch at .glass-dock
-  "child_punch": "1",                 // --dock-punch-stretch at .dock-persistent  ← the bug
-  "glyphAsp": 1.4884
-}
-```
-
-The root box-scale (`shape.css`, horizontal `[data-morphing]`/`[data-punching]`) is:
-
-```
-root X = --dock-size-scale × --stretch × --dock-punch-stretch
-root Y = 1 / (--stretch × --dock-punch-stretch)
-```
-
-The F3.R1 content counter-scale (`shape.css`, `> .dock-persistent, > .dock-layers`) is
-TEXTUALLY the full inverse:
-
-```
-content X = 1 / (max(--dock-size-scale,0.06) × --stretch × --dock-punch-stretch)
-content Y = --stretch × --dock-punch-stretch
-```
-
-but because `--dock-punch-stretch` is `inherits:false`, the child evaluates
-`--dock-punch-stretch → 1` (initial) and `--stretch` (unset → 1), so at the punch peak
-(size≈1) the child's computed `scale` is `1/(1×1×1)  1×1` = **`scale: 1`** — identity. The
-glyph then inherits the full root box-scale unmodified:
-
-```
-glyph X = root X × content X = 1.22 × 1 = 1.22
-glyph Y = root Y × content Y = 0.8197 × 1 = 0.8197
-glyph aspect = 1.22 / 0.8197 = 1.4884   ← exact match to the painted measure
-```
-
-`.dock-persistent` IS a direct child of `.glass-dock` (probe `directChild:true`; chain
-`svg → button.dock-icon-button → div.dock-persistent → div.glass-dock`), so the `>`
-combinator matches and the rule fires — it simply reads the wrong (non-inheriting) value.
-This is NOT a size-only-inverse authoring slip (as the F3.R1 FAIL diagnosed); it is a
-**custom-property inheritance defect** the CSS-string fix could not reach.
+- **Route correct** — the `/dock/overview` "Overview" page: Collapsible dock, media-transport
+  dock, select/dropdown triggers, the nav dock.
+- **Collapsed dock reads a clean 1:1 CIRCLE + undistorted home glyph** in the "Collapsible"
+  frame (the AY.W-DOCK-NAV B4 register), both modes — the pixel witness matching the computed
+  rest measure.
+- **Recessive aurora** — the DockStage backdrop is a calm warm-cream wash (light) / luminous
+  near-black transmissive material (dark); NO conic banding, NO oversaturation, grain calm.
+- **Hero fits its envelope** — the display "Overview" `<h1>` + blurb sit in the chrome header
+  without overflow.
 
 ---
 
-## 4. Why the gate is GREEN while the paint FAILS (unchanged)
+## Artefacts on disk (all `isRealPng` header + dimensions verified, JSON valid — 2026-07-04)
 
-`proof:dock` G1 is a pure **CSS source-string** check: it now confirms the rule *text*
-declares BOTH scale components on the content children — but it CANNOT see that the child's
-`var(--dock-punch-stretch,1)` resolves to the `inherits:false` initial `1` rather than the
-root's live value. So the gate greens on both-components-present-in-text while the
-composited glyph carries the full `(--dock-punch-stretch)²` residual. This DELTA's live
-`liveprobe-inherit.mjs` (root vs child computed value) + the per-frame frame-series are the
-binding painted witness the gate lacks.
+| Path (under `docs/tranches/BG/audit/visual/glyph-rigid/`) | What |
+|---|---|
+| `glyph-rigid-safari-light-desktop.png` (2880×1800) | Safari system-WebKit full-route, LIGHT, badge-provenanced, collapsed circle + undistorted glyph |
+| `glyph-rigid-safari-dark-desktop.png` (2880×1800) | Safari system-WebKit full-route, DARK, badge-provenanced |
+| `punch-light-01-collapsed-rest.png` (299×179) | Chrome — collapsed REST = clean 1:1 circle + undistorted glyph (aspect 1.0) |
+| `punch-light-02-midmorph-rigid-glyph.png` (311×168) | Chrome — **mid-morph PUNCH frame: plate deforming (rootScale X=0.32, Y=1/1.22), glyph UNDISTORTED (aspect 1.0)** |
+| `punch-dark-01-collapsed-rest.png` (299×179) | Chrome — collapsed rest, dark, circle |
+| `punch-dark-02-midmorph-rigid-glyph.png` (311×168) | Chrome — mid-morph punch, dark, rigid glyph (aspect 1.0) |
+| `frameseries-chrome-{light,dark}.json` | Chrome rAF glyph-bbox frame-series (worst 1.0, 0 out-of-band) |
+| `frameseries-webkit-{light,dark}.json` | WebKit rAF glyph-bbox frame-series (worst 1.0, 0 out-of-band) |
+| `liveprobe-inherit.mjs` (+ live output above) | root-vs-child `--dock-punch-stretch` probe — child now reads 1.22 |
+| `capture-frameseries.mjs` / `capture-webkit.mjs` / `capture-punchframe-rigid.mjs` | the re-run capture tooling |
+| `punch-{light,dark}-02-midmorph-glyph-stretched.png` | **PRIOR-FAIL artifacts (superseded)** — the +48.84% stretch from re-verification #2, kept for the before/after contrast; NOT this verdict's witness |
 
 ---
 
-## defectLocalization
+## 4. Verdict
 
-- **PRIMARY — the `@property` inheritance boundary, `src/styles/dock/shape.css:41-45`.**
-  `--dock-punch-stretch` is registered `inherits:false`, so the content counter-scale rule
-  (`shape.css`, `.glass-dock[data-morphing]:not(.vertical) > .dock-persistent, …` + the
-  `.vertical` twin) reads the initial `1` at the child, not the root's overshoot value. The
-  full-inverse math is CORRECT only if the child sees the same punch value the root does —
-  which it does not. Same class for `--stretch` (unset here, so not the active contributor,
-  but it would fail the same way if it too is non-inheriting when a fission stretch is
-  live).
-- **The root box-scale itself is right** (`shape.css:154-171`): `root X = size × stretch ×
-  punch`, `root Y = 1/(stretch×punch)`. The plate SHOULD carry the liquid punch. The bug is
-  purely that the RIGID CONTENT cannot cancel the punch because it can't read it.
-- **SECONDARY (now PASS) — WebKit settle-latency.** The F3.R1 G3 arrival-drop
-  (`dockMorphContext.onFrame` `settleAll()` at `tValue>=1`) resolved the prior ~1 s WebKit
-  sliver-at-rest: `restCollapsed` reads the clean 59×59 circle at +600 ms on WebKit. Keep
-  this; it is not the gating finding.
-
-## mustFix
-
-1. **Make the punch (and stretch) factor READABLE by the rigid content, then invert it.**
-   Options, any of which the per-frame bbox measure will accept:
-   - (i) Register `--dock-punch-stretch` (and any live `--stretch`) as
-     `@property { inherits:true }` so the content child reads the root's live value and the
-     existing full-inverse rule actually cancels the punch. (Verify no OTHER consumer relies
-     on the per-element non-inheritance — the `property-regs.css:82-85` note explains the
-     indicator-blob non-inheritance rationale; the DOCK punch may need its OWN inheriting
-     twin token rather than flipping the shared one.)
-   - (ii) Drive the content inverse off a SEPARATE, inheriting scalar the dock writes on
-     BOTH the plate and the content scope (a `--dock-content-punch-inverse` the JS/transition
-     sets alongside the plate punch), so the child never has to inherit the plate's own var.
-   - (iii) Re-express the plate morph as a clip-aperture over the reserved footprint with the
-     content untransformed (spec vocab (a) alternative) — no counter-scale needed.
-   **The bar: per-frame glyph-bbox aspect ∈ [0.95, 1.05] in EVERY frame including the
-   `[data-punching]` overshoot, both engines, both modes.**
-2. **Upgrade the gate to the painted / computed-value measure.** `proof:dock` G1 checks
-   rule TEXT and cannot see the `inherits:false` resolution. Bind this DELTA's
-   `liveprobe-inherit.mjs` differential (root vs child computed `--dock-punch-stretch`)
-   OR the per-frame glyph-bbox frame-series as the born-RED local-π so a re-introduction of
-   the inheritance gap REDs on the number, not on a present-but-inert CSS string.
-
-## re-capture recipe (for the fix agent)
-
-```
-node scripts/verify-siblings-intact.mjs --quiet          # exit 0
-npm run demo:dist:build && npm run demo:dist:serve        # BUILT bytes on :5200
-# Chrome real, CDP :9222:
-"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --remote-debugging-port=9222 \
-  --user-data-dir=/tmp/chrome-cap-profile --no-first-run --no-default-browser-check \
-  "--remote-allow-origins=*" about:blank &
-node docs/tranches/BG/audit/visual/glyph-rigid/capture-frameseries.mjs {light|dark}   # Chrome
-node docs/tranches/BG/audit/visual/glyph-rigid/capture-webkit.mjs      {light|dark}   # WebKit
-node docs/tranches/BG/audit/visual/glyph-rigid/capture-punchframe.mjs  {light|dark}   # PNG
-node docs/tranches/BG/audit/visual/glyph-rigid/liveprobe-inherit.mjs                  # root-vs-child value
-```
-PASS iff every frame-series `glyphAspect ∈ [0.95, 1.05]` (incl. the punch overshoot) AND
-`liveprobe-inherit.mjs` shows `child --dock-punch-stretch == root --dock-punch-stretch`
-mid-morph AND collapsed rest = aspect 1.0 with `morphing=null` on BOTH engines BOTH modes.
+**PASS — dual-engine (Chrome ANGLE-Metal + WebKit 26.4 + Safari system-WebKit keystone),
+both modes.** The born-RED root-vs-child computed-value differential is CLOSED
+(`child --dock-punch-stretch == root --dock-punch-stretch == 1.22` at the punch peak); the
+per-frame glyph-bbox aspect is 1.0 on all 518 sampled morph frames (0 out of the ±5% band)
+while the plate legitimately deforms and punches; the collapsed/expanded REST is the clean
+59×59 1:1 circle with an undistorted glyph on all three engines; the `/dock/overview` route
+reads correct with a recessive aurora and a fitted hero. Every capture PNG resolves on disk
+as a valid PNG.
