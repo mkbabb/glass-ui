@@ -31,8 +31,23 @@ export interface TrailSample {
  * here (the substrate owns PRM). The deterministic rest pose: the spring at the
  * pointer target (or centre when inactive), zero velocity, the trail collapsed
  * onto the body.
+ *
+ * F9.R8 (BG.W-BLOB-AFFECT-INTERACT — pointer truth) — the SDF-SHAPED HIT-TEST. The
+ * listener box is a SQUARE, but the blob silhouette is the body DISC (the satellites
+ * orbit OUTSIDE the box). `options.hitRadius()` returns the silhouette radius in the
+ * normalized [-1, 1] space; `hitTest(clientX, clientY)` is the authoritative predicate
+ * the engage + click gates read, and `onPointerMove` engages the attract ONLY inside
+ * it — so hovering the empty box margin never lunges the blob, and the caller lets a
+ * corner click FALL THROUGH to a sibling card (the `.goo-blob-hit` clip-path is the
+ * compositor-level twin). With `hitRadius` UNSET the whole box engages (byte-identical
+ * to the prior always-on `active`) — the tight silhouette is the opt-in a shaped
+ * consumer (GooBlob) passes, so the goo-dot-matrix reuse is unaffected.
  */
-export function useBlobPointer(el: Ref<HTMLElement | null>) {
+export function useBlobPointer(
+    el: Ref<HTMLElement | null>,
+    options: { hitRadius?: () => number } = {},
+) {
+    const { hitRadius } = options;
     const pointer = ref({ x: 0, y: 0 });
     const velocity = ref({ x: 0, y: 0 });
     const active = ref(false);
@@ -69,13 +84,45 @@ export function useBlobPointer(el: Ref<HTMLElement | null>) {
     let pulseVel = 0;
     // Underdamped spring constants (PULSE_OMEGA/PULSE_ZETA) live in ../constants.
 
+    // F9.R8 — the SDF engage radius in the listener's normalized [-1, 1] space. The
+    // blob silhouette ≈ the body disc (satellites orbit OUTSIDE the listener box);
+    // `hitRadius()` returns that radius, UNSET → Infinity (the whole box, byte-identical
+    // to the prior always-on `active`). `pulse` swells the body on a click, so the
+    // engage radius widens with it (a click on the just-swollen edge still lands).
+    function sdfRadius(): number {
+        const r = hitRadius ? hitRadius() : Infinity;
+        return r * (1 + Math.max(0, pulse));
+    }
+
+    /**
+     * The SDF-shaped hit-test (the L5 pointer-shaping ask): is a CLIENT point INSIDE
+     * the blob silhouette? The root square must NOT intercept sibling-card clicks —
+     * outside the SDF the caller lets the event fall through (the `.goo-blob-hit`
+     * clip-path is the compositor-level twin; this is the authoritative JS predicate the
+     * engage + click gates read). Returns false when unmounted / zero-sized.
+     */
+    function hitTest(clientX: number, clientY: number): boolean {
+        const target = el.value;
+        if (!target) return false;
+        const rect = target.getBoundingClientRect();
+        if (rect.width === 0 || rect.height === 0) return false;
+        const nx = ((clientX - rect.left) / rect.width) * 2 - 1;
+        const ny = ((clientY - rect.top) / rect.height) * 2 - 1;
+        return Math.hypot(nx, ny) <= sdfRadius();
+    }
+
     function onPointerMove(e: PointerEvent) {
         const target = el.value;
         if (!target) return;
         const rect = target.getBoundingClientRect();
         rawX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
         rawY = ((e.clientY - rect.top) / rect.height) * 2 - 1;
-        active.value = true;
+        // Engage the attract/wake ONLY inside the SDF — a pointer over the empty box
+        // margin (inside the listener, outside the silhouette) does NOT lunge the blob
+        // toward it (the "reads liquid + intentional" bar). The far corners never reach
+        // here (the clipped `.goo-blob-hit` + `pointer-events:none` root let them fall
+        // through to a sibling). UNSET hitRadius → Infinity → the whole box engages.
+        active.value = Math.hypot(rawX, rawY) <= sdfRadius();
     }
 
     function onPointerLeave() {
@@ -255,6 +302,8 @@ export function useBlobPointer(el: Ref<HTMLElement | null>) {
         rest,
         /** AX.W16 — the quiescence at-rest predicate the renderer's demand gate reads. */
         isAtRest,
+        /** F9.R8 — the SDF-shaped hit-test (is a client point inside the blob silhouette?). */
+        hitTest,
     };
 }
 

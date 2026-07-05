@@ -3,6 +3,7 @@ import { inject, useTemplateRef, watch, ref, computed, onScopeDispose } from "vu
 import { createTokenColorCache } from "../../../composables/dom";
 import type { BlobMood, BlobConfig, BlobVariant } from "./types";
 import { BLOB_CONFIG_KEY } from "./types";
+import { POS_SCALE } from "./constants";
 import { useBlobMood } from "./composables/useBlobMood";
 import { useBlobPointer } from "./composables/useBlobPointer";
 import { useBlobSatellites } from "./composables/useBlobSatellites";
@@ -105,9 +106,26 @@ const renderConfig: BlobConfig = new Proxy(cfg!, {
 
 const canvasRef = useTemplateRef<HTMLCanvasElement>("canvasRef");
 const wrapperRef = useTemplateRef<HTMLElement>("wrapperRef");
+const hitLayerRef = useTemplateRef<HTMLElement>("hitLayerRef");
+
+// F9.R8 (BG.W-BLOB-AFFECT-INTERACT — pointer truth) — the SDF hit region radius in the
+// listener's normalized [-1, 1] space. The body renders at `bodyRadius` in the CANVAS's
+// [-1, 1]; the canvas is 1/POS_SCALE (≈1.6×) the listener box, so the body disc maps to
+// `bodyRadius / POS_SCALE` here. A small pad gives a forgiving hover ring; everything
+// beyond it — the empty box margin, the corners — falls through to a sibling card (the
+// `.goo-blob-hit` clip-path is the compositor-level twin of the JS gate). The geometry
+// atoms are a mount snapshot the renderer closes over, so this is a constant.
+const HIT_PAD = 1.3;
+const hitRadius = Math.min(
+    1,
+    Math.max(0.25, (cfg!.geometry.bodyRadius / POS_SCALE) * HIT_PAD),
+);
+// The CSS clip-path circle radius: `circle(R%)` has normalized radius R/50, so the JS
+// `hitRadius` maps to `hitRadius * 50%` — the two share ONE radius source (DRY).
+const hitClip = `${(hitRadius * 50).toFixed(2)}%`;
 
 const mood = useBlobMood();
-const pointer = useBlobPointer(wrapperRef);
+const pointer = useBlobPointer(hitLayerRef, { hitRadius: () => hitRadius });
 const satelliteSystem = useBlobSatellites(cfg, color + seed);
 
 // AX.W16 (arm 4) — un-wrap EVERY color string (base + rim + every palette stop) to a
@@ -257,7 +275,11 @@ function setMood(m: BlobMood) {
 function pulse() {
     pointer.click(cfg!.interaction.clickImpulse);
 }
-function onBlobClick() {
+function onBlobClick(e: MouseEvent) {
+    // F9.R8 — only bounce/emit when the click lands INSIDE the SDF. The `.goo-blob-hit`
+    // clip already drops corner clicks to a sibling; this is the authoritative gate + the
+    // pulse-swell edge (the hit region widens with a live click pulse).
+    if (!pointer.hitTest(e.clientX, e.clientY)) return;
     pulse();
     emit("click");
 }
@@ -276,17 +298,22 @@ defineExpose({
 </script>
 
 <template>
-    <div
-        ref="wrapperRef"
-        class="goo-blob-wrapper"
-        :style="{ '--blob-color': color }"
-        @click="onBlobClick"
-    >
+    <div ref="wrapperRef" class="goo-blob-wrapper" :style="{ '--blob-color': color }">
         <canvas
             ref="canvasRef"
             class="goo-blob-canvas"
             aria-hidden="true"
             data-testid="goo-blob-canvas"
+        />
+        <!-- F9.R8 — the SDF-shaped hit surface. The wrapper is pointer-transparent; this
+             clipped child is the ONLY interactive surface, so a click outside the body
+             silhouette falls through to whatever card sits beneath. -->
+        <div
+            ref="hitLayerRef"
+            class="goo-blob-hit"
+            :style="{ '--blob-hit-radius': hitClip }"
+            data-testid="goo-blob-hit"
+            @click="onBlobClick"
         />
     </div>
 </template>
@@ -298,7 +325,12 @@ defineExpose({
     position: relative;
     z-index: var(--z-content);
     overflow: visible;
-    cursor: pointer;
+    /* F9.R8 — the ROOT square is pointer-transparent so it NEVER intercepts a
+       sibling-card click; the SDF-shaped `.goo-blob-hit` child is the only interactive
+       surface (the cursor + the listeners live there). The `:hover` shadow lift still
+       fires: hover propagates to this ancestor when the pointer-events:auto child is
+       the hit target. */
+    pointer-events: none;
     /* AV.W7 F2 — layout/style containment isolates the blob as a layout root
        (NO `paint` containment: the 160%-canvas satellites intentionally
        overflow the wrapper footprint, and paint containment would clip them).
@@ -342,6 +374,21 @@ defineExpose({
     transform: translate(-50%, -50%);
     will-change: transform;
     pointer-events: none;
+}
+
+/* F9.R8 (BG.W-BLOB-AFFECT-INTERACT) — the SDF-shaped hit surface. The wrapper is
+   pointer-events:none (never blocks the square), so this child is the ONLY interactive
+   surface. `clip-path` shapes BOTH paint (transparent — zero visual delta) AND pointer
+   hit-testing to the body silhouette disc, so a click on the corners / empty margin
+   falls THROUGH to whatever card sits beneath — the root square no longer intercepts a
+   sibling click. The canvas paints unclipped underneath (its 160% satellites overflow
+   this box), so the clip never touches the render. */
+.goo-blob-hit {
+    position: absolute;
+    inset: 0;
+    pointer-events: auto;
+    cursor: pointer;
+    clip-path: circle(var(--blob-hit-radius, 50%));
 }
 
 @media (prefers-reduced-motion: reduce) {
