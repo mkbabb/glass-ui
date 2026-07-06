@@ -82,7 +82,7 @@ const CANVAS_VIZ = [
     { id: "concentric", srcDir: "src/components/custom/concentric", studio: "demo/stories/substrates/concentric.vue" },
     { id: "fourier-field", srcDir: "src/components/custom/fourier-field", studio: "demo/stories/substrates/fourier-field.vue" },
     { id: "dot-matrix", srcDir: "src/components/custom/dot-matrix", studio: "demo/stories/substrates/dot-matrix.vue" },
-    { id: "goo-dot", srcDir: "src/components/custom/goo-dot-matrix", studio: "demo/stories/substrates/goo-dot.vue" },
+    // goo-dot RETIRED at BG.W-GOODOT-PRUNE (0 external consumers).
     { id: "liquid-grid", srcDir: "src/components/custom/liquid-grid", studio: "demo/stories/substrates/liquid-grid.vue" },
 ];
 // watercolor-dot — the recorded MARK exception (watercolor-dot.md §4): a LIGHT
@@ -206,7 +206,7 @@ const PENDING_FULL_CONFIGURATOR = [
     { id: "constellation", wave: "BC.W-VIZ-CONSTELLATION" },
     { id: "dot-flow-field", wave: "BC.W-VIZ-DOTFLOW" },
     { id: "dot-matrix", wave: "BC.W-VIZ-DOTMATRIX" },
-    { id: "goo-dot", wave: "BC.W-VIZ-HYBRID" },
+    // goo-dot RETIRED at BG.W-GOODOT-PRUNE (0 external consumers).
 ];
 facts.s3Census = {
     fullConfigurator: FULL_CONFIGURATOR,
@@ -291,7 +291,7 @@ const PAUSE_SUBSTRATE_DIRS = {
     "concentric": "src/components/custom/concentric",
     "fourier-field": "src/components/custom/fourier-field",
     "dot-matrix": "src/components/custom/dot-matrix",
-    "goo-dot": "src/components/custom/goo-dot-matrix",
+    // goo-dot RETIRED at BG.W-GOODOT-PRUNE (0 external consumers).
     "liquid-grid": "src/components/custom/liquid-grid",
 };
 const s4Verdicts = CANVAS_VIZ.map((v) => {

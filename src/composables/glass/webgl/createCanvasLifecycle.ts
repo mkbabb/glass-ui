@@ -112,7 +112,7 @@ export interface CanvasLifecycleOptions {
      * via `sizeBacking` (the reveal belt-and-braces, the load-bearing path on WebKit
      * where `contentvisibilityautostatechange` support is weaker).
      *
-     * Default `false` — OPT-IN. Today several consumers (goo-blob, goo-dot-matrix)
+     * Default `false` — OPT-IN. Today several consumers (goo-blob, aurora)
      * already write `"off-screen-io"` from their OWN `useIntersectionPause`; a leaf IO
      * defaulting on would DOUBLE-WRITE that reason and breach the one-writer invariant.
      * The atomic retirement of those per-consumer calls (so the leaf IO becomes the sole

@@ -32,8 +32,7 @@ export type VizPattern =
     | "flow"
     | "rings"
     | "warp-grid"
-    | "phyllotaxis"
-    | "dot-halftone";
+    | "phyllotaxis";
 
 /** The frozen recipe a story's still rasters from — a DISTINCT (pattern,hue,seed) triple. */
 export interface VizStillSpec {
@@ -62,7 +61,6 @@ export const VIZ_PREVIEW_STILLS: Readonly<Record<string, VizStillSpec>> = {
     "/substrates/concentric": { pattern: "rings", hue: 35, seed: 808 },
     "/substrates/liquid-grid": { pattern: "warp-grid", hue: 72, seed: 909 },
     "/substrates/dot-matrix": { pattern: "phyllotaxis", hue: 55, seed: 110 },
-    "/substrates/goo-dot": { pattern: "dot-halftone", hue: 38, seed: 121 },
 };
 
 // ── the raster canvas (φ ratio ≈ 1.61 — the card preview aspect) ──
@@ -356,36 +354,6 @@ function drawPhyllotaxis(ctx: CanvasRenderingContext2D, hue: number, _rng: () =>
     }
 }
 
-/** goo-dot — the metaball field drawn as a DOT MATRIX (dot size tracks the SDF). */
-function drawDotHalftone(ctx: CanvasRenderingContext2D, hue: number, _rng: () => number): void {
-    warmFloor(ctx, hue);
-    const cx = W * 0.52;
-    const cy = H * 0.55;
-    const balls: number[][] = [
-        [cx, cy, 22],
-        [cx + 24, cy - 10, 11],
-        [cx - 20, cy + 11, 10],
-    ];
-    const step = 6;
-    for (let y = step / 2; y < H; y += step) {
-        for (let x = step / 2; x < W; x += step) {
-            let f = 0;
-            for (const [bx, by, br] of balls) {
-                const dx = x - bx;
-                const dy = y - by;
-                f += (br * br) / (dx * dx + dy * dy + 1);
-            }
-            const v = Math.min(1, f);
-            if (v > 0.12) {
-                ctx.beginPath();
-                ctx.arc(x, y, 0.6 + v * 2.4, 0, Math.PI * 2);
-                ctx.fillStyle = warm(hue, 50, 0.25 + v * 0.65);
-                ctx.fill();
-            }
-        }
-    }
-}
-
 const GENERATORS: Record<
     VizPattern,
     (ctx: CanvasRenderingContext2D, hue: number, rng: () => number) => void
@@ -400,7 +368,6 @@ const GENERATORS: Record<
     rings: drawRings,
     "warp-grid": drawWarpGrid,
     phyllotaxis: drawPhyllotaxis,
-    "dot-halftone": drawDotHalftone,
 };
 
 // Module-level memo — each route rasters its data-URI ONCE globally.

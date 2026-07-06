@@ -64,9 +64,9 @@ export const EXPECTED_TREE = [
     // dot-flow-field), closing the Batch-V substrates band.
     // BC: `fourier-studio` RETIRED (BC.W-VIZ-FOURIER merged the Canvas2D three-view
     // split into the ONE WebGPU `fourier-field` view). `liquid-grid` (BC.W-VIZ-PAPERGRID)
-    // + `dot-matrix` (BC.W-VIZ-DOTMATRIX) + `goo-dot` (BC.W-VIZ-HYBRID, the goo-dot-matrix
-    // hybrid) append — the WebGPU-first viz suite.
-    ["substrates", ["aurora", "blob", "constellation", "fourier-field", "glass-material", "glass-panel", "dot-flow-field", "concentric", "liquid-grid", "dot-matrix", "goo-dot"]],
+    // + `dot-matrix` (BC.W-VIZ-DOTMATRIX) append — the WebGPU-first viz suite.
+    // (`goo-dot` (BC.W-VIZ-HYBRID) RETIRED at BG.W-GOODOT-PRUNE — 0 external consumers.)
+    ["substrates", ["aurora", "blob", "constellation", "fourier-field", "glass-material", "glass-panel", "dot-flow-field", "concentric", "liquid-grid", "dot-matrix"]],
     // The Primitives bin split: form-controls.
     ["forms", [
         "inputs", "textarea", "checks", "slider", "number-field", "select",

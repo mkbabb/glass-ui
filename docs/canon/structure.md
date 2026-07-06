@@ -53,7 +53,7 @@
 - toggle-group/
 - tooltip/
 
-## src/components/custom (50 dirs)
+## src/components/custom (49 dirs)
 
 - animated-digit/
 - aurora/
@@ -75,7 +75,6 @@
 - fourier-field/
 - glass-panel/
 - goo-blob/
-- goo-dot-matrix/
 - goo-filter/
 - handmark/
 - header-ribbon/
@@ -85,12 +84,12 @@
 - infinite-scroll/
 - instrument-chassis/
 - labeled-field/
+- liquid-grid/
 - metric-badge/
 - metric-cell/
 - metric-stack/
 - pager-dots/
 - paper-backdrop/
-- paper-grid/
 - pulse/
 - scrolling-text/
 - search/

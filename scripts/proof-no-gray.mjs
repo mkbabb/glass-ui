@@ -971,12 +971,7 @@ const VIZ_PALETTES = [
             arrayBody(read("src/components/custom/fourier-field/constants.ts"), "WARM_IDENTITY_PALETTE"),
         ),
     },
-    {
-        viz: "goo-dot-matrix",
-        stops: oklchStopsFromSource(
-            arrayBody(read("src/components/custom/goo-dot-matrix/constants.ts"), "WARM_IDENTITY_PALETTE"),
-        ),
-    },
+    // goo-dot-matrix RETIRED at BG.W-GOODOT-PRUNE (0 external consumers).
     {
         viz: "dot-matrix",
         stops: oklchStopsFromSource(

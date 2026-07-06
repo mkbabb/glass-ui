@@ -1,5 +1,19 @@
 # MIGRATION—v0.9.x → v1.0 → v2.0
 
+> **BG.W-GOODOT-PRUNE — `GooDotMatrix` + the `/goo-dot-matrix` subpath RETIRED with
+> rationale (0 external consumers). Clean break, no alias ("No legacy code").** The
+> `goo-dot-matrix` goo+dot HYBRID viz (`<GooDotMatrix>`, `GooDotConfig`, `useGooDotMatrix`,
+> `DEFAULT_GOO_DOT_CONFIG`) + its `@mkbabb/glass-ui/goo-dot-matrix` subpath are
+> DEFINITION-ABSENT at the 5.0.0 cut. It was a demonstration hybrid that earned no external
+> consumer since BC (the ≥2-consumer / visual-load-bearing bar; J-inv-10 / L-inv-8). Its two
+> halves both SURVIVE it and stay first-class — the goo-blob FIELD donor
+> (`@mkbabb/glass-ui/goo-blob`, byte-untouched) and the dot-matrix RENDER register
+> (`@mkbabb/glass-ui/dot-matrix`). MIGRATE: none for the library's own tree; any external
+> consumer of `/goo-dot-matrix` re-homes onto `<GooBlob>` (the merged-metaball FIELD look) or
+> `<DotMatrix>` (the dot-lattice RENDER look) — the two registers the hybrid composed. The
+> inv-11 registry-consumer probe (`npm view @mkbabb/glass-ui` + the constellation census) read
+> ZERO consumers; recorded in the cut notes.
+>
 > **BG.W-GRID-AFFINE — `PaperGrid` (the viz) RENAMED to `LiquidGrid`; `/paper-grid` →
 > `/liquid-grid`. Clean break, no alias ("No legacy code").** The WebGPU-first liquid AA-grid
 > viz + its subpath are renamed to kill the live homonym with the STATIC `.paper-grid` /

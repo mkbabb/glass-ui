@@ -41,7 +41,7 @@ export interface TrailSample {
  * corner click FALL THROUGH to a sibling card (the `.goo-blob-hit` clip-path is the
  * compositor-level twin). With `hitRadius` UNSET the whole box engages (byte-identical
  * to the prior always-on `active`) — the tight silhouette is the opt-in a shaped
- * consumer (GooBlob) passes, so the goo-dot-matrix reuse is unaffected.
+ * consumer (GooBlob) passes; the UNSET-whole-box default stays byte-preserved.
  */
 export function useBlobPointer(
     el: Ref<HTMLElement | null>,

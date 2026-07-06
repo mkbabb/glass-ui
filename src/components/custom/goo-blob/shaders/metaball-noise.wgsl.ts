@@ -10,8 +10,8 @@
 // chunk) and the `FBM_LACUNARITY`/`FBM_GAIN` consts at the top of metaball.wgsl.ts.
 // It carries NO `${...}` splice of its own (so the device-free WGSL assembler
 // resolves `${METABALL_NOISE_WGSL}` to a complete body — `proof:webgpu-everywhere`
-// W7), and it is spliced BEFORE the full-screen-triangle vertex stage so the
-// goo-dot-matrix FIELD slice (`METABALL_WGSL.slice(0, fieldEnd)`) still carries it.
+// W7), and it is spliced BEFORE the full-screen-triangle vertex stage (the fixed
+// ASSEMBLED body order — the FIELD helpers precede the vertex stage).
 
 export const METABALL_NOISE_WGSL = /* wgsl */ `
 const FBM_LACUNARITY: f32 = 1.8;

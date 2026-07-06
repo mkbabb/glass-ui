@@ -67,14 +67,14 @@ export const UI_CLASS = {
 export const CUSTOM_CLASS = {
     // INTERNAL (3)
     "goo-filter": "INTERNAL", "infinite-scroll": "INTERNAL", "split-chars": "INTERNAL",
-    // PUBLISH (47)
+    // PUBLISH (46) — goo-dot-matrix RETIRED at BG.W-GOODOT-PRUNE (0 external consumers).
     "animated-digit": "PUBLISH", aurora: "PUBLISH", "border-progress": "PUBLISH",
     "color-swatch": "PUBLISH", "completion-seal": "PUBLISH", concentric: "PUBLISH",
     configurator: "PUBLISH", "confirm-dialog": "PUBLISH", constellation: "PUBLISH",
     controls: "PUBLISH", deck: "PUBLISH", dock: "PUBLISH", "dot-flow-field": "PUBLISH",
     "dot-matrix": "PUBLISH", easing: "PUBLISH", "expandable-container": "PUBLISH",
     "fading-scroll": "PUBLISH", "fourier-field": "PUBLISH", "glass-panel": "PUBLISH",
-    "goo-blob": "PUBLISH", "goo-dot-matrix": "PUBLISH", handmark: "PUBLISH",
+    "goo-blob": "PUBLISH", handmark: "PUBLISH",
     "header-ribbon": "PUBLISH", "hover-popover": "PUBLISH", "icon-chip": "PUBLISH",
     "icon-tooltip": "PUBLISH", "instrument-chassis": "PUBLISH", "labeled-field": "PUBLISH",
     "metric-badge": "PUBLISH", "metric-cell": "PUBLISH", "metric-stack": "PUBLISH",

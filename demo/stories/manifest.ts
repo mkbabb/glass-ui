@@ -242,7 +242,6 @@ const SUBPATHS: Record<string, string> = {
     "substrates/concentric": "@mkbabb/glass-ui/concentric",
     "substrates/liquid-grid": "@mkbabb/glass-ui/liquid-grid",
     "substrates/dot-matrix": "@mkbabb/glass-ui/dot-matrix",
-    "substrates/goo-dot": "@mkbabb/glass-ui/goo-dot-matrix",
     // Forms — the input/select/toggle family via /forms + the own subpaths.
     "forms/inputs": "@mkbabb/glass-ui/forms",
     "forms/textarea": "@mkbabb/glass-ui/forms",
@@ -714,22 +713,6 @@ export const CATEGORIES: Category[] = [
                 "dot-matrix",
                 "Dot Matrix",
                 "A WebGPU-first Fibonacci phyllotaxis dot-SPHERE — a globe of fine warm-cream dots laid on a sphere SURFACE (the golden-angle area-centered lattice; Martin Roberts / extremelearning, arXiv 0912.4540 — no pole-pinching, no banded rings), depth-shaded so it reads as a translucent dot-shell (opacity 0.15+0.85·facing, size 0.6+0.4·facing — the Will-Howard / COBE / Stripe lineage), slowly rotating on a gently tilted axis. The render pass draws instanced billboard quads + the crisp fwidth SDF circle fragment; a WebGL2 instanced-billboard fallback draws the SAME dots where WebGPU is absent (born-GPU — no Canvas2D). Drag the cursor — the globe tracks it (parallax), a soft dimple pushes through the dot-shell, a flick fires a brightness bloom (the accel burst). The warm-cream identity is the library default; the mono-warm-white two-globe reference is a non-default demo preset. Shipped /dot-matrix.",
-                {
-                    background: "grid",
-                    hero: true,
-                    heroScale: "hero",
-                },
-            ),
-            // BC.W-VIZ-HYBRID — the NEW goo+dot-matrix HYBRID viz. The merging metaball SDF
-            // FIELD (the byte-untouched goo-blob sceneDistG) rendered as a DOT MATRIX, joined
-            // by the dot-grid OUTPUT stage. It self-stages ONE live WebGPU context (the field
-            // IS the surface), so the route declares the FREE static `grid` wash behind the
-            // card and mounts exactly ONE live context — the one-GL-per-route budget held.
-            s(
-                "substrates",
-                "goo-dot",
-                "Goo Dot-Matrix",
-                "A WebGPU-first goo+dot-matrix HYBRID — the merging metaball SDF FIELD (the byte-untouched goo-blob sceneDistG) rendered as a DOT MATRIX, dense+big+bright inside the merged blob and sparse+small+dim at the rim (v = thickness(sceneDistG(cellCenter)) drives the dot size + brightness; tixy.land applied to an SDF). As a satellite meatballs into the body the band of dots between them thickens into a connected bridge then snaps back — the gooey form drawn entirely in dots. Four registers, ONE field: dot-field (the smooth field-driven dot, the default), dot-dither (the Codrops Bayer8 halftone), dot-lattice / dot-sphere (the opt-in instanced flow/depth look). It re-uses two SOTA primitives the codebase owns — the goo-blob FIELD + the dot-matrix RENDER — joined by ONE new idea. WebGPU-first; a WebGL2 dot-stamp fallback runs the SAME field where WebGPU is absent (born-GPU — no Canvas2D). Drag the cursor — the dot-cloud leans toward it (the field lean), the near-cursor dots brighten + swell, a flick fires a one-shot bloom (the accel burst). The warm-cream identity is the library default; the near-dark dotted-tone register is a non-default demo preset. Shipped /goo-dot-matrix.",
                 {
                     background: "grid",
                     hero: true,

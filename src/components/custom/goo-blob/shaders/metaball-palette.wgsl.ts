@@ -12,7 +12,7 @@
 // binding. It carries NO `${...}` splice of its own (so the device-free WGSL
 // assembler resolves `${METABALL_PALETTE_WGSL}` to a complete body —
 // `proof:webgpu-everywhere` W7), and it is spliced BEFORE the full-screen-triangle
-// vertex stage so the goo-dot-matrix FIELD slice still carries the color helpers.
+// vertex stage (the fixed ASSEMBLED body order — the color helpers precede the vertex stage).
 
 export const METABALL_PALETTE_WGSL = /* wgsl */ `
 // ── OKLCh gamut clamp (hue-preserving inward chroma clamp — blob-local) ──
