@@ -476,6 +476,12 @@ export const GATES = [
         tags: ["ci", "release"],
         note: "BG.W-SHIP-DISCIPLINE-LIVE-PRECONDITION — Arm B, the tag-push BYPASS-CLOSER. The maintainer's publish path is `git tag && git push` -> release.yml (ubuntu/SwiftShader) -> `gates.mjs --run full` -> `npm publish`, which BYPASSES release.sh's Mac-only ship-block. Registered ['ci','release'] so `--run full` runs it on every tag-push publish; DEVICE-FREE — re-applies the BG band grammar to the per-region pixel DIGEST embedded in docs/tranches/BG/SHIP-ATTESTATION.json + RECOMPUTES the surfaceHash (surface-closure.mjs SOURCE bytes + the transitive paint-closure file LIST) at HEAD; REDs on absent/stale/FAIL-verdict/software-raster/webkit-fail. The attestation is written ONLY by `release.sh --run ship` (Arm A, runShip) on a real Mac/Metal GPU. Born-RED on HEAD (no ceremony has run — the tag-blocker); a 7-leg structural subprocess self-test proves the verdict GREENs on a fresh valid attestation + REDs on each forgery. Bite: absent/stale/re-stamped/software-raster/FAIL-verdict -> RED.",
     },
+    {
+        id: "proof:constraint-manifest",
+        cmd: "proof:constraint-manifest",
+        tags: ["local", "ci"],
+        note: "BG.W-CONSTRAINT-MANIFEST (WS7) — the binding-constraint manifest gate over docs/tranches/BG/CONSTRAINTS.md. PRESENCE: the 6 binding constraints (PRM/GL-budget/Safari-245510/CLS/focus-keyboard/contrast-warm) + 8 Safari/release records (version-matrix/≤18-WS3-bake/§L.0-Mac-only-release/GL↔flash/iOS-26-ceilings/DROP-WITH-TRIGGER/regular-filter-goo/var-resolution-scoped). The 'over live tokens' TEETH: 3 comment-stripped live-source cross-checks (glass-refract.css @supports lens gate, a11y-overrides.css PRM carve + WCAG-2.5.5 coarse touch floor) — a manifest that lies about the tree REDs. Device-free + self-contained (glass-ui docs+src/styles only, runs siblings-absent); born-RED (manifest absent) → GREEN + a 7-bite --self-test. NOT a closeDisease member.",
+    },
 {
         id: "proof:no-layout-animation",
         cmd: "proof:no-layout-animation",
