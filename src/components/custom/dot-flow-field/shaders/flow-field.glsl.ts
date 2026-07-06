@@ -32,6 +32,11 @@ precision highp float;
 
 #define CURL_EPS 0.012
 #define MAX_FLOW_STOPS 4
+// PI MUST be in scope BEFORE the OKLCH_MATRICES splice — its oklabToOklch folds the hue on
+// 2·PI (procedural-color.glsl.ts: "the consumer splices the matrices chunk + defines PI first").
+// Without it the WHOLE program fails to compile (undeclared identifier), the WebGL2 draw never
+// runs, and the wrapper's warm-near-black CSS floor shows as a dead plate — the paint-DELTA class.
+#define PI 3.141592653589793
 
 in vec2 vUv;
 out vec4 fragColor;

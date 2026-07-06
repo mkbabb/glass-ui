@@ -20,6 +20,10 @@ import {
 export const FLOW_FIELD_WGSL = /* wgsl */ `
 const CURL_EPS: f32 = 0.012;
 const FBM_ROT: mat2x2<f32> = mat2x2<f32>(0.8, 0.6, -0.6, 0.8);
+// PI MUST be in scope BEFORE the OKLCH_MATRICES splice — its oklabToOklch folds the hue on
+// 2·PI (procedural-color.wgsl.ts: "the consumer splices the matrices + defines PI first").
+// Without it the module fails to create and the WebKit-WebGPU fragment paints nothing.
+const PI: f32 = 3.141592653589793;
 
 // ── Uniforms (the typed-struct source-of-truth — see uniformBridgeWGPU.ts) ──
 struct U {

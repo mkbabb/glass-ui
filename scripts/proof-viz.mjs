@@ -1,5 +1,13 @@
 #!/usr/bin/env node
-// proof:viz — FOUR disjoint arms on ONE gate:
+// proof:viz — FIVE disjoint arms on ONE gate:
+//   • BG.W-DOTFLOW-REBUILD (SP1) — the shader-PI-scope compile-death arm: a viz shader that
+//     INTERPOLATES the shared OKLCH_MATRICES chunk (whose `oklabToOklch` folds the hue on 2·PI)
+//     MUST declare `PI` BEFORE the splice; a missing PI is a device-free COMPILE FAILURE that
+//     leaves the fullscreen-fragment pass never-drawing → the wrapper's warm-near-black CSS floor
+//     shows as a DEAD plate (the W-DOTFLOW-REBUILD paint-DELTA: flat ~6-luma, motion 0, both
+//     engines). Born-RED on HEAD (flow-field.{glsl,wgsl}.ts splice the matrices with no PI) →
+//     GREEN when PI lands before each splice. The headless-green/visually-broken gap the source
+//     structure gates S1-S6 could not catch (ψ round-trips, yet neither backend DRAWS).
 //   • BG.W-VIZ-RESIZE-ADOPT (V1-V5) — the viz-resize-UPLOAD-ONLY source gate
 //     (born-RED on HEAD — every viz self-measured the backing → GREEN at the hard-adopt).
 //   • BG.W-GOODOT-SETUP-SPLIT (G1-G3) — the F9 no-god-module setup-split source gate:
@@ -482,6 +490,49 @@ function runAll(over = {}) {
             "R8: src/composables/glass/useVizChoreography.ts EXISTS — the dead viz-entrance-choreography leaf must stay DEFINITION-ABSENT (the CSS-filter reveal-bloom is its successor)",
         );
 
+    // ══ SHADER-PI-SCOPE ARM (BG.W-DOTFLOW-REBUILD) — the splices-OKLCH-but-no-PI compile-death ══
+    // The dot-flow-field fullscreen-fragment shaders INTERPOLATE the shared OKLCH_MATRICES chunk
+    // (`${OKLCH_MATRICES_GLSL}` / `${OKLCH_MATRICES_WGSL}`), which inherits the chunk's
+    // `oklabToOklch` — and that folds the hue on `2·PI`. So each ASSEMBLED dot-flow shader MUST
+    // declare `PI` IN-FILE, BEFORE the splice (procedural-color.{glsl,wgsl}.ts record it verbatim:
+    // "the consumer splices the matrices chunk + defines PI first"). A missing `PI` is a
+    // DEVICE-FREE COMPILE FAILURE: the WHOLE program never links (undeclared identifier), the
+    // fullscreen-fragment pass never draws, and the wrapper's warm-near-black CSS floor shows as a
+    // DEAD plate — the W-DOTFLOW-REBUILD paint-DELTA verbatim (flat ~6-luma, motion 0, pointer 0,
+    // BOTH engines, BOTH modes; the headless-green/visually-broken gap the source structure gates
+    // S1-S6 could not see, since ψ round-trips fine yet NEITHER backend DRAWS). Born-RED on HEAD:
+    // flow-field.{glsl,wgsl}.ts splice the matrices but define no PI → GREEN when `#define PI` /
+    // `const PI` lands before each splice.
+    //
+    // SCOPED to the dot-flow-field shaders (`dot-flow-field/shaders/`): they define their uniforms
+    // INLINE and splice ONLY OETF + OKLCH, so an IN-FILE PI-before-splice is the exact contract.
+    // The general library case is NOT this check — a sibling viz shader may legitimately inherit PI
+    // from a spliced sub-chunk (metaball.frag.ts pulls PI from `${METABALL_UNIFORMS_GLSL}`), so a
+    // blanket "literal PI in-file" assert would FALSE-RED that honest pattern.
+    const PI_GLSL = /#define\s+PI\b|const\s+float\s+PI\b/;
+    const PI_WGSL = /const\s+PI\s*[:=]/;
+    for (const [rel, src] of Object.entries(files)) {
+        if (!rel.startsWith("dot-flow-field/shaders/")) continue;
+        const glSplice = src.indexOf("${OKLCH_MATRICES_GLSL}");
+        if (glSplice >= 0) {
+            const m = src.match(PI_GLSL);
+            const piIdx = m ? src.indexOf(m[0]) : -1;
+            if (piIdx < 0 || piIdx > glSplice)
+                fails.push(
+                    `SP1: ${rel} splices \${OKLCH_MATRICES_GLSL} but declares no \`#define PI\`/\`const float PI\` BEFORE it — the chunk's oklabToOklch references PI, so the whole GLSL program fails to COMPILE and the fragment never draws (the dead-plate paint-DELTA class)`,
+                );
+        }
+        const wgSplice = src.indexOf("${OKLCH_MATRICES_WGSL}");
+        if (wgSplice >= 0) {
+            const m = src.match(PI_WGSL);
+            const piIdx = m ? src.indexOf(m[0]) : -1;
+            if (piIdx < 0 || piIdx > wgSplice)
+                fails.push(
+                    `SP1: ${rel} splices \${OKLCH_MATRICES_WGSL} but declares no \`const PI\` BEFORE it — the chunk's oklabToOklch references PI, so the WGSL module fails to CREATE and the fragment paints nothing (the dead-plate paint-DELTA class)`,
+                );
+        }
+    }
+
     return fails;
 }
 
@@ -664,6 +715,40 @@ function selfTest() {
     if (!t.some((v) => v.startsWith("R8")))
         fails.push("self-test: a present useVizChoreography.ts did NOT red R8");
 
+    // ── SHADER-PI-SCOPE bites (BG.W-DOTFLOW-REBUILD) ──
+    const shaderAnchor = "dot-flow-field/shaders/_probe.glsl.ts";
+    const wgslAnchor = "dot-flow-field/shaders/_probe.wgsl.ts";
+
+    // (u) a GLSL shader that splices ${OKLCH_MATRICES_GLSL} with NO PI define reds SP1.
+    const u = runAll({
+        [shaderAnchor]:
+            "export const S = `#version 300 es\n${OETF_GLSL}\n${OKLCH_MATRICES_GLSL}\nvoid main(){}`;",
+    });
+    if (!u.some((v) => v.startsWith("SP1") && v.includes(shaderAnchor)))
+        fails.push(
+            "self-test: a GLSL shader splicing OKLCH_MATRICES with no PI define did NOT red SP1",
+        );
+
+    // (v) the SAME with a `#define PI` BEFORE the splice does NOT red SP1 (the honest survivor).
+    const v = runAll({
+        [shaderAnchor]:
+            "export const S = `#version 300 es\n#define PI 3.14159\n${OKLCH_MATRICES_GLSL}\nvoid main(){}`;",
+    });
+    if (v.some((x) => x.startsWith("SP1") && x.includes(shaderAnchor)))
+        fails.push(
+            "self-test: a GLSL shader defining PI before the splice WRONGLY red SP1 (a false-red on the honest survivor)",
+        );
+
+    // (w) a WGSL shader splicing ${OKLCH_MATRICES_WGSL} with NO const PI reds SP1.
+    const w = runAll({
+        [wgslAnchor]:
+            "export const S = `${OETF_WGSL}\n${OKLCH_MATRICES_WGSL}\n@fragment fn fs(){}`;",
+    });
+    if (!w.some((x) => x.startsWith("SP1") && x.includes(wgslAnchor)))
+        fails.push(
+            "self-test: a WGSL shader splicing OKLCH_MATRICES with no const PI did NOT red SP1",
+        );
+
     return fails;
 }
 
@@ -675,7 +760,7 @@ function main() {
 
     const artifact = {
         gate: "proof:viz",
-        wave: "BG.W-VIZ-RESIZE-ADOPT + BG.W-VIZ-PREVIEW-LIVE + BG.W-GOODOT-SETUP-SPLIT + BG.W-VIZ-REVEAL-BLOOM",
+        wave: "BG.W-VIZ-RESIZE-ADOPT + BG.W-VIZ-PREVIEW-LIVE + BG.W-GOODOT-SETUP-SPLIT + BG.W-VIZ-REVEAL-BLOOM + BG.W-DOTFLOW-REBUILD",
         stamp: snapshotStamp(),
         ok,
         violations: viol,
@@ -685,14 +770,14 @@ function main() {
     writeGateArtifact(out, artifact);
 
     console.log(
-        "proof:viz — viz-resize-UPLOAD-ONLY (BG.W-VIZ-RESIZE-ADOPT) + per-story preview stills (BG.W-VIZ-PREVIEW-LIVE) + goo-dot setup-split (BG.W-GOODOT-SETUP-SPLIT) + reveal-bloom (BG.W-VIZ-REVEAL-BLOOM)",
+        "proof:viz — viz-resize-UPLOAD-ONLY (BG.W-VIZ-RESIZE-ADOPT) + per-story preview stills (BG.W-VIZ-PREVIEW-LIVE) + goo-dot setup-split (BG.W-GOODOT-SETUP-SPLIT) + reveal-bloom (BG.W-VIZ-REVEAL-BLOOM) + shader-PI-scope (BG.W-DOTFLOW-REBUILD)",
     );
     if (viol.length) {
         console.error("  RED:");
         for (const v of viol) console.error("    ✗ " + v);
     } else {
         console.log(
-            "  GREEN (V1 one-sizer-gBCR · V2 no-self-measure · V3 no-self-size · V4 dprPolicy×9 · V5 leaf-routes · P1 registry≥11 · P2 pairwise-distinct · P3 card-dispatch · P4 device-free-memoized · G1 leaf-exports-builders · G2 composable-drained · G3 draw-in-leaf · R1 keyframe-filter-brightness · R2 canvas-target+cartoon-punch · R3 duration-token · R4 PRM-gated · R5 attr-not-dead-scalar · R6 first-visible-IO · R7 aurora-opts-in · R8 viz-choreography-absent)",
+            "  GREEN (V1 one-sizer-gBCR · V2 no-self-measure · V3 no-self-size · V4 dprPolicy×9 · V5 leaf-routes · P1 registry≥11 · P2 pairwise-distinct · P3 card-dispatch · P4 device-free-memoized · G1 leaf-exports-builders · G2 composable-drained · G3 draw-in-leaf · R1 keyframe-filter-brightness · R2 canvas-target+cartoon-punch · R3 duration-token · R4 PRM-gated · R5 attr-not-dead-scalar · R6 first-visible-IO · R7 aurora-opts-in · R8 viz-choreography-absent · SP1 shader-PI-before-OKLCH-splice)",
         );
     }
     if (isSelftest) {
