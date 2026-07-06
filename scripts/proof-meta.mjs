@@ -63,6 +63,7 @@
 
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
+import { pathToFileURL } from "node:url";
 import { ROOT } from "./constellation.mjs";
 import { gateArtifactPath, writeGateArtifact } from "./gate-output.mjs";
 // The SHARED detector kit (BG.W-GATE-FAMILY-CONSOLIDATE, F8.1). proof:meta is the
@@ -269,11 +270,93 @@ function gateFamilyConsolidate() {
     return { clause: "gate-family-consolidate", visualCount: 0, failures };
 }
 
-// The family runner — each F8 close wave appends its clause here.
-const CLAUSES = [fableArmPresent, gateFamilyConsolidate];
+// ── The `apca-parallel-witness` clause (BG.W-APCA-CONTRAST, F8.8) ──────────────
+// The APCA Lc PARALLEL-WITNESS arm added to scripts/lib/paint-arm.mjs — Lc as the
+// SOTA glass-legibility metric ALONGSIDE the WCAG-2 AA arm on composited translucent
+// plates (AA's ratio-contrast mis-ranks translucent surfaces; F2.R1 is the first
+// binding consumer). This clause is LOAD-BEARING, not a source grep: it dynamically
+// imports the arm and EXERCISES it against the APCA-W3 0.1.9 reference vectors + the
+// verdict thresholds, so a stub / wrong-constant impl reds here. DYNAMIC import (not
+// static) is the born-RED-safe path — on a HEAD without the arm a missing named export
+// resolves to `undefined` (a clean per-export failure), never a module-link crash.
+const PAINT_ARM = join(ROOT, "scripts/lib/paint-arm.mjs");
 
-function runClauses() {
-    return CLAUSES.map((fn) => fn());
+async function apcaParallelWitness() {
+    const failures = [];
+    if (!existsSync(PAINT_ARM)) {
+        return {
+            clause: "apca-parallel-witness",
+            visualCount: 0,
+            failures: ["paint-arm leaf absent — scripts/lib/paint-arm.mjs"],
+        };
+    }
+    let mod;
+    try {
+        mod = await import(pathToFileURL(PAINT_ARM).href);
+    } catch (e) {
+        return {
+            clause: "apca-parallel-witness",
+            visualCount: 0,
+            failures: [`paint-arm import threw — ${e instanceof Error ? e.message : String(e)}`],
+        };
+    }
+    for (const name of [
+        "apcaLuminance",
+        "apcaContrastLc",
+        "compositeOver",
+        "apcaLcFromResolved",
+        "apcaVerdict",
+        "apcaProbe",
+    ]) {
+        if (typeof mod[name] !== "function")
+            failures.push(
+                `paint-arm does not export a callable \`${name}\` — the APCA parallel-witness arm is absent (F8.8 un-landed).`,
+            );
+    }
+    for (const name of ["APCA_LC_BODY", "APCA_LC_SMALL"]) {
+        if (typeof mod[name] !== "number")
+            failures.push(`paint-arm does not export the numeric \`${name}\` Lc floor.`);
+    }
+    // Arm present → EXERCISE it (load-bearing; a stub / wrong-constant reds here).
+    if (failures.length === 0) {
+        const { apcaContrastLc, compositeOver, apcaLcFromResolved, apcaVerdict, APCA_LC_BODY, APCA_LC_SMALL } = mod;
+        const near = (a, b, tol) => Number.isFinite(a) && Math.abs(a - b) <= tol;
+        // The APCA-W3 0.1.9 reference vectors (the locked spec output).
+        if (!near(apcaContrastLc({ r: 0x88, g: 0x88, b: 0x88 }, { r: 255, g: 255, b: 255 }), 63.06, 0.5))
+            failures.push("APCA #888-on-#fff Lc ≠ 63.06 (±0.5) — the SAPC constants drifted from APCA-W3 0.1.9.");
+        if (!near(apcaContrastLc({ r: 255, g: 255, b: 255 }, { r: 0x88, g: 0x88, b: 0x88 }), -68.54, 0.5))
+            failures.push("APCA #fff-on-#888 Lc ≠ -68.54 (±0.5) — the reverse-polarity (WoB) path drifted.");
+        if (apcaContrastLc({ r: 128, g: 128, b: 128 }, { r: 128, g: 128, b: 128 }) !== 0)
+            failures.push("APCA identical-colour Lc ≠ 0 — the low-∆Y early-return broke.");
+        // compositeOver: 50%-alpha white over black → ~128 grey (the composited-plate seam).
+        const mid = compositeOver({ r: 255, g: 255, b: 255, alpha: 0.5 }, { r: 0, g: 0, b: 0 });
+        if (!(near(mid.r, 128, 1) && near(mid.g, 128, 1) && near(mid.b, 128, 1)))
+            failures.push("compositeOver 50%-white-over-black ≠ ~128 grey — the alpha-over arithmetic broke.");
+        // apcaLcFromResolved: warm ink over a translucent cream plate over white → legible.
+        const lc = apcaLcFromResolved("rgb(28 25 23)", "color(srgb 0.98 0.97 0.96 / 0.65)", "rgb(255 255 255)");
+        if (lc == null || Math.abs(lc) < APCA_LC_BODY)
+            failures.push(`apcaLcFromResolved warm-ink/cream-plate composite Lc = ${lc} — the composited-plate readback is degenerate.`);
+        // apcaVerdict thresholds: body floor 60, small floor 75; |signed| compare.
+        if (!apcaVerdict(63, { size: "body" }).pass)
+            failures.push("apcaVerdict |63| body should PASS the 60 floor.");
+        if (apcaVerdict(63, { size: "small" }).pass)
+            failures.push("apcaVerdict |63| small should FAIL the 75 floor.");
+        if (!apcaVerdict(-80, { size: "small" }).pass)
+            failures.push("apcaVerdict |-80| small should PASS the 75 floor (signed Lc, abs compare).");
+        if (apcaVerdict(null).pass) failures.push("apcaVerdict(null) should FAIL (degenerate read).");
+        if (APCA_LC_BODY !== 60 || APCA_LC_SMALL !== 75)
+            failures.push(`APCA floors ≠ 60/75 (the RECOVERED-LIQUID-ANIM-FINDINGS [10] spec target) — got ${APCA_LC_BODY}/${APCA_LC_SMALL}.`);
+    }
+    return { clause: "apca-parallel-witness", visualCount: 0, failures };
+}
+
+// The family runner — each F8 close wave appends its clause here. The clauses are a
+// mix of sync + async (the APCA arm dynamically imports its leaf), so the runner
+// awaits the resolved set (a plain-object clause passes through Promise.all unchanged).
+const CLAUSES = [fableArmPresent, gateFamilyConsolidate, apcaParallelWitness];
+
+async function runClauses() {
+    return Promise.all(CLAUSES.map((fn) => fn()));
 }
 
 // ── SELF-TEST ─────────────────────────────────────────────────────────────────
@@ -283,7 +366,7 @@ const SYNTH_HEADER =
 const synthTable = (rows) => SYNTH_HEADER + rows.join("\n") + "\n";
 const row = (wave, cls, fable) => `| x | ${wave} | F2 | ${cls} | PENDING | g | ${fable} | — | k |`;
 
-function selfTest() {
+async function selfTest() {
     const bites = [];
 
     // bite 1 — a VISUAL(P) row with a `—` fable cell MUST flag.
@@ -358,13 +441,54 @@ function selfTest() {
         bites.push(["missing-detect-kit → FLAG", flagged]);
     }
 
-    console.log("proof:meta — SELF-TEST (fable-arm-present + gate-family-consolidate detectors, 10 bites)");
+    // ── apca-parallel-witness detector bites (the APCA math + verdict, BG.W-APCA-CONTRAST) ──
+    // Dynamically import the arm (the same born-RED-safe path the clause uses) and exercise
+    // the pure functions — proving the detector is load-bearing (a stub impl MISSES a bite).
+    {
+        const arm = await import(pathToFileURL(PAINT_ARM).href);
+        const near = (a, b, tol) => Number.isFinite(a) && Math.abs(a - b) <= tol;
+        // bite 11 — the APCA-W3 0.1.9 reference vector #888-on-#fff resolves ≈ 63.06 (math real).
+        bites.push([
+            "apca-ref-#888-on-#fff → ≈63.06",
+            typeof arm.apcaContrastLc === "function" &&
+                near(arm.apcaContrastLc({ r: 0x88, g: 0x88, b: 0x88 }, { r: 255, g: 255, b: 255 }), 63.06, 0.5),
+        ]);
+        // bite 12 — the reverse-polarity WoB vector resolves negative (light-on-dark).
+        bites.push([
+            "apca-ref-#fff-on-#888 → ≈-68.54 (WoB negative)",
+            typeof arm.apcaContrastLc === "function" &&
+                near(arm.apcaContrastLc({ r: 255, g: 255, b: 255 }, { r: 0x88, g: 0x88, b: 0x88 }), -68.54, 0.5),
+        ]);
+        // bite 13 — the body-vs-small threshold split: |63| PASSES body(60), FAILS small(75).
+        bites.push([
+            "apca-verdict body|63|PASS + small|63|FAIL (threshold split)",
+            typeof arm.apcaVerdict === "function" &&
+                arm.apcaVerdict(63, { size: "body" }).pass === true &&
+                arm.apcaVerdict(63, { size: "small" }).pass === false,
+        ]);
+        // bite 14 — a degenerate (null) Lc FAILS the verdict (the anti-false-pass floor).
+        bites.push([
+            "apca-verdict(null) → FAIL (degenerate)",
+            typeof arm.apcaVerdict === "function" && arm.apcaVerdict(null).pass === false,
+        ]);
+        // bite 15 — compositeOver 50%-white-over-black → ~128 grey (the composited-plate seam).
+        bites.push([
+            "compositeOver 50%-white/black → ~128",
+            typeof arm.compositeOver === "function" &&
+                (() => {
+                    const m = arm.compositeOver({ r: 255, g: 255, b: 255, alpha: 0.5 }, { r: 0, g: 0, b: 0 });
+                    return near(m.r, 128, 1) && near(m.g, 128, 1) && near(m.b, 128, 1);
+                })(),
+        ]);
+    }
+
+    console.log("proof:meta — SELF-TEST (fable-arm-present + gate-family-consolidate + apca-parallel-witness, 15 bites)");
     let allFlag = true;
     for (const [name, ok] of bites) {
         console.log(`  ${ok ? "OK    " : "MISS  "}  ${name}`);
         if (!ok) allFlag = false;
     }
-    const real = runClauses();
+    const real = await runClauses();
     const realFailures = real.flatMap((c) => c.failures);
     console.log(`  real proof:meta failures : ${realFailures.length}`);
     for (const f of realFailures.slice(0, 25)) console.error(`    ${f}`);
@@ -381,16 +505,16 @@ function selfTest() {
         process.exit(1);
     }
     console.log(
-        "\n[proof:meta] SELF-TEST GREEN — all 10 bites behave, the real cursor passes fable-arm-present + gate-family-consolidate.",
+        "\n[proof:meta] SELF-TEST GREEN — all 15 bites behave, the real cursor passes fable-arm-present + gate-family-consolidate + apca-parallel-witness.",
     );
     process.exit(0);
 }
 
 // ── main ──────────────────────────────────────────────────────────────────────
 if (process.argv.includes("--self-test")) {
-    selfTest();
+    await selfTest();
 } else {
-    const clauses = runClauses();
+    const clauses = await runClauses();
     const failures = clauses.flatMap((c) => c.failures.map((f) => ({ clause: c.clause, msg: f })));
     const visualCount = clauses.find((c) => c.clause === "fable-arm-present")?.visualCount ?? 0;
 

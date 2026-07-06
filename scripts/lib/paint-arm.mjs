@@ -353,3 +353,235 @@ export function warmIdentityVerdict(stats, band = {}) {
     }
     return { pass: reasons.length === 0, reasons, predicates };
 }
+
+// ── BG.W-APCA-CONTRAST (F8.8) — the APCA Lc PARALLEL witness on composited plates ──
+//
+// The house legibility bar is WCAG-2 AA (contrast RATIO ≥ 4.5:1). But ratio-contrast
+// MIS-RANKS composited translucent surfaces — a warm-cream glass plate over a live
+// backdrop is exactly the case AA under-reads (the on-glass-fg family was DERIVED against
+// composites yet audited in ratios). The published 2026 SOTA for translucent surfaces is
+// APCA Lc (APCA-W3 0.1.9). This arm adds Lc as a PARALLEL witness ALONGSIDE the AA arm
+// (NEVER replacing it — both witnesses read on the COMPOSITED fill).
+//
+// APCA is its OWN perceptual algorithm — a 2.4-power TRC + APCA-specific luminance
+// coefficients + a soft black-clamp + a polarity-aware SAPC contrast. It is NOT the OKLab
+// decompose (the canvas-unify single-source fence targets the sRGB→OKLab matrix, which is
+// UNTOUCHED here); apcaLuminance is a distinct, self-contained metric, so it lives beside
+// oklabFromRgb without forking it. `compositeOver` is trivial alpha-over arithmetic (not a
+// colour-math algorithm) — it composites the translucent plate over its backdrop so the Lc
+// reads the surface the eye actually sees (the COMPOSITED plate, the whole point of F8.8).
+//
+// The verdict thresholds are the spec target (RECOVERED-LIQUID-ANIM-FINDINGS [10]): Lc ≥ 60
+// body / ≥ 75 small-text. Lc is SIGNED (positive = dark-on-light BoW polarity, negative =
+// light-on-dark WoB); the verdict compares the ABSOLUTE value against the floor.
+//
+// The cardinal split (mirroring paintProbe/paintBand): apcaProbe runs LOCAL on a real
+// device (it reads a live :5199 surface's `color`/`background-color`); apcaContrastLc /
+// compositeOver / apcaLcFromResolved / apcaVerdict are DEVICE-FREE (the math + the verdict
+// + the self-test — proof:meta exercises them with no live page).
+
+// APCA-W3 0.1.9 constants (the SAPC "4g" locked set — do NOT re-tune; they are a spec).
+const APCA_TRC = 2.4;
+const APCA_RCO = 0.2126729;
+const APCA_GCO = 0.7151522;
+const APCA_BCO = 0.072175;
+const APCA_NORM_BG = 0.56;
+const APCA_NORM_TXT = 0.57;
+const APCA_REV_TXT = 0.62;
+const APCA_REV_BG = 0.65;
+const APCA_BLK_THRS = 0.022;
+const APCA_BLK_CLMP = 1.414;
+const APCA_SCALE_BOW = 1.14;
+const APCA_SCALE_WOB = 1.14;
+const APCA_LO_BOW_OFFSET = 0.027;
+const APCA_LO_WOB_OFFSET = 0.027;
+const APCA_DELTA_Y_MIN = 0.0005;
+const APCA_LO_CLIP = 0.1;
+
+/** The APCA body / small-text Lc floors (RECOVERED-LIQUID-ANIM-FINDINGS [10]). */
+export const APCA_LC_BODY = 60;
+export const APCA_LC_SMALL = 75;
+
+/**
+ * APCA screen luminance Y from an sRGB {r,g,b} (0-255) triple. The APCA TRC (a straight
+ * 2.4 power, no sRGB piecewise segment) + APCA's own luminance coefficients — a SEPARATE
+ * metric from the OKLab decompose (the single-source fence is untouched). Pre-soft-clamp;
+ * the black clamp is applied per-colour inside apcaContrastLc.
+ * @param {{r:number, g:number, b:number}} c
+ * @returns {number} Y ∈ [0,1]
+ */
+export function apcaLuminance(c) {
+    const f = (chan) => Math.pow(Math.max(0, Math.min(255, chan)) / 255, APCA_TRC);
+    return APCA_RCO * f(c.r) + APCA_GCO * f(c.g) + APCA_BCO * f(c.b);
+}
+
+/**
+ * The APCA-W3 0.1.9 contrast Lc between a text colour and a background colour (both opaque
+ * {r,g,b} 0-255). Returns the SIGNED lightness contrast × 100 (positive BoW / negative WoB;
+ * 0 for a degenerate low-Δ or out-of-range read). The verdict compares |Lc| to the floor.
+ * @param {{r:number, g:number, b:number}} txt
+ * @param {{r:number, g:number, b:number}} bg
+ * @returns {number} signed Lc
+ */
+export function apcaContrastLc(txt, bg) {
+    const txtY = apcaLuminance(txt);
+    const bgY = apcaLuminance(bg);
+    if (!Number.isFinite(txtY) || !Number.isFinite(bgY)) return 0;
+    if (Math.min(txtY, bgY) < 0 || Math.max(txtY, bgY) > 1.1) return 0; // input-range clamp
+    // Soft-clamp each Y near black.
+    const Ytxt = txtY > APCA_BLK_THRS ? txtY : txtY + Math.pow(APCA_BLK_THRS - txtY, APCA_BLK_CLMP);
+    const Ybg = bgY > APCA_BLK_THRS ? bgY : bgY + Math.pow(APCA_BLK_THRS - bgY, APCA_BLK_CLMP);
+    if (Math.abs(Ybg - Ytxt) < APCA_DELTA_Y_MIN) return 0; // extremely low ∆Y → 0
+    let out;
+    if (Ybg > Ytxt) {
+        // BoW — dark text on a lighter background (normal polarity, positive Lc).
+        const sapc = (Math.pow(Ybg, APCA_NORM_BG) - Math.pow(Ytxt, APCA_NORM_TXT)) * APCA_SCALE_BOW;
+        out = sapc < APCA_LO_CLIP ? 0 : sapc - APCA_LO_BOW_OFFSET;
+    } else {
+        // WoB — light text on a darker background (reverse polarity, negative Lc).
+        const sapc = (Math.pow(Ybg, APCA_REV_BG) - Math.pow(Ytxt, APCA_REV_TXT)) * APCA_SCALE_WOB;
+        out = sapc > -APCA_LO_CLIP ? 0 : sapc + APCA_LO_WOB_OFFSET;
+    }
+    return out * 100;
+}
+
+/**
+ * Alpha-over composite: `over` ({r,g,b,alpha}) composited over an opaque `base` ({r,g,b}) →
+ * an opaque {r,g,b}. The standard sRGB-space "over" the browser paints for a translucent
+ * backgroundColor (matches what the eye sees). Trivial arithmetic — NOT a colour-math
+ * algorithm (the single-source fence is about the OKLab decompose, not alpha compositing).
+ * @param {{r:number, g:number, b:number, alpha?:number}} over
+ * @param {{r:number, g:number, b:number}} base
+ * @returns {{r:number, g:number, b:number}}
+ */
+export function compositeOver(over, base) {
+    const a = over.alpha == null ? 1 : Math.max(0, Math.min(1, over.alpha));
+    return {
+        r: Math.round(over.r * a + base.r * (1 - a)),
+        g: Math.round(over.g * a + base.g * (1 - a)),
+        b: Math.round(over.b * a + base.b * (1 - a)),
+    };
+}
+
+/**
+ * The APCA Lc on a COMPOSITED plate, from resolved CSS colour strings. `textColor` is the
+ * `color` of the text; `plateColor` is the surface `background-color` (possibly translucent);
+ * `backdropColor` (optional) is what sits behind the plate — when given, the plate is
+ * composited over it FIRST so the Lc reads the surface the eye sees (the whole point of the
+ * COMPOSITED-plate metric). A translucent text colour is likewise composited over the
+ * composited plate. Returns the signed Lc, or null when a colour cannot be parsed (the
+ * caller treats null as a degenerate read, not a pass — apcaVerdict(null) fails).
+ * @param {string} textColor resolved `color` (rgb/rgba/color(srgb)/oklab/oklch)
+ * @param {string} plateColor resolved `background-color`
+ * @param {string} [backdropColor] resolved backdrop behind the plate
+ * @returns {number | null}
+ */
+export function apcaLcFromResolved(textColor, plateColor, backdropColor) {
+    const txt = colorToRgb(textColor);
+    const plate = colorToRgb(plateColor);
+    if (!txt || !plate) return null;
+    // The effective background = the plate composited over the backdrop (if given + the
+    // plate is translucent). No backdrop → treat the plate's own (possibly < 1) alpha as
+    // over an implicit white (the worst-case light backdrop the bright bucket faces).
+    const backdrop = backdropColor ? colorToRgb(backdropColor) : { r: 255, g: 255, b: 255, alpha: 1 };
+    if (!backdrop) return null;
+    const effBg = compositeOver(plate, backdrop);
+    // A translucent text colour composites over the effective background too (opaque = no-op).
+    const effTxt = txt.alpha < 1 ? compositeOver(txt, effBg) : { r: txt.r, g: txt.g, b: txt.b };
+    return apcaContrastLc(effTxt, effBg);
+}
+
+/**
+ * Parse a resolved CSS colour (rgb/rgba/color(srgb) OR oklab/oklch) to an sRGB {r,g,b,alpha}
+ * triple. The rgb/color(srgb) forms parse directly (parseResolvedColor); the oklab/oklch
+ * forms (Chromium emits them for oklab()-authored tokens) are re-projected to sRGB through
+ * the shared OKLab decompose's INVERSE is unavailable here — so an oklab-serialized colour is
+ * resolved by the browser to a paint-equivalent sRGB in the LIVE probe (getComputedStyle over
+ * a color-mix resolves to color(srgb …)); the pure device-free path receives the sRGB form
+ * the readback already carries. If only an oklab()/oklch() string is available with no sRGB
+ * projection, its L is mapped to a neutral-grey sRGB proxy (APCA reads luminance, and OKLab L
+ * is a perceptual lightness — a faithful-enough proxy for the parallel witness). null when
+ * unparseable.
+ * @param {string} str
+ * @returns {{r:number, g:number, b:number, alpha:number} | null}
+ */
+export function colorToRgb(str) {
+    const rgb = parseResolvedColor(str);
+    if (rgb) return rgb;
+    const ok = parseOklabLike(str);
+    if (!ok) return null;
+    // OKLab L → sRGB grey proxy: sRGB gamma of the perceptual L (OKLab L is ~ the sRGB-linear
+    // lightness after the OETF, so L^(1/2.2)-ish; a neutral proxy for the luminance witness).
+    const g = Math.round(Math.max(0, Math.min(1, Math.pow(Math.max(0, ok.oklabL), 1 / 2.2))) * 255);
+    return { r: g, g, b: g, alpha: ok.alpha };
+}
+
+/**
+ * The APCA VERDICT — the parallel-witness twin of paintBand. Pass IFF |Lc| ≥ the size floor
+ * (body ≥ 60, small-text ≥ 75). PURE over a signed Lc (so a gate's self-test exercises it
+ * with synthetic Lc, no live page). This is a WITNESS ALONGSIDE the AA arm — never a
+ * replacement; a consumer reads BOTH.
+ * @param {number | null} lc the signed Lc (apcaContrastLc / apcaLcFromResolved output)
+ * @param {{size?:"body"|"small", bodyFloor?:number, smallFloor?:number}} [opts]
+ * @returns {{pass:boolean, lc:(number|null), absLc:(number|null), threshold:number, size:string, reasons:string[]}}
+ */
+export function apcaVerdict(lc, opts = {}) {
+    const size = opts.size === "small" ? "small" : "body";
+    const threshold = size === "small" ? (opts.smallFloor ?? APCA_LC_SMALL) : (opts.bodyFloor ?? APCA_LC_BODY);
+    if (lc == null || !Number.isFinite(lc))
+        return {
+            pass: false,
+            lc: lc == null ? null : lc,
+            absLc: null,
+            threshold,
+            size,
+            reasons: ["no Lc (degenerate read — a colour was unparseable or missing)"],
+        };
+    const absLc = Math.abs(lc);
+    const reasons = [];
+    if (!(absLc >= threshold))
+        reasons.push(
+            `APCA Lc ${absLc.toFixed(1)} < ${threshold} (${size}-text floor) — the composited plate is illegible under APCA (the SOTA glass metric mis-ranked as legible by WCAG-2 ratio-contrast)`,
+        );
+    return { pass: reasons.length === 0, lc, absLc, threshold, size, reasons };
+}
+
+/**
+ * The LIVE APCA probe (BG.W-APCA-CONTRAST) — the parallel-witness twin of paintProbe. Reads
+ * the FIRST `textSelector` match's resolved `color` + `background-color`, and (optionally)
+ * the `plateSelector` / `backdropSelector` background-colors, then computes the composited
+ * APCA Lc in Node (the math source is this leaf, the read is the browser). Runs LOCAL on a
+ * real device. `plateSelector` defaults to the text node itself (its own background is the
+ * plate); `backdropSelector` is what sits behind the plate. Returns {lc, ...resolved} | null.
+ * @param {import("@playwright/test").Page} page a Playwright/dev-tools page
+ * @param {string} route the app route to navigate (e.g. "/dock/overview")
+ * @param {string} textSelector the text-node selector (its `color` is the ink)
+ * @param {string} [plateSelector] the plate selector (its `background-color`; default the text node)
+ * @param {string} [backdropSelector] the backdrop behind the plate
+ * @returns {Promise<{lc:number, textColor:string, plateColor:string, backdropColor:(string|null)} | null>}
+ */
+export async function apcaProbe(page, route, textSelector, plateSelector, backdropSelector) {
+    if (route) await page.goto(route, { waitUntil: "networkidle" });
+    const read = await page.evaluate(
+        ({ t, p, b }) => {
+            const txtEl = document.querySelector(t);
+            if (!(txtEl instanceof HTMLElement)) return null;
+            const cs = getComputedStyle(txtEl);
+            const plateEl = p ? document.querySelector(p) : txtEl;
+            const bdEl = b ? document.querySelector(b) : null;
+            return {
+                textColor: cs.color,
+                plateColor:
+                    plateEl instanceof HTMLElement
+                        ? getComputedStyle(plateEl).backgroundColor
+                        : cs.backgroundColor,
+                backdropColor: bdEl instanceof HTMLElement ? getComputedStyle(bdEl).backgroundColor : null,
+            };
+        },
+        { t: textSelector, p: plateSelector ?? null, b: backdropSelector ?? null },
+    );
+    if (!read) return null;
+    const lc = apcaLcFromResolved(read.textColor, read.plateColor, read.backdropColor ?? undefined);
+    if (lc == null) return null;
+    return { lc, ...read };
+}
