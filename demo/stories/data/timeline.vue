@@ -121,9 +121,14 @@ function jumpTo(e: TimelineEvent) {
                     "
                     @click="jumpTo(e)"
                 >
+                    <!-- F2.R1 W-DARK-READABILITY-REPAIR (paint re-open): the step number sits
+                         on a brand-ramp fill whose luminance varies per tone, so a hardcoded
+                         white collapses on the LIGHT rungs in dark (WCAG ~1.8-2.8). The native
+                         contrast-color() picks the max-contrast ink per fill on the census
+                         engines (Chrome 149 / Safari 26); text-white is the pre-modern base. -->
                     <span
                         class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-medium text-white"
-                        :style="{ background: `var(--section-color-${e.tone})` }"
+                        :style="{ background: `var(--section-color-${e.tone})`, color: `contrast-color(var(--section-color-${e.tone}))` }"
                     >
                         {{ i + 1 }}
                     </span>

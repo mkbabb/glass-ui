@@ -1699,6 +1699,13 @@ export function refractWebglViolations(src) {
 //         ask; the raw page-muted --neutral-5 COLLAPSES over glass (APCA < 60, recorded).
 //   DL3 — the bright-bucket --foreground LOCKSTEP (ladder.css @container … light bucket).
 //   DL4 — the calm content-tier on-glass RE-POINT (ladder.css) — the A2 floor.
+//   DL5 — the EXTENDED on-glass MUTED re-point (paint re-open, the full-route census
+//         Class-3 mustFix): the calm content-tier re-point (DL4) does NOT reach the mid-
+//         tone / tone-tinted / selected-glass surfaces (`.feedback-tone` feedback plates,
+//         `.glass-capsule` chips + pucks, `.metric-badge` label), which composite BRIGHTER
+//         than the calm quiet plate and kept the raw page-muted --neutral-5 (measured WCAG
+//         3.3-4.27 dark, below AA). The ladder.css re-point must lift them to the STRONGER
+//         on-glass rung; the -strong rung must clear the census-measured plates.
 // A --self-test bite proves each clause has teeth.
 export function darkLegibilityViolations(darkArmText, ladderText, cardsText) {
     const violations = [];
@@ -1938,6 +1945,51 @@ export function darkLegibilityViolations(darkArmText, ladderText, cardsText) {
         violations.push(
             "DL4: the ladder.css calm content-tier :where(.glass-card, .glass-resting, .glass-quiet, .glass-wash) does not re-point --muted-foreground → var(--on-glass-muted) — a text-muted-foreground caption over a calm glass plate loses its floor (the A2 whisper collapse)",
         );
+
+    // ── DL5 — the EXTENDED on-glass MUTED re-point (paint re-open, full-route census
+    //    Class-3 mustFix) ──────────────────────────────────────────────────────────
+    // The mid-tone / tone-tinted / selected-glass surfaces (`.feedback-tone` feedback
+    // plates, `.glass-capsule` chips + pucks, `.metric-badge` label) composite BRIGHTER
+    // than the calm quiet plate (L≈0.30-0.35 vs 0.28), so the base on-glass-muted loses
+    // the floor there (the census measured the raw page-muted --neutral-5 at WCAG 3.3-4.27
+    // dark). The ladder.css re-point must lift them to the STRONGER on-glass rung. Three
+    // sub-clauses: (a) the re-point SOURCE exists; (b) --on-glass-muted-strong clears WCAG
+    // 4.5 + APCA 60 over the census-measured tone-tinted FEEDBACK plate (item-4 surface);
+    // (c) it clears WCAG 4.5 over the census-measured brightest selected-glass CHIP plate
+    // (item-5 worst case). The census-measured composited plates (F2.R1 DELTA) are the
+    // empirical witnesses — the paint judge's own painted truth, not token math. APCA on a
+    // bright mid-tone plate is the subordinate-muted CEILING (a SELECTED chip paints
+    // --accent-ink at full contrast; the idle muted label's binding floor there is WCAG).
+    const extRepoint = ruleBody(
+        ladder,
+        ":where(.feedback-tone, .glass-capsule, .metric-badge)",
+    );
+    facts.extendedRepoint =
+        !!extRepoint && /--muted-foreground:\s*var\(--on-glass-muted-strong\)/.test(extRepoint);
+    if (!facts.extendedRepoint)
+        violations.push(
+            "DL5: the ladder.css :where(.feedback-tone, .glass-capsule, .metric-badge) rule does not re-point --muted-foreground → var(--on-glass-muted-strong) — the mid-tone / tone-tinted / selected-glass surfaces keep the raw page-muted (--neutral-5), which collapses to WCAG 3.3-4.27 dark over their composited plates (the full-route census Class-3 below-floor rows: feedback tone plates, selected-glass capsule chips/pucks, metric-badge)",
+        );
+    // (b) + (c) — the -strong rung over the census-measured composited plates.
+    const feedbackTonePlate = { r: 79, g: 61, b: 40 }; // census-measured destructive tone-tinted plate (dark)
+    const brightChipPlate = { r: 95, g: 78, b: 77 }; // census-measured brightest selected-glass capsule plate (dark)
+    if (onGlassMutedStrong) {
+        facts.strongOverFeedbackTone = inkVerdict(
+            "DL5",
+            "--on-glass-muted-strong over the tone-tinted feedback plate",
+            onGlassMutedStrong,
+            feedbackTonePlate,
+        );
+        const chipRatio = Number(wcagRatio(onGlassMutedStrong, brightChipPlate).toFixed(2));
+        facts.strongOverBrightChip = {
+            ratio: chipRatio,
+            lc: Number(Math.abs(apcaContrastLc(onGlassMutedStrong, brightChipPlate)).toFixed(1)),
+        };
+        if (chipRatio < 4.5)
+            violations.push(
+                `DL5 (WCAG): --on-glass-muted-strong over the census-measured brightest selected-glass chip plate is ${chipRatio}:1 < 4.5:1 — even the -strong rung must clear the WCAG census floor on the mid-tone chip (a subordinate muted ink cannot reach APCA 60 on a bright mid-tone plate; a SELECTED chip paints --accent-ink at full contrast, so WCAG is the binding floor for the idle muted label)`,
+            );
+    }
 
     return { violations, facts };
 }
@@ -2796,7 +2848,8 @@ function selfTest() {
         'background-image: var(--card-field-floor-image, radial-gradient(60% 55% at 80% 16%, oklch(0.96 0.04 78 / 0.5), oklch(0.96 0.04 78 / 0) 72%)); }';
     const goodLadder =
         "@container style(--glass-backdrop: light) { .glass-card { --muted-foreground: var(--foreground); } } " +
-        ":where(.glass-card, .glass-resting, .glass-quiet, .glass-wash) { --muted-foreground: var(--on-glass-muted); }";
+        ":where(.glass-card, .glass-resting, .glass-quiet, .glass-wash) { --muted-foreground: var(--on-glass-muted); } " +
+        ":where(.feedback-tone, .glass-capsule, .metric-badge) { --muted-foreground: var(--on-glass-muted-strong); --muted-foreground-strong: var(--on-glass-muted-strong); }";
     // sanity — the GREEN quad must pass (a false-RED detector is as bad as a toothless one).
     if (darkLegibilityViolations(goodDarkArm, goodLadder, goodCards).violations.length !== 0) {
         fails.push(
@@ -2842,6 +2895,28 @@ function selfTest() {
     if (!darkLegibilityViolations(goodDarkArm, noRepoint, goodCards).violations.some((v) => /DL4/.test(v))) {
         fails.push(
             "self-test DL4: a calm content tier missing the --muted-foreground → var(--on-glass-muted) re-point was NOT flagged (the A2 on-glass-floor detector has no teeth)",
+        );
+    }
+    // bite DL5a — the mid-tone / tone-tinted / selected-glass surfaces missing the EXTENDED
+    // -strong re-point (the HEAD state — these surfaces keep the raw page-muted) reds DL5.
+    const noExtRepoint = goodLadder.replace(
+        ":where(.feedback-tone, .glass-capsule, .metric-badge) { --muted-foreground: var(--on-glass-muted-strong); --muted-foreground-strong: var(--on-glass-muted-strong); }",
+        "",
+    );
+    if (!darkLegibilityViolations(goodDarkArm, noExtRepoint, goodCards).violations.some((v) => /DL5:/.test(v))) {
+        fails.push(
+            "self-test DL5: the mid-tone / tone-tinted / selected-glass surfaces missing the --on-glass-muted-strong re-point (the census Class-3 below-floor state) were NOT flagged (the extended-surface floor detector has no teeth)",
+        );
+    }
+    // bite DL5b — a collapsed --on-glass-muted-strong (dropped near the bright chip plate
+    // luminance) must red DL5's numeric census over the census-measured plates.
+    const collapsedStrong = goodDarkArm.replace(
+        "--on-glass-muted-strong: hsl(36 14% 78%);",
+        "--on-glass-muted-strong: hsl(30 12% 44%);",
+    );
+    if (!darkLegibilityViolations(collapsedStrong, goodLadder, goodCards).violations.some((v) => /DL5 \((WCAG|APCA)\)/.test(v))) {
+        fails.push(
+            "self-test DL5: a collapsed --on-glass-muted-strong (dropped near the mid-tone plate luminance) was NOT flagged over the census-measured feedback/chip plates (the extended numeric floor census has no teeth)",
         );
     }
 
@@ -3040,6 +3115,9 @@ function run() {
     );
     console.log(
         `  DL3 bright-lockstep: ${dl.brightBucketLockstep ? "✓" : "✗"}  DL4 calm-repoint: ${dl.calmRepoint ? "✓" : "✗"} (the A2 on-glass floor)`,
+    );
+    console.log(
+        `  DL5 mid-tone lift : re-point=${dl.extendedRepoint ? "✓" : "✗"} (feedback-tone/glass-capsule/metric-badge → -strong)  feedback-plate=${dl.strongOverFeedbackTone ? `WCAG ${dl.strongOverFeedbackTone.ratio}:1 / APCA ${dl.strongOverFeedbackTone.lc}` : "?"}  bright-chip=${dl.strongOverBrightChip ? `WCAG ${dl.strongOverBrightChip.ratio}:1 (APCA ${dl.strongOverBrightChip.lc}, subordinate-muted ceiling)` : "?"}`,
     );
     console.log(`  self-test bites   : ${facts.selfTestOk ? "all teeth ✓" : "✗ BROKE"}`);
 

@@ -135,9 +135,15 @@ function setApi(api: CarouselApi | undefined) {
                 >
                     <CarouselContent>
                         <CarouselItem v-for="s in slides" :key="s.title">
+                            <!-- F2.R1 W-DARK-READABILITY-REPAIR (paint re-open): the swatch
+                                 paints a FIXED LIGHT hue (mode-invariant hsl 82% L), so the
+                                 label ink must NOT follow --foreground into cream in dark
+                                 (where "Warm Cream"/"Kelp"/… collapsed to WCAG ~1.05 on the
+                                 light chip). A fixed warm-dark ink reads on every light hue in
+                                 BOTH modes — the swatch is always light. -->
                             <div
-                                class="flex h-48 flex-col items-start justify-end rounded-card p-5 text-foreground"
-                                :style="{ background: `hsl(${s.hue} 60% 82%)` }"
+                                class="flex h-48 flex-col items-start justify-end rounded-card p-5"
+                                :style="{ background: `hsl(${s.hue} 60% 82%)`, color: 'hsl(24 12% 12%)' }"
                             >
                                 <p class="text-xs uppercase tracking-widest opacity-70">{{ s.note }}</p>
                                 <p class="font-display text-2xl">{{ s.title }}</p>

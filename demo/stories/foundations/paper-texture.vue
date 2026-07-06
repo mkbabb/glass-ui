@@ -161,6 +161,13 @@ const opacity = ref(0.5);
 .scope-cool,
 .scope-bone {
     background-color: var(--paper-underpaint-color);
+    /* F2.R1 W-DARK-READABILITY-REPAIR (paint re-open) — these panels paint a FIXED LIGHT
+       paper base (mode-invariant), so the `warm`/`cool`/`bone` labels must NOT follow
+       --foreground into cream in dark (where the label collapsed to WCAG ~1.05 over the
+       light paper). Re-point the ink locally to a fixed warm-dark on the known-light plate
+       (the swatch is always light, so dark ink is correct in BOTH modes). */
+    --foreground: hsl(24 12% 14%);
+    --muted-foreground: hsl(24 8% 34%);
 }
 
 /* The layered-composition panel reads warm paper (NOT gray) — a warm-cream base the

@@ -126,6 +126,10 @@ function toggle(id: string): void {
                         )"
                     >
                         <Transition :name="demo.cssClass">
+                            <!-- F2.R1 W-DARK-READABILITY-REPAIR (paint re-open): white on the
+                                 fixed --motion-accent violet collapsed to WCAG ~2.45 in dark.
+                                 The native contrast-color() picks the legible ink on the census
+                                 engines (Chrome 149 / Safari 26); text-white is the base. -->
                             <div
                                 v-if="visible[demo.id]"
                                 :class="cn(
@@ -133,6 +137,7 @@ function toggle(id: string): void {
                                     'bg-[var(--motion-accent)] text-small font-medium text-white',
                                     'shadow-cartoon-sm',
                                 )"
+                                :style="{ color: 'contrast-color(var(--motion-accent))' }"
                             >
                                 hello
                             </div>

@@ -359,6 +359,31 @@
         --muted-foreground-strong: var(--on-glass-muted-strong);
     }
 
+    /* F2.R1 W-DARK-READABILITY-REPAIR (paint re-open — the full-route dark census Class-3
+       mustFix) — the on-glass MUTED lift EXTENDS to the mid-tone / tone-tinted / selected-
+       glass surfaces the calm content-tier :where() above does NOT reach. The muted register
+       (--muted-foreground = --neutral-5, calibrated "AA vs the OPAQUE page") COLLAPSES on a
+       composited TINTED / mid-tone glass plate exactly as it does on the calm content tier —
+       but these surfaces are NOT content tiers, so the re-point above never reached them
+       (the census measured the raw page-muted at WCAG 3.3-4.27 dark, BELOW AA): the feedback
+       TONE-TINTED plates (`.feedback-tone` — Alert / Notification / Toast, the AlertDescription
+       caption + mono labels), the selected-glass capsule CHIPS + overflow PUCKS (`.glass-capsule`
+       — selectable-chip / toggle-chip / stacked-icons / tags-input, idle `text-muted-foreground`
+       ink), and the `.metric-badge` mono label. These plates composite BRIGHTER than the calm
+       quiet plate (the quiet content plate lands L≈0.28; a tone-tinted / selected chip plate
+       lands L≈0.30-0.35), so a subordinate light ink loses contrast on them — they need the
+       STRONGER on-glass rung (`--on-glass-muted-strong`, one step more present) to clear the
+       floor while STAYING subordinate to the L90 --foreground ink. ONE register (no new token,
+       no fork — it READS the existing on-glass -strong rung the wave already ships), the SAME
+       substitution-over-redeclaration discipline the content-tier re-point uses. The rung
+       auto-flips per mode (the on-glass tokens carry their own light/dark arms); in light these
+       surfaces already read the on-glass register on their light glass, byte-consistent. Machine-
+       locked by `proof:glass` dark-legibility DL5. */
+    :where(.feedback-tone, .glass-capsule, .metric-badge) {
+        --muted-foreground: var(--on-glass-muted-strong);
+        --muted-foreground-strong: var(--on-glass-muted-strong);
+    }
+
     /* AX.W55 — the `contrast-color()` foreground-ink flip (Chrome 147+/Safari 26+).
        A PROGRESSIVE-ENHANCEMENT layer, NEVER the load-bearing floor (Open-Q #5
        ratified): the declarative bucket above already carries AA on ALL engines (it
