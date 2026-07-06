@@ -45,6 +45,25 @@
 //       π spec (this clause locks the source wiring it depends on). Bite: a velocity-only
 //       wiring reds.
 //
+// F9.R5 BG.W-DOTMATRIX-STABLE — the no-flash / stability / calm-sphere extension (born-RED on
+// the pre-fix tree: the same-frame bloom attack + the diverged 2D-plane default):
+//
+//   7 — THE NO-FLASH LAW (S1). The flick bloom is SLEW-LIMITED (no same-frame
+//       `Math.max(bloom, burst)` attack — the prime random-flash suspect; a bounded slewBloom
+//       low-pass toward a capped burst instead) AND every shader bloom read (u.u3.z / uU3.z) is
+//       LOCAL (exp/nearness/facing/pAct-gated — never a whole-globe multiply). Bites: a planted
+//       same-frame Math.max attack + a planted un-gated whole-globe bloom multiply each red.
+//
+//   8 — STABILITY (S2). The dots buffer is seeded ONCE per backend (buildDotsBuffer × exactly
+//       2 — resize RE-PROJECTS, never re-rolls), and restingPointer() seeds EVERY pointer
+//       uniform field (no NaN/uninitialized read before first present). Bites: a third
+//       buildDotsBuffer (a resize re-seed) + a restingPointer missing bloom each red.
+//
+//   9 — THE CLAUDE-COWORK READ (S3/S4). DEFAULT_DOT_MATRIX_CONFIG is the CALM depth-shaded
+//       dot-SHELL: layout "sphere" (not the diverged 2D plane), a gentle well (gravityStrength
+//       ≤ 0.35, not the aggressive 0.62 plane-lens yank), a slow spin (≤ 0.12), twinkle 0 (S4).
+//       Bites: a "plane" default layout + an aggressive gravityStrength default each red.
+//
 // + a self-test bite per clause (each planted defect REDs its clause).
 
 import { existsSync, readFileSync } from "node:fs";
@@ -330,6 +349,100 @@ function clausePointer(over) {
     return viol;
 }
 
+// ── 7: the NO-FLASH law (F9.R5 BG.W-DOTMATRIX-STABLE, born-RED on HEAD) ──────────
+// S1 — no code path steps whole-frame brightness discontinuously. (a) the flick bloom is
+// SLEW-LIMITED (never a same-frame `Math.max(bloom, burst)` attack — the prime random-flash
+// suspect), (b) the shader bloom reads are LOCAL (every `u.u3.z`/`uU3.z` read nearness/
+// facing/pAct-gated — never a whole-globe multiply).
+function clauseNoFlash(over) {
+    const viol = [];
+    const composable = stripComments(
+        over?.useDotMatrix ?? read(resolve(DIR, "composables/useDotMatrix.ts")),
+    );
+    // 7a — the same-frame global attack is GONE. `push.bloom = Math.max(… burst …)` mirrors an
+    // accel spike in ONE frame (the random-flash). Its presence reds.
+    if (/push\.bloom\s*=\s*Math\.max\s*\([^)]*burst/i.test(composable))
+        viol.push("7 no-flash: useDotMatrix writes push.bloom via a same-frame Math.max(…, burst) — the accel-spike mirror IS the random flash (S1b); the bloom must SLEW-LIMIT, never same-frame jump");
+    // 7b — the slew-limited attack is PRESENT (a bounded per-frame ramp toward the bounded burst).
+    const hasSlew = /slewBloom\s*\(/.test(composable) && /BLOOM_ATTACK_TAU|BLOOM_DECAY_TAU/.test(composable);
+    if (!hasSlew)
+        viol.push("7 no-flash: useDotMatrix has no slew-limited bloom (a slewBloom(…) low-pass + a BLOOM_ATTACK_TAU/BLOOM_DECAY_TAU clock) — the flick glow must RAMP, not jump (S1b)");
+    if (!/push\.bloom\s*=\s*slewBloom\s*\(/.test(composable))
+        viol.push("7 no-flash: push.bloom is not written through slewBloom(…) — the bloom write must route the slew limiter (S1b)");
+    // The bloom target must be BOUNDED (a ceiling so an accel spike is a gentle local glow).
+    if (!/Math\.min\s*\([^)]*burst[^)]*\)|Math\.min\s*\([^)]*BLOOM_CEIL|BLOOM_CEIL/.test(composable))
+        viol.push("7 no-flash: the flick bloom target is not bounded (a Math.min(pointer.burst…, BLOOM_CEIL)) — an unbounded burst is a bright pop (S1a)");
+    // 7c — the shader bloom reads are LOCAL. Every line reading the bloom lane (u.u3.z WGSL /
+    // uU3.z GLSL) is spatially gated by exp(/nearness/facing/pAct — never a whole-globe multiply.
+    for (const [label, key] of [["WGSL", "wgsl"], ["GLSL", "glsl"]]) {
+        const src = stripComments(
+            over?.[key] ?? read(resolve(DIR, `shaders/dot-matrix.${key === "wgsl" ? "wgsl" : "glsl"}.ts`)),
+        );
+        const tok = key === "wgsl" ? /u\.u3\.z/ : /uU3\.z/;
+        for (const line of (src ?? "").split("\n")) {
+            if (!tok.test(line)) continue;
+            if (!/exp\s*\(|nearness|facing|pAct/.test(line))
+                viol.push(`7 no-flash: ${label} reads the bloom lane un-gated — every bloom read must be LOCAL (exp/nearness/facing/pAct), never a whole-globe multiply (S1a): «${line.trim().slice(0, 90)}»`);
+        }
+    }
+    return viol;
+}
+
+// ── 8: STABILITY — seed-once + every uniform seeded before first present (S2) ────
+function clauseStability(over) {
+    const viol = [];
+    const setup = over?.useDotSphere ?? read(resolve(DIR, "composables/useDotSphere.ts"));
+    const setupSrc = stripComments(setup);
+    // 8a — the dots buffer is seeded ONCE per backend (re-project on resize, never re-roll).
+    // Two setups → exactly two buildDotsBuffer( calls at setup; a re-seed anywhere (a resize
+    // re-roll) adds a THIRD, so the exact count is the seed-once witness.
+    const seedCount = (setupSrc.match(/buildDotsBuffer\s*\(/g) ?? []).length;
+    if (seedCount !== 2)
+        viol.push(`8 stability: buildDotsBuffer is called ${seedCount}× in useDotSphere (expected exactly 2 — one seed per backend setup); a resize re-seed (re-roll) is forbidden — resize RE-PROJECTS, never re-rolls (S2)`);
+    // 8b — restingPointer seeds EVERY pointer-uniform field (no NaN/undefined read before first
+    // present). The shader reads x/y/active/push/bloom/velX/velY every frame.
+    const bridge = stripComments(
+        over?.bridge ?? read(resolve(DIR, "composables/uniformBridgeWGPU.ts")),
+    );
+    const restingBody = (bridge.match(/function\s+restingPointer\s*\(\s*\)\s*:[^{]*\{([\s\S]*?)\}/) ?? [, ""])[1];
+    for (const field of ["x", "y", "active", "push", "bloom", "velX", "velY", "accelMag"]) {
+        if (!new RegExp(`\\b${field}\\s*:`).test(restingBody))
+            viol.push(`8 stability: restingPointer() does not initialize \`${field}\` — an un-seeded pointer field is an uninitialized uniform read before first present (S2)`);
+    }
+    return viol;
+}
+
+// ── 9: the Claude-cowork READ — the calm depth-shaded dot-SHELL default (S3) ──────
+function clauseCalmSphere(over) {
+    const viol = [];
+    const consts = stripComments(
+        over?.constants ?? read(resolve(DIR, "constants.ts")),
+    );
+    const num = (re) => {
+        const m = consts.match(re);
+        return m ? Number(m[1]) : NaN;
+    };
+    // 9a — the DEFAULT is the sphere (the depth-shaded translucent shell; a plane has no sphere
+    // read — the π reads a sphere with the spin stopped). Born-RED on the "plane" HEAD default.
+    const layout = (consts.match(/layout\s*:\s*["'](\w+)["']/) ?? [, ""])[1];
+    if (layout !== "sphere")
+        viol.push(`9 calm-sphere: DEFAULT_DOT_MATRIX_CONFIG.layout is "${layout}", not "sphere" — the Claude-cowork read is the depth-shaded dot-SHELL (S3); the 2D plane is a kept opt-in register, NOT the default`);
+    // 9b — the well is CALM (a gentle surface dimple, not the aggressive plane-lens yank). Born-RED
+    // on the 0.62 HEAD value.
+    const grav = num(/gravityStrength\s*:\s*([\d.]+)/);
+    if (!(grav <= 0.35))
+        viol.push(`9 calm-sphere: gravityStrength ${grav} > 0.35 — the default well must be a CALM gentle dimple, not the aggressive plane-lens yank (S3 calm)`);
+    // 9c — the spin is SLOW (a dignified rotation — the calm register). Fence.
+    const spin = num(/rotationSpeed\s*:\s*([\d.]+)/);
+    if (!(spin <= 0.12))
+        viol.push(`9 calm-sphere: rotationSpeed ${spin} > 0.12 — the default is a SLOW dignified spin (S3 calm)`);
+    // 9d — twinkle stays default-0 (a dead-still resting field; the demo lifts it bounded). S4.
+    const twk = num(/twinkle\s*:\s*([\d.]+)/);
+    if (!(twk === 0))
+        viol.push(`9 calm-sphere: twinkle default ${twk} ≠ 0 — the resting twinkle floor is OFF by default; the demo lifts it (S4)`);
+    return viol;
+}
+
 function runAll(over = {}) {
     return [
         ...clauseExists(over),
@@ -338,6 +451,9 @@ function runAll(over = {}) {
         ...clauseDistribution(over),
         ...clauseWarmIdentity(over),
         ...clausePointer(over),
+        ...clauseNoFlash(over),
+        ...clauseStability(over),
+        ...clauseCalmSphere(over),
     ];
 }
 
@@ -389,6 +505,50 @@ function selfTest() {
     if (!velOnly.some((v) => v.startsWith("6")))
         fails.push("self-test: a velocity-only wiring did NOT red clause 6");
 
+    // (7a) a same-frame Math.max(bloom, burst) attack reds clause 7 (the flash regression).
+    const bloomAttack = runAll({
+        useDotMatrix:
+            "usePointerVelocityField(); f.tick(d); use(f.speed.value); use(f.burst.value); push.bloom = Math.max(push.bloom * 0.9, pointer.burst.value); const parallax = 1;",
+    });
+    if (!bloomAttack.some((v) => v.startsWith("7")))
+        fails.push("self-test: a same-frame Math.max(bloom, burst) attack did NOT red clause 7");
+
+    // (7c) an UN-gated whole-globe bloom multiply in the shader reds clause 7 (the local floor).
+    const liveWgsl7 = read(resolve(DIR, "shaders/dot-matrix.wgsl.ts"));
+    const ungatedBloom = runAll({
+        wgsl: liveWgsl7 + "\n// planted: out.bright = out.bright * (1.0 + u.u3.z);\nconst PLANT = `out.bright = out.bright * (1.0 + u.u3.z);`;",
+    });
+    if (!ungatedBloom.some((v) => v.startsWith("7")))
+        fails.push("self-test: an un-gated whole-globe u.u3.z bloom multiply did NOT red clause 7");
+
+    // (8a) a THIRD buildDotsBuffer call (a resize re-seed/re-roll) reds clause 8.
+    const liveSetup = read(resolve(DIR, "composables/useDotSphere.ts"));
+    const reSeed = runAll({ useDotSphere: liveSetup + "\nfunction resizeReseed(){ buildDotsBuffer(config); }" });
+    if (!reSeed.some((v) => v.startsWith("8")))
+        fails.push("self-test: a third buildDotsBuffer (resize re-seed) did NOT red clause 8");
+
+    // (8b) a restingPointer missing the bloom field reds clause 8 (the uninitialized-uniform read).
+    const noBloomField = runAll({
+        bridge: "function restingPointer(): DotPointerState {\n  return { x: 0.5, y: 0.5, active: 0, push: 0, velX: 0, velY: 0, accelMag: 0 };\n}",
+    });
+    if (!noBloomField.some((v) => v.startsWith("8")))
+        fails.push("self-test: a restingPointer missing the bloom field did NOT red clause 8");
+
+    // (9a) a "plane" default layout reds clause 9 (the diverged-from-the-sphere-read regression).
+    const liveConsts9 = read(resolve(DIR, "constants.ts"));
+    const planeDefault = runAll({
+        constants: liveConsts9.replace(/layout\s*:\s*["']sphere["']/, 'layout: "plane"'),
+    });
+    if (!planeDefault.some((v) => v.startsWith("9")))
+        fails.push("self-test: a plane default layout did NOT red clause 9");
+
+    // (9b) an aggressive default gravityStrength reds clause 9 (the calm-well floor).
+    const aggressiveWell = runAll({
+        constants: liveConsts9.replace(/gravityStrength\s*:\s*[\d.]+/, "gravityStrength: 0.62"),
+    });
+    if (!aggressiveWell.some((v) => v.startsWith("9")))
+        fails.push("self-test: an aggressive gravityStrength (0.62) default did NOT red clause 9");
+
     void missing;
     return fails;
 }
@@ -420,7 +580,7 @@ function main() {
         console.error("  RED:");
         for (const v of viol) console.error("    ✗ " + v);
     } else {
-        console.log("  GREEN (1 exists · 2 substrate · 3 round-trip · 4 distribution · 5 warm-identity · 6 pointer)");
+        console.log("  GREEN (1 exists · 2 substrate · 3 round-trip · 4 distribution · 5 warm-identity · 6 pointer · 7 no-flash · 8 stability · 9 calm-sphere)");
     }
     if (isSelftest) {
         if (selfFails.length) {

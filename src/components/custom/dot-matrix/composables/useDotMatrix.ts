@@ -103,6 +103,23 @@ export function useDotMatrix(
         return [x, v];
     }
 
+    // BG.W-DOTMATRIX-STABLE (F9.R5) — the NO-FLASH law. The prior
+    // `push.bloom = Math.max(bloom * 0.9, pointer.burst.value)` mirrored any pointer-accel
+    // spike in ONE frame — a same-frame whole-cluster brightness jump the user read as a
+    // RANDOM FLASH. The bloom now SLEW-LIMITS: it eases toward the (bounded) burst on a rise
+    // time-constant (never a same-frame step) and decays back to rest on a fall constant. The
+    // shader keeps every bloom read LOCAL (nearness/facing/pAct-gated), so the flick reads as
+    // a calm DECAYING GLOW near the cursor, never a whole-globe flash.
+    const BLOOM_ATTACK_TAU = 0.18; // s — the rise clock (bounds the per-frame attack; no jump)
+    const BLOOM_DECAY_TAU = 0.42; // s — the fall clock (a calm decaying glow)
+    const BLOOM_CEIL = 0.6; // the bounded ceiling — a gentle local glow, never a bright pop
+    function slewBloom(value: number, target: number, dtSec: number): number {
+        // A single-pole low-pass toward the target: the per-frame delta is bounded by the
+        // time-constant, so a raw burst spike can NEVER step the field in one frame (S1b).
+        const tau = target > value ? BLOOM_ATTACK_TAU : BLOOM_DECAY_TAU;
+        return value + (target - value) * (1 - Math.exp(-dtSec / Math.max(tau, 1e-3)));
+    }
+
     function onFrame(timeSec: number): void {
         const deltaMs = lastFrameSec > 0 ? (timeSec - lastFrameSec) * 1000 : 16.7;
         const dtSec = Math.min(deltaMs / 1000, 0.05);
@@ -113,7 +130,9 @@ export function useDotMatrix(
             // Ease the well back to rest on the spring (the dots drift back with weight).
             [push.active, activeVel] = springStep(push.active, activeVel, 0, 0.5, 0.7, dtSec);
             [push.push, pushVel] = springStep(push.push, pushVel, 0, 0.5, 0.7, dtSec);
-            push.bloom *= 0.9;
+            // The bloom eases to rest on the SAME fall constant (no same-frame drop — the
+            // slew-limited glow decays; the no-flash law S1b).
+            push.bloom = slewBloom(push.bloom, 0, dtSec);
             // Decay the reclaimed velocity lane to rest so the lens collapses to a calm
             // symmetric well (the directional warp + comet-tail fade as the pointer leaves).
             push.velX *= 0.9;
@@ -132,8 +151,10 @@ export function useDotMatrix(
         const speed = pointer.speed.value;
         const targetPush = modeSign(config.pointerMode) * Math.min(1.0, 0.7 + speed * 0.6);
         [push.push, pushVel] = springStep(push.push, pushVel, targetPush, 0.42, 0.7, dtSec);
-        // The flick BURST (the accel axis) fires a transient brightness + size bloom + over-pull.
-        push.bloom = Math.max(push.bloom * 0.9, pointer.burst.value);
+        // The flick BURST (the accel axis) RAMPS a bounded LOCAL glow — SLEW-LIMITED toward the
+        // capped burst (never the prior same-frame `Math.max` jump; the no-flash law S1a/S1b).
+        // The shader gates it by nearness, so it stays a decaying glow near the cursor.
+        push.bloom = slewBloom(push.bloom, Math.min(pointer.burst.value, BLOOM_CEIL), dtSec);
         // THE DEAD-LEVER RECLAIM — the shared field already computes velocity + acceleration
         // every frame and the shader threw them away (it read only the scalar `speed`). Write
         // them into the velocity lane so the directional liquid lens can squash/stretch along

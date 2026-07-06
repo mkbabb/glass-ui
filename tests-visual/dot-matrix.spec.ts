@@ -168,6 +168,40 @@ for (const scheme of SCHEMES) {
         expect(b.length).toBeGreaterThan(0);
     });
 
+    test(`dot-matrix — no random flash on a parked series (${scheme}) [F9.R5]`, async ({ page }) => {
+        await page.goto(ROUTE);
+        await page.waitForSelector(CANVAS, { timeout: 8000 });
+        await setScheme(page, scheme);
+        // Park the pointer well off the canvas (no flick/dimple — the calm resting field) and
+        // let the SANCTIONED one-shot entrance bloom (the CSS filter:brightness reveal, fires
+        // exactly once) settle BEFORE the series (the wave's allowed exception).
+        await page.mouse.move(2, 2);
+        await page.waitForTimeout(1600);
+
+        // BG.W-DOTMATRIX-STABLE (F9.R5) — the no-flash law. A calm slowly-rotating dot-shell
+        // drifts sub-perceptibly frame-to-frame; the FIXED flick bloom is slew-limited + LOCAL,
+        // so a PARKED field carries ZERO whole-frame brightness spike. The prior same-frame
+        // `Math.max(bloom, burst)` attack + a twinkle/uninitialized-uniform/clear-flash regression
+        // would spike the whole-frame mean; here there is no pointer, so the series stays flat.
+        const means: number[] = [];
+        for (let i = 0; i < 8; i++) {
+            means.push((await sphereStats(page)).meanLum);
+            await page.waitForTimeout(200);
+        }
+        const peak = Math.max(...means, 0);
+        let maxDelta = 0;
+        for (let i = 1; i < means.length; i++)
+            maxDelta = Math.max(maxDelta, Math.abs(means[i] - means[i - 1]));
+
+        // Graceful: only bind the delta when the readback is REAL (a non-trivial painted field);
+        // a software-raster headless dim render is floored (the binding 60s no-flash gestalt is
+        // the DELTA the paint judge reads). No consecutive frame's whole-frame mean jumps by more
+        // than a fraction of the peak — a whole-globe flash would blow past this bound.
+        if (peak > 0.5) {
+            expect(maxDelta).toBeLessThanOrEqual(Math.max(3.0, 0.4 * peak));
+        }
+    });
+
     test(`dot-matrix PRM freezes to one static frame (${scheme})`, async ({ page }) => {
         await page.emulateMedia({ reducedMotion: "reduce" });
         await page.goto(ROUTE);

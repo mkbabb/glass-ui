@@ -1,10 +1,11 @@
 <script setup lang="ts">
 // DotMatrix — the WebGPU-first Fibonacci phyllotaxis dot-SPHERE studio (the Claude
-// co-work "fine-dot spheres on dark" reference). The DEFAULT is the warm-cream library
-// identity (ONE calm warm-cream globe of fine dots over a transparent ground — the glass
-// card shows through). The ACTUAL reference (subtle mono-warm-white TWO globes on
-// near-black) toggles beside it as a non-default named preset (presets-in-consumers;
-// BC.W-TEAL-NAVY-PURGE — the teal-on-navy is GONE).
+// co-work "fine-dot spheres on dark" reference; F9.R5 BG.W-DOTMATRIX-STABLE). The DEFAULT
+// is the CALM warm-cream library identity — ONE slowly-rotating globe of fine dots on a
+// depth-shaded translucent shell over a transparent ground (the glass card shows through),
+// gently pointer-aware with NO flash (the flick glow is LOCAL + slew-limited). The ACTUAL
+// reference (subtle mono-warm-white TWO globes on near-black) toggles beside it as a
+// non-default named preset (presets-in-consumers; BC.W-TEAL-NAVY-PURGE — teal-on-navy GONE).
 import { computed, reactive, ref } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
@@ -15,21 +16,21 @@ import {
     DotMatrix,
     type DotMatrixConfig,
 } from "@glass/components/custom/dot-matrix";
-import { DOT_MATRIX_PRESET_SPHERE, DOT_MATRIX_PRESET_WARM } from "./presets";
+import { DOT_MATRIX_PRESET_REFERENCE, DOT_MATRIX_PRESET_WARM } from "./presets";
 
 // The studio model — a live config the controls drive (commit-on-write — a single surface;
-// a toggle is a clean reset, the library default). The DEFAULT is the 2D-PLANE background
-// register with strong cursor gravity; the 3D-sphere is the kept preset toggle.
-const useSphere = ref(false);
+// a toggle is a clean reset, the library default). The DEFAULT is the CALM warm-cream globe;
+// the toggle switches to the Claude-cowork REFERENCE two-globe near-black composition.
+const useReference = ref(false);
 const paused = ref(false);
 const interactive = ref(true);
 
 const config = reactive<DotMatrixConfig>({ ...DOT_MATRIX_PRESET_WARM, interactive: true });
 
-// Switch the whole config between the 2D-plane background (default) and the 3D dot-sphere
-// (the kept preset). presets-in-consumers — the library default is the 2D plane.
-function applyPreset(sphere: boolean): void {
-    const src = sphere ? DOT_MATRIX_PRESET_SPHERE : DOT_MATRIX_PRESET_WARM;
+// Switch the whole config between the calm single-globe default and the Claude-cowork
+// REFERENCE two-globe near-black composition (both calm depth-shaded spheres — no flash).
+function applyPreset(reference: boolean): void {
+    const src = reference ? DOT_MATRIX_PRESET_REFERENCE : DOT_MATRIX_PRESET_WARM;
     Object.assign(config, JSON.parse(JSON.stringify(src)));
     config.interactive = interactive.value;
 }
@@ -37,11 +38,11 @@ function applyPreset(sphere: boolean): void {
 const liveConfig = computed<DotMatrixConfig>(() => ({ ...config }));
 
 function onTogglePreset(v: boolean): void {
-    useSphere.value = v;
+    useReference.value = v;
     applyPreset(v);
 }
 
-// Toggle the pointer interaction (the cursor gravity well + the flick burst).
+// Toggle the pointer interaction (the gentle cursor dimple + the LOCAL slew-limited flick glow).
 function onToggleInteractive(v: boolean): void {
     interactive.value = v;
     config.interactive = v;
@@ -52,23 +53,23 @@ function onToggleInteractive(v: boolean): void {
     <StoryPage>
         <StorySection
             heading="Dot matrix"
-            label="2D dot field · strong cursor gravity · phyllotaxis"
-            blurb="A 2D-PLANE background field of fine warm-cream dots that GRAVITATE toward the cursor — a deep, wide gravity well pulls the nearby dots in (they gather, brighten + swell), lagging the cursor with weight then easing back to the lattice on a spring with a slight overshoot (the liquid-weight bounce). The dots are laid on an even sunflower phyllotaxis disc (the golden-angle lattice — no banded rings; Martin Roberts / extremelearning, arXiv 0912.4540). A flick fires a transient over-pull (a comet-tail toward the cursor). Toggle the 3D-sphere register and it reads as the kept dot-globe — depth-shaded, slow tilted spin — with the SAME strong gravity well. WebGPU-FIRST: the render pass draws instanced billboard quads + the crisp fwidth SDF circle fragment; a WebGL2 instanced-billboard fallback draws the SAME dots (born-GPU — no Canvas2D). ONE GL context — the one-GL-per-route budget held."
+            label="fine-dot sphere · phyllotaxis · calm slow spin"
+            blurb="A CALM globe of fine warm-cream dots laid on a sphere SURFACE — the even sunflower phyllotaxis lattice (the golden-angle spiral, no pole-pinch or banded rings; Martin Roberts / extremelearning, arXiv 0912.4540), depth-shaded into a translucent dot-SHELL (the near hemisphere brighter + larger, the rim/far side fading to a whisper) and slowly rotating on a gently tilted axis. Stop the spin and it STILL reads as a sphere from the depth-shading alone. It is GENTLY pointer-aware — a soft surface dimple where the cursor rests + a LOCAL decaying glow on a flick, slew-limited so it NEVER flashes the whole globe. Toggle the Claude-cowork REFERENCE composition (subtle mono-warm-white TWO globes on near-black). WebGPU-FIRST: the render pass draws instanced billboard quads + the crisp fwidth SDF circle fragment; a WebGL2 instanced-billboard fallback draws the SAME dots (born-GPU — no Canvas2D). ONE GL context — the one-GL-per-route budget held."
         >
             <div class="flex flex-wrap items-center gap-4">
                 <Label class="flex items-center gap-2">
                     <Switch
-                        :model-value="useSphere"
+                        :model-value="useReference"
                         @update:model-value="onTogglePreset"
                     />
-                    <span class="text-sm">3D dot-sphere register (off = 2D-plane background default)</span>
+                    <span class="text-sm">Claude-cowork reference (two-globe on near-black; off = single warm globe)</span>
                 </Label>
                 <Label class="flex items-center gap-2">
                     <Switch
                         :model-value="interactive"
                         @update:model-value="onToggleInteractive"
                     />
-                    <span class="text-sm">interactive (cursor gravity + flick burst)</span>
+                    <span class="text-sm">interactive (gentle cursor dimple + local flick glow)</span>
                 </Label>
                 <Label class="flex items-center gap-2">
                     <Switch v-model="paused" />

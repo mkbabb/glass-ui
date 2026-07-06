@@ -58,7 +58,7 @@ export interface DotMatrixConfig {
     palette: OklchStop[];
     /** The ground color (the demo sets near-black; default transparent). */
     background: OklchStop | "transparent";
-    /** The layout register — 3D sphere (kept preset) or a flat 2D background plane (the default). */
+    /** The layout register — 3D sphere (the calm Claude-cowork default) or a flat 2D background plane (a kept opt-in register). */
     layout: DotLayout;
     /** Pointer parallax + repel + accel-burst (the §T7 interaction). */
     interactive: boolean;
@@ -94,10 +94,14 @@ export const WARM_IDENTITY_PALETTE: OklchStop[] = [
 ];
 
 /**
- * The shipped warm-identity default config — the §T5 SUBTLE + CALM register: ONE calm
- * warm-cream globe of fine dots on a transparent ground (the glass card shows through),
- * slowly rotating on a tilted axis. The depth-fade carries the sphere read; the second
- * sphere + the breathing + the near-black ground are DEMO presets (presets-in-consumers).
+ * The shipped warm-identity default config — the §T5 SUBTLE + CALM register (F9.R5
+ * BG.W-DOTMATRIX-STABLE): ONE calm warm-cream globe of fine dots on a sphere SURFACE (the
+ * Claude-cowork read — depth-shaded translucent dot-shell, no pole-pinch), slowly rotating
+ * on a tilted axis, GENTLY pointer-aware. NO flash: the flick glow is LOCAL + slew-limited
+ * (useDotMatrix.ts), the gravity well is a SUBTLE dimple (not the prior aggressive 0.62
+ * plane-lens yank). The depth-fade carries the sphere read; the second sphere + the
+ * breathing + the near-black ground are DEMO presets (presets-in-consumers). The flat 2D
+ * PLANE remains a kept opt-in register (`layout: "plane"`), NOT the default.
  */
 export const DEFAULT_DOT_MATRIX_CONFIG: DotMatrixConfig = {
     dotCount: 2400, // the reference's fine field
@@ -111,14 +115,12 @@ export const DEFAULT_DOT_MATRIX_CONFIG: DotMatrixConfig = {
     breathing: 0.0, // sub-perceptual pulse OFF by default
     palette: WARM_IDENTITY_PALETTE,
     background: "transparent",
-    layout: "plane", // the NEW default — a 2D background field (the sphere is a kept preset)
-    interactive: true, // cursor gravity on (the background-effect register)
-    pointerMode: "attract", // the plane register ATTRACTS (dots gather to the cursor)
-    parallax: 0.08, // pointer-parallax depth
-    gravityStrength: 0.62, // DEEP well — "persist MORE gravity" (was the 0.08 parallax register)
-    gravityRadius: 0.34, // the lens falloff (NDC) — tight enough that the ellipse/wake READ over
-    // the viewport-filling grid (a wide 0.7 Gaussian covered the whole disc → "everything is near"
-    // → the directional warp collapsed; re-anchored so the squash/stretch + comet-tail are visible)
-    twinkle: 0.0, // the resting per-dot twinkle floor OFF by default (the demo lifts it)
+    layout: "sphere", // the CALM Claude-cowork read — a depth-shaded dot-shell (the plane is a kept opt-in register)
+    interactive: true, // cursor-aware (a GENTLE surface dimple + a LOCAL slew-limited flick glow — no flash)
+    pointerMode: "repel", // a gentle surface dimple (the near dots part softly around the cursor)
+    parallax: 0.06, // subtle pointer-parallax depth
+    gravityStrength: 0.2, // a CALM, gentle well — a soft surface dimple, NOT the prior 0.62 plane-lens yank
+    gravityRadius: 0.3, // the dimple falloff (NDC)
+    twinkle: 0.0, // the resting per-dot twinkle floor OFF by default (the demo lifts it — S4)
     respectReducedMotion: true,
 };
