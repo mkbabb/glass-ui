@@ -17,8 +17,8 @@ import { Card, type CardTier } from "@glass/components/ui/card";
 import { Aurora } from "@glass/components/custom/aurora";
 import { Constellation } from "@glass/components/custom/constellation";
 import { FourierField } from "@glass/components/custom/fourier-field";
-import { PaperGrid } from "@glass/components/custom/paper-grid";
-import { PAPER_GRID_PRESET_SUFFUSE } from "./substrates/presets";
+import { LiquidGrid } from "@glass/components/custom/liquid-grid";
+import { LIQUID_GRID_PRESET_SUFFUSE } from "./substrates/presets";
 import { defaultBlobColorResolver } from "@glass/composables/color";
 import { useTokenColor } from "@glass/composables/dom/useTokenColor";
 import { useGlobalDark } from "@glass/composables/dark/useGlobalDark";
@@ -221,9 +221,9 @@ const liveBackdrop = computed(
         kind.value === "liquid-grid",
 );
 
-// The suffusion paper-grid config (a near-invisible large-pitch slow-warp grid behind
+// The suffusion liquid-grid config (a near-invisible large-pitch slow-warp grid behind
 // page content — the §E site-wide subtle background; presets-in-consumers).
-const liquidGridConfig = PAPER_GRID_PRESET_SUFFUSE;
+const liquidGridConfig = LIQUID_GRID_PRESET_SUFFUSE;
 
 // ── Full-bleed hero (W-SB-REVERIFY — B16/B22) ────────────────────────────────
 // A HERO page over a LIVE substrate paints the field FULL-BLEED behind the WHOLE
@@ -325,11 +325,11 @@ const bgTeleported = computed(() =>
             :class="cn('story-hero-bg', fullBleed && 'story-hero-bg--bleed')"
             aria-hidden="true"
         />
-        <!-- The SUFFUSION register: a near-invisible LIQUID paper-grid full-bleed behind
+        <!-- The SUFFUSION register: a near-invisible LIQUID liquid-grid full-bleed behind
              page content (NOT boxed in the card — the `.story-hero-bg--bleed` escape; the
              "not displayed in the card" fix). The static `grid` kind below stays the
              zero-GL default. -->
-        <PaperGrid
+        <LiquidGrid
             v-else-if="kind === 'liquid-grid'"
             :config="liquidGridConfig"
             :class="cn('story-hero-bg', fullBleed && 'story-hero-bg--bleed')"

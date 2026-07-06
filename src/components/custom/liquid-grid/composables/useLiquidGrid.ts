@@ -1,15 +1,15 @@
 // BC.W-VIZ-PAPERGRID — the public composable: the studio handle + the lifecycle wiring over
 // the WebGPU-first substrate (with the WebGL2 GLSL fallback) + the shared pointer field.
 //
-// `usePaperGrid(canvasRef, options)` composes the `createGpuSubstrate` picker — the
+// `useLiquidGrid(canvasRef, options)` composes the `createGpuSubstrate` picker — the
 // `setupWGPU` fullscreen-fragment primary WHERE WebGPU is supported, else the `setupGL`
-// WebGL2 fragment fallback (BOTH evaluate the SAME `paperGrid.ts` liquid grid — the ONE math
+// WebGL2 fragment fallback (BOTH evaluate the SAME `liquidGrid.ts` liquid grid — the ONE math
 // source). It wires the offscreen pause + the `DockBackgroundToggle` WCAG-2.2.2 pause/resume
-// seam + `wake()` on demand, and exposes the uniform `PaperGridHandle`. The renderer owns the
+// seam + `wake()` on demand, and exposes the uniform `LiquidGridHandle`. The renderer owns the
 // frame loop (the canvas lifecycle leaf); this composable re-implements ZERO scheduling.
 //
 // THE POINTER (BC.W-VIZ-INTERACTION). When `config.interactive`, a soft Gaussian bulge
-// presses the grid toward/away from the cursor: usePaperGrid composes the SHARED
+// presses the grid toward/away from the cursor: useLiquidGrid composes the SHARED
 // `usePointerVelocityField` (NEVER a second rAF — the field is FED `tick(delta)` from inside
 // the renderer's existing `frame` callback via the `onFrame` setup hook) and derives the
 // transient cursor in GRID space from BOTH the position AND the velocity (a directional lead
@@ -24,19 +24,19 @@ import {
 } from "../../../../composables/glass/webgpu/useGpuSubstrate";
 import { usePointerVelocityField } from "../../../../composables/motion/usePointerVelocityField";
 import { resolveBudgetDpr } from "../../aurora/constants/budget";
-import type { PaperGridConfig } from "../constants";
-import { gridScaleFor, type Vec2 } from "./paperGrid";
-import { createPaperGridWGPUSetup } from "./paperGridWGPUSetup";
-import { createPaperGridGLSetup } from "./paperGridGLSetup";
+import type { LiquidGridConfig } from "../constants";
+import { gridScaleFor, type Vec2 } from "./liquidGrid";
+import { createLiquidGridWGPUSetup } from "./liquidGridWGPUSetup";
+import { createLiquidGridGLSetup } from "./liquidGridGLSetup";
 
-export interface UsePaperGridOptions {
-    config: PaperGridConfig;
+export interface UseLiquidGridOptions {
+    config: LiquidGridConfig;
     /** `"capture"` → renderAt-only (the deterministic π capture path). Default `"live"`. */
     mode?: "live" | "capture";
 }
 
 /** The uniform handle a consumer wires its lifecycle against (backend-agnostic). */
-export interface PaperGridHandle {
+export interface LiquidGridHandle {
     /** The resolved backend (`"webgpu"` where supported, else the WebGL2 GLSL fallback). */
     readonly backend: GpuBackend;
     /** Park the loop (the WCAG-2.2.2 pause seam — `DockBackgroundToggle` wires this). */
@@ -54,14 +54,14 @@ export interface PaperGridHandle {
 }
 
 /**
- * Mount the paper-grid renderer on `canvasRef`. The WebGPU primary + the WebGL2 fallback are
+ * Mount the liquid-grid renderer on `canvasRef`. The WebGPU primary + the WebGL2 fallback are
  * BOTH pure fullscreen fragment passes evaluating the SAME liquid grid (the ONE math source
- * `paperGrid.ts`), so the picker is the only seam. Returns the uniform lifecycle handle.
+ * `liquidGrid.ts`), so the picker is the only seam. Returns the uniform lifecycle handle.
  */
-export function usePaperGrid(
+export function useLiquidGrid(
     canvasRef: Ref<HTMLCanvasElement | null>,
-    options: UsePaperGridOptions,
-): PaperGridHandle {
+    options: UseLiquidGridOptions,
+): LiquidGridHandle {
     const { config } = options;
     const mode = options.mode ?? "live";
 
@@ -170,7 +170,7 @@ export function usePaperGrid(
                 dprPolicy: resolveBudgetDpr,
                 // BG.W-VIZ-REVEAL-BLOOM — the one-shot cold-first-VISIBLE entrance bloom.
                 revealBloom: true,
-                setupWGPU: createPaperGridWGPUSetup({
+                setupWGPU: createLiquidGridWGPUSetup({
                     canvas,
                     config,
                     getCursor,
@@ -178,7 +178,7 @@ export function usePaperGrid(
                     shouldContinue: () => true,
                     onFrame,
                 }),
-                setupGL: createPaperGridGLSetup({
+                setupGL: createLiquidGridGLSetup({
                     canvas,
                     config,
                     getCursor,
@@ -194,7 +194,7 @@ export function usePaperGrid(
     // Arm once the canvas resolves (microtask — the ref is set after mount).
     queueMicrotask(() => ensure());
 
-    const h: PaperGridHandle = {
+    const h: LiquidGridHandle = {
         get backend(): GpuBackend {
             return ensure()?.backend ?? "webgpu";
         },

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-// PaperGrid — the WebGPU-first liquid AA-grid studio. Evenly-spaced LARGER lines on a
+// LiquidGrid — the WebGPU-first liquid AA-grid studio. Evenly-spaced LARGER lines on a
 // slowly breathing curl-flow sheet: a Ben Golus derivative-AA two-tier grid (the crisp-line
 // fix) on a Bridson divergence-free curl-warped UV (the "liquid"). The default is the warm-
 // cream library identity over transparent (the page reads through the cells); teal-on-navy is
 // gone (§E). The configurator sits on the RIGHT (the §E controls-right mandate); the title
-// carries the explicit /paper-grid subpath.
+// carries the explicit /liquid-grid subpath.
 import { computed, reactive, ref } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
@@ -19,19 +19,19 @@ import {
 } from "@glass/components/custom/labeled-field";
 import { DockBackgroundToggle } from "@glass/components/custom/dock";
 import {
-    PaperGrid,
-    type PaperGridConfig,
-} from "@glass/components/custom/paper-grid";
+    LiquidGrid,
+    type LiquidGridConfig,
+} from "@glass/components/custom/liquid-grid";
 import {
-    PAPER_GRID_PRESET_WARM,
-    PAPER_GRID_PRESET_SUFFUSE,
-    PAPER_GRID_PRESET_BOLD,
+    LIQUID_GRID_PRESET_WARM,
+    LIQUID_GRID_PRESET_SUFFUSE,
+    LIQUID_GRID_PRESET_BOLD,
 } from "./presets";
 
 // The studio model — a live config the controls drive (commit-on-write — a single surface;
 // a preset switch is a clean reset, the library default). The DEFAULT is warm-cream identity.
-const config = reactive<PaperGridConfig>(
-    JSON.parse(JSON.stringify(PAPER_GRID_PRESET_WARM)),
+const config = reactive<LiquidGridConfig>(
+    JSON.parse(JSON.stringify(LIQUID_GRID_PRESET_WARM)),
 );
 
 const paused = ref(false);
@@ -58,7 +58,7 @@ const lineWidth = computed({
     set: (v) => (config.lineWidth = v),
 });
 
-// ── liquid (cell-twist) refs ──────────────────────────────────────────────────────
+// ── liquid (affine sheet-warp) refs ──────────────────────────────────────────────────────
 const twistMax = computed({
     get: () => config.twistMax,
     set: (v) => (config.twistMax = v),
@@ -101,10 +101,10 @@ function applyPreset(key: PresetKey): void {
     presetKey.value = key;
     const src =
         key === "suffuse"
-            ? PAPER_GRID_PRESET_SUFFUSE
+            ? LIQUID_GRID_PRESET_SUFFUSE
             : key === "bold"
-              ? PAPER_GRID_PRESET_BOLD
-              : PAPER_GRID_PRESET_WARM;
+              ? LIQUID_GRID_PRESET_BOLD
+              : LIQUID_GRID_PRESET_WARM;
     Object.assign(config, JSON.parse(JSON.stringify(src)));
 }
 const suffuseOn = computed({
@@ -120,18 +120,18 @@ const boldOn = computed({
 <template>
     <StoryPage>
         <StorySection
-            heading="PaperGrid"
-            label="liquid AA-grid · evenly-spaced LARGER cells that TWIST + morph as a wave passes over and through"
-            blurb="An engineering-graph-paper grid — evenly-spaced, LARGE cells, a crisp fine rule with a bolder major rule every 5 cells — where the CELLS twist and morph as a wave passes OVER and THROUGH the sheet. The lines themselves do not bow; each box rotates + skews about its OWN center, gated by a moving Gaussian crest sweeping along a gentle diagonal and DIRECTED by the Bridson divergence-free curl flow so adjacent cells lean together (a windmill of warped boxes where the crest passes, calm square cells ahead and behind). The lines stay exactly one device-pixel crisp at any DPR (the Ben Golus derivative-AA distance reads the FINAL twisted coordinate — the blurry-mess fix). WebGPU-FIRST: a pure fullscreen fragment pass over the proven substrate, with a clean WebGL2 GLSL fallback (the SAME field — no Canvas2D path). Drag the cursor (interactive on) and a local swirl twists the cells around the pointer like a finger pressed into the liquid. The default is the warm-cream identity over transparent — the page reads through the cells."
+            heading="LiquidGrid"
+            label="liquid AA-grid · evenly-spaced LARGER cells on a sheet that bows + shears as a wave passes over and through"
+            blurb="An engineering-graph-liquid grid — evenly-spaced, LARGE cells, a crisp fine rule with a bolder major rule every 5 cells — drawn on a sheet that breathes like liquid under a lens. As a traveling Gaussian crest sweeps along a gentle diagonal, the whole SHEET bows and shears: a smooth low-order curl-flow field (Bridson divergence-free) warps the grid coordinate BEFORE evaluation, locally affine at the cell scale, so MAJOR gridlines bend as ONE coherent continuous curve and cells deform as near-parallelogram patches (never a per-pixel jitter, never a per-cell kink). The lines stay exactly one device-pixel crisp at any DPR (the Ben Golus derivative-AA distance reads the FINAL warped coordinate — the blurry-mess fix). It reads the SAME waveFlow warp as Concentric (one shared field). WebGPU-FIRST: a pure fullscreen fragment pass over the proven substrate, with a clean WebGL2 GLSL fallback (the SAME field — no Canvas2D path). Drag the cursor (interactive on) and a local swirl twists the cells around the pointer like a finger pressed into the liquid. The default is the warm-cream identity over transparent — the page reads through the cells."
         >
             <p class="text-muted-foreground mb-4 text-small">
-                <code class="font-mono text-xs">@mkbabb/glass-ui/paper-grid</code>
+                <code class="font-mono text-xs">@mkbabb/glass-ui/liquid-grid</code>
             </p>
 
             <Configurator class="h-[min(78vh,720px)] shadow-cartoon" scroll-mode="auto">
                 <template #stage>
                     <div class="relative h-full w-full overflow-hidden rounded-card">
-                        <PaperGrid
+                        <LiquidGrid
                             :config="config"
                             v-model:paused="paused"
                             class="absolute inset-0"
@@ -203,12 +203,12 @@ const boldOn = computed({
                             </ConfiguratorRow>
                         </ConfiguratorLayer>
 
-                        <ConfiguratorLayer label="Liquid (the cell-twist wave)" dividers>
-                            <ConfiguratorRow label="Twist max" name="twistMax">
+                        <ConfiguratorLayer label="Liquid (the affine sheet wave)" dividers>
+                            <ConfiguratorRow label="Warp depth" name="twistMax">
                                 <LabeledSlider
                                     v-model="twistMax"
-                                    label="Twist max"
-                                    tooltip="how far each CELL twists at the wave crest (rad; the boxes twist, the lines stay locally straight)"
+                                    label="Warp depth"
+                                    tooltip="how far the sheet bows/shears at the wave crest (grid units; major lines bow as ONE smooth curve, cells stay near-parallelogram)"
                                     :min="0"
                                     :max="0.9"
                                     :step="0.01"
@@ -318,13 +318,13 @@ const boldOn = computed({
             </Configurator>
 
             <p class="text-muted-foreground mt-4 text-small">
-                The grid is computed at a CELL-TWISTED coordinate
-                <code class="font-mono text-xs">g = cellTwist(uv·scale, t) + cursorSwirl(g)</code>
-                — each CELL rotates about its own center as a traveling Gaussian wave-crest
-                passes OVER and THROUGH the sheet (the boxes twist and morph, the lines stay
-                locally straight, never a uniform line-bow), and each line is
-                extracted as a constant-pixel-width stroke via the Ben Golus screen-space
-                derivative AA. Under
+                The grid is computed at an AFFINE-WARPED coordinate
+                <code class="font-mono text-xs">g = waveFlow(uv·scale, t) + cursorSwirl(g)</code>
+                — a smooth low-order curl-flow field bends the whole SHEET as a traveling
+                Gaussian wave-crest passes OVER and THROUGH it, so MAJOR gridlines bow and shear
+                as ONE coherent curve (cells stay near-parallelogram, never a per-pixel wobble),
+                and each line is extracted as a constant-pixel-width stroke via the Ben Golus
+                screen-space derivative AA. Under
                 <code class="font-mono text-xs">prefers-reduced-motion: reduce</code>
                 the warp freezes mid-breath and the grid holds crisp. The suffusion preset
                 rides the same field at a near-invisible

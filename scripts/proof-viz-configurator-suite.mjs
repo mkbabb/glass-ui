@@ -73,7 +73,7 @@ function walk(dir, acc = []) {
 // ── The per-viz roster ────────────────────────────────────────────────────────────
 // The 8 CANVAS viz (each owes the full four-piece bar) + watercolor-dot (the LIGHT-
 // configurator MARK exception — no heavy studio, no WebGPU) + the grid registers
-// (paper-grid is a canvas viz; it carries WGSL/GLSL + a Configurator studio).
+// (liquid-grid is a canvas viz; it carries WGSL/GLSL + a Configurator studio).
 const CANVAS_VIZ = [
     { id: "aurora", srcDir: "src/components/custom/aurora", studio: "demo/stories/substrates/aurora.vue" },
     { id: "goo-blob", srcDir: "src/components/custom/goo-blob", studio: "demo/stories/substrates/blob.vue" },
@@ -83,7 +83,7 @@ const CANVAS_VIZ = [
     { id: "fourier-field", srcDir: "src/components/custom/fourier-field", studio: "demo/stories/substrates/fourier-field.vue" },
     { id: "dot-matrix", srcDir: "src/components/custom/dot-matrix", studio: "demo/stories/substrates/dot-matrix.vue" },
     { id: "goo-dot", srcDir: "src/components/custom/goo-dot-matrix", studio: "demo/stories/substrates/goo-dot.vue" },
-    { id: "paper-grid", srcDir: "src/components/custom/paper-grid", studio: "demo/stories/substrates/paper-grid.vue" },
+    { id: "liquid-grid", srcDir: "src/components/custom/liquid-grid", studio: "demo/stories/substrates/liquid-grid.vue" },
 ];
 // watercolor-dot — the recorded MARK exception (watercolor-dot.md §4): a LIGHT
 // configurator, NO WebGPU, NO heavy studio. Allowlisted off the four-piece bar.
@@ -198,7 +198,7 @@ const FULL_CONFIGURATOR = [
     "goo-blob",
     "concentric",
     "fourier-field",
-    "paper-grid",
+    "liquid-grid",
 ];
 // The bare-switch studios — the VISIBLE pending census (each owned by its per-viz
 // wave; conformed onto the shared chassis when that wave lands its full configurator).
@@ -292,7 +292,7 @@ const PAUSE_SUBSTRATE_DIRS = {
     "fourier-field": "src/components/custom/fourier-field",
     "dot-matrix": "src/components/custom/dot-matrix",
     "goo-dot": "src/components/custom/goo-dot-matrix",
-    "paper-grid": "src/components/custom/paper-grid",
+    "liquid-grid": "src/components/custom/liquid-grid",
 };
 const s4Verdicts = CANVAS_VIZ.map((v) => {
     const src = strip(read(v.studio));
@@ -305,7 +305,7 @@ const s4Verdicts = CANVAS_VIZ.map((v) => {
             src,
         ) ||
         // a live viz instance mounted (the PascalCase viz component tag).
-        /<(?:Aurora|AuroraStage|GooBlob|Constellation|DotFlowField|Concentric|FourierField|DotMatrix|GooDotMatrix|PaperGrid)(?:\s|>|\/)/m.test(
+        /<(?:Aurora|AuroraStage|GooBlob|Constellation|DotFlowField|Concentric|FourierField|DotMatrix|GooDotMatrix|LiquidGrid)(?:\s|>|\/)/m.test(
             src,
         );
     // A non-default register — a preset/variant/reference/theme/mode toggle.

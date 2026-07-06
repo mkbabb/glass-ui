@@ -1,10 +1,10 @@
-// BC.W-VIZ-PAPERGRID — the paper-grid π binding readback (the gestalt bar).
+// BC.W-VIZ-PAPERGRID — the liquid-grid π binding readback (the gestalt bar).
 //
 // The device-free source gate (proof:viz-papergrid) asserts the SOURCE truths (the colocation
 // layout, the useGpuSubstrate compose, the JS↔WGSL↔GLSL single-math-source round-trip, the
 // curlFBM warp + Golus AA, the warm-identity default, the configurator/suffusion register).
 // This spec is the BINDING VISUAL TRUTH (BB inv-4) — the source-green/visually-broken gap
-// forbidden. It proves, on the real demo /substrates/paper-grid in BOTH modes:
+// forbidden. It proves, on the real demo /substrates/liquid-grid in BOTH modes:
 //
 //   (a) THE GRID READS AS CRISP LINES (the blurry-mess kill) — the painted surface has a
 //       thin-stroke population: HIGH-magnitude edges (the strokes' sharp rise/fall) with most
@@ -21,7 +21,7 @@
 //       surface (the soft Gaussian bulge presses the grid toward the cursor).
 //
 // The parity HOLDS — the WebGPU↔GLSL structural-proxy ΔE is recorded device-free in the parity
-// table (mean/p99 = 0.0, the ONE shared samplePaperGrid evaluator + ONE shared curl/OETF seam);
+// table (mean/p99 = 0.0, the ONE shared sampleLiquidGrid evaluator + ONE shared curl/OETF seam);
 // the binding Metal-GPU live capture-pair rides this wave's close (BC.W-GESTALT-FIRST). The
 // Safari/WebKit no-flash arm is GATED on BC.W-SAFARI-WEBGL's webglcontextlost circuit-breaker
 // (the named cross-band predecessor; SAFARI-WEBGL re-runs this WebKit capture as its own
@@ -39,10 +39,10 @@ import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = resolve(fileURLToPath(new URL("..", import.meta.url)));
-const VISUAL_DIR = resolve(ROOT, "docs/tranches/BC/audit/visual/paper-grid-delta");
+const VISUAL_DIR = resolve(ROOT, "docs/tranches/BC/audit/visual/liquid-grid-delta");
 const SCHEMES = ["light", "dark"] as const;
-const ROUTE = "/substrates/paper-grid";
-const CANVAS = '[data-testid="paper-grid-canvas"]';
+const ROUTE = "/substrates/liquid-grid";
+const CANVAS = '[data-testid="liquid-grid-canvas"]';
 
 async function setScheme(page: Page, scheme: (typeof SCHEMES)[number]) {
     await page.evaluate((s) => {
@@ -125,7 +125,7 @@ async function structureVariance(page: Page): Promise<number> {
 test.beforeAll(() => mkdirSync(VISUAL_DIR, { recursive: true }));
 
 for (const scheme of SCHEMES) {
-    test(`paper-grid renders crisp evenly-spaced liquid lines (${scheme})`, async ({ page }) => {
+    test(`liquid-grid renders crisp evenly-spaced liquid lines (${scheme})`, async ({ page }) => {
         await page.goto(ROUTE);
         await page.waitForSelector(CANVAS, { timeout: 8000 });
         await setScheme(page, scheme);
@@ -155,16 +155,16 @@ for (const scheme of SCHEMES) {
         // Own-surface DELTA capture (the cardinal-lesson freshness artefact).
         await page
             .locator(CANVAS)
-            .screenshot({ path: resolve(VISUAL_DIR, `paper-grid-${scheme}.png`) });
+            .screenshot({ path: resolve(VISUAL_DIR, `liquid-grid-${scheme}.png`) });
     });
 
-    test(`paper-grid pointer-reactive bulges the grid (${scheme})`, async ({ page }) => {
+    test(`liquid-grid pointer-reactive bulges the grid (${scheme})`, async ({ page }) => {
         await page.goto(ROUTE);
         await page.waitForSelector(CANVAS, { timeout: 8000 });
         await setScheme(page, scheme);
         await page.waitForTimeout(400);
 
-        // The interactive bulge is ON by default (DEFAULT_PAPER_GRID_CONFIG.interactive).
+        // The interactive bulge is ON by default (DEFAULT_LIQUID_GRID_CONFIG.interactive).
         // Drive the pointer over the canvas host and assert it stays a live painting surface
         // (the soft Gaussian bulge presses the grid toward the cursor — the binding pointer
         // pixel-diff is the LOCAL capture for the W-VIZ-INTERACTION reflect).
@@ -182,7 +182,7 @@ for (const scheme of SCHEMES) {
         }
     });
 
-    test(`paper-grid PRM freezes to one static frame (${scheme})`, async ({ page }) => {
+    test(`liquid-grid PRM freezes to one static frame (${scheme})`, async ({ page }) => {
         await page.emulateMedia({ reducedMotion: "reduce" });
         await page.goto(ROUTE);
         await page.waitForSelector(CANVAS, { timeout: 8000 });

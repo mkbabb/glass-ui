@@ -15,9 +15,10 @@ const fourierAccent = "var(--viz-fourier, hsl(358 72% 52%))";
                 // BB.W-PAPER-GRID-TEXTURE — the document-register article opts
                 // its INTERIOR ground into BOTH the organic grain (the existing
                 // `paper-grain-overlay` ::after) AND the geometric blueprint
-                // grid (the new `.paper-grid` host bg-image). The two registers
-                // compose orthogonally — the math/grid brand pillar is now felt
-                // THROUGH the plate, not only in the page margin around it.
+                // grid (the STATIC `.paper-grid` host bg-image — the card CARD
+                // register, distinct from the /liquid-grid viz homonym). The two
+                // registers compose orthogonally — the math/grid brand pillar is
+                // now felt THROUGH the plate, not only in the page margin around it.
                 'paper-grain-overlay paper-grid',
             )"
         >

@@ -1,22 +1,22 @@
 // BD.W-CONCENTRIC-RELIEF — the level-set topography evaluator (the SINGLE math source the
 // WGSL + GLSL concentric shaders transcribe) + the finishing-layer oracle twins.
 //
-// concentric = paper-grid with level-set contours. The field is a LOW-octave value-noise
+// concentric = liquid-grid with level-set contours. The field is a LOW-octave value-noise
 // topography H(p) (clean nested loops — NOT high-freq speckle) sampled at the SAME cell-warped
-// coordinate paper-grid twists, plus the ω=√(g·k) breathing swell; the render extracts the
+// coordinate liquid-grid twists, plus the ω=√(g·k) breathing swell; the render extracts the
 // level-set contours of H via the IQ gradient-free contour DE (`contourInk`, the KEPT
 // extraction). The contour density tracks 1/|∇H| (bunched on steep ground — a topographic map),
 // the wave flows the contours as it crosses, and the cursor bulges the topography toward/away
 // the pointer. The warm-cream height ramp paints basins cool-cream, ridges warm-amber.
 //
 // THE SHARED BASIS. `heightField` / `waveSwell` / the cell-warp are the SAME `waveField` leaf
-// paper-grid splices — a tune lands ONCE and the two viz move together (the `proof:wave-field`
+// liquid-grid splices — a tune lands ONCE and the two viz move together (the `proof:wave-field`
 // round-trip binds the JS↔GLSL↔WGSL numeric identity). This module owns concentric's noise
 // basis (`valueNoise`/`potentialFBM`) + the cursor-well + the level-set composition; the cell
 // twist + the height field math live in the shared leaf.
 
 import { waveFlow, cursorSwirl, heightField, waveSwell, type Vec2 } from "../../../../composables/glass/wave/waveField";
-import { curlFBM } from "../../paper-grid/composables/paperGrid";
+import { curlFBM } from "../../liquid-grid/composables/liquidGrid";
 
 export type { Vec2 };
 
@@ -92,13 +92,13 @@ export interface LevelFieldParams {
 
 /**
  * The warped level-set height at domain `p` and time `t` — the SINGLE math source. The
- * sampling coordinate is twisted by the SHARED `cellTwist` (the kinship with paper-grid:
+ * sampling coordinate is twisted by the SHARED `cellTwist` (the kinship with liquid-grid:
  * the same wave flows both); the height is a low-octave fbm topography + the swell; the cursor
  * adds a Gaussian peak. Returns the un-normalized height (the shader contours + tints it).
  */
 export function sampleHeight(p: Vec2, t: number, q: LevelFieldParams): number {
     // The CONTINUOUS traveling-wave flow warp twists the sampling coordinate (the contours
-    // flow/twist as the wave crosses — the SAME wave that twists the paper-grid cells).
+    // flow/twist as the wave crosses — the SAME wave that twists the liquid-grid cells).
     let g = waveFlow(curlFBM, p, t, q.waveDir, q.waveK, q.waveOmega, q.waveSigma, q.twistMax, q.amp);
     if (q.interactive > 0.5) {
         g = cursorSwirl(g, q.cursor, q.cursorWell * 0.6, q.cellSize * 2.5);

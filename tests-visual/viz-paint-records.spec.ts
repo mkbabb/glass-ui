@@ -56,8 +56,8 @@ const VIZ = [
     },
     {
         key: "PAPERGRID",
-        route: "/substrates/paper-grid",
-        canvas: ".paper-grid-canvas",
+        route: "/substrates/liquid-grid",
+        canvas: ".liquid-grid-canvas",
         record: "W-VIZ-PAPERGRID-paint.json",
         wave: "BC.W-VIZ-PAPERGRID",
         meanLumFloor: 4,

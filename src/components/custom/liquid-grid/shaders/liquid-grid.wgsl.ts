@@ -1,21 +1,21 @@
-// BC.W-VIZ-PAPERGRID — the liquid paper-grid fullscreen fragment pass (WebGPU primary).
+// BC.W-VIZ-PAPERGRID — the liquid-grid fullscreen fragment pass (WebGPU primary).
 //
 // The same shape-class as aurora/concentric — a pure full-screen-triangle fragment pass (no
 // vertex buffer, no compute, no storage buffer — the LIGHTEST viz in the suite). `fs_main`
-// evaluates the grid at a CELL-TWISTED coordinate `g = cellTwist(uv·scale) → cursorSwirl` (each
-// cell rotates about its own center, gated by a traveling Gaussian crest — the C3 cure; the
-// lines stay locally straight) and extracts each line as a crisp constant-pixel-width stroke via
-// the Ben Golus screen-space derivative AA (the blur-kill). BD.W-PAPERGRID-FACE adds the
-// structurally-absent FACE: a height-lit filled cell interior (`cellHeight`/`faceRelief`/
-// `facePlateau` — the slope of the SAME traveling-wave height the twist rides, squashed so the
-// crest face inflates), a 3-stop warm-divergent ramp keyed on `mix(shade,h)`, composited UNDER
-// the kept creases. The ink is warm (hue ∈ [20,90] — teal-on-navy gone, §E REMOVE); over
-// TRANSPARENT (the page reads through the gutters). `faceAlpha:0` default → the face evaporates
-// → byte-identical line render.
+// evaluates the grid at an AFFINE-WARPED coordinate `g = waveFlow(uv·scale) → cursorSwirl`
+// (BG.W-GRID-AFFINE: a smooth continuous domain transform gated by the traveling wave, locally
+// affine at the cell scale — the sheet bows/shears as ONE coherent transform, major lines a
+// single smooth curve) and extracts each line as a crisp constant-pixel-width stroke via the Ben
+// Golus screen-space derivative AA (the blur-kill). BD.W-PAPERGRID-FACE adds the FACE: a
+// height-lit filled cell interior (`cellHeight`/`faceRelief`/`facePlateau` — the slope of the
+// SAME traveling-wave height the warp rides, squashed so the crest face inflates), a 3-stop
+// warm-divergent ramp keyed on `mix(shade,h)`, composited UNDER the kept creases. The ink is warm
+// (hue ∈ [20,90] — teal-on-navy gone, §E REMOVE); over TRANSPARENT (the page reads through the
+// gutters). `faceAlpha:0` default → the face evaporates → byte-identical line render.
 //
-// THE SINGLE MATH SOURCE. `potentialFBM` / `gridCoverage` here + the SHARED `cellTwist` /
+// THE SINGLE MATH SOURCE. `potentialFBM` / `gridCoverage` here + the SHARED `waveFlow` /
 // `cellHeight` / `faceRelief` / `facePlateau` / `cursorSwirl` (the `waveField` leaf) transcribe
-// `composables/paperGrid.ts` line-for-line; `proof:viz-papergrid` clause P3 round-trips the
+// `composables/liquidGrid.ts` line-for-line; `proof:viz-papergrid` clause P3 round-trips the
 // JS↔WGSL↔GLSL paths at a fixed sample set. The curl operator is the SHARED `flow.wgsl.ts` chunk
 // (ONE curl source per backend).
 
@@ -23,11 +23,11 @@ import { OETF_WGSL } from "../../aurora/constants/shaders/procedural-color.wgsl"
 import { CURL_FBM_WGSL } from "../../../../composables/glass/webgl/shaders/flow.wgsl";
 import { WAVE_FIELD_WGSL } from "../../../../composables/glass/wave/waveField.wgsl";
 
-export const PAPER_GRID_WGSL = /* wgsl */ `
+export const LIQUID_GRID_WGSL = /* wgsl */ `
 const TAU: f32 = 6.283185307179586;
 
 // ── Paper-grid uniforms (the typed-struct source-of-truth — see uniformBridgeWGPU.ts) ──
-struct PaperGridUniforms {
+struct LiquidGridUniforms {
   // u0: (uTime, uGridScale, uMinorPitch, uMajorEvery)
   u0: vec4<f32>,
   // face: (uFaceAlpha, uFaceRelief, uSquashK, uBaseInset) — the height-lit FACE (re-points the retired warp lane)
@@ -48,7 +48,7 @@ struct PaperGridUniforms {
   bg: vec4<f32>,
   // wave: (waveDirX, waveDirY, waveK, waveOmega) — the traveling-wave crest
   wave: vec4<f32>,
-  // wave2: (waveSigma, twistMax, shearMax, amp) — the cell-twist envelope (amp: spring-eased)
+  // wave2: (waveSigma, twistMax, _pad, amp) — the affine sheet-warp envelope (amp: spring-eased)
   wave2: vec4<f32>,
   // faceLo: (rose-umber trough .rgb (linear), _pad) — the warm-divergent ramp (FOLD B, 3-stop)
   faceLo: vec4<f32>,
@@ -58,11 +58,11 @@ struct PaperGridUniforms {
   faceHi: vec4<f32>,
 };
 
-@group(0) @binding(0) var<uniform> u: PaperGridUniforms;
+@group(0) @binding(0) var<uniform> u: LiquidGridUniforms;
 
 ${OETF_WGSL}
 
-// ── The host noise basis (transcribes paperGrid.ts hash21/valueNoise/potentialFBM) ──
+// ── The host noise basis (transcribes liquidGrid.ts hash21/valueNoise/potentialFBM) ──
 // A quintic-faded 2D value-noise fbm potential — the SAME basis the dot-flow-field carries
 // (so the suite speaks ONE noise basis). DECLARED ABOVE the curl splice (WGSL has no forward
 // declaration — a function may only call one declared earlier).
@@ -114,10 +114,10 @@ fn potentialFBM(p: vec2f) -> f32 {
 // The shared divergence-free 2D-curl operator (flow.wgsl.ts — the FIRST WGSL curl consumer).
 ${CURL_FBM_WGSL}
 
-// The shared traveling-wave CELL-WARP chunk (waveField.wgsl.ts — cellTwist/cursorSwirl/
-// travelingEnvelope; splices AFTER valueNoise + curlFBM are declared). paper-grid + concentric
-// share this EXACTLY — the cell-local twist replaces the retired LINE-warp (the C3 cure: the
-// boxes twist about their own center, the lines stay locally straight).
+// The shared traveling-wave WARP chunk (waveField.wgsl.ts — waveFlow/cursorSwirl/
+// travelingEnvelope + the FACE leaf; splices AFTER valueNoise + curlFBM are declared). liquid-grid
+// + concentric read the SAME waveFlow continuous affine sheet-warp (the DRY coupling — a leaf
+// tune moves both).
 ${WAVE_FIELD_WGSL}
 
 // ── §1 The crisp line: Ben Golus derivative-AA grid coverage (transcribes gridCoverage) ──
@@ -177,16 +177,14 @@ fn fs_main(in: VSOut) -> @location(0) vec4f {
   let t = u.u0.x;
   let gridScale = u.u0.y;
 
-  // §5 the per-pixel kernel: CELL-TWIST + cursor-swirl the grid coordinate, then two-tier Golus.
-  // cellTwist rotates each cell about its OWN center (the boxes twist, the lines stay locally
-  // straight — the C3 cure) gated by a traveling Gaussian crest; cursorSwirl twists the cells
-  // about the finger. The Golus dv reads the FINAL twisted coord (the crisp-line fence survives).
+  // §5 the per-pixel kernel: AFFINE sheet-warp + cursor-swirl the grid coordinate, then two-tier
+  // Golus. waveFlow is the SMOOTH continuous domain transform (the SAME warp concentric reads) —
+  // a low-order curl-flow displacement gated by the traveling wave, locally affine at the cell
+  // scale, so the sheet bows/shears as ONE coherent transform (major lines a single smooth curve,
+  // no per-cell seam); cursorSwirl twists the cells about the finger. The Golus dv reads the FINAL
+  // warped coord (the crisp-line fence survives).
   let g0 = uv * gridScale;
-  // FOLD A — the PRE-twist driver: the face samples height/relief at THIS cc (floor(twisted_g)
-  // at the crest lights a NEIGHBOUR cell). cellTwist rides the SAME driver, so twist + face fuse.
-  let drv = cellDriver(g0, 1.0, t, u.wave.xy, u.wave.z, u.wave.w, u.wave2.x, u.wave2.w);
-  let cc = drv.xy;
-  var g = cellTwist(g0, 1.0, t, u.wave.xy, u.wave.z, u.wave.w, u.wave2.x, u.wave2.y, u.wave2.z, u.wave2.w);
+  var g = waveFlow(g0, t, u.wave.xy, u.wave.z, u.wave.w, u.wave2.x, u.wave2.y, u.wave2.w);
   if (u.cursor2.y > 0.5) {
     // bulgeMode (cursor2.x: +repel / −attract) signs the swirl direction.
     g = cursorSwirl(g, u.cursor.xy, u.cursor.z * u.cursor2.x, u.cursor.w);
@@ -206,9 +204,11 @@ fn fs_main(in: VSOut) -> @location(0) vec4f {
   let line = max(minor * u.grid.z, major * u.grid.w);
 
   // ── The FACE (BD.W-PAPERGRID-FACE) — height-lit filled cell interior ──────────────────
-  // Sample height/relief at the pre-twist driver cc (FOLD A); Lambert the ∇H slope against the
-  // fixed cel key-light; squash the inset so the crest face inflates; multi-stop warm-divergent
-  // ramp keyed on mix(shade, h) (FOLD B); the ink through the production OETF (FOLD E).
+  // Sample height/relief at the WARPED-space cell center (floor(g)+0.5, the cell the fragment
+  // lands in under the affine warp); Lambert the ∇H slope against the fixed cel key-light; squash
+  // the inset so the crest face inflates; multi-stop warm-divergent ramp keyed on mix(shade, h)
+  // (FOLD B); the ink through the production OETF (FOLD E).
+  let cc    = floor(g) + vec2f(0.5);
   let h     = cellHeight(cc, t, u.wave.xy, u.wave.z, u.wave.w, u.wave2.x, u.wave2.w);
   let grad  = faceRelief(cc, 1.0, t, u.wave.xy, u.wave.z, u.wave.w, u.wave2.x, u.wave2.w);
   let n     = normalize(vec3f(-grad * u.face.y, 1.0));

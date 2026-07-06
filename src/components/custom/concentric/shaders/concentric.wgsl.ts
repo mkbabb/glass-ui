@@ -1,6 +1,6 @@
 // BD.W-CONCENTRIC-RELIEF — concentric = a living level-set hypsometric SURVEY (WebGPU primary).
 //
-// concentric is the paper-grid's traveling-wave CELL-WARP applied to a LOW-octave topography
+// concentric is the liquid-grid's traveling-wave CELL-WARP applied to a LOW-octave topography
 // H(p,t), rendered as the level-set ISO-CONTOURS of H over an OPAQUE warm hypsometric FILL: a
 // tanh tone expansion, one analytic hillshade for 2.5-D relief, and a two-tier index/minor
 // contour hierarchy inked via the IQ gradient-free `contourInk` (the contour density tracks
@@ -8,7 +8,7 @@
 // HEAVES the topography toward the pointer with velocity-scaled weight. The output is OPAQUE.
 //
 // THE SINGLE MATH SOURCE. `heightField` / `cellTwist` / `waveSwell` are the SHARED `waveField`
-// leaf (the SAME paper-grid splices); `sampleHeight` transcribes `composables/levelField.ts`,
+// leaf (the SAME liquid-grid splices); `sampleHeight` transcribes `composables/levelField.ts`,
 // and the finishing reads (tone/hillshade/isIndex) transcribe its oracle twins. `proof:concentric`
 // round-trips the JS↔GLSL↔WGSL numeric identity at a fixed level-boundary sample lattice.
 
@@ -116,11 +116,11 @@ fn smoothstepEdge(e0: f32, e1: f32, x: f32) -> f32 {
 }
 
 // The level-set height at domain p (transcribes levelField.ts sampleHeight). The sampling
-// coordinate is cell-twisted (the SAME wave that twists paper-grid cells — kinship); the
+// coordinate is cell-twisted (the SAME wave that twists liquid-grid cells — kinship); the
 // height is a low-octave topography + the swell + the cursor peak.
 fn sampleHeight(p: vec2f, t: f32) -> f32 {
   // The CONTINUOUS traveling-wave flow warp (no per-cell seam — the contours flow + twist as
-  // the wave passes OVER and THROUGH them, the SAME wave that twists the paper-grid cells).
+  // the wave passes OVER and THROUGH them, the SAME wave that twists the liquid-grid cells).
   var g = waveFlow(p, t, u.wave.xy, u.wave.z, u.wave.w, u.wave2.x, u.wave2.y, u.wave2.w);
   if (u.cursor.w > 0.5) {
     g = cursorSwirl(g, u.cursor.xy, u.cursor.z * 0.6, u.u0.z * 2.5);

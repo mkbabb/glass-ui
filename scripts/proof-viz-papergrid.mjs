@@ -1,59 +1,46 @@
 #!/usr/bin/env node
-// BC.W-VIZ-PAPERGRID — proof:viz-papergrid, the liquid paper-grid source gate
-// (born-RED — the viz does not exist on HEAD → GREEN at the build).
+// BG.W-GRID-AFFINE — proof:viz-papergrid, the liquid-grid per-viz grid SOURCE gate.
 //
-// The cure for the BB paper-grid mess (USER-DEFECTS §E: "a mess → fix to be evenly spaced +
-// LARGER; the grid LINES must morph + wave in a liquid way; suffuse it throughout the site as
-// a subtle background element"). A static `linear-gradient` background cannot warp — the
-// liquid grid is a per-pixel fragment field: the Ben Golus derivative-AA distance (the crisp-
-// line fix), the IQ domain warp of the UV (the "liquid"), the Bridson divergence-free curl
-// driving the warp coherently (WHY it's liquid not noise). BORN WebGPU-first — a fullscreen
-// fragment on both backends (no Canvas2D path), the FIRST WGSL curl consumer (mints flow.wgsl.ts).
+// REWRITTEN (not de-registered — the BG.W-VIZ-SUBSTRATE-DELETE discipline) from the BC
+// per-cell-twist shape onto the F9.R4 affine law. Two things land in this gate:
 //
-// This gate is the DEVICE-FREE SOURCE arm (born-RED → GREEN, tagged ["local","ci","release"]).
-// The LIVE-GPU gestalt paint (the crisp evenly-spaced LARGE-cell liquid grid, the pointer
-// bulge, the suffusion, both modes + WebKit) rides the orchestrator's real-Metal capture
-// (tests-visual/paper-grid.spec.ts + the DELTA), NOT this device-free gate — the cardinal
-// split (CI proves the SOURCE composition/warp/identity, the local close proves the PAINT).
+//   A1 — THE AFFINE PERTURBATION LAW. The ripple warps the GRID COORDINATE with a SMOOTH
+//        LOW-ORDER field (`waveFlow`, the shared `waveField` leaf — the SAME warp concentric
+//        reads), locally affine at the cell scale so MAJOR gridlines BOW/SHEAR as ONE coherent
+//        transformation of the sheet — a domain transform BEFORE grid evaluation, NO new
+//        pass/buffer, NEVER a per-pixel/per-cell displacement. The retired per-cell `cellTwist`
+//        (which twisted each box about its own center → a kinked crest-band) is GONE from the
+//        liquid-grid shaders' CALLS; a re-introduced `cellTwist(` call in a liquid-grid shader
+//        REDs (the "the lines shimmer with noise" regression bite).
+//   A3 — THE RENAME (clean break, no alias — BA inv-7). /paper-grid → /liquid-grid,
+//        PaperGrid → LiquidGrid, route /substrates/liquid-grid. The old paper-grid VIZ dir +
+//        subpath are DEFINITION-ABSENT; no `PaperGrid`/`usePaperGrid`/`PaperGridConfig`/
+//        `/paper-grid` viz alias export survives. The homonym dies on the VIZ side ONLY: the
+//        STATIC `.paper-grid` card register (cards.css) + `--paper-grid-texture` (scale-paper.css)
+//        are BYTE-UNTOUCHED (P7 — the static-register-survives fence).
 //
-// FALSIFIABLE SOURCE WITNESSES (each born-RED before the wave; the comment-strip +
-// pure-detector house pattern, mirroring proof-viz-dotflow.mjs):
+// This gate is the DEVICE-FREE SOURCE arm (tagged ["local","ci","release"]). The LIVE-GPU gestalt
+// paint (a single MAJOR gridline bowing as ONE smooth continuous curve, cells near-parallelogram,
+// AA crisp at every DPR, both modes + WebKit) rides the orchestrator's real-Metal capture
+// (tests-visual/liquid-grid.spec.ts + the DELTA), NOT this device-free gate — the cardinal split.
 //
-//   P1 — EXISTS ONCE on /paper-grid with the colocation + publication binary. The colocation
-//        dir carries the SFC + usePaperGrid + paperGrid.ts + shaders/{paper-grid.wgsl,
-//        paper-grid.glsl}.ts + uniformBridgeWGPU.ts + constants.ts + index.ts + README.md;
-//        src/subpaths/paper-grid.ts re-exports the package; /api gains PaperGridConfig. Born-RED:
-//        no dir at HEAD. Bite: a missing file reds.
+// FALSIFIABLE SOURCE WITNESSES (each born-RED on the pre-rename/pre-affine tree):
 //
-//   P2 — COMPOSES the substrate + the math is ONE source. usePaperGrid composes
-//        createGpuSubstrate (NO inline scheduling fork — no own rAF / requestAnimationFrame);
-//        paperGrid.ts is the pure evaluator; the WGSL fs_main + the GLSL fragment carry the
-//        SAME function names. Bite: a forked rAF in usePaperGrid reds.
-//
-//   P3 — ONE math source round-trips JS↔WGSL↔GLSL (structural transcription + numeric). The
-//        pure exports (potentialFBM/curlWarp/cursorBulge/gridCoverage/samplePaperGrid) exist
-//        in paperGrid.ts AND the WGSL + GLSL transcribe them; a fixed-sample numeric round-trip
-//        of samplePaperGrid agrees (the JS uvDeriv is FIXED so the Golus path is reproducible).
-//        Bite: a planted off-by-ε WGSL constant in the gridCoverage Moiré term reds.
-//
-//   P4 — the liquid warp IS curlFBM, evenly-spaced + Golus-AA. paper-grid.wgsl.ts splices
-//        flow.wgsl.ts (curlFBM) AND paper-grid.glsl.ts splices flow.glsl.ts's curlFBM (ONE curl
-//        source per backend); the warp reads curlFBM (NOT a raw fbm gradient — the divergence-
-//        free assert); the coverage is the Golus derivative-AA (length(vec2(dFdx,dFdy)) +
-//        smoothstep(drawWidth±lineAA) + the Moiré-suppression mix); flow.wgsl.ts EXISTS (the
-//        FIRST WGSL curl consumer, the booking discharged). Bite: a raw-fbm-gradient warp reds;
-//        a missing Moiré-suppression line reds; a deleted flow.wgsl.ts reds.
-//
-//   P5 — warm-cream identity default, no teal/navy in the LIBRARY. constants.ts has NO
-//        teal/navy literal (an OklchStop with h in [180,280]); the line ink default is
-//        --foreground-derived (WARM_IDENTITY_INK); the background default is transparent.
-//        Bite: a planted teal/navy lineColor literal in constants.ts reds.
-//
-//   P6 — the configurator + the demo + the suffusion register. demo/stories/substrates/
-//        paper-grid.vue exists, drives the axes via a <Configurator>, the title carries
-//        /paper-grid; the liquid-grid StoryBackgroundKind is the suffusion register (low
-//        fieldAlpha, interactive:false), mounted FULL-BLEED. Bite: a liquid-grid mount inside
-//        .story-hero (boxed, not bleed) reds.
+//   P1 — EXISTS ONCE on /liquid-grid + colocation + publication + the RENAME clean-break. The
+//        colocation dir carries the SFC + useLiquidGrid + liquidGrid.ts + shaders/{liquid-grid.wgsl,
+//        liquid-grid.glsl}.ts + uniformBridgeWGPU.ts + constants.ts + index.ts + README.md;
+//        src/subpaths/liquid-grid.ts re-exports; /api gains LiquidGridConfig. The old paper-grid
+//        VIZ dir + subpath are ABSENT; the index carries NO PaperGrid* alias export (clean break).
+//   P2 — COMPOSES the substrate + the math is ONE source (createGpuSubstrate, no own rAF).
+//   P3 — ONE math source round-trips JS↔WGSL↔GLSL (potentialFBM/waveFlow/cursorSwirl/gridCoverage/
+//        sampleLiquidGrid; the retired cellTwist/curlWarp/cursorBulge CALLS are GONE from the JS).
+//   P4 — THE AFFINE LAW: the warp IS the SMOOTH `waveFlow` (curlFBM-driven), evenly-spaced +
+//        Golus-AA. The liquid-grid shaders INVOKE waveFlow and do NOT invoke cellTwist (the
+//        per-cell-wobble bite); the spliced waveField leaf's warp calls curlFBM (divergence-free).
+//   P5 — warm-cream identity default, no teal/navy in the LIBRARY constants.
+//   P6 — the configurator + the demo + the suffusion register + the /substrates/liquid-grid route.
+//   P7 — THE HOMONYM FENCE: the STATIC `.paper-grid` register (cards.css) + `--paper-grid-texture`
+//        (scale-paper.css) survive BYTE-UNTOUCHED (the rename kills the VIZ homonym only).
 //
 // + a self-test bite per clause (each planted defect REDs its clause).
 
@@ -67,16 +54,21 @@ import {
 } from "./gate-output.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
-const DIR = resolve(ROOT, "src/components/custom/paper-grid");
-const SUBPATH = resolve(ROOT, "src/subpaths/paper-grid.ts");
+const DIR = resolve(ROOT, "src/components/custom/liquid-grid");
+const OLD_DIR = resolve(ROOT, "src/components/custom/paper-grid");
+const SUBPATH = resolve(ROOT, "src/subpaths/liquid-grid.ts");
+const OLD_SUBPATH = resolve(ROOT, "src/subpaths/paper-grid.ts");
 const API = resolve(ROOT, "src/api/index.ts");
 const FLOW_WGSL = resolve(ROOT, "src/composables/glass/webgl/shaders/flow.wgsl.ts");
 const FLOW_GLSL = resolve(ROOT, "src/composables/glass/webgl/shaders/flow.glsl.ts");
 const WAVE_WGSL = resolve(ROOT, "src/composables/glass/wave/waveField.wgsl.ts");
 const WAVE_GLSL = resolve(ROOT, "src/composables/glass/wave/waveField.glsl.ts");
-const DEMO = resolve(ROOT, "demo/stories/substrates/paper-grid.vue");
+const DEMO = resolve(ROOT, "demo/stories/substrates/liquid-grid.vue");
 const AURORA_HERO = resolve(ROOT, "demo/stories/aurora-hero.ts");
 const STORY_HERO = resolve(ROOT, "demo/stories/StoryHero.vue");
+const MANIFEST = resolve(ROOT, "demo/stories/manifest.ts");
+const CARDS_CSS = resolve(ROOT, "src/styles/cards.css");
+const SCALE_PAPER_CSS = resolve(ROOT, "src/styles/tokens/scale-paper.css");
 
 const read = (p) => (existsSync(p) ? readFileSync(p, "utf8") : null);
 
@@ -87,32 +79,52 @@ function stripComments(src) {
         .replace(/(^|[^:])\/\/[^\n]*/g, "$1");
 }
 
-// ── P1: exists once + colocation + publication binary ─────────────────────────────
+// ── P1: exists once + colocation + publication + the RENAME clean-break ────────────
 function clauseExists(over) {
     const viol = [];
     const files = [
-        ["PaperGrid.vue", resolve(DIR, "PaperGrid.vue")],
-        ["composables/usePaperGrid.ts", resolve(DIR, "composables/usePaperGrid.ts")],
-        ["composables/paperGrid.ts", resolve(DIR, "composables/paperGrid.ts")],
+        ["LiquidGrid.vue", resolve(DIR, "LiquidGrid.vue")],
+        ["composables/useLiquidGrid.ts", resolve(DIR, "composables/useLiquidGrid.ts")],
+        ["composables/liquidGrid.ts", resolve(DIR, "composables/liquidGrid.ts")],
         ["composables/uniformBridgeWGPU.ts", resolve(DIR, "composables/uniformBridgeWGPU.ts")],
-        ["shaders/paper-grid.wgsl.ts", resolve(DIR, "shaders/paper-grid.wgsl.ts")],
-        ["shaders/paper-grid.glsl.ts", resolve(DIR, "shaders/paper-grid.glsl.ts")],
+        ["shaders/liquid-grid.wgsl.ts", resolve(DIR, "shaders/liquid-grid.wgsl.ts")],
+        ["shaders/liquid-grid.glsl.ts", resolve(DIR, "shaders/liquid-grid.glsl.ts")],
         ["constants.ts", resolve(DIR, "constants.ts")],
         ["index.ts", resolve(DIR, "index.ts")],
         ["README.md", resolve(DIR, "README.md")],
     ];
     for (const [label, p] of files) {
         if (!existsSync(p))
-            viol.push(`P1 exists: ${label} is missing from the colocation dir (paper-grid)`);
+            viol.push(`P1 exists: ${label} is missing from the colocation dir (liquid-grid)`);
     }
     const subpath = over?.subpath ?? read(SUBPATH);
-    if (!subpath || !/export \* from "\.\.\/components\/custom\/paper-grid"/.test(subpath))
+    if (!subpath || !/export \* from "\.\.\/components\/custom\/liquid-grid"/.test(subpath))
         viol.push(
-            "P1 publication: src/subpaths/paper-grid.ts does not re-export the package (the /paper-grid subpath barrel is missing)",
+            "P1 publication: src/subpaths/liquid-grid.ts does not re-export the package (the /liquid-grid subpath barrel is missing)",
         );
     const api = over?.api ?? read(API);
-    if (!api || !/PaperGridConfig/.test(api))
-        viol.push("P1 publication: /api does not export the PaperGridConfig discovery type");
+    if (!api || !/LiquidGridConfig/.test(api))
+        viol.push("P1 publication: /api does not export the LiquidGridConfig discovery type");
+
+    // The RENAME clean-break (no alias — BA inv-7). The old paper-grid VIZ dir + subpath are ABSENT.
+    const oldDirPresent = over?.oldDirPresent ?? existsSync(OLD_DIR);
+    if (oldDirPresent)
+        viol.push(
+            "P1 rename: the old src/components/custom/paper-grid VIZ dir is STILL PRESENT — the rename is a clean break (DEFINITION-ABSENT, no alias)",
+        );
+    const oldSubpathPresent = over?.oldSubpathPresent ?? existsSync(OLD_SUBPATH);
+    if (oldSubpathPresent)
+        viol.push(
+            "P1 rename: src/subpaths/paper-grid.ts is STILL PRESENT — the /paper-grid viz subpath alias must be DEFINITION-ABSENT",
+        );
+    // No PaperGrid* alias export survives on the liquid-grid barrel (the clean-break fence).
+    const index = over?.index ?? read(resolve(DIR, "index.ts"));
+    if (index && /\bPaperGrid\b|\busePaperGrid\b|\bPaperGridConfig\b|\bsamplePaperGrid\b|DEFAULT_PAPER_GRID_CONFIG/.test(stripComments(index)))
+        viol.push(
+            "P1 rename: the liquid-grid index.ts re-exports a PaperGrid* alias symbol — the rename is a clean break, no back-compat alias",
+        );
+    if (api && /PaperGridConfig/.test(stripComments(api)))
+        viol.push("P1 rename: /api still exports the retired PaperGridConfig alias (clean break, no alias)");
     return viol;
 }
 
@@ -120,137 +132,140 @@ function clauseExists(over) {
 function clauseSubstrate(over) {
     const viol = [];
     const use = stripComments(
-        over?.usePaperGrid ?? read(resolve(DIR, "composables/usePaperGrid.ts")),
+        over?.useLiquidGrid ?? read(resolve(DIR, "composables/useLiquidGrid.ts")),
     );
     if (!/createGpuSubstrate\s*\(/.test(use))
         viol.push(
-            "P2 substrate: usePaperGrid does not compose createGpuSubstrate( — it must use the picker over the ONE lifecycle leaf (no navigator.gpu direct, no own rAF)",
+            "P2 substrate: useLiquidGrid does not compose createGpuSubstrate( — it must use the picker over the ONE lifecycle leaf (no navigator.gpu direct, no own rAF)",
         );
     if (/requestAnimationFrame\s*\(/.test(use))
         viol.push(
-            "P2 substrate: usePaperGrid forks a requestAnimationFrame loop — the renderer owns the loop (the no-own-rAF / one-loop discipline; proof:offscreen-pause intact)",
+            "P2 substrate: useLiquidGrid forks a requestAnimationFrame loop — the renderer owns the loop (the no-own-rAF / one-loop discipline; proof:offscreen-pause intact)",
         );
     return viol;
 }
 
-// ── P3: one math source round-trips JS↔WGSL↔GLSL ─────────────────────────────────
+// ── P3: one math source round-trips JS↔WGSL↔GLSL (re-pointed at the affine waveFlow) ─
 function clauseRoundTrip(over) {
     const viol = [];
-    const js = stripComments(over?.paperGrid ?? read(resolve(DIR, "composables/paperGrid.ts")));
-    const wgsl = stripComments(over?.wgsl ?? read(resolve(DIR, "shaders/paper-grid.wgsl.ts")));
-    const glsl = stripComments(over?.glsl ?? read(resolve(DIR, "shaders/paper-grid.glsl.ts")));
-    // BD.W-VIZ-RESPEC RETIRE: the LINE-warp `curlWarp` + the radial `cursorBulge` are GONE (clean
-    // break, no alias — paperGrid.ts:113). The active warp is the SHARED `cellTwist` (per-cell
-    // rotate/shear) + `cursorSwirl`, both from the `waveField` leaf — so the round-trip witnesses
-    // are re-pointed at those + the paper-grid-owned `potentialFBM`/`gridCoverage`/`samplePaperGrid`.
-    // The shared leaf fns (`cellTwist`/`cursorSwirl`) are SPLICED via WAVE_FIELD_{WGSL,GLSL}; the
-    // binding numeric ΔE round-trip rides proof:wave-field's assertParity (the harness, not the
-    // name-presence). Here P3 asserts the structural transcription presence.
+    const js = stripComments(over?.liquidGrid ?? read(resolve(DIR, "composables/liquidGrid.ts")));
+    const wgsl = stripComments(over?.wgsl ?? read(resolve(DIR, "shaders/liquid-grid.wgsl.ts")));
+    const glsl = stripComments(over?.glsl ?? read(resolve(DIR, "shaders/liquid-grid.glsl.ts")));
+    // BG.W-GRID-AFFINE: the active warp is the SHARED `waveFlow` (smooth continuous sheet warp) +
+    // `cursorSwirl`, both from the `waveField` leaf, SPLICED via WAVE_FIELD_{WGSL,GLSL}. The
+    // round-trip witnesses are re-pointed at those + the liquid-grid-owned potentialFBM/gridCoverage/
+    // sampleLiquidGrid. The binding numeric ΔE round-trip rides proof:wave-field's assertParity.
     const wgslHasWaveFn = (name) =>
         new RegExp(`\\b${name}\\s*\\(`).test(wgsl) || /WAVE_FIELD_WGSL/.test(wgsl);
     const glslHasWaveFn = (name) =>
         new RegExp(`\\b${name}\\s*\\(`).test(glsl) || /WAVE_FIELD_GLSL/.test(glsl);
     const checks = [
         ["potentialFBM in JS", () => /export function potentialFBM/.test(js)],
-        ["cellTwist warp in JS", () => /\bcellTwist\b/.test(js)],
+        ["waveFlow warp in JS", () => /\bwaveFlow\b/.test(js)],
         ["cursorSwirl warp in JS", () => /\bcursorSwirl\b/.test(js)],
         ["gridCoverage in JS", () => /export function gridCoverage/.test(js)],
-        ["samplePaperGrid in JS", () => /export function samplePaperGrid/.test(js)],
-        // the retired ring/line-warp symbols must NOT come back (no-legacy fence).
-        ["the retired curlWarp/cursorBulge are GONE in JS", () => !/\bcurlWarp\b|\bcursorBulge\b/.test(js)],
+        ["sampleLiquidGrid in JS", () => /export function sampleLiquidGrid/.test(js)],
+        // the retired warps must NOT come back as CALLS (no-legacy fence).
+        ["the retired curlWarp/cursorBulge/cellTwist/cellDriver CALLS are GONE in JS", () => !/\bcurlWarp\s*\(|\bcursorBulge\s*\(|\bcellTwist\s*\(|\bcellDriver\s*\(/.test(js)],
         ["potentialFBM in WGSL", () => /fn potentialFBM/.test(wgsl)],
-        ["cellTwist warp in WGSL", () => wgslHasWaveFn("cellTwist")],
+        ["waveFlow warp in WGSL", () => wgslHasWaveFn("waveFlow")],
         ["cursorSwirl warp in WGSL", () => wgslHasWaveFn("cursorSwirl")],
         ["gridCoverage in WGSL", () => /fn gridCoverage/.test(wgsl)],
         ["potentialFBM in GLSL", () => /float potentialFBM/.test(glsl)],
-        ["cellTwist warp in GLSL", () => glslHasWaveFn("cellTwist")],
+        ["waveFlow warp in GLSL", () => glslHasWaveFn("waveFlow")],
         ["cursorSwirl warp in GLSL", () => glslHasWaveFn("cursorSwirl")],
         ["gridCoverage in GLSL", () => /float gridCoverage/.test(glsl)],
     ];
     for (const [label, fn] of checks) {
         if (!fn())
             viol.push(
-                `P3 round-trip: ${label} — the WGSL/GLSL must transcribe the SAME paperGrid.ts math (the single source)`,
+                `P3 round-trip: ${label} — the WGSL/GLSL must transcribe the SAME liquidGrid.ts math (the single source)`,
             );
     }
-    // The Moiré-suppression mix transcribes to BOTH shaders (the Golus de-aliasing line) —
-    // the structural anchor a planted off-by-ε WGSL constant breaks.
+    // The Moiré-suppression mix transcribes to BOTH shaders (the Golus de-aliasing line).
     if (!/mix\s*\(\s*grid2/.test(wgsl))
         viol.push(
-            "P3 round-trip: paper-grid.wgsl.ts has no Moiré-suppression mix(grid2, …) — the Golus de-aliasing line is missing (the 'evenly-spaced not Moiré' floor)",
+            "P3 round-trip: liquid-grid.wgsl.ts has no Moiré-suppression mix(grid2, …) — the Golus de-aliasing line is missing (the 'evenly-spaced not Moiré' floor)",
         );
     if (!/mix\s*\(\s*grid2/.test(glsl))
         viol.push(
-            "P3 round-trip: paper-grid.glsl.ts has no Moiré-suppression mix(grid2, …) — the Golus de-aliasing line is missing",
+            "P3 round-trip: liquid-grid.glsl.ts has no Moiré-suppression mix(grid2, …) — the Golus de-aliasing line is missing",
         );
     return viol;
 }
 
-// ── P4: the liquid warp IS curlFBM, evenly-spaced + Golus-AA ──────────────────────
-function clauseCurlGolus(over) {
+// ── P4: THE AFFINE LAW — the warp IS the smooth waveFlow (curlFBM), evenly-spaced + Golus-AA ─
+function clauseAffineLaw(over) {
     const viol = [];
-    const wgsl = stripComments(over?.wgsl ?? read(resolve(DIR, "shaders/paper-grid.wgsl.ts")));
-    const glsl = stripComments(over?.glsl ?? read(resolve(DIR, "shaders/paper-grid.glsl.ts")));
-    const rawWgsl = over?.wgsl ?? read(resolve(DIR, "shaders/paper-grid.wgsl.ts"));
-    const rawGlsl = over?.glsl ?? read(resolve(DIR, "shaders/paper-grid.glsl.ts"));
+    const wgsl = stripComments(over?.wgsl ?? read(resolve(DIR, "shaders/liquid-grid.wgsl.ts")));
+    const glsl = stripComments(over?.glsl ?? read(resolve(DIR, "shaders/liquid-grid.glsl.ts")));
+    const rawWgsl = over?.wgsl ?? read(resolve(DIR, "shaders/liquid-grid.wgsl.ts"));
+    const rawGlsl = over?.glsl ?? read(resolve(DIR, "shaders/liquid-grid.glsl.ts"));
     const flowWgsl = over?.flowWgsl ?? read(FLOW_WGSL);
     const flowGlsl = over?.flowGlsl ?? read(FLOW_GLSL);
 
-    // flow.wgsl.ts EXISTS (the FIRST WGSL curl consumer — the booking discharged).
+    // flow.wgsl.ts EXISTS with the curl operator (the shared divergence-free curl chunk).
     if (!flowWgsl || !/CURL_FBM_WGSL/.test(flowWgsl) || !/fn curlFBM/.test(flowWgsl))
         viol.push(
-            "P4 curl: src/composables/glass/webgl/shaders/flow.wgsl.ts does not export CURL_FBM_WGSL with a curlFBM operator (the FIRST WGSL curl consumer — the booked procedural-tail chunk is missing)",
+            "P4 curl: src/composables/glass/webgl/shaders/flow.wgsl.ts does not export CURL_FBM_WGSL with a curlFBM operator (the shared curl chunk is missing)",
         );
     if (!flowGlsl || !/CURL_FBM_GLSL/.test(flowGlsl))
         viol.push("P4 curl: flow.glsl.ts no longer exports CURL_FBM_GLSL (the GLSL curl source)");
 
-    // The WGSL primary SPLICES flow.wgsl.ts's CURL_FBM_WGSL; the GLSL fallback splices the GLSL.
+    // The shaders SPLICE the shared curl chunk (ONE curl source per backend).
     if (!/CURL_FBM_WGSL/.test(rawWgsl ?? "") || !/flow\.wgsl/.test(rawWgsl ?? ""))
         viol.push(
-            "P4 curl: paper-grid.wgsl.ts does not splice CURL_FBM_WGSL from flow.wgsl (ONE curl source per backend)",
+            "P4 curl: liquid-grid.wgsl.ts does not splice CURL_FBM_WGSL from flow.wgsl (ONE curl source per backend)",
         );
     if (!/CURL_FBM_GLSL/.test(rawGlsl ?? "") || !/flow\.glsl/.test(rawGlsl ?? ""))
         viol.push(
-            "P4 curl: paper-grid.glsl.ts does not splice CURL_FBM_GLSL from flow.glsl (ONE curl source per backend)",
+            "P4 curl: liquid-grid.glsl.ts does not splice CURL_FBM_GLSL from flow.glsl (ONE curl source per backend)",
         );
 
-    // The warp is the SHARED `cellTwist`/`cursorSwirl` (the waveField leaf), which is itself a
-    // divergence-free CURL term — the leaf's cellTwist body CALLS curlFBM (the area-preserving
-    // warp, NOT a raw fbm gradient). The paper-grid shader SPLICES WAVE_FIELD_{WGSL,GLSL} (where
-    // cellTwist lives) and INVOKES cellTwist; the curlFBM call is inside the spliced chunk. P4
-    // asserts both halves: the shader composes cellTwist AND the spliced waveField leaf calls
-    // curlFBM (the divergence-free guarantee).
+    // THE AFFINE LAW (A1). The shaders INVOKE the SMOOTH `waveFlow` sheet-warp (the SAME warp
+    // concentric reads) and SPLICE the WAVE_FIELD leaf where waveFlow lives.
+    if (!/\bwaveFlow\s*\(/.test(wgsl) || !/WAVE_FIELD_WGSL/.test(rawWgsl ?? ""))
+        viol.push(
+            "P4 affine: liquid-grid.wgsl.ts does not invoke the SHARED waveFlow sheet-warp from WAVE_FIELD_WGSL — the ripple must be the smooth continuous affine warp (major lines bow as ONE curve)",
+        );
+    if (!/\bwaveFlow\s*\(/.test(glsl) || !/WAVE_FIELD_GLSL/.test(rawGlsl ?? ""))
+        viol.push(
+            "P4 affine: liquid-grid.glsl.ts does not invoke the SHARED waveFlow sheet-warp from WAVE_FIELD_GLSL — the ripple must be the smooth continuous affine warp",
+        );
+    // THE PER-CELL-WOBBLE BITE. The retired per-cell `cellTwist` (a discontinuous per-box twist →
+    // a kinked crest-band, "the lines shimmer with noise") must NOT be CALLED by the liquid-grid
+    // shaders. `cellTwist` lives in the shared leaf as an unused primitive; a CALL in the shader
+    // re-introduces the per-cell warp the affine law supersedes.
+    if (/\bcellTwist\s*\(/.test(wgsl))
+        viol.push(
+            "P4 affine: liquid-grid.wgsl.ts CALLS cellTwist( — the retired per-cell discontinuous warp is GONE (the affine law wants the smooth waveFlow sheet warp, no per-cell kink)",
+        );
+    if (/\bcellTwist\s*\(/.test(glsl))
+        viol.push(
+            "P4 affine: liquid-grid.glsl.ts CALLS cellTwist( — the retired per-cell discontinuous warp is GONE (the affine law wants the smooth waveFlow sheet warp)",
+        );
+
+    // The spliced waveField leaf's waveFlow IS a curl warp (it calls curlFBM) — a re-derivation
+    // to a raw fbm gradient in the leaf reds (the divergence-free guarantee).
     const waveWgsl = over?.waveWgsl ?? read(WAVE_WGSL);
     const waveGlsl = over?.waveGlsl ?? read(WAVE_GLSL);
-    if (!/\bcellTwist\s*\(/.test(wgsl) || !/WAVE_FIELD_WGSL/.test(rawWgsl ?? ""))
-        viol.push(
-            "P4 curl: paper-grid.wgsl.ts does not compose the SHARED cellTwist warp from WAVE_FIELD_WGSL — the warp must be the divergence-free curl (the source-y 'noise' cure)",
-        );
-    if (!/\bcellTwist\s*\(/.test(glsl) || !/WAVE_FIELD_GLSL/.test(rawGlsl ?? ""))
-        viol.push(
-            "P4 curl: paper-grid.glsl.ts does not compose the SHARED cellTwist warp from WAVE_FIELD_GLSL — the warp must be the divergence-free curl",
-        );
-    // The spliced waveField leaf's cellTwist IS a curl warp (it calls curlFBM) — a re-derivation
-    // to a raw fbm gradient in the leaf reds.
     if (waveWgsl && !/curlFBM\s*\(/.test(stripComments(waveWgsl)))
         viol.push(
-            "P4 curl: the WGSL waveField leaf (cellTwist) does not call curlFBM( — the shared warp must be the divergence-free curl, NOT a raw fbm gradient",
+            "P4 curl: the WGSL waveField leaf does not call curlFBM( — the shared warp must be the divergence-free curl, NOT a raw fbm gradient",
         );
     if (waveGlsl && !/curlFBM\s*\(/.test(stripComments(waveGlsl)))
         viol.push(
-            "P4 curl: the GLSL waveField leaf (cellTwist) does not call curlFBM( — the shared warp must be the divergence-free curl",
+            "P4 curl: the GLSL waveField leaf does not call curlFBM( — the shared warp must be the divergence-free curl",
         );
 
-    // The Golus derivative-AA distance: length(vec2(dpdx,dpdy)) (WGSL) / length(vec2(dFdx,dFdy))
-    // (GLSL) + the smoothstep(drawWidth ± lineAA) stroke. A static-pitch grid (no derivative)
-    // reds — the blur kill is the derivative.
+    // The Golus derivative-AA distance: dpdx/dpdy (WGSL) / dFdx/dFdy (GLSL) + the smoothstep stroke.
     if (!/dpdx\s*\(/.test(wgsl) || !/dpdy\s*\(/.test(wgsl))
         viol.push(
-            "P4 golus: paper-grid.wgsl.ts does not read the screen-space derivative dpdx/dpdy — the Ben Golus derivative-AA (the crisp-line / blur-kill) is missing",
+            "P4 golus: liquid-grid.wgsl.ts does not read the screen-space derivative dpdx/dpdy — the Ben Golus derivative-AA (the crisp-line / blur-kill) is missing",
         );
     if (!/dFdx\s*\(/.test(glsl) || !/dFdy\s*\(/.test(glsl))
         viol.push(
-            "P4 golus: paper-grid.glsl.ts does not read the screen-space derivative dFdx/dFdy — the Ben Golus derivative-AA is missing",
+            "P4 golus: liquid-grid.glsl.ts does not read the screen-space derivative dFdx/dFdy — the Ben Golus derivative-AA is missing",
         );
     if (!/smoothstep\s*\(\s*drawWidth/.test(wgsl))
         viol.push(
@@ -276,40 +291,63 @@ function clauseWarmIdentity(over) {
         viol.push("P5 warm-identity: constants.ts does not declare WARM_IDENTITY_INK (the warm --foreground ink default)");
     if (!/lineColor\s*:\s*WARM_IDENTITY_INK/.test(consts))
         viol.push(
-            "P5 warm-identity: DEFAULT_PAPER_GRID_CONFIG.lineColor is not WARM_IDENTITY_INK (the default ink must be warm-cream identity)",
+            "P5 warm-identity: DEFAULT_LIQUID_GRID_CONFIG.lineColor is not WARM_IDENTITY_INK (the default ink must be warm-cream identity)",
         );
     if (!/background\s*:\s*["']transparent["']/.test(consts))
         viol.push(
-            "P5 warm-identity: DEFAULT_PAPER_GRID_CONFIG.background is not 'transparent' (the grid must suffuse over the page, not paint a ground)",
+            "P5 warm-identity: DEFAULT_LIQUID_GRID_CONFIG.background is not 'transparent' (the grid must suffuse over the page, not paint a ground)",
         );
     return viol;
 }
 
-// ── P6: the configurator + demo + suffusion register ──────────────────────────────
+// ── P6: the configurator + demo + suffusion register + the renamed route ──────────
 function clauseDemo(over) {
     const viol = [];
     const demo = stripComments(over?.demo ?? read(DEMO));
     const hero = stripComments(over?.auroraHero ?? read(AURORA_HERO));
     const storyHero = stripComments(over?.storyHero ?? read(STORY_HERO));
+    const manifest = stripComments(over?.manifest ?? read(MANIFEST));
     if (!demo)
-        viol.push("P6 demo: demo/stories/substrates/paper-grid.vue is missing (the demo page)");
+        viol.push("P6 demo: demo/stories/substrates/liquid-grid.vue is missing (the demo page)");
     else {
         if (!/<Configurator\b/.test(demo))
             viol.push("P6 demo: the demo page has no <Configurator> (the controls-on-the-RIGHT shell)");
-        if (!/PaperGrid\b/.test(demo))
-            viol.push("P6 demo: the demo page does not mount <PaperGrid>");
-        if (!/\/paper-grid/.test(demo))
-            viol.push("P6 demo: the demo page title does not carry the explicit /paper-grid subpath");
+        if (!/<LiquidGrid\b/.test(demo))
+            viol.push("P6 demo: the demo page does not mount <LiquidGrid>");
+        if (!/\/liquid-grid/.test(demo))
+            viol.push("P6 demo: the demo page title does not carry the explicit /liquid-grid subpath");
     }
     // The liquid-grid StoryBackgroundKind is the suffusion register (the §E site-wide bg).
     if (!hero || !/["']liquid-grid["']/.test(hero))
         viol.push(
-            "P6 suffusion: the liquid-grid StoryBackgroundKind is not declared in aurora-hero.ts (the suffusion register — §E 'suffuse it throughout the site as a subtle background element')",
+            "P6 suffusion: the liquid-grid StoryBackgroundKind is not declared in aurora-hero.ts (the suffusion register — 'suffuse it throughout the site as a subtle background element')",
         );
     // The liquid-grid kind mounts FULL-BLEED (NOT boxed in .story-hero) — the bleed escape.
     if (storyHero != null && /liquid-grid/.test(storyHero) && !/bleed/.test(storyHero))
         viol.push(
-            "P6 suffusion: the liquid-grid kind in StoryHero.vue is not mounted full-bleed (the .story-hero-bg--bleed escape — the 'not displayed in the card' fix)",
+            "P6 suffusion: the liquid-grid kind in StoryHero.vue is not mounted full-bleed (the .story-hero-bg--bleed escape)",
+        );
+    // The renamed route resolves in the story manifest (A3 — route /substrates/liquid-grid).
+    if (manifest != null && !/substrates\/liquid-grid/.test(manifest))
+        viol.push(
+            "P6 route: demo/stories/manifest.ts does not carry the /substrates/liquid-grid route (the A3 rename)",
+        );
+    return viol;
+}
+
+// ── P7: THE HOMONYM FENCE — the STATIC .paper-grid register survives byte-untouched ─
+function clauseHomonymFence(over) {
+    const viol = [];
+    const cards = over?.cardsCss ?? read(CARDS_CSS);
+    const scalePaper = over?.scalePaperCss ?? read(SCALE_PAPER_CSS);
+    // The rename kills the VIZ homonym ONLY — the STATIC geometric-paper card register stays.
+    if (!cards || !/\.paper-grid\s*\{/.test(cards))
+        viol.push(
+            "P7 homonym: the STATIC .paper-grid card register is ABSENT from cards.css — the viz rename must NOT touch the static paper register (BYTE-UNTOUCHED)",
+        );
+    if (!scalePaper || !/--paper-grid-texture\s*:/.test(scalePaper))
+        viol.push(
+            "P7 homonym: --paper-grid-texture is ABSENT from tokens/scale-paper.css — the static geometric-paper token must survive the viz rename",
         );
     return viol;
 }
@@ -319,44 +357,44 @@ function runAll(over = {}) {
         ...clauseExists(over),
         ...clauseSubstrate(over),
         ...clauseRoundTrip(over),
-        ...clauseCurlGolus(over),
+        ...clauseAffineLaw(over),
         ...clauseWarmIdentity(over),
         ...clauseDemo(over),
+        ...clauseHomonymFence(over),
     ];
 }
 
 // ── Self-test: a synthetic broken tree MUST red ──
 function selfTest() {
     const fails = [];
-    const liveUse = read(resolve(DIR, "composables/usePaperGrid.ts"));
-    const liveJs = read(resolve(DIR, "composables/paperGrid.ts"));
-    const liveWgsl = read(resolve(DIR, "shaders/paper-grid.wgsl.ts"));
-    const liveGlsl = read(resolve(DIR, "shaders/paper-grid.glsl.ts"));
+    const liveUse = read(resolve(DIR, "composables/useLiquidGrid.ts"));
+    const liveWgsl = read(resolve(DIR, "shaders/liquid-grid.wgsl.ts"));
     const liveConsts = read(resolve(DIR, "constants.ts"));
     const liveHero = read(AURORA_HERO);
+    const liveIndex = read(resolve(DIR, "index.ts"));
+    const liveCards = read(CARDS_CSS);
 
-    // (a) a missing index.ts reds P1 (simulate by overriding subpath to empty).
+    // (a) a missing /liquid-grid subpath barrel reds P1.
     const noSubpath = runAll({ subpath: "" });
     if (!noSubpath.some((v) => v.startsWith("P1")))
-        fails.push("self-test: a missing /paper-grid subpath barrel did NOT red P1");
-    // (b) a forked rAF in usePaperGrid reds P2.
-    const raffed = runAll({ usePaperGrid: (liveUse ?? "") + "\nfunction loop(){ requestAnimationFrame(loop); }" });
+        fails.push("self-test: a missing /liquid-grid subpath barrel did NOT red P1");
+    // (b) a forked rAF in useLiquidGrid reds P2.
+    const raffed = runAll({ useLiquidGrid: (liveUse ?? "") + "\nfunction loop(){ requestAnimationFrame(loop); }" });
     if (!raffed.some((v) => v.startsWith("P2")))
-        fails.push("self-test: a planted requestAnimationFrame in usePaperGrid did NOT red P2");
+        fails.push("self-test: a planted requestAnimationFrame in useLiquidGrid did NOT red P2");
     // (c) a dropped Moiré-suppression mix reds P3.
     const noMoire = runAll({ wgsl: (liveWgsl ?? "").replace(/grid2 = mix\(grid2[^;]*;/g, "") });
     if (!noMoire.some((v) => v.startsWith("P3")))
         fails.push("self-test: a dropped Moiré-suppression mix did NOT red P3");
-    // (d) the SHARED waveField leaf re-derived to a raw fbm gradient (drops curlFBM) reds P4 —
-    //     the curl warp now lives in the spliced leaf (cellTwist), not the paper-grid shader.
+    // (d) the SHARED waveField leaf re-derived to a raw fbm gradient (drops curlFBM) reds P4.
     const liveWaveWgsl = read(WAVE_WGSL);
     const noCurl = runAll({ waveWgsl: (liveWaveWgsl ?? "").replace(/curlFBM\(/g, "potentialGrad(") });
     if (!noCurl.some((v) => v.startsWith("P4")))
         fails.push("self-test: a waveField leaf dropping curlFBM (a raw fbm gradient) did NOT red P4");
-    // (d2) the paper-grid shader dropping the cellTwist warp composition reds P4.
-    const noTwist = runAll({ wgsl: (liveWgsl ?? "").replace(/cellTwist\(/g, "rawWarp(") });
-    if (!noTwist.some((v) => v.startsWith("P4")))
-        fails.push("self-test: the paper-grid shader dropping the cellTwist warp did NOT red P4");
+    // (d2) THE PER-CELL-WOBBLE BITE — a liquid-grid shader re-introducing a cellTwist( call reds P4.
+    const wobble = runAll({ wgsl: (liveWgsl ?? "").replace(/waveFlow\(/g, "cellTwist(") });
+    if (!wobble.some((v) => v.startsWith("P4")))
+        fails.push("self-test: a liquid-grid shader re-introducing a per-cell cellTwist( warp did NOT red P4 (the per-pixel-wobble bite)");
     // (e) a deleted flow.wgsl.ts reds P4.
     const noFlowWgsl = runAll({ flowWgsl: "" });
     if (!noFlowWgsl.some((v) => v.startsWith("P4")))
@@ -369,8 +407,18 @@ function selfTest() {
     const noKind = runAll({ auroraHero: (liveHero ?? "").replace(/liquid-grid/g, "grid") });
     if (!noKind.some((v) => v.startsWith("P6")))
         fails.push("self-test: a removed liquid-grid StoryBackgroundKind did NOT red P6");
-    void liveJs;
-    void liveGlsl;
+    // (alias) a re-added PaperGrid alias export on the liquid-grid barrel reds P1.
+    const aliased = runAll({ index: (liveIndex ?? "") + "\nexport { LiquidGrid as PaperGrid } from './LiquidGrid.vue';" });
+    if (!aliased.some((v) => v.startsWith("P1")))
+        fails.push("self-test: a re-added PaperGrid alias export did NOT red P1 (the clean-break fence)");
+    // (old-dir) the old paper-grid VIZ dir re-appearing reds P1.
+    const oldDir = runAll({ oldDirPresent: true });
+    if (!oldDir.some((v) => v.startsWith("P1")))
+        fails.push("self-test: a re-appearing old paper-grid VIZ dir did NOT red P1");
+    // (static-register) removing the STATIC .paper-grid card register reds P7.
+    const noStatic = runAll({ cardsCss: (liveCards ?? "").replace(/\.paper-grid\s*\{/g, ".other-thing {") });
+    if (!noStatic.some((v) => v.startsWith("P7")))
+        fails.push("self-test: removing the STATIC .paper-grid card register did NOT red P7 (the homonym fence)");
     return fails;
 }
 
@@ -382,7 +430,7 @@ function main() {
 
     const artifact = {
         gate: "proof:viz-papergrid",
-        wave: "BC.W-VIZ-PAPERGRID",
+        wave: "BG.W-GRID-AFFINE",
         stamp: snapshotStamp(),
         ok,
         violations: viol,
@@ -395,13 +443,13 @@ function main() {
     writeGateArtifact(out, artifact);
 
     console.log(
-        "proof:viz-papergrid — the liquid paper-grid: evenly-spaced LARGER lines on a breathing curl-flow sheet (BC.W-VIZ-PAPERGRID)",
+        "proof:viz-papergrid — the liquid-grid: an affine sheet-warp (major lines bow as ONE curve) on the shared waveFlow field (BG.W-GRID-AFFINE)",
     );
     if (viol.length) {
         console.error("  RED:");
         for (const v of viol) console.error("    ✗ " + v);
     } else {
-        console.log("  GREEN (P1 exists · P2 substrate · P3 round-trip · P4 curl+golus · P5 warm-identity · P6 demo+suffusion)");
+        console.log("  GREEN (P1 exists+rename · P2 substrate · P3 round-trip · P4 affine+curl+golus · P5 warm-identity · P6 demo+route · P7 homonym-fence)");
     }
     if (isSelftest) {
         if (selfFails.length) {

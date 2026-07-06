@@ -9,7 +9,7 @@
 //
 // THE METHODOLOGY. paper-grid is a PURE fragment field (no compute, no particles, no
 // storage buffer — the LIGHTEST viz in the suite): BOTH backends evaluate ONE analytic
-// liquid-grid field (`composables/paperGrid.ts` `samplePaperGrid()` — the Ben Golus
+// liquid-grid field (`composables/paperGrid.ts` `sampleLiquidGrid()` — the Ben Golus
 // derivative-AA two-tier grid on the Bridson divergence-free curl-warped UV) through the
 // SAME shared curl chunk (`flow.wgsl.ts` ⟷ `flow.glsl.ts`, byte-identical 2D-curl operator)
 // + the SAME OETF. So the line coverage AND the premultiplied ink they produce are
@@ -30,9 +30,9 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { PNG } from "pngjs";
 import {
-    samplePaperGrid,
+    sampleLiquidGrid,
     gridScaleFor,
-} from "../dist/paper-grid.js";
+} from "../dist/liquid-grid.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
@@ -107,7 +107,7 @@ const PARAMS = {
 
 function renderPixel(u, v) {
     const uv = { x: u * 2 - 1, y: v * 2 - 1 };
-    const { line } = samplePaperGrid(uv, T, PARAMS);
+    const { line } = sampleLiquidGrid(uv, T, PARAMS);
     // composite the warm ink over the neutral cream page by the line coverage.
     const a = Math.min(Math.max(line, 0), 1);
     const lin = [
@@ -183,7 +183,7 @@ function main() {
         surface:
             "paper-grid (default warm-identity config, 64/6px cell, majorEvery 5, two-tier Golus AA, curl-warp t=1.3 deterministic; ink composited over a neutral cream page so the lines READ in the raster)",
         methodology:
-            "device-free STRUCTURAL proxy — paper-grid is a PURE fragment field (no compute, no particles, no storage buffer): BOTH backends evaluate ONE analytic liquid-grid field (composables/paperGrid.ts samplePaperGrid — Ben Golus derivative-AA two-tier grid on a Bridson divergence-free curl-warped UV) through the SAME shared curl chunk (flow.wgsl.ts ⟷ flow.glsl.ts, byte-identical 2D-curl operator) + the SAME OETF. The line coverage + the premultiplied ink are identical at every (uv,t). The live Metal-GPU swap-chain readback vs WebGL2 readPixels is the binding live capture (rides this wave's close, BC.W-GESTALT-FIRST). The fallback is the SAME pure fragment field — parity `verified`.",
+            "device-free STRUCTURAL proxy — paper-grid is a PURE fragment field (no compute, no particles, no storage buffer): BOTH backends evaluate ONE analytic liquid-grid field (composables/paperGrid.ts sampleLiquidGrid — Ben Golus derivative-AA two-tier grid on a Bridson divergence-free curl-warped UV) through the SAME shared curl chunk (flow.wgsl.ts ⟷ flow.glsl.ts, byte-identical 2D-curl operator) + the SAME OETF. The line coverage + the premultiplied ink are identical at every (uv,t). The live Metal-GPU swap-chain readback vs WebGL2 readPixels is the binding live capture (rides this wave's close, BC.W-GESTALT-FIRST). The fallback is the SAME pure fragment field — parity `verified`.",
         raster: { width: W, height: H },
         linePixels,
         captures: {

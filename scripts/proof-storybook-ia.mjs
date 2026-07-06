@@ -63,10 +63,10 @@ export const EXPECTED_TREE = [
     // NEW WebGPU-first radial-Fourier ring-interference viz appends LAST (after
     // dot-flow-field), closing the Batch-V substrates band.
     // BC: `fourier-studio` RETIRED (BC.W-VIZ-FOURIER merged the Canvas2D three-view
-    // split into the ONE WebGPU `fourier-field` view). `paper-grid` (BC.W-VIZ-PAPERGRID)
+    // split into the ONE WebGPU `fourier-field` view). `liquid-grid` (BC.W-VIZ-PAPERGRID)
     // + `dot-matrix` (BC.W-VIZ-DOTMATRIX) + `goo-dot` (BC.W-VIZ-HYBRID, the goo-dot-matrix
     // hybrid) append — the WebGPU-first viz suite.
-    ["substrates", ["aurora", "blob", "constellation", "fourier-field", "glass-material", "glass-panel", "dot-flow-field", "concentric", "paper-grid", "dot-matrix", "goo-dot"]],
+    ["substrates", ["aurora", "blob", "constellation", "fourier-field", "glass-material", "glass-panel", "dot-flow-field", "concentric", "liquid-grid", "dot-matrix", "goo-dot"]],
     // The Primitives bin split: form-controls.
     ["forms", [
         "inputs", "textarea", "checks", "slider", "number-field", "select",

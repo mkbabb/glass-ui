@@ -10,10 +10,10 @@ import type {
     WebGPUCanvasFrame,
     BackingSize,
 } from "../../../../composables/glass/webgpu/useWebGPUCanvas";
-import { PAPER_GRID_WGSL } from "../shaders/paper-grid.wgsl";
-import type { PaperGridConfig } from "../constants";
-import type { Vec2 } from "./paperGrid";
-import { createPaperGridScratch, packPaperGridUniforms } from "./uniformBridgeWGPU";
+import { LIQUID_GRID_WGSL } from "../shaders/liquid-grid.wgsl";
+import type { LiquidGridConfig } from "../constants";
+import type { Vec2 } from "./liquidGrid";
+import { createLiquidGridScratch, packLiquidGridUniforms } from "./uniformBridgeWGPU";
 
 // WebGPU usage/visibility bitflags (webgpu.idl constants; lib.dom declares the TYPES not the
 // VALUE namespaces — naming them keeps the call sites readable, mirroring concentric).
@@ -21,9 +21,9 @@ const BUFFER_USAGE_UNIFORM = 0x40;
 const BUFFER_USAGE_COPY_DST = 0x8;
 const SHADER_STAGE_FRAGMENT = 0x2;
 
-export interface PaperGridWGPUSetupDeps {
+export interface LiquidGridWGPUSetupDeps {
     canvas: HTMLCanvasElement;
-    config: PaperGridConfig;
+    config: LiquidGridConfig;
     /** The transient pointer cursor in GRID space — re-read each frame (the cursor swirl). */
     getCursor: () => Vec2;
     /** The spring-eased traveling-wave envelope amplitude (0..1; PRM → 0). */
@@ -31,16 +31,16 @@ export interface PaperGridWGPUSetupDeps {
     /** Demand-gate (the renderer's quiescence layer — substrate-agnostic). */
     shouldContinue: () => boolean;
     /**
-     * The per-frame pointer hook — usePaperGrid advances the shared `usePointerVelocityField`
+     * The per-frame pointer hook — useLiquidGrid advances the shared `usePointerVelocityField`
      * here (the no-own-rAF discipline: the renderer's frame loop FEEDS `tick(delta)`) and
      * derives the transient cursor. ZERO own rAF.
      */
     onFrame?: (timeSec: number) => void;
 }
 
-/** Build the paper-grid `setupWGPU(device, context, format)` callback. */
-export function createPaperGridWGPUSetup(
-    deps: PaperGridWGPUSetupDeps,
+/** Build the liquid-grid `setupWGPU(device, context, format)` callback. */
+export function createLiquidGridWGPUSetup(
+    deps: LiquidGridWGPUSetupDeps,
 ): (
     device: GPUDevice,
     context: GPUCanvasContext,
@@ -50,19 +50,19 @@ export function createPaperGridWGPUSetup(
 
     return function setupWGPU(device, context, format) {
         const module = device.createShaderModule({
-            label: "[PaperGrid] paper-grid.wgsl",
-            code: PAPER_GRID_WGSL,
+            label: "[LiquidGrid] liquid-grid.wgsl",
+            code: LIQUID_GRID_WGSL,
         });
 
-        const scratch = createPaperGridScratch();
+        const scratch = createLiquidGridScratch();
         const uniformBuffer = device.createBuffer({
-            label: "[PaperGrid] uniforms",
+            label: "[LiquidGrid] uniforms",
             size: scratch.buffer.byteLength,
             usage: BUFFER_USAGE_UNIFORM | BUFFER_USAGE_COPY_DST,
         });
 
         const bgl = device.createBindGroupLayout({
-            label: "[PaperGrid] bgl",
+            label: "[LiquidGrid] bgl",
             entries: [
                 {
                     binding: 0,
@@ -72,7 +72,7 @@ export function createPaperGridWGPUSetup(
             ],
         });
         const pipeline = device.createRenderPipeline({
-            label: "[PaperGrid] pipeline",
+            label: "[LiquidGrid] pipeline",
             layout: device.createPipelineLayout({ bindGroupLayouts: [bgl] }),
             vertex: { module, entryPoint: "vs_main" },
             fragment: {
@@ -99,7 +99,7 @@ export function createPaperGridWGPUSetup(
             primitive: { topology: "triangle-list" },
         });
         const bindGroup = device.createBindGroup({
-            label: "[PaperGrid] bg",
+            label: "[LiquidGrid] bg",
             layout: bgl,
             entries: [{ binding: 0, resource: { buffer: uniformBuffer } }],
         });
@@ -117,10 +117,10 @@ export function createPaperGridWGPUSetup(
             // The grid scale derives from the backing-store extent so the cell pitch is honest
             // in device px (the Golus derivative reads the actual pixel).
             const viewExtentPx = canvas.height || 1;
-            packPaperGridUniforms(scratch, config, timeSec, aspect, viewExtentPx, getCursor(), getAmp());
+            packLiquidGridUniforms(scratch, config, timeSec, aspect, viewExtentPx, getCursor(), getAmp());
             device.queue.writeBuffer(uniformBuffer, 0, scratch.buffer);
 
-            const encoder = device.createCommandEncoder({ label: "[PaperGrid] frame" });
+            const encoder = device.createCommandEncoder({ label: "[LiquidGrid] frame" });
             const view = context.getCurrentTexture().createView();
             const rpass = encoder.beginRenderPass({
                 colorAttachments: [

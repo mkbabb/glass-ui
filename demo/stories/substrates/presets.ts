@@ -88,8 +88,8 @@ export const CONCENTRIC_PRESET_WARM: ConcentricConfig = {
     ...DEFAULT_CONCENTRIC_CONFIG,
 };
 
-// ── PaperGrid (W-VIZ-PAPERGRID) — the demo presets for the liquid paper-grid ─────
-// PRESETS-IN-CONSUMERS again. The library default (`DEFAULT_PAPER_GRID_CONFIG`) is the
+// ── LiquidGrid (W-VIZ-PAPERGRID) — the demo presets for the liquid liquid-grid ─────
+// PRESETS-IN-CONSUMERS again. The library default (`DEFAULT_LIQUID_GRID_CONFIG`) is the
 // warm-cream identity — warm-foreground ink over transparent, evenly-spaced LARGE 64px
 // cells, a slow liquid curl-flow breath. The SUFFUSION preset (a near-invisible site-wide
 // background) + the BOLD-liquid showcase preset live HERE in the DEMO tree, NEVER a
@@ -97,12 +97,12 @@ export const CONCENTRIC_PRESET_WARM: ConcentricConfig = {
 // clause P5 reds a teal/navy hue in the LIBRARY constants.ts; this demo file is the
 // sanctioned home for any named theme).
 
-import type { PaperGridConfig } from "@glass/components/custom/paper-grid";
-import { DEFAULT_PAPER_GRID_CONFIG } from "@glass/components/custom/paper-grid";
+import type { LiquidGridConfig } from "@glass/components/custom/liquid-grid";
+import { DEFAULT_LIQUID_GRID_CONFIG } from "@glass/components/custom/liquid-grid";
 
 /** The warm-cream library-identity preset (the calm default lead — story 1). */
-export const PAPER_GRID_PRESET_WARM: PaperGridConfig = {
-    ...DEFAULT_PAPER_GRID_CONFIG,
+export const LIQUID_GRID_PRESET_WARM: LiquidGridConfig = {
+    ...DEFAULT_LIQUID_GRID_CONFIG,
 };
 
 /**
@@ -110,8 +110,8 @@ export const PAPER_GRID_PRESET_WARM: PaperGridConfig = {
  * element" done RIGHT: a near-invisible (`fieldAlpha ≈ 0.12`) large-pitch (96px) slow-warp
  * grid, `interactive:false`, behind page content (NOT in a card — the full-bleed escape).
  */
-export const PAPER_GRID_PRESET_SUFFUSE: PaperGridConfig = {
-    ...DEFAULT_PAPER_GRID_CONFIG,
+export const LIQUID_GRID_PRESET_SUFFUSE: LiquidGridConfig = {
+    ...DEFAULT_LIQUID_GRID_CONFIG,
     cellSize: 96, // a larger pitch for a calmer site-wide ground
     fieldAlpha: 0.12, // near-invisible — a subtle background, not a focal element
     twistMax: 0.22, // a gentler cell-twist behind content
@@ -120,8 +120,8 @@ export const PAPER_GRID_PRESET_SUFFUSE: PaperGridConfig = {
 };
 
 /** The BOLD-liquid showcase preset — the deliberate "felt MORE" calibration counter. */
-export const PAPER_GRID_PRESET_BOLD: PaperGridConfig = {
-    ...DEFAULT_PAPER_GRID_CONFIG,
+export const LIQUID_GRID_PRESET_BOLD: LiquidGridConfig = {
+    ...DEFAULT_LIQUID_GRID_CONFIG,
     twistMax: 0.7, // a DRAMATIC cell-twist (the boxes windmill as the crest passes)
     majorAlpha: 0.16,
     bulgeStrength: 1.1,
@@ -136,8 +136,8 @@ export const PAPER_GRID_PRESET_BOLD: PaperGridConfig = {
  * teal/navy) carries the 1940s-technicolor punch. Presets-in-consumers; the vivid register lives
  * HERE, never a library token.
  */
-export const PAPER_GRID_PRESET_RIPPLE: PaperGridConfig = {
-    ...DEFAULT_PAPER_GRID_CONFIG,
+export const LIQUID_GRID_PRESET_RIPPLE: LiquidGridConfig = {
+    ...DEFAULT_LIQUID_GRID_CONFIG,
     faceAlpha: 0.62, // the face PAINTS (lifts the structurally-absent fill)
     faceRelief: 2.6, // the ∇H Lambert gain — shade traverses ~[0.15,0.95] across a crest
     squashK: 0.42, // the crest face visibly inflates (bounded by the CV<0.15 legibility fence)

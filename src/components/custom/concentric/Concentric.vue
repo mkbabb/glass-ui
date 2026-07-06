@@ -13,10 +13,10 @@ import type { OklchStop } from "../../../composables/color";
 import { useGlobalDark } from "../../../composables/dark/useGlobalDark";
 
 /**
- * Concentric — a living LEVEL-SET hypsometric SURVEY (paper-grid kin, BD.W-CONCENTRIC-RELIEF).
+ * Concentric — a living LEVEL-SET hypsometric SURVEY (liquid-grid kin, BD.W-CONCENTRIC-RELIEF).
  *
  * The iso-contours of a LOW-octave curl-warped height field H(p,t) — the SAME traveling-wave
- * CELL-WARP that twists the paper-grid cells is applied to the SAMPLING coordinate, so the
+ * CELL-WARP that twists the liquid-grid cells is applied to the SAMPLING coordinate, so the
  * contours twist + flow as a wave passes OVER and THROUGH the topography; the ω=√(g·k) swell
  * breathes the basins; the cursor HEAVES the topography toward the pointer (velocity-scaled
  * gravity). The fragment paints an OPAQUE warm hypsometric FILL, lifts it into 2.5-D relief

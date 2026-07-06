@@ -27,7 +27,7 @@ token.
 
 ## The math — the shared level-set field
 
-Concentric is paper-grid kin: it reads the SAME shared `waveField` leaf (`waveFlow` /
+Concentric is liquid-grid kin: it reads the SAME shared `waveField` leaf (`waveFlow` /
 `cellTwist` / `waveSwell` / `heightField`) + the shared `curlFBM` basis — a single noise
 source, so a tune lands once and the two viz move together. The single math source is
 `composables/levelField.ts` `sampleHeight` (pure + testable; the WGSL fragment shader + the

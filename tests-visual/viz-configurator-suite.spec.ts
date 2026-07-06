@@ -46,7 +46,7 @@ const STUDIOS = [
     { route: "/substrates/blob", id: "blob", presetThumbs: false },
     { route: "/substrates/concentric", id: "concentric", presetThumbs: false },
     { route: "/substrates/fourier-field", id: "fourier-field", presetThumbs: false },
-    { route: "/substrates/paper-grid", id: "paper-grid", presetThumbs: false },
+    { route: "/substrates/liquid-grid", id: "liquid-grid", presetThumbs: false },
 ] as const;
 
 const DESKTOP = { width: 1280, height: 900 } as const;

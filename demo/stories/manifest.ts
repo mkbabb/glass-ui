@@ -240,7 +240,7 @@ const SUBPATHS: Record<string, string> = {
     "substrates/glass-panel": "@mkbabb/glass-ui/glass-panel",
     "substrates/dot-flow-field": "@mkbabb/glass-ui/dot-flow-field",
     "substrates/concentric": "@mkbabb/glass-ui/concentric",
-    "substrates/paper-grid": "@mkbabb/glass-ui/paper-grid",
+    "substrates/liquid-grid": "@mkbabb/glass-ui/liquid-grid",
     "substrates/dot-matrix": "@mkbabb/glass-ui/dot-matrix",
     "substrates/goo-dot": "@mkbabb/glass-ui/goo-dot-matrix",
     // Forms — the input/select/toggle family via /forms + the own subpaths.
@@ -674,7 +674,7 @@ export const CATEGORIES: Category[] = [
                 },
             ),
             // BD.W-CONCENTRIC-RELIEF — the WebGPU-first level-set TOPOGRAPHIC CONTOUR viz
-            // (paper-grid kin), closing the Batch-V substrates band. It self-stages its OWN
+            // (liquid-grid kin), closing the Batch-V substrates band. It self-stages its OWN
             // GL/fragment context (the field IS the surface), so the route declares the FREE
             // static `grid` wash behind the card and mounts exactly ONE live context — its
             // own (the one-GL-per-route budget held, the dot-flow-field precedent above).
@@ -682,7 +682,7 @@ export const CATEGORIES: Category[] = [
                 "substrates",
                 "concentric",
                 "Concentric",
-                "A WebGPU-first level-set TOPOGRAPHIC CONTOUR survey — the iso-contours of a low-octave height field, nested loops that TWIST and FLOW as a traveling wave passes OVER and THROUGH the topography (the SAME cell-warp that twists the paper-grid cells, so the two viz move together — vector calculus, level sets, gradient topology). The basins breathe on the ω=√(g·k) deep-water swell (Tessendorf 2001); the contours bunch on steep ground (the density tracks 1/|∇H|). An opaque hypsometric fill (basins cool-cream, ridges warm-amber) under an analytic hillshade, with a two-tier index/minor contour hierarchy; the lines are extracted via Inigo Quilez's gradient-free contour distance-estimation (perfect GPU AA at any DPR). A pure fullscreen fragment pass over the shared waveField leaf on the WebGPU primary, with a clean WebGL2 GLSL fallback. Move the cursor and the topography HEAVES toward it. The warm-divergent identity is the library default; the demo themes the survey. Shipped /concentric.",
+                "A WebGPU-first level-set TOPOGRAPHIC CONTOUR survey — the iso-contours of a low-octave height field, nested loops that TWIST and FLOW as a traveling wave passes OVER and THROUGH the topography (the SAME waveFlow sheet-warp that bends the liquid-grid, so the two viz move together — vector calculus, level sets, gradient topology). The basins breathe on the ω=√(g·k) deep-water swell (Tessendorf 2001); the contours bunch on steep ground (the density tracks 1/|∇H|). An opaque hypsometric fill (basins cool-cream, ridges warm-amber) under an analytic hillshade, with a two-tier index/minor contour hierarchy; the lines are extracted via Inigo Quilez's gradient-free contour distance-estimation (perfect GPU AA at any DPR). A pure fullscreen fragment pass over the shared waveField leaf on the WebGPU primary, with a clean WebGL2 GLSL fallback. Move the cursor and the topography HEAVES toward it. The warm-divergent identity is the library default; the demo themes the survey. Shipped /concentric.",
                 {
                     background: "grid",
                     hero: true,
@@ -695,9 +695,9 @@ export const CATEGORIES: Category[] = [
             // — its own (the one-GL-per-route budget held, the concentric precedent above).
             s(
                 "substrates",
-                "paper-grid",
-                "Paper Grid",
-                "A WebGPU-first liquid AA-grid — evenly-spaced LARGER cells that TWIST and MORPH as a traveling wave passes OVER and THROUGH the sheet. The individual cells deform (each box rotates + skews about its own center, gated by a moving Gaussian crest + directed by the Bridson divergence-free curl flow so neighbours lean together — a windmill of warped boxes where the front passes, calm square cells elsewhere), never a uniform line-bow. A Ben Golus derivative-AA two-tier grid (one device-pixel crisp at any DPR — the blurry-mess fix; the AA reads the FINAL twisted coordinate). Drag the cursor for a local swirl — a finger twisting the cells around it. The warm-cream identity over transparent is the library default (the page reads through the cells); the suffusion preset rides the same field at a near-invisible fieldAlpha behind page content. No Canvas2D anywhere. Shipped /paper-grid.",
+                "liquid-grid",
+                "Liquid Grid",
+                "A WebGPU-first liquid AA-grid — evenly-spaced LARGER cells on a sheet that bows + shears as a traveling wave passes OVER and THROUGH it. A smooth low-order curl-flow field (Bridson divergence-free) warps the grid COORDINATE before evaluation, locally affine at the cell scale, so MAJOR gridlines bend as ONE coherent continuous curve and cells deform as near-parallelogram patches — never a per-pixel jitter, never a per-cell kink. A Ben Golus derivative-AA two-tier grid (one device-pixel crisp at any DPR — the blurry-mess fix; the AA reads the FINAL warped coordinate). It reads the SAME waveFlow warp as Concentric (one shared field). Drag the cursor for a local swirl — a finger twisting the cells around it. The warm-cream identity over transparent is the library default (the page reads through the cells); the suffusion preset rides the same field at a near-invisible fieldAlpha behind page content. No Canvas2D anywhere. Shipped /liquid-grid.",
                 {
                     background: "grid",
                     hero: true,
@@ -708,7 +708,7 @@ export const CATEGORIES: Category[] = [
             // viz (the Claude co-work "fine-dot spheres on dark" reference). It self-stages
             // its OWN GL context (the globe IS the surface), so the route declares the FREE
             // static `grid` wash behind the card and mounts exactly ONE live context — its
-            // own (the one-GL-per-route budget held, the paper-grid precedent above).
+            // own (the one-GL-per-route budget held, the liquid-grid precedent above).
             s(
                 "substrates",
                 "dot-matrix",

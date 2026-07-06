@@ -1,5 +1,26 @@
 # MIGRATION—v0.9.x → v1.0 → v2.0
 
+> **BG.W-GRID-AFFINE — `PaperGrid` (the viz) RENAMED to `LiquidGrid`; `/paper-grid` →
+> `/liquid-grid`. Clean break, no alias ("No legacy code").** The WebGPU-first liquid AA-grid
+> viz + its subpath are renamed to kill the live homonym with the STATIC `.paper-grid` /
+> `--paper-grid-texture` geometric-paper CARD register (`cards.css` / `scale-paper.css`), which
+> is BYTE-UNTOUCHED — the homonym dies on the VIZ side only. MIGRATE (one-line rename per call
+> site):
+> - `import { PaperGrid, DEFAULT_PAPER_GRID_CONFIG } from "@mkbabb/glass-ui/paper-grid"`
+>   → `import { LiquidGrid, DEFAULT_LIQUID_GRID_CONFIG } from "@mkbabb/glass-ui/liquid-grid"`.
+> - `<PaperGrid …>` → `<LiquidGrid …>`; `PaperGridConfig` → `LiquidGridConfig` (the `/api`
+>   discovery type); `usePaperGrid` → `useLiquidGrid`; `samplePaperGrid` → `sampleLiquidGrid`;
+>   the demo route `/substrates/paper-grid` → `/substrates/liquid-grid`.
+> - The `.paper-grid-wrapper`/`.paper-grid-canvas` scoped SFC classes → `.liquid-grid-*`
+>   (internal — no consumer surface). Zero external consumers verified — no by-name cross-repo
+>   ask owed. The prop schema is otherwise unchanged, EXCEPT the retired per-cell `shearMax`
+>   config field (the affine sheet-warp is shear-free — a `shearMax` set on a config object is a
+>   dead field; drop it).
+> - **The mechanism changed too (paint, not API):** the ripple is now a SMOOTH continuous
+>   AFFINE sheet-warp (`waveFlow`, the SAME warp Concentric reads) — major gridlines bow/shear as
+>   ONE coherent curve, cells near-parallelogram — instead of the retired per-cell `cellTwist`
+>   (which kinked each box about its own center). No consumer action; the surface reads better.
+
 > **BH.W-MOTION-AXIS — the four-boolean motion scatter → the ONE `motion` axis. Clean
 > break, no alias ("No legacy code").** The `draggable` / `pressable` / `spring` /
 > `liquidDrag` booleans (7 prop instances across 6 SFCs — `Card` · `Slider` ·

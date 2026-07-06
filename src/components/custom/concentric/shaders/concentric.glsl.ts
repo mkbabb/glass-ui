@@ -5,7 +5,7 @@
 // the SAME opaque finishing layer — a tanh hypsometric fill, one analytic hillshade, a two-tier
 // index/minor contour hierarchy via the IQ gradient-free `contourInk` — splicing the SHARED
 // `procedural-color.glsl.ts` OETF + OKLCh chunk + the shared `CURL_FBM_GLSL` + the shared
-// `WAVE_FIELD_GLSL` cell-warp (the SAME the paper-grid splices — the kinship). The output is OPAQUE.
+// `WAVE_FIELD_GLSL` cell-warp (the SAME the liquid-grid splices — the kinship). The output is OPAQUE.
 
 import {
     OETF_GLSL,
@@ -24,7 +24,7 @@ void main() {
   gl_Position = vec4(aPosition, 0.0, 1.0);
 }`;
 
-/** The concentric fragment source — the level-set contour-map render (paper-grid kin). */
+/** The concentric fragment source — the level-set contour-map render (liquid-grid kin). */
 export const CONCENTRIC_FRAG_GLSL = /* glsl */ `#version 300 es
 precision highp float;
 
@@ -102,7 +102,7 @@ float smoothstepEdge(float e0, float e1, float x) {
 // The level-set height at domain p (transcribes levelField.ts sampleHeight).
 float sampleHeight(vec2 p, float t) {
   // The CONTINUOUS traveling-wave flow warp (no per-cell seam — the contours flow + twist as
-  // the wave passes OVER and THROUGH them, the SAME wave that twists the paper-grid cells).
+  // the wave passes OVER and THROUGH them, the SAME wave that twists the liquid-grid cells).
   vec2 g = waveFlow(p, t, uWave.xy, uWave.z, uWave.w, uWave2.x, uWave2.y, uWave2.w);
   if (uCursor.w > 0.5) {
     g = cursorSwirl(g, uCursor.xy, uCursor.z * 0.6, uCellSize * 2.5);

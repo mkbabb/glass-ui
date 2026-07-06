@@ -136,7 +136,7 @@ export function useConcentric(
     // The per-frame pointer hook the setups invoke from inside their frame callback. It
     // advances the field one renderer frame (the push-API tick), drives the spring-eased wave
     // amplitude, and derives the cursor in domain space (the gravity well that bulges the
-    // topography toward the pointer — paper-grid parity).
+    // topography toward the pointer — liquid-grid parity).
     function onFrame(timeSec: number): void {
         const deltaMs = lastFrameSec > 0 ? (timeSec - lastFrameSec) * 1000 : 16.7;
         lastFrameSec = timeSec;

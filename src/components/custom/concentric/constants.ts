@@ -119,7 +119,7 @@ export const WARM_GROUND_LIGHT: OklchStop = { L: 0.96, C: 0.018, h: 78 };
 export const WARM_GROUND_DARK: OklchStop = { L: 0.16, C: 0.035, h: 32 };
 
 /**
- * The shipped warm-identity default config — a living LEVEL-SET hypsometric SURVEY (paper-grid
+ * The shipped warm-identity default config — a living LEVEL-SET hypsometric SURVEY (liquid-grid
  * kin): the iso-contours of a low-octave curl-warped height field, painted as an opaque warm
  * hypsometric fill, hillshaded into 2.5-D relief, inked with a two-tier index/minor contour
  * hierarchy, the cursor HEAVING the sheet with velocity-scaled weight. Reads standalone in
@@ -151,6 +151,6 @@ export const DEFAULT_CONCENTRIC_CONFIG: ConcentricConfig = {
     velocityHeave: 0.4, // pointer SPEED scales the well depth/radius (the heave weight)
     palette: WARM_IDENTITY_PALETTE,
     background: WARM_GROUND_LIGHT, // the opaque warm floor (per-mode resolved by the SFC)
-    interactive: true, // cursor gravity on (paper-grid parity)
+    interactive: true, // cursor gravity on (liquid-grid parity)
     respectReducedMotion: true,
 };

@@ -1,4 +1,4 @@
-// BC.W-VIZ-PAPERGRID — the paper-grid compile-time caps + the WARM-IDENTITY default config
+// BC.W-VIZ-PAPERGRID — the liquid-grid compile-time caps + the WARM-IDENTITY default config
 // (the single source the SFC, the composables, and the WGSL/GLSL shaders all read).
 //
 // THE WARM-IDENTITY FENCE (load-bearing — §E REMOVE the teal-on-navy reference). The default
@@ -11,14 +11,14 @@
 import type { OklchStop } from "../../../composables/color";
 
 /** The WGSL `#define` cap mirror (the grid is a fullscreen fragment — no array caps needed). */
-export const PAPER_GRID_MAX_MAJOR_EVERY = 16;
+export const LIQUID_GRID_MAX_MAJOR_EVERY = 16;
 
 /**
  * The full author schema — the studio's `useConfiguratorState` model (commit-on-write — a
  * single surface). Every field is a tunable the demo configurator drives; the SFC resolves
  * it into the uniform table.
  */
-export interface PaperGridConfig {
+export interface LiquidGridConfig {
     /** The grid cell pitch in CSS px — LARGER = bigger cells (the user's "LARGER"). */
     cellSize: number;
     /** How many minor cells per major rule (the kf `--graph-major` 5rem/1rem ratio). */
@@ -29,10 +29,8 @@ export interface PaperGridConfig {
     majorAlpha: number;
     /** Line width in device-px — one crisp pixel via Golus AA. */
     lineWidth: number;
-    /** Max per-cell twist angle at the crest (rad ≈ 15° — a clear lean, never a tumble; ≤ ~18° floor). */
+    /** The affine sheet-warp depth at the crest (grid units — how far the sheet bows/shears). */
     twistMax: number;
-    /** Max per-cell shear at the crest — a small skew so the box MORPHS, not just rotates. */
-    shearMax: number;
     /** The traveling-wave front direction (a gentle diagonal). */
     waveDir: [number, number];
     /** The crest-band spatial frequency (LOW — cells per crest). */
@@ -56,7 +54,7 @@ export interface PaperGridConfig {
     /**
      * The filled-FACE opacity — **default `0`** so the face EVAPORATES → byte-identical to the
      * line-only HEAD render (every `proof:viz-papergrid` cage clause + the warm-identity fence
-     * stay GREEN). The demo `PAPER_GRID_PRESET_RIPPLE` lifts it (presets-in-consumers).
+     * stay GREEN). The demo `LIQUID_GRID_PRESET_RIPPLE` lifts it (presets-in-consumers).
      */
     faceAlpha: number;
     /** The slope-shade gain (the ∇H Lambert relief — higher = steeper crest/trough contrast). */
@@ -110,14 +108,13 @@ export const FACE_WARM_HI: OklchStop = { L: 0.9, C: 0.1, h: 84 };
  * (research/viz/paper-grid.md §6). SUBTLE + LARGE + evenly-spaced — the user's binding
  * aesthetic. `fieldAlpha: 1` is the demo lead; the suffusion preset drops it to ~0.12.
  */
-export const DEFAULT_PAPER_GRID_CONFIG: PaperGridConfig = {
+export const DEFAULT_LIQUID_GRID_CONFIG: LiquidGridConfig = {
     cellSize: 64, // LARGER than the 28/32px static — the user's "LARGER"
     majorEvery: 5, // the kf --graph-major 5rem/1rem ratio
     minorAlpha: 0.12, // the twist must be SEEN — real warm-amber ink (judge's biggest lever; still graph-paper, not heavy)
     majorAlpha: 0.22, // the bolder rule carries the cell silhouette over cream
     lineWidth: 1.0, // one crisp device-pixel via Golus AA
-    twistMax: 0.62, // ≈ 36° crest ceiling — a DRAMATIC, decisive twist (the user rejected subtle)
-    shearMax: 0.26, // the box MORPHS as it twists (a strong skew)
+    twistMax: 0.62, // the affine sheet-warp depth at the crest (grid units — a clear liquid bow, the same magnitude concentric reads)
     waveDir: [0.92, 0.39], // the front travels along a gentle diagonal
     waveK: 0.62, // the crest-band spatial frequency — ~one full crest cycle across the visible field (a distinct front)
     waveOmega: 1.05, // the front speed — the sweep READS at a glance (still inertia-eased)
@@ -128,7 +125,7 @@ export const DEFAULT_PAPER_GRID_CONFIG: PaperGridConfig = {
     bulgeMode: "repel",
     lineColor: WARM_IDENTITY_INK,
     // The FACE — OPT-IN, calm default byte-identical (faceAlpha:0 → the face evaporates → the
-    // HEAD line-only render is unchanged; the demo PAPER_GRID_PRESET_RIPPLE lifts it).
+    // HEAD line-only render is unchanged; the demo LIQUID_GRID_PRESET_RIPPLE lifts it).
     faceAlpha: 0, // the structurally-absent FACE stays OFF by default (byte-identical to HEAD)
     faceRelief: 2.6, // the ∇H Lambert gain (so shade traverses ~[0.15,0.95] across a crest)
     squashK: 0.42, // the crest face visibly inflates (inset retreats) — bounded by the CV<0.15 fence

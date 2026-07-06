@@ -1,7 +1,7 @@
 // BC.W-VIZ-PAPERGRID — the ONE math source (pure, node-testable) the WGSL primary +
 // the WebGL2 GLSL fallback transcribe line-for-line.
 //
-// The paper-grid is the composition of THREE cited techniques on the proven substrate
+// The liquid-grid is the composition of THREE cited techniques on the proven substrate
 // (research/viz/paper-grid.md §3):
 //   1. The Ben Golus derivative-AA grid distance function (the crisp-line fix — kills
 //      the CSS sub-pixel blur). `gridCoverage` computes line coverage from the
@@ -18,18 +18,25 @@
 //      by construction, so the grid folds + stretches like fluid advection rather than
 //      the source-y bulge a raw fbm gradient produces).
 //
+// THE AFFINE SHEET WARP (BG.W-GRID-AFFINE). The ripple is a SMOOTH continuous domain transform
+// of the grid coordinate BEFORE the grid eval — `waveFlow` (the shared `waveField` leaf, the SAME
+// warp concentric reads): a low-order curl-flow displacement gated by the traveling wave, locally
+// affine at the cell scale (the warp Jacobian is ~constant across any one cell). So MAJOR
+// gridlines BOW/SHEAR as ONE coherent transformation of the sheet — no per-cell seam, no
+// per-pixel wobble (the retired per-cell `cellTwist` twisted each box about its own center → a
+// kinked crest-band; `waveFlow` is the continuous twin). A leaf tune moves both viz (the DRY
+// coupling recorded).
+//
 // THE SINGLE MATH SOURCE. The WGSL `fs_main` + the GLSL fragment transcribe `potentialFBM` /
-// `gridCoverage` here + the SHARED `cellTwist` / `cellHeight` / `faceRelief` / `facePlateau` /
-// `cursorSwirl` (the `waveField` leaf — the retired LINE-warp `curlWarp` + radial `cursorBulge`
-// are GONE, clean break) EXACTLY; `proof:viz-papergrid` clause P3 round-trips JS↔WGSL↔GLSL at a
-// FIXED `(uv, t, cursor, uvDeriv)` sample set. JS has no fragment derivatives, so the round-trip
-// passes a FIXED `uvDeriv` into `gridCoverage`/`facePlateau` (the caller computes it analytically
-// from the pitch) — the Golus + the face-plateau paths are then reproducible.
+// `gridCoverage` here + the SHARED `waveFlow` / `cellHeight` / `faceRelief` / `facePlateau` /
+// `cursorSwirl` (the `waveField` leaf) EXACTLY; `proof:viz-papergrid` clause P3 round-trips
+// JS↔WGSL↔GLSL at a FIXED `(uv, t, cursor, uvDeriv)` sample set. JS has no fragment derivatives,
+// so the round-trip passes a FIXED `uvDeriv` into `gridCoverage`/`facePlateau` (the caller
+// computes it analytically from the pitch) — the Golus + the face-plateau paths are reproducible.
 
 import {
-    cellTwist,
+    waveFlow,
     cursorSwirl,
-    cellDriver,
     cellHeight,
     faceRelief,
     facePlateau,
@@ -119,10 +126,11 @@ export function curlFBM(p: Vec2): Vec2 {
     return { x: gy, y: -gx };
 }
 
-// ── §3/§4 RETIRED — the LINE-warp `curlWarp` + the radial `cursorBulge` are GONE (clean
-// break, no alias — BD.W-VIZ-RESPEC). The "liquid" is now the per-cell TWIST (`cellTwist`)
-// + the cursor SWIRL (`cursorSwirl`), both from the shared `waveField` leaf; `samplePaperGrid`
-// composes them (the C3 cure: the cells twist, the lines stay locally straight).
+// ── §3/§4 RETIRED — the LINE-warp `curlWarp`, the radial `cursorBulge`, AND the per-cell
+// `cellTwist` are GONE (clean break, no alias). The "liquid" is now the SMOOTH continuous
+// AFFINE sheet warp (`waveFlow`) + the cursor SWIRL (`cursorSwirl`), both from the shared
+// `waveField` leaf; `sampleLiquidGrid` composes them (BG.W-GRID-AFFINE: the sheet bows/shears
+// as ONE coherent transform, major lines a single smooth curve, no per-cell kink).
 
 // ── §1 The crisp line: Ben Golus derivative-AA grid coverage ──────────────────────
 /**
@@ -181,13 +189,13 @@ export function gridCoverage(g: Vec2, targetWidth: number, uvDeriv: Vec2): numbe
 
 // ── §5 The full per-pixel kernel (the JS round-trip anchor) ───────────────────────
 /**
- * The complete paper-grid sample at a domain `uv` (the round-trip anchor). Composes the
+ * The complete liquid-grid sample at a domain `uv` (the round-trip anchor). Composes the
  * warp + the bulge + the two-tier Golus coverage EXACTLY as the WGSL/GLSL `fs_main` does,
  * returning the premultiplied-alpha (the page reads through the troughs). `uvDeriv` is the
  * FIXED analytic per-axis derivative (JS has no fragment derivatives); the shaders compute
  * it from `dpdx`/`dpdy`. Returns `{ line, alpha }` — the line coverage + the global alpha.
  */
-export interface PaperGridSampleParams {
+export interface LiquidGridSampleParams {
     /** The grid scale (view / minorPitch → LARGER cells = smaller scale). */
     gridScale: number;
     /** The traveling-wave front direction. */
@@ -198,10 +206,8 @@ export interface PaperGridSampleParams {
     waveOmega: number;
     /** The crest-band width. */
     waveSigma: number;
-    /** Max per-cell twist angle at the crest (rad). */
+    /** The affine sheet-warp displacement magnitude at the crest (grid units). */
     twistMax: number;
-    /** Max per-cell shear at the crest. */
-    shearMax: number;
     /** The spring-eased envelope amplitude (0..1; PRM snaps to 0). */
     amp: number;
     /** The cursor in GRID space. */
@@ -240,7 +246,7 @@ export interface PaperGridSampleParams {
 }
 
 /** The face-shade scalars the FACE composite reads (the numeric-parity witness — FOLD B/C/D). */
-export interface PaperGridFace {
+export interface LiquidGridFace {
     /** The crest envelope at the pre-twist driver cc (FOLD A). */
     env: number;
     /** The sheet height at the driver cc (= env; the named leaf scalar). */
@@ -255,31 +261,18 @@ export interface PaperGridFace {
     rampT: number;
 }
 
-export function samplePaperGrid(
+export function sampleLiquidGrid(
     uv: Vec2,
     t: number,
-    p: PaperGridSampleParams,
-): { line: number; alpha: number; face: PaperGridFace } {
+    p: LiquidGridSampleParams,
+): { line: number; alpha: number; face: LiquidGridFace } {
     const g0: Vec2 = { x: uv.x * p.gridScale, y: uv.y * p.gridScale };
-    // FOLD A — the PRE-twist driver: the cell pivot cc + the crest envelope the twist AND the
-    // face both ride (the face must sample at this pre-twist cc — floor(twisted_g) at the crest
-    // lights a NEIGHBOUR cell). cellTwist rides the SAME driver, so twist + face fuse.
-    const drv = cellDriver(g0, 1.0, t, p.waveDir, p.waveK, p.waveOmega, p.waveSigma, p.amp);
-    // The CELL-TWIST replaces the retired LINE-warp: each cell rotates about its own center,
-    // gated by a traveling Gaussian crest + directed by the shared curl flow (the C3 cure).
-    let g = cellTwist(
-        curlFBM,
-        g0,
-        1.0,
-        t,
-        p.waveDir,
-        p.waveK,
-        p.waveOmega,
-        p.waveSigma,
-        p.twistMax,
-        p.shearMax,
-        p.amp,
-    );
+    // BG.W-GRID-AFFINE — the AFFINE sheet warp: a SMOOTH continuous domain transform of the grid
+    // coordinate BEFORE the grid eval (`waveFlow`, the SAME warp concentric reads). The low-order
+    // curl-flow displacement is gated by the traveling wave + locally affine at the cell scale, so
+    // the whole sheet bows/shears as ONE coherent transform — major lines a single smooth curve,
+    // no per-cell seam (the retired `cellTwist` kinked at every cell boundary), no per-pixel wobble.
+    let g = waveFlow(curlFBM, g0, t, p.waveDir, p.waveK, p.waveOmega, p.waveSigma, p.twistMax, p.amp);
     if (p.interactive > 0.5) {
         g = cursorSwirl(g, p.cursor, p.bulgeStrength * p.bulgeMode, p.bulgeRadius);
     }
@@ -292,10 +285,11 @@ export function samplePaperGrid(
     const line = Math.max(minor * p.minorAlpha, major * p.majorAlpha);
 
     // ── The FACE (BD.W-PAPERGRID-FACE) — height-lit filled cell interior ──────────────────
-    // Sample height/relief at the PRE-twist driver cc (FOLD A); Lambert the ∇H slope against the
-    // fixed cel key-light; squash the inset (FOLD: the crest face inflates); composite UNDER the
-    // line, premultiplied over transparent. FOLD D: faceA = face·faceAlpha·fieldAlpha (NO h-term
-    // — the SHADE carries brightness, the SQUASH carries inflation).
+    // Sample height/relief at the WARPED-space cell center (`floor(g)+0.5`, the cell the fragment
+    // actually lands in under the affine warp); Lambert the ∇H slope against the fixed cel
+    // key-light; squash the inset (the crest face inflates); composite UNDER the line,
+    // premultiplied over transparent. FOLD D: faceA = face·faceAlpha·fieldAlpha (NO h-term — the
+    // SHADE carries brightness, the SQUASH carries inflation).
     // The face params default to the calm/off values (faceAlpha→0) so a line-only caller (the
     // parity capture passes only the line params) never NaN-poisons or throws — the face simply
     // evaporates, line-identical.
@@ -304,8 +298,9 @@ export function samplePaperGrid(
     const squashK = p.squashK ?? 0;
     const baseInset = p.baseInset ?? 0;
     const lightDir = p.lightDir ?? { x: 0.6, y: 0.8 };
-    const h = cellHeight(drv.cc, t, p.waveDir, p.waveK, p.waveOmega, p.waveSigma, p.amp);
-    const grad = faceRelief(drv.cc, 1.0, t, p.waveDir, p.waveK, p.waveOmega, p.waveSigma, p.amp);
+    const cc: Vec2 = { x: Math.floor(g.x) + 0.5, y: Math.floor(g.y) + 0.5 };
+    const h = cellHeight(cc, t, p.waveDir, p.waveK, p.waveOmega, p.waveSigma, p.amp);
+    const grad = faceRelief(cc, 1.0, t, p.waveDir, p.waveK, p.waveOmega, p.waveSigma, p.amp);
     // n = normalize(-grad·gain, 1); shade = 0.5 + dot(n, normalize(light))·0.5.
     const nx = -grad.x * faceReliefGain;
     const ny = -grad.y * faceReliefGain;
@@ -321,7 +316,7 @@ export function samplePaperGrid(
     return {
         line,
         alpha: line * p.fieldAlpha,
-        face: { env: drv.env, h, shade, faceCov, faceA, rampT },
+        face: { env: h, h, shade, faceCov, faceA, rampT },
     };
 }
 

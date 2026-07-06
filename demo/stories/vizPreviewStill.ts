@@ -60,7 +60,7 @@ export const VIZ_PREVIEW_STILLS: Readonly<Record<string, VizStillSpec>> = {
     "/substrates/glass-panel": { pattern: "glass-ladder", hue: 68, seed: 606 },
     "/substrates/dot-flow-field": { pattern: "flow", hue: 50, seed: 707 },
     "/substrates/concentric": { pattern: "rings", hue: 35, seed: 808 },
-    "/substrates/paper-grid": { pattern: "warp-grid", hue: 72, seed: 909 },
+    "/substrates/liquid-grid": { pattern: "warp-grid", hue: 72, seed: 909 },
     "/substrates/dot-matrix": { pattern: "phyllotaxis", hue: 55, seed: 110 },
     "/substrates/goo-dot": { pattern: "dot-halftone", hue: 38, seed: 121 },
 };
@@ -289,7 +289,7 @@ function drawRings(ctx: CanvasRenderingContext2D, hue: number, rng: () => number
     }
 }
 
-/** paper-grid — a curl-warped grid (the cells twist toward the crest). */
+/** liquid-grid — a curl-warped grid (the sheet bows toward the crest). */
 function drawWarpGrid(ctx: CanvasRenderingContext2D, hue: number, _rng: () => number): void {
     warmFloor(ctx, hue);
     ctx.strokeStyle = warm(hue, 45, 0.5);

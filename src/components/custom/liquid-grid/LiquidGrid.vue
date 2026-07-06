@@ -1,22 +1,22 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, useTemplateRef, watch } from "vue";
-import { usePaperGrid } from "./composables/usePaperGrid";
-import type { PaperGridConfig } from "./constants";
-import { DEFAULT_PAPER_GRID_CONFIG } from "./constants";
+import { useLiquidGrid } from "./composables/useLiquidGrid";
+import type { LiquidGridConfig } from "./constants";
+import { DEFAULT_LIQUID_GRID_CONFIG } from "./constants";
 import { cssToOklch } from "../../../composables/color";
 
 /**
- * PaperGrid — a liquid AA-grid: evenly-spaced LARGER lines on a slowly breathing
+ * LiquidGrid — a liquid AA-grid: evenly-spaced LARGER lines on a slowly breathing
  * curl-flow sheet.
  *
- * A calm engineering-graph-paper grid (evenly-spaced, LARGE cells, a crisp fine rule with
+ * A calm engineering-graph-liquid grid (evenly-spaced, LARGE cells, a crisp fine rule with
  * a bolder major rule every 5 cells) drawn on a slowly breathing liquid sheet — adjacent
  * lines bow and flow TOGETHER as if the grid is ruled on a gently rippling pond, never a
  * per-line jitter. WebGPU-FIRST: a pure fullscreen fragment pass (the aurora/concentric
  * shape-class) computes the grid at a curl-warped coordinate per pixel via the Ben Golus
  * derivative-AA distance function (constant device-pixel-crisp lines, the CSS-blur kill),
  * the Iñigo Quílez domain warp (the "liquid"), and the Bridson divergence-free curl flow
- * (WHY it's liquid not noise). It composes `usePaperGrid` → the `createGpuSubstrate` picker
+ * (WHY it's liquid not noise). It composes `useLiquidGrid` → the `createGpuSubstrate` picker
  * over the ONE canvas lifecycle leaf (offscreen-pause, live-PRM freeze, consumer-owned DPR)
  * — it never bootstraps its own context.
  *
@@ -25,11 +25,11 @@ import { cssToOklch } from "../../../composables/color";
  * token). The grid suffuses over the page (transparent ground) — teal-on-navy is gone.
  */
 const {
-    config = DEFAULT_PAPER_GRID_CONFIG,
+    config = DEFAULT_LIQUID_GRID_CONFIG,
     paused = false,
 } = defineProps<{
     /** The full author schema (the studio's `useConfiguratorState` model). */
-    config?: PaperGridConfig;
+    config?: LiquidGridConfig;
     /**
      * The declarative WCAG-2.2.2 pause seam. `v-model:paused` parks the render loop
      * (the substrate's `manual` suspend) when `true`. Wire `<DockBackgroundToggle>`'s
@@ -47,7 +47,7 @@ const canvasRef = useTemplateRef<HTMLCanvasElement>("canvasRef");
 // resolves the LIVE `--foreground` warm-cream token at mount (so the library default tracks
 // the consumer's warm identity); the WARM_IDENTITY_INK in `config` is the SSR/no-token
 // fallback. A consumer passing an explicit non-default `lineColor` wins.
-const effective = reactive<PaperGridConfig>({ ...config });
+const effective = reactive<LiquidGridConfig>({ ...config });
 watch(
     () => config,
     (c) => Object.assign(effective, c),
@@ -57,7 +57,7 @@ watch(
 onMounted(() => {
     // Resolve the live --foreground ink ONLY when the consumer left lineColor at the warm
     // default (an explicit override wins). The warm-cream identity tracks the page foreground.
-    if (config.lineColor === DEFAULT_PAPER_GRID_CONFIG.lineColor) {
+    if (config.lineColor === DEFAULT_LIQUID_GRID_CONFIG.lineColor) {
         const host = wrapperRef.value;
         if (host) {
             const fg = getComputedStyle(host).getPropertyValue("--foreground").trim();
@@ -74,7 +74,7 @@ onMounted(() => {
     }
 });
 
-const renderer = usePaperGrid(canvasRef, { config: effective });
+const renderer = useLiquidGrid(canvasRef, { config: effective });
 
 // Drive the substrate pause/resume from the declarative `paused` prop.
 watch(
@@ -101,20 +101,20 @@ defineExpose({
 <template>
     <div
         ref="wrapperRef"
-        class="paper-grid-wrapper"
+        class="liquid-grid-wrapper"
         :style="bgStyle ? { background: bgStyle } : undefined"
     >
         <canvas
             ref="canvasRef"
-            class="paper-grid-canvas"
+            class="liquid-grid-canvas"
             aria-hidden="true"
-            data-testid="paper-grid-canvas"
+            data-testid="liquid-grid-canvas"
         />
     </div>
 </template>
 
 <style scoped>
-.paper-grid-wrapper {
+.liquid-grid-wrapper {
     position: relative;
     inline-size: 100%;
     block-size: 100%;
@@ -127,7 +127,7 @@ defineExpose({
     contain-intrinsic-size: auto none;
 }
 
-.paper-grid-canvas {
+.liquid-grid-canvas {
     display: block;
     inline-size: 100%;
     block-size: 100%;

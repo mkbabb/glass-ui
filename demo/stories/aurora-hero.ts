@@ -215,8 +215,8 @@ export type HeroPaletteKey = keyof typeof HERO_PALETTES;
  *
  *   "paper"         — a quiet warm-cream grain wash.
  *   "grid"          — a token-driven blueprint ruled grid (static CSS, the zero-GL default).
- *   "liquid-grid"   — the SUFFUSION register: a near-invisible LIQUID paper-grid
- *                     (a low-fieldAlpha, large-pitch, slow-warp <PaperGrid>) full-bleed
+ *   "liquid-grid"   — the SUFFUSION register: a near-invisible liquid-grid
+ *                     (a low-fieldAlpha, large-pitch, slow-warp <LiquidGrid>) full-bleed
  *                     behind page content (BC.W-VIZ-PAPERGRID — §E "suffuse it
  *                     throughout the site as a subtle background element"; the opt-in
  *                     one-GL-per-route hero upgrade of the static `grid` kind).

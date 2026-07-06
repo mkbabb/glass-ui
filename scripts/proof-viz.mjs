@@ -136,7 +136,7 @@ const VIZ_DIRS = [
     "fourier-field",
     "constellation",
     "concentric",
-    "paper-grid",
+    "liquid-grid",
 ];
 
 // V3 exemption: the offscreen 2D-canvas raster for the CSS placeholder ground. It creates a

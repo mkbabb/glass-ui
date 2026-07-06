@@ -1,22 +1,22 @@
-// BC.W-VIZ-PAPERGRID — the typed-struct SOURCE OF TRUTH for the WebGPU paper-grid uniform
+// BC.W-VIZ-PAPERGRID — the typed-struct SOURCE OF TRUTH for the WebGPU liquid-grid uniform
 // buffer.
 //
-// The WGSL `PaperGridUniforms` struct and the JS `ArrayBuffer` write offsets are generated
+// The WGSL `LiquidGridUniforms` struct and the JS `ArrayBuffer` write offsets are generated
 // from the SAME layout table here, so a std140-vs-WGSL alignment mismatch (the
 // parity-ΔE-blowout / garbage-read trap) is structurally impossible — the field order + the
 // byte offsets are ONE declaration. The aurora / goo-blob / dot-flow-field / concentric
-// migrations established this pattern; this is its paper-grid twin.
+// migrations established this pattern; this is its liquid-grid twin.
 //
 // Every scalar packs into a vec4 lane so the natural-16-byte std140 stride holds (no array
 // rows here — the grid is a pure fullscreen fragment with scalar uniforms only).
 
 import type { OklchStop } from "../../../../composables/color";
 import { oklchToLinear } from "../../../../composables/color";
-import type { PaperGridConfig } from "../constants";
-import type { Vec2 } from "./paperGrid";
-import { gridScaleFor } from "./paperGrid";
+import type { LiquidGridConfig } from "../constants";
+import type { Vec2 } from "./liquidGrid";
+import { gridScaleFor } from "./liquidGrid";
 
-// ── PAPER-GRID uniform layout ─────────────────────────────────────────────────
+// ── LIQUID-GRID uniform layout ─────────────────────────────────────────────────
 //   u0      : vec4<f32>  off   0  (uTime, uGridScale, uMinorPitch, uMajorEvery)
 //   face    : vec4<f32>  off  16  (uFaceAlpha, uFaceRelief, uSquashK, uBaseInset) — re-points the retired warp lane
 //   warp2   : vec4<f32>  off  32  (uAmplitude, uAspect, uLightDirX, uLightDirY)
@@ -27,12 +27,12 @@ import { gridScaleFor } from "./paperGrid";
 //   line    : vec4<f32>  off 112  (uLineColor.rgb (linear-sRGB), _pad)
 //   bg      : vec4<f32>  off 128  (uBg.rgb (linear-sRGB), _pad)
 //   wave    : vec4<f32>  off 144  (waveDirX, waveDirY, waveK, waveOmega)
-//   wave2   : vec4<f32>  off 160  (waveSigma, twistMax, shearMax, amp)
+//   wave2   : vec4<f32>  off 160  (waveSigma, twistMax, _pad, amp)
 //   faceLo  : vec4<f32>  off 176  (rose-umber trough .rgb (linear), _pad) — the warm-divergent ramp
 //   faceMid : vec4<f32>  off 192  (ember-amber mid .rgb (linear), _pad)
 //   faceHi  : vec4<f32>  off 208  (warm-wheat crest .rgb (linear), _pad)
 //   total   : 224 bytes
-export const PAPER_GRID_UNIFORM_BYTES = 224;
+export const LIQUID_GRID_UNIFORM_BYTES = 224;
 
 const OFF = {
     u0: 0,
@@ -51,32 +51,32 @@ const OFF = {
     faceHi: 52,
 } as const;
 
-export interface PaperGridUniformScratch {
+export interface LiquidGridUniformScratch {
     buffer: ArrayBuffer;
     f32: Float32Array;
 }
 
-export function createPaperGridScratch(): PaperGridUniformScratch {
-    const buffer = new ArrayBuffer(PAPER_GRID_UNIFORM_BYTES);
+export function createLiquidGridScratch(): LiquidGridUniformScratch {
+    const buffer = new ArrayBuffer(LIQUID_GRID_UNIFORM_BYTES);
     return { buffer, f32: new Float32Array(buffer) };
 }
 
 /**
- * Pack the paper-grid uniforms in place. `viewExtentPx` is the canvas backing-store extent
+ * Pack the liquid-grid uniforms in place. `viewExtentPx` is the canvas backing-store extent
  * the grid scale derives from (so the cell pitch is honest in device px); `cursor` is the
  * transient pointer in GRID space (the renderer derives it from `usePointerVelocityField`);
  * `aspect` corrects the domain x. The line ink resolves the warm `--foreground` identity
  * (the demo themes it via a preset, never a token edit).
  */
-export function packPaperGridUniforms(
-    scratch: PaperGridUniformScratch,
-    config: PaperGridConfig,
+export function packLiquidGridUniforms(
+    scratch: LiquidGridUniformScratch,
+    config: LiquidGridConfig,
     timeSec: number,
     aspect: number,
     viewExtentPx: number,
     cursor: Vec2,
     amp: number,
-): PaperGridUniformScratch {
+): LiquidGridUniformScratch {
     const { f32 } = scratch;
 
     const gridScale = gridScaleFor(viewExtentPx, config.cellSize);
@@ -153,7 +153,7 @@ export function packPaperGridUniforms(
     f32[OFF.wave + 3] = config.waveOmega;
     f32[OFF.wave2 + 0] = config.waveSigma;
     f32[OFF.wave2 + 1] = config.twistMax;
-    f32[OFF.wave2 + 2] = config.shearMax;
+    f32[OFF.wave2 + 2] = 0; // _pad (the retired per-cell shearMax lane; the affine warp is shear-free)
     f32[OFF.wave2 + 3] = amp; // the spring-eased envelope amplitude (PRM snaps to 0)
 
     // The 3-stop warm-divergent FACE ramp baked to linear-sRGB (the fragment OETFs to sRGB).

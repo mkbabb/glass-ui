@@ -240,7 +240,7 @@ export function detect() {
         // studio CHROME, not a render-background substrate page — the same exempt
         // class as glass-material/blob (demos over paper, never self-demos a field).
         if (m[1] === "fourier-studio") continue;
-        // dot-flow-field + concentric (BB.W-VIZ-SUITE) + paper-grid + dot-matrix +
+        // dot-flow-field + concentric (BB.W-VIZ-SUITE) + liquid-grid + dot-matrix +
         // goo-dot (BC.W-VIZ-SUITE/VIZ-HYBRID) + fourier-field (BC.W-VIZ-FOURIER, the
         // three-view collapse): each NEW WebGPU-first viz mounts CONTAINED in the story
         // body over a calm grid/paper wash (the field is its OWN single GL/compute
@@ -253,7 +253,7 @@ export function detect() {
         if (
             m[1] === "dot-flow-field" ||
             m[1] === "concentric" ||
-            m[1] === "paper-grid" ||
+            m[1] === "liquid-grid" ||
             m[1] === "dot-matrix" ||
             m[1] === "goo-dot" ||
             m[1] === "fourier-field"

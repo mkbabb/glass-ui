@@ -78,7 +78,7 @@ export const CUSTOM_CLASS = {
     "header-ribbon": "PUBLISH", "hover-popover": "PUBLISH", "icon-chip": "PUBLISH",
     "icon-tooltip": "PUBLISH", "instrument-chassis": "PUBLISH", "labeled-field": "PUBLISH",
     "metric-badge": "PUBLISH", "metric-cell": "PUBLISH", "metric-stack": "PUBLISH",
-    "pager-dots": "PUBLISH", "paper-backdrop": "PUBLISH", "paper-grid": "PUBLISH",
+    "pager-dots": "PUBLISH", "paper-backdrop": "PUBLISH", "liquid-grid": "PUBLISH",
     pulse: "PUBLISH", "scrolling-text": "PUBLISH", search: "PUBLISH",
     "selectable-chip": "PUBLISH", "sortable-list": "PUBLISH", "spa-view": "PUBLISH",
     "stacked-icons": "PUBLISH", "status-dot": "PUBLISH", tabs: "PUBLISH",

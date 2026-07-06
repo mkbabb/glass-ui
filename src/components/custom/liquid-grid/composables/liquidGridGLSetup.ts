@@ -1,10 +1,10 @@
 // BC.W-VIZ-PAPERGRID — the WebGL2 `setupGL` builder (the ~5-10%-tail path).
 //
 // A clean aurora/concentric-class fullscreen pass: compile the full-screen-triangle vertex +
-// the `PAPER_GRID_FRAG_GLSL` fragment (which evaluates the SAME liquid grid the WGSL primary
+// the `LIQUID_GRID_FRAG_GLSL` fragment (which evaluates the SAME liquid grid the WGSL primary
 // does, splicing the SHARED `CURL_FBM_GLSL` curl chunk + the GLSL color OETF), and on each
 // `frame(t)` upload the uniform table (the SAME field/warp/grid/cursor data the WGPU uniform
-// bridge packs, here as plain GL uniforms — paper-grid has no storage buffer, it is a pure
+// bridge packs, here as plain GL uniforms — liquid-grid has no storage buffer, it is a pure
 // fragment field, so parity is `verified` not `degraded`). GPU, NOT a Canvas2D context. It
 // owns NO scheduling — the canvas lifecycle leaf delivers the frame.
 
@@ -14,21 +14,21 @@ import type {
 } from "../../../../composables/glass/webgl/useWebGLCanvas";
 import { oklchToLinear } from "../../../../composables/color";
 import {
-    PAPER_GRID_VERT_GLSL,
-    PAPER_GRID_FRAG_GLSL,
-} from "../shaders/paper-grid.glsl";
-import type { PaperGridConfig } from "../constants";
-import { gridScaleFor, type Vec2 } from "./paperGrid";
+    LIQUID_GRID_VERT_GLSL,
+    LIQUID_GRID_FRAG_GLSL,
+} from "../shaders/liquid-grid.glsl";
+import type { LiquidGridConfig } from "../constants";
+import { gridScaleFor, type Vec2 } from "./liquidGrid";
 
-export interface PaperGridGLSetupDeps {
+export interface LiquidGridGLSetupDeps {
     canvas: HTMLCanvasElement;
-    config: PaperGridConfig;
+    config: LiquidGridConfig;
     getCursor: () => Vec2;
     /** The spring-eased traveling-wave envelope amplitude (0..1; PRM → 0). */
     getAmp: () => number;
     shouldContinue: () => boolean;
     /**
-     * The per-frame pointer hook — usePaperGrid advances the shared pointer field + derives
+     * The per-frame pointer hook — useLiquidGrid advances the shared pointer field + derives
      * the transient cursor here (the no-own-rAF discipline). ZERO own rAF.
      */
     onFrame?: (timeSec: number) => void;
@@ -41,26 +41,26 @@ function compile(gl: WebGL2RenderingContext, type: number, src: string): WebGLSh
     if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
         const log = gl.getShaderInfoLog(sh);
         gl.deleteShader(sh);
-        throw new Error(`[PaperGrid] shader compile failed: ${log}`);
+        throw new Error(`[LiquidGrid] shader compile failed: ${log}`);
     }
     return sh;
 }
 
 /** Build the `setupGL(gl)` callback the `createGpuSubstrate` WebGL2 path invokes. */
-export function createPaperGridGLSetup(
-    deps: PaperGridGLSetupDeps,
+export function createLiquidGridGLSetup(
+    deps: LiquidGridGLSetupDeps,
 ): (gl: WebGL2RenderingContext) => WebGLCanvasFrame {
     const { canvas, config, getCursor, getAmp, shouldContinue, onFrame } = deps;
 
     return function setupGL(gl) {
-        const vs = compile(gl, gl.VERTEX_SHADER, PAPER_GRID_VERT_GLSL);
-        const fs = compile(gl, gl.FRAGMENT_SHADER, PAPER_GRID_FRAG_GLSL);
+        const vs = compile(gl, gl.VERTEX_SHADER, LIQUID_GRID_VERT_GLSL);
+        const fs = compile(gl, gl.FRAGMENT_SHADER, LIQUID_GRID_FRAG_GLSL);
         const program = gl.createProgram()!;
         gl.attachShader(program, vs);
         gl.attachShader(program, fs);
         gl.linkProgram(program);
         if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-            throw new Error(`[PaperGrid] link failed: ${gl.getProgramInfoLog(program)}`);
+            throw new Error(`[LiquidGrid] link failed: ${gl.getProgramInfoLog(program)}`);
         }
         gl.deleteShader(vs);
         gl.deleteShader(fs);
@@ -127,9 +127,9 @@ export function createPaperGridGLSetup(
             gl.uniform1f(uMajorEvery, config.majorEvery);
             gl.uniform1f(uAspect, aspect);
 
-            // The traveling-wave CELL-TWIST ride (mirrors the WGPU bridge — the C3 cure).
+            // The traveling-wave AFFINE sheet-warp ride (mirrors the WGPU bridge — BG.W-GRID-AFFINE).
             gl.uniform4f(uWave, config.waveDir[0], config.waveDir[1], config.waveK, config.waveOmega);
-            gl.uniform4f(uWave2, config.waveSigma, config.twistMax, config.shearMax, getAmp());
+            gl.uniform4f(uWave2, config.waveSigma, config.twistMax, 0.0, getAmp());
             gl.uniform1f(uInteractive, config.interactive ? 1 : 0);
 
             const minorPitchPx = Math.max(config.cellSize, 1);

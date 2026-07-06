@@ -391,15 +391,15 @@ export type {
 
 // ── DotFlowField / Concentric (the WebGPU-first viz, BB.W-FLOWFIELD/CONCENTRIC) ──
 // The DotFlowField* + Concentric* config/handle types ride the carved
-// api/types-extra sibling. `PaperGridConfig` stays HERE for proof:viz-papergrid.
+// api/types-extra sibling. `LiquidGridConfig` stays HERE for proof:viz-papergrid.
 
-// ── PaperGrid — the WebGPU-first liquid AA-grid viz (BC.W-VIZ-PAPERGRID) ──
-// Config + handle types for a consumer wrapping <PaperGrid> (the /paper-grid subpath).
+// ── LiquidGrid — the WebGPU-first liquid AA-grid viz (BC.W-VIZ-PAPERGRID) ──
+// Config + handle types for a consumer wrapping <LiquidGrid> (the /liquid-grid subpath).
 export type {
-    PaperGridConfig,
-    PaperGridHandle,
-    UsePaperGridOptions,
-} from "../components/custom/paper-grid";
+    LiquidGridConfig,
+    LiquidGridHandle,
+    UseLiquidGridOptions,
+} from "../components/custom/liquid-grid";
 
 // ── The component customization-surface contract (BC.W-CUSTOMIZABILITY-CENSUS) ──
 //
