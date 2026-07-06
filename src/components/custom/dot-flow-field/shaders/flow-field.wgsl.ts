@@ -128,10 +128,17 @@ struct FSQ { @builtin(position) pos: vec4<f32>, @location(0) uv: vec2<f32> };
 
 @vertex
 fn vs_main(@builtin(vertex_index) vi: u32) -> FSQ {
-  var c = array<vec2<f32>, 3>(
-    vec2<f32>(-1.0, -1.0), vec2<f32>(3.0, -1.0), vec2<f32>(-1.0, 3.0),
-  );
-  let p = c[vi];
+  // NDC corners of the covering triangle (-1,-1), (3,-1), (-1,3) — built with SCALAR
+  // BRANCHES on vi (the aurora.wgsl idiom that paints on WebKit-WebGPU + Chrome/Metal
+  // identically). A function-local var array indexed by the dynamic vertex index (a
+  // var c = array<vec2>(...) then let p = c[vi]) MISCOMPILES on WebKit's Metal WGSL
+  // backend — the covering triangle collapses to a degenerate primitive, no fragments
+  // rasterize, and the pass emits a uniform clear-floor (the BG.W-DOTFLOW-REBUILD Safari
+  // dead-black class: stdev 0, INIT succeeds, DRAW produces nothing). The branch build is
+  // the WebKit-safe covering-triangle shape.
+  var p = vec2<f32>(-1.0, -1.0);
+  if (vi == 1u) { p = vec2<f32>(3.0, -1.0); }
+  else if (vi == 2u) { p = vec2<f32>(-1.0, 3.0); }
   var out: FSQ;
   out.pos = vec4<f32>(p, 0.0, 1.0);
   out.uv = p;   // [-1,1] domain (the fullscreen-triangle overscan clips to [-1,1])

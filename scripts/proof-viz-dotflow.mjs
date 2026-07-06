@@ -32,6 +32,10 @@
 //        the fullscreen triangle with no trail FBO / no point-sprite.
 //   S5 — warm-identity default + NO teal/navy in the LIBRARY constants (the palette fence).
 //   S6 — the pointer BENDS the streamlines (velocity AND accel/burst — the user's ask).
+//   S7 — the WebKit-safe covering-triangle vertex stage (the Safari dead-black paint-fix). The
+//        WGSL vs_main builds the triangle with scalar `vi == 1u`/`vi == 2u` branches (the
+//        aurora idiom), NEVER a dynamic function-local var-array index (`c[vi]` miscompiles on
+//        WebKit's Metal WGSL → degenerate triangle → uniform clear-floor, the dead-black).
 //
 // + a self-test bite per clause (each planted defect REDs its clause) + a BORN-RED anchor bite
 //   (synthetic HEAD-like mote/trail/compute source REDs — the gate would have RED at HEAD).
@@ -280,6 +284,32 @@ function clausePointer(over) {
     return viol;
 }
 
+// ── S7: the WebKit-safe covering-triangle vertex stage (BG.W-DOTFLOW-REBUILD paint-fix) ──
+// The Safari/WebKit dead-black defect (paint DELTA: stdev 0, INIT succeeds, DRAW paints a
+// uniform clear-floor with no field) was a WebKit-Metal WGSL miscompile of a function-local
+// `var` array indexed by the dynamic vertex index (`var c = array<vec2>(…); let p = c[vi];`)
+// in vs_main — the covering triangle collapses to a degenerate primitive, so no fragment is
+// shaded. Chrome/Dawn tolerates it; WebKit does not. The aurora.wgsl vs_main (which paints on
+// the SAME WebKit) builds the triangle with SCALAR BRANCHES on vi, never a dynamic local-array
+// index. This clause locks the flow-field vs_main onto that WebKit-safe shape (born-RED on the
+// pre-fix `c[vi]` HEAD form → GREEN on the branch build) so the dead-black cannot regress.
+function clauseWebkitVertex(over) {
+    const viol = [];
+    const f = files(over);
+    const vs = extractFnBody(f.wgsl, /fn vs_main\s*\(/);
+    // The vs_main must build the covering triangle with scalar branches on vi (the aurora idiom).
+    if (!/vi\s*==\s*1u/.test(vs) || !/vi\s*==\s*2u/.test(vs))
+        viol.push(
+            "S7 webkit-vertex: the WGSL vs_main does not build the covering triangle with scalar `vi == 1u`/`vi == 2u` branches — WebKit's Metal WGSL miscompiles a dynamic local-array index (the Safari dead-black); mirror aurora.wgsl's branch build",
+        );
+    // The vs_main must NOT dynamically index a function-local var-array with vi (the miscompile).
+    if (/\[\s*vi\s*\]/.test(vs))
+        viol.push(
+            "S7 webkit-vertex: the WGSL vs_main dynamically indexes a function-local array with the vertex index ([vi]) — WebKit's Metal WGSL degenerates the covering triangle (the Safari dead-black); use the scalar-branch build",
+        );
+    return viol;
+}
+
 function runAll(over = null) {
     return [
         ...clauseRetired(over),
@@ -288,6 +318,7 @@ function runAll(over = null) {
         ...clauseFullscreenFragment(over),
         ...clauseWarmIdentity(over),
         ...clausePointer(over),
+        ...clauseWebkitVertex(over),
     ];
 }
 
@@ -328,6 +359,16 @@ function selfTest() {
     bite({ constants: base.constants + "\nexport const T = { L: 0.7, C: 0.12, h: 205 };" }, "S5", "a teal hue in the library constants");
     // (i) a velocity-only pointer wiring reds S6.
     bite({ useDotFlowField: "const f = usePointerVelocityField(); f.tick(d); use(f.velocity.value); const pointerStrength = 1; const active = 1;" }, "S6", "a velocity-only pointer wiring");
+    // (k) the WebKit dead-black regression — a vs_main dynamically indexing a function-local
+    //     var-array with vi (the EXACT pre-fix HEAD form, born-RED for S7) reds S7.
+    bite(
+        {
+            wgsl:
+                "fn vs_main(vi: u32) -> FSQ { var c = array<vec2<f32>, 3>(vec2<f32>(-1.0,-1.0), vec2<f32>(3.0,-1.0), vec2<f32>(-1.0,3.0)); let p = c[vi]; var out: FSQ; out.pos = vec4<f32>(p, 0.0, 1.0); return out; }",
+        },
+        "S7",
+        "a WGSL vs_main dynamically indexing a function-local var-array with vi (the WebKit dead-black)",
+    );
     // (j) the BORN-RED anchor — synthetic HEAD-like mote/trail/compute source REDs (the gate
     //     would have been RED at HEAD; the paint judge confirmed the pre-rebuild architecture).
     const headLike = runAll({
@@ -372,7 +413,7 @@ function main() {
         for (const v of viol) console.error("    ✗ " + v);
     } else {
         console.log(
-            "  GREEN (S1 retired · S2 present · S3 round-trip · S4 fullscreen-fragment · S5 warm-identity · S6 pointer)",
+            "  GREEN (S1 retired · S2 present · S3 round-trip · S4 fullscreen-fragment · S5 warm-identity · S6 pointer · S7 webkit-vertex)",
         );
     }
     if (isSelftest) {
