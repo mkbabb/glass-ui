@@ -15,15 +15,15 @@ const VARIANTS = ["wash", "quiet", "resting", "floating", "overlay"] as const;
 // per-variant `data-variant` hook the scoped CSS keys on is emitted under each
 // forced tier.
 describe("GlassPanel — per-rung tier honoring (AW.W12)", () => {
-    for (const tier of ["svg-filter", "css", "fallback"] as const) {
-        it(`emits a distinct data-variant per rung under tier="${tier}"`, () => {
+    for (const renderTier of ["svg-filter", "css", "fallback"] as const) {
+        it(`emits a distinct data-tier per rung under renderTier="${renderTier}"`, () => {
             const seen = new Set<string>();
-            for (const variant of VARIANTS) {
+            for (const tier of VARIANTS) {
                 const wrapper = mount(GlassPanel, {
-                    props: { tier, variant },
+                    props: { renderTier, tier },
                 });
-                const dv = wrapper.attributes("data-variant");
-                expect(dv).toBe(variant);
+                const dv = wrapper.attributes("data-tier");
+                expect(dv).toBe(tier);
                 seen.add(dv ?? "");
                 expect(wrapper.classes()).toContain("glass-panel");
                 wrapper.unmount();
@@ -33,12 +33,12 @@ describe("GlassPanel — per-rung tier honoring (AW.W12)", () => {
         });
     }
 
-    it("carries the tier-class marker so the scoped CSS can branch", () => {
-        const svg = mount(GlassPanel, { props: { tier: "svg-filter", variant: "wash" } });
+    it("carries the render-tier class marker so the scoped CSS can branch", () => {
+        const svg = mount(GlassPanel, { props: { renderTier: "svg-filter", tier: "wash" } });
         expect(svg.classes()).toContain("glass-panel--svg");
         svg.unmount();
 
-        const fb = mount(GlassPanel, { props: { tier: "fallback", variant: "overlay" } });
+        const fb = mount(GlassPanel, { props: { renderTier: "fallback", tier: "overlay" } });
         expect(fb.classes()).toContain("glass-panel--fallback");
         fb.unmount();
     });
