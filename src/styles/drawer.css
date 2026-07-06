@@ -229,12 +229,31 @@
         var(--sheet-crown),
         var(--sheet-solid) calc(var(--sheet-freeze) * 100%)
     );
+    /* BG.W-BACKDROP-BLUR-ENGAGE (F5.4) — the sheet's own backdrop blur ENGAGES off the
+       LIVE gesture scalar `--glass-drawer-t`, not a fixed duration: it builds 0 → full as
+       the finger pulls the sheet in (reaching full by the shared `--glass-blur-engage-knee`
+       ~35% pull — the iOS quick-coalesce), tracks the finger 1:1 during the drag (the
+       scalar is written per-frame), and de-blurs on the trailing dismiss over the
+       DRAWER_SNAP spring's OWN settle (the scalar glides to 0 on close) — the ONE
+       sanctioned fixed-clock leg, delivered for free by the drag scalar's spring. The
+       SOLIDIFY leg (`1 - --sheet-freeze`) still decays the blur to 0 at the full-commit
+       floor (a solid plate has no backdrop to bend — the Safari win). The engage scalar
+       + the `--glass-blur-engage-knee` curve constant are the shared engage primitive
+       minted in surfaces.css; the blur recipe is inlined here (the raw `/styles` partial
+       ships unresolved-`@apply`-free) reading `--glass-blur-engage-t` on the SAME
+       `--glass-blur-overlay-radius` rung, with the sheet's own `saturate` leg on top. At
+       `--glass-drawer-t: 0` (closed) the engage resolves 0 → NO blur (no wasted sample
+       behind an offscreen sheet; NO-MASKING-FALLBACK — a dead writer shows an un-blurred
+       plate, never a masking full blur). NO `transition: backdrop-filter` — the gesture
+       IS the clock. */
+    --glass-blur-engage-t: calc(
+        clamp(0, calc(var(--glass-drawer-t) / var(--glass-blur-engage-knee, 0.35)), 1) *
+            (1 - var(--sheet-freeze))
+    );
+    /* Unprefixed ONLY — Lightning CSS emits the `-webkit-` companion (the single-source
+       authorship discipline, per `.btn-glass`); hand-authoring both doubles the prefix. */
     backdrop-filter: blur(
-            calc(var(--glass-blur-overlay-radius, 20px) * (1 - var(--sheet-freeze)))
-        )
-        saturate(1.6);
-    -webkit-backdrop-filter: blur(
-            calc(var(--glass-blur-overlay-radius, 20px) * (1 - var(--sheet-freeze)))
+            calc(var(--glass-blur-overlay-radius, 20px) * var(--glass-blur-engage-t))
         )
         saturate(1.6);
 }

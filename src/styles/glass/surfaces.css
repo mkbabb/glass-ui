@@ -38,6 +38,42 @@
     background: var(--glass-fill);
 }
 
+/* ── The gesture-coupled backdrop-blur ENGAGE — the shared engage primitive, minted
+   ONCE here (the glass-surface home; BG.W-BACKDROP-BLUR-ENGAGE · F5.4) ─────────────────
+   iOS-27's backdrop blur ENGAGES with the gesture: the material's blur builds AS the
+   finger pulls a surface in (≤33ms on a flick, ~0.77s on a slow pull), NEVER a fixed
+   tween. The LEVER (the finding's own): a gesture surface writes this normalized engage
+   scalar off its OWN LIVE gesture scalar and reads it in a `blur(calc(<rung radius> *
+   var(--glass-blur-engage-t)))` — so the blur's CLOCK IS the gesture's clock (finger-
+   driven on the way in; the settle SPRING on the way out — the ONE sanctioned fixed-clock
+   blur, the trailing dismiss, which the drag scalar's OWN SpringProgress settle delivers
+   for free; one read, both legs correct). There is NEVER a `transition: backdrop-filter
+   <duration>` on an engaging surface — a wall-clock duration would DECOUPLE the blur from
+   the finger (the exact anti-pattern F5.4 excises; the composed `--glass-blur-*` fixed
+   surfaces keep their static blur, this register is the DRAG-DRIVEN one).
+
+   `--glass-blur-engage-t` (the drawer sheet writes it off `--glass-drawer-t`; the dock
+   expand plate off `--dock-expand-t` is the booked 2nd consumer). Registered typed so it
+   is a first-class engage input; `inherits: false` + `initial-value: 0` is the
+   NO-MASKING-FALLBACK floor (USER 07-03): an UNWIRED surface reads 0 → NO blur (an
+   un-blurred plate fails LOUD), NEVER a masking full blur that would hide a dead writer
+   (the `--glass-drawer-t: 0` closed-state precedent). `--glass-blur-engage-knee` is the
+   shared engage-curve constant — the pull fraction by which the material reaches full
+   blur (the iOS quick-coalesce: a see-through peek/half already reads as glass). The
+   recipe is inlined at each surface (drawer.css) — NOT wrapped in a `@utility`, because
+   the per-file `/styles` partial ships Lightning-autoprefixed but NOT `@apply`-resolved
+   (a raw `@apply` would ship dead); the shared home is the registered scalar + the knee. */
+@property --glass-blur-engage-t {
+    syntax: "<number>";
+    inherits: false;
+    initial-value: 0;
+}
+
+:root {
+    /* the pull fraction by which the engaged material reaches full blur (see above). */
+    --glass-blur-engage-knee: 0.35;
+}
+
 @layer components {
     /* ── Convenience shorthands (tier + shape) ── */
 

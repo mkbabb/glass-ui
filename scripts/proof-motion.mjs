@@ -721,6 +721,58 @@ function detect({ existsFn, readFn, corpus }) {
             V.push(`DR2: ${f}`);
     }
 
+    // ── BE — the gesture-coupled backdrop-blur ENGAGE (BG.W-BACKDROP-BLUR-ENGAGE / F5.4) ──
+    // iOS-27's backdrop blur ENGAGES with the gesture — the blur builds AS the finger pulls
+    // a surface in, NEVER a fixed CSS-transition duration. At HEAD every glass-ui blur leg
+    // was fixed-clock (a constant radius on the detented drawer sheet through the whole
+    // pull). The repair reads the blur RADIUS off the LIVE gesture scalar via `calc()`, so
+    // its clock IS the gesture's clock (finger-driven in, the settle spring on the trailing
+    // dismiss — the ONE sanctioned fixed-clock leg, delivered by the drag scalar's OWN
+    // SpringProgress settle). BE1 locks the shared engage primitive minted in surfaces.css
+    // (the registered `--glass-blur-engage-t` scalar with the NO-MASKING-FALLBACK
+    // `initial-value: 0` floor + the `--glass-blur-engage-knee` curve constant); BE2 locks
+    // the drawer sheet CONSUMING it — its engage scalar reads the LIVE `--glass-drawer-t`
+    // AND its `backdrop-filter` reads `var(--glass-blur-engage-t)` (not a fixed radius); BE3
+    // locks the no-fixed-duration fence (no `transition` targets `backdrop-filter` — a
+    // wall-clock blur tween is the exact anti-pattern F5.4 excises). Its self-test strips
+    // `--glass-drawer-t` from the drawer engage-t (the HEAD decoupled/constant-blur state)
+    // and asserts the arm FLAGS it.
+    const surfacesCss = stripCss(readFn("src/styles/glass/surfaces.css"));
+    const drawerBeCss = stripCss(readFn("src/styles/drawer.css"));
+
+    // BE1 — surfaces.css mints the shared engage primitive.
+    const engageProp = surfacesCss.match(/@property\s+--glass-blur-engage-t\s*\{([^}]*)\}/);
+    if (!engageProp) {
+        V.push("BE1: surfaces.css is missing the `@property --glass-blur-engage-t` registration (the shared gesture-coupled backdrop-blur engage scalar has no typed home)");
+    } else {
+        const iv = engageProp[1].match(/initial-value\s*:\s*([^;]+)/);
+        const ivVal = iv ? iv[1].trim() : null;
+        if (ivVal === null) {
+            V.push("BE1: `@property --glass-blur-engage-t` must declare `initial-value: 0` (the fail-loud floor — an un-written engage scalar paints no blur)");
+        } else if (ivVal !== "0") {
+            V.push("BE1: `@property --glass-blur-engage-t` initial-value is non-zero (a masking full-blur fallback that would hide a dead writer) — the NO-MASKING-FALLBACK edict requires `initial-value: 0` (an unwired surface reads 0 → NO blur, fail loud)");
+        }
+    }
+    if (!/--glass-blur-engage-knee\s*:/.test(surfacesCss))
+        V.push("BE1: surfaces.css is missing the `--glass-blur-engage-knee` shared engage-curve constant (the pull fraction the material reaches full blur by — the iOS quick-coalesce)");
+
+    // BE2 — the drawer sheet CONSUMES the engage scalar off the LIVE gesture scalar.
+    const drawerEngageDecl = drawerBeCss.match(/--glass-blur-engage-t\s*:\s*([^;]*);/);
+    if (!drawerEngageDecl) {
+        V.push("BE2: drawer.css does not declare `--glass-blur-engage-t` — the sheet's blur is not gesture-coupled (the F5.4 drag-driven engage is absent)");
+    } else if (!/var\(\s*--glass-drawer-t\s*\)/.test(drawerEngageDecl[1])) {
+        V.push("BE2: drawer.css's `--glass-blur-engage-t` does not read the LIVE gesture scalar `--glass-drawer-t` — the blur must track the finger, not a fixed duration (F5.4 iOS-27 blur-tracks-the-finger)");
+    }
+    // The detented sheet's backdrop-filter must read the engage scalar (the blur is COUPLED
+    // to the live gesture, not a constant radius). Scan for a `backdrop-filter: blur(...)`
+    // whose radius calc reads `--glass-blur-engage-t`.
+    if (!/backdrop-filter\s*:\s*blur\([^;]*--glass-blur-engage-t[^;]*;/.test(drawerBeCss))
+        V.push("BE2: drawer.css's sheet `backdrop-filter` blur radius does not read `var(--glass-blur-engage-t)` — the blur leg must be the live engage scalar (the HEAD `blur(radius * (1 - freeze))` constant-during-pull leg is the fixed-clock state this replaces)");
+
+    // BE3 — NO fixed-duration blur tween (the gesture is the clock, not a wall clock).
+    if (/transition[^;{}]*backdrop-filter/.test(drawerBeCss))
+        V.push("BE3: drawer.css declares a `transition` targeting `backdrop-filter` — a wall-clock blur tween DECOUPLES the blur from the finger (F5.4 forbids a fixed-duration blur; the only sanctioned fixed-clock leg is the drag scalar's OWN spring settle)");
+
     return V;
 }
 
@@ -931,6 +983,25 @@ if (
     process.exit(1);
 }
 
+// ── The BE self-test bite — DECOUPLE the drawer sheet blur from the live gesture scalar
+//    (strip `var(--glass-drawer-t)` from the engage-t declaration → the HEAD constant-blur
+//    / fixed-clock state F5.4 replaces) and assert the blur-engage arm FLAGS it (the
+//    reads-the-live-scalar teeth are real). ────────────────────────────────────────────────
+const drawerCssDiskBE = diskRead("src/styles/drawer.css");
+const decoupleRead = (rel) =>
+    rel === "src/styles/drawer.css"
+        ? // sever the live-scalar read: the engage-t no longer tracks the finger (a fixed 1)
+          drawerCssDiskBE.replace(/var\(\s*--glass-drawer-t\s*\)/g, "1")
+        : diskRead(rel);
+const decoupleViolations = detect({ existsFn: diskExists, readFn: decoupleRead, corpus });
+const beSelfTestFlags = decoupleViolations.length > violations.length;
+if (!beSelfTestFlags) {
+    console.error(
+        "proof:motion — BE SELF-TEST FAILED: the detector did NOT flag a drawer sheet blur decoupled from the live `--glass-drawer-t` scalar (the HEAD fixed-clock / constant-during-pull state). The gesture-coupled blur-engage teeth are gone; do not trust a GREEN.",
+    );
+    process.exit(1);
+}
+
 // ── Report ──────────────────────────────────────────────────────────────────────
 console.log("proof:motion — the F5 dead-composable cut is COMPLETE (BG.W-DEAD-COMPOSABLE-CUT)");
 console.log(`  dead composables      : ${DEAD.map((d) => d.name).join(", ")}`);
@@ -963,6 +1034,10 @@ console.log("proof:motion — the disclosure chevron is ONE register (BG.W-DISCL
 console.log(`  disclosure-single-register: @utility transition-disclosure = rotate var(--spring-snappy-duration) var(--ease-cartoon-punch) — Accordion · Select · Configurator carets all fold onto it (the flat transition-transform-200 / the transform-on-the-wrong-property snap / the raw arbitrary form all RETIRED)`);
 console.log(`  abrupt-spatial-tailwind   : the S6 blind spot closed — detectAbruptTailwindSpatial scans the .vue TEMPLATE (not just <style>) for a transition-transform/[transition:rotate…] riding a non-spring clock (the widen folded here as a proof:motion case row, C-1)`);
 console.log(`  self-test (DR bites)  : OK — the Accordion chevron reverted to transition-transform duration-200 flags (DR1+DR2), the synthetic template caret flags, the canonical transition-disclosure does NOT`);
+console.log("proof:motion — the drag-driven backdrop blur ENGAGES off the live gesture scalar (BG.W-BACKDROP-BLUR-ENGAGE / F5.4)");
+console.log(`  shared engage primitive: @property --glass-blur-engage-t (initial-value 0, the NO-MASKING fail-loud floor) + --glass-blur-engage-knee (the iOS quick-coalesce curve) minted ONCE in surfaces.css`);
+console.log(`  drawer sheet consumes  : --glass-blur-engage-t reads the LIVE --glass-drawer-t (× the solidify decay) and the sheet backdrop-filter blur radius reads var(--glass-blur-engage-t) — the blur builds 0→full tracking the finger, de-blurs on the DRAWER_SNAP spring's own settle (the ONE fixed-clock leg), NO transition:backdrop-filter wall-clock tween`);
+console.log(`  self-test (BE bite)   : OK — a drawer sheet blur decoupled from --glass-drawer-t (the HEAD fixed-clock / constant-during-pull state) flags`);
 console.log(`  corpus scanned        : ${corpus.length} src/+demo/ sources`);
 console.log(`  violations            : ${violations.length}`);
 for (const m of violations) console.error(`  CUT-INCOMPLETE   ${m}`);
@@ -985,6 +1060,7 @@ writeGateArtifact(ARTIFACT, {
     lwCascadeSelfTestFlagged: lwCascadeSelfTestFlags,
     r2SelfTestFlagged: r2SelfTestFlags,
     drSelfTestFlagged: drSelfTestFlags,
+    beSelfTestFlagged: beSelfTestFlags,
     disclosureRoster: DISCLOSURE_ROSTER.map((c) => c.name),
     transitionLiquidSpatial: GENERATED_LIQUID_SPATIAL,
     spine: SPINE_PATH,
