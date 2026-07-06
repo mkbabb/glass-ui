@@ -359,10 +359,37 @@
        Warm-amber (the BB.W-DARK-INK-WARM identity), NOT the slides deck hsl(45 …) literal
        (the deck is the REFERENCE; the library re-derives against its own --card). The
        light arm lives in tokens/glass.css (the plain per-mode pair — the house idiom). */
-    --on-glass-muted:        hsl(34 16% 72%);   /* brighter than the collapsed --neutral-5 L62 (6.63:1 vs the luminous-dark plate; subordinate to --foreground) */
-    --on-glass-muted-strong: hsl(36 14% 78%);   /* the -strong rung, one step more present (7.75:1 vs plate) */
+    --on-glass-muted:        hsl(34 16% 72%);   /* brighter than the collapsed --neutral-5 L62 (WCAG 7.52:1 / APCA |Lc| 61.7 vs the luminous-dark composited quiet plate; subordinate to --foreground — F2.R1 census witness) */
+    --on-glass-muted-strong: hsl(36 14% 78%);   /* the -strong rung, one step more present (WCAG 8.77:1 / APCA |Lc| 70.2 vs plate) */
     --input-on-glass:        hsl(26 12% 22%);   /* the form-well fill — grounded warm-dark so the L90 input TEXT reads against a stable base (9.3:1) */
     --progress-track-on-glass: hsl(28 14% 26%); /* the recessed meter track — a warm-dark channel distinct from the fill silhouette */
+
+    /* ── F2.R1 W-DARK-READABILITY-REPAIR — the card field-floor DARK ARM (A1) ──────
+       The BD.W-CARD-FIELD-FLOOR orphan fallback (cards.css) paints two amber radials
+       (oklch(0.96 0.04 78 / .5) + oklch(0.9 0.075 72 / .5)) SCREEN-blended on every
+       glass card with no `[data-paper-field]` ancestor — and it shipped NO dark arm,
+       so under `.dark` the near-white L≈0.9-0.96 stops paint at FULL strength + the
+       dark-arm `brightness()` backdrop lift compounds them into a hot in-card LAMP
+       (value.js card-lighting-forensics 2026-07-05, artifacts 1+3: the cream-label
+       hot-zone contrast collapsed to ~1.5-2.6:1). The dark arm collapses the two hot
+       SCREEN radials to ONE damped warm-DARK sink — oklch(L 0.34, warm hue 66, C
+       0.055 ABOVE the W-NO-GRAY strong gray floor 0.020) blended NORMAL (a warm
+       depth that SINKS into the deep plate, NEVER a screen lamp). The plate STAYS
+       dark, so the cream `--foreground` label reads WCAG ≥ 11:1 / APCA |Lc| ≥ 88 over
+       the hot zone (proven by the census), while the card keeps its warm-not-gray
+       identity (the card material `--glass-tint-strength: 8%` + the `--glass-rim-top`
+       0.40 catch carry the lit-glass read; the light-mode amber KEY is a light-mode
+       device). The 0-alpha stop is explicit `oklch(… / 0)`, NEVER bare `transparent`
+       (the WebKit black-premultiply hole, build-trap-(d)). The light default lives in
+       the cards.css var() fallback (this token unset in light → byte-identical light
+       paint). Machine-locked by `proof:glass` dark-legibility DL1. */
+    --card-field-floor-image:
+        radial-gradient(
+            120% 110% at 78% 22%,
+            oklch(0.34 0.055 66 / 0.35),
+            oklch(0.34 0.055 66 / 0) 72%
+        );
+    --card-field-floor-blend: normal;
 
     /* BA.W-DARK-MATERIAL scope 5 + BB.W-DARK-INK-WARM — the --surface-tint-* dark arm,
        --foreground-DERIVED. The light family is color-mix(in srgb, var(--foreground) N%,

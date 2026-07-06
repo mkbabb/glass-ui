@@ -79,6 +79,12 @@ import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 import { readMonolith } from "./read-css-monoliths.mjs";
+// F2.R1 W-DARK-READABILITY-REPAIR — the dark-legibility arm is F8.8's FIRST binding
+// user: it composes the shared APCA leaf (scripts/lib/paint-arm.mjs) so the census
+// reads BOTH witnesses on the COMPOSITED plate — WCAG-2 AA ratio AND APCA Lc. The
+// rgb→OKLab decompose (oklabFromRgb) is imported (the single-source fence); the
+// OKLab INVERSE + WCAG relative-luminance are local (distinct metrics, no fork).
+import { apcaContrastLc, compositeOver, oklabFromRgb, APCA_LC_BODY } from "./lib/paint-arm.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const GLASS_DEEP_FILE = "src/styles/tokens/glass-deep.css";
@@ -102,6 +108,8 @@ const BACKDROP_LUMINANCE_FILE =
 const GLASSDOCK_FILE = "src/components/custom/dock/GlassDock.vue";
 const DARK_ARM_FILE = "src/styles/tokens/dark-arm.css";
 const LIGHT_DARK_FILE = "src/styles/tokens/light-dark.css";
+const CARDS_FILE = "src/styles/cards.css";
+const LADDER_FILE = "src/styles/glass/ladder.css";
 const GLASS_SURFACES_FILE = "src/styles/glass/surfaces.css";
 // BG.W-GLASS-CONSUMER-BAND — the tokens home for the SHARED `--glass-fill-tinted`
 // plate + the two consumer recipes (`.glass-atom`/`.glass-chip`) that fold onto it.
@@ -1675,6 +1683,265 @@ export function refractWebglViolations(src) {
     return { violations, facts };
 }
 
+// ── ARM: dark-legibility (F2.R1 W-DARK-READABILITY-REPAIR — the dark CENSUS) ──────
+// The full-route DARK readability census — F8.8's FIRST binding user. Every dark
+// text-over-glass register's COMPOSITED contrast is checked against BOTH witnesses:
+// WCAG-2 AA (ratio ≥ 4.5:1) AND APCA Lc (|Lc| ≥ 60 body — the 2026 SOTA translucent-
+// surface metric, imported from the F8.8 leaf). Four clauses:
+//   DL1 — the card field-floor DARK ARM (A1, value.js card-lighting-forensics): the
+//         orphan field-floor amber radials shipped NO dark arm, so in dark the
+//         near-white L≈0.9-0.96 SCREEN radials paint a hot in-card LAMP (label ~1.5:1).
+//         cards.css TOKENIZES the field-floor (`var(--card-field-floor-image/-blend)`)
+//         + dark-arm.css sets a damped warm-DARK sink (blend NORMAL); the composited
+//         hot-zone label must clear AA + APCA. Born-RED at HEAD (no token → the lamp).
+//   DL2 — the dark on-glass MUTED registers (--on-glass-muted/-strong) clear the
+//         composited quiet-plate floor (AA + APCA). The A2 "the rung needs a floor"
+//         ask; the raw page-muted --neutral-5 COLLAPSES over glass (APCA < 60, recorded).
+//   DL3 — the bright-bucket --foreground LOCKSTEP (ladder.css @container … light bucket).
+//   DL4 — the calm content-tier on-glass RE-POINT (ladder.css) — the A2 floor.
+// A --self-test bite proves each clause has teeth.
+export function darkLegibilityViolations(darkArmText, ladderText, cardsText) {
+    const violations = [];
+    const facts = {};
+    const darkRaw = darkArmText || "";
+    const ladder = stripCss(ladderText || "");
+    const cards = stripCss(cardsText || "");
+
+    // ── local colour helpers. WCAG relative-luminance + the OKLab INVERSE are
+    //    DISTINCT metrics/capabilities, NOT a fork of the imported rgb→OKLab
+    //    decompose (oklabFromRgb — used for the mix's forward leg). ──────────────────
+    const clamp255 = (n) => Math.max(0, Math.min(255, Math.round(n)));
+    const hslToRgb = (h, s, l) => {
+        s /= 100;
+        l /= 100;
+        const k = (n) => (n + h / 30) % 12;
+        const a = s * Math.min(l, 1 - l);
+        const f = (n) => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+        return { r: clamp255(255 * f(0)), g: clamp255(255 * f(8)), b: clamp255(255 * f(4)) };
+    };
+    const toSrgb8 = (c) => {
+        c = c <= 0.0031308 ? c * 12.92 : 1.055 * Math.pow(Math.max(0, c), 1 / 2.4) - 0.055;
+        return clamp255(c * 255);
+    };
+    const oklabToRgb = ({ L, a, b }) => {
+        const l_ = L + 0.3963377774 * a + 0.2158037573 * b;
+        const m_ = L - 0.1055613458 * a - 0.0638541728 * b;
+        const s_ = L - 0.0894841775 * a - 1.291485548 * b;
+        const l = l_ ** 3;
+        const m = m_ ** 3;
+        const s = s_ ** 3;
+        return {
+            r: toSrgb8(4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s),
+            g: toSrgb8(-1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s),
+            b: toSrgb8(-0.0041960863 * l - 0.7034186147 * m + 1.707614701 * s),
+        };
+    };
+    const oklchToRgb = (L, C, H) => {
+        const h = (H * Math.PI) / 180;
+        return oklabToRgb({ L, a: C * Math.cos(h), b: C * Math.sin(h) });
+    };
+    // mix two rgb in OKLab (the color-mix(in oklab, A, B t) the glass tint seam runs)
+    const mixOklab = (A, B, t) => {
+        const a = oklabFromRgb(A.r, A.g, A.b);
+        const b = oklabFromRgb(B.r, B.g, B.b);
+        return oklabToRgb({
+            L: a.L + (b.L - a.L) * t,
+            a: a.a + (b.a - a.a) * t,
+            b: a.b + (b.b - a.b) * t,
+        });
+    };
+    const wcagLum = ({ r, g, b }) => {
+        const lin = (c) => {
+            c /= 255;
+            return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+        };
+        return 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
+    };
+    const wcagRatio = (x, y) => {
+        const a = wcagLum(x) + 0.05;
+        const b = wcagLum(y) + 0.05;
+        return Math.max(a, b) / Math.min(a, b);
+    };
+    // parse a resolved-ish CSS colour token (hsl(...) / oklch(...)) → {r,g,b,alpha}
+    const parseColor = (str) => {
+        if (!str) return null;
+        const hsl = str.match(/hsl\(\s*([\d.]+)\s+([\d.]+)%\s+([\d.]+)%(?:\s*\/\s*([\d.]+%?))?\s*\)/i);
+        if (hsl) {
+            const c = hslToRgb(+hsl[1], +hsl[2], +hsl[3]);
+            const al = hsl[4] == null ? 1 : hsl[4].endsWith("%") ? +hsl[4].slice(0, -1) / 100 : +hsl[4];
+            return { ...c, alpha: al };
+        }
+        const ok = str.match(/oklch\(\s*([\d.]+)\s+([\d.]+)\s+(-?[\d.]+)(?:deg)?(?:\s*\/\s*([\d.]+%?))?\s*\)/i);
+        if (ok) {
+            const c = oklchToRgb(+ok[1], +ok[2], +ok[3]);
+            const al = ok[4] == null ? 1 : ok[4].endsWith("%") ? +ok[4].slice(0, -1) / 100 : +ok[4];
+            return { ...c, alpha: al };
+        }
+        return null;
+    };
+    // the FIRST non-transparent colour stop of a background-image gradient string (the
+    // radial peak the eye reads); skips the explicit `/ 0` fade stops.
+    const firstColorStop = (imgStr) => {
+        if (!imgStr) return null;
+        const stops = imgStr.match(/(?:oklch|hsl)\([^)]*\)/gi);
+        if (!stops) return null;
+        for (const s of stops) {
+            const c = parseColor(s);
+            if (c && c.alpha > 0.01) return c;
+        }
+        return parseColor(stops[0]);
+    };
+
+    // ── the `.dark { … }` block (brace-matched) + a token reader ──────────────────
+    const darkBlock = (text) => {
+        const start = text.indexOf(".dark");
+        if (start < 0) return "";
+        const open = text.indexOf("{", start);
+        if (open < 0) return "";
+        let depth = 1;
+        let i = open + 1;
+        for (; i < text.length && depth > 0; i++) {
+            if (text[i] === "{") depth++;
+            else if (text[i] === "}") depth--;
+        }
+        return text.slice(open + 1, i - 1);
+    };
+    const tokenIn = (body, token) => {
+        const re = new RegExp(`(?:^|[;{\\s])${token.replace(/-/g, "\\-")}\\s*:\\s*([^;]+);`);
+        const m = body.match(re);
+        return m ? m[1].replace(/\s+/g, " ").trim() : null;
+    };
+    // a brace-matched rule body located by a start substring (for the ladder arms).
+    const ruleBody = (text, startSub) => {
+        const start = text.indexOf(startSub);
+        if (start < 0) return null;
+        const open = text.indexOf("{", start);
+        if (open < 0) return null;
+        let depth = 1;
+        let i = open + 1;
+        for (; i < text.length && depth > 0; i++) {
+            if (text[i] === "{") depth++;
+            else if (text[i] === "}") depth--;
+        }
+        return text.slice(open + 1, i - 1);
+    };
+
+    const block = darkBlock(stripCss(darkRaw));
+    const dtok = (t) => tokenIn(block, t);
+    const parseDark = (t, fallback) => parseColor(dtok(t) || "") || fallback;
+
+    const darkCard = parseDark("--card", hslToRgb(26, 22, 17));
+    const darkPage = parseDark("--neutral-0", hslToRgb(24, 9, 4));
+    const darkFg = parseDark("--foreground", hslToRgb(30, 14, 90));
+    const opQuiet = Number(dtok("--glass-opacity-quiet")) || 0.58;
+    const opResting = Number(dtok("--glass-opacity-resting")) || 0.72;
+    const tintFloorRaw = dtok("--glass-tint-strength-floor") || "12%";
+    const tintFloor = tintFloorRaw.endsWith("%") ? +tintFloorRaw.slice(0, -1) / 100 : +tintFloorRaw;
+
+    // the composited content-tier QUIET plate (the on-glass rungs' derive target):
+    // --card oklab-tinted toward --foreground at the floor strength, at opacity-quiet
+    // over the deep page — the surface the muted caption actually renders over.
+    const quietFill = mixOklab(darkCard, darkFg, tintFloor);
+    const quietPlate = compositeOver({ ...quietFill, alpha: opQuiet }, darkPage);
+    facts.quietPlateL = Number(oklabFromRgb(quietPlate.r, quietPlate.g, quietPlate.b).L.toFixed(3));
+
+    const inkVerdict = (id, label, ink, bg, floorLc = APCA_LC_BODY) => {
+        if (!ink) {
+            violations.push(`${id}: could not resolve ${label} (parse failure)`);
+            return null;
+        }
+        const ratio = Number(wcagRatio(ink, bg).toFixed(2));
+        const lc = Number(Math.abs(apcaContrastLc(ink, bg)).toFixed(1));
+        if (ratio < 4.5)
+            violations.push(
+                `${id} (WCAG): ${label} composited contrast ${ratio}:1 < 4.5:1 over the dark plate`,
+            );
+        if (lc < floorLc)
+            violations.push(
+                `${id} (APCA): ${label} composited |Lc| ${lc} < ${floorLc} over the dark plate (the SOTA glass metric AA under-reads)`,
+            );
+        return { ratio, lc };
+    };
+
+    // ── DL1 — the card field-floor DARK ARM (A1) ──────────────────────────────────
+    facts.cardsTokenizesImage = /var\(\s*--card-field-floor-image/.test(cards);
+    facts.cardsTokenizesBlend = /var\(\s*--card-field-floor-blend/.test(cards);
+    if (!facts.cardsTokenizesImage)
+        violations.push(
+            "DL1: cards.css does not TOKENIZE the field-floor background-image (var(--card-field-floor-image, …)) — the dark arm cannot re-point the light amber orphan lamp",
+        );
+    if (!facts.cardsTokenizesBlend)
+        violations.push(
+            "DL1: cards.css does not TOKENIZE the field-floor background-blend-mode (var(--card-field-floor-blend, …)) — the dark arm cannot swap the SCREEN lift for a NORMAL sink",
+        );
+    const ffImage = dtok("--card-field-floor-image");
+    const ffBlend = dtok("--card-field-floor-blend");
+    facts.darkFieldFloorSet = ffImage != null;
+    facts.darkFieldFloorBlend = ffBlend;
+    if (!ffImage)
+        violations.push(
+            "DL1: tokens/dark-arm.css .dark {} does not set --card-field-floor-image — the light amber field-floor SCREEN lamp survives in dark mode (the A1 hot in-card light source)",
+        );
+    // numeric census: the EFFECTIVE dark field-floor (the dark token when set, else the
+    // cards.css light amber fallback — the born-RED lamp) composited over the dark card,
+    // then the cream label over the hot zone.
+    const effFloorImg = ffImage || cards;
+    const effBlend = (ffBlend || "screen").toLowerCase();
+    const peak = firstColorStop(effFloorImg);
+    const cardBase = compositeOver({ ...darkCard, alpha: opResting }, darkPage);
+    if (peak) {
+        let hot;
+        if (effBlend.startsWith("normal")) {
+            hot = compositeOver({ ...peak, alpha: peak.alpha }, cardBase);
+        } else {
+            // screen(base, over) per channel, then alpha-composite over the base.
+            const screen = (bch, och) => 255 - ((255 - bch) * (255 - och)) / 255;
+            const scr = { r: screen(cardBase.r, peak.r), g: screen(cardBase.g, peak.g), b: screen(cardBase.b, peak.b) };
+            hot = compositeOver({ ...scr, alpha: peak.alpha }, cardBase);
+        }
+        facts.fieldFloorHotL = Number(oklabFromRgb(hot.r, hot.g, hot.b).L.toFixed(3));
+        const v = inkVerdict("DL1", "the cream --foreground label over the field-floor hot-zone", darkFg, hot);
+        if (v) facts.fieldFloorLabel = v;
+    }
+
+    // ── DL2 — the dark on-glass MUTED registers clear the composited floor ─────────
+    const onGlassMuted = parseColor(dtok("--on-glass-muted") || "");
+    const onGlassMutedStrong = parseColor(dtok("--on-glass-muted-strong") || "");
+    facts.onGlassMuted = onGlassMuted
+        ? inkVerdict("DL2", "--on-glass-muted", onGlassMuted, quietPlate)
+        : (violations.push("DL2: dark --on-glass-muted is missing/unparseable"), null);
+    facts.onGlassMutedStrong = onGlassMutedStrong
+        ? inkVerdict("DL2", "--on-glass-muted-strong", onGlassMutedStrong, quietPlate)
+        : (violations.push("DL2: dark --on-glass-muted-strong is missing/unparseable"), null);
+    // the whisper-collapse WITNESS (recorded fact, not a violation): the raw page-muted
+    // --neutral-5 fails APCA over the composited plate — WHY the on-glass register exists.
+    const neutral5 = parseColor(dtok("--neutral-5") || "");
+    if (neutral5) {
+        facts.pageMutedOverPlate = {
+            ratio: Number(wcagRatio(neutral5, quietPlate).toFixed(2)),
+            lc: Number(Math.abs(apcaContrastLc(neutral5, quietPlate)).toFixed(1)),
+        };
+    }
+
+    // ── DL3 — the bright-bucket --foreground LOCKSTEP (ladder.css) ─────────────────
+    const brightBucket = ruleBody(ladder, "@container style(--glass-backdrop: light)");
+    facts.brightBucketLockstep = !!brightBucket && /--muted-foreground:\s*var\(--foreground\)/.test(brightBucket);
+    if (!facts.brightBucketLockstep)
+        violations.push(
+            "DL3: the ladder.css @container style(--glass-backdrop: light) bucket does not lift --muted-foreground → var(--foreground) — the selection-inversion lockstep is broken (a darkened plate leaves the muted caption below AA)",
+        );
+
+    // ── DL4 — the calm content-tier on-glass RE-POINT (ladder.css) — the A2 floor ──
+    const calmTier = ruleBody(ladder, ":where(.glass-card, .glass-resting, .glass-quiet, .glass-wash)");
+    facts.calmRepoint = !!calmTier && /--muted-foreground:\s*var\(--on-glass-muted\)/.test(calmTier);
+    if (!facts.calmRepoint)
+        violations.push(
+            "DL4: the ladder.css calm content-tier :where(.glass-card, .glass-resting, .glass-quiet, .glass-wash) does not re-point --muted-foreground → var(--on-glass-muted) — a text-muted-foreground caption over a calm glass plate loses its floor (the A2 whisper collapse)",
+        );
+
+    return { violations, facts };
+}
+
 export function detect() {
     const decide = decideViolations(readFile(GLASS_DEEP_FILE));
     const glassMonolith = readMonolith(ROOT, "glass");
@@ -1705,6 +1972,11 @@ export function detect() {
     );
     const refractWebgl = refractWebglViolations(readFile(GLASS_REFRACT_SHADER_FILE));
     const depthTier = depthTierViolations(readFile(GLASS_DEEP_FILE), glassMonolith, tokensMonolith);
+    const darkLegibility = darkLegibilityViolations(
+        readFile(DARK_ARM_FILE),
+        readFile(LADDER_FILE),
+        readFile(CARDS_FILE),
+    );
     // the self-test bites run EVERY run (the "proven every run" discipline) — a
     // bite that loses its teeth REDs the gate, so the anti-gameability arm can
     // never silently rot.
@@ -1722,6 +1994,7 @@ export function detect() {
             ...cornerBackplate.violations,
             ...refractWebgl.violations,
             ...depthTier.violations,
+            ...darkLegibility.violations,
             ...biteFails,
         ],
         facts: {
@@ -1736,6 +2009,7 @@ export function detect() {
             cornerBackplate: cornerBackplate.facts,
             refractWebgl: refractWebgl.facts,
             depthTier: depthTier.facts,
+            darkLegibility: darkLegibility.facts,
             selfTestOk: biteFails.length === 0,
         },
     };
@@ -2508,6 +2782,69 @@ function selfTest() {
         );
     }
 
+    // ── dark-legibility bites (DL1-DL4) — F2.R1 W-DARK-READABILITY-REPAIR ──────────
+    // The GREEN reference fixtures: cards tokenized, dark-arm damped warm-DARK sink,
+    // the two ladder arms present, the on-glass registers cleared.
+    const goodDarkArm =
+        ".dark { --card: hsl(26 22% 17%); --neutral-0: hsl(24 9% 4%); --foreground: hsl(30 14% 90%); " +
+        "--neutral-5: hsl(34 14% 62%); --glass-opacity-quiet: 0.58; --glass-opacity-resting: 0.72; " +
+        "--glass-tint-strength-floor: 12%; --on-glass-muted: hsl(34 16% 72%); --on-glass-muted-strong: hsl(36 14% 78%); " +
+        "--card-field-floor-image: radial-gradient(120% 110% at 78% 22%, oklch(0.34 0.055 66 / 0.35), oklch(0.34 0.055 66 / 0) 72%); " +
+        "--card-field-floor-blend: normal; }";
+    const goodCards =
+        '[data-slot="card"][data-surface="glass"]:not(.paper-grid) { background-blend-mode: var(--card-field-floor-blend, screen, normal); ' +
+        'background-image: var(--card-field-floor-image, radial-gradient(60% 55% at 80% 16%, oklch(0.96 0.04 78 / 0.5), oklch(0.96 0.04 78 / 0) 72%)); }';
+    const goodLadder =
+        "@container style(--glass-backdrop: light) { .glass-card { --muted-foreground: var(--foreground); } } " +
+        ":where(.glass-card, .glass-resting, .glass-quiet, .glass-wash) { --muted-foreground: var(--on-glass-muted); }";
+    // sanity — the GREEN quad must pass (a false-RED detector is as bad as a toothless one).
+    if (darkLegibilityViolations(goodDarkArm, goodLadder, goodCards).violations.length !== 0) {
+        fails.push(
+            "self-test DL: the GREEN dark-legibility quad (tokenized cards + damped warm-DARK dark arm + both ladder arms) was FLAGGED (the census false-REDs a correct fix): " +
+                darkLegibilityViolations(goodDarkArm, goodLadder, goodCards).violations.join(" | "),
+        );
+    }
+    // bite DL1a — a non-tokenized cards field-floor (the HEAD hardcoded form) reds tokenization.
+    const rawCards =
+        '[data-slot="card"][data-surface="glass"]:not(.paper-grid) { background-blend-mode: screen, normal; ' +
+        "background-image: radial-gradient(60% 55% at 80% 16%, oklch(0.96 0.04 78 / 0.5), oklch(0.96 0.04 78 / 0) 72%); }";
+    if (!darkLegibilityViolations(goodDarkArm, goodLadder, rawCards).violations.some((v) => /DL1.*TOKENIZE/i.test(v))) {
+        fails.push(
+            "self-test DL1: a non-tokenized cards field-floor (the HEAD hardcoded radials) was NOT flagged (the tokenization detector has no teeth)",
+        );
+    }
+    // bite DL1b — the light amber LAMP in dark (screen-blended L0.96) reds the numeric hot-zone.
+    const lampDarkArm = goodDarkArm.replace(
+        /--card-field-floor-image:[^;]+;\s*--card-field-floor-blend:\s*normal;/,
+        "--card-field-floor-image: radial-gradient(60% 55% at 80% 16%, oklch(0.96 0.04 78 / 0.5), oklch(0.96 0.04 78 / 0) 72%); --card-field-floor-blend: screen;",
+    );
+    if (!darkLegibilityViolations(lampDarkArm, goodLadder, goodCards).violations.some((v) => /DL1 \((WCAG|APCA)\)/.test(v))) {
+        fails.push(
+            "self-test DL1: the light amber SCREEN lamp in dark (the A1 hot in-card light source) was NOT flagged by the composited hot-zone census (the numeric AA/APCA arm has no teeth)",
+        );
+    }
+    // bite DL2 — a collapsed on-glass muted (dropped to a low-L value near the plate) reds the floor.
+    const collapsedMuted = goodDarkArm.replace("--on-glass-muted: hsl(34 16% 72%);", "--on-glass-muted: hsl(30 12% 42%);");
+    if (!darkLegibilityViolations(collapsedMuted, goodLadder, goodCards).violations.some((v) => /DL2 \((WCAG|APCA)\)/.test(v))) {
+        fails.push(
+            "self-test DL2: a collapsed --on-glass-muted (dropped near the plate luminance) was NOT flagged (the on-glass floor census has no teeth)",
+        );
+    }
+    // bite DL3 — a bright bucket missing the --foreground lockstep reds.
+    const noLockstep = goodLadder.replace("--muted-foreground: var(--foreground);", "--muted-foreground: var(--muted-foreground);");
+    if (!darkLegibilityViolations(goodDarkArm, noLockstep, goodCards).violations.some((v) => /DL3/.test(v))) {
+        fails.push(
+            "self-test DL3: a bright-bucket missing the --muted-foreground → var(--foreground) lockstep was NOT flagged (the selection-inversion lockstep detector has no teeth)",
+        );
+    }
+    // bite DL4 — a calm content tier missing the on-glass re-point reds.
+    const noRepoint = goodLadder.replace("--muted-foreground: var(--on-glass-muted);", "--muted-foreground: var(--neutral-5);");
+    if (!darkLegibilityViolations(goodDarkArm, noRepoint, goodCards).violations.some((v) => /DL4/.test(v))) {
+        fails.push(
+            "self-test DL4: a calm content tier missing the --muted-foreground → var(--on-glass-muted) re-point was NOT flagged (the A2 on-glass-floor detector has no teeth)",
+        );
+    }
+
     return fails;
 }
 
@@ -2692,6 +3029,17 @@ function run() {
     );
     console.log(
         `  DT4 freeze-guard  : lerp-at=${dt.lerpDeclaringSelector || "?"}  per-element=${dt.lerpAtConsumingElement ? "✓" : "✗"}  ladder=${dt.depthBlurLadder ? dt.depthBlurLadder.map((n) => n.toFixed(2) + "px").join(" < ") : "?"} (the LERP resolves --glass-depth per-tier, never frozen at :root — the C18 painted dead-knob close)`,
+    );
+    const dl = facts.darkLegibility ?? {};
+    console.log("proof:glass — arm: dark-legibility (F2.R1 W-DARK-READABILITY-REPAIR — the dark CENSUS, F8.8's first binding user)");
+    console.log(
+        `  DL1 field-floor   : tokenized=img:${dl.cardsTokenizesImage ? "✓" : "✗"}/blend:${dl.cardsTokenizesBlend ? "✓" : "✗"}  dark-arm-set=${dl.darkFieldFloorSet ? "✓" : "✗"} (blend=${dl.darkFieldFloorBlend ?? "?"})  hot-zone L=${dl.fieldFloorHotL ?? "?"} label=${dl.fieldFloorLabel ? `WCAG ${dl.fieldFloorLabel.ratio}:1 / APCA ${dl.fieldFloorLabel.lc}` : "?"}`,
+    );
+    console.log(
+        `  DL2 on-glass fg   : quiet-plate L=${dl.quietPlateL ?? "?"}  muted=${dl.onGlassMuted ? `WCAG ${dl.onGlassMuted.ratio}:1 / APCA ${dl.onGlassMuted.lc}` : "?"}  strong=${dl.onGlassMutedStrong ? `WCAG ${dl.onGlassMutedStrong.ratio}:1 / APCA ${dl.onGlassMutedStrong.lc}` : "?"}  (page-muted witness ${dl.pageMutedOverPlate ? `APCA ${dl.pageMutedOverPlate.lc} — collapses` : "?"})`,
+    );
+    console.log(
+        `  DL3 bright-lockstep: ${dl.brightBucketLockstep ? "✓" : "✗"}  DL4 calm-repoint: ${dl.calmRepoint ? "✓" : "✗"} (the A2 on-glass floor)`,
     );
     console.log(`  self-test bites   : ${facts.selfTestOk ? "all teeth ✓" : "✗ BROKE"}`);
 

@@ -57,7 +57,14 @@
        (the K-AA carve). Under `prefers-contrast: more` the screen blend is dropped
        (the catch is decoration, the edge is the legibility asset). */
     [data-slot="card"][data-surface="glass"]:not(.paper-grid) {
-        background-blend-mode: screen, normal;
+        /* F2.R1 W-DARK-READABILITY-REPAIR — the blend is TOKENIZED so the dark arm
+           (tokens/dark-arm.css, the `--card-field-floor-blend` re-point) swaps the
+           light `screen` LIFT for a dark `normal` SINK. In dark the near-white amber
+           key screen-blended into a hot in-card lamp (value.js card-lighting-forensics
+           artifact 1); the dark arm blends NORMAL so the warm underlayer sinks INTO the
+           deep plate instead of lifting it toward the cream label. Light default is
+           byte-identical (unset token → the `screen, normal` fallback). */
+        background-blend-mode: var(--card-field-floor-blend, screen, normal);
     }
     @media (prefers-contrast: more) {
         [data-slot="card"][data-surface="glass"]:not(.paper-grid) {
@@ -100,7 +107,14 @@
            UNDERLAYER (one radial, amber-key toward the upper-right `--glass-key`,
            the field fallback). Both fade to a warm 0-alpha — NEVER bare
            `transparent` (the WebKit black-premultiply hole, build-trap-(d)). */
-        background-image:
+        /* F2.R1 W-DARK-READABILITY-REPAIR — TOKENIZED so the dark arm swaps the two
+           hot light-amber screen radials (L≈0.9-0.96) for ONE damped warm-DARK sink
+           (tokens/dark-arm.css `--card-field-floor-image`). Light default is the two
+           radials below (unset token → byte-identical light paint). Machine-locked by
+           `proof:glass` dark-legibility DL1 (the composited hot-zone label clears AA +
+           APCA over the dark plate). */
+        background-image: var(
+            --card-field-floor-image,
             radial-gradient(
                 60% 55% at 80% 16%,
                 oklch(0.96 0.04 78 / 0.5),
@@ -110,7 +124,8 @@
                 120% 110% at 78% 22%,
                 oklch(0.9 0.075 72 / 0.5),
                 oklch(0.9 0.075 72 / 0) 70%
-            );
+            )
+        );
     }
 
     /* The presence-behind gate — under an ancestor field, the card reads the REAL
