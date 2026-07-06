@@ -114,8 +114,13 @@ export function sampleHeight(p: Vec2, t: number, q: LevelFieldParams): number {
         // falloff → C1-smooth, NOT a hard-edged quad). Transcribes the WGSL/GLSL sampleHeight
         // cursor term EXACTLY (the L6 numeric-parity source; the well depth carries the
         // engage envelope + velocity-heave scale, packed JS-side into q.cursorWell).
-        const g0 = Math.exp(-d2 / 0.22);
-        const fall = smoothstepEdge(0.0, 0.55, Math.exp(-d2 / 0.6));
+        // Clamp the exp argument (the Gaussian is 0 far past the well anyway) so a parked/far
+        // cursor NEVER feeds an EXTREME −d2/σ into exp(): a huge negative argument overflows the
+        // int32 range-reduction step of WebKit/Metal's fast-math exp() → NaN → the whole field
+        // NaNs → the SILENT blank concentric painted in Safari. exp(−60)≈0, so the clamp is
+        // numerically transparent for the real heave region (d2/σ ≪ 60 there).
+        const g0 = Math.exp(-Math.min(d2 / 0.22, 60.0));
+        const fall = smoothstepEdge(0.0, 0.55, Math.exp(-Math.min(d2 / 0.6, 60.0)));
         H += q.cursorWell * g0 * fall;
     }
     return H;

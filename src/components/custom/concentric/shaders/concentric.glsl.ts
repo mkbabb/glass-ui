@@ -116,8 +116,12 @@ float sampleHeight(vec2 p, float t) {
     // The cursor HEAVE — a SOFT bulge (a Gaussian peak feathered by a smoothstep falloff so
     // the heave is C1-smooth, NOT a hard-edged quad). The well depth/radius carry the
     // velocity-HEAVE scale (packed JS-side into uCursor.z).
-    float g0 = exp(-d2 / 0.22);
-    float fall = smoothstepEdge(0.0, 0.55, exp(-d2 / 0.6));
+    // Clamp the exp argument (the Gaussian is 0 far past the well anyway) so a parked/far cursor
+    // NEVER feeds an EXTREME -d2/sigma into exp(): a huge negative argument overflows the int32
+    // range-reduction step of WebKit/Metal's fast-math exp() -> NaN -> the whole field NaNs ->
+    // the SILENT blank concentric painted in Safari. exp(-60)~=0, numerically transparent here.
+    float g0 = exp(-min(d2 / 0.22, 60.0));
+    float fall = smoothstepEdge(0.0, 0.55, exp(-min(d2 / 0.6, 60.0)));
     H += uCursor.z * g0 * fall;
   }
   return H;
@@ -182,7 +186,16 @@ void main() {
   float lvl = floor(fN);
   float isIndex = fract(lvl / indexEvery) < (0.5 / indexEvery) ? 1.0 : 0.0;
   float hw = mix(uLine.x, uLine.x * uTune.z, isIndex);
-  float ink = clamp(contourInk(fN, hw), 0.0, 1.0);
+  // Density fade — the IQ frequency-limit: when the level lines pack so tightly that this line's
+  // own half-width (hw px, in fN units = hw*fwidth(fN)) approaches the 0.5 half-spacing, the IQ AA
+  // band would FLOOD (band/aaW < hw everywhere -> ink saturates to 1 -> the contours merge into a
+  // solid wash whose bright gaps read as DASHES). Fade the stroke out as it crosses that limit
+  // (hw-aware, so the heavier index line fades before the finer minor) -> the over-dense ground
+  // reads as smooth relief, the resolvable contours stay CONTINUOUS unbroken bands. Recomputes
+  // the SAME fwidth(fN) contourInk floors on (6e-4) — no second field, no re-derivation.
+  float hwAA = hw * max(fwidth(fN), 6e-4);
+  float dfade = 1.0 - smoothstepEdge(0.30, 0.48, hwAA);
+  float ink = clamp(contourInk(fN, hw), 0.0, 1.0) * dfade;
 
   // ── 4. INK = a darker ember of the LOCAL fill (the edge-of-its-own-band signature).
   vec3 inkCol = mix(fill, fill * uTune.w, 0.85);

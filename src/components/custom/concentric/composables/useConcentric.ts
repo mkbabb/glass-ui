@@ -38,7 +38,12 @@ const WELL_ENGAGE_TAU_MS = 150;
 // knob) can never blow the well out past this (the velocity-scaled weight stays bounded).
 const WELL_SCALE_MAX = 2.2;
 // The far-off-screen resting cursor — the Gaussian peak contributes nothing (exp(-d2/…)≈0).
-const CURSOR_PARKED: Vec2 = { x: 1e6, y: 1e6 };
+// BOUNDED (not 1e6): the parked cursor flows into the SHARED cursorSwirl's `exp(-d2/(2r²))`
+// (waveField leaf — off-limits to edit), and a 1e6 sentinel makes d2≈2e12 → an exp() argument
+// so extreme it overflows the int32 range-reduction of WebKit/Metal's fast-math exp() → NaN →
+// the entire field NaNs → the SILENT blank concentric painted in Safari. At 1e3 the domain is
+// still ≫ the well radius (the Gaussian resolves to 0) but every exp argument stays int32-safe.
+const CURSOR_PARKED: Vec2 = { x: 1e3, y: 1e3 };
 
 export interface UseConcentricOptions {
     config: ConcentricConfig;

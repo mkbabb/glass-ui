@@ -405,6 +405,82 @@ function clauseLevelCurves(srcOverride) {
     return viol;
 }
 
+// ── LEVELCURVE REPAIR arm (BG.W-CONCENTRIC-LEVELCURVES paint-fix) — the two dual-engine paint
+//    defects the re-judge named, machine-locked so neither can regress:
+//      LC4 — the DENSITY FADE (the "contours render DASHED/broken" fix). Where the level lines
+//            pack so tight that a line's own half-width (hw·fwidth(fN)) approaches the 0.5
+//            half-spacing, the IQ AA band FLOODS (band/aaW < hw everywhere → ink saturates → the
+//            contours merge into a wash whose bright gaps read as DASHES). Both shaders fade the
+//            stroke out across that limit (hw-aware, keyed off the SAME fwidth(fN) contourInk
+//            floors on) — the resolvable contours stay CONTINUOUS unbroken bands. contourInk
+//            itself stays byte-frozen (L3); the fade is a main()-level ink multiply.
+//      LC5 — the EXP CLAMP + BOUNDED PARKED CURSOR (the "concentric renders BLANK in WebKit" fix).
+//            A parked/far cursor fed an EXTREME −d2/σ into the heave/swirl exp(); on WebKit/Metal
+//            fast-math that overflows the int32 range-reduction → NaN → the whole field NaNs → the
+//            SILENT blank. Both shaders clamp the heave exp argument, and the JS parked-cursor
+//            sentinel is BOUNDED (not 1e6) so the SHARED cursorSwirl exp (off-limits to edit) also
+//            stays int32-safe.
+function clauseLevelCurvesRepair(srcOverride) {
+    const viol = [];
+    const wgsl = stripComments(
+        srcOverride?.["wgsl"] ?? read(resolve(DIR, "shaders/concentric.wgsl.ts")),
+    );
+    const glsl = stripComments(
+        srcOverride?.["glsl"] ?? read(resolve(DIR, "shaders/concentric.glsl.ts")),
+    );
+    const use = stripComments(
+        srcOverride?.["useConcentric"] ?? read(resolve(DIR, "composables/useConcentric.ts")),
+    );
+
+    // LC4 — the density fade in BOTH shaders (the anti-flood / anti-dash multiply on the ink).
+    for (const [name, src] of [
+        ["concentric.wgsl.ts", wgsl],
+        ["concentric.glsl.ts", glsl],
+    ]) {
+        const hasFade = /\bdfade\b/.test(src);
+        const readsFwidth = /hwAA\s*=\s*hw\s*\*\s*max\(\s*fwidth\(\s*fN\s*\)/.test(src);
+        const fadeIsSmoothstep = /dfade\s*=\s*1\.0\s*-\s*smoothstepEdge\([^;]*hwAA\s*\)/.test(src);
+        const inkMultiplies = /contourInk\(\s*fN\s*,\s*hw\s*\)[^;]*\*\s*dfade/.test(src);
+        if (!hasFade)
+            viol.push(`LC4-dfade: ${name} carries no density-fade (\`dfade\`) — the over-dense contour FLOOD (band/aaW saturates → ink=1 → the bright-gap DASHING) is unbounded (the paint-re-judge dashed-contour defect)`);
+        if (hasFade && !readsFwidth)
+            viol.push(`LC4-dfade: ${name} density fade is not the hw-aware IQ frequency limit (needs \`hwAA = hw * max(fwidth(fN), 6e-4)\` — the flood point is when the line half-width reaches the 0.5 half-spacing)`);
+        if (hasFade && !fadeIsSmoothstep)
+            viol.push(`LC4-dfade: ${name} density fade is not a smoothstep on \`hwAA\` (needs \`dfade = 1.0 - smoothstepEdge(a, b, hwAA)\`)`);
+        if (hasFade && !inkMultiplies)
+            viol.push(`LC4-dfade: ${name} does not MULTIPLY contourInk by \`dfade\` (the fade must gate the ink or the flood-dash survives)`);
+    }
+
+    // LC5 — the heave exp is CLAMPED in BOTH shaders (no EXTREME argument reaches fast-math exp).
+    for (const [name, src] of [
+        ["concentric.wgsl.ts", wgsl],
+        ["concentric.glsl.ts", glsl],
+    ]) {
+        const clampedG0 = /exp\(\s*-\s*min\(\s*d2\s*\/\s*0\.22\s*,/.test(src);
+        const clampedFall = /exp\(\s*-\s*min\(\s*d2\s*\/\s*0\.6\s*,/.test(src);
+        // the anti-regression: a BARE unclamped extreme heave exp must NOT survive.
+        const bareG0 = /exp\(\s*-\s*d2\s*\/\s*0\.22\s*\)/.test(src);
+        if (!clampedG0 || !clampedFall)
+            viol.push(`LC5-expclamp: ${name} heave exp() is not argument-clamped (needs \`exp(-min(d2/σ, 60.0))\` on BOTH the g0 + fall terms — an extreme −d2/σ NaNs WebKit/Metal fast-math exp → the SILENT blank)`);
+        if (bareG0)
+            viol.push(`LC5-expclamp: ${name} still carries a BARE unclamped \`exp(-d2 / 0.22)\` heave — an extreme parked/far cursor overflows the exp int32 range-reduction → NaN → blank`);
+    }
+
+    // LC5 — the parked-cursor sentinel is BOUNDED (protects the SHARED cursorSwirl exp too).
+    const hasParked = /CURSOR_PARKED\s*:/.test(use);
+    if (!hasParked)
+        viol.push("LC5-cursor: useConcentric.ts declares no CURSOR_PARKED sentinel");
+    const pm = use.match(/CURSOR_PARKED\s*:\s*Vec2\s*=\s*\{\s*x:\s*([0-9.eE+]+)/);
+    if (hasParked && pm) {
+        const val = Number(pm[1]);
+        if (!(val < 1e5))
+            viol.push(`LC5-cursor: CURSOR_PARKED x=${pm[1]} is an EXTREME sentinel — it flows into the SHARED cursorSwirl exp(-d2/(2r²)) (off-limits to clamp) and NaNs WebKit/Metal fast-math; keep it bounded (< 1e5, the Gaussian is already 0 there)`);
+    } else if (hasParked && !pm) {
+        viol.push("LC5-cursor: CURSOR_PARKED shape not the expected `{ x: <n>, y: <n> }` bounded sentinel");
+    }
+    return viol;
+}
+
 function runAll(overrides = {}) {
     return [
         ...clauseColocation(overrides.colocation ?? {}),
@@ -416,6 +492,7 @@ function runAll(overrides = {}) {
         ...clauseL5WarmDivergent(overrides.l5),
         ...clauseL6Transcription(overrides.l6),
         ...clauseLevelCurves(overrides.lc),
+        ...clauseLevelCurvesRepair(overrides.lcr),
         ...clauseFallback(overrides.fallback),
         ...clauseStory(overrides.story),
     ];
@@ -523,6 +600,32 @@ function selfTest() {
         },
     });
     if (unbounded.length === 0) fails.push("self-test: a planted unbounded velocity heave did NOT red");
+
+    // ── LEVELCURVE REPAIR arm bites (BG.W-CONCENTRIC-LEVELCURVES paint-fix) ──
+    // (lcr-a) LC4 — an un-faded ink (contourInk WITHOUT the density-fade multiply) MUST red
+    //         (the over-dense contour FLOOD → dashing regression).
+    const unfaded = runAll({
+        lcr: {
+            wgsl: "let ink = clamp(contourInk(fN, hw), 0.0, 1.0); let g0 = exp(-min(d2 / 0.22, 60.0)); let fall = exp(-min(d2 / 0.6, 60.0));",
+            glsl: "float ink = clamp(contourInk(fN, hw), 0.0, 1.0); float g0 = exp(-min(d2 / 0.22, 60.0)); float fall = exp(-min(d2 / 0.6, 60.0));",
+        },
+    });
+    if (unfaded.length === 0) fails.push("self-test: a planted un-faded ink (no density-fade multiply) did NOT red");
+    // (lcr-b) LC5 — a BARE unclamped extreme heave exp MUST red (the WebKit/Metal NaN → blank
+    //         regression). The string carries the full density-fade machinery so ONLY LC5 fires.
+    const bareExp = runAll({
+        lcr: {
+            wgsl: "let hwAA = hw * max(fwidth(fN), 6e-4); let dfade = 1.0 - smoothstepEdge(0.30, 0.48, hwAA); let ink = clamp(contourInk(fN, hw), 0.0, 1.0) * dfade; let g0 = exp(-d2 / 0.22); let fall = smoothstepEdge(0.0, 0.55, exp(-d2 / 0.6));",
+            glsl: "float hwAA = hw * max(fwidth(fN), 6e-4); float dfade = 1.0 - smoothstepEdge(0.30, 0.48, hwAA); float ink = clamp(contourInk(fN, hw), 0.0, 1.0) * dfade; float g0 = exp(-d2 / 0.22); float fall = smoothstepEdge(0.0, 0.55, exp(-d2 / 0.6));",
+        },
+    });
+    if (bareExp.length === 0) fails.push("self-test: a planted BARE unclamped heave exp() did NOT red");
+    // (lcr-c) LC5 — an EXTREME 1e6 parked-cursor sentinel MUST red (it NaNs the shared cursorSwirl
+    //         exp on WebKit/Metal fast-math → the SILENT blank). Only the useConcentric override.
+    const extremeCursor = runAll({
+        lcr: { useConcentric: "const CURSOR_PARKED: Vec2 = { x: 1e6, y: 1e6 };" },
+    });
+    if (extremeCursor.length === 0) fails.push("self-test: a planted 1e6 extreme parked-cursor sentinel did NOT red");
 
     return fails;
 }
