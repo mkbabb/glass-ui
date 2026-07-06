@@ -36,7 +36,7 @@ describe("reka binding-idiom render-effect canary (AW.W26)", () => {
         // host `size-9` both pass through `cn()`'s `/^size-/` deduplicator
         // untouched (they are not both bare `size-*` on the same element).
         const wrapper = mount(Button, {
-            props: { variant: "default", size: "default" },
+            props: { variant: "default", size: "md" },
             slots: { default: '<svg class="size-9"></svg>' },
         });
         const cls = wrapper.get("button").classes();

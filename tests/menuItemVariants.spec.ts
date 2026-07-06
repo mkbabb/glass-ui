@@ -55,8 +55,8 @@ describe("menuItemVariants", () => {
         expect(c).toContain("py-1.5");
     });
 
-    it("density='audacious' paints py-2.5 to match the audacious dock rail", () => {
-        const c = menuItemVariants({ density: "audacious" });
+    it("size='lg' paints py-2.5 to match the audacious dock rail", () => {
+        const c = menuItemVariants({ size: "lg" });
         expect(c).toContain("py-2.5");
     });
 
