@@ -59,3 +59,14 @@ the engine.
 `--glass-ambient-*` were investigated for the owner-reported artifacts and are **exonerated**
 (our forensics doc, §Exonerations — the wash predates them, arriving with `cf149cff`). The
 0-byte `dist/styles/utilities/animate.css` is also benign (comment-only source strips to 0).
+
+## A5 — NEW ask **L20**: a `/goo-blob/config` subpath (the JS eager-budget blocker)
+
+(Appended at the S.W3 close, same day.) Our §6.2 JS eager gate (≤280 KiB gzip) is
+unreachable in-bounds: importing the blob's config atoms (`BLOB_CONFIG_KEY` / defaults) pulls
+the whole WebGL engine into the eager graph via the `goo-blob` barrel — 66 KiB over, with the
+engine itself execution-deferred behind idle but not BYTE-deferred. Ask: a config-only
+subpath (`@mkbabb/goo-blob/config` or equivalent) exporting the atoms/keys/defaults with zero
+engine imports, so consumers can wire config eagerly and load the engine lazily. Our census +
+re-baseline record: value.js `docs/tranches/S/audit/w3-chunk-census.md` §5/§9/§10. Standing
+hedge: recorded producer-gap row, re-verified at the W8 adopt.
