@@ -1,8 +1,8 @@
 <script setup lang="ts">
 // App switcher — the compact dot PILL BLOOMS into the 2×3 app-card grid, on the REAL
-// `useBloomUp` engine (audit §W10: "AppSwitcher→useDockContextSilhouette as fits"; the
-// silhouette engine is the context-SWITCH state machine — overkill for a single pill→grid
-// morph, so the honest reuse is the bloom, which IS the shared-element FLIP this morph is).
+// `useBloomUp` engine: a single pill→grid morph IS a shared-element FLIP, and useBloomUp
+// is exactly that bloom, so it is the honest reuse (no bespoke context-switch state
+// machine bolted on for a one-shot open).
 // The facsimile animated the pill's `inline-size`/`padding` + the grid's `max-block-size`
 // (layout properties); here the grid is a SEPARATE overlay laid out at its full settled
 // rect that FLIPs from the pill (transform/opacity/filter only). Each card pops in on a

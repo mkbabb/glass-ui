@@ -101,6 +101,18 @@ function tsUnder(dir) {
     return out;
 }
 
+/** Recursively list files under a dir whose name matches `extRe`. */
+function filesUnder(dir, extRe) {
+    if (!existsSync(dir)) return [];
+    const out = [];
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+        const full = resolve(dir, e.name);
+        if (e.isDirectory()) out.push(...filesUnder(full, extRe));
+        else if (e.isFile() && extRe.test(e.name)) out.push(full);
+    }
+    return out;
+}
+
 /** Module-scope magic-number constants: `const NAME = <number...>` where NAME is
  *  SCREAMING_SNAKE (≥3 chars). Returns the matched names. Comments/strings are
  *  stripped first so a name mentioned in prose is not counted. */
@@ -344,6 +356,162 @@ function selfTestCarveLeaves() {
     return fails;
 }
 
+// BH.B2.5 — the DOCK-LEAF-VERIFY clause (W-dock-leaf-verify). WS2 owns the dock
+// god-module carves; this wave is VERIFY-ONLY (ZERO carve) — it asserts the three facts
+// the WS2 dock carve produced hold on the frontier + cleans the ONE stale comment the
+// dead-engine cut left behind. The facts:
+//   DL1 — GlassDock.vue is the carved SFC shell: it imports its state/morph/fission
+//         logic back from `./composables/*` (the carve MOVED the logic into colocated
+//         leaves, it did not inline it).
+//   DL2 — useDockFission.ts is the carved fission leaf: it lives under composables/ AND
+//         publishes `useDockFission` (the host composes it via useDockFissionWiring).
+//   DL3 — useDockContextSilhouette.ts (the drained 551L BE context→silhouette engine) is
+//         DEFINITION-ABSENT (the BG.W-DEAD-COMPOSABLE-CUT delete).
+//   DL4 — the dock src + dock demo trees carry ZERO un-stripped reference (comment OR
+//         code) to the dead engine token. DISTINCT from proof:dock D4: D4 STRIPS comments
+//         (a dead-engine comment is not a live import, so D4 tolerates it); this is the
+//         doc-hygiene assertion the D4 tolerance leaves open — the AppSwitcher.vue header
+//         prose still named `useDockContextSilhouette`, and DL4 is the un-stripped scan
+//         that flags it. scripts/ is EXCLUDED (the gate machinery legitimately documents
+//         + self-tests the dead engine by name).
+// Born-RED on HEAD (the AppSwitcher stale comment present) → GREEN once it is cleaned.
+const DOCK_DIR = "components/custom/dock";
+const DOCK_LEAF_VERIFY = {
+    host: `${DOCK_DIR}/GlassDock.vue`,
+    hostImportMarker: "./composables/",
+    fissionLeaf: `${DOCK_DIR}/composables/useDockFission.ts`,
+    fissionSymbol: "useDockFission",
+    deadFile: `${DOCK_DIR}/composables/useDockContextSilhouette.ts`,
+    deadTokens: ["useDockContextSilhouette", "DockSilhouetteDescriptor"],
+    // the un-stripped scan trees (dock src + dock demo). scripts/ is deliberately absent.
+    scanDirs: ["src/components/custom/dock", "demo/stories/dock"],
+};
+
+/** The reusable dock-leaf-verify clause checker (runs over provided state so the self-test
+ *  can feed synthetic inputs). Returns the violation strings. */
+function evaluateDockLeafVerify(s) {
+    const violations = [];
+    // DL1 — the carved host imports its composables back.
+    if (!s.hostExists) {
+        violations.push(`src/${DOCK_LEAF_VERIFY.host} — the dock host SFC is ABSENT`);
+    } else if (!s.hostSrc.includes(DOCK_LEAF_VERIFY.hostImportMarker)) {
+        violations.push(
+            `src/${DOCK_LEAF_VERIFY.host} — imports no ./composables/* leaf (the dock logic must be carved into colocated composables + imported back, not inline)`,
+        );
+    }
+    // DL2 — the fission carve leaf present + exports its symbol.
+    if (!s.fissionExists) {
+        violations.push(
+            `src/${DOCK_LEAF_VERIFY.fissionLeaf} — the carved useDockFission leaf is ABSENT`,
+        );
+    } else if (
+        !new RegExp(
+            `export\\s+(?:async\\s+)?(?:function|const)\\s+${DOCK_LEAF_VERIFY.fissionSymbol}\\b`,
+        ).test(s.fissionSrc)
+    ) {
+        violations.push(
+            `src/${DOCK_LEAF_VERIFY.fissionLeaf} — does not export ${DOCK_LEAF_VERIFY.fissionSymbol} (the carved leaf must publish the moved symbol)`,
+        );
+    }
+    // DL3 — the drained dead-engine composable is DEFINITION-ABSENT.
+    if (s.deadFileExists) {
+        violations.push(
+            `src/${DOCK_LEAF_VERIFY.deadFile} — the drained useDockContextSilhouette engine must be DEFINITION-ABSENT (BG.W-DEAD-COMPOSABLE-CUT)`,
+        );
+    }
+    // DL4 — no un-stripped dead-token reference (comment OR code) in the dock trees.
+    for (const hit of s.deadHits) {
+        violations.push(
+            `${hit.file}:${hit.line} — a stale reference to the dead engine token "${hit.token}" survives; clean it (the engine is drained, the prose must not name it)`,
+        );
+    }
+    return violations;
+}
+
+/** Scan the dock src + demo trees for un-stripped dead-engine token references. */
+function scanDockDeadTokens() {
+    const hits = [];
+    for (const d of DOCK_LEAF_VERIFY.scanDirs) {
+        const dir = resolve(ROOT, d);
+        for (const f of filesUnder(dir, /\.(ts|vue)$/)) {
+            const lines = readFileSync(f, "utf8").split("\n");
+            lines.forEach((ln, i) => {
+                for (const tok of DOCK_LEAF_VERIFY.deadTokens) {
+                    if (ln.includes(tok)) hits.push({ file: rel(f), line: i + 1, token: tok });
+                }
+            });
+        }
+    }
+    return hits;
+}
+
+function checkDockLeafVerify() {
+    const hostPath = resolve(ROOT, "src", DOCK_LEAF_VERIFY.host);
+    const fissionPath = resolve(ROOT, "src", DOCK_LEAF_VERIFY.fissionLeaf);
+    const deadPath = resolve(ROOT, "src", DOCK_LEAF_VERIFY.deadFile);
+    const state = {
+        hostExists: existsSync(hostPath),
+        hostSrc: existsSync(hostPath) ? readFileSync(hostPath, "utf8") : "",
+        fissionExists: existsSync(fissionPath),
+        fissionSrc: existsSync(fissionPath) ? readFileSync(fissionPath, "utf8") : "",
+        deadFileExists: existsSync(deadPath),
+        deadHits: scanDockDeadTokens(),
+    };
+    const violations = evaluateDockLeafVerify(state);
+    return {
+        violations,
+        facts: {
+            hostCarved: state.hostExists && state.hostSrc.includes(DOCK_LEAF_VERIFY.hostImportMarker),
+            fissionLeaf: state.fissionExists,
+            deadEngineAbsent: !state.deadFileExists,
+            deadRefs: state.deadHits.length,
+        },
+    };
+}
+
+/** The self-test bite — synthetic dock-leaf states MUST each flag (or pass) the clause. */
+function selfTestDockLeafVerify() {
+    const fails = [];
+    const OK = {
+        hostExists: true,
+        hostSrc: "import { useDockState } from './composables/useDockState'",
+        fissionExists: true,
+        fissionSrc: "export function useDockFission() {}",
+        deadFileExists: false,
+        deadHits: [],
+    };
+    const bite = (patch, msg) => {
+        if (evaluateDockLeafVerify({ ...OK, ...patch }).length === 0) fails.push(msg);
+    };
+    bite({ hostExists: false, hostSrc: "" }, "[SELF-TEST] an absent GlassDock host did NOT flag");
+    bite(
+        { hostSrc: "import { x } from './other'" },
+        "[SELF-TEST] a GlassDock host importing no ./composables/* leaf did NOT flag (a re-inlined dock would pass)",
+    );
+    bite(
+        { fissionExists: false, fissionSrc: "" },
+        "[SELF-TEST] an absent useDockFission leaf did NOT flag",
+    );
+    bite(
+        { fissionSrc: "// no export of the symbol" },
+        "[SELF-TEST] a fission leaf that does NOT export useDockFission did NOT flag",
+    );
+    bite(
+        { deadFileExists: true },
+        "[SELF-TEST] a surviving useDockContextSilhouette.ts did NOT flag",
+    );
+    bite(
+        { deadHits: [{ file: "demo/stories/dock/examples/AppSwitcher.vue", line: 3, token: "useDockContextSilhouette" }] },
+        "[SELF-TEST] a stale dead-engine comment reference did NOT flag (the AppSwitcher class this wave cleans)",
+    );
+    if (evaluateDockLeafVerify(OK).length !== 0) {
+        fails.push(
+            "[SELF-TEST] a correctly carved-and-cleaned dock state FALSELY flagged (the clause is over-strict)",
+        );
+    }
+    return fails;
+}
+
 function run() {
     void SRC;
     const allViolations = [];
@@ -366,12 +534,22 @@ function run() {
     const selfTestFails = selfTestCarveLeaves();
     allViolations.push(...selfTestFails);
 
+    // BH.B2.5 — the dock-leaf-verify clause + its self-test bite.
+    const dockLeaf = checkDockLeafVerify();
+    allViolations.push(...dockLeaf.violations);
+    allViolations.push(...selfTestDockLeafVerify());
+
     const status = allViolations.length === 0 ? "pass" : "fail";
     writeGateArtifact(ARTIFACT, {
         generatedAt: snapshotStamp(),
         status,
         gate: "proof:colocation",
-        facts: { targets: dirFacts, idiomHome: idiom.facts, carveLeaves: carveFacts },
+        facts: {
+            targets: dirFacts,
+            idiomHome: idiom.facts,
+            carveLeaves: carveFacts,
+            dockLeafVerify: dockLeaf.facts,
+        },
         violations: allViolations,
     });
 
@@ -390,6 +568,10 @@ function run() {
     for (const c of carveFacts) {
         console.log(`  carve-leaf ${c.ok ? "✓" : "✗"} ${c.leaf}`);
     }
+    const dl = dockLeaf.facts;
+    console.log(
+        `  dock-leaf-verify (B2.5): host-carved=${dl.hostCarved} fission-leaf=${dl.fissionLeaf} silhouette-absent=${dl.deadEngineAbsent} stale-dead-refs=${dl.deadRefs}`,
+    );
     if (allViolations.length) {
         console.log("\nVIOLATIONS:");
         for (const v of allViolations) console.log(`  ✗ ${v}`);
