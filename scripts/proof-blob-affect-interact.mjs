@@ -30,8 +30,14 @@
 //        exposes `AffectPoint` {valence, arousal} + `paramsFor` mapping arousal → the
 //        motion energy (orbit/wobble/pulse) and valence → the palette warmth — the axes
 //        the ≥4 named consumer preset MODES (calm/serene/excited/playful) set. Preservation
-//        (the ENGINE ships the axes; the demo/consumer ships the presets — the ≥4-distinct
-//        Fable A/B pass is the paint bar, not this gate).
+//        (the ENGINE ships the axes; the demo/consumer ships the presets).
+//   A2 — the DEMO CONSUMER ships the ≥4 NAMED preset MODES: demo/stories/substrates/blob.vue
+//        declares a `presets` array carrying ≥4 entries AND the four spec-named keys
+//        (calm · serene · excited · playful) are all present. Born-RED on the pre-fix HEAD
+//        (the studio shipped 3 — calm/excited/shy — the paint judge's F9.R8 FAIL). The COUNT
+//        + NAMED-PRESENCE is the source-decidable floor this gate machine-locks so the count
+//        can never silently regress below 4 again; the ≥4-DISTINCT-motion-character blind
+//        Fable A/B stays the PAINT bar (this gate does not judge distinctness).
 //
 // + inline self-test bites (proven EVERY run — the anti-evasion floor): a synthetic
 //   pointer without hitTest reds I1; a synthetic onPointerMove with `active.value = true`
@@ -51,7 +57,11 @@ const FILES = {
     sfc: resolve(BLOB, "GooBlob.vue"),
     renderer: resolve(BLOB, "composables/useMetaballRenderer.ts"),
     constants: resolve(BLOB, "constants.ts"),
+    demo: resolve(ROOT, "demo/stories/substrates/blob.vue"),
 };
+
+/** The four spec-named emotion preset MODES the studio must ship (USER-0705-FOLD §(a)). */
+const NAMED_MODES = ["calm", "serene", "excited", "playful"];
 
 const read = (p) => (existsSync(p) ? readFileSync(p, "utf8") : null);
 
@@ -122,6 +132,21 @@ export function detectAffect(src) {
     };
 }
 
+/** A2 — the demo consumer's `presets` array keys (the ≥4 named MODES). Scopes to the
+ *  `const presets … = [ … ];` array literal so a stray `key:` elsewhere never leaks in;
+ *  the config objects close with `},` — only the array closes with `];`, so the lazy
+ *  `[\s\S]*?\n\];` capture terminates at the array end. */
+export function detectPresets(src) {
+    const s = stripComments(src);
+    const block = s.match(/const\s+presets\b[^=]*=\s*\[([\s\S]*?)\n\];/);
+    const body = block ? block[1] : "";
+    const keys = [...body.matchAll(/\bkey\s*:\s*["']([a-z][a-z0-9-]*)["']/gi)].map(
+        (m) => m[1],
+    );
+    const missingNamed = NAMED_MODES.filter((n) => !keys.includes(n));
+    return { found: block != null, keys, count: keys.length, missingNamed };
+}
+
 function runReal() {
     const violations = [];
     const facts = {};
@@ -130,9 +155,11 @@ function runReal() {
     const sfcSrc = read(FILES.sfc);
     const rendererSrc = read(FILES.renderer);
     const constantsSrc = read(FILES.constants);
+    const demoSrc = read(FILES.demo);
 
     if (pointerSrc == null) violations.push("useBlobPointer.ts is absent");
     if (sfcSrc == null) violations.push("GooBlob.vue is absent");
+    if (demoSrc == null) violations.push("demo/stories/substrates/blob.vue is absent");
 
     // ── I1 / I2 / I5 (pointer) ──
     const p = detectPointer(pointerSrc ?? "");
@@ -204,6 +231,24 @@ function runReal() {
             "A1: constants.ts has no `paramsFor` — the arousal→motion / valence→palette derivation is the affect-register surface",
         );
 
+    // ── A2 (demo consumer ships the ≥4 named preset MODES) ──
+    const presets = detectPresets(demoSrc ?? "");
+    facts.presets = presets;
+    if (demoSrc != null) {
+        if (!presets.found)
+            violations.push(
+                "A2: demo/stories/substrates/blob.vue declares no `const presets = [ … ]` array — the studio must ship the emotion preset MODES",
+            );
+        else if (presets.count < 4)
+            violations.push(
+                `A2: the blob studio ships only ${presets.count} preset MODE(s) [${presets.keys.join(", ")}] — the ≥4 named-mode bar is UNMET (born-RED: the pre-fix HEAD shipped 3 — calm/excited/shy — the paint judge's F9.R8 FAIL)`,
+            );
+        if (presets.found && presets.missingNamed.length)
+            violations.push(
+                `A2: the blob studio is missing the spec-named mode(s) [${presets.missingNamed.join(", ")}] — the set calm·serene·excited·playful must all be present (a mode may ride as a 5th, but the four named modes are required)`,
+            );
+    }
+
     // rendererSrc is read for completeness (the wake target lives there); no direct clause.
     facts.rendererPresent = rendererSrc != null;
 
@@ -255,6 +300,31 @@ function selfTest() {
     )
         fails.push("self-test: a fully-shaped SFC did NOT read as fixed (the detector is over-strict)");
 
+    // A2 bite — the pre-fix HEAD studio (3 modes, no serene/playful) is flagged on BOTH
+    // the count floor AND the named-presence floor.
+    const head3 = detectPresets(
+        "const presets: readonly ConfiguratorPreset<Cfg>[] = [\n" +
+            '  { key: "calm", config: {} },\n' +
+            '  { key: "excited", config: {} },\n' +
+            '  { key: "shy", config: {} },\n' +
+            "];",
+    );
+    if (head3.count >= 4 || head3.missingNamed.length === 0)
+        fails.push("self-test A2: the 3-mode HEAD studio (calm/excited/shy) was NOT flagged (count<4 + missing serene/playful)");
+
+    // A2 positive control — the fixed 5-mode studio (the 4 named + shy) reads as fixed.
+    const good5 = detectPresets(
+        "const presets: readonly ConfiguratorPreset<Cfg>[] = [\n" +
+            '  { key: "calm", config: {} },\n' +
+            '  { key: "serene", config: {} },\n' +
+            '  { key: "excited", config: {} },\n' +
+            '  { key: "playful", config: {} },\n' +
+            '  { key: "shy", config: {} },\n' +
+            "];",
+    );
+    if (!good5.found || good5.count < 4 || good5.missingNamed.length)
+        fails.push("self-test A2: the fixed 5-mode studio (4 named + shy) did NOT read as fixed (the detector is over-strict)");
+
     return fails;
 }
 
@@ -290,11 +360,14 @@ function main() {
     console.log(
         `  affect  : AffectPoint ${facts.affect?.affectPoint ? "✓" : "✗"} · paramsFor ${facts.affect?.paramsFor ? "✓" : "✗"}`,
     );
+    console.log(
+        `  presets : count ${facts.presets?.count ?? 0} ${(facts.presets?.count ?? 0) >= 4 ? "✓" : "✗"} · named [${(facts.presets?.keys ?? []).join(", ")}]${facts.presets?.missingNamed?.length ? ` · missing ${facts.presets.missingNamed.join(", ")} ✗` : " ✓"}`,
+    );
     if (violations.length) {
         console.error("  RED:");
         for (const v of violations) console.error("    ✗ " + v);
     } else {
-        console.log("  GREEN (I1 hit-test · I2 SDF-gated engage · I3 sibling-fall-through · I4 click-gate · I5 wake+PRM-seat · A1 affect axes)");
+        console.log("  GREEN (I1 hit-test · I2 SDF-gated engage · I3 sibling-fall-through · I4 click-gate · I5 wake+PRM-seat · A1 affect axes · A2 ≥4 named preset MODES)");
     }
     if (isSelftest) {
         if (selfFails.length) {

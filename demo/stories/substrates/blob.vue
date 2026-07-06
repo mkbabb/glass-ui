@@ -137,9 +137,15 @@ const MERGES: BlobMerge[] = ["quadratic", "circular"];
 // non-neon chroma. The cap lands the rendered body mean at C ≈ the comet band.
 const BLOB_WARM_REGISTER_CHROMA_CEILING = 0.15;
 
-// Three preset baselines — the calm cream default, a warm-excited bead, and a cool
-// shy-away creature (the attraction-sign showcase: a NEGATIVE attraction that genuinely
-// shies away now that the D2 sign is fixed).
+// The emotion preset MODES — the ≥4 named consumer presets the affect axes set
+// (calm · serene · excited · playful, + shy the cool attraction-sign showcase). `calm` is
+// the byte-identical library default; each mode is a DISTINCT {attraction, clickImpulse,
+// responsiveness, mood, seed, harmony} bundle whose MOTION CHARACTER (not just hue) reads
+// distinct — serene barely stirs (low arousal, no lean), excited leans HARD + taffy-pulls,
+// playful is the bounciest click + springiest squish, shy genuinely shies away (negative
+// attraction, the D2 sign fix). Every seed is capped non-neon by the warm-register chroma
+// ceiling (deriveBlobPalette chromaCeiling) so a vivid mode stays a saturated-but-non-neon
+// bead. presets-in-consumers: the STUDIO ships the modes; the engine ships the affect axes.
 // The shared GEOMETRY baseline the studio presets seed from — the orbit-OUTSIDE-body
 // separation geometry (orbit 0.30 > body 0.22, 4 satellites, radius 0.10, near-circular
 // ecc) that makes the metaball orbit→merge→absorb→emerge show read on the LARGE hero
@@ -194,6 +200,25 @@ const presets: readonly ConfiguratorPreset<BlobStudioCfg>[] = [
         },
     },
     {
+        // Serene — the CALMEST mode: low arousal (mood idle), a gentle velocity SWAY,
+        // and almost NO pointer lean (attraction ≈ 0). Distinct from calm's curious
+        // moderate lean-in — serene barely reacts to the cursor, drifting soft and cool.
+        key: "serene",
+        label: "Serene",
+        sub: "cool · gently sways",
+        config: {
+            attraction: 0.08,
+            clickImpulse: 0.3,
+            responsiveness: 0.1,
+            mood: "idle",
+            // A soft cool-teal anchor, capped to non-neon by the warm-register chroma
+            // ceiling (the same seam the excited/shy seeds ride) — a calm cool wash.
+            seed: "oklch(0.8 0.07 200)",
+            harmony: "analogous",
+            ...STUDIO_GEO_BASE,
+        },
+    },
+    {
         key: "excited",
         label: "Excited",
         sub: "warm · leans in",
@@ -213,6 +238,25 @@ const presets: readonly ConfiguratorPreset<BlobStudioCfg>[] = [
             // is genuinely warm-red, capped by the chroma ceiling into the comet's
             // register. The triad showcase moves to the harmony Select (a user can
             // still pick it; the SHIPPED warm preset stays in-family).
+            harmony: "analogous",
+            ...STUDIO_GEO_BASE,
+        },
+    },
+    {
+        // Playful — HIGH arousal (mood happy): the biggest, bounciest click impulse
+        // (1.2, past excited's 0.9) + the springiest velocity squash (responsiveness
+        // 0.9) but only a MODERATE steady lean (attraction 0.4) — so it reads as
+        // bouncy/springy on click+flick where excited reads as a strong hard lean-in.
+        key: "playful",
+        label: "Playful",
+        sub: "warm · bouncy",
+        config: {
+            attraction: 0.4,
+            clickImpulse: 1.2,
+            responsiveness: 0.9,
+            mood: "happy",
+            // A bright warm gold-coral anchor, capped non-neon by the chroma ceiling.
+            seed: "oklch(0.75 0.15 62)",
             harmony: "analogous",
             ...STUDIO_GEO_BASE,
         },
