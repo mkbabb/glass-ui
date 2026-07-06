@@ -1215,3 +1215,289 @@ Captures:
 - PNGs + witnesses under `docs/tranches/BG/audit/visual/glyph-rigid/`: `glyph-rigid-safari-{light,dark}-desktop.png` · `punch-{light,dark}-02-midmorph-glyph-stretched.png` · `punch-{light,dark}-01-collapsed-rest.png`
 - Frame series (worst=1.4884): `glyph-rigid/frameseries-{chrome,webkit}-{light,dark}.json`
 - Live probe: `glyph-rigid/liveprobe-inherit.mjs` (root_punch=1.22 vs child_punch=1, childScale=1)
+
+---
+
+## 2026-07-04 — IOS27-MOTION-TRUTH dock-morph re-judge #2 batch (rows F3.R1 / F3.R2 / NF.3)
+
+allPass: **false** — 2 PASS, 1 FAIL. The two dock-morph repairs PASS dual-engine and flip to DONE — glyph-rigid closed by the `@property --dock-punch-stretch` `inherits:false→true` flip, pane-overlap closed by the `--dock-expand-t` `:not([data-pane-swap])` decouple. The GLASS-SIGNAL-TRUTH ST3 dead-observer holds row NF.3 at PENDING: the M8-runtime part-2 loop-arm fix (`wantsLiveLoop` + `preserveDrawingBuffer`) did NOT change the paint — 0 of 12 docks fire the writer-witness.
+
+| Wave | Row | Verdict | Cursor |
+|------|-----|---------|--------|
+| BG.W-DOCK-GLYPH-RIGID | F3.R1 | PASS | DONE |
+| BG.W-DOCK-PANE-OVERLAP | F3.R2 | PASS | DONE |
+| BG.W-GLASS-SIGNAL-TRUTH | NF.3 | FAIL | PENDING (held) |
+
+Provenance across the batch: Chrome = CDP on `ANGLE Metal Renderer: Apple M5 Max` (real Metal, not SwiftShader) + WebKit 26.4 (Playwright) + Safari system-WebKit keystone on `Apple GPU`/Metal (no `Version/` token → load-bearing C-SAFARI Tier-1). Engine + GPU decoded IN-PIXEL from the badge per leg. All captures over BUILT bytes on `:5200` (vite preview of the demo dist, NOT the `:5199` dev server); the glyph-rigid + pane-overlap passes ride LIVE rAF frame-series / trusted-click screencast (the correct instrument for a motion wave — a settled PNG cannot witness a per-frame morph). `verify-siblings-intact.mjs --quiet` exits 0 before AND after this synthesis; no `/tmp/sibling-park|stash`; servers + throwaway Chrome torn down by each paint agent; operated only under glass-ui.
+
+Cursor state confirmed at synthesis: rows F3.R1 + F3.R2 already read DONE (the paint agents flipped them in-run — commits `b666939b` / `f5c3ff4b`); row NF.3 remains PENDING (paint FAIL, commit `34a04a94`). No cursor edit owed by synthesis.
+
+---
+
+### PASSED -> DONE
+
+#### F3.R1 — BG.W-DOCK-GLYPH-RIGID re-verification #3 (commit `b666939b`)
+
+The F3.R1 INHERITANCE-gap root cause is CLOSED in paint: `shape.css` `@property --dock-punch-stretch` flipped `inherits:false → true`, so the rigid-content inverse rule reads the dock ROOT's live punch overshoot at the child `.dock-persistent`/`.dock-layers` and CANCELS it — the full-inverse restored, the `(--dock-punch-stretch)²` = 1.4884 (+48.84%) residual gone. Dual-engine (Chrome 149 ANGLE-Metal Apple M5 Max + WebKit 26.4 Playwright + Safari system-WebKit keystone), both modes, fresh `npm run demo:dist:build` on `:5200` (built CSS confirmed carrying `@property --dock-punch-stretch{…inherits:true…}` — the landed fix vs the prior FAIL's `inherits:false`).
+
+- Per-frame glyph-bbox rAF π across all 4 surfaces: worst glyphAspect = **1.0**, **0/518** morph frames out of the ±5% band — WHILE the morph genuinely fired (24–30 `[data-morphing]` frames/direction, pillW sweeping 45→257px), the plate genuinely deformed (rootScale X 1.11→0.32), and the punch overshoot was genuinely present (plate cross-axis Y pinned at 0.819672 = 1/1.22).
+- Born-RED root-vs-child differential CLOSED (`liveprobe-inherit.mjs`, punch peak t=3605ms, `[data-punching]` present): root_punch = 1.22 AND child_punch = 1.22 (the child now inherits the root's live overshoot — was 1 in the FAIL); rootScale "1.22 0.819672" × childScale "0.819672 1.22" = (1.0, 1.0) exact cancel, glyphAsp 1.0. The prior FAIL's +48.84% residual is gone.
+- Collapsed REST all engines: 59×59, pillAspect 1.0, glyphAspect 1.0, border-radius 9999px, morphing=null (the AY.W-DOCK-NAV B4 circle). Expanded rest + after-expand glyphAspect 1.0.
+- Safari system-WebKit keystones both modes: in-pixel badge decoded (ENGINE WEBKIT / GPU Apple GPU / VIEW 1440×900 @2x); route correct; collapsed dock = clean circle + undistorted glyph; recessive DockStage aurora (warm-cream light / luminous near-black dark, no conic, no oversaturation, grain calm); hero fits its envelope.
+- Chrome mid-morph pixel witnesses both modes: plate deforming (rootScale X=0.32, Y=1/1.22) with the home glyph UNDISTORTED (aspect 1.0) — the rigid-content-over-morphing-plate contract in pixels.
+- Gate HARDENED with the new G4 arm binding the `@property` inheritance flag the G1 text-check could not see (born-RED on `inherits:false`); `proof:dock` GREEN — G4 inherits=true, 28 self-test bites, vue-tsc clean.
+
+Anti-evasion: every capture PNG resolves on disk as a valid PNG (2× 2880×1800 Safari keystones + 4× Chrome punch PNGs); all 4 frameseries JSON valid.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-DOCK-GLYPH-RIGID-DELTA.md` (FAIL→PASS)
+- 6 PNGs: `docs/tranches/BG/audit/visual/glyph-rigid/{glyph-rigid-safari-{light,dark}-desktop.png, punch-{light,dark}-{01-collapsed-rest,02-midmorph-rigid-glyph}.png}`
+- 4 frameseries JSON: `docs/tranches/BG/audit/visual/glyph-rigid/frameseries-{chrome,webkit}-{light,dark}.json`
+
+#### F3.R2 — BG.W-DOCK-PANE-OVERLAP re-judge (commit `f5c3ff4b`)
+
+The §2.2 box-collapse-on-a-nested-pane-swap root cause is CLOSED: `--dock-expand-t` is DECOUPLED from the pane-swap crossfade (the three `[data-morphing]` derivation arms scoped `:not([data-pane-swap])`; `dockMorphContext` distinguishes the OUTER collapse↔expand target `isOuter:true` from a NESTED `<DockLayerGroup>` pane-swap, arming `data-pane-swap` only on the nested swap). Fresh non-authoring dual-engine re-judge (Chrome CDP real Metal + Safari WKWebView), both modes, both nested cases.
+
+- BINDING box-flip-monotonic π (Chrome CDP on-screen ANGLE Metal Renderer Apple M5 Max, trusted-click rAF frame-series): the visible `.glass-dock` plate box HOLDS the expanded 269.12px footprint across all 31 morph frames — `min==max==269.12`, **0 dip frames**, `--dock-expand-t` pinned at 1. The prior FAIL (same day) had min 53.68px / 31 dip frames / dipRatioOfRest 0.199 / expand-t cycling to 0 — the §2.2 box-collapse defect is CLOSED. Verified in BOTH light+dark on BOTH cases (dock-layer-rail-group always-expanded + dock-nested-collapsible-group). `verdict.json overallPass:true`.
+- Overlapped opacity crossfade stays green (the part that already passed): P1 entering engages t≈0.15 → ramps to 1.0; P2 leaving persists to t≈0.5; CO 3 co-present >0.3-alpha frames; DZ 0 dead-zone frames; SWAP enter≥0.5@t≈0.41 while leave 0.32.
+- Computed structure both modes: 5 DockLayerGroups all nested (standaloneGroupCount=0 — the orchestrator convex-blend box path the fix guards), glCount=0 (recessive CSS/2D aurora field, no conic/oversaturation), mainChildren=2, three CSS rules (overlap/enter/reserve) resolve true.
+- Settled paint verified correct both engines both modes (hero fits envelope, blurb, recessive DockStage field, left nav dock, bottom nav dock, all 5 DockLayerGroup expanded plates); provenance decoded from the top-left engine badge (CHROME · ANGLE Metal Renderer Apple M5 Max + WEBKIT · Apple GPU, LIGHT+DARK).
+- Gate HARDENED with the new P4 arm binding the CSS-guard + the orchestrator's isOuter/data-pane-swap seam the P3 box-flip check could not see (born-RED on HEAD's unguarded derivation); `proof:dock` GREEN — P4 cssGuarded/isOuter/swapFlag/paneSwapAttr all true, 32 self-test bites, vue-tsc clean.
+
+Anti-evasion: all 4 settled PNGs `isRealPng:true` (89504e47 sig), 2880×1800, mode-differentiated, resolve on disk; `chrome-frameseries.json` + `verdict.json` valid.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-DOCK-PANE-OVERLAP-DELTA.md` (rewritten to PASS)
+- 4 PNGs: `docs/tranches/BG/audit/visual/BG.W-DOCK-PANE-OVERLAP-paint/paneloverlap-layers-{chrome,safari}-{light,dark}.png`
+- Witnesses: `BG.W-DOCK-PANE-OVERLAP-paint/chrome-frameseries.json` · `BG.W-DOCK-PANE-OVERLAP-paint/verdict.json`
+
+---
+
+### FAILED -> PENDING (row NF.3 — paint FAIL, fix owed)
+
+#### NF.3 — BG.W-GLASS-SIGNAL-TRUTH re-judge #2 (cursor held PENDING; paint FAIL; src SHAs preserved; recorded `34a04a94`)
+
+The M8-runtime part-2 loop-arm fix (`wantsLiveLoop` + `preserveDrawingBuffer`) landed on `tranche/BG` at HEAD `22af965b` (fix `d785cba2` integrated) and `proof:glass` is GREEN device-free, but it did NOT change the PAINTED outcome — the born-RED FAIL STILL reproduces. Dual-engine (Chrome ANGLE-Metal M5 Max + Safari WebKit Apple GPU, no SwiftShader), both modes.
+
+- **CENTRAL FAIL (ST3):** on `/dock/overview` (the flagship route the criteria name), **0 of 12** GlassDocks fire the writer-witness — both modes both engines. Every dock: no `data-backdrop-sampled`, inline `--glass-backdrop-luma=(none)` [computed 0 = the `@property` initial, not a real write], `--glass-ambient-hue=rgba(0,0,0,0)`. Measured at `data-capture-ready`, +6s (24 loop ticks), AND after a viewport resize — the `wantsLiveLoop` + `preserveDrawingBuffer` fix did not move the paint.
+- **ISOLATION (4 in-page probes):** (1) observer code shipped+wired (`wantsLiveLoop` in built bytes; autoLuminance guard passes; ref=dockEl is on the `.glass-dock` written to); (2) the write path works GLOBALLY — the `/substrates/glass-material` control card (explicit `live:true`) DOES stamp the witness in this build; (3) BOTH sample fns return non-null when replicated on a dock (sampleStatic→0.981 opaque near-white, sampleAnimated→1.0), so if `sampleNow` ran it WOULD write; (4) therefore the dock observer `sampleNow()` is inert across mount+loop+resize — the gap is UPSTREAM of the loop-arm predicate.
+- **SECONDARY (degenerate readback):** even the control write is DEGENERATE (luma 0 / hue transparent) — the DockStage field WebGL canvas (armed 1928×4809, carries `data-glass-field-canvas`) reads `{r:0,g:0,b:0,a:0}` on `drawImage` despite `preserveDrawingBuffer:true`, so the control card writes luma 0 / hue transparent. Even once the dock observer fires, the ambient-hue catch-light would be degenerate.
+- Other criteria: ST1 N/A (no `.glass-clear` plate on the wave route — clear-scrim floor is source-correct + gate-green but never pixel-verified). ST2 PASS (dead `--glass-backdrop-hue` absent). ST4 PARTIAL (declarative-bucket FLOOR paints — docks read as translucent glass over the warm recessive aurora, no conic/oversaturation, grain calm, hero fits envelope — observer refinement dead).
+- Pixel gestalt clean (no conic/oversaturation, grain calm, hero fits envelope, both modes both engines). Provenance decoded from PNGs: Chrome badge ANGLE Metal Renderer Apple M5 Max; Safari badge WEBKIT Apple GPU (real GPUs, no SwiftShader). 4 PNGs all 2880×1800, all resolve on disk.
+
+mustFix (for a build-fix-agent — NOT this synthesis agent):
+1. Localize why `sampleNow()` is inert for docks — GlassDock.vue:86–104 + useGlassBackdropLuminance.ts:434–443 (sampleNow) / 488–496 (mount watch) / 400–429 (write). The observer is instantiated + the write path works globally + both sample fns return non-null when replicated, yet no dock fires `data-backdrop-sampled`/`--glass-backdrop-luma`/`--glass-ambient-hue` across mount+loop+resize; the gap is upstream of the loop-arm predicate (the `wantsLiveLoop` fix did not reach it).
+2. Fix the degenerate animated readback — verify `preserveDrawingBuffer` reaches the WebGL ctx init in the BUILT preview (the field canvas reads `{0,0,0,0}` on `drawImage` despite the M8 `preserveDrawingBuffer:true` handoff) OR adopt a compositing-safe readback, so the ambient-hue catch-light yields a real nonzero warm luma+hue.
+3. Bind the live root-vs-witness differential as the born-RED π (the device-free `proof:glass` signal-truth arm greens while the paint stays dead).
+
+PRESERVE (do not regress): ST2 (one hue channel, one writer), the ST4 declarative-bucket floor (docks translucent glass over the warm recessive aurora), the working control-card write path.
+
+Captures:
+- DELTA (carries `defectLocalization` + `mustFix[]`): `docs/tranches/BG/audit/visual/BG.W-GLASS-SIGNAL-TRUTH-DELTA.md`
+- 4 PNGs: `docs/tranches/BG/audit/visual/BG.W-GLASS-SIGNAL-TRUTH-paint2/BG.W-GLASS-SIGNAL-TRUTH-{chrome,safari}-dock-overview-{light,dark}.png`
+- Deep probe: `docs/tranches/BG/audit/visual/BG.W-GLASS-SIGNAL-TRUTH-deepprobe.mjs`
+
+---
+
+## 2026-07-05 — F7 typewriter + F9 blob (PASS) + F3 shell-morph + F5 liquid-weight + F9 dotflow (FAIL) batch (rows 16.2 / F9.R1 / F3.R3 / F5.2 / 6.6)
+
+allPass: **false** — 2 PASS, 3 FAIL. The section-typewriter fade-up register (per-glyph heading × body view()-cascade congruence) and the blob satellite-shade seam both PASS dual-engine and flip to DONE. Three FAILs hold: SHELL-MORPH-PAINT-REPAIR (F3.R3) — the travel-frame repair landed but the settled "horizontal" endpoint is BROKEN and the content re-margin fires NAKED at settle; LIQUID-WEIGHT-DEFAULT (F5.2) — the PRM re-alias is defeated by source-order cascade (vestibular floor broken) + the dock-hover-press is unwired; DOTFLOW-REBUILD (6.6) — the paint-fix targeted the WebGL2 path but both judged engines run the WGSL path, so it is a no-op (Chrome white-out / Safari dead-black persist).
+
+| Wave | Row | Verdict | Cursor |
+|------|-----|---------|--------|
+| BG.W-SECTION-TYPEWRITER-FADEUP | 16.2 | PASS | DONE |
+| BG.W-BLOB-SATELLITE-SHADE | F9.R1 | PASS | DONE |
+| BG.W-SHELL-MORPH-PAINT-REPAIR | F3.R3 | FAIL | PENDING (held) |
+| BG.W-LIQUID-WEIGHT-DEFAULT | F5.2 | FAIL | PENDING (held) |
+| BG.W-DOTFLOW-REBUILD | 6.6 | FAIL | PENDING (held) |
+
+Provenance across the batch: Chrome = CDP on `ANGLE Metal Renderer: Apple M5 Max` (real Metal, not SwiftShader); WebKit = off-screen WKWebView `.wkshot-bin` and/or Playwright WebKit 26.4 on system `WebKit.framework` / `Apple GPU` (no `Version/` token → load-bearing C-SAFARI Tier-1). Engine + GPU decoded IN-PIXEL from the badge per leg. All captures over BUILT bytes on `:5200` (vite preview of the demo dist, NOT the `:5199` dev server); the motion waves (typewriter/shell-morph/liquid-weight) ride LIVE `getAnimations()` / CDP `Page.startScreencast` frame-series — a settled PNG cannot witness a per-frame morph. `verify-siblings-intact.mjs --quiet` exits 0 before AND after this synthesis; no `/tmp/sibling-park|stash`; servers + throwaway Chrome torn down by each paint agent; operated only under glass-ui.
+
+Cursor state confirmed at synthesis: rows 16.2 + F9.R1 already read DONE (the paint agents flipped them in-run — commits `fc67f7e8` / `5df908ae`); rows F3.R3 (`a3a9b58b`), F5.2 (`da6e0cf4`), 6.6 (`24c9b072`) remain PENDING (paint FAIL, fix owed, src SHAs preserved). No cursor edit owed by synthesis.
+
+---
+
+### PASSED -> DONE
+
+#### 16.2 — BG.W-SECTION-TYPEWRITER-FADEUP (commit `fc67f7e8`)
+
+The per-glyph heading reveal × body `view()`-cascade CONGRUENCE is PROVEN LIVE, both engines both modes. Non-authoring dual-engine judge (Chrome ANGLE-Metal Apple M5 Max + Safari system-WebKit/Apple GPU).
+
+- π (`getAnimations()`-per-node congruence): neither NAMED route carries a `<StorySection heading>`, so the per-glyph register was measured on the real storybook consuming routes. Live `getAnimations()` on fresh mount: `/containers/accordion` Chrome 14 `gl-char-rise` (heading, per-glyph) + 6 `gl-cascade-build` on a native `view()` ViewTimeline (body) = 81 congruent beats (light+dark); `/containers/dialog` Chrome 27+4 = 102 beats; `/containers/accordion` WebKit (Playwright, supportsView:true) 14+6 = 37 beats. firstCongruent t≈110ms — both registers at the same beat, both engines.
+- Structural computed-DOM identical Chrome+WebKit both modes: armed=2/revealed=2 (page-singleton provide-key wired), charAnimName=`gl-char-rise`, charDisplay=inline-block (`:stagger=false` drop, no double `.char-stagger`), `--char-stagger-step`=30ms with idx2 delay 0.06s (DRY off *30ms), bodyAnimName=`gl-cascade-build` on animationTimeline=`view()` (two-register, single anim per node — no double-cascade). T1/T2/T3/T4 all confirmed in paint.
+- FOUC-clean: on `/compositions/form-validation` an armed-but-not-revealed below-fold heading resolves glyph opacity:0 + translateY(8.14px) (inverted pre-reveal floor, armed synchronously) — no visible-then-hidden flash; system-WebKit accordion captures show Single/Multiple per-glyph headings fully visible (no stranded opacity:0); mount re-sweep reveals above-fold.
+- Named-route gestalt CLEAN both engines both modes: `/display/section` (Section hero + eyebrow labels + tone matrix legible, 5 scroll-cascade `view()` bodies, glContextCount 1) · `/motion/typewriter` (`--motion-accent` violet masthead + TypewriterText typing live, glContextCount 0). Recessive backdrop no conic/no oversaturation, grain calm, hero fits envelope, warm-cream (light) / warm-ember luminous-dark (dark).
+- All 10 capture PNGs resolve on disk, real dims (Chrome 1440×900, Safari 2880×1800), non-blank, engine badge decoded in-pixel (4 CHROME/ANGLE-Metal + 6 WEBKIT/Apple-GPU).
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-SECTION-TYPEWRITER-FADEUP-DELTA.md`
+- 10 PNGs: `docs/tranches/BG/audit/visual/BG.W-SECTION-TYPEWRITER-FADEUP-paint/{section,typewriter}-{chrome,safari}-{light,dark}-desktop-full.png` + `accordion-safari-{light,dark}-desktop-full.png`
+
+#### F9.R1 — BG.W-BLOB-SATELLITE-SHADE (commit `5df908ae`)
+
+The byte-identical default paint renders the canonical warm-cream lit coherent metaball bead; the satellite-shade-over-a-keyed-body-hue derivation reads HUE-FOLLOWING. Dual-engine (real-Metal Chrome M5 Max + real-WebKit Apple GPU + system-Safari-26 provenance), both modes, route `/substrates/blob`.
+
+- Default paint (Chrome light/dark + WebKit light/dark): the canonical warm-cream lit coherent metaball bead — satellites metaballed-in, lit glint + soft shadow, no black slab / no oversaturation.
+- Satellite-shade-over-a-keyed-body-hue derivation reads HUE-FOLLOWING across Calm-cream → Excited-red → Shy-teal presets, both modes — one coherent family that tracks the keyed hue, never a clashing floater.
+- Seam widen confirmed: `uSatColor[]`/`uSatColorAmt`/`uSatColorActive` uniforms + `blendSatColor()` frag present in dist (goo-blob + goo-dot-matrix mirror), default-OFF early-return → byte-identical; gate `proof:blob-color-equivalence` GREEN 19/19 (born-RED 12a-12e blendSatColor + 13a-13c deriveBlobPalette).
+- All 10 capture PNGs resolve on disk.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-BLOB-SATELLITE-SHADE-DELTA.md`
+- 10 PNGs: `docs/tranches/BG/audit/visual/blob-satellite-shade/blob-{chrome,webkit,safari}-{light,dark}.png` + `blob-keyed-{excited,shy}-chrome-{light,dark}.png`
+
+---
+
+### FAILED -> PENDING (rows F3.R3, F5.2, 6.6 — paint FAIL, fix owed)
+
+#### F3.R3 — BG.W-SHELL-MORPH-PAINT-REPAIR (cursor held PENDING; paint FAIL; src SHAs preserved; recorded `a3a9b58b`)
+
+The travel-frame repair genuinely LANDED, but the wave's "content re-margin hidden at the occluded midpoint" criterion is NOT met AND the settled "horizontal" endpoint is visually BROKEN — a conjunction failure. Dual-engine (Chrome CDP `connectOverCDP:9477` ANGLE Metal Apple M5 Max + off-screen WKWebView Apple GPU), both modes, routes `/foundations/colors` (content) + `/dock/overview` (dock), both directions. The binding motion π = CDP `Page.startScreencast` frame-series with each painted frame tagged to live `--dock-morph-t` + `--dock-bridge-opacity` (D10 fence honored — no scalar stand-in).
+
+Scorecard: (1) ≥12 painted travel frames/leg → PASS (leg1 V→H 20 distinct / leg2 H→V 18 distinct, all distinct SHA — not a hard swap). (2) teardrop legible 0.18<t<0.82 → PASS (bo ramps 0.03→0.55→1.00 plateau→0.06, 11/12 teardrop-window frames bridge-visible). (3) content re-margin hidden at occluded midpoint → **FAIL** (the 91px full-column re-margin, main left 91↔0, fires AT SETTLE — leg1 t=1 bo=0, leg2 t=0 bo=0, morphing=false — NAKED, teardrop already gone). (4) no in-gesture stall >100ms → PASS (max gap leg1 29ms / leg2 33ms, measure-storm excised). NO-MASKING rider → PASS (bridge dormant 0/92 rest samples, absent v-if at rest).
+
+- **BROKEN ENDPOINT (defect):** the settled "horizontal" dock never becomes horizontal — it stays `.glass-dock.vertical` (computed 67×654, aside 91×686 `position:fixed`) while main re-margins to `left:0` with only a TOP-gutter reserve, so the fixed vertical rail OCCLUDES the content's left ~50–90px (measured+screenshot: "Colors"→"ors", "FOUNDATIONS"→"TIONS", swatch 0 hidden; "Overview"→"erview"). Reproduces identically on colors+overview, light+dark.
+- Localization: `SidebarDock.vue:193` hardcodes `orientation="vertical"`; nothing re-points GlassDock's own orientation on the shell morph (only `[data-shell-dock-orientation]` flips, `AppShell.vue:357/401`); the compensating `AppShell.vue:528` `:deep(.demo-sidebar-dock){flex-direction:row}` reaches the glass-dock root but cannot re-lay the inner vertical grid; `AppShell.vue:86-92` flips `settledOrientation` only on morphing→false (settle), driving the naked re-margin.
+- Safari settled-vertical REST reads correct both modes (provenance + rest confirmed); the defect is engine-independent CSS/layout, only reachable in the morph endpoint the WKWebView snapshot can't fire.
+
+mustFix (for a build-fix-agent — NOT this synthesis agent):
+1. Make the settled horizontal dock actually horizontal (re-point GlassDock's orientation prop / reshape the inner layout to a top bar) so the re-margin to `left:0` no longer slides under a rail.
+2. Land the discrete re-margin INSIDE the occluded midpoint (drive off `boundOrientation`'s 0.5-crossing, not morphing→false) — only viable once #1 removes the left occlusion.
+3. Re-verify via screencast frame-series both routes/legs/modes.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-SHELL-MORPH-PAINT-REPAIR-DELTA.md`
+- Travel series + report: `docs/tranches/BG/audit/visual/shell-morph-paint-repair/chrome-travel/f{005,009,013}_*.jpg` · `f157_t0.27_bo0.78_leg2.jpg` · `screencast-report.json`
+- BROKEN endpoint captures: `shell-morph-paint-repair/chrome-endpoint/{colors,overview}-{light,dark}-B-settled-horizontal-BROKEN.png` (+ `colors-light-A-rest-vertical.png`)
+- Safari rest: `shell-morph-paint-repair/safari-rest/safari-{colors,overview}-{light,dark}.png`
+
+#### F5.2 — BG.W-LIQUID-WEIGHT-DEFAULT (cursor held PENDING; paint FAIL; src SHAs preserved; recorded `da6e0cf4`)
+
+Dual-engine paint judge FAIL (Chrome 149 ANGLE-Metal M5 Max + Safari WebKit/Apple-GPU, both modes, BUILT `:5200`). TWO decisive defects.
+
+- **(A) THE PRM RE-ALIAS IS DEFEATED BY SOURCE-ORDER CASCADE (primary):** under `prefers-reduced-motion: reduce`, `--transition-liquid-spatial` on `:root` STILL resolves the `--spring-smooth` `linear()` overshoot NOT `--ease-standard` `cubic-bezier()` (vestibular floor broken). The named π spec `tests-visual/liquid-weight-default.spec.ts` FAILS its PRM light+dark tests (2 failed / 8 passed on chromium; webkit fails identically per direct root-token probe, matchMedia matches=true). Root cause: the base default `:root{--transition-liquid-spatial:var(--spring-smooth)}` at `scheme-spring.css:152` is imported AFTER the PRM `@media(reduce)` re-alias at `scheme-motion.css:397` (`tokens.css:28→34`), winning at equal `:root` specificity even when reduce matches — the exact "PRM keeps the overshoot" source-green/render-broken class the spec header names.
+- **(B) ROW 2 dock-hover-press UNWIRED:** `useLiquidPress`/`springPreset('press')`/`--dock-press-t` binding on `DockIconButton`/the dock control families is ABSENT (`DockIconButton.vue` composes `dock-icon-button glass-specular-track glass-capsule-hover`, no useLiquidPress; `--dock-press-t` only a comment in `useLiquidPress.ts:73`); the dock press stays the CSS `:active` no-overshoot floor (the §2.8 ROUGH state), the ROUGH→MATCHES pass bar UNMET.
+- **PASSES:** the default inversion + calm opt-out PAINT — `.tap-squish`/`.interactive-item` default scale leg resolves the spring `linear()` AND `.motion-calm` resolves `cubic-bezier()`, both engines both modes; settled visual correct dual-engine (recessive aurora no conic/oversaturation, grain calm, hero fits envelope, dark register luminous transmissive glass, provenance badges decoded from pixels); prerequisites W-DOCK-GLYPH-RIGID / W-OVERLAY-ENTER-PAINT / W-DOCK-PANE-OVERLAP / W-MOTION-SPINE all DONE+paint-verified. All 12 capture PNGs resolve on disk (6 Chrome @1440×900 + 6 Safari @2880×1800).
+
+mustFix (for a build-fix-agent):
+1. Relocate the PRM `@media(reduce)` re-alias of `--transition-liquid-spatial` into `scheme-spring.css` after line 152 (or otherwise raise its cascade precedence) so it wins under reduce.
+2. Wire `useLiquidPress` `springPreset('press')` on `DockIconButton` writing `--dock-press-t` (DOCK_SPRING {0.68,0.64} untouched).
+3. Re-run the F5.2 live-gesture sweep + the π spec incl. PRM→bezier both engines both modes.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-LIQUID-WEIGHT-DEFAULT-DELTA.md`
+- 12 PNGs: `docs/tranches/BG/audit/visual/liquid-weight/liqweight-{tabs,dock,dialog}-{chrome,safari}-{light,dark}-desktop.png`
+- Probes: `liquid-weight/pi-readback.json` · `liquid-weight/chrome-settled-pi.json`
+
+#### 6.6 — BG.W-DOTFLOW-REBUILD (cursor held PENDING; paint FAIL; src SHAs `6dce9b5b`/`7b82c7fc` preserved; recorded `24c9b072`)
+
+Dual-engine paint re-judge of the paint-fix commit `6dce9b5b` — VERDICT FAIL, both engines both modes. Route `/substrates/dot-flow-field`, built bytes on `:5200`, `?capture=` + `data-capture-ready` poll, engine badges decoded in-pixel.
+
+- **Chrome 149 / real Metal (ANGLE Metal Apple M5 Max — NOT SwiftShader):** the showcase canvas paints a FLAT BRIGHT WHITE-OUT plate. Census meanLuma 207.3, stdLuma 2.9, 0% chromatic, both modes. Faint white motes clump ONLY at the card right margin; no warm-fire flow, no deep warm floor, warm-fire hue does not survive the tone-map.
+- **Safari 26 / WKWebView (Apple GPU):** the showcase canvas paints a DEAD NEAR-BLACK plate. Census meanLuma 4.7, stdLuma 0.0, 0% chromatic, both modes. Effectively identical to the prior dead-black FAIL.
+- The reference warm-fire advected dot-wave (mid-luma, high-stdLuma warm-chromatic streamline field over a deep warm-near-black floor, zero teal) is ABSENT in all four captures. The paint-fix reduced Chrome blow-out slightly (253→207) but did NOT resolve the defect.
+- **DECISIVE NEW FINDING (defectLocalization):** probed live — BOTH judged engines run the WebGPU/WGSL path (`{gpu:true, gl2:false, wgpu:true}`) on Chrome 149/M5-Max AND Safari 26 WKWebView. So the RGBA8-trail Safari-fix in `flowSetupGLFlow.ts` (WebGL2 GLSL path) is a NO-OP on both — it never executes. The WGSL trail is still `flowSetupWGPU.ts:147 rgba16float`. `proof:viz-dotflow` is GREEN (structural, not the arbiter — headless-green/visually-broken gap). The StoryHero Aurora backdrop rendered correctly warm+structured on both engines (the working control), isolating the defect to the DotFlowField WGSL composite.
+
+mustFix (for a build-fix-agent):
+1. Land the fix on the WGSL path — `flowSetupWGPU.ts` trail format + `shaders/flow-field.render.wgsl.ts` present tone-map/deposit — NOT the WebGL2 GLSL path.
+2. Kill the Chrome white-out (the warm-fire hue must survive the tone-map, not blow to a flat bright plate).
+3. Fix the Safari WKWebView dead-black (WGSL compute-advect + RGBA16F trail ping-pong + present yields no visible output on WebKit-WebGPU while the Aurora hero renders fine).
+4. Re-verify the reference-flowing-dot-wave read on the WGSL path, both engines both modes.
+
+Captures:
+- DELTA (carries `defectLocalization` + 4-item mustFix): `docs/tranches/BG/audit/visual/BG.W-DOTFLOW-REBUILD-DELTA.md`
+- 10 PNGs + census: `docs/tranches/BG/audit/visual/BG.W-DOTFLOW-REBUILD-paint/refetch-{chrome,safari}-{showcase-,canvas-,}{light,dark}.png` · `refetch-chrome-census.json`
+
+---
+
+## 2026-07-05 — F2/F3/F9 glass-depth + signal-truth + dock-rail + dotflow re-judge batch (rows F2.5 / NF.3 / F3.R4 / 6.6)
+
+allPass: **false** — 1 PASS, 3 FAIL. Only BG.W-GLASS-SIGNAL-TRUTH (NF.3) flips to DONE; the depth-tier dead-knob (F2.5), the shell-absent dock rail (F3.R4), and the un-rebuilt dotflow field (6.6) hold at PENDING (fix owed).
+
+| Wave | Row | Verdict | Cursor |
+|------|-----|---------|--------|
+| BG.W-GLASS-DEPTH-TIER | F2.5 | FAIL | PENDING (held) |
+| BG.W-GLASS-SIGNAL-TRUTH | NF.3 | PASS | DONE |
+| BG.W-DOCK-RAIL-REINVENT | F3.R4 | FAIL | PENDING (held) |
+| BG.W-DOTFLOW-REBUILD | 6.6 | FAIL | PENDING (held) |
+
+Provenance across the batch: Chrome = CDP on `ANGLE Metal Renderer: Apple M5 Max` (real Metal, not SwiftShader); WebKit = off-screen WKWebView / playwright-webkit on system `WebKit.framework` / `Apple GPU` (no `Version/` token -> load-bearing C-SAFARI Tier-1). Engine + GPU decoded IN-PIXEL from the badge per leg. All captures over BUILT bytes on `:5200` (vite preview of the demo dist, NOT the `:5199` dev server) via the C18 `?capture=` harness. `verify-siblings-intact.mjs --quiet` exits 0 before AND after this synthesis; no `/tmp/sibling-park|stash`; each paint agent tore down its demo serve (`:5200`) + throwaway Chrome (`:9477`); operated only under glass-ui.
+
+Cursor state confirmed at synthesis: the paint agents flipped all four rows in-run — F2.5 (`e6bdd0f8`) PAINT-PENDING -> PENDING (JUDGED-FAIL note on disk), NF.3 (`51dcfd84`) PAINT-PENDING -> DONE, F3.R4 (`1d5d29f9`) PAINT-PENDING -> PENDING, 6.6 (`7573f907`) PAINT-PENDING -> PENDING. The one PASS row (NF.3) reads DONE. No cursor edit owed by synthesis.
+
+---
+
+### PASSED -> DONE
+
+#### NF.3 — BG.W-GLASS-SIGNAL-TRUTH (re-judge; cursor flip + DELTA `51dcfd84`)
+
+The born-RED FAIL is CLEARED. Dual-engine non-authoring paint judge (Chrome ANGLE-Metal M5 Max + Safari/WebKit Apple GPU), both modes, over BUILT `:5200` bytes.
+
+- ST3 (the writer-witness): 0/12 -> **12/12 docks** on `/dock/overview` fire the `data-backdrop-sampled` writer-witness in BOTH modes at `data-capture-ready`, +6s (24 loop ticks), AND after a viewport resize (was 0/12). The `withDefaults(..., { autoLuminance: true })` fix closed the Vue boolean-cast-false dead-guard root cause (an absent `boolean` prop cast to `false` so `props.autoLuminance !== false` never wired the observer).
+- On-screen docks over the DockStage aurora write NON-DEGENERATE real values — light: luma 0.957 + warm hue `oklch(0.72 0.06 84.6)` + `--glass-ambient-strength: 8%` + `light` bucket; dark: luma 0.003 + warm hue 67.3° + 8% + `dark` bucket. The `FIELD_ALPHA_FLOOR` rejects the empty field readback and falls to the static stack-walk over the real warm field, resolving the prior luma≈1.0/transparent field-black degeneracy (mustFix #2).
+- ST2 PASS (dead `--glass-backdrop-hue` absent at runtime; one hue channel one writer). ST4 PASS (declarative `@container` bucket floor + observer refinement both engage). ST1 source-green + non-blocking (static floor `calc(12% + luma*28%)`; no `.glass-clear` element renders on either wave route, out of paint-judge pixel reach).
+- Pixel gestalt both engines both modes: warm recessive aurora (no conic banding/oversaturation), glass reads as glass (docks transmit the warm field, not gray slabs — FD-DOCK-1), grain calm, Overview/Glass Material hero fits its envelope. All 8 PNGs @2880×1800 resolve on disk, real, with decoded provenance badges.
+- NON-BLOCKING NOTE (recorded): off-screen/below-fold-center docks fall to a transparent-body static null (luma 0) at mount — a `sampleStatic` center-point edge; not a visible defect, still fires the witness, self-corrects on scroll-in.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-GLASS-SIGNAL-TRUTH-DELTA.md`
+- 8 PNGs: `docs/tranches/BG/audit/visual/signal-truth-repaint/BG.W-GLASS-SIGNAL-TRUTH-{chrome,safari}-{dock-overview,glass-material}-{light,dark}.png`
+
+---
+
+### FAILED -> PENDING (rows F2.5, F3.R4, 6.6 — paint FAIL, fix owed)
+
+#### F2.5 — BG.W-GLASS-DEPTH-TIER (cursor held PENDING; paint FAIL; src SHAs `glass-deep.css` 8bf3c4a2 / `glass/deep.css` ec048808 preserved; landed `841f3768`; recorded `e6bdd0f8`)
+
+Dual-engine (Chrome/Metal + WebKit/Metal), both modes. The tier-depth grade SCALAR resolves correctly per tier (overlay/menu 1 · floating/popover 0.7 · content 0.35; grade tokens monotone + in-range `0.35 < 0.7 < 1`), BUT the scalar is a DEAD KNOB on the painted material — every deep surface paints FLAT 16px blur / saturate 1.8 regardless of its tier grade. The wave's central claim ("content~14px < popover~15px < menu 16px, menu > popover > button thickness BY CONSTRUCTION") does NOT paint: **menu = popover = button.** The exact "a deep button reads as thick as a deep menu" defect the wave claims to fix is STILL present.
+
+- **ROOT CAUSE (registered-@property eager-substitution freeze):** in `src/styles/tokens/glass-deep.css` the LERP intermediates `--glass-blur-deep-active-radius` and `--glass-saturate-deep-active` are declared at `:root` and reference `var(--glass-depth)`. `--glass-depth` is a REGISTERED `@property <number>` (property-regs.css §18, `inherits:true` `initial-value:1`). Per the CSS Properties & Values API, a `var()` to a registered custom property inside another custom property is substituted with that property's computed value AT THE DECLARING ELEMENT — here `:root`, where `--glass-depth` = its initial 1 — so the calc bakes `* 1` and inherits frozen; descendants that set `--glass-depth` to 0.35/0.7 inherit the frozen calc and never re-drive it. Resolved on EVERY element (Chrome AND WebKit, both modes): `--glass-blur-deep-active-radius = calc(( 13px + (16px - 13px) * 1 ) * 1)`. Confirmed via in-page computed-DOM probe on real Chrome/Metal (CDP) and cross-checked via playwright-webkit — identical flat-16px at forced depth 0/0.35/0.7/1.
+- **LIVE:** the one deep surface on `/display/buttons` (primary-audacious CTA, `glass-wash btn-glass glass-deep`) resolves `--glass-depth` 0.35 (correct) yet paints `backdrop-filter blur 16px`, not ~14px. The `glass/deep.css` tier map (`:where` rules) is CORRECT (sets `--glass-depth` per tier) but inert because the consuming LERP is frozen upstream. `proof:glass` DT4 is GREEN OVER BROKEN — it text-checks the calc mentions `var(--glass-depth)` but never evaluates the freeze.
+- FENCES THAT HELD (recorded): calm content default BYTE-UNCHANGED (non-deep floating 13px / overlay 20px / card 8px / wash 1px — the tier map sets only the scalar, never a `--glass-blur-*` token; `proof:glass-cal` green by construction); one-deep-refractive-per-route budget held (buttons 1 · popover 0 · dropdown 0; 0 lens/refract); no `--glass-blur-*` re-pointed by the tier map. Routes render fully both engines/modes (recessive field, calm grain, hero fits envelope, warm-cream light + luminous-dark identities honored).
+- CAPTURES: 12 route PNGs on disk, all 2880×1800, `isRealPng`, per-engine badge (Chrome magenta 10424 / WebKit 6432), real content (σ 11.4–57.3), mode-honored.
+
+mustFix (for a build-fix-agent):
+1. Relocate the deep LERP composition (`--glass-blur-deep-active-radius` / `--glass-saturate-deep-active` / `--glass-blur-deep`) OUT of `:root` and INTO the `.glass-deep` rule (`glass/deep.css`) so it re-evaluates `var(--glass-depth)` at the element where the tier grade is in scope — do NOT un-register `--glass-depth` (keeps the @property animation).
+2. Re-verify both engines paint a strict monotone ladder: content ~14px/~1.67 < popover ~15px/~1.74 < menu 16px/1.8; the live CTA must paint ~14px.
+3. Harden `proof:glass` DT4 to assert the RESOLVED per-grade blur DIFFERS (evaluate the LERP at the three grades, fail on flat), not just that the source mentions `var(--glass-depth)`.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-GLASS-DEPTH-TIER-DELTA.md`
+- 12 PNGs: `docs/tranches/BG/audit/visual/pipeline-depth-tier/depth-tier-{chrome,safari}-{buttons,popover,dropdown}-{light,dark}.png`
+
+#### F3.R4 — BG.W-DOCK-RAIL-REINVENT (cursor held PENDING; paint FAIL; src SHAs preserved; recorded `1d5d29f9`)
+
+Dual-engine both-modes (Chrome/ANGLE-Metal M5 Max + Safari/WebKit Apple GPU, demo:dist BUILT bytes on `:5200`; siblings intact exit 0 before+after). The reinvented rail MECHANICS are correct and dual-engine-clean wherever the rail is rendered (the 2 demo story routes) — 5 of 7 pass-bar criteria PASS: (1) COLLAPSED containment (rest members `opacity:0` + tucked, only the 1.5px warm-ink `--dock-rail-hairline` shows), (2) HOVER fan-out crossing the edge with φ² asymmetric overhang (fan-port ratio 2.93-3.05, inside 2.6±0.5; token calc provably 2.618), (3) BOX-INVIOLATE dW=dH=0 on every stack/mode/engine, (5) compositor-only fan on `--spring-dock` + per-member stagger + PRM snap (no width/height/inset animated, no animation-timeline leak, hover-intent+focus fan), (6) Safari-26 dual-engine paints the fan in both modes.
+
+TWO CRITERIA UNMET -> FAIL:
+- **Criterion 7 (primary):** the user-named shell consumers `SidebarDock.vue` (~L386) + `BottomDock.vue` (~L374) render NO `<DockStack>` (the tag survives only in BD.W-DOCK-CORE removal comments; the rail lives ONLY on `rail.vue:250` + `liquid-playground.vue:820/867`, both below the default fold). `useShellNavDock.ts` computes `railItems` but no shell template consumes it into `<DockStack mode=facets :items=railItems>`. The "two shell docks / shell chrome on any route" the fold explicitly requires (`fold-dock.md:69,106-107`) is UNDELIVERED — the C-DOCK-chronic close is not literal in the shell.
+- **Criterion 4 (secondary):** the `wrap` display-option exists in CSS (`stack-rail.css:312`) + prop (`DockStack.vue:84`) but no demo exercises it (only `visibleCount=4` is painted).
+- The one-border-grammar coherence is unverifiable/subsumed: the 16.1 scroll-progress hairline (shell docks) and the rail hairline (story docks) never co-occur because the rail is absent from the shell, so the "sibling whispers / one voice" read (`fold-dock.md:114,163`) cannot be judged.
+
+All 32 capture PNGs resolve on disk.
+
+mustFix (for a build-fix-agent): wire `<DockStack>` into the shell `#rail` slots (the contained topology won't re-introduce the BD collision) + demo the `wrap` axis + re-earn the shell box-equality/containment π and the one-border-grammar read.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-DOCK-RAIL-REINVENT-DELTA.md`
+- Paint PNGs + probes: `docs/tranches/BG/audit/visual/BG.W-DOCK-RAIL-REINVENT-paint/rail-{chrome,safari}-{rail,liquid-playground,lp}-{light,dark}-*.png` · `scroll-cap.json` · `interaction-probe.json`
+
+#### 6.6 — BG.W-DOTFLOW-REBUILD (re-judge of HEAD `e6bdd0f8`, the WGSL rgba8unorm paint-fix; cursor held PENDING; paint FAIL; src SHAs `6dce9b5b`/`7b82c7fc` preserved; recorded `7573f907`)
+
+Non-authoring dual-engine re-judge over BUILT `:5200`, route `/substrates/dot-flow-field`, both modes — Chrome via CDP (real Chrome.app 149, ANGLE Metal M5 Max, canvas context probe `wgpu:true`/`gl2:false`) + Safari via off-screen system-WebKit WKWebView (badge WEBKIT/Apple GPU). VERDICT: FAIL both engines both modes — the reference IMG_1836 flowing-dot-wave is absent. The rgba8unorm fix did NOT close the gap (a constant-tune on the forbidden architecture).
+
+- **Chrome/Metal-WebGPU:** the trail-format flip helped (structure + warm-fire chroma now survive on the LEFT half; warm 99-100%, teal 0-1% so the teal-navy purge holds) BUT the frame reads as a smeared marbled warm-fire trail-CLOUD, NOT discrete beaded dots on evenly-spaced streamlines, AND the right ~40% washes to a flat bright ~200-luma plate (col-luma L->R 144->201 light / 126->196 dark, p99 204-207, mean 161-178 over-bright).
+- **Safari/WebKit-WebGPU:** DEAD BLACK in BOTH modes (canvas OKLab L 0.11, chroma 0.01, zero structure) while the Aurora hero renders fine on the same WKWebView — DotFlowField-WGSL-specific.
+- PASS-BAR unmet: cannot trace ≥8 distinct smooth evenly-spaced beaded streamlines in either engine; p99 near white-out (Chrome) and mean at dead-black (Safari) both fail the luminance-band requirement.
+- **ROOT (structural):** the first-principles rebuild the RE-OPENED criteria demand was never built — src still ships `FLOW_PRESET_AURORA_CURRENT` `mode:"flow"` (free-advected motes + additive-trail feedback buffer), the exact architecture the bar forbids; no Jobard-Lefer evenly-spaced streamline placement, no arc-length-beaded dot chains, no retirement of the additive-trail flood machinery. `proof:viz-dotflow` is GREEN (verifies SOURCE constants, not the composite) — the headless-green/visually-broken gap.
+
+mustFix (for a build-fix-agent — a first-principles rebuild, NOT another constant-tune):
+1. Kill the Chrome/Metal right-half white-out — `shaders/flow-field.render.wgsl.ts` `fs_present` + the dense `particleCount:12000`/`speedGlow:1.35` deposit accumulate a flat bright plate.
+2. Land Jobard-Lefer evenly-spaced streamline placement (dSep-separated, arc-length-beaded dot chains) over `curlFBM` — retire the free-advected-mote + additive-trail architecture (`demo/stories/substrates/presets.ts` `FLOW_PRESET_AURORA_CURRENT` + `src/components/custom/dot-flow-field/`).
+3. Fix the Safari/WebKit-WebGPU dead-black — `flowSetupWGPU.ts` + `shaders/flow-field.*.wgsl.ts` (storage-buffer usage flags / additive-blend on rgba8unorm target / two-pass ping-pong / present alphaMode).
+4. Warm-fire hue must survive the tone-map (no flat bright plate; deep warm floor).
+5. Re-verify the reference-flowing-dot-wave read (≥8 traceable beaded streamlines, p99 below white-out AND mean above dead-black) on the WGSL path, both engines both modes.
+
+Captures:
+- DELTA (carries `defectLocalization` + 5-item mustFix): `docs/tranches/BG/audit/visual/BG.W-DOTFLOW-REBUILD-DELTA.md`
+- Re-judge PNGs + census: `docs/tranches/BG/audit/visual/BG.W-DOTFLOW-REBUILD-paint/rejudge-{chrome,safari}-{,canvas-,showcase-}{light,dark}.png` · `refetch-chrome-census.json`

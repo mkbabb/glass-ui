@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-04T07:00:34.932Z",
+  "generatedAt": "2026-07-05T03:41:53.246Z",
   "wave": "BG.W-DOCK-PANE-OVERLAP",
   "route": "/dock/layers",
   "modes": {
@@ -21,8 +21,8 @@
             "plateW": 269.12,
             "activeIdx": 0
           },
-          "totalFrames": 133,
-          "morphFrames": 127,
+          "totalFrames": 37,
+          "morphFrames": 31,
           "sawMorph": true,
           "checks": {
             "P1_entering_engages": {
@@ -31,16 +31,16 @@
               "enterRampsUp": true,
               "enterAt015to022": [
                 {
-                  "t": 0.1477,
+                  "t": 0.148,
                   "o": 0
                 },
                 {
-                  "t": 0.187,
-                  "o": 0.074
+                  "t": 0.1874,
+                  "o": 0.075
                 },
                 {
-                  "t": 0.2237,
-                  "o": 0.147
+                  "t": 0.2291,
+                  "o": 0.158
                 }
               ],
               "maxEnterHigh": 1
@@ -50,16 +50,16 @@
               "leaveRampsDown": true,
               "leaveNear06": [
                 {
-                  "t": 0.4073,
-                  "o": 0.321
+                  "t": 0.4078,
+                  "o": 0.32
                 },
                 {
                   "t": 0.453,
                   "o": 0.245
                 },
                 {
-                  "t": 0.4941,
-                  "o": 0.176
+                  "t": 0.498,
+                  "o": 0.17
                 }
               ],
               "maxLeaveLow": 1
@@ -69,19 +69,19 @@
               "coFrameCount": 3,
               "sample": [
                 {
-                  "t": 0.3167,
-                  "enter": 0.333,
-                  "leave": 0.472
+                  "t": 0.3171,
+                  "enter": 0.334,
+                  "leave": 0.471
                 },
                 {
-                  "t": 0.3557,
-                  "enter": 0.411,
-                  "leave": 0.407
+                  "t": 0.3606,
+                  "enter": 0.421,
+                  "leave": 0.399
                 },
                 {
-                  "t": 0.4073,
-                  "enter": 0.515,
-                  "leave": 0.321
+                  "t": 0.4078,
+                  "enter": 0.516,
+                  "leave": 0.32
                 }
               ]
             },
@@ -91,27 +91,27 @@
               "sample": []
             },
             "P3_box_flip_no_dip": {
-              "pass": false,
+              "pass": true,
               "restPlateW": 269.12,
-              "minPlateW": 53.68,
+              "minPlateW": 269.12,
               "maxPlateW": 269.12,
-              "dipFrameCount": 31,
-              "worstDipW": 53.68,
-              "dipRatioOfRest": 0.199
+              "dipFrameCount": 0,
+              "worstDipW": null,
+              "dipRatioOfRest": null
             },
             "EXPANDT_no_spurious_collapse": {
-              "pass": false,
+              "pass": true,
               "preExpanded": true,
-              "expandTmin": 0,
-              "note": "layer swap spuriously cycles --dock-expand-t 0->1 -> plate collapses then re-expands"
+              "expandTmin": 1,
+              "note": "expand-t held"
             },
             "SWAP_overlapped_handoff": {
               "pass": true,
-              "enterReaches50AtT": 0.4073,
-              "leaveOpacityWhenEnter50": 0.321
+              "enterReaches50AtT": 0.4078,
+              "leaveOpacityWhenEnter50": 0.32
             }
           },
-          "pass": false
+          "pass": true
         },
         "nested-collapsible": {
           "case": "nested-collapsible",
@@ -122,8 +122,8 @@
             "plateW": 269.12,
             "activeIdx": 0
           },
-          "totalFrames": 133,
-          "morphFrames": 127,
+          "totalFrames": 36,
+          "morphFrames": 31,
           "sawMorph": true,
           "checks": {
             "P1_entering_engages": {
@@ -132,12 +132,12 @@
               "enterRampsUp": true,
               "enterAt015to022": [
                 {
-                  "t": 0.1514,
-                  "o": 0.003
+                  "t": 0.1533,
+                  "o": 0.007
                 },
                 {
-                  "t": 0.1882,
-                  "o": 0.076
+                  "t": 0.193,
+                  "o": 0.086
                 },
                 {
                   "t": 0.2346,
@@ -151,16 +151,16 @@
               "leaveRampsDown": true,
               "leaveNear06": [
                 {
-                  "t": 0.4158,
-                  "o": 0.307
+                  "t": 0.414,
+                  "o": 0.31
                 },
                 {
-                  "t": 0.4609,
-                  "o": 0.232
+                  "t": 0.4591,
+                  "o": 0.235
                 },
                 {
-                  "t": 0.5058,
-                  "o": 0.157
+                  "t": 0.5037,
+                  "o": 0.161
                 }
               ],
               "maxLeaveLow": 1
@@ -170,19 +170,19 @@
               "coFrameCount": 3,
               "sample": [
                 {
-                  "t": 0.3251,
-                  "enter": 0.35,
-                  "leave": 0.458
+                  "t": 0.3233,
+                  "enter": 0.347,
+                  "leave": 0.461
                 },
                 {
-                  "t": 0.3704,
-                  "enter": 0.441,
-                  "leave": 0.383
+                  "t": 0.3686,
+                  "enter": 0.437,
+                  "leave": 0.386
                 },
                 {
-                  "t": 0.4158,
-                  "enter": 0.532,
-                  "leave": 0.307
+                  "t": 0.414,
+                  "enter": 0.528,
+                  "leave": 0.31
                 }
               ]
             },
@@ -192,27 +192,27 @@
               "sample": []
             },
             "P3_box_flip_no_dip": {
-              "pass": false,
+              "pass": true,
               "restPlateW": 269.12,
-              "minPlateW": 53.68,
+              "minPlateW": 269.12,
               "maxPlateW": 269.12,
-              "dipFrameCount": 30,
-              "worstDipW": 53.68,
-              "dipRatioOfRest": 0.199
+              "dipFrameCount": 0,
+              "worstDipW": null,
+              "dipRatioOfRest": null
             },
             "EXPANDT_no_spurious_collapse": {
-              "pass": false,
+              "pass": true,
               "preExpanded": true,
-              "expandTmin": 0,
-              "note": "layer swap spuriously cycles --dock-expand-t 0->1 -> plate collapses then re-expands"
+              "expandTmin": 1,
+              "note": "expand-t held"
             },
             "SWAP_overlapped_handoff": {
               "pass": true,
-              "enterReaches50AtT": 0.4158,
-              "leaveOpacityWhenEnter50": 0.307
+              "enterReaches50AtT": 0.414,
+              "leaveOpacityWhenEnter50": 0.31
             }
           },
-          "pass": false
+          "pass": true
         }
       }
     },
@@ -234,8 +234,8 @@
             "plateW": 269.12,
             "activeIdx": 0
           },
-          "totalFrames": 132,
-          "morphFrames": 127,
+          "totalFrames": 35,
+          "morphFrames": 31,
           "sawMorph": true,
           "checks": {
             "P1_entering_engages": {
@@ -244,16 +244,16 @@
               "enterRampsUp": true,
               "enterAt015to022": [
                 {
-                  "t": 0.1451,
+                  "t": 0.1454,
                   "o": 0
                 },
                 {
-                  "t": 0.1866,
-                  "o": 0.073
+                  "t": 0.1926,
+                  "o": 0.085
                 },
                 {
-                  "t": 0.2287,
-                  "o": 0.157
+                  "t": 0.2346,
+                  "o": 0.169
                 }
               ],
               "maxEnterHigh": 1
@@ -263,12 +263,113 @@
               "leaveRampsDown": true,
               "leaveNear06": [
                 {
-                  "t": 0.4073,
-                  "o": 0.321
+                  "t": 0.4135,
+                  "o": 0.311
                 },
                 {
-                  "t": 0.4525,
-                  "o": 0.246
+                  "t": 0.4587,
+                  "o": 0.236
+                },
+                {
+                  "t": 0.5024,
+                  "o": 0.163
+                }
+              ],
+              "maxLeaveLow": 1
+            },
+            "CO_co_presence": {
+              "pass": true,
+              "coFrameCount": 3,
+              "sample": [
+                {
+                  "t": 0.3229,
+                  "enter": 0.346,
+                  "leave": 0.462
+                },
+                {
+                  "t": 0.3686,
+                  "enter": 0.437,
+                  "leave": 0.386
+                },
+                {
+                  "t": 0.4135,
+                  "enter": 0.527,
+                  "leave": 0.311
+                }
+              ]
+            },
+            "DZ_no_dead_zone": {
+              "pass": true,
+              "deadZoneFrameCount": 0,
+              "sample": []
+            },
+            "P3_box_flip_no_dip": {
+              "pass": true,
+              "restPlateW": 269.12,
+              "minPlateW": 269.12,
+              "maxPlateW": 269.12,
+              "dipFrameCount": 0,
+              "worstDipW": null,
+              "dipRatioOfRest": null
+            },
+            "EXPANDT_no_spurious_collapse": {
+              "pass": true,
+              "preExpanded": true,
+              "expandTmin": 1,
+              "note": "expand-t held"
+            },
+            "SWAP_overlapped_handoff": {
+              "pass": true,
+              "enterReaches50AtT": 0.4135,
+              "leaveOpacityWhenEnter50": 0.311
+            }
+          },
+          "pass": true
+        },
+        "nested-collapsible": {
+          "case": "nested-collapsible",
+          "mode": "dark",
+          "note": "collapsible group (nested in GlassDock)",
+          "pre": {
+            "expandT": "1",
+            "plateW": 269.12,
+            "activeIdx": 0
+          },
+          "totalFrames": 36,
+          "morphFrames": 31,
+          "sawMorph": true,
+          "checks": {
+            "P1_entering_engages": {
+              "pass": true,
+              "enterEngaged": true,
+              "enterRampsUp": true,
+              "enterAt015to022": [
+                {
+                  "t": 0.1473,
+                  "o": 0
+                },
+                {
+                  "t": 0.187,
+                  "o": 0.074
+                },
+                {
+                  "t": 0.2291,
+                  "o": 0.158
+                }
+              ],
+              "maxEnterHigh": 1
+            },
+            "P2_leaving_persists": {
+              "pass": true,
+              "leaveRampsDown": true,
+              "leaveNear06": [
+                {
+                  "t": 0.4078,
+                  "o": 0.32
+                },
+                {
+                  "t": 0.453,
+                  "o": 0.245
                 },
                 {
                   "t": 0.4976,
@@ -287,14 +388,14 @@
                   "leave": 0.472
                 },
                 {
-                  "t": 0.361,
-                  "enter": 0.422,
-                  "leave": 0.398
+                  "t": 0.3619,
+                  "enter": 0.424,
+                  "leave": 0.397
                 },
                 {
-                  "t": 0.4073,
-                  "enter": 0.515,
-                  "leave": 0.321
+                  "t": 0.4078,
+                  "enter": 0.516,
+                  "leave": 0.32
                 }
               ]
             },
@@ -304,164 +405,51 @@
               "sample": []
             },
             "P3_box_flip_no_dip": {
-              "pass": false,
+              "pass": true,
               "restPlateW": 269.12,
-              "minPlateW": 53.68,
+              "minPlateW": 269.12,
               "maxPlateW": 269.12,
-              "dipFrameCount": 31,
-              "worstDipW": 53.68,
-              "dipRatioOfRest": 0.199
+              "dipFrameCount": 0,
+              "worstDipW": null,
+              "dipRatioOfRest": null
             },
             "EXPANDT_no_spurious_collapse": {
-              "pass": false,
+              "pass": true,
               "preExpanded": true,
-              "expandTmin": 0,
-              "note": "layer swap spuriously cycles --dock-expand-t 0->1 -> plate collapses then re-expands"
+              "expandTmin": 1,
+              "note": "expand-t held"
             },
             "SWAP_overlapped_handoff": {
               "pass": true,
-              "enterReaches50AtT": 0.4073,
-              "leaveOpacityWhenEnter50": 0.321
+              "enterReaches50AtT": 0.4078,
+              "leaveOpacityWhenEnter50": 0.32
             }
           },
-          "pass": false
-        },
-        "nested-collapsible": {
-          "case": "nested-collapsible",
-          "mode": "dark",
-          "note": "collapsible group (nested in GlassDock)",
-          "pre": {
-            "expandT": "1",
-            "plateW": 269.12,
-            "activeIdx": 0
-          },
-          "totalFrames": 132,
-          "morphFrames": 127,
-          "sawMorph": true,
-          "checks": {
-            "P1_entering_engages": {
-              "pass": true,
-              "enterEngaged": true,
-              "enterRampsUp": true,
-              "enterAt015to022": [
-                {
-                  "t": 0.1477,
-                  "o": 0
-                },
-                {
-                  "t": 0.1839,
-                  "o": 0.068
-                },
-                {
-                  "t": 0.2291,
-                  "o": 0.158
-                }
-              ],
-              "maxEnterHigh": 1
-            },
-            "P2_leaving_persists": {
-              "pass": true,
-              "leaveRampsDown": true,
-              "leaveNear06": [
-                {
-                  "t": 0.4069,
-                  "o": 0.322
-                },
-                {
-                  "t": 0.453,
-                  "o": 0.245
-                },
-                {
-                  "t": 0.4976,
-                  "o": 0.171
-                }
-              ],
-              "maxLeaveLow": 1
-            },
-            "CO_co_presence": {
-              "pass": true,
-              "coFrameCount": 3,
-              "sample": [
-                {
-                  "t": 0.311,
-                  "enter": 0.322,
-                  "leave": 0.482
-                },
-                {
-                  "t": 0.3566,
-                  "enter": 0.413,
-                  "leave": 0.406
-                },
-                {
-                  "t": 0.4069,
-                  "enter": 0.514,
-                  "leave": 0.322
-                }
-              ]
-            },
-            "DZ_no_dead_zone": {
-              "pass": true,
-              "deadZoneFrameCount": 0,
-              "sample": []
-            },
-            "P3_box_flip_no_dip": {
-              "pass": false,
-              "restPlateW": 269.12,
-              "minPlateW": 53.68,
-              "maxPlateW": 269.12,
-              "dipFrameCount": 31,
-              "worstDipW": 53.68,
-              "dipRatioOfRest": 0.199
-            },
-            "EXPANDT_no_spurious_collapse": {
-              "pass": false,
-              "preExpanded": true,
-              "expandTmin": 0,
-              "note": "layer swap spuriously cycles --dock-expand-t 0->1 -> plate collapses then re-expands"
-            },
-            "SWAP_overlapped_handoff": {
-              "pass": true,
-              "enterReaches50AtT": 0.4069,
-              "leaveOpacityWhenEnter50": 0.322
-            }
-          },
-          "pass": false
+          "pass": true
         }
       }
     }
   },
-  "overallPass": false,
+  "overallPass": true,
   "summary": {
     "light": {
       "standalone-rail": {
-        "pass": false,
-        "fails": [
-          "P3_box_flip_no_dip",
-          "EXPANDT_no_spurious_collapse"
-        ]
+        "pass": true,
+        "fails": []
       },
       "nested-collapsible": {
-        "pass": false,
-        "fails": [
-          "P3_box_flip_no_dip",
-          "EXPANDT_no_spurious_collapse"
-        ]
+        "pass": true,
+        "fails": []
       }
     },
     "dark": {
       "standalone-rail": {
-        "pass": false,
-        "fails": [
-          "P3_box_flip_no_dip",
-          "EXPANDT_no_spurious_collapse"
-        ]
+        "pass": true,
+        "fails": []
       },
       "nested-collapsible": {
-        "pass": false,
-        "fails": [
-          "P3_box_flip_no_dip",
-          "EXPANDT_no_spurious_collapse"
-        ]
+        "pass": true,
+        "fails": []
       }
     }
   }
