@@ -48,6 +48,22 @@
 //        exactly one verdict ∈ {adopt, retire}, a non-empty rationale, and ≥1 file
 //        (the decision is recorded IN the gate — the anti-re-litigation floor).
 //
+//   D5 — the deletes are CONSUMED (BH.B3 δ1 — the CodeBlock→Code-fold-consume /
+//        demo-restructure verify wave): no surviving demo file references a retired
+//        chassis's DELETED CSS file BY NAME. A deleted stylesheet resolves to NOTHING
+//        — a live `@import` is D3's dangle, a PROSE pointer (`demo-frame.css §5` in a
+//        comment describing deleted machinery as live) is dead documentation that
+//        misleads the B3 restructure. DISTINCT from D3 (which strips comments so a
+//        retired component NAME is honest provenance): D5 scans the RAW corpus and
+//        targets the deleted FILE (a file cannot be honest provenance). The retired-
+//        CSS set derives from the ledger (DRY). (born-RED: HEAD's StoryPage.vue prose
+//        references the deleted `demo-frame.css §5` mount-stagger.)
+//   D6 — the CodeBlock→Code fold is CONSUMED single-source ("consume, do NOT re-fold"
+//        — the δ1 bar): the ONE demo code register is EXACTLY {Code.vue, CodeBlock.vue}
+//        (BC.W-CODE-BLOCKS — the inline + multi-line rungs), both present, NO third
+//        `Code*.vue` fork. A downstream restructure re-minting a third code chassis
+//        REDs (the no-dual-path discipline on the demo code register).
+//
 //   T1 — SplitChars carries `stagger?: boolean` and DROPS the mount-bound
 //        `.char-stagger` recipe when false (the "no mount-fire-before-reveal"
 //        mechanism — the IO-gated reveal must own the entrance). (born-RED: HEAD's
@@ -73,8 +89,11 @@
 // live `<DemoFrame>` tag REDs D3; a synthetic adopted file with zero importers REDs
 // D2; a synthetic decision with an empty rationale REDs D4; a jargon-in-a-comment
 // mention of a retired name does NOT red D3 (the comment-strip distinguishing bite);
-// + one bite per T-clause that recreates the HEAD state (the born-RED proof): the
-// unconditional-`.char-stagger` SplitChars REDs T1, the `* 30ms` literal REDs T2,
+// a dead-doc `demo-frame.css §5` pointer REDs D5 (the deleted-FILE reference, RAW-
+// scanned — distinct from the D3 name-in-comment provenance); a synthetic third code
+// fork REDs D6 and a rung-missing register REDs D6 (the "consume, do NOT re-fold"
+// bar); + one bite per T-clause that recreates the HEAD state (the born-RED proof):
+// the unconditional-`.char-stagger` SplitChars REDs T1, the `* 30ms` literal REDs T2,
 // the absent `useSectionReveal` REDs T3, the heading-register-less StorySection REDs T4.
 
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
@@ -312,6 +331,73 @@ function detect(overrides = {}) {
         missing.length === 0 && malformed.length === 0,
     );
 
+    // ── D5 — the deletes are CONSUMED: no surviving demo file references a retired
+    //    chassis's DELETED CSS file BY NAME (the δ1 CodeBlock→Code-fold-consume /
+    //    demo-restructure verify wave — BH.B3). A deleted stylesheet points at
+    //    NOTHING: a live `@import` is D3's dangle; a PROSE pointer (`demo-frame.css §5`
+    //    in a comment describing the deleted mount-stagger as a live mechanism) is
+    //    DEAD DOCUMENTATION that misleads the B3 demo-restructure consumer. DISTINCT
+    //    from D3 — which STRIPS comments so a retired COMPONENT NAME (`<DemoFrame>`) in
+    //    provenance prose is legitimately OK — because D5 targets the deleted FILE (a
+    //    file, unlike a name, cannot be honest provenance: it resolves to nothing). D5
+    //    scans the RAW (un-stripped) corpus. The retired-CSS set is DERIVED from the
+    //    ledger (DRY — a new retired `.css` auto-enrolls, no hand-list drift).
+    const retiredCssNames = [
+        ...new Set(
+            retireVerdicts
+                .flatMap((d) => d.files)
+                .filter((f) => f.endsWith(".css"))
+                .map(basename),
+        ),
+    ];
+    const rawCorpus =
+        overrides.rawCorpus ??
+        allDemoFiles([".vue", ".css"]).map((p) => ({
+            path: p.slice(ROOT.length + 1),
+            text: readFileSync(p, "utf8"),
+        }));
+    const deadCssRefs = [];
+    for (const name of retiredCssNames)
+        for (const c of rawCorpus)
+            if (c.text.includes(name))
+                deadCssRefs.push(`${c.path}: dead reference to deleted ${name}`);
+    facts.retiredCssNames = retiredCssNames;
+    facts.deadCssRefs = deadCssRefs;
+    assert(
+        "D5 — the deletes are consumed (no demo file references a retired chassis's deleted CSS by name)",
+        deadCssRefs.length === 0,
+    );
+
+    // ── D6 — the CodeBlock→Code fold is CONSUMED single-source (consume, do NOT
+    //    re-fold — the δ1 wave's central bar). The ONE demo code register is EXACTLY
+    //    {Code.vue, CodeBlock.vue} (BC.W-CODE-BLOCKS — the inline + multi-line rungs):
+    //    BOTH present, and NO THIRD `Code*.vue` fork. A downstream restructure that
+    //    re-mints a third code chassis (a `CodeSnippet.vue`, a second `*CodeBlock*`)
+    //    REDs — the no-dual-path discipline transposed to the demo code register. The
+    //    family is basename `/^Code.*\.vue$/` (Code.vue / CodeBlock.vue / a fork), so
+    //    Encode/Decode/Barcode never false-flag.
+    const ALLOWED_CODE = new Set(["Code.vue", "CodeBlock.vue"]);
+    const codeVueBasenames =
+        overrides.codeVueBasenames ??
+        [
+            ...new Set(
+                allDemoFiles([".vue"])
+                    .map((p) => basename(p.slice(ROOT.length + 1)))
+                    .filter((b) => /^Code.*\.vue$/.test(b)),
+            ),
+        ];
+    const codeForks = codeVueBasenames.filter((b) => !ALLOWED_CODE.has(b));
+    const codeRegisterComplete = [...ALLOWED_CODE].every((b) =>
+        codeVueBasenames.includes(b),
+    );
+    facts.codeVueBasenames = codeVueBasenames;
+    facts.codeForks = codeForks;
+    facts.codeRegisterComplete = codeRegisterComplete;
+    assert(
+        "D6 — the CodeBlock→Code fold is single-source (Code + CodeBlock only, no third fork)",
+        codeRegisterComplete && codeForks.length === 0,
+    );
+
     // ── The section-entrance congruence clauses (BG.W-SECTION-TYPEWRITER-FADEUP). ──
     const splitCharsSrc = readSrc(SEC.splitChars);
     const schemeMotionSrc = readSrc(SEC.schemeMotion);
@@ -488,6 +574,35 @@ function selfTest() {
         "D4 — the decision ledger is complete (4 named chassis, verdict + rationale + files)",
         "D4 empty rationale",
     );
+    // D5: a demo file that names a retired chassis's DELETED css file (the HEAD
+    // StoryPage.vue `demo-frame.css §5` dead-doc form) → REDs D5. The raw corpus is
+    // fed directly (D5 scans un-stripped source — a comment reference IS the dead doc).
+    sab(
+        {
+            rawCorpus: [
+                {
+                    path: "demo/stories/x.vue",
+                    text: `<!-- the cel-slam --i stagger — demo-frame.css §5 -->`,
+                },
+            ],
+        },
+        "D5 — the deletes are consumed (no demo file references a retired chassis's deleted CSS by name)",
+        "D5 dead-doc pointer to a deleted retired-chassis CSS file (HEAD form)",
+    );
+    // D6 (fork): a synthetic THIRD code-register fork alongside Code + CodeBlock →
+    // REDs D6 (the re-fold the wave's "consume, do NOT re-fold" bar forbids).
+    sab(
+        { codeVueBasenames: ["Code.vue", "CodeBlock.vue", "CodeSnippet.vue"] },
+        "D6 — the CodeBlock→Code fold is single-source (Code + CodeBlock only, no third fork)",
+        "D6 a third code-component fork (re-fold)",
+    );
+    // D6 (incomplete): a register missing a rung (only Code.vue, CodeBlock.vue gone) →
+    // REDs D6 (the fold is not the two-rung register).
+    sab(
+        { codeVueBasenames: ["Code.vue"] },
+        "D6 — the CodeBlock→Code fold is single-source (Code + CodeBlock only, no third fork)",
+        "D6 incomplete register (a rung missing)",
+    );
 
     // ── T-clause bites — each recreates the HEAD state (the born-RED proof). ──
     // T1: the unconditional-`.char-stagger` SplitChars (no `stagger` prop) → REDs T1.
@@ -577,6 +692,12 @@ function run() {
         `  D4 ledger complete        : ${facts["D4 — the decision ledger is complete (4 named chassis, verdict + rationale + files)"]}`,
     );
     console.log(
+        `  D5 deletes consumed (δ1)  : ${facts["D5 — the deletes are consumed (no demo file references a retired chassis's deleted CSS by name)"]}`,
+    );
+    console.log(
+        `  D6 code-fold single-source: ${facts["D6 — the CodeBlock→Code fold is single-source (Code + CodeBlock only, no third fork)"]}  (register: ${JSON.stringify(facts.codeVueBasenames)})`,
+    );
+    console.log(
         `  T1 SplitChars stagger-drop: ${facts["T1 — SplitChars `stagger?:boolean` DROPS .char-stagger (no mount-fire-before-reveal)"]}`,
     );
     console.log(
@@ -589,7 +710,7 @@ function run() {
         `  T4 two-register + no-2×    : ${facts["T4 — StorySection two-register + gl-char-rise CSS + page provides singleton, no double-cascade"]}`,
     );
     console.log(
-        `  self-test (bite proof)    : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×2 incl. comment-strip + D4 + T1-T4)`,
+        `  self-test (bite proof)    : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×2 incl. comment-strip + D4 + D5 + D6×2 + T1-T4)`,
     );
     if (violations.length) {
         console.log("\nVIOLATIONS:");
@@ -600,6 +721,10 @@ function run() {
             console.log(`  adopt gaps      : ${JSON.stringify(facts.adoptGaps)}`);
         if (facts.dangles?.length)
             console.log(`  dangling refs   : ${JSON.stringify(facts.dangles)}`);
+        if (facts.deadCssRefs?.length)
+            console.log(`  dead css refs   : ${JSON.stringify(facts.deadCssRefs)}`);
+        if (facts.codeForks?.length)
+            console.log(`  code forks      : ${JSON.stringify(facts.codeForks)}`);
         if (facts.ledgerMissing?.length)
             console.log(`  ledger missing  : ${JSON.stringify(facts.ledgerMissing)}`);
         if (facts.ledgerMalformed?.length)

@@ -112,12 +112,12 @@ watch(current, () => onRouteSettle());
              rise (the .route-enter reduce arm). -->
         <!-- W-STORY-PAGE-STANDARD — the box-model INVERSION. On a CONTENT page the
              article WIDENS to `--story-article-w` (min(96vw, 87rem) — the φ ladder
-             root, killing the prior 1152-cap 288px dead margin) so the φ²-dominant
-             `<DemoFrame variant="stage">` cels can HOIST out of the prose measure as
-             direct article children (a fixed-width hoist, NO cqw, NO container-type
-             — the dock-collapse-scar-safe form). A HERO page keeps the bounded
-             `--story-page-max-inline` rhythm (the monolith StoryHero hero plate is
-             the alive front-door read, untouched). -->
+             root, killing the prior 1152-cap 288px dead margin) so the page's own
+             φ²-dominant glass cels (the slotted `.story-cels` children below) can
+             HOIST out of the prose measure as direct article children (a fixed-width
+             hoist, NO cqw, NO container-type — the dock-collapse-scar-safe form). A
+             HERO page keeps the bounded `--story-page-max-inline` rhythm (the monolith
+             StoryHero hero plate is the alive front-door read, untouched). -->
         <!-- BC.W-STORYBOOK-META — the bounded article rhythm survives on the HERO
              path (axis-3); the content path widens to the φ-ladder root. -->
             <!-- BC.W-PAGE-CHASSIS — the chrome <header> hosts the AUDACIOUS hero cluster
@@ -160,23 +160,23 @@ watch(current, () => onRouteSettle());
 
             <!-- W-STORY-PAGE-STANDARD — the CONTENT-page body is the box-model
                  INVERSION: NOT one monolith gray StoryHero card with flat sections
-                 inside, but a stack of FREE glassy cels (`<DemoFrame variant>`)
-                 floating DIRECTLY over the ONE shared warm field ([data-paper-field],
-                 mounted globally in AppShell). The cels are hoisted OUT of any prose
-                 wrapper (the φ²-stage cels are direct children of this section, so a
-                 `stage` cel can bleed to the wide article without a cqw container) —
-                 each cel transmits the field, carries the warm cartoon cast, and
-                 SLAMS in on the mount clock. The eyebrow + blurb + title live in the
-                 chrome <header> above (ONE title); this body owns no second header. -->
-            <!-- The cels own their OWN mount-clock entrance (the cel-slam on the
-                 punch arc, the `--i` overlapping stagger — demo-frame.css §5), so
-                 this stack is NOT a `.scroll-cascade` view-timeline host: a
-                 view-timeline would (a) miss the above-the-fold protagonist (it only
-                 fires as an element crosses INTO view) and (b) double-bind the cel.
-                 The `--i` overlap index is auto-assigned per cel by nth-of-type in
-                 demo-frame.css (no per-page wiring); a page may override `:i`. The
-                 stack is the calm DELIMITED rhythm (each cel its own glass plate, so
-                 no inter-section hairline is needed — the cels ARE the delimiters). -->
+                 inside, but a stack of FREE glassy cels (the page's own slotted
+                 `.story-cels` children) floating DIRECTLY over the ONE shared warm
+                 field ([data-paper-field], mounted globally in AppShell). The cels are
+                 hoisted OUT of any prose wrapper (they are direct children of this
+                 section, so a wide cel can bleed to the wide article without a cqw
+                 container) — each cel transmits the field and carries the warm cartoon
+                 cast. The eyebrow + blurb + title live in the chrome <header> above
+                 (ONE title); this body owns no second header. -->
+            <!-- BG.W-CHASSIS-ADOPT-OR-RETIRE consumed: the retired DemoFrame cel
+                 chassis + its retired stylesheet (the punch-arc `--i` mount-stagger)
+                 are GONE (zero-importer, retired per proof:demo). The body-cel
+                 entrance now rides the ONE `<article>` `.route-enter` on-mount beat
+                 above (the whole page rises + fades as one) — NOT a per-cel
+                 view-timeline (`.scroll-cascade`), which would miss the above-the-fold
+                 protagonist and double-bind the cel. The stack is the calm DELIMITED
+                 rhythm (each cel its own glass plate, so no inter-section hairline is
+                 needed — the cels ARE the delimiters). -->
             <section
                 v-if="variant === 'page'"
                 class="story-cels flex flex-col"
