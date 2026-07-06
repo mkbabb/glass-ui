@@ -199,3 +199,75 @@ export function makeEllipticSpectrum(
 
     return components;
 }
+
+// ── BG.W-FOURIER-BEAUTY B2 — the coefficient-driven closed-figure family ─────────
+//
+// A DELIBERATE figure, not a scribble: a few-term INTEGER-index harmonic stack. Because
+// every phasor index is an INTEGER, `exp(2πi·k·t)` has period 1, so the sum CLOSES at t=1
+// by construction (`z(0) === z(1)`) — no arbitrary/irrational term can leave the figure
+// open. Two counter-rotating integer phasors `a·e^{i·2π·p·t} + b·e^{i·2π·q·t}` trace a clean
+// epicycloid/hypotrochoid whose symmetry order is `|p − q|` (the spirograph/fourier-flower
+// family); a third small term adds character without breaking closure. This is the sharp
+// primitive the random `makeEllipticSpectrum` "boring ellipse" is NOT — the same evaluator
+// (`partialSumAt`/`positionsAt`) reconstructs both.
+
+/** One integer-index harmonic term of a {@link FOURIER_FIGURES} recipe (polar form). */
+export interface HarmonicTerm {
+    /** The INTEGER frequency index (a closed figure requires integers — the period-1 fence). */
+    index: number;
+    /** The phasor magnitude (relative; the figure is scale-fit at render). */
+    mag: number;
+    /** The phase offset in turns (0..1 — multiplied by 2π; a phase rotates the figure). */
+    phase: number;
+}
+
+/**
+ * Build a {@link BasisComponent} spectrum from a closed-figure recipe (a list of integer-index
+ * {@link HarmonicTerm}s). The recipe's `phase` is in TURNS; the rectangular coefficient is
+ * `mag·(cos, sin)` at `2π·phase`. The result CLOSES (all indices integer) — feed it straight
+ * to `partialSumAt`/`positionsAt`.
+ */
+export function makeHarmonicFigure(terms: readonly HarmonicTerm[]): BasisComponent[] {
+    return terms.map((t) => {
+        const a = 2 * Math.PI * t.phase;
+        return comp(t.index, t.mag * Math.cos(a), t.mag * Math.sin(a));
+    });
+}
+
+/**
+ * The curated FLOWER / closed-epicycle figure catalogue — few-term integer-ratio harmonic
+ * stacks, each a deliberate figure (the symmetry order is `|p − q|` for the dominant pair).
+ * Selectable/cyclable by key; the LIBRARY beauty register the `boring` random ellipse lacked.
+ * The magnitudes stay large + few-phasor so the figure reads bold, not crinkled.
+ */
+export const FOURIER_FIGURES: Record<string, HarmonicTerm[]> = {
+    // 3-fold deltoid flower (|1 − (−2)| = 3).
+    trefoil: [
+        { index: 1, mag: 0.72, phase: 0 },
+        { index: -2, mag: 0.34, phase: 0 },
+    ],
+    // 4-fold astroid flower (|1 − (−3)| = 4).
+    quatrefoil: [
+        { index: 1, mag: 0.7, phase: 0 },
+        { index: -3, mag: 0.3, phase: 0 },
+    ],
+    // 5-fold flower (|1 − (−4)| = 5).
+    pentafoil: [
+        { index: 1, mag: 0.7, phase: 0 },
+        { index: -4, mag: 0.26, phase: 0 },
+    ],
+    // 6-fold flower (|1 − (−5)| = 6).
+    hexafoil: [
+        { index: 1, mag: 0.68, phase: 0 },
+        { index: -5, mag: 0.24, phase: 0 },
+    ],
+    // A richer 3-term spirograph — the dominant pair + a small high harmonic for character.
+    spiro: [
+        { index: 1, mag: 0.64, phase: 0 },
+        { index: -4, mag: 0.28, phase: 0.12 },
+        { index: 7, mag: 0.1, phase: 0.33 },
+    ],
+};
+
+/** The ordered figure keys (the demo/consumer cycle order). */
+export const FOURIER_FIGURE_KEYS = Object.keys(FOURIER_FIGURES);

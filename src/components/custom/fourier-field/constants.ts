@@ -47,13 +47,45 @@ export const MAX_FOURIER_STOPS = 4;
 export const SCRUB_GAIN = 0.15;
 
 /**
- * The 2-D cursor-FOLLOW lean depth (BD.W-VIZ-BROKEN-FIX D6b — the spatial follow beside the
- * velocity scrub). A bounded fraction of the model half-span the view-fit center leans
- * toward the cursor, so the whole reconstruction pans TOWARD the cursor on screen (a gentle
- * pull, never a yank — the [[feedback-liquid-weight-universal]] weighted register). At 0
- * the field is byte-identical (the ambient/non-interactive register).
+ * The 2-D cursor-FOLLOW reach (BG.W-FOURIER-BEAUTY B3 — the REAL spatial follow, superseding
+ * the BD.W-VIZ-BROKEN-FIX D6b 0.12 whisper-lean that read as "abysmal tracking"). It is the
+ * bounded fraction of the CLIP half-span (not the model half-span — the whisper's frame-of-
+ * reference bug) the figure CENTROID reaches toward the cursor: `getPointerLean` maps the
+ * critically-damped smoothed pointer [0,1]→clip[-1,1]→MODEL (through the fit `scale`/`aspect`
+ * — the CORRECT coordinate space), so the tracked feature (the centroid) genuinely REACHES
+ * within a small radius of the pointer within the damped settle, never the 12% pan that never
+ * arrived. Bounded < 1 so the figure stays largely in frame. At 0 (ambient/non-interactive)
+ * the field is byte-identical. The velocity SCRUB (`SCRUB_GAIN`, the WHEN-on-the-curve nudge)
+ * is orthogonal + preserved.
  */
-export const FOLLOW_LEAN = 0.12;
+export const FOLLOW_REACH = 0.7;
+
+// ── BG.W-FOURIER-BEAUTY B1 — the THICK luminous RIBBON stroke register ──────────
+/**
+ * The comet ribbon's TAIL width as a fraction of the head width (the head→tail taper). At the
+ * head (age 1) the stroke is the full `trailWidth`; at the tail (age 0) it is `RIBBON_TAIL_FRAC`
+ * of it. The taper is `f(age) = RIBBON_TAIL_FRAC + (1 − RIBBON_TAIL_FRAC)·age` (LINEAR, so the
+ * age-0.5 MID-BODY is `RIBBON_TAIL_FRAC + (1 − RIBBON_TAIL_FRAC)·0.5` of the head). Declared
+ * ONCE here + MIRRORED verbatim as the `RIBBON_TAIL_FRAC` const in BOTH shaders (the GLSL twin
+ * cannot import a TS constant); `proof:viz` FB1 cross-checks the three copies are equal so the
+ * mid-body floor below can never drift off the taper.
+ */
+export const RIBBON_TAIL_FRAC = 0.4;
+/** The mid-body taper fraction (age 0.5) — the width the {@link RIBBON_HEAD_FLOOR_PX} floor targets. */
+export const RIBBON_MID_TAPER_FRAC = RIBBON_TAIL_FRAC + (1 - RIBBON_TAIL_FRAC) * 0.5; // 0.7
+/**
+ * The MID-BODY minimum in CSS px (the B1 "≥2.5px CSS mid-body at every DPR, never a 1px
+ * hairline polyline" bar). The width is DPR-independent by construction (converted to model
+ * via `canvasCssMin` = backing ÷ dpr), so a CSS-px floor holds at every DPR.
+ */
+export const RIBBON_MID_FLOOR_PX = 2.5;
+/**
+ * The HEAD-width floor in CSS px (the `trailWidth` clamp in `trailWidthToModel`). Sized so the
+ * mid-body (head × {@link RIBBON_MID_TAPER_FRAC}) clears {@link RIBBON_MID_FLOOR_PX} — even a
+ * consumer setting `trailWidth: 1` gets a ≥2.5px mid-body. A hair over the exact quotient for
+ * float safety.
+ */
+export const RIBBON_HEAD_FLOOR_PX = RIBBON_MID_FLOOR_PX / RIBBON_MID_TAPER_FRAC + 0.05; // ≈3.62
 
 /**
  * The degenerate-tangent guard (BD.W-FOURIER-LOOM §2b). At a cusp the head's instantaneous
@@ -149,7 +181,9 @@ export const DEFAULT_FOURIER_CONFIG: FourierFieldConfig = {
     epicycleArms: 6,
     rainbowChain: true,
     trailArc: 0.43,
-    trailWidth: 3,
+    // BG.W-FOURIER-BEAUTY B1 — a THICK luminous ribbon head (was 3). The head→tail taper
+    // (RIBBON_TAIL_FRAC) + the RIBBON_HEAD_FLOOR_PX floor keep the mid-body ≥2.5px CSS.
+    trailWidth: 5,
     intensity: 1,
     harmonicScale: 0.24,
     speed: 1,

@@ -30,6 +30,12 @@ const TANGENT_EPS: f32 = 1e-4;
 // The speed yardstick: the head speed (model units between curveSamples[0] and [1]) is
 // normalized against this many trail half-widths so ŝ ∈ [0,1] is scale-free + parity-safe.
 const SPEED_REF_HALFWIDTHS: f32 = 6.0;
+// BG.W-FOURIER-BEAUTY B1 — the THICK luminous RIBBON. RIBBON_TAIL_FRAC is MIRRORED verbatim
+// from constants.ts (the WGSL twin cannot import a TS const); proof:viz FB1 cross-checks the
+// two copies are equal so the mid-body floor (RIBBON_HEAD_FLOOR_PX) can never drift off it.
+const RIBBON_TAIL_FRAC: f32 = 0.4;
+const RIBBON_UNDERGLOW_SCALE: f32 = 2.2;
+const RIBBON_UNDERGLOW_ALPHA: f32 = 0.16;
 
 // ── Render uniforms (the typed-struct source-of-truth — see uniformBridgeWGPU.ts) ──
 struct RenderUniforms {
@@ -242,15 +248,25 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
     if (i >= sampleCount - 1) { break; }
     let sa = curveSamples[i];
     let sb = curveSamples[i + 1];
-    let d = segDist(p, sa.xy, sb.xy);
-    let cover = 1.0 - smoothstep(halfW, halfW + aa, d);
-    if (cover < 0.002) { continue; }
     let age = max(sa.z, sb.z);            // 1 at head, 0 at tail
+    let d = segDist(p, sa.xy, sb.xy);
+    // B1 — the head→tail TAPER (thick head, thin tail); segDist gives round joins/caps.
+    let ribbonHalf = halfW * (RIBBON_TAIL_FRAC + (1.0 - RIBBON_TAIL_FRAC) * age);
+    let lin = samplePaletteLin(1.0 - age * 0.4); // warm core, lighter tail
+    let rgb = clamp(linearToSrgb(lin), vec3<f32>(0.0), vec3<f32>(1.0));
+    // B1 — the soft UNDER-GLOW under the crisp ribbon (ONE color event, a wider soft feather).
+    let glowHalf = ribbonHalf * RIBBON_UNDERGLOW_SCALE;
+    let glowCover = 1.0 - smoothstep(glowHalf, glowHalf + aa * 3.0, d);
+    if (glowCover > 0.002) {
+      let ga = peak * RIBBON_UNDERGLOW_ALPHA * pow(age, fadeExp) * glowCover;
+      accum = vec4<f32>(rgb * ga, ga) + accum * (1.0 - ga);
+    }
+    // the crisp tapered ribbon core (painted OVER its own under-glow).
+    let cover = 1.0 - smoothstep(ribbonHalf, ribbonHalf + aa, d);
+    if (cover < 0.002) { continue; }
     var a = peak * pow(age, fadeExp);
     a = max(a, peak * trailFloor);
     a = a * cover;
-    let lin = samplePaletteLin(1.0 - age * 0.4); // warm core, lighter tail
-    let rgb = clamp(linearToSrgb(lin), vec3<f32>(0.0), vec3<f32>(1.0));
     accum = vec4<f32>(rgb * a, a) + accum * (1.0 - a);
   }
 

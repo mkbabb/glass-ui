@@ -121,6 +121,19 @@ const VIZ_CHOREO = resolve(ROOT, "src/composables/glass/useVizChoreography.ts");
 // The reference/paint-anchor viz that must opt into the bloom (R7).
 const AURORA_REVEAL_ANCHOR = "aurora/composables/runtime.ts";
 
+// BG.W-FOURIER-BEAUTY (F9.R7) — the fourier-field visual-excellence arm (FB1-FB3). The
+// shaders/constants/math/bridge/composable are `.ts` under fourier-field/ (in the `files`
+// map); the SFC is `.vue` (read by path). The FB arm reads these by their rel keys +
+// this path.
+const FF_SFC = resolve(ROOT, "src/components/custom/fourier-field/FourierField.vue");
+// The fourier-field file rel-keys inside the `files` map (relative to CUSTOM).
+const FF_CONSTANTS = "fourier-field/constants.ts";
+const FF_MATH = "fourier-field/math.ts";
+const FF_BRIDGE = "fourier-field/composables/uniformBridgeWGPU.ts";
+const FF_COMPOSABLE = "fourier-field/composables/useFourierField.ts";
+const FF_GLSL = "fourier-field/shaders/fourier-field.glsl.ts";
+const FF_WGSL = "fourier-field/shaders/fourier-field.render.wgsl.ts";
+
 // The 8 procedural viz whose resize/render is HARD-ADOPTED upload-only.
 // (goo-dot-matrix RETIRED at BG.W-GOODOT-PRUNE — 0 external consumers; the hybrid's
 // two halves survive it: goo-blob FIELD donor + dot-matrix RENDER.)
@@ -149,6 +162,26 @@ function stripComments(src) {
     return src
         .replace(/\/\*[\s\S]*?\*\//g, "")
         .replace(/(^|[^:])\/\/[^\n]*/g, "$1");
+}
+
+/**
+ * The FIRST numeric literal bound to `name` across the forms the FB arm reads — the GLSL
+ * `#define name 0.4`, the WGSL `const name: f32 = 0.4`, the TS `const name = 0.4`, and the TS
+ * object-property `name: 5`. The optional `: <type>` annotation (WGSL `f32`, TS `number`) is
+ * skipped by a LETTER-led type token so the `32` in `f32` is not mis-captured. Returns `null`
+ * if `name` is never bound to a literal (a derived `= a / b` expression yields no first-bind
+ * literal — the FB arm asserts the DERIVATION structure separately). Used to cross-check the
+ * shader-mirrored `RIBBON_TAIL_FRAC` equals the TS constant.
+ */
+function firstNum(src, name) {
+    const def = src.match(new RegExp("#define\\s+" + name + "\\b\\s+(-?[0-9]+(?:\\.[0-9]+)?)"));
+    if (def) return Number(def[1]);
+    const m = src.match(
+        new RegExp(
+            name + "\\b\\s*(?::\\s*[A-Za-z][\\w<>]*)?\\s*[:=]\\s*(-?[0-9]+(?:\\.[0-9]+)?)",
+        ),
+    );
+    return m ? Number(m[1]) : null;
 }
 
 /** Recursively collect every `.ts` under `dir` (relative to CUSTOM). */
@@ -474,6 +507,143 @@ function runAll(over = {}) {
         }
     }
 
+    // ══ FOURIER-BEAUTY ARM (BG.W-FOURIER-BEAUTY / F9.R7) — the fourier-field visual pass ══
+    // The de-migrated fourier-field renders "correctly" (6.3's floor) but reads BORING with
+    // ABYSMAL mouse tracking + a thin hairline stroke. This arm locks the THREE excellence
+    // deliverables device-free (the BEAUTY gestalt rides the paint judge, the cardinal split):
+    //   FB1 — the THICK luminous RIBBON: a head→tail TAPERED stroke (RIBBON_TAIL_FRAC, MIRRORED
+    //         into BOTH shaders + cross-checked equal) + a soft UNDER-GLOW layer + the mid-body
+    //         ≥2.5px CSS floor (RIBBON_HEAD_FLOOR_PX derived from RIBBON_MID_FLOOR_PX, applied
+    //         in trailWidthToModel). Born-RED: HEAD paints a uniform hairline (halfW), no taper.
+    //   FB2 — BEAUTIFUL closed figures: makeHarmonicFigure + a ≥4-entry FOURIER_FIGURES catalogue
+    //         of INTEGER-index recipes (integer indices → the sum CLOSES by construction) + the
+    //         SFC source→figure dispatch. Born-RED: HEAD has only the random elliptic scribble.
+    //   FB3 — REAL pointer tracking: getPointerLean reads the critically-damped smoothedPosition
+    //         in the CORRECT coord space (fit scale + backing aspect), bounded by FOLLOW_REACH
+    //         (the 0.12 FOLLOW_LEAN whisper RETIRED), no headT=pointer snap, no second rAF.
+    //         Born-RED: HEAD has the FOLLOW_LEAN whisper (wrong frame + wrong y sign).
+    {
+        const consts = files[FF_CONSTANTS] ?? "";
+        const math = files[FF_MATH] ?? "";
+        const bridge = files[FF_BRIDGE] ?? "";
+        const composable = files[FF_COMPOSABLE] ?? "";
+        const glsl = files[FF_GLSL] ?? "";
+        const wgsl = files[FF_WGSL] ?? "";
+        const sfc = stripComments(
+            over.__ffsfc !== undefined ? over.__ffsfc : (read(FF_SFC) ?? ""),
+        );
+
+        // ── FB1 — the thick tapered ribbon + under-glow + mid-body floor ──
+        const tailFrac = firstNum(consts, "RIBBON_TAIL_FRAC");
+        const midFloor = firstNum(consts, "RIBBON_MID_FLOOR_PX");
+        if (tailFrac === null || tailFrac <= 0 || tailFrac >= 1)
+            fails.push(
+                "FB1: constants.ts declares no valid `RIBBON_TAIL_FRAC` (0..1) — the ribbon taper register is absent (born-RED: HEAD paints a uniform-width stroke)",
+            );
+        if (midFloor === null || midFloor < 2.5)
+            fails.push(
+                "FB1: `RIBBON_MID_FLOOR_PX` is absent or < 2.5 — the mid-body must clear ≥2.5px CSS (never a 1px hairline polyline)",
+            );
+        if (!/RIBBON_MID_TAPER_FRAC\s*=\s*RIBBON_TAIL_FRAC\s*\+\s*\(1\s*-\s*RIBBON_TAIL_FRAC\)\s*\*\s*0\.5/.test(consts))
+            fails.push(
+                "FB1: `RIBBON_MID_TAPER_FRAC` is not derived `RIBBON_TAIL_FRAC + (1 - RIBBON_TAIL_FRAC) * 0.5` — the mid-taper must track the tail frac",
+            );
+        if (!/RIBBON_HEAD_FLOOR_PX\s*=\s*RIBBON_MID_FLOOR_PX\s*\/\s*RIBBON_MID_TAPER_FRAC/.test(consts))
+            fails.push(
+                "FB1: `RIBBON_HEAD_FLOOR_PX` is not derived `RIBBON_MID_FLOOR_PX / RIBBON_MID_TAPER_FRAC` — the head floor must guarantee the mid-body clears the CSS floor by construction",
+            );
+        // The floor is APPLIED in trailWidthToModel (both setups call it — the DRY single site).
+        if (!/RIBBON_HEAD_FLOOR_PX/.test(bridge) || !/Math\.max\(\s*trailWidthPx\s*,\s*RIBBON_HEAD_FLOOR_PX\s*\)/.test(bridge))
+            fails.push(
+                "FB1: trailWidthToModel does not clamp `Math.max(trailWidthPx, RIBBON_HEAD_FLOOR_PX)` — the mid-body floor is not applied (a `trailWidth: 1` would paint a hairline)",
+            );
+        // The default config is a THICK ribbon head.
+        const defW = firstNum(consts, "trailWidth");
+        if (defW === null || defW < 4)
+            fails.push(
+                `FB1: DEFAULT_FOURIER_CONFIG.trailWidth is ${defW ?? "absent"} (<4) — the default is not a THICK luminous ribbon`,
+            );
+        // BOTH shader twins carry the taper + under-glow, MIRRORING the TS tail frac.
+        for (const [label, src] of [["GLSL", glsl], ["WGSL render", wgsl]]) {
+            const shaderTail = firstNum(src, "RIBBON_TAIL_FRAC");
+            if (shaderTail === null)
+                fails.push(
+                    `FB1: the ${label} shader declares no \`RIBBON_TAIL_FRAC\` — the head→tail taper is absent (born-RED: HEAD paints a uniform \`halfW\` stroke)`,
+                );
+            else if (tailFrac !== null && Math.abs(shaderTail - tailFrac) > 1e-6)
+                fails.push(
+                    `FB1: the ${label} shader's RIBBON_TAIL_FRAC (${shaderTail}) DRIFTS from constants.ts (${tailFrac}) — the mid-body floor guarantee breaks if the taper diverges`,
+                );
+            if (!/ribbonHalf\s*=\s*halfW\s*\*\s*\(\s*RIBBON_TAIL_FRAC/.test(src))
+                fails.push(
+                    `FB1: the ${label} shader has no age-scaled \`ribbonHalf = halfW * (RIBBON_TAIL_FRAC + …)\` taper — the stroke is a uniform hairline, not a tapered ribbon`,
+                );
+            if (!/RIBBON_UNDERGLOW_SCALE/.test(src) || !/RIBBON_UNDERGLOW_ALPHA/.test(src) || !/glowHalf\s*=\s*ribbonHalf\s*\*\s*RIBBON_UNDERGLOW_SCALE/.test(src))
+                fails.push(
+                    `FB1: the ${label} shader paints no soft UNDER-GLOW (\`glowHalf = ribbonHalf * RIBBON_UNDERGLOW_SCALE\`) — the luminous ribbon halo is absent`,
+                );
+        }
+
+        // ── FB2 — the beautiful closed-figure family ──
+        if (!/export function makeHarmonicFigure\b/.test(math))
+            fails.push(
+                "FB2: math.ts exports no `makeHarmonicFigure` — the coefficient-driven closed-figure primitive is absent (born-RED: HEAD has only the random elliptic scribble)",
+            );
+        const figBlock = (math.match(/FOURIER_FIGURES[\s\S]*?\n\};/) || [""])[0];
+        const figEntries = [...figBlock.matchAll(/(\w[\w-]*)\s*:\s*\[/g)].map((m) => m[1]);
+        if (!/export const FOURIER_FIGURES\b/.test(math) || figEntries.length < 4)
+            fails.push(
+                `FB2: FOURIER_FIGURES has ${figEntries.length} recipes (<4) — the deliberate-figure family (fourier flowers / closed epicycles) is incomplete`,
+            );
+        // Every phasor index is an INTEGER (a non-integer index would NOT close — a scribble).
+        if (/index\s*:\s*-?\d+\.\d/.test(figBlock))
+            fails.push(
+                "FB2: a FOURIER_FIGURES recipe carries a NON-INTEGER `index` — an integer index is the period-1 closure fence (a fractional index draws an OPEN scribble)",
+            );
+        // The SFC dispatches a `source` naming a figure → the figure spectrum.
+        if (!/makeHarmonicFigure\s*\(/.test(sfc) || !/FOURIER_FIGURES\[/.test(sfc))
+            fails.push(
+                "FB2: FourierField.vue does not dispatch `source` → `makeHarmonicFigure(FOURIER_FIGURES[…])` — a curated figure is unreachable via config",
+            );
+
+        // ── FB3 — the real critically-damped follow (no snap, no second rAF) ──
+        if (!/export const FOLLOW_REACH\b/.test(consts))
+            fails.push(
+                "FB3: constants.ts declares no `FOLLOW_REACH` — the real follow depth is absent (born-RED: HEAD carries the 0.12 FOLLOW_LEAN whisper)",
+            );
+        if (/FOLLOW_LEAN\b/.test(consts) || /FOLLOW_LEAN\b/.test(composable))
+            fails.push(
+                "FB3: the retired `FOLLOW_LEAN` whisper survives — the clean break requires it GONE (the 12% pan that never reached the cursor)",
+            );
+        // getPointerLean reads the critically-damped smoothed pointer in the CORRECT coord
+        // space (the fit scale + the BACKING aspect — dpr/scroll-safe), bounded by FOLLOW_REACH.
+        for (const [tok, why] of [
+            ["FOLLOW_REACH", "the bounded reach"],
+            ["smoothedPosition", "the critically-damped pointer (no snap by construction)"],
+            ["ensureFit().scale", "the fit scale (correct model→clip space)"],
+            ["canvas.width", "the BACKING aspect (dpr/scroll-safe box↔backing mapping)"],
+        ]) {
+            if (!composable.includes(tok))
+                fails.push(
+                    `FB3: getPointerLean does not read \`${tok}\` — ${why} is missing from the follow`,
+                );
+        }
+        // The retired headT=pointer SNAP class stays dead (a direct headT set from a pointer coord).
+        if (/headT\s*=\s*[^;\n]*\b(pointer|position\.value\.x|sp\.x)\b/.test(composable))
+            fails.push(
+                "FB3: a `headT = <pointer coord>` SNAP survives in useFourierField.ts — the teleport class stays dead (the velocity SCRUB integrates headT, it never snaps to an absolute pointer position)",
+            );
+        // NO second rAF (the one-loop discipline — the field is fed by the ONE onFrame tick).
+        if (/requestAnimationFrame\s*\(/.test(composable))
+            fails.push(
+                "FB3: useFourierField.ts owns a `requestAnimationFrame` — the viz renderer owns the ONE loop; the follow is fed by onFrame's `pointer.tick` (a second rAF breaks proof:offscreen-pause)",
+            );
+        if (!/pointer\.tick\s*\(/.test(composable))
+            fails.push(
+                "FB3: useFourierField.ts does not feed `pointer.tick(...)` from onFrame — the shared field (+ its tick(0) PRM freeze) is not advanced",
+            );
+    }
+
     return fails;
 }
 
@@ -663,6 +833,66 @@ function selfTest() {
             "self-test: a WGSL shader splicing OKLCH_MATRICES with no const PI did NOT red SP1",
         );
 
+    // ── FOURIER-BEAUTY bites (BG.W-FOURIER-BEAUTY / F9.R7) ──
+    // A valid follow body the FB3 bites break ONE witness at a time (satisfies FOLLOW_REACH +
+    // smoothedPosition + ensureFit().scale + canvas.width + pointer.tick, no rAF, no snap).
+    const validFF =
+        "import { SCRUB_GAIN, FOLLOW_REACH } from '../constants';\n" +
+        "const sp = pointer.smoothedPosition.value;\n" +
+        "const scale = Math.max(ensureFit().scale, 1e-6);\n" +
+        "const asp = canvas.width / canvas.height;\n" +
+        "pointer.tick(deltaMs);\n" +
+        "headT = (headT + rate * dt) % 1;\n";
+
+    // (fb1) a planted uniform-HAIRLINE shader (no taper/under-glow) reds FB1.
+    const fbHairline = runAll({
+        [FF_GLSL]:
+            "export const S = `#version 300 es\nfloat cover = 1.0 - smoothstep(halfW, halfW + aa, d);`;",
+    });
+    if (!fbHairline.some((v) => v.startsWith("FB1")))
+        fails.push("self-test: a planted uniform-hairline shader (no taper) did NOT red FB1");
+
+    // (fb2) a trailWidthToModel with NO RIBBON_HEAD_FLOOR_PX clamp reds FB1 (mid-body floor gone).
+    const fbNoFloor = runAll({
+        [FF_BRIDGE]:
+            "export function trailWidthToModel(trailWidthPx, scale, canvasCssMin){ return trailWidthPx / scale; }",
+    });
+    if (!fbNoFloor.some((v) => v.startsWith("FB1")))
+        fails.push("self-test: a trailWidthToModel with no mid-body floor clamp did NOT red FB1");
+
+    // (fb3) a <4-entry FOURIER_FIGURES catalogue reds FB2.
+    const fbFewFigs = runAll({
+        [FF_MATH]:
+            "export function makeHarmonicFigure(){}\nexport const FOURIER_FIGURES = {\n  a: [{ index: 1, mag: 0.7, phase: 0 }],\n  b: [{ index: 2, mag: 0.5, phase: 0 }],\n};",
+    });
+    if (!fbFewFigs.some((v) => v.startsWith("FB2")))
+        fails.push("self-test: a <4-entry FOURIER_FIGURES did NOT red FB2");
+
+    // (fb4) a NON-INTEGER figure index reds FB2 (the closure fence).
+    const fbFracIdx = runAll({
+        [FF_MATH]:
+            "export function makeHarmonicFigure(){}\nexport const FOURIER_FIGURES = {\n  a: [{ index: 1, mag: 0.7, phase: 0 }],\n  b: [{ index: 2, mag: 0.5, phase: 0 }],\n  c: [{ index: 3, mag: 0.4, phase: 0 }],\n  d: [{ index: 1.5, mag: 0.3, phase: 0 }],\n};",
+    });
+    if (!fbFracIdx.some((v) => v.startsWith("FB2")))
+        fails.push("self-test: a non-integer figure index did NOT red FB2");
+
+    // (fb5) a planted headT=pointer SNAP regression reds FB3 (the teleport class stays dead).
+    const fbSnap = runAll({
+        [FF_COMPOSABLE]: validFF + "headT = pointer.position.value.x;\n",
+    });
+    if (!fbSnap.some((v) => v.startsWith("FB3")))
+        fails.push("self-test: a planted headT=pointer snap did NOT red FB3");
+
+    // (fb6) a planted SECOND requestAnimationFrame reds FB3 (the one-loop discipline).
+    const fbRaf = runAll({ [FF_COMPOSABLE]: validFF + "requestAnimationFrame(loop);\n" });
+    if (!fbRaf.some((v) => v.startsWith("FB3")))
+        fails.push("self-test: a planted second requestAnimationFrame did NOT red FB3");
+
+    // (fb7) a surviving FOLLOW_LEAN whisper reds FB3 (the clean break requires it GONE).
+    const fbWhisper = runAll({ [FF_COMPOSABLE]: validFF + "const l = FOLLOW_LEAN * sp.x;\n" });
+    if (!fbWhisper.some((v) => v.startsWith("FB3")))
+        fails.push("self-test: a surviving FOLLOW_LEAN whisper did NOT red FB3");
+
     return fails;
 }
 
@@ -674,7 +904,7 @@ function main() {
 
     const artifact = {
         gate: "proof:viz",
-        wave: "BG.W-VIZ-RESIZE-ADOPT + BG.W-VIZ-PREVIEW-LIVE + BG.W-VIZ-REVEAL-BLOOM + BG.W-DOTFLOW-REBUILD",
+        wave: "BG.W-VIZ-RESIZE-ADOPT + BG.W-VIZ-PREVIEW-LIVE + BG.W-VIZ-REVEAL-BLOOM + BG.W-DOTFLOW-REBUILD + BG.W-FOURIER-BEAUTY",
         stamp: snapshotStamp(),
         ok,
         violations: viol,
@@ -684,14 +914,14 @@ function main() {
     writeGateArtifact(out, artifact);
 
     console.log(
-        "proof:viz — viz-resize-UPLOAD-ONLY (BG.W-VIZ-RESIZE-ADOPT) + per-story preview stills (BG.W-VIZ-PREVIEW-LIVE) + reveal-bloom (BG.W-VIZ-REVEAL-BLOOM) + shader-PI-scope (BG.W-DOTFLOW-REBUILD)",
+        "proof:viz — viz-resize-UPLOAD-ONLY (BG.W-VIZ-RESIZE-ADOPT) + per-story preview stills (BG.W-VIZ-PREVIEW-LIVE) + reveal-bloom (BG.W-VIZ-REVEAL-BLOOM) + shader-PI-scope (BG.W-DOTFLOW-REBUILD) + fourier-beauty (BG.W-FOURIER-BEAUTY)",
     );
     if (viol.length) {
         console.error("  RED:");
         for (const v of viol) console.error("    ✗ " + v);
     } else {
         console.log(
-            "  GREEN (V1 one-sizer-gBCR · V2 no-self-measure · V3 no-self-size · V4 dprPolicy×8 · V5 leaf-routes · P1 registry≥10 · P2 pairwise-distinct · P3 card-dispatch · P4 device-free-memoized · R1 keyframe-filter-brightness · R2 canvas-target+cartoon-punch · R3 duration-token · R4 PRM-gated · R5 attr-not-dead-scalar · R6 first-visible-IO · R7 aurora-opts-in · R8 viz-choreography-absent · SP1 shader-PI-before-OKLCH-splice)",
+            "  GREEN (V1 one-sizer-gBCR · V2 no-self-measure · V3 no-self-size · V4 dprPolicy×8 · V5 leaf-routes · P1 registry≥10 · P2 pairwise-distinct · P3 card-dispatch · P4 device-free-memoized · R1 keyframe-filter-brightness · R2 canvas-target+cartoon-punch · R3 duration-token · R4 PRM-gated · R5 attr-not-dead-scalar · R6 first-visible-IO · R7 aurora-opts-in · R8 viz-choreography-absent · SP1 shader-PI-before-OKLCH-splice · FB1 thick-tapered-ribbon+underglow+midfloor · FB2 beautiful-closed-figures · FB3 real-damped-follow-no-snap-no-2nd-rAF)",
         );
     }
     if (isSelftest) {

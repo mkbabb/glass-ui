@@ -35,6 +35,12 @@ precision highp float;
 // BD.W-FOURIER-LOOM §2b — MUST equal the WGSL twin + FOURIER_TANGENT_EPS (constants.ts).
 #define TANGENT_EPS 1e-4
 #define SPEED_REF_HALFWIDTHS 6.0
+// BG.W-FOURIER-BEAUTY B1 — the THICK luminous RIBBON. RIBBON_TAIL_FRAC is MIRRORED verbatim
+// from constants.ts (the GLSL twin cannot import a TS const); proof:viz FB1 cross-checks the
+// two copies are equal so the mid-body floor (RIBBON_HEAD_FLOOR_PX) can never drift off it.
+#define RIBBON_TAIL_FRAC 0.4
+#define RIBBON_UNDERGLOW_SCALE 2.2
+#define RIBBON_UNDERGLOW_ALPHA 0.16
 
 in vec2 vClip;
 out vec4 fragColor;
@@ -197,14 +203,26 @@ void main() {
     if (i >= uSampleCount - 1) break;
     vec3 sa = uCurve[i];
     vec3 sb = uCurve[i + 1];
-    float d = segDist(p, sa.xy, sb.xy);
-    float cover = 1.0 - smoothstep(halfW, halfW + aa, d);
-    if (cover < 0.002) continue;
     float age = max(sa.z, sb.z);
-    float a = peak * pow(age, fadeExp);
-    a = max(a, peak * trailFloor) * cover;
+    float d = segDist(p, sa.xy, sb.xy);
+    // B1 — the head→tail TAPER: the ribbon half-width scales with age (thick head, thin tail).
+    // The segDist capsule gives round joins/caps for free; the taper makes it a ribbon.
+    float ribbonHalf = halfW * (RIBBON_TAIL_FRAC + (1.0 - RIBBON_TAIL_FRAC) * age);
     vec3 lin = samplePaletteLin(1.0 - age * 0.4);
     vec3 rgb = clamp(linearToSrgb(lin), vec3(0.0), vec3(1.0));
+    // B1 — the soft UNDER-GLOW: a wider, low-alpha copy UNDER the crisp ribbon (the luminous
+    // halo — ONE color event, the SAME warm palette; a wider AA feather for softness).
+    float glowHalf = ribbonHalf * RIBBON_UNDERGLOW_SCALE;
+    float glowCover = 1.0 - smoothstep(glowHalf, glowHalf + aa * 3.0, d);
+    if (glowCover > 0.002) {
+      float ga = peak * RIBBON_UNDERGLOW_ALPHA * pow(age, fadeExp) * glowCover;
+      accum = vec4(rgb * ga, ga) + accum * (1.0 - ga);
+    }
+    // the crisp tapered ribbon core (painted OVER its own under-glow).
+    float cover = 1.0 - smoothstep(ribbonHalf, ribbonHalf + aa, d);
+    if (cover < 0.002) continue;
+    float a = peak * pow(age, fadeExp);
+    a = max(a, peak * trailFloor) * cover;
     accum = vec4(rgb * a, a) + accum * (1.0 - a);
   }
 

@@ -14,7 +14,12 @@
 import type { OklchStop } from "../../../../composables/color";
 import { oklchToLinear } from "../../../../composables/color";
 import { positionsAt, type BasisComponent } from "../math";
-import { MAX_PHASORS, MAX_FOURIER_STOPS, FOURIER_FIT_SAMPLES } from "../constants";
+import {
+    MAX_PHASORS,
+    MAX_FOURIER_STOPS,
+    FOURIER_FIT_SAMPLES,
+    RIBBON_HEAD_FLOOR_PX,
+} from "../constants";
 
 /** One phasor lane in the storage buffer: (re, im, index, _pad). */
 export const FOURIER_PHASOR_BYTES = 16;
@@ -157,8 +162,12 @@ export function trailWidthToModel(
     scale: number,
     canvasCssMin: number,
 ): number {
+    // BG.W-FOURIER-BEAUTY B1 — FLOOR the head width so the tapered MID-BODY clears
+    // RIBBON_MID_FLOOR_PX (2.5px CSS) at every DPR: even a consumer setting `trailWidth: 1`
+    // paints a ≥2.5px mid-body ribbon, never a 1px hairline polyline.
+    const headPx = Math.max(trailWidthPx, RIBBON_HEAD_FLOOR_PX);
     const cssPerClip = Math.max(canvasCssMin, 1) / 2;
-    return (trailWidthPx / Math.max(scale, 1e-6)) / cssPerClip;
+    return (headPx / Math.max(scale, 1e-6)) / cssPerClip;
 }
 
 /** Pack the render uniforms in place. */

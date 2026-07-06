@@ -5,7 +5,12 @@ import { cssToOklch } from "../../../composables/color";
 import { resolveTokenColor } from "../../../composables/dom";
 import { useGlobalDark } from "../../../composables/dark";
 import { mulberry32, hashString } from "../../../utils/prng";
-import { makeEllipticSpectrum, type BasisComponent } from "./math";
+import {
+    makeEllipticSpectrum,
+    makeHarmonicFigure,
+    FOURIER_FIGURES,
+    type BasisComponent,
+} from "./math";
 import type { FourierFieldConfig } from "./constants";
 import { DEFAULT_FOURIER_CONFIG, MAX_PHASORS } from "./constants";
 import { useFourierField } from "./composables/useFourierField";
@@ -79,6 +84,11 @@ const cfg = computed<FourierFieldConfig>(() => {
 // makeEllipticSpectrum runs in JS; the WGSL only SUMS the uploaded phasor table).
 const spectrum = computed<readonly BasisComponent[]>(() => {
     if (props.spectrum && props.spectrum.length > 0) return props.spectrum;
+    // BG.W-FOURIER-BEAUTY B2 — a `source` naming a curated closed-figure recipe generates a
+    // DELIBERATE flower/epicycle figure (integer-index → closes by construction), not the
+    // "boring" random ellipse. The default `source: "elliptic"` keeps the seeded generator.
+    const figure = FOURIER_FIGURES[cfg.value.source];
+    if (figure) return makeHarmonicFigure(figure);
     const liveSeed = props.freeze ? "fourier-field/frozen" : props.seed || "fourier-field";
     const rng = mulberry32(hashString(liveSeed + props.seed));
     return makeEllipticSpectrum(rng, {

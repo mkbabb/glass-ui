@@ -9,8 +9,12 @@ export {
     partialSumAt,
     dftFromPoints,
     makeEllipticSpectrum,
+    makeHarmonicFigure,
+    FOURIER_FIGURES,
+    FOURIER_FIGURE_KEYS,
     type BasisComponent,
     type EllipticSpectrumOptions,
+    type HarmonicTerm,
 } from "./math";
 export {
     DEFAULT_FOURIER_CONFIG,

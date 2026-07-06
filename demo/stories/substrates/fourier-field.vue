@@ -14,6 +14,9 @@ import ShowcaseFrame from "../ShowcaseFrame.vue";
 import {
     FourierField,
     makeEllipticSpectrum,
+    makeHarmonicFigure,
+    FOURIER_FIGURES,
+    FOURIER_FIGURE_KEYS,
     type BasisComponent,
     type FourierFieldConfig,
 } from "@glass/components/custom/fourier-field";
@@ -71,14 +74,42 @@ const COLOR_OPTIONS = [
     { label: "Legendre (violet)", value: "var(--viz-legendre)" },
 ];
 
+// BG.W-FOURIER-BEAUTY B2 — the coefficient-driven closed-figure family (fourier flowers)
+// beside the generated ellipse + the traced glyphs.
+const FIGURE_LABELS: Record<string, string> = {
+    trefoil: "Trefoil flower",
+    quatrefoil: "Quatrefoil flower",
+    pentafoil: "Pentafoil flower",
+    hexafoil: "Hexafoil flower",
+    spiro: "Spirograph",
+};
 const SOURCE_OPTIONS = [
     { label: "Elliptic — generated", value: "elliptic" },
+    ...FOURIER_FIGURE_KEYS.map((k) => ({ label: FIGURE_LABELS[k] ?? k, value: k })),
     ...FOURIER_SHAPES.map((s) => ({ label: `Trace ${s.label}`, value: s.key })),
 ];
 
 // The config presets fold the retired `variant`: Ambient ellipse (= hero), Dense
 // reconstruction (= final), Brand mark ℱ, Summing harmonics.
 const presets: readonly ConfiguratorPreset<FourierViewCfg>[] = [
+    {
+        // BG.W-FOURIER-BEAUTY B2 — a DELIBERATE closed epicycle figure opens the route.
+        key: "flower",
+        label: "Fourier flower",
+        sub: "closed epicycle figure",
+        config: {
+            source: "pentafoil",
+            harmonics: 2,
+            showEpicycles: true,
+            epicycleArms: 2,
+            rainbowChain: true,
+            trailArc: 0.72,
+            trailWidth: 5,
+            intensity: 1,
+            harmonicScale: 0.24,
+            color: "var(--viz-fourier)",
+        },
+    },
     {
         key: "ambient",
         label: "Ambient ellipse",
@@ -90,7 +121,7 @@ const presets: readonly ConfiguratorPreset<FourierViewCfg>[] = [
             epicycleArms: 4,
             rainbowChain: true,
             trailArc: 0.43,
-            trailWidth: 3,
+            trailWidth: 5,
             intensity: 1,
             harmonicScale: 0.24,
             color: "var(--viz-fourier)",
@@ -107,7 +138,7 @@ const presets: readonly ConfiguratorPreset<FourierViewCfg>[] = [
             epicycleArms: 8,
             rainbowChain: false,
             trailArc: 0.6,
-            trailWidth: 3.2,
+            trailWidth: 5,
             intensity: 1,
             harmonicScale: 0.17,
             color: "var(--viz-chebyshev)",
@@ -124,7 +155,7 @@ const presets: readonly ConfiguratorPreset<FourierViewCfg>[] = [
             epicycleArms: 18,
             rainbowChain: true,
             trailArc: 0.5,
-            trailWidth: 3,
+            trailWidth: 4,
             intensity: 1,
             harmonicScale: 0.24,
             color: "var(--viz-fourier)",
@@ -141,7 +172,7 @@ const presets: readonly ConfiguratorPreset<FourierViewCfg>[] = [
             epicycleArms: 8,
             rainbowChain: true,
             trailArc: 0.43,
-            trailWidth: 3,
+            trailWidth: 5,
             intensity: 1.1,
             harmonicScale: 0.2,
             color: "var(--viz-legendre)",
@@ -151,7 +182,7 @@ const presets: readonly ConfiguratorPreset<FourierViewCfg>[] = [
 
 const studio = useConfiguratorState<FourierViewCfg>({
     presets,
-    initialPreset: "ambient",
+    initialPreset: "flower",
     cloneMode: "per-preset",
 });
 
@@ -170,6 +201,8 @@ const ellipticSpectrum = computed<BasisComponent[]>(() =>
 const activeSpectrum = computed<readonly BasisComponent[]>(() => {
     const src = studio.config.source;
     if (src === "elliptic") return ellipticSpectrum.value;
+    // B2 — a closed-figure recipe (fourier flower) generates its integer-index spectrum.
+    if (FOURIER_FIGURES[src]) return makeHarmonicFigure(FOURIER_FIGURES[src]);
     return getFourierShape(src).spectrum;
 });
 const maxHarmonics = computed(() => Math.max(1, activeSpectrum.value.length));

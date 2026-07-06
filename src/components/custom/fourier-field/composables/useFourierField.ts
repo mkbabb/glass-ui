@@ -31,7 +31,7 @@ import { usePointerVelocityField } from "../../../../composables/motion/usePoint
 import { resolveBudgetDpr } from "../../aurora/constants/budget";
 import type { OklchStop } from "../../../../composables/color";
 import type { FourierFieldConfig } from "../constants";
-import { SCRUB_GAIN, FOLLOW_LEAN, MAX_PHASORS } from "../constants";
+import { SCRUB_GAIN, FOLLOW_REACH, MAX_PHASORS } from "../constants";
 import { partialSumAt, type BasisComponent } from "../math";
 import { createFourierWGPUSetup } from "./fourierFieldWGPUSetup";
 import { createFourierGLSetup } from "./fourierFieldGLSetup";
@@ -260,23 +260,39 @@ export function useFourierField(
         return headToUnit(m.x, m.y, leanedFit, aspect);
     };
 
-    // ── BD.W-VIZ-BROKEN-FIX D6b — the 2-D cursor FOLLOW lean (model-space center offset). ──
-    // When interactive + active, the field LEANS toward the cursor: a small bounded MODEL-
-    // space offset the setups SUBTRACT from the view-fit center so the whole reconstruction
-    // pans toward the cursor on screen (the spatial "follow" beside D6a's velocity scrub).
-    // The smoothed pointer is [0,1] → clip [-1,1] → a fraction of the [-1,1] model half-span.
-    // PRM-safe: under reduce `usePointerVelocityField` HOLDS the position (no live motion),
-    // so the lean is a STATIC bend toward the last position (a static lean is not motion);
-    // when not active it relaxes to {0,0} (the ambient/byte-identical register). FOLLOW_LEAN
-    // is the bounded follow depth (≈12% of the model half-span — a gentle pull, never a yank).
+    // ── BG.W-FOURIER-BEAUTY B3 — the REAL 2-D cursor FOLLOW (critically-damped, correct
+    // coordinate space). ──  When interactive + active, the figure CENTROID genuinely REACHES
+    // toward the cursor (the prior BD.W-VIZ-BROKEN-FIX D6b 0.12 model-space whisper never
+    // arrived — the "abysmal tracking" defect). The follow reads the SHARED
+    // `usePointerVelocityField.smoothedPosition` (the critically-damped lerp — ZERO snap/
+    // teleport by construction; the prior `headT = pointerX` absolute-X snap class stays
+    // dead) and maps it through the SAME model→clip fit the render inverts:
+    //   • pointer [0,1] (getBoundingClientRect-normalized — dpr/scroll-safe, the 6.1 sizer
+    //     box↔backing mapping) → clip [-1,1]; DOM y grows DOWN so the y clip is INVERTED
+    //     (the whisper shipped the WRONG y sign — the figure panned AWAY from the cursor);
+    //   • clip → MODEL offset via `× aspect / scale` (the exact inverse of the fs's
+    //     `model = center + clip·aspect / scale`), bounded by `FOLLOW_REACH` (< 1 so the
+    //     figure stays largely in frame), then SUBTRACTED from `fit.center` by the setups so
+    //     the centroid sits under the cursor → the tracked feature reaches within a small
+    //     radius within the damped settle.
+    // PRM-safe: under reduce the pointer field HOLDS its position (no live motion), so the
+    // follow is a STATIC bend toward the last position (not animation); when not active it
+    // relaxes to {0,0} (the ambient/byte-identical register). NO second rAF — the follow reads
+    // the field the ONE onFrame `tick` advances.
     const getPointerLean = (): { x: number; y: number } => {
         if (!config.interactive || !pointer.active.value) return { x: 0, y: 0 };
+        const canvas = canvasRef.value;
+        if (!canvas || !canvas.width || !canvas.height) return { x: 0, y: 0 };
         const sp = pointer.smoothedPosition.value;
-        // [0,1] → clip [-1,1]; the model half-span is ~1 (the fit maps the curve into [-1,1]),
-        // so the model offset is the clip offset × the bounded follow depth.
+        const scale = Math.max(ensureFit().scale, 1e-6);
+        const aspect = canvas.width / canvas.height;
+        // [0,1] → clip [-1,1] × the bounded reach; DOM y (down) → clip y (up) is inverted.
+        const clipX = (sp.x * 2 - 1) * FOLLOW_REACH;
+        const clipY = -(sp.y * 2 - 1) * FOLLOW_REACH;
+        // clip → MODEL offset (the inverse of the fs `model = center + clip·aspect / scale`).
         return {
-            x: (sp.x * 2 - 1) * FOLLOW_LEAN,
-            y: (sp.y * 2 - 1) * FOLLOW_LEAN,
+            x: (clipX * aspect) / scale,
+            y: clipY / scale,
         };
     };
 
