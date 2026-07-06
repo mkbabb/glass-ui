@@ -130,12 +130,13 @@ const fontRungStyle = computed(() => {
   >
     <slot />
     <SelectIcon as-child>
-      <!-- BD.W-SELECT-WELL — the chevron joins the panel's spring + punch clock
-           (kill the 200ms ease-standard fork that desynced from the 0.4s welling
-           panel) so trigger + panel move as ONE liquid gesture. The `rotate`
-           longhand (not `transform`) composes with any other transform. Reads the
-           SHIPPED `--ease-cartoon-punch` (PRM re-aliases it to non-overshoot). -->
-      <ChevronDown class="[transition:rotate_var(--spring-snappy-duration)_var(--ease-cartoon-punch)] in-data-[state=open]:rotate-180 h-4 w-4 shrink-0 opacity-(--select-chevron-opacity)" />
+      <!-- BG.W-DISCLOSURE-ROTATE — the chevron rides the ONE `transition-disclosure`
+           register (btn.css): the `rotate` longhand on the spring's own settle clock
+           `--spring-snappy-duration` + the weighty `--ease-cartoon-punch` arrival, PRM
+           re-aliased to non-overshoot. Byte-identical to the prior BD.W-SELECT-WELL
+           arbitrary form — folded onto the shared register so the Accordion + Configurator
+           carets settle on the SAME clock+curve (one register, no re-declaration). -->
+      <ChevronDown class="transition-disclosure in-data-[state=open]:rotate-180 h-4 w-4 shrink-0 opacity-(--select-chevron-opacity)" />
     </SelectIcon>
   </SelectTrigger>
 </template>

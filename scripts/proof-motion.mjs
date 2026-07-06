@@ -162,6 +162,71 @@ function collectCorpus() {
     return out;
 }
 
+// ── The disclosure-caret register surface (BG.W-DISCLOSURE-ROTATE / DR) ──────────
+// The ONE `transition-disclosure` register + the three carets that COLLAPSE onto it.
+// At HEAD the same disclosure chevron painted in THREE divergent registers; DR1 locks
+// the single register + the re-points, DR2 is the widened Tailwind-TEMPLATE detector.
+const DISCLOSURE_ROSTER = [
+    { name: "AccordionTrigger", path: "src/components/ui/accordion/AccordionTrigger.vue" },
+    { name: "SelectTrigger", path: "src/components/ui/select/SelectTrigger.vue" },
+    { name: "ConfiguratorLayer", path: "src/components/custom/configurator/ConfiguratorLayer.vue" },
+];
+const DISCLOSURE_UTILITY = "transition-disclosure";
+
+// The <template> section of a .vue SFC (the class-attr surface — never the <style> block;
+// proof:spring-ease's detectAbruptSpatial scans only <style>, so a chevron transition in
+// the TEMPLATE is its blind spot — this is the widen, per the C-1 resolution).
+function templateOf(src) {
+    const m = src.match(/<template>([\s\S]*?)<\/template>/i);
+    return m ? m[1] : src;
+}
+
+// A spatial transition leg is EASED/SPRUNG (never abrupt) iff it rides a --spring-*
+// register or the weighty eased-arrival curves (--ease-cartoon-punch / --ease-out-expo) —
+// the SAME set proof:spring-ease's abruptSpatialTiming clears.
+function sprungOrEased(s) {
+    return (
+        /--spring-[a-z-]+/.test(s) ||
+        /--ease-cartoon-punch\b/.test(s) ||
+        /--ease-out-expo\b/.test(s)
+    );
+}
+
+// DR2 — the abrupt-spatial-TAILWIND detector: a .vue TEMPLATE class run carrying a Tailwind
+// spatial-transition form (`transition-transform`, or an arbitrary
+// `[transition:(rotate|scale|translate|transform)_…]`) that rides a NON-spring clock with
+// no --spring-*/eased-arrival token AND is not the canonical `transition-disclosure`
+// register. Mirrors proof:spring-ease's CSS-shorthand abruptSpatialTiming, transposed onto
+// Tailwind template tokens (the born-RED witness = the accordion chevron pre-fix).
+export function detectAbruptTailwindSpatial(file, template) {
+    const V = [];
+    // (a) the arbitrary `[transition:(rotate|scale|translate|transform)_<clock>_<curve>]`
+    //     property utility (Tailwind arbitrary-value form; `_` is the space separator).
+    const arbRe = /\[transition:(rotate|scale|translate|transform)_([^\]]+)\]/g;
+    let m;
+    while ((m = arbRe.exec(template)) !== null) {
+        if (sprungOrEased(m[2])) continue;
+        V.push(
+            `${file}: the arbitrary spatial transition '[transition:${m[1]}_${m[2]}]' rides a non-spring clock with no --spring-*/eased-arrival token (an abrupt Tailwind spatial caret — fold onto \`${DISCLOSURE_UTILITY}\`)`,
+        );
+    }
+    // (b) the `transition-transform` utility (transitions transform/translate/scale/rotate
+    //     in Tailwind v4). Abrupt when its class run carries NO --spring-*/eased token and is
+    //     NOT `transition-disclosure` — it falls back to Tailwind's flat default bezier (the
+    //     accordion caret pre-fix). Scan every class/:class attribute string.
+    const classRe = /:?class\s*=\s*(?:"([^"]*)"|'([^']*)')/g;
+    while ((m = classRe.exec(template)) !== null) {
+        const cls = m[1] ?? m[2] ?? "";
+        if (!/\btransition-transform\b/.test(cls)) continue;
+        if (new RegExp(`\\b${DISCLOSURE_UTILITY}\\b`).test(cls)) continue;
+        if (sprungOrEased(cls)) continue;
+        V.push(
+            `${file}: a \`transition-transform\` class ('${cls.replace(/\s+/g, " ").trim().slice(0, 64)}…') rides the flat Tailwind bezier default (no --spring-*/eased-arrival token) — an abrupt spatial caret; fold onto \`${DISCLOSURE_UTILITY}\``,
+        );
+    }
+    return V;
+}
+
 // ── The pure detector — takes an environment so the self-test can inject a synthetic
 //    mutated state (a re-planted dead composable). ─────────────────────────────────
 function detect({ existsFn, readFn, corpus }) {
@@ -599,6 +664,63 @@ function detect({ existsFn, readFn, corpus }) {
     else if (!/initial-value\s*:\s*0\b/.test(dockPressProp[0]))
         V.push("R2: `@property --dock-press-t` initial-value must be 0 (the CSS rest / no-JS floor — an unwired dock control reads no press deepen)");
 
+    // ── DR — the disclosure chevron register (BG.W-DISCLOSURE-ROTATE) ────────────────
+    // The same disclosure caret painted in THREE divergent registers at HEAD: Accordion a
+    // flat `transition-transform duration-200` bezier (zero weight), Select the snappy-clock
+    // cartoon-punch, Configurator a `--duration-fast` snappy on the WRONG `transform`
+    // property (a `transition: transform` never covers the `rotate` Tailwind v4's `rotate-*`
+    // writes — the chevron SNAPPED). DR1 locks the ONE `transition-disclosure` register + the
+    // three carets re-pointed onto it (the `disclosure-single-register` clause); DR2 is the
+    // widened Tailwind-TEMPLATE detector (the `abrupt-spatial-tailwind` clause), the S6 blind
+    // spot folded HERE as a proof:motion case row (the C-1 resolution — the widen does NOT
+    // fork proof:spring-ease, whose sweep is CSS-shorthand only). (btnCss is read once in the
+    // LW clause above; reuse it here — no second read.)
+
+    // DR1 — the ONE register exists, transitions `rotate`, rides a sprung/eased curve on the
+    //       spring's OWN settle clock (never a flat bezier / generic --duration-*).
+    const discBody = (() => {
+        const m = btnCss.match(/@utility\s+transition-disclosure\s*\{/);
+        if (!m) return null;
+        let i = m.index + m[0].length;
+        let depth = 1;
+        const start = i;
+        for (; i < btnCss.length && depth > 0; i++) {
+            if (btnCss[i] === "{") depth++;
+            else if (btnCss[i] === "}") depth--;
+        }
+        return btnCss.slice(start, i - 1);
+    })();
+    if (discBody == null) {
+        V.push("DR1: `@utility transition-disclosure` is not minted in utilities/btn.css — the ONE canonical chevron-rotate register has no home (the three carets cannot resolve the SAME clock+curve)");
+    } else {
+        if (!/transition\s*:\s*rotate\b/.test(discBody))
+            V.push("DR1: transition-disclosure must transition the `rotate` property — Tailwind v4 `rotate-*` writes the `rotate` longhand, NOT `transform`, so a `transition: transform` never animates the chevron flip (the Configurator snap bug)");
+        if (!sprungOrEased(discBody))
+            V.push("DR1: transition-disclosure's curve is not a --spring-* register nor the weighty eased arrival (--ease-cartoon-punch/--ease-out-expo) — a disclosure caret must carry liquid weight, not a flat bezier/keyword (the divergence this register kills)");
+        if (!/var\(\s*--spring-[a-z]+-duration\s*\)/.test(discBody))
+            V.push("DR1: transition-disclosure's clock is not a per-spring settle clock var(--spring-*-duration) — the register must ride the spring's OWN clock (the W-GLASS-CAL per-spring-duration doctrine), never a generic --duration-*");
+    }
+
+    // DR1b — the THREE carets reference the ONE register + the divergent HEAD forms are GONE.
+    const discSrc = {};
+    for (const c of DISCLOSURE_ROSTER) discSrc[c.name] = readFn(c.path);
+    for (const c of DISCLOSURE_ROSTER) {
+        if (!new RegExp(`\\b${DISCLOSURE_UTILITY}\\b`).test(discSrc[c.name]))
+            V.push(`DR1: ${c.name}'s disclosure caret does not reference \`${DISCLOSURE_UTILITY}\` — the three carets must resolve the SAME clock+curve (substitution over re-declaration; a divergent register reds)`);
+    }
+    if (/transition-transform\s+duration-200/.test(discSrc.AccordionTrigger))
+        V.push("DR1: AccordionTrigger still carries the flat `transition-transform duration-200` chevron (the zero-weight abrupt bezier the register replaces — clean break, no dual path)");
+    if (/\[transition:rotate_/.test(discSrc.SelectTrigger))
+        V.push("DR1: SelectTrigger still carries the raw `[transition:rotate_…]` arbitrary form — fold it onto `transition-disclosure` (one register, no re-declaration)");
+    if (/\.configurator-layer-chevron\s*\{[^}]*transition\s*:/.test(discSrc.ConfiguratorLayer))
+        V.push("DR1: ConfiguratorLayer still declares a scoped `.configurator-layer-chevron { transition: … }` (the `--duration-fast` snappy on the WRONG `transform` property) — fold onto `transition-disclosure` (clean break)");
+
+    // DR2 — the abrupt-spatial-tailwind detector (the S6 template widen) over the roster.
+    for (const c of DISCLOSURE_ROSTER) {
+        for (const f of detectAbruptTailwindSpatial(c.name, templateOf(discSrc[c.name])))
+            V.push(`DR2: ${f}`);
+    }
+
     return V;
 }
 
@@ -766,6 +888,49 @@ if (!r2SelfTestFlags) {
     process.exit(1);
 }
 
+// ── The DR self-test bite — revert the Accordion chevron to the flat `transition-transform
+//    duration-200` (the HEAD divergent disclosure state — the born-RED accordion-caret
+//    witness) and assert the disclosure arm FLAGS it: DR1 loses the register reference AND
+//    DR2's Tailwind-TEMPLATE scanner catches the abrupt spatial form (the
+//    disclosure-single-register + abrupt-spatial-tailwind teeth are real). ─────────────────
+const accordionDiskDR = diskRead("src/components/ui/accordion/AccordionTrigger.vue");
+const revertDiscRead = (rel) =>
+    rel === "src/components/ui/accordion/AccordionTrigger.vue"
+        ? accordionDiskDR.replace(/\btransition-disclosure\b/, "transition-transform duration-200")
+        : diskRead(rel);
+const revertDiscViolations = detect({ existsFn: diskExists, readFn: revertDiscRead, corpus });
+const drSelfTestFlags = revertDiscViolations.length > violations.length;
+if (!drSelfTestFlags) {
+    console.error(
+        "proof:motion — DR SELF-TEST FAILED: the detector did NOT flag the Accordion chevron reverted to `transition-transform duration-200` (the HEAD divergent disclosure state — the born-RED accordion-caret witness). The disclosure-single-register / abrupt-spatial-tailwind teeth are gone; do not trust a GREEN.",
+    );
+    process.exit(1);
+}
+// A direct DR2-scanner bite — a synthetic `.vue` template with a flat `transition-transform
+// duration-200` on a state-toggled caret MUST flag (the widened detector proves its bite on
+// the exact form the spec names), and the canonical `transition-disclosure` MUST NOT.
+const drScannerBite = detectAbruptTailwindSpatial(
+    "src/_bite.vue",
+    '<div><svg class="h-4 w-4 shrink-0 transition-transform duration-200" /></div>',
+);
+if (drScannerBite.length === 0) {
+    console.error(
+        "proof:motion — DR2 SCANNER SELF-TEST FAILED: detectAbruptTailwindSpatial did NOT flag a synthetic `transition-transform duration-200` template caret (the abrupt-spatial-tailwind form the spec names). The template widen has no teeth.",
+    );
+    process.exit(1);
+}
+if (
+    detectAbruptTailwindSpatial(
+        "src/_bite.vue",
+        '<svg class="h-4 w-4 shrink-0 transition-disclosure" />',
+    ).length !== 0
+) {
+    console.error(
+        "proof:motion — DR2 SCANNER SELF-TEST FAILED: detectAbruptTailwindSpatial FLAGGED the canonical `transition-disclosure` caret (a false-positive on the register the wave mints).",
+    );
+    process.exit(1);
+}
+
 // ── Report ──────────────────────────────────────────────────────────────────────
 console.log("proof:motion — the F5 dead-composable cut is COMPLETE (BG.W-DEAD-COMPOSABLE-CUT)");
 console.log(`  dead composables      : ${DEAD.map((d) => d.name).join(", ")}`);
@@ -794,6 +959,10 @@ console.log(`  liquid-weight-default : --transition-liquid-spatial = ${GENERATED
 console.log(`  calm opt-out + PRM    : .motion-calm → var(--ease-standard) (explicit opt-out) + the PRM carve re-aliases the same — homed in scheme-spring.css AFTER the base default (the LAST-imported partial) so it WINS the source-order cascade under reduce (the F5.2 vestibular-floor fix — no overshoot under reduce)`);
 console.log(`  dock-hover-press (R2) : DockIconButton composes useLiquidPress(springPreset('press'), squish) writing --dock-press-t — the interruptible spring press; the dock CSS couples the specular gleam (via --glass-btn-press-t) + a sub-perceptual brightness deepen to the spring, the :active register the no-JS/PRM floor`);
 console.log(`  self-test (LW bites)  : OK — a .interactive-item scale leg reverted to var(--ease-standard), scheme-spring stripped of its PRM re-alias (losing-cascade), AND DockIconButton severed of useLiquidPress all flag`);
+console.log("proof:motion — the disclosure chevron is ONE register (BG.W-DISCLOSURE-ROTATE)");
+console.log(`  disclosure-single-register: @utility transition-disclosure = rotate var(--spring-snappy-duration) var(--ease-cartoon-punch) — Accordion · Select · Configurator carets all fold onto it (the flat transition-transform-200 / the transform-on-the-wrong-property snap / the raw arbitrary form all RETIRED)`);
+console.log(`  abrupt-spatial-tailwind   : the S6 blind spot closed — detectAbruptTailwindSpatial scans the .vue TEMPLATE (not just <style>) for a transition-transform/[transition:rotate…] riding a non-spring clock (the widen folded here as a proof:motion case row, C-1)`);
+console.log(`  self-test (DR bites)  : OK — the Accordion chevron reverted to transition-transform duration-200 flags (DR1+DR2), the synthetic template caret flags, the canonical transition-disclosure does NOT`);
 console.log(`  corpus scanned        : ${corpus.length} src/+demo/ sources`);
 console.log(`  violations            : ${violations.length}`);
 for (const m of violations) console.error(`  CUT-INCOMPLETE   ${m}`);
@@ -815,6 +984,8 @@ writeGateArtifact(ARTIFACT, {
     lwSelfTestFlagged: lwSelfTestFlags,
     lwCascadeSelfTestFlagged: lwCascadeSelfTestFlags,
     r2SelfTestFlagged: r2SelfTestFlags,
+    drSelfTestFlagged: drSelfTestFlags,
+    disclosureRoster: DISCLOSURE_ROSTER.map((c) => c.name),
     transitionLiquidSpatial: GENERATED_LIQUID_SPATIAL,
     spine: SPINE_PATH,
     bloomWrappers: BLOOM_WRAPPERS,

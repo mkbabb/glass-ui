@@ -137,10 +137,14 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
                     {{ sub }}
                 </span>
             </div>
-            <!-- Chevron rotates on the fast snappy spring register (the §6 enter
-                 vocabulary) — a crisp settle, not the prior flat 200ms bezier. -->
+            <!-- BG.W-DISCLOSURE-ROTATE — the chevron rides the ONE shared
+                 `transition-disclosure` register (btn.css): the `rotate` longhand on
+                 `--spring-snappy-duration` + the weighty `--ease-cartoon-punch` arrival.
+                 The prior scoped `transition: transform …` transitioned the WRONG property
+                 (Tailwind's `rotate-180` writes `rotate`, not `transform`, so it SNAPPED);
+                 folded onto the register the Accordion + Select carets share. -->
             <ChevronDown
-                class="configurator-layer-chevron h-4 w-4 shrink-0 text-muted-foreground group-data-[state=open]:rotate-180"
+                class="h-4 w-4 shrink-0 text-muted-foreground group-data-[state=open]:rotate-180 transition-disclosure"
                 aria-hidden="true"
             />
         </button>
@@ -194,17 +198,14 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
  * the fast snappy spring (`--spring-snappy`) at `--duration-fast`. The
  * height axis is a layout property; the snappy `linear()` overshoot reads as
  * a quick settle (sub-perceptual peak), not a sluggish 200ms ramp. The
- * chevron rotation rides the SAME spring for one coherent open gesture.
+ * chevron rotation is owned by the shared `transition-disclosure` register
+ * (BG.W-DISCLOSURE-ROTATE, btn.css) — no scoped chevron transition survives here.
  */
 .configurator-layer-region {
     transition: grid-template-rows var(--duration-fast) var(--spring-snappy);
 }
-.configurator-layer-chevron {
-    transition: transform var(--duration-fast) var(--spring-snappy);
-}
 @media (prefers-reduced-motion: reduce) {
-    .configurator-layer-region,
-    .configurator-layer-chevron {
+    .configurator-layer-region {
         transition: none;
     }
 }

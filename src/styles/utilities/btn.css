@@ -79,6 +79,26 @@
     transition-property: height, opacity;
 }
 
+/* ── Disclosure chevron register (BG.W-DISCLOSURE-ROTATE) ────────────────
+   ONE canonical chevron-rotate gesture — the SAME settle clock + arrival curve
+   across EVERY disclosure caret (Accordion / Select / Configurator). The three
+   diverged: Accordion rode a flat `transition-transform duration-200` bezier
+   (zero weight), Select the snappy-clock cartoon-punch, Configurator a scoped
+   `--duration-fast` snappy on the WRONG property (a `transition: transform`
+   never covers the `rotate` Tailwind v4's `rotate-*` writes, so its chevron
+   SNAPPED). This register collapses them onto ONE (substitution over
+   re-declaration): the `rotate` property (the longhand the toggle actually
+   writes), the spring's OWN settle clock `--spring-snappy-duration` (the
+   W-GLASS-CAL per-spring-duration doctrine, not a generic `--duration-*`), and
+   the weighty `--ease-cartoon-punch` arrival (the liquid-weight "morph more on
+   move" register — a small quick control that still carries inertia). PRM:
+   `--ease-cartoon-punch` self-re-aliases to the no-overshoot `--ease-standard`
+   under `prefers-reduced-motion: reduce` (scheme-motion.css), so the caret still
+   flips its state with zero overshoot frames — the vestibular floor. */
+@utility transition-disclosure {
+    transition: rotate var(--spring-snappy-duration) var(--ease-cartoon-punch);
+}
+
 /* ── Sheet/drawer slide-out animation grammar ──
    The sheet/drawer-panel analogue of the overlay enter (the popover-class
    surfaces now ride the spring-clocked `.glass-reveal`, BB.W-LIQUID-REVEAL).
