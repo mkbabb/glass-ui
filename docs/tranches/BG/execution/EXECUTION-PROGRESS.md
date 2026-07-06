@@ -217,6 +217,26 @@ BOOKED. **[P]** in the class cell = paint owed at that wave's OWN non-authoring 
 > killed on completion. The INSTRUMENT is certified end-to-end for fan-out (pipeline-validation evidence per
 > real-paint-protocol §3; the wave's OWN reinvented-rail gestalt row flips only at its owning non-authoring
 > paint close). `docs/tranches/BG/audit/visual/pipeline-validate/DOCK-RAIL-REINVENT-PIPELINE-VALIDATE-DELTA.md`.
+> **RE-CONFIRMED AGAIN (2026-07-05)** by a fresh non-authoring capture-pipeline validator on the
+> DOTFLOW-REBUILD wave route (`BG.W-DOTFLOW-REBUILD` F9 → `/substrates/dot-flow-field`, the WebGPU-first
+> streamline flow-field viz — the FIRST pipeline proof on the actual viz route, not `/dock/overview`):
+> re-ran `verify-siblings-intact` (exit 0), rebuilt `demo:dist` + served BUILT bytes on :5200, re-compiled
+> `wkshot-live.m` from scratch, launched a real Chrome.app CDP leg (Chrome 149, port 9333, playwright
+> connectOverCDP) + the off-screen WKWebView leg, and captured all four PNGs fresh. Chrome `ANGLE (Apple,
+> ANGLE Metal Renderer: Apple M5 Max)` (real Metal, NOT SwiftShader) @1x 1440×900 + WebKit `Apple GPU`
+> @2x 2880×1800, both modes — each VISUALLY decoded to the FULL Dot-Flow-Field route gestalt (the audacious
+> "Dot Flow Field" display hero + "SUBSTRATES · DOT FLOW FIELD" eyebrow + `@mkbabb/glass-ui/dot-flow-field`
+> subpath chip + the curl-noise/advected-particle blurb + "EVENLY-SPACED BEADED STREAMLINES · CURL-WARPED ·
+> CURSOR-BENT" eyebrow, the sidebar icon rail + bottom nav dock) with the in-pixel `ENGINE CHROME/WEBKIT ·
+> GPU ANGLE Metal M5 Max|Apple GPU · VIEW 1440×900 @1x|@2x (2880×1800px) · MODE LIGHT/DARK` badge + magenta
+> `#ff00ff` fiducial (the two engines pixel-distinguishable CHROME vs WEBKIT — different GPU strings +
+> font metrics, a genuinely different engine, not a re-shot Chromium). Non-blank proven by decoder:
+> `isRealPng` true on all 4, body σ(lum) 44–48 (a flat shell reads ~0), mode-distinct means (light
+> L≈203–213 / dark L≈60–62, the luminous-dark register); `data-capture-ready` polled @~3.8s Chrome / @4500ms
+> both WebKit modes; `verify-siblings-intact --quiet` exit 0 before AND after; the served `demo:dist:serve`
+> + throwaway Chrome killed on completion. The INSTRUMENT is certified end-to-end for fan-out (pipeline-
+> validation evidence per real-paint-protocol §3; the wave's OWN streamline-coherence gestalt row flips only
+> at its owning non-authoring paint close). `docs/tranches/BG/audit/visual/pipeline-validate/DOTFLOW-REBUILD-PIPELINE-VALIDATE-DELTA.md`.
 > **BD cut fork facts:** the
 > canonical BD cut is the `v4.2.0` tag object (`git rev-list -1 v4.2.0`); `998136bb` is the master fork point.
 
