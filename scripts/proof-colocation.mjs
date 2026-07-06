@@ -512,6 +512,172 @@ function selfTestDockLeafVerify() {
     return fails;
 }
 
+// BH.B2.4c — the SATELLITE/GOO-DOT LEAF-VERIFY clause (W-leaf-verify-ws5). WS5 owns the
+// goo-blob satellite-shade widen + the goo-dot-matrix prune; this wave is VERIFY-ONLY (ZERO
+// carve) — it asserts the leaf shapes BG's WS5 landed hold on the frontier + cleans the stale
+// suite-doc references the goo-dot-matrix PRUNE (BG.W-GOODOT-PRUNE) left behind. The facts:
+//   SL1 — useBlobSatellites.ts is the colocated satellite leaf: it lives under composables/
+//         AND publishes `useBlobSatellites` (the BG.W-BLOB-SATELLITE-SHADE widened leaf).
+//   SL2 — GooBlob.vue is the carved host: it imports the satellite leaf back from
+//         ./composables/useBlobSatellites (the leaf is COMPOSED, not inline).
+//   SL3 — the goo-dot-matrix HYBRID leaf set is DEFINITION-ABSENT (the whole dir gone, the
+//         BG.W-GOODOT-PRUNE retirement — 0 external consumers).
+//   SL4 — the viz src (+ viz demo) trees carry ZERO un-stripped reference to the retired
+//         viz's PRECISE identifiers (goo-dot-matrix / goo+dot / GooDotMatrix / useGooDotMatrix).
+//         The scan uses the retired viz's UNAMBIGUOUS full names ONLY — NOT the ambiguous
+//         `goo-dot` short-form, which the LIVE pager-dots `.goo-dot` pip class + the metaball
+//         shader's field-slice comments legitimately carry. scripts/ is EXCLUDED (the gate
+//         machinery + proof:viz-hybrid legitimately document the retirement by name).
+// Born-RED on HEAD (the PROCEDURAL-SUITE.md goo-dot-matrix member row + the dot-matrix
+// README/live-row hybrid cross-refs present) → GREEN once the suite doc is reconciled to the
+// pruned frontier.
+const SATELLITE_LEAF_VERIFY = {
+    host: "components/custom/goo-blob/GooBlob.vue",
+    hostImportMarker: "./composables/useBlobSatellites",
+    satelliteLeaf: "components/custom/goo-blob/composables/useBlobSatellites.ts",
+    satelliteSymbol: "useBlobSatellites",
+    retiredVizDir: "components/custom/goo-dot-matrix",
+    // the UNAMBIGUOUS retired-viz identifiers (never the overloaded `goo-dot` short-form
+    // nor the LIVE generic `hybrid` word — aurora's warpMode + handmark's four-layer hybrid).
+    retiredTokens: ["goo-dot-matrix", "goo+dot", "GooDotMatrix", "useGooDotMatrix", "BC.W-VIZ-HYBRID"],
+    // the un-stripped scan trees (viz src + viz demo). scripts/ is deliberately absent.
+    scanDirs: ["src/components/custom", "demo/stories/substrates"],
+};
+
+/** The reusable satellite/goo-dot leaf-verify clause checker (runs over provided state so the
+ *  self-test can feed synthetic inputs). Returns the violation strings. */
+function evaluateSatelliteLeafVerify(s) {
+    const violations = [];
+    // SL1 — the satellite carve leaf present + exports its symbol.
+    if (!s.satelliteExists) {
+        violations.push(
+            `src/${SATELLITE_LEAF_VERIFY.satelliteLeaf} — the colocated useBlobSatellites leaf is ABSENT`,
+        );
+    } else if (
+        !new RegExp(
+            `export\\s+(?:async\\s+)?(?:function|const)\\s+${SATELLITE_LEAF_VERIFY.satelliteSymbol}\\b`,
+        ).test(s.satelliteSrc)
+    ) {
+        violations.push(
+            `src/${SATELLITE_LEAF_VERIFY.satelliteLeaf} — does not export ${SATELLITE_LEAF_VERIFY.satelliteSymbol} (the colocated leaf must publish the widened symbol)`,
+        );
+    }
+    // SL2 — the carved host imports the satellite leaf back.
+    if (!s.hostExists) {
+        violations.push(`src/${SATELLITE_LEAF_VERIFY.host} — the goo-blob host SFC is ABSENT`);
+    } else if (!s.hostSrc.includes(SATELLITE_LEAF_VERIFY.hostImportMarker)) {
+        violations.push(
+            `src/${SATELLITE_LEAF_VERIFY.host} — imports no ${SATELLITE_LEAF_VERIFY.hostImportMarker} leaf (the satellite logic must be composed from the colocated leaf, not inline)`,
+        );
+    }
+    // SL3 — the retired goo-dot-matrix HYBRID leaf set is DEFINITION-ABSENT.
+    if (s.retiredDirExists) {
+        violations.push(
+            `src/${SATELLITE_LEAF_VERIFY.retiredVizDir} — the goo-dot-matrix HYBRID viz must be DEFINITION-ABSENT (BG.W-GOODOT-PRUNE)`,
+        );
+    }
+    // SL4 — no un-stripped retired-viz reference (comment OR code) in the viz trees.
+    for (const hit of s.retiredHits) {
+        violations.push(
+            `${hit.file}:${hit.line} — a stale reference to the retired viz token "${hit.token}" survives; reconcile it (the goo-dot-matrix viz is pruned, the suite index must not list it)`,
+        );
+    }
+    return violations;
+}
+
+/** Scan the viz src + demo trees for un-stripped retired-viz token references. */
+function scanRetiredVizTokens() {
+    const hits = [];
+    for (const d of SATELLITE_LEAF_VERIFY.scanDirs) {
+        const dir = resolve(ROOT, d);
+        for (const f of filesUnder(dir, /\.(ts|vue|md|css)$/)) {
+            const lines = readFileSync(f, "utf8").split("\n");
+            lines.forEach((ln, i) => {
+                for (const tok of SATELLITE_LEAF_VERIFY.retiredTokens) {
+                    if (ln.includes(tok)) hits.push({ file: rel(f), line: i + 1, token: tok });
+                }
+            });
+        }
+    }
+    return hits;
+}
+
+function checkSatelliteLeafVerify() {
+    const hostPath = resolve(ROOT, "src", SATELLITE_LEAF_VERIFY.host);
+    const leafPath = resolve(ROOT, "src", SATELLITE_LEAF_VERIFY.satelliteLeaf);
+    const retiredDirPath = resolve(ROOT, "src", SATELLITE_LEAF_VERIFY.retiredVizDir);
+    const state = {
+        hostExists: existsSync(hostPath),
+        hostSrc: existsSync(hostPath) ? readFileSync(hostPath, "utf8") : "",
+        satelliteExists: existsSync(leafPath),
+        satelliteSrc: existsSync(leafPath) ? readFileSync(leafPath, "utf8") : "",
+        retiredDirExists: existsSync(retiredDirPath),
+        retiredHits: scanRetiredVizTokens(),
+    };
+    const violations = evaluateSatelliteLeafVerify(state);
+    return {
+        violations,
+        facts: {
+            satelliteLeaf: state.satelliteExists,
+            hostComposes:
+                state.hostExists &&
+                state.hostSrc.includes(SATELLITE_LEAF_VERIFY.hostImportMarker),
+            goodotAbsent: !state.retiredDirExists,
+            staleRefs: state.retiredHits.length,
+        },
+    };
+}
+
+/** The self-test bite — synthetic satellite/goo-dot states MUST each flag (or pass) the clause. */
+function selfTestSatelliteLeafVerify() {
+    const fails = [];
+    const OK = {
+        hostExists: true,
+        hostSrc: 'import { useBlobSatellites } from "./composables/useBlobSatellites"',
+        satelliteExists: true,
+        satelliteSrc: "export function useBlobSatellites() {}",
+        retiredDirExists: false,
+        retiredHits: [],
+    };
+    const bite = (patch, msg) => {
+        if (evaluateSatelliteLeafVerify({ ...OK, ...patch }).length === 0) fails.push(msg);
+    };
+    bite(
+        { satelliteExists: false, satelliteSrc: "" },
+        "[SELF-TEST] an absent useBlobSatellites leaf did NOT flag",
+    );
+    bite(
+        { satelliteSrc: "// no export of the symbol" },
+        "[SELF-TEST] a satellite leaf that does NOT export useBlobSatellites did NOT flag",
+    );
+    bite(
+        { hostSrc: 'import { x } from "./other"' },
+        "[SELF-TEST] a goo-blob host importing no satellite leaf did NOT flag (a re-inlined satellite system would pass)",
+    );
+    bite(
+        { retiredDirExists: true },
+        "[SELF-TEST] a surviving goo-dot-matrix dir did NOT flag (the prune must be DEFINITION-ABSENT)",
+    );
+    bite(
+        {
+            retiredHits: [
+                {
+                    file: "src/components/custom/PROCEDURAL-SUITE.md",
+                    line: 21,
+                    token: "goo-dot-matrix",
+                },
+            ],
+        },
+        "[SELF-TEST] a stale goo-dot-matrix suite-doc reference did NOT flag (the PROCEDURAL-SUITE class this wave reconciles)",
+    );
+    if (evaluateSatelliteLeafVerify(OK).length !== 0) {
+        fails.push(
+            "[SELF-TEST] a correctly-verified satellite/pruned-goo-dot state FALSELY flagged (the clause is over-strict)",
+        );
+    }
+    return fails;
+}
+
 function run() {
     void SRC;
     const allViolations = [];
@@ -539,6 +705,11 @@ function run() {
     allViolations.push(...dockLeaf.violations);
     allViolations.push(...selfTestDockLeafVerify());
 
+    // BH.B2.4c — the satellite/goo-dot leaf-verify clause + its self-test bite.
+    const satelliteLeaf = checkSatelliteLeafVerify();
+    allViolations.push(...satelliteLeaf.violations);
+    allViolations.push(...selfTestSatelliteLeafVerify());
+
     const status = allViolations.length === 0 ? "pass" : "fail";
     writeGateArtifact(ARTIFACT, {
         generatedAt: snapshotStamp(),
@@ -549,6 +720,7 @@ function run() {
             idiomHome: idiom.facts,
             carveLeaves: carveFacts,
             dockLeafVerify: dockLeaf.facts,
+            satelliteLeafVerify: satelliteLeaf.facts,
         },
         violations: allViolations,
     });
@@ -571,6 +743,10 @@ function run() {
     const dl = dockLeaf.facts;
     console.log(
         `  dock-leaf-verify (B2.5): host-carved=${dl.hostCarved} fission-leaf=${dl.fissionLeaf} silhouette-absent=${dl.deadEngineAbsent} stale-dead-refs=${dl.deadRefs}`,
+    );
+    const sl = satelliteLeaf.facts;
+    console.log(
+        `  leaf-verify (B2.4c): satellite-leaf=${sl.satelliteLeaf} host-composes=${sl.hostComposes} goodot-absent=${sl.goodotAbsent} stale-refs=${sl.staleRefs}`,
     );
     if (allViolations.length) {
         console.log("\nVIOLATIONS:");

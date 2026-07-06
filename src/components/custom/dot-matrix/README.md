@@ -2,10 +2,9 @@
 
 A globe of fine warm-cream dots laid on a sphere SURFACE, depth-shaded so it reads as a
 translucent dot-SHELL, slowly rotating on a tilted axis, pointer-aware. The Claude co-work
-"fine-dot spheres on dark" reference (USER-DEFECTS §E), built as the 8th first-class member
-of the procedural-animation suite (a goo-blob sibling, register **a** — the pure
-phyllotaxis dot-SPHERE; the goo+dot HYBRID is register **b**, `BC.W-VIZ-HYBRID`, which
-REUSES this rasterizer).
+"fine-dot spheres on dark" reference (USER-DEFECTS §E), built as a first-class member
+of the procedural-animation suite (a goo-blob sibling — the pure phyllotaxis
+dot-SPHERE).
 
 ```ts
 import { DotMatrix } from "@mkbabb/glass-ui/dot-matrix";
@@ -76,5 +75,5 @@ dot-matrix/
   warm-cream `{ L:0.92, C:0.03, h:78 }` family; the mono-warm-white-on-near-black reference
   + the two-globe composition are DEMO presets in `demo/stories/substrates/presets.ts`,
   never a library token. The teal-on-navy is GONE entirely (clean break — BC.W-TEAL-NAVY-PURGE).
-- **It composes toward the HYBRID** — the dot-rasterizer is the shared primitive
-  `BC.W-VIZ-HYBRID` reuses; dot-matrix does NOT edit the goo-blob SDF (the fence is binding).
+- **It is a goo-blob SIBLING, not a fork** — dot-matrix is a distinct viz beside goo-blob;
+  it does NOT edit the goo-blob SDF (the sibling fence is binding).
