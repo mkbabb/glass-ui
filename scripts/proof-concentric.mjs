@@ -160,7 +160,12 @@ function clauseL2RingGone(srcOverride) {
     return viol;
 }
 
-// L3 — contourInk is byte-frozen (WGSL↔GLSL identical body), FED a per-level width param.
+// L3 — contourInk is byte-frozen (WGSL↔GLSL identical body), FED the per-level width AND the
+//      per-fragment AA-width `aaW` (both PARAMETERS). The helper is DERIVATIVE-FREE: the
+//      `fwidth(fN)` derivative is hoisted to fs_main's uniform control flow (the ONE site, L7-P1)
+//      — a fragment-derivative builtin INSIDE a helper fn is a WebKit/Metal (WebGL2 + WebGPU)
+//      codegen hazard the F9.R3 paint-fix removes ("derivative-FREE → Safari-safe", the discipline
+//      waveField's faceRelief already codifies).
 function clauseL3ContourFrozen(srcOverride) {
     const viol = [];
     const wgsl = stripComments(
@@ -169,22 +174,81 @@ function clauseL3ContourFrozen(srcOverride) {
     const glsl = stripComments(
         srcOverride?.["glsl"] ?? read(resolve(DIR, "shaders/concentric.glsl.ts")),
     );
-    // Both shaders carry a contourInk(fN, hw) that is FED a width param (not re-derived).
-    const wHas = /fn contourInk\(\s*fN:\s*f32,\s*hw:\s*f32\s*\)/.test(wgsl);
-    const gHas = /float contourInk\(\s*float fN,\s*float hw\s*\)/.test(glsl);
+    // Both shaders carry a contourInk(fN, hw, aaW) — FED the AA width (not a helper re-derivation).
+    const wSig = /fn contourInk\(\s*fN:\s*f32,\s*hw:\s*f32,\s*aaW:\s*f32\s*\)/;
+    const gSig = /float contourInk\(\s*float fN,\s*float hw,\s*float aaW\s*\)/;
+    const wHas = wSig.test(wgsl);
+    const gHas = gSig.test(glsl);
     if (!wHas)
-        viol.push("L3-contour: concentric.wgsl.ts lacks `contourInk(fN, hw)` (the byte-frozen IQ contour DE, FED a width param)");
+        viol.push("L3-contour: concentric.wgsl.ts lacks `contourInk(fN, hw, aaW)` (the byte-frozen IQ contour DE, FED the AA width — no derivative in the helper)");
     if (!gHas)
-        viol.push("L3-contour: concentric.glsl.ts lacks `contourInk(fN, hw)` (the byte-frozen IQ contour DE, FED a width param)");
-    // The frozen body: band = |fract(fN+0.5)−0.5|; aaW = max(fwidth(fN), 6e-4); 1−smoothstep(hw,…,band/aaW).
-    const frozenBody = (src) =>
-        /abs\(\s*fract\(\s*fN\s*\+\s*0\.5\s*\)\s*-\s*0\.5\s*\)/.test(src) &&
-        /max\(\s*fwidth\(\s*fN\s*\)\s*,\s*6e-4\s*\)/.test(src) &&
-        /1\.0\s*-\s*smoothstepEdge\(\s*hw\s*,\s*hw\s*\+/.test(src);
-    if (wHas && !frozenBody(wgsl))
-        viol.push("L3-contour: concentric.wgsl.ts contourInk body drifted from the byte-frozen IQ form (band/aaW/1−smoothstep(hw,…))");
-    if (gHas && !frozenBody(glsl))
-        viol.push("L3-contour: concentric.glsl.ts contourInk body drifted from the byte-frozen IQ form (band/aaW/1−smoothstep(hw,…))");
+        viol.push("L3-contour: concentric.glsl.ts lacks `contourInk(fN, hw, aaW)` (the byte-frozen IQ contour DE, FED the AA width — no derivative in the helper)");
+    // Extract the contourInk fn body (single-statement, no nested braces).
+    const bodyOf = (src, sig) => {
+        const m = src.match(new RegExp(sig.source + "[^{]*\\{([\\s\\S]*?)\\}"));
+        return m ? m[1] : null;
+    };
+    // The frozen body: band = |fract(fN+0.5)−0.5|; 1−smoothstep(hw,…, band/aaW). aaW is the PARAM.
+    const frozenBody = (body) =>
+        body != null &&
+        /abs\(\s*fract\(\s*fN\s*\+\s*0\.5\s*\)\s*-\s*0\.5\s*\)/.test(body) &&
+        /1\.0\s*-\s*smoothstepEdge\(\s*hw\s*,\s*hw\s*\+/.test(body) &&
+        /band\s*\/\s*aaW/.test(body);
+    // Derivative-FREE helper: the contourInk body carries NO fragment-derivative builtin.
+    const derivFree = (body) =>
+        body != null && !/\b(fwidth|dFdx|dFdy|dpdx|dpdy)\b/.test(body);
+    const wBody = wHas ? bodyOf(wgsl, wSig) : null;
+    const gBody = gHas ? bodyOf(glsl, gSig) : null;
+    if (wHas && !frozenBody(wBody))
+        viol.push("L3-contour: concentric.wgsl.ts contourInk body drifted from the byte-frozen IQ form (band = |fract(fN+0.5)−0.5|, 1−smoothstep(hw,…, band/aaW))");
+    if (gHas && !frozenBody(gBody))
+        viol.push("L3-contour: concentric.glsl.ts contourInk body drifted from the byte-frozen IQ form (band = |fract(fN+0.5)−0.5|, 1−smoothstep(hw,…, band/aaW))");
+    if (wHas && !derivFree(wBody))
+        viol.push("L3-contour: concentric.wgsl.ts contourInk calls a fragment-derivative builtin (fwidth) INSIDE the helper — the WebKit/Metal-WebGPU codegen hazard; hoist it to fs_main's uniform control flow and FEED aaW");
+    if (gHas && !derivFree(gBody))
+        viol.push("L3-contour: concentric.glsl.ts contourInk calls a fragment-derivative builtin (fwidth) INSIDE the helper — the WebKit/Metal codegen hazard; hoist it to fs_main and FEED aaW");
+    return viol;
+}
+
+// L7 (F9.R3 WebKit-paint-fix) — the WebKit/Metal-WebGPU portability floor. The concentric GLSL/
+//     GL2 fallback is EMPIRICALLY correct on WebKit (it renders an OPAQUE structured field —
+//     verified via a real WebKit WebGL2 readback, so the LC5 exp/NaN premise was FALSE), so the
+//     silent blank the paint judge saw is confined to the WebGPU PRIMARY (Safari 26 WebGPU, the
+//     path untestable in a WebGPU-adapter-less CI). This clause removes the two Metal-codegen
+//     hazards that yield a validates-but-degenerate WGSL pipeline (the blank slips PAST the
+//     substrate's validation-probe fallback): (P1) the fwidth(fN) derivative lives at exactly ONE
+//     fs_main site (hoisted out of the helper; L3 owns the derivative-free helper), and (P2) NO
+//     dynamic uniform-array indexing of the palette — a static-index unroll.
+function clauseWebkitPortability(srcOverride) {
+    const viol = [];
+    const wgsl = stripComments(
+        srcOverride?.["wgsl"] ?? read(resolve(DIR, "shaders/concentric.wgsl.ts")),
+    );
+    const glsl = stripComments(
+        srcOverride?.["glsl"] ?? read(resolve(DIR, "shaders/concentric.glsl.ts")),
+    );
+    for (const [name, src] of [
+        ["concentric.wgsl.ts", wgsl],
+        ["concentric.glsl.ts", glsl],
+    ]) {
+        // P1 — exactly ONE fwidth(fN) site, the fs_main hoist `aaW = max(fwidth(fN), 6e-4)`.
+        const fwCount = (src.match(/fwidth\s*\(\s*fN\s*\)/g) || []).length;
+        const hasHoist = /aaW\s*=\s*max\(\s*fwidth\(\s*fN\s*\)\s*,\s*6e-4\s*\)/.test(src);
+        if (fwCount !== 1)
+            viol.push(`P1-fwidth: ${name} has ${fwCount} fwidth(fN) sites (must be exactly ONE — the fs_main hoist; a helper-derivative + a second site is the WebKit/Metal codegen hazard)`);
+        if (!hasHoist)
+            viol.push(`P1-fwidth: ${name} lacks the single fs_main derivative hoist \`aaW = max(fwidth(fN), 6e-4)\` (uniform control flow)`);
+        // P2 — no dynamic uniform-array palette indexing (a WebKit/Metal argument-buffer hazard).
+        //      A CONSTANT index (uPalette[0], u.palette[3]) is fine; a variable index reds. Strip
+        //      the GLSL array DECLARATION (`uniform vec3 uPalette[MAX_RING_STOPS];`) first — its
+        //      bracket carries the size token, not an index read.
+        const body = src.replace(/uniform\s+\w+\s+uPalette\s*\[[^\]]*\]\s*;/g, "");
+        const dyn = name.endsWith("glsl.ts")
+            ? /uPalette\s*\[\s*(?!\d+\s*\])/.test(body)
+            : /u\.palette\s*\[\s*(?!\d+\s*\])/.test(body);
+        if (dyn)
+            viol.push(`P2-palette: ${name} indexes the palette uniform-array with a DYNAMIC (non-constant) index — a WebKit/Metal-WebGPU argument-buffer codegen hazard; use the static-index unroll (paletteStop/paletteStopLin)`);
+    }
     return viol;
 }
 
@@ -438,17 +502,19 @@ function clauseLevelCurvesRepair(srcOverride) {
         ["concentric.glsl.ts", glsl],
     ]) {
         const hasFade = /\bdfade\b/.test(src);
-        const readsFwidth = /hwAA\s*=\s*hw\s*\*\s*max\(\s*fwidth\(\s*fN\s*\)/.test(src);
+        // Reads the HOISTED single-site aaW (= max(fwidth(fN), 6e-4)) — the fs_main derivative,
+        // NOT a second fwidth (L7-P1: one derivative, two readers — the contourInk stroke + this).
+        const readsAaW = /hwAA\s*=\s*hw\s*\*\s*aaW\b/.test(src);
         const fadeIsSmoothstep = /dfade\s*=\s*1\.0\s*-\s*smoothstepEdge\([^;]*hwAA\s*\)/.test(src);
-        const inkMultiplies = /contourInk\(\s*fN\s*,\s*hw\s*\)[^;]*\*\s*dfade/.test(src);
+        const inkMultiplies = /contourInk\(\s*fN\s*,\s*hw\s*,\s*aaW\s*\)[^;]*\*\s*dfade/.test(src);
         if (!hasFade)
             viol.push(`LC4-dfade: ${name} carries no density-fade (\`dfade\`) — the over-dense contour FLOOD (band/aaW saturates → ink=1 → the bright-gap DASHING) is unbounded (the paint-re-judge dashed-contour defect)`);
-        if (hasFade && !readsFwidth)
-            viol.push(`LC4-dfade: ${name} density fade is not the hw-aware IQ frequency limit (needs \`hwAA = hw * max(fwidth(fN), 6e-4)\` — the flood point is when the line half-width reaches the 0.5 half-spacing)`);
+        if (hasFade && !readsAaW)
+            viol.push(`LC4-dfade: ${name} density fade is not the hw-aware IQ frequency limit (needs \`hwAA = hw * aaW\` reusing the hoisted single-site fwidth — the flood point is when the line half-width reaches the 0.5 half-spacing; a second \`fwidth\` here reds L7-P1)`);
         if (hasFade && !fadeIsSmoothstep)
             viol.push(`LC4-dfade: ${name} density fade is not a smoothstep on \`hwAA\` (needs \`dfade = 1.0 - smoothstepEdge(a, b, hwAA)\`)`);
         if (hasFade && !inkMultiplies)
-            viol.push(`LC4-dfade: ${name} does not MULTIPLY contourInk by \`dfade\` (the fade must gate the ink or the flood-dash survives)`);
+            viol.push(`LC4-dfade: ${name} does not MULTIPLY contourInk(fN, hw, aaW) by \`dfade\` (the fade must gate the ink or the flood-dash survives)`);
     }
 
     // LC5 — the heave exp is CLAMPED in BOTH shaders (no EXTREME argument reaches fast-math exp).
@@ -488,6 +554,7 @@ function runAll(overrides = {}) {
         ...clauseL1FieldSource(overrides.l1),
         ...clauseL2RingGone(overrides.l2),
         ...clauseL3ContourFrozen(overrides.l3),
+        ...clauseWebkitPortability(overrides.wk),
         ...clauseL4PureOpaque(overrides.l4),
         ...clauseL5WarmDivergent(overrides.l5),
         ...clauseL6Transcription(overrides.l6),
@@ -516,14 +583,33 @@ function selfTest() {
         l2: { manifest: 'W-CONCENTRIC\n s("substrates","concentric","Concentric","A radial Fourier ring-interference field — concentric ellipsoid rings. /concentric."' },
     });
     if (ringProse.length === 0) fails.push("self-test: a re-smuggled 'ellipsoid rings' manifest prose did NOT red");
-    // (c) L3 — a re-derived contourInk (drifted body).
+    // (c) L3 — a re-derived contourInk (a fragment-derivative builtin INSIDE the helper).
     const reDerived = runAll({
         l3: {
-            wgsl: "fn contourInk(fN: f32, hw: f32) -> f32 { return length(vec2(dpdx(fN), dpdy(fN))); }",
-            glsl: "float contourInk(float fN, float hw) { return length(vec2(dFdx(fN), dFdy(fN))); }",
+            wgsl: "fn contourInk(fN: f32, hw: f32, aaW: f32) -> f32 { return length(vec2f(dpdx(fN), dpdy(fN))); }",
+            glsl: "float contourInk(float fN, float hw, float aaW) { return length(vec2(dFdx(fN), dFdy(fN))); }",
         },
     });
-    if (reDerived.length === 0) fails.push("self-test: a re-derived contourInk did NOT red");
+    if (reDerived.length === 0) fails.push("self-test: a re-derived (derivative-in-helper) contourInk did NOT red");
+    // (c2) L3 — a re-introduced fwidth() INSIDE the contourInk helper MUST red (the derivative-
+    //      free-helper regression the F9.R3 WebKit paint-fix removes — the exact hazard shape).
+    const helperDeriv = runAll({
+        l3: {
+            wgsl: "fn contourInk(fN: f32, hw: f32, aaW: f32) -> f32 { let band = abs(fract(fN + 0.5) - 0.5); let w = max(fwidth(fN), 6e-4); return 1.0 - smoothstepEdge(hw, hw + u.line.y, band / w); }",
+            glsl: "float contourInk(float fN, float hw, float aaW) { float band = abs(fract(fN + 0.5) - 0.5); float w = max(fwidth(fN), 6e-4); return 1.0 - smoothstepEdge(hw, hw + uLine.y, band / w); }",
+        },
+    });
+    if (helperDeriv.length === 0) fails.push("self-test: a re-introduced fwidth() INSIDE the contourInk helper did NOT red");
+    // (c3) L7-P2 — a DYNAMIC uniform-array palette index MUST red (the WebKit/Metal-WebGPU
+    //      argument-buffer hazard the static-index unroll removes). Carries the fs_main hoist so
+    //      ONLY P2 fires.
+    const dynPalette = runAll({
+        wk: {
+            wgsl: "let aaW = max(fwidth(fN), 6e-4); let stop = u.palette[i0].rgb;",
+            glsl: "float aaW = max(fwidth(fN), 6e-4); vec3 stop = uPalette[i0];",
+        },
+    });
+    if (dynPalette.length === 0) fails.push("self-test: a dynamic uniform-array palette index did NOT red");
     // (d) L4 — an rgb*ink transparent regression (alpha = ink).
     const transp = runAll({
         l4: {
@@ -606,17 +692,18 @@ function selfTest() {
     //         (the over-dense contour FLOOD → dashing regression).
     const unfaded = runAll({
         lcr: {
-            wgsl: "let ink = clamp(contourInk(fN, hw), 0.0, 1.0); let g0 = exp(-min(d2 / 0.22, 60.0)); let fall = exp(-min(d2 / 0.6, 60.0));",
-            glsl: "float ink = clamp(contourInk(fN, hw), 0.0, 1.0); float g0 = exp(-min(d2 / 0.22, 60.0)); float fall = exp(-min(d2 / 0.6, 60.0));",
+            wgsl: "let ink = clamp(contourInk(fN, hw, aaW), 0.0, 1.0); let g0 = exp(-min(d2 / 0.22, 60.0)); let fall = exp(-min(d2 / 0.6, 60.0));",
+            glsl: "float ink = clamp(contourInk(fN, hw, aaW), 0.0, 1.0); float g0 = exp(-min(d2 / 0.22, 60.0)); float fall = exp(-min(d2 / 0.6, 60.0));",
         },
     });
     if (unfaded.length === 0) fails.push("self-test: a planted un-faded ink (no density-fade multiply) did NOT red");
     // (lcr-b) LC5 — a BARE unclamped extreme heave exp MUST red (the WebKit/Metal NaN → blank
-    //         regression). The string carries the full density-fade machinery so ONLY LC5 fires.
+    //         regression). The string carries the full density-fade machinery (the hoisted aaW)
+    //         so ONLY LC5 fires.
     const bareExp = runAll({
         lcr: {
-            wgsl: "let hwAA = hw * max(fwidth(fN), 6e-4); let dfade = 1.0 - smoothstepEdge(0.30, 0.48, hwAA); let ink = clamp(contourInk(fN, hw), 0.0, 1.0) * dfade; let g0 = exp(-d2 / 0.22); let fall = smoothstepEdge(0.0, 0.55, exp(-d2 / 0.6));",
-            glsl: "float hwAA = hw * max(fwidth(fN), 6e-4); float dfade = 1.0 - smoothstepEdge(0.30, 0.48, hwAA); float ink = clamp(contourInk(fN, hw), 0.0, 1.0) * dfade; float g0 = exp(-d2 / 0.22); float fall = smoothstepEdge(0.0, 0.55, exp(-d2 / 0.6));",
+            wgsl: "let aaW = max(fwidth(fN), 6e-4); let hwAA = hw * aaW; let dfade = 1.0 - smoothstepEdge(0.30, 0.48, hwAA); let ink = clamp(contourInk(fN, hw, aaW), 0.0, 1.0) * dfade; let g0 = exp(-d2 / 0.22); let fall = smoothstepEdge(0.0, 0.55, exp(-d2 / 0.6));",
+            glsl: "float aaW = max(fwidth(fN), 6e-4); float hwAA = hw * aaW; float dfade = 1.0 - smoothstepEdge(0.30, 0.48, hwAA); float ink = clamp(contourInk(fN, hw, aaW), 0.0, 1.0) * dfade; float g0 = exp(-d2 / 0.22); float fall = smoothstepEdge(0.0, 0.55, exp(-d2 / 0.6));",
         },
     });
     if (bareExp.length === 0) fails.push("self-test: a planted BARE unclamped heave exp() did NOT red");

@@ -151,10 +151,22 @@ fn sampleHeight(p: vec2f, t: f32) -> f32 {
 // |fract(fN + 0.5) − 0.5| / fwidth(fN). The contour density tracks 1/|∇H| automatically.
 // 'aaW' floors against a DPR-aware minimum so the index line stays CONTINUOUS where the heave
 // packs contours (steep |∇H| saturates fwidth — challenge R4).
-fn contourInk(fN: f32, hw: f32) -> f32 {
+// FED both the per-level half-width 'hw' AND the per-fragment AA width 'aaW' (parameters, NOT a
+// re-derivation): a fragment-derivative builtin (fwidth) inside a HELPER fn is a WebKit/Metal-
+// WebGPU codegen hazard, so the derivative is hoisted to fs_main's uniform control flow (the ONE
+// fwidth(fN) site) and FED here — this helper is DERIVATIVE-FREE (the Safari-safe discipline).
+fn contourInk(fN: f32, hw: f32, aaW: f32) -> f32 {
   let band = abs(fract(fN + 0.5) - 0.5);
-  let aaW = max(fwidth(fN), 6e-4);
   return 1.0 - smoothstepEdge(hw, hw + u.line.y, band / aaW);
+}
+
+// Static-index palette fetch — NO dynamic uniform-array indexing (a WebKit/Metal-WebGPU
+// argument-buffer codegen hazard). The 4-stop cap is unrolled so every read is a CONSTANT index.
+fn paletteStop(idx: i32) -> vec3<f32> {
+  if (idx <= 0) { return u.palette[0].rgb; }
+  else if (idx == 1) { return u.palette[1].rgb; }
+  else if (idx == 2) { return u.palette[2].rgb; }
+  return u.palette[3].rgb;
 }
 
 // Sample the multi-stop palette (linear-sRGB stops, OKLab mix). t in [0,1].
@@ -166,8 +178,8 @@ fn samplePaletteLin(t: f32) -> vec3<f32> {
   let i0 = i32(floor(ft));
   let i1 = min(i0 + 1, stopCount - 1);
   let f = ft - f32(i0);
-  let labA = LMS_TO_OKLAB * cbrt3(LINEAR_SRGB_TO_LMS * u.palette[i0].rgb);
-  let labB = LMS_TO_OKLAB * cbrt3(LINEAR_SRGB_TO_LMS * u.palette[i1].rgb);
+  let labA = LMS_TO_OKLAB * cbrt3(LINEAR_SRGB_TO_LMS * paletteStop(i0));
+  let labB = LMS_TO_OKLAB * cbrt3(LINEAR_SRGB_TO_LMS * paletteStop(i1));
   return oklabToLinearSrgb(mix(labA, labB, f));
 }
 
@@ -217,9 +229,13 @@ fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
   // (hw-aware, so the heavier index line fades before the finer minor) → the over-dense ground
   // reads as smooth relief, the resolvable contours stay CONTINUOUS unbroken bands. Recomputes
   // the SAME fwidth(fN) contourInk floors on (6e-4) — no second field, no re-derivation.
-  let hwAA = hw * max(fwidth(fN), 6e-4);
+  // The ONE fwidth(fN) derivative site — in fs_main's UNIFORM control flow (a fragment-
+  // derivative builtin inside a helper is the WebKit/Metal codegen hazard; see the GLSL twin).
+  // The SAME aaW feeds the contourInk stroke AND the density-fade — no second field.
+  let aaW = max(fwidth(fN), 6e-4);
+  let hwAA = hw * aaW;
   let dfade = 1.0 - smoothstepEdge(0.30, 0.48, hwAA);
-  let ink = clamp(contourInk(fN, hw), 0.0, 1.0) * dfade;
+  let ink = clamp(contourInk(fN, hw, aaW), 0.0, 1.0) * dfade;
 
   // ── 4. INK = a darker ember of the LOCAL fill (the edge-of-its-own-band signature).
   let inkCol = mix(fill, fill * u.tune.w, 0.85);
