@@ -189,5 +189,12 @@ const opacity = ref(0.5);
 }
 .dark .texture-panel {
     background-color: color-mix(in srgb, var(--foreground) 12%, var(--card));
+    /* F2.R2 W-DARK-READABILITY-REPAIR (paint re-open, Class-B) — this dark panel is a
+       lifted mid-tone plate ([75,65,57] L≈0.30), so the frequency-card caption's
+       --muted-foreground collapsed to WCAG 3.87 on it. Re-point the muted register on
+       THIS panel to the shared on-glass -strong rung (clears the floor here, 6.47) —
+       the F2.R1 demo-local re-point precedent, no new token, no fork. */
+    --muted-foreground: var(--on-glass-muted-strong);
+    --muted-foreground-strong: var(--on-glass-muted-strong);
 }
 </style>

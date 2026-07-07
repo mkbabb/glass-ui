@@ -34,10 +34,14 @@ const semanticVariants: { variant: "success" | "warning" | "info"; label: string
     { variant: "info", label: "info" },
 ];
 
-const vizBadges: { cls: string; label: string }[] = [
-    { cls: "bg-viz-fourier text-white", label: "fourier" },
-    { cls: "bg-viz-chebyshev text-white", label: "chebyshev" },
-    { cls: "bg-viz-legendre text-white", label: "legendre" },
+// F2.R2 W-DARK-READABILITY-REPAIR — each viz pill carries its `token` so the label
+// reads a per-fill `contrast-color(var(--viz-<token>))` ink (white on the light
+// --viz-legendre/lightened fills collapses in dark; contrast-color() picks the
+// legible ink per fill on the census engines).
+const vizBadges: { cls: string; token: string; label: string }[] = [
+    { cls: "bg-viz-fourier text-white", token: "fourier", label: "fourier" },
+    { cls: "bg-viz-chebyshev text-white", token: "chebyshev", label: "chebyshev" },
+    { cls: "bg-viz-legendre text-white", token: "legendre", label: "legendre" },
 ];
 </script>
 
@@ -68,11 +72,15 @@ const vizBadges: { cls: string; label: string }[] = [
             blurb="Compose a --section-color-N fill as a documented Badge tone — the 13-stop jewel-tone ramp as a saturated-pill teaching axis."
         >
             <div class="flex flex-wrap items-center gap-3">
+                <!-- F2.R2 W-DARK-READABILITY-REPAIR (paint re-open): the loud pill's fill
+                     is the --section-color ramp whose DARK ARM LIGHTENS to L≈0.72-0.81, so
+                     text-white collapses to WCAG ~1.8-2.9 in dark. Per-fill contrast-color()
+                     picks the legible ink on the census engines (Chrome 149 / Safari 26). -->
                 <Badge
                     v-for="t in sectionToneBadges"
                     :key="t.stop"
                     class="border-transparent text-white"
-                    :style="{ backgroundColor: `var(--section-color-${t.stop})` }"
+                    :style="{ backgroundColor: `var(--section-color-${t.stop})`, color: `contrast-color(var(--section-color-${t.stop}))` }"
                 >
                     {{ t.label }}
                 </Badge>
@@ -93,10 +101,13 @@ const vizBadges: { cls: string; label: string }[] = [
 
         <StorySection label="viz-basis via inline fill">
             <div class="flex flex-wrap items-center gap-3">
+                <!-- F2.R2 W-DARK-READABILITY-REPAIR — per-fill contrast-color() ink
+                     (white on the light --viz-legendre / lightened viz fills collapses). -->
                 <Badge
                     v-for="v in vizBadges"
                     :key="v.label"
                     :class="cn('border-transparent', v.cls)"
+                    :style="{ color: `contrast-color(var(--viz-${v.token}))` }"
                 >
                     {{ v.label }}
                 </Badge>

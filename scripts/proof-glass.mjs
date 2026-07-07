@@ -119,6 +119,14 @@ const GLASS_CHIP_FILE = "src/styles/glass/glass-chip.css";
 const TRANSITIONS_FILE = "src/styles/transitions.css";
 const STORY_HERO_CSS_FILE = "demo/stories/story-hero.css";
 const STORY_HERO_SFC_FILE = "demo/stories/StoryHero.vue";
+// F2.R2 W-DARK-READABILITY-REPAIR (paint re-open) — the demo surfaces the full-route
+// dark census FAILED on (DL6 avatar/badge per-fill contrast ink · DL7 opaque mid-tone
+// stage muted-caption lift). The gate reads a demo SFC as source the STORY_HERO_CSS_FILE
+// precedent (demo/stories/story-hero.css) already establishes.
+const AVATAR_STORY_FILE = "demo/stories/data/avatar.vue";
+const BADGE_STORY_FILE = "demo/stories/display/badge.vue";
+const SHADOWS_STORY_FILE = "demo/stories/foundations/shadows.vue";
+const PAPER_TEXTURE_STORY_FILE = "demo/stories/foundations/paper-texture.vue";
 const GLASS_REFRACT_SHADER_FILE =
     "src/composables/glass/webgl/shaders/glass-refract.glsl.ts";
 // The pinned cross-stack chromatic scale (must match the exported CHROMATIC_SCALE
@@ -1705,9 +1713,22 @@ export function refractWebglViolations(src) {
 //         `.glass-capsule` chips + pucks, `.metric-badge` label), which composite BRIGHTER
 //         than the calm quiet plate and kept the raw page-muted --neutral-5 (measured WCAG
 //         3.3-4.27 dark, below AA). The ladder.css re-point must lift them to the STRONGER
-//         on-glass rung; the -strong rung must clear the census-measured plates.
+//         on-glass rung; the -strong rung must clear the census-measured plates (the F2.R2
+//         re-run found the brightest is the configurator preset-label glass-capsule at
+//         [100,85,68] — the -strong rung is recalibrated to clear it).
+//   DL6 — (F2.R2 paint re-open, the full-route census Class-A, 21 nodes) the loud brand
+//         fill collapses white text in dark: the --section-color / --viz-* ramps have a
+//         DARK ARM that LIGHTENS the fill (L≈0.72-0.81), so a hardcoded text-white on an
+//         avatar fallback initial / a loud badge pill reads WCAG 1.78-2.93. Each loud fill
+//         site must carry a per-fill `contrast-color(var(--<token>))` ink (the SAME fix
+//         F2.R1 shipped for timeline+motion), read off the census demo SFCs.
+//   DL7 — (F2.R2 paint re-open, the full-route census Class-B) the muted caption on an
+//         opaque LIFTED mid-tone demo stage (shadows `.shadow-stage` [71,61,53] / paper
+//         `.texture-panel` [75,65,57]) collapses (WCAG 3.87-4.12): the `.dark` stage rule
+//         must re-point --muted-foreground → var(--on-glass-muted-strong) (the shared rung,
+//         no fork), which clears the floor over the census-measured stage plates.
 // A --self-test bite proves each clause has teeth.
-export function darkLegibilityViolations(darkArmText, ladderText, cardsText) {
+export function darkLegibilityViolations(darkArmText, ladderText, cardsText, demo) {
     const violations = [];
     const facts = {};
     const darkRaw = darkArmText || "";
@@ -1972,7 +1993,11 @@ export function darkLegibilityViolations(darkArmText, ladderText, cardsText) {
         );
     // (b) + (c) — the -strong rung over the census-measured composited plates.
     const feedbackTonePlate = { r: 79, g: 61, b: 40 }; // census-measured destructive tone-tinted plate (dark)
-    const brightChipPlate = { r: 95, g: 78, b: 77 }; // census-measured brightest selected-glass capsule plate (dark)
+    // F2.R2 (paint re-open) — the re-run census's BRIGHTEST on-glass mid-tone plate is the
+    // configurator preset-label glass-capsule [100,85,68] (L≈0.10, brighter than the AZ
+    // selected-chip [95,78,77]); the -strong rung must clear the WCAG floor over THIS worst
+    // case (with the L78→L81 recalibration it lands 4.68; born-RED at L78 → 4.33).
+    const brightChipPlate = { r: 100, g: 85, b: 68 }; // census-measured brightest on-glass plate (dark, F2.R2 configurator)
     if (onGlassMutedStrong) {
         facts.strongOverFeedbackTone = inkVerdict(
             "DL5",
@@ -1988,6 +2013,86 @@ export function darkLegibilityViolations(darkArmText, ladderText, cardsText) {
         if (chipRatio < 4.5)
             violations.push(
                 `DL5 (WCAG): --on-glass-muted-strong over the census-measured brightest selected-glass chip plate is ${chipRatio}:1 < 4.5:1 — even the -strong rung must clear the WCAG census floor on the mid-tone chip (a subordinate muted ink cannot reach APCA 60 on a bright mid-tone plate; a SELECTED chip paints --accent-ink at full contrast, so WCAG is the binding floor for the idle muted label)`,
+            );
+    }
+
+    // ── DL6 — the loud-brand-fill per-fill CONTRAST INK (F2.R2 paint re-open, Class-A) ────
+    // A hardcoded white/`text-white` on a --section-color-N / --viz-* fill collapses in dark
+    // because the ramp's DARK ARM lightens the fill (L≈0.72-0.81 → WCAG 1.78-2.93). The fix
+    // (the SAME `contrast-color(var(--<token>))` F2.R1 shipped for timeline+motion) is read
+    // off the census demo SFCs. Two families:
+    //   (a) avatar fallback initials — every inline `var(--section-color-…)` BACKGROUND
+    //       binding must be matched by a `contrast-color(var(--section-color-…))` per-fill ink.
+    //   (b) badge loud pills — the --section-color pills AND the `bg-viz-*` utility pills
+    //       (which carry `text-white`) each need a per-fill `contrast-color(var(--…))` ink.
+    // A `contrast-color(var(--X-))` reference does NOT count as a bare BACKGROUND fill (the
+    // inner var is preceded by `contrast-color(`, not a backtick-template), so the counts
+    // separate cleanly (born-RED: N fills, 0 inks).
+    if (demo && (demo.avatar != null || demo.badge != null)) {
+        // (a) avatar — count the backtick-template `var(--section-color-` BACKGROUND fills vs
+        //     the `contrast-color(var(--section-color-` inks. Each avatar fallback is a
+        //     DISTINCT source binding, so counts match 1:1 when every site is fixed.
+        if (demo.avatar != null) {
+            const a = demo.avatar;
+            const secBgFills = (a.match(/`\s*var\(--section-color-/g) || []).length;
+            const secInks = (a.match(/contrast-color\(\s*var\(--section-color-/g) || []).length;
+            facts.avatarSecBgFills = secBgFills;
+            facts.avatarSecInks = secInks;
+            if (secBgFills > 0 && secInks < secBgFills)
+                violations.push(
+                    `DL6 (avatar): ${secBgFills} inline --section-color background fill(s) but only ${secInks} per-fill contrast-color() ink(s) — a hardcoded white on the dark-arm-lightened --section-color fill collapses to WCAG 1.78-2.77 in dark; give each fallback initial a contrast-color(var(--section-color-N)) ink (the F2.R1 timeline fix)`,
+                );
+        }
+        // (b) badge — PRESENCE of a per-fill ink for BOTH loud-brand families the pills use
+        //     (v-for makes 1:1 count-matching unreliable — a single template binding renders
+        //     N pills, so presence-per-family is the honest signal).
+        if (demo.badge != null) {
+            const b = demo.badge;
+            const hasSectionPill = /`\s*var\(--section-color-/.test(b);
+            const hasVizWhitePill = /bg-viz-[a-z0-9-]+[^"'`]*text-white/.test(b);
+            const hasSectionInk = /contrast-color\(\s*var\(--section-color-/.test(b);
+            const hasVizInk = /contrast-color\(\s*var\(--viz-/.test(b);
+            facts.badgeSectionInk = hasSectionInk;
+            facts.badgeVizInk = hasVizInk;
+            if (hasSectionPill && !hasSectionInk)
+                violations.push(
+                    "DL6 (badge): a loud --section-color pill carries text-white but NO per-fill contrast-color(var(--section-color-…)) ink — the dark-arm-lightened fill washes the label to WCAG 1.81-2.93 in dark",
+                );
+            if (hasVizWhitePill && !hasVizInk)
+                violations.push(
+                    "DL6 (badge): a `bg-viz-*` loud pill carries text-white but NO per-fill contrast-color(var(--viz-…)) ink — white on the light --viz-legendre / lightened viz fill collapses in dark",
+                );
+        }
+    }
+
+    // ── DL7 — the opaque mid-tone STAGE muted-caption lift (F2.R2 paint re-open, Class-B) ──
+    // A muted caption on a demo-authored LIFTED mid-tone stage (shadows `.shadow-stage` /
+    // paper `.texture-panel`, both `color-mix(--foreground N%, --card)` L≈0.28-0.30 in dark)
+    // collapses (--muted-foreground is calibrated vs the near-black PAGE, not this plate → WCAG
+    // 3.87-4.12). The `.dark` stage rule must re-point --muted-foreground → the shared on-glass
+    // -strong rung (no fork, no new token — the F2.R1 demo-local re-point precedent). Source-
+    // presence per stage; the numeric floor is DL5's bumped worst-case plate (the stage plates
+    // L≈0.05 are DARKER than the configurator [100,85,68] L≈0.10, so -strong clears them a
+    // fortiori — 6.89 / 6.47).
+    const darkStageRepoints = (text, selector) => {
+        if (text == null) return true; // not supplied → not asserted
+        const body = ruleBody(stripCss(text), selector);
+        return !!body && /--muted-foreground:\s*var\(--on-glass-muted-strong\)/.test(body);
+    };
+    if (demo && demo.shadows != null) {
+        const ok = darkStageRepoints(demo.shadows, ".dark .shadow-stage");
+        facts.shadowStageRepoint = ok;
+        if (!ok)
+            violations.push(
+                "DL7 (shadows): the `.dark .shadow-stage` rule does not re-point --muted-foreground → var(--on-glass-muted-strong) — the swatch-caption muted ink collapses to WCAG 4.12 on the lifted mid-tone dark stage",
+            );
+    }
+    if (demo && demo.paperTexture != null) {
+        const ok = darkStageRepoints(demo.paperTexture, ".dark .texture-panel");
+        facts.texturePanelRepoint = ok;
+        if (!ok)
+            violations.push(
+                "DL7 (paper-texture): the `.dark .texture-panel` rule does not re-point --muted-foreground → var(--on-glass-muted-strong) — the frequency-card caption collapses to WCAG 3.87 on the lifted mid-tone dark panel",
             );
     }
 
@@ -2028,6 +2133,12 @@ export function detect() {
         readFile(DARK_ARM_FILE),
         readFile(LADDER_FILE),
         readFile(CARDS_FILE),
+        {
+            avatar: readFile(AVATAR_STORY_FILE),
+            badge: readFile(BADGE_STORY_FILE),
+            shadows: readFile(SHADOWS_STORY_FILE),
+            paperTexture: readFile(PAPER_TEXTURE_STORY_FILE),
+        },
     );
     // the self-test bites run EVERY run (the "proven every run" discipline) — a
     // bite that loses its teeth REDs the gate, so the anti-gameability arm can
@@ -2840,7 +2951,7 @@ function selfTest() {
     const goodDarkArm =
         ".dark { --card: hsl(26 22% 17%); --neutral-0: hsl(24 9% 4%); --foreground: hsl(30 14% 90%); " +
         "--neutral-5: hsl(34 14% 62%); --glass-opacity-quiet: 0.58; --glass-opacity-resting: 0.72; " +
-        "--glass-tint-strength-floor: 12%; --on-glass-muted: hsl(34 16% 72%); --on-glass-muted-strong: hsl(36 14% 78%); " +
+        "--glass-tint-strength-floor: 12%; --on-glass-muted: hsl(34 16% 72%); --on-glass-muted-strong: hsl(36 13% 81%); " +
         "--card-field-floor-image: radial-gradient(120% 110% at 78% 22%, oklch(0.34 0.055 66 / 0.35), oklch(0.34 0.055 66 / 0) 72%); " +
         "--card-field-floor-blend: normal; }";
     const goodCards =
@@ -2911,12 +3022,74 @@ function selfTest() {
     // bite DL5b — a collapsed --on-glass-muted-strong (dropped near the bright chip plate
     // luminance) must red DL5's numeric census over the census-measured plates.
     const collapsedStrong = goodDarkArm.replace(
-        "--on-glass-muted-strong: hsl(36 14% 78%);",
+        "--on-glass-muted-strong: hsl(36 13% 81%);",
         "--on-glass-muted-strong: hsl(30 12% 44%);",
     );
     if (!darkLegibilityViolations(collapsedStrong, goodLadder, goodCards).violations.some((v) => /DL5 \((WCAG|APCA)\)/.test(v))) {
         fails.push(
             "self-test DL5: a collapsed --on-glass-muted-strong (dropped near the mid-tone plate luminance) was NOT flagged over the census-measured feedback/chip plates (the extended numeric floor census has no teeth)",
+        );
+    }
+
+    // ── dark-legibility DL6/DL7 bites (F2.R2 paint re-open — Class-A/Class-B) ──────────
+    // The GREEN demo fixtures: a fixed avatar/badge/stage set carrying the per-fill
+    // contrast-color() inks + the stage muted re-points.
+    const goodAvatar =
+        '<AvatarFallback :style="{ background: `var(--section-color-${p.tone})`, color: `contrast-color(var(--section-color-${p.tone}))` }">{{p.initials}}</AvatarFallback>';
+    const goodBadge =
+        '<Badge class="text-white" :style="{ backgroundColor: `var(--section-color-${t.stop})`, color: `contrast-color(var(--section-color-${t.stop}))` }" /> ' +
+        '<Badge :class="cn(\'bg-viz-fourier text-white\')" :style="{ color: `contrast-color(var(--viz-${v.token}))` }" />';
+    const goodShadows =
+        ".dark .shadow-stage { background-color: color-mix(in srgb, var(--foreground) 10%, var(--card)); --muted-foreground: var(--on-glass-muted-strong); }";
+    const goodPaper =
+        ".dark .texture-panel { background-color: color-mix(in srgb, var(--foreground) 12%, var(--card)); --muted-foreground: var(--on-glass-muted-strong); }";
+    const goodDemo = { avatar: goodAvatar, badge: goodBadge, shadows: goodShadows, paperTexture: goodPaper };
+    // sanity — the GREEN demo set must pass (a false-RED detector is as bad as a toothless one).
+    {
+        const g = darkLegibilityViolations(goodDarkArm, goodLadder, goodCards, goodDemo).violations.filter((v) =>
+            /^DL[67]/.test(v),
+        );
+        if (g.length !== 0)
+            fails.push(
+                "self-test DL6/DL7: the GREEN demo set (per-fill contrast-color inks + stage muted re-points) was FLAGGED (the census false-REDs a correct fix): " +
+                    g.join(" | "),
+            );
+    }
+    // bite DL6a — an avatar with a --section-color background BUT NO contrast ink (the HEAD
+    // text-white-only state) must red DL6.
+    const bareAvatar =
+        '<AvatarFallback class="text-white" :style="{ background: `var(--section-color-${p.tone})` }">{{p.initials}}</AvatarFallback>';
+    if (
+        !darkLegibilityViolations(goodDarkArm, goodLadder, goodCards, { avatar: bareAvatar }).violations.some((v) =>
+            /^DL6 \(avatar\)/.test(v),
+        )
+    ) {
+        fails.push(
+            "self-test DL6: a bare `text-white` avatar fallback on a --section-color fill (no per-fill contrast-color ink) was NOT flagged (the Class-A dark-collapse detector has no teeth)",
+        );
+    }
+    // bite DL6b — a badge with a `bg-viz-* text-white` pill BUT NO contrast-color(var(--viz-…))
+    // ink must red DL6 (the HEAD viz-pill state).
+    const bareVizBadge = '<Badge :class="cn(\'bg-viz-fourier text-white\')" />';
+    if (
+        !darkLegibilityViolations(goodDarkArm, goodLadder, goodCards, { badge: bareVizBadge }).violations.some((v) =>
+            /^DL6 \(badge\)/.test(v),
+        )
+    ) {
+        fails.push(
+            "self-test DL6: a `bg-viz-* text-white` loud pill with no per-fill contrast-color(var(--viz-…)) ink was NOT flagged (the Class-A viz-pill detector has no teeth)",
+        );
+    }
+    // bite DL7a — a `.dark .shadow-stage` missing the --on-glass-muted-strong re-point (the
+    // HEAD state) must red DL7.
+    const bareShadows = ".dark .shadow-stage { background-color: color-mix(in srgb, var(--foreground) 10%, var(--card)); }";
+    if (
+        !darkLegibilityViolations(goodDarkArm, goodLadder, goodCards, { shadows: bareShadows }).violations.some((v) =>
+            /^DL7 \(shadows\)/.test(v),
+        )
+    ) {
+        fails.push(
+            "self-test DL7: a `.dark .shadow-stage` missing the --muted-foreground → var(--on-glass-muted-strong) re-point was NOT flagged (the Class-B mid-tone-stage detector has no teeth)",
         );
     }
 

@@ -93,5 +93,12 @@ const shadows: { cls: string; label: string }[] = [
    scoped block is SILENTLY DROPPED (the recurring trap). */
 .dark .shadow-stage {
     background-color: color-mix(in srgb, var(--foreground) 10%, var(--card));
+    /* F2.R2 W-DARK-READABILITY-REPAIR (paint re-open, Class-B) — this dark stage is a
+       lifted mid-tone plate ([71,61,53] L≈0.28), so the swatch-caption --muted-foreground
+       (--neutral-5, calibrated vs the near-black PAGE) collapsed to WCAG 4.12 on it. Re-point
+       the muted register on THIS stage to the shared on-glass -strong rung (no new token, no
+       fork — the F2.R1 demo-local re-point precedent), which clears the floor here (6.89). */
+    --muted-foreground: var(--on-glass-muted-strong);
+    --muted-foreground-strong: var(--on-glass-muted-strong);
 }
 </style>

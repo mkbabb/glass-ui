@@ -49,6 +49,12 @@ const sizes = ["sm", "md", "lg"] as const;
             <p class="text-admin-label mb-4 text-muted-foreground">Shapes · fallbacks · tones</p>
             <div class="flex flex-wrap items-center gap-4">
                 <Avatar v-for="p in people" :key="p.id" size="md" shape="circle">
+                    <!-- F2.R2 W-DARK-READABILITY-REPAIR (paint re-open): the initials sit
+                         on the --section-color ramp whose DARK ARM LIGHTENS the fill (L≈0.72-0.81),
+                         so a hardcoded white collapses to WCAG ~1.8-2.8 in dark. The native
+                         contrast-color() picks the max-contrast ink per fill on the census
+                         engines (Chrome 149 / Safari 26) — the SAME fix F2.R1 shipped for the
+                         timeline step-numbers; text-white is the pre-modern base it overrides. -->
                     <AvatarFallback
                         :class="
                             cn(
@@ -57,6 +63,7 @@ const sizes = ["sm", "md", "lg"] as const;
                         "
                         :style="{
                             background: `var(--section-color-${p.tone})`,
+                            color: `contrast-color(var(--section-color-${p.tone}))`,
                         }"
                     >
                         {{ p.initials }}
@@ -93,9 +100,11 @@ const sizes = ["sm", "md", "lg"] as const;
                             size="sm"
                             class="h-10 w-10 border-2 border-background"
                         >
+                            <!-- F2.R2 W-DARK-READABILITY-REPAIR — per-fill contrast-color() ink
+                                 (the dark-arm-lightened --section-color fill washes text-white). -->
                             <AvatarFallback
                                 class="text-xs font-medium text-white"
-                                :style="{ background: `var(--section-color-${(item as Member).tone})` }"
+                                :style="{ background: `var(--section-color-${(item as Member).tone})`, color: `contrast-color(var(--section-color-${(item as Member).tone}))` }"
                             >
                                 {{ (item as Member).initials }}
                             </AvatarFallback>
@@ -121,9 +130,11 @@ const sizes = ["sm", "md", "lg"] as const;
                     class="interactive-item flex items-center gap-4 px-4 py-3"
                 >
                     <Avatar size="sm">
+                        <!-- F2.R2 W-DARK-READABILITY-REPAIR — per-fill contrast-color() ink
+                             (the dark-arm-lightened --section-color fill washes text-white). -->
                         <AvatarFallback
                             class="text-xs font-medium text-white"
-                            :style="{ background: `var(--section-color-${p.tone})` }"
+                            :style="{ background: `var(--section-color-${p.tone})`, color: `contrast-color(var(--section-color-${p.tone}))` }"
                         >
                             {{ p.initials }}
                         </AvatarFallback>
