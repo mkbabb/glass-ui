@@ -678,6 +678,210 @@ function selfTestSatelliteLeafVerify() {
     return fails;
 }
 
+// BH.B2.4b — the WS4 SUBSTRATE/TABS LEAF-VERIFY clause (W-leaf-verify-ws4). WS4 owns the
+// glass-substrate + SegmentedTabs god-module carves (BG.W-COLOCATE); this wave is VERIFY-ONLY
+// (ZERO carve) — it asserts the FOUR leaf shapes BG's WS4 landed still hold on the frontier +
+// reconciles the stale tabs-README colocation map the SegmentedTabs carve left behind. It is the
+// proof:colocation-side mirror of the proof:encapsulation COLOCATE arm — so a future BG re-point
+// of a leaf name/path is caught by BOTH gates ("re-point BH reader-gate expectations if BG
+// diverged"). The facts:
+//   LV1–LV4 — each carve host IMPORTS its colocated leaf(s) BACK: the leaf exists, EXPORTS its
+//             carved symbol, and the host carries a real `from "<spec>"` (the carve MOVED the
+//             logic — a severed import or an absent leaf flags). The four carves:
+//               createCanvasLifecycle     → backingSize (sizeBacking) + visibility (createCanvasVisibility)
+//               useWebGPUCanvas           → webgpuDevice (withAcquireTimeout) + webgpuCanvasTypes (WebGPUCanvasOptions)
+//               useGlassBackdropLuminance → ambientHueHistogram (accumulateHuePixel)
+//               SegmentedTabs             → useTabResponsive + useTabRovingFocus
+//             The line-count DRAIN (proof:no-god-module / proof:encapsulation C1) is NOT re-asserted
+//             here — it is a BG WS-owned substrate concern (useGlassBackdropLuminance is still > 500
+//             at HEAD; its drain is BG's, not this verify wave's — "BH carves ZERO substrate, BG owns
+//             it"). This clause verifies the LEAF SHAPE only.
+//   LV5 — the tabs-README colocation map NAMES the carved SegmentedTabs leaves (useTabResponsive +
+//         useTabRovingFocus). A colocation map that lists ONLY useTabIndicator is STALE: the carve
+//         moved the responsive-collapse + roving-focus logic into colocated leaves but the README
+//         (its own declared "SOURCE OF TRUTH for the colocation map") did not follow.
+// Born-RED on HEAD (the tabs README names neither carved leaf) → GREEN once the map is reconciled.
+const LEAF_VERIFY_WS4 = {
+    carves: [
+        {
+            host: "composables/glass/webgl/createCanvasLifecycle.ts",
+            leaves: [
+                { path: "composables/glass/webgl/backingSize.ts", spec: "./backingSize", symbol: "sizeBacking" },
+                { path: "composables/glass/webgl/visibility.ts", spec: "./visibility", symbol: "createCanvasVisibility" },
+            ],
+        },
+        {
+            host: "composables/glass/webgpu/useWebGPUCanvas.ts",
+            leaves: [
+                { path: "composables/glass/webgpu/webgpuDevice.ts", spec: "./webgpuDevice", symbol: "withAcquireTimeout" },
+                { path: "composables/glass/webgpu/webgpuCanvasTypes.ts", spec: "./webgpuCanvasTypes", symbol: "WebGPUCanvasOptions" },
+            ],
+        },
+        {
+            host: "composables/glass/useGlassBackdropLuminance.ts",
+            leaves: [
+                { path: "composables/glass/ambientHueHistogram.ts", spec: "./ambientHueHistogram", symbol: "accumulateHuePixel" },
+            ],
+        },
+        {
+            host: "components/custom/tabs/SegmentedTabs.vue",
+            leaves: [
+                { path: "components/custom/tabs/composables/useTabResponsive.ts", spec: "./composables/useTabResponsive", symbol: "useTabResponsive" },
+                { path: "components/custom/tabs/composables/useTabRovingFocus.ts", spec: "./composables/useTabRovingFocus", symbol: "useTabRovingFocus" },
+            ],
+        },
+    ],
+    readme: "components/custom/tabs/README.md",
+    // the carved SegmentedTabs leaf symbols the colocation map MUST name (the B2.4b carve).
+    readmeLeafNames: ["useTabResponsive", "useTabRovingFocus"],
+};
+
+/** Evaluate ONE carved leaf (LV1–LV4) over provided source so the self-test can feed synthetic
+ *  strings. Returns the violation strings. The export detector spans function/const/class/type/
+ *  interface (the webgpuCanvasTypes leaf publishes an `interface`); the import check matches the
+ *  QUOTED spec so `./webgpuDevice` never partial-matches a longer sibling path. */
+function evaluateLeafShape(host, leaf, leafExists, leafSrc, hostSrc) {
+    const violations = [];
+    if (!leafExists) {
+        violations.push(
+            `src/${leaf.path} — the carved WS4 leaf is ABSENT; the ${leaf.symbol} logic must live in the colocated leaf, not inline in src/${host}`,
+        );
+        return violations;
+    }
+    const exportRe = new RegExp(
+        `export\\s+(?:async\\s+)?(?:function|const|class|type|interface)\\s+${leaf.symbol}\\b`,
+    );
+    if (!exportRe.test(leafSrc)) {
+        violations.push(
+            `src/${leaf.path} — does not export ${leaf.symbol} (the carved leaf must publish the moved symbol)`,
+        );
+    }
+    if (!hostSrc.includes(`"${leaf.spec}"`) && !hostSrc.includes(`'${leaf.spec}'`)) {
+        violations.push(
+            `src/${host} — does not import from "${leaf.spec}" (the carve must be COMPOSED back, not duplicated)`,
+        );
+    }
+    return violations;
+}
+
+/** Evaluate the tabs-README colocation-map reconcile (LV5). */
+function evaluateReadmeColocationMap(readmeExists, readmeSrc, leafNames) {
+    const violations = [];
+    if (!readmeExists) {
+        violations.push(
+            `src/${LEAF_VERIFY_WS4.readme} — the tabs README (the declared colocation-map SOURCE OF TRUTH) is ABSENT`,
+        );
+        return violations;
+    }
+    for (const name of leafNames) {
+        if (!readmeSrc.includes(name)) {
+            violations.push(
+                `src/${LEAF_VERIFY_WS4.readme} — the colocation map does not name the carved SegmentedTabs leaf ${name} (BG.W-COLOCATE carved it out of the SFC; the doc is stale, reconcile the map)`,
+            );
+        }
+    }
+    return violations;
+}
+
+function checkLeafVerifyWs4() {
+    const allViolations = [];
+    const carveFacts = [];
+    for (const carve of LEAF_VERIFY_WS4.carves) {
+        const hostPath = resolve(ROOT, "src", carve.host);
+        const hostExists = existsSync(hostPath);
+        const hostSrc = hostExists ? readFileSync(hostPath, "utf8") : "";
+        if (!hostExists) {
+            allViolations.push(`src/${carve.host} — the WS4 carve host is ABSENT`);
+        }
+        let ok = hostExists;
+        for (const leaf of carve.leaves) {
+            const leafPath = resolve(ROOT, "src", leaf.path);
+            const leafExists = existsSync(leafPath);
+            const leafSrc = leafExists ? readFileSync(leafPath, "utf8") : "";
+            const v = evaluateLeafShape(carve.host, leaf, leafExists, leafSrc, hostSrc);
+            if (v.length) ok = false;
+            allViolations.push(...v);
+        }
+        carveFacts.push({ host: `src/${carve.host}`, ok });
+    }
+    const readmePath = resolve(ROOT, "src", LEAF_VERIFY_WS4.readme);
+    const readmeExists = existsSync(readmePath);
+    const readmeSrc = readmeExists ? readFileSync(readmePath, "utf8") : "";
+    const readmeViolations = evaluateReadmeColocationMap(
+        readmeExists,
+        readmeSrc,
+        LEAF_VERIFY_WS4.readmeLeafNames,
+    );
+    allViolations.push(...readmeViolations);
+    return {
+        violations: allViolations,
+        facts: { carves: carveFacts, readmeReconciled: readmeViolations.length === 0 },
+    };
+}
+
+/** The self-test bite — synthetic WS4 leaf-verify states MUST each flag (or pass) the clause. */
+function selfTestLeafVerifyWs4() {
+    const fails = [];
+    const leaf = { path: "x.ts", spec: "./x", symbol: "useFoo" };
+    if (evaluateLeafShape("h.ts", leaf, false, "", "").length === 0)
+        fails.push("[SELF-TEST] an ABSENT WS4 carve leaf did NOT flag");
+    if (
+        evaluateLeafShape("h.ts", leaf, true, "// no export", 'import { useFoo } from "./x"')
+            .length === 0
+    )
+        fails.push("[SELF-TEST] a WS4 leaf that does NOT export its symbol did NOT flag");
+    if (
+        evaluateLeafShape("h.ts", leaf, true, "export function useFoo() {}", "no import here")
+            .length === 0
+    )
+        fails.push(
+            "[SELF-TEST] a host that does NOT compose the WS4 leaf did NOT flag (a re-inlined dual-path copy would pass)",
+        );
+    if (
+        evaluateLeafShape(
+            "h.ts",
+            { path: "t.ts", spec: "./t", symbol: "TFoo" },
+            true,
+            "export interface TFoo {}",
+            'import type { TFoo } from "./t"',
+        ).length !== 0
+    )
+        fails.push(
+            "[SELF-TEST] an interface-exporting WS4 leaf FALSELY flagged (the export detector misses type/interface — webgpuCanvasTypes would break)",
+        );
+    if (
+        evaluateLeafShape(
+            "h.ts",
+            leaf,
+            true,
+            "export function useFoo() {}",
+            'import { useFoo } from "./x"',
+        ).length !== 0
+    )
+        fails.push("[SELF-TEST] a correctly carved-and-imported WS4 leaf FALSELY flagged (over-strict)");
+    if (
+        evaluateReadmeColocationMap(true, "only useTabIndicator here", [
+            "useTabResponsive",
+            "useTabRovingFocus",
+        ]).length === 0
+    )
+        fails.push(
+            "[SELF-TEST] a stale tabs-README colocation map (names neither carved leaf) did NOT flag (the map this wave reconciles)",
+        );
+    if (evaluateReadmeColocationMap(false, "", ["useTabResponsive"]).length === 0)
+        fails.push("[SELF-TEST] an absent tabs README did NOT flag");
+    if (
+        evaluateReadmeColocationMap(true, "useTabIndicator useTabResponsive useTabRovingFocus", [
+            "useTabResponsive",
+            "useTabRovingFocus",
+        ]).length !== 0
+    )
+        fails.push(
+            "[SELF-TEST] a reconciled tabs-README colocation map FALSELY flagged (over-strict)",
+        );
+    return fails;
+}
+
 function run() {
     void SRC;
     const allViolations = [];
@@ -710,6 +914,11 @@ function run() {
     allViolations.push(...satelliteLeaf.violations);
     allViolations.push(...selfTestSatelliteLeafVerify());
 
+    // BH.B2.4b — the WS4 substrate/tabs leaf-verify clause + its self-test bite.
+    const ws4Leaf = checkLeafVerifyWs4();
+    allViolations.push(...ws4Leaf.violations);
+    allViolations.push(...selfTestLeafVerifyWs4());
+
     const status = allViolations.length === 0 ? "pass" : "fail";
     writeGateArtifact(ARTIFACT, {
         generatedAt: snapshotStamp(),
@@ -721,6 +930,7 @@ function run() {
             carveLeaves: carveFacts,
             dockLeafVerify: dockLeaf.facts,
             satelliteLeafVerify: satelliteLeaf.facts,
+            leafVerifyWs4: ws4Leaf.facts,
         },
         violations: allViolations,
     });
@@ -747,6 +957,10 @@ function run() {
     const sl = satelliteLeaf.facts;
     console.log(
         `  leaf-verify (B2.4c): satellite-leaf=${sl.satelliteLeaf} host-composes=${sl.hostComposes} goodot-absent=${sl.goodotAbsent} stale-refs=${sl.staleRefs}`,
+    );
+    const wl = ws4Leaf.facts;
+    console.log(
+        `  leaf-verify (B2.4b): ${wl.carves.map((c) => `${c.host.split("/").pop()}=${c.ok ? "✓" : "✗"}`).join(" ")} readme-map=${wl.readmeReconciled}`,
     );
     if (allViolations.length) {
         console.log("\nVIOLATIONS:");

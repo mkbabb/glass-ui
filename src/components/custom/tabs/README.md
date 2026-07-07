@@ -67,11 +67,21 @@ The feature-dir convention (see `docs/precepts/design-idioms.md` §7 + the
 
 ```
 src/components/custom/tabs/
-├── SegmentedTabs.vue          # the single component (variant axis + responsive collapse)
+├── SegmentedTabs.vue          # the single component shell (variant axis + responsive collapse)
+├── constants.ts               # the elastic-indicator travel-squish magic-number home
 ├── composables/
-│   └── useTabIndicator.ts     # the gliding + squishing elastic-indicator engine
+│   ├── useTabIndicator.ts     # the gliding + squishing elastic-indicator engine
+│   ├── useTabResponsive.ts    # the below-breakpoint collapse-to-<Select> resolver
+│   ├── useTabRovingFocus.ts   # the WAI-ARIA roving-tabindex keyboard machine
+│   └── useTabDragMorph.ts     # the pull/drag-to-morph liquid-tab gesture (useDragMorph)
 └── index.ts                   # the package barrel
 ```
+
+The SFC is the carved shell (BG.W-COLOCATE / WS4 ratchet-drain #13): the
+responsive-collapse and roving-focus concerns were carved out of the component
+into their colocated `composables/` leaves, which the SFC IMPORTS back — it does
+not inline them (`proof:colocation` §B2.4b verifies each leaf exists, exports its
+symbol, and is composed by the SFC).
 
 The indicator's visual axes (`--tab-indicator-max-stretch`, the spring register)
 are tokens (`tokens.css`); a consumer retunes the squish cap by overriding the
@@ -84,6 +94,13 @@ token, no library edit.
 - `useTabIndicator` — the active-indicator position + the volume-preserving
   squish. The indicator is ONE element on `--spring-snappy`; do not stack a
   second indicator or hand-roll a per-segment highlight.
+- `useTabResponsive` — the below-breakpoint collapse to a `<Select>` (the
+  `:responsive` axis). Do not re-fork the breakpoint/collapse logic in the SFC.
+- `useTabRovingFocus` — the WAI-ARIA tablist/toolbar roving-tabindex machine
+  (exactly one `tabindex="0"`, axis-derived arrows, Home/End, disabled-skip). Do
+  not hand-roll a second keyboard handler.
+- `useTabDragMorph` — the `:draggable` pull/drag-to-morph liquid-tab gesture,
+  composing the shared `useDragMorph` primitive. Do not fork a second drag engine.
 
 ---
 
@@ -92,8 +109,10 @@ token, no library edit.
 - `proof:tabs-unified` — the unified family contract: ONE component, the
   three-value variant axis, the ARIA-role-per-variant, and the single elastic
   indicator. Bite: re-introduce a `Bouncy*` alias or a second indicator → RED.
-- `proof:no-god-module` — `SegmentedTabs.vue` is ratchet-grandfathered pending
-  its W-GOD1 carve; the composable + the component stay under the bound once
-  carved.
+- `proof:no-god-module` — `SegmentedTabs.vue` is under the 500-line bound (the
+  BG.W-COLOCATE carve landed: the responsive + roving-focus concerns moved to
+  colocated leaves); the SFC + each composable stay under the bound.
 - `proof:colocation` — the feature-dir convention (composables under
-  `composables/`, the README present).
+  `composables/`, a `constants.ts` home, the README present) + the §B2.4b
+  leaf-verify clause (each carved leaf exists, exports its symbol, and is
+  composed by the SFC; the colocation map above stays reconciled to disk).
