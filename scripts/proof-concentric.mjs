@@ -43,6 +43,23 @@ const DIR = resolve(ROOT, "src/components/custom/concentric");
 const PARITY_TABLE = resolve(ROOT, "docs/tranches/BB/audit/gpu-parity-table.md");
 const STORY = resolve(ROOT, "demo/stories/substrates/concentric.vue");
 const MANIFEST = resolve(ROOT, "demo/stories/manifest.ts");
+const CAPTURE_CSS = resolve(ROOT, "demo/capture/capture.css");
+
+// LC6 (BG.W-CONCENTRIC-LEVELCURVES paint-fix) — the viz-wrapper set the capture harness MUST
+// neutralize `content-visibility` for. Every procedural-viz host carries `content-visibility:
+// auto` (a render-skip), so a below-fold viz mounts content-SKIPPED and an off-screen WKWebView
+// snapshot never lays it out → the field snapshots BLANK. The concentric wrapper is the
+// load-bearing member (the wave's viz — born-RED on the HEAD `.aurora-root`-only rule).
+const VIZ_WRAPPERS = [
+    "concentric-wrapper",
+    "aurora-root",
+    "constellation",
+    "dot-matrix-wrapper",
+    "dot-flow-field-wrapper",
+    "fourier-field",
+    "goo-blob-wrapper",
+    "liquid-grid-wrapper",
+];
 
 const read = (p) => (existsSync(p) ? readFileSync(p, "utf8") : null);
 const stripComments = (s) =>
@@ -210,15 +227,19 @@ function clauseL3ContourFrozen(srcOverride) {
     return viol;
 }
 
-// L7 (F9.R3 WebKit-paint-fix) — the WebKit/Metal-WebGPU portability floor. The concentric GLSL/
-//     GL2 fallback is EMPIRICALLY correct on WebKit (it renders an OPAQUE structured field —
-//     verified via a real WebKit WebGL2 readback, so the LC5 exp/NaN premise was FALSE), so the
-//     silent blank the paint judge saw is confined to the WebGPU PRIMARY (Safari 26 WebGPU, the
-//     path untestable in a WebGPU-adapter-less CI). This clause removes the two Metal-codegen
-//     hazards that yield a validates-but-degenerate WGSL pipeline (the blank slips PAST the
-//     substrate's validation-probe fallback): (P1) the fwidth(fN) derivative lives at exactly ONE
-//     fs_main site (hoisted out of the helper; L3 owns the derivative-free helper), and (P2) NO
-//     dynamic uniform-array indexing of the palette — a static-index unroll.
+// L7 (F9.R3 WebKit-paint-fix) — the WebKit/Metal-WebGPU codegen-hygiene floor. BOTH the concentric
+//     GLSL/GL2 AND the WGSL paths are EMPIRICALLY correct on WebKit — each renders an OPAQUE
+//     structured field (the GL2 path verified via a real playwright-webkit WebGL2 readback:
+//     stdL≈0.07, alpha 1, zero transparent px, at DPR-1 AND DPR-2-large). The dual-engine "silent
+//     blank" the paint judge saw was NEVER a shader/exp NaN and is NOT confined to the WebGPU
+//     primary — it is the CONTENT-VISIBILITY skip (LC6): the below-fold concentric wrapper mounts
+//     `content-visibility: auto` content-SKIPPED, so an off-screen WKWebView snapshot never lays it
+//     out and the CANVAS (whichever backend drew into it) snapshots blank — substrate-agnostic,
+//     which is exactly why BOTH paths blanked. This clause is retained as WebKit/Metal codegen
+//     HYGIENE (it is the correct discipline regardless): (P1) the fwidth(fN) derivative lives at
+//     exactly ONE fs_main site (hoisted out of the helper; L3 owns the derivative-free helper), and
+//     (P2) NO dynamic uniform-array indexing of the palette — a static-index unroll. The actual
+//     paint fix lives in LC6 (the capture harness neutralizes content-visibility for the viz wrappers).
 function clauseWebkitPortability(srcOverride) {
     const viol = [];
     const wgsl = stripComments(
@@ -547,6 +568,46 @@ function clauseLevelCurvesRepair(srcOverride) {
     return viol;
 }
 
+// LC6 (BG.W-CONCENTRIC-LEVELCURVES paint-fix) — the WebKit content-visibility capture floor (the
+//     TRUE dual-engine "silent blank" root cause, empirically bisected). The concentric story seats
+//     the viz BELOW the fold (a long StorySection blurb rides above the Configurator stage), so on
+//     WebKit it mounts content-SKIPPED (`content-visibility: auto` on `.concentric-wrapper`). An
+//     off-screen WKWebView snapshot never lays out a content-skipped subtree, so the CANVAS — the
+//     WGSL primary AND the GLSL fallback alike (the skip is UPSTREAM of the backend, which is why
+//     BOTH paths blanked while the shader math is correct) — snapshots BLANK while the DOM is fully
+//     real. The capture harness MUST neutralize `content-visibility` for the viz wrapper set (the
+//     established lone `.aurora-root` rule, GENERALIZED) so the off-screen snapshot reads the real
+//     paint. A capture.css that force-visibles ONLY `.aurora-root` (the HEAD state, before this fix)
+//     leaves the below-fold concentric skipped → reds. This is the paint fix (L7 is codegen hygiene).
+function clauseCaptureVisibility(srcOverride) {
+    const viol = [];
+    const css = srcOverride?.["capture"] ?? read(CAPTURE_CSS);
+    if (css == null) {
+        viol.push("LC6-capture: demo/capture/capture.css is missing (the capture-mode faithful-snapshot stylesheet)");
+        return viol;
+    }
+    // Parse the flat rule blocks (capture.css is un-nested) and collect the selector preludes of
+    // every rule whose body force-visibles content-visibility. A viz wrapper is "covered" iff it
+    // appears (as a `.<class>` selector) in ANY such prelude.
+    const rules = [...css.matchAll(/([^{}]+)\{([^{}]*)\}/g)];
+    const visiblePreludes = rules
+        .filter((r) => /content-visibility:\s*visible\s*!important/.test(r[2]))
+        .map((r) => r[1]);
+    if (visiblePreludes.length === 0) {
+        viol.push("LC6-capture: capture.css declares NO `content-visibility: visible !important` neutralization — a content-skipped below-fold viz snapshots BLANK in an off-screen WKWebView (the dual-engine silent-blank the paint judge saw)");
+        return viol;
+    }
+    const covered = (cls) =>
+        visiblePreludes.some((p) => new RegExp(`\\.${cls}\\b`).test(p));
+    for (const cls of VIZ_WRAPPERS) {
+        if (!covered(cls)) {
+            const lead = cls === "concentric-wrapper" ? " (the wave's own viz — the born-RED anchor)" : "";
+            viol.push(`LC6-capture: capture.css content-visibility:visible neutralization does not cover \`.${cls}\`${lead} — a below-fold ${cls} snapshots BLANK in an off-screen WKWebView; generalize the lone \`.aurora-root\` rule to the whole viz-wrapper set`);
+        }
+    }
+    return viol;
+}
+
 function runAll(overrides = {}) {
     return [
         ...clauseColocation(overrides.colocation ?? {}),
@@ -560,6 +621,7 @@ function runAll(overrides = {}) {
         ...clauseL6Transcription(overrides.l6),
         ...clauseLevelCurves(overrides.lc),
         ...clauseLevelCurvesRepair(overrides.lcr),
+        ...clauseCaptureVisibility(overrides.capture),
         ...clauseFallback(overrides.fallback),
         ...clauseStory(overrides.story),
     ];
@@ -713,6 +775,25 @@ function selfTest() {
         lcr: { useConcentric: "const CURSOR_PARKED: Vec2 = { x: 1e6, y: 1e6 };" },
     });
     if (extremeCursor.length === 0) fails.push("self-test: a planted 1e6 extreme parked-cursor sentinel did NOT red");
+
+    // ── LC6 (BG.W-CONCENTRIC-LEVELCURVES paint-fix) — the capture content-visibility floor ──
+    // (lc6-a) the HEAD state: capture.css force-visibles ONLY `.aurora-root` — a below-fold
+    //         concentric wrapper stays content-skipped → the off-screen snapshot BLANKS. MUST red
+    //         (missing `.concentric-wrapper` + the sibling viz wrappers).
+    const auroraOnly = runAll({
+        capture: {
+            capture:
+                "html[data-capture] .aurora-root {\n  contain: none !important;\n  content-visibility: visible !important;\n  contain-intrinsic-size: auto !important;\n}\n",
+        },
+    });
+    if (auroraOnly.length === 0)
+        fails.push("self-test: a capture.css that force-visibles ONLY .aurora-root (leaving .concentric-wrapper content-skipped) did NOT red");
+    // (lc6-b) a capture.css with NO content-visibility:visible neutralization at all MUST red.
+    const noVisible = runAll({
+        capture: { capture: "html[data-capture] * { animation: none !important; }\n" },
+    });
+    if (noVisible.length === 0)
+        fails.push("self-test: a capture.css with NO content-visibility:visible neutralization did NOT red");
 
     return fails;
 }

@@ -79,19 +79,32 @@ html[data-capture] .scroll-pin-phase-settle {
     filter: none !important;
 }
 
-/* ── 4 · De-promote the route wrapper + the aurora field ───────────────────
+/* ── 4 · De-promote the route wrapper + EVERY procedural-viz field ──────────
  *
  * The `.route-enter` wrapper is the named culprit — rule 1 already de-animates
  * it; this also drops any `contain` so its subtree composites into the base
- * layer. The aurora host carries `contain: content` + `content-visibility: auto`
- * (a render-skip + containment context); force it `visible`/`none` so the WebGL
- * field always renders into the base layer the snapshot reads (the route's own
- * DockStage aurora sits INSIDE the route wrapper). This only ever renders MORE,
+ * layer. EVERY procedural-viz host carries `contain: content` +
+ * `content-visibility: auto` (a render-skip + containment context); force it
+ * `visible`/`none` so the WebGL/WebGPU field always renders into the base layer
+ * the snapshot reads. This is NOT aurora-only: a viz seated BELOW the fold (the
+ * concentric story rides a long StorySection blurb above its stage) mounts
+ * content-SKIPPED, and an off-screen WKWebView snapshot never lays it out → the
+ * field snapshots BLANK while the DOM is fully real (the dual-engine paint judge
+ * "silent blank" — content-visibility, NOT a shader defect). Generalized from
+ * the lone `.aurora-root` to the whole viz-wrapper set so ANY viz (in-fold or
+ * below-fold, present or future) captures faithfully. Only ever renders MORE,
  * never less — it cannot hide settled pixels. */
 html[data-capture] .route-enter {
     contain: none !important;
 }
-html[data-capture] .aurora-root {
+html[data-capture] .aurora-root,
+html[data-capture] .concentric-wrapper,
+html[data-capture] .constellation,
+html[data-capture] .dot-matrix-wrapper,
+html[data-capture] .dot-flow-field-wrapper,
+html[data-capture] .fourier-field,
+html[data-capture] .goo-blob-wrapper,
+html[data-capture] .liquid-grid-wrapper {
     contain: none !important;
     content-visibility: visible !important;
     contain-intrinsic-size: auto !important;
