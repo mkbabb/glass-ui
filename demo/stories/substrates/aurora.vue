@@ -135,21 +135,13 @@ const hintText = computed(() => [
         height-class="h-[min(78vh,720px)]"
         scroll-mode="never"
     >
-        <!-- BB.W-SUFFUSE3 (b) — the studio masthead at the DISPLAY register with the
-             --motion-accent violet as the ONE color text-event (the procedural-suite
-             studios read ONE coherent purple identity on the masthead, never a body
-             <p>/<h2>; the same family blob's studio masthead carries). -->
-        <template #masthead>
-            <header class="flex flex-col gap-1">
-                <span class="section-label">Substrates · Aurora Studio</span>
-                <span
-                    class="text-display-3 font-display leading-tight"
-                    :style="{ color: 'var(--motion-accent)' }"
-                >
-                    Aurora Studio
-                </span>
-            </header>
-        </template>
+        <!-- BG.W-CHASSIS-ADOPT-OR-RETIRE — the studio identity is the ONE StoryHeader
+             cluster the adopted VizStudio/StoryPage chassis renders (eyebrow → subpath
+             → the audacious display <h1> "Aurora" → blurb, rendered ONCE). The prior
+             inline #masthead <header> ("Aurora Studio" at text-display-3) restated the
+             page identity a SECOND time at display scale — the forbidden double-header;
+             it is EXCISED at the source AND the masthead slot is removed from the
+             chassis root so no viz can re-author its identity. -->
 
         <!-- The REAL baked-thumbnail preset row (the dead-card fix: usePresetThumbnails
              AWAITS armAsync before renderAt on the WebGPU backend). -->

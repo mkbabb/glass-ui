@@ -63,6 +63,19 @@
 //        (BC.W-CODE-BLOCKS — the inline + multi-line rungs), both present, NO third
 //        `Code*.vue` fork. A downstream restructure re-minting a third code chassis
 //        REDs (the no-dual-path discipline on the demo code register).
+//   D7 — the adopted VizStudio chassis is UNIFIED-HEADER single-source (no double-
+//        header). VizStudio WRAPS StoryPage, which renders the ONE StoryHeader
+//        identity cluster (eyebrow → subpath → the audacious display <h1> → blurb,
+//        rendered ONCE). So the chassis MUST NOT expose a `#masthead` slot seam that
+//        lets a viz restate the page identity at DISPLAY scale beside it — the exact
+//        double-header the paint judge FAILED (aurora painted "Aurora" [StoryHeader
+//        display <h1>] AND "Aurora Studio" [an inline #masthead <header> at
+//        text-display-3], two competing display titles). Two arms: (a) VizStudio.vue
+//        declares NO `<slot name="masthead">` (the seam removed at the chassis root);
+//        (b) no demo .vue fills a `<template #masthead>` (no consumer double-authors a
+//        masthead identity header). Comment-STRIPPED (a `masthead` mention in prose /
+//        a viz's own hand-voice label is provenance, never a live seam). (born-RED:
+//        HEAD's VizStudio.vue declares the slot AND aurora.vue fills it.)
 //
 //   T1 — SplitChars carries `stagger?: boolean` and DROPS the mount-bound
 //        `.char-stagger` recipe when false (the "no mount-fire-before-reveal"
@@ -92,7 +105,10 @@
 // a dead-doc `demo-frame.css §5` pointer REDs D5 (the deleted-FILE reference, RAW-
 // scanned — distinct from the D3 name-in-comment provenance); a synthetic third code
 // fork REDs D6 and a rung-missing register REDs D6 (the "consume, do NOT re-fold"
-// bar); + one bite per T-clause that recreates the HEAD state (the born-RED proof):
+// bar); a synthetic VizStudio `<slot name="masthead">` REDs D7 (the seam-at-the-root
+// arm) and a synthetic consumer `<template #masthead>` REDs D7 (the double-authored
+// masthead arm), while a `masthead` mention in prose does NOT red D7 (the comment-
+// strip distinguishing bite); + one bite per T-clause that recreates the HEAD state (the born-RED proof):
 // the unconditional-`.char-stagger` SplitChars REDs T1, the `* 30ms` literal REDs T2,
 // the absent `useSectionReveal` REDs T3, the heading-register-less StorySection REDs T4.
 
@@ -398,6 +414,29 @@ function detect(overrides = {}) {
         codeRegisterComplete && codeForks.length === 0,
     );
 
+    // ── D7 — the adopted VizStudio chassis is UNIFIED-HEADER single-source (no
+    //    double-header). VizStudio WRAPS StoryPage, which renders the ONE StoryHeader
+    //    identity cluster (eyebrow → subpath → audacious display <h1> → blurb, ONCE).
+    //    A `#masthead` slot seam let a viz restate the page identity at DISPLAY scale
+    //    beside it — the aurora "Aurora" + "Aurora Studio" double-header the paint
+    //    judge FAILED. Two arms: (a) VizStudio.vue declares NO `<slot name="masthead">`
+    //    (the seam removed at the chassis root); (b) no demo .vue fills a
+    //    `<template #masthead>` (no consumer double-authors a masthead identity).
+    //    Comment-STRIPPED so a `masthead` mention in prose (or a viz's own hand-voice
+    //    label string) is never a false live-seam flag.
+    const VIZSTUDIO = "demo/stories/substrates/VizStudio.vue";
+    const vizStudioSrc = stripComments(readSrc(VIZSTUDIO));
+    const d7NoMastheadSlot = !/<slot\s+name=["']masthead["']/.test(vizStudioSrc);
+    const mastheadRe = /<template\s+(?:#masthead|v-slot:masthead)\b/;
+    const mastheadFills = vueCorpus
+        .filter((c) => mastheadRe.test(c.text))
+        .map((c) => c.path);
+    facts.d7 = { noMastheadSlot: d7NoMastheadSlot, mastheadFills };
+    assert(
+        "D7 — VizStudio unified-header single-source (no #masthead double-header seam)",
+        d7NoMastheadSlot && mastheadFills.length === 0,
+    );
+
     // ── The section-entrance congruence clauses (BG.W-SECTION-TYPEWRITER-FADEUP). ──
     const splitCharsSrc = readSrc(SEC.splitChars);
     const schemeMotionSrc = readSrc(SEC.schemeMotion);
@@ -603,6 +642,52 @@ function selfTest() {
         "D6 — the CodeBlock→Code fold is single-source (Code + CodeBlock only, no third fork)",
         "D6 incomplete register (a rung missing)",
     );
+    // D7 (seam-at-root): a synthetic VizStudio.vue that declares the `#masthead` slot
+    // → REDs D7 (the chassis re-exposes the double-header seam). vueCorpus isolated to
+    // an empty set so ONLY the slot-seam arm fires.
+    sab(
+        {
+            srcOverride: {
+                "demo/stories/substrates/VizStudio.vue": `<template><slot name="masthead" /></template>`,
+            },
+            vueCorpus: [],
+        },
+        "D7 — VizStudio unified-header single-source (no #masthead double-header seam)",
+        "D7 VizStudio re-declares the #masthead slot (HEAD form)",
+    );
+    // D7 (double-authored): a synthetic consumer that fills a `<template #masthead>`
+    // with an inline <header> → REDs D7 (a viz double-authors its identity masthead).
+    sab(
+        {
+            vueCorpus: [
+                {
+                    path: "demo/stories/substrates/viz.vue",
+                    text: `<template #masthead><header><span class="text-display-3">Aurora Studio</span></header></template>`,
+                },
+            ],
+            cssCorpus: [],
+        },
+        "D7 — VizStudio unified-header single-source (no #masthead double-header seam)",
+        "D7 a consumer fills the #masthead slot (aurora HEAD form)",
+    );
+    // D7 (distinguishing): a bare `masthead` mention in a comment / a viz's own
+    // hand-voice label string must NOT red D7 (the conservatism fence — only a live
+    // `<template #masthead>` seam is the double-header, not the word `masthead`).
+    sabNot(
+        {
+            vueCorpus: [
+                {
+                    path: "demo/stories/motion/handmark.vue",
+                    text: stripComments(
+                        `<!-- The masthead underline — a hand pen line under the word. -->\n<HandMark label="pen underline · the masthead default" />`,
+                    ),
+                },
+            ],
+            cssCorpus: [],
+        },
+        "D7 — VizStudio unified-header single-source (no #masthead double-header seam)",
+        "D7 comment/label `masthead` mention distinguishing bite",
+    );
 
     // ── T-clause bites — each recreates the HEAD state (the born-RED proof). ──
     // T1: the unconditional-`.char-stagger` SplitChars (no `stagger` prop) → REDs T1.
@@ -698,6 +783,9 @@ function run() {
         `  D6 code-fold single-source: ${facts["D6 — the CodeBlock→Code fold is single-source (Code + CodeBlock only, no third fork)"]}  (register: ${JSON.stringify(facts.codeVueBasenames)})`,
     );
     console.log(
+        `  D7 unified-header 1-source : ${facts["D7 — VizStudio unified-header single-source (no #masthead double-header seam)"]}  (mastheadFills: ${JSON.stringify(facts.d7?.mastheadFills ?? [])})`,
+    );
+    console.log(
         `  T1 SplitChars stagger-drop: ${facts["T1 — SplitChars `stagger?:boolean` DROPS .char-stagger (no mount-fire-before-reveal)"]}`,
     );
     console.log(
@@ -710,7 +798,7 @@ function run() {
         `  T4 two-register + no-2×    : ${facts["T4 — StorySection two-register + gl-char-rise CSS + page provides singleton, no double-cascade"]}`,
     );
     console.log(
-        `  self-test (bite proof)    : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×2 incl. comment-strip + D4 + D5 + D6×2 + T1-T4)`,
+        `  self-test (bite proof)    : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×2 incl. comment-strip + D4 + D5 + D6×2 + D7×3 incl. comment-strip + T1-T4)`,
     );
     if (violations.length) {
         console.log("\nVIOLATIONS:");

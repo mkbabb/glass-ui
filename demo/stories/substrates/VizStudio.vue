@@ -103,13 +103,16 @@ const configuratorClass = computed(() =>
          manifest row. This wrapper hosts the studio body inside the chassis. -->
     <StoryPage>
         <StorySection :heading="heading" :label="label" :blurb="blurb">
-            <!-- BB.W-SUFFUSE3 (b) — the optional studio masthead COLOR EVENT (the
-                 --motion-accent violet display title), rendered ABOVE the studio
-                 frame. A studio passes its violet display masthead here so the
-                 motion/studio family reads ONE coherent purple identity (the
-                 masthead is the studio's color event, distinct from the section
-                 heading rung). -->
-            <slot name="masthead" />
+            <!-- BG.W-CHASSIS-ADOPT-OR-RETIRE — NO #masthead slot. The page identity is
+                 the ONE StoryHeader cluster StoryPage renders (eyebrow → subpath →
+                 audacious display <h1> → blurb, rendered ONCE). The retired masthead
+                 seam let a studio inject a SECOND display-scale title beside it — the
+                 forbidden double-header (the aurora "Aurora" + "Aurora Studio" collision);
+                 the seam is removed at the chassis root so no viz can re-author its
+                 identity. The studio's in-body section label is the StorySection
+                 `heading`/`label`/`blurb` rung above; its color event lives in the viz
+                 itself, never a competing masthead title. -->
+
             <!-- BC.W-CONFIG-RIGHT — stage LEFT, controls RIGHT on desktop. The
                  `aside-side="right"` is the <Configurator> default, pinned here so
                  the studio's controls-right placement is a recorded contract the π
