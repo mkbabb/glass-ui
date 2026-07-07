@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { defineAsyncComponent } from "vue";
 import StoryPage from "../StoryPage.vue";
+import StorySection from "../StorySection.vue";
+import FamilyTabs, { type FamilyMember } from "../FamilyTabs.vue";
 import {
     Table,
     TableBody,
@@ -19,6 +22,17 @@ import { Table as TableIcon, Table2 } from "@lucide/vue";
 // identity. PH3-safe (inline borderLeft, not the border-l-[3px] + <IconChip>
 // double-header shape).
 const DATA_STOP = 9;
+
+// BG.W-DEMO-IA-REDESIGN — the Data TABLE family. The sortable/filterable data-table
+// folds onto this ONE table page as a member (bare, STORY_NESTED_KEY) via the
+// switcher below.
+const familyMembers: FamilyMember[] = [
+    {
+        id: "data-table",
+        label: "Data table",
+        component: defineAsyncComponent(() => import("./data-table.vue")),
+    },
+];
 
 interface Invoice {
     id: string;
@@ -146,5 +160,8 @@ const fmt = (n: number) => new Intl.NumberFormat("en-US", { style: "currency", c
                 </Table>
             </div>
         </div>
+        <StorySection heading="Sortable data table">
+            <FamilyTabs :members="familyMembers" aria-label="Table family" />
+        </StorySection>
     </StoryPage>
 </template>

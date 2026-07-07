@@ -675,7 +675,20 @@
             story-hero-subordinate-fade linear both;
         animation-delay: 0ms, 0s;
         animation-timeline: auto, scroll();
-        animation-range: normal, 0 var(--hero-condense-fade-range, 120px);
+        /* BG.W-DEMO-IA-REDESIGN (SHRINK-NOT-FADE, USER 07-05) — the subordinate
+           eyebrow/blurb feather ONLY AFTER the title pins. The SHRINK (the
+           title-collapse scale over 0..--hero-condense-range) is the PRIMARY scroll
+           read; opacity may only COUPLE to it, never LEAD. So the subordinate fade
+           opens at --hero-condense-range (the pin) and completes one fade-range
+           later — the title holds full opacity across the whole condense window, and
+           only the eyebrow/blurb reclaim room AFTER the header has settled. The
+           standalone opacity-led leave (fade from scroll 0) is RETIRED. */
+        animation-range: normal,
+            var(--hero-condense-range, 160px)
+                calc(
+                    var(--hero-condense-range, 160px) +
+                        var(--hero-condense-fade-range, 120px)
+                );
     }
     /* BG.W-ROUTE-ENTER-VISIBLE (fix c) — the subpath chip JOINS the reading-order
        cascade. It carried `story-header-cluster--enter` (StoryHeader.vue) but had NO
@@ -706,7 +719,20 @@
             story-hero-subordinate-fade linear both;
         animation-delay: 120ms, 0s;
         animation-timeline: auto, scroll();
-        animation-range: normal, 0 var(--hero-condense-fade-range, 120px);
+        /* BG.W-DEMO-IA-REDESIGN (SHRINK-NOT-FADE, USER 07-05) — the subordinate
+           eyebrow/blurb feather ONLY AFTER the title pins. The SHRINK (the
+           title-collapse scale over 0..--hero-condense-range) is the PRIMARY scroll
+           read; opacity may only COUPLE to it, never LEAD. So the subordinate fade
+           opens at --hero-condense-range (the pin) and completes one fade-range
+           later — the title holds full opacity across the whole condense window, and
+           only the eyebrow/blurb reclaim room AFTER the header has settled. The
+           standalone opacity-led leave (fade from scroll 0) is RETIRED. */
+        animation-range: normal,
+            var(--hero-condense-range, 160px)
+                calc(
+                    var(--hero-condense-range, 160px) +
+                        var(--hero-condense-fade-range, 120px)
+                );
     }
 }
 

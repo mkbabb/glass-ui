@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
-import { ref } from "vue";
+import { defineAsyncComponent, ref } from "vue";
+import FamilyTabs, { type FamilyMember } from "../FamilyTabs.vue";
 import { Input } from "@glass/components/ui/input";
 import { Label } from "@glass/components/ui/label";
 import { SearchBar } from "@glass/components/custom/search";
@@ -17,6 +18,37 @@ const withLabel = ref("");
 const errored = ref("not-an-email");
 const searchTerm = ref("");
 const pillBare = ref("");
+
+// BG.W-DEMO-IA-REDESIGN — the Forms INPUT family. Textarea, select, combobox,
+// multi-select, and label no longer each earn a route; they render as members of
+// this ONE input-family page via the switcher below (bare, STORY_NESTED_KEY).
+const familyMembers: FamilyMember[] = [
+    {
+        id: "textarea",
+        label: "Textarea",
+        component: defineAsyncComponent(() => import("./textarea.vue")),
+    },
+    {
+        id: "select",
+        label: "Select",
+        component: defineAsyncComponent(() => import("./select.vue")),
+    },
+    {
+        id: "combobox",
+        label: "Combobox",
+        component: defineAsyncComponent(() => import("./combobox.vue")),
+    },
+    {
+        id: "multi-select",
+        label: "Multi-select",
+        component: defineAsyncComponent(() => import("./multi-select.vue")),
+    },
+    {
+        id: "label",
+        label: "Label",
+        component: defineAsyncComponent(() => import("./label.vue")),
+    },
+];
 </script>
 
 <template>
@@ -118,6 +150,9 @@ const pillBare = ref("");
                     aria-label="bare pill input"
                 >
             </div>
+        </StorySection>
+        <StorySection heading="The input family">
+            <FamilyTabs :members="familyMembers" aria-label="Input family" />
         </StorySection>
     </StoryPage>
 </template>

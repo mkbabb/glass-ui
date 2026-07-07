@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
-import { computed, ref } from "vue";
+import StorySection from "../StorySection.vue";
+import { computed, defineAsyncComponent, ref } from "vue";
+import FamilyTabs, { type FamilyMember } from "../FamilyTabs.vue";
 import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, ToggleRight } from "@lucide/vue";
 import { Toggle } from "@glass/components/ui/toggle";
 import { ToggleGroup, ToggleGroupItem } from "@glass/components/ui/toggle-group";
@@ -10,6 +12,22 @@ import { IconChip } from "@glass/components/custom/icon-chip";
 // identity (the cool stop). PH3-safe (inline borderLeft, not the
 // border-l-[3px] + <IconChip> double-header shape).
 const FORMS_STOP = 3;
+
+// BG.W-DEMO-IA-REDESIGN — the Forms TOGGLES family. The chip toggles (toggle-chip,
+// selectable-chip) collapse onto this ONE toggles page as members (bare,
+// STORY_NESTED_KEY) via the switcher below.
+const familyMembers: FamilyMember[] = [
+    {
+        id: "toggle-chip",
+        label: "Toggle chip",
+        component: defineAsyncComponent(() => import("./toggle-chip.vue")),
+    },
+    {
+        id: "selectable-chip",
+        label: "Selectable chip",
+        component: defineAsyncComponent(() => import("./selectable-chip.vue")),
+    },
+];
 
 const bold = ref<boolean>(false);
 const marks = ref<string[]>(["bold"]);
@@ -146,5 +164,8 @@ const cell = ref<string>("warm");
                 cell · {{ cell }}
             </p>
         </section>
+        <StorySection heading="The chip toggles">
+            <FamilyTabs :members="familyMembers" aria-label="Toggle family" />
+        </StorySection>
     </StoryPage>
 </template>

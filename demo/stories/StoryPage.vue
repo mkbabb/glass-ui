@@ -1,11 +1,19 @@
 <script setup lang="ts">
-import { computed, provide, watch } from "vue";
+import { computed, inject, provide, watch } from "vue";
 import { cn } from "@glass/utils/cn";
 import { TooltipProvider } from "@glass/components/ui/tooltip";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
 import { SECTION_REVEAL_KEY, useSectionReveal } from "./useSectionReveal";
+import { STORY_NESTED_KEY } from "./story-nested";
 import StoryHero from "./StoryHero.vue";
 import StoryHeader from "./StoryHeader.vue";
+
+// BG.W-DEMO-IA-REDESIGN — the family-collapse nesting seam. When this StoryPage is
+// a MEMBER inside a `<FamilyTabs>` family page (which provides STORY_NESTED_KEY), it
+// renders BARE — just its slot body, dropping the hero/chrome header + the
+// route-enter <article> — so the family page owns the ONE identity header over N
+// member bodies (no doubled hero <h1>, no second route-enter root).
+const nested = inject(STORY_NESTED_KEY, false);
 
 interface StoryPageProps {
     /** Override the max-width on the content section. */
@@ -81,6 +89,13 @@ watch(current, () => onRouteSettle());
 </script>
 
 <template>
+    <!-- BG.W-DEMO-IA-REDESIGN — the BARE nested body. When this StoryPage is a member
+         inside a `<FamilyTabs>` family page, it renders ONLY its slot body (the member's
+         own sections) — no hero/chrome header, no route-enter <article> — so the family
+         page owns the ONE identity header. Zero member content re-authored. -->
+    <div v-if="nested" class="story-nested-body">
+        <slot />
+    </div>
     <!-- BG.W-ROUTE-TRANSITION — the routed page presents a SINGLE ELEMENT root (this
          <article>) so the AppShell bare keyed `<component class="route-enter">` swap can
          apply the `.route-enter` on-mount entrance to it (a fragment/text-only root
@@ -89,6 +104,7 @@ watch(current, () => onRouteSettle());
          INSIDE the <article> root (same tooltip context to all descendants, zero
          layout/visual change). -->
     <article
+        v-else
         class="story-page-article mx-auto w-full"
         :data-variant="variant"
         :style="{

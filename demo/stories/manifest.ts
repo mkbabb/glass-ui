@@ -267,6 +267,9 @@ const SUBPATHS: Record<string, string> = {
     "display/pulse": "@mkbabb/glass-ui/pulse",
     "display/stacked-icons": "@mkbabb/glass-ui/stacked-icons",
     "display/dark-mode-toggle": "@mkbabb/glass-ui/controls",
+    // BG.W-DEMO-IA-REDESIGN — the Display ATOMS wall (folds separator · pulse ·
+    // status-dot · stacked-icons · dark-mode-toggle · avatar as family members).
+    "display/atoms": "/display/atoms",
     // Containers — the glass surfaces.
     "containers/dialog": "@mkbabb/glass-ui/dialog",
     "containers/sheet": "@mkbabb/glass-ui/sheet",
@@ -311,6 +314,9 @@ const SUBPATHS: Record<string, string> = {
     "data/scrolling-text": "@mkbabb/glass-ui/scrolling-text",
     "data/metric-cell": "@mkbabb/glass-ui/metric-cell",
     "data/metric-stack": "@mkbabb/glass-ui/metric-stack",
+    // BG.W-DEMO-IA-REDESIGN — the Data METRICS family (folds metric-cell ·
+    // metric-stack · metric-badge · metric-pill · scrolling-text as members).
+    "data/metrics": "/data/metrics",
     // Feedback — the status surfaces.
     "feedback/alert": "/feedback/alert",
     "feedback/toast": "@mkbabb/glass-ui/toast",
@@ -333,6 +339,12 @@ const SUBPATHS: Record<string, string> = {
     "motion/handmark": "@mkbabb/glass-ui/handmark",
     "motion/animated-digit": "@mkbabb/glass-ui/animated-digit",
     "motion/split-chars": "@mkbabb/glass-ui/motion-core",
+    // BG.W-DEMO-IA-REDESIGN — the Motion SCROLL family (folds scroll-vt ·
+    // scroll-system · scroll-choreography, dependency order) + the TYPE & NUMBER
+    // family (folds typewriter · split-chars · animated-digit · countup). The
+    // scroll page shares /motion-core with reveal — the DECLARED motion-core family.
+    "motion/scroll": "@mkbabb/glass-ui/motion-core",
+    "motion/text-motion": "/motion/text-motion",
     // Compositions — real scenes carry the route path.
     "compositions/hero": "/compositions/hero",
     "compositions/math-paper": "/compositions/math-paper",
@@ -377,6 +389,76 @@ const LANDING_BLURBS: Record<string, string> = {
     motion: "The spring, curve, and reveal vocabulary — the drift band identity.",
     compositions: "Real scenes — dashboards, auth shells, the math-paper idiom.",
 };
+
+/**
+ * BG.W-DEMO-IA-REDESIGN — the family-collapse registry (the `demo-earns-page` floor).
+ *
+ * The demo was a 120-page spec-sheet inventory where 8 component subpaths were split
+ * across ≥2 near-duplicate pages (inputs/textarea/combobox all demoing `/forms`,
+ * table/data-table both `/data-table`, timeline ×3, …). This wave collapses each
+ * redundant set onto ONE FAMILY page (`forms/inputs`, `data/table`, `data/metrics`,
+ * `motion/scroll`, …) that shows the members as sections via `<FamilyTabs>` (each
+ * member composed BARE — its own SFC, zero content re-authored, the STORY_NESTED_KEY
+ * seam). The member routes below are DROPPED from the nav (`foldFamilies` filters
+ * them out), shrinking the routed set ~120 → ~94 designed pages.
+ *
+ * The member SFCs STAY on disk (composed by their family page), so the no-orphan
+ * bijection holds — they are simply UN-ROUTED here. `proof:demo`'s `demo-earns-page`
+ * arm reads this set to subtract the folded members before measuring the REAL routed
+ * subpath collisions. Keyed `category/id`.
+ */
+export const FOLDED_STORY_IDS: ReadonlySet<string> = new Set<string>([
+    // Forms → forms/inputs (the input family) + forms/toggle (the toggles family).
+    "forms/textarea",
+    "forms/select",
+    "forms/combobox",
+    "forms/multi-select",
+    "forms/label",
+    "forms/toggle-chip",
+    "forms/selectable-chip",
+    // Display atoms → display/atoms; the metric atoms move OUT to data/metrics.
+    "display/separator",
+    "display/pulse",
+    "display/status-dot",
+    "display/stacked-icons",
+    "display/dark-mode-toggle",
+    "display/metric-badge",
+    "display/metric-pill",
+    // Data → data/table (data-table) · data/timeline (segmented/continuous) ·
+    // data/metrics · display/atoms (avatar).
+    "data/data-table",
+    "data/timeline-segmented",
+    "data/timeline-continuous",
+    "data/metric-cell",
+    "data/metric-stack",
+    "data/scrolling-text",
+    "data/avatar",
+    // Feedback → feedback/toast.
+    "feedback/toaster",
+    // Motion → motion/scroll · motion/text-motion.
+    "motion/scroll-vt",
+    "motion/scroll-system",
+    "motion/scroll-choreography",
+    "motion/typewriter",
+    "motion/split-chars",
+    "motion/animated-digit",
+    "motion/countup",
+    // Foundations → foundations/paper-glass (the paper chapter).
+    "foundations/paper-texture",
+]);
+
+/**
+ * BG.W-DEMO-IA-REDESIGN — the DECLARED families: the subpaths a routed collision is
+ * SANCTIONED on. After the family collapse, exactly two subpaths are legitimately
+ * shared by >1 routed page: `/dock` (the headline dock family — 4.11's counts) and
+ * `/motion-core` (the broad composable barrel `reveal` + the `scroll` family both
+ * live on). Every OTHER shared subpath is a redundant-page defect. `proof:demo`'s
+ * `demo-earns-page` arm reads this allowlist.
+ */
+export const DECLARED_FAMILY_SUBPATHS: ReadonlySet<string> = new Set<string>([
+    "@mkbabb/glass-ui/dock",
+    "@mkbabb/glass-ui/motion-core",
+]);
 
 function s(
     cat: string,
@@ -807,6 +889,12 @@ export const CATEGORIES: Category[] = [
                 "Dark Mode Toggle",
                 "Size axis (sm · md · lg · control standalone; dock sizes to its GlassDock host); composes useGlobalDark.",
             ),
+            s(
+                "display",
+                "atoms",
+                "Atoms",
+                "The designed atoms wall — separator, status-dot, pulse, stacked-icons, avatar, and the dark-mode toggle on ONE page, sectioned by the family switcher.",
+            ),
         ],
     },
     {
@@ -1033,6 +1121,15 @@ export const CATEGORIES: Category[] = [
                     background: "grid",
                 },
             ),
+            s(
+                "data",
+                "metrics",
+                "Metrics",
+                "The numeric-readout family — MetricCell, MetricStack, MetricBadge, MetricPill, and the ScrollingText marquee on ONE page, sectioned by the family switcher.",
+                {
+                    background: "grid",
+                },
+            ),
         ],
     },
     {
@@ -1149,6 +1246,24 @@ export const CATEGORIES: Category[] = [
                 "Split Chars",
                 "SplitChars / useCharStagger — the per-glyph split partner to the shipped .char-stagger CSS: mints the .char spans + --char-index/--char-total the recipe reads, accessible by construction (the aria-label keeps the word ONE accessible name; the glyphs are aria-hidden). Char / word / grapheme (Intl.Segmenter) split units.",
             ),
+            s(
+                "motion",
+                "scroll",
+                "Scroll",
+                "The native scroll-driven register — the scroll() timeline, the reader edge-fade system, and the choreography recipes (build · cascade · pin) on ONE page in dependency order.",
+                {
+                    background: "constellation",
+                },
+            ),
+            s(
+                "motion",
+                "text-motion",
+                "Text Motion",
+                "The type & number motion family — Typewriter, SplitChars, AnimatedDigit, and Countup on ONE page, sectioned by the family switcher.",
+                {
+                    background: "constellation",
+                },
+            ),
         ],
     },
     {
@@ -1240,6 +1355,42 @@ export const CATEGORIES: Category[] = [
         ],
     },
 ];
+
+// BG.W-DEMO-IA-REDESIGN — the family collapse + the narrative arc re-order, applied
+// AFTER the category tree is built but BEFORE the depth ladder is derived (so the
+// FIRST *surviving* story per category is the D2 main).
+//
+// (1) foldFamilies — drop the folded member routes from the nav. The member SFCs
+//     stay on disk (composed by their family page via <FamilyTabs>), so the
+//     no-orphan bijection holds; they are just un-routed here.
+function foldFamilies(categories: Category[]): void {
+    for (const cat of categories) {
+        cat.stories = cat.stories.filter(
+            (st) => !FOLDED_STORY_IDS.has(`${cat.id}/${st.id}`),
+        );
+    }
+}
+foldFamilies(CATEGORIES);
+
+// (2) The narrative arc (D3-C1) — Foundations → Material (substrates) → Elements
+//     (DISPLAY atoms, then FORMS controls — the display↔forms swap) → Surfaces
+//     (containers · navigation · dock) → Data → Feedback → Motion → Compositions.
+const ACT_ORDER: readonly string[] = [
+    "foundations",
+    "substrates",
+    "display",
+    "forms",
+    "containers",
+    "navigation",
+    "dock",
+    "data",
+    "feedback",
+    "motion",
+    "compositions",
+];
+CATEGORIES.sort(
+    (a, b) => ACT_ORDER.indexOf(a.id) - ACT_ORDER.indexOf(b.id),
+);
 
 // BC.W-PAGE-CHASSIS — finalize the depth-keyed √φ title ladder + the section
 // landings AFTER the category tree is built (the FIRST story per category is the

@@ -1,7 +1,20 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
-import { h } from "vue";
+import { defineAsyncComponent, h } from "vue";
+import StorySection from "../StorySection.vue";
+import FamilyTabs, { type FamilyMember } from "../FamilyTabs.vue";
 import { ToastProvider, ToastViewport } from "reka-ui";
+
+// BG.W-DEMO-IA-REDESIGN — the Feedback TOAST family. The imperative `Toaster`
+// register folds onto this ONE toast page as a member (bare, STORY_NESTED_KEY)
+// via the switcher below.
+const familyMembers: FamilyMember[] = [
+    {
+        id: "toaster",
+        label: "Toaster (imperative)",
+        component: defineAsyncComponent(() => import("./toaster.vue")),
+    },
+];
 import { Button } from "@glass/components/ui/button";
 import {
     Toast,
@@ -168,5 +181,8 @@ const toneIcon: Record<string, typeof CheckCircle2> = {
                 />
             </ToastProvider>
         </section>
+        <StorySection heading="Imperative toaster">
+            <FamilyTabs :members="familyMembers" aria-label="Toast family" />
+        </StorySection>
     </StoryPage>
 </template>

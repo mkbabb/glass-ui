@@ -1,7 +1,26 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
-import { ref, computed } from "vue";
+import StorySection from "../StorySection.vue";
+import FamilyTabs, { type FamilyMember } from "../FamilyTabs.vue";
+import { ref, computed, defineAsyncComponent } from "vue";
 import { GlassTimeline } from "@glass/components/custom/timeline";
+
+// BG.W-DEMO-IA-REDESIGN — the Data TIMELINE family. The segmented + continuous
+// timeline registers collapse onto this ONE timeline page as members (bare,
+// STORY_NESTED_KEY) via the switcher below. The mechanical file consolidation
+// rides F7.3.
+const familyMembers: FamilyMember[] = [
+    {
+        id: "timeline-segmented",
+        label: "Segmented",
+        component: defineAsyncComponent(() => import("./timeline-segmented.vue")),
+    },
+    {
+        id: "timeline-continuous",
+        label: "Continuous",
+        component: defineAsyncComponent(() => import("./timeline-continuous.vue")),
+    },
+];
 import { cn } from "@glass/utils/cn";
 
 interface TimelineEvent {
@@ -142,5 +161,8 @@ function jumpTo(e: TimelineEvent) {
                 </li>
             </ol>
         </div>
+        <StorySection heading="Segmented & continuous">
+            <FamilyTabs :members="familyMembers" aria-label="Timeline family" />
+        </StorySection>
     </StoryPage>
 </template>

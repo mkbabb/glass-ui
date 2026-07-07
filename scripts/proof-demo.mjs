@@ -142,6 +142,68 @@ const SEC = {
     storyPage: "demo/stories/StoryPage.vue",
 };
 
+// ── The demo-IA-redesign clauses (BG.W-DEMO-IA-REDESIGN — E1-E3). ────────────────
+// The demo was a 120-page spec-sheet inventory with 8 component subpaths split across
+// ≥2 near-duplicate pages. This wave collapses each redundant set onto ONE family
+// page (composed via <FamilyTabs>, member SFCs un-routed via FOLDED_STORY_IDS), so
+// the routed set shrinks to the ~94 designed pages. E1 is the machine floor: no
+// subpath is shared by >1 ROUTED page unless it is a DECLARED family. E2 keeps the
+// DockStage staged field WARM (not cerulean). E3 keeps the StoryPage scroll read a
+// SHRINK, never a fade.
+const IA = {
+    manifest: "demo/stories/manifest.ts",
+    dockStage: "demo/stories/dock/DockStage.vue",
+    heroCss: "demo/stories/story-hero.css",
+};
+
+// Parse every s("cat","id") routed-row candidate from the manifest source.
+function parseStoryRows(src) {
+    const out = [];
+    const re = /\bs\(\s*"([\w-]+)"\s*,\s*"([\w-]+)"/g;
+    let m;
+    while ((m = re.exec(src))) out.push(`${m[1]}/${m[2]}`);
+    return out;
+}
+
+// Parse a `new Set<string>([ "a", "b", … ])` literal named `name` → its members.
+// Returns an EMPTY set when the const is absent (the HEAD state — no FOLDED yet).
+function parseSetLiteral(src, name) {
+    const i = src.indexOf(name);
+    if (i < 0) return new Set();
+    const open = src.indexOf("([", i);
+    if (open < 0) return new Set();
+    const close = src.indexOf("])", open);
+    if (close < 0) return new Set();
+    return new Set(
+        [...src.slice(open + 2, close).matchAll(/"([^"]+)"/g)].map((x) => x[1]),
+    );
+}
+
+// Parse the SUBPATHS `"cat/id": "<subpath>"` map from the manifest source.
+function parseSubpaths(src) {
+    const out = {};
+    const i = src.indexOf("const SUBPATHS");
+    if (i < 0) return out;
+    const open = src.indexOf("{", i);
+    let depth = 0,
+        end = -1;
+    for (let j = open; j < src.length; j++) {
+        if (src[j] === "{") depth++;
+        else if (src[j] === "}") {
+            depth--;
+            if (depth === 0) {
+                end = j;
+                break;
+            }
+        }
+    }
+    for (const m of src
+        .slice(open + 1, end)
+        .matchAll(/"([\w-]+\/[\w-]+)"\s*:\s*"([^"]+)"/g))
+        out[m[1]] = m[2];
+    return out;
+}
+
 // ── The DECISION LEDGER — the adopt/retire verdict + rationale per chassis. ──────
 // This table IS the recorded decision (D4 asserts it complete). Each `files[]` is
 // the on-disk artefact set the verdict governs (retire → absent; adopt → present +
@@ -518,6 +580,80 @@ function detect(overrides = {}) {
         t4Heading && t4Body && t4Css && t4Provide && t4NoDouble,
     );
 
+    // ── E1 — demo-earns-page: no subpath shared by >1 ROUTED page off the declared
+    //    family allowlist. The routed set = the s() rows MINUS FOLDED_STORY_IDS (the
+    //    collapsed member pages). Born-RED on HEAD (no FOLDED → the 8 collisions;
+    //    only `dock` is a declared family so 7 are undeclared). GREEN once the
+    //    families fold — the only surviving multi-row subpaths are the two DECLARED
+    //    families (`/dock` + `/motion-core`). ──
+    const manifestSrc = overrides.manifestSrc ?? read(IA.manifest);
+    const rows = parseStoryRows(manifestSrc);
+    const folded =
+        overrides.foldedOverride ??
+        parseSetLiteral(manifestSrc, "FOLDED_STORY_IDS");
+    const declared =
+        overrides.declaredOverride ??
+        parseSetLiteral(manifestSrc, "DECLARED_FAMILY_SUBPATHS");
+    const subpaths = overrides.subpathsOverride ?? parseSubpaths(manifestSrc);
+    const routed = rows.filter((r) => !folded.has(r));
+    const bySubpath = {};
+    for (const r of routed) {
+        const sp = subpaths[r] ?? `/${r}`;
+        (bySubpath[sp] ??= []).push(r);
+    }
+    const e1Collisions = Object.entries(bySubpath)
+        .filter(([sp, rs]) => rs.length > 1 && !declared.has(sp))
+        .map(([sp, rs]) => `${sp} ← ${rs.join(", ")}`);
+    facts.e1 = {
+        routedCount: routed.length,
+        declared: [...declared],
+        collisions: e1Collisions,
+    };
+    assert(
+        "E1 — demo-earns-page (no undeclared subpath shared by >1 routed page)",
+        e1Collisions.length === 0,
+    );
+
+    // ── E2 — field-warm-default: the DockStage staged field DEFAULT is a WARM
+    //    heroAuroraConfig (identity-aligned), NEVER the cerulean OPENAI_SKY (hue
+    //    240) at war with the warm-cream identity. ──
+    const dockStageSrc = overrides.dockStageSrc ?? read(IA.dockStage);
+    const dsDefault =
+        (dockStageSrc.match(/config:\s*\(\)\s*=>\s*([^\n,}]+)/) || [])[1] ?? "";
+    const e2NotCerulean = !/OPENAI_SKY/.test(dsDefault);
+    const e2Warm = /heroAuroraConfig\(/.test(dsDefault);
+    facts.e2 = {
+        default: dsDefault.trim(),
+        notCerulean: e2NotCerulean,
+        warm: e2Warm,
+    };
+    assert(
+        "E2 — field-warm-default (DockStage default is warm heroAuroraConfig, not OPENAI_SKY cerulean)",
+        e2NotCerulean && e2Warm,
+    );
+
+    // ── E3 — shrink-not-fade: the StoryPage header SHRINKS on scroll (the
+    //    title-collapse scale is the primary read); the subordinate eyebrow/blurb
+    //    fade may only COUPLE to it (open AFTER the pin), never LEAD from scroll 0.
+    //    Born-RED on the HEAD `animation-range: normal, 0 var(--hero-condense-fade-
+    //    range)` form (the fade leads from 0). ──
+    const heroCssSrc = overrides.heroCssSrc ?? read(IA.heroCss);
+    const e3ShrinkPresent =
+        /@keyframes\s+title-collapse/.test(heroCssSrc) &&
+        /animation:\s*title-collapse\b/.test(heroCssSrc);
+    const e3FadeLeadsAt0 =
+        /animation-range:\s*normal,\s*0\s+var\(--hero-condense-fade-range/.test(
+            heroCssSrc,
+        );
+    facts.e3 = {
+        shrinkPresent: e3ShrinkPresent,
+        fadeLeadsAt0: e3FadeLeadsAt0,
+    };
+    assert(
+        "E3 — shrink-not-fade (title-collapse shrink leads; subordinate fade follows the pin, not scroll 0)",
+        e3ShrinkPresent && !e3FadeLeadsAt0,
+    );
+
     return { facts, violations };
 }
 
@@ -732,6 +868,45 @@ function selfTest() {
         "T4 heading-register-less StorySection (HEAD form)",
     );
 
+    // E1 (born-RED): the HEAD state — EMPTY folded set over the real manifest rows +
+    // subpaths → the 8 redundant-page collisions surface (7 undeclared) → REDs E1.
+    sab(
+        { foldedOverride: new Set() },
+        "E1 — demo-earns-page (no undeclared subpath shared by >1 routed page)",
+        "E1 empty FOLDED (HEAD) leaves undeclared subpath collisions",
+    );
+    // E1 (distinguishing): a subpath shared by 2 rows that IS a declared family
+    // (dock) must NOT red — the allowlist is the sanction.
+    sabNot(
+        {
+            manifestSrc: `s("nav","a","A") s("nav","b","B")`,
+            subpathsOverride: {
+                "nav/a": "@mkbabb/glass-ui/dock",
+                "nav/b": "@mkbabb/glass-ui/dock",
+            },
+            foldedOverride: new Set(),
+            declaredOverride: new Set(["@mkbabb/glass-ui/dock"]),
+        },
+        "E1 — demo-earns-page (no undeclared subpath shared by >1 routed page)",
+        "E1 a declared-family (dock) collision is sanctioned",
+    );
+    // E2 (born-RED): a synthetic DockStage default of PRESETS.OPENAI_SKY (cerulean)
+    // → REDs E2.
+    sab(
+        { dockStageSrc: `config: () => PRESETS.OPENAI_SKY,` },
+        "E2 — field-warm-default (DockStage default is warm heroAuroraConfig, not OPENAI_SKY cerulean)",
+        "E2 cerulean OPENAI_SKY default (HEAD form)",
+    );
+    // E3 (born-RED): the HEAD subordinate-fade `animation-range: normal, 0 var(--hero-
+    // condense-fade-range …)` (the fade leads from scroll 0) → REDs E3.
+    sab(
+        {
+            heroCssSrc: `@keyframes title-collapse { to { scale: 0.82; } }\n.x { animation: title-collapse both; animation-range: normal, 0 var(--hero-condense-fade-range, 120px); }`,
+        },
+        "E3 — shrink-not-fade (title-collapse shrink leads; subordinate fade follows the pin, not scroll 0)",
+        "E3 subordinate fade leads from scroll 0 (HEAD form)",
+    );
+
     return flagged;
 }
 
@@ -798,7 +973,16 @@ function run() {
         `  T4 two-register + no-2×    : ${facts["T4 — StorySection two-register + gl-char-rise CSS + page provides singleton, no double-cascade"]}`,
     );
     console.log(
-        `  self-test (bite proof)    : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×2 incl. comment-strip + D4 + D5 + D6×2 + D7×3 incl. comment-strip + T1-T4)`,
+        `  E1 demo-earns-page        : ${facts["E1 — demo-earns-page (no undeclared subpath shared by >1 routed page)"]}  (routed: ${facts.e1?.routedCount}, undeclared collisions: ${JSON.stringify(facts.e1?.collisions ?? [])})`,
+    );
+    console.log(
+        `  E2 field-warm-default     : ${facts["E2 — field-warm-default (DockStage default is warm heroAuroraConfig, not OPENAI_SKY cerulean)"]}  (default: ${facts.e2?.default})`,
+    );
+    console.log(
+        `  E3 shrink-not-fade        : ${facts["E3 — shrink-not-fade (title-collapse shrink leads; subordinate fade follows the pin, not scroll 0)"]}`,
+    );
+    console.log(
+        `  self-test (bite proof)    : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×2 incl. comment-strip + D4 + D5 + D6×2 + D7×3 incl. comment-strip + T1-T4 + E1×2 incl. declared-family + E2 + E3)`,
     );
     if (violations.length) {
         console.log("\nVIOLATIONS:");

@@ -1,8 +1,20 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
-import { onMounted, ref } from "vue";
+import { defineAsyncComponent, onMounted, ref } from "vue";
+import FamilyTabs, { type FamilyMember } from "../FamilyTabs.vue";
 import { cn } from "@glass/utils/cn";
+
+// BG.W-DEMO-IA-REDESIGN — the Foundations PAPER chapter. The paper-texture tour
+// folds onto this ONE paper page as a member (bare, STORY_NESTED_KEY) via the
+// switcher below.
+const familyMembers: FamilyMember[] = [
+    {
+        id: "paper-texture",
+        label: "Paper texture",
+        component: defineAsyncComponent(() => import("./paper-texture.vue")),
+    },
+];
 
 // The paper-vs-glass tour declares a paper-grain wash on its manifest row; the
 // page chassis renders it behind a glassy hero card, so the tier tiles read
@@ -247,6 +259,9 @@ onMounted(() => {
                 </div>
             </div>
         </div>
+        <StorySection heading="Paper texture & grain">
+            <FamilyTabs :members="familyMembers" aria-label="Paper family" />
+        </StorySection>
     </StoryPage>
 </template>
 
