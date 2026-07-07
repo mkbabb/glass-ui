@@ -227,19 +227,21 @@ function clauseL3ContourFrozen(srcOverride) {
     return viol;
 }
 
-// L7 (F9.R3 WebKit-paint-fix) — the WebKit/Metal-WebGPU codegen-hygiene floor. BOTH the concentric
-//     GLSL/GL2 AND the WGSL paths are EMPIRICALLY correct on WebKit — each renders an OPAQUE
-//     structured field (the GL2 path verified via a real playwright-webkit WebGL2 readback:
-//     stdL≈0.07, alpha 1, zero transparent px, at DPR-1 AND DPR-2-large). The dual-engine "silent
-//     blank" the paint judge saw was NEVER a shader/exp NaN and is NOT confined to the WebGPU
-//     primary — it is the CONTENT-VISIBILITY skip (LC6): the below-fold concentric wrapper mounts
-//     `content-visibility: auto` content-SKIPPED, so an off-screen WKWebView snapshot never lays it
-//     out and the CANVAS (whichever backend drew into it) snapshots blank — substrate-agnostic,
-//     which is exactly why BOTH paths blanked. This clause is retained as WebKit/Metal codegen
-//     HYGIENE (it is the correct discipline regardless): (P1) the fwidth(fN) derivative lives at
-//     exactly ONE fs_main site (hoisted out of the helper; L3 owns the derivative-free helper), and
-//     (P2) NO dynamic uniform-array indexing of the palette — a static-index unroll. The actual
-//     paint fix lives in LC6 (the capture harness neutralizes content-visibility for the viz wrappers).
+// L7 (F9.R3 WebKit-paint-fix) — the WebKit/Metal-WebGPU FRAGMENT-stage codegen-hygiene floor:
+//     (P1) the fwidth(fN) derivative lives at exactly ONE fs_main site (hoisted out of the helper;
+//     L3 owns the derivative-free helper), and (P2) NO dynamic uniform-array indexing of the
+//     palette — a static-index unroll. RECORD CORRECTION (BG.W-CONCENTRIC-LEVELCURVES re-judge):
+//     the dual-engine "silent blank" the paint judge saw on the WGSL-primary path was NOT
+//     content-visibility (the LC6 below-fold force-visible generalization landed and concentric
+//     STILL blanked in WebKit, while the aurora control below the same fold under the identical
+//     force-visible rule PAINTED) and was NOT a fragment-stage exp NaN — it was the VERTEX path:
+//     the WGSL vs_main dynamically indexed a function-local `array<vec2…>(…)` by the runtime
+//     vertex_index (`corners[vi]`), which MISCOMPILES on WebKit's Metal WGSL backend to a
+//     degenerate covering triangle (no fragments rasterize → clear-floor), while Chrome/ANGLE
+//     tolerates it (so Chrome painted while WebKit blanked). That root cause is machine-locked in
+//     LC7 (clauseWgslVertexBranch); this L7 clause is the fragment-stage codegen hygiene beside it
+//     (the correct discipline regardless — a helper-derivative or a dynamic palette index would
+//     independently break WebKit-Metal).
 function clauseWebkitPortability(srcOverride) {
     const viol = [];
     const wgsl = stripComments(
@@ -270,6 +272,40 @@ function clauseWebkitPortability(srcOverride) {
         if (dyn)
             viol.push(`P2-palette: ${name} indexes the palette uniform-array with a DYNAMIC (non-constant) index — a WebKit/Metal-WebGPU argument-buffer codegen hazard; use the static-index unroll (paletteStop/paletteStopLin)`);
     }
+    return viol;
+}
+
+// LC7 (BG.W-CONCENTRIC-LEVELCURVES paint-fix — the TRUE dual-engine WebKit "silent blank" root
+//      cause, empirically bisected against the WORKING aurora path). The WGSL covering-triangle
+//      vertex path MUST build its NDC corners with SCALAR BRANCHES on the vertex index (`if
+//      (vi == 1u) { … } else if (vi == 2u) { … }` — the aurora.wgsl / dot-flow-field idiom),
+//      NEVER a function-local `var corners = array<vec2<f32>, 3>(...)` DYNAMICALLY indexed by the
+//      runtime vertex_index (`corners[vi]`). The dynamic local-array index MISCOMPILES on
+//      WebKit's Metal WGSL backend — the covering triangle collapses to a degenerate primitive,
+//      NO fragments rasterize, and the pass emits a uniform clear-floor (the Safari blank: INIT
+//      succeeds, DRAW produces nothing, ERROR-FREE compile/link, stdL≈0.005, edge≈0.0002).
+//      Chrome/ANGLE TOLERATES the dynamic index, which is exactly why concentric painted in Chrome
+//      but blanked in WebKit while the field math + capture harness were correct. The GLSL fallback
+//      drives its fullscreen pass from an `aPosition` vertex ATTRIBUTE (no vertex-index array), so
+//      this hazard is WGSL-only. Born-RED on the HEAD `corners[vi]` form.
+function clauseWgslVertexBranch(srcOverride) {
+    const viol = [];
+    const wgsl = stripComments(
+        srcOverride?.["wgsl"] ?? read(resolve(DIR, "shaders/concentric.wgsl.ts")),
+    );
+    // Scope to the @vertex region (vs_main is the sole body between @vertex and @fragment).
+    const vs = (wgsl.match(/@vertex[\s\S]*?(?=@fragment)/) ?? [wgsl])[0];
+    const hasBranch = /if\s*\(\s*vi\s*==\s*1u\s*\)/.test(vs);
+    const hasArrayCtor = /array\s*<\s*vec2[\s\S]*?>\s*\(/.test(vs);
+    const hasDynIndex = /\b\w+\s*\[\s*vi\b/.test(vs);
+    if (hasArrayCtor && hasDynIndex)
+        viol.push(
+            "LC7-vsbranch: concentric.wgsl.ts vs_main DYNAMICALLY indexes a function-local `array<vec2…>(…)` by the runtime vertex_index (`corners[vi]`) — this MISCOMPILES on WebKit's Metal WGSL backend (the covering triangle collapses → degenerate primitive → NO fragments rasterize → the SILENT dual-engine blank the paint judge saw; Chrome/ANGLE tolerates it, so Chrome painted while WebKit blanked). Build the corners with SCALAR BRANCHES on vi (`if (vi == 1u) { … } else if (vi == 2u) { … }`) — the WebKit-safe aurora.wgsl / dot-flow-field covering-triangle idiom",
+        );
+    if (!hasBranch)
+        viol.push(
+            "LC7-vsbranch: concentric.wgsl.ts vs_main does not build the covering triangle with the WebKit-safe scalar-branch form (`if (vi == 1u) { … } else if (vi == 2u) { … }`) — the branch build is the covering-triangle shape that paints on WebKit-WebGPU + Chrome/Metal identically (a dynamic local-array index by the vertex_index degenerates the triangle on WebKit)",
+        );
     return viol;
 }
 
@@ -568,17 +604,20 @@ function clauseLevelCurvesRepair(srcOverride) {
     return viol;
 }
 
-// LC6 (BG.W-CONCENTRIC-LEVELCURVES paint-fix) — the WebKit content-visibility capture floor (the
-//     TRUE dual-engine "silent blank" root cause, empirically bisected). The concentric story seats
-//     the viz BELOW the fold (a long StorySection blurb rides above the Configurator stage), so on
-//     WebKit it mounts content-SKIPPED (`content-visibility: auto` on `.concentric-wrapper`). An
-//     off-screen WKWebView snapshot never lays out a content-skipped subtree, so the CANVAS — the
-//     WGSL primary AND the GLSL fallback alike (the skip is UPSTREAM of the backend, which is why
-//     BOTH paths blanked while the shader math is correct) — snapshots BLANK while the DOM is fully
-//     real. The capture harness MUST neutralize `content-visibility` for the viz wrapper set (the
-//     established lone `.aurora-root` rule, GENERALIZED) so the off-screen snapshot reads the real
-//     paint. A capture.css that force-visibles ONLY `.aurora-root` (the HEAD state, before this fix)
-//     leaves the below-fold concentric skipped → reds. This is the paint fix (L7 is codegen hygiene).
+// LC6 (BG.W-CONCENTRIC-LEVELCURVES) — the WebKit content-visibility CAPTURE-HYGIENE floor. RECORD
+//     CORRECTION (the re-judge): LC6 was originally attributed as "the TRUE dual-engine silent-blank
+//     root cause", but the re-judge EMPIRICALLY FALSIFIED that — the force-visible generalization
+//     landed and concentric STILL blanked in WebKit, while the aurora control below the same fold
+//     under the identical rule PAINTED. The true root cause is the WGSL vs_main dynamic-array-index
+//     miscompile (LC7). LC6 is RETAINED as correct capture HYGIENE regardless: every procedural-viz
+//     host carries `content-visibility: auto` (a render-skip), so a below-fold viz mounts
+//     content-SKIPPED and an off-screen WKWebView snapshot never lays it out → the field snapshots
+//     blank. The capture harness force-visibles the whole viz-wrapper set (the established lone
+//     `.aurora-root` rule, GENERALIZED) so an off-screen snapshot of a below-fold viz reads its real
+//     paint — a faithful-capture improvement (it correctly force-visibles below-fold vizzes), just
+//     NOT the concentric paint fix (that is LC7 + the fragment-stage L7 hygiene). A capture.css that
+//     force-visibles ONLY `.aurora-root` (the state before the generalization) leaves the below-fold
+//     concentric skipped → reds (the capture-hygiene regression this clause still guards).
 function clauseCaptureVisibility(srcOverride) {
     const viol = [];
     const css = srcOverride?.["capture"] ?? read(CAPTURE_CSS);
@@ -616,6 +655,7 @@ function runAll(overrides = {}) {
         ...clauseL2RingGone(overrides.l2),
         ...clauseL3ContourFrozen(overrides.l3),
         ...clauseWebkitPortability(overrides.wk),
+        ...clauseWgslVertexBranch(overrides.vsbranch),
         ...clauseL4PureOpaque(overrides.l4),
         ...clauseL5WarmDivergent(overrides.l5),
         ...clauseL6Transcription(overrides.l6),
@@ -672,6 +712,20 @@ function selfTest() {
         },
     });
     if (dynPalette.length === 0) fails.push("self-test: a dynamic uniform-array palette index did NOT red");
+    // (c4) LC7 — a DYNAMIC-array-index covering-triangle vs_main (`corners[vi]`) MUST red (the
+    //      WebKit/Metal WGSL vertex-path miscompile → the degenerate triangle → the SILENT dual-
+    //      engine blank). The override carries the @vertex/@fragment markers so the region scope
+    //      resolves; ONLY LC7 fires on it.
+    const dynVertex = runAll({
+        vsbranch: {
+            wgsl:
+                "@vertex\nfn vs_main(@builtin(vertex_index) vi: u32) -> VSOut {\n" +
+                "  var corners = array<vec2<f32>, 3>(vec2<f32>(-1.0, -1.0), vec2<f32>(3.0, -1.0), vec2<f32>(-1.0, 3.0));\n" +
+                "  let c = corners[vi];\n  var out: VSOut;\n  out.pos = vec4<f32>(c, 0.0, 1.0);\n  out.uv = c;\n  return out;\n}\n" +
+                "@fragment\nfn fs_main() {}",
+        },
+    });
+    if (dynVertex.length === 0) fails.push("self-test: a planted dynamic-array-index (corners[vi]) covering-triangle vs_main did NOT red");
     // (d) L4 — an rgb*ink transparent regression (alpha = ink).
     const transp = runAll({
         l4: {

@@ -63,10 +63,21 @@ struct VSOut {
 
 @vertex
 fn vs_main(@builtin(vertex_index) vi: u32) -> VSOut {
-  var corners = array<vec2<f32>, 3>(
-    vec2<f32>(-1.0, -1.0), vec2<f32>(3.0, -1.0), vec2<f32>(-1.0, 3.0),
-  );
-  let c = corners[vi];
+  // NDC corners of the covering triangle (-1,-1), (3,-1), (-1,3) — built with SCALAR
+  // BRANCHES on vi (the aurora.wgsl / dot-flow-field idiom that paints on WebKit-WebGPU +
+  // Chrome/Metal IDENTICALLY). A function-local \`var corners = array<vec2<f32>, 3>(...)\`
+  // then \`corners[vi]\` — a DYNAMIC index by the runtime vertex_index — MISCOMPILES on
+  // WebKit's Metal WGSL backend: the covering triangle collapses to a degenerate primitive,
+  // NO fragments rasterize, and the pass emits a uniform clear-floor. That is the "silent
+  // blank" concentric painted in Safari (INIT succeeds, DRAW produces nothing, error-free
+  // compile/link, stdL≈0.005, edge≈0.0002) — substrate-agnostic-LOOKING but actually the
+  // vertex path, NOT content-visibility. Chrome/ANGLE TOLERATES the dynamic local-array
+  // index, which is exactly why concentric painted in Chrome while WebKit blanked. The
+  // scalar-branch build is the WebKit-safe covering-triangle shape (the dot-flow-field
+  // shader carries the same recorded fix).
+  var c = vec2<f32>(-1.0, -1.0);
+  if (vi == 1u) { c = vec2<f32>(3.0, -1.0); }
+  else if (vi == 2u) { c = vec2<f32>(-1.0, 3.0); }
   var out: VSOut;
   out.pos = vec4<f32>(c, 0.0, 1.0);
   out.uv = vec2<f32>(c.x, c.y);
