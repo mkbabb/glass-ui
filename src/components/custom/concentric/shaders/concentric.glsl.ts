@@ -103,7 +103,9 @@ float smoothstepEdge(float e0, float e1, float x) {
 float sampleHeight(vec2 p, float t) {
   // The CONTINUOUS traveling-wave flow warp (no per-cell seam — the contours flow + twist as
   // the wave passes OVER and THROUGH them, the SAME wave that twists the liquid-grid cells).
-  vec2 g = waveFlow(p, t, uWave.xy, uWave.z, uWave.w, uWave2.x, uWave2.y, uWave2.w);
+  // BG.W-GRID-AFFINE — p is UNIT-scale here (span ~1), so the curl-sampling frequency is the
+  // unit-scale 0.6 (liquid-grid's cell-scale g0 passes the tiny 0.03); behaviour unchanged.
+  vec2 g = waveFlow(p, t, uWave.xy, uWave.z, uWave.w, uWave2.x, uWave2.y, uWave2.w, 0.6);
   if (uCursor.w > 0.5) {
     g = cursorSwirl(g, uCursor.xy, uCursor.z * 0.6, uCellSize * 2.5);
   }

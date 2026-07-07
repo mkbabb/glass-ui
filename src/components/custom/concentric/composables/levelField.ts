@@ -99,7 +99,20 @@ export interface LevelFieldParams {
 export function sampleHeight(p: Vec2, t: number, q: LevelFieldParams): number {
     // The CONTINUOUS traveling-wave flow warp twists the sampling coordinate (the contours
     // flow/twist as the wave crosses — the SAME wave that twists the liquid-grid cells).
-    let g = waveFlow(curlFBM, p, t, q.waveDir, q.waveK, q.waveOmega, q.waveSigma, q.twistMax, q.amp);
+    // BG.W-GRID-AFFINE — p is UNIT-scale here, so the curl-sampling frequency is the unit-scale
+    // 0.6 (liquid-grid's cell-scale g0 passes the tiny 0.03); concentric behaviour unchanged.
+    let g = waveFlow(
+        curlFBM,
+        p,
+        t,
+        q.waveDir,
+        q.waveK,
+        q.waveOmega,
+        q.waveSigma,
+        q.twistMax,
+        q.amp,
+        0.6,
+    );
     if (q.interactive > 0.5) {
         g = cursorSwirl(g, q.cursor, q.cursorWell * 0.6, q.cellSize * 2.5);
     }

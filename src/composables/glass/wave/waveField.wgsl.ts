@@ -98,11 +98,18 @@ fn cellTwist(g: vec2f, cellSize: f32, t: f32, waveDir: vec2f, waveK: f32, waveOm
 
 // The CONTINUOUS traveling-wave FLOW warp — the SMOOTH twin of cellTwist (no per-cell seam;
 // for the level-set contours that shatter into a mesh under the cell discontinuity).
+// BG.W-GRID-AFFINE — warpFreq is the HOST-supplied curl-sampling spatial frequency (the caller's
+// own coordinate units): an order of magnitude BELOW its grid frequency so the warp is locally
+// affine (major lines bow as ONE smooth curve, no sub-cell crackle). liquid-grid (cell-scale g0)
+// passes ~0.03; concentric (unit-scale p) passes 0.6. The 1.833333 second-flow ratio transcribes
+// WAVE_FLOW_SECOND_RATIO. Amplitude unchanged — curl magnitude is the intrinsic gradient at the
+// fixed CURL_EPS, independent of warpFreq; the t-drift is host-agnostic.
 fn waveFlow(g: vec2f, t: f32, waveDir: vec2f, waveK: f32, waveOmega: f32, waveSigma: f32,
-            twistMax: f32, amp: f32) -> vec2f {
+            twistMax: f32, amp: f32, warpFreq: f32) -> vec2f {
   let env = travelingEnvelope(g, t, waveDir, waveK, waveOmega, waveSigma) * amp;
-  let f = curlFBM(vec2f(g.x * 0.6 + t * 0.05, g.y * 0.6 - t * 0.04));
-  let f2 = curlFBM(vec2f(g.x * 1.1 - t * 0.03, g.y * 1.1 + t * 0.035));
+  let f = curlFBM(vec2f(g.x * warpFreq + t * 0.05, g.y * warpFreq - t * 0.04));
+  let wf2 = warpFreq * 1.833333;
+  let f2 = curlFBM(vec2f(g.x * wf2 - t * 0.03, g.y * wf2 + t * 0.035));
   let k = twistMax * env;
   return g + (f + f2 * 0.5) * k;
 }

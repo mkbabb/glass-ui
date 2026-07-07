@@ -262,6 +262,15 @@ export function cursorSwirl(
 
 // ── The smooth traveling-wave FLOW warp (continuous — for the level-set contours) ─
 /**
+ * The `waveFlow` second-flow FREQUENCY RATIO (shared across JS↔GLSL↔WGSL — the round-trip fence).
+ * The secondary counter-flow term samples the curl at `warpFreq · this` so it drifts on a slightly
+ * different spatial scale (the anti-loop variety) while staying the SAME order of magnitude as the
+ * primary. `0.6 · 1.833333 ≈ 1.1` reproduces concentric's unit-scale pair; the GLSL/WGSL
+ * transcriptions carry the identical literal.
+ */
+export const WAVE_FLOW_SECOND_RATIO = 1.833333;
+
+/**
  * A CONTINUOUS divergence-free flow warp gated by the traveling wave — the SMOOTH twin of
  * `cellTwist` for surfaces that need an unbroken coordinate (the level-set contours shatter
  * into a mesh under the per-cell discontinuity; they need this continuous warp). The curl
@@ -269,6 +278,19 @@ export function cursorSwirl(
  * the SAME traveling Gaussian crest sweeping along `waveDir`. So the contours flow + twist as
  * the wave passes OVER and THROUGH them, with NO cell-boundary discontinuity. Returns the
  * warped coordinate.
+ *
+ * BG.W-GRID-AFFINE — the LOCALLY-AFFINE frequency law. `warpFreq` is the HOST-supplied spatial
+ * frequency (in the caller's OWN coordinate units) at which the curl-flow potential is sampled.
+ * The caller passes a frequency an ORDER OF MAGNITUDE BELOW its own grid/contour frequency, so
+ * the warp-displacement gradient is ~constant across any ONE cell (the warp Jacobian is locally
+ * affine): the major gridlines bow as ONE smooth continuous curve across the frame, NEVER the
+ * per-cell crackle a cell-scale sampling frequency produces. liquid-grid feeds a CELL-scale
+ * coordinate (`uv · gridScale`, span ~14–40 cells) so it passes a tiny `warpFreq` (~0.03 →
+ * wavelength of MANY cells); concentric feeds a UNIT-scale domain (`vUv`, span ~1) so it passes
+ * the unit-scale `0.6`. The amplitude is UNCHANGED (the curl magnitude is the intrinsic q-space
+ * gradient at the fixed `CURL_EPS`, independent of `warpFreq` — only the spatial frequency drops,
+ * the bow amplitude `twistMax · env` is preserved). The `t·` drift coefficients are host-agnostic
+ * (they set the flow's temporal evolution rate in q-space, independent of `warpFreq`).
  */
 export function waveFlow(
     curlFn: (p: Vec2) => Vec2,
@@ -280,11 +302,14 @@ export function waveFlow(
     waveSigma: number,
     twistMax: number,
     amp: number,
+    warpFreq = 0.6,
 ): Vec2 {
     const env = travelingEnvelope(g, t, waveDir, waveK, waveOmega, waveSigma) * amp;
-    const f = curlFn({ x: g.x * 0.6 + t * 0.05, y: g.y * 0.6 - t * 0.04 });
-    // a second slow counter-flow so the warp never visibly loops.
-    const f2 = curlFn({ x: g.x * 1.1 - t * 0.03, y: g.y * 1.1 + t * 0.035 });
+    const f = curlFn({ x: g.x * warpFreq + t * 0.05, y: g.y * warpFreq - t * 0.04 });
+    // a second slow counter-flow (a slightly different spatial scale + opposite drift) so the
+    // warp never visibly loops — still an order of magnitude below the grid frequency.
+    const wf2 = warpFreq * WAVE_FLOW_SECOND_RATIO;
+    const f2 = curlFn({ x: g.x * wf2 - t * 0.03, y: g.y * wf2 + t * 0.035 });
     const k = twistMax * env;
     return {
         x: g.x + (f.x + f2.x * 0.5) * k,

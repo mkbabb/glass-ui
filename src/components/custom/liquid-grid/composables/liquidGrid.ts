@@ -54,6 +54,17 @@ const TAU = Math.PI * 2;
 /** The curl central-difference epsilon (matches `flow.glsl.ts` / `flow.wgsl.ts`). */
 export const CURL_EPS = 0.012;
 
+/**
+ * BG.W-GRID-AFFINE — the liquid-grid curl-sampling spatial frequency (in CELL units).
+ * `g0 = uv · gridScale` is CELL-scale (span ~14–40 cells), so the warp must sample the curl
+ * potential at a frequency an ORDER OF MAGNITUDE below the grid frequency for the warp to be
+ * locally affine at the cell scale — the sheet bows as ONE smooth curve (base wavelength 1/0.03 ≈
+ * 33 cells), never the sub-cell crackle a cell-scale `~1` frequency produced. Concentric's own
+ * `waveFlow` call passes the unit-scale `0.6` (its `p` is unit-scale). The shaders carry the same
+ * `0.03` literal (the round-trip fence). NOT a config tunable — the affine-frequency FLOOR.
+ */
+export const LIQUID_GRID_WARP_FREQ = 0.03;
+
 // ── The host noise basis: a quintic-faded 2D value-noise fbm potential ────────────
 // The SAME basis the dot-flow-field's `flowField.ts` carries (so the suite speaks ONE
 // noise basis); the curl operator wraps it (basis-agnostic). The WGSL/GLSL transcribe
@@ -272,7 +283,18 @@ export function sampleLiquidGrid(
     // curl-flow displacement is gated by the traveling wave + locally affine at the cell scale, so
     // the whole sheet bows/shears as ONE coherent transform — major lines a single smooth curve,
     // no per-cell seam (the retired `cellTwist` kinked at every cell boundary), no per-pixel wobble.
-    let g = waveFlow(curlFBM, g0, t, p.waveDir, p.waveK, p.waveOmega, p.waveSigma, p.twistMax, p.amp);
+    let g = waveFlow(
+        curlFBM,
+        g0,
+        t,
+        p.waveDir,
+        p.waveK,
+        p.waveOmega,
+        p.waveSigma,
+        p.twistMax,
+        p.amp,
+        LIQUID_GRID_WARP_FREQ,
+    );
     if (p.interactive > 0.5) {
         g = cursorSwirl(g, p.cursor, p.bulgeStrength * p.bulgeMode, p.bulgeRadius);
     }

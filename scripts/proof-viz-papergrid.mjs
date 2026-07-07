@@ -63,6 +63,7 @@ const FLOW_WGSL = resolve(ROOT, "src/composables/glass/webgl/shaders/flow.wgsl.t
 const FLOW_GLSL = resolve(ROOT, "src/composables/glass/webgl/shaders/flow.glsl.ts");
 const WAVE_WGSL = resolve(ROOT, "src/composables/glass/wave/waveField.wgsl.ts");
 const WAVE_GLSL = resolve(ROOT, "src/composables/glass/wave/waveField.glsl.ts");
+const WAVE_JS = resolve(ROOT, "src/composables/glass/wave/waveField.ts");
 const DEMO = resolve(ROOT, "demo/stories/substrates/liquid-grid.vue");
 const AURORA_HERO = resolve(ROOT, "demo/stories/aurora-hero.ts");
 const STORY_HERO = resolve(ROOT, "demo/stories/StoryHero.vue");
@@ -352,6 +353,98 @@ function clauseHomonymFence(over) {
     return viol;
 }
 
+// ── P8: THE LOCALLY-AFFINE FREQUENCY FLOOR — the warp is sampled ≪ the grid frequency ─
+// The BG.W-GRID-AFFINE paint re-open (the "shimmers with noise" FAIL): the shared `waveFlow` leaf
+// hardcoded a ~1-CELL curl-sampling frequency (`g * 0.6`/`* 1.1`) — right for concentric's
+// unit-scale `p` but ~14× TOO HIGH for liquid-grid's cell-scale `g0` → the warp Jacobian varied
+// strongly WITHIN each cell → the major lines crackled (56–86 curvature reversals) instead of
+// bowing smoothly. The cure is a HOST-supplied `warpFreq` parameter: liquid-grid (cell-scale g0)
+// passes a tiny frequency ≤ AFFINE_FREQ_CEIL so the warp is locally affine at the cell scale (the
+// sheet bows as ONE smooth curve); concentric (unit-scale p) keeps its unit-scale 0.6. This clause
+// encodes the fix as a device-free invariant (born-RED on the pre-fix hardcoded-0.6 leaf).
+const AFFINE_FREQ_CEIL = 0.1;
+function clauseAffineFreq(over) {
+    const viol = [];
+    const waveJs = stripComments(over?.waveJs ?? read(WAVE_JS));
+    const waveGlsl = stripComments(over?.waveGlsl ?? read(WAVE_GLSL));
+    const waveWgsl = stripComments(over?.waveWgsl ?? read(WAVE_WGSL));
+    const glsl = stripComments(over?.glsl ?? read(resolve(DIR, "shaders/liquid-grid.glsl.ts")));
+    const wgsl = stripComments(over?.wgsl ?? read(resolve(DIR, "shaders/liquid-grid.wgsl.ts")));
+    const liquidGridJs = stripComments(
+        over?.liquidGrid ?? read(resolve(DIR, "composables/liquidGrid.ts")),
+    );
+
+    // (1) the shared waveFlow SIGNATURE carries a host-supplied `warpFreq` parameter in all three
+    //     transcriptions (the frequency is host-parameterized, NOT a hardcoded cell-scale literal).
+    //     Capture the params up to waveFlow's OWN close (the lazy `)` stops at the sig close, NOT a
+    //     later `): Vec2 {` sibling like cursorSwirl — the anti-fool scoping).
+    const jsSig = waveJs && waveJs.match(/export function waveFlow\(([\s\S]*?)\)\s*:\s*Vec2\s*\{/);
+    if (waveJs && (!jsSig || !/\bwarpFreq\b/.test(jsSig[1])))
+        viol.push(
+            "P8 affine-freq: waveField.ts `waveFlow` signature has no `warpFreq` parameter — the curl-sampling frequency must be host-supplied (the locally-affine floor), not a hardcoded cell-scale literal",
+        );
+    const glslSig = waveGlsl && waveGlsl.match(/vec2 waveFlow\(([\s\S]*?)\)\s*\{/);
+    if (waveGlsl && (!glslSig || !/\bwarpFreq\b/.test(glslSig[1])))
+        viol.push("P8 affine-freq: the GLSL waveField leaf `waveFlow` signature has no `warpFreq` parameter");
+    const wgslSig = waveWgsl && waveWgsl.match(/fn waveFlow\(([\s\S]*?)\)\s*->/);
+    if (waveWgsl && (!wgslSig || !/\bwarpFreq\b/.test(wgslSig[1])))
+        viol.push("P8 affine-freq: the WGSL waveField leaf `waveFlow` signature has no `warpFreq` parameter");
+
+    // (2) the leaf body samples the curl at `warpFreq`, NOT the hardcoded cell-scale `g.* * 0.6`
+    //     literal (the crackle source the FAIL localized).
+    if (waveGlsl && /\bg\.[xy]\s*\*\s*0\.6\b/.test(waveGlsl))
+        viol.push(
+            "P8 affine-freq: the GLSL waveFlow still samples the curl at the hardcoded cell-scale `g * 0.6` — the crackle frequency (must read the host `warpFreq`)",
+        );
+    if (waveWgsl && /\bg\.[xy]\s*\*\s*0\.6\b/.test(waveWgsl))
+        viol.push("P8 affine-freq: the WGSL waveFlow still samples the curl at the hardcoded `g * 0.6`");
+
+    // (3) the liquid-grid shaders CALL waveFlow with a LOW warpFreq last-arg (≤ AFFINE_FREQ_CEIL):
+    //     g0 is CELL-scale, so the affine floor demands an order-of-magnitude-below frequency.
+    for (const [name, src] of [
+        ["glsl", glsl],
+        ["wgsl", wgsl],
+    ]) {
+        const call = (src ?? "").match(/\bwaveFlow\s*\(([^)]*)\)/);
+        if (!call) {
+            viol.push(
+                `P8 affine-freq: liquid-grid.${name}.ts has no waveFlow(...) call to read the warpFreq from`,
+            );
+            continue;
+        }
+        const args = call[1].split(",").map((s) => s.trim());
+        const last = args[args.length - 1];
+        const freq = Number(last);
+        if (!Number.isFinite(freq))
+            viol.push(
+                `P8 affine-freq: liquid-grid.${name}.ts waveFlow(...) last arg "${last}" is not a numeric warpFreq literal — the affine floor needs the sampling frequency AT the call site`,
+            );
+        else if (freq > AFFINE_FREQ_CEIL)
+            viol.push(
+                `P8 affine-freq: liquid-grid.${name}.ts samples the curl at warpFreq=${freq} > ${AFFINE_FREQ_CEIL} — the CELL-scale g0 needs an order-of-magnitude-below frequency (locally affine: major lines bow as ONE curve, no sub-cell crackle)`,
+            );
+    }
+
+    // (4) the JS host declares LIQUID_GRID_WARP_FREQ (low) and FEEDS it to waveFlow — the JS↔shader
+    //     round-trip on the affine frequency (one source, three transcriptions).
+    if (liquidGridJs) {
+        const decl = liquidGridJs.match(/LIQUID_GRID_WARP_FREQ\s*=\s*([\d.]+)/);
+        if (!decl)
+            viol.push(
+                "P8 affine-freq: liquidGrid.ts does not declare LIQUID_GRID_WARP_FREQ (the named cell-scale affine frequency)",
+            );
+        else if (Number(decl[1]) > AFFINE_FREQ_CEIL)
+            viol.push(
+                `P8 affine-freq: LIQUID_GRID_WARP_FREQ=${decl[1]} > ${AFFINE_FREQ_CEIL} — the JS host must feed the same low affine frequency the shaders do`,
+            );
+        if (!/waveFlow\([^)]*LIQUID_GRID_WARP_FREQ/.test(liquidGridJs))
+            viol.push(
+                "P8 affine-freq: liquidGrid.ts sampleLiquidGrid does not pass LIQUID_GRID_WARP_FREQ to waveFlow (the JS↔shader affine-frequency round-trip)",
+            );
+    }
+    return viol;
+}
+
 function runAll(over = {}) {
     return [
         ...clauseExists(over),
@@ -361,6 +454,7 @@ function runAll(over = {}) {
         ...clauseWarmIdentity(over),
         ...clauseDemo(over),
         ...clauseHomonymFence(over),
+        ...clauseAffineFreq(over),
     ];
 }
 
@@ -419,6 +513,23 @@ function selfTest() {
     const noStatic = runAll({ cardsCss: (liveCards ?? "").replace(/\.paper-grid\s*\{/g, ".other-thing {") });
     if (!noStatic.some((v) => v.startsWith("P7")))
         fails.push("self-test: removing the STATIC .paper-grid card register did NOT red P7 (the homonym fence)");
+    // (affine-freq-a) a HIGH cell-scale warpFreq at the liquid-grid call site (the crackle
+    // frequency the FAIL localized) reds P8.
+    const liveGlsl = read(resolve(DIR, "shaders/liquid-grid.glsl.ts"));
+    const hiFreq = runAll({
+        glsl: (liveGlsl ?? "").replace(/(\bwaveFlow\s*\([^)]*,\s*)0\.03(\s*\))/, "$1" + "0.6" + "$2"),
+    });
+    if (!hiFreq.some((v) => v.startsWith("P8")))
+        fails.push(
+            "self-test: a HIGH cell-scale warpFreq (0.6) at the liquid-grid waveFlow call did NOT red P8 (the affine-frequency floor — the sub-cell crackle)",
+        );
+    // (affine-freq-b) the shared waveFlow leaf dropping its `warpFreq` parameter reds P8.
+    const liveWaveJs = read(WAVE_JS);
+    const noFreqParam = runAll({ waveJs: (liveWaveJs ?? "").replace(/,\s*warpFreq = 0\.6,/, ",") });
+    if (!noFreqParam.some((v) => v.startsWith("P8")))
+        fails.push(
+            "self-test: the shared waveFlow leaf dropping its `warpFreq` parameter did NOT red P8 (host-supplied affine frequency)",
+        );
     return fails;
 }
 
@@ -449,7 +560,7 @@ function main() {
         console.error("  RED:");
         for (const v of viol) console.error("    ✗ " + v);
     } else {
-        console.log("  GREEN (P1 exists+rename · P2 substrate · P3 round-trip · P4 affine+curl+golus · P5 warm-identity · P6 demo+route · P7 homonym-fence)");
+        console.log("  GREEN (P1 exists+rename · P2 substrate · P3 round-trip · P4 affine+curl+golus · P5 warm-identity · P6 demo+route · P7 homonym-fence · P8 affine-frequency-floor)");
     }
     if (isSelftest) {
         if (selfFails.length) {

@@ -184,7 +184,10 @@ fn fs_main(in: VSOut) -> @location(0) vec4f {
   // no per-cell seam); cursorSwirl twists the cells about the finger. The Golus dv reads the FINAL
   // warped coord (the crisp-line fence survives).
   let g0 = uv * gridScale;
-  var g = waveFlow(g0, t, u.wave.xy, u.wave.z, u.wave.w, u.wave2.x, u.wave2.y, u.wave2.w);
+  // BG.W-GRID-AFFINE — g0 is CELL-scale, so pass the tiny 0.03 curl-sampling frequency (== the JS
+  // LIQUID_GRID_WARP_FREQ) so the warp is locally affine at the cell scale (major lines bow as ONE
+  // smooth curve, no sub-cell crackle). Concentric passes 0.6 (its p is unit-scale).
+  var g = waveFlow(g0, t, u.wave.xy, u.wave.z, u.wave.w, u.wave2.x, u.wave2.y, u.wave2.w, 0.03);
   if (u.cursor2.y > 0.5) {
     // bulgeMode (cursor2.x: +repel / −attract) signs the swirl direction.
     g = cursorSwirl(g, u.cursor.xy, u.cursor.z * u.cursor2.x, u.cursor.w);
