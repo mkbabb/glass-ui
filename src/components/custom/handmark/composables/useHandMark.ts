@@ -20,6 +20,7 @@
 import { computed, ref, type Ref } from "vue";
 import { useLineBoil } from "@mkbabb/pencil-boil";
 import { resolveBrush, type Brush, type BrushName } from "../brush";
+import { NOISE_WOBBLE_REF, VB_H } from "../constants";
 
 /**
  * The boil clock surface the SFC binds — the `useLineBoil` return shape, declared
@@ -63,6 +64,8 @@ export interface UseHandMarkInput {
     jagged: boolean;
     /** NATURAL underline morphology (C-2) — procedural off the house-seeded engine. */
     natural: boolean;
+    /** NATURAL-underline excursion knob (BG.W-HANDMARK-PERFECT (c)); `null` ⇒ derive from brush wobble. */
+    amplitude: number | null;
     box: MarkBox | null;
     path: string | null;
     filterId: string;
@@ -73,6 +76,14 @@ export interface UseHandMarkInput {
      * one pre-measure frame. Ignored in positioned (`box`) mode.
      */
     baselineFrac: number | null;
+    /**
+     * The aspect-correct marking-space HEIGHT (BG.W-HANDMARK-PERFECT (a)) — `VB_W /
+     * boxAspect` from the SFC-measured `.hm` box px-aspect, so `preserveAspectRatio="none"`
+     * scales the text-mode wobble SHAPE uniformly (the humps stop crushing flat on a short
+     * word). Defaults to `VB_H`; used ONLY for the measured text-mode marks (the positioned/
+     * box path keeps `VB_H` byte-for-byte).
+     */
+    vbH: number;
 }
 
 /**
@@ -84,6 +95,7 @@ export function normalizeProps(
     props: HandMarkProps,
     filterId: string,
     baselineFrac: number | null = null,
+    vbH: number = VB_H,
 ): UseHandMarkInput {
     return {
         brush: props.brush ?? "pen",
@@ -99,10 +111,12 @@ export function normalizeProps(
         jagged: props.jagged ?? false,
         // the `boil` brush auto-engages the natural morphology; an explicit prop wins.
         natural: props.natural ?? props.brush === "boil",
+        amplitude: props.amplitude ?? null,
         box: props.box ?? null,
         path: props.path ?? null,
         filterId,
         baselineFrac,
+        vbH,
     };
 }
 
@@ -141,8 +155,12 @@ export function useHandMark(input: Ref<UseHandMarkInput>): HandMarkCore {
 
     // base centerlines — recomputed only when geometry inputs change (incl. the
     // measured baselineFrac: the underline re-anchors the instant the measure lands).
-    const baseGeom = computed<ShapeGeom>(() =>
-        shapeGeom(
+    const baseGeom = computed<ShapeGeom>(() => {
+        // (c) the amplitude knob: an explicit prop WINS; else derive the excursion from
+        // the brush `wobble` scalar (f(wobble)=wobble/ref, 1 at the shipped boil default
+        // ⇒ byte-identical), decoupling excursion from stroke weight.
+        const ampScale = input.value.amplitude ?? brush.value.wobble / NOISE_WOBBLE_REF;
+        return shapeGeom(
             input.value.shape,
             {
                 roughness: brush.value.roughness,
@@ -153,8 +171,10 @@ export function useHandMark(input: Ref<UseHandMarkInput>): HandMarkCore {
             input.value.box,
             input.value.baselineFrac,
             input.value.natural,
-        ),
-    );
+            input.value.vbH,
+            ampScale,
+        );
+    });
 
     const boils = computed(
         () =>

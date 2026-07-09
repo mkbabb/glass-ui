@@ -5,9 +5,11 @@
  * KISS, one path, ZERO instrument-name conditionals (SPEC §12 acc-1). Only field
  * reads decide the medium:
  *
- *   - `ribbon` picks the L2 body: 'stroke' (pen/crayon — plain stroked <path>) vs
- *     'hull' (the opt-in vendored perfect-freehand variable-width fill — the
- *     highlighter's BA.W-HANDMARK C-1(b) slab).
+ *   - `ribbon` picks the L2 body: 'stroke' (pen/pencil/ring — a plain stroked <path>)
+ *     vs 'hull' (the opt-in vendored perfect-freehand variable-width fill — the boil/
+ *     crayon/marker/highlighter voices, the BA.W-HANDMARK C-1(b) slab). The hull body
+ *     carries the se-GUARD: a degenerate near-point outline falls back to a stroked
+ *     path so a tiny-datum hull mark never vanishes (BG.W-HANDMARK-PERFECT (b)).
  *   - `passes` + `passOpacity` → the crayon offset-overdraw heavy-core look.
  *   - `grain > 0` flips on the L3 filter (texture.ts); 0 ⇒ no filter (pen is free).
  *   - `blend` unlocks highlighter ('multiply'); no other field needs it.
@@ -189,15 +191,34 @@ export function ink(
                 start: { taper: b.taper.start, easing: easeFor(b.taper.ease) },
                 end: { taper: b.taper.end, easing: easeFor(b.taper.ease) },
             });
-            paths.push({
-                d: getSvgPathFromStroke(outline),
-                fill: color,
-                opacity,
-                blend: b.blend,
-                cap: b.cap,
-            });
+            const hullD = getSvgPathFromStroke(outline);
+            // ── (b) THE HULL se-GUARD (BG.W-HANDMARK-PERFECT; SPEC §3 residual b) ──
+            // `getSvgPathFromStroke` returns "" when `outline.length < 4` (a degenerate
+            // short/tiny-datum centerline → a near-point hull), so a bare `<path d="">`
+            // renders NOTHING — the highlighter/marker/crayon/boil hull marks all VANISH
+            // over a 1ch box-mode datum. A missing mark must never silently disappear:
+            // on a degenerate outline, FALL BACK to the plain stroked body (switch `kind`
+            // to stroke) so the mark ALWAYS paints a visible band. The full-span case is
+            // byte-untouched (outline.length ≥ 4 → the filled hull as before).
+            if (outline.length < 4 || hullD === "") {
+                paths.push({
+                    d: serialize(jittered),
+                    stroke: color,
+                    opacity,
+                    blend: b.blend,
+                    cap: b.cap,
+                });
+            } else {
+                paths.push({
+                    d: hullD,
+                    fill: color,
+                    opacity,
+                    blend: b.blend,
+                    cap: b.cap,
+                });
+            }
         } else {
-            // ── default: plain stroked path (pen / the shipped stroke-crayon) ──
+            // ── default: plain stroked path (pen/pencil/ring — the clean stroke voices) ──
             paths.push({
                 d: serialize(jittered),
                 stroke: color,

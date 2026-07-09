@@ -61,3 +61,14 @@ export const NOISE_F0 = 2.5;
 export const NOISE_AMP_FRAC = 0.05;
 /** endpoint-only cosine taper width (the ends settle to baseline; the BODY stays irregular). */
 export const NOISE_EDGE = 0.12;
+
+/**
+ * The AMPLITUDE-KNOB reference wobble (BG.W-HANDMARK-PERFECT (c)). The natural-underline
+ * excursion is `span × NOISE_AMP_FRAC × f(wobble)` where `f(wobble) = wobble / NOISE_WOBBLE_REF`
+ * — repurposing the existing Brush `wobble` scalar to drive the centerline amplitude,
+ * decoupling excursion from stroke `weight` (the atlas's published `amplitude` ask, no 13th
+ * scalar). Pinned to the shipped `boil` brush's wobble (1.4) so `f(1.4) = 1` ⇒ the default
+ * boil render is BYTE-IDENTICAL; a consumer lifts excursion by raising `wobble` (or the
+ * explicit `amplitude` prop, which wins). A lower-wobble brush wobbles proportionally less.
+ */
+export const NOISE_WOBBLE_REF = 1.4;

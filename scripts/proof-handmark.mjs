@@ -193,16 +193,21 @@ if (!w3Multiply) violations.push("W3(e): HandMark.vue must wire the multiply ble
 // (the period constants NATURAL_AMP_FRAC/PERIODS_MIN/PERIODS_MAX are DELETED — no-legacy).
 // The boil voice is now a φ-incommensurate fractal value-noise displacement: scale-relative
 // amplitude via NOISE_AMP_FRAC, irregular hump spacing via the NOISE_OCTAVES/NOISE_F0/NOISE_PHI
-// octave sum (φ mutually-irrational steps → the sum never closes into a period). W4 asserts the
-// NEW morphology constants (the binding spacing-CV discriminator rides proof:handmark-audit).
+// octave sum (φ mutually-irrational steps → the sum never closes into a period).
+// BG.W-HANDMARK-PERFECT carved the pure value-noise engine into the pencil-boil-FREE
+// ./noise leaf (so proof:handmark-audit can strip-import + sample the REAL emitted point-set
+// — geometry.ts re-exports it); the NOISE_* constant witnesses now read geometry+noise, and
+// the binding spacing-CV discriminator RUNS in proof:handmark-audit (no longer a phantom).
+const noise = rd(`${HM}/noise.ts`);
+const geomAndNoise = `${geometry}\n${noise}`;
 const w4Procedural =
     /naturalUnderlinePoints/.test(geometry) &&
-    /NOISE_AMP_FRAC/.test(geometry) &&
-    /NOISE_OCTAVES/.test(geometry) &&
-    /NOISE_PHI/.test(geometry) &&
-    /NOISE_F0/.test(geometry);
+    /NOISE_AMP_FRAC/.test(geomAndNoise) &&
+    /NOISE_OCTAVES/.test(geomAndNoise) &&
+    /NOISE_PHI/.test(geomAndNoise) &&
+    /NOISE_F0/.test(geomAndNoise);
 facts.w4Procedural = w4Procedural;
-if (!w4Procedural) violations.push("W4: geometry.ts must carry the φ-incommensurate naturalUnderlinePoints (scale-relative amplitude via NOISE_AMP_FRAC + irregular spacing via the NOISE_OCTAVES/NOISE_F0/NOISE_PHI octave sum)");
+if (!w4Procedural) violations.push("W4: geometry+noise must carry the φ-incommensurate naturalUnderlinePoints (scale-relative amplitude via NOISE_AMP_FRAC + irregular spacing via the NOISE_OCTAVES/NOISE_F0/NOISE_PHI octave sum)");
 
 // the seed reconcile — glass-ui handmark code imports mulberry32 from the HOUSE leaf,
 // NEVER from @mkbabb/pencil-boil. Grep every handmark .ts (+ the SFC) for the bad import.
@@ -251,6 +256,48 @@ const w6Recorded = /three-underline/i.test(claude) || (/HandMark/.test(claude) &
 facts.w6ClaudeRecorded = w6Recorded;
 if (!w6Recorded) violations.push("W6: CLAUDE.md must record the three-register fence + the HandMark family");
 
+// ── W7 — the BG.W-HANDMARK-PERFECT engine perfections (+ hull-guard clause) ────
+// (b) the hull se-guard: ink.ts guards the hull body on a degenerate near-point
+// outline and falls back to a STROKED path (fill→stroke) so a tiny-datum hull mark
+// (highlighter/marker/crayon/boil over a 1ch box-mode datum) never emits an empty `d`
+// and vanishes. The full-span case stays the filled hull byte-for-byte.
+const w7HullGuard =
+    /getSvgPathFromStroke\(outline\)/.test(ink) &&
+    /outline\.length\s*<\s*4/.test(ink) &&
+    /if\s*\(\s*outline\.length\s*<\s*4[\s\S]{0,80}?\)\s*\{[\s\S]{0,220}?stroke:\s*color/.test(ink);
+facts.w7HullGuard = w7HullGuard;
+if (!w7HullGuard)
+    violations.push(
+        "W7(b): ink.ts must carry the hull se-guard (outline.length<4 → a stroked fallback, never an empty hull `d`)",
+    );
+
+// (a) the aspect-correct viewBox: the SFC derives the marking-space HEIGHT from the
+// MEASURED box px-aspect (vbH = VB_W / boxAspect) + binds it into the viewBox, so
+// `preserveAspectRatio="none"` scales the text-mode wobble SHAPE uniformly (a short
+// word's humps stop crushing flat — the headless-green ruler trap closed).
+const w7Aspect =
+    /boxAspect/.test(sfc) &&
+    /VB_W\s*\/\s*(?:a|boxAspect)/.test(sfc) &&
+    /viewBox=.*\$\{\s*vbH\s*\}/.test(sfc);
+facts.w7AspectCorrect = w7Aspect;
+if (!w7Aspect)
+    violations.push(
+        "W7(a): HandMark.vue must derive the aspect-correct viewBox (vbH = VB_W / boxAspect from the measured box px-aspect, bound into the viewBox)",
+    );
+
+// (c) the amplitude knob: the SFC/core derives the natural excursion from the brush
+// `wobble` scalar (NOISE_WOBBLE_REF) with an explicit `amplitude` prop override — no
+// 13th brush scalar, default byte-identical.
+const w7Amplitude =
+    /NOISE_WOBBLE_REF/.test(constants) &&
+    /amplitude/.test(rd(`${HM}/types.ts`)) &&
+    /wobble\s*\/\s*NOISE_WOBBLE_REF/.test(rd(`${HM}/composables/useHandMark.ts`));
+facts.w7AmplitudeKnob = w7Amplitude;
+if (!w7Amplitude)
+    violations.push(
+        "W7(c): the amplitude knob must repurpose the brush `wobble` scalar (NOISE_WOBBLE_REF) with an `amplitude` prop override (default byte-identical)",
+    );
+
 // ── verdict ──────────────────────────────────────────────────────────────────
 const pass = violations.length === 0;
 const result = {
@@ -268,4 +315,4 @@ if (!pass) {
     for (const v of violations) console.log(`  ✗ ${v}`);
     process.exit(1);
 }
-console.log("  ✓ W1 family ships · W2 fold clean · W3 highlighter five deltas live · W4 morphology natural+seeded · W5 voices differ · W6 fence held");
+console.log("  ✓ W1 family ships · W2 fold clean · W3 highlighter five deltas live · W4 morphology natural+seeded · W5 voices differ · W6 fence held · W7 aspect-correct viewBox + hull se-guard + amplitude knob");

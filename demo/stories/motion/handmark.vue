@@ -114,6 +114,48 @@ function replayLoad() {
             </div>
         </StorySection>
 
+        <!-- The box-mode hull marks over TINY datums — the se-guard (BG.W-HANDMARK-PERFECT b). -->
+        <StorySection
+            label="box-mode hull · the se-guard (never a vanish)"
+            blurb="A hull brush (marker/crayon) over a tiny datum used to collapse to an empty perfect-freehand outline and VANISH. The se-guard falls back to a stroked body, so a box/bracket over a 1-char datum always paints a visible band."
+        >
+            <div class="paper-grain-overlay flex flex-wrap items-center gap-8 rounded-card border bg-card p-8">
+                <p class="text-display-3 font-display leading-tight text-foreground">
+                    box
+                    <HandMark
+                        brush="marker"
+                        shape="box"
+                        color="#2a8c5a"
+                        :box="{ x: 46, y: 10, w: 9, h: 22 }"
+                        >a</HandMark
+                    >
+                    datum
+                </p>
+                <p class="text-display-3 font-display leading-tight text-foreground">
+                    bracket
+                    <HandMark
+                        brush="crayon"
+                        shape="bracket"
+                        color="#cc4422"
+                        :box="{ x: 44, y: 8, w: 12, h: 26 }"
+                        >it</HandMark
+                    >
+                    tight
+                </p>
+            </div>
+        </StorySection>
+
+        <!-- The amplitude knob — a bolder hand line off the wobble scalar (BG.W-HANDMARK-PERFECT c). -->
+        <StorySection
+            label="amplitude · the excursion knob"
+            blurb="The natural-underline excursion is font-proportional (aspect-correct viewBox) and driven by the amplitude knob — the default reads byte-identical, an explicit amplitude lifts the wobble÷stroke ratio for a bolder hand line."
+        >
+            <div class="paper-grain-overlay flex flex-col gap-3 rounded-card border bg-card p-8 text-display-3 font-display leading-tight text-foreground">
+                <p><HandMark brush="boil" :seed="8">default</HandMark></p>
+                <p><HandMark brush="boil" :seed="8" :amplitude="1.8">bolder</HandMark></p>
+            </div>
+        </StorySection>
+
         <!-- The color prop — the motion family's ONE coherent purple event. -->
         <StorySection
             label="color prop · the motion accent"

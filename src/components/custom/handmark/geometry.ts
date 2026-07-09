@@ -30,21 +30,23 @@ import {
     wobbleLinePoints,
     type WobbleOptions,
 } from "@mkbabb/pencil-boil";
-import { mulberry32 } from "../../../utils/prng";
 import {
     HIGHLIGHT_FALLBACK_FRAC,
     HIGHLIGHT_RISE,
-    NOISE_AMP_FRAC,
-    NOISE_EDGE,
-    NOISE_F0,
-    NOISE_OCTAVES,
-    NOISE_PHI,
     UNDERLINE_GAP,
     VB_H,
     VB_W,
 } from "./constants";
+import { naturalUnderlinePoints } from "./noise";
 import type { HandShape, MarkBox } from "./types";
 
+// The φ-incommensurate boil voice (`naturalUnderlinePoints`) lives in the pencil-boil-
+// FREE ./noise leaf so proof:handmark-audit can strip-import + sample the REAL emitted
+// point-set (node cannot type-strip a TS module under node_modules — geometry.ts's
+// top-level pencil-boil import would block that). Re-exported so the /handmark barrel
+// surface + the measuring gate read the SAME symbol (never a symbol-presence regex —
+// the W-GATE-TRUTH-AUDIT discipline).
+export { naturalUnderlinePoints } from "./noise";
 export { VB_W, VB_H, UNDERLINE_GAP };
 
 /** A shape maps to one or more centerlines (open polylines) or one closed ring. */
@@ -53,121 +55,32 @@ export interface ShapeGeom {
     closed: boolean;
 }
 
-/** smootherstep (6t⁵−15t⁴+10t³) — the C² fairing for the value-noise lerp. */
-function smootherstep(t: number): number {
-    return t * t * t * (t * (t * 6 - 15) + 10);
-}
-
-/**
- * The boil voice — φ-incommensurate fractal value-noise (RE-INVENT; the masthead
- * morphology). A 1-D fractal value-noise DISPLACEMENT off the HOUSE `mulberry32`,
- * NOT a seeded sinusoid (the prior body self-correlated into a near-period — a spell-
- * check squiggle):
- *
- *   disp(t) = Σ_{k=0..OCT-1} aₖ · vnoiseₖ(t·fₖ + φₖ)   normalised by Σaₖ
- *     fₖ = NOISE_F0 · φ^k   (φ mutually-irrational steps → the sum NEVER closes
- *                            into a period — the non-periodicity mechanism)
- *     aₖ = (1/φ)^k          (per-octave decay)
- *     φₖ = seeded per-octave phase (house mulberry32)
- *     vnoiseₖ = seeded lattice value-noise, smootherstep-faired
- *
- * The four atlas axes:
- *   - amplitude SCALES with the rendered span (`(x2−x1) × NOISE_AMP_FRAC`), not a
- *     viewBox-stretched constant (a long word and a short word wobble in proportion);
- *   - the hump-to-hump spacing is IRREGULAR (the φ-incommensurate octave sum — the
- *     honest non-periodicity teeth, spacing-CV ~0.41 at the paint count vs the prior
- *     sinusoid's ~0.14, over 400 seeds);
- *   - the non-uniform body gives the pf hull a pressure-taper-friendly point stream;
- *   - the seed is the HOUSE mulberry32 (determinism + per-seed variation), ZERO
- *     pencil-boil `mulberry32` import.
- *
- * ENDPOINT anchor (NOT a body-wide envelope): a narrow cosine taper at the very ends
- * only (`NOISE_EDGE`), so the ends settle to baseline (no draw-on pop) while the BODY
- * amplitude stays irregular hump-to-hump (the prior `sin(π·t)` envelope made the body
- * amplitude smooth-and-uniform — the clean-envelope tell). FILTER-FREE: the wander is
- * in the control points + the hull width, never a feTurbulence.
- *
- * EXPORTED so the measuring gate samples the REAL emitted point-set (never a symbol-
- * presence regex — the W-GATE-TRUTH-AUDIT discipline).
- */
-export function naturalUnderlinePoints(
-    x1: number,
-    y: number,
-    x2: number,
-    seed: number,
-    segments: number,
-): [number, number][] {
-    const span = x2 - x1;
-    if (span <= 0) return [[x1, y], [x2, y]];
-    const s = seed >>> 0;
-    const amp = span * NOISE_AMP_FRAC; // SCALE-relative amplitude
-
-    // Per-octave seeded phase (one rng stream, order-fixed for determinism) + a
-    // per-octave seeded value-noise lattice (a sub-stream so octaves are independent).
-    const phaseRng = mulberry32(s);
-    let ampSum = 0;
-    const octaves = Array.from({ length: NOISE_OCTAVES }, (_, k) => {
-        const phase = phaseRng() * 10;
-        const freq = NOISE_F0 * Math.pow(NOISE_PHI, k);
-        const weight = Math.pow(1 / NOISE_PHI, k);
-        ampSum += weight;
-        const subRng = mulberry32((s ^ Math.imul(0x9e3779b9, k + 1)) >>> 0);
-        const lattice = new Map<number, number>();
-        const node = (idx: number): number => {
-            let v = lattice.get(idx);
-            if (v === undefined) {
-                v = subRng();
-                lattice.set(idx, v);
-            }
-            return v;
-        };
-        const vnoise = (x: number): number => {
-            const i0 = Math.floor(x);
-            const f = x - i0;
-            const a = node(i0);
-            const b = node(i0 + 1);
-            return a + (b - a) * smootherstep(f); // [0,1)
-        };
-        return { phase, freq, weight, vnoise };
-    });
-
-    const n = Math.max(6, segments);
-    const pts: [number, number][] = [];
-    for (let i = 0; i <= n; i++) {
-        const t = i / n;
-        const x = x1 + span * t;
-        let disp = 0;
-        for (const o of octaves) {
-            // centre the [0,1) lattice value to [-1,1] so the body straddles baseline.
-            disp += o.weight * (o.vnoise(t * o.freq + o.phase) * 2 - 1);
-        }
-        disp /= ampSum;
-        // endpoint-only cosine taper — the ends settle to baseline; the BODY is irregular.
-        let edge = 1;
-        if (t < NOISE_EDGE) {
-            edge = 0.5 - 0.5 * Math.cos((t / NOISE_EDGE) * Math.PI);
-        } else if (t > 1 - NOISE_EDGE) {
-            edge = 0.5 - 0.5 * Math.cos(((1 - t) / NOISE_EDGE) * Math.PI);
-        }
-        pts.push([x, y + amp * disp * edge]);
-    }
-    return pts;
-}
-
 /**
  * Semantic shape → { lines, closed } in the marking space (or a positioned box).
  *
  * The text-mode underline anchors to a MEASURED baseline: `baselineFrac` is the
  * slotted word's alphabetic baseline as a fraction of the `.hm` box height (the SFC
  * measures it via ResizeObserver + `document.fonts.ready`). The underline y is then
- * `VB_H × (baselineFrac + UNDERLINE_GAP)` — never the old hardcoded `32` (80% of the
+ * `H × (baselineFrac + UNDERLINE_GAP)` — never the old hardcoded `32` (80% of the
  * box), which struck through tight-leading headings. `null` ⇒ not yet measured: fall
- * back to the legacy `VB_H − 8` constant so first paint (and jsdom/SSR) still renders
- * a line, replaced the instant the measure lands.
+ * back to the legacy `H − 8` constant so first paint (and jsdom/SSR) still renders a
+ * line, replaced the instant the measure lands.
  *
  * `natural` routes the underline through the φ-incommensurate value-noise
  * `naturalUnderlinePoints` morphology instead of pencil-boil's `wobbleLinePoints`
  * (the masthead `boil` voice); the default underline keeps the pencil-boil line.
+ *
+ * BG.W-HANDMARK-PERFECT (a) THE ASPECT-CORRECT viewBox — `vbH` is the SFC-measured
+ * marking-space HEIGHT (`VB_W / boxAspect`) for the TEXT-MODE underline/strikethrough/
+ * highlight, so `preserveAspectRatio="none"` scales the wobble SHAPE uniformly (the x
+ * and y scales EQUAL → the humps stop being x-stretched flat). It defaults to `VB_H`,
+ * and is used ONLY for the measured text-mode y — the positioned/box/circle/bracket
+ * path keeps `VB_H` byte-for-byte (it DEPENDS on the none-stretch to fill the datum
+ * rect; the text-mode fix must not touch it).
+ *
+ * BG.W-HANDMARK-PERFECT (c) THE AMPLITUDE KNOB — `ampScale` multiplies the natural-
+ * underline excursion (default 1 ⇒ byte-identical; the SFC derives it from the brush
+ * `wobble` scalar, decoupling excursion from stroke `weight`).
  */
 export function shapeGeom(
     shape: HandShape,
@@ -175,19 +88,28 @@ export function shapeGeom(
     box: MarkBox | null = null,
     baselineFrac: number | null = null,
     natural = false,
+    vbH: number = VB_H,
+    ampScale = 1,
 ): ShapeGeom {
     const pad = 4;
+    // The measured text-mode marking-space height (aspect-correct). ONLY the underline/
+    // strikethrough/highlight text-mode marks ride `vbH`; every other path keeps VB_H so
+    // the datum-stretch is byte-for-byte unchanged.
+    const isMeasuredText =
+        box == null &&
+        (shape === "underline" || shape === "strikethrough" || shape === "highlight");
+    const H = isMeasuredText ? vbH : VB_H;
     const x1 = box ? box.x : pad;
     const x2 = box ? box.x + box.w : VB_W - pad;
-    const cy = box ? box.y + box.h / 2 : VB_H / 2;
+    const cy = box ? box.y + box.h / 2 : H / 2;
     // text-mode underline y: the MEASURED baseline + a hairline gap (the E1 root fix).
-    // box-mode keeps its hand character (0.92 of the datum box). The legacy `VB_H − 8`
+    // box-mode keeps its hand character (0.92 of the datum box). The legacy `H − 8`
     // constant is the pre-measure fallback ONLY (null baselineFrac).
     const yBase = box
         ? box.y + box.h * 0.92
         : baselineFrac != null
-          ? VB_H * (baselineFrac + UNDERLINE_GAP)
-          : VB_H - 8;
+          ? H * (baselineFrac + UNDERLINE_GAP)
+          : H - 8;
     const seed = opts.seed ?? 1;
     const segments = opts.segments ?? 9;
 
@@ -199,7 +121,7 @@ export function shapeGeom(
             return {
                 lines: [
                     natural
-                        ? naturalUnderlinePoints(x1, yBase, x2, seed, segments)
+                        ? naturalUnderlinePoints(x1, yBase, x2, seed, segments, ampScale)
                         : L(x1, yBase, x2, yBase),
                 ],
                 closed: false,
@@ -215,7 +137,7 @@ export function shapeGeom(
             // covers x-height down to the baseline. Pre-measure falls back to a low
             // fixed band (HIGHLIGHT_FALLBACK_FRAC), parallel to the underline fallback.
             const frac = baselineFrac != null ? baselineFrac : HIGHLIGHT_FALLBACK_FRAC;
-            const yBand = box ? cy : VB_H * (frac - HIGHLIGHT_RISE);
+            const yBand = box ? cy : H * (frac - HIGHLIGHT_RISE);
             return { lines: [L(x1, yBand, x2, yBand)], closed: false };
         }
         case "box": {

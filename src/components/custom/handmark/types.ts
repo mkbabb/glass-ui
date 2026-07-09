@@ -65,6 +65,14 @@ export interface HandMarkProps {
     /** angular kinks vs smooth bezier. default false. */
     jagged?: boolean;
     /**
+     * NATURAL-underline excursion knob (BG.W-HANDMARK-PERFECT (c)). Multiplies the
+     * scale-relative wobble amplitude (`span × NOISE_AMP_FRAC × amplitude`). Default is
+     * unset ⇒ the amplitude is derived from the brush `wobble` scalar (byte-identical at
+     * the shipped default); an explicit value WINS (e.g. `1.4` for a bolder hand line,
+     * font-proportional). Only the natural/boil underline reads it.
+     */
+    amplitude?: number;
+    /**
      * NATURAL underline morphology (BA.W-HANDMARK C-2). When true (the masthead
      * `boil` voice), the underline geometry goes PROCEDURAL — scale-relative
      * amplitude, an IRREGULAR seeded period count, off the house prng leaf feeding

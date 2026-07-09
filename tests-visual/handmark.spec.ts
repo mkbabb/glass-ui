@@ -21,6 +21,12 @@ const VISUAL_DIR = fileURLToPath(
 );
 mkdirSync(VISUAL_DIR, { recursive: true });
 
+// BG.W-HANDMARK-PERFECT — the aspect-correct + hull-guard captures land in the BG dir.
+const BG_VISUAL_DIR = fileURLToPath(
+    new URL("../docs/tranches/BG/audit/visual/", import.meta.url),
+);
+mkdirSync(BG_VISUAL_DIR, { recursive: true });
+
 const ROUTE = "/motion/handmark";
 const VIEWPORTS = [
     { w: 1280, h: 900, tag: "desktop" },
@@ -105,6 +111,100 @@ test.describe("BA.W-HANDMARK — the hand-voice family paints", () => {
                 });
             });
         }
+    }
+
+    // BG.W-HANDMARK-PERFECT (a) — the aspect-correct viewBox. A text-mode underline's
+    // viewBox HEIGHT is derived from the measured box px-aspect (vbH = VB_W / boxAspect),
+    // so `preserveAspectRatio="none"` scales the wobble SHAPE uniformly: the viewBox aspect
+    // (100 / vbH) must EQUAL the rendered px-aspect (clientW / clientH). The prior fixed
+    // `0 0 100 40` viewBox let a short word render at px-aspect 11-17 → the wobble crushed
+    // to a flat bar (the headless-green ruler trap). Both modes, short AND long words.
+    for (const dark of [false, true]) {
+        const mode = dark ? "dark" : "light";
+        test(`the underline viewBox is aspect-correct — humps never crush flat (${mode})`, async ({
+            page,
+        }) => {
+            await page.setViewportSize({ width: 1280, height: 900 });
+            await page.goto(ROUTE, { waitUntil: "networkidle" });
+            await setMode(page, dark);
+            await page.waitForTimeout(500); // the ResizeObserver box-aspect measure settles
+
+            const marks = page.locator('span.hm[data-shape="underline"]');
+            const n = await marks.count();
+            expect(n).toBeGreaterThanOrEqual(2);
+
+            let checked = 0;
+            for (let i = 0; i < n; i++) {
+                const readout = await marks.nth(i).evaluate((el) => {
+                    const svg = el.querySelector("svg.hm__svg") as SVGSVGElement | null;
+                    if (!svg) return null;
+                    const vb = svg.getAttribute("viewBox");
+                    const r = svg.getBoundingClientRect();
+                    if (!vb || r.width <= 0 || r.height <= 0) return null;
+                    const parts = vb.split(/\s+/).map(Number);
+                    const vbAspect = parts[2] / parts[3]; // 100 / vbH
+                    return { vbAspect, pxAspect: r.width / r.height, vbH: parts[3] };
+                });
+                if (!readout) continue;
+                checked++;
+                // the aspect-correct invariant: the derived vbH makes the viewBox aspect
+                // TRACK the rendered px-aspect (uniform x/y scale). Within 8% tolerance
+                // (sub-pixel box-measure + the ±2% overshoot of the .hm__svg width).
+                const rel = Math.abs(readout.vbAspect - readout.pxAspect) / readout.pxAspect;
+                expect(
+                    rel,
+                    `viewBox aspect ${readout.vbAspect.toFixed(2)} must track px-aspect ${readout.pxAspect.toFixed(2)} (vbH ${readout.vbH.toFixed(1)})`,
+                ).toBeLessThan(0.08);
+                // vbH is NO LONGER pinned at 40 for a wide word (the derivation fired).
+                expect(readout.vbH).toBeGreaterThan(0);
+            }
+            expect(checked).toBeGreaterThanOrEqual(2);
+
+            await page.screenshot({
+                path: `${BG_VISUAL_DIR}/W-HANDMARK-PERFECT-aspect-${mode}.png`,
+                fullPage: true,
+            });
+        });
+
+        // BG.W-HANDMARK-PERFECT (b) — the hull se-guard. A hull brush (marker/crayon) over
+        // a tiny box/bracket datum used to collapse to an empty pf outline and VANISH; the
+        // guard falls back to a stroked body so it ALWAYS paints a visible band.
+        test(`the box-mode hull marks paint a visible band — never a vanish (${mode})`, async ({
+            page,
+        }) => {
+            await page.setViewportSize({ width: 1280, height: 900 });
+            await page.goto(ROUTE, { waitUntil: "networkidle" });
+            await setMode(page, dark);
+            await page.waitForTimeout(400);
+
+            const hullBoxes = page.locator(
+                'span.hm[data-shape="box"], span.hm[data-shape="bracket"]',
+            );
+            const n = await hullBoxes.count();
+            expect(n).toBeGreaterThanOrEqual(1);
+            for (let i = 0; i < n; i++) {
+                const painted = await hullBoxes.nth(i).evaluate((el) => {
+                    const paths = Array.from(
+                        el.querySelectorAll("path.hm__path"),
+                    ) as SVGPathElement[];
+                    if (paths.length === 0) return false;
+                    // every emitted path carries a non-empty `d` (no `d=""` vanish) AND a
+                    // real painted bounding box.
+                    return paths.every((p) => {
+                        const d = p.getAttribute("d") ?? "";
+                        if (d.length < 3) return false;
+                        const bb = p.getBBox();
+                        return bb.width > 0 || bb.height > 0;
+                    });
+                });
+                expect(painted, `box/bracket hull mark ${i} must paint (no vanish)`).toBe(true);
+            }
+
+            await page.screenshot({
+                path: `${BG_VISUAL_DIR}/W-HANDMARK-PERFECT-hull-guard-${mode}.png`,
+                fullPage: true,
+            });
+        });
     }
 
     test("the boil natural morphology renders a non-flat hand line (C-2)", async ({

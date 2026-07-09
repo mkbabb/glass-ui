@@ -68,7 +68,28 @@ const uid = `hm-${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
 // `null` until measured (the pre-measure / jsdom / SSR frame falls back in geometry).
 const baselineFrac = ref<number | null>(null);
 
-const input = computed(() => normalizeProps(props, uid, baselineFrac.value));
+// ── the aspect-correct viewBox (BG.W-HANDMARK-PERFECT (a); SPEC §3 residual a) ────
+// A text-mode underline's `.hm` box renders far WIDER than the 2.5 viewBox aspect
+// (a short word → px-aspect 11-17), and `preserveAspectRatio="none"` then x-stretches
+// the wobble into a flat bar (the headless-green trap — a gate reading the path `d`
+// PASSES while the render is a ruler). Deriving the marking-space HEIGHT from the
+// MEASURED box px-aspect (`vbH = VB_W / boxAspect`) makes the x and y scales EQUAL, so
+// the humps scale in PROPORTION at every word length. `null` until measured; the
+// positioned/box/circle/bracket path keeps `VB_H` (it DEPENDS on the none-stretch to
+// fill the datum rect — the text-mode fix must not touch it).
+const boxAspect = ref<number | null>(null);
+const vbH = computed(() => {
+    const textMode =
+        props.box == null &&
+        (props.shape === "underline" ||
+            props.shape === "strikethrough" ||
+            props.shape === "highlight");
+    const a = boxAspect.value;
+    if (!textMode || a == null || a <= 0) return VB_H;
+    return VB_W / a;
+});
+
+const input = computed(() => normalizeProps(props, uid, baselineFrac.value, vbH.value));
 const core = useHandMark(input);
 
 const { brush, fragment, grained, drawKind, draws, boils, boil, boilArmed } = core;
@@ -84,7 +105,10 @@ const root = ref<HTMLElement | null>(null);
 
 const drawTransition = computed(() => {
     if (!draws.value) return "none";
-    const ease = "cubic-bezier(.16,1,.3,1)";
+    // (d) the draw-on easing is the token, not a hardcoded literal (byte-identical to
+    // the prior `cubic-bezier(.16,1,.3,1)`) — the bold-decelerating ARRIVAL ease is the
+    // liquid-weight register, retuned library-wide from ONE token.
+    const ease = "var(--ease-out-expo)";
     const prop = drawKind.value === "clip" ? "clip-path" : "stroke-dashoffset";
     return `${prop} ${props.drawMs}ms ${ease} ${props.drawDelayMs}ms`;
 });
@@ -159,6 +183,8 @@ function measure(): void {
     if (!tr) return;
     const host = el.getBoundingClientRect();
     if (host.height <= 0) return;
+    // (a) the box px-aspect drives the aspect-correct marking-space height (vbH).
+    if (host.width > 0) boxAspect.value = host.width / host.height;
     // the glyph bottom as a fraction of the `.hm` box (the measured baseline).
     const frac = (tr.bottom - host.top) / host.height;
     // clamp to the box so a degenerate measure never throws the line off-canvas.
@@ -194,7 +220,9 @@ onMounted(() => {
                     io?.disconnect();
                 }
             },
-            { threshold: 0.35 },
+            // (d) near-0 any-intersect: a thin 1px underline on a tall viewport may never
+            // cross a 35% threshold → the draw-on would never fire → an invisible mark.
+            { threshold: 0.01 },
         );
         if (root.value) io.observe(root.value);
     } else if (props.appear === "visible") {
@@ -237,7 +265,7 @@ function pathStyle(blend: BlendMode): CSSProperties {
         <slot />
         <svg
             class="hm__svg"
-            :viewBox="`0 0 ${VB_W} ${VB_H}`"
+            :viewBox="`0 0 ${VB_W} ${vbH}`"
             preserveAspectRatio="none"
             aria-hidden="true"
             focusable="false"
