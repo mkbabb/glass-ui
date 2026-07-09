@@ -1,5 +1,24 @@
 # BG.W-CONCENTRIC-LEVELCURVES — dual-engine paint judge DELTA (re-judge after F9.R3 **LC6 content-visibility** capture-fix)
 
+> ## POST-DELTA UPDATE (2026-07-09, orchestrator, no-agent local diagnosis) — the ROOT-CAUSE fix LANDED after this capture
+> This FAIL DELTA was captured at commit `fa948297`. The **actual root cause it named in mustFix#1** — a DYNAMIC
+> local-array index `corners[vi]` in the vertex path that MISCOMPILES on WebKit's Metal WGSL backend into a
+> degenerate covering triangle (INIT succeeds, DRAW rasterizes no fragments → the "silent blank" cream plate) —
+> was FIXED at commit **`0d280422`** (a DESCENDANT of `fa948297`, verified via `git merge-base --is-ancestor`).
+> The `0d280422` diff replaces `corners[vi]` with SCALAR BRANCHES (`if (vi == 1u) … else if (vi == 2u) …`,
+> `concentric.wgsl.ts:78-84`), which is **byte-for-byte the same idiom the dot-flow-field shader uses**
+> (`flow-field.wgsl.ts:140-141`) — and dot-flow-field paint-PASSes on WebKit. So the fail history is NOT three
+> attempts at the same defect: it is (1) LC6 content-visibility (a red herring, disproven in THIS DELTA), (2) F9.R3
+> derivative-free `contourInk` + static-index palette (necessary WebKit-Metal hardening, but insufficient alone),
+> (3) `0d280422` the vertex scalar-branch — **the true root cause, which has NEVER been re-painted** (the weekly
+> quota cap hit immediately after the commit). **Expectation: the next dual-engine re-paint PASSES WebKit.** If it
+> still blanks, the NEXT suspect (per mustFix#1's list, everything else being addressed) is a WGSL uniform-struct
+> alignment divergence in `uniformBridgeWGPU.ts` packing vs the working aurora setup — bisect concentric's
+> `ConcentricUniforms` layout against aurora's. Do NOT re-chase content-visibility (disproven) or the vertex path
+> (fixed). This corrects the record per mustFix#2.
+
+
+
 **Verdict: FAIL** (one blocking defect UNRESOLVED — paint owed; the wave routes to a build-FIX agent).
 **Route:** `/substrates/concentric`
 **Judged:** non-authoring paint judge, BUILT bytes (`demo:dist:build` → `vite preview :5200`), dual-engine (real Chrome.app ANGLE/Metal via CDP + system WebKit.framework off-screen WKWebView snapshot, tall 1440×1900→2880×3800 retina), both modes, over the proven C18 `?capture=<route>&mode=<m>` + `data-capture-ready` method.
