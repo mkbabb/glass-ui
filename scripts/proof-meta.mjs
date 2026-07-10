@@ -762,6 +762,139 @@ async function gestaltCursorParity() {
     return { clause: "gestalt-cursor-parity", visualCount: 0, failures };
 }
 
+// ── The `gesture-frame-recorder` clause (BG.W-GESTURE-FRAME-RECORDER, 17.7) ──────
+// The paint-INSTRUMENT that closes the settled-still C18 gap. The C18
+// `?capture=<route>` harness snaps ONE at-rest SETTLED-STILL frame — right for a
+// static surface, blind to a GESTURE (drag/press/fling/morph MOVES, may OVERSHOOT,
+// then SETTLES). `scripts/lib/gesture-frame-recorder.mjs` is the pure,
+// device-free-testable analysis + recording-protocol core the gesture captures
+// compose. This clause EXERCISES its primitives LOAD-BEARING (the
+// apca-parallel-witness / gestalt-cursor-parity precedent — a stub/hollow leaf reds
+// here, not a source grep alone), against synthetic reference frame-series: a
+// MOTION-present series passes, a DEAD (settled-still-only) series reds motion, a
+// SETTLED series settles-to-its-endpoint, a jittery tail reds settled, an OVERSHOOT
+// series reads the iOS-27 bounce, a monotone one does not. + the single-decoder
+// discipline (it imports pngRegionStats from reflect-capture-verify, no 2nd PNG
+// decoder). DYNAMIC import — the born-RED-safe path (on a HEAD without the leaf a
+// missing named export resolves to undefined, a clean per-export failure).
+const GESTURE_RECORDER = join(ROOT, "scripts/lib/gesture-frame-recorder.mjs");
+
+/**
+ * The PURE recorder-export detector — given a module-like object, the recorder
+ * primitives that are absent/uncallable. Fed a synthetic stub by the self-test (a
+ * recorder-absent stub → the HEAD born-RED state; the real module → clean).
+ * @param {any} mod
+ * @returns {string[]}
+ */
+function checkRecorderExports(mod) {
+    const failures = [];
+    for (const name of [
+        "frameSchedule",
+        "frameDeltas",
+        "travelSpan",
+        "motionVerdict",
+        "settledVerdict",
+        "overshootVerdict",
+        "gestureFrameVerdict",
+        "recordFrameSeries",
+    ]) {
+        if (typeof mod?.[name] !== "function")
+            failures.push(
+                `gesture-frame-recorder does not export a callable \`${name}\` — the paint-INSTRUMENT is absent (BG.W-GESTURE-FRAME-RECORDER 17.7 un-landed).`,
+            );
+    }
+    return failures;
+}
+
+// The synthetic reference frame-series the clause + self-test exercise the leaf on.
+// A per-frame REDUCED SIGNAL (one scalar per frame — a --stretch, a centre px, a
+// region meanL). All device-free (plain number arrays; the PNG-reduce path is the
+// composition over the shared decoder, source-asserted separately).
+const GESTURE_FIXTURES = {
+    // rises, overshoots (peak 108 > endpoint 100), settles flat to the endpoint.
+    springOvershoot: [0, 28, 62, 88, 104, 108, 102, 100, 100, 100],
+    // rises monotone to the endpoint, no bounce (ease-out / PRM-snapped).
+    monotoneArrive: [0, 40, 70, 88, 96, 100, 100, 100],
+    // never moves — a dead snap / a settled-still-only capture mislabeled a gesture.
+    dead: [50, 50, 50, 50, 50],
+    // moves but the tail never rests (a wobbling drag / a never-arriving spring).
+    jitterTail: [0, 45, 92, 60, 112, 44, 108, 52],
+};
+
+async function gestureFrameRecorder() {
+    const failures = [];
+    if (!existsSync(GESTURE_RECORDER)) {
+        return {
+            clause: "gesture-frame-recorder",
+            visualCount: 0,
+            failures: ["gesture-frame-recorder leaf absent — scripts/lib/gesture-frame-recorder.mjs"],
+        };
+    }
+    let mod;
+    try {
+        mod = await import(pathToFileURL(GESTURE_RECORDER).href);
+    } catch (e) {
+        return {
+            clause: "gesture-frame-recorder",
+            visualCount: 0,
+            failures: [`gesture-frame-recorder import threw — ${e instanceof Error ? e.message : String(e)}`],
+        };
+    }
+    const exportFails = checkRecorderExports(mod);
+    failures.push(...exportFails);
+    // Recorder present → EXERCISE it (load-bearing; a hollow/wrong impl reds here).
+    if (exportFails.length === 0) {
+        const {
+            frameSchedule,
+            motionVerdict,
+            settledVerdict,
+            overshootVerdict,
+            gestureFrameVerdict,
+        } = mod;
+        const { springOvershoot, monotoneArrive, dead, jitterTail } = GESTURE_FIXTURES;
+
+        // The RECORDER clock — a deterministic multi-frame schedule (the C18
+        // settled-still has NO frame clock; a gesture needs a reproducible one).
+        const sched = frameSchedule(4, 16, 0);
+        if (!(Array.isArray(sched) && sched.length === 4 && sched[0] === 0 && sched[3] === 48))
+            failures.push("CLOCK: frameSchedule(4,16,0) ≠ [0,16,32,48] — the deterministic recorder clock is broken.");
+
+        // MOTION — a real gesture MOVES; a dead snap does NOT (the settled-still blind spot).
+        if (!motionVerdict(springOvershoot).present)
+            failures.push("MOTION: a moving spring series reads motion:false — the motion detector is dead.");
+        if (motionVerdict(dead).present)
+            failures.push("MOTION: a frozen (settled-still-only) series reads motion:true — the dead-gesture catch is vacuous (the C18-gap blind spot un-closed).");
+
+        // SETTLED — the tail rests within tolerance of the endpoint; a jittery tail does NOT.
+        const s = settledVerdict(springOvershoot);
+        if (!(s.settled && Math.abs(s.endpoint - 100) < 1e-6))
+            failures.push("SETTLED: the spring series does not read settled-to-its-100 endpoint — the settled-still verify is broken.");
+        if (settledVerdict(jitterTail).settled)
+            failures.push("SETTLED: a jittery never-arriving tail reads settled:true — the residual-jitter catch is vacuous.");
+
+        // OVERSHOOT — the iOS-27 bounce reads on a spring, NOT on a monotone arrival.
+        if (!overshootVerdict(springOvershoot).overshoot)
+            failures.push("OVERSHOOT: the spring series (peak 108 > endpoint 100) reads overshoot:false — the liquid-weight bounce detector is dead.");
+        if (overshootVerdict(monotoneArrive).overshoot)
+            failures.push("OVERSHOOT: a monotone no-bounce arrival reads overshoot:true — the overshoot detector false-fires (a calm ease-out is not a bounce).");
+
+        // The composite `liquid` read — a moving, settling gesture is liquid.
+        if (!gestureFrameVerdict(springOvershoot).liquid)
+            failures.push("COMPOSITE: a moving+settling gesture reads liquid:false — the composite verdict is broken.");
+        if (gestureFrameVerdict(dead).liquid)
+            failures.push("COMPOSITE: a dead (no-motion) series reads liquid:true — the composite verdict does not require motion.");
+
+        // WIRED — the single-decoder discipline: the leaf COMPOSES the ONE shared
+        // reflect-capture-verify decoder for its PNG-reduce path, never a 2nd PNG decoder.
+        const src = readFileSync(GESTURE_RECORDER, "utf8");
+        if (!/pngRegionStats/.test(src) || !/reflect-capture-verify/.test(src))
+            failures.push("WIRED: the recorder does not compose reflect-capture-verify's pngRegionStats — the PNG-reduce path is not on the single decoder.");
+        if (/\binflateSync\b/.test(src) || /decodePng/.test(src))
+            failures.push("WIRED: the recorder carries its OWN PNG decoder (inflateSync/decodePng) — the single-decoder discipline is broken (a 2nd decoder, the AV.W1 two-copy class).");
+    }
+    return { clause: "gesture-frame-recorder", visualCount: 0, failures };
+}
+
 // The family runner — each F8 close wave appends its clause here. The clauses are a
 // mix of sync + async (the APCA arm dynamically imports its leaf), so the runner
 // awaits the resolved set (a plain-object clause passes through Promise.all unchanged).
@@ -772,6 +905,7 @@ const CLAUSES = [
     deferredLedgerTerminal,
     edictVerdictPresent,
     gestaltCursorParity,
+    gestureFrameRecorder,
     coherenceCensus,
     glassPaperCongruence,
 ];
@@ -1105,6 +1239,58 @@ async function selfTest() {
         }
     }
 
+    // ── gesture-frame-recorder detector bites (BG.W-GESTURE-FRAME-RECORDER, 17.7) ──
+    // The PURE checkRecorderExports detector is fed a synthetic stub (born-RED
+    // witness), and the REAL leaf is EXERCISED against the reference frame-series
+    // (the load-bearing GREEN-after) — a hollow / wrong-signed recorder MISSES a bite.
+    {
+        // bite 35 — a recorder-ABSENT module stub flags ≥8 missing exports (the HEAD
+        // born-RED state: the leaf did not exist).
+        bites.push([
+            "recorder-absent-stub → FLAG (born-RED HEAD state, ≥8 missing exports)",
+            checkRecorderExports({ frameSchedule: 1, frameDeltas: 2 }).length >= 6,
+        ]);
+        const grMod = await import(pathToFileURL(GESTURE_RECORDER).href);
+        // bite 36 — the REAL leaf carries every recorder export (GREEN-after).
+        bites.push([
+            "recorder-present-real-module → NO-flag (all 8 exports callable)",
+            checkRecorderExports(grMod).length === 0,
+        ]);
+        const { springOvershoot, monotoneArrive, dead, jitterTail } = GESTURE_FIXTURES;
+        // bite 37 — MOTION: a moving series reads motion; a dead (settled-still-only)
+        // series does NOT — the C18-gap blind spot the recorder closes.
+        bites.push([
+            "motion → moving=present, dead(settled-still-only)=absent (C18-gap catch)",
+            typeof grMod.motionVerdict === "function" &&
+                grMod.motionVerdict(springOvershoot).present === true &&
+                grMod.motionVerdict(dead).present === false,
+        ]);
+        // bite 38 — SETTLED: the spring settles to its endpoint; a jittery tail does NOT.
+        bites.push([
+            "settled → spring settles-to-endpoint, jitter-tail unsettled",
+            typeof grMod.settledVerdict === "function" &&
+                grMod.settledVerdict(springOvershoot).settled === true &&
+                grMod.settledVerdict(jitterTail).settled === false,
+        ]);
+        // bite 39 — OVERSHOOT: the spring bounce reads; a monotone arrival does not
+        // (the liquid-weight bounce, not a false-fire on a calm ease-out).
+        bites.push([
+            "overshoot → spring=bounce, monotone=no-bounce (liquid-weight, no false-fire)",
+            typeof grMod.overshootVerdict === "function" &&
+                grMod.overshootVerdict(springOvershoot).overshoot === true &&
+                grMod.overshootVerdict(monotoneArrive).overshoot === false,
+        ]);
+        // bite 40 — the deterministic RECORDER clock is reproducible + pure.
+        bites.push([
+            "clock → frameSchedule(3,16,8) = [8,24,40] (deterministic, pure)",
+            typeof grMod.frameSchedule === "function" &&
+                (() => {
+                    const a = grMod.frameSchedule(3, 16, 8);
+                    return a.length === 3 && a[0] === 8 && a[1] === 24 && a[2] === 40;
+                })(),
+        ]);
+    }
+
     // BG.W-COHERENCE-CENSUS-GATE (F8 capstone 17.1) — fold the coherence-census bites.
     for (const b of coherenceCensusSelfBites()) bites.push(b);
 
@@ -1112,7 +1298,7 @@ async function selfTest() {
     for (const b of glassPaperCongruenceSelfBites()) bites.push(b);
 
     console.log(
-        `proof:meta — SELF-TEST (fable-arm-present + gate-family-consolidate + apca-parallel-witness + deferred-ledger-terminal + edict-verdict-present + gestalt-cursor-parity + coherence-census + glass-paper-congruence, ${bites.length} bites)`,
+        `proof:meta — SELF-TEST (fable-arm-present + gate-family-consolidate + apca-parallel-witness + deferred-ledger-terminal + edict-verdict-present + gestalt-cursor-parity + gesture-frame-recorder + coherence-census + glass-paper-congruence, ${bites.length} bites)`,
     );
     let allFlag = true;
     for (const [name, ok] of bites) {
@@ -1136,7 +1322,7 @@ async function selfTest() {
         process.exit(1);
     }
     console.log(
-        "\n[proof:meta] SELF-TEST GREEN — all bites behave, the real cursor passes fable-arm-present + gate-family-consolidate + apca-parallel-witness + deferred-ledger-terminal + edict-verdict-present + gestalt-cursor-parity + coherence-census + glass-paper-congruence.",
+        "\n[proof:meta] SELF-TEST GREEN — all bites behave, the real cursor passes fable-arm-present + gate-family-consolidate + apca-parallel-witness + deferred-ledger-terminal + edict-verdict-present + gestalt-cursor-parity + gesture-frame-recorder + coherence-census + glass-paper-congruence.",
     );
     process.exit(0);
 }
