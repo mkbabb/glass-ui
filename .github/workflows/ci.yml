@@ -67,6 +67,10 @@ jobs:
               run: npm run proof:dock-rail-hairline
             - name: proof:dock-taxonomy
               run: npm run proof:dock-taxonomy
+            - name: proof:dock-decompose
+              run: npm run proof:dock-decompose
+            - name: proof:encapsulation
+              run: npm run proof:encapsulation
             - name: proof:dock-contextual-layers
               run: npm run proof:dock-contextual-layers
             - name: proof:morph-showcase
@@ -75,10 +79,8 @@ jobs:
               run: npm run proof:dock-fission
             - name: proof:dock-gallery
               run: npm run proof:dock-gallery
-            - name: proof:haptic-couple
-              run: npm run proof:haptic-couple
-            - name: proof:celebration-burst
-              run: npm run proof:celebration-burst
+            - name: proof:motion
+              run: npm run proof:motion
             - name: proof:metaball-bridge2
               run: npm run proof:metaball-bridge2
             - name: proof:blob-page-fence
@@ -89,8 +91,6 @@ jobs:
               run: npm run proof:motion2
             - name: proof:dock-sections
               run: npm run proof:dock-sections
-            - name: proof:dock-context
-              run: npm run proof:dock-context
             - name: proof:dock-morph-insitu
               run: npm run proof:dock-morph-insitu
             - name: proof:shell-hold
@@ -141,10 +141,10 @@ jobs:
               run: npm run proof:peer-optional
             - name: proof:ship-attestation
               run: npm run proof:ship-attestation
+            - name: proof:constraint-manifest
+              run: npm run proof:constraint-manifest
             - name: proof:no-layout-animation
               run: npm run proof:no-layout-animation
-            - name: proof:build
-              run: npm run proof:build
             - name: proof:perf-producer
               run: npm run proof:perf-producer
             - name: proof:vueuse-free-root
@@ -195,6 +195,8 @@ jobs:
               run: npm run proof:fail-explicit
             - name: proof:no-god-module
               run: npm run proof:no-god-module
+            - name: proof:deps-currency
+              run: npm run proof:deps-currency
             - name: proof:composable-return-types
               run: npm run proof:composable-return-types
             - name: proof:liquid-glass-tokens
@@ -207,6 +209,8 @@ jobs:
               run: npm run proof:route-confounder
             - name: proof:route-single-root
               run: npm run proof:route-single-root
+            - name: proof:route-enter-visible
+              run: npm run proof:route-enter-visible
             - name: proof:no-paper-field
               run: npm run proof:no-paper-field
             - name: proof:focal-complete
@@ -345,10 +349,10 @@ jobs:
               run: npm run proof:button-glass
             - name: proof:control-tokens
               run: npm run proof:control-tokens
-            - name: proof:paper-grid
-              run: npm run proof:paper-grid
             - name: proof:paper
               run: npm run proof:paper
+            - name: proof:paper-grid
+              run: npm run proof:paper-grid
             - name: proof:display-tracking
               run: npm run proof:display-tracking
             - name: proof:external-payload
@@ -373,10 +377,14 @@ jobs:
               run: npm run proof:liquid-reveal
             - name: proof:no-dual-path
               run: npm run proof:no-dual-path
+            - name: proof:no-masking-fallback
+              run: npm run proof:no-masking-fallback
             - name: proof:demo-design
               run: npm run proof:demo-design
             - name: proof:border-progress
               run: npm run proof:border-progress
+            - name: proof:liquid-fill
+              run: npm run proof:liquid-fill
             - name: proof:deck
               run: npm run proof:deck
             - name: proof:pointer-velocity
@@ -403,18 +411,30 @@ jobs:
               run: npm run proof:flow-field
             - name: proof:aur-kuwahara
               run: npm run proof:aur-kuwahara
+            - name: proof:aurora-glsl-webkit
+              run: npm run proof:aurora-glsl-webkit
+            - name: proof:aur-metal
+              run: npm run proof:aur-metal
+            - name: proof:aur-image
+              run: npm run proof:aur-image
             - name: proof:precept-current
               run: npm run proof:precept-current
+            - name: proof:canon-homes
+              run: npm run proof:canon-homes
             - name: proof:concentric
               run: npm run proof:concentric
             - name: proof:strict-freshness-armed
               run: npm run proof:strict-freshness-armed
             - name: proof:crossrepo-asks
               run: npm run proof:crossrepo-asks
+            - name: proof:crossrepo-asks:bh
+              run: npm run proof:crossrepo-asks:bh
             - name: proof:lineage-probe
               run: npm run proof:lineage-probe
             - name: proof:doc-override-idiom
               run: npm run proof:doc-override-idiom
+            - name: proof:cut-docs
+              run: npm run proof:cut-docs
             - name: proof:eyebrow-union
               run: npm run proof:eyebrow-union
             - name: proof:pager-ring
@@ -425,6 +445,8 @@ jobs:
               run: npm run proof:easing-primitive
             - name: proof:handmark
               run: npm run proof:handmark
+            - name: proof:handmark-audit
+              run: npm run proof:handmark-audit
             - name: proof:ba-animate
               run: npm run proof:ba-animate
             - name: proof:fading-scroll
@@ -433,8 +455,16 @@ jobs:
               run: npm run proof:emission
             - name: proof:goo-redress
               run: npm run proof:goo-redress
+            - name: proof:blob-affect-interact
+              run: npm run proof:blob-affect-interact
             - name: proof:glass-cal
               run: npm run proof:glass-cal
+            - name: proof:glass
+              run: npm run proof:glass
+            - name: proof:glass-idiom-factor
+              run: npm run proof:glass-idiom-factor
+            - name: proof:glass-clip
+              run: npm run proof:glass-clip
             - name: proof:dock-plate-clearance
               run: npm run proof:dock-plate-clearance
             - name: proof:atlas-ab
@@ -459,6 +489,10 @@ jobs:
               run: npm run proof:visual-runner
             - name: proof:ba-gestalt
               run: npm run proof:ba-gestalt
+            - name: proof:warm-identity
+              run: npm run proof:warm-identity
+            - name: proof:build
+              run: npm run proof:build
             - name: proof:bc-fold-ledger
               run: npm run proof:bc-fold-ledger
             - name: proof:bg-deferred-ledger
@@ -467,6 +501,10 @@ jobs:
               run: npm run proof:git-hygiene
             - name: proof:be-bf-ledger
               run: npm run proof:be-bf-ledger
+            - name: proof:meta
+              run: npm run proof:meta
+            - name: proof:token-manifest:self-test
+              run: npm run proof:token-manifest:self-test
             - name: proof:observer-loop
               run: npm run proof:observer-loop
             - name: proof:black-bar
@@ -505,6 +543,16 @@ jobs:
               run: npm run proof:motion-presets
             - name: proof:dock-engine
               run: npm run proof:dock-engine
+            - name: proof:shell-dock-dry
+              run: npm run proof:shell-dock-dry
+            - name: proof:dock
+              run: npm run proof:dock
+            - name: proof:dock-consumer-fence
+              run: npm run proof:dock-consumer-fence
+            - name: proof:dock-story-modularize
+              run: npm run proof:dock-story-modularize
+            - name: proof:dock-engine-unify
+              run: npm run proof:dock-engine-unify
             - name: proof:dock-arbitrary
               run: npm run proof:dock-arbitrary
             - name: proof:dock-shrink-blur
@@ -523,8 +571,12 @@ jobs:
               run: npm run proof:dock-stack-rail
             - name: proof:dock-rail-realize
               run: npm run proof:dock-rail-realize
+            - name: proof:dock-rail-reinvent
+              run: npm run proof:dock-rail-reinvent
             - name: proof:dock-cockpit
               run: npm run proof:dock-cockpit
+            - name: proof:dock-persistent-cut
+              run: npm run proof:dock-persistent-cut
             - name: proof:tabs-ios
               run: npm run proof:tabs-ios
             - name: proof:liquid-tab
@@ -561,8 +613,6 @@ jobs:
               run: npm run proof:webgpu-everywhere
             - name: proof:safari-webgl
               run: npm run proof:safari-webgl
-            - name: proof:viz-choreography
-              run: npm run proof:viz-choreography
             - name: proof:visual-reconcile
               run: npm run proof:visual-reconcile
             - name: proof:viz-aurora
@@ -573,6 +623,8 @@ jobs:
               run: npm run proof:fourier-field
             - name: proof:viz-constellation
               run: npm run proof:viz-constellation
+            - name: proof:viz
+              run: npm run proof:viz
             - name: proof:viz-dotflow
               run: npm run proof:viz-dotflow
             - name: proof:viz-papergrid
@@ -615,10 +667,14 @@ jobs:
               run: npm run proof:scroll-chrome
             - name: proof:dock-search
               run: npm run proof:dock-search
+            - name: proof:siri
+              run: npm run proof:siri
             - name: proof:viz-configurator-suite
               run: npm run proof:viz-configurator-suite
             - name: proof:storybook-meta
               run: npm run proof:storybook-meta
+            - name: proof:demo
+              run: npm run proof:demo
             - name: proof:bp-lazy
               run: npm run proof:bp-lazy
             - name: proof:no-dead-token

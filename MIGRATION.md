@@ -1,455 +1,760 @@
-# MIGRATION—v0.9.x → v1.0 → v2.0
+# MIGRATION
 
-> **BG.W-GOODOT-PRUNE — `GooDotMatrix` + the `/goo-dot-matrix` subpath RETIRED with
-> rationale (0 external consumers). Clean break, no alias ("No legacy code").** The
-> `goo-dot-matrix` goo+dot HYBRID viz (`<GooDotMatrix>`, `GooDotConfig`, `useGooDotMatrix`,
-> `DEFAULT_GOO_DOT_CONFIG`) + its `@mkbabb/glass-ui/goo-dot-matrix` subpath are
-> DEFINITION-ABSENT at the 5.0.0 cut. It was a demonstration hybrid that earned no external
-> consumer since BC (the ≥2-consumer / visual-load-bearing bar; J-inv-10 / L-inv-8). Its two
-> halves both SURVIVE it and stay first-class — the goo-blob FIELD donor
-> (`@mkbabb/glass-ui/goo-blob`, byte-untouched) and the dot-matrix RENDER register
-> (`@mkbabb/glass-ui/dot-matrix`). MIGRATE: none for the library's own tree; any external
-> consumer of `/goo-dot-matrix` re-homes onto `<GooBlob>` (the merged-metaball FIELD look) or
-> `<DotMatrix>` (the dot-lattice RENDER look) — the two registers the hybrid composed. The
-> inv-11 registry-consumer probe (`npm view @mkbabb/glass-ui` + the constellation census) read
-> ZERO consumers; recorded in the cut notes.
->
-> **BG.W-GRID-AFFINE — `PaperGrid` (the viz) RENAMED to `LiquidGrid`; `/paper-grid` →
-> `/liquid-grid`. Clean break, no alias ("No legacy code").** The WebGPU-first liquid AA-grid
-> viz + its subpath are renamed to kill the live homonym with the STATIC `.paper-grid` /
-> `--paper-grid-texture` geometric-paper CARD register (`cards.css` / `scale-paper.css`), which
-> is BYTE-UNTOUCHED — the homonym dies on the VIZ side only. MIGRATE (one-line rename per call
-> site):
-> - `import { PaperGrid, DEFAULT_PAPER_GRID_CONFIG } from "@mkbabb/glass-ui/paper-grid"`
->   → `import { LiquidGrid, DEFAULT_LIQUID_GRID_CONFIG } from "@mkbabb/glass-ui/liquid-grid"`.
-> - `<PaperGrid …>` → `<LiquidGrid …>`; `PaperGridConfig` → `LiquidGridConfig` (the `/api`
->   discovery type); `usePaperGrid` → `useLiquidGrid`; `samplePaperGrid` → `sampleLiquidGrid`;
->   the demo route `/substrates/paper-grid` → `/substrates/liquid-grid`.
-> - The `.paper-grid-wrapper`/`.paper-grid-canvas` scoped SFC classes → `.liquid-grid-*`
->   (internal — no consumer surface). Zero external consumers verified — no by-name cross-repo
->   ask owed. The prop schema is otherwise unchanged, EXCEPT the retired per-cell `shearMax`
->   config field (the affine sheet-warp is shear-free — a `shearMax` set on a config object is a
->   dead field; drop it).
-> - **The mechanism changed too (paint, not API):** the ripple is now a SMOOTH continuous
->   AFFINE sheet-warp (`waveFlow`, the SAME warp Concentric reads) — major gridlines bow/shear as
->   ONE coherent curve, cells near-parallelogram — instead of the retired per-cell `cellTwist`
->   (which kinked each box about its own center). No consumer action; the surface reads better.
+The per-version migration guide for `@mkbabb/glass-ui`. Each `## <version>` section
+records the breaking changes that landed in that cut, newest first. Clean breaks only
+— no legacy aliases, no back-compat shims (L invariant 4); every break is a one-line
+rename or import re-point per call site.
 
-> **BH.W-MOTION-AXIS — the four-boolean motion scatter → the ONE `motion` axis. Clean
-> break, no alias ("No legacy code").** The `draggable` / `pressable` / `spring` /
-> `liquidDrag` booleans (7 prop instances across 6 SFCs — `Card` · `Slider` ·
-> `DialogContent` · `SheetContent` · `SegmentedTabs` · `DockLayerGroup`) are COLLAPSED onto
-> a single `motion?: "full" | "reduced" | "off"` axis (default `full` — physics is the
-> DEFAULT, the axis is an opt-DOWN per the liquid-weight-universal law). `motion="reduced"`
-> degrades the JS gesture physics to their CSS floor (the same state `prefers-reduced-motion`
-> produces); `motion="off"` unbinds the enrichment AND writes `--motion-weight: 0` (the
-> functional interaction — click/keyboard/drag-handle — stays). PRM forces `full → reduced`
-> regardless (a11y absolute).
-> - **`<SegmentedTabs draggable>` / `<DockLayerGroup draggable>` → the `motion="full"`
->   DEFAULT.** The drag is now the DEFAULT (a click-only strip opts DOWN with
->   `motion="reduced"`). DockLayerGroup's drag flips default-ON (the boolean defaulted
->   `false`) — the pull is an enrichment over the always-present click/keyboard model write.
-> - **`<Card pressable>` → interactivity + `motion`.** A Card presses IFF it renders
->   interactive (`as="button"` / `as="a"` / `href` / `role="button"` on the root) AND
->   `motion !== "off"`. MIGRATE: a former `<Card pressable @click>` becomes
->   `<Card as="button" @click>` (a static plate never presses — the derivation, not a
->   default). A former `<Card pressable="false">` is a bare `<Card>` (already static).
-> - **`<Slider liquidDrag>` → `motion`.** `liquidDrag="false"` → `motion="reduced"` (or
->   `"off"`); the default `full` is byte-identical to the prior `liquidDrag: true`.
-> - **`<DialogContent spring>` / `<SheetContent spring>` → `springPreset` + `motion`.** The
->   `spring` boolean carried BOTH the on/off AND the preset; it splits: `springPreset?:
->   "smooth" | "snappy" | "bouncy" | "gentle"` is the curve choice (a distinct concern from
->   motion intensity), and `motion` gates the engine. `spring={true}` → `springPreset="smooth"`;
->   `spring="bouncy"` → `springPreset="bouncy"`; unset `spring` → unset `springPreset` (the
->   `.glass-reveal` / `sheet-animate` CSS floor, byte-identical). Sheet's `dragDismiss` now
->   engages the spring engine on its own (it needs it) — it no longer requires `spring`.
-> - **The kept gesture CONTRACTS are UNTOUCHED** (`keepDockOpen` · `dragDismiss` ·
->   `responsive`) — a gesture contract is a role/behavior, not motion intensity.
-> Machine-locked by `proof:encapsulation` · `motion-axis` arm (M1-M6).
+## 5.0.0
 
-> **BG.W-DEAD-SWEEP — the `selectableChipVariants` alias + the `--corner-shape-card`/
-> `-pill` dead tokens SWEPT. Clean break, no alias ("No legacy code").** Two net-negative
-> cuts:
-> - **`selectableChipVariants` → `chipVariants`, `SelectableChipVariants` → `ChipVariants`.**
->   The `selectableChipVariants.ts` re-point shim (a self-admitted back-compat rename over
->   the ONE congruent `chipVariants` recipe — BD.W-CHIP-CONGRUENT-GLASS) is DELETED. The
->   `@mkbabb/glass-ui/selectable-chip` subpath now exports `chipVariants` (value) +
->   `ChipVariants` (type); `@mkbabb/glass-ui/api` exports the `ChipVariants` type (was
->   `SelectableChipVariants`). MIGRATE: rename `selectableChipVariants` → `chipVariants`
->   and `SelectableChipVariants` → `ChipVariants` at each import site (the recipe body is
->   byte-identical — it always WAS `chipVariants` under the alias). `<SelectableChip>`
->   itself is unchanged.
-> - **`--corner-shape-card` / `--corner-shape-pill` DELETED.** They were dead `round`
->   no-op knobs (zero `var()` readers; the CSS `corner-shape` INITIAL VALUE is `round`, so
->   a card/pill with no declaration is already round). The "cards/pills stay round" policy
->   is UNCHANGED — glass.css writes no `corner-shape` on `.glass-card`/`.glass-btn`/
->   `.btn-pill`, so they inherit the round default (the CARD-REHOMED policy). The SQUIRCLE
->   members `--corner-shape-{bigdock,dialog,sheet,panel,hero}` are LIVE and untouched.
->   MIGRATE: a consumer who was re-pointing `--corner-shape-card`/`-pill` mints the alias
->   itself and adds the surface to `glass/squircle.css`'s `@supports` block (presets-in-
->   consumers). `proof:squircle-language`'s policy clause is re-pointed onto the NEGATIVE
->   GUARD — a re-mint of either token reds (the net-negative cannot silently reverse).
+The 5.0.0 cut is the joint BG/BH release: the BG visual-convergence band (the warm /
+weighty / liquid iOS-27 redesign) lands alongside the BH structural reshape. **The
+whole consumer break is ONE dropped export key — `./api` — plus its 203-symbol
+re-home** (each symbol swaps its import PATH onto the owning subpath, zero symbol loss);
+every other published key is preserved (the regen proves 96/96 keys reproduce). The
+remaining rows are a token rename (`--ring` → `--focus-ring-color`), one
+component/subpath rename (`goo-blob` → `blob`), and the source-only `src/subpaths/`
+deletion + curated flat-barrel relocations (no export break). The BG visual band is a
+paint upgrade — no public-prop break beyond the rows below.
 
-> **BG.W-DOCK-CAP-SCROLL-FADE — the `<GlassDock overflow="scroll">` opt-in RETIRED.
-> Clean break, no alias ("No legacy code").** The `overflow` prop is now
-> `"grow" | "wrap"` (the `"scroll"` member is GONE). A capped dock axis is
-> INTRINSICALLY a scroll axis, no opt-in: a HORIZONTAL dock scrolls its over-cap
-> inline content whenever the row exceeds `--dock-max-inline-size` (the intrinsic
-> `.dock-scroll-x` port; under the cap nothing scrolls), and a VERTICAL rail scrolls
-> its over-cap block content whenever it exceeds `--dock-max-block-size` (the
-> unconditional cap-derived shell rule; the `.dock-scroll-y` opt-in class is
-> retired). The scroll port's CROSS axis is now `overflow-*: clip` +
-> `overflow-clip-margin: var(--dock-control-safe-inset)` (the mechanically-honest
-> un-clip — the prior `overflow-*: visible` pin was a latent no-op that CSS Overflow
-> §3 computed to `auto`), and the over-cap edge feathers via the `<FadingScroll>`
-> `--fade-scroll-width` mask seam (the liquid-weight soft edge). MIGRATE: drop any
-> `overflow="scroll"` prop — a capped dock scrolls by construction; set
-> `--dock-max-block-size` / `--dock-max-inline-size` per-instance to anchor the cap.
-> Machine-locked by `proof:dock-plate-clearance` (W2 re-pointed onto the `clip` +
-> `overflow-clip-margin` un-clip + the `.dock-scroll-y`-retired assert + a self-test
-> bite).
+### The `/api` discovery-subpath fold — 203-symbol re-home
 
-> **BC.W-VIZ-FOURIER — the Canvas2D fourier renderer + the three-view split RETIRED
-> onto the WebGPU-first `useFourierField`. Clean break, no alias ("No legacy code").**
-> The fourier surface — three views (`fourier-field.vue` + the foreground
-> `fourier-studio.vue` over `FourierStudioStage.vue`) on a Canvas2D renderer the §E
-> "WebGPU everywhere, no canvas" mandate forbids — COLLAPSES to ONE GPU view and
-> MIGRATES off Canvas2D onto the WGSL-primary GPU substrate (`createGpuSubstrate`,
-> `setupWGPU` + `setupGL`). **The demo `fourier-studio.vue` + `FourierStudioStage.vue`
-> are DELETED** (the studio's controllable-clock/N-harmonics/epicycle/ℱ-trace axes fold
-> into the ONE merged `fourier-field.vue` view; no alias). The Canvas2D-era gates
-> `proof:fourier-field-intensity` / `proof:fourier-studio` /
-> `proof:fourier-field-visibility-live` retired with the Canvas2D render they asserted
-> (the flat-alpha/quadratic intensity model + the phosphor-comet canvas readback are
-> gone); the new `proof:fourier-field` (U1 ONE-merged-view + the deleted SFCs ABSENT, U2
-> WGSL-primary-no-Canvas2D, U3 the ONE math source round-trip) is their successor. No
-> public-prop break — `<FourierField>` keeps its `ConstellationProps`-shaped contract;
-> only the demo studio split + the Canvas2D substrate are retired. MIGRATE: none for a
-> library consumer (the public `<FourierField>` surface is unchanged); the demo studio
-> route folds into the merged view.
+`@mkbabb/glass-ui/api` (the pure types + constants discovery layer) is FOLD-DELETED. The
+`./api` key is the ONLY dropped key. Every one of its 203 symbols re-homes onto its
+OWNING published subpath — so a consumer swaps the import PATH with zero symbol loss:
 
-> **BC.W-VIZ-CONSTELLATION — the Canvas2D `drawOverlay` frozen-`now` handoff gate
-> `proof:constellation-freeze-live` RETIRED with the migration. Clean break, no alias.**
-> The constellation re-homes off the Canvas2D substrate (the low-res `ctx.arc()` discs +
-> the 2D `drawOverlay` skin seam) onto the WebGPU instanced-points+lines substrate
-> (`createGpuSubstrate`); the `drawOverlay` overlay-painter seam is INERT post-migration
-> (the lattice renders on the GPU, not a 2D context, so the render loop never invokes
-> `drawOverlay`). `proof:constellation-freeze-live` measured the `drawOverlay`
-> frozen-`now` handoff — a Canvas2D-era internal the GPU re-home deleted — so it retired;
-> the SURVIVING field-freeze determinism (under `prefers-reduced-motion` two frames are
-> IDENTICAL) is covered by the new `tests-visual/constellation.spec.ts` PRM-freeze π.
-> `drawOverlay` stays a public `ConstellationProps` prop (a consumer-skin seam) but is
-> no longer painted by the built-in GPU loop. The new `proof:viz-constellation` (C1 no
-> Canvas2D / `constellationDraw.ts` DELETED, C2 crisp SDF circle, C3 instanced quads, C4
-> the ONE math source) is the migration's source gate. MIGRATE: none for a library
-> consumer.
+```ts
+// 5.0.0 — the /api discovery layer is gone; import each symbol from its owning subpath
+- import type { AuroraConfig, CardTier } from "@mkbabb/glass-ui/api";
++ import type { AuroraConfig } from "@mkbabb/glass-ui/aurora";
++ import type { CardTier } from "@mkbabb/glass-ui/card";
+```
 
-> **BC.W-RADIO-FIX / Band 6 — `<Button variant="solid">` RETIRED (clean break, no
-> alias, "No legacy code").** The `solid` variant was a back-compat escape hatch (the
-> previous default's opaque `bg-primary` fill, "so consumers can still get the solid
-> look") — unused in-repo and at odds with the glass-first identity. MIGRATE: the
-> default `<Button>` is the glass register; for a loud CTA use `variant="accent"` (the
-> gold-tint-on-glass). This flips `proof:no-shadcn-default` fully GREEN (the last
-> shadcn-neutral surface-fill residual removed). The `default`/`outline`/`secondary`/
-> `accent`/`ghost`/`destructive` variants are unchanged.
+200 of the 203 symbols were ALREADY exported by their owning subpath barrel (the fold is
+a pure import-path swap — the owning subpath needs no new export). Only the three
+`ui/_shared` orphans re-home to a barrel that ADDS one export: `Surface` → `/card`,
+`MenuItemVariants` → `/command`, `ControlSize` → `/forms`. The three root-barrel
+`*Variants` types (`AlertVariants` / `AvatarVariants` / `ToggleVariants`) resolve off the
+root `@mkbabb/glass-ui` barrel. value.js's 18 consumed specifiers (root + 15 subpaths +
+`/easing` + `/styles/fonts`) are all named in the table below, so the compound-import
+unbuildable class cannot recur.
 
-> **BA.W-TABS — the tab family standardized on ONE engine, TWO materials. Clean
-> break, no alias ("No legacy code").** `SegmentedTabs` is now ONE engine with TWO
-> MATERIALS (`variant: "pill" | "underline"`) and ONE orientation axis
-> (`orientation: "horizontal" | "vertical"`). Four retirements:
->
-> 1. **`variant="segmented"` → `variant="pill"` (the DEFAULT now).** Segmented and
->    pill were one register; the user kept "pill" by name. `pill` is the glass
->    material — a glass-quiet track + the selected-reads-as-glass (`--glass-bg-floating`)
->    indicator, no gray. MIGRATE: drop the `variant="segmented"` prop (it re-defaults
->    to `pill`) or rename it to `variant="pill"`. A `<SegmentedTabs>` with no `variant`
->    now paints the glass pill.
-> 2. **`overflow="scroll" / "auto"` axis RETIRED.** Overflow is `<FadingScroll>`'s job
->    (`@mkbabb/glass-ui/fading-scroll`) at the consumer's own level, not an in-tabs
->    scroller. MIGRATE: wrap the strip in `<FadingScroll>` or apply `useFadingScroll`
->    where a genuinely-overflowing tab row needs an edge fade (the common ≤4-tab case
->    needs none).
-> 3. **`:multi-select` RE-HOMED to `<ToggleGroup>`.** A multi-pressed strip (N
->    independent toggles on one surface, `role="group"`) IS a ToggleGroup, not a tab
->    family member. MIGRATE: `<SegmentedTabs :multi-select>` →
->    `<ToggleGroup type="multiple">` (the IG-B2 glass-track register). The single-select
->    string model replaces the prior `string | string[]` union.
-> 4. **`ui/Tabs` (the reka wrapper family: `Tabs`/`TabsList`/`TabsTrigger`/`TabsContent`/`TabsIndicator`)
->    LEFT the public surface.** It is no longer re-exported from `@mkbabb/glass-ui` or
->    `@mkbabb/glass-ui/<ui-tabs>`. The standardized family is `SegmentedTabs`
->    (`@mkbabb/glass-ui/tabs`). MIGRATE a hand-rolled `ui/Tabs` recipe to the matching
->    `<SegmentedTabs variant="…">` material. (The reka substrate files remain INTERNAL
->    solely for the dock-rail consumer `DockLayerGroup` — they are not a consumer
->    surface.) The `indicator`/`surface` default-ON baked-plate that painted the R10-2
->    oval blob dies with the public surface.
->
-> **External migration re-issue (the AY W-CONSUMER ledger, re-stamped at this SHA).**
-> The 5 DEFERRED external rows (fourier-analysis/web 3× `UnderlineTabs`, words/frontend
-> 2× `BouncyToggle`) re-target the standardized API: `UnderlineTabs` →
-> `<SegmentedTabs variant="underline">` (the paper material, panel-nav `role="tablist"`);
-> `BouncyToggle` → `<SegmentedTabs>` (the default pill material — the named-good glass
-> register). The receiver contract is PRESERVED — `:options` / `:model-value` /
-> `@update:model-value` + `variant` are unchanged across the standardization, so the
-> drop-in swap the ledger promises still holds; the `proof:consumer-staleness` allowlist
-> re-stamps (those rows carry their `{receiver-wave, close-gate}` terminals in the
-> consumer's own tranche). The `proof:tabs-unified` gate retired-with-re-point onto
-> `proof:tabs-std`.
+The full 203-symbol map (grouped alphabetically by symbol; `kind` is the TS export kind;
+`new import (owning subpath)` is the 5.0.0 target):
 
-> **BC.W-DOCK-STACK-RAIL — `<DockRail>` + `DockRailItem` RETIRED onto the macOS
-> hover-expand `<DockStack>` + `DockStackItem`. Clean break, no alias ("No legacy
-> code").** The AZ.W-RAIL3 divider-carousel rail (a floating strip of detached glass
-> chips on a connective hairline at a measured `<DockSeparator>` seam) CONTRADICTED the
-> verbatim macOS-stack ask, so it is rebuilt from scratch as the stack: a core anchor
-> item whose N members FAN OUT next to the rail on hover/focus (3 configurable + scrollable
-> n-stack via `<FadingScroll>`), extending beyond the dock edge into its own gutter so it
-> clears `<main>` BY TOPOLOGY. **`DockRail` + `DockRailItem` are GONE from
-> `@mkbabb/glass-ui/dock`** (the export names + the SFC `DockRail.vue` + the
-> `src/styles/dock/rail-extend.css` chip partial + the `measureSeam` /
-> `--dock-rail-seam-offset` seam-locator all DELETED, no alias). MIGRATE: `<DockRail
-> v-model:context :items>` → `<DockStack v-model:selected :items>` (`DockRailItem` →
-> `DockStackItem = { id, label, icon?, onSelect? }`); the in-dock-`<DockLayerGroup>`
-> contextual pattern stays the route-keyed seam — only its render target is the stack rail
-> (demo-only; no library API there). Machine-locked by `proof:dock-stack-rail` (S1 asserts
-> the divider-carousel DEFINITION-ABSENT; S2-S6 own the new `<DockStack>` seat / fan-out /
-> overflow / topology / one-registry). The `proof:rail3` gate retired with it; the
-> SECTION-GROUPING half of `proof:dock-sections` (S1 the `<DockSection>` zones + S4 the
-> shell adoption) stays GREEN.
+| symbol | kind | new import (owning subpath) |
+|---|---|---|
+| `AlertVariants` | type | `@mkbabb/glass-ui` (root) |
+| `AvatarVariants` | type | `@mkbabb/glass-ui` (root) |
+| `ToggleVariants` | type | `@mkbabb/glass-ui` (root) |
+| `AnimatedDigitMode` | type | `/animated-digit` |
+| `AnimatedDigitProps` | type | `/animated-digit` |
+| `AuroraAtoms` | type | `/aurora` |
+| `AuroraConfig` | type | `/aurora` |
+| `AuroraCursorApi` | type | `/aurora` |
+| `AuroraFlow` | type | `/aurora` |
+| `AuroraHarmony` | type | `/aurora` |
+| `AuroraHuePath` | type | `/aurora` |
+| `AuroraInstance` | type | `/aurora` |
+| `AuroraInteractivity` | type | `/aurora` |
+| `AuroraInteractivityAtom` | type | `/aurora` |
+| `AuroraMedium` | type | `/aurora` |
+| `AuroraMediumAtom` | type | `/aurora` |
+| `AuroraMotionAtom` | type | `/aurora` |
+| `AuroraNucleus` | type | `/aurora` |
+| `AuroraRuntimeMode` | type | `/aurora` |
+| `AuroraRuntimeOptions` | type | `/aurora` |
+| `AuroraZoneArrangement` | type | `/aurora` |
+| `AuroraZones` | type | `/aurora` |
+| `DEFAULT_AURORA_CONFIG` | const | `/aurora` |
+| `DeriveAuroraOptions` | type | `/aurora` |
+| `DeriveEasing` | type | `/aurora` |
+| `FlowPattern` | type | `/aurora` |
+| `MAX_NUCLEI` | const | `/aurora` |
+| `MAX_STOPS` | const | `/aurora` |
+| `OklchStop` | type | `/aurora` |
+| `PAPER_WASH_GROUND` | const | `/aurora` |
+| `StrokeMode` | type | `/aurora` |
+| `StrokeOrient` | type | `/aurora` |
+| `WarpMode` | type | `/aurora` |
+| `BadgeVariants` | type | `/badge` |
+| `BorderProgressCoverage` | type | `/border-progress` |
+| `BorderProgressMilestone` | type | `/border-progress` |
+| `BorderProgressMilestoneEvent` | type | `/border-progress` |
+| `BorderProgressProps` | type | `/border-progress` |
+| `ButtonVariants` | type | `/button` |
+| `Canvas2DFrame` | type | `/canvas` |
+| `Canvas2DHandle` | type | `/canvas` |
+| `Canvas2DOptions` | type | `/canvas` |
+| `Canvas2DSuspendReason` | type | `/canvas` |
+| `CardMetal` | type | `/card` |
+| `CardSurface` | type | `/card` |
+| `CardTier` | type | `/card` |
+| `CardVariant` | type | `/card` |
+| `ScrollCardHeaderProps` | type | `/card` |
+| `ScrollCardProps` | type | `/card` |
+| `UseAccentToneOptions` | type | `/color` |
+| `UseAccentToneReturn` | type | `/color` |
+| `CompletionSealProps` | type | `/completion-seal` |
+| `CompletionSealShape` | type | `/completion-seal` |
+| `ConcentricConfig` | type | `/concentric` |
+| `ConcentricHandle` | type | `/concentric` |
+| `UseConcentricOptions` | type | `/concentric` |
+| `ConfiguratorCloneMode` | type | `/configurator` |
+| `ConfiguratorPreset` | type | `/configurator` |
+| `ConfiguratorScrollMode` | type | `/configurator` |
+| `ConfiguratorState` | type | `/configurator` |
+| `ConfiguratorStateOptions` | type | `/configurator` |
+| `ConstellationField` | type | `/constellation` |
+| `ConstellationProps` | type | `/constellation` |
+| `ConstellationWarp` | type | `/constellation` |
+| `DarkFlipSettledCallback` | type | `/dark` |
+| `DarkModeSyncScriptOptions` | type | `/dark` |
+| `UseGlobalDarkOptions` | type | `/dark` |
+| `UseGlobalDarkReturn` | type | `/dark` |
+| `DeckCore` | type | `/deck` |
+| `DeckMoves` | type | `/deck` |
+| `UseDockSearchOptions` | type | `/dock` |
+| `UseDockSearchReturn` | type | `/dock` |
+| `UseDockStateReturn` | type | `/dock` |
+| `UseClipboardOptions` | type | `/dom` |
+| `UseClipboardReturn` | type | `/dom` |
+| `UseUserInvalidAriaOptions` | type | `/dom` |
+| `UseUserInvalidAriaReturn` | type | `/dom` |
+| `DotFlowFieldHandle` | type | `/dot-flow-field` |
+| `FlowFieldConfig` | type | `/dot-flow-field` |
+| `UseDotFlowFieldOptions` | type | `/dot-flow-field` |
+| `WaveComponent` | type | `/dot-flow-field` |
+| `BezierPoints` | type | `/easing` |
+| `EasingFn` | type | `/easing` |
+| `EasingPickerMode` | type | `/easing` |
+| `EasingPickerValue` | type | `/easing` |
+| `JumpTerm` | type | `/easing` |
+| `UseEasingPickerOptions` | type | `/easing` |
+| `UseEasingPickerReturn` | type | `/easing` |
+| `FourierFieldConfig` | type | `/fourier-field` |
+| `FourierFieldProps` | type | `/fourier-field` |
+| `GlassPanelProps` | type | `/glass-panel` |
+| `GlassPanelVariant` | type | `/glass-panel` |
+| `BlendMode` | type | `/handmark` |
+| `Brush` | type | `/handmark` |
+| `BrushName` | type | `/handmark` |
+| `HandAnimation` | type | `/handmark` |
+| `HandMarkProps` | type | `/handmark` |
+| `HandShape` | type | `/handmark` |
+| `InkPath` | type | `/handmark` |
+| `MarkBox` | type | `/handmark` |
+| `TaperSpec` | type | `/handmark` |
+| `HeaderRibbonPosition` | type | `/header-ribbon` |
+| `HeaderRibbonProps` | type | `/header-ribbon` |
+| `IconChipIcon` | type | `/icon-chip` |
+| `IconChipProps` | type | `/icon-chip` |
+| `IconChipSection` | type | `/icon-chip` |
+| `IconChipTone` | type | `/icon-chip` |
+| `InstrumentChassisPhase` | type | `/instrument-chassis` |
+| `MetricBadgeLabelPosition` | type | `/metric-badge` |
+| `MetricBadgeProps` | type | `/metric-badge` |
+| `MetricBadgeSize` | type | `/metric-badge` |
+| `MetricCellAppearance` | type | `/metric-cell` |
+| `MetricCellProps` | type | `/metric-cell` |
+| `MetricRowProps` | type | `/metric-stack` |
+| `MetricStackProps` | type | `/metric-stack` |
+| `BloomUpPreset` | type | `/motion` |
+| `CelebrationBurstPreset` | type | `/motion` |
+| `Countup` | type | `/motion` |
+| `DockCtaReceivePreset` | type | `/motion` |
+| `DragMorphAxis` | type | `/motion` |
+| `DragMorphSnapTarget` | type | `/motion` |
+| `Easing` | type | `/motion` |
+| `LiquidRevealPreset` | type | `/motion` |
+| `TimingFunction` | type | `/motion` |
+| `UseBloomUpOptions` | type | `/motion` |
+| `UseBloomUpReturn` | type | `/motion` |
+| `UseCelebrationBurstOptions` | type | `/motion` |
+| `UseCelebrationBurstReturn` | type | `/motion` |
+| `UseCountupOptions` | type | `/motion` |
+| `UseDockCtaReceiveOptions` | type | `/motion` |
+| `UseDockCtaReceiveReturn` | type | `/motion` |
+| `UseDragMorphParams` | type | `/motion` |
+| `UseDragMorphReturn` | type | `/motion` |
+| `UseLiquidRevealOptions` | type | `/motion` |
+| `UseLiquidRevealReturn` | type | `/motion` |
+| `HapticPattern` | type | `/motion-core` |
+| `HighlightMatcher` | type | `/motion-core` |
+| `NavigateOptions` | type | `/motion-core` |
+| `PointerVec2` | type | `/motion-core` |
+| `TriggerPoint` | type | `/motion-core` |
+| `UseCharStaggerOptions` | type | `/motion-core` |
+| `UseCharStaggerReturn` | type | `/motion-core` |
+| `UseHapticOptions` | type | `/motion-core` |
+| `UseHapticReturn` | type | `/motion-core` |
+| `UsePointerVelocityField` | type | `/motion-core` |
+| `UsePointerVelocityFieldOptions` | type | `/motion-core` |
+| `UseScrollChromeOptions` | type | `/motion-core` |
+| `UseScrollChromeReturn` | type | `/motion-core` |
+| `UseScrollTriggerOptions` | type | `/motion-core` |
+| `UseScrollTriggerReturn` | type | `/motion-core` |
+| `UseTextHighlightControls` | type | `/motion-core` |
+| `ViewTransitionOptions` | type | `/motion-core` |
+| `ViewTransitionResult` | type | `/motion-core` |
+| `CurveFn` | type | `/motion-curves` |
+| `MotionCurve` | type | `/motion-curves` |
+| `MotionCurveKind` | type | `/motion-curves` |
+| `SpringPresetName` | type | `/motion-curves` |
+| `SpringPresetRow` | type | `/motion-curves` |
+| `PagerDotsProps` | type | `/pager-dots` |
+| `PagerWindow` | type | `/pager-dots` |
+| `PaperBackdropFrequency` | type | `/paper-backdrop` |
+| `PaperBackdropProps` | type | `/paper-backdrop` |
+| `PaperGridConfig` | type | `/paper-grid` |
+| `PaperGridHandle` | type | `/paper-grid` |
+| `UsePaperGridOptions` | type | `/paper-grid` |
+| `FuzzySearchState` | type | `/search` |
+| `SearchableItem` | type | `/search` |
+| `SearchIndex` | type | `/search` |
+| `SearchResult` | type | `/search` |
+| `SearchVariant` | type | `/search` |
+| `SearchVariants` | type | `/search` |
+| `UseFuzzySearchOptions` | type | `/search` |
+| `SelectableChipVariants` | type | `/selectable-chip` |
+| `SheetVariants` | type | `/sheet` |
+| `ClickDelegateOptions` | type | `/sidebar` |
+| `LazyLoaderOptions` | type | `/sidebar` |
+| `ScrollToOptions` | type | `/sidebar` |
+| `ScrollTrackerOptions` | type | `/sidebar` |
+| `SidebarIndexEntry` | type | `/sidebar` |
+| `SidebarSection` | type | `/sidebar` |
+| `SidebarState` | type | `/sidebar` |
+| `TreeIndexEntry` | type | `/sidebar` |
+| `TreeNode` | type | `/sidebar` |
+| `SliderVariants` | type | `/slider` |
+| `SpaViewProps` | type | `/spa-view` |
+| `StackedIconGroupProps` | type | `/stacked-icons` |
+| `SegmentedTabOption` | type | `/tabs` |
+| `SegmentedTabsOrientation` | type | `/tabs` |
+| `SegmentedTabsProps` | type | `/tabs` |
+| `SegmentedTabsVariant` | type | `/tabs` |
+| `TimelineSegment` | type | `/timeline` |
+| `TimelineSegmentGradient` | type | `/timeline` |
+| `TimelineSegmentState` | type | `/timeline` |
+| `ToastType` | type | `/toast` |
+| `ToastVariant` | type | `/toast` |
+| `ToggleChipVariants` | type | `/toggle-chip` |
+| `FlatSection` | type | `/virtual` |
+| `ForcedSectionWindowRange` | type | `/virtual` |
+| `SectionLayout` | type | `/virtual` |
+| `SectionWindowRange` | type | `/virtual` |
+| `ControlSize` | type | `/forms` |
+| `MenuItemVariants` | type | `/command` |
+| `Surface` | type | `/card` |
+### `--ring` → `--focus-ring-color` (focus-ring token rename)
 
-> **AZ.W-REGISTER-IOS — the dock interactive register is DE-RED'd to the iOS
-> luminance-lift.** No consumer API rename — this is a TOKEN-knob + demo-preset
-> change. The dock SELECTED/hover/active/pressed register at the library ROOT is
-> now the iOS-26/27 glass luminance-lift, not a brand-red accent (R3-6). Two NEW
-> retint knobs for downstream retinters: `--dock-selected-accent` (the SINGLE knob
-> for the selected affordance — defaults to `color-mix(in oklab, var(--foreground)
-> 14%, transparent)`, a translucent foreground luminance-lift that auto-flips with
-> `--foreground`; consumed by the rail leading-edge accent BAR), and
-> `--dock-control-press-bg` (the iOS press-darken — `--glass-bg-resting` mixed ~7%
-> toward `--foreground`, read on every dock control `:active`). The rail active
-> GLYPH + BAR no longer fall back to `var(--dock-rail-active-accent, var(--primary))`;
-> the glyph stays warm-ink `--foreground`, the bar paints `--dock-selected-accent`.
-> A consumer that previously re-tinted the selected register to a brand hue via
-> `--dock-rail-active-accent` should instead set `--dock-selected-accent` (the
-> luminance-lift knob) — `--dock-rail-active-accent` is no longer read on the rail
-> glyph/bar default. The demo's `--demo-nav-accent: var(--viz-fourier)` NCSU-red
-> preset is RETIRED (the demo consumes the neutral root register; presets live in
-> the consumer, the library's default is the de-red'd iOS register). Brand red
-> survives only as static ink (the ℱ wordmark / data-viz strokes / gold-CTA family).
-> Guarded by `proof:register-ios` (a negative predicate that REDs a brand-red
-> re-introduction on any interactive selector).
+The focus-ring color token `--ring` is renamed `--focus-ring-color` (clean break, no
+alias). It reads the focus register the `--focus-ring-shadow` utility composes (the
+token-first focus axis). MIGRATE: rename every `--ring` reference to `--focus-ring-color`
+at each declaration/read site. A consumer that cannot re-point in one pass reads it
+fallback-first for the transition window — `var(--focus-ring-color, var(--ring))` — then
+drops the `var(--ring)` fallback once its own tree is renamed (the fallback is a consumer
+convenience, NOT a library alias: glass-ui ships only `--focus-ring-color`). Landed on
+the 5.0.0 cut commit; the atlas consumer (12 bare `--ring` reads across 11 files)
+re-points on its own `^5.0.0` bump.
 
-> **The published cut is v3.13.0 — there is no 3.11/3.12 entry on the registry.** The
-> AZ tranche's breaks (the dock taxonomy + the metric `amount`→`value` rename + the
-> constellation generalization + the Card `veil` addition) ALL ship together in the
-> published **3.13.0**. The interim `3.11.0/.1/.2 + 3.12.0` registry publishes were
-> STALE-LINEAGE out-of-band publishes from a pre-prune tree (they carry the four
-> since-retired subpaths and lack `/underline`); the AZ cut SKIPPED them and published
-> 3.13.0 from master via release.yml provenance so `latest` resolves the true close (AZ
-> FINAL §5). A consumer pins **3.13.0** and reads every break below as landing on that one
-> release — the number-skip is intentional, the 3.11/3.12 lineage is not the close.
->
-> **v3.13.0** — the dock taxonomy clean break (AZ.W-DOCK-TAXONOMY, H2 arm-a):
-> `<GlassDock variant="rail">` → `<GlassDock orientation="vertical">` (the `variant`
-> discriminant is removed; a vertical dock is now COLLAPSIBLE by default — it morphs its
-> `height`; a static nav column adds `always-expanded`). `<GlassDock variant="instrument-strip">`
-> is removed (zero live consumers) — compose `<InstrumentChassis>` directly; the speedtest
-> `SurveyResultDock` cockpit re-pins on the 3.13.0 adopt.
+### `goo-blob` → `blob` (component + subpath rename)
 
-> **v3.10.0 (AY, NARROWED at AZ.W-PRUNE2)**—two zero-consumer subpaths RETIRED outright (no
-> aliases, per the no-backwards-compat invariant): `@mkbabb/glass-ui/deck-progress` +
-> `/instrument-rail` (0 production consumers at the census,
-> `docs/tranches/AY/audit/PRUNE-LEDGER.md`). `/header-ribbon` + `/glass-panel` were retired
-> by the same census and RESTORED at AZ.W-PRUNE2 — the census missed their live keyframes.js
-> binary consumer (`docs/consumer-evidence/{header-ribbon,glass-panel}.md`); both ship again.
-> A consumer that referenced one composes the equivalent from the surviving
-> primitives (`Progress`, `Section`, the `.glass-*` ladder, `InstrumentChassis`).
-> NEW subpath: `@mkbabb/glass-ui/underline` (`<GlassUnderline>`) — RETIRED at the BA cut
-> onto `<HandMark shape="underline">` (see the BA.W-HANDMARK row above; it never reached
-> a real consumer, the 3.11/3.12 publishes were stale-lineage).
-> BREAKING (3.13.0): `<MetricBadge>` / `<MetricPill>` — the primary prop `amount` is renamed
-> `value` (the Metric value-core convergence; a valid `0` now renders `0`, never the placeholder).
-> Clean break, no alias — speedtest re-points on the bump (`/metric-cell` + `/metric-stack`
-> surfaces unchanged).
-> ADDITIVE (3.13.0): the `/constellation` subpath gains optional default-OFF generalization
-> props/exports (pinnedIndex/pinNode, accentEdges, the palette accent/edgeFloor/edgeAccentAlpha,
-> stepPinnedDrift, warpAutoRelease + warpSettled) — the protected quintet is byte-compatible.
-> ADDITIVE (3.13.0): the Card `surface` union gains `"veil"` — the borderless/rimless
-> wash-fill text-legibility plate (`--veil-*` knobs, the optional `--veil-feather` mask). No break.
-> ADDITIVE (4.1.0): `@mkbabb/glass-ui/border-progress` — `<BorderProgress>`, the masked-conic
-> border-ring primitive (progress IS the element's border; BB.W-BORDER-PROGRESS). A net-new public
-> subpath (off the root barrel); no retirement, no break. The speedtest AW.W7 consumer binds it on `^4.1.0`.
-> ADDITIVE (4.1.0): `--instrument-dial-min-block-size-desktop` (BB.W-DESKTOP-RESERVE) — the wide-axis
-> (desktop) chassis dial reserve now ships in the library (`@container chassis (min-width: 45rem)` on
-> `.instrument-dial`, default `var(--chassis-max-block-size)`). A consumer that authored a local wide-axis
-> reserve interim (e.g. speedtest's `.instrument-dial { min-block-size: var(--chassis-max-block-size) }`,
-> AW.W4.1) DELETES it on consume — byte-equivalent at the default; retune via the token if the meter block-size differs.
-> CANONICALIZED (4.1.0): `--glass-opacity-{tier}` per-tier alpha — documented + gated (BB.W-CARD-TIER-ALPHA); values byte-unchanged, a consumer that re-pinned the same tier alphas (e.g. speedtest register.css) deletes its override on consume.
-> ADDITIVE (4.1.0): aurora `warpMode` gains `"curl"` — the Bridson curl-noise flow warp (opt-in; the default fbm/cellular/hybrid render byte-identical). The published `WarpMode` union widens additively; no break (BB.B1).
+`<GooBlob>` renames to `<Blob>` and the `@mkbabb/glass-ui/goo-blob` subpath renames to
+`@mkbabb/glass-ui/blob` (clean break, no alias — the owner-ratified full rename). The
+types + scoped CSS seams rename in lockstep; the config registry keys
+`BLOB_CONFIG_KEY` / `BLOB_CONFIG_DEFAULTS` already carried the `BLOB` prefix (stable, no
+change). MIGRATE (one-line rename per call site):
 
-> **CALLER HAZARD (next cut, BA.W-DEMO-AFFORDANCES) — never stack `.glass-btn` + `.btn-pill`.**
-> The two button size registers are MUTUALLY EXCLUSIVE: `.glass-btn` is the
-> FIXED-square icon primitive (`width/height: var(--size-icon-btn)` + `contain:paint`),
-> `.btn-pill` is the CONTENT-WIDTH text pill. Stacked on one element the fixed square
-> wins and `contain:paint` clips a wrapped text label into a ~40px blob (the R8-17
-> defect). A text-bearing `.glass-btn` (an icon button carrying a text child) collapses
-> the same way even without `.btn-pill`. MIGRATE: for a play/replay or text-bearing
-> affordance reach for a real `<Button>` with a leading Lucide glyph (the content-width
-> pill), never an icon-button primitive carrying text. No library recipe changes — the
-> `.glass-btn`/`.btn-pill` recipes are untouched; this is a caller-side hazard the new
-> `proof:demo-affordances` gate machine-locks (W1: no class co-occurrence, no text-bearing
-> icon button across `demo/**` + the `src/styles/**` recipes).
->
-> **CLEAN BREAK (next cut, BA.W-SURFACE-AXIS) — Dialog `variant` → the shared `surface` axis.**
-> `<DialogContent variant="glass|opaque">` is RETIRED onto the ONE shared
-> `{glass·veil·opaque}` surface-decoration axis: `<DialogContent surface="glass|veil|opaque">`
-> (no alias — the prior `variant` was Dialog-local and never matched the Card grammar). Migrate
-> per call site: `variant="glass"` → `surface="glass"` (also the new default), `variant="opaque"`
-> → `surface="opaque"`; the `veil` rung is gained for free. The painted output for the `glass`
-> and `opaque` rungs is byte-identical (the same `glass-floating` / `.glass-opaque` material,
-> now reached through the shared resolver).
->
-> ADDITIVE (next cut, BA.W-SURFACE-AXIS): the shared `Surface = "glass" | "veil" | "opaque"` axis
-> (published on `@mkbabb/glass-ui/api`) reaches the whole content/floating band — `GlassPanel`,
-> `Sheet`, `Popover`, `Command`, `Drawer`, and `ExpandableContainer` each gain a `surface` prop
-> (default `"glass"`, byte-compatible). `<Skeleton>` gains a `surface?: "glass" | "opaque"` prop
-> (default `"opaque"`, byte-identical to today's `bg-muted`); `surface="glass"` is the NEW
-> over-glass register (a translucent `--skeleton-glass-bg` block that lets a frosted plate read
-> through). The `ExpandableContainer` fullscreen overlay now un-walls onto the overlay glass tier
-> by default (`surface="opaque"` restores the prior solid wall). No break for any of these.
->
-> ADDITIVE (4.1.0, BB.W-SURFACE-AXIS-COMPLETE): the shared `Surface = "glass" | "veil" | "opaque"`
-> axis reaches the last two surfaces R8-12 named verbatim — `<Toast>` and `<Button>` each gain a
-> `surface` prop (the Card-`surface`-gains-`veil` precedent). `<Toast surface="glass">` (the default,
-> byte-identical to today's `glass-floating` plate) composes WITH the `variant` tone arm — the
-> feedback-tone tint rides ON the resolved surface, orthogonal to the {glass·veil·opaque} decoration.
-> `<Button surface=…>` defaults UNSET (the `variant` axis owns Button's default); `surface="opaque"`
-> and the `solid` variant are the same `--glass-level:0` endpoint reached from two axes (NOT
-> duplicated recipes). No break for either.
+```ts
+- import { GooBlob } from "@mkbabb/glass-ui/goo-blob";
++ import { Blob } from "@mkbabb/glass-ui/blob";
+```
 
-> **ADDITIVE (4.1.0, BB.W-ON-GLASS-FG) — the surface-aware FOREGROUND register (the dark-theme
-> whisper collapse closed).** glass-ui mints a THREE-RUNG on-glass foreground family whose
-> contrast TARGET is the COMPOSITED content-tier glass FILL, not the canvas: `--on-glass-muted`
-> (+ `--on-glass-muted-strong`), `--input-on-glass`, and `--progress-track-on-glass`. The
-> glass-first MAXIMAL default (AX.W54) makes a caption/well/track over a TRANSLUCENT glass plate
-> the common case, where the canvas-calibrated `--muted-foreground` (= `--neutral-5`, "AA vs
-> page") COLLAPSED on its own surface (1.15-3.29:1 measured in dark theme). The calm-light content
-> tiers (`.glass-card`/`.glass-resting`/`.glass-quiet`/`.glass-wash`) now re-point
-> `--muted-foreground` → `--on-glass-muted` (+ the `-strong` twin) BESIDE the BA adaptive-glass
-> seam (the THIRD state — between page-muted and the bright-bucket full ink; legible-AND-subordinate),
-> so every `text-muted-foreground` caption + CardDescription inherits the on-glass rung with ZERO
-> per-site edit. Input/Textarea wells read `--input-on-glass`; the Progress default/gradient track
-> reads `--progress-track-on-glass`. No break, no rename — the page-muted register
-> (`--muted-foreground: var(--neutral-5)`) is UNTOUCHED for the opaque-canvas case.
->
-> CONSUMER-INTERIM DELETION (the ≥2-consumer law closed): a consumer that hand-re-declared
-> `--muted-foreground` over glass — the slides `deck.css §1` `--muted-foreground`/`-strong`
-> override, the speedtest WG (secondary-text + value-plate) + WV1 (survey-seat) interims — DELETES
-> its override on the `^4.1.0` re-pin and INHERITS the library on-glass register. The override that
-> PROVED the fix retires onto the root.
+`<GooBlob …>` → `<Blob …>`; the prop schema + the `useMetaballRenderer` seam are
+otherwise unchanged. The merged-metaball FIELD look is identical — only the name moves.
 
-> **RENDERED-BEHAVIOUR (next cut, BA.W-EMISSION) — the Select bound + the Slider size axis
-> now actually PAINT in every consumer.** No API rename — these are EMISSION fixes (the
-> structural utilities ship as precompiled CSS instead of dead arbitrary-bracket classes a
-> consumer's content-scan never reached). Three rendered changes a consumer SEES on the bump:
-> (1) `<SelectContent>` now BOUNDS its content to `min(24rem, 60dvh)` tightened by
-> `--reka-popper-available-height` with inner `overflow-y: auto` — a tall (16-item-class)
-> dropdown that previously overflowed the viewport now bottoms INSIDE it and scrolls within
-> (override the cap via `--select-content-max-h` on any ancestor). (2) `<Slider size="md">`
-> (and `sm`/`lg`) now renders its REAL track geometry (`md` ≈ 20px / 1.25rem) — the `size`
-> prop was previously INERT in consumers (fell back to the 6px track); a consumer relying on
-> that broken 6px-regardless behaviour will now see the correct sized track. (3) glass-ui's
-> own `@source` directive (for a consumer re-importing the `/styles` cascade) re-points
-> `"../components"` → `"../*.js"` so it reaches the compiled `dist/*.js` chunks — a consumer
-> that copied glass-ui's `@source` line verbatim should ensure THEIR `@source` points at the
-> installed `dist` (per the consumer-wiring section), unchanged guidance.
+### `src/subpaths/` deleted + curated flat-barrel relocations (key-preserving)
 
-> ADDITIVE (next cut, BA.W-EMISSION): `<WatercolorDot>` gains a `variant?: "solid" | "ghost"`
-> prop (default `"solid"`, byte-compatible). `variant="ghost"` renders the SAME seeded blob
-> silhouette as a STROKE (a `color` border over a low-alpha fill) — the empty-palette-slot
-> affordance, NOT a CSS dashed rectangle. No break.
+The 79 one-line `src/subpaths/*.ts` mirror barrels are DELETED; the build entry-map is
+re-derived from the real colocated component/composable barrels by the fail-closed
+exports regen. The 11 curated flat `src/*.ts` barrels relocate under `src/entries/`.
+Both moves are SOURCE-ONLY and KEY-PRESERVING — the same `dist/<name>.js` chunk set
+emits and every published subpath key resolves identically. No consumer action is
+required for either.
 
-> **BA.W-PAGER — `CarouselDots` RETIRED onto `<PagerDots>` + the counter re-registers
-> off `bg-card`. Clean break, no alias ("No legacy code").** The carousel dots and the
-> slides deck `DeckPager` were ALREADY one register; BA.W-PAGER harvests that into ONE
-> primitive — `<PagerDots>` (`@mkbabb/glass-ui/pager-dots`), encapsulated in a glass pager
-> pill. Two breaks:
->
-> 1. **`CarouselDots` → `<PagerDots>` (clean break).** `CarouselDots` is GONE from the
->    `/carousel` barrel (it auto-wired the embla API via `useCarousel()` inject).
->    `<PagerDots>` is standalone — wire `:count`, `:active` (`v-model:active`), and
->    `@select`/`scrollTo` to the embla API explicitly. MIGRATE: `<CarouselDots />` →
->    `<PagerDots :count="api.scrollSnapList().length" :active="api.selectedScrollSnap()"
->    @select="(i) => api.scrollTo(i)" />`. The pip anatomy (24px hit-box, 6px pip,
->    elongate-on-active, the `--foreground` 52%/72%/full register) is IDENTICAL — the dots
->    look the same; they now read a `--pager-dot-*` token set (retint the active fill via
->    `--pager-dot-active`) and sit in the `.glass-pager-ring` chassis by default
->    (`ring="false"` for a flush-on-an-ambient-glass-host deck). `windowFit?` generalizes
->    the DeckPager dock-gutter windowing (off by default).
-> 2. **The `<CarouselPager>` counter is off the opaque `bg-card` ring.** The counter
->    `<span>` now composes `.glass-pager-ring` (the glass-floating pill) instead of
->    `rounded-pill border border-border bg-card` — the dark `rgb(28,25,23)` slab dies.
->    No consumer change (the counter is internal to `<CarouselPager>`); a consumer that
->    hand-overrode the counter's `bg-card` re-points to the glass ring.
+### The BG/BH visual-convergence & structural retirements
 
-> **BA.W-HANDMARK — `GlassUnderline` + the `/underline` subpath RETIRED onto
-> `<HandMark shape="underline">`. Clean break, no alias (DEC-8 outcome 1).** The d6
-> hand-voice family re-landed on `@mkbabb/glass-ui/handmark` (`<HandMark>` / `<InkMark>`
-> + the flat `BRUSHES` continuum + the pure L1–L3 stages), and the editorial underline
-> is now ONE shape of that ONE hand voice — not a parallel component. Two breaks:
->
-> 1. **`@mkbabb/glass-ui/underline` (`<GlassUnderline>`) is GONE.** The `/underline`
->    subpath + the `GlassUnderline*` types are removed from the surface (no alias, per
->    the no-backwards-compat invariant). MIGRATE: `import { GlassUnderline } from
->    "@mkbabb/glass-ui/underline"` → `import { HandMark } from
->    "@mkbabb/glass-ui/handmark"`; `<GlassUnderline>word</GlassUnderline>` →
->    `<HandMark shape="underline">word</HandMark>`. The editorial draw-on underline is
->    `<HandMark shape="underline" animation="draw-on">`; the natural pencil-boil
->    morphology (scale-relative amplitude, irregular seeded periods) is the `boil`
->    brush (`<HandMark brush="boil" shape="underline">`). The default `pen` brush is a
->    clean wobbled line, `grain:0`, no extra dep.
-> 2. **New optional peers (vendored/peer split).** `<HandMark>` adds two OPTIONAL peers:
->    `@mkbabb/pencil-boil ^0.4.1` (the L1 wobble geometry — imported only when a wobble
->    paints) and `perfect-freehand ^1.2.3` (the variable-width hull body — VENDORED into
->    `freehand.ts`, declared as an optional peer for provenance, touched only by the
->    `ribbon:"hull"` highlighter). Both are tree-shaken when unused; a `pen`-only
->    consumer pulls neither. The `/handmark` chunk is ≈7.6 KiB-gzip (the `profile:budget`
->    rebaseline records it + the engaged pf hull body).
->
-> **This row is for any FUTURE external `/underline` consumer — NOT slides.** The
-> 2026-06-15 slides ground-truth (BINDING) confirms slides imports ZERO
-> `@mkbabb/glass-ui/underline` / `GlassUnderline`: its `SlideIntro`/`SlideCloser` red
-> pen-underlines are deck-LOCAL CSS/SVG `::after` glyphs, never the library component.
-> The phantom "slides adopt-book break" was the AZ-H6-fold assumption the slides session
-> disproved at HEAD `c943a49`; there is no slides edit on this fold.
+**BG.W-GOODOT-PRUNE — `GooDotMatrix` + the `/goo-dot-matrix` subpath RETIRED with
+rationale (0 external consumers). Clean break, no alias ("No legacy code").** The
+`goo-dot-matrix` goo+dot HYBRID viz (`<GooDotMatrix>`, `GooDotConfig`, `useGooDotMatrix`,
+`DEFAULT_GOO_DOT_CONFIG`) + its `@mkbabb/glass-ui/goo-dot-matrix` subpath are
+DEFINITION-ABSENT at the 5.0.0 cut. It was a demonstration hybrid that earned no external
+consumer since BC (the ≥2-consumer / visual-load-bearing bar; J-inv-10 / L-inv-8). Its two
+halves both SURVIVE it and stay first-class — the goo-blob FIELD donor
+(`@mkbabb/glass-ui/goo-blob`, byte-untouched) and the dot-matrix RENDER register
+(`@mkbabb/glass-ui/dot-matrix`). MIGRATE: none for the library's own tree; any external
+consumer of `/goo-dot-matrix` re-homes onto `<GooBlob>` (the merged-metaball FIELD look) or
+`<DotMatrix>` (the dot-lattice RENDER look) — the two registers the hybrid composed. The
+inv-11 registry-consumer probe (`npm view @mkbabb/glass-ui` + the constellation census) read
+ZERO consumers; recorded in the cut notes.
 
-> **BB.W-METAL-SHIMMER — the `@keyframes gold-shimmer-slide` RETIRED onto the
-> metal-PARAMETERIZED `@keyframes metal-shimmer-sweep`. Clean break, no alias ("No
-> legacy code").** The gold-only shimmer keyframe generalized into ONE metal-agnostic
-> position sweep (reading a `--metal-shimmer-color` channel + the `--metal-stop-*`
-> slots the recipe binds per-metal), so the bronze quad (the third brand metal) + the
-> gold + silver registers all share ONE keyframe. Two notes:
->
-> 1. **`@keyframes gold-shimmer-slide` is GONE** — the keyframe NAME is removed (no
->    alias). The `.gold-shimmer` CLASS is PRESERVED (it re-points onto
->    `metal-shimmer-sweep` with `--metal-shimmer-color: gold`; the gold gradient stops +
->    `background-size`/`background-clip` + the PRM bracket are byte-identical — the gold
->    READ is UNCHANGED). The `--animate-gold-shimmer` token is PRESERVED (re-pointed onto
->    `metal-shimmer-sweep`). MIGRATE only if a consumer referenced `gold-shimmer-slide`
->    BY NAME in a hand-rolled `animation:` rule → `animation: metal-shimmer-sweep …`.
->    No consumer that composed the `.gold-shimmer` class or read `--animate-gold-shimmer`
->    changes.
-> 2. **NEW additive surface (no break).** The bronze quad (`--bronze`/`-light`/`-dark`/
->    `-deep` + `--color-bronze*`, the third brand metal on the W-NO-GRAY exception), the
->    `--duration-metal: 6s` slow clock, and the `.metal-{gold,silver,bronze}` /
->    `.metal-*-border` / `.metal-rainbow-rim` utilities are all ADDITIVE — a consumer
->    opts in by composing a `.metal-*` class. The `.metal-rainbow-rim` composes
->    W-GLASS-ACCENT's `--glass-accent` rim seam.
+**BG.W-GRID-AFFINE — `PaperGrid` (the viz) RENAMED to `LiquidGrid`; `/paper-grid` →
+`/liquid-grid`. Clean break, no alias ("No legacy code").** The WebGPU-first liquid AA-grid
+viz + its subpath are renamed to kill the live homonym with the STATIC `.paper-grid` /
+`--paper-grid-texture` geometric-paper CARD register (`cards.css` / `scale-paper.css`), which
+is BYTE-UNTOUCHED — the homonym dies on the VIZ side only. MIGRATE (one-line rename per call
+site):
+- `import { PaperGrid, DEFAULT_PAPER_GRID_CONFIG } from "@mkbabb/glass-ui/paper-grid"`
+  → `import { LiquidGrid, DEFAULT_LIQUID_GRID_CONFIG } from "@mkbabb/glass-ui/liquid-grid"`.
+- `<PaperGrid …>` → `<LiquidGrid …>`; `PaperGridConfig` → `LiquidGridConfig` (the `/api`
+  discovery type); `usePaperGrid` → `useLiquidGrid`; `samplePaperGrid` → `sampleLiquidGrid`;
+  the demo route `/substrates/paper-grid` → `/substrates/liquid-grid`.
+- The `.paper-grid-wrapper`/`.paper-grid-canvas` scoped SFC classes → `.liquid-grid-*`
+  (internal — no consumer surface). Zero external consumers verified — no by-name cross-repo
+  ask owed. The prop schema is otherwise unchanged, EXCEPT the retired per-cell `shearMax`
+  config field (the affine sheet-warp is shear-free — a `shearMax` set on a config object is a
+  dead field; drop it).
+- **The mechanism changed too (paint, not API):** the ripple is now a SMOOTH continuous
+  AFFINE sheet-warp (`waveFlow`, the SAME warp Concentric reads) — major gridlines bow/shear as
+  ONE coherent curve, cells near-parallelogram — instead of the retired per-cell `cellTwist`
+  (which kinked each box about its own center). No consumer action; the surface reads better.
 
-> **v2.0.0 (AI.W1 R3)**—the motion composables move off the root barrel to
-> the new `@mkbabb/glass-ui/motion` flat subpath, closing the
-> AI-CARRY-GLASS-UI-KEYFRAMES-EDGE 4-tranche chronic. See the **v2.0.0**
-> section below for the full symbol list + codemod hints. Same SCC-trap
-> closure shape as L.W1 Lane C — different heavy peer
-> (`@mkbabb/keyframes.js` instead of `@vueuse/core`).
+**BH.W-MOTION-AXIS — the four-boolean motion scatter → the ONE `motion` axis. Clean
+break, no alias ("No legacy code").** The `draggable` / `pressable` / `spring` /
+`liquidDrag` booleans (7 prop instances across 6 SFCs — `Card` · `Slider` ·
+`DialogContent` · `SheetContent` · `SegmentedTabs` · `DockLayerGroup`) are COLLAPSED onto
+a single `motion?: "full" | "reduced" | "off"` axis (default `full` — physics is the
+DEFAULT, the axis is an opt-DOWN per the liquid-weight-universal law). `motion="reduced"`
+degrades the JS gesture physics to their CSS floor (the same state `prefers-reduced-motion`
+produces); `motion="off"` unbinds the enrichment AND writes `--motion-weight: 0` (the
+functional interaction — click/keyboard/drag-handle — stays). PRM forces `full → reduced`
+regardless (a11y absolute).
+- **`<SegmentedTabs draggable>` / `<DockLayerGroup draggable>` → the `motion="full"`
+  DEFAULT.** The drag is now the DEFAULT (a click-only strip opts DOWN with
+  `motion="reduced"`). DockLayerGroup's drag flips default-ON (the boolean defaulted
+  `false`) — the pull is an enrichment over the always-present click/keyboard model write.
+- **`<Card pressable>` → interactivity + `motion`.** A Card presses IFF it renders
+  interactive (`as="button"` / `as="a"` / `href` / `role="button"` on the root) AND
+  `motion !== "off"`. MIGRATE: a former `<Card pressable @click>` becomes
+  `<Card as="button" @click>` (a static plate never presses — the derivation, not a
+  default). A former `<Card pressable="false">` is a bare `<Card>` (already static).
+- **`<Slider liquidDrag>` → `motion`.** `liquidDrag="false"` → `motion="reduced"` (or
+  `"off"`); the default `full` is byte-identical to the prior `liquidDrag: true`.
+- **`<DialogContent spring>` / `<SheetContent spring>` → `springPreset` + `motion`.** The
+  `spring` boolean carried BOTH the on/off AND the preset; it splits: `springPreset?:
+  "smooth" | "snappy" | "bouncy" | "gentle"` is the curve choice (a distinct concern from
+  motion intensity), and `motion` gates the engine. `spring={true}` → `springPreset="smooth"`;
+  `spring="bouncy"` → `springPreset="bouncy"`; unset `spring` → unset `springPreset` (the
+  `.glass-reveal` / `sheet-animate` CSS floor, byte-identical). Sheet's `dragDismiss` now
+  engages the spring engine on its own (it needs it) — it no longer requires `spring`.
+- **The kept gesture CONTRACTS are UNTOUCHED** (`keepDockOpen` · `dragDismiss` ·
+  `responsive`) — a gesture contract is a role/behavior, not motion intensity.
+Machine-locked by `proof:encapsulation` · `motion-axis` arm (M1-M6).
+
+**BG.W-DEAD-SWEEP — the `selectableChipVariants` alias + the `--corner-shape-card`/
+`-pill` dead tokens SWEPT. Clean break, no alias ("No legacy code").** Two net-negative
+cuts:
+- **`selectableChipVariants` → `chipVariants`, `SelectableChipVariants` → `ChipVariants`.**
+  The `selectableChipVariants.ts` re-point shim (a self-admitted back-compat rename over
+  the ONE congruent `chipVariants` recipe — BD.W-CHIP-CONGRUENT-GLASS) is DELETED. The
+  `@mkbabb/glass-ui/selectable-chip` subpath now exports `chipVariants` (value) +
+  `ChipVariants` (type); `@mkbabb/glass-ui/api` exports the `ChipVariants` type (was
+  `SelectableChipVariants`). MIGRATE: rename `selectableChipVariants` → `chipVariants`
+  and `SelectableChipVariants` → `ChipVariants` at each import site (the recipe body is
+  byte-identical — it always WAS `chipVariants` under the alias). `<SelectableChip>`
+  itself is unchanged.
+- **`--corner-shape-card` / `--corner-shape-pill` DELETED.** They were dead `round`
+  no-op knobs (zero `var()` readers; the CSS `corner-shape` INITIAL VALUE is `round`, so
+  a card/pill with no declaration is already round). The "cards/pills stay round" policy
+  is UNCHANGED — glass.css writes no `corner-shape` on `.glass-card`/`.glass-btn`/
+  `.btn-pill`, so they inherit the round default (the CARD-REHOMED policy). The SQUIRCLE
+  members `--corner-shape-{bigdock,dialog,sheet,panel,hero}` are LIVE and untouched.
+  MIGRATE: a consumer who was re-pointing `--corner-shape-card`/`-pill` mints the alias
+  itself and adds the surface to `glass/squircle.css`'s `@supports` block (presets-in-
+  consumers). `proof:squircle-language`'s policy clause is re-pointed onto the NEGATIVE
+  GUARD — a re-mint of either token reds (the net-negative cannot silently reverse).
+
+**BG.W-DOCK-CAP-SCROLL-FADE — the `<GlassDock overflow="scroll">` opt-in RETIRED.
+Clean break, no alias ("No legacy code").** The `overflow` prop is now
+`"grow" | "wrap"` (the `"scroll"` member is GONE). A capped dock axis is
+INTRINSICALLY a scroll axis, no opt-in: a HORIZONTAL dock scrolls its over-cap
+inline content whenever the row exceeds `--dock-max-inline-size` (the intrinsic
+`.dock-scroll-x` port; under the cap nothing scrolls), and a VERTICAL rail scrolls
+its over-cap block content whenever it exceeds `--dock-max-block-size` (the
+unconditional cap-derived shell rule; the `.dock-scroll-y` opt-in class is
+retired). The scroll port's CROSS axis is now `overflow-*: clip` +
+`overflow-clip-margin: var(--dock-control-safe-inset)` (the mechanically-honest
+un-clip — the prior `overflow-*: visible` pin was a latent no-op that CSS Overflow
+§3 computed to `auto`), and the over-cap edge feathers via the `<FadingScroll>`
+`--fade-scroll-width` mask seam (the liquid-weight soft edge). MIGRATE: drop any
+`overflow="scroll"` prop — a capped dock scrolls by construction; set
+`--dock-max-block-size` / `--dock-max-inline-size` per-instance to anchor the cap.
+Machine-locked by `proof:dock-plate-clearance` (W2 re-pointed onto the `clip` +
+`overflow-clip-margin` un-clip + the `.dock-scroll-y`-retired assert + a self-test
+bite).
+
+## 4.1.0
+
+**BC.W-VIZ-FOURIER — the Canvas2D fourier renderer + the three-view split RETIRED
+onto the WebGPU-first `useFourierField`. Clean break, no alias ("No legacy code").**
+The fourier surface — three views (`fourier-field.vue` + the foreground
+`fourier-studio.vue` over `FourierStudioStage.vue`) on a Canvas2D renderer the §E
+"WebGPU everywhere, no canvas" mandate forbids — COLLAPSES to ONE GPU view and
+MIGRATES off Canvas2D onto the WGSL-primary GPU substrate (`createGpuSubstrate`,
+`setupWGPU` + `setupGL`). **The demo `fourier-studio.vue` + `FourierStudioStage.vue`
+are DELETED** (the studio's controllable-clock/N-harmonics/epicycle/ℱ-trace axes fold
+into the ONE merged `fourier-field.vue` view; no alias). The Canvas2D-era gates
+`proof:fourier-field-intensity` / `proof:fourier-studio` /
+`proof:fourier-field-visibility-live` retired with the Canvas2D render they asserted
+(the flat-alpha/quadratic intensity model + the phosphor-comet canvas readback are
+gone); the new `proof:fourier-field` (U1 ONE-merged-view + the deleted SFCs ABSENT, U2
+WGSL-primary-no-Canvas2D, U3 the ONE math source round-trip) is their successor. No
+public-prop break — `<FourierField>` keeps its `ConstellationProps`-shaped contract;
+only the demo studio split + the Canvas2D substrate are retired. MIGRATE: none for a
+library consumer (the public `<FourierField>` surface is unchanged); the demo studio
+route folds into the merged view.
+
+**BC.W-VIZ-CONSTELLATION — the Canvas2D `drawOverlay` frozen-`now` handoff gate
+`proof:constellation-freeze-live` RETIRED with the migration. Clean break, no alias.**
+The constellation re-homes off the Canvas2D substrate (the low-res `ctx.arc()` discs +
+the 2D `drawOverlay` skin seam) onto the WebGPU instanced-points+lines substrate
+(`createGpuSubstrate`); the `drawOverlay` overlay-painter seam is INERT post-migration
+(the lattice renders on the GPU, not a 2D context, so the render loop never invokes
+`drawOverlay`). `proof:constellation-freeze-live` measured the `drawOverlay`
+frozen-`now` handoff — a Canvas2D-era internal the GPU re-home deleted — so it retired;
+the SURVIVING field-freeze determinism (under `prefers-reduced-motion` two frames are
+IDENTICAL) is covered by the new `tests-visual/constellation.spec.ts` PRM-freeze π.
+`drawOverlay` stays a public `ConstellationProps` prop (a consumer-skin seam) but is
+no longer painted by the built-in GPU loop. The new `proof:viz-constellation` (C1 no
+Canvas2D / `constellationDraw.ts` DELETED, C2 crisp SDF circle, C3 instanced quads, C4
+the ONE math source) is the migration's source gate. MIGRATE: none for a library
+consumer.
+
+**BC.W-RADIO-FIX / Band 6 — `<Button variant="solid">` RETIRED (clean break, no
+alias, "No legacy code").** The `solid` variant was a back-compat escape hatch (the
+previous default's opaque `bg-primary` fill, "so consumers can still get the solid
+look") — unused in-repo and at odds with the glass-first identity. MIGRATE: the
+default `<Button>` is the glass register; for a loud CTA use `variant="accent"` (the
+gold-tint-on-glass). This flips `proof:no-shadcn-default` fully GREEN (the last
+shadcn-neutral surface-fill residual removed). The `default`/`outline`/`secondary`/
+`accent`/`ghost`/`destructive` variants are unchanged.
+
+**BC.W-DOCK-STACK-RAIL — `<DockRail>` + `DockRailItem` RETIRED onto the macOS
+hover-expand `<DockStack>` + `DockStackItem`. Clean break, no alias ("No legacy
+code").** The AZ.W-RAIL3 divider-carousel rail (a floating strip of detached glass
+chips on a connective hairline at a measured `<DockSeparator>` seam) CONTRADICTED the
+verbatim macOS-stack ask, so it is rebuilt from scratch as the stack: a core anchor
+item whose N members FAN OUT next to the rail on hover/focus (3 configurable + scrollable
+n-stack via `<FadingScroll>`), extending beyond the dock edge into its own gutter so it
+clears `<main>` BY TOPOLOGY. **`DockRail` + `DockRailItem` are GONE from
+`@mkbabb/glass-ui/dock`** (the export names + the SFC `DockRail.vue` + the
+`src/styles/dock/rail-extend.css` chip partial + the `measureSeam` /
+`--dock-rail-seam-offset` seam-locator all DELETED, no alias). MIGRATE: `<DockRail
+v-model:context :items>` → `<DockStack v-model:selected :items>` (`DockRailItem` →
+`DockStackItem = { id, label, icon?, onSelect? }`); the in-dock-`<DockLayerGroup>`
+contextual pattern stays the route-keyed seam — only its render target is the stack rail
+(demo-only; no library API there). Machine-locked by `proof:dock-stack-rail` (S1 asserts
+the divider-carousel DEFINITION-ABSENT; S2-S6 own the new `<DockStack>` seat / fan-out /
+overflow / topology / one-registry). The `proof:rail3` gate retired with it; the
+SECTION-GROUPING half of `proof:dock-sections` (S1 the `<DockSection>` zones + S4 the
+shell adoption) stays GREEN.
+
+ADDITIVE (4.1.0): `@mkbabb/glass-ui/border-progress` — `<BorderProgress>`, the masked-conic
+border-ring primitive (progress IS the element's border; BB.W-BORDER-PROGRESS). A net-new public
+subpath (off the root barrel); no retirement, no break. The speedtest AW.W7 consumer binds it on `^4.1.0`.
+
+ADDITIVE (4.1.0): `--instrument-dial-min-block-size-desktop` (BB.W-DESKTOP-RESERVE) — the wide-axis
+(desktop) chassis dial reserve now ships in the library (`@container chassis (min-width: 45rem)` on
+`.instrument-dial`, default `var(--chassis-max-block-size)`). A consumer that authored a local wide-axis
+reserve interim (e.g. speedtest's `.instrument-dial { min-block-size: var(--chassis-max-block-size) }`,
+AW.W4.1) DELETES it on consume — byte-equivalent at the default; retune via the token if the meter block-size differs.
+
+CANONICALIZED (4.1.0): `--glass-opacity-{tier}` per-tier alpha — documented + gated (BB.W-CARD-TIER-ALPHA); values byte-unchanged, a consumer that re-pinned the same tier alphas (e.g. speedtest register.css) deletes its override on consume.
+
+ADDITIVE (4.1.0): aurora `warpMode` gains `"curl"` — the Bridson curl-noise flow warp (opt-in; the default fbm/cellular/hybrid render byte-identical). The published `WarpMode` union widens additively; no break (BB.B1).
+
+ADDITIVE (4.1.0, BB.W-SURFACE-AXIS-COMPLETE): the shared `Surface = "glass" | "veil" | "opaque"`
+axis reaches the last two surfaces R8-12 named verbatim — `<Toast>` and `<Button>` each gain a
+`surface` prop (the Card-`surface`-gains-`veil` precedent). `<Toast surface="glass">` (the default,
+byte-identical to today's `glass-floating` plate) composes WITH the `variant` tone arm — the
+feedback-tone tint rides ON the resolved surface, orthogonal to the {glass·veil·opaque} decoration.
+`<Button surface=…>` defaults UNSET (the `variant` axis owns Button's default); `surface="opaque"`
+and the `solid` variant are the same `--glass-level:0` endpoint reached from two axes (NOT
+duplicated recipes). No break for either.
+
+**ADDITIVE (4.1.0, BB.W-ON-GLASS-FG) — the surface-aware FOREGROUND register (the dark-theme
+whisper collapse closed).** glass-ui mints a THREE-RUNG on-glass foreground family whose
+contrast TARGET is the COMPOSITED content-tier glass FILL, not the canvas: `--on-glass-muted`
+(+ `--on-glass-muted-strong`), `--input-on-glass`, and `--progress-track-on-glass`. The
+glass-first MAXIMAL default (AX.W54) makes a caption/well/track over a TRANSLUCENT glass plate
+the common case, where the canvas-calibrated `--muted-foreground` (= `--neutral-5`, "AA vs
+page") COLLAPSED on its own surface (1.15-3.29:1 measured in dark theme). The calm-light content
+tiers (`.glass-card`/`.glass-resting`/`.glass-quiet`/`.glass-wash`) now re-point
+`--muted-foreground` → `--on-glass-muted` (+ the `-strong` twin) BESIDE the BA adaptive-glass
+seam (the THIRD state — between page-muted and the bright-bucket full ink; legible-AND-subordinate),
+so every `text-muted-foreground` caption + CardDescription inherits the on-glass rung with ZERO
+per-site edit. Input/Textarea wells read `--input-on-glass`; the Progress default/gradient track
+reads `--progress-track-on-glass`. No break, no rename — the page-muted register
+(`--muted-foreground: var(--neutral-5)`) is UNTOUCHED for the opaque-canvas case.
+
+CONSUMER-INTERIM DELETION (the ≥2-consumer law closed): a consumer that hand-re-declared
+`--muted-foreground` over glass — the slides `deck.css §1` `--muted-foreground`/`-strong`
+override, the speedtest WG (secondary-text + value-plate) + WV1 (survey-seat) interims — DELETES
+its override on the `^4.1.0` re-pin and INHERITS the library on-glass register. The override that
+PROVED the fix retires onto the root.
+
+**BB.W-METAL-SHIMMER — the `@keyframes gold-shimmer-slide` RETIRED onto the
+metal-PARAMETERIZED `@keyframes metal-shimmer-sweep`. Clean break, no alias ("No
+legacy code").** The gold-only shimmer keyframe generalized into ONE metal-agnostic
+position sweep (reading a `--metal-shimmer-color` channel + the `--metal-stop-*`
+slots the recipe binds per-metal), so the bronze quad (the third brand metal) + the
+gold + silver registers all share ONE keyframe. Two notes:
+
+1. **`@keyframes gold-shimmer-slide` is GONE** — the keyframe NAME is removed (no
+   alias). The `.gold-shimmer` CLASS is PRESERVED (it re-points onto
+   `metal-shimmer-sweep` with `--metal-shimmer-color: gold`; the gold gradient stops +
+   `background-size`/`background-clip` + the PRM bracket are byte-identical — the gold
+   READ is UNCHANGED). The `--animate-gold-shimmer` token is PRESERVED (re-pointed onto
+   `metal-shimmer-sweep`). MIGRATE only if a consumer referenced `gold-shimmer-slide`
+   BY NAME in a hand-rolled `animation:` rule → `animation: metal-shimmer-sweep …`.
+   No consumer that composed the `.gold-shimmer` class or read `--animate-gold-shimmer`
+   changes.
+2. **NEW additive surface (no break).** The bronze quad (`--bronze`/`-light`/`-dark`/
+   `-deep` + `--color-bronze*`, the third brand metal on the W-NO-GRAY exception), the
+   `--duration-metal: 6s` slow clock, and the `.metal-{gold,silver,bronze}` /
+   `.metal-*-border` / `.metal-rainbow-rim` utilities are all ADDITIVE — a consumer
+   opts in by composing a `.metal-*` class. The `.metal-rainbow-rim` composes
+   W-GLASS-ACCENT's `--glass-accent` rim seam.
+
+## 4.0.0
+
+**BA.W-TABS — the tab family standardized on ONE engine, TWO materials. Clean
+break, no alias ("No legacy code").** `SegmentedTabs` is now ONE engine with TWO
+MATERIALS (`variant: "pill" | "underline"`) and ONE orientation axis
+(`orientation: "horizontal" | "vertical"`). Four retirements:
+
+1. **`variant="segmented"` → `variant="pill"` (the DEFAULT now).** Segmented and
+   pill were one register; the user kept "pill" by name. `pill` is the glass
+   material — a glass-quiet track + the selected-reads-as-glass (`--glass-bg-floating`)
+   indicator, no gray. MIGRATE: drop the `variant="segmented"` prop (it re-defaults
+   to `pill`) or rename it to `variant="pill"`. A `<SegmentedTabs>` with no `variant`
+   now paints the glass pill.
+2. **`overflow="scroll" / "auto"` axis RETIRED.** Overflow is `<FadingScroll>`'s job
+   (`@mkbabb/glass-ui/fading-scroll`) at the consumer's own level, not an in-tabs
+   scroller. MIGRATE: wrap the strip in `<FadingScroll>` or apply `useFadingScroll`
+   where a genuinely-overflowing tab row needs an edge fade (the common ≤4-tab case
+   needs none).
+3. **`:multi-select` RE-HOMED to `<ToggleGroup>`.** A multi-pressed strip (N
+   independent toggles on one surface, `role="group"`) IS a ToggleGroup, not a tab
+   family member. MIGRATE: `<SegmentedTabs :multi-select>` →
+   `<ToggleGroup type="multiple">` (the IG-B2 glass-track register). The single-select
+   string model replaces the prior `string | string[]` union.
+4. **`ui/Tabs` (the reka wrapper family: `Tabs`/`TabsList`/`TabsTrigger`/`TabsContent`/`TabsIndicator`)
+   LEFT the public surface.** It is no longer re-exported from `@mkbabb/glass-ui` or
+   `@mkbabb/glass-ui/<ui-tabs>`. The standardized family is `SegmentedTabs`
+   (`@mkbabb/glass-ui/tabs`). MIGRATE a hand-rolled `ui/Tabs` recipe to the matching
+   `<SegmentedTabs variant="…">` material. (The reka substrate files remain INTERNAL
+   solely for the dock-rail consumer `DockLayerGroup` — they are not a consumer
+   surface.) The `indicator`/`surface` default-ON baked-plate that painted the R10-2
+   oval blob dies with the public surface.
+
+**External migration re-issue (the AY W-CONSUMER ledger, re-stamped at this SHA).**
+The 5 DEFERRED external rows (fourier-analysis/web 3× `UnderlineTabs`, words/frontend
+2× `BouncyToggle`) re-target the standardized API: `UnderlineTabs` →
+`<SegmentedTabs variant="underline">` (the paper material, panel-nav `role="tablist"`);
+`BouncyToggle` → `<SegmentedTabs>` (the default pill material — the named-good glass
+register). The receiver contract is PRESERVED — `:options` / `:model-value` /
+`@update:model-value` + `variant` are unchanged across the standardization, so the
+drop-in swap the ledger promises still holds; the `proof:consumer-staleness` allowlist
+re-stamps (those rows carry their `{receiver-wave, close-gate}` terminals in the
+consumer's own tranche). The `proof:tabs-unified` gate retired-with-re-point onto
+`proof:tabs-std`.
+
+**CALLER HAZARD (next cut, BA.W-DEMO-AFFORDANCES) — never stack `.glass-btn` + `.btn-pill`.**
+The two button size registers are MUTUALLY EXCLUSIVE: `.glass-btn` is the
+FIXED-square icon primitive (`width/height: var(--size-icon-btn)` + `contain:paint`),
+`.btn-pill` is the CONTENT-WIDTH text pill. Stacked on one element the fixed square
+wins and `contain:paint` clips a wrapped text label into a ~40px blob (the R8-17
+defect). A text-bearing `.glass-btn` (an icon button carrying a text child) collapses
+the same way even without `.btn-pill`. MIGRATE: for a play/replay or text-bearing
+affordance reach for a real `<Button>` with a leading Lucide glyph (the content-width
+pill), never an icon-button primitive carrying text. No library recipe changes — the
+`.glass-btn`/`.btn-pill` recipes are untouched; this is a caller-side hazard the new
+`proof:demo-affordances` gate machine-locks (W1: no class co-occurrence, no text-bearing
+icon button across `demo/**` + the `src/styles/**` recipes).
+
+**CLEAN BREAK (next cut, BA.W-SURFACE-AXIS) — Dialog `variant` → the shared `surface` axis.**
+`<DialogContent variant="glass|opaque">` is RETIRED onto the ONE shared
+`{glass·veil·opaque}` surface-decoration axis: `<DialogContent surface="glass|veil|opaque">`
+(no alias — the prior `variant` was Dialog-local and never matched the Card grammar). Migrate
+per call site: `variant="glass"` → `surface="glass"` (also the new default), `variant="opaque"`
+→ `surface="opaque"`; the `veil` rung is gained for free. The painted output for the `glass`
+and `opaque` rungs is byte-identical (the same `glass-floating` / `.glass-opaque` material,
+now reached through the shared resolver).
+
+ADDITIVE (next cut, BA.W-SURFACE-AXIS): the shared `Surface = "glass" | "veil" | "opaque"` axis
+(published on `@mkbabb/glass-ui/api`) reaches the whole content/floating band — `GlassPanel`,
+`Sheet`, `Popover`, `Command`, `Drawer`, and `ExpandableContainer` each gain a `surface` prop
+(default `"glass"`, byte-compatible). `<Skeleton>` gains a `surface?: "glass" | "opaque"` prop
+(default `"opaque"`, byte-identical to today's `bg-muted`); `surface="glass"` is the NEW
+over-glass register (a translucent `--skeleton-glass-bg` block that lets a frosted plate read
+through). The `ExpandableContainer` fullscreen overlay now un-walls onto the overlay glass tier
+by default (`surface="opaque"` restores the prior solid wall). No break for any of these.
+
+**RENDERED-BEHAVIOUR (next cut, BA.W-EMISSION) — the Select bound + the Slider size axis
+now actually PAINT in every consumer.** No API rename — these are EMISSION fixes (the
+structural utilities ship as precompiled CSS instead of dead arbitrary-bracket classes a
+consumer's content-scan never reached). Three rendered changes a consumer SEES on the bump:
+(1) `<SelectContent>` now BOUNDS its content to `min(24rem, 60dvh)` tightened by
+`--reka-popper-available-height` with inner `overflow-y: auto` — a tall (16-item-class)
+dropdown that previously overflowed the viewport now bottoms INSIDE it and scrolls within
+(override the cap via `--select-content-max-h` on any ancestor). (2) `<Slider size="md">`
+(and `sm`/`lg`) now renders its REAL track geometry (`md` ≈ 20px / 1.25rem) — the `size`
+prop was previously INERT in consumers (fell back to the 6px track); a consumer relying on
+that broken 6px-regardless behaviour will now see the correct sized track. (3) glass-ui's
+own `@source` directive (for a consumer re-importing the `/styles` cascade) re-points
+`"../components"` → `"../*.js"` so it reaches the compiled `dist/*.js` chunks — a consumer
+that copied glass-ui's `@source` line verbatim should ensure THEIR `@source` points at the
+installed `dist` (per the consumer-wiring section), unchanged guidance.
+
+ADDITIVE (next cut, BA.W-EMISSION): `<WatercolorDot>` gains a `variant?: "solid" | "ghost"`
+prop (default `"solid"`, byte-compatible). `variant="ghost"` renders the SAME seeded blob
+silhouette as a STROKE (a `color` border over a low-alpha fill) — the empty-palette-slot
+affordance, NOT a CSS dashed rectangle. No break.
+
+**BA.W-PAGER — `CarouselDots` RETIRED onto `<PagerDots>` + the counter re-registers
+off `bg-card`. Clean break, no alias ("No legacy code").** The carousel dots and the
+slides deck `DeckPager` were ALREADY one register; BA.W-PAGER harvests that into ONE
+primitive — `<PagerDots>` (`@mkbabb/glass-ui/pager-dots`), encapsulated in a glass pager
+pill. Two breaks:
+
+1. **`CarouselDots` → `<PagerDots>` (clean break).** `CarouselDots` is GONE from the
+   `/carousel` barrel (it auto-wired the embla API via `useCarousel()` inject).
+   `<PagerDots>` is standalone — wire `:count`, `:active` (`v-model:active`), and
+   `@select`/`scrollTo` to the embla API explicitly. MIGRATE: `<CarouselDots />` →
+   `<PagerDots :count="api.scrollSnapList().length" :active="api.selectedScrollSnap()"
+   @select="(i) => api.scrollTo(i)" />`. The pip anatomy (24px hit-box, 6px pip,
+   elongate-on-active, the `--foreground` 52%/72%/full register) is IDENTICAL — the dots
+   look the same; they now read a `--pager-dot-*` token set (retint the active fill via
+   `--pager-dot-active`) and sit in the `.glass-pager-ring` chassis by default
+   (`ring="false"` for a flush-on-an-ambient-glass-host deck). `windowFit?` generalizes
+   the DeckPager dock-gutter windowing (off by default).
+2. **The `<CarouselPager>` counter is off the opaque `bg-card` ring.** The counter
+   `<span>` now composes `.glass-pager-ring` (the glass-floating pill) instead of
+   `rounded-pill border border-border bg-card` — the dark `rgb(28,25,23)` slab dies.
+   No consumer change (the counter is internal to `<CarouselPager>`); a consumer that
+   hand-overrode the counter's `bg-card` re-points to the glass ring.
+
+**BA.W-HANDMARK — `GlassUnderline` + the `/underline` subpath RETIRED onto
+`<HandMark shape="underline">`. Clean break, no alias (DEC-8 outcome 1).** The d6
+hand-voice family re-landed on `@mkbabb/glass-ui/handmark` (`<HandMark>` / `<InkMark>`
++ the flat `BRUSHES` continuum + the pure L1–L3 stages), and the editorial underline
+is now ONE shape of that ONE hand voice — not a parallel component. Two breaks:
+
+1. **`@mkbabb/glass-ui/underline` (`<GlassUnderline>`) is GONE.** The `/underline`
+   subpath + the `GlassUnderline*` types are removed from the surface (no alias, per
+   the no-backwards-compat invariant). MIGRATE: `import { GlassUnderline } from
+   "@mkbabb/glass-ui/underline"` → `import { HandMark } from
+   "@mkbabb/glass-ui/handmark"`; `<GlassUnderline>word</GlassUnderline>` →
+   `<HandMark shape="underline">word</HandMark>`. The editorial draw-on underline is
+   `<HandMark shape="underline" animation="draw-on">`; the natural pencil-boil
+   morphology (scale-relative amplitude, irregular seeded periods) is the `boil`
+   brush (`<HandMark brush="boil" shape="underline">`). The default `pen` brush is a
+   clean wobbled line, `grain:0`, no extra dep.
+2. **New optional peers (vendored/peer split).** `<HandMark>` adds two OPTIONAL peers:
+   `@mkbabb/pencil-boil ^0.4.1` (the L1 wobble geometry — imported only when a wobble
+   paints) and `perfect-freehand ^1.2.3` (the variable-width hull body — VENDORED into
+   `freehand.ts`, declared as an optional peer for provenance, touched only by the
+   `ribbon:"hull"` highlighter). Both are tree-shaken when unused; a `pen`-only
+   consumer pulls neither. The `/handmark` chunk is ≈7.6 KiB-gzip (the `profile:budget`
+   rebaseline records it + the engaged pf hull body).
+
+**This row is for any FUTURE external `/underline` consumer — NOT slides.** The
+2026-06-15 slides ground-truth (BINDING) confirms slides imports ZERO
+`@mkbabb/glass-ui/underline` / `GlassUnderline`: its `SlideIntro`/`SlideCloser` red
+pen-underlines are deck-LOCAL CSS/SVG `::after` glyphs, never the library component.
+The phantom "slides adopt-book break" was the AZ-H6-fold assumption the slides session
+disproved at HEAD `c943a49`; there is no slides edit on this fold.
+
+## 3.13.0
+
+**AZ.W-REGISTER-IOS — the dock interactive register is DE-RED'd to the iOS
+luminance-lift.** No consumer API rename — this is a TOKEN-knob + demo-preset
+change. The dock SELECTED/hover/active/pressed register at the library ROOT is
+now the iOS-26/27 glass luminance-lift, not a brand-red accent (R3-6). Two NEW
+retint knobs for downstream retinters: `--dock-selected-accent` (the SINGLE knob
+for the selected affordance — defaults to `color-mix(in oklab, var(--foreground)
+14%, transparent)`, a translucent foreground luminance-lift that auto-flips with
+`--foreground`; consumed by the rail leading-edge accent BAR), and
+`--dock-control-press-bg` (the iOS press-darken — `--glass-bg-resting` mixed ~7%
+toward `--foreground`, read on every dock control `:active`). The rail active
+GLYPH + BAR no longer fall back to `var(--dock-rail-active-accent, var(--primary))`;
+the glyph stays warm-ink `--foreground`, the bar paints `--dock-selected-accent`.
+A consumer that previously re-tinted the selected register to a brand hue via
+`--dock-rail-active-accent` should instead set `--dock-selected-accent` (the
+luminance-lift knob) — `--dock-rail-active-accent` is no longer read on the rail
+glyph/bar default. The demo's `--demo-nav-accent: var(--viz-fourier)` NCSU-red
+preset is RETIRED (the demo consumes the neutral root register; presets live in
+the consumer, the library's default is the de-red'd iOS register). Brand red
+survives only as static ink (the ℱ wordmark / data-viz strokes / gold-CTA family).
+Guarded by `proof:register-ios` (a negative predicate that REDs a brand-red
+re-introduction on any interactive selector).
+
+**The published cut is v3.13.0 — there is no 3.11/3.12 entry on the registry.** The
+AZ tranche's breaks (the dock taxonomy + the metric `amount`→`value` rename + the
+constellation generalization + the Card `veil` addition) ALL ship together in the
+published **3.13.0**. The interim `3.11.0/.1/.2 + 3.12.0` registry publishes were
+STALE-LINEAGE out-of-band publishes from a pre-prune tree (they carry the four
+since-retired subpaths and lack `/underline`); the AZ cut SKIPPED them and published
+3.13.0 from master via release.yml provenance so `latest` resolves the true close (AZ
+FINAL §5). A consumer pins **3.13.0** and reads every break below as landing on that one
+release — the number-skip is intentional, the 3.11/3.12 lineage is not the close.
+
+**v3.13.0** — the dock taxonomy clean break (AZ.W-DOCK-TAXONOMY, H2 arm-a):
+`<GlassDock variant="rail">` → `<GlassDock orientation="vertical">` (the `variant`
+discriminant is removed; a vertical dock is now COLLAPSIBLE by default — it morphs its
+`height`; a static nav column adds `always-expanded`). `<GlassDock variant="instrument-strip">`
+is removed (zero live consumers) — compose `<InstrumentChassis>` directly; the speedtest
+`SurveyResultDock` cockpit re-pins on the 3.13.0 adopt.
+
+BREAKING (3.13.0): `<MetricBadge>` / `<MetricPill>` — the primary prop `amount` is renamed
+`value` (the Metric value-core convergence; a valid `0` now renders `0`, never the placeholder).
+Clean break, no alias — speedtest re-points on the bump (`/metric-cell` + `/metric-stack`
+surfaces unchanged).
+
+ADDITIVE (3.13.0): the `/constellation` subpath gains optional default-OFF generalization
+props/exports (pinnedIndex/pinNode, accentEdges, the palette accent/edgeFloor/edgeAccentAlpha,
+stepPinnedDrift, warpAutoRelease + warpSettled) — the protected quintet is byte-compatible.
+
+ADDITIVE (3.13.0): the Card `surface` union gains `"veil"` — the borderless/rimless
+wash-fill text-legibility plate (`--veil-*` knobs, the optional `--veil-feather` mask). No break.
+
+## 3.10.0
+
+**v3.10.0 (AY, NARROWED at AZ.W-PRUNE2)**—two zero-consumer subpaths RETIRED outright (no
+aliases, per the no-backwards-compat invariant): `@mkbabb/glass-ui/deck-progress` +
+`/instrument-rail` (0 production consumers at the census,
+`docs/tranches/AY/audit/PRUNE-LEDGER.md`). `/header-ribbon` + `/glass-panel` were retired
+by the same census and RESTORED at AZ.W-PRUNE2 — the census missed their live keyframes.js
+binary consumer (`docs/consumer-evidence/{header-ribbon,glass-panel}.md`); both ship again.
+A consumer that referenced one composes the equivalent from the surviving
+primitives (`Progress`, `Section`, the `.glass-*` ladder, `InstrumentChassis`).
+NEW subpath: `@mkbabb/glass-ui/underline` (`<GlassUnderline>`) — RETIRED at the BA cut
+onto `<HandMark shape="underline">` (see the BA.W-HANDMARK row above; it never reached
+a real consumer, the 3.11/3.12 publishes were stale-lineage).
+
+## 2.0.0 (AI.W1 R3) — motion subpath surgery
+
+**v2.0.0 (AI.W1 R3)**—the motion composables move off the root barrel to
+the new `@mkbabb/glass-ui/motion` flat subpath, closing the
+AI-CARRY-GLASS-UI-KEYFRAMES-EDGE 4-tranche chronic. See the **v2.0.0**
+section below for the full symbol list + codemod hints. Same SCC-trap
+closure shape as L.W1 Lane C — different heavy peer
+(`@mkbabb/keyframes.js` instead of `@vueuse/core`).
+
+---
 
 v1.0 is the L-tranche cohort release. It freezes the public API and lands four
 architectural transpositions that BREAK v0.9.x consumer shapes:
@@ -2018,3 +2323,4 @@ motion-named SIGNATURE DATA.
 | `useMorphField()` (the weld function + `MorphTier`/`MorphSilhouette`/`MorphFieldRect`/`BodySpec`/`MorphFieldOptions`/`MorphFieldHandle`) | root barrel · `/motion-core` | GUTTED — the weld body had ZERO callers. Its live surface — `MORPH_SIGNATURES` + `MorphSignature`/`MorphSignatureName`/`MorphVector` — MOVES to `composables/motion/morphSignatures.ts` and STAYS on the barrel (byte-identical DATA). |
 
 **Consumer re-pin (`MORPH_SIGNATURES`):** none — the import path is unchanged (the root barrel + `/motion-core` still re-export `MORPH_SIGNATURES` and the three signature types). Only the `useMorphField` function symbol + its function-domain types leave the surface. Machine-locked by `proof:motion` (the DEFINITION-ABSENCE + the gut + the name-collision fence against `proof:liquid-morph`, the DISTINCT BC dock-morph gate).
+

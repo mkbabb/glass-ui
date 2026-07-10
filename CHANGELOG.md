@@ -1,5 +1,48 @@
 # Changelog
 
+## 5.0.0
+
+The joint BG/BH cut — the BG visual-convergence redesign lands with the BH structural
+reshape as one major release, one migration event.
+
+### Breaking
+
+- **The `./api` discovery subpath is folded (the ONLY dropped export key).** Its 203
+  symbols re-home onto their owning subpaths — a pure consumer import-path swap, zero
+  symbol loss (200 were already exported by the owning barrel; the 3 `_shared` orphans —
+  `Surface` → `/card`, `MenuItemVariants` → `/command`, `ControlSize` → `/forms` — add one
+  re-export each). See `MIGRATION.md` `## 5.0.0` for the full 203-row map.
+- **`--ring` → `--focus-ring-color`** — the focus-ring color token renames (clean break,
+  no alias). Consumers rename the reference; a transition-window read is
+  `var(--focus-ring-color, var(--ring))`.
+- **`goo-blob` → `blob`** — the `<GooBlob>` component renames to `<Blob>` and the
+  `@mkbabb/glass-ui/goo-blob` subpath renames to `@mkbabb/glass-ui/blob` (no alias). The
+  `BLOB_CONFIG_*` keys were already `BLOB`-prefixed (stable).
+- **`src/subpaths/` (79 mirror barrels) deleted + the curated flat `src/*.ts` barrels
+  relocate under `src/entries/`** — both source-only and key-preserving (the same
+  `dist/<name>.js` chunk set emits; every published key resolves identically).
+
+### Changed
+
+- **The BG visual-convergence band** — the warm / weighty / liquid iOS-27 redesign: the
+  unified `.glass-capsule` register, the `--motion-weight` governing scalar, the deep-glass
+  and lensing refraction tiers, the dark luminous-transmissive material, the warm-chroma
+  floor, the metal-shimmer triad, and the procedural-viz WebGPU-first suite all land as a
+  paint upgrade with no public-prop break beyond the rows above.
+- **The four-boolean motion scatter → the ONE `motion` axis** — `draggable` / `pressable` /
+  `spring` / `liquidDrag` collapse onto `motion?: "full" | "reduced" | "off"` (default
+  `full`); see the `MIGRATION.md` `## 5.0.0` motion-axis row.
+
+### Fixed
+
+- **The external payload trim** (`7813a695`) — `@lucide/vue` is externalized (removed from
+  the eager bundle graph) and the dead `lucide-vue-next` / `vaul-vue` import strings are
+  deleted with no alias, dropping the root-barrel first-paint payload.
+- **The value.js de-straddle** — the `@mkbabb/value.js` peer floor rides to the single
+  version keyframes' own value dep pins (the broken-singleton identity — no `^0.13 || ^1`
+  straddle survives); `@mkbabb/keyframes.js` moves to the `^5.1.0` floor the shipped
+  `useDragMorph` `snap:` option needs.
+
 ## 4.2.0
 
 ### The BD greenfield hardening wave — the warm / weighty / liquid redesign
@@ -208,154 +251,6 @@ Highlights:
     **W9 supply + Fraunces + component splits (AU.W4/W9/W10, carried).** Button `size="icon-sm"`, Select `size`, Dialog `showClose`, `ConfiguratorLayer dividers`, `darkModeSyncScript()` FOUC, `useGlobalDark({ initialValue })`; the variable Fraunces display face; the ContinuousTimeline + BouncyToggle splits.
 
     **value.js peer (E-valuepeer) — sequencing note.** value.js is `0.10.0` on npm at this cut; the in-tree peer stays `^0.10.0` so installs resolve today. The downstream sequence publishes value.js `0.11.0` first, then the peer bump rides a later cut — a manifest-range precondition, not a runtime change (the blob-color contract is proven bit-identical against value.js's CPU port).
-
-## Unreleased
-
-### Tranche AX.W07 — aurora WGSL black-canvas fix + WebGPU gated-off (KNOWN LIMITATION)
-
-Fixed the two device-proven defects that rendered the aurora WebGPU twin **pure
-black** on every WebGPU-capable machine (the WebGL2 path was always correct and is
-untouched). The WGSL `Uniforms` struct declared the five count/enum fields as `i32`
-while the CPU packed them as floats — so the shader read the IEEE-754 bit-pattern of
-`3.0` (`1077936128`) instead of the count `3`, overflowing the palette ramp index →
-black. AND the dynamically-indexed `palette`/`nucleiPos`/`nucleiMod` arrays lived in a
-`var<uniform>` block, which returns `[0,0,0,0]` for a runtime index on Apple/Metal (MSL
-forbids dynamic indexing of the `constant` address space). The fix lands both in one
-atomic shader-struct rewrite: the count fields are now `f32` + `i32()`-cast in-shader
-(one Float32Array pack path, no Int32Array dual-view), and the arrays move into a new
-`var<storage, read> Field` buffer at `@binding(1)` (always-legal for dynamic indices,
-byte-identical std140 layout). The WebGPU frame seam also inherits the `masterTempo()` +
-`cursor.burst` demand-gate parity the WebGL2 `frameLoop` carries.
-
-**KNOWN LIMITATION — WebGPU is gated OFF by default.** Even unblocked, the WGSL
-single-pass twin is **reduced-parity by design** (isotropic-only nuclei, fbm-only warp,
-no flow/cursor/lighting/mediums/strokes/grain, straight-OKLab palette vs the GLSL OKLCh
-hue-arc). So a WebGPU-capable machine is served the **tested universal WebGL2 path**, not
-the reduced-parity twin — no capable machine silently downgrades. The internal
-`WEBGPU_PARITY` lever (`renderMode.ts`, NOT a consumer prop) is shipped `false`; while it
-is, a capable adapter resolves `"webgl"`. **The restoration wave is AX.W14 (band C ·
-AURORA)** — it owns the `WEBGPU_PARITY` flip, and only for the OPT-IN Kuwahara painterly
-finish over a parity-floor field, never to auto-default a capable machine. New device
-gate `proof:aurora-webgpu-render` (a real `GPUDevice` render + centre-pixel readback —
-the only instrument that catches the black-canvas class; born-RED black at HEAD, GREEN
-non-black after both fixes, device-proven on a real Metal adapter).
-
-### Tranche AV.W12 — legacy-excision + fail-explicit
-
-Excised the silent error-swallows and masking defaults from `src/`, moved the
-`src/api/index.ts` + `src/index.ts` per-version tranche archaeology here (the
-two barrels now carry only their live scope criteria + cherry-pick rationale),
-hoisted the aurora crayon special-case to a peer medium, and sealed the shader
-ID dispatch.
-
-**Fail-explicit dispositions:**
-
--   `useSortable` — the `setPointerCapture` failure is no longer a silent empty
-    `catch`. It surfaces a new `pointerCaptureActive: ComputedRef<boolean>` on
-    the return (false when the drag runs on the document listeners alone) and
-    dev-warns once. KEEP+BEFITTING (capture is an optimization; the document
-    `pointermove`/`pointerup` listeners are the real drag path).
--   `useClipboard` / `copyToClipboard` — the two `catch { return false }` arms
-    now name the failing channel. `UseClipboardOptions` gains
-    `onCopyError(reason)`, the composable `copy()` returns `{ ok, reason }`, and
-    a new `CopyFailureReason` (`'clipboard-api' | 'exec-command' | 'no-api'`) +
-    `CopyResult` ship. The bare `copyToClipboard(text)` keeps its
-    `Promise<boolean>` signature (reporting through `onCopyError`). The
-    `execCommand` arm STAYS (legacy-browser fallback) but is now NAMED + REPORTED.
--   `GooBlob` — the `?? reactive({ ...BLOB_CONFIG_DEFAULTS })` masking default is
-    removed. The config is resolved with the same loud discipline as the
-    `colorResolver` seam: an explicit `config` prop OR an ancestor
-    `provide(BLOB_CONFIG_KEY, …)`. A mount with neither THROWS. A new optional
-    `config?: BlobConfig` prop is the explicit channel (pass `BLOB_CONFIG_DEFAULTS`
-    for the stock look).
--   `useGlobalDark` — a CONFLICTING second `initialValue` seed now THROWS (was a
-    dev-warn-only silent ignore in prod). A matching re-seed stays a no-op.
--   `useAurora` — the deferred-init failure contract is loud: the JSDoc states the
-    three required consumer paths (`onInitError` | Vue `errorHandler` | accept the
-    rejection), `useAurora` dev-warns once when armed deferred with no handler,
-    and the two `try/catch` arms carry fail-explicit sentinels. WebGL2-unavailable
-    still throws hard.
--   `useViewTransition` — the `vt.ready?.catch(() => {})` skip-swallow is KEPT
-    (befitting — it prevents an unhandled `pageerror` on a rapid re-trigger) and
-    annotated with the fail-explicit befitting sentinel.
-
-**Aurora shader / runtime:**
-
--   The crayon medium is hoisted out of `mediumOil()` (its `strokeMode == 2`
-    branch) into a peer `mediumCrayon()` dispatched at `main()` level
-    (`uMedium == 4`), alongside pastel/watercolor/oil. The runtime resolves a
-    `medium: "oil"` + `strokeMode: "crayon"` config to the crayon peer
-    (`resolveMediumId`). Behavior-preserving — the crayon path reads no
-    `uStrokeMode`, so the pixel output is identical.
--   The four `Record<…, number>` ID maps (`MEDIUM_ID`, `FLOW_ID`, `WARP_ID`,
-    `STROKE_MODE_ID`) are now sealed `as const satisfies Record<…>` typed
-    dispatch: a new union member is a compile error until it gets a slot.
-    `crayon` drops out of `STROKE_MODE_ID` (it is a `MEDIUM_ID` peer now).
-
-**Gates:** `proof:fail-explicit` (no un-annotated silent swallow / masking
-default in `src/`) and `proof:no-legacy-commentary` (no tranche-letter / version
-archaeology in the two barrel bodies) registered.
-
-### Per-version `/api` discovery-layer history (moved from `src/api/index.ts`)
-
-The discovery layer (`@mkbabb/glass-ui/api`) accreted these type/constant
-promotions over the v1.0.5 → 3.3.0 arc. The source-file header carried this
-tally; it lives here now, with only the live scope criteria remaining in source.
-
--   **M.W2 Lane B (v1.0.5):** 5 promotions absorbing L-residuals + L.W7 fallout —
-    `GlassPanelVariant`, `ConfiguratorCloneMode`, `TimelineSegment` +
-    `TimelineSegmentGradient` + `TimelineSegmentState`. Surface 32 → 37
-    (33 types + 4 constants).
--   **O.W4 Lane A (v1.2.4 / v1.3.0):** 12 type promotions closing the 3 Rγ /api
-    discovery gaps — Sidebar domain (6: `SidebarState`, `SidebarSection`,
-    `TreeNode`, `TreeIndexEntry`, `SidebarIndexEntry`, `ScrollTrackerOptions`),
-    Search domain (5: `SearchableItem`, `SearchResult`, `FuzzySearchState`,
-    `UseFuzzySearchOptions`, `SearchIndex`), Props/variants triad (3:
-    `GlassPanelProps`, `ToastType`, `MenuItemVariants`). Surface 37 → 49
-    (45 types + 4 constants).
--   **O.W6 Lane A (v1.4.0):** 4 type promotions for the useClipboard + HeaderRibbon
-    primitives (`UseClipboardOptions`, `UseClipboardReturn`, `HeaderRibbonPosition`,
-    `HeaderRibbonProps`). Surface 49 → 53 (49 types + 4 constants).
--   **P.W0 Lane C resync (v1.7.0):** canonical at-HEAD surface 55 (51 types +
-    4 constants). A 2-type bookkeeping drift between the O.W6 running tally and the
-    actual HEAD enumeration surfaced at the P-open Pγ audit; the AB+1 cohort
-    (`AnimatedDigit`, `MetricCell`, `MetricStack`, `ResponsiveTabs`, `MetricRow`)
-    shipped without promoting their Props/variant types — those land at P.W1.
--   **P.W1 Lane A (v1.7.1):** 8 type promotions for the AB+1 cohort — MetricCell
-    (`MetricCellProps` + `MetricCellAppearance`), MetricStack (`MetricStackProps` +
-    `MetricRowProps`), AnimatedDigit (`AnimatedDigitProps` + `AnimatedDigitMode`),
-    `ResponsiveTabsProps`, `StackedIconGroupProps`. Surface 55 → 63
-    (59 types + 4 constants).
--   **P.W2 Lane D (v1.7.2):** 1 type promotion — `UseDockStateReturn`. Surface
-    63 → 64 (60 types + 4 constants).
--   **P.W3 Lane C (v1.8.0):** 2 type promotions — `PaperBackdropProps` +
-    `PaperBackdropFrequency`. Surface 64 → 66 (62 types + 4 constants).
--   **AU.W9 resync (3.3.0):** canonical at-HEAD enumeration 70 (67 types +
-    3 constants). The AQ.W4 / AQ.W5 / AU.W9 waves added 5 type re-exports
-    (`UseUserInvalidAriaOptions`, `UseUserInvalidAriaReturn`, `ViewTransitionResult`,
-    `UseGlobalDarkOptions`, `DarkModeSyncScriptOptions`) without bumping the prose
-    tally, and the "4 constants" figure was a miscount — only 3 value exports ride
-    the layer (`DEFAULT_AURORA_CONFIG`, `MAX_NUCLEI`, `MAX_STOPS`).
-
-### Root-barrel curation history (moved from `src/index.ts`)
-
--   **L.W1 Lane A** closed the vueuse SCC trap (Phase 2; intentional v1.0 break) —
-    the root barrel re-exports each vueuse-free leaf explicitly so Rollup never
-    walks a vueuse-bearing leaf into the root SCC. K.WS Phase 1 (additive subpaths
-    at v0.9.3) did not close the trap because `export * from "./components/ui"`
-    still walked every vueuse-bearing leaf.
--   **L.W1 Lane C** added `src/dark.ts` + `src/keyboard.ts` + `src/carousel.ts`,
-    retiring the nested `composables/dark` + `composables/keyboard` v0.9.x subpaths.
--   **L.W2 Lane B** annotated the custom-package cherry-pick rationale (the
-    acceptance bar + exclusion criteria remain live in source).
--   **AI.W1 R3** retired `composables/motion` from the root barrel (heavy
-    `@mkbabb/keyframes.js` peer); reachable via `@mkbabb/glass-ui/motion`. Closed
-    AI-CARRY-GLASS-UI-KEYFRAMES-EDGE.
--   **AP.W3 R0G-7** relocated `installDarkModeSync` to `/dark` and kept the
-    `motion-core` leaves (keyframes-FREE + vueuse-FREE) off the root walk.
--   **AQ.W5 §Design 3** added the dependency-free `startViewTransition` /
-    `supportsViewTransitions` View-Transitions substrate (broad reach for the
-    cross-repo muster J.W5 coupling; also on `/motion-core`).
 
 ## 3.2.0
 
