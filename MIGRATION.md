@@ -1985,6 +1985,14 @@ material).
 :root { --glass-blur-resting-radius: 12px; }
 ```
 
+This retire ROW is the **bbnf-buddy row-4 by-name-ask witness** of the 5.0.0-BH-B7
+consumer-migration roster (`bbnf-glass-blur-dock-retune-no-op`; `preset.css:230`) —
+the sole in-repo witness now that the sibling-probe gate `proof:retired-token-consumers`
+is KILLED (ruling #3). A consumer overriding `--glass-blur-dock`/`-radius`/`--glass-saturate-dock`
+drops the dead override on its own bump; there is no glass-ui gate probing the sibling
+tree. See `docs/tranches/BH/coordination/asks-and-consumes.md` (row 4) + `proof:crossrepo-asks:bh`
+(the `>=4` covered-floor).
+
 ### `ladder.css` / `shell.css` carves (BG.W-CLOSEFIX-9SITE — no-god-module, no consumer impact)
 
 `glass/ladder.css`'s grain `::after` overlay tail carves into `glass/grain-overlay.css`, and `dock/shell.css`'s
