@@ -17,12 +17,12 @@ import { Slider } from "@glass/components/ui/slider";
 import { Switch } from "@glass/components/ui/switch";
 import { MetricBadge } from "@glass/components/custom/metric-badge";
 import { IconChip } from "@glass/components/custom/icon-chip";
-import StoryHero from "./StoryHero.vue";
+import StoryHero from "../hero/StoryHero.vue";
 import SectionPreviewCard from "./SectionPreviewCard.vue";
-import { findCategory } from "./manifest";
-import { categoryHero, categorySpecimen } from "./category-hero";
-import { heroAuroraConfig } from "./aurora-hero";
-import { warmFieldHue } from "./warm-field";
+import { findCategory } from "../../stories/manifest";
+import { categoryHero, categorySpecimen } from "../hero/category-hero";
+import { heroAuroraConfig } from "../hero/aurora-hero";
+import { warmFieldHue } from "../hero/warm-field";
 
 const route = useRoute();
 

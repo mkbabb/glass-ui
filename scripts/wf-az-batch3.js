@@ -1,6 +1,6 @@
 // AZ Batch 3 dispatch — two stages: A = BLOB-PAGE ‖ MOTION-SUITE ‖ SHELL-IDENTITY,
 // B = BLOB-STUDIO ‖ SHELL-CONFIG. The stage split enforces the shared-write
-// sequences (blob.vue/types.ts: page→studio; demo/layout/*: identity→config)
+// sequences (blob.vue/types.ts: page→studio; demo/shell/*: identity→config)
 // and keeps the parallel width at 3 (the rate-limit lesson).
 export const meta = {
   name: 'az-batch3',
@@ -55,7 +55,7 @@ log('stage A: ' + a.length + '/3')
 phase('StageB')
 const b = (await parallel([
   lane('W-BLOB-STUDIO', 'StageB', '\nSEQUENCED after W-BLOB-PAGE (same-batch shared-write on blob.vue/types.ts — re-grep its landed edits first). The G-PERF numbers are MACHINE-CLASS-PINNED (the M5-Max dev box; no CI arm enforces them) per the orchestrator ruling §X; W-BLOB-GLASS folds in under its ORIGINAL G-PERF + G-BROWSER gates — the uBackdrop refraction ships ONLY if both hold (the user conditional).'),
-  lane('W-SHELL-CONFIG', 'StageB', '\nSEQUENCED after W-SHELL-IDENTITY (shared demo/layout/*). The R3-4 deletions are binding: the composables view REMOVED, the floating PresetEditor FAB REMOVED, the dark-mode toggle FOLDED into the gear configurator (density/ui-scale/glass-level/theme/motion). W-DOCK-CONTEXT landed route-driven shell DockLayerGroups — coordinate, do not regress them.'),
+  lane('W-SHELL-CONFIG', 'StageB', '\nSEQUENCED after W-SHELL-IDENTITY (shared demo/shell/*). The R3-4 deletions are binding: the composables view REMOVED, the floating PresetEditor FAB REMOVED, the dark-mode toggle FOLDED into the gear configurator (density/ui-scale/glass-level/theme/motion). W-DOCK-CONTEXT landed route-driven shell DockLayerGroups — coordinate, do not regress them.'),
 ])).filter(Boolean)
 log('stage B: ' + b.length + '/2')
 return { a, b }

@@ -177,10 +177,10 @@ const SEC = {
     splitChars: "src/components/custom/split-chars/SplitChars.vue",
     schemeMotion: "src/styles/tokens/scheme-motion.css",
     typoUtil: "src/styles/typography/utilities.css",
-    reveal: "demo/stories/useSectionReveal.ts",
-    storySection: "demo/stories/StorySection.vue",
-    storyHeroCss: "demo/stories/story-hero.css",
-    storyPage: "demo/stories/StoryPage.vue",
+    reveal: "demo/chassis/section/useSectionReveal.ts",
+    storySection: "demo/chassis/section/StorySection.vue",
+    storyHeroCss: "demo/chassis/hero/story-hero.css",
+    storyPage: "demo/chassis/page/StoryPage.vue",
 };
 
 // ── The demo-IA-redesign clauses (BG.W-DEMO-IA-REDESIGN — E1-E3). ────────────────
@@ -194,7 +194,7 @@ const SEC = {
 const IA = {
     manifest: "demo/stories/manifest.ts",
     dockStage: "demo/stories/dock/DockStage.vue",
-    heroCss: "demo/stories/story-hero.css",
+    heroCss: "demo/chassis/hero/story-hero.css",
 };
 
 // ── The demo SUB-TYPE taxonomy (BG.W-STORY-PAGE-API — the §4-D restore). ──────────
@@ -302,7 +302,7 @@ const DECISIONS = [
     {
         name: "StoryHeader",
         verdict: "adopt",
-        files: ["demo/stories/StoryHeader.vue"],
+        files: ["demo/chassis/hero/StoryHeader.vue"],
         rationale:
             "The ONE ordered header cluster (eyebrow → subpath → title → blurb, reading order). Live-imported by the StoryPage + StoryHero chassis — the adopted unified page-header.",
     },
@@ -336,6 +336,123 @@ const COMPOSABLE_MOVES = {
             name: "useContextualDockLayers",
             from: "demo/composables/useContextualDockLayers.ts",
             to: "demo/shell/useContextualDockLayers.ts",
+        },
+    ],
+};
+
+// ── The B3-δ34 chassis-colocation move (BH.B3 δ3/δ4). ────────────────────────────
+// The flat `demo/stories/` ROOT chassis kit + the `demo/layout/` app frame + the
+// `demo/presets/` configurator preset-data carried NO colocation grain — the
+// story-kit primitives, the app shell, and the preset data all sat at flat roots
+// off their consumers (the exact defect the colocation edict names). This wave
+// RE-HOMES each into a colocated dir: the story-kit chassis →
+// `demo/chassis/<group>/` (page · hero · section · landing · showcase · code ·
+// play · family), the app frame `layout/` → `shell/` (beside the shell composables
+// δ2 landed), and the configurator preset-data `presets/` → `configurator/presets/`
+// (its ONLY consumers are the configurator preset-editor). Each `to` is
+// DEFINITION-PRESENT after the move and each `from` DEFINITION-ABSENT (a clean move,
+// never a copy that leaves a dual-path husk behind), and the dissolved flat-root
+// dirs (`layout/` · `presets/`) are EXTIRPATED. Born-RED on HEAD (every `to`
+// absent, every `from` present, both dirs live). The CL clauses assert the move is
+// realized + clean + extirpated.
+const COLOCATION = {
+    // the dissolved flat-root dirs — no empty husk may survive (the extirpation edict)
+    dissolvedDirs: ["demo/layout", "demo/presets"],
+    // the ONLY flat file allowed to remain directly under demo/stories/ (the route
+    // manifest — its per-category carve + the ./*/*.vue glob is the δ5/δ6 wave, not
+    // this one). Any OTHER flat chassis .vue/.css at the stories root is a re-drift.
+    storiesRootAllowed: new Set(["manifest.ts"]),
+    moves: [
+        // chassis/page
+        { from: "demo/stories/StoryPage.vue", to: "demo/chassis/page/StoryPage.vue" },
+        // chassis/hero
+        { from: "demo/stories/StoryHero.vue", to: "demo/chassis/hero/StoryHero.vue" },
+        {
+            from: "demo/stories/StoryHeader.vue",
+            to: "demo/chassis/hero/StoryHeader.vue",
+        },
+        {
+            from: "demo/stories/story-hero.css",
+            to: "demo/chassis/hero/story-hero.css",
+        },
+        {
+            from: "demo/stories/aurora-hero.ts",
+            to: "demo/chassis/hero/aurora-hero.ts",
+        },
+        {
+            from: "demo/stories/category-hero.ts",
+            to: "demo/chassis/hero/category-hero.ts",
+        },
+        {
+            from: "demo/stories/warm-field.ts",
+            to: "demo/chassis/hero/warm-field.ts",
+        },
+        { from: "demo/stories/focal.ts", to: "demo/chassis/hero/focal.ts" },
+        // chassis/section
+        {
+            from: "demo/stories/StorySection.vue",
+            to: "demo/chassis/section/StorySection.vue",
+        },
+        {
+            from: "demo/stories/useSectionReveal.ts",
+            to: "demo/chassis/section/useSectionReveal.ts",
+        },
+        // chassis/landing
+        {
+            from: "demo/stories/SectionLanding.vue",
+            to: "demo/chassis/landing/SectionLanding.vue",
+        },
+        {
+            from: "demo/stories/SectionPreviewCard.vue",
+            to: "demo/chassis/landing/SectionPreviewCard.vue",
+        },
+        {
+            from: "demo/stories/vizPreviewStill.ts",
+            to: "demo/chassis/landing/vizPreviewStill.ts",
+        },
+        // chassis/showcase
+        {
+            from: "demo/stories/ShowcaseFrame.vue",
+            to: "demo/chassis/showcase/ShowcaseFrame.vue",
+        },
+        {
+            from: "demo/stories/TokenLadder.vue",
+            to: "demo/chassis/showcase/TokenLadder.vue",
+        },
+        // chassis/code (the BC.W-CODE-BLOCKS two-rung register, colocated)
+        { from: "demo/stories/Code.vue", to: "demo/chassis/code/Code.vue" },
+        { from: "demo/stories/CodeBlock.vue", to: "demo/chassis/code/CodeBlock.vue" },
+        // chassis/play
+        {
+            from: "demo/stories/StoryPlayButton.vue",
+            to: "demo/chassis/play/StoryPlayButton.vue",
+        },
+        // chassis/family
+        {
+            from: "demo/stories/FamilyTabs.vue",
+            to: "demo/chassis/family/FamilyTabs.vue",
+        },
+        {
+            from: "demo/stories/story-nested.ts",
+            to: "demo/chassis/family/story-nested.ts",
+        },
+        // shell (was layout/ + the stories-root dock-layer data)
+        { from: "demo/layout/AppShell.vue", to: "demo/shell/AppShell.vue" },
+        { from: "demo/layout/SidebarDock.vue", to: "demo/shell/SidebarDock.vue" },
+        { from: "demo/layout/BottomDock.vue", to: "demo/shell/BottomDock.vue" },
+        { from: "demo/layout/dock-nav.css", to: "demo/shell/dock-nav.css" },
+        {
+            from: "demo/stories/dock-layer-contexts.ts",
+            to: "demo/shell/dock-layer-contexts.ts",
+        },
+        // configurator/presets (was demo/presets/)
+        {
+            from: "demo/presets/manifest.ts",
+            to: "demo/configurator/presets/manifest.ts",
+        },
+        {
+            from: "demo/presets/neutral.css",
+            to: "demo/configurator/presets/neutral.css",
         },
     ],
 };
@@ -1038,6 +1155,55 @@ function detect(overrides = {}) {
         cdDangles.length === 0,
     );
 
+    // ── CL1/CL2/CL3 — the B3-δ34 chassis-colocation move (BH.B3 δ3/δ4). The flat
+    //    demo/stories/ root chassis kit + demo/layout/ + demo/presets/ re-home into
+    //    colocated dirs (chassis/<group>/ · shell/ · configurator/presets/). Born-RED
+    //    on HEAD (every `to` absent, every `from` present, both flat-root dirs live).
+    const coloc = overrides.colocation ?? COLOCATION;
+
+    // CL1 — every moved chassis is PRESENT at its colocated home (the move landed —
+    //   not a delete, a re-home).
+    const clHomeGaps = [];
+    for (const m of coloc.moves) if (!fileExists(m.to)) clHomeGaps.push(m.to);
+    facts.cl1 = { homeGaps: clHomeGaps };
+    assert(
+        "CL1 — every flat-root chassis is re-homed to its colocated dir (chassis/<group>/ · shell/ · configurator/presets/ present)",
+        clHomeGaps.length === 0,
+    );
+
+    // CL2 — every flat-root SOURCE is DEFINITION-ABSENT (a clean MOVE, never a copy
+    //   that leaves the old flat-root file behind as a dual-path husk).
+    const clSurvivors = [];
+    for (const m of coloc.moves) if (fileExists(m.from)) clSurvivors.push(m.from);
+    facts.cl2 = { survivors: clSurvivors };
+    assert(
+        "CL2 — the flat-root chassis are gone (each moved source DEFINITION-ABSENT, no dual-path husk)",
+        clSurvivors.length === 0,
+    );
+
+    // CL3 — the dissolved flat-root dirs are EXTIRPATED (demo/layout · demo/presets
+    //   DEFINITION-ABSENT — no empty husk survives) AND no stray flat chassis .vue/.css
+    //   re-drifts to the demo/stories/ ROOT (only manifest.ts is sanctioned there; the
+    //   per-category carve + the ./*/*.vue glob is the δ5/δ6 wave). The anti-drift floor.
+    const clDirHusks = coloc.dissolvedDirs.filter((d) => fileExists(d));
+    const storiesDir = resolve(ROOT, "demo/stories");
+    const storiesRootEntries =
+        overrides.storiesRootEntries ??
+        (existsSync(storiesDir)
+            ? readdirSync(storiesDir).filter((f) => {
+                  const p = resolve(storiesDir, f);
+                  return statSync(p).isFile() && /\.(vue|css)$/.test(f);
+              })
+            : []);
+    const clStrays = storiesRootEntries.filter(
+        (f) => !coloc.storiesRootAllowed.has(f),
+    );
+    facts.cl3 = { dirHusks: clDirHusks, strays: clStrays };
+    assert(
+        "CL3 — the dissolved flat-root dirs are extirpated (demo/layout + demo/presets gone) + no stray flat chassis at the stories root",
+        clDirHusks.length === 0 && clStrays.length === 0,
+    );
+
     // ── WC1-WC5 — the colors-watercolor arm (BG.W-COLORS-WATERCOLOR-SWATCH). The
     //    /foundations/colors section-ramp stops render as the shipped <WatercolorDot>
     //    seeded blobs (REUSED not re-forked), sized ≥112px (larger than the retired
@@ -1229,7 +1395,7 @@ function selfTest() {
     // so the bite tests EXACTLY the missing-importer path, not a stray css dangle.)
     sab(
         {
-            existsOverride: { "demo/stories/StoryHeader.vue": true },
+            existsOverride: { "demo/chassis/hero/StoryHeader.vue": true },
             vueCorpus: [
                 { path: "demo/stories/foo.vue", text: `<template><div/></template>` },
             ],
@@ -1645,6 +1811,34 @@ function selfTest() {
         "CD3 comment-strip distinguishing bite",
     );
 
+    // ── CL-clause bites (BH.B3 δ34 chassis-colocation) — each recreates a HEAD-state
+    // defect the move must not carry. existsOverride drives the fileExists() probes
+    // CL1/CL2 read; storiesRootEntries drives the CL3 stray scan.
+    // CL1: a colocated home MISSING (the move deleted instead of re-homed) → REDs CL1.
+    sab(
+        { existsOverride: { "demo/chassis/page/StoryPage.vue": false } },
+        "CL1 — every flat-root chassis is re-homed to its colocated dir (chassis/<group>/ · shell/ · configurator/presets/ present)",
+        "CL1 a colocated chassis home is absent (delete-not-rehome)",
+    );
+    // CL2: a flat-root SOURCE still on disk (the HEAD form / a copy-not-move husk) → REDs CL2.
+    sab(
+        { existsOverride: { "demo/stories/StoryPage.vue": true } },
+        "CL2 — the flat-root chassis are gone (each moved source DEFINITION-ABSENT, no dual-path husk)",
+        "CL2 a flat-root chassis survives (dual-path husk, HEAD form)",
+    );
+    // CL3 (dir husk): the dissolved demo/layout/ dir still present → REDs CL3.
+    sab(
+        { existsOverride: { "demo/layout": true }, storiesRootEntries: [] },
+        "CL3 — the dissolved flat-root dirs are extirpated (demo/layout + demo/presets gone) + no stray flat chassis at the stories root",
+        "CL3 a dissolved flat-root dir husk survives",
+    );
+    // CL3 (stray-drift): a flat chassis .vue re-drifts to the stories root → REDs CL3.
+    sab(
+        { existsOverride: {}, storiesRootEntries: ["StoryPage.vue", "manifest.ts"] },
+        "CL3 — the dissolved flat-root dirs are extirpated (demo/layout + demo/presets gone) + no stray flat chassis at the stories root",
+        "CL3 a flat chassis re-drifts to the stories root",
+    );
+
     // ── WC-clause bites (BG.W-COLORS-WATERCOLOR-SWATCH) — each recreates a defect
     // the fixed colors pane must not carry. GOOD_WC satisfies every WC clause; each
     // bite mutates ONE axis. WC_FILE is the literal path detect() reads via readSrc.
@@ -1895,6 +2089,15 @@ function run() {
         `  CD3 clean move (no dangle) : ${facts["CD3 — the composables dissolve is clean (no demo import references the retired demo/composables/ path)"]}  (dangles: ${JSON.stringify(facts.cdDangles ?? [])})`,
     );
     console.log(
+        `  CL1 chassis re-homed      : ${facts["CL1 — every flat-root chassis is re-homed to its colocated dir (chassis/<group>/ · shell/ · configurator/presets/ present)"]}  (homeGaps: ${JSON.stringify(facts.cl1?.homeGaps ?? [])})`,
+    );
+    console.log(
+        `  CL2 flat-root extirpated  : ${facts["CL2 — the flat-root chassis are gone (each moved source DEFINITION-ABSENT, no dual-path husk)"]}  (survivors: ${JSON.stringify(facts.cl2?.survivors ?? [])})`,
+    );
+    console.log(
+        `  CL3 dirs gone + no drift  : ${facts["CL3 — the dissolved flat-root dirs are extirpated (demo/layout + demo/presets gone) + no stray flat chassis at the stories root"]}  (dirHusks: ${JSON.stringify(facts.cl3?.dirHusks ?? [])}, strays: ${JSON.stringify(facts.cl3?.strays ?? [])})`,
+    );
+    console.log(
         `  WC1 colors→WatercolorDot  : ${facts["WC1 — the colors ramp composes the shipped <WatercolorDot> primitive over --section-color-N"]}`,
     );
     console.log(
@@ -1919,7 +2122,7 @@ function run() {
         `  PR3 ribbon tile ≥72px     : ${facts["PR3 — the top-placed preset tiles read a LARGE floor (≥72px, top-scoped configurator.css rule)"]}  (minPx: ${facts.pr3?.minPx})`,
     );
     console.log(
-        `  self-test (bite proof)    : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×2 incl. comment-strip + D4 + D5 + D6×2 + D7×3 incl. comment-strip + T1-T4 + E1×2 incl. declared-family + E2 + E3 + F1 + F2×2 incl. FamilyTabs + F3 + ST1-ST5 + CF1 + CF2×3 incl. comment-strip + CD1 + CD2 + CD3×2 incl. comment-strip + WC1-WC5 + PR1×2 incl. comment-strip + PR2 + PR3×2 incl. sub-72)`,
+        `  self-test (bite proof)    : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×2 incl. comment-strip + D4 + D5 + D6×2 + D7×3 incl. comment-strip + T1-T4 + E1×2 incl. declared-family + E2 + E3 + F1 + F2×2 incl. FamilyTabs + F3 + ST1-ST5 + CF1 + CF2×3 incl. comment-strip + CD1 + CD2 + CD3×2 incl. comment-strip + CL1 + CL2 + CL3×2 incl. dir-husk + stray-drift + WC1-WC5 + PR1×2 incl. comment-strip + PR2 + PR3×2 incl. sub-72)`,
     );
     if (violations.length) {
         console.log("\nVIOLATIONS:");

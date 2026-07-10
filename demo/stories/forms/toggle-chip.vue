@@ -3,9 +3,9 @@
 // Deliberately unopinionated about exclusive vs multi selection; consumers
 // wire `model-value` / `@update:model-value` (or `v-model`) directly.
 import { ref, computed } from "vue";
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
-import ShowcaseFrame from "../ShowcaseFrame.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { ToggleChip } from "@glass/subpaths/toggle-chip";
 import { IconChip } from "@glass/components/custom/icon-chip";
 import { Triangle, Square, Circle, Hexagon, CircleDot } from "@lucide/vue";

@@ -5,11 +5,11 @@
 // The chassis-tier ladder sits alongside a live mini-chassis so the tokens read
 // composed, and the chart-palette ladder sits alongside a row of plain token-color
 // tiles so each chart hue reads at swatch scale.
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
-import ShowcaseFrame from "../ShowcaseFrame.vue";
-import TokenLadder from "../TokenLadder.vue";
-import type { TokenLadderRow } from "../TokenLadder.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
+import TokenLadder from "../../chassis/showcase/TokenLadder.vue";
+import type { TokenLadderRow } from "../../chassis/showcase/TokenLadder.vue";
 import { InstrumentChassis } from "@glass/components/custom/instrument-chassis";
 
 const chartAliases: TokenLadderRow[] = [

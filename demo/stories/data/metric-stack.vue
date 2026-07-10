@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { MetricStack, MetricRow } from "@glass/components/custom/metric-stack";
 import { Download, Upload, Gauge, Waves } from "@lucide/vue";
 </script>

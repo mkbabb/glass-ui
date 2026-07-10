@@ -89,7 +89,7 @@ const WATERCOLOR_DOT = "src/components/custom/watercolor-dot/WatercolorDot.vue";
 // The rounded-everywhere witnesses: the Configurator component owns the configurator
 // clip rounding (the aurora shell inherits it); SectionPreviewCard rounds the home tiles.
 const CONFIGURATOR = "src/components/custom/configurator/Configurator.vue";
-const SECTION_PREVIEW_CARD = "demo/stories/SectionPreviewCard.vue";
+const SECTION_PREVIEW_CARD = "demo/chassis/landing/SectionPreviewCard.vue";
 const RADII_WITNESS = "demo/stories/foundations/radii.vue";
 
 // In --self-test mode, allow sabotaged overrides to prove the bites red.

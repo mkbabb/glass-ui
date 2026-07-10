@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import StoryPage from "../StoryPage.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
 import { defineAsyncComponent, h } from "vue";
-import StorySection from "../StorySection.vue";
-import FamilyTabs, { type FamilyMember } from "../FamilyTabs.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import FamilyTabs, { type FamilyMember } from "../../chassis/family/FamilyTabs.vue";
 import { ToastProvider, ToastViewport } from "reka-ui";
 
 // BG.W-DEMO-IA-REDESIGN — the Feedback TOAST family. The imperative `Toaster`

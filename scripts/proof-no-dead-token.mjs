@@ -244,7 +244,7 @@ const KEEP_ALLOWLIST = new Map([
     ],
     [
         "--dock-content-safe-inset",
-        "EXTENSION-POINT — the CONTENT-side anti-collision gutter token (dock/density.css, W-HIERARCHY2) consumed by the DEMO <main> scroll-padding at demo/layout/dock-nav.css:273; the src-only scan misses the demo consumer.",
+        "EXTENSION-POINT — the CONTENT-side anti-collision gutter token (dock/density.css, W-HIERARCHY2) consumed by the DEMO <main> scroll-padding at demo/shell/dock-nav.css:273; the src-only scan misses the demo consumer.",
     ],
     // ── ASSERTER-PINNED (the §0 scope-reveal — a gate/test asserter is a live ───
     // consumer; deleting reds it; the asserter is out of this arm's bounds, so the
@@ -279,15 +279,15 @@ const KEEP_ALLOWLIST = new Map([
     ],
     [
         "--grid-line",
-        "ASSERTER-PINNED + DEMO-CONSUMED — the ONE blueprint-grid LINE strength (scale-paper.css) is pinned by `proof:grid-simple` G2 (asserts scale-paper declares the one --grid-pitch/--grid-major/--grid-line/--grid-line-major rhythm source AND the grid bg reads var(--grid-line(-major))) AND consumed via var() by the demo grid background (demo/stories/story-hero.css); the src-only scan misses the demo consumer.",
+        "ASSERTER-PINNED + DEMO-CONSUMED — the ONE blueprint-grid LINE strength (scale-paper.css) is pinned by `proof:grid-simple` G2 (asserts scale-paper declares the one --grid-pitch/--grid-major/--grid-line/--grid-line-major rhythm source AND the grid bg reads var(--grid-line(-major))) AND consumed via var() by the demo grid background (demo/chassis/hero/story-hero.css); the src-only scan misses the demo consumer.",
     ],
     [
         "--grid-line-major",
-        "ASSERTER-PINNED + DEMO-CONSUMED — the major-grid LINE strength twin; pinned by the same proof:grid-simple G2 rhythm-source + var(--grid-line-major) reads, consumed via var() by demo/stories/story-hero.css.",
+        "ASSERTER-PINNED + DEMO-CONSUMED — the major-grid LINE strength twin; pinned by the same proof:grid-simple G2 rhythm-source + var(--grid-line-major) reads, consumed via var() by demo/chassis/hero/story-hero.css.",
     ],
     [
         "--grid-major",
-        "ASSERTER-PINNED + DEMO-CONSUMED — the major-grid PITCH (5rem); pinned by the proof:grid-simple G2 rhythm-source assert + consumed via var(--grid-major) by demo/stories/story-hero.css (the src-only scan misses the demo consumer).",
+        "ASSERTER-PINNED + DEMO-CONSUMED — the major-grid PITCH (5rem); pinned by the proof:grid-simple G2 rhythm-source assert + consumed via var(--grid-major) by demo/chassis/hero/story-hero.css (the src-only scan misses the demo consumer).",
     ],
     [
         "--spring-press-duration",

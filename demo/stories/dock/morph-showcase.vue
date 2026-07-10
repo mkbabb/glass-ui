@@ -26,8 +26,8 @@
 // window so it never steady-state re-blurs. The Tier-C clip-path teardrop under it is the
 // WebKit-Metal floor.
 import { computed, nextTick, onMounted, ref, useTemplateRef } from "vue";
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { Compass, Shapes, Boxes, Database, Bell, ArrowLeftRight } from "@lucide/vue";
 import {
     DockIconButton,

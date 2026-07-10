@@ -9,8 +9,8 @@
 // design — that consumer CSS is the point of the pane, not a fork of a sibling
 // primitive).
 import { ref, type ComponentPublicInstance } from "vue";
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { vReveal } from "@glass/composables/motion/vReveal";
 import { useLiquidReveal } from "@glass/composables/motion/useLiquidReveal";
 import { Button } from "@glass/components/ui/button";

@@ -9,8 +9,8 @@
 // hijacked). The 2nd binary consumer is the speedtest survey-deck (cross-repo); the
 // slides repo CONSUMES-BACK its donor (post-cut).
 import { computed, onMounted, onBeforeUnmount, ref, watch, nextTick } from "vue";
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import {
     useDeck,
     useDeckKeyboard,

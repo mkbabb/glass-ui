@@ -9,9 +9,9 @@
 // SHIPPED curves and can never drift from the token vocabulary. A live Spring
 // Playground lets the user author a spring (response/ζ → linear() readout). The
 // animated block reads `--motion-accent` (the glass-ui violet twin), not warm-red.
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
-import StoryPlayButton from "../StoryPlayButton.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import StoryPlayButton from "../../chassis/play/StoryPlayButton.vue";
 import { computed, ref, shallowRef } from "vue";
 import {
     useNumericTransition,

@@ -63,7 +63,7 @@ const strip = (s) =>
 
 const presetEditor = strip(read("demo/configurator/PresetEditor.vue"));
 const manifest = strip(read("demo/stories/manifest.ts"));
-const sidebar = strip(read("demo/layout/SidebarDock.vue"));
+const sidebar = strip(read("demo/shell/SidebarDock.vue"));
 const types = strip(read("demo/configurator/preset-editor/types.ts"));
 const cssWriters = strip(read("demo/configurator/preset-editor/css-writers.ts"));
 

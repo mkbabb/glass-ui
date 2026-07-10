@@ -364,9 +364,9 @@ function run() {
     const sources = {
         introVue: safeRead(resolve(ROOT, "demo/stories/foundations/intro.vue")),
         heroVue: safeRead(resolve(ROOT, "demo/stories/compositions/hero.vue")),
-        storyHeroVue: safeRead(resolve(ROOT, "demo/stories/StoryHero.vue")),
-        storyPageVue: safeRead(resolve(ROOT, "demo/stories/StoryPage.vue")),
-        storyHeroCss: safeRead(resolve(ROOT, "demo/stories/story-hero.css")),
+        storyHeroVue: safeRead(resolve(ROOT, "demo/chassis/hero/StoryHero.vue")),
+        storyPageVue: safeRead(resolve(ROOT, "demo/chassis/page/StoryPage.vue")),
+        storyHeroCss: safeRead(resolve(ROOT, "demo/chassis/hero/story-hero.css")),
         manifestTs: safeRead(resolve(ROOT, "demo/stories/manifest.ts")),
         authShellVue: safeRead(resolve(ROOT, "demo/stories/compositions/auth-shell.vue")),
     };

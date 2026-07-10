@@ -10,8 +10,8 @@
 // checkerboard reference field (`.tint-checker`) so each rung's alpha + warm→cool
 // gradation reads against the contrasting field — and a dense grid layout kills the
 // one-rung-per-full-width-row dead-space.
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 
 interface TintRow {
     cls: string;

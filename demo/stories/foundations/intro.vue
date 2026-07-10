@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import StoryPage from "../StoryPage.vue";
-import SectionPreviewCard from "../SectionPreviewCard.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import SectionPreviewCard from "../../chassis/landing/SectionPreviewCard.vue";
 import { CATEGORIES } from "../manifest";
-import { categoryHero } from "../category-hero";
+import { categoryHero } from "../../chassis/hero/category-hero";
 
 // The storybook front-door hero declares a live aurora wash on its manifest row;
 // the page chassis renders it behind a glassy hero card so the title sits glass-

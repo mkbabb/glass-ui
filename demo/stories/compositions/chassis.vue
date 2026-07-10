@@ -5,7 +5,7 @@
 // variation." Every KIND is a thin composition over the StoryPage chassis
 // guaranteeing the SAME conformity (a glassy sub-card · a header/rule · the warm
 // field) while its content varies.
-import StoryPage from "../StoryPage.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
 import {
     DemoStage,
     DemoSpecimen,

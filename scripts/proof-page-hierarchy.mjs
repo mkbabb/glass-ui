@@ -187,8 +187,8 @@ add(
 //   (b) the body section composes `.story-sections--delimited`;
 //   (c) the CSS draws the inter-section hairline on the DARK-ADAPTIVE token
 //       (--configurator-divider), NOT an inline `border-border/N` alpha.
-const storyPage = strip(read("demo/stories/StoryPage.vue"));
-const storyHeroCss = strip(read("demo/stories/story-hero.css"));
+const storyPage = strip(read("demo/chassis/page/StoryPage.vue"));
+const storyHeroCss = strip(read("demo/chassis/hero/story-hero.css"));
 
 const hasDelimitedProp = /\bdelimited\??:\s*boolean/.test(storyPage);
 const bodyComposesDelimiter = /story-sections--delimited/.test(storyPage);
@@ -231,7 +231,7 @@ add(
 //     this is the PRESENCE-of-R1 floor);
 // (b) StorySection exposes the canonical R2 heading rung (`<h2 class="text-subheading">`
 //     via the heading prop / #heading slot) — the body's section register.
-const storySection = strip(read("demo/stories/StorySection.vue"));
+const storySection = strip(read("demo/chassis/section/StorySection.vue"));
 const r1HeroPresent =
     /text-display-\$\{heroScale\}/.test(storyPage) ||
     /story-hero-title/.test(storyPage) ||

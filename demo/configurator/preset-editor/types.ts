@@ -4,7 +4,7 @@
 // Types-only module; no runtime side effects.
 
 import type { Ref } from "vue";
-import type { PresetId } from "../../presets/manifest";
+import type { PresetId } from "../presets/manifest";
 
 export type Density = "cozy" | "comfortable" | "compact";
 

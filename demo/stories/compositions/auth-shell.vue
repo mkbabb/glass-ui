@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import StoryPage from "../StoryPage.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
 import { ref } from "vue";
 import { Lock, ShieldCheck, Sparkles, Users } from "@lucide/vue";
 import { Button } from "@glass/components/ui/button";
@@ -10,7 +10,7 @@ import { Separator } from "@glass/components/ui/separator";
 import { Aurora } from "@glass/components/custom/aurora";
 import { IconChip } from "@glass/components/custom/icon-chip";
 import { cn } from "@glass/utils/cn";
-import { heroAuroraConfig } from "../aurora-hero";
+import { heroAuroraConfig } from "../../chassis/hero/aurora-hero";
 
 const wonkSettings = '"WONK" 1, "SOFT" 0';
 

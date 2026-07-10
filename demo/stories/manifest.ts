@@ -15,8 +15,8 @@
  * IA no longer carries the 22-story reference category; clean break, no alias.)
  */
 import type { Component } from "vue";
-import type { StoryBackground } from "./aurora-hero";
-import { CATEGORY_HERO } from "./category-hero";
+import type { StoryBackground } from "../chassis/hero/aurora-hero";
+import { CATEGORY_HERO } from "../chassis/hero/category-hero";
 import {
     Compass,
     Droplet,
@@ -91,7 +91,7 @@ export interface Story {
 }
 
 /** Re-export the descriptor type so consumers reach it from the manifest. */
-export type { StoryBackground } from "./aurora-hero";
+export type { StoryBackground } from "../chassis/hero/aurora-hero";
 
 export interface Category {
     id: string;

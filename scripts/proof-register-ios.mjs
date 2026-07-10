@@ -60,7 +60,7 @@ const tokens = strip(readMonolith(ROOT, "tokens"));
 // press-darken witnesses (`--dock-control-press-bg` on the icon/tab/picker
 // :active rules) resolve against the carved content.
 const dockControls = strip(readMonolith(ROOT, "dock-controls"));
-const dockNav = strip(read("demo/layout/dock-nav.css"));
+const dockNav = strip(read("demo/shell/dock-nav.css"));
 
 const checks = []; // {id, pass, detail}
 const add = (id, pass, detail) => checks.push({ id, pass: Boolean(pass), detail });

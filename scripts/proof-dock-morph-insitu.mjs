@@ -58,9 +58,9 @@ import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-outpu
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const COMMAND = "npm run proof:dock-morph-insitu";
 
-const APPSHELL = "demo/layout/AppShell.vue";
-const SIDEBAR = "demo/layout/SidebarDock.vue";
-const BOTTOM = "demo/layout/BottomDock.vue";
+const APPSHELL = "demo/shell/AppShell.vue";
+const SIDEBAR = "demo/shell/SidebarDock.vue";
+const BOTTOM = "demo/shell/BottomDock.vue";
 // BG.W-SHELL-DOCK-DRY — the shared facet-rail loop (the useContextualDockLayers wire)
 // + the morph-button wiring (the toggle-dock-morph dispatch) were factored out of both
 // shell SFCs into this composable; M1/M3 FOLLOW the carve into it.

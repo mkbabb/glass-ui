@@ -265,7 +265,7 @@ const LEDGER_BY_FILE = new Map(LEDGER.map((r) => [r.surface, r]));
 // appears on the <h1>; the display register is present via the computed binding.
 // Accept EITHER the legacy literal `text-display-[34]` OR the computed
 // `heroClass`/`text-display-${heroScale}` form gated to the audacious ladder.
-const storyHero = strip(read("demo/stories/StoryHero.vue"));
+const storyHero = strip(read("demo/chassis/hero/StoryHero.vue"));
 // The hero <h1> binds the display rung via :class with the heroClass computed
 // (BC.W-PAGE-CHASSIS) — the <h1> carries `story-hero-title` + `heroClass`.
 // BD.W-CUT — the protagonist hero <h1> now also carries `:data-hero-scale="heroScale"`

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { defineAsyncComponent } from "vue";
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
-import FamilyTabs, { type FamilyMember } from "../FamilyTabs.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import FamilyTabs, { type FamilyMember } from "../../chassis/family/FamilyTabs.vue";
 import {
     Table,
     TableBody,

@@ -11,8 +11,8 @@
 // The BC.W-VIRTUAL-WINDOW bridge is composed AT THE CALL SITE: the ToC-click
 // fires useVirtualSectionWindow.ensureTargetWindow(id) (warm) BEFORE
 // useScrollTo.scrollTo(id) — the two leaves are file-disjoint, joined here.
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { computed, ref } from "vue";
 import {
     useScrollTracker,

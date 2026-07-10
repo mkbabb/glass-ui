@@ -45,7 +45,7 @@
 //        component (search/SearchBar.vue, search/FuzzySearch.vue)
 //        → BC.W-SEARCH-CUSTOM.
 //   C4 — audacious-type STARVED by a pinned single display rung
-//        (demo/stories/StoryHero.vue) → BC.W-HERO-AUDACIOUS.
+//        (demo/chassis/hero/StoryHero.vue) → BC.W-HERO-AUDACIOUS.
 // PARTIAL-until-threads-land is CORRECT, not a failure — this wave AUTHORS the
 // bar + the gate + the census; the per-component threads land in the owning band
 // waves, each re-earning its own proof:ba-gestalt verdict.
@@ -247,7 +247,7 @@ walk(UI_ROOT, uiFiles);
 const customFiles = [];
 for (const dir of ENROLLED_CUSTOM) walk(join(CUSTOM_ROOT, dir), customFiles);
 
-const STORY_HERO = "demo/stories/StoryHero.vue";
+const STORY_HERO = "demo/chassis/hero/StoryHero.vue";
 
 // CP1 — the speedtest-AX `data-protagonist` MetricRow emphasis fold. MetricRow
 // lives in custom/metric-stack (NOT an ENROLLED_CUSTOM compound — it bears no C3

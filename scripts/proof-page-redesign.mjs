@@ -75,13 +75,13 @@ export function detect() {
         if (!ok) violations.push(label);
     }
 
-    const storyHero = read("demo/stories/StoryHero.vue");
+    const storyHero = read("demo/chassis/hero/StoryHero.vue");
     const storyHeroCode = stripComments(storyHero);
-    const storyPage = read("demo/stories/StoryPage.vue");
+    const storyPage = read("demo/chassis/page/StoryPage.vue");
     const storyPageCode = stripComments(storyPage);
     const manifest = read("demo/stories/manifest.ts");
-    const auroraHero = read("demo/stories/aurora-hero.ts");
-    const heroCss = read("demo/stories/story-hero.css");
+    const auroraHero = read("demo/chassis/hero/aurora-hero.ts");
+    const heroCss = read("demo/chassis/hero/story-hero.css");
     const demoCss = read("demo/demo.css");
 
     // ── 1. StoryHero exists + composes a GLASS card + the five substrates. ──
@@ -161,7 +161,9 @@ export function detect() {
     // ── 4. StoryPage hosts StoryHero (the universal container). ──
     assert(
         "StoryPage imports StoryHero",
-        /import\s+StoryHero\s+from\s+["']\.\/StoryHero\.vue["']/.test(
+        // StoryHero re-homed to demo/chassis/hero/ (BH.B3 δ34); StoryPage is in
+        // demo/chassis/page/, so it reaches the sibling via ../hero/StoryHero.vue.
+        /import\s+StoryHero\s+from\s+["']\.\.\/hero\/StoryHero\.vue["']/.test(
             storyPageCode,
         ),
     );

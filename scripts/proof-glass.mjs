@@ -117,12 +117,12 @@ const TOKENS_GLASS_FILE = "src/styles/tokens/glass.css";
 const GLASS_ATOM_FILE = "src/styles/glass/glass-atom.css";
 const GLASS_CHIP_FILE = "src/styles/glass/glass-chip.css";
 const TRANSITIONS_FILE = "src/styles/transitions.css";
-const STORY_HERO_CSS_FILE = "demo/stories/story-hero.css";
-const STORY_HERO_SFC_FILE = "demo/stories/StoryHero.vue";
+const STORY_HERO_CSS_FILE = "demo/chassis/hero/story-hero.css";
+const STORY_HERO_SFC_FILE = "demo/chassis/hero/StoryHero.vue";
 // F2.R2 W-DARK-READABILITY-REPAIR (paint re-open) — the demo surfaces the full-route
 // dark census FAILED on (DL6 avatar/badge per-fill contrast ink · DL7 opaque mid-tone
 // stage muted-caption lift). The gate reads a demo SFC as source the STORY_HERO_CSS_FILE
-// precedent (demo/stories/story-hero.css) already establishes.
+// precedent (demo/chassis/hero/story-hero.css) already establishes.
 const AVATAR_STORY_FILE = "demo/stories/data/avatar.vue";
 const BADGE_STORY_FILE = "demo/stories/display/badge.vue";
 const SHADOWS_STORY_FILE = "demo/stories/foundations/shadows.vue";

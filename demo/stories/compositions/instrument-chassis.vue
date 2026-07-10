@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import StoryPage from "../StoryPage.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
 import {
     InstrumentChassis,
     ChassisDivider,

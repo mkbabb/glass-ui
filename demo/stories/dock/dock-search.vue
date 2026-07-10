@@ -14,8 +14,8 @@
 // (dockMorphContext/DOCK_SPRING) is byte-untouched; the dock-search is a seam BESIDE it.
 import { computed, ref, useTemplateRef } from "vue";
 import { Search } from "@lucide/vue";
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { GlassDock, useDockSearch } from "@glass/components/custom/dock";
 import { useDockState } from "@glass/components/custom/dock/composables/useDockState";
 import { useVirtualSectionWindow } from "@glass/composables/virtual";

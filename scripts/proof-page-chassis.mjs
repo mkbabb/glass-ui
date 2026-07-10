@@ -198,7 +198,7 @@ for (const r of routes)
     if (r.kind === "landing") r.subpath = LANDING_SUBPATHS[r.cat] ?? `/${r.cat}`;
 
 // ── PC1 — the scroll-shrink register exists + is compositor-only ──────────────────
-const heroCss = strip(read("demo/stories/story-hero.css"));
+const heroCss = strip(read("demo/chassis/hero/story-hero.css"));
 const hasShrinkClass = /\.story-hero-shrink\b/.test(heroCss);
 const shrinkSticky =
     /\.story-hero-shrink\s*\{[^}]*position:\s*sticky/.test(heroCss);
@@ -253,9 +253,9 @@ add(
 );
 
 // ── PC2 — heroScale + subpath + depth fields exist + threaded; fira-code chip ─────
-const storyHero = strip(read("demo/stories/StoryHero.vue"));
-const storyHeader = strip(read("demo/stories/StoryHeader.vue"));
-const storyPage = strip(read("demo/stories/StoryPage.vue"));
+const storyHero = strip(read("demo/chassis/hero/StoryHero.vue"));
+const storyHeader = strip(read("demo/chassis/hero/StoryHeader.vue"));
+const storyPage = strip(read("demo/chassis/page/StoryPage.vue"));
 // Story interface carries subpath + heroScale + depth.
 const ifaceHasSubpath = /subpath\?:\s*string/.test(manifest);
 const ifaceHasHeroScale = /heroScale\?:\s*HeroScale/.test(manifest) ||
@@ -476,13 +476,13 @@ add(
 
 // ── PC7 — the section-landing + inline-preview model ──────────────────────────────
 const previewCardExists = existsSync(
-    resolve(ROOT, "demo/stories/SectionPreviewCard.vue"),
+    resolve(ROOT, "demo/chassis/landing/SectionPreviewCard.vue"),
 );
 const sectionLandingExists = existsSync(
-    resolve(ROOT, "demo/stories/SectionLanding.vue"),
+    resolve(ROOT, "demo/chassis/landing/SectionLanding.vue"),
 );
-const previewCard = strip(read("demo/stories/SectionPreviewCard.vue"));
-const sectionLanding = strip(read("demo/stories/SectionLanding.vue"));
+const previewCard = strip(read("demo/chassis/landing/SectionPreviewCard.vue"));
+const sectionLanding = strip(read("demo/chassis/landing/SectionLanding.vue"));
 const intro = strip(read("demo/stories/foundations/intro.vue"));
 const router = strip(read("demo/router.ts"));
 // the card composes IconChip + title + subpath chip + a `preview` slot.
@@ -528,12 +528,12 @@ add(
 
 // ── the no-Lenis/GSAP/Locomotive fence bite ───────────────────────────────────────
 const demoFiles = [
-    "demo/stories/story-hero.css",
-    "demo/stories/StoryHero.vue",
-    "demo/stories/StoryPage.vue",
-    "demo/stories/StoryHeader.vue",
-    "demo/stories/SectionPreviewCard.vue",
-    "demo/stories/SectionLanding.vue",
+    "demo/chassis/hero/story-hero.css",
+    "demo/chassis/hero/StoryHero.vue",
+    "demo/chassis/page/StoryPage.vue",
+    "demo/chassis/hero/StoryHeader.vue",
+    "demo/chassis/landing/SectionPreviewCard.vue",
+    "demo/chassis/landing/SectionLanding.vue",
 ];
 const lenisHit = demoFiles.some((f) =>
     /\b(lenis|gsap|locomotive|ScrollTrigger)\b/i.test(strip(read(f))),

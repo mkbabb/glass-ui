@@ -5,9 +5,9 @@
 // selected (the --accent-band + --accent-edge rim + the contrast-safe --accent-ink
 // label). Every chip is the SAME coherent tonal language; only the --tone differs.
 import { ref } from "vue";
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
-import ShowcaseFrame from "../ShowcaseFrame.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { SelectableChip } from "@glass/subpaths/selectable-chip";
 
 

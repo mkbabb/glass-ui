@@ -57,7 +57,7 @@ const GALLERY = "demo/stories/dock/dock-gallery.vue";
 const CHASSIS = "demo/stories/dock/DockExampleTile.vue";
 const CALL = "demo/stories/dock/examples/DynamicIslandCall.vue";
 const EXAMPLES_DIR = "demo/stories/dock/examples";
-const SHELL = "demo/layout/AppShell.vue";
+const SHELL = "demo/shell/AppShell.vue";
 
 const readRel = (rel) => {
     const p = resolve(ROOT, rel);

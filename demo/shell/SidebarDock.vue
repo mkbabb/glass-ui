@@ -39,11 +39,11 @@ import { ArrowLeftRight, Settings2 } from "@lucide/vue";
 import { cn } from "@glass/utils/cn";
 import { CATEGORIES } from "../stories/manifest";
 import { useStoryNavigation } from "../chassis/useStoryNavigation";
-import { useShellNavDock } from "../shell/useShellNavDock";
+import { useShellNavDock } from "./useShellNavDock";
 import {
     useShellDockOrientation,
     useShellScrollProgress,
-} from "../shell/useShellScrollProgress";
+} from "./useShellScrollProgress";
 import { useConfiguratorOpen } from "../configurator/useConfiguratorOpen";
 
 const props = withDefaults(

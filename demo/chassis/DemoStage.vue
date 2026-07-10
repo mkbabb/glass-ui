@@ -12,7 +12,7 @@
 // A demo-private chassis primitive — NOT a library export.
 import { computed, inject, type HTMLAttributes } from "vue";
 import { cn } from "@glass/utils/cn";
-import StorySection from "../stories/StorySection.vue";
+import StorySection from "./section/StorySection.vue";
 import { DEMO_FIELD_KEY } from "./subtype-context";
 
 const props = withDefaults(

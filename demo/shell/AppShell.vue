@@ -23,12 +23,12 @@ import { useStoryNavigation } from "../chassis/useStoryNavigation";
 import {
     SHELL_DOCK_ORIENTATION,
     SHELL_SCROLL_PROGRESS,
-} from "../shell/useShellScrollProgress";
-import { warmFieldHue } from "../stories/warm-field";
+} from "./useShellScrollProgress";
+import { warmFieldHue } from "../chassis/hero/warm-field";
 import {
     shellAuroraConfig as buildShellAuroraConfig,
     shellAuroraConfigDark as buildShellAuroraConfigDark,
-} from "../stories/aurora-hero";
+} from "../chassis/hero/aurora-hero";
 import { useGlobalDark } from "@glass/composables/dark/useGlobalDark";
 import { shellFieldActive } from "../router";
 import { PresetEditor } from "../configurator";

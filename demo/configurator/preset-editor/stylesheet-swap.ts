@@ -6,7 +6,7 @@
 // creation, href swap, enable/disable. No CSS-variable writes, no localStorage.
 
 import { DEFAULT_CONFIG, PRESET_LINK_ID } from "./defaults";
-import { PRESETS, type PresetId } from "../../presets/manifest";
+import { PRESETS, type PresetId } from "../presets/manifest";
 
 let presetLinkEl: HTMLLinkElement | null = null;
 

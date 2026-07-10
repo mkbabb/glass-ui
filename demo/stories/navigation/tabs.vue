@@ -6,8 +6,8 @@
 // and the multi-select section (re-homed to ToggleGroup) are GONE — each material
 // is shown over its PROPER substrate (pill over a glass backdrop, underline over a
 // paper/grain card). The constellation may freely change (R10, verbatim).
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { ref } from "vue";
 import {
     SegmentedTabs,

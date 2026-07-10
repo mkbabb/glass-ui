@@ -562,10 +562,10 @@ function run() {
         "GLASS_UI_GRID_SIMPLE_ARTIFACT",
         "BC-grid-simple",
     );
-    const heroCss = safeRead(resolve(ROOT, "demo/stories/story-hero.css"));
+    const heroCss = safeRead(resolve(ROOT, "demo/chassis/hero/story-hero.css"));
     const scalePaperCss = safeRead(resolve(ROOT, "src/styles/tokens/scale-paper.css"));
     const cardsCss = safeRead(resolve(ROOT, "src/styles/cards.css"));
-    const storyHeroVue = safeRead(resolve(ROOT, "demo/stories/StoryHero.vue"));
+    const storyHeroVue = safeRead(resolve(ROOT, "demo/chassis/hero/StoryHero.vue"));
     const hasGridDir = existsSync(
         resolve(ROOT, "src/components/custom/grid-simple"),
     );

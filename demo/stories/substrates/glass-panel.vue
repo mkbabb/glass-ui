@@ -13,8 +13,8 @@
 // do I reach for?": a bare surface → a `.glass-{rung}` MATERIAL; a content container →
 // a `<Card>`. There is no third "panel" thing — the `<GlassPanel>` component is GONE.
 import { ref } from "vue";
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { Aurora, DEFAULT_AURORA_CONFIG } from "@glass/subpaths/aurora";
 import { ToggleGroup, ToggleGroupItem } from "@glass/components/ui/toggle-group";
 

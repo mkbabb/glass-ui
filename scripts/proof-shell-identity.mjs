@@ -53,8 +53,8 @@ const strip = (s) =>
         .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "))
         .replace(/\/\/[^\n]*/g, "");
 
-const sidebar = strip(read("demo/layout/SidebarDock.vue"));
-const dockNav = strip(read("demo/layout/dock-nav.css"));
+const sidebar = strip(read("demo/shell/SidebarDock.vue"));
+const dockNav = strip(read("demo/shell/dock-nav.css"));
 
 const checks = []; // {id, pass, detail}
 const add = (id, pass, detail) => checks.push({ id, pass: Boolean(pass), detail });

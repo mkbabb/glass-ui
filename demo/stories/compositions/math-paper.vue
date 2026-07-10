@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import StoryPage from "../StoryPage.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
 import { cn } from "@glass/utils/cn";
 
 const sectionAccent = "var(--section-color-3, hsl(265 65% 62%))";

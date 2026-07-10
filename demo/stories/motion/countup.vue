@@ -3,7 +3,7 @@
 // under a host and tweens their text content 0 → target via the keyframes LIGHT
 // `NumericAnimation` engine (value.js-free callable easing).
 import { ref } from "vue";
-import StoryPage from "../StoryPage.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
 import { useCountup } from "@glass/composables/motion/useCountup";
 import { Button } from "@glass/components/ui/button";
 

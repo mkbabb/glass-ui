@@ -9,7 +9,7 @@
 // bounded reveal of a static painterly field is acceptable delight under reduce.
 import { onMounted, onBeforeUnmount, ref } from "vue";
 import { Aurora } from "@glass/components/custom/aurora";
-import { heroAuroraConfig } from "../stories/aurora-hero";
+import { heroAuroraConfig } from "../chassis/hero/aurora-hero";
 
 const emit = defineEmits<{ done: [] }>();
 

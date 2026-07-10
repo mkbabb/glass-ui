@@ -5,8 +5,8 @@
 // via <FamilyTabs>. Zero content re-authored: each member SFC is composed bare
 // (STORY_NESTED_KEY).
 import { defineAsyncComponent } from "vue";
-import StoryPage from "../StoryPage.vue";
-import FamilyTabs, { type FamilyMember } from "../FamilyTabs.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import FamilyTabs, { type FamilyMember } from "../../chassis/family/FamilyTabs.vue";
 
 const members: FamilyMember[] = [
     {

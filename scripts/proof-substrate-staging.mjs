@@ -216,11 +216,11 @@ function run() {
         "utf8",
     );
     const kindUnionSrc = readFileSync(
-        resolve(ROOT, "demo/stories/aurora-hero.ts"),
+        resolve(ROOT, "demo/chassis/hero/aurora-hero.ts"),
         "utf8",
     );
     const storyHeroSrc = readFileSync(
-        resolve(ROOT, "demo/stories/StoryHero.vue"),
+        resolve(ROOT, "demo/chassis/hero/StoryHero.vue"),
         "utf8",
     );
     const emptyStatesSrc = readFileSync(

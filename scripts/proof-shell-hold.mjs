@@ -62,8 +62,8 @@ function cliPaths() {
     const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
     _cliPaths = {
         ROOT,
-        SIDEBAR: resolve(ROOT, "demo/layout/SidebarDock.vue"),
-        BOTTOM: resolve(ROOT, "demo/layout/BottomDock.vue"),
+        SIDEBAR: resolve(ROOT, "demo/shell/SidebarDock.vue"),
+        BOTTOM: resolve(ROOT, "demo/shell/BottomDock.vue"),
         // BG.W-SHELL-DOCK-DRY — the carved leaf holding the shared railContext guard.
         SHELL: resolve(ROOT, "demo/shell/useShellNavDock.ts"),
         ARTIFACT: gateArtifactPath("GLASS_UI_SHELL_HOLD_ARTIFACT", "BA-shell-hold"),

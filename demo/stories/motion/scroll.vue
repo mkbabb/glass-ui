@@ -6,8 +6,8 @@
 // `scroll-vt.vue` / `scroll-system.vue` / `scroll-choreography.vue` member wrappers +
 // the <FamilyTabs> switcher are RETIRED (clean break) — each render body moved bare
 // into a colocated PascalCase body sub-component (Scroll{Native,Reader,Choreography}Body).
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import ScrollNativeBody from "./ScrollNativeBody.vue";
 import ScrollReaderBody from "./ScrollReaderBody.vue";
 import ScrollChoreographyBody from "./ScrollChoreographyBody.vue";

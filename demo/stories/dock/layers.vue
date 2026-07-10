@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { ref } from "vue";
 import { Package, Layers, Library, FileText, ChevronLeft, ChevronRight } from "@lucide/vue";
 import { GlassDock, DockIconButton, DockLayerGroup, DockLayer, DockSeparator } from "@glass/components/custom/dock";

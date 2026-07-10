@@ -18,7 +18,7 @@ import { Aurora } from "@glass/components/custom/aurora";
 import { Constellation } from "@glass/components/custom/constellation";
 import { FourierField } from "@glass/components/custom/fourier-field";
 import { LiquidGrid } from "@glass/components/custom/liquid-grid";
-import { LIQUID_GRID_PRESET_SUFFUSE } from "./substrates/presets";
+import { LIQUID_GRID_PRESET_SUFFUSE } from "../../stories/substrates/presets";
 import { defaultBlobColorResolver } from "@glass/composables/color";
 import { useTokenColor } from "@glass/composables/dom/useTokenColor";
 import { useGlobalDark } from "@glass/composables/dark/useGlobalDark";

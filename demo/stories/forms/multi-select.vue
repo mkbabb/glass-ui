@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import StoryPage from "../StoryPage.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
 import { ref } from "vue";
 import { MultiSelect, type MultiSelectOption } from "@glass/components/ui/multi-select";
 import { Label } from "@glass/components/ui/label";

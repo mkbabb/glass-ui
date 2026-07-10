@@ -65,7 +65,7 @@ const BG_KINDS = new Set(["aurora", "constellation", "fourier", "grid", "paper"]
 
 // ── The source surfaces (comment-stripped) ───────────────────────────────────
 const manifest = strip(read("demo/stories/manifest.ts"));
-const showcaseFrame = strip(read("demo/stories/ShowcaseFrame.vue"));
+const showcaseFrame = strip(read("demo/chassis/showcase/ShowcaseFrame.vue"));
 const glassMaterial = strip(read("demo/stories/substrates/glass-material.vue"));
 const dockStageExists = existsSync(resolve(ROOT, "demo/stories/dock/DockStage.vue"));
 const dockStage = strip(read("demo/stories/dock/DockStage.vue"));

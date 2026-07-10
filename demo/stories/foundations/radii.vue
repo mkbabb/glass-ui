@@ -5,8 +5,8 @@
 // W-SCROLL-MOTION `.scroll-cascade` register, no GL field — a static-wash route by
 // design). The token-tour boxes float over a designed substrate; no per-pane
 // bespoke craft.
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { cn } from "@glass/utils/cn";
 
 const scale: { cls: string; label: string; hint: string }[] = [

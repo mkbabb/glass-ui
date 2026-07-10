@@ -19,8 +19,8 @@
 //     and the route had no live field at all). The tiles keep their own static gradient
 //     backdrops; the shared field reads behind the column.
 //   • ONE <GooFilter> goo <filter> mount at shell root (the fission Call tile references it by id).
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import DockStage from "./DockStage.vue";
 import AppleMusic from "./examples/AppleMusic.vue";
 import DynamicIslandCall from "./examples/DynamicIslandCall.vue";

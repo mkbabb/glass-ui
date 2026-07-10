@@ -63,8 +63,8 @@ const STACK_CSS = "src/styles/dock/stack-rail.css";
 // The SHELL consumers + the demo wrap-surface (the F3.R4 paint-FIX arm — the primitive is
 // device-free-correct T1-T5, but the paint verdict FAILED on WHERE the rail paints: the
 // named shell docks rendered NO <DockStack>, and no demo exercised the `wrap` axis).
-const SIDEBAR = "demo/layout/SidebarDock.vue";
-const BOTTOM = "demo/layout/BottomDock.vue";
+const SIDEBAR = "demo/shell/SidebarDock.vue";
+const BOTTOM = "demo/shell/BottomDock.vue";
 const LIQUID_PLAYGROUND = "demo/stories/dock/liquid-playground.vue";
 const RAIL_STORY = "demo/stories/dock/rail.vue";
 

@@ -2,8 +2,8 @@
 // Form-validity vocabulary in one place — the `useUserInvalidAria` composable
 // drives the `aria-invalid` / error-message wiring across the fields below.
 import { onMounted, onUnmounted, ref } from "vue";
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { useUserInvalidAria } from "@glass/composables/dom/useUserInvalidAria";
 import { Input } from "@glass/components/ui/input";
 import { Textarea } from "@glass/components/ui/textarea";

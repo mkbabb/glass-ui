@@ -5,8 +5,8 @@
 // family — this page no longer duplicates it with fake hint-SVGs (AZ.W-MOTION-SUITE
 // de-dup). Here: the §6 easing-doctrine legend (which easing fits which job) + the
 // shipped <Transition> class-sets that compose those curves into enter/leave grammar.
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { ref } from "vue";
 import { Button } from "@glass/components/ui/button";
 import { cn } from "@glass/utils/cn";

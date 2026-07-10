@@ -167,8 +167,8 @@ if (SELF_TEST) {
 }
 
 // ── run against the real tree ─────────────────────────────────────────────────
-const landing = stripSfc(read("demo/stories/SectionLanding.vue"));
-const previewCard = stripSfc(read("demo/stories/SectionPreviewCard.vue"));
+const landing = stripSfc(read("demo/chassis/landing/SectionLanding.vue"));
+const previewCard = stripSfc(read("demo/chassis/landing/SectionPreviewCard.vue"));
 
 const checks = [];
 const add = (id, pass, detail) => checks.push({ id, pass: Boolean(pass), detail });

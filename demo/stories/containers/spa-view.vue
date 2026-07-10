@@ -4,9 +4,9 @@
 // back, and the count survives (the KeepAlive cache restored the live instance,
 // no re-mount). The :max cap bounds the LRU.
 import { defineComponent, h, ref } from "vue";
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
-import ShowcaseFrame from "../ShowcaseFrame.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { SpaView } from "@glass/components/custom/spa-view";
 import { SegmentedTabs } from "@glass/components/custom/tabs";
 import { Layers } from "@lucide/vue";

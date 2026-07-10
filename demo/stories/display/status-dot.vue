@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { StatusDot } from "@glass/components/custom/status-dot";
 
 type Variant = "active" | "paused" | "idle" | "error" | "custom";

@@ -17,9 +17,9 @@
 // the 3-claim grid + the "View the source"/CTA buttons are RETIRED (clean break, no
 // alias). The per-category hue (forest — compositions) lives in the IconChip + eyebrow
 // ONLY; the title + body stay warm ink (the one-color-event rule).
-import StoryPage from "../StoryPage.vue";
-import SectionPreviewCard from "../SectionPreviewCard.vue";
-import { categoryHue } from "../category-hero";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import SectionPreviewCard from "../../chassis/landing/SectionPreviewCard.vue";
+import { categoryHue } from "../../chassis/hero/category-hero";
 import {
     LayoutDashboard,
     KeyRound,

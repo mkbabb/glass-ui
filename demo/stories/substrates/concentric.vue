@@ -6,8 +6,8 @@
 // (gravity). The default is the warm-cream library identity over transparent (basins cool-cream,
 // ridges warm-amber); the teal-on-navy is a non-default named preset (presets-in-consumers).
 import { computed, reactive, ref, watch } from "vue";
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import {
     Configurator,
     ConfiguratorLayer,

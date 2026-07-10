@@ -6,7 +6,7 @@
 //
 // This gate freezes the canon: every NAMED face referenced in
 //   - the demo tables (defaults.ts FONT_OPTIONS stacks + DEFAULT_CONFIG.font)
-//   - the demo presets (demo/presets/*.css --font-* declarations)
+//   - the demo presets (demo/configurator/presets/*.css --font-* declarations)
 //   - the library `--font-stack-*` tokens (tokens.css)
 // must be either a SHIPPED face (declared as a `@font-face` font-family in
 // src/styles/fonts.css, demo/demo.css, or src/styles/typography.css's
@@ -79,7 +79,7 @@ function cliPaths() {
         TYPOGRAPHY: resolve(ROOT, "src/styles/typography.css"),
         // Reference sites the canon must hold across.
         DEFAULTS: resolve(ROOT, "demo/configurator/preset-editor/defaults.ts"),
-        NEUTRAL: resolve(ROOT, "demo/presets/neutral.css"),
+        NEUTRAL: resolve(ROOT, "demo/configurator/presets/neutral.css"),
         TOKENS: resolve(ROOT, "src/styles/tokens.css"),
         ARTIFACT: gateArtifactPath(
             "GLASS_UI_FONT_CANON_ARTIFACT",

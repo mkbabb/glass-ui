@@ -6,9 +6,9 @@
 // the fullscreen-overlay chrome via the `#fullscreen-chrome` named slot — the
 // body-lock + teleport + Escape-to-exit stay the SFC's (the consumer changes the
 // CHROME, never the BEHAVIOUR).
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
-import ShowcaseFrame from "../ShowcaseFrame.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { ExpandableContainer } from "@glass/components/custom/expandable-container";
 import { IconChip } from "@glass/components/custom/icon-chip";
 import { Maximize2, X } from "@lucide/vue";

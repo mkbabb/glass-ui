@@ -41,7 +41,7 @@ const stripTs = (s) =>
         .replace(/\/\/[^\n]*/g, "");
 
 // ── Parse focal.ts — GL_BG_KINDS + SELF_STAGES_GL ─────────────────────────────
-const focalSrc = stripTs(read("demo/stories/focal.ts"));
+const focalSrc = stripTs(read("demo/chassis/hero/focal.ts"));
 function parseStringSet(src, name) {
     const m = src.match(new RegExp(`${name}[^=]*=\\s*new Set\\(\\[([\\s\\S]*?)\\]\\)`));
     if (!m) return new Set();
@@ -95,7 +95,8 @@ const add = (id, pass, detail) => checks.push({ id, pass: Boolean(pass), detail 
 
 // ── C1 — the resolver is WIRED into router.ts meta.focal ──────────────────────
 const routerSrc = stripTs(read("demo/router.ts"));
-const importsResolver = /import\s*\{[^}]*\bisFocalRoute\b[^}]*\}\s*from\s*["']\.\/stories\/focal["']/.test(
+// The focal resolver re-homed to demo/chassis/hero/focal.ts (BH.B3 δ34).
+const importsResolver = /import\s*\{[^}]*\bisFocalRoute\b[^}]*\}\s*from\s*["']\.\/chassis\/hero\/focal["']/.test(
     routerSrc,
 );
 const threadsStoryFocal = /focal:\s*isFocalRoute\(\s*`\$\{category\.id\}\/\$\{story\.id\}`/.test(

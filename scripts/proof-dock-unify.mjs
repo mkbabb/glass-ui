@@ -98,8 +98,8 @@ const SHOWCASE_DOCKS = [
 // diverges at HEAD is a VIOLATION; the pendingW40 channel is retained only for a
 // shell dock that genuinely still fails (a named-successor record, not a silent pass).
 const SHELL_DOCKS = [
-    { path: "demo/layout/BottomDock.vue", requireHome: true },
-    { path: "demo/layout/SidebarDock.vue", requireHome: true },
+    { path: "demo/shell/BottomDock.vue", requireHome: true },
+    { path: "demo/shell/SidebarDock.vue", requireHome: true },
 ];
 
 // AZ.W-DOCK-NORMALIZE — the FEATURE-EXEMPT positive contract. These docks
@@ -126,7 +126,7 @@ const FEATURE_EXEMPT_DOCKS = [
             "the AZ.W-MORPH-SHOWCASE vertical↔horizontal liquid-glass morph facility — the docks are the MORPH SUBJECT (the shipped View-Transitions crossfade + the perf-gated liquid-teardrop preview, both bidirectional on the ONE --dock-morph-t scalar), not a nav rail; a home control would pollute the morph teaching surface",
     },
     {
-        path: "demo/layout/AppShell.vue",
+        path: "demo/shell/AppShell.vue",
         facility:
             "the BA.W-DOCK-MORPH-INSITU in-situ V↔H morph DEMONSTRATION stage — the two synthetic <GlassDock>s under the focused morph overlay are the MORPH SUBJECT (the shipped View-Transitions crossfade + the perf-gated liquid-teardrop, both bidirectional on the ONE --dock-morph-t scalar, useDockOrientationMorph consumer #2), NOT a nav rail; the SHELL nav docks (SidebarDock/BottomDock — the home-left + DockSeparator nav-pattern) are the separate SHELL_DOCKS census entries. A home control on the morph-stage docks would pollute the morph teaching surface, exactly as the morph-showcase story",
     },

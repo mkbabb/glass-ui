@@ -2,9 +2,9 @@
 // Toaster — wrap-around <ToastProvider> consumer that the speedtest
 // (and any non-glass-ui app) drops into the layout root. Composes
 // useToast for the ToastViewport rendering loop.
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
-import ShowcaseFrame from "../ShowcaseFrame.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { Button } from "@glass/components/ui/button";
 import { Play } from "@lucide/vue";
 import { Toaster, useToast } from "@glass/components/ui/toast";

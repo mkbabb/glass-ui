@@ -275,12 +275,12 @@ export function detectIconChip(sources) {
     const PASTE_RE = /color-mix\(in srgb, var\(--section-color-\$\{/;
     // The recipe-owning primitives are exempt by the same logic the icon-chip/ dir
     // is: a primitive that OWNS its own tint-chip recipe is not one of "the four
-    // inline icon-chip pastes." BC.W-CODE-BLOCKS minted `demo/stories/Code.vue` —
+    // inline icon-chip pastes." BC.W-CODE-BLOCKS minted `demo/chassis/code/Code.vue` —
     // the inline-CODE-literal tint chip (a `<code>` backplate, NO glyph, NO
     // plate-vs-glyph proportion) — a DISTINCT consolidating primitive that owns the
     // code-chip recipe, not an icon-chip paste (the same `--section-color-${tone}`
     // family, a different chip). It is exempt like the icon-chip/ dir.
-    const W4_OWNER_FILES = new Set(["demo/stories/Code.vue"]);
+    const W4_OWNER_FILES = new Set(["demo/chassis/code/Code.vue"]);
     const scanFiles = [
         ...listFiles(resolve(ROOT, "src"), [".vue", ".ts", ".css"]),
         ...listFiles(resolve(ROOT, "demo"), [".vue", ".ts", ".css"]),

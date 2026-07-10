@@ -291,8 +291,8 @@ function run() {
 
     const routerSrc = readFileSync(resolve(ROOT, "demo/router.ts"), "utf8");
     const transitionsCssSrc = readFileSync(resolve(ROOT, "src/styles/transitions.css"), "utf8");
-    const storyHeroCssSrc = readFileSync(resolve(ROOT, "demo/stories/story-hero.css"), "utf8");
-    const storyHeaderSrc = readFileSync(resolve(ROOT, "demo/stories/StoryHeader.vue"), "utf8");
+    const storyHeroCssSrc = readFileSync(resolve(ROOT, "demo/chassis/hero/story-hero.css"), "utf8");
+    const storyHeaderSrc = readFileSync(resolve(ROOT, "demo/chassis/hero/StoryHeader.vue"), "utf8");
 
     violations.push(...checkRouteEnterVisible({ routerSrc, transitionsCssSrc, storyHeroCssSrc, storyHeaderSrc }));
 

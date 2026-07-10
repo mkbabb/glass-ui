@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { computed, defineAsyncComponent, ref } from "vue";
-import FamilyTabs, { type FamilyMember } from "../FamilyTabs.vue";
+import FamilyTabs, { type FamilyMember } from "../../chassis/family/FamilyTabs.vue";
 import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, ToggleRight } from "@lucide/vue";
 import { Toggle } from "@glass/components/ui/toggle";
 import { ToggleGroup, ToggleGroupItem } from "@glass/components/ui/toggle-group";

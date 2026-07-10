@@ -87,9 +87,9 @@ function cliPaths() {
         // BG.W-DOCK-SCROLL-PROGRESS — the W7 dock-consumer arm reads the demo shell
         // (the reference adoption: the page-scroll progress IS the leftside dock's
         // border; the standalone bar is DEFINITION-ABSENT).
-        SIDEBAR_DOCK: resolve(ROOT, "demo/layout/SidebarDock.vue"),
-        APP_SHELL: resolve(ROOT, "demo/layout/AppShell.vue"),
-        DOCK_NAV: resolve(ROOT, "demo/layout/dock-nav.css"),
+        SIDEBAR_DOCK: resolve(ROOT, "demo/shell/SidebarDock.vue"),
+        APP_SHELL: resolve(ROOT, "demo/shell/AppShell.vue"),
+        DOCK_NAV: resolve(ROOT, "demo/shell/dock-nav.css"),
         ARTIFACT: gateArtifactPath(
             "GLASS_UI_BORDER_PROGRESS_ARTIFACT",
             "BB-border-progress",

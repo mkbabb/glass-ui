@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { Alert, AlertDescription, AlertTitle } from "@glass/components/ui/alert";
 import { IconChip } from "@glass/components/custom/icon-chip";
 import { Info, CircleAlert, TriangleAlert, CircleCheck, Sparkles, Bell } from "@lucide/vue";

@@ -10,7 +10,7 @@
 //   src/styles/floating-panel.css                 a0ec1245796189c2
 //   src/styles/tokens/offsets-sizing.css          3e8a0a762859de6c
 //   src/components/ui/dropdown-menu/DropdownMenuContent.vue  584a36444a1a255c
-//   demo/layout/SidebarDock.vue                   dd2eb316d11c2fcc
+//   demo/shell/SidebarDock.vue                   dd2eb316d11c2fcc
 
 import { fileURLToPath } from "node:url";
 import { writeFileSync } from "node:fs";

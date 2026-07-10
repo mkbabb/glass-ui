@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { Badge } from "@glass/components/ui/badge";
 import { IconChip } from "@glass/components/custom/icon-chip";
 import { cn } from "@glass/utils/cn";

@@ -588,14 +588,14 @@ function run() {
     const sources = {
         manifestTs: safeRead(resolve(ROOT, "demo/stories/manifest.ts")),
         introVue: safeRead(resolve(ROOT, "demo/stories/foundations/intro.vue")),
-        sectionLandingVue: safeRead(resolve(ROOT, "demo/stories/SectionLanding.vue")),
+        sectionLandingVue: safeRead(resolve(ROOT, "demo/chassis/landing/SectionLanding.vue")),
         sectionPreviewCardVue: safeRead(
-            resolve(ROOT, "demo/stories/SectionPreviewCard.vue"),
+            resolve(ROOT, "demo/chassis/landing/SectionPreviewCard.vue"),
         ),
-        categoryHeroTs: safeRead(resolve(ROOT, "demo/stories/category-hero.ts")),
-        auroraHeroTs: safeRead(resolve(ROOT, "demo/stories/aurora-hero.ts")),
-        storyHeroVue: safeRead(resolve(ROOT, "demo/stories/StoryHero.vue")),
-        storyPageVue: safeRead(resolve(ROOT, "demo/stories/StoryPage.vue")),
+        categoryHeroTs: safeRead(resolve(ROOT, "demo/chassis/hero/category-hero.ts")),
+        auroraHeroTs: safeRead(resolve(ROOT, "demo/chassis/hero/aurora-hero.ts")),
+        storyHeroVue: safeRead(resolve(ROOT, "demo/chassis/hero/StoryHero.vue")),
+        storyPageVue: safeRead(resolve(ROOT, "demo/chassis/page/StoryPage.vue")),
     };
 
     const { facts, violations } = detectHeroAudacious(sources);

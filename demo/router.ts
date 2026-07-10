@@ -2,7 +2,7 @@ import { ref } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
 import { CATEGORIES, firstStoryPath } from "./stories/manifest";
-import { isFocalRoute, suppressesShellField } from "./stories/focal";
+import { isFocalRoute, suppressesShellField } from "./chassis/hero/focal";
 
 /**
  * BG.W-FIELD-AURORA (M2) — the shell-field gate. `false` on a FOCAL route (the
@@ -42,7 +42,7 @@ function buildRoutes(): RouteRecordRaw[] {
                 ? {
                       path: `/${category.id}`,
                       name: `category:${category.id}`,
-                      component: () => import("./stories/SectionLanding.vue"),
+                      component: () => import("./chassis/landing/SectionLanding.vue"),
                       meta: {
                           categoryId: category.id,
                           landing: true,

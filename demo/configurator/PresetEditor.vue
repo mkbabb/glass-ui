@@ -27,7 +27,7 @@ import {
     ConfiguratorRow,
 } from "@glass/components/custom/configurator";
 import { DarkModeToggle } from "@glass/components/custom/controls";
-import { PRESETS } from "../presets/manifest";
+import { PRESETS } from "./presets/manifest";
 import {
     FONT_OPTIONS,
     usePresetEditor,

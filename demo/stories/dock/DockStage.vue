@@ -20,7 +20,7 @@
 // is NOT a transparent tile; it self-stages.
 import { computed, ref, useTemplateRef } from "vue";
 import { Aurora, type AuroraConfig } from "@glass/components/custom/aurora";
-import { heroAuroraConfig } from "../aurora-hero";
+import { heroAuroraConfig } from "../../chassis/hero/aurora-hero";
 
 withDefaults(
     defineProps<{

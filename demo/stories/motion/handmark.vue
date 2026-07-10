@@ -5,8 +5,8 @@
 // highlighter consumer (the five field deltas LIVE) + the natural pencil-boil
 // morphology + the brush voices.
 import { ref } from "vue";
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { Button } from "@glass/components/ui/button";
 import { HandMark } from "@glass/components/custom/handmark";
 

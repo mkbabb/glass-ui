@@ -11,7 +11,7 @@
 // mechanisms are GONE and the bare swap + its on-mount `.route-enter` @keyframes are
 // PRESENT — so a future edit cannot silently re-introduce the freeze class.
 //
-// The FOUR deleted confounders (each ABSENT in demo/layout/AppShell.vue):
+// The FOUR deleted confounders (each ABSENT in demo/shell/AppShell.vue):
 //   1. the route page-enter `<Transition name="fade-slide">` wrapper,
 //   2. the BD.W-SHELL-ROUTE-BLOOM find-child watch (`useBloomUp` + the
 //      `section-landing-skeleton` rect it bloomed through),
@@ -200,7 +200,7 @@ function run() {
     );
     const violations = [];
 
-    const appShellSrc = readFileSync(resolve(ROOT, "demo/layout/AppShell.vue"), "utf8");
+    const appShellSrc = readFileSync(resolve(ROOT, "demo/shell/AppShell.vue"), "utf8");
     const transitionsCssSrc = readFileSync(resolve(ROOT, "src/styles/transitions.css"), "utf8");
 
     violations.push(...checkRouteConfounder({ appShellSrc, transitionsCssSrc }));

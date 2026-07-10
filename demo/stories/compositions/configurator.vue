@@ -6,9 +6,9 @@
 // flat story (`demo/stories/aurora.vue`) is the configurator-in-anger over
 // a real WebGL field; this story is the primitive shown honestly.
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
-import ShowcaseFrame from "../ShowcaseFrame.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import {
     Configurator,
     ConfiguratorLayer,

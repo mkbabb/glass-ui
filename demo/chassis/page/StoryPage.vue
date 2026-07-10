@@ -2,16 +2,16 @@
 import { computed, inject, provide, watch } from "vue";
 import { cn } from "@glass/utils/cn";
 import { TooltipProvider } from "@glass/components/ui/tooltip";
-import { useStoryNavigation } from "../chassis/useStoryNavigation";
-import { SECTION_REVEAL_KEY, useSectionReveal } from "./useSectionReveal";
-import { STORY_NESTED_KEY } from "./story-nested";
+import { useStoryNavigation } from "../useStoryNavigation";
+import { SECTION_REVEAL_KEY, useSectionReveal } from "../section/useSectionReveal";
+import { STORY_NESTED_KEY } from "../family/story-nested";
 // BG.W-STORY-PAGE-API (§4-D) — the demo SUB-TYPE field context. StoryPage provides
 // its manifest-declared background (the warm field every demo floats over) so a
 // nested sub-type (chiefly <DemoStage>) reads "what field am I over?" WITHOUT
 // mounting a second GL context (the one-GL-per-route budget).
-import { DEMO_FIELD_KEY } from "../chassis/subtype-context";
-import StoryHero from "./StoryHero.vue";
-import StoryHeader from "./StoryHeader.vue";
+import { DEMO_FIELD_KEY } from "../subtype-context";
+import StoryHero from "../hero/StoryHero.vue";
+import StoryHeader from "../hero/StoryHeader.vue";
 
 // BG.W-DEMO-IA-REDESIGN — the family-collapse nesting seam. When this StoryPage is
 // a MEMBER inside a `<FamilyTabs>` family page (which provides STORY_NESTED_KEY), it

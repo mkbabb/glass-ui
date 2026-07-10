@@ -50,8 +50,8 @@ import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-outpu
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const COMMAND = "npm run proof:dock-collapsed-both";
 
-const BOTTOM_DOCK = "demo/layout/BottomDock.vue";
-const SIDEBAR_DOCK = "demo/layout/SidebarDock.vue";
+const BOTTOM_DOCK = "demo/shell/BottomDock.vue";
+const SIDEBAR_DOCK = "demo/shell/SidebarDock.vue";
 const MORPH_CSS = "src/styles/dock/morph.css";
 const DENSITY_CSS = "src/styles/dock/density.css";
 const OVERFLOW_CSS = "src/styles/dock/overflow.css";

@@ -225,8 +225,8 @@ const MORPH_BRIDGE_CSS = resolve(ROOT, "src/styles/dock/morph-bridge.css");
 // grid) that OCCLUDED the re-margined content column. The shell wiring lives in the demo
 // layout (the binary consumer #2 of `useDockOrientationMorph`): AppShell.vue drives the
 // settled-orientation commit; SidebarDock.vue owns the `<GlassDock>` orientation prop.
-const DEMO_APP_SHELL = resolve(ROOT, "demo/layout/AppShell.vue");
-const DEMO_SIDEBAR_DOCK = resolve(ROOT, "demo/layout/SidebarDock.vue");
+const DEMO_APP_SHELL = resolve(ROOT, "demo/shell/AppShell.vue");
+const DEMO_SIDEBAR_DOCK = resolve(ROOT, "demo/shell/SidebarDock.vue");
 // The two morph-region CONTENT children that carry the inverse-scale (the plate
 // scales, these do NOT). Both must carry the inverse on both axes.
 const RIGID_CONTENT_CHILDREN = [".dock-persistent", ".dock-layers"];

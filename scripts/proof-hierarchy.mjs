@@ -141,7 +141,7 @@ add(
 // ── (b) <StorySection> exposes the canonical heading register ─────────────────
 // The chassis renders a `text-subheading`-keyed <h2> (the `heading` prop /
 // `#heading` slot), distinct from the mono `.section-label` caption.
-const storySection = strip(read("demo/stories/StorySection.vue"));
+const storySection = strip(read("demo/chassis/section/StorySection.vue"));
 const hasSubheadingH2 = /<h2[^>]*\bclass="[^"]*\btext-subheading\b/.test(storySection);
 const hasHeadingProp =
     /\bheading\??:\s*string/.test(storySection) || /name="heading"/.test(storySection);
@@ -227,10 +227,10 @@ add(
 // the pre-wave tree; extend-in-place, NO new gate id).
 // ══════════════════════════════════════════════════════════════════════════════
 
-const storyPage = strip(read("demo/stories/StoryPage.vue"));
-const storyHero = strip(read("demo/stories/StoryHero.vue"));
-const storyHeader = strip(read("demo/stories/StoryHeader.vue"));
-const storyHeroCss = strip(read("demo/stories/story-hero.css"));
+const storyPage = strip(read("demo/chassis/page/StoryPage.vue"));
+const storyHero = strip(read("demo/chassis/hero/StoryHero.vue"));
+const storyHeader = strip(read("demo/chassis/hero/StoryHeader.vue"));
+const storyHeroCss = strip(read("demo/chassis/hero/story-hero.css"));
 
 // ── (H2-ORDER) the StoryHeader cluster is ONE ordered unit (reading order) ──────
 // BOTH arms (anti-evasion): (1) the chrome <header> descriptor (eyebrow + blurb) is
@@ -351,7 +351,7 @@ add(
 // control token reds); (3) the StoryPage <main> content column CONSUMES it (a
 // scroll-padding/margin reserve, not a dead token).
 const densityCss = strip(read("src/styles/dock/density.css"));
-const dockNavCss = strip(read("demo/layout/dock-nav.css"));
+const dockNavCss = strip(read("demo/shell/dock-nav.css"));
 const contentInsetDecl = /--dock-content-safe-inset\s*:/.test(densityCss);
 // the de-overload: the declaration value must NOT be `var(--dock-control-safe-inset)`.
 const contentInsetMatch = densityCss.match(/--dock-content-safe-inset\s*:\s*([^;]+);/);

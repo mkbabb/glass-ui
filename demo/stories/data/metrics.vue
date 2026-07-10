@@ -5,8 +5,8 @@
 // <FamilyTabs>. The metric-badge/metric-pill atoms move OUT of Display (they are data
 // readouts, not display atoms). Zero content re-authored — each member composed bare.
 import { defineAsyncComponent } from "vue";
-import StoryPage from "../StoryPage.vue";
-import FamilyTabs, { type FamilyMember } from "../FamilyTabs.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import FamilyTabs, { type FamilyMember } from "../../chassis/family/FamilyTabs.vue";
 
 const members: FamilyMember[] = [
     {

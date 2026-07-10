@@ -4,8 +4,8 @@
 // scroll-cascade rung stagger (W-SCROLL-MOTION `.scroll-cascade`, no GL). The
 // shadows-on-stage perception-correction (the dark mid-tone backing so cast shadows
 // read in DARK) is PRESERVED — the wash sits UNDER it, not replacing it.
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { cn } from "@glass/utils/cn";
 
 const shadows: { cls: string; label: string }[] = [

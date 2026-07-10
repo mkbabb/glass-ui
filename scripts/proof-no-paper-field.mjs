@@ -141,7 +141,7 @@ if (SELF_TEST) {
 const paperCss = stripCss(read("src/styles/paper.css"));
 const paperBackdrop = stripTs(read("src/components/custom/paper-backdrop/PaperBackdrop.vue"));
 const propRegs = stripCss(read("src/styles/tokens/property-regs.css"));
-const appShell = stripTs(read("demo/layout/AppShell.vue"));
+const appShell = stripTs(read("demo/shell/AppShell.vue"));
 
 // BG.W-PAPER-GRAIN-OPTIN (wave 2.5) flips W5 from advisory to enforced: the universal
 // grain mount is RETIRED (per-surface opt-in), the grain tokens stay intact.

@@ -67,7 +67,7 @@ function routedFiles(ROOT) {
     const rows = parseRoutedRows(manifestSrc);
     const files = rows.map((r) => `demo/stories/${r}.vue`);
     // The category-landing route component + the catch-all 404 are routed too.
-    files.push("demo/stories/SectionLanding.vue");
+    files.push("demo/chassis/landing/SectionLanding.vue");
     files.push("demo/eggs/NotFound.vue");
     return [...new Set(files)];
 }

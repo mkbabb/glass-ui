@@ -91,12 +91,12 @@ const COMMAND = "npm run proof:storybook-meta";
 const SELF_TEST = process.argv.includes("--self-test") || process.argv.includes("--selftest");
 
 const STORIES_DIR = resolve(ROOT, "demo/stories");
-const APPSHELL = "demo/layout/AppShell.vue";
-const STORYPAGE = "demo/stories/StoryPage.vue";
+const APPSHELL = "demo/shell/AppShell.vue";
+const STORYPAGE = "demo/chassis/page/StoryPage.vue";
 const STORY_SECTION_HEADER = "demo/stories/StorySectionHeader.vue";
-const SECTION_PREVIEW_CARD = "demo/stories/SectionPreviewCard.vue";
-const STORY_HERO_CSS = "demo/stories/story-hero.css";
-const DOCK_NAV_CSS = "demo/layout/dock-nav.css";
+const SECTION_PREVIEW_CARD = "demo/chassis/landing/SectionPreviewCard.vue";
+const STORY_HERO_CSS = "demo/chassis/hero/story-hero.css";
+const DOCK_NAV_CSS = "demo/shell/dock-nav.css";
 
 const read = (rel) => {
     const p = resolve(ROOT, rel);
@@ -265,8 +265,8 @@ function detectGlassPanelCap(sources, overrides = {}) {
 // future agent cannot smuggle a fresh card-bypass past. The recorded baseline shrinks
 // as the page bands re-thread; it never grows.
 const M9A_ALLOWLIST = new Set([
-    "demo/stories/ShowcaseFrame.vue", // DEFINES the triplet (its reason to exist)
-    "demo/stories/SectionPreviewCard.vue", // the chassis card SHELL mint
+    "demo/chassis/showcase/ShowcaseFrame.vue", // DEFINES the triplet (its reason to exist)
+    "demo/chassis/landing/SectionPreviewCard.vue", // the chassis card SHELL mint
 ]);
 const TRIPLET_RE = /rounded-card[^"'`]*\bborder\b[^"'`]*\b(?:bg-card|shadow-cartoon)\b/;
 // The recorded census baseline (the page-band-owned residual set, routed in the
@@ -334,7 +334,7 @@ const M9B_ALLOWLIST = new Set([
     "demo/stories/motion/ScrollReaderBody.vue",
     "demo/stories/foundations/css-utilities.vue", // the scale-on-hover demo buttons
     "demo/stories/display/buttons.vue", // the button pane demonstrates raw vs <Button>
-    "demo/stories/CodeBlock.vue", // the copy-affordance button (the chassis primitive)
+    "demo/chassis/code/CodeBlock.vue", // the copy-affordance button (the chassis primitive)
     // BD configurator — the preset-tile gallery selector is a bespoke configurator
     // control (a `data-preset-tile` glass-capsule + glass-capsule-hover + focus-ring +
     // aria-pressed thumbnail tile, the proof:configurator-glass-atoms primitive), a
@@ -540,7 +540,7 @@ function selfTest(sources) {
         const cleanBase = Object.fromEntries(Object.entries(sources).map(([k]) => [k, ""]));
         // (i) an ALLOWLISTED host carrying the triplet stays GREEN (the def is exempt).
         const exempt = detectRawTriplet(cleanBase, {
-            "demo/stories/ShowcaseFrame.vue": `<div class="rounded-card border bg-card">DEF</div>`,
+            "demo/chassis/showcase/ShowcaseFrame.vue": `<div class="rounded-card border bg-card">DEF</div>`,
         });
         // (ii) a BASELINE-recorded residual stays GREEN (it routes to the ledger, not a regression).
         const baselineResidual = detectRawTriplet(cleanBase, {

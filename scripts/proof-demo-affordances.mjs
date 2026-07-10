@@ -63,7 +63,7 @@ const REL = (p) => resolve(ROOT, p);
 // The play/replay sites + the trigger sites + the container sites. The
 // curve-picker chip rack + the play register land here too.
 const PATHS = {
-    STORY_PLAY_BUTTON: REL("demo/stories/StoryPlayButton.vue"),
+    STORY_PLAY_BUTTON: REL("demo/chassis/play/StoryPlayButton.vue"),
     CURVE_GALLERY: REL("demo/stories/motion/curve-gallery.vue"),
     // BEZIER_EDITOR + StepsEditor retired at BB.W-EASING-PRIMITIVE (the C-3 fold):
     // the curve-gallery's two demo editors RE-HOMED onto the published <EasingPicker>

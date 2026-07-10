@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import StoryPage from "../StoryPage.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
 import { HoverPopover } from "@glass/components/custom/hover-popover";
 import { IconChip } from "@glass/components/custom/icon-chip";
 import { Button } from "@glass/components/ui/button";

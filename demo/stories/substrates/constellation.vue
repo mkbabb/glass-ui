@@ -4,9 +4,9 @@
 // `drawOverlay` seam carries arbitrary consumer content, so a branded skin stays
 // a consumer concern.
 import { computed, onMounted, onUnmounted, ref, useTemplateRef } from "vue";
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
-import ShowcaseFrame from "../ShowcaseFrame.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import {
     Constellation,
     type ConstellationField,

@@ -13,9 +13,9 @@
 // the opaque specimen host (they have no glass to refract — the field is for the
 // glass variants only). The press-squish rides the LIBRARY <Button> / .glass-btn
 // press register (tap-squish + useSpringPress), never a demo-local fork.
-import StoryPage from "../StoryPage.vue";
-import ShowcaseFrame from "../ShowcaseFrame.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { ref } from "vue";
 import { Button } from "@glass/components/ui/button";
 import { cn } from "@glass/utils/cn";

@@ -24,7 +24,7 @@
 // ShowcaseFrame / VizStudio, the demo-private chassis family).
 
 import type { ComputedRef, InjectionKey } from "vue";
-import type { StoryBackground } from "../stories/aurora-hero";
+import type { StoryBackground } from "./hero/aurora-hero";
 
 /** The closed demo-KIND vocabulary — the taxonomy is exactly these five. */
 export const DEMO_SUBTYPES = [

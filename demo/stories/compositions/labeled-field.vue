@@ -4,9 +4,9 @@
 // label. The LabeledField parent owns the IconTooltip + label layer.
 import { computed, ref } from "vue";
 import { Eye, EyeOff, X } from "@lucide/vue";
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
-import ShowcaseFrame from "../ShowcaseFrame.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import {
     LabeledField,
     LabeledInput,

@@ -6,7 +6,7 @@
 
 import { DEFAULT_CONFIG, STORAGE_KEY } from "./defaults";
 import type { ConfigBaseline, ConfigDelta, Density, FontSlots } from "./types";
-import type { PresetId } from "../../presets/manifest";
+import type { PresetId } from "../presets/manifest";
 
 function isPlainObject(v: unknown): v is Record<string, unknown> {
     return typeof v === "object" && v !== null && !Array.isArray(v);

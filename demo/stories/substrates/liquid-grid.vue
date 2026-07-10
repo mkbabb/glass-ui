@@ -6,8 +6,8 @@
 // gone (§E). The configurator sits on the RIGHT (the §E controls-right mandate); the title
 // carries the explicit /liquid-grid subpath.
 import { computed, reactive, ref } from "vue";
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import {
     Configurator,
     ConfiguratorLayer,

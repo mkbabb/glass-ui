@@ -80,8 +80,8 @@ const rawFiraCodeRe = /<code\b[^>]*\bclass="[^"]*\bfira-code\b[^"]*"[^>]*>/g;
 // ── The enrolled set (footprint-scoped — display/card.vue, the headline re-author) ──
 const ENROLLED = ["demo/stories/display/card.vue"];
 
-const CODE_SFC = "demo/stories/Code.vue";
-const CODEBLOCK_SFC = "demo/stories/CodeBlock.vue";
+const CODE_SFC = "demo/chassis/code/Code.vue";
+const CODEBLOCK_SFC = "demo/chassis/code/CodeBlock.vue";
 
 // ── C1 — the two primitives EXIST + compose the canonical register ────────────
 const codeSrc = read(CODE_SFC);

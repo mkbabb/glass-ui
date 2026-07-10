@@ -15,8 +15,8 @@
  * `useDrawerSnap` `SpringProgress` engine); drag the handle to cycle peek → half →
  * full.
  */
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { ref } from "vue";
 import {
     Drawer,

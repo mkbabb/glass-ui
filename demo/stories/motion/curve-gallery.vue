@@ -28,9 +28,9 @@
 // The plots + driven dots read ONE coherent purple — `--motion-accent` (the glass-ui
 // `--viz-legendre` violet twin), the motion family's single color event; the THICK
 // stroke in it IS the point.
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
-import StoryPlayButton from "../StoryPlayButton.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import StoryPlayButton from "../../chassis/play/StoryPlayButton.vue";
 import { computed, onUnmounted, ref } from "vue";
 import { Play } from "@lucide/vue";
 import { FadingScroll } from "@glass/components/custom/fading-scroll";

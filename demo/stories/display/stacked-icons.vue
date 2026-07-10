@@ -1,9 +1,9 @@
 <script setup lang="ts">
 // StackedIconGroup — overlapping icon stack with maxVisible / +N overflow.
 // Size axis only.
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
-import ShowcaseFrame from "../ShowcaseFrame.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { StackedIconGroup } from "@glass/subpaths/stacked-icons";
 import { Heart, Star, Bookmark, Flag, Pin, Bell, Sparkles } from "@lucide/vue";
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import StoryPage from "../StoryPage.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
 // Typewriter story — cycles multiple phrases, exposes speed + cursor controls.
 import { computed, ref } from "vue";
 import {

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // proof:shell-dock-dry (BG.W-SHELL-DOCK-DRY) — the demo shell-dock DRY gate.
 //
-// The two demo shell docks (demo/layout/SidebarDock.vue + demo/layout/BottomDock.vue)
+// The two demo shell docks (demo/shell/SidebarDock.vue + demo/shell/BottomDock.vue)
 // byte-DUPLICATED the shared FACET-RAIL loop — the route→facet resolver wire, the
 // `railItems` map, the SHELL-HOLD `railContext` writable computed (the equality
 // short-circuit that navigates ONLY on a genuine user chip activation), the
@@ -39,9 +39,9 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, "..");
 
 const COMPOSABLE = "demo/shell/useShellNavDock.ts";
-const SIDEBAR = "demo/layout/SidebarDock.vue";
-const BOTTOM = "demo/layout/BottomDock.vue";
-const NAVCSS = "demo/layout/dock-nav.css";
+const SIDEBAR = "demo/shell/SidebarDock.vue";
+const BOTTOM = "demo/shell/BottomDock.vue";
+const NAVCSS = "demo/shell/dock-nav.css";
 
 function read(rel) {
     const p = resolve(ROOT, rel);
@@ -85,10 +85,13 @@ function checkComposable(src) {
 // P2 — an SFC CONSUMES the composable + carries ZERO duplicated inline logic (the DRY).
 function checkSfcConsumes(src, name) {
     if (src == null) return { ok: false, reason: `${name} is absent` };
-    if (!/from\s+["']\.\.\/shell\/useShellNavDock["']/.test(src))
+    // Accept either the colocated `./useShellNavDock` (BH.B3 δ34 — the shell docks
+    // now live IN demo/shell/ beside the composable) OR the pre-colocation
+    // `../shell/useShellNavDock` (a shell-adjacent consumer).
+    if (!/from\s+["']\.{1,2}\/(?:shell\/)?useShellNavDock["']/.test(src))
         return {
             ok: false,
-            reason: `${name} does not import useShellNavDock from ../shell/useShellNavDock`,
+            reason: `${name} does not import useShellNavDock from ./useShellNavDock (or ../shell/useShellNavDock)`,
         };
     if (!/useShellNavDock\s*\(/.test(src))
         return { ok: false, reason: `${name} does not call useShellNavDock()` };

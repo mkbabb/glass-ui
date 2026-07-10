@@ -9,7 +9,7 @@
 //
 // It CONSUMES the registers — no new substrate. Reduced-motion is the outer gate on
 // every recipe. PascalCase composed-by helper.
-import StorySection from "../StorySection.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { onMounted, ref } from "vue";
 import {
     supportsScrollTimeline,

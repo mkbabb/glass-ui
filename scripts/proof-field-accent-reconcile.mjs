@@ -94,10 +94,10 @@ if (SELF_TEST) {
 }
 
 // ── Run against the real tree ─────────────────────────────────────────────────
-const auroraHero = stripTs(read("demo/stories/aurora-hero.ts"));
-const warmField = stripTs(read("demo/stories/warm-field.ts"));
-const appShell = stripTs(read("demo/layout/AppShell.vue"));
-const sectionLanding = stripTs(read("demo/stories/SectionLanding.vue"));
+const auroraHero = stripTs(read("demo/chassis/hero/aurora-hero.ts"));
+const warmField = stripTs(read("demo/chassis/hero/warm-field.ts"));
+const appShell = stripTs(read("demo/shell/AppShell.vue"));
+const sectionLanding = stripTs(read("demo/chassis/landing/SectionLanding.vue"));
 const luminance = stripTs(read("src/composables/glass/useGlassBackdropLuminance.ts"));
 
 const checks = [];

@@ -3,9 +3,9 @@
 // Distinct from the underlying Tooltip family (manual provider, fully
 // custom content) — IconTooltip bakes in display typography for the
 // canonical "label + question-mark" pattern.
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
-import ShowcaseFrame from "../ShowcaseFrame.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { Info, HelpCircle, AlertTriangle } from "@lucide/vue";
 import { IconTooltip } from "@glass/components/custom/icon-tooltip";
 </script>

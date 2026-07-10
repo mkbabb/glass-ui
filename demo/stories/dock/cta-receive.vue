@@ -9,8 +9,8 @@
 // Compositor-only (transform/opacity/filter) + PRM-seats (a deterministic snap-to-gone
 // + hand-off under reduced-motion).
 import { onMounted, ref, useTemplateRef } from "vue";
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { Plus, Star, Compass, Shapes, Boxes } from "@lucide/vue";
 import { GlassDock, DockIconButton } from "@glass/components/custom/dock";
 import { Button } from "@glass/components/ui/button";

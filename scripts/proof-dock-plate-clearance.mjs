@@ -369,12 +369,12 @@ export function detectScrollPortCrossAxis(dockCss, bottomDockSrc, sidebarDockSrc
     facts.sidebarDockOverflowScroll = sidebarScroll;
     if (bottomScroll) {
         violations.push(
-            'W2: demo/layout/BottomDock.vue still passes `overflow="scroll"` — the value is RETIRED (a capped axis scrolls intrinsically; there is no `"scroll"` union member)',
+            'W2: demo/shell/BottomDock.vue still passes `overflow="scroll"` — the value is RETIRED (a capped axis scrolls intrinsically; there is no `"scroll"` union member)',
         );
     }
     if (sidebarScroll) {
         violations.push(
-            'W2: demo/layout/SidebarDock.vue still passes `overflow="scroll"` — the value is RETIRED (a capped axis scrolls intrinsically; there is no `"scroll"` union member)',
+            'W2: demo/shell/SidebarDock.vue still passes `overflow="scroll"` — the value is RETIRED (a capped axis scrolls intrinsically; there is no `"scroll"` union member)',
         );
     }
 
@@ -449,8 +449,8 @@ async function run() {
     const densityCss = readFileSync(resolve(ROOT, "src/styles/dock/density.css"), "utf8");
     const shellCss = readFileSync(resolve(ROOT, "src/styles/dock/shell.css"), "utf8");
     const controlsCss = readMonolith(ROOT, "dock-controls"); // the five control-family partials
-    const bottomDock = readFileSync(resolve(ROOT, "demo/layout/BottomDock.vue"), "utf8");
-    const sidebarDock = readFileSync(resolve(ROOT, "demo/layout/SidebarDock.vue"), "utf8");
+    const bottomDock = readFileSync(resolve(ROOT, "demo/shell/BottomDock.vue"), "utf8");
+    const sidebarDock = readFileSync(resolve(ROOT, "demo/shell/SidebarDock.vue"), "utf8");
 
     const w1 = detectPlateClearance(densityCss, controlsCss);
     const w2 = detectScrollPortCrossAxis(dockCss, bottomDock, sidebarDock);

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { CompletionSeal } from "@glass/components/custom/completion-seal";
 import { Button } from "@glass/components/ui/button";
 

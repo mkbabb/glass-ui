@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { defineAsyncComponent, onMounted, ref } from "vue";
-import FamilyTabs, { type FamilyMember } from "../FamilyTabs.vue";
+import FamilyTabs, { type FamilyMember } from "../../chassis/family/FamilyTabs.vue";
 import { cn } from "@glass/utils/cn";
 
 // BG.W-DEMO-IA-REDESIGN — the Foundations PAPER chapter. The paper-texture tour

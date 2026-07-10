@@ -66,8 +66,8 @@ const GLASS_DOCK = `${DOCK_DIR}/GlassDock.vue`;
 const STACK_CSS = "src/styles/dock/stack-rail.css";
 const RAIL_EXTEND_CSS = "src/styles/dock/rail-extend.css";
 const DOCK_CSS = "src/styles/dock.css";
-const SIDEBAR = "demo/layout/SidebarDock.vue";
-const BOTTOM = "demo/layout/BottomDock.vue";
+const SIDEBAR = "demo/shell/SidebarDock.vue";
+const BOTTOM = "demo/shell/BottomDock.vue";
 const RAIL_STORY = "demo/stories/dock/rail.vue";
 // BD.W-DOCK-CORE (A1) — the broken `mode="facets"` carousel rail was REMOVED from the
 // SHELL nav docks (the user's "erroneous BROKEN RAIL element"); `<DockStack>` retains its

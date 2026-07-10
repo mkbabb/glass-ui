@@ -11,7 +11,7 @@
 //
 // WHAT IT ASSERTS:
 //   1. AppShell.vue IMPORTS + RENDERS both SidebarDock AND BottomDock.
-//   2. CategoryRail.vue + StoryPager.vue are DELETED from demo/layout/, and grep
+//   2. CategoryRail.vue + StoryPager.vue are DELETED from demo/shell/, and grep
 //      finds zero residual IMPORT of either anywhere under demo/ (a code comment
 //      mentioning the old name by prose is NOT an import and does not count).
 //   3. Both new docks render a <GlassDock> and consume useStoryNavigation.
@@ -33,7 +33,7 @@ function cliPaths() {
     _cliPaths = {
         ROOT,
         DEMO: resolve(ROOT, "demo"),
-        LAYOUT: resolve(ROOT, "demo/layout"),
+        SHELL: resolve(ROOT, "demo/shell"),
         ARTIFACT: gateArtifactPath(
             "GLASS_UI_DEMO_DOCK_NAV_ARTIFACT",
             "AW-demo-dock-nav",
@@ -74,13 +74,13 @@ export function detect(fileMap, allSources) {
     const violations = [];
     const facts = {};
 
-    // (2a) The deleted files are GONE from demo/layout/.
+    // (2a) The deleted files are GONE from demo/shell/.
     for (const deleted of ["CategoryRail.vue", "StoryPager.vue"]) {
-        const present = fileMap[`layout/${deleted}`] !== undefined;
+        const present = fileMap[`shell/${deleted}`] !== undefined;
         facts[`deleted_${deleted}`] = !present;
         if (present) {
             violations.push(
-                `demo/layout/${deleted} still exists — it must be deleted (clean break, no re-export shim)`,
+                `demo/shell/${deleted} still exists — it must be deleted (clean break, no re-export shim)`,
             );
         }
     }
@@ -98,9 +98,9 @@ export function detect(fileMap, allSources) {
     }
 
     // (1) AppShell imports + renders both new docks.
-    const appShell = fileMap["layout/AppShell.vue"];
+    const appShell = fileMap["shell/AppShell.vue"];
     if (!appShell) {
-        violations.push("demo/layout/AppShell.vue is missing");
+        violations.push("demo/shell/AppShell.vue is missing");
     } else {
         for (const dock of ["SidebarDock", "BottomDock"]) {
             const imported = importsDeletedComponent(appShell, dock); // same import matcher
@@ -116,9 +116,9 @@ export function detect(fileMap, allSources) {
 
     // (3) Both new docks exist, render a <GlassDock>, and consume useStoryNavigation.
     for (const dock of ["SidebarDock", "BottomDock"]) {
-        const src = fileMap[`layout/${dock}.vue`];
+        const src = fileMap[`shell/${dock}.vue`];
         if (!src) {
-            violations.push(`demo/layout/${dock}.vue is missing`);
+            violations.push(`demo/shell/${dock}.vue is missing`);
             continue;
         }
         const hasGlassDock = /<GlassDock\b/.test(src) && /\bGlassDock\b/.test(src);
@@ -140,11 +140,11 @@ function run() {
 
     // Map of `<reldir>/<file>` → source for the files the gate reasons over.
     const fileMap = {};
-    if (fs.existsSync(P.LAYOUT)) {
-        for (const entry of fs.readdirSync(P.LAYOUT)) {
-            const full = resolve(P.LAYOUT, entry);
+    if (fs.existsSync(P.SHELL)) {
+        for (const entry of fs.readdirSync(P.SHELL)) {
+            const full = resolve(P.SHELL, entry);
             if (fs.statSync(full).isFile())
-                fileMap[`layout/${entry}`] = fs.readFileSync(full, "utf8");
+                fileMap[`shell/${entry}`] = fs.readFileSync(full, "utf8");
         }
     }
 

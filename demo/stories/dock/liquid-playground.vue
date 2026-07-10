@@ -45,8 +45,8 @@ import {
     Clock,
 } from "@lucide/vue";
 import { IconChip } from "@glass/components/custom/icon-chip";
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { Button } from "@glass/components/ui/button";
 import { Slider } from "@glass/components/ui/slider";
 import { SegmentedTabs } from "@glass/components/custom/tabs";

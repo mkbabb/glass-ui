@@ -15,7 +15,7 @@
 //
 // A demo-private chassis primitive — NOT a library export.
 import { computed, type HTMLAttributes } from "vue";
-import StorySection from "../stories/StorySection.vue";
+import StorySection from "./section/StorySection.vue";
 import DemoSpecimen from "./DemoSpecimen.vue";
 
 export interface DemoMatrixCell {

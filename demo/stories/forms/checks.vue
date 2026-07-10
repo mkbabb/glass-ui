@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { ref } from "vue";
 import { Checkbox } from "@glass/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@glass/components/ui/radio-group";

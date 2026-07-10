@@ -75,8 +75,8 @@ function cliPaths() {
         CONSTANTS: resolve(ROOT, "src/components/custom/dock/constants.ts"),
         SECTION_CSS: resolve(ROOT, "src/styles/dock/section.css"),
         INDEX: resolve(ROOT, "src/components/custom/dock/index.ts"),
-        SIDEBAR: resolve(ROOT, "demo/layout/SidebarDock.vue"),
-        BOTTOM: resolve(ROOT, "demo/layout/BottomDock.vue"),
+        SIDEBAR: resolve(ROOT, "demo/shell/SidebarDock.vue"),
+        BOTTOM: resolve(ROOT, "demo/shell/BottomDock.vue"),
         ARTIFACT: gateArtifactPath("GLASS_UI_DOCK_SECTIONS_ARTIFACT", "BA-dock-sections"),
     };
     return _cliPaths;

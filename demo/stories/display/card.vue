@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
-import Code from "../Code.vue";
-import CodeBlock from "../CodeBlock.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import Code from "../../chassis/code/Code.vue";
+import CodeBlock from "../../chassis/code/CodeBlock.vue";
 import {
     Card,
     CardHeader,

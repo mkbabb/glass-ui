@@ -71,9 +71,9 @@ function cliPaths() {
         // FOLLOW the carve into it (the "asserts follow the composition into the carved
         // leaf" precedent).
         SHELL: resolve(ROOT, "demo/shell/useShellNavDock.ts"),
-        MANIFEST: resolve(ROOT, "demo/stories/dock-layer-contexts.ts"),
-        SIDEBAR: resolve(ROOT, "demo/layout/SidebarDock.vue"),
-        BOTTOM: resolve(ROOT, "demo/layout/BottomDock.vue"),
+        MANIFEST: resolve(ROOT, "demo/shell/dock-layer-contexts.ts"),
+        SIDEBAR: resolve(ROOT, "demo/shell/SidebarDock.vue"),
+        BOTTOM: resolve(ROOT, "demo/shell/BottomDock.vue"),
         ARTIFACT: gateArtifactPath(
             "GLASS_UI_DOCK_CONTEXTUAL_ARTIFACT",
             "AZ-dock-contextual-layers",
@@ -106,7 +106,7 @@ export function detectContextual(fs) {
     }
     if (!hasManifest) {
         violations.push(
-            "W1: `demo/stories/dock-layer-contexts.ts` is absent — the per-route-context layer manifest does not exist",
+            "W1: `demo/shell/dock-layer-contexts.ts` is absent — the per-route-context layer manifest does not exist",
         );
     }
 
@@ -207,7 +207,7 @@ export function detectContextual(fs) {
         ["BottomDock.vue", fs.bottomText, "bottom"],
     ]) {
         if (typeof text !== "string") {
-            violations.push(`W2: \`demo/layout/${name}\` is absent — cannot witness the shell-dock consumer`);
+            violations.push(`W2: \`demo/shell/${name}\` is absent — cannot witness the shell-dock consumer`);
             continue;
         }
         const live = stripComments(text, "vue");

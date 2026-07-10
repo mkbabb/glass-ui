@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import StoryPage from "../StoryPage.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
 import { Avatar, AvatarFallback, AvatarImage } from "@glass/components/ui/avatar";
 import { StackedIconGroup } from "@glass/components/custom/stacked-icons";
 import { cn } from "@glass/utils/cn";

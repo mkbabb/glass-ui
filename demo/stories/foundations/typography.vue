@@ -9,9 +9,9 @@
 // on its own view() timeline; no demo-local @keyframes). The ONE color event is
 // the TYPE itself — the ladder stays ink, the wash is the calm neutral grid (the
 // one-color-event proportion held).
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
-import ShowcaseFrame from "../ShowcaseFrame.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { cn } from "@glass/utils/cn";
 
 // The graded display ladder — display → body → admin rail, as a DESIGNED rhythm.

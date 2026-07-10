@@ -8,9 +8,9 @@
 // wash read-through (ShowcaseFrame quiet tier) + the glass-tier hover lift; its
 // glyphs stay ink (the monochrome proportion held). The library `--section-color`
 // tokens are NOT demo color (D6 fence).
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
-import ShowcaseFrame from "../ShowcaseFrame.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import {
     Bell,
     BookOpen,

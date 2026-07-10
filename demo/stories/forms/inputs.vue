@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { defineAsyncComponent, ref } from "vue";
-import FamilyTabs, { type FamilyMember } from "../FamilyTabs.vue";
+import FamilyTabs, { type FamilyMember } from "../../chassis/family/FamilyTabs.vue";
 import { Input } from "@glass/components/ui/input";
 import { Label } from "@glass/components/ui/label";
 import { SearchBar } from "@glass/components/custom/search";

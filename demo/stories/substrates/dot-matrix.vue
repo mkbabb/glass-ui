@@ -7,9 +7,9 @@
 // reference (subtle mono-warm-white TWO globes on near-black) toggles beside it as a
 // non-default named preset (presets-in-consumers; BC.W-TEAL-NAVY-PURGE — teal-on-navy GONE).
 import { computed, reactive, ref } from "vue";
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
-import ShowcaseFrame from "../ShowcaseFrame.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { Switch } from "@glass/components/ui/switch";
 import { Label } from "@glass/components/ui/label";
 import {

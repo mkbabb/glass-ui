@@ -25,7 +25,7 @@ export interface FamilyMember {
     id: string;
     /** The tab label. */
     label: string;
-    /** The member SFC (pass `defineAsyncComponent(() => import("./textarea.vue"))`). */
+    /** The member SFC (pass `defineAsyncComponent(() => import("../../stories/textarea.vue"))`). */
     component: Component;
 }
 

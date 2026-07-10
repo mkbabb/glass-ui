@@ -53,7 +53,7 @@ const SUBPATH = resolve(ROOT, "src/subpaths/goo-dot-matrix.ts");
 const PKG = resolve(ROOT, "package.json");
 const DEMO_STORY = resolve(ROOT, "demo/stories/substrates/goo-dot.vue");
 const MANIFEST = resolve(ROOT, "demo/stories/manifest.ts");
-const PREVIEW_STILL = resolve(ROOT, "demo/stories/vizPreviewStill.ts");
+const PREVIEW_STILL = resolve(ROOT, "demo/chassis/landing/vizPreviewStill.ts");
 // The two survivors — the halves that outlive the hybrid.
 const GOOBLOB_DIR = resolve(ROOT, "src/components/custom/goo-blob");
 const GOOBLOB_METABALL = resolve(

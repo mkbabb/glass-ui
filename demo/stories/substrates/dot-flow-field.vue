@@ -7,9 +7,9 @@
 // with a byte-identical WebGL2 fallback (the free-advected-mote + additive-trail architecture is
 // RETIRED). The library default is warm-cream; the IMG_1836 teal-on-navy skin is a demo preset.
 import { computed, reactive, ref } from "vue";
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
-import ShowcaseFrame from "../ShowcaseFrame.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { Switch } from "@glass/components/ui/switch";
 import { Label } from "@glass/components/ui/label";
 import {

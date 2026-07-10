@@ -20,9 +20,9 @@
 // @keyframes). The 13-stop ramp IS the content (the reference-class one-color-event
 // exemption, the progress phase-bus precedent), so every stop carries its full
 // `--section-color-N` chroma; the mono-caption labels stay ink.
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
-import ShowcaseFrame from "../ShowcaseFrame.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { WatercolorDot } from "@glass/components/custom/watercolor-dot";
 import { cn } from "@glass/utils/cn";
 

@@ -47,7 +47,7 @@ import {
 import { FadingScroll } from "@glass/components/custom/fading-scroll";
 import SidebarDock from "./SidebarDock.vue";
 import { useStoryNavigation } from "../chassis/useStoryNavigation";
-import { useShellNavDock } from "../shell/useShellNavDock";
+import { useShellNavDock } from "./useShellNavDock";
 
 const { current, next, prev, nextCategory, prevCategory, goTo } =
     useStoryNavigation();

@@ -10,8 +10,8 @@
 // facsimile: the real capability replaces the hand-rolled prototype.
 import { ref, useTemplateRef } from "vue";
 import { Search, Sparkles } from "@lucide/vue";
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { GlassDock, SiriDockCapability } from "@glass/components/custom/dock";
 import { useDockState } from "@glass/components/custom/dock/composables/useDockState";
 import type { UseDockSearchOptions } from "@glass/components/custom/dock/composables/useDockSearch";

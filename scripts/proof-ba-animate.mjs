@@ -146,10 +146,10 @@ const checks = []; // {id, pass, detail}
 const add = (id, pass, detail) => checks.push({ id, pass: Boolean(pass), detail });
 
 // ── The source surfaces (comment-stripped) ───────────────────────────────────
-const appShell = strip(read("demo/layout/AppShell.vue"));
+const appShell = strip(read("demo/shell/AppShell.vue"));
 const metricCell = strip(read("demo/stories/data/metric-cell.vue"));
-const storyHero = strip(read("demo/stories/StoryHero.vue"));
-const dockNavCss = strip(read("demo/layout/dock-nav.css"));
+const storyHero = strip(read("demo/chassis/hero/StoryHero.vue"));
+const dockNavCss = strip(read("demo/shell/dock-nav.css"));
 const transitionsCss = strip(read("src/styles/transitions.css"));
 
 // ── W1 — the route page-enter is wired (scoped to the <RouterView v-slot> block) ──

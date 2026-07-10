@@ -6,9 +6,9 @@
 // (13 sites in keyframes.js demo + 9 in words/frontend). Transition
 // + easing bind to --duration-fast + --ease-standard.
 import { Heart, Sparkles, Star, Zap } from "@lucide/vue";
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
-import ShowcaseFrame from "../ShowcaseFrame.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 </script>
 
 <template>

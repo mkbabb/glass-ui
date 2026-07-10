@@ -229,7 +229,7 @@ const PASTE_RE = /color-mix\(in srgb, var\(--section-color-\$\{/;
 // and Code.vue (BC.W-CODE-BLOCKS — the inline-code chip's `tone` prop tints a CODE
 // literal's backplate, a DISTINCT one-color-event primitive, the single demo-private
 // home for the code-chip event, never an inline icon-chip re-paste in a story body).
-const PASTE_PRIMITIVE_HOMES = ["icon-chip", "stories/Code.vue"];
+const PASTE_PRIMITIVE_HOMES = ["icon-chip", "chassis/code/Code.vue"];
 const pasteHits = [];
 for (const rel of listFiles("demo", ".vue")) {
     if (PASTE_PRIMITIVE_HOMES.some((h) => rel.includes(h))) continue;
@@ -258,7 +258,7 @@ add(
 // at text-title INSIDE that page-only header. The assert verifies BOTH facts with
 // equal rigor — the content-page header is gated to variant==='page' AND its <h1> is
 // at the one-rung-above grade (a regress to a lower rung still reds).
-const storyPage = strip(read("demo/stories/StoryPage.vue"));
+const storyPage = strip(read("demo/chassis/page/StoryPage.vue"));
 const contentHeaderOk = /<header\b[^>]*v-if="variant === 'page'"/.test(storyPage);
 // BD.W-CUT — the chrome/hero SCALE SPLIT. The content-page chrome <h1> is now a CALM
 // page LABEL, NOT the protagonist rung: the audacious `text-display-${heroScale}` floor

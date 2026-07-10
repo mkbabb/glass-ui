@@ -7,9 +7,9 @@
 // `--paper-*-texture` vars at any ancestor scope — the cascade is the
 // canonical way to retint or swap the turbulence without forking the SFC.
 import { ref } from "vue";
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
-import ShowcaseFrame from "../ShowcaseFrame.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { PaperBackdrop } from "@glass/components/custom/paper-backdrop";
 
 const opacity = ref(0.5);

@@ -6,9 +6,9 @@
 // through to the bare --size-icon-btn fallback and teach nothing. We host it
 // across three densities so the size-inheritance IS the teaching point.
 import { ref } from "vue";
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
-import ShowcaseFrame from "../ShowcaseFrame.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { DarkModeToggle } from "@glass/subpaths/controls";
 import { GlassDock } from "@glass/components/custom/dock";
 

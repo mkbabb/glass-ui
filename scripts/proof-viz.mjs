@@ -16,7 +16,7 @@
 //   • BG.W-VIZ-PREVIEW-LIVE (P1-P4) — the per-STORY distinct-preview-still source gate:
 //     the /substrates bento painted 11 IDENTICAL frozen aurora stills (every card shared
 //     the ONE category `fieldStill`); the cure is a per-story dispatch off the colocated
-//     `demo/stories/vizPreviewStill.ts` registry so per-card pixel-hash differs BY
+//     `demo/chassis/landing/vizPreviewStill.ts` registry so per-card pixel-hash differs BY
 //     CONSTRUCTION over ZERO live GL contexts (born-RED on HEAD — the registry + the
 //     SectionPreviewCard import do not exist). The LIVE per-card-pixel-hash paint is the
 //     orchestrator's real-device capture, NOT this gate (the cardinal source/paint split).
@@ -110,8 +110,8 @@ const VISIBILITY_LEAF = resolve(
 // BG.W-VIZ-PREVIEW-LIVE — the per-story preview-still surface (the SectionPreviewCard
 // dispatch + its colocated distinct-still registry). The preview arm (P1-P4) shares
 // this gate with the resize-upload-only arm (V1-V5); the two are disjoint file sets.
-const CARD = resolve(ROOT, "demo/stories/SectionPreviewCard.vue");
-const STILL = resolve(ROOT, "demo/stories/vizPreviewStill.ts");
+const CARD = resolve(ROOT, "demo/chassis/landing/SectionPreviewCard.vue");
+const STILL = resolve(ROOT, "demo/chassis/landing/vizPreviewStill.ts");
 // BG.W-VIZ-REVEAL-BLOOM — the one-shot cold-first-VISIBLE entrance bloom (R1-R8).
 // The CSS-filter recipe + its minted duration token + the LEAF attr mechanism +
 // the aurora opt-in anchor + the useVizChoreography DEFINITION-ABSENT verify.

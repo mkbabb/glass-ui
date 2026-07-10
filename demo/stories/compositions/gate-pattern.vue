@@ -13,8 +13,8 @@
 // correct key closes it. The page is always reachable; nothing traps the viewport.
 import { ref, nextTick } from "vue";
 import { Lock, Unlock } from "@lucide/vue";
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import {
     Card,
     CardContent,

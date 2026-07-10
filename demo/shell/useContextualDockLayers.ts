@@ -22,7 +22,7 @@ import {
     CONTEXT_LAYER_MAP,
     FALLBACK_CONTEXT_LAYER,
     type ContextLayer,
-} from "../stories/dock-layer-contexts";
+} from "./dock-layer-contexts";
 
 export interface UseContextualDockLayersReturn {
     /** The active category id off the route (null when off any story route). */

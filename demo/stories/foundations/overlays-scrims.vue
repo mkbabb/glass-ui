@@ -7,11 +7,11 @@
 // the dim has nothing to dim and reads as nothing. The three scrim weights now
 // paint over a vivid gradient field (`.scrim-stage`) so each weight's dim reads as
 // the backdrop-darkening it IS.
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
-import ShowcaseFrame from "../ShowcaseFrame.vue";
-import TokenLadder from "../TokenLadder.vue";
-import type { TokenLadderRow } from "../TokenLadder.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
+import TokenLadder from "../../chassis/showcase/TokenLadder.vue";
+import type { TokenLadderRow } from "../../chassis/showcase/TokenLadder.vue";
 
 const scrims: { cls: string; label: string; hint: string }[] = [
     {

@@ -54,9 +54,9 @@ const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const COMMAND = "npm run proof:dock-persistent-cut";
 const SELF_TEST = process.argv.includes("--self-test");
 
-const SIDEBAR = resolve(ROOT, "demo/layout/SidebarDock.vue");
-const BOTTOM = resolve(ROOT, "demo/layout/BottomDock.vue");
-const APPSHELL = resolve(ROOT, "demo/layout/AppShell.vue");
+const SIDEBAR = resolve(ROOT, "demo/shell/SidebarDock.vue");
+const BOTTOM = resolve(ROOT, "demo/shell/BottomDock.vue");
+const APPSHELL = resolve(ROOT, "demo/shell/AppShell.vue");
 const USE_LONG_PRESS = resolve(ROOT, "demo/eggs/useLongPress.ts");
 const FREDRAW_OVERLAY = resolve(ROOT, "demo/eggs/FRedrawOverlay.vue");
 const FGLYPH = resolve(ROOT, "demo/eggs/fGlyphPoints.ts");

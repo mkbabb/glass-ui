@@ -18,7 +18,7 @@
 
 import { reactive } from "vue";
 import { useGlobalDark } from "@glass/composables/dark";
-import type { PresetId } from "../../presets/manifest";
+import type { PresetId } from "../presets/manifest";
 import { writeField, writeFontSlot } from "./css-writers";
 import { DEFAULT_CONFIG, FIELD_CSS_VARS, FONT_SLOT_VARS } from "./defaults";
 import { loadPersisted, persist } from "./persistence";

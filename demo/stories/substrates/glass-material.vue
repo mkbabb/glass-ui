@@ -14,9 +14,9 @@
 // dialog/sheet register (cards stay round by policy), and the deliberately-subtle
 // rim is shown against an on/off contrast device.
 import { ref, useTemplateRef } from "vue";
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
-import ShowcaseFrame from "../ShowcaseFrame.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { useSpecularTracking, Button } from "@glass/index";
 // AZ.W-ADAPTIVE-AUTO Arm 2 — the DEMO exerciser for the sampled-luminance observer
 // (path B: demo-private — the composable is OFF the public glass barrel, imported

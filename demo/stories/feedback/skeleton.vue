@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
-import ShowcaseFrame from "../ShowcaseFrame.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { Skeleton } from "@glass/components/ui/skeleton";
 import { IconChip } from "@glass/components/custom/icon-chip";
 import { LoaderCircle } from "@lucide/vue";

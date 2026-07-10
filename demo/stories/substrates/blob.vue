@@ -11,8 +11,8 @@
 // page never approaches the browser's per-page WebGL cap.
 import { computed, reactive, ref, watch } from "vue";
 import VizStudio from "./VizStudio.vue";
-import StorySection from "../StorySection.vue";
-import ShowcaseFrame from "../ShowcaseFrame.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { GooBlob } from "@glass/components/custom/goo-blob";
 import type { BlobConfig, BlobMood, BlobMerge } from "@glass/components/custom/goo-blob";
 import { BLOB_CONFIG_DEFAULTS } from "@glass/components/custom/goo-blob/types";

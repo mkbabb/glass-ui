@@ -9,8 +9,8 @@
 // the face. This pane is the binary in-repo consumer (the hero word + a multi-word
 // headline + the AT-label readback).
 import { ref } from "vue";
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { SplitChars } from "@glass/components/custom/split-chars";
 import { Button } from "@glass/components/ui/button";
 

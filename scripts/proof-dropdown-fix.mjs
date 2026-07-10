@@ -66,7 +66,7 @@ function cliPaths() {
         DROPDOWN_CONTENT: ui("dropdown-menu/DropdownMenuContent.vue"),
         MENU_VARIANTS: ui("_shared/menuItemVariants.ts"),
         BASE_MISC_CSS: resolve(ROOT, "src/styles/utilities/base-misc.css"),
-        DOCK_NAV_CSS: resolve(ROOT, "demo/layout/dock-nav.css"),
+        DOCK_NAV_CSS: resolve(ROOT, "demo/shell/dock-nav.css"),
         CLAUDE_MD: resolve(ROOT, "CLAUDE.md"),
         ARTIFACT: gateArtifactPath(
             "GATE_DROPDOWN_FIX_OUT",

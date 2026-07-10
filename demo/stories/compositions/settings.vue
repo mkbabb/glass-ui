@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import StoryPage from "../StoryPage.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
 import { ref } from "vue";
 import { Card, CardContent } from "@glass/components/ui/card";
 import { Separator } from "@glass/components/ui/separator";

@@ -42,9 +42,9 @@ export const ROOT = resolve(fileURLToPath(new URL("../../", import.meta.url)));
 // closure (the routeSeeds HARD-RED, NOT an emptiness check, is the discriminator).
 export const SHELL_SEED = Object.freeze([
     "demo/App.vue",
-    "demo/layout/AppShell.vue",
-    "demo/layout/BottomDock.vue",
-    "demo/layout/SidebarDock.vue",
+    "demo/shell/AppShell.vue",
+    "demo/shell/BottomDock.vue",
+    "demo/shell/SidebarDock.vue",
     "src/styles/index.css",
 ]);
 

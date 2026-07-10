@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import StoryPage from "../StoryPage.vue";
+import StoryPage from "../../chassis/page/StoryPage.vue";
 import { ref } from "vue";
 import { Check, ChevronsUpDown, Search } from "@lucide/vue";
 import {
