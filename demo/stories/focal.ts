@@ -58,6 +58,7 @@ export const SELF_STAGES_GL: ReadonlySet<string> = new Set([
     "dock/dock-search",
     "dock/cta-receive",
     "dock/morph-showcase",
+    "dock/siri-island",
     "dock/rail",
     "dock/liquid-playground",
 ]);
