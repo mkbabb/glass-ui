@@ -1271,6 +1271,67 @@ function detect(overrides = {}) {
         m3Flat && m3NoIndexForm,
     );
 
+    // ── SM1-SM3 — the stories.smoke re-point (BH.B3 δ-stories-smoke-repoint). ─────
+    //   The V.W4.T16 storybook smoke spec (tests/stories.smoke.spec.ts) is
+    //   RE-POINTED onto the δ5 manifest-carve: the glob-resolved SFC resolver moved
+    //   OFF manifest.ts into demo/stories/manifest/lazy.ts (`makeLazy`). Born-RED on
+    //   HEAD — the pre-carve spec imported ONLY CATEGORIES from the manifest,
+    //   exercised NO carved resolver, and leaned SOLELY on Vite's glob runtime for
+    //   "every row resolves" (no device-independent disk bijection). This clause
+    //   block locks the re-point AND runs the manifest ≡ disk bijection itself, so
+    //   "assert every row resolves" is a gate fact, not only a runtime test.
+    const SMOKE_FILE = "tests/stories.smoke.spec.ts";
+    const smokeSrc = overrides.smokeSrc ?? readSrc(SMOKE_FILE);
+
+    // SM1 — the spec exists + imports CATEGORIES from the SINGLE-SOURCE manifest +
+    //   carries the "every row resolves (no MissingStory)" assertion.
+    const sm1Exists = smokeSrc.length > 0;
+    const sm1ImportsCategories =
+        /import\s*\{[^}]*\bCATEGORIES\b[^}]*\}\s*from\s*["']\.\.\/demo\/stories\/manifest["']/.test(
+            smokeSrc,
+        );
+    const sm1MissingAssert = /MissingStory:/.test(smokeSrc);
+    facts.sm1 = {
+        exists: sm1Exists,
+        importsCategories: sm1ImportsCategories,
+        missingAssert: sm1MissingAssert,
+    };
+    assert(
+        "SM1 — stories.smoke imports CATEGORIES from the single-source manifest + asserts every row resolves (no MissingStory)",
+        sm1Exists && sm1ImportsCategories && sm1MissingAssert,
+    );
+
+    // SM2 — the spec is RE-POINTED onto the δ5 carve: it exercises the carved
+    //   `makeLazy` resolver (imported from ../demo/stories/manifest/lazy) AND carries
+    //   a device-independent disk bijection (an `existsSync` check of the per-row
+    //   `.vue`). The pre-carve HEAD spec did NEITHER → born-RED.
+    const sm2ImportsMakeLazy =
+        /import\s*\{[^}]*\bmakeLazy\b[^}]*\}\s*from\s*["']\.\.\/demo\/stories\/manifest\/lazy["']/.test(
+            smokeSrc,
+        );
+    const sm2DiskBijection = /existsSync/.test(smokeSrc) && /\.vue`/.test(smokeSrc);
+    facts.sm2 = {
+        importsMakeLazy: sm2ImportsMakeLazy,
+        diskBijection: sm2DiskBijection,
+    };
+    assert(
+        "SM2 — stories.smoke is re-pointed onto the δ5 carve (exercises makeLazy from manifest/lazy + a device-independent disk bijection)",
+        sm2ImportsMakeLazy && sm2DiskBijection,
+    );
+
+    // SM3 — the manifest ≡ disk bijection HOLDS device-free: every `s("cat","id")`
+    //   row resolves to `demo/stories/<cat>/<id>.vue` on disk (the EXACT key
+    //   `makeLazy` builds). This IS "assert every row resolves" at the gate level —
+    //   a row added without its SFC (or a mis-cased id) REDs the close. The
+    //   `manifestSrc` override lets a self-test plant a phantom row.
+    const smRows = parseStoryRows(manifestSrc);
+    const smMissing = smRows.filter((r) => !fileExists(`demo/stories/${r}.vue`));
+    facts.sm3 = { rows: smRows.length, missing: smMissing };
+    assert(
+        "SM3 — the manifest ≡ disk bijection holds (every story row resolves to its demo/stories/<cat>/<id>.vue)",
+        smRows.length >= 80 && smMissing.length === 0,
+    );
+
     // ── WC1-WC5 — the colors-watercolor arm (BG.W-COLORS-WATERCOLOR-SWATCH). The
     //    /foundations/colors section-ramp stops render as the shipped <WatercolorDot>
     //    seeded blobs (REUSED not re-forked), sized ≥112px (larger than the retired
@@ -1948,6 +2009,51 @@ function selfTest() {
         "M3 the glob adopts the dropped ./*/*/index.vue dir-form",
     );
 
+    // ── SM-clause bites (BH.B3 δ-stories-smoke-repoint). ─────────────────────────
+    // The pre-carve HEAD smoke spec — imports ONLY CATEGORIES, no makeLazy, no disk
+    // bijection: the born-RED form SM2 flags (SM1 still greens, the spec is not
+    // gone). SMOKE_HEAD is the exact V.W4.T16 shape before the re-point.
+    const SMOKE_HEAD =
+        `import { describe, expect, it } from "vitest";\n` +
+        `import { CATEGORIES } from "../demo/stories/manifest";\n` +
+        `// asserts no MissingStory: placeholder resolves\n`;
+    // SM2 (born-RED HEAD form): the spec does not import makeLazy from the carved
+    //   leaf AND carries no existsSync disk bijection → REDs SM2 (SM1 stays green).
+    sab(
+        { smokeSrc: SMOKE_HEAD },
+        "SM2 — stories.smoke is re-pointed onto the δ5 carve (exercises makeLazy from manifest/lazy + a device-independent disk bijection)",
+        "SM2 pre-carve smoke spec (no makeLazy, no disk bijection)",
+    );
+    // SM1: the "every row resolves" MissingStory assertion is DELETED (the spec
+    //   greened vacuously by dropping the check) → REDs SM1.
+    sab(
+        {
+            smokeSrc:
+                `import { CATEGORIES } from "../demo/stories/manifest";\n` +
+                `import { makeLazy } from "../demo/stories/manifest/lazy";\n` +
+                `import { existsSync } from "node:fs";\n` +
+                // Single-quoted so the backtick after `.vue` is a literal char —
+                // greens SM2's makeLazy + disk-bijection, carries NO MissingStory: → REDs SM1.
+                'existsSync(`x/y.vue`);\n',
+        },
+        "SM1 — stories.smoke imports CATEGORIES from the single-source manifest + asserts every row resolves (no MissingStory)",
+        "SM1 the MissingStory every-row-resolves assertion deleted",
+    );
+    // SM3: a phantom manifest row (a story whose SFC is absent on disk) → REDs SM3
+    //   (the bijection break — a row added without its file). The synthetic rows key
+    //   to demo/stories/<cat>/<id>.vue paths that do not exist, so the bijection fails.
+    sab(
+        {
+            manifestSrc:
+                M_HEAD +
+                `const modules = import.meta.glob<{ default: Component }>("./*/*.vue");\n` +
+                M_ROWS +
+                `\ns("phantomcat", "phantomid", "T");`,
+        },
+        "SM3 — the manifest ≡ disk bijection holds (every story row resolves to its demo/stories/<cat>/<id>.vue)",
+        "SM3 a phantom manifest row with no SFC on disk",
+    );
+
     // ── WC-clause bites (BG.W-COLORS-WATERCOLOR-SWATCH) — each recreates a defect
     // the fixed colors pane must not carry. GOOD_WC satisfies every WC clause; each
     // bite mutates ONE axis. WC_FILE is the literal path detect() reads via readSrc.
@@ -2207,6 +2313,15 @@ function run() {
         `  CL3 dirs gone + no drift  : ${facts["CL3 — the dissolved flat-root dirs are extirpated (demo/layout + demo/presets gone) + no stray flat chassis at the stories root"]}  (dirHusks: ${JSON.stringify(facts.cl3?.dirHusks ?? [])}, strays: ${JSON.stringify(facts.cl3?.strays ?? [])})`,
     );
     console.log(
+        `  SM1 smoke imports+resolves: ${facts["SM1 — stories.smoke imports CATEGORIES from the single-source manifest + asserts every row resolves (no MissingStory)"]}`,
+    );
+    console.log(
+        `  SM2 smoke re-pointed (δ5) : ${facts["SM2 — stories.smoke is re-pointed onto the δ5 carve (exercises makeLazy from manifest/lazy + a device-independent disk bijection)"]}  (makeLazy: ${facts.sm2?.importsMakeLazy}, disk: ${facts.sm2?.diskBijection})`,
+    );
+    console.log(
+        `  SM3 manifest≡disk bijection: ${facts["SM3 — the manifest ≡ disk bijection holds (every story row resolves to its demo/stories/<cat>/<id>.vue)"]}  (rows: ${facts.sm3?.rows}, missing: ${JSON.stringify(facts.sm3?.missing ?? [])})`,
+    );
+    console.log(
         `  WC1 colors→WatercolorDot  : ${facts["WC1 — the colors ramp composes the shipped <WatercolorDot> primitive over --section-color-N"]}`,
     );
     console.log(
@@ -2231,7 +2346,7 @@ function run() {
         `  PR3 ribbon tile ≥72px     : ${facts["PR3 — the top-placed preset tiles read a LARGE floor (≥72px, top-scoped configurator.css rule)"]}  (minPx: ${facts.pr3?.minPx})`,
     );
     console.log(
-        `  self-test (bite proof)    : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×2 incl. comment-strip + D4 + D5 + D6×2 + D7×3 incl. comment-strip + T1-T4 + E1×2 incl. declared-family + E2 + E3 + F1 + F2×2 incl. FamilyTabs + F3 + ST1-ST5 + CF1 + CF2×3 incl. comment-strip + CD1 + CD2 + CD3×2 incl. comment-strip + CL1 + CL2 + CL3×2 incl. dir-husk + stray-drift + M1 + M2 + M3 + WC1-WC5 + PR1×2 incl. comment-strip + PR2 + PR3×2 incl. sub-72)`,
+        `  self-test (bite proof)    : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×2 incl. comment-strip + D4 + D5 + D6×2 + D7×3 incl. comment-strip + T1-T4 + E1×2 incl. declared-family + E2 + E3 + F1 + F2×2 incl. FamilyTabs + F3 + ST1-ST5 + CF1 + CF2×3 incl. comment-strip + CD1 + CD2 + CD3×2 incl. comment-strip + CL1 + CL2 + CL3×2 incl. dir-husk + stray-drift + M1 + M2 + M3 + SM1 + SM2 + SM3 + WC1-WC5 + PR1×2 incl. comment-strip + PR2 + PR3×2 incl. sub-72)`,
     );
     if (violations.length) {
         console.log("\nVIOLATIONS:");
