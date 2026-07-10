@@ -1137,6 +1137,64 @@ function detect(overrides = {}) {
         wc5Cascade && wc5NoLocalKeyframes,
     );
 
+    // ── PR1-PR3 — the preset-ribbon arm (BG.W-PRESET-RIBBON-TOP / F7.6). The aurora
+    //    studio's presets are a LARGE full-width TOP RIBBON, not the 360px aside
+    //    gutter: the studio pins galleryPlacement="top", the shared VizStudio chassis
+    //    THREADS the axis to the ONE library <Configurator> (single-writer — the studio
+    //    only sets the axis, the chassis owns the passthrough, never a per-studio
+    //    gallery re-fork), and the top-placed preset tiles read a LARGE floor (≥72px)
+    //    via a top-scoped configurator.css rule. Born-RED on HEAD (aurora passes no
+    //    gallery-placement; VizStudio hardcodes the aside default; no top-scoped tile
+    //    floor). The FadingScroll overflow is the shipped PresetPickerRow scroll-port
+    //    (byte-untouched). The studio + chassis srcs are comment-STRIPPED (a
+    //    gallery-placement mention in prose is provenance, never a live bind — the anti-
+    //    evasion strip a self-test bite proves).
+    const AURORA_STUDIO = "demo/stories/substrates/aurora.vue";
+    const VIZ_STUDIO_PR = "demo/stories/substrates/VizStudio.vue";
+    const CONFIG_CSS = "src/styles/configurator.css";
+    const auroraStudioSrc = stripComments(readSrc(AURORA_STUDIO));
+    const vizStudioPrSrc = stripComments(readSrc(VIZ_STUDIO_PR));
+    const configCssSrc = stripComments(
+        overrides.configCssSrc ?? read(CONFIG_CSS),
+    );
+
+    // PR1 — the aurora studio pins the TOP ribbon: it binds gallery-placement="top"
+    //   (static or the `:gallery-placement="'top'"` bound form) on its <VizStudio> host.
+    const pr1Top =
+        /gallery-placement\s*=\s*"top"/.test(auroraStudioSrc) ||
+        /:gallery-placement\s*=\s*"'top'"/.test(auroraStudioSrc);
+    facts.pr1 = { pinsTop: pr1Top };
+    assert(
+        'PR1 — the aurora studio pins the preset gallery as a top ribbon (gallery-placement="top")',
+        pr1Top,
+    );
+
+    // PR2 — the VizStudio chassis THREADS the axis to the library <Configurator>
+    //   (single-writer passthrough): it declares a `galleryPlacement` prop AND binds
+    //   `:gallery-placement=` on <Configurator>. The studio sets the axis; the chassis
+    //   owns the ONE Configurator — never a per-studio gallery re-fork.
+    const pr2Prop = /\bgalleryPlacement\?\s*:/.test(vizStudioPrSrc);
+    const pr2Bind = /:gallery-placement\s*=/.test(vizStudioPrSrc);
+    facts.pr2 = { prop: pr2Prop, bind: pr2Bind };
+    assert(
+        "PR2 — VizStudio threads galleryPlacement to <Configurator> (single-writer passthrough)",
+        pr2Prop && pr2Bind,
+    );
+
+    // PR3 — the top-placed preset tiles read a LARGE floor (≥72px): a top-scoped
+    //   configurator.css rule (`[data-gallery="top"] .configurator-preset-tile`) sets
+    //   an inline-size whose clamp MIN rung is ≥72px (the wave's LARGE-ribbon tile
+    //   floor). A missing top-scoped rule (HEAD) or a sub-72px floor REDs.
+    const prTileMatch = configCssSrc.match(
+        /\[data-slot="configurator"\]\[data-gallery="top"\]\s*\.configurator-preset-tile\s*\{[^}]*inline-size:\s*clamp\(\s*([\d.]+)px/,
+    );
+    const pr3Px = prTileMatch ? parseFloat(prTileMatch[1]) : 0;
+    facts.pr3 = { present: Boolean(prTileMatch), minPx: pr3Px };
+    assert(
+        "PR3 — the top-placed preset tiles read a LARGE floor (≥72px, top-scoped configurator.css rule)",
+        pr3Px >= 72,
+    );
+
     return { facts, violations };
 }
 
@@ -1666,6 +1724,63 @@ function selfTest() {
         "WC5 a demo-local @keyframes in the colors pane",
     );
 
+    // ── PR-clause bites (BG.W-PRESET-RIBBON-TOP / F7.6) — each recreates the HEAD
+    // (failing) state, so the arm cannot silently regress. ──
+    // PR1 (born-RED HEAD form): the aurora studio passes NO gallery-placement (the
+    // default aside gutter) → REDs PR1.
+    sab(
+        {
+            srcOverride: {
+                "demo/stories/substrates/aurora.vue": `<template><VizStudio heading="Aurora" scroll-mode="never"><template #presets><PresetPickerRow /></template></VizStudio></template>`,
+            },
+        },
+        'PR1 — the aurora studio pins the preset gallery as a top ribbon (gallery-placement="top")',
+        "PR1 aurora studio passes no gallery-placement (HEAD aside form)",
+    );
+    // PR1 (comment-strip anti-evasion): a gallery-placement="top" that lives ONLY in a
+    // comment does NOT satisfy PR1 (the corpus is comment-stripped — a prose mention is
+    // provenance, never a live bind) → still REDs PR1.
+    sab(
+        {
+            srcOverride: {
+                "demo/stories/substrates/aurora.vue": `<!-- gallery-placement="top" is the F7.6 ribbon --><template><VizStudio heading="Aurora" /></template>`,
+            },
+        },
+        'PR1 — the aurora studio pins the preset gallery as a top ribbon (gallery-placement="top")',
+        "PR1 comment-only gallery-placement does not satisfy the bind (comment-strip)",
+    );
+    // PR2 (born-RED HEAD form): VizStudio hardcodes the aside default (no
+    // galleryPlacement prop, no :gallery-placement bind) → REDs PR2. vueCorpus empty so
+    // the D7 masthead-fill arm never confounds the bite.
+    sab(
+        {
+            srcOverride: {
+                "demo/stories/substrates/VizStudio.vue": `defineProps<{ heading?: string }>();\n<template><Configurator :aside-side="'right'"><template #stage /></Configurator></template>`,
+            },
+            vueCorpus: [],
+        },
+        "PR2 — VizStudio threads galleryPlacement to <Configurator> (single-writer passthrough)",
+        "PR2 VizStudio hardcodes the aside default (HEAD form)",
+    );
+    // PR3 (born-RED HEAD form): no top-scoped preset-tile floor in configurator.css →
+    // REDs PR3 (only the base `.configurator-preset-tile` rule, no top placement).
+    sab(
+        {
+            configCssSrc: `.configurator-preset-tile { inline-size: clamp(160px, 22vw, 232px); }`,
+        },
+        "PR3 — the top-placed preset tiles read a LARGE floor (≥72px, top-scoped configurator.css rule)",
+        "PR3 no top-scoped preset-tile floor (HEAD form)",
+    );
+    // PR3 (sub-72 distinguishing): a top-scoped tile rule whose clamp floor is sub-72px
+    // → REDs PR3 (the ≥72px LARGE-ribbon floor — a small ribbon does not clear it).
+    sab(
+        {
+            configCssSrc: `[data-slot="configurator"][data-gallery="top"] .configurator-preset-tile { inline-size: clamp(64px, 20vw, 120px); }`,
+        },
+        "PR3 — the top-placed preset tiles read a LARGE floor (≥72px, top-scoped configurator.css rule)",
+        "PR3 a sub-72px top-scoped tile floor",
+    );
+
     return flagged;
 }
 
@@ -1795,7 +1910,16 @@ function run() {
         `  WC5 scroll-cascade entrance: ${facts["WC5 — the ramp enters on scroll via the existing .scroll-cascade--columns register (no demo-local @keyframes)"]}`,
     );
     console.log(
-        `  self-test (bite proof)    : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×2 incl. comment-strip + D4 + D5 + D6×2 + D7×3 incl. comment-strip + T1-T4 + E1×2 incl. declared-family + E2 + E3 + F1 + F2×2 incl. FamilyTabs + F3 + ST1-ST5 + CF1 + CF2×3 incl. comment-strip + CD1 + CD2 + CD3×2 incl. comment-strip + WC1-WC5)`,
+        `  PR1 aurora ribbon (top)   : ${facts['PR1 — the aurora studio pins the preset gallery as a top ribbon (gallery-placement="top")']}  (pinsTop: ${facts.pr1?.pinsTop})`,
+    );
+    console.log(
+        `  PR2 VizStudio threads axis: ${facts["PR2 — VizStudio threads galleryPlacement to <Configurator> (single-writer passthrough)"]}  (prop: ${facts.pr2?.prop}, bind: ${facts.pr2?.bind})`,
+    );
+    console.log(
+        `  PR3 ribbon tile ≥72px     : ${facts["PR3 — the top-placed preset tiles read a LARGE floor (≥72px, top-scoped configurator.css rule)"]}  (minPx: ${facts.pr3?.minPx})`,
+    );
+    console.log(
+        `  self-test (bite proof)    : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×2 incl. comment-strip + D4 + D5 + D6×2 + D7×3 incl. comment-strip + T1-T4 + E1×2 incl. declared-family + E2 + E3 + F1 + F2×2 incl. FamilyTabs + F3 + ST1-ST5 + CF1 + CF2×3 incl. comment-strip + CD1 + CD2 + CD3×2 incl. comment-strip + WC1-WC5 + PR1×2 incl. comment-strip + PR2 + PR3×2 incl. sub-72)`,
     );
     if (violations.length) {
         console.log("\nVIOLATIONS:");

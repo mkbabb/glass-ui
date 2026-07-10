@@ -134,6 +134,7 @@ const hintText = computed(() => [
         blurb="A WebGPU-first procedural painterly gradient field — multi-nuclei composition, four mediums (smooth · oil · oil-pastel · van-Gogh) + the anisotropic-Kuwahara finish, cursor-driven swirl. Drag inside the stage to swirl the field; alt-click to spawn a nucleus. The configurator on the RIGHT drives EVERY axis: the OKLCh palette (the per-stop ColorSwatch editor), the composition (medium · zones · arrangement), the motion register, the warp/noise. The warm-cream Dawn identity is the default lead; the blue Sky is a named non-default preset. Shipped /aurora."
         height-class="h-[min(78vh,720px)]"
         scroll-mode="never"
+        gallery-placement="top"
     >
         <!-- BG.W-CHASSIS-ADOPT-OR-RETIRE — the studio identity is the ONE StoryHeader
              cluster the adopted VizStudio/StoryPage chassis renders (eyebrow → subpath
@@ -143,8 +144,14 @@ const hintText = computed(() => [
              it is EXCISED at the source AND the masthead slot is removed from the
              chassis root so no viz can re-author its identity. -->
 
-        <!-- The REAL baked-thumbnail preset row (the dead-card fix: usePresetThumbnails
-             AWAITS armAsync before renderAt on the WebGPU backend). -->
+        <!-- BG.W-PRESET-RIBBON-TOP — the presets are a LARGE full-width TOP RIBBON.
+             The `gallery-placement="top"` axis (threaded through VizStudio to the ONE
+             library <Configurator>) lifts the gallery OUT of the 360px aside gutter and
+             pins it spanning BOTH columns up-top; the stage + controls reclaim the full
+             height in row 2 (configurator.css `[data-gallery="top"]`). The REAL baked-
+             thumbnail preset row (the dead-card fix: usePresetThumbnails AWAITS armAsync
+             before renderAt on the WebGPU backend) fills the ribbon, its φ-tall tiles
+             LARGE (≥72px) and FadingScroll-overflow-clipped. -->
         <template #presets>
             <PresetPickerRow
                 :current="currentKey"

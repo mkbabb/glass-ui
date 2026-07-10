@@ -206,6 +206,19 @@
      * fill + rim + cast all carry from .glass-capsule. */
 }
 
+/* BG.W-PRESET-RIBBON-TOP (F7.6) — the LARGE full-width TOP RIBBON tile floor. When
+ * the gallery is pinned up-top (data-gallery="top") the presets span the whole studio
+ * width, not the 360px aside gutter, so the tiles read one rung LARGER than the aside
+ * form — the "LARGE ribbon" the aurora studio wants. Still the SAME
+ * .configurator-preset-tile card (no new material, the warm-glass capsule + cast carry
+ * from the base rule); only the inline-size floor lifts, and it is scoped to the top
+ * placement so the aside inspector idiom stays byte-unchanged. The clamp MIN (200px)
+ * clears the ≥72px LARGE-ribbon floor with headroom; the FadingScroll port (the
+ * .configurator-gallery-track) still clips the horizontal overflow. */
+[data-slot="configurator"][data-gallery="top"] .configurator-preset-tile {
+    inline-size: clamp(200px, 20vw, 288px);
+}
+
 /* The §3 field-well — the device-free `auroraFallbackGround` background-image is
  * set inline per tile; this rule sets the cover sizing + the rounded inner crown.
  * The well is the COLOURFUL field; the warm-glass capsule frames it. */

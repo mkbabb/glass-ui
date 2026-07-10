@@ -39,6 +39,7 @@ import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import {
     Configurator,
+    type ConfiguratorGalleryPlacement,
     type ConfiguratorPreset,
     type ConfiguratorScrollMode,
 } from "@glass/components/custom/configurator";
@@ -65,6 +66,16 @@ const props = withDefaults(
         presets?: readonly ConfiguratorPreset<unknown>[];
         /** The active preset key (display only). */
         activePreset?: string;
+        /**
+         * Where the preset gallery sits — forwarded to `<Configurator>`. Default
+         * `"aside"` (the inspector idiom, byte-identical to before). `"top"` pins
+         * the presets as a LARGE full-width scrollable ribbon across the top of the
+         * studio (the aurora studio's F7.6 register — the stage + controls reclaim
+         * the full height below it). The chassis OWNS the passthrough (single-writer
+         * — it threads the axis to the ONE library `<Configurator>`); a studio only
+         * sets the axis, never a per-studio gallery re-fork.
+         */
+        galleryPlacement?: ConfiguratorGalleryPlacement;
         /** Scroll behaviour for the controls column. Default `auto`. */
         scrollMode?: ConfiguratorScrollMode;
         /**
@@ -79,6 +90,7 @@ const props = withDefaults(
     {
         scrollMode: "auto",
         heightClass: "h-[min(78vh,720px)]",
+        galleryPlacement: "aside",
     },
 );
 
@@ -121,6 +133,7 @@ const configuratorClass = computed(() =>
                  arbitrary utility). Below `lg` the controls stack below the stage. -->
             <Configurator
                 :aside-side="'right'"
+                :gallery-placement="galleryPlacement"
                 :scroll-mode="scrollMode"
                 :presets="presets"
                 :active-preset="activePreset"
