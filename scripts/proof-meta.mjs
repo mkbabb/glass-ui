@@ -75,6 +75,7 @@ import {
     isSeparatorRow,
     isWaveId,
     isVisualClass,
+    findHeaderColumns,
     DETECT_KIT_ROSTER,
 } from "./lib/detect/index.mjs";
 import {
@@ -95,6 +96,13 @@ const LEDGER = join(ROOT, "docs/tranches/BG/DIRECTIVE-LEDGER.md");
 // fold ledger (the disposition source of truth) + the build-map (the wave-spec authority).
 const FOLD_LEDGER_JSON = join(ROOT, "docs/tranches/BG/FOLD-LEDGER.json");
 const BUILD_MAP = join(ROOT, "docs/tranches/BG/execution/bg-build-map.md");
+// F8.6 (BG.W-ARISTOTELIAN-PROPORTION) — the edict-verdict-present clause reads the
+// gestalt roster (the enrolled surface set), the 3-axis edict-verdict ledger (the
+// review-completeness artefact), the aristotelian canon home, and the √φ model anchor.
+const GESTALT_ROSTER = join(ROOT, "docs/tranches/BG/audit/reflect/bg-gestalt-roster.md");
+const EDICT_LEDGER = join(ROOT, "docs/tranches/BG/audit/reflect/bg-edict-verdict-ledger.md");
+const ARIST_CANON = join(ROOT, "docs/canon/aristotelian-proportion.md");
+const CARD_SFC = join(ROOT, "src/components/ui/card/Card.vue");
 
 /**
  * The `fable / designSync` cell names BOTH halves iff it is non-empty, not `—`,
@@ -464,6 +472,179 @@ function deferredLedgerTerminal() {
     };
 }
 
+// ── The `edict-verdict-present` clause (BG.W-ARISTOTELIAN-PROPORTION, F8.6) ─────
+// GA-9 / PE-GESTALT: the Band-0 aesthetic edicts (√φ-proportion · animation-laws ·
+// technicolor-cartoon-punch) are transposed INTO the gestalt review as acceptance
+// LANGUAGE the review FILES per enrolled surface — NOT a fan-out of N mechanical
+// gates (the ceremony disease). This clause is a REVIEW-COMPLETENESS fence, the
+// fable-arm-present S1/S2 shape applied to the design-language edicts:
+//   A — the enrolled surface set (DERIVED from bg-gestalt-roster.md, the SAME set
+//       proof:ba-gestalt/warm-identity read) each carries a COMPLETE 3-axis row in
+//       the edict-verdict ledger (a verdict token PASS/FAIL/PENDING per axis). A
+//       roster surface with no row, or a row with a blank/garbage axis cell, is a
+//       review-INCOMPLETE HARD-RED. The clause locks COMPLETENESS, not PASS — the
+//       FABLE review files the PASS/FAIL (the canon CLOSE-PRECONDITION).
+//   B — the aristotelian canon home carries the edict vocabulary + the FABLE-not-
+//       the-builder CLOSE-PRECONDITION + the acceptance-LANGUAGE-not-N-gates fence +
+//       the light `--card-pad` proportion-census model reference.
+//   C — the LIGHT proportion-census model EXISTS on disk (the √φ ladder constants
+//       1.272/1.618/2.618 live in Card.vue) so the canon reference is not a phantom.
+//       This is a ONE-anchor census, NOT an off-ledger-rem gate fan-out.
+//   D — the DIRECTIVE-LEDGER §7b PE-GESTALT process-edict row names this wave owner.
+// Born-RED on a HEAD without the ledger + canon (the pre-flip state); GREEN once the
+// review roster is complete + the canon + model resolve. The PURE detector operates
+// on injected sources so the self-test feeds synthetic fixtures (a dropped surface /
+// a blank axis / a garbage token each MUST flag). ZERO pixels — the FABLE 3-axis
+// verdict is the PASS oracle; this clause locks the review is COMPLETE, never green
+// over a skipped surface or a missing axis.
+
+/** The three design-language acceptance axes (GA-9 / PE-GESTALT). */
+const EDICT_AXES = ["proportion", "animation", "technicolor"];
+/** A recognized verdict token opens the axis cell (case-insensitive, prose may follow). */
+const VERDICT_TOKEN = /^(PASS|FAIL|PENDING)\b/i;
+/** The light proportion-census model anchors — the `--card-pad` √φ ladder constants. */
+const CARD_PAD_LADDER = ["1.272", "1.618", "2.618"];
+
+/**
+ * Derive the enrolled gestalt surface set from the roster (column 0 of the data
+ * rows). Strips the HTML doc-block first, then reads each pipe-row's first cell.
+ * @param {string} src
+ * @returns {string[]}
+ */
+function rosterSurfaces(src) {
+    const noComments = src.replace(/<!--[\s\S]*?-->/g, "");
+    const surfaces = [];
+    let cols = null;
+    for (const ln of noComments.split("\n")) {
+        if (!ln.trimStart().startsWith("|")) continue;
+        const cells = rowCells(ln);
+        if (cells.length < 2 || isSeparatorRow(cells)) continue;
+        if (cells.map((c) => c.toLowerCase()).includes("surface")) {
+            cols = { surfIdx: cells.map((c) => c.toLowerCase()).indexOf("surface") };
+            continue; // the header itself is never a data row
+        }
+        if (!cols) continue;
+        const surface = (cells[cols.surfIdx] ?? "").trim();
+        if (surface && surface !== "—") surfaces.push(surface);
+    }
+    return surfaces;
+}
+
+/**
+ * Parse the edict-verdict ledger BY HEADER NAME (column-order-free). Returns a
+ * `surface → { proportion, animation, technicolor }` map of the raw cell strings.
+ * @param {string} src
+ * @returns {Map<string,Record<string,string>>}
+ */
+function parseEdictLedger(src) {
+    const noComments = src.replace(/<!--[\s\S]*?-->/g, "");
+    const rows = new Map();
+    let cols = null;
+    for (const ln of noComments.split("\n")) {
+        if (!ln.trimStart().startsWith("|")) continue;
+        const cells = rowCells(ln);
+        if (cells.length < 2 || isSeparatorRow(cells)) continue;
+        const header = findHeaderColumns(cells, {
+            surface: "surface",
+            proportion: "proportion",
+            animation: "animation",
+            technicolor: "technicolor",
+        });
+        if (header) {
+            cols = header;
+            continue; // the header itself is never a data row
+        }
+        if (!cols) continue;
+        const surface = (cells[cols.surface] ?? "").trim();
+        if (!surface || surface === "—") continue;
+        const axes = {};
+        for (const ax of EDICT_AXES) axes[ax] = cells[cols[ax]] ?? "";
+        rows.set(surface, axes);
+    }
+    return rows;
+}
+
+/**
+ * The PURE detector — operates on injected sources so the self-test can feed
+ * synthetic fixtures. Returns the review-completeness + canon + model failures.
+ * @param {{ rosterSrc:string, ledgerSrc:string, canonSrc:string, cardSrc:string, directiveLedger:string }} io
+ * @returns {string[]}
+ */
+function edictVerdictCheck({ rosterSrc, ledgerSrc, canonSrc, cardSrc, directiveLedger }) {
+    const failures = [];
+
+    // A — every enrolled gestalt surface carries a COMPLETE 3-axis verdict row.
+    const surfaces = rosterSurfaces(rosterSrc);
+    if (surfaces.length === 0)
+        failures.push("the gestalt roster declares ZERO enrolled surfaces — the review-completeness set is empty (the roster parse broke).");
+    const ledger = parseEdictLedger(ledgerSrc);
+    if (ledger.size === 0)
+        failures.push("the edict-verdict ledger declares ZERO rows — no header row names `surface` + `proportion` + `animation` + `technicolor`.");
+    for (const s of surfaces) {
+        const row = ledger.get(s);
+        if (!row) {
+            failures.push(`enrolled gestalt surface \`${s}\` has no edict-verdict row — the review is INCOMPLETE (GA-9: every enrolled surface owes a 3-axis verdict).`);
+            continue;
+        }
+        for (const ax of EDICT_AXES) {
+            const cell = String(row[ax] ?? "").trim();
+            if (!cell || cell === "—" || !VERDICT_TOKEN.test(cell))
+                failures.push(`enrolled gestalt surface \`${s}\` axis \`${ax}\` carries no verdict token (PASS/FAIL/PENDING) [cell: \`${cell}\`] — the 3-axis verdict is INCOMPLETE.`);
+        }
+    }
+
+    // B — the canon carries the edict vocab + the CLOSE-PRECONDITION + the fence + the model.
+    const need = [
+        [/√φ|sqrt-?φ|proportion/i, "the √φ-proportion axis name"],
+        [/animation[-\s]laws?/i, "the animation-laws axis name"],
+        [/technicolor/i, "the technicolor-cartoon-punch axis name"],
+        [/CLOSE\s+PRECONDITION/i, "the CLOSE-PRECONDITION sentence"],
+        [/not\s+the\s+building\s+agent/i, "the FABLE-not-the-builder rule (`not the building agent`)"],
+        [/not\s+(a\s+fan-?out\s+of\s+)?N\s+mechanical\s+gates|never\s+a\s+gate\s+fan-?out/i, "the acceptance-LANGUAGE-not-N-gates fence"],
+        [/--card-pad/i, "the light proportion-census model reference (`--card-pad` √φ ladder)"],
+    ];
+    for (const [re, label] of need)
+        if (!re.test(canonSrc)) failures.push(`the aristotelian-proportion canon is missing ${label}.`);
+
+    // C — the LIGHT proportion-census model EXISTS on disk (a ONE-anchor census, NOT a
+    //     fan-out): the √φ ladder constants live in Card.vue, so the canon is not a phantom.
+    for (const k of CARD_PAD_LADDER)
+        if (!cardSrc.includes(k))
+            failures.push(`the √φ proportion model is broken — Card.vue does not carry the ladder constant \`${k}\` (the light-census exemplar the canon universalizes).`);
+
+    // D — the DIRECTIVE-LEDGER §7b PE-GESTALT row names this wave as owner.
+    if (!/PE-GESTALT/.test(directiveLedger))
+        failures.push("DIRECTIVE-LEDGER §7b missing the PE-GESTALT process-edict row.");
+    else if (!/PE-GESTALT[\s\S]{0,2200}?W-ARISTOTELIAN-PROPORTION/.test(directiveLedger))
+        failures.push("DIRECTIVE-LEDGER PE-GESTALT row does not name `W-ARISTOTELIAN-PROPORTION` as owner.");
+
+    return failures;
+}
+
+function edictVerdictPresent() {
+    for (const [label, p] of [
+        ["gestalt roster", GESTALT_ROSTER],
+        ["edict-verdict ledger", EDICT_LEDGER],
+        ["aristotelian canon", ARIST_CANON],
+        ["Card.vue", CARD_SFC],
+        ["DIRECTIVE-LEDGER", LEDGER],
+    ]) {
+        if (!existsSync(p))
+            return { clause: "edict-verdict-present", visualCount: 0, failures: [`${label} absent — ${p.replace(ROOT + "/", "")}`] };
+    }
+    return {
+        clause: "edict-verdict-present",
+        visualCount: 0,
+        failures: edictVerdictCheck({
+            rosterSrc: readFileSync(GESTALT_ROSTER, "utf8"),
+            ledgerSrc: readFileSync(EDICT_LEDGER, "utf8"),
+            canonSrc: readFileSync(ARIST_CANON, "utf8"),
+            cardSrc: readFileSync(CARD_SFC, "utf8"),
+            directiveLedger: readFileSync(LEDGER, "utf8"),
+        }),
+    };
+}
+
 // ── The `gestalt-cursor-parity` clause (BG.W-GESTALT-CURSOR-PARITY, 12.4a joinery) ──
 // The keystone JOINERY: the gestalt close oracle (proof:ba-gestalt) is JOINED to the
 // shipped `surface-closure.mjs` paint-closure so a surface's watched paint BREADTH is
@@ -589,6 +770,7 @@ const CLAUSES = [
     gateFamilyConsolidate,
     apcaParallelWitness,
     deferredLedgerTerminal,
+    edictVerdictPresent,
     gestaltCursorParity,
     coherenceCensus,
     glassPaperCongruence,
@@ -773,6 +955,101 @@ async function selfTest() {
         }
     }
 
+    // ── edict-verdict-present detector bites (BG.W-ARISTOTELIAN-PROPORTION, F8.6) ──
+    // The PURE edictVerdictCheck detector is fed synthetic roster/ledger fixtures (the
+    // born-RED witnesses) with the REAL canon/card/directive for the non-tested legs,
+    // proving the review-completeness fence is load-bearing (a dropped surface / a blank
+    // axis / a garbage token / a stripped canon-fence each MISS a bite if it is hollow).
+    {
+        const realRoster = readFileSync(GESTALT_ROSTER, "utf8");
+        const realLedger = readFileSync(EDICT_LEDGER, "utf8");
+        const realCanon = readFileSync(ARIST_CANON, "utf8");
+        const realCard = readFileSync(CARD_SFC, "utf8");
+        const realDir = readFileSync(LEDGER, "utf8");
+        // A 2-surface synthetic roster + a matching COMPLETE ledger (the controlled pair).
+        const synRoster = "| surface | routes |\n|---|---|\n| dock | /dock/overview |\n| aurora | /substrates/aurora |\n";
+        const synLedgerOk =
+            "| surface | proportion | animation | technicolor |\n|---|---|---|---|\n" +
+            "| dock | PENDING | PENDING | PENDING |\n| aurora | PASS | PENDING | FAIL |\n";
+        const chkSyn = (roster, ledger) =>
+            edictVerdictCheck({ rosterSrc: roster, ledgerSrc: ledger, canonSrc: realCanon, cardSrc: realCard, directiveLedger: realDir });
+
+        // bite 26 — a COMPLETE synthetic roster+ledger raises NO completeness failure.
+        {
+            const fs = chkSyn(synRoster, synLedgerOk);
+            const ok = !fs.some((f) => f.includes("edict-verdict row") || f.includes("verdict token"));
+            bites.push(["edict-complete-synthetic → NO completeness flag", ok]);
+        }
+        // bite 27 — a surface DROPPED from the ledger MUST flag (review-completeness).
+        {
+            const synLedgerMissing =
+                "| surface | proportion | animation | technicolor |\n|---|---|---|---|\n| dock | PENDING | PENDING | PENDING |\n";
+            const flagged = chkSyn(synRoster, synLedgerMissing).some(
+                (f) => f.includes("aurora") && f.includes("no edict-verdict row"),
+            );
+            bites.push(["edict-ledger-drops-surface → FLAG (review-completeness)", flagged]);
+        }
+        // bite 28 — a BLANK axis cell MUST flag (the 3-axis completeness).
+        {
+            const synLedgerBlank =
+                "| surface | proportion | animation | technicolor |\n|---|---|---|---|\n| dock | PENDING | PENDING |  |\n| aurora | PASS | PASS | PASS |\n";
+            const flagged = chkSyn(synRoster, synLedgerBlank).some(
+                (f) => f.includes("`dock`") && f.includes("technicolor") && f.includes("verdict token"),
+            );
+            bites.push(["edict-axis-blank → FLAG (3-axis completeness)", flagged]);
+        }
+        // bite 29 — a GARBAGE (non-verdict) axis token MUST flag (the verdict vocabulary).
+        {
+            const synLedgerGarbage =
+                "| surface | proportion | animation | technicolor |\n|---|---|---|---|\n| dock | PENDING | maybe-later | PENDING |\n| aurora | PASS | PASS | PASS |\n";
+            const flagged = chkSyn(synRoster, synLedgerGarbage).some(
+                (f) => f.includes("`dock`") && f.includes("animation") && f.includes("verdict token"),
+            );
+            bites.push(["edict-axis-garbage-token → FLAG (verdict vocabulary)", flagged]);
+        }
+        // bite 30 — the canon stripped of the FABLE-not-the-builder rule MUST flag.
+        {
+            const strippedCanon = realCanon.replace(/not\s+the\s+building\s+agent/gi, "the building agent");
+            const flagged = edictVerdictCheck({
+                rosterSrc: realRoster, ledgerSrc: realLedger, canonSrc: strippedCanon, cardSrc: realCard, directiveLedger: realDir,
+            }).some((f) => f.includes("not the building agent"));
+            bites.push(["canon-strips-not-the-building-agent → FLAG", flagged]);
+        }
+        // bite 31 — the canon stripped of the not-N-gates fence MUST flag.
+        {
+            const strippedCanon = realCanon
+                .replace(/not\s+(a\s+fan-?out\s+of\s+)?N\s+mechanical\s+gates/gi, "N mechanical gates")
+                .replace(/never\s+a\s+gate\s+fan-?out/gi, "a gate fan-out");
+            const flagged = edictVerdictCheck({
+                rosterSrc: realRoster, ledgerSrc: realLedger, canonSrc: strippedCanon, cardSrc: realCard, directiveLedger: realDir,
+            }).some((f) => f.includes("acceptance-LANGUAGE-not-N-gates"));
+            bites.push(["canon-strips-not-N-gates-fence → FLAG", flagged]);
+        }
+        // bite 32 — a Card.vue missing a √φ ladder constant MUST flag (the model is a phantom).
+        {
+            const brokenCard = realCard.split("1.618").join("1.5");
+            const flagged = edictVerdictCheck({
+                rosterSrc: realRoster, ledgerSrc: realLedger, canonSrc: realCanon, cardSrc: brokenCard, directiveLedger: realDir,
+            }).some((f) => f.includes("1.618") && f.includes("proportion model"));
+            bites.push(["card-drops-phi-ladder-constant → FLAG (model not a phantom)", flagged]);
+        }
+        // bite 33 — the DIRECTIVE-LEDGER PE-GESTALT row not naming the owner MUST flag.
+        {
+            const strippedDir = realDir.split("W-ARISTOTELIAN-PROPORTION").join("W-XXX-ABSENT");
+            const flagged = edictVerdictCheck({
+                rosterSrc: realRoster, ledgerSrc: realLedger, canonSrc: realCanon, cardSrc: realCard, directiveLedger: strippedDir,
+            }).some((f) => f.includes("PE-GESTALT") && f.includes("W-ARISTOTELIAN-PROPORTION"));
+            bites.push(["directive-PE-GESTALT-no-owner → FLAG", flagged]);
+        }
+        // bite 34 — the REAL roster + ledger + canon + model + directive is CLEAN (GREEN-after).
+        {
+            const clean = edictVerdictCheck({
+                rosterSrc: realRoster, ledgerSrc: realLedger, canonSrc: realCanon, cardSrc: realCard, directiveLedger: realDir,
+            }).length === 0;
+            bites.push(["real-edict-verdict-present → clean (GREEN-after)", clean]);
+        }
+    }
+
     // ── gestalt-cursor-parity detector bites (BG.W-GESTALT-CURSOR-PARITY, 12.4a joinery) ──
     // The PURE checkJoineryExports detector is fed synthetic stubs (born-RED witness), and
     // the REAL proof-ba-gestalt joinery is EXERCISED (the load-bearing GREEN-after) — a
@@ -835,7 +1112,7 @@ async function selfTest() {
     for (const b of glassPaperCongruenceSelfBites()) bites.push(b);
 
     console.log(
-        `proof:meta — SELF-TEST (fable-arm-present + gate-family-consolidate + apca-parallel-witness + deferred-ledger-terminal + gestalt-cursor-parity + coherence-census + glass-paper-congruence, ${bites.length} bites)`,
+        `proof:meta — SELF-TEST (fable-arm-present + gate-family-consolidate + apca-parallel-witness + deferred-ledger-terminal + edict-verdict-present + gestalt-cursor-parity + coherence-census + glass-paper-congruence, ${bites.length} bites)`,
     );
     let allFlag = true;
     for (const [name, ok] of bites) {
@@ -859,7 +1136,7 @@ async function selfTest() {
         process.exit(1);
     }
     console.log(
-        "\n[proof:meta] SELF-TEST GREEN — all bites behave, the real cursor passes fable-arm-present + gate-family-consolidate + apca-parallel-witness + deferred-ledger-terminal + gestalt-cursor-parity + coherence-census + glass-paper-congruence.",
+        "\n[proof:meta] SELF-TEST GREEN — all bites behave, the real cursor passes fable-arm-present + gate-family-consolidate + apca-parallel-witness + deferred-ledger-terminal + edict-verdict-present + gestalt-cursor-parity + coherence-census + glass-paper-congruence.",
     );
     process.exit(0);
 }

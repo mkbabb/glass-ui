@@ -44,3 +44,10 @@ Per-component contracts live in the colocated `src/components/custom/<dir>/READM
 
 The 4 glass-ui design docs are extracted in-repo at `docs/design/`: `design-idioms.md`,
 `motion-canon.md`, `tunable-anim.md`, `affordance-map.md`.
+
+## The process-edict canon
+
+- `aristotelian-proportion.md` — the GA-9 / PE-GESTALT edict: the gestalt review files a
+  3-axis acceptance verdict per enrolled surface (√φ-proportion · animation-laws ·
+  technicolor-cartoon-punch) as acceptance LANGUAGE, NOT a fan-out of N mechanical gates.
+  Machine-locked by `proof:meta · edict-verdict-present` (BG.W-ARISTOTELIAN-PROPORTION).
