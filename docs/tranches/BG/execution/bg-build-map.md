@@ -189,7 +189,11 @@ W-HANDMARK-PERFECT` (+14.4 pencil-boil). *(14.5 cross-repo-asks → F8.)*
 - `12.16 W-CSS-MINIFY` (NEW): minify `dist/styles/*.css`; PRUNE BC.W-CSS-CRITICAL machinery; aurora forcing-trigger
   `dist/aurora.js gz>54KB` MUST split. AFTER F9 demigrate + Siri.
 - `12.17 W-TOKEN-MANIFEST` (NEW; BEFORE 3.14) · `12.18 W-ARISTOTELIAN-PROPORTION` (NEW; acceptance LANGUAGE not N gates
-  — GA-9) · `12.19 W-DEFERRAL-DISPOSITIONS` (NEW; RETIRE half + story sub-types).
+  — GA-9) · `12.19 W-DEFERRAL-DISPOSITIONS` (NEW; RETIRE half + story sub-types). **BG.W-DEFERRAL-DISPOSITIONS**
+  (F8.7) is the DECIDE/ledger-flip charter for the GA-6 RETIRE set (the 7 speculative registers flip `DEFER-with-trigger →
+  RETIRE` in `FOLD-LEDGER.json` here, with rationale + successor) — a `proof:bg-deferred-ledger` DECIDE_CHARTER member,
+  ZERO pixels; the GA-5 five no-carrier registers name real carriers (metal/image → F9, advection → 6.6, sub-types → 16.3,
+  aristotelian → F8.6). Locked by `proof:meta` · `deferred-ledger-terminal`.
 - **Capstone (≤4 rows, R16):** `17.1 W-COHERENCE-CENSUS-GATE` (17.1+17.2, share the capture) · `17.4
   W-ANIMATION-CONGRUENCE` · `17.5 W-GLASS-PAPER-CONGRUENCE` · `17.6 W-PAGE-COMPONENT-AUDIT` (+17.3 + F7.4 GA-10 — the
   480-capture cross-page harmonized-whole read, the **abolished-W-REFLECT3 funnel replaced by a REAL wave**).

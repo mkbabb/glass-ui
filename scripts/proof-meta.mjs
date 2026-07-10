@@ -89,6 +89,10 @@ import { GATES, gatesFor } from "./gates.mjs";
 const CURSOR = join(ROOT, "docs/tranches/BG/execution/EXECUTION-PROGRESS.md");
 const CANON = join(ROOT, "docs/tranches/BG/canon/fable-design-arm.md");
 const LEDGER = join(ROOT, "docs/tranches/BG/DIRECTIVE-LEDGER.md");
+// F8.7 (BG.W-DEFERRAL-DISPOSITIONS) — the deferred-ledger-terminal clause reads the
+// fold ledger (the disposition source of truth) + the build-map (the wave-spec authority).
+const FOLD_LEDGER_JSON = join(ROOT, "docs/tranches/BG/FOLD-LEDGER.json");
+const BUILD_MAP = join(ROOT, "docs/tranches/BG/execution/bg-build-map.md");
 
 /**
  * The `fable / designSync` cell names BOTH halves iff it is non-empty, not `—`,
@@ -350,10 +354,118 @@ async function apcaParallelWitness() {
     return { clause: "apca-parallel-witness", visualCount: 0, failures };
 }
 
+// ── The `deferred-ledger-terminal` clause (BG.W-DEFERRAL-DISPOSITIONS, F8.7) ────
+// GA-6 + GA-5, the two halves of the deferral surface DECIDED:
+//   (a) GA-6 RETIRE-in-place — the 7 speculative "wants-it-someday" registers (aurora
+//       satin/prism/reactive + tab-ios-capsule + alive-idle + anticipate-follow +
+//       concentric-radius; 11 FOLD-LEDGER.json rows across the BE/BF convergence) are
+//       DECIDED-TERMINAL: NONE is DEFER-with-trigger, each is a terminal RETIRE carrying
+//       a non-empty rationale + successor (the BB.W-NDA-DECIDE no-re-book discipline —
+//       "the hope is not a trigger", the J-inv-10 ≥2-consumer bar failing INWARD).
+//   (b) GA-5 no-carrier registers — the 5 BD registers that fell through with a ledger
+//       row but ZERO buildable wave now each NAME a real wave-spec carrier resolving in
+//       the BG build-map (metal ×2 → BG.W-AUR-METAL-FINISH / BG.W-AUR-IMAGE-SOURCE (F9),
+//       advection → BG.W-DOTFLOW-REBUILD (6.6 AMEND), sub-types → BG.W-STORY-PAGE-API
+//       (16.3 AMEND), aristotelian → BG.W-ARISTOTELIAN-PROPORTION (F8.6)).
+// Born-RED on a HEAD where the 11 register rows are DEFER-with-trigger (the pre-flip
+// state); GREEN once every one is a terminal RETIRE with rationale + successor AND every
+// carrier resolves. The PURE detector operates on injected {ledger, buildMapText} so the
+// self-test feeds synthetic fixtures (a re-flipped-to-DEFER row MUST flag). This clause
+// carries ZERO pixels — the visual metal/image/dotflow sub-waves carry their own π/proof:viz.
+
+// The 11 ledger rows across the 7 speculative registers (the anti-evasion set — a future
+// edit that flips ANY back to DEFER-with-trigger, or drops its rationale/successor, reds).
+const RETIRE_REGISTER_IDS = [
+    "BE.W-AUR-SATIN",
+    "BF.W-AUR-SATIN",
+    "BE.W-AUR-PRISM",
+    "BF.W-AUR-PRISM",
+    "BE.W-AUR-REACTIVE",
+    "BF.W-AUR-REACTIVE",
+    "BE.W-TAB-IOS-CAPSULE",
+    "BF.W-TAB-IOS-CAPSULE",
+    "BE.W-ALIVE-IDLE",
+    "BE.W-ANTICIPATE-FOLLOW",
+    "BE.W-CONCENTRIC-RADIUS",
+];
+
+// The 5 GA-5 no-carrier BD registers → their real carrier wave-specs (each must resolve
+// in the build-map — the wave-spec authority proof:bg-deferred-ledger also reads).
+const CARRIER_WAVES = [
+    "BG.W-AUR-METAL-FINISH", // metallic ×2 → F9 (6.10)
+    "BG.W-AUR-IMAGE-SOURCE", // blurred-image-bg → F9 (6.11)
+    "BG.W-DOTFLOW-REBUILD", // advection flow register → 6.6 (AMEND)
+    "BG.W-STORY-PAGE-API", // Demo{Stage,Specimen,…} sub-types → 16.3 (AMEND)
+    "BG.W-ARISTOTELIAN-PROPORTION", // aristotelian edict → F8.6
+];
+
+/**
+ * The PURE detector — operates on already-loaded objects so the self-test can feed
+ * synthetic fixtures. Returns the row-specific failures.
+ * @param {{ ledger: any, buildMapText: string }} io
+ * @returns {string[]}
+ */
+function deferredLedgerTerminalCheck({ ledger, buildMapText }) {
+    const failures = [];
+    const rows = Array.isArray(ledger?.items) ? ledger.items : [];
+    const byId = new Map(rows.map((r) => [r.id, r]));
+    // (a) GA-6 — every register row is a TERMINAL RETIRE with rationale + successor.
+    for (const id of RETIRE_REGISTER_IDS) {
+        const row = byId.get(id);
+        if (!row) {
+            failures.push(`RETIRE register "${id}" has no FOLD-LEDGER.json row (the GA-6 disposition set must carry it).`);
+            continue;
+        }
+        if (row.disposition === "DEFER-with-trigger") {
+            failures.push(`RETIRE register "${id}" is still DEFER-with-trigger — the speculative "wants-it-someday" registers must be DECIDED-TERMINAL RETIRE (GA-6; the hope is not a ≥2-consumer trigger).`);
+            continue;
+        }
+        if (row.disposition !== "RETIRE") {
+            failures.push(`RETIRE register "${id}" disposition is "${row.disposition}", expected terminal RETIRE (GA-6).`);
+        }
+        if (!row.rationale || !String(row.rationale).trim())
+            failures.push(`RETIRE register "${id}" carries no rationale — a terminal RETIRE must record WHY (the BB.W-NDA-DECIDE discipline).`);
+        if (!row.successor || !String(row.successor).trim())
+            failures.push(`RETIRE register "${id}" carries no successor — a terminal RETIRE must name the re-entry path (a fresh ≥2-consumer trigger).`);
+    }
+    // (b) GA-5 — the 5 no-carrier registers each name a REAL wave-spec carrier. The
+    //     build-map lists the wave-id without the `BG.` prefix (e.g. `6.10 W-AUR-METAL-
+    //     FINISH`), so match the `W-<NAME>` stem (the same authority proof:bg-deferred-
+    //     ledger derives its bold roster from).
+    for (const wave of CARRIER_WAVES) {
+        const stem = wave.replace(/^BG\./, "");
+        if (!buildMapText.includes(stem))
+            failures.push(`the GA-5 carrier wave "${wave}" is absent from the BG build-map — a no-carrier register still has no buildable wave-spec.`);
+    }
+    return failures;
+}
+
+function deferredLedgerTerminal() {
+    for (const [label, p] of [
+        ["FOLD-LEDGER.json", FOLD_LEDGER_JSON],
+        ["bg-build-map.md", BUILD_MAP],
+    ]) {
+        if (!existsSync(p))
+            return { clause: "deferred-ledger-terminal", visualCount: 0, failures: [`${label} absent — ${p.replace(ROOT + "/", "")}`] };
+    }
+    let ledger;
+    try {
+        ledger = JSON.parse(readFileSync(FOLD_LEDGER_JSON, "utf8"));
+    } catch (e) {
+        return { clause: "deferred-ledger-terminal", visualCount: 0, failures: [`FOLD-LEDGER.json parse error — ${e instanceof Error ? e.message : String(e)}`] };
+    }
+    const buildMapText = readFileSync(BUILD_MAP, "utf8");
+    return {
+        clause: "deferred-ledger-terminal",
+        visualCount: 0,
+        failures: deferredLedgerTerminalCheck({ ledger, buildMapText }),
+    };
+}
+
 // The family runner — each F8 close wave appends its clause here. The clauses are a
 // mix of sync + async (the APCA arm dynamically imports its leaf), so the runner
 // awaits the resolved set (a plain-object clause passes through Promise.all unchanged).
-const CLAUSES = [fableArmPresent, gateFamilyConsolidate, apcaParallelWitness];
+const CLAUSES = [fableArmPresent, gateFamilyConsolidate, apcaParallelWitness, deferredLedgerTerminal];
 
 async function runClauses() {
     return Promise.all(CLAUSES.map((fn) => fn()));
@@ -482,7 +594,59 @@ async function selfTest() {
         ]);
     }
 
-    console.log("proof:meta — SELF-TEST (fable-arm-present + gate-family-consolidate + apca-parallel-witness, 15 bites)");
+    // ── deferred-ledger-terminal detector bites (BG.W-DEFERRAL-DISPOSITIONS, F8.7) ──
+    // The PURE detector is fed synthetic fixtures cloned off the REAL ledger + build-map,
+    // proving it is load-bearing (a re-flipped-to-DEFER row / a stripped rationale /
+    // successor / an absent carrier each MISS a bite if the detector is hollow).
+    {
+        const realLedger = JSON.parse(readFileSync(FOLD_LEDGER_JSON, "utf8"));
+        const realBuildMap = readFileSync(BUILD_MAP, "utf8");
+        const cloneL = (o) => JSON.parse(JSON.stringify(o));
+        // bite 16 — a register RE-FLIPPED to DEFER-with-trigger (the born-RED HEAD state) MUST flag.
+        {
+            const led = cloneL(realLedger);
+            const r = led.items.find((x) => x.id === "BE.W-AUR-SATIN");
+            r.disposition = "DEFER-with-trigger";
+            r.trigger = "an aurora-medium breadth consumer wants the satin register";
+            const flagged = deferredLedgerTerminalCheck({ ledger: led, buildMapText: realBuildMap }).some(
+                (f) => f.includes("BE.W-AUR-SATIN") && f.includes("DEFER-with-trigger"),
+            );
+            bites.push(["retire-register-re-flipped-to-DEFER → FLAG (born-RED HEAD state)", flagged]);
+        }
+        // bite 17 — a terminal RETIRE stripped of its rationale MUST flag.
+        {
+            const led = cloneL(realLedger);
+            led.items.find((x) => x.id === "BE.W-ALIVE-IDLE").rationale = "";
+            const flagged = deferredLedgerTerminalCheck({ ledger: led, buildMapText: realBuildMap }).some(
+                (f) => f.includes("BE.W-ALIVE-IDLE") && f.includes("rationale"),
+            );
+            bites.push(["retire-missing-rationale → FLAG", flagged]);
+        }
+        // bite 18 — a terminal RETIRE stripped of its successor MUST flag.
+        {
+            const led = cloneL(realLedger);
+            led.items.find((x) => x.id === "BE.W-CONCENTRIC-RADIUS").successor = "";
+            const flagged = deferredLedgerTerminalCheck({ ledger: led, buildMapText: realBuildMap }).some(
+                (f) => f.includes("BE.W-CONCENTRIC-RADIUS") && f.includes("successor"),
+            );
+            bites.push(["retire-missing-successor → FLAG", flagged]);
+        }
+        // bite 19 — a GA-5 carrier absent from the build-map MUST flag.
+        {
+            const stripped = realBuildMap.split("W-AUR-METAL-FINISH").join("W-XXX-ABSENT");
+            const flagged = deferredLedgerTerminalCheck({ ledger: realLedger, buildMapText: stripped }).some((f) =>
+                f.includes("BG.W-AUR-METAL-FINISH"),
+            );
+            bites.push(["ga5-carrier-absent → FLAG", flagged]);
+        }
+        // bite 20 — the REAL ledger + build-map is CLEAN (the GREEN-after proof, clause-scoped).
+        {
+            const clean = deferredLedgerTerminalCheck({ ledger: realLedger, buildMapText: realBuildMap }).length === 0;
+            bites.push(["real-deferred-ledger-terminal → clean (GREEN-after)", clean]);
+        }
+    }
+
+    console.log("proof:meta — SELF-TEST (fable-arm-present + gate-family-consolidate + apca-parallel-witness + deferred-ledger-terminal, 20 bites)");
     let allFlag = true;
     for (const [name, ok] of bites) {
         console.log(`  ${ok ? "OK    " : "MISS  "}  ${name}`);

@@ -86,6 +86,9 @@ const DECIDE_CHARTER = new Set([
     "BG.W-BE-BF-LEDGER",
     "BG.W-DEFERRED-LEDGER",
     "BG.W-DS-COMPLETE",
+    // F8.7 — the GA-6 RETIRE-in-place charter: the 7 speculative registers flip
+    // DEFER-with-trigger → RETIRE here (a ledger-flip DECIDE wave, zero pixels).
+    "BG.W-DEFERRAL-DISPOSITIONS",
 ]);
 
 // ── corpus derivation (the SAME derivation the producer ran) ─────────────────────

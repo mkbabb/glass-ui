@@ -9,7 +9,7 @@
 > The doc⟷JSON parity is asserted; this `.md` is generated from `FOLD-LEDGER.json`.
 
 **Corpus:** AX 31 + BF-census 32 + BE-waves 39 + BF-waves 31 + in-src 2 = **135** (disjoint namespaces).
-**Dispositions:** RETIRE 12 · MET 12 · COORDINATED 74 · DEFER-with-trigger 34 · SUPERSEDED 3.
+**Dispositions:** RETIRE 23 · MET 12 · COORDINATED 74 · DEFER-with-trigger 23 · SUPERSEDED 3.
 **Max destination concentration:** 19 (ceiling 24).
 
 
@@ -94,18 +94,18 @@
 
 | id | disposition | dest / trigger |
 |---|---|---|
-| `BE.W-ALIVE-IDLE` | DEFER-with-trigger | _(defer)_ a real surface wants the breathing-pill idle register |
+| `BE.W-ALIVE-IDLE` | RETIRE | (GA-6) speculative breathing-pill idle register, never minted, 0 consumers over 2 tranches → RETIRE; re-enters on a fresh ≥2-consumer trigger |
 | `BE.W-AMBIENT-TINT` | COORDINATED | `BG.W-AMBIENT-HISTOGRAM-LEAF` |
-| `BE.W-ANTICIPATE-FOLLOW` | DEFER-with-trigger | _(defer)_ a real surface wants the anticipation pre-dip |
+| `BE.W-ANTICIPATE-FOLLOW` | RETIRE | (GA-6) speculative anticipation pre-dip register, no shipped primitive, 0 consumers over 2 tranches → RETIRE; re-enters on a fresh ≥2-consumer trigger |
 | `BE.W-ARIA-ORIENTATION-GUARD` | MET | `BG.W-COHERENCE-CENSUS` |
-| `BE.W-AUR-PRISM` | DEFER-with-trigger | _(defer)_ an aurora-medium breadth consumer wants the prism register |
-| `BE.W-AUR-REACTIVE` | DEFER-with-trigger | _(defer)_ an album-hue re-seed consumer + the `uShimmer` term lands |
-| `BE.W-AUR-SATIN` | DEFER-with-trigger | _(defer)_ an aurora-medium breadth consumer wants the satin register |
+| `BE.W-AUR-PRISM` | RETIRE | (GA-6) aurora prism medium (uMedium==9) never minted, additive breadth spec-debt, 0 consumers over 2 tranches → RETIRE; re-enters on a fresh ≥2-consumer trigger |
+| `BE.W-AUR-REACTIVE` | RETIRE | (GA-6) album-hue re-seed + uShimmer register never minted, 0 consumers over 2 tranches → RETIRE; re-enters on a fresh ≥2-consumer trigger |
+| `BE.W-AUR-SATIN` | RETIRE | (GA-6) aurora satin medium never minted (grep=0), additive breadth register, 0 consumers over 2 tranches → RETIRE; re-enters on a fresh ≥2-consumer trigger |
 | `BE.W-BACKDROP-SETTLE` | COORDINATED | `BG.W-GLASS-BACKDROP-SAMPLE` |
 | `BE.W-BLOOM-UP` | COORDINATED | `BG.W-FLIP-ONE` |
 | `BE.W-CELEBRATE-BURST` | COORDINATED | `BG.W-JUBILANCE-DECIDE` |
 | `BE.W-CLEAR-VARIANT` | COORDINATED | `BG.W-GLASS-CONSUMER-BAND` |
-| `BE.W-CONCENTRIC-RADIUS` | DEFER-with-trigger | _(defer)_ a real 2-consumer concentric-radius register need lands |
+| `BE.W-CONCENTRIC-RADIUS` | RETIRE | (GA-6) RETIRE the SPECULATIVE shared concentric-radius register only (premature abstraction over one call site); KEEP the per-surface containerConcentric idiom + the F8.6 aristotelian gate; re-enters on a fresh ≥2-consumer trigger |
 | `BE.W-CUT` | SUPERSEDED | `BG.W-CUT` |
 | `BE.W-DEEP-CEILING` | DEFER-with-trigger | _(defer)_ the deep-glass perf budget clears the full Apple blur(20px)/saturate(1.8) |
 | `BE.W-DESHADCN-GATE-WIDEN` | COORDINATED | `BG.W-DESHADCN-CENSUS` |
@@ -130,7 +130,7 @@
 | `BE.W-SAFARI-CAPTURE` | COORDINATED | `BG.W-SAFARI-PARITY-GATE` |
 | `BE.W-SHEET-TRANSLUCENT` | COORDINATED | `BG.W-SHEET-INSET-ROOT` |
 | `BE.W-SQUIRCLE-COVERAGE` | COORDINATED | `BG.W-GLASS-REFRACT-WEBGL` |
-| `BE.W-TAB-IOS-CAPSULE` | DEFER-with-trigger | _(defer)_ a DockTabBar consumer wants the dock-tab capsule arm |
+| `BE.W-TAB-IOS-CAPSULE` | RETIRE | (GA-6) DockTabBar capsule arm never built (the SegmentedTabs capsule shipped without it), 0 consumers over 2 tranches → RETIRE; re-enters on a fresh ≥2-consumer trigger |
 | `BE.W-TINTED-CHIP` | MET | `BG.W-GLASS-CONSUMER-BAND` |
 | `BE.W-VIZ-PARITY-METAL` | DEFER-with-trigger | _(defer)_ a real Metal box runs the cross-backend viz-parity capture |
 
@@ -138,9 +138,9 @@
 
 | id | disposition | dest / trigger |
 |---|---|---|
-| `BF.W-AUR-PRISM` | DEFER-with-trigger | _(defer)_ an aurora-medium breadth consumer wants the prism register |
-| `BF.W-AUR-REACTIVE` | DEFER-with-trigger | _(defer)_ an album-hue re-seed consumer lands |
-| `BF.W-AUR-SATIN` | DEFER-with-trigger | _(defer)_ an aurora-medium breadth consumer wants the satin register |
+| `BF.W-AUR-PRISM` | RETIRE | (GA-6) BF-convergence duplicate of the never-minted aurora prism medium → RETIRE in lockstep with its BE origin; re-enters on a fresh ≥2-consumer trigger |
+| `BF.W-AUR-REACTIVE` | RETIRE | (GA-6) BF-convergence duplicate of the album-hue reactive register (uShimmer never minted) → RETIRE in lockstep with its BE origin; re-enters on a fresh ≥2-consumer trigger |
+| `BF.W-AUR-SATIN` | RETIRE | (GA-6) BF-convergence duplicate of the never-minted aurora satin medium → RETIRE in lockstep with its BE origin; re-enters on a fresh ≥2-consumer trigger |
 | `BF.W-CONSUMER-BAND` | COORDINATED | `BG.W-GLASS-CONSUMER-BAND` |
 | `BF.W-CORNER-AA` | COORDINATED | `BG.W-GLASS-CLIP-DISCIPLINE` |
 | `BF.W-CUT` | SUPERSEDED | `BG.W-CUT` |
@@ -167,7 +167,7 @@
 | `BF.W-SILHOUETTE-REALIZE` | COORDINATED | `BG.W-DOCK-CUT` |
 | `BF.W-SPIKE-DELETE` | RETIRE | `BG.W-SPIKE-DELETE` |
 | `BF.W-SQUIRCLE` | COORDINATED | `BG.W-GLASS-REFRACT-WEBGL` |
-| `BF.W-TAB-IOS-CAPSULE` | DEFER-with-trigger | _(defer)_ a DockTabBar consumer wants the dock-tab capsule arm |
+| `BF.W-TAB-IOS-CAPSULE` | RETIRE | (GA-6) BF-convergence duplicate of the never-built DockTabBar capsule arm → RETIRE in lockstep with its BE origin; re-enters on a fresh ≥2-consumer trigger |
 | `BF.W-VH-COMPOSE` | SUPERSEDED | `BG.W-DOCK-INPLACE-MORPH` |
 
 ## In-`src` CONSUME/BOOKED markers (2 — `.ts`/`.vue` only)
