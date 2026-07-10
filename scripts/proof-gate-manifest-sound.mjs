@@ -38,6 +38,19 @@
 // gates (a key + a live script but NO aggregate row — manifest dark matter that
 // passes parity yet runs nowhere) are tagged-or-removed; a future unmanifested gate
 // reds. The allowlist's non-empty-rationale discipline forbids parking a bare key.
+//
+// CLAUSE 11 — MANIFEST-EXTRACTED (BH.B5b-gate-manifest-extract). The 349-row gate
+// table + its per-row `note` rationale were carved OUT of gates.mjs into the DATA
+// manifest `scripts/gates.manifest.mjs`; gates.mjs shrank to the thin ~300L runner
+// that IMPORTS GATES from it (and re-exports it for the downstream consumers). The
+// clause asserts the manifest exists + exports a non-empty GATES, the runner imports
+// from it AND carries NO inline `export const GATES = [` row-literal, the runner is
+// under the thin-runner line ceiling, and — the wave's binding hard-gate — the live
+// SPAWNED `--list local|ci|release|full` output byte-equals `gatesFor(mode)` through
+// the real import chain (the byte-identical-pre/post proof, standing). Born-RED on
+// the pre-extract HEAD (no manifest + the runner still carries the table); GREEN once
+// the verbatim move lands. + a self-test bite (a re-inlined literal / severed import /
+// absent manifest / list-drift each flag; the clean extracted shape does not).
 
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -103,6 +116,69 @@ export function manifestedViolations({ extraKeys = [], extraAllowlist = [] } = {
         );
     }
     return { violations, unmanifested, allowlist: [...allowlist.keys()] };
+}
+
+// CLAUSE 11 — MANIFEST-EXTRACTED (BH.B5b-gate-manifest-extract). The 349-row gate
+// table + its per-row `note` rationale live in scripts/gates.manifest.mjs; gates.mjs
+// is the thin ~300L orchestrator that IMPORTS GATES from it. The runner carries NO
+// inline `export const GATES = [` row-literal (the table is extracted, not
+// duplicated), and `--list local|ci|release|full` is byte-identical to the manifest
+// data end-to-end (the extract was a verbatim move). The RUNNER_LINE_CEILING is a
+// generous thin-runner bound — the point is not the exact count but that the 2400-line
+// table cannot creep back into the runner (a re-inline blows past it AND trips the
+// inline-literal bite).
+const MANIFEST_FILE = "gates.manifest.mjs";
+const RUNNER_LINE_CEILING = 450;
+
+/**
+ * Clause 11 — MANIFEST-EXTRACTED. PURE over injectable inputs so the self-test can
+ * drive synthetic runner sources / a missing manifest / a byte-drift `--list` mode.
+ * `listChecks` is the end-to-end byte-identity witness: each `{ mode, ok, detail }`
+ * records whether the SPAWNED `--list <mode>` stdout byte-equals `gatesFor(mode)`
+ * (through the real import chain — a broken manifest import or a re-inlined stale
+ * array diverges).
+ */
+export function extractionViolations({
+    manifestExists,
+    manifestExportsGates,
+    runnerSrc = "",
+    runnerLineCount,
+    listChecks = [],
+    lineCeiling = RUNNER_LINE_CEILING,
+} = {}) {
+    const violations = [];
+    if (!manifestExists)
+        violations.push(
+            `[MANIFEST-EXTRACTED] scripts/${MANIFEST_FILE} is absent — the gate-row table must live in the extracted data manifest`,
+        );
+    else if (!manifestExportsGates)
+        violations.push(
+            `[MANIFEST-EXTRACTED] scripts/${MANIFEST_FILE} does not export a non-empty GATES array`,
+        );
+    // The runner must IMPORT GATES from the manifest (consume, not re-define)…
+    const importsManifest =
+        /import\s*\{[^}]*\bGATES\b[^}]*\}\s*from\s*["']\.\/gates\.manifest\.mjs["']/.test(runnerSrc);
+    if (!importsManifest)
+        violations.push(
+            `[MANIFEST-EXTRACTED] scripts/gates.mjs does not import { GATES } from "./${MANIFEST_FILE}" — the runner must consume the extracted manifest`,
+        );
+    // …and must NOT carry the inline row-literal table (the 2400-line essay is GONE).
+    if (/export\s+const\s+GATES\s*=\s*\[/.test(runnerSrc))
+        violations.push(
+            `[MANIFEST-EXTRACTED] scripts/gates.mjs still defines an inline \`export const GATES = [\` row-literal — the table must be extracted, not duplicated`,
+        );
+    // The runner is thin (the ~300L orchestrator; a re-inlined table blows the bound).
+    if (typeof runnerLineCount === "number" && runnerLineCount > lineCeiling)
+        violations.push(
+            `[MANIFEST-EXTRACTED] scripts/gates.mjs is ${runnerLineCount} lines (> ${lineCeiling}) — the runner is no longer thin (the table crept back in?)`,
+        );
+    // Byte-identity: each mode's live --list byte-equals gatesFor(mode).
+    for (const c of listChecks)
+        if (!c.ok)
+            violations.push(
+                `[MANIFEST-EXTRACTED] \`--list ${c.mode}\` output diverges from gatesFor("${c.mode}") ${c.detail ?? ""} — the extracted runner's list is not byte-identical to the manifest data`,
+            );
+    return violations;
 }
 
 // The standing user-domain dirt the clean-tree guard allowlists (the docs/precepts
@@ -353,6 +429,100 @@ function detectSound() {
             "[GATE-MANIFESTED] SELF-TEST FAILED: a bare-rationale COMPOSITE_OR_RUNNER allowlist entry was NOT flagged — the rationale bite is broken",
         );
 
+    // ── Clause 11: MANIFEST-EXTRACTED (BH.B5b) ──────────────────────────────
+    // The gate-row DATA table lives in scripts/gates.manifest.mjs; scripts/gates.mjs
+    // is the thin runner that IMPORTS GATES from it (no inline row-literal), and the
+    // live `--list <mode>` output byte-equals gatesFor(mode) end-to-end. Born-RED on
+    // the pre-extract HEAD (no manifest + the runner carries the inline table); GREEN
+    // once the extract lands. The `--list` spawns are cheap (they only PRINT the cmd
+    // list — no gate runs, no recursion risk).
+    const manifestPath = resolve(SCRIPTS, MANIFEST_FILE);
+    const manifestExists = existsSync(manifestPath);
+    let manifestExportsGates = false;
+    if (manifestExists) {
+        const mSrc = readFileSync(manifestPath, "utf8");
+        manifestExportsGates = /export\s+const\s+GATES\s*=\s*\[/.test(mSrc) && GATES.length > 0;
+    }
+    const runnerSrc = readFileSync(resolve(SCRIPTS, "gates.mjs"), "utf8");
+    const runnerLineCount = runnerSrc.split("\n").length;
+    const listChecks = ["local", "ci", "release", "full"].map((mode) => {
+        const res = runNode([resolve(SCRIPTS, "gates.mjs"), "--list", mode]);
+        const expected = gatesFor(mode)
+            .map((g) => g.cmd)
+            .join("\n");
+        // console.log appends a trailing newline — strip exactly one for the compare.
+        const got = (res.out ?? "").replace(/\n$/, "");
+        return {
+            mode,
+            ok: res.ok && got === expected,
+            detail: res.ok ? `(got ${got.length}B vs manifest ${expected.length}B)` : "(runner spawn failed)",
+        };
+    });
+    const extractionV = extractionViolations({
+        manifestExists,
+        manifestExportsGates,
+        runnerSrc,
+        runnerLineCount,
+        listChecks,
+    });
+    facts.manifestExtracted = {
+        manifestExists,
+        manifestExportsGates,
+        runnerLineCount,
+        runnerLineCeiling: RUNNER_LINE_CEILING,
+        listChecks: listChecks.map((c) => ({ mode: c.mode, ok: c.ok })),
+    };
+    for (const v of extractionV) violations.push(v);
+    // SELF-TEST bite: the pure detector must FLAG a re-inlined literal / a severed
+    // manifest import / an absent manifest / a `--list` drift, and must NOT flag the
+    // clean extracted shape (the anti-hollow guard — the clause is load-bearing).
+    const stClean = extractionViolations({
+        manifestExists: true,
+        manifestExportsGates: true,
+        runnerSrc: 'import { GATES } from "./gates.manifest.mjs";\nexport { GATES };',
+        runnerLineCount: 300,
+        listChecks: [{ mode: "local", ok: true }],
+    });
+    const stInline = extractionViolations({
+        manifestExists: true,
+        manifestExportsGates: true,
+        runnerSrc: 'export const GATES = [ { id: "x", cmd: "x", tags: ["ci"] } ];',
+        runnerLineCount: 2800,
+        listChecks: [],
+    });
+    const stNoImport = extractionViolations({
+        manifestExists: true,
+        manifestExportsGates: true,
+        runnerSrc: "const x = 1;",
+        runnerLineCount: 300,
+        listChecks: [],
+    });
+    const stNoManifest = extractionViolations({
+        manifestExists: false,
+        manifestExportsGates: false,
+        runnerSrc: 'import { GATES } from "./gates.manifest.mjs";',
+        runnerLineCount: 300,
+        listChecks: [],
+    });
+    const stDrift = extractionViolations({
+        manifestExists: true,
+        manifestExportsGates: true,
+        runnerSrc: 'import { GATES } from "./gates.manifest.mjs";',
+        runnerLineCount: 300,
+        listChecks: [{ mode: "ci", ok: false, detail: "(synthetic drift)" }],
+    });
+    const clause11SelfTest =
+        stClean.length === 0 &&
+        stInline.some((v) => v.includes("inline")) &&
+        stNoImport.some((v) => v.includes("does not import")) &&
+        stNoManifest.some((v) => v.includes("is absent")) &&
+        stDrift.some((v) => v.includes("--list ci"));
+    facts.clause11SelfTest = clause11SelfTest;
+    if (!clause11SelfTest)
+        violations.push(
+            "[MANIFEST-EXTRACTED] SELF-TEST FAILED: the extraction detector did not flag a synthetic inline-literal / severed-import / absent-manifest / list-drift (or false-flagged the clean extracted shape) — the clause is not load-bearing",
+        );
+
     // ── Clause 5: DOCK-ROUTE-LIVE ───────────────────────────────────────────
     // proof-dock-orchestrator-single.mjs carries DOCK_ROUTE = "/dock/layers" (a
     // real route — the demo manifest produces /dock/layers) AND the gates.mjs:665
@@ -582,6 +752,7 @@ function run() {
     console.log(`  8 R6-PERSISTED         : dock-animation-live status "${facts.r6DockAnimationStatus}"`);
     console.log(`  9 FONT-PATH-LIVE       : ${facts.fontCascadeLive ? "✓ (reads the carved partial)" : "✗ (stale tokens.css path)"}`);
     console.log(`  10 GATE-MANIFESTED     : ${facts.unmanifestedGates.length === 0 ? "OK (every proof:* key manifested or allowlisted)" : facts.unmanifestedGates.length + " unmanifested: " + facts.unmanifestedGates.join(", ")}`);
+    console.log(`  11 MANIFEST-EXTRACTED  : manifest ${facts.manifestExtracted.manifestExists && facts.manifestExtracted.manifestExportsGates ? "✓" : "✗"} | runner ${facts.manifestExtracted.runnerLineCount}L (≤${facts.manifestExtracted.runnerLineCeiling}) | --list ${facts.manifestExtracted.listChecks.map((c) => `${c.mode}:${c.ok ? "✓" : "✗"}`).join(" ")} | self-test ${facts.clause11SelfTest ? "✓" : "✗"}`);
     console.log(`  4b CLAUSE-4 SELF-TEST  : bare-port-5175-red ${facts.clause4SelfTest.synthRedFlagged ? "✓" : "✗"} | service-port-green ${!facts.clause4SelfTest.synthGreenFlagged ? "✓" : "✗"}`);
     console.log(`  clean tree             : ${facts.unallowedDirt.length === 0 ? "YES" : "NO — " + facts.unallowedDirt.join(", ")}`);
     if (violations.length) {
