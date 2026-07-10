@@ -9,9 +9,21 @@
 // proportion) but gains the calm wash read-through (the StoryHero `cardTier` drop)
 // + the glass-tier hover the icons grid has. The library `--section-color` tokens
 // are NOT demo color (they ARE library tokens — D6 fence).
+//
+// BG.W-COLORS-WATERCOLOR-SWATCH (USER 07-05) — the section-ramp stops render as the
+// living WatercolorDot voice: each stop is a seeded organic pastel blob (the shipped
+// `<WatercolorDot>` primitive, REUSED not re-forked — no demo-local blob), sized well
+// above the retired 96px flat chip, laid out with a HAND-LAID vertical stagger (a
+// fixed per-stop block-offset — the irregular read the user named, never a flat
+// aligned row), animating LIVE on the rebuilt useRAFLoop (`animate`) and entering ON
+// SCROLL via the EXISTING `.scroll-cascade--columns` register (KISS — no demo-local
+// @keyframes). The 13-stop ramp IS the content (the reference-class one-color-event
+// exemption, the progress phase-bus precedent), so every stop carries its full
+// `--section-color-N` chroma; the mono-caption labels stay ink.
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
+import { WatercolorDot } from "@glass/components/custom/watercolor-dot";
 import { cn } from "@glass/utils/cn";
 
 // Core surface/semantic roles exposed as Tailwind utilities via @theme.
@@ -35,6 +47,18 @@ const core: { name: string; cssVar: string; utility: string }[] = [
 // 13-stop chapter palette. W1-D ships --section-color-0..12 and bg-section-N.
 const rainbow = Array.from({ length: 13 }, (_, i) => i);
 
+// The WatercolorDot swatch size — well above the retired 96px (h-24) flat chip so
+// the organic blob reads as a hand-painted mark, not a token cell (BG.W-COLORS-
+// WATERCOLOR-SWATCH pass-bar ≥112px).
+const SWATCH_SIZE = "7.5rem"; // 120px
+
+// Hand-laid block-offset per stop (rem), fixed for capture determinism. Adjacent
+// stops carry DISTINCT offsets — the irregular hand-laid zigzag the user named, not
+// a flat aligned row. Applied as a STATIC margin-block-start (a layout offset, never
+// animated) so it composes with the compositor-only .scroll-cascade--columns
+// entrance transform without clobbering it.
+const STAGGER_REM = [0, 1.6, 0.5, 1.3, 0, 1.7, 0.6, 1.4, 0.3, 1.5, 0.4, 1.2, 0];
+
 // Viz basis palette — the three orthogonal-polynomial hues plus two
 // companion neutrals (amber / green) used throughout math-paper work. The
 // ornamental glyphs are display-register letters (not lucide icons), so each tile
@@ -51,10 +75,12 @@ const viz: { id: string; glyph: string; label: string; sub: string }[] = [
 
 <template>
     <StoryPage>
-        <!-- THE RAINBOW — PROMOTED to the focal moment, leading the pane. The 13
-             stops pop in on the W-SCROLL-MOTION `.scroll-cascade--columns` register
-             (the column-stagger spring-clocked build — the focal pop-entrance, no
-             demo-local @keyframes). The stops are LARGER than the buried HEAD row. -->
+        <!-- THE RAINBOW — PROMOTED to the focal moment, leading the pane. Each of the
+             13 stops is a living WatercolorDot seeded blob (≥112px, the watercolor
+             voice the user asked back), laid out with a hand-laid vertical stagger and
+             popping in on the W-SCROLL-MOTION `.scroll-cascade--columns` register (the
+             column-stagger spring-clocked build — the focal pop-entrance, no
+             demo-local @keyframes). The blobs are LARGER than the buried HEAD chip. -->
         <StorySection label="Foundations · Color" heading="Section ramp · 13 stops">
             <p class="text-small max-w-prose text-muted-foreground">
                 The chapter palette — <code class="fira-code">--section-color-0..12</code>,
@@ -62,18 +88,19 @@ const viz: { id: string; glyph: string; label: string; sub: string }[] = [
                 vibrant register; the role tokens below stay documentary-monochrome.
             </p>
             <div
-                class="scroll-cascade scroll-cascade--columns grid gap-2"
-                style="grid-template-columns: repeat(13, minmax(0, 1fr))"
+                class="scroll-cascade scroll-cascade--columns flex flex-wrap items-start gap-x-5 gap-y-3"
             >
                 <div
                     v-for="i in rainbow"
                     :key="i"
-                    class="flex flex-col items-center gap-1.5"
-                    :style="{ '--col': i }"
+                    class="flex flex-col items-center gap-2"
+                    :style="{ '--col': i, marginBlockStart: `${STAGGER_REM[i]}rem` }"
                 >
-                    <div
-                        class="h-24 w-full rounded-lg border border-border/40 shadow-cartoon-sm"
-                        :style="{ background: `var(--section-color-${i})` }"
+                    <WatercolorDot
+                        :color="`var(--section-color-${i})`"
+                        :seed="`section-ramp-${i}`"
+                        animate
+                        :style="{ width: SWATCH_SIZE, height: SWATCH_SIZE }"
                     />
                     <span class="text-mono-caption text-muted-foreground">{{ i }}</span>
                 </div>

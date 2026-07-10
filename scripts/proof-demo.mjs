@@ -1038,6 +1038,105 @@ function detect(overrides = {}) {
         cdDangles.length === 0,
     );
 
+    // ── WC1-WC5 — the colors-watercolor arm (BG.W-COLORS-WATERCOLOR-SWATCH). The
+    //    /foundations/colors section-ramp stops render as the shipped <WatercolorDot>
+    //    seeded blobs (REUSED not re-forked), sized ≥112px (larger than the retired
+    //    96px flat chip), laid out with a HAND-LAID stagger (adjacent stops carry
+    //    DISTINCT block-offsets), entering on scroll via the EXISTING
+    //    `.scroll-cascade--columns` register (no demo-local @keyframes). Born-RED on
+    //    HEAD (the flat `h-24 rounded-lg` chip painting `background:
+    //    var(--section-color-N)`). The ramp IS the content — the reference-class
+    //    one-color-event exemption, so the full-chroma per-stop hue is correct here.
+    const WC_FILE = "demo/stories/foundations/colors.vue";
+    const wcRaw = readSrc(WC_FILE);
+    const wcSrc = stripComments(wcRaw);
+
+    // WC1 — the ramp composes the SHIPPED <WatercolorDot> primitive over
+    // --section-color-N (the ramp IS the content). A demo-local blob re-fork (an
+    // import off any non-watercolor-dot path, or a hand-rolled blob) fails the
+    // shipped-primitive import; a flat-chip HEAD tree carries no <WatercolorDot>.
+    const wc1Import =
+        /import\s*\{[^}]*\bWatercolorDot\b[^}]*\}\s*from\s*["'][^"']*\/watercolor-dot["']/.test(
+            wcSrc,
+        );
+    const wc1Tag = /<WatercolorDot[\s/>]/.test(wcSrc);
+    const wc1Ramp = /var\(--section-color-/.test(wcSrc);
+    facts.wc1 = { import: wc1Import, tag: wc1Tag, ramp: wc1Ramp };
+    assert(
+        "WC1 — the colors ramp composes the shipped <WatercolorDot> primitive over --section-color-N",
+        wc1Import && wc1Tag && wc1Ramp,
+    );
+
+    // WC2 — no flat-chip regression: no element paints the ramp as a flat
+    // `background: var(--section-color-N)` fill (the retired h-24 chip). The
+    // signature is a `background`/`background-color` style paired with
+    // --section-color on one line — WatercolorDot reads its hue via `:color`, never
+    // a background.
+    const wc2FlatChip = /background(?:-color)?[^\n]{0,40}var\(--section-color-/.test(
+        wcSrc,
+    );
+    facts.wc2 = { flatChip: wc2FlatChip };
+    assert(
+        "WC2 — no flat-chip regression (the ramp is not a raw background: var(--section-color-N) chip)",
+        !wc2FlatChip,
+    );
+
+    // WC3 — the blobs are sized ≥112px (strictly larger than the retired 96px flat
+    // chip). The size is the SWATCH_SIZE const (rem/px) applied as blob width+height.
+    const wc3Match = wcRaw.match(/SWATCH_SIZE\s*=\s*["']([\d.]+)(rem|px)["']/);
+    const wc3Px = wc3Match
+        ? wc3Match[2] === "rem"
+            ? parseFloat(wc3Match[1]) * 16
+            : parseFloat(wc3Match[1])
+        : 0;
+    const wc3Applied =
+        /width:\s*SWATCH_SIZE/.test(wcSrc) && /height:\s*SWATCH_SIZE/.test(wcSrc);
+    facts.wc3 = { px: wc3Px, applied: wc3Applied };
+    assert(
+        "WC3 — the ramp swatches are sized ≥112px (larger than the retired 96px flat chip)",
+        wc3Px >= 112 && wc3Applied,
+    );
+
+    // WC4 — the hand-laid stagger: adjacent stops carry DISTINCT block-offsets. The
+    // STAGGER_REM array drives a per-stop `marginBlockStart` (a block-axis offset),
+    // and no two consecutive entries are equal (the irregular hand-laid read, not a
+    // flat aligned row).
+    const wc4Match = wcRaw.match(/STAGGER_REM\s*=\s*\[([^\]]*)\]/);
+    const staggerVals = wc4Match
+        ? wc4Match[1]
+              .split(",")
+              .map((s) => parseFloat(s.trim()))
+              .filter((v) => !Number.isNaN(v))
+        : [];
+    const wc4Distinct =
+        staggerVals.length >= 2 &&
+        staggerVals.every((v, idx) => idx === 0 || v !== staggerVals[idx - 1]);
+    const wc4BlockAxis =
+        /marginBlockStart/.test(wcSrc) &&
+        (wcSrc.match(/STAGGER_REM/g) || []).length >= 2;
+    facts.wc4 = {
+        count: staggerVals.length,
+        distinct: wc4Distinct,
+        blockAxis: wc4BlockAxis,
+    };
+    assert(
+        "WC4 — the ramp carries a hand-laid stagger (adjacent stops carry distinct block-offsets)",
+        wc4Distinct && wc4BlockAxis,
+    );
+
+    // WC5 — the entrance rides the EXISTING `.scroll-cascade--columns` register
+    // (KISS — no demo-local @keyframes in the colors pane). The container carries the
+    // register + the per-stop --col index; the file mints no local @keyframes.
+    const wc5Cascade = /scroll-cascade--columns/.test(wcSrc) && /--col/.test(wcSrc);
+    // Scan the COMMENT-STRIPPED source (a `@keyframes` mention in a prose comment is
+    // provenance, never a live demo-local fork; a real definition lives in a <style>).
+    const wc5NoLocalKeyframes = !/@keyframes/.test(wcSrc);
+    facts.wc5 = { cascade: wc5Cascade, noLocalKeyframes: wc5NoLocalKeyframes };
+    assert(
+        "WC5 — the ramp enters on scroll via the existing .scroll-cascade--columns register (no demo-local @keyframes)",
+        wc5Cascade && wc5NoLocalKeyframes,
+    );
+
     return { facts, violations };
 }
 
@@ -1488,6 +1587,85 @@ function selfTest() {
         "CD3 comment-strip distinguishing bite",
     );
 
+    // ── WC-clause bites (BG.W-COLORS-WATERCOLOR-SWATCH) — each recreates a defect
+    // the fixed colors pane must not carry. GOOD_WC satisfies every WC clause; each
+    // bite mutates ONE axis. WC_FILE is the literal path detect() reads via readSrc.
+    const WC_KEY = "demo/stories/foundations/colors.vue";
+    const GOOD_WC =
+        `import { WatercolorDot } from "@glass/components/custom/watercolor-dot";\n` +
+        `const SWATCH_SIZE = "7.5rem";\n` +
+        `const STAGGER_REM = [0, 1.6, 0.5];\n` +
+        `<template><div class="scroll-cascade scroll-cascade--columns">` +
+        `<div :style="{ '--col': i, marginBlockStart: \`\${STAGGER_REM[i]}rem\` }">` +
+        `<WatercolorDot :color="\`var(--section-color-\${i})\`" :seed="\`s-\${i}\`" animate ` +
+        `:style="{ width: SWATCH_SIZE, height: SWATCH_SIZE }" /></div></div></template>`;
+    // WC1 (born-RED HEAD form): the flat h-24 chip, no <WatercolorDot> → REDs WC1.
+    sab(
+        {
+            srcOverride: {
+                [WC_KEY]:
+                    `<template><div class="scroll-cascade scroll-cascade--columns">` +
+                    `<div :style="{ '--col': i }"><div class="h-24 rounded-lg" ` +
+                    `:style="{ background: \`var(--section-color-\${i})\` }" /></div></div></template>`,
+            },
+        },
+        "WC1 — the colors ramp composes the shipped <WatercolorDot> primitive over --section-color-N",
+        "WC1 flat-chip HEAD form (no <WatercolorDot>)",
+    );
+    // WC2: a half-migration — <WatercolorDot> present BUT a flat background chip
+    // still paints the ramp beside it → REDs WC2 (the good axes stay green).
+    sab(
+        {
+            srcOverride: {
+                [WC_KEY]:
+                    GOOD_WC.replace(
+                        "</div></div></template>",
+                        `</div><div :style="{ background: \`var(--section-color-\${i})\` }" /></div></template>`,
+                    ),
+            },
+        },
+        "WC2 — no flat-chip regression (the ramp is not a raw background: var(--section-color-N) chip)",
+        "WC2 a surviving flat background: var(--section-color-N) chip",
+    );
+    // WC3: a too-small swatch (SWATCH_SIZE = 6rem = 96px, the retired chip size) →
+    // REDs WC3 (the >=112px floor).
+    sab(
+        {
+            srcOverride: {
+                [WC_KEY]: GOOD_WC.replace('"7.5rem"', '"6rem"'),
+            },
+        },
+        "WC3 — the ramp swatches are sized ≥112px (larger than the retired 96px flat chip)",
+        "WC3 a sub-112px swatch (96px, the retired chip)",
+    );
+    // WC4: a flat stagger (adjacent-equal offsets [0, 0, 1]) → REDs WC4 (the
+    // hand-laid distinct-adjacency read is gone).
+    sab(
+        {
+            srcOverride: {
+                [WC_KEY]: GOOD_WC.replace(
+                    "[0, 1.6, 0.5]",
+                    "[0, 0, 1]",
+                ),
+            },
+        },
+        "WC4 — the ramp carries a hand-laid stagger (adjacent stops carry distinct block-offsets)",
+        "WC4 a flat stagger (adjacent-equal block-offsets)",
+    );
+    // WC5: a demo-local @keyframes minted in the colors pane (the KISS-violating
+    // fork the shipped .scroll-cascade--columns register makes unnecessary) → REDs WC5.
+    sab(
+        {
+            srcOverride: {
+                [WC_KEY]:
+                    GOOD_WC +
+                    `\n<style>@keyframes colors-local-rise { to { opacity: 1; } }</style>`,
+            },
+        },
+        "WC5 — the ramp enters on scroll via the existing .scroll-cascade--columns register (no demo-local @keyframes)",
+        "WC5 a demo-local @keyframes in the colors pane",
+    );
+
     return flagged;
 }
 
@@ -1602,7 +1780,22 @@ function run() {
         `  CD3 clean move (no dangle) : ${facts["CD3 — the composables dissolve is clean (no demo import references the retired demo/composables/ path)"]}  (dangles: ${JSON.stringify(facts.cdDangles ?? [])})`,
     );
     console.log(
-        `  self-test (bite proof)    : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×2 incl. comment-strip + D4 + D5 + D6×2 + D7×3 incl. comment-strip + T1-T4 + E1×2 incl. declared-family + E2 + E3 + F1 + F2×2 incl. FamilyTabs + F3 + ST1-ST5 + CF1 + CF2×3 incl. comment-strip + CD1 + CD2 + CD3×2 incl. comment-strip)`,
+        `  WC1 colors→WatercolorDot  : ${facts["WC1 — the colors ramp composes the shipped <WatercolorDot> primitive over --section-color-N"]}`,
+    );
+    console.log(
+        `  WC2 no flat-chip regress  : ${facts["WC2 — no flat-chip regression (the ramp is not a raw background: var(--section-color-N) chip)"]}`,
+    );
+    console.log(
+        `  WC3 swatch ≥112px         : ${facts["WC3 — the ramp swatches are sized ≥112px (larger than the retired 96px flat chip)"]}  (px: ${facts.wc3?.px})`,
+    );
+    console.log(
+        `  WC4 hand-laid stagger     : ${facts["WC4 — the ramp carries a hand-laid stagger (adjacent stops carry distinct block-offsets)"]}  (stops: ${facts.wc4?.count}, distinct: ${facts.wc4?.distinct})`,
+    );
+    console.log(
+        `  WC5 scroll-cascade entrance: ${facts["WC5 — the ramp enters on scroll via the existing .scroll-cascade--columns register (no demo-local @keyframes)"]}`,
+    );
+    console.log(
+        `  self-test (bite proof)    : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×2 incl. comment-strip + D4 + D5 + D6×2 + D7×3 incl. comment-strip + T1-T4 + E1×2 incl. declared-family + E2 + E3 + F1 + F2×2 incl. FamilyTabs + F3 + ST1-ST5 + CF1 + CF2×3 incl. comment-strip + CD1 + CD2 + CD3×2 incl. comment-strip + WC1-WC5)`,
     );
     if (violations.length) {
         console.log("\nVIOLATIONS:");
