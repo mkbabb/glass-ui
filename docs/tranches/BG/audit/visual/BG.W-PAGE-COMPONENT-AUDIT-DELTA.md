@@ -1,5 +1,38 @@
 # BG.W-PAGE-COMPONENT-AUDIT (17.6) — the 480-capture cross-page harmonized-whole DELTA
 
+> ## POST-DELTA UPDATE (2026-07-10, audit triumvirate) — the ROOT CAUSE named; every OBSERVATION in this DELTA CONFIRMED
+> The audit triumvirate re-derived this FAIL against the tree. **No claim in this DELTA is falsified** — all its
+> observations are accurate (this is a correct-but-SHALLOW DELTA, unlike the concentric one whose content-visibility
+> root cause was empirically wrong). This block adds the precise MECHANISM the DELTA stopped short of, so no future
+> agent re-chases at symptom level. Full write-up: `docs/tranches/BG/audit/W-PAGE-COMPONENT-AUDIT-COMPLETION-AUDIT.md`.
+>
+> **The named root cause (nav/tabs + motion/scroll — the "0 GL canvases" this DELTA observed):** the warm-cream field
+> is NOT the base page (`--background = --neutral-0 = hsl(40 30% 98%)`, L98 → ≈0.005 OKLab chroma, imperceptible);
+> it is the global SHELL `<Aurora>` (`AppShell.vue:320-328`, warm-projected `[25,95]`), mounted IFF `shellFieldActive`.
+> `shellFieldActive = !to.meta.focal` (`router.ts:107`); `focal = isFocalRoute(routeId, bg)` (`focal.ts:62-68`) returns
+> true when `bg.kind ∈ GL_BG_KINDS`. `navigation → aurora` / `motion → constellation` (`manifest.ts:202,206`) mark both
+> routes FOCAL by their GL kind → the shell aurora is SUPPRESSED. **But `StoryPage.vue:217` mounts `StoryHero` (which
+> actually renders the field) ONLY on `variant === "hero"`, and both routes are page-variant (no `hero` flag).** So the
+> focal flag removes the warm shell field while the page never mounts the GL field it assumed → ZERO GL contexts → the
+> probe reads the neutral near-white/near-black base. It is a genuine defect in `focal.ts`: the predicate assumes a GL
+> background-kind implies the page mounts that field, which only holds for HERO pages.
+>
+> **Framing correction (the ONE thing to not mislead on):** this DELTA's mustFix for navigation says "0 GL canvases
+> mounted — the aurora is not compositing." Read literally that suggests an Aurora RENDER bug. The truth: the aurora is
+> deliberately SUPPRESSED by the focal predicate and never re-mounted, so **zero auroras are ever instantiated** —
+> nothing fails to composite; nothing is asked to. Do NOT chase an Aurora rendering defect.
+>
+> **`/compositions/hero` is a DIFFERENT mechanism (this DELTA has it right):** it IS a hero (`manifest.ts:1245-1254`),
+> so StoryHero mounts the constellation correctly-as-designed — but a constellation is achromatic grey line-art over
+> the near-white/near-black base → warmFraction=0 (light), a dead near-black void (dark). The field mounts; it carries
+> no warm identity.
+>
+> **Fix (precise):** thread the story `hero` flag through `isFocalRoute` — `focal = (kind ∈ GL_BG_KINDS && isHeroPage)
+> || SELF_STAGES_GL.has(routeId)` (`focal.ts`), and pass `story.hero` at the two `router.ts` call sites (`:52`, `:74`).
+> Then nav/motion CONTENT pages become non-focal → the shell warm aurora composites behind them exactly as it already
+> does for the CONVERGED forms/data/containers content pages. compositions/hero takes a warm underpaint/aurora/base
+> plate (SECONDARY fix). This corrects the record with the named mechanism; the DELTA's observations stand verbatim.
+
 **Class:** [P] paint-gated capstone close · **Device-free gate:** `proof:warm-identity` (cross-page arm) · **Instrument:** `tests-visual/coherence-congruence.spec.ts` · **Roster:** `docs/tranches/BG/audit/reflect/bg-page-audit-roster.md`
 
 This is the NON-AUTHORING paint judge's input scaffold — the building agent does NOT fill the verdicts (the non-authoring fence). The device-free arm is GREEN (the convergence STRUCTURE landed); the operative all-converged verdict is a born-RED baseline the LOCAL late-sweep + the judge flip.
