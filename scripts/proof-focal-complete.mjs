@@ -16,10 +16,23 @@
 //   C3 — the resolver is TOTAL: GL_BG_KINDS carries the 4 full-bleed GL kinds, and
 //        every manifest row whose resolved background.kind ∈ GL_BG_KINDS is focal by
 //        construction (a focal-without-a-field is impossible — isFocalRoute checks
-//        the kind first).
+//        the kind first). NOTE: C3 is a one-GL ENUMERATION tautology — it never
+//        verifies a focal route MOUNTS a field, so it GREENED OVER the 17.6 warm-
+//        field defect; C4 is the missing regression guard.
+//   C4 — BG.W-PAGE-COMPONENT-AUDIT (17.6): the shell-field suppression is HERO-
+//        GATED. The landed fix DECOUPLES shell-field suppression onto
+//        `suppressesShellField(routeId, bg, isHeroPage)` (the chromatic-field arm
+//        `isHeroPage`-gated), so a non-hero GL-background CONTENT page KEEPS the
+//        warm shell `<Aurora>` (navigation/tabs, motion/scroll) and an achromatic
+//        constellation/fourier hero keeps it as an UNDERPAINT (compositions/hero).
+//        C4 machine-locks: the fn is hero-gated, CHROMATIC_FIELD_KINDS excludes the
+//        achromatic line-art, both router call sites thread the hero flag, and
+//        shellFieldActive reads meta.suppressesShellField (not meta.focal).
 //
-// A self-test bite (--self-test) drops a DockStage route from SELF_STAGES_GL and
-// asserts C2 would RED (the planted bite).
+// Self-test bites (--self-test): C2 drops a DockStage route from SELF_STAGES_GL and
+// asserts C2 would RED; C4-bite-1 drops the `isHeroPage &&` gate from the chromatic
+// arm (the pre-fix shape) and C4-bite-2 re-wires shellFieldActive off meta.focal —
+// each must make C4 RED (the born-RED warm-field-defect teeth).
 
 import { execSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
@@ -49,6 +62,7 @@ function parseStringSet(src, name) {
 }
 const GL_BG_KINDS = parseStringSet(focalSrc, "GL_BG_KINDS");
 const SELF_STAGES_GL = parseStringSet(focalSrc, "SELF_STAGES_GL");
+const CHROMATIC_FIELD_KINDS = parseStringSet(focalSrc, "CHROMATIC_FIELD_KINDS");
 
 // ── Parse the manifest — story ids + resolved backgrounds + category defaults ──
 const manifest = stripTs(read("demo/stories/manifest.ts"));
@@ -163,6 +177,87 @@ add(
         : `the resolver is not total (gl-kinds-complete=${glKindsComplete} every-gl-row-focal=${glRowsFocal} rows=${rows.length})`,
 );
 
+// ── C4 — the shell-field suppression is HERO-GATED (BG.W-PAGE-COMPONENT-AUDIT
+//    17.6 regression guard). C3 is a TAUTOLOGY (it filters GL rows then asserts
+//    they are focal "by construction" — never verifying a focal route MOUNTS a
+//    field), so it GREENED OVER the 17.6 defect: a GL-background CONTENT page
+//    (non-hero) was flagged focal → the shell warm `<Aurora>` suppressed → but
+//    `StoryHero` mounts the GL field ONLY on `variant==='hero'` → 0 GL contexts →
+//    the neutral near-white/near-black base (navigation/tabs · motion/scroll ·
+//    compositions/hero read NOT-WARM at the roster probe box; meanChroma 0.003-
+//    0.008 vs the warm floor — the paint-judge FAIL). The landed fix DECOUPLES
+//    shell-field suppression onto `suppressesShellField(routeId, bg, isHeroPage)`
+//    (the chromatic-field arm HERO-GATED) so a non-hero GL-background page KEEPS
+//    the warm shell field, and an achromatic constellation/fourier hero keeps it
+//    as an UNDERPAINT. C4 machine-locks that decoupling so the defect class cannot
+//    silently regress (the two born-RED self-test bites below prove the teeth).
+function detectHeroGatedSuppression(focalSource, routerSource) {
+    const chromatic = parseStringSet(focalSource, "CHROMATIC_FIELD_KINDS");
+    // (a) the resolver exists + carries the isHeroPage param (the decoupled gate).
+    const fnDecl =
+        /export function suppressesShellField\(\s*routeId[^)]*isHeroPage\s*:\s*boolean[^)]*\)/.test(
+            focalSource,
+        );
+    // (b) the chromatic-field arm is HERO-GATED: the parenthesized arm that reads
+    //     CHROMATIC_FIELD_KINDS.has(kind) BEGINS with `isHeroPage &&`, so a NON-hero
+    //     GL-background CONTENT page does NOT suppress the warm shell field (the
+    //     exact 17.6 defect guard — dropping this `&&` re-strips the whole nav/
+    //     motion content band).
+    const heroGatedArm =
+        /\(\s*isHeroPage\s*&&[\s\S]*?CHROMATIC_FIELD_KINDS\.has\(\s*kind\s*\)\s*\)/.test(
+            focalSource,
+        );
+    // (c) CHROMATIC_FIELD_KINDS EXCLUDES the achromatic line-art (constellation/
+    //     fourier) so a constellation hero KEEPS the warm shell UNDERPAINT (the
+    //     compositions/hero dark-void kill), and INCLUDES a real chromatic field
+    //     (aurora) that legitimately replaces the shell (the one-GL law).
+    const chromaticExcludesLineArt =
+        chromatic.has("aurora") &&
+        !chromatic.has("constellation") &&
+        !chromatic.has("fourier");
+    // (d) router.ts threads the hero flag into suppressesShellField at BOTH call
+    //     sites (a landing always mounts StoryHero → true; a story → story.hero).
+    const landingThreads =
+        /suppressesShellField\(\s*category\.id\s*,\s*category\.landing\??\.background\s*,\s*true\s*,?\s*\)/.test(
+            routerSource,
+        );
+    const storyThreads =
+        /suppressesShellField\(\s*`\$\{category\.id\}\/\$\{story\.id\}`\s*,\s*story\.background\s*,\s*story\.hero\s*===\s*true\s*,?\s*\)/.test(
+            routerSource,
+        );
+    // (e) the shell-field gate reads meta.suppressesShellField (NOT meta.focal) —
+    //     the decoupling that restores the warm field on a non-focal-but-content
+    //     route while the one-GL `focal` enumeration (proof:focal-complete C1-C3)
+    //     stays byte-unchanged for its own reader.
+    const wiredToSuppresses =
+        /shellFieldActive\.value\s*=\s*!\s*to\.meta\??\.suppressesShellField/.test(
+            routerSource,
+        );
+    return {
+        fnDecl,
+        heroGatedArm,
+        chromaticExcludesLineArt,
+        landingThreads,
+        storyThreads,
+        wiredToSuppresses,
+    };
+}
+const c4d = detectHeroGatedSuppression(focalSrc, routerSrc);
+const c4 =
+    c4d.fnDecl &&
+    c4d.heroGatedArm &&
+    c4d.chromaticExcludesLineArt &&
+    c4d.landingThreads &&
+    c4d.storyThreads &&
+    c4d.wiredToSuppresses;
+add(
+    "c4-shell-field-suppression-hero-gated",
+    c4,
+    c4
+        ? `suppressesShellField(routeId, bg, isHeroPage) is HERO-GATED — a non-hero GL-background CONTENT page KEEPS the warm shell field; CHROMATIC_FIELD_KINDS={${[...CHROMATIC_FIELD_KINDS].sort().join(",")}} excludes constellation/fourier (underpaint kept); router threads the hero flag at both call sites + shellFieldActive reads meta.suppressesShellField (the 17.6 warm-field defect class machine-locked)`
+        : `the shell-field suppression is NOT hero-gated (fnDecl=${c4d.fnDecl} heroGatedArm=${c4d.heroGatedArm} chromaticExcludesLineArt=${c4d.chromaticExcludesLineArt} landingThreads=${c4d.landingThreads} storyThreads=${c4d.storyThreads} wiredToSuppresses=${c4d.wiredToSuppresses}) — the 17.6 defect (a non-hero GL-background page strips the warm shell field → 0 GL contexts → neutral base) is NOT closed`,
+);
+
 // ── self-test: the planted bite — drop a DockStage route from SELF_STAGES_GL ───
 if (SELF_TEST) {
     const dropped = [...dockStageRoutes][0];
@@ -178,7 +273,45 @@ if (SELF_TEST) {
         console.error("\n[self-test] the planted bite has NO teeth");
         process.exit(1);
     }
-    console.log("\n[self-test] the C2 DockStage-grep bite has teeth");
+
+    // C4 bite 1 — the 17.6 defect re-introduced: DROP the `isHeroPage &&` gate from
+    // the chromatic-field arm (the exact pre-fix shape). A non-hero GL-background
+    // page would then suppress the shell warm field → 0 GL contexts → neutral base.
+    const preFixFocal = focalSrc.replace(
+        /\(\s*isHeroPage\s*&&([\s\S]*?CHROMATIC_FIELD_KINDS\.has\(\s*kind\s*\))\s*\)/,
+        "($1)",
+    );
+    const biteHero = detectHeroGatedSuppression(preFixFocal, routerSrc);
+    const c4LiveHeroGated = detectHeroGatedSuppression(focalSrc, routerSrc).heroGatedArm;
+    const c4HeroBiteHasTeeth =
+        preFixFocal !== focalSrc && c4LiveHeroGated && !biteHero.heroGatedArm;
+    console.log(
+        `  ${c4HeroBiteHasTeeth ? "✓" : "✗"} c4-bite-1 — dropping \`isHeroPage &&\` from the chromatic arm makes C4 RED (live=${c4LiveHeroGated}, mutated=${biteHero.heroGatedArm}, teeth=${c4HeroBiteHasTeeth})`,
+    );
+
+    // C4 bite 2 — the decoupling severed: re-wire shellFieldActive off meta.focal
+    // (the pre-fix wire that conflated the one-GL enumeration with the warm-field
+    // gate). A GL-background content page is focal → the shell field is stripped.
+    const preFixRouter = routerSrc.replace(
+        /shellFieldActive\.value\s*=\s*!\s*to\.meta\??\.suppressesShellField/,
+        "shellFieldActive.value = !to.meta?.focal",
+    );
+    const biteWire = detectHeroGatedSuppression(focalSrc, preFixRouter);
+    const c4LiveWired = detectHeroGatedSuppression(focalSrc, routerSrc).wiredToSuppresses;
+    const c4WireBiteHasTeeth =
+        preFixRouter !== routerSrc && c4LiveWired && !biteWire.wiredToSuppresses;
+    console.log(
+        `  ${c4WireBiteHasTeeth ? "✓" : "✗"} c4-bite-2 — re-wiring shellFieldActive off meta.focal makes C4 RED (live=${c4LiveWired}, mutated=${biteWire.wiredToSuppresses}, teeth=${c4WireBiteHasTeeth})`,
+    );
+
+    if (!c4HeroBiteHasTeeth || !c4WireBiteHasTeeth) {
+        console.error("\n[self-test] a C4 hero-gating bite has NO teeth");
+        process.exit(1);
+    }
+
+    console.log(
+        "\n[self-test] the C2 DockStage-grep bite + the two C4 hero-gating bites have teeth",
+    );
     process.exit(0);
 }
 
@@ -207,5 +340,5 @@ if (!pass) {
     process.exit(1);
 }
 console.log(
-    "\n[proof:focal-complete] focal is background.kind-derived + SELF_STAGES_GL, wired into router meta.focal, the DockStage grep is enrolled, and the resolver is total. The runtime one-GL law rides the live capture.",
+    "\n[proof:focal-complete] focal is background.kind-derived + SELF_STAGES_GL, wired into router meta.focal, the DockStage grep is enrolled, the resolver is total, and the shell-field suppression is HERO-GATED (the 17.6 warm-field defect class machine-locked). The runtime one-GL law rides the live capture.",
 );

@@ -179,3 +179,39 @@ The 8 warm routes' DARK captures read meanL≈0.19–0.36, BELOW the roster `exp
 - Chrome leg: `BG.W-PAGE-COMPONENT-AUDIT-paint/chrome-cap.mjs` (playwright `connectOverCDP` :9334, 11 routes × 2 modes).
 - WebKit leg: `.wkshot-live "http://localhost:5200/?capture=<route>&mode=<m>" <out> <m> 15000` (off-screen WKWebView, compiled from `docs/tranches/BG/audit/wkshot-live.m`).
 - Validate: `BG.W-PAGE-COMPONENT-AUDIT-paint/validate.mjs` (reuses `scripts/reflect-capture-verify.mjs` + `scripts/lib/paint-arm.mjs warmIdentityVerdict` — gate-parity read at the roster probe boxes) → `validate-out.json`.
+
+---
+
+# BUILD-FIX AGENT RESOLUTION (2026-07-10, STEP 0.4) — the mustFix source-defects CLOSED at HEAD
+
+**Role:** BUILD-FIX AGENT (this note records the SOURCE resolution + the machine-lock; it does NOT flip a roster row or judge the painted truth — the non-authoring fence stands, the re-judge below is the non-authoring late-sweep judge's). The warm-field mustFix items the paint judge named are fixed IN THE TREE by the landed repair `2ade5013` (+ `40f4b18f`), which are ancestors of the current `tranche/BG` HEAD; this wave adds the OWED regression machine-lock the audit-of-record's §6 named.
+
+## The SOURCE fix (already landed — `demo/chassis/hero/focal.ts` + `demo/router.ts`)
+
+The named root cause — `isFocalRoute` suppressed the shell warm `<Aurora>` on a route's GL `background.kind` while `StoryHero` mounts the GL field ONLY on a hero page — is closed by DECOUPLING shell-field suppression onto a distinct single-source `suppressesShellField(routeId, bg, isHeroPage)`:
+
+```
+suppressesShellField = (isHeroPage && kind ∈ CHROMATIC_FIELD_KINDS) || SELF_STAGES_GL.has(routeId)
+CHROMATIC_FIELD_KINDS = { aurora, liquid-grid }   // constellation/fourier = achromatic line-art → NOT suppressing
+```
+
+`router.afterEach` now reads `!to.meta.suppressesShellField` for `shellFieldActive` (was `!to.meta.focal`). `isFocalRoute`/`meta.focal` are BYTE-UNCHANGED (still the one-GL `proof:focal-complete` reader's owns-a-field enumeration) — no rule forked. Effect on the three FAIL routes:
+
+- **navigation/tabs** (`aurora` kind, non-hero content page) → `isHeroPage=false` → does NOT suppress → the shell warm `<Aurora>` (`AppShell.vue`, warm-projected `[25,95]`) composites behind it, exactly as it already does for the 8 CONVERGED forms/data/containers content bands.
+- **motion/scroll** (`constellation` kind, non-hero content page) → same → shell warm field composites.
+- **compositions/hero** (`constellation` HERO, achromatic — EXCLUDED from `CHROMATIC_FIELD_KINDS`) → does NOT suppress → the shell warm field stays as an UNDERPAINT behind the grey constellation (warm-cream light / luminous-warm-dark dark — the "charcoal slab on a dead void" §W-DARK-MATERIAL forbids is killed; two GL by design, per the audit ruling).
+
+## The OWED gate clause LANDED — `proof:focal-complete` C4 (the audit §6 Task-3)
+
+The audit named C3 a TAUTOLOGY (it filters GL rows then asserts they are focal "by construction" — it NEVER verifies a focal route MOUNTS a field, so it GREENED OVER this defect) and owed a born-RED C4 with FIX A. FIX A landed WITHOUT it; this wave closes the gap, re-specced onto the landed `suppressesShellField` architecture. **C4 (`c4-shell-field-suppression-hero-gated`)** asserts: the resolver exists + is `isHeroPage`-param'd; the chromatic-field arm is `isHeroPage`-GATED (a non-hero GL-background CONTENT page does NOT suppress — the exact defect guard); `CHROMATIC_FIELD_KINDS` EXCLUDES constellation/fourier (the underpaint kept) and INCLUDES aurora; both `router.ts` call sites thread the hero flag; and `shellFieldActive` reads `meta.suppressesShellField` not `meta.focal`. GREEN on HEAD (the fix landed); the born-RED is demonstrated by TWO self-test bites — dropping `isHeroPage &&` from the chromatic arm, and re-wiring `shellFieldActive` off `meta.focal`, each RED the clause. `proof:focal-complete` is 4/4 GREEN.
+
+## mustFix disposition
+
+- **[compositions/hero]** SOURCE-CLOSED (warm shell underpaint behind the constellation, both modes) — pending the non-authoring re-judge's fresh dual-engine warm capture.
+- **[navigation/tabs]** SOURCE-CLOSED (shell warm aurora composites — the `0 GL canvases` was the deliberate focal-suppression, not an Aurora render bug) — pending re-judge.
+- **[motion/scroll]** warm-field SOURCE-CLOSED (shell warm composites); the FRAME-SERIES half is the gesture-instrument gap below.
+- **[gesture frame-series]** NOT a source defect — a paint-INSTRUMENT gap (the settled-still C18 harness reads at `data-capture-ready` with `getAnimations().running===0` and structurally cannot produce the ≥8-frame entrance / shell-vh-morph / drawer-drag series). Booked as the RECORDER row (repair `2ade5013` §B); the non-authoring judge supplies the frame-series instrument at re-judge. Left to the judge (the non-authoring fence — the building agent does not author its own paint verdict).
+
+## Re-judge owed
+
+`proof:warm-identity` device-free arm GREEN + `proof:focal-complete` 4/4 GREEN is INSUFFICIENT for the operative close — the re-judge is a FRESH dual-engine (Chrome ANGLE-Metal + real Safari/WebKit) both-modes warm-capture roster flip by the NON-AUTHORING late-sweep judge over the BUILT `:5200` bytes. The roster rows stay born-RED FAIL until that capture reads warm at each probe box (the anti-evasion floor forbids a CONVERGED-over-not-warm flip). No `src/` paint touched by this fix (the shell-field seam is `demo/`; the machine-lock is `scripts/`).
