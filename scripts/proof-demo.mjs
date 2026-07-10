@@ -315,6 +315,31 @@ const DECISIONS = [
     },
 ];
 
+// ── The B3-d2 composables-dissolve moves (BH.F7 δ2-dock-layers-shell). ───────────
+// `demo/composables/` was a two-file catch-all off the colocation grain — a
+// navigation composable that belongs BESIDE the storybook chassis it drives, and
+// a route→layer resolver that belongs BESIDE its shell consumer. This wave
+// DISSOLVES the dir: useStoryNavigation → demo/chassis/, useContextualDockLayers →
+// demo/shell/ (beside useShellNavDock.ts, its sole consumer). Each `from`/`to` is
+// the on-disk artefact the move governs (from → absent; to → present). The CD
+// clauses assert the dissolve is realized + clean (born-RED on HEAD, where both
+// files live under demo/composables/).
+const COMPOSABLE_MOVES = {
+    dissolvedDir: "demo/composables",
+    moves: [
+        {
+            name: "useStoryNavigation",
+            from: "demo/composables/useStoryNavigation.ts",
+            to: "demo/chassis/useStoryNavigation.ts",
+        },
+        {
+            name: "useContextualDockLayers",
+            from: "demo/composables/useContextualDockLayers.ts",
+            to: "demo/shell/useContextualDockLayers.ts",
+        },
+    ],
+};
+
 function read(rel) {
     const p = resolve(ROOT, rel);
     return existsSync(p) ? readFileSync(p, "utf8") : "";
@@ -963,6 +988,56 @@ function detect(overrides = {}) {
         stExtras.length === 0 && stAllPresent,
     );
 
+    // ── CD1/CD2/CD3 — the B3-d2 composables-dissolve moves (BH.F7 δ2). ────────────
+    const moves = overrides.composableMoves ?? COMPOSABLE_MOVES;
+
+    // CD1 — the OLD home is DISSOLVED: the `demo/composables/` dir AND both old
+    //   composable files are DEFINITION-ABSENT (born-RED: HEAD carries both under
+    //   demo/composables/). A survivor = a half-move (the old copy left behind is
+    //   the dual-path the dissolve forbids).
+    const cdDissolveSurvivors = [];
+    if (fileExists(moves.dissolvedDir)) cdDissolveSurvivors.push(moves.dissolvedDir);
+    for (const m of moves.moves)
+        if (fileExists(m.from)) cdDissolveSurvivors.push(m.from);
+    facts.cdDissolveSurvivors = cdDissolveSurvivors;
+    assert(
+        "CD1 — demo/composables/ is dissolved (the dir + both old composable files DEFINITION-ABSENT)",
+        cdDissolveSurvivors.length === 0,
+    );
+
+    // CD2 — each dissolved composable is RE-HOMED: the new file EXISTS on disk
+    //   (useStoryNavigation → demo/chassis/, useContextualDockLayers → demo/shell/).
+    //   The dissolve is a MOVE, never a delete.
+    const cdRehomeGaps = [];
+    for (const m of moves.moves)
+        if (!fileExists(m.to)) cdRehomeGaps.push(`${m.name} → ${m.to}`);
+    facts.cdRehomeGaps = cdRehomeGaps;
+    assert(
+        "CD2 — each dissolved composable is re-homed (chassis/useStoryNavigation + shell/useContextualDockLayers present)",
+        cdRehomeGaps.length === 0,
+    );
+
+    // CD3 — the move is CLEAN: no demo/ import statement still references the retired
+    //   `demo/composables/` path. A stale `../composables/use{Story…}` import would
+    //   resolve to NOTHING (the broken-import dangle). Comment-STRIPPED corpus over
+    //   demo/**/*.{ts,vue} (both the .vue consumers + the shell .ts consumer).
+    const moveCorpus =
+        overrides.moveCorpus ??
+        allDemoFiles([".ts", ".vue"]).map((p) => ({
+            path: p.slice(ROOT.length + 1),
+            text: stripComments(readFileSync(p, "utf8")),
+        }));
+    const staleMoveImportRe =
+        /from\s*["'][^"']*\/composables\/(useStoryNavigation|useContextualDockLayers)["']/;
+    const cdDangles = moveCorpus
+        .filter((c) => staleMoveImportRe.test(c.text))
+        .map((c) => c.path);
+    facts.cdDangles = cdDangles;
+    assert(
+        "CD3 — the composables dissolve is clean (no demo import references the retired demo/composables/ path)",
+        cdDangles.length === 0,
+    );
+
     return { facts, violations };
 }
 
@@ -1370,6 +1445,49 @@ function selfTest() {
         "CF2 comment-strip + sanctioned raw-Configurator-in-StorySection distinguishing bite",
     );
 
+    // CD1: an OLD composable file still on disk (the HEAD half-move form) → REDs CD1.
+    sab(
+        { existsOverride: { "demo/composables/useStoryNavigation.ts": true } },
+        "CD1 — demo/composables/ is dissolved (the dir + both old composable files DEFINITION-ABSENT)",
+        "CD1 old composable file survives on disk (half-move)",
+    );
+    // CD2: a re-home target absent (the composable deleted, never re-homed) → REDs CD2.
+    sab(
+        { existsOverride: { "demo/chassis/useStoryNavigation.ts": false } },
+        "CD2 — each dissolved composable is re-homed (chassis/useStoryNavigation + shell/useContextualDockLayers present)",
+        "CD2 re-home target absent (delete-not-move)",
+    );
+    // CD3: a stale `../composables/useStoryNavigation` import survives → REDs CD3
+    //   (the broken-import dangle the clean move forbids).
+    sab(
+        {
+            moveCorpus: [
+                {
+                    path: "demo/layout/AppShell.vue",
+                    text: `import { useStoryNavigation } from "../composables/useStoryNavigation";`,
+                },
+            ],
+        },
+        "CD3 — the composables dissolve is clean (no demo import references the retired demo/composables/ path)",
+        "CD3 stale demo/composables import survives",
+    );
+    // CD3 (distinguishing): a `composables/` mention INSIDE a comment must NOT red
+    //   (the corpus is comment-stripped — a prose note is provenance, never a dangle).
+    sabNot(
+        {
+            moveCorpus: [
+                {
+                    path: "demo/layout/AppShell.vue",
+                    text: stripComments(
+                        `// moved off ../composables/useStoryNavigation to ../chassis/\n<template><div/></template>`,
+                    ),
+                },
+            ],
+        },
+        "CD3 — the composables dissolve is clean (no demo import references the retired demo/composables/ path)",
+        "CD3 comment-strip distinguishing bite",
+    );
+
     return flagged;
 }
 
@@ -1475,7 +1593,16 @@ function run() {
         `  ST5 closed vocabulary     : ${facts["ST5 — the demo sub-type vocabulary is closed (exactly the five members on disk, no drift)"]}  (${JSON.stringify(facts.st5?.basenames ?? [])})`,
     );
     console.log(
-        `  self-test (bite proof)    : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×2 incl. comment-strip + D4 + D5 + D6×2 + D7×3 incl. comment-strip + T1-T4 + E1×2 incl. declared-family + E2 + E3 + F1 + F2×2 incl. FamilyTabs + F3 + ST1-ST5 + CF1 + CF2×3 incl. comment-strip)`,
+        `  CD1 composables dissolved : ${facts["CD1 — demo/composables/ is dissolved (the dir + both old composable files DEFINITION-ABSENT)"]}  (survivors: ${JSON.stringify(facts.cdDissolveSurvivors ?? [])})`,
+    );
+    console.log(
+        `  CD2 re-homed (move not del): ${facts["CD2 — each dissolved composable is re-homed (chassis/useStoryNavigation + shell/useContextualDockLayers present)"]}  (gaps: ${JSON.stringify(facts.cdRehomeGaps ?? [])})`,
+    );
+    console.log(
+        `  CD3 clean move (no dangle) : ${facts["CD3 — the composables dissolve is clean (no demo import references the retired demo/composables/ path)"]}  (dangles: ${JSON.stringify(facts.cdDangles ?? [])})`,
+    );
+    console.log(
+        `  self-test (bite proof)    : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×2 incl. comment-strip + D4 + D5 + D6×2 + D7×3 incl. comment-strip + T1-T4 + E1×2 incl. declared-family + E2 + E3 + F1 + F2×2 incl. FamilyTabs + F3 + ST1-ST5 + CF1 + CF2×3 incl. comment-strip + CD1 + CD2 + CD3×2 incl. comment-strip)`,
     );
     if (violations.length) {
         console.log("\nVIOLATIONS:");

@@ -2,7 +2,7 @@
 import { computed, inject, provide, watch } from "vue";
 import { cn } from "@glass/utils/cn";
 import { TooltipProvider } from "@glass/components/ui/tooltip";
-import { useStoryNavigation } from "../composables/useStoryNavigation";
+import { useStoryNavigation } from "../chassis/useStoryNavigation";
 import { SECTION_REVEAL_KEY, useSectionReveal } from "./useSectionReveal";
 import { STORY_NESTED_KEY } from "./story-nested";
 // BG.W-STORY-PAGE-API (§4-D) — the demo SUB-TYPE field context. StoryPage provides

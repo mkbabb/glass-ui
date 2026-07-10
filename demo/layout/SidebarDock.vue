@@ -38,7 +38,7 @@ import {
 import { ArrowLeftRight, Settings2 } from "@lucide/vue";
 import { cn } from "@glass/utils/cn";
 import { CATEGORIES } from "../stories/manifest";
-import { useStoryNavigation } from "../composables/useStoryNavigation";
+import { useStoryNavigation } from "../chassis/useStoryNavigation";
 import { useShellNavDock } from "../shell/useShellNavDock";
 import {
     useShellDockOrientation,

@@ -19,7 +19,7 @@ import {
     registerShortcut,
     useRegisteredShortcuts,
 } from "@glass/composables/keyboard";
-import { useStoryNavigation } from "../composables/useStoryNavigation";
+import { useStoryNavigation } from "../chassis/useStoryNavigation";
 import {
     SHELL_DOCK_ORIENTATION,
     SHELL_SCROLL_PROGRESS,

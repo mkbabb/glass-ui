@@ -46,7 +46,7 @@ import {
 } from "@glass/components/ui/tooltip";
 import { FadingScroll } from "@glass/components/custom/fading-scroll";
 import SidebarDock from "./SidebarDock.vue";
-import { useStoryNavigation } from "../composables/useStoryNavigation";
+import { useStoryNavigation } from "../chassis/useStoryNavigation";
 import { useShellNavDock } from "../shell/useShellNavDock";
 
 const { current, next, prev, nextCategory, prevCategory, goTo } =

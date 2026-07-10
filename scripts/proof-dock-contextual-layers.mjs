@@ -61,7 +61,11 @@ function cliPaths() {
     const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
     _cliPaths = {
         ROOT,
-        COMPOSABLE: resolve(ROOT, "demo/composables/useContextualDockLayers.ts"),
+        // BH.F7 δ2-dock-layers-shell — demo/composables/ DISSOLVED; the route→layer
+        // seam re-homed BESIDE its shell consumer (proof:demo CD2 asserts the move).
+        // This reader gate FOLLOWS the carve into demo/shell/ (the "asserts follow the
+        // composition into the carved leaf" precedent).
+        COMPOSABLE: resolve(ROOT, "demo/shell/useContextualDockLayers.ts"),
         // BG.W-SHELL-DOCK-DRY — the shared facet-rail loop (the seam wire + the railItems
         // map) was factored out of both shell SFCs into this composable; the W2 asserts
         // FOLLOW the carve into it (the "asserts follow the composition into the carved
@@ -97,7 +101,7 @@ export function detectContextual(fs) {
 
     if (!hasComposable) {
         violations.push(
-            "W1: `demo/composables/useContextualDockLayers.ts` is absent — the route→layer seam does not exist (the R3-14 facility is unbuilt)",
+            "W1: `demo/shell/useContextualDockLayers.ts` is absent — the route→layer seam does not exist (the R3-14 facility is unbuilt)",
         );
     }
     if (!hasManifest) {

@@ -24,7 +24,7 @@ import { computed } from "vue";
 import type { ComputedRef, WritableComputedRef } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import type { DockStackItem } from "@glass/components/custom/dock";
-import { useContextualDockLayers } from "../composables/useContextualDockLayers";
+import { useContextualDockLayers } from "./useContextualDockLayers";
 
 export interface UseShellNavDockOptions {
     /**
