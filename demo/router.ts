@@ -2,7 +2,7 @@ import { ref } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
 import { CATEGORIES, firstStoryPath } from "./stories/manifest";
-import { isFocalRoute } from "./stories/focal";
+import { isFocalRoute, suppressesShellField } from "./stories/focal";
 
 /**
  * BG.W-FIELD-AURORA (M2) — the shell-field gate. `false` on a FOCAL route (the
@@ -50,6 +50,15 @@ function buildRoutes(): RouteRecordRaw[] {
                           // BG.W-FIELD-AURORA (M2) — the landing's focal flag,
                           // derived from its resolved section-landing background.
                           focal: isFocalRoute(category.id, category.landing?.background),
+                          // BG.W-PAGE-COMPONENT-AUDIT (17.6) — the shell-field
+                          // suppression flag. A landing always mounts
+                          // `StoryHero variant="hero"` (isHeroPage: true); the shell
+                          // stands down only for a CHROMATIC landing field.
+                          suppressesShellField: suppressesShellField(
+                              category.id,
+                              category.landing?.background,
+                              true,
+                          ),
                       },
                   }
                 : {
@@ -69,9 +78,19 @@ function buildRoutes(): RouteRecordRaw[] {
                     storyId: story.id,
                     title: story.title,
                     // BG.W-FIELD-AURORA (M2) — the route's focal flag (GL
-                    // background.kind OR a SELF_STAGES_GL dock route). On a focal
-                    // route the shell aurora stands down (the one-GL law).
+                    // background.kind OR a SELF_STAGES_GL dock route). Owns-a-GL-field
+                    // enumeration (the one-GL law); `proof:focal-complete` reads it.
                     focal: isFocalRoute(`${category.id}/${story.id}`, story.background),
+                    // BG.W-PAGE-COMPONENT-AUDIT (17.6) — the shell-field suppression
+                    // flag. A `background.kind` field mounts ONLY on a hero page
+                    // (`story.hero`); a CONTENT page (no hero) mounts no field and
+                    // KEEPS the warm shell, and an achromatic constellation/fourier
+                    // hero keeps it as an underpaint (CHROMATIC_FIELD_KINDS only).
+                    suppressesShellField: suppressesShellField(
+                        `${category.id}/${story.id}`,
+                        story.background,
+                        story.hero === true,
+                    ),
                 },
             });
         }
@@ -99,12 +118,15 @@ export const router = createRouter({
 });
 
 // BG.W-FIELD-AURORA (M2) — flip the shell-field gate on the COMMITTED route. The
-// shell `<Aurora>` mounts IFF the destination is NOT focal, so a focal route's own
-// route-dominant GL field is the ONLY mounted context (the never-2-contexts law).
-// Reading the committed `to.meta.focal` (not a live computed) means a non-focal→
-// non-focal nav stays `false→false` and the shell node persists (no reparent).
+// shell `<Aurora>` mounts IFF the destination does NOT suppress it (BG.W-PAGE-
+// COMPONENT-AUDIT 17.6): a CHROMATIC hero field (aurora/liquid-grid) or a self-
+// staging dock route REPLACES the shell; a GL-background CONTENT page (mounts no
+// field) and an achromatic constellation/fourier hero KEEP the warm shell (the
+// latter as a warm underpaint). Reading the committed `to.meta.suppressesShellField`
+// (not a live computed) means a keeps→keeps nav stays `true→true` and the shell node
+// persists (no reparent — the per-route hue re-uploads on the persisted node).
 router.afterEach((to) => {
-    shellFieldActive.value = !to.meta?.focal;
+    shellFieldActive.value = !to.meta?.suppressesShellField;
 });
 
 // BG.W-ROUTE-ENTER-VISIBLE (fix a) — pre-resolve the route chunk BEFORE the swap on

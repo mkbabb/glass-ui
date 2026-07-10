@@ -29,6 +29,20 @@ export const GL_BG_KINDS: ReadonlySet<string> = new Set([
     "liquid-grid",
 ]);
 
+/** The GL field kinds that carry the WARM-CREAM identity themselves — a CHROMATIC
+ *  full-bleed field that REPLACES the shell warm aurora (nothing warm needs to sit
+ *  behind it). The achromatic line-art overlays (`constellation`, `fourier`) are
+ *  DELIBERATELY EXCLUDED: they are grey line-art with no warm identity, so the shell
+ *  warm field must stay behind them as an UNDERPAINT (warm-cream in light, luminous-
+ *  warm-dark in dark — never the "charcoal slab on a dead void" W-DARK-MATERIAL
+ *  forbids). This is DISTINCT from `GL_BG_KINDS` (the one-GL owns-a-field
+ *  enumeration): a constellation hero is FOCAL (owns a GL field) yet does NOT
+ *  suppress the shell (keeps the warm underpaint). */
+export const CHROMATIC_FIELD_KINDS: ReadonlySet<string> = new Set([
+    "aurora",
+    "liquid-grid",
+]);
+
 /** Routes that mount a route-DOMINANT GL canvas OUTSIDE the `background` channel —
  *  the dock stories whose page IS the dock-over-a-live-field demonstration. Keyed
  *  by the route id (`<category>/<story>`). `proof:focal-complete` C2 asserts this
@@ -65,4 +79,35 @@ export function isFocalRoute(
 ): boolean {
     const kind = backgroundKind(bg);
     return (kind !== undefined && GL_BG_KINDS.has(kind)) || SELF_STAGES_GL.has(routeId);
+}
+
+/**
+ * Does this route SUPPRESS the shell `<Aurora>` warm field? DISTINCT from
+ * `isFocalRoute` (owns-a-GL-field / one-GL enumeration): the shell stands down IFF
+ * the mounted field ITSELF carries the warm-cream identity and so REPLACES it —
+ * i.e. a CHROMATIC field (aurora / liquid-grid) on a page that actually MOUNTS it,
+ * OR a self-staging dock route. Two gates on the GL-background arm:
+ *
+ *   1. `isHeroPage` — a `background.kind` GL field is rendered by `StoryHero`, which
+ *      `StoryPage.vue` mounts ONLY on `variant === "hero"` (a page-variant content
+ *      story mounts NO field). A GL-background CONTENT page therefore mounts nothing
+ *      to replace the shell → it must KEEP the warm shell field. (Section landings
+ *      always mount `StoryHero variant="hero"`, so they pass `isHeroPage: true`.)
+ *   2. `CHROMATIC_FIELD_KINDS` — `constellation`/`fourier` are achromatic line-art
+ *      overlays with no warm identity → they KEEP the shell warm field as underpaint,
+ *      never suppress it.
+ *
+ * `SELF_STAGES_GL` stays unconditional (those routes mount a route-dominant GL field
+ * outside the `background` channel; they replace the shell by construction).
+ */
+export function suppressesShellField(
+    routeId: string,
+    bg: StoryBackground | undefined,
+    isHeroPage: boolean,
+): boolean {
+    const kind = backgroundKind(bg);
+    return (
+        (isHeroPage && kind !== undefined && CHROMATIC_FIELD_KINDS.has(kind)) ||
+        SELF_STAGES_GL.has(routeId)
+    );
 }
