@@ -131,6 +131,27 @@
 // a surviving `timeline-segmented.vue` wrapper REDs F1, a surviving `scroll-vt.vue`
 // wrapper REDs F2 AND a re-introduced `<FamilyTabs>` on the merged scroll page REDs F2
 // (the no-indirection arm), a top-level `demo/stories/aurora/` helper dir REDs F3.
+//
+//   ST1 — the CLOSED five-KIND demo sub-type vocabulary EXISTS (BG.W-STORY-PAGE-API
+//         §4-D): the five sub-type SFCs (Demo{Stage,Specimen,Interaction,Matrix,
+//         Composition}.vue) are DEFINITION-PRESENT in demo/chassis/ AND the barrel
+//         exports each name. (born-RED: demo/chassis/ is DEFINITION-ABSENT on HEAD.)
+//   ST2 — each sub-type is a REAL slot-bearing composition (a `<slot`), so content
+//         is NOT dropped — the C1·R1 slot-drop refutation (a `(p)=>h(DemoFrame,
+//         {...p})`-style variant-shim that renders EMPTY, the silent-no-op class).
+//   ST3 — each sub-type declares the CONFORMITY invariant: it composes a glass tier
+//         (a `glass-<rung>` class) OR the glassy `<DemoSpecimen>` base — the "one
+//         product" glassy-card uniformity (a bare `bg-card` slab off the ladder REDs).
+//   ST4 — each sub-type is ADOPTED, not shelf-ware: ≥1 LIVE importer/usage in the
+//         demo corpus — the anti-DemoFrame floor (the zero-importer substrate D1
+//         retired; a minted-but-never-used taxonomy is the flattened-out defect).
+//   ST5 — the vocabulary is CLOSED (anti-drift): the on-disk `demo/chassis/Demo*.vue`
+//         set is EXACTLY the five (no 6th sub-type smuggled in, no member missing).
+//
+// ST self-test bites: a missing sub-type REDs ST1; a slotless variant-shim REDs ST2;
+// a bare `bg-card` slab (no glass tier / no DemoSpecimen) REDs ST3; a zero-importer
+// sub-type REDs ST4 (the DemoFrame shelf-ware trap); a synthetic 6th `DemoFoo.vue`
+// smuggled into the closed set REDs ST5 (the anti-gameability arm).
 
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { resolve } from "node:path";
@@ -174,6 +195,38 @@ const IA = {
     manifest: "demo/stories/manifest.ts",
     dockStage: "demo/stories/dock/DockStage.vue",
     heroCss: "demo/stories/story-hero.css",
+};
+
+// ── The demo SUB-TYPE taxonomy (BG.W-STORY-PAGE-API — the §4-D restore). ──────────
+// The storybook demo pages were bespoke spec-sheets — N locally-plausible scaffolds
+// with NO shared demo-KIND vocabulary (the gestalt-cohesion root, audit A2/GA-5).
+// This wave restores the CLOSED five-KIND vocabulary flattened out of the earlier
+// W-STORY-PAGE-API: each KIND is a THIN composition over the StoryPage chassis that
+// GUARANTEES the conformity invariants (a glassy sub-card · a header/rule · the warm
+// field) while the CONTENT varies — "N spec-sheets → one product with natural
+// variation." Born-RED on HEAD (demo/chassis/ is DEFINITION-ABSENT).
+const SUBTYPES = {
+    dir: "demo/chassis",
+    barrel: "demo/chassis/index.ts",
+    members: [
+        { name: "DemoStage", file: "demo/chassis/DemoStage.vue", kind: "stage" },
+        {
+            name: "DemoSpecimen",
+            file: "demo/chassis/DemoSpecimen.vue",
+            kind: "specimen",
+        },
+        {
+            name: "DemoInteraction",
+            file: "demo/chassis/DemoInteraction.vue",
+            kind: "interaction",
+        },
+        { name: "DemoMatrix", file: "demo/chassis/DemoMatrix.vue", kind: "matrix" },
+        {
+            name: "DemoComposition",
+            file: "demo/chassis/DemoComposition.vue",
+            kind: "composition",
+        },
+    ],
 };
 
 // Parse every s("cat","id") routed-row candidate from the manifest source.
@@ -773,6 +826,101 @@ function detect(overrides = {}) {
         f3TopLevelGone && f3NestedPresent,
     );
 
+    // ── ST1-ST5 — the demo SUB-TYPE taxonomy (BG.W-STORY-PAGE-API §4-D). The
+    //    CLOSED five-KIND vocabulary is minted, real, conformity-guaranteeing, and
+    //    ADOPTED (not the zero-importer DemoFrame shelf-ware D1 retired). Born-RED
+    //    on HEAD (demo/chassis/ DEFINITION-ABSENT). ──
+    const stMembers = SUBTYPES.members;
+
+    // ST1 — the five members DEFINITION-PRESENT + the barrel exports each name (the
+    //    vocabulary is closed + barrelled, not a loose set of orphan SFCs).
+    const stMissing = stMembers
+        .filter((m) => !fileExists(m.file))
+        .map((m) => m.name);
+    const stBarrelSrc = readSrc(SUBTYPES.barrel);
+    const stBarrelGaps = stMembers
+        .filter((m) => !new RegExp(`\\b${m.name}\\b`).test(stBarrelSrc))
+        .map((m) => m.name);
+    facts.st1 = { missing: stMissing, barrelGaps: stBarrelGaps };
+    assert(
+        "ST1 — the five demo sub-types exist in demo/chassis/ + the barrel exports each",
+        stMissing.length === 0 && stBarrelGaps.length === 0,
+    );
+
+    // ST2 — each member is a REAL slot-bearing composition (a `<slot`). The C1·R1
+    //    slot-drop refutation baked in: a slotless `(p)=>h(DemoFrame,{...p})`-style
+    //    variant-shim that DROPS its content (the silent-no-op class) REDs.
+    const stSlotless = stMembers
+        .filter((m) => !/<slot[\s/>]/.test(readSrc(m.file)))
+        .map((m) => m.name);
+    facts.st2 = { slotless: stSlotless };
+    assert(
+        "ST2 — each demo sub-type is a real slot-bearing composition (content is not dropped)",
+        stSlotless.length === 0,
+    );
+
+    // ST3 — each member declares the CONFORMITY invariant: it composes a glass tier
+    //    (a `glass-<rung>` class, concrete OR dynamic-concat) OR composes the glassy
+    //    `<DemoSpecimen>` base. A sub-type rendering a bare opaque `bg-card` slab off
+    //    the glass ladder breaks the "one product" glassy-card conformity and REDs.
+    const stNoConformity = stMembers
+        .filter((m) => {
+            const src = readSrc(m.file);
+            const glassTier =
+                /glass-(wash|quiet|resting|floating|overlay)/.test(src) ||
+                /glass-['"]/.test(src);
+            const composesSpecimen = /<DemoSpecimen[\s/>]/.test(src);
+            return !(glassTier || composesSpecimen);
+        })
+        .map((m) => m.name);
+    facts.st3 = { noConformity: stNoConformity };
+    assert(
+        "ST3 — each demo sub-type composes the glassy-card conformity (a glass tier / DemoSpecimen)",
+        stNoConformity.length === 0,
+    );
+
+    // ST4 — each member is ADOPTED, not shelf-ware: ≥1 LIVE importer/usage in the
+    //    demo corpus (excluding its own file) — the anti-DemoFrame floor (the
+    //    zero-importer substrate D1 retired). A minted-but-never-used taxonomy is the
+    //    exact flattened-out DemoFrame the audit condemns.
+    const stShelfware = [];
+    const stImporters = {};
+    for (const m of stMembers) {
+        const importers = liveImporters(m.name, [m.file]);
+        stImporters[m.name] = importers;
+        if (importers.length === 0) stShelfware.push(m.name);
+    }
+    facts.st4 = { shelfware: stShelfware, importers: stImporters };
+    assert(
+        "ST4 — every demo sub-type is adopted (≥1 live importer, not zero-importer shelf-ware)",
+        stShelfware.length === 0,
+    );
+
+    // ST5 — the vocabulary is CLOSED (anti-drift): the on-disk `demo/chassis/Demo*.vue`
+    //    set is EXACTLY the five members — no 6th sub-type smuggled in unaudited, no
+    //    member missing. The anti-gameability floor (a future agent cannot silently
+    //    add a `DemoFoo.vue` kind off the roster).
+    const chassisDir = resolve(DEMO_DIR, "chassis");
+    const chassisVueBasenames =
+        overrides.chassisVueBasenames ??
+        (existsSync(chassisDir)
+            ? readdirSync(chassisDir).filter((b) => /^Demo.*\.vue$/.test(b))
+            : []);
+    const stDeclared = new Set(stMembers.map((m) => `${m.name}.vue`));
+    const stExtras = chassisVueBasenames.filter((b) => !stDeclared.has(b));
+    const stAllPresent = [...stDeclared].every((b) =>
+        chassisVueBasenames.includes(b),
+    );
+    facts.st5 = {
+        basenames: chassisVueBasenames,
+        extras: stExtras,
+        allPresent: stAllPresent,
+    };
+    assert(
+        "ST5 — the demo sub-type vocabulary is closed (exactly the five members on disk, no drift)",
+        stExtras.length === 0 && stAllPresent,
+    );
+
     return { facts, violations };
 }
 
@@ -1059,6 +1207,64 @@ function selfTest() {
         "F3 top-level demo/stories/aurora/ helper dir (HEAD form)",
     );
 
+    // ── ST-clause bites — the demo SUB-TYPE taxonomy (BG.W-STORY-PAGE-API §4-D). ──
+    // ST1 (born-RED HEAD form): a missing sub-type member → REDs ST1.
+    sab(
+        { existsOverride: { "demo/chassis/DemoStage.vue": false } },
+        "ST1 — the five demo sub-types exist in demo/chassis/ + the barrel exports each",
+        "ST1 a missing sub-type member (HEAD absent-dir form)",
+    );
+    // ST2: a slotless sub-type source (the C1·R1 slot-drop shim — content dropped;
+    // a glass tier is present so ONLY the slot-drop arm fires) → REDs ST2.
+    sab(
+        {
+            srcOverride: {
+                "demo/chassis/DemoStage.vue": `<template><div class="glass-resting" /></template>`,
+            },
+        },
+        "ST2 — each demo sub-type is a real slot-bearing composition (content is not dropped)",
+        "ST2 a slotless sub-type (the slot-drop variant-shim)",
+    );
+    // ST3: a sub-type with a real slot but NO glass tier / no DemoSpecimen (a bare
+    // opaque bg-card slab off the glass ladder) → REDs ST3.
+    sab(
+        {
+            srcOverride: {
+                "demo/chassis/DemoStage.vue": `<template><div class="bg-card rounded-card"><slot /></div></template>`,
+            },
+        },
+        "ST3 — each demo sub-type composes the glassy-card conformity (a glass tier / DemoSpecimen)",
+        "ST3 a bare bg-card slab off the glass ladder (no conformity)",
+    );
+    // ST4: a sub-type with ZERO live importers (the zero-importer DemoFrame shelf-ware
+    // trap D1 retired) → REDs ST4. (vueCorpus isolated to a demo with no sub-type usage.)
+    sab(
+        {
+            vueCorpus: [
+                { path: "demo/foo.vue", text: `<template><div /></template>` },
+            ],
+            cssCorpus: [],
+        },
+        "ST4 — every demo sub-type is adopted (≥1 live importer, not zero-importer shelf-ware)",
+        "ST4 a zero-importer sub-type (the DemoFrame shelf-ware trap)",
+    );
+    // ST5: a synthetic 6th `DemoFoo.vue` smuggled into the closed set → REDs ST5
+    // (the anti-drift / anti-gameability arm — the roster is exactly the five).
+    sab(
+        {
+            chassisVueBasenames: [
+                "DemoStage.vue",
+                "DemoSpecimen.vue",
+                "DemoInteraction.vue",
+                "DemoMatrix.vue",
+                "DemoComposition.vue",
+                "DemoFoo.vue",
+            ],
+        },
+        "ST5 — the demo sub-type vocabulary is closed (exactly the five members on disk, no drift)",
+        "ST5 a 6th sub-type smuggled into the closed set (drift)",
+    );
+
     return flagged;
 }
 
@@ -1143,7 +1349,22 @@ function run() {
         `  F3 aurora nested          : ${facts["F3 — the aurora studio-helper dir nested under substrates/aurora/ (off the ./*/*.vue route glob)"]}  (topLevelGone: ${facts.f3?.topLevelGone}, nested: ${facts.f3?.nestedPresent})`,
     );
     console.log(
-        `  self-test (bite proof)    : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×2 incl. comment-strip + D4 + D5 + D6×2 + D7×3 incl. comment-strip + T1-T4 + E1×2 incl. declared-family + E2 + E3 + F1 + F2×2 incl. FamilyTabs + F3)`,
+        `  ST1 sub-types exist+barrel: ${facts["ST1 — the five demo sub-types exist in demo/chassis/ + the barrel exports each"]}`,
+    );
+    console.log(
+        `  ST2 slot-bearing (no drop): ${facts["ST2 — each demo sub-type is a real slot-bearing composition (content is not dropped)"]}`,
+    );
+    console.log(
+        `  ST3 glassy-card conformity: ${facts["ST3 — each demo sub-type composes the glassy-card conformity (a glass tier / DemoSpecimen)"]}`,
+    );
+    console.log(
+        `  ST4 adopted (≥1 importer) : ${facts["ST4 — every demo sub-type is adopted (≥1 live importer, not zero-importer shelf-ware)"]}  (importers: ${JSON.stringify(Object.fromEntries(Object.entries(facts.st4?.importers ?? {}).map(([k, v]) => [k, v.length])))})`,
+    );
+    console.log(
+        `  ST5 closed vocabulary     : ${facts["ST5 — the demo sub-type vocabulary is closed (exactly the five members on disk, no drift)"]}  (${JSON.stringify(facts.st5?.basenames ?? [])})`,
+    );
+    console.log(
+        `  self-test (bite proof)    : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×2 incl. comment-strip + D4 + D5 + D6×2 + D7×3 incl. comment-strip + T1-T4 + E1×2 incl. declared-family + E2 + E3 + F1 + F2×2 incl. FamilyTabs + F3 + ST1-ST5)`,
     );
     if (violations.length) {
         console.log("\nVIOLATIONS:");

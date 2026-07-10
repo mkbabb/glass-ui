@@ -5,6 +5,11 @@ import { TooltipProvider } from "@glass/components/ui/tooltip";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
 import { SECTION_REVEAL_KEY, useSectionReveal } from "./useSectionReveal";
 import { STORY_NESTED_KEY } from "./story-nested";
+// BG.W-STORY-PAGE-API (§4-D) — the demo SUB-TYPE field context. StoryPage provides
+// its manifest-declared background (the warm field every demo floats over) so a
+// nested sub-type (chiefly <DemoStage>) reads "what field am I over?" WITHOUT
+// mounting a second GL context (the one-GL-per-route budget).
+import { DEMO_FIELD_KEY } from "../chassis/subtype-context";
 import StoryHero from "./StoryHero.vue";
 import StoryHeader from "./StoryHeader.vue";
 
@@ -85,6 +90,8 @@ const { register, onRouteSettle } = useSectionReveal(() =>
         : document.querySelector<HTMLElement>("main.demo-main-scroller"),
 );
 provide(SECTION_REVEAL_KEY, register);
+// The page field the demo sub-type chassis reads (BG.W-STORY-PAGE-API §4-D).
+provide(DEMO_FIELD_KEY, background);
 watch(current, () => onRouteSettle());
 </script>
 

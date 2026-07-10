@@ -355,6 +355,7 @@ const SUBPATHS: Record<string, string> = {
     "compositions/gate-pattern": "/compositions/gate-pattern",
     "compositions/labeled-field": "@mkbabb/glass-ui/labeled-field",
     "compositions/icon-tooltip": "@mkbabb/glass-ui/icon-tooltip",
+    "compositions/chassis": "/compositions/chassis",
 };
 
 /** The per-category section-landing import-namespace root (the D1 hero's chip). */
@@ -1316,6 +1317,16 @@ export const CATEGORIES: Category[] = [
                 "icon-tooltip",
                 "Icon Tooltip",
                 "Auto-provider tooltip for label co-location with display typography baked in.",
+            ),
+            // BG.W-STORY-PAGE-API (§4-D) — the demo SUB-TYPE taxonomy reference. The
+            // five demo KINDS (stage · specimen · interaction · matrix · composition)
+            // side by side — one product with natural variation, not N spec-sheets.
+            s(
+                "compositions",
+                "chassis",
+                "Story Chassis",
+                "The five demo KINDS — Stage · Specimen · Interaction · Matrix · Composition — each a thin composition over the StoryPage chassis, guaranteeing the same glassy-card conformity while the content varies.",
+                { background: "grid" },
             ),
         ],
     },
