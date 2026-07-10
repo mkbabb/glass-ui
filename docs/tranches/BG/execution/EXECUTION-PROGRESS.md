@@ -486,6 +486,7 @@ commit · gate result · paint pointer.
 | 1.7 | BH.B2.4a W-bh-carves (worm/bloomUp) | F6 | DONE `[C]` | `6daf7ef3` · `proof:colocation` GREEN (3 carve-leaves; hosts ≤500); paint π deferred to WS11/WS12. |
 | 1.8 | BH.B4a-archive-refresh | F8 | DONE `[C]` | `9724960f` · 20 doc renames → `docs/archive/`; overfitting-audit + instructions README refreshed. |
 | 1.9 | BH.B4b-skeleton | F8 | DONE `[C]` | `2846bb25` · canon-doc/design-docs resolvers + `gen:structure` (structure.md re-derived from disk); 11/11 self-checks GREEN. |
+| 1.9b | BH.B4b-content | F8 | DONE `[C]` | `(this-commit)` · `proof:canon-homes` GREEN (15/15 canon homes content-complete, dep TABLE 11 rows ≥ floor 5, self-proof ok). 8 skeleton docs/canon homes redistributed with live CLAUDE.md contract prose + ~24 colocated custom/ READMEs authored (incl. instrument-chassis); `auditCanonHomes("content")==[]` silent-loss fence armed; vue-tsc clean. |
 | 1.10 | BH.B4c-precept-extract (files) | F8 | DONE `[C]` | `0ca2d3ce` · `proof:design-docs-files` GREEN (4 design docs → docs/design/). |
 | 1.11 | BH.B4d-evidence-prune (files) | F8 | DONE `[C]` | `8490378b` · `proof:consumer-evidence-live` GREEN (31 live; dead=0). The 3 LYING docs (use-haptic/-celebration-burst/-viz-choreography) are DELETED at 10.5, not here. |
 | 1.12 | BH.B6 W-core-prompts | F8 | DONE `[C]` | `a9f87453` · `proof:core-prompts` GREEN (3 prompts + README). |

@@ -1,14 +1,47 @@
-# Build & gates (canon home — skeleton)
+# Build & gates (canon home)
 
-> SKELETON (BH.B4b-skeleton). The live contract prose redistributes here from
-> CLAUDE.md §Build + the Gate-hygiene block at BH.B4b-content ([WS12]). Until then,
-> CLAUDE.md is the live source; this home is the resolver target
-> `scripts/lib/canon-doc.mjs` names (`build-and-gates`).
+## The build pipeline
 
-Redistributes: the `build` two-arm pipeline (vite + emit-types) · `proof:ba-gestalt`
-the holistic per-surface acceptance gate · the live-gate `:5199` default · the
-`--run full` close-battery siblings-absent canon · the sibling-safety foreign-tree
-fence · the cardinal-ledger parser · the disposition-register restamp arm.
+```
+npm run build              # library → dist/glass-ui.js + glass-ui.css + index.d.ts + per-subpath chunks
+npm run typecheck          # vue-tsc --noEmit
+npm run profile:budget     # bundle-budget gate; --enforce mode in CI
+npm run verify-export-types # subpath dts publication probe
+```
+
+`build` runs two sequential arms — `vite build` emits the JS bundle + per-subpath chunks +
+the `/styles` CSS, then `emit-types` (`vue-tsc --project tsconfig.build.json`) emits the flat
+per-entry `.d.ts` set into `dist/` out-of-band. Declarations are NOT emitted by an in-Vite
+plugin: `tsconfig.build.json` runs the repo-native `vue-tsc` in `emitDeclarationOnly` mode
+against `src/`, decoupling the dts emit from any plugin-bundled TypeScript pin. CI and
+`release.sh` invoke `npm run build` directly.
+
+## Gate hygiene
+
+- **`proof:ba-gestalt`** is the holistic per-surface acceptance gate (the P-1 close-class
+  fix). A per-mechanism π verifies the LOCAL mechanism (a pixel ΔL) but cannot verify the
+  GESTALT the user reads; the gate is a roster of named acceptance surfaces, each owed a
+  whole-page capture in BOTH modes over its real backdrop + a recorded VERDICT — operative-
+  PASS IFF every verdict is PASS AND every declared capture path RESOLVES ON DISK.
+- **The live-gate fleet defaults `:5199`.** Every live-gate + profile default resolves the
+  demo vite server `:5199` (the `?? "http://…:5199"` form; the env override preserved).
+  `proof:gate-manifest-sound` clause 4 flags any non-:5199 port in a live-demo-URL default.
+- **The close runs the FULL battery siblings-absent (BB.W-CLOSE-BATTERY).** The close/release
+  path runs `gates.mjs --run full` — the DEDUPED union of the `local`, `ci`, and `release`
+  tag sets — in a siblings-absent clean checkout BEFORE the irreversible tag, NOT `--run
+  local` alone. `release.sh` + `release.yml` invoke `--run full`; `proof:full` is the entry.
+- **SIBLING SAFETY — the foreign-tree fence (inv-26).** To reproduce the CI siblings-absent
+  runner LOCALLY, use a FRESH throwaway glass-ui worktree in `/tmp` — the absence comes from
+  the fresh checkout, NEVER from touching `~/Programming`. It is ABSOLUTELY FORBIDDEN for any
+  process to `mv`/`rm`/move/delete ANY path under `~/Programming` except the glass-ui repo
+  itself + `/tmp` worktrees. `scripts/verify-siblings-intact.mjs` is the standing tripwire.
+- **The cardinal-ledger parser reads PROGRESS columns BY HEADER NAME.** `proof:live-verified-
+  ledger` locates the `wave` + `status` columns by scanning the table header, not by position,
+  so a tranche may order its columns freely.
+- **The disposition register is the chronic-fold machine arm.** The register is re-evaluated in
+  place each tranche (`reStampedAt` advanced), and `proof:disposition-live` REDs a stale
+  re-stamped-without-decide pending — a pending must be DISCHARGED or re-homed to a current
+  wave.
 
 ## The close-battery — the standing closeDisease sweep (BG.W-CLOSE-SWEEP)
 
