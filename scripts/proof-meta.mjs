@@ -86,6 +86,7 @@ import {
 } from "./gate-family-manifest.mjs";
 import { GATES, gatesFor } from "./gates.mjs";
 import { coherenceCensus, coherenceCensusSelfBites } from "./proof-coherence-census.mjs";
+import { glassPaperCongruence, glassPaperCongruenceSelfBites } from "./proof-glass-paper-congruence.mjs";
 
 const CURSOR = join(ROOT, "docs/tranches/BG/execution/EXECUTION-PROGRESS.md");
 const CANON = join(ROOT, "docs/tranches/BG/canon/fable-design-arm.md");
@@ -590,6 +591,7 @@ const CLAUSES = [
     deferredLedgerTerminal,
     gestaltCursorParity,
     coherenceCensus,
+    glassPaperCongruence,
 ];
 
 async function runClauses() {
@@ -829,8 +831,11 @@ async function selfTest() {
     // BG.W-COHERENCE-CENSUS-GATE (F8 capstone 17.1) — fold the coherence-census bites.
     for (const b of coherenceCensusSelfBites()) bites.push(b);
 
+    // BG.W-GLASS-PAPER-CONGRUENCE (F8 capstone 17.5) — fold the spine machine-lock bites.
+    for (const b of glassPaperCongruenceSelfBites()) bites.push(b);
+
     console.log(
-        "proof:meta — SELF-TEST (fable-arm-present + gate-family-consolidate + apca-parallel-witness + deferred-ledger-terminal + gestalt-cursor-parity + coherence-census, 35 bites)",
+        `proof:meta — SELF-TEST (fable-arm-present + gate-family-consolidate + apca-parallel-witness + deferred-ledger-terminal + gestalt-cursor-parity + coherence-census + glass-paper-congruence, ${bites.length} bites)`,
     );
     let allFlag = true;
     for (const [name, ok] of bites) {
@@ -854,7 +859,7 @@ async function selfTest() {
         process.exit(1);
     }
     console.log(
-        "\n[proof:meta] SELF-TEST GREEN — all 35 bites behave, the real cursor passes fable-arm-present + gate-family-consolidate + apca-parallel-witness + deferred-ledger-terminal + gestalt-cursor-parity + coherence-census.",
+        "\n[proof:meta] SELF-TEST GREEN — all bites behave, the real cursor passes fable-arm-present + gate-family-consolidate + apca-parallel-witness + deferred-ledger-terminal + gestalt-cursor-parity + coherence-census + glass-paper-congruence.",
     );
     process.exit(0);
 }
