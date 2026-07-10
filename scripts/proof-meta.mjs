@@ -462,10 +462,133 @@ function deferredLedgerTerminal() {
     };
 }
 
+// ── The `gestalt-cursor-parity` clause (BG.W-GESTALT-CURSOR-PARITY, 12.4a joinery) ──
+// The keystone JOINERY: the gestalt close oracle (proof:ba-gestalt) is JOINED to the
+// shipped `surface-closure.mjs` paint-closure so a surface's watched paint BREADTH is
+// DERIVED (the transitive closure its routes reach), not a single-file hand-list. This
+// clause EXERCISES that joinery LOAD-BEARING (the apca-parallel-witness precedent — a
+// stubbed/severed joinery reds here, not a source grep alone). Three readings:
+//   • the SCOPED per-surface closure (SHELL_SEED-inclusive, reaching dock/morph.css
+//     transitively — the exact single-file blind spot the joinery closes; the freshness
+//     teeth), • the FULL closure (PARITY-C completeness NET — an orphan paint file
+//     outside it is watched by no surface), • the DERIVED-closure freshness verdict
+//     (a wrong recorded hash reads stale, the live scoped hash reads fresh).
+// PARITY-A (cursor-DONE ⇒ roster-PASS) is the WEAK BB-lie catcher already carried by
+// proof:ba-gestalt's per-surface FAIL/PASS verdicts (the honest re-price: PARITY-A is
+// toothless for the 82/105 waves whose paint maps to NONE); PARITY-B is DELETED
+// (redundant with the G5 pixel-band + G7 freshness). The LOAD-BEARING value is
+// PARITY-C + the freshness teeth, both exercised here. DYNAMIC import (the born-RED-safe
+// path — on a HEAD without the joinery exports a missing named export resolves to
+// undefined, a clean per-export failure, never a module-link crash).
+const BA_GESTALT = join(ROOT, "scripts/proof-ba-gestalt.mjs");
+
+/**
+ * The PURE joinery-export detector — given a module-like object, the joinery exports
+ * that are absent/uncallable. Fed synthetic stubs by the self-test (a joinery-absent
+ * stub → the HEAD born-RED state; the real module → clean).
+ * @param {any} mod
+ * @returns {string[]}
+ */
+function checkJoineryExports(mod) {
+    const failures = [];
+    for (const name of [
+        "surfaceScopedClosure",
+        "surfaceScopedHash",
+        "fullPaintClosure",
+        "closureFreshnessVerdict",
+    ]) {
+        if (typeof mod?.[name] !== "function")
+            failures.push(
+                `proof-ba-gestalt does not export a callable \`${name}\` — the surface-closure JOINERY is absent (BG.W-GESTALT-CURSOR-PARITY 12.4a un-landed).`,
+            );
+    }
+    return failures;
+}
+
+async function gestaltCursorParity() {
+    const failures = [];
+    if (!existsSync(BA_GESTALT)) {
+        return {
+            clause: "gestalt-cursor-parity",
+            visualCount: 0,
+            failures: ["proof-ba-gestalt gate absent — scripts/proof-ba-gestalt.mjs"],
+        };
+    }
+    let mod;
+    try {
+        // Import-safe: proof-ba-gestalt guards its top-level run() behind import.meta.url,
+        // so importing it for the joinery primitives never runs the sibling gate.
+        mod = await import(pathToFileURL(BA_GESTALT).href);
+    } catch (e) {
+        return {
+            clause: "gestalt-cursor-parity",
+            visualCount: 0,
+            failures: [`proof-ba-gestalt import threw — ${e instanceof Error ? e.message : String(e)}`],
+        };
+    }
+    const exportFails = checkJoineryExports(mod);
+    failures.push(...exportFails);
+    // Joinery present → EXERCISE it (load-bearing; a stub / severed closure reds here).
+    if (exportFails.length === 0) {
+        const { surfaceScopedClosure, surfaceScopedHash, fullPaintClosure, closureFreshnessVerdict } = mod;
+        const ORPHAN = "src/components/custom/__NOT_A_REAL_SURFACE__.vue";
+
+        // PARITY-C — the FULL completeness net has reach AND a boundary.
+        const net = fullPaintClosure();
+        if (!(Array.isArray(net) && net.length > 1)) {
+            failures.push("PARITY-C: fullPaintClosure() is empty/degenerate — the completeness net has no reach.");
+        } else {
+            if (!net.includes("src/styles/index.css"))
+                failures.push("PARITY-C: the full closure does not reach src/styles/index.css — the SHELL_SEED-inclusive net is broken.");
+            if (net.includes(ORPHAN))
+                failures.push("PARITY-C: a synthetic orphan path is INSIDE the full closure — the net has no boundary (every path is reachable, the orphan-catch is vacuous).");
+        }
+
+        // SCOPED per-surface breadth — SHELL_SEED-inclusive + reaches the transitive
+        // cascade (dock/morph.css, the single-file hand-list blind spot).
+        const scoped = surfaceScopedClosure("/dock/overview");
+        if (!(Array.isArray(scoped) && scoped.length > 1)) {
+            failures.push("SCOPED: surfaceScopedClosure('/dock/overview') is empty/degenerate — the per-surface breadth is not derived.");
+        } else {
+            if (!scoped.includes("src/styles/index.css"))
+                failures.push("SCOPED: the /dock/overview closure is not SHELL_SEED-inclusive (no src/styles/index.css) — the global-cascade breadth is missing.");
+            if (!scoped.some((p) => p.includes("dock/morph.css")))
+                failures.push("SCOPED: the /dock/overview closure does not reach dock/morph.css — the freshness teeth (a transitive dock paint edit re-stales the PASS) are toothless.");
+        }
+
+        // The freshness TEETH — a wrong recorded hash reads stale, the live hash fresh.
+        const live = surfaceScopedHash("/dock/overview");
+        if (!/^[0-9a-f]{64}$/.test(String(live))) {
+            failures.push("TEETH: surfaceScopedHash('/dock/overview') is not a 64-hex digest — the re-stamp helper is degenerate.");
+        } else {
+            if (closureFreshnessVerdict("0".repeat(64), "/dock/overview").state !== "stale")
+                failures.push("TEETH: a wrong recorded hash does not read STALE against the derived closure — the freshness auto-revoke is toothless.");
+            if (closureFreshnessVerdict(live, "/dock/overview").state !== "fresh")
+                failures.push("TEETH: the live scoped hash does not read FRESH — the freshness comparison is broken.");
+        }
+
+        // WIRED — proof-ba-gestalt's OWN source imports the closure machinery AND its
+        // per-surface freshness DERIVES from it (not a shelf-ware export sitting beside a
+        // hand-list freshness the gate still reads).
+        const src = readFileSync(BA_GESTALT, "utf8");
+        if (!/collectPaintClosure/.test(src) || !/\bSHELL_SEED\b/.test(src))
+            failures.push("WIRED: proof-ba-gestalt does not import the surface-closure machinery — the joinery export is shelf-ware.");
+        if (!/function\s+surfaceFreshness\(\s*surface\s*,\s*routesCell\s*\)/.test(src) || !/closureFreshnessVerdict\(/.test(src))
+            failures.push("WIRED: proof-ba-gestalt's per-surface freshness does not derive from the closure (surfaceFreshness/closureFreshnessVerdict un-wired) — the joinery is not load-bearing in the gate.");
+    }
+    return { clause: "gestalt-cursor-parity", visualCount: 0, failures };
+}
+
 // The family runner — each F8 close wave appends its clause here. The clauses are a
 // mix of sync + async (the APCA arm dynamically imports its leaf), so the runner
 // awaits the resolved set (a plain-object clause passes through Promise.all unchanged).
-const CLAUSES = [fableArmPresent, gateFamilyConsolidate, apcaParallelWitness, deferredLedgerTerminal];
+const CLAUSES = [
+    fableArmPresent,
+    gateFamilyConsolidate,
+    apcaParallelWitness,
+    deferredLedgerTerminal,
+    gestaltCursorParity,
+];
 
 async function runClauses() {
     return Promise.all(CLAUSES.map((fn) => fn()));
@@ -646,7 +769,62 @@ async function selfTest() {
         }
     }
 
-    console.log("proof:meta — SELF-TEST (fable-arm-present + gate-family-consolidate + apca-parallel-witness + deferred-ledger-terminal, 20 bites)");
+    // ── gestalt-cursor-parity detector bites (BG.W-GESTALT-CURSOR-PARITY, 12.4a joinery) ──
+    // The PURE checkJoineryExports detector is fed synthetic stubs (born-RED witness), and
+    // the REAL proof-ba-gestalt joinery is EXERCISED (the load-bearing GREEN-after) — a
+    // stub / severed closure MISSES a bite if the clause is hollow.
+    {
+        // bite 21 — a joinery-ABSENT module stub flags ≥4 missing exports (the HEAD born-
+        // RED state: proof-ba-gestalt exported only COLUMNS/parseRoster/parseProbe).
+        bites.push([
+            "joinery-absent-stub → FLAG (born-RED HEAD state, ≥4 missing exports)",
+            checkJoineryExports({ COLUMNS: [], parseRoster: () => {}, parseProbe: () => {} }).length >= 4,
+        ]);
+        // bite 22 — the REAL proof-ba-gestalt module carries the joinery exports (GREEN-after).
+        const baMod = await import(pathToFileURL(BA_GESTALT).href);
+        bites.push([
+            "joinery-present-real-module → NO-flag (all 4 exports callable)",
+            checkJoineryExports(baMod).length === 0,
+        ]);
+        // bite 23 — PARITY-C net has reach + boundary: a real cascade file INSIDE, a
+        // synthetic orphan OUTSIDE.
+        {
+            const net = typeof baMod.fullPaintClosure === "function" ? baMod.fullPaintClosure() : [];
+            const ok =
+                Array.isArray(net) &&
+                net.length > 1 &&
+                net.includes("src/styles/index.css") &&
+                !net.includes("src/components/custom/__NOT_A_REAL_SURFACE__.vue");
+            bites.push(["parity-C-net → reach(index.css) + boundary(orphan-outside)", ok]);
+        }
+        // bite 24 — the SCOPED closure reaches dock/morph.css (the transitive freshness-
+        // teeth breadth the single-file hand-list could never watch).
+        {
+            const scoped =
+                typeof baMod.surfaceScopedClosure === "function"
+                    ? baMod.surfaceScopedClosure("/dock/overview")
+                    : [];
+            const ok =
+                Array.isArray(scoped) &&
+                scoped.includes("src/styles/index.css") &&
+                scoped.some((p) => p.includes("dock/morph.css"));
+            bites.push(["scoped-closure → SHELL_SEED-inclusive + reaches dock/morph.css (teeth breadth)", ok]);
+        }
+        // bite 25 — the freshness TEETH: a wrong hash reads stale, the live hash fresh.
+        {
+            let ok = false;
+            if (typeof baMod.surfaceScopedHash === "function" && typeof baMod.closureFreshnessVerdict === "function") {
+                const live = baMod.surfaceScopedHash("/dock/overview");
+                ok =
+                    /^[0-9a-f]{64}$/.test(String(live)) &&
+                    baMod.closureFreshnessVerdict("0".repeat(64), "/dock/overview").state === "stale" &&
+                    baMod.closureFreshnessVerdict(live, "/dock/overview").state === "fresh";
+            }
+            bites.push(["freshness-teeth → wrong-hash=stale, live-hash=fresh", ok]);
+        }
+    }
+
+    console.log("proof:meta — SELF-TEST (fable-arm-present + gate-family-consolidate + apca-parallel-witness + deferred-ledger-terminal + gestalt-cursor-parity, 25 bites)");
     let allFlag = true;
     for (const [name, ok] of bites) {
         console.log(`  ${ok ? "OK    " : "MISS  "}  ${name}`);
@@ -669,7 +847,7 @@ async function selfTest() {
         process.exit(1);
     }
     console.log(
-        "\n[proof:meta] SELF-TEST GREEN — all 15 bites behave, the real cursor passes fable-arm-present + gate-family-consolidate + apca-parallel-witness.",
+        "\n[proof:meta] SELF-TEST GREEN — all 25 bites behave, the real cursor passes fable-arm-present + gate-family-consolidate + apca-parallel-witness + deferred-ledger-terminal + gestalt-cursor-parity.",
     );
     process.exit(0);
 }

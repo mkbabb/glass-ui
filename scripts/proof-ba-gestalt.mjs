@@ -66,7 +66,16 @@ import {
 // a 2-segment `/cat/story` token whose SFC is absent on disk is a `[ROUTE-RESOLVES]`
 // HARD-RED here. This is NOT a closure-emptiness guard (SHELL_SEED always makes the
 // closure non-empty) — it is route RESOLUTION at the gate boundary.
-import { routeSeeds } from "./lib/surface-closure.mjs";
+// BG.W-GESTALT-CURSOR-PARITY (12.4a joinery) additionally pulls the paint-closure
+// machinery: `collectPaintClosure` + `SHELL_SEED` derive the per-surface freshness
+// BREADTH (the scoped closure), and `surfaceClosure` derives the PARITY-C completeness
+// net (the full closure). One join source — never a second closure walker.
+import {
+    routeSeeds,
+    collectPaintClosure,
+    surfaceClosure,
+    SHELL_SEED,
+} from "./lib/surface-closure.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const COMMAND = "npm run proof:ba-gestalt";
@@ -319,17 +328,126 @@ function evalBand(stats, preds) {
     return { ok: fails.length === 0, fails };
 }
 
-// ── G7 (auto-revoke) — the surface-hash freshness clause, RE-PURPOSED ────────────
-// BB held freshness behind --strict-freshness (an opt-in NOTE on the bare arm). BC
-// made auto-revoke the DEFAULT; BC keeps it (the real-paint-protocol §4 G7 default):
-// a drifted surface-hash AUTO-REVERTS the verdict to FAIL (not a warning). The
-// per-surface record docs/tranches/BG/audit/reflect/<surface>.md carries the
-// <!-- surface-paths --> + <!-- surface-hash --> header.
+// ── The GESTALT↔CURSOR surface-closure JOINERY (BG.W-GESTALT-CURSOR-PARITY, 12.4a) ──
+// The keystone joinery: the per-surface freshness BREADTH is DERIVED from the shipped
+// `surface-closure.mjs` paint-closure, NOT a single-file hand-list. A surface's watched
+// paint set is the SCOPED closure `collectPaintClosure(SHELL_SEED ∪ routeSeeds(routes))`
+// — the transitive paint sources the surface's routes reach through the demo→src import
+// + CSS `@import` graph (SHELL_SEED-inclusive: the global glass cascade loads at the
+// shell via `src/styles/index.css`, not per-route). So a paint edit to a file the
+// surface COMPOSES — e.g. a dock-control change in `dock/morph.css`, reached transitively
+// via the cascade yet INVISIBLE to the old single-file hand-list — re-stales the
+// surface's PASS. The real freshness teeth (the build-map §G2 SCOPED-closure clause).
+//
+// The `full` map (`surfaceClosure(roster).closure` = SHELL_SEED ∪ EVERY surface's route
+// seeds → transitive closure) is the PARITY-C completeness net: a paint file OUTSIDE it
+// is an orphan no roster surface watches. Two readings, disjoint purposes (SCOPED for the
+// per-surface freshness breadth, FULL for the PARITY-C orphan net).
+//
+// HONEST re-price (the build-map + FINAL.md §G2): the walk resolves LOCAL relative / `@/`
+// specs only (a bare-package / dynamic-route import returns null), so the closure is
+// dominated by the CSS cascade reachable via `index.css` — which is exactly where the
+// visual identity (dock/glass/tokens) lives. The freshness is a CONSERVATIVE OVER-revoke
+// (a cascade-CSS edit re-stales EVERY surface); the roster's over-revoke disclosure
+// already sanctions this ("err toward re-capture"). The per-surface pixel-read (G5) stays
+// the binding operative paint criterion; freshness only auto-revokes an existing PASS.
+//
+// EXPORTED so proof:meta's `gestalt-cursor-parity` clause can EXERCISE the primitives
+// LOAD-BEARING (the apca-parallel-witness precedent — a stubbed/severed joinery reds the
+// clause), and so the flipping paint wave re-stamps `<!-- surface-hash -->` off
+// `surfaceScopedHash(routes)` rather than a hand-typed single-file hash.
+
+const _scopedClosureCache = new Map();
+
+/** The route seeds a SINGLE `routes` cell resolves — a 1-row roster fed to routeSeeds. */
+function routeSeedsForCell(routesCell) {
+    const synthetic =
+        "| surface | routes |\n|---|---|\n| s | " +
+        String(routesCell ?? "").replace(/\|/g, " ") +
+        " |\n";
+    return routeSeeds(synthetic, { root: ROOT }).seeds;
+}
+
+/**
+ * The SCOPED per-surface paint-closure — the DERIVED `surface-paths` BREADTH: the
+ * transitive paint sources the surface's routes reach (SHELL_SEED-inclusive), sorted
+ * repo-relative. Memoized by the routes cell (identical cells share the walk).
+ * @param {string} routesCell the roster row's `routes` cell
+ * @returns {string[]} sorted repo-relative paint sources
+ */
+export function surfaceScopedClosure(routesCell) {
+    const key = String(routesCell ?? "");
+    if (_scopedClosureCache.has(key)) return _scopedClosureCache.get(key);
+    const seeds = [...SHELL_SEED, ...routeSeedsForCell(key)].map((p) => resolve(ROOT, p));
+    const closure = collectPaintClosure(seeds, { root: ROOT });
+    _scopedClosureCache.set(key, closure);
+    return closure;
+}
+
+/**
+ * The re-stamp helper: the sha256 of a surface's DERIVED scoped-closure bytes. The
+ * flipping paint wave writes this into the per-surface `<!-- surface-hash -->` header; a
+ * later transitive paint edit drifts it → G7 auto-revokes the PASS.
+ * @param {string} routesCell
+ * @returns {string} the sha256 hex (or "" if any closure path is unreadable)
+ */
+export function surfaceScopedHash(routesCell) {
+    return surfaceHash(ROOT, surfaceScopedClosure(routesCell));
+}
+
+let _fullClosure = null;
+/**
+ * The PARITY-C completeness NET: the FULL paint-closure (SHELL_SEED ∪ EVERY roster route
+ * seed → transitive closure). A paint file OUTSIDE it is an orphan no surface watches.
+ * Read once off the live roster; memoized.
+ * @returns {string[]} sorted repo-relative paint sources
+ */
+export function fullPaintClosure() {
+    if (_fullClosure) return _fullClosure;
+    if (!existsSync(ROSTER)) return (_fullClosure = []);
+    _fullClosure = surfaceClosure(readFileSync(ROSTER, "utf8"), { root: ROOT }).closure;
+    return _fullClosure;
+}
+
+/**
+ * The DERIVED-closure freshness verdict (the JOINERY teeth): compare a surface's recorded
+ * surface-hash to the LIVE hash of its DERIVED scoped closure. PURE over
+ * (recordedHashHex, routesCell) so the clause + the self-test can exercise it.
+ * @param {string} recordedHashHex the 64-hex `<!-- surface-hash -->` value
+ * @param {string} routesCell the surface's `routes` cell
+ * @returns {{state:"fresh"} | {state:"stale", reason:string}}
+ */
+export function closureFreshnessVerdict(recordedHashHex, routesCell) {
+    const current = surfaceScopedHash(routesCell);
+    if (!current)
+        return {
+            state: "stale",
+            reason: "the DERIVED paint-closure has an unreadable path — re-derive + re-stamp surfaceScopedHash(routes)",
+        };
+    if (String(recordedHashHex).trim().toLowerCase() === current.toLowerCase())
+        return { state: "fresh" };
+    const n = surfaceScopedClosure(routesCell).length;
+    return {
+        state: "stale",
+        reason: `the DERIVED paint-closure (${n} files) drifted since capture (hash ${String(recordedHashHex).slice(0, 12)} → ${current.slice(0, 12)}) — a transitive paint edit re-stales the PASS; re-capture + re-stamp surfaceScopedHash(routes)`,
+    };
+}
+
+// ── G7 (auto-revoke) — the surface-hash freshness clause, RE-SOURCED onto the closure ──
+// BB held freshness behind --strict-freshness (an opt-in NOTE on the bare arm). BC made
+// auto-revoke the DEFAULT: a drifted surface-hash AUTO-REVERTS the verdict to FAIL. BG's
+// 12.4a joinery RE-SOURCES the hashed breadth from the single-file hand-list onto the
+// DERIVED scoped paint-closure (surfaceScopedHash) — so ANY file the surface's routes
+// reach re-stales a PASS, not just the one hand-declared file. The per-surface record
+// docs/tranches/BG/audit/reflect/<surface>.md carries the `<!-- surface-hash -->` header
+// (stamped off surfaceScopedHash at flip time); the `<!-- surface-paths -->` header is now
+// informational — the DERIVED closure is authoritative.
 /**
  * @param {string} surface
+ * @param {string} routesCell the roster row's `routes` cell (the closure seed)
  * @returns {{state:"fresh"|"stale"|"no-header"|"no-record", reason?:string, recordPath:string}}
  */
-function surfaceFreshness(surface) {
+function surfaceFreshness(surface, routesCell) {
     const recordPath = resolve(REFLECT_DIR, `${surface}.md`);
     if (!existsSync(recordPath))
         return {
@@ -338,7 +456,14 @@ function surfaceFreshness(surface) {
             recordPath,
         };
     const doc = readFileSync(recordPath, "utf8");
-    const verdict = freshnessVerdict(doc, ROOT);
+    const sh = doc.match(/<!--\s*surface-hash:\s*([0-9a-fA-F]{64})\s*-->/);
+    if (!sh)
+        return {
+            state: "no-header",
+            reason: `the ${surface}.md record carries no <!-- surface-hash --> header — the DERIVED paint-closure freshness cannot be verified`,
+            recordPath,
+        };
+    const verdict = closureFreshnessVerdict(sh[1].trim(), routesCell);
     return { ...verdict, recordPath };
 }
 
@@ -556,7 +681,9 @@ function detect() {
         }
 
         // ── G7 (auto-revoke) — runs per surface, AUTO-REVERTS a PASS on drift ────
-        const fr = surfaceFreshness(surface);
+        // Re-sourced onto the DERIVED scoped paint-closure (BG.W-GESTALT-CURSOR-PARITY
+        // 12.4a joinery): the freshness watches every file the surface's routes reach.
+        const fr = surfaceFreshness(surface, row.routes);
         freshness[surface] = fr.state;
         if (verdict === "PASS" && fr.state !== "fresh") {
             violations.push(
@@ -786,6 +913,40 @@ function selfTest() {
             })(),
         },
         {
+            // BG.W-GESTALT-CURSOR-PARITY (12.4a joinery) — the DERIVED-closure freshness
+            // teeth. The surface's watched breadth is the SCOPED closure (SHELL_SEED-
+            // inclusive, reaching dock/morph.css transitively — the exact single-file
+            // hand-list blind spot the joinery closes); a recorded hash ≠ the LIVE scoped
+            // hash reads STALE, the LIVE hash reads FRESH. The mechanism is load-bearing
+            // (a severed closure would collapse both branches).
+            label: "SURFACE-CLOSURE joinery — the scoped closure is SHELL_SEED-inclusive + reaches dock/morph.css; a wrong recorded hash reads stale, the live scoped hash reads fresh (the freshness teeth)",
+            flag: (() => {
+                const routes = "/dock/overview";
+                const closure = surfaceScopedClosure(routes);
+                const shellInclusive = closure.includes("src/styles/index.css");
+                const reachesMorph = closure.some((p) => p.includes("dock/morph.css"));
+                const live = surfaceScopedHash(routes);
+                const wellFormed = /^[0-9a-f]{64}$/.test(live);
+                const stale = closureFreshnessVerdict("0".repeat(64), routes).state === "stale";
+                const fresh = closureFreshnessVerdict(live, routes).state === "fresh";
+                return shellInclusive && reachesMorph && wellFormed && stale && fresh
+                    ? "flagged"
+                    : null;
+            })(),
+        },
+        {
+            // The PARITY-C completeness NET — a synthetic new-component paint file NOT in
+            // any surface's closure is an orphan (outside the full net); a genuinely-
+            // reached cascade file (src/styles/index.css via SHELL_SEED) IS in the net.
+            label: "PARITY-C net — a synthetic orphan paint file is OUTSIDE the full closure; a real cascade file (src/styles/index.css) is INSIDE it (the completeness net has reach + a boundary)",
+            flag: (() => {
+                const net = fullPaintClosure();
+                const orphanOutside = !net.includes("src/components/custom/__NOT_A_REAL_SURFACE__.vue");
+                const reachedInside = net.includes("src/styles/index.css");
+                return net.length > 1 && orphanOutside && reachedInside ? "flagged" : null;
+            })(),
+        },
+        {
             // G8 negation pair — (i) the real-deferral fixture → RED
             label: "G8a (i) real-deferral — `this wave's π rides W-REFLECT3` (un-quoted, un-RETIRE) flags forward-deferral",
             flag: g8ScanLine("this wave's π rides W-REFLECT3")?.detector === "G8a"
@@ -882,7 +1043,7 @@ function run() {
 
     console.log("proof:ba-gestalt — the PIXEL-reading, ci-blocking gestalt close oracle (BG.W-PAINT-IS-THE-GATE; reads LIVE BG paint, defect-localizing)");
     console.log(`  roster ledger        : ${facts.rosterPresent ? relative(ROOT, ROSTER) : "ABSENT (born-RED ground-freeze — the BG roster + Metal captures land via the non-authoring capture agent)"}`);
-    console.log(`  self-test (bite proof): OK — ${facts.selfTestChecks ?? 0} synthetic checks flagged (G5 grey-RED + warm-GREEN, D2-METALLIC ceiling, content-rainbow-no-false-RED, D5-TOP-BAR topDelta RED/clean + probe-discipline + re-shot-broken, G7 auto-revoke, G8 negation-pair i/i′/ii/iii/iv, ROUTE-RESOLVES /dock/typoo-RED + prose-GREEN)`);
+    console.log(`  self-test (bite proof): OK — ${facts.selfTestChecks ?? 0} synthetic checks flagged (G5 grey-RED + warm-GREEN, D2-METALLIC ceiling, content-rainbow-no-false-RED, D5-TOP-BAR topDelta RED/clean + probe-discipline + re-shot-broken, G7 auto-revoke, SURFACE-CLOSURE joinery + PARITY-C net, G8 negation-pair i/i′/ii/iii/iv, ROUTE-RESOLVES /dock/typoo-RED + prose-GREEN)`);
     console.log(`  G8 no-terminal-reflect: ${facts.g8FilesScanned ?? 0} files scanned — ${(facts.g8Hits ?? []).length ? (facts.g8Hits.length + " DEFERRAL HIT(S)") : "clean (the corpus RETIRES the deferral)"}`);
     if (facts.rosterPresent) {
         console.log(`  surfaces present     : ${(facts.surfaces ?? []).length} (${(facts.surfaces ?? []).join(", ")})`);
