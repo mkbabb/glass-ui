@@ -85,6 +85,7 @@ import {
     validateConsolidation,
 } from "./gate-family-manifest.mjs";
 import { GATES, gatesFor } from "./gates.mjs";
+import { coherenceCensus, coherenceCensusSelfBites } from "./proof-coherence-census.mjs";
 
 const CURSOR = join(ROOT, "docs/tranches/BG/execution/EXECUTION-PROGRESS.md");
 const CANON = join(ROOT, "docs/tranches/BG/canon/fable-design-arm.md");
@@ -588,6 +589,7 @@ const CLAUSES = [
     apcaParallelWitness,
     deferredLedgerTerminal,
     gestaltCursorParity,
+    coherenceCensus,
 ];
 
 async function runClauses() {
@@ -824,7 +826,12 @@ async function selfTest() {
         }
     }
 
-    console.log("proof:meta — SELF-TEST (fable-arm-present + gate-family-consolidate + apca-parallel-witness + deferred-ledger-terminal + gestalt-cursor-parity, 25 bites)");
+    // BG.W-COHERENCE-CENSUS-GATE (F8 capstone 17.1) — fold the coherence-census bites.
+    for (const b of coherenceCensusSelfBites()) bites.push(b);
+
+    console.log(
+        "proof:meta — SELF-TEST (fable-arm-present + gate-family-consolidate + apca-parallel-witness + deferred-ledger-terminal + gestalt-cursor-parity + coherence-census, 35 bites)",
+    );
     let allFlag = true;
     for (const [name, ok] of bites) {
         console.log(`  ${ok ? "OK    " : "MISS  "}  ${name}`);
@@ -847,7 +854,7 @@ async function selfTest() {
         process.exit(1);
     }
     console.log(
-        "\n[proof:meta] SELF-TEST GREEN — all 25 bites behave, the real cursor passes fable-arm-present + gate-family-consolidate + apca-parallel-witness + deferred-ledger-terminal + gestalt-cursor-parity.",
+        "\n[proof:meta] SELF-TEST GREEN — all 35 bites behave, the real cursor passes fable-arm-present + gate-family-consolidate + apca-parallel-witness + deferred-ledger-terminal + gestalt-cursor-parity + coherence-census.",
     );
     process.exit(0);
 }
