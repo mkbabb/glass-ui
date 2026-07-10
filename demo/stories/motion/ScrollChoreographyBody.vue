@@ -1,22 +1,14 @@
 <script setup lang="ts">
-// Scroll Choreography (BB.W-SCROLL-MOTION) — the canonical demonstration of the SOTA
-// scroll-driven CHOREOGRAPHY register: the page-load BUILD, the section CASCADE, the
-// scroll-PINNED fixed-stage-advances-time reveals + the native smooth-scroll opt-in,
-// all on the native scroll()/view()/timeline-scope substrate (NO Lenis/GSAP dep — the
-// platform now ships these natively, off the compositor at 60fps).
+// BG.W-DEMO-DUP-MERGE (F7.3) — the Scroll CHOREOGRAPHY register body, extracted from
+// the retired routed `scroll-choreography.vue` wrapper (the StoryPage chrome stripped;
+// composed as one <StorySection> register inside motion/scroll.vue). The canonical
+// demonstration of the SOTA scroll-driven CHOREOGRAPHY register: the page-load BUILD,
+// the section CASCADE, the scroll-PINNED fixed-stage-advances-time reveals + the native
+// smooth-scroll opt-in, all on the native scroll()/view()/timeline-scope substrate (NO
+// Lenis/GSAP dep).
 //
-// This story CONSUMES the registers — no new substrate:
-//   · the PAGE-ENTER rides this route's own StoryPage <article> mount (the keyed
-//     `<component class="route-enter">` on-mount entrance, transitions.css —
-//     BG.W-ROUTE-TRANSITION retired the per-child `.scroll-build` page-build).
-//   · the SECTION-CASCADE rides this StoryPage's section wrap (each StorySection
-//     builds in on its own view() timeline — the implicit stagger, `.scroll-cascade`).
-//   · the SCROLL-PINNED showcase below is the `.scroll-pin`/`.scroll-pin-stage`
-//     register — a position: sticky stage whose internal phases advance with scroll
-//     (the fixed-stage-advances-time read).
-// Reduced-motion is the outer gate on every recipe (they never bind under PRM — the
-// terminal static layout).
-import StoryPage from "../StoryPage.vue";
+// It CONSUMES the registers — no new substrate. Reduced-motion is the outer gate on
+// every recipe. PascalCase composed-by helper.
 import StorySection from "../StorySection.vue";
 import { onMounted, ref } from "vue";
 import {
@@ -61,7 +53,6 @@ useScrollPin({
 </script>
 
 <template>
-    <StoryPage>
         <StorySection heading="The register">
             <p class="text-prose text-muted-foreground max-w-prose">
                 Three recipes on the native substrate, all compositor-only and
@@ -186,5 +177,4 @@ useScrollPin({
                 </div>
             </div>
         </StorySection>
-    </StoryPage>
 </template>

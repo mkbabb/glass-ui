@@ -18,7 +18,7 @@ import { fileURLToPath } from "node:url";
 
 const LIBRARY_ROOT = fileURLToPath(new URL("..", import.meta.url));
 const MANIFEST_PATH = `${LIBRARY_ROOT}demo/stories/manifest.ts`;
-const PRESETS_PATH = `${LIBRARY_ROOT}demo/stories/aurora/presets.ts`;
+const PRESETS_PATH = `${LIBRARY_ROOT}demo/stories/substrates/aurora/presets.ts`;
 
 export interface Scene {
     /** `/${category}/${story}` — the navigable route path (demo/router.ts). */
@@ -106,7 +106,7 @@ export const PI_TARGETS = {
 } as const;
 
 /**
- * Re-source the 12 aurora preset KEYS from `demo/stories/aurora/presets.ts`
+ * Re-source the 12 aurora preset KEYS from `demo/stories/substrates/aurora/presets.ts`
  * (`PRESETS = { OPENAI_SKY, … }`) — the same anti-drift discipline. The
  * substrate-paints-color spec renders aurora DEFAULT + EACH preset at t=1.
  */

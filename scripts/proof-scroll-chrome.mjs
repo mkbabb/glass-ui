@@ -73,7 +73,7 @@ const FILES = {
     propertyRegs: "src/styles/tokens/property-regs.css",
     indexCss: "src/styles/index.css",
     api: "src/api/index.ts",
-    story: "demo/stories/motion/scroll-system.vue",
+    story: "demo/stories/motion/ScrollReaderBody.vue",
 };
 
 function read(rel) {

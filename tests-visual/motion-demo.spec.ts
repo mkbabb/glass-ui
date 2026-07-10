@@ -170,9 +170,11 @@ test.describe("motion-demo (π lane — the robust /motion render, fail-CLOSED)"
     });
 
     // ── SCROLL-VT-DEMO: the scroll/VT story renders the facilities ────────────────
+    // BG.W-DEMO-DUP-MERGE (F7.3) — the native scroll register merged onto /motion/scroll
+    // (the ScrollNativeBody section); the facilities render there.
     test("the scroll/VT story renders the capability badges + the reorder list", async ({ page }) => {
         await page.setViewportSize({ width: 1280, height: 900 });
-        await page.goto("/motion/scroll-vt", { waitUntil: "networkidle" });
+        await page.goto("/motion/scroll", { waitUntil: "networkidle" });
 
         const text = await page.locator("body").innerText();
         expect(text).toContain("scroll() timeline");
@@ -220,8 +222,8 @@ test.describe("motion-demo (π lane — the robust /motion render, fail-CLOSED)"
             await page.waitForTimeout(250);
             await page.screenshot({ path: `${VISUAL_DIR}W-MOTION-SUITE-springs-after-${mode}.png`, fullPage: false });
 
-            // the scroll/VT story
-            await page.goto("/motion/scroll-vt", { waitUntil: "networkidle" });
+            // the scroll/VT story (F7.3 — merged onto /motion/scroll, native register)
+            await page.goto("/motion/scroll", { waitUntil: "networkidle" });
             await setDark(page, dark);
             await page.waitForTimeout(250);
             await page.screenshot({ path: `${VISUAL_DIR}W-MOTION-SUITE-scroll-vt-${mode}.png`, fullPage: false });

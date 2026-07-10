@@ -4,7 +4,7 @@
 // bundles this; the capture script navigates here. ?medium= forces a medium override.
 
 import { createAurora } from "../src/components/custom/aurora/composables/runtime";
-import { PRESETS } from "../demo/stories/aurora/presets";
+import { PRESETS } from "../demo/stories/substrates/aurora/presets";
 import type { AuroraConfig, AuroraMedium } from "../src/components/custom/aurora/constants/presets";
 
 const params = new URLSearchParams(location.search);

@@ -26,10 +26,10 @@ consumers booked (the blob Seed + the OKLCh stop rows still on raw
 # false-positive — those sites use a raw <input type="color">, not the component):
 grep -rln 'components/custom/color-swatch|@mkbabb/glass-ui/color-swatch' demo/ src/ \
   | grep -v '/components/custom/color-swatch/' | grep -v 'src/subpaths/'
-#   → demo/stories/aurora/sections/AuroraColorSection.vue
+#   → demo/stories/substrates/aurora/sections/AuroraColorSection.vue
 ```
 
-`demo/stories/aurora/sections/AuroraColorSection.vue` mounts `<ColorSwatch>` twice (the
+`demo/stories/substrates/aurora/sections/AuroraColorSection.vue` mounts `<ColorSwatch>` twice (the
 aurora Seed input + the DERIVE seed) — two mounts in one file (the file is the unit
 the census counts).
 
@@ -38,8 +38,8 @@ reference the `[&::-webkit-color-swatch]` CSS pseudo, not the component import):
 
 ```bash
 grep -rln '\[&::-webkit-color-swatch\]' demo/ src/ | grep -v '/components/custom/color-swatch/'
-#   → demo/stories/aurora/OklchStopRow.vue          (the per-stop OKLCh hex input)
-#   → demo/stories/aurora/config/PaletteLayer.vue   (the palette stop input)
+#   → demo/stories/substrates/aurora/OklchStopRow.vue          (the per-stop OKLCh hex input)
+#   → demo/stories/substrates/aurora/config/PaletteLayer.vue   (the palette stop input)
 #   → src/components/custom/watercolor-dot/WatercolorDot.vue (the dot color hex input)
 ```
 
@@ -72,7 +72,7 @@ re-pointed onto `<ColorSwatch>` (record the call-site; the ≥2-consumer bar cle
 
 ## Cross-references
 
-- `demo/stories/aurora/sections/AuroraColorSection.vue` (consumer #1 — Seed + DERIVE).
-- `demo/stories/aurora/OklchStopRow.vue` / `demo/stories/aurora/config/PaletteLayer.vue`
+- `demo/stories/substrates/aurora/sections/AuroraColorSection.vue` (consumer #1 — Seed + DERIVE).
+- `demo/stories/substrates/aurora/OklchStopRow.vue` / `demo/stories/substrates/aurora/config/PaletteLayer.vue`
   (the booked re-point targets — still raw `<input type="color">`).
 - `src/components/custom/color-swatch/ColorSwatch.vue` (the proportioned chip + hex affordance).

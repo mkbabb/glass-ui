@@ -98,6 +98,23 @@
 //        observer while its page-level `.story-sections` no longer carries
 //        `.scroll-cascade` (the no-double-bind). (born-RED: none of it on HEAD.)
 //
+//   F1 — the Timeline×3 dup collapses to ONE `data/timeline.vue` (BG.W-DEMO-DUP-MERGE
+//        / F7.3): the `timeline-segmented.vue` + `timeline-continuous.vue` member
+//        WRAPPERS are DEFINITION-ABSENT, their render bodies moved into colocated
+//        PascalCase body sub-components (`Timeline{Segmented,Continuous}Body.vue`) that
+//        EXIST, and the family page composes each as a stacked `<StorySection>` register
+//        (≥3, comment-stripped so a provenance mention never fakes a tag). (born-RED:
+//        the member wrappers exist on HEAD.)
+//   F2 — the Scroll×3 dup collapses to ONE `motion/scroll.vue` the same way (the
+//        `scroll-vt`/`scroll-system`/`scroll-choreography` wrappers DEFINITION-ABSENT,
+//        the `Scroll{Native,Reader,Choreography}Body.vue` bodies EXIST, 3 stacked
+//        `<StorySection>` registers, AND the F7.1-interim `<FamilyTabs>` switcher GONE
+//        from the family page). (born-RED: the member wrappers exist on HEAD.)
+//   F3 — the aurora studio-helper dir nests under `substrates/aurora/` (off the
+//        `./*/*.vue` route glob): `demo/stories/aurora/` DEFINITION-ABSENT,
+//        `demo/stories/substrates/aurora/` PRESENT. (born-RED: aurora/ sits at the top
+//        level on HEAD.)
+//
 // Self-test bites: a synthetic retired file that still "exists" REDs D1; a synthetic
 // live `<DemoFrame>` tag REDs D3; a synthetic adopted file with zero importers REDs
 // D2; a synthetic decision with an empty rationale REDs D4; a jargon-in-a-comment
@@ -110,7 +127,10 @@
 // masthead arm), while a `masthead` mention in prose does NOT red D7 (the comment-
 // strip distinguishing bite); + one bite per T-clause that recreates the HEAD state (the born-RED proof):
 // the unconditional-`.char-stagger` SplitChars REDs T1, the `* 30ms` literal REDs T2,
-// the absent `useSectionReveal` REDs T3, the heading-register-less StorySection REDs T4.
+// the absent `useSectionReveal` REDs T3, the heading-register-less StorySection REDs T4;
+// a surviving `timeline-segmented.vue` wrapper REDs F1, a surviving `scroll-vt.vue`
+// wrapper REDs F2 AND a re-introduced `<FamilyTabs>` on the merged scroll page REDs F2
+// (the no-indirection arm), a top-level `demo/stories/aurora/` helper dir REDs F3.
 
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { resolve } from "node:path";
@@ -654,6 +674,105 @@ function detect(overrides = {}) {
         e3ShrinkPresent && !e3FadeLeadsAt0,
     );
 
+    // ── F1-F3 — the BG.W-DEMO-DUP-MERGE mechanical dup-collapse (F7.3). The
+    //    concentrated content duplication (Timeline×3, Scroll×3) + the top-level
+    //    aurora/ studio-helper dir are collapsed: each duplicate member WRAPPER is
+    //    DELETED and its render body moves into the ONE family page as a
+    //    <StorySection> register over a colocated PascalCase body sub-component
+    //    (copy-the-render-body-delete-the-wrapper, the curve-gallery exemplar), and
+    //    the aurora/ helper dir nests under substrates/aurora/ (off the ./*/*.vue
+    //    glob). Born-RED on HEAD (the member wrappers exist + aurora/ sits at the top
+    //    level); GREEN once each set collapses onto its ONE family page. The F5+
+    //    bites recreate the HEAD state (a surviving member wrapper, a re-introduced
+    //    FamilyTabs, a top-level aurora/) so the collapse cannot silently regress. ──
+    const DUP_MERGE = {
+        timeline: {
+            family: "demo/stories/data/timeline.vue",
+            members: [
+                "demo/stories/data/timeline-segmented.vue",
+                "demo/stories/data/timeline-continuous.vue",
+            ],
+            bodies: [
+                "demo/stories/data/TimelineSegmentedBody.vue",
+                "demo/stories/data/TimelineContinuousBody.vue",
+            ],
+            bodyTags: ["TimelineSegmentedBody", "TimelineContinuousBody"],
+        },
+        scroll: {
+            family: "demo/stories/motion/scroll.vue",
+            members: [
+                "demo/stories/motion/scroll-vt.vue",
+                "demo/stories/motion/scroll-system.vue",
+                "demo/stories/motion/scroll-choreography.vue",
+            ],
+            bodies: [
+                "demo/stories/motion/ScrollNativeBody.vue",
+                "demo/stories/motion/ScrollReaderBody.vue",
+                "demo/stories/motion/ScrollChoreographyBody.vue",
+            ],
+            bodyTags: [
+                "ScrollNativeBody",
+                "ScrollReaderBody",
+                "ScrollChoreographyBody",
+            ],
+        },
+        // The aurora studio-helper dir moved off the top-level ./*/*.vue glob.
+        auroraTopLevelWitness: "demo/stories/aurora/presets.ts",
+        auroraNestedWitness: "demo/stories/substrates/aurora/presets.ts",
+    };
+    // A family page collapse is realized IFF every member wrapper is DEFINITION-ABSENT,
+    // every colocated body sub-component EXISTS, and the family page composes each body
+    // as a stacked <StorySection> register (≥ N registers). The family src is
+    // comment-STRIPPED so a retired member NAME in a provenance comment never fakes a
+    // live composition/tag.
+    const mergeRealized = (spec, minSections, forbidTag) => {
+        const membersGone = spec.members.every((m) => !fileExists(m));
+        const bodiesPresent = spec.bodies.every((b) => fileExists(b));
+        const famSrc = fileExists(spec.family)
+            ? stripComments(readSrc(spec.family))
+            : "";
+        const composes = spec.bodyTags.every((t) =>
+            new RegExp(`<${t}[\\s/>]`).test(famSrc),
+        );
+        const sectionCount = (famSrc.match(/<StorySection\b/g) || []).length;
+        const forbidGone = forbidTag ? !new RegExp(forbidTag).test(famSrc) : true;
+        return {
+            membersGone,
+            bodiesPresent,
+            composes,
+            sectionCount,
+            forbidGone,
+            ok:
+                membersGone &&
+                bodiesPresent &&
+                composes &&
+                sectionCount >= minSections &&
+                forbidGone,
+        };
+    };
+
+    const f1 = mergeRealized(DUP_MERGE.timeline, 3, null);
+    facts.f1 = f1;
+    assert(
+        "F1 — Timeline×3 merged to ONE data/timeline.vue (3 <StorySection> registers over colocated bodies; the segmented/continuous wrappers deleted)",
+        f1.ok,
+    );
+
+    const f2 = mergeRealized(DUP_MERGE.scroll, 3, "FamilyTabs");
+    facts.f2 = f2;
+    assert(
+        "F2 — Scroll×3 merged to ONE motion/scroll.vue (3 <StorySection> registers over colocated bodies, no FamilyTabs; the vt/system/choreography wrappers deleted)",
+        f2.ok,
+    );
+
+    const f3TopLevelGone = !fileExists(DUP_MERGE.auroraTopLevelWitness);
+    const f3NestedPresent = fileExists(DUP_MERGE.auroraNestedWitness);
+    facts.f3 = { topLevelGone: f3TopLevelGone, nestedPresent: f3NestedPresent };
+    assert(
+        "F3 — the aurora studio-helper dir nested under substrates/aurora/ (off the ./*/*.vue route glob)",
+        f3TopLevelGone && f3NestedPresent,
+    );
+
     return { facts, violations };
 }
 
@@ -906,6 +1025,39 @@ function selfTest() {
         "E3 — shrink-not-fade (title-collapse shrink leads; subordinate fade follows the pin, not scroll 0)",
         "E3 subordinate fade leads from scroll 0 (HEAD form)",
     );
+    // F1 (born-RED): the HEAD state — a surviving `timeline-segmented.vue` member
+    // wrapper (the dup un-collapsed) → REDs F1.
+    sab(
+        { existsOverride: { "demo/stories/data/timeline-segmented.vue": true } },
+        "F1 — Timeline×3 merged to ONE data/timeline.vue (3 <StorySection> registers over colocated bodies; the segmented/continuous wrappers deleted)",
+        "F1 surviving timeline-segmented.vue member wrapper (HEAD form)",
+    );
+    // F2 (born-RED): a surviving `scroll-vt.vue` member wrapper → REDs F2.
+    sab(
+        { existsOverride: { "demo/stories/motion/scroll-vt.vue": true } },
+        "F2 — Scroll×3 merged to ONE motion/scroll.vue (3 <StorySection> registers over colocated bodies, no FamilyTabs; the vt/system/choreography wrappers deleted)",
+        "F2 surviving scroll-vt.vue member wrapper (HEAD form)",
+    );
+    // F2 (distinguishing): the family page re-introduces the <FamilyTabs> switcher
+    // (the F7.1 interim indirection the mechanical merge retires) even with the bodies
+    // composed → REDs F2 on the no-FamilyTabs arm.
+    sab(
+        {
+            srcOverride: {
+                "demo/stories/motion/scroll.vue":
+                    "<template><StorySection><ScrollNativeBody /></StorySection><StorySection><ScrollReaderBody /></StorySection><StorySection><ScrollChoreographyBody /></StorySection><FamilyTabs :members=\"m\" /></template>",
+            },
+        },
+        "F2 — Scroll×3 merged to ONE motion/scroll.vue (3 <StorySection> registers over colocated bodies, no FamilyTabs; the vt/system/choreography wrappers deleted)",
+        "F2 FamilyTabs re-introduced on the merged family page",
+    );
+    // F3 (born-RED): the aurora studio-helper dir still sits at the top level
+    // (demo/stories/aurora/, matched by the ./*/*.vue route glob) → REDs F3.
+    sab(
+        { existsOverride: { "demo/stories/aurora/presets.ts": true } },
+        "F3 — the aurora studio-helper dir nested under substrates/aurora/ (off the ./*/*.vue route glob)",
+        "F3 top-level demo/stories/aurora/ helper dir (HEAD form)",
+    );
 
     return flagged;
 }
@@ -982,7 +1134,16 @@ function run() {
         `  E3 shrink-not-fade        : ${facts["E3 — shrink-not-fade (title-collapse shrink leads; subordinate fade follows the pin, not scroll 0)"]}`,
     );
     console.log(
-        `  self-test (bite proof)    : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×2 incl. comment-strip + D4 + D5 + D6×2 + D7×3 incl. comment-strip + T1-T4 + E1×2 incl. declared-family + E2 + E3)`,
+        `  F1 timeline×3→1 merged    : ${facts["F1 — Timeline×3 merged to ONE data/timeline.vue (3 <StorySection> registers over colocated bodies; the segmented/continuous wrappers deleted)"]}  (sections: ${facts.f1?.sectionCount})`,
+    );
+    console.log(
+        `  F2 scroll×3→1 merged      : ${facts["F2 — Scroll×3 merged to ONE motion/scroll.vue (3 <StorySection> registers over colocated bodies, no FamilyTabs; the vt/system/choreography wrappers deleted)"]}  (sections: ${facts.f2?.sectionCount}, noFamilyTabs: ${facts.f2?.forbidGone})`,
+    );
+    console.log(
+        `  F3 aurora nested          : ${facts["F3 — the aurora studio-helper dir nested under substrates/aurora/ (off the ./*/*.vue route glob)"]}  (topLevelGone: ${facts.f3?.topLevelGone}, nested: ${facts.f3?.nestedPresent})`,
+    );
+    console.log(
+        `  self-test (bite proof)    : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×2 incl. comment-strip + D4 + D5 + D6×2 + D7×3 incl. comment-strip + T1-T4 + E1×2 incl. declared-family + E2 + E3 + F1 + F2×2 incl. FamilyTabs + F3)`,
     );
     if (violations.length) {
         console.log("\nVIOLATIONS:");

@@ -63,7 +63,7 @@ const FILES = {
     coreBarrel: "src/composables/motion/core/index.ts",
     tracker: "src/composables/sidebar/useScrollTracker.ts",
     propertyRegs: "src/styles/tokens/property-regs.css",
-    story: "demo/stories/motion/scroll-system.vue",
+    story: "demo/stories/motion/ScrollReaderBody.vue",
     evidence: "docs/consumer-evidence/use-scroll-trigger.md",
 };
 

@@ -68,10 +68,10 @@ const PATHS = {
     glSetup: resolve(AURORA, "composables/glSetup.ts"),
     // M6 — the demo-surfacing reach paths (the paint-judge fix). The studio picker +
     // the deterministic capture path + the named metal baseline.
-    demoOptions: resolve(ROOT, "demo/stories/aurora/config/options.ts"),
-    demoComposition: resolve(ROOT, "demo/stories/aurora/sections/AuroraCompositionSection.vue"),
+    demoOptions: resolve(ROOT, "demo/stories/substrates/aurora/config/options.ts"),
+    demoComposition: resolve(ROOT, "demo/stories/substrates/aurora/sections/AuroraCompositionSection.vue"),
     demoStudio: resolve(ROOT, "demo/stories/substrates/aurora.vue"),
-    demoPresets: resolve(ROOT, "demo/stories/aurora/presets.ts"),
+    demoPresets: resolve(ROOT, "demo/stories/substrates/aurora/presets.ts"),
 };
 
 const ARTIFACT = gateArtifactPath("GLASS_UI_AUR_METAL_ARTIFACT", "BG-W-AUR-METAL-FINISH");

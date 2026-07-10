@@ -419,7 +419,7 @@ onBeforeUnmount(() => {
                      BORDER ITEM on the leftside dock (SidebarDock wears the
                      `<BorderProgress>` ring off the provided shell scroll fraction).
                      The `.scroll-progress` LIBRARY recipe stays (its consumer is the
-                     /motion/scroll-vt story). -->
+                     /motion/scroll story, native register). -->
                 <!-- BG.W-ROUTE-TRANSITION (M1) — the route swap is a BARE KEYED ATOMIC
                      SWAP: NO Vue <Transition>, NO Suspense, NO v-if/skeleton/no-match
                      branch chain. A keyed `<component>` unmounts the old + mounts the new

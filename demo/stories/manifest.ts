@@ -307,8 +307,6 @@ const SUBPATHS: Record<string, string> = {
     "data/sortable-list": "@mkbabb/glass-ui/sortable-list",
     "data/infinite-scroll": "@mkbabb/glass-ui/infinite-scroll",
     "data/timeline": "@mkbabb/glass-ui/timeline",
-    "data/timeline-segmented": "@mkbabb/glass-ui/timeline",
-    "data/timeline-continuous": "@mkbabb/glass-ui/timeline",
     "data/search": "@mkbabb/glass-ui/search",
     "data/virtual-section": "@mkbabb/glass-ui/virtual",
     "data/scrolling-text": "@mkbabb/glass-ui/scrolling-text",
@@ -329,9 +327,6 @@ const SUBPATHS: Record<string, string> = {
     // Motion — the spring/curve/reveal vocabulary.
     "motion/springs": "@mkbabb/glass-ui/motion",
     "motion/curve-gallery": "@mkbabb/glass-ui/easing",
-    "motion/scroll-vt": "@mkbabb/glass-ui/motion-core",
-    "motion/scroll-system": "@mkbabb/glass-ui/motion-core",
-    "motion/scroll-choreography": "/motion/scroll-choreography",
     "motion/countup": "@mkbabb/glass-ui/motion",
     "motion/reveal": "@mkbabb/glass-ui/motion-core",
     "motion/deck": "@mkbabb/glass-ui/deck",
@@ -339,10 +334,12 @@ const SUBPATHS: Record<string, string> = {
     "motion/handmark": "@mkbabb/glass-ui/handmark",
     "motion/animated-digit": "@mkbabb/glass-ui/animated-digit",
     "motion/split-chars": "@mkbabb/glass-ui/motion-core",
-    // BG.W-DEMO-IA-REDESIGN — the Motion SCROLL family (folds scroll-vt ·
-    // scroll-system · scroll-choreography, dependency order) + the TYPE & NUMBER
-    // family (folds typewriter · split-chars · animated-digit · countup). The
-    // scroll page shares /motion-core with reveal — the DECLARED motion-core family.
+    // BG.W-DEMO-DUP-MERGE (F7.3) — the Motion SCROLL family: the native · reader ·
+    // choreography registers are MERGED into ONE motion/scroll.vue page (3
+    // <StorySection> registers over colocated body sub-components; the scroll-vt ·
+    // scroll-system · scroll-choreography member wrappers deleted). The TYPE & NUMBER
+    // family (folds typewriter · split-chars · animated-digit · countup) stays a fold.
+    // The scroll page shares /motion-core with reveal — the DECLARED motion-core family.
     "motion/scroll": "@mkbabb/glass-ui/motion-core",
     "motion/text-motion": "/motion/text-motion",
     // Compositions — real scenes carry the route path.
@@ -424,11 +421,10 @@ export const FOLDED_STORY_IDS: ReadonlySet<string> = new Set<string>([
     "display/dark-mode-toggle",
     "display/metric-badge",
     "display/metric-pill",
-    // Data → data/table (data-table) · data/timeline (segmented/continuous) ·
-    // data/metrics · display/atoms (avatar).
+    // Data → data/table (data-table) · data/metrics · display/atoms (avatar).
+    // (timeline-segmented/continuous MERGED into data/timeline at F7.3 — the member
+    // files are deleted, so they are no longer routed rows to fold here.)
     "data/data-table",
-    "data/timeline-segmented",
-    "data/timeline-continuous",
     "data/metric-cell",
     "data/metric-stack",
     "data/scrolling-text",
@@ -436,9 +432,8 @@ export const FOLDED_STORY_IDS: ReadonlySet<string> = new Set<string>([
     // Feedback → feedback/toast.
     "feedback/toaster",
     // Motion → motion/scroll · motion/text-motion.
-    "motion/scroll-vt",
-    "motion/scroll-system",
-    "motion/scroll-choreography",
+    // (scroll-vt/system/choreography MERGED into motion/scroll at F7.3 — the member
+    // files are deleted, so they are no longer routed rows to fold here.)
     "motion/typewriter",
     "motion/split-chars",
     "motion/animated-digit",
@@ -1078,18 +1073,6 @@ export const CATEGORIES: Category[] = [
             s("data", "sortable-list", "Sortable List"),
             s("data", "infinite-scroll", "Infinite Scroll"),
             s("data", "timeline", "Timeline"),
-            s(
-                "data",
-                "timeline-segmented",
-                "Timeline (segmented)",
-                "A multi-phase progress timeline with per-segment gradients and hover/click boundary dots.",
-            ),
-            s(
-                "data",
-                "timeline-continuous",
-                "Timeline (continuous)",
-                "One rounded-pill rail with N absolutely-positioned region children — the same segment shape as the segmented timeline, a different geometry.",
-            ),
             s("data", "search", "Fuzzy Search"),
             s(
                 "data",
@@ -1182,24 +1165,6 @@ export const CATEGORIES: Category[] = [
                     // constellation budget in this band).
                     background: "grid",
                 },
-            ),
-            s(
-                "motion",
-                "scroll-vt",
-                "Scroll & View Transitions",
-                "The native scroll-driven facilities — .scroll-progress (scroll() timeline), [data-scroll-reveal] (view() timeline), the .gl-list-item View-Transitions reorder, and a capability badge.",
-            ),
-            s(
-                "motion",
-                "scroll-system",
-                "Scroll System",
-                "useScrollTrigger — the ONE scroll reader: a continuous progress ramp AND discrete onCross/onEnter/onLeave trigger-point events off the SAME rAF-coalesced read (no second listener). Direction (committed past an 8px flip-delta) plus per-second velocity, the native --scroll-t ramp where the platform drives it and a JS fallback where it does not. Reduced-motion keeps the crossings and drops the interpolation.",
-            ),
-            s(
-                "motion",
-                "scroll-choreography",
-                "Scroll Choreography",
-                "The SOTA scroll-driven choreography register — the page enters on the route swap (.route-enter), the sections cascade as you scroll (.scroll-cascade), and a showcase pins and advances through phases (.scroll-pin) on the native scroll()/view()/timeline-scope substrate. Compositor-only + PRM-safe + the native smooth-scroll opt-in; ZERO Lenis/GSAP dep.",
             ),
             s(
                 "motion",

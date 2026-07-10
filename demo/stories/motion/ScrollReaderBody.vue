@@ -1,7 +1,9 @@
 <script setup lang="ts">
-// Scroll System (BC.W-SCROLL-TRIGGER) — the live exerciser for the ONE scroll reader,
-// `useScrollTrigger`. Point it at a scroll source and it gives back two things off the
-// SAME rAF-coalesced read (the shared `createScrollReader` core):
+// BG.W-DEMO-DUP-MERGE (F7.3) — the Scroll READER register body, extracted from the
+// retired routed `scroll-system.vue` wrapper (the StoryPage chrome stripped; composed
+// as one <StorySection> register inside motion/scroll.vue). The live exerciser for the
+// ONE scroll reader, `useScrollTrigger`. Point it at a scroll source and it gives back
+// two things off the SAME rAF-coalesced read (the shared `createScrollReader` core):
 //   · a continuous `progress` ref (0..1) for ramps,
 //   · discrete crossing events — onCross / onEnter / onLeave — that fire ONCE when the
 //     scroll position passes a declared trigger-point in a given direction (a flip-delta
@@ -10,12 +12,8 @@
 // framerate-independent). This is the trigger-point reader BC.W-SCROLL-CHROME consumes
 // for the dock + page-header collapse — the §3.2 gap #1 closed.
 //
-// The story scrolls a bounded scroll-PORT (a tall inner column inside a fixed-height
-// frame) so the demonstration is self-contained + deterministic: the readout updates
-// live, the event log records each crossing ONCE, and a jitter at a boundary fires
-// nothing (the anti-thrash). It CONSUMES the reader — no new substrate, no second
-// listener.
-import StoryPage from "../StoryPage.vue";
+// It CONSUMES the reader — no new substrate, no second listener. PascalCase composed-by
+// helper.
 import StorySection from "../StorySection.vue";
 import { computed, ref } from "vue";
 import {
@@ -75,7 +73,6 @@ const collapsePct = computed(() => `${Math.round(collapseT.value * 100)}%`);
 </script>
 
 <template>
-    <StoryPage>
         <StorySection heading="The one scroll reader">
             <p class="text-prose text-muted-foreground max-w-prose">
                 <code class="fira-code">useScrollTrigger</code> gives a continuous
@@ -237,5 +234,4 @@ const collapsePct = computed(() => `${Math.round(collapseT.value * 100)}%`);
                 </div>
             </div>
         </StorySection>
-    </StoryPage>
 </template>

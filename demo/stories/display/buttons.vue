@@ -20,7 +20,7 @@ import { ref } from "vue";
 import { Button } from "@glass/components/ui/button";
 import { cn } from "@glass/utils/cn";
 import { Aurora } from "@glass/components/custom/aurora";
-import { PRESETS } from "../aurora/presets";
+import { PRESETS } from "../substrates/aurora/presets";
 
 const pressed = ref(false);
 

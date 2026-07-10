@@ -71,8 +71,8 @@ const barrel = read("src/components/custom/fading-scroll/index.ts");
 const subpath = read("src/subpaths/fading-scroll.ts");
 const segTabsVue = strip(read("src/components/custom/tabs/SegmentedTabs.vue"));
 const segTabsCss = strip(read("src/styles/segmented-tabs.css"));
-const auroraDock = strip(read("demo/stories/aurora/AuroraConfigDock.vue"));
-const presetRow = strip(read("demo/stories/aurora/PresetPickerRow.vue"));
+const auroraDock = strip(read("demo/stories/substrates/aurora/AuroraConfigDock.vue"));
+const presetRow = strip(read("demo/stories/substrates/aurora/PresetPickerRow.vue"));
 const blobVue = strip(read("demo/stories/substrates/blob.vue"));
 
 // The static `.scroll-fade-*` utilities + `--mask-fade-width` token RETIRED at

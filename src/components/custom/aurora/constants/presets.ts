@@ -3,7 +3,7 @@
  *
  * Authored presets (Sky, Dawn, Meadow, Deliberative, Day9, Oil Impasto,
  * Oil Gestural, Oil Van Gogh, Crayon Sunset, Crayon Rainbow, Crayon Ocean)
- * live in the consumer — see demo/stories/aurora/presets.ts.
+ * live in the consumer — see demo/stories/substrates/aurora/presets.ts.
  *
  * Per memory rule "Presets in consumers": named themed presets belong in
  * each consumer project, not in the library. The library exports only the

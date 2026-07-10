@@ -526,7 +526,7 @@ Hide) zero. Every interactive axis is on the offscreen-park gate — a parked rA
   brushwork *is* the point, not behind dense text.
 - **Presets live in consumers.** The library exports the config *shape* and a minimal
   `DEFAULT_AURORA_CONFIG` only. The named themes (Sky, Dawn, Meadow, Oil Van Gogh, …) live in
-  `demo/stories/aurora/presets.ts`, per the presets-in-consumers rule.
+  `demo/stories/substrates/aurora/presets.ts`, per the presets-in-consumers rule.
 
 ---
 

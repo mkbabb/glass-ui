@@ -74,9 +74,9 @@ function countMatches(src, re) {
 // the deletion-proof tracks THEM (every aurora-studio select must round-trip
 // its open state via `v-model:is-open`, never the controlled-shut literal).
 const DEAD_SELECT_SITES = [
-    "demo/stories/aurora/sections/AuroraColorSection.vue",
-    "demo/stories/aurora/sections/AuroraCompositionSection.vue",
-    "demo/stories/aurora/sections/AuroraMotionSection.vue",
+    "demo/stories/substrates/aurora/sections/AuroraColorSection.vue",
+    "demo/stories/substrates/aurora/sections/AuroraCompositionSection.vue",
+    "demo/stories/substrates/aurora/sections/AuroraMotionSection.vue",
 ];
 
 // ── Clause 6: the T5-route sites — ZERO `W-AUR-WEBGPU-DECIDE` ROUTE cite. ──

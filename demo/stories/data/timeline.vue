@@ -1,27 +1,18 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
-import FamilyTabs, { type FamilyMember } from "../FamilyTabs.vue";
-import { ref, computed, defineAsyncComponent } from "vue";
+import { ref, computed } from "vue";
 import { GlassTimeline } from "@glass/components/custom/timeline";
-
-// BG.W-DEMO-IA-REDESIGN — the Data TIMELINE family. The segmented + continuous
-// timeline registers collapse onto this ONE timeline page as members (bare,
-// STORY_NESTED_KEY) via the switcher below. The mechanical file consolidation
-// rides F7.3.
-const familyMembers: FamilyMember[] = [
-    {
-        id: "timeline-segmented",
-        label: "Segmented",
-        component: defineAsyncComponent(() => import("./timeline-segmented.vue")),
-    },
-    {
-        id: "timeline-continuous",
-        label: "Continuous",
-        component: defineAsyncComponent(() => import("./timeline-continuous.vue")),
-    },
-];
 import { cn } from "@glass/utils/cn";
+
+// BG.W-DEMO-DUP-MERGE (F7.3) — the Data TIMELINE family, mechanically consolidated.
+// The three timeline registers (discrete scrubber · segmented multi-phase · one-rail
+// continuous) render as THREE <StorySection> registers on this ONE page. The prior
+// routed `timeline-segmented.vue` / `timeline-continuous.vue` member wrappers +
+// the <FamilyTabs> switcher are RETIRED (clean break) — each render body moved bare
+// into a colocated PascalCase body sub-component (Timeline{Segmented,Continuous}Body).
+import TimelineSegmentedBody from "./TimelineSegmentedBody.vue";
+import TimelineContinuousBody from "./TimelineContinuousBody.vue";
 
 interface TimelineEvent {
     id: string;
@@ -66,103 +57,110 @@ function jumpTo(e: TimelineEvent) {
 
 <template>
     <StoryPage>
-        <div>
-            <p class="text-admin-label mb-4 text-muted-foreground">Release timeline</p>
+        <StorySection heading="Discrete progression">
+            <div>
+                <p class="text-admin-label mb-4 text-muted-foreground">Release timeline</p>
 
-            <div
-                :class="
-                    cn(
-                        'flex flex-col gap-8 rounded-card border border-border bg-card p-6 shadow-cartoon',
-                    )
-                "
-            >
-                <!-- Scrubber -->
-                <div class="relative pt-8">
-                    <GlassTimeline
-                        :model-value="position"
-                        :label="label"
-                        @update:model-value="position = $event"
-                    />
-
-                    <!-- Tick overlay — absolute so the dots sit on top of the glass track. -->
-                    <div class="pointer-events-none absolute inset-x-1 bottom-0 top-8 flex">
-                        <div
-                            v-for="e in events"
-                            :key="e.id"
-                            class="absolute top-1/2 -translate-x-1/2 -translate-y-1/2"
-                            :style="{ left: `${e.at * 100}%` }"
-                        >
-                            <span
-                                class="block h-2 w-2 rounded-full ring-2 ring-background"
-                                :style="{ background: `var(--section-color-${e.tone})` }"
-                            />
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Active event callout -->
                 <div
-                    v-if="activeEvent"
-                    class="flex items-start gap-3 rounded-md border-l-[3px] bg-background p-4"
-                    :style="{ borderLeftColor: `var(--section-color-${activeEvent.tone})` }"
-                >
-                    <div class="flex min-w-0 flex-col gap-1">
-                        <span
-                            class="text-admin-label"
-                            :style="{ color: `var(--section-color-${activeEvent.tone})` }"
-                        >
-                            {{ activeEvent.label }}
-                        </span>
-                        <span class="text-small text-foreground">{{ activeEvent.body }}</span>
-                    </div>
-                </div>
-                <div
-                    v-else
-                    class="ghost-slot p-4 text-small"
-                >
-                    Drag the scrubber or click an event below.
-                </div>
-            </div>
-        </div>
-
-        <!-- Event list -->
-        <div>
-            <p class="text-admin-label mb-4 text-muted-foreground">Events</p>
-            <ol class="flex flex-col divide-y divide-border rounded-card border border-border bg-card shadow-cartoon">
-                <li
-                    v-for="(e, i) in events"
-                    :key="e.id"
                     :class="
                         cn(
-                            'interactive-item flex cursor-pointer items-center gap-4 px-4 py-3',
-                            i === activeIndex && 'bg-muted/40',
+                            'flex flex-col gap-8 rounded-card border border-border bg-card p-6 shadow-cartoon',
                         )
                     "
-                    @click="jumpTo(e)"
                 >
-                    <!-- F2.R1 W-DARK-READABILITY-REPAIR (paint re-open): the step number sits
-                         on a brand-ramp fill whose luminance varies per tone, so a hardcoded
-                         white collapses on the LIGHT rungs in dark (WCAG ~1.8-2.8). The native
-                         contrast-color() picks the max-contrast ink per fill on the census
-                         engines (Chrome 149 / Safari 26); text-white is the pre-modern base. -->
-                    <span
-                        class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-medium text-white"
-                        :style="{ background: `var(--section-color-${e.tone})`, color: `contrast-color(var(--section-color-${e.tone}))` }"
-                    >
-                        {{ i + 1 }}
-                    </span>
-                    <div class="flex min-w-0 flex-1 flex-col">
-                        <span class="text-small font-medium">{{ e.label }}</span>
-                        <span class="text-mono-caption text-muted-foreground">{{ e.body }}</span>
+                    <!-- Scrubber -->
+                    <div class="relative pt-8">
+                        <GlassTimeline
+                            :model-value="position"
+                            :label="label"
+                            @update:model-value="position = $event"
+                        />
+
+                        <!-- Tick overlay — absolute so the dots sit on top of the glass track. -->
+                        <div class="pointer-events-none absolute inset-x-1 bottom-0 top-8 flex">
+                            <div
+                                v-for="e in events"
+                                :key="e.id"
+                                class="absolute top-1/2 -translate-x-1/2 -translate-y-1/2"
+                                :style="{ left: `${e.at * 100}%` }"
+                            >
+                                <span
+                                    class="block h-2 w-2 rounded-full ring-2 ring-background"
+                                    :style="{ background: `var(--section-color-${e.tone})` }"
+                                />
+                            </div>
+                        </div>
                     </div>
-                    <span class="fira-code text-mono-caption text-muted-foreground">
-                        {{ Math.round(e.at * 100) }}%
-                    </span>
-                </li>
-            </ol>
-        </div>
-        <StorySection heading="Segmented & continuous">
-            <FamilyTabs :members="familyMembers" aria-label="Timeline family" />
+
+                    <!-- Active event callout -->
+                    <div
+                        v-if="activeEvent"
+                        class="flex items-start gap-3 rounded-md border-l-[3px] bg-background p-4"
+                        :style="{ borderLeftColor: `var(--section-color-${activeEvent.tone})` }"
+                    >
+                        <div class="flex min-w-0 flex-col gap-1">
+                            <span
+                                class="text-admin-label"
+                                :style="{ color: `var(--section-color-${activeEvent.tone})` }"
+                            >
+                                {{ activeEvent.label }}
+                            </span>
+                            <span class="text-small text-foreground">{{ activeEvent.body }}</span>
+                        </div>
+                    </div>
+                    <div
+                        v-else
+                        class="ghost-slot p-4 text-small"
+                    >
+                        Drag the scrubber or click an event below.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event list -->
+            <div>
+                <p class="text-admin-label mb-4 text-muted-foreground">Events</p>
+                <ol class="flex flex-col divide-y divide-border rounded-card border border-border bg-card shadow-cartoon">
+                    <li
+                        v-for="(e, i) in events"
+                        :key="e.id"
+                        :class="
+                            cn(
+                                'interactive-item flex cursor-pointer items-center gap-4 px-4 py-3',
+                                i === activeIndex && 'bg-muted/40',
+                            )
+                        "
+                        @click="jumpTo(e)"
+                    >
+                        <!-- F2.R1 W-DARK-READABILITY-REPAIR (paint re-open): the step number sits
+                             on a brand-ramp fill whose luminance varies per tone, so a hardcoded
+                             white collapses on the LIGHT rungs in dark (WCAG ~1.8-2.8). The native
+                             contrast-color() picks the max-contrast ink per fill on the census
+                             engines (Chrome 149 / Safari 26); text-white is the pre-modern base. -->
+                        <span
+                            class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-medium text-white"
+                            :style="{ background: `var(--section-color-${e.tone})`, color: `contrast-color(var(--section-color-${e.tone}))` }"
+                        >
+                            {{ i + 1 }}
+                        </span>
+                        <div class="flex min-w-0 flex-1 flex-col">
+                            <span class="text-small font-medium">{{ e.label }}</span>
+                            <span class="text-mono-caption text-muted-foreground">{{ e.body }}</span>
+                        </div>
+                        <span class="fira-code text-mono-caption text-muted-foreground">
+                            {{ Math.round(e.at * 100) }}%
+                        </span>
+                    </li>
+                </ol>
+            </div>
+        </StorySection>
+
+        <StorySection heading="Segmented — multi-phase progress">
+            <TimelineSegmentedBody />
+        </StorySection>
+
+        <StorySection heading="Continuous — one rail, N regions">
+            <TimelineContinuousBody />
         </StorySection>
     </StoryPage>
 </template>

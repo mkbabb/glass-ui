@@ -7,7 +7,7 @@
 // user scanning the most-prominent surface SEES the three painterly mediums by name and
 // clicks into atomic van-Gogh dabs, not a pre-W13 oil smear.
 //
-// A SOURCE/STRUCTURE parse over demo/stories/aurora/presets.ts (the TypeScript object
+// A SOURCE/STRUCTURE parse over demo/stories/substrates/aurora/presets.ts (the TypeScript object
 // literal IS the artefact — the precept-valid form for demo-content). The RUNTIME truth
 // (the thumbnail PAINTS atomic dabs) is the π-lane readback captured in
 // docs/tranches/AX/audit/W47-aurora-preset-roster-reconcile.json.
@@ -21,8 +21,8 @@ import { fileURLToPath } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
-const PRESETS = resolve(ROOT, "demo/stories/aurora/presets.ts");
-const OPTIONS = resolve(ROOT, "demo/stories/aurora/config/options.ts");
+const PRESETS = resolve(ROOT, "demo/stories/substrates/aurora/presets.ts");
+const OPTIONS = resolve(ROOT, "demo/stories/substrates/aurora/config/options.ts");
 const ARTIFACT = gateArtifactPath(
     "GLASS_UI_AURORA_PRESET_ROSTER_ARTIFACT",
     "AX-W47-aurora-preset-roster",

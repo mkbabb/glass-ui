@@ -70,7 +70,7 @@ const FAMILIES = "demo/stories/motion/curve-families.ts";
 const EASING_PICKER = "src/components/custom/easing/EasingPicker.vue";
 const BEZIER_OLD = "demo/stories/motion/curve-gallery/BezierEditor.vue";
 const STEPS_OLD = "demo/stories/motion/curve-gallery/StepsEditor.vue";
-const SCROLL_VT = "demo/stories/motion/scroll-vt.vue";
+const SCROLL_VT = "demo/stories/motion/ScrollNativeBody.vue";
 const FOUNDATIONS = "demo/stories/foundations/motion.vue";
 const DEMO_CSS = "demo/demo.css";
 

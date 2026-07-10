@@ -467,7 +467,7 @@ function run() {
 
     const renderMode = safeRead(resolve(ROOT, AURORA, "constants/renderMode.ts"));
     const thumbnails = safeRead(
-        resolve(ROOT, "demo/stories/aurora/usePresetThumbnails.ts"),
+        resolve(ROOT, "demo/stories/substrates/aurora/usePresetThumbnails.ts"),
     );
     const wgsl = safeRead(resolve(ROOT, AURORA, "constants/shaders/aurora.wgsl.ts"));
     const wgslMediumsPath = resolve(

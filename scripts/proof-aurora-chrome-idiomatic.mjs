@@ -39,7 +39,7 @@ import { fileURLToPath } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
-const AURORA = resolve(ROOT, "demo/stories/aurora");
+const AURORA = resolve(ROOT, "demo/stories/substrates/aurora");
 const DOCK = resolve(AURORA, "AuroraConfigDock.vue");
 const SECTIONS = resolve(AURORA, "sections");
 const COLOR = resolve(SECTIONS, "AuroraColorSection.vue");

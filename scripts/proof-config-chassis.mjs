@@ -77,10 +77,10 @@ const darkArm = strip(read("src/styles/tokens/dark-arm.css"));
 const swatchVue = strip(read("src/components/custom/color-swatch/ColorSwatch.vue"));
 const swatchBarrel = read("src/components/custom/color-swatch/index.ts");
 const swatchSubpath = read("src/subpaths/color-swatch.ts");
-const auroraColor = strip(read("demo/stories/aurora/sections/AuroraColorSection.vue"));
+const auroraColor = strip(read("demo/stories/substrates/aurora/sections/AuroraColorSection.vue"));
 const presetEditorVue = strip(read("demo/configurator/PresetEditor.vue"));
 const storeTs = strip(read("demo/configurator/preset-editor/store.ts"));
-const thumbnails = strip(read("demo/stories/aurora/usePresetThumbnails.ts"));
+const thumbnails = strip(read("demo/stories/substrates/aurora/usePresetThumbnails.ts"));
 
 const checks = [];
 const facts = {};

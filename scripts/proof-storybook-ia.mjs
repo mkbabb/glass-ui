@@ -72,11 +72,13 @@ export const EXPECTED_TREE = [
         "inputs", "textarea", "checks", "slider", "number-field", "select",
         "combobox", "multi-select", "toggle", "toggle-chip", "selectable-chip", "label",
     ]],
-    // The Primitives bin split: display atoms.
+    // The Primitives bin split: display atoms. `atoms` joined at BG.W-DEMO-IA-REDESIGN
+    // (the display ATOMS family page — separator/pulse/status-dot/stacked-icons/
+    // dark-mode-toggle/avatar composed as members via <FamilyTabs>).
     ["display", [
         "buttons", "card", "badge", "separator", "section", "metric-badge",
         "metric-pill", "status-dot", "pulse", "stacked-icons",
-        "dark-mode-toggle",
+        "dark-mode-toggle", "atoms",
     ]],
     // Command folds in from the dissolved single-story Tools bin. The standalone
     // `native-top-layer` probe folded into the Dialog + HoverPopover stories as a
@@ -113,12 +115,15 @@ export const EXPECTED_TREE = [
     // Dynamic-Island activity islands / grows into the Apple Music player on the one
     // useLiquidMorph engine; `dock-gallery` is the BREADTH gallery of distinct iOS
     // surfaces the dock shape-shifts into). Both are real routed manifest stories.
-    ["dock", ["liquid-playground", "dock-gallery", "overview", "layers", "rail", "morph-showcase", "sections", "cta-receive", "dock-search"]],
+    // `siri-island` joined at the BG dock band (the Siri/Dynamic-Island dock surface).
+    ["dock", ["liquid-playground", "dock-gallery", "overview", "layers", "rail", "morph-showcase", "sections", "cta-receive", "dock-search", "siri-island"]],
+    // BG.W-DEMO-DUP-MERGE (F7.3) — the timeline segmented/continuous member routes are
+    // MERGED into `data/timeline` (the 3-<StorySection> family page); `metrics` is the
+    // BG.W-DEMO-IA-REDESIGN metric-family page (metric-cell/stack/badge/pill/scrolling-text).
     ["data", [
         "table", "data-table", "tags-input", "avatar", "sortable-list",
-        "infinite-scroll", "timeline", "timeline-segmented",
-        "timeline-continuous", "search", "scrolling-text",
-        "metric-cell", "metric-stack", "virtual-section",
+        "infinite-scroll", "timeline", "search", "scrolling-text",
+        "metric-cell", "metric-stack", "metrics", "virtual-section",
     ]],
     ["feedback", [
         "alert", "toast", "toaster", "notification", "progress", "skeleton",
@@ -140,10 +145,13 @@ export const EXPECTED_TREE = [
     // `deck` joined at BC.W-DECK (the full-viewport keyboard-paged aria-live
     // PRESENTATION register — useDeck + useDeckKeyboard + <DeckPager>, DISTINCT
     // from /carousel's item-scroller).
+    // BG.W-DEMO-DUP-MERGE (F7.3) — the scroll vt/system/choreography member routes are
+    // MERGED into `scroll` (the native→reader→choreography 3-<StorySection> family page);
+    // `text-motion` is the BG.W-DEMO-IA-REDESIGN type-&-number family (typewriter/
+    // split-chars/animated-digit/countup composed as members).
     ["motion", [
         "springs", "countup", "reveal", "deck", "typewriter", "animated-digit",
-        "curve-gallery", "handmark", "scroll-vt", "scroll-system",
-        "scroll-choreography", "split-chars",
+        "curve-gallery", "handmark", "scroll", "text-motion", "split-chars",
     ]],
     // `dashboard` retired at AY.W-PRUNE (pure-recipe filler — every primitive it
     // composed has its own story + real consumers). `instrument-rail` +

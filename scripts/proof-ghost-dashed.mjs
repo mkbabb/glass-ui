@@ -77,9 +77,9 @@ const UTILITY_PARTIALS = [
 const GHOST_FORK_SITES = [
     "demo/stories/display/section.vue",
     "demo/stories/containers/context-menu.vue",
-    "demo/stories/data/timeline-segmented.vue",
+    "demo/stories/data/TimelineSegmentedBody.vue",
     "demo/stories/data/timeline.vue",
-    "demo/stories/data/timeline-continuous.vue",
+    "demo/stories/data/TimelineContinuousBody.vue",
     "demo/stories/data/search.vue",
 ];
 

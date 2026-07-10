@@ -412,7 +412,7 @@ const MOTION_SURFACES = [
     "demo/stories/motion/springs.vue",
     "demo/stories/motion/typewriter.vue",
     "demo/stories/motion/underline.vue",
-    "demo/stories/motion/scroll-vt.vue",
+    "demo/stories/motion/ScrollNativeBody.vue",
     "demo/stories/motion/curve-gallery/BezierEditor.vue",
     "demo/stories/foundations/motion.vue",
 ];

@@ -272,7 +272,7 @@ const TRIPLET_RE = /rounded-card[^"'`]*\bborder\b[^"'`]*\b(?:bg-card|shadow-cart
 // The recorded census baseline (the page-band-owned residual set, routed in the
 // idiom-audit ledger). A NEW off-baseline triplet reds; the count never grows.
 const M9A_BASELINE = new Set([
-    "demo/stories/aurora/PresetPickerRow.vue",
+    "demo/stories/substrates/aurora/PresetPickerRow.vue",
     "demo/stories/data/avatar.vue",
     "demo/stories/data/data-table.vue",
     "demo/stories/data/infinite-scroll.vue",
@@ -281,8 +281,11 @@ const M9A_BASELINE = new Set([
     "demo/stories/data/search.vue",
     "demo/stories/data/sortable-list.vue",
     "demo/stories/data/table.vue",
-    "demo/stories/data/timeline-continuous.vue",
-    "demo/stories/data/timeline-segmented.vue",
+    // BG.W-DEMO-DUP-MERGE (F7.3) — the timeline segmented/continuous member wrappers
+    // MERGED into data/timeline.vue as colocated body sub-components (the triplet
+    // moved verbatim; the baseline follows the carve, the ratchet does not grow).
+    "demo/stories/data/TimelineContinuousBody.vue",
+    "demo/stories/data/TimelineSegmentedBody.vue",
     "demo/stories/data/timeline.vue",
     "demo/stories/data/virtual-section.vue",
     "demo/stories/display/metric-badge.vue",
@@ -321,11 +324,14 @@ function detectRawTriplet(sources, overrides = {}, { allowlist = M9A_ALLOWLIST, 
 // census routes to the idiom-audit ledger.
 const M9B_ALLOWLIST = new Set([
     // the configurator/control panes that hand-roll a bare control by design.
-    "demo/stories/aurora/OklchStopRow.vue",
-    "demo/stories/aurora/PresetPickerRow.vue",
+    "demo/stories/substrates/aurora/OklchStopRow.vue",
+    "demo/stories/substrates/aurora/PresetPickerRow.vue",
     "demo/stories/motion/curve-gallery.vue",
     "demo/stories/motion/springs.vue",
-    "demo/stories/motion/scroll-system.vue",
+    // BG.W-DEMO-DUP-MERGE (F7.3) — the scroll-system reader exerciser MERGED into
+    // motion/scroll.vue as the ScrollReaderBody sub-component (its clear/recalculate
+    // control buttons are the scroll-reader affordance, moved verbatim).
+    "demo/stories/motion/ScrollReaderBody.vue",
     "demo/stories/foundations/css-utilities.vue", // the scale-on-hover demo buttons
     "demo/stories/display/buttons.vue", // the button pane demonstrates raw vs <Button>
     "demo/stories/CodeBlock.vue", // the copy-affordance button (the chassis primitive)
@@ -341,8 +347,11 @@ const M9B_BASELINE = new Set([
     "demo/stories/containers/expandable-container.vue",
     "demo/stories/containers/hover-card.vue",
     "demo/stories/data/infinite-scroll.vue",
-    "demo/stories/data/timeline-continuous.vue",
-    "demo/stories/data/timeline-segmented.vue",
+    // BG.W-DEMO-DUP-MERGE (F7.3) — the timeline segmented/continuous member wrappers
+    // MERGED into data/timeline.vue as colocated body sub-components (the advance/reset
+    // control buttons moved verbatim; the baseline follows the carve).
+    "demo/stories/data/TimelineContinuousBody.vue",
+    "demo/stories/data/TimelineSegmentedBody.vue",
     "demo/stories/data/virtual-section.vue",
     "demo/stories/dock/layers.vue",
     "demo/stories/dock/overview.vue",

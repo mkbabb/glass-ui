@@ -22,7 +22,7 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
 import { auroraFallbackGround } from "../../../../../../src/components/custom/aurora/composables/auroraFallbackGround";
-import { PRESETS, PRESET_KEYS, PRESET_META } from "../../../../../../demo/stories/aurora/presets";
+import { PRESETS, PRESET_KEYS, PRESET_META } from "../../../../../../demo/stories/substrates/aurora/presets";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 

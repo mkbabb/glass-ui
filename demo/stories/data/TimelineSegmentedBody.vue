@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import StoryPage from "../StoryPage.vue";
+// BG.W-DEMO-DUP-MERGE (F7.3) — the Timeline SEGMENTED register body, extracted from
+// the retired routed `timeline-segmented.vue` wrapper (the StoryPage chrome stripped;
+// composed as one <StorySection> register inside data/timeline.vue). PascalCase =
+// composed-by helper (off the no-orphan bijection), never a route.
 import { ref, computed } from "vue";
 import { GlassTimeline } from "@glass/components/custom/timeline";
 import type {
@@ -127,7 +130,6 @@ function legendBackground(seg: TimelineSegment): string {
 </script>
 
 <template>
-    <StoryPage>
         <div>
             <p class="text-admin-label mb-4 text-muted-foreground">
                 Segmented variant — multi-phase progress
@@ -232,5 +234,4 @@ function legendBackground(seg: TimelineSegment): string {
                 </li>
             </ol>
         </div>
-    </StoryPage>
 </template>

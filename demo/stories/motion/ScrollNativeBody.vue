@@ -1,14 +1,15 @@
 <script setup lang="ts">
-// Scroll & View Transitions (AZ.W-MOTION-SUITE) — the first live demonstration of
-// the SHIPPED native scroll-driven + view-transition facilities:
+// BG.W-DEMO-DUP-MERGE (F7.3) — the Scroll NATIVE register body, extracted from the
+// retired routed `scroll-vt.vue` wrapper (the StoryPage chrome stripped; composed as
+// one <StorySection> register inside motion/scroll.vue). The first live demonstration
+// of the SHIPPED native scroll-driven + view-transition facilities:
 //   · scroll-driven.css `.scroll-progress` (a scroll() timeline scaleX bar)
 //   · scroll-driven.css `[data-scroll-reveal]` (a per-child view() timeline fade+lift)
 //   · `startViewTransition` (the useViewTransition substrate) reordering a
 //     `.gl-list-item` group (view-transition.css)
 //   · a `supportsScrollTimeline`/`supportsViewTimeline` capability badge
 // These CONSUME the facilities — no new substrate. Reduced-motion is the outer gate
-// on the CSS recipes (they never bind under PRM).
-import StoryPage from "../StoryPage.vue";
+// on the CSS recipes (they never bind under PRM). PascalCase composed-by helper.
 import StorySection from "../StorySection.vue";
 import { onMounted, ref } from "vue";
 import { startViewTransition } from "@glass/composables/motion/useViewTransition";
@@ -51,7 +52,6 @@ const REVEAL_ITEMS = Array.from({ length: 8 }, (_, i) => `Reveal card ${i + 1}`)
 </script>
 
 <template>
-    <StoryPage>
         <StorySection
             label="Capability"
             blurb="The native scroll-driven + view-transition primitives the library reaches for, with a live capability probe. Where the engine lacks animation-timeline, the JS composables are the ≤20-LOC fallback (single writer, no double-run)."
@@ -146,5 +146,4 @@ const REVEAL_ITEMS = Array.from({ length: 8 }, (_, i) => `Reveal card ${i + 1}`)
                 </ul>
             </div>
         </StorySection>
-    </StoryPage>
 </template>

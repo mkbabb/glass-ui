@@ -149,7 +149,7 @@ export interface AuroraInstance {
 
 The `<Aurora>` SFC also accepts a `:opacity-ceiling` prop (`number`, default `1.0`, clamped `[0, 1]`) — the *outer compositing envelope* applied uniformly to the placeholder and the canvas via `--aurora-opacity-ceiling`. Distinct from `config.alpha` (per-pixel pigment opacity inside the shader): the ceiling is a per-route saturation clamp for content-over-aurora surfaces (forms, text-dense panels) so the drift recedes behind page content without altering the painted image. Hero surfaces stay at `1.0`; quiet routes opt in to `0.5` or thereabouts.
 
-Per memory rule "Presets in consumers": the 11 authored themes (Sky, Dawn, Meadow, Deliberative, Day9, Oil Impasto, Oil Gestural, Oil Van Gogh, Crayon Sunset, Crayon Rainbow, Crayon Ocean) live at `demo/stories/aurora/presets.ts`, not here.
+Per memory rule "Presets in consumers": the 11 authored themes (Sky, Dawn, Meadow, Deliberative, Day9, Oil Impasto, Oil Gestural, Oil Van Gogh, Crayon Sunset, Crayon Rainbow, Crayon Ocean) live at `demo/stories/substrates/aurora/presets.ts`, not here.
 
 ### The atoms door — the ONE consumer surface (AX.W10)
 
@@ -184,7 +184,7 @@ Per memory rule "Presets in consumers": the 11 authored themes (Sky, Dawn, Meado
 - **Palette is baked to LINEAR sRGB** for the LUT, not gamma-sRGB. The shader ACES-tonemaps in linear, then closes the mandatory sRGB OETF (`linearToSrgb`, spliced from the shared chunk) at `main()` — the AV.W1 too-dark defect is fixed at the single OETF source.
 - **`preserveDrawingBuffer` is capture-only by default.** WebGL context attributes are fixed at context creation, so live runtimes default false while thumbnail/capture runtimes opt true. Without preservation, `readPixels` / `toDataURL` after the composited frame is not a stable capture contract.
 - **Nuclei y-coordinate is CSS-top-origin** (0 = top, 1 = bottom). Runtime flips Y at the uniform boundary — see `AUTHOR_Y_ORIGIN_IS_TOP` marks in `runtime.ts`. Config authoring stays top-origin.
-- **Thumbnail baking uses a shared offscreen context.** 11 presets + 1 live stage exceeds Chromium's ~8 contexts/page cap. One capture-mode aurora, `update(frozen) + renderAt(1.0) + toDataURL` per preset, `dispose()` releasing via `WEBGL_lose_context`. Pattern at `demo/stories/aurora/usePresetThumbnails.ts`.
+- **Thumbnail baking uses a shared offscreen context.** 11 presets + 1 live stage exceeds Chromium's ~8 contexts/page cap. One capture-mode aurora, `update(frozen) + renderAt(1.0) + toDataURL` per preset, `dispose()` releasing via `WEBGL_lose_context`. Pattern at `demo/stories/substrates/aurora/usePresetThumbnails.ts`.
 - **`renderAt()` is draw-only.** It uploads `uTime`, current cursor uniforms, clears, and draws once. It does not mutate `startTime`, advance cursor easing/decay, schedule/cancel RAF, or change running state.
 - **Shader space is normalized.** The fragment program samples composition and media in `vUv` / 0..1 space. CSS sizing and the canvas backing store own aspect and DPR; the shader has no live `uRes`/`uDpr` surface.
 - **Crayon is a first-class DRY medium, not strokes (AX.W13).** `mediumCrayon()` (`uMedium==4`) is the DRY tooth-multiply: it rotates `p` along the tensor flow then multiplies anisotropic tooth noise into the base color, with a hard SCUMBLE that lets the lower color show through the broken upper layer and OKLCh broken-color pigment patches. NO sheen, NO burnish — that waxy gloss is the oil-pastel deposition's signature (`mediumOilPastel`), distinct from dry crayon. Crayon is its own `medium:"crayon"` (the legacy `oil` + `strokeMode:"crayon"` peer-route is REMOVED — clean break, no alias); it shares the SUBSTRATE (the structure-tensor orientation + the tooth noise + `brokenColorJitter`), not the dispatch body.
@@ -265,7 +265,7 @@ src/composables/glass/webgl/shaders/
                                    # aurora.frag.ts AND the blob's metaball.frag.ts both splice it
 ```
 
-The aurora SFC + runtime + `useAurora` ride the shared `useWebGLCanvas` substrate (the AU.W6 WebGL2 lifecycle + the AV.W7 offscreen-pause / PRM-freeze park machinery) — aurora does not own its own rAF/context lifecycle. Demo studio composition (the 11 authored presets and the configurator UI) lives at `demo/stories/aurora/`.
+The aurora SFC + runtime + `useAurora` ride the shared `useWebGLCanvas` substrate (the AU.W6 WebGL2 lifecycle + the AV.W7 offscreen-pause / PRM-freeze park machinery) — aurora does not own its own rAF/context lifecycle. Demo studio composition (the 11 authored presets and the configurator UI) lives at `demo/stories/substrates/aurora/`.
 
 ## 10. Spec deltas (v4.1 → v5.0)
 

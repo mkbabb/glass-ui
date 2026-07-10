@@ -357,7 +357,7 @@ add(
 // asserts the device-free raster bake is the seam; the BINDING meanLum>0 paint rides the
 // orchestrator's :5199 capture.
 // ════════════════════════════════════════════════════════════════════════════════════
-const THUMB = "demo/stories/aurora/usePresetThumbnails.ts";
+const THUMB = "demo/stories/substrates/aurora/usePresetThumbnails.ts";
 const thumbSrc = strip(read(THUMB));
 // The thumbnail bakes via the device-free auroraFallbackGround raster — and NO retired
 // WebGPU `mode:"capture"` bake survives (clean break, no-backwards-compat).

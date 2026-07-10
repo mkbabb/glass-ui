@@ -273,7 +273,7 @@ export const HARNESS_SOURCE = String.raw`
         if (!harnessReady) {
             harnessReady = Promise.all([
                 import("/src/components/custom/aurora/composables/runtime.ts"),
-                import("/demo/stories/aurora/presets.ts"),
+                import("/demo/stories/substrates/aurora/presets.ts"),
             ]).then(([runtimeModule, presetModule]) => {
                 createAurora = runtimeModule.createAurora;
                 presets = presetModule.PRESETS;

@@ -8,17 +8,17 @@ import {
 import { registerShortcut } from "@glass/composables/keyboard";
 import type { AuroraConfig } from "@glass/components/custom/aurora";
 import VizStudio from "./VizStudio.vue";
-import PresetPickerRow from "../aurora/PresetPickerRow.vue";
-import AuroraStage from "../aurora/AuroraStage.vue";
-import AuroraConfigDock from "../aurora/AuroraConfigDock.vue";
+import PresetPickerRow from "./aurora/PresetPickerRow.vue";
+import AuroraStage from "./aurora/AuroraStage.vue";
+import AuroraConfigDock from "./aurora/AuroraConfigDock.vue";
 import {
     PRESETS,
     PRESET_KEYS,
     PRESET_META,
     type PresetKey,
-} from "../aurora/presets";
-import { mediumOptions } from "../aurora/config/options";
-import { usePresetThumbnails } from "../aurora/usePresetThumbnails";
+} from "./aurora/presets";
+import { mediumOptions } from "./aurora/config/options";
+import { usePresetThumbnails } from "./aurora/usePresetThumbnails";
 
 /**
  * Aurora studio — the FIRST exemplar of the shared VizStudio chassis

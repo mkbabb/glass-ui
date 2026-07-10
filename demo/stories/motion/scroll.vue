@@ -1,44 +1,41 @@
 <script setup lang="ts">
-// BG.W-DEMO-IA-REDESIGN — the Motion SCROLL family. The three scroll pages
-// (native scroll-driven · the reader edge-fade system · the choreography register)
-// collapse onto ONE scroll page in dependency order (native → reader → choreography),
-// sectioned by member via <FamilyTabs>. Zero content re-authored — each member SFC is
-// composed bare (STORY_NESTED_KEY). The mechanical file consolidation rides F7.3.
-import { defineAsyncComponent } from "vue";
+// BG.W-DEMO-DUP-MERGE (F7.3) — the Motion SCROLL family, mechanically consolidated.
+// The three scroll registers (native scroll-driven · the reader trigger system · the
+// choreography register) render as THREE <StorySection> registers on this ONE page in
+// dependency order (native → reader → choreography). The prior routed
+// `scroll-vt.vue` / `scroll-system.vue` / `scroll-choreography.vue` member wrappers +
+// the <FamilyTabs> switcher are RETIRED (clean break) — each render body moved bare
+// into a colocated PascalCase body sub-component (Scroll{Native,Reader,Choreography}Body).
 import StoryPage from "../StoryPage.vue";
-import FamilyTabs, { type FamilyMember } from "../FamilyTabs.vue";
-
-const members: FamilyMember[] = [
-    {
-        id: "scroll-vt",
-        label: "Native scroll-driven",
-        component: defineAsyncComponent(() => import("./scroll-vt.vue")),
-    },
-    {
-        id: "scroll-system",
-        label: "Reader system",
-        component: defineAsyncComponent(() => import("./scroll-system.vue")),
-    },
-    {
-        id: "scroll-choreography",
-        label: "Choreography",
-        component: defineAsyncComponent(() => import("./scroll-choreography.vue")),
-    },
-];
+import StorySection from "../StorySection.vue";
+import ScrollNativeBody from "./ScrollNativeBody.vue";
+import ScrollReaderBody from "./ScrollReaderBody.vue";
+import ScrollChoreographyBody from "./ScrollChoreographyBody.vue";
 </script>
 
 <template>
     <StoryPage>
-        <!-- The motion band's ONE coherent color event — the family switcher's
-             ink-mark underline reads the demo-local --motion-accent violet (the
-             --viz-legendre twin; never a library token). -->
+        <!-- The motion band's ONE coherent color event — the ink-mark underline reads
+             the demo-local --motion-accent violet (the --viz-legendre twin; never a
+             library token). -->
         <div
             :style="{
                 '--paper-ink-mark-color': 'var(--motion-accent)',
                 '--section-label-accent': 'var(--motion-accent)',
             }"
+            class="flex flex-col gap-8"
         >
-            <FamilyTabs :members="members" aria-label="Scroll motion family" />
+            <StorySection heading="Native scroll-driven">
+                <ScrollNativeBody />
+            </StorySection>
+
+            <StorySection heading="Reader trigger system">
+                <ScrollReaderBody />
+            </StorySection>
+
+            <StorySection heading="Choreography">
+                <ScrollChoreographyBody />
+            </StorySection>
         </div>
     </StoryPage>
 </template>

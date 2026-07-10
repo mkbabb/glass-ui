@@ -121,7 +121,7 @@ function run() {
     // preset via configToAtoms; every section mutates atoms; resolveAtoms over
     // the preset baseline drives the canvas). The two witnesses below assert
     // that stronger shape directly.
-    const dock = readRel(ROOT, "demo/stories/aurora/AuroraConfigDock.vue");
+    const dock = readRel(ROOT, "demo/stories/substrates/aurora/AuroraConfigDock.vue");
     const dockDrivesAtoms =
         /resolveAtoms\s*\(/.test(dock) &&
         /reactive<AuroraAtoms>\(\s*configToAtoms\(/.test(dock);
@@ -134,7 +134,7 @@ function run() {
     // The atoms door is the ONLY surface: no dock section mutates the raw
     // config directly (a `props.config.<field> =` write would be a second door
     // around resolveAtoms — the bypass this clause exists to forbid).
-    const sectionsDir = resolve(ROOT, "demo/stories/aurora/sections");
+    const sectionsDir = resolve(ROOT, "demo/stories/substrates/aurora/sections");
     const sectionWrites = [];
     if (existsSync(sectionsDir)) {
         for (const f of readdirSync(sectionsDir)) {
