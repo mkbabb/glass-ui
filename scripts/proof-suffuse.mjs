@@ -227,12 +227,15 @@ const LEDGER = [
     // class), so it is EXEMPT from the strict ≤1-event count like select/slider/badge;
     // the page identity is still the eyebrow/rail/chip on --section-color-8.
     { surface: "demo/stories/feedback/progress.vue", event: "--section-color-8", kind: "reference" },
-    // ── BB.W-SUFFUSE3 (b) the studio masthead surfaces — the --motion-accent
-    //    violet title is the ONE color text-event. aurora/blob carry the
-    //    title-violet (color kind). (BC.W-VIZ-FOURIER — substrates/fourier-studio
-    //    was RETIRED onto the shared VizStudio chassis; its ledger row is dropped.)
-    { surface: "demo/stories/substrates/aurora.vue", event: "--motion-accent", kind: "color" },
-    { surface: "demo/stories/substrates/blob.vue", event: "--motion-accent", kind: "color" },
+    // ── The substrates STUDIOS (aurora/blob/fourier) re-homed onto the shared
+    //    VizStudio chassis (BC.W-VIZ-FOURIER fourier · BG.W-CHASSIS-ADOPT-OR-RETIRE
+    //    aurora · BG.W-CONFIGURATOR-STANDARDIZE blob), retiring their inline
+    //    `--motion-accent` display-masthead <header> (the double-header). The studio
+    //    identity is now the ONE StoryHeader cluster the chassis renders — no inline
+    //    color text-event to ledger. Their ledger rows are dropped (mirroring the
+    //    fourier-studio precedent); they carry ZERO tinted events and pass the ≤1
+    //    ceiling by construction, and they are not in REQUIRED_LEDGER_SURFACES. The
+    //    three MOTION demo pages keep their inline mastheads + ledger rows.
     // ── The legitimately-monochrome surfaces (D3-9) — ZERO events ──────────────
     // The icon GRID (the icons.vue grid block — NOT the Pops chip block, which is
     // the chip reference and a sanctioned event), the Section type-ladder
@@ -692,11 +695,17 @@ const TITLE_VIOLET_SURFACES = [
     "demo/stories/motion/springs.vue",
     "demo/stories/motion/typewriter.vue",
     "demo/stories/motion/curve-gallery.vue",
-    "demo/stories/substrates/aurora.vue",
-    "demo/stories/substrates/blob.vue",
     // BC.W-VIZ-FOURIER — substrates/fourier-studio.vue was RETIRED (the fourier
-    // studio re-homed onto the shared VizStudio chassis / fourier-field.vue). The
-    // stale enrollment is dropped; the surviving studio mastheads carry the violet.
+    // studio re-homed onto the shared VizStudio chassis / fourier-field.vue).
+    // BG.W-CHASSIS-ADOPT-OR-RETIRE (aurora) + BG.W-CONFIGURATOR-STANDARDIZE (blob):
+    // the substrates studios (aurora/blob/fourier) ALL re-homed onto the shared
+    // VizStudio chassis, retiring their inline `--motion-accent` display-masthead
+    // <header> (the double-header the F7.2 aurora paint-fix + the F7.7 blob/fourier
+    // standardization killed). Their identity is now the ONE StoryHeader cluster the
+    // chassis renders (eyebrow → subpath → audacious display <h1> → blurb, ONCE) — no
+    // inline masthead to carry a title-violet. The stale studio enrollments are
+    // dropped, mirroring the fourier-studio precedent; the three MOTION demo pages
+    // (springs/typewriter/curve-gallery) keep their inline mastheads and stay enrolled.
 ];
 const titleVioletBreaches = [];
 for (const rel of TITLE_VIOLET_SURFACES) {

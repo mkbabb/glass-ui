@@ -572,6 +572,48 @@ function detect(overrides = {}) {
         d7NoMastheadSlot && mastheadFills.length === 0,
     );
 
+    // ── CF — the CONFIGURATOR-STANDARDIZE arm (BG.W-CONFIGURATOR-STANDARDIZE). The
+    //    three procedural STUDIOS (aurora · blob · fourier) speak ONE chassis grammar:
+    //    each composes the shared VizStudio → <Configurator>, NEVER a raw <Configurator>
+    //    floated in a <ShowcaseFrame> under its own inline display <header> masthead (the
+    //    OFFSET + the double-header the wave retires; aurora is the reference, blob +
+    //    fourier re-home). CF1 reads the three studio SFCs comment-STRIPPED (so a prose
+    //    mention is never a false live-seam flag); CF2 is the anti-fork bite over the
+    //    WHOLE substrate band so a future studio cannot re-introduce the dialect.
+    const CF_STUDIOS = [
+        "demo/stories/substrates/aurora.vue",
+        "demo/stories/substrates/blob.vue",
+        "demo/stories/substrates/fourier-field.vue",
+    ];
+    const cfComposesVizStudio = (rel) =>
+        /<VizStudio(?:\s|>|\/|$)/m.test(stripComments(readSrc(rel)));
+    const cf1Missing = CF_STUDIOS.filter((f) => !cfComposesVizStudio(f));
+    facts.cf1 = { studios: CF_STUDIOS, missing: cf1Missing };
+    assert(
+        "CF1 — the 3 procedural studios (aurora/blob/fourier) each compose the ONE VizStudio chassis",
+        cf1Missing.length === 0,
+    );
+    // CF2 — the anti-fork bite: NO substrate studio floats a raw <Configurator> DIRECTLY
+    // inside a <ShowcaseFrame> (the OFFSET) NOR carries an inline text-display-3 <header>
+    // masthead (the double-header). Scanned comment-STRIPPED across the whole substrate
+    // band; the sanctioned concentric/liquid-grid raw <Configurator>-in-<StorySection>
+    // (no ShowcaseFrame wrapper, no masthead — a valid DIRECT composition of the library
+    // controls-right primitive) never trips, and VizStudio's own <Configurator> never
+    // trips (it is not ShowcaseFrame-wrapped).
+    const CF_OFFSET_RE = /<ShowcaseFrame\b[^>]*>\s*<Configurator\b/;
+    const CF_MASTHEAD_RE = /<header\b[\s\S]{0,400}?\btext-display-3\b/;
+    const cf2Scan = vueCorpus.filter((c) =>
+        c.path.startsWith("demo/stories/substrates/"),
+    );
+    const cf2Offenders = cf2Scan
+        .filter((c) => CF_OFFSET_RE.test(c.text) || CF_MASTHEAD_RE.test(c.text))
+        .map((c) => c.path);
+    facts.cf2 = { scanned: cf2Scan.length, offenders: cf2Offenders };
+    assert(
+        "CF2 — no substrate studio floats a raw <Configurator> in a <ShowcaseFrame> or an inline text-display-3 masthead (the anti-fork bite)",
+        cf2Offenders.length === 0,
+    );
+
     // ── The section-entrance congruence clauses (BG.W-SECTION-TYPEWRITER-FADEUP). ──
     const splitCharsSrc = readSrc(SEC.splitChars);
     const schemeMotionSrc = readSrc(SEC.schemeMotion);
@@ -1265,6 +1307,69 @@ function selfTest() {
         "ST5 a 6th sub-type smuggled into the closed set (drift)",
     );
 
+    // ── CF self-test bites (BG.W-CONFIGURATOR-STANDARDIZE) ──
+    // CF1: a named studio that does NOT compose <VizStudio> (the HEAD blob/fourier form —
+    // a raw <Configurator> studio, not the shared chassis) → REDs CF1.
+    sab(
+        {
+            srcOverride: {
+                "demo/stories/substrates/blob.vue": `<template><StoryPage><ShowcaseFrame><Configurator /></ShowcaseFrame></StoryPage></template>`,
+            },
+        },
+        "CF1 — the 3 procedural studios (aurora/blob/fourier) each compose the ONE VizStudio chassis",
+        "CF1 a studio that does not compose <VizStudio> (the HEAD raw-Configurator form)",
+    );
+    // CF2 (offset): a substrate studio that floats a raw <Configurator> DIRECTLY inside a
+    // <ShowcaseFrame> (the fourier/blob OFFSET the wave retires) → REDs CF2.
+    sab(
+        {
+            vueCorpus: [
+                {
+                    path: "demo/stories/substrates/x.vue",
+                    text: `<template><StorySection><ShowcaseFrame pad="lg" tier="quiet">\n<Configurator :presets="p"><template #stage /></Configurator></ShowcaseFrame></StorySection></template>`,
+                },
+            ],
+            cssCorpus: [],
+        },
+        "CF2 — no substrate studio floats a raw <Configurator> in a <ShowcaseFrame> or an inline text-display-3 masthead (the anti-fork bite)",
+        "CF2 a raw <Configurator> floated in a <ShowcaseFrame> (the OFFSET)",
+    );
+    // CF2 (masthead): a substrate studio that carries an inline text-display-3 <header>
+    // masthead (the double-header the F7.2 aurora fix killed) → REDs CF2.
+    sab(
+        {
+            vueCorpus: [
+                {
+                    path: "demo/stories/substrates/y.vue",
+                    text: `<template><StoryPage><header class="flex flex-col gap-1"><span class="section-label">Substrates · Foo</span><span class="text-display-3 font-display">Foo Studio</span></header></StoryPage></template>`,
+                },
+            ],
+            cssCorpus: [],
+        },
+        "CF2 — no substrate studio floats a raw <Configurator> in a <ShowcaseFrame> or an inline text-display-3 masthead (the anti-fork bite)",
+        "CF2 an inline text-display-3 <header> masthead (the double-header)",
+    );
+    // CF2 (distinguishing): a substrate studio whose text-display-3 / ShowcaseFrame-over-
+    // Configurator mention lives ONLY in a COMMENT must NOT trip CF2 (the corpus is
+    // comment-STRIPPED — prose is provenance, not a live seam), AND the sanctioned
+    // concentric/liquid-grid raw <Configurator>-in-<StorySection> (no ShowcaseFrame
+    // wrapper) is a valid DIRECT composition that never trips.
+    sabNot(
+        {
+            vueCorpus: [
+                {
+                    path: "demo/stories/substrates/z.vue",
+                    text: stripComments(
+                        `<!-- the retired inline <header> masthead at text-display-3, and the <ShowcaseFrame> <Configurator> OFFSET, are GONE -->\n<template><StorySection><Configurator :presets="p"><template #stage /></Configurator></StorySection></template>`,
+                    ),
+                },
+            ],
+            cssCorpus: [],
+        },
+        "CF2 — no substrate studio floats a raw <Configurator> in a <ShowcaseFrame> or an inline text-display-3 masthead (the anti-fork bite)",
+        "CF2 comment-strip + sanctioned raw-Configurator-in-StorySection distinguishing bite",
+    );
+
     return flagged;
 }
 
@@ -1319,6 +1424,12 @@ function run() {
         `  D7 unified-header 1-source : ${facts["D7 — VizStudio unified-header single-source (no #masthead double-header seam)"]}  (mastheadFills: ${JSON.stringify(facts.d7?.mastheadFills ?? [])})`,
     );
     console.log(
+        `  CF1 studios→VizStudio     : ${facts["CF1 — the 3 procedural studios (aurora/blob/fourier) each compose the ONE VizStudio chassis"]}  (missing: ${JSON.stringify(facts.cf1?.missing ?? [])})`,
+    );
+    console.log(
+        `  CF2 anti-fork (no OFFSET) : ${facts["CF2 — no substrate studio floats a raw <Configurator> in a <ShowcaseFrame> or an inline text-display-3 masthead (the anti-fork bite)"]}  (offenders: ${JSON.stringify(facts.cf2?.offenders ?? [])})`,
+    );
+    console.log(
         `  T1 SplitChars stagger-drop: ${facts["T1 — SplitChars `stagger?:boolean` DROPS .char-stagger (no mount-fire-before-reveal)"]}`,
     );
     console.log(
@@ -1364,7 +1475,7 @@ function run() {
         `  ST5 closed vocabulary     : ${facts["ST5 — the demo sub-type vocabulary is closed (exactly the five members on disk, no drift)"]}  (${JSON.stringify(facts.st5?.basenames ?? [])})`,
     );
     console.log(
-        `  self-test (bite proof)    : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×2 incl. comment-strip + D4 + D5 + D6×2 + D7×3 incl. comment-strip + T1-T4 + E1×2 incl. declared-family + E2 + E3 + F1 + F2×2 incl. FamilyTabs + F3 + ST1-ST5)`,
+        `  self-test (bite proof)    : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×2 incl. comment-strip + D4 + D5 + D6×2 + D7×3 incl. comment-strip + T1-T4 + E1×2 incl. declared-family + E2 + E3 + F1 + F2×2 incl. FamilyTabs + F3 + ST1-ST5 + CF1 + CF2×3 incl. comment-strip)`,
     );
     if (violations.length) {
         console.log("\nVIOLATIONS:");

@@ -10,7 +10,7 @@
 // stage). Every ambient/static swatch routes to WatercolorDot (no GL context) so the
 // page never approaches the browser's per-page WebGL cap.
 import { computed, reactive, ref, watch } from "vue";
-import StoryPage from "../StoryPage.vue";
+import VizStudio from "./VizStudio.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
 import { GooBlob } from "@glass/components/custom/goo-blob";
@@ -465,58 +465,22 @@ watch(studioPaused, () => {
 </script>
 
 <template>
-    <StoryPage>
-        <!--
-          AZ.W-BLOB-PAGE D4 — HERO-FIRST IA. The page now LEADS with the LIVING lit
-          GL bead (the studio's metaball hero, satellites visibly cycling on mount) so
-          a fresh viewer reads the living creature first — not a row of static swatches
-          they mistake for "the blobs" and find flat/satellite-less. The static
-          WatercolorDot swatch register is DEMOTED to the supporting section below (it
-          is NOT retired — it is the zero-GL companion register, and BOTH WatercolorDot
-          mounts are preserved: the swatch row here-below + the ambient palette dots in
-          the studio's Stops row, satisfying the WatercolorDot ≥2-demo-mount keep
-          evidence). The studio stage bead's wrapper SIZE is W-BLOB-STUDIO's axis; this
-          wave sets the IA POSITION (hero first) + the satellite-orbit geometry.
-        -->
-        <!-- BB.W-SUFFUSE3 (b) — the studio title at the DISPLAY register with the
-             --motion-accent violet as the ONE color text-event (the studio's
-             unifying identity on the masthead, never a body <p>/<h2>). -->
-        <header class="flex flex-col gap-1">
-            <span class="section-label">Substrates · Blob Studio</span>
-            <span
-                class="text-display-3 font-display leading-tight"
-                :style="{ color: 'var(--motion-accent)' }"
-            >
-                Blob Studio
-            </span>
-        </header>
-
-        <StorySection
-            label="Blob studio — preset · interaction · mood · seed-palette"
-            blurb="The blob showcase on the library's own Configurator chrome (the same studio
-                shell Aurora composes). The preset row drives useConfiguratorState (per-preset
-                clones); the stage paints the live config. Hover to feel the lean — attraction +1
-                leans IN, -1 SHIES AWAY (the sign is honored); click to fire the spring impulse;
-                pick a mood (the {valence, arousal} affect model); set a seed + harmony to ramp the
-                OKLCh palette fed LIVE to the hero body. One GL context."
-        >
-            <ShowcaseFrame pad="lg" tier="quiet">
-                <Configurator
-                    class="h-[min(70vh,560px)]"
-                    :presets="presets"
-                    :active-preset="studio.activePreset.value"
-                    @select-preset="studio.selectPreset"
-                    @reset="studio.resetCurrent"
-                >
-                    <!--
-                      AZ.W-BLOB-STUDIO §3.6 — the PRIMARY preset affordance (the weighted
-                      preset row). The default Configurator preset row is plain `text-xs
-                      font-medium` chips; the studio overrides the `#presets` slot to make
-                      the preset row read as the TOP of the hierarchy: a larger weighted
-                      label + the preset's `sub` descriptor visible inline, the active chip
-                      a glass-tier pill (the glass-first selected register) — the preset is
-                      the first thing the eye lands on, then the layered sliders below.
-                    -->
+    <!-- BG.W-CONFIGURATOR-STANDARDIZE — the ONE chassis. The blob studio re-homes
+         onto the shared VizStudio (StoryPage + <Configurator asideSide=right> + rounded
+         clip), retiring its own inline <header> masthead (the double-header F7.2 killed on
+         aurora) + the raw <Configurator>-in-<ShowcaseFrame> studio wrapper (the OFFSET). The
+         page identity is the ONE StoryHeader cluster the chassis renders. (The #stage/
+         #controls/#presets slot bodies are preserved verbatim.) -->
+    <VizStudio
+        heading="GooBlob"
+        label="Blob studio — preset · interaction · mood · seed-palette"
+        blurb="The blob showcase on the library's own Configurator chrome (the same studio shell Aurora composes). The preset row drives useConfiguratorState (per-preset clones); the stage paints the live config. Hover to feel the lean — attraction +1 leans IN, -1 SHIES AWAY (the sign is honored); click to fire the spring impulse; pick a mood (the {valence, arousal} affect model); set a seed + harmony to ramp the OKLCh palette fed LIVE to the hero body. One GL context."
+        height-class="h-[min(70vh,560px)]"
+        :presets="presets"
+        :active-preset="studio.activePreset.value"
+        @select-preset="studio.selectPreset"
+        @reset="studio.resetCurrent"
+    >
                     <template #presets="{ presets: ps, activePreset }">
                         <FadingScroll
                             axis="x"
@@ -799,9 +763,6 @@ watch(studioPaused, () => {
                             </ConfiguratorRow>
                         </ConfiguratorLayer>
                     </template>
-                </Configurator>
-            </ShowcaseFrame>
-        </StorySection>
 
         <StorySection
             label="STAGE 1 — the plain blob, from first principles"
@@ -894,7 +855,7 @@ watch(studioPaused, () => {
                 </span>
             </ShowcaseFrame>
         </StorySection>
-    </StoryPage>
+    </VizStudio>
 </template>
 
 <style scoped>

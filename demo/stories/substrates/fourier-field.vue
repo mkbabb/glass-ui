@@ -8,9 +8,7 @@
 // library identity is the default; the cool/violet options read the shipped --viz-* tokens
 // (presets-in-consumers; no demo-local teal).
 import { computed, reactive, ref, watch } from "vue";
-import StoryPage from "../StoryPage.vue";
-import StorySection from "../StorySection.vue";
-import ShowcaseFrame from "../ShowcaseFrame.vue";
+import VizStudio from "./VizStudio.vue";
 import {
     FourierField,
     makeEllipticSpectrum,
@@ -305,39 +303,23 @@ const liveStatus = computed(() => (paused.value ? "paused" : "playing"));
 </script>
 
 <template>
-    <StoryPage>
+    <!-- BG.W-CONFIGURATOR-STANDARDIZE — the ONE chassis. The fourier studio re-homes
+         onto the shared VizStudio (StoryPage + <Configurator asideSide=right> + rounded
+         clip), retiring its own inline <header> masthead (the double-header F7.2 killed on
+         aurora) + the raw <Configurator>-in-<ShowcaseFrame> studio wrapper (the OFFSET). The
+         page identity is the ONE StoryHeader cluster the chassis renders. (The #stage/
+         #controls/#presets slot bodies are preserved verbatim.) -->
+    <VizStudio
+        heading="Fourier Field"
+        label="harmonics · epicycles · shape-trace · scrub"
+        blurb="ONE Fourier view. A chain of rotating circles stacked tip-to-tail draws the reconstructing curve as you watch — drag the harmonic-count N slider and the curve assembles term by term, from a single ellipse to the full reconstruction. Toggle the epicycle chain; pick a source (a generated elliptic spectrum, the ℱ wordmark, a heart, a star); pick a color. Drag the cursor across the field to SCRUB the reconstruction — left rewinds, right fast-forwards. WebGPU-first, on the GPU substrate — no Canvas2D anywhere."
+        height-class="h-[min(72vh,600px)]"
+        :presets="presets"
+        :active-preset="studio.activePreset.value"
+        @select-preset="studio.selectPreset"
+        @reset="studio.resetCurrent"
+    >
         <span ref="probe" class="sr-only" aria-hidden="true" />
-        <header class="flex flex-col gap-2">
-            <span class="section-label">Substrates · @mkbabb/glass-ui/fourier-field</span>
-            <span
-                class="text-display-3 font-display leading-tight"
-                :style="{ color: 'var(--motion-accent)' }"
-            >
-                Fourier Field
-            </span>
-            <p class="text-small max-w-prose text-muted-foreground">
-                ONE Fourier view. A chain of rotating circles stacked tip-to-tail draws the
-                reconstructing curve as you watch — drag the harmonic-count N slider and the
-                curve assembles term by term, from a single ellipse to the full reconstruction.
-                Toggle the epicycle chain; pick a source (a generated elliptic spectrum, the ℱ
-                wordmark, a heart, a star); pick a color. Drag the cursor across the field to
-                SCRUB the reconstruction — left rewinds, right fast-forwards. WebGPU-first, on
-                the GPU substrate — no Canvas2D anywhere.
-            </p>
-        </header>
-
-        <StorySection
-            heading="The live studio"
-            label="harmonics · epicycles · shape-trace · scrub"
-        >
-            <ShowcaseFrame pad="lg" tier="quiet">
-                <Configurator
-                    class="h-[min(72vh,600px)]"
-                    :presets="presets"
-                    :active-preset="studio.activePreset.value"
-                    @select-preset="studio.selectPreset"
-                    @reset="studio.resetCurrent"
-                >
                     <template #stage>
                         <div class="relative flex h-full w-full flex-col">
                             <div class="relative min-h-0 flex-1 overflow-hidden rounded-card">
@@ -516,8 +498,5 @@ const liveStatus = computed(() => (paused.value ? "paused" : "playing"));
                             </ConfiguratorRow>
                         </ConfiguratorLayer>
                     </template>
-                </Configurator>
-            </ShowcaseFrame>
-        </StorySection>
-    </StoryPage>
+    </VizStudio>
 </template>

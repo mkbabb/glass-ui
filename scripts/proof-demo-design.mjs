@@ -248,22 +248,29 @@ function d5(src) {
     // shared VizStudio chassis: (a) the chassis is controls-on-the-RIGHT (the
     // <Configurator aside-side="right"> single-writer — the condemned
     // controls-below / double-card-with-grid is GONE), AND (b) the aurora studio
-    // (the FIRST VizStudio exemplar) carries ONE coherent description (a single
-    // `blurb=` threaded to the chassis — no duplicated-blurb sandwich) PLUS the
-    // --motion-accent display masthead. The retired fourier-studio's
-    // "TRUNCATE the spectrum" sandwich cannot recur (the chassis owns the layout).
+    // (the FIRST VizStudio exemplar) COMPOSES the chassis (which owns the ONE
+    // StoryHeader identity cluster) with ONE coherent description (a single `blurb=`
+    // threaded to the chassis — no duplicated-blurb sandwich). BG.W-CHASSIS-ADOPT-
+    // OR-RETIRE (aurora) + BG.W-CONFIGURATOR-STANDARDIZE (blob/fourier) RETIRED the
+    // inline `--motion-accent` display masthead (the double-header the paint judge
+    // FAILED at F7.2): the studio identity is now the ONE StoryHeader the VizStudio
+    // chassis renders, NOT an inline masthead. So the redress is COMPOSES-VizStudio,
+    // no longer HAS-an-inline-masthead. The retired fourier-studio's "TRUNCATE the
+    // spectrum" sandwich cannot recur (the chassis owns the layout).
     const chassis = src.vizStudio;
     // The VizStudio chassis pins the <Configurator> to controls-on-the-RIGHT — the
     // bound form is `:aside-side="'right'"` (a string literal in a bound attr).
     const controlsRight =
         /:?aside-side=["']'?right'?["']/.test(chassis) ||
         /asideSide\s*[:=]\s*["']'?right'?["']/.test(chassis);
-    const studioMasthead = /text-display-[1-5][\s\S]{0,200}var\(--motion-accent\)/.test(f);
+    // The studio COMPOSES the shared VizStudio chassis (the chassis owns the ONE
+    // StoryHeader identity — no inline double-header masthead).
+    const composesVizStudio = /<VizStudio(?:\s|>|\/|$)/m.test(f);
     // ONE blurb — the studio threads a single `blurb=` description (no duplicated
     // sandwich re-stating the prose in a second header/section).
     const blurbCount = (f.match(/\bblurb=/g) ?? []).length;
     const oneBlurb = blurbCount <= 1;
-    const studioFixed = controlsRight && studioMasthead && oneBlurb;
+    const studioFixed = controlsRight && composesVizStudio && oneBlurb;
     // reveal: composes <StorySection>, no hand-rolled top-level text-prose at the
     // page root (the StorySection census fix).
     const revealStorySection = /<StorySection\b/.test(r);
@@ -432,7 +439,7 @@ add(
     "d5-incongruence-panes-redressed",
     r5.pass,
     r5.pass
-        ? "the named incongruence panes are redressed: buttons CTA out-presents destructive (focal placement), notification renders .feedback-tone rows not 10px dots, the VizStudio chassis is controls-on-the-RIGHT + the aurora studio carries ONE blurb + the --motion-accent display masthead (no double-card/sandwich), reveal routes through <StorySection> (no top-level text-prose bypass)"
+        ? "the named incongruence panes are redressed: buttons CTA out-presents destructive (focal placement), notification renders .feedback-tone rows not 10px dots, the VizStudio chassis is controls-on-the-RIGHT + the aurora studio COMPOSES the chassis with ONE blurb (the chassis owns the ONE StoryHeader identity — the inline --motion-accent double-header masthead RETIRED at F7.2/F7.7), reveal routes through <StorySection> (no top-level text-prose bypass)"
         : `an incongruence pane is unredressed (cta-out-presents=${r5.ctaOutPresents} no-dots=${r5.noDots} studio-fixed=${r5.studioFixed} reveal-fixed=${r5.revealFixed})`,
 );
 
