@@ -63,6 +63,11 @@ export const PI_EXCLUDE = [
         rationale:
             "AZ.W-REFLECT 2nd-combobox reflection probe — the medium2 twin of reflect-medium, captures + logs, asserts `expect(true).toBe(true)`. Capture orchestration, not a binding readback.",
     },
+    {
+        spec: "coherence-congruence.spec.ts",
+        rationale:
+            "BG.W-PAGE-COMPONENT-AUDIT (17.6) — the 480-capture CROSS-PAGE harmonized-whole read (the LOCAL late-sweep instrument, two-tier model COHERENCE FOLD G7 L8). It sweeps the enrolled route set × {light,dark} × {chromium,webkit} and records per-route dominant-hue reads for the NON-AUTHORING judge to flip each roster row — a POST-INTEGRATION whole-congruence orchestration, NOT a per-mechanism binding readback, and NOT an always-on `--run pi` member (a 480-to-ci promotion re-creates the terminal-reflect chokepoint the plan forbids). Invoked explicitly at the WS12 close; the device-free convergence STRUCTURE is `proof:warm-identity`'s cross-page arm.",
+    },
 ];
 
 /** Every `*.spec.ts` on disk, sorted (the raw workspace glob). */

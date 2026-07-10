@@ -64,6 +64,51 @@ const COMMAND = "npm run proof:warm-identity";
 const REFLECT_DIR = resolve(ROOT, "docs/tranches/BG/audit/reflect");
 const ROSTER = resolve(REFLECT_DIR, "bg-gestalt-roster.md");
 
+// ── The CROSS-PAGE audit arm (BG.W-PAGE-COMPONENT-AUDIT, 17.6) ────────────────────
+// 17.6 EXTENDS this battery with the 480-capture cross-page harmonized-whole read: a
+// per-category CONVERGENCE roster (the 7 un-converged Pass-E categories + the C2-SENTINEL
+// spot-check, GA-10 / F7.4) DISTINCT from the 10-surface pinned bg-gestalt-roster. The
+// device-free arm reads the convergence STRUCTURE (routes resolve, categories + sentinels
+// enrolled, the 480-capture instrument on disk, anti-evasion armed); the operative
+// all-converged verdict is a REPORTED born-RED baseline the LOCAL late-sweep + the
+// non-authoring judge flip (the two-tier model, COHERENCE FOLD G7 L8 — a 480-to-ci
+// promotion would re-create the §2.A1 terminal-reflect chokepoint).
+const PAGE_AUDIT_ROSTER = resolve(REFLECT_DIR, "bg-page-audit-roster.md");
+const COHERENCE_SPEC = resolve(ROOT, "tests-visual/coherence-congruence.spec.ts");
+const PAGE_AUDIT_COLUMNS = Object.freeze([
+    "category",
+    "route",
+    "capture-light",
+    "capture-dark",
+    "probe",
+    "expect",
+    "verdict",
+    "notes",
+]);
+// The 7 un-converged Pass-E categories (GA-10 / F7.4) — each owes a convergence row.
+const PASS_E_CATEGORIES = Object.freeze([
+    "display",
+    "containers",
+    "data",
+    "feedback",
+    "navigation",
+    "compositions",
+    "motion",
+]);
+// The C2-SENTINEL (COHERENCE FOLD G7 L8) mid-tranche spot-check routes — the 4
+// no-roster-band representatives (forms/inputs · compositions/math-paper ·
+// containers/sheet · data/metric-stack).
+const C2_SENTINEL_ROUTES = Object.freeze([
+    "/forms/inputs",
+    "/compositions/math-paper",
+    "/containers/sheet",
+    "/data/metric-stack",
+]);
+// A verdict that DECLARES cross-page convergence — the anti-evasion enforces a warm
+// dual-engine capture behind it (a hand-typed CONVERGED over a missing/not-warm composite
+// is the close-class lie).
+const CONVERGED_VERDICTS = new Set(["PASS", "CONVERGED"]);
+
 // The whole-page capture floor (mirrors proof:ba-gestalt; a degenerate crop never proves a
 // route navigated + rendered).
 const MIN_CAPTURE_WIDTH = 320;
@@ -160,6 +205,150 @@ function readCapture(repoRelPath, field, topbar) {
     const corner = pngRegionStats(abs, CORNER_REGION);
     if (corner) stats.cornerL = corner.meanL;
     return { stats, verdict: warmIdentityVerdict(stats, WARM_BAND), dims };
+}
+
+/**
+ * Parse the CROSS-PAGE audit roster (its own `category`-headed 8-column schema, DISTINCT
+ * from the `surface`-headed bg-gestalt roster `parseRoster` reads). Strips HTML comments,
+ * drops the header + separator. Returns data rows keyed by PAGE_AUDIT_COLUMNS (+ the
+ * `__header`/`__malformed` sentinels the schema/well-formed arms read).
+ * @param {string} src
+ */
+export function parsePageAuditRoster(src) {
+    const noComments = src.replace(/<!--[\s\S]*?-->/g, "");
+    const rows = [];
+    let inTable = false;
+    for (const raw of noComments.split("\n")) {
+        const line = raw.trim();
+        if (!line.startsWith("|")) {
+            if (inTable && line === "") inTable = false;
+            continue;
+        }
+        const cells = line
+            .replace(/^\|/, "")
+            .replace(/\|$/, "")
+            .split("|")
+            .map((c) => c.trim());
+        const isSeparator = cells.every((c) => /^:?-+:?$/.test(c));
+        if (isSeparator) {
+            inTable = true;
+            continue;
+        }
+        if (cells[0] === "category") {
+            inTable = true;
+            rows.push({ __header: cells });
+            continue;
+        }
+        if (!inTable) continue;
+        if (cells.length < PAGE_AUDIT_COLUMNS.length) {
+            rows.push({ __malformed: cells });
+            continue;
+        }
+        const row = {};
+        PAGE_AUDIT_COLUMNS.forEach((col, i) => (row[col] = cells[i]));
+        rows.push(row);
+    }
+    return rows;
+}
+
+/**
+ * The CROSS-PAGE convergence arm (17.6). Takes the roster SOURCE (so a self-test bite
+ * exercises it with a synthetic string, no disk). Verifies the convergence STRUCTURE —
+ * schema, the 7 Pass-E categories + the 4 C2-SENTINEL routes enrolled, every route
+ * resolves on disk (routeSeeds HARD-RED), the 480-capture instrument present, and the
+ * ANTI-EVASION (a CONVERGED row over a missing/not-warm composite REDs). A FAIL/PENDING
+ * row owes NO capture yet (the born-RED baseline); only a CONVERGED verdict pulls the
+ * pixel-read. `crossPageConvergedBaseline` is a REPORTED fact, not a device-free violation.
+ * @param {string} src
+ * @returns {{facts:object, violations:string[]}}
+ */
+export function crossPageAudit(src) {
+    const violations = [];
+    const facts = {};
+    const parsed = parsePageAuditRoster(src);
+    const header = parsed.find((r) => r.__header)?.__header;
+    const malformed = parsed.filter((r) => r.__malformed);
+    const data = parsed.filter((r) => !r.__header && !r.__malformed);
+    facts.pageAuditRows = data.length;
+
+    const headerOk = header && PAGE_AUDIT_COLUMNS.every((c, i) => header[i] === c);
+    if (!headerOk)
+        violations.push(
+            `[PAGE-AUDIT-COLUMN-SCHEMA] the page-audit roster header is not the canonical column set [${PAGE_AUDIT_COLUMNS.join(", ")}] (got ${JSON.stringify(header)})`,
+        );
+    for (const m of malformed)
+        violations.push(
+            `[PAGE-AUDIT-WELL-FORMED] a page-audit row has fewer than ${PAGE_AUDIT_COLUMNS.length} cells: ${JSON.stringify(m.__malformed)}`,
+        );
+
+    // ── the 7 Pass-E categories each owe a convergence row (GA-10 / F7.4) ─────────
+    const declaredCategories = new Set(data.map((r) => r.category));
+    const missingCategories = PASS_E_CATEGORIES.filter((c) => !declaredCategories.has(c));
+    facts.passECategoriesEnrolled = `${PASS_E_CATEGORIES.length - missingCategories.length}/${PASS_E_CATEGORIES.length}`;
+    for (const c of missingCategories)
+        violations.push(
+            `[PAGE-AUDIT-CATEGORY-COMPLETE] the un-converged Pass-E category "${c}" (GA-10 / F7.4) has NO convergence row — the 7 categories (${PASS_E_CATEGORIES.join(", ")}) each owe a representative route`,
+        );
+
+    // ── the 4 C2-SENTINEL routes each enrolled (COHERENCE FOLD G7 L8) ─────────────
+    const declaredRoutes = new Set(data.map((r) => r.route));
+    const missingSentinels = C2_SENTINEL_ROUTES.filter((r) => !declaredRoutes.has(r));
+    facts.sentinelRoutesEnrolled = `${C2_SENTINEL_ROUTES.length - missingSentinels.length}/${C2_SENTINEL_ROUTES.length}`;
+    for (const r of missingSentinels)
+        violations.push(
+            `[PAGE-AUDIT-SENTINEL-COMPLETE] the C2-SENTINEL spot-check route "${r}" (COHERENCE FOLD G7 L8) is not enrolled — the 4 no-roster-band representatives are the mid-tranche sentinel`,
+        );
+
+    // ── route-resolution soundness (surface-closure routeSeeds HARD-RED) ──────────
+    const rs = routeSeeds(src, { root: ROOT });
+    facts.pageAuditRouteTokens = rs.tokens.length;
+    for (const hr of rs.hardReds)
+        violations.push(
+            `[PAGE-AUDIT-ROUTE-RESOLVES] the page-audit roster declares route ${hr.token} but its demo SFC ${hr.expected} does NOT exist on disk — a typo'd cross-page slug cannot silently vanish from the audited set`,
+        );
+
+    // ── anti-evasion + the convergence baseline ──────────────────────────────────
+    let converged = 0;
+    const perRow = [];
+    for (const row of data) {
+        const verdict = (row.verdict ?? "").toUpperCase();
+        const isConverged = CONVERGED_VERDICTS.has(verdict);
+        if (isConverged) converged++;
+        const probe = parseProbe(row.probe ?? "");
+        if (!probe) {
+            violations.push(
+                `[PAGE-AUDIT-PROBE] row "${row.category} ${row.route}" has no fractional FIELD probe (x=,y=,w=,h=) in "${row.probe}"`,
+            );
+            continue;
+        }
+        if (isConverged) {
+            // The both-engines matrix: chromium (roster path) + webkit (derived) × {light,dark}.
+            const captures = [
+                { engine: "chromium", mode: "light", path: row["capture-light"] },
+                { engine: "chromium", mode: "dark", path: row["capture-dark"] },
+                { engine: "webkit", mode: "light", path: webkitCapturePath(row["capture-light"]) },
+                { engine: "webkit", mode: "dark", path: webkitCapturePath(row["capture-dark"]) },
+            ];
+            for (const cap of captures) {
+                const read = readCapture(cap.path, probe.field, probe.topbar);
+                if (!read) {
+                    violations.push(
+                        `[PAGE-AUDIT-ANTI-EVASION] "${row.category} ${row.route}" verdict ${verdict} but the ${cap.engine} ${cap.mode} capture "${cap.path}" is ABSENT — a CONVERGED row demands a real warm composite in BOTH modes on BOTH engines (chromium + WebKit)`,
+                    );
+                    continue;
+                }
+                if (!read.verdict.pass)
+                    violations.push(
+                        `[PAGE-AUDIT-ANTI-EVASION] "${row.category} ${row.route}" verdict ${verdict} but the ${cap.engine} ${cap.mode} composite "${cap.path}" reads ${read.verdict.reasons.join(", ")} — OUTSIDE the warm-identity band; the dominant-hue pixel-read is the operative verdict`,
+                    );
+            }
+        }
+        perRow.push({ category: row.category, route: row.route, verdict });
+    }
+    facts.crossPageConvergence = perRow;
+    facts.crossPageConvergedBaseline = `${converged}/${data.length} cross-page rows CONVERGED (born-RED until the non-authoring late-sweep judge flips each on a fresh warm dual-engine capture)`;
+
+    return { facts, violations };
 }
 
 function detect() {
@@ -291,6 +480,26 @@ function detect() {
     }
     facts.groundEvidence = groundEvidence;
     facts.groundNotWarm = `${groundNotWarm}/${groundRead} 4.2.0 Metal-ground captures read NOT warm (the born-RED disease the composited-gestalt kernel catches)`;
+
+    // ── the CROSS-PAGE audit arm (BG.W-PAGE-COMPONENT-AUDIT, 17.6) ────────────────
+    if (!existsSync(PAGE_AUDIT_ROSTER)) {
+        violations.push(
+            `[PAGE-AUDIT-ROSTER-PRESENT] the cross-page per-category convergence roster is absent at ${relative(ROOT, PAGE_AUDIT_ROSTER)} — 17.6's 480-capture route seeds have no home (the 7 Pass-E categories + the C2-SENTINEL)`,
+        );
+        facts.pageAuditRosterPresent = false;
+    } else {
+        facts.pageAuditRosterPresent = true;
+        const cross = crossPageAudit(readFileSync(PAGE_AUDIT_ROSTER, "utf8"));
+        facts.crossPageAudit = cross.facts;
+        violations.push(...cross.violations);
+    }
+    // The 480-capture LOCAL late-sweep instrument (the two-tier model): its presence is a
+    // device-free structural requirement; its GREEN paint is the LOCAL close, not ci/release.
+    facts.coherenceSpecPresent = existsSync(COHERENCE_SPEC);
+    if (!facts.coherenceSpecPresent)
+        violations.push(
+            `[PAGE-AUDIT-HARNESS] the 480-capture cross-page instrument ${relative(ROOT, COHERENCE_SPEC)} is absent — the LOCAL late-sweep that produces the harmonized-whole read has no home`,
+        );
 
     return { facts, violations };
 }
@@ -430,6 +639,48 @@ function selfTest() {
                 return r.hardReds.some((h) => h.token === "/dock/typoo") ? "flagged" : null;
             })(),
         },
+        // ── the CROSS-PAGE audit self-test bites (17.6) ──────────────────────────
+        (() => {
+            const HEAD =
+                "| category | route | capture-light | capture-dark | probe | expect | verdict | notes |\n" +
+                "|---|---|---|---|---|---|---|---|\n";
+            const row = (cat, route, verdict, cap = "docs/tranches/BG/audit/visual/__self-test-absent__.png") =>
+                `| ${cat} | ${route} | ${cap} | ${cap} | x=0,y=0,w=1,h=1 | meanL=0..1 | ${verdict} | n |\n`;
+            const FULL_ROUTES = {
+                display: "/display/atoms",
+                containers: "/containers/dialog",
+                data: "/data/metrics",
+                feedback: "/feedback/toast",
+                navigation: "/navigation/tabs",
+                compositions: "/compositions/hero",
+                motion: "/motion/scroll",
+            };
+            const SENTINELS = C2_SENTINEL_ROUTES.map((r) => row("sentinel", r, "FAIL"));
+            const catRows = (overrides = {}) =>
+                PASS_E_CATEGORIES.filter((c) => !(overrides.drop === c)).map((c) =>
+                    row(c, overrides.route?.[c] ?? FULL_ROUTES[c], overrides.verdict?.[c] ?? "FAIL"),
+                );
+            // Bite A — a missing Pass-E category flags [PAGE-AUDIT-CATEGORY-COMPLETE].
+            const missingCat = crossPageAudit(HEAD + catRows({ drop: "motion" }).join("") + SENTINELS.join(""));
+            // Bite B — a CONVERGED row over an absent capture flags [PAGE-AUDIT-ANTI-EVASION].
+            const converged = crossPageAudit(HEAD + catRows({ verdict: { display: "CONVERGED" } }).join("") + SENTINELS.join(""));
+            // Bite C — a route whose SFC is absent flags [PAGE-AUDIT-ROUTE-RESOLVES].
+            const badRoute = crossPageAudit(HEAD + catRows({ route: { display: "/display/does-not-exist-slug" } }).join("") + SENTINELS.join(""));
+            // The GREEN witness — the real committed roster passes the structural arm.
+            const realRoster = existsSync(PAGE_AUDIT_ROSTER)
+                ? crossPageAudit(readFileSync(PAGE_AUDIT_ROSTER, "utf8"))
+                : { violations: ["(roster absent — cannot verify green)"] };
+            const flagged =
+                missingCat.violations.some((v) => v.includes("[PAGE-AUDIT-CATEGORY-COMPLETE]")) &&
+                converged.violations.some((v) => v.includes("[PAGE-AUDIT-ANTI-EVASION]")) &&
+                badRoute.violations.some((v) => v.includes("[PAGE-AUDIT-ROUTE-RESOLVES]")) &&
+                realRoster.violations.length === 0;
+            return {
+                label:
+                    "cross-page audit (17.6) — missing-category REDs [PAGE-AUDIT-CATEGORY-COMPLETE] · CONVERGED-over-absent-capture REDs [PAGE-AUDIT-ANTI-EVASION] · absent-SFC route REDs [PAGE-AUDIT-ROUTE-RESOLVES] · the real committed roster passes the structural arm (0 violations)",
+                flag: flagged ? "flagged" : null,
+            };
+        })(),
     ];
     const missed = checks.filter((c) => !c.flag).map((c) => c.label);
     if (missed.length) {
@@ -461,7 +712,7 @@ function run() {
         "proof:warm-identity — the composited-WHOLE dominant-hue paint battery (BG.W-COMPOSITED-GESTALT-GATE; measure the whole, not the part)",
     );
     console.log(
-        `  self-test (bite proof): OK — ${facts.selfTestChecks ?? 0} synthetic checks flagged (gray-RED + gray-slab-neutral + cerulean-RED + warm-GREEN + warmFraction-mixed + chromaCeiling + edgeCast + topBar + cornerClip + routeNavigates + degenerate + both-engines + ROUTE-RESOLVES)`,
+        `  self-test (bite proof): OK — ${facts.selfTestChecks ?? 0} synthetic checks flagged (gray-RED + gray-slab-neutral + cerulean-RED + warm-GREEN + warmFraction-mixed + chromaCeiling + edgeCast + topBar + cornerClip + routeNavigates + degenerate + both-engines + ROUTE-RESOLVES + cross-page-audit)`,
     );
     if (facts.rosterPresent) {
         console.log(`  enrolled surface set : ${facts.enrolledSurfaces ?? 0} surfaces (the ba-gestalt roster IS one enrolled surface set, NOT the sole oracle)`);
@@ -470,6 +721,11 @@ function run() {
         console.log(`  4.2.0 ground evidence: ${facts.groundNotWarm}`);
         for (const g of facts.groundEvidence ?? [])
             console.log(`    ${g.state === "not-warm" ? "✗" : g.state === "warm" ? "✓" : "·"} ${g.capture.padEnd(46)} ${g.state}${g.dominantFamily ? ` (dom=${g.dominantFamily}, warmFrac=${g.warmFraction})` : ""}`);
+    }
+    if (facts.pageAuditRosterPresent) {
+        const cp = facts.crossPageAudit ?? {};
+        console.log(`  cross-page audit (17.6): ${cp.pageAuditRows ?? 0} convergence rows — Pass-E ${cp.passECategoriesEnrolled ?? "?"} · C2-SENTINEL ${cp.sentinelRoutesEnrolled ?? "?"} · ${cp.pageAuditRouteTokens ?? 0} route tokens`);
+        console.log(`  cross-page baseline  : ${cp.crossPageConvergedBaseline ?? "0/0"} — the 480-capture harmonized-whole read rides the LOCAL late-sweep (${facts.coherenceSpecPresent ? "instrument present" : "instrument ABSENT"})`);
     }
     if (violations.length) {
         console.log("\nVIOLATIONS:");
