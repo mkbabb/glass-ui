@@ -1204,6 +1204,73 @@ function detect(overrides = {}) {
         clDirHusks.length === 0 && clStrays.length === 0,
     );
 
+    // ── M1-M3 — the δ5/δ6 manifest-carve+glob DECISION (BH.B3 δ5/δ6). ────────────
+    //   δ6 (glob `./*/*.vue` → `./*/*/index.vue` + per-story-dir moves) is DROPPED
+    //   (BH.PLAN §4.0 row 8 "δ6 glob DROPPED"): trivial stories stay FLAT, so the
+    //   glob stays flat by design. δ5 (carve manifest.ts) is executed as the SAFE,
+    //   foreign-gate-preserving colocation of the ONE cleanly-carveable concern —
+    //   the glob-resolved SFC `lazy` resolver → `demo/stories/manifest/lazy.ts` —
+    //   while every literal ~13 foreign gates parse (the `s()` rows, the SUBPATHS
+    //   map, the `Story` interface fields, the category-id order, sectionLanding)
+    //   STAYS textually in manifest.ts (the single parseable source-of-truth;
+    //   demo/ is exempt from proof:no-god-module which scans src/ only). Born-RED on
+    //   HEAD (the lazy resolver was inlined in manifest.ts, no manifest/ dir).
+    const LAZY_TS = "demo/stories/manifest/lazy.ts";
+    const lazyExists =
+        overrides.lazyExists ?? fileExists(LAZY_TS);
+    const lazySrc = readSrc(LAZY_TS);
+    // M1 — the lazy resolver is colocated + composed (the carve landed clean, no
+    //   inline resolver husk): lazy.ts exports makeLazy, manifest.ts imports it, and
+    //   manifest.ts no longer inlines a `function lazy(` resolver.
+    const m1LazyLeaf = lazyExists && /export\s+function\s+makeLazy\b/.test(lazySrc);
+    const m1ManifestImports = /from\s+["']\.\/manifest\/lazy["']/.test(manifestSrc);
+    const m1NoInlineResolver = !/\bfunction\s+lazy\s*\(/.test(manifestSrc);
+    facts.m1 = {
+        lazyLeaf: m1LazyLeaf,
+        manifestImports: m1ManifestImports,
+        noInlineResolver: m1NoInlineResolver,
+    };
+    assert(
+        "M1 — the manifest `lazy` resolver is colocated (manifest/lazy.ts exports makeLazy, manifest.ts imports it, no inline resolver husk)",
+        m1LazyLeaf && m1ManifestImports && m1NoInlineResolver,
+    );
+    // M2 — the single-source contract PRESERVED (the anti-carve foreign-gate
+    //   regression guard): manifest.ts still carries the ~13-gate-parsed literals —
+    //   the s() rows (≥80), the SUBPATHS map, FOLDED/DECLARED, and the SAME Story
+    //   interface field regexes proof:page-chassis reads (subpath/heroScale/depth).
+    //   A carve that moved these OUT breaks a foreign gate → M2 REDs.
+    const m2Rows = parseStoryRows(manifestSrc).length >= 80;
+    const m2Maps =
+        /const\s+SUBPATHS\b/.test(manifestSrc) &&
+        /FOLDED_STORY_IDS\b/.test(manifestSrc) &&
+        /DECLARED_FAMILY_SUBPATHS\b/.test(manifestSrc);
+    const m2Iface =
+        /subpath\?:\s*string/.test(manifestSrc) &&
+        /heroScale\?:\s*HeroScale/.test(manifestSrc) &&
+        /depth\?:\s*StoryDepth/.test(manifestSrc);
+    facts.m2 = {
+        rows: parseStoryRows(manifestSrc).length,
+        maps: m2Maps,
+        iface: m2Iface,
+    };
+    assert(
+        "M2 — the manifest single-source contract preserved (s() rows + SUBPATHS + FOLDED/DECLARED + Story interface fields still in manifest.ts)",
+        m2Rows && m2Maps && m2Iface,
+    );
+    // M3 — the δ6-drop record: the route glob stays FLAT `./*/*.vue` (the
+    //   per-story-`index.vue` dir-form is NOT adopted — the KISS decision that keeps
+    //   ~80 trivial stories flat and never renders a flat story blank).
+    const m3Flat =
+        /import\.meta\.glob<[^>]*>\(\s*["']\.\/\*\/\*\.vue["']\)/.test(
+            manifestSrc,
+        );
+    const m3NoIndexForm = !/["']\.\/\*\/\*\/index\.vue["']/.test(manifestSrc);
+    facts.m3 = { flat: m3Flat, noIndexForm: m3NoIndexForm };
+    assert(
+        "M3 — the δ6 glob stays FLAT `./*/*.vue` (no per-story `index.vue` dir-form contrivance)",
+        m3Flat && m3NoIndexForm,
+    );
+
     // ── WC1-WC5 — the colors-watercolor arm (BG.W-COLORS-WATERCOLOR-SWATCH). The
     //    /foundations/colors section-ramp stops render as the shipped <WatercolorDot>
     //    seeded blobs (REUSED not re-forked), sized ≥112px (larger than the retired
@@ -1839,6 +1906,48 @@ function selfTest() {
         "CL3 a flat chassis re-drifts to the stories root",
     );
 
+    // ── M-clause bites (BH.B3 δ5/δ6 manifest-carve+glob) — each recreates a defect
+    // the carve must not carry. The M2/M3 synthetics carry every OTHER M-clause
+    // literal so exactly the sabotaged clause reds.
+    const M_HEAD =
+        `import { makeLazy } from "./manifest/lazy";\n` +
+        `interface Story { subpath?: string; heroScale?: HeroScale; depth?: StoryDepth }\n` +
+        `const SUBPATHS: Record<string, string> = {};\n` +
+        `export const FOLDED_STORY_IDS = new Set([]);\n` +
+        `export const DECLARED_FAMILY_SUBPATHS = new Set([]);\n`;
+    const M_ROWS = Array.from({ length: 90 }, (_, i) => `s("c", "id${i}", "T");`).join(
+        "\n",
+    );
+    // M1: the lazy resolver leaf is absent (the carve deleted-not-colocated / a
+    //   re-inlined HEAD husk) → REDs M1.
+    sab(
+        { lazyExists: false },
+        "M1 — the manifest `lazy` resolver is colocated (manifest/lazy.ts exports makeLazy, manifest.ts imports it, no inline resolver husk)",
+        "M1 the colocated lazy resolver leaf is absent",
+    );
+    // M2: the s() rows moved OUT of manifest.ts (0 rows) — the foreign-gate-breaking
+    //   full row-split → REDs M2 (the single-source contract broken).
+    sab(
+        {
+            manifestSrc:
+                M_HEAD +
+                `const modules = import.meta.glob<{ default: Component }>("./*/*.vue");\n`,
+        },
+        "M2 — the manifest single-source contract preserved (s() rows + SUBPATHS + FOLDED/DECLARED + Story interface fields still in manifest.ts)",
+        "M2 the s() rows moved out of manifest.ts",
+    );
+    // M3: the glob adopts the dropped per-story `./*/*/index.vue` dir-form → REDs M3.
+    sab(
+        {
+            manifestSrc:
+                M_HEAD +
+                `const modules = import.meta.glob<{ default: Component }>("./*/*/index.vue");\n` +
+                M_ROWS,
+        },
+        "M3 — the δ6 glob stays FLAT `./*/*.vue` (no per-story `index.vue` dir-form contrivance)",
+        "M3 the glob adopts the dropped ./*/*/index.vue dir-form",
+    );
+
     // ── WC-clause bites (BG.W-COLORS-WATERCOLOR-SWATCH) — each recreates a defect
     // the fixed colors pane must not carry. GOOD_WC satisfies every WC clause; each
     // bite mutates ONE axis. WC_FILE is the literal path detect() reads via readSrc.
@@ -2122,7 +2231,7 @@ function run() {
         `  PR3 ribbon tile ≥72px     : ${facts["PR3 — the top-placed preset tiles read a LARGE floor (≥72px, top-scoped configurator.css rule)"]}  (minPx: ${facts.pr3?.minPx})`,
     );
     console.log(
-        `  self-test (bite proof)    : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×2 incl. comment-strip + D4 + D5 + D6×2 + D7×3 incl. comment-strip + T1-T4 + E1×2 incl. declared-family + E2 + E3 + F1 + F2×2 incl. FamilyTabs + F3 + ST1-ST5 + CF1 + CF2×3 incl. comment-strip + CD1 + CD2 + CD3×2 incl. comment-strip + CL1 + CL2 + CL3×2 incl. dir-husk + stray-drift + WC1-WC5 + PR1×2 incl. comment-strip + PR2 + PR3×2 incl. sub-72)`,
+        `  self-test (bite proof)    : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×2 incl. comment-strip + D4 + D5 + D6×2 + D7×3 incl. comment-strip + T1-T4 + E1×2 incl. declared-family + E2 + E3 + F1 + F2×2 incl. FamilyTabs + F3 + ST1-ST5 + CF1 + CF2×3 incl. comment-strip + CD1 + CD2 + CD3×2 incl. comment-strip + CL1 + CL2 + CL3×2 incl. dir-husk + stray-drift + M1 + M2 + M3 + WC1-WC5 + PR1×2 incl. comment-strip + PR2 + PR3×2 incl. sub-72)`,
     );
     if (violations.length) {
         console.log("\nVIOLATIONS:");

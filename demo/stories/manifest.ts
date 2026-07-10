@@ -17,6 +17,7 @@
 import type { Component } from "vue";
 import type { StoryBackground } from "../chassis/hero/aurora-hero";
 import { CATEGORY_HERO } from "../chassis/hero/category-hero";
+import { makeLazy } from "./manifest/lazy";
 import {
     Compass,
     Droplet,
@@ -124,20 +125,29 @@ export interface SectionLanding {
     depth: StoryDepth;
 }
 
+// ── The δ5/δ6 manifest-carve+glob DECISION (BH.B3 δ5/δ6). ────────────────────────
+// δ6 (glob `./*/*.vue` → `./*/*/index.vue` + per-story-dir moves) is DROPPED — the
+// converged BH.PLAN §4.0 family table (row 8: "δ6 glob DROPPED") is authoritative,
+// and KISS keeps ~80 trivial single-file stories FLAT `<category>/<id>.vue`. The glob
+// below stays flat by DESIGN; a change to `./*/*/index.vue` renders every flat story
+// blank (the runtime route-walk hazard the wave warns about).
+//
+// δ5 (carve `manifest.ts`) is the surviving deliverable, and it "accepts" the row +
+// map structure IN PLACE: this file is the single parseable source-of-truth ~13
+// device-free gates read by literal path + regex — the `s()` rows (proof:runtime /
+// proof:page-prune / proof:no-orphan-demo-route / proof:substrate-staging / …), the
+// SUBPATHS map (proof:page-chassis), the category-id order (proof:storybook-ia), the
+// `Story` interface fields subpath/heroScale/depth (proof:page-chassis), the
+// sectionLanding heroScale (proof:hero-audacious). Moving any of those OUT breaks a
+// foreign gate this wave does not own; `demo/` is exempt from proof:no-god-module
+// (which scans `src/` only), so no machine bound is violated by keeping them. The ONE
+// cleanly-carveable concern — the glob-resolved SFC `lazy` resolver — is colocated in
+// `./manifest/lazy.ts` (the spec's `lazy` carve target); the glob record stays here so
+// the relative path + keys are unchanged. This reconciles BG.W-MANIFEST-COLOCATE
+// ("keep manifest.ts") with δ5.
 const modules = import.meta.glob<{ default: Component }>("./*/*.vue");
 
-function lazy(category: string, id: string): () => Promise<Component> {
-    const key = `./${category}/${id}.vue`;
-    const loader = modules[key];
-    if (!loader) {
-        return () =>
-            Promise.resolve({
-                render: () => null,
-                name: `MissingStory:${category}/${id}`,
-            }) as Promise<Component>;
-    }
-    return () => loader().then((m) => m.default);
-}
+const lazy = makeLazy(modules);
 
 /** Per-page container options — the declared background + the hero register. */
 interface StoryOptions {
