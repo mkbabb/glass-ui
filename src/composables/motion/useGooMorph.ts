@@ -41,6 +41,15 @@
 import { onScopeDispose, type Ref } from "vue";
 import { useLiquidFlex } from "./useLiquidFlex";
 import { MORPH_SIGNATURES } from "./morphSignatures";
+// BG.W-GOO-BARBELL-CSS — the PURE barbell-projection geometry lives in the
+// colocated stateless leaf; the engine COMPOSES it (owns no geometry math of
+// its own — the single-definition carve). The transform strings are byte-preserved.
+import {
+    projectBarbell,
+    composeBodyTransform,
+    composeNeckTransform,
+    composeRestNeckTransform,
+} from "./gooBarbellGeometry";
 
 // BD.W-MORPH-FIELD-WELD — useGooMorph is the `lateralNeck` RECIPE over the unified WELD.
 // It keeps its public API + the `--goo-t` drive (NO rename) + its barbell rAF projection,
@@ -125,9 +134,6 @@ export interface UseGooMorphReturn {
     drive(fractionalIndex: number): void;
 }
 
-/** The golden ratio — the body diameter is the golden-minor of the slot pitch. */
-const PHI = 1.618033988749895;
-
 const PRM = (): boolean =>
     typeof window !== "undefined" &&
     typeof window.matchMedia === "function" &&
@@ -140,12 +146,6 @@ function clockMs(el: HTMLElement, prop: string, fallback: number): number {
     if (raw.endsWith("ms")) return Number.parseFloat(raw) || fallback;
     if (raw.endsWith("s")) return (Number.parseFloat(raw) || fallback / 1000) * 1000;
     return Number.parseFloat(raw) || fallback;
-}
-
-/** sin(π·p)^k — 0 at the ends, peak at the midpoint. The well shape. */
-function bell(p: number, k: number): number {
-    const s = Math.sin(Math.PI * Math.min(1, Math.max(0, p)));
-    return Math.pow(s, k);
 }
 
 export function useGooMorph(params: UseGooMorphParams): UseGooMorphReturn {
@@ -214,10 +214,8 @@ export function useGooMorph(params: UseGooMorphParams): UseGooMorphReturn {
         return Number.isFinite(v) && v > 0 ? v : neckGap;
     }
 
-    /** Compose a body transform on the travel axis: translate(center) → -50% → scale + the
-     *  on-axis squash-&-stretch reciprocal (volume-preserving). `el` is sized to the body
-     *  diameter D, so no scale-to-fit is needed; the squash is the `--stretch` taffy. The
-     *  `arc` lobs the body centre on the CROSS axis (overlapping action). */
+    /** Write a body transform onto `el` — the thin DOM wrapper over the leaf's pure
+     *  `composeBodyTransform` (the geometry composition lives in gooBarbellGeometry). */
     function writeBody(
         el: HTMLElement,
         center: number,
@@ -225,17 +223,13 @@ export function useGooMorph(params: UseGooMorphParams): UseGooMorphReturn {
         stretchOn: number,
         stretchCross: number,
     ): void {
-        if (vertical.value) {
-            el.style.transform =
-                `translateY(${center.toFixed(2)}px) translateX(${arc.toFixed(2)}px) ` +
-                `translateY(-50%) translateX(-50%) ` +
-                `scaleY(${stretchOn.toFixed(4)}) scaleX(${stretchCross.toFixed(4)})`;
-        } else {
-            el.style.transform =
-                `translateX(${center.toFixed(2)}px) translateY(${arc.toFixed(2)}px) ` +
-                `translateX(-50%) translateY(-50%) ` +
-                `scaleX(${stretchOn.toFixed(4)}) scaleY(${stretchCross.toFixed(4)})`;
-        }
+        el.style.transform = composeBodyTransform(
+            center,
+            arc,
+            stretchOn,
+            stretchCross,
+            vertical.value,
+        );
     }
 
     /**
@@ -258,65 +252,46 @@ export function useGooMorph(params: UseGooMorphParams): UseGooMorphReturn {
         const host = hostRef.value;
         if (!bodyA || !bodyB || !neck || !host) return;
 
-        const step = Math.max(1, restSize());
-        const D = step / PHI; // the body diameter — the golden-minor of the slot pitch
-        const span = B - A;
-
-        const idxSpan = toIdx - fromIdx;
-        const p =
-            idxSpan === 0
-                ? 1
-                : Math.min(1, Math.max(0, (gooT - fromIdx) / idxSpan));
-
-        const NECK_GAP = readNeckGap(host);
-        const sep = 1 - bell(p, 1) * (1 - NECK_GAP); // 1 at slots → NECK_GAP at mid
-        const mid = (A + B) / 2;
-        const half = (span / 2) * sep;
-        const cA = mid - half; // bodyA travels toward mid then on
-        const cB = mid + half;
-
-        const neckGirth = bell(p, 1.5); // wells → pinches, ~0 at the ends
-        const gap = Math.abs(cB - cA); // the live centre-to-centre gap
-
         // the cartoon-weight lever (0 under PRM/auto — CSS owns the carve; here we read it
-        // so the arc + the body squash scale with the consumer weight).
+        // so the arc + the body squash scale with the consumer weight). The leaf clamps it.
         const weightRaw = getComputedStyle(host)
             .getPropertyValue("--goo-weight")
             .trim();
-        const weight = Math.min(1, Math.max(0, Number.parseFloat(weightRaw) || 0));
+        const weight = Number.parseFloat(weightRaw) || 0;
 
-        // the on-axis squash-&-stretch toward the neck (the `--stretch` velocity swell
-        // lives in CSS; here the bodies elongate on-axis as they neck — necking taffy).
-        const stretchOn = 1 + bell(p, 1) * 0.12 * weight;
-        const stretchCross = 1 / stretchOn; // volume-preserving
+        // the PURE barbell projection (gooBarbellGeometry) — body centers + neck span/girth
+        // + the volume-preserving squash + the overlapping-action arc. `p` is the NORMALIZED
+        // progress over the WHOLE from→to travel, so the barbell necks across the BIG gap on
+        // the SAME slow flow curve; the neck-gap is the consumer's `--{prefix}-neck-gap`.
+        const g = projectBarbell({
+            A,
+            B,
+            fromIdx,
+            toIdx,
+            gooT,
+            step: restSize(),
+            neckGap: readNeckGap(host),
+            weight,
+        });
 
-        // the arc (overlapping action) — the body centres lob a subtle cross-axis parabola
-        // so the merge LOBS, not a flat slide. ±D·0.06·sin(πp), weight-scaled, PRM→0.
-        const arc = -D * 0.06 * bell(p, 1) * weight;
-
-        writeBody(bodyA, cA, arc, stretchOn, stretchCross);
-        writeBody(bodyB, cB, arc, stretchOn, stretchCross);
+        writeBody(bodyA, g.cA, g.arc, g.stretchOn, g.stretchCross);
+        writeBody(bodyB, g.cB, g.arc, g.stretchOn, g.stretchCross);
 
         // the NECK — translate(mid), scaleX(gap/D) on-axis so it spans the live gap,
         // scaleY(neckGirth) cross-axis so it WELLS then PINCHES (~0 at the ends → the neck
         // vanishes at rest, no ghost throat). The concave `--neck-waist` clip-path (set in
-        // CSS) carves the structural hourglass; the filter softens + welds it. transform
-        // composes the on-axis span + the cross-axis well.
-        const neckSpanScale = D > 0 ? gap / D : 1;
-        if (vertical.value) {
-            neck.style.transform =
-                `translateY(${mid.toFixed(2)}px) translateY(-50%) ` +
-                `scaleY(${neckSpanScale.toFixed(4)}) scaleX(${neckGirth.toFixed(4)})`;
-        } else {
-            neck.style.transform =
-                `translateX(${mid.toFixed(2)}px) translateX(-50%) ` +
-                `scaleX(${neckSpanScale.toFixed(4)}) scaleY(${neckGirth.toFixed(4)})`;
-        }
+        // CSS) carves the structural hourglass; the filter softens + welds it.
+        neck.style.transform = composeNeckTransform(
+            g.mid,
+            g.neckSpanScale,
+            g.neckGirth,
+            vertical.value,
+        );
         // the dwell-follows-the-neck opacity gate: the neck is visible EXACTLY while it
         // wells (fades in as neckGirth crosses ~0, out as it returns). The consumer's layer
         // [data-traveling] gate fades the whole layer; this gates the NECK alpha within it.
-        neck.style.opacity = neckGirth.toFixed(4);
-        host.style.setProperty("--goo-neck-girth", neckGirth.toFixed(4));
+        neck.style.opacity = g.neckGirth.toFixed(4);
+        host.style.setProperty("--goo-neck-girth", g.neckGirth.toFixed(4));
     }
 
     /** Coalesce the barbell to ONE resting body at the target center; hide the neck (no
@@ -331,11 +306,7 @@ export function useGooMorph(params: UseGooMorphParams): UseGooMorphReturn {
         writeBody(bodyA, c, 0, 1, 1);
         writeBody(bodyB, c, 0, 1, 1); // coalesced ON bodyA — ONE resting mass
         neck.style.opacity = "0"; // no ghost throat at rest
-        if (vertical.value) {
-            neck.style.transform = `translateY(${c.toFixed(2)}px) translateY(-50%) scaleY(0.0001) scaleX(0)`;
-        } else {
-            neck.style.transform = `translateX(${c.toFixed(2)}px) translateX(-50%) scaleX(0.0001) scaleY(0)`;
-        }
+        neck.style.transform = composeRestNeckTransform(c, vertical.value);
         if (host) {
             host.style.setProperty("--goo-neck-girth", "0");
             host.style.setProperty("--stretch", "1");

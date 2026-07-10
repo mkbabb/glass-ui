@@ -1138,6 +1138,137 @@ function detectMotionAxis(overrides = {}) {
     return { facts, violations };
 }
 
+// ── BG.W-GOO-BARBELL-CSS — the goo-morph BARBELL geometry carve. ──
+// useGooMorph.ts is the ONE goo-morph engine (Carousel≡Pager share it via
+// useCarouselWorm/usePagerWorm). The PURE barbell-projection GEOMETRY — the
+// bell() well shape, the body-center separation, the neck girth/span, the
+// volume-preserving squash, the overlapping-action arc, and the compositor
+// transform-string composers — is carved into a colocated STATELESS leaf
+// (gooBarbellGeometry.ts) the engine COMPOSES. The engine KEEPS the stateful
+// rAF/transition/DOM-write orchestration + the token reads; the geometry math
+// beside it. Byte-identical paint (the transform strings are byte-preserved —
+// paint-class P). Born-RED on HEAD (leaf absent + the geometry defined in the
+// engine) → GREEN on the carve + a bite per clause. Asserts:
+//   GB1 — COLOCATION: gooBarbellGeometry.ts exists AND exports the geometry fns
+//         (projectBarbell/composeBodyTransform/composeNeckTransform/
+//         composeRestNeckTransform/bell/bodyDiameter/PHI) AND useGooMorph.ts
+//         imports the consumed set back from "./gooBarbellGeometry".
+//   GB2 — STATELESS-LEAF: the leaf owns NO state — no SpringProgress/keyframes
+//         import, no vue import (no reactivity), no rAF (requestAnimationFrame),
+//         no DOM read/write (getComputedStyle/.style/document/window), no
+//         mulberry32/hashString rng ownership, and ZERO module-level mutable
+//         let/var.
+//   GB3 — SINGLE-DEFINITION: the pure geometry fns are DEFINED in the leaf AND
+//         DEFINITION-ABSENT from the engine (the carve is real — no dual-path
+//         copy; writeBody stays a thin driver DOM wrapper over the composer).
+const GOO_ENGINE = resolve(SRC, "composables/motion/useGooMorph.ts");
+const GOO_LEAF = resolve(SRC, "composables/motion/gooBarbellGeometry.ts");
+// The pure geometry symbols the leaf owns (the exports).
+const GOO_GEOM_EXPORTS = [
+    "PHI",
+    "bell",
+    "bodyDiameter",
+    "projectBarbell",
+    "composeBodyTransform",
+    "composeNeckTransform",
+    "composeRestNeckTransform",
+];
+// The subset the engine COMPOSES back (bell/bodyDiameter/PHI live inside
+// projectBarbell — the engine consumes the projection + the three composers).
+const GOO_GEOM_IMPORTS = [
+    "projectBarbell",
+    "composeBodyTransform",
+    "composeNeckTransform",
+    "composeRestNeckTransform",
+];
+// The pure functions that must be DEFINITION-ABSENT from the engine (the dual-path
+// fence). PHI is a const (checked via definesSymbol below); the DOM-writing
+// writeBody wrapper stays in the engine and is NOT a leaf symbol, so it is fine.
+const GOO_GEOM_SINGLE_DEF = [
+    "bell",
+    "bodyDiameter",
+    "projectBarbell",
+    "composeBodyTransform",
+    "composeNeckTransform",
+    "composeRestNeckTransform",
+];
+
+// overrides: { engineText?, leafExists?, leafText? } — a self-test sabotages any.
+function detectGooBarbell(overrides = {}) {
+    const violations = [];
+    const facts = {};
+
+    const engineSrc = overrides.engineText ?? read(GOO_ENGINE);
+    const leafExists = overrides.leafExists ?? existsSync(GOO_LEAF);
+    const leafSrc = overrides.leafText ?? (leafExists ? read(GOO_LEAF) : "");
+
+    // ── GB1 — COLOCATION: leaf exists + exports the geometry fns + engine imports back. ──
+    const leafExportsAll = GOO_GEOM_EXPORTS.every((n) => exportsSymbol(leafSrc, n));
+    const engineImports = importsFromSpec(
+        engineSrc,
+        "./gooBarbellGeometry",
+        GOO_GEOM_IMPORTS,
+    );
+    facts.colocation = { leafExists, leafExportsAll, engineImports };
+    if (!(leafExists && leafExportsAll && engineImports))
+        violations.push(
+            `GB1 — gooBarbellGeometry.ts must exist (${leafExists}) AND export ${GOO_GEOM_EXPORTS.join("/")} (${leafExportsAll}) AND useGooMorph.ts must import ${GOO_GEOM_IMPORTS.join("/")} from "./gooBarbellGeometry" (${engineImports})`,
+        );
+
+    // ── GB2 — STATELESS-LEAF: no spring/keyframes fork, no vue, no rAF, no DOM, no rng, no module state. ──
+    const cleanLeaf = stripComments(leafSrc);
+    const hasSpring =
+        /\bSpringProgress\b/.test(cleanLeaf) ||
+        /from\s*["']@mkbabb\/keyframes(\.js)?["']/.test(cleanLeaf);
+    const importsVue = /from\s*["']vue["']/.test(cleanLeaf);
+    const hasRaf = /\brequestAnimationFrame\b/.test(cleanLeaf);
+    const touchesDom =
+        /\bgetComputedStyle\b/.test(cleanLeaf) ||
+        /\.style\b/.test(cleanLeaf) ||
+        /\bdocument\b/.test(cleanLeaf) ||
+        /\bwindow\b/.test(cleanLeaf);
+    const ownsRng = /\b(mulberry32|hashString)\s*\(/.test(cleanLeaf);
+    // Module-scope mutable = a `let`/`var` at COLUMN 0 (a function-local decl is indented).
+    const moduleMutable = /^(let|var)\s/m.test(cleanLeaf);
+    facts.stateless = {
+        hasSpring,
+        importsVue,
+        hasRaf,
+        touchesDom,
+        ownsRng,
+        moduleMutable,
+    };
+    if (
+        !(
+            leafExists &&
+            !hasSpring &&
+            !importsVue &&
+            !hasRaf &&
+            !touchesDom &&
+            !ownsRng &&
+            !moduleMutable
+        )
+    )
+        violations.push(
+            `GB2 — gooBarbellGeometry.ts must be a stateless pure leaf (spring=${hasSpring}, vue=${importsVue}, rAF=${hasRaf}, DOM=${touchesDom}, rng=${ownsRng}, module-mutable=${moduleMutable})`,
+        );
+
+    // ── GB3 — SINGLE-DEFINITION: the geometry fns live in the leaf, absent from the engine. ──
+    const leafDefinesAll = GOO_GEOM_SINGLE_DEF.every(
+        (n) => definesFunction(leafSrc, n) || definesSymbol(leafSrc, n),
+    );
+    const engineRedefines = GOO_GEOM_SINGLE_DEF.filter(
+        (n) => definesFunction(engineSrc, n) || definesSymbol(engineSrc, n),
+    );
+    facts.singleDefinition = { leafDefinesAll, engineRedefines };
+    if (!(leafDefinesAll && engineRedefines.length === 0))
+        violations.push(
+            `GB3 — the geometry fns must be DEFINED in the leaf (${leafDefinesAll}) AND DEFINITION-ABSENT from useGooMorph.ts (re-defined: ${engineRedefines.join(", ") || "none"}) — the carve is real, no dual-path copy`,
+        );
+
+    return { facts, violations };
+}
+
 // ── The detector — runs over a SOURCE MAP so a self-test can sabotage inputs.
 // overrides: { driverText?, godModuleSource?, leafExists?, leafSource? }.
 function detect(overrides = {}) {
@@ -1787,6 +1918,85 @@ function selfTest() {
     // M-fence: the migrated tree carries ZERO motion-axis violation.
     sabNotM({}, "M", "M the migrated tree (no boolean-scatter, motion axis clean)");
 
+    // ── BG.W-GOO-BARBELL-CSS — the GB1–GB3 bites over detectGooBarbell. ──
+    const liveGooEngine = read(GOO_ENGINE);
+    const liveGooLeaf = read(GOO_LEAF);
+    const sabGoo = (overrides, prefix, name) => {
+        const { violations } = detectGooBarbell(overrides);
+        if (violations.some((x) => x.startsWith(prefix))) flagged++;
+        else
+            throw new Error(
+                `[proof:encapsulation self-test] goo-barbell bite FAILED to flag: ${name}`,
+            );
+    };
+    const sabNotGoo = (overrides, prefix, name) => {
+        const { violations } = detectGooBarbell(overrides);
+        if (!violations.some((x) => x.startsWith(prefix))) flagged++;
+        else
+            throw new Error(
+                `[proof:encapsulation self-test] goo-barbell fence bite WRONGLY flagged: ${name}`,
+            );
+    };
+    // GB1: the carved leaf is absent from disk.
+    sabGoo(
+        { leafExists: false, leafText: "" },
+        "GB1",
+        "GB1 the goo geometry leaf is absent",
+    );
+    // GB1: the engine drops the geometry import (no composition).
+    sabGoo(
+        {
+            engineText: liveGooEngine.replace(
+                /import\s*\{[\s\S]*?\}\s*from\s*["']\.\/gooBarbellGeometry["'];/,
+                "",
+            ),
+        },
+        "GB1",
+        "GB1 useGooMorph drops the gooBarbellGeometry import",
+    );
+    // GB2: the leaf imports SpringProgress (the forbidden spring fork).
+    sabGoo(
+        {
+            leafText: `import { SpringProgress } from "@mkbabb/keyframes.js";\n${liveGooLeaf}`,
+        },
+        "GB2",
+        "GB2 the leaf forks SpringProgress",
+    );
+    // GB2: the leaf reaches into the DOM (a stateful read the engine owns).
+    sabGoo(
+        { leafText: `${liveGooLeaf}\nconst _p = getComputedStyle;` },
+        "GB2",
+        "GB2 the leaf touches the DOM (getComputedStyle)",
+    );
+    // GB2: the leaf owns an rAF (a private loop — the one-loop discipline).
+    sabGoo(
+        { leafText: `${liveGooLeaf}\nrequestAnimationFrame(() => {});` },
+        "GB2",
+        "GB2 the leaf owns a requestAnimationFrame loop",
+    );
+    // GB2: the leaf declares module-level mutable state.
+    sabGoo(
+        { leafText: `let gooFrameCounter = 0;\n${liveGooLeaf}` },
+        "GB2",
+        "GB2 the leaf carries module-level mutable state",
+    );
+    // GB3: the engine re-declares projectBarbell (the dual-path copy).
+    sabGoo(
+        {
+            engineText: `function projectBarbell(s) { return s; }\n${liveGooEngine}`,
+        },
+        "GB3",
+        "GB3 the engine re-declares projectBarbell (dual-path)",
+    );
+    // GB3 (fence): a bare comment mention of a geometry fn in the engine does NOT flag.
+    sabNotGoo(
+        { engineText: `// projectBarbell composes the barbell\n${liveGooEngine}` },
+        "GB3",
+        "GB3 comment-mention fence (a note is not a definition)",
+    );
+    // GB-fence: the migrated tree carries ZERO goo-barbell violation.
+    sabNotGoo({}, "GB", "GB the migrated tree (goo geometry carved clean)");
+
     return flagged;
 }
 
@@ -1815,6 +2025,8 @@ function run() {
     // BH.W-MOTION-AXIS — the four-boolean motion scatter folded onto the Motion axis.
     const { facts: motionFacts, violations: motionViolations } =
         detectMotionAxis();
+    // BG.W-GOO-BARBELL-CSS — the goo-morph barbell GEOMETRY carve.
+    const { facts: gooFacts, violations: gooViolations } = detectGooBarbell();
     const facts = {
         ...blobFacts,
         colocate: colocateFacts,
@@ -1823,6 +2035,7 @@ function run() {
         axisGrammar: axisFacts,
         sizeGrammar: sizeFacts,
         motionAxis: motionFacts,
+        gooBarbell: gooFacts,
     };
     const violations = [
         ...blobViolations,
@@ -1832,6 +2045,7 @@ function run() {
         ...axisViolations,
         ...sizeViolations,
         ...motionViolations,
+        ...gooViolations,
     ];
     const status = violations.length === 0 ? "pass" : "fail";
 
@@ -1906,7 +2120,13 @@ function run() {
         `    motion-axis                   : ${motionViolations.length === 0 ? "GREEN" : "RED"} (bool-props=${motionFacts.boolPropsGone.hits.length}, motion-typed-missing=${motionFacts.motionTyped.missing.length}, data-motion-missing=${motionFacts.dataMotionWrite.missing.length}, weight-off=${motionFacts.motionWeightOff.writesWeightOff}, PRM-clamp=${motionFacts.prmPrecedence.prmClampsDown}, kept-missing=${motionFacts.keptContracts.missing.length})`,
     );
     console.log(
-        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (blob E1×2+E1-fence+E2×2+E3×2+E4+E4-fence + colocate C1×2+C1-fence+C2×2+C3+C3-fence + alias-kill A1+A2+fence + deshadcn DS1×3+DS1-fence+DS2+DS3×2+DS3-regex+DS4+DS-clean + axis-grammar G1+G2+G3+G3-fence+G4+G4-fence+G5+G6 + size-grammar S1x2+S2+S3+S4+S5+S6+S-fence + motion-axis M1×2+M1-fence×2+M2+M3+M4+M5+M6+M-fence)`,
+        "  BG.W-GOO-BARBELL-CSS (GB1 colocation · GB2 stateless-leaf · GB3 single-definition):",
+    );
+    console.log(
+        `    goo-barbell geometry          : ${gooViolations.length === 0 ? "GREEN" : "RED"} (leaf=${gooFacts.colocation.leafExists}, exports=${gooFacts.colocation.leafExportsAll}, engine-imports=${gooFacts.colocation.engineImports}, stateless=${!gooFacts.stateless.hasSpring && !gooFacts.stateless.importsVue && !gooFacts.stateless.hasRaf && !gooFacts.stateless.touchesDom && !gooFacts.stateless.moduleMutable}, engine-redefs=${gooFacts.singleDefinition.engineRedefines.length})`,
+    );
+    console.log(
+        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (blob E1×2+E1-fence+E2×2+E3×2+E4+E4-fence + colocate C1×2+C1-fence+C2×2+C3+C3-fence + alias-kill A1+A2+fence + deshadcn DS1×3+DS1-fence+DS2+DS3×2+DS3-regex+DS4+DS-clean + axis-grammar G1+G2+G3+G3-fence+G4+G4-fence+G5+G6 + size-grammar S1x2+S2+S3+S4+S5+S6+S-fence + motion-axis M1×2+M1-fence×2+M2+M3+M4+M5+M6+M-fence + goo-barbell GB1×2+GB2×4+GB3+GB3-fence+GB-fence)`,
     );
 
     if (violations.length) {
@@ -1938,5 +2158,6 @@ export {
     detectAxisGrammar,
     detectSizeGrammar,
     detectMotionAxis,
+    detectGooBarbell,
     selfTest,
 };
