@@ -4,10 +4,11 @@ import { resolve } from "node:path";
 /**
  * The library entry map. Two tiers:
  *
- *  1. The 12 MULTI-LINE CURATED barrels — hand-listed below. These carry real
+ *  1. The MULTI-LINE CURATED barrels — hand-listed below. These carry real
  *     curation logic, not a single mirror line: `index` (the vueuse-FREE root
- *     barrel — L.W1 Lane A SCC closure), `api` (the types/constants discovery
- *     layer), `tokens`, `forms`/`dark`/`keyboard`/`carousel` (the vueuse-bearing
+ *     barrel — L.W1 Lane A SCC closure), `tokens`, `axes` (the types-only grammar
+ *     discovery layer — the `/api` successor; `/api` dropped at BH.B2.2),
+ *     `forms`/`dark`/`keyboard`/`carousel` (the vueuse-bearing
  *     flat subpaths — L.W1 Lane C), `motion`/`motion-core` (the keyframes-engine
  *     split — AP.W3 R0G-7), `sidebar` (the AI.W5-δ composables-of-record
  *     relocation), `infinite-scroll` (the component + composables pair). They
@@ -29,7 +30,6 @@ export function libraryEntries(rootDir: string) {
     // Tier 1 — the curated multi-line barrels (explicit; STAY at src/ top level).
     const curated: Record<string, string> = {
         index: resolve(rootDir, "src/index.ts"),
-        api: resolve(rootDir, "src/api/index.ts"),
         tokens: resolve(rootDir, "src/tokens.ts"),
         forms: resolve(rootDir, "src/forms.ts"),
         dark: resolve(rootDir, "src/dark.ts"),

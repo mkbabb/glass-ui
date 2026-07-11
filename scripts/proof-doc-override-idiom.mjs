@@ -100,11 +100,6 @@ export function readShippedRadius(css) {
     return m ? m[1] : null;
 }
 
-// The consumer canon sentence signature — names "override the radius primitive,
-// never the composed --glass-blur-* directly".
-const CANON_SIG =
-    /overrid(?:e|es|ing|den)\s+the\s+`?--glass-blur-[\w*-]*radius`?\s+primitive[\s\S]{0,200}?never\s+the\s+composed\s+`?--glass-blur/i;
-
 export function detect() {
     const violations = [];
     const facts = {};
@@ -189,15 +184,9 @@ export function detect() {
         );
     }
 
-    // ── W4 — the consumer canon line is recorded in the canon home ───────────
-    const hasCanon = wiringMd != null && CANON_SIG.test(wiringMd);
-    facts.w4Canon = hasCanon;
-    if (!hasCanon) {
-        violations.push(
-            `W4 — ${WIRING_REL} does not record the override-the-primitive consumer canon ` +
-                `("override the --glass-blur-*-radius primitive, never the composed --glass-blur-*")`,
-        );
-    }
+    // (BH.B5e: W4 — the doc-presence `CANON_SIG` sentence check over the consumer-
+    // wiring canon home — DROPPED. The W1-W3 example-overrides-the-primitive-at-the-
+    // live-value + byte-parity clauses are kept; canon authoring rides proof:claude-deletable.)
 
     return { violations, facts, wiringRaw, readmeRaw };
 }
@@ -222,7 +211,6 @@ function run() {
     console.log(`  ${WIRING_REL} override decls : ${(facts.w1WiringDecls ?? []).join(" · ") || "(none)"}`);
     console.log(`  README.md override decls            : ${(facts.w1ReadmeDecls ?? []).join(" · ") || "(none)"}`);
     console.log(`  byte-parity (W3)                    : ${facts.w3Parity ? "✓" : "✗"}`);
-    console.log(`  consumer canon recorded (W4)        : ${facts.w4Canon ? "✓" : "✗"}`);
     if (!pass) {
         console.log("");
         for (const v of violations) console.log(`  ✗ ${v}`);

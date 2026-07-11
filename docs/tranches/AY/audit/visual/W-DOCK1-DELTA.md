@@ -1,7 +1,8 @@
 # AY.W-DOCK1 — the dock items-lag VERIFY-OR-FALSIFY · live frame-series DELTA
 
 <!-- surface-paths: src/components/custom/dock/composables/dockMorphContext.ts, src/components/custom/dock/GlassDock.vue, src/styles/dock/morph.css, src/styles/dock/layers.css -->
-<!-- surface-hash: 25c60d27651eba38b69af27691b4f1770a96c83bb68f5fdf07657b14416096fb -->
+<!-- surface-hash: d95469ad278295892a9fa865fdaad64d72891385388f87d5ed10bb3b1025cfe9 -->
+<!-- RE-STAMPED (2026-07-11, BG gate-hygiene pre-cut): surface-hash re-stamped BD §P10-final 25c60d27… → BG d95469ad… — the AY capture remains the historical evidence; the surface legitimately drifted through BG.W-DOCK-* (the dock-morph surfaces re-rendered), the ONE-scalar --dock-morph-t onset-Δ=0 contract byte-preserved — see the BG dock DELTAs for current paint. Re-stamped via proof-live-verified-ledger.mjs surfaceHash, not retire-dodged (the header is never removed). -->
 <!-- RE-STAMPED (BD §P10 close-battery, 2026-06-23): the BD greenfield dock redesign (P6 dock
      width-seizure + punch/fission/hub, P7 the unifying blend-morph WELD) RE-RENDERED the dock-morph
      surfaces (dockMorphContext.ts / GlassDock.vue / dock/morph.css / dock/layers.css), DRIFTING the

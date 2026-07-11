@@ -135,8 +135,17 @@ if (!cls.pass) {
 // re-derived surface, preserving 4-space indent + trailing newline.
 // ---------------------------------------------------------------------------
 if (WRITE) {
-    if (exit !== 0) {
-        console.error("regen-exports --write REFUSED — surface not classified/faithful (exit 1).");
+    // The B2.1-swap re-pin gates on SOURCE INTEGRITY (classified + fidelity) —
+    // NOT on EXACT_REPRODUCTION, which is precisely what --write RESOLVES (a
+    // surface change re-pins package.json so a later check-mode run is exact).
+    // Refusing on `exit !== 0` would deadlock the swap: a dropped `/api` makes
+    // EXACT_REPRODUCTION false pre-write, so the strict guard would never let the
+    // drop land. Only classified/fidelity failures (a genuinely-unsafe source)
+    // block the write.
+    if (!cls.pass || fidelity.failed.length) {
+        console.error(
+            `regen-exports --write REFUSED — surface not classified/faithful (unclassified=${cls.unclassified.length}, fidelityFailed=${fidelity.failed.length}).`,
+        );
         process.exit(1);
     }
     const pkg = JSON.parse(readFileSync(pkgPath, "utf8"));

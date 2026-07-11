@@ -50,7 +50,6 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
-import { readCanon } from "./lib/canon-doc.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 
@@ -169,7 +168,6 @@ export function detectSpaView(sources) {
     const subpath = stripBlockComments(sources.subpath ?? "");
     const apiTs = stripBlockComments(sources.apiTs ?? "");
     const demoStory = stripHtmlComments(stripBlockComments(sources.demoStory ?? ""));
-    const claudeMd = sources.claudeMd ?? "";
     const evidenceMd = sources.evidenceMd ?? "";
     const deltaMd = sources.deltaMd ?? "";
     const transitionsCss = sources.transitionsCss ?? "";
@@ -221,16 +219,16 @@ export function detectSpaView(sources) {
     if (!exposesView) violations.push("W4: the `view`/`is` dynamic-component props are absent");
     if (!apiPublishesProps) violations.push("W4: src/api/index.ts must publish `SpaViewProps` from the spa-view package");
 
-    // ── W5 — the ≥2-consumer bar + canon ──────────────────────────────────────
+    // ── W5 — the ≥2-consumer bar ──────────────────────────────────────────────
+    // (BH.B5e: the doc-presence `claudeMd` sub-check DROPPED — the functional
+    // ≥2-consumer clauses are kept; canon-home authoring rides proof:claude-deletable.)
     const evidenceNamesBooked = /AdminDashboardLayout/.test(evidenceMd);
     const evidenceNamesDemo = /demo\/stories\/containers\/spa-view\.vue/.test(evidenceMd);
     const demoBindsSpaView = /<SpaView/.test(demoStory) && /:max=/.test(demoStory);
-    const claudeNamesComponent = /SpaView/.test(claudeMd) && /spa-view/.test(claudeMd);
     const deltaExists = deltaMd.length > 0;
     if (!evidenceNamesBooked) violations.push("W5: consumer-evidence must name the booked binary consumer (AdminDashboardLayout)");
     if (!evidenceNamesDemo) violations.push("W5: consumer-evidence must name the in-repo demo exerciser");
     if (!demoBindsSpaView) violations.push("W5: the demo story must mount <SpaView :max>");
-    if (!claudeNamesComponent) violations.push("W5: the spa-view README (src/components/custom/spa-view/README.md) must record SpaView + the /spa-view subpath");
     if (!deltaExists) violations.push("W5: the W-SPAVIEW-CACHE DELTA is absent");
 
     const facts = {
@@ -238,7 +236,7 @@ export function detectSpaView(sources) {
         w2: { ...ka },
         w3: { ...tr, fadeRecipePresent, fadePrmHandled },
         w4: { exposesMax, exposesIncludeExclude, passesIncludeExclude, exposesView, apiPublishesProps },
-        w5: { evidenceNamesBooked, evidenceNamesDemo, demoBindsSpaView, claudeNamesComponent, deltaExists },
+        w5: { evidenceNamesBooked, evidenceNamesDemo, demoBindsSpaView, deltaExists },
     };
     return { facts, violations };
 }
@@ -296,7 +294,6 @@ function run() {
         packageFacts,
         apiTs: safeRead(P.API_INDEX),
         demoStory: safeRead(P.DEMO_STORY),
-        claudeMd: readCanon("component:spa-view", "soft"), // BH.B5c re-home off CLAUDE.md
         evidenceMd: safeRead(P.CONSUMER_EVIDENCE),
         deltaMd: safeRead(P.DELTA),
         transitionsCss: safeRead(P.TRANSITIONS_CSS),
@@ -343,9 +340,9 @@ function run() {
         )}`,
     );
     console.log(
-        `  W5 ≥2-consumer bar + canon recorded   : ${yn(
+        `  W5 ≥2-consumer bar                    : ${yn(
             facts.w5.evidenceNamesBooked && facts.w5.evidenceNamesDemo && facts.w5.demoBindsSpaView &&
-                facts.w5.claudeNamesComponent && facts.w5.deltaExists,
+                facts.w5.deltaExists,
         )}`,
     );
     console.log(`  self-test bite (no-fork)              : ${yn(bite.biteOk)}  (clean:${yn(bite.cleanOk)} fork-flagged:${yn(bite.forkFlagged)})`);

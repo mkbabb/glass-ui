@@ -60,8 +60,6 @@ import {
     snapshotStamp,
     writeGateArtifact,
 } from "./gate-output.mjs";
-import { readCanon } from "./lib/canon-doc.mjs";
-import { readDesign } from "./lib/design-docs.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 
@@ -94,17 +92,10 @@ function ruleBody(css, needle) {
  * Pure detector — given the source strings, return { facts, violations }.
  * `chassisCss` is the (comment-STRIPPED) instrument-chassis.css; `chassisCssRaw`
  * is the un-stripped source (for the silver-comment narration witness);
- * `vueRaw` the InstrumentChassis.vue source; `claudeMd` / `idiomsMd` read RAW.
+ * `vueRaw` the InstrumentChassis.vue source.
  */
 export function detectPhasePalette(sources) {
-    const { chassisCss, chassisCssRaw, vueRaw, claudeMd, idiomsMd } = sources;
-    // docs/precepts is a git SUBMODULE (a sibling private repo). On a CI runner
-    // the checkout does not initialize it (and cannot — the default token has no
-    // cross-repo grant), so the dir is empty. Absent-submodule → skip-by-policy
-    // (the sibling-gate convention) — never a hard failure on a runner that cannot
-    // see the doc. Locally the design-idioms.md clause BITES. Default true so the
-    // self-test (which supplies a synthetic idiomsMd) keeps biting.
-    const submodulePresent = sources.submodulePresent !== false;
+    const { chassisCss, chassisCssRaw, vueRaw } = sources;
     const facts = {};
     const violations = [];
 
@@ -194,14 +185,12 @@ export function detectPhasePalette(sources) {
         );
     }
 
-    // ── W4 — the canon recorded + the silver doc coherent + silver source fenced ─
+    // ── W4 — the silver doc coherent (source comments) + silver source fenced ────
+    // (BH.B5e: the doc-presence sub-checks over the instrument-chassis README canon
+    // + design-idioms.md — `claudeRecordsSeam` / `idiomsRecordsSeam` — DROPPED; the
+    // in-source silver-twin comment-coherence + the W-NO-GRAY silver-source fence are
+    // KEPT. Canon/design-home authoring rides proof:claude-deletable.)
     facts.w4 = {};
-    // CLAUDE.md records the consumer seam (RAW read — embedded CSS in the doc).
-    facts.w4.claudeRecordsSeam =
-        /--phase-complete-color/.test(claudeMd) &&
-        /InstrumentChassis phase canon/.test(claudeMd);
-    // design-idioms chassis idiom row carries the demotion line (RAW read).
-    facts.w4.idiomsRecordsSeam = /--phase-complete-color/.test(idiomsMd);
     // The silver structure-twin comments name the gold DEFAULT (RAW chassis css +
     // the vue doc): both reference --phase-complete-color near the silver twin.
     facts.w4.cssSilverDocCoherent =
@@ -224,21 +213,6 @@ export function detectPhasePalette(sources) {
         /--twin-line-shadow:\s*color-mix\(in oklab, var\(--color-silver-dark\)/.test(
             chassisCssRaw,
         );
-    if (!facts.w4.claudeRecordsSeam) {
-        violations.push(
-            "W4: the instrument-chassis README's InstrumentChassis phase-canon section must record the `--phase-complete-color` consumer seam",
-        );
-    }
-    if (!submodulePresent) {
-        facts.w4.idiomsSkipped = true;
-        console.log(
-            "  W4 design-idioms: SKIP-BY-POLICY — docs/design/design-idioms.md empty/absent on this runner (the demotion-line clause bites where present)",
-        );
-    } else if (!facts.w4.idiomsRecordsSeam) {
-        violations.push(
-            "W4: design-idioms.md's chassis idiom row must carry the `--phase-complete-color` demotion line",
-        );
-    }
     if (!facts.w4.cssSilverDocCoherent) {
         violations.push(
             "W4: instrument-chassis.css's silver-twin comment must name the warm-gold DEFAULT (reference `--phase-complete-color`), not gold-as-only-ink",
@@ -292,8 +266,6 @@ function selfTest() {
         --phase-tint-amount: var(--phase-tint-peak);
     }`;
     const docsOk = {
-        claudeMd: "### InstrumentChassis phase canon\n--phase-complete-color seam",
-        idiomsMd: "--phase-complete-color demotion line",
         vueRaw:
             'twin of the warm-gold "complete"-phase affirmation … --phase-complete-color',
         chassisCssRaw:
@@ -332,15 +304,6 @@ function run() {
                 "src/components/custom/instrument-chassis/InstrumentChassis.vue",
             ),
         ),
-        // BH.B5c re-home: the phase-canon seam reads the instrument-chassis README
-        // (canon home); the demotion-line idiom reads the extracted docs/design/
-        // design-idioms.md. Markdown read RAW — a /* */ strip would pair across the
-        // embedded CSS examples + prose (the binding-rules directive).
-        claudeMd: readCanon("component:instrument-chassis", "soft"),
-        idiomsMd: readDesign("design-idioms", "soft"),
-        // docs/design/design-idioms.md is the extracted in-repo idiom home (B4c) —
-        // always present on a fresh checkout. Present iff the readDesign body is non-empty.
-        submodulePresent: readDesign("design-idioms", "soft").length > 0,
     };
 
     const { facts, violations } = detectPhasePalette(sources);
@@ -397,10 +360,8 @@ function run() {
         )}`,
     );
     console.log(
-        `  W4 canon recorded + silver doc coherent  : ${yn(
-            facts.w4.claudeRecordsSeam &&
-                facts.w4.idiomsRecordsSeam &&
-                facts.w4.cssSilverDocCoherent &&
+        `  W4 silver doc coherent + source fenced   : ${yn(
+            facts.w4.cssSilverDocCoherent &&
                 facts.w4.vueSilverDocCoherent &&
                 facts.w4.silverSourceIntact,
         )}`,

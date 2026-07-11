@@ -1,0 +1,394 @@
+
+> @mkbabb/glass-ui@4.2.0 demo:dist:build
+> vite build --config demo/vite.demo-dist.config.ts
+
+vite v8.0.13 building client environment for production...
+[2Ktransforming...Found 2 warnings while optimizing generated CSS:
+
+Issue #1:
+[2m│   }[22m
+[2m│ }[22m
+[2m│[22m ::highlight(glass-search-mark) {
+[2m┆[22m             [33m[2m^--[22m 'highlight' is not recognized as a valid pseudo-element. Did you mean ':highlight' (pseudo-class) or is this a typo?[39m
+[2m┆[22m
+[2m│   background-color: var( --text-highlight-search-bg, var(--rainbow-pastel-yellow) );[22m
+[2m│   @supports (color: color-mix(in lab, red, red)) {[22m
+
+Issue #2:
+[2m│   color: var(--text-highlight-search-fg, inherit);[22m
+[2m│ }[22m
+[2m│[22m ::highlight(glass-mark) {
+[2m┆[22m             [33m[2m^--[22m 'highlight' is not recognized as a valid pseudo-element. Did you mean ':highlight' (pseudo-class) or is this a typo?[39m
+[2m┆[22m
+[2m│   background-color: var( --text-highlight-bg, var(--primary) );[22m
+[2m│   @supports (color: color-mix(in lab, red, red)) {[22m
+
+✓ 3775 modules transformed.
+[lightningcss minify] 'highlight' is not recognized as a valid pseudo-element. Did you mean ':highlight' (pseudo-class) or is this a typo?
+852 |  }
+853 |  /*! tailwindcss v4.3.1 | MIT License | https://tailwindcss.com */
+854 |  ....btn-punch>:not(.cartoon-cast){transition:none}}::highlight(glass-search-mark){background-color:var(--text-highlig...
+    |                                                                 ^
+[lightningcss minify] 'highlight' is not recognized as a valid pseudo-element. Did you mean ':highlight' (pseudo-class) or is this a typo?
+852 |  }
+853 |  /*! tailwindcss v4.3.1 | MIT License | https://tailwindcss.com */
+854 |  ...)}@supports (color:color-mix(in lab, red, red)){::highlight(glass-search-mark){background-color:var(--text-highlig...
+    |                                                                 ^
+[lightningcss minify] 'highlight' is not recognized as a valid pseudo-element. Did you mean ':highlight' (pseudo-class) or is this a typo?
+852 |  }
+853 |  /*! tailwindcss v4.3.1 | MIT License | https://tailwindcss.com */
+854 |  ...ar(--rainbow-pastel-yellow) 55%, transparent))}}::highlight(glass-search-mark){color:var(--text-highlight-search-f...
+    |                                                                 ^
+[lightningcss minify] 'highlight' is not recognized as a valid pseudo-element. Did you mean ':highlight' (pseudo-class) or is this a typo?
+852 |  }
+853 |  /*! tailwindcss v4.3.1 | MIT License | https://tailwindcss.com */
+854 |  ...){color:var(--text-highlight-search-fg,inherit)}::highlight(glass-mark){background-color:var(--text-highlight-bg,v...
+    |                                                                 ^
+[lightningcss minify] 'highlight' is not recognized as a valid pseudo-element. Did you mean ':highlight' (pseudo-class) or is this a typo?
+852 |  }
+853 |  /*! tailwindcss v4.3.1 | MIT License | https://tailwindcss.com */
+854 |  ...)}@supports (color:color-mix(in lab, red, red)){::highlight(glass-mark){background-color:var(--text-highlight-bg,c...
+    |                                                                 ^
+[lightningcss minify] 'highlight' is not recognized as a valid pseudo-element. Did you mean ':highlight' (pseudo-class) or is this a typo?
+852 |  }
+853 |  /*! tailwindcss v4.3.1 | MIT License | https://tailwindcss.com */
+854 |  ...mix(in srgb, var(--primary) 18%, transparent))}}::highlight(glass-mark){color:var(--text-highlight-fg,inherit)}@me...
+    |                                                                 ^
+rendering chunks...
+computing gzip size...
+dist-demo/index.html                                           2.02 kB │ gzip:   1.02 kB
+dist-demo/assets/fira-code-latin-ext-Dvfvaomy.woff2           13.27 kB
+dist-demo/assets/plus-jakarta-sans-latin-ext-DmpS2jIq.woff2   21.72 kB
+dist-demo/assets/plus-jakarta-sans-latin-eXO_dkmS.woff2       27.34 kB
+dist-demo/assets/fira-code-latin-CHoedHDv.woff2               36.27 kB
+dist-demo/assets/aurora-x1XGuNl0.css                           0.00 kB │ gzip:   0.02 kB
+dist-demo/assets/layers-CItVTmgO.css                           0.05 kB │ gzip:   0.07 kB
+dist-demo/assets/overview-BBveFaWa.css                         0.05 kB │ gzip:   0.07 kB
+dist-demo/assets/SiriWaveform-81_ewEvi.css                     0.08 kB │ gzip:   0.09 kB
+dist-demo/assets/MetricBadge-CaeAgE4v.css                      0.08 kB │ gzip:   0.09 kB
+dist-demo/assets/animated-digit-Bc2Y4qvl.css                   0.12 kB │ gzip:   0.12 kB
+dist-demo/assets/morph-showcase-BEiPIap4.css                   0.13 kB │ gzip:   0.12 kB
+dist-demo/assets/auth-shell-DVpkI9oR.css                       0.13 kB │ gzip:   0.11 kB
+dist-demo/assets/expandable-container-CAUhRzvP.css             0.13 kB │ gzip:   0.13 kB
+dist-demo/assets/intro-BsqA4xzP.css                            0.14 kB │ gzip:   0.14 kB
+dist-demo/assets/hero-BqLVcpqt.css                             0.15 kB │ gzip:   0.15 kB
+dist-demo/assets/css-utilities-D708fROm.css                    0.20 kB │ gzip:   0.10 kB
+dist-demo/assets/sortable-list-B_DMLkUZ.css                    0.22 kB │ gzip:   0.15 kB
+dist-demo/assets/shadows-9d9tdUlx.css                          0.26 kB │ gzip:   0.15 kB
+dist-demo/assets/settings-BuiP4lAu.css                         0.26 kB │ gzip:   0.17 kB
+dist-demo/assets/concentric-D6AB3GTm.css                       0.28 kB │ gzip:   0.17 kB
+dist-demo/assets/dot-matrix-DKMoifjr.css                       0.28 kB │ gzip:   0.18 kB
+dist-demo/assets/dot-flow-field-Bx25N_gC.css                   0.28 kB │ gzip:   0.18 kB
+dist-demo/assets/gate-pattern-BYvAo-0q.css                     0.30 kB │ gzip:   0.20 kB
+dist-demo/assets/Constellation-BZTQhszY.css                    0.31 kB │ gzip:   0.18 kB
+dist-demo/assets/DockStage-DplvtvDk.css                        0.35 kB │ gzip:   0.22 kB
+dist-demo/assets/reveal-DMU_VXFo.css                           0.35 kB │ gzip:   0.20 kB
+dist-demo/assets/notification-CNdi_A--.css                     0.42 kB │ gzip:   0.17 kB
+dist-demo/assets/timeline-continuous--9f2hpl_.css              0.44 kB │ gzip:   0.19 kB
+dist-demo/assets/LabeledField-BiYTXUsA.css                     0.46 kB │ gzip:   0.21 kB
+dist-demo/assets/ShowcaseFrame-CZI8c-28.css                    0.46 kB │ gzip:   0.23 kB
+dist-demo/assets/cta-receive-CuDldeoe.css                      0.50 kB │ gzip:   0.25 kB
+dist-demo/assets/typewriter-D7m6YgK4.css                       0.57 kB │ gzip:   0.30 kB
+dist-demo/assets/StoryHero-zDHxzbYV.css                        0.61 kB │ gzip:   0.27 kB
+dist-demo/assets/header-ribbon-CrBKperL.css                    0.66 kB │ gzip:   0.26 kB
+dist-demo/assets/overlays-scrims-CF7PLcsE.css                  0.66 kB │ gzip:   0.35 kB
+dist-demo/assets/configurator-CTL4kTC_.css                     0.69 kB │ gzip:   0.22 kB
+dist-demo/assets/surface-tints-CzYhMjDz.css                    0.80 kB │ gzip:   0.38 kB
+dist-demo/assets/liquid-playground-D5Q01O3V.css                0.81 kB │ gzip:   0.38 kB
+dist-demo/assets/paper-glass-6wudztu3.css                      0.88 kB │ gzip:   0.35 kB
+dist-demo/assets/DockLayer-BBt6Qgyo.css                        0.89 kB │ gzip:   0.29 kB
+dist-demo/assets/paper-texture-mcF7XL-8.css                    0.94 kB │ gzip:   0.27 kB
+dist-demo/assets/GooBlob-DGErTeWA.css                          1.01 kB │ gzip:   0.43 kB
+dist-demo/assets/handmark-Bw0oy586.css                         1.02 kB │ gzip:   0.40 kB
+dist-demo/assets/scrolling-text-DAJOhRT2.css                   1.10 kB │ gzip:   0.42 kB
+dist-demo/assets/capture-Ct1cmmnA.css                          1.13 kB │ gzip:   0.35 kB
+dist-demo/assets/Skeleton-CR9DvlIl.css                         1.15 kB │ gzip:   0.46 kB
+dist-demo/assets/StackedIconGroup-CQ-dsKfV.css                 1.16 kB │ gzip:   0.42 kB
+dist-demo/assets/curve-gallery-BJy3lqQx.css                    1.27 kB │ gzip:   0.49 kB
+dist-demo/assets/card-q0ZtTM3w.css                             1.37 kB │ gzip:   0.53 kB
+dist-demo/assets/SortableItem-BI_LzfFB.css                     1.38 kB │ gzip:   0.49 kB
+dist-demo/assets/siri-island-wIErPUrb.css                      1.48 kB │ gzip:   0.51 kB
+dist-demo/assets/DockExampleTile-BkHO9EzN.css                  1.58 kB │ gzip:   0.59 kB
+dist-demo/assets/pulse-Dt_9f1Jp.css                            1.67 kB │ gzip:   0.61 kB
+dist-demo/assets/dock-search-DAaGwptF.css                      1.75 kB │ gzip:   0.64 kB
+dist-demo/assets/instrument-chassis-BVfQZ2i7.css               1.87 kB │ gzip:   0.64 kB
+dist-demo/assets/PagerDots-CYsXiak9.css                        2.64 kB │ gzip:   0.79 kB
+dist-demo/assets/blob-n5DjCYB8.css                             2.73 kB │ gzip:   0.67 kB
+dist-demo/assets/SectionPreviewCard-oqrKgkhk.css               2.92 kB │ gzip:   0.84 kB
+dist-demo/assets/carousel-B99TJlC5.css                         2.94 kB │ gzip:   0.91 kB
+dist-demo/assets/SectionLanding-DSTwwPgT.css                   2.96 kB │ gzip:   0.87 kB
+dist-demo/assets/metric-stack-CkYW_hZK.css                     3.48 kB │ gzip:   1.05 kB
+dist-demo/assets/progress-GPOCUfSz.css                         3.91 kB │ gzip:   1.03 kB
+dist-demo/assets/deck-Cg_QIpzU.css                             4.04 kB │ gzip:   1.16 kB
+dist-demo/assets/neutral-IAB5FU_9.css                          5.02 kB │ gzip:   1.26 kB
+dist-demo/assets/GlassTimeline-DRb26xfi.css                   13.88 kB │ gzip:   2.88 kB
+dist-demo/assets/dock-gallery-DTVUGz96.css                    17.89 kB │ gzip:   3.46 kB
+dist-demo/assets/index-CybQSBXJ.css                          406.44 kB │ gzip:  68.25 kB
+dist-demo/assets/minus-C9BO6ZNq.js                             0.10 kB │ gzip:   0.12 kB
+dist-demo/assets/check-0FKsxLF1.js                             0.11 kB │ gzip:   0.13 kB
+dist-demo/assets/coalesceMetric-DM66Jc2d.js                    0.11 kB │ gzip:   0.11 kB
+dist-demo/assets/circle-Wr20rDM9.js                            0.12 kB │ gzip:   0.12 kB
+dist-demo/assets/loader-circle-6xoQaYIe.js                     0.13 kB │ gzip:   0.14 kB
+dist-demo/assets/isValueEqualOrExist-B6W07G4V.js               0.13 kB │ gzip:   0.13 kB
+dist-demo/assets/plus-DBKPSP8y.js                              0.14 kB │ gzip:   0.14 kB
+dist-demo/assets/arrow-left-Bqr4VL8z.js                        0.15 kB │ gzip:   0.15 kB
+dist-demo/assets/vReveal-CsT6qIem.js                           0.15 kB │ gzip:   0.14 kB
+dist-demo/assets/gauge-BIZm-uGJ.js                             0.16 kB │ gzip:   0.16 kB
+dist-demo/assets/circle-check-DKQColEw.js                      0.16 kB │ gzip:   0.16 kB
+dist-demo/assets/command-xtOCoqZY.js                           0.17 kB │ gzip:   0.15 kB
+dist-demo/assets/menu-DJ07JttD.js                              0.17 kB │ gzip:   0.14 kB
+dist-demo/assets/play-CXM-58Vw.js                              0.18 kB │ gzip:   0.17 kB
+dist-demo/assets/info-g5C3wS9q.js                              0.19 kB │ gzip:   0.17 kB
+dist-demo/assets/lock-CYqQuDbN.js                              0.19 kB │ gzip:   0.18 kB
+dist-demo/assets/circle-x-KRCAll6F.js                          0.19 kB │ gzip:   0.17 kB
+dist-demo/assets/pause--UBIvf8f.js                             0.20 kB │ gzip:   0.15 kB
+dist-demo/assets/bookmark-PPTyW8KM.js                          0.22 kB │ gzip:   0.19 kB
+dist-demo/assets/library-CNtyGPSg.js                           0.22 kB │ gzip:   0.17 kB
+dist-demo/assets/upload-DcG4Lg0c.js                            0.22 kB │ gzip:   0.18 kB
+dist-demo/assets/download-D4bLe1-S.js                          0.22 kB │ gzip:   0.18 kB
+dist-demo/assets/copy-DLmhq8r1.js                              0.22 kB │ gzip:   0.19 kB
+dist-demo/assets/message-circle-KtRsc3xI.js                    0.23 kB │ gzip:   0.20 kB
+dist-demo/assets/circle-question-mark-CRUlFpB1.js              0.23 kB │ gzip:   0.20 kB
+dist-demo/assets/circle-alert-TIgYRd5M.js                      0.24 kB │ gzip:   0.18 kB
+dist-demo/assets/heart-Bwndi6zV.js                             0.24 kB │ gzip:   0.20 kB
+dist-demo/assets/waves-horizontal-QHMFU6yV.js                  0.24 kB │ gzip:   0.17 kB
+dist-demo/assets/zap-DLXojowK.js                               0.25 kB │ gzip:   0.19 kB
+dist-demo/assets/triangle-alert-DxyGA9ZE.js                    0.25 kB │ gzip:   0.20 kB
+dist-demo/assets/book-open-Dl_w0eMm.js                         0.26 kB │ gzip:   0.19 kB
+dist-demo/assets/house-DWmIcDbU.js                             0.27 kB │ gzip:   0.20 kB
+dist-demo/assets/shield-check-BVetF1cl.js                      0.31 kB │ gzip:   0.24 kB
+dist-demo/assets/tag-CkClK_Q6.js                               0.31 kB │ gzip:   0.24 kB
+dist-demo/assets/trash-2-Dq9U1L_y.js                           0.31 kB │ gzip:   0.21 kB
+dist-demo/assets/file-question-mark-llrjYRVB.js                0.32 kB │ gzip:   0.24 kB
+dist-demo/assets/PopoverTrigger-CbCoEPe3.js                    0.33 kB │ gzip:   0.26 kB
+dist-demo/assets/useLiquidReveal-DO5RAX5K.js                   0.33 kB │ gzip:   0.25 kB
+dist-demo/assets/share-2-CXW0c_xq.js                           0.34 kB │ gzip:   0.22 kB
+dist-demo/assets/DialogFooter-Cn33FgzP.js                      0.35 kB │ gzip:   0.27 kB
+dist-demo/assets/grip-vertical-CYg76Kyu.js                     0.36 kB │ gzip:   0.18 kB
+dist-demo/assets/package-CdC8-klG.js                           0.36 kB │ gzip:   0.25 kB
+dist-demo/assets/CardContent-ugbmCRpf.js                       0.36 kB │ gzip:   0.27 kB
+dist-demo/assets/file-text-fZXUiQIe.js                         0.37 kB │ gzip:   0.24 kB
+dist-demo/assets/volume-2-D1qtWQav.js                          0.38 kB │ gzip:   0.26 kB
+dist-demo/assets/skip-forward-C8e64dKq.js                      0.41 kB │ gzip:   0.25 kB
+dist-demo/assets/sliders-horizontal-B6TdTvPP.js                0.41 kB │ gzip:   0.23 kB
+dist-demo/assets/minimize-2-BdSHaUnm.js                        0.41 kB │ gzip:   0.24 kB
+dist-demo/assets/star-CToiuQE0.js                              0.46 kB │ gzip:   0.28 kB
+dist-demo/assets/IconTooltip-j6XYZVxv.js                       0.46 kB │ gzip:   0.30 kB
+dist-demo/assets/settings-YtnNAM-z.js                          0.47 kB │ gzip:   0.25 kB
+dist-demo/assets/underline-Bvr09QQw.js                         0.48 kB │ gzip:   0.29 kB
+dist-demo/assets/PaperBackdrop-rf3foqOH.js                     0.51 kB │ gzip:   0.36 kB
+dist-demo/assets/sun-gXm1-uOe.js                               0.62 kB │ gzip:   0.33 kB
+dist-demo/assets/Skeleton-C1ecCg7q.js                          0.63 kB │ gzip:   0.39 kB
+dist-demo/assets/chipVariants-DicQK55q.js                      0.70 kB │ gzip:   0.37 kB
+dist-demo/assets/DockExampleTile-BfpkmM5A.js                   0.71 kB │ gzip:   0.42 kB
+dist-demo/assets/LabeledSwitch-D6p871GF.js                     0.74 kB │ gzip:   0.44 kB
+dist-demo/assets/SelectGroup-DUNlXlOI.js                       0.77 kB │ gzip:   0.43 kB
+dist-demo/assets/DockBackgroundToggle-u5xE-a5F.js              0.78 kB │ gzip:   0.45 kB
+dist-demo/assets/DockStage-qX8nUrAi.js                         0.78 kB │ gzip:   0.50 kB
+dist-demo/assets/useScrollTo-BH8Q8JF8.js                       0.79 kB │ gzip:   0.46 kB
+dist-demo/assets/LabeledSlider-DLGOfcyR.js                     0.82 kB │ gzip:   0.47 kB
+dist-demo/assets/scrollReader-D8DvwEbB.js                      0.83 kB │ gzip:   0.39 kB
+dist-demo/assets/toggle-chip-CEvfvoZX.js                       0.83 kB │ gzip:   0.47 kB
+dist-demo/assets/useSingleOrMultipleValue-C9VKXxjl.js          0.85 kB │ gzip:   0.43 kB
+dist-demo/assets/MenuCheckboxItem-pvQ21uBY.js                  0.86 kB │ gzip:   0.50 kB
+dist-demo/assets/StoryPlayButton-DaaNvzYX.js                   0.91 kB │ gzip:   0.52 kB
+dist-demo/assets/Textarea-B0A_Co9u.js                          0.91 kB │ gzip:   0.54 kB
+dist-demo/assets/TokenLadder-Z-CnHinc.js                       0.91 kB │ gzip:   0.53 kB
+dist-demo/assets/options-BBS3g_6Z.js                           0.96 kB │ gzip:   0.36 kB
+dist-demo/assets/FamilyTabs-Cz7xkEbi.js                        0.97 kB │ gzip:   0.56 kB
+dist-demo/assets/LabeledInput-D-FNbU-O.js                      0.97 kB │ gzip:   0.54 kB
+dist-demo/assets/useArrowNavigation-BXJUPAf4.js                1.01 kB │ gzip:   0.60 kB
+dist-demo/assets/spectrum-walk-Blw0i-US.js                     1.02 kB │ gzip:   0.64 kB
+dist-demo/assets/NotFound-D0V9uMYV.js                          1.09 kB │ gzip:   0.67 kB
+dist-demo/assets/Input-ZhxEUCFX.js                             1.11 kB │ gzip:   0.60 kB
+dist-demo/assets/CardDescription-BZZ9W1h1.js                   1.12 kB │ gzip:   0.48 kB
+dist-demo/assets/SearchBar-DTyuvE2p.js                         1.13 kB │ gzip:   0.63 kB
+dist-demo/assets/split-chars-iDGDo3B5.js                       1.15 kB │ gzip:   0.70 kB
+dist-demo/assets/ShowcaseFrame-DR3tahlG.js                     1.19 kB │ gzip:   0.62 kB
+dist-demo/assets/NucleiOverlay-Dk4WVN1O.js                     1.19 kB │ gzip:   0.69 kB
+dist-demo/assets/useCountup-CuNMhVoD.js                        1.21 kB │ gzip:   0.61 kB
+dist-demo/assets/InstrumentChassis-D3jj84Vv.js                 1.32 kB │ gzip:   0.60 kB
+dist-demo/assets/useDockSearch-Be61QSTk.js                     1.35 kB │ gzip:   0.73 kB
+dist-demo/assets/VizStudio-OCqTwaxE.js                         1.39 kB │ gzip:   0.71 kB
+dist-demo/assets/LabeledSelect-DRuTKvZZ.js                     1.40 kB │ gzip:   0.71 kB
+dist-demo/assets/scroll-DEfNY-bD.js                            1.43 kB │ gzip:   0.68 kB
+dist-demo/assets/text-motion-B71A4c1f.js                       1.59 kB │ gzip:   0.71 kB
+dist-demo/assets/LabeledField-km-axHat.js                      1.62 kB │ gzip:   0.73 kB
+dist-demo/assets/PresetPickerRow-ClVX3EEs.js                   1.62 kB │ gzip:   0.89 kB
+dist-demo/assets/ConfirmDialog-DDT5zG7Z.js                     1.64 kB │ gzip:   0.82 kB
+dist-demo/assets/RovingFocusItem-CbwNMAxn.js                   1.71 kB │ gzip:   0.86 kB
+dist-demo/assets/IconChip-7EoMbwMl.js                          1.76 kB │ gzip:   0.81 kB
+dist-demo/assets/useConfiguratorState-DVyrZV87.js              1.77 kB │ gzip:   0.87 kB
+dist-demo/assets/badge-D34X0VTm.js                             1.78 kB │ gzip:   0.87 kB
+dist-demo/assets/icon-tooltip-B04UBi_U.js                      1.80 kB │ gzip:   0.87 kB
+dist-demo/assets/intro-B8HeQbOa.js                             1.87 kB │ gzip:   1.10 kB
+dist-demo/assets/engine-badge-BMNFMUyd.js                      1.87 kB │ gzip:   1.06 kB
+dist-demo/assets/RovingFocusGroup-B7avREHD.js                  1.97 kB │ gzip:   0.94 kB
+dist-demo/assets/metrics-BL2BZhIV.js                           1.98 kB │ gzip:   0.82 kB
+dist-demo/assets/atoms-Bpi9sYV1.js                             2.05 kB │ gzip:   0.84 kB
+dist-demo/assets/TableEmpty-CLvh_k3m.js                        2.09 kB │ gzip:   0.71 kB
+dist-demo/assets/HoverPopover-DjCI5Y6g.js                      2.09 kB │ gzip:   1.02 kB
+dist-demo/assets/shadows-Ek7voalm.js                           2.10 kB │ gzip:   0.99 kB
+dist-demo/assets/radii-CbrcpWMq.js                             2.10 kB │ gzip:   0.79 kB
+dist-demo/assets/Separator-DtrIROzy.js                         2.12 kB │ gzip:   0.85 kB
+dist-demo/assets/StackedIconGroup-DaN738nJ.js                  2.28 kB │ gzip:   1.00 kB
+dist-demo/assets/separator-D8hjT4xF.js                         2.32 kB │ gzip:   0.70 kB
+dist-demo/assets/glass-panel-ChCP9s_e.js                       2.38 kB │ gzip:   1.22 kB
+dist-demo/assets/overlays-scrims-BDFCIiXu.js                   2.41 kB │ gzip:   1.10 kB
+dist-demo/assets/countup-DENv4o3P.js                           2.42 kB │ gzip:   0.93 kB
+dist-demo/assets/useElementMorph-BQv2o8kk.js                   2.44 kB │ gzip:   1.12 kB
+dist-demo/assets/spa-view-Cq7rNt7n.js                          2.45 kB │ gzip:   1.27 kB
+dist-demo/assets/MetricBadge-BUmmj7IW.js                       2.64 kB │ gzip:   0.91 kB
+dist-demo/assets/hero-UtCa_jAF.js                              2.68 kB │ gzip:   1.40 kB
+dist-demo/assets/sections-NpK8lNEc.js                          2.70 kB │ gzip:   1.10 kB
+dist-demo/assets/Toggle-CvKbmXcS.js                            2.71 kB │ gzip:   1.02 kB
+dist-demo/assets/dark-mode-toggle-BPQtmodU.js                  2.74 kB │ gzip:   1.22 kB
+dist-demo/assets/reveal-BlV9LDJT.js                            2.75 kB │ gzip:   1.32 kB
+dist-demo/assets/useFuzzySearch-BqHUi3NZ.js                    2.80 kB │ gzip:   1.33 kB
+dist-demo/assets/surface-tints-NS7EROQ9.js                     2.90 kB │ gzip:   1.09 kB
+dist-demo/assets/stacked-icons-lxArjBNP.js                     2.93 kB │ gzip:   1.32 kB
+dist-demo/assets/StorySection-DHUnnVUH.js                      2.95 kB │ gzip:   1.40 kB
+dist-demo/assets/toggle-chip-CS80fy0y.js                       3.04 kB │ gzip:   1.49 kB
+dist-demo/assets/Configurator-BCt1O64i.js                      3.05 kB │ gzip:   1.31 kB
+dist-demo/assets/virtual-section-BRnJYxy0.js                   3.09 kB │ gzip:   1.60 kB
+dist-demo/assets/selectable-chip-DGioJWoe.js                   3.12 kB │ gzip:   1.42 kB
+dist-demo/assets/sheet-D3KCap6n.js                             3.20 kB │ gzip:   1.47 kB
+dist-demo/assets/SectionLanding-C4Na1h-m.js                    3.27 kB │ gzip:   1.39 kB
+dist-demo/assets/textarea-BT7fsroI.js                          3.32 kB │ gzip:   1.34 kB
+dist-demo/assets/CollapsibleTrigger-CLGT4UwZ.js                3.33 kB │ gzip:   1.29 kB
+dist-demo/assets/useBloomUp-DLBKU37f.js                        3.33 kB │ gzip:   1.38 kB
+dist-demo/assets/aurora-d_itYe_4.js                            3.40 kB │ gzip:   1.77 kB
+dist-demo/assets/toaster-DrOkslLF.js                           3.40 kB │ gzip:   1.57 kB
+dist-demo/assets/OklchStopRow-DN3imuRI.js                      3.41 kB │ gzip:   1.34 kB
+dist-demo/assets/useScrollChrome-CmJ24Ydt.js                   3.44 kB │ gzip:   1.59 kB
+dist-demo/assets/avatar-CFes17LJ.js                            3.46 kB │ gzip:   1.39 kB
+dist-demo/assets/skeleton-DY6juXAw.js                          3.51 kB │ gzip:   1.11 kB
+dist-demo/assets/avatar-sPH2mn1V.js                            3.59 kB │ gzip:   1.33 kB
+dist-demo/assets/scrolling-text-nS2jwdy8.js                    3.59 kB │ gzip:   1.69 kB
+dist-demo/assets/AuroraStage-6ScaV2cc.js                       3.62 kB │ gzip:   1.57 kB
+dist-demo/assets/math-paper-ClxXl21i.js                        3.62 kB │ gzip:   1.70 kB
+dist-demo/assets/StoryPage-wIfa3P3U.js                         3.63 kB │ gzip:   1.58 kB
+dist-demo/assets/typography-3IJ7NodC.js                        3.64 kB │ gzip:   1.45 kB
+dist-demo/assets/animated-digit-B9Tak0rU.js                    3.67 kB │ gzip:   1.64 kB
+dist-demo/assets/label-CvBokLE6.js                             3.67 kB │ gzip:   1.39 kB
+dist-demo/assets/header-ribbon-CuI7_SDB.js                     3.68 kB │ gzip:   1.66 kB
+dist-demo/assets/empty-states-gG17pYjJ.js                      3.72 kB │ gzip:   1.85 kB
+dist-demo/assets/infinite-scroll-BQLhqwRL.js                   3.77 kB │ gzip:   1.89 kB
+dist-demo/assets/useVirtualSectionWindow-Bilrge5T.js           3.79 kB │ gzip:   1.53 kB
+dist-demo/assets/drawer-DiC3KAgI.js                            3.82 kB │ gzip:   1.55 kB
+dist-demo/assets/colors-p9NeRG3q.js                            3.84 kB │ gzip:   1.53 kB
+dist-demo/assets/tooltip-C8bO-jVw.js                           3.85 kB │ gzip:   1.46 kB
+dist-demo/assets/form-validation-Cl4mQrTF.js                   3.89 kB │ gzip:   1.59 kB
+dist-demo/assets/metric-pill-0ffRlML4.js                       3.92 kB │ gzip:   1.47 kB
+dist-demo/assets/slider-D1tvILri.js                            4.01 kB │ gzip:   1.47 kB
+dist-demo/assets/motion-EW0aD4HD.js                            4.04 kB │ gzip:   1.86 kB
+dist-demo/assets/chart-chassis-palette-DdcjFr2y.js             4.06 kB │ gzip:   1.58 kB
+dist-demo/assets/morph-showcase-DaTElkUa.js                    4.10 kB │ gzip:   1.74 kB
+dist-demo/assets/status-dot-DHkMkUDk.js                        4.11 kB │ gzip:   1.51 kB
+dist-demo/assets/timeline-segmented-Bm7tNSbP.js                4.13 kB │ gzip:   1.60 kB
+dist-demo/assets/css-utilities-D_wM9tlb.js                     4.22 kB │ gzip:   1.26 kB
+dist-demo/assets/popover-CqoEG1oQ.js                           4.23 kB │ gzip:   1.45 kB
+dist-demo/assets/gate-pattern-DA5KekFm.js                      4.32 kB │ gzip:   1.94 kB
+dist-demo/assets/ToggleGroupItem-DA7dP1xA.js                   4.33 kB │ gzip:   1.74 kB
+dist-demo/assets/section-CKwHBdo8.js                           4.38 kB │ gzip:   1.76 kB
+dist-demo/assets/drawer-live-behind-BJuwIGjv.js                4.38 kB │ gzip:   1.62 kB
+dist-demo/assets/timeline-DmyyRPHa.js                          4.40 kB │ gzip:   1.91 kB
+dist-demo/assets/cta-receive-C2-S_IAq.js                       4.42 kB │ gzip:   1.97 kB
+dist-demo/assets/SiriWaveform-orIkEwDM.js                      4.42 kB │ gzip:   2.27 kB
+dist-demo/assets/Checkbox-BYE57Y7N.js                          4.46 kB │ gzip:   1.75 kB
+dist-demo/assets/dialog-C1ApG8_5.js                            4.51 kB │ gzip:   1.83 kB
+dist-demo/assets/timeline-continuous-CYSeMTJB.js               4.60 kB │ gzip:   1.83 kB
+dist-demo/assets/collapsible-BOxDPnS_.js                       4.64 kB │ gzip:   1.86 kB
+dist-demo/assets/checks-5xDnDMUm.js                            4.75 kB │ gzip:   1.62 kB
+dist-demo/assets/pulse-BrsnlwAw.js                             4.77 kB │ gzip:   1.34 kB
+dist-demo/assets/scroll-vt-OHBZqjZ-.js                         4.77 kB │ gzip:   2.01 kB
+dist-demo/assets/hover-card-CZGWABYa.js                        4.84 kB │ gzip:   2.02 kB
+dist-demo/assets/labeled-field-DH6KxEHJ.js                     4.86 kB │ gzip:   2.04 kB
+dist-demo/assets/icons-C9F1PjkZ.js                             4.86 kB │ gzip:   1.92 kB
+dist-demo/assets/auth-shell-Dt3HRX9H.js                        4.90 kB │ gzip:   2.16 kB
+dist-demo/assets/notification-DS2Jt5XC.js                      4.97 kB │ gzip:   2.26 kB
+dist-demo/assets/MenuSeparator-lzN0KbcH.js                     5.04 kB │ gzip:   1.72 kB
+dist-demo/assets/select-BXZ8aLxW.js                            5.13 kB │ gzip:   1.73 kB
+dist-demo/assets/completion-seal-D32JzH15.js                   5.16 kB │ gzip:   1.94 kB
+dist-demo/assets/hover-popover-C_qUqmVt.js                     5.24 kB │ gzip:   1.76 kB
+dist-demo/assets/paper-texture-nVwXs2Bz.js                     5.25 kB │ gzip:   1.73 kB
+dist-demo/assets/metric-stack-DU36hR2s.js                      5.28 kB │ gzip:   2.02 kB
+dist-demo/assets/alert-ChFCmGI2.js                             5.34 kB │ gzip:   1.82 kB
+dist-demo/assets/metric-cell-DMPJf7yY.js                       5.35 kB │ gzip:   2.15 kB
+dist-demo/assets/buttons-neCkyuwH.js                           5.50 kB │ gzip:   2.04 kB
+dist-demo/assets/badge-DTA588cI.js                             5.65 kB │ gzip:   1.83 kB
+dist-demo/assets/table-OWVgrtbu.js                             5.66 kB │ gzip:   2.17 kB
+dist-demo/assets/dock-search-DWZkkbxC.js                       5.68 kB │ gzip:   2.77 kB
+dist-demo/assets/confirm-dialog-BgnlXfc0.js                    5.69 kB │ gzip:   2.24 kB
+dist-demo/assets/paper-glass-BBaKppBX.js                       5.98 kB │ gzip:   2.25 kB
+dist-demo/assets/ContextMenuContent-Qcp42PB9.js                6.00 kB │ gzip:   2.06 kB
+dist-demo/assets/scroll-system-DLlW--si.js                     6.07 kB │ gzip:   2.26 kB
+dist-demo/assets/command-B6JylrqK.js                           6.10 kB │ gzip:   2.40 kB
+dist-demo/assets/SectionPreviewCard-8di4gGOv.js                6.23 kB │ gzip:   2.72 kB
+dist-demo/assets/toggle-Ca_QlKUM.js                            6.30 kB │ gzip:   2.25 kB
+dist-demo/assets/toast-DvEqKxp_.js                             6.31 kB │ gzip:   2.74 kB
+dist-demo/assets/multi-select-Cc7iykns.js                      6.33 kB │ gzip:   2.51 kB
+dist-demo/assets/settings-DQJl9U3H.js                          6.36 kB │ gzip:   1.97 kB
+dist-demo/assets/scroll-choreography-B1IlXyuE.js               6.39 kB │ gzip:   2.59 kB
+dist-demo/assets/inputs-rec6dqEm.js                            6.43 kB │ gzip:   2.33 kB
+dist-demo/assets/deck-fhJKbMwl.js                              6.47 kB │ gzip:   3.12 kB
+dist-demo/assets/tabs-z7kpXWj5.js                              6.53 kB │ gzip:   2.53 kB
+dist-demo/assets/RadioGroupItem-Br64Mbuw.js                    6.57 kB │ gzip:   2.20 kB
+dist-demo/assets/SortableItem-Bj4bpvD0.js                      6.63 kB │ gzip:   2.67 kB
+dist-demo/assets/siri-island-DJ-qu534.js                       6.64 kB │ gzip:   2.94 kB
+dist-demo/assets/HoverCardTrigger-C9LIW7ta.js                  6.67 kB │ gzip:   2.09 kB
+dist-demo/assets/instrument-chassis-DEo7E9G-.js                6.77 kB │ gzip:   2.38 kB
+dist-demo/assets/sortable-list-CeJF53lq.js                     6.84 kB │ gzip:   2.10 kB
+dist-demo/assets/expandable-container-eUOIS-10.js              7.06 kB │ gzip:   2.72 kB
+dist-demo/assets/rail-DDAnIHsy.js                              7.23 kB │ gzip:   2.46 kB
+dist-demo/assets/springs-CfYY_cHK.js                           7.25 kB │ gzip:   3.13 kB
+dist-demo/assets/metric-badge-B9TOkBDO.js                      7.74 kB │ gzip:   2.00 kB
+dist-demo/assets/context-menu-BsVmO5gO.js                      7.75 kB │ gzip:   2.06 kB
+dist-demo/assets/configurator-B8K0f38m.js                      7.79 kB │ gzip:   3.13 kB
+dist-demo/assets/DrawerDescription-D1Rq4KsW.js                 8.43 kB │ gzip:   3.16 kB
+dist-demo/assets/PagerDots-Dq3BftWb.js                         8.50 kB │ gzip:   3.35 kB
+dist-demo/assets/layers-CUQ_paoE.js                            8.61 kB │ gzip:   2.54 kB
+dist-demo/assets/liquid-grid-C_K_cHdp.js                       9.05 kB │ gzip:   3.16 kB
+dist-demo/assets/DropdownMenuLabel-CQ66PWCH.js                 9.33 kB │ gzip:   2.68 kB
+dist-demo/assets/accordion-BNlVMqrT.js                         9.67 kB │ gzip:   3.30 kB
+dist-demo/assets/toc-tracking-DScoObOb.js                      9.96 kB │ gzip:   3.75 kB
+dist-demo/assets/combobox-Bs7vcEw1.js                         10.25 kB │ gzip:   3.27 kB
+dist-demo/assets/MenuPortal-BXCQgH1j.js                       11.07 kB │ gzip:   3.02 kB
+dist-demo/assets/PopoverContent-B8rpFIQU.js                   11.26 kB │ gzip:   2.45 kB
+dist-demo/assets/glass-material-O750L_T2.js                   11.34 kB │ gzip:   3.70 kB
+dist-demo/assets/data-table-xdHIivKH.js                       12.34 kB │ gzip:   4.35 kB
+dist-demo/assets/tags-input-QiaKF491.js                       12.84 kB │ gzip:   4.13 kB
+dist-demo/assets/fourier-field-Cxe1d54z.js                    12.84 kB │ gzip:   4.65 kB
+dist-demo/assets/presets-Sumz24C7.js                          12.89 kB │ gzip:   2.99 kB
+dist-demo/assets/GlassTimeline-BqjzGySb.js                    12.90 kB │ gzip:   4.29 kB
+dist-demo/assets/DockLayer-DOP6xumu.js                        13.88 kB │ gzip:   5.06 kB
+dist-demo/assets/progress-DBuXb9ol.js                         14.96 kB │ gzip:   4.87 kB
+dist-demo/assets/dropdown-menu-Cgh7pFYj.js                    15.28 kB │ gzip:   4.13 kB
+dist-demo/assets/constellation-B2slZ8he.js                    15.89 kB │ gzip:   5.15 kB
+dist-demo/assets/dock-gallery-CzK18LUJ.js                     16.84 kB │ gzip:   5.54 kB
+dist-demo/assets/use-toast-BMEJBilI.js                        16.89 kB │ gzip:   5.59 kB
+dist-demo/assets/typewriter-DZrOBJES.js                       17.47 kB │ gzip:   5.74 kB
+dist-demo/assets/liquid-playground-BhMp51m-.js                17.74 kB │ gzip:   5.88 kB
+dist-demo/assets/blob-C76hpq0o.js                             19.89 kB │ gzip:   7.27 kB
+dist-demo/assets/card-BmEhu6KL.js                             20.99 kB │ gzip:   6.35 kB
+dist-demo/assets/overview-C6e5flob.js                         21.15 kB │ gzip:   5.68 kB
+dist-demo/assets/number-field-CkNEe7Di.js                     22.28 kB │ gzip:   6.77 kB
+dist-demo/assets/handmark-BjilSxgH.js                         24.11 kB │ gzip:   9.50 kB
+dist-demo/assets/dot-flow-field-Cf4wim84.js                   24.97 kB │ gzip:   9.15 kB
+dist-demo/assets/search-C2sUxn3Z.js                           25.36 kB │ gzip:   8.01 kB
+dist-demo/assets/curve-gallery-BsAGcTpa.js                    25.64 kB │ gzip:   9.17 kB
+dist-demo/assets/AuroraConfigDock--h9jl2bf.js                 27.15 kB │ gzip:   8.00 kB
+dist-demo/assets/Constellation-DDQAJMLY.js                    30.28 kB │ gzip:  10.97 kB
+dist-demo/assets/carousel-B8OcTbTL.js                         31.85 kB │ gzip:  12.37 kB
+dist-demo/assets/concentric-CGkhmYPj.js                       34.23 kB │ gzip:  11.71 kB
+dist-demo/assets/dot-matrix-D5I_E9Dn.js                       39.37 kB │ gzip:  14.00 kB
+dist-demo/assets/StoryHero-Tw3fef93.js                        91.82 kB │ gzip:  29.12 kB
+dist-demo/assets/GooBlob-D3tdCB33.js                          93.91 kB │ gzip:  34.69 kB
+dist-demo/assets/index-Dy1CIhbG.js                           835.12 kB │ gzip: 277.10 kB
+
+✓ built in 914ms
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.

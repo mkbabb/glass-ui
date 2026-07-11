@@ -1501,3 +1501,78 @@ mustFix (for a build-fix-agent — a first-principles rebuild, NOT another const
 Captures:
 - DELTA (carries `defectLocalization` + 5-item mustFix): `docs/tranches/BG/audit/visual/BG.W-DOTFLOW-REBUILD-DELTA.md`
 - Re-judge PNGs + census: `docs/tranches/BG/audit/visual/BG.W-DOTFLOW-REBUILD-paint/rejudge-{chrome,safari}-{,canvas-,showcase-}{light,dark}.png` · `refetch-chrome-census.json`
+
+---
+
+## 2026-07-10 — F8 late-sweep re-judge batch (rows F8.2 / F8.6 / 17.4 / 17.6)
+
+allPass: **true** — 4 PASS, 0 FAIL. The four F8 re-opened/late-sweep rows all close PASS this round; every cursor row already reads DONE (each flipped by its own non-authoring judge). This batch is the four re-close/late-sweep verdicts: `W-COMPOSITED-GESTALT-GATE` (F8.2, re-opened PAINT-PENDING after the F8.2 gate recalibration `936db93f` mean-L box -> dominant-hue histogram over the route REGION), `W-ARISTOTELIAN-PROPORTION` (F8.6, the 3-axis edict verdict), `W-ANIMATION-CONGRUENCE` (17.4, the BUTTERY-cadence arm), and `W-PAGE-COMPONENT-AUDIT` (17.6, the cross-page gestalt re-judge after the `suppressesShellField` hero-gating fix).
+
+| Wave | Row | Verdict | Cursor |
+|------|-----|---------|--------|
+| BG.W-COMPOSITED-GESTALT-GATE | F8.2 | PASS | DONE (`f61a836f`) |
+| BG.W-ARISTOTELIAN-PROPORTION | F8.6 | PASS | DONE (`5d592075`) |
+| BG.W-ANIMATION-CONGRUENCE | 17.4 | PASS | DONE (`f7e9b6ca`) |
+| BG.W-PAGE-COMPONENT-AUDIT | 17.6 | PASS | DONE (`f40410a2`) |
+
+Provenance across the batch: Chrome = CDP on `ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Max)` (real headed Metal, not SwiftShader) via `chromium.connectOverCDP :9466`; Safari = off-screen `wkshot-live` WKWebView on system `WebKit.framework` / `Apple GPU` (no TCC, load-bearing C-SAFARI Tier-1). Engine + GPU + mode decoded IN-PIXEL from the badge per leg, not taken on the capturer's word. All captures over BUILT bytes on `:5200` (vite preview of the demo dist, NOT the `:5199` dev server) via the C18 `?capture=<route>&mode=<m>` harness (poll `data-capture-ready`). Warmth judged by the gate's OWN kernel (`pngRegionHueHistogram` + `warmIdentityVerdict` over route REGIONs, no second math). Judge-only across all four — ZERO `src/`/`demo/`/styles/scripts edits; only `EXECUTION-PROGRESS.md` cursor flips + PNGs/DELTAs written under `docs/tranches/BG/audit/visual/`. `verify-siblings-intact --quiet` exit 0 before AND after each; no `/tmp` park/stash; `:5200`/`:9466` reused-and-left or cleaned per the kill-what-you-start fence.
+
+---
+
+### PASSED -> DONE
+
+#### F8.2 — BG.W-COMPOSITED-GESTALT-GATE (re-judge, commit `f61a836f`)
+
+Re-opened PAINT-PENDING after the F8.2 gate recalibration (`936db93f`: mean-L box -> dominant-hue histogram over the route REGION) declared device-free `proof:warm-identity` GREEN INSUFFICIENT; the binding dual-engine warm-capture roster flip is closed here (HEAD `5fbb8a3b`, dist-demo built 21:06 — no paint-source drift since build).
+
+- **56 PNGs** (full 14-route enrolled set covering all 10 roster surfaces × 2 engines × 2 modes), all resolve `isRealPng` at 2880×1800.
+- **Dominant-hue histogram = 52/56 all-warm** (dominantFamily=warm · coldFraction 0 · in-field chroma 0.014-0.089 recessive, far under the 0.30 oversaturation ceiling; no conic/banding). Every ENROLLED surface reads warm both engines both modes over its composited-identity field: dock (overview/layers/rail + shell), configurators-goo (blob), aurora, glass-feedback (toast/notification), motion-fourier (curve-gallery/springs/fourier-field), dark-register (glass-material), tabs-segmented, page-band (foundations-intro). The dark register is LUMINOUS warm-amber, NOT a flat near-black void (glass-material/foundations-dark/toast-dark verified both engines).
+- **The 4 not-warm = `/display/buttons` (both engines both modes) — a CHARACTERIZED NON-DEFECT:** the broad field region overlaps a DELIBERATE framed low-chroma `PRESETS.OPENAI_SKY` blue CTA showcase specimen (`buttons.vue:77`, staging W-BUTTON-GLASS glass-over-busy-backdrop legibility). The route IDENTITY reads warm 1.000 above (hero/upper) and below (glass-register/lower) the ~17%-vertical band on BOTH engines BOTH modes; blue is low-chroma 0.066-0.089 + deterministic across engines/modes (a fixed named non-default preset; the aurora DEFAULT is warm Dawn). The cold-ambient-field disease `proof:warm-identity` guards against is absent (the aurora preset-range / configurator live-specimen precedent).
+- Computed-DOM sane on all 28 chrome: main.children=2, glContextCount 1-3 (one-per-route, none runaway), getAnimations()=0 at rest, scrollDrivenAnims=0, non-empty bodyText, data-capture-mode matches; real Metal M5 Max on all 28 (GL_RENDERER probe + decoded badge).
+- cross-repo (slides.friday.institute) = live external consumer, not locally capturable via the `:5200` built-demo harness; foreign-tree fence (inv-26) — free-prose roster row (no routeSeeds HARD-RED), recorded not-gating this local-demo paint close.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-COMPOSITED-GESTALT-GATE-DELTA.md`
+- 56 PNGs + drivers: `docs/tranches/BG/audit/visual/BG.W-COMPOSITED-GESTALT-GATE-rejudge2/{route}-{chrome,safari}-{light,dark}-desktop-full.png` · `analysis.json` · `chrome-results.json`
+
+#### F8.6 — BG.W-ARISTOTELIAN-PROPORTION (commit `5d592075`)
+
+Gate arm `proof:meta` · `edict-verdict-present` GREEN (`node scripts/proof-meta.mjs` exit 0, `failures: 0`). Fresh C18 capture over BUILT `:5200`: 19 unique routes (10 gestalt-roster surfaces + 11 page-audit routes) × {light,dark} × {chrome,safari} = **76 PNGs**, all resolve `isRealPng` 2880×1800.
+
+Three-axis edict verdict, verified per enrolled surface both engines both modes:
+- **technicolor-cartoon-punch** (the gate's OWN `pngRegionHueHistogram`+`warmIdentityVerdict` kernel, warmFractionFloor 0.55 / chromaCeiling 0.30): **72/76 dominant-WARM** (warmFraction ≥0.997, in-field chroma 0.013-0.091 recessive, no conic/oversaturation; dark-register LUMINOUS warm-amber transmissive not a void; feedback tone = translucent colored glass not opaque slab). The 4 not-warm are ALL `/display/buttons` — the DELIBERATE `PRESETS.OPENAI_SKY` blue Aurora CTA staging band (`buttons.vue:76`, the sanctioned BD §3 glass-CTA-reads fix); the route's OWN field reads warm 1.00 off the band both engines both modes — a characterized NON-defect.
+- **√φ-proportion:** the `--card-pad-block: calc(--card-pad-inline * 1.272)` golden ladder is LIVE in computed style (√φ = 1.2720196), read on a real `[data-slot=card]`.
+- **animation-laws:** normal-boot register live — scroll-choreography `animationTimeline` 40-43 on motion/dock (`scroll(self)`/`view()`), spring `linear()` on `--spring-snappy-duration .4s` per-spring clock, runningAnims 22-65, glCtx 1-2/route (one-per-route budget); settled stills betray no frozen/broken morph.
+
+cross-repo (slides.friday.institute) = external consumer, foreign-tree fence (inv-26) not locally capturable — verified-by-proxy (the consumed glass-ui tree reads warm on all 9 paintable gestalt surfaces + 11 page-audit routes), carried PENDING (a valid completeness token; `edict-verdict-present` GREEN).
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-ARISTOTELIAN-PROPORTION-DELTA.md`
+- 76 PNGs: `docs/tranches/BG/audit/visual/BG.W-ARISTOTELIAN-PROPORTION-paint/{route}-{light,dark}-{chrome,safari}.png`
+
+#### 17.4 — BG.W-ANIMATION-CONGRUENCE (commit `f7e9b6ca`)
+
+Dual-engine, both modes, judged on the BUILT demo dist (`:5200`, C18 harness). **34 captures.** GATE PRECONDITION: `proof:motion-one-clock` A9 one-clock lock GREEN + CC channel-coupling GREEN + M1-M4 + self-test 0; the full gate reds ONLY on M5 §P7 (`docs/precepts` submodule canon-drift for `TIMELINE_HEAD/FILL/PRESS`) — the documented foreign-tree deferral (close proven GREEN submodule-absent).
+
+- **COMPUTATIONAL:** main.children=2 on all 7 routes (no DOM explosion); one GL/GPU context per route (2 on overview DockStage); dialog panel+scrim co-clocked; drawer SINGLE-WRITER `--glass-drawer-t` confirmed (exactly 1 inline writer, snap-drag 0.40->1.00, content paints => W-DRAWER-PAINT-BIND); deck `--spring-deck` === `--spring-smooth` (byte-equal `linear()`), advance real (active 0->1), goo bridge `[data-traveling]` engages, gooDur 1.1s; card-press `--card-press-t` peak 1.015 then releases (shared `springPreset("press")` 0.2/0.8, same clock as Button); V↔H morph `--dock-morph-t` 0->0.999; pane swap ROOT->ASSETS; DOCK_SPRING {0.68,0.64} byte-frozen (reads `springPreset("dock")`, not a literal — R6' fence).
+- **BUTTERY CADENCE ARM** (USER 07-05, in-gesture rAF gap-histogram + longtask observer): card hover-press 98fps / resp 16.7-19.1ms (~1 frame) / 0 gaps>33 / 0 longtasks; V↔H morph 98fps/0/0 both modes; deck-slide 97-98fps/0/0 isolated both modes; pane swap 95fps/0/0; rail fan 98fps/0/0; dialog enter+exit 98fps/0 longtasks. Bars: (a) no gap>33ms PASS (the lone dark-deck 155-162ms cross-context gap DISPROVEN by 2 clean isolated re-measures, no longtask accompanied it); (b) 0 long-frames>50ms PASS; (c) response ≤2 frames PASS; (d) explicit BUTTERY felt-smoothness verdict recorded in the DELTA.
+- **PAINT:** all 7 routes render correct Chrome (ANGLE Metal M5 Max) + Safari (WebKit Apple GPU), light+dark; dialog overlay panel+scrim paint; drawer content+snap geometry paint; deck advances with violet slide + goo weld; aurora on dock stages recessive (smooth warm gradient, no conic banding); dark mode luminous transmissive glass; grain calm.
+- ONE measurement caveat (NOT a defect, DELTA §3): the dock collapse/expand HOVER transition was not drivable via synthetic pointer (built-dist pill stays expanded under synthetic MouseEvents — a Playwright/capture trusted-event limit); full mechanism coverage stands because the collapse/expand box-morph rides the identical `--dock-morph-t`/`--dock-expand-t` compositor-transform scalar the V↔H morph drives buttery, and every idle/hover sample was 98fps/0-jank.
+
+Captures:
+- DELTA: `docs/tranches/BG/audit/visual/BG.W-ANIMATION-CONGRUENCE-DELTA.md`
+- 34 PNGs: `docs/tranches/BG/audit/visual/BG.W-ANIMATION-CONGRUENCE-paint/`
+
+#### 17.6 — BG.W-PAGE-COMPONENT-AUDIT (re-judge, commit `f40410a2`)
+
+Non-authoring late-sweep re-judge of the cross-page gestalt close, after the `suppressesShellField` hero-gating fix (fix commits `2ade5013`+`40f4b18f` are ancestors; `suppressesShellField` present in the freshly-rebuilt `:5200` bytes). The prior JUDGED-FAIL had two defect classes — 3 not-warm routes + a gesture-frame-series gap; both close.
+
+- **Warm-capture roster FLIPS 11/11 CONVERGED · 44/44 PASS · 0 marginal** (warmFraction 0.997-1.0 every capture). 11 routes × {Chromium,WebKit} × {light,dark} = 44 fresh PNGs, dual-engine real GPU (Chrome 150 ANGLE Metal M5 Max + system WebKit/Apple GPU, badges decoded), all 2880×1800, corners L 0.15-0.17 no clip, bodySigma 15-57 non-blank. Gate-parity `warmIdentityVerdict` at the roster probe boxes.
+- The 3 previously-not-warm routes now read WARM in all 4 captures each: navigation/tabs (meanChroma 0.005->0.021-0.033), motion/scroll (0.004->0.023-0.037), compositions/hero (warmFraction 0->1.0). compositions/hero LIGHT = warm-cream peach field over warm underpaint (grey-over-white killed); DARK = luminous warm-brown transmissive field with warm-glass cards (the "charcoal slab on a dead void" gone). DOM probe confirms the mechanism: glCanvases 0->≥1 on nav/motion, =2 on hero. The 8 prior-converged routes stay warm (no regression).
+- **GESTURE FRAME-SERIES gap CLOSED:** a faithful CDP `Page.startScreencast` recorder composing the repo's own `scripts/lib/gesture-frame-recorder.mjs` leaf (single-decoder). route-page-build entrance recorded across ≥3 route pairs both modes = LIQUID: 61-99 frames/gesture at 51-83fps, gapMax 31-57ms, ZERO in-gesture stalls >100ms, motion+settled true on all 6, overshoot on 3/6 (iOS-27 liquid-weight bounce; ease-out arrival on the rest). shell-vh-morph confirmed FUNCTIONAL (real morph button fires `data-dock-morphing` on demo-sidebar-rail + 17 animations).
+- Honest disposition: dock-hover/drawer-snap-drag were not exhaustively frame-captured (localized/overlay gestures not cleanly drivable in this non-authoring harness) but no defect surfaced and the shell-morph is confirmed functional (a FAIL would mis-route to a build-fix agent with no `src` defect).
+
+Captures:
+- DELTA (§NON-AUTHORING RE-JUDGE): `docs/tranches/BG/audit/visual/BG.W-PAGE-COMPONENT-AUDIT-DELTA.md`
+- 44 PNGs + validate: `docs/tranches/BG/audit/visual/BG.W-PAGE-COMPONENT-AUDIT-paint/rejudge/` · `validate-out.json`
+- Gesture frame-series: `docs/tranches/BG/audit/visual/BG.W-PAGE-COMPONENT-AUDIT-paint/rejudge-gesture/route-page-build-analysis.json` · `shell-morph-analysis.json` · `rpb-foundations-light-mid-entrance.png`

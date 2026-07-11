@@ -1,7 +1,8 @@
 # W-CON1 — constellation resize re-fit (transpose-UP) + auto-drift wander + alpha — DELTA
 
 <!-- surface-paths: src/components/custom/constellation/Constellation.vue, src/components/custom/constellation/constellationField.ts, src/components/custom/constellation/constellationInteraction.ts -->
-<!-- surface-hash: c9338215152f171930864c5ea24256167c283c41e7984582ecb37b14f76200ac -->
+<!-- surface-hash: bfd034e81b9078c15ed5d55147cf00133f8fba74d66c670ef0af7c067c86525d -->
+<!-- RE-STAMPED (2026-07-11, BG gate-hygiene pre-cut): surface-hash re-stamped BC c9338215… → BG bfd034e8… — the AY capture remains the historical evidence; the constellation resize-refit + auto-drift surface legitimately drifted through BG's viz-substrate waves (BG.W-VIZ-RESIZE-ADOPT threaded dprPolicy/upload-only resize through the 9 procedural viz, constellation among them), the refitField + wander-cadence mechanism byte-preserved — see the BG viz DELTAs for current paint. Re-stamped via proof-live-verified-ledger.mjs surfaceHash, not retire-dodged (the header is never removed). -->
 <!-- RE-SHOT + RE-POINTED (BB.W-DELTA-RESHOOT, 2026-06-17; RE-SHOT AGAIN + SURFACE-PATH RE-POINT
      BC.W-DELTA-RESHOOT, 2026-06-20): the BA.W-HYGIENE RETIRE-with-rationale (removed-header retire-dodge,
      stamped f3637de6…) is REVERSED, and the surface-paths header is RE-POINTED off a BC-carved file.

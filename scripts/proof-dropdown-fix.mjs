@@ -53,7 +53,6 @@ import {
     snapshotStamp,
     writeGateArtifact,
 } from "./gate-output.mjs";
-import { readCanon } from "./lib/canon-doc.mjs";
 
 let _cliPaths = null;
 function cliPaths() {
@@ -140,7 +139,6 @@ export function detectDropdownFix(sources) {
     const menuVariants = stripBlockComments(sources.menuVariants ?? "");
     const baseMiscCss = stripBlockComments(sources.baseMiscCss ?? "");
     const dockNavCss = stripBlockComments(sources.dockNavCss ?? "");
-    const claudeMd = sources.claudeMd ?? "";
 
     const violations = [];
 
@@ -250,15 +248,9 @@ export function detectDropdownFix(sources) {
             "D3: the library does not ship the `.scroll-gutter-stable` utility (`scrollbar-gutter: stable`) in utilities/base-misc.css (the durable presets-in-consumers contribution — a consumer app-shell opts in, not just the demo).",
         );
     }
-    // The canon note exists (the consumer-facing discipline is documented).
-    const canonNoteExists =
-        /scroll-gutter-stable/.test(claudeMd) &&
-        /scrollbar-gutter:\s*stable/.test(claudeMd);
-    if (!canonNoteExists) {
-        violations.push(
-            "D3: the consumer-wiring canon (docs/canon/consumer-wiring.md) does not document the `.scroll-gutter-stable` discipline (the consumer-facing presets-in-consumers note — a portaled-overlay-hosting app-shell scroller opts into stable gutter).",
-        );
-    }
+    // (BH.B5e: the D3 doc-presence `canonNoteExists` sub-check DROPPED — the
+    // functional `.scroll-gutter-stable`-utility-ships clause is kept; consumer-wiring
+    // canon authoring rides proof:claude-deletable.)
 
     // ── D4 — the picker panel reads the trigger width ─────────────────────────
     // The SelectContent viewport reads `min-w-(--reka-select-trigger-width)` (the
@@ -320,7 +312,7 @@ export function detectDropdownFix(sources) {
             dotGatedOnIndicator,
             dotIsDecorative,
         },
-        d3: { scrollerHasGutter, libUtilExists, canonNoteExists },
+        d3: { scrollerHasGutter, libUtilExists },
         d4: { panelReadsTriggerWidth },
         d5: {
             selectNoAriaExpanded,
@@ -358,7 +350,6 @@ function selfTest() {
         menuVariants: "indicator: { none: 'px-2', start: 'pl-7 pr-2' }",
         baseMiscCss: ".scroll-gutter-stable { scrollbar-gutter: stable; }",
         dockNavCss: ".demo-main-scroller { scroll-timeline-name: --x; scrollbar-gutter: stable; }",
-        claudeMd: "`.scroll-gutter-stable` — scrollbar-gutter: stable on the route scroller",
     };
     expectClean("clean-fixture", clean);
 
@@ -416,7 +407,6 @@ function run() {
         menuVariants: safeRead(P.MENU_VARIANTS),
         baseMiscCss: safeRead(P.BASE_MISC_CSS),
         dockNavCss: safeRead(P.DOCK_NAV_CSS),
-        claudeMd: readCanon("consumer-wiring", "soft"), // BH.B5c re-home off CLAUDE.md
     });
 
     const selfTestFailures = wantSelfTest ? selfTest() : [];
@@ -464,11 +454,10 @@ function run() {
     console.log(
         `  D3 no-shift discipline present  : ${yn(
             facts.d3.scrollerHasGutter &&
-                facts.d3.libUtilExists &&
-                facts.d3.canonNoteExists,
+                facts.d3.libUtilExists,
         )}  (scroller:${yn(facts.d3.scrollerHasGutter)} util:${yn(
             facts.d3.libUtilExists,
-        )} canon:${yn(facts.d3.canonNoteExists)})`,
+        )})`,
     );
     console.log(
         `  D4 panel reads trigger width    : ${yn(facts.d4.panelReadsTriggerWidth)}`,

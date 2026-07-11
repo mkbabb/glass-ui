@@ -72,7 +72,6 @@ import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 import { readMonolith } from "./read-css-monoliths.mjs";
-import { readCanon } from "./lib/canon-doc.mjs";
 
 let _cliPaths = null;
 function cliPaths() {
@@ -189,9 +188,6 @@ export function detectSurfaceAxis(sources) {
     const sharedIndexTs = stripBlockComments(sources.sharedIndexTs ?? "");
     const apiIndexTs = stripBlockComments(sources.apiIndexTs ?? "");
     const migrationMd = sources.migrationMd ?? "";
-    // CLAUDE.md is markdown prose (the W7 doc-honesty witness) — read raw, no
-    // comment-strip (the `//`-strip would mangle prose `://` and is not owed here).
-    const claudeMd = sources.claudeMd ?? "";
 
     const sfc = {};
     for (const [k, v] of Object.entries(sources.sfc ?? {})) {
@@ -426,46 +422,10 @@ export function detectSurfaceAxis(sources) {
         );
     }
 
-    // ── W7 — the doc claim is HONEST (the doc-lie kill) ───────────────────────
-    // For each of Toast/Button: IF CLAUDE.md carries a `<Toast surface=…>` /
-    // `<Button surface=…>` example, THEN the corresponding SFC MUST DECLARE a
-    // `surface` prop (an example for a prop the component does not declare is the
-    // P-5 doc lie — RED). The SFC declares the prop iff it carries a
-    // `surface?: Surface` interface field (a `surface\s*\?\s*:` declaration). A
-    // documented surface example with a backing declaration is honest; an example
-    // with NO backing declaration (the pre-BB state) reds — the structural anti-
-    // doc-lie bite.
-    const docExample = (component) =>
-        new RegExp(`<${component}\\s+surface\\s*=`).test(claudeMd);
-    const sfcDeclaresSurface = (src) => /surface\s*\?\s*:/.test(src);
-    const toastDocExample = docExample("Toast");
-    const buttonDocExample = docExample("Button");
-    const toastDeclares = sfcDeclaresSurface(sfc.toast ?? "");
-    const buttonDeclares = sfcDeclaresSurface(sfc.button ?? "");
-    // HONEST iff: a doc example is present AND the SFC declares the prop. (The
-    // wave's intent is the example IS documented and the prop EXISTS — both true.)
-    const toastDocHonest = toastDocExample && toastDeclares;
-    const buttonDocHonest = buttonDocExample && buttonDeclares;
-    if (toastDocExample && !toastDeclares) {
-        violations.push(
-            "W7: the glass-system canon documents a `<Toast surface=…>` example but Toast.vue declares no `surface` prop (the doc lie — a documented prop with no backing declaration).",
-        );
-    }
-    if (buttonDocExample && !buttonDeclares) {
-        violations.push(
-            "W7: the glass-system canon documents a `<Button surface=…>` example but Button.vue declares no `surface` prop (the doc lie — a documented prop with no backing declaration).",
-        );
-    }
-    if (!toastDocHonest) {
-        violations.push(
-            "W7: the glass-system surface-axis canon must name Toast with a `<Toast surface=…>` example AND Toast.vue must declare the `surface` prop (the eleven-surface enrollment, doc-honest).",
-        );
-    }
-    if (!buttonDocHonest) {
-        violations.push(
-            "W7: the glass-system surface-axis canon must name Button with a `<Button surface=…>` example AND Button.vue must declare the `surface` prop (the eleven-surface enrollment, doc-honest).",
-        );
-    }
+    // (BH.B5e: W7 — the doc-honesty clause reading the glass-system canon for
+    // `<Toast/Button surface=…>` examples — DROPPED. The functional Toast/Button
+    // enrollment is asserted by W3 (both thread the shared surface axis); canon
+    // authoring rides proof:claude-deletable.)
 
     const facts = {
         w1: {
@@ -482,14 +442,6 @@ export function detectSurfaceAxis(sources) {
         w4: { dialogHasVariantProp, dialogHasSurfaceProp, migrationRow },
         w5: { controlRegisterDefined, inputReadsRegister, selectRidesGrayWash },
         w6: { paperMarkDefined, mathPaperConsumes, tabsConsumes, consumerCount },
-        w7: {
-            toastDocExample,
-            buttonDocExample,
-            toastDeclares,
-            buttonDeclares,
-            toastDocHonest,
-            buttonDocHonest,
-        },
     };
 
     return { facts, violations };
@@ -518,7 +470,6 @@ function run() {
         sharedIndexTs: safeRead(P.SHARED_INDEX_TS),
         apiIndexTs: safeRead(P.API_INDEX_TS),
         migrationMd: safeRead(P.MIGRATION_MD),
-        claudeMd: readCanon("glass-system", "soft"), // BH.B5c re-home off CLAUDE.md
         sfc: {
             card: safeRead(P.CARD_VUE),
             glassPanel: safeRead(P.GLASS_PANEL_VUE),
@@ -594,13 +545,6 @@ function run() {
         `  W6 paper-ink-mark register    : ${yn(
             facts.w6.paperMarkDefined && facts.w6.consumerCount >= 2,
         )}  (consumers:${facts.w6.consumerCount})`,
-    );
-    console.log(
-        `  W7 doc claim is HONEST        : ${yn(
-            facts.w7.toastDocHonest && facts.w7.buttonDocHonest,
-        )}  (toast:${yn(facts.w7.toastDocHonest)} button:${yn(
-            facts.w7.buttonDocHonest,
-        )})`,
     );
 
     if (violations.length > 0) {

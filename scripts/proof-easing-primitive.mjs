@@ -57,8 +57,6 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
-import { readCanon } from "./lib/canon-doc.mjs";
-import { readDesign } from "./lib/design-docs.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 
@@ -152,8 +150,6 @@ export function detectEasingPrimitive(sources) {
     const apiTs = stripBlockComments(sources.apiTs ?? "");
     const curveGalleryVue = stripHtmlComments(stripBlockComments(sources.curveGalleryVue ?? ""));
     // Markdown prose — read raw (no //-strip would mangle URLs / prose; not owed).
-    const claudeMd = sources.claudeMd ?? "";
-    const designIdiomsMd = sources.designIdiomsMd ?? "";
     const progressMd = sources.progressMd ?? "";
     const deltaMd = sources.deltaMd ?? "";
 
@@ -266,31 +262,11 @@ export function detectEasingPrimitive(sources) {
         violations.push("W4: the W-EASING-PRIMITIVE DELTA does not record the value.js GradientPane consumer-#2 contract.");
     }
 
-    // ── W5 — the canon + the boundary law are recorded ─────────────────────────
-    // BH.B5c re-home: the picker/boundary canon reads the easing README (canon home);
-    // the editor-on-Configurator idiom reads the extracted docs/design/design-idioms.md.
-    const claudeNamesPicker = /EasingPicker/.test(claudeMd) && /\/easing/.test(claudeMd);
-    const claudeRecordsBoundary =
-        /boundary law/i.test(claudeMd) && /value\.?js/i.test(claudeMd) && /keyframes\.?js/i.test(claudeMd);
-    if (!claudeNamesPicker) {
-        violations.push("W5: the easing README carries no <EasingPicker> / /easing section under the motion canon.");
-    }
-    if (!claudeRecordsBoundary) {
-        violations.push("W5: the easing README does not record the boundary law (curve MATH = value.js · playback = keyframes.js · the editor = glass-ui).");
-    }
-    // docs/design/design-idioms.md is an IN-REPO extraction (B4c) — always present on a
-    // fresh checkout. Kept a soft-skip only if the home is somehow empty; else bites.
-    const submodulePresent = sources.submodulePresent !== false;
-    const idiomHomesConfigurator =
-        /Easing/.test(designIdiomsMd) &&
-        (/EasingConfigurator/.test(designIdiomsMd) || /editor-on-(?:the-)?[Cc]onfigurator/.test(designIdiomsMd));
-    if (!submodulePresent) {
-        console.log(
-            "  W5 design-idioms: SKIP-BY-POLICY — docs/design/design-idioms.md is empty/absent on this runner (the editor-on-Configurator idiom-home clause bites where present)",
-        );
-    } else if (!idiomHomesConfigurator) {
-        violations.push("W5: design-idioms.md does not home the editor-on-Configurator idiom (the <EasingConfigurator> register).");
-    }
+    // ── W5 — the api publication (functional) ──────────────────────────────────
+    // (BH.B5e: the doc-presence sub-checks — the easing README canon + boundary-law
+    // prose + the design-idioms editor-on-Configurator idiom-home — DROPPED. The
+    // functional api-publication clause is kept; canon/design-home authoring rides
+    // proof:claude-deletable.)
     const apiPublishesTypes =
         /EasingPicker(?:Mode|Value)?/.test(apiTs) &&
         /from\s+["'][^"']*components\/custom\/easing["']/.test(apiTs);
@@ -313,7 +289,7 @@ export function detectEasingPrimitive(sources) {
         w2: { composesMath, forksStaircase, forksBezierSolver },
         w3: { demoStepsPresent, demoBezierPresent, galleryImportsLibraryPicker, galleryDirEditorForks },
         w4: { bindsBezierMode, bindsStepsMode, progressRecordsConsumer2, deltaRecordsConsumer2 },
-        w5: { claudeNamesPicker, claudeRecordsBoundary, idiomHomesConfigurator, apiPublishesTypes, submodulePresent },
+        w5: { apiPublishesTypes },
     };
     return { facts, violations };
 }
@@ -340,13 +316,7 @@ function run() {
     const curveGalleryDirEntries = existsSync(P.CURVE_GALLERY_DIR)
         ? readdirSync(P.CURVE_GALLERY_DIR)
         : [];
-    // docs/design/design-idioms.md is the extracted in-repo idiom home (B4c) — always
-    // present on a fresh checkout. Present iff the readDesign body is non-empty.
-    const designIdiomsMd = readDesign("design-idioms", "soft");
-    const submodulePresent = designIdiomsMd.length > 0;
-
     const { facts, violations } = detectEasingPrimitive({
-        submodulePresent,
         dirExists: existsSync(P.EASING_DIR),
         pickerVue: safeRead(P.PICKER_VUE),
         configuratorVue: safeRead(P.CONFIGURATOR_VUE),
@@ -361,8 +331,6 @@ function run() {
         curveGalleryDirEntries,
         demoStepsPresent: existsSync(P.DEMO_STEPS_VUE),
         demoBezierPresent: existsSync(P.DEMO_BEZIER_VUE),
-        claudeMd: readCanon("component:easing", "soft"), // BH.B5c re-home off CLAUDE.md
-        designIdiomsMd, // BH.B5c re-home off docs/precepts → docs/design via readDesign
         progressMd: safeRead(P.PROGRESS_MD),
         deltaMd: safeRead(P.DELTA_MD),
     });
@@ -415,12 +383,7 @@ function run() {
         )}  (bezier:${yn(facts.w4.bindsBezierMode)} steps:${yn(facts.w4.bindsStepsMode)} gradient-pane:${yn(facts.w4.progressRecordsConsumer2 && facts.w4.deltaRecordsConsumer2)})`,
     );
     console.log(
-        `  W5 canon + boundary law recorded    : ${yn(
-            facts.w5.claudeNamesPicker &&
-                facts.w5.claudeRecordsBoundary &&
-                (facts.w5.submodulePresent === false || facts.w5.idiomHomesConfigurator) &&
-                facts.w5.apiPublishesTypes,
-        )}${facts.w5.submodulePresent === false ? " (idiom-home skip — submodule absent)" : ""}`,
+        `  W5 api publication                  : ${yn(facts.w5.apiPublishesTypes)}`,
     );
 
     if (violations.length > 0) {

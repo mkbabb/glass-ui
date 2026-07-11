@@ -12,24 +12,6 @@ import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { ROOT } from "./constellation.mjs";
 import { gateArtifactPath, writeGateArtifact, snapshotStamp } from "./gate-output.mjs";
-import { readCanon } from "./lib/canon-doc.mjs";
-
-// BH.B5c re-home: the CLAUDE.md contract-prose meta-checks read the docs/canon
-// CROSS-CUTTING homes (where CLAUDE.md's § sections redistributed) — NOT the public
-// README.md (the "readme" key) nor the component READMEs. Concatenate the nine.
-const CANON_CROSS_CUTTING = [
-    "structure",
-    "dependencies",
-    "build-and-gates",
-    "conventions",
-    "design-axes",
-    "glass-system",
-    "motion-system",
-    "consumer-wiring",
-    "exports-subpaths",
-];
-const readCanonCorpus = () =>
-    CANON_CROSS_CUTTING.map((k) => readCanon(k, "soft")).join("\n");
 
 const ARTIFACT = gateArtifactPath("GLASS_UI_README_META_ARTIFACT", "AY-readme-meta-clean");
 
@@ -233,24 +215,11 @@ function run() {
             violations.push(`constellation/README.md tokens section missing: ${missingTok.join(", ")}`);
     }
 
-    // docs/canon cross-cutting homes: no phantom composable / removed gate; keyframes
-    // peer matches; luma RESERVE (BH.B5c re-home off CLAUDE.md → the canon corpus).
-    {
-        const cm = readCanonCorpus();
-        if (/useDockTransition/.test(cm)) violations.push("docs/canon names phantom useDockTransition");
-        if (/proof:glass-one-model/.test(cm)) violations.push("docs/canon names removed proof:glass-one-model");
-        if (/useSpringOrchestrator/.test(cm)) violations.push("docs/canon names phantom useSpringOrchestrator");
-        // BD adopted the keyframes 5.x major (a clean break to `^5.0.0`, no `||^4`
-        // straddle) — assert the dependencies.md deps line carries the shipped clean form
-        // (the `^4.0.0` spine is retired with the major bump).
-        if (!/@mkbabb\/keyframes\.js[`\s|]*\^5\.0\.0/.test(cm))
-            violations.push("docs/canon/dependencies.md keyframes peer-range line does not carry the clean ^5.0.0 spine (BD keyframes-5 adopt)");
-        if (!/RESERVED/.test(cm) || !/no observer ships|NO observer ships/i.test(cm)) {
-            // luma RESERVE sentinel
-            if (/ships demo-private/.test(cm) && /glass-backdrop-luma/.test(cm))
-                violations.push("docs/canon still claims --glass-backdrop-luma ships demo-private");
-        }
-    }
+    // (BH.B5e: the docs/canon cross-cutting corpus DOC-SYNC clause — the re-homed
+    // CLAUDE.md contract-prose meta-checks (phantom-composable / removed-gate /
+    // keyframes-peer / luma-RESERVE over the canon corpus) — DROPPED. The four
+    // component-README meta-strip + research-citation + source-sync clauses are kept;
+    // canon-corpus authoring rides proof:claude-deletable + proof:doc-consistency.)
 
     // goo-blob: documented paletteStops literal equals the types.ts shipped array.
     {

@@ -34,7 +34,6 @@ import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { gatesFor } from "./gates.mjs";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
-import { readCanon } from "./lib/canon-doc.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const SELF = fileURLToPath(import.meta.url);
@@ -106,7 +105,6 @@ function closePathVerdict(modes, policy) {
  *   releaseShModes: string[]|null,
  *   releaseYmlModes: string[]|null,
  *   proofFullScript: boolean,
- *   claudeCanon: boolean,
  * }} input
  */
 function evaluate(input) {
@@ -138,18 +136,17 @@ function evaluate(input) {
     facts.releaseYml = closePathVerdict(input.releaseYmlModes, CLOSE_PATH_POLICY.releaseYml);
     if (facts.releaseYml) violations.push(`[clause 3] ${facts.releaseYml}`);
 
-    // ── Clause 4 — the close-battery canon: the `proof:full` script + the build-and-gates rule.
+    // ── Clause 4 — the close-battery canon: the `proof:full` script exists.
+    // (BH.B5e: the doc-presence `claudeCanon` sub-check DROPPED — the functional
+    // `proof:full` script assert is kept; canon-home authoring rides proof:claude-deletable.)
     facts.proofFullScript = input.proofFullScript;
     if (!input.proofFullScript) violations.push("[clause 4] package.json has no `proof:full` → `node scripts/gates.mjs --run full` script");
-    facts.claudeCanon = input.claudeCanon;
-    if (!input.claudeCanon) violations.push("[clause 4] docs/canon/build-and-gates.md does not record the close-battery rule (`--run full` = local∪ci∪release siblings-absent before the tag)");
 
     return { violations, facts };
 }
 
 /** Build the real-tree input (disk + gatesFor). */
 function realInput() {
-    const claude = readCanon("build-and-gates", "soft"); // BH.B5c re-home off CLAUDE.md
     const pkg = JSON.parse(read("package.json"));
     return {
         union: {
@@ -161,7 +158,6 @@ function realInput() {
         releaseShModes: collectRunModes(read("scripts/release.sh")),
         releaseYmlModes: collectRunModes(read(".github/workflows/release.yml")),
         proofFullScript: /gates\.mjs\s+--run\s+full/.test(pkg.scripts?.["proof:full"] ?? ""),
-        claudeCanon: /--run full/.test(claude) && /close[- ]battery|local ?∪ ?ci ?∪ ?release/i.test(claude),
     };
 }
 
@@ -177,7 +173,6 @@ function syntheticInput(kind) {
         releaseShModes: ["ship", "full"],
         releaseYmlModes: ["full"],
         proofFullScript: true,
-        claudeCanon: true,
     };
     if (kind === "clean") return base;
     // broken: narrow release.sh to a single `--run local` (the over-claim class).
@@ -247,7 +242,6 @@ function run() {
     console.log(`  release.sh           : ${facts.releaseSh ? "NARROWED — " + facts.releaseSh : "runs --run full (RATIFIED: BG.W-CUT adds --run ship)"}`);
     console.log(`  release.yml          : ${facts.releaseYml ? "NARROWED — " + facts.releaseYml : "runs --run full (RATIFIED full-only, no ship)"}`);
     console.log(`  proof:full script    : ${facts.proofFullScript ? "present" : "MISSING"}`);
-    console.log(`  CLAUDE.md canon      : ${facts.claudeCanon ? "recorded" : "MISSING"}`);
     console.log(`  self-test (subproc)  : broken exit ${facts.selfTest.brokenExit} (expect 1) · clean exit ${facts.selfTest.cleanExit} (expect 0) · broken names [clause 2] ${facts.selfTest.brokenNamesClause2 ? "✓" : "✗"}`);
     if (violations.length) {
         console.log("\nVIOLATIONS:");

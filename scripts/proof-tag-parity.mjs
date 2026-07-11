@@ -181,6 +181,24 @@ const JUSTIFIED_LOCAL_ONLY = new Map([
     // runner; the binding score-floor is the local real-device run (the floor is
     // re-pinned at the close, the live-π architecture). local-only by design.
     ["proof:lighthouse", "BB.W-LIGHTHOUSE — device-bound Lighthouse score-floor gate (real Chrome + production preview); the binding run is the local close-leg, never a headless CI runner (the live-π architecture, the proof:dock-animation-live precedent)."],
+    // BG.W-CLOSE-SWEEP — the standing closeDisease-manifest completeness sweep, the
+    // THIRD born-RED-by-design gate (beside proof:ba-gestalt + proof:ship-attestation;
+    // DO NOT fix mid-tranche). Two independent local-only justifications: (1) it imports
+    // gates.mjs to DERIVE SWEEP_SET + spawns the sweep, so it cannot be a swept member
+    // without recursion (the proof:close-battery-parity / proof:gate-manifest-sound
+    // meta-gate precedent); (2) a ci tag would need a ci.yml re-emission that RE-SEEDS
+    // its own R3 (a circular re-seed the gate's own header names). It rides `--run full`
+    // (local ∈ the deduped union) so it never blocks headless CI.
+    ["proof:close-sweep", "BG.W-CLOSE-SWEEP — the standing closeDisease-manifest completeness sweep, born-RED BY DESIGN (the THIRD born-RED gate beside proof:ba-gestalt + proof:ship-attestation). Local-only for TWO reasons: it imports gates.mjs to derive SWEEP_SET + spawns the sweep (it cannot be a swept member without recursion — the proof:close-battery-parity meta-gate precedent), AND a ci tag would re-seed its own R3 via the ci.yml re-emission (a circular re-seed). Rides `--run full` (local ∈ the union), never blocks headless CI; a ci promotion is FORBIDDEN by construction."],
+    // BG.W-TOKEN-MANIFEST — the standing anti-accretion token-basis floor, born-RED BY
+    // DESIGN on the ~39 genuinely-dead HEAD tokens (the proof:ba-gestalt born-RED
+    // precedent). ['local'] so it does NOT block ci/release mid-tranche; F2.2 W-GLASS-
+    // BASIS-CONSOLIDATE is the authorized flipper (deletes the dead set, flips GREEN,
+    // then promotes to ci/release). Its ALWAYS-GREEN channel-aware witness
+    // proof:token-manifest:self-test already carries ci/release, so the detector's
+    // soundness IS ci-enforced while the born-RED gate itself stays local until its
+    // flipper lands.
+    ["proof:token-manifest", "BG.W-TOKEN-MANIFEST — the anti-accretion token-basis floor, born-RED BY DESIGN on the ~39 dead HEAD tokens (the proof:ba-gestalt born-RED precedent); ['local'] until F2.2 W-GLASS-BASIS-CONSOLIDATE deletes the dead set + flips it GREEN + promotes it to ci/release. The always-green witness proof:token-manifest:self-test carries ci/release, so the channel classifier's soundness is already ci-enforced while the born-RED gate stays local."],
 ]);
 
 /** Does a gate's backing script spawn a browser (a Playwright/live gate)? */

@@ -65,6 +65,13 @@ atlas G-M11's "no hand-rolled substitute where a glass-ui primitive exists" gate
 registry, never a consumer copy. Co-ownership recorded: atlas M.W0-A.6 authors the consume-canon; we
 own the registry artifact.
 
+**LANDED (BH.B4-canon).** The register ships at `docs/canon/primitives.json` — 90 subpaths / 1564
+exported symbols, generated from the export manifest (`scripts/lib/subpath-policy.mjs`) + the canon
+docs (`scripts/lib/canon-doc.mjs` `CANON_HOMES`) by `node scripts/regen-primitives.mjs --write`,
+carrying no timestamp so committed==regen. Machine-locked by `proof:canon-homes` (the REGISTER-FRESH
+clause — a subpath add / export rename that never re-generated it REDs). Atlas builds its viz-subset
+manifest on top of this ROOT artifact; G-M11 references it, never a consumer copy.
+
 ## Tier 3 (their anti-asks — recorded)
 
 No publish pressure (their law) · no glass cuts wanted for the M chrome work · ring-alias/CAP-SCROLLS

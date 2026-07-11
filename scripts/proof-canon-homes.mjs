@@ -19,6 +19,13 @@
 //       dependencies.md (marker stripped, >200 chars, NO table) would green clause (H)
 //       WHILE the dep-rot arm parses 0 deps and stays permanently vacuous. This clause
 //       asserts citedDeps() over the on-disk home returns ≥ MIN_DEPS rows.
+//   (R) REGISTER-FRESH — the GENERATED canonical-primitives register
+//       (docs/canon/primitives.json, BH.B4-canon / ATLAS-M item 7) is present AND
+//       byte-fresh (committed == `regen-primitives --write`) AND carries ≥ MIN_PRIMITIVES
+//       exported symbols. It is the ROOT registry atlas's G-M11 gate references — a
+//       subpath add / export rename that never re-generated it would strand atlas on a
+//       stale register (the derive-not-hand-author self-lock, mirroring
+//       proof:claude-structure-sync's structure.md freshness arm).
 //
 // SELF-PROVING — the pure detectors are fed synthetic bodies each run (a skeleton-
 // marker stub must classify "skeleton", a fat body "content", a prose-only dep block
@@ -46,6 +53,10 @@ import {
     snapshotStamp,
     writeGateArtifact,
 } from "./gate-output.mjs";
+import {
+    primitivesFreshness,
+    buildPrimitivesRegister,
+} from "./regen-primitives.mjs";
 
 const ARTIFACT = gateArtifactPath(
     "GLASS_UI_CANON_HOMES_ARTIFACT",
@@ -55,6 +66,11 @@ const ARTIFACT = gateArtifactPath(
 // The dependency TABLE floor — the real peer set is 11 rows; a table that lost its
 // rows (or a prose-only regression) drops below this and REDs the dep-rot arm's source.
 const MIN_DEPS = 5;
+
+// The primitives-register floor — the real surface is 90 subpaths / >1500 exports; a
+// register that collapsed (a broken generator emitting an empty `primitives`) drops
+// below this and REDs, so a vacuous register cannot green the REGISTER-FRESH clause.
+const MIN_PRIMITIVES = 40;
 
 // ── The self-test bite — the pure detectors must keep their teeth every run ──────────
 function selfTest() {
@@ -81,6 +97,16 @@ function selfTest() {
     const parsed = citedDeps(table);
     if (parsed.length !== 1 || parsed[0].pkg !== "vue" || parsed[0].range !== "^3.5")
         notes.push("citedDeps failed to parse a synthetic dependency TABLE row");
+    // primitives register: the generator yields a non-vacuous `primitives` array…
+    const reg = buildPrimitivesRegister();
+    if (!Array.isArray(reg.primitives) || reg.primitives.length < MIN_PRIMITIVES)
+        notes.push("buildPrimitivesRegister produced a vacuous/short primitives array");
+    // …and a synthetic DRIFT (a mutated register) is not byte-equal to the fresh form
+    // (the committed==regen comparator would catch a stale on-disk register).
+    const fresh = JSON.stringify(reg, null, 2) + "\n";
+    const drifted = fresh.replace(/"subpathCount":\s*\d+/, '"subpathCount": -1');
+    if (fresh === drifted)
+        notes.push("the primitives-register freshness comparator failed to detect a synthetic drift");
     return notes;
 }
 
@@ -105,6 +131,24 @@ function run() {
         );
     }
 
+    // (R) REGISTER-FRESH — the generated canonical-primitives register is present,
+    // byte-fresh, and non-vacuous (the ROOT registry atlas G-M11 references).
+    const reg = primitivesFreshness();
+    const regRows = buildPrimitivesRegister().primitives.length;
+    if (reg.committed === null) {
+        violations.push(
+            `${reg.outRel} — the generated canonical-primitives register is ABSENT; run \`node scripts/regen-primitives.mjs --write\` (ATLAS-M item 7 — atlas G-M11 references this ROOT registry)`,
+        );
+    } else if (!reg.fresh) {
+        violations.push(
+            `${reg.outRel} — STALE: a published subpath / an export drifted from disk without re-generating the register. Run: node scripts/regen-primitives.mjs --write (derive-not-hand-author — the register cannot be stale when atlas reads it)`,
+        );
+    } else if (regRows < MIN_PRIMITIVES) {
+        violations.push(
+            `${reg.outRel} — the register lists ${regRows} subpath(s) (< ${MIN_PRIMITIVES}) — the generator collapsed to a vacuous register`,
+        );
+    }
+
     // SELF-PROOF
     const selfNotes = selfTest();
     for (const n of selfNotes) violations.push(`SELF-PROOF FAILED: ${n}`);
@@ -116,6 +160,9 @@ function run() {
         failing: failing.map((f) => ({ key: f.key, state: f.state })),
         depTableRows: deps.length,
         depTableFloor: MIN_DEPS,
+        primitivesRegister: reg.outRel,
+        primitivesRegisterFresh: reg.committed !== null && reg.fresh,
+        primitivesSubpaths: regRows,
         selfProof: selfNotes.length === 0 ? "ok" : "FAILED",
         states: Object.fromEntries(
             Object.keys(CANON_HOMES).map((k) => [k, canonHomeState(k)]),
@@ -136,6 +183,7 @@ function run() {
     console.log(`  canon homes                 : ${facts.homeCount}`);
     console.log(`  content-complete            : ${facts.contentComplete}`);
     console.log(`  dependency table rows       : ${facts.depTableRows} (floor ${facts.depTableFloor})`);
+    console.log(`  primitives register         : ${facts.primitivesSubpaths} subpaths, fresh=${facts.primitivesRegisterFresh}`);
     console.log(`  self-proof                  : ${facts.selfProof}`);
     if (violations.length) {
         console.log("\nVIOLATIONS:");

@@ -16,9 +16,6 @@
     "types": "./dist/index.d.ts",
     "typesVersions": {
         "*": {
-            "api": [
-                "dist/api/index.d.ts"
-            ],
             "tokens": [
                 "dist/tokens.d.ts"
             ],
@@ -293,10 +290,6 @@
             "types": "./dist/index.d.ts",
             "import": "./dist/glass-ui.js",
             "default": "./dist/glass-ui.js"
-        },
-        "./api": {
-            "types": "./dist/api/index.d.ts",
-            "import": "./dist/api.js"
         },
         "./tokens": {
             "types": "./dist/tokens.d.ts",
@@ -998,6 +991,8 @@
         "proof:git-hygiene": "node scripts/proof-git-hygiene.mjs",
         "proof:be-bf-ledger": "node scripts/proof-be-bf-ledger.mjs",
         "proof:meta": "node scripts/proof-meta.mjs",
+        "proof:coherence-census": "node scripts/proof-coherence-census.mjs",
+        "proof:glass-paper-congruence": "node scripts/proof-glass-paper-congruence.mjs",
         "proof:token-manifest": "node scripts/proof-token-manifest.mjs",
         "proof:token-manifest:self-test": "node scripts/proof-token-manifest.mjs --self-test",
         "proof:observer-loop": "node scripts/proof-observer-loop.mjs",
@@ -1109,9 +1104,9 @@
     },
     "peerDependencies": {
         "@lucide/vue": "^1.16.0",
-        "@mkbabb/keyframes.js": "^5.0.0",
+        "@mkbabb/keyframes.js": "^5.2.0",
         "@mkbabb/pencil-boil": "^0.4.1",
-        "@mkbabb/value.js": "^1.0.0",
+        "@mkbabb/value.js": "^3.1.0",
         "@vueuse/core": "^14.0",
         "class-variance-authority": "^0.7",
         "clsx": "^2.0",
@@ -1147,9 +1142,9 @@
     },
     "devDependencies": {
         "@lucide/vue": "^1.20.0",
-        "@mkbabb/keyframes.js": "^5.1.0",
+        "@mkbabb/keyframes.js": "^5.2.0",
         "@mkbabb/pencil-boil": "^0.4.1",
-        "@mkbabb/value.js": "^1.0.0",
+        "@mkbabb/value.js": "^3.1.0",
         "@tailwindcss/postcss": "^4.3.1",
         "@tailwindcss/vite": "^4.3.1",
         "@types/node": "^24.12.3",

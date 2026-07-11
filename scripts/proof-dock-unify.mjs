@@ -62,7 +62,6 @@ import { readFileSync, readdirSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
-import { readCanon } from "./lib/canon-doc.mjs";
 import { readDockCss } from "./read-dock-css.mjs";
 // AY.W-CSS1: tokens.css is a thin @import root over tokens/*.css partials; the token
 // DEFINITIONS live in the partials, so read the concatenated monolith, not the root.
@@ -300,7 +299,6 @@ export function detectDockUnify(sources) {
     const {
         tokensCss,
         dockCss,
-        claudeMd,
         showcaseDocks,
         shellDocks,
         featureExemptDocks = [],
@@ -529,31 +527,9 @@ export function detectDockUnify(sources) {
         );
     }
 
-    // ── F5 — the contract is recorded canon in the dock README (BH.B5c re-home) ──
-    const claudeHasNavPattern =
-        /nav-pattern\b/i.test(claudeMd) ||
-        (/home-left/i.test(claudeMd) && /<DockSeparator>/.test(claudeMd) && /#persistent/.test(claudeMd));
-    const claudeHasCollapsedTokens =
-        /--dock-collapsed-summary-min-size/.test(claudeMd) &&
-        /--dock-collapsed-padding/.test(claudeMd);
-    const claudeHasGlassSelected =
-        /--dock-control-active-bg/.test(claudeMd) &&
-        /glass/i.test(claudeMd);
-    if (!claudeHasNavPattern) {
-        violations.push(
-            "F5: the dock README does not record the dock nav-pattern contract (home-left #persistent + nav + <DockSeparator>, ONE GlassDock root).",
-        );
-    }
-    if (!claudeHasCollapsedTokens) {
-        violations.push(
-            "F5: the dock README does not record the collapsed-floor tokens (--dock-collapsed-summary-min-size + --dock-collapsed-padding).",
-        );
-    }
-    if (!claudeHasGlassSelected) {
-        violations.push(
-            "F5: the dock README does not record the glass-first selected-control register (--dock-control-active-bg as a glass tier).",
-        );
-    }
+    // (BH.B5e: F5 — the doc-presence clause recording the dock nav-pattern contract
+    // in the dock README canon home — DROPPED. The functional F1-F4 clauses are kept;
+    // canon-home authoring rides proof:claude-deletable.)
 
     const facts = {
         f1: {
@@ -593,11 +569,6 @@ export function detectDockUnify(sources) {
             closure,
             censusDoc: { present: censusDocPresent, hasMatrix: censusDocHasMatrix },
         },
-        f5: {
-            claudeHasNavPattern,
-            claudeHasCollapsedTokens,
-            claudeHasGlassSelected,
-        },
     };
 
     return { facts, violations };
@@ -607,7 +578,6 @@ export function detectSource(sources) {
     return detectDockUnify({
         tokensCss: stripBlockComments(sources.tokensCss ?? ""),
         dockCss: stripBlockComments(sources.dockCss ?? ""),
-        claudeMd: sources.claudeMd ?? "",
         showcaseDocks: (sources.showcaseDocks ?? []).map((d) => ({
             ...d,
             text: stripHtmlComments(d.text ?? ""),
@@ -652,7 +622,6 @@ function run() {
     const { facts, violations } = detectSource({
         tokensCss: readMonolith(ROOT, "tokens"),
         dockCss: readDockCss(ROOT),
-        claudeMd: readCanon("component:dock", "soft"), // BH.B5c re-home off CLAUDE.md
         showcaseDocks: showcase.map((d) => ({
             path: d.path,
             requireHome: d.requireHome,
@@ -729,15 +698,6 @@ function run() {
     console.log(
         `  F4 census doc artefact                     : ${
             facts.f4.censusDoc.present && facts.f4.censusDoc.hasMatrix ? "YES" : "NO"
-        }`,
-    );
-    console.log(
-        `  F5 dock README records the contract        : ${
-            facts.f5.claudeHasNavPattern &&
-            facts.f5.claudeHasCollapsedTokens &&
-            facts.f5.claudeHasGlassSelected
-                ? "YES"
-                : "NO"
         }`,
     );
 

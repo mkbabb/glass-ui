@@ -24,7 +24,6 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
-import { readCanon } from "./lib/canon-doc.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 
@@ -121,7 +120,6 @@ export function detectSplitChars(sources) {
     const splitVue = sources.splitVue ?? "";
     const charStaggerCss = sources.charStaggerCss ?? "";
     const consumerEvidence = sources.consumerEvidence ?? "";
-    const claudeMd = sources.claudeMd ?? "";
 
     // ── SP1 — the partner exists ONCE on /motion-core + engine-free ──
     const exportsComposable = /export\s+function\s+useCharStagger\b/.test(
@@ -283,16 +281,15 @@ export function detectSplitChars(sources) {
     // /api publishes the option + return types on the discovery surface.
     const apiPublishes =
         /UseCharStaggerOptions/.test(api) && /UseCharStaggerReturn/.test(api);
-    // the structure enumeration lives in the GENERATED docs/canon/structure.md (BH.B5c
-    // re-home off CLAUDE.md) — the dir MUST appear as a `- split-chars/` bullet;
-    // proof:claude-structure-sync owns the hard regen-freshness gate, this records presence.
-    const inClaudeStructure = /^\s*-\s+split-chars\/\s*$/m.test(claudeMd);
+    // (BH.B5e: the SP6 structure-enumeration sub-check — the `- split-chars/` bullet
+    // in the generated docs/canon/structure.md — DROPPED; proof:claude-structure-sync
+    // owns the hard regen-freshness gate over structure.md. The functional dir/barrel/
+    // api clauses are kept.)
     facts.sp6 = {
         dirFiles,
         missingDirFiles,
         ridesRootBarrel,
         apiPublishes,
-        inClaudeStructure,
     };
     if (missingDirFiles.length)
         violations.push(
@@ -305,10 +302,6 @@ export function detectSplitChars(sources) {
     if (!apiPublishes)
         violations.push(
             "SP6: /api does not publish UseCharStaggerOptions + UseCharStaggerReturn",
-        );
-    if (!inClaudeStructure)
-        violations.push(
-            "SP6: the split-chars dir is not enumerated in docs/canon/structure.md (proof:claude-structure-sync owns the regen-freshness gate)",
         );
 
     return { facts, violations };
@@ -340,7 +333,6 @@ export function useCharStagger(target, opts = {}) {
   animation-delay: calc(var(--char-index, 0) * 30ms);
 }`,
         consumerEvidence: `demo/stories/motion/split-chars.vue — the demo hero story; StoryHeader every hero by construction; the cross-repo fourier consume.`,
-        claudeMd: `- split-chars/`,
         splitDirFiles: ["SplitChars.vue", "index.ts", "README.md"],
     };
     const clean = detectSplitChars(base);
@@ -414,10 +406,6 @@ export function useCharStagger(target, opts = {}) {
     });
     if (!sp5.violations.some((v) => v.startsWith("SP5")))
         fails.push("SP5 bite (no fourier consume) did not flag");
-    // SP6 bite — the dir present on disk but missing from CLAUDE.md enumeration.
-    const sp6 = detectSplitChars({ ...base, claudeMd: `` });
-    if (!sp6.violations.some((v) => v.startsWith("SP6")))
-        fails.push("SP6 bite (un-enumerated dir) did not flag");
     // SP6 bite — missing README.
     const sp6b = detectSplitChars({
         ...base,
@@ -444,7 +432,6 @@ function run() {
         splitVue: stripAll(safeRead(p.SPLIT_CHARS_VUE)),
         charStaggerCss: stripBlockComments(safeRead(p.CHAR_STAGGER_CSS)),
         consumerEvidence: safeRead(p.CONSUMER_EVIDENCE),
-        claudeMd: readCanon("structure", "soft"), // BH.B5c re-home off CLAUDE.md
         splitDirFiles: dirFiles,
     };
 
@@ -480,7 +467,7 @@ function run() {
         `  SP5 ≥2-consumer record (demo hero + hero construction + fourier): ${facts.sp5.evidencePresent && facts.sp5.namesDemoConsumer && facts.sp5.namesHeroConstruction && facts.sp5.namesFourierConsume ? "✓" : "✗"}`,
     );
     console.log(
-        `  SP6 colocation dir + root barrel + api + CLAUDE.md §Structure: ${facts.sp6.missingDirFiles.length === 0 && facts.sp6.ridesRootBarrel && facts.sp6.apiPublishes && facts.sp6.inClaudeStructure ? "✓" : "✗"}`,
+        `  SP6 colocation dir + root barrel + api: ${facts.sp6.missingDirFiles.length === 0 && facts.sp6.ridesRootBarrel && facts.sp6.apiPublishes ? "✓" : "✗"}`,
     );
     console.log(
         `  self-test bites: ${selfTestFails.length === 0 ? "all flag ✓" : "BROKEN — " + selfTestFails.join("; ")}`,

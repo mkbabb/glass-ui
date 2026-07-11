@@ -57,7 +57,6 @@ import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
-import { readCanon } from "./lib/canon-doc.mjs";
 import {
     detectS1,
     detectS2,
@@ -251,36 +250,8 @@ function detectR4() {
     return { violations, facts };
 }
 
-// ── R5 — the doc-reconcile (BH.B5c re-home off CLAUDE.md → the dock README canon home) ──
-function detectR5() {
-    const violations = [];
-    const facts = {};
-    const claude = readCanon("component:dock", "soft");
-
-    // The stale retired-machinery references are GONE.
-    facts.hasProofRail3 = /Machine-locked by\s+`?proof:rail3`?/.test(claude) || /\bproof:rail3\b/.test(claude);
-    facts.hasRail3Spec = /tests-visual\/rail3\.spec\.ts/.test(claude);
-    facts.hasSeamOffset = /--dock-rail-seam-offset/.test(claude);
-    facts.hasProofRailExtend = /\bproof:rail-extend\b/.test(claude);
-    if (facts.hasProofRail3)
-        violations.push("R5: the dock README still references `proof:rail3` (a deleted gate) — the doc-reconcile must replace it with proof:dock-rail-realize / proof:dock-stack-rail");
-    if (facts.hasRail3Spec)
-        violations.push("R5: the dock README still references `tests-visual/rail3.spec.ts` (a deleted spec) — the doc-reconcile must remove it");
-    if (facts.hasSeamOffset)
-        violations.push("R5: the dock README still references `--dock-rail-seam-offset` (the retired divider-seam locator) — the doc-reconcile must remove it (the rail seats at the dock edge / in the gutter, no seam-offset)");
-    if (facts.hasProofRailExtend)
-        violations.push("R5: the dock README still references `proof:rail-extend` (a retired predecessor gate) — the doc-reconcile must remove it");
-
-    // The live contract IS documented (the facet mode + the live gate).
-    facts.documentsDockRailRealize = /\bproof:dock-rail-realize\b/.test(claude);
-    facts.documentsFacetMode = /mode="facets"|facet carousel|facet-carousel|FACET CAROUSEL/i.test(claude);
-    if (!facts.documentsDockRailRealize)
-        violations.push("R5: the dock README does not document `proof:dock-rail-realize` — the live facet-mode gate must be the recorded contract");
-    if (!facts.documentsFacetMode)
-        violations.push("R5: the dock README does not document the `mode=\"facets\"` facet carousel — the re-instated rail contract must be recorded");
-
-    return { violations, facts };
-}
+// (BH.B5e: R5 — the doc-reconcile clause — DROPPED. The functional R1-R4 +
+// the extended S-clauses are kept; canon-home doc authoring rides proof:claude-deletable.)
 
 // ── the extended S-clauses (proof:dock-stack-rail S1-S6 stay GREEN by construction) ──
 function detectExtendedStackRail() {
@@ -353,8 +324,6 @@ function selfTests() {
     })();
     // R4 — an internal selection shadow reds.
     out.r4 = (() => /\b(selected|active|context)\s*=\s*ref\(/.test("const context = ref('music');"))();
-    // R5 — a CLAUDE.md `Machine-locked by proof:rail3` survivor reds (the doc-reconcile bite).
-    out.r5 = (() => /Machine-locked by\s+`?proof:rail3`?/.test("Machine-locked by `proof:rail3` (R1…R6)"))();
     return out;
 }
 
@@ -363,7 +332,6 @@ export async function detect() {
     const r2 = detectR2();
     const r3 = detectR3();
     const r4 = detectR4();
-    const r5 = detectR5();
     const ext = detectExtendedStackRail();
     const bornRed = await reconstructBornRed();
 
@@ -381,7 +349,6 @@ export async function detect() {
         ...r2.violations,
         ...r3.violations,
         ...r4.violations,
-        ...r5.violations,
         ...ext.violations,
         ...bornRedViolations,
         ...stViolations,
@@ -393,7 +360,6 @@ export async function detect() {
             r2: r2.facts,
             r3: r3.facts,
             r4: r4.facts,
-            r5: r5.facts,
             extendsStackRail: ext.facts,
             bornRed,
             selfTests: st,
@@ -419,7 +385,6 @@ async function run() {
     console.log(`  R2 per-facet-accent: writes-accent=${facts.r2.writesPerFacetAccent} item-accent-field=${facts.r2.itemHasAccent} css-reads-accent=${facts.r2.cssReadsAccent}`);
     console.log(`  R3 fork-absent: useLiquidRail-absent=${facts.r3.useLiquidRailAbsent} liquid-rail-css-absent=${facts.r3.liquidRailCssAbsent} no-capsule-class=${facts.r3.noCapsuleClass} demo-import-gone=${!facts.r3.demoCssImportsLiquidRail} box-inviolate(frame-no-clip)=${facts.r3.frameNoClip} spring-dock=${facts.r3.fanRidesSpringDock} projection-pure=${facts.r3.projectionPure}`);
     console.log(`  R4 one-registry: selected-is-model=${facts.r4.selectedIsModel} no-shadow=${!facts.r4.hasSelectionShadow}`);
-    console.log(`  R5 doc-reconcile: no-rail3=${!facts.r5.hasProofRail3} no-rail3-spec=${!facts.r5.hasRail3Spec} no-seam-offset=${!facts.r5.hasSeamOffset} no-rail-extend=${!facts.r5.hasProofRailExtend} documents-realize=${facts.r5.documentsDockRailRealize} documents-facet=${facts.r5.documentsFacetMode}`);
     console.log(`  extends proof:dock-stack-rail S1-S6: violations=${facts.extendsStackRail ? "(see below)" : "n/a"}`);
     console.log(`  born-RED: reconstructed=${facts.bornRed.reconstructed} useLiquidRail@head=${facts.bornRed.useLiquidRailAtHead}`);
     console.log(`  self-tests: ${Object.entries(facts.selfTests).map(([k, v]) => `${k}=${v ? "OK" : "BROKE"}`).join(" ")}`);

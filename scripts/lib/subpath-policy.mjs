@@ -109,10 +109,14 @@ export const TIERS = [
 // the symbol-fidelity existence check.
 // ===========================================================================
 
-// The 12 curated barrels at src/ top level (`index` → the root "." key).
+// The 11 curated barrels at src/ top level (`index` → the root "." key).
+// BH.B2.2 W-api-fold — the `/api` discovery subpath is DROPPED (clean break, no
+// alias): its 203 canonical symbols re-home onto the root barrel + the per-family
+// subpaths (MIGRATION.md ## 5.0.0 table), and the types-only `/axes` grammar
+// subpath is the honest successor for the four axis vocabularies. No `api:` entry
+// → the regen emits no `./api` export key + no `typesVersions.api`.
 export const CURATED = {
     index: "src/index.ts",
-    api: "src/api/index.ts",
     tokens: "src/tokens.ts",
     forms: "src/forms.ts",
     dark: "src/dark.ts",
@@ -150,8 +154,10 @@ export const CSS_FONT_EXPORTS = {
     "./fonts/*": "./dist/fonts/*",
 };
 
-// Per-name `.d.ts` overrides (the one subpath whose types live in a nested dir).
-export const TYPES_OVERRIDE = { api: "./dist/api/index.d.ts" };
+// Per-name `.d.ts` overrides (a subpath whose types live in a nested dir). Empty
+// since BH.B2.2 dropped `/api` (its `./dist/api/index.d.ts` override was the sole
+// member); kept as the extension seam for a future nested-types subpath.
+export const TYPES_OVERRIDE = {};
 
 // ===========================================================================
 // DISK READ — the dir name list per tier. `injectUnclassified` appends a

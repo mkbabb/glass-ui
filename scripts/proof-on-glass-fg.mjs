@@ -39,7 +39,6 @@ import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-outpu
 // AY.W-CSS1 — tokens.css/glass.css became thin @import roots over carved partials;
 // readMonolith concatenates root + partials in cascade order so the seam scan resolves.
 import { readMonolith } from "./read-css-monoliths.mjs";
-import { readCanon } from "./lib/canon-doc.mjs";
 
 const COMMAND = "npm run proof:on-glass-fg";
 
@@ -72,8 +71,6 @@ function detectOnGlassFg({
     inputCss, // surfaces.css + the Input/Textarea SFCs (the well consumers)
     progressDefault, // ProgressDefault.vue
     progressGradient, // ProgressGradient.vue
-    claudeMd,
-    migrationMd,
 }) {
     const facts = {};
 
@@ -216,10 +213,13 @@ function detectOnGlassFg({
     facts.w3.ok =
         calmRepoint && brightBucketLiftIntact && overlayLiftIntact && noSeamReDeclare;
 
-    // W4 — the consumers read the rungs + the canon is recorded -----------------------
+    // W4 — the consumers read the rungs -----------------------------------------------
     // The well: the input rest fill READS --input-on-glass via a var() (the SFC re-points
     // --control-surface-bg onto it, OR reads it directly — one well register, no fork).
     // A `var(--input-on-glass…)` READ (not the bare declaration) is the consumer truth.
+    // (BH.B5e: the doc-presence `claudeRecorded` / `migrationRecorded` sub-checks
+    // DROPPED — the functional consumer-read clauses are kept; canon/MIGRATION
+    // authoring rides proof:claude-deletable.)
     const wellReads = /var\(\s*--input-on-glass/.test(inputCss);
     const trackDefaultReads = /var\(--progress-track,\s*var\(--progress-track-on-glass\)/.test(
         progressDefault,
@@ -227,25 +227,15 @@ function detectOnGlassFg({
     const trackGradientReads = /var\(--progress-track,\s*var\(--progress-track-on-glass\)/.test(
         progressGradient,
     );
-    const claudeRecorded =
-        /on-glass-muted/.test(claudeMd) &&
-        /--input-on-glass/.test(claudeMd) &&
-        /--progress-track-on-glass/.test(claudeMd);
-    const migrationRecorded =
-        /on-glass/.test(migrationMd) && /--muted-foreground/.test(migrationMd);
     facts.w4 = {
         wellReads,
         trackDefaultReads,
         trackGradientReads,
-        claudeRecorded,
-        migrationRecorded,
     };
     facts.w4.ok =
         wellReads &&
         trackDefaultReads &&
-        trackGradientReads &&
-        claudeRecorded &&
-        migrationRecorded;
+        trackGradientReads;
 
     return facts;
 }
@@ -290,10 +280,6 @@ function selfTest() {
     const goodInput = `background: var(--input-on-glass, var(--control-surface-bg));`;
     const goodPDefault = `bg-[var(--progress-track,var(--progress-track-on-glass))]`;
     const goodPGradient = `bg-[var(--progress-track,var(--progress-track-on-glass))]`;
-    const goodClaude =
-        "the surface-aware foreground register: --on-glass-muted / --input-on-glass / --progress-track-on-glass";
-    const goodMigration =
-        "a consumer that hand-re-declared --muted-foreground over glass deletes its override (the on-glass register)";
 
     const base = {
         tokens: goodTokens,
@@ -302,8 +288,6 @@ function selfTest() {
         inputCss: goodInput,
         progressDefault: goodPDefault,
         progressGradient: goodPGradient,
-        claudeMd: goodClaude,
-        migrationMd: goodMigration,
     };
 
     const bites = [];
@@ -392,13 +376,9 @@ const inputCss = [
 ].join("\n");
 const progressDefault = strip(read("src/components/ui/progress/ProgressDefault.vue"));
 const progressGradient = strip(read("src/components/ui/progress/ProgressGradient.vue"));
-// The glass-system canon home (BH.B5c re-home off CLAUDE.md) is MARKDOWN prose (with
-// embedded CSS/JS code examples), NOT a code file — `strip()`'s `/* */` regex pairs
-// comment fragments ACROSS the embedded examples and blanks whole prose regions (incl.
-// this canon), so the canon read is RAW. The W4 canon is recorded AS prose.
-const claudeMd = readCanon("glass-system", "soft");
-const migrationMd = strip(read("MIGRATION.md"));
-
+// (BH.B5e: the doc-presence W4 sub-checks over the glass-system canon home +
+// MIGRATION.md are DROPPED — the functional consumer-read clauses remain; canon/
+// MIGRATION authoring rides proof:claude-deletable.)
 const facts = detectOnGlassFg({
     tokens: tokensMonolith,
     darkArm,
@@ -406,8 +386,6 @@ const facts = detectOnGlassFg({
     inputCss,
     progressDefault,
     progressGradient,
-    claudeMd,
-    migrationMd,
 });
 
 // the π readback spec must exist (the BINDING visual truth — never this gate alone)
@@ -423,7 +401,7 @@ const checks = [
     { id: "W1 three-rungs-once + no-fork", pass: facts.w1.ok, detail: JSON.stringify(facts.w1.perRung) },
     { id: "W2 derived + warm-hue + no-deck-copy + keep-page-muted", pass: facts.w2.ok, detail: `warm=${facts.w2.allWarm} noDeckCopy=${facts.w2.noDeckCopy} keep=${facts.w2.keepPageMuted} vals=${facts.w2.vals.join("|")}` },
     { id: "W3 calm-tier re-point BESIDE the BA seam (byte-untouched)", pass: facts.w3.ok, detail: `repoint=${facts.w3.calmRepoint} brightIntact=${facts.w3.brightBucketLiftIntact} overlayIntact=${facts.w3.overlayLiftIntact} noSeamReDecl=${facts.w3.noSeamReDeclare}` },
-    { id: "W4 consumers read rungs + canon recorded", pass: facts.w4.ok, detail: `well=${facts.w4.wellReads} trackDef=${facts.w4.trackDefaultReads} trackGrad=${facts.w4.trackGradientReads} claude=${facts.w4.claudeRecorded} migration=${facts.w4.migrationRecorded}` },
+    { id: "W4 consumers read rungs", pass: facts.w4.ok, detail: `well=${facts.w4.wellReads} trackDef=${facts.w4.trackDefaultReads} trackGrad=${facts.w4.trackGradientReads}` },
     { id: "π readback spec exists", pass: piSpecExists, detail: "tests-visual/on-glass-fg.spec.ts (the BINDING AA-over-composited-plate truth)" },
     { id: "self-test bites all RED their clause", pass: biteFailures.length === 0, detail: bites.map((b) => `${b.name}:${b.reds ? "red" : "green"}`).join(", ") },
 ];

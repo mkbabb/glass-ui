@@ -1,7 +1,8 @@
 # AY.W-DOCK2 — REAL entering-child lockstep gate + ONE DOCK_SPRING + rail cohesion · DELTA
 
 <!-- surface-paths: src/components/custom/dock/composables/dockMorphContext.ts, src/components/custom/dock/composables/useLayerTransition.ts, src/components/custom/dock/DockLayerGroup.vue, src/styles/dock/layers.css -->
-<!-- surface-hash: 05361bf8d3626b97ab695bbe53cbb751078f585fe58ae6d2ae3c4824635184cc -->
+<!-- surface-hash: 23bf0ed90168ef81fcbae7454b5f9ca450c23945a3bfa3d64af7c44b6307a63c -->
+<!-- RE-STAMPED (2026-07-11, BG gate-hygiene pre-cut): surface-hash re-stamped BD 05361bf8… → BG 23bf0ed9… — the AY capture remains the historical evidence; the surface legitimately drifted through BG.W-DOCK-* (the entering-child lockstep surfaces re-rendered), the single --dock-morph-t scalar lockstep contract byte-preserved — see the BG dock DELTAs for current paint. Re-stamped via proof-live-verified-ledger.mjs surfaceHash, not retire-dodged (the header is never removed). -->
 <!-- RE-STAMPED (BD §P10 close-battery, 2026-06-23): the BD greenfield dock redesign (P6 dock + P7 the
      unifying blend-morph WELD) RE-RENDERED the entering-child lockstep surfaces (dockMorphContext.ts /
      useLayerTransition.ts / DockLayerGroup.vue / dock/layers.css), DRIFTING the surface-hash (BC
