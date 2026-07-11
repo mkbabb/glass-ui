@@ -90,10 +90,13 @@ From `ledgers/CHRONIC-DISPOSITIONS.md` §6 + `ledgers/PROMPT-RECAP.md`:
 4. **border-progress** — RULED: RETIRE the subpath until the speedtest adoption lands (the honest
    0-real-consumer state; the "born ≥2" claim was false). Re-entry = the speedtest consume, already
    an ASK row. completion-seal: WATCHLIST with the demo-only status named in cut notes.
-5. **metrics sextet scope** — USER-GATED (UF-K1 names three; the census found six). Recommendation:
-   relocate metric-cell + metric-stack + instrument-chassis to speedtest; icon-tooltip/pulse/
-   scrolling-text get per-item mechanism-distinctness adjudication in B8 (pulse and scrolling-text
-   are plausibly general; icon-tooltip likely folds into the D-FACTOR tooltip cell).
+5. **metrics sextet scope** — USER-GATED, recommendation CORRECTED by round-2b consumer truth
+   (XR-3): the "speedtest-only" premise was false — metric-cell/metric-stack/metric-badge,
+   instrument-chassis, and pulse are consumed by THREE repos (speedtest, muster, sci-report;
+   per-site grep evidence). Moving them breaks two repos silently. NEW recommendation: the metric
+   family + instrument-chassis + pulse STAY library surface; the UF-K1 overfit instinct lands on
+   (a) the /data/metrics DEMO page redesign (the D-STORY worklist), (b) icon-tooltip → the D-FACTOR
+   Tooltip-preset fold, (c) scrolling-text (genuinely speedtest-only) → move-or-keep adjudication.
 6. **hover-popover** — SETTLED BY THE USER (UF-P7): hover becomes a trigger AXIS of the one anchored
    overlay; hover-popover and hover-card both dissolve as names; keepDockOpen rides the trigger axis
    as a parameter. D-FACTOR owns the union spec.

@@ -257,5 +257,42 @@ The crossrepo-ledger + adversarial-reverify agents returned schema-satisfying ST
 — REJECTED, not folded (accepting them would be the close-class lie). Re-running as round-2b
 (wf_43d1fa26) with the rejection named in their prompts.
 
-Registry state: OPEN (rounds 1 + 2 folded; round-2b re-runs pending; round 3 = stability check).
-Stability bar: two consecutive rounds surfacing nothing new.
+---
+
+# ROUND-2b FOLDS (the re-run lenses — both returned real, evidenced work)
+
+## FAM-17 — the cross-repo relay state (XR lens; full digest in ROUND-2B-DIGEST.md)
+
+- **XR-3 [P1] — the FAM-10 "speedtest-only sextet" premise is FALSE.** metric-cell/metric-stack/
+  metric-badge, instrument-chassis, and pulse are a THREE-REPO public surface (speedtest + muster +
+  sci-report, per-site grep evidence). Only icon-tooltip and scrolling-text are truly speedtest-only.
+  A metrics move on the old premise silently breaks muster + sci-report. → the metrics ruling is
+  CORRECTED (see PLAN-FRAME ruling 5): the metric family + chassis + pulse STAY library surface; the
+  user's overfit instinct re-lands on the /data/metrics DEMO page (D-STORY) + the genuinely
+  speedtest-only pair.
+- **XR-4 [P2]** goo-blob→blob rename is NOT consumer-free: value.js demo carries 5 live goo-blob
+  imports (file-linked). Whichever way Decision-blob goes (land or revert-the-doc), the value.js carry
+  rides it.
+- **Peer-spine hazard**: EVERY consumer pins pre-5.0.0 with stale kf/value peers; atlas + sci-report
+  carry OPEN `>=4.2.0` ranges that would AUTO-RESOLVE the 5.0.0 publish into a value.js peer conflict
+  — a cut-day hazard requiring pin-guard asks BEFORE any publish.
+- Inbound roster (7 packets): DNS FIXED-verified · ATLAS-M/N renames DONE on disk EXCEPT
+  `.text-gilt→.gold-shimmer` (open MIGRATION-row ask; atlas carries a dead class at 2 sites) ·
+  SPEEDTEST-AX accepted onto named waves · VALUEJS-T series (14 open asks, W-1/2/3 windows) · the
+  **OWNER-ORDERED aurora-pointer rider (2026-07-11) PENDING → folds into D-VIZ interactivity as a
+  named BI wave**.
+- /api break = exactly 2 sites (speedtest TimelineSegment→/timeline, muster aurora-config→/aurora),
+  both rostered + gate-locked; paper-grid/goo-dot-matrix drops have zero consumers (safe).
+- Fold-carry corrections: glass-panel retire = 5 sites / 2 repos (atlas ×3, sci-report ×2);
+  hover-popover fold = atlas EasterEgg.vue:44.
+
+## The adversarial re-verification (ARV lens): all 10 round-1 claims RE-CONFIRMED, none refuted
+
+Live-proved: the tab-drag double-kill, the drawer per-frame blur trio, the meta-leak in dist +
+rendered, fourier two-canvas @ dpr2, DockStage 9.68MP (~3.9× visible area) + 12 luminance observers,
+the orphan-gate demo-counting. Framing precisions: the Escape collision is first-registered-wins
+(narrower than "4 containers"); the dead Transition recipes are demo-exercised (motion.vue tour) with
+zero production consumers; component-orphan excludes only the package's own same-named story.
+
+Registry state: OPEN (rounds 1, 2, 2b folded). Round 3 = the stability check (fresh eyes over the
+full registry; two consecutive clean rounds close the audit).
