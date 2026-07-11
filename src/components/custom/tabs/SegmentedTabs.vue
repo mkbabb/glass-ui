@@ -109,6 +109,19 @@ export interface SegmentedTabsProps {
      * `full → reduced` regardless (a11y absolute).
      */
     motion?: Motion;
+    /**
+     * BG.W-EYEGLASS-TABS — the iOS-27 eye-glass loupe register (ADDITIVE, default
+     * `false`, `pill`-ONLY). Flips a `data-eyeglass` attribute the CSS reads to opt the
+     * strip into (a) `.glass-lens` refraction on the indicator (Chromium bends the
+     * frosted-stage backdrop; off `backdrop-filter: url()` engines it degrades to the
+     * honest proud `.glass-capsule` frost floor — NO faked bend), (b) the proud loupe
+     * geometry (the static outset spilling past the track on BOTH position paths), (c)
+     * the stronger stage frost the loupe bends, (d) the opt-in `--tab-selected-ink`
+     * glyph-accent seam. ORTHOGONAL to `variant`/`motion`/`responsive` — it stacks.
+     * Ignored on `underline` (a paper hairline has no plate to loupe — not an error).
+     * Default `false` ⇒ byte-identical to the shipped `.glass-capsule` pill.
+     */
+    eyeglass?: boolean;
     class?: HTMLAttributes["class"];
 }
 
@@ -116,6 +129,7 @@ const props = withDefaults(defineProps<SegmentedTabsProps>(), {
     variant: "pill",
     orientation: "horizontal",
     responsive: false,
+    eyeglass: false,
 });
 
 // BH.W-MOTION-AXIS — the resolved motion state. `armed` (resolved `full`) gates the
@@ -142,6 +156,12 @@ const ANCHOR_SUPPORTED =
 
 const isUnderline = computed(() => props.variant === "underline");
 const isVertical = computed(() => props.orientation === "vertical");
+
+// BG.W-EYEGLASS-TABS — the eyeglass loupe engages pill-ONLY (the underline paper
+// hairline has no plate to loupe; eyeglass is ignored on it, not an error). This ONE
+// computed is the SINGLE gate for the `data-eyeglass` host attr AND the `.glass-lens`
+// indicator compose — additive, default-off, byte-identical to the shipped pill when off.
+const eyeglassOn = computed(() => props.eyeglass && !isUnderline.value);
 
 const activeValues = computed<string[]>(() =>
     model.value != null ? [model.value] : [],
@@ -322,6 +342,7 @@ const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
         :role="isUnderline ? 'tablist' : 'group'"
         :aria-orientation="isUnderline ? (isVertical ? 'vertical' : 'horizontal') : undefined"
         :data-motion="motionAxis.dataMotion.value"
+        :data-eyeglass="eyeglassOn ? '' : undefined"
         :style="motionAxis.hostStyle.value"
         :class="cn(
             'segmented-tabs',
@@ -351,6 +372,12 @@ const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
                 // `.glass-capsule` (warm-floor fill + rim + lift, ONE recipe; the
                 // dock-tab selected arm + buttons greenfield compose the SAME class).
                 'glass-capsule',
+                // BG.W-EYEGLASS-TABS — the eyeglass indicator COMPOSES the shipped
+                // `.glass-lens` (glass-refract.css) — the whole refraction rides INSIDE
+                // its own `@supports (backdrop-filter: url(#glass-refract))` gate, so off
+                // that engine the pill paints the un-gated `.glass-capsule` frost floor
+                // (the honest Safari/Firefox degrade — NO faked bend). Pill-only + opt-in.
+                eyeglassOn && 'glass-lens',
                 jsSingleSlider ? 'segmented-indicator--js' : 'segmented-indicator--anchor',
                 dragEnabled && 'glass-drag-grabbable',
                 dragEnabled && drag.dragging.value && 'glass-drag-lift',

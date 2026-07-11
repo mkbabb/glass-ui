@@ -2017,6 +2017,12 @@ export const GATES = [
         note: "BC.W-TABS-IOS — iOS-27 small stadium glass PILLS (not squared, not reka/shadcn-flat). T1 the --radius-tab aliases the ONE --radius-pill source (the px literals + 640px radius bumps DELETED, clean break); T2 the active pill is a distinct lifted glass plate (--glass-bg-floating-tinted + the BLACK-BAR rim-top/-bottom + glass-shadow-floating lift); T3 no dark D2 ring on the track/indicator; T4 the drag engine fence (aria + roving + the cap lockstep const==token in [1.0,1.2]); T5 the active label legible. Reads the DESHADCN census (zero residual shadcn-neutral). Bite: a squared/flat tab / a px-literal radius / a dark ring / a raw untinted plate → RED.",
     },
     {
+        id: "proof:eyeglass-tabs",
+        cmd: "proof:eyeglass-tabs",
+        tags: ["local", "ci"],
+        note: "BG.W-EYEGLASS-TABS — the iOS-27 eye-glass loupe register on SegmentedTabs (ADDITIVE pill-only `eyeglass` axis composing .glass-lens + the proud geometry + the stronger stage frost + the contrast-split glyph-ink). E1 the axis exists ONCE (data-eyeglass, pill-gated, default-off byte-identical); E2 the lens is COMPOSED + @supports-gated + baked (no forked filter / no leak / no var-scale-splice, DDR-LENS-BAKE); E3 the proud is a STATIC LENGTH outset on BOTH position paths at BOTH breakpoints (C3/AC7, no new animated box dimension — proof:no-layout-animation holds); E4 the FROZEN snappy clock (=--spring-snappy-duration) + DISTINCT caps (stretch ≤1.2, blob area ≤1.14 per-axis ≤~1.068); E5 the selected LABEL stays --foreground (AA/T5) + the GLYPH tints via --tab-selected-ink on a DESCENDANT svg (AC4, --foreground no-op default) + the --tab-flood-t register survives; E6 the honest-degrade posture (Safari proud capsule, no faked bend) + booked successors recorded. Device-free composition+fence arm; the BINDING truth is the DRIVEN 60fps frame-series π (both engines/modes vs bar60/) — per-mechanism greens do NOT close the visual wave (BG inv-4). Keeps green: tabs-std/tabs-ios/lensing/liquid-tab/no-layout-animation/glass-accent/register-ios/glass-cal/no-masking-fallback. Bite: an unconditional data-eyeglass / a refraction outside @supports / a one-path or vanishing-at-640 or bare-ratio proud / a blob-max past its area cap / a glyph tint on the tab color / a pre-baked magnified fake → the matching clause reddens (9-bite self-test).",
+    },
+    {
         id: "proof:liquid-tab",
         cmd: "proof:liquid-tab",
         tags: ["local", "ci", "release"],

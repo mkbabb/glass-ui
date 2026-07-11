@@ -8,13 +8,13 @@
 // paper/grain card). The constellation may freely change (R10, verbatim).
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
-import { ref } from "vue";
+import { ref, type Component } from "vue";
 import {
     SegmentedTabs,
     type SegmentedTabOption,
 } from "@glass/components/custom/tabs";
 import { IconChip } from "@glass/components/custom/icon-chip";
-import { LayoutGrid } from "@lucide/vue";
+import { LayoutGrid, List, Kanban, Clock } from "@lucide/vue";
 
 // BC.W-SUFFUSE-reconcile — the navigation band's ONE coherent --section-color-12 indigo identity. PH3-safe (inline borderLeft, not the border-l-[3px] + <IconChip> double-header shape).
 const NAV_STOP = 12;
@@ -39,6 +39,17 @@ const priorityOptions: SegmentedTabOption[] = [
 
 // ── Pill (glass) — DRAGGABLE (the LIQUID TAB, BB.W-DRAG-MORPH) ──
 const liquidView = ref("grid");
+
+// ── Pill (glass) — EYEGLASS (the iOS-27 loupe, BG.W-EYEGLASS-TABS) ──
+const eyeglassView = ref("grid");
+// The selected-GLYPH accent-ink demo needs a glyph (an svg icon) per option — the
+// `--tab-selected-ink` seam tints the selected svg while the LABEL stays warm-ink.
+const eyeglassIcons: Record<string, Component> = {
+    grid: LayoutGrid,
+    list: List,
+    kanban: Kanban,
+    timeline: Clock,
+};
 
 // ── Pill (glass) — vertical ──
 const account = ref("profile");
@@ -141,6 +152,38 @@ const chapterBody: Record<string, string> = {
                     />
                     <span class="text-xs text-muted-foreground"
                         >selected: {{ liquidView }} — drag the pill</span
+                    >
+                </div>
+            </div>
+        </StorySection>
+
+        <!-- ════ The PILL material — EYEGLASS (the iOS-27 loupe) ════ -->
+        <StorySection
+            heading="Pill — eyeglass (the iOS-27 loupe)"
+            blurb="The proud liquid-glass LOUPE (pill-only, additive default-off). The selected pill composes .glass-lens — on Chromium it REFRACTS the frosted aurora stage through a squircle bevel; off backdrop-filter:url() engines it degrades to the honest proud .glass-capsule frost floor (no faked bend). The pill sits PROUD — taller than its slot, crown/base spilling past the track. A consumer accent preset (teal) flows the rim + tints the selected GLYPH via --tab-selected-ink while the LABEL stays warm-ink (the contrast-split). The snappy glide + squish are unchanged (frozen clock)."
+        >
+            <div class="glass-card flex flex-col gap-4 rounded-[var(--radius-card)] p-5">
+                <div class="flex flex-wrap items-center gap-3">
+                    <SegmentedTabs
+                        v-model="eyeglassView"
+                        :options="viewOptions"
+                        eyeglass
+                        :style="{
+                            '--glass-accent': 'oklch(0.82 0.13 205)',
+                            '--glass-accent-strength': '42%',
+                            '--tab-selected-ink': 'oklch(0.86 0.15 205)',
+                        }"
+                    >
+                        <template #option="{ option }">
+                            <component
+                                :is="eyeglassIcons[option.value]"
+                                class="inline size-4 align-[-3px]"
+                            />
+                            <span class="ml-1.5">{{ option.label }}</span>
+                        </template>
+                    </SegmentedTabs>
+                    <span class="text-xs text-muted-foreground"
+                        >selected: {{ eyeglassView }}</span
                     >
                 </div>
             </div>
