@@ -24,6 +24,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+import { readCanon } from "./lib/canon-doc.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 
@@ -43,7 +44,6 @@ function cliPaths() {
         ),
         CHAR_STAGGER_CSS: resolve(ROOT, "src/styles/typography/utilities.css"),
         CONSUMER_EVIDENCE: resolve(ROOT, "docs/consumer-evidence/split-chars.md"),
-        CLAUDE_MD: resolve(ROOT, "CLAUDE.md"),
         ARTIFACT: gateArtifactPath("GLASS_UI_SPLIT_CHARS_ARTIFACT", "BC-split-chars"),
     };
     return _cliPaths;
@@ -283,10 +283,10 @@ export function detectSplitChars(sources) {
     // /api publishes the option + return types on the discovery surface.
     const apiPublishes =
         /UseCharStaggerOptions/.test(api) && /UseCharStaggerReturn/.test(api);
-    // the structure-sync clause is CLAUDE.md-owned (the §Structure custom/ enumeration
-    // + count). It is asserted here (the dir MUST be enumerated) — proof:claude-structure-sync
-    // owns the hard count gate; this records the enumeration presence.
-    const inClaudeStructure = /│\s+│\s+├──\s+split-chars\//.test(claudeMd);
+    // the structure enumeration lives in the GENERATED docs/canon/structure.md (BH.B5c
+    // re-home off CLAUDE.md) — the dir MUST appear as a `- split-chars/` bullet;
+    // proof:claude-structure-sync owns the hard regen-freshness gate, this records presence.
+    const inClaudeStructure = /^\s*-\s+split-chars\/\s*$/m.test(claudeMd);
     facts.sp6 = {
         dirFiles,
         missingDirFiles,
@@ -308,7 +308,7 @@ export function detectSplitChars(sources) {
         );
     if (!inClaudeStructure)
         violations.push(
-            "SP6: the split-chars dir is not enumerated in the CLAUDE.md §Structure custom/ map (proof:claude-structure-sync owns the count)",
+            "SP6: the split-chars dir is not enumerated in docs/canon/structure.md (proof:claude-structure-sync owns the regen-freshness gate)",
         );
 
     return { facts, violations };
@@ -340,7 +340,7 @@ export function useCharStagger(target, opts = {}) {
   animation-delay: calc(var(--char-index, 0) * 30ms);
 }`,
         consumerEvidence: `demo/stories/motion/split-chars.vue — the demo hero story; StoryHeader every hero by construction; the cross-repo fourier consume.`,
-        claudeMd: `│   │   ├── split-chars/`,
+        claudeMd: `- split-chars/`,
         splitDirFiles: ["SplitChars.vue", "index.ts", "README.md"],
     };
     const clean = detectSplitChars(base);
@@ -444,7 +444,7 @@ function run() {
         splitVue: stripAll(safeRead(p.SPLIT_CHARS_VUE)),
         charStaggerCss: stripBlockComments(safeRead(p.CHAR_STAGGER_CSS)),
         consumerEvidence: safeRead(p.CONSUMER_EVIDENCE),
-        claudeMd: safeRead(p.CLAUDE_MD),
+        claudeMd: readCanon("structure", "soft"), // BH.B5c re-home off CLAUDE.md
         splitDirFiles: dirFiles,
     };
 

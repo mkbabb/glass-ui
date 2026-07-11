@@ -112,7 +112,7 @@ const SRC_DIR = resolve(ROOT, "src");
 const SPRING_PRESETS_TS = "src/composables/motion/springPresets.ts";
 const CURVES_TS = "src/composables/motion/curves.ts";
 const REGEN_MJS = "scripts/regen-spring-tokens.mjs";
-const MOTION_CANON = "docs/precepts/motion-canon.md";
+const MOTION_CANON = "docs/design/motion-canon.md"; // BH.B5c re-home off docs/precepts submodule
 const ASKS_AND_CONSUMES = "docs/tranches/BC/coordination/asks-and-consumes.md";
 // ── A9 / CC source anchors (the live spring sources + the coupled-facility seams) ──
 const SCHEME_MOTION_CSS = "src/styles/tokens/scheme-motion.css";
@@ -711,15 +711,10 @@ export function detectVizInversion(read) {
 export function detectCanonSync(read) {
     const violations = [];
     const facts = {};
-    // docs/precepts is a git SUBMODULE (a sibling private repo). On a CI runner
-    // the checkout does not initialize it (and cannot — the default token has no
-    // cross-repo grant), so the dir is empty + motion-canon.md is absent.
-    // Absent-submodule → skip-by-policy (the sibling-gate convention) for the §P7
-    // motion-canon.md clause ONLY; the cross-repo book (asks-and-consumes.md, a
-    // main-repo file, NOT a submodule) keeps biting below. Locally the §P7 clause BITES.
-    const preceptsDir = resolve(ROOT, "docs/precepts");
-    const submodulePresent =
-        existsSync(preceptsDir) && readdirSync(preceptsDir).length > 0;
+    // BH.B5c: the §P7 motion-canon clause re-homed off the docs/precepts submodule onto
+    // the in-repo docs/design extraction — always present on a fresh checkout, so the
+    // clause always BITES (present iff the extracted home resolves).
+    const submodulePresent = existsSync(resolve(ROOT, MOTION_CANON));
     facts.submodulePresent = submodulePresent;
     if (!submodulePresent) {
         console.log(

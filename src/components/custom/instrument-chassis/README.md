@@ -24,7 +24,7 @@ instrument panel, not a flat card.
 - **`InstrumentChassisPhase`** / **`InstrumentChassisVariant`** — the phase + variant type
   unions.
 
-## The phase bus (BB.W-PHASE-PALETTE / N18)
+## The phase bus — the InstrumentChassis phase canon (BB.W-PHASE-PALETTE / N18)
 
 The `InstrumentChassisPhase` union (`ready | ping | download | upload | jitter | complete`)
 carries `"ping"` as the canonical generic-active phase (map any active-but-unspecialised

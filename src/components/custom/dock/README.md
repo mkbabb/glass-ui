@@ -286,6 +286,34 @@ substrate-with-consumer precept).
 
 ---
 
+## The nav-pattern, the collapsed-floor + the selected register
+
+A **NAV-flavored** dock composes ONE `<GlassDock>` root with a consistent nav-pattern:
+a home/brand control in the leading **`#persistent`** slot (**home-left**), the nav
+items, and `<DockSeparator>` dividers between groups — zero raw-class separators, zero
+hand-rolled home chrome.
+
+Three load-bearing token registers:
+
+- **The collapsed-floor is a PERFECT CIRCLE.** `--dock-collapsed-summary-min-size`
+  (`calc(--dock-layer-height * 0.85)`, a tight proportioned circle below the full
+  control height) + `--dock-collapsed-padding` (`calc(0.25rem * var(--dock-scale))`, a
+  tighter pad floor) — BOTH ride the `--dock-scale` coarse-pointer thread. The collapsed
+  `.dock-layer--summary` lifts the height-lock (`aspect-ratio: 1`) so the pill is a 1:1
+  circle, not an oval.
+- **The glass-first, de-red'd iOS selected register.** `--dock-control-active-bg` is a
+  `--glass-bg-*` glass tier (`var(--glass-bg-floating)`, a tier ABOVE the hover
+  `var(--glass-bg-resting)`) reading the dock substrate through it — the "selected reads
+  as glass" model, NOT a flat `--surface-tint-N` overlay and NEVER a saturated brand-red
+  fill; the selected glyph stays warm-ink `--foreground`.
+- **The `mode="facets"` facet carousel** (`<DockStack mode="facets">`, BE.W-DOCK-RAIL-REALIZE)
+  renders the members as a CONTEXT CAROUSEL of accent-tinted facet chips (each writes its
+  own `--glass-accent` context hue), the active facet lifting onto the
+  `--dock-control-active-bg` glass tier — a RENDER MODE on the ONE `<DockStack>`, box-INVIOLATE,
+  fanning on the SAME `--spring-dock` clock. Locked by `proof:dock-rail-realize`.
+
+---
+
 ## Gates (the falsifiable contract)
 
 | Gate | Asserts |
@@ -308,7 +336,6 @@ substrate-with-consumer precept).
 | `proof:dock-no-scale-pop` | The collapse-onset scale-pop + FLIP-thrash stay dead: the `.collapsed:hover` scale is `:not([data-morphing])`-gated and the hover hysteresis seam is wired. |
 | `proof:dock-tap-integrity` | The morph-race click integrity: the identity-scoped pass-through + the morph-settle window + the no-witnessed-press AT pass-through (the iOS one-tap contract). |
 | `proof:dock-contextual-layers` | The route-driven contextual facet seam: ONE resolver (`useContextualDockLayers`), the rail-strip render target, no parallel store. |
-| `proof:rail3` | The floating-carousel rail: the facets OUT of the dock body, the box INVIOLATE via the `.glass-dock-frame` escape, the visible connective hairline, ≥2 shell consumers. |
 | `proof:dock-sections` | The declarative tripartite `<DockSection>` chassis: a `sections` descriptor array renders the rail-core | section | nav zones by composing `<DockSeparator>` over the in-flow controls (`display: contents`, the dock box shrink-wraps as before); the divider seam derivation is required (no static midline decoy). |
 | `proof:dock-morph-insitu` | The in-situ shell V↔H morph + layering: the shell binds `useDockOrientationMorph` on the ONE `--dock-morph-t` scalar (no second engine), bidirectional with the topology change occluded behind the VT-crossfade default, the layering/contextual switch wired, and the BA-VJS-1 nested-group measure-ordering fix (the spring byte-fenced). |
 | `proof:dock-morph-family` | The collapse/expand morph is compositor-bound + PRM-safe + chrome-continuous on BOTH orientations (F1–F6, `DOCK_SPRING` byte-untouched): the box-size morph is a COMPOSITOR transform over a reserved settled footprint (the CDP Layout track stays FLAT, content reads complete behind the clip aperture from frame 0), PRM seats synchronously (no collapsed-from sliver), `DockLayerGroup` self-reserves its peak block-size, `--dock-local-scale` is a registered inheriting `@property` scale preset, and the VERTICAL collapse↔expand morphs its plate chrome continuously on the SAME `--dock-expand-t` scalar. |
@@ -318,9 +345,15 @@ substrate-with-consumer precept).
 | `proof:dock-shrink-blur` | The shrunken dock is not a blurry mess: the resting self-blur (`filter: blur`) is gated to `[data-morphing]` so the COLLAPSED pill reads crisp (`blur(0px)` at rest), the 3px decongest bloom present only transiently mid-morph; the 9px backdrop byte-frozen + the PRM carve. |
 | `proof:dock-vertical-clickable` | The VERTICAL dock works AND is CLICKABLE (the BB unclickable defect closed): the two-line root fix (`GlassDock` `visualExpanded`, engine byte-untouched) gives the vertical controls real ≥44px tap hit-rects, closing the prior `proof:dock-tap-integrity` vertical failure. |
 | `proof:dock-collapsed-both` | Vertical AND bottom dock COLLAPSED states with tab items + persistent controls (a demo-shell composition over the UNCHANGED library collapse engine: BottomDock a bounded summary window of `DockTabButton` `#collapsed` chips, SidebarDock host-conditional collapsible). |
-| `proof:dock-stack-rail` | The macOS hover-expand stack rail (`DockStack`, the clean-break rebuild SUPERSEDING `DockRail`/`proof:rail3` + the `proof:dock-sections` rail clauses): extend-beyond, hover-expand (reusing `HOVER_INTENT_MS`), 3-configurable/scrollable/n-stack, the fan-out compositor-only on `--spring-dock` staggered by `--dock-stack-stagger` + PRM-carved, seated at the dock EDGE via the `.glass-dock-frame`/`--dock-rail-extend-length` escape. |
+| `proof:dock-stack-rail` | The macOS hover-expand stack rail (`DockStack`, the clean-break rebuild SUPERSEDING the retired `DockRail` divider-carousel rail + the `proof:dock-sections` rail clauses): extend-beyond, hover-expand (reusing `HOVER_INTENT_MS`), 3-configurable/scrollable/n-stack, the fan-out compositor-only on `--spring-dock` staggered by `--dock-stack-stagger` + PRM-carved, seated at the dock EDGE via the `.glass-dock-frame`/`--dock-rail-extend-length` escape. |
 | `proof:dock-cockpit` | The `[data-preset="cockpit"]` geometry preset (cross-repo speedtest A-9): a fixed `2.75rem` control floor + `--dock-label-ratio` beside the density rungs, closing the dock-oversize chronic; the `FEATURE_EXEMPT` census preserved. |
 | `proof:dock-search` | The dock becomes a fuzzy SEARCH bar: `useDockSearch` composes the SHIPPED `/search` VSCode-scorer pipeline (`useFuzzySearch` — no re-fork) + `GlassDock`, so the dock morphs into a command/search surface that filters as you type. |
 | `proof:dock-fission` | The n-ary detach orchestrator: the rest state is ONE glass pill (goo OFF), the split CARVES it. ONE `SpringProgress` writes `--dock-split-t` off `DOCK_SPRING`/`--spring-dock` (no new spring family), bidirectional split/merge, per-context goo signature descriptor-driven (`DOCK_SPLIT_SIGNATURES` — radial/lateral/inward), pointer-reactive `--seam-tension` off `usePointerVelocityField`, PRM=instant, compositor-only. A consuming seam BESIDE the morph engine — `dockMorphContext`/`DOCK_SPRING` byte-untouched (box-inviolate). |
 | `proof:dock-gallery` | The dock-gallery RE-HOST onto the real library primitives + the ONE demo chassis: the `<DockExampleTile>` chassis declares `--ex-spring` off the shipped `--spring-*` register (no bespoke overshoot bezier), every `examples/*.vue` composes a real engine (`useBloomUp`/`useDockFission` — a CSS-only facsimile reds), the Dynamic Island Call is an ACTUAL fission, and the gallery is compositor-only demo-scoped. |
 | `proof:dock-rail-realize` | The clean-break fork DELETE: the standalone `.liquid-rail-dock` capsule + its re-forked `useLiquidRail` spring loop are DELETED wholesale; only the pure φ-tier/ring carousel PROJECTION math is harvested into a STATELESS `railProjection.ts` (`projectFacets`/`ringOffset`/`tieredSpan` — no spring re-fork, the facet fan rides the dock's own `--spring-dock` clock). |
+| `proof:dock-decompose` | The `GlassDock.vue` god-SFC decomposition: the SFC is ≤ 500 lines AND its `proof:no-god-module` RATCHET baseline row is drained; colocation + single-writer discipline hold. |
+| `proof:dock-engine-unify` | The ONE `useDockSpring` factory is the band's SOLE new `SpringProgress` site (PRM-armed, LIGHT-surface fence); `dockMorphContext` CONSUMES it (zero raw new `SpringProgress`) — the busy-signal single-source. |
+| `proof:dock-story-modularize` | The dock-story protection + cleanup: `liquid-playground.vue` OWNS the ONE dock + TABS facility (`GlassDock` + `DockStack` + `mode="facets"`, both orientations); `dock-gallery.vue` is the pure BREADTH gallery (0 `GlassDock`). |
+| `proof:dock-consumer-fence` | The dock never leaks internal-part CSS onto consumer elements: every `.dock-layer-*` family paint/layout rule carries a `:where(.glass-dock, .dock-layer-group)` dock-root anchor (custom-property-only registers exempt), and no faked global gesture. |
+| `proof:dock-rail-reinvent` | The dock rail topology INVERTED (USER 07-05): the always-OUTSIDE anchor is GONE, the core seats CONTAINED when collapsed. EXTENDS `proof:dock-rail-realize` (R1–R5 + `proof:dock-stack-rail` S1–S6 re-asserted GREEN). |
+| `proof:dock-persistent-cut` | The persistent ℱ brand wordmark + its long-press Fourier-redraw egg are REMOVED from `SidebarDock` (iOS-26 HIG: glass is the floating navigation layer, never content). |

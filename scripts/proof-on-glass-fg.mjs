@@ -39,6 +39,7 @@ import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-outpu
 // AY.W-CSS1 — tokens.css/glass.css became thin @import roots over carved partials;
 // readMonolith concatenates root + partials in cascade order so the seam scan resolves.
 import { readMonolith } from "./read-css-monoliths.mjs";
+import { readCanon } from "./lib/canon-doc.mjs";
 
 const COMMAND = "npm run proof:on-glass-fg";
 
@@ -391,12 +392,11 @@ const inputCss = [
 ].join("\n");
 const progressDefault = strip(read("src/components/ui/progress/ProgressDefault.vue"));
 const progressGradient = strip(read("src/components/ui/progress/ProgressGradient.vue"));
-// CLAUDE.md is MARKDOWN prose (with embedded CSS/JS code examples), NOT a code
-// file — `strip()`'s `/* */` regex pairs comment fragments ACROSS the embedded
-// examples and blanks whole prose regions (incl. this canon), so the canon read
-// is RAW. The false-witness concern strip guards (a token in a real code comment)
-// does not apply: the W4 canon is recorded AS prose.
-const claudeMd = read("CLAUDE.md");
+// The glass-system canon home (BH.B5c re-home off CLAUDE.md) is MARKDOWN prose (with
+// embedded CSS/JS code examples), NOT a code file — `strip()`'s `/* */` regex pairs
+// comment fragments ACROSS the embedded examples and blanks whole prose regions (incl.
+// this canon), so the canon read is RAW. The W4 canon is recorded AS prose.
+const claudeMd = readCanon("glass-system", "soft");
 const migrationMd = strip(read("MIGRATION.md"));
 
 const facts = detectOnGlassFg({

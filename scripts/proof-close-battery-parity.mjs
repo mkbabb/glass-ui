@@ -34,6 +34,7 @@ import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { gatesFor } from "./gates.mjs";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+import { readCanon } from "./lib/canon-doc.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const SELF = fileURLToPath(import.meta.url);
@@ -135,18 +136,18 @@ function evaluate(input) {
     facts.releaseYml = closePathVerdict(input.releaseYmlModes, CLOSE_PATH_POLICY.releaseYml);
     if (facts.releaseYml) violations.push(`[clause 3] ${facts.releaseYml}`);
 
-    // ── Clause 4 — the close-battery canon: the `proof:full` script + the CLAUDE.md rule.
+    // ── Clause 4 — the close-battery canon: the `proof:full` script + the build-and-gates rule.
     facts.proofFullScript = input.proofFullScript;
     if (!input.proofFullScript) violations.push("[clause 4] package.json has no `proof:full` → `node scripts/gates.mjs --run full` script");
     facts.claudeCanon = input.claudeCanon;
-    if (!input.claudeCanon) violations.push("[clause 4] CLAUDE.md gate-hygiene does not record the close-battery rule (`--run full` = local∪ci∪release siblings-absent before the tag)");
+    if (!input.claudeCanon) violations.push("[clause 4] docs/canon/build-and-gates.md does not record the close-battery rule (`--run full` = local∪ci∪release siblings-absent before the tag)");
 
     return { violations, facts };
 }
 
 /** Build the real-tree input (disk + gatesFor). */
 function realInput() {
-    const claude = read("CLAUDE.md") ?? "";
+    const claude = readCanon("build-and-gates", "soft"); // BH.B5c re-home off CLAUDE.md
     const pkg = JSON.parse(read("package.json"));
     return {
         union: {

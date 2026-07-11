@@ -1,49 +1,46 @@
 #!/usr/bin/env node
-// BA.W-HYGIENE — the CLAUDE.md §Structure custom/ drift gate (proof:claude-structure-sync).
+// BA.W-HYGIENE — the §Structure custom/ drift gate (proof:claude-structure-sync).
+// RE-HOMED off CLAUDE.md onto the GENERATED docs/canon/structure.md (BH.B5c). The
+// structure map a fresh agent reads FIRST to route to a component used to live in the
+// CLAUDE.md §Structure `custom/` ASCII tree; it drifted from disk through two closes
+// (declared "36 custom package dirs" while disk had 33). BH regenerates the map from
+// disk (`regen-structure.mjs`, the SAME colocated-barrel glob the export regen feeds),
+// so the enumeration CANNOT be hand-maintained — the gate no longer parses a
+// hand-authored tree, it asserts the committed generated file is FRESH.
 //
-// CLAUDE.md is the structural map a fresh agent reads FIRST to route to a component.
-// Through two closes (P-5) the §Structure `custom/` enumeration drifted from disk: it
-// declared "36 custom package dirs" while disk had 33, and OMITTED five shipped
-// feature-dirs (constellation/ fourier-field/ glass-panel/ header-ribbon/ underline/).
-// A fresh agent routing by §Structure could not find them. This gate makes the
-// enumeration ≡ disk MACHINE-ENFORCED so the map cannot silently diverge again.
+// It asserts:
+//   (a) REGEN-FRESHNESS — the committed docs/canon/structure.md is byte-identical to
+//       the freshly-generated form (`structureFreshness()`). A custom/ui/composable
+//       dir add (or delete) that never re-ran `node scripts/regen-structure.mjs
+//       --write` REDs. This SUPERSEDES the CLAUDE.md-tree set-equality parse — the
+//       generated map cannot drift from disk (it IS disk), and the freshness check is
+//       the honest guard against a stale committed copy. The bare readFileSync(CLAUDE_MD)
+//       crash (the ci ENOENT the whole BH doc-migration kills) is gone.
+//   (b) PNG-TRACKED — the on-disk-but-untracked visual-png integrity assert (P-4,
+//       kept): every un-ignored `docs/tranches/*/audit/{visual,reflect}/**.png` on disk
+//       is `git ls-files`-tracked, so a png that resolves on the authoring tree but
+//       404s on a fresh clone REDs. (This arm is BOOKED to split into
+//       proof:visual-png-tracked at B5e — for B5c it rides here, CLAUDE-read-free.)
 //
-// It asserts (the anti-evasion bite — SET EQUALITY in BOTH directions):
-//   (a) the dir-named lines under the `custom/` header enumerate EXACTLY the dirs
-//       present at `ls src/components/custom/` (excluding `index.ts` + any non-dir);
-//       a dir on disk missing from the doc REDs, AND a dir in the doc absent from disk
-//       REDs.
-//   (b) the declared count ("<N> custom package dirs") EQUALS the actual disk dir
-//       count. It is DERIVED-vs-actual, not a literal "33" match — adding a dir to
-//       disk must re-sync the count, never green a frozen number; correcting the count
-//       while a future dir is added un-enumerated also REDs (the set arm catches it).
-//
-// Born-RED at HEAD pre-edit (36 ≠ 33, five dirs omitted); GREEN after the §Structure
-// re-sync. The gate guards every later wave adding a custom/ dir — it must enumerate
-// the dir in CLAUDE.md or RED.
+// Born-RED whenever the committed structure.md drifts from disk; GREEN after --write.
 
 import { execSync } from "node:child_process";
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { existsSync, readdirSync } from "node:fs";
 import { resolve, relative } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+import { structureFreshness } from "./regen-structure.mjs";
+import { canonDocRel } from "./lib/canon-doc.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
-const CLAUDE_MD = resolve(ROOT, "CLAUDE.md");
 const CUSTOM_DIR = resolve(ROOT, "src/components/custom");
 const ARTIFACT = gateArtifactPath("GLASS_UI_CLAUDE_STRUCTURE_ARTIFACT", "BA-claude-structure-sync");
 
 const rel = (p) => relative(ROOT, p);
 
-// BA.W-HYGIENE (P-4): the on-disk-but-untracked visual-png integrity assert. The
-// .gitignore un-ignores `docs/tranches/*/audit/visual/*.png` + `…/*/*.png` precisely so
-// proof:live-verified-ledger / proof:az-reflect can assert the cited pngs exist on a
-// fresh CI checkout. But a png that EXISTS on disk yet is NOT `git ls-files`-tracked
-// resolves on the authoring tree and 404s on a fresh clone — the exact failure class the
-// gitignore exception was built to prevent (the AX close left 26 such orphans). This arm
-// asserts every on-disk un-ignored visual png is tracked, closing the class MECHANICALLY.
-// It is git-aware (the only seam that needs git); on a non-git or detached runner it
-// degrades to skip-by-policy (a clean CI checkout always has git).
+// BA.W-HYGIENE (P-4): the on-disk-but-untracked visual-png integrity assert. A png that
+// EXISTS on disk yet is NOT `git ls-files`-tracked resolves on the authoring tree and
+// 404s on a fresh clone. Git-aware; on a non-git runner it degrades to skip-by-policy.
 function untrackedVisualPngs() {
     try {
         const out = execSync(
@@ -56,8 +53,8 @@ function untrackedVisualPngs() {
     }
 }
 
-/** The disk truth: immediate sub-DIRECTORIES of src/components/custom/ (excludes
- *  index.ts + any loose file; a dir IS a package by the custom/ convention). */
+/** The disk truth: immediate sub-DIRECTORIES of src/components/custom/ (a fact for the
+ *  artefact; the freshness check is the binding assertion). */
 function diskDirs() {
     return readdirSync(CUSTOM_DIR, { withFileTypes: true })
         .filter((e) => e.isDirectory())
@@ -65,91 +62,31 @@ function diskDirs() {
         .sort();
 }
 
-/** Parse the CLAUDE.md §Structure custom/ enumeration. The enumeration lives in a
- *  fenced ``` block as an ASCII tree. The `custom/` header line carries the declared
- *  count; the DIRECT-CHILD dir lines carry the 3-deep tree prefix `│   │   ├── <name>/`
- *  (the deeper `│   │   │   ├──` nested children of dock/ + controls/ and the trailing
- *  `└── index.ts` barrel are NOT direct package dirs and are excluded). */
-function parseDoc() {
-    const lines = readFileSync(CLAUDE_MD, "utf8").split("\n");
-    // The custom/ header: `│   ├── custom/   # <N> custom package dirs ...`
-    const headerIdx = lines.findIndex((l) =>
-        /^│\s+├──\s+custom\/\s+#.*custom package dirs/.test(l),
-    );
-    if (headerIdx === -1)
-        return { found: false, declaredCount: null, dirs: [] };
-    const header = lines[headerIdx];
-    const countMatch = header.match(/#\s*(\d+)\s+custom package dirs/);
-    const declaredCount = countMatch ? Number(countMatch[1]) : null;
-
-    // Walk forward from the header collecting DIRECT-CHILD dir lines until the block
-    // closes (the `│   └── index.ts` custom-barrel line, or the next sibling section
-    // `│   └──`/`├──` at the components level, or the fence close).
-    const dirs = [];
-    for (let i = headerIdx + 1; i < lines.length; i++) {
-        const l = lines[i];
-        // Block end: the custom/ barrel close `│   │   └── index.ts` then the
-        // components-level `│   └── index.ts`, or a fence / next top section.
-        if (/^```/.test(l)) break;
-        if (/^│\s+└──\s+index\.ts/.test(l)) break; // components/ barrel close
-        // A direct-child package dir line: exactly the 3-deep `│   │   ├── <name>/`.
-        const m = l.match(/^│\s+│\s+├──\s+([a-z0-9][a-z0-9-]*)\/(?:\s|$)/);
-        if (m) dirs.push(m[1]);
-    }
-    return { found: true, declaredCount, dirs: dirs.sort() };
-}
-
 function run() {
     const violations = [];
     const disk = diskDirs();
-    const doc = parseDoc();
+    const fr = structureFreshness();
 
     const facts = {
-        claudeMd: rel(CLAUDE_MD),
+        structureHome: canonDocRel("structure"),
         customDir: rel(CUSTOM_DIR),
         diskCount: disk.length,
-        declaredCount: doc.declaredCount,
-        enumeratedCount: doc.dirs.length,
+        structureFresh: fr.fresh,
+        structurePresent: fr.committed !== null,
     };
 
-    if (!doc.found) {
+    // (a) REGEN-FRESHNESS — the committed generated map ≡ the fresh generation.
+    if (fr.committed === null) {
         violations.push(
-            "CLAUDE.md — the §Structure `custom/` header (`# <N> custom package dirs ...`) was not found; the parse anchor drifted",
+            `${fr.outRel} — the generated structure map is ABSENT; run \`node scripts/regen-structure.mjs --write\``,
         );
-    } else {
-        // (a) SET EQUALITY both directions.
-        const docSet = new Set(doc.dirs);
-        const diskSet = new Set(disk);
-        const onDiskNotDoc = disk.filter((d) => !docSet.has(d));
-        const inDocNotDisk = doc.dirs.filter((d) => !diskSet.has(d));
-        facts.onDiskMissingFromDoc = onDiskNotDoc;
-        facts.inDocAbsentFromDisk = inDocNotDisk;
-        for (const d of onDiskNotDoc)
-            violations.push(
-                `src/components/custom/${d}/ — present on disk but ABSENT from the CLAUDE.md §Structure enumeration; add it`,
-            );
-        for (const d of inDocNotDisk)
-            violations.push(
-                `CLAUDE.md enumerates \`${d}/\` but it is ABSENT from src/components/custom/; remove the stale line`,
-            );
-
-        // (b) declared count = actual disk count (DERIVED, not a literal "33").
-        if (doc.declaredCount === null)
-            violations.push(
-                "CLAUDE.md — the custom/ header carries no parseable `<N> custom package dirs` count",
-            );
-        else if (doc.declaredCount !== disk.length)
-            violations.push(
-                `CLAUDE.md declares ${doc.declaredCount} custom package dirs; disk has ${disk.length} — re-sync the count`,
-            );
-
-        // Belt-and-suspenders: the enumerated set count must also equal disk (it
-        // follows from set-equality, but record it as a fact for the artefact).
-        if (doc.dirs.length !== disk.length)
-            facts.enumeratedNeqDisk = true;
+    } else if (!fr.fresh) {
+        violations.push(
+            `${fr.outRel} — STALE: a src/components/{ui,custom} or src/composables dir drifted from disk without re-generating. Run: node scripts/regen-structure.mjs --write`,
+        );
     }
 
-    // (P-4) the on-disk-but-untracked visual-png integrity assert (the clean-tree arm).
+    // (b) PNG-TRACKED — the on-disk-but-untracked visual-png integrity assert.
     const png = untrackedVisualPngs();
     facts.pngIntegrityGitAware = png.gitAware;
     facts.untrackedVisualPngs = png.files;
@@ -173,10 +110,9 @@ function run() {
         violations,
     });
 
-    console.log("proof:claude-structure-sync — the CLAUDE.md §Structure custom/ map ≡ disk + the clean-tree png-tracked assert (BA.W-HYGIENE)");
-    console.log(`  disk dirs            : ${facts.diskCount}`);
-    console.log(`  declared count       : ${facts.declaredCount}`);
-    console.log(`  enumerated dirs      : ${facts.enumeratedCount}`);
+    console.log("proof:claude-structure-sync — the generated docs/canon/structure.md ≡ disk (regen-fresh) + the clean-tree png-tracked assert (BA.W-HYGIENE, BH.B5c re-home)");
+    console.log(`  disk custom dirs     : ${facts.diskCount}`);
+    console.log(`  structure.md fresh   : ${facts.structureFresh}`);
     console.log(`  untracked visual pngs: ${facts.pngIntegrityGitAware ? facts.untrackedVisualPngs.length : "n/a (no git)"}`);
     if (violations.length) {
         console.log("\nVIOLATIONS:");

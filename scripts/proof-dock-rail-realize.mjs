@@ -57,6 +57,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+import { readCanon } from "./lib/canon-doc.mjs";
 import {
     detectS1,
     detectS2,
@@ -78,7 +79,6 @@ const STACK_CSS = "src/styles/dock/stack-rail.css";
 const LIQUID_RAIL_CSS = "src/styles/dock/liquid-rail.css";
 const DEMO_CSS = "demo/demo.css";
 const PLAYGROUND = "demo/stories/dock/liquid-playground.vue";
-const CLAUDE_MD = "CLAUDE.md";
 
 const PRE_FIX_COMMIT = "9b301f4a"; // the WF-2-integration tree (the capsule fork live)
 
@@ -251,11 +251,11 @@ function detectR4() {
     return { violations, facts };
 }
 
-// ── R5 — the CLAUDE.md doc-reconcile ──
+// ── R5 — the doc-reconcile (BH.B5c re-home off CLAUDE.md → the dock README canon home) ──
 function detectR5() {
     const violations = [];
     const facts = {};
-    const claude = readRel(CLAUDE_MD);
+    const claude = readCanon("component:dock", "soft");
 
     // The stale retired-machinery references are GONE.
     facts.hasProofRail3 = /Machine-locked by\s+`?proof:rail3`?/.test(claude) || /\bproof:rail3\b/.test(claude);
@@ -263,21 +263,21 @@ function detectR5() {
     facts.hasSeamOffset = /--dock-rail-seam-offset/.test(claude);
     facts.hasProofRailExtend = /\bproof:rail-extend\b/.test(claude);
     if (facts.hasProofRail3)
-        violations.push("R5: CLAUDE.md still references `proof:rail3` (a deleted gate) — the doc-reconcile must replace it with proof:dock-rail-realize / proof:dock-stack-rail");
+        violations.push("R5: the dock README still references `proof:rail3` (a deleted gate) — the doc-reconcile must replace it with proof:dock-rail-realize / proof:dock-stack-rail");
     if (facts.hasRail3Spec)
-        violations.push("R5: CLAUDE.md still references `tests-visual/rail3.spec.ts` (a deleted spec) — the doc-reconcile must remove it");
+        violations.push("R5: the dock README still references `tests-visual/rail3.spec.ts` (a deleted spec) — the doc-reconcile must remove it");
     if (facts.hasSeamOffset)
-        violations.push("R5: CLAUDE.md still references `--dock-rail-seam-offset` (the retired divider-seam locator) — the doc-reconcile must remove it (the rail seats at the dock edge / in the gutter, no seam-offset)");
+        violations.push("R5: the dock README still references `--dock-rail-seam-offset` (the retired divider-seam locator) — the doc-reconcile must remove it (the rail seats at the dock edge / in the gutter, no seam-offset)");
     if (facts.hasProofRailExtend)
-        violations.push("R5: CLAUDE.md still references `proof:rail-extend` (a retired predecessor gate) — the doc-reconcile must remove it");
+        violations.push("R5: the dock README still references `proof:rail-extend` (a retired predecessor gate) — the doc-reconcile must remove it");
 
     // The live contract IS documented (the facet mode + the live gate).
     facts.documentsDockRailRealize = /\bproof:dock-rail-realize\b/.test(claude);
     facts.documentsFacetMode = /mode="facets"|facet carousel|facet-carousel|FACET CAROUSEL/i.test(claude);
     if (!facts.documentsDockRailRealize)
-        violations.push("R5: CLAUDE.md does not document `proof:dock-rail-realize` — the live facet-mode gate must be the recorded contract");
+        violations.push("R5: the dock README does not document `proof:dock-rail-realize` — the live facet-mode gate must be the recorded contract");
     if (!facts.documentsFacetMode)
-        violations.push("R5: CLAUDE.md does not document the `mode=\"facets\"` facet carousel — the re-instated rail contract must be recorded");
+        violations.push("R5: the dock README does not document the `mode=\"facets\"` facet carousel — the re-instated rail contract must be recorded");
 
     return { violations, facts };
 }

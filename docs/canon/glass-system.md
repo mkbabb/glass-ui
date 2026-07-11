@@ -84,3 +84,8 @@ Drawer, Popover, Command, ExpandableContainer, Skeleton, Toast, Button). `veil` 
 borderless legibility plate; `opaque` is `--glass-level:0`. No second three-rung surface
 recipe is possible (`proof:surface-axis` W1). W-FEEDBACK-TONE and W-MENU-GLASS CONSUME
 this axis; they do not re-author it.
+
+The enrolled surfaces each thread the `surface` prop through the resolver, so `<Sheet
+surface="opaque">` / `<Popover surface="veil">` / `<Toast surface="veil">` / `<Button
+surface="veil">` all mean the SAME thing — the doc-honest eleven-surface enrollment (each
+example names a prop the SFC genuinely declares; `proof:surface-axis` W7).

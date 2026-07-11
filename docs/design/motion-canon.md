@@ -197,8 +197,17 @@ table — every other `(response, ζ)` read derives via `springPreset(name)`:
   DERIVED from the `dock` `SPRING_PRESETS` row via `springPreset("dock")` (the
   no-second-authority fence — ONE table row feeds the CSS token, the JS-driven morph,
   and the const; not a frozen hand-value).
-- **`DRAWER_SNAP`** `(0.4, 0.82)` — the drawer detent-snap register
-  (`drawer/constants.ts`).
+- **`DRAWER_SNAP`** `(0.5, 0.74)` — the drawer detent-snap register
+  (`drawer/constants.ts`), the drawer's OWN settle clock.
+- **`TIMELINE_HEAD`** `(0.34, 0.74)` — the `ScrubberTimeline` warm-glass lozenge
+  head-travel default (`ScrubberTimeline.vue` `HEAD_SPRING`) — a per-surface JS-only
+  register; the fast head clock the fill trails (BG.W-SPRING-REGISTER-TIDY).
+- **`TIMELINE_FILL`** `(0.46, 0.82)` — the `ScrubberTimeline` lane-fill trailing default
+  (`ScrubberTimeline.vue` `FILL_SPRING`) — a slower clock than the head so the fill
+  TRAILS the bead (liquid trailing).
+- **`TIMELINE_PRESS`** `(0.22, 0.7)` — the `ScrubberTimeline` grab-anticipation press
+  default (`ScrubberTimeline.vue` `PRESS_SPRING`) — the pointerdown squash feeding the
+  `--scale-press` dip.
 
 A NEW hand-inlined `(response, ζ)` register TABLE (≥2 unsanctioned rows in one file)
 reds M1 — it should be a `SPRING_PRESETS` row read via `springPreset(name)`.

@@ -212,32 +212,28 @@ function checkDir(dirRel) {
 
 function checkIdiomHome() {
     const violations = [];
-    const doc = resolve(ROOT, "docs/precepts/design-idioms.md");
+    // BH.B5c: the design-idiom-home clause re-homed off the docs/precepts submodule
+    // onto the in-repo docs/design extraction (always present on a fresh checkout, so
+    // the clause always BITES) — present iff the extracted home resolves.
+    const doc = resolve(ROOT, "docs/design/design-idioms.md");
     const facts = { docExists: existsSync(doc), docBytes: 0, citedByContributing: false, citedByIndexCss: false, precepteSubmodulePresent: true };
-    // docs/precepts is a git SUBMODULE (a sibling private repo). On a CI runner
-    // the checkout does not initialize it (and cannot — the default token has no
-    // cross-repo grant), so the dir is empty. Absent-submodule → skip-by-policy
-    // (the sibling-gate convention: proof:resolution et al.) — never a hard
-    // failure on a runner that cannot see the doc. Locally the clause BITES.
-    const preceptsDir = resolve(ROOT, "docs/precepts");
-    const submodulePresent =
-        existsSync(preceptsDir) && readdirSync(preceptsDir).length > 0;
+    const submodulePresent = existsSync(doc);
     facts.precepteSubmodulePresent = submodulePresent;
     if (!submodulePresent) {
         console.log(
-            "  idiom-home: SKIP-BY-POLICY — docs/precepts submodule not initialized on this runner (the doc clause bites locally)",
+            "  idiom-home: SKIP-BY-POLICY — docs/design/design-idioms.md absent on this runner (the doc clause bites where present)",
         );
     } else if (!facts.docExists) {
-        violations.push("docs/precepts/design-idioms.md — the design-idiom home is missing");
+        violations.push("docs/design/design-idioms.md — the design-idiom home is missing");
     } else {
         facts.docBytes = statSync(doc).size;
         if (facts.docBytes < 1024)
-            violations.push(`docs/precepts/design-idioms.md is ${facts.docBytes}B (< 1 KB) — a stub, not the enumerated home`);
+            violations.push(`docs/design/design-idioms.md is ${facts.docBytes}B (< 1 KB) — a stub, not the enumerated home`);
         const body = readFileSync(doc, "utf8");
         // Must enumerate the @theme + @utility homes + the partial rule.
         for (const needle of ["@theme", "@utility", "@apply", "@import"]) {
             if (!body.includes(needle))
-                violations.push(`docs/precepts/design-idioms.md — does not enumerate the ${needle} home`);
+                violations.push(`docs/design/design-idioms.md — does not enumerate the ${needle} home`);
         }
     }
     const contributing = resolve(ROOT, "CONTRIBUTING.md");

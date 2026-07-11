@@ -53,6 +53,7 @@ import {
     snapshotStamp,
     writeGateArtifact,
 } from "./gate-output.mjs";
+import { readCanon } from "./lib/canon-doc.mjs";
 
 let _cliPaths = null;
 function cliPaths() {
@@ -67,7 +68,6 @@ function cliPaths() {
         MENU_VARIANTS: ui("_shared/menuItemVariants.ts"),
         BASE_MISC_CSS: resolve(ROOT, "src/styles/utilities/base-misc.css"),
         DOCK_NAV_CSS: resolve(ROOT, "demo/shell/dock-nav.css"),
-        CLAUDE_MD: resolve(ROOT, "CLAUDE.md"),
         ARTIFACT: gateArtifactPath(
             "GATE_DROPDOWN_FIX_OUT",
             "BC-dropdown-fix",
@@ -256,7 +256,7 @@ export function detectDropdownFix(sources) {
         /scrollbar-gutter:\s*stable/.test(claudeMd);
     if (!canonNoteExists) {
         violations.push(
-            "D3: the CLAUDE.md canon does not document the `.scroll-gutter-stable` discipline (the consumer-facing presets-in-consumers note — a portaled-overlay-hosting app-shell scroller opts into stable gutter).",
+            "D3: the consumer-wiring canon (docs/canon/consumer-wiring.md) does not document the `.scroll-gutter-stable` discipline (the consumer-facing presets-in-consumers note — a portaled-overlay-hosting app-shell scroller opts into stable gutter).",
         );
     }
 
@@ -416,7 +416,7 @@ function run() {
         menuVariants: safeRead(P.MENU_VARIANTS),
         baseMiscCss: safeRead(P.BASE_MISC_CSS),
         dockNavCss: safeRead(P.DOCK_NAV_CSS),
-        claudeMd: safeRead(P.CLAUDE_MD),
+        claudeMd: readCanon("consumer-wiring", "soft"), // BH.B5c re-home off CLAUDE.md
     });
 
     const selfTestFailures = wantSelfTest ? selfTest() : [];

@@ -50,6 +50,7 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+import { readCanon } from "./lib/canon-doc.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const ARTIFACT = gateArtifactPath("GLASS_UI_HANDMARK_ARTIFACT", "BA-handmark");
@@ -250,11 +251,12 @@ const w6FenceHeld =
 facts.w6FenceHeld = w6FenceHeld;
 if (!w6FenceHeld) violations.push("W6: the structural .paper-ink-mark register must stay STRAIGHT (no wobble/feTurbulence/perturb)");
 
-// CLAUDE.md records the three-register fence + the family.
-const claude = rd("CLAUDE.md");
-const w6Recorded = /three-underline/i.test(claude) || (/HandMark/.test(claude) && /paper-ink-mark/.test(claude));
+// The handmark README (docs canon home) records the three-register fence + the family
+// (BH.B5c re-home off CLAUDE.md).
+const canonHandmark = readCanon("component:handmark", "soft");
+const w6Recorded = /three-underline/i.test(canonHandmark) || (/HandMark/.test(canonHandmark) && /paper-ink-mark/.test(canonHandmark));
 facts.w6ClaudeRecorded = w6Recorded;
-if (!w6Recorded) violations.push("W6: CLAUDE.md must record the three-register fence + the HandMark family");
+if (!w6Recorded) violations.push("W6: the handmark README (src/components/custom/handmark/README.md) must record the three-register fence + the HandMark family");
 
 // ── W7 — the BG.W-HANDMARK-PERFECT engine perfections (+ hull-guard clause) ────
 // (b) the hull se-guard: ink.ts guards the hull body on a degenerate near-point

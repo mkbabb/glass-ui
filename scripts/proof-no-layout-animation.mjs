@@ -766,14 +766,12 @@ const nonSpatialOf = (carve) => {
 };
 const prmSelfTestBites = nonSpatialOf(prmGoodCarve) === true && nonSpatialOf(prmBadCarve) === false;
 
-// ── BB.W-MOTION-CANON MC1 — the canon precept doc presence (submodule-aware,
-//    skip-by-policy on a runner with the docs/precepts submodule uninitialized,
-//    mirroring proof:colocation's idiom-home clause). Bites LOCALLY: the doc exists
+// ── BB.W-MOTION-CANON MC1 — the canon precept doc presence. BH.B5c re-home: reads the
+//    in-repo docs/design/motion-canon.md extraction (always present on a fresh checkout,
+//    so the clause always BITES) instead of the docs/precepts submodule. The doc exists
 //    and declares the six principle headings P1-P6. ──
-const preceptsDir = resolve(ROOT, "docs/precepts");
-const preceptsSubmodulePresent =
-    existsSync(preceptsDir) && readdirSync(preceptsDir).length > 0;
-const canonDocFile = resolve(ROOT, "docs/precepts/motion-canon.md");
+const canonDocFile = resolve(ROOT, "docs/design/motion-canon.md");
+const preceptsSubmodulePresent = existsSync(canonDocFile);
 let canonDocFacts = { submodulePresent: preceptsSubmodulePresent, exists: false, hasP1toP6: false };
 let canonDocOk = true; // skip-by-policy default
 if (preceptsSubmodulePresent) {

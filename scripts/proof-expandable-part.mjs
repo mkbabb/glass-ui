@@ -63,7 +63,6 @@ const P = {
     SUBPATHS_DIR: resolve(ROOT, "src/subpaths"),
     API_INDEX: resolve(ROOT, "src/api/index.ts"),
     DEMO_STORY: resolve(ROOT, "demo/stories/containers/expandable-container.vue"),
-    CLAUDE_MD: resolve(ROOT, "CLAUDE.md"),
     DELTA: resolve(ROOT, "docs/tranches/BC/audit/visual/W-EXPANDABLE-PART-DELTA.md"),
     ARTIFACT: gateArtifactPath("GLASS_UI_EXPANDABLE_PART_ARTIFACT", "BC-expandable-part"),
 };

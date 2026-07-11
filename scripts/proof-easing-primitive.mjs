@@ -57,6 +57,8 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+import { readCanon } from "./lib/canon-doc.mjs";
+import { readDesign } from "./lib/design-docs.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 
@@ -75,8 +77,6 @@ const P = {
     CURVE_GALLERY_DIR: resolve(ROOT, "demo/stories/motion/curve-gallery"),
     DEMO_STEPS_VUE: resolve(ROOT, "demo/stories/motion/curve-gallery/StepsEditor.vue"),
     DEMO_BEZIER_VUE: resolve(ROOT, "demo/stories/motion/curve-gallery/BezierEditor.vue"),
-    CLAUDE_MD: resolve(ROOT, "CLAUDE.md"),
-    DESIGN_IDIOMS_MD: resolve(ROOT, "docs/precepts/design-idioms.md"),
     PROGRESS_MD: resolve(ROOT, "docs/tranches/BB/PROGRESS.md"),
     DELTA_MD: resolve(ROOT, "docs/tranches/BB/audit/visual/W-EASING-PRIMITIVE-DELTA.md"),
     ARTIFACT: gateArtifactPath("GLASS_UI_EASING_PRIMITIVE_ARTIFACT", "BB-easing-primitive"),
@@ -267,27 +267,26 @@ export function detectEasingPrimitive(sources) {
     }
 
     // ── W5 — the canon + the boundary law are recorded ─────────────────────────
+    // BH.B5c re-home: the picker/boundary canon reads the easing README (canon home);
+    // the editor-on-Configurator idiom reads the extracted docs/design/design-idioms.md.
     const claudeNamesPicker = /EasingPicker/.test(claudeMd) && /\/easing/.test(claudeMd);
     const claudeRecordsBoundary =
         /boundary law/i.test(claudeMd) && /value\.?js/i.test(claudeMd) && /keyframes\.?js/i.test(claudeMd);
     if (!claudeNamesPicker) {
-        violations.push("W5: CLAUDE.md carries no <EasingPicker> / /easing section under the motion canon.");
+        violations.push("W5: the easing README carries no <EasingPicker> / /easing section under the motion canon.");
     }
     if (!claudeRecordsBoundary) {
-        violations.push("W5: CLAUDE.md does not record the boundary law (curve MATH = value.js · playback = keyframes.js · the editor = glass-ui).");
+        violations.push("W5: the easing README does not record the boundary law (curve MATH = value.js · playback = keyframes.js · the editor = glass-ui).");
     }
-    // docs/precepts is a git SUBMODULE — empty on a CI runner that cannot init it,
-    // so design-idioms.md is absent. Absent-submodule → skip-by-policy (the
-    // sibling-gate convention) for THIS clause ONLY; the CLAUDE.md (claudeNamesPicker
-    // / claudeRecordsBoundary) and src/api (apiPublishesTypes) W5 sub-checks are
-    // NON-submodule and keep biting. Default true so any caller keeps biting.
+    // docs/design/design-idioms.md is an IN-REPO extraction (B4c) — always present on a
+    // fresh checkout. Kept a soft-skip only if the home is somehow empty; else bites.
     const submodulePresent = sources.submodulePresent !== false;
     const idiomHomesConfigurator =
         /Easing/.test(designIdiomsMd) &&
         (/EasingConfigurator/.test(designIdiomsMd) || /editor-on-(?:the-)?[Cc]onfigurator/.test(designIdiomsMd));
     if (!submodulePresent) {
         console.log(
-            "  W5 design-idioms: SKIP-BY-POLICY — docs/precepts submodule not initialized on this runner (the editor-on-Configurator idiom-home clause bites locally)",
+            "  W5 design-idioms: SKIP-BY-POLICY — docs/design/design-idioms.md is empty/absent on this runner (the editor-on-Configurator idiom-home clause bites where present)",
         );
     } else if (!idiomHomesConfigurator) {
         violations.push("W5: design-idioms.md does not home the editor-on-Configurator idiom (the <EasingConfigurator> register).");
@@ -341,10 +340,10 @@ function run() {
     const curveGalleryDirEntries = existsSync(P.CURVE_GALLERY_DIR)
         ? readdirSync(P.CURVE_GALLERY_DIR)
         : [];
-    // docs/precepts is a git SUBMODULE — empty on a CI runner that cannot init it.
-    const preceptsDir = resolve(ROOT, "docs/precepts");
-    const submodulePresent =
-        existsSync(preceptsDir) && readdirSync(preceptsDir).length > 0;
+    // docs/design/design-idioms.md is the extracted in-repo idiom home (B4c) — always
+    // present on a fresh checkout. Present iff the readDesign body is non-empty.
+    const designIdiomsMd = readDesign("design-idioms", "soft");
+    const submodulePresent = designIdiomsMd.length > 0;
 
     const { facts, violations } = detectEasingPrimitive({
         submodulePresent,
@@ -362,8 +361,8 @@ function run() {
         curveGalleryDirEntries,
         demoStepsPresent: existsSync(P.DEMO_STEPS_VUE),
         demoBezierPresent: existsSync(P.DEMO_BEZIER_VUE),
-        claudeMd: safeRead(P.CLAUDE_MD),
-        designIdiomsMd: safeRead(P.DESIGN_IDIOMS_MD),
+        claudeMd: readCanon("component:easing", "soft"), // BH.B5c re-home off CLAUDE.md
+        designIdiomsMd, // BH.B5c re-home off docs/precepts → docs/design via readDesign
         progressMd: safeRead(P.PROGRESS_MD),
         deltaMd: safeRead(P.DELTA_MD),
     });

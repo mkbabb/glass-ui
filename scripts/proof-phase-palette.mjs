@@ -60,6 +60,8 @@ import {
     snapshotStamp,
     writeGateArtifact,
 } from "./gate-output.mjs";
+import { readCanon } from "./lib/canon-doc.mjs";
+import { readDesign } from "./lib/design-docs.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 
@@ -224,13 +226,13 @@ export function detectPhasePalette(sources) {
         );
     if (!facts.w4.claudeRecordsSeam) {
         violations.push(
-            "W4: CLAUDE.md's InstrumentChassis phase-canon section must record the `--phase-complete-color` consumer seam",
+            "W4: the instrument-chassis README's InstrumentChassis phase-canon section must record the `--phase-complete-color` consumer seam",
         );
     }
     if (!submodulePresent) {
         facts.w4.idiomsSkipped = true;
         console.log(
-            "  W4 design-idioms: SKIP-BY-POLICY — docs/precepts submodule not initialized on this runner (the demotion-line clause bites locally)",
+            "  W4 design-idioms: SKIP-BY-POLICY — docs/design/design-idioms.md empty/absent on this runner (the demotion-line clause bites where present)",
         );
     } else if (!facts.w4.idiomsRecordsSeam) {
         violations.push(
@@ -330,17 +332,15 @@ function run() {
                 "src/components/custom/instrument-chassis/InstrumentChassis.vue",
             ),
         ),
-        // Markdown read RAW — a /* */ strip would pair across the embedded CSS
-        // examples + prose (the binding-rules directive).
-        claudeMd: safeRead(resolve(ROOT, "CLAUDE.md")),
-        idiomsMd: safeRead(resolve(ROOT, "docs/precepts/design-idioms.md")),
-        // docs/precepts is a git SUBMODULE — empty on a CI runner that cannot
-        // init it. Skip the design-idioms.md clause when absent (the CLAUDE.md /
-        // silver-source / vue-doc W4 sub-checks below are NON-submodule and keep biting).
-        submodulePresent: (() => {
-            const preceptsDir = resolve(ROOT, "docs/precepts");
-            return existsSync(preceptsDir) && readdirSync(preceptsDir).length > 0;
-        })(),
+        // BH.B5c re-home: the phase-canon seam reads the instrument-chassis README
+        // (canon home); the demotion-line idiom reads the extracted docs/design/
+        // design-idioms.md. Markdown read RAW — a /* */ strip would pair across the
+        // embedded CSS examples + prose (the binding-rules directive).
+        claudeMd: readCanon("component:instrument-chassis", "soft"),
+        idiomsMd: readDesign("design-idioms", "soft"),
+        // docs/design/design-idioms.md is the extracted in-repo idiom home (B4c) —
+        // always present on a fresh checkout. Present iff the readDesign body is non-empty.
+        submodulePresent: readDesign("design-idioms", "soft").length > 0,
     };
 
     const { facts, violations } = detectPhasePalette(sources);

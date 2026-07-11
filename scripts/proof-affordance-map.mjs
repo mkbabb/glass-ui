@@ -39,7 +39,7 @@ import { ROOT } from "./constellation.mjs";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
 const COMMAND = "npm run proof:affordance-map";
-const MAP = "docs/precepts/affordance-map.md";
+const MAP = "docs/design/affordance-map.md"; // BH.B5c re-home off docs/precepts submodule
 const SPEC = "tests-visual/affordance-map.spec.ts";
 
 const read = (rel) => {
@@ -377,12 +377,12 @@ const inventory = walkInventory(dirBodies);
 // (A1 map-exists/every-mapped, A2 inert/focus, A5 map-canon, the map-derived live
 // violations); the src-derived A3 desync, A4 primitives, the inventory walk, and
 // the π-spec/self-test bites keep biting. Locally the map clauses BITE.
-const preceptsDir = resolve(ROOT, "docs/precepts");
-const submodulePresent =
-    existsSync(preceptsDir) && readdirSync(preceptsDir).length > 0;
+// BH.B5c: re-homed off the docs/precepts submodule onto the in-repo docs/design
+// extraction — present iff the extracted map resolves (always, on a fresh checkout).
+const submodulePresent = existsSync(resolve(ROOT, MAP));
 if (!submodulePresent) {
     console.log(
-        "  affordance-map: SKIP-BY-POLICY — docs/precepts submodule not initialized on this runner (the affordance-map.md clauses bite locally; A3/A4/inventory/π still bite)",
+        "  affordance-map: SKIP-BY-POLICY — docs/design/affordance-map.md absent on this runner (A3/A4/inventory/π still bite)",
     );
 }
 

@@ -53,7 +53,9 @@ const WAVE_BOUNDS = [
     "scripts/proof-crossrepo-asks.mjs",
     "package.json",
     "scripts/gates.mjs",
-    "CLAUDE.md",
+    // BH.B5c: the CLAUDE.md canon-note bound re-homed onto the redistributed
+    // cross-repo relay note in the dependencies canon home (CLAUDE.md is deleted at B4f).
+    "docs/canon/dependencies.md",
     "docs/tranches/BB/PROGRESS.md",
 ];
 

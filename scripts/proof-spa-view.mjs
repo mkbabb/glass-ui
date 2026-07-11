@@ -50,6 +50,7 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+import { readCanon } from "./lib/canon-doc.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 
@@ -63,7 +64,6 @@ const P = {
     API_INDEX: resolve(ROOT, "src/api/index.ts"),
     DEMO_STORY: resolve(ROOT, "demo/stories/containers/spa-view.vue"),
     CONSUMER_EVIDENCE: resolve(ROOT, "docs/consumer-evidence/spa-view.md"),
-    CLAUDE_MD: resolve(ROOT, "CLAUDE.md"),
     DELTA: resolve(ROOT, "docs/tranches/BB/audit/visual/W-SPAVIEW-CACHE-DELTA.md"),
     TRANSITIONS_CSS: resolve(ROOT, "src/styles/transitions.css"),
     ARTIFACT: gateArtifactPath("GLASS_UI_SPA_VIEW_ARTIFACT", "BB-spa-view"),
@@ -230,7 +230,7 @@ export function detectSpaView(sources) {
     if (!evidenceNamesBooked) violations.push("W5: consumer-evidence must name the booked binary consumer (AdminDashboardLayout)");
     if (!evidenceNamesDemo) violations.push("W5: consumer-evidence must name the in-repo demo exerciser");
     if (!demoBindsSpaView) violations.push("W5: the demo story must mount <SpaView :max>");
-    if (!claudeNamesComponent) violations.push("W5: CLAUDE.md must record SpaView + the /spa-view subpath (the §Structure custom-dir bump + the note)");
+    if (!claudeNamesComponent) violations.push("W5: the spa-view README (src/components/custom/spa-view/README.md) must record SpaView + the /spa-view subpath");
     if (!deltaExists) violations.push("W5: the W-SPAVIEW-CACHE DELTA is absent");
 
     const facts = {
@@ -296,7 +296,7 @@ function run() {
         packageFacts,
         apiTs: safeRead(P.API_INDEX),
         demoStory: safeRead(P.DEMO_STORY),
-        claudeMd: safeRead(P.CLAUDE_MD),
+        claudeMd: readCanon("component:spa-view", "soft"), // BH.B5c re-home off CLAUDE.md
         evidenceMd: safeRead(P.CONSUMER_EVIDENCE),
         deltaMd: safeRead(P.DELTA),
         transitionsCss: safeRead(P.TRANSITIONS_CSS),

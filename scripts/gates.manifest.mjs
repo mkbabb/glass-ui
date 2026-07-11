@@ -408,7 +408,13 @@ export const GATES = [
         id: "proof:doc-consistency",
         cmd: "proof:doc-consistency",
         tags: ["local", "ci", "release"],
-        note: "AT.W7-dock-c — CLAUDE.md custom-dir + dependency citations resolve at HEAD (doc-rot guard)",
+        note: "AT.W7-dock-c — canon structure.md custom-dir + dependencies.md dependency citations resolve at HEAD (doc-rot guard; BH.B5c re-homed off CLAUDE.md onto the docs/canon homes)",
+    },
+    {
+        id: "proof:claude-deletable",
+        cmd: "proof:claude-deletable",
+        tags: ["local", "ci", "release"],
+        note: "BH.B5c — the CLAUDE.md-is-deletable precondition gate + the HARD B5c→B4f (CLAUDE.md hard-delete) edge. Born-RED at HEAD (16 live CLAUDE-readers) → GREEN once B5c re-homes every gate onto its docs/canon (canon-doc.mjs) / docs/design (design-docs.mjs) home; B4f may then delete the file. THREE device-free pure-FS clauses (comment-stripped + self-excluded so a comment/regex CLAUDE mention never counts): C-CRASH zero gates read CLAUDE.md over the 6 reader-alias forms (readFileSync|safeRead|readRel|rd|read|readCanon)(…CLAUDE…); C-RGZERO zero bare readFileSync(…CLAUDE…) sites + zero dead CLAUDE.md/CLAUDE_MD path literals; C-HOMES auditCanonHomes('content')==[] && auditDesignHomes()==[] (the silent-loss fence — every redistributed contract content-complete at its new home BEFORE the source is deleted). Self-proving: synthetic reader-form / bare-readFileSync / path-const sources MUST flag; a comment-only mention + a re-homed readCanon() MUST NOT. Bite: re-introduce a readFileSync(CLAUDE_MD) / a dead CLAUDE.md literal in any proof-*.mjs, or leave a canon/design home a skeleton stub → RED.",
     },
     {
         id: "proof:au-w0-reground",

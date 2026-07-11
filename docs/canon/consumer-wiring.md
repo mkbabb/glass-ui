@@ -67,3 +67,13 @@ compiles against glass-ui's own `@theme`, and ships the resulting utility RULES 
 free); (2) glass-ui's OWN `@source "../*.js"` backstop in `src/styles/index.css`. Fully-
 arbitrary bracket utilities are PRE-COMPILED into shipped CSS instead (the Select collision-
 bound, the Slider size axis). Machine-locked by `proof:emission`.
+
+**The `.scroll-gutter-stable` discipline (presets-in-consumers).** An app-shell route
+scroller that HOSTS portaled picker/menu overlays (Select / DropdownMenu / any reka overlay
+that locks body scroll on open) opts into `.scroll-gutter-stable` — `scrollbar-gutter: stable`
+RESERVES the scrollbar gutter whether or not the scrollbar is present, so reka's lock-induced
+scrollbar removal removes NO layout space and the centred content does not reflow / the
+trigger does not twitch. The library ships the named discipline; the CONSUMER app-shell opts
+its OWN scroller in (the demo `.demo-main-scroller` is the reference adoption). glass-ui does
+NOT force `scrollbar-gutter` on every consumer's scroller. Machine-locked by
+`proof:dropdown-fix`.

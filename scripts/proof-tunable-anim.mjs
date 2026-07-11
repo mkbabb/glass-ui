@@ -53,7 +53,7 @@ import { fileURLToPath } from "node:url";
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, "..");
 
-const REGISTRY_DOC = "docs/precepts/tunable-anim.md";
+const REGISTRY_DOC = "docs/design/tunable-anim.md"; // BH.B5c re-home off docs/precepts submodule
 const SPRING_PRESETS_TS = "src/composables/motion/springPresets.ts";
 const ASKS_DOC = "docs/tranches/BC/coordination/asks-and-consumes.md";
 const EASING_PICKER_SFC = "src/components/custom/easing/EasingPicker.vue";
@@ -329,8 +329,9 @@ export function runChecks(sources) {
 }
 
 function preceptsSubmodulePresent() {
-    const dir = join(ROOT, "docs/precepts");
-    return existsSync(dir) && readdirSync(dir).length > 0;
+    // BH.B5c: the registry doc re-homed off the docs/precepts submodule onto the
+    // in-repo docs/design extraction — present iff the extracted home resolves.
+    return existsSync(join(ROOT, REGISTRY_DOC));
 }
 
 function loadReal() {

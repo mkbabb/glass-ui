@@ -72,6 +72,7 @@ import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 import { readMonolith } from "./read-css-monoliths.mjs";
+import { readCanon } from "./lib/canon-doc.mjs";
 
 let _cliPaths = null;
 function cliPaths() {
@@ -86,8 +87,8 @@ function cliPaths() {
         SHARED_INDEX_TS: ui("_shared/index.ts"),
         API_INDEX_TS: resolve(ROOT, "src/api/index.ts"),
         MIGRATION_MD: resolve(ROOT, "MIGRATION.md"),
-        // BB.W-SURFACE-AXIS-COMPLETE — the W7 doc-honesty witness reads CLAUDE.md.
-        CLAUDE_MD: resolve(ROOT, "CLAUDE.md"),
+        // BB.W-SURFACE-AXIS-COMPLETE — the W7 doc-honesty witness reads the glass-system
+        // canon home (BH.B5c re-home off CLAUDE.md).
         // The eleven enrolled surfaces (BB.W-SURFACE-AXIS-COMPLETE finished the
         // R8-12 enrollment — Toast + Button join the prior nine).
         CARD_VUE: ui("card/Card.vue"),
@@ -447,22 +448,22 @@ export function detectSurfaceAxis(sources) {
     const buttonDocHonest = buttonDocExample && buttonDeclares;
     if (toastDocExample && !toastDeclares) {
         violations.push(
-            "W7: CLAUDE.md documents a `<Toast surface=…>` example but Toast.vue declares no `surface` prop (the doc lie — a documented prop with no backing declaration).",
+            "W7: the glass-system canon documents a `<Toast surface=…>` example but Toast.vue declares no `surface` prop (the doc lie — a documented prop with no backing declaration).",
         );
     }
     if (buttonDocExample && !buttonDeclares) {
         violations.push(
-            "W7: CLAUDE.md documents a `<Button surface=…>` example but Button.vue declares no `surface` prop (the doc lie — a documented prop with no backing declaration).",
+            "W7: the glass-system canon documents a `<Button surface=…>` example but Button.vue declares no `surface` prop (the doc lie — a documented prop with no backing declaration).",
         );
     }
     if (!toastDocHonest) {
         violations.push(
-            "W7: the CLAUDE.md surface-axis canon must name Toast with a `<Toast surface=…>` example AND Toast.vue must declare the `surface` prop (the eleven-surface enrollment, doc-honest).",
+            "W7: the glass-system surface-axis canon must name Toast with a `<Toast surface=…>` example AND Toast.vue must declare the `surface` prop (the eleven-surface enrollment, doc-honest).",
         );
     }
     if (!buttonDocHonest) {
         violations.push(
-            "W7: the CLAUDE.md surface-axis canon must name Button with a `<Button surface=…>` example AND Button.vue must declare the `surface` prop (the eleven-surface enrollment, doc-honest).",
+            "W7: the glass-system surface-axis canon must name Button with a `<Button surface=…>` example AND Button.vue must declare the `surface` prop (the eleven-surface enrollment, doc-honest).",
         );
     }
 
@@ -517,7 +518,7 @@ function run() {
         sharedIndexTs: safeRead(P.SHARED_INDEX_TS),
         apiIndexTs: safeRead(P.API_INDEX_TS),
         migrationMd: safeRead(P.MIGRATION_MD),
-        claudeMd: safeRead(P.CLAUDE_MD),
+        claudeMd: readCanon("glass-system", "soft"), // BH.B5c re-home off CLAUDE.md
         sfc: {
             card: safeRead(P.CARD_VUE),
             glassPanel: safeRead(P.GLASS_PANEL_VUE),

@@ -46,7 +46,7 @@ import { gateArtifactPath, writeGateArtifact, snapshotStamp } from "./gate-outpu
 
 const ARTIFACT = gateArtifactPath("GLASS_UI_PRECEPT_CURRENT_ARTIFACT", "BB-precept-current");
 
-const DOC = "docs/precepts/design-idioms.md";
+const DOC = "docs/design/design-idioms.md"; // BH.B5c re-home off docs/precepts submodule
 const STYLES = "src/styles";
 const INDEX = "src/styles/index.css";
 const GLASSCSS = "src/styles/glass.css";
@@ -339,9 +339,9 @@ function run() {
     // (the sibling-gate convention) — the LIVE-doc detector (W1/W2/W3 read
     // design-idioms.md) skips; the SYNTHETIC-doc self-test (which supplies its own
     // inline §3 fixtures, NOT the submodule) keeps biting. Locally the clause BITES.
-    const preceptsDir = resolve(ROOT, "docs/precepts");
-    const submodulePresent =
-        existsSync(preceptsDir) && readdirSync(preceptsDir).length > 0;
+    // BH.B5c: re-homed off the docs/precepts submodule onto the in-repo docs/design
+    // extraction — present iff the extracted design-idioms home resolves.
+    const submodulePresent = existsSync(resolve(ROOT, DOC));
 
     let facts, violations;
     if (!submodulePresent) {

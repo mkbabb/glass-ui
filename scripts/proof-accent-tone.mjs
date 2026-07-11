@@ -53,9 +53,11 @@ function cliPaths() {
         CHIP_VARIANTS: resolve(ROOT, "src/components/custom/selectable-chip/chipVariants.ts"),
         GLASS_CHIP_CSS: resolve(ROOT, "src/styles/glass/glass-chip.css"),
         SELECTABLE_DIR: resolve(ROOT, "src/components/custom/selectable-chip"),
-        SUBPATH: resolve(ROOT, "src/subpaths/selectable-chip.ts"),
+        // BH.B5c — the A6 arm re-points off the src/subpaths mirror (B2.1-swap deletes
+        // it) onto the colocated component barrel; the CLAUDE_MD §Structure WARN-fact is
+        // DROPPED (proof:claude-structure-sync owns the generated structure.md map).
+        SELECTABLE_BARREL: resolve(ROOT, "src/components/custom/selectable-chip/index.ts"),
         API_INDEX: resolve(ROOT, "src/api/index.ts"),
-        CLAUDE_MD: resolve(ROOT, "CLAUDE.md"),
         COLOR_RADIUS: resolve(ROOT, "src/styles/tokens/color-radius.css"),
         DARK_ARM: resolve(ROOT, "src/styles/tokens/dark-arm.css"),
         ARTIFACT: gateArtifactPath("GLASS_UI_ACCENT_TONE_ARTIFACT", "BC-accent-tone"),
@@ -213,8 +215,7 @@ export function detectAccentTone(sources) {
     const colorIndex = sources.colorIndex ?? "";
     const toggle = sources.toggleChip ?? "";
     const api = sources.apiIndex ?? "";
-    const subpath = sources.subpath ?? "";
-    const claudeMd = sources.claudeMd ?? "";
+    const barrel = sources.barrel ?? "";
 
     // ── A1 — the register exists ONCE, all 4 channels off ONE --tone, in oklab ──
     const channels = ["--accent-fill", "--accent-band", "--accent-edge", "--accent-ink"];
@@ -341,26 +342,18 @@ export function detectAccentTone(sources) {
 
     // ── A6 — the colocation dir + subpath + api publication ──
     const dirFiles = sources.selectableDirFiles ?? [];
-    const needFiles = ["SelectableChip.vue", "selectableChipVariants.ts", "index.ts", "README.md"];
+    const needFiles = ["SelectableChip.vue", "chipVariants.ts", "index.ts", "README.md"];
     const missingDirFiles = needFiles.filter((f) => !dirFiles.includes(f));
-    const subpathMirrors = /export\s*\*\s*from\s*["']\.\.\/components\/custom\/selectable-chip["']/.test(subpath);
+    const barrelPublishes = /SelectableChip/.test(barrel) && /chipVariants/.test(barrel);
     const apiPublishes =
-        /SelectableChipVariants/.test(api) && /UseAccentToneOptions/.test(api) && /UseAccentToneReturn/.test(api);
-    // the structure-sync clause is CLAUDE.md-owned (the §Structure custom/ enumeration
-    // + count). It is asserted here but degrades to a WARN-fact when CLAUDE.md has not
-    // yet been re-synced (the cross-cutting doc is the orchestrator's structure-sync
-    // arm — proof:claude-structure-sync owns the hard gate). We RECORD it.
-    const inClaudeStructure = /│\s+│\s+├──\s+selectable-chip\//.test(claudeMd);
-    facts.a6 = { dirFiles, missingDirFiles, subpathMirrors, apiPublishes, inClaudeStructure };
+        /\bChipVariants\b/.test(api) && /UseAccentToneOptions/.test(api) && /UseAccentToneReturn/.test(api);
+    facts.a6 = { dirFiles, missingDirFiles, barrelPublishes, apiPublishes };
     if (missingDirFiles.length)
         violations.push(`A6: the selectable-chip colocation dir is missing file(s): ${missingDirFiles.join(", ")}`);
-    if (!subpathMirrors)
-        violations.push("A6: src/subpaths/selectable-chip.ts does not mirror the component dir");
+    if (!barrelPublishes)
+        violations.push("A6: src/components/custom/selectable-chip/index.ts does not publish SelectableChip + chipVariants");
     if (!apiPublishes)
         violations.push("A6: /api does not publish SelectableChipVariants + UseAccentToneOptions/Return");
-    // NOTE: inClaudeStructure is recorded but NOT a hard violation here — the CLAUDE.md
-    // §Structure re-sync is proof:claude-structure-sync's gate (the cross-cutting doc
-    // arm the orchestrator owns); a hard fail here would double-own it.
 
     return { facts, violations };
 }
@@ -381,12 +374,11 @@ function selfTest() {
         toggleChip: `import { chipVariants } from "../selectable-chip/chipVariants";\nexport const toggleChipVariants = cva("", { variants: { variant: { chip: chipVariants({ size: "md" }) } } });`,
         chipVariants: `export const chipVariants = cva("glass-chip glass-capsule glass-capsule-hover accent-tone", { variants: {} });`,
         glassChipCss: `.glass-chip[data-state="on"] { --accent-band: color-mix(in oklab, var(--surface), var(--tone) 18%); }`,
-        apiIndex: `export type { SelectableChipVariants, UseAccentToneOptions, UseAccentToneReturn } from "x";`,
-        subpath: `export * from "../components/custom/selectable-chip";`,
-        claudeMd: `│   │   ├── selectable-chip/`,
+        apiIndex: `export type { ChipVariants, UseAccentToneOptions, UseAccentToneReturn } from "x";`,
+        barrel: `export { default as SelectableChip } from "./SelectableChip.vue";\nexport { chipVariants, type ChipVariants } from "./chipVariants";`,
         colorRadius: `--section-color-5:  oklch(0.530 0.124 69.6);`,
         darkArm: `--section-color-5:  oklch(0.813 0.109 78.2);`,
-        selectableDirFiles: ["SelectableChip.vue", "selectableChipVariants.ts", "index.ts", "README.md"],
+        selectableDirFiles: ["SelectableChip.vue", "chipVariants.ts", "index.ts", "README.md"],
     };
     const clean = detectAccentTone(base);
     if (clean.violations.length) fails.push(`BASE should be clean, got: ${clean.violations.join(" | ")}`);
@@ -417,7 +409,7 @@ function selfTest() {
     const a5 = detectAccentTone({ ...base, colorRadius: `--section-color-5:  oklch(0.92 0.05 90);` });
     if (!a5.violations.some((v) => v.startsWith("A5"))) fails.push("A5 bite (below-AA amber) did not flag");
     // A6 bite — missing README.
-    const a6 = detectAccentTone({ ...base, selectableDirFiles: ["SelectableChip.vue", "selectableChipVariants.ts", "index.ts"] });
+    const a6 = detectAccentTone({ ...base, selectableDirFiles: ["SelectableChip.vue", "chipVariants.ts", "index.ts"] });
     if (!a6.violations.some((v) => v.startsWith("A6"))) fails.push("A6 bite (missing README) did not flag");
 
     return fails;
@@ -436,8 +428,7 @@ function run() {
         chipVariants: stripBlockComments(safeRead(p.CHIP_VARIANTS)),
         glassChipCss: stripBlockComments(safeRead(p.GLASS_CHIP_CSS)),
         apiIndex: stripBlockComments(safeRead(p.API_INDEX)),
-        subpath: stripBlockComments(safeRead(p.SUBPATH)),
-        claudeMd: safeRead(p.CLAUDE_MD),
+        barrel: stripBlockComments(safeRead(p.SELECTABLE_BARREL)),
         colorRadius: stripBlockComments(safeRead(p.COLOR_RADIUS)),
         darkArm: stripBlockComments(safeRead(p.DARK_ARM)),
         selectableDirFiles: dirFiles,
@@ -462,7 +453,7 @@ function run() {
     console.log(`  A3 N-pastes collapsed (hand-roll=${facts.a3.tonalHandRoll}): ${facts.a3.tonalHandRoll === 0 && facts.a3.pointsAtRegister ? "✓" : "✗"}`);
     console.log(`  A4 idle floor (${(facts.a4.fillStrength * 100).toFixed(0)}% → ${facts.a4.defaultFloorJnd} JND ≥ ${facts.a4.floorBarJnd}; 1%=${facts.a4.planted1pctJnd} JND): ${facts.a4.defaultFloorJnd >= IDLE_FLOOR_JND && facts.a4.planted1pctJnd < IDLE_FLOOR_JND ? "✓" : "✗"}`);
     console.log(`  A5 amber ≥AA (light ${facts.a5.amberLightVsCard}:1 / dark ${facts.a5.amberDarkVsCard}:1; HEAD light was 3.49:1 → lifted): ${facts.a5.amberLightVsCard >= 4.5 && facts.a5.amberDarkVsCard >= 4.5 ? "✓" : "✗"}`);
-    console.log(`  A6 dir+subpath+api (CLAUDE.md §Structure=${facts.a6.inClaudeStructure ? "synced" : "PENDING — proof:claude-structure-sync owns it"}): ${facts.a6.missingDirFiles.length === 0 && facts.a6.subpathMirrors && facts.a6.apiPublishes ? "✓" : "✗"}`);
+    console.log(`  A6 dir+barrel+api: ${facts.a6.missingDirFiles.length === 0 && facts.a6.barrelPublishes && facts.a6.apiPublishes ? "✓" : "✗"}`);
     console.log(`  self-test bites: ${selfTestFails.length === 0 ? "all flag ✓" : "BROKEN — " + selfTestFails.join("; ")}`);
     if (violations.length) {
         console.log("\nVIOLATIONS:");

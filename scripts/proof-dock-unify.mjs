@@ -62,6 +62,7 @@ import { readFileSync, readdirSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+import { readCanon } from "./lib/canon-doc.mjs";
 import { readDockCss } from "./read-dock-css.mjs";
 // AY.W-CSS1: tokens.css is a thin @import root over tokens/*.css partials; the token
 // DEFINITIONS live in the partials, so read the concatenated monolith, not the root.
@@ -160,7 +161,6 @@ function cliPaths() {
         ROOT,
         TOKENS_CSS: resolve(ROOT, "src/styles/tokens.css"),
         DOCK_CSS: resolve(ROOT, "src/styles/dock.css"),
-        CLAUDE_MD: resolve(ROOT, "CLAUDE.md"),
         DEMO_DIR: resolve(ROOT, "demo"),
         CENSUS_DOC: resolve(
             ROOT,
@@ -529,7 +529,7 @@ export function detectDockUnify(sources) {
         );
     }
 
-    // ── F5 — the contract is recorded canon in CLAUDE.md ──
+    // ── F5 — the contract is recorded canon in the dock README (BH.B5c re-home) ──
     const claudeHasNavPattern =
         /nav-pattern\b/i.test(claudeMd) ||
         (/home-left/i.test(claudeMd) && /<DockSeparator>/.test(claudeMd) && /#persistent/.test(claudeMd));
@@ -541,17 +541,17 @@ export function detectDockUnify(sources) {
         /glass/i.test(claudeMd);
     if (!claudeHasNavPattern) {
         violations.push(
-            "F5: CLAUDE.md does not record the dock nav-pattern contract (home-left #persistent + nav + <DockSeparator>, ONE GlassDock root).",
+            "F5: the dock README does not record the dock nav-pattern contract (home-left #persistent + nav + <DockSeparator>, ONE GlassDock root).",
         );
     }
     if (!claudeHasCollapsedTokens) {
         violations.push(
-            "F5: CLAUDE.md does not record the collapsed-floor tokens (--dock-collapsed-summary-min-size + --dock-collapsed-padding).",
+            "F5: the dock README does not record the collapsed-floor tokens (--dock-collapsed-summary-min-size + --dock-collapsed-padding).",
         );
     }
     if (!claudeHasGlassSelected) {
         violations.push(
-            "F5: CLAUDE.md does not record the glass-first selected-control register (--dock-control-active-bg as a glass tier).",
+            "F5: the dock README does not record the glass-first selected-control register (--dock-control-active-bg as a glass tier).",
         );
     }
 
@@ -638,7 +638,6 @@ function run() {
         ROOT,
         TOKENS_CSS,
         DOCK_CSS,
-        CLAUDE_MD,
         DEMO_DIR,
         CENSUS_DOC,
         SHOWCASE_DOCKS: showcase,
@@ -653,7 +652,7 @@ function run() {
     const { facts, violations } = detectSource({
         tokensCss: readMonolith(ROOT, "tokens"),
         dockCss: readDockCss(ROOT),
-        claudeMd: safeRead(CLAUDE_MD),
+        claudeMd: readCanon("component:dock", "soft"), // BH.B5c re-home off CLAUDE.md
         showcaseDocks: showcase.map((d) => ({
             path: d.path,
             requireHome: d.requireHome,
@@ -733,7 +732,7 @@ function run() {
         }`,
     );
     console.log(
-        `  F5 CLAUDE.md records the contract          : ${
+        `  F5 dock README records the contract        : ${
             facts.f5.claudeHasNavPattern &&
             facts.f5.claudeHasCollapsedTokens &&
             facts.f5.claudeHasGlassSelected

@@ -19,6 +19,7 @@
 
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { pathToFileURL } from "node:url";
 import { REPO_ROOT, readTree } from "./lib/subpath-policy.mjs";
 
 const ARGS = new Set(process.argv.slice(2));
@@ -65,29 +66,39 @@ export function generateStructureMd() {
     return `${lines.join("\n").replace(/\n+$/, "")}\n`;
 }
 
-const generated = generateStructureMd();
-
-if (WRITE) {
-    writeFileSync(OUT_ABS, generated);
-    console.log(`regen-structure --write — wrote ${OUT_REL}`);
-    process.exit(0);
+/** The re-home seam (BH.B5c). proof:claude-structure-sync imports this to compare the
+ *  committed structure.md to the freshly-generated form WITHOUT the CLI side effects
+ *  (the run-block below is guarded behind import.meta.url so an import never writes
+ *  stdout / exits). Returns { fresh, committed, generated } — fresh iff byte-equal. */
+export function structureFreshness() {
+    const generated = generateStructureMd();
+    const committed = existsSync(OUT_ABS) ? readFileSync(OUT_ABS, "utf8") : null;
+    return { fresh: committed === generated, committed, generated, outRel: OUT_REL };
 }
 
-if (CHECK) {
-    if (!existsSync(OUT_ABS)) {
-        console.error(`regen-structure --check — ${OUT_REL} is ABSENT (run --write).`);
-        process.exit(1);
+// CLI run-block — guarded so importing this module is side-effect-free.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+    const generated = generateStructureMd();
+    if (WRITE) {
+        writeFileSync(OUT_ABS, generated);
+        console.log(`regen-structure --write — wrote ${OUT_REL}`);
+        process.exit(0);
     }
-    const current = readFileSync(OUT_ABS, "utf8");
-    if (current !== generated) {
-        console.error(
-            `regen-structure --check — ${OUT_REL} is STALE (a custom/ui/composable dir drifted from disk). Run: node scripts/regen-structure.mjs --write`,
-        );
-        process.exit(1);
+    if (CHECK) {
+        if (!existsSync(OUT_ABS)) {
+            console.error(`regen-structure --check — ${OUT_REL} is ABSENT (run --write).`);
+            process.exit(1);
+        }
+        const current = readFileSync(OUT_ABS, "utf8");
+        if (current !== generated) {
+            console.error(
+                `regen-structure --check — ${OUT_REL} is STALE (a custom/ui/composable dir drifted from disk). Run: node scripts/regen-structure.mjs --write`,
+            );
+            process.exit(1);
+        }
+        console.log(`regen-structure --check — ${OUT_REL} is FRESH (matches disk).`);
+        process.exit(0);
     }
-    console.log(`regen-structure --check — ${OUT_REL} is FRESH (matches disk).`);
-    process.exit(0);
+    // default — print
+    process.stdout.write(generated);
 }
-
-// default — print
-process.stdout.write(generated);
