@@ -74,12 +74,31 @@ fi
 # proof:*, so VT-name / surface / phantom-class drift between the last CI run
 # and the tag shipped unguarded.
 #
+# BG.W-CUT — Arm A, the live-Metal SHIP-BLOCK (the 5.0.0 tag is USER-GATED behind
+# a live capture). On a real Mac/Metal GPU with the demo served (`npm run
+# demo:serve`, :5199), `gates.mjs --run ship` (runShip) captures the BG roster,
+# re-applies the band grammar to the per-region pixel DIGEST, and writes
+# docs/tranches/BG/SHIP-ATTESTATION.json. It runs BEFORE `--run full` so Arm B
+# (`proof:ship-attestation`, in the union below) VERIFIES the FRESH attestation at
+# HEAD — the tag can never fire on an absent/stale/software-raster/webkit-fail
+# capture. FAIL-CLOSED by construction: a non-Mac / unserved-demo / no-ceremony
+# runner exits non-zero and aborts (CI never reaches this — the maintainer's
+# `git tag && git push` path is release.yml's `--run full` = Arm B, NEVER
+# `--run ship`; SwiftShader cannot paint Metal). The ceremony JSON is committed
+# with the release commit before the tag is pushed.
+echo "[release] Arm A — the live-Metal ship ceremony (gates.mjs --run ship)..."
+node scripts/gates.mjs --run ship
+
 # BB.W-CLOSE-BATTERY — the tag now re-runs `--run full` (the DEDUPED union
 # local ∪ ci ∪ release), NOT `--run release` alone. BA's close claimed
 # `--run local` green while `ci ⊂ local` carried 18 reds AND never ran the union
 # siblings-absent; `--run full` makes that close-class lie impossible (the runner
 # is siblings-absent by construction, siblings skip-by-policy, so the clean-runner
 # union IS the CI-accurate battery). `proof:close-battery-parity` locks this path.
+# BG.W-CUT — the union carries Arm B (`proof:ship-attestation`, ['ci','release'])
+# which re-verifies the SHIP-ATTESTATION.json Arm A just wrote, so the 5.0.0 tag is
+# doubly-fenced (live capture + device-free re-verify), and `RATCHET_BASELINES=={}`
+# (proof:no-god-module) is an ENUMERATED member of this union.
 echo "[release] running the manifest 'full' gate set (local ∪ ci ∪ release)..."
 node scripts/gates.mjs --run full
 

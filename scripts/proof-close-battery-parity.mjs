@@ -48,13 +48,15 @@ function read(rel) {
 // release.sh (the Mac ceremony) requires the FULL union; release.yml (the
 // SwiftShader CI publish path) is FULL-ONLY and must NEVER demand `--run ship`.
 //
-// RATIFIED (BG.W-SHIP-DISCIPLINE-LIVE-PRECONDITION): release.sh's REQUIRED set stays
-// `["full"]` here; BG.W-CUT (which lands the release.sh ship-block + the close-battery
-// `--run ship` requirement) upgrades release.sh.required to `["ship", "full"]` IN THE
-// SAME cut. clause-3 (release.yml) is FULL-ONLY FOREVER — a future agent "fixing"
-// release.yml to run `--run ship` would fail-close every CI publish (no Metal in CI).
+// RATIFIED (BG.W-SHIP-DISCIPLINE-LIVE-PRECONDITION → LANDED BG.W-CUT): release.sh's
+// REQUIRED set is now `["ship", "full"]` — BG.W-CUT landed the release.sh ship-block
+// (Arm A, `gates.mjs --run ship`, the live-Metal ceremony BEFORE the `--run full`
+// union) AND upgrades this requirement IN THE SAME cut, so a future edit dropping the
+// ship-block REDs clause-2. clause-3 (release.yml) is FULL-ONLY FOREVER — a future
+// agent "fixing" release.yml to run `--run ship` would fail-close every CI publish
+// (no Metal in CI; the `forbidden: ["ship"]` on release.yml locks that).
 const CLOSE_PATH_POLICY = {
-    releaseSh: { label: "scripts/release.sh", required: ["full"], forbidden: [] },
+    releaseSh: { label: "scripts/release.sh", required: ["ship", "full"], forbidden: [] },
     releaseYml: { label: ".github/workflows/release.yml", required: ["full"], forbidden: ["ship"] },
 };
 

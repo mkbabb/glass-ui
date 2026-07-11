@@ -18,6 +18,14 @@
 # scope) + an OIDC id-token for npm provenance (`--provenance` attests the
 # build to this repo/workflow). The publish step runs only on tag refs —
 # push/PR never reach it.
+#
+# BG.W-CUT (5.0.0) — the CI publish path. `--run full` is the deduped union that
+# carries Arm B `proof:ship-attestation` (['ci','release'], the device-free tag
+# BYPASS-CLOSER — CI=SwiftShader cannot paint Metal, so it re-verifies the
+# committed docs/tranches/BG/SHIP-ATTESTATION.json Arm A wrote on the Mac dev-box,
+# NEVER `--run ship`) AND the `RATCHET_BASELINES=={}` drain (proof:no-god-module).
+# The tag can therefore never publish an absent/stale/software-raster attestation
+# or an undrained ratchet.
 name: release
 
 on:
