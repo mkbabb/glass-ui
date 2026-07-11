@@ -74,6 +74,32 @@ research (≤8, batched 3) → synthesize → prototype (worktrees; run-or-spec-
 (convergence % + enumerated gaps) → agglomerate; ≥3 passes; 100% = zero open gaps + fresh adversarial
 audit by non-authors + two consecutive clean passes. Partial routes banked with named re-triggers.
 
+## Rulings on the ledger open questions (orchestrator; user may veto any at formation)
+
+From `ledgers/CHRONIC-DISPOSITIONS.md` §6 + `ledgers/PROMPT-RECAP.md`:
+
+1. **Baseline-gated standing-book batch (8 rows)** — RULED: RETIRE wholesale. Standing books are
+   UF-P2 debt; each re-enters via `@supports` the day a touched surface pays the diff (the
+   css-at-function precedent). No ruling conflict: "migrate-first-when-touched" is preserved as the
+   RE-ENTRY path, not a standing row.
+2. **inline-edit-primitive (10 closes un-converged)** — RULED: RETIRE-until-convergence, with the
+   convergence trigger named in the retire rationale. A decade-of-closes hold IS the disease.
+3. **aurora-medium lazy-chunk split** — RULED: RETIRE the book (the spliced `uMedium` dispatch is the
+   decided identity, per the deep-glass-16px precedent). D-VIZ may re-open ONLY if its perf pass
+   measures the medium GLSL as a material first-paint cost — that is a new trigger, not a re-book.
+4. **border-progress** — RULED: RETIRE the subpath until the speedtest adoption lands (the honest
+   0-real-consumer state; the "born ≥2" claim was false). Re-entry = the speedtest consume, already
+   an ASK row. completion-seal: WATCHLIST with the demo-only status named in cut notes.
+5. **metrics sextet scope** — USER-GATED (UF-K1 names three; the census found six). Recommendation:
+   relocate metric-cell + metric-stack + instrument-chassis to speedtest; icon-tooltip/pulse/
+   scrolling-text get per-item mechanism-distinctness adjudication in B8 (pulse and scrolling-text
+   are plausibly general; icon-tooltip likely folds into the D-FACTOR tooltip cell).
+6. **hover-popover** — SETTLED BY THE USER (UF-P7): hover becomes a trigger AXIS of the one anchored
+   overlay; hover-popover and hover-card both dissolve as names; keepDockOpen rides the trigger axis
+   as a parameter. D-FACTOR owns the union spec.
+7. **Decision-0 (the cut)** — USER-GATED, standing recommendation unchanged: HOLD the tag; one cut at
+   the BI close. (Round-1 strengthened it: the tree is not even honestly cut-ready today.)
+
 ## Orchestration ledger
 
 - 2026-07-11: screenshots banked (25), USER-FINDINGS registry written, audit round 1 launched
