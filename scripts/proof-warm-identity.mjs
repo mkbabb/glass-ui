@@ -49,6 +49,8 @@ import {
     isRealPng,
     pngDimensions,
     pngRegionHueHistogram,
+    pngRegionHueDivergence,
+    hueDivergent,
     pngRegionDelta,
     pngRegionStats,
     regionStatsDelta,
@@ -117,7 +119,10 @@ const MIN_CAPTURE_HEIGHT = 320;
 // The warm-identity band. warmFractionFloor 0.55 (the chroma-weighted warm fraction must
 // dominate); chromaCeiling 0.30 (the coarse metallic/over-saturation bound — the finer
 // per-surface ceiling lives in ba-gestalt's expect cells). The delta ceilings localize the
-// edge-cast (a cold rim / clip artifact) and the D5 top bar.
+// edge-cast (a cold rim / clip artifact) and the D5 top bar — but F8.2 RE-CALIBRATES those
+// two PART probes onto the dominant-hue divergence: the mean-L ΔE is measured ONLY when the
+// region reads a DIVERGENT COLOURED slab (readCapture reads pngRegionHueDivergence first), so
+// an achromatic page-top MARGIN or a warm-consistent edge no longer FALSE-trips the ceiling.
 const WARM_BAND = Object.freeze({
     warmFractionFloor: 0.55,
     chromaCeiling: 0.3,
@@ -196,11 +201,28 @@ function readCapture(repoRelPath, field, topbar) {
         meanL: hist.meanL,
         captureReal,
     };
-    const edgeDelta = pngRegionDelta(abs, edgeRegion(field), field);
-    if (edgeDelta) stats.edgeDelta = edgeDelta.dE;
+    // The PART-probe recalibration (F8.2 — "mean-L box → dominant-hue histogram over real
+    // route REGION"). Read the edge / top-bar region's DOMINANT HUE FIRST: a NEUTRAL part (an
+    // achromatic page margin — the false-trip the raw mean-L box produced on the browser
+    // page-top margin) or a part reading the SAME warm family as the field is CONSISTENT — no
+    // aberrant slab, the ΔE box is NOT measured. Only a genuinely DIVERGENT COLOURED part (a
+    // cold/magenta aberrant slab, the real D5 defect) feeds the mean-L ΔE the predicate reads.
+    const edge = edgeRegion(field);
+    const edgeDiv = pngRegionHueDivergence(abs, edge, field);
+    stats.edgeDivergent = !!edgeDiv?.divergent;
+    stats.edgeFamily = edgeDiv?.partFamily ?? "?";
+    if (stats.edgeDivergent) {
+        const edgeDelta = pngRegionDelta(abs, edge, field);
+        if (edgeDelta) stats.edgeDelta = edgeDelta.dE;
+    }
     if (topbar) {
-        const td = pngRegionDelta(abs, topbar, field);
-        if (td) stats.topDelta = td.dE;
+        const topDiv = pngRegionHueDivergence(abs, topbar, field);
+        stats.topDivergent = !!topDiv?.divergent;
+        stats.topFamily = topDiv?.partFamily ?? "?";
+        if (stats.topDivergent) {
+            const td = pngRegionDelta(abs, topbar, field);
+            if (td) stats.topDelta = td.dE;
+        }
     }
     const corner = pngRegionStats(abs, CORNER_REGION);
     if (corner) stats.cornerL = corner.meanL;
@@ -588,6 +610,49 @@ function selfTest() {
                 return dE > WARM_BAND.topBarCeiling && !v.pass && v.reasons.some((r) => r.includes("[topBar]")) ? "flagged" : null;
             })(),
         },
+        // ── the F8.2 PART-probe recalibration bites (mean-L box → dominant-hue over route REGION) ──
+        {
+            label: "recalibration — a NEUTRAL top/edge part (an achromatic page-top MARGIN, dominantFamily neutral) over a warm field is NOT a divergent slab (the F8.2 fix: the mean-L box false-tripped the ceiling on the white/near-black page margin; the dominant-hue read makes it moot)",
+            flag: hueDivergent({ dominantFamily: "neutral" }, { dominantFamily: "warm" }) === false ? "flagged" : null,
+        },
+        {
+            label: "recalibration — a WARM-consistent part (dominantFamily warm, same as the field) is NOT divergent (a warm masthead / warm edge sliver reads consistent, not an aberrant slab)",
+            flag: hueDivergent({ dominantFamily: "warm" }, { dominantFamily: "warm" }) === false ? "flagged" : null,
+        },
+        {
+            label: "recalibration — a DIVERGENT COLOURED part (dominantFamily cold/magenta, ≠ the warm field) IS the genuine D5 aberrant-slab defect (still caught — the recalibration kills only the neutral/consistent false-trips, never the real divergent slab)",
+            flag:
+                hueDivergent({ dominantFamily: "cold" }, { dominantFamily: "warm" }) === true &&
+                hueDivergent({ dominantFamily: "magenta" }, { dominantFamily: "warm" }) === true
+                    ? "flagged"
+                    : null,
+        },
+        {
+            // The BORN-RED→GREEN on-disk witness: readCapture over a real WARM dock capture at
+            // the roster's `ty=0.00` top-bar box. The RETIRED mean-L ΔE box FALSE-trips the
+            // ceiling (topDelta 0.184 light / 0.499 dark — the browser page-top margin), but the
+            // recalibrated read classifies the top region NEUTRAL → not divergent → readCapture
+            // PASSES. Degrades gracefully (flags) if the -close/ capture is pruned — bites above
+            // are the disk-free load-bearing proof.
+            label: "recalibration (disk) — a real WARM dock capture: the raw mean-L top-bar ΔE FALSE-trips the ceiling (page-margin box) YET the dominant-hue read passes readCapture (topDivergent false; the page-margin false-trip killed)",
+            flag: (() => {
+                const dockCap = join(
+                    "docs/tranches/BG/audit/visual/BG.W-COMPOSITED-GESTALT-GATE-close",
+                    "dock-overview-chrome-light-desktop-full.png",
+                );
+                if (!existsSync(resolve(ROOT, dockCap))) return "flagged"; // fixture absent — degrade
+                const dockField = { x: 0.18, y: 0.5, w: 0.2, h: 0.12 };
+                const dockTopbar = { x: 0.52, y: 0.0, w: 0.46, h: 0.05 };
+                // The raw mean-L box the recalibration RETIRES for this region — the page-margin ΔE.
+                const rawBox = pngRegionDelta(resolve(ROOT, dockCap), dockTopbar, dockField);
+                const boxFalseTrips = !!rawBox && rawBox.dE > WARM_BAND.topBarCeiling;
+                // The recalibrated read — the top region reads NEUTRAL → not divergent → PASSES.
+                const read = readCapture(dockCap, dockField, dockTopbar);
+                const recalibratedPasses =
+                    !!read && read.verdict.pass === true && read.stats?.topDivergent === false;
+                return boxFalseTrips && recalibratedPasses ? "flagged" : null;
+            })(),
+        },
         {
             label: "cornerClip — a warm field with a black-notch corner (corner L 0.01) REDs [cornerClip]",
             flag: (() => {
@@ -712,7 +777,7 @@ function run() {
         "proof:warm-identity — the composited-WHOLE dominant-hue paint battery (BG.W-COMPOSITED-GESTALT-GATE; measure the whole, not the part)",
     );
     console.log(
-        `  self-test (bite proof): OK — ${facts.selfTestChecks ?? 0} synthetic checks flagged (gray-RED + gray-slab-neutral + cerulean-RED + warm-GREEN + warmFraction-mixed + chromaCeiling + edgeCast + topBar + cornerClip + routeNavigates + degenerate + both-engines + ROUTE-RESOLVES + cross-page-audit)`,
+        `  self-test (bite proof): OK — ${facts.selfTestChecks ?? 0} synthetic checks flagged (gray-RED + gray-slab-neutral + cerulean-RED + warm-GREEN + warmFraction-mixed + chromaCeiling + edgeCast + topBar + recalibration×4 [neutral-margin-consistent + warm-consistent + divergent-slab-caught + disk-false-trip-killed] + cornerClip + routeNavigates + degenerate + both-engines + ROUTE-RESOLVES + cross-page-audit)`,
     );
     if (facts.rosterPresent) {
         console.log(`  enrolled surface set : ${facts.enrolledSurfaces ?? 0} surfaces (the ba-gestalt roster IS one enrolled surface set, NOT the sole oracle)`);

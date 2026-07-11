@@ -488,3 +488,60 @@ export function pngRegionHueHistogram(absPath, region, opts = {}) {
         samples: n,
     };
 }
+
+// ── The PART-probe recalibration — dominant-hue divergence over the real route REGION ──
+// (BG.W-COMPOSITED-GESTALT-GATE, F8.2 — "mean-L box → dominant-hue histogram over real
+// route REGION"). The topBar / edgeCast PART predicates used to read a MEAN-L OKLab ΔE box
+// (pngRegionDelta) between a PART region and the field. That box FALSE-TRIPS on geometry
+// OUTSIDE the composited whole: the browser page-top MARGIN (white in light / near-black in
+// dark — a legitimate achromatic page chrome, NOT an aberrant slab: measured topDelta 0.184
+// light / 0.499 dark on the warm dock capture, both > the 0.14 topBarCeiling), and a benign
+// glass-card↔backdrop LUMINANCE STEP at a field edge — none of which is a HUE defect. The
+// dominant-hue histogram reads the region's actual hue FAMILY: a NEUTRAL part (an achromatic
+// margin — dominantFamily "neutral") is the ABSENCE of an aberrant colour slab, and a part
+// reading the SAME family as the field is CONSISTENT; only a part reading a DIVERGENT
+// COLOURED family (cold/magenta/green with real chroma weight, DIFFERENT from the warm field)
+// is the genuine D5 aberrant-slab defect the box conflated with those benign luminance steps.
+// So the recalibrated gate reads the divergence FIRST and only measures the mean-L ΔE when the
+// part is a genuinely divergent COLOURED slab. ONE decoder + ONE hue kernel — no second math.
+
+/**
+ * PURE classifier — is a PART region a DIVERGENT COLOURED slab relative to the field? Over
+ * two dominant-hue results (so a gate self-test feeds synthetic histograms with NO PNG).
+ * A NEUTRAL part (an achromatic page margin) is NOT divergent (no slab); a part reading the
+ * SAME dominant family as the field is NOT divergent (consistent); only a coloured part whose
+ * dominant family DIFFERS from the field's is divergent.
+ * @param {{dominantFamily?:string} | null} partHist
+ * @param {{dominantFamily?:string} | null} fieldHist
+ * @returns {boolean}
+ */
+export function hueDivergent(partHist, fieldHist) {
+    if (!partHist || !fieldHist) return false;
+    const part = partHist.dominantFamily;
+    if (!part || part === "neutral") return false; // achromatic margin — no aberrant slab
+    return part !== fieldHist.dominantFamily; // a genuinely divergent COLOURED slab
+}
+
+/**
+ * The dominant-hue divergence of a PART region vs the FIELD region of ONE capture. Reads both
+ * regions' dominant-hue histograms via the SINGLE decoder (pngRegionHueHistogram — no second
+ * IDAT inflate) and classifies via hueDivergent. Returns the verdict + both families (for the
+ * gate's facts + a legible RED). null when the field region is undecodable.
+ * @param {string} absPath
+ * @param {{x:number,y:number,w:number,h:number}} partRegion
+ * @param {{x:number,y:number,w:number,h:number}} fieldRegion
+ * @param {{bins?:number, chromaFloor?:number, neutralCeiling?:number}} [opts]
+ * @returns {{divergent:boolean, partFamily:string, fieldFamily:string, partColouredFraction:number} | null}
+ */
+export function pngRegionHueDivergence(absPath, partRegion, fieldRegion, opts = {}) {
+    const field = pngRegionHueHistogram(absPath, fieldRegion, opts);
+    if (!field) return null;
+    const part = pngRegionHueHistogram(absPath, partRegion, opts);
+    if (!part) return { divergent: false, partFamily: "unread", fieldFamily: field.dominantFamily, partColouredFraction: 0 };
+    return {
+        divergent: hueDivergent(part, field),
+        partFamily: part.dominantFamily,
+        fieldFamily: field.dominantFamily,
+        partColouredFraction: 1 - part.neutralFraction,
+    };
+}
