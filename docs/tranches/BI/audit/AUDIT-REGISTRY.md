@@ -108,9 +108,26 @@ Both siblings use highlight.js ^11.11.1 + house .hljs theme. → D-STORY (the Co
 
 ## FAM-10 — consumer truth / overfit
 
-- ✔-class corrections to user hypotheses: **glass-panel is LIVE** (atlas + sci-report chrome) — keep or
-  fold WITH consumer migration, not a blind prune. **hover-popover** is reka HoverCard underneath but
-  has real consumers (atlas + fourier-analysis) — adjudicate with a fold path, not delete.
+**THE MECHANISM-DISTINCTNESS LAW (user ruling, 2026-07-11):** a consumer count answers "is it
+imported," never "should this concept exist." Consumer counts gate substrate-SHIPPING (the J-inv-10
+≥2 bar for minting new substrate); they do NOT immunize redundant taxonomy. A component earns a
+distinct name iff it owns a MECHANISM no survivor expresses; otherwise it is a fold-with-migration
+row (consumers get a relay ask), regardless of how many consumers it has.
+
+- **GlassPanel: RETIRE (fold onto Card/tier classes)** — the law applied, source-verified. Its `tier`
+  axis is byte-duplicative of Card's (same TIER_CLASS map), its `surface` axis is the same shared
+  resolver Card uses, and its ONE distinct mechanism — `useGlassRenderer`/`createGlassFilter` (a JS
+  canvas-generated feDisplacementMap refraction) — is a SECOND refraction path competing with the
+  house `.glass-lens`/`#glass-refract` axis, with GlassPanel as its ONLY consumer (a textbook
+  no-dual-path violation); its no-backdrop-filter branch is a per-rung opaque legacy ladder of the
+  NF-condemned class. A slotless glass surface needs no component at all (`class="glass-resting"`).
+  Consumers (sci-report GalleryView/TaxonomyApparatus/VftColophonBeat, atlas chrome) migrate
+  mechanically → ASK rows. `useGlassRenderer`/`createGlassFilter` retire with it unless D-GLASS
+  research shows a case `.glass-lens` cannot serve (default: retire).
+- **hover-popover: re-adjudicated under the same law** — round-1 kept it on consumer count; the law
+  says its being "literally reka HoverCard underneath" makes it a fold-onto-HoverCard candidate
+  unless it owns a distinct mechanism (the keep-open/hoverOpenDelay behavior — D-GLASS/B8 adjudicates
+  mechanism-first, consumers get the migration ask).
 - speedtest-ONLY sextet: metric-cell, metric-stack, instrument-chassis, icon-tooltip, pulse,
   scrolling-text → the metrics-transfer ask (UF-K1) generalizes to this set (decide each).
 - border-progress: ZERO real consumers; the CLAUDE.md "born ≥2 by construction" claim is FALSE at
