@@ -183,5 +183,79 @@ unconsumed by it). The w-full census on buttons/forms/select read clean — but 
 6. **Cross-repo asks/consumes ledger** (inbound packets → dispositions).
 7. **Adversarial re-verify** of round-1 P1s not yet independently confirmed.
 
-Registry state: OPEN (round 1 folded; round 2 pending). Stability bar: two consecutive rounds
-surfacing nothing new.
+---
+
+# ROUND 2 FOLDS (4 lenses accepted; 2 lenses REJECTED as fabricated stubs → re-run as round-2b)
+
+## The Safari reframe (SAF lens — overturns round-1's engine attribution)
+
+- **SAF-1 [P1]** The repo's only cross-engine gate (the `webkit` Playwright project) runs on WebKit
+  rev 2287 with FULL Chromium parity (anchor-positioning, contrast-color(), startViewTransition,
+  backdrop-filter:url() ALL live — probed) — the config's own "bug 245510 absence" comment is FALSE
+  for it. The gate structurally cannot catch stable-Safari gaps: false assurance. → W-SAFARI-REAL-VERIFY
+  (relabel the project "modern-WebKit-parity"; REAL Safari — wkshot/system WKWebView, the BG dual-engine
+  harness — becomes the close obligation for every user-flagged Safari route).
+- **UF-C5 re-scoped**: the dock morph FUNCTIONS on WebKit too (measured 296→18px / 26→332px, zero
+  errors). "Does not work at all" → perf/feel + real-Safari repro owed, NOT an engine break.
+- **UF-C3 re-scoped**: liquid-playground/dock-gallery render near-identical on WebKit; the plausible
+  real cause of the Safari "broken" feel is FAM-5 amplified by Safari's compositor (the 9.05MP
+  DockStage canvas under backdrop-filter — measured live). Registry STRIKES the Safari-specific
+  attribution; keeps the real-Safari verification obligation.
+- **UF-I1 confirmed engine-agnostic**: carousel broken IDENTICALLY on both engines — and the probe
+  found **PagerDots renders EMPTY** (no dots paint at all) — the concrete breakage for D-PAGER's
+  codebase-truth diagnosis.
+
+## FAM-15 — accessibility (new family; the lens had never run — mostly standing gaps, not BG regressions)
+
+- **A11Y-1 [P1]** Destructive button label 3.57:1 in light mode on the SHIPPED demo — root cause is
+  the FAM-1/emission class: `.text-destructive-foreground` has NO backing rule in the demo's built CSS
+  (CVA-only utility unscanned) → W-DEMO-SOURCE-SCAN + a proof:emission clause for CVA foreground
+  utilities.
+- **A11Y-2 [P1]** EVERY Slider thumb is nameless (axe aria-input-field-name ×22 on /substrates/aurora)
+  — the stale-reka-binding class → W-SLIDER-THUMB-NAME + a π axe assert.
+- **A11Y-3 [P2]** SplitChars mints `aria-label` on a role-less span (ARIA-in-HTML violation).
+- **A11Y-4 [P2]** ExpandableContainer fullscreen: NO focus trap / move-in / restore / inert — pairs
+  with UF-J5's Escape defect; the first-principles rebuild (UF-J5 wave) owns both.
+- **A11Y-5 [P2]** Dock chrome buttons partially obscured to 17×40px (WCAG 2.5.8) — D-DOCK input.
+- **Refuted clean** (live-proved): tabs roving-tabindex, dock root aria contract, Dialog/Sheet/Drawer
+  focus management, siri-island keyboard reach.
+
+## FAM-16 — the doc-lie census extension (DOC lens)
+
+- **DOC-1 [P1]** MIGRATION.md's binding 203-symbol /api re-home table points 3 rows at the DELETED
+  /paper-grid subpath under pre-rename symbol names (self-contradicted within the same 5.0.0 section)
+  → regenerate the table from disk + a gate clause (every target subpath resolves, every symbol exports).
+- **DOC-2 [P1]** README.md is frozen at v1.0: directs consumers to the dropped /api, wrong subpath
+  count (37 vs 89), peer table lists abrogated vaul-vue + renamed lucide + keyframes ^2.0 (disk ^5.2.0)
+  + omits value.js entirely → W-README-5.0.0-REWRITE against docs/canon.
+- **DOC-3 [P2]** MIGRATION documents the src/subpaths/ deletion + src/entries/ move as landed; disk:
+  78 files still there, src/entries/ absent.
+- **DOC-4 [P2]** The /virtual un-retire justification is FABRICATED: its named binary consumer (words
+  DefinitionContentView) is deleted; words ships a LOCAL fork; only internal consumers exist — the
+  border-progress lie class. → consumer-truth adjudication under the mechanism-distinctness law.
+- **DOC-5 [P2]** /deck "≥2 by construction (speedtest + slides)" false — speedtest has zero deck
+  imports; slides is the sole consumer.
+- Clean: docs/canon/primitives.json regen-fresh; the motion-axis/dead-sweep/liquid-grid-rename rows
+  ARE executed.
+
+## FAM-14 update — the affordance contradiction RECONCILED (CBA lens)
+
+- **CBA-1 [P1]** The full-width triggers are CHASSIS-INHERITED: StorySection's body is `flex flex-col`
+  (align-items:stretch), so any LONE direct-child trigger balloons to the column width (live-measured
+  1357px on popover/dropdown-menu/hover-popover). Round-1's markup grep was a structural
+  false-negative (CBA-7) — the audit law: measure rendered width, never grep markup. → the trigger-wrap
+  sweep + the D-STORY chassis fix (a Specimen wrapper that never stretches lone interactive children).
+- **CBA-2 [P1]** data/search is a test fixture masquerading as a demo (internal call-count ledger,
+  buildIndex/fuzzyMatch button labels, data-testid UI) → rebuild as a real search demo; move readbacks
+  to the visual spec. CBA-3: readout strips across containers/data bands → FAM-7 W-DEMETA.
+- **CBA-4/5/6 [P2/P3]** Permutation-coverage gaps; FamilyTabs IA duplication; inconsistent
+  StorySection demarcation. The ranked 15-worst worklist delivered → D-STORY input.
+
+## Round-2 lens hygiene
+
+The crossrepo-ledger + adversarial-reverify agents returned schema-satisfying STUBS ("test"/"probe")
+— REJECTED, not folded (accepting them would be the close-class lie). Re-running as round-2b
+(wf_43d1fa26) with the rejection named in their prompts.
+
+Registry state: OPEN (rounds 1 + 2 folded; round-2b re-runs pending; round 3 = stability check).
+Stability bar: two consecutive rounds surfacing nothing new.
