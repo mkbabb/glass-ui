@@ -208,6 +208,26 @@ function pageProbe() {
                 const t0 = performance.now();
                 let stable = 0;
                 let lastW = W0;
+                // AX.W01 sampler-race fix — the EXPAND WITNESS. A collapsed→hover expand
+                // does NOT begin the instant `fire(ENTER)` dispatches: the dock defers the
+                // commit by `HOVER_INTENT_MS` (60ms, useDockState's collapsed→hover intent
+                // dwell) so a morphing-edge sweep cannot thrash it. During that dwell the box
+                // sits stable at the collapsed footprint, and BG.W-DOCK-GLYPH-RIGID's
+                // settle-at-visible-arrival clears the prior collapse morph promptly — so a
+                // CLEAN stable-collapsed plateau precedes the expand. A bare `stable >= 5`
+                // exit fired IN that plateau (5 rAF frames ≈ 45ms < the 60ms dwell), returning
+                // the pre-expand collapse-tail as if the morph had SNAPPED (0 rising frames) —
+                // a false RED while the expand spring is healthy (verified: 41 rising frames,
+                // 58→495px). Arm the stability-exit ONLY after the box has GROWN past the
+                // collapsed baseline by `EXPAND_WITNESS_PX` (the expand is witnessed), so the
+                // sampler can never return during the pre-expand dwell. A genuine snap still
+                // trips the witness (the box grows), then exits with too-few rising frames →
+                // RED; a genuine freeze never grows and rides the 2s backstop with a flat
+                // series → RED. Snap/freeze detection is preserved; only the dwell-race dies.
+                let wMin = W0;
+                let wMax = W0;
+                let morphSeen = false;
+                const EXPAND_WITNESS_PX = 40;
                 const f = () => {
                     const t = performance.now() - t0;
                     const w = wOf();
@@ -218,10 +238,13 @@ function pageProbe() {
                     if (lastEnteringChild()) enteringSampled = true;
                     enteringChildOpacities.push(e);
                     times.push(t);
+                    if (w < wMin) wMin = w;
+                    if (w > wMax) wMax = w;
+                    if (wMax - wMin > EXPAND_WITNESS_PX) morphSeen = true;
                     if (Math.abs(w - lastW) < 0.5) stable++;
                     else stable = 0;
                     lastW = w;
-                    if (stable >= 5 || t > 2000)
+                    if ((morphSeen && stable >= 5) || t > 2000)
                         res({
                             W0,
                             T0,
@@ -284,9 +307,14 @@ function pageProbe() {
             // delay so the `.collapsed` class settles, making the subsequent expand a
             // REAL morph (not a no-op on an already-expanded dock). This is the same
             // collapse-first idiom W-DOCK1's capture harness uses.
+            // The wait must clear the FULL collapse: the `:collapse-delay="600"` idle
+            // timer THEN the ~300ms collapse morph settle (= ~900ms), so a 900ms wait
+            // sampled the collapse-tail mid-ring (`--dock-morph-t` ≈ 0.98 still gliding)
+            // and polluted the expand baseline. Wait past the settle so the sampled
+            // baseline is a fully-at-rest collapsed dock (`--dock-morph-t` reverted to 0).
             if (capture && !capture.classList.contains("collapsed")) {
                 fire(LEAVE, capture);
-                await sleep(900);
+                await sleep(1400);
             }
             const dock =
                 capture && capture.classList.contains("collapsed")
