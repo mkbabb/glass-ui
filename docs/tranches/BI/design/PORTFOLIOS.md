@@ -101,6 +101,27 @@ register homogenization, sheet divider draw-in smoothing, drawer/live-behind per
 
 ---
 
+## D-FACTOR — the component-axis factorization (the Kronecker discipline; user directive UF-P7, minted 2026-07-11 mid-loop)
+
+The user's directive: every component decomposes into orthogonal AXES; the component set should be
+the tensor product of a small axis set, not N bespoke names. A behavior (hover-open) is an axis
+value, never a component. Guard: the mechanism-distinctness law — an axis-cell keeps its own name
+IFF it owns a genuinely distinct mechanism (a different ARIA pattern, focus model, or paint physics).
+Floors: WCAG 1.4.13 for hover-triggered content (dismissible · hoverable · persistent), coarse-pointer
+reality (hover does not exist on touch — every hover trigger needs its tap story), reka-ui substrate
+honesty (what one wrapper can genuinely unify over separate reka roots).
+
+| family | formulation | center |
+|--------|-------------|--------|
+| FACTOR-A "one overlay root" | ONE anchored-overlay primitive with a `trigger` axis (click · hover · focus · context) × content-role axis (plain · rich) × surface axis; Popover/HoverCard/HoverPopover collapse into it; Tooltip stays distinct (describedby, non-interactive — a different ARIA mechanism); the menu family stays distinct (roving focus/typeahead). | axis product over one root |
+| FACTOR-B "axis grammar, ARIA-distinct roots" | Keep the ARIA-pattern roots (popover-class, tooltip, menu, listbox) as the ONLY component names; every other current name becomes an axis/preset on one of them; a global synonym census retires every duplicate name library-wide (pane/panel/plate/tile; chip/badge/pill; the toggle family). | naming law + per-root axes |
+| FACTOR-C "behavior composables" | Triggers/behaviors ship as composables (useHoverTrigger, usePressTrigger, useAnchor) freely composable onto any surface; components are thin ARIA shells; the product space is reached by composition, not props. | headless behavior algebra |
+
+Flagship deliverable regardless of family: the FULL component-axis matrix (every exported component ×
+its axes), the synonym-collision census, and the distilled survivor set with per-survivor axis specs.
+D-FACTOR supersets the FAM-10 per-component adjudications (GlassPanel, hover-popover) — those become
+its first two settled cells.
+
 ## Loop state
 
 | problem | pass | state |
@@ -111,6 +132,7 @@ register homogenization, sheet divider draw-in smoothing, drawer/live-behind per
 | D-STORY | 0 | 3 families LIVE |
 | D-GLASS | 0 | 3 families LIVE |
 | D-MOTION | 0 | 3 families LIVE |
+| D-FACTOR | 0 (minted mid-loop, 2026-07-11) | 3 families LIVE — research rides pass 2 |
 
 Pass-1 research charters derive one-per-family plus a prior-art sweep per problem. Early-round
 researchers receive the task statement + their family charter ONLY (the favored approach is withheld).
