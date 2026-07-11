@@ -84,3 +84,41 @@ Dispatched per the standing relay law: path-scoped single-file commit on `tranch
 force, your work untouched. The value.js-side record: `docs/tranches/T/letters/
 GLASSUI-T-ASKS.md §P1 rider` + the PROGRESS event row. An ack is a bonus, never waited on;
 delivery ≠ disposition (the row stays open until source-verified at HEAD).
+
+---
+
+## §6 ADDENDUM (same audit, same relay — two ADDITIONAL producer rows; dispatched 2026-07-11)
+
+**Stamped HEAD**: glass-ui **`c93a7f13`** (`tranche/BG`; the F8 5.0.0 cut row is USER-GATED
+and **untagged** at this write — both cites below re-verified live at this HEAD). These rows
+ride the standing **P10** and **P3** packets (`VALUEJS-T-ASKS-2026-07-09.md`), recorded here
+so the SAME owner audit (`MANDATE §0.6`, 2026-07-11) travels as one relay. Books, never
+gates — each is walked at value.js **T.W7 verify-at-cut** beside the §4 asks.
+
+### §6.1 P10 rider — `text-title` hardcodes `font-weight: 700` (value.js T-40)
+
+Owner verbatim: "Dropdown options should not be bold." The demo's color-space dropdown option
+letterforms (`font-display italic text-title`) compute to **700** Fraunces — root probed live:
+the **`text-title` @utility hardcodes `font-weight: 700`**
+(`src/styles/typography/semantic.css:132-139`, verified at `c93a7f13`). Same class as the
+`text-heading` 700 the consumer already had to retire from its pane title by pinning
+`font-weight: var(--type-weight-display)` on its own class list. **Ask**: `text-title` (and
+kin) join P10's weight TOKENIZATION (`--type-weight-title`, or the shared heading station) so
+a consumer re-voices weight without un-utility-ing the type class. The demo's pin is the
+booked interim; it retires the day the token lands (value.js `audit/t33-research.md §6.5`).
+
+### §6.2 P3 rider — the glass-recipe backdrop-filter edge-sampling bleed (value.js T-45)
+
+Owner verbatim: "Strange clipping artifacts on the borders of these cards." Root FOUND BY
+BISECTION on the value.js built bundle (`audit/t33-research.md §6.8` — header-veil off: rim
+persists; card `backdrop-filter: none`: rim GONE): a glass plate's own
+`backdrop-filter: blur(N) saturate(…)` samples the bright field BEYOND the element's edge and
+smears it inward ≈ one blur radius; the rounded clip then cuts the smeared band unevenly at
+the corner arcs → a light rim/streak inside the top edge + corners. **Population-wide by
+construction**: every ladder rung pairing backdrop blur with a radius clip over a bright
+ground (e.g. the veil rung `cards.css:459`, the refract chain `glass-refract.css:109`, the
+`--glass-blur-*` family). **Ask**: the **oversampled-pseudo idiom at the LADDER** — the
+backdrop-filter moves onto a `::before { inset: calc(-2 * blur) }` oversampling pseudo
+clipped by the host's radius+overflow, so the smear falls outside the visible edge. The demo
+lands the same idiom as a booked interim on its OWN pane-card recipe only (T.W6.5 Lane M);
+the interim swaps out when the ladder cure ships — never a demo fork of the ladder (PR-2).
