@@ -13,6 +13,11 @@ a new component, not a new engine, not a new spring. The genuinely-new delta is 
 optional ambient-hue wire. Everything else is a token retune + a class compose against primitives already on
 disk (Arm 3's ~90%-already-there verdict, confirmed).
 
+> **PRE-CANON:** an adversarial critique (verdict **SOUND-WITH-FIXES**, findings AC1–AC8, all fixes applied
+> inline + verified against on-disk HEAD) is in the **CRITIQUE (adversarial, pre-canon)** section before §8.
+> Read it before this becomes canon — two findings (AC1 Safari @supports truth, AC3 driven-capture determinism)
+> are build-time VERIFICATION prerequisites, not source-only claims.
+
 ---
 
 ## §0 — The synthesis verdict + the resolved spring discrepancy (read first)
@@ -215,9 +220,20 @@ match it. **[CRITIQUE-FIX C5 — the TWO channels have DIFFERENT legal caps; do 
 `proof:liquid-tab` LT2 (verified proof-liquid-tab.mjs L125-126) caps the **BLOB** channel by its **AREA ≤ 1.14**
 (volume-preserving ⇒ per-axis `--tab-indicator-blob-max` ≤ √1.14 ≈ **1.068**, NOT 1.2); the **STRETCH** channel
 (`--tab-indicator-max-stretch`) is the reciprocal squish capped ≤ **1.2** (taffy floor). Growing
-`--tab-indicator-blob-max` toward 1.2 REDS LT2. The reference's 1.15–1.25× mid-flight core-width is reachable as
-the PRODUCT (stretch ≤1.2 × blob ≤1.068 ≈ 1.28 ceiling) — the loop pushes stretch first, blob only within its
-area cap. The positional overshoot itself stays snappy's ζ (the 8% T2 witness is a compressed-centroid reading on
+`--tab-indicator-blob-max` toward 1.2 REDS LT2. **[AC-FIX AC2 — C5's "1.28 ceiling" is WRONG; the house composed
+anti-taffy INTENT is ≤1.14, BELOW the reference's 1.20×.]** The along-travel rendered width is the PRODUCT
+`blob × stretch`, and `proof-liquid-tab.mjs` L129 records the house intent as **composed peak `blob × stretch` ≤
+1.14** (the anti-taffy fence — the SAME quantity Arm 1 calls "core-width"). So C5's "1.28 ceiling" is not the
+target and not the house intent: the eyeglass along-travel swell is capped at **≈1.14×** (e.g. blob 1.045 ×
+stretch 1.090 ≈ 1.14). The reference's ~1.20× core-width (Arm 1 §1: rest 290 → peak 348) therefore is NOT fully
+reproduced — the house anti-taffy fence deliberately swells tighter than iOS. This is an ACCEPTED bounded
+house-identity divergence (mirroring the §0 timing residual), recorded loud, NOT smuggled. CAVEAT: the composed
+cap's ENFORCER, `tests-visual/tab-ios-capsule.spec.ts`, is a **PHANTOM at HEAD** (does not exist — verified;
+`tabs-std.spec.ts` is the only live tabs spec), so today only the per-channel device-free caps (blob ≤1.068,
+stretch ≤1.2) actually block — meaning nothing currently reds a 1.20× swell. The eyeglass wave MUST either honor
+the 1.14 composed intent (recommended) or, if it targets 1.20, correct the LT2 L129 comment's dead-spec citation
+and note the intent is superseded (a future spec landing 1.14 would then red — so honoring 1.14 is the safe
+default). The positional overshoot itself stays snappy's ζ (the 8% T2 witness is a compressed-centroid reading on
 the extreme-tab leftward leg; Arm 1's own caveat flags it under-read/over-read, and T4 gives ζ≈0.85 — snappy's
 0.74 sits mid-band; §4.3's overshoot band accepts the rendered ~3% snappy overshoot, NOT the device's 8% — an
 ACCEPTED house-identity divergence, C11).
@@ -285,6 +301,16 @@ ALREADY-frosted track output).
   blur ON the loupe.
 - **Convergence (§4.3):** add a track contrast-kill probe (the reference 94% figure) — the lens has a legible
   field to bend or the wave is not done.
+- **[AC-FIX AC5 — the nested backdrop-filter compose (strong-frost track + `url()` pill-lens) is a known-finicky
+  rendering path; VERIFY it live, do not assert it.]** The pill (`.segmented-indicator`, `position:absolute`
+  inside `.segmented-tabs`) is a DESCENDANT of the track, so a track `backdrop-filter` establishes a backdrop root
+  and the pill's `backdrop-filter: url()` samples the track's FROSTED output — which is exactly the desired
+  "lens an already-frosted field." BUT nested `backdrop-filter` × `contain: paint` × the anchored-indicator
+  stacking-context (segmented-tabs.css L254-257 deliberately keeps stacking-context churn OFF the `--anchor`
+  element to avoid severing `anchor()`) is precisely where Chromium regresses. The wave MUST LIVE-verify (Chrome)
+  that the pill demonstrably lenses the FROSTED track output (not the raw aurora, and not a broken empty backdrop),
+  AND that adding the track backdrop root does not sever the anchor glide (a regressed glide reds the π
+  `motionVerdict`). This is a build-time verification step, not a source assertion.
 
 ---
 
@@ -374,6 +400,20 @@ front-ends, ONE reducer:
 - **Per-frame reduction:** extract `(center-x, plateW, plateH)` with the SAME `brightness×smoothness` FWHM the
   reference used (the pill lightens+blurs the backdrop → bright + low-texture); align by travel-normalized time
   against the reference table.
+- **[AC-FIX AC3 — the DRIVEN capture harness is NET-NEW infra, not a trivial `?capture=` extension; name the
+  determinism mechanism or the numeric bands do not terminate.]** What is on disk is ONLY the REDUCER
+  (`gesture-frame-recorder.mjs` — `recordFrameSeries` takes pre-captured PNG paths; `frameSchedule` is a schedule
+  helper). The browser-DRIVING half is unbuilt: (a) pointer-inject the tab select; (b) **deterministically STEP
+  the spring frame-by-frame** — a best-effort CDP/Playwright screencast jitters, and the §4.3 per-frame `|Δx|≤24px`
+  bands CANNOT terminate against a jittering clock. The determinism mechanism is **WAAPI seek**: `getAnimations()`
+  on the indicator → set `animation.currentTime = frameSchedule[i]` and capture (WebKit + Chromium both support
+  seeking a running CSS `transition: inset`/WAAPI transform), forcing a repaint of the `backdrop-filter: url()`
+  raster at each seeked frame. (c) **The OPTICS arm is judged at SETTLED over a KNOWN backdrop state** — the
+  KINEMATICS arm tolerates a live backdrop via the backdrop-robust cyan-centroid (Arm 1's method), but the rim
+  luminance probes need a fixed backdrop; you CANNOT freeze the aurora via PRM to fix it because PRM also kills the
+  squish/overshoot you are measuring (§3), so the optics arm captures the settled pill over a pinned/seeded aurora
+  frame while the kinematics arm runs the live gesture. Scope this driven-capture harness as genuinely-new work,
+  not an `?capture=` one-liner.
 
 ### 4.3 — Convergence criteria (numeric — the loop terminates on measurement)
 
@@ -384,10 +424,11 @@ Green requires ALL bands, across T2 + T3 + T4, on BOTH engines, BOTH modes:
 | position (center-x) | max per-frame `|Δx| ≤ 24px` mid-travel, `≤ 12px` at endpoints | Arm 1 caveat: ±20px mid, ±10px endpoint measurement floor + margin |
 | settle | tail within `±4px` of true tab center for `≥5` trailing frames | `settledVerdict` |
 | overshoot | `overshootVerdict` FIRES (monotone arrival REDs); peak positional overshoot `∈ [2%, 9%]` of travel, recovered `≤ 6` frames (~100ms) | brackets snappy ζ=0.74 (3.2%) + the T2 8% witness — a BAND, not a hard 8% match |
-| width (squish) | mid-flight core-width peak `∈ [1.10×, 1.25×]` rest (motion-blur excluded), releasing to `±5%` of rest at settle | Arm 1 §1 honest geometric stretch + release-at-arrival |
+| width (squish) | mid-flight core-width (= along-travel `blob × stretch`) peak `∈ [1.10×, 1.15×]` rest, releasing to `±5%` of rest at settle. **[AC-FIX AC2 — upper bound LOWERED 1.25→1.15 to honor the house composed anti-taffy intent ≤1.14 (proof-liquid-tab.mjs L129); the reference's 1.20× is an ACCEPTED bounded divergence, not the band]** | house anti-taffy fence (composed peak ≤1.14) + release-at-arrival; the reference 1.20× is recorded as divergence, not converged-on |
 | proud (STATIC reservation) | the RESTING static box reservation `= 1.14 ± 0.03 ×` track, and the reservation is CONSTANT (no animated `inset`/`height` — a NEW animated box dimension REDs `no-layout-animation`). Note the rendered block extent DOES vary in flight by the compositor blob `scale` (≤1.068/axis) — that is compositor-safe and expected; the "constant" band probes the STATIC reservation, not the rendered pixels | signature #2 [CRITIQUE-FIX: clarified static-reservation vs blob-scaled render] |
 | timing | departure→2%-settle `∈ [200, 320]ms`; t90 (perceptual arrival) `∈ [110, 200]ms` | Arm 1 §1 derived kinematics |
-| **perf (60fps mid-tier mobile) [CRITIQUE-FIX C2 — was ABSENT]** | on a throttled mobile profile (4×-CPU, the `proof:lighthouse` register), the driven T3 travel drops `≤ 1` frame over its ~19-frame (~317ms) span; no long-task > 50ms during travel; the Chromium `backdrop-filter: url()` refraction over the LIVE aurora is `contain: paint`-bounded. Judged on the Chromium refraction arm (the expensive path; iOS-Safari degrades to the cheap capsule) | the directive's explicit 60fps-mid-mobile ask; Arm 1's MEASURED travel is ~19 frames (NOT the seed's stale "≤4 frames"), so the refraction re-raster runs the whole span — a real cost with NO band as written |
+| **perf (60fps mid-tier mobile) [CRITIQUE-FIX C2 — was ABSENT]** | on a throttled mobile profile (4×-CPU, the `proof:lighthouse` register), the driven T3 travel drops `≤ 1` frame over its ~19-frame (~317ms) span; no long-task > 50ms during travel; the Chromium `backdrop-filter: url()` refraction over the LIVE aurora is `contain: paint`-bounded. Judged on the Chromium refraction arm (the expensive path; iOS-Safari degrades to the cheap capsule). **[AC-FIX AC6 — the failure mode is a DEGRADE DECISION, not iterate-to-green.]** The `backdrop-filter: url()` refraction re-rasterizes a LIVE WebGL aurora for the WHOLE ~19-frame span — the single most expensive thing in the wave; if it cannot hold 60fps on the mid-tier profile the loop does NOT spin, it TERMINATES by falling that profile to the S1-T3 capsule floor (recorded, NF-honest — §4.4), never a faked static loupe. Consider staging the eyeglass DEFAULT over a CSS-EXPRESSIBLE backdrop (which unlocks the cheaper cross-engine T1 clone-loupe) rather than the live aurora, which forces the expensive T2-only path on every consumer (§2 books T1 but §-census stages over the live aurora — a perf tension) | the directive's explicit 60fps-mid-mobile ask; Arm 1's MEASURED travel is ~19 frames (NOT the seed's stale "≤4 frames"), so the refraction re-raster runs the whole span — a real cost |
+| **Safari honest-degrade (AC-FIX AC1 — the load-bearing UNVERIFIED assumption)** | on Safari 26 the pill MUST resolve the honest `.glass-capsule` floating-frost floor (blur + tint + LIGHT rim + specular + lift), NOT a half-applied lens. The whole degrade rests on `@supports (backdrop-filter: url("#glass-refract"))` returning **FALSE** on Safari 26 — but WebKit has historically returned TRUE for `CSS.supports('backdrop-filter','url(#x)')` (parses the syntax, does not render — bug 245510). If TRUE, Safari ENTERS the `.glass-lens` block, its `backdrop-filter: var(--glass-blur-resting) url(#…)` REPLACES the capsule's `--glass-blur-floating` (source-order win, verified), the `url()` leg no-ops → a DIFFERENT blur rung with NO refraction = a masking-adjacent "tried and painted nothing," NOT the promised clean capsule. **The π MUST empirically confirm the Safari arm paints the capsule floating-frost rung** (measure the resolved blur radius / composited frost), and E6 records the result. Belt-and-suspenders: if Safari passes the @supports, add a runtime `CSS.supports`-verified companion or re-point the eyeglass Safari path to explicitly re-assert `--glass-blur-floating` | this is the single runtime fact the entire dual-engine honest-degrade story depends on, and it is asserted (via `proof:lensing` L3, a SOURCE gate) but never verified on a Safari 26 runtime for the NEW tab consumer |
 | optics (settled — NUMERIC thresholds, [CRITIQUE-FIX C6 — Arm 1 supplies the numbers]) | proudness `1.14 ± 0.03×`; **busy-arm** rim: interior B-channel `≥ 190` with an L-dip to `≤ 130` at the outline (Arm 1 §2b busy B 200-206 / L~120); **calm-arm** rim: interior B `≈ 165 ± 15`, light specular-top present, no bloom; dark refractive outline present on the Chromium busy arm ONLY; accent: selected-GLYPH B-channel `≥ +60` over unselected white-glyph baseline WHEN a preset accent is set AND glyph clears 3:1 / label clears 4.5:1 (§1.5 C7); **calm↔busy Δ** judged against the STATIC `--glass-backdrop` bucket (the shipped floor — NOT "the observer produces it"; the live observer path is DEAD on disk, §1.3 C1 — a band gated on a dead mechanism never terminates) | Arm 1 §2b/2d/2f |
 
 ### 4.4 — The loop body (build → capture → reduce → compare → refine)
@@ -435,7 +476,14 @@ composition + the fences, the π proves the paint.
 - **E3** — the proud geometry is a STATIC outset off `--eyeglass-proud` (a **LENGTH**, no px radius literal),
   applied on **BOTH** the JS `inset-block` **AND** the anchor `inset-block-start/-end` longhands (C3 — else
   Safari-26 gets no proud); a NEW animated box dimension REDs (`no-layout-animation` cross-check) + a self-test
-  bite (a proud present on ONLY one of the two position paths REDs).
+  bite (a proud present on ONLY one of the two position paths REDs). **[AC-FIX AC7 — the anchor path HARDCODES the
+  trim literal at TWO breakpoints; the proud override must reach both.]** Verified: the shipped anchor longhands
+  are `calc(anchor(top) + 0.1875rem)` at base (segmented-tabs.css L181-182) AND `calc(anchor(top) + 0.25rem)` at
+  `@640` (L221-222) — a HARDCODED `rem` literal, NOT `var(--bouncy-track-trim)`. So the eyeglass proud must be
+  restated on the anchor longhands at BOTH breakpoints (e.g. `calc(anchor(top) + 0.1875rem - var(--eyeglass-proud))`
+  base and `+ 0.25rem - …` @640), or the wave first threads the trim token into the anchor calc so a single
+  `- var(--eyeglass-proud, 0px)` addend suffices. E3's self-test asserts the proud resolves at the `@640`
+  breakpoint too (a base-only proud that vanishes at ≥640px REDs — the silent-absent-at-desktop class).
 - **E4** — the kinematics read the FROZEN clock (`--tab-indicator-duration = --spring-snappy-duration`); the
   STRETCH cap constant==token ≤ 1.2 AND the BLOB cap constant==token with AREA ≤ 1.14 (per-axis ≤~1.068 — C5,
   distinct caps, NOT a shared [1.0,1.2]); NO new spring/`linear()`/PRESETS re-time + a self-test bite (a planted
@@ -443,9 +491,16 @@ composition + the fences, the π proves the paint.
 - **E5** — the accent is FLOOD+RIM + the CONTRAST-SPLIT ink: the selected **label** clears 4.5:1 (stays
   `--foreground`, no interactive brand-red re-point); the selected **glyph** may tint to `var(--glass-accent)`
   and clears the 3:1 graphics floor (C7 — reproduces the cyan icon honestly, gate-green); `--tab-selected-ink`
-  is the glyph seam; the ambient/attenuation is the STATIC `--glass-backdrop` bucket floor (the live observer is
-  BOOKED, its animated path DEAD on disk — C1, records the honest posture NOT a ≥2-consumer promotion of a dead
-  path) + self-test bites (a saturated-hue LABEL default REDs; a glyph below 3:1 REDs).
+  is the glyph seam. **[AC-FIX AC4 — the glyph tint MUST live on a DESCENDANT svg/glyph selector, NEVER the tab's
+  own `color`.]** `proof:tabs-ios` T5 scans `.segmented-tab[aria-pressed="true"] { color: … }` and pins it to
+  `var(--foreground)`; the glyph (an inline SVG) typically inherits `currentColor` = the tab `color`. Tinting the
+  glyph by writing the tab's `color` would (a) RED T5 and (b) drop the LABEL below AA in lockstep. So
+  `--tab-selected-ink` must be applied on a descendant `.segmented-tab[aria-pressed="true"] svg` (or glyph-child)
+  rule — `color`/`fill: var(--tab-selected-ink, var(--foreground))` — decoupled from the inherited label ink. E5's
+  self-test bite asserts a glyph tint written on the TAB `color` (not a descendant) REDs (T5-respecting), beside
+  the glyph-below-3:1 and saturated-LABEL-default bites. The ambient/attenuation is the STATIC `--glass-backdrop`
+  bucket floor (the live observer is BOOKED, its animated path DEAD on disk — C1, records the honest posture NOT a
+  ≥2-consumer promotion of a dead path).
 - **E6** — the honest-degrade posture recorded (Safari = proud capsule + rim + accent, no faked bend); the T1
   clone-loupe, the chromatic-aberration rim, AND the live ambient-observer wire BOOKED with named successors.
 - + a self-test suite proving each fence detector is not hollow.
@@ -508,6 +563,120 @@ Everything else is a token retune + a class compose. Not a component, not an eng
 
 ---
 
+## CRITIQUE (adversarial, pre-canon)
+
+> A second, hostile pass against the plan + all three research arms + the directive, run against on-disk HEAD
+> (every cited file/line/token/gate-clause verified). The plan already folds a strong self-critique (C1–C11,
+> all confirmed real); this pass attacks what those missed or softened. Findings are `AC*`; each clear fix is
+> applied inline at its site (tagged `[AC-FIX ACn]`) and summarized here. **Verdict: SOUND-WITH-FIXES.** The
+> composition, the no-fork discipline, and the honest-degrade posture are correct and mostly gate-coherent; the
+> defects are two make-or-break VERIFICATION gaps (Safari @supports truth, driven-capture determinism), one
+> under-acknowledged FIDELITY cap (the swell), and four implementation/coherence nits. None is fatal; all have a
+> clear correct answer, applied below.
+
+### Verified-TRUE (the plan's load-bearing claims hold at HEAD)
+- Spring table §0 (snappy 0.48/ζ0.74/+3.2%, dock 0.68/0.64, press 0.20/0.80, bouncy 0.60/0.60) — EXACT vs
+  `springPresets.ts`. Arm 2 correct, Arm 1 stale — the plan resolved it right.
+- The anchor-positioning path is REAL (`.segmented-indicator--anchor`, `inset-block-start: calc(anchor(top) +
+  0.1875rem)`, L174-200) — C3's entire basis is valid; Safari-26 genuinely uses this path.
+- `.glass-lens` (glass-refract.css L172, `@layer components`) is imported AFTER glass.css/`.glass-capsule`
+  (L170, same layer) → source-order-wins the `backdrop-filter` conflict on the `@supports` engine. C8 correct.
+- `.glass-capsule` = `backdrop-filter: var(--glass-blur-floating)` (L64); `.glass-capsule-track` = `--glass-blur-quiet`
+  8px (L85) → C4's signature-#7 track-frost gap is REAL.
+- `proof:tabs-ios` T3 (a dark top inset reading `--foreground` REDs — top edge MUST be light) and T5 (active
+  label pinned `var(--foreground)`) are real and registered; the dead-rim reconcile (§1.3) is sound.
+- `useGlassBackdropLuminance` animated path is GENUINELY DEAD (0/12 docks fired the witness) — C1 correct, the
+  booked-not-claimed posture is the right NF call.
+- The proud-inset is covered by the `size-morph-indicator-booked` allowlist (`props:["width","height","inset"]`,
+  proof-no-layout-animation.mjs L199-203) — a CONSTANT proud addend adds no new animated dimension. Green holds.
+
+### Findings (most-severe first)
+
+**AC1 — Safari `@supports (backdrop-filter: url())` truth is the single UNVERIFIED runtime fact the whole
+honest-degrade rests on. [HIGH]** WebKit has historically returned TRUE for `CSS.supports('backdrop-filter',
+'url(#x)')` (parses syntax, renders nothing — bug 245510). If Safari 26 returns TRUE, the pill ENTERS the
+`.glass-lens` block, its `backdrop-filter: var(--glass-blur-resting) url(#…)` REPLACES the capsule's floating
+frost (source-order, verified), the `url()` no-ops → a wrong blur rung + NO refraction = a masking-adjacent
+"tried, painted nothing," NOT the promised clean capsule. `proof:lensing` L3 asserts the gate in SOURCE, never on
+a Safari runtime for the NEW tab consumer. FIX applied: §4.3 gains a Safari honest-degrade band (the π must
+measure the resolved Safari frost rung); E6 records it; belt-and-suspenders re-assert `--glass-blur-floating` on
+the eyeglass Safari path if the @supports leaks true.
+
+**AC2 — the swell cap conflict: the house anti-taffy INTENT (composed `blob × stretch` ≤ 1.14) is BELOW the
+reference's ~1.20× core-width; C5's "1.28 ceiling" is wrong and the §4.3 band's 1.25 upper bound exceeds the
+house intent. [HIGH]** proof-liquid-tab.mjs L129 records the composed anti-taffy peak ≤ 1.14 (the SAME quantity
+Arm 1 calls "core-width"; Arm 1 §1 measured 348/290 = 1.20 as the honest geometric figure). So a FAITHFUL swell
+(1.20) exceeds the house fence, and C5's product-of-maxes (1.28) both overshoots the plan's own band AND the
+house intent. Compounding: the enforcer `tab-ios-capsule.spec.ts` is a **PHANTOM at HEAD** (verified absent — the
+LT2 L129 comment cites a dead spec), so today nothing reds a 1.20 swell, but the stated intent is 1.14 and a
+future spec landing it would red. FIX applied: C5 corrected; §4.3 width upper bound lowered 1.25→1.15; the
+reference 1.20× recorded as an ACCEPTED bounded divergence (the house swells tighter than iOS on purpose); the
+phantom-spec citation flagged for authoring-or-correction.
+
+**AC3 — the DRIVEN deterministic 60fps capture harness is net-new and under-scoped; the numeric bands do not
+terminate without it. [MED-HIGH]** On disk is ONLY the reducer (`recordFrameSeries` consumes pre-captured PNGs)
++ a schedule helper. The browser-driving half (pointer-inject, deterministic per-frame spring STEP, dual-engine
+screencast, forced `backdrop-filter` repaint per frame) is unbuilt; the plan frames it as an `?capture=`
+extension. A best-effort screencast jitters → the `|Δx|≤24px` per-frame bands never cleanly terminate. FIX
+applied: §4.2 names the determinism mechanism (WAAPI `getAnimations().currentTime` seek, cross-engine) + states
+the optics arm is judged at SETTLED over a KNOWN backdrop (the kinematics arm tolerates a live backdrop via the
+robust centroid; you cannot freeze the aurora via PRM without killing the motion you measure) + scopes it as
+genuinely-new infra.
+
+**AC4 — C7's selected-glyph tint must live on a DESCENDANT svg selector, never the tab's own `color` (T5 pins it).
+[MEDIUM]** `proof:tabs-ios` T5 scans `.segmented-tab[aria-pressed="true"] { color }` = `--foreground`; the glyph
+inherits `currentColor`. Tinting via the tab `color` REDs T5 AND drops the label AA. FIX applied: E5 requires
+`--tab-selected-ink` on `.segmented-tab[aria-pressed="true"] svg` (decoupled from the label ink) + a self-test
+bite that a tab-`color` glyph tint REDs.
+
+**AC5 — the nested backdrop-filter compose (strong-frost track + `url()` pill-lens) is a known-finicky path,
+asserted not verified. [MEDIUM]** Nested `backdrop-filter` × `contain: paint` × the anchored-indicator
+stacking-context (the L254-257 anti-sever guard) is exactly where Chromium regresses. FIX applied: §1.6 adds a
+build-time LIVE verification (the pill lenses the FROSTED track output; the added track backdrop root does not
+sever the anchor glide).
+
+**AC6 — the perf band's failure mode is a DEGRADE DECISION, not iterate-to-green; frame it so the loop
+terminates. [MEDIUM]** `backdrop-filter: url()` re-rasterizing a LIVE WebGL aurora for the whole ~19-frame span on
+a 4×-throttled mobile may be genuinely unachievable at 60fps; the honest outcome is falling that profile to the
+capsule floor, not spinning. Also: staging the eyeglass DEFAULT over the live aurora GUARANTEES the expensive
+T2-only path and forecloses the cheaper cross-engine T1 clone-loupe (which §2 books but the census stages away
+from). FIX applied: §4.3 perf row + §4.4 state the degrade-decision termination + flag the live-aurora-vs-T1
+staging tension.
+
+**AC7 — the anchor proud override must reach BOTH breakpoints; the anchor inset hardcodes the trim literal.
+[LOW-MED]** The shipped anchor longhands hardcode `+0.1875rem` (base) and `+0.25rem` (@640), NOT
+`var(--bouncy-track-trim)`, so a base-only eyeglass override silently vanishes at ≥640px. FIX applied: E3 restates
+the proud at both breakpoints (or threads the trim token first) + a self-test bite for the @640 case.
+
+**AC8 — the RATIFIED weighty-snappy reads visibly SLOWER than THIS reference; state the perceptual consequence
+loud, since the directive says "perfect the effect." [LOW]** §0 ratifies snappy (0.48s) over the reference's
+measured ~0.32–0.40s (≈15–20% quicker) as the house iOS-27 identity. That is a defensible house choice, but it
+means a reviewer comparing to the Find My video will see a deliberately heavier glide — not a bug, an identity
+divergence. The precedence rule (on-disk HEAD > Arm 1) is what ranks the measured reference LAST on the two axes
+where house-identity and fidelity conflict (spring timing AC8, swell cap AC2). Recorded as accepted; the §4.4
+timing-residual clause already books it — this finding just asks the convergence timing-band rationale to name
+the perceptual consequence so the divergence is not read as a miss.
+
+### Cross-check on the 7 attack axes
+1. **Fidelity:** honest — 5 of 8 signatures land faithfully; the swell (AC2), the sub-AA cyan LABEL (accepted
+   divergence, §1.5), the LIVE calm↔busy dynamic (dead observer → static bucket, C1), and the chromatic-aberration
+   rim (booked) are all acknowledged gaps. AC2 was the one under-acknowledged, now fixed.
+2. **Safari-26 truth:** anchor / plus-lighter / mask-image / color-mix(oklab) / @property all real on 26; the ONE
+   wishful assumption is the @supports-returns-false degrade (AC1), now flagged for empirical proof.
+3. **No-fork:** clean — composition + a small genuinely-new delta; the `.glass-lens`/`.glass-capsule` co-compose
+   is a cascade compose (verified source-order), not a fork.
+4. **NO-MASKING-FALLBACK:** correct in intent; the ONE hole is AC1 (a leaked @supports would produce a
+   masking-adjacent Safari paint) — closed by the added verification.
+5. **Perf:** the real risk (refraction over live aurora, ~19 frames, mobile) is now a bounded degrade-decision
+   (AC6), not an open-ended target.
+6. **Iteration loop:** numeric + terminating ONCE the determinism mechanism (AC3) and the corrected swell band
+   (AC2) land; without them the bands were unsatisfiable/jittering.
+7. **Gate coherence:** tabs-std / tabs-ios (T3/T4/T5) / lensing (L1/L3/L4/L6) / liquid-tab (LT2) /
+   no-layout-animation / glass-accent / register-ios / glass-cal / no-masking-fallback all stay green with the
+   fixes — the only latent trap was AC4 (glyph vs T5), now closed.
+
+---
+
 ## §8 — THE FOLD BLOCK (born-RED cursor row — the orchestrator folds it; DO NOT edit EXECUTION-PROGRESS.md here)
 
 > Ready-to-lift row. The engine IMPLEMENTS the wave; the orchestrator OWNS the cursor edit. This block lives in
@@ -519,15 +688,22 @@ Everything else is a token retune + a class compose. Not a component, not an eng
 degrade) over a stronger-frosted STAGE track (`--eyeglass-track-blur`, signature #7), the STATIC proud loupe
 (`--eyeglass-proud` LENGTH, 1.14× the track, on BOTH the JS `inset-block` AND the anchor `inset-*` longhands),
 the ratified snappy glide (0.48s/ζ0.74, frozen clock) with the reference-retuned SIZE channels
-(`--tab-indicator-max-stretch` ≤1.2 / `-blob-max` area ≤1.14 to the bar60/ ladder), the FLOOD+RIM accent (label
-clears 4.5:1 at `--foreground`; the glyph clears 3:1 tinting to `--glass-accent`; calm↔busy via the STATIC
-`--glass-backdrop` bucket — the LIVE observer wire is BOOKED, its animated path DEAD on disk), PRM =
-seat-motion-keep-optics. Gate: proof:eyeglass-tabs (E1-E6 + self-test bites). π: the DRIVEN 60fps frame-series
-(gesture-frame-recorder.mjs, Chrome CDP + Playwright-webkit front-ends) judged against bar60/ on
-Chromium-refraction + Safari-honest-capsule, both modes, to the §4.3 numeric convergence bands INCLUDING the
-mid-tier-mobile 60fps/frame-budget band (born-RED at HEAD → GREEN at convergence). Keeps green: tabs-std,
-tabs-ios (T1/T3/T4/T5), lensing (L1/L3/L4/L6), liquid-tab (LT2 blob-area ≤1.14), no-layout-animation,
-glass-accent, register-ios, glass-cal, no-masking-fallback. Booked successors: BG.W-EYEGLASS-DOCK-KIN (dock
-rail), the T1 clone-loupe (cross-engine over a duplicable backdrop), the chromatic-aberration rim (W-LENSING
-color-split), the LIVE ambient-observer wire (needs the field-canvas handle + a fired writer-witness). |
+(`--tab-indicator-max-stretch` ≤1.2 / `-blob-max` area ≤1.14; the COMPOSED along-travel swell honors the house
+anti-taffy intent ≈1.14× — the reference's ~1.20× is an accepted bounded divergence, AC2), the FLOOD+RIM accent
+(label clears 4.5:1 at `--foreground`; the glyph clears 3:1 tinting to `--glass-accent` on a DESCENDANT svg
+selector, never the tab `color`, AC4; calm↔busy via the STATIC `--glass-backdrop` bucket — the LIVE observer wire
+is BOOKED, its animated path DEAD on disk), PRM = seat-motion-keep-optics. Gate: proof:eyeglass-tabs (E1-E6 +
+self-test bites). π: the DRIVEN 60fps frame-series (gesture-frame-recorder.mjs REDUCER + a NET-NEW WAAPI-seek
+driving harness, AC3; Chrome CDP + Playwright-webkit front-ends) judged against bar60/ on Chromium-refraction +
+Safari-honest-capsule, both modes, to the §4.3 numeric convergence bands INCLUDING (a) the mid-tier-mobile
+60fps/frame-budget band whose FAILURE MODE is a degrade-to-capsule decision not iterate-to-green (AC6) and (b) the
+Safari honest-degrade band that EMPIRICALLY confirms the @supports gate resolves the capsule frost, not a
+half-applied lens (AC1). TWO build-time verification prerequisites (NOT source assertions): the Safari @supports
+truth (AC1) + the nested track-frost×pill-lens compose + anchor-glide-survives-`contain` (AC5). Keeps green:
+tabs-std, tabs-ios (T1/T3/T4/T5 — glyph tint on a descendant selector, AC4), lensing (L1/L3/L4/L6), liquid-tab
+(LT2 blob-area ≤1.14), no-layout-animation, glass-accent, register-ios, glass-cal, no-masking-fallback. Booked
+successors: BG.W-EYEGLASS-DOCK-KIN (dock rail), the T1 clone-loupe (cross-engine over a duplicable backdrop — and
+the recommended DEFAULT stage if perf forces off the live-aurora T2 path, AC6), the chromatic-aberration rim
+(W-LENSING color-split), the LIVE ambient-observer wire (needs the field-canvas handle + a fired writer-witness),
+and authoring/correcting the phantom `tab-ios-capsule.spec.ts` composed-peak enforcer (AC2). |
 ```
