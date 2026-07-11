@@ -1,5 +1,16 @@
 # The Constellation Structure Standard — TRANCHE PLAN (band/wave DAG)
 
+> **LINEAGE (USER-RATIFIED 2026-07-11): this tranche IS the BH structure mandate, reformulated and hardened.**
+> The user's commissioning directive was "further perfect BH"; BH's own B2 (alias-codemod, leaf-verify) and B3
+> (chassis-colocation) bands began exactly this arc, and this plan completes it — the flatten, the recursive
+> colocation law, CSS colocation, the proportion grammar, the constellation standard. It executes under the
+> NEXT letter (**BI**) for one mechanical reason only: **BH closes at the joint BG+BH 5.0.0 cut** (its close
+> battery + FINAL are part of that cut), and the closed-tranche ledger discipline forbids re-opening a closed
+> letter (the BE/BF "closed — do not re-open" precedent). BI is therefore chartered as **BH-STRUCTURE, the
+> successor cohort**: same mandate, its own 5.1.0 close. If the owner prefers the work INSIDE BH proper, the
+> only coherent form is folding S0–S6 pre-cut — delaying 5.0.0 by the full 20-wave restructure — which this
+> plan recommends against (the flatten is export-surface-neutral but the cut is hardened and hours away).
+>
 > The executable Plan phase against the CANONICAL `STRUCTURE-SPEC.md` (post-round-6) + the
 > `ORCHESTRATOR-ADJUDICATION.md` (settled law). Authored per the adjudication's ruling 3 ("the Plan phase is
 > commissioned now against the canonical spec"). This doc writes ZERO `src/`/`demo/`/`scripts/`/`styles/`/
