@@ -25,7 +25,31 @@
 // disjoint complement on the same swept corpus; the two share the catch-set + the
 // audited layout-reclaim allowlist, split which-arm owns it (no double-gate).
 //
-// FIVE machine clauses (each with an inline self-test bite proven every run):
+// SEVEN machine clauses (each with an inline self-test bite proven every run):
+//   A9 — THE ONE-CLOCK LOCK (BG.W-ANIMATION-CONGRUENCE / the WS12 A9 arm). Every
+//        `SPRING_DEFAULTS_ALLOWLIST` entry is VALUE-CHECKED against its LIVE source:
+//        an entry whose source now READS the table (`springPreset(name)`) carries no
+//        hand-inlined pair, so it is DEAD and must be REMOVED from the allowlist (a
+//        table-reader cannot drift — it is not a sanctioned literal); an entry whose
+//        `pair` disagrees with the source literal is STALE doc-rot. This SUPERSEDES
+//        the inline documentary `pair` trust — the allowlist is now self-verifying
+//        against `springPresets.ts` + the per-primitive constant sources, the
+//        `proof:precept-current` doc-freshness discipline applied to the spring
+//        register (born-RED on HEAD: useSpringPress/DOCK_SPRING now read the table,
+//        DRAWER_SNAP drifted 0.4/0.82 → live 0.5/0.74).
+//   CC — THE CHANNEL-COUPLING ARM (the IOS27-MOTION-TRUTH §4.2 clause). One gesture
+//        derives ALL its channels from ONE clock family — the source-structural half
+//        of the frame-by-frame truth read (the paint judge owns the FEEL/screencast):
+//        (CC1) the overlay band's EXIT clock ≤ its ENTRANCE clock per surface (dialog
+//        panel `.glass-reveal` + scrim `sheet-animate`: a fade-out longer than its
+//        fade-in reds — an exit must never outlast its entrance); the panel + scrim
+//        each reference the coupled clock tokens at the shared launch (not a scrim
+//        decoupled onto a standalone long clock the panel never shares); (CC2) the
+//        drawer is a SINGLE scalar-WRITER — every detent transition (gesture-release ·
+//        open · programmatic · external activeSnapPoint) routes through the ONE
+//        `--glass-drawer-t`/`--stage-t` writer + the ONE `spring.target` re-seat, and
+//        NO gesture-driven surface carries a fixed `transition: backdrop-filter` blur
+//        tween (the gesture drives blur per-frame; a decoupled fixed tween reds).
 //   M1 — SINGLE SOURCE. `SPRING_PRESETS` (springPresets.ts) is the ONLY hand-
 //        authored `(response, ζ)` register TABLE; `regen-spring-tokens.mjs` +
 //        `curves.ts` both import it (the no-second-authority assert). A planted
@@ -90,6 +114,13 @@ const CURVES_TS = "src/composables/motion/curves.ts";
 const REGEN_MJS = "scripts/regen-spring-tokens.mjs";
 const MOTION_CANON = "docs/precepts/motion-canon.md";
 const ASKS_AND_CONSUMES = "docs/tranches/BC/coordination/asks-and-consumes.md";
+// ── A9 / CC source anchors (the live spring sources + the coupled-facility seams) ──
+const SCHEME_MOTION_CSS = "src/styles/tokens/scheme-motion.css";
+const SCHEME_SPRING_CSS = "src/styles/tokens/scheme-spring.css";
+const GLASS_REVEAL_CSS = "src/styles/glass/reveal.css";
+const SHEET_ANIMATE_CSS = "src/styles/utilities/btn.css";
+const DRAWER_SNAP_TS = "src/components/ui/drawer/composables/useDrawerSnap.ts";
+const DRAWER_LOOK_CSS = "src/styles/drawer.css";
 
 // The viz family — the one un-clocked island (BC.W-VIZ-CHOREOGRAPHY's positive
 // scope). M4 asserts none of these OWN a kf rAF (RAFPlayback.play/.loop/.drive).
@@ -126,26 +157,36 @@ const OFF_SPINE_FILES = new Set(OFF_SPINE_ALLOWLIST.map((e) => e.file));
 //    Each is a single documented per-primitive default pair, derived/declared at
 //    the primitive's own seam (NOT a hand-kept register table). motion-canon.md §P7
 //    records them; M5 cross-checks. A NEW hand-inlined register TABLE is the M1 RED.
+//
+// A9 note (BG.W-ANIMATION-CONGRUENCE): each entry carries a `source` anchor so the
+// A9 arm VALUE-CHECKS the `pair` against the live literal (a `symbol` locates the
+// declaration; an optional `pairRe` reads the pair from the declaration window). An
+// entry whose source READS THE TABLE (`springPreset(name)`) is DEAD — it carries no
+// hand-inlined literal to sanction, so it is REMOVED from this allowlist (a
+// table-reader cannot drift). The prior `useSpringPress`/`DOCK_SPRING` entries were
+// removed on that basis (both now read `springPreset("press")`/`springPreset("dock")`
+// — the one-spring-family single source); `DRAWER_SNAP` was corrected 0.4/0.82 →
+// live 0.5/0.74 (drawer/constants.ts). The A9 arm reds if any remaining entry is
+// stale or table-reading.
 export const SPRING_DEFAULTS_ALLOWLIST = [
     {
         name: "useSpring",
         pair: [0.5, 0.86],
+        source: {
+            file: "src/composables/motion/useSpring.ts",
+            pairRe:
+                /options\.response\s*\?\?\s*([0-9.]+)[\s\S]{0,120}?options\.dampingFraction\s*\?\?\s*([0-9.]+)/,
+        },
         reason: "the base SpringProgress primitive default (the SETTLE register's response/ζ) — the floor every useSpring caller may override.",
     },
     {
-        name: "useSpringPress",
-        pair: [0.25, 0.7],
-        reason: "the press-squish primitive default — a crisp short-response press settle (W-PRESS-UNIFY).",
-    },
-    {
-        name: "DOCK_SPRING",
-        pair: [0.32, 0.7],
-        reason: "the dock expand/collapse morph register (dock/constants.ts) — value.js-fenced, kf is the named 2nd consumer; BC.W-SPRING-EASE owns its retune.",
-    },
-    {
         name: "DRAWER_SNAP",
-        pair: [0.4, 0.82],
-        reason: "the drawer detent-snap register (drawer/constants.ts) — the per-primitive snap settle.",
+        pair: [0.5, 0.74],
+        source: {
+            file: "src/components/ui/drawer/constants.ts",
+            symbol: "DRAWER_SNAP",
+        },
+        reason: "the drawer detent-snap register (drawer/constants.ts) — the per-primitive snap settle (off-table {0.5,0.74}; the drawer's OWN settle clock).",
     },
     // BG.W-SPRING-REGISTER-TIDY — the 3 ScrubberTimeline per-leg spring defaults MOVED
     // OFF the global SPRING_PRESETS table (table→6, presets-in-consumers) into a
@@ -155,16 +196,28 @@ export const SPRING_DEFAULTS_ALLOWLIST = [
     {
         name: "TIMELINE_HEAD",
         pair: [0.34, 0.74],
+        source: {
+            file: "src/components/custom/timeline/ScrubberTimeline.vue",
+            symbol: "HEAD_SPRING",
+        },
         reason: "the ScrubberTimeline warm-glass lozenge head-travel default (ScrubberTimeline.vue) — a per-surface JS-only register; the fast head clock the fill trails.",
     },
     {
         name: "TIMELINE_FILL",
         pair: [0.46, 0.82],
+        source: {
+            file: "src/components/custom/timeline/ScrubberTimeline.vue",
+            symbol: "FILL_SPRING",
+        },
         reason: "the ScrubberTimeline lane-fill trailing default (ScrubberTimeline.vue) — a slower clock than the head so the fill TRAILS the bead (liquid trailing).",
     },
     {
         name: "TIMELINE_PRESS",
         pair: [0.22, 0.7],
+        source: {
+            file: "src/components/custom/timeline/ScrubberTimeline.vue",
+            symbol: "PRESS_SPRING",
+        },
         reason: "the ScrubberTimeline grab-anticipation press default (ScrubberTimeline.vue) — the pointerdown squash feeding the --scale-press dip.",
     },
 ];
@@ -739,9 +792,160 @@ function clockFenceCorpus() {
     return { css, vue, ts };
 }
 
+// ── A9 — the ONE-CLOCK LOCK (BG.W-ANIMATION-CONGRUENCE) ──────────────────────────
+// Value-check each SPRING_DEFAULTS_ALLOWLIST entry against its live source. A source
+// that READS the table (springPreset(...)) is DEAD (no literal to sanction — remove
+// it); a source literal that disagrees with the `pair` is STALE doc-rot. `raw` is the
+// file text (null if absent). Returns a violation reason string, or null.
+export function checkSpringDefaultLive(entry, raw) {
+    const src = entry.source;
+    if (!src) return "no source anchor — cannot value-check the pair (add source: { file, symbol|pairRe })";
+    if (raw == null) return `source file ${src.file} not found`;
+    const stripped = stripAllComments(raw);
+    let win = stripped;
+    if (src.symbol) {
+        const decl = new RegExp(`\\b${src.symbol}\\b\\s*[:=]`).exec(stripped);
+        if (!decl) return `symbol '${src.symbol}' not found in ${src.file} (the source moved/renamed)`;
+        win = stripped.slice(decl.index, decl.index + 240);
+    }
+    if (/springPreset\s*\(/.test(win)) {
+        return `${src.file}${src.symbol ? ` (${src.symbol})` : ""} READS the table via springPreset() — a table-reader carries no hand-inlined pair, so it cannot drift. REMOVE it from SPRING_DEFAULTS_ALLOWLIST (dead entry)`;
+    }
+    const re = src.pairRe ?? /response:\s*([0-9.]+)[\s\S]{0,80}?dampingFraction:\s*([0-9.]+)/;
+    const m = re.exec(win);
+    if (!m) return `no (response, ζ) literal at ${src.file}${src.symbol ? ` (${src.symbol})` : ""} — cannot verify the pair`;
+    const live = [parseFloat(m[1]), parseFloat(m[2])];
+    if (live[0] !== entry.pair[0] || live[1] !== entry.pair[1]) {
+        return `STALE — allowlist pair [${entry.pair.join(", ")}] disagrees with the live literal [${live.join(", ")}] at ${src.file}${src.symbol ? ` (${src.symbol})` : ""} (doc-rot; reconcile the pair to live)`;
+    }
+    return null;
+}
+
+export function detectSpringDefaultsLive(read) {
+    const violations = [];
+    const facts = { checked: [] };
+    for (const entry of SPRING_DEFAULTS_ALLOWLIST) {
+        const raw = entry.source ? read(entry.source.file) : null;
+        const reason = checkSpringDefaultLive(entry, raw);
+        if (reason) violations.push(`SPRING_DEFAULTS_ALLOWLIST '${entry.name}': ${reason} (A9).`);
+        else facts.checked.push(entry.name);
+    }
+    return { violations, facts };
+}
+
+// ── CC — the CHANNEL-COUPLING arm (IOS27-MOTION-TRUTH §4.2) ──────────────────────
+// One gesture derives ALL its channels from ONE clock family. The source-structural
+// half (the paint judge owns the FEEL/screencast). Three pure predicates the detector
+// AND the self-test share (DRY, testable).
+export function readDurationSeconds(src, name) {
+    if (src == null) return null;
+    const m = new RegExp(`${name}\\s*:\\s*([0-9.]+)(m?s)\\b`).exec(src);
+    if (!m) return null;
+    const v = parseFloat(m[1]);
+    return m[2] === "ms" ? v / 1000 : v;
+}
+export function countScalarWrites(src, prop) {
+    return (src.match(new RegExp(`setProperty\\(\\s*["']${prop}["']`, "g")) || []).length;
+}
+export function hasFixedBackdropTween(src) {
+    return /transition(?:-property)?\s*:\s*[^;}]*backdrop-filter/.test(src);
+}
+
+export function detectChannelCoupling(read) {
+    const violations = [];
+    const facts = {};
+
+    // CC1 — overlay exit ≤ entrance (dialog panel .glass-reveal + scrim sheet-animate).
+    // The panel enters on --spring-snappy-duration + exits on --duration-fast; the
+    // scrim enters on --duration-panel + exits on --duration-fast. An exit clock that
+    // OUTLASTS its entrance reds (the cc-dismiss-longer / decoupled-scrim defect, 2.5).
+    const motionCss = stripCssComments(read(SCHEME_MOTION_CSS) ?? "");
+    const springCss = stripCssComments(read(SCHEME_SPRING_CSS) ?? "");
+    const fast = readDurationSeconds(motionCss, "--duration-fast");
+    const panel = readDurationSeconds(motionCss, "--duration-panel");
+    const snappyDur = readDurationSeconds(springCss, "--spring-snappy-duration");
+    facts.cc1 = { fast, panel, snappyDur };
+    if (fast == null || panel == null || snappyDur == null) {
+        violations.push(
+            `CC1: could not read the overlay clocks (--duration-fast=${fast}, --duration-panel=${panel}, --spring-snappy-duration=${snappyDur}) — the coupled-clock value-check is blind (channel-coupling).`,
+        );
+    } else {
+        if (fast > snappyDur) {
+            violations.push(
+                `CC1: the dialog panel exit (--duration-fast ${fast}s) OUTLASTS its entrance (--spring-snappy-duration ${snappyDur}s) — an exit must never outlast its entrance (channel-coupling).`,
+            );
+        }
+        if (fast > panel) {
+            violations.push(
+                `CC1: the dialog scrim exit (--duration-fast ${fast}s) OUTLASTS its entrance (--duration-panel ${panel}s) — an exit must never outlast its entrance (channel-coupling).`,
+            );
+        }
+    }
+    // CC1 structural presence — the panel + scrim reference the coupled clocks (so the
+    // value-check binds to the real coupled surfaces, not floating token magnitudes).
+    const revealCss = stripCssComments(read(GLASS_REVEAL_CSS) ?? "");
+    const sheetCss = stripCssComments(read(SHEET_ANIMATE_CSS) ?? "");
+    facts.cc1.panelReadsSnappy = /--spring-snappy-duration/.test(revealCss);
+    facts.cc1.panelExitFast = /glass-reveal-out\s+var\(--duration-fast\)/.test(revealCss);
+    facts.cc1.scrimReadsPanel = /duration-\[var\(--duration-panel\)\]/.test(sheetCss);
+    facts.cc1.scrimExitFast = /duration-\[var\(--duration-fast\)\]/.test(sheetCss);
+    if (!facts.cc1.panelReadsSnappy || !facts.cc1.panelExitFast) {
+        violations.push(
+            `CC1: the dialog panel (.glass-reveal, ${GLASS_REVEAL_CSS}) no longer couples enter=--spring-snappy-duration + exit=glass-reveal-out var(--duration-fast) — the coupled-clock value-check is unanchored (channel-coupling).`,
+        );
+    }
+    if (!facts.cc1.scrimReadsPanel || !facts.cc1.scrimExitFast) {
+        violations.push(
+            `CC1: the dialog scrim (sheet-animate, ${SHEET_ANIMATE_CSS}) no longer couples open=--duration-panel + close=--duration-fast — the coupled-clock value-check is unanchored (channel-coupling).`,
+        );
+    }
+
+    // CC2 — the drawer is a SINGLE scalar-writer. Every detent transition (gesture ·
+    // open · programmatic · external activeSnapPoint) routes through the ONE
+    // writeScalar (the sole site writing --glass-drawer-t/--stage-t) + the ONE
+    // spring.target re-seat, so sheet+scrim+page-recede stay ON ONE writer (D1). A
+    // forked scalar writer decouples the channels.
+    const drawerTs = stripAllComments(read(DRAWER_SNAP_TS) ?? "");
+    const drawerT = countScalarWrites(drawerTs, "--glass-drawer-t");
+    const stageT = countScalarWrites(drawerTs, "--stage-t");
+    const hasReseat = /\.target\s*=/.test(drawerTs);
+    facts.cc2 = { drawerTWrites: drawerT, stageTWrites: stageT, hasReseat };
+    if (drawerT !== 1 || stageT !== 1) {
+        violations.push(
+            `CC2: the drawer scalar is NOT single-writer — ${DRAWER_SNAP_TS} writes --glass-drawer-t ${drawerT}× and --stage-t ${stageT}× (expect exactly 1 each, inside the ONE writeScalar). A forked writer decouples the sheet/scrim/page channels (channel-coupling).`,
+        );
+    }
+    if (!hasReseat) {
+        violations.push(
+            `CC2: the drawer detent re-seat (spring.target = …) is absent in ${DRAWER_SNAP_TS} — every detent transition must route through the ONE spring re-seat (channel-coupling).`,
+        );
+    }
+    // CC2b — no gesture-driven surface carries a fixed `transition: backdrop-filter`
+    // blur tween (the drawer gesture drives blur per-frame off the scalar; a fixed
+    // tween where a gesture drives is the "fixed blur tween" RED).
+    const drawerCss = stripCssComments(read(DRAWER_LOOK_CSS) ?? "");
+    const fixedBlur = hasFixedBackdropTween(drawerCss);
+    facts.cc2.noFixedBlurTween = !fixedBlur;
+    if (fixedBlur) {
+        violations.push(
+            `CC2: ${DRAWER_LOOK_CSS} declares a fixed \`transition: backdrop-filter\` — the drawer gesture drives blur per-frame off --glass-drawer-t; a decoupled fixed blur tween reds (channel-coupling).`,
+        );
+    }
+
+    return { violations, facts };
+}
+
 export function detectAll(read) {
     const violations = [];
     const facts = {};
+
+    const a9 = detectSpringDefaultsLive(read);
+    facts.a9 = a9.facts;
+    violations.push(...a9.violations);
+
+    const cc = detectChannelCoupling(read);
+    facts.cc = cc.facts;
+    violations.push(...cc.violations);
 
     const m1 = detectSingleSource(read);
     facts.m1 = m1.facts;
@@ -850,6 +1054,37 @@ function selfTest() {
         if (RAFPLAYBACK_OWN_RE.test(stripAllComments(fed))) failures.push("self-test M4: a tick(dt) feed was misread as owning a kf rAF (M4 false-positive)");
     }
 
+    // A9 bite — a table-reading source reds (DEAD), a stale literal reds, a correct
+    // literal passes (the doc-rot detector is not hollow).
+    {
+        const e = { name: "SELFTEST", pair: [0.5, 0.74], source: { file: "f.ts", symbol: "DRAWER_SNAP" } };
+        const dead = checkSpringDefaultLive(e, `export const DRAWER_SNAP = springPreset("smooth");`);
+        if (!dead || !/READS the table/.test(dead)) failures.push("self-test A9: a table-reading (springPreset) source did NOT flag as a DEAD entry (A9 dead-mute)");
+        const stale = checkSpringDefaultLive(e, `export const DRAWER_SNAP = { response: 0.9, dampingFraction: 0.9 };`);
+        if (!stale || !/STALE/.test(stale)) failures.push("self-test A9: a stale (0.9,0.9)-vs-(0.5,0.74) literal did NOT flag STALE (A9 stale-mute)");
+        const ok = checkSpringDefaultLive(e, `export const DRAWER_SNAP = { response: 0.5, dampingFraction: 0.74 };`);
+        if (ok) failures.push(`self-test A9: a correct (0.5,0.74) literal false-flagged (${ok})`);
+    }
+
+    // CC bite — the three coupling predicates each bite a planted defect + never
+    // false-flag the honest form.
+    {
+        if (readDurationSeconds("  --duration-fast: 200ms;", "--duration-fast") !== 0.2) failures.push("self-test CC1: readDurationSeconds(ms) did not resolve 200ms → 0.2s");
+        if (readDurationSeconds("  --duration-panel: 0.55s;", "--duration-panel") !== 0.55) failures.push("self-test CC1: readDurationSeconds(s) did not resolve 0.55s");
+        // exit ≤ entrance: a planted exit>entrance is the RED, the honest form passes.
+        const exitOutlasts = (exit, enter) => exit > enter;
+        if (!exitOutlasts(0.6, 0.4)) failures.push("self-test CC1: a planted exit(0.6)>entrance(0.4) did NOT flag");
+        if (exitOutlasts(0.2, 0.4)) failures.push("self-test CC1: the honest exit(0.2)≤entrance(0.4) false-flagged");
+        // single-writer: a forked writer reds; the single writer passes.
+        const forked = countScalarWrites(`el.style.setProperty("--glass-drawer-t", a); other.setProperty('--glass-drawer-t', b);`, "--glass-drawer-t");
+        if (forked !== 2) failures.push(`self-test CC2: a forked --glass-drawer-t writer was not counted (got ${forked}, expected 2)`);
+        const single = countScalarWrites(`el.style.setProperty("--glass-drawer-t", a);`, "--glass-drawer-t");
+        if (single !== 1) failures.push(`self-test CC2: a single writer miscounted (got ${single}, expected 1)`);
+        // fixed blur tween: a `transition: backdrop-filter` reds; an opacity tween does not.
+        if (!hasFixedBackdropTween("transition: backdrop-filter 0.4s ease;")) failures.push("self-test CC2: a fixed `transition: backdrop-filter` was not detected");
+        if (hasFixedBackdropTween("transition: opacity 0.2s ease;")) failures.push("self-test CC2: an opacity tween false-flagged as a backdrop-filter tween");
+    }
+
     return failures;
 }
 
@@ -881,6 +1116,8 @@ function run() {
     });
 
     console.log("proof:motion-one-clock — keyframes.js is the ONE source + clock (BC.W-MOTION-ONE-CLOCK)");
+    console.log(`  A9 one-clock lock      : ${facts.a9.checked.length} spring defaults value-checked vs live source ✓`);
+    console.log(`  CC channel-coupling    : overlay exit≤entrance (fast ${facts.cc.cc1.fast}s ≤ snappy ${facts.cc.cc1.snappyDur}s / panel ${facts.cc.cc1.panel}s), drawer single-writer (${facts.cc.cc2.drawerTWrites}×--glass-drawer-t / ${facts.cc.cc2.stageTWrites}×--stage-t), no fixed blur-tween ${facts.cc.cc2.noFixedBlurTween ? "✓" : "✗"}`);
     console.log(`  M1 single source       : canonical rows ${facts.m1.canonicalRows}, second tables ${facts.m1.secondTables.length}, regen+curves import ${facts.m1.regenImportsPresets && facts.m1.curvesImportsPresets ? "yes ✓" : "NO ✗"}`);
     console.log(`  M2 off-spine seams     : ${facts.m2.prongA.length + facts.m2.prongB.length} (sanctioned ${OFF_SPINE_ALLOWLIST.length}), files scanned ${facts.m2.filesScanned}`);
     console.log(`  M3 clock fence         : ${facts.m3.clockForks} forks over ${facts.m3.corpusFilesScanned} corpus files; pending bridges ${facts.m3.pendingBridges.length}`);

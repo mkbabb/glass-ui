@@ -233,15 +233,16 @@ for (const scheme of SCHEMES) {
 test("CARD :pressable — a pressable card drives a reciprocal scale + the --card-press-t drive", async ({
     page,
 }) => {
-    // The pressable-card demo home (the W-PRESS-UNIFY story). If absent at HEAD, the
-    // booked story is the named successor; the source gate + the Button arm carry the bar.
-    await page.goto("/containers/cards");
+    // The pressable-card demo home (the BG.W-ANIMATION-CONGRUENCE story — the
+    // `:pressable` card π landed; the skip-guard is retained as a served-app sentinel,
+    // NOT the HEAD state — the story exists, so this test RUNS).
+    await page.goto("/containers/card-pressable");
     await page.waitForLoadState("networkidle");
     await setScheme(page, "light");
 
     const card = page.locator('[data-slot="card"][data-pressable]').first();
     if ((await card.count()) === 0) {
-        test.skip(true, "no :pressable card story at HEAD — booked successor (the bar holds on Button + Card source binding)");
+        test.skip(true, "no :pressable card mounted (served-app sentinel — the story is /containers/card-pressable)");
         return;
     }
     const box = await card.boundingBox();

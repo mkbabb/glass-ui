@@ -245,17 +245,18 @@ const specularTokenStyle = computed<CSSProperties>(() =>
 // BB.W-PRESS-UNIFY — the interactive press register (consumer #2). Wired ONLY when
 // `pressable` (a tappable list-card); a static content plate never presses. The driver
 // is the SAME `useLiquidPress` Button composes — the interruptible coupled spring-press
-// (the reciprocal X/Y squish + the `--card-press-t` drive the `.glass-press` brightness
-// leg reads). A card is a larger surface than a button, so the shrink is a touch
-// shallower (0.02 → 0.98 at full press) — the press REGISTER per surface is recorded,
-// not flattened to one curve. PRM-instant + compositor-only by construction (inherited
-// from `useLiquidPress`). The driver is ALWAYS constructed (a composable cannot mount
+// leg reads). BG.W-ANIMATION-CONGRUENCE (A9 one-spring-family): the press clock is the
+// SHARED `press` SPRING_PRESETS row (`useSpringPress`'s default = `springPreset("press")`
+// = {0.2, 0.8}) — the OFF-table {0.28, 0.78} literal is RETIRED so Card presses on the
+// EXACT clock Button does (one spring family, one source, no per-surface spring fork).
+// The per-surface REGISTER stays the *amplitude* (a card is a larger surface, so the
+// shrink is a touch shallower — 0.02 → 0.98 at full press — via `shrinkDepth`, NOT a
+// second spring clock). PRM-instant + compositor-only by construction (inherited from
+// `useLiquidPress`). The driver is ALWAYS constructed (a composable cannot mount
 // conditionally), but the handlers + the press `:style` only reach the host when
 // `pressable` — the rest-state press value is 0 so an un-pressable card is byte-
 // identical to HEAD (no `scale`, no `--card-press-t` paint).
 const press = useLiquidPress({
-    response: 0.28,
-    dampingFraction: 0.78,
     pressVar: "--card-press-t",
     shrinkDepth: 0.02,
     maxStretch: 1.03,

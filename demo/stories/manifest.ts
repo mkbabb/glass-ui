@@ -295,6 +295,7 @@ const SUBPATHS: Record<string, string> = {
     "containers/expandable-container": "@mkbabb/glass-ui/expandable-container",
     "containers/command": "@mkbabb/glass-ui/command",
     "containers/spa-view": "@mkbabb/glass-ui/spa-view",
+    "containers/card-pressable": "@mkbabb/glass-ui/card",
     // Navigation — the glass nav chrome.
     "navigation/tabs": "@mkbabb/glass-ui/tabs",
     "navigation/carousel": "@mkbabb/glass-ui/carousel",
@@ -946,6 +947,12 @@ export const CATEGORIES: Category[] = [
                 "spa-view",
                 "SpaView",
                 "Bounded view-cache router pane — <SpaView :max> over Vue's <KeepAlive> + an out-in cross-fade; inactive views stay mounted (state survives the switch) up to the LRU cap.",
+            ),
+            s(
+                "containers",
+                "card-pressable",
+                "Pressable Card",
+                "The tappable list-card — <Card as=\"button\"> presses on the shared iOS spring (reciprocal squish + the --card-press-t brightness drive, one clock family with Button); a static content card never presses.",
             ),
         ],
     },
