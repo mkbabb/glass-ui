@@ -1,0 +1,93 @@
+{
+  "wave": "BG.W-EYEGLASS-TABS",
+  "family": "F2.6",
+  "class": "P (paint-gated)",
+  "built_at": "b4c1998c",
+  "judged_by": "NON-AUTHORING dual-engine paint judge (F8.3 stand-in)",
+  "judged_at": "2026-07-11",
+  "verdict": "PASS",
+  "one_line": "The eyeglass register reads as ONE proud iOS-27 liquid-glass loupe on BOTH engines, both modes — Chromium physically refracts a textured backdrop on real Metal; Safari-26 degrades honestly to the proud frosted capsule (blur PAINTS, no faked bend, the @supports-leak handled by the belt-and-suspenders). Kinematics converge (continuous transit, overshoot ~2.75%, settle-to-endpoint, squish ~1.10x releasing to rest). Timing is the RECORDED, accepted house residual (clock frozen).",
+  "provenance": {
+    "chrome": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Max) — Chrome 150, real Metal GPU",
+    "safari": "system WebKit.framework (Safari 26 engine) — Apple GPU, 1440x900 @2x, badge decoded in-pixel"
+  },
+  "device_free_gate": { "proof:eyeglass-tabs": "PASS (E1-E6 + self-test bites)", "vue-tsc": "clean (exit 0, 0 errors — zero src edits by judge)" },
+
+  "chromium_refraction_arm": {
+    "refraction_mechanism_works": true,
+    "refraction_evidence": "busy diagonal-stripe backdrop is DISPLACED/warped through the pill (both modes); the rest of the strip only blurs (no displacement) — the .glass-lens url(#glass-refract) physically bends on real Metal (NF primary-works proof)",
+    "resolved_backdrop_filter": "blur(13px) saturate(1.6) url(#glass-refract)  [light] / blur(13px) saturate(1.28) brightness(1.1) url(#glass-refract) [dark]  — floating rung, baked scale=28",
+    "kinematics": {
+      "instrument": "WAAPI-seek of the top/bottom/left/right (anchor inset glide) + scale transitions; cx = getBoundingClientRect ground-truth per seeked 60fps frame; fed to scripts/lib/gesture-frame-recorder.mjs",
+      "t2_1slot": { "travel_px": 101, "overshoot_pct": 2.75, "overshoot_fires": true, "settled_tail_dev_px": 0, "recovery_frames": 1, "liquid": true, "t90_ms": 50, "settle2pct_ms": 100 },
+      "t3_2slot": { "travel_px": 202, "overshoot_pct": 2.76, "overshoot_fires": true, "settled_tail_dev_px": 0, "recovery_frames": 1, "liquid": true, "continuous_transit_body_covers_middle": true, "t90_ms": 50, "settle2pct_ms": 100 },
+      "t4_1slot": { "travel_px": 101, "overshoot_pct": 2.76, "overshoot_fires": true, "settled_tail_dev_px": 0, "recovery_frames": 1, "liquid": true, "t90_ms": 50, "settle2pct_ms": 100 },
+      "both_modes_identical": true
+    },
+    "squish_natural_playback": {
+      "t3_composed_core_width_peak_over_rest": 1.1015,
+      "t3_settle_over_rest": 1.0,
+      "t2_t4_peak_over_rest": 1.073,
+      "peak_stretch_t3": 1.0539,
+      "honors_composed_anti_taffy_cap_le_1_14": true
+    },
+    "proud_geometry": {
+      "ratio_vs_tab_slot_31px": 1.15,
+      "ratio_vs_non_eyeglass_pill": 1.477,
+      "static_reservation": true,
+      "block_extent_variation_px": 1.49,
+      "block_extent_variation_source": "compositor scale (blob/stretch), NOT an animated box dimension"
+    },
+    "selected_ink_contrast_split": {
+      "glyph_color": "oklch(0.86 0.15 205) cyan (via --tab-selected-ink on descendant svg)",
+      "label_color": "warm-ink var(--foreground) [rgb(28,25,23) light / rgb(233,230,226) dark] — AA held",
+      "split_correct": true
+    },
+    "prm": { "squish_stretch": 1.0, "glide_commits": true, "static_optics_kept": true },
+    "perf_4x_cpu": { "long_tasks_gt50ms": 0, "max_frame_ms": 47, "median_frame_ms": 26.9, "dropped_frames_gt33ms": 1, "band_dropped_le1": true, "note": "CPU-side holds; true mid-tier-mobile GPU refraction cost is a desktop-emulation limitation; AC6 degrade-to-capsule booked" }
+  },
+
+  "safari_honest_degrade_arm": {
+    "supports_refract_returns": true,
+    "ac1_concern_real": "Safari 26 CSS.supports('backdrop-filter','url(#glass-refract)') returns TRUE (WebKit bug 245510) so the pill ENTERS the .glass-lens block",
+    "belt_and_suspenders_works": true,
+    "resolved_blur_rung": "floating (blur 13px + saturate 1.6 [light] / saturate 1.28 brightness 1.1 [dark]) + no-op url()",
+    "blur_paints_evidence": "busy-backdrop test: the strip + pill FROST (blur) the stripes (softened/muted inside the strip vs crisp outside) — the backdrop-filter is NOT nuked by the invalid url()",
+    "no_faked_bend": "stripes are BLURRED, NOT displaced/warped (the url() harmlessly no-ops) — honest frosted capsule, NOT a half-applied lens, NOT tried-and-painted-nothing",
+    "proud_lands_on_anchor_path_c3": { "ratio_vs_slot": 1.114, "not_a_flat_capsule": true },
+    "glyph_cyan": true,
+    "label_warm_ink": true,
+    "both_modes": true,
+    "verdict": "DECISIVE PASS — honest proud frosted capsule, no masking fallback"
+  },
+
+  "make_or_break_signatures": {
+    "1_refraction": "PASS (Chromium physically refracts; Safari honest frosted degrade)",
+    "2_proud_loupe": "PASS-with-note (1.15x vs the tab slot, static; contained within the 39px frosted strip capsule — proud vs slot, not overflowing the outer strip)",
+    "3_kinematics": "PASS (continuous transit, overshoot ~2.75%, settle-to-endpoint, squish 1.10x releasing to rest)",
+    "6_selected_ink": "PASS (cyan glyph via contrast-split, label warm-ink AA)",
+    "7_stage_frost": "PASS (floating rung stronger than the calm quiet track; reads on both engines)"
+  },
+
+  "recorded_divergences_all_bounded_and_within_spec": [
+    "TIMING: house glide t90 ~50ms / 2%-settle ~100ms is FASTER than the §5.3 reference band [t90 110-200ms; settle 200-320ms] — the RATIFIED frozen-clock house 'quick-but-weighty' identity; the RECORDED residual per §0/§6/AC8, not converged-on (clock frozen by T4).",
+    "DEMO STAGING: the eyeglass is staged over a CALM near-flat aurora inside a 52%-opaque glass-card, so the SHIPPED demo shows the subtle calm-arm read (little to bend); the refraction mechanism is proven to work on a busy field (busy-backdrop test). The wave explicitly accepts the calm arm as an honest reference state; a busier demo stage would show off signature #1 (a demo-side choice, not a mechanism defect).",
+    "PROUD vs STRIP: the pill reads proud vs the tab SLOT (1.15x) but sits WITHIN the 39px frosted strip capsule (crownSpill -1.66px) rather than overflowing the outer strip edges (the strip carries 4px padding). Reads proud-on-the-slot per §1.1; does not reproduce the reference's dramatic bar-overflow.",
+    "GLYPH-INK TIMING: the selected-glyph cyan swaps to the destination tab IMMEDIATELY at click (frame 0), not arrival-trailed (§1.4 'trails the glide, keyed to the settle') — the cyan glyph leads the pill by the glide duration.",
+    "CONTAIN: the pill computes contain:none (relies on the backdrop-filter stacking context, not the explicit contain:paint recommended in §1.2 C8); no-layout-animation is satisfied (not contain:layout) and perf held.",
+    "AMBIENT OBSERVER: calm↔busy attenuation judged against the STATIC --glass-backdrop bucket (the live useGlassBackdropLuminance animated path is DEAD on disk per C1 — correctly BOOKED, not promoted)."
+  ],
+  "pi_51_bands_summary": {
+    "position_motion_present": "GREEN",
+    "settle_tail_le4px": "GREEN (0px)",
+    "overshoot_fires_and_2to9pct": "GREEN (2.75-2.76%)",
+    "overshoot_recovery_le6frames": "GREEN (1 frame)",
+    "width_squish_1_10_to_1_15_release": "GREEN (T3 1.1015x, releases to rest)",
+    "proud_1_14_plusminus_0_03_static": "GREEN vs slot (1.15x, static)",
+    "continuous_transit": "GREEN (body covers middle tab, no fade)",
+    "timing": "RECORDED RESIDUAL (house quicker than reference; clock frozen; accepted per §0/§6/AC8)",
+    "perf_60fps_mid_mobile": "GREEN CPU-side (0 long-tasks>50ms, <=1 dropped frame); GPU-side mid-mobile a desktop-emulation limitation, AC6 degrade booked",
+    "safari_honest_degrade": "GREEN (empirically confirmed capsule floating-frost, blur paints, no faked bend)",
+    "optics_settled": "GREEN on the busy-arm proof (Chromium displacement present; Safari blur-only frost); calm-arm over the demo aurora is the shipped honest read"
+  }
+}
