@@ -23,7 +23,10 @@ charter; `docs/tranches/BH/spec-structure/` folds in via `waves/BI.W-STRUCTURE-R
    a. **Dock spring** — shipped 0.68/ζ0.64 (+6.9%, the liquid-weight tune) vs the measured-iOS band
       0.28±0.04/ζ0.82±0.06 (1.1–1.4% overshoot). The A/B pair + the iOS reference arm.
       Recommendation: the iOS band (Apple's liquid is brisk + tiny overshoot + coupled channels —
-      weight ≠ slow), post the M1 parity fix, respecting the ≤~1% box-morph ceiling.
+      weight ≠ slow), post the M1 parity fix, respecting the ≤~1% box-morph ceiling. The A/B is
+      LIVE either way (the gate binds the mechanism, never the value — the closure-read fix): a
+      veto to the weighty arm carries the named cost that the arrival-cut hack is gone, so the
+      ζ0.64 tail must be carried honestly (accepted, or absorbed by the lead/trail release).
    b. **Pager worm aesthetic veto** — the goo arm shipped by ruling 13's mechanics (67fps WebKit,
       raster 100× under budget; clip = bowtie at multi-hop). The reserved veto: the shallow-waist
       fat-fusing-pill IS the Google-worm read (montages on disk).

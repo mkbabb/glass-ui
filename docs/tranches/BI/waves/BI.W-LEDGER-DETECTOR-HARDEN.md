@@ -17,7 +17,10 @@ DEFER-with-trigger row gains a trigger-fired probe (the row REDs when its trigge
 observable true and the row still says DEFER — the D27/deep-glass class); (e) the ledger TRUE-UP
 executes: every stale row flipped with evidence (the round-1 corrections already applied stay); (f)
 the discharge rule: a re-stamped row without a decide REDs (the RE-STAMP-DISCHARGE mirror on the BI
-ledgers themselves).
+ledgers themselves); (g) the LEDGER-COLUMN-RESOLVE clause (the closure-read fix): every
+disposition-target named in the CHRONIC/PROMPT-RECAP ledger BODIES resolves to a real
+`waves/<id>.md` — the disposition-live pattern applied to the markdown spine itself (born-RED
+via a planted phantom self-test).
 
 ## Acceptance — `proof:bg-deferred-ledger` EXTENDED (the §G clauses born-RED on the 8 markers at HEAD)
 + per-clause self-test bites (a planted bare-word BOOKED must flag; a planted fired-trigger DEFER must flag).

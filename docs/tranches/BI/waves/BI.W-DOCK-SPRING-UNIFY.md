@@ -110,3 +110,16 @@ extended.
   C7 proved the BD.W-ANIM-IOS27-TUNE retune (0.68/0.64) moved AWAY from the reference it cited; the measured
   band (0.28±0.04, 0.82±0.06) is the G8 target. Decided-terminal (the A/B is the user-confirmation, not a
   re-open).
+
+
+## Closure-read correction (the SU3 veto-foreclosure fix — the BLUR-MUTE pattern)
+SU3 is RE-SCOPED to gate the MECHANISM, never the value: (i) ONE spring engine (the ~10-site
+SpringProgress reconcile — a second `new SpringProgress` in the dock band reds); (ii) the
+arrival-cut hack ABSENT (the settle is honest physics, whatever the preset); (iii) the scalar zoo
+ABSENT. The dock (response, ζ) VALUE is USER-SETTABLE per PLAN §0.2a — SU3 asserts only that the
+preset row and the CSS tokens agree (the M1 parity invariant), not the numbers. THE VETO COST,
+recorded honestly: keeping the weighty 0.68/ζ0.64 arm requires a CLEAN long-settle treatment
+(the ~1s tail accepted as-is, or the two-edge lead/trail release absorbing it) because the
+arrival-cut hack that previously hid the ζ0.64 ring is deleted by (ii) unconditionally — the A/B
+capture pair presents BOTH arms post-M1 with this cost named. §Dispositions T1 is re-labeled: the
+MECHANISM decision is terminal; the VALUE rides §0.2a.
