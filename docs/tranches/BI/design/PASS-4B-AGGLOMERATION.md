@@ -69,3 +69,30 @@ the ~10-site SpringProgress reconcile, the G8 retune with the user A/B, the comp
 build, the G10 fold coordination, the gate cull). Motion's G4 parity fix is LANDED-and-green in its
 worktree (428.59ms → 0.36ms) with the surgical 2-file diff ready to be a wave's payload. All seven
 problems are formation-ready pending pass-5's two items and the user-judgment batch.
+
+---
+
+## PASS-5 CLOSE (orchestrator, 2026-07-12)
+
+Both build items CONVERGED (critics: pager 97, glass 95):
+
+- **RULING 13 RESOLVED — the goo worm ships at 13px.** The composed moving capture inverted the
+  pass-3 static read: goo = a fat fusing mercury pill (the Google-worm read, critic-confirmed from
+  the montages); clip = a rigid barbell that turns BOWTIE at 4-hop. 67.2fps on genuine WebKit
+  (0 drops), raster 0.375ms (~100× under the G3 budget, CHEAPER than clip). Clip banks as the
+  `@supports`-not degrade floor — no dual path. Residuals: the user's reserved aesthetic veto
+  (shallow-waist-is-the-worm) + the Metal device raster trace (wave obligations).
+- **RULINGS 10–12 CLOSED.** Law-3: the mask-composite ring is a dedicated overlay child
+  (`.metal-*-ring`) — the host carries no mask, so interior blanking is impossible by construction;
+  interiors 4-5/5 legible across all four engine×mode cells; proof:geometry-grammar GREEN with the
+  6/6 born-RED self-test. Law-1: the external-reader clause satisfied honestly (segmented-tabs.css
+  reads the relay; the dead-relay bite REDs). --stage-t: sheet-root-scoped, zero documentElement
+  writes, the drag paints, the recalc storm dead. Residuals → wave obligations (deep SFC relay
+  composition, border→ring doc reconcile, visible-Safari re-shoot, scaffold quarantine).
+
+## FINAL LOOP STATE (all seven problems formation-ready)
+
+pager 97 · glass 95 · motion 91 · viz 90 · factor 88 · story 87 · dock 86 — every remaining open
+item is either a RULED decision (rulings 1–13), a wave obligation (device runs, landings,
+RED→GREEN differentials), or a user-judgment item (the capture batch). The formation audit
+(round 4) adversarially verifies this classification over the drafted plan.
