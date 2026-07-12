@@ -65,8 +65,12 @@ Decided (PASS-1 §2.3 + N6 WIRE):
 
 ## §Acceptance
 
-Gate: **`proof:motion-one-clock`** (NEW, born-RED) — a CSS dropdown and a JS dock morph co-scale in proportion
-at tempo 0.85 and 1.2 (CSS_t90/JS_t90 ratio ≈ 1 at both). PLUS:
+Gate: **`proof:motion-one-clock` EXTENDED** (the R15-01 correction — the gate is BC-minted and PASSES at
+HEAD; this wave AUTHORS the tempo-parity co-scale clause INTO it, per this spec's own round-4 note): a CSS
+dropdown and a JS dock morph co-scale in proportion at tempo 0.85 and 1.2 (CSS_t90/JS_t90 ratio ≈ 1 at
+both). The NEW clause is born-RED in the honest sense: no `--motion-tempo` axis exists at HEAD, so the
+co-scale assert has nothing to verify until the axis wire lands (clause-RED → GREEN at the wire). The
+pre-existing A9/CC/M1–M5 arms are NEVER re-minted or overwritten. PLUS:
 - **`proof:no-masking-fallback` EXTENDED (the R14-01 correction — this wave AUTHORS the data-motion arm)**:
   the existing gate PASSES at HEAD and carries NO data-motion clause; this wave adds Arm F — an emitted
   `data-motion` attribute with ZERO live CSS consumers is a dead signal (the masking class). The NEW clause

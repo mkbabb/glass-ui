@@ -39,3 +39,5 @@ Clauses:
 ## Dispositions
 
 - Terminalizes **BI-STAB-A-1** (folded-member deep-link 404s). The routing companion to W-AFFORDANCE's CBA-5 FamilyTabs-IA decision (drop-standalone vs thin-index) — whichever IA lands, the folded ids resolve rather than 404.
+
+- AUTHOR the gate-script clauses this spec's §Acceptance names (the R15 courtesy fix: the §Work list carries the authoring item; §Acceptance alone does not build a gate).

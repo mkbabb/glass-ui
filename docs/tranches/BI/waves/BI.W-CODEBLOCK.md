@@ -51,3 +51,5 @@ Clauses:
 ## Dispositions
 
 - Terminalizes **WS4-15** (Fira code blocks — re-open the highlight arm, now LANDED). **FAM-8** / **UF-F3** discharged.
+
+- AUTHOR the gate-script clauses this spec's §Acceptance names (the R15 courtesy fix: §Work must carry the authoring item for every clause §Acceptance specs — the gate must be buildable from this spec alone).
