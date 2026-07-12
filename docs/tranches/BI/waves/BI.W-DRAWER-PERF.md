@@ -72,7 +72,7 @@ blur + alpha dim are compositor-safe).
 **Drawer open/drag/settle frame-series** — HEAD 6 janky / 22.5 ms max → 0 janky / 9.7 ms (the 1.9× win); the
 CDP Layout-flat trace (no ForcedReflow); the Dialog/Command modal staging STILL flips (the co-convert did not
 break it); drawer-live-behind smooth (UF-G9). Chrome AND real-device/visible-Safari (the 1.9× was Chrome-
-measured — the Safari capture is owed). Both modes. Rides W-REFLECT (`proof:ba-gestalt` container-band). DELTA:
+measured — the Safari capture is owed). Both modes. rides the B-close gestalt ceremony (W-GESTALT-LEDGER-FILE oracle + the close battery)). DELTA:
 `W-DRAWER-PERF-DELTA.md`.
 
 ## §Obligations

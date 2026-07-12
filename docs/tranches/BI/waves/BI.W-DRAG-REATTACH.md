@@ -55,7 +55,7 @@ Gate: **`proof:drag-morph`** (EXTENDED in place — the D5 reachability arm, no 
 
 ## §π/DELTA
 
-`tests-visual/drag-morph.spec.ts` (EXTEND — the liquid-tab arm; LOCAL-only, rides W-REFLECT):
+`tests-visual/drag-morph.spec.ts` (EXTEND — the liquid-tab arm; LOCAL-only, rides the B-close gestalt ceremony (W-GESTALT-LEDGER-FILE oracle + the close battery)):
 - drive a real `pointerdown → pointermove → pointerup` on the pill indicator: the indicator FOLLOWS the
   pointer (frame-series translate), SQUISHES on travel, and FLINGS to the nearest tab on release (the
   drag-morph frame contract); the click path is un-regressed (a plain click still selects). Chromium + real

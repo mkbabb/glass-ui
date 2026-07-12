@@ -50,7 +50,7 @@ Gate: **`proof:fold-delete`** (dialog/sheet clause, authored in W-AXES-GATES) + 
 
 **Edge-slide parity + focus-return** π: Dialog `placement=right|bottom` slide byte-identical to the retired
 Sheet frame-series; focus-trap + focus-return; the N3 fence (Drawer live-behind non-modal unchanged) —
-Chrome + real WebKit, BOTH modes. DELTA: `W-DIALOG-PLACEMENT-DELTA.md`. Rides W-REFLECT
+Chrome + real WebKit, BOTH modes. DELTA: `W-DIALOG-PLACEMENT-DELTA.md`. rides the B-close gestalt ceremony (W-GESTALT-LEDGER-FILE oracle + the close battery)
 (`proof:ba-gestalt` overlay-band).
 
 ## §Obligations

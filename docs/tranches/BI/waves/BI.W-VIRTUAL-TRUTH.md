@@ -20,3 +20,9 @@ self-test bite.
 
 ## Dispositions
 DOC-4 → terminal. The BC un-retire row → corrected-with-rationale.
+
+
+## Ownership (round-4 BI-AUD5-02 reconcile)
+THIS wave is the SOLE owner of the /virtual terminal fate (adjudicate -> execute). Any other wave
+mentioning /virtual (the orphan-split gate, the doc rewrites) CITES this wave and defers; no second
+end-state may ship. The adjudication rule stands as §Design (a)/(b) — one terminal outcome.

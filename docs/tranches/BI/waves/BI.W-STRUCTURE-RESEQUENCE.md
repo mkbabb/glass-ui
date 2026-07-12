@@ -191,3 +191,12 @@ the evidence.
 - NOTE (band-numbering): this wave's band is the reformed BH-structure (PLAN-FRAME "B9 — Structure"); the
   charter's "B9+B10" groups it with the B8 prunes/consumer-truth — the existing authored waves use "B8
   (consumer-truth)" for the prune band, kept for cross-reference coherence.
+
+
+## Round-4 correction (BI-AUD5-05 + BI-DAG-03)
+The re-scoped structure sub-waves are referenced by their BH-plan section IDs (S0-CENSUS-RECOMPUTE,
+S1-FLATTEN-PREP/MOVE, S2-CSS-COLOCATE, S3-PROMOTE/FOLD/README, S4-GUTS/DISJOINT/DIFFERENTIAL,
+S5-ASKS, S6-G8/CLOSE — docs/tranches/BH/spec-structure/STRUCTURE-TRANCHE-PLAN.md §2) until this wave
+AUTHORS them as BI specs at its execution start (its first Work item). The census precondition is
+allDone(EVERY repair band by NAME: B0-CUT, B1-GEOMETRY, B2-GLASS, B3-DOCK, B4-PAGER, B5-VIZ,
+B6-STORY, B7-MOTION, B8-FACTOR+PRUNES) — never a band-number range.

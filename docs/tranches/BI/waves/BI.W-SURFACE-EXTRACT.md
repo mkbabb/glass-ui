@@ -66,7 +66,7 @@ Gate: **`proof:surface-axis`** extended in place (no new key) + `proof:glass-coh
 **Refactor-not-repaint byte-diff** (Open-Gap-3, the binding claim): π diff at default expressions —
 Card / Dialog / Sheet / Popover / Command / ExpandableContainer + the taxonomy-matrix route — BOTH modes,
 Chrome + Safari; pixel-identical to the pre-extract ground (0 delta). DELTA:
-`docs/tranches/BI/audit/visual/W-SURFACE-EXTRACT-DELTA.md`. Rides W-REFLECT (`proof:ba-gestalt` glass-band).
+`docs/tranches/BI/audit/visual/W-SURFACE-EXTRACT-DELTA.md`. rides the B-close gestalt ceremony (W-GESTALT-LEDGER-FILE oracle + the close battery)).
 
 ## §Obligations
 

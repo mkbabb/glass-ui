@@ -48,7 +48,7 @@ Gate: **`proof:demo-control-live`** (NEW, `["local","ci"]`) — the story dead-r
 
 ## §π/DELTA
 
-`tests-visual/demo-control-live.spec.ts` (NEW, LOCAL-only, rides W-REFLECT):
+`tests-visual/demo-control-live.spec.ts` (NEW, LOCAL-only, rides the B-close gestalt ceremony (W-GESTALT-LEDGER-FILE oracle + the close battery)):
 - flip the grain Switch on `/compositions/settings` → the `.paper-grain-overlay` grain visibly appears/
   disappears (a per-region luminance/texture delta); drag the grain slider → the surface grain density changes
   (getComputedStyle `--glass-grain-opacity` tracks the slider). BOTH modes.

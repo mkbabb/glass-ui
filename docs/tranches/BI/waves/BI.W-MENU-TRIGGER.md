@@ -42,7 +42,7 @@ Gate: **`proof:fold-delete`** (menu clause, authored in W-AXES-GATES).
 
 **Menu[trigger] roving-focus + edge parity** π: the `trigger=context` right-click open + roving Arrow/Home/
 End + typeahead reads identically to `trigger=click`, Chrome + WebKit, BOTH modes. DELTA:
-`W-MENU-TRIGGER-DELTA.md`. Rides W-REFLECT (`proof:ba-gestalt` navigation-band).
+`W-MENU-TRIGGER-DELTA.md`. rides the B-close gestalt ceremony (W-GESTALT-LEDGER-FILE oracle + the close battery)).
 
 ## §Obligations
 

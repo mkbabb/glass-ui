@@ -37,7 +37,7 @@ Gate: **`proof:a11y`** (the split-chars arm — device-free source arm + a live 
 
 ## §π/DELTA
 
-`tests-visual/a11y-splitchars.spec.ts` (NEW, LOCAL-only, rides W-REFLECT):
+`tests-visual/a11y-splitchars.spec.ts` (NEW, LOCAL-only, rides the B-close gestalt ceremony (W-GESTALT-LEDGER-FILE oracle + the close battery)):
 - run axe on a SplitChars-bearing route: ZERO ARIA-in-HTML / `aria-prohibited-attr` violations; the accessible
   name resolves to the full text (`props.text`), the glyph children stay hidden. BOTH modes, Chromium + real
   WebKit.

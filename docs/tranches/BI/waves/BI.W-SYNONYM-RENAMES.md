@@ -52,7 +52,7 @@ Gate: **`proof:variant-residual`** (W-AXES-GATES) + an **api-lockstep** clause.
 
 Byte-diff: every renamed component paints byte-identical (a name rename, zero value change) — Notification/
 Alert/Toast/Badge tone surfaces, BOTH modes (0 delta). DELTA: `W-SYNONYM-RENAMES-DELTA.md` (also carries the
-W-BUTTON-TONE tone byte-diff). Rides W-REFLECT (`proof:ba-gestalt` feedback-band, un-regressed).
+W-BUTTON-TONE tone byte-diff). rides the B-close gestalt ceremony (W-GESTALT-LEDGER-FILE oracle + the close battery)).
 
 ## §Obligations
 

@@ -17,7 +17,7 @@ Discharges (registry rows this wave OWNS):
 
 Decided mechanism — FIXED (D-VIZ PASS-1 §0, not relitigated): the three are DELETED. Their
 `usePointerVelocityField` consumption retires WITH them; the surviving field-consumer compat set is aurora +
-goo-blob + fourier-field + constellation + liquid-grid (`useLiquidGrid`) + `useDockFission`. Clean break,
+goo-blob + fourier-field + constellation + liquid-grid (`useLiquidGrid`) + `(useDockFission — RETIRED by BI.W-DOCK-RETIRES, not a surviving consumer)`. Clean break,
 no alias — the symmetric-closure discipline (a broken-reference half-delete REDs the same as a stub).
 
 - **DELETE the three component dirs, stories, subpath barrels, and package.json exports** (breaking — the

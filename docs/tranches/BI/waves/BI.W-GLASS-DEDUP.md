@@ -60,7 +60,7 @@ in W-AXES-GATES) + invariant-11 registry probe.
 Byte-diff on every GlassPanel-slot demo now mounting `<Surface>`/`class="glass-resting"` (0 delta at the
 shared rungs — GlassPanel's tier map ≡ Card's). Any refraction demo re-points `.glass-lens` — π that the
 lens reads identically (Chrome + Safari, the SVG-filter kill is the Safari-honesty win, the un-gated
-blur+tint base is the off-Chromium floor). DELTA: `W-GLASS-DEDUP-DELTA.md`. Rides W-REFLECT.
+blur+tint base is the off-Chromium floor). DELTA: `W-GLASS-DEDUP-DELTA.md`. rides the B-close gestalt ceremony (W-GESTALT-LEDGER-FILE oracle + the close battery).
 
 ## §Obligations
 
@@ -79,3 +79,9 @@ blur+tint base is the off-Chromium floor). DELTA: `W-GLASS-DEDUP-DELTA.md`. Ride
 - Terminalizes the FAM-9 floating-panel.css + `.glass-hero` zero-consumer rows: **DELETED**.
 - Terminalizes the second-refraction-path (`useGlassRenderer`) dual-path row: **RETIRED-TERMINAL** onto
   `.glass-lens`.
+
+
+## Round-4 correction (NEW-1)
+The §Acceptance label above is corrected per the formation audit: the EXISTING gate greens at HEAD;
+this wave AUTHORS the feDisplacementMap-refraction-source clause (+ a createGlassFilter planted-revival
+self-test bite) and flips it RED->GREEN at the delete. FAM-9's registry line inherits this correction.

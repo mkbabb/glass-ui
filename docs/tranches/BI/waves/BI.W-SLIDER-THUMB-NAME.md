@@ -44,7 +44,7 @@ Gate: **`proof:a11y`** (the slider arm — device-free source arm asserting the 
 
 ## §π/DELTA
 
-`tests-visual/a11y-slider.spec.ts` (NEW, LOCAL-only, rides W-REFLECT):
+`tests-visual/a11y-slider.spec.ts` (NEW, LOCAL-only, rides the B-close gestalt ceremony (W-GESTALT-LEDGER-FILE oracle + the close battery)):
 - run axe on `/substrates/aurora` + the configurator LCH-slider routes: ZERO `aria-input-field-name`
   violations (was ≥22); every thumb resolves an accessible name equal to its field label. BOTH modes,
   Chromium + real WebKit.

@@ -91,7 +91,7 @@ Gate: **`proof:animation-coherence`** EXTENDED IN PLACE (3 arms, PASS-1 §2.6):
 dropdown bounce refined (UF-G3); the exit tighten. **G1 — Safari `@starting-style` var-swap honesty**: does
 Safari resolve the SWAPPED register custom properties (`--reveal-spring`/`--reveal-clock`/scale/blur) inside
 `@starting-style` at first paint on reka's mount-already-open path (closed on genuine WebKit at pass-3;
-re-verify on device) — THE gating risk for the binding mechanism. Chrome + Safari, both modes. Rides W-REFLECT
+re-verify on device) — THE gating risk for the binding mechanism. Chrome + Safari, both modes. rides the B-close gestalt ceremony (W-GESTALT-LEDGER-FILE oracle + the close battery)
 (`proof:ba-gestalt` overlay-band). DELTA: `W-REGISTER-TABLE-DELTA.md`.
 
 ## §Obligations

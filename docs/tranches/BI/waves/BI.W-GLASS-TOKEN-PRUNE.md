@@ -52,7 +52,7 @@ Gate: **`proof:dialog-glass`** re-pointed + a rung-census clause.
 **The α-band probe capture** is the deciding evidence: live Dialog + Sheet composited-plate α getComputedStyle
 readback vs raw floating/overlay, BOTH modes, Chrome + Safari →
 `docs/tranches/BI/audit/visual/W-GLASS-TOKEN-PRUNE-DELTA.md`. Plus a byte-diff of the Dialog/Sheet plate
-before/after (0 delta — the reconcile preserves the composited α). Rides W-REFLECT (`proof:ba-gestalt`
+before/after (0 delta — the reconcile preserves the composited α). rides the B-close gestalt ceremony (W-GESTALT-LEDGER-FILE oracle + the close battery)
 glass-band).
 
 ## §Obligations

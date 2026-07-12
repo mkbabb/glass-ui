@@ -69,3 +69,13 @@ the evidence; each gate's self-test proves the detector is not hollow.
 
 - Terminalizes FAM-11 factor-gate-soundness rows (variant-residual + membership-fence + per-fold delete):
   **AUTHORED born-RED**, GREEN at the fold/rename landings. No re-book.
+
+
+## Round-4 additions (formation-audit residue homing)
+- `proof:fold-delete` gains the MULTISELECT clause (BI-DAG-01): multi-select definition-absent +
+  Combobox[multiple] live + the story-fold; born-RED.
+- The OWNEDBY-RESOLVE clause (bld:gate-owner-resolve): proof:no-masking-fallback Arm E's `owedBy`
+  must resolve to a real waves-spec on disk (the waveSpecExists mirror); `--specular-angle`'s phantom
+  WS8.4 owner is re-pointed to a real BI wave or the site is cured; born-RED on the phantom.
+- FAM-11 residue (BI-FAM11-GATE-RESIDUE): warm-identity RELABEL-or-ARM clause (the 'PRIMARY paint
+  gate' label may not exceed its teeth) + the ba-gestalt manifest-note/ci-tag reconcile clause.

@@ -60,7 +60,7 @@ Gate: **`proof:fold-delete`** (overlay clause, authored in W-AXES-GATES) + the W
 
 - **WCAG 1.4.13 + coarse-pointer + focus-return** π (the acceptance bar, PASS-1 gap 1): the union bloom
   frame-series, hover-hoverable-content dismiss, coarse-pointer tap-toggle, focus-return-to-invoker —
-  Chrome + real WebKit, BOTH modes. DELTA: `W-OVERLAY-UNION-DELTA.md`. Rides W-REFLECT
+  Chrome + real WebKit, BOTH modes. DELTA: `W-OVERLAY-UNION-DELTA.md`. rides the B-close gestalt ceremony (W-GESTALT-LEDGER-FILE oracle + the close battery)
   (`proof:ba-gestalt` overlay-band).
 - The public `v-model:open` re-emit e2e sweep (the silent-no-op class) is a binding capture, not a unit.
 

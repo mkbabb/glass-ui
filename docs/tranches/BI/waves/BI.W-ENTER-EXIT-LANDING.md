@@ -59,7 +59,7 @@ binding REDs.
 **The full overlay band** captured — each surface enters in its assigned register: homogeneous-yet-distinct
 (UF-G2 popover reads like the dropdown), the gear Sheet fade in/out perfected (UF-G10), the Toast/Notification
 transient center-seed bloom, every exit tightened to ~150/100 ms with 0 overshoot. Chrome + Safari, both modes.
-Rides W-REFLECT (`proof:ba-gestalt` overlay-band verdict). DELTA: `W-ENTER-EXIT-LANDING-DELTA.md`.
+rides the B-close gestalt ceremony (W-GESTALT-LEDGER-FILE oracle + the close battery)). DELTA: `W-ENTER-EXIT-LANDING-DELTA.md`.
 
 ## §Obligations
 

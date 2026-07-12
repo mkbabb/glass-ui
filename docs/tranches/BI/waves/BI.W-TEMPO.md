@@ -30,7 +30,7 @@ Decided (PASS-1 §2.3 + N6 WIRE):
 - **CSS↔JS parity (the P7 one-clock law).** A shared `motionTempo(el?)` reader (~10 lines,
   `src/composables/motion/motionTempo.ts`, cached `getComputedStyle` — the `--motion-weight` site-local
   getter seam) multiplied `response *= tempo` at spring construction in `useSpring` / `useSpringPress` /
-  `useDockOrientationMorph` / `useDrawerSnap`. `duration ∝ response` (ωₙ = 2π/response) so scaling the CSS clock
+  `useDockSpring (the surviving dock engine per BI.W-DOCK-SPINE; useDockOrientationMorph retires)` / `useDrawerSnap`. `duration ∝ response` (ωₙ = 2π/response) so scaling the CSS clock
   by tempo ≡ scaling response by tempo — proportionality by construction; the M1 parity (CSS==JS at tempo 1)
   therefore holds at ANY tempo (G2).
 - **Deliberate-weight carve.** The loud iOS-27 surfaces (dock morph, drawer, deck) re-pin `--motion-tempo: 1`
@@ -54,7 +54,7 @@ Decided (PASS-1 §2.3 + N6 WIRE):
 - `src/styles/tokens/scheme-spring.css:121-127` — the generated `-settle` + reader blocks (replaces the flat
   `-duration` values).
 - NEW `src/composables/motion/motionTempo.ts` (~10 lines); wire `response *= tempo` into `useSpring` /
-  `useSpringPress` / `useDockOrientationMorph` / `src/components/ui/drawer/composables/useDrawerSnap.ts`.
+  `useSpringPress` / `useDockSpring (the surviving dock engine per BI.W-DOCK-SPINE; useDockOrientationMorph retires)` / `src/components/ui/drawer/composables/useDrawerSnap.ts`.
 - `src/styles/glass/reveal.css:210` — the `data-motion="reduced"` + `data-motion="off"` arms.
 - The loud-scope `--motion-tempo: 1` re-pins (dock morph / drawer / deck scopes).
 - NEW `demo/stories/motion/tempo.vue` — a live 0.7→1.3 slider over dropdown + popover + dialog + JS dock morph.
@@ -86,3 +86,8 @@ arm (fade-only) paint. Chrome + Safari, both modes. DELTA: `W-TEMPO-DELTA.md`.
   FALLBACK floor + the ≥2 shipped emitters). Supersedes the SUFFUSION-MAP M4 "excise" reading.
 - Tempo seed: **1.0 identity** (the shape problem is fixed by M1 + M6, not a scalar).
 - `--motion-tempo` ⟂ `--motion-weight` ⟂ `--ui-scale` fence recorded.
+
+
+## Round-4 correction (NEW-2)
+§Work gains: author the tempo-parity clause INTO the existing proof:motion-one-clock (never a
+collision-fated second gate); the CSS/JS co-scale assert derives both t90s under one --motion-tempo write.

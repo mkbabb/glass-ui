@@ -48,7 +48,7 @@ Gate: **`proof:emission`** (EXTENDED — a CVA-foreground backing-rule clause, n
 
 ## §π/DELTA
 
-`tests-visual/emission.spec.ts` (EXTEND — the destructive-contrast arm; LOCAL-only, rides W-REFLECT):
+`tests-visual/emission.spec.ts` (EXTEND — the destructive-contrast arm; LOCAL-only, rides the B-close gestalt ceremony (W-GESTALT-LEDGER-FILE oracle + the close battery)):
 - render `<Button variant/tone="destructive">` on the shipped demo: the label resolves the
   `--destructive-foreground` ink and clears WCAG AA (≥4.5:1) over the `bg-destructive` fill in LIGHT mode
   (was 3.57:1); axe `color-contrast` clean. BOTH modes, Chromium + real WebKit.

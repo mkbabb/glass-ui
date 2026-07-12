@@ -40,9 +40,9 @@ B0-CUT (12)  ── the cut-blockers + doc truth ─── gates everything
    ├── B3-DOCK (10)         the greenfield (spine→escape→controls→crossfade→overflow→spring→fold→retires→gates→device)
    ├── B4-PAGER + B5-VIZ (13)  the worm · carousel · ribbon · deletions · field core · aurora · perf clamps
    ├── B6-STORY (9)         schema · kit · codeblock · shrink-hero · tiles · demeta · affordance
-   ├── B9-PRUNES (14)       interaction repairs · a11y · prunes · consumer truth
+   ├── B8-PRUNES (14)       interaction repairs · a11y · prunes · consumer truth
    │
-   └── B10-STRUCTURE (1→N)  W-STRUCTURE-RESEQUENCE re-scopes the BH 20-wave plan POST-repairs
+   └── B9-STRUCTURE (1→N)  W-STRUCTURE-RESEQUENCE re-scopes the BH 20-wave plan POST-repairs
         └── CLOSE: the full battery + the formation-audit residue + THE CUT (user-gated)
 ```
 
@@ -59,9 +59,9 @@ BEFORE their breaking waves ship (the peer pin-guards in B0 before ANY publish).
 - **B1**: RADIUS-GRAMMAR · METAL-RIM-BAND · SHADOW-GRAMMAR · SHEET-RADIUS · CONFIG-IN-SHEET ·
   BADGE-ALIGN · BP-BOTTOM-LINEAR · SCROLL-PROGRESS-RIM
 - **B2+B8**: SURFACE-EXTRACT · CLEAR-FOLD · GLASS-TOKEN-PRUNE · GLASS-DEDUP · BLUR-MUTE ·
-  DEAD-SUBSTRATE · OVERLAY-UNION · MENU-TRIGGER · DIALOG-PLACEMENT · CHIP-FOLD · MULTISELECT-FOLD ·
+  OVERLAY-UNION · MENU-TRIGGER · DIALOG-PLACEMENT · CHIP-FOLD · MULTISELECT-FOLD ·
   BUTTON-TONE · SYNONYM-RENAMES · AXES-GATES · FACTOR-ASKS
-- **B3**: DOCK-SPINE · DOCK-ESCAPE · DOCK-CONTROLS · DOCK-CROSSFADE · DOCK-OVERFLOW ·
+- **B3**: DOCK-SPINE · TABS-FACTOR · DOCK-ESCAPE · DOCK-CONTROLS · DOCK-CROSSFADE · DOCK-OVERFLOW ·
   DOCK-SPRING-UNIFY · DOCK-FOLD · DOCK-RETIRES · DOCK-GATE-CULL · DOCK-DEVICE
 - **B4+B5**: PAGER-WORM · PAGER-A11Y · CAROUSEL-REBUILD · PAGER-RETIRES · FOURIER-RIBBON ·
   VIZ-DELETIONS · FIELD-CORE · AURORA-VIBRANCY · CONSTELLATION-DEDUPE · STAGE-FIELD-CLAMP ·
@@ -70,10 +70,10 @@ BEFORE their breaking waves ship (the peer pin-guards in B0 before ANY publish).
   AFFORDANCE-REDESIGN · FOLDED-REDIRECTS · SUBSTRATE-INDEX-TILES
 - **B7**: SPRING-PARITY · REGISTER-TABLE · TEMPO · ENTER-EXIT-LANDING · COMMAND-JITTER · DRAWER-PERF ·
   ACCORDION-PRESS · DRAW-IN
-- **B9**: ESC-STACK · DRAG-REATTACH · GRAIN-WIRE · SLIDER-THUMB-NAME · DEMO-SOURCE-SCAN ·
+- **B8-PRUNES (band NAME; the wave headers' scheme governs)**: ESC-STACK · DRAG-REATTACH · GRAIN-WIRE · SLIDER-THUMB-NAME · DEMO-SOURCE-SCAN ·
   SPLITCHARS-ARIA · METRICS-DEMO · MATH-PAPER-REMOVE · HERO-DEMOTE · COMPOSITIONS-PRUNE ·
   SPEEDTEST-ONLY-PAIR · ORPHAN-BINARY-SPLIT · BORDER-PROGRESS-RETIRE · VIRTUAL-TRUTH
-- **B10**: STRUCTURE-RESEQUENCE (expands into the renumbered structure waves post-repair)
+- **B9-STRUCTURE**: STRUCTURE-RESEQUENCE (expands into the renumbered structure waves post-repair)
 
 ## §3 — The convergence record (the design loop, 5 passes + iOS-27 reference)
 
@@ -123,3 +123,19 @@ the π/DELTA obligations captured (dual-engine, both modes; the visible-Safari d
 disposition ledgers verified terminal → the user-judgment batch RESOLVED → THE CUT (§0, user-gated) →
 cross-repo consume relays. The formation itself was audited (the formation audit = audit round 4;
 its residue is folded before execution begins).
+
+## §8 — The formation-audit record (round 4) + the fix pass
+
+Round 4 (4 fresh lenses over the formed corpus) returned: "unusually strong, disciplined... born-RED
+discipline impeccable (13/13 spot-verified against HEAD)" + 15 residue items — ALL FIXED in the
+2026-07-12 fix pass (digest: audit/ROUND-4-FORMATION-AUDIT.md): the missing eyeglass wave MINTED
+(BI.W-TABS-FACTOR — UF-H1's owner, closing the 3 dangling refs); the orchestrator's own duplicate gap
+wave RETIRED (DEAD-SUBSTRATE triple-collided with CLEAR-FOLD + GLASS-DEDUP — the audit caught the
+auditor); the MultiSelect fold gate re-pointed + authored (proof:fold-delete clause); the two
+mis-labeled born-RED claims corrected to EXTENDED-with-new-clause (GLASS-DEDUP feDisplacementMap,
+TEMPO tempo-parity); the /virtual triple-divergence resolved to ONE owner (VIRTUAL-TRUTH); the
+scroll-rim spectrum promoted to /color (border-progress stays 0-consumer, its retire stands); the
+band numbering reconciled to NAMES; STRUCTURE-RESEQUENCE's sub-wave refs bound to BH section IDs;
+the 16 dangling W-REFLECT refs re-pointed to the gestalt close; AXES-GATES gained the owedBy-resolve
++ FAM-11 residue clauses. Wave count stands at 90 (−1 retire, +1 mint). Round 5 verifies the fixes
++ is clean-round candidate; the corpus closes on two consecutive clean rounds.

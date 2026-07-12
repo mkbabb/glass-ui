@@ -63,7 +63,7 @@ Gate: **`proof:esc-stack`** (NEW, `["local","ci"]`) — device-free source arm +
 
 ## §π/DELTA
 
-`tests-visual/esc-stack.spec.ts` (NEW, LOCAL-only, rides W-REFLECT):
+`tests-visual/esc-stack.spec.ts` (NEW, LOCAL-only, rides the B-close gestalt ceremony (W-GESTALT-LEDGER-FILE oracle + the close battery)):
 - **Escape stack** — open ExpandableContainer #1, then #2 (nested/stacked); Escape closes #2 (topmost), a
   second Escape closes #1 — NOT #1-first (the single-winner regression). Chromium + real WebKit.
 - **Focus model** — on expand, `document.activeElement` is inside the fullscreen panel; Tab cycles within it
