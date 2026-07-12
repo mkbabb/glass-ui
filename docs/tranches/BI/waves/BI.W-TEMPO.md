@@ -58,13 +58,20 @@ Decided (PASS-1 §2.3 + N6 WIRE):
 - `src/styles/glass/reveal.css:210` — the `data-motion="reduced"` + `data-motion="off"` arms.
 - The loud-scope `--motion-tempo: 1` re-pins (dock morph / drawer / deck scopes).
 - NEW `demo/stories/motion/tempo.vue` — a live 0.7→1.3 slider over dropdown + popover + dialog + JS dock morph.
+- AUTHOR Arm F into `scripts/proof-no-masking-fallback.mjs` + a `no-masking-manifest.mjs` entry: the
+  data-motion dead-signal clause (emitters counted in SFCs vs `[data-motion` consumers in src/styles;
+  zero consumers with ≥1 emitter = RED) + the planted-dead-wire self-test bite (the R14-01 fix — the
+  gate must be ABLE to detect what this wave discharges).
 
 ## §Acceptance
 
 Gate: **`proof:motion-one-clock`** (NEW, born-RED) — a CSS dropdown and a JS dock morph co-scale in proportion
 at tempo 0.85 and 1.2 (CSS_t90/JS_t90 ratio ≈ 1 at both). PLUS:
-- **`proof:no-masking-fallback`** — the N6 wire: `data-motion="reduced"/"off"` has ≥1 LIVE CSS consumer on disk
-  (a dead wire is a masking crime → the wire discharges it). BORN-RED at HEAD (6 emitters, 0 CSS consumers).
+- **`proof:no-masking-fallback` EXTENDED (the R14-01 correction — this wave AUTHORS the data-motion arm)**:
+  the existing gate PASSES at HEAD and carries NO data-motion clause; this wave adds Arm F — an emitted
+  `data-motion` attribute with ZERO live CSS consumers is a dead signal (the masking class). The NEW clause
+  is born-RED on the HEAD state (6 SFC emitters, 0 `[data-motion` consumers in src/styles) and flips GREEN
+  at the reveal.css wire. Never a claim that the pre-existing arms detect this.
 - **`proof:spring-tokens-synced`** stays GREEN with ZERO consumer diffs (the reader keeps the `-duration` name
   — the G4 round-trip). Self-test bites: a synthetic tempo-write that DOESN'T reach a JS spring reds
   `motion-one-clock`; the reduced/off arms absent reds `no-masking-fallback`.
