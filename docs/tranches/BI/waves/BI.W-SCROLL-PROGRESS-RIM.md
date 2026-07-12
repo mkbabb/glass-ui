@@ -24,3 +24,11 @@ engines — the thin rounded rainbow rim reads against ss-02's gray band as the 
 
 Band: B3-adjacent (authored under B1 Law-3; LANDS after BI.W-DOCK-SPINE provides the plate host —
 the round-4 BI-DAG-05 sequencing edge made explicit).
+
+
+## Work addendum (R5-C-03 — the /color promotion is OWNED here)
+Move `composables/spectrum-walk.ts` (the value.js-bearing OKLCH/shorter walk) from border-progress
+to the shared `/color` leaf (its natural home beside `cssToOklch`), preserving the dynamic-import
+boundary; re-point border-progress's internal import to /color (it remains a consumer of the shared
+leaf, still 0 binary consumers of the border-progress PACKAGE — the retire wave stands); the dock rim
+consumes /color directly. This wave OWNS that move; GLASS-TOKEN-PRUNE and BORDER-PROGRESS-RETIRE cite it.

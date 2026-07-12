@@ -1,5 +1,7 @@
 # BI.W-VIRTUAL-TRUTH — the /virtual consumer-truth adjudication (DOC-4)
 
+Band: B8 (prunes + consumer truth).
+
 ## Mandate
 FAM-16 DOC-4: the /virtual leaf's BC un-retire justification is fabricated — its named binary
 consumer (words DefinitionContentView) is deleted; words ships a LOCAL fork; only internal glass-ui

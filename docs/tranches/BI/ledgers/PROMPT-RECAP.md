@@ -568,3 +568,8 @@ Two un-terminal "decide build-or-retire" rows RULED terminal (UF-P2 forbids the 
 |-----|--------|
 | WS1-09 macro-flower | RETIRE — decorative variant with no consumer demand and no owning design problem; re-entry only via a fresh user ask (never a standing book). |
 | WS5-04 metallic-aurora | RETIRE — the metal-finish shipped as the aurora metal-gradient medium (the BD arc; the prism-medium slot now paints metal-gradient per the chronic ledger); iOS-27 T11 adjudicated the aurora register MET/BETTERED. Any further metallic ask re-enters fresh. |
+
+## ADDENDUM 2 (round-5 phantom repoints)
+
+BI.W-FLATTEN-PREP / BI.W-G9-HARVEST → owned by BI.W-STRUCTURE-RESEQUENCE via the BH section IDs
+(S1-FLATTEN-PREP, S0-G9-HARVEST); the sub-waves are authored as BI specs at that wave's execution start.

@@ -266,3 +266,17 @@ decided / routed) but never LIVENESS. BI must add these trigger-fired probes to 
 - **binary-vs-demo consumer split:** proof:component-orphan must count binary (sibling+registry) consumers
   distinctly from demo+internal (kills the vacuous ≥2-green that greened border-progress).
 - **phantom-owner RED:** a masking/ratchet owedBy/carve-successor that names no real waves/<id>.md REDs.
+
+---
+
+## ADDENDUM 2 (round-5 BI-R5-LEDGER-PHANTOM-ORPHANS reconcile — phantom wave names → the real roster)
+
+| ledger name | real owner |
+|---|---|
+| BI.W-A11Y-SWEEP | the B8 a11y cluster: BI.W-SLIDER-THUMB-NAME + BI.W-SPLITCHARS-ARIA + BI.W-DEMO-SOURCE-SCAN (+ ESC-STACK's focus-trap arm) |
+| BI.W-CENSUS-DETECTOR-HARDEN | BI.W-RATCHET-GROWTH (the detector/ledger-liveness contract) |
+| BI.W-DEMO-CONTROL-WIRE | BI.W-GRAIN-WIRE (the story dead-ref audit rides it) |
+| BI.W-MASKING-OWNER-RESOLVE | BI.W-AXES-GATES (the owedBy-resolve clause, round-4 addition) |
+| BI.W-METRIC-FAMILY-RELOCATE | BI.W-METRICS-DEMO (disposition CORRECTED to STAY per XR-3; the demo redesign is the wave) |
+| BI.W-RATCHET-REDRAIN | BI.W-STYLE-REDRAIN + BI.W-ENCAP-REDRAIN (B0) |
+| BI.W-SAFARI-METAL-VERIFY | BI.W-DOCK-DEVICE (the visible-Safari batch) |

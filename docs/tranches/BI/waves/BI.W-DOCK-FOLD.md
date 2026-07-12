@@ -93,3 +93,13 @@ table + the resolving MIGRATION rows.
   PRESERVED through the `<DockControl>` fold (the folded control keeps `useLiquidPress` + `--dock-press-t`).
 - The reka `ui/tabs` retire + the `useDockItemDrag` retire land as decided-terminal disposition rows (clean
   break, no alias; the census-verified zero-binary-consumer verdicts recorded).
+
+
+## Round-5 additions (R5-C-02 + the atlas P-loop coupling)
+- MIGRATION+ask rows for **value.js**: `useLayerTransition` (ActionBarLayer.vue:8, Dock.vue) +
+  `DockLayerGroup`/`DockLayer` — the crossfade fold's consumer set includes value.js, NOT speedtest
+  alone; a silent prune of the published symbols is forbidden (F4).
+- The atlas **DockAppendix PEEK-as-third-detent** ask (atlas-inbox-2026-07-12-p-loop.md §3, refining
+  ask #17) rides the SAME useLayerTransition→orchestrator fold: the crossfade slot's design carries
+  the tri-state (SHUT→PEEK→FULL) as a bounded extension consideration; atlas self-hosts until the
+  primitive ships and swaps on its consume batch.

@@ -14,7 +14,11 @@ charter; `docs/tranches/BH/spec-structure/` folds in via `waves/BI.W-STRUCTURE-R
    budget gate failing, the release test step failing with 50 reds, the MIGRATION self-contradiction)
    and BI's own breaks (viz deletions, dock fold, overlay union, synonym renames) belong in ONE
    coherent major, not two. Counter-option preserved: cut 5.0.0 first as the BG record, absorb BI as
-   6.0.0.
+   6.0.0. PRIORITY SIGNAL (atlas P-loop communiqué, 2026-07-12): atlas's six-tranche dock-collapse
+   chronic is root-caused to glass-ui 4.2.0's own synthetic dispatch — ALREADY DELETED at HEAD —
+   so every week the cut waits, that defect class stays live on seven atlas routes; the atlas
+   consume wave is poised born-RED on the tag markers. The signal strengthens the ONE-cut-soon
+   recommendation without changing the user gate.
 2. **The judgment captures** (paths in the wave specs' Obligations):
    a. **Dock spring** — shipped 0.68/ζ0.64 (+6.9%, the liquid-weight tune) vs the measured-iOS band
       0.28±0.04/ζ0.82±0.06 (1.1–1.4% overshoot). The A/B pair + the iOS reference arm.
@@ -27,6 +31,10 @@ charter; `docs/tranches/BH/spec-structure/` folds in via `waves/BI.W-STRUCTURE-R
       lands enters in-band); the 0.88 arm captured if the user wants globally tighter.
    d. **Button blur-mute delta** — two candidate `-radius` cohorts captured.
    e. **Eyeglass pill vertical sizing default** (UF-H1's config axis) + eyeglass-as-default tabs.
+   f. **Hero cartoon-weight A/B** (SHADOW-GRAMMAR: the loud-CTA punch register post the rest-stamp
+      gating — reverses a shipped register; capture pair in the spec).
+   g. **DRAWER_SNAP detent retune A/B** ({0.5,0.74} → the measured-iOS ≈{0.32,0.80}; DRAWER-PERF's
+      obligation — reverses a shipped register; capture pair in the spec).
 
 ## §1 — The band DAG (90 waves; specs in `waves/BI.W-*.md`)
 

@@ -76,3 +76,8 @@ demo-only-category report over the current tree ARE the evidence.
 - FEEDS **W-BORDER-PROGRESS-RETIRE** (border-progress is the exemplar demo-only subpath the split catches) and
   **W-METRICS-DEMO** (the metric family clears the split's BINARY bar — 3 repos — proving the split is not a
   blanket-retire).
+
+
+## Round-5 note (BI-R5-VIRTUAL-DOUBLE-OWN)
+The /virtual TERMINAL FATE is owned by BI.W-VIRTUAL-TRUTH alone; this wave's gate clause reports the
+consumer categories and CITES that wave — it decides nothing about /virtual's end-state.

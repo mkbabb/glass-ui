@@ -30,7 +30,7 @@ RE-BASELINES; it does not re-author the 20 wave-spec bodies (those are re-scoped
 The structure band (S0–S4 spine + S5 asks + S6 close) runs AFTER the BI repair bands (B0 P0 repairs · B1
 geometry · B2 glass-simplify · B3 dock greenfield · B4 pager greenfield · B5 substrates/viz-delete · B6
 storybook · B7 motion · B8 prunes + consumer-truth). Census keys off the REPAIRED tree, never the pre-repair
-one. `BI.W-CENSUS-RECOMPUTE` becomes the FIRST structure-band wave (not the first BI wave), with `published`
+one. `S:CENSUS-RECOMPUTE (BH-plan ID)` becomes the FIRST structure-band wave (not the first BI wave), with `published`
 replaced by `allDone(B0..B8)` as its precondition.
 
 ### D2 — the semver reconcile (STRUCT-2, Decision-0)
@@ -46,7 +46,7 @@ deletions the plan assumed are REMOVED from the breaking set (XR-3 — the famil
 
 ### D3 — census re-baseline (STRUCT-3)
 
-`BI.W-CENSUS-RECOMPUTE` strips every hardcoded expectation number (91/90 families, 9 viz, 94/94 subpaths, ~568
+`S:CENSUS-RECOMPUTE (BH-plan ID)` strips every hardcoded expectation number (91/90 families, 9 viz, 94/94 subpaths, ~568
 specifiers, 865 tier-literals, 638 renames, 190 chunks) and RECOMPUTES on the repaired tree: flat families
 DROP (−3 viz, −glass-panel, −scrolling-text, −icon-tooltip-fold; the metric families STAY per XR-3, so the
 ROUND-1 "−3 metric" is REVERSED) to a census-recomputed count (≈85 — NOT hardcoded; the figure is the
@@ -96,7 +96,7 @@ lands in the repair band; GUTS-RESIDUAL reads the post-adjudication tree.
 
 STRUCT-8's original disposition (add a metrics-transfer carry to `ASK-SPEEDTEST`) is WRONG per XR-3: the metric
 family (metric-cell/stack/badge) + instrument-chassis + pulse are a THREE-repo public surface (speedtest +
-muster + sci-report) and STAY library surface (`W-METRICS-DEMO`). So `BI.W-ASK-SPEEDTEST` carries NO
+muster + sci-report) and STAY library surface (`W-METRICS-DEMO`). So `S:ASK-SPEEDTEST (BH-plan ID)` carries NO
 metrics-adoption; its real cut-fixed carries are the `/api` break (2 sites: speedtest `TimelineSegment→/timeline`,
 muster `aurora-config→/aurora`) + the kf `^5.2.0` / value `^3.1.0` peer bumps + the graduations/backend reshape.
 The metric-family prune line is DELETED from the structure asks.
@@ -140,7 +140,7 @@ BI-close (B10, `W-CLOSE`) subsumes the structure close into the ONE cut (Decisio
   (the sequence law D1, the semver reconcile D2, the census re-baseline D3, the dropped PROMOTE-CONTEXT, the
   re-scoped README/FOLD/PROMOTE-PRIMITIVES/CSS-B2, the corrected ASK-SPEEDTEST) — strip every stale hardcoded
   count, name the repaired baseline.
-- RE-SCOPE the affected wave specs in place (`BI.W-CENSUS-RECOMPUTE`, `-FLATTEN-PREP`, `-FLATTEN-MOVE`,
+- RE-SCOPE the affected wave specs in place (`S:CENSUS-RECOMPUTE (BH-plan ID)`, `-FLATTEN-PREP`, `-FLATTEN-MOVE`,
   `-PROMOTE-PRIMITIVES`, `-README-REMEDIATE`, `-FOLD-CENSUS`, `-CSS-COLOCATE-B2`, `-ASK-SPEEDTEST`) — strip the
   stale figures, re-point the greenfield-owned rows, note the fold of PROMOTE-CONTEXT.
 - RECORD the STRUCT-9/10/11/12/14 items as OWNED by the repair bands (W-VIZ-DELETIONS gate orphans + SSOT,
