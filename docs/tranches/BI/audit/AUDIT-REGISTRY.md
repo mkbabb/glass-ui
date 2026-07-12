@@ -294,5 +294,46 @@ the orphan-gate demo-counting. Framing precisions: the Escape collision is first
 (narrower than "4 containers"); the dead Transition recipes are demo-exercised (motion.vue tour) with
 zero production consumers; component-orphan excludes only the package's own same-named story.
 
-Registry state: OPEN (rounds 1, 2, 2b folded). Round 3 = the stability check (fresh eyes over the
-full registry; two consecutive clean rounds close the audit).
+---
+
+# iOS-27 REFERENCE FOLD (UF-P8; ladders + suffusion map at design/ios27-reference/)
+
+## FAM-18 — the spring time-base parity break (M1) — VERIFICATION OWED (round 3)
+
+The Fable motion analyst measured the emitted CSS `linear()` spring curves painting t90 in 44–79ms
+while the JS `SpringProgress` integrator takes 217–508ms for the SAME (response, ζ) — a ~5× time-base
+compression in `regen-spring-tokens.mjs`. If confirmed, this is the PREREQUISITE fix before ANY
+spring retune (every CSS-vs-JS feel comparison across BD/BG argued across two different clocks), and
+it carries a kf coordination ask. Round-3 must independently re-verify (render one spring both ways,
+measure), then the fix wave is born-RED against the measured parity.
+
+## The measured iOS calibration (binding reference; full tables in the ladders)
+
+- iOS dock morph: response 0.28±0.04, ζ 0.82±0.06, overshoot 1.1–1.4% — the shipped DOCK_SPRING
+  (0.68/ζ0.64, +7.3%) is 2.3× slower with ~6× the overshoot than Apple's real motion. The G8 A/B
+  goes to the user WITH the measured iOS arm as the reference: "liquid weight" per Apple is brisk +
+  tiny overshoot + coupled channels + velocity continuity, not slowness.
+- Corpus-wide surface overshoot ceiling: ~1.7%.
+- Enters: iOS overlays are blur-led ghosts 130–375ms (ours paint t90 44ms — FASTER than iOS);
+  exits 50–117ms (ours 200ms — slower). The tempo seed = 1.0 identity; the tightening lands
+  per-register from the measured table, not via a global scalar guess.
+- Eyeglass: needs a NEW spring row (0.32–0.40/ζ0.6–0.85) + the two-rest-state `--eyeglass-live-t`
+  scalar (settled-inset ⇄ live-proud) + interior magnification ×1.15–1.25 + the edge-asymmetric
+  release (lead ~117ms / trail ~270ms) — the SAME two-edge driver the pager worm needs (one
+  mechanism, two consumers).
+- Dock frost: house 9px ≥ reference ≈3–5pt — do NOT deepen the nav dock.
+- Goo waist: ≤2 frames (17–33ms) of visible neck; no taffy threads.
+
+## The de-dup roster (the suffusion map's single-home table; 26 rows, 30 collapsing duplicates)
+
+Headline collapses the formation folds into wave specs: the FOUR enter registers → .glass-reveal
+table; 7 dock SpringProgress sites → ONE useDockSpring; the dock scalar zoo (4 scalars + 7-factor
+scale product) → one; the fission complex (~2,026L) RETIRED as a dock facility (T2, pending G10
+census; goo spec kept as a recorded bound + the DOCK-B bank re-trigger); the pager goo drive +
+carousel worm DELETED wholesale; useGlassRenderer second refraction path → .glass-lens; the
+metal border-image → masked band; the dead recipes/attrs/tokens per the roster. BD T-table: 5 MET,
+8 BI-OWNED (several corrected/re-scoped), 3 RETIRED with rationale (T2 fission, T3 premise misread,
+T8 re-scoped to lens-on-frost).
+
+Registry state: OPEN (rounds 1, 2, 2b + the iOS-27 fold). Round 3 = the stability check + the M1
+re-verification. Two consecutive clean rounds close the audit.
