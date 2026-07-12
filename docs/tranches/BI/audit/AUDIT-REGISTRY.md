@@ -335,5 +335,46 @@ metal border-image → masked band; the dead recipes/attrs/tokens per the roster
 8 BI-OWNED (several corrected/re-scoped), 3 RETIRED with rationale (T2 fission, T3 premise misread,
 T8 re-scoped to lens-on-frost).
 
-Registry state: OPEN (rounds 1, 2, 2b + the iOS-27 fold). Round 3 = the stability check + the M1
-re-verification. Two consecutive clean rounds close the audit.
+---
+
+# ROUND-3 FOLDS (digest: ROUND-3-DIGEST.md)
+
+## FAM-18 — M1 CONFIRMED + root-caused (verification discharged)
+
+Triangulated (analytic + node-vs-real-kf + live paint): the linear() curve normalizes over
+`maxDuration = 4×response` (the kf default) while the paired duration token uses the 2%-settle
+horizon — ~4.8× apart; replaying the long-normalized curve over the short clock compresses ~5×.
+CSS t90 44–79ms vs JS 211–508ms, matching the iOS-analyst claim exactly. **The fix is
+glass-ui-LOCAL** (pass `maxDuration = settle` into springLinearStops — verified <1ms parity; the
+earlier "kf coordination ask" framing is REFUTED — kf already honors the override). Riders: the
+robust fix derives BOTH horizons from the TRUE numeric 2%-settle (the gentle ζ=1 endpoint-snap);
+`proof:spring-tokens-synced` gains a TEMPO-parity clause (value-parity alone let the 5× drift sail).
+Downstream (separate wave): the unified clock lands at 211–508ms — SLOWER than measured iOS
+(130–180ms) — the absolute recalibration is the retune the iOS ladder already frames.
+
+## FAM-1 EXTENSION (Sweep B — round 3 is NOT a clean round)
+
+- **STAB-B-1 [P0]** the release-tagged `test` step FAILS (50 vitest failures, 6 errors, 12 files) at
+  step 2, BEFORE the FAM-1 proof gates even run. Causes: **STAB-B-2** GlassDock autoLuminance
+  default-TRUE (BG.W-GLASS-SIGNAL-TRUTH) calls elementsFromPoint (absent in happy-dom) crashing ~30
+  dock tests — the wave never re-ran the dock suite; **STAB-B-3** proof-doc-consistency.test.ts 6/6
+  red (gate re-homed to docs/canon at BH.B5c; the test still expects the CLAUDE.md parser — the gate
+  itself passes); **STAB-B-4** the /dock surface snapshot stale (22→27; 5 unregistered siri-*
+  symbols). → all three join the B0-CUT repair band.
+- Everything else CLEAN: build exit 0; the 93 export targets resolve; git tree clean; 130/130 routes
+  200; spot consoles clean.
+
+## Sweep A: effectively CLEAN (1 new P3)
+
+Folded-member deep-link 404s (the ~25 FOLDED_STORY_IDS routes dropped without redirects) — D-STORY
+IA note. Plus a concrete FAM-7 instance: /data/timeline narrates the library's own build history as
+sample data (the W-DEMETA sweep must cover DATA, not just blurbs).
+
+## Formation-readiness: SUBSTANTIVELY READY; registration residuals patched
+
+60/62 UF rows owner-mapped; no naked banks; relay carries owned. Patched by the orchestrator:
+UF-A9 + UF-P8 appended to the PROMPT-RECAP owner spine (both were substantively addressed but
+unregistered); the two un-terminal PROMPT-RECAP rows RULED (below).
+
+Registry state: OPEN. Round 3 was NOT clean (STAB-B-1 family). Round 4 (post-pass-4) is clean-round
+candidate #1; the audit closes on two consecutive clean rounds.

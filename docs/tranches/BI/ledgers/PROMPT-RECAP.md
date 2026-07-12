@@ -550,3 +550,21 @@ has ONE owning BI band/wave. This IS the BI plan seed.
 *Ledger complete. Terminal disposition on every BG/BH-era prompt: LANDED · PARTIAL(owner) · UNADDRESSED(owner)
 · SUPERSEDED · RETIRED. Zero re-books. Diseases (§H, 12 rows) each carry a first-principles terminal owner.
 The §UNRESOLVED table is the BI plan seed.*
+
+---
+
+## ADDENDUM (orchestrator, 2026-07-12 — the round-3 formation-readiness patch)
+
+Two rows post-dated the ledger build and are hereby registered in the owner spine (FR-2/FR-3):
+
+| id | directive | owner |
+|----|-----------|-------|
+| UF-A9 | button-corner crescent artifacts "in many uis" (2026-07-12; ss-26) | D-GLASS Law-4 shadow grammar (`proof:geometry-grammar` capsule-crescent clause) + the offset-stamp × radius census wave |
+| UF-P8 | iOS-27 reference re-examination with Fable agents; suffuse + de-duplicate (2026-07-12) | DONE-in-loop: `design/ios27-reference/` ladders + SUFFUSION-MAP (5676bcc0); the de-dup roster folds into the formation wave specs; DesignSync publication rides formation |
+
+Two un-terminal "decide build-or-retire" rows RULED terminal (UF-P2 forbids the re-book):
+
+| row | ruling |
+|-----|--------|
+| WS1-09 macro-flower | RETIRE — decorative variant with no consumer demand and no owning design problem; re-entry only via a fresh user ask (never a standing book). |
+| WS5-04 metallic-aurora | RETIRE — the metal-finish shipped as the aurora metal-gradient medium (the BD arc; the prism-medium slot now paints metal-gradient per the chronic ledger); iOS-27 T11 adjudicated the aurora register MET/BETTERED. Any further metallic ask re-enters fresh. |
