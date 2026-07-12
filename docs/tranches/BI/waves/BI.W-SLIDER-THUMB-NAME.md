@@ -69,3 +69,11 @@ Gate: **`proof:a11y`** (the slider arm — device-free source arm asserting the 
   for/id wiring where absent.
 - ax:speedtest-a11y-bundle: the bundle-label RETIRES (each concrete row is decomposed + owned) + the
   gate asserts no un-decomposed bundle-kind book survives in the ledgers.
+
+
+## Round-10 designation (BI-R10-01 — this wave is THE framework-author of the a11y source gate)
+`proof:a11y` is AUTHORED HERE (NEW, born-RED on the nameless slider thumbs at HEAD): the device-free
+source-gate framework (axe-class asserts expressible from source) whose arms are — the slider-thumb
+accessible-name arm, the LabeledField for/id arm (round-6 addition above), the bundle-decompose arm,
+and the SPLITCHARS-ARIA arm (that wave EXTENDS this gate). The per-arm axe π specs remain the binding
+paint truth; this gate is the device-free floor.

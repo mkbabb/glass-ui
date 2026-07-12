@@ -28,3 +28,11 @@ DOC-4 → terminal. The BC un-retire row → corrected-with-rationale.
 THIS wave is the SOLE owner of the /virtual terminal fate (adjudicate -> execute). Any other wave
 mentioning /virtual (the orphan-split gate, the doc rewrites) CITES this wave and defers; no second
 end-state may ship. The adjudication rule stands as §Design (a)/(b) — one terminal outcome.
+
+
+## Round-10 designation (BI-R10-01 — this wave is THE framework-author of the consumer-truth gate)
+`proof:consumer-evidence-true` (§Acceptance above, NEW born-RED) IS the shared consumer-truth gate the
+B8 retire waves cite: it gains three sibling arms — the SPEEDTEST-ONLY-PAIR arm, the
+BORDER-PROGRESS-RETIRE arm (the 0-consumer + re-entry-trigger assert), and the METRICS-DEMO KEEP-guard
+arm (the 3-repo consumer floor) — each EXTENDING this gate, never a second framework. The
+`proof:consumer-truth` name in those three specs resolves HERE.

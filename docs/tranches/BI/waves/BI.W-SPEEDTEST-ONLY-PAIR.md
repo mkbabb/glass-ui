@@ -75,3 +75,9 @@ registry probe artefact are the evidence.
 - Terminalizes the XR-3 speedtest-only remainder: **scrolling-text RETIRE-RELOCATE** · **icon-tooltip
   FOLD-onto-Tooltip** (W-OVERLAY-UNION executes the mechanism; this wave owns the consumer-truth + the asks).
 - Liveness probe: a re-minted `/scrolling-text` with speedtest-only consumers REDs.
+
+
+## Round-10 gate designation (BI-R10-01)
+The `proof:consumer-truth` named in §Acceptance is the speedtest-only-pair arm of **`proof:consumer-evidence-true`,
+authored (NEW, born-RED) by BI.W-VIRTUAL-TRUTH** — this wave EXTENDS that gate with its arm; it
+authors no second framework.

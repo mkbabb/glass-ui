@@ -79,3 +79,9 @@ differential are the evidence.
   0 binary consumers REDs.
 - **OFIT-3 completion-seal:** WATCHLIST (KEEP published, demo-only status in cut notes) — not retired (1 honest
   consumer + present evidence doc).
+
+
+## Round-10 gate designation (BI-R10-01)
+The `proof:consumer-truth` named in §Acceptance is the border-progress 0-consumer + re-entry arm of **`proof:consumer-evidence-true`,
+authored (NEW, born-RED) by BI.W-VIRTUAL-TRUTH** — this wave EXTENDS that gate with its arm; it
+authors no second framework.

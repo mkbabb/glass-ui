@@ -81,3 +81,9 @@ this wave carries the DECISION + doc truth, not a repaint.
   the D-FACTOR Metric fold or kept as-is). Liveness probe: a silent metric-subpath drop REDs M1.
 - CORRECTS **STRUCT-8**: the metrics-transfer carry is REMOVED from ASK-SPEEDTEST (recorded in
   W-STRUCTURE-RESEQUENCE).
+
+
+## Round-10 gate designation (BI-R10-01)
+The `proof:consumer-truth` named in §Acceptance is the metrics 3-repo KEEP-guard arm of **`proof:consumer-evidence-true`,
+authored (NEW, born-RED) by BI.W-VIRTUAL-TRUTH** — this wave EXTENDS that gate with its arm; it
+authors no second framework.

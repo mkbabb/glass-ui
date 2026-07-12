@@ -50,3 +50,8 @@ Gate: **`proof:a11y`** (the split-chars arm — device-free source arm + a live 
 
 - Terminalizes **A11Y-3** (FAM-15): BUILT (`role="img"` on the labeled wrapper). Liveness probe: a role-less
   element carrying a bound `aria-label` REDs.
+
+
+## Round-10 gate designation (BI-R10-01)
+The `proof:a11y` named in §Acceptance is the SplitChars arm of **`proof:a11y`, authored (NEW,
+born-RED) by BI.W-SLIDER-THUMB-NAME** — this wave EXTENDS that gate; it authors no second framework.
