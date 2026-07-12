@@ -21,7 +21,7 @@ goo-blob + fourier-field + constellation + liquid-grid (`useLiquidGrid`) + `(use
 no alias — the symmetric-closure discipline (a broken-reference half-delete REDs the same as a stub).
 
 - **DELETE the three component dirs, stories, subpath barrels, and package.json exports** (breaking — the
-  MAJOR cut carries it; paper-grid/goo-dot-matrix drops were zero-consumer per XR, and these three have zero
+  MAJOR cut carries it; paper-grid/liquid-grid (liquid-grid is the live keeper; the paper-grid name is its pre-rename form)/goo-dot-matrix drops were zero-consumer per XR, and these three have zero
   binary consumers too — safe on the sibling census).
 - **Orphan the ~5 gates:** `proof:concentric`, `proof:dot-matrix`, `proof:viz-dotflow`, `proof:flow-field`
   (the dot-flow-field colocation gate) — remove from `package.json` + the `gates.mjs` registry (all four are

@@ -608,3 +608,10 @@ FORWARD proposals → committed IDs (the binding map; clause-g scope):
 HISTORICAL names appearing in addressed-by/evidence columns (past-tranche records, clause-g EXEMPT,
 never BI targets): W-BUTTON-GLASS, W-COLOCATE, W-DEAD-SWEEP, W-DEEP-GLASS, W-DESHADCN,
 W-DOCK-NORMALIZE, W-EYEGLASS-TABS, W-LENSING, W-SURFACE-AXIS.
+
+## ADDENDUM 4 (round-13 courtesy note — the ASK-* relay labels)
+
+The `ASK-SPEEDTEST[-METRICS]`/`ASK-SCI-REPORT`/`ASK-WORDS` owner-column labels resolve to
+**BI.W-PRECUT-XR-ASKS** (the pre-cut pin-guards + inbound dispositions) and **BI.W-FACTOR-ASKS** /
+**BI.W-DOCK-FOLD** (the fold-migration relays), with the structure-band sibling asks riding
+BI.W-STRUCTURE-RESEQUENCE's S5 IDs. Not W-shaped, out of clause-g scope; mapped here for readers.
