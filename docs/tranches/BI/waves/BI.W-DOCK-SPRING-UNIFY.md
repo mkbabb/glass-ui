@@ -82,7 +82,9 @@ extended.
 - SU4 **M1-clock**: the dock's CSS `--spring-*` legs read the M1-corrected emission (the tempo-parity clause
   the motion-band M1 wave adds is GREEN); no dock leg carries the pre-fix ~5× compressed curve.
 - Self-test bites: a synthetic second `new SpringProgress` REDs SU1; a synthetic re-added
-  `--dock-punch-stretch` REDs SU2; a synthetic 0.68/0.64 dock row REDs SU3.
+- self-test bites: a planted second `new SpringProgress` in the dock band REDs SU3; a planted
+  arrival-cut timer REDs SU3; a planted preset↔CSS-token (response, ζ) disagreement REDs SU3.
+  (NO value-row bite — any (response, ζ) the user selects is legal.)
 
 ## §π/DELTA
 
@@ -107,7 +109,9 @@ extended.
 ## §Dispositions
 
 - **T1 dock morph** (BD IOS27-REFERENCE "DOCK_SPRING matches the feel") → TERMINALIZED: BI-OWNED calibration —
-  C7 proved the BD.W-ANIM-IOS27-TUNE retune (0.68/0.64) moved AWAY from the reference it cited; the measured
+- self-test bites: a planted second `new SpringProgress` in the dock band REDs SU3; a planted
+  arrival-cut timer REDs SU3; a planted preset↔CSS-token (response, ζ) disagreement REDs SU3.
+  (NO value-row bite — any (response, ζ) the user selects is legal.)
   band (0.28±0.04, 0.82±0.06) is the G8 target. Decided-terminal (the A/B is the user-confirmation, not a
   re-open).
 

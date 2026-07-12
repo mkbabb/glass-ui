@@ -39,7 +39,7 @@ charter; `docs/tranches/BH/spec-structure/` folds in via `waves/BI.W-STRUCTURE-R
    g. **DRAWER_SNAP detent retune A/B** ({0.5,0.74} → the measured-iOS ≈{0.32,0.80}; DRAWER-PERF's
       obligation — reverses a shipped register; capture pair in the spec).
 
-## §1 — The band DAG (90 waves; specs in `waves/BI.W-*.md`)
+## §1 — The band DAG (91 waves; specs in `waves/BI.W-*.md`)
 
 ```
 B0-CUT (13)  ── the cut-blockers + doc truth ─── gates everything
@@ -47,8 +47,8 @@ B0-CUT (13)  ── the cut-blockers + doc truth ─── gates everything
    ├── B1-GEOMETRY (8)      the radius/shadow/border grammar (proof:geometry-grammar, 4 laws)
    ├── B7-MOTION (8)        M1 parity FIRST (SPRING-PARITY gates every retune) → registers/tempo/landings
    │
-   ├── B2-GLASS + B8-FACTOR (15)   Surface extraction · overlay union · folds · renames · gates
-   ├── B3-DOCK (10)         the greenfield (spine→escape→controls→crossfade→overflow→spring→fold→retires→gates→device)
+   ├── B2-GLASS + B8-FACTOR (14)   Surface extraction · overlay union · folds · renames · gates
+   ├── B3-DOCK (11)         the greenfield (spine→tabs-factor→escape→controls→crossfade→overflow→spring→fold→retires→gates→device)
    ├── B4-PAGER + B5-VIZ (13)  the worm · carousel · ribbon · deletions · field core · aurora · perf clamps
    ├── B6-STORY (9)         schema · kit · codeblock · shrink-hero · tiles · demeta · affordance
    ├── B8-PRUNES (14)       interaction repairs · a11y · prunes · consumer truth
@@ -148,5 +148,5 @@ TEMPO tempo-parity); the /virtual triple-divergence resolved to ONE owner (VIRTU
 scroll-rim spectrum promoted to /color (border-progress stays 0-consumer, its retire stands); the
 band numbering reconciled to NAMES; STRUCTURE-RESEQUENCE's sub-wave refs bound to BH section IDs;
 the 16 dangling W-REFLECT refs re-pointed to the gestalt close; AXES-GATES gained the owedBy-resolve
-+ FAM-11 residue clauses. Wave count stands at 90 (−1 retire, +1 mint). Round 5 verifies the fixes
++ FAM-11 residue clauses. Wave count: 91 (the round-4 −1 retire/+1 mint netted 90; the round-6 LEDGER-DETECTOR-HARDEN mint made 91; B0=13, B3=11 — the count annotations reconciled at round-7). Round 5 verifies the fixes
 + is clean-round candidate; the corpus closes on two consecutive clean rounds.
