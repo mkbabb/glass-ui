@@ -27,3 +27,14 @@ via a planted phantom self-test).
 
 ## Dispositions
 bld:census-detector-harden → BUILT here (terminal). The FAM-12 liveness doctrine → machine-locked here.
+
+
+## Round-12 scope pin (clause g — the dry-run's two residual classes resolved)
+Clause (g) applies to FORWARD disposition-targets ONLY: the `→ BUILD/FOLD/RETIRE` arrows and
+UNRESOLVED-table owner columns that point at BI work — each must resolve to `waves/BI.W-<id>.md`
+or an ADDENDA mapping row. OUT OF SCOPE (evidence, never targets): (i) historical wave names in
+addressed-by/evidence columns (past-tranche records — W-DESHADCN, W-COLOCATE, W-LENSING class);
+(ii) cross-tranche `resolvedBy`/flip-to refs on ALREADY-SHIPPED rows (BG.W-DEEP-GLASS-DECIDE,
+BH.B1-W3 — their evidence lives under the past tranche's audit/ dirs, not a waves/ dir); (iii)
+ADDENDA left-columns (the audit trail). The resolver rule + a per-class self-test bite (a planted
+unresolved FORWARD target flags; a historical evidence ref does NOT false-positive) ship with the gate.

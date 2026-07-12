@@ -301,3 +301,10 @@ decided / routed) but never LIVENESS. BI must add these trigger-fired probes to 
 The 7 phantom disposition targets are now resolved IN THE BODY (the addenda remain as the audit
 trail of the reconciliation history). BI.W-LEDGER-DETECTOR-HARDEN clause (g) gates this class
 henceforth: every disposition-target in this ledger's body must resolve to a real waves/<id>.md.
+
+
+## ADDENDUM 5 (round-12 — the §5 cross-tranche flip-tos are SHIPPED EVIDENCE, clause-g exempt)
+The §5 resolvedBy targets `BG.W-DEEP-GLASS-DECIDE` (×2) and `BH.B1-W3` reference ALREADY-SHIPPED
+work whose record lives under the past tranches' own dirs (BG: audit/visual/…DEEP-GLASS…DELTA.md;
+BH: the B1 cursor rows) — they are evidence of completed discharge, not resolvable BI targets, per
+the clause-(g) scope pin (BI.W-LEDGER-DETECTOR-HARDEN, round-12).
