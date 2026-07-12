@@ -1,8 +1,44 @@
 # BI EXECUTION — the cursor (guardian-readable; the orchestrator keeps it current)
 
-**GREENLIGHT: NO — armed, awaiting the user's word.** (Formation closed 2026-07-12 at 051e6957;
-execution prep completed 2026-07-12 on user order. Nothing below this line executes until the user
-greenlights; the judgment batch a–g and Decision-0 gate VALUES and THE CUT, never mechanisms.)
+**GREENLIGHT: YES — 2026-07-12 ~18:45 EDT, user order** ("Begin and continue the current tranche…
+do not relinquish control until the plan is complete IN TOTALITY… This is all under 5.0.0. You
+ratify the rest with your judgement, and record these choices."). Execution branch: `tranche/BI`
+(cut from tranche/BG @ 2c6c095d). Publish/push/deploy AUTHORIZED by the same order.
+
+## Decision-0 + the judgment batch — RESOLVED (user delegation, orchestrator-ratified 2026-07-12)
+
+**Decision-0 — RULED BY THE USER: the cut is 5.0.0.** One major at the BI close carrying
+repairs + greenfields + structure; the BG standalone cut is superseded. Atlas/speedtest/sci-report
+consume relays fire on the 5.0.0 tag (number-agnostic on atlas's side; outbound Decision-0 note owed
+via PRECUT-XR-ASKS per atlas §6).
+
+**Judgment a–g — DELEGATED to the orchestrator; RATIFIED as follows** (each recorded with its
+rationale; every A/B capture pair still lands per spec so the choices stay auditable):
+
+- **(a) Dock spring → the measured-iOS band: response 0.30 / ζ 0.82** (center of 0.28±0.04/ζ0.82±0.06),
+  post-M1, respecting the ≤~1% box-morph overshoot ceiling. Apple's liquid is brisk + tiny overshoot +
+  coupled channels — weight ≠ slow; the shipped ζ0.64 tail was only tolerable via the arrival-cut hack,
+  which is gone. Owner: DOCK-SPRING-UNIFY (mechanism) — the value pins post-SPRING-PARITY.
+- **(b) Pager goo-worm → SHIPS** (ruling 13 stands: 67fps real WebKit, raster 100× under budget; the
+  clip arm bowties at multi-hop and stays the @supports degrade floor). The veto is declined — the
+  moving capture reads as the Google-worm gesture, not the fat-fusing-pill still. Owner: PAGER-WORM.
+- **(c) Motion tempo → 1.0 identity + per-register tightening.** The M1 parity fix alone lands enters
+  in-band; a global 0.88 on top would double-tighten past the iOS ladder. Owner: TEMPO.
+- **(d) Button blur-mute → resting 8px → 7px on the `.btn-glass` cohort ONLY** (the user's words name
+  buttons, resolving Open-Gap-9's scope), via the `-radius` PRIMITIVE override. If the π ΔL reads
+  sub-perceptual, step 7→6px until the delta is measurable-but-a-hair; the recorded number is whatever
+  the π certifies. Owner: BLUR-MUTE.
+- **(e) Eyeglass → THE tabs default** (the user's own mandate); sizing defaults at the measured-iOS
+  mid-band — settled-inset 0.84×, live-proud 1.12× — with `--eyeglass-proud` shipping as the retune
+  knob. Owner: TABS-FACTOR.
+- **(f) Hero punch → Law 4 re-land: soft radius-following drop + press-squish + specular; the hard
+  cartoon stamp is GATED OFF pill silhouettes.** The crescent is the user's own twice-reported defect
+  (UF-A8/A9) — keeping the stamp on stadiums is untenable. The A/B must show the punch SURVIVES; if
+  the weight dies in paint, the pill-specific weight recipe (spec fallback) lands before close.
+  Owner: SHADOW-GRAMMAR.
+- **(g) DRAWER_SNAP → the measured-iOS (0.32, 0.80)**, landing only AFTER SPRING-PARITY and the
+  DRAWER-PERF mechanism fixes (the lag was never the spring), with the A/B pair captured. Owner:
+  DRAWER-PERF obligation → DOCK-SPRING-UNIFY-adjacent value pin.
 
 ## The band order (the PLAN §1 DAG; task ids in the session task list)
 
@@ -50,3 +86,4 @@ verify-siblings-intact before+after any siblings-absent emulation.
 ## Log
 
 - 2026-07-12: cursor minted; task DAG #81–#95 created; guardians re-tooled to execution posture. GREENLIGHT: NO.
+- 2026-07-12 ~18:45: USER GREENLIGHT — execution begins in totality; Decision-0 ruled 5.0.0; judgments a–g delegated + ratified (above); branch tranche/BI cut @ 2c6c095d; atlas asks #21–25 routed to PRECUT-XR-ASKS.
