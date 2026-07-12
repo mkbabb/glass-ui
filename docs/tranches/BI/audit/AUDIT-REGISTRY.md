@@ -378,3 +378,21 @@ unregistered); the two un-terminal PROMPT-RECAP rows RULED (below).
 
 Registry state: OPEN. Round 3 was NOT clean (STAB-B-1 family). Round 4 (post-pass-4) is clean-round
 candidate #1; the audit closes on two consecutive clean rounds.
+
+---
+
+# THE AUDIT CLOSE (2026-07-12, round 17)
+
+**The 17-round formation audit CLOSES on two consecutive clean passes (rounds 16 + 17).**
+The finding stream: R4=15 → R5=9 → R6=5 → R7=2 → R8=1 → R9=0 → R10=1 → R11=1 → R12=2 → R13=0 →
+R14=1 → R15=1 → R16=0 → **R17=0** — every finding fixed same-round, every fix substance-verified by a
+later round. The closing passes ran: the exhaustive gate-claim existence census both directions (25
+NEW gates all absent at HEAD; 24 EXTENDED gates all exist; gates EXECUTED, not grepped), the freshest-
+fix regressions, the oldest-findings regression (the five round-1 P1s still faithfully discharged),
+the roster bijection (91=91), and line-by-line breaking of the auditor's three bet-money specs — zero
+material findings. The corpus substance has been clean since round 9; rounds 10-15 hardened the audit
+machinery's own self-description (gate authorship, ledger resolution, born-RED honesty).
+
+The tranche stands as the return deliverable: PLAN.md + 91 waves + the ledgers (10 addenda) + the
+design record (5 passes + iOS-27 reference + 18 rulings) + this trail. The return awaits the
+user-ordered 48-hour floor (2026-07-14 02:30) and carries the §0 judgment batch (a-g) + Decision-0.
