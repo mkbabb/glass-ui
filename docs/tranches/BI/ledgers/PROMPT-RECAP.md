@@ -1,5 +1,12 @@
 # BI — THE PROMPT-RECAP LEDGER (the BG/BH-era accountability spine)
 
+> **OWNER-NAME RESOLUTION RULE (round-8 R8-F1, binding):** owner names in this ledger written before
+> the formation fleet authored the final wave set are PROPOSALS; the mechanical renames to the
+> committed 91 IDs are applied in place where the mapping is 1:1, and for any residual un-renamed
+> `W-*` proposal the BINDING owner map is `PLAN.md §2` + the ADDENDA tables. Phantom names surviving
+> inside ADDENDA left-columns are the historical audit trail, not live targets. The
+> `BI.W-LEDGER-DETECTOR-HARDEN` clause (g) gate enforces body-target resolution henceforth.
+
 **Charter.** Recapitulate EVERY user prompt/directive across the BG/BH era and verify each is addressed
 or carries a terminal owner. Re-booking is FORBIDDEN — every row gets **LANDED** (evidence) · **PARTIAL**
 (what remains + owner) · **UNADDRESSED** (owner) · **SUPERSEDED** (by what) · **RETIRED** (rationale).
@@ -43,13 +50,13 @@ The DIRECTIVE-LEDGER mined 1517 raw utterances → 94 distinct directives, statu
 | C-GRAY (LL48) | "No gray." warm-cream transmissive glass everywhere | PARTIAL | **PARTIAL-DISEASE** — re-reads gray on surfaces; UF-E10 (07-11) "repulsive gray" entrance re-flags it | **B2 D-GLASS + B5/B7** (§H-6) |
 | C-LIQUID (LL49) | liquid weight UNIVERSAL — inertia/bounce/squish/coupled-fade on ALL motion+scroll; "remember always" | PARTIAL | **PARTIAL** — law codified; standing MEMORY edict (§E-2); UF-I1 (dot-morph pager) + UF-G* re-ask fidelity | **B7 D-MOTION + B4 D-PAGER** |
 | C-BLUR (LL50) | dial glass blur back; ONE coherent blur register (dock==button==card) | PARTIAL | **PARTIAL** — calm ladder shipped; UF-B3/B4 re-ask "dial back globally a bit more" | **B2 D-GLASS** |
-| C-CAST-CLIP (LL51) | kill red/maroon dock shadow-cast halo; card corners clip | REGRESSED | **PARTIAL** — UF-A8 (button corner cartoon-cast slab) + UF-C6/C7 (dock clip) re-open | **B0/B1** (W-CARTOON-CAST-CALM) + **B3** |
-| C-SCROLLSHRINK (LL52) | titles scroll-and-shrink revived; kill the top aberrative bar | REGRESSED | **PARTIAL** — UF-F2 confirms StoryHero never composes the extant ScrollCard shrink (fades, never shrinks) | **B6 D-STORY** (W-STORY-CHASSIS) |
+| C-CAST-CLIP (LL51) | kill red/maroon dock shadow-cast halo; card corners clip | REGRESSED | **PARTIAL** — UF-A8 (button corner cartoon-cast slab) + UF-C6/C7 (dock clip) re-open | **B0/B1** (BI.W-SHADOW-GRAMMAR) + **B3** |
+| C-SCROLLSHRINK (LL52) | titles scroll-and-shrink revived; kill the top aberrative bar | REGRESSED | **PARTIAL** — UF-F2 confirms StoryHero never composes the extant ScrollCard shrink (fades, never shrinks) | **B6 D-STORY** (BI.W-STORY-SCHEMA) |
 | C-VIZ (LL53) | procedural-viz refinement; previews broken; blob/fourier/dot-flow rebuild | REGRESSED | **PARTIAL-DISEASE** — UF-E8 condemns dot-flow/concentric/dot-matrix ("30+ attempts"); UF-E3/E6/E9 re-ask | **B5 D-VIZ** (§H-7) |
 | C-PERSIST (LL54) | remove the useless persistent ℱ brand section atop both docks | UNADDRESSED | **UNADDRESSED** — still renders | **B3 D-DOCK** |
 | C-DESHADCN (LL55) | de-shadcn FORM — abrogate default shadcn/reka/tailwind styling | UNADDRESSED | **LANDED** — round-1: `proof:no-shadcn-default` GREEN (BG built it) | LANDED |
 | C-SAFARI (LL56) | all glass+goo+morph MUST work on Safari; no fallbacks | UNADDRESSED | **UNADDRESSED-DISEASE** — zero Safari verification; UF-C3 flags liquid-playground/dock-gallery broken in Safari | **round-2 verify + B3** (§H-5) |
-| C-PAINT (LL57) | real-paint-verify is the GATE; judge as a user on a fresh non-authored capture; blocks the tag | UNADDRESSED | **UNADDRESSED-DISEASE** — round-1 GATE-1: the 147-spec binding-π suite runs in NO close battery; visual-runner W4 born-RED, DELTA absent | **B10** (W-PI-IN-CLOSE) (§H-2) |
+| C-PAINT (LL57) | real-paint-verify is the GATE; judge as a user on a fresh non-authored capture; blocks the tag | UNADDRESSED | **UNADDRESSED-DISEASE** — round-1 GATE-1: the 147-spec binding-π suite runs in NO close battery; visual-runner W4 born-RED, DELTA absent | **B10** (BI.W-PI-IN-CLOSE) (§H-2) |
 | C-SIRI (LL58) | recreate Siri waveform + Siri glass dock-island | UNADDRESSED | **LANDED-PARTIAL** — siri-island landed (round-1); waveform shipped demo-private (scope-narrow, §A-WS6) | **B3/B6** (promote-trigger) |
 | C-ENCAP (LL59) | break >500L god-modules into colocated dirs; dedup carousel↔deck, popover↔dropdown | PARTIAL | **PARTIAL-DISEASE** — 9 files still >500L @ HEAD (surfaces 508, dark-arm 507, segmented-tabs 572, useGlassBackdropLuminance 554, property-regs 563, DockLayerGroup 524, shell 524, GlassDock 515, ladder 510) | **B0** (W-ENCAP-REDRAIN, W-STYLE-REDRAIN) + **B9** (§H-4) |
 
@@ -83,7 +90,7 @@ The DIRECTIVE-LEDGER mined 1517 raw utterances → 94 distinct directives, statu
 | WS2-10 | proper collapsed states; perfect CIRCLE not oval; longer hover window | PARTIAL | **PARTIAL→greenfield** | B3 |
 | WS2-11 | dock items draggable; golden drag-ring preserves radius | DEFERRED | **UNADDRESSED** — `useDockItemDrag` exists, unwired | B3 |
 | WS2-12 | a dropdown tints the ENTIRE dock; popover==dropdown | DEFERRED | **UNADDRESSED** | B3 |
-| WS2-13 | dock chroma-samples backdrop hue (iOS-27 deep transmit) | PARTIAL | **PARTIAL** — luminance-only; PERF-6 flags 10× getImageData readbacks | B3 + PERF (W-DOCK-LUMA-SHARE) |
+| WS2-13 | dock chroma-samples backdrop hue (iOS-27 deep transmit) | PARTIAL | **PARTIAL** — luminance-only; PERF-6 flags 10× getImageData readbacks | B3 + PERF (BI.W-DOCK-LUMA-SHARE) |
 | WS2-14 | bottom dock scrolling category tabs + core controls | PARTIAL | **PARTIAL→greenfield** | B3 |
 | WS2-15 | tab-bar/dock-gallery = ONE dock w/ tabs facility | PARTIAL | **PARTIAL** — UF-C3 dock-gallery broken in Safari | B3 |
 | WS2-16 | dock home-left nav-pattern, ONE root component | ADDRESSED | **LANDED** (W-DOCK-NORMALIZE census) — re-verify survives greenfield | B3 (carry) |
@@ -141,7 +148,7 @@ The DIRECTIVE-LEDGER mined 1517 raw utterances → 94 distinct directives, statu
 | ID | core | @4.2.0 | RE-VERIFIED | owner |
 |----|------|--------|-------------|-------|
 | WS5-01 | /substrates previews work (live, animate) | REGRESSED | **UNADDRESSED** — UF-E9/F1 stills low-quality | B5/B6 |
-| WS5-02 | goo-blob rebuilt + rename goo-blob→"blob" | PARTIAL | **PARTIAL-LIE** — rebuild landed; **rename marked DONE but UNEXECUTED** (dir+subpath still goo-blob; MIGRATION.md §262 lies) | B5 (W-BLOB-RENAME-LAND) (§H-3) |
+| WS5-02 | goo-blob rebuilt + rename goo-blob→"blob" | PARTIAL | **PARTIAL-LIE** — rebuild landed; **rename marked DONE but UNEXECUTED** (dir+subpath still goo-blob; MIGRATION.md §262 lies) | B5 (BI.W-BLOB-RENAME-LAND) (§H-3) |
 | WS5-03 | aurora first-principles overhaul (van-Gogh brush, OKLAB) | ADDRESSED | **LANDED** (warming + kuwahara) — UF-E1/E4 vibrancy + larger studio | B5 |
 | WS5-04 | metallic aurora (2 variants) | DEFERRED | **DEFERRED** — carrier `BD.W-AUR-METAL-FINISH` | B5 (decide) |
 | WS5-05 | dot-flow-field rebuilt (sweeping waves, halftone) | PARTIAL | **RETIRE** — UF-E8 delete after 30+ attempts | B5 (W-VIZ-PRUNE) |
@@ -149,7 +156,7 @@ The DIRECTIVE-LEDGER mined 1517 raw utterances → 94 distinct directives, statu
 | WS5-07 | concentric = level-set ellipsoid lines | PARTIAL | **RETIRE** — UF-E8 delete | B5 (W-VIZ-PRUNE) |
 | WS5-08 | dot-matrix cursor-gravity | PARTIAL | **RETIRE** — UF-E8 delete | B5 (W-VIZ-PRUNE) |
 | WS5-09 | hybrid goo-blob + dot-matrix (goo-dot) | REGRESSED | **RETIRE** — depends on dot-matrix (deleted) | B5 |
-| WS5-10 | FourierField first-class; follows cursor; ONE view | PARTIAL | **UNADDRESSED-DISEASE** — UF-E6 "a mess, rework from first principles; what we had before was better"; UF-E7 perf god-awful | B5 (W-FOURIER-REBUILD) (§H-7) |
+| WS5-10 | FourierField first-class; follows cursor; ONE view | PARTIAL | **UNADDRESSED-DISEASE** — UF-E6 "a mess, rework from first principles; what we had before was better"; UF-E7 perf god-awful | B5 (BI.W-FOURIER-RIBBON) (§H-7) |
 | WS5-11 | every bg cursor+touch interactive w/ accel+velocity | ADDRESSED | **LANDED** (`usePointerVelocityField`) — UF-E2/E5 re-ask ALL bgs interactive | B5 (wire coverage) |
 | WS5-12 | first-class procedural-animation SUITE defined | ADDRESSED | **LANDED** (PROCEDURAL-SUITE.md) — stale after 3 deletions (STRUCT-10) | B5/B9 (reconcile) |
 | WS5-13 | WebGPU-first everywhere; no canvas | PARTIAL | **PARTIAL** — WebGL2 fallback KEPT (aspirational not held) | B5 |
@@ -169,10 +176,10 @@ The DIRECTIVE-LEDGER mined 1517 raw utterances → 94 distinct directives, statu
 
 | ID | core | @4.2.0 | RE-VERIFIED | owner |
 |----|------|--------|-------------|-------|
-| WS7-01 | real-paint-verify is the GATE (= C-PAINT) | UNADDRESSED | **UNADDRESSED-DISEASE** — π suite in NO close battery (GATE-1) | B10 (W-PI-IN-CLOSE) (§H-2) |
+| WS7-01 | real-paint-verify is the GATE (= C-PAINT) | UNADDRESSED | **UNADDRESSED-DISEASE** — π suite in NO close battery (GATE-1) | B10 (BI.W-PI-IN-CLOSE) (§H-2) |
 | WS7-02 | Safari parity gate (= C-SAFARI) | UNADDRESSED | **UNADDRESSED-DISEASE** — zero Safari verification | round-2 + B3 (§H-5) |
 | WS7-03 | no-silent-drop deferred-fold ledger built FIRST | PARTIAL | **PARTIAL** — this ledger family IS the build; liveness clauses owed (FAM-12) | B10 (W-LEDGER-TRUE-UP) |
-| WS7-03b | overfitting audit; dead engines DECIDED; ≥2-site or exported | PARTIAL | **PARTIAL** — proof:component-orphan counts demo as consumer (can't catch overfit) | B8 (W-ORPHAN-BINARY-SPLIT) |
+| WS7-03b | overfitting audit; dead engines DECIDED; ≥2-site or exported | PARTIAL | **PARTIAL** — proof:component-orphan counts demo as consumer (can't catch overfit) | B8 (BI.W-ORPHAN-BINARY-SPLIT) |
 | WS7-04 | NO legacy code — clean breaks, no aliases/shims/dual-paths | VIOLATED | **PARTIAL** — UF-P6 re-asserts; surface=clear/floating-panel/glass-hero dead substrate survive | B2/B8 (fold/retire) + §E |
 | WS7-05 | NO workarounds; fix at ROOT | BINDING law | **BINDING** — UF-C6 "No workarounds or sizing hacks" re-asserts (dock safe-inset IS the rejected hack) | B3 + standing |
 | WS7-06 | KISS/DRY/no contrivance | BINDING law | **BINDING** — UF-B6/P7 re-assert (Kronecker de-dup) | D-FACTOR + standing |
@@ -187,8 +194,8 @@ The DIRECTIVE-LEDGER mined 1517 raw utterances → 94 distinct directives, statu
 
 | ID | core | recorded status | RE-VERIFIED | owner |
 |----|------|-----------------|-------------|-------|
-| PE-FABLE (GA-3) | every visual wave declares fableArm+designSyncSurface; the DesignSync PASS comes from a FABLE instance (CLOSE PRECONDITION) | ADDRESSED (schema) | **PARTIAL** — schema locks COMPLETENESS only; the actual PASS oracle unfilled | B10 (W-GESTALT-LEDGER-FILE) |
-| PE-GESTALT (GA-9) | 3-axis acceptance verdict (√φ-proportion · animation-laws · technicolor) per surface | ADDRESSED (completeness) | **UNADDRESSED-DISEASE** — 30/30 cells PENDING; zero filed verdicts | B10 (W-GESTALT-LEDGER-FILE) (§H-8) |
+| PE-FABLE (GA-3) | every visual wave declares fableArm+designSyncSurface; the DesignSync PASS comes from a FABLE instance (CLOSE PRECONDITION) | ADDRESSED (schema) | **PARTIAL** — schema locks COMPLETENESS only; the actual PASS oracle unfilled | B10 (BI.W-GESTALT-LEDGER-FILE) |
+| PE-GESTALT (GA-9) | 3-axis acceptance verdict (√φ-proportion · animation-laws · technicolor) per surface | ADDRESSED (completeness) | **UNADDRESSED-DISEASE** — 30/30 cells PENDING; zero filed verdicts | B10 (BI.W-GESTALT-LEDGER-FILE) (§H-8) |
 | PE-COMPOSITED (GA-2) | composited-whole paint gate: dominant-hue histogram over a route region | UNADDRESSED structurally | **UNADDRESSED** — warm-identity greens at 0/11 convergence (GATE-5/6) | B10 (W-PAINT-GATE-LABEL + arm) |
 
 ### §8 RETIRED directives (DIRECTIVE-LEDGER §8) — carried as terminal RETIRE
@@ -264,7 +271,7 @@ paint-neutral. This IS BI band **B9** (per PLAN-FRAME §B9, re-sequenced AFTER t
 |-----------------|---------|-------------|-------|
 | /api drop + export reshape (clean break) | BH.B2-export-reshape | **PARTIAL** — lands at cut; speedtest imports TimelineSegment from /api (ASK-carry) | B9/cut + ASK-SPEEDTEST |
 | hard-delete CLAUDE.md (no replacement) | BH.B4f-claude-delete | **PENDING** (round-1: "absolute-last"); durable home → design-idioms.md + wave specs | B9/cut |
-| goo-blob→blob rename (clean break) | BH.B2 (documented) | **LIE** — DONE-claimed, UNEXECUTED (§H-3) | B5 (W-BLOB-RENAME-LAND) |
+| goo-blob→blob rename (clean break) | BH.B2 (documented) | **LIE** — DONE-claimed, UNEXECUTED (§H-3) | B5 (BI.W-BLOB-RENAME-LAND) |
 | the 91-family FLATTEN (atomic) | BI.W-FLATTEN-PREP + MOVE | **spec LANDED** — census must run POST-repair (STRUCT-1/3) | B9 |
 | recursive colocation (PROMOTE/FOLD) | PROMOTE-CONTEXT/PRIMITIVES · FOLD-CENSUS · README-REMEDIATE | **spec LANDED** — re-scope post-greenfield (STRUCT-4/5/6) | B9 |
 | CSS colocation under index.css | CSS-COLOCATE-B1/B2 | **spec LANDED** — dock arm sequences AFTER dock greenfield (STRUCT-7) | B9 |
@@ -288,7 +295,7 @@ PROMOTE-PRIMITIVES) · STRUCT-14 (confirm dot-flow delete reverses BG.W-DOTFLOW-
 |----|-------|--------|--------|-------|
 | E-1 | **no-masking-fallback (07-03)** — primary works in paint or fails loud; no fallback that hides a dead primary; modern CSS on target engines, not legacy ladders; glass+dock sharpest | CLAUDE.md BG.NF.1 + USER-0703-FIX-NOTES + MEMORY | **LANDED-PARTIAL** — `proof:no-masking-fallback` GREEN; Arm E vacuous (owedBy string not wave-resolved), 2 sites ship "owed" incl phantom WS8.4 (GATE-3); Arm B 5-channel scoped (GATE-4) | B10/gate-harden (W-MASKING-OWNER-RESOLVE + W-MASKING-BROAD-SWEEP) |
 | E-2 | **liquid-weight-universal** — ALL motion/transitions/scrolling carry inertia/weight/bounce/squish/coupled-fade; pager/deck dots goo-morph between states; "remember always" | MEMORY (feedback_liquid_weight_universal) | **PARTIAL** — law codified; UF-I1 dot-morph pager owed; UF-G* fidelity | B4 D-PAGER + B7 D-MOTION |
-| E-3 | **demo no-meta rule** — NEVER reference meta processes/tranches/kf on any demo page; mark and audit | CLAUDE.md + UF-F5 | **VIOLATED** — META-1..5: SPRING_PRESETS comment ships "BD.W-ANIM-IOS27-TUNE" into dist + rendered on /motion/springs; ~10-15 engineering-voice blurbs; 262 source-comment refs | B6 (W-SPRING-DEMETA + W-DEMO-COPY-DEMETA + W-DEMO-COMMENT-SCRUB) + the lexicon GATE |
+| E-3 | **demo no-meta rule** — NEVER reference meta processes/tranches/kf on any demo page; mark and audit | CLAUDE.md + UF-F5 | **VIOLATED** — META-1..5: SPRING_PRESETS comment ships "BD.W-ANIM-IOS27-TUNE" into dist + rendered on /motion/springs; ~10-15 engineering-voice blurbs; 262 source-comment refs | B6 (BI.W-DEMETA + BI.W-DEMETA + W-DEMO-COMMENT-SCRUB) + the lexicon GATE |
 | E-4 | **greenfield no-meta** — greenfield projects have no past; no "ported from"/version-history/migration language | MEMORY (feedback_greenfield_no_meta) | **BINDING** — honored; enforced with E-3 | B6 lexicon gate |
 | E-5 | **no backwards compat / presets-in-consumers** — clean breaks, library-own tokens evolve as identity | MEMORY | **BINDING** (= WS7-04) | standing |
 
@@ -322,12 +329,12 @@ mapped). `class`: DEFECT · DESIGN · PRUNE · REFINE · PROCESS.
 |----|------|-------|--------|-------|
 | UF-A1 | super-rounded Section un-idiomatic; round like a card | DESIGN | UNADDRESSED | B1 D-GLASS (W-RADIUS-GRAMMAR) |
 | UF-A2 | vertical tabs container rounding balloons (10003px radius on 92×132) | DEFECT | UNADDRESSED | B1 (W-RADIUS-GRAMMAR) |
-| UF-A3 | drawer/gear-sheet not rounded; fade needs perfecting | DEFECT | UNADDRESSED | B1 (W-SHEET-ROUND) + B7 |
+| UF-A3 | drawer/gear-sheet not rounded; fade needs perfecting | DEFECT | UNADDRESSED | B1 (BI.W-SHEET-RADIUS) + B7 |
 | UF-A4 | Configurator Appearance section square | DEFECT | UNADDRESSED | B1 (W-CONFIG-IN-SHEET) |
 | UF-A5 | section body indented for no reason | DEFECT | UNADDRESSED | B1 (W-CONFIG-IN-SHEET) |
 | UF-A6 | rose badge baseline low (optical centering) | DEFECT | UNADDRESSED | B0 (W-BADGE-OPTICAL) |
-| UF-A7 | metal rim border-image SQUARES corners | DEFECT | UNADDRESSED | B0 (W-METAL-RIM-CONIC) |
-| UF-A8 | cartoon-cast hard shadow slab at rest on CTAs | DEFECT | UNADDRESSED | B0 (W-CARTOON-CAST-CALM) |
+| UF-A7 | metal rim border-image SQUARES corners | DEFECT | UNADDRESSED | B0 (BI.W-METAL-RIM-BAND) |
+| UF-A8 | cartoon-cast hard shadow slab at rest on CTAs | DEFECT | UNADDRESSED | B0 (BI.W-SHADOW-GRAMMAR) |
 
 ### B · Glass simplification/calibration/duplication
 
@@ -347,7 +354,7 @@ mapped). `class`: DEFECT · DESIGN · PRUNE · REFINE · PROCESS.
 | UF-C1 | reinvent entire dock suite from iOS-27 first principles; greenfield | DESIGN | UNADDRESSED | B3 D-DOCK |
 | UF-C2 | rail implementation broken; redesign | DESIGN | UNADDRESSED | B3 |
 | UF-C3 | liquid-playground + dock-gallery broken in Safari | DEFECT | UNADDRESSED | B3 + round-2 Safari |
-| UF-C4 | /dock/overview sluggish (PERF-3 oversized canvas) | DEFECT | UNADDRESSED | B5/B3 (W-DOCKSTAGE-FIELD-VIEWPORT-CLAMP) |
+| UF-C4 | /dock/overview sluggish (PERF-3 oversized canvas) | DEFECT | UNADDRESSED | B5/B3 (BI.W-STAGE-FIELD-CLAMP) |
 | UF-C5 | dock morphing does not work at all | DEFECT | UNADDRESSED — functional on Chromium; Safari-specific | B3 (W-DOCK-MORPH-SAFARI) |
 | UF-C6 | end-control hover clips; no workarounds/sizing hacks | DEFECT | UNADDRESSED — safe-inset IS the rejected hack | B3 (W-DOCK-HOVER-ESCAPE) |
 | UF-C7 | dock hover items clip improperly (top+bottom) | DEFECT | UNADDRESSED | B3 |
@@ -358,7 +365,7 @@ mapped). `class`: DEFECT · DESIGN · PRUNE · REFINE · PROCESS.
 
 | id | core | class | status | owner |
 |----|------|-------|--------|-------|
-| UF-D1 | scroll progressbar: rainbow, thinner, rounded | REFINE | UNADDRESSED — 2-stop mono ramp, 11px, flat band | B0 (W-SCROLL-RING) |
+| UF-D1 | scroll progressbar: rainbow, thinner, rounded | REFINE | UNADDRESSED — 2-stop mono ramp, 11px, flat band | B0 (BI.W-SCROLL-PROGRESS-RIM) |
 
 ### E · Procedural substrates (fold into D-VIZ)
 
@@ -369,8 +376,8 @@ mapped). `class`: DEFECT · DESIGN · PRUNE · REFINE · PROCESS.
 | UF-E3 | goo-blob interaction reworked from first principles + satellite demo | DESIGN | UNADDRESSED | B5 |
 | UF-E4 | /substrates/aurora core space larger | REFINE | UNADDRESSED | B5 |
 | UF-E5 | constellation dedup demos + interactive background standard | DESIGN | UNADDRESSED | B5 |
-| UF-E6 | fourier-field reworked from first principles; cursor-biased; "before was better" | DESIGN | UNADDRESSED (= WS5-10 disease) | B5 (W-FOURIER-REBUILD) |
-| UF-E7 | fourier-field performance god awful (~39fps, 2 WebGPU canvases) | DEFECT | UNADDRESSED | B5 (W-VIZ-FOURIER-PERF + W-VIZ-ROUTE-ONE-GL) |
+| UF-E6 | fourier-field reworked from first principles; cursor-biased; "before was better" | DESIGN | UNADDRESSED (= WS5-10 disease) | B5 (BI.W-FOURIER-RIBBON) |
+| UF-E7 | fourier-field performance god awful (~39fps, 2 WebGPU canvases) | DEFECT | UNADDRESSED | B5 (BI.W-FOURIER-RIBBON + BI.W-AUTH-SHELL-BG) |
 | UF-E8 | dot-flow-field, concentric, dot-matrix — DELETE (30+ failed attempts) | PRUNE | UNADDRESSED | B5 (W-VIZ-PRUNE) |
 | UF-E9 | preview images stunningly low quality; real components | DEFECT | UNADDRESSED | B6 (W-LANDING-LIVE) |
 | UF-E10 | (07-11) "repulsive gray" fade-in entrance; aurora start animation must be palette-derived + beautifully defined | DEFECT+DESIGN | UNADDRESSED — atomic gray fade over suppressed field; promote auroraFallbackGround to capable-path first frame | B5 D-VIZ (ground) + B7 D-MOTION (route-enter split) |
@@ -380,7 +387,7 @@ mapped). `class`: DEFECT · DESIGN · PRUNE · REFINE · PROCESS.
 | id | core | class | status | owner |
 |----|------|-------|--------|-------|
 | UF-F1 | landing tiles = live curated components, not icon space | DESIGN | UNADDRESSED | B6 (W-LANDING-LIVE) |
-| UF-F2 | title shrinks on scroll; codified meta-component system; "is this not extant?" | DESIGN | UNADDRESSED — ScrollCard exists, unwired | B6 (W-STORY-CHASSIS) |
+| UF-F2 | title shrinks on scroll; codified meta-component system; "is this not extant?" | DESIGN | UNADDRESSED — ScrollCard exists, unwired | B6 (BI.W-STORY-SCHEMA) |
 | UF-F3 | code sections sized + highlight.js-themed, standardized every page | DESIGN | UNADDRESSED — zero highlighting | B6 (W-CODEBLOCK) |
 | UF-F4 | far too much meta text on every page | DEFECT | UNADDRESSED | B6 (demeta) |
 | UF-F5 | NEVER reference meta/tranches/kf on any demo page; audit | PROCESS | VIOLATED (= E-3) | B6 (lexicon gate) |
@@ -398,9 +405,9 @@ mapped). `class`: DEFECT · DESIGN · PRUNE · REFINE · PROCESS.
 | UF-G2 | popover animations like dropdowns; homogenous | REFINE | UNADDRESSED | B7 |
 | UF-G3 | dropdown-menu bounce refine | REFINE | UNADDRESSED | B7 |
 | UF-G4 | context-menu + hover-card tighten | REFINE | UNADDRESSED | B7 |
-| UF-G5 | accordion indents on click (tap-squish on full-width row) | DEFECT | UNADDRESSED | B7 (W-ACCORDION-NO-PRESS-SQUISH + W-CONTROL-PRESS-TRANSITION-MERGE) |
+| UF-G5 | accordion indents on click (tap-squish on full-width row) | DEFECT | UNADDRESSED | B7 (BI.W-ACCORDION-PRESS + W-CONTROL-PRESS-TRANSITION-MERGE) |
 | UF-G6 | refined draw-in animations, codified; sheet header divider too bouncy | DESIGN | UNADDRESSED — chrome-rule-strike on cartoon-punch +22% | B7 (W-DRAWIN-EXPO-REGISTER) |
-| UF-G7 | drawer laggy and weak (per-frame backdrop reblur) | DEFECT | UNADDRESSED | B7 (W-DRAWER-BLUR-DE-ANIMATE) |
+| UF-G7 | drawer laggy and weak (per-frame backdrop reblur) | DEFECT | UNADDRESSED | B7 (BI.W-DRAWER-PERF) |
 | UF-G8 | command palette jitters (scrollbar-gutter) | DEFECT | UNADDRESSED | B0 (W-COMMAND-STABLE-GUTTER) |
 | UF-G9 | drawer-live-behind awful | DEFECT | UNADDRESSED | B7 |
 | UF-G10 | gear sheet fade-in/out needs perfecting | REFINE | UNADDRESSED | B7 |
@@ -424,10 +431,10 @@ mapped). `class`: DEFECT · DESIGN · PRUNE · REFINE · PROCESS.
 | id | core | class | status | owner |
 |----|------|-------|--------|-------|
 | UF-J1 | replicate value.js color-picker sliders 1:1 | DESIGN | UNADDRESSED | B5/B7 |
-| UF-J2 | grain Switch does nothing (dead ref) | DEFECT | UNADDRESSED | B0 (W-DEMO-CONTROL-WIRE) |
+| UF-J2 | grain Switch does nothing (dead ref) | DEFECT | UNADDRESSED | B0 (BI.W-GRAIN-WIRE) |
 | UF-J3 | do cards match variants; what of veil card | PROCESS | UNADDRESSED | B6 (J3 card-variant audit) |
 | UF-J4 | BorderProgress bottom-edge hollow rect awful | DEFECT | UNADDRESSED | B0 (W-BP-BOTTOM-LINEAR) |
-| UF-J5 | expandable-container first-principles fix; Esc doesn't globally work | DEFECT | UNADDRESSED | B0 (W-ESC-STACK) |
+| UF-J5 | expandable-container first-principles fix; Esc doesn't globally work | DEFECT | UNADDRESSED | B0 (BI.W-ESC-STACK) |
 | UF-J6 | hover-popover vs popover vs hover-card — necessary? redesign page | PRUNE | UNADDRESSED (= UF-P7 flagship) | B8/D-FACTOR |
 
 ### K · Prune / overfit
@@ -437,7 +444,7 @@ mapped). `class`: DEFECT · DESIGN · PRUNE · REFINE · PROCESS.
 | UF-K1 | /data/metrics overfit; move to speedtest | PRUNE | UNADDRESSED | B8 (ASK-SPEEDTEST-METRICS) |
 | UF-K2 | /compositions/hero → sub-page not category | PRUNE | UNADDRESSED | B8 |
 | UF-K3 | /compositions/math-paper overfit; remove | PRUNE | UNADDRESSED | B8 |
-| UF-K4 | /compositions/auth-shell performance miserable (fourier page-bg) | DEFECT | UNADDRESSED | B5 (W-FOURIER-PAGE-BG-RETIRE) |
+| UF-K4 | /compositions/auth-shell performance miserable (fourier page-bg) | DEFECT | UNADDRESSED | B5 (BI.W-AUTH-SHELL-BG) |
 | UF-K5 | prune many superfluous components | PRUNE | UNADDRESSED | B8 |
 
 ### §P · Process directives (binding on the BI formation itself)
@@ -462,14 +469,14 @@ its OWN wave. Each below carries a TERMINAL owner (no re-book).
 | # | disease | rode | why it's a disease | TERMINAL owner |
 |---|---------|------|--------------------|-----------------|
 | H-1 | **The dock band** (C-DOCK, WS2-08 rail, KS-DOCK) | BB→BC→BG (3 consecutive tranche re-openings; FAM-3) | per-mechanism greens over a gestalt-broken band; clip/morph/rail/Safari all re-open; the BA `--dock-control-safe-inset` mitigation IS the sizing hack the user rejected (UF-C6) | **B3 D-DOCK greenfield** (from iOS-27 first principles; clip structurally absent, not sizing-hacked) |
-| H-2 | **real-paint-verify never blocks the tag** (C-PAINT, WS7-01) | shipped source-green/visually-broken 3× (BB/BC/BD); STILL unenforced @ HEAD (GATE-1) | the 147-spec binding-π suite is in NO close battery; visual-runner W4 born-RED, DELTA absent | **B10 W-PI-IN-CLOSE** — make `--run pi` (or the W4 DELTA) a release-tagged tag-blocker |
-| H-3 | **goo-blob→blob rename DONE-but-UNEXECUTED** | ruled, cursor-DONE + MIGRATION.md §262 documents it landed, rode BH.B2→cut | disk unchanged (dir + `"./goo-blob"` subpath); the migration guide LIES to consumers incl value.js — a green-over-broken carried across the close | **B5 W-BLOB-RENAME-LAND** (execute the rename + regen-exports) OR revert MIGRATION §262 + the cursor claim (charter forbids the silent carry) |
+| H-2 | **real-paint-verify never blocks the tag** (C-PAINT, WS7-01) | shipped source-green/visually-broken 3× (BB/BC/BD); STILL unenforced @ HEAD (GATE-1) | the 147-spec binding-π suite is in NO close battery; visual-runner W4 born-RED, DELTA absent | **B10 BI.W-PI-IN-CLOSE** — make `--run pi` (or the W4 DELTA) a release-tagged tag-blocker |
+| H-3 | **goo-blob→blob rename DONE-but-UNEXECUTED** | ruled, cursor-DONE + MIGRATION.md §262 documents it landed, rode BH.B2→cut | disk unchanged (dir + `"./goo-blob"` subpath); the migration guide LIES to consumers incl value.js — a green-over-broken carried across the close | **B5 BI.W-BLOB-RENAME-LAND** (execute the rename + regen-exports) OR revert MIGRATION §262 + the cursor claim (charter forbids the silent carry) |
 | H-4 | **no-god-module ratchet-regrowth (GF5) / C-ENCAP** | drained at 0.7/F6.5/W-COLOCATE, re-grew past 500 by later BG waves; RATCHET_BASELINES=={} is a cut-precondition unmet | 9 files >500L @ HEAD (confirmed: 508/507/572/554/563/524/524/515/510); the ratchet "normalizes regrowth" — a growing wave rides green | **B0/B9 W-STYLE-REDRAIN + W-ENCAP-REDRAIN** + harden the ratchet contract so GROWTH reds the growing wave (not a phantom future drain) |
 | H-5 | **Safari parity never verified** (C-SAFARI, WS7-02) | asked 06-18→06-24, zero verification through BG | UF-C3 flags liquid-playground/dock-gallery broken in Safari; no standing Safari gate | **round-2 Safari verification + B3** (a standing Safari-parity gate; honest-degrade per E-1) |
 | H-6 | **"No gray" recurring** (C-GRAY, WS3-01) | 2026-06-12→06-25→07-11 (4 rounds) | cure landed structurally but re-reads gray on surfaces + over-corrected to metallic; UF-E10 "repulsive gray" entrance re-flags it | **B2 D-GLASS + B5/B7** (UF-E10 palette-derived entrance) |
-| H-7 | **viz condemned after 30+ attempts** (C-VIZ, WS5-10) | BB→BC→BG; UF-E6/E8 | dot-flow/concentric/dot-matrix never reached the paint bar; fourier "a mess, before was better" | **B5 W-VIZ-PRUNE** (delete 3) + **W-FOURIER-REBUILD** (first-principles physics) |
-| H-8 | **PE-GESTALT acceptance ledger zero-filed** (GA-9) | authored 07-01, all 30 cells PENDING at cut | the close-precondition design-review verdict never actually ran; proof:meta greens on token-presence | **B10 W-GESTALT-LEDGER-FILE** — a non-authoring Fable instance flips PENDING→PASS/FAIL before the tag |
-| H-9 | **profile:budget FAILS while the cut claims readiness** (RECAP-2) | attributed but unresolved across BG/BH | goo-blob 129% of gzip ceiling (+725% drift) + unbaselined liquid-grid/axes; an --enforce CI gate in --run full | **B0/B10 W-BUDGET-REBASELINE** (resolve the ceiling or lift with rationale before the tag) |
+| H-7 | **viz condemned after 30+ attempts** (C-VIZ, WS5-10) | BB→BC→BG; UF-E6/E8 | dot-flow/concentric/dot-matrix never reached the paint bar; fourier "a mess, before was better" | **B5 W-VIZ-PRUNE** (delete 3) + **BI.W-FOURIER-RIBBON** (first-principles physics) |
+| H-8 | **PE-GESTALT acceptance ledger zero-filed** (GA-9) | authored 07-01, all 30 cells PENDING at cut | the close-precondition design-review verdict never actually ran; proof:meta greens on token-presence | **B10 BI.W-GESTALT-LEDGER-FILE** — a non-authoring Fable instance flips PENDING→PASS/FAIL before the tag |
+| H-9 | **profile:budget FAILS while the cut claims readiness** (RECAP-2) | attributed but unresolved across BG/BH | goo-blob 129% of gzip ceiling (+725% drift) + unbaselined liquid-grid/axes; an --enforce CI gate in --run full | **B0/B10 BI.W-BUDGET-REBASELINE** (resolve the ceiling or lift with rationale before the tag) |
 | H-10 | **dock-arch-dry un-decided dead engines** (WS2-17) | asked 06-25, never decided | `useDockContextSilhouette` 551L / 0 consumers, 5 springs, 2 morph engines — wire ≥2 or retire, un-adjudicated | **B3 D-DOCK + B9** (the greenfield decides each dead engine terminally) |
 | H-11 | **C-PERSIST (persistent ℱ brand section)** (WS2-09) | asked 06-09→06-25, still renders | a pure UNADDRESSED ask rode every dock close | **B3 D-DOCK** (remove) |
 | H-12 | **bookkeeping-drift-behind-the-live-tree** (FAM-12: LEDGER-1/2, DETECTOR-1) | gates verify STRUCTURE never LIVENESS | FOLD-LEDGER D27 (kf-snap LANDED, still DEFER) + deep-glass 20px pair (RETIRED, still DEFER) + 8 bare-word BOOKED invisible to the detector | **B10 W-LEDGER-TRUE-UP + W-CENSUS-DETECTOR-HARDEN** (add trigger-fired liveness probes) |
@@ -482,51 +489,51 @@ The consolidated carry. LANDED rows are omitted; RETIRED-terminal (R-01..R-07, W
 has ONE owning BI band/wave. This IS the BI plan seed.
 
 ### B0 — P0 repairs (mechanism-local, no design loop)
-- UF-H2 W-DRAG-REATTACH (tabs draggable dead) · UF-J2 W-DEMO-CONTROL-WIRE (grain no-op) · UF-J5 W-ESC-STACK
+- UF-H2 W-DRAG-REATTACH (tabs draggable dead) · UF-J2 BI.W-GRAIN-WIRE (grain no-op) · UF-J5 BI.W-ESC-STACK
   (Escape single-winner) · UF-G8 W-COMMAND-STABLE-GUTTER (command jitter) · UF-A6 W-BADGE-OPTICAL · UF-A7
-  W-METAL-RIM-CONIC · UF-A8 W-CARTOON-CAST-CALM · UF-D1 W-SCROLL-RING · UF-J4 W-BP-BOTTOM-LINEAR · H-9
-  W-BUDGET-REBASELINE · H-4 W-ENCAP-REDRAIN + W-STYLE-REDRAIN (+ demo-card-declare, FAM-1).
+  BI.W-METAL-RIM-BAND · UF-A8 BI.W-SHADOW-GRAMMAR · UF-D1 BI.W-SCROLL-PROGRESS-RIM · UF-J4 W-BP-BOTTOM-LINEAR · H-9
+  BI.W-BUDGET-REBASELINE · H-4 W-ENCAP-REDRAIN + W-STYLE-REDRAIN (+ demo-card-declare, FAM-1).
 
 ### B1 — Geometry grammar (D-GLASS-adjacent)
-- UF-A1/A2 W-RADIUS-GRAMMAR (concentric-radius + capsule-vs-card) · UF-A3 W-SHEET-ROUND · UF-A4/A5
+- UF-A1/A2 W-RADIUS-GRAMMAR (concentric-radius + capsule-vs-card) · UF-A3 BI.W-SHEET-RADIUS · UF-A4/A5
   W-CONFIG-IN-SHEET · UF-H1 eyeglass-default + vertical-size + variant-cull (tabs) · UF-A6/WS4-12 pill-in-capsule.
 
 ### B2 — Glass simplification (D-GLASS)
 - UF-B1/B5 W-GLASS-CENSUS (multi-dimensional sprawl census) · UF-B2 W-GLASSPANEL-FOLD · UF-B3/B4 blur dial-back
-  · WS3-01/02/03/07/10 (gray/blur/cast/adaptive/tint) · CENSUS-1 W-FOLD-CLEAR-VARIANT · CENSUS-2
+  · WS3-01/02/03/07/10 (gray/blur/cast/adaptive/tint) · CENSUS-1 BI.W-CLEAR-FOLD · CENSUS-2
   W-RETIRE-FLOATING-PANEL · CENSUS-3 W-RETIRE-GLASS-HERO-ORPHAN · CENSUS-4 W-FOLD-GLASS-DEFINED-STANDALONE.
 
 ### B3 — Dock greenfield (D-DOCK; §H-1)
 - UF-C1..C9 (all) · WS2-01..08/10..15/17 · C-PERSIST/WS2-09 · WS2-17/H-10 (dead-engine decide) · WS4-24
-  playground · UF-C4 W-DOCKSTAGE-FIELD-VIEWPORT-CLAMP · PERF-6 W-DOCK-LUMA-SHARE · UF-C5 W-DOCK-MORPH-SAFARI.
+  playground · UF-C4 BI.W-STAGE-FIELD-CLAMP · PERF-6 BI.W-DOCK-LUMA-SHARE · UF-C5 W-DOCK-MORPH-SAFARI.
 
 ### B4 — Carousel/pager greenfield (D-PAGER)
 - UF-I1 dot-morph pager + carousel rebuild · WS4-08 carousel↔deck dedup · E-2 liquid-weight (dot goo-worm).
 
 ### B5 — Substrates (D-VIZ)
 - UF-E8 W-VIZ-PRUNE (delete dot-flow/concentric/dot-matrix + gates/stories/exports) · UF-E6/E7/WS5-10
-  W-FOURIER-REBUILD + W-VIZ-FOURIER-PERF · UF-K4 W-FOURIER-PAGE-BG-RETIRE · UF-E7/PERF-5 W-VIZ-ROUTE-ONE-GL ·
+  BI.W-FOURIER-RIBBON + BI.W-FOURIER-RIBBON · UF-K4 BI.W-AUTH-SHELL-BG · UF-E7/PERF-5 BI.W-AUTH-SHELL-BG ·
   UF-E1/E4 aurora vibrancy + setting-sun preset + larger studio · UF-E2/E5/E10 interactive bgs + entrance ground
-  · UF-E3 blob physics + satellite demo · UF-E9/WS5-01 live previews · WS5-02/H-3 W-BLOB-RENAME-LAND · WS5-04
+  · UF-E3 blob physics + satellite demo · UF-E9/WS5-01 live previews · WS5-02/H-3 BI.W-BLOB-RENAME-LAND · WS5-04
   metallic-aurora decide · UF-J1 value.js LCH sliders · WS5-06/07/08 paper-grid/concentric/dot-matrix (retire
   or fold) · PROCEDURAL-SUITE reconcile (STRUCT-10) · VALUEJS aurora-pointer rider (§F).
 
 ### B6 — Storybook meta-system (D-STORY)
-- UF-F1/E9 W-LANDING-LIVE · UF-F2/WS4-01 W-STORY-CHASSIS (ScrollCard shrink) · UF-F3 W-CODEBLOCK
-  (highlight.js) + CODE-1/CODE-2 · UF-F4/F5 + META-1..5 + E-3 W-SPRING-DEMETA + W-DEMO-COPY-DEMETA +
+- UF-F1/E9 W-LANDING-LIVE · UF-F2/WS4-01 BI.W-STORY-SCHEMA (ScrollCard shrink) · UF-F3 W-CODEBLOCK
+  (highlight.js) + CODE-1/CODE-2 · UF-F4/F5 + META-1..5 + E-3 BI.W-DEMETA + BI.W-DEMETA +
   W-DEMO-COMMENT-SCRUB + the lexicon GATE · UF-F6 veil-card demarcation · UF-F7/F8/F9 affordance redesign +
   dividers/section-cards · UF-J3 card-variant audit · WS4-13/19/22 · WS7-12 path-standardize.
 
 ### B7 — Motion register (D-MOTION)
 - UF-G1..G10 (all) · MOTION-1..7 · UF-A3/G10 sheet fade · UF-G6 W-DRAWIN-EXPO-REGISTER · UF-G5
-  W-ACCORDION-NO-PRESS-SQUISH + W-CONTROL-PRESS-TRANSITION-MERGE · UF-G7 W-DRAWER-BLUR-DE-ANIMATE (+ PERF-4/10)
+  BI.W-ACCORDION-PRESS + W-CONTROL-PRESS-TRANSITION-MERGE · UF-G7 BI.W-DRAWER-PERF (+ PERF-4/10)
   · W-OVERLAY-ENTER-REGISTERS (two clocks) · W-MOTION-SHOWCASE-TRUTH (dead recipes) · UF-E10 route-enter split
   · C-ROUTE/WS1-01..03 route-transition · E-2 liquid-weight universal.
 
 ### B8 — Prunes + consumer truth
 - UF-K1/STRUCT-8 ASK-SPEEDTEST-METRICS (metric-cell/stack/badge move) · UF-K2 hero demote · UF-K3 math-paper
   remove · UF-K5/F10 superfluous prune · UF-J6/UF-P7 D-FACTOR (hover-popover/popover/hover-card adjudication) ·
-  WS4-16/17 · WS7-03b W-ORPHAN-BINARY-SPLIT · border-progress/completion-seal consumer truth.
+  WS4-16/17 · WS7-03b BI.W-ORPHAN-BINARY-SPLIT · border-progress/completion-seal consumer truth.
 
 ### B9 — Structure (the reformed 20-wave CONSTELLATION)
 - All §D rows + STRUCT-1..14 re-sequencing · KS-API-COLOCATION flatten/reshape · /api drop + export reshape ·
@@ -534,7 +541,7 @@ has ONE owning BI band/wave. This IS the BI plan seed.
   idioms-home + idiomatic-Tailwind · B9-S5 sibling ASK relays (§F).
 
 ### B10 — Close
-- H-2 W-PI-IN-CLOSE · H-8 W-GESTALT-LEDGER-FILE (PE-FABLE/PE-GESTALT PASS oracle) · PE-COMPOSITED
+- H-2 BI.W-PI-IN-CLOSE · H-8 BI.W-GESTALT-LEDGER-FILE (PE-FABLE/PE-GESTALT PASS oracle) · PE-COMPOSITED
   W-PAINT-GATE-LABEL + arm · E-1 W-MASKING-OWNER-RESOLVE + W-MASKING-BROAD-SWEEP (GATE-3/4) · GATE-2
   W-GESTALT-CI-TAG-RECONCILE · H-12 W-LEDGER-TRUE-UP + W-CENSUS-DETECTOR-HARDEN + W-LEDGER-DISCHARGE
   (LEDGER-1/2) · Decision-0 the ONE cut · cross-repo relays · UF-P1/P2/P3/P5 close-completeness.

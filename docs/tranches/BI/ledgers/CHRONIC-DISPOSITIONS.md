@@ -1,5 +1,12 @@
 # BI CHRONIC / DEFERRED DISPOSITION LEDGER
 
+> **OWNER-NAME RESOLUTION RULE (round-8 R8-F1, binding):** owner names in this ledger written before
+> the formation fleet authored the final wave set are PROPOSALS; the mechanical renames to the
+> committed 91 IDs are applied in place where the mapping is 1:1, and for any residual un-renamed
+> `W-*` proposal the BINDING owner map is `PLAN.md §2` + the ADDENDA tables. Phantom names surviving
+> inside ADDENDA left-columns are the historical audit trail, not live targets. The
+> `BI.W-LEDGER-DETECTOR-HARDEN` clause (g) gate enforces body-target resolution henceforth.
+
 The COMPLETE deferred-item census for the BI tranche formation. **Every row gets a TERMINAL
 disposition** — BUILD (named BI wave) · FOLD (into a named wave) · RETIRE (with rationale). Re-booking
 is FORBIDDEN (user mandate UF-P2, 2026-07-11). A row that rode **≥2 published closes un-decided** is a
