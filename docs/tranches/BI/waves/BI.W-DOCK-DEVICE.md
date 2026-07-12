@@ -98,6 +98,14 @@ names. The binding claims:
 - **dis:safari-metal-verify** (Safari/WebKit + real-Metal p50 NEVER run — 3+ ⚠, D7/D8/D24/D25/BF.W-GOO-SPLIT-
   PERF/BE.W-VIZ-PARITY-METAL) → TERMINALIZED for the DOCK band: `proof:safari-parity` REDs on broken
   `backdrop-filter:url()`; the p50 capture artefact resolves on disk. (The viz/goo Metal p50 for the substrate
-  band rides its own W-SAFARI-METAL-VERIFY — this closes the DOCK arm.)
+  band rides its own THIS wave (rescoped round-6: the substrate-band arm below) — this closes the DOCK arm.)
 - **D8** (manual real-Safari-26-Metal goo-fission p50) → DISSOLVED: fission RETIRED (W-DOCK-RETIRES), so the
   goo-fission p50 is moot — no goo to measure. Decided-terminal.
+
+
+## Round-6 rescope (D-2 — this wave owns the WHOLE visible-Safari/Metal device batch)
+Beyond the dock arms: the SUBSTRATE-BAND Metal captures — the viz cross-backend parity p50 on a real
+Metal box (the D24 BE.W-VIZ-PARITY-METAL discharge: aurora/blob WGSL-vs-GLSL on visible Safari.app)
++ the goo p50. The chronic rows dis:safari-metal-verify (D7/D24/D25 arms; D8 fission is moot per
+DOCK-RETIRES) discharge HERE — no phantom successor survives. ADDENDUM-2's SAFARI-METAL row
+re-points to this wave for BOTH arms.

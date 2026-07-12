@@ -61,3 +61,11 @@ Gate: **`proof:a11y`** (the slider arm — device-free source arm asserting the 
 - Notes the CHRONIC §1a **ax:labeled-slider-readout** RETIRE (the numeric-readout register is superseded by the
   UF-J1 value.js-color-picker-slider work, per the ledger) — this wave touches the NAME, not the readout;
   recorded, no re-book.
+
+
+## Round-6 additions (D-3 — the A11Y-SWEEP fold completes)
+- The GENERAL LabeledField for/id auto-binding assert (ax:labeled-field-for-id): the axe label rule
+  passes on EVERY LabeledField-wrapped input (not the slider thumb alone) — a gate clause + the
+  for/id wiring where absent.
+- ax:speedtest-a11y-bundle: the bundle-label RETIRES (each concrete row is decomposed + owned) + the
+  gate asserts no un-decomposed bundle-kind book survives in the ledgers.

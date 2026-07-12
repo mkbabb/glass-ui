@@ -280,3 +280,11 @@ decided / routed) but never LIVENESS. BI must add these trigger-fired probes to 
 | BI.W-METRIC-FAMILY-RELOCATE | BI.W-METRICS-DEMO (disposition CORRECTED to STAY per XR-3; the demo redesign is the wave) |
 | BI.W-RATCHET-REDRAIN | BI.W-STYLE-REDRAIN + BI.W-ENCAP-REDRAIN (B0) |
 | BI.W-SAFARI-METAL-VERIFY | BI.W-DOCK-DEVICE (the visible-Safari batch) |
+
+## ADDENDUM 3 (round-6 sweep-D substance corrections)
+
+| row | corrected owner |
+|---|---|
+| BI.W-CENSUS-DETECTOR-HARDEN (+ W-LEDGER-TRUE-UP, W-LEDGER-DISCHARGE) | **BI.W-LEDGER-DETECTOR-HARDEN** (minted, B0) — the ADDENDUM-2 RATCHET-GROWTH repoint was substantively wrong and is superseded |
+| BI.W-SAFARI-METAL-VERIFY | **BI.W-DOCK-DEVICE** (rescoped to BOTH arms: dock + the substrate-band viz/goo Metal p50; D24 discharges there) |
+| ax:labeled-field-for-id + ax:speedtest-a11y-bundle | **BI.W-SLIDER-THUMB-NAME** (round-6 additions) |

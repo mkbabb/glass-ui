@@ -39,7 +39,7 @@ charter; `docs/tranches/BH/spec-structure/` folds in via `waves/BI.W-STRUCTURE-R
 ## §1 — The band DAG (90 waves; specs in `waves/BI.W-*.md`)
 
 ```
-B0-CUT (12)  ── the cut-blockers + doc truth ─── gates everything
+B0-CUT (13)  ── the cut-blockers + doc truth ─── gates everything
    │
    ├── B1-GEOMETRY (8)      the radius/shadow/border grammar (proof:geometry-grammar, 4 laws)
    ├── B7-MOTION (8)        M1 parity FIRST (SPRING-PARITY gates every retune) → registers/tempo/landings
@@ -63,7 +63,7 @@ BEFORE their breaking waves ship (the peer pin-guards in B0 before ANY publish).
 
 - **B0**: ENCAP-REDRAIN · DEMO-CARD-DECLARE · STYLE-REDRAIN · BUDGET-REBASELINE · BLOB-RENAME-LAND ·
   PI-IN-CLOSE · GESTALT-LEDGER-FILE · STAB-CLOSE · MIGRATION-TRUE-UP · DOC-CANON-REWRITE ·
-  RATCHET-GROWTH · PRECUT-XR-ASKS
+  RATCHET-GROWTH · LEDGER-DETECTOR-HARDEN · PRECUT-XR-ASKS
 - **B1**: RADIUS-GRAMMAR · METAL-RIM-BAND · SHADOW-GRAMMAR · SHEET-RADIUS · CONFIG-IN-SHEET ·
   BADGE-ALIGN · BP-BOTTOM-LINEAR · SCROLL-PROGRESS-RIM
 - **B2+B8**: SURFACE-EXTRACT · CLEAR-FOLD · GLASS-TOKEN-PRUNE · GLASS-DEDUP · BLUR-MUTE ·
