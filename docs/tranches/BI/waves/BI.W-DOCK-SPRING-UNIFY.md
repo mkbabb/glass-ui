@@ -60,9 +60,11 @@ clock, not two).
 - `src/styles/dock/shape.css` (21K) — DELETE `@property --dock-punch-stretch` (:53), the 7-factor `scale:`
   product (:168-176), the per-child inverse counter-scale (:235-249). `--dock-expand-t`/`--dock-size-scale`/
   dock `--stretch` DEFINITION-ABSENT (the chrome reads `--dock-t`).
-- `src/composables/motion/springPresets.ts:98` — retune the `dock` row response 0.68→~0.28, ζ0.64→~0.82,
-  overshoot to 1–3% (the measured band; `DOCK_SPRING`/`constants.ts:85-87` re-resolves through it). Delete
-  the `dockMorphContext.ts` arrival-settle cut (fix ζ, not both).
+- `src/composables/motion/springPresets.ts:98` — set the `dock` row to THE §0.2a-RESOLVED value (the
+  recommended iOS band ~0.28/ζ0.82 IF the user confirms; the shipped 0.68/ζ0.64 with the honest-tail
+  treatment IF the user vetoes — `DOCK_SPRING`/`constants.ts:85-87` re-resolves through it either way).
+  Delete the `dockMorphContext.ts` arrival-settle cut UNCONDITIONALLY (the mechanism decision; whatever
+  the value, the settle is honest physics).
 - `dockMorphContext.ts` — the `--dock-t` clip morph on the retuned `useDockSpring`; interruptible re-seat
   preserved.
 - Verify the dock CSS legs (content fade/hover/press `--spring-*` reads) paint on the M1-corrected clock.
@@ -77,11 +79,12 @@ extended.
 - SU2 **scalar-zoo-absent** (BORN-RED): `--dock-punch-stretch`, `--dock-expand-t`, `--dock-size-scale`, dock
   `--stretch`, the 7-factor `scale:` product, the per-child counter-scale all DEFINITION-ABSENT; the ONE
   `--dock-t` plate scalar is the sole morph driver.
-- SU3 **G8-retune** (BORN-RED): the `springPresets` `dock` row resolves the measured band (response ∈
-  [0.24,0.32], ζ ∈ [0.76,0.88], overshoot ≤3%); the `dockMorphContext` arrival-cut is absent.
+- SU3 **MECHANISM-ONLY** (BORN-RED on the arrival-cut, which is live at HEAD): the `dockMorphContext`
+  arrival-cut is ABSENT and the `dock` preset row AGREES with the emitted CSS tokens (the M1 parity
+  invariant). NO value-range predicate — the (response, ζ) numbers are user-settable per PLAN §0.2a.
 - SU4 **M1-clock**: the dock's CSS `--spring-*` legs read the M1-corrected emission (the tempo-parity clause
   the motion-band M1 wave adds is GREEN); no dock leg carries the pre-fix ~5× compressed curve.
-- Self-test bites: a synthetic second `new SpringProgress` REDs SU1; a synthetic re-added
+- Self-test bites: a synthetic second `new SpringProgress` REDs SU1; a synthetic re-added scalar REDs SU2; a synthetic re-added
 - self-test bites: a planted second `new SpringProgress` in the dock band REDs SU3; a planted
   arrival-cut timer REDs SU3; a planted preset↔CSS-token (response, ζ) disagreement REDs SU3.
   (NO value-row bite — any (response, ζ) the user selects is legal.)
