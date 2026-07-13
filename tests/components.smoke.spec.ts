@@ -28,7 +28,7 @@ import { PaperBackdrop } from "@glass/subpaths/paper-backdrop";
 import { Pulse } from "@glass/subpaths/pulse";
 import { StatusDot } from "@glass/subpaths/status-dot";
 import { SegmentedTabs } from "@glass/subpaths/tabs";
-import { ToggleChip, toggleChipVariants } from "@glass/subpaths/toggle-chip";
+import { Chip, chipVariants } from "@glass/subpaths/chip";
 
 describe("component smoke coverage", () => {
     it("renders Button slot content", () => {
@@ -38,7 +38,13 @@ describe("component smoke coverage", () => {
     });
 
     it("applies Button variant classes", () => {
-        expect(buttonVariants({ variant: "destructive" })).toContain("bg-destructive");
+        expect(buttonVariants({ variant: "outline" })).toContain("btn-glass");
+    });
+
+    // BI.W-BUTTON-TONE — `destructive` is a TONE now (not a `variant`); the
+    // four-state fill rides the orthogonal `tone` axis.
+    it("applies Button destructive tone classes", () => {
+        expect(buttonVariants({ tone: "destructive" })).toContain("bg-destructive");
     });
 
     it("renders Badge slot content", () => {
@@ -354,12 +360,12 @@ describe("component smoke coverage", () => {
         expect(button.attributes("data-size")).toBe("sm");
     });
 
-    it("renders ToggleChip slot content", () => {
-        expect(mount(ToggleChip, { slots: { default: "Chip" } }).text()).toBe("Chip");
+    it("renders Chip slot content", () => {
+        expect(mount(Chip, { slots: { default: "Chip" } }).text()).toBe("Chip");
     });
 
-    it("applies ToggleChip cell variant classes", () => {
-        expect(toggleChipVariants({ variant: "cell" })).toContain("flex-col");
+    it("applies Chip cell shape classes", () => {
+        expect(chipVariants({ shape: "cell" })).toContain("flex-col");
     });
 
     it("renders SegmentedTabs options", () => {

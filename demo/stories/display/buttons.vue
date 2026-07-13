@@ -34,7 +34,6 @@ const vizButtons = [
 // refract). The glass variants (glass / glass-wash) move to the field stage below.
 const opaqueVariants = [
     "default",
-    "destructive",
     "outline",
     "secondary",
     "accent",
@@ -136,6 +135,9 @@ const sizes = ["xs", "sm", "md", "lg"] as const;
         >
             <div class="flex flex-wrap gap-3">
                 <Button v-for="v in opaqueVariants" :key="v" :variant="v">{{ v }}</Button>
+                <!-- BI.W-BUTTON-TONE — the destructive register is a TONE now (not a
+                     variant); the specimen renders on the orthogonal `tone` axis. -->
+                <Button tone="destructive">destructive</Button>
             </div>
         </StorySection>
 

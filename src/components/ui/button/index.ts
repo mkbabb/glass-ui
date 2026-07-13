@@ -110,8 +110,12 @@ export const buttonVariants = cva(
         // the dormant default so the gold actually reads.
         'gold-audacious':
           'glass-wash btn-glass glass-capsule glass-capsule-hover btn-punch text-foreground [--glass-accent:var(--color-gold)] [--glass-accent-strength:32%]',
-        destructive:
-          'bg-destructive text-destructive-foreground hover:bg-destructive/90 active:bg-destructive/80 aria-pressed:bg-destructive/85',
+        // BI.W-BUTTON-TONE (PASS-4B ruling 5 — "destructive IS a tone"). The
+        // `destructive` STYLE-map member is RETIRED off the `variant` axis onto the
+        // orthogonal `tone` axis (below): a destructive intent is a semantic tone, not
+        // a surface/register, and `variant` is STYLE-only (proof:variant-residual · the
+        // Kronecker factorization lock). Clean break — no `variant="destructive"` alias;
+        // every call site renames to `tone="destructive"`.
         // BC.W-BUTTON-GLASS-IOS (move 7 / BG-IOS-6 — the de-shadcn A6 reskin). The
         // `outline`/`secondary`/`accent` triplet was the un-reskinned shadcn-neutral
         // tail (`border-input bg-background`/`bg-secondary`/`bg-accent`). They re-point
@@ -203,6 +207,20 @@ export const buttonVariants = cva(
         true: 'p-0',
         false: '',
       },
+      // BI.W-BUTTON-TONE (PASS-4B ruling 5 — "destructive IS a tone"). The semantic
+      // status register, ORTHOGONAL to the `variant` STYLE axis (a destructive intent
+      // composes over ANY variant). Keys ∈ the `TONES` tuple (_shared/axes.ts, the ONE
+      // grammar home) — `neutral` is the tone-less default (no override; the variant
+      // paints alone), `destructive` carries the four-state fill/hover/active/pressed
+      // recipe VERBATIM off the retired `variant.destructive` member. This is the
+      // CORRECT home for the tone (proof:variant-residual's tone-block fence): a tone in
+      // the `tone` map is never a residual. Widen to success/warning/info here when a
+      // toned CTA needs them (the axis is minted to the two live rungs today).
+      tone: {
+        neutral: '',
+        destructive:
+          'bg-destructive text-destructive-foreground hover:bg-destructive/90 active:bg-destructive/80 aria-pressed:bg-destructive/85',
+      },
     },
     compoundVariants: [
       // The LABEL geometry (was baked into the old size rungs) — applied only when
@@ -223,6 +241,7 @@ export const buttonVariants = cva(
       variant: 'default',
       size: 'md',
       iconOnly: false,
+      tone: 'neutral',
     },
   },
 )
