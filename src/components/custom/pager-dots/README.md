@@ -2,11 +2,24 @@
 
 `@mkbabb/glass-ui/pager-dots` — the ONE position-dot rail register (BA.W-PAGER, R10-1 + R10-3).
 
-A dot-per-page rail: a 24px hit-box (WCAG 2.5.8) with a `::before`-painted pip
-centered by the grid; the active dot ELONGATES along the rail axis into a pill (a
-real emitted morph on the governed `--spring-dock` register), inactive 52% / hover
-72% / active full `--pager-dot-active`. This is the SHARED oracle — the carousel
-ships it (`CarouselDots` retired onto it) and the slides deck `DeckPager` adopts it.
+A dot-per-page rail: a crisp `::before`-painted 13px pip centered in each cell, with
+a LIQUID dot-MORPH worm (BI.W-PAGER-WORM) as the active indicator — a two-edge
+lead/trail barbell that STRETCHES → TRAVELS → RE-FORMS between dots with liquid weight
+(the Google-worm edict), driven by `useLeadTrail` (the ONE shared two-edge integrator —
+NO `--spring-dock`/CSS-transition clock; release-at-arrival is emergent). The paint is a
+THREE-LAYER split — a crisp BED (N pips, never filtered), the WORM masses (the goo
+`#pager-worm-goo` filter + translucency ONCE), and the transparent hit-target buttons —
+so the σ8 whole-layer-filter empty-pill annihilation is structurally impossible. Inactive
+52% / hover 72% / active-under-worm dims ~35% / the worm masses paint full
+`--pager-dot-active`. This is the SHARED oracle — the carousel ships it (`CarouselDots`
+retired onto it) and the slides deck `DeckPager` adopts it.
+
+Keyboard (BI.W-PAGER-A11Y): the rail is a roving-tabindex tablist/toolbar — EXACTLY ONE
+tab stop (the active dot); a root `@keydown` handles the axis-derived arrows
+(ArrowRight/Left horizontal ⇄ ArrowDown/Up vertical), Home/End jump, wrapping. Each
+hit-target grows to a ≥28px comfort box (24px cell, WCAG 2.5.8 AA — the deliberate
+below-44px exemption is recorded in `docs/tranches/BI/audit/W-PAGER-A11Y-hit-target.md`)
+while the painted pip stays UNMOVED.
 
 ## Anatomy
 
@@ -49,11 +62,12 @@ const active = ref(0);
 
 | token                  | default                                              | what |
 |------------------------|------------------------------------------------------|------|
-| `--pager-dot-active`   | `var(--foreground)`                                  | the active fill — slides sets `var(--ncsu-red)` |
-| `--pager-dot-inactive` | `color-mix(in srgb, var(--foreground) 52%, transparent)` | the resting fill (≥3:1 WCAG 1.4.11, both schemes) |
-| `--pager-dot-hover`    | `color-mix(in srgb, var(--foreground) 72%, transparent)` | the hover fill |
-| `--pager-dot-size`     | `0.375rem`                                           | the 6px base pip diameter |
-| `--pager-dot-elongated`| `1.5rem`                                             | the 24px active elongation |
+| `--pager-dot-active`     | `var(--foreground)`                                  | the solid ink the worm masses paint — slides sets `var(--ncsu-red)` |
+| `--pager-dot-inactive`   | `color-mix(in srgb, var(--foreground) 52%, transparent)` | the resting bed pip (≥3:1 WCAG 1.4.11, both schemes) |
+| `--pager-dot-active-dim` | `color-mix(in srgb, var(--foreground) 35%, transparent)` | the active bed pip dimmed UNDER the worm (the brightness hierarchy) |
+| `--pager-dot-hover`      | `color-mix(in srgb, var(--foreground) 72%, transparent)` | the hover fill |
+| `--pager-dot-size`       | `0.8125rem`                                          | the 13px base pip diameter (the worm body D — a real dot with mass to merge) |
+| `--pager-dot-elongated`  | `2.25rem`                                            | the 36px max worm elongation (the lead↔trail gap clamp — bounded, never taffy) |
 
 The fill reads `--foreground`-over-transparent, so it re-tints under `.dark` BY
 CONSTRUCTION. The glass ring chassis (`.glass-pager-ring`, glass/surfaces.css) is
