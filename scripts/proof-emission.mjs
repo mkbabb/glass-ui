@@ -437,10 +437,22 @@ add(
 // its hook. Born-RED against HEAD (the CVA carries `fixed inset-y-0 right-0 h-full w-3/4`;
 // no sheet-content rule ships; the SFC mints no data-slot).
 // ════════════════════════════════════════════════════════════════════════════════════
-const sheetCvaSrc = strip(read("src/components/ui/sheet/index.ts"));
-// The STRUCTURAL positioning tokens forbidden on the CVA (they must live in the shipped
-// [data-slot] rule, not a consumer-JIT-dependent utility). Decoration (border-*, the
-// padding tokens, glass-floating, sheet-animate, the slide-in/out data-state pairs) STAYS.
+// BI.W-DIALOG-PLACEMENT — the Sheet FOLDED onto `<DialogContent placement>`; the
+// overlay-band INVERSE follows the fold. The side-slide's structural positioning lives
+// in dialog-placement.css (the renamed sheet.css); DialogContent.vue's SIDE class
+// definitions (the `sideBaseClasses` const + the `PLACEMENT_SLIDE` map) must carry ONLY
+// decoration. We scope the geometry grep to that SIDE region so the CENTER modal's own
+// `fixed left-1/2 top-1/2 z-modal` centering (never the D7 subject — a simple centering
+// that ships fine) is not conflated.
+const dialogContentSrc = strip(read("src/components/ui/dialog/DialogContent.vue"));
+const placementRegion =
+    (dialogContentSrc.match(
+        /const PLACEMENT_SLIDE[\s\S]*?const sideBaseClasses\s*=\s*['"][^'"]*['"]/,
+    ) || [""])[0];
+// The STRUCTURAL positioning tokens forbidden on the SIDE class strings (they must live
+// in the shipped [data-slot=dialog-content][data-placement] rule, not a consumer-JIT-
+// dependent utility). Decoration (border-*, the padding tokens, glass-floating,
+// sheet-animate, the rounding, the slide-in/out data-state pairs) STAYS.
 const SHEET_GEOMETRY = [
     /\bfixed\b/,
     /\binset-x-0\b/,
@@ -450,27 +462,29 @@ const SHEET_GEOMETRY = [
     /\bz-modal\b/,
     /\bsm:max-w-sm\b/,
 ];
-const sheetGeometryHits = SHEET_GEOMETRY.filter((re) => re.test(sheetCvaSrc)).map(
+const sheetGeometryHits = SHEET_GEOMETRY.filter((re) => re.test(placementRegion)).map(
     (re) => re.source,
 );
-const sheetCvaGeometryStripped = sheetGeometryHits.length === 0;
+const sheetCvaGeometryStripped = placementRegion.length > 0 && sheetGeometryHits.length === 0;
 facts.sheetGeometryHits = sheetGeometryHits;
 add(
     "sheet-cva-geometry-stripped",
     sheetCvaGeometryStripped,
     sheetCvaGeometryStripped
-        ? "the sheetVariants CVA carries ONLY decoration — every structural positioning token (fixed/inset/h-full/w-3/4/z-modal/sm:max-w-sm) is STRIPPED off the class strings (the geometry ships as the precompiled [data-slot=sheet-content][data-side] rule, never a consumer-JIT-dependent utility)"
-        : `the sheetVariants CVA STILL carries load-bearing structural positioning utilities (${sheetGeometryHits.join(", ")}) — these die in a consumer's content-scan (the D7 configurator-drawer break); move them to the shipped src/styles/sheet.css [data-slot=sheet-content][data-side] rule`,
+        ? "the DialogContent placement side-slide (sideBaseClasses + PLACEMENT_SLIDE) carries ONLY decoration — every structural positioning token (fixed/inset/h-full/w-3/4/z-modal/sm:max-w-sm) is STRIPPED off the class strings (the geometry ships as the precompiled [data-slot=dialog-content][data-placement] rule, never a consumer-JIT-dependent utility)"
+        : placementRegion.length === 0
+          ? "the DialogContent placement side region (PLACEMENT_SLIDE + sideBaseClasses) was not found — the Sheet fold's side-slide definitions must live in src/components/ui/dialog/DialogContent.vue"
+          : `the DialogContent placement side-slide STILL carries load-bearing structural positioning utilities (${sheetGeometryHits.join(", ")}) — these die in a consumer's content-scan (the D7 configurator-drawer break); move them to the shipped src/styles/dialog-placement.css [data-slot=dialog-content][data-placement] rule`,
 );
 // The POSITIVE backing (mirrors W2/W3): the shipped [data-slot=sheet-content] rule ships
 // in the built /styles cascade — position:fixed on the base + the per-side inset on the
 // data-side variant. Whitespace/`:where(`-wrapper/minifier tolerant.
 const sheetBasePosInDist =
-    /:?\s*(?:where\()?\[data-slot=["']?sheet-content["']?\]\)?[^{}]*\{[^}]*position\s*:\s*fixed/.test(
+    /:?\s*(?:where\()?\[data-slot=["']?dialog-content["']?\]\[data-placement\]\)?[^{}]*\{[^}]*position\s*:\s*fixed/.test(
         distCss,
     );
 const sheetSideInsetInDist =
-    /\[data-slot=["']?sheet-content["']?\]\[data-side=["']?(?:right|left|top|bottom)["']?\]/.test(
+    /\[data-slot=["']?dialog-content["']?\]\[data-placement=["']?(?:right|left|top|bottom)["']?\]/.test(
         distCss,
     );
 const sheetPositioningInDist = sheetBasePosInDist && sheetSideInsetInDist;
@@ -480,21 +494,22 @@ add(
     "sheet-positioning-in-built-css",
     sheetPositioningInDist,
     sheetPositioningInDist
-        ? "the overlay-band structural positioning SHIPS in dist (a [data-slot=sheet-content] position:fixed base rule + [data-slot=sheet-content][data-side=…] per-side inset rules, from src/styles/sheet.css) — the Sheet positions in EVERY consumer regardless of Tailwind content-scan reach (the D7 root fix)"
-        : `the overlay-band positioning is ABSENT from the built /styles cascade (base position:fixed ${sheetBasePosInDist ? "✓" : "✗"}, per-side inset ${sheetSideInsetInDist ? "✓" : "✗"}) — src/styles/sheet.css did not ship the precompiled [data-slot=sheet-content][data-side] rule (run npm run build; born-RED against HEAD where the rule does not exist)`,
+        ? "the overlay-band structural positioning SHIPS in dist (a [data-slot=dialog-content][data-placement] position:fixed base rule + [data-slot=dialog-content][data-placement=…] per-side inset rules, from src/styles/dialog-placement.css) — the folded side sheet positions in EVERY consumer regardless of Tailwind content-scan reach (the D7 root fix)"
+        : `the overlay-band positioning is ABSENT from the built /styles cascade (base position:fixed ${sheetBasePosInDist ? "✓" : "✗"}, per-side inset ${sheetSideInsetInDist ? "✓" : "✗"}) — src/styles/dialog-placement.css did not ship the precompiled [data-slot=dialog-content][data-placement] rule (run npm run build; born-RED against HEAD where the rule does not exist)`,
 );
-// The SFC mints the [data-slot=sheet-content] + [data-side] hooks the shipped rule keys off.
-const sheetContentSrc = strip(read("src/components/ui/sheet/SheetContent.vue"));
-const sheetMintsDataSlot = /data-slot\s*=\s*["'](?:'?sheet-content'?)["']/.test(sheetContentSrc);
-const sheetMintsDataSide = /:?data-side\s*=/.test(sheetContentSrc);
+// The SFC mints the [data-slot=dialog-content] + [data-placement] hooks the shipped rule
+// keys off (the folded side sheet — BI.W-DIALOG-PLACEMENT).
+const sheetContentSrc = strip(read("src/components/ui/dialog/DialogContent.vue"));
+const sheetMintsDataSlot = /data-slot\s*=\s*["'](?:'?dialog-content'?)["']/.test(sheetContentSrc);
+const sheetMintsDataSide = /:?data-placement\s*=/.test(sheetContentSrc);
 facts.sheetMintsDataSlot = sheetMintsDataSlot;
 facts.sheetMintsDataSide = sheetMintsDataSide;
 add(
     "sheet-content-mints-data-slot-side",
     sheetMintsDataSlot && sheetMintsDataSide,
     sheetMintsDataSlot && sheetMintsDataSide
-        ? "SheetContent.vue mints data-slot=\"sheet-content\" + :data-side on the portaled content node — the hook the shipped [data-slot=sheet-content][data-side] positioning rule keys off"
-        : `SheetContent.vue does not mint the positioning hooks (data-slot ${sheetMintsDataSlot}, data-side ${sheetMintsDataSide}) — the shipped rule has nothing to select`,
+        ? "DialogContent.vue mints data-slot=\"dialog-content\" + :data-placement on the portaled content node — the hook the shipped [data-slot=dialog-content][data-placement] positioning rule keys off (the folded side sheet)"
+        : `DialogContent.vue does not mint the positioning hooks (data-slot ${sheetMintsDataSlot}, data-placement ${sheetMintsDataSide}) — the shipped rule has nothing to select`,
 );
 
 // ════════════════════════════════════════════════════════════════════════════════════
@@ -515,11 +530,13 @@ function forwardsAttrs(rel) {
     return { hasInheritFalse, spreadsAttrs, forwards: hasInheritFalse && spreadsAttrs };
 }
 const OVERLAY_CONTENT_SFCS = [
-    { id: "SheetContent", rel: "src/components/ui/sheet/SheetContent.vue", inBounds: true },
+    // SheetContent RETIRED at BI.W-DIALOG-PLACEMENT (Sheet folded onto DialogContent
+    // placement); its portal-attrs assertion retires with the SFC.
     { id: "DrawerContent", rel: "src/components/ui/drawer/DrawerContent.vue", inBounds: true },
-    // DialogContent is the same-class SIBLING (a portal-rooted overlay Content) OUT of
-    // W-SHEET-INSET-ROOT File Bounds. RECORDED here (the card-spacing-base-setter census
-    // precedent) — booked to the same fix-class, not asserted by this in-bounds wave.
+    // DialogContent is the same-class SIBLING (a portal-rooted overlay Content — now the
+    // fold home for the side sheet too). RECORDED here (the card-spacing-base-setter
+    // census precedent) — the $attrs-forward remains booked to the same fix-class (the
+    // pre-fold posture, unchanged by this wave), not asserted by this in-bounds arm.
     { id: "DialogContent", rel: "src/components/ui/dialog/DialogContent.vue", inBounds: false },
 ];
 const portalAttrsCensus = OVERLAY_CONTENT_SFCS.map((s) => ({

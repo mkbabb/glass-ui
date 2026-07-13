@@ -2,9 +2,28 @@
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import { ref } from "vue";
 import { Button } from "@glass/components/ui/button";
-import { ConfirmDialog } from "@glass/components/custom/confirm-dialog";
+// BI.W-DIALOG-PLACEMENT — ConfirmDialog DEMOTED to a Dialog PRESET (its imperative
+// promise-opener was thin — a preset over the Dialog root, not a distinct component).
+// The confirm flow is a CONSUMER composition now (presets live in consumers): a glass
+// `<DialogContent :show-close="false">` with a title/description + a confirm/cancel
+// footer + the loading dismiss-guard. This story IS that preset, shown inline.
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogDescription,
+    DialogFooter,
+} from "@glass/components/ui/dialog";
 import { IconChip } from "@glass/components/custom/icon-chip";
-import { Trash2, LogOut, Archive, CheckCircle2, ShieldAlert } from "@lucide/vue";
+import {
+    Trash2,
+    LogOut,
+    Archive,
+    CheckCircle2,
+    ShieldAlert,
+    LoaderCircle,
+} from "@lucide/vue";
 // BB.W-SUFFUSE3 — the feedback band's --section-color-8 ruby identity.
 const FEEDBACK_STOP = 8;
 
@@ -13,6 +32,7 @@ const destructiveLoading = ref(false);
 const destructiveLog = ref<string[]>([]);
 
 function onDestructiveConfirm(): void {
+    if (destructiveLoading.value) return;
     destructiveLoading.value = true;
     window.setTimeout(() => {
         destructiveLoading.value = false;
@@ -23,6 +43,11 @@ function onDestructiveConfirm(): void {
         ].slice(0, 4);
     }, 900);
 }
+// The loading dismiss-guard: reka's DialogContent emits these dismiss intents; while a
+// confirm is in-flight we PREVENT the dismiss (the retired ConfirmDialog's guard).
+function guardDismiss(event: Event): void {
+    if (destructiveLoading.value) event.preventDefault();
+}
 
 const benignOpen = ref(false);
 const benignLog = ref<string[]>([]);
@@ -31,6 +56,7 @@ function onBenignConfirm(): void {
         `Archived at ${new Date().toLocaleTimeString()}`,
         ...benignLog.value,
     ].slice(0, 4);
+    benignOpen.value = false;
 }
 
 const signOutOpen = ref(false);
@@ -57,8 +83,10 @@ const signOutOpen = ref(false);
                     Feedback · Confirm Dialog
                 </span>
                 <p class="text-small text-muted-foreground">
-                    Guardrail surfaces — the destructive tone carries its own
-                    variant color; the section identity is the ONE page event.
+                    The confirm-flow Dialog preset — a glass
+                    <code class="font-mono text-xs">Dialog</code> composition, not a
+                    distinct component; the destructive tone carries its own button
+                    register.
                 </p>
             </div>
         </header>
@@ -80,7 +108,7 @@ const signOutOpen = ref(false);
                     </p>
                     <div>
                         <Button
-                            variant="destructive"
+                            tone="destructive"
                             class="gap-1.5"
                             @click="destructiveOpen = true"
                         >
@@ -96,15 +124,48 @@ const signOutOpen = ref(false);
                     </ul>
                 </div>
 
-                <ConfirmDialog
-                    v-model:open="destructiveOpen"
-                    title="Delete workspace?"
-                    description="This will permanently remove all analyses, notes, and attachments inside fourier-sandbox-42. This cannot be undone."
-                    confirm-label="Delete workspace"
-                    destructive
-                    :loading="destructiveLoading"
-                    @confirm="onDestructiveConfirm"
-                />
+                <Dialog v-model:open="destructiveOpen">
+                    <DialogContent
+                        surface="glass"
+                        class="w-[calc(100%-2rem)] sm:max-w-sm"
+                        :show-close="false"
+                        @escape-key-down="guardDismiss"
+                        @interact-outside="guardDismiss"
+                    >
+                        <DialogHeader>
+                            <DialogTitle class="font-display font-semibold">
+                                Delete workspace?
+                            </DialogTitle>
+                            <DialogDescription class="fira-code">
+                                This will permanently remove all analyses, notes, and
+                                attachments inside fourier-sandbox-42. This cannot be
+                                undone.
+                            </DialogDescription>
+                        </DialogHeader>
+                        <DialogFooter class="gap-2">
+                            <Button
+                                variant="outline"
+                                class="cursor-pointer rounded-pill"
+                                :disabled="destructiveLoading"
+                                @click="destructiveOpen = false"
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                tone="destructive"
+                                class="cursor-pointer gap-1.5 rounded-pill"
+                                :disabled="destructiveLoading"
+                                @click="onDestructiveConfirm"
+                            >
+                                <LoaderCircle
+                                    v-if="destructiveLoading"
+                                    class="size-4 animate-spin"
+                                />
+                                Delete workspace
+                            </Button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
             </div>
         </section>
 
@@ -141,25 +202,50 @@ const signOutOpen = ref(false);
                     </ul>
                 </div>
 
-                <ConfirmDialog
-                    v-model:open="benignOpen"
-                    title="Archive this thread?"
-                    description="Archived threads move to the Archive tab. You can restore them any time."
-                    confirm-label="Archive"
-                    @confirm="onBenignConfirm"
-                />
+                <Dialog v-model:open="benignOpen">
+                    <DialogContent
+                        surface="glass"
+                        class="w-[calc(100%-2rem)] sm:max-w-sm"
+                        :show-close="false"
+                    >
+                        <DialogHeader>
+                            <DialogTitle class="font-display font-semibold">
+                                Archive this thread?
+                            </DialogTitle>
+                            <DialogDescription class="fira-code">
+                                Archived threads move to the Archive tab. You can
+                                restore them any time.
+                            </DialogDescription>
+                        </DialogHeader>
+                        <DialogFooter class="gap-2">
+                            <Button
+                                variant="outline"
+                                class="cursor-pointer rounded-pill"
+                                @click="benignOpen = false"
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                class="cursor-pointer gap-1.5 rounded-pill"
+                                @click="onBenignConfirm"
+                            >
+                                Archive
+                            </Button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
             </div>
         </section>
 
         <section class="flex flex-col gap-3">
-            <p class="section-label">slot override — custom body + action</p>
+            <p class="section-label">custom body + action</p>
             <div
                 class="relative overflow-hidden rounded-2xl border border-border/60 bg-card/60 p-6 min-h-[220px]"
             >
                 <div class="flex flex-col gap-3">
                     <p class="max-w-prose text-sm text-muted-foreground">
-                        Default + action slots let consumers swap copy and the
-                        confirm label for richer framing.
+                        A richer body + a custom confirm label — the preset is just
+                        Dialog primitives, so consumers frame it however they like.
                     </p>
                     <div>
                         <Button variant="outline" class="gap-1.5" @click="signOutOpen = true">
@@ -169,22 +255,41 @@ const signOutOpen = ref(false);
                     </div>
                 </div>
 
-                <ConfirmDialog
-                    v-model:open="signOutOpen"
-                    title="Sign out of all devices?"
-                    confirm-label="Sign out"
-                >
-                    <p>
-                        You'll need to re-authenticate the next time you open
-                        the editor. Local drafts stay on this device.
-                    </p>
-                    <template #action>
-                        <span class="inline-flex items-center gap-1.5">
-                            <CheckCircle2 class="size-4" />
-                            Sign me out
-                        </span>
-                    </template>
-                </ConfirmDialog>
+                <Dialog v-model:open="signOutOpen">
+                    <DialogContent
+                        surface="glass"
+                        class="w-[calc(100%-2rem)] sm:max-w-sm"
+                        :show-close="false"
+                    >
+                        <DialogHeader>
+                            <DialogTitle class="font-display font-semibold">
+                                Sign out of all devices?
+                            </DialogTitle>
+                            <DialogDescription class="fira-code">
+                                You'll need to re-authenticate the next time you open
+                                the editor. Local drafts stay on this device.
+                            </DialogDescription>
+                        </DialogHeader>
+                        <DialogFooter class="gap-2">
+                            <Button
+                                variant="outline"
+                                class="cursor-pointer rounded-pill"
+                                @click="signOutOpen = false"
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                class="cursor-pointer gap-1.5 rounded-pill"
+                                @click="signOutOpen = false"
+                            >
+                                <span class="inline-flex items-center gap-1.5">
+                                    <CheckCircle2 class="size-4" />
+                                    Sign me out
+                                </span>
+                            </Button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
             </div>
         </section>
     </StoryPage>

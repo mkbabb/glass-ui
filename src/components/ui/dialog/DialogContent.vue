@@ -15,12 +15,15 @@ import { useSpringMount, type SpringPreset } from '../../../composables/motion/u
 import ModalOverlay from '../_shared/ModalOverlay.vue'
 // BH.W-MOTION-AXIS — the `spring` boolean dies onto the ONE `motion` axis (the preset
 // carves off onto the distinct `springPreset` prop; motion gates the JS entrance).
-import type { Motion } from '../_shared/axes'
+import type { Motion, Placement } from '../_shared/axes'
 import { useMotionAxis } from '../_shared/useMotionAxis'
 // BA.W-SURFACE-AXIS — Dialog's binary `variant: glass|opaque` string RETIRES onto
 // the SHARED {glass·veil·opaque} `surface` axis (clean break, no alias — the prior
 // `variant` was Dialog-local and never matched the Card grammar; MIGRATION.md row).
-import { surfaceClass, type Surface } from '../_shared/useSurfaceAxis'
+// BI.W-DIALOG-PLACEMENT — `decorationClass` (the veil/opaque decoration ONLY) rides
+// the placement != center slide path (the folded Sheet composes glass-floating in its
+// slide base; the decoration layers the same shared W55 seam).
+import { surfaceClass, decorationClass, type Surface } from '../_shared/useSurfaceAxis'
 
 const props = withDefaults(
   defineProps<DialogContentProps & {
@@ -31,6 +34,18 @@ const props = withDefaults(
      *  plate; `opaque` sets `--glass-level:0` (the solid-card escape). Replaces the
      *  retired binary `variant: glass|opaque` (clean break). */
     surface?: Surface;
+    /**
+     * BI.W-DIALOG-PLACEMENT — the overlay-placement axis (Sheet FOLDED onto Dialog).
+     * `center` (default) is the byte-identical centered modal — the `.glass-reveal`
+     * bloom over the see-through `--glass-bg-dialog` rung. `top|right|bottom|left`
+     * are the edge SIDE-SLIDE (the former `<Sheet side>`): the content fixes to that
+     * viewport edge, spans the cross axis, rounds its INNER corners on the dialog rung,
+     * and slides in via the shared `sheet-animate` CSS register (byte-identical to the
+     * retired Sheet frame-series). N3: a placement != center Dialog is a NON-detented
+     * side sheet — a detented bottom sheet over a LIVE surface stays `<Drawer>` (snap
+     * physics is Drawer's mechanism, never this paint axis).
+     */
+    placement?: Placement;
     /**
      * Optional CSS `animation` shorthand forwarded to the portaled scrim
      * via the `--scrim-animation` typed cascade variable. reka-ui's
@@ -89,21 +104,32 @@ const props = withDefaults(
      */
     stage?: 'none' | 'dim' | 'scale' | 'immersive';
   }>(),
-  { surface: 'glass', showClose: true, stage: 'none' },
+  { surface: 'glass', placement: 'center', showClose: true, stage: 'none' },
 )
 const emits = defineEmits<DialogContentEmits>()
 
 const delegatedProps = computed(() => {
-  const { class: _, surface: _su, scrimAnimation: _sa, motion: _mo, springPreset: _spp, showClose: _sc, stage: _st, ...delegated } = props
+  const { class: _, surface: _su, placement: _pl, scrimAnimation: _sa, motion: _mo, springPreset: _spp, showClose: _sc, stage: _st, ...delegated } = props
   return delegated
 })
+
+// BI.W-DIALOG-PLACEMENT — center vs the folded Sheet side-slide.
+const placement = computed<Placement>(() => props.placement ?? 'center')
+const isCenter = computed(() => placement.value === 'center')
 
 // BH.W-MOTION-AXIS — the resolved motion state. The JS spring entrance arms iff a
 // `springPreset` is named AND the resolved motion is not `off` (a preset-less dialog
 // keeps the `.glass-reveal` CSS bloom — byte-identical to HEAD's unset `spring`).
 const motionAxis = useMotionAxis(() => props.motion)
+// The JS spring entrance is the CENTERED scale-bloom ONLY (BI.W-DIALOG-PLACEMENT). A
+// placement != center Dialog slides via the CSS `sheet-animate` register (byte-identical
+// to the retired Sheet); the JS slide-spring + drag-dismiss gesture are Drawer's
+// mechanism (the N3 disambiguation), never smuggled into this paint axis.
 const springActive = computed(
-  () => props.springPreset != null && motionAxis.resolved.value !== 'off',
+  () =>
+    props.springPreset != null &&
+    motionAxis.resolved.value !== 'off' &&
+    (props.placement ?? 'center') === 'center',
 )
 
 // BD.W-OVERLAY-STAGE-COUPLE — the centered modal flips `--stage-t` 0→1 on open (the
@@ -199,6 +225,51 @@ const variantClasses = computed(() =>
   cn(surfaceClass(props.surface, 'floating'), 'rounded-dialog')
 )
 
+// BI.W-DIALOG-PLACEMENT — the folded Sheet side-slide (the retired `sheetVariants`
+// side arms, verbatim). Each `placement != center` value rounds its INNER corners on
+// the dialog rung, borders the inner edge, and slides in via the shared `sheet-animate`
+// CSS register (byte-identical frame-series to the retired Sheet — the slide is PAINT,
+// not a distinct mechanism; N3: snap-detent physics stays Drawer's). The STRUCTURAL
+// positioning (fixed/inset/size/z) ships PRECOMPILED off
+// `[data-slot="dialog-content"][data-placement]` (src/styles/dialog-placement.css) — a
+// load-bearing geometry utility dies in a consumer's Tailwind content-scan (the D7
+// emission inverse), so it is an attribute-selector rule, never a CVA class.
+const PLACEMENT_SLIDE: Record<Exclude<Placement, 'center'>, string> = {
+  top: 'rounded-b-dialog border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top',
+  bottom: 'rounded-t-dialog border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom',
+  left: 'rounded-r-dialog border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left',
+  right: 'rounded-l-dialog border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right',
+}
+// The side base (the retired `sheetVariants` base with the STRUCTURAL utilities stripped):
+// the overlay padding ladder + the `sheet-animate` data-state slide pair + `transition
+// ease-in-out`. `glass-floating` rides `surfaceClass(.., 'floating')` below (no double-name).
+const sideBaseClasses = 'grid gap-4 [--overlay-pad-inline:--spacing(6)] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] px-(--overlay-pad-inline) py-(--overlay-pad-block) transition ease-in-out sheet-animate'
+
+// The resolved content class — center (the `.glass-reveal` bloom or the JS spring) vs the
+// folded side-slide. A side placement never arms the JS spring (springActive gates to
+// center) and never composes the center `-translate-x/y-1/2 glass-reveal` recipe.
+const contentClass = computed(() =>
+  isCenter.value
+    ? cn(baseClasses, springActive.value ? '' : defaultMotionClasses, variantClasses.value, props.class)
+    : cn(
+        sideBaseClasses,
+        PLACEMENT_SLIDE[placement.value as Exclude<Placement, 'center'>],
+        surfaceClass(props.surface, 'floating'),
+        props.class,
+      )
+)
+
+// BI.W-DIALOG-PLACEMENT / W-CONFIG-IN-SHEET — the folded side sheet is the Law-1
+// concentric-radius RELAY PARENT (the retired SheetContent published this for the
+// gear-sheet Configurator's nested cards): it PUBLISHES its resolved corner
+// (--radius-dialog) as --radius-ctx + its content pad (--overlay-pad-inline) as
+// --radius-inset, so a nested card-class surface DERIVES its own corner concentric with
+// the outer. Center dialogs need no relay (they are terminal, not a nesting host).
+const radiusCtxStyle: CSSProperties = {
+  '--radius-ctx': 'var(--radius-dialog)',
+  '--radius-inset': 'var(--overlay-pad-inline)',
+}
+
 // W13 spring entrance. Inject reka-ui's open ref and wire a useSpringMount
 // (without dragHandlers — Dialog has no drag-dismiss gesture). The position
 // 0→1 drives an inverse-scale + opacity so the dialog grows-in from 95% with
@@ -235,26 +306,33 @@ const springStyle = computed<CSSProperties | undefined>(() => {
   }
 })
 
-// BC.W-DIALOG-GLASS — the dialog reads as ACTUAL iOS-27 liquid glass: drop the
-// modal plate from the floating tier (0.80 — "NOT glassy at all") to the SEE-
-// THROUGH `--glass-bg-dialog` register (0.68). This is the SELF-RE-POINT recipe
-// (the dock precedent, tokens/glass.css §substitution-vs-inheritance): the dialog
-// re-DECLARES the composed `--glass-bg-floating` onto `--glass-bg-dialog` on its
-// OWN scope, so the base `.glass-floating` rule (`background: var(--glass-bg-
-// floating)`) resolves the transparent dialog plate WHILE keeping the floating
-// edge/rim/under-shadow LIFT (the modal floats off the scrim). NOT a raw rung
-// override (which won't re-compose the already-resolved :root value); the re-
-// declaration on the scope is the documented retune path. Rides the DEFAULT
-// `glass` surface; `surface="opaque"` still reaches `--glass-level:0` (the re-
-// point sets the bg token, the level seam zeroes it through unchanged). The
-// `--glass-bg-dialog` token carries the BC.W-ADAPTIVE-RECONCILE oklab tint
-// wrapper, so the bright-bucket darken reaches the modal for AA over a busy page.
+// BC.W-DIALOG-GLASS / BI.W-GLASS-TOKEN-PRUNE — the dialog reads as ACTUAL iOS-27
+// liquid glass: drop the modal plate from the floating tier (0.80 — "NOT glassy at
+// all") to the SEE-THROUGH `--glass-bg-dialog` register (0.68). The α-band probe
+// (BI.W-GLASS-TOKEN-PRUNE, the arbiter) DECIDED the rung is genuinely-distinct
+// physics — Δ plate-α 0.12 vs floating, ΔL 0.06–0.10 over a busy/dark page (>> 2%)
+// → KEEP the rung — and this reads it through ONE DOOR. The floating rung composes
+// its plate from an internal `--glass-bg-rung` slot (glass/ladder.css: `.glass-
+// floating { --glass-bg-rung: var(--glass-bg-floating) } → --glass-plate-tinted →
+// background`), so the dialog scope re-points that slot onto the NAMED `--glass-bg-
+// dialog` rung directly — NO `--glass-bg-floating: var(--glass-bg-dialog)` double-
+// name re-declaration (the named-duplicate wart the prune kills; `--glass-bg-
+// floating` keeps meaning `floating` on this scope). Byte-identical plate α to the
+// retired re-declaration (both resolve `--glass-bg-rung` → the dialog bg). The
+// floating tier's edge/rim/under-shadow LIFT survives (surfaceClass(.., 'floating')
+// below keeps the class). Rides the DEFAULT `glass` surface; `surface="opaque"`
+// still reaches `--glass-level:0` (the dialog rung's own calc zeroes through
+// unchanged). The `--glass-bg-dialog` token carries the BC.W-ADAPTIVE-RECONCILE
+// oklab tint wrapper, so the bright-bucket darken reaches the modal for AA over a
+// busy page.
 const plateStyle: CSSProperties = {
-  '--glass-bg-floating': 'var(--glass-bg-dialog)',
+  '--glass-bg-rung': 'var(--glass-bg-dialog)',
 } as CSSProperties
 
 const contentStyle = computed<CSSProperties>(() => ({
   ...plateStyle,
+  // BI.W-DIALOG-PLACEMENT — the concentric-radius relay rides the folded side sheets only.
+  ...(isCenter.value ? {} : radiusCtxStyle),
   // BH.W-MOTION-AXIS — the `--motion-weight: 0` off-write (undefined at full/reduced).
   ...((motionAxis.hostStyle.value as CSSProperties | undefined) ?? {}),
   ...(springStyle.value ?? {}),
@@ -271,10 +349,12 @@ const contentStyle = computed<CSSProperties>(() => ({
     />
     <DialogContent
       v-bind="forwarded"
-      :class="cn(baseClasses, springActive ? '' : defaultMotionClasses, variantClasses, props.class)"
+      :class="contentClass"
       :style="contentStyle"
       :data-surface="props.surface"
-      data-reveal="overlay"
+      data-slot="dialog-content"
+      :data-placement="isCenter ? undefined : placement"
+      :data-reveal="isCenter ? 'overlay' : undefined"
       :data-motion="motionAxis.dataMotion.value"
       :data-spring="springActive ? (props.springPreset ?? 'smooth') : undefined"
     >

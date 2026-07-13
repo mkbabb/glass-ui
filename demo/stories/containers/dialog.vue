@@ -15,9 +15,8 @@ import {
 import { Button } from "@glass/components/ui/button";
 import { Input } from "@glass/components/ui/input";
 import { Label } from "@glass/components/ui/label";
-import { ConfirmDialog } from "@glass/components/custom/confirm-dialog";
 import { IconChip } from "@glass/components/custom/icon-chip";
-import { MessageSquare } from "@lucide/vue";
+import { MessageSquare, LoaderCircle } from "@lucide/vue";
 
 // BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2
 // blue identity. PH3-safe (inline borderLeft, not the border-l-[3px] +
@@ -29,11 +28,17 @@ const confirming = ref(false);
 const confirmed = ref(0);
 
 function onConfirm() {
+    if (confirming.value) return;
     confirming.value = true;
     setTimeout(() => {
         confirming.value = false;
         confirmed.value += 1;
+        confirmOpen.value = false;
     }, 700);
+}
+// The loading dismiss-guard: while a confirm is in-flight, PREVENT reka's dismiss intents.
+function guardConfirmDismiss(event: Event) {
+    if (confirming.value) event.preventDefault();
 }
 </script>
 
@@ -113,11 +118,12 @@ function onConfirm() {
                 </div>
             </StorySection>
 
-            <StorySection heading="Confirm dialog" gap="lg">
+            <StorySection heading="Confirm preset" gap="lg">
                 <p class="text-sm text-muted-foreground">
-                    <code class="font-mono text-xs">ConfirmDialog</code> — destructive
-                    flag, async loading state, emits <code class="font-mono text-xs">@confirm</code>.
-                    Confirmed {{ confirmed }} time(s).
+                    The confirm-flow Dialog preset — destructive tone, async loading
+                    state, the loading dismiss-guard. A consumer composition over
+                    <code class="font-mono text-xs">Dialog</code>, not a distinct
+                    component. Confirmed {{ confirmed }} time(s).
                 </p>
                 <div class="relative isolate rounded-2xl border border-border bg-card p-6">
                     <div class="flex items-center justify-between gap-4">
@@ -128,21 +134,53 @@ function onConfirm() {
                             </p>
                         </div>
                         <Button
-                            variant="destructive"
+                            tone="destructive"
                             @click="confirmOpen = true"
                         >
                             Delete
                         </Button>
                     </div>
-                    <ConfirmDialog
-                        v-model:open="confirmOpen"
-                        title="Delete workspace?"
-                        description="This action cannot be undone. Assets, sessions, and tokens are permanently destroyed."
-                        confirm-label="Delete forever"
-                        destructive
-                        :loading="confirming"
-                        @confirm="onConfirm"
-                    />
+                    <Dialog v-model:open="confirmOpen">
+                        <DialogContent
+                            surface="glass"
+                            class="w-[calc(100%-2rem)] sm:max-w-sm"
+                            :show-close="false"
+                            @escape-key-down="guardConfirmDismiss"
+                            @interact-outside="guardConfirmDismiss"
+                        >
+                            <DialogHeader>
+                                <DialogTitle class="font-display font-semibold">
+                                    Delete workspace?
+                                </DialogTitle>
+                                <DialogDescription class="fira-code">
+                                    This action cannot be undone. Assets, sessions, and
+                                    tokens are permanently destroyed.
+                                </DialogDescription>
+                            </DialogHeader>
+                            <DialogFooter class="gap-2">
+                                <Button
+                                    variant="outline"
+                                    class="cursor-pointer rounded-pill"
+                                    :disabled="confirming"
+                                    @click="confirmOpen = false"
+                                >
+                                    Cancel
+                                </Button>
+                                <Button
+                                    tone="destructive"
+                                    class="cursor-pointer gap-1.5 rounded-pill"
+                                    :disabled="confirming"
+                                    @click="onConfirm"
+                                >
+                                    <LoaderCircle
+                                        v-if="confirming"
+                                        class="size-4 animate-spin"
+                                    />
+                                    Delete forever
+                                </Button>
+                            </DialogFooter>
+                        </DialogContent>
+                    </Dialog>
                 </div>
             </StorySection>
         

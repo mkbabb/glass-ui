@@ -2,15 +2,15 @@
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import {
-    Sheet,
-    SheetClose,
-    SheetContent,
-    SheetDescription,
-    SheetFooter,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
-} from "@glass/components/ui/sheet";
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@glass/components/ui/dialog";
 import { Button } from "@glass/components/ui/button";
 import { Input } from "@glass/components/ui/input";
 import { Label } from "@glass/components/ui/label";
@@ -23,8 +23,11 @@ import { PanelRight } from "@lucide/vue";
 // <IconChip> double-header shape).
 const CONTAINERS_STOP = 2;
 
-type Side = "top" | "right" | "bottom" | "left";
-const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
+// BI.W-DIALOG-PLACEMENT — the Sheet side-slide FOLDED onto `<DialogContent placement>`
+// (same reka DialogRoot + FocusScope; the slide is paint, not mechanism). The four
+// non-center placements are the retired Sheet sides.
+type SidePlacement = "top" | "right" | "bottom" | "left";
+const sides: readonly SidePlacement[] = ["top", "right", "bottom", "left"] as const;
 </script>
 
 <template>
@@ -40,37 +43,38 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
             <IconChip :icon="PanelRight" :section="CONTAINERS_STOP" bloom reveal />
             <div class="flex flex-col gap-1">
                 <span class="section-label--tinted text-admin-label">
-                    Containers · Sheet
+                    Containers · Dialog Placement
                 </span>
                 <p class="text-small text-muted-foreground">
-                    Side-drawer sheet surfaces — the container identity is the ONE
-                    color event.
+                    The side-slide sheet — a Dialog <code
+                        class="font-mono text-xs">placement</code> axis; the container
+                    identity is the ONE color event.
                 </p>
             </div>
         </header>
 
             <StorySection heading="Four sides" gap="lg">
                 <p class="text-sm text-muted-foreground">
-                    Each trigger opens its own sheet — identical body, different
-                    <code class="font-mono text-xs">side</code> prop.
+                    Each trigger opens its own side sheet — identical body, different
+                    <code class="font-mono text-xs">placement</code> prop.
                 </p>
                 <div class="flex flex-wrap gap-3">
-                    <Sheet v-for="side in sides" :key="side">
-                        <SheetTrigger as-child>
+                    <Dialog v-for="side in sides" :key="side">
+                        <DialogTrigger as-child>
                             <Button variant="outline" class="capitalize">
                                 Open {{ side }}
                             </Button>
-                        </SheetTrigger>
-                        <SheetContent :side="side">
-                            <SheetHeader>
-                                <SheetTitle class="capitalize">
+                        </DialogTrigger>
+                        <DialogContent :placement="side">
+                            <DialogHeader>
+                                <DialogTitle class="capitalize">
                                     {{ side }} sheet
-                                </SheetTitle>
-                                <SheetDescription>
+                                </DialogTitle>
+                                <DialogDescription>
                                     Slides in from the {{ side }} edge. Esc or
                                     overlay-click dismisses.
-                                </SheetDescription>
-                            </SheetHeader>
+                                </DialogDescription>
+                            </DialogHeader>
                             <div class="grid gap-4 py-4">
                                 <div class="grid gap-2">
                                     <Label for="name">Name</Label>
@@ -85,16 +89,16 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                                     />
                                 </div>
                             </div>
-                            <SheetFooter>
-                                <SheetClose as-child>
+                            <DialogFooter>
+                                <DialogClose as-child>
                                     <Button variant="outline">Cancel</Button>
-                                </SheetClose>
-                                <SheetClose as-child>
+                                </DialogClose>
+                                <DialogClose as-child>
                                     <Button>Save changes</Button>
-                                </SheetClose>
-                            </SheetFooter>
-                        </SheetContent>
-                    </Sheet>
+                                </DialogClose>
+                            </DialogFooter>
+                        </DialogContent>
+                    </Dialog>
                 </div>
             </StorySection>
 

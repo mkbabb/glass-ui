@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted } from "vue";
 import {
-    Sheet,
-    SheetContent,
-    SheetDescription,
-    SheetHeader,
-    SheetTitle,
-} from "@glass/components/ui/sheet";
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+} from "@glass/components/ui/dialog";
 import { Slider } from "@glass/components/ui/slider";
 import { Switch } from "@glass/components/ui/switch";
 import {
@@ -40,7 +40,7 @@ const CONFIG_EVENT = "glass-ui-demo:toggle-configurator";
 
 const cfg = usePresetEditor();
 // The SHARED open singleton (AZ.R4-SHELL) — the gear control reflects this same
-// ref via aria-expanded. The Sheet binds it directly.
+// ref via aria-expanded. The Dialog binds it directly.
 const { open, toggle } = useConfiguratorOpen();
 
 // ─── External event wiring ────────────────────────────────────────────────
@@ -153,27 +153,27 @@ function effectiveFont(slot: keyof FontSlots): string {
 <template>
     <!-- AZ.W-SHELL-CONFIG — the gear-hosted demo configurator. The floating FAB
          is GONE (the open is rehomed onto the SidebarDock gear DockControl);
-         the Sheet is open-controlled by `open` (driven by the `,` shortcut + the
+         the Dialog is open-controlled by `open` (driven by the `,` shortcut + the
          `glass-ui-demo:toggle-configurator` window event — both still functional)
-         + the dock gear, so there is no in-component SheetTrigger. -->
-    <Sheet v-model:open="open">
-        <SheetContent
-            side="right"
+         + the dock gear, so there is no in-component DialogTrigger. -->
+    <Dialog v-model:open="open">
+        <DialogContent
+            placement="right"
             class="glass-resting w-full sm:max-w-md overflow-y-auto p-0"
         >
             <div class="flex h-full flex-col">
-                <SheetHeader
+                <DialogHeader
                     class="px-(--configurator-pad-inline) pt-6 pb-4 border-b"
                     style="border-color: var(--configurator-divider)"
                 >
-                    <SheetTitle class="font-display text-2xl">
+                    <DialogTitle class="font-display text-2xl">
                         glass-ui demo Configurator
-                    </SheetTitle>
-                    <SheetDescription class="text-prose text-sm">
+                    </DialogTitle>
+                    <DialogDescription class="text-prose text-sm">
                         Live-tune the post-W54 design axes — glass, scale, motion,
                         and the token presets. Changes persist locally.
-                    </SheetDescription>
-                </SheetHeader>
+                    </DialogDescription>
+                </DialogHeader>
 
                 <!-- BA.W-CONFIG-CHASSIS.3 — the gear RECOMPOSED on the Configurator
                      chassis (CFG-5, clean break): each former hand-rolled
@@ -186,7 +186,7 @@ function effectiveFont(slot: keyof FontSlots): string {
                      BI.W-CONFIG-IN-SHEET (FAM-4, ruling 11) — the bare `.configurator
                      glass-floating` root masquerade is GONE: the sections ARE the
                      shipped <ConfiguratorLayer>/<ConfiguratorRow> chassis; this wrapper
-                     is an honest single-column scroll port (the Sheet owns the surface
+                     is an honest single-column scroll port (the Dialog owns the surface
                      + overflow; the <Configurator> stage-grid SFC is a studio chassis,
                      a mismatch for a controls-only sheet). The sections read the Law-1
                      concentric card rung off the SHEET's published ctx (site #3), so
@@ -397,6 +397,6 @@ function effectiveFont(slot: keyof FontSlots): string {
                     </Button>
                 </div>
             </div>
-        </SheetContent>
-    </Sheet>
+        </DialogContent>
+    </Dialog>
 </template>

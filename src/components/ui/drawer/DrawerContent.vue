@@ -15,7 +15,7 @@ import { cn } from '../../../utils'
 // border/rim, the opaque rung sets `--glass-level:0` on the host — both ride the
 // shared seam, NO `glass-drawer`-local fork. PRESERVED byte-for-byte through the
 // abrogation (the public surface axis is inviolate).
-import { surfaceClass, type Surface } from '../_shared/useSurfaceAxis'
+import { decorationClass, type Surface } from '../_shared/useSurfaceAxis'
 // BB.W-DRAWER-ABROGATE — the house snap engine (the snap math vaul-vue used to own,
 // on the HOUSE `SpringProgress` clock). The content binds it against the snap seam
 // `<Drawer>` provides; the engine drives `--glass-drawer-t` (the snap-fraction
@@ -62,10 +62,10 @@ const delegatedProps = computed(() => {
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
 
 // BA.W-SURFACE-AXIS — the veil/opaque decoration on top of the `.glass-drawer`
-// recipe (strip the resolver's base-tier prefix; the recipe owns the base). The
-// `:data-surface` attr drives the CSS seam in lockstep.
+// recipe (the recipe owns the base). BI.W-SURFACE-EXTRACT — decoration-only, no
+// `.replace` tier-strip wart. The `:data-surface` attr drives the CSS seam.
 const surfaceDecoration = computed(() =>
-  surfaceClass(props.surface).replace(/^glass-\w+\s*/, ''),
+  decorationClass(props.surface),
 )
 
 // BB.W-DRAWER-ABROGATE — bind the house snap engine. The snap seam is OPTIONAL (a
