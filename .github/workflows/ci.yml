@@ -439,6 +439,8 @@ jobs:
               run: npm run proof:crossrepo-asks:bi
             - name: proof:inbound-marks
               run: npm run proof:inbound-marks
+            - name: proof:blob-rename
+              run: npm run proof:blob-rename
             - name: proof:lineage-probe
               run: npm run proof:lineage-probe
             - name: proof:doc-override-idiom
@@ -449,6 +451,8 @@ jobs:
               run: npm run proof:cut-docs
             - name: proof:eyebrow-union
               run: npm run proof:eyebrow-union
+            - name: proof:migration-truth
+              run: npm run proof:migration-truth
             - name: proof:pager-ring
               run: npm run proof:pager-ring
             - name: proof:icon-chip

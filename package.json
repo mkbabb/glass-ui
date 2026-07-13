@@ -148,6 +148,9 @@
             "aurora": [
                 "dist/aurora.d.ts"
             ],
+            "blob": [
+                "dist/blob.d.ts"
+            ],
             "border-progress": [
                 "dist/border-progress.d.ts"
             ],
@@ -198,9 +201,6 @@
             ],
             "glass-panel": [
                 "dist/glass-panel.d.ts"
-            ],
-            "goo-blob": [
-                "dist/goo-blob.d.ts"
             ],
             "handmark": [
                 "dist/handmark.d.ts"
@@ -467,6 +467,10 @@
             "types": "./dist/aurora.d.ts",
             "import": "./dist/aurora.js"
         },
+        "./blob": {
+            "types": "./dist/blob.d.ts",
+            "import": "./dist/blob.js"
+        },
         "./border-progress": {
             "types": "./dist/border-progress.d.ts",
             "import": "./dist/border-progress.js"
@@ -534,10 +538,6 @@
         "./glass-panel": {
             "types": "./dist/glass-panel.d.ts",
             "import": "./dist/glass-panel.js"
-        },
-        "./goo-blob": {
-            "types": "./dist/goo-blob.d.ts",
-            "import": "./dist/goo-blob.js"
         },
         "./handmark": {
             "types": "./dist/handmark.d.ts",
@@ -757,6 +757,8 @@
         "proof:crossrepo-asks:bh": "node scripts/proof-crossrepo-asks-bh.mjs",
         "proof:crossrepo-asks:bi": "node scripts/proof-crossrepo-asks-bi.mjs",
         "proof:inbound-marks": "node scripts/proof-inbound-marks.mjs",
+        "proof:blob-rename": "node scripts/proof-blob-rename.mjs",
+        "proof:migration-truth": "node scripts/proof-migration-truth.mjs",
         "proof:strict-freshness-armed": "node scripts/proof-strict-freshness-armed.mjs",
         "proof:live-verified-ledger:strict": "node scripts/proof-live-verified-ledger.mjs --tranche=AY --strict-freshness && node scripts/proof-live-verified-ledger.mjs --tranche=BB --strict-freshness",
         "proof:precept-current": "node scripts/proof-precept-current.mjs",
@@ -872,7 +874,7 @@
         "proof:aurora-studio": "node scripts/proof-aurora-studio.mjs",
         "proof:aurora-interaction-prm": "node scripts/proof-aurora-interaction-prm.mjs",
         "proof:shader-shared-source": "node scripts/proof-shader-shared-source.mjs",
-        "proof:blob-color-equivalence": "vitest run tests/components/custom/goo-blob/blob-color-equivalence.test.ts",
+        "proof:blob-color-equivalence": "vitest run tests/components/custom/blob/blob-color-equivalence.test.ts",
         "proof:fail-explicit": "node scripts/proof-fail-explicit.mjs",
         "proof:no-god-module": "node scripts/proof-no-god-module.mjs",
         "proof:deps-currency": "node scripts/proof-deps-currency.mjs",
