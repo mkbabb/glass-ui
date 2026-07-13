@@ -140,3 +140,48 @@
         transition: none;
     }
 }
+
+/* ── The dropdown-menu content font + inner-pad (BI.W-GLASS-DEDUP — moved here from
+   the DELETED floating-panel.css; the `.floating-panel` fixed-overlay recipe had ZERO
+   consumers and retired with the file). These are the STILL-LIVE rules — the dropdown
+   content family reads its consumer-facing knobs here.
+
+   Font knob (Q.W3 Lane C / Qβ-F3): migrated out of the lone scoped `<style>` blocks on
+   `DropdownMenuContent.vue` + `DropdownMenuSubContent.vue`. `--dropdown-menu-font` is
+   the consumer knob (value.js overrides it to `var(--font-mono)`); the `, inherit`
+   fall-through MUST be preserved verbatim per the Qθ binding constraint.
+
+   Inner-pad (AZ.R5-4): the dropdown content family reads the shared `--panel-padding`
+   token — one override retunes every teleported menu surface.
+
+   UNLAYERED (like the retired scoped block + the floating-panel.css source) — no other
+   rule sets `font-family`/`padding` on these surfaces, so the cascade effect is identical. */
+.dropdown-menu-content,
+.dropdown-sub-content {
+    font-family: var(--dropdown-menu-font, inherit);
+    padding: var(--panel-padding);
+
+    /* ── The L11 menu-plate token surface (BI.W-MENU-TRIGGER — the value.js coordination
+       ask). ONE consumer-retunable menu token surface following the factored Menu grammar
+       (the `--dropdown-menu-font` precedent, same family): a consumer retunes the whole
+       Menu plate — click AND context trigger, content AND sub-content — via a single
+       `:root` override. Each knob is a PURE NO-OP at its default (it falls through to the
+       floating tier's own value) and preserves the glass-first identity: the
+       bg/border knobs re-point the tier's INPUT primitives (`--glass-bg-rung` /
+       `--glass-border-rung`) — the "override the primitive the composite reads, never the
+       composite" discipline — so the W55 adaptive oklab tint still darkens/lifts over the
+       consumer's value AND the forced-colors a11y fallback (which sets `background:
+       Canvas` / `border: 1px solid CanvasText` DIRECTLY on `.glass-floating`) still wins.
+       The shadow knob replaces the drop-shadow leg of the tier's box-shadow stack; its
+       default reproduces the floating stack EXACTLY by reading the same rung tokens, so
+       the under-shadow + reduced-transparency behaviour re-resolves in lockstep (and
+       forced-colors strips box-shadow regardless). */
+    --glass-bg-rung: var(--dropdown-menu-bg, var(--glass-bg-floating));
+    --glass-border-rung: var(--dropdown-menu-border, var(--glass-border-floating));
+    box-shadow: var(
+        --dropdown-menu-shadow,
+        var(--glass-material-rim),
+        var(--glass-under-shadow-vivid),
+        var(--glass-shadow-floating)
+    );
+}

@@ -1,19 +1,21 @@
 <script setup lang="ts">
 import {
-  DropdownMenuSub,
   type DropdownMenuSubEmits,
   type DropdownMenuSubProps,
   useForwardPropsEmits,
 } from 'reka-ui'
+// BI.W-MENU-TRIGGER — the trigger axis switches the reka Sub family.
+import { useMenuPart } from './useMenuTrigger'
 
 const props = defineProps<DropdownMenuSubProps>()
 const emits = defineEmits<DropdownMenuSubEmits>()
 
 const forwarded = useForwardPropsEmits(props, emits)
+const SubComp = useMenuPart('Sub')
 </script>
 
 <template>
-  <DropdownMenuSub v-bind="forwarded">
+  <component :is="SubComp" v-bind="forwarded">
     <slot />
-  </DropdownMenuSub>
+  </component>
 </template>

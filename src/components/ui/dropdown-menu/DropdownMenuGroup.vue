@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { DropdownMenuGroup, type DropdownMenuGroupProps } from 'reka-ui'
+import { type DropdownMenuGroupProps } from 'reka-ui'
+// BI.W-MENU-TRIGGER — the trigger axis switches the reka Group family.
+import { useMenuPart } from './useMenuTrigger'
 
 const props = defineProps<DropdownMenuGroupProps>()
+const GroupComp = useMenuPart('Group')
 </script>
 
 <template>
-  <DropdownMenuGroup v-bind="props">
+  <component :is="GroupComp" v-bind="props">
     <slot />
-  </DropdownMenuGroup>
+  </component>
 </template>

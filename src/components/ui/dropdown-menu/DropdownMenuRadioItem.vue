@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { type HTMLAttributes, computed } from 'vue'
 import {
-  DropdownMenuItemIndicator,
-  DropdownMenuRadioItem,
   type DropdownMenuRadioItemEmits,
   type DropdownMenuRadioItemProps,
   useForwardPropsEmits,
 } from 'reka-ui'
 import { cn } from '../../../utils'
 import { menuItemVariants } from '../_shared/menuItemVariants'
+// BI.W-MENU-TRIGGER — the trigger axis switches the reka RadioItem + ItemIndicator.
+import { useMenuPart } from './useMenuTrigger'
 
 const props = defineProps<DropdownMenuRadioItemProps & { class?: HTMLAttributes['class'] }>()
 
@@ -21,10 +21,13 @@ const delegatedProps = computed(() => {
 })
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
+const RadioItemComp = useMenuPart('RadioItem')
+const ItemIndicatorComp = useMenuPart('ItemIndicator')
 </script>
 
 <template>
-  <DropdownMenuRadioItem
+  <component
+    :is="RadioItemComp"
     v-bind="forwarded"
     :class="cn(
       menuItemVariants({ indicator: 'start' }),
@@ -32,10 +35,10 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     )"
   >
     <span class="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
-      <DropdownMenuItemIndicator>
+      <component :is="ItemIndicatorComp">
         <span class="inline-block w-2 h-2 rounded-pill bg-current"></span>
-      </DropdownMenuItemIndicator>
+      </component>
     </span>
     <slot />
-  </DropdownMenuRadioItem>
+  </component>
 </template>

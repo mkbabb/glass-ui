@@ -1,5 +1,9 @@
 export { DropdownMenuPortal } from 'reka-ui'
 
+// BI.W-MENU-TRIGGER — the Menu family's `trigger` axis (ContextMenu folded onto Menu
+// as `trigger="context"`; clean break, no alias). `click | context`.
+export type { MenuTrigger } from './useMenuTrigger'
+
 export { default as DropdownMenu } from './DropdownMenu.vue'
 export { default as DropdownMenuTrigger } from './DropdownMenuTrigger.vue'
 export { default as DropdownMenuContent } from './DropdownMenuContent.vue'

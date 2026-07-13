@@ -79,7 +79,8 @@ const FAMILY_DIRS = [
     "src/components/ui/select",
     "src/components/ui/dropdown-menu",
     "src/components/ui/combobox",
-    "src/components/ui/context-menu",
+    // BI.W-MENU-TRIGGER — context-menu folded onto dropdown-menu (`trigger="context"`);
+    // the dropdown-menu dir above carries the survivor family's type scale.
     "src/components/ui/command",
 ];
 const EXEMPT = new Set([
@@ -142,8 +143,8 @@ const surfaceReads = [
     ["select/SelectLabel.vue", /text-dropdown-secondary\b/, "SelectLabel → secondary"],
     ["dropdown-menu/DropdownMenuLabel.vue", /text-dropdown-secondary\b/, "DropdownMenuLabel → secondary"],
     ["dropdown-menu/DropdownMenuShortcut.vue", /text-dropdown-secondary\b/, "DropdownMenuShortcut → secondary"],
-    ["context-menu/ContextMenuLabel.vue", /text-dropdown-secondary\b/, "ContextMenuLabel → secondary"],
-    ["context-menu/ContextMenuShortcut.vue", /text-dropdown-secondary\b/, "ContextMenuShortcut → secondary"],
+    // BI.W-MENU-TRIGGER — ContextMenuLabel/Shortcut retired (context-menu folded onto
+    // the dropdown-menu family; the DropdownMenu rows above carry the assertion).
     ["combobox/ComboboxInput.vue", /text-dropdown\b/, "ComboboxInput → primary"],
     ["combobox/ComboboxEmpty.vue", /text-dropdown\b/, "ComboboxEmpty → primary"],
     ["combobox/ComboboxGroup.vue", /text-dropdown-secondary\b/, "ComboboxGroup heading → secondary"],

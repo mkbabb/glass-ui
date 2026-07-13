@@ -11,7 +11,12 @@ import {
     TableEmpty,
 } from "../table";
 import { Skeleton } from "../skeleton";
-import { ContextMenu, ContextMenuTrigger, ContextMenuContent } from "../context-menu";
+// BI.W-MENU-TRIGGER — ContextMenu folded onto the Menu family as `trigger="context"`.
+import {
+    DropdownMenu,
+    DropdownMenuTrigger,
+    DropdownMenuContent,
+} from "../dropdown-menu";
 import DataTablePagination from "./DataTablePagination.vue";
 import type { DataTableColumn, DataTableSort } from "./types";
 import { useDataTableRowIdentity } from "./composables/useDataTableRowIdentity";
@@ -167,10 +172,11 @@ function sortIndicator(col: DataTableColumn<T>): string {
             <div v-else-if="rows.length > 0" class="flex flex-col gap-2">
                 <template v-for="entry in rowEntries" :key="entry.key">
                     <component
-                        :is="hasRowContextMenu ? ContextMenu : 'div'"
+                        :is="hasRowContextMenu ? DropdownMenu : 'div'"
+                        :trigger="hasRowContextMenu ? 'context' : undefined"
                     >
                         <component
-                            :is="hasRowContextMenu ? ContextMenuTrigger : 'div'"
+                            :is="hasRowContextMenu ? DropdownMenuTrigger : 'div'"
                             :as-child="hasRowContextMenu ? true : undefined"
                         >
                             <div
@@ -234,9 +240,9 @@ function sortIndicator(col: DataTableColumn<T>): string {
                                 </dl>
                             </div>
                         </component>
-                        <ContextMenuContent v-if="hasRowContextMenu">
+                        <DropdownMenuContent v-if="hasRowContextMenu">
                             <slot name="row-context-menu" :row="entry.row" />
-                        </ContextMenuContent>
+                        </DropdownMenuContent>
                     </component>
                 </template>
             </div>
@@ -294,8 +300,8 @@ function sortIndicator(col: DataTableColumn<T>): string {
                 <template v-else-if="rows.length > 0">
                     <template v-for="entry in rowEntries" :key="entry.key">
                         <!-- Row with right-click context menu -->
-                        <ContextMenu v-if="hasRowContextMenu">
-                            <ContextMenuTrigger as-child>
+                        <DropdownMenu v-if="hasRowContextMenu" trigger="context">
+                            <DropdownMenuTrigger as-child>
                                 <TableRow
                                     class="cursor-pointer"
                                     @click="emit('select', entry.row)"
@@ -319,11 +325,11 @@ function sortIndicator(col: DataTableColumn<T>): string {
                                         <slot name="row-actions" :row="entry.row" />
                                     </TableCell>
                                 </TableRow>
-                            </ContextMenuTrigger>
-                            <ContextMenuContent>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent>
                                 <slot name="row-context-menu" :row="entry.row" />
-                            </ContextMenuContent>
-                        </ContextMenu>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
 
                         <!-- Plain row (no context menu) -->
                         <TableRow

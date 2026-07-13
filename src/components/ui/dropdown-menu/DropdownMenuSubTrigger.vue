@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { type HTMLAttributes, computed } from 'vue'
 import {
-  DropdownMenuSubTrigger,
   type DropdownMenuSubTriggerProps,
   useForwardProps,
 } from 'reka-ui'
 import { ChevronRight } from "@lucide/vue"
 import { cn } from '../../../utils'
 import { menuItemVariants } from '../_shared/menuItemVariants'
+// BI.W-MENU-TRIGGER — the trigger axis switches the reka SubTrigger family.
+import { useMenuPart } from './useMenuTrigger'
 
 const props = defineProps<DropdownMenuSubTriggerProps & { class?: HTMLAttributes['class'] }>()
 
@@ -18,10 +19,12 @@ const delegatedProps = computed(() => {
 })
 
 const forwardedProps = useForwardProps(delegatedProps)
+const SubTriggerComp = useMenuPart('SubTrigger')
 </script>
 
 <template>
-  <DropdownMenuSubTrigger
+  <component
+    :is="SubTriggerComp"
     v-bind="forwardedProps"
     :class="cn(
       menuItemVariants({ indicator: 'none' }),
@@ -30,5 +33,5 @@ const forwardedProps = useForwardProps(delegatedProps)
   >
     <slot />
     <ChevronRight class="ml-auto h-4 w-4" />
-  </DropdownMenuSubTrigger>
+  </component>
 </template>

@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import { type HTMLAttributes, computed } from 'vue'
 import {
-  DropdownMenuContent,
   type DropdownMenuContentEmits,
   type DropdownMenuContentProps,
-  DropdownMenuPortal,
   useForwardPropsEmits,
 } from 'reka-ui'
 import { cn } from '../../../utils'
@@ -13,6 +11,8 @@ import { useOptionalDockContext } from "../../custom/dock/composables/dockContex
 // the φ --overlay-pad-* ladder onto the dropdown (the overlay golden uniformity).
 // Default `glass` is byte-identical to the prior bare `glass-floating` plate.
 import { surfaceClass, type Surface } from '../_shared/useSurfaceAxis'
+// BI.W-MENU-TRIGGER — the trigger axis switches the reka Content + Portal family.
+import { useMenuPart, useMenuTrigger } from './useMenuTrigger'
 
 const props = withDefaults(
   defineProps<DropdownMenuContentProps & { class?: HTMLAttributes['class']; surface?: Surface }>(),
@@ -29,9 +29,26 @@ const props = withDefaults(
 )
 const emits = defineEmits<DropdownMenuContentEmits>()
 
+const trigger = useMenuTrigger()
+const ContentComp = useMenuPart('Content')
+const PortalComp = useMenuPart('Portal')
+
 const delegatedProps = computed(() => {
   const { class: _, surface: __, ...delegated } = props
-
+  // A context menu anchors at the pointer — the DropdownMenu-only positioning props
+  // (side/align/sideOffset/arrowPadding/updatePositionStrategy) are not on the reka
+  // ContextMenuContent surface; forward them only on the click branch.
+  if (trigger.value === 'context') {
+    const {
+      side: _s,
+      sideOffset: _so,
+      align: _a,
+      arrowPadding: _ap,
+      updatePositionStrategy: _up,
+      ...ctx
+    } = delegated
+    return ctx
+  }
   return delegated
 })
 
@@ -40,8 +57,9 @@ const dockContext = useOptionalDockContext()
 </script>
 
 <template>
-  <DropdownMenuPortal>
-    <DropdownMenuContent
+  <component :is="PortalComp">
+    <component
+      :is="ContentComp"
       v-bind="forwarded"
       :data-glass-dock-portal="dockContext?.id ? '' : undefined"
       :data-glass-dock-owner="dockContext?.id"
@@ -60,6 +78,6 @@ const dockContext = useOptionalDockContext()
       )"
     >
       <slot />
-    </DropdownMenuContent>
-  </DropdownMenuPortal>
+    </component>
+  </component>
 </template>

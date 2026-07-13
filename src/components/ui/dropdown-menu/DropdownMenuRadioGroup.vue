@@ -1,19 +1,21 @@
 <script setup lang="ts">
 import {
-  DropdownMenuRadioGroup,
   type DropdownMenuRadioGroupEmits,
   type DropdownMenuRadioGroupProps,
   useForwardPropsEmits,
 } from 'reka-ui'
+// BI.W-MENU-TRIGGER — the trigger axis switches the reka RadioGroup family.
+import { useMenuPart } from './useMenuTrigger'
 
 const props = defineProps<DropdownMenuRadioGroupProps>()
 const emits = defineEmits<DropdownMenuRadioGroupEmits>()
 
 const forwarded = useForwardPropsEmits(props, emits)
+const RadioGroupComp = useMenuPart('RadioGroup')
 </script>
 
 <template>
-  <DropdownMenuRadioGroup v-bind="forwarded">
+  <component :is="RadioGroupComp" v-bind="forwarded">
     <slot />
-  </DropdownMenuRadioGroup>
+  </component>
 </template>

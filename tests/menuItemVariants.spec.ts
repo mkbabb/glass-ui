@@ -4,8 +4,9 @@ import { menuItemVariants } from "@glass/components/ui/_shared/menuItemVariants"
 /**
  * V.W3.T2 — menuItemVariants CVA contract.
  *
- * Verifies the canonical 9-primitive (DropdownMenu × 4 + ContextMenu × 4 +
- * Select/Combobox/Command Items) menu-item recipe:
+ * Verifies the canonical menu-item recipe shared across the DropdownMenu family
+ * (Item / CheckboxItem / RadioItem / SubTrigger — one CVA over both the click AND
+ * context trigger axes, BI.W-MENU-TRIGGER) + the Select / Combobox / Command Items:
  * 1. composes the `interactive-item` substrate utility (provides
  *    border-radius lg + active-scale + focus-visible ring + data-disabled paint);
  * 2. paints hover / focus / data-highlighted accents on the same surface;

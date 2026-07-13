@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { type HTMLAttributes, computed } from 'vue'
 import {
-  DropdownMenuCheckboxItem,
   type DropdownMenuCheckboxItemEmits,
   type DropdownMenuCheckboxItemProps,
-  DropdownMenuItemIndicator,
   useForwardPropsEmits,
 } from 'reka-ui'
 import { Check } from "@lucide/vue"
 import { cn } from '../../../utils'
 import { menuItemVariants } from '../_shared/menuItemVariants'
+// BI.W-MENU-TRIGGER — the trigger axis switches the reka CheckboxItem + ItemIndicator.
+import { useMenuPart } from './useMenuTrigger'
 
 const props = defineProps<DropdownMenuCheckboxItemProps & { class?: HTMLAttributes['class'] }>()
 const emits = defineEmits<DropdownMenuCheckboxItemEmits>()
@@ -21,10 +21,13 @@ const delegatedProps = computed(() => {
 })
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
+const CheckboxItemComp = useMenuPart('CheckboxItem')
+const ItemIndicatorComp = useMenuPart('ItemIndicator')
 </script>
 
 <template>
-  <DropdownMenuCheckboxItem
+  <component
+    :is="CheckboxItemComp"
     v-bind="forwarded"
     :class="cn(
       menuItemVariants({ indicator: 'start-wide' }),
@@ -32,10 +35,10 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     )"
   >
     <span class="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
-      <DropdownMenuItemIndicator>
+      <component :is="ItemIndicatorComp">
         <Check class="w-4 h-4" />
-      </DropdownMenuItemIndicator>
+      </component>
     </span>
     <slot />
-  </DropdownMenuCheckboxItem>
+  </component>
 </template>

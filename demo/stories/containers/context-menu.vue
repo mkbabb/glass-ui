@@ -2,18 +2,21 @@
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { ref } from "vue";
+// BI.W-MENU-TRIGGER — ContextMenu folded onto the Menu family as `trigger="context"`
+// (clean break, no alias). The right-click menu is now the DropdownMenu family with the
+// context trigger axis — ONE menu engine, one set of items.
 import {
-    ContextMenu,
-    ContextMenuCheckboxItem,
-    ContextMenuContent,
-    ContextMenuItem,
-    ContextMenuLabel,
-    ContextMenuRadioGroup,
-    ContextMenuRadioItem,
-    ContextMenuSeparator,
-    ContextMenuShortcut,
-    ContextMenuTrigger,
-} from "@glass/components/ui/context-menu";
+    DropdownMenu,
+    DropdownMenuCheckboxItem,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuRadioGroup,
+    DropdownMenuRadioItem,
+    DropdownMenuSeparator,
+    DropdownMenuShortcut,
+    DropdownMenuTrigger,
+} from "@glass/components/ui/dropdown-menu";
 import { IconChip } from "@glass/components/custom/icon-chip";
 import { MousePointerClick } from "@lucide/vue";
 
@@ -52,8 +55,8 @@ const showGrid = ref(true);
                 <p class="text-sm text-muted-foreground">
                     Right-click the paper below.
                 </p>
-                <ContextMenu>
-                    <ContextMenuTrigger
+                <DropdownMenu trigger="context">
+                    <DropdownMenuTrigger
                         class="ghost-slot grid h-72 place-items-center transition-colors"
                     >
                         <div class="grid gap-2 text-center">
@@ -62,41 +65,41 @@ const showGrid = ref(true);
                                 tone = {{ tone }} · grid = {{ showGrid }}
                             </p>
                         </div>
-                    </ContextMenuTrigger>
-                    <ContextMenuContent class="w-64">
-                        <ContextMenuLabel>Canvas</ContextMenuLabel>
-                        <ContextMenuItem>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent class="w-64">
+                        <DropdownMenuLabel>Canvas</DropdownMenuLabel>
+                        <DropdownMenuItem>
                             Rename
-                            <ContextMenuShortcut>F2</ContextMenuShortcut>
-                        </ContextMenuItem>
-                        <ContextMenuItem>
+                            <DropdownMenuShortcut>F2</DropdownMenuShortcut>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
                             Duplicate
-                            <ContextMenuShortcut>⌘D</ContextMenuShortcut>
-                        </ContextMenuItem>
-                        <ContextMenuSeparator />
-                        <ContextMenuLabel>Tone</ContextMenuLabel>
-                        <ContextMenuRadioGroup v-model="tone">
-                            <ContextMenuRadioItem value="warm">
+                            <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuLabel>Tone</DropdownMenuLabel>
+                        <DropdownMenuRadioGroup v-model="tone">
+                            <DropdownMenuRadioItem value="warm">
                                 Warm
-                            </ContextMenuRadioItem>
-                            <ContextMenuRadioItem value="cool">
+                            </DropdownMenuRadioItem>
+                            <DropdownMenuRadioItem value="cool">
                                 Cool
-                            </ContextMenuRadioItem>
-                            <ContextMenuRadioItem value="neutral">
+                            </DropdownMenuRadioItem>
+                            <DropdownMenuRadioItem value="neutral">
                                 Neutral
-                            </ContextMenuRadioItem>
-                        </ContextMenuRadioGroup>
-                        <ContextMenuSeparator />
-                        <ContextMenuCheckboxItem v-model="showGrid">
+                            </DropdownMenuRadioItem>
+                        </DropdownMenuRadioGroup>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuCheckboxItem v-model="showGrid">
                             Show grid
-                        </ContextMenuCheckboxItem>
-                        <ContextMenuSeparator />
-                        <ContextMenuItem class="text-destructive">
+                        </DropdownMenuCheckboxItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem class="text-destructive">
                             Delete
-                            <ContextMenuShortcut>⌘⌫</ContextMenuShortcut>
-                        </ContextMenuItem>
-                    </ContextMenuContent>
-                </ContextMenu>
+                            <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
             </StorySection>
         
     </StoryPage>
