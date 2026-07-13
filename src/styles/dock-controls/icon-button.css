@@ -32,20 +32,19 @@
         scale: 1;
         width: var(--dock-control-size, var(--size-icon-btn));
         height: var(--dock-control-size, var(--size-icon-btn));
-        /* BA.W-DOCK-GEOMETRY — the control-plate clearance inset (DC-2). The HIT
-           BOX stays the full `--dock-control-size` (the WCAG 2.5.5 touch floor on
-           the CELL), while the inset padding + `background-clip: content-box`
-           insets the PAINTED plate within it: the hover/active fill paints only the
-           content box (the cell minus the inset on every side), so the maximal
-           hover (×1.1) / active circle clears the cross-axis clip edge with ≥1px
-           margin — the lozenge dies at the plate diameter, not at the clip box. The
-           inset falls back to the prior `--dock-icon-padding` (0) when no dock
-           ancestor sets `--dock-control-safe-inset` (a standalone icon button). */
-        padding: var(--dock-icon-padding, var(--dock-control-safe-inset, 0));
+        /* BI.W-DOCK-CONTROLS — the `--dock-control-safe-inset` painted-plate inset
+           FOLDED onto the shared `.glass-capsule` face (glass/glass-capsule.css):
+           `.glass-dock .dock-icon-button { padding: var(--dock-icon-padding,
+           var(--dock-control-safe-inset, 0)) }` + `background-clip: content-box` on
+           the capsule family. The HIT CELL stays the full `--dock-control-size`
+           (the WCAG 2.5.5 touch floor on the CELL); the painted plate insets within
+           it (hit box ≠ paint box). Here the standalone routing is GONE — a bare
+           standalone icon button (outside a dock) keeps only its `--dock-icon-padding`
+           override, no safe-inset token read (the face owns the token). */
+        padding: var(--dock-icon-padding, 0);
         cursor: pointer;
         border: none;
         background: transparent;
-        background-clip: content-box;
         border-radius: var(--dock-control-radius, var(--radius-pill));
         /* Foreground base routes through `--dock-fg-on-aurora` (defaults to
            `--foreground`, byte-identical to before) so a consumer floating the

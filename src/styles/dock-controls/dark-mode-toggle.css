@@ -36,7 +36,8 @@
         }
 
         &:focus-visible {
-            box-shadow: var(--focus-ring-shadow);
+            /* BI.W-DOCK-CONTROLS (value.js P5) — the ONE dock ring register. */
+            box-shadow: var(--dock-ring);
         }
 
         &[data-size="sm"] {

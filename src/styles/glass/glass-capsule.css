@@ -140,4 +140,36 @@
             scale: 1;
         }
     }
+
+    /* ── BI.W-DOCK-CONTROLS — the folded dock-control safe-inset (the face token) ──
+       The `--dock-control-safe-inset` 10% band-aid the user rejected FOLDS into the
+       FACE: the painted plate insets (`background-clip: content-box` over the inset
+       `padding`), while the HIT CELL stays the full `--dock-control-size` (the WCAG
+       2.5.5 ≥44px touch floor on the CELL, never the plate). Hit box ≠ paint box —
+       the clip fix (W-DOCK-SPINE's L1 `overflow: visible`) and the touch floor are
+       now DECOUPLED: A11Y-5's 17×40px defect dies because the hit box reads the full
+       cell while the painted plate insets independently.
+
+       DOCK-SCOPED (`.glass-dock` descendant) so NO other `.glass-capsule` consumer
+       (a glass Button, a Badge/IconChip/chip OUTSIDE a dock) inherits the content-box
+       clip — `--dock-control-safe-inset` resolves to 0 outside a dock anyway, but the
+       scope keeps the content-box clip off the broad capsule family. This is the ONE
+       home of the safe-inset routing (the standalone `padding`/`background-clip`
+       sites in the dock-control recipe files collapsed onto it — proof:dock-controls
+       C3). Two legs, ONE token home:
+       • the SHARED fill-inset — the painted plate clips to the content box so the
+         fill insets within the control's own padding / the safe-inset. Applies to
+         the whole dock capsule family (icon active plate + hover register).
+       • the ICON-SHAPE safe-inset padding — the ONE `--dock-control-safe-inset`
+         read. A fixed-square icon control needs `padding` to define a content box
+         SMALLER than the cell (the plate insets within the square); a text control
+         (tab/trigger) uses its OWN text padding as the inset, so the padding leg is
+         scoped to the icon shape (`.dock-icon-button`) — it never clobbers a text
+         control's or a nested strip's padding. */
+    .glass-dock :is(.glass-capsule, .glass-capsule-hover) {
+        background-clip: content-box;
+    }
+    .glass-dock .dock-icon-button {
+        padding: var(--dock-icon-padding, var(--dock-control-safe-inset, 0));
+    }
 }

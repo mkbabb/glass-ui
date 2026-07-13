@@ -120,19 +120,10 @@
     inset-block: calc(var(--bouncy-track-trim) - var(--eyeglass-proud));
 }
 
-/* (2) THE PROUD LOUPE — the anchor-primary path (Safari-26 + Chrome). The base longhands
-   tether `anchor(top/bottom) + trim`; subtracting the proud spills proud on BOTH edges.
-   Reading var(--bouncy-track-trim) (not the base hardcoded literal) re-resolves the trim at
-   @640, so ONE rule holds the proud at both breakpoints (C3/AC7). The inline whisper proud
-   spills a hair past the button edges (LOW, collision-safe). */
-@supports (position-anchor: --x) {
-    .segmented-tabs[data-eyeglass] .segmented-indicator--anchor {
-        inset-block-start: calc(anchor(top) + var(--bouncy-track-trim) - var(--eyeglass-proud));
-        inset-block-end: calc(anchor(bottom) + var(--bouncy-track-trim) - var(--eyeglass-proud));
-        inset-inline-start: calc(anchor(left) - var(--eyeglass-proud-inline));
-        inset-inline-end: calc(anchor(right) - var(--eyeglass-proud-inline));
-    }
-}
+/* BI.W-DOCK-CONTROLS — the eyeglass proud anchor-primary path RETIRED with the pill
+   CSS-anchor branch. The pill indicator rides the ONE JS-measured writer on every
+   engine, so the `.segmented-indicator--js` proud rule above is the SOLE loupe-outset
+   path (Safari-identical by construction). */
 
 /* (1) belt-and-suspenders (AC1) — re-assert the FLOATING blur rung on the eyeglass lens.
    `.glass-lens` (glass-refract.css) paints `--glass-blur-resting url(#…)` inside its own

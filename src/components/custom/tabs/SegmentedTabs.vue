@@ -24,7 +24,12 @@ import {
     SelectTrigger,
     SelectValue,
 } from "../../ui/select";
-import { useTabIndicator } from "./composables/useTabIndicator";
+// BI.W-DOCK-CONTROLS — the ONE traveling-indicator writer. `useTabIndicator` was
+// PROMOTED to `composables/motion/useSelectionIndicator` (the library's single
+// indicator writer; the dock IS SegmentedTabs/ToggleGroup wearing chrome). The
+// CSS-anchor dual path RETIRED — the pill indicator ALWAYS measures via JS, so
+// Chrome and Safari paint the same pixels by construction.
+import { useSelectionIndicator } from "../../../composables/motion/useSelectionIndicator";
 import { useTabDragMorph } from "./composables/useTabDragMorph";
 import { useTabResponsive } from "./composables/useTabResponsive";
 import { useTabRovingFocus } from "./composables/useTabRovingFocus";
@@ -145,13 +150,6 @@ const containerRef = ref<HTMLElement | null>(null);
 const indicatorRef = ref<HTMLElement | null>(null);
 const buttonRefs = ref<HTMLElement[]>([]);
 
-// CSS anchor positioning owns the single-select slider position where supported;
-// a non-anchor engine falls back to the JS single writer.
-const ANCHOR_SUPPORTED =
-    typeof CSS !== "undefined" &&
-    typeof CSS.supports === "function" &&
-    CSS.supports("position-anchor", "--x");
-
 // ── Computed state ──
 
 const isUnderline = computed(() => props.variant === "underline");
@@ -184,10 +182,10 @@ function pillHoverClass(option: SegmentedTabOption): string | false {
     );
 }
 
-// The JS slider writer is live only on the underline-EXCLUDED pill variant when
-// the engine lacks anchor support (underline runs the CSS anchor `::before`).
-const jsSliderActive = computed(() => !ANCHOR_SUPPORTED && !isUnderline.value);
-const jsSingleSlider = jsSliderActive;
+// BI.W-DOCK-CONTROLS — the pill indicator element is present on the pill material
+// only (the underline paints its indicator as the container `::before` pseudo, no
+// element node). The ONE JS writer measures it on EVERY engine (the CSS-anchor
+// dual path retired — Safari-identical by construction).
 
 // ── Responsive collapse (package-private composable — BG.W-COLOCATE) ──
 //
@@ -212,14 +210,12 @@ const {
 
 const indicatorModel = computed<string | undefined>(() => stripValue.value);
 
-const { singleSliderStyle, squishOnTravel } = useTabIndicator({
+const { singleSliderStyle, squishOnTravel } = useSelectionIndicator({
     containerRef,
     indicatorRef,
     buttonRefs,
     options: stripOptions,
     model: indicatorModel,
-    anchorSupported: ANCHOR_SUPPORTED,
-    jsSliderActive,
     activeValues,
     vertical: isVertical,
 });
@@ -368,9 +364,13 @@ const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
             ref="indicatorRef"
             :class="[
                 'segmented-indicator',
+                // BI.W-DOCK-CONTROLS — the ONE JS-measured writer paints the slider on
+                // EVERY engine (the CSS-anchor branch retired), so the indicator always
+                // carries `--js` (Safari-identical by construction).
+                'segmented-indicator--js',
                 // BD.W-TAB-IOS-CAPSULE — the active pill COMPOSES the shared
                 // `.glass-capsule` (warm-floor fill + rim + lift, ONE recipe; the
-                // dock-tab selected arm + buttons greenfield compose the SAME class).
+                // dock control selected arm + buttons greenfield compose the SAME class).
                 'glass-capsule',
                 // BG.W-EYEGLASS-TABS — the eyeglass indicator COMPOSES the shipped
                 // `.glass-lens` (glass-refract.css) — the whole refraction rides INSIDE
@@ -378,13 +378,12 @@ const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
                 // that engine the pill paints the un-gated `.glass-capsule` frost floor
                 // (the honest Safari/Firefox degrade — NO faked bend). Pill-only + opt-in.
                 eyeglassOn && 'glass-lens',
-                jsSingleSlider ? 'segmented-indicator--js' : 'segmented-indicator--anchor',
                 dragEnabled && 'glass-drag-grabbable',
                 dragEnabled && drag.dragging.value && 'glass-drag-lift',
             ]"
             :style="dragEnabled
-                ? { ...(jsSingleSlider ? singleSliderStyle : {}), ...drag.dragStyle.value }
-                : (jsSingleSlider ? singleSliderStyle : undefined)"
+                ? { ...singleSliderStyle, ...drag.dragStyle.value }
+                : singleSliderStyle"
         />
 
         <!-- Buttons. -->

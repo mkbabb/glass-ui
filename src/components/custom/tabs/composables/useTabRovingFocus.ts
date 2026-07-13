@@ -1,14 +1,26 @@
 import { computed } from "vue";
 import type { ComputedRef, Ref } from "vue";
-import type { SegmentedTabOption } from "../SegmentedTabs.vue";
+
+/**
+ * The minimal roving option shape — the machine reads ONLY `value` + `disabled`
+ * (BI.W-DOCK-CONTROLS decoupled it from `SegmentedTabOption` so the shared
+ * headless `useSelectionGroup` can compose it VERBATIM over its generic option
+ * type). Any richer option (the tabs' `SegmentedTabOption`) is structurally
+ * assignable.
+ */
+export interface RovingSelectionOption {
+    value: string;
+    disabled?: boolean;
+}
 
 /**
  * Package-private composable for `SegmentedTabs.vue` — BG.W-COLOCATE (the WS4
  * roving-focus/responsive carve; ratchet-drain #13). The WAI-ARIA tablist/toolbar
  * roving-tabindex keyboard machine lives here, carved out of the SFC to hold the
- * no-god-module bound — the `useTabIndicator`/`useTabDragMorph` colocation-sibling
- * pattern. The SFC IMPORTS it and binds `:tabindex="rovingTabindex(idx)"` +
- * `@keydown="onStripKeydown"` in its template.
+ * no-god-module bound. BI.W-DOCK-CONTROLS composes it VERBATIM inside the shared
+ * headless `useSelectionGroup` (the dock IS SegmentedTabs/ToggleGroup wearing
+ * chrome — ONE roving machine, never re-forked). The SFC IMPORTS it and binds
+ * `:tabindex="rovingTabindex(idx)"` + `@keydown="onStripKeydown"` in its template.
  *
  * EXACTLY ONE tab in the focus order (the active tab `tabindex="0"`, the rest `-1`);
  * the arrow keys move focus + activate (selection-follows-focus). The arrow AXIS is
@@ -21,7 +33,7 @@ import type { SegmentedTabOption } from "../SegmentedTabs.vue";
  */
 export interface UseTabRovingFocusParams {
     /** The options the strip renders (index-aligned to `buttonRefs`). */
-    stripOptions: ComputedRef<SegmentedTabOption[]>;
+    stripOptions: ComputedRef<readonly RovingSelectionOption[]>;
     /** The value the strip renders (the ONE tabstop anchor). */
     stripValue: ComputedRef<string | undefined>;
     /** True for the vertical (block-axis) orientation — flips the arrow axis. */

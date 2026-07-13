@@ -194,43 +194,13 @@
         opacity var(--duration-fast) ease;
 }
 
-/* Anchor path — the indicator tethers to the active button's `anchor-name`.
-   `inset` reads the anchor's edges; the browser interpolates `inset` between
-   buttons on selection (the glide), and the JS `--stretch` write deforms it
-   (the squish) on the SAME calibrated clock. */
-@supports (position-anchor: --x) {
-    .segmented-indicator--anchor {
-        position-anchor: --gl-tab-active;
-        /* The four edge longhands tether to the active button's anchor edges (the
-           inline-trimmed band over the full anchor block extent). NO `inset-block:
-           auto` shorthand here — it would reset the block longhands above it to auto
-           and collapse the indicator to height 0 (the live-found clobber). */
-        inset-block-start: calc(anchor(top) + 0.1875rem);
-        inset-block-end: calc(anchor(bottom) + 0.1875rem);
-        inset-inline-start: anchor(left);
-        inset-inline-end: anchor(right);
-        opacity: 1;
-    }
-    /* Vertical: the anchor band runs the FULL block extent of the active button
-       (the indicator tracks the column, not the row) with the inline axis trimmed. */
-    .segmented-tabs--vertical .segmented-indicator--anchor {
-        inset-block-start: anchor(top);
-        inset-block-end: anchor(bottom);
-        inset-inline-start: calc(anchor(left) + 0.1875rem);
-        inset-inline-end: calc(anchor(right) + 0.1875rem);
-    }
-    @media (prefers-reduced-motion: no-preference) {
-        .segmented-indicator--anchor {
-            transition:
-                inset var(--tab-indicator-duration) var(--spring-snappy),
-                scale var(--tab-indicator-duration) var(--spring-snappy);
-        }
-    }
-    .segmented-tabs:not(.segmented-tabs--underline) .segmented-tab[aria-pressed="true"],
-    .segmented-tabs:not(.segmented-tabs--underline) .segmented-tab[aria-selected="true"] {
-        anchor-name: --gl-tab-active;
-    }
-}
+/* BI.W-DOCK-CONTROLS — the PILL `.segmented-indicator--anchor` CSS-anchor branch
+   is RETIRED (DEFINITION-ABSENT). The pill indicator now rides the ONE JS-measured
+   writer (`useSelectionIndicator`) on every engine — Chrome and Safari paint the
+   same pixels by construction, so the CSS `position-anchor` glide path (which only
+   fired on anchor-supporting engines) is dead. The underline material keeps its
+   own `anchor-name`/`::before` indicator below (a distinct paper-material indicator,
+   not the pill writer). */
 
 @media (min-width: 640px) {
     .segmented-indicator {
@@ -243,18 +213,8 @@
         inset-block: auto;
         inset-inline: 0.25rem;
     }
-    @supports (position-anchor: --x) {
-        .segmented-indicator--anchor {
-            inset-block-start: calc(anchor(top) + 0.25rem);
-            inset-block-end: calc(anchor(bottom) + 0.25rem);
-        }
-        .segmented-tabs--vertical .segmented-indicator--anchor {
-            inset-block-start: anchor(top);
-            inset-block-end: anchor(bottom);
-            inset-inline-start: calc(anchor(left) + 0.25rem);
-            inset-inline-end: calc(anchor(right) + 0.25rem);
-        }
-    }
+    /* BI.W-DOCK-CONTROLS — the pill `.segmented-indicator--anchor` breakpoint trim
+       retired with the anchor branch (the ONE JS writer carries the inset). */
 }
 
 /* ── The tab buttons ── */

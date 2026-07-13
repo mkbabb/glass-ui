@@ -288,6 +288,44 @@
        coherently on touch. The 0.25rem base stays the ratified tight floor. */
     --dock-collapsed-padding: calc(0.25rem * var(--dock-scale));
 
+    /* BI.W-DOCK-OVERFLOW (§Inbound T-52 c — DECIDED BUILD, not optional). `--dock-pill-h`
+       is THE ONE authoritative EXPORTED dock-pill (outer block) height rung. A consumer
+       reserving a band for the floating dock (a scroll-padding-bottom, a fixed spacer, an
+       anti-collision gutter) reads THIS token instead of RE-DERIVING control-height +
+       padding per repo — the T-57 band-reservation re-derivation drift class the speedtest
+       consumer cures locally today. Tracks the EXPANDED control row (`--dock-layer-height`)
+       plus the dock's own block padding (`--dock-padding-block`, the shell.css pad); it
+       resolves at `:root` off the fallback ladder AND re-resolves inside each
+       `[data-size]`/coarse scope transitively (`--dock-layer-height` already threads
+       `--dock-scale` at every density rung), so ONE token tracks the painted pill height on
+       every rung + pointer. Consumers override the pieces (`--dock-layer-height` via density
+       / `--dock-padding-block`), never re-derive the sum. */
+    --dock-pill-h: calc(
+        var(--dock-layer-height, 2.5rem) + 2 * var(--dock-padding-block, 0.375rem)
+    );
+
+    /* BI.W-DOCK-OVERFLOW (§Inbound T-52 b) — the native-scroll-track ring-room reserve.
+       `--dock-scroll-safe-inset` is ≥ the focus-ring weight (`--focus-ring-width`, 2px) so
+       a FLUSH first/last item's focus-ring arc renders WHOLE inside the scroll port's
+       PADDED clip box (the port adds this as padding + pulls it back with an equal negative
+       margin, so the dock layout is unchanged — the canonical no-cross-axis-clip scroll-
+       strip idiom; overflow.css). `--dock-scroll-gutter` is the `scroll-padding-inline`
+       recenter gutter so `scrollIntoView` (useSelectionGroup, on every select) lands a
+       selected member with ≥1px port slack, never jammed flush against the port edge. */
+    --dock-scroll-safe-inset: calc(var(--focus-ring-width, 2px) + 1px);
+    --dock-scroll-gutter: var(--dock-scroll-safe-inset);
+
+    /* BI.W-DOCK-OVERFLOW — the pure-CSS Gaussian fisheye knobs (dock/fisheye.css). The
+       fits-branch magnify amplitude + the falloff sigma (a UNITLESS px window — the writer
+       writes `--x`/`--dock-px` as unitless numbers so `pow()`/`exp()` operate on
+       `<number>`). Consumers retune the hump strength/spread from these two handles. */
+    --dock-fisheye-amp: 0.6;
+    --dock-fisheye-sigma: 64;
+    /* The per-frame `--dock-px` ease clock (fisheye.css `transition: --dock-px … linear`).
+       80ms is the G4-measured buttery-hump ease (not the settle of a spring — a linear
+       pointer-follow smoothing); tokenized so it is retunable + coherence-clean. */
+    --dock-fisheye-duration: 80ms;
+
     /* AX.W45-TUNE Q3/C3 + C5 — the dock-control family reads a real GLASS register
        on hover/active, NOT a same-hue `--card` mix at an alpha adjacent to the dock's
        own `--glass-bg-dock` substrate (a sub-1%-ΔL no-op — the loud Q3 tell: "nothing
@@ -392,6 +430,23 @@
        as static brand INK (the ℱ wordmark / data-viz strokes / the gold-CTA
        family), never as an interactive register. */
     --dock-selected-accent: color-mix(in oklab, var(--foreground) 14%, transparent);
+
+    /* BI.W-DOCK-CONTROLS (value.js P5 — the ONE ring contract). `--dock-ring` is
+       THE single ring register EVERY dock control reads for its focus-visible /
+       selection ring — the focus-ring shadow, the selected accent, and the picker
+       triggers collapse onto ONE token (a consumer retunes every dock ring from a
+       single `:root { --dock-ring: … }` override, the `--focus-ring-shadow`
+       token-first axis). Defaults to the shared `--focus-ring-shadow` so the ring
+       is byte-identical to before.
+
+       THE ACTIVE SEAT YIELDS TO CONSUMER INDICATOR CONTENT. A dock control that
+       hosts consumer indicator content in its active seat carries `data-ring-yield`
+       — the dock's own ring/accent defers so the consumer's own indicator reads
+       (the seam value.js's letter-rail ask names). The standalone letter-rail
+       PRIMITIVE is declined-terminal: the greenfield dock + the DockStack facet
+       mode IS the rail register (a future letter-rail consumer binds the DockStack
+       seam + `data-ring-yield`, never a second rail component). */
+    --dock-ring: var(--focus-ring-shadow);
 
     /* AZ.W-REGISTER-IOS — the iOS press-DARKEN. Press today scales only
        (`--scale-press-dock`, C4-INV-4); iOS lands "darken + shrink". This token
