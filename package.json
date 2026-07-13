@@ -160,9 +160,6 @@
             "completion-seal": [
                 "dist/completion-seal.d.ts"
             ],
-            "concentric": [
-                "dist/concentric.d.ts"
-            ],
             "configurator": [
                 "dist/configurator.d.ts"
             ],
@@ -180,12 +177,6 @@
             ],
             "dock": [
                 "dist/dock.d.ts"
-            ],
-            "dot-flow-field": [
-                "dist/dot-flow-field.d.ts"
-            ],
-            "dot-matrix": [
-                "dist/dot-matrix.d.ts"
             ],
             "easing": [
                 "dist/easing.d.ts"
@@ -483,10 +474,6 @@
             "types": "./dist/completion-seal.d.ts",
             "import": "./dist/completion-seal.js"
         },
-        "./concentric": {
-            "types": "./dist/concentric.d.ts",
-            "import": "./dist/concentric.js"
-        },
         "./configurator": {
             "types": "./dist/configurator.d.ts",
             "import": "./dist/configurator.js"
@@ -510,14 +497,6 @@
         "./dock": {
             "types": "./dist/dock.d.ts",
             "import": "./dist/dock.js"
-        },
-        "./dot-flow-field": {
-            "types": "./dist/dot-flow-field.d.ts",
-            "import": "./dist/dot-flow-field.js"
-        },
-        "./dot-matrix": {
-            "types": "./dist/dot-matrix.d.ts",
-            "import": "./dist/dot-matrix.js"
         },
         "./easing": {
             "types": "./dist/easing.d.ts",
@@ -697,39 +676,15 @@
         "proof:phantom-classes": "node scripts/proof-phantom-classes.mjs",
         "proof:vt-names": "node scripts/proof-vt-names.mjs",
         "proof:deck": "node scripts/proof-deck.mjs",
-        "proof:dock-animation-live": "node scripts/proof-dock-animation-live.mjs",
-        "proof:dock-rail-cohesion": "node scripts/proof-dock-rail-cohesion.mjs",
-        "proof:dock-lockstep-bornred": "node scripts/proof-dock-lockstep-bornred.mjs",
-        "proof:dock-items-lag-capture": "node scripts/proof-dock-items-lag-capture.mjs",
-        "proof:dock-orchestrator-single": "node scripts/proof-dock-orchestrator-single.mjs",
-        "proof:dock-clip-reveal": "node scripts/proof-dock-clip-reveal.mjs",
-        "proof:dock-layering-polish": "node scripts/proof-dock-layering-polish.mjs",
-        "proof:dock-wrap-content-driven": "node scripts/proof-dock-wrap-content-driven.mjs",
-        "proof:dock-hold-contract": "node scripts/proof-dock-hold-contract.mjs",
-        "proof:dock-opacity-lockstep": "node scripts/proof-dock-opacity-lockstep.mjs",
         "proof:dock-a11y-contract": "vitest run tests/components/custom/dock/DockLayerRail.a11y.test.ts",
-        "proof:dock-vocabulary": "node scripts/proof-dock-vocabulary.mjs",
-        "proof:dock-region-model": "node scripts/proof-dock-region-model.mjs",
-        "proof:dock-perfection": "node scripts/proof-dock-perfection.mjs",
-        "proof:dock-unify": "node scripts/proof-dock-unify.mjs",
-        "proof:dock-rail-hairline": "node scripts/proof-dock-rail-hairline.mjs",
-        "proof:dock-no-scale-pop": "node scripts/proof-dock-no-scale-pop.mjs",
-        "proof:dock-tap-integrity": "node scripts/proof-dock-tap-integrity.mjs",
-        "proof:dock-taxonomy": "node scripts/proof-dock-taxonomy.mjs",
-        "proof:dock-decompose": "node scripts/proof-dock-decompose.mjs",
         "proof:encapsulation": "node scripts/proof-encapsulation.mjs",
-        "proof:dock-contextual-layers": "node scripts/proof-dock-contextual-layers.mjs",
         "proof:morph-showcase": "node scripts/proof-morph-showcase.mjs",
-        "proof:dock-fission": "node scripts/proof-dock-fission.mjs",
-        "proof:dock-gallery": "node scripts/proof-dock-gallery.mjs",
         "proof:metaball-bridge2": "node scripts/proof-metaball-bridge2.mjs",
         "proof:motion": "node scripts/proof-motion.mjs",
         "proof:blob-page": "node scripts/proof-blob-page.mjs",
         "proof:blob-page-fence": "node scripts/proof-blob-page-fence.mjs",
         "proof:motion-demo": "node scripts/proof-motion-demo.mjs",
         "proof:motion2": "node scripts/proof-motion2.mjs",
-        "proof:dock-sections": "node scripts/proof-dock-sections.mjs",
-        "proof:dock-morph-insitu": "node scripts/proof-dock-morph-insitu.mjs",
         "proof:shell-hold": "node scripts/proof-shell-hold.mjs",
         "proof:az-reflect": "node scripts/proof-az-reflect.mjs",
         "proof:az-final": "node scripts/proof-az-final.mjs",
@@ -741,8 +696,6 @@
         "proof:adaptive-glass-live": "node scripts/proof-adaptive-glass-live.mjs",
         "proof:adaptive-observer": "node scripts/proof-adaptive-observer.mjs",
         "proof:register-ios": "node scripts/proof-register-ios.mjs",
-        "proof:dock-css-carve": "node scripts/proof-dock-css-carve.mjs",
-        "proof:dock-css-split": "node scripts/proof-dock-controls-split.mjs",
         "proof:design-idiom-localization": "node scripts/proof-design-idiom-localization.mjs",
         "proof:hierarchy": "node scripts/proof-hierarchy.mjs",
         "proof:eyebrow-union": "node scripts/proof-eyebrow-union.mjs",
@@ -752,11 +705,11 @@
         "proof:doc-truth": "node scripts/proof-doc-truth.mjs",
         "proof:cut-docs": "node scripts/proof-cut-docs.mjs",
         "proof:lineage-probe": "node scripts/proof-lineage-probe.mjs",
-        "proof:concentric": "node scripts/proof-concentric.mjs",
         "proof:crossrepo-asks": "node scripts/proof-crossrepo-asks.mjs",
         "proof:crossrepo-asks:bh": "node scripts/proof-crossrepo-asks-bh.mjs",
         "proof:crossrepo-asks:bi": "node scripts/proof-crossrepo-asks-bi.mjs",
         "proof:inbound-marks": "node scripts/proof-inbound-marks.mjs",
+        "proof:viz-deletions": "node scripts/proof-viz-deletions.mjs",
         "proof:press-register": "node scripts/proof-press-register.mjs",
         "proof:drawer-stage": "node scripts/proof-drawer-stage.mjs",
         "proof:draw-in": "node scripts/proof-draw-in.mjs",
@@ -773,13 +726,11 @@
         "proof:aur-metal": "node scripts/proof-aur-metal.mjs",
         "proof:aurora-glsl-webkit": "node scripts/proof-aurora-glsl-webkit.mjs",
         "proof:aur-image": "node scripts/proof-aur-image.mjs",
-        "proof:flow-field": "node scripts/proof-flow-field.mjs",
         "proof:nda-decided": "node scripts/proof-nda-decided.mjs",
         "proof:aurora-curl-warp": "node scripts/proof-aurora-curl-warp.mjs",
         "proof:spring-crisp": "node scripts/proof-spring-crisp.mjs",
         "proof:spa-view": "node scripts/proof-spa-view.mjs",
         "proof:card-tier-alpha": "node scripts/proof-card-tier-alpha.mjs",
-        "proof:dockmorph-cta": "node scripts/proof-dockmorph-cta.mjs",
         "proof:bloom-up": "node scripts/proof-bloom-up.mjs",
         "proof:gpu-substrate-single": "node scripts/proof-gpu-substrate-single.mjs",
         "proof:desktop-reserve": "node scripts/proof-desktop-reserve.mjs",
@@ -806,7 +757,6 @@
         "proof:phase-palette": "node scripts/proof-phase-palette.mjs",
         "proof:aurora-swraster": "node scripts/proof-aurora-swraster.mjs",
         "proof:on-glass-fg": "node scripts/proof-on-glass-fg.mjs",
-        "proof:dock-morph-family": "node scripts/proof-dock-morph-family.mjs",
         "proof:suffuse": "node scripts/proof-suffuse.mjs",
         "proof:suffuse2": "node scripts/proof-suffuse2.mjs",
         "proof:colocation": "node scripts/proof-colocation.mjs",
@@ -957,7 +907,6 @@
         "proof:glass-cal": "node scripts/proof-glass-cal.mjs",
         "proof:glass-clip": "node scripts/proof-glass-clip.mjs",
         "proof:glass-idiom-factor": "node scripts/proof-glass-idiom-factor.mjs",
-        "proof:dock-plate-clearance": "node scripts/proof-dock-plate-clearance.mjs",
         "proof:atlas-ab": "node scripts/proof-atlas-ab.mjs",
         "proof:config-chassis": "node scripts/proof-config-chassis.mjs",
         "proof:progress-gradient": "node scripts/proof-progress-gradient.mjs",
@@ -973,7 +922,6 @@
         "proof:no-dead-token": "node scripts/proof-no-dead-token.mjs",
         "proof:affordance-contrast": "node scripts/proof-affordance-contrast.mjs",
         "proof:datatable-split": "node scripts/proof-datatable-split.mjs",
-        "proof:dock-big-dock": "node scripts/proof-dock-big-dock.mjs",
         "proof:reka-binding-idiom": "node scripts/proof-reka-binding-idiom.mjs",
         "proof:animation-coherence": "node scripts/proof-animation-coherence.mjs",
         "proof:design-md-current": "node scripts/proof-design-md-current.mjs",
@@ -1027,25 +975,20 @@
         "proof:core-prompts": "node scripts/proof-core-prompts.mjs",
         "proof:split-chars": "node scripts/proof-split-chars.mjs",
         "proof:motion-presets": "node scripts/proof-motion-presets.mjs",
-        "proof:dock": "node scripts/proof-dock.mjs",
-        "proof:dock-engine": "node scripts/proof-dock-engine.mjs",
-        "proof:dock-engine-unify": "node scripts/proof-dock-engine-unify.mjs",
-        "proof:dock-story-modularize": "node scripts/proof-dock-story-modularize.mjs",
         "proof:shell-dock-dry": "node scripts/proof-shell-dock-dry.mjs",
-        "proof:dock-consumer-fence": "node scripts/proof-dock-consumer-fence.mjs",
-        "proof:dock-arbitrary": "node scripts/proof-dock-arbitrary.mjs",
-        "proof:dock-shrink-blur": "node scripts/proof-dock-shrink-blur.mjs",
         "proof:liquid-morph": "node scripts/proof-liquid-morph.mjs",
-        "proof:dock-vertical-clickable": "node scripts/proof-dock-vertical-clickable.mjs",
-        "proof:dock-collapsed-both": "node scripts/proof-dock-collapsed-both.mjs",
-        "proof:dock-stack-rail": "node scripts/proof-dock-stack-rail.mjs",
-        "proof:dock-rail-realize": "node scripts/proof-dock-rail-realize.mjs",
-        "proof:dock-rail-reinvent": "node scripts/proof-dock-rail-reinvent.mjs",
-        "proof:dock-cockpit": "node scripts/proof-dock-cockpit.mjs",
-        "proof:dock-persistent-cut": "node scripts/proof-dock-persistent-cut.mjs",
         "proof:tabs-ios": "node scripts/proof-tabs-ios.mjs",
         "proof:eyeglass-tabs": "node scripts/proof-eyeglass-tabs.mjs",
         "proof:aria-orientation": "node scripts/proof-aria-orientation.mjs",
+        "proof:dock-spine": "node scripts/proof-dock-spine.mjs",
+        "proof:dock-controls": "node scripts/proof-dock-controls.mjs",
+        "proof:dock-escape": "node scripts/proof-dock-escape.mjs",
+        "proof:dock-crossfade": "node scripts/proof-dock-crossfade.mjs",
+        "proof:dock-overflow": "node scripts/proof-dock-overflow.mjs",
+        "proof:dock-single-engine": "node scripts/proof-dock-single-engine.mjs",
+        "proof:dock-retire-terminal": "node scripts/proof-dock-retire-terminal.mjs",
+        "proof:dock-fold": "node scripts/proof-dock-fold.mjs",
+        "proof:dock-gate-roster": "node scripts/proof-dock-gate-roster.mjs",
         "proof:dock-a11y": "node scripts/proof-dock-a11y.mjs",
         "proof:liquid-tab": "node scripts/proof-liquid-tab.mjs",
         "proof:underline-tune": "node scripts/proof-underline-tune.mjs",
@@ -1079,9 +1022,7 @@
         "proof:page-chassis": "node scripts/proof-page-chassis.mjs",
         "proof:fourier-field": "node scripts/proof-fourier-field.mjs",
         "proof:viz-constellation": "node scripts/proof-viz-constellation.mjs",
-        "proof:viz-dotflow": "node scripts/proof-viz-dotflow.mjs",
         "proof:viz-papergrid": "node scripts/proof-viz-papergrid.mjs",
-        "proof:dot-matrix": "node scripts/proof-dot-matrix.mjs",
         "proof:teal-navy-purge": "node scripts/proof-teal-navy-purge.mjs",
         "proof:page-hierarchy": "node scripts/proof-page-hierarchy.mjs",
         "proof:grid-simple": "node scripts/proof-grid-simple.mjs",
@@ -1094,7 +1035,6 @@
         "proof:expandable-part": "node scripts/proof-expandable-part.mjs",
         "proof:scroll-trigger": "node scripts/proof-scroll-trigger.mjs",
         "proof:scroll-chrome": "node scripts/proof-scroll-chrome.mjs",
-        "proof:dock-search": "node scripts/proof-dock-search.mjs",
         "proof:siri": "node scripts/proof-siri.mjs",
         "proof:viz-configurator-suite": "node scripts/proof-viz-configurator-suite.mjs",
         "proof:storybook-meta": "node scripts/proof-storybook-meta.mjs",
