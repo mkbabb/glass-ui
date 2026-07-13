@@ -37,4 +37,59 @@ export const MOTIONS = ["full", "reduced", "off"] as const;
 export type Motion = (typeof MOTIONS)[number]; // default "full"; PRM > prop > default
 
 /** The surface-decoration axis — mirrors `useSurfaceAxis`'s `Surface` (gate-asserted ≡). */
-export const SURFACES = ["glass", "veil", "opaque", "clear"] as const;
+export const SURFACES = ["glass", "veil", "opaque"] as const; // `clear` RETIRED at BI.W-CLEAR-FOLD (dead substrate, 0 consumers)
+
+// ── BI.W-AXES-GATES — the three factor-band axes (the axes-ext membership fence).
+// TONES / PLACEMENTS / TRIGGERS join the four grammar unions so the Kronecker
+// factorization has a HOME for the concepts a `variant` map used to smuggle: a tone
+// (success/warning/info/destructive — proof:variant-residual moves them off `variant`
+// onto `tone`), a surface placement (Sheet's side-slide folds onto Dialog `placement`),
+// and an overlay trigger (HoverPopover/HoverCard/ContextMenu fold onto ONE Popover
+// `trigger`). A private tone/placement/trigger-shaped union anywhere else in src/ is
+// forbidden by construction — proof:encapsulation's axes-ext arm greps for a re-mint.
+
+/** The tone axis — the semantic status register (`--<tone>` token cohort); NEVER a `variant` member. */
+export const TONES = ["neutral", "success", "warning", "info", "destructive"] as const;
+export type Tone = (typeof TONES)[number]; // default "neutral"
+
+/** The overlay-placement axis — Sheet's side-slide + Dialog center fold onto ONE placement. */
+export const PLACEMENTS = ["center", "top", "right", "bottom", "left"] as const;
+export type Placement = (typeof PLACEMENTS)[number]; // default "center"
+
+/** The overlay-trigger axis — click | hover | context (the sealed Popover Kronecker fold). */
+export const TRIGGERS = ["click", "hover", "context"] as const;
+export type Trigger = (typeof TRIGGERS)[number]; // default "click"
+
+// ── THE PAIRED-EDIT META-ARRAYS (proof:encapsulation reads these; NOT exported —
+// the membership fence keeps the module's EXPORT surface pure axis vocabulary, so
+// these self-describing const arrays are internal). Adding an axis is a PAIRED edit:
+// mint the tuple + its type AND list it here, or the gate's axes-ext arm reds the
+// inconsistency. `AXIS_TUPLES` ≡ every exported `const … as const` tuple name;
+// `AXIS_TYPE_NAMES` ≡ every derived-union type name; `ALLOWED_EXPORTS` ≡ the WHOLE
+// admissible export set (tuples + types + the two re-exported surface types).
+const AXIS_TUPLES = [
+    "SIZES",
+    "ORIENTATIONS",
+    "MOTIONS",
+    "SURFACES",
+    "TONES",
+    "PLACEMENTS",
+    "TRIGGERS",
+] as const;
+const AXIS_TYPE_NAMES = [
+    "Size",
+    "Orientation",
+    "Motion",
+    "Tone",
+    "Placement",
+    "Trigger",
+] as const;
+const ALLOWED_EXPORTS = [
+    ...AXIS_TUPLES,
+    ...AXIS_TYPE_NAMES,
+    "Surface",
+    "SurfaceTier",
+] as const;
+void AXIS_TUPLES;
+void AXIS_TYPE_NAMES;
+void ALLOWED_EXPORTS;

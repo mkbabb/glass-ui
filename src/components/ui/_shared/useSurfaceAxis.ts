@@ -18,7 +18,7 @@
 // they do not re-author it.
 
 /**
- * The shared surface-decoration axis — four rungs, ONE grammar.
+ * The shared surface-decoration axis — three rungs, ONE grammar.
  *
  *   glass   — the resolved tier's plain glass rung (default). The translucent
  *             blur surface, the maximal glass-first register.
@@ -30,16 +30,13 @@
  *   opaque  — the `--glass-level:0` solid-card escape: solid `--card` + `blur(0)`
  *             through the ONE level knob. The explicit opt-out from the maximal
  *             glass default.
- *   clear   — BE.W-CLEAR-VARIANT: the Apple-Clear MAXIMALLY translucent register —
- *             the `--glass-bg-clear` (0.58) plate, the clearest the library ships
- *             (the album grid bleeds genuinely through). STRUCTURALLY coupled to a
- *             MANDATORY `::before` legibility scrim (a near-transparent plate → the
- *             text needs a scrim floor) whose strength derives from the sampled
- *             `--glass-backdrop-luma` (it dims MORE over a bright backdrop). A
- *             scrim-less clear surface is FORBIDDEN — the `.glass-clear` decoration
- *             class carries the scrim in the SAME rule (the Apple Clear contract).
+ *
+ * (BE.W-CLEAR-VARIANT's `clear` member was RETIRED at BI.W-CLEAR-FOLD — a full
+ * mechanism with zero binding consumers; the substrate-without-consumer invariant
+ * J-inv-10 retires it. proof:surface-axis W9 (member-consumption) gate-locks the
+ * union against a future dead member riding vacuously.)
  */
-export type Surface = "glass" | "veil" | "opaque" | "clear";
+export type Surface = "glass" | "veil" | "opaque";
 
 /**
  * The 5-rung glass-ladder tier the surface paints its base over. Mirrors the
@@ -68,14 +65,8 @@ export type SurfaceTier =
  *   surfaceClass("glass",  "floating") → "glass-floating"
  *   surfaceClass("veil",   "floating") → "glass-floating veil-surface"
  *   surfaceClass("opaque", "floating") → "glass-floating glass-opaque"
- *   surfaceClass("clear",  "floating") → "glass-floating glass-clear"
  *
- * The `glass-clear` decoration class (BE.W-CLEAR-VARIANT) is scrim-COUPLED: its CSS
- * rule carries the MANDATORY `::before` legibility scrim in the SAME seam, so a
- * `surface="clear"` surface can NEVER paint the maximally-translucent plate without
- * the dim — the Apple Clear contract is structural, not opt-out.
- *
- * @param surface the decoration rung (`glass` default · `veil` · `opaque` · `clear`)
+ * @param surface the decoration rung (`glass` default · `veil` · `opaque`)
  * @param tier    the base ladder rung (default `resting`)
  */
 export function surfaceClass(
@@ -83,8 +74,29 @@ export function surfaceClass(
     tier: SurfaceTier = "resting",
 ): string {
     const base = `glass-${tier}`;
-    if (surface === "veil") return `${base} veil-surface`;
-    if (surface === "opaque") return `${base} glass-opaque`;
-    if (surface === "clear") return `${base} glass-clear`;
-    return base;
+    const deco = decorationClass(surface);
+    return deco ? `${base} ${deco}` : base;
+}
+
+/**
+ * Resolve ONLY the decoration class for a surface — no base-tier prefix
+ * (BI.W-SURFACE-EXTRACT). The SINGLE source of the veil/opaque decoration
+ * string; `surfaceClass()` (above) composes it after the base tier. This KILLS
+ * the `surfaceClass(x).replace(/^glass-.../, "")` tier-strip DRY wart every
+ * reka-portaled overlay hand-rolled to strip the base tier off `surfaceClass`'s
+ * output (the `^glass-<tier>` prefix, whitespace-trimmed): a
+ * surface that already composes its OWN base tier (Card `glass-${tier}`,
+ * Dialog/Sheet/Popover's baked `glass-floating`, the drawer recipe) reaches
+ * for the decoration ALONE through this function — ONE regex-free source.
+ *
+ *   decorationClass("glass")  → ""              (the identity — the bare tier paints)
+ *   decorationClass("veil")   → "veil-surface"
+ *   decorationClass("opaque") → "glass-opaque"
+ *
+ * @param surface the decoration rung (`glass` default · `veil` · `opaque`)
+ */
+export function decorationClass(surface: Surface = "glass"): string {
+    if (surface === "veil") return "veil-surface";
+    if (surface === "opaque") return "glass-opaque";
+    return "";
 }

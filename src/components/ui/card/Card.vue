@@ -1,19 +1,22 @@
 <script setup lang="ts">
 import { computed, useAttrs, type HTMLAttributes, type CSSProperties } from "vue";
-import { Primitive, type PrimitiveProps } from "reka-ui";
+import type { PrimitiveProps } from "reka-ui";
 import { cn } from "../../../utils";
 import { vSpecular } from "../../../composables/glass";
 import { useLiquidPress } from "../../../composables/motion/useLiquidPress";
 import { useStalePropWarning } from "../_shared/useStalePropWarning";
-// BA.W-SURFACE-AXIS — Card's `veil` surface arm routes through the SHARED
-// resolver so the `veil-surface` decoration class has ONE source (the same class
-// Card emitted inline today — a refactor onto the shared seam, byte-identical).
-// `cartoon` stays a Card-LOCAL superset member (NOT a {glass·veil·opaque} axis
-// rung), and `opaque` is a Card TIER (the `.glass-opaque` escape on the resting
-// rung), so Card composes its base tier itself and reaches the shared resolver
-// only for the `veil` decoration. The `:data-surface="surface"` binding (below)
-// is what the CSS seam reads — Card was already the reference axis.
-import { surfaceClass } from "../_shared/useSurfaceAxis";
+// BI.W-SURFACE-EXTRACT — Card composes the bare (tier × decoration) plate
+// `<Surface>` (the extracted primitive) + its header/content/footer slots + the
+// golden-φ padding ladder + the Card-LOCAL superset (`cartoon`, `grid`, `selection`,
+// the press/specular gesture enrichments). `<Surface>` owns the glass tier ×
+// {glass·veil·opaque·clear} decoration + deep/shadow/grain; NO component-private
+// surface recipe survives. `cartoon` stays a Card-LOCAL superset member (NOT a
+// {glass·veil·opaque} axis rung, the grammar fence), and `opaque`/`deep` LEFT the
+// tier union onto the surface axis / a boolean (`<Card surface="opaque">` /
+// `<Card deep>` — clean break, no `tier="opaque"` alias). The `:data-surface`
+// binding is what the CSS seam reads.
+import Surface from "../surface/Surface.vue";
+import type { Surface as SurfaceKind } from "../_shared/useSurfaceAxis";
 // BH.W-MOTION-AXIS — the ONE motion-weight axis (the four-boolean scatter collapse).
 // Card's `pressable` boolean dies onto `motion`: the press CAPABILITY now derives
 // from interactivity (an interactive `as`/`href`/`role` root) AND `motion !== "off"`
@@ -22,49 +25,51 @@ import type { Motion } from "../_shared/axes";
 import { useMotionAxis } from "../_shared/useMotionAxis";
 
 /**
- * The glass surface ladder. Maps 1:1 to `.glass-{tier}` in glass.css after the
- * v0.8.0 R3-spec rename:
+ * The glass surface ladder — the 5-rung base tier (BI.W-SURFACE-EXTRACT collapsed
+ * `opaque`/`deep` OUT of this union). Maps 1:1 to `.glass-{tier}` in glass.css and is
+ * now value-identical to the `SurfaceTier` grammar vocabulary:
  *
  *   wash     — lightest (~0.30α)        : inline workspace chrome, scroll-pane host
  *   quiet    — light    (~0.50α)        : ambient panels, secondary surfaces
  *   resting  — canonical (~0.65α)       : the protagonist plate (default)
  *   floating — heavy   (~0.80α)         : popover-class, login surfaces
  *   overlay  — heaviest (~0.95α + blur) : modal-on-modal, dialog over content
- *   opaque   — `--glass-level:0` escape : the solid-card opt-out (AX.W54), maps to
- *              `.glass-opaque` through the same `glass-${tier}` rung as the rest
- *   deep     — `--glass-blur-deep-*` OPT-IN : the maximal iOS-27 Liquid-Glass tier
- *              ABOVE the W-GLASS-CAL calm default (Apple saturate-1.5/blur-16px),
- *              maps to `.glass-floating glass-deep` (a base rung + the deep
- *              decoration, mirroring opaque) — the hero glass / CTA register
- *              (BB.W-DEEP-GLASS). The calm content default is byte-unchanged.
+ *
+ * The solid-card escape is now `<Card surface="opaque">` (the `--glass-level:0`
+ * decoration on the surface axis, not a tier), and the maximal iOS-27 deep-glass
+ * register is `<Card deep>` (the boolean — `.glass-floating glass-deep`, BB.W-DEEP-GLASS).
+ * Both are clean breaks: no `tier="opaque"` / `tier="deep"` alias (MIGRATION row).
  */
 export type CardTier =
     | "wash"
     | "quiet"
     | "resting"
     | "floating"
-    | "overlay"
-    | "opaque"
-    | "deep";
+    | "overlay";
 
 /**
- * Surface decoration register — orthogonal to `tier`/`shadow`/`grain`.
+ * Surface decoration register — the SHARED {glass·veil·opaque·clear} axis (the
+ * `Surface` grammar) PLUS Card's local `cartoon` superset (BI.W-SURFACE-EXTRACT:
+ * `CardSurface = Surface | "cartoon"`; `opaque`/`clear` joined the union as the
+ * `tier="opaque"` collapse landing + the clear register). Orthogonal to
+ * `tier`/`shadow`/`grain`.
  *
  *   glass    — the tier's plain glass rung (default)
- *   cartoon  — the Memphis-sticker decoration layered on top of the resolved
- *              tier: 2px border, offset-stamp shadow, hover-lift. Composes onto
- *              ANY tier; the retired `<CartoonCard>` was `tier="quiet" surface="cartoon"`.
- *   veil     — the text-legibility PLATE (R5-7). The wash/quiet glass fill +
- *              blur with the border AND rim/highlight STRIPPED (border:none,
- *              box-shadow:none — the boxed look reads as a "dividing line" on a
- *              text plate). An optional radial feather axis (`--veil-feather`,
- *              default none) fades the plate edges into the backdrop. Conceptually
- *              the W55 adaptive-legibility tint applied as a LOCAL plate over a
- *              busy/bright backdrop. Token-first (`--veil-*` rungs). It routes the
- *              glass material through the `--glass-*` ladder, so `--glass-level` /
- *              the W55 bright-bucket retune it in lockstep with every glass surface.
+ *   veil     — the text-legibility PLATE (R5-7). The wash/quiet glass fill + blur
+ *              with the border AND rim/highlight STRIPPED. An optional radial
+ *              feather axis (`--veil-feather`, default none). Routes the glass
+ *              material through the `--glass-*` ladder, so `--glass-level` / the
+ *              W55 bright-bucket retune it in lockstep with every glass surface.
+ *   opaque   — the `--glass-level:0` solid-card escape (the prior `tier="opaque"`
+ *              rung's clean-break successor): a solid `--card` plate through the ONE
+ *              level knob, the tint axis zeroed.
+ *   clear    — the scrim-coupled maximally-translucent Apple-Clear plate
+ *              (BE.W-CLEAR-VARIANT).
+ *   cartoon  — the Card-LOCAL Memphis-sticker decoration (NOT a `Surface` axis
+ *              member — the grammar fence): 2px border, offset-stamp shadow,
+ *              hover-lift. Composes onto ANY tier over the glass base.
  */
-export type CardSurface = "glass" | "cartoon" | "veil";
+export type CardSurface = SurfaceKind | "cartoon";
 
 /**
  * Specular catch-light register (AX.W09) — the pointer-anchored moving lens on a
@@ -104,14 +109,18 @@ export type CardMetal = "gold" | "silver" | "bronze";
 interface Props extends PrimitiveProps {
     /** Surface tier; selects one rung of the glass ladder. Default `resting`. */
     tier?: CardTier;
-    /** Surface decoration register. `glass` (default) renders the tier's glass
-     *  rung; `cartoon` overlays the `cartoon-surface` decoration utility (2px
-     *  border, offset-stamp shadow, hover-lift); `veil` overlays the borderless,
-     *  rimless `veil-surface` text-legibility plate (the wash/quiet glass fill +
-     *  blur with the boxed border + rim STRIPPED, an optional `--veil-feather`
-     *  radial edge fade). Orthogonal to `tier`/`shadow`/`grain` — exactly like
-     *  `shadow` and `grain`; NOT a `tier` rung. */
+    /** Surface decoration register (the shared `Surface` axis + Card's `cartoon`
+     *  superset). `glass` (default) renders the tier's glass rung; `veil` overlays
+     *  the borderless/rimless text-legibility plate; `opaque` is the
+     *  `--glass-level:0` solid-card escape (the `tier="opaque"` collapse landing);
+     *  `clear` the scrim-coupled Apple-Clear plate; `cartoon` overlays the
+     *  Card-LOCAL Memphis-sticker decoration. Orthogonal to `tier`/`shadow`/`grain`. */
     surface?: CardSurface;
+    /** BB.W-DEEP-GLASS — the maximal iOS-27 deep-glass opt-in (Apple
+     *  saturate-1.5/blur-16px): the `.glass-deep` decoration on the `floating` base
+     *  rung. Default `false` (the calm content default, byte-unchanged). The
+     *  clean-break successor of the retired `tier="deep"` rung. */
+    deep?: boolean;
     /** Surface drop shadow via `--shadow-card`. Off for cards nested inside cards. */
     shadow?: boolean;
     /** `::after` paper-grain overlay. Off for scroll panes (the grain conflicts
@@ -182,6 +191,7 @@ interface Props extends PrimitiveProps {
 const props = withDefaults(defineProps<Props>(), {
     tier: "resting",
     surface: "glass",
+    deep: false,
     shadow: true,
     grain: true,
     grid: false,
@@ -189,6 +199,20 @@ const props = withDefaults(defineProps<Props>(), {
     metal: "gold",
     as: "div",
 });
+
+// BI.W-SURFACE-EXTRACT — the plate decoration passed to `<Surface>`. `cartoon` is
+// Card-LOCAL (NOT a `Surface` member), so the plate rides the plain `glass` base
+// and the `.cartoon-surface` decoration is composed in Card's class below; the
+// REAL `surface` value still flows to `:data-surface` (the CSS seam reads
+// `[data-surface="cartoon"]` to withhold the glass-specular/paper-texture rules).
+const surfaceForPlate = computed<SurfaceKind>(() =>
+    props.surface === "cartoon" ? "glass" : props.surface,
+);
+// The drop shadow rides glass/opaque/deep/clear; `veil` is shadowless (handled in
+// `<Surface>`), and `cartoon` owns its own offset-stamp — so withhold `--shadow-card`
+// there (byte-identical to the prior `shadow && surface === 'glass'` gate: opaque/deep
+// were `surface="glass"` TIERS then, so they kept the shadow; veil/cartoon dropped it).
+const plateShadow = computed(() => props.shadow && props.surface !== "cartoon");
 
 // BH.W-MOTION-AXIS — the resolved motion state (PRM-clamped; `armed` gates the JS
 // enrichment, `dataMotion`/`hostStyle` are the zero-delta-at-`full` binds).
@@ -329,13 +353,26 @@ const hostStyle = computed<CSSProperties | undefined>(() => {
 useStalePropWarning("Card", ["flush"]);
 </script>
 
+<!-- BI.W-SURFACE-EXTRACT — Card composes the extracted bare plate `<Surface>`.
+     `<Surface>` owns the glass tier × {glass·veil·opaque·clear} decoration +
+     deep/shadow/grain (through the ONE `decorationClass` seam); Card threads its
+     local chrome (padding ladder, specular, cartoon, grid, press, selection) as
+     fallthrough class/attrs/directive onto the ONE root. `cartoon` rides the plain
+     glass base (`surfaceForPlate`) with the REAL `surface` on `:data-surface` (the
+     CSS seam reads `[data-surface="cartoon"]` to withhold the glass rules).
+     NOTE: this comment lives OUTSIDE <template> — an in-template root comment turns
+     the render into a fragment (comment + element), breaking single-root attr
+     inheritance + `wrapper.element` in the unit harness. -->
 <template>
-    <Primitive
+    <Surface
         v-specular="specularArmed"
         data-slot="card"
-        :data-tier="tier"
+        :tier="tier"
+        :surface="surfaceForPlate"
+        :deep="deep"
+        :shadow="plateShadow"
+        :grain="grain"
         :data-surface="surface"
-        :data-grain="grain"
         :data-grid="grid"
         :data-pressable="pressable || undefined"
         :data-motion="motionAxis.dataMotion.value"
@@ -374,20 +411,10 @@ useStalePropWarning("Card", ["flush"]);
                 //       φ²-tight intra-header gap (replaces the flat gap-y-1.5).
                 // CLEAN BREAK: the prior `--card-spacing` knob is GONE, no alias.
                 '[--card-pad-inline:--spacing(6)] [--card-pad-block:calc(var(--card-pad-inline)*1.272)] [--card-pad-section-gap:var(--card-pad-block)] [--card-pad-footer:calc(var(--card-pad-block)/1.618)] [--card-pad-title-gap:calc(var(--card-pad-inline)/2.618)] data-[size=sm]:[--card-pad-inline:--spacing(4)]',
-                // AX.W54 — `opaque` is the `--glass-level:0` escape, NOT a base
-                // rung: `.glass-opaque` only sets the level scalar, so it must
-                // ride a base tier class to keep the glass edge/rim/under-shadow
-                // (a solid `--card` plate with a glass edge, not a bare div —
-                // see glass.css §opaque-escape). It composes onto the canonical
-                // `resting` rung. BB.W-DEEP-GLASS — `deep` mirrors the opaque
-                // pattern: a deep DECORATION (.glass-deep re-points the floating
-                // rung blur to the deep family) ON the base `floating` rung — the
-                // maximal iOS-27 register, opt-in. Every other tier maps 1:1.
-                tier === 'opaque'
-                    ? 'glass-resting glass-opaque'
-                    : tier === 'deep'
-                      ? 'glass-floating glass-deep'
-                      : `glass-${tier}`,
+                // BI.W-SURFACE-EXTRACT — the glass tier × {glass·veil·opaque·clear}
+                // decoration + `deep`/`shadow`/`grain` are `<Surface>`'s (composed on
+                // the ONE root above via the `:tier`/`:surface`/`:deep`/`:shadow`/`:grain`
+                // props). Card threads ONLY its LOCAL chrome below.
                 // AX.W09 — wire-or-omit. The pointer-anchored moving catch-light
                 // (`glass-specular-track`) is emitted ONLY when `specular` is
                 // opted in on a glass surface; an `off` (default) glass card does
@@ -395,23 +422,11 @@ useStalePropWarning("Card", ["flush"]);
                 // cartoon cards stay flat (the specular is a glass-surface fold,
                 // not a sticker).
                 specularArmed && 'glass-specular-track',
+                // The Card-LOCAL cartoon Memphis-sticker decoration (NOT a `Surface`
+                // axis member — the grammar fence). Composed over the plain glass
+                // base `<Surface>` paints; the :data-surface binding carries the real
+                // `cartoon` value so the CSS seam withholds the glass rules.
                 surface === 'cartoon' && 'cartoon-surface',
-                // R5-7 — the veil text-plate. Composes the borderless/rimless
-                // `veil-surface` decoration ON TOP of the resolved tier (the
-                // `@utility` wins by layer order, so its `border:none`/
-                // `box-shadow:none`/`background:var(--veil-bg)` strip the rung's
-                // boxed look). It routes the glass material through the
-                // `--glass-*` ladder (cohesion-sanctioned); the `shadow` prop is a
-                // no-op here (veil's rim is stripped by design — the box-shadow:
-                // none clause below covers it). BA.W-SURFACE-AXIS — the veil
-                // decoration class now comes from the SHARED resolver so its string
-                // has ONE source library-wide (byte-identical to the prior inline
-                // `'veil-surface'`); the resolver's base-tier prefix is dropped
-                // here since Card composes `glass-${tier}` itself above.
-                surface === 'veil' &&
-                    surfaceClass('veil').replace(/^glass-\w+\s+/, ''),
-                shadow && surface === 'glass' && 'shadow-card',
-                !grain && '[&::after]:hidden',
                 // BB.W-PAPER-GRID-TEXTURE — the additive geometric grid axis,
                 // default OFF (a bare card is byte-identical to HEAD). When
                 // opted in, composes the `.paper-grid` interior-ground utility
@@ -442,5 +457,5 @@ useStalePropWarning("Card", ["flush"]);
              the glass carrier). z-index:-1 sits it behind the cel face. -->
         <span v-if="surface === 'cartoon'" class="cartoon-cast" aria-hidden="true" />
         <slot />
-    </Primitive>
+    </Surface>
 </template>

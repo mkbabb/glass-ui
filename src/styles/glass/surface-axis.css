@@ -110,4 +110,27 @@
         --paper-ink-mark-weight: 2px;
         --paper-ink-mark-color: var(--foreground);
     }
+
+    /* ── .glass-well — the recessed SEATED field register ──────────────────────
+       (BI.W-SURFACE-EXTRACT, value.js P3 WELL rung ADMIT). A field/track seated
+       INTO the surface: the `--card` plate stepped a whisper darker toward the warm
+       `--foreground` ink + a soft inset groove, so a nested input/meter reads as
+       recessed. It is a FIELD register (like `.input-bar`), NOT a `[data-surface]`
+       plate decoration — a well is a hole in the surface, not a floating plate. The
+       fill composes AT the element off the local `--glass-well-tone` (default 8%,
+       bounded to the P3 [6%,10%] band) so a per-scope override re-resolves (the
+       substitution-vs-inheritance discipline); the oklab mix stays in the perceptual
+       glass-tint family (NOT the in-srgb brand-overlay fence). The inset groove reads
+       the same warm ink — a recessed edge, not a drop shadow. */
+    .glass-well {
+        --glass-well-tone: 8%;
+        background: color-mix(
+            in oklab,
+            var(--card),
+            var(--foreground) var(--glass-well-tone)
+        );
+        box-shadow: inset 0 1px 2px
+            color-mix(in srgb, var(--foreground) 8%, transparent);
+        border-radius: var(--radius-md);
+    }
 }

@@ -15,7 +15,12 @@ export type { MenuItemVariants } from "./menuItemVariants";
 // floating surface threads (Card/GlassPanel/Dialog/Sheet/Drawer/Popover/Command/
 // ExpandableContainer/Skeleton) + the consumer waves import (W-FEEDBACK-TONE,
 // W-MENU-GLASS). The ONE seam — no second axis.
-export { surfaceClass } from "./useSurfaceAxis";
+// BI.W-SURFACE-EXTRACT — `decorationClass` joins the resolver beside `surfaceClass`
+// (the runtime home for the surface-axis functions; `/api` publishes the TYPES).
+// It returns ONLY the veil/opaque/clear decoration class (no base-tier prefix) —
+// the single source that killed the `.replace(/^glass-\w+\s*/, "")` DRY wart every
+// reka-portaled overlay hand-rolled to strip `surfaceClass`'s tier prefix.
+export { surfaceClass, decorationClass } from "./useSurfaceAxis";
 export type { Surface, SurfaceTier } from "./useSurfaceAxis";
 
 // BC.W-CONTROL-CUSTOM — the shared control-SIZE axis. The `ControlSize` union +
