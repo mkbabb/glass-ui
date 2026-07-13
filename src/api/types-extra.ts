@@ -153,10 +153,14 @@ export type { AlertVariants } from "../components/ui/alert";
 export type { AvatarVariants } from "../components/ui/avatar";
 export type { BadgeVariants } from "../components/ui/badge";
 export type { ButtonVariants } from "../components/ui/button";
-export type { SheetVariants } from "../components/ui/sheet";
+// `SheetVariants` RETIRED at BI.W-DIALOG-PLACEMENT — Sheet folded onto `<DialogContent
+// placement>`; its `side` union is the shared `Placement` axis now (`@mkbabb/glass-ui`
+// axes). No successor CVA type — the placement is an axis restriction, not a `variant` map.
 export type { SliderVariants } from "../components/ui/slider";
 export type { ToggleVariants } from "../components/ui/toggle";
-export type { ToggleChipVariants } from "../components/custom/toggle-chip";
+// `ToggleChipVariants` RETIRED at BI.W-CHIP-FOLD — ToggleChip folded onto `<Chip>`;
+// its `variant` (`chip`/`cell`) was a name-synonym of Chip's `shape`. Consumers read
+// `ChipVariants` (`/chip` / api) — the ONE congruent chip recipe's `size × shape` axis.
 
 // ── Search domain ──────────────────────────────────────────────────────────
 // `SearchableItem` is the input shape consumers feed `buildIndex` /
@@ -174,7 +178,8 @@ export type {
 
 // ── Toast row shape ──────────────────────────────────────────────────────────
 // `ToastType` is the canonical toast row shape (aliased from `Toast` on the toast
-// barrel); paired with the `ToastVariant` enum (published from api/index.ts).
+// barrel); the `tone` field reads the shared `Tone` axis (`/axes`), the former
+// `ToastVariant` enum RETIRED (BI.W-SYNONYM-RENAMES — clean break, no alias).
 export type { ToastType } from "../components/ui/toast";
 
 // ── Clipboard ──────────────────────────────────────────────────────────────
@@ -275,9 +280,11 @@ export type {
 
 // ── HeaderRibbon ───────────────────────────────────────────────────────────
 // `HeaderRibbonProps` — props shape consumers forward when wrapping
-// `<HeaderRibbon>`. `HeaderRibbonPosition` is the alignment enum (`'left' | 'right'`).
+// `<HeaderRibbon>`. `HeaderRibbonPlacement` is the placement enum (`'left' | 'right'` —
+// BI.W-SYNONYM-RENAMES: the `position`/`HeaderRibbonPosition` synonym renamed to the
+// shared `placement` axis vocabulary, clean break no alias).
 export type {
-    HeaderRibbonPosition,
+    HeaderRibbonPlacement,
     HeaderRibbonProps,
 } from "../components/custom/header-ribbon";
 

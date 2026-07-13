@@ -10,18 +10,20 @@ import { IconChip } from "@glass/components/custom/icon-chip";
 // BB.W-SUFFUSE3 — the feedback band's --section-color-8 ruby identity.
 const FEEDBACK_STOP = 8;
 
+// BI.W-SYNONYM-RENAMES — the status `type` synonym is the shared `tone` axis
+// (`error` absorbed into `destructive`, clean break no alias).
 interface Item {
     id: string;
-    type: "success" | "error" | "info" | "warning";
+    tone: "success" | "warning" | "info" | "destructive";
     message: string;
 }
 
 const notifications = ref<Item[]>([]);
 
 let counter = 0;
-function push(type: Item["type"], message: string): void {
+function push(tone: Item["tone"], message: string): void {
     const id = `n-${++counter}`;
-    notifications.value = [...notifications.value, { id, type, message }];
+    notifications.value = [...notifications.value, { id, tone, message }];
     window.setTimeout(() => {
         remove(id);
     }, 4000);
@@ -41,25 +43,25 @@ function fireWarning() {
     push("warning", "You have 3 minutes left in your preview session.");
 }
 function fireError() {
-    push("error", "Couldn't reach the analysis service. Retrying…");
+    push("destructive", "Couldn't reach the analysis service. Retrying…");
 }
 
 // BB.W-DEMO-DESIGN — the tones table teaches the REAL surface: each sample is an
 // actual mini colored-glass `.feedback-tone` row (the shared tinted-glass recipe
 // the Notification/Toast/Alert surfaces share — a tone-tinted translucent wash + a
 // tone-keyed rim + a full-chroma glyph), NOT a 10px solid dot. The glyph maps the
-// tone to its lucide icon; the `tone` field is the `.feedback-tone-<name>` class.
+// tone to its lucide icon; the `toneClass` field is the `.feedback-tone-<name>` class.
 const samples: {
-    type: Item["type"];
+    tone: Item["tone"];
     label: string;
     message: string;
     icon: Component;
-    tone: string;
+    toneClass: string;
 }[] = [
-    { type: "info", label: "Info", message: "Workspace switched to Chebyshev basis.", icon: Info, tone: "feedback-tone-info" },
-    { type: "success", label: "Success", message: "Deploy finished — build #2048 is live.", icon: CheckCircle2, tone: "feedback-tone-success" },
-    { type: "warning", label: "Warning", message: "Preview session expires in 3 minutes.", icon: AlertTriangle, tone: "feedback-tone-warning" },
-    { type: "error", label: "Error", message: "Couldn't reach the analysis service.", icon: XCircle, tone: "feedback-tone-destructive" },
+    { tone: "info", label: "Info", message: "Workspace switched to Chebyshev basis.", icon: Info, toneClass: "feedback-tone-info" },
+    { tone: "success", label: "Success", message: "Deploy finished — build #2048 is live.", icon: CheckCircle2, toneClass: "feedback-tone-success" },
+    { tone: "warning", label: "Warning", message: "Preview session expires in 3 minutes.", icon: AlertTriangle, toneClass: "feedback-tone-warning" },
+    { tone: "destructive", label: "Error", message: "Couldn't reach the analysis service.", icon: XCircle, toneClass: "feedback-tone-destructive" },
 ];
 </script>
 
@@ -86,7 +88,7 @@ const samples: {
                 </span>
                 <p class="text-small text-muted-foreground">
                     Status surfaces — the notification tones carry their own
-                    variant color; the section identity is the ONE page event.
+                    tone color; the section identity is the ONE page event.
                 </p>
             </div>
         </header>
@@ -117,9 +119,9 @@ const samples: {
                 <div class="scroll-cascade flex flex-col gap-3">
                     <div
                         v-for="s in samples"
-                        :key="s.type"
+                        :key="s.tone"
                         class="feedback-tone flex items-center gap-4 rounded-card border px-5 py-3.5"
-                        :class="s.tone"
+                        :class="s.toneClass"
                     >
                         <component
                             :is="s.icon"

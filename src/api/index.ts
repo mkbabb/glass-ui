@@ -16,8 +16,7 @@
 //   - Variant-prop types (`*Variants`) for the four-state component contract.
 //   - Domain shapes that consumers type fixtures + presets against (Aurora,
 //     Configurator).
-//   - Semantic surface enums (`CardTier`, `InstrumentChassisPhase`,
-//     `ToastVariant`).
+//   - Semantic surface enums (`CardTier`, `InstrumentChassisPhase`).
 //   - Aurora numeric ceilings + default config (consumers building presets).
 //
 // NOT in scope (defer to component-specific subpaths):
@@ -75,8 +74,19 @@ export type { Surface } from "../components/ui/_shared";
 // now types its visual-rung prop `tier: SurfaceTier`. The four grammar axes
 // (Size/Orientation/Motion/Surface) publish via the `/axes` subpath.
 export type { SurfaceTier } from "../components/ui/_shared";
+// BI.W-SURFACE-EXTRACT — the extracted bare (tier × decoration) glass plate
+// primitive. `SurfaceProps` is the prop shape of `<Surface>` (`tier`/`surface`/
+// `deep`/`shadow`/`grain` over the ONE `decorationClass` seam) a consumer wrapping
+// the plate types against; the component + its `/surface` subpath ship the runtime.
+// The `decorationClass` VALUE resolver publishes from `../components/ui/_shared`
+// (beside `surfaceClass` — the runtime home; `/api` stays types + constants).
+// `CardTier` (published above) collapsed `opaque`/`deep` OUT of the tier union onto
+// `surface="opaque"` / the `deep` boolean (clean break — MIGRATION row).
+export type { SurfaceProps } from "../components/ui/surface";
 export type { InstrumentChassisPhase } from "../components/custom/instrument-chassis";
-export type { ToastVariant } from "../components/ui/toast";
+// BI.W-SYNONYM-RENAMES — `ToastVariant` RETIRED (clean break, no alias). The toast's
+// status is the ONE shared `Tone` axis, published via the `/axes` subpath (Tone);
+// `variant`/`type` synonyms are DEFINITION-ABSENT from the toast surface (api-lockstep).
 
 // ── HandMark (the hand-voice mark family, BA.W-HANDMARK) ─────────────────────
 // The `/handmark` subpath's public surface: the prop model + the flat Brush
@@ -102,11 +112,14 @@ export type {
 // ToggleChip — the no-god-module bound). `MenuItemVariants` + `ControlSize` stay
 // HERE beside `Surface` (the `_shared` per-surface source gate reads them in
 // api/index.ts).
-// `MenuItemVariants` — CVA-derived union for the 11-site menu/picker item
-// four-state contract (command / dropdown-menu / context-menu / combobox /
-// select). Sourced from `_shared/` which is private-to-ui/ at runtime; the
-// barrel exists so `/api` can pin the canonical type shape.
+// `MenuItemVariants` — CVA-derived union for the menu/picker item four-state
+// contract (command / dropdown-menu / combobox / select). Sourced from `_shared/`
+// which is private-to-ui/ at runtime; the barrel exists so `/api` can pin the
+// canonical type shape.
 export type { MenuItemVariants } from "../components/ui/_shared";
+// `MenuTrigger` — BI.W-MENU-TRIGGER. The Menu family's `trigger` axis
+// (`click | context`); ContextMenu folded onto DropdownMenu as `trigger="context"`.
+export type { MenuTrigger } from "../components/ui/dropdown-menu";
 // `ControlSize` — BC.W-CONTROL-CUSTOM. The shared control-size union the input
 // register (Input / Switch / Textarea / NumberFieldInput) threads as `size?`.
 // Sourced from `_shared/` (the form-family shared home, beside `surfaceClass`);
@@ -160,18 +173,19 @@ export type {
 // stay HERE for proof:search-custom (see the BC.W-SEARCH-CUSTOM record below).
 
 // ── Props triad ────────────────────────────────────────────────────────────
-// `GlassPanelProps` — the props shape of `<GlassPanel>` (its visual-rung prop is
-// `tier: SurfaceTier`, its backend `renderTier: GlassTier`); consumers wrapping
-// `<GlassPanel>` (chrome composers, preset panels) type their forwarded prop bag
-// against this. (AZ.W-PRUNE2 RESTORE — re-published for the keyframes consumer.)
-export type { GlassPanelProps } from "../components/custom/glass-panel";
+// BI.W-GLASS-DEDUP — `GlassPanelProps` RETIRED (FAM-10): `<GlassPanel>` owned NO
+// distinct mechanism (its tier map ≡ Card's, its surface ≡ the shared resolver, its
+// `useGlassRenderer`/`createGlassFilter` JS-canvas feDisplacementMap was a SECOND
+// refraction path competing with the ONE `.glass-lens`/`#glass-refract` axis). A
+// slotless glass surface needs no component — `<Surface tier surface>` /
+// `class="glass-resting"` serves it (clean break, no alias; MIGRATION row).
 export type { SpaViewProps } from "../components/custom/spa-view";
 
 // ── Toast / Clipboard / User-invalid / View-Transition ───────────────────────
 // The ToastType row shape, the UseClipboard* / UseUserInvalidAria* composable-
 // return canons, and the ViewTransition* substrate types ride the carved
-// api/types-extra sibling (the no-god-module bound). `ToastVariant` (the enum)
-// stays in the Surface-enums block above.
+// api/types-extra sibling (the no-god-module bound). The toast status is the shared
+// `Tone` axis (/axes) — `ToastVariant` is RETIRED (BI.W-SYNONYM-RENAMES).
 
 // ── Carved type-publication extension (BB.W-CARVE5) ───────────────────────────
 // The composable-return + motion-curve type re-exports (Count-up animator,
@@ -181,7 +195,7 @@ export type { SpaViewProps } from "../components/custom/spa-view";
 export type * from "./types-extra";
 
 // ── HeaderRibbon ───────────────────────────────────────────────────────────
-// `HeaderRibbonProps`/`HeaderRibbonPosition` ride the carved api/types-extra
+// `HeaderRibbonProps`/`HeaderRibbonPlacement` ride the carved api/types-extra
 // sibling (AZ.W-PRUNE2 RESTORE — keyframes.js binds `/header-ribbon` in EditorShell).
 
 // ── Constellation / Fourier field ────────────────────────────────────────────
@@ -232,17 +246,18 @@ export type {
     IconChipIcon,
 } from "../components/custom/icon-chip";
 
-// ── SelectableChip / accent-tone (BC.W-ACCENT-TONE) ──────────────────────────
-// The contrast-floored tonal-accent register's public types. `ChipVariants` is the
-// ONE congruent chip recipe's CVA-derived size axis (the BD.W-CHIP-CONGRUENT-GLASS
-// shared register — the `selectableChipVariants`/`SelectableChipVariants` alias was
-// SWEPT at BG.W-DEAD-SWEEP, clean break, no alias) a consumer wrapping <SelectableChip>
-// types against. `UseAccentToneOptions`/`UseAccentToneReturn` are the contrast-safe-ink
-// composable's option + return shapes (the value.js-bearing `safeAccentColor` ink
-// resolver). The value.js-bearing runtime values ride `/selectable-chip` + the `/color`
+// ── Chip / accent-tone (BI.W-CHIP-FOLD; BC.W-ACCENT-TONE) ────────────────────
+// The ONE folded chip's public types. `ChipProps` is the `<Chip>` prop contract
+// (`shape × tone × surface`); `ChipVariants` is the congruent chip recipe's
+// CVA-derived `size × shape` axis (the `selectableChipVariants`/`SelectableChipVariants`
+// alias was SWEPT at BG.W-DEAD-SWEEP, the ToggleChip + SelectableChip surfaces FOLDED
+// at BI.W-CHIP-FOLD — clean break, no alias). `UseAccentToneOptions`/`UseAccentToneReturn`
+// are the contrast-safe-ink composable's option + return shapes (value.js-QUARANTINED —
+// the ink solve rides a dynamic `import('./accent-tone-solve')` boundary; the shell types
+// are value.js-free). The value.js-bearing runtime values ride `/chip` + the `/color`
 // leaf ONLY (OFF the value.js-free root barrel — the SCC-trap discipline); the types
 // ride here.
-export type { ChipVariants } from "../components/custom/selectable-chip";
+export type { ChipProps, ChipVariants } from "../components/custom/chip";
 export type {
     UseAccentToneOptions,
     UseAccentToneReturn,
@@ -473,7 +488,8 @@ export type {
 //   <Tooltip><TooltipContent surface="veil">           — the legibility plate
 //   <ContextMenu><ContextMenuContent surface="glass">  — the default glass plate
 //   <Command surface="veil"> (Dialog-hosted: the surface flows through the host)
-//   <HoverCard><HoverCardContent surface="opaque">     — the half-threaded case closed
+//   <Popover trigger="hover"><PopoverContent surface="opaque"> — the folded
+//     HoverCard case (BI.W-OVERLAY-UNION: HoverCard folded onto the sealed union)
 //
 // Each defaults to `surface="glass"` (byte-identical to the prior bare
 // `glass-floating` plate). The raw `min-w-32` / `max-h` / tooltip `text-sm` /

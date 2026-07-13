@@ -55,7 +55,7 @@ const icons = [Heart, Star, Bookmark, Flag, Pin, Bell, Sparkles];
         </StorySection>
 
         <StorySection
-            label="direction + reversed"
+            label="orientation + reversed"
             blurb="horizontal (default) | vertical, with optional `reversed` to flip the stack order without changing the items array."
         >
             <ShowcaseFrame pad="lg">
@@ -64,7 +64,7 @@ const icons = [Heart, Star, Bookmark, Flag, Pin, Bell, Sparkles];
                         :items="icons"
                         size="md"
                         :max-visible="5"
-                        direction="horizontal"
+                        orientation="horizontal"
                     >
                         <template #icon="{ item: Icon }">
                             <component
@@ -77,7 +77,7 @@ const icons = [Heart, Star, Bookmark, Flag, Pin, Bell, Sparkles];
                         :items="icons"
                         size="md"
                         :max-visible="5"
-                        direction="vertical"
+                        orientation="vertical"
                     >
                         <template #icon="{ item: Icon }">
                             <component

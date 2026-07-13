@@ -18,11 +18,28 @@ export const badgeVariants = cva(
   'badge-atom focus-ring inline-flex items-center gap-1.5 rounded-badge font-semibold transition-control wrap-anywhere [&_svg:not([class*=size-])]:size-(--ui-glyph-sm) [&_svg]:shrink-0 [&_svg]:pointer-events-none',
   {
     variants: {
+      // BI.W-SYNONYM-RENAMES — `variant` is a STYLE axis ONLY (the plate register:
+      // default/secondary/outline). The semantic status colors (destructive/success/
+      // warning/info) are the `tone` axis below (the shared TONES tuple, _shared/
+      // axes.ts) — a tone is not a style (proof:variant-residual). `tone` is declared
+      // AFTER `variant` so a set tone's `bg-*/text-*/hover:*` wins the `cn`
+      // tailwind-merge over the default `variant` plate — byte-identical paint to the
+      // former `variant="<tone>"`. The glass register keys off `[data-tone]` now
+      // (glass-atom.css); the style variants keep `[data-variant]`.
       variant: {
         default:
           'bg-primary text-primary-foreground hover:bg-primary/80',
         secondary:
           'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+        // `outline` keeps a real border (it IS the edge) but reads the warm keyed
+        // rim ink, not a melting transparent line.
+        outline: 'badge-atom--outline text-foreground',
+      },
+      // The semantic status register — `neutral` defers to the `variant` plate
+      // (empty; the default/secondary/outline paint shows through), each named tone
+      // overrides the plate with the canonical `--<tone>` cohort.
+      tone: {
+        neutral: '',
         // AY.W-PRIM-POLISH D4 — the dark destructive plate is DEEPENED at the
         // badge so the 14px/600 light-ink label clears AA. The shared dark
         // `--destructive` (hsl(0 80% 60%) = rgb(235,71,71)) painted only 3.07:1
@@ -34,10 +51,7 @@ export const badgeVariants = cva(
         // destructive consumers — Button, input invalid-ring — keep their value).
         destructive:
           'bg-destructive text-destructive-foreground hover:bg-destructive/80 dark:bg-[hsl(0_70%_45%)] dark:hover:bg-[hsl(0_70%_45%)]/85',
-        // `outline` keeps a real border (it IS the edge) but reads the warm keyed
-        // rim ink, not a melting transparent line.
-        outline: 'badge-atom--outline text-foreground',
-        // Status-tier variants — consume the canonical `--success / --warning
+        // Status-tier tones — consume the canonical `--success / --warning
         // / --info` plate + `--{success,warning,info}-foreground` glyph
         // tokens (declared at tokens.css:244-256). Per audit U.W0.B-b
         // §"glass-ui gaps".
@@ -87,6 +101,7 @@ export const badgeVariants = cva(
     },
     defaultVariants: {
       variant: 'default',
+      tone: 'neutral',
       size: 'md',
       surface: 'loud',
     },

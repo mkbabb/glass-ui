@@ -11,12 +11,16 @@ export const alertVariants = cva(
   'relative w-full rounded-lg border px-4 py-3 text-[length:var(--control-text)] grid has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] grid-cols-[0_1fr] has-[>svg]:gap-x-3 gap-y-0.5 items-start [&>svg]:size-(--ui-glyph) [&>svg]:translate-y-0.5 [&>svg]:text-current',
   {
     variants: {
-      variant: {
+      // BI.W-SYNONYM-RENAMES — the semantic status register is the `tone` axis
+      // (reads the shared TONES tuple, _shared/axes.ts), NEVER a `variant` map (a
+      // tone is not a style — proof:variant-residual). `neutral` is the un-toned
+      // glass-wash base (the former `variant:'default'`), byte-identical paint.
+      tone: {
         // AX.W54 — GLASS-FIRST. An Alert is a content panel, so its surface is
         // the glass WASH tier (`--glass-bg-wash` + `--glass-blur-wash`), not an
         // opaque `bg-card` plate. The body text stays `--card-foreground` for
         // legibility; the semantic TONE rides ON the glass.
-        default: 'bg-(--glass-bg-wash) [backdrop-filter:var(--glass-blur-wash)] text-card-foreground',
+        neutral: 'bg-(--glass-bg-wash) [backdrop-filter:var(--glass-blur-wash)] text-card-foreground',
         // BA.W-FEEDBACK-TONE — the tone SOURCE unifies onto the shared `--feedback-
         // tone-*` family. Alert is already the CORRECT SHAPE (glass plate + tone on
         // rim/glyph, never an opaque fill — the convergence model the wave names), but
@@ -39,7 +43,7 @@ export const alertVariants = cva(
       },
     },
     defaultVariants: {
-      variant: 'default',
+      tone: 'neutral',
     },
   },
 )

@@ -9,12 +9,12 @@
       :key="notification.id"
       class="glass-floating feedback-tone flex items-center gap-3 rounded-panel px-4 py-3 text-foreground"
       :class="[
-        toneClasses[notification.type],
+        toneClasses[notification.tone],
         'min-w-[300px] max-w-[500px]'
       ]"
     >
       <component
-        :is="notificationIcons[notification.type]"
+        :is="notificationIcons[notification.tone]"
         class="feedback-tone-glyph h-5 w-5 flex-shrink-0"
       />
       <p class="flex-1 text-sm font-medium">
@@ -33,9 +33,13 @@
 <script setup lang="ts">
 import { CheckCircle, XCircle, AlertCircle, Info, X } from "@lucide/vue"
 
+// BI.W-SYNONYM-RENAMES — the status `type` synonym is the shared `tone` axis (a
+// subset of the TONES tuple, _shared/axes.ts; `error` was `destructive`'s synonym —
+// clean break, no alias). Zero paint change: each tone still maps to the SAME
+// `.feedback-tone-<name>` register.
 interface Notification {
   id: string
-  type: 'success' | 'error' | 'info' | 'warning'
+  tone: 'success' | 'warning' | 'info' | 'destructive'
   message: string
   duration?: number
 }
@@ -51,21 +55,21 @@ defineEmits<{
 // BA.W-FEEDBACK-TONE — tone rides ON glass. The prior `bg-<tone>/90` per-type map was
 // the SECOND of three independent tone maps — a near-opaque (α 0.9, above the ~0.92
 // translucency floor) slab over the `glass-floating` base (the R8-13b flat-green
-// defect). It is DELETED. The `type` now maps onto the SAME `.feedback-tone-<name>`
-// register Toast consumes (the three-maps-into-one collapse; `error` IS the destructive
-// tone) — a tinted-glass wash + tone-keyed rim + full-chroma glyph, the backdrop
+// defect). It is DELETED. The `tone` axis maps onto the SAME `.feedback-tone-<name>`
+// register Toast consumes (the three-maps-into-one collapse; `destructive` absorbed the
+// former `error` synonym) — a tinted-glass wash + tone-keyed rim + full-chroma glyph, the backdrop
 // showing through. The body `<p>` stays `--foreground` (legibility); the glyph carries
 // the tone via `.feedback-tone-glyph`.
 const toneClasses = {
   success: 'feedback-tone-success',
-  error: 'feedback-tone-destructive',
+  destructive: 'feedback-tone-destructive',
   warning: 'feedback-tone-warning',
   info: 'feedback-tone-info',
 }
 
 const notificationIcons = {
   success: CheckCircle,
-  error: XCircle,
+  destructive: XCircle,
   warning: AlertCircle,
   info: Info,
 }

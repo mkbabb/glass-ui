@@ -347,7 +347,7 @@ function formatMatches(indices: number[]): string {
                     </Button>
                     <Button
                         type="button"
-                        variant="destructive"
+                        tone="destructive"
                         size="sm"
                         data-testid="clear-cache-button"
                         aria-label="Clear search cache"

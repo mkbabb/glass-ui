@@ -5,14 +5,15 @@ import { type AlertVariants, alertVariants } from '.'
 
 const props = defineProps<{
   class?: HTMLAttributes['class']
-  variant?: AlertVariants['variant']
+  tone?: AlertVariants['tone']
 }>()
 </script>
 
 <template>
   <div
     data-slot="alert"
-    :class="cn(alertVariants({ variant }), props.class)"
+    :data-tone="tone"
+    :class="cn(alertVariants({ tone }), props.class)"
     role="alert"
   >
     <slot />

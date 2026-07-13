@@ -1,2 +1,2 @@
 export { default as HeaderRibbon } from "./HeaderRibbon.vue";
-export type { HeaderRibbonPosition, HeaderRibbonProps } from "./types";
+export type { HeaderRibbonPlacement, HeaderRibbonProps } from "./types";

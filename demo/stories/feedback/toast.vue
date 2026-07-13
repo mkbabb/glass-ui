@@ -40,7 +40,7 @@ function fireDefault() {
 
 function fireSuccess() {
     toast({
-        variant: "success",
+        tone: "success",
         title: "Deploy complete",
         description: "Build #2048 is live. Traffic ramping now.",
     });
@@ -48,7 +48,7 @@ function fireSuccess() {
 
 function fireWarning() {
     toast({
-        variant: "warning",
+        tone: "warning",
         title: "Approaching quota",
         description: "84% of your hourly window is used. Resets in 17 minutes.",
     });
@@ -56,7 +56,7 @@ function fireWarning() {
 
 function fireInfo() {
     toast({
-        variant: "info",
+        tone: "info",
         title: "Live preview is read-only",
         description: "Open the editor pane to make changes.",
     });
@@ -64,7 +64,7 @@ function fireInfo() {
 
 function fireError() {
     toast({
-        variant: "destructive",
+        tone: "destructive",
         title: "Upload failed",
         description: "Network timed out. We kept the file in local drafts.",
     });
@@ -72,7 +72,7 @@ function fireError() {
 
 function fireDestructive() {
     toast({
-        variant: "destructive",
+        tone: "destructive",
         title: "Session expired",
         description: "Re-authenticate to continue editing.",
     });
@@ -93,12 +93,12 @@ function fireWithAction() {
     });
 }
 
-// The tone rides the native Toast `variant`
-// (success/warning/info/destructive), which resolves the
-// `--{success,warning,info}` token plates inside the CVA. The story only maps
-// the per-variant ICON (not part of the surface CVA).
+// The status rides the shared Toast `tone` axis
+// (neutral/success/warning/info/destructive), which resolves the
+// `--{success,warning,info}` token plates via `.feedback-tone-<name>`. The story
+// only maps the per-tone ICON (not part of the surface register).
 const toneIcon: Record<string, typeof CheckCircle2> = {
-    default: Info,
+    neutral: Info,
     success: CheckCircle2,
     warning: AlertTriangle,
     info: Info,
@@ -127,7 +127,7 @@ const toneIcon: Record<string, typeof CheckCircle2> = {
                     Feedback · Toasts
                 </span>
                 <p class="text-small text-muted-foreground">
-                    Transient surfaces — the toast tones carry their own variant
+                    Transient surfaces — the toast tones carry their own tone
                     color; the section identity is the ONE page event.
                 </p>
             </div>
@@ -141,7 +141,7 @@ const toneIcon: Record<string, typeof CheckCircle2> = {
                 <Button variant="outline" @click="fireWarning">Warning</Button>
                 <Button variant="outline" @click="fireInfo">Info</Button>
                 <Button variant="outline" @click="fireError">Error</Button>
-                <Button variant="destructive" @click="fireDestructive">Destructive</Button>
+                <Button tone="destructive" @click="fireDestructive">Destructive</Button>
                 <Button @click="fireWithAction">With action</Button>
             </div>
         </section>
@@ -150,9 +150,9 @@ const toneIcon: Record<string, typeof CheckCircle2> = {
             <p class="section-label">viewport</p>
             <p class="font-mono text-xs text-muted-foreground">
                 Toasts render bottom-right on desktop, top on mobile. Swipe or
-                close-button dismiss. The tone rides the native Toast
-                <code>variant</code> (default / success / warning / info /
-                destructive) — the CVA resolves the
+                close-button dismiss. The status rides the shared Toast
+                <code>tone</code> axis (neutral / success / warning / info /
+                destructive) — <code>.feedback-tone-*</code> resolves the
                 <code>--{success,warning,info}</code> token plates.
             </p>
             <ToastProvider>
@@ -163,7 +163,7 @@ const toneIcon: Record<string, typeof CheckCircle2> = {
                 >
                     <div class="flex items-start gap-3">
                         <component
-                            :is="toneIcon[t.variant ?? 'default']"
+                            :is="toneIcon[t.tone ?? 'neutral']"
                             class="mt-0.5 size-5 shrink-0"
                         />
                         <div class="grid gap-1">

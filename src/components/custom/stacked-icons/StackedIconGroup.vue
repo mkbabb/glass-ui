@@ -3,10 +3,10 @@
         :is="as"
         class="stacked-icon-group group/stack relative isolate flex"
         :class="[
-            direction === 'vertical' ? 'flex-col' : 'items-center',
-            reversed ? (direction === 'vertical' ? 'flex-col-reverse' : 'flex-row-reverse') : '',
+            orientation === 'vertical' ? 'flex-col' : 'items-center',
+            reversed ? (orientation === 'vertical' ? 'flex-col-reverse' : 'flex-row-reverse') : '',
         ]"
-        :data-direction="direction"
+        :data-orientation="orientation"
         :style="{ '--n': stackCount }"
     >
         <!-- Visible icons (up to maxVisible) -->
@@ -63,7 +63,7 @@ import type { StackedIconGroupProps } from './types';
 
 const props = withDefaults(defineProps<StackedIconGroupProps<T>>(), {
     maxVisible: 3,
-    direction: 'horizontal',
+    orientation: 'horizontal',
     reversed: false,
     size: 'md',
     expandOnHover: true,
@@ -79,7 +79,7 @@ const sizeClass = computed(() => {
 });
 
 const overlapClass = computed(() => {
-    if (props.direction === 'vertical') {
+    if (props.orientation === 'vertical') {
         switch (props.size) {
             case 'sm': return '-mt-(--stack-overlap-sm)';
             case 'md': return '-mt-(--stack-overlap-md)';
@@ -151,10 +151,10 @@ const stackCount = computed(() => {
         );
         scale: calc(1 + 0.06 * var(--fan));
     }
-    .group\/stack[data-direction='horizontal']:hover .stacked-icon-puck--fan {
+    .group\/stack[data-orientation='horizontal']:hover .stacked-icon-puck--fan {
         translate: calc(6px * var(--fan)) calc(-3px * var(--fan));
     }
-    .group\/stack[data-direction='vertical']:hover .stacked-icon-puck--fan {
+    .group\/stack[data-orientation='vertical']:hover .stacked-icon-puck--fan {
         translate: calc(3px * var(--fan)) calc(6px * var(--fan));
     }
     /* each puck casts its own cel as it lifts off — the inert child / the puck's

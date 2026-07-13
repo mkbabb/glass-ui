@@ -3,8 +3,9 @@ export interface StackedIconGroupProps<TItem> {
     items: TItem[];
     /** Max visible icons before showing +N overflow */
     maxVisible?: number;
-    /** Stack direction */
-    direction?: "horizontal" | "vertical";
+    /** Stack orientation (BI.W-SYNONYM-RENAMES — the `direction` synonym renamed to
+     *  the shared `orientation` axis vocabulary; horizontal|vertical, zero value change). */
+    orientation?: "horizontal" | "vertical";
     /** Reverse the visual order */
     reversed?: boolean;
     /** Icon size */

@@ -42,7 +42,7 @@ const NAV_STOP = 12;
             <div
                 class="relative h-32 w-full overflow-hidden rounded-card border border-border/60 bg-card"
             >
-                <HeaderRibbon position="left" class="!absolute">
+                <HeaderRibbon placement="left" class="!absolute">
                     <template #anchor="{ pinned }">
                         <DockControl
                             type="button"

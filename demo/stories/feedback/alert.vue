@@ -53,7 +53,7 @@ const FEEDBACK_STOP = 8;
             </StorySection>
 
             <StorySection heading="Destructive" gap="md">
-                <Alert variant="destructive">
+                <Alert tone="destructive">
                     <CircleAlert />
                     <AlertTitle>Session expired</AlertTitle>
                     <AlertDescription>
@@ -67,7 +67,7 @@ const FEEDBACK_STOP = 8;
                  (success/warning/info), resolving the
                  `--{success,warning,info}` tokens. -->
             <StorySection heading="Warning" gap="md">
-                <Alert variant="warning">
+                <Alert tone="warning">
                     <TriangleAlert />
                     <AlertTitle>Approaching rate limit</AlertTitle>
                     <AlertDescription>
@@ -78,7 +78,7 @@ const FEEDBACK_STOP = 8;
             </StorySection>
 
             <StorySection heading="Info" gap="md">
-                <Alert variant="info">
+                <Alert tone="info">
                     <Info />
                     <AlertTitle>Live preview is read-only</AlertTitle>
                     <AlertDescription>
@@ -89,7 +89,7 @@ const FEEDBACK_STOP = 8;
             </StorySection>
 
             <StorySection heading="Success" gap="md">
-                <Alert variant="success">
+                <Alert tone="success">
                     <CircleCheck />
                     <AlertTitle>Deployed to production</AlertTitle>
                     <AlertDescription>

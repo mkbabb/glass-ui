@@ -21,17 +21,20 @@ const sectionToneBadges: { stop: number; label: string }[] = [
     { stop: 12, label: "indigo" },
 ];
 
-const coreVariants: { variant: "default" | "secondary" | "destructive" | "outline"; label: string }[] = [
+// BI.W-SYNONYM-RENAMES — `variant` is a STYLE axis (default/secondary/outline). The
+// semantic status colours are the `tone` axis below (a tone is not a style); the
+// former `variant="destructive"` is `tone="destructive"`.
+const coreVariants: { variant: "default" | "secondary" | "outline"; label: string }[] = [
     { variant: "default", label: "default" },
     { variant: "secondary", label: "secondary" },
-    { variant: "destructive", label: "destructive" },
     { variant: "outline", label: "outline" },
 ];
 
-const semanticVariants: { variant: "success" | "warning" | "info"; label: string }[] = [
-    { variant: "success", label: "success" },
-    { variant: "warning", label: "warning" },
-    { variant: "info", label: "info" },
+const semanticTones: { tone: "destructive" | "success" | "warning" | "info"; label: string }[] = [
+    { tone: "destructive", label: "destructive" },
+    { tone: "success", label: "success" },
+    { tone: "warning", label: "warning" },
+    { tone: "info", label: "info" },
 ];
 
 // F2.R2 W-DARK-READABILITY-REPAIR — each viz pill carries its `token` so the label
@@ -175,18 +178,18 @@ const vizBadges: { cls: string; token: string; label: string }[] = [
         >
             <div class="flex flex-wrap items-center gap-3">
                 <Badge
-                    v-for="v in semanticVariants"
-                    :key="v.variant"
-                    :variant="v.variant"
+                    v-for="v in semanticTones"
+                    :key="v.tone"
+                    :tone="v.tone"
                 >
                     {{ v.label }}
                 </Badge>
             </div>
             <div class="flex flex-wrap items-center gap-3">
                 <Badge
-                    v-for="v in semanticVariants"
-                    :key="v.variant"
-                    :variant="v.variant"
+                    v-for="v in semanticTones"
+                    :key="v.tone"
+                    :tone="v.tone"
                     class="gap-1.5"
                 >
                     <span class="size-1.5 rounded-full bg-current" />

@@ -5,6 +5,13 @@ import { cn } from '../../../utils'
 
 const props = defineProps<{
   variant?: BadgeVariants['variant']
+  /**
+   * BI.W-SYNONYM-RENAMES — the semantic status register (the shared `tone` axis:
+   * neutral/destructive/success/warning/info). Orthogonal to the `variant` STYLE
+   * plate; a set tone overrides the plate colour. Replaces the former
+   * `variant="destructive|success|warning|info"` (a tone is not a style).
+   */
+  tone?: BadgeVariants['tone']
   size?: BadgeVariants['size']
   /**
    * BD.W-GLASS-ATOM-REGISTER — the register split. `loud` (default) is the opaque
@@ -28,10 +35,11 @@ const props = defineProps<{
   <div
     data-slot="badge"
     :data-variant="variant"
+    :data-tone="tone"
     :data-size="size"
     :data-surface="surface === 'glass' ? 'glass' : undefined"
     :data-cast="cast ? '' : undefined"
-    :class="cn(badgeVariants({ variant, size, surface }), props.class)"
+    :class="cn(badgeVariants({ variant, tone, size, surface }), props.class)"
   >
     <!-- The inert moving cel cast (BD.W-CARTOON-CASTER) — an aria-hidden child the
          loud register floats above, NEVER a ::before/::after (both are occupied on

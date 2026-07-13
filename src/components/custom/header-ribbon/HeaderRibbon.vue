@@ -2,7 +2,7 @@
     <div
         :class="[
             'fixed z-dock pointer-events-none w-fit flex items-center px-4 pt-4 pb-2',
-            position === 'left' ? 'top-0 left-0' : 'top-0 right-0',
+            placement === 'left' ? 'top-0 left-0' : 'top-0 right-0',
         ]"
         @mouseleave="onGroupMouseLeave"
     >
@@ -15,8 +15,8 @@
             class="pointer-events-auto flex items-center h-6"
             @mouseenter="onRibbonMouseEnter"
         >
-            <!-- position=right: items first (expand left), then anchor. -->
-            <template v-if="position === 'right'">
+            <!-- placement=right: items first (expand left), then anchor. -->
+            <template v-if="placement === 'right'">
                 <div
                     :class="[
                         'header-items-wrapper header-items-right flex items-center gap-3',
@@ -31,8 +31,8 @@
                 <slot name="anchor" :pinned="isPinned" :toggled="isToggled" />
             </div>
 
-            <!-- position=left: anchor first, then items expand right. -->
-            <template v-if="position === 'left'">
+            <!-- placement=left: anchor first, then items expand right. -->
+            <template v-if="placement === 'left'">
                 <div
                     :class="[
                         'header-items-wrapper header-items-left flex items-center gap-3',
@@ -51,7 +51,7 @@ import { computed, onBeforeUnmount, ref } from "vue";
 import type { HeaderRibbonProps } from "./types";
 
 const props = withDefaults(defineProps<HeaderRibbonProps>(), {
-    position: "left",
+    placement: "left",
     hideTimeoutMs: 2000,
 });
 
