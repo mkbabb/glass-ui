@@ -143,6 +143,8 @@ jobs:
               run: npm run proof:peer-optional
             - name: proof:ship-attestation
               run: npm run proof:ship-attestation
+            - name: proof:pi-attestation
+              run: npm run proof:pi-attestation
             - name: proof:constraint-manifest
               run: npm run proof:constraint-manifest
             - name: proof:no-layout-animation
@@ -217,6 +219,8 @@ jobs:
               run: npm run proof:no-paper-field
             - name: proof:focal-complete
               run: npm run proof:focal-complete
+            - name: proof:category-card-warm
+              run: npm run proof:category-card-warm
             - name: proof:field-accent-reconcile
               run: npm run proof:field-accent-reconcile
             - name: proof:demo-radial-calm
@@ -431,10 +435,14 @@ jobs:
               run: npm run proof:crossrepo-asks
             - name: proof:crossrepo-asks:bh
               run: npm run proof:crossrepo-asks:bh
+            - name: proof:crossrepo-asks:bi
+              run: npm run proof:crossrepo-asks:bi
             - name: proof:lineage-probe
               run: npm run proof:lineage-probe
             - name: proof:doc-override-idiom
               run: npm run proof:doc-override-idiom
+            - name: proof:doc-truth
+              run: npm run proof:doc-truth
             - name: proof:cut-docs
               run: npm run proof:cut-docs
             - name: proof:eyebrow-union
@@ -459,6 +467,8 @@ jobs:
               run: npm run proof:goo-redress
             - name: proof:blob-affect-interact
               run: npm run proof:blob-affect-interact
+            - name: proof:blob-affect-interact:selftest
+              run: npm run proof:blob-affect-interact:selftest
             - name: proof:glass-cal
               run: npm run proof:glass-cal
             - name: proof:glass
@@ -629,6 +639,8 @@ jobs:
               run: npm run proof:viz-constellation
             - name: proof:viz
               run: npm run proof:viz
+            - name: proof:viz:selftest
+              run: npm run proof:viz:selftest
             - name: proof:viz-dotflow
               run: npm run proof:viz-dotflow
             - name: proof:viz-papergrid
