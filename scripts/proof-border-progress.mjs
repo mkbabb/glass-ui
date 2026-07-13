@@ -477,6 +477,36 @@ export function detectBorderProgress(inputs) {
             "W7e: the radius/width props do not defer to the cascade when unset (or the dock ring does not ride `--border-progress-radius: var(--radius-pill)`) — the token-first follow-the-host seam",
         );
 
+    // ── W8 — BI.W-BP-BOTTOM-LINEAR: BOTH edge registers paint a LINEAR fill ────
+    // The GEO-4 dual-path fix. The bottom-edge register (a HORIZONTAL band) must
+    // OVERRIDE `background` to a LINEAR gradient reading --border-progress-fill (the
+    // `to right` twin of the inline-end-edge `to bottom` sibling), so the value maps
+    // LINEARLY along the block axis. Inheriting the base perimeter conic (:48-54)
+    // mapped the single bottom edge nonlinearly through the corner angles and the
+    // band read as a full-width hollow outlined rect (UF-J4). The clause: BOTH edge
+    // registers override background to a LINEAR gradient reading the fill; neither
+    // inherits the perimeter conic. ONE shared linear-paint expression — full-ring
+    // keeps its conic.
+    const bottomEdgeBlock =
+        /\[data-coverage="bottom-edge"\][^{]*\{([^{}]*)\}/.exec(css)?.[1] ?? "";
+    const bottomEdgeLinear =
+        /background\s*:\s*linear-gradient\(\s*to right/.test(bottomEdgeBlock) &&
+        /var\(--border-progress-fill/.test(bottomEdgeBlock);
+    // The inline-end-edge sibling ALREADY paints a linear `to bottom` fill (W7b's
+    // edgeCoverageLinear + the fill-read). Re-assert it here so the clause binds
+    // BOTH registers symmetrically — a regression on either edge reds.
+    const inlineEndLinear =
+        edgeCoverageLinear && /var\(--border-progress-fill/.test(edgeBlock);
+    facts.w8 = { bottomEdgeLinear, inlineEndLinear };
+    if (!bottomEdgeLinear)
+        violations.push(
+            "W8: the `bottom-edge` coverage does not override `background` to a LINEAR `to right` gradient reading --border-progress-fill — it inherits the base perimeter conic (:48-54), which maps the single bottom edge nonlinearly through the corner angles (the UF-J4 hollow-outlined-rect read). Mirror the inline-end-edge sibling (a conic -> linear paint swap; the SAME fill-scaled spectrum stops)",
+        );
+    if (!inlineEndLinear)
+        violations.push(
+            "W8: the `inline-end-edge` coverage does not paint a LINEAR fill reading --border-progress-fill — both edge registers share ONE linear-paint expression (neither inherits the perimeter conic)",
+        );
+
     return { facts, violations };
 }
 
@@ -548,7 +578,10 @@ function selfTest() {
             mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0) border-box;
             mask-composite: exclude;
         }
-        .border-progress[data-coverage="bottom-edge"] .border-progress__ring { mask-composite: exclude, intersect; }
+        .border-progress[data-coverage="bottom-edge"] .border-progress__ring {
+            background: linear-gradient( to right, var(--s), transparent var(--border-progress-fill), transparent );
+            mask-composite: exclude, intersect;
+        }
         .border-progress[data-coverage="inline-end-edge"] .border-progress__ring {
             background: linear-gradient( to bottom, var(--s), transparent var(--border-progress-fill), transparent );
             mask: linear-gradient(to left, #fff 0 12px, transparent 12px), linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0) border-box;
@@ -686,6 +719,33 @@ function selfTest() {
                 sidebarDock: good.sidebarDock.replace(/"full-ring"/, '"x"'),
             }).violations.some((v) => /W7c/.test(v)),
     });
+    // Bite K (W8) — the bottom-edge INHERITING the base perimeter conic (its
+    // linear `background` override stripped, mask-only) reds — the GEO-4 dual-path
+    // asymmetry the fix closes; the mask stack survives, only the paint is gone.
+    bites.push({
+        name: "bottom-edge-inherits-conic",
+        red:
+            detectBorderProgress({
+                ...good,
+                css: good.css.replace(
+                    /(\.border-progress\[data-coverage="bottom-edge"\] \.border-progress__ring \{)[^}]*(\})/,
+                    "$1 mask-composite: exclude, intersect; $2",
+                ),
+            }).violations.some((v) => /W8/.test(v)),
+    });
+    // Bite L (W8) — the inline-end-edge sibling losing its linear paint reds too
+    // (the clause binds BOTH edge registers symmetrically).
+    bites.push({
+        name: "inline-end-edge-loses-linear",
+        red:
+            detectBorderProgress({
+                ...good,
+                css: good.css.replace(
+                    /(\.border-progress\[data-coverage="inline-end-edge"\] \.border-progress__ring \{)\s*background:[^;]*;/,
+                    "$1",
+                ),
+            }).violations.some((v) => /W8/.test(v)),
+    });
 
     return { baseGreen, bites };
 }
@@ -790,6 +850,13 @@ function run() {
         )}  bar-absent:${yn(facts.w7.barAbsent)}  defer-to-cascade:${yn(
             facts.w7.propsDeferToCascade && facts.w7.dockRadiusToken,
         )}`,
+    );
+    console.log(
+        `  W8 both edges LINEAR (BI.W-BP-BOTTOM-LINEAR): ${yn(
+            facts.w8.bottomEdgeLinear && facts.w8.inlineEndLinear,
+        )}  (bottom-edge:${yn(facts.w8.bottomEdgeLinear)}  inline-end-edge:${yn(
+            facts.w8.inlineEndLinear,
+        )})`,
     );
 
     if (violations.length > 0) {

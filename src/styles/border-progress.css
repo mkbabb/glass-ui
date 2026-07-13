@@ -79,6 +79,21 @@
    `exclude(padding, intersect(border, band))` — the PADDING BOX joined the mask
    and the "edge band" painted the whole interior as a slab. */
 .border-progress[data-coverage="bottom-edge"] .border-progress__ring {
+    /* BI.W-BP-BOTTOM-LINEAR — the PAINT swaps to a LINEAR `to right` gradient (the
+       inline-end-edge twin, `to bottom` -> `to right` for the horizontal band) so the
+       fill maps LINEARLY along the block axis (the scrollbar metaphor). Inheriting
+       the base perimeter conic mapped the single bottom edge nonlinearly through the
+       corner angles and the band read as a full-width hollow outlined rect (UF-J4).
+       ONE shared linear-paint expression for both edge registers -- the perimeter
+       `full-ring` keeps its conic; the SAME fill-scaled spectrum stop list drives
+       it. The mask stack below is UNTOUCHED (the band-scope + radius cut-out already
+       correct). */
+    background: linear-gradient(
+        to right,
+        var(--border-progress-spectrum, var(--section-color-7)),
+        transparent var(--border-progress-fill, 0%),
+        transparent 100%
+    );
     -webkit-mask:
         linear-gradient(to top, #fff 0, #fff var(--border-progress-width, 12px), transparent var(--border-progress-width, 12px)),
         linear-gradient(#fff 0 0) padding-box,

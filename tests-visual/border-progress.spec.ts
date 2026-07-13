@@ -166,4 +166,69 @@ test.describe("BB.W-BORDER-PROGRESS — the masked-conic border ring", () => {
             clip: { x: 100, y: 100, width: 360, height: 240 },
         });
     });
+
+    // BI.W-BP-BOTTOM-LINEAR (GEO-4) — the bottom-edge fill PROGRESSES linearly along
+    // the edge (the paint swapped conic → linear `to right`), so the band reads as a
+    // filled prefix + a transparent tail, NOT the fill-invariant hollow outlined rect
+    // the base perimeter conic painted (UF-J4). Chromium + real WebKit, BOTH modes.
+    for (const mode of MODES) {
+        test(`coverage=bottom-edge paints a LINEAR fill that progresses along the edge (${mode})`, async ({
+            page,
+        }) => {
+            mkdirSync(VISUAL_DIR, { recursive: true });
+            await page.setViewportSize(VIEWPORTS[1]);
+            await page.goto(HOST_ROUTE, { waitUntil: "networkidle" });
+            await setMode(page, mode);
+            const sel = await injectRing(page, "bottom-edge");
+            await page.waitForTimeout(120);
+
+            const ringSel = `${sel} .border-progress__ring`;
+
+            // the bottom-edge PAINT is a LINEAR gradient — NOT the base perimeter
+            // conic (which maps the single edge nonlinearly through the corner angles
+            // → the UF-J4 hollow-outlined-rect read).
+            const bottomBg = await page
+                .locator(ringSel)
+                .evaluate((el) => getComputedStyle(el).backgroundImage);
+            expect(bottomBg).toContain("linear-gradient");
+            expect(bottomBg).not.toContain("conic-gradient");
+
+            // the fill PROGRESSES: sweeping --border-progress-fill moves the
+            // transparent front, so the resolved gradient at 25% ≠ at 80% (a uniform
+            // hollow outline is fill-invariant — the born-RED bug).
+            const bgAt = async (fill: string) => {
+                await page.locator(sel).evaluate((el, f) => {
+                    (el as HTMLElement).style.setProperty(
+                        "--border-progress-fill",
+                        f,
+                    );
+                }, fill);
+                await page.waitForTimeout(40);
+                return page
+                    .locator(ringSel)
+                    .evaluate((el) => getComputedStyle(el).backgroundImage);
+            };
+            const low = await bgAt("25%");
+            await page.screenshot({
+                path: `${VISUAL_DIR}/W-BP-BOTTOM-LINEAR-25-${mode}.png`,
+                clip: { x: 100, y: 100, width: 360, height: 240 },
+            });
+            const high = await bgAt("80%");
+            await page.screenshot({
+                path: `${VISUAL_DIR}/W-BP-BOTTOM-LINEAR-80-${mode}.png`,
+                clip: { x: 100, y: 100, width: 360, height: 240 },
+            });
+            // the filled prefix grew — linear progression, not a static outline.
+            expect(low).not.toBe(high);
+
+            // the full-ring perimeter conic is UN-REGRESSED (the shared linear paint
+            // is edge-scoped; the perimeter keeps its conic).
+            await injectRing(page, "full-ring");
+            await page.waitForTimeout(80);
+            const fullBg = await page
+                .locator(ringSel)
+                .evaluate((el) => getComputedStyle(el).backgroundImage);
+            expect(fullBg).toContain("conic-gradient");
+        });
+    }
 });
