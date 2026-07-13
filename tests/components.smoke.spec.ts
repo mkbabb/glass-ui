@@ -280,7 +280,11 @@ describe("component smoke coverage", () => {
             slots: { default: "<button>Tool</button>" },
         });
         expect(wrapper.text()).toContain("Tool");
-        expect(wrapper.classes()).toContain("vertical");
+        // BI.W-DOCK-SPINE — the orientation contract lives on `.glass-dock` (the
+        // surface every CSS rule + consumer selector keys off); the SFC keeps a
+        // leading documentation comment node, so the fragment-root `wrapper.classes()`
+        // is unreliable — query `.glass-dock` directly, mirroring the sibling test.
+        expect(wrapper.get(".glass-dock").classes()).toContain("vertical");
     });
 
     it("renders rounded vertical GlassDock shape", () => {

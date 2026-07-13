@@ -356,11 +356,13 @@ function selfTestCarveLeaves() {
 // god-module carves; this wave is VERIFY-ONLY (ZERO carve) — it asserts the three facts
 // the WS2 dock carve produced hold on the frontier + cleans the ONE stale comment the
 // dead-engine cut left behind. The facts:
-//   DL1 — GlassDock.vue is the carved SFC shell: it imports its state/morph/fission
+//   DL1 — GlassDock.vue is the carved SFC shell: it imports its state/morph
 //         logic back from `./composables/*` (the carve MOVED the logic into colocated
 //         leaves, it did not inline it).
-//   DL2 — useDockFission.ts is the carved fission leaf: it lives under composables/ AND
-//         publishes `useDockFission` (the host composes it via useDockFissionWiring).
+//   DL2 — RETIRED (BI.W-DOCK-RETIRES): the fission facility (useDockFission.ts) was
+//         retired terminally with the dock greenfield; the leaf is DEFINITION-ABSENT.
+//         The terminal-lock owner is proof:dock-retire-terminal, not this colocation
+//         gate, so the former "fission leaf present" roster row is dropped here.
 //   DL3 — useDockContextSilhouette.ts (the drained 551L BE context→silhouette engine) is
 //         DEFINITION-ABSENT (the BG.W-DEAD-COMPOSABLE-CUT delete).
 //   DL4 — the dock src + dock demo trees carry ZERO un-stripped reference (comment OR
@@ -375,8 +377,6 @@ const DOCK_DIR = "components/custom/dock";
 const DOCK_LEAF_VERIFY = {
     host: `${DOCK_DIR}/GlassDock.vue`,
     hostImportMarker: "./composables/",
-    fissionLeaf: `${DOCK_DIR}/composables/useDockFission.ts`,
-    fissionSymbol: "useDockFission",
     deadFile: `${DOCK_DIR}/composables/useDockContextSilhouette.ts`,
     deadTokens: ["useDockContextSilhouette", "DockSilhouetteDescriptor"],
     // the un-stripped scan trees (dock src + dock demo). scripts/ is deliberately absent.
@@ -395,20 +395,8 @@ function evaluateDockLeafVerify(s) {
             `src/${DOCK_LEAF_VERIFY.host} — imports no ./composables/* leaf (the dock logic must be carved into colocated composables + imported back, not inline)`,
         );
     }
-    // DL2 — the fission carve leaf present + exports its symbol.
-    if (!s.fissionExists) {
-        violations.push(
-            `src/${DOCK_LEAF_VERIFY.fissionLeaf} — the carved useDockFission leaf is ABSENT`,
-        );
-    } else if (
-        !new RegExp(
-            `export\\s+(?:async\\s+)?(?:function|const)\\s+${DOCK_LEAF_VERIFY.fissionSymbol}\\b`,
-        ).test(s.fissionSrc)
-    ) {
-        violations.push(
-            `src/${DOCK_LEAF_VERIFY.fissionLeaf} — does not export ${DOCK_LEAF_VERIFY.fissionSymbol} (the carved leaf must publish the moved symbol)`,
-        );
-    }
+    // DL2 — RETIRED (BI.W-DOCK-RETIRES): the fission facility died terminally with the
+    // dock greenfield; proof:dock-retire-terminal owns the DEFINITION-ABSENT lock now.
     // DL3 — the drained dead-engine composable is DEFINITION-ABSENT.
     if (s.deadFileExists) {
         violations.push(
@@ -443,13 +431,10 @@ function scanDockDeadTokens() {
 
 function checkDockLeafVerify() {
     const hostPath = resolve(ROOT, "src", DOCK_LEAF_VERIFY.host);
-    const fissionPath = resolve(ROOT, "src", DOCK_LEAF_VERIFY.fissionLeaf);
     const deadPath = resolve(ROOT, "src", DOCK_LEAF_VERIFY.deadFile);
     const state = {
         hostExists: existsSync(hostPath),
         hostSrc: existsSync(hostPath) ? readFileSync(hostPath, "utf8") : "",
-        fissionExists: existsSync(fissionPath),
-        fissionSrc: existsSync(fissionPath) ? readFileSync(fissionPath, "utf8") : "",
         deadFileExists: existsSync(deadPath),
         deadHits: scanDockDeadTokens(),
     };
@@ -458,7 +443,6 @@ function checkDockLeafVerify() {
         violations,
         facts: {
             hostCarved: state.hostExists && state.hostSrc.includes(DOCK_LEAF_VERIFY.hostImportMarker),
-            fissionLeaf: state.fissionExists,
             deadEngineAbsent: !state.deadFileExists,
             deadRefs: state.deadHits.length,
         },
@@ -471,8 +455,6 @@ function selfTestDockLeafVerify() {
     const OK = {
         hostExists: true,
         hostSrc: "import { useDockState } from './composables/useDockState'",
-        fissionExists: true,
-        fissionSrc: "export function useDockFission() {}",
         deadFileExists: false,
         deadHits: [],
     };
@@ -483,14 +465,6 @@ function selfTestDockLeafVerify() {
     bite(
         { hostSrc: "import { x } from './other'" },
         "[SELF-TEST] a GlassDock host importing no ./composables/* leaf did NOT flag (a re-inlined dock would pass)",
-    );
-    bite(
-        { fissionExists: false, fissionSrc: "" },
-        "[SELF-TEST] an absent useDockFission leaf did NOT flag",
-    );
-    bite(
-        { fissionSrc: "// no export of the symbol" },
-        "[SELF-TEST] a fission leaf that does NOT export useDockFission did NOT flag",
     );
     bite(
         { deadFileExists: true },
@@ -960,7 +934,7 @@ function run() {
     }
     const dl = dockLeaf.facts;
     console.log(
-        `  dock-leaf-verify (B2.5): host-carved=${dl.hostCarved} fission-leaf=${dl.fissionLeaf} silhouette-absent=${dl.deadEngineAbsent} stale-dead-refs=${dl.deadRefs}`,
+        `  dock-leaf-verify (B2.5): host-carved=${dl.hostCarved} silhouette-absent=${dl.deadEngineAbsent} stale-dead-refs=${dl.deadRefs}`,
     );
     const sl = satelliteLeaf.facts;
     console.log(

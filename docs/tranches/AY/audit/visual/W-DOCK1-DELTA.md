@@ -1,7 +1,8 @@
 # AY.W-DOCK1 — the dock items-lag VERIFY-OR-FALSIFY · live frame-series DELTA
 
 <!-- surface-paths: src/components/custom/dock/composables/dockMorphContext.ts, src/components/custom/dock/GlassDock.vue, src/styles/dock/morph.css, src/styles/dock/layers.css -->
-<!-- surface-hash: d95469ad278295892a9fa865fdaad64d72891385388f87d5ed10bb3b1025cfe9 -->
+<!-- surface-hash: 8c5af8947695e287c2ef2a60bbc122a94022486b09e0bf379cb8091dc08629bc -->
+<!-- RE-STAMPED (2026-07-13, BI.W-DOCK-SPINE greenfield): surface-hash re-stamped BG d95469ad… → BI 8c5af894… — all four surface-paths RESOLVE (the greenfield dock rebuild drifted the SOURCE bytes: GlassDock.vue → the L0/L1 spine split, dock/morph.css/layers.css → the plate-scoped --dock-t interps, dockMorphContext.ts untouched-in-name). Re-stamped via the exported proof-live-verified-ledger.mjs surfaceHash (NOT hand-typed, NOT a removed-header dodge). The PNG frame-series capture is stale vs the greenfield paint → PENDING-RESHOOT (#92): the visual re-shoot is BOOKED for the W-REFLECT close on real GPU; the header stays honest (hash == current source bytes) while the capture obligation is tracked. -->
 <!-- RE-STAMPED (2026-07-11, BG gate-hygiene pre-cut): surface-hash re-stamped BD §P10-final 25c60d27… → BG d95469ad… — the AY capture remains the historical evidence; the surface legitimately drifted through BG.W-DOCK-* (the dock-morph surfaces re-rendered), the ONE-scalar --dock-morph-t onset-Δ=0 contract byte-preserved — see the BG dock DELTAs for current paint. Re-stamped via proof-live-verified-ledger.mjs surfaceHash, not retire-dodged (the header is never removed). -->
 <!-- RE-STAMPED (BD §P10 close-battery, 2026-06-23): the BD greenfield dock redesign (P6 dock
      width-seizure + punch/fission/hub, P7 the unifying blend-morph WELD) RE-RENDERED the dock-morph

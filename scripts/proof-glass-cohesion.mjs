@@ -457,10 +457,11 @@ const vSpecularStripped = strip(vSpecularSrc);
 const specularCore = strip(read("src/composables/glass/useSpecularTracking.ts"));
 const glassBarrel = strip(read("src/composables/glass/index.ts"));
 const buttonSfc = strip(read("src/components/ui/button/Button.vue"));
-const dockIconBtn = strip(read("src/components/custom/dock/DockIconButton.vue"));
-const dockTabBtn = strip(read("src/components/custom/dock/DockTabButton.vue"));
-const dockSelectTrig = strip(read("src/components/custom/dock/DockSelectTrigger.vue"));
-const dockDropdownTrig = strip(read("src/components/custom/dock/DockDropdownTrigger.vue"));
+// BI.W-DOCK-CONTROLS — the four dock control SFCs folded to TWO greenfield
+// components: DockControl.vue (icon+tab shapes) + DockTrigger.vue (select/dropdown/
+// popover `for` discriminant). The auto-arm witness follows the fold into the live files.
+const dockControl = strip(read("src/components/custom/dock/DockControl.vue"));
+const dockTrigger = strip(read("src/components/custom/dock/DockTrigger.vue"));
 const cardSfc = strip(read("src/components/ui/card/Card.vue"));
 const grainCss = strip(readMonolith(ROOT, "glass")); // ladder.css folds into the glass monolith
 // BB.W-CARVE4 — the grain knob (--glass-grain-engage-duration) carved from glass.css
@@ -523,17 +524,14 @@ add(
 // NET-NEW surface auto-arms it with `v-specular`).
 const w2ButtonArms = /v-specular\b/.test(buttonSfc);
 const w2DockArms =
-    /v-specular\b/.test(dockIconBtn) &&
-    /v-specular\b/.test(dockTabBtn) &&
-    /v-specular\b/.test(dockSelectTrig) &&
-    /v-specular\b/.test(dockDropdownTrig);
+    /v-specular\b/.test(dockControl) && /v-specular\b/.test(dockTrigger);
 const w2Published = /\bvSpecular\b/.test(glassBarrel);
 add(
     "liquid-hover",
     "interactive-glass-auto-arms-zero-wiring",
     w2ButtonArms && w2DockArms && w2Published,
     w2ButtonArms && w2DockArms && w2Published
-        ? "Button + the four dock controls (icon/tab/select/dropdown) carry the v-specular auto-arm at their root, and vSpecular is published on the /glass barrel — a bare <Button variant=\"glass\"> / <DockIconButton> gleams pointer-following with ZERO consumer wiring"
+        ? "Button + the two dock controls (DockControl icon/tab + DockTrigger select/dropdown/popover) carry the v-specular auto-arm at their root, and vSpecular is published on the /glass barrel — a bare <Button variant=\"glass\"> / <DockControl> gleams pointer-following with ZERO consumer wiring"
         : `the interactive-glass auto-arm is INCOMPLETE — button=${w2ButtonArms}, dock-family=${w2DockArms}, published=${w2Published}`,
 );
 
@@ -551,7 +549,7 @@ for (const file of allFiles) {
     const rel = relative(ROOT, file).replace(/\\/g, "/");
     if (HANDWIRED_TRIPLET.test(strip(read(rel)))) handwired.push(rel);
 }
-const dockIconNoTriplet = !HANDWIRED_TRIPLET.test(dockIconBtn);
+const dockIconNoTriplet = !HANDWIRED_TRIPLET.test(dockControl);
 add(
     "liquid-hover",
     "handwire-retired-no-two-copies",

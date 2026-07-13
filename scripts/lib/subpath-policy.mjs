@@ -46,13 +46,15 @@ export const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..
 
 // --- src/components/ui/<dir> ---
 export const UI_CLASS = {
-    // PUBLISH (25)
+    // PUBLISH (26)
     badge: "PUBLISH", button: "PUBLISH", card: "PUBLISH", collapsible: "PUBLISH",
     command: "PUBLISH", "context-menu": "PUBLISH", "data-table": "PUBLISH",
     dialog: "PUBLISH", drawer: "PUBLISH", "dropdown-menu": "PUBLISH",
     "focus-scope": "PUBLISH", "hover-card": "PUBLISH", label: "PUBLISH",
     notification: "PUBLISH", "number-field": "PUBLISH", popover: "PUBLISH",
     progress: "PUBLISH", select: "PUBLISH", separator: "PUBLISH", sheet: "PUBLISH",
+    // BI.W-SURFACE-EXTRACT — the extracted bare (tier × decoration) glass plate.
+    surface: "PUBLISH",
     slider: "PUBLISH", switch: "PUBLISH", toast: "PUBLISH", "toggle-group": "PUBLISH",
     tooltip: "PUBLISH",
     // INTERNAL (18) — reached via the root barrel / a curated subpath / substrate.
@@ -131,6 +133,13 @@ export const CURATED = {
     // BH.W-AXIS-GRAMMAR — the types-only `/axes` discovery subpath (the honest
     // `/api` successor: the four grammar axes + their frozen tuples, GENERATED).
     axes: "src/axes.ts",
+    // BI.W-BLOB-SEAMS (RP-2 / L20) — the value.js-FREE `/blob-config` config leaf.
+    // The vite entry is the `src/subpaths/blob-config.ts` mirror (the glob); this maps
+    // to the REAL config barrel so `namedExports` + fidelity read the concrete surface
+    // (the `canvas`/`fourier-math` name≠leaf pattern). A config-only consumer imports
+    // the `BlobConfig` shape + hero preset WITHOUT Blob.vue's value.js `/color` eager
+    // weight (~−33 KiB), the `/border-progress` bp-lazy critical-path discipline.
+    "blob-config": "src/components/custom/blob/config.ts",
 };
 
 // The 7 composable subpaths whose entry source is a nested leaf (name ≠ leaf).

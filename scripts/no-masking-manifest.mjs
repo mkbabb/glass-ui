@@ -111,9 +111,9 @@ export const SETTLE_TIMER_SIGNATURES = ["morphWindowMs", "longestTransitionMs"];
 export const WRITER_OWED = [
     {
         name: "--specular-angle",
-        owedBy: "WS8.4 W-GLASS-SOTA-LADDER",
+        owedBy: "BI.W-DOCK-CONTROLS",
         rationale:
-            "the useSpecularPointer writer is exported but consumer-pending; WS8.4 wires a REAL writer via the Tier-1 GL path or retires the leaf (EDICT §2b L6).",
+            "the useSpecularPointer writer is exported but consumer-pending; BI.W-DOCK-CONTROLS lands the specular register on a REAL binding consumer (the dock-control glass-capsule face, vSpecular/useLiquidPress) or the leaf retires (EDICT §2b L6). Re-pointed off the phantom `WS8.4 W-GLASS-SOTA-LADDER` (no wave-spec on disk — BI.W-AXES-GATES OWNEDBY-RESOLVE).",
     },
 ];
 

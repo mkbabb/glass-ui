@@ -23,17 +23,16 @@ import {
 } from "@glass/composables/motion/curves";
 import { springTimingFunction } from "@mkbabb/keyframes.js";
 
-// BG.W-SPRING-REGISTER-TIDY — the global SPRING_PRESETS table is the canonical SIX; the
-// 3 per-component ScrubberTimeline registers (head/fill/press) drained OUT to a
+// BG.W-SPRING-REGISTER-TIDY — the global SPRING_PRESETS table drained the 3
+// per-component ScrubberTimeline registers (head/fill/press) OUT to a
 // ScrubberTimeline-LOCAL map (presets-in-consumers), so they are NOT MOTION_CURVES rows.
-const SPRING_TOKENS = [
-    "--spring-smooth",
-    "--spring-snappy",
-    "--spring-bouncy",
-    "--spring-gentle",
-    "--spring-dock",
-    "--spring-press",
-] as const;
+// BI.W-REGISTER-TABLE / BI.W-TABS-FACTOR — the canonical spring set grew (`transient`,
+// the enter-transient CENTER-SEED bloom; `eyeglass`, the tab-pill loupe travel), so the
+// canonical spring token list is DERIVED live from SPRING_PRESETS in declaration order —
+// drift-proof (a new/renamed/reordered spring reconciles here with ZERO edit; the source
+// builds MOTION_CURVES_CANONICAL from the SAME SPRING_PRESETS order, so this locks the
+// prefix + order + the exact bezier tail, not a stale hand-snapshot of the count).
+const SPRING_TOKENS = SPRING_PRESETS.map((p) => `--spring-${p.name}`);
 
 const BEZIER_CANONICAL = [
     "--motion-ease-standard",
@@ -121,7 +120,7 @@ describe("MOTION_CURVES — the CSS↔JS curve table", () => {
         expect(motionCurve("--spring-snappy").token).toBe("--spring-snappy");
     });
 
-    it("the canonical list is the 12 canonical rows in declaration order", () => {
+    it("the canonical list is SPRING_PRESETS (declaration order) then the bezier canonical", () => {
         expect(MOTION_CURVES_CANONICAL.map((c) => c.token)).toEqual([
             ...SPRING_TOKENS,
             ...BEZIER_CANONICAL,
@@ -130,20 +129,25 @@ describe("MOTION_CURVES — the CSS↔JS curve table", () => {
 });
 
 describe("SPRING_PRESETS — the shared single-source table", () => {
-    it("holds the six iOS-canonical (response, ζ) pairs", () => {
+    it("holds the seven iOS-canonical (response, ζ) pairs", () => {
         const byName = Object.fromEntries(SPRING_PRESETS.map((p) => [p.name, p]));
         // BD.W-ANIM-IOS27-TUNE — the GLOBAL re-calibration toward the iOS-27 weighty-
         // gooey-inertial pole (longer response → inertia/weight; through-body damping
         // toward critically-damped-with-a-TOUCH-of-overshoot; every overshoot ∈ [0%,10%]).
-        // The BC.W-SPRING-EASE byte-frozen KEEP fence is RETIRED — all six rows re-tune
-        // in lockstep; gentle ζ stays EXACTLY 1.0 (the --ease-convergence alias depends
-        // on overshoot==0).
+        // The BC.W-SPRING-EASE byte-frozen KEEP fence is RETIRED — all rows re-tune in
+        // lockstep; gentle ζ stays EXACTLY 1.0 (the --ease-convergence alias depends on
+        // overshoot==0).
         expect(byName.smooth).toMatchObject({ response: 0.58, dampingFraction: 0.8 });
         expect(byName.snappy).toMatchObject({ response: 0.48, dampingFraction: 0.74 });
         expect(byName.bouncy).toMatchObject({ response: 0.6, dampingFraction: 0.6 });
         expect(byName.gentle).toMatchObject({ response: 0.82, dampingFraction: 1.0 });
-        expect(byName.dock).toMatchObject({ response: 0.68, dampingFraction: 0.64 });
+        // BI judgment (a) — dock re-pinned to the frame-measured iOS band (response 0.30
+        // / ζ 0.82, center of 0.28±0.04 / ζ0.82±0.06); the BD {0.68,0.64} weighty tune was
+        // calibrated against the pre-M1 broken time base and is RETIRED.
+        expect(byName.dock).toMatchObject({ response: 0.3, dampingFraction: 0.82 });
         expect(byName.press).toMatchObject({ response: 0.2, dampingFraction: 0.8 });
+        // BI.W-REGISTER-TABLE — the enter-transient CENTER-SEED materialize bloom.
+        expect(byName.transient).toMatchObject({ response: 0.62, dampingFraction: 0.9 });
     });
 });
 

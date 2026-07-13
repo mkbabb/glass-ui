@@ -60,9 +60,11 @@ const HEADER_LIVE_VERIFIED = new Set([
     "proof:font-cascade-live",
     "proof:substrate-paints-color",
     "proof:tabs-std",
-    "proof:dock-animation-live",
-    "proof:dock-orchestrator-single",
-    "proof:dock-wrap-content-driven",
+    // BI.W-DOCK-RETIRES RECONCILED OUT: the greenfield dock rebuild (W-DOCK-SPINE →
+    // W-DOCK-RETIRES) culled proof:dock-animation-live / proof:dock-orchestrator-single /
+    // proof:dock-wrap-content-driven — the gate SCRIPTS are deleted (no browser spawn, no
+    // manifest row), so they are no longer live-verified Playwright gates. Removed from the
+    // documented header set (the deck-progress-rail retire precedent below).
     // proof:deck-progress-rail RECONCILED OUT (AY.W-CLOSE1): the DeckProgress WRAPPER
     // was retired (PRUNE-LEDGER R2), so this gate lost its π render arm and is now a
     // STATIC src-scan lock over the kept .glass-progress-rail recipe + the /deck
