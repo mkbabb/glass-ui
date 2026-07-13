@@ -91,6 +91,9 @@ co-land window; nothing blocks the 5.0.0 tag.
 - **bbnf-buddy** — /dock, /sortable-list, /dark, /toggle-chip, /tabs, /controls; the `--glass-blur-dock` token-retire (row 4). Zero `/api`.
 - **slides** — /deck, /dock, /controls, /button, /forms, /separator, /popover, /dialog, /constellation, /fourier-field (row 11). glass-ui 3.13.0 + kf `^3.0.0` today; its migration onto the primitives is a slides-side concern.
 - **value.js** (demo) — `/goo-blob` ×5 (row 7); consumes glass-ui 5.0.0 at the cut (value `^3.1.0`).
+- **atlas (pending)** — `./data-table` INBOUND-CONSUMER-PENDING (their W-SOURCE-BROWSER table shell,
+  atlas-inbox §9.3 2026-07-13): the repo-cleanup census + any subpath-prune wave must NOT rule
+  `./data-table` dead on zero-local-consumers; the atlas consume is the recorded 2nd-party consumer.
 
 ## Disposition notes (no ask)
 

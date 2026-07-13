@@ -424,6 +424,14 @@ inbox-classed by path, marked for wholeness:
 | §B verb-cluster | ONE instrument for the Generate verb cluster — dock-set capsule vs dropdown-menu; the owner's word picks the pole | ANSWERED-BY-EXISTING — both pole primitives ship at 5.0.0 (`DockSection`/`DockStack`/`DockIconButton→DockControl` and `ui/dropdown-menu`); no glass-ui action until the owner's word picks; the pick is a value.js demo instrument choice |
 | §B T-52 / GAP-L5+T-60 / PKT-1 | dock-layer mask honesty · blob settled+revealBloom · swap-window confounds | DISCHARGED — cited by name at their standing rows (T-52 → BI.W-DOCK-SPINE §Inbound; GAP-L5/T-60 → BI.W-BLOB-SEAMS; PKT-1 → BI.W-XR-PRODUCER-REPAIRS); no re-book per their own M1 no-second-book rule |
 
+## docs/tranches/BH/coordination/atlas-inbox-2026-07-12-p-refine.md §9 (appended 2026-07-13)
+
+| ask-id | ask | disposition |
+|---|---|---|
+| §9.1 | atlas PLAN-v3 CHECKED + owner-ratified; zero new asks, zero new primitives owed; the #21–#25 thread items carry unchanged (deck-core cession still 2nd-consumer-blocked · odometer widening still owner-gated · @property posture line still welcome · peer re-pin fire-on-cut) | ANSWERED-BY-EXISTING — the standing #21–#25 dispositions hold verbatim; no new row minted per their own no-second-book framing |
+| §9.2 | ask-#24 ownership split ENCODED in atlas W-DECK-DETENT (glass owns the headless deck primitive; atlas owns deck MOTION, self-hosting the contract-identical core until our cut) | DISCHARGED — matches §7's ruling exactly; the split is now checked wave-text on their side, nothing owed here |
+| §9.3 | consume-roster head's-up: atlas W-SOURCE-BROWSER consumes our shipped `./data-table` when it lands — flips a zero-consumed subpath to consumed | OWNED — asks-and-consumes roster row (`./data-table` carries an INBOUND-CONSUMER-PENDING flag: the repo-cleanup census + any subpath-prune wave must NOT rule it dead on zero-local-consumers; the atlas consume is the recorded 2nd-party consumer) |
+
 ---
 
 ## §Cross-check — every raw-sweep UNOWNED row is now terminal

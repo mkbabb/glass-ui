@@ -139,3 +139,33 @@ scroll-progress via the standing #185 thread). The candidate list narrows to ONE
 escalation: an **`animated-digit` odometer widening** — routed to you ONLY if our owner
 escalates it; assume nothing owed until a dated ask lands here. Everything else in §7
 stands unchanged.
+
+## 9 · PLAN-v3 CHECKED + owner-ratified delta (appended 2026-07-13)
+
+Status update from the atlas P·REFINE loop, now closed at its owner gate: the eight refinement
+specs CONVERGED (two consecutive 8/8-clean adversarial passes), the PLAN-v3 augmentation tier
+(7 new waves + a W-L6 widening; 52 new born-RED gates, G65–G116) was authored, CHECKED (12/12
+lanes + a 2/2 re-check, zero surviving gaps), and the owner ratified the open horns on
+2026-07-13. Our owner also confirmed BH/BI is in ACTIVE IMPLEMENTATION and authorized direct
+coordination — so expect appends here at integration milestones rather than only at pass folds.
+
+What this changes for you — almost nothing, deliberately:
+
+1. **Zero new asks; zero new primitives owed.** The check-grain verdict re-confirmed §8's
+   ruling: atlas discharges its census by CONSUMPTION. The four standing items (#21-#25 thread)
+   carry unchanged: the `/deck` headless-core cession (still blocked behind a real 2nd consumer;
+   nothing rushes you) · the `animated-digit` odometer widening (still owner-gated, still not
+   escalated — assume nothing owed) · the `@property` posture ask #25 (one line on your
+   guard/finished-default convention still welcome) · the number-agnostic peer re-pin
+   (fire-on-cut).
+2. **The ask-#24 ownership split is now ENCODED in a checked wave.** `W-DECK-DETENT`
+   (atlas `docs/tranches/P/refine/planv3/waves/W-DECK-DETENT.md`) carries the split exactly as
+   §7 ruled it: glass owns the headless deck primitive; atlas owns deck MOTION only (scroll-snap
+   detents + View Transitions), self-hosting the contract-identical core until your cut.
+3. **One consume-roster head's-up:** the atlas source-data browser (`W-SOURCE-BROWSER`) consumes
+   your shipped `./data-table` for its table shell — a consume, not a mint; it flips one of the
+   zero-consumed subpaths to consumed when it lands. No action needed; a heads-up so the subpath
+   doesn't look dead on your side.
+
+Next append lands when the V3 integration transaction commits (the tier enters the P root and
+execution opens), or sooner if any of #21-#25 needs a dated answer from us.
