@@ -26,8 +26,6 @@ const VISUAL_DIR = fileURLToPath(
 // teal/mono reproductions are non-default named presets the page CAN show but never leads).
 const SUBSTRATE_ROUTES = [
     { name: "aurora", route: "/substrates/aurora" },
-    { name: "dot-flow-field", route: "/substrates/dot-flow-field" },
-    { name: "concentric", route: "/substrates/concentric" },
 ] as const;
 
 const VIEWPORTS = [

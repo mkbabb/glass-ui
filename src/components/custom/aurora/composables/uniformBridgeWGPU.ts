@@ -50,7 +50,7 @@ import {
     MAX_STOPS,
     type AuroraConfig,
 } from "../constants/presets";
-import type { CursorState } from "./cursorModel";
+import type { AuroraCursorUniforms } from "./uniformBridge";
 
 /** The total uniform-buffer byte size (16-aligned). */
 export const AURORA_WGPU_UNIFORM_BYTES = 576;
@@ -113,7 +113,7 @@ export function createAuroraWGPUUniformScratch(): AuroraWGPUUniformScratch {
 export function packAuroraWGPUUniforms(
     scratch: AuroraWGPUUniformScratch,
     cfg: AuroraConfig,
-    cursor: CursorState,
+    cursor: AuroraCursorUniforms,
     timeSec: number,
 ): AuroraWGPUUniformScratch {
     const { f32, i32, paletteScratch } = scratch;

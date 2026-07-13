@@ -15,7 +15,7 @@
 // not a per-consumer opt-in. This dependency-free `ObjectDirective` (the `vReveal`
 // playbook) attaches the rAF-coalesced `pointermove` position write to its host on
 // `mounted` and tears it down on `unmounted` — so a bare `<Button variant="glass">`
-// / `<DockIconButton>` / `.glass-btn` control follows the pointer with ZERO
+// / `<DockControl>` / `.glass-btn` control follows the pointer with ZERO
 // `useSpecularTracking` call site, no `:style`/`@pointermove` pair.
 //
 // SINGLE-SOURCE: the directive does NOT re-implement the rAF/PRM/coordinate write —

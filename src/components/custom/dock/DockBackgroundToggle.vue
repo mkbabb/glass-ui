@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { Pause, Play } from "@lucide/vue";
-import DockIconButton from "./DockIconButton.vue";
+import DockControl from "./DockControl.vue";
 
 /**
  * <DockBackgroundToggle> — the WCAG 2.2.2 (Pause, Stop, Hide), Level A pause/play
@@ -15,7 +15,7 @@ import DockIconButton from "./DockIconButton.vue";
  * Binding contract (KISS — it binds an EXISTING renderer seam, adds no parallel
  * pause path): the consumer holds the paused state and wires it to the renderer's
  * `pause()`/`resume()`. The toggle is a thin `v-model:paused` control over a
- * `<DockIconButton>` host (the dock is the natural home for a background control):
+ * `<DockControl>` host (the dock is the natural home for a background control):
  *
  * ```vue
  * <script setup>
@@ -56,7 +56,7 @@ function toggle() {
 </script>
 
 <template>
-    <DockIconButton
+    <DockControl
         type="button"
         :aria-pressed="paused"
         :aria-label="label"
@@ -66,5 +66,5 @@ function toggle() {
         <!-- Pressed ⇒ paused ⇒ show the Play affordance (the action it offers). -->
         <Play v-if="paused" :size="18" aria-hidden="true" />
         <Pause v-else :size="18" aria-hidden="true" />
-    </DockIconButton>
+    </DockControl>
 </template>

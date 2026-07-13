@@ -487,7 +487,7 @@ landed + gated by `proof:aurora-interaction-prm`:
 - **Cursor-as-light** — the pointer drives the W4 impasto `uLightDir`, so the catch-lights
   track the cursor and the relief reads tactile (a slow auto-orbit when idle). No new
   lighting path — it reuses the movable impasto light.
-- **Velocity-reactive flow** — `cursorModel.ts` carries pointer/scroll velocity (the
+- **Velocity-reactive flow** — the shared `usePointerVelocityField` (BI.W-FIELD-CORE) derives pointer/scroll velocity (the
   `uCursorVelocity` / `uCursorBurst` uniforms); a fast flick injects a transient swirl-burst
   easing out over ~1s, distinct from the steady attraction.
 - **Scroll coupling** — palette/breath progress binds to scroll via the existing
@@ -623,7 +623,6 @@ src/components/custom/aurora/
     ├── atoms.ts                  # the ≤7-atom resolveAtoms door (THE consumer surface) + configToAtoms inverse
     ├── color.ts                  # OKLCh math + deriveAurora + oklchToLinear + flattenPalette
     ├── configSource.ts           # useConfiguratorState<AuroraConfig> source threading (per-preset clones)
-    ├── cursorModel.ts            # the cursor-as-light state model (velocity-reactive flow)
     ├── frameLoop.ts              # the rAF loop + the offscreen-park / PRM-freeze hooks
     ├── glSetup.ts                # GL context + program + uniform-location setup
     ├── runtime.ts                # createAurora — live/capture WebGL lifecycle + cursor easing

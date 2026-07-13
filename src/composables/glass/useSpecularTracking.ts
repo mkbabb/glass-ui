@@ -3,7 +3,7 @@ import { onScopeDispose, ref, type CSSProperties } from "vue";
 /**
  * `useSpecularTracking` — the pointer-anchored moving-specular write seam
  * (AX.W09). The single DRY home for the catch-light position write that was
- * hand-copied VERBATIM in `Card.vue` and `DockIconButton.vue`.
+ * hand-copied VERBATIM in `Card.vue` and `DockControl.vue`.
  *
  * On pointer-move it writes the cursor position (`--mouse-x`/`--mouse-y`, as
  * percentages of the host box) onto the host's inline style; the unified

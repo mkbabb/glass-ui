@@ -41,10 +41,10 @@ const VISUAL_DIR = fileURLToPath(
 // first VizStudio exemplar; the rest compose <Configurator> directly. The bare-switch
 // studios (the PENDING_FULL_CONFIGURATOR census) are NOT asserted here — they conform
 // onto the chassis when their owning per-viz wave lands its full configurator.
+// concentric DELETED at BI.W-VIZ-DELETIONS (the user-ordered clean-break prune) — off the set.
 const STUDIOS = [
     { route: "/substrates/aurora", id: "aurora", presetThumbs: true },
     { route: "/substrates/blob", id: "blob", presetThumbs: false },
-    { route: "/substrates/concentric", id: "concentric", presetThumbs: false },
     { route: "/substrates/fourier-field", id: "fourier-field", presetThumbs: false },
     { route: "/substrates/liquid-grid", id: "liquid-grid", presetThumbs: false },
 ] as const;

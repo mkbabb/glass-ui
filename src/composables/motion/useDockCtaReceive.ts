@@ -46,7 +46,7 @@ export type DockCtaReceivePreset = ElementMorphPreset;
 export interface UseDockCtaReceiveOptions {
     /**
      * The dock control the CTA flies onto — a templateRef to the control ELEMENT or to a
-     * component (e.g. `<DockIconButton>`), whose root element is resolved via `.$el`. When
+     * component (e.g. `<DockControl>`), whose root element is resolved via `.$el`. When
      * null at receive time, the morph is a no-op snap (nowhere to fly) and `onReceived`
      * fires immediately.
      */

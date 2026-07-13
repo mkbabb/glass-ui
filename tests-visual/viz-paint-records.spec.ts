@@ -45,15 +45,8 @@ const VIZ = [
         meanLumFloor: 4,
         chromaFloor: 1,
     },
-    {
-        key: "DOTFLOW",
-        route: "/substrates/dot-flow-field",
-        canvas: ".dot-flow-field-canvas",
-        record: "W-VIZ-DOTFLOW-paint.json",
-        wave: "BC.W-VIZ-DOTFLOW",
-        meanLumFloor: 4,
-        chromaFloor: 0, // the dot lattice is a warm near-mono field; chroma floor is 0 (≥0)
-    },
+    // DOTFLOW DELETED at BI.W-VIZ-DELETIONS (the user-ordered clean-break prune of the
+    // dot-flow-field viz) — off the paint-record set.
     {
         key: "PAPERGRID",
         route: "/substrates/liquid-grid",

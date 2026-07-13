@@ -20,10 +20,10 @@ import type {
 import { AURORA_WGSL } from "../constants/shaders/aurora.wgsl";
 import { AURORA_IMAGE_WGSL } from "../constants/shaders/aurora-image.wgsl";
 import {
-    advanceCursor,
-    cursorIsLive,
-    type CursorState,
-} from "./cursorModel";
+    mapAuroraCursor,
+    auroraFieldLive,
+    type AuroraCursorScalars,
+} from "./frameLoop";
 import {
     AURORA_WGPU_UNIFORM_BYTES,
     createAuroraWGPUUniformScratch,
@@ -44,7 +44,8 @@ import type { UsePointerVelocityField } from "../../../../composables/motion/use
 
 export interface AuroraWGPUSetupDeps {
     canvas: HTMLCanvasElement;
-    cursor: CursorState;
+    /** The cursor strength ceiling + radius (the runtime's imperative setters write these). */
+    getCursorScalars: () => AuroraCursorScalars;
     getConfig: () => AuroraConfig;
     getReducedMotion: () => boolean;
     /**
@@ -89,7 +90,7 @@ export function createAuroraWGPUSetup(
 ): (device: GPUDevice, context: GPUCanvasContext, format: GPUTextureFormat) => WebGPUCanvasFrame {
     const {
         canvas,
-        cursor,
+        getCursorScalars,
         getConfig,
         getReducedMotion,
         pointerField,
@@ -108,7 +109,7 @@ export function createAuroraWGPUSetup(
         if (getConfig().source === "image") {
             return setupImageWGPU(device, context, format, {
                 canvas,
-                cursor,
+                getCursorScalars,
                 getConfig,
                 getReducedMotion,
                 pointerField,
@@ -185,10 +186,10 @@ export function createAuroraWGPUSetup(
         function resize(_s?: BackingSize): void {}
 
         function frame(timeSec: number): void {
-            // BC.W-VIZ-AURORA (T5) — FEED the shared pointer field one tick (the one-loop
-            // push-step; no own rAF). Under PRM tick(0) freezes the field. Then apply the
-            // iOS-27 gel SNAP-BACK: a fast flick that DECELERATES (accel opposes velocity)
-            // injects a transient over-warp into the cursor burst the shader already reads.
+            // BI.W-FIELD-CORE — FEED the shared pointer field one tick (the one-loop
+            // push-step; no own rAF). Under PRM tick(0) freezes the field. Map its readout
+            // onto the cursor uniforms (the SAME `mapAuroraCursor` the WebGL2 loop uses —
+            // one source, incl. the iOS-27 gel snap-back).
             const tempo = getReducedMotion() ? 0 : 1;
             const deltaMs =
                 prevTimeSec === null
@@ -196,15 +197,7 @@ export function createAuroraWGPUSetup(
                     : Math.max(0, (timeSec - prevTimeSec) * 1000);
             prevTimeSec = timeSec;
             pointerField.tick(tempo === 0 ? 0 : deltaMs);
-            const accel = pointerField.acceleration.value;
-            const vel = pointerField.velocity.value;
-            const decel = -(accel.x * vel.x + accel.y * vel.y);
-            if (decel > 0 && tempo > 0) {
-                cursor.burst = Math.min(1, cursor.burst + decel * 6.0);
-            }
-
-            // tempo-scaled cursor advance — the burst/velocity collapse under PRM.
-            advanceCursor(cursor, tempo);
+            const cursor = mapAuroraCursor(pointerField, getCursorScalars(), tempo);
 
             // Pack + upload the uniforms (slider drag refills the scratch in place).
             packAuroraWGPUUniforms(scratch, getConfig(), cursor, timeSec);
@@ -239,8 +232,7 @@ export function createAuroraWGPUSetup(
                 config.breathDepth !== 0 ||
                 config.warpDrift !== 0;
             if (driftLive) return true;
-            if (config.interactivity?.light && cursor.burst > 1e-3) return true;
-            return cursorIsLive(cursor);
+            return auroraFieldLive(pointerField);
         }
 
         return {
@@ -271,7 +263,7 @@ function setupImageWGPU(
 ): WebGPUCanvasFrame {
     const {
         canvas,
-        cursor,
+        getCursorScalars,
         getConfig,
         getReducedMotion,
         pointerField,
@@ -374,7 +366,7 @@ function setupImageWGPU(
             prevTimeSec === null ? 0 : Math.max(0, (timeSec - prevTimeSec) * 1000);
         prevTimeSec = timeSec;
         pointerField.tick(tempo === 0 ? 0 : deltaMs);
-        advanceCursor(cursor, tempo);
+        const cursor = mapAuroraCursor(pointerField, getCursorScalars(), tempo);
 
         const aspect =
             canvas.height > 0 ? canvas.width / canvas.height : 1.0;
@@ -408,7 +400,7 @@ function setupImageWGPU(
             config.warpDrift !== 0 ||
             config.paletteDrift !== 0;
         if (driftLive) return true;
-        return cursorIsLive(cursor);
+        return auroraFieldLive(pointerField);
     }
 
     return {

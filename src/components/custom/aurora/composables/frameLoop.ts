@@ -1,94 +1,167 @@
 /**
  * Aurora frame loop — the per-frame draw + the render-demand gate.
  *
+ * BI.W-FIELD-CORE — the retired `cursorModel.ts` is GONE. The cursor is now the mapped
+ * readout of the SHARED `usePointerVelocityField` (`auroraCursorMapping`): the mass-spring
+ * attractor is the cursor position, `engagement · strength` the attraction (so the
+ * cursor-local luminance lean reads on the `smooth` medium, not a dead swirl axis), the
+ * derived velocity + flick burst pass onto the EXISTING `uCursor*` uniforms (ZERO shader
+ * edit). The field is FED `tick(deltaMs)` from THIS loop (the one-loop discipline — no own
+ * rAF) and FREEZES under PRM via the MASTER TEMPO SCALAR (`tick(0)`).
+ *
  * `drawFrame` re-sends the per-frame cursor + time uniforms and issues the single
- * full-screen-triangle draw. `needsAnimation` is the demand gate: it returns
- * `false` under reduced-motion (the static frame draws once, then the loop parks),
- * `false` at steady-state (all four drift uniforms 0 AND the cursor settled within
- * ε — the next frame would be pixel-identical), and `true` while drift is live or
- * the cursor is still easing.
+ * full-screen-triangle draw. `needsAnimation` is the demand gate: `false` under
+ * reduced-motion (the static frame draws once, then parks), `false` at steady-state (all
+ * four drift uniforms 0 AND the field settled — the next frame is pixel-identical), and
+ * `true` while drift is live or the field is still easing (engagement / speed / burst /
+ * attractor motion above ε).
  */
 
 import type { UniformLocations } from "./glSetup";
-import { advanceCursor, cursorIsLive, type CursorState } from "./cursorModel";
+import type { AuroraCursorUniforms } from "./uniformBridge";
 import type { AuroraConfig } from "../constants/presets";
 import type { UsePointerVelocityField } from "../../../../composables/motion/usePointerVelocityField";
+import {
+    auroraCursorMapping,
+    snapshotField,
+} from "../../../../composables/motion/pointerFieldMappings";
+
+/** The at-rest scalars a config-less cursor read seeds (strength ceiling + influence radius). */
+export interface AuroraCursorScalars {
+    /** The active-strength ceiling (cfg.strength; scaled by engagement). */
+    strength: number;
+    /** The influence radius (0.05..0.5). */
+    radius: number;
+}
 
 export interface FrameLoopDeps {
     gl: WebGL2RenderingContext;
     prog: WebGLProgram;
     uniforms: UniformLocations;
-    cursor: CursorState;
+    /**
+     * BI.W-FIELD-CORE — the shared viz-pointer-physics field (the ONE cursor source). FED
+     * `tick(deltaMs)` from THIS callback (the one-loop discipline — no own rAF). The
+     * `auroraCursorMapping` projects its readout onto the `uCursor*` uniforms.
+     */
+    pointerField: UsePointerVelocityField;
+    /** The cursor strength ceiling + radius (the runtime's imperative setters write these). */
+    getCursorScalars: () => AuroraCursorScalars;
     /** The live config (drift uniforms gate the demand loop). */
     getConfig: () => AuroraConfig;
     /** Reduced-motion intent — parks the loop after one static frame. */
     getReducedMotion: () => boolean;
-    /**
-     * BC.W-VIZ-AURORA (T5) — the shared viz-pointer-physics field (BB.B4). FED
-     * `tick(deltaMs)` from THIS frame callback (the one-loop discipline — the field owns
-     * NO own rAF); the renderer reads `acceleration` for the iOS-27 gel snap-back. The
-     * existing cursorModel velocity/burst stays the byte-faithful baseline; the accel
-     * term is the additive fold.
-     */
-    pointerField: UsePointerVelocityField;
 }
 
 export interface FrameLoop {
-    /** Advance the cursor easing THEN draw — the per-frame step. */
+    /** Advance the field THEN draw — the per-frame step. */
     frame: (timeSec: number) => void;
     /** Demand gate — is there live motion to render on the next frame? */
     needsAnimation: () => boolean;
 }
 
+const FIELD_REST_EPS = 1e-3;
+const ATTRACTOR_REST_EPS = 1e-4;
+
+/**
+ * Map an ALREADY-TICKED shared pointer field onto the aurora `uCursor*` uniform shape (the
+ * ONE cursor projection both backends — WebGL2 frameLoop + WGSL wgpuSetup — share). The
+ * `auroraCursorMapping` projects the attractor/engagement/velocity/burst; the iOS-27 gel
+ * SNAP-BACK folds a decel over-burst onto the shader's existing burst (tempo-gated so it
+ * cannot leak under reduce).
+ */
+export function mapAuroraCursor(
+    pointerField: UsePointerVelocityField,
+    scalars: AuroraCursorScalars,
+    tempo: number,
+): AuroraCursorUniforms {
+    const m = auroraCursorMapping(snapshotField(pointerField), scalars);
+    let burst = m.burst;
+    if (tempo > 0) {
+        const accel = pointerField.acceleration.value;
+        const vel = pointerField.velocity.value;
+        const decel = -(accel.x * vel.x + accel.y * vel.y);
+        if (decel > 0) burst = Math.min(1, burst + decel * 3.0);
+    }
+    return {
+        x: m.cx,
+        y: m.cy,
+        strength: m.strength,
+        radius: m.radius,
+        velX: m.velX,
+        velY: m.velY,
+        burst,
+    };
+}
+
+/**
+ * The demand-gate liveness over the shared field state (the retired `cursorIsLive` over the
+ * field) — engaged / moving / bursting / attractor mid-settle.
+ */
+export function auroraFieldLive(pointerField: UsePointerVelocityField): boolean {
+    const av = pointerField.attractorVelocity.value;
+    return (
+        pointerField.engagement.value > FIELD_REST_EPS ||
+        pointerField.speed.value > FIELD_REST_EPS ||
+        pointerField.burst.value > FIELD_REST_EPS ||
+        Math.hypot(av.x, av.y) > ATTRACTOR_REST_EPS
+    );
+}
+
 export function createFrameLoop(deps: FrameLoopDeps): FrameLoop {
-    const { gl, prog, uniforms: U, cursor, getConfig, getReducedMotion, pointerField } =
+    const { gl, prog, uniforms: U, pointerField, getCursorScalars, getConfig, getReducedMotion } =
         deps;
     const flipY = (y: number): number => 1.0 - y;
 
-    // BC.W-VIZ-AURORA (T5) — the per-frame delta the shared field's tick() needs. The
-    // substrate's frame callback hands an absolute `timeSec`; we derive the delta here (the
-    // first frame seeds prevTime so the opening delta is 0 — no teleport spike).
+    // The per-frame delta the shared field's tick() needs. The substrate's frame callback
+    // hands an absolute `timeSec`; we derive the delta here (the first frame seeds prevTime
+    // so the opening delta is 0 — no teleport spike).
     let prevTimeSec: number | null = null;
+    // The last mapped cursor (re-computed each frame; drawFrame reads it, needsAnimation
+    // reads the field directly).
+    let cur: AuroraCursorUniforms = {
+        x: 0.5,
+        y: 0.5,
+        strength: 0,
+        radius: 0.25,
+        velX: 0,
+        velY: 0,
+        burst: 0,
+    };
 
-    // AW.W8.1 — the MASTER TEMPO SCALAR. The single suppression seam the whole
-    // interactive stack routes through: 0 under reduced-motion (the substrate's live
-    // PRM ref) so every interactive axis freezes; 1 otherwise. The DockBackgroundToggle
-    // pause stops the loop entirely (the substrate suspend), so it converges here too.
-    // tempo scales the integrated dt of every axis, NEVER uTime (scaling the clock
-    // makes the flow jump; the integration step scales, the clock keeps marching).
+    // AW.W8.1 — the MASTER TEMPO SCALAR. The single suppression seam the whole interactive
+    // stack routes through: 0 under reduced-motion (the substrate's live PRM ref) so every
+    // interactive axis freezes; 1 otherwise. The DockBackgroundToggle pause stops the loop
+    // entirely (the substrate suspend), so it converges here too. tempo scales the
+    // integrated field tick (`tick(0)` freezes it), NEVER uTime (scaling the clock makes
+    // the flow jump; the integration step scales, the clock keeps marching).
     function masterTempo(): number {
         return getReducedMotion() ? 0 : 1;
     }
 
     function drawFrame(timeSec: number): void {
         gl.useProgram(prog);
-        gl.uniform2f(U.uCursor, cursor.x, flipY(cursor.y));
-        gl.uniform1f(U.uCursorStrength, cursor.strength);
-        gl.uniform1f(U.uCursorRadius, cursor.radius);
-        // AW.W8.1 — the velocity-reactive flow uniforms (the burst decays to 0 via the
-        // tempo-scaled advanceCursor, so they cannot leak motion under reduce).
-        gl.uniform2f(U.uCursorVelocity, cursor.velX, -cursor.velY); // flipY on the delta
-        gl.uniform1f(U.uCursorBurst, cursor.burst);
+        gl.uniform2f(U.uCursor, cur.x, flipY(cur.y));
+        gl.uniform1f(U.uCursorStrength, cur.strength);
+        gl.uniform1f(U.uCursorRadius, cur.radius);
+        // BI.W-FIELD-CORE — the velocity-reactive flow uniforms (the field freezes under
+        // reduce via tick(0), so they cannot leak motion under reduce).
+        gl.uniform2f(U.uCursorVelocity, cur.velX, -cur.velY); // flipY on the delta
+        gl.uniform1f(U.uCursorBurst, cur.burst);
         gl.uniform1f(U.uTime, timeSec);
 
-        // AW.W8.1 — cursor-as-light: when interactivity.light is on, the cursor drives
-        // the impasto uLightDir (the AW.W4.2 movable light); a slow idle auto-orbit
-        // when the cursor is at rest. Gated by the master tempo (0 under PRM) so the
-        // light freezes under reduce — the orbit reads uTime which is already frozen,
-        // and the cursor-driven component is zeroed by tempo. The cursor pointermove
-        // WRITE-PATH (in useCursorInteraction) early-outs on reducedMotion separately.
+        // AW.W8.1 — cursor-as-light: when interactivity.light is on, the cursor drives the
+        // impasto uLightDir (the AW.W4.2 movable light); a slow idle auto-orbit when the
+        // cursor is at rest. Gated by the master tempo (0 under PRM) so the light freezes
+        // under reduce.
         const cfg = getConfig();
         if (cfg.interactivity?.light) {
             const tempo = masterTempo();
-            // Idle auto-orbit: a slow circle on uTime (frozen under reduce). The
-            // cursor pulls the light toward the pointer when active.
             const orbit = timeSec * 0.25;
             let lx = Math.cos(orbit) * 0.5;
             let ly = Math.sin(orbit) * 0.5;
-            // Pull toward the cursor (centre-relative) scaled by strength × tempo.
-            const cuX = (cursor.x - 0.5) * 2.0;
-            const cuY = (0.5 - cursor.y) * 2.0; // flipY
-            const pull = cursor.strength * tempo;
+            const cuX = (cur.x - 0.5) * 2.0;
+            const cuY = (0.5 - cur.y) * 2.0; // flipY
+            const pull = cur.strength * tempo;
             lx = lx * (1 - pull) + cuX * pull;
             ly = ly * (1 - pull) + cuY * pull;
             gl.uniform3f(U.uLightDir, lx * tempo + (1 - tempo) * -0.5, ly * tempo + (1 - tempo) * 0.6, 0.62);
@@ -107,35 +180,23 @@ export function createFrameLoop(deps: FrameLoopDeps): FrameLoop {
             config.breathDepth !== 0 ||
             config.warpDrift !== 0;
         if (driftLive) return true;
-        // AW.W8.1 — the velocity burst keeps the loop live while it decays out.
-        if (config.interactivity?.light && cursor.burst > 1e-3) return true;
-        return cursorIsLive(cursor);
+        return auroraFieldLive(pointerField);
     }
 
     return {
         frame: (timeSec) => {
-            // BC.W-VIZ-AURORA (T5) — FEED the shared pointer field one tick (the one-loop
-            // push-step; the field owns no own rAF). The delta is the inter-frame gap (0 on
-            // the first frame). Under PRM masterTempo()=0 → tick(0) freezes the field too.
+            // FEED the shared pointer field one tick (the one-loop push-step; no own rAF).
+            // The delta is the inter-frame gap (0 on the first frame). Under PRM
+            // masterTempo()=0 → tick(0) freezes the field.
+            const tempo = masterTempo();
             const deltaMs =
                 prevTimeSec === null
                     ? 0
                     : Math.max(0, (timeSec - prevTimeSec) * 1000);
             prevTimeSec = timeSec;
-            pointerField.tick(masterTempo() === 0 ? 0 : deltaMs);
-            // The iOS-27 GEL SNAP-BACK: a fast flick that DECELERATES (the acceleration
-            // OPPOSES the velocity) injects a transient over-warp into the cursor burst —
-            // the field springs back. The accel term is the additive fold over the
-            // existing velocity/burst baseline (read here, applied to the burst the shader
-            // already consumes — no new uniform, no new loop).
-            const accel = pointerField.acceleration.value;
-            const vel = pointerField.velocity.value;
-            const decel = -(accel.x * vel.x + accel.y * vel.y);
-            if (decel > 0 && masterTempo() > 0) {
-                cursor.burst = Math.min(1, cursor.burst + decel * 6.0);
-            }
-            // tempo-scaled cursor advance — the burst/velocity collapse under PRM.
-            advanceCursor(cursor, masterTempo());
+            pointerField.tick(tempo === 0 ? 0 : deltaMs);
+            // Map the field readout onto the cursor uniforms (the ONE cursor source).
+            cur = mapAuroraCursor(pointerField, getCursorScalars(), tempo);
             drawFrame(timeSec);
         },
         needsAnimation,

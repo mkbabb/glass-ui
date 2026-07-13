@@ -29,7 +29,7 @@ import {
     MAX_NUCLEI,
     type AuroraConfig,
 } from "../constants/presets";
-import type { CursorState } from "./cursorModel";
+import type { AuroraCursorUniforms } from "./uniformBridge";
 
 /** The total image-uniform-buffer byte size (16-aligned). */
 export const AURORA_IMAGE_WGPU_UNIFORM_BYTES = 288;
@@ -67,7 +67,7 @@ export function createAuroraImageWGPUScratch(): AuroraImageWGPUScratch {
 export function packAuroraImageWGPUUniforms(
     scratch: AuroraImageWGPUScratch,
     cfg: AuroraConfig,
-    cursor: CursorState,
+    cursor: AuroraCursorUniforms,
     timeSec: number,
     aspect: number,
 ): AuroraImageWGPUScratch {

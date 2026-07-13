@@ -55,8 +55,9 @@ import {
 // It keeps its public API + the `--goo-t` drive (NO rename) + its barbell rAF projection,
 // but its neck-gap + threshold defaults now derive from the SHARED `MORPH_SIGNATURES`
 // `lateralNeck` row (DATA) — so the gooey waist + the gap-relative band are ONE source
-// library-wide (the carousel/deck/pager all neck off the same signature). The `<filter>`
-// it passes through is the ONE shell-root `<GooFilter>` mount's `#glass-goo`/`#pager-goo`.
+// library-wide. The DECK slide-plate is the surviving consumer (the carousel content
+// barbell + the pager dot-pip goo-morph both RETIRED — BI.W-CAROUSEL-REBUILD / -PAGER-WORM);
+// the `<filter>` it passes through is the ONE shell-root `<GooFilter>` mount's `#glass-goo`.
 // The `kPeak` of `lateralNeck` IS the resting neck-gap floor (the bodies' nearness at the
 // gooey midpoint) — the single tuning the user's "carousel goo is awful" fix lives on.
 const LATERAL_NECK = MORPH_SIGNATURES.lateralNeck;

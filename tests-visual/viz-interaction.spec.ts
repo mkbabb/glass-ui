@@ -47,15 +47,13 @@ const VISUAL_DIR = resolve(ROOT, "docs/tranches/BC/audit/visual/viz-interaction-
 const SCHEMES = ["light", "dark"] as const;
 
 // The interactive procedural-viz routes (the substrate stories — the SAME route map the
-// webgpu-everywhere paint π uses). dot-matrix is a forward-looking per-viz wave — enrolled
-// when its route lands. Each viz reads the shared field; this spec drives the cursor over
-// EACH and asserts a reactive frame diff.
+// webgpu-everywhere paint π uses). dot-flow-field / concentric / dot-matrix were DELETED at
+// BI.W-VIZ-DELETIONS (the user-ordered clean-break prune) — off the route set. Each viz reads
+// the shared field; this spec drives the cursor over EACH and asserts a reactive frame diff.
 const VIZ_ROUTES = [
     { id: "aurora", route: "/substrates/aurora" },
     { id: "blob", route: "/substrates/blob" },
     { id: "constellation", route: "/substrates/constellation" },
-    { id: "dot-flow-field", route: "/substrates/dot-flow-field" },
-    { id: "concentric", route: "/substrates/concentric" },
     { id: "fourier-field", route: "/substrates/fourier-field" },
 ] as const;
 

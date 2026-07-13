@@ -20,7 +20,35 @@ import { flattenPalette } from "./color";
 import { warmCatchLight } from "../../../../composables/color";
 import type { OklchStop } from "../../../../composables/color";
 import type { UniformLocations } from "./glSetup";
-import type { CursorState } from "./cursorModel";
+
+/**
+ * BI.W-FIELD-CORE — the aurora cursor UNIFORM shape (the `uCursor*` upload inputs). The
+ * retired `cursorModel.ts` `CursorState` is GONE — the cursor is now the mapped readout of
+ * the shared `usePointerVelocityField` (`auroraCursorMapping`): x/y = the mass-spring
+ * attractor (0..1, CSS-top — the bridge flips Y), strength = engagement·ceil, velX/velY the
+ * derived velocity, burst the flick impulse. The GLSL path uploads all seven; the WGPU
+ * struct packs only x/y/strength/radius. `AURORA_CURSOR_UNIFORM_REST` is the neutral
+ * at-rest seed the bridge inits with (re-sent per frame by the frame loop).
+ */
+export interface AuroraCursorUniforms {
+    x: number;
+    y: number;
+    strength: number;
+    radius: number;
+    velX: number;
+    velY: number;
+    burst: number;
+}
+
+export const AURORA_CURSOR_UNIFORM_REST: AuroraCursorUniforms = {
+    x: 0.5,
+    y: 0.5,
+    strength: 0,
+    radius: 0.25,
+    velX: 0,
+    velY: 0,
+    burst: 0,
+};
 import {
     DEFAULT_VIVIDNESS,
     METAL_POLISH_DEFAULT,
@@ -187,7 +215,6 @@ export function createUniformBridge(
     gl: WebGL2RenderingContext,
     prog: WebGLProgram,
     U: UniformLocations,
-    cursor: CursorState,
 ): (cfg: AuroraConfig) => void {
     // CSS-top-origin → shader bottom-origin.
     const flipY = (y: number): number => 1.0 - y;
@@ -274,13 +301,16 @@ export function createUniformBridge(
         gl.uniform2f(U.uFlowFocal, cfg.flow.focalX, flipY(cfg.flow.focalY));
         gl.uniform1f(U.uFlowAngle, cfg.flow.angle);
         gl.uniform1f(U.uFlowCurl, cfg.flow.curl);
-        // Cursor uniforms are re-sent every frame in the frame loop; init once here.
-        gl.uniform2f(U.uCursor, cursor.x, flipY(cursor.y));
-        gl.uniform1f(U.uCursorStrength, cursor.strength);
-        gl.uniform1f(U.uCursorRadius, cursor.radius);
-        // AW.W8.1 — the velocity-reactive flow uniforms (re-sent per frame too).
-        gl.uniform2f(U.uCursorVelocity, cursor.velX, -cursor.velY);
-        gl.uniform1f(U.uCursorBurst, cursor.burst);
+        // Cursor uniforms are re-sent every frame in the frame loop (mapped from the
+        // shared pointer field); init to the neutral at-rest seed once here.
+        const c = AURORA_CURSOR_UNIFORM_REST;
+        gl.uniform2f(U.uCursor, c.x, flipY(c.y));
+        gl.uniform1f(U.uCursorStrength, c.strength);
+        gl.uniform1f(U.uCursorRadius, c.radius);
+        // BI.W-FIELD-CORE — the velocity-reactive flow uniforms (re-sent per frame from
+        // the field-mapped cursor).
+        gl.uniform2f(U.uCursorVelocity, c.velX, -c.velY);
+        gl.uniform1f(U.uCursorBurst, c.burst);
         gl.uniform1f(U.uStrokeAmount, cfg.strokeAmount);
         gl.uniform1f(U.uStrokeScale, cfg.strokeScale);
         gl.uniform1f(U.uStrokeAnisotropy, cfg.strokeAnisotropy);

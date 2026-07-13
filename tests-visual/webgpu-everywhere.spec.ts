@@ -27,16 +27,15 @@ import { assertServedDemoAurora } from "./served-app-sentinel.ts";
 
 test.setTimeout(180_000);
 
-// The six EXTANT substrate routes (dot-matrix is a forward-looking per-viz wave — not yet
-// a route). Each mounts ONE viz `<canvas>` (the field IS the surface). The canvas
-// selector is universal (`canvas`) — every viz renders into a single `<canvas>` element.
+// The EXTANT substrate routes (dot-flow-field / concentric / dot-matrix DELETED at
+// BI.W-VIZ-DELETIONS — the user-ordered clean-break prune). Each mounts ONE viz `<canvas>`
+// (the field IS the surface). The canvas selector is universal (`canvas`) — every viz
+// renders into a single `<canvas>` element.
 const SUBSTRATE_ROUTES = [
     { id: "aurora", route: "/substrates/aurora" },
     { id: "blob", route: "/substrates/blob" },
     { id: "constellation", route: "/substrates/constellation" },
     { id: "fourier-field", route: "/substrates/fourier-field" },
-    { id: "dot-flow-field", route: "/substrates/dot-flow-field" },
-    { id: "concentric", route: "/substrates/concentric" },
 ] as const;
 
 // The PAINT-EXISTENCE floor — the BB-disease this wave cures is a BLACK VOID (a crashed/
@@ -156,10 +155,10 @@ test.describe("BC.W-WEBGPU-EVERYWHERE — every substrate PAINTS, on every host"
     //    `device.createShaderModule` + `getCompilationInfo` on the adapter-bearing host
     //    (the binding compile the device-free static gate proxies). The bug class THIS wave
     //    owns is the reserved-keyword identifier (the Blob `var target` → 250×/frame
-    //    invalid-pipeline → 0 pixels live) — it must be GONE on EVERY shader. The 4
-    //    known-clean primaries (aurora/concentric/flow-render/flow-compute) compile fully
-    //    clean; any OTHER residual (a metaball-math uniformity issue the Blob per-viz
-    //    wave owns) is SURFACED for its owner, never silently hidden by the picker's fall.
+    //    invalid-pipeline → 0 pixels live) — it must be GONE on EVERY shader. The known-clean
+    //    aurora primary compiles fully clean (concentric/flow-render/flow-compute DELETED at
+    //    BI.W-VIZ-DELETIONS); any OTHER residual (a metaball-math uniformity issue the Blob
+    //    per-viz wave owns) is SURFACED for its owner, never silently hidden by the picker's fall.
     test("every WGSL primary compiles with NO reserved-keyword error on real Metal", async ({
         page,
     }) => {
@@ -171,9 +170,6 @@ test.describe("BC.W-WEBGPU-EVERYWHERE — every substrate PAINTS, on every host"
             const device = await adapter.requestDevice();
             const shaders: Record<string, string> = {
                 aurora: "/src/components/custom/aurora/constants/shaders/aurora.wgsl.ts#AURORA_WGSL",
-                concentric: "/src/components/custom/concentric/shaders/concentric.wgsl.ts#CONCENTRIC_WGSL",
-                flowRender: "/src/components/custom/dot-flow-field/shaders/flow-field.render.wgsl.ts#FLOW_FIELD_RENDER_WGSL",
-                flowCompute: "/src/components/custom/dot-flow-field/shaders/flow-field.compute.wgsl.ts#FLOW_FIELD_COMPUTE_WGSL",
                 metaball: "/src/components/custom/blob/shaders/metaball.wgsl.ts#METABALL_WGSL",
             };
             const out: Record<string, { errors: string[] }> = {};
@@ -205,8 +201,8 @@ test.describe("BC.W-WEBGPU-EVERYWHERE — every substrate PAINTS, on every host"
                 `${id}: a WGSL reserved-keyword compile error survived (${reserved.join(" | ")}) — the Blob var-target class this wave fixes`,
             ).toEqual([]);
         }
-        // The 4 known-clean primaries compile FULLY clean (zero errors).
-        for (const id of ["aurora", "concentric", "flowRender", "flowCompute"]) {
+        // The known-clean aurora primary compiles FULLY clean (zero errors).
+        for (const id of ["aurora"]) {
             expect(
                 out[id]!.errors,
                 `${id}: the WGSL primary must compile clean on Metal (${out[id]!.errors.join(" | ")})`,

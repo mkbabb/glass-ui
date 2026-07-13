@@ -11,7 +11,7 @@
 // `useCanvas2D` lifecycle below stay live (aurora/blob/constellation/fourier).
 
 // AX.W09 — the DRY pointer-anchored moving-specular write seam (lifted from the
-// verbatim Card.vue + DockIconButton.vue copies; PRM-aware; the `.glass-material`
+// verbatim Card.vue + DockControl.vue copies; PRM-aware; the `.glass-material`
 // recipe maps the host `--mouse-x/y` write onto its typed specular channel).
 // BB.W-LIQUIDHOVER — `createSpecularWriter` is the extracted single-source position-
 // write core (rAF-coalesce + cached-PRM + cleanup); both `useSpecularTracking` (the
