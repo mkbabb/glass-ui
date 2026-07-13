@@ -143,6 +143,17 @@ const vizBadges: { cls: string; token: string; label: string }[] = [
             </div>
         </StorySection>
 
+        <StorySection
+            label="glyph optical centering"
+            blurb="BI.W-BADGE-ALIGN — the leading-line-box tracks the --ui-scale-scaled font, so the glyph and the label share ONE optical center at every size (and at coarse pointer)."
+        >
+            <div data-badge-optical class="flex flex-wrap items-center gap-3">
+                <Badge size="sm"><BadgeCheck /> Verified</Badge>
+                <Badge size="md"><BadgeCheck /> Verified</Badge>
+                <Badge size="lg"><BadgeCheck /> Verified</Badge>
+            </div>
+        </StorySection>
+
         <StorySection label="size × variant">
             <div class="flex flex-col gap-3">
                 <div
@@ -188,7 +199,8 @@ const vizBadges: { cls: string; token: string; label: string }[] = [
             <p class="text-sm">
                 Row text aligned with
                 <Badge variant="outline" size="md">size="md"</Badge>
-                badge — baselines coincide because the badge inherits text-sm leading-5.
+                badge — the badge line-box reads a relative leading-[1.1] that tracks
+                the --control-text-scaled font, so it centres in the surrounding line.
             </p>
         </StorySection>
     </StoryPage>

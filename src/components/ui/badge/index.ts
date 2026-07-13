@@ -53,9 +53,18 @@ export const badgeVariants = cva(
         // quieter `--control-text-sm` (scaled `text-xs`), md the `--control-text`
         // workhorse (scaled `text-sm`), lg the scaled body register, so the badge's
         // three-rung scale grows in lockstep on a `--ui-scale` override.
-        sm: 'text-[length:var(--control-text-sm)] leading-4 px-2 py-0.5',
-        md: 'text-[length:var(--control-text)] leading-5 px-2.5 py-1',
-        lg: 'text-[length:calc(var(--type-body)*var(--ui-scale))] leading-6 px-3 py-1.5',
+        // BI.W-BADGE-ALIGN (GEO-8/UF-A6) — the line-height is a RELATIVE unitless
+        // `leading-[1.1]`, NOT a fixed `leading-4/5/6` px. The font tracks `--ui-scale`
+        // (12/14/16px at rest → ~18/21/24px at coarse 1.5×) but the prior fixed px
+        // line-box (16/20/24px) could not grow with it — at coarse the font OVERFLOWED
+        // the box and at rest the taller-than-font line-box drifted the glyph optical
+        // center low ("rose" badge sat low). A unitless 1.1 makes the line-box = 1.1×
+        // the scaled font, so the box tracks the font at every scale and the glyph
+        // (`--ui-glyph-sm`, also `--ui-scale`-scaled) shares ONE optical center with
+        // the text via the base `items-center` — at rest AND at coarse.
+        sm: 'text-[length:var(--control-text-sm)] leading-[1.1] px-2 py-0.5',
+        md: 'text-[length:var(--control-text)] leading-[1.1] px-2.5 py-1',
+        lg: 'text-[length:calc(var(--type-body)*var(--ui-scale))] leading-[1.1] px-3 py-1.5',
       },
       // BD.W-GLASS-ATOM-REGISTER — the TWO registers (the family's load-bearing
       // split): `loud` is the opaque saturated identity pill (default — a `success`
