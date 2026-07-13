@@ -1,4 +1,4 @@
-import { config } from "@vue/test-utils";
+import { config, enableAutoUnmount } from "@vue/test-utils";
 import { afterEach, vi } from "vitest";
 
 config.global.stubs = {
@@ -134,6 +134,11 @@ HTMLCanvasElement.prototype.getContext = vi.fn(() => ({
 })) as unknown as typeof HTMLCanvasElement.prototype.getContext;
 
 HTMLCanvasElement.prototype.toDataURL = vi.fn(() => "data:image/png;base64,AA==");
+
+// Every mounted wrapper unmounts after its test — component scopes dispose, so
+// composable rAF/timer loops (useLeadTrail et al.) cancel instead of firing into a
+// torn-down environment (the post-teardown ReferenceError leak class).
+enableAutoUnmount(afterEach);
 
 afterEach(() => {
     vi.clearAllMocks();
