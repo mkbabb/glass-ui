@@ -33,13 +33,21 @@ export const sheetVariants = cva(
   'gap-4 glass-floating [--overlay-pad-inline:--spacing(6)] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] px-(--overlay-pad-inline) py-(--overlay-pad-block) transition ease-in-out sheet-animate',
   {
     variants: {
+      // BI.W-SHEET-RADIUS — the Sheet reads ROUNDED (UF-A3/FAM-4/GEO-2). Each side
+      // rounds its INNER corners on the dialog/card rung (--radius-dialog); the edge
+      // flush against the viewport stays SQUARE (it meets the screen edge). With a
+      // non-zero radius the shipped `.glass-floating.sheet-animate` squircle @supports
+      // rule (glass/squircle.css:45) becomes LIVE — the superellipse now reads (a
+      // 0-radius box has no base radius for the superellipse; the vacuous-gate GEO-2
+      // is dead). A right sheet rounds its LEFT (inner) corners, a left sheet its
+      // RIGHT, a top sheet its BOTTOM edge, a bottom sheet its TOP edge.
       side: {
-        top: 'border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top',
+        top: 'rounded-b-dialog border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top',
         bottom:
-            'border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom',
-        left: 'border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left',
+            'rounded-t-dialog border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom',
+        left: 'rounded-r-dialog border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left',
         right:
-            'border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right',
+            'rounded-l-dialog border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right',
       },
     },
     defaultVariants: {

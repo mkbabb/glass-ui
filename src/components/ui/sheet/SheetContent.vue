@@ -92,6 +92,20 @@ const surfaceDecoration = computed(() =>
   surfaceClass(props.surface ?? 'glass').replace(/^glass-\w+\s*/, ''),
 )
 
+// BI.W-SHEET-RADIUS — the Sheet is the Law-1 concentric-radius RELAY PARENT (site #3,
+// W-CONFIG-IN-SHEET). It PUBLISHES its resolved corner (--radius-dialog, the rung the
+// sheetVariants side arms round to) as --radius-ctx + its content pad (--overlay-pad-inline)
+// as --radius-inset on the content root, so a nested card-class surface — the gear-sheet
+// Configurator sections — DERIVES its own corner concentric with the outer:
+//   border-radius: max(var(--radius-floor), calc(var(--radius-ctx) − var(--radius-inset)))
+// The identity default (--radius-inset: 0px at :root) makes an un-nested reader read the
+// full --radius-ctx; here the sheet's pad insets the inner corner so the nesting stays
+// concentric across the pad.
+const radiusCtxStyle: CSSProperties = {
+  '--radius-ctx': 'var(--radius-dialog)',
+  '--radius-inset': 'var(--overlay-pad-inline)',
+}
+
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
 
 // W13 spring entrance + optional drag-dismiss. Inject reka-ui's open ref
@@ -152,7 +166,7 @@ const dragHandlers = computed(() =>
     <DialogContent
       :class="cn(sheetVariants({ side }), surfaceDecoration, springActive ? 'transition-none' : '', props.class)"
       v-bind="{ ...forwarded, ...$attrs }"
-      :style="springStyle"
+      :style="[radiusCtxStyle, springStyle]"
       data-slot="sheet-content"
       :data-side="side"
       :data-surface="props.surface ?? 'glass'"
