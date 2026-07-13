@@ -96,6 +96,9 @@ export const EXPECTED_TREE = [
         // `spa-view` joined at BB.B7 (W-SPAVIEW-CACHE — the <SpaView :max>
         // bounded view-cache router pane over Vue's <KeepAlive> + out-in).
         "spa-view",
+        // `card-pressable` joined at BI.W-DEMO-CARD-DECLARE (the :pressable
+        // interaction facet — a distinct Card facet from display/card).
+        "card-pressable",
     ]],
     // `header-ribbon` RETURNED at AZ.W-PRUNE2 (the restore: a live keyframes.js
     // binary consumer — the published subpath ships again WITH its story).
@@ -154,6 +157,9 @@ export const EXPECTED_TREE = [
     ["motion", [
         "springs", "countup", "reveal", "deck", "typewriter", "animated-digit",
         "curve-gallery", "handmark", "scroll", "text-motion", "split-chars",
+        // `tempo` joined at BI.W-TEMPO (the --motion-tempo one-clock knob —
+        // one write co-scales every CSS clock + the JS springs).
+        "tempo",
     ]],
     // `dashboard` retired at AY.W-PRUNE (pure-recipe filler — every primitive it
     // composed has its own story + real consumers). `instrument-rail` +
@@ -164,6 +170,9 @@ export const EXPECTED_TREE = [
         "empty-states", "drawer-live-behind",
         "configurator", "instrument-chassis",
         "form-validation", "labeled-field", "icon-tooltip", "gate-pattern",
+        // `chassis` joined at BG.W-STORY-PAGE-API (§4-D — the five demo KINDS
+        // side by side over the one StoryPage chassis).
+        "chassis",
     ]],
     // The reference-only `composables` category was DELETED at AZ.W-SHELL-CONFIG
     // (the demo IA no longer carries the 22-story reference shelf — clean break, no
