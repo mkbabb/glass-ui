@@ -24,9 +24,17 @@
 //        Bound is UNDER the glass-ui tree (no ../sibling path — the gate NEVER probes a
 //        sibling; the killed proof:retired-token-consumers raw-grep is NOT re-introduced),
 //        and the roster records the fence.
+//   X5 — the fold-migration-ledger completeness (BI.W-FACTOR-ASKS): every B8 Kronecker
+//        fold with a MIGRATION.md `### BI.W-<FOLD>` retire→survivor section names a landing
+//        wave + a terminal disposition + a consumer relay row here. The fold set is DERIVED
+//        from MIGRATION.md (anti-hand-freeze — a NEW `### BI.W-*` fold section the roster
+//        never files reds), with BI.W-DOCK-FOLD (its own asks doc, row 12) + BI.W-CLEAR-FOLD
+//        (0-consumer surface member) EXEMPT. A fold with a migration section but no relay row
+//        REDs (the no-silent-drop completeness law).
 //
 // STRUCTURAL/coordination wave — NO π, NO proof:ba-gestalt (zero pixels). The born-RED→
-// GREEN log (roster absent→present) + the 4-bite self-test is the binding truth.
+// GREEN log (roster absent→present; every fold RED at HEAD — MIGRATION section + relay row
+// both absent) + the 6-bite self-test is the binding truth.
 
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -44,6 +52,7 @@ const read = (rel) => {
 const ROSTER = "docs/tranches/BI/coordination/asks-and-consumes.md";
 const OUTBOUND = "docs/tranches/BI/coordination/atlas-outbound-2026-07-12-decision-0.md";
 const XR9_SOURCE = "docs/tranches/BI/audit/ROUND-2B-DIGEST.md";
+const MIGRATION = "MIGRATION.md";
 
 // ── The wave's declared File Bounds (the X4 content-only fence target) ────────────────
 // Every path this wave is allowed to touch is UNDER the glass-ui tree. The fence asserts
@@ -175,6 +184,67 @@ add(
     "the roster records the content-only foreign-tree fence (inv-26 — glass-ui edits ZERO sibling files; each sibling resolves the built dist/ on its own bump)",
 );
 
+// ── X5 — the fold-migration-ledger completeness (BI.W-FACTOR-ASKS) ────────────────────
+// THE NEED. The B8 Kronecker factorization lands the band's in-repo fold/rename breaks —
+// each a clean break (DEFINITION-ABSENT on disk, no alias) whose consumer migration is a
+// by-name ASK row on THIS roster. The no-silent-drop completeness law: every fold with a
+// MIGRATION.md `### BI.W-<FOLD>` retire→survivor section MUST name a landing wave + a
+// terminal disposition + a consumer relay row here — a fold with a migration section but
+// no relay row REDs. The fold set is DERIVED from MIGRATION.md (anti-hand-freeze — a NEW
+// `### BI.W-*` fold section the roster does not carry reds), with the two non-outbound
+// folds EXEMPT by construction: BI.W-DOCK-FOLD carries its per-control detail on
+// W-DOCK-FOLD-asks.md (roster row 12), BI.W-CLEAR-FOLD retires a 0-consumer surface member
+// (MIGRATION-only, no outbound ask owed).
+const migText = read(MIGRATION);
+// The FACTOR-ASKS fold set — each MUST carry a MIGRATION section + a landing wave +
+// disposition + relay row. A listed fold whose MIGRATION section vanished, OR a roster that
+// drops a fold's wave/disposition, reds; the derived-coverage arm below catches a NEW
+// MIGRATION fold header the roster does not carry.
+const FOLD_WAVES = [
+    "BI.W-OVERLAY-UNION",
+    "BI.W-MENU-TRIGGER",
+    "BI.W-DIALOG-PLACEMENT",
+    "BI.W-CHIP-FOLD",
+    "BI.W-MULTISELECT-FOLD",
+    "BI.W-BUTTON-TONE",
+    "BI.W-SYNONYM-RENAMES",
+    "BI.W-GLASS-DEDUP",
+];
+// MIGRATION-only folds (no outbound consumer ask owed): dock carries its own asks doc
+// (roster row 12), clear retires a 0-consumer member.
+const FOLD_EXEMPT = new Set(["BI.W-DOCK-FOLD", "BI.W-CLEAR-FOLD"]);
+// A fold row's terminal disposition vocabulary (bound to the wave on the SAME roster line).
+const FOLD_DISPOSITION = /LANDED by|issues at the 5\.0\.0 cut|no external consumer|= row 8|= row 9|= row 12/;
+const rosterLines = rosterText.split("\n");
+// A fold is relay-covered when SOME roster line names the wave AND carries a disposition.
+const foldRelayCovered = (wave) => rosterLines.some((l) => l.includes(wave) && FOLD_DISPOSITION.test(l));
+const foldMigrationPresent = (wave) => migText.includes(`### ${wave}`);
+
+let allFoldsMigrated = true;
+let allFoldsRelayed = true;
+for (const wave of FOLD_WAVES) {
+    const mig = foldMigrationPresent(wave);
+    const relay = rosterExists && foldRelayCovered(wave);
+    if (!mig) allFoldsMigrated = false;
+    if (!relay) allFoldsRelayed = false;
+    add(
+        `X5-fold-${wave}`,
+        mig && relay,
+        `${wave} — MIGRATION §:${mig ? "present" : "MISSING (no retire→survivor row)"} · relay-row:${relay ? "covered (wave + disposition)" : "MISSING (no landing-wave + disposition row)"}`,
+    );
+}
+// no-silent-drop coverage: every `### BI.W-<FOLD>` MIGRATION header is EITHER exempt OR
+// named on the roster (a new fold section the roster never files reds — anti-hand-freeze).
+const migFoldHeaders = [...migText.matchAll(/^###\s+(BI\.W-[A-Z0-9-]+)/gm)].map((m) => m[1]);
+const uncoveredFolds = migFoldHeaders.filter((w) => !FOLD_EXEMPT.has(w) && !(rosterExists && rosterText.includes(w)));
+add(
+    "X5-no-silent-drop",
+    migFoldHeaders.length > 0 && uncoveredFolds.length === 0,
+    uncoveredFolds.length === 0
+        ? `every MIGRATION.md fold section (${migFoldHeaders.length} '### BI.W-*' headers) is EXEMPT or named on the roster (no silent drop)`
+        : `MIGRATION fold section(s) with NO roster relay row: ${uncoveredFolds.join(", ")} (the no-silent-drop law)`,
+);
+
 // ── The self-test bites — the coverage floors + the pairing + the fence are falsifiable ─
 function selfTest() {
     const bites = [];
@@ -195,6 +265,17 @@ function selfTest() {
     const doctoredBounds = [...WAVE_BOUNDS, "../atlas/package.json"];
     const breach = doctoredBounds.filter((p) => p.startsWith("../"));
     bites.push({ id: "bite-sibling-path-flags", pass: breach.length > 0 });
+    // bite 5: a fold whose relay row is DROPPED — strip a fold wave from the roster and its
+    // relay-cover check must fail (a fold with a MIGRATION section but no relay row REDs).
+    const foldDropped = rosterText.replace(new RegExp(FOLD_WAVES[0].replace(/[.]/g, "\\$&"), "g"), "REMOVED");
+    const droppedLines = foldDropped.split("\n");
+    const stillCovered = droppedLines.some((l) => l.includes(FOLD_WAVES[0]) && FOLD_DISPOSITION.test(l));
+    bites.push({ id: "bite-fold-no-relay-row-flags", pass: !stillCovered });
+    // bite 6: a SYNTHETIC new MIGRATION fold header (not exempt, not on the roster) reds the
+    // no-silent-drop coverage arm.
+    const synthHeaders = [...migFoldHeaders, "BI.W-SYNTHETIC-FOLD"];
+    const synthUncovered = synthHeaders.filter((w) => !FOLD_EXEMPT.has(w) && !rosterText.includes(w));
+    bites.push({ id: "bite-new-fold-no-relay-flags", pass: synthUncovered.includes("BI.W-SYNTHETIC-FOLD") });
     return bites;
 }
 const bites = selfTest();
@@ -205,6 +286,7 @@ add("selftest-all-bites", allBitesPass, "every self-test bite flags its planted 
 // The aggregate no-drop floors.
 add("X1-all-cut-fixed-covered", rosterExists && allCutFixedCovered && allStemsAttested, `the roster covers ALL ${CUT_FIXED_ASKS.length} cut-fixed asks + §XR-9 attests every stem`);
 add("X2-all-pin-guard-covered", rosterExists && allPinGuardCovered, `the roster covers BOTH pin-guard asks (atlas + sci-report)`);
+add("X5-all-folds-carry-relay-row", allFoldsMigrated && allFoldsRelayed, `every FACTOR-ASKS fold (${FOLD_WAVES.length}) carries a MIGRATION section + a landing-wave + disposition + relay row (the no-silent-drop completeness law)`);
 
 // ── Report ───────────────────────────────────────────────────────────────────────────
 const failed = checks.filter((c) => !c.pass);
@@ -220,7 +302,7 @@ writeGateArtifact(ARTIFACT, {
     status: pass ? "pass" : "fail",
     gate: "proof:crossrepo-asks:bi",
     command: COMMAND,
-    note: "STRUCTURAL/coordination wave — NO π. X1 the roster covers every XR-9 carry row (SOURCE-ATTESTED from ROUND-2B-DIGEST.md §XR-9) with trigger + disposition + the PAIRED kf ^5.2.0 / value ^3.1.0 peer bump; X2 the pin-guard rows (atlas + sci-report → ^5.0.0 + value ^3.1.0 LOCKSTEP) filed as HARD pre-publish blockers (born-RED at HEAD — roster ABSENT); X3 the .text-gilt→.gold-shimmer + /api + value.js blob-rename carry rows; X4 the content-only foreign-tree fence (inv-26) by construction + the roster records it. + a 4-bite self-test.",
+    note: "STRUCTURAL/coordination wave — NO π. X1 the roster covers every XR-9 carry row (SOURCE-ATTESTED from ROUND-2B-DIGEST.md §XR-9) with trigger + disposition + the PAIRED kf ^5.2.0 / value ^3.1.0 peer bump; X2 the pin-guard rows (atlas + sci-report → ^5.0.0 + value ^3.1.0 LOCKSTEP) filed as HARD pre-publish blockers (born-RED at HEAD — roster ABSENT); X3 the .text-gilt→.gold-shimmer + /api + value.js blob-rename carry rows; X4 the content-only foreign-tree fence (inv-26) by construction + the roster records it; X5 the fold-migration-ledger completeness (BI.W-FACTOR-ASKS — every MIGRATION.md `### BI.W-<FOLD>` section names a landing wave + disposition + relay row here; the no-silent-drop law, DOCK-FOLD/CLEAR-FOLD exempt). + a 6-bite self-test.",
     roster: ROSTER,
     cutFixedAsks: CUT_FIXED_ASKS,
     pinGuardAsks: PIN_GUARD_ASKS,
@@ -234,5 +316,5 @@ if (!pass) {
     process.exit(1);
 }
 console.log(
-    "\n[proof:crossrepo-asks:bi] the BI 5.0.0 cut roster is whole — the XR-9 carry rows are covered (SOURCE-ATTESTED), the pin-guard (atlas + sci-report → ^5.0.0 + value ^3.1.0 LOCKSTEP) is filed as a HARD pre-publish blocker, the .text-gilt/api/blob-rename carry rows are present, and the content-only foreign-tree fence (inv-26) holds by construction.",
+    "\n[proof:crossrepo-asks:bi] the BI 5.0.0 cut roster is whole — the XR-9 carry rows are covered (SOURCE-ATTESTED), the pin-guard (atlas + sci-report → ^5.0.0 + value ^3.1.0 LOCKSTEP) is filed as a HARD pre-publish blocker, the .text-gilt/api/blob-rename carry rows are present, the content-only foreign-tree fence (inv-26) holds by construction, and the fold-migration ledger is complete (every B8 fold names a landing wave + disposition + relay row — the no-silent-drop law).",
 );

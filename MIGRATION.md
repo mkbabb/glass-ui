@@ -144,7 +144,6 @@ The full 199-symbol map (grouped alphabetically by symbol; `kind` is the TS expo
 | `UseEasingPickerReturn` | type | `/easing` |
 | `FourierFieldConfig` | type | `/fourier-field` |
 | `FourierFieldProps` | type | `/fourier-field` |
-| `GlassPanelProps` | type | `/glass-panel` |
 | `BlendMode` | type | `/handmark` |
 | `Brush` | type | `/handmark` |
 | `BrushName` | type | `/handmark` |
@@ -154,7 +153,7 @@ The full 199-symbol map (grouped alphabetically by symbol; `kind` is the TS expo
 | `InkPath` | type | `/handmark` |
 | `MarkBox` | type | `/handmark` |
 | `TaperSpec` | type | `/handmark` |
-| `HeaderRibbonPosition` | type | `/header-ribbon` |
+| `HeaderRibbonPlacement` | type | `/header-ribbon` |
 | `HeaderRibbonProps` | type | `/header-ribbon` |
 | `IconChipIcon` | type | `/icon-chip` |
 | `IconChipProps` | type | `/icon-chip` |
@@ -219,8 +218,7 @@ The full 199-symbol map (grouped alphabetically by symbol; `kind` is the TS expo
 | `SearchVariant` | type | `/search` |
 | `SearchVariants` | type | `/search` |
 | `UseFuzzySearchOptions` | type | `/search` |
-| `ChipVariants` | type | `/selectable-chip` |
-| `SheetVariants` | type | `/sheet` |
+| `ChipVariants` | type | `/chip` |
 | `ClickDelegateOptions` | type | `/sidebar` |
 | `LazyLoaderOptions` | type | `/sidebar` |
 | `ScrollToOptions` | type | `/sidebar` |
@@ -241,8 +239,6 @@ The full 199-symbol map (grouped alphabetically by symbol; `kind` is the TS expo
 | `TimelineSegmentGradient` | type | `/timeline` |
 | `TimelineSegmentState` | type | `/timeline` |
 | `ToastType` | type | `/toast` |
-| `ToastVariant` | type | `/toast` |
-| `ToggleChipVariants` | type | `/toggle-chip` |
 | `FlatSection` | type | `/virtual` |
 | `ForcedSectionWindowRange` | type | `/virtual` |
 | `SectionLayout` | type | `/virtual` |
@@ -480,6 +476,296 @@ charge was reversed). Machine-locked by `proof:dock-fold` (F1 components-folded 
 reka-ui-tabs-retired · F3 cta-seat-preserved · F4 migration-table-complete · F5
 useDockItemDrag-retired + 3 self-test bites).
 
+### BI.W-OVERLAY-UNION — HoverPopover + HoverCard fold onto ONE sealed `<Popover>`
+
+The Kronecker fold (UF-P7/UF-J6): the three overlays with the SAME positioned-glass
+mechanism collapse onto ONE sealed `<Popover>` with a `trigger` axis (`click` default
+· `hover` · `context`) that switches the reka ROOT internally (fine-hover → reka
+`HoverCardRoot`; click/context/coarse-hover → `PopoverRoot`), a `role` axis on
+`<PopoverContent>` (`dialog` default · `card` → `role="group"` + `aria-label`
+passthrough), and the shared `surface` axis. `keepDockOpen` is ONE `watch(open)`
+serving both roots. Coarse-pointer hover auto-promotes to tap-toggle (reka's
+`excludeTouch` leaves the hover root structurally dead on touch). **Tooltip SURVIVES**
+the fold as a genuinely distinct mechanism (`aria-describedby` naming, `role="tooltip"`,
+the SR mirror, non-focusable content); `IconTooltip` is its canonical preset. Clean
+break, no alias — every consumer re-points by name.
+
+| Retired (5.0.0) | Survivor | Rename |
+|---|---|---|
+| `HoverPopover` (`@mkbabb/glass-ui/hover-popover`) | `Popover` (`@mkbabb/glass-ui/popover`) | `<HoverPopover content side align>…</HoverPopover>` → `<Popover trigger="hover"><PopoverTrigger as-child>…</PopoverTrigger><PopoverContent role="card" :side>…</PopoverContent></Popover>` |
+| `HoverCard` / `HoverCardTrigger` / `HoverCardContent` (`@mkbabb/glass-ui/hover-card`) | `Popover` / `PopoverTrigger` / `PopoverContent` | `<HoverCard>…</HoverCard>` → `<Popover trigger="hover">…</Popover>`; `<HoverCardContent>` → `<PopoverContent role="card" aria-label="…">` (the reka `HoverCardRoot` substrate is PRESERVED — imported by the union's fine-hover branch) |
+| `hoverOpenDelay` prop | `openDelay` prop | `:hover-open-delay="80"` → `:open-delay="80"` |
+| `./hover-popover` subpath export | `./popover` | delete the import spec; import `Popover`/`PopoverTrigger`/`PopoverContent` from `@mkbabb/glass-ui/popover` |
+| `./hover-card` subpath export | `./popover` | as above |
+| `hover-popover.css` substrate sheet (`.hover-popover-panel` / `.hover-popover-label`) | none | the union content rides the shared `glass-floating` + `glass-reveal` recipe; the bespoke panel substrate is deleted |
+
+`role="dialog"` under `trigger="hover"` is REFUSED (a hover surface cannot be a
+modal-adjacent dialog — WCAG 1.4.13): the union dev-warns and falls to `role="card"`
+(the documented fallback is `role="dialog" aria-modal="false"`). `IconTooltip` is
+byte-unchanged at the call site (it composes the Tooltip family — the disposition only
+records it as a preset, NOT its own overlay root). Cross-repo: the `words` hover-card
+×12-13 migration + the `atlas` `EasterEgg.vue` hover-popover fold ride the `^5.0.0`
+peer-bump asks (`docs/tranches/BI/coordination/asks-and-consumes.md`, filed by
+W-FACTOR-ASKS). Machine-locked by `proof:fold-delete` (overlay clause: retired
+dir/subpath/export absent ×2, no consumer import, survivor `Popover` present) + the
+WCAG 1.4.13 / coarse-pointer / focus-return π (rides the B-close gestalt ceremony).
+
+### BI.W-MENU-TRIGGER — ContextMenu folds onto the Menu family as `trigger="context"`
+
+The Kronecker fold (UF-P7 / FAM-10): ContextMenu owns NO distinct mechanism vs
+DropdownMenu — identical reka roving-focus + typeahead, and the items already share ONE
+`menuItemVariants` CVA. So the whole `ContextMenu*` family collapses onto the Menu
+(`DropdownMenu*`) family with a `trigger` axis (`click` default · `context`) that switches
+the reka anchoring family internally (`context` → the reka `ContextMenu*` substrate at the
+pointer; `click` → the reka `DropdownMenu*` substrate at the button). ONE menu engine, one
+set of items — the trigger is paint/anchoring, not mechanism. `v-model:open` round-trips in
+both modes. **Select (listbox) and Combobox (combobox) SURVIVE** the census (distinct ARIA
+roles + keyboard models); **Command SURVIVES** as its own command-palette root. Clean break,
+no alias — every consumer re-points by name.
+
+| Retired (5.0.0) | Survivor | Rename |
+|---|---|---|
+| `ContextMenu` / `ContextMenuTrigger` / `ContextMenuContent` / …Item / …CheckboxItem / …RadioItem / …RadioGroup / …Label / …Separator / …Shortcut / …Sub* (`@mkbabb/glass-ui/context-menu`) | `DropdownMenu` / `DropdownMenuTrigger` / `DropdownMenuContent` / … (`@mkbabb/glass-ui/dropdown-menu`) | `<ContextMenu><ContextMenuTrigger>…</ContextMenuTrigger><ContextMenuContent>…</ContextMenuContent></ContextMenu>` → `<DropdownMenu trigger="context"><DropdownMenuTrigger>…</DropdownMenuTrigger><DropdownMenuContent>…</DropdownMenuContent></DropdownMenu>` (rename `ContextMenu*` → `DropdownMenu*` at every node; add `trigger="context"` on the root) |
+| `./context-menu` subpath export | `./dropdown-menu` | delete the import spec; import the `DropdownMenu*` family from `@mkbabb/glass-ui/dropdown-menu` |
+
+The `--dropdown-menu-{bg,border,shadow}` consumer-retunable tokens (value.js L11) join the
+existing `--dropdown-menu-font` on `.dropdown-menu-content` (menu.css) — ONE menu-plate
+token surface a consumer retunes via a `:root` override, no-op at its default. Machine-locked
+by `proof:fold-delete` (menu clause: retired dir/subpath/export absent, no consumer import,
+survivor `DropdownMenu` present) + the roving-focus/typeahead-parity π (`trigger=context`
+right-click reads identically to `trigger=click`, Chrome + WebKit, both modes; rides the
+B-close gestalt ceremony). No cross-repo ContextMenu consumer in the round-2b roster
+(invariant-11 probe confirmed at execution).
+
+### BI.W-MULTISELECT-FOLD — MultiSelect folds onto `<Combobox multiple>`
+
+The Kronecker fold (D-FACTOR PASS-1 §B): `MultiSelect` was a `Popover` + `Command`
+composition over the SAME Combobox-family mechanism (a filtered listbox with a
+selection model) — no distinct mechanism, so it folds onto `<Combobox multiple>`. reka's
+`ComboboxRoot` carries `multiple` natively (an array `v-model` + `by` comparison); the
+selected values render as **chips-in-trigger** via the shared glass-chip capsule register
+(the TagsInput chip register — `.glass-chip .glass-capsule`), read from the forwarded
+root `modelValue` slot state. `MultiSelect` was a root-barrel-only export (NO subpath at
+HEAD), so there is no `./multi-select` package export to retire. Clean break, no alias.
+
+| Retired (5.0.0) | Survivor | Rename |
+|---|---|---|
+| `MultiSelect` / `MultiSelectOption` (root barrel `@mkbabb/glass-ui`) | `Combobox` (+ `multiple`) (`@mkbabb/glass-ui/forms`) | `<MultiSelect v-model="arr" :options="opts" placeholder="…" :max-display="3" />` → `<Combobox v-model="arr" multiple>`, composing `<ComboboxAnchor>` (render selected chips-in-trigger from the `modelValue` slot on the glass-chip capsule register) + `<ComboboxList>` / `<ComboboxInput>` / `<ComboboxItem :value>` (the same filtered items). The prior `:options` array becomes explicit `<ComboboxItem>`s; `:max-display` has no analogue (the chips-in-trigger wrap, they do not collapse to `(+N)`). |
+
+The single-select `<Combobox>` (multiple unset) is byte-identical — the `multiple` prop is
+additive on the shared root. No cross-repo consumer: `MultiSelect` was demo-only at HEAD
+(the invariant-11 registry + foreign-tree probe found 0 external consumers). Machine-locked
+by `proof:fold-delete` (multiselect clause: retired `ui/multi-select` dir absent, survivor
+Combobox `multiple` capability present) + the a11y-axe multiple-arm (selected-option
+announcements) + the story-fold π (the chips-in-trigger read, both modes; rides the B-close
+gestalt ceremony).
+
+### BI.W-CHIP-FOLD — ToggleChip + SelectableChip fold onto ONE `<Chip>`
+
+The Kronecker fold (D-FACTOR FACTOR-B / UF-P7 / FAM-10): `ToggleChip` and `SelectableChip`
+were ONE interactive lozenge over ONE CVA — `ToggleChip`'s `variant` (`chip`/`cell`) is a
+pure NAME-SYNONYM of `SelectableChip`'s `shape` (`pill`/`cell`). They collapse onto ONE
+`<Chip>` with `shape: pill | cell` × an opt-in `tone` (the contrast-floored tonal-accent
+register) × the shared `surface` axis. The `variant`/`shape` merge is compile-time (the CVA
+folds); `shape=pill` ≡ the retired `ToggleChip variant="chip"`, `shape=cell` ≡ `variant="cell"`,
+and an unset `tone` ≡ the plain warm-floor glass toggle (byte-identical). `<Chip>` ships
+subpath-ONLY (`/chip`, OFF the value.js-free root barrel): its tonal ink solve is
+value.js-bearing, quarantined behind a dynamic `import('./accent-tone-solve')` boundary
+INSIDE `useAccentTone` (the sync value.js-FREE shell — the measured 26KB payload rides the
+dynamic leaf, the `/border-progress` BC.W-AX-BP-LAZY carve-off precedent), so a plain-boolean
+toggle (a `var()` / unset tone) stays ~1KB value.js-free. `IconChip` is KEPT (a distinct
+mechanism, resolved-by-distinctness); `Badge` SURVIVES (static, non-interactive). Clean
+break, no alias.
+
+| Retired (5.0.0) | Survivor | Rename |
+|---|---|---|
+| `ToggleChip` (`@mkbabb/glass-ui/toggle-chip`) | `Chip` (`@mkbabb/glass-ui/chip`) | `<ToggleChip v-model="on" variant="chip">…</ToggleChip>` → `<Chip v-model="on" shape="pill">…</Chip>`; `variant="cell"` → `shape="cell"` (`pill` is the default, so `variant="chip"` may drop to bare `<Chip>`) |
+| `SelectableChip` (`@mkbabb/glass-ui/selectable-chip`) | `Chip` (`@mkbabb/glass-ui/chip`) | `<SelectableChip v-model="on" :tone="t" size="lg">…</SelectableChip>` → `<Chip v-model="on" :tone="t" size="lg">…</Chip>` (the `tone` prop is unchanged — the tonal register is now opt-in on the ONE `<Chip>`) |
+| `toggleChipVariants` / `ToggleChipVariants` (`/toggle-chip`) | `chipVariants` / `ChipVariants` (`/chip`) | rename the recipe + type; the CVA axis is now `size × shape` (the `variant`→`shape` name-synonym; the `selectableChipVariants`→`chipVariants` shim was already SWEPT at BG.W-DEAD-SWEEP) |
+| `./toggle-chip` + `./selectable-chip` subpath exports | `./chip` | delete the import specs; import `Chip` / `chipVariants` from `@mkbabb/glass-ui/chip` (a value.js-bearing subpath — NOT re-added to the root barrel) |
+
+`<Chip>`'s eager `/chip` chunk is value.js-FREE (a static-only critical-path walk reaches ZERO
+value.js; `accent-tone-solve.ts` is reached ONLY by the dynamic `import()`), so a `var()` tone
+never loads the 26KB value.js math — a concrete `#hex`/`oklch(…)` tone lazily upgrades the
+label ink the next tick. Cross-repo `ToggleChip`/`SelectableChip` consumers ride the `^5.0.0`
+peer-bump asks (`docs/tranches/BI/coordination/asks-and-consumes.md`, filed by W-FACTOR-ASKS;
+confirm via the invariant-11 registry probe). Machine-locked by `proof:fold-delete` (chip
+clause: retired `toggle-chip` + `selectable-chip` dir/subpath/export absent ×2, no consumer
+import, survivor `Chip` present) + `proof:accent-tone` A2 (the value.js QUARANTINE — the
+`accent-tone-solve` leaf bears value.js, the sync shell does NOT) + the value.js-boundary walk
+(the `proof:bp-lazy`-style eager-graph assert) + the B-close gestalt ceremony (the pill/cell/
+tonal chip byte-faithful to the retired pair, both modes).
+
+### BI.W-SURFACE-EXTRACT — `CardTier` folds onto the `surface` axis
+
+The bare (tier × decoration) glass plate is extracted as `<Surface>` (published at
+`@mkbabb/glass-ui/surface`); `Card`'s legacy tier spellings fold onto the same axis.
+Clean break, no alias.
+
+| Retired (5.0.0) | Replacement |
+|---|---|
+| `CardTier` `"opaque"` (tier prop spelling) | `surface="opaque"` on `Card`/`Surface` |
+| `CardTier` `"deep"` (tier prop spelling) | `surface="deep"` on `Card`/`Surface` |
+
+Machine-locked by `proof:surface-axis` W7/W8 (the wart census is zero + `<Surface>`
+publishes; the private-union floor holds).
+
+### BI.W-CLEAR-FOLD — the dead `surface="clear"` member retired
+
+The `surface="clear"` decoration member (BE.W-CLEAR-VARIANT — the Apple-Clear
+maximally-translucent plate + its mandatory `::before` legibility scrim) is RETIRED as
+dead substrate: a full mechanism with ZERO binding consumers (0 in-repo + 0 across
+atlas / speedtest / slides / value.js / keyframes.js at npm 4.2.0 — the substrate-
+without-consumer invariant J-inv-10). Clean break, no alias.
+
+| Retired (5.0.0) | Replacement |
+|---|---|
+| `surface="clear"` (Surface union member) | none — the member is gone; use `surface="glass"` (the maximal translucent default) or `surface="veil"` (the borderless text plate) |
+| `--glass-bg-clear` / `--glass-opacity-clear` tokens | none (rung census 11→10; the `.glass-clear` decoration + the `[data-surface="clear"]` scrim rule die with the member) |
+
+No paint changes for any surviving surface (a dead member painted nowhere). No consumer
+migration is owed — the 0-consumer state was verified at the retire (the inv-11 registry +
+foreign-tree probe). Machine-locked by `proof:surface-axis` **W9** (member-consumption:
+every `Surface` union member resolves ≥1 real non-demo/non-self consumer in `src/` OR is
+DEFINITION-ABSENT — the vacuous-green a dead member used to ride is closed) + the coupled
+retirement of `proof:glass-foundation`'s A3 clear arm (the gate that verified the member
+dies WITH it) + the `proof:encapsulation` G2 3-member re-green.
+
+### BI.W-DIALOG-PLACEMENT — Sheet folds onto `<Dialog placement>`; ConfirmDialog → a Dialog preset
+
+The Kronecker fold (D-FACTOR FACTOR-B): `Sheet` was the SAME reka `DialogRoot` + the
+SAME FocusScope as Dialog — its side-slide is PAINT, not a distinct mechanism — so it
+folds onto a `<DialogContent placement="center | top | right | bottom | left">` axis
+(`center` default = the byte-identical centered modal; the four side values are the
+retired Sheet sides). The per-side rounding/border + the `sheet-animate` slide register
+are the retired `sheetVariants` arms verbatim; the structural positioning ships
+PRECOMPILED off `[data-slot="dialog-content"][data-placement]` (`dialog-placement.css`,
+the renamed `sheet.css`). **`ConfirmDialog` DEMOTES to a Dialog preset** — its
+promise/`v-model:open` opener was thin (a glass `<DialogContent :show-close="false">` +
+a title/description + a confirm/cancel footer + a loading dismiss-guard), a CONSUMER
+composition now (presets live in consumers), not a shipped component. Clean break, no
+alias.
+
+**THE N3 DISAMBIGUATION RULE:** `Dialog[placement]` is NOT `Drawer`. **Drawer SURVIVES** —
+it owns the snap-detent spring physics + the live-behind non-modal focus model + a
+keyframes-bearing chunk (a mechanism no survivor expresses). A side sheet with no detents
+is `<Dialog placement="right">`; a detented bottom sheet over a live surface is `<Drawer>`.
+Placement is a Dialog paint axis; snap-physics is Drawer's mechanism — disjoint, never a
+third fork. Sheet's `dragDismiss` gesture does NOT carry into the fold (it was the JS
+slide-spring — Drawer's mechanism).
+
+| Retired (5.0.0) | Survivor | Rename |
+|---|---|---|
+| `Sheet` / `SheetTrigger` / `SheetContent` / `SheetHeader` / `SheetTitle` / `SheetDescription` / `SheetFooter` / `SheetClose` (`@mkbabb/glass-ui/sheet`) | `Dialog` / `DialogTrigger` / `DialogContent` / `DialogHeader` / `DialogTitle` / `DialogDescription` / `DialogFooter` / `DialogClose` (`@mkbabb/glass-ui/dialog`) | `<Sheet>…<SheetContent side="right">` → `<Dialog>…<DialogContent placement="right">`; every `Sheet*` sub-part → its `Dialog*` twin (same slot shape) |
+| `<SheetContent side="top\|right\|bottom\|left">` | `<DialogContent placement="…">` | `side="right"` → `placement="right"` (the prop renames; `placement="center"` is the new default centered modal) |
+| `<SheetContent dragDismiss dragThreshold>` | `<Drawer>` (snap physics) | a drag-dismissable bottom sheet is a `Drawer` (detents + live-behind), not a placement Dialog — re-point to the Drawer family |
+| `SheetVariants` (type, `/sheet`) | `Placement` axis (`@mkbabb/glass-ui`) | `SheetVariants['side']` → `Placement` (`"center" \| "top" \| "right" \| "bottom" \| "left"`); no successor CVA type (placement is an axis restriction, not a `variant` map) |
+| `ConfirmDialog` (`@mkbabb/glass-ui/confirm-dialog`) | `Dialog` preset (consumer composition) | `<ConfirmDialog v-model:open title description confirm-label destructive :loading @confirm>` → a `<Dialog v-model:open><DialogContent surface="glass" :show-close="false" @escape-key-down @interact-outside>` with a `<DialogHeader>` title/description + a `<DialogFooter>` cancel/confirm `<Button>` pair (the confirm reads `tone="destructive"` when destructive — the tone axis, see BI.W-BUTTON-TONE below; the loading guard `preventDefault`s the dismiss intents while in-flight) — the demo `feedback/confirm-dialog` story shows the full preset inline |
+| `./sheet` subpath export | `./dialog` | delete the import spec; import from `@mkbabb/glass-ui/dialog` |
+| `./confirm-dialog` subpath export | `./dialog` | as above — compose the confirm preset over `Dialog` |
+| `sheet.css` (`[data-slot="sheet-content"][data-side]`) | `dialog-placement.css` (`[data-slot="dialog-content"][data-placement]`) | the precompiled overlay-positioning file renames; the `:where()` consumer-override specificity is unchanged |
+
+The folded side sheet reads the Dialog `--glass-bg-dialog` glass rung (the fold's whole
+point — ONE dialog material; the retired Sheet read the floating rung — a plate-α shift,
+NOT a slide-geometry change: the enter travel is byte-identical). Dialog `variant`→`surface`
+is the separate BA.W-SURFACE-AXIS clean break (documented above). Cross-repo: no external
+`/sheet` or `/confirm-dialog` consumer found (the configurator gear-sheet is internal-demo,
+ConfirmDialog was demo-only); the `^5.0.0` peer-bump ask covers any downstream importer
+(`docs/tranches/BI/coordination/asks-and-consumes.md`, filed by W-FACTOR-ASKS). Machine-
+locked by `proof:fold-delete` (dialog-sheet clause: retired `ui/sheet` +
+`custom/confirm-dialog` dirs/subpaths/exports absent, no consumer import, survivor `Dialog`
+present) + the edge-slide + focus-return π (Chrome + real WebKit, both modes; rides the
+B-close gestalt ceremony).
+
+### BI.W-BUTTON-TONE — `Button.destructive` migrates off `variant` onto the `tone` axis
+
+The Kronecker factorization reaches the library's oldest component (PASS-4B ruling 5 — "destructive
+IS a tone"). `destructive` was a `variant` CVA member — but a destructive intent is a SEMANTIC TONE,
+not a style/surface register, so it moves onto the ORTHOGONAL `tone` axis (`_shared/axes.ts`'s `TONES`
+tuple, the ONE grammar home). `variant` is now STYLE-only (`default`/`primary-audacious`/`gold-audacious`/
+`outline`/`secondary`/`accent`/`ghost`/`glass`/`glass-wash`/`ai`/`link`) — machine-locked by
+`proof:variant-residual` (no tone/size/surface concept may hide in a `variant` map). The four-state
+fill/hover/active/aria-pressed recipe moves VERBATIM onto the `tone.destructive` arm (the byte-identical
+CVA rows); `tone="neutral"` is the tone-less default (the variant paints alone). Clean break, no alias.
+`ButtonVariants['tone']` publishes on `/api` in lockstep (it re-derives off the CVA `tone` map — no
+separate api edit).
+
+| Retired (5.0.0) | Survivor | Rename |
+|---|---|---|
+| `<Button variant="destructive">` | `<Button tone="destructive">` | the destructive register is a `tone`, not a `variant`; `variant` is reserved for STYLE members. `tone` composes ORTHOGONALLY (a destructive `outline`/`ghost` is now expressible: `<Button variant="outline" tone="destructive">`) |
+| `ButtonVariants['variant']` member `"destructive"` | `ButtonVariants['tone']` member `"destructive"` | the CVA `variant` map DROPS `destructive`; the CVA `tone` map ADDS it (`"neutral" \| "destructive"`, default `neutral`) |
+
+Cross-repo: the consumer call-site migration (`<Button variant="destructive">` → `<Button tone="destructive">`
+in words/atlas/muster/sci-report, paired with the kf `^5.2.0` + value `^3.1.0` peer bump) is filed by
+`BI.W-FACTOR-ASKS` on the `docs/tranches/BI/coordination/asks-and-consumes.md` roster. Machine-locked by
+`proof:variant-residual` (the `button:destructive` residual GREENs when `destructive` is a `tone` value +
+DEFINITION-ABSENT from the `variant` map) — jointly with `BI.W-SYNONYM-RENAMES` (the alert/badge tone
+residuals). The tone byte-diff rides `W-SYNONYM-RENAMES-DELTA.md` + the B-close gestalt ceremony.
+
+### BI.W-SYNONYM-RENAMES — the library-wide synonym-rename law (`type`/`variant` tone · `direction` · `position` · `ToastVariant`)
+
+The synonym-de-duplication law (UF-P7; FAM-10 mechanism-distinctness — a synonym is a name-duplicate, not a
+distinct mechanism). Every rename is a NAME rename with ZERO value change (byte-identical paint); the `/api`
+surface moves in lockstep (the old synonym name is DEFINITION-ABSENT, no alias, no dual path).
+
+**Tone axis** — the semantic status register (success/warning/info/destructive + neutral) moves off the
+`type`/`variant` maps onto the ONE shared `tone` axis (`_shared/axes.ts`'s `TONES` tuple), machine-locked by
+`proof:variant-residual` (no tone concept may hide in a `variant`/`type` map). Byte-identical paint: each tone
+still resolves the SAME classes/`.feedback-tone-<name>` register.
+
+| Retired (5.0.0) | Survivor | Rename |
+|---|---|---|
+| `<Alert variant="destructive\|success\|warning\|info">` | `<Alert tone="…">` | the CVA `variant` map → a `tone` map; `variant:'default'` → `tone:'neutral'` (the un-toned glass-wash base). `Alert` now emits `:data-tone` |
+| `<Badge variant="destructive\|success\|warning\|info">` | `<Badge tone="…">` | `variant` stays STYLE-only (`default`/`secondary`/`outline`); a new orthogonal `tone` map carries the semantics (`tone` declared AFTER `variant` so a set tone wins the `cn` merge — byte-identical). `Badge` emits `:data-tone`; the glass register keys off `.badge-atom--glass[data-tone='…']` (glass-atom.css re-keyed) |
+| `Toast.variant?: ToastVariant` (`'default'\|'destructive'\|…`) | `Toast.tone?: Tone` | the private `ToastVariant` union RETIRED — the toast status reads the ONE shared `Tone` axis (`default` → `neutral`). `Toast` emits `:data-tone`. `ToastVariant` export DROPPED from `/api` (`src/api/index.ts`) + the toast barrel; the tone type publishes as `Tone` via `@mkbabb/glass-ui/axes` |
+| `Notification` item `type: 'success'\|'error'\|'info'\|'warning'` | item `tone: 'success'\|'warning'\|'info'\|'destructive'` | the `type` synonym → `tone` (a TONES subset); `error` was `destructive`'s synonym → folded (clean break). Zero paint change (same `.feedback-tone-<name>`) |
+
+**Orientation / Placement axis** — the layout/side synonyms fold onto the shared axis vocabulary:
+
+| Retired (5.0.0) | Survivor | Rename |
+|---|---|---|
+| `<StackedIconGroup direction="horizontal\|vertical">` | `<StackedIconGroup orientation="…">` | `direction` → the shared `orientation` vocabulary (`StackedIconGroupProps.direction` → `.orientation`; `:data-direction` → `:data-orientation`, the SFC CSS re-keyed). Zero value change |
+| `HeaderRibbon.position?: HeaderRibbonPosition` (`'left'\|'right'`) | `HeaderRibbon.placement?: HeaderRibbonPlacement` | `position` → the shared `placement` vocabulary (a PLACEMENTS subset); the type `HeaderRibbonPosition` → `HeaderRibbonPlacement` (published on `/api`). Zero value change |
+
+Cross-repo: the consumer call-site migration (words/atlas/muster/sci-report, paired with the `^5.0.0` peer
+bump) is filed by `BI.W-FACTOR-ASKS` on `docs/tranches/BI/coordination/asks-and-consumes.md`. Machine-locked by
+`proof:variant-residual` (the alert/badge tone residuals GREEN) — jointly with `BI.W-BUTTON-TONE`. The
+`register`→`size` (SelectTrigger, already `size`) + `ToggleChip.variant`→`shape` (BI.W-CHIP-FOLD) rows of the
+law are recorded in their own waves. Distinct-mechanism holdouts (NOT synonyms — flagged as riders, not
+renamed): `SortableList.axis` (`x\|y` drag-axis, not orientation), `DockStack.position` (`start\|end`
+alignment), `MetricStack.register` (`audacious\|result` display-mode, would break `size-grammar`),
+`Toaster.position` (corner anchor), `Drawer.direction` (reka/vaul forward prop). The tone/orientation byte-diff
+rides `W-SYNONYM-RENAMES-DELTA.md` + the B-close gestalt ceremony.
+
+### BI.W-GLASS-DEDUP — `GlassPanel` retires onto `Card` / `<Surface>` / `.glass-resting` (the ONE refraction door)
+
+The FAM-10 mechanism-distinctness ruling (UF-B2): `<GlassPanel>` owned NO distinct mechanism — its tier map
+was Card's, its surface was the shared `surface` resolver, and its `useGlassRenderer`/`createGlassFilter`
+JS-canvas `feDisplacementMap` was a SECOND refraction path competing with the house `.glass-lens` /
+`#glass-refract` axis. A slotless glass surface needs no component: `<Surface tier surface>` (or the bare
+`class="glass-resting"` utility) serves the plate case, and `.glass-lens` serves the refraction case. Clean
+break, no alias — the component, its subpath, its `/api` type, its tier-proof gate, and the JS-canvas
+refraction builder all retire together.
+
+| Retired (5.0.0) | Survivor | Rename |
+|---|---|---|
+| `GlassPanel` (`@mkbabb/glass-ui/glass-panel`) | `Card` / `<Surface>` / `class="glass-resting"` | `<GlassPanel tier="resting">…</GlassPanel>` → `<Surface tier="resting" surface="glass">…</Surface>` (or the bare `class="glass-resting"` on the plate); a refraction case re-points onto `class="glass-lens"` |
+| `GlassPanelProps` (type, `/api`) | none — retired outright | no successor type; `<Surface>` publishes `SurfaceProps` (the shared tier × surface axis) |
+| `./glass-panel` subpath export | `./card` / root `<Surface>` | delete the import spec; import `Card`/`Surface` from `@mkbabb/glass-ui` (root) or `@mkbabb/glass-ui/card` |
+| `useGlassRenderer` / `createGlassFilter` / `destroyGlassFilter` (the JS-canvas refraction builder) | `.glass-lens` / `#glass-refract` (the ONE declarative refraction door) | a bespoke JS `feDisplacementMap` builder is gone — the refraction is the single `.glass-lens` opt-in on the SOTA-degrade ladder |
+| `.glass-card` (co-selector alias) | `.glass-resting` | fold the alias onto `.glass-resting` (pure co-selector; byte-identical) |
+
+Byte-diff: every GlassPanel-slot demo now mounting `<Surface>` / `class="glass-resting"` is 0-delta at the
+shared tier rungs (GlassPanel's tier map ≡ Card's); any refraction demo re-points `.glass-lens`. Cross-repo:
+the glass-panel usage (5 sites / 2 repos — **atlas ×3**, **sci-report ×2**) rides the `^5.0.0` peer-bump ask
+(`docs/tranches/BI/coordination/asks-and-consumes.md` row 8, filed by `BI.W-FACTOR-ASKS`). The
+`composables/glass/index.ts` keyframes.js-binds-`/glass-panel` claim was RE-PROBED read-only at HEAD — no live
+sibling binds it, so the delete is silent-safe. Machine-locked by `proof:fold-delete` (glass-panel clause:
+`custom/glass-panel/` dir + `/glass-panel` subpath + `GlassPanelProps` DEFINITION-ABSENT, no live `GlassPanel`
+import in `src/`, survivor `.glass-resting`/`<Surface>` present — the residual package.json `./glass-panel`
+export drop is the orchestrator regen) + `proof:no-dual-path` (single refraction door: builders=0) +
+`proof:migration-truth` (the dead `GlassPanelProps→/glass-panel` re-home row removed).
+
 ## 4.1.0
 
 **BC.W-VIZ-FOURIER — the Canvas2D fourier renderer + the three-view split RETIRED
@@ -524,7 +810,8 @@ look") — unused in-repo and at odds with the glass-first identity. MIGRATE: th
 default `<Button>` is the glass register; for a loud CTA use `variant="accent"` (the
 gold-tint-on-glass). This flips `proof:no-shadcn-default` fully GREEN (the last
 shadcn-neutral surface-fill residual removed). The `default`/`outline`/`secondary`/
-`accent`/`ghost`/`destructive` variants are unchanged.
+`accent`/`ghost` variants are unchanged (`destructive` LATER migrates off `variant`
+onto the `tone` axis at BI.W-BUTTON-TONE — see below).
 
 **BC.W-DOCK-STACK-RAIL — `<DockRail>` + `DockRailItem` RETIRED onto the macOS
 hover-expand `<DockStack>` + `DockStackItem`. Clean break, no alias ("No legacy
