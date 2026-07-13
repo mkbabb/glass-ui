@@ -9,30 +9,39 @@ import { usePagerWorm } from "./composables/usePagerWorm";
    The shared oracle the carousel ships and the slides deck adopts. ≥2 consumers by
    construction: the carousel + the slides DeckPager (a THIN PagerDots wrapper).
 
-   THE GOO-MORPH BARBELL (BD.W-GOO-BARBELL-NECK). The active indicator GOO-MORPHS from
-   dot to dot like the Google-deck dot morph — but as a true BARBELL, not a single
-   stretching worm: TWO round pip-bodies (head + lead) bud apart, a metaball NECK with a
-   concave waist wells up between them (peak mid, ~0 at the ends), the SVG goo filter
-   merges the three into ONE silhouette with a real local-minimum waist, then the bodies
-   coalesce on the target + SETTLE. FAR more liquid + squishy than a flat slide. Two layers:
+   THE LIQUID DOT-MORPH WORM (BI.W-PAGER-WORM). The selected indicator STRETCHES,
+   TRAVELS, and RE-FORMS on the next dot with liquid weight (the Google-worm edict) —
+   a two-edge worm: a LEAD edge springs toward the target dot, a TRAIL edge lags then
+   catches up (`useLeadTrail`, the ONE shared driver), and the gap between them is the
+   live elongation. The paint is a THREE-LAYER split so the filter is DECOUPLED from
+   the bed by construction (the σ8 whole-layer-filter annihilation that painted an
+   EMPTY pill is structurally impossible now):
 
-   • THE GOO SILHOUETTE LAYER (`.pager-goo-layer`, aria-hidden, pointer-events:none) —
-     N opaque `.goo-dot` pips (the rail bed) + the BARBELL (bodyA + a concave neck +
-     bodyB), all wrapped in the classic SVG gooey filter (blur → alpha-threshold). The
-     barbell is the only moving group; bodyA/bodyB are round pips, the neck wells a
-     concave throat between them. The 52% rail translucency lives ONCE at the LAYER
-     opacity (the opaque-layer technique — translucent pips break the alpha threshold).
-     COMPOSITOR-ONLY: the bodies travel on `transform: translate`, deform on `scale`
-     (the useLiquidFlex `--stretch` reciprocal), the neck wells on scaleY — NEVER an
+   • THE BED LAYER (`.pager-bed-layer`, aria-hidden) — N crisp CSS circles, NO filter,
+     EVER (the rail bed). The active bed pip dims ~0.35 UNDER the worm (the brightness
+     hierarchy: the opaque worm reads brighter than the translucent bed).
+
+   • THE WORM LAYER (`.pager-worm-layer`, aria-hidden, pointer-events:none) — ONLY the
+     indicator masses (bodyA + a welling concave neck + bodyB), the translucency ONCE
+     at the layer, the goo filter ONCE at the layer. COMPOSITOR-ONLY: the bodies travel
+     on the `translate` property, deform on the CSS `scale: var(--stretch)` reciprocal
+     (the `useLiquidFlex` LOW-cap squish), the neck spans/wells on `scale` — NEVER an
      animated width (motion-canon P5).
 
-   • THE INTERACTION LAYER (the transparent 24px `<button>` hit-targets, ABOVE the goo
-     layer) — BYTE-UNTOUCHED: all a11y (role/aria/keyboard/focus-ring), windowFit, and
-     click live here. The barbell + goo layer are PRESENTATIONAL.
+   • THE INTERACTION LAYER (the transparent 24px `<button>` hit-targets, ABOVE the worm
+     layer) — all a11y (role/aria/keyboard/focus-ring), windowFit, and click live here.
+     The bed + worm layers are PRESENTATIONAL.
 
-   PRM (motion-canon P6): the barbell coalesces to ONE body, `--stretch` stays 1, the goo
-   layer is DROPPED (display:none) — only the fade survives. `@supports (filter: url(#x))`
-   gates the goo layer; the plain transform body is the floor on a gap engine.
+   THE PAINT ARM (ruling 13). Arm A (the shipped register) merges the barbell with the
+   worm-scoped `#pager-worm-goo` filter (a true smooth throat — single-body peak 0.72 >
+   the 0.33 threshold). Arm B (the `@supports`-not degrade FLOOR) renders the un-merged
+   clip-path barbell (`#pager-neck-throat`) — a VISIBLE honest partial, NEVER the empty
+   pill. No dual path at 13px: the filter is the sole paint; the clip is reached ONLY on
+   an engine that cannot ref an SVG filter.
+
+   PRM (motion-canon P6): the worm coalesces to ONE body, seats on the target with zero
+   in-between frames (`--stretch` stays 1, the filter dropped) — only the fade survives;
+   the bed is static.
 
    Every paint reads a `--pager-*` token (the consumer retint seam — slides sets
    `--pager-dot-active: var(--ncsu-red)`; presets-in-consumers). */
@@ -77,8 +86,10 @@ const emit = defineEmits<{ (e: "select", index: number): void }>();
 const active = defineModel<number>("active", { default: 0 });
 
 const rootEl = ref<HTMLElement | null>(null);
-// the BARBELL — two round pip-bodies + a welling concave neck (the de-dup of the prior
-// single worm; the engine projects all three).
+// the WORM layer — the bodies/neck's positioning context (the coordinate origin the
+// worm reads its centers against, so the ring padding never skews the projection).
+const wormLayerEl = ref<HTMLElement | null>(null);
+// the three worm masses — two round pip-bodies + a welling concave neck.
 const bodyAEl = ref<HTMLElement | null>(null);
 const bodyBEl = ref<HTMLElement | null>(null);
 const neckEl = ref<HTMLElement | null>(null);
@@ -91,12 +102,12 @@ function setDot(i: number, el: Element | null): void {
     else dotEls.delete(i);
 }
 
-// the opaque goo-dot silhouettes — the center read for the worm travel comes off
-// these (they share the buttons' grid, so their centers ARE the painted dot centers).
-const gooDotEls = new Map<number, HTMLElement>();
-function setGooDot(i: number, el: Element | null): void {
-    if (el) gooDotEls.set(i, el as HTMLElement);
-    else gooDotEls.delete(i);
+// the crisp bed pips — the worm travel centers measure off these (they share the
+// button grid, so their centers ARE the painted dot centers).
+const bedDotEls = new Map<number, HTMLElement>();
+function setBedDot(i: number, el: Element | null): void {
+    if (el) bedDotEls.set(i, el as HTMLElement);
+    else bedDotEls.delete(i);
 }
 
 const vertical = computed(() => props.orientation === "vertical");
@@ -112,15 +123,16 @@ const win = computed(() =>
 );
 const shown = computed(() => win.value.shown);
 
-// The goo-morph WORM geometry (centerOf/restSize) + the useGooMorph instance + the
-// active/shown travel/settle driver live in the colocated composables/ leaf (BH.B2.4a).
-// The SFC keeps the interaction layer (the dot maps + the keyboard focus recovery below).
+// The worm geometry (`centerOf`) + the `useLeadTrail` driver + the active/shown/resize
+// watchers live in the colocated composables/ leaf (BH.B2.4a). The SFC keeps the
+// interaction layer (the dot maps + the keyboard focus recovery below).
 usePagerWorm({
     rootEl,
+    wormLayerEl,
     bodyAEl,
     bodyBEl,
     neckEl,
-    gooDotEls,
+    bedDotEls,
     shown,
     vertical,
     active,
@@ -143,6 +155,91 @@ function select(i: number): void {
     active.value = i;
     emit("select", i);
 }
+
+// ── The roving-tabindex keyboard contract (BI.W-PAGER-A11Y) ──────────────────────────
+// The WAI-ARIA tabs/toolbar roving-tabindex mirrored onto the windowed dot rail (the
+// SegmentedTabs contract — BB.W-DRAG-MORPH the model): EXACTLY ONE tab stop (the active
+// dot `tabindex="0"`, the rest `-1`); a root `@keydown` handles the AXIS-DERIVED arrows
+// (ArrowRight/Left horizontal ⇄ ArrowDown/Up vertical, off the orientation), Home/End jump,
+// wrapping at the ends, skipping any disabled dot. The keyboard step IS a selection →
+// focus-follows the activated dot (the SAME `select(...)` path a click takes), re-focused
+// on the next tick since a hop off the current window remounts its button.
+
+// The ONE tab stop — the active dot when it is in the window (a windowed rail always
+// centers on the active, so this resolves to the active dot), else the first rendered dot.
+const tabStopIndex = computed(() => {
+    const s = shown.value;
+    if (s.length === 0) return -1;
+    return s.includes(active.value) ? active.value : s[0]!;
+});
+function rovingTabindex(i: number): number {
+    return i === tabStopIndex.value ? 0 : -1;
+}
+
+// Focus-follows-activation: select the slide (recomputes the window), then re-focus its
+// dot on the next tick (the button may have just mounted into the window).
+function focusSlide(i: number): void {
+    select(i);
+    void nextTick(() => dotEls.get(i)?.focus());
+}
+// Step to the next NON-disabled dot in `dir` (+1/-1), wrapping. `dotEls` reads the live
+// native `disabled` (no dot is disabled today — the skip is honest, not a fabricated prop;
+// an off-window index is `undefined` → treated enabled → select+recompute+focus).
+function stepTo(from: number, dir: 1 | -1): void {
+    const n = props.count;
+    if (n === 0) return;
+    for (let step = 1; step <= n; step++) {
+        const i = (from + dir * step + n * step) % n; // wrap
+        if (!dotEls.get(i)?.disabled) {
+            focusSlide(i);
+            return;
+        }
+    }
+}
+function edgeTo(edge: "first" | "last"): void {
+    const n = props.count;
+    if (n === 0) return;
+    const order =
+        edge === "first"
+            ? Array.from({ length: n }, (_, i) => i)
+            : Array.from({ length: n }, (_, i) => n - 1 - i);
+    for (const i of order) {
+        if (!dotEls.get(i)?.disabled) {
+            focusSlide(i);
+            return;
+        }
+    }
+}
+function onKeydown(e: KeyboardEvent): void {
+    const from = active.value;
+    const nextKey = vertical.value ? "ArrowDown" : "ArrowRight";
+    const prevKey = vertical.value ? "ArrowUp" : "ArrowLeft";
+    let handled = true;
+    switch (e.key) {
+        case nextKey:
+            stepTo(from, 1);
+            break;
+        case prevKey:
+            stepTo(from, -1);
+            break;
+        case "Home":
+            edgeTo("first");
+            break;
+        case "End":
+            edgeTo("last");
+            break;
+        default:
+            handled = false;
+            break;
+    }
+    if (handled) {
+        e.preventDefault(); // no page scroll on the arrow keys
+        // the pager OWNS its navigation keys (the WAI-ARIA tablist contract) — stop the
+        // bubble so an ancestor keyboard-scroller (the embla <Carousel>) does not
+        // double-advance off the SAME key.
+        e.stopPropagation();
+    }
+}
 </script>
 
 <template>
@@ -153,6 +250,7 @@ function select(i: number): void {
         :aria-label="ariaLabel"
         :aria-orientation="pattern === 'group' ? undefined : orientation"
         :data-orientation="orientation"
+        @keydown="onKeydown"
         :class="
             cn(
                 'pager-dots inline-flex items-center justify-center gap-1.5',
@@ -162,26 +260,23 @@ function select(i: number): void {
             )
         "
     >
-        <!-- ONE hidden SVG goo filter, mounted per rail (aria-hidden, 0×0). The
-             blur-then-alpha-threshold metaball merge (morph-bridge.css trick). STATIC —
-             never animated (the WebKit #184601 trap); only opaque shapes move. -->
+        <!-- ONE hidden SVG defs, mounted per rail (aria-hidden, 0×0). The concave
+             NECK-THROAT clipPath is the Arm B degrade FLOOR — a structural hourglass
+             waist reached ONLY under `@supports not (filter: url())`. The metaball goo
+             `<filter>` lives ONCE at the app/shell root (`<GooFilter>`); the worm layer
+             references `#pager-worm-goo` by id. -->
         <svg
-            class="pager-goo-defs"
+            class="pager-worm-defs"
             width="0"
             height="0"
             aria-hidden="true"
             focusable="false"
         >
             <defs>
-                <!-- BD.W-MORPH-FIELD-WELD (M1) — the goo `<filter id="pager-goo">` is NOT
-                     mounted here anymore (it dup-mounted per PagerDots instance). It lives
-                     ONCE at the app/shell root (`<GooFilter>`), and `.pager-goo-layer`
-                     references it by id (`url(#pager-goo)`). Only the per-instance clipPath
-                     stays inline (a structural clip, not the shared metaball graph). -->
-                <!-- the concave NECK-THROAT (NET-NEW — the dot-scale `--neck-waist`
-                     hourglass). objectBoundingBox cubic-Bézier sides pulling IN to the 0.34
-                     waist — a SMOOTH concave throat (NOT a faceted polygon, NOT `inset()`).
-                     Safari-safe (objectBoundingBox clipPath universally supported). -->
+                <!-- the concave NECK-THROAT — objectBoundingBox cubic-Bézier sides
+                     pulling IN to the 0.34 waist (a SMOOTH concave throat, NOT a faceted
+                     polygon, NOT `inset()`). Safari-safe (objectBoundingBox clipPath
+                     universally supported). Arm B (the `@supports`-not floor) only. -->
                 <clipPath id="pager-neck-throat" clipPathUnits="objectBoundingBox">
                     <path
                         d="M0,0 C0.25,0 0.36,0.34 0.5,0.34 C0.64,0.34 0.75,0 1,0 L1,1 C0.75,1 0.64,0.66 0.5,0.66 C0.36,0.66 0.25,1 0,1 Z"
@@ -190,15 +285,14 @@ function select(i: number): void {
             </defs>
         </svg>
 
-        <!-- THE GOO SILHOUETTE LAYER — opaque pips + the traveling worm, merged by the
-             goo filter. aria-hidden, pointer-events:none (the buttons own interaction).
-             Mirrors the button grid (same gap, 24px cells) so a goo-dot center IS the
-             painted dot center. -->
-        <div class="pager-goo-layer" aria-hidden="true">
+        <!-- THE BED LAYER — N crisp CSS circles, NEVER filtered (the rail bed). The
+             active pip dims ~0.35 under the worm. Mirrors the button grid (same gap,
+             24px cells) so a bed pip center IS the painted dot center. -->
+        <div class="pager-bed-layer" aria-hidden="true">
             <span
                 v-for="i in shown"
                 :key="i"
-                :ref="(el) => setGooDot(i, el as Element | null)"
+                :ref="(el) => setBedDot(i, el as Element | null)"
                 class="goo-dot"
                 :data-active="i === active ? '' : undefined"
                 :data-edge="
@@ -208,8 +302,16 @@ function select(i: number): void {
                         : undefined
                 "
             />
-            <!-- THE BARBELL — bodyA / neck / bodyB (three refs the engine projects). Two
-                 round pip-bodies bud apart, the concave neck wells between them. -->
+        </div>
+
+        <!-- THE WORM LAYER — ONLY the barbell masses (bodyA / neck / bodyB), the
+             translucency ONCE, the goo filter ONCE. aria-hidden, pointer-events:none
+             (the buttons own interaction). -->
+        <div
+            ref="wormLayerEl"
+            class="pager-worm-layer"
+            aria-hidden="true"
+        >
             <span ref="bodyAEl" class="goo-body" />
             <span ref="neckEl" class="goo-neck" />
             <span ref="bodyBEl" class="goo-body" />
@@ -225,6 +327,7 @@ function select(i: number): void {
             :aria-selected="pattern === 'group' ? undefined : i === active"
             :aria-current="pattern === 'group' && i === active ? 'true' : undefined"
             :aria-label="`Go to slide ${i + 1}`"
+            :tabindex="rovingTabindex(i)"
             :data-active="i === active ? '' : undefined"
             :data-edge="
                 (k === 0 && win.clippedStart) || (k === shown.length - 1 && win.clippedEnd)
@@ -239,75 +342,63 @@ function select(i: number): void {
 </template>
 
 <style scoped>
-/* ── PagerDots — the ONE position-dot register + the goo-morph WORM (BD.W-PAGER) ────
+/* ── PagerDots — the ONE position-dot register + the liquid dot-MORPH worm
+   (BI.W-PAGER-WORM) ─────────────────────────────────────────────────────────────
    The shared oracle (carousel dots ≡ slides DeckPager). The active indicator is a
-   LIQUID WORM that goo-morphs between dots (STRETCH→MERGE→CONTRACT→SETTLE). Every
-   paint reads a `--pager-*` token so a consumer retints with zero fork. */
+   LIQUID worm (a two-edge lead/trail barbell) that STRETCHES → TRAVELS → RE-FORMS
+   between dots. Three layers: a crisp bed (no filter), the worm masses (filter once),
+   the transparent hit-targets. Every paint reads a `--pager-*` token. */
 
 .pager-dots {
     /* the per-rail dot tokens — a consumer retints by overriding these. KEPT. */
-    --pager-dot-size: 0.8125rem; /* 13px base pip diameter (the worm rests at this) — a
-       real dot, not a speck (BD goo-morph-refine; the MASTER scale: bigger dot → fatter
-       worm body → wider bridging fringe → the goo has mass to merge). */
-    --pager-dot-elongated: 2.25rem; /* 36px the worm's max elongation reference (1.5× the
-       bigger pitch; documentary — the worm length is geometry-derived in paint()). */
-    --pager-dot-active: var(--foreground); /* the solid ink the goo layer paints */
+    --pager-dot-size: 0.8125rem; /* 13px base pip diameter (the worm body D). A real
+       dot, not a speck: bigger dot → fatter worm body → wider bridging fringe → the goo
+       has mass to merge (ruling 13, ONE arm at 13px). */
+    --pager-dot-elongated: 2.25rem; /* 36px — the worm's max elongation (the LEAD↔TRAIL
+       gap clamp; a multi-hop worm travels bounded, never taffy). */
+    --pager-dot-active: var(--foreground); /* the solid ink the worm masses paint */
     --pager-dot-inactive: color-mix(in srgb, var(--foreground) 52%, transparent);
+    --pager-dot-active-dim: color-mix(in srgb, var(--foreground) 35%, transparent);
     --pager-dot-hover: color-mix(in srgb, var(--foreground) 72%, transparent);
 
-    /* the goo-morph worm tokens (BD.W-PAGER-GOO-MORPH). The geometry-law DWELL curve
-       (--pager-worm-flow) + its clock + swell SHIP from the §2 EASING register in
-       tokens/scheme-motion.css beside their --carousel-goo-flow / --deck-goo-flow family
-       (the curve-definition home — a `linear()` is never serialized inline in an SFC) and
-       cascade into .pager-dots from :root; a consumer :root/scope override still cascades
-       in with zero :deep(). Only the component-local goo-layer opacity lives here. */
-    --pager-goo-layer-opacity: 0.65; /* the rail translucency, ONCE at the layer — a solid
-       WET neck (still translucent glass, not opaque). */
-    --pager-goo-filter: url(#pager-goo); /* consumer can swap a wetter/crisper filter */
+    /* the worm layer translucency, ONCE at the layer — a solid WET worm (still
+       translucent glass, not opaque). */
+    --pager-worm-layer-opacity: 0.65;
+    /* the worm-scoped filter — a consumer can swap a wetter/crisper graph. */
+    --pager-goo-filter: url(#pager-worm-goo);
 
-    /* BD.W-CAROUSEL-DECK-GLASS §5 — the per-consumer `--goo-weight`. The pager is the
-       LOUDEST consumer (0.7 — a dot worm at 13px has NO vestibular risk, so the technicolor
-       flow is most exuberant here). A dot commit is always a DRIVER (a deliberate click /
-       keyboard select); there is no ambient auto-advance to mute, so no `[data-autoplay]`
-       seam — the worm always carries its weight. PRM zeroes `--motion-weight` (below). */
-    --goo-weight: 0.7;
-    --motion-weight: var(--goo-weight);
+    /* the travel-squish scalar (1 at rest; the worm bodies read it via the CSS `scale`
+       reciprocal). Written per-frame off `useLiquidFlex` by the worm driver. */
+    --stretch: 1;
 
-    /* BD.W-GOO-BARBELL-NECK — the NEW barbell tokens (consumer-scoped; the shared token
-       files stay read-only). `--pager-worm-neck-gap` — how near the two pip-bodies draw at
-       mid (the engine reads it, falling to its 0.7 param); `--neck-waist` — the concave
-       throat depth the clipPath pulls IN to at the waist. */
-    --pager-worm-neck-gap: 0.7;
-    --neck-waist: 0.34;
+    /* the roving hit target (BI.W-PAGER-A11Y). The transparent `<button>` grows to a ≥28px
+       comfort target while the painted pip (the BED layer, 13px in a 24px cell) is UNMOVED;
+       the symmetric negative margin pulls the 28px box back into a 24px flow cell so the
+       button centers stay aligned with the bed pips (24px meets WCAG 2.5.8 AA; the deliberate
+       below-44px exemption is recorded in W-PAGER-A11Y-hit-target.md). */
+    --pager-hit-target: 28px;
+    --pager-hit-inset: -2px; /* = (24px cell − 28px target) / 2 — the flow-cell pull-back */
 
-    position: relative; /* the goo layer + barbell anchor to the rail box */
+    position: relative; /* the bed + worm layers anchor to the rail box */
 }
 
-/* THE GOO SILHOUETTE LAYER — the opaque merge medium. EVERY shape inside is full-alpha;
-   the 52% rail translucency lives ONCE here (the opaque-layer technique). The goo
-   filter merges the worm + the dots into ONE metaball silhouette. Mirrors the button
-   grid so a goo-dot center IS the painted dot center. */
-.pager-goo-layer {
+/* THE BED LAYER — N crisp CSS circles, NEVER filtered. Mirrors the button grid so a
+   bed pip center IS the painted dot center. */
+.pager-bed-layer {
     position: absolute;
     inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.375rem; /* gap-1.5 — match the button rail */
-    pointer-events: none; /* the buttons ABOVE own the hit-targets */
-    filter: var(--pager-goo-filter, url(#pager-goo)); /* the metaball merge */
-    opacity: var(--pager-goo-layer-opacity, 0.52); /* the 52% translucency, ONCE */
-    color: var(--pager-dot-active); /* the solid ink the shapes use */
-    will-change: transform; /* force a compositor layer — Safari re-raster (§6) */
-    contain: layout paint; /* tight-boxed filter region — the morph-bridge perf rule */
-    isolation: isolate; /* scope the filter, not the page */
+    pointer-events: none;
+    color: var(--pager-dot-active);
 }
-.pager-dots[data-orientation="vertical"] .pager-goo-layer {
+.pager-dots[data-orientation="vertical"] .pager-bed-layer {
     flex-direction: column;
 }
 
-/* the opaque pip silhouettes — full alpha (the filter needs opacity:1). Centered in a
-   24px cell to mirror the button grid; the painted pip is --pager-dot-size. */
+/* the crisp bed pip — a real dot, centered in a 24px cell to mirror the button grid. */
 .goo-dot {
     flex: 0 0 24px;
     width: 24px;
@@ -320,12 +411,11 @@ function select(i: number): void {
     width: var(--pager-dot-size);
     height: var(--pager-dot-size);
     border-radius: var(--radius-pill);
-    background: currentColor; /* FULL alpha */
+    background: var(--pager-dot-inactive); /* the 52% rail bed */
 }
-/* the active dot's own pip dims — the WORM sits on it (the brightness hierarchy: the
-   opaque worm at full presence reads brighter than the 52%-layer bed). */
+/* the active bed pip dims UNDER the worm (the worm reads brighter — the hierarchy). */
 .goo-dot[data-active]::before {
-    opacity: 0.35;
+    background: var(--pager-dot-active-dim); /* ~0.35 */
 }
 /* a clipped window edge cue — smaller pip. */
 .goo-dot[data-edge]::before {
@@ -334,39 +424,27 @@ function select(i: number): void {
     opacity: 0.6;
 }
 
-/* THE BARBELL BODIES — two round opaque pips (the metaball masses). They RESERVE a resting
-   footprint ONCE (--pager-dot-size, the one-time layout reserve, motion-canon P5); the
-   travel + squash are ALL transform (translate + scale), written by useGooMorph off the
-   flow. The squish reads --stretch reciprocally (axis-derived). NEVER an animated width. */
-.goo-body {
+/* THE WORM LAYER — the opaque merge medium (bodyA + neck + bodyB), the goo filter +
+   the translucency ONCE here (the opaque-layer technique — translucent masses would
+   break the alpha threshold). DECOUPLED from the bed by construction. */
+.pager-worm-layer {
     position: absolute;
-    top: 50%;
-    left: 0;
-    width: var(--pager-dot-size); /* the reserved body diameter D */
-    height: var(--pager-dot-size);
-    margin-top: calc(var(--pager-dot-size) / -2); /* center on the rail axis */
-    border-radius: 50%; /* a round pip — the metaball body */
-    background: currentColor; /* FULL alpha — the goo medium */
-    transform-origin: center;
-    /* the volume-preserving squish — paired reciprocally, axis-derived (the SegmentedTabs
-       indicator law). The engine transform carries the per-frame squash; --stretch is the
-       EXTRA travel-velocity swell on top (released at arrival). */
-    scale: var(--stretch, 1) calc(1 / var(--stretch, 1));
-    will-change: transform;
-}
-.pager-dots[data-orientation="vertical"] .goo-body {
-    top: 0;
-    left: 50%;
-    margin-top: 0;
-    margin-left: calc(var(--pager-dot-size) / -2);
-    scale: calc(1 / var(--stretch, 1)) var(--stretch, 1);
+    inset: 0;
+    pointer-events: none; /* the buttons ABOVE own the hit-targets */
+    filter: var(--pager-goo-filter, url(#pager-worm-goo)); /* the metaball MERGE (Arm A) */
+    opacity: var(--pager-worm-layer-opacity, 0.65); /* the translucency, ONCE */
+    color: var(--pager-dot-active); /* the solid ink the masses use */
+    will-change: transform; /* force a compositor layer — Safari re-raster */
+    contain: layout paint; /* tight-boxed filter region — the morph-bridge perf rule */
+    isolation: isolate; /* scope the filter, not the page */
 }
 
-/* THE CONCAVE NECK — the welling hourglass bridge between the two pip-bodies. The smooth
-   concave throat is the `#pager-neck-throat` objectBoundingBox clipPath (cubic-Bézier sides
-   pulling IN to the --neck-waist midpoint) — a STRUCTURAL concave waist BEFORE the filter
-   fuses it (NOT a faceted polygon, NOT `inset()`). The engine writes translate(mid)
-   scaleX(gap/D) scaleY(neckGirth) + the girth-following opacity (wells → pinches). */
+/* THE WORM MASSES — two round opaque pips + a welling concave neck. They reserve a
+   resting footprint ONCE (`--pager-dot-size`, the one-time layout reserve, motion-canon
+   P5); the travel is ALL `translate`, the body squash is the CSS `scale: var(--stretch)`
+   reciprocal, the neck span/well is `scale`. NEVER an animated width. The base geometry
+   centers each mass on the layer's on-axis ORIGIN so a `translate:center` positions it. */
+.goo-body,
 .goo-neck {
     position: absolute;
     top: 50%;
@@ -374,34 +452,62 @@ function select(i: number): void {
     width: var(--pager-dot-size);
     height: var(--pager-dot-size);
     margin-top: calc(var(--pager-dot-size) / -2);
+    margin-left: calc(var(--pager-dot-size) / -2); /* center on the layer's x-origin */
     background: currentColor; /* FULL alpha — the goo medium */
-    clip-path: url(#pager-neck-throat);
     transform-origin: center;
-    opacity: 0; /* the engine writes the girth-following opacity */
-    will-change: transform, opacity;
+    will-change: transform;
 }
+.pager-dots[data-orientation="vertical"] .goo-body,
 .pager-dots[data-orientation="vertical"] .goo-neck {
     top: 0;
-    left: 50%;
-    margin-top: 0;
-    margin-left: calc(var(--pager-dot-size) / -2);
+    left: 50%; /* center on the layer's y-origin (top:0 + margin-top:-D/2) */
 }
 
-/* @supports gate — on a non-supporting/buggy engine, DROP the goo filter; the plain
-   transform worm alone is the correct floor (a non-merged traveling capsule). */
-@supports not (filter: url(#pager-goo)) {
-    .pager-goo-layer {
+.goo-body {
+    border-radius: 50%; /* a round pip — the metaball body */
+    /* the volume-preserving squish — paired reciprocally, axis-derived (the
+       SegmentedTabs indicator law). The driver writes `--stretch` off `useLiquidFlex`
+       (LOW cap 1.2); the individual `scale` composes with the JS `translate` in-place. */
+    scale: var(--stretch, 1) calc(1 / var(--stretch, 1));
+}
+.pager-dots[data-orientation="vertical"] .goo-body {
+    scale: calc(1 / var(--stretch, 1)) var(--stretch, 1);
+}
+
+/* THE CONCAVE NECK — the welling bridge between the two bodies. A rect that the driver
+   spans (`scaleX(gap/D)`) + wells (`scaleY(neckGirth)`); the girth-following opacity
+   (wells in → pinches out). Under Arm A the goo filter fuses it; under Arm B (the
+   `@supports`-not floor) the `#pager-neck-throat` clip carves the structural waist. */
+.goo-neck {
+    border-radius: 0;
+    opacity: 0; /* the driver writes the girth-following opacity */
+}
+
+/* Arm B — the `@supports not (filter: url())` degrade FLOOR: DROP the goo filter (a
+   non-supporting engine cannot ref it) and render the un-merged clip-path barbell — a
+   VISIBLE honest partial (the structural hourglass waist), NEVER the empty pill. The
+   filter is the SOLE 13px paint on every supporting engine; the clip is reached ONLY
+   here (no dual path at 13px). */
+@supports not (filter: url(#pager-worm-goo)) {
+    .pager-worm-layer {
         filter: none;
+    }
+    .goo-neck {
+        clip-path: url(#pager-neck-throat);
     }
 }
 
-/* ── THE INTERACTION LAYER — the 24px hit-targets (BYTE-KEPT). No painted pip now:
-   the goo layer paints; the button is a transparent target with a focus-ring. ── */
+/* ── THE INTERACTION LAYER — the 24px hit-targets (BYTE-KEPT). No painted pip: the bed
+   paints; the button is a transparent target with a focus-ring. ── */
 .pager-dot {
     position: relative;
-    z-index: 1; /* above the goo layer (interaction) */
-    width: 24px;
-    height: 24px;
+    z-index: 1; /* above the bed + worm layers (interaction) */
+    /* the ≥28px hit box; the negative margin pulls it back into a 24px flow cell so the
+       button center stays aligned with the bed pip (the pip is UNMOVED — it lives in the
+       bed layer). BI.W-PAGER-A11Y. */
+    width: var(--pager-hit-target);
+    height: var(--pager-hit-target);
+    margin: var(--pager-hit-inset);
     padding: 0;
     border: 0;
     cursor: pointer;
@@ -409,25 +515,18 @@ function select(i: number): void {
     display: grid;
     place-items: center;
 }
-/* a hover cue on the (transparent) button → brighten its goo-dot pip via a sibling
-   reach is not possible cross-layer; instead the worm + active read carry the
-   hierarchy. A bare hover lift on the pip is preserved through the goo-dot::before
-   default 52% layer presence (the layer reads as the rail bed). */
 
 @media (prefers-reduced-motion: reduce) {
-    /* P6 — the goo layer is DROPPED (a static blur+threshold is pure cost with no
-       travel to merge); the barbell coalesces to ONE body (useGooMorph early-returns);
-       only the fade survives on the plain dots. Show the goo-dot pips (no filter) as the
-       static indicator bed — the active body still snaps onto the target. */
-    .pager-goo-layer {
+    /* P6 — the worm coalesces to ONE body on the target (the driver SEATS instantly,
+       zero in-between frames), `--stretch` stays 1, the goo filter is DROPPED (a static
+       blur+threshold is pure cost with no travel to merge). Only the fade survives; the
+       bed is static. */
+    .pager-worm-layer {
         filter: none;
-        /* zero the cartoon weight in ONE assignment (the barbell coalesces; no swell). */
-        --motion-weight: 0;
     }
     .goo-body,
     .goo-neck {
         scale: 1 1;
-        transition: none;
     }
 }
 </style>

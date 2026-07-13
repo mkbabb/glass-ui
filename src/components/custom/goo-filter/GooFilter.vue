@@ -2,14 +2,16 @@
 // BD.W-MORPH-FIELD-WELD — GooFilter: the ONE library metaball `<filter>` mount.
 //
 // THE UNIFICATION (4a — the DRY win). `GlassGooFilter.vue` (#glass-goo) +
-// `DockGooFilter.vue` (#dock-fission-goo) + the showcase's inline #dock-morph-goo + the
-// pager's #pager-goo were FOUR byte-near-identical SVG metaball graphs at four scales,
-// mounted at four sites (and #dock-fission-goo double-mounted live on liquid-playground).
-// This SFC is the ONE parameterized graph, mounted ONCE at shell root, exposing EVERY id
-// from a single <defs>. The graph is BYTE-IDENTICAL to the prior mounts (blur →
-// feColorMatrix alpha threshold → feComposite atop). A Safari regression can now happen
-// in only ONE place; a fix lands once. GlassGooFilter / DockGooFilter re-export the ids
-// off this mount (no alias, no legacy).
+// `DockGooFilter.vue` (#dock-fission-goo) + the showcase's inline #dock-morph-goo were
+// byte-near-identical SVG metaball graphs at four scales, mounted at four sites (and
+// #dock-fission-goo double-mounted live on liquid-playground). This SFC is the ONE
+// parameterized graph, mounted ONCE at shell root, exposing EVERY id from a single
+// <defs>. The graph is BYTE-IDENTICAL to the prior mounts (blur → feColorMatrix alpha
+// threshold → feComposite atop). A Safari regression can now happen in only ONE place; a
+// fix lands once. GlassGooFilter / DockGooFilter re-export the ids off this mount (no
+// alias, no legacy). The dot-pip PLATE `#pager-goo` RETIRED at BI.W-PAGER-RETIRES (the
+// pager's liquid dot-morph worm paints the worm-scale `#pager-worm-goo`, not a plate goo;
+// the plate id had no surviving consumer — the G8 live-plate fence).
 //
 // SAFARI-FIRST (§L7, the binding cross-engine contract — every fact from the prior
 // mounts, now in ONE place):
@@ -43,16 +45,22 @@ interface GooSpec {
 }
 
 // The LIBRARY id register (DATA). Byte-identical graph per id; only the three numeric
-// knobs differ by scale. These are the exact tunings the prior four mounts shipped:
+// knobs differ by scale. These are the exact tunings the prior mounts shipped:
 //   glass-goo       — the carousel/deck PLATE scale (GlassGooFilter defaults)
 //   dock-fission-goo— the dock fission scale (DockGooFilter defaults)
-//   pager-goo       — the dot-pip scale (the PagerDots worm)
+//   pager-worm-goo  — the dot-WORM scale (the PagerDots liquid dot-morph worm, BI.W-PAGER-WORM):
+//     σ4 / slope 18 / offset −6 → threshold 6/18 = 0.333; a lone body's blurred peak
+//     (σ4 over a 13px pip) is ~0.72 > 0.333, so it survives the threshold + the two
+//     bodies fuse across the neck at a true smooth throat (the σ8 whole-layer graph
+//     over-blurred a small pip below its own threshold — the empty-pill annihilation).
 //   dock-morph-goo  — the V↔H teardrop scale (the morph-showcase inline mount, promoted)
 //   morph-goo       — the generic useMorphField default
+// (The dot-pip PLATE `#pager-goo` (σ8/18/−7) RETIRED at BI.W-PAGER-RETIRES — no surviving
+//  consumer once the pager's worm paints `#pager-worm-goo`; the G8 live-plate fence.)
 const LIBRARY_IDS: readonly GooSpec[] = [
     { id: "glass-goo", blur: 10, slope: 15, offset: -7 },
     { id: "dock-fission-goo", blur: 7, slope: 20, offset: -9 },
-    { id: "pager-goo", blur: 8, slope: 18, offset: -7 },
+    { id: "pager-worm-goo", blur: 4, slope: 18, offset: -6 },
     { id: "dock-morph-goo", blur: 16, slope: 14, offset: -7 },
     { id: "morph-goo", blur: 10, slope: 18, offset: -7 },
 ];

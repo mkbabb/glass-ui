@@ -7,14 +7,18 @@ exposes EVERY library metaball id off ONE byte-identical blur→alpha-threshold 
 
 | id | scale | consumer |
 |---|---|---|
-| `glass-goo` | plate | carousel / deck slide BARBELL goo-morph |
-| `pager-goo` | dot-pip | PagerDots worm |
+| `glass-goo` | plate | deck slide BARBELL goo-morph (`useGooMorph`) |
+| `pager-worm-goo` | dot-worm | PagerDots liquid dot-morph worm (Arm A, σ4/18/−6) |
 | `dock-fission-goo` | dock | the fission bridge necks |
 | `dock-morph-goo` | teardrop | the V↔H dock teardrop weld |
 | `morph-goo` | generic | `useMorphField` default |
 
-It is the DRY union of the prior FOUR byte-near-identical mounts (`GlassGooFilter`,
-`DockGooFilter`, the inline showcase filter, the pager filter) — and the fix for the live
+The dot-pip PLATE `pager-goo` (σ8/18/−7) RETIRED at BI.W-PAGER-RETIRES — no surviving
+consumer once the pager's liquid worm paints the worm-scale `pager-worm-goo` (the G8
+live-plate fence).
+
+It is the DRY union of the prior byte-near-identical mounts (`GlassGooFilter`,
+`DockGooFilter`, the inline showcase filter) — and the fix for the live
 duplicate-`<filter id>` double-mount. A Safari regression can now happen in ONE place; a fix
 lands once. Each id is the SAME graph at its own `blur`/`slope`/`offset` (DATA in the
 `LIBRARY_IDS` register); a consumer tunes a one-off via the `extra` prop.

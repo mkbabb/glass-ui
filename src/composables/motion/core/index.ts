@@ -58,6 +58,15 @@ export * from "../useTextHighlight";
 // so it is engine-FREE + vueuse-FREE and ships on the `/motion-core` surface AND the
 // root barrel. ≥2 consumers: useDockOrientationMorph + the tabs-indicator squish.
 export * from "../useLiquidFlex";
+// BI.W-PAGER-WORM — the two-edge lead/trail integrator (the ONE driver behind the
+// liquid dot-MORPH worm + the B3 eyeglass release). A spring LEAD edge + a damped
+// TRAIL follower in ONE rAF; the gap between the edges IS the worm's elongation, the
+// trail catching the lead is the emergent release-at-arrival (no timer). Imports
+// `vue` only — engine-FREE + vueuse-FREE (hand-rolled integrator, no spring engine),
+// so it ships on the `/motion-core` surface AND the root barrel (the `useLiquidFlex`
+// precedent). ≥2 consumers: the pager worm + the B3 eyeglass release
+// (docs/consumer-evidence/use-lead-trail.md).
+export * from "../useLeadTrail";
 // BD.W-GOO-CAROUSEL-DECK — the ONE goo-morph engine (the de-dup of the pager WORM):
 // a two-edge stretch→merge→pinch→settle driver consumed by the pager dot (worm scale),
 // the carousel slide PLATE, and the deck slide PLATE — ONE engine, per-consumer tokens.
@@ -76,6 +85,14 @@ export * from "../morphSignatures";
 // consumers are the born-WebGPU viz (W-FLOWFIELD + W-CONCENTRIC) — see
 // docs/consumer-evidence/use-pointer-velocity-field.md.
 export * from "../usePointerVelocityField";
+// BI.W-FIELD-CORE — the route pointer BROADCASTER (Layer 0.5) + the four PURE per-viz
+// pointer-field mappings (Layer 1). `useRoutePointer` is the ONE capture-phase window
+// listener a full-bleed `pointer-events:none` background viz reads (it cannot listen for
+// itself); the mappings project the field readout onto each viz's inputs. Both import
+// `vue` only (the mappings are pure type-only) — engine-FREE + vueuse-FREE, so they ship
+// on the `/motion-core` surface AND the root barrel (the usePointerVelocityField precedent).
+export * from "../useRoutePointer";
+export * from "../pointerFieldMappings";
 // BC.W-SPLIT-CHARS — the per-glyph split partner the shipped `.char-stagger` CSS
 // recipe (typography/utilities.css) has been waiting for. It reads a target's
 // `textContent`, mints `.char` spans + the `--char-index`/`--char-total` customs
@@ -117,3 +134,12 @@ export * from "../useScrollChrome";
 // useLiquidPress) read the cap through `effectiveCap` + fold the velocity boost via
 // `writeVelocityWeight`.
 export * from "./writeVelocityWeight";
+// BI.W-DOCK-CONTROLS — the ONE traveling-indicator writer + the ONE headless
+// selection engine (the dock IS SegmentedTabs/ToggleGroup wearing chrome). Both
+// import `vue` only (via `useLiquidFlex`/`writeVelocityWeight`/`useTabRovingFocus`,
+// all engine-FREE + vueuse-FREE), so they ship on the `/motion-core` surface. The
+// CSS-anchor dual path retired — `useSelectionIndicator` is Safari-identical by
+// construction; `useSelectionGroup` composes the roving machine + the indicator +
+// the scrollIntoView recenter, reka-free.
+export * from "../useSelectionIndicator";
+export * from "../useSelectionGroup";
