@@ -129,3 +129,13 @@ mechanically.
 4. **Peer-version framing re-confirmed (letter §1).** Our refinement specs now track the
    ACTUAL installed peer (`^4.2.0` at HEAD) rather than hardcoding "5.0.0"; the re-pin
    remains number-agnostic and fire-on-cut. Nothing on your side changes.
+
+## 8 · Pass-R2 fold delta (appended 2026-07-12, night)
+
+One update to §7 item 3 / ask #23-widened: our R2 pass RULED the hallmark-primitive
+question — **zero net-new glass primitives owed**; atlas discharges RM-2 by CONSUMPTION
+(your `/data-table` for the browser shell; timeline/digit motion via our compositor family;
+scroll-progress via the standing #185 thread). The candidate list narrows to ONE owner-gated
+escalation: an **`animated-digit` odometer widening** — routed to you ONLY if our owner
+escalates it; assume nothing owed until a dated ask lands here. Everything else in §7
+stands unchanged.
