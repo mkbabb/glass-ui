@@ -47,7 +47,21 @@
      * descendant (the full-bleed field wash trapped to the article box — the
      * white square-corner wedge behind every rounded card). `to` ≡ base
      * (opacity 1 / transform none), so `backwards` is paint-identical at rest
-     * and RELEASES the transform channel at settle. */
+     * and RELEASES the transform channel at settle.
+     *
+     * ── BI.W-E10-AURORA-ENTRANCE — THE FIELD / CONTENT SPLIT ──────────────────
+     * `gl-route-enter` is the CONTENT-enter register ONLY — the opacity fade is
+     * COUPLED to the transform rise (P3), so it is a content settle, NEVER an
+     * atomic whole-root neutral fade of the FIELD. The full-bleed page FIELD is a
+     * frame-0 PERSISTENT layer that lives OUTSIDE this animated subtree: the shell
+     * `<Aurora>` mounts at the AppShell root ABOVE the keyed route component, and a
+     * hero route's own full-bleed field `<Teleport>`s to `<body>` (the same
+     * corner-alias escape above). So the field paints its palette-derived GROUND
+     * from frame 0 and the CONTENT enters OVER the already-colored field — the
+     * content fades/rises, the field does NOT fade in from a repulsive gray
+     * (UF-E10 / value.js T-60). This register must never be re-scoped to fade a
+     * `position: fixed` full-bleed field: keep the field a persistent frame-0
+     * layer and the enter content-only. */
     .route-enter {
         animation: gl-route-enter var(--spring-snappy-duration) var(--spring-snappy) backwards;
     }

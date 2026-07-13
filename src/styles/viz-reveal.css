@@ -1,21 +1,34 @@
-/* BG.W-VIZ-REVEAL-BLOOM — the one-shot cold-first-VISIBLE procedural-viz entrance.
+/* BI.W-E10-AURORA-ENTRANCE (value.js T-60) — the PALETTE-HONEST one-shot
+ * cold-first-VISIBLE procedural-viz entrance.
  *
- * A procedural-viz CANVAS blooms into being: `filter: brightness()/saturate()` ramps
- * from a dim floor, OVERSHOOTS past 1.0, then settles to the canvas's own no-resting-
- * filter rest — a FIELD bloom (the canvas rect stays scale(1), no box-zoom gutter).
+ * A procedural-viz CANVAS materializes: it fades in from transparent (`opacity`) with
+ * a gentle warm LIFT (`filter: brightness()/saturate()` PULSES up and settles). The
+ * whole ramp is PALETTE-HONEST — brightness and saturate NEVER dip below 1, so the
+ * entrance never transits a `brightness<1`/`saturate<1` GRAY VEIL over the chromatic
+ * field (the T-60 condemned form: the prior `from { brightness(0.4) saturate(0.7) }`
+ * dim floor, which — stamped while the canvas still sat at the consumer's `opacity:0`
+ * — opened the visible arrival INSIDE a `brightness 0.54–0.83` desaturated stage: the
+ * "pulses to gray" the owner named). The field's OWN colors carry the entrance; the
+ * bloom only lifts their light, it never dims or desaturates them.
  *
- * THE OVERSHOOT is the whole point + the reason this is `filter: brightness`, not
- * `opacity`: opacity clamps at 1.0, so it CANNOT overshoot. The `--ease-cartoon-punch`
- * linear() curve peaks at 1.22 progress, so the single from→to `filter` interval
- * EXTRAPOLATES past the settle value — brightness lands ≈1.13 at the peak (the ~+13%
- * field bloom measured on both engines), then monotone-settles to brightness(1). This
- * is the EFFECTS-channel sanctioned overshoot (W-MOTION-CANON P1); compositor-only.
+ * A FIELD bloom — the canvas rect stays scale(1) (no box-zoom gutter). Compositor-only
+ * (opacity + filter, the W-MOTION-CANON P5 EFFECTS channel). The peak is EXPLICIT in
+ * the keyframe (the 55% stop), so the animation rides a monotone `--ease-out` (NOT the
+ * extrapolating `--ease-cartoon-punch`, whose overshoot would dip the settle segment
+ * BELOW 1 and re-introduce the condemned dim tail).
+ *
+ * THE DOOR (BI.W-E10 / T-60): the aurora runtime opts OUT of this bloom by default
+ * (`revealBloom: false`) — the aurora materializes as its palette-derived GROUND with
+ * the canvas OPACITY cross-fade over it, so a second `filter`-bloom would double the
+ * entrance; it never sets `data-substrate-reveal`. The blob + the line-art vizzes keep
+ * it (now palette-honest). Both runtimes expose the `revealBloom` consumer door.
  *
  * THE TARGET is the CANVAS ([data-substrate-reveal]) — NOT a `.viz-canvas-host`
- * wrapper: goo-blob's resting `drop-shadow` filter lives on ITS wrapper, so targeting
+ * wrapper: the blob's resting `drop-shadow` filter lives on ITS wrapper, so targeting
  * the canvas never collides with a resting wrapper filter. NO `animation-fill-mode`
  * that PERMANENTLY holds a settle filter — the animation reverts to the canvas's own
- * (no) filter post-settle (brightness(1) saturate(1) == no filter, a seamless revert).
+ * (no) filter post-settle (brightness(1) saturate(1) opacity(1) == no filter/full
+ * opacity, a seamless revert).
  *
  * THE LEAF (createCanvasLifecycle.ts) sets the one-shot `data-substrate-reveal` attr
  * the moment the canvas FIRST becomes visible (a dedicated one-shot IntersectionObserver
@@ -24,13 +37,20 @@
  *
  * PRM — the `animation:` line sits inside `@media (prefers-reduced-motion: no-preference)`
  * AND the leaf skips the attr under reduce, so the field paints settled from frame 0
- * (no dim floor, no luminance ramp — instant settled). The vestibular floor. */
+ * (no fade, no luminance pulse — instant settled). The vestibular floor. */
 
 @keyframes substrate-reveal-bloom {
     from {
-        filter: brightness(0.4) saturate(0.7);
+        opacity: 0;
+        filter: brightness(1) saturate(1);
+    }
+    55% {
+        /* the lit bloom peak — a warm luminance + saturation LIFT, NEVER a dim
+           veil: brightness and saturate stay ≥ 1 the whole way (palette-honest). */
+        filter: brightness(1.08) saturate(1.05);
     }
     to {
+        opacity: 1;
         filter: brightness(1) saturate(1);
     }
 }
@@ -38,6 +58,6 @@
 @media (prefers-reduced-motion: no-preference) {
     canvas[data-substrate-reveal] {
         animation: substrate-reveal-bloom var(--substrate-reveal-duration)
-            var(--ease-cartoon-punch);
+            var(--ease-out);
     }
 }

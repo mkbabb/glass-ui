@@ -21,23 +21,26 @@
 import type { StoryBackground } from "./aurora-hero";
 
 /** The full-bleed page-field kinds that ARE a live GL substrate. A route whose
- *  resolved `background.kind` is one of these owns its own GL field. */
+ *  resolved `background.kind` is one of these owns its own GL field.
+ *
+ *  BI.W-AUTH-SHELL-BG — `"fourier"` is RETIRED from the set (clean break): the
+ *  library's heaviest shader is no longer a StoryHero page-background kind, so no
+ *  route resolves to a live fourier field. */
 export const GL_BG_KINDS: ReadonlySet<string> = new Set([
     "aurora",
     "constellation",
-    "fourier",
     "liquid-grid",
 ]);
 
 /** The GL field kinds that carry the WARM-CREAM identity themselves — a CHROMATIC
  *  full-bleed field that REPLACES the shell warm aurora (nothing warm needs to sit
- *  behind it). The achromatic line-art overlays (`constellation`, `fourier`) are
- *  DELIBERATELY EXCLUDED: they are grey line-art with no warm identity, so the shell
- *  warm field must stay behind them as an UNDERPAINT (warm-cream in light, luminous-
- *  warm-dark in dark — never the "charcoal slab on a dead void" W-DARK-MATERIAL
- *  forbids). This is DISTINCT from `GL_BG_KINDS` (the one-GL owns-a-field
- *  enumeration): a constellation hero is FOCAL (owns a GL field) yet does NOT
- *  suppress the shell (keeps the warm underpaint). */
+ *  behind it). The achromatic line-art overlay (`constellation`) is DELIBERATELY
+ *  EXCLUDED: it is grey line-art with no warm identity, so the shell warm field must
+ *  stay behind it as an UNDERPAINT (warm-cream in light, luminous-warm-dark in dark —
+ *  never the "charcoal slab on a dead void" W-DARK-MATERIAL forbids). This is DISTINCT
+ *  from `GL_BG_KINDS` (the one-GL owns-a-field enumeration): a constellation hero is
+ *  FOCAL (owns a GL field) yet does NOT suppress the shell (keeps the warm
+ *  underpaint). */
 export const CHROMATIC_FIELD_KINDS: ReadonlySet<string> = new Set([
     "aurora",
     "liquid-grid",
@@ -61,6 +64,14 @@ export const SELF_STAGES_GL: ReadonlySet<string> = new Set([
     "dock/controls",
     "dock/overflow",
     "dock/rail",
+    // BI.W-AUTH-SHELL-BG (PERF-2 / UF-K4) — the auth-shell composition mounts its OWN
+    // route-representative GL field (the purple→tomato brand-panel <Aurora>) OUTSIDE the
+    // `background` channel, so the recessive shell aurora stands down: the brand aurora is
+    // the route's ONE GL context (the page declares a zero-GL `grid` wash). This is the
+    // composition analogue of a DockStage route — a self-staging GL page that is NOT a
+    // `<DockStage>` route (proof:focal-complete C2 is a ⊇ check, so a non-DockStage member
+    // is admitted).
+    "compositions/auth-shell",
 ]);
 
 /** Resolve a `StoryBackground` (string shorthand or `{kind}` object) to its kind. */
@@ -88,6 +99,15 @@ export function isFocalRoute(
  * the mounted field ITSELF carries the warm-cream identity and so REPLACES it —
  * i.e. a CHROMATIC field (aurora / liquid-grid) on a page that actually MOUNTS it,
  * OR a self-staging dock route. Two gates on the GL-background arm:
+ *
+ * BI.W-E10-AURORA-ENTRANCE — the suppression is of the LIVE field ONLY, never of the
+ * palette-derived GROUND. The shell stands down only where the route MOUNTS its OWN
+ * chromatic field (the `isHeroPage` + `CHROMATIC_FIELD_KINDS` gate), and that field's
+ * `<Aurora>` paints its `auroraFallbackGround` palette ground from frame 0 (before the
+ * WebGL canvas arms). So SOME palette-derived ground is ALWAYS present at frame 0 — the
+ * shell field on a non-suppressing route, the route's own field on a suppressing one —
+ * and the entrance colors from frame 0 (no bare-page-bg / repulsive-gray first paint).
+ * The suppression closes the one-GL budget; it never blanks the frame-0 color.
  *
  *   1. `isHeroPage` — a `background.kind` GL field is rendered by `StoryHero`, which
  *      `StoryPage.vue` mounts ONLY on `variant === "hero"` (a page-variant content

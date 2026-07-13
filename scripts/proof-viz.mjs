@@ -378,9 +378,19 @@ function runAll(over = {}) {
         fails.push(
             "R2: the reveal recipe does not target `canvas[data-substrate-reveal]` — it must target the CANVAS, not a `.viz-canvas-host` wrapper (the goo-blob wrapper drop-shadow collision)",
         );
-    if (!/var\(--ease-cartoon-punch\)/.test(revealCss))
+    // R2 (BI.W-E10-AURORA-ENTRANCE / value.js T-60 supersession) — the reveal rides a
+    // MONOTONE ease, NOT the extrapolating `--ease-cartoon-punch`. The palette-honest
+    // floor forbids the entrance dipping brightness/saturate below 1; an overshoot ease
+    // pushes the settling segment BELOW 1 (the condemned dim tail), so the bloom LIFT is
+    // now EXPLICIT in the keyframe mid-stop and the ease is monotone. A re-introduction
+    // of `--ease-cartoon-punch` on the reveal REDs (it would re-open the sub-1 dim tail).
+    if (/var\(--ease-cartoon-punch\)/.test(revealCss))
         fails.push(
-            "R2: the reveal `animation` does not ride `var(--ease-cartoon-punch)` — the overshoot past 1.0 comes ONLY from that linear() curve; a plain ease cannot bloom",
+            "R2: the reveal `animation` rides `--ease-cartoon-punch` — the extrapolating overshoot dips the settling brightness BELOW 1 (the palette-DISHONEST gray tail, T-60); ride a monotone ease with the bloom lift explicit in the keyframe",
+        );
+    if (!/var\(--ease-out\)|var\(--ease-standard\)/.test(revealCss))
+        fails.push(
+            "R2: the reveal `animation` does not ride a monotone ease var (`--ease-out`/`--ease-standard`) — the palette-honest bloom settles monotonically, never below 1",
         );
 
     // R3 — the duration is the minted token (token-first), read as a var() (not inline `Nms`).
@@ -440,12 +450,26 @@ function runAll(over = {}) {
             "R6: the reveal has no `revealFired` one-shot guard — an IO/CV re-reveal would fire a second bloom on scroll-off-and-back",
         );
 
-    // R7 — the reference/paint-anchor viz (aurora) OPTS IN (`revealBloom: true`), so the
-    //      mechanism is ENGAGED, not shipped-but-unconsumed shelf-ware.
+    // R7 (BI.W-E10-AURORA-ENTRANCE / value.js T-60 supersession) — the reveal-bloom
+    //      mechanism is a first-class CONSUMER DOOR, not shelf-ware / not hardwired-dead.
+    //      The aurora runtime EXPOSES `revealBloom?` on AuroraRuntimeOptions and THREADS
+    //      it (`options.revealBloom ??`), defaulting it OFF for the aurora: the palette-
+    //      derived GROUND + the canvas opacity cross-fade SUPERSEDE the gray filter-bloom
+    //      (which stamped inside the dim floor over the chromatic field — the "pulses to
+    //      gray" defect). The bloom stays CONSUMED by the blob (default-on) + the line-art
+    //      vizzes; the aurora opts out by default. A hardwired `revealBloom: true` (no
+    //      door) OR an absent option REDs — the mechanism must be a live threaded seam.
     const auroraSrc = files[AURORA_REVEAL_ANCHOR] ?? "";
-    if (!/revealBloom\s*:\s*true/.test(auroraSrc))
+    const auroraCode = auroraSrc
+        .replace(/\/\*[\s\S]*?\*\//g, "")
+        .replace(/\/\/[^\n]*/g, "");
+    if (
+        !/revealBloom\?\s*:\s*boolean/.test(auroraSrc) ||
+        !/revealBloom\s*:\s*options\.revealBloom\s*\?\?/.test(auroraCode) ||
+        /revealBloom\s*:\s*true\b/.test(auroraCode)
+    )
         fails.push(
-            "R7: the aurora runtime (the reference/paint-anchor viz) does not pass `revealBloom: true` — the entrance bloom is shipped-but-unconsumed shelf-ware (born-RED: on HEAD no viz opts in)",
+            "R7: the aurora runtime does not expose the reveal-bloom consumer DOOR (revealBloom?: boolean on AuroraRuntimeOptions, threaded `options.revealBloom ??`, not hardwired `true`) — BI.W-E10/T-60: the door is the opt-out/arrival-sync seam that supersedes the hardwired gray bloom",
         );
 
     // R8 — useVizChoreography.ts is DEFINITION-ABSENT (the wave's explicit verify — the dead
@@ -682,10 +706,11 @@ function selfTest() {
         fails.push("self-test: a GL-arming preview still did NOT red P4");
 
     // ── REVEAL-BLOOM bites (BG.W-VIZ-REVEAL-BLOOM) ──
-    // A valid reveal recipe the bites break ONE witness at a time.
+    // A valid reveal recipe the bites break ONE witness at a time (BI.W-E10 / T-60:
+    // palette-honest — brightness/saturate never below 1, monotone `--ease-out`).
     const validReveal =
-        "@keyframes substrate-reveal-bloom { from { filter: brightness(0.4); } to { filter: brightness(1); } }\n" +
-        "@media (prefers-reduced-motion: no-preference) { canvas[data-substrate-reveal] { animation: substrate-reveal-bloom var(--substrate-reveal-duration) var(--ease-cartoon-punch); } }";
+        "@keyframes substrate-reveal-bloom { from { opacity: 0; filter: brightness(1) saturate(1); } 55% { filter: brightness(1.08) saturate(1.05); } to { opacity: 1; filter: brightness(1) saturate(1); } }\n" +
+        "@media (prefers-reduced-motion: no-preference) { canvas[data-substrate-reveal] { animation: substrate-reveal-bloom var(--substrate-reveal-duration) var(--ease-out); } }";
 
     // (m) a reveal css with NO @keyframes reds R1.
     const m = runAll({
@@ -718,8 +743,8 @@ function selfTest() {
     // (p) an unconditional `animation:` BEFORE the PRM gate reds R4.
     const p = runAll({
         __reveal:
-            "@keyframes substrate-reveal-bloom { from { filter: brightness(0.4); } to { filter: brightness(1); } }\n" +
-            "canvas[data-substrate-reveal] { animation: substrate-reveal-bloom var(--substrate-reveal-duration) var(--ease-cartoon-punch); }\n" +
+            "@keyframes substrate-reveal-bloom { from { opacity: 0; filter: brightness(1); } to { opacity: 1; filter: brightness(1); } }\n" +
+            "canvas[data-substrate-reveal] { animation: substrate-reveal-bloom var(--substrate-reveal-duration) var(--ease-out); }\n" +
             "@media (prefers-reduced-motion: no-preference) { canvas { color: red; } }",
     });
     if (!p.some((v) => v.startsWith("R4")))
@@ -735,7 +760,8 @@ function selfTest() {
     if (!r.some((v) => v.startsWith("R6")))
         fails.push("self-test: a leaf with no armRevealBloom/revealIo did NOT red R6");
 
-    // (s) the aurora anchor with NO `revealBloom: true` reds R7 (shipped-but-unconsumed).
+    // (s) the aurora anchor with NO reveal-bloom DOOR (no revealBloom?: option, no
+    //     threaded `options.revealBloom ??`) reds R7 (the mechanism must be a live door).
     const s = runAll({
         [AURORA_REVEAL_ANCHOR]:
             "handle = createGpuSubstrate(canvas, { dprPolicy: resolveBudgetDpr });",

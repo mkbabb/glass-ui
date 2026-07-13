@@ -38,9 +38,9 @@
 //        value.js oklchToLinear core (ONE color source — no re-implemented OKLCh
 //        math) AND closes its CPU luminance math with the SAME linearToSrgb OETF
 //        the proof:aurora-space-gamma pipeline locks. Aurora.vue threads it into the
-//        placeholder under the "css" substrate (the flat gradient stays the
-//        capable-device first-frame). RED at HEAD: the only ground is the flat
-//        linear-gradient(135deg, …) band; no field-derived ground exists. Bite: a
+//        placeholder on EVERY substrate (BI.W-E10-AURORA-ENTRANCE — the flat
+//        paletteToCssGradient band is RETIRED from Aurora.vue; the palette-derived
+//        ground is the capable-path frame-0 surface too). Bite: a
 //        ground that only reads the flat palette stops (a re-skinned gradient, no
 //        nuclei read) REDs the field-derivation clause; a re-implemented OKLCh
 //        bake (no oklchToLinear reuse) REDs the one-color-source clause.
@@ -219,12 +219,14 @@ export function detectAuroraSwraster(sources) {
     // transfer — without it the CPU mean drifts systematically).
     facts.w3.tonemapMirrored =
         /acesPbrNeutral/.test(gr) && /startCompression/.test(gr);
-    // Aurora.vue threads the field ground into the placeholder under the "css"
-    // substrate (the flat gradient stays the capable first-frame).
+    // BI.W-E10-AURORA-ENTRANCE (§Disposition, terminal) — Aurora.vue threads the
+    // field ground into the placeholder on EVERY substrate: the flat
+    // `paletteToCssGradient` band is RETIRED from Aurora.vue (the capable path now
+    // paints the palette-derived ground as its frame-0 surface too, not the "repulsive
+    // gray" gradient). The `auroraFallbackGround` thread is REQUIRED; the flat-band
+    // reference must be ABSENT (a re-introduction of the capable-path gradient REDs).
     facts.w3.threadedIntoPlaceholder =
-        /auroraFallbackGround/.test(av) &&
-        /resolvedRenderMode\s*===\s*"css"/.test(av) &&
-        /paletteToCssGradient/.test(av);
+        /auroraFallbackGround/.test(av) && !/paletteToCssGradient/.test(av);
     facts.w3.ok =
         facts.w3.readsNuclei &&
         facts.w3.reusesColorCore &&
@@ -234,7 +236,7 @@ export function detectAuroraSwraster(sources) {
         facts.w3.threadedIntoPlaceholder;
     if (!facts.w3.ok) {
         violations.push(
-            "W3: the fallback ground (auroraFallbackGround.ts) must be FIELD-derived (reads config.nuclei + softmaxBeta via nucleiFieldStatic), reuse the value.js oklchToLinear core (no forked OKLCh math), close its CPU luminance with the SAME linearToSrgb OETF + the PBR-Neutral tonemap, and Aurora.vue must thread it into the placeholder under the \"css\" substrate (the flat paletteToCssGradient stays the capable first-frame)",
+            "W3: the fallback ground (auroraFallbackGround.ts) must be FIELD-derived (reads config.nuclei + softmaxBeta via nucleiFieldStatic), reuse the value.js oklchToLinear core (no forked OKLCh math), close its CPU luminance with the SAME linearToSrgb OETF + the PBR-Neutral tonemap, and Aurora.vue must thread it into the placeholder on EVERY substrate (BI.W-E10-AURORA-ENTRANCE — the flat paletteToCssGradient band is RETIRED from Aurora.vue; the palette-derived ground is the capable-path frame-0 surface too)",
         );
     }
 
@@ -272,8 +274,8 @@ function selfTest() {
       }`;
     const goodAuroraVue = `
       import { auroraFallbackGround } from "./composables/auroraFallbackGround";
-      import { paletteToCssGradient } from "./composables/color";
-      const placeholder = resolvedRenderMode === "css" ? auroraFallbackGround(cfg) : paletteToCssGradient(cfg.palette);`;
+      const faithfulGround = computed(() => auroraFallbackGround(props.config));
+      const placeholderBackgroundImage = computed(() => faithfulGround.value.backgroundImage);`;
 
     const base = {
         renderMode: goodRenderMode,

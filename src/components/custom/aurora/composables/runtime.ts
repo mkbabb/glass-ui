@@ -5,7 +5,9 @@
  * This module composes four cohesive seams atop the substrate:
  *   - glSetup       — compile/link + geometry + the uniform location cache
  *   - uniformBridge — the reactive-config → GL-uniform translation + enum dispatch
- *   - cursorModel   — the eased pointer-attraction state + advance
+ *   - pointerField  — the shared `usePointerVelocityField` (the retired cursorModel's
+ *                     successor, BI.W-FIELD-CORE): the mass-spring attractor + engagement
+ *                     the `auroraCursorMapping` projects onto the `uCursor*` uniforms
  *   - frameLoop     — the per-frame draw + the render-demand gate
  *
  * It owns ONLY the aurora-specific glue: threading the seams through the
@@ -33,8 +35,7 @@ import { isSoftwareWebGLRenderer } from "../constants/renderMode";
 import type { AuroraConfig, AuroraInstance } from "../constants/presets";
 import { createGlProgram } from "./glSetup";
 import { createUniformBridge } from "./uniformBridge";
-import { createCursorState, injectCursorVelocity as injectCursorVel } from "./cursorModel";
-import { createFrameLoop } from "./frameLoop";
+import { createFrameLoop, type AuroraCursorScalars } from "./frameLoop";
 import { createAuroraWGPUSetup } from "./wgpuSetup";
 import { usePointerVelocityField } from "../../../../composables/motion/usePointerVelocityField";
 
@@ -112,6 +113,24 @@ export interface AuroraRuntimeOptions {
      * threaded through both seams.
      */
     forceWebGLUnderSoftwareRaster?: boolean;
+    /**
+     * BI.W-E10-AURORA-ENTRANCE (value.js T-60) — the reveal-bloom CONSUMER DOOR.
+     *
+     * The one-shot cold-first-VISIBLE `filter`-bloom (`data-substrate-reveal` →
+     * `@keyframes substrate-reveal-bloom`, viz-reveal.css). It defaults `false` for
+     * the aurora: the aurora already materializes as the palette-derived GROUND
+     * (Aurora.vue's `auroraFallbackGround` placeholder) with the live canvas
+     * OPACITY cross-fading over it — a same-palette dissolve, the "defined bloom
+     * choreography". Arming the `filter`-bloom ON TOP of that opacity cross-fade
+     * was the T-60 gray stage: the bloom stamped at first-visible while the canvas
+     * still sat at `opacity: 0`, so the visible arrival always opened INSIDE the
+     * `brightness(0.54–0.83)` dim floor (a `brightness<1`/`saturate<1` veil over a
+     * chromatic field — the condemned form). The door is the opt-out (default) AND
+     * the arrival-sync seam: a consumer who wants the bloom passes `true` (the
+     * keyframe is now palette-honest — brightness/saturate never dip below 1). The
+     * palette-derived first paint is the floor either way (UF-E10, value.js co-signed).
+     */
+    revealBloom?: boolean;
 }
 
 function shouldInitEagerly(options: AuroraRuntimeOptions): boolean {
@@ -151,13 +170,6 @@ export interface AuroraRuntime extends Omit<AuroraInstance, "pause" | "resume"> 
      * the WebGL2 fallback resolves immediately. Idempotent + safe post-dispose.
      */
     armAsync(): Promise<void>;
-    /**
-     * AW.W8.1 — feed a pointer delta into the velocity-reactive flow (a fast flick →
-     * a transient swirl-burst). The PRM early-out lives here: the injection is
-     * suppressed when the substrate reports reduced-motion (the cursor write-path
-     * fires from the pointermove listener, INDEPENDENT of the parked rAF loop).
-     */
-    injectCursorVelocity(dx: number, dy: number): void;
     /** AW.W8.1 — the live reduced-motion state (the cursor listener early-outs on it). */
     readonly reducedMotion: boolean;
 }
@@ -197,18 +209,31 @@ export function createAurora(
     // consumer-side listener `useAurora` used to install.
     const frozenOffset = 3.7;
 
-    const cursor = createCursorState();
-
-    // BC.W-VIZ-AURORA (T5) — the shared viz-pointer-physics field (BB.B4). The fold is
-    // ADDITIVE + byte-faithful: the existing cursorModel velocity/burst (the swirl
-    // attraction) stays the baseline; this field adds the ACCELERATION (second-derivative)
-    // term for the iOS-27 gel snap-back — a fast flick that DECELERATES (negative accel)
-    // gets a transient over-warp that springs back. The field owns NO own rAF — it is FED
-    // `tick(deltaMs)` from inside the EXISTING createCanvasLifecycle frame callback (the
-    // one-loop / proof:offscreen-pause discipline), and FREEZES under PRM (tick(0)). The
-    // pointer POSITION write is event-driven (setCursor / injectCursorVelocity feed
-    // `setPointer`, PRM-gated); the velocity + acceleration are DERIVED in tick.
-    const pointerField = usePointerVelocityField();
+    // BI.W-FIELD-CORE — the shared viz-pointer-physics field IS the cursor now (the retired
+    // `cursorModel.ts` is GONE). A light responsive tuning (the cursor should track snappily,
+    // not lag like the heavy blob): the mass-spring attractor is the cursor position, the
+    // engagement envelope drives the attraction strength (so the cursor-local luminance lean
+    // reads on the `smooth` medium — the T-38 dead-swirl-axis fix), the velocity + burst pass
+    // onto the `uCursor*` uniforms. The field owns NO own rAF — it is FED `tick(deltaMs)` from
+    // inside the EXISTING createCanvasLifecycle frame callback (the one-loop / offscreen-pause
+    // discipline), and FREEZES under PRM (tick(0)). The pointer POSITION write is event-driven
+    // (`setCursor` → `setPointer`, PRM-gated inside the field); velocity/accel are DERIVED in
+    // tick — the ONE smoothing stage (no double-smooth).
+    const pointerField = usePointerVelocityField({
+        mass: 1,
+        damping: 0.9,
+        attractorResponse: 0.28,
+        leadGain: 0.08,
+        halfLifeMs: 110,
+    });
+    // The cursor strength CEILING (setCursor's strength arg) + the influence radius. The
+    // engagement envelope scales the ceiling; the field-mapped strength = engagement·ceil.
+    let cursorStrengthCeil = 0.8;
+    let cursorRadius = 0.25;
+    const getCursorScalars = (): AuroraCursorScalars => ({
+        strength: cursorStrengthCeil,
+        radius: cursorRadius,
+    });
 
     // `setConfig` is (re)assigned by `setup(gl)`; before the first arm (and across
     // a context-loss/restore window) it is null and `update()` only stashes
@@ -257,8 +282,12 @@ export function createAurora(
         // BG.W-VIZ-RESIZE-ADOPT — the leaf owns backing-store measurement + sizing
         // (round(gBCR × dprPolicy)); every viz `resize` is upload-only.
         dprPolicy: resolveAuroraWashDpr,
-        // BG.W-VIZ-REVEAL-BLOOM — the one-shot cold-first-VISIBLE entrance bloom.
-        revealBloom: true,
+        // BI.W-E10-AURORA-ENTRANCE (value.js T-60) — the reveal-bloom door, DEFAULT
+        // OFF for the aurora: the palette-derived ground + the canvas opacity
+        // cross-fade IS the entrance (no `filter`-bloom veil over the chromatic
+        // field). A consumer opts the filter-bloom back in via the door (pass a
+        // truthy `revealBloom`); it defaults OFF here.
+        revealBloom: options.revealBloom ?? false,
         contextAttrs: {
             antialias: false,
             alpha: true,
@@ -274,11 +303,11 @@ export function createAurora(
         // byte-untouched WebGL2 fallback.
         setupWGPU: createAuroraWGPUSetup({
             canvas,
-            cursor,
+            getCursorScalars,
             getConfig: () => config,
             getReducedMotion: () => canvasHandle.reducedMotion,
-            // BC.W-VIZ-AURORA (T5) — the shared pointer field, FED tick() from the WGPU
-            // frame callback (the SAME field instance the WebGL2 loop feeds — one source).
+            // BI.W-FIELD-CORE — the shared pointer field, FED tick() from the WGPU frame
+            // callback (the SAME field instance the WebGL2 loop feeds — one source).
             pointerField,
             // BG.W-AUR-IMAGE-SOURCE — the image-source seam (no-op on a palette config).
             getDecodedImage: () => imageCoord.getDecodedImage(),
@@ -319,18 +348,18 @@ export function createAurora(
                 gl.useProgram(prog);
             }
 
-            const uploadConfig = createUniformBridge(gl, prog, uniforms, cursor);
+            const uploadConfig = createUniformBridge(gl, prog, uniforms);
             const loop = createFrameLoop({
                 gl,
                 prog,
                 uniforms,
-                cursor,
+                // BI.W-FIELD-CORE — the shared pointer field + the cursor scalars; the loop
+                // maps the field readout onto the `uCursor*` uniforms (no CursorState).
+                pointerField,
+                getCursorScalars,
                 getConfig: () => config,
                 // Read the substrate's live reduced-motion state (G1).
                 getReducedMotion: () => canvasHandle.reducedMotion,
-                // BC.W-VIZ-AURORA (T5) — the shared pointer field, FED tick() from the
-                // frame callback (the one-loop discipline; no own rAF).
-                pointerField,
             });
 
             // GL state setup — clear-to-transparent, premultiplied-alpha blend.
@@ -375,35 +404,25 @@ export function createAurora(
     });
 
     function setCursor(x: number, y: number, strength: number = 0.8) {
-        cursor.targetX = x;
-        cursor.targetY = y;
-        cursor.targetStrength = strength;
-        // BC.W-VIZ-AURORA (T5) — feed the shared field the raw pointer target (the
-        // POSITION write the velocity + acceleration derive from; PRM-gated inside
-        // setPointer). The field's velocity/accel are advanced by tick() in the loop.
+        cursorStrengthCeil = strength;
+        // BI.W-FIELD-CORE — feed the shared field the RAW pointer target ONCE (the POSITION
+        // write the velocity/acceleration/attractor all derive from; PRM-gated INSIDE
+        // setPointer — the write-path early-out lives in the field). The engagement envelope
+        // ramps (setActive) so the attraction fades in/out smoothly; the field's
+        // velocity/accel/attractor advance by tick() in the loop (the ONE smoothing stage).
+        pointerField.setActive(true);
         pointerField.setPointer(x, y);
-        // A pointer move re-introduces cursor easing — re-arm a parked loop.
-        canvasHandle.wake();
-    }
-    // AW.W8.1 — the velocity-reactive flow WRITE-PATH. Feeds a pointer delta into the
-    // cursor velocity + swirl-burst. The pointermove listener (useCursorInteraction)
-    // fires INDEPENDENT of the rAF loop, so it could move the field even while the loop
-    // is parked under reduce — the cursor WRITE-PATH PRM early-out lives HERE: the
-    // velocity injection is SUPPRESSED when the substrate reports reduced-motion (the
-    // master tempo scalar also zeroes the decay, but this write-path check is the
-    // load-bearing one for the off-loop listener — proof:aurora-interaction-prm asserts it).
-    function injectCursorVelocity(dx: number, dy: number) {
-        if (canvasHandle.reducedMotion) return; // cursor write-path PRM early-out
-        injectCursorVel(cursor, dx, dy);
+        // A pointer move re-introduces field easing — re-arm a parked loop.
         canvasHandle.wake();
     }
     function clearCursor() {
-        cursor.targetStrength = 0;
+        // Disengage — the engagement envelope decays, the attractor relaxes to rest.
+        pointerField.setActive(false);
         // The decay-to-rest still needs frames to animate out — re-arm.
         canvasHandle.wake();
     }
     function setCursorRadius(r: number) {
-        cursor.radius = r;
+        cursorRadius = r;
         // Radius shift is visible iff the cursor is active; wake so the change is
         // drawn (the loop re-parks immediately if the cursor is at rest).
         canvasHandle.wake();
@@ -484,9 +503,8 @@ export function createAurora(
         clearCursor,
         setCursorRadius,
         setReducedMotion,
-        // AW.W8.1 — the velocity-reactive flow write-path (PRM-gated) + the live
-        // reduced-motion read (the cursor pointermove listener early-outs on it).
-        injectCursorVelocity,
+        // BI.W-FIELD-CORE — the live reduced-motion read (the cursor pointermove listener
+        // early-outs on it; the field's setPointer is PRM-gated too).
         get reducedMotion() {
             return canvasHandle.reducedMotion;
         },
