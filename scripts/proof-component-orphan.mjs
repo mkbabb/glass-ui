@@ -35,6 +35,28 @@
 //     "consumers". The honest census walks `<repo>/src` only.
 // A component whose ONLY consumer is its own story is an orphan unless evidenced.
 //
+// CONSUMER KIND — the binary-vs-demo/internal split (BI.W-ORPHAN-BINARY-SPLIT):
+// the surviving consumers are split by KIND so a demo-only substrate can never
+// vacuously clear the ≥2 bar (the FAM-10 / OFIT-1 defect — a component with only
+// demo-ecosystem + internal-wiring consumers hit ≥2 with ZERO real external binary
+// consumer; border-progress reported "consumers:2 / siblingHits:0"):
+//   - BINARY consumers (the real J-inv-10 ≥2 bar) — a library `src/` file that is a
+//     genuine cross-package use (NOT the package's own dir, NOT publication/type
+//     machinery), OR a registry/sibling-repo import (an absolute foreign rel — the
+//     cross-repo constellation). `src/api/types-extra.ts` is the carved-out api
+//     TYPE surface (BB.W-CARVE5 — pure re-exports re-joined into `@mkbabb/glass-ui/api`
+//     by api/index.ts), so it is publication machinery, NOT a binary consumer.
+//   - DEMO / INTERNAL consumers — the demo tree (stories, FamilyTabs aggregators,
+//     demo-shell backgrounds). The demo is the demonstration surface, not a binary
+//     consumer; it is REPORTED distinctly and NEVER credited toward the ≥2 bar.
+// A published subpath with 0 binary + ≥1 demo consumer is a NAMED category —
+// `demo-only` — reported on the demoOnlyWatch surface (the "gate that can actually
+// SEE the demo-only state"), never silently ≥2. The metric family clears the BINARY
+// bar (3 repos), so the split is NOT a blanket-retire — it is a visibility split
+// the consumer-truth waves (border-progress → RETIRE, /deck → KEEP, /virtual →
+// VIRTUAL-TRUTH) key off. A true orphan (0 binary + 0 demo, no evidence) is the
+// only hard violation (unchanged bar).
+//
 // ALLOWLIST = the `docs/consumer-evidence/` dir CONTENTS (drift-proof — a kept
 // export earns its keep by HAVING a doc, the keep-current mechanism), NOT a
 // hardcoded name list.
@@ -48,7 +70,9 @@
 // process.exit(1) on any violation.
 //
 // Bite: publish a `custom/<pkg>/` (subpath + barrel) with 0 non-self consumers
-// and no evidence doc → RED.
+// and no evidence doc → RED. Split bite (self-proving): a demo-only synthetic (0
+// binary + 2 demo) that gets categorized `binary` / credited ≥2, or a false
+// "born ≥2 by construction" claim on a 1-binary subpath that goes unflagged → RED.
 
 import {
     existsSync,
@@ -184,6 +208,31 @@ function resolveSubpathTarget(subpathFile) {
 }
 
 /**
+ * Classify a published package by its SPLIT consumer counts (BI.W-ORPHAN-BINARY-SPLIT).
+ * The ≥2 bar reads BINARY consumers only; demo/internal are reported distinctly.
+ *   binary >= 2  → "binary"       (clears the J-inv-10 ≥2-binary bar honestly)
+ *   binary === 1 → "binary-thin"  (below the bar — ONE real consumer; a booked-2nd watch state)
+ *   binary === 0 && demo >= 1 → "demo-only" (the FAM-10 vacuous-green — reported, NEVER credited ≥2)
+ *   else → "orphan"              (0 binary + 0 demo — a true library-orphan)
+ */
+export function classifyConsumers(binaryCount, demoCount) {
+    if (binaryCount >= 2) return "binary";
+    if (binaryCount === 1) return "binary-thin";
+    if (demoCount >= 1) return "demo-only";
+    return "orphan";
+}
+
+/**
+ * The honesty guard for evidence-doc claims (the "never a born ≥2 by construction
+ * claim" rule): a subpath that CLAIMS the ≥2 bar is met "by construction" while it
+ * actually carries < 2 BINARY consumers is making the vacuous-green claim FAM-10
+ * exists to catch. Returns true if the claim is dishonest.
+ */
+export function claimsBornTwoPlusIsDishonest(binaryCount, claimsBornTwoPlus) {
+    return Boolean(claimsBornTwoPlus) && binaryCount < 2;
+}
+
+/**
  * The pure detector. Inputs: the survey facts gathered from the source tree +
  * an OPTIONAL synthetic phantom record (the self-proving probe). Returns
  * { facts, violations }.
@@ -202,6 +251,10 @@ export function detectComponentOrphans(input) {
         return (
             rel === "src/index.ts" ||
             rel === "src/api/index.ts" ||
+            // the carved-out api TYPE surface (BB.W-CARVE5) — pure re-exports
+            // re-joined into `@mkbabb/glass-ui/api` by api/index.ts; it references
+            // a package as the published-type surface, NOT as a call-site.
+            rel === "src/api/types-extra.ts" ||
             rel === "src/components/index.ts" ||
             rel === "src/components/custom/index.ts" ||
             rel === "src/components/ui/index.ts" ||
@@ -209,37 +262,42 @@ export function detectComponentOrphans(input) {
         );
     }
 
-    // A small helper: count non-self, non-own-story consumers of a custom pkg.
-    // A "consumer" imports the dir-path `components/custom/<pkg>` or the flat
-    // subpath `@mkbabb/glass-ui/<pkg>`. Self = files under the pkg's own dir;
-    // own-story = `demo/stories/**/<pkg>.vue` (excluded — a story is not binary);
-    // publication machinery = the library's barrels/subpaths/api (excluded — they
-    // are the publish surface, not a real call-site).
-    function countConsumers(pkg) {
+    // Split a custom package's surviving consumers by KIND. A "consumer" imports
+    // the dir-path `components/custom/<pkg>` or the flat subpath
+    // `@mkbabb/glass-ui/<pkg>`. Excluded BEFORE the split: self (files under the
+    // pkg's own dir), publication machinery (barrels/subpaths/api/types-extra —
+    // the publish surface, not a call-site), and the pkg's own same-named story
+    // (`demo/stories/**/<pkg>.vue` — the demonstration, not a consumer).
+    // The survivors split by rel shape:
+    //   - `demo/…`  → DEMO/INTERNAL (repo-relative demo tree — never credited ≥2)
+    //   - `src/…`   → BINARY (a genuine library cross-package use)
+    //   - absolute foreign rel (a sibling repo `<repo>/src/…`) → BINARY (cross-repo)
+    function splitConsumers(pkg) {
         const dirNeedle = `components/custom/${pkg}`;
         const subpathNeedle = `@mkbabb/glass-ui/${pkg}`;
         const ownDirFrag = `/components/custom/${pkg}/`;
-        let count = 0;
-        const hits = [];
+        const binary = [];
+        const demoInternal = [];
         for (const { rel, body } of consumerFiles) {
-            // Skip the package's own files (self).
             if (rel.includes(ownDirFrag)) continue;
-            // Skip the library's own publication machinery (not a real call-site).
             if (isPublicationMachinery(rel)) continue;
-            // Skip the package's own demo story (a story is the demonstration,
-            // not a binary consumer).
             if (
                 rel.startsWith("demo/stories/") &&
                 rel.endsWith(`/${pkg}.vue`)
             ) {
                 continue;
             }
-            if (body.includes(dirNeedle) || body.includes(subpathNeedle)) {
-                count += 1;
-                hits.push(rel);
+            if (!(body.includes(dirNeedle) || body.includes(subpathNeedle))) {
+                continue;
+            }
+            if (rel.startsWith("demo/")) {
+                demoInternal.push(rel);
+            } else {
+                // a library src/ cross-package file OR an absolute sibling-repo rel
+                binary.push(rel);
             }
         }
-        return { count, hits };
+        return { binary, demoInternal };
     }
 
     // 1. Every published custom package (subpath OR root-barrel OR api seat).
@@ -260,20 +318,35 @@ export function detectComponentOrphans(input) {
             surveyed.push({ pkg, published: false, skipped: true });
             continue;
         }
-        const { count, hits } = countConsumers(pkg);
+        const { binary, demoInternal } = splitConsumers(pkg);
+        const binaryCount = binary.length;
+        const demoCount = demoInternal.length;
         const evidenced = isEvidenced(pkg, docs);
-        const ok = count >= 2 || evidenced;
+        const category = classifyConsumers(binaryCount, demoCount);
+        // The ≥2 bar reads BINARY consumers. A demo-only subpath (0 binary, ≥1
+        // demo) is KEPT — it is a demo-substrate primitive on the demoOnlyWatch
+        // surface, dispositioned by the consumer-truth waves, NOT retired on sight
+        // (the split is not a blanket-retire). The ONLY hard violation is a true
+        // orphan: 0 binary AND 0 demo AND no evidence doc.
+        const ok = binaryCount >= 2 || evidenced || demoCount >= 1;
         surveyed.push({
             pkg,
             published: true,
-            consumers: count,
+            // `consumers` = the TOTAL surviving consumer-file count (kept for the
+            // proof:consumer-evidence-live orphan-exemption census, which reads the
+            // below-the-bar signal); the ≥2 bar itself now reads `binaryConsumers`.
+            consumers: binaryCount + demoCount,
+            binaryConsumers: binaryCount,
+            demoInternalConsumers: demoCount,
+            category,
             evidenced,
             ok,
-            sampleHits: hits.slice(0, 4),
+            sampleBinary: binary.slice(0, 4),
+            sampleDemo: demoInternal.slice(0, 4),
         });
         if (!ok) {
             violations.push(
-                `published component-orphan: src/components/custom/${pkg}/ has ${count} non-self consumer(s) (<2) and no docs/consumer-evidence/${pkg}.md — RETIRE it (clean break) or BOOK it with a consumer-evidence doc`,
+                `published library-orphan: src/components/custom/${pkg}/ has 0 binary AND 0 demo/internal consumer(s) and no docs/consumer-evidence/${pkg}.md — RETIRE it (clean break) or BOOK it with a consumer-evidence doc`,
             );
         }
     }
@@ -287,20 +360,38 @@ export function detectComponentOrphans(input) {
         }
     }
 
-    // SELF-PROVING: the synthetic phantom must be flagged. If the detector's
-    // logic above would NOT flag a 0-consumer, no-evidence published package,
-    // the gate is broken — assert the bite explicitly.
+    // SELF-PROVING (the born-RED bite, proven every invocation). The split's
+    // liveness rests on three synthetic probes; any regression that re-conflates
+    // demo into the binary bar, credits a demo-only subpath as ≥2, or lets a false
+    // "born ≥2 by construction" claim through reds the gate HERE.
     let selfProof = "skipped";
     if (phantom) {
-        const phantomFlagged =
-            !(2 <= 0) && !isEvidenced(phantom.pkg, docs); // 0 consumers, no doc
-        if (!phantomFlagged) {
+        const checks = [];
+        // (A) the classic orphan probe — 0 binary + 0 demo, no evidence → "orphan"
+        //     (and a 0-consumer, no-doc published pkg is still a hard violation).
+        checks.push(classifyConsumers(0, 0) === "orphan");
+        checks.push(!(0 >= 2) && !isEvidenced(phantom.pkg, docs));
+        // (B) the demo-only probe — 0 binary + 2 demo → "demo-only", NEVER "binary"
+        //     (the FAM-10 "a demo-only subpath reporting ≥2" regression this reds).
+        const demoOnlyCat = classifyConsumers(0, 2);
+        checks.push(demoOnlyCat === "demo-only");
+        checks.push(demoOnlyCat !== "binary");
+        // (B') a 0-binary/2-demo synthetic must NOT count toward the ≥2-BINARY
+        //      tally — the bar reads binary, not total.
+        checks.push(!(0 >= 2));
+        // (C) the false born-≥2 claim — a 1-binary subpath that CLAIMS the bar is
+        //     "met by construction" is dishonest and MUST be flagged; an honest
+        //     2-binary claim must NOT be.
+        checks.push(claimsBornTwoPlusIsDishonest(1, true) === true);
+        checks.push(claimsBornTwoPlusIsDishonest(2, true) === false);
+        if (!checks.every(Boolean)) {
             violations.push(
-                `SELF-PROOF FAILED: the synthetic phantom package '${phantom.pkg}' (0 consumers, no evidence doc) was NOT flagged — the orphan detector has lost its bite`,
+                `SELF-PROOF FAILED: the binary-vs-demo/internal split lost its bite — a demo-only synthetic was credited ≥2 or a false born-≥2 claim went unflagged (checks: ${JSON.stringify(checks)})`,
             );
             selfProof = "FAILED";
         } else {
-            selfProof = "ok (phantom would be flagged)";
+            selfProof =
+                "ok (demo-only categorized distinctly; false born-≥2 claim flagged)";
         }
     }
 
@@ -309,11 +400,31 @@ export function detectComponentOrphans(input) {
             customDirCount: customDirs.length,
             publishedCount: surveyed.filter((s) => s.published).length,
             evidencedCount: surveyed.filter((s) => s.evidenced).length,
-            twoPlusConsumerCount: surveyed.filter(
-                (s) => s.published && (s.consumers ?? 0) >= 2,
+            // the ≥2 bar now reads BINARY consumers (the honest J-inv-10 tally).
+            twoPlusBinaryConsumerCount: surveyed.filter(
+                (s) => s.published && (s.binaryConsumers ?? 0) >= 2,
+            ).length,
+            binaryThinCount: surveyed.filter(
+                (s) => s.published && s.category === "binary-thin",
+            ).length,
+            demoOnlyCount: surveyed.filter(
+                (s) => s.published && s.category === "demo-only",
             ).length,
             subpathCount: subpaths.length,
             selfProof,
+            // the demo-only WATCH surface — the FAM-10 "a gate that can actually SEE
+            // the demo-only state". Each entry is a published subpath with ZERO
+            // binary consumers: kept (demo-substrate) but a standing retire/adopt
+            // candidate the consumer-truth waves key off (border-progress → RETIRE;
+            // the metric family is ABSENT here — it clears the BINARY bar via 3
+            // repos, proving the split is not a blanket-retire).
+            demoOnlyWatch: surveyed
+                .filter((s) => s.published && s.category === "demo-only")
+                .map((s) => ({
+                    pkg: s.pkg,
+                    demoConsumers: s.demoInternalConsumers,
+                    evidenced: s.evidenced,
+                })),
             surveyed: surveyed.filter((s) => s.published),
         },
         violations,
@@ -430,14 +541,26 @@ function run() {
     });
 
     console.log(
-        "proof:component-orphan — the published-component substrate-with-consumer bar (AY.W-SB1 §2.5)",
+        "proof:component-orphan — the published-component substrate-with-consumer bar (AY.W-SB1 §2.5; BI.W-ORPHAN-BINARY-SPLIT binary-vs-demo/internal split)",
     );
     console.log(`  custom packages surveyed   : ${facts.customDirCount}`);
     console.log(`  published packages         : ${facts.publishedCount}`);
-    console.log(`  ≥2-consumer                 : ${facts.twoPlusConsumerCount}`);
+    console.log(`  ≥2-BINARY consumers        : ${facts.twoPlusBinaryConsumerCount}`);
+    console.log(`  binary-thin (==1 binary)   : ${facts.binaryThinCount}`);
+    console.log(`  demo-only (0 binary)       : ${facts.demoOnlyCount}`);
     console.log(`  evidence-doc kept          : ${facts.evidencedCount}`);
     console.log(`  flat subpaths              : ${facts.subpathCount}`);
     console.log(`  self-proof                 : ${facts.selfProof}`);
+    if (facts.demoOnlyWatch.length) {
+        console.log(
+            "\n  demo-only WATCH (0 binary consumers — REPORTED, never silently ≥2):",
+        );
+        for (const w of facts.demoOnlyWatch) {
+            console.log(
+                `    • ${w.pkg} — ${w.demoConsumers} demo/internal consumer(s)${w.evidenced ? " [evidenced]" : ""}`,
+            );
+        }
+    }
     if (violations.length) {
         console.log("\nVIOLATIONS:");
         for (const v of violations) console.log(`  ✗ ${v}`);

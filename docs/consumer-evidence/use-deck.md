@@ -32,15 +32,25 @@ bound it. The honest tally:
 So the honest count is ONE external consumer (slides); the earlier claim of two
 consumers by construction is false.
 
-## Disposition — KEEP-vs-FOLD (deferred to B8)
+## Disposition — KEEP (executed at BI.W-ORPHAN-BINARY-SPLIT, DOC-4/DOC-5)
 
-Under the mechanism-distinctness law, `/deck` owns a mechanism DISTINCT from
-`/carousel` (a keyboard-paged aria-live full-viewport presentation register vs an
-embla item-scroller), so a fold onto `/carousel` is not a byte-equivalent
-substitution. This wave records the honest single-consumer count; it does NOT
-execute a fold. The KEEP-with-single-consumer-note vs FOLD decision, and the
-`W-ORPHAN-BINARY-SPLIT` orphan-gate mechanism split, are the consumer-truth band
-(B8) — recorded, not re-booked.
+**KEEP.** Under the mechanism-distinctness law, `/deck` owns a mechanism DISTINCT
+from `/carousel` (a keyboard-paged aria-live full-viewport presentation register vs
+an embla item-scroller), so a fold onto `/carousel` is not a byte-equivalent
+substitution — a fold would DELETE a mechanism, not de-duplicate one. The
+KEEP-vs-FOLD decision the `W-DOC-CANON-REWRITE` audit routed to the consumer-truth
+band (B8) is resolved here: **KEEP with the honest single-repo note.**
+
+The `proof:component-orphan` binary-vs-demo/internal split (the same wave) measures
+`/deck` at the file level as **4 BINARY call-sites, all in slides** (`DeckPager.vue`,
+`DeckSlide.vue`, `deckKeys.ts`, `useDeck.ts`), so it clears the ≥2-BINARY bar on the
+census's file unit — it is NOT on the `demoOnlyWatch` surface. The honest caveat the
+census's file count cannot see: those 4 call-sites are a **single external repo**
+(slides), so at the repo grain `/deck` is a one-consumer KEEP (distinct mechanism),
+not a two-repo KEEP. Both truths hold: the gate greens on the 4 binary files; this
+doc records that they are one repo. If the slides adopt never lands (the consume-back
+is gated on the 5.0.0 publish), the 4 call-sites evaporate and the verdict returns to
+`library-orphan` — the subpath folds at the next prune census.
 
 ## Re-audit proof
 
