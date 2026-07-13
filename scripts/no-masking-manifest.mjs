@@ -224,6 +224,42 @@ export const LADDER_OWED = [
     },
 ];
 
+// ── Arm F — the data-motion DEAD-SIGNAL clause (BI.W-TEMPO / N6) ─────────────────
+// `useMotionAxis` (_shared/useMotionAxis.ts) emits `data-motion="reduced"/"off"` from
+// the overlay content SFCs (Dialog + Sheet + more — ≥2 shipped emitters). A shipped
+// emitter with ZERO live CSS consumer is a DEAD WIRE — the reduction "works" in the
+// model but paints NOTHING (the masking class the NO-MASKING-FALLBACK edict forbids:
+// "primary works in paint or fails loud"). N6 = WIRE (not excise — the emitters are a
+// shipped feature): the gate counts emitters (.vue SFCs binding `data-motion=`) vs CSS
+// consumers (`[data-motion` selectors in src/styles) and REDs when emitters ≥1 AND
+// consumers < the floor. reveal.css's `[data-motion="reduced"/"off"]` arms are the
+// consumers that flip it GREEN.
+export const DATA_MOTION_SIGNAL = {
+    attribute: "data-motion",
+    emitterScope: "src/components", // .vue SFCs binding data-motion=
+    consumerScope: "src/styles", // .css [data-motion selectors
+    minConsumersWhenEmitted: 1,
+    owedBy: "BI.W-TEMPO",
+    reason:
+        "useMotionAxis emits data-motion=reduced/off (Dialog + Sheet, ≥2 emitters); an emitter with 0 CSS consumers is a dead wire — N6 WIRES it via glass/reveal.css's [data-motion] arms (never excise a shipped feature).",
+};
+
+/**
+ * Count `data-motion=` / `:data-motion=` attribute EMISSIONS in a .vue source (block +
+ * `//` line + `<!-- -->` HTML comments stripped, so a prose mention never counts).
+ */
+export function countDataMotionEmitters(src) {
+    const noHtml = stripComments(src).replace(/<!--[\s\S]*?-->/g, "");
+    const m = noHtml.match(/:?data-motion\s*=/g);
+    return m ? m.length : 0;
+}
+
+/** Count `[data-motion=…]` / `[data-motion]` SELECTOR consumers in a CSS source (comments stripped). */
+export function countDataMotionConsumers(src) {
+    const m = stripComments(src).match(/\[data-motion[=\]]/g);
+    return m ? m.length : 0;
+}
+
 /** Strip `/* … *​/` block comments AND `//` line comments (URL-safe `://` preserved). */
 export function stripComments(src) {
     // Block comments first.

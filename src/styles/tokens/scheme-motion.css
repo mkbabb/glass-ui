@@ -357,6 +357,27 @@
 }
 
 /* ═══════════════════════════════════════════════
+   BI.W-TEMPO — the loud-scope tempo re-pin (the deliberate-weight carve, M11).
+
+   `--motion-tempo` (property-regs.css, initial 1.0 identity) is the global motion
+   TIME knob — a consumer sets `:root { --motion-tempo: 0.85 }` (the "options for
+   longer" clause of UF-G1) and every utility-UI spring clock + JS response tightens
+   in lockstep. The loud iOS-27 surfaces — the DOCK morph, the DRAWER sheet, the DECK
+   slide (composing `.liquid-stage`) — re-pin `--motion-tempo: 1` on their OWN scope
+   so the deliberately-landed BD.W-ANIM-IOS27-TUNE weight HOLDS where it was tuned,
+   while the ambient utility chrome follows the consumer's global scale (the SAME
+   `.liquid-stage { --motion-weight: 1 }` loud-driver carve pattern, for the TIME
+   axis). `:where()` keeps the specificity at 0 so a consumer's explicit per-instance
+   override still wins. At the 1.0 identity default this is a byte-no-op; it engages
+   ONLY when a consumer scales tempo globally.
+
+   ⟂ `--motion-weight` (magnitude) ⟂ `--ui-scale` (geometry) — the three scalars stay
+   disjoint (the NAMING FENCE). */
+:where(.glass-dock, .glass-drawer, .liquid-stage) {
+    --motion-tempo: 1;
+}
+
+/* ═══════════════════════════════════════════════
    BG.W-LIQUID-WEIGHT-DEFAULT (F5.2) — the calm opt-out
 
    The DEFAULT interactive-transition SPATIAL register is now spring-derived

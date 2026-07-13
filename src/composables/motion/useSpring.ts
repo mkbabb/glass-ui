@@ -24,6 +24,7 @@ import {
     type MaybeRefOrGetter,
     type Ref,
 } from "vue";
+import { motionTempo } from "./motionTempo";
 
 export interface UseSpringOptions {
     /**
@@ -102,9 +103,17 @@ export function useSpring(
     const velocity = ref(initialVelocity);
     const isSettled = ref(initialVelocity === 0);
 
+    // BI.W-TEMPO — co-scale `response` by the global `--motion-tempo` axis so the JS
+    // spring shares ONE clock with its CSS twin (`--spring-<name>-duration` reads
+    // `settle * --motion-tempo`). `duration ∝ response`, so scaling response by tempo
+    // keeps CSS_t90 == JS_t90 at any tempo (P7, G2). Read once at construction off
+    // `:root` (this base primitive is element-agnostic; the element-bearing engines —
+    // useDrawerSnap — read off their own scope). At the 1.0 identity default this is
+    // `response * 1`, byte-identical. `useSpringPress` composes this, so it inherits
+    // the tempo through the ONE construction site (no double-application).
     const spring = shallowRef(
         new SpringProgress({
-            response: options.response ?? 0.5,
+            response: (options.response ?? 0.5) * motionTempo(),
             dampingFraction: options.dampingFraction ?? 0.86,
             initial,
             initialVelocity,

@@ -28,36 +28,17 @@ interface TransitionDemo {
     cssClass: string; // Transition name prop → matches .<name>-enter-active etc.
 }
 
+// BI.W-REGISTER-TABLE — the `fade-slide` / `pop` / `dialog-scale` / `dropdown`
+// Vue-<Transition> recipes are RETIRED (census-dead, 0 src/ consumers); their overlay/
+// menu entrances now ride the ONE `.glass-reveal` recipe bound by `data-reveal`
+// (enter-overlay / enter-menu / enter-tooltip / enter-transient — see the live overlays
+// in Display ▸ Overlays). The showcase keeps the still-live generic swaps.
 const transitionDemos: TransitionDemo[] = [
     {
         id: "fade",
         name: "fade",
         blurb: "Symmetric, fast opacity — the plainest tool in the box.",
         cssClass: "fade",
-    },
-    {
-        id: "fade-slide",
-        name: "fade-slide",
-        blurb: "Spring-entered, accelerate-out translateY — menus, hints, floaters.",
-        cssClass: "fade-slide",
-    },
-    {
-        id: "pop",
-        name: "pop",
-        blurb: "Bouncy scale-up, brisk ease-out exit — popovers, badges.",
-        cssClass: "pop",
-    },
-    {
-        id: "dialog-scale",
-        name: "dialog-scale",
-        blurb: "Dialog-appropriate: slow bouncy entry, measured exit.",
-        cssClass: "dialog-scale",
-    },
-    {
-        id: "dropdown",
-        name: "dropdown",
-        blurb: "Instant opacity, snappy spring transform — menus.",
-        cssClass: "dropdown",
     },
     {
         id: "tab-fade",

@@ -337,6 +337,7 @@ const SUBPATHS: Record<string, string> = {
     "feedback/completion-seal": "@mkbabb/glass-ui/completion-seal",
     // Motion — the spring/curve/reveal vocabulary.
     "motion/springs": "@mkbabb/glass-ui/motion",
+    "motion/tempo": "@mkbabb/glass-ui/motion",
     "motion/curve-gallery": "@mkbabb/glass-ui/easing",
     "motion/countup": "@mkbabb/glass-ui/motion",
     "motion/reveal": "@mkbabb/glass-ui/motion-core",
@@ -462,12 +463,17 @@ export const FOLDED_STORY_IDS: ReadonlySet<string> = new Set<string>([
  * `/card` (BI.W-DEMO-CARD-DECLARE — `display/card` demos the Card surface-tier facets,
  * `containers/card-pressable` demos the `:pressable` interaction facet: two distinct
  * Card mechanisms each earning a routed page, the `/motion-core` scroll+reveal
- * precedent — NOT a fold, both facets are load-bearing). Every OTHER shared subpath
- * is a redundant-page defect. `proof:demo`'s `demo-earns-page` arm reads this allowlist.
+ * precedent — NOT a fold, both facets are load-bearing), and `/motion` (BI.W-TEMPO —
+ * `motion/springs` demos the useSpring ORCHESTRATOR, `motion/tempo` demos the distinct
+ * `--motion-tempo` axis over the same /motion primitives: two load-bearing motion
+ * mechanisms each earning a routed page, the SAME scroll+reveal precedent — NOT a
+ * fold). Every OTHER shared subpath is a redundant-page defect. `proof:demo`'s
+ * `demo-earns-page` arm reads this allowlist.
  */
 export const DECLARED_FAMILY_SUBPATHS: ReadonlySet<string> = new Set<string>([
     "@mkbabb/glass-ui/dock",
     "@mkbabb/glass-ui/motion-core",
+    "@mkbabb/glass-ui/motion",
     "@mkbabb/glass-ui/card",
 ]);
 
@@ -1175,6 +1181,17 @@ export const CATEGORIES: Category[] = [
             s("motion", "springs", "Spring Orchestrator", undefined, {
                 background: "constellation",
             }),
+            s(
+                "motion",
+                "tempo",
+                "Motion Tempo",
+                "The --motion-tempo axis (M11 / N6) — ONE registered inheriting TIME scalar co-scales BOTH the CSS spring clocks (the --spring-*-duration reader = settle × --motion-tempo) AND the JS spring responses (motionTempo() → response × tempo). A live 0.7→1.3 slider over a dropdown + popover + dialog + a JS dock morph proves the P7 CSS↔JS one-clock co-scale; ⟂ --motion-weight ⟂ --ui-scale.",
+                {
+                    // A calm blueprint wash (the one-GL-per-route fence — the tempo demo
+                    // spends no GL context; the glass overlays POP over the static grid).
+                    background: "grid",
+                },
+            ),
             s(
                 "motion",
                 "curve-gallery",

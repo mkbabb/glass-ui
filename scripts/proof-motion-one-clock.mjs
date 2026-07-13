@@ -96,6 +96,10 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+// BI.W-TEMPO — the co-scale clause integrates the physical SpringProgress step
+// response (JS_t90) so the CSS↔JS proportionality is computed off the real spring, not
+// a hardcoded factor (the FAM-18/M1 tempo-parity precedent in proof-spring-tokens-synced).
+import { SpringProgress } from "@mkbabb/keyframes.js";
 
 // Resolve the repo root from this module's URL when invoked as a CLI gate; fall
 // back to cwd under a test runner where import.meta.url may not be a file: URL on
@@ -117,10 +121,20 @@ const ASKS_AND_CONSUMES = "docs/tranches/BC/coordination/asks-and-consumes.md";
 // ── A9 / CC source anchors (the live spring sources + the coupled-facility seams) ──
 const SCHEME_MOTION_CSS = "src/styles/tokens/scheme-motion.css";
 const SCHEME_SPRING_CSS = "src/styles/tokens/scheme-spring.css";
+// BI.W-REGISTER-TABLE — the named motion registers (enter/exit clocks) `.glass-reveal`
+// binds by `data-reveal`. The overlay enter clock is `--enter-overlay-clock`
+// (= `--spring-snappy-duration`); the exit is `--exit-overlay-duration`. CC1's anchors
+// follow the register indirection reveal.css now rides (was the literal `--spring-
+// snappy-duration` / `glass-reveal-out var(--duration-fast)` pre-REGISTER-TABLE).
+const MOTION_REGISTERS_CSS = "src/styles/tokens/motion-registers.css";
 const GLASS_REVEAL_CSS = "src/styles/glass/reveal.css";
 const SHEET_ANIMATE_CSS = "src/styles/utilities/btn.css";
 const DRAWER_SNAP_TS = "src/components/ui/drawer/composables/useDrawerSnap.ts";
 const DRAWER_LOOK_CSS = "src/styles/drawer.css";
+// BI.W-TEMPO co-scale anchors — the axis registration, the CSS reader split, the JS
+// dock spring engine (the surviving dock engine per BI.W-DOCK-SPINE).
+const PROPERTY_REGS_CSS = "src/styles/tokens/property-regs.css";
+const USE_DOCK_SPRING_TS = "src/components/custom/dock/composables/useDockSpring.ts";
 
 // The viz family — the one un-clocked island (BC.W-VIZ-CHOREOGRAPHY's positive
 // scope). M4 asserts none of these OWN a kf rAF (RAFPlayback.play/.loop/.drive).
@@ -842,6 +856,27 @@ export function readDurationSeconds(src, name) {
 export function countScalarWrites(src, prop) {
     return (src.match(new RegExp(`setProperty\\(\\s*["']${prop}["']`, "g")) || []).length;
 }
+// BI.W-DRAWER-PERF FOLLOW (ruling 12): the scoped write targets THREE reader roots
+// (sheet · scrim · wrapper), so the single-WRITER law is CONTAINMENT, not site-count —
+// every `setProperty("<prop>")` site must live INSIDE the one `writeScalar` function
+// body (a site outside it is the forked writer the clause kills). Brace-balanced body
+// extraction; a missing writeScalar = zero containment (fail-loud).
+export function scalarWritesOutsideWriter(src, prop, writerName = "writeScalar") {
+    const total = countScalarWrites(src, prop);
+    const decl = src.match(new RegExp(`function\\s+${writerName}\\s*\\([^)]*\\)\\s*\\{`));
+    if (!decl) return total;
+    const start = decl.index + decl[0].length;
+    let depth = 1;
+    let i = start;
+    while (i < src.length && depth > 0) {
+        const ch = src[i];
+        if (ch === "{") depth += 1;
+        else if (ch === "}") depth -= 1;
+        i += 1;
+    }
+    const body = src.slice(start, i);
+    return total - countScalarWrites(body, prop);
+}
 export function hasFixedBackdropTween(src) {
     return /transition(?:-property)?\s*:\s*[^;}]*backdrop-filter/.test(src);
 }
@@ -854,20 +889,32 @@ export function detectChannelCoupling(read) {
     // The panel enters on --spring-snappy-duration + exits on --duration-fast; the
     // scrim enters on --duration-panel + exits on --duration-fast. An exit clock that
     // OUTLASTS its entrance reds (the cc-dismiss-longer / decoupled-scrim defect, 2.5).
+    // BI.W-REGISTER-TABLE reconcile (anchor-only; the CC1 SEMANTIC — exit ≤ entrance,
+    // panel + scrim couple their clocks — is PRESERVED). The overlay panel now rides the
+    // NAMED registers: enter clock `--enter-overlay-clock` (= --spring-snappy-duration,
+    // numeric = --spring-snappy-settle at tempo 1) + exit clock `--exit-overlay-duration`
+    // (motion-registers.css) via reveal.css's `--reveal-clock`/`--reveal-exit-clock`. The
+    // scrim (sheet-animate) is unchanged (--duration-panel open / --duration-fast close).
     const motionCss = stripCssComments(read(SCHEME_MOTION_CSS) ?? "");
     const springCss = stripCssComments(read(SCHEME_SPRING_CSS) ?? "");
+    const registersCss = stripCssComments(read(MOTION_REGISTERS_CSS) ?? "");
     const fast = readDurationSeconds(motionCss, "--duration-fast");
     const panel = readDurationSeconds(motionCss, "--duration-panel");
-    const snappyDur = readDurationSeconds(springCss, "--spring-snappy-duration");
-    facts.cc1 = { fast, panel, snappyDur };
-    if (fast == null || panel == null || snappyDur == null) {
+    // The panel entrance numeric is the raw --spring-snappy-settle (BI.W-TEMPO split —
+    // the public --spring-snappy-duration is now the `settle * --motion-tempo` reader a
+    // device-free gate cannot evaluate; at the 1.0 identity settle == the old duration).
+    const snappyDur = readDurationSeconds(springCss, "--spring-snappy-settle");
+    // The panel EXIT is the named overlay exit register (was --duration-fast pre-table).
+    const overlayExit = readDurationSeconds(registersCss, "--exit-overlay-duration");
+    facts.cc1 = { fast, panel, snappyDur, overlayExit };
+    if (fast == null || panel == null || snappyDur == null || overlayExit == null) {
         violations.push(
-            `CC1: could not read the overlay clocks (--duration-fast=${fast}, --duration-panel=${panel}, --spring-snappy-duration=${snappyDur}) — the coupled-clock value-check is blind (channel-coupling).`,
+            `CC1: could not read the overlay clocks (--duration-fast=${fast}, --duration-panel=${panel}, --spring-snappy-settle=${snappyDur}, --exit-overlay-duration=${overlayExit}) — the coupled-clock value-check is blind (channel-coupling).`,
         );
     } else {
-        if (fast > snappyDur) {
+        if (overlayExit > snappyDur) {
             violations.push(
-                `CC1: the dialog panel exit (--duration-fast ${fast}s) OUTLASTS its entrance (--spring-snappy-duration ${snappyDur}s) — an exit must never outlast its entrance (channel-coupling).`,
+                `CC1: the dialog panel exit (--exit-overlay-duration ${overlayExit}s) OUTLASTS its entrance (--spring-snappy-settle ${snappyDur}s) — an exit must never outlast its entrance (channel-coupling).`,
             );
         }
         if (fast > panel) {
@@ -878,15 +925,20 @@ export function detectChannelCoupling(read) {
     }
     // CC1 structural presence — the panel + scrim reference the coupled clocks (so the
     // value-check binds to the real coupled surfaces, not floating token magnitudes).
+    // Panel now rides the register indirection: reveal.css binds `--reveal-clock` (the
+    // enter register) + `glass-reveal-out var(--reveal-exit-clock)` (the exit register);
+    // motion-registers.css maps `--enter-overlay-clock: var(--spring-snappy-duration)`.
     const revealCss = stripCssComments(read(GLASS_REVEAL_CSS) ?? "");
     const sheetCss = stripCssComments(read(SHEET_ANIMATE_CSS) ?? "");
-    facts.cc1.panelReadsSnappy = /--spring-snappy-duration/.test(revealCss);
-    facts.cc1.panelExitFast = /glass-reveal-out\s+var\(--duration-fast\)/.test(revealCss);
+    facts.cc1.panelReadsSnappy =
+        /--reveal-clock/.test(revealCss) &&
+        /--enter-overlay-clock:\s*var\(--spring-snappy-duration\)/.test(registersCss);
+    facts.cc1.panelExitFast = /glass-reveal-out\s+var\(--reveal-exit-clock\)/.test(revealCss);
     facts.cc1.scrimReadsPanel = /duration-\[var\(--duration-panel\)\]/.test(sheetCss);
     facts.cc1.scrimExitFast = /duration-\[var\(--duration-fast\)\]/.test(sheetCss);
     if (!facts.cc1.panelReadsSnappy || !facts.cc1.panelExitFast) {
         violations.push(
-            `CC1: the dialog panel (.glass-reveal, ${GLASS_REVEAL_CSS}) no longer couples enter=--spring-snappy-duration + exit=glass-reveal-out var(--duration-fast) — the coupled-clock value-check is unanchored (channel-coupling).`,
+            `CC1: the dialog panel (.glass-reveal, ${GLASS_REVEAL_CSS}) no longer couples enter=--enter-overlay-clock (→ --spring-snappy-duration) + exit=glass-reveal-out var(--reveal-exit-clock) — the coupled-clock value-check is unanchored (channel-coupling).`,
         );
     }
     if (!facts.cc1.scrimReadsPanel || !facts.cc1.scrimExitFast) {
@@ -903,11 +955,17 @@ export function detectChannelCoupling(read) {
     const drawerTs = stripAllComments(read(DRAWER_SNAP_TS) ?? "");
     const drawerT = countScalarWrites(drawerTs, "--glass-drawer-t");
     const stageT = countScalarWrites(drawerTs, "--stage-t");
+    // BI.W-DRAWER-PERF FOLLOW (ruling 12): --stage-t legitimately writes N sites inside
+    // the ONE writeScalar (the sheet + the scrim/wrapper reader-root loop — the scoped
+    // write that killed the documentElement 120× recalc). Single-WRITER = CONTAINMENT:
+    // zero sites outside writeScalar; --glass-drawer-t stays the exactly-1 sheet write.
+    const drawerTOutside = scalarWritesOutsideWriter(drawerTs, "--glass-drawer-t");
+    const stageTOutside = scalarWritesOutsideWriter(drawerTs, "--stage-t");
     const hasReseat = /\.target\s*=/.test(drawerTs);
-    facts.cc2 = { drawerTWrites: drawerT, stageTWrites: stageT, hasReseat };
-    if (drawerT !== 1 || stageT !== 1) {
+    facts.cc2 = { drawerTWrites: drawerT, stageTWrites: stageT, drawerTOutside, stageTOutside, hasReseat };
+    if (drawerT !== 1 || stageT < 1 || drawerTOutside !== 0 || stageTOutside !== 0) {
         violations.push(
-            `CC2: the drawer scalar is NOT single-writer — ${DRAWER_SNAP_TS} writes --glass-drawer-t ${drawerT}× and --stage-t ${stageT}× (expect exactly 1 each, inside the ONE writeScalar). A forked writer decouples the sheet/scrim/page channels (channel-coupling).`,
+            `CC2: the drawer scalar is NOT single-writer — ${DRAWER_SNAP_TS} writes --glass-drawer-t ${drawerT}× (${drawerTOutside} outside writeScalar; expect exactly 1, inside) and --stage-t ${stageT}× (${stageTOutside} OUTSIDE the ONE writeScalar; the ruling-12 multi-root scoped write allows N sites INSIDE it, zero outside). A forked writer decouples the sheet/scrim/page channels (channel-coupling).`,
         );
     }
     if (!hasReseat) {
@@ -928,6 +986,140 @@ export function detectChannelCoupling(read) {
     }
 
     return { violations, facts };
+}
+
+// ── TEMPO — the CSS↔JS co-scale clause (BI.W-TEMPO / M11 — the round-4 correction) ──
+// AUTHORED INTO this gate (never a collision-fated second gate): the `--motion-tempo`
+// axis co-scales BOTH the CSS spring clocks (the `--spring-<name>-duration` reader reads
+// `settle * var(--motion-tempo)`) AND the JS spring RESPONSES (`response *= tempo`).
+// Because `duration ∝ response` (ωₙ = 2π/response), a CSS dropdown (enter-menu clock =
+// `--spring-smooth-duration`) and a JS dock morph (DOCK_SPRING) co-scale IN PROPORTION
+// as tempo varies — the CSS clock and the JS response stretch by the SAME factor, so
+// their t90-scale ratio ≈ 1 at ANY tempo (G2). BORN-RED HONEST: no `--motion-tempo`
+// axis exists at HEAD (unregistered @property + flat CSS clock + no JS wire), so the
+// PRESENCE gate reds until the wire lands (clause-RED → GREEN at the wire). A regression
+// that scales the CSS clock but NOT the JS spring (or the reverse) reds the co-scale
+// ratio (the self-test bite: a tempo-write that doesn't reach a JS spring reds).
+const TEMPO_COSCALE_TEMPOS = [0.85, 1.2];
+const TEMPO_COSCALE_BAND = 0.02; // ±2% of the co-scale ratio (the wire lands it ~0)
+// DOCK_SPRING (dock/constants.ts → springPreset("dock")); the JS dock-morph register.
+const DOCK_COSCALE_SPRING = { response: 0.68, dampingFraction: 0.64 };
+const TEMPO_RISE_LEVEL = 0.9; // the 90%-travel rise-time (t90) landmark
+const TEMPO_RISE_DT = 0.0002; // 0.2ms — sub-ms JS_t90 resolution
+const TEMPO_RISE_MAX_SECONDS = 5;
+
+/** Physical time (s) the `SpringProgress(target=1)` step response first reaches `level`. */
+function springRiseTimeSeconds(preset, level) {
+    const spring = new SpringProgress({
+        response: preset.response,
+        dampingFraction: preset.dampingFraction,
+    });
+    spring.target = 1;
+    let prev = spring.tickToTime(0);
+    for (let t = TEMPO_RISE_DT; t < TEMPO_RISE_MAX_SECONDS; t += TEMPO_RISE_DT) {
+        const x = spring.tickToTime(t);
+        if (prev < level && x >= level) {
+            return t - TEMPO_RISE_DT + ((level - prev) / (x - prev)) * TEMPO_RISE_DT;
+        }
+        prev = x;
+    }
+    return null;
+}
+
+/**
+ * PURE co-scale detector — reads the 3 axis sources (the @property registration, the
+ * scheme-spring CSS reader split, the JS dock spring engine) so the self-test can inject
+ * a synthetic "CSS scales, JS doesn't" state and assert it FLAGS, while the fully-wired
+ * synthetic stays clean.
+ */
+export function detectTempoCoScale({ propRegsSrc, springCss, dockSpringSrc }) {
+    const violations = [];
+    const facts = { tempos: TEMPO_COSCALE_TEMPOS, band: TEMPO_COSCALE_BAND, perTempo: [] };
+
+    // Presence 1 — the `--motion-tempo` @property is REGISTERED (the axis exists).
+    const tempoRegistered = /@property\s+--motion-tempo\b/.test(
+        stripAllComments(propRegsSrc ?? ""),
+    );
+    facts.tempoRegistered = tempoRegistered;
+    if (!tempoRegistered) {
+        violations.push(
+            `TEMPO co-scale: \`@property --motion-tempo\` is NOT registered (${PROPERTY_REGS_CSS}) — the tempo axis does not exist; the CSS↔JS co-scale has nothing to verify (born-RED until the wire lands).`,
+        );
+    }
+
+    // Presence 2 — the CSS `--spring-smooth-duration` READER (the enter-menu / dropdown
+    // clock) co-scales by `var(--motion-tempo)`; the raw `-settle` seconds are present.
+    const cleanCss = stripCssComments(springCss ?? "");
+    const readerM = cleanCss.match(/--spring-smooth-duration:\s*([^;]+);/);
+    const settleM = cleanCss.match(/--spring-smooth-settle:\s*([0-9.]+)s/);
+    const hasCssTempo = Boolean(readerM) && /var\(\s*--motion-tempo\s*\)/.test(readerM[1]);
+    facts.hasCssTempo = hasCssTempo;
+    facts.smoothSettle = settleM ? Number.parseFloat(settleM[1]) : null;
+    if (!hasCssTempo) {
+        violations.push(
+            `TEMPO co-scale: the CSS \`--spring-smooth-duration\` dropdown clock does NOT read \`var(--motion-tempo)\` (${SCHEME_SPRING_CSS}) — the CSS side is not tempo-scaled, so a global tempo write never reaches the dropdown clock.`,
+        );
+    }
+    if (!settleM) {
+        violations.push(
+            `TEMPO co-scale: the raw \`--spring-smooth-settle\` clock is missing (${SCHEME_SPRING_CSS}) — the reader has no numeric source to scale.`,
+        );
+    }
+
+    // Presence 3 — the JS DOCK engine co-scales `response` by `motionTempo()`.
+    const cleanDock = stripAllComments(dockSpringSrc ?? "");
+    const hasJsTempo =
+        /motionTempo\s*\(/.test(cleanDock) &&
+        /response:\s*[^,;\n]*\*\s*motionTempo\s*\(/.test(cleanDock);
+    facts.hasJsTempo = hasJsTempo;
+    if (!hasJsTempo) {
+        violations.push(
+            `TEMPO co-scale: the JS dock spring (${USE_DOCK_SPRING_TS}) does NOT scale \`response\` by \`motionTempo()\` — the JS side is not tempo-scaled, so at a global tempo≠1 the dock JS morph DESYNCS from its CSS clock (the P7 one-clock break).`,
+        );
+    }
+
+    // The co-scale numbers — computed off the DETECTED booleans so a "CSS scales, JS
+    // doesn't" state produces a diverging ratio (the load-bearing self-test bite). The
+    // settle number must be present to compute the CSS clock scale.
+    if (settleM) {
+        const settleSec = Number.parseFloat(settleM[1]);
+        const jsBaseT90 = springRiseTimeSeconds(DOCK_COSCALE_SPRING, TEMPO_RISE_LEVEL);
+        for (const t of TEMPO_COSCALE_TEMPOS) {
+            // CSS dropdown scale = clock(t)/clock(1); clock(t) = settle * (tempo? t : 1).
+            const cssClockT = settleSec * (hasCssTempo ? t : 1);
+            const cssScale = cssClockT / settleSec;
+            // JS dock scale = t90(resp·(tempo? t : 1)) / t90(resp); t90 ∝ response, so
+            // this is exactly t when the JS wire multiplies by tempo, else 1.
+            const jsRespT = DOCK_COSCALE_SPRING.response * (hasJsTempo ? t : 1);
+            const jsT90t = springRiseTimeSeconds(
+                { response: jsRespT, dampingFraction: DOCK_COSCALE_SPRING.dampingFraction },
+                TEMPO_RISE_LEVEL,
+            );
+            const jsScale = jsBaseT90 && jsT90t ? jsT90t / jsBaseT90 : null;
+            const coScaleRatio = jsScale ? cssScale / jsScale : null;
+            facts.perTempo.push({
+                tempo: t,
+                cssScale: Math.round(cssScale * 1000) / 1000,
+                jsScale: jsScale == null ? null : Math.round(jsScale * 1000) / 1000,
+                coScaleRatio: coScaleRatio == null ? null : Math.round(coScaleRatio * 1000) / 1000,
+            });
+            if (coScaleRatio == null || Math.abs(coScaleRatio - 1) > TEMPO_COSCALE_BAND) {
+                violations.push(
+                    `TEMPO co-scale @tempo ${t}: CSS clock scale ${cssScale.toFixed(3)} vs JS response scale ${jsScale == null ? "n/a" : jsScale.toFixed(3)} → co-scale ratio ${coScaleRatio == null ? "n/a" : coScaleRatio.toFixed(3)} (|·−1|>${TEMPO_COSCALE_BAND}) — the CSS dropdown clock and the JS dock morph do NOT co-scale in proportion; a global tempo tightens one but not the other (the P7 one-clock law).`,
+                );
+            }
+        }
+    }
+
+    return { violations, facts };
+}
+
+function detectTempoCoScaleReal(read) {
+    return detectTempoCoScale({
+        propRegsSrc: read(PROPERTY_REGS_CSS),
+        springCss: read(SCHEME_SPRING_CSS),
+        dockSpringSrc: read(USE_DOCK_SPRING_TS),
+    });
 }
 
 export function detectAll(read) {
@@ -970,6 +1162,12 @@ export function detectAll(read) {
     const m5 = detectCanonSync(read);
     facts.m5 = m5.facts;
     violations.push(...m5.violations);
+
+    // BI.W-TEMPO — the CSS↔JS co-scale clause (M11, the round-4 correction — authored
+    // INTO this gate, never a second gate). born-RED at HEAD (no axis) → GREEN at wire.
+    const tempo = detectTempoCoScaleReal(read);
+    facts.tempo = tempo.facts;
+    violations.push(...tempo.violations);
 
     facts.oneClock = violations.length === 0;
     return { facts, violations };
@@ -1075,9 +1273,42 @@ function selfTest() {
         if (forked !== 2) failures.push(`self-test CC2: a forked --glass-drawer-t writer was not counted (got ${forked}, expected 2)`);
         const single = countScalarWrites(`el.style.setProperty("--glass-drawer-t", a);`, "--glass-drawer-t");
         if (single !== 1) failures.push(`self-test CC2: a single writer miscounted (got ${single}, expected 1)`);
+        // containment (ruling-12 FOLLOW): N sites INSIDE writeScalar pass; a planted
+        // site OUTSIDE it reds; a missing writeScalar fails loud (total counted outside).
+        const contained = `function writeScalar(t) { if (sheet) { sheet.style.setProperty("--stage-t", t); } for (const el of roots) { el.style.setProperty("--stage-t", t); } }`;
+        if (scalarWritesOutsideWriter(contained, "--stage-t") !== 0) failures.push("self-test CC2: the honest multi-root writeScalar false-flagged (containment)");
+        const escaped = contained + ` rogue.style.setProperty("--stage-t", x);`;
+        if (scalarWritesOutsideWriter(escaped, "--stage-t") !== 1) failures.push("self-test CC2: a planted OUTSIDE-writeScalar --stage-t write was not flagged");
+        if (scalarWritesOutsideWriter(`el.style.setProperty("--stage-t", x);`, "--stage-t") !== 1) failures.push("self-test CC2: a writeScalar-less file did not fail loud");
         // fixed blur tween: a `transition: backdrop-filter` reds; an opacity tween does not.
         if (!hasFixedBackdropTween("transition: backdrop-filter 0.4s ease;")) failures.push("self-test CC2: a fixed `transition: backdrop-filter` was not detected");
         if (hasFixedBackdropTween("transition: opacity 0.2s ease;")) failures.push("self-test CC2: an opacity tween false-flagged as a backdrop-filter tween");
+    }
+
+    // TEMPO co-scale bite — a synthetic tempo-write that DOESN'T reach a JS spring reds
+    // (CSS scales by tempo, JS does not → the co-scale ratio diverges); the fully-wired
+    // synthetic stays clean; and the born-RED HEAD state (no axis) reds via presence.
+    {
+        const reg = '@property --motion-tempo { syntax: "<number>"; inherits: true; initial-value: 1; }';
+        const cssWired =
+            "  --spring-smooth-settle: 0.35s;\n  --spring-smooth-duration: calc(var(--spring-smooth-settle) * var(--motion-tempo));";
+        const cssFlat = "  --spring-smooth-settle: 0.35s;\n  --spring-smooth-duration: 0.35s;";
+        const dockWired = "new SpringProgress({ response: config.response * motionTempo(), dampingFraction: config.dampingFraction });";
+        const dockFlat = "new SpringProgress({ response: config.response, dampingFraction: config.dampingFraction });";
+
+        // fully wired → clean.
+        const wired = detectTempoCoScale({ propRegsSrc: reg, springCss: cssWired, dockSpringSrc: dockWired });
+        if (wired.violations.length !== 0) failures.push(`self-test TEMPO: a fully-wired axis false-flagged (${wired.violations.join("; ")})`);
+
+        // CSS scales, JS doesn't → the co-scale ratio diverges AND presence-3 reds.
+        const jsMissing = detectTempoCoScale({ propRegsSrc: reg, springCss: cssWired, dockSpringSrc: dockFlat });
+        if (jsMissing.violations.length === 0) failures.push("self-test TEMPO: a tempo-write that DOESN'T reach the JS dock spring did NOT red (co-scale teeth gone)");
+        const ratioDiverged = jsMissing.facts.perTempo.some((p) => p.coScaleRatio != null && Math.abs(p.coScaleRatio - 1) > TEMPO_COSCALE_BAND);
+        if (!ratioDiverged) failures.push("self-test TEMPO: the CSS-scales-JS-doesn't co-scale ratio did NOT diverge from 1 (the proportionality check is hollow)");
+
+        // no axis at all (HEAD) → born-RED via presence.
+        const noAxis = detectTempoCoScale({ propRegsSrc: "", springCss: cssFlat, dockSpringSrc: dockFlat });
+        if (noAxis.violations.length === 0) failures.push("self-test TEMPO: the axis-absent HEAD state was NOT born-RED (presence gate hollow)");
     }
 
     return failures;
@@ -1112,12 +1343,13 @@ function run() {
 
     console.log("proof:motion-one-clock — keyframes.js is the ONE source + clock (BC.W-MOTION-ONE-CLOCK)");
     console.log(`  A9 one-clock lock      : ${facts.a9.checked.length} spring defaults value-checked vs live source ✓`);
-    console.log(`  CC channel-coupling    : overlay exit≤entrance (fast ${facts.cc.cc1.fast}s ≤ snappy ${facts.cc.cc1.snappyDur}s / panel ${facts.cc.cc1.panel}s), drawer single-writer (${facts.cc.cc2.drawerTWrites}×--glass-drawer-t / ${facts.cc.cc2.stageTWrites}×--stage-t), no fixed blur-tween ${facts.cc.cc2.noFixedBlurTween ? "✓" : "✗"}`);
+    console.log(`  CC channel-coupling    : panel exit≤entrance (overlay-exit ${facts.cc.cc1.overlayExit}s ≤ snappy ${facts.cc.cc1.snappyDur}s), scrim exit≤entrance (fast ${facts.cc.cc1.fast}s ≤ panel ${facts.cc.cc1.panel}s), drawer single-writer (${facts.cc.cc2.drawerTWrites}×--glass-drawer-t / ${facts.cc.cc2.stageTWrites}×--stage-t), no fixed blur-tween ${facts.cc.cc2.noFixedBlurTween ? "✓" : "✗"}`);
     console.log(`  M1 single source       : canonical rows ${facts.m1.canonicalRows}, second tables ${facts.m1.secondTables.length}, regen+curves import ${facts.m1.regenImportsPresets && facts.m1.curvesImportsPresets ? "yes ✓" : "NO ✗"}`);
     console.log(`  M2 off-spine seams     : ${facts.m2.prongA.length + facts.m2.prongB.length} (sanctioned ${OFF_SPINE_ALLOWLIST.length}), files scanned ${facts.m2.filesScanned}`);
     console.log(`  M3 clock fence         : ${facts.m3.clockForks} forks over ${facts.m3.corpusFilesScanned} corpus files; pending bridges ${facts.m3.pendingBridges.length}`);
     console.log(`  M4 viz inversion       : ${facts.m4.hits.length} viz-owned rAF over ${facts.m4.vizFilesScanned} viz files`);
     console.log(`  M5 canon + book        : §P7 ${facts.m5.submodulePresent === false ? "skip (submodule absent)" : facts.m5.hasP7 ? "yes ✓" : "NO ✗"}, cross-repo book ${facts.m5.crossRepoBookExists ? "yes ✓" : "NO ✗"}`);
+    console.log(`  TEMPO co-scale (BI/M11): axis reg ${facts.tempo.tempoRegistered ? "✓" : "✗"}, CSS clock ×tempo ${facts.tempo.hasCssTempo ? "✓" : "✗"}, JS dock ×tempo ${facts.tempo.hasJsTempo ? "✓" : "✗"}; co-scale ratio @[${facts.tempo.tempos.join(",")}] = ${facts.tempo.perTempo.map((p) => p.coScaleRatio).join(", ")}`);
     console.log(`  self-test failures     : ${selfFailures.length}`);
     console.log(`  one clock              : ${facts.oneClock && selfFailures.length === 0 ? "YES" : "NO"}`);
     if (all.length) {

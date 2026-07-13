@@ -403,3 +403,34 @@
     inherits: true;
     initial-value: 0.618;
 }
+
+/* BI.W-TEMPO (M11 / N6) — the GOVERNING motion TIME scalar (the one application
+   point). ONE registered inheriting number co-scales BOTH the CSS spring clocks
+   (the `--spring-<name>-duration` reader reads `calc(var(--spring-<name>-settle) *
+   var(--motion-tempo))`, scheme-spring.css) AND the JS spring RESPONSES (each spring
+   engine reads it via `motionTempo()` and scales `response *= tempo` at
+   construction). Because `duration ∝ response` (ωₙ = 2π/response), scaling the CSS
+   clock by tempo ≡ scaling response by tempo — so the M1 CSS==JS parity holds at ANY
+   tempo (G2). It serves the "options for longer" clause of UF-G1 (a global motion
+   time knob a consumer sets on `:root`).
+
+   Registered with the EXACT `--ui-scale`/`--motion-weight`/`--glass-level` typed
+   cascading-scalar idiom — `inherits: true` so a consumer sets it on any ancestor
+   and every descendant spring re-reads it (the loud iOS-27 surfaces re-pin
+   `--motion-tempo: 1` on their own scope, scheme-motion.css, so the utility UI
+   tightens/loosens while the deliberate BD.W-ANIM-IOS27-TUNE weight holds where it
+   landed). `initial-value: 1` is the IDENTITY (RATIFIED judgment (c) — the per-
+   register tightening is M1 + REGISTER-TABLE's exit/enter-menu clocks, NOT a global
+   scale): at 1.0 the reader resolves `settle * 1` byte-identical to the flat clock,
+   so the axis is a no-op at rest. A malformed override CLAMPS to the initial 1 (the
+   typed fail-safe; `motionTempo()` mirrors the ≤0 → 1 clamp JS-side).
+
+   THE NAMING FENCE — `--motion-tempo` (TIME) ⟂ `--motion-weight` (MAGNITUDE, default
+   0.618) ⟂ `--ui-scale` (GEOMETRY): three registered inheriting scalars, NEVER
+   folded. PRM is orthogonal (tempo × the universal ~0.01ms carve is still ~0; the JS
+   `respectReducedMotion` snap wins at every tempo). */
+@property --motion-tempo {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 1;
+}

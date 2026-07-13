@@ -44,12 +44,15 @@ import {
 } from "./gate-output.mjs";
 import {
     BARE_VAR_CHANNELS,
+    DATA_MOTION_SIGNAL,
     JS_SINGLE_SOURCE,
     LADDER_OWED,
     NO_TRANSITIONEND_LADDER,
     REGISTERED_DORMANT,
     SETTLE_TIMER_SIGNATURES,
     WRITER_OWED,
+    countDataMotionConsumers,
+    countDataMotionEmitters,
     countMaskingVarReads,
     maskingFallbackValues,
     stripComments,
@@ -74,6 +77,21 @@ function cssFiles(rel) {
         const st = statSync(p);
         if (st.isDirectory()) out.push(...cssFiles(join(rel, name)));
         else if (name.endsWith(".css")) out.push(p);
+    }
+    return out;
+}
+
+/** Recursively collect `*.vue` files under a repo-relative dir. */
+function vueFiles(rel) {
+    const abs = resolve(ROOT, rel);
+    if (!existsSync(abs)) return [];
+    if (statSync(abs).isFile()) return abs.endsWith(".vue") ? [abs] : [];
+    const out = [];
+    for (const name of readdirSync(abs)) {
+        const p = join(abs, name);
+        const st = statSync(p);
+        if (st.isDirectory()) out.push(...vueFiles(join(rel, name)));
+        else if (name.endsWith(".vue")) out.push(p);
     }
     return out;
 }
@@ -229,6 +247,42 @@ for (const row of [...WRITER_OWED, ...LADDER_OWED]) {
         );
 }
 
+// ── Arm F — DATA-MOTION DEAD-SIGNAL (BI.W-TEMPO / N6) ─────────────────────────────
+// A shipped `data-motion="reduced"/"off"` emitter (useMotionAxis, ≥2 SFCs) with ZERO
+// live CSS consumer is a DEAD WIRE (the masking class — the reduction paints nothing).
+// Count emitters (.vue binding `data-motion=`) vs CSS consumers (`[data-motion`
+// selectors in src/styles); RED when emitters ≥1 AND consumers < the floor. Born-RED
+// on the HEAD state (6 emitters, 0 consumers) → GREEN at the reveal.css wire.
+const armFRows = [];
+{
+    const { attribute, emitterScope, consumerScope, minConsumersWhenEmitted } =
+        DATA_MOTION_SIGNAL;
+    let emitters = 0;
+    const emitterFiles = [];
+    for (const f of vueFiles(emitterScope)) {
+        const n = countDataMotionEmitters(readFileSync(f, "utf8"));
+        if (n > 0) {
+            emitters += n;
+            emitterFiles.push(f.slice(ROOT.length + 1));
+        }
+    }
+    let consumers = 0;
+    const consumerFiles = [];
+    for (const f of cssFiles(consumerScope)) {
+        const n = countDataMotionConsumers(readFileSync(f, "utf8"));
+        if (n > 0) {
+            consumers += n;
+            consumerFiles.push(f.slice(ROOT.length + 1));
+        }
+    }
+    const ok = !(emitters >= 1 && consumers < minConsumersWhenEmitted);
+    armFRows.push({ attribute, emitters, emitterFiles, consumers, consumerFiles, ok });
+    if (!ok)
+        violations.push(
+            `Arm F — ${emitters} \`${attribute}\` emitter(s) [${emitterFiles.join(", ")}] but ${consumers} live CSS consumer(s) in ${consumerScope} — a shipped emitter with zero consumers is a DEAD WIRE (N6: WIRE it in src/styles, never excise a shipped feature).`,
+        );
+}
+
 // ── SELF-TEST BITES ──────────────────────────────────────────────────────────────
 // Each planted masking snippet MUST flag; the honest identity-rest survivors MUST NOT.
 const bites = [];
@@ -286,6 +340,25 @@ const identityRestNotAChannel = !BARE_VAR_CHANNELS.some(
     (c) => c.name === "--stretch" || c.name === "--mouse-x" || c.name === "--dock-control-floor",
 );
 bite("F-identity-rest-survives", identityRestNotAChannel);
+// G — Arm F (N6): a planted DEAD wire (emitter present, 0 consumers) MUST be
+// detectable, and a WIRED signal (emitter + ≥1 consumer) MUST clear — the planted-
+// dead-wire self-test bite (the R14-01 fix: the gate must be ABLE to detect what this
+// wave discharges). ONE bite proves both the counting AND the RED-condition logic.
+bite(
+    "G-dead-data-motion-flags",
+    (() => {
+        const emit = countDataMotionEmitters(
+            '<DialogContent :data-motion="motionAxis.dataMotion.value" />',
+        );
+        const deadConsumers = countDataMotionConsumers(".glass-reveal { scale: none; }");
+        const wiredConsumers = countDataMotionConsumers(
+            '.glass-reveal[data-motion="off"] { scale: none; }',
+        );
+        // The RED predicate is `emitters >= 1 && consumers < 1`: the dead state fires
+        // it (emit≥1, deadConsumers 0), the wired state clears it (wiredConsumers≥1).
+        return emit >= 1 && deadConsumers === 0 && wiredConsumers >= 1;
+    })(),
+);
 const allBitesFlagged = bites.every((b) => b.flagged);
 if (!allBitesFlagged)
     violations.push(
@@ -302,6 +375,7 @@ const facts = {
     armC: armCRows,
     armD: armDRows,
     armE: armERows,
+    armF: armFRows,
     selfTestBites: bites,
     allBitesFlagged,
 };
@@ -323,6 +397,9 @@ console.log(`  Arm B bare-var channels OK        : ${okB} (masking reads=${armBR
 console.log(`  Arm C JS single-source OK         : ${okC} (${armCRows.length} sites)`);
 console.log(`  Arm D transitionend-ladder ABSENT : ${okD} (${armDRows.length} files scanned)`);
 console.log(`  Arm E census rows all owned       : ${armERows.every((r) => r.ok)} (${armERows.length} owed rows)`);
+console.log(
+    `  Arm F data-motion signal wired    : ${armFRows.every((r) => r.ok)} (${armFRows[0]?.emitters ?? 0} emitters / ${armFRows[0]?.consumers ?? 0} CSS consumers)`,
+);
 console.log(`  self-test bites all flagged       : ${allBitesFlagged} (${bites.length} bites)`);
 if (violations.length) {
     console.log("\nVIOLATIONS:");
