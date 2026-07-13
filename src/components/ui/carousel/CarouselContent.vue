@@ -1,375 +1,138 @@
 <script setup lang="ts">
-// BD.W-GOO-BARBELL-NECK — the carousel track host + the liquid BARBELL goo-morph.
+// BI.W-CAROUSEL-REBUILD — the carousel track host: a clean embla viewport + track.
 //
-// THE BINDING BAR (the user's verbatim carousel feedback): the carousel transitions
-// should be "more GLASSY, have more DISTORTION and INERTIA" and "should MORPH BLOB and
-// MEATBALL from one to another" (the Gemini-carousel read). embla owns the ITEM-SCROLL;
-// the goo-morph rides ON it as the TRANSITION layer.
+// THE CATEGORY ERROR RETIRED (D-PAGER PASS-1 §0 Defect 2). The prior build painted a
+// content BARBELL over the slides — a 265px goo body flying 559px OUTSIDE the 414px card
+// and sweeping the description text every advance (a whole-layer filtered goo cast).
+// Unanimous verdict across families: RETIRE wholesale. The content-barbell composable +
+// its goo tokens are now DEFINITION-ABSENT (BI.W-PAGER-RETIRES, terminal — clean break, no
+// alias, no dormant stub). A metaball-merge is the INDICATOR's job (the pager worm,
+// PagerDots) — the CONTENT is crisp weighty embla scroll, with ZERO filter (the 559px-escape
+// class is structurally unreproducible: there is no filtered layer left to escape).
 //
-// THE MECHANISM (Safari-first, compositor-only — the de-duped `useGooMorph` BARBELL).
-// A metaball merge is, definitionally, TWO round bodies + the bridge between them. The
-// prior build painted ONE full-height plate over N static plates — a single
-// constant-cross-section rectangle, blurred + thresholded, can only fatten into a rounded
-// rectangle (a warm TRAY with one scalloped edge — NO geometry that produces a WAIST). The
-// N-plate bed + the single worm are DELETED. The goo layer now hosts the BARBELL:
-//   • bodyA / bodyB — TWO round warm-cream droplets (`D = restSize/φ`, the golden-minor of
-//     the slide pitch — a BLOB, not a plate) travelling apart-then-together;
-//   • neck — a SEPARATE element between them whose girth WELLS on `--goo-t` (a bell, peak
-//     mid, ~0 at the ends) and whose `clip-path` carves a smooth CONCAVE waist (the
-//     `--neck-waist` throat — a structural hourglass on BOTH engines BEFORE the filter even
-//     fuses it: the Safari insurance); the static `#glass-goo` blur→threshold welds the
-//     three into ONE warm silhouette WITH A REAL LOCAL-MINIMUM WAIST (waist/body ≤ 0.45);
-//   • the crisp content rides the EXISTING embla track UNFILTERED on top (text never passes
-//     the goo threshold — feColorMatrix would mangle it).
-//   • the drive is `useGooMorph(tokenPrefix: "carousel-goo")` — on embla `select` it
-//     `travel()`s the barbell; on `scroll` (the live drag) it `drive()`s it continuously off
-//     embla `scrollProgress()` (the drag-driven neck). The INERTIA is the `--carousel-goo-flow`
-//     `--spring-*`-derived `linear()` + the `useLiquidFlex` squish, the cartoon-punch (the
-//     `--ease-cartoon-punch` pre-dip + arc + moving-cast + the trailing `--neck-specular-angle`
-//     sweep), gated on `--goo-weight`.
-//
-// SAFARI / PRM: the goo filter is the regular `filter: url(#glass-goo)` graph (the ONE shell-root `<GooFilter>` mount
-// carries the WebKit-correctness facts); the concave throat is the engine-agnostic waist
-// floor; `@supports not (filter: url(#x))` drops the layer to a plain cross-fade floor; under
-// reduce the goo layer is `display:none`, the barbell coalesces to ONE body.
+// WHAT SHIPS. A clean viewport + track. Programmatic/dot scrolls carry inertia from the
+// weighty embla `duration` (the drag already has momentum) — the calm-overdamped
+// content-snap law (momentum yes, bounce no). An OPTIONAL compositor-only arrival
+// (`:arrival`) scales each slide 0.965→1 + fades it off its distance-from-centre, CLIPPED
+// inside the `overflow-hidden` viewport — transform + opacity ONLY, never a filter, never a
+// layout property (motion-canon P5). The pager worm (PagerDots) is the ONE metaball morph;
+// the drag-scrub that drives it lives in the consumer beside the pager.
 import type { WithClassAsProps } from "./interface";
-import { computed, ref } from "vue";
+import { onBeforeUnmount, ref, watch } from "vue";
 import { cn } from "../../../utils";
 import { useCarousel } from "./useCarousel";
-import { useCarouselWorm } from "./composables/useCarouselWorm";
+import type { UnwrapRefCarouselApi } from "./interface";
 
 defineOptions({
     inheritAttrs: false,
 });
 
-const props = defineProps<WithClassAsProps>();
+const props = withDefaults(
+    defineProps<
+        {
+            /**
+             * Opt-in compositor-only arrival: each slide scales 0.965→1 + fades off its
+             * distance from the viewport centre as it scrolls (transform + opacity ONLY,
+             * clipped inside the viewport — no filter, no layout property). Default off.
+             */
+            arrival?: boolean;
+        } & WithClassAsProps
+    >(),
+    { arrival: false },
+);
 
 const { carouselRef, carouselApi, orientation } = useCarousel();
 
-const vertical = computed(() => orientation === "vertical");
+const trackEl = ref<HTMLElement | null>(null);
 
-// the content root (the user-gesture listen surface — any pointerdown/keydown inside the
-// carousel is a DRIVER; the autoplay timer never dispatches a real DOM gesture).
-const rootEl = ref<HTMLElement | null>(null);
-// the goo silhouette layer host (the geometry origin + the `--goo-t` transition host) +
-// the BARBELL: two round bodies + a welling concave neck. The N-plate bed is DELETED — the
-// two bodies ARE the masses.
-const gooLayerEl = ref<HTMLElement | null>(null);
-const bodyAEl = ref<HTMLElement | null>(null);
-const bodyBEl = ref<HTMLElement | null>(null);
-const neckEl = ref<HTMLElement | null>(null);
+// ── The OPTIONAL compositor arrival (scale + opacity off scrollProgress) ──────────
+// Standard embla scale-on-scroll: each slide's distance from the nearest snap drives a
+// sub-perceptual scale (1 at centre → 0.965 one slide away) + fade. Written straight onto
+// the slide node's `transform`/`opacity` (compositor-only) — embla transforms the TRACK,
+// so a per-slide transform never collides. PRM → the slides rest at scale 1 (no arrival).
+const ARRIVAL_SCALE_DROP = 0.035; // 1 → 0.965 at one slide away
+const ARRIVAL_FADE_DROP = 0.3; // 1 → 0.7 at one slide away
+const prefersReducedMotion =
+    typeof window !== "undefined" &&
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-// The liquid goo-morph BARBELL wiring — the embla select/scroll/reInit handlers, the
-// DRIVER-vs-OBSERVER autoplay seam, and the barbell geometry — lives in the colocated
-// composables/ leaf (BH.B2.4a). The SFC keeps only the template + style + the refs.
-useCarouselWorm({
-    rootEl,
-    gooLayerEl,
-    bodyAEl,
-    bodyBEl,
-    neckEl,
-    carouselApi,
-    vertical,
+function applyArrival(): void {
+    const api = carouselApi.value;
+    if (!api) return;
+    const nodes = api.slideNodes();
+    if (!props.arrival || prefersReducedMotion) {
+        for (const node of nodes) {
+            node.style.transform = "";
+            node.style.opacity = "";
+        }
+        return;
+    }
+    const progress = api.scrollProgress();
+    const snaps = api.scrollSnapList();
+    nodes.forEach((node, i) => {
+        const snap = snaps[i] ?? progress;
+        const t = Math.min(Math.abs(snap - progress) * (snaps.length - 1 || 1), 1);
+        node.style.transform = `scale(${(1 - ARRIVAL_SCALE_DROP * t).toFixed(4)})`;
+        node.style.opacity = (1 - ARRIVAL_FADE_DROP * t).toFixed(4);
+    });
+}
+
+let bound: UnwrapRefCarouselApi | null = null;
+function bindArrival(api: UnwrapRefCarouselApi | null | undefined): void {
+    if (!api || bound === api) return;
+    bound = api;
+    api.on("scroll", applyArrival);
+    api.on("reInit", applyArrival);
+    api.on("init", applyArrival);
+    applyArrival();
+}
+watch(carouselApi, (api) => bindArrival(api), { immediate: true });
+watch(
+    () => props.arrival,
+    () => applyArrival(),
+);
+onBeforeUnmount(() => {
+    const api = bound;
+    if (!api) return;
+    api.off("scroll", applyArrival);
+    api.off("reInit", applyArrival);
+    api.off("init", applyArrival);
+    bound = null;
 });
 </script>
 
 <template>
-    <!-- The relative wrapper hosts the embla viewport + the goo overlay as SIBLINGS. The
-         goo layer must NOT be a CHILD of `carouselRef` — embla-carousel-vue treats the
-         viewport's FIRST child as its scroll container, so any sibling injected before the
-         track breaks embla's layout (the track stops scrolling). The overlay is therefore
-         an absolutely-positioned sibling OVER the viewport. -->
-    <div ref="rootEl" class="carousel-content-root">
-        <!-- BD.W-MORPH-FIELD-WELD — the goo `<filter>` is the ONE library `<GooFilter>`
-             mount at the app/shell root (`url(#glass-goo)`, the BARBELL plate-scale id). The
-             carousel references it by id below; a standalone consumer mounts `<GooFilter/>`
-             once at their own root (no per-carousel mount → zero duplicate `<filter id>`). -->
-
-        <!-- THE CONCAVE NECK-THROAT clip-path (NET-NEW — the `--neck-waist` hourglass). An
-             SVG <clipPath clipPathUnits="objectBoundingBox"> so the 0..1 cubic-Bézier
-             coords SCALE with the neck element (a CSS `path()` is fixed-px + cannot take
-             `%`/`calc` — build-trap; `shape()` is not Safari-stable). The top + bottom edges
-             curve INWARD to the 0.34 waist via √φ-proportioned control points — a SMOOTH
-             concave throat (NOT a faceted polygon, NOT the fission `inset()` thinner). The
-             waist depth is the static `--neck-waist` literal; the engine's scaleY(neckGirth)
-             WELLS it. Safari-safe (objectBoundingBox clipPath is universally supported). -->
-        <svg
-            class="carousel-neck-defs"
-            width="0"
-            height="0"
-            aria-hidden="true"
-            focusable="false"
-        >
-            <defs>
-                <clipPath id="carousel-neck-throat" clipPathUnits="objectBoundingBox">
-                    <path
-                        d="M0,0 C0.25,0 0.36,0.34 0.5,0.34 C0.64,0.34 0.75,0 1,0 L1,1 C0.75,1 0.64,0.66 0.5,0.66 C0.36,0.66 0.25,1 0,1 Z"
-                    />
-                </clipPath>
-            </defs>
-        </svg>
-
-        <!-- THE GOO SILHOUETTE LAYER — the BARBELL: two round warm-cream bodies + a welling
-             concave neck, wrapped in the static SVG goo filter. aria-hidden +
-             pointer-events:none (the crisp track owns content + interaction). On select/drag
-             the bodies bud apart, the neck WELLS a concave waist across the gap (the
-             `--neck-waist` clip-path + the goo threshold), the filter MERGES the three into
-             one warm silhouette with a real local-minimum waist, then the bodies coalesce +
-             PINCH off — the "morph blob and meatball" read. The layer opacity is the ONE
-             translucency (the opaque-layer technique). -->
+    <!-- THE EMBLA VIEWPORT — `carouselRef`; its ONLY child is the scroll track (embla treats
+         the first child as its scroll container). `overflow-hidden` CLIPS the arrival scale
+         inside the card — nothing paints outside the viewport box. -->
+    <div
+        ref="carouselRef"
+        data-slot="carousel-content"
+        class="carousel-viewport overflow-hidden"
+    >
+        <!-- THE CRISP CONTENT — the embla track. No filter, ever. -->
         <div
-            ref="gooLayerEl"
-            class="carousel-goo-layer"
-            :class="orientation === 'vertical' ? 'carousel-goo-layer--vertical' : ''"
-            aria-hidden="true"
+            ref="trackEl"
+            :class="
+                cn(
+                    'carousel-track flex',
+                    orientation === 'horizontal' ? '-ml-4' : '-mt-4 flex-col',
+                    props.class
+                )
+            "
+            v-bind="$attrs"
         >
-            <!-- THE BARBELL — bodyA / neck / bodyB (three explicit refs the engine projects).
-                 bodyA/bodyB are round droplets (D = step/φ); the neck is the concave-throat
-                 bridge that wells then pinches. The filter welds them into ONE waisted mass. -->
-            <span ref="bodyAEl" class="carousel-goo-body" />
-            <span ref="neckEl" class="carousel-goo-neck" />
-            <span ref="bodyBEl" class="carousel-goo-body" />
-        </div>
-
-        <!-- THE EMBLA VIEWPORT — `carouselRef`; its ONLY child is the scroll track (NEVER
-             inject a sibling before it — embla treats the first child as the container). -->
-        <div
-            ref="carouselRef"
-            data-slot="carousel-content"
-            class="carousel-viewport overflow-hidden"
-        >
-            <!-- THE CRISP CONTENT — the embla track, UNFILTERED, above the goo layer. -->
-            <div
-                :class="
-                    cn(
-                        'carousel-track flex',
-                        orientation === 'horizontal' ? '-ml-4' : '-mt-4 flex-col',
-                        props.class
-                    )
-                "
-                v-bind="$attrs"
-            >
-                <slot />
-            </div>
+            <slot />
         </div>
     </div>
 </template>
 
 <style scoped>
-/* The relative wrapper anchors the goo overlay over the embla viewport. */
-.carousel-content-root {
-    position: relative;
-}
 .carousel-viewport {
     position: relative;
-    z-index: 1; /* the crisp slides above the goo overlay */
 }
-
-/* THE GOO SILHOUETTE LAYER — the translucent warm-GLASS metaball bridge that travels
-   OVER the slides during the transition (z-index 2, above the crisp content). It is a
-   LIQUID GLASS lens: warm-cream, NEVER gray (BA.W-NO-GRAY). At REST it is invisible
-   (`opacity: 0`); while traveling (`[data-traveling]`) it fades to the morph opacity, so
-   the worm-plate necks across the gap as a glassy bridge bending the content behind it.
-   The goo filter merges the worm into ONE metaball silhouette. */
-.carousel-goo-layer {
-    position: absolute;
-    inset: 0;
-    z-index: 2; /* ABOVE the crisp slides — the glass bridge travels over them */
-    pointer-events: none;
-    filter: var(--carousel-goo-filter, url(#glass-goo)); /* the metaball merge */
-    opacity: 0; /* invisible at rest; fades in only during travel */
-    transition: opacity var(--duration-fast) var(--ease-out);
-    /* the warm-cream glass ink (NEVER gray — BA.W-NO-GRAY): warm MATERIAL at the warm
-       hue. The worm reads as a luminous warm-glass bridge, not a charcoal blob. */
-    color: color-mix(in oklab, var(--card), white 8%);
-    /* BD.W-CAROUSEL-DECK-GLASS §5 — the DRIVER weight. The carousel-Next/drag is a DRIVER
-       (the user touched a pixel): full cartoon weight `--goo-weight: 1.0` → `--motion-weight`
-       reads the SHIPPED cartoon-cast register. The `[data-autoplay]` ambient seam (below)
-       zeroes it for calm auto-motion; PRM zeroes it too (the `--motion-weight: 0` carve). */
-    --goo-weight: 1;
-    --motion-weight: var(--goo-weight);
-    /* BD.W-GOO-BARBELL-NECK — the NEW barbell tokens (declared once, consumer-scoped —
-       the shared `src/styles/tokens/*` stay read-only; these are the carousel's own).
-       `--carousel-goo-neck-gap` — how near the two bodies draw at mid (the engine reads it,
-       falling to its 0.78 param); `--neck-waist` — the concave throat depth (the % the
-       hourglass clip-path pulls IN at the midpoint); the max-stretch bump 1.24→1.32 (a more
-       decisive welling neck) overrides the read-only token in-scope (no-legacy clean lift). */
-    --carousel-goo-neck-gap: 0.78;
-    --neck-waist: 0.34; /* the throat depth — the sides pull in to 34% at the waist */
-    --carousel-goo-max-stretch: 1.32;
-    will-change: transform, opacity; /* force a compositor layer — Safari re-raster */
-    contain: layout style; /* scope restyle, NOT paint — `contain: paint` clips the
-       metaball neck at the layer box (JUDGE-1 §3); the SVG filter region (-50%/200%) +
-       the worm-peak span are what bound the goo, not a paint clip. */
-    isolation: isolate; /* scope the filter, not the page */
-    /* NO `overflow: clip` — the goo neck must extend past the gap to read between the two
-       masses near the slide edges. The crisp embla viewport (z-index 1) is the legible
-       content boundary; the goo bridge floats over it. */
-}
-/* BD.W-CAROUSEL-DECK-GLASS §5 — the CALM AUTO-MOTION seam. An auto-advance flags
-   `data-autoplay` on the host (CarouselContent's `markTraveling`): zero `--motion-weight`
-   so the cartoon-cast/punch self-extinguish — ambient drift never reads as a loud
-   deliberate flip. A USER swipe clears the attr → the weighty driver punch returns. */
-.carousel-goo-layer[data-autoplay] {
-    --motion-weight: 0;
-}
-/* fade the glass bridge IN during travel — the morph opacity (a translucent warm lens
-   so the slide content reads through the bridge). */
-.carousel-goo-layer[data-traveling] {
-    opacity: var(--carousel-goo-layer-opacity, 0.55);
-}
-/* BD.W-CAROUSEL-DECK-GLASS §4 — the moving CARTOON-CAST (REUSES the SHIPPED
-   `--shadow-cartoon-*` warm cel stamp — DRY, no second shadow system). The cast must NOT
-   live inside the goo-filtered layer (its `feColorMatrix` threshold would crush the soft
-   shadow alpha), so it rides the NON-filtered `.carousel-content-root::before` and reads
-   the goo host's weight via `:has()`. It PUNCHES opposite the morph direction (down-left,
-   away from the upper-right `--glass-key`), scaled by `--goo-weight` (read off the goo host
-   through `--motion-weight`), and snaps back on settle. Muted under `[data-autoplay]`/PRM. */
-.carousel-content-root::before {
-    content: "";
-    position: absolute;
-    inset: 12%;
-    z-index: 0; /* behind the crisp viewport (z-1) + the goo layer (z-2) — the cel anchor */
-    border-radius: var(--radius-card);
-    pointer-events: none;
-    box-shadow: var(--shadow-cartoon-md);
-    /* the weight is read off the goo host (which owns `--goo-weight`/`--motion-weight` +
-       the `[data-autoplay]` mute); the root mirrors it via the carousel-goo-weight echo. */
-    --carousel-cast-travel: calc(6px * var(--carousel-cast-weight, 0));
-    translate: calc(-1 * var(--carousel-cast-travel)) var(--carousel-cast-travel);
-    opacity: 0; /* the cast lives with the travel gate */
-    transition:
-        translate calc(var(--duration-normal) * 1.15) var(--ease-cartoon-punch),
-        opacity var(--duration-fast) var(--ease-out);
-}
-/* the gate: while the goo host travels, the cast PUNCHES in; an auto-advance host carries
-   `[data-autoplay]` → the weight echo stays 0 (calm); a user swipe → full weight. */
-.carousel-content-root:has(.carousel-goo-layer[data-traveling])::before {
-    opacity: 1;
-    --carousel-cast-weight: 1;
-}
-.carousel-content-root:has(.carousel-goo-layer[data-traveling][data-autoplay])::before {
-    --carousel-cast-weight: 0; /* calm auto-motion — the ink anchor stays put */
-}
-/* THE DARK REGISTER — luminous warm transmissive glass, never a gray-brown halo.
-   In dark mode `--card` is L≈0.30; the worm/plate radial-gradient reads it as
-   currentColor and composites to a dim taupe HALO (effective L≈0.31). This `.dark`
-   arm lifts the fill toward the WARM DARK-INK elevation register (W-DARK-MATERIAL):
-   `oklch(from var(--card) 0.68 0.05 h)` keeps the warm hue (live H≈59°), pins L→0.68
-   (the warm-ink elevation), and RE-SATURATES C→0.05 (~2.5× the BA.W-NO-GRAY STRONG
-   floor) — a warm lift, NOT a gray `white N%` mix. The transmissive companion
-   (`saturate(1.3) brightness(1.3)` appended AFTER `url(#glass-goo)` on the shorthand
-   — plain CSS-filter functions, Safari-native, NOT in the SVG graph) makes the warm
-   chroma read as LIT glass and pushes the composited mass over L 0.5 — a glowing
-   warm membrane with the dark aurora glowing THROUGH it. */
-.dark .carousel-goo-layer {
-    color: oklch(from var(--card) 0.68 0.05 h);
-    filter: var(--carousel-goo-filter, url(#glass-goo)) saturate(1.3)
-        brightness(1.3);
-}
-.carousel-goo-layer--vertical {
-    flex-direction: column;
-    margin-inline-start: 0;
-    margin-block-start: -1rem; /* mirror the vertical track's -mt-4 */
-}
-
-/* THE BARBELL BODIES — two round warm-cream droplets (the metaball masses). FULL alpha
-   (the goo threshold needs opacity:1; the layer opacity supplies the glass translucency).
-   Sized to the body diameter D = step/φ (set by `setWormGeometry`), `border-radius: 50%`
-   (a BLOB, not a plate). The domed-droplet radial-gradient inner catch-light reads as a
-   LIQUID GLASS droplet. transform-origin LEFT/TOP so the engine's translate(center)
-   translate(-50%) lands the centre exactly. The travel + squash are ALL transform (written
-   by useGooMorph off the `--goo-t` flow). NEVER an animated width/height (motion-canon P5). */
-.carousel-goo-body {
-    position: absolute;
-    top: 0;
-    left: 0;
-    inline-size: var(--carousel-body-d, 40%);
-    block-size: var(--carousel-body-d, 40%);
-    border-radius: 50%; /* a round BLOB — the metaball body */
-    background:
-        radial-gradient(
-            120% 110% at 50% 22%,
-            color-mix(in oklab, currentColor, white 18%),
-            currentColor 72%
-        );
-    transform-origin: center;
-    /* the volume-preserving travel-velocity swell — paired reciprocally, axis-derived
-       (the SegmentedTabs indicator law). The engine transform carries the per-frame squash;
-       `--stretch` is the EXTRA velocity swell on top (released at arrival). */
-    scale: var(--stretch, 1) calc(1 / var(--stretch, 1));
-    will-change: transform;
-}
-.carousel-goo-layer--vertical .carousel-goo-body {
-    scale: calc(1 / var(--stretch, 1)) var(--stretch, 1);
-}
-
-/* THE CONCAVE NECK — the welling hourglass bridge between the two bodies. NET-NEW: a smooth
-   concave `clip-path: path()` (cubic-Bézier sides whose control points pull IN to the
-   `--neck-waist` midpoint) — NOT the fission `inset()` capsule-thinner (a rectangular
-   thinner, not an hourglass) and NOT a faceted hand-placed polygon (the straight segments
-   survive the slope-15 shoulder + read as facets). The throat is a STRUCTURAL concavity on
-   BOTH engines BEFORE the filter fuses it (the Safari insurance — the waist is geometry,
-   not a filter nuance). The engine writes translate(mid) scaleX(gap/D) scaleY(neckGirth) +
-   the opacity (girth-following), so the neck WELLS then PINCHES. Sized to the body diameter
-   D; transform-origin centre so the scale grows symmetrically. */
-.carousel-goo-neck {
-    position: absolute;
-    top: 0;
-    left: 0;
-    inline-size: var(--carousel-body-d, 40%);
-    block-size: var(--carousel-body-d, 40%);
-    background:
-        radial-gradient(
-            120% 110% at 50% 30%,
-            color-mix(in oklab, currentColor, white 14%),
-            currentColor 76%
-        );
-    /* the concave hourglass throat — an SVG objectBoundingBox clipPath (the top + bottom
-       edges curve INWARD to the `--neck-waist` (0.34) midpoint via cubic-Bézier control
-       points): a STRUCTURAL concave waist BEFORE the filter fuses it. Smooth (cubic Bézier),
-       never faceted; references the in-template `#carousel-neck-throat` defs (Safari-safe,
-       scales with the element via objectBoundingBox units). */
-    clip-path: url(#carousel-neck-throat);
-    transform-origin: center;
-    opacity: 0; /* the engine writes the girth-following opacity (wells → pinches) */
-    will-change: transform, opacity;
-}
-
-/* the concave-throat clipPath defs host — off-screen, non-interactive, paints nothing; it
-   only carries the <clipPath> the neck references by id. */
-.carousel-neck-defs {
-    position: absolute;
-    width: 0;
-    height: 0;
-    pointer-events: none;
-}
-
-/* THE CRISP CONTENT — the embla track, above the goo layer. */
 .carousel-track {
     position: relative;
-    z-index: 1;
-}
-
-/* @supports gate — on a non-supporting/buggy engine DROP the goo filter; the bodies still
-   cross-fade as the correct floor (no metaball weld). The crisp embla track is the legible
-   surface; without the filter the bare two bodies are just flat bg blocks → hide the layer. */
-@supports not (filter: url(#glass-goo)) {
-    .carousel-goo-layer {
-        filter: none;
-        opacity: 0;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    /* P6 — the goo layer is DROPPED (a static blur+threshold is pure cost with no travel to
-       merge); the barbell coalesces to ONE body (useGooMorph early-returns, the neck +
-       bodyB hidden). The crisp embla scroll is the legible floor; only the embla translate
-       survives (no goo, no squish). */
-    .carousel-goo-layer {
-        display: none;
-        /* zero the cartoon weight in ONE assignment (the cast travel collapses to rest). */
-        --motion-weight: 0;
-    }
 }
 </style>

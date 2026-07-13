@@ -3,6 +3,13 @@ import { createInjectionState } from '@vueuse/core'
 import emblaCarouselVue from 'embla-carousel-vue'
 import { onMounted, ref } from 'vue'
 
+// BI.W-CAROUSEL-REBUILD — the weighty content-snap default. embla's `duration` is its
+// scroll-physics travel parameter (higher = more inertia); the calm-overdamped law (momentum
+// yes, bounce no) reads at 30 — a heavier glide than the embla default (~25) so a
+// programmatic / dot / Next scroll arrives with weight (a drag already carries its own
+// momentum). A consumer `opts.duration` overrides it (the default fills, never forces).
+const CAROUSEL_WEIGHTY_DURATION = 30
+
 const [useProvideCarousel, useInjectCarousel] = createInjectionState(
   ({
     opts,
@@ -10,6 +17,7 @@ const [useProvideCarousel, useInjectCarousel] = createInjectionState(
     plugins,
   }: CarouselProps, emits: CarouselEmits) => {
     const [emblaNode, emblaApi] = emblaCarouselVue({
+      duration: CAROUSEL_WEIGHTY_DURATION,
       ...opts,
       axis: orientation === 'horizontal' ? 'x' : 'y',
     }, plugins)
@@ -53,4 +61,4 @@ function useCarousel() {
   return carouselState
 }
 
-export { useCarousel, useProvideCarousel }
+export { useCarousel, useProvideCarousel, CAROUSEL_WEIGHTY_DURATION }
