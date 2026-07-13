@@ -1,0 +1,93 @@
+/* tokens/motion-registers.css
+   BI.W-REGISTER-TABLE — the NAMED motion registers over the ONE `.glass-reveal`
+   recipe (D-MOTION PASS-1 §2.1). This is the register TABLE: a semantic name →
+   a bundle `{spring, clock, scale, blur, slide}`. The ONE `.glass-reveal` recipe
+   (glass/reveal.css) binds a register by name via `data-reveal="overlay|menu|
+   tooltip|transient"` — swapping ONLY these knob vars, never the recipe body.
+
+   @import-ed by tokens.css IMMEDIATELY AFTER scheme-spring.css — it READS the
+   parity-fixed `--spring-*` / `--spring-*-duration` clocks (BI.W-SPRING-PARITY,
+   READ-ONLY here — the W-GLASS-CAL fence; this file re-times NO spring, it BINDS
+   the shipped registers to a semantic name). Custom properties resolve order-
+   independently within :root, so the placement is cascade-order-invariant.
+
+   THE KEY CORRECTION (PASS-4B): the parity fix (W-SPRING-PARITY), NOT response-
+   shortening, landed the enters IN-BAND — keep the 400ms clock, fix the curve. So
+   each register carries the FULL settle clock; the perceptual arrival is audacious
+   because the parity-fixed curve reaches ~90% by ~mid-clock, not a truncated timer.
+
+   ── The register table ──────────────────────────────────────────────────────
+   | register        | spring          | clock (settle) | scale-from | blur  | rise  |
+   |-----------------|-----------------|----------------|------------|-------|-------|
+   | enter-overlay   | snappy          | 0.44s          | 0.88       | 6px   | 0.5rem|  Dialog/Sheet/Popover — the .glass-reveal DEFAULT. Blur is the dominant overlay channel (MOTION-LADDER M4); t90 ~212ms/+3.2% (iOS 130-370ms materialize band).
+   | enter-menu      | smooth          | 0.35s (tight)  | 0.96       | 2px   | 0.5rem|  dropdown/select/combobox/command — the REFINED bounce (UF-G3) + "popover like the dropdown" homogeneity (UF-G2). t90 ~239ms/+0.2%.
+   | enter-tooltip   | ease-out-expo   | 0.2s (fastest) | 0.97       | 0     | 0     |  tooltip/hover-card — NO overshoot, fastest decelerating arrival (UF-G4 "tightened").
+   | enter-transient | transient       | 0.46s          | 0.5        | 8px   | 0     |  Toast + Notification — the gentle-class CENTER-SEED materialize bloom (MOTION-LADDER M5). NEW spring row (0.62, 0.90); t90 ~0.34s.
+
+   ── The exit register (M6 — tighten 200ms → 150/100ms) ──────────────────────
+   NAMED exit clocks on the no-overshoot `--ease-out` (P2: a closing surface must
+   never overshoot past gone). Minted as their OWN tokens, NOT a re-tune of the
+   shared `--duration-fast` (0.2s) — re-timing that would re-time everything, and
+   this closes the reveal.css comment-vs-value drift (the comment claimed ≤150ms
+   while `--duration-fast` = 0.2s). The `.glass-reveal` exit reads `--exit-overlay-
+   duration` by default; `[data-reveal="transient"]` swaps in the tighter transient
+   exit.
+
+   ── press / morph / cascade — NAMES over shipped recipes (zero paint change) ──
+   These registers are NAMED here for the doctrine (the motion canon's register
+   vocabulary), pointing at their ALREADY-SHIPPED source tokens — NO new token is
+   minted (a dead alias would trip the dead-token floor):
+     · press   → `--spring-press` (0.12s tap; useSpringPress + --glass-btn-press-t)
+     · morph   → `--spring-dock` / `--spring-dock-duration` (the dock box morph)
+     · cascade → the W-SCROLL-MOTION `.scroll-cascade` / `--scroll-cascade-*` recipe
+
+   ── PKT-2 spring-clock hole — the MARKING-PASS decision (recorded IN the table) ──
+   The value.js PKT-2 consumer surfaced a "spring-clock hole": press (0.12s tap) ↔
+   snappy (0.44s) with a ~0.3s-settle gap, framed as "mint a ~0.3s preset OR bless
+   snappy". DECISION: NEITHER new preset NOR bless-snappy. The ~0.3s-settle register
+   ALREADY EXISTS — `--spring-smooth` (0.35s, the SETTLE / enter-menu clock). A
+   press-adjacent consumer composes the existing register: the tap on `--spring-press`
+   (0.12s), the mid-settle on `--spring-smooth` (0.35s). Minting a 7th INTERACTIVE
+   preset for ONE value.js consumer fails the ≥2-consumer bar (presets-in-consumers);
+   "bless snappy" is rejected because 0.44s reads sluggish for a press-adjacent
+   interaction. (The `transient` 7th row IS minted — but for a DISTINCT need with ≥2
+   consumers: the enter-transient center-seed bloom, Toast + Notification.) */
+:root {
+    /* ── enter-overlay — the .glass-reveal DEFAULT (Dialog / Sheet / Popover) ── */
+    --enter-overlay-spring: var(--spring-snappy);
+    --enter-overlay-clock: var(--spring-snappy-duration);
+    --enter-overlay-scale: 0.88;
+    /* Blur is the dominant overlay channel (MOTION-LADDER M4) — 4px → 6px. */
+    --enter-overlay-blur: 6px;
+    --enter-overlay-slide: 0.5rem;
+
+    /* ── enter-menu — dropdown / select / combobox / command (UF-G2/UF-G3) ── */
+    --enter-menu-spring: var(--spring-smooth);
+    --enter-menu-clock: var(--spring-smooth-duration);
+    --enter-menu-scale: 0.96;
+    --enter-menu-blur: 2px;
+    --enter-menu-slide: 0.5rem;
+
+    /* ── enter-tooltip — tooltip / hover-card (UF-G4 — NO overshoot, fastest) ── */
+    --enter-tooltip-spring: var(--ease-out-expo);
+    --enter-tooltip-clock: var(--duration-fast);
+    --enter-tooltip-scale: 0.97;
+    --enter-tooltip-blur: 0px;
+    --enter-tooltip-slide: 0px;
+
+    /* ── enter-transient — Toast + Notification CENTER-SEED bloom (MOTION-LADDER M5) ── */
+    --enter-transient-spring: var(--spring-transient);
+    --enter-transient-clock: var(--spring-transient-duration);
+    /* The deep scale-from — a materialize bloom from ~half-size (not the near-no-op
+       overlay 0.88), so the surface reads as coalescing from its own seed. */
+    --enter-transient-scale: 0.5;
+    --enter-transient-blur: 8px;
+    /* Center-seed — no directional edge slide (it blooms from its own centre). */
+    --enter-transient-slide: 0px;
+
+    /* ── The NAMED exit clocks (M6 — tighten the reveal exit 200ms → 150/100ms) ── */
+    --exit-overlay-duration: 0.15s;
+    --exit-transient-duration: 0.1s;
+    /* The exit curve — the no-overshoot ease-out (P2: never overshoot past gone). */
+    --exit-curve: var(--ease-out);
+}

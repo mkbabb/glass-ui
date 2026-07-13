@@ -19,25 +19,10 @@
         opacity: 0;
     }
 
-    /* ── Fade-slide (spring in, accelerate out) ── */
-    .fade-slide-enter-active {
-        transition:
-            opacity var(--duration-normal) var(--ease-out),
-            transform var(--spring-smooth-duration) var(--spring-smooth);
-    }
-    .fade-slide-leave-active {
-        transition:
-            opacity var(--duration-fast) var(--ease-in),
-            transform var(--duration-fast) var(--ease-in);
-    }
-    .fade-slide-enter-from {
-        opacity: 0;
-        transform: translateY(-4px);
-    }
-    .fade-slide-leave-to {
-        opacity: 0;
-        transform: translateY(4px);
-    }
+    /* BI.W-REGISTER-TABLE — `fade-slide` RETIRED (census-dead: 0 src/ consumers; the
+       demo showcase tile is deleted with it). Clean break, no alias — an overlay
+       entrance rides `.glass-reveal` + its `data-reveal` register, not a hand-rolled
+       Vue-<Transition> recipe. */
 
     /* ── Route-enter (BG.W-ROUTE-TRANSITION — the bare keyed atomic swap entrance) ──
      *
@@ -67,62 +52,12 @@
         animation: gl-route-enter var(--spring-snappy-duration) var(--spring-snappy) backwards;
     }
 
-    /* ── Dialog scale (bouncy spring in, ease out) ── */
-    .dialog-scale-enter-active {
-        transition:
-            opacity var(--duration-slow) var(--ease-out),
-            transform var(--spring-bouncy-duration) var(--spring-bouncy);
-    }
-    .dialog-scale-leave-active {
-        transition:
-            opacity var(--duration-normal) var(--ease-standard),
-            transform var(--duration-normal) var(--ease-standard);
-    }
-    .dialog-scale-enter-from {
-        opacity: 0;
-        transform: scale(0.95) translateY(8px);
-    }
-    .dialog-scale-leave-to {
-        opacity: 0;
-        transform: scale(0.95) translateY(8px);
-    }
-
-    /* ── Spring pop (bouncy in, fast out) ── */
-    .pop-enter-active {
-        transition:
-            opacity var(--duration-fast) var(--ease-out),
-            transform var(--spring-bouncy-duration) var(--spring-bouncy);
-    }
-    .pop-leave-active {
-        transition:
-            opacity var(--duration-fast) var(--ease-out),
-            transform var(--duration-fast) var(--ease-out);
-    }
-    .pop-enter-from {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-    .pop-leave-to {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-
-    /* ── Dropdown (fast opacity + snappy spring transform) ── */
-    .dropdown-enter-active {
-        transition:
-            opacity var(--duration-instant) var(--ease-out),
-            transform var(--spring-snappy-duration) var(--spring-snappy);
-    }
-    .dropdown-leave-active {
-        transition:
-            opacity var(--duration-instant) var(--ease-standard),
-            transform var(--duration-fast) var(--ease-standard);
-    }
-    .dropdown-enter-from,
-    .dropdown-leave-to {
-        opacity: 0;
-        transform: scale(0.96) translateY(4px);
-    }
+    /* BI.W-REGISTER-TABLE — `dialog-scale` / `pop` / `dropdown` RETIRED (census-dead:
+       0 src/ consumers each; the demo showcase tiles are deleted with them). Clean
+       break, no alias. The overlay/menu entrances they duplicated now ride the ONE
+       `.glass-reveal` recipe bound by `data-reveal` (enter-overlay / enter-menu) — the
+       register table replaces the per-recipe fork. `pane-swap` (below, live dock
+       consumer) + `fade` / `tab-fade` / `metric-swap` are KEPT. */
 
     /* ── Tab fade ── */
     .tab-fade-enter-active,
@@ -177,63 +112,30 @@
         transform-origin: center bottom;
     }
 
-    /* ── Toast contract (AI.W4-M.3 doc; no source motion change) ──
+    /* ── Toast contract (BI.W-REGISTER-TABLE — the enter-transient binding) ──
      *
-     * `<Toast>` (reka-ui-backed `ToastRoot`, see
-     * `components/ui/toast/Toast.vue`) consumes reka's
-     * `tw-animate-css` choreography directly through the
-     * `data-[state=open]:animate-in` / `data-[state=closed]:animate-out`
-     * + `data-[state=open]:slide-in-from-{top,bottom}-full` +
-     * `data-[state=closed]:fade-out-80 / slide-out-to-right-full`
-     * class chain. The contract that emerges from those defaults is
-     * the canonical entrance / dwell / exit grammar:
+     * `<Toast>` (reka-ui `ToastRoot`, components/ui/toast/Toast.vue) MATERIALIZES via
+     * the `enter-transient` register — `.glass-reveal[data-reveal="transient"]` — a
+     * CENTER-SEED bloom (scale-from ~0.5, decongest-blur, fade, on the gentle transient
+     * spring; MOTION-LADDER M5), NOT the retired slide-in-from-viewport-edge. The reka
+     * `tw-animate-css` data-state choreography (`data-[state=open]:animate-in` /
+     * `animate-out` / `slide-in-from-*-full` / `fade-out-80`) + the Toast's own
+     * `transition-[opacity,transform]` are RETIRED (clean break, no alias). The prior
+     * AY.W-MOTION "§6 DELIBERATE KEEP" exemption is SUPERSEDED: every glass-ui overlay now
+     * speaks ONE enter grammar, the register table. `.glass-reveal` owns:
      *
-     *   • ENTRANCE — slide-in from the viewport edge (top on mobile,
-     *     bottom on desktop ≥ sm), opacity 0 → 1, ~200ms with the
-     *     `tw-animate-css` ease-out curve. The slide direction is the
-     *     viewport origin so the toast reads as "arriving from
-     *     somewhere", not as "popping in from nowhere".
+     *   • ENTRANCE — the @starting-style bloom (transform-origin center → the surface
+     *     coalesces from its own seed), on the transient spring + its 2%-settle clock.
+     *   • DWELL — no motion (the READING window; default 5000ms via use-toast.ts).
+     *   • EXIT — the `glass-reveal-out` keyframe reka's `usePresence` awaits, on the tight
+     *     `--exit-transient-duration` (100ms) no-overshoot `--ease-out`.
      *
-     *   • DWELL — no motion. The toast sits at its rest position for
-     *     the consumer-specified `duration` (default 5000ms via
-     *     `use-toast.ts` `TOAST_REMOVE_DELAY`). The dwell is the
-     *     READING window; any motion here competes with the user's
-     *     read.
-     *
-     *   • EXIT — fade-out (opacity 1 → 0.2) combined with a
-     *     slide-out-to-right (the canonical "swipe-end-mimicking"
-     *     direction), ~150ms. The right-out direction lets a
-     *     timeout-driven exit feel like a swipe even when the user
-     *     didn't swipe; consistency with the swipe-end gesture
-     *     (`data-[swipe=end]`).
-     *
-     * Per the FD2 §4 rule (HANDOFF-AS-DRAIN-THEN-FILL): the toast
-     * itself does NOT drain-then-fill (single notification, single
-     * surface). The grammar is single-event entrance + dwell + exit;
-     * the next toast (if any) enters on its own contract.
-     *
-     * §6 EASING-DOCTRINE EXEMPTION (AY.W-MOTION — DELIBERATE KEEP).
-     * Every glass-ui-OWNED entrance surface (`dialog-scale`, `pop`,
-     * `dropdown`, `fade-slide`, `dock-in`) rides the house `--spring-*`
-     * enter / `--ease-out`/`--ease-standard` exit vocabulary (the §6
-     * doctrine, tokens.css:162-190). The Toast does NOT — and that is
-     * BY DESIGN, not an unexamined default. The reka-ui `ToastRoot`
-     * primitive OWNS its data-state choreography: the entrance slide
-     * direction tracks the viewport origin AND the swipe-end gesture
-     * (`data-[swipe=end]:slide-out-to-right-full`), so the entrance/exit
-     * are coupled to reka's `tw-animate-css` data-state machinery. The §6
-     * spring vocabulary governs glass-ui-OWNED surfaces; the reka-Toast
-     * entrance is not one — re-authoring it onto a `<Transition>` would
-     * fork the primitive's swipe-coupled contract (and `tw-animate-css`
-     * is the shipped optionalPeer this contract depends on). The gate
-     * (proof:animation-coherence) carries the Toast surface in its
-     * REGISTER_ASSIGNMENT_ALLOW set so this keep reads as a gated,
-     * deliberate exemption.
-     *
-     * PRM is honoured at the `@media (prefers-reduced-motion: reduce)`
-     * block below — the slide motion retires; the fade-in/out
-     * remains. No source motion change; this comment block IS the
-     * documentation closure for the toast contract row.
+     * The swipe-drag gesture is PRESERVED — reka drives the `translate-x` (with
+     * `transition-none` during the active move); the reveal's own `translate` leg springs
+     * the cancel/settle back. `tw-animate-css` stays a shipped optionalPeer for the other
+     * overlays' animate-in paths, but the Toast no longer depends on it. PRM is honoured
+     * by `.glass-reveal`'s own reduced-motion carve (glass/reveal.css) — scale/translate/
+     * blur snap, the fade survives. This block IS the closure for the toast contract row.
      */
 
     /* ── Reduced motion: preserve fades, remove transform/scale motion ── */
@@ -250,14 +152,6 @@
             transition-duration: 0.1s !important;
         }
 
-        .fade-slide-enter-active,
-        .fade-slide-leave-active,
-        .dialog-scale-enter-active,
-        .dialog-scale-leave-active,
-        .pop-enter-active,
-        .pop-leave-active,
-        .dropdown-enter-active,
-        .dropdown-leave-active,
         .pane-swap-enter-active,
         .pane-swap-leave-active,
         .metric-swap-enter-active,
@@ -268,14 +162,6 @@
             animation-duration: 0.01ms !important;
         }
 
-        .fade-slide-enter-from,
-        .fade-slide-leave-to,
-        .dialog-scale-enter-from,
-        .dialog-scale-leave-to,
-        .pop-enter-from,
-        .pop-leave-to,
-        .dropdown-enter-from,
-        .dropdown-leave-to,
         .pane-swap-enter-from,
         .pane-swap-leave-to,
         .metric-swap-enter-from,

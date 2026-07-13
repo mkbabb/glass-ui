@@ -20,7 +20,8 @@ export type SpringPresetName =
     | "bouncy"
     | "gentle"
     | "dock"
-    | "press";
+    | "press"
+    | "transient";
 
 /** One named-spring row: the analytic (response, dampingFraction) pair + its register doc. */
 export interface SpringPresetRow {
@@ -52,6 +53,9 @@ export interface SpringPresetRow {
  *   DOCK    → dock    — the dock expand/collapse morph AND everything inside it.
  *   PRESS   → press   — the iOS interactive tap-press: sub-100ms answer, a tiny alive
  *                       rebound. `useSpringPress` reads this row's (response, ζ).
+ *   TRANSIENT → transient — the gentle-class CENTER-SEED materialize bloom (Toast +
+ *                       Notification): a deep scale-from with a near-critically-damped
+ *                       settle (no flick), the `enter-transient` register (BI.W-REGISTER-TABLE).
  *
  * BD.W-ANIM-IOS27-TUNE — the GLOBAL re-calibration toward the iOS-27
  * weighty-gooey-inertial pole (USER law: "SMOOTH, CONTROLLED, INERTIA, AUDACIOUS;
@@ -105,6 +109,12 @@ export const SPRING_PRESETS: readonly SpringPresetRow[] = [
         response: 0.2,
         dampingFraction: 0.8,
         comment: "PRESS register — the iOS interactive tap (useSpringPress + --glass-btn-press-t): a hair of inertial carry (sub-200ms iOS window) + a tiny alive rebound (+1.5%); the interruptible re-seat keeps the gesture continuous. BD.W-ANIM-IOS27-TUNE",
+    },
+    {
+        name: "transient",
+        response: 0.62,
+        dampingFraction: 0.9,
+        comment: "TRANSIENT register — the enter-transient CENTER-SEED materialize bloom (Toast + Notification): a deep scale-from with a near-critically-damped settle (overshoot ~+0.15%, no flick), t90 ~0.34s / 2%-settle 0.46s — the gentle-class MOTION-LADDER M5 bloom. Consumed by the --enter-transient-* register (BI.W-REGISTER-TABLE).",
     },
 ] as const;
 //

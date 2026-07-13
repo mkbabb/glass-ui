@@ -66,7 +66,14 @@
        `hsl(hsl(…) / α)` — invalid, never paints (the modal dim was silently dead).
        The genuine channel form would require `--background` declared as a bare
        `H S% L%` triple, which it never is — hence the alpha-derivative mix. */
-    --top-layer-enter-scale: 0.96;
+    /* BI.W-REGISTER-TABLE — the native top-layer enter is FOLDED onto the `enter-overlay`
+       register (the FOURTH register RETIRED — one enter grammar). The scale/blur knobs
+       SOURCE the register (so the native `.glass-top-layer` enter matches the reka Dialog
+       enter); a consumer still retunes the top-layer enter here, but the value tracks the
+       overlay register unless overridden. --top-layer-enter-blur is MINTED here (was an
+       inline 4px fallback in animations.css) so both channels source the register. */
+    --top-layer-enter-scale: var(--enter-overlay-scale);
+    --top-layer-enter-blur: var(--enter-overlay-blur);
     --top-layer-backdrop-blur: 8px;
     --top-layer-backdrop-dim: 0.5;
 

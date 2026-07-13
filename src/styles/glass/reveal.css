@@ -41,15 +41,28 @@
 
 @layer components {
     .glass-reveal {
-        /* The one public start knob (the decongest radius). The spatial/effects
-           clocks read the shared spring tokens (read-only — the W-GLASS-CAL fence). */
-        --glass-reveal-blur: 4px;
-        --glass-reveal-slide: 0.5rem;
-        /* The materialize squish — the surface blooms FROM 0.88 (a clear squish-grow,
-           the Control-Center round-toggle reference), not the near-no-op 0.95. The
-           authority lives here; the closed/exit leg reads it with a 0.88 fallback.
-           BD.W-ANIM-IOS27-TUNE */
-        --glass-reveal-enter-scale: 0.88;
+        /* ── BI.W-REGISTER-TABLE — the register-binding knobs ────────────────────
+           The base binds the `enter-overlay` register (Dialog/Sheet/Popover — the
+           DEFAULT); a `data-reveal="menu|tooltip|transient"` variant below swaps ONLY
+           these knobs, never the recipe BODY. The knobs source tokens/motion-registers.css
+           (which reads the parity-fixed --spring-* clocks — READ-ONLY here, the W-GLASS-CAL
+           fence). THE KEY CORRECTION (PASS-4B): the parity fix, not response-shortening,
+           lands the enter in-band — keep the full settle clock, the curve arrives audacious. */
+        --reveal-spring: var(--enter-overlay-spring);
+        --reveal-clock: var(--enter-overlay-clock);
+        /* The NAMED exit register (M6 — the reveal exit tightens 200ms → 150ms overlay /
+           100ms transient, on the no-overshoot ease-out; its OWN token, not a re-tune of
+           the shared --duration-fast — closing the reveal comment-vs-value drift). */
+        --reveal-exit-clock: var(--exit-overlay-duration);
+        --reveal-exit-curve: var(--exit-curve);
+        /* The materialize channels — the register bundle's scale-from / decongest-blur /
+           edge-slide. The overlay default is scale-from 0.88, blur 6px (the dominant
+           overlay channel, MOTION-LADDER M4), slide 0.5rem. The closed/exit leg +
+           @starting-style read these knobs (with a defensive fallback for a non-supporting
+           engine). BD.W-ANIM-IOS27-TUNE + BI.W-REGISTER-TABLE. */
+        --glass-reveal-enter-scale: var(--enter-overlay-scale);
+        --glass-reveal-blur: var(--enter-overlay-blur);
+        --glass-reveal-slide: var(--enter-overlay-slide);
         /* The SQUISH channel — the same volume-preserving born-wide+flat squish the
            universal `.liquid-enter` mount recipe speaks (ONE grammar, no fork). The
            closed leg rides it on the `scale:` LONGHAND (vol-preserving sx·sy ≈ 1),
@@ -60,17 +73,60 @@
         --lq-stretch-y: 0.945;
         transform-origin: var(--reka-popper-transform-origin, center);
         /* The coupled transition list — the SPATIAL legs (scale/translate) on the
-           snappy spring's OWN settle clock, the EFFECTS legs (opacity/filter blur-
+           register spring's OWN settle clock, the EFFECTS legs (opacity/filter blur-
            settle) on the no-overshoot ease-out. ONE coherent glide. The blur rides
            `filter` (the surface's own pixels) NOT `backdrop-filter` (which would
            clobber the resting glass-floating plate blur). */
         transition-property: scale, translate, opacity, filter, display, overlay;
-        transition-duration: var(--spring-snappy-duration), var(--spring-snappy-duration),
-            var(--spring-snappy-duration), var(--spring-snappy-duration),
-            var(--spring-snappy-duration), var(--spring-snappy-duration);
-        transition-timing-function: var(--spring-snappy), var(--spring-snappy),
+        transition-duration: var(--reveal-clock), var(--reveal-clock),
+            var(--reveal-clock), var(--reveal-clock),
+            var(--reveal-clock), var(--reveal-clock);
+        transition-timing-function: var(--reveal-spring), var(--reveal-spring),
             var(--ease-out), var(--ease-out), linear, linear;
         transition-behavior: allow-discrete;
+    }
+
+    /* ── THE REGISTER-BINDING AXIS (BI.W-REGISTER-TABLE) ──────────────────────────
+       `data-reveal="overlay|menu|tooltip|transient"` swaps ONLY the register knobs
+       (spring/clock/scale/blur/slide/exit-clock) — the recipe BODY (@starting-style
+       from-state, data-state legs, coupled channels, PRM carve) stays ONE. The attr is
+       RENAMED off PASS-1's `data-motion` (the shipped BH.W-MOTION-AXIS reduction axis
+       full/reduced/off — the collision is real). Default (no attr) = enter-overlay. */
+    .glass-reveal[data-reveal="overlay"] {
+        /* Explicit restatement of the base default (legibility — a no-op re-point). */
+        --reveal-spring: var(--enter-overlay-spring);
+        --reveal-clock: var(--enter-overlay-clock);
+        --reveal-exit-clock: var(--exit-overlay-duration);
+        --glass-reveal-enter-scale: var(--enter-overlay-scale);
+        --glass-reveal-blur: var(--enter-overlay-blur);
+        --glass-reveal-slide: var(--enter-overlay-slide);
+    }
+    /* enter-menu — dropdown/select/combobox/command (UF-G2 homogeneity, UF-G3 refined). */
+    .glass-reveal[data-reveal="menu"] {
+        --reveal-spring: var(--enter-menu-spring);
+        --reveal-clock: var(--enter-menu-clock);
+        --reveal-exit-clock: var(--exit-overlay-duration);
+        --glass-reveal-enter-scale: var(--enter-menu-scale);
+        --glass-reveal-blur: var(--enter-menu-blur);
+        --glass-reveal-slide: var(--enter-menu-slide);
+    }
+    /* enter-tooltip — tooltip/hover-card (UF-G4 — NO overshoot, fastest arrival). */
+    .glass-reveal[data-reveal="tooltip"] {
+        --reveal-spring: var(--enter-tooltip-spring);
+        --reveal-clock: var(--enter-tooltip-clock);
+        --reveal-exit-clock: var(--exit-overlay-duration);
+        --glass-reveal-enter-scale: var(--enter-tooltip-scale);
+        --glass-reveal-blur: var(--enter-tooltip-blur);
+        --glass-reveal-slide: var(--enter-tooltip-slide);
+    }
+    /* enter-transient — Toast + Notification CENTER-SEED bloom (MOTION-LADDER M5). */
+    .glass-reveal[data-reveal="transient"] {
+        --reveal-spring: var(--enter-transient-spring);
+        --reveal-clock: var(--enter-transient-clock);
+        --reveal-exit-clock: var(--exit-transient-duration);
+        --glass-reveal-enter-scale: var(--enter-transient-scale);
+        --glass-reveal-blur: var(--enter-transient-blur);
+        --glass-reveal-slide: var(--enter-transient-slide);
     }
 
     /* OPEN — the settled, bloomed-in state (the spring-clocked scale/fade/blur-settle
@@ -136,8 +192,12 @@
            `none` ≠ the closed `glass-reveal-out` → reka's `isAnimating` is true), reka
            dispatches ANIMATION_OUT and the exit paints its full ≥4-frame recede. The
            clock is the no-overshoot `--ease-out` on the fast `--duration-fast` (≤150ms).
-           Compositor-only (scale/opacity/filter — the proof:no-layout-animation floor). */
-        animation: glass-reveal-out var(--duration-fast) var(--ease-out) both;
+           Compositor-only (scale/opacity/filter — the proof:no-layout-animation floor).
+           BI.W-REGISTER-TABLE — the exit rides the NAMED exit register (--reveal-exit-clock
+           = --exit-overlay-duration 150ms default, --exit-transient-duration 100ms on
+           [data-reveal=transient]) on the no-overshoot --reveal-exit-curve (= --ease-out),
+           tightening the prior 200ms --duration-fast (M6). */
+        animation: glass-reveal-out var(--reveal-exit-clock) var(--reveal-exit-curve) both;
         /* The side-popover `translate` slide-out stays a TRANSITION — a DIFFERENT
            property, so it coexists with the scale/opacity/filter animation (no cascade
            fight) and never touches a center Dialog's `-translate-x-1/2 -translate-y-1/2`
@@ -147,8 +207,8 @@
            cascade would override — the keyframe); the ENTER still rides the base rule's
            full transition-property (unchanged). */
         transition-property: translate, display, overlay;
-        transition-timing-function: var(--ease-out);
-        transition-duration: var(--duration-fast);
+        transition-timing-function: var(--reveal-exit-curve);
+        transition-duration: var(--reveal-exit-clock);
     }
 
     /* The directional slide-in — the compositor `translate` leg keyed off the
@@ -198,6 +258,47 @@
     }
     .glass-reveal[data-state="closed"][data-side="right"] {
         translate: calc(-1 * var(--glass-reveal-slide)) 0;
+    }
+
+    /* ── THE `data-motion` REDUCTION AXIS (N6 WIRE — BI.W-TEMPO) ────────────────────
+       `useMotionAxis` (_shared/useMotionAxis.ts) emits `data-motion="reduced"/"off"`
+       from the overlay content SFCs (Dialog + Sheet — ≥2 shipped emitters); at HEAD
+       ZERO CSS consumed it — a DEAD WIRE the NO-MASKING-FALLBACK floor forbids. These
+       arms WIRE the signal (N6 = WIRE, supersedes the SUFFUSION-MAP M4 "excise"). It
+       is DISJOINT from the `data-reveal` REGISTER axis above (two attributes, two
+       concerns): `data-reveal` picks the enter-register BUNDLE (overlay/menu/tooltip/
+       transient); `data-motion` DEGRADES the whole reveal for a motion-sensitive
+       consumer. OS `prefers-reduced-motion` (the @media carve below, unlayered) still
+       WINS where active — PRM ≥ the prop reduction (the useMotionAxis precedence).
+
+       reduced — the JS gesture physics degrade to their CSS floor: a barely-there 0.97
+                 bloom, decongest blur OFF (a calm mild reduction; only the register
+                 knobs swap, so the coupled scale/opacity legs still glide the base
+                 recipe — the prop reduction is gentler than OS-forced PRM). */
+    .glass-reveal[data-motion="reduced"] {
+        --glass-reveal-enter-scale: 0.97;
+        --glass-reveal-blur: 0px;
+    }
+    /* off — motion OFF (the functional open KEPT — meaning never off): fade ONLY, ZERO
+       transform/blur frames (the vestibular floor the PRM carve also lands). Mirrors
+       the reduced-motion carve so the two full reductions read identically. */
+    .glass-reveal[data-motion="off"] {
+        scale: none;
+        translate: none;
+        filter: blur(0);
+        transition-property: opacity, display, overlay;
+        transition-duration: var(--reveal-exit-clock);
+        transition-timing-function: var(--reveal-exit-curve);
+    }
+    .glass-reveal[data-motion="off"][data-state="closed"] {
+        scale: none;
+        translate: none;
+        filter: blur(0);
+        /* The exit fades ONLY — swap the reka-awaitable fade-only keyframe (a
+           transition-only fade is torn down before it paints; the keyframe keeps the
+           fade PAINTING). Duration/timing/fill inherit from the closed `animation`
+           shorthand — only the name swaps (the PRM-carve precedent). */
+        animation-name: glass-reveal-out-reduced;
     }
 }
 

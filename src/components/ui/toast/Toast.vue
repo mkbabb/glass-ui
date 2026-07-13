@@ -61,6 +61,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     data-slot="toast"
     :data-variant="variant"
     :data-surface="surface"
+    data-reveal="transient"
     v-bind="forwarded"
     :class="
       cn(
@@ -71,10 +72,19 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
         // base through surfaceClass(surface, floating) — see the script block above
         // (no quotes/parens detail here: this comment lives inside the binding attr).
         surfaceClass(surface, 'floating'),
-        // BB.W-CARD-PAD — the overlay-band golden padding ladder: the inline anchor is
-        // --spacing(6) = 24px, the block axis lifts by sqrt-phi (`*1.272`). `pr-8`
-        // STAYS (close-button clearance), overriding the inline pad on the trailing edge.
-        '[--overlay-pad-inline:--spacing(6)] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] group pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-panel px-(--overlay-pad-inline) py-(--overlay-pad-block) pr-8 transition-[opacity,transform] data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-(--reka-toast-swipe-end-x) data-[swipe=move]:translate-x-(--reka-toast-swipe-move-x) data-[swipe=move]:transition-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=end]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-top-full data-[state=open]:sm:slide-in-from-bottom-full',
+        // BI.W-REGISTER-TABLE — the toast MATERIALIZES via the `enter-transient` register
+        // (a CENTER-SEED bloom: scale-from ~0.5, decongest-blur, fade, on the gentle
+        // transient spring — MOTION-LADDER M5), NOT a slide-in-from-viewport-edge. The
+        // reka `tw-animate-css` `data-[state=open]:animate-in` / `animate-out` /
+        // `slide-in-from-*-full` / `fade-out-80` chain + the own `transition-[opacity,
+        // transform]` are RETIRED (clean break, no alias) — `.glass-reveal` owns the
+        // data-state enter (via @starting-style, transform-origin center) AND the exit
+        // (the `glass-reveal-out` keyframe reka's usePresence awaits). The swipe-drag
+        // gesture keeps its reka-driven `translate-x` (with `transition-none` during the
+        // active move); the reveal's own `translate` leg springs the cancel/settle back.
+        // BB.W-CARD-PAD — the overlay-band golden padding ladder (inline anchor --spacing(6),
+        // block axis sqrt-phi *1.272); `pr-8` STAYS (close-button clearance).
+        'glass-reveal [--overlay-pad-inline:--spacing(6)] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] group pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-panel px-(--overlay-pad-inline) py-(--overlay-pad-block) pr-8 data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-(--reka-toast-swipe-end-x) data-[swipe=move]:translate-x-(--reka-toast-swipe-move-x) data-[swipe=move]:transition-none',
         // The body text stays --foreground (legibility); the tinted-glass wash + the
         // tone-keyed rim + the full-chroma glyph carry the semantic. Toggling on the
         // tone register only for a NON-default variant keeps `default` the un-toned

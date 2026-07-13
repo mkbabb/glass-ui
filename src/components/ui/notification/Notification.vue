@@ -72,24 +72,39 @@ const notificationIcons = {
 </script>
 
 <style scoped>
-.notification-enter-active,
+/* BI.W-REGISTER-TABLE — the notification MATERIALIZES via the `enter-transient`
+   register (the CENTER-SEED materialize bloom, MOTION-LADDER M5): scale-from
+   --enter-transient-scale, decongest-blur, fade, on the gentle transient spring — the
+   SAME register the Toast rides via `.glass-reveal[data-reveal="transient"]`. A
+   `<TransitionGroup>` list is NOT a reka-portal data-state surface, so it composes the
+   register TOKENS directly in a Vue-<Transition> recipe (ONE register, two binding
+   forms). The prior slide-in-from-right is RETIRED (clean break, no alias). The SPATIAL
+   scale leg rides the transient spring, the EFFECTS opacity/filter legs the no-overshoot
+   --ease-out (the W-MOTION-CANON split); the exit rides the tight --exit-transient clock. */
+.notification-enter-active {
+  transition:
+    opacity var(--enter-transient-clock) var(--ease-out),
+    scale var(--enter-transient-clock) var(--enter-transient-spring),
+    filter var(--enter-transient-clock) var(--ease-out);
+}
+
 .notification-leave-active {
   transition:
-    opacity var(--duration-normal) var(--ease-standard),
-    transform var(--duration-normal) var(--ease-standard);
+    opacity var(--exit-transient-duration) var(--exit-curve),
+    scale var(--exit-transient-duration) var(--exit-curve),
+    filter var(--exit-transient-duration) var(--exit-curve);
 }
 
-.notification-enter-from {
-  transform: translateX(100%);
-  opacity: 0;
-}
-
+.notification-enter-from,
 .notification-leave-to {
-  transform: translateX(100%);
   opacity: 0;
+  scale: var(--enter-transient-scale);
+  filter: blur(var(--enter-transient-blur));
 }
 
+/* The FLIP reorder (a new notification pushes the stack down) rides the transient
+   spring — the same weighty settle as the bloom (SPATIAL transform → spring). */
 .notification-move {
-  transition: transform var(--duration-normal) var(--ease-standard);
+  transition: transform var(--enter-transient-clock) var(--enter-transient-spring);
 }
 </style>
