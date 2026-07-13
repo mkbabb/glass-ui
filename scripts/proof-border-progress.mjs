@@ -70,11 +70,14 @@ function cliPaths() {
         VUE: d("BorderProgress.vue"),
         HELPER: d("composables/useBorderSpectrum.ts"),
         // BC.W-AX-BP-LAZY — the value.js OKLCH/shorter-hue walk + the CONSUME marker
-        // CARVED into the dynamically-imported spectrum-walk.ts leaf (the eager-graph
-        // payload move). W3's value.js-consume evidence FOLLOWS the carve into the
-        // leaf (the proof:webgl-substrate-single "asserts follow the composition into
-        // the carved leaf" precedent — proof:bp-lazy owns the dynamic-boundary lock).
-        WALK: d("composables/spectrum-walk.ts"),
+        // in the dynamically-imported spectrum-walk.ts leaf (the eager-graph payload
+        // move). W3's value.js-consume evidence FOLLOWS the walk into the leaf (the
+        // proof:webgl-substrate-single "asserts follow the composition into the carved
+        // leaf" precedent — proof:bp-lazy owns the dynamic-boundary lock).
+        // BI.W-SCROLL-PROGRESS-RIM — the walk was PROMOTED to the shared `/color` leaf
+        // (its natural home beside cssToOklch); border-progress stays a consumer of the
+        // moved leaf, so W3 FOLLOWS the walk into /color (BOTH green until the retire wave).
+        WALK: resolve(ROOT, "src/composables/color/spectrum-walk.ts"),
         CONSTANTS: d("constants.ts"),
         INDEX: d("index.ts"),
         README: d("README.md"),
@@ -226,7 +229,12 @@ export function detectBorderProgress(inputs) {
     // DISCHARGED here (BC.W-VALUE-JS-CONSUME): the local `interpolateHue` walk is
     // re-pointed onto value.js's published `sampleColorRamp`, and the consume-and-delete
     // marker is GONE (no dangling re-point booking — the no-orphan-marker discipline).
-    const importsLeaf = /from\s+["'][^"']*composables\/color["']/.test(walk);
+    // BI.W-SCROLL-PROGRESS-RIM — the walk now LIVES IN the /color leaf, so it composes the
+    // leaf's own color primitives via a same-dir `./index` import (a walk INSIDE
+    // composables/color trivially "imports the leaf"); the pre-promotion
+    // `…/composables/color` form is still accepted for the transitional/self-test corpus.
+    const importsLeaf =
+        /from\s+["'](\.\/index|\.|[^"']*composables\/color)["']/.test(walk);
     const importsSampleColorRamp = /\bsampleColorRamp\b/.test(walk);
     const usesShorterArc = /["']shorter["']/.test(walk);
     // The interim is discharged — the local interpolateHue form must be GONE (the
@@ -421,10 +429,14 @@ export function detectBorderProgress(inputs) {
     // bottom-edge · collapsed pill → full-ring).
     const dockMounts = /<BorderProgress\b/.test(sidebarDock);
     const dockReadsFraction = /useShellScrollProgress\(\)/.test(sidebarDock);
+    // BI.W-DOCK-RETIRES reconcile — the shell dock is a STATIC vertical rail now (the
+    // in-situ V↔H orientation morph retired decided-terminal), so the HORIZONTAL
+    // `bottom-edge` arm is gone from SidebarDock. The two LIVE coverage states are the
+    // vertical rail's `inline-end-edge` + a collapsed pill's `full-ring`. The `bottom-edge`
+    // COVERAGE RULE stays in border-progress.css (W4/W8 assert it for card-chrome
+    // consumers) — only the dock USAGE dropped it.
     const dockCoverageStates =
-        /inline-end-edge/.test(sidebarDock) &&
-        /bottom-edge/.test(sidebarDock) &&
-        /full-ring/.test(sidebarDock);
+        /inline-end-edge/.test(sidebarDock) && /full-ring/.test(sidebarDock);
     const shellProvidesFraction =
         /SHELL_SCROLL_PROGRESS/.test(appShell) && /provide\(/.test(appShell);
     // W7d — the standalone bar is DEFINITION-ABSENT: no live `.demo-scroll-progress`
@@ -462,7 +474,7 @@ export function detectBorderProgress(inputs) {
         );
     if (!(dockMounts && dockReadsFraction && dockCoverageStates))
         violations.push(
-            "W7c: the shell dock does not wear the scroll-progress border (SidebarDock must mount <BorderProgress> off useShellScrollProgress() with the inline-end-edge / bottom-edge / full-ring coverage states wired)",
+            "W7c: the shell dock does not wear the scroll-progress border (SidebarDock must mount <BorderProgress> off useShellScrollProgress() with the inline-end-edge (vertical rail) + full-ring (collapsed pill) coverage states wired — the bottom-edge arm retired with the V↔H morph, BI.W-DOCK-RETIRES)",
         );
     if (!shellProvidesFraction)
         violations.push(

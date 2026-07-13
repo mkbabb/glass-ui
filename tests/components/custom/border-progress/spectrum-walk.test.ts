@@ -20,10 +20,13 @@ import { describe, expect, it, vi } from "vitest";
 import {
     spectrumStops,
 } from "@glass/components/custom/border-progress/composables/useBorderSpectrum";
+// BI.W-SCROLL-PROGRESS-RIM — the value.js-bearing walk was PROMOTED to the shared `/color`
+// leaf (its natural home beside cssToOklch); border-progress's sync shell still consumes it
+// via the dynamic `import()` boundary. This parity unit spans BOTH surfaces.
 import {
     walkConcreteSpectrum,
     spectrumAt,
-} from "@glass/components/custom/border-progress/composables/spectrum-walk";
+} from "@glass/composables/color/spectrum-walk";
 import { BORDER_PROGRESS_DEFAULT_SPECTRUM } from "@glass/components/custom/border-progress/constants";
 
 const CONCRETE = ["#e11d48", "#4f46e5"] as const; // rose → indigo (the spec anchor set)

@@ -4,9 +4,11 @@
 // `computed` and a consumer may call it synchronously, so it MUST stay sync (an
 // `async` export breaks the synchronous render). This module is value.js-FREE: it
 // carries NO top-level `@mkbabb/value.js` / `/color` import. The OKLCH/shorter-hue
-// perceptual walk (the only value.js consumer in the leaf) moved to the
-// dynamically-imported `./spectrum-walk` module (BC.W-AX-BP-LAZY — the eager-graph
-// payload move), so `dist/border-progress.js`'s first-paint reach is value.js-free.
+// perceptual walk (the only value.js consumer in the leaf) lives in the
+// dynamically-imported `/color/spectrum-walk` module (BC.W-AX-BP-LAZY — the eager-graph
+// payload move; PROMOTED to the shared `/color` leaf at BI.W-SCROLL-PROGRESS-RIM so the
+// dock rim consumes it directly + border-progress stays a consumer of the moved leaf),
+// so `dist/border-progress.js`'s first-paint reach is value.js-free.
 //
 // Two paths, split by RAMP KIND:
 //   - The `var()` / default ramp (the HOT path) — fully synchronous, value.js-FREE.
@@ -84,8 +86,11 @@ export function spectrumStops(
     if (onUpgrade) {
         // BC.W-AX-BP-LAZY — the value.js-bearing perceptual walk is a dynamic chunk reached
         // ONLY for concrete #hex/oklch() anchors, so the default brand-ramp /border-progress
-        // chunk stays value.js-free on its first-paint critical path.
-        void import("./spectrum-walk").then(({ walkConcreteSpectrum }) => { // lazy-boundary: BC.W-AX-BP-LAZY value.js-free fast path; perceptual walk only for concrete anchors
+        // chunk stays value.js-free on its first-paint critical path. BI.W-SCROLL-PROGRESS-RIM
+        // PROMOTED the walk to the shared `/color` leaf (its natural home beside cssToOklch);
+        // border-progress re-points its dynamic import here, staying a consumer of the moved
+        // leaf (BOTH green until the retire wave — 0 binary consumers of border-progress).
+        void import("../../../../composables/color/spectrum-walk").then(({ walkConcreteSpectrum }) => { // lazy-boundary: BC.W-AX-BP-LAZY value.js-free fast path; perceptual walk only for concrete anchors
             const walked = walkConcreteSpectrum(stops, count);
             walkCache.set(key, walked);
             onUpgrade(walked);

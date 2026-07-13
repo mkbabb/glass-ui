@@ -151,14 +151,24 @@ function openConfigurator(): void {
 //     dormant-but-wired here and live for any collapsing consumer.
 //   (BI.W-DOCK-RETIRES removed the V↔H-morph HORIZONTAL `bottom-edge` arm — the shell
 //   dock no longer morphs orientation; it is a static vertical rail.)
-// The ink is the calm warm-ink two-stop ramp (NOT the 13-stop brand rainbow — the
-// dock is chrome, and a rainbow border is a second color event; the warm ink flips
-// modes for free). Thickness + pill radius ride the `--border-progress-*` cascade
-// tokens (dock-nav.css) — the ring follows the dock's stadium with zero
-// measurement.
+// BI.W-SCROLL-PROGRESS-RIM (UF-D1, verbatim: "should be RAINBOW, thinner, and rounded") —
+// the ink is the brand `--section-color-*` RAINBOW, superseding the BG.W-DOCK-SCROLL-PROGRESS
+// warm-ink two-stop ramp that read as ss-02's chunky flat GRAY band (clean break, no alias —
+// the user asked for rainbow). "rainbow" = the section-color ramp, staying in the warm
+// identity: a warm→cool arc (rose → amber → forest → teal → indigo → violet) sampled off the
+// 13-stop ramp so the rim reads as "a spectrum of our colors". Presets-in-consumers — the demo
+// (this shell) passes the spectrum config; the tokens resolve in the cascade + flip modes for
+// free. Thickness (the thin RIM rung ~4px, dock-nav.css) + pill radius ride the
+// `--border-progress-*` cascade tokens — the band inherits the dock PLATE's stadium
+// (BI.W-DOCK-SPINE: the plate is `border-radius: inherit` from the pill `.glass-dock`) with
+// zero measurement.
 const SCROLL_RING_STOPS: readonly string[] = [
-    "color-mix(in srgb, var(--foreground) 45%, transparent)",
-    "var(--foreground)",
+    "var(--section-color-0)", // rose
+    "var(--section-color-5)", // amber
+    "var(--section-color-4)", // forest
+    "var(--section-color-3)", // teal-cyan
+    "var(--section-color-2)", // indigo
+    "var(--section-color-7)", // violet
 ];
 const scrollProgress = useShellScrollProgress();
 const dockRef = useTemplateRef<InstanceType<typeof GlassDock>>("dockRef");

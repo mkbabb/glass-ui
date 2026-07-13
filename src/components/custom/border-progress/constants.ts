@@ -82,3 +82,11 @@ export interface BorderProgressMilestoneEvent {
     /** The value at the moment of crossing (post-update). */
     value: number;
 }
+
+/**
+ * BI.W-SCROLL-PROGRESS-RIM (atlas C1/#185) — the per-item `[0,1]` STEPPER contract. N
+ * items → N band segments; item `i`'s scalar (clamped `[0,1]`) fills its OWN arc, so a
+ * consumer (the atlas dock-progress) binds PER-ITEM, not only the aggregate `value`. The
+ * successor-contract half of ask #23 — the consume renderer lands on the atlas side.
+ */
+export type BorderProgressSegments = readonly number[];

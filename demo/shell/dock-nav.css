@@ -196,12 +196,16 @@
     inset: 0;
     z-index: 2;
     pointer-events: none;
-    /* Follow the dock plate: the static vertical rail is `shape-pill` (stadium),
-       and a collapsed pill is the same register. */
+    /* BI.W-DOCK-SPINE — the band inherits the dock PLATE's radius by construction: the
+       greenfield `.dock-plate` is `border-radius: inherit` from the pill `.glass-dock`,
+       so the sibling-overlay ring hugs the SAME stadium. Follow the pill: the static
+       vertical rail is `shape-pill`, and a collapsed pill is the same register. */
     --border-progress-radius: var(--radius-pill, 9999px);
-    /* The thick+rounded read (the 10-14px envelope), tuned against the ~67px
-       vertical pill so the band reads as the dock's own edge, not a bar. */
-    --border-progress-width: 11px;
+    /* BI.W-SCROLL-PROGRESS-RIM (UF-D1: "thinner") — the THIN RIM rung (~4px), a RIM
+       indicator STRICTLY below the 10-14px card-envelope floor (a card chrome), not the
+       prior chunky 11px band ss-02 read as a gray slab. Tuned against the ~67px vertical
+       pill so the rainbow band reads as the dock's own thin edge. */
+    --border-progress-width: 4px;
     /* BI.W-DOCK-RETIRES — the `[data-dock-morphing]` ring dissolve (continuity across
        the V↔H morph) is DEFINITION-ABSENT (the shell dock no longer morphs orientation). */
     transition: opacity 180ms var(--ease-out, ease-out);

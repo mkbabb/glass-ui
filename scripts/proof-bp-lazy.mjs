@@ -70,7 +70,11 @@ function cliPaths() {
         ROOT,
         ENTRY: resolve(ROOT, "src/subpaths/border-progress.ts"),
         SHELL: d("composables/useBorderSpectrum.ts"),
-        WALK: d("composables/spectrum-walk.ts"),
+        // BI.W-SCROLL-PROGRESS-RIM — the value.js-bearing walk was PROMOTED to the shared
+        // `/color` leaf (its natural home beside cssToOklch); the dynamic-import boundary is
+        // preserved (border-progress re-points its `import()` to /color), so this gate FOLLOWS
+        // the walk into the leaf — the dynamic-boundary lock is unchanged, only the path moved.
+        WALK: resolve(ROOT, "src/composables/color/spectrum-walk.ts"),
         ARTIFACT: gateArtifactPath("GLASS_UI_BP_LAZY_ARTIFACT", "BC-bp-lazy"),
     };
     return _cliPaths;
@@ -150,13 +154,19 @@ export function detectBpLazy({ shell = "", walk = "", walkExists = false, eagerR
     }
 
     // ── BP2 — spectrum-walk.ts is the dynamic leaf, reached ONLY by import() ───
+    // BI.W-SCROLL-PROGRESS-RIM — the walk moved to `/color`, so the dynamic-boundary edge
+    // now points at `…/composables/color/spectrum-walk` (was `./spectrum-walk`); match a
+    // spectrum-walk import regardless of the relative prefix (the boundary is what matters,
+    // not the path). The walk, now INSIDE the leaf, imports its color primitives via a
+    // same-dir `./index` (a walk in composables/color trivially carries the /color leaf edge).
     const shellHasStaticWalkEdge =
-        /(?:import|export)\s+[^"';]*?from\s*["']\.\/spectrum-walk["']/.test(shell);
-    const shellHasDynamicWalkEdge = /import\(\s*["']\.\/spectrum-walk["']\s*\)/.test(
+        /(?:import|export)\s+[^"';]*?from\s*["'][^"']*spectrum-walk["']/.test(shell);
+    const shellHasDynamicWalkEdge = /import\(\s*["'][^"']*spectrum-walk["']\s*\)/.test(
         shell,
     );
     const walkHasValueJs = /from\s*["']@mkbabb\/value\.js["']/.test(walk);
-    const walkHasColorLeaf = /from\s*["'][^"']*composables\/color["']/.test(walk);
+    const walkHasColorLeaf =
+        /from\s*["'](\.\/index|\.|[^"']*composables\/color)["']/.test(walk);
     facts.bp2 = {
         walkExists,
         shellHasStaticWalkEdge,
@@ -213,7 +223,7 @@ export function detectBpLazy({ shell = "", walk = "", walkExists = false, eagerR
     // is present. The structural witness is the `containsVar` short-circuit returning
     // `[...stops]` and the `import(` sitting after it (guarded by the concrete path).
     const varReturnIdx = shell.search(/return\s+\[\.\.\.stops\]/);
-    const dynImportIdx = shell.search(/import\(\s*["']\.\/spectrum-walk["']/);
+    const dynImportIdx = shell.search(/import\(\s*["'][^"']*spectrum-walk["']/);
     const varReturnsBeforeDynImport =
         varReturnIdx !== -1 &&
         (dynImportIdx === -1 || varReturnIdx < dynImportIdx);

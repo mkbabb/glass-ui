@@ -68,6 +68,16 @@ export interface BorderProgressProps {
      * `--phase-color` cascade precedent — the milestone is the EVENT seam).
      */
     milestones?: readonly BorderProgressMilestone[];
+    /**
+     * BI.W-SCROLL-PROGRESS-RIM (atlas C1/#185) — the per-item `[0,1]` STEPPER seam. When
+     * provided, the band is partitioned into N equal arcs (one per item) and each item's
+     * `[0,1]` scalar fills its OWN arc — so a consumer (the atlas dock-progress) binds
+     * PER-ITEM, not only the aggregate `value`. Each scalar is clamped to `[0,1]`; the arc
+     * hues walk the spectrum across the segments (the rainbow spread). UNSET, the aggregate
+     * single-fill sweep (`value`) paints (byte-identical). The successor-contract half of
+     * ask #23 — the consume renderer lands on the atlas side.
+     */
+    segments?: readonly number[];
     /** Pass-through class on the root. */
     class?: string;
 }
@@ -91,8 +101,9 @@ const ariaNow = computed(() => props.value);
 // the conic-gradient reads. The default `var(--…)` token ramp passes through to the
 // live cascade SYNCHRONOUSLY (value.js-free, no dynamic load — byte-identical paint).
 // CONCRETE anchors show the synchronous interim first, then UPGRADE to the OKLCH/
-// shorter-hue perceptual walk on the next tick when `./spectrum-walk` resolves
-// (BC.W-AX-BP-LAZY — the value.js spectrum walk rides a dynamic `import()` boundary).
+// shorter-hue perceptual walk on the next tick when `/color/spectrum-walk` resolves
+// (BC.W-AX-BP-LAZY — the value.js spectrum walk rides a dynamic `import()` boundary;
+// PROMOTED to the shared `/color` leaf at BI.W-SCROLL-PROGRESS-RIM).
 const spectrum = ref<string[]>([]);
 const resolveSpectrum = () => {
     const stops = props.stops ?? BORDER_PROGRESS_DEFAULT_SPECTRUM;
@@ -125,6 +136,43 @@ const spectrumStopList = computed(() => {
     if (n === 1) return `${s[0]} 0%, ${s[0]} ${at(1)}`;
     return s.map((color, i) => `${color} ${at(i / (n - 1))}`).join(", ");
 });
+
+// BI.W-SCROLL-PROGRESS-RIM (atlas C1/#185) — the PER-ITEM stepper stop list. When
+// `segments` is provided the band is N equal arcs; arc i spans [i/N, (i+1)/N] and its
+// item's clamped [0,1] scalar fills [i/N, i/N + seg/N], transparent to (i+1)/N — a stepped
+// per-item read (the atlas binds each item, not only the aggregate). The arc hues walk the
+// resolved spectrum across the segments. The gradient positions are non-decreasing (CSS
+// clamps), so the fill is `100%` in this mode (the base recipe's trailing `transparent
+// var(--fill)` is a no-op at the tail; this stop list encodes its own transparent bands).
+const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
+const segmentStopList = computed<string | null>(() => {
+    const segs = props.segments;
+    if (!segs || segs.length === 0) return null;
+    const s = spectrum.value;
+    const N = segs.length;
+    const colorAt = (i: number) => {
+        if (s.length === 0) return "var(--section-color-7)";
+        const idx = N <= 1 ? 0 : Math.round((i / (N - 1)) * (s.length - 1));
+        return s[Math.min(s.length - 1, Math.max(0, idx))];
+    };
+    const pct = (f: number) => `${(f * 100).toFixed(3)}%`;
+    const out: string[] = [];
+    for (let i = 0; i < N; i++) {
+        const base = i / N;
+        const filled = base + clamp01(segs[i]) / N;
+        const next = (i + 1) / N;
+        const c = colorAt(i);
+        out.push(
+            `${c} ${pct(base)}`,
+            `${c} ${pct(filled)}`,
+            `transparent ${pct(filled)}`,
+            `transparent ${pct(next)}`,
+        );
+    }
+    return out.join(", ");
+});
+// The per-item mode is active IFF a non-empty `segments` array is supplied.
+const perItem = computed(() => (props.segments?.length ?? 0) > 0);
 
 // The milestone-edge state (the `data-milestone` PRM-gated pulse). The ring pulses
 // for one paint when a boundary is crossed; the emit carries the crossed edge.
@@ -160,15 +208,21 @@ const rootStyle = computed<CSSProperties>(
     () =>
         ({
             // The @property-animated fill drives the conic sweep (it INTERPOLATES;
-            // a bare unregistered var() snaps — the §18 registered-property idiom).
-            "--border-progress-fill": `${(fraction.value * 100).toFixed(3)}%`,
+            // a bare unregistered var() snaps — the §18 registered-property idiom). In
+            // the PER-ITEM stepper mode the fill pins `100%` (the segment stop list
+            // encodes its own transparent bands ending at 100%, so the base recipe's
+            // trailing `transparent var(--fill)` is a tail no-op).
+            "--border-progress-fill": perItem.value
+                ? "100%"
+                : `${(fraction.value * 100).toFixed(3)}%`,
             ...(props.width != null
                 ? { "--border-progress-width": `${props.width}px` }
                 : {}),
             ...(props.radius != null
                 ? { "--border-progress-radius": `${props.radius}px` }
                 : {}),
-            "--border-progress-spectrum": spectrumStopList.value,
+            "--border-progress-spectrum":
+                segmentStopList.value ?? spectrumStopList.value,
         }) as CSSProperties,
 );
 </script>

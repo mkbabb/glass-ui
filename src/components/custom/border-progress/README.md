@@ -29,8 +29,10 @@ a spectrum of our colors."_
 - **The brand-spectrum fill via value.js `sampleColorRamp`.** The conic stops are the
   section/viz brand ramp (`--section-color-*`/`--viz-*`) walked SHORTER-hue (no chroma
   trough — OKLab greys a warm→cool midpoint; the shorter arc stays saturated). The
-  perceptual walk (`composables/spectrum-walk.ts`, behind the value.js-free dynamic
-  `import()` boundary) is a thin consumer of value.js's published
+  perceptual walk (`src/composables/color/spectrum-walk.ts`, behind the value.js-free
+  dynamic `import()` boundary — PROMOTED to the shared `/color` leaf at
+  BI.W-SCROLL-PROGRESS-RIM; border-progress stays a consumer of the moved leaf) is a
+  thin consumer of value.js's published
   `sampleColorRamp(from, to, n, { space: "oklch", hueMethod: "shorter" })` + the
   EXISTING `/color` leaf (`cssToOklch`/`oklchStopToHex`) — it re-implements ZERO color
   math (`proof:single-color-core` holds; the math source IS value.js). The
