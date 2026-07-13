@@ -9,6 +9,7 @@ import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
+import CodeBlock from "../../chassis/code/CodeBlock.vue";
 import {
     Configurator,
     ConfiguratorLayer,
@@ -30,6 +31,20 @@ interface Cfg {
 }
 
 const mediums = ["aurora", "ink", "gouache"] as const;
+
+// The `useConfiguratorState` API surface, rendered through the ONE <CodeBlock>
+// register (real, copy-able, syntax-highlighted) — not a hand-rolled raw <pre>.
+const apiSnippet = `const cfg = useConfiguratorState<T>({
+  presets,                  // readonly ConfiguratorPreset<T>[]
+  initialPreset: "default", // optional preset key
+});
+
+cfg.config         // reactive T (the live config)
+cfg.activePreset   // ComputedRef<string | undefined>
+cfg.isDirty        // ComputedRef<boolean>
+cfg.selectPreset(key)
+cfg.resetCurrent()
+cfg.cyclePreset()`;
 
 // Each medium tilts the specimen's hue triad — the stage reads the medium
 // as a distinct palette so the Select is visibly load-bearing, not decorative.
@@ -315,17 +330,7 @@ const size = computed(() => (isNarrow.value ? "sm" : "md"));
             blurb="useConfiguratorState<T> returns config + activePreset + isDirty + selectPreset + resetCurrent + cyclePreset. Generic over the live shape T; structuredClone-based by default with optional cloner / equality hooks."
         >
             <ShowcaseFrame pad="md" tier="quiet">
-                <pre v-pre class="fira-code text-sm overflow-x-auto"><code>const cfg = useConfiguratorState&lt;T&gt;({
-  presets,                  // readonly ConfiguratorPreset&lt;T&gt;[]
-  initialPreset: "default", // optional preset key
-});
-
-cfg.config         // reactive T (the live config)
-cfg.activePreset   // ComputedRef&lt;string | undefined&gt;
-cfg.isDirty        // ComputedRef&lt;boolean&gt;
-cfg.selectPreset(key)
-cfg.resetCurrent()
-cfg.cyclePreset()</code></pre>
+                <CodeBlock lang="ts" :code="apiSnippet" />
             </ShowcaseFrame>
         </StorySection>
     </StoryPage>

@@ -1,0 +1,115 @@
+/* hljs-house-theme — the static, cascade-driven warm-crayon highlight.js theme
+   (BI.W-CODEBLOCK).
+
+   NOT a GitHub palette, NOT a head-`<style>` swap (the value.js post-mortem: a
+   swapped-in theme stylesheet flashes the wrong mode on first paint). The crayons
+   are demo tokens the storybook already owns — `--section-color-*` (the jewel
+   ramp), `--viz-amber` (the number crayon), `--foreground` (the base ink) and
+   `--on-glass-muted-strong` (the recede-but-legible comment rung). Every crayon
+   token AUTO-FLIPS per mode (the ramp re-declares in `.dark`), so the light plate
+   reads the low-L jewel and the dark plate reads its brightened mirror — per-mode
+   correctness with ZERO `light-dark()` (the inset-shadow trap is structurally out
+   of reach; there are no shadows here, and the plain-arm discipline holds anyway).
+
+   This sheet is GLOBAL (imported unscoped from CodeBlock.vue) so it reaches the
+   `.hljs-*` spans highlight.js writes into the `<pre>` innerHTML at runtime — a
+   Vue-scoped block would miss the dynamically-inserted markup.
+
+   G3: every crayon clears AA ≥4.5 / APCA ≥60 over the composited `.glass-quiet`
+   plate in BOTH modes (the paint-arm OKLab readback binds it — π batch). The
+   just-clear light-mode members carry margin by choosing the lower-L ramp index. */
+
+.story-code-block {
+    /* The five warm crayons — keyword / entity / string / number / comment. Each
+       reads an auto-flipping demo token; the base ink is `--foreground`. */
+    --code-keyword: var(--section-color-1); /* purple — const/import/return/type */
+    --code-entity: var(--section-color-2); /* indigo — function/class/attr names */
+    --code-string: var(--section-color-4); /* forest — strings/regexp/chars */
+    --code-number: var(--viz-amber); /* amber — numbers/booleans/literals */
+    --code-comment: var(--on-glass-muted-strong); /* the recede-but-legible rung */
+}
+
+/* The plain `.dark` arm — per-mode, no `light-dark()`. The jewel ramp already
+   brightens in `.dark`, so the crayons stay correct by auto-flip; the arm keeps
+   the comment crayon at the calibrated `-strong` muted rung (quietest element that
+   still clears AA over the deep plate) and re-affirms the amber number crayon,
+   which on the near-black plate wants the full brand amber, not a washed pastel. */
+.dark .story-code-block {
+    --code-number: var(--viz-amber);
+    --code-comment: var(--on-glass-muted-strong);
+}
+
+/* The base ink — the un-tokenized run of a highlighted block reads the warm
+   `--foreground` (auto-flipping), never a hard-coded ink. */
+.story-code-block .hljs {
+    color: var(--foreground);
+    background: transparent;
+}
+
+/* ── The crayon map: every `.hljs-*` token class → a `--code-*` crayon ─────────
+   Grouped by role so the five crayons cover the full grammar surface (ts / xml /
+   css / bash). No GitHub literal anywhere — every color is `var(--code-*)`. */
+
+/* keyword crayon — language keywords, built-ins, types, tags, symbols */
+.story-code-block .hljs-keyword,
+.story-code-block .hljs-built_in,
+.story-code-block .hljs-type,
+.story-code-block .hljs-tag,
+.story-code-block .hljs-symbol,
+.story-code-block .hljs-selector-tag,
+.story-code-block .hljs-doctag {
+    color: var(--code-keyword);
+}
+
+/* entity crayon — function / class titles, attributes, properties, names */
+.story-code-block .hljs-title,
+.story-code-block .hljs-title.function_,
+.story-code-block .hljs-title.class_,
+.story-code-block .hljs-function .hljs-title,
+.story-code-block .hljs-attr,
+.story-code-block .hljs-attribute,
+.story-code-block .hljs-property,
+.story-code-block .hljs-name,
+.story-code-block .hljs-selector-class,
+.story-code-block .hljs-selector-id,
+.story-code-block .hljs-variable {
+    color: var(--code-entity);
+}
+
+/* string crayon — strings, regexp, chars, template-string meta */
+.story-code-block .hljs-string,
+.story-code-block .hljs-regexp,
+.story-code-block .hljs-char.escape_,
+.story-code-block .hljs-meta .hljs-string,
+.story-code-block .hljs-template-tag,
+.story-code-block .hljs-template-variable {
+    color: var(--code-string);
+}
+
+/* number crayon — numeric + boolean/null literals */
+.story-code-block .hljs-number,
+.story-code-block .hljs-literal,
+.story-code-block .hljs-meta .hljs-number {
+    color: var(--code-number);
+}
+
+/* comment crayon — comments, quotes, doc-strings */
+.story-code-block .hljs-comment,
+.story-code-block .hljs-quote {
+    color: var(--code-comment);
+    font-style: italic;
+}
+
+/* meta / directives read the muted comment rung so pragmas recede like comments */
+.story-code-block .hljs-meta,
+.story-code-block .hljs-meta .hljs-keyword {
+    color: var(--code-comment);
+}
+
+/* emphasis carried by hljs stays a face treatment, not a new color */
+.story-code-block .hljs-emphasis {
+    font-style: italic;
+}
+.story-code-block .hljs-strong {
+    font-weight: 600;
+}

@@ -43,8 +43,8 @@
 //   + self-test bites: a synthetic re-added `<code class="font-mono">` REDs C2; a
 //     synthetic raw `<code class="fira-code">` REDs C3.
 
-import { existsSync, readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { resolve, join } from "node:path";
 import { ROOT } from "./constellation.mjs";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
@@ -210,6 +210,43 @@ add(
         : "`@utility fira-code` body drifted — the canonical font register must stay the exact var(--font-mono) + liga/calt pair (byte-fenced)",
 );
 
+// ── C7 — TREE-GLOBAL block register (BI.W-CODEBLOCK EXTEND) ────────────────────
+// The inline `<code>`-dialect bars (C2/C3) are footprint-scoped to the enrolled
+// re-author. BI.W-CODEBLOCK makes the BLOCK register tree-global: ZERO raw
+// `<pre …fira-code…>` code blocks survive anywhere in demo/stories — every
+// multi-line snippet renders through <CodeBlock> (highlighted, copy-able, sized).
+// A `<pre data-mono-content>` opt-out (terminal output / font specimen / ascii)
+// is legit mono, NOT a code block, and stays off the bar (the classifier).
+const preFiraRe = /<pre\b[^>]*\bclass="[^"]*\bfira-code\b[^"]*"[^>]*>/g;
+const isLegitMono = (openTag) => /\bdata-mono-content\b/.test(openTag);
+
+function walkVue(dir) {
+    const abs = resolve(ROOT, dir);
+    if (!existsSync(abs)) return [];
+    const out = [];
+    for (const entry of readdirSync(abs, { withFileTypes: true })) {
+        const rel = join(dir, entry.name);
+        if (entry.isDirectory()) out.push(...walkVue(rel));
+        else if (entry.name.endsWith(".vue")) out.push(rel);
+    }
+    return out;
+}
+
+const blockOffenders = [];
+for (const rel of walkVue("demo/stories")) {
+    const src = strip(read(rel));
+    for (const tag of src.match(preFiraRe) ?? []) {
+        if (!isLegitMono(tag)) blockOffenders.push(rel);
+    }
+}
+add(
+    "C7-tree-global-block-register",
+    blockOffenders.length === 0,
+    blockOffenders.length === 0
+        ? "zero raw `<pre …fira-code…>` code blocks survive across demo/stories — <CodeBlock> is the tree-global block register (the two hand-rolled offenders folded; a `<pre data-mono-content>` opt-out stays off the bar). C7 (BI.W-CODEBLOCK EXTEND)"
+        : `${blockOffenders.length} raw <pre fira-code> code-block offender(s) survive tree-wide: ${[...new Set(blockOffenders)].join(", ")}`,
+);
+
 // ── the π readback spec is wired (the BINDING close) ──────────────────────────
 add(
     "pi-readback-spec-exists",
@@ -260,6 +297,23 @@ if (SELF_TEST) {
         bite(
             "C6 flags a synthetic drifted fira-code rule (font-family swapped)",
             !intact,
+        );
+    }
+
+    // Bite 5 (BI.W-CODEBLOCK) — a synthetic raw `<pre fira-code>` code block REDs
+    // C7; a `<pre data-mono-content>` opt-out does NOT (the classifier bite).
+    {
+        const offender = `<pre class="fira-code"><code>const x = 1;</code></pre>`;
+        const legit = `<pre data-mono-content class="fira-code">$ npm run build</pre>`;
+        const offFlagged = (strip(offender).match(preFiraRe) ?? []).some(
+            (t) => !isLegitMono(t),
+        );
+        const legitFlagged = (strip(legit).match(preFiraRe) ?? []).some(
+            (t) => !isLegitMono(t),
+        );
+        bite(
+            "C7 flags a synthetic raw <pre fira-code> block AND spares a `<pre data-mono-content>` opt-out",
+            offFlagged && !legitFlagged,
         );
     }
 

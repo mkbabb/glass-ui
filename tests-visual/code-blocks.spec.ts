@@ -186,3 +186,109 @@ test.describe("BC.W-CODE-BLOCKS — the ONE Fira-Code code register (π)", () =>
         );
     });
 });
+
+// ── BI.W-CODEBLOCK — the highlighted register π (hljs swap + warm crayons) ──────
+// The BC arm above bound the plate/font/pad/copy. THIS arm binds what the
+// BI.W-CODEBLOCK highlight lands: the lazy highlight.js chunk resolves into
+// `.hljs-*` crayon spans, the raw text stays present across the swap (CLS-0 content
+// invariant — highlighting is deferred COLOR, never deferred content), and the
+// warm crayons resolve to distinct non-transparent colors off the `--code-*`
+// tokens. The route is /compositions/configurator (its <CodeBlock> snippet carries
+// keyword + comment + string runs, so every crayon class is present to read).
+//
+// The full G3 AA≥4.5 / APCA≥60 crayon-contrast over the composited `.glass-quiet`
+// plate rides the paint-arm OKLab batch (#92) — this spec proves the crayons
+// APPLY + are DISTINCT; the paint-arm proves they CLEAR.
+const paintedBI: Record<string, unknown> = {};
+
+test.describe("BI.W-CODEBLOCK — the highlighted code register (π)", () => {
+    for (const dark of [false, true]) {
+        const mode = dark ? "dark" : "light";
+
+        test(`CB-π-5..6 — hljs swap + warm crayons resolve distinct (${mode})`, async ({
+            page,
+        }) => {
+            await page.goto("/compositions/configurator", {
+                waitUntil: "domcontentloaded",
+            });
+            await page.evaluate(
+                (on) => document.documentElement.classList.toggle("dark", on),
+                dark,
+            );
+            await page.waitForSelector(".story-code-block-pre", { timeout: 8000 });
+            // Give the lazy `import("highlight.js/lib/core")` chunk time to resolve
+            // + swap the innerHTML.
+            await page
+                .waitForSelector(".story-code-block-pre[data-hljs-highlighted]", {
+                    timeout: 8000,
+                })
+                .catch(() => {});
+            await page.waitForTimeout(400);
+
+            const readback = await page.evaluate(() => {
+                const pre = document.querySelector(".story-code-block-pre");
+                if (!pre) return null;
+                const rawText = (pre.textContent ?? "").trim();
+                const highlighted = pre.hasAttribute("data-hljs-highlighted");
+                const hljsSpans = pre.querySelectorAll('[class^="hljs-"]').length;
+                const colorOf = (sel: string) => {
+                    const el = pre.querySelector(sel);
+                    return el ? getComputedStyle(el).color : null;
+                };
+                const base = getComputedStyle(pre).color;
+                return {
+                    rawTextLen: rawText.length,
+                    highlighted,
+                    hljsSpans,
+                    keyword: colorOf(".hljs-keyword"),
+                    string: colorOf(".hljs-string"),
+                    comment: colorOf(".hljs-comment"),
+                    base,
+                };
+            });
+
+            paintedBI[mode] = readback;
+            expect(readback, `${mode}: /compositions/configurator renders a CodeBlock`).not.toBeNull();
+            const r = readback as NonNullable<typeof readback>;
+
+            // CB-π-5 — the raw text is present from frame 0 (CLS-0 content invariant)
+            // AND the lazy chunk resolved into `.hljs-*` spans (highlighting landed).
+            expect(
+                r.rawTextLen,
+                `${mode}: the raw code text is present (deferred COLOR, never content)`,
+            ).toBeGreaterThan(0);
+            expect(
+                r.highlighted && r.hljsSpans > 0,
+                `${mode}: the lazy highlight.js chunk resolved into .hljs-* crayon spans (${r.hljsSpans} spans, marker=${r.highlighted})`,
+            ).toBe(true);
+
+            // CB-π-6 — the warm crayons resolve to real, distinct, non-transparent
+            // colors (the theme APPLIED; keyword ≠ string ≠ comment ≠ base ink). The
+            // AA/APCA contrast-over-plate is the paint-arm π batch.
+            const isColor = (c: string | null) =>
+                Boolean(c) && c !== "rgba(0, 0, 0, 0)" && c !== "transparent";
+            for (const [name, c] of [
+                ["keyword", r.keyword],
+                ["string", r.string],
+                ["comment", r.comment],
+            ] as const) {
+                expect(
+                    isColor(c),
+                    `${mode}: the ${name} crayon resolves a real color (got "${c}")`,
+                ).toBe(true);
+            }
+            expect(
+                new Set([r.keyword, r.string, r.comment]).size,
+                `${mode}: the crayons are distinct hues (keyword/string/comment must differ — got ${r.keyword} / ${r.string} / ${r.comment})`,
+            ).toBeGreaterThanOrEqual(2);
+        });
+    }
+
+    test.afterAll(() => {
+        mkdirSync(VISUAL_DIR, { recursive: true });
+        writeFileSync(
+            `${VISUAL_DIR}/W-CODEBLOCK-highlight-readback.json`,
+            `${JSON.stringify(paintedBI, null, 2)}\n`,
+        );
+    });
+});

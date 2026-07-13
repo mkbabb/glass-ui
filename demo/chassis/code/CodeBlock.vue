@@ -19,9 +19,14 @@
 // example renders through this — a real, copy-able, Fira-Code code block, not
 // prose. A demo-private chassis primitive — NOT a library export (the
 // <StorySection> / <ShowcaseFrame> precedent).
-import { computed, ref, useSlots } from "vue";
+import { computed, ref, toRef, useSlots } from "vue";
 import { Check, Copy } from "@lucide/vue";
 import { cn } from "@glass/utils/cn";
+import { FadingScroll } from "@glass/components/custom/fading-scroll";
+import { useCodeHighlight } from "./useCodeHighlight";
+// The warm-crayon highlight.js theme — GLOBAL (unscoped) so it reaches the
+// `.hljs-*` spans highlight.js writes into the <pre> innerHTML at runtime.
+import "./hljs-house-theme.css";
 
 interface CodeBlockProps {
     /** The literal code string. XOR the default slot (the slot wins when both). */
@@ -41,6 +46,14 @@ const preRef = ref<HTMLElement | null>(null);
 const copied = ref(false);
 
 const hasSlot = computed(() => Boolean(slots.default));
+
+// Lazy highlight.js swaps in the `.hljs-*` crayon spans once its chunk resolves.
+// The raw fira-code text paints from frame 0 (Vue renders it) — highlighting is
+// deferred COLOR, never deferred content (a dead chunk leaves legible mono).
+useCodeHighlight(preRef, {
+    lang: toRef(props, "lang"),
+    text: () => props.code ?? preRef.value?.textContent ?? "",
+});
 
 async function copy(): Promise<void> {
     const text = props.code ?? preRef.value?.textContent ?? "";
@@ -88,11 +101,15 @@ async function copy(): Promise<void> {
         </button>
 
         <!-- The real fenced block — fira-code, the literal text. The slot wins;
-             else the `code` prop string. -->
-        <pre
-            ref="preRef"
-            class="story-code-block-pre fira-code"
-        ><slot v-if="hasSlot" />{{ hasSlot ? "" : code }}</pre>
+             else the `code` prop string. The <FadingScroll> port owns the
+             horizontal overflow + the edge feather cue (a long line scrolls, never
+             wraps mid-identifier); the prose-measure cap keeps the block readable. -->
+        <FadingScroll axis="x" class="story-code-block-scroll">
+            <pre
+                ref="preRef"
+                class="story-code-block-pre fira-code"
+            ><slot v-if="hasSlot" />{{ hasSlot ? "" : code }}</pre>
+        </FadingScroll>
     </div>
 </template>
 
@@ -108,17 +125,26 @@ async function copy(): Promise<void> {
     overflow: hidden;
 }
 
+/* The scroll port (the <FadingScroll> root) owns the horizontal overflow + the
+   per-edge feather cue. The prose-measure cap keeps the code column readable —
+   a code block is not a full-bleed banner. */
+.story-code-block-scroll {
+    max-inline-size: 42rem;
+}
+
 .story-code-block-pre {
     margin: 0;
-    /* The literal text — warm ink, fira-code (the @utility on the element), with
-       wrapping preserved for multi-line snippets. */
+    /* The literal text — warm ink, fira-code (the @utility on the element). A long
+       line SCROLLS (the <FadingScroll> port), never wraps mid-identifier: `pre`,
+       not `pre-wrap` (a wrapped long identifier is worse than a scroll cue). */
     color: var(--foreground);
     font-size: var(--type-small, 0.875rem);
     line-height: var(--type-leading-small, 1.5);
-    white-space: pre-wrap;
-    word-break: break-word;
-    /* Leave room for the copy button so a long first line never collides. */
+    white-space: pre;
+    /* Leave room for the copy button so a long first line never collides at rest. */
     padding-inline-end: 2rem;
+    /* The block is the intrinsic content width so the port can scroll it. */
+    inline-size: max-content;
 }
 
 .story-code-block-lang {

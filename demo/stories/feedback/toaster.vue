@@ -5,11 +5,24 @@
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
+import CodeBlock from "../../chassis/code/CodeBlock.vue";
 import { Button } from "@glass/components/ui/button";
 import { Play } from "@lucide/vue";
 import { Toaster, useToast } from "@glass/components/ui/toast";
 
 const { toast } = useToast();
+
+// The drop-in usage, rendered through the ONE <CodeBlock> register (real,
+// copy-able, syntax-highlighted) — not a hand-rolled raw <pre>.
+const usageSnippet = `// App.vue
+<template>
+  <router-view />
+  <Toaster />
+</template>
+
+// Anywhere downstream
+const { toast } = useToast();
+toast({ title: "Saved", description: "..." });`;
 
 function fireToast() {
     toast({
@@ -50,15 +63,7 @@ function fireToast() {
             blurb="Drop a single <Toaster /> at your layout root. Anywhere in the tree, useToast() returns { toast, dismiss, toasts }. The Toaster itself manages the ToastProvider context + viewport."
         >
             <ShowcaseFrame pad="md" tier="quiet">
-                <pre v-pre class="fira-code text-sm overflow-x-auto"><code>// App.vue
-&lt;template&gt;
-  &lt;router-view /&gt;
-  &lt;Toaster /&gt;
-&lt;/template&gt;
-
-// Anywhere downstream
-const { toast } = useToast();
-toast({ title: "Saved", description: "..." });</code></pre>
+                <CodeBlock lang="vue" :code="usageSnippet" />
             </ShowcaseFrame>
         </StorySection>
     </StoryPage>
