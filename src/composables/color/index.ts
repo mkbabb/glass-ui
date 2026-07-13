@@ -330,10 +330,13 @@ export function deriveBlobPalette(
 
 // ── BC.W-ACCENT-TONE — the contrast-floored tonal-accent register (JS ink half) ──
 //
-// `useAccentTone` composes value.js `safeAccentColor`/`computeSafeAccent` for the
-// contrast-safe label ink ON the active band — the value.js-bearing JS half of the
-// `.accent-tone` CSS register. Re-exported from this `/color` value.js-bearing leaf
-// (NOT the value.js-free root barrel — the SCC-trap discipline; the chip that
-// statically imports it ships /selectable-chip ONLY).
+// `useAccentTone` is the sync value.js-FREE shell (BI.W-CHIP-FOLD) — the contrast-safe
+// label ink ON the active band, value.js-QUARANTINED behind a dynamic
+// `import('./accent-tone-solve')` boundary (the value.js math lives in the
+// `accent-tone-solve` leaf, reached ONLY for a concrete tone; a `var()` / unset tone
+// stays value.js-free). Re-exported from this `/color` leaf; the `<Chip>` that consumes
+// it imports the SHELL MODULE DIRECTLY (`./useAccentTone`, not this barrel) so its `/chip`
+// eager chunk stays value.js-free, and ships /chip ONLY (OFF the value.js-free root barrel
+// — the SCC-trap discipline).
 export { useAccentTone } from "./useAccentTone";
 export type { UseAccentToneOptions, UseAccentToneReturn } from "./useAccentTone";

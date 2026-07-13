@@ -4,10 +4,12 @@
 //
 // The born-RED→GREEN device-free SOURCE arm for the ONE tonal-accent register: a
 // `.accent-tone` CSS recipe (one `--tone` → idle FILL / active BAND / EDGE / INK,
-// `in oklab`) + `useAccentTone` (the contrast-safe ink via value.js `safeAccentColor`,
-// NO re-rolled contrast math) + `<SelectableChip>` (the reka-Toggle face) — and the
-// retirement of the ToggleChip per-state `color-mix(…--primary…)` hand-roll (2× active
-// fill inside an 8-literal cluster). FOURIER-INBOUND #3 (the register) BUILT; #13 (the
+// `in oklab`) + `useAccentTone` (the sync value.js-FREE shell) + `accent-tone-solve`
+// (the value.js `safeAccentColor` ink solve, quarantined behind a dynamic-import
+// boundary — BI.W-CHIP-FOLD; NO re-rolled contrast math) + `<Chip>` (the reka-Toggle
+// face; ToggleChip + SelectableChip FOLDED onto shape × tone). A2 now asserts the
+// value.js QUARANTINE (the leaf bears value.js, the shell does NOT — the /chip eager
+// graph stays value.js-free). FOURIER-INBOUND #3 (the register) BUILT; #13 (the
 // `--viz-amber` rebaseline) FOLDED here as the regression-guard half (see A5).
 //
 // The BINDING painted truth is the π readback (the W-ACCENT-TONE-DELTA capture + the
@@ -49,14 +51,17 @@ function cliPaths() {
         ACCENT_CSS: resolve(ROOT, "src/styles/glass/accent-tone.css"),
         USE_ACCENT_TONE: resolve(ROOT, "src/composables/color/useAccentTone.ts"),
         COLOR_INDEX: resolve(ROOT, "src/composables/color/index.ts"),
-        TOGGLE_CHIP: resolve(ROOT, "src/components/custom/toggle-chip/index.ts"),
-        CHIP_VARIANTS: resolve(ROOT, "src/components/custom/selectable-chip/chipVariants.ts"),
+        // BI.W-CHIP-FOLD — the value.js-BEARING ink solve leaf (the dynamic-import
+        // boundary A2 asserts the sync `useAccentTone` shell is QUARANTINED from).
+        ACCENT_TONE_SOLVE: resolve(ROOT, "src/composables/color/accent-tone-solve.ts"),
+        // BI.W-CHIP-FOLD — ToggleChip + SelectableChip FOLDED onto the ONE <Chip>
+        // (shape × tone; clean break, no alias). The gate re-points off the retired
+        // toggle-chip/selectable-chip dirs onto the survivor chip/ colocation.
+        CHIP_VUE: resolve(ROOT, "src/components/custom/chip/Chip.vue"),
+        CHIP_VARIANTS: resolve(ROOT, "src/components/custom/chip/chipVariants.ts"),
         GLASS_CHIP_CSS: resolve(ROOT, "src/styles/glass/glass-chip.css"),
-        SELECTABLE_DIR: resolve(ROOT, "src/components/custom/selectable-chip"),
-        // BH.B5c — the A6 arm re-points off the src/subpaths mirror (B2.1-swap deletes
-        // it) onto the colocated component barrel; the CLAUDE_MD §Structure WARN-fact is
-        // DROPPED (proof:claude-structure-sync owns the generated structure.md map).
-        SELECTABLE_BARREL: resolve(ROOT, "src/components/custom/selectable-chip/index.ts"),
+        CHIP_DIR: resolve(ROOT, "src/components/custom/chip"),
+        CHIP_BARREL: resolve(ROOT, "src/components/custom/chip/index.ts"),
         API_INDEX: resolve(ROOT, "src/api/index.ts"),
         COLOR_RADIUS: resolve(ROOT, "src/styles/tokens/color-radius.css"),
         DARK_ARM: resolve(ROOT, "src/styles/tokens/dark-arm.css"),
@@ -212,8 +217,9 @@ export function detectAccentTone(sources) {
 
     const css = sources.accentCss ?? "";
     const useTone = sources.useAccentTone ?? "";
+    const solve = sources.accentToneSolve ?? "";
     const colorIndex = sources.colorIndex ?? "";
-    const toggle = sources.toggleChip ?? "";
+    const chip = sources.chip ?? "";
     const api = sources.apiIndex ?? "";
     const barrel = sources.barrel ?? "";
 
@@ -235,41 +241,54 @@ export function detectAccentTone(sources) {
     if (!usesOklab) violations.push("A1: the channels are not mixed `in oklab` (the perceptual glass-tint family)");
     if (wrongSpace) violations.push("A1: a channel mixes `in srgb` (the wrong space — the --surface-tint-* fence)");
 
-    // ── A2 — the contrast-safe ink composes value.js, NO hand-rolled contrast math ──
-    const importsSafeAccent = /import\s*\{[^}]*\bsafeAccentColor\b[^}]*\}\s*from\s*["']@mkbabb\/value\.js["']/.test(useTone);
+    // ── A2 — the value.js ink solve is QUARANTINED behind the dynamic leaf, NO
+    //    hand-rolled contrast math (BI.W-CHIP-FOLD). The value.js `safeAccentColor`
+    //    consumer lives in `accent-tone-solve.ts` (the dynamic-import leaf); the sync
+    //    `useAccentTone` shell is value.js-FREE (a static edge would re-drag the 26KB
+    //    value.js payload into the eager `/chip` chunk). This is STRONGER than the pre-
+    //    fold "shell imports value.js" check — it asserts the eager graph stays free. ──
+    const importsSafeAccent = /import\s*\{[^}]*\bsafeAccentColor\b[^}]*\}\s*from\s*["']@mkbabb\/value\.js["']/.test(solve);
+    // the QUARANTINE: the sync shell must carry NO static `@mkbabb/value.js` edge (the
+    // value.js math rides the dynamic `import('./accent-tone-solve')` boundary only).
+    const shellValueJsFree = !/from\s*["']@mkbabb\/value\.js["']/.test(useTone);
     // a planted hand-rolled contrast/lightness solve reds (the proof:single-color-core
-    // mirror): a relativeLuminance/contrastRatio function, an OKLCh lightness-bisection
-    // loop, or a re-defined WCAG ratio in the composable.
+    // mirror), scanned across BOTH the shell and the solve leaf: a relativeLuminance/
+    // contrastRatio function, an OKLCh lightness-bisection loop, or a re-defined WCAG
+    // ratio (the value.js core is COMPOSED, never re-rolled, on either side of the boundary).
+    const handRollScan2 = `${useTone}\n${solve}`;
     const handRoll =
-        /function\s+(relativeLuminance|contrastRatio|luminance|wcagContrast)\b/.test(useTone) ||
-        /\bwhile\s*\([^)]*contrast/i.test(useTone) ||
-        /\bfor\s*\([^)]*\)\s*\{[^}]*lightness[^}]*bisect/i.test(useTone) ||
-        /0\.2126\s*\*/.test(useTone); // the WCAG luminance coefficient — a re-roll tell
+        /function\s+(relativeLuminance|contrastRatio|luminance|wcagContrast)\b/.test(handRollScan2) ||
+        /\bwhile\s*\([^)]*contrast/i.test(handRollScan2) ||
+        /\bfor\s*\([^)]*\)\s*\{[^}]*lightness[^}]*bisect/i.test(handRollScan2) ||
+        /0\.2126\s*\*/.test(handRollScan2); // the WCAG luminance coefficient — a re-roll tell
     const reExported = /export\s*\{[^}]*\buseAccentTone\b/.test(colorIndex);
-    facts.a2 = { importsSafeAccent, handRoll, reExported };
+    facts.a2 = { importsSafeAccent, shellValueJsFree, handRoll, reExported };
     if (!importsSafeAccent)
-        violations.push("A2: useAccentTone does not import `safeAccentColor` from @mkbabb/value.js");
+        violations.push("A2: the accent-tone-solve leaf does not import `safeAccentColor` from @mkbabb/value.js (the value.js ink solve must live in the dynamic leaf)");
+    if (!shellValueJsFree)
+        violations.push("A2: the useAccentTone shell statically imports `@mkbabb/value.js` — the quarantine broke (the value.js math must ride the dynamic `import('./accent-tone-solve')` boundary so the eager /chip chunk stays value.js-free)");
     if (handRoll)
-        violations.push("A2: useAccentTone hand-rolls a contrast/lightness solve (re-roll the value.js color core — proof:single-color-core)");
+        violations.push("A2: the accent-tone register hand-rolls a contrast/lightness solve (re-roll the value.js color core — proof:single-color-core)");
     if (!reExported)
         violations.push("A2: useAccentTone is not re-exported from the /color leaf (composables/color/index.ts)");
 
     // ── A3 — the N-pastes collapse (the ToggleChip hand-roll retired) ──
-    //   BD.W-CHIP-CONGRUENT-GLASS — the toggle-chip collapsed onto the shared chip
-    //   family recipe: `index.ts` RE-POINTS onto `chipVariants` (which composes the
+    //   BD.W-CHIP-CONGRUENT-GLASS + BI.W-CHIP-FOLD — the chip family collapsed onto the
+    //   ONE `<Chip>` over the shared `chipVariants` recipe (which composes the
     //   `.accent-tone` register: `"glass-chip glass-capsule glass-capsule-hover
     //   accent-tone"`), and the `data-state="on"` band flood (the `--accent-band` event)
     //   lives in `glass/glass-chip.css` (no class-binding at the call site). So the
-    //   re-point is now THROUGH chipVariants + the css band, not an inline string in
-    //   index.ts. A3 follows the composition: no hand-roll literal survives anywhere in
-    //   the chip family, the recipe composes `.accent-tone`, and the `--accent-band`
-    //   event is wired (the register is the SOLE active-fill source — no `--primary` fork).
+    //   composition is THROUGH chipVariants + the css band, not an inline string in the
+    //   SFC. A3 follows the composition: no hand-roll literal survives anywhere in the
+    //   chip family, `<Chip>` composes `.accent-tone` via chipVariants(), and the
+    //   `--accent-band` event is wired (the register is the SOLE active-fill source — no
+    //   `--primary` fork).
     const chipVariants = sources.chipVariants ?? "";
     const glassChipCss = sources.glassChipCss ?? "";
-    const handRollScan = `${toggle}\n${chipVariants}`;
+    const handRollScan = `${chip}\n${chipVariants}`;
     const tonalHandRoll = (handRollScan.match(/data-\[state=on\]:bg-\[color-mix/g) || []).length;
     const primaryColorMix = (handRollScan.match(/color-mix\(in_srgb,var\(--primary\)/g) || []).length;
-    const composesAccentTone = /chipVariants\s*\(/.test(toggle) && /accent-tone/.test(chipVariants);
+    const composesAccentTone = /chipVariants\s*\(/.test(chip) && /accent-tone/.test(chipVariants);
     const bandEventWired = /--accent-band\b/.test(glassChipCss) && /data-state=["']?on/.test(glassChipCss);
     const pointsAtRegister = composesAccentTone && bandEventWired;
     facts.a3 = { tonalHandRoll, primaryColorMix, pointsAtRegister, composesAccentTone, bandEventWired };
@@ -278,7 +297,7 @@ export function detectAccentTone(sources) {
     if (primaryColorMix > 0)
         violations.push(`A3: ${primaryColorMix} per-state \`color-mix(…--primary…)\` literal(s) survive in the chip family`);
     if (!composesAccentTone)
-        violations.push("A3: toggle-chip does not re-point onto the shared chipVariants `.accent-tone` register (the chip-family congruence broke)");
+        violations.push("A3: <Chip> does not compose the shared chipVariants `.accent-tone` register (the chip-family congruence broke)");
     if (!bandEventWired)
         violations.push("A3: the `--accent-band` data-state=on active-fill event is not wired in glass/glass-chip.css (the register's selected flood)");
 
@@ -340,20 +359,21 @@ export function detectAccentTone(sources) {
             violations.push(`A5: --section-color-5 (dark) is ${amberDarkCt.toFixed(2)}:1 vs the card — below the AA bar`);
     }
 
-    // ── A6 — the colocation dir + subpath + api publication ──
-    const dirFiles = sources.selectableDirFiles ?? [];
-    const needFiles = ["SelectableChip.vue", "chipVariants.ts", "index.ts", "README.md"];
+    // ── A6 — the colocation dir + subpath + api publication (BI.W-CHIP-FOLD: the
+    //    survivor chip/ dir replaces the retired selectable-chip/ + toggle-chip/) ──
+    const dirFiles = sources.chipDirFiles ?? [];
+    const needFiles = ["Chip.vue", "chipVariants.ts", "index.ts", "README.md"];
     const missingDirFiles = needFiles.filter((f) => !dirFiles.includes(f));
-    const barrelPublishes = /SelectableChip/.test(barrel) && /chipVariants/.test(barrel);
+    const barrelPublishes = /\bChip\b/.test(barrel) && /chipVariants/.test(barrel);
     const apiPublishes =
         /\bChipVariants\b/.test(api) && /UseAccentToneOptions/.test(api) && /UseAccentToneReturn/.test(api);
     facts.a6 = { dirFiles, missingDirFiles, barrelPublishes, apiPublishes };
     if (missingDirFiles.length)
-        violations.push(`A6: the selectable-chip colocation dir is missing file(s): ${missingDirFiles.join(", ")}`);
+        violations.push(`A6: the chip colocation dir is missing file(s): ${missingDirFiles.join(", ")}`);
     if (!barrelPublishes)
-        violations.push("A6: src/components/custom/selectable-chip/index.ts does not publish SelectableChip + chipVariants");
+        violations.push("A6: src/components/custom/chip/index.ts does not publish Chip + chipVariants");
     if (!apiPublishes)
-        violations.push("A6: /api does not publish SelectableChipVariants + UseAccentToneOptions/Return");
+        violations.push("A6: /api does not publish ChipVariants + UseAccentToneOptions/Return");
 
     return { facts, violations };
 }
@@ -369,16 +389,17 @@ function selfTest() {
   --accent-edge: color-mix(in oklab, transparent, var(--tone) 55%);
   --accent-ink: var(--accent-ink-resolved, var(--foreground));
 }`,
-        useAccentTone: `import { safeAccentColor } from "@mkbabb/value.js";\nexport function useAccentTone(){}`,
+        useAccentTone: `export function useAccentTone(){\n  void import("./accent-tone-solve");\n}`,
+        accentToneSolve: `import { safeAccentColor } from "@mkbabb/value.js";\nexport function solveAccentInk(){}`,
         colorIndex: `export { useAccentTone } from "./useAccentTone";`,
-        toggleChip: `import { chipVariants } from "../selectable-chip/chipVariants";\nexport const toggleChipVariants = cva("", { variants: { variant: { chip: chipVariants({ size: "md" }) } } });`,
+        chip: `import { chipVariants } from "./chipVariants";\nconst c = chipVariants({ size: "md", shape: "cell" });`,
         chipVariants: `export const chipVariants = cva("glass-chip glass-capsule glass-capsule-hover accent-tone", { variants: {} });`,
         glassChipCss: `.glass-chip[data-state="on"] { --accent-band: color-mix(in oklab, var(--surface), var(--tone) 18%); }`,
         apiIndex: `export type { ChipVariants, UseAccentToneOptions, UseAccentToneReturn } from "x";`,
-        barrel: `export { default as SelectableChip } from "./SelectableChip.vue";\nexport { chipVariants, type ChipVariants } from "./chipVariants";`,
+        barrel: `export { default as Chip } from "./Chip.vue";\nexport { chipVariants, type ChipVariants } from "./chipVariants";`,
         colorRadius: `--section-color-5:  oklch(0.530 0.124 69.6);`,
         darkArm: `--section-color-5:  oklch(0.813 0.109 78.2);`,
-        selectableDirFiles: ["SelectableChip.vue", "chipVariants.ts", "index.ts", "README.md"],
+        chipDirFiles: ["Chip.vue", "chipVariants.ts", "index.ts", "README.md"],
     };
     const clean = detectAccentTone(base);
     if (clean.violations.length) fails.push(`BASE should be clean, got: ${clean.violations.join(" | ")}`);
@@ -393,14 +414,17 @@ function selfTest() {
         accentCss: base.accentCss.replace("in oklab", "in srgb"), // first occurrence only
     });
     if (!a1b.violations.some((v) => v.includes("srgb"))) fails.push("A1 bite (in srgb) did not flag");
-    // A2 bite — hand-rolled contrast.
-    const a2 = detectAccentTone({ ...base, useAccentTone: base.useAccentTone + `\nconst l = 0.2126 * r + 0.7152 * g;` });
+    // A2 bite — hand-rolled contrast in the solve leaf.
+    const a2 = detectAccentTone({ ...base, accentToneSolve: base.accentToneSolve + `\nconst l = 0.2126 * r + 0.7152 * g;` });
     if (!a2.violations.some((v) => v.startsWith("A2"))) fails.push("A2 bite (hand-rolled luminance) did not flag");
-    // A2 bite — missing import.
-    const a2b = detectAccentTone({ ...base, useAccentTone: `export function useAccentTone(){}` });
-    if (!a2b.violations.some((v) => v.includes("safeAccentColor"))) fails.push("A2 bite (no value.js import) did not flag");
-    // A3 bite — re-paste the active-fill hand-roll.
-    const a3 = detectAccentTone({ ...base, toggleChip: base.toggleChip + `\n"data-[state=on]:bg-[color-mix(in_srgb,var(--primary)_18%,transparent)]"` });
+    // A2 bite — the leaf drops the value.js safeAccentColor import.
+    const a2b = detectAccentTone({ ...base, accentToneSolve: `export function solveAccentInk(){}` });
+    if (!a2b.violations.some((v) => v.includes("safeAccentColor"))) fails.push("A2 bite (no value.js import in leaf) did not flag");
+    // A2 bite — the QUARANTINE breaks: a static value.js edge back in the sync shell.
+    const a2c = detectAccentTone({ ...base, useAccentTone: base.useAccentTone + `\nimport { safeAccentColor } from "@mkbabb/value.js";` });
+    if (!a2c.violations.some((v) => v.includes("quarantine"))) fails.push("A2 bite (shell re-drags value.js / quarantine) did not flag");
+    // A3 bite — re-paste the active-fill hand-roll into the chip SFC.
+    const a3 = detectAccentTone({ ...base, chip: base.chip + `\n"data-[state=on]:bg-[color-mix(in_srgb,var(--primary)_18%,transparent)]"` });
     if (!a3.violations.some((v) => v.startsWith("A3"))) fails.push("A3 bite (re-pasted hand-roll) did not flag");
     // A4 bite — 1% strength.
     const a4 = detectAccentTone({ ...base, accentCss: base.accentCss.replace("--accent-fill-strength: 8%", "--accent-fill-strength: 1%") });
@@ -409,7 +433,7 @@ function selfTest() {
     const a5 = detectAccentTone({ ...base, colorRadius: `--section-color-5:  oklch(0.92 0.05 90);` });
     if (!a5.violations.some((v) => v.startsWith("A5"))) fails.push("A5 bite (below-AA amber) did not flag");
     // A6 bite — missing README.
-    const a6 = detectAccentTone({ ...base, selectableDirFiles: ["SelectableChip.vue", "chipVariants.ts", "index.ts"] });
+    const a6 = detectAccentTone({ ...base, chipDirFiles: ["Chip.vue", "chipVariants.ts", "index.ts"] });
     if (!a6.violations.some((v) => v.startsWith("A6"))) fails.push("A6 bite (missing README) did not flag");
 
     return fails;
@@ -417,21 +441,22 @@ function selfTest() {
 
 function run() {
     const p = cliPaths();
-    const dirFiles = existsSync(p.SELECTABLE_DIR)
-        ? readdirSync(p.SELECTABLE_DIR).filter((n) => statSync(resolve(p.SELECTABLE_DIR, n)).isFile())
+    const dirFiles = existsSync(p.CHIP_DIR)
+        ? readdirSync(p.CHIP_DIR).filter((n) => statSync(resolve(p.CHIP_DIR, n)).isFile())
         : [];
     const sources = {
         accentCss: stripBlockComments(safeRead(p.ACCENT_CSS)),
         useAccentTone: stripBlockComments(safeRead(p.USE_ACCENT_TONE)),
+        accentToneSolve: stripBlockComments(safeRead(p.ACCENT_TONE_SOLVE)),
         colorIndex: stripBlockComments(safeRead(p.COLOR_INDEX)),
-        toggleChip: stripBlockComments(safeRead(p.TOGGLE_CHIP)),
+        chip: stripBlockComments(safeRead(p.CHIP_VUE)),
         chipVariants: stripBlockComments(safeRead(p.CHIP_VARIANTS)),
         glassChipCss: stripBlockComments(safeRead(p.GLASS_CHIP_CSS)),
         apiIndex: stripBlockComments(safeRead(p.API_INDEX)),
-        barrel: stripBlockComments(safeRead(p.SELECTABLE_BARREL)),
+        barrel: stripBlockComments(safeRead(p.CHIP_BARREL)),
         colorRadius: stripBlockComments(safeRead(p.COLOR_RADIUS)),
         darkArm: stripBlockComments(safeRead(p.DARK_ARM)),
-        selectableDirFiles: dirFiles,
+        chipDirFiles: dirFiles,
     };
 
     const { facts, violations } = detectAccentTone(sources);
@@ -449,7 +474,7 @@ function run() {
 
     console.log("proof:accent-tone — the contrast-floored 3-channel tonal-accent register (BC.W-ACCENT-TONE)");
     console.log(`  A1 register (4 channels, in oklab): ${facts.a1.hasRecipe && facts.a1.missingChannels.length === 0 && facts.a1.usesOklab && !facts.a1.wrongSpace ? "✓" : "✗"}`);
-    console.log(`  A2 ink composes value.js, no re-roll: ${facts.a2.importsSafeAccent && !facts.a2.handRoll && facts.a2.reExported ? "✓" : "✗"}`);
+    console.log(`  A2 ink solve value.js-quarantined, no re-roll (leaf bears value.js${facts.a2.shellValueJsFree ? ", shell free" : ", SHELL LEAKS"}): ${facts.a2.importsSafeAccent && facts.a2.shellValueJsFree && !facts.a2.handRoll && facts.a2.reExported ? "✓" : "✗"}`);
     console.log(`  A3 N-pastes collapsed (hand-roll=${facts.a3.tonalHandRoll}): ${facts.a3.tonalHandRoll === 0 && facts.a3.pointsAtRegister ? "✓" : "✗"}`);
     console.log(`  A4 idle floor (${(facts.a4.fillStrength * 100).toFixed(0)}% → ${facts.a4.defaultFloorJnd} JND ≥ ${facts.a4.floorBarJnd}; 1%=${facts.a4.planted1pctJnd} JND): ${facts.a4.defaultFloorJnd >= IDLE_FLOOR_JND && facts.a4.planted1pctJnd < IDLE_FLOOR_JND ? "✓" : "✗"}`);
     console.log(`  A5 amber ≥AA (light ${facts.a5.amberLightVsCard}:1 / dark ${facts.a5.amberDarkVsCard}:1; HEAD light was 3.49:1 → lifted): ${facts.a5.amberLightVsCard >= 4.5 && facts.a5.amberDarkVsCard >= 4.5 ? "✓" : "✗"}`);

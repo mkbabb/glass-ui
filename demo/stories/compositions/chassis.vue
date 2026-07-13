@@ -72,7 +72,7 @@ const cellVariant = (id: string | number) =>
             <div class="flex flex-wrap items-center gap-3">
                 <Button>Default</Button>
                 <Button variant="primary-audacious">Primary</Button>
-                <Badge variant="success">shipped</Badge>
+                <Badge tone="success">shipped</Badge>
             </div>
         </DemoSpecimen>
 

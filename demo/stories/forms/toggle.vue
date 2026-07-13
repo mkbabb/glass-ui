@@ -6,7 +6,7 @@ import FamilyTabs, { type FamilyMember } from "../../chassis/family/FamilyTabs.v
 import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, ToggleRight } from "@lucide/vue";
 import { Toggle } from "@glass/components/ui/toggle";
 import { ToggleGroup, ToggleGroupItem } from "@glass/components/ui/toggle-group";
-import { ToggleChip } from "@glass/components/custom/toggle-chip";
+import { Chip } from "@glass/components/custom/chip";
 import { IconChip } from "@glass/components/custom/icon-chip";
 // BC.W-SUFFUSE-reconcile — the forms band's ONE coherent --section-color-3 teal
 // identity (the cool stop). PH3-safe (inline borderLeft, not the
@@ -114,21 +114,21 @@ const cell = ref<string>("warm");
             <p class="text-mono-caption text-muted-foreground">align · {{ align }}</p>
         </section>
 
-        <!-- ToggleChip: chip variant. -->
+        <!-- Chip: pill shape. -->
         <section class="flex flex-col gap-3" data-testid="toggle-chip-chip-section">
-            <p class="section-label">toggle-chip · chip variant</p>
+            <p class="section-label">chip · pill shape</p>
             <div class="flex flex-wrap items-center gap-2">
-                <ToggleChip
+                <Chip
                     v-for="key in filterKeys"
                     :key="key"
                     v-model="filters[key]"
-                    variant="chip"
+                    shape="pill"
                     :aria-label="`Toggle ${key} filter`"
                     :data-testid="`toggle-chip-chip-${key}`"
                     data-toggle-chip-variant="chip"
                 >
                     {{ key }}
-                </ToggleChip>
+                </Chip>
             </div>
             <p
                 class="text-mono-caption text-muted-foreground"
@@ -138,15 +138,15 @@ const cell = ref<string>("warm");
             </p>
         </section>
 
-        <!-- ToggleChip: cell variant — icon + label. -->
+        <!-- Chip: cell shape — icon + label. -->
         <section class="flex flex-col gap-3" data-testid="toggle-chip-cell-section">
-            <p class="section-label">toggle-chip · cell variant</p>
+            <p class="section-label">chip · cell shape</p>
             <div class="flex flex-wrap items-stretch gap-3">
-                <ToggleChip
+                <Chip
                     v-for="opt in ['warm', 'cool', 'mono'] as const"
                     :key="opt"
                     :model-value="cell === opt"
-                    variant="cell"
+                    shape="cell"
                     class="w-24"
                     :aria-label="`Select ${opt} palette`"
                     :data-testid="`toggle-chip-cell-${opt}`"
@@ -155,7 +155,7 @@ const cell = ref<string>("warm");
                 >
                     <span class="h-6 w-6 rounded-full bg-viz-fourier" />
                     <span class="capitalize">{{ opt }}</span>
-                </ToggleChip>
+                </Chip>
             </div>
             <p
                 class="text-mono-caption text-muted-foreground"

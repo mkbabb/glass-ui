@@ -1,12 +1,12 @@
 <script setup lang="ts">
-// ToggleChip — chip vs cell variants over a reka-ui Toggle root.
+// Chip — pill vs cell shapes over a reka-ui Toggle root (the folded <Chip>, BI.W-CHIP-FOLD).
 // Deliberately unopinionated about exclusive vs multi selection; consumers
 // wire `model-value` / `@update:model-value` (or `v-model`) directly.
 import { ref, computed } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
-import { ToggleChip } from "@glass/subpaths/toggle-chip";
+import { Chip } from "@glass/components/custom/chip";
 import { IconChip } from "@glass/components/custom/icon-chip";
 import { Triangle, Square, Circle, Hexagon, CircleDot } from "@lucide/vue";
 // BC.W-SUFFUSE-reconcile — the forms band's ONE coherent --section-color-3 teal
@@ -57,39 +57,39 @@ const cells = [
         </header>
 
         <StorySection
-            label="variant=chip — multi-select"
+            label="shape=pill — multi-select"
             blurb="Inline horizontal selectors. Each chip carries `aria-pressed` from the reka-ui Toggle root; consumers manage their own selection model."
         >
             <ShowcaseFrame pad="lg">
                 <div class="flex flex-wrap gap-2">
-                    <ToggleChip
+                    <Chip
                         v-for="key in Object.keys(tags)"
                         :key="key"
                         v-model="tags[key]"
-                        variant="chip"
+                        shape="pill"
                     >
                         {{ key }}
-                    </ToggleChip>
+                    </Chip>
                 </div>
             </ShowcaseFrame>
         </StorySection>
 
         <StorySection
-            label="variant=cell — exclusive selection (no ToggleGroup)"
+            label="shape=cell — exclusive selection (no ToggleGroup)"
             blurb="Square cards stacking icon + label. Exclusive selection composes via direct refs — the primitive is deliberately unopinionated about ToggleGroup."
         >
             <ShowcaseFrame pad="lg">
                 <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                    <ToggleChip
+                    <Chip
                         v-for="cell in cells"
                         :key="cell.value"
                         :model-value="pose === cell.value"
-                        variant="cell"
+                        shape="cell"
                         @update:model-value="() => pickPose(cell.value)"
                     >
                         <component :is="cell.icon" class="size-icon-md" />
                         <span>{{ cell.label }}</span>
-                    </ToggleChip>
+                    </Chip>
                 </div>
                 <p class="text-mono-caption text-muted-foreground">
                     selected: <code class="fira-code">{{ pose ?? "(none)" }}</code>

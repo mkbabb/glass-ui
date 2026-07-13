@@ -1,16 +1,17 @@
 import { type VariantProps, cva } from "class-variance-authority";
 
 /**
- * chipVariants — the ONE congruent chip recipe (BD.W-CHIP-CONGRUENT-GLASS).
+ * chipVariants — the ONE congruent chip recipe (BI.W-CHIP-FOLD; BD.W-CHIP-CONGRUENT-GLASS).
  *
- * The chip family (ToggleChip · SelectableChip + the toggle-group children)
- * collapses to ONE `chipVariants({ size })`: a stadium-pill warm-glass LENS that
- * PUNCHES when you pick it. Survival of the fittest — the SelectableChip size axis
- * (`sm`/`md`/`lg`) + the `ToggleChip` `chip`/`cell` axis collapse here (clean
- * break, no alias — the no-legacy law; the `selectableChipVariants`/
- * `SelectableChipVariants` re-point shim was SWEPT at BG.W-DEAD-SWEEP, every
- * consumer reads `chipVariants`/`ChipVariants` directly). The three SFCs stay
- * DISTINCT (bool toggle vs tonal picker vs glyph tile) but render the SAME register.
+ * The chip family (the retired ToggleChip + SelectableChip + the toggle-group
+ * children) is FOLDED onto ONE `<Chip shape × tone>`: a stadium-pill warm-glass
+ * LENS that PUNCHES when you pick it. The Kronecker factorization (BI.W-CHIP-FOLD)
+ * observed that ToggleChip's `variant` (`chip`/`cell`) was a pure NAME-SYNONYM of
+ * SelectableChip's `shape` (`pill`/`cell`) over the SAME CVA — so the two surfaces
+ * merge compile-time onto this ONE recipe (clean break, no alias — the no-legacy
+ * law; the `selectableChipVariants`/`SelectableChipVariants` shim was SWEPT at
+ * BG.W-DEAD-SWEEP). The tonal-accent register (`tone`) is a per-instance style
+ * layered ON this recipe by `Chip.vue`, not a CVA axis.
  *
  * The recipe is STRUCTURE + the shared-register hooks: it COMPOSES the read-only
  * shared registers, never re-forks a parallel glass/cartoon/motion system —
@@ -34,7 +35,7 @@ import { type VariantProps, cva } from "class-variance-authority";
  * NO scale CVA — the ONE `scale` write lives on `.glass-chip` (hover/press/punch
  * folded into a single source of truth; a CVA `hover:scale-*` would collide).
  * The CVA carries no `color-mix(…--primary…)` literal — the tonal COLOUR is the
- * `.accent-tone` register's.
+ * `.accent-tone` register's (driven by the `tone` prop's per-instance style).
  */
 export const chipVariants = cva(
     [
@@ -59,12 +60,14 @@ export const chipVariants = cva(
                 lg: "inline-flex items-center justify-center gap-2 px-5 py-2 text-base",
             },
             /**
-             * The SHAPE axis (BH.W-SIZE-UNIFY) — a silhouette word is NEVER a scale
-             * rung (the axes.ts sub-range law). `pill` (default) is the stadium
-             * capsule; `cell` is the square icon+label TILE (a card, not a pill):
-             * `.glass-chip--cell` re-points the silhouette to `--radius-card`, the
-             * material + motion stay the shared register. Composed WITH `size`; the
-             * cell geometry overrides the inline-flex pill padding at the element.
+             * The SHAPE axis (BI.W-CHIP-FOLD; BH.W-SIZE-UNIFY) — a silhouette word
+             * is NEVER a scale rung (the axes.ts sub-range law). `pill` (default)
+             * is the stadium capsule (the retired ToggleChip `variant="chip"`);
+             * `cell` is the square icon+label TILE (a card, not a pill — the retired
+             * `variant="cell"`): `.glass-chip--cell` re-points the silhouette to
+             * `--radius-card`, the material + motion stay the shared register.
+             * Composed WITH `size`; the cell geometry overrides the inline-flex pill
+             * padding at the element.
              */
             shape: {
                 pill: "",

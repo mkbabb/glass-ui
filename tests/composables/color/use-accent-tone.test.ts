@@ -4,7 +4,7 @@
 // contrast target. This test proves the contrast-safe CONTRACT holds for N synthetic
 // tones in BOTH modes — the load-bearing invariant fourier asked for.
 
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { useAccentTone } from "@glass/composables/color";
 import {
     parseCSSColor,
@@ -56,6 +56,17 @@ function rgbOfInk(ink: string): [number, number, number] {
 const LIGHT_CARD = "hsl(36 48% 97%)";
 const DARK_CARD = "hsl(24 8% 16%)";
 
+// BI.W-CHIP-FOLD carved the ink SOLVE behind a dynamic import (the value.js
+// quarantine — the eager /chip chunk stays value.js-free): `ink` is the synchronous
+// interim "" until the solve leaf loads and the reactive counter bumps. The contract
+// tests await that settle; the CONTRACT itself (contrast-safe ink) is unchanged.
+async function settledInk(get: () => string): Promise<string> {
+    await vi.waitFor(() => {
+        if (get() === "") throw new Error("ink not yet resolved");
+    });
+    return get();
+}
+
 // N synthetic tones spanning the wheel + the L axis (chromatic + near-ink).
 const TONES = [
     "oklch(0.532 0.180 317.5)", // violet
@@ -80,29 +91,33 @@ describe("useAccentTone — the contrast-safe ink contract", () => {
         expect(toneStyle.value["--accent-ink-resolved"]).toBeUndefined();
     });
 
-    it("a concrete tone resolves an oklch() ink + emits the override", () => {
+    it("a concrete tone resolves an oklch() ink + emits the override", async () => {
         const { ink, toneStyle } = useAccentTone(() => "oklch(0.532 0.180 317.5)");
+        await settledInk(() => ink.value);
         expect(ink.value).toMatch(/^oklch\(/);
         expect(toneStyle.value["--accent-ink-resolved"]).toBe(ink.value);
     });
 
-    it("over the LIGHT card: the band is light, so the ink resolves DARK", () => {
+    it("over the LIGHT card: the band is light, so the ink resolves DARK", async () => {
         const { ink } = useAccentTone(() => "oklch(0.35 0.15 264)", { surface: LIGHT_CARD });
+        await settledInk(() => ink.value);
         const inkLab = labOfCss(`oklch(${ink.value.match(/oklch\(([\d.]+)/)![1]} 0 0)`);
         // dark ink over the light band — ink L well below the band L.
         expect(inkLab[0]).toBeLessThan(0.6);
     });
 
-    it("over the DARK card: the band is dark, so the ink resolves LIGHT", () => {
+    it("over the DARK card: the band is dark, so the ink resolves LIGHT", async () => {
         const { ink } = useAccentTone(() => "oklch(0.739 0.134 318.1)", { surface: DARK_CARD });
+        await settledInk(() => ink.value);
         const inkL = Number(ink.value.match(/oklch\(([\d.]+)/)![1]);
         expect(inkL).toBeGreaterThan(0.6);
     });
 
-    it("the resolved ink ALWAYS clears 4.5:1 over the band — every tone, both modes", () => {
+    it("the resolved ink ALWAYS clears 4.5:1 over the band — every tone, both modes", async () => {
         for (const surface of [LIGHT_CARD, DARK_CARD]) {
             for (const tone of TONES) {
                 const { ink } = useAccentTone(() => tone, { surface });
+                await settledInk(() => ink.value);
                 const ratio = wcag(rgbOfInk(ink.value), bandRgb(surface, tone));
                 expect(
                     ratio,
@@ -112,10 +127,12 @@ describe("useAccentTone — the contrast-safe ink contract", () => {
         }
     });
 
-    it("a tighter inkContrast target is honored (the ink lifts further)", () => {
+    it("a tighter inkContrast target is honored (the ink lifts further)", async () => {
         const tone = "oklch(0.55 0.2 30)";
         const loose = useAccentTone(() => tone, { surface: LIGHT_CARD, inkContrast: 4.5 });
         const tight = useAccentTone(() => tone, { surface: LIGHT_CARD, inkContrast: 7 });
+        await settledInk(() => loose.ink.value);
+        await settledInk(() => tight.ink.value);
         const looseRatio = wcag(rgbOfInk(loose.ink.value), bandRgb(LIGHT_CARD, tone));
         const tightRatio = wcag(rgbOfInk(tight.ink.value), bandRgb(LIGHT_CARD, tone));
         expect(tightRatio).toBeGreaterThan(looseRatio);

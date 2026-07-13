@@ -1,14 +1,15 @@
 <script setup lang="ts">
-// SelectableChip — the BC.W-ACCENT-TONE tonal-accent register's component face.
-// A tag/filter chip row reading a DISTINCT `:tone` per chip: idle-legible at rest
-// (the floored --accent-fill ≥3:1, NOT the HEAD whisper) + active-bold when
-// selected (the --accent-band + --accent-edge rim + the contrast-safe --accent-ink
-// label). Every chip is the SAME coherent tonal language; only the --tone differs.
+// Chip · tone — the folded <Chip>'s tonal-accent register (BC.W-ACCENT-TONE face,
+// BI.W-CHIP-FOLD). A tag/filter chip row reading a DISTINCT `:tone` per chip:
+// idle-legible at rest (the floored --accent-fill ≥3:1, NOT the HEAD whisper) +
+// active-bold when selected (the --accent-band + --accent-edge rim + the contrast-safe
+// --accent-ink label). Every chip is the SAME coherent tonal language; only the --tone
+// differs. A `var()` tone stays value.js-free; a concrete tone loads the ink solve leaf.
 import { ref } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
-import { SelectableChip } from "@glass/subpaths/selectable-chip";
+import { Chip } from "@glass/components/custom/chip";
 
 
 
@@ -45,14 +46,14 @@ function pick(v: string) {
         >
             <ShowcaseFrame pad="lg">
                 <div class="flex flex-wrap gap-2">
-                    <SelectableChip
+                    <Chip
                         v-for="tag in tags"
                         :key="tag.label"
                         v-model="tag.on"
                         :tone="tag.tone"
                     >
                         {{ tag.label }}
-                    </SelectableChip>
+                    </Chip>
                 </div>
             </ShowcaseFrame>
         </StorySection>
@@ -63,7 +64,7 @@ function pick(v: string) {
         >
             <ShowcaseFrame pad="lg">
                 <div class="flex flex-wrap gap-2">
-                    <SelectableChip
+                    <Chip
                         v-for="f in filters"
                         :key="f.value"
                         :model-value="filter === f.value"
@@ -71,7 +72,7 @@ function pick(v: string) {
                         @update:model-value="() => pick(f.value)"
                     >
                         {{ f.label }}
-                    </SelectableChip>
+                    </Chip>
                 </div>
                 <p class="text-mono-caption text-muted-foreground">
                     selected: <code class="fira-code">{{ filter ?? "(none)" }}</code>
