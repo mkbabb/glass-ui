@@ -402,6 +402,23 @@
     will-change: translate, scale;
 }
 
+/* ── BI.W-SHADOW-GRAMMAR (Law 4) — the offset-stamp requires a CARD silhouette ──
+   The hard 0-blur `--shadow-cartoon-*` offset stamp is a card-silhouette grammar: on
+   a CARD it tucks under the corner radius, but on a CAPSULE/PILL host the hard
+   directional stamp pokes off the stadium along the bottom-left arc = the lopsided
+   crescent (UF-A8/A9 — the loud `primary-audacious`/`gold-audacious` `-audacious`
+   CTAs, ss-08/ss-26). So the `.btn-punch` pill cast RE-POINTS the inert child's stamp
+   to a SOFT radius-following drop (`--shadow-lg`): the punch WEIGHT re-lands on the
+   soft drop + the press-squish + the specular gleam (the BD.W-CARTOON-PUNCH weight
+   SURVIVES — the ratified judgment), WITHOUT the hard offset crescent. The cast still
+   TRAVELS down-left on press (`--cartoon-press-t` drives translate/scale over the soft
+   drop) — the caster punch, minus the crescent. The hard offset stamp stays legal ONLY
+   under a card-radius ancestor (`.cartoon-surface`, the Card `surface="cartoon"`
+   register above). Law-4 GREEN condition of proof:geometry-grammar. */
+.btn-punch .cartoon-cast {
+    box-shadow: var(--shadow-lg);
+}
+
 /* BD.W-CARTOON-CASTER — PRM/PRT carve. Under reduced-motion `--motion-weight: 0`
    zeroes travel/spread/squash/lag in ONE assignment (every `calc(… * --motion-weight)`
    collapses to rest); the transition is killed. The static bold cel STAMP persists

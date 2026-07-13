@@ -43,10 +43,19 @@ interface Props extends PrimitiveProps {
   // overshoot follow-through), the reciprocal squish re-targets to a louder fenced
   // amplitude (maxStretch 1.04→1.09, composed-area ≤1.14), the glyph settles a beat
   // after the capsule (overlapping action, the BD.W-TABS-LIQUID register), and an
-  // INERT `.cartoon-cast` child carries the moving inked cel cast (the
-  // BD.W-CARTOON-CASTER caster — NEVER a button-local `::after` re-fork). Default-ON
-  // for the `primary-audacious`/`gold-audacious` hero register; opt-in elsewhere.
-  // The dock default stays CALM (no punch — a dock of punching icons is manic).
+  // INERT `.cartoon-cast` child carries the moving cast (the BD.W-CARTOON-CASTER
+  // caster — NEVER a button-local `::after` re-fork). Default-ON for the
+  // `primary-audacious`/`gold-audacious` hero register; opt-in elsewhere. The dock
+  // default stays CALM (no punch — a dock of punching icons is manic).
+  //
+  // BI.W-SHADOW-GRAMMAR (Law 4) — the offset-stamp requires a CARD silhouette. A
+  // button is a PILL, so the pill cast re-points to a SOFT radius-following drop
+  // (`--shadow-lg`, cards.css `.btn-punch .cartoon-cast`) instead of the hard 0-blur
+  // `--shadow-cartoon` offset stamp that pokes the lopsided crescent off the stadium
+  // (UF-A8/A9). The punch WEIGHT re-lands on the soft drop + the press-squish + the
+  // specular gleam (the ratified judgment — the weight survives, the crescent dies);
+  // the caster still travels down-left on press. The hard stamp stays legal only on a
+  // card-radius surface (Card `surface="cartoon"`).
   punch?: boolean
   // Element-specific <button> attributes forwarded to the rendered host. reka's
   // Primitive only types `as`/`as-child`, so these are spread through `$attrs`
@@ -92,15 +101,14 @@ const surfaceDecoration = computed(() => {
 // the press still FUNCTIONS (the scale arrives) with the squish physics off.
 //
 // BC.W-BUTTON-GLASS-IOS (move 3 / BG-IOS-3) — the iOS interactive press register.
-// The press reads `useSpringPress`'s DEFAULTS — the ONE source. The Apple
-// `interactiveSpring` (response 0.15 / ζ 0.86, the sub-100ms iOS press window with a
-// tiny alive overshoot) is BOOKED in the `press` SPRING_PRESETS row that BC.W-SPRING-
-// EASE owns + re-points the `useSpringPress` defaults onto (springPresets.ts +
-// useSpringPress.ts — OUT of this wave's footprint). Button stays consumer #1 of
+// The press reads `useSpringPress`'s DEFAULTS — the ONE source. The iOS interactive
+// tap physics SHIP in the `press` SPRING_PRESETS row (springPresets.ts, tuned at
+// BD.W-ANIM-IOS27-TUNE to response 0.2 / ζ 0.8 — the sub-200ms iOS press window with a
+// tiny alive rebound); `useSpringPress` reads them via `springPreset("press")` (the
+// row is LIVE, not booked — src:button-press-row is MET). Button stays consumer #1 of
 // `useSpringPress` (direct composition, `proof:button-glass` B2). NO button-local
 // magic-number spring (the W-GLASS-CAL spring fence) — the press physics live at the
-// ONE table, never a per-call literal. When SPRING-EASE lands the 0.15/0.86 row, the
-// press answers in the iOS window with zero edit here.
+// ONE table, never a per-call literal.
 // BD.W-BUTTON-GLASS-CONSUME (§4b) — `.btn-punch` is default-ON for the loud hero
 // register (`primary-audacious`/`gold-audacious`) + opt-in via the `punch` prop on
 // any variant. ONE source for both the class emission AND the louder squish cap (no
@@ -163,7 +171,10 @@ const pressStyle = computed<CSSProperties>(() => {
   // child travels DOWN-LEFT + spreads on press, scaled by `--motion-weight` (the
   // `.btn-punch` css sets `--motion-weight: 1` — the loud register). ONE press scalar
   // drives the squish, the gleam, AND the cast — no second press var. Only emitted on
-  // the punch register (the calm workhorse carries no cast).
+  // the punch register (the calm workhorse carries no cast). BI.W-SHADOW-GRAMMAR
+  // (Law 4) — on the pill the cast carries a SOFT radius-following drop (`--shadow-lg`)
+  // not the hard offset stamp, so the press travel moves a soft drop (the punch
+  // weight) rather than the crescent.
   if (punchActive.value) {
     ;(style as Record<string, string>)['--cartoon-press-t'] = t.toFixed(4)
   }
@@ -242,12 +253,16 @@ const liquidDecoration = computed(() =>
     @pointercancel="press.release"
     @pointerleave="press.release"
   >
-    <!-- BD.W-BUTTON-GLASS-CONSUME (§4b) — the INERT moving-cel cast child (the
+    <!-- BD.W-BUTTON-GLASS-CONSUME (§4b) — the INERT moving cast child (the
          BD.W-CARTOON-CASTER inert-child pattern: a real aria-hidden child, NEVER a
          `::before`/`::after` — both pseudos are OCCUPIED on the glass carrier by the
          specular catch-light + the grain overlay). The `.cartoon-cast` css (cards.css)
          reads `--motion-weight × --cartoon-press-t` and travels on the compositor. Only
-         rendered on the punch register; absent (zero DOM cost) otherwise. -->
+         rendered on the punch register; absent (zero DOM cost) otherwise.
+         BI.W-SHADOW-GRAMMAR (Law 4) — under the `.btn-punch` pill host the cast paints a
+         SOFT radius-following drop (`--shadow-lg`), NOT the hard `--shadow-cartoon`
+         offset stamp (which pokes the UF-A8/A9 crescent off the stadium); the hard
+         stamp is legal only under a card-radius ancestor. -->
     <span v-if="punchActive" class="cartoon-cast" aria-hidden="true" />
     <slot />
   </Primitive>
