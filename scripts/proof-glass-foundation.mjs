@@ -17,14 +17,19 @@
 //   A2 — the `--glass-fill-tint` / `--glass-fill-strength` per-instance PLATE-FILL
 //        axis is @property-registered (the typed no-op floor — transparent / 0%,
 //        the both-modes neutral identity) DISTINCT from the rim `--glass-accent`,
-//        and the composed sheet/clear bgs ride the mode-aware oklab-tint seam.
-//   A3 — `surface="clear"` is the 4th surface-axis member with its MANDATORY
-//        legibility scrim, and `--glass-opacity-clear` / `--glass-opacity-sheet`
-//        exist in the Apple-Clear / bottom-sheet bands.
+//        and the composed sheet bg rides the mode-aware oklab-tint seam.
+//   A3 — the `--glass-opacity-sheet` bottom-sheet rung exists in its band (strictly
+//        between the dialog and the overlay — the see-through bottom-sheet register).
+//
+// (BI.W-CLEAR-FOLD — the `surface="clear"` 4th member + its mandatory scrim + the
+// `--glass-opacity-clear`/`--glass-bg-clear` rungs were RETIRED as dead substrate
+// (0 consumers, J-inv-10). The A3 clear arm + the A2 `bgClearShared` sub-check +
+// the two clear self-test bites are STRUCTURALLY COUPLED to that member and die
+// WITH it — the coupled retirement (the scrim was coupled to the member; both go).
+// proof:surface-axis W9 is the successor member-consumption fence.)
 //
 // bite-check (the --self-test arm): a hand-rolled rgb→oklch in the observer reds A1;
-// a second getImageData/canvas reds A1; a non-neutral fill-tint default reds A2; a
-// `clear` member with no scrim reds A3; an opaque clear (α ≥ dialog 0.68) reds A3.
+// a second getImageData/canvas reds A1; a non-neutral fill-tint default reds A2.
 
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -236,13 +241,13 @@ function detectFillTint() {
         );
     }
 
-    // the composed sheet/clear bgs ride the SHARED mode-aware oklab-tint recipe (so
-    // the W55 darken + the dark-arm companions reach them per-mode — the both-modes
-    // arm, no second hand-rolled recipe). Byte-isomorphic to `--glass-bg-dialog`.
-    // byte-isomorphic to `--glass-bg-dialog`: `color-mix(in oklab, color-mix(in srgb,
-    // var(--card) … var(--glass-opacity-<name>) …), var(--glass-tint-source)
-    // var(--glass-tint-strength))`. Match the OKLAB outer + the SRGB inner + the
-    // per-name opacity token + the W55 tint cohort tail (order-faithful, nest-tolerant).
+    // the composed sheet bg rides the SHARED mode-aware oklab-tint recipe (so the W55
+    // darken + the dark-arm companions reach it per-mode — the both-modes arm, no
+    // second hand-rolled recipe). Byte-isomorphic to `--glass-bg-dialog`: `color-mix(in
+    // oklab, color-mix(in srgb, var(--card) … var(--glass-opacity-<name>) …),
+    // var(--glass-tint-source) var(--glass-tint-strength))`. Match the OKLAB outer + the
+    // SRGB inner + the per-name opacity token + the W55 tint cohort tail (order-faithful,
+    // nest-tolerant). (BI.W-CLEAR-FOLD — the `clear` bg sub-check died with the member.)
     const bgShape = (name) => {
         const re = new RegExp(
             `--glass-bg-${name}:\\s*color-mix\\(in oklab,\\s*color-mix\\(in srgb,\\s*var\\(--card\\)[^;]*var\\(--glass-opacity-${name}\\)[^;]*var\\(--glass-tint-source\\)\\s*var\\(--glass-tint-strength\\)[^;]*;`,
@@ -250,123 +255,41 @@ function detectFillTint() {
         return re.test(tokensSquished);
     };
     facts.bgSheetShared = bgShape("sheet");
-    facts.bgClearShared = bgShape("clear");
     if (!facts.bgSheetShared) {
         violations.push(
             "A2: `--glass-bg-sheet` does not ride the shared oklab-tint recipe (it must be byte-isomorphic to `--glass-bg-dialog`, only the opacity token differing — the mode-aware seam)",
-        );
-    }
-    if (!facts.bgClearShared) {
-        violations.push(
-            "A2: `--glass-bg-clear` does not ride the shared oklab-tint recipe (byte-isomorphic to `--glass-bg-dialog` — the mode-aware seam)",
         );
     }
 
     return { violations, facts };
 }
 
-// ── A3: surface="clear" 4th member + mandatory scrim + opacity rungs ─────────
-function detectClearSheet() {
+// ── A3: the --glass-opacity-sheet bottom-sheet rung ──────────────────────────
+// (BI.W-CLEAR-FOLD — the `surface="clear"` 4th member + its mandatory scrim + the
+// `--glass-opacity-clear` rung + the `--glass-bg-clear` fill were RETIRED as dead
+// substrate (0 consumers, J-inv-10). The clear alpha / union / mapping / scrim
+// assertions were STRUCTURALLY COUPLED to that member and die WITH it — the coupled
+// retirement. proof:surface-axis W9 is the successor member-consumption fence. Only
+// the SHEET rung survives here — it is a live surviving surface.)
+function detectSheetRung() {
     const violations = [];
     const facts = {};
 
     const tokens = stripCss(readMonolith(ROOT, "tokens"));
-    const glass = stripCss(readMonolith(ROOT, "glass"));
-    const glassSquished = squish(glass);
 
-    // the opacity rungs exist in their bands.
-    const clearM = /--glass-opacity-clear:\s*([\d.]+)/.exec(tokens);
+    // the sheet opacity rung exists in its band (strictly between dialog and overlay).
     const sheetM = /--glass-opacity-sheet:\s*([\d.]+)/.exec(tokens);
     const dialogM = /--glass-opacity-dialog:\s*([\d.]+)/.exec(tokens);
     const overlayM = /--glass-opacity-overlay:\s*([\d.]+)/.exec(tokens);
-    facts.clearAlpha = clearM ? Number(clearM[1]) : null;
     facts.sheetAlpha = sheetM ? Number(sheetM[1]) : null;
     const DIALOG = dialogM ? Number(dialogM[1]) : 0.68;
     const OVERLAY = overlayM ? Number(overlayM[1]) : 0.95;
 
-    if (facts.clearAlpha === null) {
-        violations.push("A3: `--glass-opacity-clear` is absent (the Apple-Clear rung)");
-    } else if (!(facts.clearAlpha < DIALOG)) {
-        violations.push(
-            `A3: --glass-opacity-clear (${facts.clearAlpha}) is NOT strictly clearer than the dialog (${DIALOG}) — an opaque clear is a slab, not the maximally-translucent register`,
-        );
-    } else if (!(facts.clearAlpha > 0.45)) {
-        violations.push(
-            `A3: --glass-opacity-clear (${facts.clearAlpha}) is ≤ 0.45 — clearer than a plate (a ghost, not glass)`,
-        );
-    }
     if (facts.sheetAlpha === null) {
         violations.push("A3: `--glass-opacity-sheet` is absent (the bottom-sheet rung)");
     } else if (!(facts.sheetAlpha > DIALOG && facts.sheetAlpha < OVERLAY)) {
         violations.push(
             `A3: --glass-opacity-sheet (${facts.sheetAlpha}) is NOT strictly between the dialog (${DIALOG}) and the overlay (${OVERLAY}) — the see-through bottom-sheet band`,
-        );
-    }
-
-    // the `clear` 4th surface-axis member in the resolver (the union + the mapping).
-    const axisRaw = readFile(SURFACE_AXIS_FILE);
-    const axisSrc = stripTs(axisRaw);
-    facts.clearInUnion =
-        /export\s+type\s+Surface\s*=[^;]*["']clear["']/.test(axisSrc);
-    facts.clearMapped =
-        /surface\s*===\s*["']clear["']\s*\)\s*return\s*`?\$\{base\}\s+glass-clear/.test(
-            axisSrc,
-        ) || /["']clear["'][^;]*glass-clear/.test(axisSrc);
-    if (!facts.clearInUnion) {
-        violations.push(
-            "A3: the `Surface` union does not carry the `clear` member (the 4th surface-axis member is absent)",
-        );
-    }
-    if (!facts.clearMapped) {
-        violations.push(
-            "A3: `surfaceClass` does not map `clear → glass-clear` (the scrim-coupled decoration class)",
-        );
-    }
-
-    // the MANDATORY scrim — the `[data-surface="clear"]`/`.glass-clear` rule carries a
-    // backdrop DIM reading `color-mix(in srgb, var(--background) …, transparent)` AND
-    // its strength derives from the sampled `--glass-backdrop-luma`. A clear plate
-    // WITHOUT the scrim is FORBIDDEN (the Apple Clear contract).
-    const hasClearRule = /\.glass-clear\b/.test(glassSquished);
-    facts.clearRule = hasClearRule;
-    facts.scrimDim =
-        /color-mix\( in srgb, var\(--background\)[^,]*var\(--glass-clear-scrim-strength\)/.test(
-            glassSquished,
-        );
-    facts.scrimLumaDerived =
-        /--glass-clear-scrim-strength:\s*calc\([^)]*var\(--glass-backdrop-luma/.test(
-            glassSquished,
-        );
-    facts.clearReadsBg =
-        /var\(--glass-bg-clear\)/.test(glassSquished);
-    if (!hasClearRule) {
-        violations.push(
-            "A3: there is no `.glass-clear` decoration rule (the 4th-member CSS seam is absent)",
-        );
-    } else {
-        if (!facts.clearReadsBg)
-            violations.push(
-                "A3: the `.glass-clear` plate does not read `--glass-bg-clear` (the maximally-translucent fill)",
-            );
-        if (!facts.scrimDim)
-            violations.push(
-                "A3 MANDATORY SCRIM: the `.glass-clear` rule has NO `color-mix(in srgb, var(--background) …, transparent)` backdrop-dim scrim — a scrim-less clear plate is FORBIDDEN (the Apple Clear contract: near-transparent → the text needs a scrim floor)",
-            );
-        if (!facts.scrimLumaDerived)
-            violations.push(
-                "A3 SCRIM: the scrim strength does not derive from the sampled `--glass-backdrop-luma` (it must dim MORE over a bright backdrop — the dynamic legibility)",
-            );
-    }
-
-    // CV4-equivalent: the clear scrim DIMS THE BACKDROP (`--background`), it does NOT
-    // re-write the W55 plate-tint cohort — the two legibility axes stay disjoint.
-    facts.scrimForksW55 =
-        /--glass-clear-scrim-strength:\s*var\(--glass-tint-strength\)/.test(
-            glassSquished,
-        );
-    if (facts.scrimForksW55) {
-        violations.push(
-            "A3 distinct-axis: the clear scrim FORKS the W55 plate-tint cohort — the scrim dims the BACKDROP (`--background`), it never re-uses `--glass-tint-source`/`--glass-tint-strength` (the two axes are disjoint)",
         );
     }
 
@@ -376,10 +299,10 @@ function detectClearSheet() {
 export function detect() {
     const a1 = detectAmbientHue();
     const a2 = detectFillTint();
-    const a3 = detectClearSheet();
+    const a3 = detectSheetRung();
     return {
         violations: [...a1.violations, ...a2.violations, ...a3.violations],
-        facts: { ambient: a1.facts, fill: a2.facts, clear: a3.facts },
+        facts: { ambient: a1.facts, fill: a2.facts, sheet: a3.facts },
     };
 }
 
@@ -407,22 +330,18 @@ function selfTest() {
         fails.push("self-test A2: a non-neutral fill-tint default slipped the transparent-identity assert");
     }
 
-    // A3 bite — a `.glass-clear` rule WITHOUT a scrim must be caught (the contract).
-    const scrimless = ".glass-clear { background: var(--glass-bg-clear); }";
-    const hasScrim =
-        /color-mix\(\s*in srgb,\s*var\(--background\)[^,]*var\(--glass-clear-scrim-strength\)/.test(
-            scrimless,
-        );
-    if (hasScrim) {
-        fails.push("self-test A3: a scrim-less .glass-clear slipped the mandatory-scrim assert");
+    // A3 bite — the sheet rung must sit strictly between dialog and overlay.
+    const badSheet = 0.99;
+    const DIALOG = 0.68;
+    const OVERLAY = 0.95;
+    if (badSheet > DIALOG && badSheet < OVERLAY) {
+        fails.push("self-test A3: an out-of-band sheet alpha slipped the dialog<sheet<overlay assert");
     }
 
-    // A3 bite — an opaque clear (α ≥ dialog 0.68) must red the clearer-than-modal assert.
-    const opaqueClear = 0.7;
-    const DIALOG = 0.68;
-    if (opaqueClear < DIALOG) {
-        fails.push("self-test A3: an opaque clear (≥ dialog) slipped the clearer-than-modal assert");
-    }
+    // (BI.W-CLEAR-FOLD — the two A3 clear self-test bites (a scrim-less .glass-clear;
+    // an opaque clear ≥ dialog) were STRUCTURALLY COUPLED to the retired `clear` member
+    // and die WITH it — the coupled retirement. proof:surface-axis W9's self-test bites
+    // are the successor (a re-added dead member + a surviving --glass-bg-clear rung).)
 
     return fails;
 }
@@ -461,10 +380,10 @@ function run() {
         `  A1 ambient-hue : writes=${facts.ambient.writesAmbientHue ? "✓" : "✗"}  value.js-math=${facts.ambient.importsValueJsPrimitives ? "✓" : "✗"}  free-rider(getImageData=${facts.ambient.getImageDataCount}/canvas=${facts.ambient.createCanvasCount})  gray-null=${facts.ambient.grayNullIdentity ? "✓" : "✗"}`,
     );
     console.log(
-        `  A2 fill-tint   : @property fill-tint=${facts.fill.fillTintRegistered ? "✓" : "✗"} (<color> inherit transparent) strength=${facts.fill.fillStrengthRegistered ? "✓" : "✗"} (<%> inherit 0%)  distinct-from-accent=${facts.fill.distinctFromAccent ? "✓" : "✗"}  bg sheet/clear shared=${facts.fill.bgSheetShared && facts.fill.bgClearShared ? "✓" : "✗"}`,
+        `  A2 fill-tint   : @property fill-tint=${facts.fill.fillTintRegistered ? "✓" : "✗"} (<color> inherit transparent) strength=${facts.fill.fillStrengthRegistered ? "✓" : "✗"} (<%> inherit 0%)  distinct-from-accent=${facts.fill.distinctFromAccent ? "✓" : "✗"}  bg sheet shared=${facts.fill.bgSheetShared ? "✓" : "✗"}`,
     );
     console.log(
-        `  A3 clear/sheet : clear-α=${facts.clear.clearAlpha} sheet-α=${facts.clear.sheetAlpha}  union=${facts.clear.clearInUnion ? "✓" : "✗"} mapped=${facts.clear.clearMapped ? "✓" : "✗"}  scrim(dim=${facts.clear.scrimDim ? "✓" : "✗"} luma=${facts.clear.scrimLumaDerived ? "✓" : "✗"})`,
+        `  A3 sheet rung  : sheet-α=${facts.sheet.sheetAlpha}  (in dialog<sheet<overlay band)`,
     );
 
     if (violations.length) {
