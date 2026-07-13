@@ -2,18 +2,6 @@
 
 Glassmorphic design system for Vue 3.5. Shared components, design tokens, and composables built on reka-ui and Tailwind CSS v4, with a golden-ratio typography scale.
 
-## Features
-
-- 43 shadcn-vue / reka-ui base components plus 30 custom composites (Button—incl. `primary-audacious`—Card, Dialog, Select, Tabs, Popover, Slider, NumberField, Section, ScrollPane, CartoonCard, MetricBadge, MetricPill, etc.)
-- Five-tier glassmorphism: `.glass-wash`, `.glass-quiet`, `.glass-resting`, `.glass-floating`, `.glass-overlay` (the v0.8.0 ladder; replaces the prior subtle/default/medium/elevated naming)
-- Convenience shorthands: `.glass-card`, `.glass-pill`, `.glass-btn`, `.floating-panel`, `.glass-cartoon`, `@utility btn-audacious`
-- `GlassDock`: collapsible glass action bar with horizontal + vertical orientations, `containerName` prop, layered `DockLayerGroup`/`DockLayer` panes, density rail, ref-counted keep-open state
-- Golden-ratio typography scale (√φ ≈ 1.272, 11+ stops from micro to display-5)
-- Design tokens: duration, easing, z-index (incl. `--z-behind`), radius (primitive + semantic), shadows, glass tiers, paper textures, surface-tint 9-rung family with `quiet | floating | modal` aliases
-- Vue `<Transition>` class sets, shared `@keyframes` (`sparkle-sweep`, `dock-in`, `dialog-in`, etc.), SVG noise textures
-- Public composables across 8 sub-trees (L.W2 restructure): `motion/` (spring, RAF, animated-number, animated-number-map, stagger, stagger reveal, intersection pause, dark-mode sync, scroll progress), `glass/` (renderer + WebGL/WebGPU shader assets), `sortable/`, `sidebar/` (tree/follow/scroll/state), `dom/` (resize observer, touch gate, token color), `reactive/` (timer/interval), `dark/` (global dark—flat `/dark` subpath), `keyboard/` (shortcuts registry—flat `/keyboard` subpath)
-- Bundle-budget gate (`npm run profile:budget`) re-landed K W4 Lane B; CI workflow at `.github/workflows/lint.yml`
-
 ## Install
 
 ```bash
@@ -23,24 +11,27 @@ npm install @mkbabb/glass-ui
 ## Usage
 
 ```ts
-// v1.0—vueuse-FREE root barrel
+// vueuse-FREE root barrel — core primitives + core composables
 import { Button, Card, Dialog } from "@mkbabb/glass-ui";
 
-// v1.0—vueuse-bearing flat subpaths
+// vueuse-bearing surfaces ship as flat subpaths (the SCC-trap closure)
 import { useGlobalDark } from "@mkbabb/glass-ui/dark";
 import { useKeyboardShortcuts, registerShortcut } from "@mkbabb/glass-ui/keyboard";
 import { useCarousel } from "@mkbabb/glass-ui/carousel";
 import { Input, Textarea, Combobox } from "@mkbabb/glass-ui/forms";
 
-// Per-package subpaths
+// per-package subpaths — one component family per dist chunk
 import { GlassDock, DockLayerGroup, DockLayer } from "@mkbabb/glass-ui/dock";
 import { DarkModeToggle } from "@mkbabb/glass-ui/controls";
 import { Configurator, useConfiguratorState } from "@mkbabb/glass-ui/configurator";
 import { HoverPopover } from "@mkbabb/glass-ui/hover-popover";
 
-// v1.0—canonical public types + constants
-import type { AuroraConfig, ButtonVariants, CardTier } from "@mkbabb/glass-ui/api";
-import { DEFAULT_AURORA_CONFIG, MAX_NUCLEI } from "@mkbabb/glass-ui/api";
+// public types + constants live on their OWNING subpath (the 5.0.0 export reshape
+// dropped the `/api` discovery layer — every symbol re-homes to its family subpath)
+import type { AuroraConfig } from "@mkbabb/glass-ui/aurora";
+import type { ButtonVariants } from "@mkbabb/glass-ui/button";
+import type { CardTier } from "@mkbabb/glass-ui/card";
+import { DEFAULT_AURORA_CONFIG, MAX_NUCLEI } from "@mkbabb/glass-ui/aurora";
 ```
 
 ```vue
@@ -55,6 +46,7 @@ import { DEFAULT_AURORA_CONFIG, MAX_NUCLEI } from "@mkbabb/glass-ui/api";
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "@mkbabb/glass-ui/styles";
+@source "../node_modules/@mkbabb/glass-ui/dist";   /* template-utility content-scan */
 @variant dark (&:where(.dark, .dark *));
 
 /* override tokens locally for your project */
@@ -66,112 +58,64 @@ import { DEFAULT_AURORA_CONFIG, MAX_NUCLEI } from "@mkbabb/glass-ui/api";
 }
 ```
 
+## Documentation
+
+The authoritative canon lives under [`docs/canon/`](./docs/canon/) (regenerated /
+gate-locked homes), with the consumer-facing migration path in [`MIGRATION.md`](./MIGRATION.md):
+
+- [`docs/canon/structure.md`](./docs/canon/structure.md) — the generated `src/` tree (the machine-truth source; never hand-maintained)
+- [`docs/canon/glass-system.md`](./docs/canon/glass-system.md) — the glass tier ladder + adaptive-legibility axes
+- [`docs/canon/exports-and-subpaths.md`](./docs/canon/exports-and-subpaths.md) — the public-surface layering + the `manualChunks` recipe
+- [`docs/canon/dependencies.md`](./docs/canon/dependencies.md) — the peer set + the keyframes/value.js spine
+- [`docs/canon/conventions.md`](./docs/canon/conventions.md) — TypeScript / token / ring conventions
+- [`docs/canon/motion-system.md`](./docs/canon/motion-system.md) — the spring/bezier motion canon
+- [`DESIGN.md`](./DESIGN.md) — the storybook category index
+
 ## Build
 
 ```bash
 npm run dev             # storybook demo (multi-page, dock + carousel navigation)
-npm run build           # library → dist/glass-ui.js + glass-ui.css + index.d.ts
+npm run build           # library → dist/glass-ui.js + glass-ui.css + index.d.ts + per-subpath chunks
 npm run typecheck       # vue-tsc --noEmit
 npm run profile:budget  # bundle-budget gate (--enforce in CI)
 ```
 
 ## Storybook
 
-`npm run dev` launches a Vue 3 storybook under `demo/` covering every primitive, container, navigation element, data component, feedback pattern, motion demo, composable, and composition. Vertical `GlassDock` rail for category navigation; horizontal `Carousel` pager for stories within a category. Keyboard: `[`/`]` prev/next story, `{`/`}` prev/next category, `,` configurator, `?` keyboard help. A dismissible right-side `Sheet` lets you live-edit font/scale/hue/grain/radius/density/cartoon-shadow/dark tokens against `:root`. See `DESIGN.md#storybook-demo` for the full category index.
+`npm run dev` launches a Vue 3 storybook under `demo/` covering every primitive, container, navigation element, data component, feedback pattern, motion demo, composable, and composition. A vertical `GlassDock` rail drives category navigation; a horizontal `Carousel` pager drives stories within a category. Keyboard: `[`/`]` prev/next story, `{`/`}` prev/next category, `,` configurator, `?` keyboard help. A dismissible right-side `Sheet` lets you live-edit font/scale/hue/grain/radius/density/cartoon-shadow/dark tokens against `:root`. See `DESIGN.md#storybook-demo` for the full category index.
 
 ## Structure
 
+The `src/` tree is machine-generated into [`docs/canon/structure.md`](./docs/canon/structure.md) (regenerated by `npm run gen:structure`, gate-locked by `proof:claude-structure-sync`). At a glance:
+
 ```
 src/
-├── index.ts                    # core primitives, core composables, utilities (vueuse-FREE root barrel)
+├── index.ts          # vueuse-FREE curated root barrel
+├── api/              # (removed at 5.0.0 — types re-home to their owning subpath)
 ├── components/
-│   ├── ui/                     # 43 shadcn-vue components (reka-ui primitives) + _shared (44 dirs total)
-│   │   ├── _shared/            # ModalOverlay (V.W3), menuItemVariants CVA (V.W3)
-│   │   ├── button/             # Primitive + CVA (11 variants incl. primary-audacious; 5 sizes)
-│   │   ├── card/               # Card + CartoonCard + ScrollPane sibling primitives
-│   │   ├── section/            # Section sectioning landmark
-│   │   ├── slider/             # reka-ui Slider with glass track + keepDockOpen contract
-│   │   ├── skeleton/           # Compositor-friendly transform-only shimmer
-│   │   ├── notification/       # Consumes success/warning/info-foreground tokens
-│   │   ├── metric-pill/        # Stacked-pill primitive composing MetricBadge
-│   │   └── ...                 # accordion, alert, avatar, badge, carousel, checkbox, collapsible,
-│   │                           # combobox, command, context-menu, data-table, dialog, drawer,
-│   │                           # dropdown-menu, hover-card, input, label, multi-select,
-│   │                           # number-field, popover, progress, radio-group, select,
-│   │                           # separator, sheet, switch, table, tabs, tags-input, textarea,
-│   │                           # toast, toggle, toggle-group, tooltip
-│   └── custom/                 # 30 custom composites
-│       ├── aurora/             # Aurora WebGL background + useAurora composable
-│       ├── configurator/       # Configurator + Layer + Row + useConfiguratorState
-│       ├── dock/               # GlassDock, DockLayer, DockLayerGroup, DockIconButton,
-│       │                       # DockTabButton, DockSelectTrigger, DockDropdownTrigger
-│       ├── dock-group/         # DockGroup chassis-strip wrapper
-│       ├── hover-popover/      # HoverPopover (hoverOpenDelay prop—K W1 rename)
-│       ├── instrument-chassis/ # InstrumentChassis + RegionDivider
-│       ├── labeled-field/      # LabeledField parent + 4 wrappers
-│       ├── metric-badge/       # MetricBadge primitive
-│       ├── pulse/              # Dots / ring loading indicator
-│       ├── scrolling-text/     # Overflow-marquee primitive (lifted from speedtest—v0.9.1)
-│       ├── tabs/               # BouncyTabs, UnderlineTabs, BouncyToggle
-│       ├── timeline/           # GlassTimeline
-│       ├── typewriter/         # TypewriterText
-│       └── ...                 # confirm-dialog, controls, expandable-container,
-│                               # glass-panel, icon-tooltip, infinite-scroll, paper-backdrop,
-│                               # search, sidebar, sortable-list, stacked-icons, status-dot,
-│                               # toggle-chip
-├── composables/                # public composables across 8 coherent sub-trees (L.W2 Lane A restructure)
-│   ├── dark/                   # useGlobalDark (flat `/dark` subpath; vueuse-bearing)
-│   ├── keyboard/               # useKeyboardShortcuts + registerShortcut + useRegisteredShortcuts
-│   │                           # + formatCombo + formatComboParts + isMac (flat `/keyboard` subpath)
-│   ├── reactive/               # useInterval, useTimer
-│   ├── dom/                    # useResizeObserver, useTouchGate, useTokenColor
-│   ├── motion/                 # useSpringOrchestrator, useStaggerReveal, useScrollProgress,
-│   │                           # useAnimatedNumber, useAnimatedNumberMap, useStagger,
-│   │                           # useDarkModeSync, useRAFLoop, useIntersectionPause
-│   ├── glass/                  # useGlassRenderer, createGlassFilter, destroyGlassFilter (WebGL/WebGPU)
-│   ├── sortable/               # useSortable
-│   └── sidebar/                # useSidebarState, useSidebarFollow, useScrollTracker, useTreeIndex
-├── styles/
-│   ├── index.css               # imports all below in order
-│   ├── tokens.css              # design tokens (duration, easing, z-index, radius, shadows, glass, paper, surface-tint)
-│   ├── theme.css               # @theme block (Tailwind color/font/radius aliases)
-│   ├── typography.css          # golden-ratio type scale + semantic classes
-│   ├── glass.css               # 5-rung glass ladder + .glass-card / .glass-pill / .glass-btn / .glass-cartoon
-│   ├── dock.css                # density rail + dock-layer-grid + separators (button styling lives in dock components)
-│   ├── dock-group.css          # DockGroup chassis-strip rules
-│   ├── hover-popover.css       # popover-animation grammar
-│   ├── instrument-chassis.css  # bezel + groove dividers + region rules
-│   ├── cards.css               # .cartoon-card, .elevated-card
-│   ├── paper.css               # paper-underpaint + paper-grain-overlay utilities
-│   ├── floating-panel.css      # .floating-panel, .floating-panel-item
-│   ├── transitions.css         # Vue <Transition> classes: fade, fade-slide, pop, dialog-scale, dropdown
-│   ├── animations.css          # @keyframes: dialog-in/out, floating-panel-in, collapsible, tooltip, shimmer, sparkle-sweep
-│   └── utilities.css           # focus-ring, btn-press, btn-audacious, rainbow-text, touch-gate, etc.
-└── utils/
-    └── cn.ts                   # clsx + hand-rolled deduplicator (v0.9.2—replaces tailwind-merge)
+│   ├── ui/           # shadcn-vue / reka-ui base component packages + _shared
+│   └── custom/       # custom composite packages (each a colocated feature dir)
+├── composables/      # public composables across coherent sub-trees
+│   │                 # (motion/ glass/ dark/ keyboard/ sortable/ sidebar/ dom/
+│   │                 #  reactive/ color/ virtual/ …)
+├── subpaths/         # trivial one-line per-package subpath mirror barrels
+├── styles/           # token cascade + glass ladder + component recipes
+└── utils/            # cn() + shared prng leaf
 ```
 
 ## Subpath imports
 
-Beyond the root barrel, the library ships **37 flat JS subpaths** (32 component packages + `/api` + `/forms` + `/dark` + `/keyboard` + `/carousel`) plus the `/styles` CSS bundle (38 entries total in `package.json` exports). v1.0 (L.W1) adds three vueuse-bearing surfaces as flat top-level subpaths (`/dark`, `/keyboard`, `/carousel`) and a pure-types-and-constants `/api` discovery layer.
+Beyond the vueuse-FREE root barrel, the library ships a large set of flat per-package JS subpaths (one `dist/<name>.js` chunk per subpath, each tree-shaking independently) plus the CSS/font bundle entries. The exact subpath count is machine-truth, not prose: **`proof:subpath-enumeration`** is the source of truth (it re-derives the count from `package.json` exports ↔ `dist/` chunks ↔ the `libraryEntries` map, so a hardcoded figure here would only drift). See `package.json` `exports` for the full map; resolution is verified at every release by `scripts/release.sh`'s synthetic-consumer probe.
 
 ```ts
-// v1.0 vueuse-bearing subpaths (closed the SCC trap; root barrel no longer
-// re-exports these symbols)
+// vueuse-bearing subpaths (the SCC-trap closure — the root barrel does not
+// re-export these symbols)
 import { useGlobalDark } from "@mkbabb/glass-ui/dark";
 import { useKeyboardShortcuts, registerShortcut } from "@mkbabb/glass-ui/keyboard";
 import { useCarousel } from "@mkbabb/glass-ui/carousel";
 import { Input, Textarea, Combobox } from "@mkbabb/glass-ui/forms";
 
-// v1.0 discovery layer—pure types + constants
-import type {
-    AuroraConfig,
-    ButtonVariants,
-    CardTier,
-    ConfiguratorState,
-} from "@mkbabb/glass-ui/api";
-
-// Per-package subpaths—substrate isolation
+// per-package subpaths — substrate isolation
 import { GlassDock, DockLayerGroup, DockLayer } from "@mkbabb/glass-ui/dock";
 import { DarkModeToggle } from "@mkbabb/glass-ui/controls";
 import { Aurora, useAurora } from "@mkbabb/glass-ui/aurora";
@@ -182,91 +126,61 @@ import { Sidebar } from "@mkbabb/glass-ui/sidebar";
 import { ScrollingText } from "@mkbabb/glass-ui/scrolling-text";
 ```
 
-See `package.json` `exports` for the full subpath map (37 flat JS subpaths plus `/styles`). Resolution is verified at every release by `scripts/release.sh`'s synthetic-consumer probe (L.W0 Lane III).
-
-v1.0 retired the nested v0.9.x subpaths `@mkbabb/glass-ui/composables/dark` + `@mkbabb/glass-ui/composables/keyboard` (flattened to `/dark` + `/keyboard`) and the demo-only `@mkbabb/glass-ui/pagination` + `@mkbabb/glass-ui/virtual` subpaths (zero production consumers; L.W3 wire-or-retire). See `MIGRATION.md` for the consumer-facing migration path.
+The v0.9.x nested subpaths `@mkbabb/glass-ui/composables/dark` + `.../composables/keyboard` were flattened to `/dark` + `/keyboard` at v1.0, and the demo-only `@mkbabb/glass-ui/pagination` subpath was retired (zero production consumers). The `@mkbabb/glass-ui/virtual` subpath is LIVE at 5.0.0 — retired at v1.0, it RETURNED at BC (the windowing engine's homecoming) and ships OFF the root barrel; see `docs/consumer-evidence/use-virtual-section-window.md` for its honest consumer status. The 5.0.0 export reshape dropped the pure-types `/api` discovery layer (a clean break; every symbol re-homes to its owning family subpath). See `MIGRATION.md` for the full per-symbol re-home table.
 
 ## Glass Token System
 
-Five tiers with 1:1 alignment across opacity, blur, background, border, and shadow:
+Five tiers with 1:1 alignment across opacity, blur, background, border, and shadow. Each tier defines `--glass-{opacity,blur,bg,border,shadow}-{tier}`; consumers override the primitives at `:root` to tune intensity. `--glass-level` (a typed inheriting `@property`) is the ONE opacity+blur knob — `level=1` is the hand-tuned ladder, `level=0` is the opaque escape.
 
-| Tier | Class | Light opacity | Dark opacity | Blur | Use |
-|------|-------|---------------|--------------|------|-----|
-| Wash | `.glass-wash` | 30% | 38% | `blur(1px) saturate(1.05)` | Dock backgrounds, input fills, hover overlays |
-| Quiet | `.glass-quiet` | 50% | 58% | `blur(3px)` | Inline workspace chrome |
-| Resting | `.glass-resting` | 65% | 72% | `blur(12px) saturate(1.05)` | Cards, content containers |
-| Floating | `.glass-floating` | 80% | 88% | `blur(16px) saturate(1.4)` | Popovers, tooltips, dropdowns |
-| Overlay | `.glass-overlay` | 95% | 96% | `blur(24px) saturate(1.5)` | Dialogs, command palette, modals |
+| Tier | Class | Use |
+|------|-------|-----|
+| Wash | `.glass-wash` | Dock backgrounds, input fills, hover overlays |
+| Quiet | `.glass-quiet` | Inline workspace chrome |
+| Resting | `.glass-resting` | Cards, content containers |
+| Floating | `.glass-floating` | Popovers, tooltips, dropdowns |
+| Overlay | `.glass-overlay` | Dialogs, command palette, modals |
 
-Each tier defines `--glass-{opacity,blur,bg,border,shadow}-{tier}`. Consumers override the primitives at `:root` to tune intensity. Convenience classes bundle a tier with a shape:
-- `.glass-card` = resting tier + `var(--radius-card)` + offset card shadow
-- `.glass-pill` = resting tier + pill radius + press feedback
-- `.glass-cartoon` = cartoon-tier shadow + 2px border + hover-lift (carried by `<CartoonCard>`)
+Convenience classes bundle a tier with a shape: `.glass-card` (resting + `--radius-card` + offset card shadow), `.glass-pill` (resting + pill radius + press feedback), `.glass-btn`. See [`docs/canon/glass-system.md`](./docs/canon/glass-system.md) for the adaptive-legibility axes (`--glass-tint-*`, `--glass-accent`, the dark transmissive-material arm).
 
 ## Design Tokens
 
-`tokens.css` defines the shared `:root` properties consumed by all style modules and components:
-
-| Category | Tokens | Notes |
-|----------|--------|-------|
-| Duration | `--duration-instant` through `--duration-linger` | 8 stops, 0.1s–2.5s; `--duration-shimmer{,-fast,-slow}` for shimmer cadence |
-| Easing | `--spring-{smooth,snappy,bouncy,gentle}`, `--ease-standard`, `--ease-apple-spring` etc. | Spring linear() + cubic-bezier fallbacks |
-| Z-index | `--z-behind` (-10) through `--z-debug` (99999) | 14-level scale plus background tier |
-| Radius | `--radius` base + `sm`/`md`/`lg`/`xl`/`2xl`/`pill` | Primitive scale from 0.5rem base |
-| Radius (semantic) | `--radius-{card,panel,dialog,input,button,badge,dock,tooltip}` | Aliases into the primitive scale |
-| Shadows | `--shadow-xs` through `--shadow-2xl` + cartoon + dock + glass-tier | Elevation scale, hsl-based |
-| Glass | `--glass-{opacity,blur,bg,border,shadow}-{wash,quiet,resting,floating,overlay}` | 5 tiers, all aligned |
-| Surface tint | `--surface-tint-{4,6,8,10,12,15,18,22,25}` + `{quiet,floating,modal}` aliases | 9-rung family with tier aliases |
-| Paper | `paper-underpaint` + `paper-grain-overlay` utilities | SVG feTurbulence noise |
-| Colors | Full shadcn HSL-channel palette + viz-basis + section-N + status (success/warning/info) tinted families | Override locally per project |
+`src/styles/tokens/` defines the shared `:root` properties consumed by all style modules and components — duration, easing (`--spring-{smooth,snappy,bouncy,gentle}` + `--spring-<name>-duration` clocks), z-index, radius (primitive + semantic), shadows (composed via `color-mix(in srgb, var(--shadow-color) N%, transparent)`), the 5-tier glass ladder, paper/grain textures, the `--surface-tint-*` family, and the warm-chroma color palette. Consumers override any token locally per project.
 
 ## Typography
 
-Type scale based on √φ ≈ 1.272 (modulated golden ratio). Each step is φ^(n/2) of the base.
-
-| Token | Size | ~px | Class |
-|-------|------|-----|-------|
-| `--type-micro` | 0.6875rem | 11 | `.text-micro` |
-| `--type-caption` | 0.75rem | 12 | `.text-caption` |
-| `--type-small` | 0.875rem | 14 | `.text-small` |
-| `--type-body` | 1rem | 16 | `.text-body` |
-| `--type-prose` | 1.125rem | 18 | `.text-prose` |
-| `--type-subheading` | 1.272rem | 20 | `.text-subheading` |
-| `--type-heading` | 1.618rem | 26 | `.text-heading` |
-| `--type-title` | 2.058rem | 33 | `.text-title` |
-| `--type-display-1` | 2.618rem | 42 | `.text-display` |
-| `--type-display-2` | 3.33rem | 53 | `.text-display-2` |
-| `--type-display-3` | 4.236rem | 68 | `.text-display-3` |
-
-The `@theme` block in `theme.css` maps these to Tailwind's `--font-size-*` tokens, so `text-sm`, `text-lg`, etc. adopt the golden-ratio scale.
+Type scale based on √φ ≈ 1.272 (modulated golden ratio); each step is φ^(n/2) of the base. Semantic classes run `.text-micro` → `.text-body` → `.text-heading` → `.text-title` → the audacious `.text-display-*` ladder. The `@theme` block in `theme.css` maps these to Tailwind's `--font-size-*` tokens, so `text-sm` / `text-lg` adopt the golden-ratio scale.
 
 ## Conventions
 
-- TypeScript `strict:true`, `verbatimModuleSyntax:true`
-- `moduleResolution:bundler`, `target:ES2022`, `lib:ES2023`
-- `import type` for all type-only imports
-- Named exports only, no defaults
+- TypeScript `strict:true`, `verbatimModuleSyntax:true`; `moduleResolution:bundler`, `target:ES2022`, `lib:ES2023`
+- `import type` for all type-only imports; named exports only, no defaults
 - shadcn-vue component pattern: reka-ui `Primitive` / `useForwardPropsEmits`, CVA for variants, `cn()` for class composition
-- All shadows normalized to `hsl(var(--shadow-color) / alpha)` format
-- Color palette as HSL channels in `:root` (e.g., `--primary: 222.2 47.4% 11.2%`), consumed as `hsl(var(--primary))` in `@theme`
-- Button four-state guarantee: standard, hover, active (`scale-[var(--scale-press-btn)]`), disabled (`opacity-disabled`)
+- Color tokens are **complete `hsl()` colors** — `--primary: hsl(24 10% 10%)`, consumed directly as `var(--primary)`. NEVER `hsl(var(--token))` (double-wrapping is invalid and never paints); for an alpha derivative use `color-mix(in srgb, var(--token) N%, transparent)`
+- `cn()` is `clsx` + a hand-rolled conflict-bucket deduplicator (replaced `tailwind-merge` at v0.9.2 — a deliberate keep, not a gap to re-upgrade)
+
+See [`docs/canon/conventions.md`](./docs/canon/conventions.md) for the full set.
 
 ## Dependencies
 
-All runtime deps are peer:
+All runtime deps are peer — glass-ui declares them in `peerDependencies` and ships none in its own `dependencies` bundle, so the consumer's single Vue / Tailwind / reka-ui spine is reused rather than re-vendored.
 
 | Package | Role |
 |---------|------|
 | `vue` ^3.5 | Framework |
 | `reka-ui` ^2.0 | Headless UI primitives |
-| `@vueuse/core` ^14.0 | Composable utilities (useDark, createGlobalState, useEventListener) |
-| `tailwindcss` ^4.0 | Utility CSS framework |
+| `@vueuse/core` ^14.0 | useDark, createGlobalState, useEventListener (optional peer) |
+| `tailwindcss` ^4.0 | Utility CSS |
 | `class-variance-authority` ^0.7 | Component variant definitions |
-| `clsx` ^2.0 | Conditional class joining (cn() ships its own deduplicator as of v0.9.2; replaces tailwind-merge) |
-| `embla-carousel-vue` ^8.0 | Carousel substrate |
-| `lucide-vue-next` ^0.525 | Icon set |
-| `vaul-vue` ^0.2 | Drawer primitives |
-| `@mkbabb/keyframes.js` ^2.0 | Spring/keyframe runtime |
+| `clsx` ^2.0 | Conditional class joining (`cn()` ships its own deduplicator) |
+| `embla-carousel-vue` ^8.0 | Carousel substrate (optional peer) |
+| `@lucide/vue` ^1.16.0 | Icon set (the renamed v1 package; was `lucide-vue-next` pre-v1.0) |
+| `@mkbabb/keyframes.js` ^5.2.0 | Spring/keyframe runtime (optional peer) |
+| `@mkbabb/value.js` ^3.1.0 | Color/value normalization (optional peer) |
+| `@mkbabb/pencil-boil` ^0.4.1 | Hand-mark freehand core (optional peer) |
+| `perfect-freehand` ^1.2.3 | Variable-width stroke geometry (optional peer) |
+| `tw-animate-css` ^1.2.5 | `animate-in`/`animate-out` data-state utilities (optional peer) |
+
+`tw-animate-css` is required only for the animated overlay surfaces (Dialog / Sheet / Popover / DropdownMenu emit `animate-in`/`animate-out` data-state utilities); a Button-only consumer never needs it. See [`docs/canon/dependencies.md`](./docs/canon/dependencies.md).
 
 ## Contributing
 
