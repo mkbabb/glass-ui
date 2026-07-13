@@ -18,8 +18,12 @@
 // field with NO opaque card between (the BG-2 lesson). The pause-toggle demo keeps its
 // OWN functional aurora (it must, to demonstrate pause/resume on a real renderer) — it
 // is NOT a transparent tile; it self-stages.
-import { computed, ref, useTemplateRef } from "vue";
+import { computed, useTemplateRef } from "vue";
 import { Aurora, type AuroraConfig } from "@glass/components/custom/aurora";
+import {
+    useGlassBackdropLuminance,
+    GLASS_BACKDROP_SHARED_ATTR,
+} from "@glass/composables/glass/useGlassBackdropLuminance";
 import { heroAuroraConfig } from "../../chassis/hero/aurora-hero";
 
 withDefaults(
@@ -42,21 +46,37 @@ withDefaults(
     { opacityCeiling: 0.55, config: () => heroAuroraConfig("cat-dock") },
 );
 
-// BC.W-ADAPTIVE-RECONCILE — thread the shared aurora <canvas> to the docks staged over
-// it so each GlassDock's useGlassBackdropLuminance observer SAMPLES the live field
-// (drawImage + getImageData) and writes `--glass-backdrop-luma`, closing the observer
-// loop on the demo route. Without the canvas the observer falls to the elementsFromPoint
-// static walk, which reads the transparent aurora canvas as < 0.5α and never lands a
-// real luma over the field. <Aurora> exposes its `canvasRef`; we surface it through the
-// scoped slot so each staged dock binds `:background-canvas="backgroundCanvas"`.
+// The shared aurora <canvas>, surfaced through the scoped slot. BI.W-DOCK-LUMA-SHARE
+// SUBSUMED the per-dock binding: the stage now runs the ONE shared observer below and the
+// staged docks INHERIT `--glass-backdrop-luma` (they stand down their own readback), so a
+// dock no longer needs the canvas. The scoped `backgroundCanvas` is RETAINED for the
+// sibling dock stories (layers / sections / cta-receive / dock-search) that still bind
+// `:background-canvas` — a now-harmless no-op there (those docks stand down under the same
+// shared marker), migrated off in the story-band pass. <Aurora> exposes its `canvasRef`.
 const auroraRef = useTemplateRef<{ canvasRef: HTMLCanvasElement | null }>("auroraRef");
 const backgroundCanvas = computed<HTMLCanvasElement | null>(
     () => auroraRef.value?.canvasRef ?? null,
 );
+
+// BI.W-DOCK-LUMA-SHARE (PERF-6/FAM-5) — the ONE shared backdrop-luminance observer per
+// route. The luminance signal is a per-ROUTE property of the shared field, not a per-DOCK
+// one: N docks over the SAME aurora read the SAME luma (+ ambient hue). This ONE observer
+// samples the field (drawImage + getImageData, ≤ 4 Hz, 32×32) at the `.dock-stage` scope
+// and writes `--glass-backdrop-luma` / `--glass-backdrop` / `--glass-ambient-*` there;
+// every staged GlassDock INHERITS them via the registered inheriting @property cascade and
+// STANDS DOWN its own per-dock observer (the `shared: true` observer stamps the
+// `data-glass-backdrop-shared` marker the docks' `.closest` coverage-check reads). 12
+// per-dock getImageData readbacks → 1 per route. The stage template ALSO carries the
+// static marker so the stand-down is race-free from frame 0.
+const stageEl = useTemplateRef<HTMLElement>("stageEl");
+useGlassBackdropLuminance(stageEl, {
+    backgroundCanvas: () => auroraRef.value?.canvasRef ?? null,
+    shared: true,
+});
 </script>
 
 <template>
-    <div class="dock-stage">
+    <div ref="stageEl" class="dock-stage" :[GLASS_BACKDROP_SHARED_ATTR]="''">
         <!-- The ONE shared field behind the whole demo column. The field's backing
              store is CLAMPED to the VIEWPORT (BI.W-STAGE-FIELD-CLAMP / PERF-3): the
              absolute track spans the full scroll column, but the <Aurora> host inside
