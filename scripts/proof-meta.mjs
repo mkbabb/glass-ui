@@ -99,10 +99,21 @@ const BUILD_MAP = join(ROOT, "docs/tranches/BG/execution/bg-build-map.md");
 // F8.6 (BG.W-ARISTOTELIAN-PROPORTION) — the edict-verdict-present clause reads the
 // gestalt roster (the enrolled surface set), the 3-axis edict-verdict ledger (the
 // review-completeness artefact), the aristotelian canon home, and the √φ model anchor.
-const GESTALT_ROSTER = join(ROOT, "docs/tranches/BG/audit/reflect/bg-gestalt-roster.md");
-const EDICT_LEDGER = join(ROOT, "docs/tranches/BG/audit/reflect/bg-edict-verdict-ledger.md");
+// RE-POINTED to the BI reflect dir at BI.W-GESTALT-LEDGER-FILE (H-8): the enrolled
+// surface set + the 3-axis ledger are the BI post-greenfield acceptance artefacts.
+const GESTALT_ROSTER = join(ROOT, "docs/tranches/BI/audit/reflect/bi-gestalt-roster.md");
+const EDICT_LEDGER = join(ROOT, "docs/tranches/BI/audit/reflect/bi-edict-verdict-ledger.md");
 const ARIST_CANON = join(ROOT, "docs/canon/aristotelian-proportion.md");
 const CARD_SFC = join(ROOT, "src/components/ui/card/Card.vue");
+
+// BI.W-GESTALT-LEDGER-FILE (H-8) — the OPERATIVE-CLOSE flag. The edict-verdict-present
+// clause has TWO tiers: the bare `proof:meta` (local+ci) locks COMPLETENESS only (a
+// PENDING token is valid — the tranche's CI stays unblocked while the ledger is
+// un-flipped), and `proof:meta --operative-close` (the B10 tag-blocker) demands every
+// cell PASS/FAIL (no PENDING) + every flipped surface's dual-engine captures resolve on
+// disk + a non-authoring Fable author. Born-RED at HEAD (all cells PENDING) — the
+// operative-close arm greens ONLY on a fully-filed non-PENDING Fable ledger.
+const OPERATIVE_CLOSE = process.argv.includes("--operative-close");
 
 /**
  * The `fable / designSync` cell names BOTH halves iff it is non-empty, not `—`,
@@ -472,13 +483,14 @@ function deferredLedgerTerminal() {
     };
 }
 
-// ── The `edict-verdict-present` clause (BG.W-ARISTOTELIAN-PROPORTION, F8.6) ─────
+// ── The `edict-verdict-present` clause (BG.W-ARISTOTELIAN-PROPORTION, F8.6;
+//    UPGRADED completeness→verdict-bearing at BI.W-GESTALT-LEDGER-FILE, H-8) ─────
 // GA-9 / PE-GESTALT: the Band-0 aesthetic edicts (√φ-proportion · animation-laws ·
 // technicolor-cartoon-punch) are transposed INTO the gestalt review as acceptance
 // LANGUAGE the review FILES per enrolled surface — NOT a fan-out of N mechanical
 // gates (the ceremony disease). This clause is a REVIEW-COMPLETENESS fence, the
 // fable-arm-present S1/S2 shape applied to the design-language edicts:
-//   A — the enrolled surface set (DERIVED from bg-gestalt-roster.md, the SAME set
+//   A — the enrolled surface set (DERIVED from bi-gestalt-roster.md, the SAME set
 //       proof:ba-gestalt/warm-identity read) each carries a COMPLETE 3-axis row in
 //       the edict-verdict ledger (a verdict token PASS/FAIL/PENDING per axis). A
 //       roster surface with no row, or a row with a blank/garbage axis cell, is a
@@ -491,12 +503,30 @@ function deferredLedgerTerminal() {
 //       1.272/1.618/2.618 live in Card.vue) so the canon reference is not a phantom.
 //       This is a ONE-anchor census, NOT an off-ledger-rem gate fan-out.
 //   D — the DIRECTIVE-LEDGER §7b PE-GESTALT process-edict row names this wave owner.
-// Born-RED on a HEAD without the ledger + canon (the pre-flip state); GREEN once the
-// review roster is complete + the canon + model resolve. The PURE detector operates
-// on injected sources so the self-test feeds synthetic fixtures (a dropped surface /
-// a blank axis / a garbage token each MUST flag). ZERO pixels — the FABLE 3-axis
-// verdict is the PASS oracle; this clause locks the review is COMPLETE, never green
-// over a skipped surface or a missing axis.
+//
+// THE UPGRADE (BI.W-GESTALT-LEDGER-FILE, H-8) — the fatal FAM-1 gap the BG shape had:
+// `proof:meta` greened on a PENDING token (a PENDING cell SATISFIED the completeness
+// gate, so the PASS oracle was unfilled and the close could proceed over an all-PENDING
+// ledger). The clause gains a SECOND tier gated behind `--operative-close` (the B10
+// tag-blocker; the bare local+ci gate keeps its completeness-only behaviour so the
+// tranche's CI is not wedged by an intentionally-un-flipped ledger):
+//   G2 — an OPERATIVE close demands every cell is PASS/FAIL, NOT PENDING (a PENDING at
+//        the close is an un-filed Fable verdict — the cure for "greens vacuously on the
+//        token"). Born-RED at HEAD (all cells PENDING).
+//   G3 — every FLIPPED surface's DUAL-ENGINE capture paths (the roster's `capture*`
+//        columns) RESOLVE ON DISK (the ba-gestalt anti-evasion floor — a PASS with a
+//        missing capture is the close-class lie, forbidden).
+//   G4 — every FLIPPED surface's verdict AUTHOR is a Fable instance DISTINCT from the
+//        wave builder (the non-authoring bar — the direct cure for opus-fanout-built
+//        visuals self-judged; a self-authored / non-Fable / mechanical-fanout author reds).
+// The FLIP (PENDING→PASS/FAIL) is a B10 Fable close ceremony; the ORACLE is built here,
+// born-RED against the all-PENDING HEAD state. The PURE detector operates on injected
+// sources (incl. an injected fileExists) so the self-test feeds synthetic fixtures
+// (a dropped surface / a blank axis / a garbage token / a PENDING at operative close /
+// a PASS with a missing capture / a self-authored verdict each MUST flag). ZERO pixels —
+// the FABLE 3-axis verdict is the PASS oracle; this clause locks the review is COMPLETE
+// (bare) and FILED by a non-authoring Fable instance (operative), never green over a
+// skipped surface, a missing axis, a PENDING close, a missing capture, or a self-judge.
 
 /** The three design-language acceptance axes (GA-9 / PE-GESTALT). */
 const EDICT_AXES = ["proportion", "animation", "technicolor"];
@@ -565,12 +595,105 @@ function parseEdictLedger(src) {
 }
 
 /**
+ * Parse the roster's DUAL-ENGINE capture paths per surface (BI.W-GESTALT-LEDGER-FILE,
+ * G3). The `edict-verdict-present` operative-close arm resolves every FLIPPED surface's
+ * captures on disk. Reads the `surface` column + EVERY column whose header starts with
+ * `capture` (chrome/safari × light/dark — any count), returning `surface → paths[]`.
+ * @param {string} src
+ * @returns {Map<string,string[]>}
+ */
+function rosterCaptures(src) {
+    const noComments = src.replace(/<!--[\s\S]*?-->/g, "");
+    const captures = new Map();
+    let cols = null;
+    for (const ln of noComments.split("\n")) {
+        if (!ln.trimStart().startsWith("|")) continue;
+        const cells = rowCells(ln);
+        if (cells.length < 2 || isSeparatorRow(cells)) continue;
+        const lower = cells.map((c) => c.toLowerCase());
+        if (lower.includes("surface")) {
+            const surfIdx = lower.indexOf("surface");
+            const capIdxs = lower.map((c, i) => (c.startsWith("capture") ? i : -1)).filter((i) => i !== -1);
+            cols = { surfIdx, capIdxs };
+            continue; // the header itself is never a data row
+        }
+        if (!cols) continue;
+        const surface = (cells[cols.surfIdx] ?? "").trim();
+        if (!surface || surface === "—") continue;
+        const caps = cols.capIdxs.map((i) => (cells[i] ?? "").trim()).filter((c) => c && c !== "—");
+        captures.set(surface, caps);
+    }
+    return captures;
+}
+
+/**
+ * Parse the ledger's per-row verdict AUTHOR (BI.W-GESTALT-LEDGER-FILE, G4). BY HEADER
+ * NAME (column-order-free); the `author` column is REQUIRED here (a ledger without it
+ * cannot satisfy the non-authoring bar at an operative close).
+ * @param {string} src
+ * @returns {Map<string,string>}
+ */
+function parseLedgerAuthors(src) {
+    const noComments = src.replace(/<!--[\s\S]*?-->/g, "");
+    const authors = new Map();
+    let cols = null;
+    for (const ln of noComments.split("\n")) {
+        if (!ln.trimStart().startsWith("|")) continue;
+        const cells = rowCells(ln);
+        if (cells.length < 2 || isSeparatorRow(cells)) continue;
+        const header = findHeaderColumns(cells, { surface: "surface", author: "author" }, { required: ["surface", "author"] });
+        if (header) {
+            cols = header;
+            continue; // the header itself is never a data row
+        }
+        if (!cols) continue;
+        const surface = (cells[cols.surface] ?? "").trim();
+        if (!surface || surface === "—") continue;
+        authors.set(surface, (cells[cols.author] ?? "").trim());
+    }
+    return authors;
+}
+
+/**
+ * The wave-builder token the non-authoring bar (G4) compares against — a visible-body
+ * `Wave builder: <id>` line (bold/backtick-tolerant). `""` when absent.
+ * @param {string} src
+ * @returns {string}
+ */
+function parseBuilder(src) {
+    const noComments = src.replace(/<!--[\s\S]*?-->/g, "");
+    const m = noComments.match(/wave[-\s]?builder[^:\n]*:\s*[`*\s]*([A-Za-z0-9.\-]+)/i);
+    return m ? m[1].trim() : "";
+}
+
+/**
+ * The non-authoring-bar verdict (G4). A flipped row's author must be a Fable instance
+ * DISTINCT from the wave builder — a self-judged builder verdict (a mechanical
+ * opus/sonnet fan-out, or the builder wave itself) is forbidden. Returns a violation
+ * clause, or `null` when the author is a valid non-authoring Fable instance.
+ * @param {string} author
+ * @param {string} builder
+ * @returns {string|null}
+ */
+function nonAuthoringViolation(author, builder) {
+    const a = String(author ?? "").trim();
+    if (a === "" || a === "—") return "carries no verdict author (`—` or empty)";
+    if (!/fable/i.test(a)) return `verdict author \`${a}\` is not a Fable instance`;
+    if (/\b(opus|sonnet|haiku|builder)\b/i.test(a))
+        return `verdict author \`${a}\` names a mechanical fan-out agent (a self-judged builder verdict)`;
+    if (builder && a.toLowerCase().includes(builder.toLowerCase()))
+        return `verdict author \`${a}\` names the wave builder \`${builder}\` (self-authored)`;
+    return null;
+}
+
+/**
  * The PURE detector — operates on injected sources so the self-test can feed
- * synthetic fixtures. Returns the review-completeness + canon + model failures.
- * @param {{ rosterSrc:string, ledgerSrc:string, canonSrc:string, cardSrc:string, directiveLedger:string }} io
+ * synthetic fixtures. Returns the review-completeness + canon + model failures, plus
+ * (when `operativeClose`) the G2/G3/G4 operative-close failures.
+ * @param {{ rosterSrc:string, ledgerSrc:string, canonSrc:string, cardSrc:string, directiveLedger:string, operativeClose?:boolean, fileExists?:(rel:string)=>boolean }} io
  * @returns {string[]}
  */
-function edictVerdictCheck({ rosterSrc, ledgerSrc, canonSrc, cardSrc, directiveLedger }) {
+function edictVerdictCheck({ rosterSrc, ledgerSrc, canonSrc, cardSrc, directiveLedger, operativeClose = false, fileExists = repoFileExists }) {
     const failures = [];
 
     // A — every enrolled gestalt surface carries a COMPLETE 3-axis verdict row.
@@ -618,6 +741,55 @@ function edictVerdictCheck({ rosterSrc, ledgerSrc, canonSrc, cardSrc, directiveL
     else if (!/PE-GESTALT[\s\S]{0,2200}?W-ARISTOTELIAN-PROPORTION/.test(directiveLedger))
         failures.push("DIRECTIVE-LEDGER PE-GESTALT row does not name `W-ARISTOTELIAN-PROPORTION` as owner.");
 
+    // ── The OPERATIVE-CLOSE arm (G2/G3/G4, BI.W-GESTALT-LEDGER-FILE, H-8) ──────────
+    // Gated: only the B10 tag-blocker (`--operative-close`) runs it; the bare local+ci
+    // gate stays completeness-only (a PENDING token is valid there). Born-RED at HEAD:
+    // the all-PENDING ledger reds G2 on every axis.
+    if (operativeClose) {
+        const captures = rosterCaptures(rosterSrc);
+        const authors = parseLedgerAuthors(ledgerSrc);
+        const builder = parseBuilder(ledgerSrc);
+        if (!builder)
+            failures.push(
+                "OPERATIVE-CLOSE: the edict-verdict ledger declares no `wave-builder` — the non-authoring bar (G4) has no builder to compare the verdict author against.",
+            );
+        for (const s of surfaces) {
+            const row = ledger.get(s);
+            if (!row) continue; // already flagged by the completeness arm (A)
+            const axisVals = EDICT_AXES.map((ax) => String(row[ax] ?? "").trim());
+            const anyFiled = axisVals.some((v) => /^(PASS|FAIL)\b/i.test(v));
+            // G2 — an operative close demands PASS/FAIL, never PENDING.
+            for (const ax of EDICT_AXES) {
+                const cell = String(row[ax] ?? "").trim();
+                if (/^PENDING\b/i.test(cell))
+                    failures.push(
+                        `OPERATIVE-CLOSE: enrolled gestalt surface \`${s}\` axis \`${ax}\` is still PENDING — an operative close demands a FILED PASS/FAIL Fable verdict (G2; the cure for "greens vacuously on the token").`,
+                    );
+            }
+            // G3 + G4 bite on a FLIPPED surface (a filed PASS/FAIL on any axis).
+            if (anyFiled) {
+                // G3 — every declared dual-engine capture path resolves on disk.
+                const caps = captures.get(s) ?? [];
+                if (caps.length === 0)
+                    failures.push(
+                        `OPERATIVE-CLOSE: flipped gestalt surface \`${s}\` declares no capture paths in the roster — the anti-evasion floor (G3) has nothing to resolve (a PASS over no capture is the close-class lie).`,
+                    );
+                for (const cap of caps) {
+                    if (!fileExists(cap))
+                        failures.push(
+                            `OPERATIVE-CLOSE: flipped gestalt surface \`${s}\` capture \`${cap}\` does not resolve on disk — a PASS with a missing capture is the close-class lie (G3).`,
+                        );
+                }
+                // G4 — the verdict author is a Fable instance distinct from the builder.
+                const violation = nonAuthoringViolation(authors.get(s), builder);
+                if (violation)
+                    failures.push(
+                        `OPERATIVE-CLOSE: flipped gestalt surface \`${s}\` ${violation} (G4 — the verdict author must be a Fable instance distinct from the wave builder; a self-judged builder verdict is forbidden).`,
+                    );
+            }
+        }
+    }
+
     return failures;
 }
 
@@ -641,6 +813,8 @@ function edictVerdictPresent() {
             canonSrc: readFileSync(ARIST_CANON, "utf8"),
             cardSrc: readFileSync(CARD_SFC, "utf8"),
             directiveLedger: readFileSync(LEDGER, "utf8"),
+            operativeClose: OPERATIVE_CLOSE,
+            fileExists: repoFileExists,
         }),
     };
 }
@@ -1181,6 +1355,94 @@ async function selfTest() {
                 rosterSrc: realRoster, ledgerSrc: realLedger, canonSrc: realCanon, cardSrc: realCard, directiveLedger: realDir,
             }).length === 0;
             bites.push(["real-edict-verdict-present → clean (GREEN-after)", clean]);
+        }
+
+        // ── OPERATIVE-CLOSE detector bites (BI.W-GESTALT-LEDGER-FILE — G2/G3/G4) ──
+        // The UPGRADE: at an operative close the ledger must be fully-filed non-PENDING,
+        // every flipped surface's dual-engine captures must resolve, and every author
+        // must be a non-authoring Fable instance. Fed synthetic fixtures with
+        // operativeClose=true + an injected fileExists (a PENDING cell / a PASS with a
+        // missing capture / a self-authored / non-Fable author each MUST flag; a
+        // fully-filed Fable-authored ledger over resolving captures must NOT flag).
+        {
+            const synRosterCap =
+                "| surface | routes | capture-chrome-light | capture-chrome-dark |\n|---|---|---|---|\n" +
+                "| dock | /dock/overview | cap/dock-l.png | cap/dock-d.png |\n" +
+                "| aurora | /substrates/aurora | cap/aurora-l.png | cap/aurora-d.png |\n";
+            const builderLine = "\nWave builder (the non-authoring bar): BI.W-GESTALT-LEDGER-FILE\n";
+            const opLedger = (rows) =>
+                "| surface | proportion | animation | technicolor | author |\n|---|---|---|---|---|\n" +
+                rows.join("\n") + "\n" + builderLine;
+            const chkOp = (roster, ledger, fileExists) =>
+                edictVerdictCheck({
+                    rosterSrc: roster, ledgerSrc: ledger, canonSrc: realCanon, cardSrc: realCard,
+                    directiveLedger: realDir, operativeClose: true, fileExists,
+                });
+
+            // bite 34a — a PENDING cell at an operative close MUST flag (born-RED HEAD state).
+            {
+                const ledger = opLedger([
+                    "| dock | PENDING | PENDING | PENDING | — |",
+                    "| aurora | PASS | PASS | PASS | Fable/DesignSync-reviewer-1 |",
+                ]);
+                const flagged = chkOp(synRosterCap, ledger, () => true).some(
+                    (f) => f.includes("OPERATIVE-CLOSE") && f.includes("`dock`") && f.includes("PENDING"),
+                );
+                bites.push(["op-close-pending-cell → FLAG (born-RED, G2)", flagged]);
+            }
+            // bite 34b — a FLIPPED PASS surface with a MISSING capture MUST flag (G3 anti-evasion).
+            {
+                const ledger = opLedger([
+                    "| dock | PASS | PASS | PASS | Fable/DesignSync-reviewer-1 |",
+                    "| aurora | PASS | PASS | PASS | Fable/DesignSync-reviewer-2 |",
+                ]);
+                const fe = (p) => p.includes("aurora"); // aurora resolves, dock does NOT.
+                const flagged = chkOp(synRosterCap, ledger, fe).some(
+                    (f) => f.includes("OPERATIVE-CLOSE") && f.includes("`dock`") && f.includes("does not resolve"),
+                );
+                bites.push(["op-close-pass-missing-capture → FLAG (G3 anti-evasion)", flagged]);
+            }
+            // bite 34c — a SELF-AUTHORED verdict (a Fable author naming the builder) MUST flag (G4).
+            {
+                const ledger = opLedger([
+                    "| dock | PASS | PASS | PASS | Fable-BI.W-GESTALT-LEDGER-FILE |",
+                    "| aurora | PASS | PASS | PASS | Fable/DesignSync-reviewer-2 |",
+                ]);
+                const flagged = chkOp(synRosterCap, ledger, () => true).some(
+                    (f) => f.includes("OPERATIVE-CLOSE") && f.includes("`dock`") && f.includes("G4"),
+                );
+                bites.push(["op-close-self-authored → FLAG (non-authoring bar G4)", flagged]);
+            }
+            // bite 34d — a non-Fable / mechanical-fanout author MUST flag (G4).
+            {
+                const ledger = opLedger([
+                    "| dock | PASS | PASS | PASS | opus-fanout-builder |",
+                    "| aurora | PASS | PASS | PASS | Fable/DesignSync-reviewer-2 |",
+                ]);
+                const flagged = chkOp(synRosterCap, ledger, () => true).some(
+                    (f) => f.includes("OPERATIVE-CLOSE") && f.includes("`dock`") && f.includes("G4"),
+                );
+                bites.push(["op-close-non-fable-author → FLAG (G4 Fable-instance bar)", flagged]);
+            }
+            // bite 34e — a FULLY-FILED non-PENDING ledger with resolving captures + non-
+            //            authoring Fable authors raises NO operative-close failure (GREEN-after).
+            {
+                const ledger = opLedger([
+                    "| dock | PASS | PASS | FAIL | Fable/DesignSync-reviewer-1 |",
+                    "| aurora | PASS | PASS | PASS | Fable/DesignSync-reviewer-2 |",
+                ]);
+                const clean = !chkOp(synRosterCap, ledger, () => true).some((f) => f.includes("OPERATIVE-CLOSE"));
+                bites.push(["op-close-fully-filed → NO operative flag (GREEN-after target)", clean]);
+            }
+            // bite 34f — the REAL BI ledger under operativeClose IS the born-RED oracle:
+            //            the all-PENDING HEAD state reds the operative-close arm (G2).
+            {
+                const flagged = edictVerdictCheck({
+                    rosterSrc: realRoster, ledgerSrc: realLedger, canonSrc: realCanon, cardSrc: realCard,
+                    directiveLedger: realDir, operativeClose: true, fileExists: repoFileExists,
+                }).some((f) => f.includes("OPERATIVE-CLOSE") && f.includes("PENDING"));
+                bites.push(["real-BI-ledger-operative → FLAG PENDING (born-RED oracle)", flagged]);
+            }
         }
     }
 
