@@ -27,6 +27,10 @@ import { ROOT } from "./constellation.mjs";
 // parity gates / proof-gate-manifest-sound) keep resolving through the facade.
 import { GATES } from "./gates.manifest.mjs";
 export { GATES };
+// BI.W-PI-IN-CLOSE — Arm A writes the binding-π attestation after a GREEN `--run pi`.
+// The CLI dispatch in that leaf is guarded, so importing it never runs the sibling
+// gate (device-free by construction — it reads spec files + the pi-runner-manifest).
+import { writePiAttestation, parsePiReport } from "./proof-pi-attestation.mjs";
 
 /** The gate cmds tagged for a given aggregate, in manifest order. */
 export function gatesFor(mode) {
@@ -202,6 +206,7 @@ async function runPi() {
             `${PI_PROJECTS.length} projects [${PI_PROJECTS.join(", ")}] against the :5199 demo origin ` +
             `(served-app-sentinel fail-closed).`,
     );
+    const reportPath = resolve(PI_WORKSPACE, ".cache/pi-report.json");
     const args = [
         "test",
         ...specs,
@@ -214,7 +219,7 @@ async function runPi() {
         encoding: "utf8",
         env: {
             ...process.env,
-            PLAYWRIGHT_JSON_OUTPUT_NAME: resolve(PI_WORKSPACE, ".cache/pi-report.json"),
+            PLAYWRIGHT_JSON_OUTPUT_NAME: reportPath,
         },
     });
     if (res.status !== 0) {
@@ -226,6 +231,34 @@ async function runPi() {
         process.exit(1);
     }
     console.log(`\n[gates --run pi] the enrolled visual-π set PASSED (${specs.length} specs, both projects).`);
+
+    // BI.W-PI-IN-CLOSE — Arm A: write the fresh binding-π attestation. The run passed
+    // (exit 0), so the ledger is honest — parse the JSON report for the real per-spec
+    // verdicts (all pass by construction of the exit), fall back to the enrolled
+    // all-pass set on an unparseable report. The device-free proof:pi-attestation (Arm
+    // B, ['ci','release'], in --run full) re-verifies this at HEAD, so the tag-push
+    // publish path cannot fire without a fresh, full-coverage, all-green pi attestation.
+    let capturedCommit = null;
+    try {
+        capturedCommit = execSync("git rev-parse HEAD", { cwd: ROOT, encoding: "utf8" }).trim();
+    } catch {
+        capturedCommit = null;
+    }
+    const report = parsePiReport(reportPath);
+    const ledger = report
+        ? specs.map((f) => ({ spec: f, verdict: report.get(f) ?? "pass" }))
+        : undefined;
+    const att = writePiAttestation({
+        root: ROOT,
+        specs: ledger,
+        projects: PI_PROJECTS,
+        capturedCommit,
+    });
+    console.log(
+        `[gates --run pi] wrote docs/tranches/BI/PI-ATTESTATION.json (verdict ${att.verdict}, ` +
+            `${att.enrolledCount} specs, suiteHash ${att.suiteHash.slice(0, 12)}…) + the W-PI-IN-CLOSE-DELTA ledger. ` +
+            `proof:pi-attestation (the device-free tag-blocker) will re-verify it on the git-push publish path.`,
+    );
 }
 
 /**

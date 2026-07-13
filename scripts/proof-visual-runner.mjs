@@ -44,6 +44,13 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { resolve, relative } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+// BI.W-PI-IN-CLOSE — W4's real oracle. The binding paint is attested in
+// PI-ATTESTATION.json (written by the local real-GPU `gates.mjs --run pi` close
+// ceremony); Arm B `proof:pi-attestation` is the device-free tag-blocker. W4 READS
+// that attestation to REPORT whether the local paint ran GREEN (a reported born-red
+// fact — NOT a ci-failing violation; the ci arm asserts ENROLLMENT, the tag-blocker
+// asserts PAINT). Importing the leaf is guarded — it never runs the sibling gate.
+import { evaluatePiAttestation, readPiAttestation, PI_ATTESTATION_PATH, PI_ATTESTATION_REL } from "./proof-pi-attestation.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const WORKSPACE = resolve(ROOT, "tests-visual");
@@ -247,29 +254,36 @@ async function run() {
     if (!selfRegistered)
         violations.push("[W3 CLOSE-PATH] proof:visual-runner is not a registered package.json script");
 
-    // ── W4: BINDING-TRUTH-RAN — BORN-RED by design (the local close + the verdict
-    // ledger are owed to W-REFLECT3, Batch 7). Reported, NOT a ci-failing violation:
-    // the ci arm asserts ENROLLMENT (W1-W3), the local real-device run asserts PAINT.
-    // The DELTA's per-orphan verdict ledger + the GREEN run land at the close.
-    const DELTA_PATH = resolve(ROOT, "docs/tranches/BB/audit/visual/W-VISUAL-RUNNER-DELTA.md");
-    const deltaExists = existsSync(DELTA_PATH);
-    let deltaHasGreenRun = false;
-    let deltaHasVerdictLedger = false;
-    if (deltaExists) {
-        const delta = readFileSync(DELTA_PATH, "utf8");
-        deltaHasGreenRun = /--run pi[\s\S]*GREEN|GREEN[\s\S]*--run pi/.test(delta) && /both projects|coarse-touch/.test(delta);
-        deltaHasVerdictLedger = /verdict ledger|per-orphan/i.test(delta);
-    }
-    facts.w4_deltaExists = deltaExists;
-    facts.w4_localGreenRecorded = deltaHasGreenRun;
-    facts.w4_verdictLedgerComplete = deltaHasVerdictLedger;
-    // W4 is BORN-RED: surfaced in the artefact as a born-red note, NOT pushed into
-    // `violations` (which would ci-fail the gate). The close (W-REFLECT3) flips it by
-    // recording the real-device GREEN + the verdict ledger in the DELTA.
-    const w4BornRed =
-        !deltaExists || !deltaHasGreenRun || !deltaHasVerdictLedger;
+    // ── W4: BINDING-TRUTH-RAN — the REAL PI-ATTESTATION.json oracle (BI.W-PI-IN-CLOSE).
+    // W4 reads the attestation the local real-GPU `gates.mjs --run pi` close ceremony
+    // writes (docs/tranches/BI/PI-ATTESTATION.json) and REPORTS whether the binding-π
+    // paint ran GREEN — present + fresh (the enrolled-suite content hash recomputed at
+    // HEAD MATCHES) + all-green per-spec ledger + both projects. It flips born-RED →
+    // GREEN only on a fresh valid attestation. This is REPORTED, NOT pushed into
+    // `violations` (which would ci-fail proof:visual-runner, whose ci arm asserts
+    // ENROLLMENT): the actual tag-blocking red is the DEVICE-FREE `proof:pi-attestation`
+    // (Arm B, ["ci","release"], in --run full) which the SAME oracle backs. So CI proves
+    // ENROLLMENT here; the tag-blocker proves PAINT there.
+    const piAtt = readPiAttestation(PI_ATTESTATION_PATH);
+    const piEval = evaluatePiAttestation(piAtt, { root: ROOT });
+    facts.w4_attestationPath = PI_ATTESTATION_REL;
+    facts.w4_attestationPresent = piEval.facts.present;
+    facts.w4_attestationVerdict = piEval.facts.verdict ?? null;
+    facts.w4_suiteFresh =
+        piEval.facts.present &&
+        typeof piEval.facts.suiteHash?.embedded === "string" &&
+        piEval.facts.suiteHash.embedded === piEval.facts.suiteHash.recomputed;
+    facts.w4_ledgerGreen =
+        piEval.facts.present &&
+        (piEval.facts.failedSpecs?.length ?? 1) === 0 &&
+        (piEval.facts.missingSpecs ?? 1) === 0;
+    // W4 GREEN iff the attestation evaluates clean (present, fresh, full-coverage,
+    // all-green over both projects).
+    const w4BornRed = !piEval.ok;
     facts.w4_bornRed = w4BornRed;
-    facts.w4_owedTo = "W-REFLECT3 (Batch 7) — the local real-device `--run pi` GREEN + the per-orphan verdict ledger";
+    facts.w4_evalViolations = piEval.violations;
+    facts.w4_owedTo =
+        "the local real-GPU `gates.mjs --run pi` close ceremony (Arm A) — the per-spec verdict ledger + the fresh PI-ATTESTATION.json; the tag-blocker is proof:pi-attestation (Arm B)";
 
     const status = violations.length === 0 ? "pass" : "fail";
     writeGateArtifact(ARTIFACT, {
@@ -287,7 +301,7 @@ async function run() {
     console.log(`  W2 ENROLLED-ORPHAN-FREE: disk-non-private ${facts.diskNonPrivate} | enrolled ${facts.enrolled} | excluded ${facts.excluded} | orphans ${facts.orphans.length} | union==disk ${facts.enrollmentUnionMatchesDisk ? "✓" : "✗"}`);
     console.log(`  W2 SELF-TEST + COMPUTED: orphan-bites ${facts.selfTestOrphanBites ? "✓" : "✗"} | computed-from-disk ${facts.computedFromDisk && facts.manifestReadsDisk ? "✓" : "✗"}`);
     console.log(`  W3 NAMED-IN-CLOSE-PATH : gates:pi ${facts.gatesPiScript ? "✓" : "✗"} | self-registered ${facts.selfRegistered ? "✓" : "✗"} (ci-tag membership asserted by proof:tag-parity)`);
-    console.log(`  W4 BINDING-TRUTH-RAN   : ${facts.w4_bornRed ? "BORN-RED (owed to W-REFLECT3, Batch 7 — the local real-device --run pi GREEN + verdict ledger)" : "✓ (local GREEN + verdict ledger recorded)"}`);
+    console.log(`  W4 BINDING-TRUTH-RAN   : ${facts.w4_bornRed ? `BORN-RED (PI-ATTESTATION ${facts.w4_attestationPresent ? `present but ${facts.w4_suiteFresh ? "" : "STALE / "}${facts.w4_ledgerGreen ? "" : "non-green "}(verdict ${facts.w4_attestationVerdict})` : "absent"} — owed to the local real-GPU --run pi close ceremony; the tag-blocker is proof:pi-attestation)` : "✓ (fresh all-green PI-ATTESTATION — the local --run pi paint ran GREEN over both projects)"}`);
     if (violations.length) {
         console.log("\nVIOLATIONS (the ci-side enrollment-soundness arm):");
         for (const v of violations) console.log(`  x ${v}`);

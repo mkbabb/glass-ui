@@ -89,6 +89,18 @@ fi
 echo "[release] Arm A — the live-Metal ship ceremony (gates.mjs --run ship)..."
 node scripts/gates.mjs --run ship
 
+# BI.W-PI-IN-CLOSE — Arm A', the binding-π PAINT ceremony. On the real Mac/GPU with
+# the demo served (:5199), `gates.mjs --run pi` runs the ENROLLED tests-visual/*.spec.ts
+# set over BOTH Playwright projects [chromium-headless-new, coarse-touch],
+# served-app-sentinel fail-closed, and on a GREEN run WRITES the per-spec verdict ledger
+# + the derived suiteHash into docs/tranches/BI/PI-ATTESTATION.json (+ the DELTA). It
+# runs BEFORE `--run full` so the device-free `proof:pi-attestation` (Arm B, in the
+# union below) VERIFIES the FRESH attestation at HEAD — the tag can never fire on an
+# absent/stale/FAIL/partial binding-π run. This terminalizes the 3-tranche H-2 disease
+# (real-paint-verify never blocked the tag — the source-green/visually-broken class).
+echo "[release] Arm A' — the binding-π paint ceremony (gates.mjs --run pi over :5199)..."
+node scripts/gates.mjs --run pi
+
 # BB.W-CLOSE-BATTERY — the tag now re-runs `--run full` (the DEDUPED union
 # local ∪ ci ∪ release), NOT `--run release` alone. BA's close claimed
 # `--run local` green while `ci ⊂ local` carried 18 reds AND never ran the union
@@ -99,6 +111,9 @@ node scripts/gates.mjs --run ship
 # which re-verifies the SHIP-ATTESTATION.json Arm A just wrote, so the 5.0.0 tag is
 # doubly-fenced (live capture + device-free re-verify), and `RATCHET_BASELINES=={}`
 # (proof:no-god-module) is an ENUMERATED member of this union.
+# BI.W-PI-IN-CLOSE — the union ALSO carries `proof:pi-attestation` (['ci','release'])
+# which re-verifies the PI-ATTESTATION.json Arm A' (`--run pi`) just wrote, so the
+# binding-π suite (161 per-mechanism specs) is a machine-enforced tag precondition too.
 echo "[release] running the manifest 'full' gate set (local ∪ ci ∪ release)..."
 node scripts/gates.mjs --run full
 
