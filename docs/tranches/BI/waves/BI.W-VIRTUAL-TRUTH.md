@@ -36,3 +36,10 @@ B8 retire waves cite: it gains three sibling arms — the SPEEDTEST-ONLY-PAIR ar
 BORDER-PROGRESS-RETIRE arm (the 0-consumer + re-entry-trigger assert), and the METRICS-DEMO KEEP-guard
 arm (the 3-repo consumer floor) — each EXTENDING this gate, never a second framework. The
 `proof:consumer-truth` name in those three specs resolves HERE.
+
+## §Inbound acceptance constraints (the 2026-07-12 marking pass)
+
+- **atlas O-E9 — the document-native /virtual ask** is the SECOND-consumer signal this wave's
+  KEEP/FOLD decision must weigh BY NAME (a content-visibility substrate + slim viewport core):
+  the consumer-truth verdict cites it (build the slim core / decline with the atlas-visible
+  rationale) — either way the marks ledger row goes terminal.

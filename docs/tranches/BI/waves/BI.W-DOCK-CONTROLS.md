@@ -97,3 +97,16 @@ is live; `DockIconButton`+`DockTabButton` + 3 triggers are separate; A11Y-5 17×
 - **ax:dock-select-clamp-label** (`DockSelectTrigger` `clampLabel`, AT — DISPOSITION-REGISTER.json:91, book,
   1 consumer) → TERMINALIZED here: the `<DockTrigger>` fold establishes label policy NATIVELY (the greenfield
   is reinvented from iOS-27 first principles — label-clamp is a native trigger concern). Decided-terminal.
+
+## §Inbound acceptance constraints (the 2026-07-12 marking pass)
+
+- **atlas #persistent-end (M25, priority-bumped)**: the greenfield dock chassis ships BOTH leading
+  AND trailing persistent slots (`#persistent` + `#persistent-end`) — the ONE new slot atlas asked
+  for, native to the rebuild.
+- **value.js P5 — the ring contract**: `--dock-ring` (L13) is the ONE ring register the dock
+  controls read; the ACTIVE SEAT yields to consumer indicator content (the seam their letter-rail
+  ask names). The standalone letter-rail PRIMITIVE is DECLINED-TERMINAL — the greenfield dock +
+  DockStack facet mode IS the rail register (mechanism-distinctness law; value.js's W4-4 interim
+  is their pre-recorded permanent; a future letter-rail consumer binds the DockStack seam).
+- **speedtest cockpit label-ratio**: if the greenfield keeps the `cockpit` preset, its label ratio
+  adopts the consumer-calibrated **0.275** (their measured ask; was 0.42).

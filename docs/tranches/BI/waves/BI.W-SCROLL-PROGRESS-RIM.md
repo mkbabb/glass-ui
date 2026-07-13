@@ -46,3 +46,8 @@ convention change would silently shift the spectrum with zero born-RED). Constra
   SAME window (U-F77 ordering) — the roster row (asks-and-consumes §U-F30 watch) is the trigger.
 - Oracle at the value.js cut: the border-progress/scroll-rim spectrum renders byte-identical
   before/after, OR the co-migration lands in-window.
+
+- **atlas C1/#185 — the per-item stepper seam**: the rim exposes the per-item `[0,1]` scalar
+  contract (N items → N band segments or the equivalent under the rim grammar) so the atlas
+  dock-progress consume binds per-item, not only the aggregate — the successor-contract half of
+  ask #23.

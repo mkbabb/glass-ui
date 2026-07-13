@@ -77,3 +77,18 @@ source-gate framework (axe-class asserts expressible from source) whose arms are
 accessible-name arm, the LabeledField for/id arm (round-6 addition above), the bundle-decompose arm,
 and the SPLITCHARS-ARIA arm (that wave EXTENDS this gate). The per-arm axe π specs remain the binding
 paint truth; this gate is the device-free floor.
+
+## §Inbound acceptance constraints (the 2026-07-12 marking pass, round 2)
+
+- **value.js L6 — the slider token surface**: `--slider-thumb-border-w` + the spectrum hover recipe
+  land as consumer-retunable tokens on the SAME wave that owns the thumb (one slider owner).
+- **value.js P1-R3 cross-ref**: the UA-outline pairing is BI.W-XR-PRODUCER-REPAIRS' edit — SERIALIZE
+  the two waves' `Slider.vue` edits at build time (shared-file flag).
+- **The EasingPicker SelectTrigger accessible-name CHRONIC (R→S→T, three tranches — a disease row)**:
+  this wave authors the `proof:a11y` framework; the chronic dies here as a framework ARM (the
+  EasingPicker's SelectTrigger carries a real accessible name; born-RED bite). The L7 v2 FEATURE
+  batch (chrome prop, autoplay door, initialPoints, curve-glyph menu) is DECLINED-TERMINAL —
+  single-consumer feature growth; value.js's own pre-recorded interim stands; re-trigger: a second
+  named consumer. The travel-dot REST + PRM-at-source halves are defect-class and land with the arm.
+- **atlas O-E8/GU-3-ASK-A — StatusDot forced-colors**: under `forced-colors: active` the dot carries
+  a non-color signal (border/glyph) — a `proof:a11y` framework arm + bite (real A-class defect).

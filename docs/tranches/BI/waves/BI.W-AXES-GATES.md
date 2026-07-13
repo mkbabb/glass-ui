@@ -79,3 +79,9 @@ the evidence; each gate's self-test proves the detector is not hollow.
   WS8.4 owner is re-pointed to a real BI wave or the site is cured; born-RED on the phantom.
 - FAM-11 residue (BI-FAM11-GATE-RESIDUE): warm-identity RELABEL-or-ARM clause (the 'PRIMARY paint
   gate' label may not exceed its teeth) + the ba-gestalt manifest-note/ci-tag reconcile clause.
+
+## §Inbound acceptance constraints (the 2026-07-12 marking pass)
+
+- **atlas C2 — the Card as-child single-root guarantee**: the axes gate gains a clause — a
+  glass-ui compound surface documented `asChild`-capable renders EXACTLY ONE root element (the
+  directive-root guarantee atlas binds to); born-RED bite on a planted two-root asChild render.

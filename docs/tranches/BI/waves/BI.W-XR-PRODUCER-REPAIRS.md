@@ -81,3 +81,21 @@ suppression each REDs).
 - PKT-3 (compositor collapse/expand recipe): **already-B7** (ENTER-EXIT-LANDING/ACCORDION-PRESS
   family); PKT-4/L9 (skeleton shimmer seams): **DECLINED-TERMINAL** — the shipped compositor-only
   shimmer stands; a re-open needs a new mechanism (recorded).
+
+## §Scope widen (the 2026-07-12 marking pass, round 2 — the dist/build-correctness family joins)
+
+- **X4 — value.js A6 + L16**: the minifier must NOT drop the unprefixed `backdrop-filter: none`
+  (vendor-prefix collapse); ONE `-webkit-backdrop-filter` prefix policy is chosen + recorded
+  (gate-asserted on the fresh dist).
+- **X5 — value.js CC-1**: the registered-@property-inside-`color-mix()` collapse on bare
+  `.glass-wash` — the emitted dist paints the rung (fix the emission or the recipe form; the two
+  bare sites paint the day it lands).
+- **X6 — value.js P5 rider**: the WatercolorDot ring register is SOLID ≤48px (never a hairline —
+  their sizing law), one recipe edit.
+- **X7 — value.js P10/T-40**: display/heading/title WEIGHT tokenization (`--type-weight-display/
+  -heading/-title`); `text-title`'s hardcoded 700 reads the token (the bold-letterform root). The
+  SelectTrigger +1 size station is DECLINED-TERMINAL per ruling 16 (KEEP-AS-IS, fence recorded);
+  the token-indirect `--select-trigger-font-size` is the sanctioned future form if a second
+  consumer asks.
+- **X8 — atlas pencil-boil peer widen**: verify handmark compatibility against pencil-boil ^0.8.1
+  and widen the optionalPeer floor (clean single range, no dual).

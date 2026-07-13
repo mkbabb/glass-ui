@@ -80,3 +80,9 @@ section inline padding (12px) ≠ chrome padding (24px).
   capsule). Cited, not a second mandate row.
 - Liveness probe: a configurator section that does NOT read `var(--radius-ctx)` (a dead relay site) OR a
   padding-mismatch REDs.
+
+## §Inbound acceptance constraints (the 2026-07-12 marking pass)
+
+- **value.js L14 — the ConfiguratorRow double-label API** lands here (the configurator chassis
+  wave): label + sub-label as first-class props, no consumer `:deep()` reach. The crayon Slider
+  VARIANT half is DECLINED-TERMINAL (consumer-taste variant; presets-in-consumers; re-trigger ≥2).

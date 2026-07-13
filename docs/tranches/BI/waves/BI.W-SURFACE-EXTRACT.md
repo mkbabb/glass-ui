@@ -79,3 +79,16 @@ Chrome + Safari; pixel-identical to the pre-extract ground (0 delta). DELTA:
 
 None terminalized here (the chassis wave). `clear`, the glass-panel prune, the token rungs, and the blur
 mute are terminalized by the four dependent waves below.
+
+## §Inbound acceptance constraints (the 2026-07-12 marking pass)
+
+- **value.js P3 — the ladder rung asks** are INPUTS to the extracted surface grammar: the recessed
+  WELL rung (`--glass-bg-well` + `.glass-well`; tone-step ∈ [6%,10%] `--foreground` into `--card`,
+  oklab, default 8%), the seated field-chrome/`.input-bar` rung + cap seam, the scroll-header
+  rest-floor + bottom-feather knobs (Q9 EFFECT bracket 27–39%), tiers PUBLISH effective lightness,
+  the P-3 chroma-guard note. The grammar DECIDES each (admit as a rung / DECLINE-recorded with
+  value.js's pre-recorded interim-becomes-permanent fallback) — a silent omission REDs the marks
+  ledger.
+- **atlas GU-1/O-E2 — `--glass-key-direction`**: the under-shadow key-light register (shipped,
+  `glass/ladder-undershadow.css`) gains the direction token (atlas is the named consumer; verified
+  ABSENT on disk 2026-07-12). Token-first, one write retunes the lean library-wide.

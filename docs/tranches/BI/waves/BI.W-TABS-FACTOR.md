@@ -42,3 +42,12 @@ both engines, both modes; the proud-outset readback vs the ladder band; the PRM 
 ## Obligations
 The §0 user judgment (2e: sizing default + the default-flip ratification) · the visible-Safari
 device run rides BI.W-DOCK-DEVICE's batch.
+
+## §Inbound acceptance constraints (the 2026-07-12 marking pass)
+
+- **value.js P4/T-20 — the indicator-box parity oracle (BUILD-BY-SUBSUMPTION)**: the eyeglass
+  rebuild retires the anchor-arm double-count class — acceptance: indicator ≡ active-button box at
+  every breakpoint × orientation × scheme × engine (incl. the JS fallback), **ε ≤ 0.5px per edge,
+  both engines** (their O-8 oracle as our π constraint). Their DECLINE disposition was
+  escalate-to-owner; the rebuild subsumes it — if the rebuilt indicator cannot meet ε≤0.5, THEN the
+  escalation fires (recorded, not silent).

@@ -54,3 +54,10 @@ End + typeahead reads identically to `trigger=click`, Chrome + WebKit, BOTH mode
 - Terminalizes the ContextMenu fold: **FOLDED-TERMINAL** onto `Menu trigger=context`. Clean break, no alias.
 - Command survives as its own root (the CONTESTED cell resolved SURVIVE per the census — a distinct
   command-palette mechanism); NOT folded here.
+
+## §Inbound acceptance constraints (the 2026-07-12 marking pass)
+
+- **value.js L11 — dropdown-menu glass tokens**: the menu surface exposes `--dropdown-menu-bg/
+  border/shadow`-class consumer-retunable tokens (or the equivalent under this wave's factored
+  grammar — the NAME follows the factor, the retune AXIS is the ask). One menu token surface,
+  consumer-reachable, recorded in the outbound at land.

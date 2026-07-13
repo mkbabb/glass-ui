@@ -79,3 +79,12 @@ both modes. DELTA: `docs/tranches/BI/audit/visual/W-BLOB-SEAMS-DELTA.md`.
 - Row F (body-arrival pose): **TERMINAL — DECLINED** (the FSM `emerging` state is the sanctioned
   interim per the communiqué's own pre-recorded disposition).
 - PROMPT-RECAP row 314's wholesale "B5" routing: **RESOLVED** onto this wave (ADDENDUM entry).
+
+- **Scope widen (marking round 2)**: the per-row decision record ALSO adjudicates the
+  BLOB-GENESIS/Q1–Q10 engine-contract rows (HERO headroom · satellites-at-rest · SDF hit-test ·
+  mobile envelope · frame pacing · single-surface · sequencing · scale-aware deform · uBackdrop
+  refraction · atom stability) — each terminal (shipped-evidence / build-here / DECLINE-recorded);
+  the mercury-colony fission register is DISCHARGED-SHIPPED (their own dedup).
+- **L20/A5/P9-J2 — the `/blob/config` subpath**: if BLOB-RENAME-LAND's export reshape did not land
+  it, it lands HERE (the RP-2 coupling: L20 + GAP-L5 + the WGSL drain arrive in ONE window — the
+  value.js eager-budget win ~−33 KiB).

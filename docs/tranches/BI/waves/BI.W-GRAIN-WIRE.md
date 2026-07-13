@@ -63,3 +63,9 @@ Gate: **`proof:demo-control-live`** (NEW, `["local","ci"]`) — the story dead-r
 - Terminalizes **bld:demo-control-wire** (CHRONIC §2): BUILT (grain/paperGrain wired + the story-wide dead-ref
   audit). Liveness probe: a demo control model written-but-never-read REDs (the write-only-control detector is
   the never-again floor — the UF-J2 class cannot silently return).
+
+## §Inbound acceptance constraints (the 2026-07-12 marking pass)
+
+- **atlas O-E4 — the grain register**: the grain opacity band + the dark-arm grain treatment land
+  as consumer-visible tokens on this wave's wiring (atlas's band ask; their numbers are inputs,
+  the register is ours).

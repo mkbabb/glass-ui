@@ -136,3 +136,9 @@ double-smooths; `FourierField.vue:78` forces `interactive=false`. GREEN here.
   wave's constellation mapping does not re-open them. Terminal.
 - **The WebGPU wake ping-pong velocity texture** stays a BOOKED refinement (WebGPU-only; the honest degrade
   is the CPU burst term — present-but-simpler, never a fake). Recorded, no re-book.
+
+## §Inbound acceptance constraints (the 2026-07-12 marking pass)
+
+- **atlas O-E5 — renderMode-static + the WebGPU idle-gate**: the field core exposes the static
+  render mode (one-frame paint, no loop) + the idle-gate (the WebGPU device stays un-acquired
+  until first live need) — both consumer-visible seams on the core this wave builds.
