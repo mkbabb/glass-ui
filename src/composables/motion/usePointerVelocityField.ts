@@ -35,11 +35,29 @@
 // listener minted once (the AV.W7 useWebGLCanvas substrate pattern), never a fresh
 // matchMedia per event.
 //
+// THE ATTRACTOR + ENGAGEMENT EVOLUTION (BI.W-FIELD-CORE). Layer 0 grows TWO additive
+// outputs beside the byte-FROZEN velocity/acceleration/burst chain:
+//   - `engagement` — the smoothed active-envelope (0..1), a half-life ease of the
+//     `active` flag (authored as `halfLifeMs`, k derived internally). ε-gated so a
+//     fully-decayed envelope reads exactly 0 (the demand-loop park contract).
+//   - `attractor`/`attractorVelocity` — a HAND-ROLLED 2nd-order semi-implicit-Euler
+//     mass-spring-damper (`a = -ω²(x-target) - 2ζω·v`), the ONE eased-follow position
+//     the four per-viz mappings read. Its `target` is `lerp(restAnchor, position,
+//     engagement)` (it relaxes to `restAnchor` when the pointer lifts) with the flick
+//     `burst` coupled as an impulse LEAD (`target += burst·normalize(velocity)·leadGain`
+//     — the follow leads toward the heading on a fast move). ω derives from the SAME
+//     `(response, dampingFraction)` convention the four existing hand-rolled integrators
+//     use (`ω = 2π/response`, `mass` scaling the effective response — no second
+//     ω-formula). This is the SINGLE smoothing stage the blob/aurora read; the raw
+//     pointer feeds `setPointer` ONCE (the BI double-smooth kill — a renderer that read
+//     the attractor never re-smooths a pre-smoothed input).
+//
 // VUE-ONLY (off the SCC trap). The composable imports `vue` ONLY — no `@vueuse/core`,
 // no `@mkbabb/keyframes.js` — so it ships on the engine-free `/motion-core` subpath
 // AND the root barrel (the cursorModel precedent is module-local; this one is the
-// PUBLISHED generalization). The smoothing is a hand-rolled critically-damped lerp
-// (no spring engine), so no keyframes edge is introduced.
+// PUBLISHED generalization). The smoothing is a hand-rolled critically-damped lerp +
+// the hand-rolled mass-spring-damper attractor (no spring engine), so no keyframes edge
+// is introduced.
 
 import { onScopeDispose, readonly, ref, type Ref } from "vue";
 
@@ -79,6 +97,45 @@ export interface UsePointerVelocityFieldOptions {
      * Default true. (A deterministic viz capture that ACCEPTS live dynamics opts out.)
      */
     respectReducedMotion?: boolean;
+
+    // ── The attractor mass-spring-damper (Layer 0 evolution) ──────────────────
+    /**
+     * The attractor MASS (dimensionless; default 1). Heavier = a slower, weightier
+     * follow (the effective response scales with `√mass`). The `blobPullMapping`
+     * passes ≈1.6 (the visible weight); a light chrome follow keeps 1.
+     */
+    mass?: number;
+    /**
+     * The attractor DAMPING ratio ζ (default 0.85). ζ < 1 lets the follow overshoot
+     * slightly then settle — the overshoot IS the perceived weight (ζ=1 critical reads
+     * weightless). The `blobPullMapping` passes 0.78–0.85.
+     */
+    damping?: number;
+    /**
+     * The base attractor RESPONSE (seconds; default 0.32 — the DOCK_SPRING register).
+     * The effective response is `attractorResponse · √mass`; ω = 2π / effectiveResponse
+     * (the SAME `ω = 2π/response` convention the existing hand-rolled integrators use,
+     * with `mass` as the physical scaler — no second ω-formula).
+     */
+    attractorResponse?: number;
+    /**
+     * The burst-LEAD gain (default 0.12). A fast flick leads the attractor target
+     * toward the heading by `burst · normalize(velocity) · leadGain` — the follow
+     * anticipates the pointer's direction on a quick move.
+     */
+    leadGain?: number;
+    /**
+     * The rest anchor the attractor relaxes to when the pointer lifts (engagement → 0).
+     * Default centre `{0.5, 0.5}`.
+     */
+    restAnchor?: PointerVec2;
+    /**
+     * The engagement-envelope HALF-LIFE (ms; default 120). `engagement` eases toward
+     * `active ? 1 : 0`; after `halfLifeMs` the remaining gap halves (k derived
+     * internally — feel as half-life, never a raw per-tick lerp). Lower = snappier
+     * engage/disengage; a subtle-interactive background passes a longer half-life.
+     */
+    halfLifeMs?: number;
 }
 
 export interface UsePointerVelocityField {
@@ -97,6 +154,21 @@ export interface UsePointerVelocityField {
     /** The transient flick-burst impulse (0..1, decays over ~1s). */
     readonly burst: Readonly<Ref<number>>;
     /**
+     * The smoothed active-ENGAGEMENT envelope (0..1) — a half-life ease of `active`.
+     * The mappings scale their influence by it (strength = engagement·cfg.strength);
+     * the attractor target lerps `restAnchor → position` by it. ε-gated: a fully
+     * decayed envelope reads exactly 0 (the park contract).
+     */
+    readonly engagement: Readonly<Ref<number>>;
+    /**
+     * The mass-spring-damper ATTRACTOR position (0..1) — the ONE eased-follow the
+     * per-viz mappings read (the heavy weighty follow whose slight overshoot is the
+     * perceived mass). Relaxes to `restAnchor` when the pointer lifts.
+     */
+    readonly attractor: Readonly<Ref<PointerVec2>>;
+    /** The attractor's own VELOCITY (normalized-host units per second). */
+    readonly attractorVelocity: Readonly<Ref<PointerVec2>>;
+    /**
      * The `@pointermove` handler — schedules NO frame; it only stashes the raw target
      * (PRM-gated). The renderer's `tick` does the smoothing/derivation on its OWN
      * frame. Bind on the host (or call `setPointer` directly from a custom listener).
@@ -112,6 +184,13 @@ export interface UsePointerVelocityField {
      * clip-space coords). PRM-gated like `onPointerMove`.
      */
     setPointer: (xNorm: number, yNorm: number) => void;
+    /**
+     * Set the engagement `active` flag directly — for a push-API consumer that owns its
+     * own hit-test / active gate (the blob SDF hit-test, the aurora stage) rather than
+     * the bound `onPointerEnter`/`onPointerLeave`. Drives the smoothed `engagement`
+     * envelope. Idempotent.
+     */
+    setActive: (active: boolean) => void;
     /**
      * Advance the physics ONE renderer frame. The viz calls this from INSIDE its
      * existing frame callback with the frame `delta` (ms). NO own rAF — the renderer
@@ -157,6 +236,20 @@ export function usePointerVelocityField(
     const burstDecay = options.burstDecay ?? 0.96;
     const respectPRM = options.respectReducedMotion !== false;
 
+    // ── The attractor mass-spring-damper knobs (Layer 0 evolution). ω derives from
+    // the SAME `ω = 2π/response` convention the four existing integrators use, with
+    // `mass` scaling the effective response (heavier = slower/weightier) — no second
+    // ω-formula.
+    const mass = Math.max(0.05, options.mass ?? 1);
+    const zeta = Math.max(0, options.damping ?? 0.85);
+    const attractorResponse = Math.max(0.01, options.attractorResponse ?? 0.32);
+    const leadGain = options.leadGain ?? 0.12;
+    const restAnchor: PointerVec2 = options.restAnchor ?? { x: 0.5, y: 0.5 };
+    const halfLifeMs = Math.max(1, options.halfLifeMs ?? 120);
+    const omega = (2 * Math.PI) / (attractorResponse * Math.sqrt(mass));
+    // ε below which the engagement envelope reads exactly 0 (the demand-park contract).
+    const ENGAGE_EPS = 1e-3;
+
     // ── The cached PRM ref (AV.W7 substrate pattern) — ONE matchMedia + change
     // listener for the field's lifetime, NOT a fresh matchMedia per pointer event.
     const canMatch =
@@ -177,6 +270,10 @@ export function usePointerVelocityField(
     const speed = ref(0);
     const acceleration = ref<PointerVec2>({ x: 0, y: 0 });
     const burst = ref(0);
+    // ── The attractor + engagement state (the additive Layer 0 outputs). ──────────
+    const engagement = ref(0);
+    const attractor = ref<PointerVec2>({ ...restAnchor });
+    const attractorVelocity = ref<PointerVec2>({ x: 0, y: 0 });
 
     function reset(): void {
         velocity.value = { x: 0, y: 0 };
@@ -186,6 +283,10 @@ export function usePointerVelocityField(
         // Hold the smoothed position at the live target (a reset is a freeze, not a
         // re-center) — the dynamics zero, the placement stays.
         smoothedPosition.value = { ...position.value };
+        // The attractor freezes too: its velocity zeroes (no live momentum) while its
+        // position + the engagement envelope HOLD (a freeze, not a re-center — the
+        // placement survives, the dynamics stop).
+        attractorVelocity.value = { x: 0, y: 0 };
     }
 
     function setPointer(xNorm: number, yNorm: number): void {
@@ -213,6 +314,9 @@ export function usePointerVelocityField(
     }
     function onPointerLeave(): void {
         active.value = false;
+    }
+    function setActive(next: boolean): void {
+        active.value = next;
     }
 
     // Advance the physics ONE renderer frame. The viz owns the rAF; this is the
@@ -262,6 +366,38 @@ export function usePointerVelocityField(
         speed.value = moveSpeed;
         acceleration.value = { x: ax, y: ay };
         burst.value = nextBurst;
+
+        // ── The engagement envelope — a half-life ease toward `active ? 1 : 0` (k
+        //    derived from the authored half-life). ε-gated so a decayed envelope reads
+        //    exactly 0 (the demand-park contract). Additive: the existing outputs above
+        //    are byte-frozen; this reads only `active` + the prior engagement.
+        const engageTarget = active.value ? 1 : 0;
+        const engageK = 1 - Math.pow(2, -deltaMs / halfLifeMs);
+        let nextEngage = engagement.value + (engageTarget - engagement.value) * engageK;
+        if (engageTarget === 0 && nextEngage < ENGAGE_EPS) nextEngage = 0;
+        else if (engageTarget === 1 && nextEngage > 1 - ENGAGE_EPS) nextEngage = 1;
+        engagement.value = nextEngage;
+
+        // ── The attractor mass-spring-damper (semi-implicit / symplectic Euler: update
+        //    velocity FIRST, then position — explicit Euler diverges at low fps). The
+        //    target relaxes `restAnchor → position` by engagement, with the flick burst
+        //    coupled as an impulse LEAD toward the heading.
+        let tgtX = restAnchor.x + (position.value.x - restAnchor.x) * nextEngage;
+        let tgtY = restAnchor.y + (position.value.y - restAnchor.y) * nextEngage;
+        const vMag = Math.hypot(vx, vy);
+        if (vMag > 1e-4 && leadGain !== 0) {
+            const lead = (nextBurst * leadGain) / vMag;
+            tgtX += vx * lead;
+            tgtY += vy * lead;
+        }
+        const av = attractorVelocity.value;
+        const ap = attractor.value;
+        const accAx = -omega * omega * (ap.x - tgtX) - 2 * zeta * omega * av.x;
+        const accAy = -omega * omega * (ap.y - tgtY) - 2 * zeta * omega * av.y;
+        const navx = av.x + accAx * dt;
+        const navy = av.y + accAy * dt;
+        attractorVelocity.value = { x: navx, y: navy };
+        attractor.value = { x: ap.x + navx * dt, y: ap.y + navy * dt };
     }
 
     function dispose(): void {
@@ -278,10 +414,14 @@ export function usePointerVelocityField(
         speed: readonly(speed) as Readonly<Ref<number>>,
         acceleration: readonly(acceleration) as Readonly<Ref<PointerVec2>>,
         burst: readonly(burst) as Readonly<Ref<number>>,
+        engagement: readonly(engagement) as Readonly<Ref<number>>,
+        attractor: readonly(attractor) as Readonly<Ref<PointerVec2>>,
+        attractorVelocity: readonly(attractorVelocity) as Readonly<Ref<PointerVec2>>,
         onPointerMove,
         onPointerEnter,
         onPointerLeave,
         setPointer,
+        setActive,
         tick,
         reset,
         dispose,

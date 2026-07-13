@@ -34,12 +34,9 @@ useCursorInteraction(stageRef, () => props.config, {
         auroraRef.value?.setCursor(x, y, strength);
     },
     clearCursor: () => auroraRef.value?.clearCursor(),
-    // Feed the per-move delta into the velocity-reactive flow (a fast flick →
-    // a transient swirl-burst). The runtime PRM-gates the write-path.
-    injectVelocity: (dx, dy) => {
-        if (!props.interactive) return;
-        auroraRef.value?.injectCursorVelocity(dx, dy);
-    },
+    // BI.W-FIELD-CORE — a single position write (setCursor); the shared pointer field
+    // DERIVES the velocity + flick-burst from the smoothed position deltas in its tick (the
+    // ONE smoothing stage — the per-move delta re-feed retired with cursorModel).
 });
 </script>
 
@@ -48,9 +45,12 @@ useCursorInteraction(stageRef, () => props.config, {
          (`rounded-card overflow-hidden`) so the radius reaches the canvas PIXELS, not
          just the Configurator panel frame; `.aurora-root` keeps its `contain:content`
          so the corners clip the live field, never a square canvas behind a round panel. -->
+    <!-- BI.W-AURORA-VIBRANCY (UF-E4) — the `min-h-[30rem]` floor grows the "core chosen
+         aurora space" (the studio canvas larger); the stage still flexes `h-full` up to the
+         bumped VizStudio height envelope, but never collapses below a generous minimum. -->
     <div
         ref="stageRef"
-        class="relative h-full w-full cursor-crosshair touch-none select-none rounded-card overflow-hidden"
+        class="relative h-full w-full min-h-[30rem] cursor-crosshair touch-none select-none rounded-card overflow-hidden"
     >
         <Aurora ref="auroraRef" :config="config" />
         <NucleiOverlay

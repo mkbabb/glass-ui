@@ -1,72 +1,115 @@
-// AW.W8 — the interaction PRM-suppression suite.
+// BI.W-FIELD-CORE — the interaction PRM-suppression suite (re-pointed off the retired
+// cursorModel onto the shared `usePointerVelocityField`, the aurora cursor's successor).
 //
-// Every interactive axis (cursor-as-light, velocity-burst, scroll, the WebGPU wake)
-// routes through the MASTER TEMPO SCALAR — the single suppression seam PRM + the
-// DockBackgroundToggle pause converge on. This suite asserts the tempo-scalar
-// contract on the CPU cursor model (the GPU axes' suppression is structural — the
-// tempo gates the injection in the shader uniforms / the wake advect pass):
+// Every interactive axis (cursor-as-light, velocity-burst, scroll, the WebGPU wake) routes
+// through the MASTER TEMPO SCALAR — the single suppression seam PRM + the DockBackgroundToggle
+// pause converge on. In the field era the tempo gates the field TICK: `pointerField.tick(0)`
+// (the deterministic FREEZE) zeroes the velocity + burst; a live tick retains them. This suite
+// asserts the tempo-scalar contract on the FIELD (the CPU cursor now IS the field):
 //
-//   - tempo=0 (PRM) FREEZES the velocity + burst — advanceCursor with tempo=0 zeroes
-//     them (the field collapses to stillness under reduce).
-//   - tempo=1 retains them (the axis animates when not suppressed).
-//   - injectCursorVelocity adds a transient burst (the flick → swirl-burst); the
-//     burst is bounded [0,1].
-//   - the velocity is delta-clamped (a teleport does not spike a giant burst).
+//   - tick(0) (PRM/tempo=0) FREEZES the velocity + burst to stillness.
+//   - a live tick with movement RETAINS/GROWS them (the axis animates when not suppressed).
+//   - the flick burst is bounded [0,1].
+//   - the field DERIVES velocity (no per-move re-implementation — the double-smooth is dead).
+//   - `auroraCursorMapping` projects engagement→strength (the cursor-local luminance lean that
+//     reads on the smooth medium — the T-38 fix), attractor→cursor position.
 
 import { describe, expect, it } from "vitest";
+import { effectScope } from "vue";
+import { usePointerVelocityField } from "@glass/composables/motion/usePointerVelocityField";
 import {
-    createCursorState,
-    advanceCursor,
-    injectCursorVelocity,
-} from "@glass/components/custom/aurora/composables/cursorModel";
+    auroraCursorMapping,
+    snapshotField,
+} from "@glass/composables/motion/pointerFieldMappings";
 
-describe("AW.W8.1 — the master tempo scalar freezes the interactive field under PRM", () => {
-    it("tempo=0 (reduced-motion) FREEZES the velocity + burst to stillness", () => {
-        const c = createCursorState();
-        injectCursorVelocity(c, 0.08, -0.05); // a flick
-        expect(c.burst).toBeGreaterThan(0);
-        expect(Math.hypot(c.velX, c.velY)).toBeGreaterThan(0);
-        // One advance under tempo=0 zeroes both (the suppression seam). Use abs to
-        // accept the signed-zero (-0) the multiply-by-zero produces.
-        advanceCursor(c, 0);
-        expect(c.burst).toBe(0);
-        expect(Math.abs(c.velX)).toBe(0);
-        expect(Math.abs(c.velY)).toBe(0);
+// The field calls `onScopeDispose`; run it inside an effect scope so the disposer registers.
+// `respectReducedMotion:false` so the deterministic tick(0) drives the freeze (not the env's
+// matchMedia, which happy-dom may not provide).
+function withField<T>(fn: (field: ReturnType<typeof usePointerVelocityField>) => T): T {
+    const scope = effectScope();
+    const out = scope.run(() =>
+        fn(usePointerVelocityField({ respectReducedMotion: false })),
+    ) as T;
+    scope.stop();
+    return out;
+}
+
+// Drive a flick: move from centre toward a corner over a few ticks so the smoothed position
+// moves and the derived velocity + burst grow.
+function flick(field: ReturnType<typeof usePointerVelocityField>): void {
+    field.setActive(true);
+    field.setPointer(0.5, 0.5);
+    field.tick(16);
+    field.setPointer(0.9, 0.9);
+    field.tick(16);
+    field.tick(16);
+}
+
+describe("BI.W-FIELD-CORE — the master tempo scalar (tick(0)) freezes the interactive field under PRM", () => {
+    it("tick(0) FREEZES the velocity + burst to stillness", () => {
+        withField((field) => {
+            flick(field);
+            expect(field.burst.value).toBeGreaterThan(0);
+            expect(Math.hypot(field.velocity.value.x, field.velocity.value.y)).toBeGreaterThan(0);
+            // tick(0) is the deterministic FREEZE (the tempo=0 / PRM seam).
+            field.tick(0);
+            expect(field.burst.value).toBe(0);
+            expect(Math.abs(field.velocity.value.x)).toBe(0);
+            expect(Math.abs(field.velocity.value.y)).toBe(0);
+        });
     });
 
-    it("tempo=1 RETAINS the velocity + burst (the axis animates when not suppressed)", () => {
-        const c = createCursorState();
-        injectCursorVelocity(c, 0.08, -0.05);
-        const burst0 = c.burst;
-        advanceCursor(c, 1);
-        // The burst decays (×0.96) but is NOT zeroed — the flick eases out over ~1s.
-        expect(c.burst).toBeGreaterThan(0);
-        expect(c.burst).toBeLessThan(burst0);
+    it("a live tick RETAINS/GROWS the velocity + burst (the axis animates when not suppressed)", () => {
+        withField((field) => {
+            flick(field);
+            const burst0 = field.burst.value;
+            // Another live tick keeps the field alive (a decaying burst is still > 0).
+            field.tick(16);
+            expect(field.burst.value).toBeGreaterThan(0);
+            expect(burst0).toBeGreaterThan(0);
+        });
     });
 
-    it("the burst decays toward zero over ~1s at tempo=1 (the flick eases out)", () => {
-        const c = createCursorState();
-        injectCursorVelocity(c, 0.1, 0); // a strong flick
-        for (let i = 0; i < 60; i++) advanceCursor(c, 1); // ~1s at 60fps
-        expect(c.burst).toBeLessThan(0.15); // ≈0.96^60 ≈ 0.09 of the initial
+    it("the burst is bounded [0,1] even under a large teleport move", () => {
+        withField((field) => {
+            field.setActive(true);
+            field.setPointer(0, 0);
+            field.tick(16);
+            field.setPointer(1, 1); // a full-span jump
+            field.tick(16);
+            field.tick(16);
+            expect(field.burst.value).toBeLessThanOrEqual(1);
+            expect(field.burst.value).toBeGreaterThanOrEqual(0);
+        });
     });
 
-    it("injectCursorVelocity clamps the per-move delta (a teleport does not spike a giant burst)", () => {
-        const c = createCursorState();
-        injectCursorVelocity(c, 5.0, 5.0); // a teleport (off-screen → on)
-        // velocity is delta-clamped to ±0.12, so the burst stays bounded.
-        expect(c.burst).toBeLessThanOrEqual(1);
-        expect(Math.abs(c.velX)).toBeLessThanOrEqual(0.12 * 0.31); // eased fraction of the clamp
+    it("auroraCursorMapping drives strength off engagement (the smooth-medium luminance lean)", () => {
+        withField((field) => {
+            // Inactive → engagement decays → strength 0.
+            field.setActive(false);
+            field.tick(16);
+            const rest = auroraCursorMapping(snapshotField(field), { strength: 0.8 });
+            expect(rest.strength).toBeLessThan(0.05);
+            // Engaged → engagement ramps → strength rises toward the ceiling.
+            field.setActive(true);
+            field.setPointer(0.7, 0.3);
+            for (let i = 0; i < 30; i++) field.tick(16);
+            const active = auroraCursorMapping(snapshotField(field), { strength: 0.8 });
+            expect(active.strength).toBeGreaterThan(rest.strength);
+            expect(active.strength).toBeLessThanOrEqual(0.8);
+        });
     });
 
-    it("a partial tempo (0<tempo<1) scales the retained fraction (the integration step, not the clock)", () => {
-        const c1 = createCursorState();
-        const c2 = createCursorState();
-        injectCursorVelocity(c1, 0.08, 0);
-        injectCursorVelocity(c2, 0.08, 0);
-        advanceCursor(c1, 1.0);
-        advanceCursor(c2, 0.5);
-        // The half-tempo cursor retains LESS burst (tempo multiplies the retained fraction).
-        expect(c2.burst).toBeLessThan(c1.burst);
+    it("the attractor eases toward the pointer (the ONE smoothing stage — no double-smooth)", () => {
+        withField((field) => {
+            field.setActive(true);
+            field.setPointer(0.9, 0.1);
+            const start = { ...field.attractor.value };
+            for (let i = 0; i < 40; i++) field.tick(16);
+            const end = field.attractor.value;
+            // The attractor moved from centre toward the target (a real mass-spring follow).
+            expect(Math.abs(end.x - 0.9)).toBeLessThan(Math.abs(start.x - 0.9));
+            expect(Math.abs(end.y - 0.1)).toBeLessThan(Math.abs(start.y - 0.1));
+        });
     });
 });

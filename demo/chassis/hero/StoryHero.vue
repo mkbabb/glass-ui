@@ -3,7 +3,7 @@
 // CARD floating OVER a per-page background substrate. The glass card reads
 // glass-first by default (the library's default register), so a page composing
 // this DEMONSTRATES the glass it ships: a translucent card over a live aurora /
-// constellation / fourier field, or a quiet paper / blueprint-grid wash.
+// constellation field or a liquid-grid, or a quiet paper / blueprint-grid wash.
 //
 // A page declares its background ONCE on its manifest row (`background:`); the
 // page chassis (`StoryPage`) reads that descriptor and passes it here. Two
@@ -12,15 +12,14 @@
 //     the universal shape every content page wears.
 //   - variant="hero"           — a full-bleed glassy hero card floating over the
 //     live substrate; the front-door demonstration.
-import { computed } from "vue";
+import { computed, ref, watch } from "vue";
 import { Card, type CardTier } from "@glass/components/ui/card";
 import { Aurora } from "@glass/components/custom/aurora";
 import { Constellation } from "@glass/components/custom/constellation";
-import { FourierField } from "@glass/components/custom/fourier-field";
 import { LiquidGrid } from "@glass/components/custom/liquid-grid";
 import { LIQUID_GRID_PRESET_SUFFUSE } from "../../stories/substrates/presets";
-import { defaultBlobColorResolver } from "@glass/composables/color";
 import { useTokenColor } from "@glass/composables/dom/useTokenColor";
+import { useRoutePointer } from "@glass/composables/motion/useRoutePointer";
 import { useGlobalDark } from "@glass/composables/dark/useGlobalDark";
 import { cn } from "@glass/utils/cn";
 import StoryHeader from "./StoryHeader.vue";
@@ -156,6 +155,26 @@ const auroraConfig = computed(() => heroAuroraConfig(auroraPalette.value));
 // explicit per-page `intensity` always wins (the consumer override is honored).
 const { isDark } = useGlobalDark();
 
+// BI.W-FIELD-CORE / BI.W-CONSTELLATION-DEDUPE — the interactive-BACKGROUND standard. StoryHero is
+// the ROUTE chassis, so it installs the ONE capture-phase window pointer broadcaster
+// (`useRoutePointer`) per route + PROVIDES it. Every full-bleed `pointer-events:none` background viz
+// below reads this one instance and feeds its own field — the canvases stay `pointer-events:none`
+// (they cannot listen for themselves), yet the backgrounds react to the pointer:
+//   - Constellation reads it via `:background-interactive` (a SUBTLE well over the shared field).
+//   - Aurora is threaded HERE via `setCursor` (the cursor-swirl attractor; no aurora-component edit).
+const route = useRoutePointer();
+
+// The aurora full-bleed background reads the route pointer via its `setCursor` seam (the cursor
+// mechanism is W-FIELD-CORE's; this only FEEDS it). The canvas stays `pointer-events:none` — the
+// broadcaster captures at the window, so the aurora never occludes the page. A modest strength keeps
+// the background swirl subtle; the aurora field smooths it. `active === false` (PRM / off-viewport)
+// relaxes the swirl.
+const auroraRef = ref<InstanceType<typeof Aurora> | null>(null);
+watch([() => route.pointer.value, () => route.active.value], ([pointer, active]) => {
+    if (kind.value !== "aurora") return;
+    auroraRef.value?.setCursor(pointer.x, pointer.y, active ? 0.6 : 0);
+});
+
 // The per-page opacity ceiling — how far back the live substrate recedes behind
 // the card content. A hero sits richer; a contained page sits quieter; DARK lifts
 // both so the field is not suppressed by the near-black page + the wash tint.
@@ -209,7 +228,7 @@ function drawFocal(
 const isHero = computed(() => props.variant === "hero");
 
 // A GooBlob is a CONTAINED creature (aspect-ratio:1), NOT a full-bleed page-field
-// like the aurora/constellation/fourier drift surfaces — so it is NOT a story
+// like the aurora/constellation drift surfaces — so it is NOT a story
 // background kind (W-BLOB-REBUILD: the prior `blob` page-background was a category
 // error that blew the contained creature out to the full article width and buried
 // the page). The blob's home is its contained studio + the empty-states mascot.
@@ -217,13 +236,17 @@ const liveBackdrop = computed(
     () =>
         kind.value === "aurora" ||
         kind.value === "constellation" ||
-        kind.value === "fourier" ||
         kind.value === "liquid-grid",
 );
 
 // The suffusion liquid-grid config (a near-invisible large-pitch slow-warp grid behind
 // page content — the §E site-wide subtle background; presets-in-consumers).
 const liquidGridConfig = LIQUID_GRID_PRESET_SUFFUSE;
+
+// A STATIC declared backdrop — the calm blueprint-grid / paper-grain wash. Not a
+// live GL field, but a real declared background that is the WHOLE-PAGE wash BEHIND
+// the content.
+const staticBackdrop = computed(() => kind.value === "grid" || kind.value === "paper");
 
 // ── Full-bleed hero (W-SB-REVERIFY — B16/B22) ────────────────────────────────
 // A HERO page over a LIVE substrate paints the field FULL-BLEED behind the WHOLE
@@ -233,12 +256,19 @@ const liquidGridConfig = LIQUID_GRID_PRESET_SUFFUSE;
 // `position: fixed; inset: 0` (the KonamiAurora full-bleed idiom) so it fills the
 // viewport behind the page header AND the content, and the content sits DIRECTLY
 // over the live field on a thin readability plate — no boxing, no wash-out.
-const fullBleed = computed(() => isHero.value && liveBackdrop.value);
-
-// A STATIC declared backdrop — the calm blueprint-grid / paper-grain wash. Not a
-// live GL field, but a real declared background that is the WHOLE-PAGE wash BEHIND
-// the content.
-const staticBackdrop = computed(() => kind.value === "grid" || kind.value === "paper");
+//
+// BI.W-AUTH-SHELL-BG — a BESPOKE composition (`heroTitle: false` — it hand-authors
+// its OWN hero <h1> AND its OWN complete layout) ALSO floats its content directly,
+// NEVER inside a chassis card, even over a STATIC wash. auth-shell is the case: it
+// retired its 4.87MP live-fourier page-bg for a calm `grid` wash, and its self-owned
+// split-panel composition must not be double-framed by a StoryHero card. The live
+// heroes (hero.vue/constellation) already float via `liveBackdrop`; this adds the
+// static-wash bespoke case (the ONLY `heroTitle: false` static hero is auth-shell).
+const fullBleed = computed(
+    () =>
+        isHero.value &&
+        (liveBackdrop.value || (staticBackdrop.value && !props.heroTitle)),
+);
 
 // BC.W-GRID-SIMPLE — the BACKGROUND-mount full-bleed condition. The crisp grid /
 // paper wash gets the SAME `.story-hero-bg--bleed` (`position: fixed; inset: 0`)
@@ -300,61 +330,56 @@ const bgTeleported = computed(() =>
              wash behind the rounded card — the white corner wedges); the boxed
              arm stays in place (`:disabled`). -->
         <Teleport to="body" :disabled="!bgTeleported">
-        <Aurora
-            v-if="kind === 'aurora'"
-            :config="auroraConfig"
-            :opacity-ceiling="opacityCeiling"
-            :class="cn('story-hero-bg', fullBleed && 'story-hero-bg--bleed')"
-            aria-hidden="true"
-        />
-        <Constellation
-            v-else-if="kind === 'constellation'"
-            seed="glass-ui"
-            :count="56"
-            :link="140"
-            :opacity-ceiling="opacityCeiling"
-            :draw-overlay="drawFocal"
-            :class="cn('story-hero-bg', fullBleed && 'story-hero-bg--bleed')"
-        />
-        <FourierField
-            v-else-if="kind === 'fourier'"
-            color="var(--viz-fourier, hsl(358 72% 52%))"
-            :color-resolver="defaultBlobColorResolver"
-            :intensity="opacityCeiling"
-            seed="glass-ui-hero"
-            :class="cn('story-hero-bg', fullBleed && 'story-hero-bg--bleed')"
-            aria-hidden="true"
-        />
-        <!-- The SUFFUSION register: a near-invisible LIQUID liquid-grid full-bleed behind
+            <Aurora
+                v-if="kind === 'aurora'"
+                ref="auroraRef"
+                :config="auroraConfig"
+                :opacity-ceiling="opacityCeiling"
+                :class="cn('story-hero-bg', fullBleed && 'story-hero-bg--bleed')"
+                aria-hidden="true"
+            />
+            <Constellation
+                v-else-if="kind === 'constellation'"
+                seed="glass-ui"
+                :count="56"
+                :link="140"
+                :opacity-ceiling="opacityCeiling"
+                :draw-overlay="drawFocal"
+                background-interactive
+                :class="cn('story-hero-bg', fullBleed && 'story-hero-bg--bleed')"
+            />
+            <!-- The SUFFUSION register: a near-invisible LIQUID liquid-grid full-bleed behind
              page content (NOT boxed in the card — the `.story-hero-bg--bleed` escape; the
              "not displayed in the card" fix). The static `grid` kind below stays the
              zero-GL default. -->
-        <LiquidGrid
-            v-else-if="kind === 'liquid-grid'"
-            :config="liquidGridConfig"
-            :class="cn('story-hero-bg', fullBleed && 'story-hero-bg--bleed')"
-        />
-        <!-- BC.W-GRID-SIMPLE — the static crisp grid / paper wash mounts FULL-BLEED
+            <LiquidGrid
+                v-else-if="kind === 'liquid-grid'"
+                :config="liquidGridConfig"
+                :class="cn('story-hero-bg', fullBleed && 'story-hero-bg--bleed')"
+            />
+            <!-- BC.W-GRID-SIMPLE — the static crisp grid / paper wash mounts FULL-BLEED
              (`.story-hero-bg--bleed` → `position: fixed; inset: 0`) so it is the
              WHOLE-PAGE background BEHIND the content, NOT a `-z-10` layer clipped
              inside the rounded `.story-hero` and NOT read through a blurred `wash`
              card. The crisp `.grid-bg` recipe (story-hero.css) reads the shared
              `--grid-*` rhythm. -->
-        <div
-            v-else-if="kind === 'grid'"
-            :class="cn('story-hero-bg grid-bg', bgFullBleed && 'story-hero-bg--bleed')"
-            aria-hidden="true"
-        />
-        <div
-            v-else-if="kind === 'paper'"
-            :class="
-                cn(
-                    'story-hero-bg story-bg-paper paper-grain-overlay',
-                    bgFullBleed && 'story-hero-bg--bleed',
-                )
-            "
-            aria-hidden="true"
-        />
+            <div
+                v-else-if="kind === 'grid'"
+                :class="
+                    cn('story-hero-bg grid-bg', bgFullBleed && 'story-hero-bg--bleed')
+                "
+                aria-hidden="true"
+            />
+            <div
+                v-else-if="kind === 'paper'"
+                :class="
+                    cn(
+                        'story-hero-bg story-bg-paper paper-grain-overlay',
+                        bgFullBleed && 'story-hero-bg--bleed',
+                    )
+                "
+                aria-hidden="true"
+            />
         </Teleport>
 
         <!-- Full-bleed hero — the content floats DIRECTLY over the live field on a
@@ -395,12 +420,7 @@ const bgTeleported = computed(() =>
                 <h1
                     v-if="showHeroTitle"
                     :data-hero-scale="heroScale"
-                    :class="
-                        cn(
-                            'story-hero-title story-hero-title--enter',
-                            heroClass,
-                        )
-                    "
+                    :class="cn('story-hero-title story-hero-title--enter', heroClass)"
                 >
                     <!-- BG.W-HERO-FIT — the #title-ornament slot carries a page's
                          bespoke inline ornament (the ℱ wordmark) INSIDE the ONE
@@ -457,12 +477,7 @@ const bgTeleported = computed(() =>
                 <h1
                     v-if="showHeroTitle"
                     :data-hero-scale="heroScale"
-                    :class="
-                        cn(
-                            'story-hero-title story-hero-title--enter',
-                            heroClass,
-                        )
-                    "
+                    :class="cn('story-hero-title story-hero-title--enter', heroClass)"
                 >
                     <!-- BG.W-HERO-FIT — the #title-ornament slot carries a page's
                          bespoke inline ornament (the ℱ wordmark) INSIDE the ONE
