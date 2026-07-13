@@ -144,15 +144,13 @@ The field is not a diagram floating over dead cream — it is a living LOOM that
 LIGHTS its own warm ground, with a head bead that squashes-and-stretches and a
 chain inked with a cel-shadow. Three orthogonal mechanisms, all in this module:
 
-- **§2a — the comet lights the field (the lit-field seam).** `useFourierField`
-  derives the head's `[0,1]²` UV once per frame (`headUnit()` → `partialSumAt` over
-  N harmonics, mapped through the SAME cached `computeFourierFit` the GPU comet
-  paints from, with the cursor-lean folded in so it co-locates with the painted
-  head). It is handed to the SFC via the `onHeadFrame` hook — fired from INSIDE the
-  ONE clock's `onFrame` (no second rAF) — which writes `--ff-head-xy` (per frame) +
-  `--ff-head-hue` (reactively off the palette) on its host. The page-background warm
-  field reads those vars to TRANSLATE a phosphor bloom sprite to the head. PRM →
-  the var is present + STABLE at the frozen-T head (the bloom seats, no sweep).
+- **§2a — the comet is lit by the GPU head quad (BI.W-FOURIER-RIBBON).** The head's
+  halo + saturated core + white specular is painted by the ribbon's HEAD layer (an
+  instanced quad running the exact `headAniso` 3-layer SDF) — the comet lights the
+  field on the compositor, ON the GPU. The prior per-frame `--ff-head-xy`/`--ff-head-hue`
+  `setProperty` restyle bridge (a `headUnit()` CPU derive handed to a CSS phosphor-bloom
+  SPRITE) is RETIRED: it paid a style recalc every frame and had ZERO live consumer (no
+  CSS read the vars). No per-frame CSS restyle survives.
 - **§2b — the squash-and-stretch head (the one new shader math).** The round head
   SDF becomes a volume-preserving anisotropic ellipse off the local travel tangent
   `T` (derived in-shader from `curveSamples[0]` vs `[1]` — the SAME evaluator on

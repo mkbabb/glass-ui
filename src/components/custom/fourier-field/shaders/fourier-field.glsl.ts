@@ -1,37 +1,88 @@
-// BC.W-VIZ-FOURIER — the WebGL2 GLSL twin (the genuinely-absent-tail fallback ONLY).
+// BI.W-FOURIER-RIBBON — the WebGL2 INSTANCED-RIBBON programs (the WebGL2 fallback tail).
 //
-// A clean aurora/concentric-class fullscreen fragment pass: the full-screen-triangle
-// vertex + a fragment that composites the SAME comet-trail + epicycle-chain + comet-head
-// SDF the WGSL primary does — reading the SAME CPU-minted curve-sample + chain-tip tables
-// (uploaded as plain GL uniform arrays; the JS side steps `partialSumAt`/`positionsAt` —
-// the ONE math source — per frame). NO second advection/evaluator law; the parity status
-// is `verified` (the field is the same SDF over the same math). NEVER reached on a capable
-// engine — Safari 26+ rides the WGSL primary; this is the Linux-Firefox / pre-A12 tail.
+// The fullscreen per-pixel SDF fragment (the O(pixels×segments) loop over ALL ≤256 segments
+// at EVERY pixel) RETIRED wholesale onto instanced geometry (proof:viz-fourier-ribbon FB1 —
+// no dual path). ONE instanced program paints every ribbon LAYER (trail · epicycle · head ·
+// cel), selected per draw by `uLayer`:
+//   • the VERTEX expands a unit quad to the per-instance capsule (a→b padded by the covered
+//     extent) or AABB (ring / head halo) bounding box — so each instance covers ONLY its own
+//     segment, O(covered_pixels), not the whole canvas;
+//   • the FRAGMENT runs the EXACT `segDist` under-glow+core / ring+arm+dot / head-aniso /
+//     cel over-composite the fullscreen loop ran — pixel-identical by over-composite
+//     associativity, the per-instance premultiplied contribution blended `over` in draw order.
 //
-// The color/OKLCh math splices the SHARED `procedural-color.glsl.ts` chunk so the OETF +
-// the Ottosson matrices can never DRIFT from the WGSL primary's `procedural-color.wgsl.ts`.
+// The head→tail TAPER (`RIBBON_TAIL_FRAC`, MIRRORED verbatim from constants.ts — the GLSL
+// twin cannot import a TS const) + the soft UNDER-GLOW (`RIBBON_UNDERGLOW_*`) live in the
+// trail fragment; proof:viz FB1 cross-checks the mirror. The color/OKLCh math splices the
+// SHARED `procedural-color.glsl.ts` chunk so the OETF + Ottosson matrices can never DRIFT
+// from the WGSL primary. NEVER reached on a capable engine — Safari 26+/Chrome ride the WGSL
+// instanced primary; this is the Linux-Firefox / pre-A12 tail.
 
 import {
     OETF_GLSL,
     OKLCH_MATRICES_GLSL,
 } from "../../../../composables/glass/webgl/shaders/procedural-color.glsl";
 
-/** The full-screen-triangle vertex shader (the aurora/concentric pattern). */
+/** The instanced ribbon VERTEX — expands the unit quad to each instance's covered bbox. */
 export const FOURIER_FIELD_VERT_GLSL = /* glsl */ `#version 300 es
-in vec2 aPosition;
-out vec2 vClip;
+// BI.W-FOURIER-RIBBON §2b — MUST equal the WGSL twin + FOURIER_TANGENT_EPS (constants.ts).
+#define RIBBON_UNDERGLOW_SCALE 2.2
+
+in vec2 aCorner;   // the unit quad corner ∈ [0,1]²
+in vec4 aSeg;      // (ax, ay, bx, by) — segment endpoints in MODEL space
+in vec4 aData;     // (age, strokeHalf, arg2, _pad) — strokeHalf/age/arg2 per layer
+
+uniform vec4 uFit;         // (centerX, centerY, scale, aspect) — model→clip fit
+uniform int  uLayer;       // 0 trail · 1 epicycle · 2 head · 3 cel-rope · 4 cel-arm
+uniform float uEdgeMargin; // AA-feather slop in MODEL units (a few CSS px), padding the bbox
+
+out vec2 vP;       // the MODEL-space fragment coordinate (the fs runs the SDF on it)
+out vec2 vA;
+out vec2 vB;
+out float vAge;
+out float vHalf;
+out float vArg2;
+
 void main() {
-  vClip = aPosition;
-  gl_Position = vec4(aPosition, 0.0, 1.0);
+  vec2 a = aSeg.xy;
+  vec2 b = aSeg.zw;
+  float strokeHalf = aData.y;
+  vA = a; vB = b; vAge = aData.x; vHalf = strokeHalf; vArg2 = aData.z;
+
+  vec2 pos;
+  if (uLayer == 1 || uLayer == 2) {
+    // AABB around a — the epicycle orbit RING (radius = |b-a|) or the head HALO.
+    float ext = (uLayer == 1) ? (length(b - a) + strokeHalf * 0.7) : (strokeHalf * 4.5);
+    ext += uEdgeMargin;
+    pos = a + (aCorner * 2.0 - 1.0) * ext;
+  } else {
+    // Capsule along a→b padded by the covered extent (trail under-glow / cel stroke).
+    float ext = (uLayer == 0) ? (strokeHalf * RIBBON_UNDERGLOW_SCALE) : strokeHalf;
+    ext += uEdgeMargin;
+    vec2 d = b - a;
+    float len = length(d);
+    vec2 dir = len > 1e-6 ? d / len : vec2(1.0, 0.0);
+    vec2 perp = vec2(-dir.y, dir.x);
+    vec2 along = mix(a - dir * ext, b + dir * ext, aCorner.x);
+    pos = along + perp * (aCorner.y * 2.0 - 1.0) * ext;
+  }
+
+  vP = pos;
+  vec2 center = uFit.xy;
+  float scale = max(uFit.z, 1e-6);
+  float aspect = max(uFit.w, 1e-4);
+  // model → clip (the inverse of the fs's p = center + vClip·aspect / scale).
+  float clipX = (pos.x - center.x) * scale / aspect;
+  float clipY = (pos.y - center.y) * scale;
+  gl_Position = vec4(clipX, clipY, 0.0, 1.0);
 }
 `;
 
-/** The fragment SDF — the GLSL twin of fourier-field.render.wgsl.ts's fs_main. */
+/** The instanced ribbon FRAGMENT — the exact per-layer SDF over-composite, loop-free. */
 export const FOURIER_FIELD_FRAG_GLSL = /* glsl */ `#version 300 es
 precision highp float;
 
-#define MAX_CURVE_SAMPLES 256
-#define MAX_PHASORS 64
+#define MAX_FOURIER_STOPS 4
 // BD.W-FOURIER-LOOM §2b — MUST equal the WGSL twin + FOURIER_TANGENT_EPS (constants.ts).
 #define TANGENT_EPS 1e-4
 #define SPEED_REF_HALFWIDTHS 6.0
@@ -42,20 +93,20 @@ precision highp float;
 #define RIBBON_UNDERGLOW_SCALE 2.2
 #define RIBBON_UNDERGLOW_ALPHA 0.16
 
-in vec2 vClip;
+in vec2 vP;
+in vec2 vA;
+in vec2 vB;
+in float vAge;
+in float vHalf;
+in float vArg2;
 out vec4 fragColor;
 
-uniform vec4 uFit;          // (centerX, centerY, scale, aspect)
-uniform vec4 uTrail;        // (trailWidth, peakAlpha, headGlowAlpha, trailFadeExp)
-uniform vec4 uEnv;          // (trailFloor, intensity, showEpicycles, rainbowChain)
-uniform vec4 uLoom;         // (squashGain, celGain, _pad, _pad) — FOURIER-LOOM §2b/§3b
-uniform int  uSampleCount;
-uniform int  uArmCount;
+uniform vec4 uTrail;      // (trailWidth, peakAlpha, headGlowAlpha, trailFadeExp)
+uniform vec4 uEnv;        // (trailFloor, intensity, showEpicycles, rainbowChain)
+uniform vec4 uLoom;       // (squashGain, celGain, _pad, _pad) — FOURIER-LOOM §2b/§3b
+uniform int  uLayer;      // 0 trail · 1 epicycle · 2 head · 3 cel-rope · 4 cel-arm
 uniform int  uStopCount;
-uniform vec3 uPalette[4];   // linear-sRGB stops
-// curveSamples[i] = (x, y, age) in MODEL space; chainTips[k] = (x, y) in MODEL space.
-uniform vec3 uCurve[MAX_CURVE_SAMPLES];
-uniform vec2 uChain[MAX_PHASORS];
+uniform vec3 uPalette[MAX_FOURIER_STOPS]; // linear-sRGB stops
 
 const float PI = 3.141592653589793;
 
@@ -95,8 +146,6 @@ float segDist(vec2 p, vec2 a, vec2 b) {
 }
 
 // BD.W-FOURIER-LOOM §2b — the head travel frame (T, ŝ), the GLSL twin of the WGSL headFrame.
-// The cusp guard returns +x as the stable fallback when s ≤ TANGENT_EPS — identical to the
-// WGSL twin + the CPU bead path.
 struct HeadFrame { vec2 T; float sHat; };
 HeadFrame headFrame(vec2 head, vec2 headBack, float halfW) {
   vec2 d = head - headBack;
@@ -120,127 +169,74 @@ float headAniso(vec2 p, vec2 head, HeadFrame fr, float k) {
 }
 
 void main() {
-  vec2 center = uFit.xy;
-  float scale = max(uFit.z, 1e-6);
-  float aspect = max(uFit.w, 1e-4);
-  // clip → model (the inverse of model→clip fit).
-  vec2 p = center + vec2(vClip.x * aspect, vClip.y) / scale;
-
+  vec2 p = vP;
   float aa = max(fwidth(p.x) + fwidth(p.y), 1e-5) * 0.75;
-  float trailWidth = uTrail.x;            // already in model units (packed CPU-side)
   float peak = uTrail.y * uEnv.y;
   float headGlow = uTrail.z * uEnv.y;
   float fadeExp = uTrail.w;
   float trailFloor = uEnv.x;
-  bool showEpicycles = uEnv.z > 0.5;
   bool rainbow = uEnv.w > 0.5;
-  float squashGain = uLoom.x;            // FOURIER-LOOM §2b
-  float celGain = uLoom.y;               // FOURIER-LOOM §3b
-  float halfW = trailWidth * 0.5;
+  float squashGain = uLoom.x;
+  float celGain = uLoom.y;
+  float halfW = vHalf;
 
-  // §2b — the head travel frame (SAME uCurve[0]/[1] the WGSL twin reads → parity).
-  HeadFrame headFr;
-  headFr.T = vec2(1.0, 0.0);
-  headFr.sHat = 0.0;
-  if (uSampleCount >= 2) {
-    headFr = headFrame(uCurve[0].xy, uCurve[1].xy, halfW);
-  }
-  vec2 celOff = -headFr.T * halfW * 1.4;
-
-  vec4 accum = vec4(0.0);
-
-  // §3b — the cartoon CEL-SHADOW: a darker offset copy of the rope + chain, opposite travel,
-  // painted FIRST (under the lit chain). PRM-static; celGain = 0 → no pass (byte-frozen).
-  if (celGain > 0.001) {
-    vec3 ink = vec3(0.0);
-    float celA = clamp(celGain, 0.0, 1.0);
-    for (int i = 0; i < MAX_CURVE_SAMPLES; i++) {
-      if (i >= uSampleCount - 1) break;
-      vec2 sa = uCurve[i].xy + celOff;
-      vec2 sb = uCurve[i + 1].xy + celOff;
-      float d = segDist(p, sa, sb);
-      float cover = 1.0 - smoothstep(halfW, halfW + aa, d);
-      if (cover < 0.002) continue;
-      float m = cover * celA * peak;
-      accum = vec4(ink * m, m) + accum * (1.0 - m);
-    }
-    if (showEpicycles && uArmCount >= 1) {
-      for (int k = 0; k < MAX_PHASORS; k++) {
-        if (k >= uArmCount) break;
-        vec2 a = uChain[k] + celOff;
-        vec2 b = uChain[k + 1] + celOff;
-        float dArm = segDist(p, a, b);
-        float armMask = 1.0 - smoothstep(halfW * 0.55, halfW * 0.55 + aa, dArm);
-        float m = armMask * celA * peak * 0.7;
-        accum = vec4(ink * m, m) + accum * (1.0 - m);
-      }
-    }
-  }
-
-  if (showEpicycles && uArmCount >= 1) {
-    for (int k = 0; k < MAX_PHASORS; k++) {
-      if (k >= uArmCount) break;
-      vec2 a = uChain[k];
-      vec2 b = uChain[k + 1];
-      float seg = float(k) / max(float(uArmCount - 1), 1.0);
-      vec3 lin = chainColorLin(seg, rainbow);
-      float radius = length(b - a);
-      float dRing = abs(length(p - a) - radius);
-      float ringW = max(halfW * 0.45, aa);
-      float ringMask = (1.0 - smoothstep(ringW, ringW + aa, dRing)) * 0.5;
-      float dArm = segDist(p, a, b);
-      float armMask = 1.0 - smoothstep(halfW * 0.55, halfW * 0.55 + aa, dArm);
-      float dotR = max(halfW * 0.7, aa * 2.0);
-      float dDot = length(p - a);
-      float dotMask = 1.0 - smoothstep(dotR, dotR + aa, dDot);
-      float m = clamp(max(max(ringMask, armMask), dotMask), 0.0, 1.0) * peak * 0.7;
-      vec3 rgb = clamp(linearToSrgb(lin), vec3(0.0), vec3(1.0));
-      accum = vec4(rgb * m, m) + accum * (1.0 - m);
-    }
-  }
-
-  for (int i = 0; i < MAX_CURVE_SAMPLES; i++) {
-    if (i >= uSampleCount - 1) break;
-    vec3 sa = uCurve[i];
-    vec3 sb = uCurve[i + 1];
-    float age = max(sa.z, sb.z);
-    float d = segDist(p, sa.xy, sb.xy);
+  if (uLayer == 0) {
+    // ── TRAIL — the tapered luminous ribbon over its own soft under-glow ──
+    float age = vAge;
+    float d = segDist(p, vA, vB);
     // B1 — the head→tail TAPER: the ribbon half-width scales with age (thick head, thin tail).
-    // The segDist capsule gives round joins/caps for free; the taper makes it a ribbon.
     float ribbonHalf = halfW * (RIBBON_TAIL_FRAC + (1.0 - RIBBON_TAIL_FRAC) * age);
     vec3 lin = samplePaletteLin(1.0 - age * 0.4);
     vec3 rgb = clamp(linearToSrgb(lin), vec3(0.0), vec3(1.0));
-    // B1 — the soft UNDER-GLOW: a wider, low-alpha copy UNDER the crisp ribbon (the luminous
-    // halo — ONE color event, the SAME warm palette; a wider AA feather for softness).
+    // B1 — the soft UNDER-GLOW: a wider, low-alpha copy UNDER the crisp ribbon (ONE color event).
     float glowHalf = ribbonHalf * RIBBON_UNDERGLOW_SCALE;
     float glowCover = 1.0 - smoothstep(glowHalf, glowHalf + aa * 3.0, d);
-    if (glowCover > 0.002) {
-      float ga = peak * RIBBON_UNDERGLOW_ALPHA * pow(age, fadeExp) * glowCover;
-      accum = vec4(rgb * ga, ga) + accum * (1.0 - ga);
-    }
-    // the crisp tapered ribbon core (painted OVER its own under-glow).
+    float ga = peak * RIBBON_UNDERGLOW_ALPHA * pow(age, fadeExp) * glowCover;
+    // the crisp tapered ribbon core.
     float cover = 1.0 - smoothstep(ribbonHalf, ribbonHalf + aa, d);
-    if (cover < 0.002) continue;
-    float a = peak * pow(age, fadeExp);
-    a = max(a, peak * trailFloor) * cover;
-    accum = vec4(rgb * a, a) + accum * (1.0 - a);
-  }
-
-  if (uSampleCount >= 1) {
-    vec2 head = uCurve[0].xy;
-    // §2b — the squash-and-stretch anisotropic head (collapses to the round disc at rest).
-    float dHead = headAniso(p, head, headFr, squashGain);
+    float ca = max(peak * pow(age, fadeExp), peak * trailFloor) * cover;
+    // core OVER glow OVER transparent (both premultiplied on the SAME rgb → out = rgb·outA).
+    float outA = ca + ga * (1.0 - ca);
+    fragColor = vec4(rgb * outA, outA);
+  } else if (uLayer == 1) {
+    // ── EPICYCLE — orbit RING + ARM + joint DOT union (MAX-blended, no join seam) ──
+    float seg = vArg2;
+    vec3 lin = chainColorLin(seg, rainbow);
+    vec3 rgb = clamp(linearToSrgb(lin), vec3(0.0), vec3(1.0));
+    float radius = length(vB - vA);
+    float dRing = abs(length(p - vA) - radius);
+    float ringW = max(halfW * 0.45, aa);
+    float ringMask = (1.0 - smoothstep(ringW, ringW + aa, dRing)) * 0.5;
+    float dArm = segDist(p, vA, vB);
+    float armMask = 1.0 - smoothstep(halfW * 0.55, halfW * 0.55 + aa, dArm);
+    float dotR = max(halfW * 0.7, aa * 2.0);
+    float dDot = length(p - vA);
+    float dotMask = 1.0 - smoothstep(dotR, dotR + aa, dDot);
+    float m = clamp(max(max(ringMask, armMask), dotMask), 0.0, 1.0) * peak * 0.7;
+    fragColor = vec4(rgb * m, m);
+  } else if (uLayer == 2) {
+    // ── HEAD — squash-and-stretch (§2b): halo + saturated core + white specular ──
+    vec2 head = vA;
+    vec2 headBack = vB;
+    HeadFrame fr = headFrame(head, headBack, halfW);
+    float dHead = headAniso(p, head, fr, squashGain);
     float coreR = halfW * 1.5;
     float haloR = coreR * 3.0;
     vec3 headRgb = clamp(linearToSrgb(samplePaletteLin(0.0)), vec3(0.0), vec3(1.0));
     float halo = (1.0 - smoothstep(0.0, haloR, dHead)) * headGlow * 0.35;
-    accum = vec4(headRgb * halo, halo) + accum * (1.0 - halo);
+    vec4 accum = vec4(headRgb * halo, halo);
     float core = (1.0 - smoothstep(coreR, coreR + aa, dHead)) * headGlow;
     accum = vec4(headRgb * core, core) + accum * (1.0 - core);
     float spec = (1.0 - smoothstep(coreR * 0.4, coreR * 0.4 + aa, dHead)) * headGlow * 0.9;
     accum = vec4(vec3(1.0) * spec, spec) + accum * (1.0 - spec);
+    fragColor = accum;
+  } else {
+    // ── CEL — the technicolor ink shadow (rope uLayer==3 / arm uLayer==4) ──
+    float celA = clamp(celGain, 0.0, 1.0);
+    float d = segDist(p, vA, vB);
+    float cover = 1.0 - smoothstep(halfW, halfW + aa, d);
+    float m = cover * celA * peak * vArg2; // vArg2 = celStrength (1.0 rope / 0.7 arm)
+    fragColor = vec4(0.0, 0.0, 0.0, m);
   }
-
-  fragColor = accum;
 }
 `;

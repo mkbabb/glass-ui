@@ -1,12 +1,15 @@
-// BC.W-VIZ-FOURIER — the WebGL2 `setupGL` builder (the genuinely-absent-tail path).
+// BI.W-FOURIER-RIBBON — the WebGL2 `setupGL` builder (the instanced-ribbon fallback tail).
 //
-// A clean fullscreen fragment pass: compile the full-screen-triangle vertex + the
-// `FOURIER_FIELD_FRAG_GLSL` fragment (the SDF twin of the WGSL render pass, splicing the
-// SHARED GLSL color chunk). On each `frame(t)` the CPU steps the SAME `partialSumAt`/
-// `positionsAt` math source — the ONE evaluator the WGSL compute kernel transcribes — into
-// the curve-sample + chain-tip uniform arrays, then uploads + draws. NO second math law;
-// parity is `verified` (the same SDF over the same evaluator). NEVER reached on a capable
-// engine. It owns NO scheduling — the canvas lifecycle leaf delivers the frame.
+// The fullscreen fragment SDF (the O(pixels×segments) loop) RETIRED onto instanced geometry
+// (proof:viz-fourier-ribbon FB1). On each `frame(t)` the CPU steps the SAME `partialSumAt`
+// math source into the curve-sample + chain-tip tables — the ONE evaluator the WGSL compute
+// kernel transcribes — then ASSEMBLES the per-layer instance buffer (cel → epicycle → trail →
+// head) and issues one `drawArraysInstanced` per layer. Each instance is a small capsule/AABB
+// quad covering ONLY its own segment bbox (the vertex expands the unit quad), running the
+// EXACT `segDist` over-composite the fullscreen loop ran — pixel-identical, O(covered_pixels).
+// NO second math law; parity is `verified`. NEVER reached on a capable engine (Chrome/Safari
+// ride the WGSL instanced primary). It owns NO scheduling — the canvas lifecycle leaf delivers
+// the frame.
 
 import type {
     WebGLCanvasFrame,
@@ -20,6 +23,14 @@ import {
     FOURIER_FIELD_FRAG_GLSL,
 } from "../shaders/fourier-field.glsl";
 import {
+    planRibbonLayers,
+    RIBBON_LAYER_ID,
+    RIBBON_QUAD_STRIP,
+    RIBBON_QUAD_STRIP_VERTS,
+    RIBBON_INSTANCE_FLOATS,
+    type RibbonLayerKind,
+} from "../shaders/fourier-field.ribbon";
+import {
     MAX_FOURIER_STOPS,
     type FourierFieldConfig,
 } from "../constants";
@@ -30,7 +41,7 @@ import {
     type FourierFit,
 } from "./uniformBridgeWGPU";
 
-/** The GL uniform-array curve cap (kept under typical GL uniform limits). */
+/** The GL curve-sample count (the trail draws this − 1 capsule instances). */
 const GL_MAX_CURVE_SAMPLES = 256;
 const GL_MAX_PHASORS = 64;
 const PEAK_ALPHA = 0.92;
@@ -47,7 +58,7 @@ export interface FourierGLSetupDeps {
     shouldContinue: () => boolean;
     onFrame?: (timeSec: number) => void;
     /**
-     * BD.W-VIZ-BROKEN-FIX D6b — the 2-D cursor FOLLOW (model-space center lean). Mirrors the
+     * BG.W-FOURIER-BEAUTY B3 — the 2-D cursor FOLLOW (model-space center lean). Mirrors the
      * WGSL arm exactly (both read the SAME uFit center) — parity-safe by construction.
      * `{x:0,y:0}` (ambient/PRM) is byte-identical to today.
      */
@@ -87,18 +98,35 @@ export function createFourierGLSetup(
         gl.deleteShader(vs);
         gl.deleteShader(fs);
 
+        // ── VAO: the static unit-quad (divisor 0) + the per-frame instance buffer (divisor 1) ──
         const vao = gl.createVertexArray();
         gl.bindVertexArray(vao);
-        const buf = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-        gl.bufferData(
-            gl.ARRAY_BUFFER,
-            new Float32Array([-1, -1, 3, -1, -1, 3]),
-            gl.STATIC_DRAW,
-        );
-        const loc = gl.getAttribLocation(program, "aPosition");
-        gl.enableVertexAttribArray(loc);
-        gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+        const quadBuf = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, quadBuf);
+        gl.bufferData(gl.ARRAY_BUFFER, RIBBON_QUAD_STRIP, gl.STATIC_DRAW);
+        const aCorner = gl.getAttribLocation(program, "aCorner");
+        gl.enableVertexAttribArray(aCorner);
+        gl.vertexAttribPointer(aCorner, 2, gl.FLOAT, false, 0, 0);
+        gl.vertexAttribDivisor(aCorner, 0);
+
+        // The instance buffer — one Float32Array holding all layers back-to-back, re-pointed
+        // per layer by attribute byte offset (WebGL2 has no baseInstance).
+        const MAX_INSTANCES =
+            (GL_MAX_CURVE_SAMPLES - 1) * 2 + GL_MAX_PHASORS * 2 + 1; // cel-rope+trail, cel-arm+epi, head
+        const instanceScratch = new Float32Array(MAX_INSTANCES * RIBBON_INSTANCE_FLOATS);
+        const instBuf = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, instBuf);
+        gl.bufferData(gl.ARRAY_BUFFER, instanceScratch.byteLength, gl.DYNAMIC_DRAW);
+        const STRIDE = RIBBON_INSTANCE_FLOATS * 4; // 32 bytes
+        const aSeg = gl.getAttribLocation(program, "aSeg");
+        const aData = gl.getAttribLocation(program, "aData");
+        gl.enableVertexAttribArray(aSeg);
+        gl.enableVertexAttribArray(aData);
+        gl.vertexAttribPointer(aSeg, 4, gl.FLOAT, false, STRIDE, 0);
+        gl.vertexAttribPointer(aData, 4, gl.FLOAT, false, STRIDE, 16);
+        gl.vertexAttribDivisor(aSeg, 1);
+        gl.vertexAttribDivisor(aData, 1);
         gl.bindVertexArray(null);
 
         const u = (name: string) => gl.getUniformLocation(program, name);
@@ -106,14 +134,12 @@ export function createFourierGLSetup(
         const uTrail = u("uTrail");
         const uEnv = u("uEnv");
         const uLoom = u("uLoom"); // FOURIER-LOOM §2b/§3b — (squashGain, celGain, _pad, _pad)
-        const uSampleCount = u("uSampleCount");
-        const uArmCount = u("uArmCount");
+        const uLayer = u("uLayer");
+        const uEdgeMargin = u("uEdgeMargin");
         const uStopCount = u("uStopCount");
         const uPalette = u("uPalette[0]");
-        const uCurve = u("uCurve[0]");
-        const uChain = u("uChain[0]");
 
-        // Scratch arrays (vec3 curve = x,y,age; vec2 chain = x,y).
+        // Scratch — the CPU-stepped curve (x,y,age) + chain (x,y) tables (the SAME evaluator).
         const curveData = new Float32Array(GL_MAX_CURVE_SAMPLES * 3);
         const chainData = new Float32Array((GL_MAX_PHASORS + 1) * 2);
         const palData = new Float32Array(MAX_FOURIER_STOPS * 3);
@@ -178,12 +204,126 @@ export function createFourierGLSetup(
                 }
             }
 
-            // BG.W-VIZ-RESIZE-ADOPT — the box in CSS px derives from the LEAF-sized
-            // backing store (round(gBCR × dpr) ÷ dpr), never clientWidth.
+            // BG.W-VIZ-RESIZE-ADOPT — the box in CSS px derives from the LEAF-sized backing store.
             const aspect = canvas.width / Math.max(canvas.height, 1);
             const cssMin =
                 Math.min(canvas.width, canvas.height) / Math.max(resolveBudgetDpr(), 1);
             const trailModel = trailWidthToModel(config.trailWidth, fit.scale, cssMin);
+            const halfW = trailModel * 0.5;
+            // The instanced-quad AA-feather slop (model units) padding each bbox (~6 CSS px).
+            const edgeMargin = (6 * 2) / (Math.max(fit.scale, 1e-6) * Math.max(cssMin, 1));
+
+            // The cel ink lags behind the travel: −T·halfW·1.4 (the SAME offset both engines use).
+            const hx = curveData[0];
+            const hy = curveData[1];
+            const bx = curveData[3];
+            const by = curveData[4];
+            const dx = hx - bx;
+            const dy = hy - by;
+            const s = Math.hypot(dx, dy);
+            const tx = s > 1e-4 ? dx / s : 1;
+            const ty = s > 1e-4 ? dy / s : 0;
+            const celOffX = -tx * halfW * 1.4;
+            const celOffY = -ty * halfW * 1.4;
+
+            // ── Assemble the per-layer instance buffer (draw order: cel → epicycle → trail → head) ──
+            const layers = planRibbonLayers({
+                sampleCount,
+                armCount: armN,
+                showEpicycles: config.showEpicycles,
+                celGain: config.celGain,
+            });
+            const offsets = new Map<RibbonLayerKind, number>(); // start FLOAT index per layer
+            let cursor = 0;
+            const writeInst = (
+                ax: number,
+                ay: number,
+                bx2: number,
+                by2: number,
+                age: number,
+                strokeHalf: number,
+                arg2: number,
+            ): void => {
+                instanceScratch[cursor++] = ax;
+                instanceScratch[cursor++] = ay;
+                instanceScratch[cursor++] = bx2;
+                instanceScratch[cursor++] = by2;
+                instanceScratch[cursor++] = age;
+                instanceScratch[cursor++] = strokeHalf;
+                instanceScratch[cursor++] = arg2;
+                instanceScratch[cursor++] = 0;
+            };
+            for (const layer of layers) {
+                offsets.set(layer.kind, cursor);
+                if (layer.kind === "cel-rope") {
+                    for (let i = 0; i < sampleCount - 1; i++) {
+                        const o = i * 3;
+                        writeInst(
+                            curveData[o] + celOffX,
+                            curveData[o + 1] + celOffY,
+                            curveData[o + 3] + celOffX,
+                            curveData[o + 4] + celOffY,
+                            0,
+                            halfW,
+                            1.0,
+                        );
+                    }
+                } else if (layer.kind === "cel-arm") {
+                    for (let k = 0; k < armN; k++) {
+                        const o = k * 2;
+                        writeInst(
+                            chainData[o] + celOffX,
+                            chainData[o + 1] + celOffY,
+                            chainData[o + 2] + celOffX,
+                            chainData[o + 3] + celOffY,
+                            0,
+                            halfW * 0.55,
+                            0.7,
+                        );
+                    }
+                } else if (layer.kind === "epicycle") {
+                    const segDenom = Math.max(armN - 1, 1);
+                    for (let k = 0; k < armN; k++) {
+                        const o = k * 2;
+                        writeInst(
+                            chainData[o],
+                            chainData[o + 1],
+                            chainData[o + 2],
+                            chainData[o + 3],
+                            0,
+                            halfW,
+                            k / segDenom,
+                        );
+                    }
+                } else if (layer.kind === "trail") {
+                    for (let i = 0; i < sampleCount - 1; i++) {
+                        const o = i * 3;
+                        const age = Math.max(curveData[o + 2], curveData[o + 5]);
+                        writeInst(
+                            curveData[o],
+                            curveData[o + 1],
+                            curveData[o + 3],
+                            curveData[o + 4],
+                            age,
+                            halfW,
+                            0,
+                        );
+                    }
+                } else {
+                    // head — one instance off curveSamples[0]/[1]
+                    writeInst(
+                        curveData[0],
+                        curveData[1],
+                        curveData[3],
+                        curveData[4],
+                        0,
+                        halfW,
+                        0,
+                    );
+                }
+            }
+            const totalFloats = cursor;
+
             const palette = getPalette();
             const stopCount = Math.min(palette.length, MAX_FOURIER_STOPS);
             for (let i = 0; i < MAX_FOURIER_STOPS; i++) {
@@ -197,29 +337,18 @@ export function createFourierGLSetup(
             gl.useProgram(program);
             gl.bindVertexArray(vao);
             gl.enable(gl.BLEND);
-            gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
             gl.clearColor(0, 0, 0, 0);
             gl.clear(gl.COLOR_BUFFER_BIT);
 
-            // D6b — lean the view-fit CENTER toward the cursor (the 2-D follow). SUBTRACT the
-            // cursor's model offset so the content pans TOWARD the cursor on screen (the
-            // clip→model map p = center + vClip*aspect/scale). Mirrors the WGSL arm exactly;
+            // Upload the assembled instance data.
+            gl.bindBuffer(gl.ARRAY_BUFFER, instBuf);
+            gl.bufferSubData(gl.ARRAY_BUFFER, 0, instanceScratch.subarray(0, totalFloats));
+
+            // BG.W-FOURIER-BEAUTY B3 — lean the fit CENTER toward the cursor (the 2-D follow);
             // ambient/PRM is {0,0} → byte-identical. The ONE uFit uniform carries it.
             const lean = getPointerLean?.() ?? { x: 0, y: 0 };
-            gl.uniform4f(
-                uFit,
-                fit.centerX - lean.x,
-                fit.centerY - lean.y,
-                fit.scale,
-                aspect,
-            );
-            gl.uniform4f(
-                uTrail,
-                trailModel,
-                PEAK_ALPHA,
-                HEAD_GLOW_ALPHA,
-                TRAIL_FADE_EXP,
-            );
+            gl.uniform4f(uFit, fit.centerX - lean.x, fit.centerY - lean.y, fit.scale, aspect);
+            gl.uniform4f(uTrail, trailModel, PEAK_ALPHA, HEAD_GLOW_ALPHA, TRAIL_FADE_EXP);
             gl.uniform4f(
                 uEnv,
                 TRAIL_FLOOR,
@@ -227,17 +356,36 @@ export function createFourierGLSetup(
                 config.showEpicycles ? 1 : 0,
                 config.rainbowChain ? 1 : 0,
             );
-            // FOURIER-LOOM §2b/§3b — the squash + cel gains (the tangent is derived in-shader
-            // off uCurve[0]/[1], the SAME evaluator both engines step → parity by construction).
             gl.uniform4f(uLoom, config.squashGain, config.celGain, 0, 0);
-            gl.uniform1i(uSampleCount, sampleCount);
-            gl.uniform1i(uArmCount, armN);
+            gl.uniform1f(uEdgeMargin, edgeMargin);
             gl.uniform1i(uStopCount, stopCount);
             gl.uniform3fv(uPalette, palData);
-            gl.uniform3fv(uCurve, curveData);
-            gl.uniform2fv(uChain, chainData);
 
-            gl.drawArrays(gl.TRIANGLES, 0, 3);
+            // Draw each layer: re-point the instance attributes at the layer's byte offset, set
+            // the layer id + blend, and issue one instanced draw over the quad.
+            for (const layer of layers) {
+                const startFloat = offsets.get(layer.kind) ?? 0;
+                const byteOffset = startFloat * 4;
+                gl.vertexAttribPointer(aSeg, 4, gl.FLOAT, false, STRIDE, byteOffset);
+                gl.vertexAttribPointer(aData, 4, gl.FLOAT, false, STRIDE, byteOffset + 16);
+                gl.uniform1i(uLayer, RIBBON_LAYER_ID[layer.kind]);
+                if (layer.blend === "max") {
+                    // FB5 — the epicycle-join seam fix: per-channel MAX → adjacent arms UNION.
+                    gl.blendEquation(gl.MAX);
+                    gl.blendFunc(gl.ONE, gl.ONE);
+                } else {
+                    gl.blendEquation(gl.FUNC_ADD);
+                    gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+                }
+                gl.drawArraysInstanced(
+                    gl.TRIANGLE_STRIP,
+                    0,
+                    RIBBON_QUAD_STRIP_VERTS,
+                    layer.instanceCount,
+                );
+            }
+            // Restore the default add-blend equation for any subsequent GL user.
+            gl.blendEquation(gl.FUNC_ADD);
         }
 
         return {
@@ -246,7 +394,8 @@ export function createFourierGLSetup(
             resize,
             teardown: () => {
                 gl.deleteProgram(program);
-                gl.deleteBuffer(buf);
+                gl.deleteBuffer(quadBuf);
+                gl.deleteBuffer(instBuf);
                 gl.deleteVertexArray(vao);
             },
         };

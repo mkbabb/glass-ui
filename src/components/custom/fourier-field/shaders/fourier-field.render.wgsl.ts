@@ -1,17 +1,24 @@
-// BC.W-VIZ-FOURIER — the fullscreen-fragment SDF RENDER pass (WebGPU primary).
+// BI.W-FOURIER-RIBBON — the WebGPU INSTANCED-RIBBON render pass (the primary path).
 //
-// A pure full-screen-triangle pass (the aurora/concentric shape-class — the most robust
-// single-draw paint): `vs_main` emits the 3-vertex fullscreen triangle; `fs_main` reads
-// the compute pass's `curveSamples` (the comet body) + `chainTips` (the epicycle chain)
-// storage buffers and composites the field by analytic SDF —
-//   • the comet TRAIL: min-distance to the curve polyline, AA-feathered by fwidth, the
-//     per-segment AGE driving the fade `peak·pow(age, fadeExp)` floored at `peak·floor`
-//     (a per-FRAGMENT alpha — no `globalAlpha` banding, no `lighter` hue-blowout);
-//   • the epicycle ARMS + orbit RINGS + joint DOTS: SDFs over the chain tips;
-//   • the comet HEAD: a radial halo + saturated core + white specular at curveSamples[0].
-// Color rides the shared `procedural-color.wgsl.ts` OKLCh ramp (the rainbow chain a
-// hue-sweep over it, NOT a second color path). Premultiplied-alpha over the transparent
-// clear KILLS the `lighter` additive hue-blowout the Canvas2D path fought.
+// The fullscreen per-pixel SDF `fs_main` (the O(pixels×segments) loop over ALL ≤384 segments
+// at EVERY pixel — `render.wgsl fs_main` ran the IDENTICAL fullscreen loop as the GLSL twin,
+// so the WGSL primary was NO cheaper) RETIRED wholesale onto an instanced/vertex-pulling pass
+// (proof:viz-fourier-ribbon FB1 — no dual path). The `fourier-field.compute.wgsl.ts` kernel is
+// BYTE-IDENTICAL (the `curveSamples`/`chainTips` storage buffers unchanged); the render pass
+// now VERTEX-PULLS each instance's endpoints straight from those buffers via `instance_index`:
+//   • `vs_main` builds a unit quad from `vertex_index` and expands it to the per-instance
+//     capsule (a→b padded) or AABB (ring / head halo) bbox — each instance covers ONLY its
+//     segment, O(covered_pixels);
+//   • `fs_main` runs the EXACT `segDist` under-glow+core / ring+arm+dot / head-aniso / cel
+//     over-composite the fullscreen loop ran — pixel-identical by over-composite associativity.
+//
+// The pipeline-overridable `LAYER` constant selects the layer (5 pipelines share this ONE
+// module): 0 trail · 1 epicycle · 2 head · 3 cel-rope · 4 cel-arm. The head→tail TAPER
+// (`RIBBON_TAIL_FRAC`, MIRRORED verbatim from constants.ts) + the soft UNDER-GLOW live in the
+// trail branch; proof:viz FB1 cross-checks the mirror. Premultiplied over the transparent
+// clear KILLS the `lighter` additive hue-blowout; the epicycle pipeline uses `operation: max`
+// so adjacent-arm overlaps UNION (the FB5 join-seam fix). Color rides the shared
+// `procedural-color.wgsl.ts` OKLCh ramp (ONE color source, no drift from the GLSL twin).
 
 import {
     OETF_WGSL,
@@ -19,16 +26,14 @@ import {
 } from "../../aurora/constants/shaders/procedural-color.wgsl";
 
 export const FOURIER_FIELD_RENDER_WGSL = /* wgsl */ `
+// The instanced-ribbon LAYER selector (a pipeline-overridable constant — 5 pipelines share the
+// ONE module, each specializing this): 0 trail · 1 epicycle · 2 head · 3 cel-rope · 4 cel-arm.
+override LAYER: i32 = 0;
+
 const PI: f32 = 3.141592653589793;
-const TAU: f32 = 6.283185307179586;
-const MAX_CURVE_SAMPLES: i32 = 384;
-const MAX_PHASORS: i32 = 64;
-const MAX_FOURIER_STOPS: i32 = 4;
 // BD.W-FOURIER-LOOM §2b — the degenerate-tangent guard (must equal FOURIER_TANGENT_EPS in
 // constants.ts + the GL CPU bead path so a cusp resolves IDENTICALLY across both engines).
 const TANGENT_EPS: f32 = 1e-4;
-// The speed yardstick: the head speed (model units between curveSamples[0] and [1]) is
-// normalized against this many trail half-widths so ŝ ∈ [0,1] is scale-free + parity-safe.
 const SPEED_REF_HALFWIDTHS: f32 = 6.0;
 // BG.W-FOURIER-BEAUTY B1 — the THICK luminous RIBBON. RIBBON_TAIL_FRAC is MIRRORED verbatim
 // from constants.ts (the WGSL twin cannot import a TS const); proof:viz FB1 cross-checks the
@@ -45,7 +50,7 @@ struct RenderUniforms {
   r1: vec4<f32>,
   // r2: (trailFloor, intensity, showEpicycles, rainbowChain)
   r2: vec4<f32>,
-  // r3: (squashGain, celGain, _pad, _pad) — FOURIER-LOOM §2b/§3b
+  // r3: (squashGain, celGain, edgeMargin, _pad) — FOURIER-LOOM §2b/§3b + the ribbon bbox slop
   r3: vec4<f32>,
   // ints: (sampleCount, armCount, stopCount, _pad)
   ints: vec4<i32>,
@@ -54,15 +59,14 @@ struct RenderUniforms {
 };
 
 @group(0) @binding(0) var<uniform> u: RenderUniforms;
-// curveSamples[i] = (x, y, age, _pad) in MODEL space
+// curveSamples[i] = (x, y, age, _pad) in MODEL space — the render VERTEX-PULLS these.
 @group(0) @binding(1) var<storage, read> curveSamples: array<vec4<f32>>;
-// chainTips[k] = (x, y, _pad, _pad) in MODEL space
+// chainTips[k] = (x, y, _pad, _pad) in MODEL space.
 @group(0) @binding(2) var<storage, read> chainTips: array<vec4<f32>>;
 
 ${OETF_WGSL}
 ${OKLCH_MATRICES_WGSL}
 
-// Sample the multi-stop palette (linear-sRGB stops, OKLab mix). t in [0,1].
 fn samplePaletteLin(t: f32) -> vec3<f32> {
   let stopCount = u.ints.z;
   if (stopCount <= 1) { return u.palette[0].rgb; }
@@ -76,21 +80,17 @@ fn samplePaletteLin(t: f32) -> vec3<f32> {
   return oklabToLinearSrgb(mix(labA, labB, f));
 }
 
-// A warm-anchored chain hue sweep over the palette base — the rainbow chain register.
-// Tilts the base hue by a tight warm-ward band so the chain stays colourful but warm.
 fn chainColorLin(seg: f32, rainbow: bool) -> vec3<f32> {
   let baseLin = u.palette[0].rgb;
   if (!rainbow) { return baseLin; }
   let lab = LMS_TO_OKLAB * cbrt3(LINEAR_SRGB_TO_LMS * baseLin);
   let lch = oklabToOklch(lab);
-  // warm-anchored: a touch cool at the root climbing warm toward the tips.
-  let hueShift = mix(-0.45, 1.15, clamp(seg, 0.0, 1.0)); // radians (~ -26°..+66°)
+  let hueShift = mix(-0.45, 1.15, clamp(seg, 0.0, 1.0));
   let h = lch.z + hueShift;
   let lifted = vec3<f32>(0.66, max(lch.y, 0.14), h);
   return oklabToLinearSrgb(oklchToOklab(lifted));
 }
 
-// Distance from point p to segment ab (model space).
 fn segDist(p: vec2<f32>, a: vec2<f32>, b: vec2<f32>) -> f32 {
   let pa = p - a;
   let ba = b - a;
@@ -98,9 +98,7 @@ fn segDist(p: vec2<f32>, a: vec2<f32>, b: vec2<f32>) -> f32 {
   return length(pa - ba * h);
 }
 
-// BD.W-FOURIER-LOOM §2b — the head travel frame: the unit tangent T from curveSamples[0]
-// (head) vs [1] (one step back) + the normalized speed ŝ ∈ [0,1]. The cusp guard returns
-// the +x axis as the stable fallback when s ≤ TANGENT_EPS, identical to the GL CPU path.
+// BD.W-FOURIER-LOOM §2b — the head travel frame + the volume-preserving anisotropic distance.
 struct HeadFrame { T: vec2<f32>, sHat: f32, };
 fn headFrame(head: vec2<f32>, headBack: vec2<f32>, halfW: f32) -> HeadFrame {
   let d = head - headBack;
@@ -117,9 +115,6 @@ fn headFrame(head: vec2<f32>, headBack: vec2<f32>, halfW: f32) -> HeadFrame {
   return out;
 }
 
-// The volume-preserving anisotropic head distance: project (p − head) onto T and T⊥, stretch
-// the tangent extent by (1 + k·ŝ) and squeeze the normal extent by 1/(1 + k·ŝ), then length.
-// k = 0 (or ŝ = 0) collapses to the round disc length(p − head) — byte-frozen at rest.
 fn headAniso(p: vec2<f32>, head: vec2<f32>, fr: HeadFrame, k: f32) -> f32 {
   let g = 1.0 + k * fr.sHat;
   let n = vec2<f32>(-fr.T.y, fr.T.x);
@@ -129,168 +124,179 @@ fn headAniso(p: vec2<f32>, head: vec2<f32>, fr: HeadFrame, k: f32) -> f32 {
   return length(vec2<f32>(along, across));
 }
 
+// The cel ink lags behind the travel — the SAME −T·halfW·1.4 offset both engines apply (the
+// head frame is read straight off the compute-filled curveSamples[0]/[1], parity by construction).
+fn celOffset(halfW: f32) -> vec2<f32> {
+  let fr = headFrame(curveSamples[0].xy, curveSamples[1].xy, halfW);
+  return -fr.T * halfW * 1.4;
+}
+
+// The unit quad as two triangles (6 verts) in [0,1]² — the instanced vertex expands it.
+fn quadCorner(vi: u32) -> vec2<f32> {
+  var c = array<vec2<f32>, 6>(
+    vec2<f32>(0.0, 0.0), vec2<f32>(1.0, 0.0), vec2<f32>(0.0, 1.0),
+    vec2<f32>(0.0, 1.0), vec2<f32>(1.0, 0.0), vec2<f32>(1.0, 1.0),
+  );
+  return c[vi];
+}
+
 struct VSOut {
   @builtin(position) pos: vec4<f32>,
-  @location(0) model: vec2<f32>,   // model-space coordinate of this fragment
+  @location(0) p: vec2<f32>,      // model-space fragment coordinate
+  @location(1) a: vec2<f32>,
+  @location(2) b: vec2<f32>,
+  @location(3) segData: vec3<f32>,   // (age, strokeHalf, arg2)
 };
 
 @vertex
-fn vs_main(@builtin(vertex_index) vi: u32) -> VSOut {
-  // Full-screen triangle (covers the viewport with 3 verts).
-  var p = array<vec2<f32>, 3>(
-    vec2<f32>(-1.0, -3.0), vec2<f32>(-1.0, 1.0), vec2<f32>(3.0, 1.0),
-  );
-  let clip = p[vi];
-  // Inverse of the model→clip fit: clip = (model − center)·scale, aspect-corrected x.
-  // → model = center + clip·(1/scale), x un-aspect-corrected.
+fn vs_main(@builtin(vertex_index) vi: u32, @builtin(instance_index) inst: u32) -> VSOut {
+  let corner = quadCorner(vi);
   let center = u.r0.xy;
   let scale = max(u.r0.z, 1e-6);
   let aspect = max(u.r0.w, 1e-4);
-  let model = center + vec2<f32>(clip.x * aspect, clip.y) / scale;
+  let halfW = u.r1.x * 0.5;
+  let margin = u.r3.z;
 
+  var a: vec2<f32> = vec2<f32>(0.0);
+  var b: vec2<f32> = vec2<f32>(0.0);
+  var strokeHalf: f32 = halfW;
+  var age: f32 = 0.0;
+  var arg2: f32 = 0.0;
+  var isCapsule: bool = true;
+  var ext: f32 = halfW;
+
+  if (LAYER == 0) {
+    // TRAIL — the curve capsule; the covered extent is the head-width under-glow.
+    a = curveSamples[inst].xy;
+    b = curveSamples[inst + 1u].xy;
+    age = max(curveSamples[inst].z, curveSamples[inst + 1u].z);
+    ext = halfW * RIBBON_UNDERGLOW_SCALE;
+    isCapsule = true;
+  } else if (LAYER == 1) {
+    // EPICYCLE — the chain AABB around a (radius = |b−a|).
+    a = chainTips[inst].xy;
+    b = chainTips[inst + 1u].xy;
+    arg2 = f32(inst) / max(f32(u.ints.y - 1), 1.0);
+    ext = length(b - a) + halfW * 0.7;
+    isCapsule = false;
+  } else if (LAYER == 2) {
+    // HEAD — the comet head at curveSamples[0], AABB by the halo radius.
+    a = curveSamples[0].xy;
+    b = curveSamples[1].xy;
+    ext = halfW * 4.5;
+    isCapsule = false;
+  } else if (LAYER == 3) {
+    // CEL-ROPE — the curve capsule, offset opposite travel; full-width ink.
+    let off = celOffset(halfW);
+    a = curveSamples[inst].xy + off;
+    b = curveSamples[inst + 1u].xy + off;
+    arg2 = 1.0;
+    ext = halfW;
+    isCapsule = true;
+  } else {
+    // CEL-ARM (LAYER == 4) — the chain capsule, offset; the narrower arm ink (0.55·halfW).
+    let off = celOffset(halfW);
+    a = chainTips[inst].xy + off;
+    b = chainTips[inst + 1u].xy + off;
+    strokeHalf = halfW * 0.55;
+    arg2 = 0.7;
+    ext = halfW * 0.55;
+    isCapsule = true;
+  }
+  ext = ext + margin;
+
+  var pos: vec2<f32>;
+  if (isCapsule) {
+    let d = b - a;
+    let len = length(d);
+    var dir = vec2<f32>(1.0, 0.0);
+    if (len > 1e-6) { dir = d / len; }
+    let perp = vec2<f32>(-dir.y, dir.x);
+    let along = mix(a - dir * ext, b + dir * ext, corner.x);
+    pos = along + perp * (corner.y * 2.0 - 1.0) * ext;
+  } else {
+    pos = a + (corner * 2.0 - vec2<f32>(1.0)) * ext;
+  }
+
+  let clipX = (pos.x - center.x) * scale / aspect;
+  let clipY = (pos.y - center.y) * scale;
   var out: VSOut;
-  out.pos = vec4<f32>(clip, 0.0, 1.0);
-  out.model = model;
+  out.pos = vec4<f32>(clipX, clipY, 0.0, 1.0);
+  out.p = pos;
+  out.a = a;
+  out.b = b;
+  out.segData = vec3<f32>(age, strokeHalf, arg2);
   return out;
 }
 
 @fragment
 fn fs_main(in: VSOut) -> @location(0) vec4<f32> {
-  let p = in.model;
-  // AA feather: one device pixel in model units (fwidth of the model coord).
+  let p = in.p;
   let aa = max(fwidth(p.x) + fwidth(p.y), 1e-5) * 0.75;
-
-  let trailWidth = u.r1.x;                // already in model units (packed CPU-side)
-  let peak = u.r1.y * u.r2.y;             // peakAlpha · intensity
+  let peak = u.r1.y * u.r2.y;
   let headGlow = u.r1.z * u.r2.y;
   let fadeExp = u.r1.w;
   let trailFloor = u.r2.x;
-  let sampleCount = u.ints.x;
-  let armCount = u.ints.y;
-  let showEpicycles = u.r2.z > 0.5;
   let rainbow = u.r2.w > 0.5;
-  let squashGain = u.r3.x;                 // FOURIER-LOOM §2b
-  let celGain = u.r3.y;                    // FOURIER-LOOM §3b
-  let halfW = trailWidth * 0.5;
+  let squashGain = u.r3.x;
+  let celGain = u.r3.y;
+  let halfW = in.segData.y;
+  let age = in.segData.x;
+  let arg2 = in.segData.z;
+  let a = in.a;
+  let b = in.b;
 
-  // BD.W-FOURIER-LOOM §2b — the head travel frame (the SAME curveSamples[0]/[1] both engines
-  // read → parity by construction). The cel offset (§3b) rides −T (opposite travel).
-  var headFr: HeadFrame;
-  headFr.T = vec2<f32>(1.0, 0.0);
-  headFr.sHat = 0.0;
-  if (sampleCount >= 2) {
-    headFr = headFrame(curveSamples[0].xy, curveSamples[1].xy, halfW);
-  }
-  let celOff = -headFr.T * halfW * 1.4;    // the ink lags behind the travel
-
-  var accum = vec4<f32>(0.0);              // premultiplied accumulation
-
-  // ── §3b — the cartoon CEL-SHADOW: a darker offset copy of the chain + rope, opposite
-  //    travel, painted FIRST (it sits UNDER the lit chain). PRM-static (the frozen-T travel
-  //    frame is a fixed offset, no live sweep). celGain = 0 → no pass (byte-frozen). ──
-  if (celGain > 0.001) {
-    let ink = vec3<f32>(0.0);              // pure ink — the technicolor 2-tone shadow
-    let celA = clamp(celGain, 0.0, 1.0);
-    // the rope cel (one offset distance-to-curve band).
-    for (var i = 0; i < MAX_CURVE_SAMPLES; i = i + 1) {
-      if (i >= sampleCount - 1) { break; }
-      let sa = curveSamples[i].xy + celOff;
-      let sb = curveSamples[i + 1].xy + celOff;
-      let d = segDist(p, sa, sb);
-      let cover = 1.0 - smoothstep(halfW, halfW + aa, d);
-      if (cover < 0.002) { continue; }
-      let m = cover * celA * peak;
-      accum = vec4<f32>(ink * m, m) + accum * (1.0 - m);
-    }
-    // the chain cel (arms only — the bold scaffold ink).
-    if (showEpicycles && armCount >= 1) {
-      for (var k = 0; k < MAX_PHASORS; k = k + 1) {
-        if (k >= armCount) { break; }
-        let a = chainTips[k].xy + celOff;
-        let b = chainTips[k + 1].xy + celOff;
-        let dArm = segDist(p, a, b);
-        let armMask = 1.0 - smoothstep(halfW * 0.55, halfW * 0.55 + aa, dArm);
-        let m = armMask * celA * peak * 0.7;
-        accum = vec4<f32>(ink * m, m) + accum * (1.0 - m);
-      }
-    }
-  }
-
-  // ── Epicycle scaffolding (orbit rings + arms + joint dots) UNDER the curve ──
-  if (showEpicycles && armCount >= 1) {
-    for (var k = 0; k < MAX_PHASORS; k = k + 1) {
-      if (k >= armCount) { break; }
-      let a = chainTips[k].xy;
-      let b = chainTips[k + 1].xy;
-      let seg = f32(k) / max(f32(armCount - 1), 1.0);
-      let lin = chainColorLin(seg, rainbow);
-      // orbit RING around a (radius = arm length).
-      let radius = length(b - a);
-      let dRing = abs(length(p - a) - radius);
-      let ringW = max(halfW * 0.45, aa);
-      let ringMask = (1.0 - smoothstep(ringW, ringW + aa, dRing)) * 0.5;
-      // ARM segment a→b.
-      let dArm = segDist(p, a, b);
-      let armMask = 1.0 - smoothstep(halfW * 0.55, halfW * 0.55 + aa, dArm);
-      // joint DOT at a.
-      let dotR = max(halfW * 0.7, aa * 2.0);
-      let dDot = length(p - a);
-      let dotMask = 1.0 - smoothstep(dotR, dotR + aa, dDot);
-      let m = clamp(max(max(ringMask, armMask), dotMask), 0.0, 1.0) * peak * 0.7;
-      let rgb = clamp(linearToSrgb(lin), vec3<f32>(0.0), vec3<f32>(1.0));
-      // over-composite (premultiplied).
-      accum = vec4<f32>(rgb * m, m) + accum * (1.0 - m);
-    }
-  }
-
-  // ── The comet TRAIL — min-distance to the curve polyline, per-segment age fade ──
-  for (var i = 0; i < MAX_CURVE_SAMPLES; i = i + 1) {
-    if (i >= sampleCount - 1) { break; }
-    let sa = curveSamples[i];
-    let sb = curveSamples[i + 1];
-    let age = max(sa.z, sb.z);            // 1 at head, 0 at tail
-    let d = segDist(p, sa.xy, sb.xy);
-    // B1 — the head→tail TAPER (thick head, thin tail); segDist gives round joins/caps.
+  if (LAYER == 0) {
+    // ── TRAIL — the tapered luminous ribbon over its own soft under-glow ──
+    let d = segDist(p, a, b);
     let ribbonHalf = halfW * (RIBBON_TAIL_FRAC + (1.0 - RIBBON_TAIL_FRAC) * age);
-    let lin = samplePaletteLin(1.0 - age * 0.4); // warm core, lighter tail
+    let lin = samplePaletteLin(1.0 - age * 0.4);
     let rgb = clamp(linearToSrgb(lin), vec3<f32>(0.0), vec3<f32>(1.0));
-    // B1 — the soft UNDER-GLOW under the crisp ribbon (ONE color event, a wider soft feather).
     let glowHalf = ribbonHalf * RIBBON_UNDERGLOW_SCALE;
     let glowCover = 1.0 - smoothstep(glowHalf, glowHalf + aa * 3.0, d);
-    if (glowCover > 0.002) {
-      let ga = peak * RIBBON_UNDERGLOW_ALPHA * pow(age, fadeExp) * glowCover;
-      accum = vec4<f32>(rgb * ga, ga) + accum * (1.0 - ga);
-    }
-    // the crisp tapered ribbon core (painted OVER its own under-glow).
+    let ga = peak * RIBBON_UNDERGLOW_ALPHA * pow(age, fadeExp) * glowCover;
     let cover = 1.0 - smoothstep(ribbonHalf, ribbonHalf + aa, d);
-    if (cover < 0.002) { continue; }
-    var a = peak * pow(age, fadeExp);
-    a = max(a, peak * trailFloor);
-    a = a * cover;
-    accum = vec4<f32>(rgb * a, a) + accum * (1.0 - a);
-  }
-
-  // ── The comet HEAD — squash-and-stretch (§2b) halo + saturated core + white specular.
-  //    dHead is the volume-preserving anisotropic distance off the travel frame; at rest
-  //    (sHat=0) or squashGain=0 it collapses to the round disc length(p − head). ──
-  if (sampleCount >= 1) {
-    let head = curveSamples[0].xy;
-    let dHead = headAniso(p, head, headFr, squashGain);
+    let ca = max(peak * pow(age, fadeExp), peak * trailFloor) * cover;
+    let outA = ca + ga * (1.0 - ca);
+    return vec4<f32>(rgb * outA, outA);
+  } else if (LAYER == 1) {
+    // ── EPICYCLE — orbit RING + ARM + joint DOT union (MAX-blended, no join seam) ──
+    let lin = chainColorLin(arg2, rainbow);
+    let rgb = clamp(linearToSrgb(lin), vec3<f32>(0.0), vec3<f32>(1.0));
+    let radius = length(b - a);
+    let dRing = abs(length(p - a) - radius);
+    let ringW = max(halfW * 0.45, aa);
+    let ringMask = (1.0 - smoothstep(ringW, ringW + aa, dRing)) * 0.5;
+    let dArm = segDist(p, a, b);
+    let armMask = 1.0 - smoothstep(halfW * 0.55, halfW * 0.55 + aa, dArm);
+    let dotR = max(halfW * 0.7, aa * 2.0);
+    let dDot = length(p - a);
+    let dotMask = 1.0 - smoothstep(dotR, dotR + aa, dDot);
+    let m = clamp(max(max(ringMask, armMask), dotMask), 0.0, 1.0) * peak * 0.7;
+    return vec4<f32>(rgb * m, m);
+  } else if (LAYER == 2) {
+    // ── HEAD — squash-and-stretch (§2b): halo + saturated core + white specular ──
+    let head = a;
+    let headBack = b;
+    let fr = headFrame(head, headBack, halfW);
+    let dHead = headAniso(p, head, fr, squashGain);
     let coreR = halfW * 1.5;
     let haloR = coreR * 3.0;
-    let headLin = samplePaletteLin(0.0);
-    let headRgb = clamp(linearToSrgb(headLin), vec3<f32>(0.0), vec3<f32>(1.0));
-    // soft halo
+    let headRgb = clamp(linearToSrgb(samplePaletteLin(0.0)), vec3<f32>(0.0), vec3<f32>(1.0));
     let halo = (1.0 - smoothstep(0.0, haloR, dHead)) * headGlow * 0.35;
-    accum = vec4<f32>(headRgb * halo, halo) + accum * (1.0 - halo);
-    // saturated core
+    var accum = vec4<f32>(headRgb * halo, halo);
     let core = (1.0 - smoothstep(coreR, coreR + aa, dHead)) * headGlow;
     accum = vec4<f32>(headRgb * core, core) + accum * (1.0 - core);
-    // white specular
     let spec = (1.0 - smoothstep(coreR * 0.4, coreR * 0.4 + aa, dHead)) * headGlow * 0.9;
     accum = vec4<f32>(vec3<f32>(1.0) * spec, spec) + accum * (1.0 - spec);
+    return accum;
+  } else {
+    // ── CEL — the technicolor ink shadow (rope LAYER==3 / arm LAYER==4) ──
+    let celA = clamp(celGain, 0.0, 1.0);
+    let d = segDist(p, a, b);
+    let cover = 1.0 - smoothstep(halfW, halfW + aa, d);
+    let m = cover * celA * peak * arg2; // arg2 = celStrength (1.0 rope / 0.7 arm)
+    return vec4<f32>(0.0, 0.0, 0.0, m);
   }
-
-  return accum;
 }
 `;

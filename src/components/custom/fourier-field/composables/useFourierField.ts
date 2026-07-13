@@ -28,18 +28,18 @@ import {
     type GpuBackend,
 } from "../../../../composables/glass/webgpu/useGpuSubstrate";
 import { usePointerVelocityField } from "../../../../composables/motion/usePointerVelocityField";
+import {
+    fourierLeanMapping,
+    snapshotField,
+} from "../../../../composables/motion/pointerFieldMappings";
 import { resolveBudgetDpr } from "../../aurora/constants/budget";
 import type { OklchStop } from "../../../../composables/color";
 import type { FourierFieldConfig } from "../constants";
-import { SCRUB_GAIN, FOLLOW_REACH, MAX_PHASORS } from "../constants";
-import { partialSumAt, type BasisComponent } from "../math";
+import { SCRUB_GAIN } from "../constants";
+import type { BasisComponent } from "../math";
 import { createFourierWGPUSetup } from "./fourierFieldWGPUSetup";
 import { createFourierGLSetup } from "./fourierFieldGLSetup";
-import {
-    computeFourierFit,
-    headToUnit,
-    type FourierFit,
-} from "./uniformBridgeWGPU";
+import { computeFourierFit, type FourierFit } from "./uniformBridgeWGPU";
 
 export interface UseFourierFieldOptions {
     config: FourierFieldConfig;
@@ -56,13 +56,14 @@ export interface UseFourierFieldOptions {
     /** `"capture"` → renderAt-only (the deterministic π capture path). Default `"live"`. */
     mode?: "live" | "capture";
     /**
-     * BD.W-FOURIER-LOOM §2a — the lit-field seam hook. Fired ONCE per frame from INSIDE the
-     * ONE clock's `onFrame` (NO second rAF), AFTER `headT` advances, with the head's `[0,1]²`
-     * UV (or `null` before the canvas is sized). The SFC writes `--ff-head-xy` on its host so
-     * the warm field's phosphor bloom tracks the comet. PRM → fired with the STABLE frozen-T
-     * UV (the bloom seats, no sweep).
+     * BI.W-FIELD-CORE — the route pointer BROADCASTER read (the SUBTLE-interactive background
+     * register). A full-bleed `pointer-events:none` field cannot listen for its own pointer, so
+     * an ambient consumer reads the route-level `useRoutePointer` and feeds the shared field
+     * from here each frame (viewport-normalized ≈ host-normalized for a full-bleed field). The
+     * lean/bias then read on a background field WITHOUT the field owning a pointer listener.
+     * Omit for the studio (which binds its own host listeners).
      */
-    onHeadFrame?: (unit: { x: number; y: number } | null) => void;
+    routePointer?: () => { x: number; y: number; active: boolean } | null;
 }
 
 /** The uniform handle a consumer wires its lifecycle against (backend-agnostic). */
@@ -83,13 +84,6 @@ export interface FourierFieldHandle {
     readonly headT: number;
     /** Scrub the clock directly (the transport scrubber / a pointer drag). */
     setHeadT: (t: number) => void;
-    /**
-     * BD.W-FOURIER-LOOM §2a — the comet head mapped to the stage's `[0,1]²` UV, off the SAME
-     * cached fit the GPU comet paints from. The SFC writes this to `--ff-head-xy` per frame so
-     * the warm field's phosphor bloom tracks the head (the lit-field seam). `null` before the
-     * canvas is sized. PRM → a STABLE frozen-T value (the bloom seats, no sweep).
-     */
-    headUnit: () => { x: number; y: number } | null;
     /** Tear down the renderer + release GPU/GL resources. */
     dispose: () => void;
 }
@@ -142,14 +136,12 @@ export function useFourierField(
         (options.freeze?.() ?? false) || (handle?.reducedMotion ?? false);
 
     // The per-frame hook the setups invoke from inside their frame callback. It advances the
-    // shared pointer field (the push-API tick) + the head_t clock (the ONE clock), THEN fires
-    // the §2a lit-field seam (the SFC writes `--ff-head-xy`) — once per frame, NO second rAF.
+    // shared pointer field (the push-API tick) + the head_t clock (the ONE clock) — once per
+    // frame, NO second rAF. BI.W-FOURIER-RIBBON retired the per-frame `--ff-head-*` setProperty
+    // restyle bridge (a dead CSS-sprite seam with no live consumer — the (b) perf attribution);
+    // the comet head is painted by the GPU head quad, never a per-frame CSS restyle.
     function onFrame(timeSec: number): void {
         advanceClock(timeSec);
-        // §2a — hand the freshly-advanced head UV to the SFC (it writes `--ff-head-xy`). Fired
-        // in EVERY register (frozen/interactive/free) so the bloom always tracks (PRM → the
-        // STABLE frozen-T UV). `getHeadUnit` is defined below; this hook runs after setup.
-        options.onHeadFrame?.(getHeadUnit());
     }
 
     // Advance the pointer field + the head_t clock (the ONE clock). The early-returns keep
@@ -157,6 +149,15 @@ export function useFourierField(
     function advanceClock(timeSec: number): void {
         const deltaMs = lastFrameSec >= 0 ? (timeSec - lastFrameSec) * 1000 : 16.7;
         lastFrameSec = timeSec;
+        // BI.W-FIELD-CORE — feed the shared field from the route broadcaster (the
+        // subtle-interactive background register — the canvas is pointer-events:none, so it
+        // reads the route pointer rather than its own listener). A single position write; the
+        // field derives velocity/burst/engagement in tick.
+        const rp = options.routePointer?.();
+        if (rp) {
+            pointer.setActive(rp.active);
+            if (rp.active) pointer.setPointer(rp.x, rp.y);
+        }
         pointer.tick(deltaMs);
 
         if (isFrozen()) {
@@ -205,13 +206,10 @@ export function useFourierField(
 
     const getHeadT = (): number => headT;
 
-    // ── BD.W-FOURIER-LOOM §2a — the shared CPU head derive (the lit-field seam). ──
-    // ONE `partialSumAt` per frame (N ≤ 64 cos/sin — cheap), CPU-side, consumed by the SFC
-    // to write `--ff-head-xy`. It uses the SAME `computeFourierFit` the GPU twins use (the
-    // cached fit below), so the bloom maps model→[0,1]² off the EXACT fit the comet head
-    // paints from — the bloom can never desync from the GPU comet. The WGPU twin computes
-    // the head inside its compute shader (uploads only the scalar `headT`); this shared CPU
-    // derive kills that engine-asymmetry by construction (both consume the ONE evaluator).
+    // ── BI.W-FOURIER-RIBBON — the cached view-fit (recompute on spectrum change ONLY). ──
+    // The `spectrum !== fitSpectrum` guard HOISTS `computeFourierFit` out of the frame loop
+    // (proof:viz-fourier-ribbon FB4): the O(FIT_SAMPLES) bbox pass runs once per spectrum swap,
+    // never per frame. `getPointerLean` reads the cached scale for the model→clip 2-D lean.
     let fitSpectrum: readonly BasisComponent[] | null = null;
     let fit: FourierFit = { centerX: 0, centerY: 0, scale: 1 };
     const ensureFit = (): FourierFit => {
@@ -221,43 +219,6 @@ export function useFourierField(
             fit = computeFourierFit(spectrum);
         }
         return fit;
-    };
-
-    /** The MODEL-space head point at the current `headT` (the partial sum over N harmonics). */
-    const getHeadModel = (): { x: number; y: number } => {
-        const spectrum = getSpectrum() as BasisComponent[];
-        const harmonicN = Math.max(
-            1,
-            Math.min(Math.round(config.harmonics), spectrum.length, MAX_PHASORS),
-        );
-        const [x, y] = partialSumAt(spectrum, headT, harmonicN);
-        return { x, y };
-    };
-
-    /**
-     * The head mapped to the stage's `[0,1]²` UV (the SFC writes this to `--ff-head-xy`). The
-     * `aspect` is the live canvas CSS aspect (the SAME the render reads), and the cursor LEAN
-     * is folded into the fit center EXACTLY as the GPU twins do (both setups subtract the lean
-     * from `fit.center`), so the bloom co-locates with the GPU comet head on screen — the
-     * desync fence (challenge-1 R3: the bloom can never drift off the painted comet). Returns
-     * `null` before the canvas is sized.
-     */
-    const getHeadUnit = (): { x: number; y: number } | null => {
-        const canvas = canvasRef.value;
-        if (!canvas) return null;
-        // BG.W-VIZ-RESIZE-ADOPT — read the LEAF-sized backing store, never clientWidth.
-        const w = canvas.width || 0;
-        const h = canvas.height || 0;
-        if (w <= 0 || h <= 0) return null;
-        const aspect = w / h;
-        const m = getHeadModel();
-        const base = ensureFit();
-        const lean = getPointerLean();
-        const leanedFit: FourierFit =
-            lean.x !== 0 || lean.y !== 0
-                ? { ...base, centerX: base.centerX - lean.x, centerY: base.centerY - lean.y }
-                : base;
-        return headToUnit(m.x, m.y, leanedFit, aspect);
     };
 
     // ── BG.W-FOURIER-BEAUTY B3 — the REAL 2-D cursor FOLLOW (critically-damped, correct
@@ -280,20 +241,21 @@ export function useFourierField(
     // relaxes to {0,0} (the ambient/byte-identical register). NO second rAF — the follow reads
     // the field the ONE onFrame `tick` advances.
     const getPointerLean = (): { x: number; y: number } => {
-        if (!config.interactive || !pointer.active.value) return { x: 0, y: 0 };
+        if (!config.interactive) return { x: 0, y: 0 };
         const canvas = canvasRef.value;
         if (!canvas || !canvas.width || !canvas.height) return { x: 0, y: 0 };
-        const sp = pointer.smoothedPosition.value;
-        const scale = Math.max(ensureFit().scale, 1e-6);
-        const aspect = canvas.width / canvas.height;
-        // [0,1] → clip [-1,1] × the bounded reach; DOM y (down) → clip y (up) is inverted.
-        const clipX = (sp.x * 2 - 1) * FOLLOW_REACH;
-        const clipY = -(sp.y * 2 - 1) * FOLLOW_REACH;
-        // clip → MODEL offset (the inverse of the fs `model = center + clip·aspect / scale`).
-        return {
-            x: (clipX * aspect) / scale,
-            y: clipY / scale,
-        };
+        // BI.W-FIELD-CORE — the SUBTLE lean via the shared PURE `fourierLeanMapping`
+        // (FOLLOW_LEAN ≈ 0.15, engagement-scaled — the RETIRED FOLLOW_REACH=0.7 centroid-
+        // teleport is gone). The curve draws TOWARD the cursor without translating the figure;
+        // engagement fades it in/out (a lifted pointer relaxes to the ambient register).
+        const { leanX, leanY } = fourierLeanMapping(
+            snapshotField(pointer),
+            {
+                aspect: canvas.width / canvas.height,
+                scale: Math.max(ensureFit().scale, 1e-6),
+            },
+        );
+        return { x: leanX, y: leanY };
     };
 
     // ── Pointer listeners on the wrapper (the canvas is pointer-events:none). ──
@@ -379,7 +341,6 @@ export function useFourierField(
             headT = ((t % 1) + 1) % 1;
             ensure()?.wake();
         },
-        headUnit: getHeadUnit,
         dispose: () => {
             const canvas = canvasRef.value;
             if (canvas) unbindPointer(canvas);

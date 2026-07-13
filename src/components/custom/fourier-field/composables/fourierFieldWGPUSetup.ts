@@ -16,6 +16,11 @@ import { resolveBudgetDpr } from "../../aurora/constants/budget";
 import { FOURIER_FIELD_COMPUTE_WGSL } from "../shaders/fourier-field.compute.wgsl";
 import { FOURIER_FIELD_RENDER_WGSL } from "../shaders/fourier-field.render.wgsl";
 import {
+    planRibbonLayers,
+    RIBBON_LAYER_ID,
+    type RibbonLayerKind,
+} from "../shaders/fourier-field.ribbon";
+import {
     MAX_PHASORS,
     MAX_CURVE_SAMPLES,
     type FourierFieldConfig,
@@ -150,6 +155,8 @@ export function createFourierWGPUSetup(
             ],
         });
 
+        // BI.W-FOURIER-RIBBON — the render pass VERTEX-PULLS each instance's endpoints from the
+        // compute-filled storage buffers, so binding 1/2 are now VERTEX-visible too.
         const renderBGL = device.createBindGroupLayout({
             label: "[FourierField] render-bgl",
             entries: [
@@ -160,43 +167,56 @@ export function createFourierWGPUSetup(
                 },
                 {
                     binding: 1,
-                    visibility: SHADER_STAGE_FRAGMENT,
+                    visibility: SHADER_STAGE_VERTEX | SHADER_STAGE_FRAGMENT,
                     buffer: { type: "read-only-storage" },
                 },
                 {
                     binding: 2,
-                    visibility: SHADER_STAGE_FRAGMENT,
+                    visibility: SHADER_STAGE_VERTEX | SHADER_STAGE_FRAGMENT,
                     buffer: { type: "read-only-storage" },
                 },
             ],
         });
-        const renderPipeline = device.createRenderPipeline({
-            label: "[FourierField] render-pipeline",
-            layout: device.createPipelineLayout({ bindGroupLayouts: [renderBGL] }),
-            vertex: { module: renderModule, entryPoint: "vs_main" },
-            fragment: {
-                module: renderModule,
-                entryPoint: "fs_main",
-                targets: [
-                    {
-                        format,
-                        blend: {
-                            color: {
-                                srcFactor: "one",
-                                dstFactor: "one-minus-src-alpha",
-                                operation: "add",
-                            },
-                            alpha: {
-                                srcFactor: "one",
-                                dstFactor: "one-minus-src-alpha",
-                                operation: "add",
-                            },
-                        },
-                    },
-                ],
-            },
-            primitive: { topology: "triangle-list" },
+        const renderLayout = device.createPipelineLayout({
+            bindGroupLayouts: [renderBGL],
         });
+
+        // The premultiplied source-over blend every layer but the epicycle uses.
+        const OVER_BLEND: GPUBlendState = {
+            color: { srcFactor: "one", dstFactor: "one-minus-src-alpha", operation: "add" },
+            alpha: { srcFactor: "one", dstFactor: "one-minus-src-alpha", operation: "add" },
+        };
+        // FB5 — the epicycle-join seam fix: per-channel MAX so adjacent arms UNION (no seam).
+        const MAX_BLEND: GPUBlendState = {
+            color: { srcFactor: "one", dstFactor: "one", operation: "max" },
+            alpha: { srcFactor: "one", dstFactor: "one", operation: "max" },
+        };
+
+        // ONE module, 5 instanced pipelines specialized by the overridable `LAYER` constant.
+        const makeRibbonPipeline = (layer: number, blend: GPUBlendState) =>
+            device.createRenderPipeline({
+                label: `[FourierField] ribbon-pipeline-L${layer}`,
+                layout: renderLayout,
+                vertex: {
+                    module: renderModule,
+                    entryPoint: "vs_main",
+                    constants: { LAYER: layer },
+                },
+                fragment: {
+                    module: renderModule,
+                    entryPoint: "fs_main",
+                    constants: { LAYER: layer },
+                    targets: [{ format, blend }],
+                },
+                primitive: { topology: "triangle-list" },
+            });
+        const pipelinesByKind: Record<RibbonLayerKind, GPURenderPipeline> = {
+            trail: makeRibbonPipeline(RIBBON_LAYER_ID.trail, OVER_BLEND),
+            epicycle: makeRibbonPipeline(RIBBON_LAYER_ID.epicycle, MAX_BLEND),
+            head: makeRibbonPipeline(RIBBON_LAYER_ID.head, OVER_BLEND),
+            "cel-rope": makeRibbonPipeline(RIBBON_LAYER_ID["cel-rope"], OVER_BLEND),
+            "cel-arm": makeRibbonPipeline(RIBBON_LAYER_ID["cel-arm"], OVER_BLEND),
+        };
         const renderBindGroup = device.createBindGroup({
             label: "[FourierField] render-bg",
             layout: renderBGL,
@@ -259,6 +279,11 @@ export function createFourierWGPUSetup(
                 Math.min(canvas.width, canvas.height) / Math.max(resolveBudgetDpr(), 1);
             const aspect = canvas.width / Math.max(canvas.height, 1);
             const trailModel = trailWidthToModel(config.trailWidth, fit.scale, cssMin);
+            // BI.W-FOURIER-RIBBON — the instanced-quad AA-feather slop in MODEL units: a few CSS
+            // px so the smoothstep feather at each bbox edge is never clipped. model-per-cssPx =
+            // (1/scale)·(2/cssMin); pad ~6 CSS px.
+            const edgeMargin =
+                (6 * 2) / (Math.max(fit.scale, 1e-6) * Math.max(cssMin, 1));
 
             // D6b — lean the view-fit CENTER toward the cursor (the 2-D follow). The render
             // maps clip→model as p = center + vClip*aspect/scale, so SUBTRACTING the cursor's
@@ -285,6 +310,7 @@ export function createFourierWGPUSetup(
                 config.rainbowChain,
                 config.squashGain,
                 config.celGain,
+                edgeMargin,
                 sampleCount,
                 armN,
                 getPalette(),
@@ -298,7 +324,9 @@ export function createFourierWGPUSetup(
             cpass.setBindGroup(0, computeBindGroup);
             cpass.dispatchWorkgroups(Math.ceil(MAX_CURVE_SAMPLES / WORKGROUP_SIZE));
             cpass.end();
-            // 2. render pass — fullscreen SDF over the clear.
+            // 2. render pass — the instanced ribbon layers over the clear (cel → epicycle →
+            //    trail → head), each an O(covered_pixels) instanced draw vertex-pulling its
+            //    endpoints from the compute-filled storage buffers.
             const view = context.getCurrentTexture().createView();
             const rpass = encoder.beginRenderPass({
                 colorAttachments: [
@@ -310,9 +338,17 @@ export function createFourierWGPUSetup(
                     },
                 ],
             });
-            rpass.setPipeline(renderPipeline);
             rpass.setBindGroup(0, renderBindGroup);
-            rpass.draw(3, 1, 0, 0); // fullscreen triangle
+            const layers = planRibbonLayers({
+                sampleCount,
+                armCount: armN,
+                showEpicycles: config.showEpicycles,
+                celGain: config.celGain,
+            });
+            for (const layer of layers) {
+                rpass.setPipeline(pipelinesByKind[layer.kind]);
+                rpass.draw(6, layer.instanceCount, 0, 0);
+            }
             rpass.end();
             device.queue.submit([encoder.finish()]);
         }

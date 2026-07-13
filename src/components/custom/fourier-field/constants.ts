@@ -46,19 +46,12 @@ export const MAX_FOURIER_STOPS = 4;
  */
 export const SCRUB_GAIN = 0.15;
 
-/**
- * The 2-D cursor-FOLLOW reach (BG.W-FOURIER-BEAUTY B3 — the REAL spatial follow, superseding
- * the BD.W-VIZ-BROKEN-FIX D6b 0.12 whisper-lean that read as "abysmal tracking"). It is the
- * bounded fraction of the CLIP half-span (not the model half-span — the whisper's frame-of-
- * reference bug) the figure CENTROID reaches toward the cursor: `getPointerLean` maps the
- * critically-damped smoothed pointer [0,1]→clip[-1,1]→MODEL (through the fit `scale`/`aspect`
- * — the CORRECT coordinate space), so the tracked feature (the centroid) genuinely REACHES
- * within a small radius of the pointer within the damped settle, never the 12% pan that never
- * arrived. Bounded < 1 so the figure stays largely in frame. At 0 (ambient/non-interactive)
- * the field is byte-identical. The velocity SCRUB (`SCRUB_GAIN`, the WHEN-on-the-curve nudge)
- * is orthogonal + preserved.
- */
-export const FOLLOW_REACH = 0.7;
+// BI.W-FIELD-CORE — `FOLLOW_REACH = 0.7` (the centroid-TELEPORT — the figure lunged its
+// whole centroid two-thirds of the frame toward the cursor) is RETIRED (clean break, no
+// alias). The subtle centroid LEAN + the directional DRAW-BIAS are now the shared PURE
+// `fourierLeanMapping` (`composables/motion/pointerFieldMappings.ts`, FOLLOW_LEAN ≈ 0.15,
+// engagement-scaled): the curve "gracefully draws TOWARD" the cursor WITHOUT translating the
+// figure. The velocity SCRUB (`SCRUB_GAIN`, the WHEN-on-the-curve nudge) is orthogonal + preserved.
 
 // ── BG.W-FOURIER-BEAUTY B1 — the THICK luminous RIBBON stroke register ──────────
 /**

@@ -4,6 +4,7 @@ import type { ColorResolver, OklchStop } from "../../../composables/color";
 import { cssToOklch } from "../../../composables/color";
 import { resolveTokenColor } from "../../../composables/dom";
 import { useGlobalDark } from "../../../composables/dark";
+import { useRoutePointer } from "../../../composables/motion/useRoutePointer";
 import { mulberry32, hashString } from "../../../utils/prng";
 import {
     makeEllipticSpectrum,
@@ -65,19 +66,43 @@ const canvasRef = useTemplateRef<HTMLCanvasElement>("canvasRef");
 
 const { isDark } = useGlobalDark();
 
+// BI.W-FIELD-CORE — the route pointer BROADCASTER (the interactive-background standard). A
+// full-bleed `pointer-events:none` field cannot listen for its own pointer; it reads the ONE
+// capture-phase window listener the route provides (StoryHero) and feeds the shared field.
+const route = useRoutePointer();
+
 // The effective config — the passed config, or the warm-identity default; the ambient
-// `intensity` prop overrides when set, and an ambient consumer (no config) defaults to a
-// non-interactive recessive register.
+// `intensity` prop overrides when set. BI.W-FIELD-CORE — the hard `interactive=false` gate
+// (line 78, the ambient dead-flow) is RETIRED: an ambient consumer (no config) is now the
+// SUBTLE-INTERACTIVE background register — the field responds to the route pointer (a subtle
+// centroid lean) while the CANVAS stays `pointer-events:none` (the route broadcaster captures
+// at the window, so the field never eats the page's hit-testing).
 const cfg = computed<FourierFieldConfig>(() => {
     const base = props.config ?? DEFAULT_FOURIER_CONFIG;
     const intensity =
         props.intensity != null
             ? Math.max(0, Math.min(2, props.intensity))
             : base.intensity;
-    // An ambient-background consumer (passes `color`, no `config`) is non-interactive.
-    const interactive = props.config ? base.interactive : false;
+    // The FIELD responds (lean/scrub): the studio's config-driven value, or a subtle
+    // route-fed register for the ambient consumer.
+    const interactive = props.config ? base.interactive : true;
     return { ...base, intensity, interactive };
 });
+
+// The CSS `pointer-events:auto` register is ONLY for the STUDIO (which binds its OWN host
+// listeners). The ambient route-fed field keeps `pointer-events:none` — it reads the window
+// broadcaster, never its own listener, so it never occludes the page.
+const hostInteractive = computed(() => !!props.config && cfg.value.interactive);
+// The route-pointer read fed to the ambient field (undefined for the studio — it owns its
+// host listeners, so the route feed would double-write). Viewport-normalized ≈ host-normalized
+// for a full-bleed background field.
+const routePointerRead = props.config
+    ? undefined
+    : () => ({
+          x: route.pointer.value.x,
+          y: route.pointer.value.y,
+          active: route.active.value,
+      });
 
 // The active spectrum — the explicit `spectrum` prop (a curated shape DFT) wins; otherwise a
 // seeded elliptic spectrum is generated CPU-side from the config (the ONE spectrum mint —
@@ -165,37 +190,20 @@ const renderConfig = new Proxy({} as FourierFieldConfig, {
     getOwnPropertyDescriptor: (_t, key) =>
         Reflect.getOwnPropertyDescriptor(cfg.value, key),
 });
-// BD.W-FOURIER-LOOM §2a — the lit-field seam. The composable hands the comet head's [0,1]²
-// UV here once per frame (from INSIDE the ONE clock — NO second rAF); the SFC writes it to
-// `--ff-head-xy` on its own host so the warm field's phosphor bloom (mounted by the page-
-// background warm field) tracks the comet. The write is a string `"x y"` the CSS reads via
-// a fixed-size bloom SPRITE TRANSLATED to it (a compositor transform, not a re-rastered
-// gradient center — the per-frame-paint honesty fence). Absent at HEAD (born-RED); present +
-// STABLE under PRM (the frozen-T head — the bloom seats, no sweep). The hue is written
-// reactively off the palette base (NOT per frame), so it tracks the active warm anchor.
-function writeHeadXY(unit: { x: number; y: number } | null): void {
-    const el = hostRef.value;
-    if (!el || !unit) return;
-    el.style.setProperty("--ff-head-xy", `${unit.x.toFixed(4)} ${unit.y.toFixed(4)}`);
-}
-
+// BI.W-FOURIER-RIBBON — the per-frame `--ff-head-xy`/`--ff-head-hue` setProperty restyle
+// bridge is RETIRED (the (b) perf attribution): it drove a CSS phosphor-bloom SPRITE that had
+// ZERO live consumer, paying a style recalc every frame for nothing. The comet head is painted
+// by the GPU head quad (the instanced ribbon's head layer), never a per-frame CSS restyle.
 const renderer = useFourierField(canvasRef, {
     config: renderConfig,
     getSpectrum,
     getPalette,
     freeze: () => props.freeze,
-    onHeadFrame: writeHeadXY,
+    // BI.W-FIELD-CORE — the ambient field reads the route broadcaster (the canvas is
+    // pointer-events:none; the studio owns its host listeners so this is undefined there).
+    routePointer: routePointerRead,
 });
 
-// `--ff-head-hue` — the bloom's warm anchor hue (degrees), written reactively off the
-// resolved palette base (the comet core stop), NOT per frame. Re-runs on a palette/mode
-// flip so the bloom hue tracks the active warm anchor (the §2a hue seam).
-function writeHeadHue(): void {
-    const el = hostRef.value;
-    if (!el) return;
-    const base = resolvedPalette.value[0];
-    if (base) el.style.setProperty("--ff-head-hue", `${base.h.toFixed(1)}`);
-}
 // Wake a parked loop on a config edit (the blob paletteStops-watcher precedent) so a
 // control change to a quiescent field repaints same-frame.
 watch(() => props.config, () => renderer.wake(), { deep: true });
@@ -203,16 +211,11 @@ watch(() => props.config, () => renderer.wake(), { deep: true });
 watch([() => props.color, () => props.getPalette, isDark], refreshPalette, {
     immediate: true,
 });
-// The §2a head-hue seam — re-write `--ff-head-hue` whenever the resolved palette changes
-// (a palette/mode flip retints the bloom anchor). The host may not exist yet in setup(); the
-// onMounted below seeds it once the element is real.
-watch(resolvedPalette, writeHeadHue);
 // The immediate watch fires in setup() before `hostRef` is mounted, so a `var()`-token
 // `color` cannot resolve the cascade yet (it kept the warm-identity default). Re-resolve
 // once the host element exists — the `var()` un-wrap now reaches a real element.
 onMounted(() => {
     refreshPalette();
-    writeHeadHue();
 });
 watch(isDark, () => renderer.wake());
 watch(
@@ -227,7 +230,6 @@ defineExpose({
     wake: renderer.wake,
     renderAt: renderer.renderAt,
     setHeadT: renderer.setHeadT,
-    headUnit: renderer.headUnit,
 });
 </script>
 
@@ -235,7 +237,7 @@ defineExpose({
     <div
         ref="hostRef"
         class="fourier-field"
-        :class="{ 'fourier-field--interactive': cfg.interactive }"
+        :class="{ 'fourier-field--interactive': hostInteractive }"
     >
         <canvas ref="canvasRef" class="fourier-field-canvas" aria-hidden="true" />
     </div>
