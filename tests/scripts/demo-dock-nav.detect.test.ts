@@ -35,9 +35,9 @@ const { next } = useStoryNavigation();
 
 function freshMap() {
     return {
-        "layout/AppShell.vue": APP_SHELL_OK,
-        "layout/SidebarDock.vue": SIDEBAR_OK,
-        "layout/BottomDock.vue": BOTTOM_OK,
+        "shell/AppShell.vue": APP_SHELL_OK,
+        "shell/SidebarDock.vue": SIDEBAR_OK,
+        "shell/BottomDock.vue": BOTTOM_OK,
     };
 }
 
@@ -64,7 +64,7 @@ describe("proof:demo-dock-nav detect() (structural)", () => {
 
     it("violates when CategoryRail still exists", () => {
         const map = freshMap();
-        map["layout/CategoryRail.vue"] = "<template>old</template>";
+        map["shell/CategoryRail.vue"] = "<template>old</template>";
         const { violations } = detect(map, { ...map });
         expect(violations.some((v) => v.includes("CategoryRail.vue still exists"))).toBe(
             true,
@@ -80,7 +80,7 @@ describe("proof:demo-dock-nav detect() (structural)", () => {
 
     it("violates when a new dock drops its <GlassDock>", () => {
         const map = freshMap();
-        map["layout/SidebarDock.vue"] = `
+        map["shell/SidebarDock.vue"] = `
 import { useStoryNavigation } from "../composables/useStoryNavigation";
 const { firstOfCategory } = useStoryNavigation();
 <template><div /></template>`;

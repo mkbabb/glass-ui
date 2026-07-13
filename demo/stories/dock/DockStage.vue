@@ -57,9 +57,24 @@ const backgroundCanvas = computed<HTMLCanvasElement | null>(
 
 <template>
     <div class="dock-stage">
-        <!-- The ONE shared field behind the whole demo column. Offscreen-paused by
-             construction (the <Aurora> useIntersectionPause + content-visibility
-             seam). aria-hidden — purely decorative staging.
+        <!-- The ONE shared field behind the whole demo column. The field's backing
+             store is CLAMPED to the VIEWPORT (BI.W-STAGE-FIELD-CLAMP / PERF-3): the
+             absolute track spans the full scroll column, but the <Aurora> host inside
+             it is sized to `100dvh` and `position: sticky` — so the field pins to the
+             viewport as the page scrolls (always painted) while the offscreen scroll
+             column is NEVER rasterized (9.68MP → ~2.5MP). Sizing the field to the full
+             column was pure over-provisioned GPU fill: a decorative backdrop of which
+             only ~one viewport is ever visible. The DPR clamp (sub-2× wash,
+             `resolveAuroraWashDpr` = 1.5×) rides through the library aurora unchanged.
+
+             `.dock-stage` clips with `overflow: clip` (NOT `hidden`): `hidden`
+             establishes a scroll container that would CONFINE the sticky field to this
+             box (freezing the pin); `clip` clips the rounded corners without a scroll
+             container, so the field sticks relative to the outer `<main>` scroller.
+
+             Offscreen-paused by construction (the <Aurora> useIntersectionPause +
+             content-visibility seam parks the rAF once the field leaves the viewport).
+             aria-hidden — purely decorative staging.
 
              BG.W-GLASS-SIGNAL-TRUTH (mustFix 2) — `preserveDrawingBuffer: true` on the
              SAMPLED field. A live WebGL canvas clears its drawing buffer after the
@@ -67,19 +82,22 @@ const backgroundCanvas = computed<HTMLCanvasElement | null>(
              reads BLACK (luma 0 / hue transparent) off `drawImage(auroraCanvas)` —
              the "witness fires but the value is a lie" state the NF.3 paint-DELTA
              flagged. Preserving the buffer keeps the last rendered warm frame readable,
-             so the sampled luma + ambient hue are REAL. The `data-glass-field-canvas`
-             marker also lets a non-dock content surface over the stage auto-discover
-             this field (the SHELL_FIELD_CANVAS_SELECTOR reconcile). The render is
-             UNCHANGED — preservation only affects readback. -->
-        <Aurora
-            ref="auroraRef"
-            :config="config"
-            :opacity-ceiling="opacityCeiling"
-            :runtime-options="{ preserveDrawingBuffer: true }"
-            data-glass-field-canvas
-            class="dock-stage-field"
-            aria-hidden="true"
-        />
+             so the sampled luma + ambient hue are REAL (the W-DOCK-LUMA-SHARE shared
+             observer reads this same field). The `data-glass-field-canvas` marker also
+             lets a non-dock content surface over the stage auto-discover this field
+             (the SHELL_FIELD_CANVAS_SELECTOR reconcile). The render is UNCHANGED —
+             preservation only affects readback. -->
+        <div class="dock-stage-field-track" aria-hidden="true">
+            <Aurora
+                ref="auroraRef"
+                :config="config"
+                :opacity-ceiling="opacityCeiling"
+                :runtime-options="{ preserveDrawingBuffer: true }"
+                data-glass-field-canvas
+                class="dock-stage-field"
+                aria-hidden="true"
+            />
+        </div>
         <!-- The dock demos flow over the shared field. The scoped slot surfaces the
              shared aurora <canvas> so each staged dock threads it into its luminance
              observer (`:background-canvas="backgroundCanvas"`) — closing the observer
@@ -92,19 +110,44 @@ const backgroundCanvas = computed<HTMLCanvasElement | null>(
 
 <style scoped>
 /* The shared-stage container — an isolating positioning context so the single
-   field sits behind the slotted column without escaping to the page. */
+   field sits behind the slotted column without escaping to the page.
+
+   `overflow: clip` (NOT `hidden`): the sticky field must pin to the outer
+   `<main>` scroll container, but `overflow: hidden` would establish a scroll
+   container here and CONFINE the sticky pin to this box (freezing it). `clip`
+   clips the rounded corners identically without a scroll container, so the
+   viewport-clamped field stays pinned as the page scrolls. */
 .dock-stage {
     position: relative;
     isolation: isolate;
     border-radius: var(--radius-card);
-    overflow: hidden;
+    overflow: clip;
 }
 
-/* The ONE shared aurora field, pinned behind the column. */
-.dock-stage-field {
+/* The absolute TRACK spans the full scroll column behind the demos (the sticky
+   range) but occupies zero flow space, so the sticky field never pushes the
+   column down. */
+.dock-stage-field-track {
     position: absolute;
     inset: 0;
     z-index: -1;
+    pointer-events: none;
+}
+
+/* The ONE shared aurora field, VIEWPORT-CLAMPED (BI.W-STAGE-FIELD-CLAMP /
+   PERF-3). Sized to `100dvh` (not the full ~2365px scroll column), so the
+   Aurora ResizeObserver measures the viewport and the backing store never
+   exceeds ~2.5MP (down from 9.68MP). `position: sticky; top: 0` pins the field
+   to the viewport across the whole column so the visible region is always
+   painted; the offscreen column is never rasterized. The descendant selector
+   (`.dock-stage .dock-stage-field`) wins the height over the Aurora root's
+   `h-full` utility (unlayered scoped rule, specificity 0,2,0). */
+.dock-stage .dock-stage-field {
+    position: sticky;
+    top: 0;
+    display: block;
+    height: 100dvh;
+    width: 100%;
     pointer-events: none;
 }
 

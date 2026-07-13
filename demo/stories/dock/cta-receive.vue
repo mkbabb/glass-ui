@@ -12,7 +12,7 @@ import { onMounted, ref, useTemplateRef } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { Plus, Star, Compass, Shapes, Boxes } from "@lucide/vue";
-import { GlassDock, DockIconButton } from "@glass/components/custom/dock";
+import { GlassDock, DockControl } from "@glass/components/custom/dock";
 import { Button } from "@glass/components/ui/button";
 import { useDockCtaReceive } from "@glass/composables/motion/useDockCtaReceive";
 import DockStage from "./DockStage.vue";
@@ -127,18 +127,18 @@ function revealNow() {
 
                     <!-- The dock with the target control. -->
                     <GlassDock :background-canvas="backgroundCanvas" always-expanded class="relative z-10">
-                        <DockIconButton aria-label="Foundations"><Compass /></DockIconButton>
-                        <DockIconButton aria-label="Primitives"><Shapes /></DockIconButton>
-                        <DockIconButton aria-label="Containers"><Boxes /></DockIconButton>
+                        <DockControl aria-label="Foundations"><Compass /></DockControl>
+                        <DockControl aria-label="Primitives"><Shapes /></DockControl>
+                        <DockControl aria-label="Containers"><Boxes /></DockControl>
                         <!-- The receive TARGET — the CTA lands here. -->
-                        <DockIconButton
+                        <DockControl
                             ref="targetEl"
                             aria-label="Favorites"
                             :class="{ 'cta-receive-target--lit': received }"
                             class="cta-receive-target"
                         >
                             <Star />
-                        </DockIconButton>
+                        </DockControl>
                     </GlassDock>
                 </div>
 

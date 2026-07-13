@@ -48,19 +48,19 @@ export const CHROMATIC_FIELD_KINDS: ReadonlySet<string> = new Set([
  *  by the route id (`<category>/<story>`). `proof:focal-complete` C2 asserts this
  *  set ⊇ the committed grep of `<DockStage` over the routed SFCs (so adding a new
  *  DockStage route without enrolling it here REDs the gate — never a silent 2-GL
- *  drift). The rail + liquid-playground self-stage their OWN `<Aurora>` (not via
- *  DockStage) and are enrolled here directly. */
+ *  drift). The rail self-stages its OWN `<Aurora>` (not via DockStage) and is
+ *  enrolled here directly. */
 export const SELF_STAGES_GL: ReadonlySet<string> = new Set([
     "dock/overview",
     "dock/layers",
     "dock/sections",
-    "dock/dock-gallery",
     "dock/dock-search",
     "dock/cta-receive",
-    "dock/morph-showcase",
-    "dock/siri-island",
+    // BI.W-DOCK-CONTROLS / BI.W-DOCK-OVERFLOW — the controls + overflow reference stories
+    // wrap <DockStage> (the dock-over-a-live-field demonstration); enrolled so c2 stays green.
+    "dock/controls",
+    "dock/overflow",
     "dock/rail",
-    "dock/liquid-playground",
 ]);
 
 /** Resolve a `StoryBackground` (string shorthand or `{kind}` object) to its kind. */

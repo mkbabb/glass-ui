@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick, onBeforeUnmount, onMounted, provide, ref, useTemplateRef, watch } from "vue";
+import { computed, nextTick, onMounted, provide, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import {
     Dialog,
@@ -9,10 +9,7 @@ import {
     DialogTitle,
 } from "@glass/components/ui/dialog";
 import { Aurora } from "@glass/components/custom/aurora";
-import {
-    GooFilter,
-    useDockOrientationMorph,
-} from "@glass/components/custom/dock";
+import { GooFilter } from "@glass/components/custom/dock";
 import {
     formatCombo,
     formatComboParts,
@@ -20,10 +17,7 @@ import {
     useRegisteredShortcuts,
 } from "@glass/composables/keyboard";
 import { useStoryNavigation } from "../chassis/useStoryNavigation";
-import {
-    SHELL_DOCK_ORIENTATION,
-    SHELL_SCROLL_PROGRESS,
-} from "./useShellScrollProgress";
+import { SHELL_SCROLL_PROGRESS } from "./useShellScrollProgress";
 import { warmFieldHue } from "../chassis/hero/warm-field";
 import {
     shellAuroraConfig as buildShellAuroraConfig,
@@ -53,96 +47,12 @@ useKonami(() => {
     showKonami.value = true;
 });
 
-// ── BG.W-DOCK-INPLACE-MORPH — the in-dock button flips the REAL nav dock V↔H IN
-// PLACE via the liquid teardrop (D13, THE HEADLINE). The modal stage + the synthetic
-// two-dock View-Transitions crossfade are DELETED (no `role="dialog"`, esc moot). The
-// in-dock `ArrowLeftRight` control (SidebarDock/BottomDock, dispatching the ONE
-// `glass-ui-demo:toggle-dock-morph` window event) drives the SAME `useDockOrientationMorph`
-// driver bound to the REAL `<aside>` shell-dock box (the shell is its binary consumer
-// #2). The vertical left-column dock reshapes into a fixed-floating TOP-LEADING
-// horizontal bar (the corner the two orientations SHARE, so the goo occludes minimal
-// travel — F-ARM-3), the topology flip hidden under the dock-anchored goo teardrop
-// (`#dock-morph-goo`, F-ARM-2). ONE scalar, ONE spring (the DOCK_SPRING clock the
-// driver owns), both directions, interruptible, PRM-snap. NO second engine, NO parallel
-// clock (the driver's raw-spring→useDockSpring drain is booked to its own wave).
-const asideEl = useTemplateRef<HTMLElement>("asideEl");
-
-// The dock footprints (px) — the morph spans the liquid teardrop reshapes across.
-const V_FULL_H = 296;
-const H_FULL_W = 332;
-
-const morph = useDockOrientationMorph({
-    rootEl: asideEl,
-    verticalSize: V_FULL_H,
-    horizontalSize: H_FULL_W,
-});
-
-// The SETTLED orientation — tracks the 0.5-crossing `boundOrientation` (a pure `f(t)`),
-// NOT the spring SETTLE (BG.W-SHELL-MORPH-PAINT-REPAIR F3.R3). The `<main>` column reclaim
-// + top-gutter reserve, the aside's fixed-floating position toggle, AND (via SidebarDock's
-// `:orientation` bind) the GlassDock's own row-relayout ALL commit AT the occluded midpoint
-// (t≈0.5, where the goo teardrop is at its full-opacity plateau AND the real dock is
-// opacity:0 under `[data-dock-morphing]`) — never NAKED at settle (bo=0), the paint FAIL
-// the judge caught. `boundOrientation` is already the driver's crossing `f(t)`; a mid-flight
-// V→H→V wiggle re-crosses 0.5 under the SAME goo window, so no reflow ever paints uncovered.
-// It stays a writable ref (the capture seam + the provide type) fed by a watch on the
-// crossing. STILL a STATIC reserve toggle (a data-attr), never an animated height
-// (`proof:no-layout-animation` holds).
-const settledOrientation = ref<"vertical" | "horizontal">("vertical");
-watch(
-    () => morph.boundOrientation.value,
-    (o) => {
-        settledOrientation.value = o;
-    },
-    { immediate: true },
-);
-
-// The dock-anchored goo teardrop references the canonical `#dock-morph-goo` mount
-// (`GooFilter`, blur 16 / slope 14 / offset −7, mounted ONCE at the shell root — F6).
-// Gated to the occluded MIDPOINT window: a pure `f(--dock-morph-t)`, no clock (M5).
-const morphGooFilter = computed(() =>
-    morph.t.value > 0.18 && morph.t.value < 0.82 ? "url(#dock-morph-goo)" : "none",
-);
-
-// The in-dock control fires the ONE window event → the REAL dock flips in place.
-function onToggleShellMorph(): void {
-    morph.toggle();
-}
-
-// DETERMINISTIC CAPTURE SEAM — the π/Playwright arm pins EXACT t values (the
-// frame-series) + drives toggle/morphTo (both directions) on the REAL shell dock. The
-// scalar is the ONE source; pinning yields a frame-reproducible silhouette (no
-// wall-clock). Re-pointed off the deleted modal (open/close/setPreview are no-ops —
-// there is no stage to open; the flip is in place).
-onMounted(() => {
-    (
-        window as unknown as {
-            __shellDockMorph?: {
-                open: () => void;
-                close: () => void;
-                setPreview: (on: boolean) => void;
-                setMorphT: (t: number) => void;
-                toggle: () => void;
-                morphTo: (o: "vertical" | "horizontal") => void;
-            };
-        }
-    ).__shellDockMorph = {
-        open: () => {},
-        close: () => {},
-        setPreview: () => {},
-        setMorphT: (value) => {
-            void nextTick(() => morph.pin(value));
-            settledOrientation.value = value >= 0.5 ? "horizontal" : "vertical";
-        },
-        toggle: () => {
-            void nextTick(() => morph.toggle());
-        },
-        morphTo: (o) => {
-            void nextTick(() => morph.morphTo(o));
-        },
-    };
-    window.addEventListener("glass-ui-demo:toggle-dock-morph", onToggleShellMorph);
-});
+// BI.W-DOCK-RETIRES — the in-situ V↔H orientation morph (the `useDockOrientationMorph`
+// driver bound to the `<aside>` shell-dock box, the dock-anchored goo teardrop, the
+// `glass-ui-demo:toggle-dock-morph` window event, and the `__shellDockMorph` capture
+// seam) is DEFINITION-ABSENT (decided-terminal, clean break). The platform cannot
+// continuously interpolate a flex-column→row topology change; the shell dock is a static
+// vertical sidebar rail (the V↔H swap successor is `<DockCrossfade>` for a layer swap).
 
 // `<main>` owns route scroll now (the shell itself is a fixed viewport frame),
 // so the router's window-targeted scrollBehavior can't reset it. Reset the
@@ -162,7 +72,6 @@ const mainEl = ref<HTMLElement | null>(null);
 // persists across the keyed route swap, so the listener attaches once).
 const shellScrollProgress = ref(0);
 provide(SHELL_SCROLL_PROGRESS, shellScrollProgress);
-provide(SHELL_DOCK_ORIENTATION, settledOrientation);
 
 let scrollRafId = 0;
 function computeShellScrollProgress(): void {
@@ -219,9 +128,9 @@ watch(
 // BG.W-ROUTE-TRANSITION — the categoryId no-op `startViewTransition` watch + its dead
 // `document.documentElement.dataset.categorySwitch` write are DELETED (the dataset flag
 // had ZERO readers, and the VT body was an intentional no-op — a confounding mechanism
-// the bare keyed atomic swap makes redundant). BG.W-DOCK-INPLACE-MORPH then deleted the
-// LAST `startViewTransition` in this shell (the dock-morph crossfade) — the V↔H flip is
-// now the in-place liquid teardrop, so AppShell imports no `startViewTransition` at all.
+// the bare keyed atomic swap makes redundant). AppShell imports no `startViewTransition`
+// at all (BI.W-DOCK-RETIRES retired the in-situ V↔H dock morph — the shell dock is a
+// static vertical sidebar rail).
 
 // BG.W-FIELD-AURORA (M2) — the per-route WARM FIELD hue feeds the ONE shell
 // `<Aurora>` (the retired `.paper-field` CSS plane's successor). `warmFieldHue`
@@ -304,9 +213,6 @@ onMounted(() => {
     );
 });
 
-onBeforeUnmount(() => {
-    window.removeEventListener("glass-ui-demo:toggle-dock-morph", onToggleShellMorph);
-});
 </script>
 
 <template>
@@ -333,61 +239,26 @@ onBeforeUnmount(() => {
 
     <!-- BD.W-MORPH-FIELD-WELD (M1) — the ONE library goo `<filter>` mount, ONCE at the
          shell root. It exposes EVERY library metaball id off one byte-identical sRGB graph
-         (`#glass-goo` carousel/deck · `#pager-goo` worm · `#dock-fission-goo` fission ·
-         `#dock-morph-goo` V↔H teardrop · `#morph-goo` generic) — the DRY union of the
-         prior four byte-near-identical mounts. A global `<defs>` referenced by id; mounting
-         twice dups the ids, so it lives HERE once and every route's morph reaches it. -->
+         (`#glass-goo` carousel/deck · `#pager-goo` / `#pager-worm-goo` worm · `#morph-goo`
+         generic) — the DRY union. A global `<defs>` referenced by id; mounting twice dups
+         the ids, so it lives HERE once and every route's morph reaches it. -->
     <GooFilter />
 
     <!-- BG.W-FIELD-AURORA (C7) — `data-paper-field` on the CONTENT ANCESTOR of
          <main> (NOT the fixed Aurora sibling). The `cards.css` opaque-fallback
-         suppressor + the `liquid-morph.css` ambient-tint seam are DESCENDANT
-         selectors reading this attr, so it must sit above the cards. Set only while
-         the shell field is active (a focal route's own field needs no suppression). -->
+         suppressor is a DESCENDANT selector reading this attr, so it must sit above
+         the cards. Set only while the shell field is active (a focal route's own
+         field needs no suppression). -->
     <div
         class="relative flex h-screen overflow-hidden text-foreground"
         :data-paper-field="shellFieldActive ? '' : null"
     >
-        <!-- Fixed vertical sidebar rail dock (off-canvas below the mobile
-             breakpoint — see dock-nav.css; the BottomDock owns the off-canvas
-             Sheet trigger).
-             BG.W-DOCK-INPLACE-MORPH — this `<aside>` IS the REAL shell-dock box the
-             `useDockOrientationMorph` driver reshapes in place. `--dock-morph-t`/
-             `--stretch` are written onto it; `[data-shell-dock-orientation]` (settled)
-             flips the vertical column ↔ the fixed-floating TOP-LEADING horizontal bar;
-             `[data-dock-morphing]` dissolves the real dock under the goo teardrop
-             during the flight (the merge-then-reshape). -->
-        <aside
-            ref="asideEl"
-            class="demo-sidebar-rail"
-            :data-shell-dock-orientation="settledOrientation"
-            :data-dock-morphing="morph.morphing.value ? '' : undefined"
-            :style="{
-                '--dock-bridge-v-h': `${V_FULL_H}px`,
-                '--dock-bridge-h-w': `${H_FULL_W}px`,
-            }"
-        >
+        <!-- Fixed vertical sidebar rail dock (off-canvas below the mobile breakpoint —
+             see dock-nav.css; the BottomDock owns the off-canvas Sheet trigger).
+             BI.W-DOCK-RETIRES — the in-situ V↔H orientation morph retired; the shell
+             dock is a STATIC vertical sidebar rail (no morph driver, no goo teardrop). -->
+        <aside class="demo-sidebar-rail">
             <SidebarDock />
-            <!-- The dock-anchored liquid teardrop that occludes the V↔H topology flip.
-                 It overlays the REAL dock box (top-leading-anchored via the `--inplace`
-                 modifier), references the canonical `#dock-morph-goo` mount, and paints
-                 ONLY in the occluded midpoint window (`--dock-bridge-opacity`, gated by
-                 the driver's `bridgeStyle`). No modal, no synthetic dock, no VT. -->
-            <div
-                v-if="morph.morphing.value"
-                class="dock-morph-bridge dock-morph-bridge--inplace"
-                :style="{ '--stretch': String(morph.stretch.value), ...morph.bridgeStyle.value }"
-                aria-hidden="true"
-                data-testid="shell-dock-morph-bridge"
-            >
-                <div
-                    class="dock-morph-bridge-goo"
-                    :style="{ '--dock-bridge-goo-filter': morphGooFilter }"
-                >
-                    <div class="dock-morph-bridge-plate dock-morph-bridge-plate--vertical" />
-                    <div class="dock-morph-bridge-plate dock-morph-bridge-plate--horizontal" />
-                </div>
-            </div>
         </aside>
 
         <div class="flex min-h-0 min-w-0 flex-1 flex-col">
@@ -396,15 +267,9 @@ onBeforeUnmount(() => {
                  `tabindex="-1"` (BG.W-ROUTE-TRANSITION P4-F) lets the route-settle
                  watch move focus here, so the atomic keyed swap doesn't strand focus
                  at <body> + keyboard tab order resets to the new page. -->
-            <!-- BG.W-DOCK-INPLACE-MORPH — when the shell dock settles HORIZONTAL it
-                 becomes a fixed-floating TOP-LEADING bar (out of flow); `<main>` reclaims
-                 the column automatically (flex) and reserves a top gutter for the floating
-                 bar via `[data-shell-dock-orientation]` (a STATIC reserve committed at
-                 settle, the `pt` mirror of the existing bottom-dock reserve). -->
             <main
                 ref="mainEl"
                 tabindex="-1"
-                :data-shell-dock-orientation="settledOrientation"
                 class="demo-main-scroller smooth-scroll relative flex-1 min-h-0 min-w-0 overflow-y-auto px-4 pt-6 pb-28 md:px-8 md:pt-10 md:pb-32"
             >
                 <!-- BG.W-ROUTE-TRANSITION (P4-F) — the SR route-change announce. The
@@ -451,11 +316,9 @@ onBeforeUnmount(() => {
     <CommandPalette v-model:open="showPalette" />
     <KonamiAurora v-if="showKonami" @done="showKonami = false" />
 
-    <!-- BG.W-DOCK-INPLACE-MORPH — the modal stage + the synthetic two-dock
-         View-Transitions crossfade are DELETED (D13). The V↔H flip is now the REAL
-         `<aside>` shell dock reshaping IN PLACE via the liquid teardrop (see the `<aside
-         ref="asideEl">` above + `useDockOrientationMorph`). No `role="dialog"`, esc moot,
-         no `startViewTransition` on the morph path. -->
+    <!-- BI.W-DOCK-RETIRES — the in-situ V↔H dock-morph stage is DEFINITION-ABSENT
+         (decided-terminal). No modal, no goo teardrop, no `startViewTransition` on the
+         morph path — the shell dock is a static vertical sidebar rail. -->
 
     <!-- The glass-ui demo Configurator — a right-side Sheet, opened by the
          SidebarDock gear control or the `,` shortcut (AZ.W-SHELL-CONFIG: the
@@ -492,55 +355,7 @@ onBeforeUnmount(() => {
     </Dialog>
 </template>
 
-<style scoped>
-/* BG.W-DOCK-INPLACE-MORPH — the REAL shell dock flips V↔H IN PLACE (F-ARM-3). The
-   `<aside class="demo-sidebar-rail">` is styled by dock-nav.css as the in-flow vertical
-   left column; these rules add the HORIZONTAL settled state + the flight treatment. All
-   are static reserves / compositor properties (no animated height — the goo teardrop IS
-   the liquid transition; `proof:no-layout-animation` holds). The aside is in THIS
-   component's template, so the scoped hash lands on it; `:deep()` reaches the child
-   SidebarDock's own dock box. */
-
-/* The morphing aside lifts above <main> so the dock-anchored teardrop can grow rightward
-   from the shared top-leading corner into the reclaimed column without being clipped. */
-.demo-sidebar-rail[data-dock-morphing] {
-    position: relative;
-    z-index: 45;
-    overflow: visible;
-}
-
-/* During the flight the real dock dissolves under the goo (the Dynamic-Island
-   merge-then-reshape); the goo bridge (a direct child of the aside, NOT inside the dock
-   box) stays painted and carries the visible V→H reshape. */
-.demo-sidebar-rail[data-dock-morphing] :deep(.demo-sidebar-dock) {
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity var(--spring-smooth-duration, 0.36s) var(--ease-out, ease);
-}
-
-/* HORIZONTAL settled state (committed at settle) — the fixed-floating TOP-LEADING bar,
-   the mirror of the bottom-center story dock. The vertical left column and this top bar
-   SHARE the top-leading corner, so the corner-pinned reshape's travel is minimal. */
-.demo-sidebar-rail[data-shell-dock-orientation="horizontal"] {
-    position: fixed;
-    inset-block-start: var(--demo-nav-top-inset, 1rem);
-    inset-inline-start: var(--demo-nav-rail-inset, 1rem);
-    inset-inline-end: auto;
-    z-index: 40;
-}
-
-/* BG.W-SHELL-MORPH-PAINT-REPAIR (F3.R3) — the internal dock flows as a ROW when settled
-   horizontal because SidebarDock binds `:orientation="dockOrientation"` on the GlassDock
-   (it drops `.glass-dock.vertical`'s column grid for the base `display:inline-flex` row —
-   a genuine wide-short top bar). The prior `:deep(.demo-sidebar-dock){ flex-direction: row }`
-   workaround was insufficient (it re-flowed the root but left GlassDock's internal vertical
-   structure a tall rail that occluded the re-margined content — the paint FAIL); the bound
-   orientation prop is the real fix, so the workaround is deleted (no dead override). */
-
-/* <main> reserves a top gutter for the floating top bar when the dock settled horizontal
-   (a static reserve, the pt mirror of the pb-28 bottom-dock reserve; the column reclaim is
-   automatic via flex the moment the aside goes fixed). */
-.demo-main-scroller[data-shell-dock-orientation="horizontal"] {
-    padding-block-start: calc(var(--demo-nav-top-inset, 1rem) + 3.5rem);
-}
-</style>
+<!-- BI.W-DOCK-RETIRES — the in-situ V↔H dock-morph scoped CSS (the `[data-dock-morphing]`
+     dissolve + the `[data-shell-dock-orientation="horizontal"]` fixed-floating reshape) is
+     DEFINITION-ABSENT (the morph retired decided-terminal; the shell dock is a static
+     vertical sidebar rail styled by dock-nav.css). -->

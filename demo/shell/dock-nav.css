@@ -196,18 +196,15 @@
     inset: 0;
     z-index: 2;
     pointer-events: none;
-    /* Follow the dock plate: the vertical rail + the settled horizontal bar are
-       both `shape-pill` (stadium), and a collapsed pill is the same register. */
+    /* Follow the dock plate: the static vertical rail is `shape-pill` (stadium),
+       and a collapsed pill is the same register. */
     --border-progress-radius: var(--radius-pill, 9999px);
     /* The thick+rounded read (the 10-14px envelope), tuned against the ~67px
        vertical pill so the band reads as the dock's own edge, not a bar. */
     --border-progress-width: 11px;
-    /* Continuity across the V↔H morph: the ring dissolves in lockstep with the
-       dock under the goo window (below) — never a pop across the topology flip. */
+    /* BI.W-DOCK-RETIRES — the `[data-dock-morphing]` ring dissolve (continuity across
+       the V↔H morph) is DEFINITION-ABSENT (the shell dock no longer morphs orientation). */
     transition: opacity 180ms var(--ease-out, ease-out);
-}
-[data-dock-morphing] .demo-dock-progress-host > .demo-dock-scroll-ring {
-    opacity: 0;
 }
 
 /* ════════════════════════════════════════════════════════════════════════

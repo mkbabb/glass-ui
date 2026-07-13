@@ -1,0 +1,113 @@
+{
+  "$schema": "./W-DOCK-RETIRES-DISPOSITIONS.schema (informal — the proof:dock-retire-terminal R5 source)",
+  "doc": "BI.W-DOCK-RETIRES — the decided-terminal disposition register for the dock greenfield excisions. Every row is a `retired` disposition (clean break, no alias, NO re-book path). `retiredBy` names the BI wave that landed the delete; a `docs/tranches/<LETTER>/waves/<id>.md` spec MUST resolve for it (R5 soundness). `successor` names where any surviving need is covered (a NEW honest ≥2-consumer trigger, never a re-opened row). The mechanism SOURCE files are DEFINITION-ABSENT (R1-R4); this file is the R5 terminal-register witness. Mirrors the AX DISPOSITION-REGISTER.json `retired`-row shape.",
+  "selfTest": {
+    "note": "proof:dock-retire-terminal R5 self-test — a synthetic `book`/`resolved:false`-without-retiredBy row for a retired feature MUST flag. The gate constructs the synthetic bite in-process; this file carries ONLY terminal rows.",
+    "syntheticBook": {
+      "id": "__self-test-only__",
+      "disposition": "book",
+      "note": "NEVER present in the live items[] — the gate's own bite injects a synthetic disease-state row and asserts R5 flags it."
+    }
+  },
+  "items": [
+    {
+      "id": "dock-fission",
+      "disposition": "retired",
+      "summary": "The n-ary dock FISSION facility — useDockFission + useDockFissionWiring + dockFissionSignatures + fission-bridge.css + fission-island.css (~1,392L). A GlassDock `:splittable` seam that split a dock into N goo-necked islands.",
+      "retiredBy": "BI.W-DOCK-RETIRES",
+      "resolved": true,
+      "rationale": "Demo-only spectacle (zero binary consumer — the G10 constellation grep + registry probe found it live ONLY on retired demo stories) AND the PRIME UF-C3 Safari suspect: fission-bridge.css was the ONLY dock mechanism stacking a regular goo `filter: url(#dock-fission-goo)` over a `backdrop-filter` subtree (the WebKit-specific compositing path UF-C3 named — 'essentially all of /dock/liquid-playground is broken in safari … as is all of /dock/dock-gallery'). Retired ~2,026L with the V↔H bridge. C3 corrected the neck fiction (the honest goo spec DOCK-LADDER §3: lobe-bulge → waist ≤2 frames → clean gap, NO taffy thread). Decided-terminal.",
+      "successor": "The DOCK-B bank re-trigger — a NEW honest ≥2-consumer demand for continuous multi-island choreography (never a re-opened fission book). The honest goo morphology bound is DOCK-LADDER §3.",
+      "definitionAbsent": [
+        "src/components/custom/dock/composables/useDockFission.ts",
+        "src/components/custom/dock/composables/useDockFissionWiring.ts",
+        "src/components/custom/dock/composables/dockFissionSignatures.ts",
+        "src/styles/dock/fission-bridge.css",
+        "src/styles/dock/fission-island.css"
+      ]
+    },
+    {
+      "id": "dock-siri-island",
+      "disposition": "retired",
+      "summary": "The Siri-as-a-dock-capability island — useSiriDock + SiriDockCapability.vue + siri.css + the SIRI_FORMS √φ form ladder (~565L). A glass island blooming from the dock pill through four morph forms.",
+      "retiredBy": "BI.W-DOCK-RETIRES",
+      "resolved": true,
+      "rationale": "Demo-only zero-binary-consumer capability. The siri-* adjudication is TERMINAL here (BI ruling 18): siri-* is demoted OUT of the dock module — a standalone `/siri-island` iff a real consumer materializes, else deleted. It resolved to deleted. The /dock public surface re-shapes off the siri-* symbols (SIRI_FORMS / SIRI_SQRT_PHI / SiriDockCapability / siriFormOf / useSiriDock). Decided-terminal.",
+      "successor": "A standalone `/siri-island` subpath IFF a genuine consumer materializes (a NEW honest ≥2, never a re-opened dock-capability book). No surviving need at HEAD.",
+      "definitionAbsent": [
+        "src/components/custom/dock/composables/useSiriDock.ts",
+        "src/components/custom/dock/SiriDockCapability.vue",
+        "src/styles/dock/siri.css",
+        "demo/stories/dock/siri-island.vue",
+        "demo/stories/dock/SiriWaveform.vue"
+      ]
+    },
+    {
+      "id": "dock-orientation-morph",
+      "disposition": "retired",
+      "summary": "The V↔H liquid-glass orientation morph — useDockOrientationMorph (its `new SpringProgress` @:279) + morph-bridge.css + the two-real-DOM-docks metaball teardrop bridge (~634L).",
+      "retiredBy": "BI.W-DOCK-RETIRES",
+      "resolved": true,
+      "rationale": "The platform CANNOT continuously interpolate a flex-column→row topology change (the module README's own admission) — the V↔H swap is a face-swap, not a continuous morph. The metaball teardrop bridge was a suspected Safari co-killer of the broken showcases (a second goo `filter:url()` × `backdrop-filter` subtree). D25 (always-on metaball-teardrop V↔H fidelity, perf-gated) is decided-terminal here: the crossfade won G6 (an interruptible spring beats a non-interruptible UA-eased VT), so the teardrop fidelity is decided-against. src:dock-specular-fold (useDockOrientationMorph.ts:196 specular fold BOOKED) resolves by deletion. Decided-terminal.",
+      "successor": "<DockCrossfade :active> — the thin two-child opacity-overlap face-swap (BI.W-DOCK-CROSSFADE). A consumer needing a V↔H transition composes the crossfade.",
+      "definitionAbsent": [
+        "src/components/custom/dock/composables/useDockOrientationMorph.ts",
+        "src/styles/dock/morph-bridge.css"
+      ]
+    },
+    {
+      "id": "dock-hysteresis",
+      "disposition": "retired",
+      "summary": "The ~120L moving-edge-sweep hysteresis in useDockState.ts — isMorphingEdgeSweep + EDGE_BAND_PX + the onMouseLeave geometry recheck.",
+      "retiredBy": "BI.W-DOCK-RETIRES",
+      "resolved": true,
+      "rationale": "The AZ.W-DOCK-FLICKER moving-edge-sweep compensation guarded a hover BOUNDARY that moved WITH the box (the enter/leave listeners on the morphing .glass-dock root re-fired enter↔leave as the collapsing edge swept a stationary cursor). W-DOCK-SPINE (G7) moved the hit frame onto a STATIONARY, state-sized box that never sweeps under the cursor — a hit frame that does not move cannot re-fire enter↔leave, so there is nothing to guard. The state machine + the ~60ms HOVER_INTENT_MS intent-dwell (a genuine UX sweep-past guard) are KEPT. Decided-terminal.",
+      "successor": "The W-DOCK-SPINE stationary state-sized hit frame (the moving-edge class is unrepresentable) + the KEPT ~60ms HOVER_INTENT_MS intent-dwell.",
+      "definitionAbsent": [
+        "src/components/custom/dock/composables/useDockState.ts#isMorphingEdgeSweep",
+        "src/components/custom/dock/constants.ts#EDGE_BAND_PX"
+      ]
+    },
+    {
+      "id": "dock-escape-band-aids",
+      "disposition": "retired",
+      "summary": "The `.glass-dock-frame` display:contents escape + the `#rail`/`dock-hairline-slot` slot + the `overflow-clip-margin` cross-axis band-aid + railProjection.ts (157L φ²-crossing ring math).",
+      "retiredBy": "BI.W-DOCK-ESCAPE",
+      "resolved": true,
+      "rationale": "The escape band-aids compensated for the triple-identity clip (an anchored flex strip needs no φ-tier ring math — PASS-4B ruling 4). W-DOCK-SPINE made the box `contain:layout` (not paint) with the L0 plate owning the clip + L1 `overflow:visible`, and W-DOCK-ESCAPE rendered the fan/satellite/menu surfaces as TOP-LAYER popovers (spec-exempt from ancestor clip/contain/transform) — so there is nothing to escape from. railProjection.ts DELETE is wired in W-DOCK-ESCAPE, terminalized here. Decided-terminal.",
+      "successor": "The L0 plate clip + L1 overflow:visible (W-DOCK-SPINE) + the top-layer popover fan via useDockPopover (W-DOCK-ESCAPE); native scroll + FadingScroll mask (W-DOCK-OVERFLOW).",
+      "definitionAbsent": [
+        "src/components/custom/dock/composables/railProjection.ts",
+        ".glass-dock-frame (CSS selector — library dock CSS)",
+        "overflow-clip-margin (CSS property — library dock CSS)"
+      ]
+    },
+    {
+      "id": "dock-contextual-silhouette",
+      "disposition": "retired",
+      "summary": "T3 — 'the drill-in recomposes the dock' contextual-silhouette premise (a dock that recomposes its silhouette on a contextual drill-in).",
+      "retiredBy": "BI.W-DOCK-RETIRES",
+      "resolved": true,
+      "rationale": "Premise misread (C4): a drill-in leaves the dock UNTOUCHED — the back-capsule is a HEADER affordance, not a dock recomposition, and the only real recomposition axis is scroll-minimize. Nothing to build; the premise dissolves. Decided-terminal.",
+      "successor": "Scroll-minimize is the only dock recomposition axis (a drill-in is a header/route concern, not a dock morph)."
+    },
+    {
+      "id": "dock-tab-indicator-flood",
+      "disposition": "retired",
+      "summary": "T4 — the dock tab-indicator scale-pop ×1.15 + accent-flood-on-commit (`--dock-accent-flood-t`) plate-swap non-indicator.",
+      "retiredBy": "BI.W-DOCK-RETIRES",
+      "resolved": true,
+      "rationale": "SUPERSEDED by the eyeglass-on-dock-row register. C1: the 'flood' was a red card read THROUGH the plate — `--dock-accent-flood-t` retired unbuilt. C2: the pop is lens magnification, not a scale-pop. The reference-true indicator is the eyeglass wave (UF-H1, a sibling band); the dock's plate-swap non-indicator retires here. Decided-terminal.",
+      "successor": "The eyeglass-on-dock-row register (UF-H1, the eyeglass tabs default — BI.W-TABS-FACTOR); the dock control run rides useSelectionIndicator (BI.W-DOCK-CONTROLS)."
+    },
+    {
+      "id": "dock-nowplaying-pill",
+      "disposition": "retired",
+      "summary": "BE.W-DOCK-NOWPLAYING-PILL — a now-playing pill needing an album-shade tint.",
+      "retiredBy": "BI.W-DOCK-RETIRES",
+      "resolved": true,
+      "rationale": "Never built (2+ closes un-decided). No consumer; the originating need is covered by shipped machinery. Decided-terminal.",
+      "successor": "<Drawer mode=\"live-behind\"> (the shipped detented sheet) / the dock greenfield cover any surviving now-playing need."
+    }
+  ]
+}

@@ -15,7 +15,7 @@ import {
 import {
     GlassDock,
     DockSection,
-    DockIconButton,
+    DockControl,
     type DockSectionDescriptor,
 } from "@glass/components/custom/dock";
 import DockStage from "./DockStage.vue";
@@ -72,27 +72,27 @@ const sections: readonly DockSectionDescriptor[] = [
                         >
                             <!-- rail-core: the leading home/brand region -->
                             <template #home>
-                                <DockIconButton aria-label="Home"><Home /></DockIconButton>
+                                <DockControl aria-label="Home"><Home /></DockControl>
                             </template>
                             <!-- section: Browse -->
                             <template #browse>
-                                <DockIconButton aria-label="Search"><Search /></DockIconButton>
-                                <DockIconButton aria-label="Layers"><Layers /></DockIconButton>
+                                <DockControl aria-label="Search"><Search /></DockControl>
+                                <DockControl aria-label="Layers"><Layers /></DockControl>
                             </template>
                             <!-- section: Assets -->
                             <template #assets>
-                                <DockIconButton aria-label="Packages"><Package /></DockIconButton>
-                                <DockIconButton aria-label="Libraries"><Library /></DockIconButton>
+                                <DockControl aria-label="Packages"><Package /></DockControl>
+                                <DockControl aria-label="Libraries"><Library /></DockControl>
                             </template>
                             <!-- section: System -->
                             <template #system>
-                                <DockIconButton aria-label="Notifications"><Bell /></DockIconButton>
-                                <DockIconButton aria-label="Settings"><Settings /></DockIconButton>
+                                <DockControl aria-label="Notifications"><Bell /></DockControl>
+                                <DockControl aria-label="Settings"><Settings /></DockControl>
                             </template>
                             <!-- nav: the trailing nav arrows -->
                             <template #nav>
-                                <DockIconButton aria-label="Previous"><ChevronLeft /></DockIconButton>
-                                <DockIconButton aria-label="Next"><ChevronRight /></DockIconButton>
+                                <DockControl aria-label="Previous"><ChevronLeft /></DockControl>
+                                <DockControl aria-label="Next"><ChevronRight /></DockControl>
                             </template>
                         </DockSection>
                     </GlassDock>

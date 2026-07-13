@@ -107,16 +107,10 @@
    source; a hand-extracted src critical.css would RED). */
 @import "../src/styles/index.css";
 @import "./chassis/hero/story-hero.css";
-/* the LIQUID-DOCK prototype surfaces are DEMO-ONLY (off the library bundle; the driving
-   composable was DEFINITION-ABSENT'd at BG.W-DEAD-COMPOSABLE-CUT and this sheet moved
-   into demo/ — the god-module baseline drained). Loaded here after the library so the
-   glass tokens + `@layer components` resolve. liquid-morph.css carries the demo island
-   FACE/layout (`.liquid-island-*`) only; the fission bridge BEHAVIOR
-   (`.dock-fission-bridge`/`.dock-fission-piece` — the library N-seam goo recipe,
-   BE.W-DOCK-FISSION) ships in the LIBRARY cascade via index.css → dock.css, so the demo
-   inherits it (no explicit @import). liquid-morph.css loads AFTER index.css so the demo
-   island faces resolve over the library behavior in `@layer components` source order. */
-@import "./stories/dock/liquid-morph.css";
+/* BI.W-DOCK-RETIRES — the liquid-morph / fission / siri / V↔H-goo demo surfaces
+   (`liquid-morph.css`, `liquid-playground`, `dock-gallery`, `morph-showcase`,
+   `siri-island`) are DEFINITION-ABSENT (the whole goo-dock spectacle retired
+   decided-terminal; clean break, no alias). */
 
 @variant dark (&:where(.dark, .dark *));
 

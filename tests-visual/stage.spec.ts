@@ -16,9 +16,9 @@
 //   (c) /substrates/glass-material shows the glass rungs floating over the aurora
 //       with NO opaque frame between — the ShowcaseFrame host's resolved background
 //       is transparent (the field shows), not --card near-black (the BG-2 kill).
-//   (d) the dock demos (/dock/overview, /dock/morph-showcase) paint over a live
-//       field — the DockStage aurora canvas is present behind the dock pills, not a
-//       flat bg-card/40 panel.
+//   (d) the dock demos (/dock/overview) paint over a live field — the DockStage aurora
+//       canvas is present behind the dock pills, not a flat bg-card/40 panel.
+//       (BI.W-DOCK-RETIRES — /dock/morph-showcase retired with the V↔H goo morph.)
 //   (e) a calm-seed aurora's breathing register shows perceptible drift — the
 //       breathing MOTION_FIELDS atom is non-zero (the source W4 proves the table;
 //       this arm confirms an aurora canvas renders on the staged routes).
@@ -131,7 +131,9 @@ test("(c) /substrates/glass-material rungs float over the aurora, no opaque plat
 });
 
 // ── (d) the dock demos paint over a live field ───────────────────────────────
-for (const route of ["/dock/overview", "/dock/morph-showcase"]) {
+// BI.W-DOCK-RETIRES — /dock/morph-showcase retired (the V↔H goo morph is decided-terminal);
+// /dock/overview is the surviving DockStage-over-live-field witness.
+for (const route of ["/dock/overview"]) {
     test(`(d) ${route} dock demos sit over a live DockStage field`, async ({ page }) => {
         await page.goto(route, { waitUntil: "networkidle" });
         await page.waitForTimeout(500);

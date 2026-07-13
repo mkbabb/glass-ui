@@ -12,9 +12,9 @@
 // fraction. The directive's intent — the scroll position drives the value — is
 // kept; the divergence is recorded in USER-0703-FIX-NOTES.md.)
 //
-// The dock ORIENTATION rides the same seam: the V↔H in-place morph settles the
-// shell dock vertical (the left rail) or horizontal (the floating top bar), and
-// the ring's coverage follows (inline-end-edge ↔ bottom-edge).
+// BI.W-DOCK-RETIRES — the `SHELL_DOCK_ORIENTATION` seam is DEFINITION-ABSENT (the V↔H
+// in-place dock morph retired decided-terminal; the shell dock is a STATIC vertical rail,
+// so the ring coverage is the fixed inline-end edge, no orientation follow).
 
 import { inject, ref, type InjectionKey, type Ref } from "vue";
 
@@ -23,17 +23,7 @@ export const SHELL_SCROLL_PROGRESS: InjectionKey<Ref<number>> = Symbol(
     "demo:shell-scroll-progress",
 );
 
-/** The shell dock's SETTLED orientation (the V↔H morph commit). */
-export const SHELL_DOCK_ORIENTATION: InjectionKey<
-    Ref<"vertical" | "horizontal">
-> = Symbol("demo:shell-dock-orientation");
-
 /** Inject the shell scroll fraction (a detached host reads a static 0). */
 export function useShellScrollProgress(): Ref<number> {
     return inject(SHELL_SCROLL_PROGRESS, () => ref(0), true);
-}
-
-/** Inject the shell dock's settled orientation (defaults vertical). */
-export function useShellDockOrientation(): Ref<"vertical" | "horizontal"> {
-    return inject(SHELL_DOCK_ORIENTATION, () => ref<"vertical" | "horizontal">("vertical"), true);
 }

@@ -7,13 +7,15 @@
 // the binding PAINTED truth on the WebKit project (the engine with the same
 // `backdrop-filter: url()` absence + the same context-eviction model):
 //
-//   - THE NO-FLASH ASSERT (the §H headline): over /substrates/aurora + /dock/morph-showcase,
+//   - THE NO-FLASH ASSERT (the §H headline): over /substrates/aurora + /dock/overview,
 //     capture a frame-series across ~2s and assert the painted region's meanLum does NOT
 //     oscillate (no strobe — the frame-to-frame meanLum variance stays below a flash floor).
-//   - THE VIZ-PAINT-ON-WEBKIT ASSERT: aurora/constellation/blob/dot-flow/concentric each read
+//   - THE VIZ-PAINT-ON-WEBKIT ASSERT: aurora/constellation/blob each read
 //     meanLum > 0 AND stay painted across the window (no blink-to-black loop).
-//   - THE MORPH-STABILITY-ON-WEBKIT ASSERT: the dock V↔H morph paints a continuous glass plate
-//     at every frame (meanLum > 0, no white box) — the WebGL context under it never storms.
+//   - THE DOCK-STABILITY-ON-WEBKIT ASSERT: the dock over a live aurora field (DockStage)
+//     paints a continuous glass plate at every frame (meanLum > 0, no white box) — the WebGL
+//     context under it never storms. (BI.W-DOCK-RETIRES retired the V↔H morph-showcase route;
+//     /dock/overview is the surviving dock-over-live-field WebKit witness.)
 //   - THE GLASS-DEGRADE-ON-WEBKIT ASSERT: a glass card reads the blur+saturate+tint base
 //     (translucent warm glass, NOT an un-styled box) — the lens absence is invisible, the
 //     material present.
@@ -33,15 +35,17 @@ import { PNG } from "pngjs";
 
 // ── The viz routes + their canvas selectors (the demo surfaces this wave's Safari
 //    no-flash arm depends on per the spec's "walk aurora/blob/constellation/flow/concentric").
+// dot-flow-field / concentric / dot-matrix DELETED at BI.W-VIZ-DELETIONS (the user-ordered
+// clean-break prune) — off the paint-on-WebKit route set.
 const VIZ = [
     { route: "/substrates/aurora", canvas: ".aurora-canvas" },
     { route: "/substrates/blob", canvas: '[data-testid="goo-blob-canvas"]' },
     { route: "/substrates/constellation", canvas: ".constellation-canvas" },
-    { route: "/substrates/dot-flow-field", canvas: '[data-testid="dot-flow-field-canvas"]' },
-    { route: "/substrates/concentric", canvas: '[data-testid="concentric-canvas"]' },
 ] as const;
 
-const MORPH_ROUTE = "/dock/morph-showcase";
+// BI.W-DOCK-RETIRES — the V↔H morph-showcase route retired; the dock-over-live-field
+// WebKit stability witness is /dock/overview (DockStage aurora under the dock plate).
+const MORPH_ROUTE = "/dock/overview";
 const SCHEMES = ["light", "dark"] as const;
 
 // The flash floor: the frame-to-frame meanLum standard deviation across the capture window.
@@ -151,9 +155,9 @@ for (const scheme of SCHEMES) {
     }
 }
 
-// ── The morph-stability + no-flash arm ─────────────────────────────────────────
+// ── The dock-stability + no-flash arm (BI.W-DOCK-RETIRES — the dock over a live field) ──
 for (const scheme of SCHEMES) {
-    test(`dock V↔H morph paints a continuous plate + does NOT flash (${scheme})`, async ({
+    test(`dock over the live field paints a continuous plate + does NOT flash (${scheme})`, async ({
         page,
     }) => {
         const errors: string[] = [];
@@ -168,13 +172,13 @@ for (const scheme of SCHEMES) {
             .waitFor({ state: "visible", timeout: 8000 })
             .then(() => true)
             .catch(() => false);
-        if (!ok) test.skip(true, "no .glass-dock on the morph route at HEAD");
+        if (!ok) test.skip(true, "no .glass-dock on the dock route at HEAD");
         await setScheme(page, scheme);
         await page.waitForTimeout(300);
 
-        // Capture a frame-series of the dock plate while a morph runs (the showcase morphs
-        // continuously / on a toggle). Every frame must paint a continuous glass plate —
-        // meanLum > 0, never a white box (meanLum ≈ 1) or a black box (meanLum ≈ 0).
+        // Capture a frame-series of the dock plate over the live DockStage aurora field.
+        // Every frame must paint a continuous glass plate — meanLum > 0, never a white box
+        // (meanLum ≈ 1) or a black box (meanLum ≈ 0) — the WebGL context never storms.
         const series = await lumSeries(page, ".glass-dock", 10, 200);
         for (const l of series) {
             expect(l).toBeGreaterThan(0); // a glass plate paints (not a black hole)

@@ -6,19 +6,17 @@
  * and the mobile-primary `BottomDock.vue` (horizontal story bar) — byte-DUPLICATED a
  * cohesive block of navigation logic: the route→facet resolver wire, the `railItems`
  * map, the SHELL-HOLD `railContext` writable computed (the equality short-circuit that
- * navigates ONLY on a genuine user chip activation, never a v-model echo), the
- * arrow-roving `onFacetKeydown`, and the `glass-ui-demo:toggle-dock-morph` window-event
- * dispatch. This composable factors that ONCE over the two thin SFCs — the DRY.
+ * navigates ONLY on a genuine user chip activation, never a v-model echo), and the
+ * arrow-roving `onFacetKeydown`. This composable factors that ONCE over the two thin
+ * SFCs — the DRY. (BI.W-DOCK-RETIRES removed the `glass-ui-demo:toggle-dock-morph`
+ * dispatch — the in-situ V↔H dock morph retired decided-terminal.)
  *
- * THE FENCE (SHELL-DOCK-DRY re-scope): the desktop↔mobile SWAP is a pure CSS media
- * query (`dock-nav.css` `@media (max-width: 767px)`), a SEPARATE axis from the
- * user-driven V↔H dock morph. This composable stays ⟂ to it — it owns NO breakpoint /
- * orientation / matchMedia logic, so the morph state can never collide with the 768px
- * responsive swap. The facet keydown is axis-AGNOSTIC by construction (ArrowRight OR
- * ArrowDown → next; ArrowLeft OR ArrowUp → prev), so the ONE handler serves both the
- * vertical and the horizontal rail (the tablist's `aria-orientation` carries the axis
- * semantics). The mobile off-canvas Sheet trigger + each dock's OWN section descriptors
- * + the per-dock category-nav loop stay LOCAL to the SFCs.
+ * THE FENCE: the desktop↔mobile SWAP is a pure CSS media query (`dock-nav.css`
+ * `@media (max-width: 767px)`). The facet keydown is axis-AGNOSTIC by construction
+ * (ArrowRight OR ArrowDown → next; ArrowLeft OR ArrowUp → prev), so the ONE handler
+ * serves both the vertical and the horizontal rail (the tablist's `aria-orientation`
+ * carries the axis semantics). The mobile off-canvas Sheet trigger + each dock's OWN
+ * section descriptors + the per-dock category-nav loop stay LOCAL to the SFCs.
  */
 import { computed } from "vue";
 import type { ComputedRef, WritableComputedRef } from "vue";
@@ -43,8 +41,6 @@ export interface UseShellNavDock {
     railContext: WritableComputedRef<string | undefined>;
     /** Arrow-key roving across the facet tablist (axis-agnostic; Home/End jump). */
     onFacetKeydown: (e: KeyboardEvent, index: number) => void;
-    /** Dispatch the in-situ V↔H dock-morph window event (AppShell owns the driver). */
-    openDockMorph: () => void;
 }
 
 export function useShellNavDock(
@@ -124,13 +120,5 @@ export function useShellNavDock(
         railContext.value = items[next]?.id;
     }
 
-    // BA.W-DOCK-MORPH-INSITU — the in-situ V↔H orientation-morph trigger. Dispatches
-    // the ONE `glass-ui-demo:toggle-dock-morph` window event both shell docks fire
-    // (AppShell hosts the state + the `useDockOrientationMorph` driver — the shell is
-    // the driver's binary consumer #2). ONE event path, no parallel open machinery.
-    function openDockMorph(): void {
-        window.dispatchEvent(new CustomEvent("glass-ui-demo:toggle-dock-morph"));
-    }
-
-    return { railItems, railContext, onFacetKeydown, openDockMorph };
+    return { railItems, railContext, onFacetKeydown };
 }
