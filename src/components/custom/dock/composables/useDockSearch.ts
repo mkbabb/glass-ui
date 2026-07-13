@@ -1,7 +1,7 @@
 // useDockSearch — the DOCK-as-native-dynamic-search-bar seam (BC.W-DOCK-SEARCH).
 //
 // Tap the collapsed dock pill and it MORPHS — continuously, via the dock's own
-// `--dock-morph-t` glide + the `morph-bridge.css` metaball, not a hard swap — into a
+// `--dock-morph-t`/`--dock-t` plate glide, not a hard swap — into a
 // search field; type and the fuzzy dropdown ranks live; ArrowDown/Up walks the results,
 // Enter routes; a result-select scrolls-to-and-warms the windowed target; tap away and
 // the dock returns to a compact PERSISTENT bar. The morph is the reward (the iOS-27
@@ -16,8 +16,15 @@
 //     NO new state machine.
 //   - it does NOT import `dockMorphContext`/`dockMorphMeasure`/`DOCK_SPRING` for an
 //     EDIT (the box-inviolate fence). The pill→field morph rides the dock's OWN
-//     `--dock-morph-t` scalar + the byte-untouched `morph-bridge.css` metaball — NO
-//     second goo filter, NO second spring.
+//     `--dock-morph-t`/`--dock-t` plate glide — NO second spring.
+//
+// THE L2 POPOVER MOUNT (BI.W-DOCK-ESCAPE). The composable is HEADLESS (the consumer
+// authors the field + dropdown). The FIELD is the morphed dock pill (an L1 in-flow
+// control). The RESULTS DROPDOWN re-hosts on a TOP-LAYER `popover` surface (composing
+// `useDockPopover` — the JS one-shot placement anchored to the field), exempt from the
+// dock's ancestor clip/contain/transform BY SPEC: the ranked list overflows the dock box
+// without clipping. The `/search` pipeline (`useFuzzySearch`/`useVirtualSectionWindow`/
+// `ensureTargetWindow`+`useScrollTo`) is UNCHANGED — only the dropdown's MOUNT moves to L2.
 //
 // THE ONE-OF-EACH DISCIPLINE. The matcher is `useFuzzySearch` (the VSCode subsequence
 // scorer — composed, NEVER re-forked); the results window is `useVirtualSectionWindow`
@@ -125,8 +132,8 @@ export interface UseDockSearchReturn<T extends SearchableItem = SearchableItem> 
  * `acceptAutocomplete` surface; the async `onSearch` adapter; the `onResultSelect` →
  * `ensureTargetWindow` + `scrollTo` wire. Does NOT edit the morph engine
  * (`dockMorphContext`/`DOCK_SPRING` byte-untouched — the box-inviolate fence); the
- * pill→field morph is the dock's OWN `--dock-morph-t` glide + the `morph-bridge.css`
- * metaball.
+ * pill→field morph is the dock's OWN `--dock-morph-t`/`--dock-t` plate glide, and the
+ * results dropdown re-hosts on a top-layer `popover` (BI.W-DOCK-ESCAPE — `useDockPopover`).
  *
  * @example
  * ```ts

@@ -4,17 +4,16 @@
 // A horizontal `always-expanded fit-content` GlassDock pinned
 // to the viewport bottom (NOT in document flow — it floats over the <main>
 // scroll-region's bottom inset, so route scroll never displaces it). It carries
-// the in-category story tabs (the DockTabButton set) PLUS the prev/next +
+// the in-category story tabs (the DockControl (shape="tab") set) PLUS the prev/next +
 // prev/next-category controls that today live only as keyboard shortcuts, AND a
 // mobile-only category trigger hosting the off-canvas SidebarDock in a <Sheet>.
 //
 // Active-story affordance = the NCSU-red underline/pill + W25 `tap-squish` on
-// press; DockTabButton auto-activates its `.is-active` state when the rendered
+// press; DockControl (shape="tab") auto-activates its `.is-active` state when the rendered
 // RouterLink carries aria-current="page". Dogfoods the dock + glass atoms +
 // iOS-26 across the 3 viewports.
 import { computed, ref } from "vue";
 import {
-    ArrowLeftRight,
     ChevronLeft,
     ChevronRight,
     ChevronsLeft,
@@ -22,11 +21,10 @@ import {
     PanelLeft,
 } from "@lucide/vue";
 import {
-    DockIconButton,
+    DockControl,
     DockSection,
     DockSeparator,
     DockStack,
-    DockTabButton,
     GlassDock,
     type DockSectionDescriptor,
 } from "@glass/components/custom/dock";
@@ -54,7 +52,7 @@ const { current, next, prev, nextCategory, prevCategory, goTo } =
 
 // W-NAV-DOCK-FIX (defect 5) — the FULL in-category page list (NOT a ≤4 summary slice).
 // Every story in the active category is a jump-to-page tab in the scrolling strip; the
-// active one carries aria-current="page" (DockTabButton auto-lifts its selected-as-glass
+// active one carries aria-current="page" (DockControl (shape="tab") auto-lifts its selected-as-glass
 // tier). The strip scrolls horizontally inside the <FadingScroll> port — the dock box
 // stays one row (box-INVIOLATE).
 const categoryStories = computed(() => {
@@ -72,16 +70,14 @@ function goToStory(storyId: string): void {
     if (loc) goTo(loc.category.id, storyId);
 }
 
-// BG.W-SHELL-DOCK-DRY — the shared facet-rail loop + the morph-button wiring are
-// factored ONCE into `useShellNavDock` (the SidebarDock + BottomDock were byte-
-// duplicating the route→facet resolver wire, the railItems map, the SHELL-HOLD
-// railContext writable computed, the arrow-roving keydown, and the morph-event
-// dispatch). The composable stays ⟂ to the desktop↔mobile responsive SWAP (a pure
-// `dock-nav.css` media query — a SEPARATE axis from the user-driven V↔H morph, it must
-// not fight the 768px breakpoint). The BottomDock is the persistent bar, so it passes
-// no `onNavigate` (a facet click just changes route); the in-category story-nav loop +
-// the dock's own `sections` descriptors stay LOCAL.
-const { railItems, railContext, openDockMorph } = useShellNavDock();
+// BG.W-SHELL-DOCK-DRY — the shared facet-rail loop is factored ONCE into
+// `useShellNavDock` (the SidebarDock + BottomDock were byte-duplicating the route→facet
+// resolver wire, the railItems map, the SHELL-HOLD railContext writable computed, and the
+// arrow-roving keydown). The BottomDock is the persistent bar, so it passes no
+// `onNavigate` (a facet click just changes route); the in-category story-nav loop + the
+// dock's own `sections` descriptors stay LOCAL. (BI.W-DOCK-RETIRES removed the in-situ
+// V↔H dock-morph button — the morph retired decided-terminal.)
+const { railItems, railContext } = useShellNavDock();
 
 // BA.W-DOCK-SECTIONS — the declarative tripartite descriptor. The deleted section
 // model returns WITHOUT inflation: <DockSection> GROUPS the EXISTING in-flow controls —
@@ -138,13 +134,13 @@ const hasNext = computed(() =>
                         <Tooltip>
                             <TooltipTrigger as-child>
                                 <SheetTrigger as-child>
-                                    <DockIconButton
+                                    <DockControl
                                         type="button"
                                         class="demo-bottom-dock__menu tap-squish"
                                         aria-label="Open category navigation"
                                     >
                                         <PanelLeft class="h-4 w-4" aria-hidden="true" />
-                                    </DockIconButton>
+                                    </DockControl>
                                 </SheetTrigger>
                             </TooltipTrigger>
                             <TooltipContent side="top" :side-offset="10">
@@ -200,7 +196,7 @@ const hasNext = computed(() =>
                              honestly, never "flaky". -->
                         <Tooltip>
                             <TooltipTrigger as-child>
-                                <DockIconButton
+                                <DockControl
                                     type="button"
                                     class="tap-squish"
                                     aria-label="Previous story"
@@ -208,7 +204,7 @@ const hasNext = computed(() =>
                                     @click="prev()"
                                 >
                                     <ChevronLeft class="h-4 w-4" aria-hidden="true" />
-                                </DockIconButton>
+                                </DockControl>
                             </TooltipTrigger>
                             <TooltipContent side="top" :side-offset="10">
                                 Previous story ·
@@ -218,13 +214,13 @@ const hasNext = computed(() =>
 
                         <!-- W-NAV-DOCK-FIX (defect 5) — the SCROLLING category-page tab
                              strip. Every story in the active category as a jump-to-page
-                             DockTabButton, wrapped in the shipped <FadingScroll axis="x">
+                             DockControl (shape="tab"), wrapped in the shipped <FadingScroll axis="x">
                              (start sharp at rest, end feathered while overflowing). The
                              strip scrolls INSIDE the port — the dock box stays one row
                              (box-INVIOLATE). Clicking a tab navigates via goToStory (one
                              registry). -->
                         <FadingScroll axis="x" class="demo-bottom-dock__tabs">
-                            <DockTabButton
+                            <DockControl shape="tab"
                                 v-for="entry in categoryStories"
                                 :key="entry.story.id"
                                 class="tap-squish"
@@ -233,14 +229,14 @@ const hasNext = computed(() =>
                                 @click="goToStory(entry.story.id)"
                             >
                                 {{ entry.story.title }}
-                            </DockTabButton>
+                            </DockControl>
                         </FadingScroll>
 
                         <!-- W-NAV-DOCK-FIX (defect 2) — next is PERSISTENT, disabled (not
                              removed) at the last story; the row geometry never shifts. -->
                         <Tooltip>
                             <TooltipTrigger as-child>
-                                <DockIconButton
+                                <DockControl
                                     type="button"
                                     class="tap-squish"
                                     aria-label="Next story"
@@ -248,7 +244,7 @@ const hasNext = computed(() =>
                                     @click="next()"
                                 >
                                     <ChevronRight class="h-4 w-4" aria-hidden="true" />
-                                </DockIconButton>
+                                </DockControl>
                             </TooltipTrigger>
                             <TooltipContent side="top" :side-offset="10">
                                 Next story · <kbd class="font-mono text-[0.7em]">]</kbd>
@@ -265,14 +261,14 @@ const hasNext = computed(() =>
                     <TooltipProvider :delay-duration="250">
                         <Tooltip>
                             <TooltipTrigger as-child>
-                                <DockIconButton
+                                <DockControl
                                     type="button"
                                     class="tap-squish"
                                     :aria-label="`Previous category (current: ${categoryTitle})`"
                                     @click="prevCategory()"
                                 >
                                     <ChevronsLeft class="h-4 w-4" aria-hidden="true" />
-                                </DockIconButton>
+                                </DockControl>
                             </TooltipTrigger>
                             <TooltipContent side="top" :side-offset="10">
                                 Previous category ·
@@ -281,63 +277,42 @@ const hasNext = computed(() =>
                         </Tooltip>
                         <Tooltip>
                             <TooltipTrigger as-child>
-                                <DockIconButton
+                                <DockControl
                                     type="button"
                                     class="tap-squish"
                                     :aria-label="`Next category (current: ${categoryTitle})`"
                                     @click="nextCategory()"
                                 >
                                     <ChevronsRight class="h-4 w-4" aria-hidden="true" />
-                                </DockIconButton>
+                                </DockControl>
                             </TooltipTrigger>
                             <TooltipContent side="top" :side-offset="10">
                                 Next category · <kbd class="font-mono text-[0.7em]">}</kbd>
                             </TooltipContent>
                         </Tooltip>
-                        <!-- BA.W-DOCK-MORPH-INSITU — the V↔H orientation-morph control.
-                             It opens the shell's focused morph demonstration (the dock
-                             flows vertical↔horizontal on the ONE --dock-morph-t scalar —
-                             the AZ driver consumed in-situ, the shell is consumer #2). -->
-                        <Tooltip>
-                            <TooltipTrigger as-child>
-                                <DockIconButton
-                                    type="button"
-                                    class="demo-bottom-dock__morph tap-squish"
-                                    aria-label="Demonstrate the vertical-horizontal dock morph"
-                                    @click="openDockMorph"
-                                >
-                                    <ArrowLeftRight class="h-4 w-4" aria-hidden="true" />
-                                </DockIconButton>
-                            </TooltipTrigger>
-                            <TooltipContent side="top" :side-offset="10">
-                                Dock morph (V ↔ H)
-                            </TooltipContent>
-                        </Tooltip>
+                        <!-- BI.W-DOCK-RETIRES — the V↔H orientation-morph control is
+                             DEFINITION-ABSENT (the in-situ dock morph retired
+                             decided-terminal; the shell docks no longer morph orientation). -->
                     </TooltipProvider>
                 </template>
             </DockSection>
 
-            <!-- BG.W-DOCK-RAIL-REINVENT (F3.R4) — the reinvented CONTAINED rail restored to
-                 the persistent shell chrome (the BD.W-DOCK-CORE A1 removal REVERSED under the
-                 inverted topology). At rest the `mode="facets"` stack is ENTIRELY CONTAINED
-                 in the horizontal dock — the core reads as a normal dock control at the top-
-                 trailing corner + the `--dock-rail-hairline` line; on hover/focus the facet
-                 chips FAN UP across the top edge into the gutter (asymmetric-golden,
-                 box-INVIOLATE deltaW=deltaH=0, staying on-screen above the bottom-anchored
-                 bar). Each chip carries its per-facet `--glass-accent` context hue. Clicking
-                 writes `railContext` (the ONE registry). Rendered only when >1 facet — the
-                 new topology never collides with the dock content. -->
-            <template #rail>
-                <DockStack
-                    v-if="railItems.length > 1"
-                    v-model:selected="railContext"
-                    mode="facets"
-                    :items="railItems"
-                    core-label="Section facets"
-                    position="end"
-                    data-testid="bottom-facet-rail"
-                />
-            </template>
+            <!-- BI.W-DOCK-ESCAPE — the facet carousel is an in-flow `<DockStack mode="facets">`
+                 control whose chips FAN UP out of a TOP-LAYER popover (the `#rail` slot
+                 RETIRED). The core reads as a normal control; hover/focus fans the accent-
+                 tinted facet chips above the bottom-anchored bar in the top layer (spec-exempt
+                 from the dock clip — box INVIOLATE, deltaW=deltaH=0, on-screen). Each chip
+                 carries its per-facet `--glass-accent` context hue; clicking writes
+                 `railContext` (the ONE registry). Rendered only when >1 facet. -->
+            <DockStack
+                v-if="railItems.length > 1"
+                v-model:selected="railContext"
+                mode="facets"
+                :items="railItems"
+                core-label="Section facets"
+                position="end"
+                data-testid="bottom-facet-rail"
+            />
         </GlassDock>
     </nav>
 </template>
@@ -346,7 +321,7 @@ const hasNext = computed(() =>
 /* W-NAV-DOCK-FIX (defect 5) — the category-page tab strip scrolls horizontally inside
    the FadingScroll port (the `.demo-bottom-dock__tabs` class is merged onto the
    <FadingScroll> root, which IS the `.fading-scroll--x` scroll port). Lay the slotted
-   DockTabButtons in a row and cap the inline-size so overflow SCROLLS, never widening
+   tab-shape DockControls in a row and cap the inline-size so overflow SCROLLS, never widening
    the dock box (box-INVIOLATE). `min-inline-size: 0` lets the flex child shrink below
    content; the cap keeps the strip a bounded scroller. */
 .demo-bottom-dock__tabs {

@@ -1,18 +1,15 @@
 <script setup lang="ts">
 // SidebarDock — the demo's category-rail dock (AW.W28.b).
 //
-// An always-expanded GlassDock whose `orientation` TRACKS the shell's settled V↔H morph
-// (BG.W-SHELL-MORPH-PAINT-REPAIR F3.R3 — `:orientation="dockOrientation"`, the injected
-// `SHELL_DOCK_ORIENTATION` the in-place morph commits at the occluded 0.5-crossing). At
-// rest it is the vertical left rail; when the shell settles horizontal the SAME GlassDock
-// lays out as a wide-short top bar (it drops `.glass-dock.vertical`'s column grid), so the
-// content re-margin clears it instead of sliding UNDER a persistent vertical rail. The prior
-// hardcoded `orientation="vertical"` is retired — a static vertical prop pinned the column
-// grid forever (the content-occlusion paint FAIL). It is a FIXED icon+label nav rail:
-// it opts OUT of the (now orientation-agnostic) collapse machinery via `always-expanded`,
-// so there is no collapse↔expand affordance here. The only "expand" is the mobile
-// off-canvas Sheet host the BottomDock owns; this component is the rail body it
-// reuses for both the desktop fixed column and the mobile drawer.
+// An always-expanded, STATIC vertical GlassDock (`orientation="vertical"`) — the
+// fixed left-column nav rail. (BI.W-DOCK-RETIRES retired the in-situ V↔H orientation
+// morph decided-terminal: the platform cannot continuously interpolate a flex-column→row
+// topology change, so the dock is a static vertical rail — no `SHELL_DOCK_ORIENTATION`
+// track, no wide-short top-bar reshape.) It is a FIXED icon+label nav rail: it opts OUT
+// of the collapse machinery via `always-expanded`, so there is no collapse↔expand
+// affordance here. The only "expand" is the mobile off-canvas Sheet host the BottomDock
+// owns; this component is the rail body it reuses for both the desktop fixed column and
+// the mobile drawer.
 //
 // Dogfoods the dock + the W22-W26 glass atoms + iOS-26 Liquid Glass. The
 // genuine NEW deliverable is the active-category restyle: the affordance moves
@@ -20,7 +17,7 @@
 // left-edge accent rule + W25 `tap-squish` press feedback.
 import { computed, useTemplateRef } from "vue";
 import {
-    DockIconButton,
+    DockControl,
     DockSection,
     DockSeparator,
     DockStack,
@@ -35,15 +32,12 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@glass/components/ui/tooltip";
-import { ArrowLeftRight, Settings2 } from "@lucide/vue";
+import { Settings2 } from "@lucide/vue";
 import { cn } from "@glass/utils/cn";
 import { CATEGORIES } from "../stories/manifest";
 import { useStoryNavigation } from "../chassis/useStoryNavigation";
 import { useShellNavDock } from "./useShellNavDock";
-import {
-    useShellDockOrientation,
-    useShellScrollProgress,
-} from "./useShellScrollProgress";
+import { useShellScrollProgress } from "./useShellScrollProgress";
 import { useConfiguratorOpen } from "../configurator/useConfiguratorOpen";
 
 const props = withDefaults(
@@ -98,16 +92,13 @@ function go(categoryId: string): void {
     emit("navigate");
 }
 
-// BG.W-SHELL-DOCK-DRY — the shared facet-rail loop + the morph-button wiring are
-// factored ONCE into `useShellNavDock` (the SidebarDock + BottomDock were byte-
-// duplicating the route→facet resolver wire, the railItems map, the SHELL-HOLD
-// railContext writable computed, the arrow-roving keydown, and the morph-event
-// dispatch). The composable stays ⟂ to the desktop↔mobile responsive SWAP (that is a
-// pure `dock-nav.css` media query, a SEPARATE axis from the user-driven V↔H morph — it
-// must not fight the 768px breakpoint). SidebarDock passes `onNavigate` so a facet
-// activation closes the mobile off-canvas Sheet host it reuses; the category-nav loop
-// (`go`) + the dock's own `sections` descriptors stay LOCAL.
-const { railItems, railContext, openDockMorph } = useShellNavDock({
+// BG.W-SHELL-DOCK-DRY — the shared facet-rail loop is factored ONCE into
+// `useShellNavDock` (the SidebarDock + BottomDock were byte-duplicating the route→facet
+// resolver wire, the railItems map, the SHELL-HOLD railContext writable computed, and
+// the arrow-roving keydown). SidebarDock passes `onNavigate` so a facet activation closes
+// the mobile off-canvas Sheet host it reuses; the category-nav loop (`go`) + the dock's
+// own `sections` descriptors stay LOCAL.
+const { railItems, railContext } = useShellNavDock({
     onNavigate: () => emit("navigate"),
 });
 
@@ -129,7 +120,7 @@ const sections = computed<DockSectionDescriptor[]>(() => [
 
 // AZ.W-SHELL-CONFIG — the gear-hosted demo configurator open control. The
 // floating FAB is GONE; the open is rehomed onto this trailing dock gear (the
-// dock-as-configurator-chrome idiom — GlassDock + DockIconButton). It dispatches
+// dock-as-configurator-chrome idiom — GlassDock + DockControl). It dispatches
 // the SAME `glass-ui-demo:toggle-configurator` window event the `,` shortcut does
 // (PresetEditor.vue listens for it) — one event path, no parallel open machinery.
 //
@@ -152,14 +143,14 @@ function openConfigurator(): void {
 // dock plate. Decorative-informational: `aria-hidden` (the scroll position stays
 // reachable via the scroller itself). Coverage is STATE-DRIVEN, one register per
 // dock form:
-//   · vertical rail (the settled left column) → `inline-end-edge` — the
+//   · vertical rail (the static left column) → `inline-end-edge` — the
 //     content-facing edge fills top→bottom with the scroll (the scrollbar
 //     metaphor as the dock's own border);
-//   · the V↔H morph settled HORIZONTAL top bar → `bottom-edge` (the content-facing
-//     edge of the floating bar);
 //   · a COLLAPSED pill → `full-ring` (the circle wears the whole ring — the
 //     natural morph). The shell dock is always-expanded, so this arm is
 //     dormant-but-wired here and live for any collapsing consumer.
+//   (BI.W-DOCK-RETIRES removed the V↔H-morph HORIZONTAL `bottom-edge` arm — the shell
+//   dock no longer morphs orientation; it is a static vertical rail.)
 // The ink is the calm warm-ink two-stop ramp (NOT the 13-stop brand rainbow — the
 // dock is chrome, and a rainbow border is a second color event; the warm ink flips
 // modes for free). Thickness + pill radius ride the `--border-progress-*` cascade
@@ -170,14 +161,13 @@ const SCROLL_RING_STOPS: readonly string[] = [
     "var(--foreground)",
 ];
 const scrollProgress = useShellScrollProgress();
-const dockOrientation = useShellDockOrientation();
 const dockRef = useTemplateRef<InstanceType<typeof GlassDock>>("dockRef");
 const ringCoverage = computed<BorderProgressCoverage>(() => {
     const dock = dockRef.value;
+    // BI.W-DOCK-RETIRES — the shell dock is a static vertical rail (no V↔H morph): a
+    // collapsed pill wears the full ring; the expanded rail fills its inline-end edge.
     if (dock && !dock.expanded) return "full-ring";
-    return dockOrientation.value === "horizontal"
-        ? "bottom-edge"
-        : "inline-end-edge";
+    return "inline-end-edge";
 });
 </script>
 
@@ -190,13 +180,12 @@ const ringCoverage = computed<BorderProgressCoverage>(() => {
          affordance is the BottomDock's job, not the category rail's. The persistent ℱ
          brand wordmark is GONE (BG.W-DOCK-PERSISTENT-CUT); Foundations is a normal chip. -->
     <!-- BG.W-DOCK-SCROLL-PROGRESS — the progress-host wrapper shrink-wraps the dock
-         so the `<BorderProgress>` ring (an inset-0 sibling overlay) hugs the dock
-         plate's own box in every settled form; the ring dissolves in lockstep with
-         the dock under the [data-dock-morphing] goo window (dock-nav.css). -->
+         so the `<BorderProgress>` ring (an inset-0 sibling overlay) hugs the static
+         vertical dock plate's own box (BI.W-DOCK-RETIRES retired the V↔H morph). -->
     <div class="demo-dock-progress-host min-h-0">
     <GlassDock
         ref="dockRef"
-        :orientation="dockOrientation"
+        orientation="vertical"
         always-expanded
         class="demo-sidebar-dock min-h-0"
         aria-label="Category navigation"
@@ -225,7 +214,7 @@ const ringCoverage = computed<BorderProgressCoverage>(() => {
                 <TooltipProvider :delay-duration="250">
                     <Tooltip v-for="category in primaryCategories" :key="category.id">
                         <TooltipTrigger as-child>
-                            <DockIconButton
+                            <DockControl
                                 type="button"
                                 :aria-current="
                                     category.id === activeCategoryId ? 'page' : undefined
@@ -246,7 +235,7 @@ const ringCoverage = computed<BorderProgressCoverage>(() => {
                                     class="h-4 w-4"
                                     aria-hidden="true"
                                 />
-                            </DockIconButton>
+                            </DockControl>
                         </TooltipTrigger>
                         <TooltipContent
                             v-if="showTooltips"
@@ -274,32 +263,12 @@ const ringCoverage = computed<BorderProgressCoverage>(() => {
                  `glass-ui-demo:toggle-configurator` event the `,` shortcut does. -->
             <template #utility>
                 <TooltipProvider :delay-duration="250">
-                    <!-- BA.W-DOCK-MORPH-INSITU — the V↔H orientation-morph control. It
-                         opens the shell's focused morph demonstration (the dock flows
-                         vertical↔horizontal on the ONE --dock-morph-t scalar — the AZ
-                         driver consumed in-situ, the shell is binary consumer #2). -->
+                    <!-- BI.W-DOCK-RETIRES — the V↔H orientation-morph control is
+                         DEFINITION-ABSENT (the in-situ dock morph retired decided-terminal;
+                         the shell dock is a static vertical rail). -->
                     <Tooltip>
                         <TooltipTrigger as-child>
-                            <DockIconButton
-                                type="button"
-                                class="demo-sidebar-morph tap-squish"
-                                aria-label="Demonstrate the vertical-horizontal dock morph"
-                                @click="openDockMorph"
-                            >
-                                <ArrowLeftRight class="h-4 w-4" aria-hidden="true" />
-                            </DockIconButton>
-                        </TooltipTrigger>
-                        <TooltipContent
-                            v-if="showTooltips"
-                            side="right"
-                            :side-offset="10"
-                        >
-                            Dock morph (V ↔ H)
-                        </TooltipContent>
-                    </Tooltip>
-                    <Tooltip>
-                        <TooltipTrigger as-child>
-                            <DockIconButton
+                            <DockControl
                                 type="button"
                                 class="demo-sidebar-gear tap-squish"
                                 aria-label="Open the glass-ui demo configurator"
@@ -307,7 +276,7 @@ const ringCoverage = computed<BorderProgressCoverage>(() => {
                                 @click="openConfigurator"
                             >
                                 <Settings2 class="h-4 w-4" aria-hidden="true" />
-                            </DockIconButton>
+                            </DockControl>
                         </TooltipTrigger>
                         <TooltipContent
                             v-if="showTooltips"
@@ -321,28 +290,23 @@ const ringCoverage = computed<BorderProgressCoverage>(() => {
             </template>
         </DockSection>
 
-        <!-- BG.W-DOCK-RAIL-REINVENT (F3.R4) — the reinvented CONTAINED rail restored to the
-             persistent shell chrome (the BD.W-DOCK-CORE A1 removal REVERSED under the
-             inverted topology). At rest the stack is ENTIRELY CONTAINED in the dock box —
-             the `mode="facets"` core reads as a normal dock icon seated at the trailing edge
-             + the `--dock-rail-hairline` warm-ink line; on hover/focus the facet chips FAN
-             OUT across the dock edge into the gutter (asymmetric-golden, box-INVIOLATE
-             deltaW=deltaH=0). Each chip carries its per-facet `--glass-accent` context hue.
-             Clicking writes `railContext` (the ONE registry — the SAME router navigation).
-             Rendered only when the section carries >1 facet (single-facet routes show no
-             rail — no clutter). This is the ground the BD-removed broken carousel could not
-             stand on: the new topology never collides with the dock content. -->
-        <template #rail>
-            <DockStack
-                v-if="railItems.length > 1"
-                v-model:selected="railContext"
-                mode="facets"
-                :items="railItems"
-                core-label="Section facets"
-                position="end"
-                data-testid="sidebar-facet-rail"
-            />
-        </template>
+        <!-- BI.W-DOCK-ESCAPE — the facet carousel is an in-flow `<DockStack mode="facets">`
+             control whose chips FAN OUT of a TOP-LAYER popover (the `#rail` slot RETIRED). The
+             core reads as a normal dock icon; hover/focus fans the accent-tinted facet chips
+             past the dock body in the top layer (spec-exempt from the dock clip — box
+             INVIOLATE, deltaW=deltaH=0). Each chip carries its per-facet `--glass-accent`
+             context hue; clicking writes `railContext` (the ONE registry — the SAME router
+             navigation). Rendered only when the section carries >1 facet (single-facet routes
+             show no rail — no clutter). -->
+        <DockStack
+            v-if="railItems.length > 1"
+            v-model:selected="railContext"
+            mode="facets"
+            :items="railItems"
+            core-label="Section facets"
+            position="end"
+            data-testid="sidebar-facet-rail"
+        />
     </GlassDock>
 
     <!-- The page-scroll progress as the dock's own BORDER (BG.W-DOCK-SCROLL-PROGRESS).
