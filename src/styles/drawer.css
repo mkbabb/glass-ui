@@ -34,40 +34,48 @@
 /* BD.W-OVERLAY-STAGE-COUPLE — `--stage-t`, the ONE registered STAGING scalar (0 =
  * closed/un-staged → 1 = fully staged). The whole modal band rides this ONE knob:
  * the drawer's surface FREEZE (A), the scrim DEEPEN (B), the page RECEDE+SCALE (C),
- * the opt-in blur ENGAGE (D) are all pure `calc()` reads OF it. `inherits: true` so
- * a single writer at `:root` reaches the portaled scrim AND the page-wrapper sibling
- * AND the sheet descendants from ONE write (the scrim is NOT a descendant of the
- * content, so a content-local mirror could never reach it — the `:root` write is the
- * cross-subtree path).
+ * the opt-in blur ENGAGE (D) are all pure `calc()` reads OF it.
+ *
+ * BI.W-DRAWER-PERF — `inherits: false`. The scalar is SCOPED-written onto each reader
+ * root DIRECTLY (the sheet · the scrim `[data-stage-scrim]` · the page-wrapper
+ * `[data-stage-wrapper]`), and every consumer reads it on the SAME element it is
+ * written to — no cross-subtree inheritance is relied upon. `inherits: false` is what
+ * makes the scoping cheap: a write on the app-root wrapper recalcs ONLY the wrapper,
+ * not the whole app subtree an `inherits: true` write on that ancestor would invalidate
+ * (the 120× main-thread lever the `documentElement` writer paid; the drawer's per-frame
+ * writer is the hot path). An un-written reader resolves `initial-value: 0` (the
+ * resting/un-staged state) — a dead writer fails to a resting page, never a masked
+ * full-staged one.
  *
  * THE SINGLE WRITER (fold C1·R2 — no dual scalar desync). `useDrawerSnap.writeScalar`
  * writes BOTH `--glass-drawer-t` (the sheet's per-element translate) AND `--stage-t`
- * (the scene scalar at `:root`) in the SAME call — atomically, never separately, so
- * the two can never desync on a drag-cancel / fling-overshoot / interrupted snap. A
- * plain modal (Dialog/Command) flips `--stage-t` 0→1 on `--spring-snappy` at open;
- * the close-write removes the inline value so the registered property reverts to its
- * `initial-value: 0` (the stale-latch fix). `initial-value: 0` so an un-staged page never
- * recedes. EVERY consumer `clamp(0, …, 1)`-bounds it (a `--ease-cartoon-punch` fling
- * can overshoot >1 — the page-scale / radius / scrim must not run past their
- * endpoints). */
+ * (the scene scalar, on each reader root) in the SAME call — atomically, never
+ * separately, so the two can never desync on a drag-cancel / fling-overshoot /
+ * interrupted snap. A plain modal (Dialog/Command) flips `--stage-t` 0→1 on
+ * `--spring-snappy` at open (DialogContent.vue, scoped to the same reader roots); the
+ * close-write removes the inline value so the registered property reverts to its
+ * `initial-value: 0` (the stale-latch fix). EVERY consumer `clamp(0, …, 1)`-bounds it
+ * (a `--ease-cartoon-punch` fling can overshoot >1 — the page-scale / radius / scrim
+ * must not run past their endpoints). */
 @property --stage-t {
     syntax: "<number>";
-    inherits: true;
+    inherits: false;
     initial-value: 0;
 }
 
-/* The stage-t transition + close-write reset (the registered-property stale-latch
- * fix, fold C3·R7).
+/* The stage-t FLIP transition (the centered-modal glide; the registered-property
+ * stale-latch fix, fold C3·R7).
  *
- * The drawer's single writer (useDrawerSnap) drives `--stage-t` per frame and
- * REMOVES the inline value on close → the registered property reverts to its
- * `initial-value: 0`. The centered modal (DialogContent) flips it 0→1 on open via the
- * `data-stage-flip` marker on `:root`; this rule owns the FLIP TRANSITION (a snappy
- * spring) so the dialog's `:root --stage-t` value glides 0→1 rather than snapping — a
- * CSS-owned transition, NOT an inline `transition` shorthand on `:root` (which would
- * clobber unrelated root transitions). On close the marker is dropped and the inline
- * value removed → the property reverts to 0 (no stale full-staged latch on re-open). */
-:root[data-stage-flip] {
+ * The drawer's single writer (useDrawerSnap) drives `--stage-t` per frame (NO
+ * transition — the spring IS the clock) and REMOVES the inline value on close → each
+ * reader root reverts to `initial-value: 0`. The centered modal (DialogContent) has no
+ * detent, so it FLIPS `--stage-t` 0→1 on open via the `data-stage-flip` marker written
+ * onto each reader root (BI.W-DRAWER-PERF — off `:root`); this rule owns the FLIP
+ * TRANSITION (a snappy spring) so the value glides 0→1 rather than snapping. Scoped to
+ * `[data-stage-flip]` so it fires ONLY during the modal flip — the drawer's per-frame
+ * scalar writes carry no marker, so the spring never double-smooths the drag. */
+[data-stage-scrim][data-stage-flip],
+[data-stage-wrapper][data-stage-flip] {
     transition: --stage-t var(--spring-snappy-duration, 0.4s) var(--spring-snappy, ease);
 }
 
@@ -380,7 +388,7 @@
 /*
  * BD.W-OVERLAY-STAGE-COUPLE — coupling (C): the page RECEDE + SCALE. The page wrapper
  * scales `1 → 0.95` + corner-radius blooms as `--stage-t → 1` (the iOS "card recedes"
- * depth cue), retiring the dead `shouldScaleBackground` boolean. `scale` +
+ * depth cue — the honest `stage=` enum drives it). `scale` +
  * `border-radius` ONLY — NO `filter` (the ancestor-filter trap: `filter` on the app
  * root establishes a containing block for `position:fixed` and force-rasterizes the
  * page subtree every frame — fold C2·R1; §7). The wrapper is the consumer's app-root
@@ -399,15 +407,19 @@
 
 /*
  * BD.W-OVERLAY-STAGE-COUPLE — coupling (D): the blur ENGAGE (opt-in `immersive`, the
- * Command spotlight). The scrim's `backdrop-filter` radius ramps `0 → deep` on
- * `--stage-t`. ONE-SHOT over the open window (gated to the modal-flip 0→1 via
- * `[data-stage-immersive]`, NEVER the drawer's per-frame scalar — the §L7 Safari
- * fence: a per-frame full-viewport re-blur is the cardinal sin, fold C2·R). WebKit
- * pays the sample once as the flip lands. Default OFF.
+ * Command spotlight). BI.W-DRAWER-PERF — the scrim's backdrop blur ENGAGES at a FIXED
+ * depth (16px), NOT a per-frame radius ramp on `--stage-t`. A `blur(calc(--stage-t *
+ * 16px))` re-rasterizes the blur kernel EVERY frame (the cardinal Safari sin, §L7 /
+ * fold C2·R); the DIM ramps instead via the scrim α coupling (the `[data-stage-scrim]`
+ * rule above, already `--stage-t`-driven) — the backdrop blur snaps to depth while the
+ * dim tracks the detent (MOTION-LADDER §1.3: the backdrop blur engages fast at a fixed
+ * depth, the dim ramps; a symmetric radius ramp reads wrong). The scrim fades in over
+ * its `animate="fade"` enter, so the fixed blur reads as coalescing, never a pop.
+ * Default OFF.
  */
 [data-stage-scrim][data-stage-immersive] {
-    backdrop-filter: blur(calc(clamp(0, var(--stage-t), 1) * 16px));
-    -webkit-backdrop-filter: blur(calc(clamp(0, var(--stage-t), 1) * 16px));
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
 }
 
 /* Reduced-motion — the house `SpringProgress` snaps the detent deterministically

@@ -17,6 +17,7 @@
 
 import { onUnmounted, ref, watch, type Ref } from "vue";
 import { SpringProgress } from "@mkbabb/keyframes.js";
+import { motionTempo } from "../../../../composables/motion/motionTempo";
 import { DRAWER_FLING_VELOCITY, DRAWER_SNAP } from "../constants";
 import type { DrawerSnapContext } from "./drawerSnapContext";
 
@@ -93,18 +94,51 @@ export function useDrawerSnap(options: UseDrawerSnapOptions): UseDrawerSnapRetur
     // frame under `prefers-reduced-motion: reduce` (the deterministic detent seat).
     let spring: SpringProgress | null = null;
 
+    // The two CROSS-SUBTREE `--stage-t` reader roots — the scrim (a PORTAL SIBLING) +
+    // the page-wrapper (OUTSIDE the portal). Neither descends from the sheet, so each
+    // needs its OWN scoped write. Resolved lazily + cached for the open window; a ref is
+    // re-queried only while absent-or-detached (a late-mounting portal scrim backfills;
+    // a stale ref drops). A `querySelector` on an attribute marker reads NO layout —
+    // unlike the retired per-frame `getBoundingClientRect`, it triggers no reflow.
+    let scrimEl: HTMLElement | null = null;
+    let wrapperEl: HTMLElement | null = null;
+    function crossSubtreeStageRoots(): HTMLElement[] {
+        if (typeof document === "undefined") return [];
+        if (!scrimEl?.isConnected) {
+            scrimEl = document.querySelector<HTMLElement>("[data-stage-scrim]");
+        }
+        if (!wrapperEl?.isConnected) {
+            wrapperEl =
+                document.querySelector<HTMLElement>("[data-stage-wrapper]");
+        }
+        const roots: HTMLElement[] = [];
+        if (scrimEl) roots.push(scrimEl);
+        if (wrapperEl) roots.push(wrapperEl);
+        return roots;
+    }
+
     // BD.W-OVERLAY-STAGE-COUPLE — the SINGLE writer (fold C1·R2, no dual-scalar
     // desync). ONE call writes BOTH the sheet's per-element translate scalar
-    // (`--glass-drawer-t` on the content) AND the SCENE staging scalar (`--stage-t`
-    // at `:root`) atomically, so the surface freeze / scrim deepen / page recede can
-    // never desync from the translate on a drag-cancel / fling-overshoot / interrupted
-    // snap. `--stage-t` lives at `:root` (not the content) because the scrim is a
-    // PORTAL SIBLING and the page-wrapper is OUTSIDE the portal — neither is a
-    // descendant of the content, so only a `:root` (inherited) write reaches them.
+    // (`--glass-drawer-t`) AND the SCENE staging scalar (`--stage-t`) atomically, so the
+    // surface freeze / scrim deepen / page recede can never desync from the translate on
+    // a drag-cancel / fling-overshoot / interrupted snap.
+    //
+    // BI.W-DRAWER-PERF — `--stage-t` is SCOPED to the three reader roots (the sheet ·
+    // the scrim · the page-wrapper), NOT `document.documentElement`. A per-frame
+    // `documentElement` write invalidated the inherited-property cache for the WHOLE
+    // document (a 120× main-thread lever — 12.53 ms/frame vs 0.104 ms scoped). `--stage-t`
+    // is now `inherits: false` (drawer.css), so each scoped write recalcs ONLY its own
+    // element — the sheet is the live `contentEl`; the scrim + wrapper are the cached
+    // cross-subtree roots.
     function writeScalar(t: number) {
-        const el = contentEl();
-        if (el) el.style.setProperty("--glass-drawer-t", `${t}`);
-        document.documentElement.style.setProperty("--stage-t", `${t}`);
+        const sheet = contentEl();
+        if (sheet) {
+            sheet.style.setProperty("--glass-drawer-t", `${t}`);
+            sheet.style.setProperty("--stage-t", `${t}`);
+        }
+        for (const el of crossSubtreeStageRoots()) {
+            el.style.setProperty("--stage-t", `${t}`);
+        }
     }
 
     function disposeSpring() {
@@ -112,18 +146,29 @@ export function useDrawerSnap(options: UseDrawerSnapOptions): UseDrawerSnapRetur
             spring.dispose();
             spring = null;
         }
-        // BD.W-OVERLAY-STAGE-COUPLE — clear the inline `:root --stage-t` on close so
-        // the CSS `:root:not(:has(…open…))` reset (drawer.css) takes over and the NEXT
-        // open does not inherit a stale full-staged value (the registered-property
-        // stale-latch fix, fold C3·R7). An inline write would otherwise out-specify
-        // the reset rule and latch the scene at the last detent fraction.
-        document.documentElement.style.removeProperty("--stage-t");
+        // BI.W-DRAWER-PERF — clear the scoped inline `--stage-t` on close so each reader
+        // root reverts to the registered `initial-value: 0` (drawer.css) and the NEXT
+        // open does not latch a stale full-staged value (the stale-latch fix, fold
+        // C3·R7). The sheet unmounts with the content; clear the cross-subtree roots +
+        // drop the cache so the next open re-resolves a freshly-portaled scrim.
+        const sheet = contentEl();
+        if (sheet) sheet.style.removeProperty("--stage-t");
+        if (scrimEl) scrimEl.style.removeProperty("--stage-t");
+        if (wrapperEl) wrapperEl.style.removeProperty("--stage-t");
+        scrimEl = null;
+        wrapperEl = null;
     }
 
     function ensureSpring(initial?: number): SpringProgress {
         if (spring) return spring;
         spring = new SpringProgress({
-            response: DRAWER_SNAP.response,
+            // BI.W-TEMPO — co-scale the DRAWER_SNAP response by `--motion-tempo` read
+            // off the drawer's OWN scope (the content element, which inherits the
+            // `.glass-drawer { --motion-tempo: 1 }` loud-scope re-pin, scheme-motion.css)
+            // so the snap settle shares ONE clock with its CSS twin at any tempo (P7,
+            // G2). Byte-identical at the 1.0 identity. DRAWER_SNAP (constants.ts) stays
+            // byte-fenced — this scales the READ, not the register.
+            response: DRAWER_SNAP.response * motionTempo(contentEl()),
             dampingFraction: DRAWER_SNAP.dampingFraction,
             // Seed at the caller's endpoint when given (the open path seeds CLOSED so
             // the settle is a real slide-in); else the live resting fraction.
@@ -189,9 +234,16 @@ export function useDrawerSnap(options: UseDrawerSnapOptions): UseDrawerSnapRetur
         return -e.clientX; // right
     }
 
-    function dragSpan(): number {
-        // The travel span (px) one full fraction of the sheet covers. For a bottom/
-        // top sheet that is the content block-size; for a side lens, the inline-size.
+    // BI.W-DRAWER-PERF — the drag travel span (px) one full fraction covers, measured
+    // ONCE at gesture start (`onPointerDown`) and cached, NOT per frame. A per-frame
+    // `getBoundingClientRect()` in `onPointerMove` is a forced synchronous reflow (the
+    // ForcedReflow the trace flagged); the sheet's box is fixed for the gesture, so the
+    // pointerdown measure is exact for the whole drag.
+    let cachedDragSpan = 1;
+    function measureDragSpan(): number {
+        // For a bottom/top sheet the span is the content block-size; for a side lens,
+        // the inline-size. This is the ONLY `getBoundingClientRect` — called at
+        // pointerdown, never on the per-frame move path.
         const el = contentEl();
         if (!el) return 1;
         const r = el.getBoundingClientRect();
@@ -210,6 +262,8 @@ export function useDrawerSnap(options: UseDrawerSnapOptions): UseDrawerSnapRetur
         lastTime = e.timeStamp;
         startFraction = currentFraction();
         velocity = 0;
+        // Measure the drag span ONCE, here — the per-frame move path reads the cache.
+        cachedDragSpan = measureDragSpan();
         handle.setPointerCapture?.(e.pointerId);
     }
 
@@ -220,8 +274,9 @@ export function useDrawerSnap(options: UseDrawerSnapOptions): UseDrawerSnapRetur
         if (dt > 0) velocity = (coord - lastCoord) / dt;
         lastCoord = coord;
         lastTime = e.timeStamp;
-        // Map the px delta to a fraction delta and write the scalar directly.
-        const deltaFraction = (coord - startCoord) / dragSpan();
+        // Map the px delta to a fraction delta and write the scalar directly. Read the
+        // pointerdown-cached span — NO per-frame `getBoundingClientRect` (the reflow).
+        const deltaFraction = (coord - startCoord) / cachedDragSpan;
         const ladder = effectiveLadder(ctx.snapPoints.value, ctx.direction.value);
         const min = ladder[0];
         const max = ladder[ladder.length - 1];

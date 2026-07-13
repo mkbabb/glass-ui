@@ -4,8 +4,8 @@
  *
  * A full-bleed surface stays live AND reachable while a sheet rides over it as a
  * peek / half / full bottom sheet. `<Drawer mode="live-behind">` flips the three
- * relevant defaults at once — reka `:modal="false"` + `shouldScaleBackground: false`
- * + the direction-derived `[0.12, 0.5, 1]` ladder — so the surface behind keeps its
+ * relevant defaults at once — reka `:modal="false"` + `stage="none"` (the page never
+ * recedes) + the direction-derived `[0.12, 0.5, 1]` ladder — so the surface behind keeps its
  * size, stays keyboard-reachable, and is not hidden from assistive tech (the HOUSE
  * reka `DialogRoot` substrate delivers the non-modal page-interactive contract
  * natively; vaul-vue is ABROGATED — BB.W-DRAWER-ABROGATE). The modal sheet in the

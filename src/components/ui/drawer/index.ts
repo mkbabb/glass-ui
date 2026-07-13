@@ -30,9 +30,9 @@ export type DrawerDirection = "top" | "bottom" | "left" | "right";
 export type DrawerMode = "modal" | "live-behind";
 
 /**
- * BD.W-OVERLAY-STAGE-COUPLE — the scene-staging enum (retires the dead
- * `shouldScaleBackground` boolean, clean break). `none` leaves the page untouched;
- * `dim` deepens the scrim only (the PRM-safe luminance depth cue); `scale` recedes +
+ * BD.W-OVERLAY-STAGE-COUPLE — the honest scene-staging enum. `none` leaves the page
+ * untouched; `dim` deepens the scrim only (the PRM-safe luminance depth cue); `scale`
+ * recedes +
  * scales the page (the iOS card-recede); `immersive` adds the backdrop-blur engage.
  * `modal` defaults to `scale`; `live-behind` to `none`. PRM degrades `scale`/
  * `immersive` to `dim`. All four couplings ride the ONE `--stage-t` scalar the snap

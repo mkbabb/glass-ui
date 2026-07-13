@@ -25,9 +25,8 @@ import { provideDrawerSnapContext } from './composables/drawerSnapContext'
  * binding is byte-identical, but resolved by the house engine, not forwarded to reka,
  * which knows only `open`/`defaultOpen`/`modal`).
  *
- * BD.W-OVERLAY-STAGE-COUPLE — `stage` is the honest scene-staging enum that RETIRES
- * the dead `shouldScaleBackground` boolean (clean break, no alias — the old boolean
- * was read by NOTHING, `#app transform: none` at every detent):
+ * BD.W-OVERLAY-STAGE-COUPLE — `stage` is the honest scene-staging enum — the page
+ * recede is a real `--stage-t` scale/radius drive, not a boolean that moves no pixels:
  *   • `none`      — no staging (the live-behind peek sheet leaves the page untouched).
  *   • `dim`       — the scrim deepens with the detent; the page does NOT transform
  *                   (the PRM-safe luminance-only depth cue; also the `scale` degrade).
@@ -56,9 +55,9 @@ const props = withDefaults(
     /** Drag/slide axis (BB-2 default-ladder source). */
     direction?: DrawerDirection
     /**
-     * BD.W-OVERLAY-STAGE-COUPLE — the scene-staging enum (retires the dead
-     * `shouldScaleBackground`). `none` leaves the page untouched (the live-behind
-     * default); `dim` deepens the scrim only; `scale` recedes + scales the page;
+     * BD.W-OVERLAY-STAGE-COUPLE — the honest scene-staging enum. `none` leaves the
+     * page untouched (the live-behind default); `dim` deepens the scrim only; `scale`
+     * recedes + scales the page;
      * `immersive` adds the backdrop-blur engage. Defaulted by `mode`.
      */
     stage?: DrawerStage
@@ -108,7 +107,7 @@ const live = computed(() => props.mode === 'live-behind')
 const resolvedModal = computed(() => props.modal ?? (live.value ? false : true))
 
 // BD.W-OVERLAY-STAGE-COUPLE — the resolved stage. `modal` defaults to `scale` (the
-// iOS card-recede look the dead `shouldScaleBackground` only pretended to do);
+// iOS card-recede look — a real `--stage-t` page transform);
 // `live-behind` defaults to `none` (the peek sheet leaves the page interactive +
 // untouched). An explicit `stage` always wins. Under PRM, `scale`/`immersive`
 // degrade to `dim` — a full-page snap-scale is perceived motion (fold C1·R6).
@@ -125,7 +124,7 @@ const resolvedStage = computed<DrawerStage>(() => {
 // consumer's `[data-stage-wrapper]` marker while the sheet is open. The `--stage-t`
 // scalar the snap engine writes at `:root` drives the actual recede; these attrs are
 // the per-stage GATES (so a `none`/`dim` drawer never moves the page — a real
-// no-op, no longer the `shouldScaleBackground` lie). Cleared on close.
+// no-op). Cleared on close.
 function syncStageGates(open: boolean) {
   if (typeof document === 'undefined') return
   const wrapper = document.querySelector('[data-stage-wrapper]') as HTMLElement | null
