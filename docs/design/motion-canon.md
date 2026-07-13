@@ -163,14 +163,18 @@ spring leg reads its OWN clock through the named token.
 `keyframes.js` reached through the `/motion` barrel: every spring/morph/press/drag/
 reveal/number-tween composes a kf primitive (`SpringProgress`/`Draggable`/
 `ElementMorph`/`SmoothProgress`/`NumericAnimation`/`Sequence`). There are exactly TWO
-sanctioned off-spine seams, both for SCC / foreign-tree reasons, both documented:
+sanctioned off-spine seams, each for SCC / foreign-tree reasons, each documented:
 
 - **`usePointerVelocityField`** — the shared viz-pointer-physics field. A hand-rolled
   critically-damped lerp (position → velocity → acceleration), intentionally kf-FREE so
   it ships on the engine-free `/motion-core` subpath AND the root barrel (a keyframes
   edge would trap it off-root — the SCC root-barrel discipline). It owns NO rAF: the
-  renderer FEEDS it `tick(delta)` from its own canvas-lifecycle loop. The ONE allowed
-  off-spine smoother.
+  renderer FEEDS it `tick(delta)` from its own canvas-lifecycle loop.
+- **`useLeadTrail`** (BI.W-PAGER-WORM W2) — the two-edge lead/trail integrator (spring
+  LEAD + damped TRAIL follower in ONE self-parking rAF). Spec-MANDATED kf-FREE for the
+  same SCC reason: it ships on `/motion-core` + the root barrel and is consumed by BOTH
+  the pager worm and the B3 eyeglass release (≥2 consumers by construction); its own
+  gate (`proof:pager-worm` W2) asserts the kf-free form. PRM seats instantly.
 - **`useDragMorph`** — the pull/drag-to-morph primitive. It WIRES the published kf
   surface (`Draggable` + `SpringProgress` + the shipped `decayRest` projection) and
   re-rolls the SNAP HERE (`decayRest` projects the frictional rest, then `spring.target`

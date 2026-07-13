@@ -169,19 +169,26 @@ export function detectBand() {
     // floor.)
     const overshoot = analyticOvershoot(constDamping);
     facts.derivedOvershoot = Math.round(overshoot * 10000) / 10000;
-    if (constResponse < 0.62 || constResponse > 0.74) {
+    // BI SU3 RECONCILE (judgment (a), user-delegated + orchestrator-ratified 2026-07-12):
+    // the BD-era "weighty band" clamps ([0.62,0.74]/[0.58,0.68]/overshoot [0.05,0.10])
+    // were VALUE bindings — exactly the class the SU3 ruling forbids (the gate binds the
+    // MECHANISM, never a taste value; the value was re-ratified to the measured-iOS band
+    // 0.30/z0.82 at the BI cut). The surviving asserts are the PHYSICAL floor (a spring
+    // must be a spring) + the <=10% overshoot CEILING (the one recorded hard bound — a
+    // dock that visibly rings past 10% is a defect in ANY register, not a taste choice).
+    if (!(constResponse > 0 && constResponse <= 1.5)) {
         violations.push(
-            `DOCK_SPRING response ${constResponse} is outside the iOS-27 weighty band [0.62, 0.74]`,
+            `DOCK_SPRING response ${constResponse} is outside the physical floor (0, 1.5] — not a plausible dock spring`,
         );
     }
-    if (constDamping < 0.58 || constDamping > 0.68) {
+    if (!(constDamping > 0 && constDamping < 1)) {
         violations.push(
-            `DOCK_SPRING ζ ${constDamping} is outside the iOS-27 weighty band [0.58, 0.68]`,
+            `DOCK_SPRING ζ ${constDamping} is outside (0, 1) — the dock register is an underdamped spring by design`,
         );
     }
-    if (overshoot < 0.05 || overshoot > 0.1) {
+    if (overshoot > 0.1) {
         violations.push(
-            `the derived overshoot exp(-ζπ/√(1-ζ²))=${facts.derivedOvershoot} is outside [0.05, 0.10] (the iOS-27 weighty-gooey overshoot register, ≤10% ceiling)`,
+            `the derived overshoot exp(-ζπ/√(1-ζ²))=${facts.derivedOvershoot} exceeds the 10% hard ceiling (the recorded box-morph bound)`,
         );
     }
 

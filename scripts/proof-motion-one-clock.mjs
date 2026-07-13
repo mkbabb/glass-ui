@@ -158,6 +158,12 @@ const VIZ_DIRS = [
 //    allowlisted seam must STILL trip a prong" floor), so it is removed.)
 export const OFF_SPINE_ALLOWLIST = [
     {
+        file: "src/composables/motion/useLeadTrail.ts",
+        seam: "hand-rolled-lead-trail",
+        reason:
+            "the two-edge lead/trail integrator (BI.W-PAGER-WORM W2, spec-MANDATED keyframes-FREE): it ships on the engine-free /motion-core subpath AND the root barrel (the SCC root-barrel discipline — a kf edge would trap the pager dots + the B3 eyeglass release off-root), owns ONE self-parking rAF, PRM seats instantly. >=2 consumers (pager worm + eyeglass release); its own gate proof:pager-worm W2 ASSERTS the kf-free form — de-allowlisting here would contradict the sibling gate (motion-canon P7 note carried by the wave).",
+    },
+    {
         file: "src/composables/motion/usePointerVelocityField.ts",
         seam: "hand-rolled-lerp",
         reason:
@@ -194,7 +200,7 @@ export const SPRING_DEFAULTS_ALLOWLIST = [
     },
     {
         name: "DRAWER_SNAP",
-        pair: [0.5, 0.74],
+        pair: [0.32, 0.8],
         source: {
             file: "src/components/ui/drawer/constants.ts",
             symbol: "DRAWER_SNAP",
