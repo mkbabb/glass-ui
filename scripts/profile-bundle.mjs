@@ -223,11 +223,29 @@ const startedAt = Date.now();
 // be invisible on the WGSL primary, so the dual-port is the correct cost. Measured raw
 // ~197.8k / gzip ~62.7k; lifted to raw 208_000 / gzip 66_000 (a thin headroom for the two
 // image programs + the upload/bridge leaves, NOT open-ended creep; an overrun still HALTS).
+// BI.W-BUDGET-REBASELINE re-base — THE 13TH LIFT + the goo-blob→blob chunk-key rename.
+// BI.W-BLOB-RENAME-LAND renamed the metaball subpath goo-blob→blob (clean break, no
+// alias), so the emitted entry chunk is now `dist/blob.js`; the prior `dist/goo-blob.js`
+// key points at a vanished chunk (MISSING → fail-closed). The key is re-pointed. The
+// ceiling is LIFTED because the blob chunk carries the DUAL-BACKEND metaball capability
+// (metaball.wgsl.ts the WebGPU-first WGSL primary + metaball.frag the WebGL2 fallback +
+// the noise/palette WGSL + sdf-body/watercolor-edges/oklch GLSL chunks — 1622 shader
+// lines) plus the BG blob-config/BLOB-SEAMS growth, all SINGLE-SOURCED in blob.js (the
+// `smoothK`/metaball body appears in NO other chunk) with value.js + keyframes staying
+// EXTERNAL peers (0 bundled) — a shipped capability, NOT a leak. Measured raw ~103_906 /
+// gzip ~36_095; lifted to raw 115_000 / gzip 40_000 (the same ~10% close headroom the
+// aurora/CSS rebases use; an overrun still HALTS per the W4 §3a field-bake-hoist
+// triumvirate). INTERIM PIN — this ceiling + the D5 drift baseline are pinned against the
+// B0-adjacent tree (post-blob-rename, PRE-B5-viz-deletion, PRE-B3-dock-drain). The B5
+// D-VIZ deletions (concentric/dot-flow-field/dot-matrix chunk drops) + the B3 dock drains +
+// the BLOB package.json `./blob` export completion (which re-classes blob.js shared→entry)
+// land LATER, so the FINAL pin is a B10 re-run against the settled tree — see
+// docs/tranches/BI/audit/W-BUDGET-REBASELINE-NOTE.md.
 const BUDGETS = {
     "dist/glass-ui.js": { raw: 190_000, gzip: 33_700 },
     "dist/styles/index.css": { raw: 548_000, gzip: 140_000 },
     "dist/aurora.js": { raw: 208_000, gzip: 66_000 },
-    "dist/goo-blob.js": { raw: 85_000, gzip: 28_000 },
+    "dist/blob.js": { raw: 115_000, gzip: 40_000 },
     // BC.W-VIZ-CONSTELLATION / W-VIZ-FOURIER re-base — the WebGPU-first re-home
     // (the per-viz Band-4 waves) moved both viz OFF Canvas2D onto createGpuSubstrate:
     // they now carry the WGSL compute/render primaries + the typed uniformBridgeWGPU
