@@ -108,6 +108,39 @@ watch(
 const hostClass = computed(() =>
     cn(props.stagger && "char-stagger", props.class),
 );
+
+// The wrapper binds `aria-label="{text}"` so the split word keeps ONE accessible
+// name (the glyph spans are aria-hidden). But `aria-label` on a role-LESS generic
+// element (the default `span`, a `div`, a `p`) is an ARIA-in-HTML violation
+// (`aria-prohibited-attr`): a generic element bears no name from author, so AT
+// support for the label is undefined. `role="img"` makes the labeled wrapper a
+// name-bearing element — the accessible-name-bearing role for a graphic-of-text
+// whose visual children are decorative — so the label + the hidden glyphs compose
+// ONE spec-valid accessible name. This is the StatusDot conditional-role idiom
+// (`role="img"` only when a name is bound), extended to honour `as`: a consumer
+// that overrides `as` to an element that ALREADY bears a name from author (a
+// heading, a link, a button, an <img>) keeps that native role — the role is not
+// force-added and its semantics are not clobbered — and a custom Component `as`
+// owns its own accessibility. Only a role-less string host is force-roled, and
+// only when an accessible name is actually present.
+const NAME_BEARING_HOSTS = new Set([
+    "a",
+    "button",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "img",
+    "label",
+    "output",
+]);
+const hostRole = computed<"img" | undefined>(() => {
+    if (!props.text) return undefined; // no accessible name → nothing to make valid
+    if (typeof props.as !== "string") return undefined; // a Component owns its own role
+    return NAME_BEARING_HOSTS.has(props.as.toLowerCase()) ? undefined : "img";
+});
 </script>
 
 <template>
@@ -115,6 +148,7 @@ const hostClass = computed(() =>
         :ref="setRoot"
         :as="props.as"
         :class="hostClass"
+        :role="hostRole"
         :aria-label="props.text"
         >{{ initialText }}</Primitive
     >

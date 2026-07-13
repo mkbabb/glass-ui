@@ -30,7 +30,7 @@ import { SplitChars } from "@mkbabb/glass-ui";
 `<SplitChars text="Fourier" />` renders:
 
 ```html
-<span class="char-stagger" aria-label="Fourier" style="--char-total:7">
+<span class="char-stagger" role="img" aria-label="Fourier" style="--char-total:7">
     <span class="char" style="--char-index:0" aria-hidden="true">F</span>
     <span class="char" style="--char-index:1" aria-hidden="true">o</span>
     … (--char-index 2..6)
@@ -58,6 +58,14 @@ name is unambiguous (a slot would split arbitrary markup).
 The wrapper carries `aria-label={text}` (the full word); every `.char` span is
 `aria-hidden`. AT reads the word ONCE; the kinetic glyphs are invisible to AT. A
 hand-roll could forget it; `<SplitChars>` cannot — the prop IS the label source.
+
+The labeled wrapper also carries `role="img"` so the `aria-label` is spec-valid: a
+bound `aria-label` on a role-less generic element (the default `span`) is an
+ARIA-in-HTML violation (`aria-prohibited-attr`) — a generic element bears no name
+from author. `role="img"` names the graphic-of-text whose glyph children are
+decorative. The role is CONDITIONAL (the StatusDot idiom): an `as` override to an
+element that already bears a name from author (`as="h1"`, a heading; a link; a
+button) keeps its native role, and a custom Component `as` owns its own semantics.
 
 ## The composable
 
