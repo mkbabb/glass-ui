@@ -26,9 +26,21 @@
 // docs/tranches/BB/audit/visual/W-DRAG-MORPH-DELTA.md, BOTH modes.
 
 import { test, expect } from "@playwright/test";
-import type { Page } from "@playwright/test";
+import type { Locator, Page } from "@playwright/test";
 import { fileURLToPath } from "node:url";
 import { mkdirSync } from "node:fs";
+
+// Select tab `index` via a real CLICK — robust to the target already being active.
+// BI.W-DRAG-REATTACH: the ACTIVE pill is grab-to-drag (`pointer-events: none` on the
+// selected `.segmented-tab` forwards a press THROUGH to the draggable indicator), so a
+// `.click()` on the already-selected tab is (correctly) intercepted by the indicator.
+// Clicking the active tab is a semantic no-op anyway; skip when already selected and
+// click otherwise (non-active tabs keep `pointer-events` → click-to-select, unchanged).
+async function selectTab(tabs: Locator, index: number): Promise<void> {
+    const pressed = await tabs.nth(index).getAttribute("aria-pressed");
+    if (pressed === "true") return;
+    await tabs.nth(index).click();
+}
 
 const VISUAL_DIR = fileURLToPath(
     new URL("../docs/tranches/BB/audit/visual/", import.meta.url),
@@ -143,8 +155,9 @@ test("(b) flick past midpoint snaps forward; slow short-of-midpoint snaps back",
     const tabs = strip.locator(".segmented-tab");
     await expect(indicator).toBeVisible();
 
-    // Reset selection to the first tab via a click.
-    await tabs.nth(0).click();
+    // Reset selection to the first tab (a no-op click when already active — the
+    // active pill is grab-to-drag, so `selectTab` skips a redundant press).
+    await selectTab(tabs, 0);
     await page.waitForTimeout(400);
 
     const first = await tabs.nth(0).boundingBox();
@@ -178,7 +191,7 @@ test("(c) PRM — drag functions, snap commits, NO squish frames", async ({ page
     const tabs = strip.locator(".segmented-tab");
     await expect(indicator).toBeVisible();
 
-    await tabs.nth(0).click();
+    await selectTab(tabs, 0);
     await page.waitForTimeout(300);
 
     const ind = await indicator.boundingBox();
@@ -228,7 +241,7 @@ test("(d) keyboard roving — one tabstop, arrow/Home/End move focus + activate"
     expect(tabindices.filter((t) => t === "-1").length).toBe(tabindices.length - 1);
 
     // Focus the active tab; ArrowRight moves focus + activates the next.
-    await hTabs.nth(0).click();
+    await selectTab(hTabs, 0);
     await page.waitForTimeout(200);
     await hTabs.nth(0).focus();
     await page.keyboard.press("ArrowRight");
@@ -252,12 +265,92 @@ test("(d) keyboard roving — one tabstop, arrow/Home/End move focus + activate"
         ".segmented-tabs--vertical:not(.segmented-tabs--underline)",
     ).first();
     const vTabs = vStrip.locator(".segmented-tab");
-    await vTabs.nth(0).click();
+    await selectTab(vTabs, 0);
     await page.waitForTimeout(200);
     await vTabs.nth(0).focus();
     await page.keyboard.press("ArrowDown");
     await page.waitForTimeout(200);
     await expect(vTabs.nth(1)).toBeFocused();
+});
+
+// ── (e) BI.W-DRAG-REATTACH — the liquid-tab double-kill (Kill A + Kill B) ─────────
+// The reachability arm (booked to the #92 π batch — real-GPU/pointer-emulation). At
+// HEAD the pill was DEAD twice over: Kill A (the reattach never re-ran on a LIVE
+// indicator — the setup-time call early-returned pre-mount, a non-immediate watch
+// never re-armed it) and Kill B (the indicator sat z-0 UNDER the z-10 buttons, so a
+// pointerdown at its center hit a button, never the drag listener). This drives the
+// real gesture end-to-end: the initial pointerdown LANDS on the indicator (the active
+// button forwards it through — Kill B rest), the `Draggable` is armed and the lozenge
+// takes `.glass-drag-lift` (Kill A), the lifted pill wins the hit-test as it travels
+// (Kill B occlusion), and a plain click still selects (the click path un-regressed).
+test("(e) liquid-tab reachability — grab lands on the indicator, drag starts, click un-regressed", async ({
+    page,
+}) => {
+    await page.setViewportSize(VIEWPORTS[1]);
+    await setDark(page, false);
+
+    const strip = page.locator(
+        ".segmented-tabs:not(.segmented-tabs--underline):not(.segmented-tabs--vertical)",
+    ).first();
+    const indicator = strip.locator(".segmented-indicator.glass-drag-grabbable");
+    const tabs = strip.locator(".segmented-tab");
+    await expect(indicator).toBeVisible();
+
+    // The click path is un-regressed — a plain click on a NON-active tab still selects
+    // it (the drag is additive; non-active tabs keep click-to-select untouched).
+    await tabs.nth(1).click();
+    await page.waitForTimeout(400);
+    await expect(tabs.nth(1)).toHaveAttribute("aria-pressed", "true");
+
+    const box = await indicator.boundingBox();
+    if (!box) return;
+    const cx = box.x + box.width / 2;
+    const cy = box.y + box.height / 2;
+
+    // Kill B (rest reachability) — the active button forwards the press THROUGH:
+    // elementFromPoint at the indicator center resolves INTO the indicator subtree,
+    // never an occluding `.segmented-tab`.
+    const restHit = await page.evaluate(
+        ([x, y]) => {
+            const el = document.elementFromPoint(x as number, y as number);
+            return {
+                inIndicator: !!el?.closest(".segmented-indicator"),
+                isTab: !!el?.closest(".segmented-tab"),
+            };
+        },
+        [cx, cy],
+    );
+    expect(restHit.inIndicator).toBe(true);
+    expect(restHit.isTab).toBe(false);
+
+    // Kill A (the reattach armed) — a pointerdown STARTS the drag; the indicator takes
+    // `.glass-drag-lift`, proving the `Draggable` is bound to the LIVE node.
+    await page.mouse.move(cx, cy);
+    await page.mouse.down();
+    await page.mouse.move(cx + box.width, cy, { steps: 3 });
+    await expect(indicator).toHaveClass(/glass-drag-lift/);
+
+    // Kill B (travel occlusion) — during the grab the LIFTED indicator wins the
+    // hit-test at its current center (z-30 above the z-10 labels it travels over).
+    const grabWins = await indicator.evaluate((el) => {
+        const r = el.getBoundingClientRect();
+        const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+        return !!hit?.closest(".segmented-indicator");
+    });
+    expect(grabWins).toBe(true);
+
+    await page.mouse.up();
+    await page.waitForTimeout(500);
+
+    // The click path still selects AFTER a drag — selecting the first tab lands it.
+    await selectTab(tabs, 0);
+    await page.waitForTimeout(400);
+    await expect(tabs.nth(0)).toHaveAttribute("aria-pressed", "true");
+
+    mkdirSync(VISUAL_DIR, { recursive: true });
+    await page.screenshot({
+        path: `${VISUAL_DIR}/drag-morph-e-reattach-desktop-light.png`,
+    });
 });
 
 // ── consumer #2 — the DockLayerGroup pull-to-switch ──────────────────────────────

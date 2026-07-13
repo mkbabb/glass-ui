@@ -35,6 +35,47 @@
 }
 
 /* ════════════════════════════════════════════════════════════════════════
+   BI.W-DRAG-REATTACH — the tabs `:draggable` z-order double-repair (Kill B).
+
+   The SegmentedTabs pill indicator is a SIBLING behind the tab buttons: at rest
+   `.segmented-indicator` is `z-0` (segmented-tabs.css) UNDER `.segmented-tab`
+   `z-10`, so the LABEL paints crisp ON TOP of the glass plate (correct — the plate
+   is a backing surface, the glyph is the foreground). But that same stack makes the
+   indicator UNGRABBABLE two ways, and both must fall or the liquid tab stays dead:
+
+     · THE GRAB BOOTSTRAP — kf `Draggable` binds `pointerdown` on the INDICATOR node,
+       yet a press on the active pill hits the z-10 BUTTON (a sibling, not an
+       ancestor of the indicator), so the gesture never reaches the drag listener.
+       On a DRAGGABLE strip (the indicator carries `.glass-drag-grabbable`) the ACTIVE
+       button forwards the press THROUGH to the indicator beneath: `pointer-events:
+       none` drops it from hit-testing WITHOUT touching paint (the label stays
+       painted on top; `elementFromPoint(indicatorCenter)` + the initial `pointerdown`
+       now land on the indicator). NON-active buttons keep `pointer-events`
+       (click-to-select is byte-identical); the active pill is grab-to-drag (the
+       iOS-27 read — the selected segment is the physical lozenge). Keyboard is
+       untouched — `pointer-events` does not gate focus or `keydown`, so the roving
+       tabindex contract stays whole (WCAG 2.1.1 alternative intact).
+
+     · THE TRAVEL OCCLUSION — once grabbed, the pulled lozenge slides across the
+       OTHER buttons; while `.glass-drag-lift` is set (useDragMorph's `dragging`),
+       raise the indicator ABOVE the z-10 labels so the traveling pill renders on top
+       and `elementFromPoint(indicatorCenter)` keeps returning the indicator (pointer
+       capture already routes the events; the lift is the paint + reachability half).
+
+   Compositor-only (z-index + hit-testing, no layout). The REST z-order is UNTOUCHED
+   — `.segmented-indicator { z-index: 0 }` still paints behind the labels at rest. */
+.segmented-tabs:not(.segmented-tabs--underline):has(
+        .segmented-indicator.glass-drag-grabbable
+    )
+    .segmented-tab[aria-pressed="true"] {
+    pointer-events: none;
+}
+
+.segmented-indicator.glass-drag-lift {
+    z-index: 30;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
    BG.W-EYEGLASS-TABS — the iOS-27 eye-glass loupe register (ADDITIVE, pill-ONLY).
 
    The SFC flips `data-eyeglass` on the strip host (pill-only, default-off) + composes

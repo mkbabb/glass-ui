@@ -140,14 +140,32 @@ export function useTabDragMorph(
         },
     );
 
-    // Re-resolve the snap geometry when the options/orientation change (a resize is
-    // caught by useDragMorph's next-grab reattach; an option/axis change needs the
-    // explicit refresh so the rebuilt Draggable carries fresh axis).
+    // BI.W-DRAG-REATTACH (Kill A) — arm `reattach` on the LIVE indicator element.
+    // `useDragMorph.reattach()` runs ONCE in setup, PRE-MOUNT, when `indicatorRef` is
+    // still null — the early-return leaves the `Draggable` UNBUILT — and nothing re-arms
+    // it: on mount `dragEnabled`/`stripOptions.length`/`isVertical` are all STABLE (the
+    // pill is `motion:full` → `dragEnabled` is born true, the option count and axis do
+    // not change), so a NON-immediate watch never fires with a live element and the drag
+    // stays dead. Watching the indicator ELEMENT itself (`indicatorRef.value`) with
+    // `{ immediate: true }` gives `reattach` its first LIVE call the tick the element
+    // resolves (the immediate run is a null-guarded no-op; the null→element transition
+    // fires the real arm), and re-resolves the snap centers on every option/orientation
+    // change (a resize re-resolves via the same `refresh` on the next re-arm). `refresh`
+    // is a no-op mid-gesture + a no-op on a null node, so the immediate arm is safe.
     watch(
-        () => [stripOptions.value.length, isVertical.value, dragEnabled.value] as const,
+        () =>
+            [
+                indicatorRef.value,
+                stripOptions.value.length,
+                isVertical.value,
+                dragEnabled.value,
+            ] as const,
         () => {
-            if (dragEnabled.value) nextTick(() => drag.refresh());
+            if (dragEnabled.value && indicatorRef.value) {
+                nextTick(() => drag.refresh());
+            }
         },
+        { immediate: true },
     );
 
     return { dragEnabled, drag };

@@ -116,6 +116,16 @@ function cliPaths() {
             ROOT,
             "src/components/custom/dock/DockLayerGroup.vue",
         ),
+        // BI.W-DRAG-REATTACH — the z-order double-repair (Kill B) lives in the
+        // SegmentedTabs CSS. The rest z-0 is in segmented-tabs.css; the grab-state
+        // z-lift + the active-button grab-bootstrap fall-through are in the drag tail
+        // segmented-tabs-drag.css (carved by BI.W-STYLE-REDRAIN — the §Work `segmented-
+        // tabs.css` ref re-homes here for the grab affordance).
+        SEGMENTED_TABS_CSS: resolve(ROOT, "src/styles/segmented-tabs.css"),
+        SEGMENTED_TABS_DRAG_CSS: resolve(
+            ROOT,
+            "src/styles/tabs/segmented-tabs-drag.css",
+        ),
         ARTIFACT: gateArtifactPath("GLASS_UI_DRAG_MORPH_ARTIFACT", "BB-drag-morph"),
     };
     return _cliPaths;
@@ -143,6 +153,25 @@ function stripBlockComments(text) {
             if (end === -1) end = text.length;
             result += blankRange(text, i, end);
             i = end;
+        } else {
+            result += text[i];
+            i++;
+        }
+    }
+    return result;
+}
+
+// Strip CSS `/* … */` block comments ONLY (CSS has no `//` line comment — a `url(//…)`
+// must not be blanked; the generic TS stripper's `//` branch is wrong for CSS).
+function stripCssComments(text) {
+    let result = "";
+    let i = 0;
+    while (i < text.length) {
+        if (text[i] === "/" && text[i + 1] === "*") {
+            const end = text.indexOf("*/", i + 2);
+            const stop = end === -1 ? text.length : end + 2;
+            result += blankRange(text, i, stop);
+            i = stop;
         } else {
             result += text[i];
             i++;
@@ -193,6 +222,11 @@ export function detectDragMorph(sources) {
     const dockLayerGroup = stripHtmlComments(
         stripBlockComments(sources.dockLayerGroupVue ?? ""),
     );
+    // BI.W-DRAG-REATTACH — the z-order double-repair CSS (Kill B). The rest z-0 lives
+    // in segmented-tabs.css; the grab-state z-lift + the active-button grab-bootstrap
+    // fall-through live in the drag tail (segmented-tabs-drag.css).
+    const baseCss = stripCssComments(sources.segmentedTabsCss ?? "");
+    const dragCss = stripCssComments(sources.segmentedTabsDragCss ?? "");
 
     const violations = [];
 
@@ -347,11 +381,20 @@ export function detectDragMorph(sources) {
         );
     }
 
-    // ── D4 — the SegmentedTabs `:draggable` axis is ADDITIVE with ≥2 consumers ────
-    const hasDraggableProp = /draggable\s*\?\s*:\s*boolean/.test(segmentedTabs);
-    if (!hasDraggableProp) {
+    // ── D4 — the SegmentedTabs drag axis is ADDITIVE with ≥2 consumers ────────────
+    // BH.W-MOTION-AXIS — the `draggable?: boolean` prop died onto the ONE `motion`
+    // axis (the clean-break successor, no alias — MIGRATION.md): the SFC declares
+    // `motion?: Motion` and gates the drag on the resolved `armed` register via
+    // `useMotionAxis`. The additive-axis witness FOLLOWS the rename (a stale
+    // `draggable?: boolean` grep would false-RED the shipped tree). The internal
+    // `useTabDragMorph` option keeps its `draggable` field name — a composable option,
+    // explicitly excluded (the gate greps the public component PROP surface).
+    const hasMotionAxisProp =
+        /motion\s*\?\s*:\s*Motion/.test(segmentedTabs) &&
+        /useMotionAxis\s*\(/.test(segmentedTabs);
+    if (!hasMotionAxisProp) {
         violations.push(
-            "D4: SegmentedTabs declares no `draggable?: boolean` prop (the additive `:draggable` axis did not land).",
+            "D4: SegmentedTabs declares no `motion?: Motion` axis wired through `useMotionAxis` (the additive drag axis — the `draggable?: boolean` clean-break successor — did not land).",
         );
     }
     // BC.W-LIQUID-TAB — the drag is ADDITIVE OVER the click/keyboard path, NOT
@@ -440,6 +483,70 @@ export function detectDragMorph(sources) {
         );
     }
 
+    // ── D6 — the reattach seam arms on the LIVE indicator element (Kill A) ─────────
+    // BI.W-DRAG-REATTACH. `useDragMorph.reattach()` runs ONCE in setup, PRE-MOUNT,
+    // when `indicatorRef` is still null — the early-return leaves the `Draggable`
+    // UNBUILT — and nothing re-arms it: the consumer's refresh watch is NON-immediate
+    // over stable deps (on a `motion:full` pill `dragEnabled` is born true, the option
+    // count + axis do not change). The consumer must arm `reattach` IMMEDIATELY on the
+    // live indicator element: a `watch` keyed off `indicatorRef.value` with
+    // `{ immediate: true }` whose body calls `drag.refresh(` (→ reattach on the live
+    // node). RED at HEAD: the refresh watch carries no `immediate: true` (the reattach
+    // never gets a live first call → the liquid tab is dead).
+    const armsReattachImmediate =
+        /watch\s*\(\s*\(\s*\)\s*=>\s*\[[\s\S]*?indicatorRef\.value[\s\S]*?\.refresh\s*\([\s\S]*?\{\s*immediate\s*:\s*true\s*\}/.test(
+            tabDragMorph,
+        );
+    if (!armsReattachImmediate) {
+        violations.push(
+            "D6: the SegmentedTabs consumer does not arm `reattach` immediately on the live indicator element (a `watch` keyed off `indicatorRef.value` with `{ immediate: true }` calling `drag.refresh(`) — the setup-time reattach early-returns pre-mount and a non-immediate watch never re-arms it, so the `Draggable` is never built on a live node (the liquid tab stays dead).",
+        );
+    }
+
+    // ── D7 — the indicator is REACHABLE for the grab (Kill B) ─────────────────────
+    // BI.W-DRAG-REATTACH. At rest `.segmented-indicator { z-index: 0 }` sits UNDER
+    // `.segmented-tab { z-index: 10 }` (the label paints crisp ON TOP of the plate —
+    // the rest paint is CORRECT and must stay). That stack makes the indicator
+    // ungrabbable two ways, both repaired here:
+    //   (b1) THE GRAB BOOTSTRAP — kf `Draggable` binds `pointerdown` on the indicator
+    //        NODE, but a press on the active pill hits the z-10 button (a sibling, not
+    //        an ancestor), so the drag never starts. A DRAGGABLE strip (its indicator
+    //        carries `.glass-drag-grabbable`) forwards the press THROUGH the active
+    //        button via `pointer-events: none` — dropped from hit-testing WITHOUT
+    //        changing paint (the label stays on top; the pointerdown reaches the
+    //        indicator). Non-active buttons keep click-to-select (byte-identical).
+    //   (b2) THE TRAVEL OCCLUSION — once grabbed, the pulled lozenge lifts ABOVE the
+    //        z-10 labels it travels over (`.segmented-indicator.glass-drag-lift`
+    //        z-index > 10) so `elementFromPoint(indicatorCenter)` returns the indicator.
+    // The REST z-order stays z-0 (untouched). RED at HEAD: no grab-state z-lift + no
+    // active-button fall-through → `elementFromPoint(indicatorCenter)` returns a tab.
+    const restZOrderUnchanged =
+        /\.segmented-indicator\s*\{[^}]*z-index\s*:\s*0\b/.test(baseCss);
+    const grabZLiftMatch =
+        /\.segmented-indicator(?:\.glass-drag-lift|\[data-dragging\])[^{]*\{[^}]*z-index\s*:\s*(\d+)/.exec(
+            dragCss,
+        );
+    const grabZLift = grabZLiftMatch != null && Number(grabZLiftMatch[1]) > 10;
+    const grabBootstrap =
+        /:has\(\s*\.segmented-indicator\.glass-drag-grabbable\s*\)[\s\S]*?\.segmented-tab\[aria-pressed="true"\][^{]*\{[^}]*pointer-events\s*:\s*none/.test(
+            dragCss,
+        );
+    if (!restZOrderUnchanged) {
+        violations.push(
+            "D7: the base `.segmented-indicator { z-index: 0 }` rest z-order is gone — the rest paint (the label crisp OVER the plate) must be UNTOUCHED; only the grab state lifts.",
+        );
+    }
+    if (!grabZLift) {
+        violations.push(
+            "D7: no grab-state z-lift (`.segmented-indicator.glass-drag-lift { z-index: >10 }`) — while dragging the pulled lozenge must render ABOVE the z-10 buttons so `elementFromPoint(indicatorCenter)` returns the indicator, not an occluding tab.",
+        );
+    }
+    if (!grabBootstrap) {
+        violations.push(
+            'D7: no grab bootstrap (`:has(.segmented-indicator.glass-drag-grabbable) .segmented-tab[aria-pressed="true"] { pointer-events: none }`) — the active pill must forward the initial pointerdown THROUGH to the indicator (kf Draggable binds pointerdown on the indicator node), else the drag never starts.',
+        );
+    }
+
     const facts = {
         d1: {
             dmExists,
@@ -454,7 +561,7 @@ export function detectDragMorph(sources) {
         d2: { usesTanhLaw, usesDrive, capReadsGetter, hardcodedHighCap: hardcodedHighCap?.[1] ?? null },
         d3: { wiresNativeSnap, keepsCommitResolver, singleCommitGuard, reRollExcised },
         d4: {
-            hasDraggableProp,
+            hasMotionAxisProp,
             clickPathIntact,
             tabsConsumes,
             dockConsumes,
@@ -466,6 +573,13 @@ export function detectDragMorph(sources) {
             rovingGatedOnDraggable,
             axisDerivedArrows,
             hasHomeEnd,
+        },
+        d6: { armsReattachImmediate },
+        d7: {
+            restZOrderUnchanged,
+            grabZLift,
+            grabZIndex: grabZLiftMatch ? Number(grabZLiftMatch[1]) : null,
+            grabBootstrap,
         },
     };
 
@@ -533,6 +647,35 @@ function selfTestSnapBite() {
     return facts.d3.reRollExcised === false && facts.d3.wiresNativeSnap === false;
 }
 
+// ── The R-reattach self-test bite (Kill A, proven every run) ─────────────────────
+// A synthetic consumer whose reattach watch is NON-immediate (the exact Kill-A
+// regression — the pre-wave HEAD shape) MUST flag: `armsReattachImmediate` false. If
+// it does NOT, the reattach gate has no teeth (a self-proof failure reds the gate).
+function selfTestReattachBite() {
+    const SYNTHETIC_NON_IMMEDIATE = [
+        "watch(",
+        "  () => [indicatorRef.value, stripOptions.value.length, dragEnabled.value] as const,",
+        "  () => { if (dragEnabled.value) nextTick(() => drag.refresh()); },",
+        ");",
+    ].join("\n");
+    const { facts } = detectDragMorph({
+        useTabDragMorphTs: SYNTHETIC_NON_IMMEDIATE,
+    });
+    return facts.d6.armsReattachImmediate === false;
+}
+
+// ── The R-reach self-test bite (Kill B, proven every run) ────────────────────────
+// A synthetic drag CSS that keeps the indicator z-0 DURING grab (a `.glass-drag-lift`
+// rule that does NOT lift above the z-10 buttons) MUST flag: `grabZLift` false. If it
+// does NOT, the reachability gate has no teeth.
+function selfTestReachBite() {
+    const SYNTHETIC_Z0_GRAB = ".segmented-indicator.glass-drag-lift { z-index: 0; }";
+    const { facts } = detectDragMorph({
+        segmentedTabsDragCss: SYNTHETIC_Z0_GRAB,
+    });
+    return facts.d7.grabZLift === false;
+}
+
 function run() {
     const P = cliPaths();
     const { ROOT } = P;
@@ -544,6 +687,8 @@ function run() {
         useTabDragMorphTs: safeRead(P.USE_TAB_DRAG_MORPH_TS),
         useTabRovingFocusTs: safeRead(P.USE_TAB_ROVING_FOCUS_TS),
         dockLayerGroupVue: safeRead(P.DOCK_LAYER_GROUP_VUE),
+        segmentedTabsCss: safeRead(P.SEGMENTED_TABS_CSS),
+        segmentedTabsDragCss: safeRead(P.SEGMENTED_TABS_DRAG_CSS),
     });
 
     const biteHasTeeth = selfTestBite();
@@ -558,6 +703,18 @@ function run() {
             "SELF-TEST: the D3 snap-excise bite did not flag a synthetic surviving re-roll (decayRest + spring.target without native snap) — the snap-excise gate has no teeth.",
         );
     }
+    const reattachBiteHasTeeth = selfTestReattachBite();
+    if (!reattachBiteHasTeeth) {
+        violations.push(
+            "SELF-TEST: the D6 reattach bite did not flag a synthetic NON-immediate reattach watch (the Kill-A regression) — the reattach gate has no teeth.",
+        );
+    }
+    const reachBiteHasTeeth = selfTestReachBite();
+    if (!reachBiteHasTeeth) {
+        violations.push(
+            "SELF-TEST: the D7 reach bite did not flag a synthetic z-0-during-grab indicator (the Kill-B regression) — the reachability gate has no teeth.",
+        );
+    }
 
     const status = violations.length === 0 ? "pass" : "fail";
 
@@ -568,7 +725,12 @@ function run() {
         command: "npm run proof:drag-morph",
         facts,
         violations,
-        selfTest: { d5BiteHasTeeth: biteHasTeeth, d3SnapBiteHasTeeth: snapBiteHasTeeth },
+        selfTest: {
+            d5BiteHasTeeth: biteHasTeeth,
+            d3SnapBiteHasTeeth: snapBiteHasTeeth,
+            d6ReattachBiteHasTeeth: reattachBiteHasTeeth,
+            d7ReachBiteHasTeeth: reachBiteHasTeeth,
+        },
     });
 
     const yn = (b) => (b ? "YES" : "NO");
@@ -601,8 +763,8 @@ function run() {
         )}`,
     );
     console.log(
-        `  D4 :draggable additive, ≥2 consumers    : ${yn(
-            facts.d4.hasDraggableProp &&
+        `  D4 motion-axis additive, ≥2 consumers   : ${yn(
+            facts.d4.hasMotionAxisProp &&
                 facts.d4.clickPathIntact &&
                 facts.d4.consumerCount >= 2,
         )}  (consumers:${facts.d4.consumerCount})`,
@@ -616,8 +778,22 @@ function run() {
                 facts.d5.hasHomeEnd,
         )}`,
     );
+    console.log(
+        `  D6 reattach arms on live indicator      : ${yn(
+            facts.d6.armsReattachImmediate,
+        )}  (Kill A)`,
+    );
+    console.log(
+        `  D7 indicator reachable for grab         : ${yn(
+            facts.d7.restZOrderUnchanged &&
+                facts.d7.grabZLift &&
+                facts.d7.grabBootstrap,
+        )}  (Kill B, grab-z:${facts.d7.grabZIndex ?? "none"})`,
+    );
     console.log(`  self-test D5 bite has teeth             : ${yn(biteHasTeeth)}`);
     console.log(`  self-test D3 snap-excise bite has teeth : ${yn(snapBiteHasTeeth)}`);
+    console.log(`  self-test reattach bite has teeth       : ${yn(reattachBiteHasTeeth)}`);
+    console.log(`  self-test reach bite has teeth          : ${yn(reachBiteHasTeeth)}`);
 
     if (violations.length > 0) {
         console.log("\nVIOLATIONS:");
