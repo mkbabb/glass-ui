@@ -245,12 +245,15 @@ export function detectPressRegister(presets, useSpringPressSrc, schemeSrc) {
         v.push("S3: cannot read scheme-motion.css");
     } else {
         facts.springPressEmitted = /--spring-press:\s*linear\(/.test(schemeSrc);
-        facts.springPressDurationEmitted = /--spring-press-duration:\s*[\d.]+s/.test(schemeSrc);
+        // BI.W-TEMPO — the raw press clock is the INTERNAL `--spring-press-settle`
+        // (the public `--spring-press-duration` is now the `calc(settle * --motion-
+        // tempo)` reader); S3's "the press clock is emitted" reads the raw settle.
+        facts.springPressDurationEmitted = /--spring-press-settle:\s*[\d.]+s/.test(schemeSrc);
         if (!facts.springPressEmitted) {
             v.push("S3: `--spring-press` curve token is NOT emitted in scheme-motion.css (re-run regen-spring-tokens.mjs)");
         }
         if (!facts.springPressDurationEmitted) {
-            v.push("S3: `--spring-press-duration` clock token is NOT emitted in scheme-motion.css");
+            v.push("S3: `--spring-press-settle` clock token is NOT emitted in scheme-spring.css");
         }
     }
     return { facts, violations: v };
@@ -315,15 +318,18 @@ export function detectClockNotTruncated(presets, schemeSrc) {
     for (const p of presets) {
         const analytic = springSettleDurationSeconds(p);
         facts.clocks[p.name] = analytic;
-        const m = schemeSrc.match(new RegExp(`--spring-${p.name}-duration:\\s*([\\d.]+)s`));
+        // BI.W-TEMPO — the raw analytic clock is the INTERNAL `--spring-<name>-settle`
+        // (the public `--spring-<name>-duration` is the `calc(settle * --motion-tempo)`
+        // reader); S5's "the clock == the analytic settle" reads the raw settle.
+        const m = schemeSrc.match(new RegExp(`--spring-${p.name}-settle:\\s*([\\d.]+)s`));
         if (!m) {
-            v.push(`S5: no --spring-${p.name}-duration token in scheme-motion.css`);
+            v.push(`S5: no --spring-${p.name}-settle token in scheme-spring.css`);
             continue;
         }
         const emitted = Number.parseFloat(m[1]);
         if (Math.abs(emitted - analytic) > 1e-9) {
             v.push(
-                `S5: --spring-${p.name}-duration ${emitted}s is NOT the analytic 2%-band settle ${analytic}s (a hand-truncated clock re-introduces the W-GLASS-CAL tail-jank)`,
+                `S5: --spring-${p.name}-settle ${emitted}s is NOT the analytic 2%-band settle ${analytic}s (a hand-truncated clock re-introduces the W-GLASS-CAL tail-jank)`,
             );
         }
     }
@@ -660,7 +666,7 @@ function selfTest() {
     // S3 bite — a useSpringPress with a literal default (not the press row) reds.
     const literalPress = "const spring = useSpring(target, { response: options.response ?? 0.25, dampingFraction: options.dampingFraction ?? 0.7 });";
     if (
-        detectPressRegister(frontLoaded, literalPress, "--spring-press: linear(0, 1); --spring-press-duration: 0.16s;").violations
+        detectPressRegister(frontLoaded, literalPress, "--spring-press: linear(0, 1); --spring-press-settle: 0.16s;").violations
             .length === 0
     ) {
         failures.push("SELF-TEST S3: a useSpringPress literal default (0.25/0.7, not the row) did NOT red");
@@ -682,15 +688,16 @@ function selfTest() {
         failures.push("SELF-TEST S4: a drifted `smooth` keep (ζ 0.80→0.65) did NOT red");
     }
 
-    // S5 bite — a hand-truncated --spring-snappy-duration reds against the analytic.
-    const truncatedScheme = "--spring-snappy-duration: 0.15s;\n--spring-smooth-duration: 0.36s;";
+    // S5 bite — a hand-truncated --spring-snappy-settle reds against the analytic
+    // (BI.W-TEMPO: the raw clock is the internal `-settle`; S5 reads it there now).
+    const truncatedScheme = "--spring-snappy-settle: 0.15s;\n--spring-smooth-settle: 0.36s;";
     const realPresets = PRESETS;
     if (
         detectClockNotTruncated(realPresets, truncatedScheme).violations.every(
-            (s) => !/snappy-duration 0\.15s/.test(s),
+            (s) => !/snappy-settle 0\.15s/.test(s),
         )
     ) {
-        failures.push("SELF-TEST S5: a hand-truncated --spring-snappy-duration: 0.15s did NOT red against the analytic");
+        failures.push("SELF-TEST S5: a hand-truncated --spring-snappy-settle: 0.15s did NOT red against the analytic");
     }
 
     // S6 bites — the three abrupt shapes on planted spatial legs.

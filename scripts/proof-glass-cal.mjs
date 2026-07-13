@@ -463,10 +463,15 @@ export function detectSpringClock() {
             readFile("src/styles/tokens/scheme-spring.css"),
     );
     for (const name of SPRING_NAMES) {
-        const m = schemeMotion.match(new RegExp(`--spring-${name}-duration:\\s*([\\d.]+)s`));
+        // BI.W-TEMPO — the raw analytic clock is the INTERNAL `--spring-<name>-settle`
+        // token (the public `--spring-<name>-duration` is now the `calc(settle *
+        // --motion-tempo)` reader a numeric match cannot parse). S1's intent — "the
+        // per-spring clock is minted" — is served by the raw settle; at the 1.0
+        // identity it equals the prior flat `-duration` value.
+        const m = schemeMotion.match(new RegExp(`--spring-${name}-settle:\\s*([\\d.]+)s`));
         facts.durations[name] = m ? Number(m[1]) : null;
         if (!m) {
-            violations.push(`S1: --spring-${name}-duration not minted in tokens/scheme-motion.css (the generated per-spring clock)`);
+            violations.push(`S1: --spring-${name}-settle not minted in tokens/scheme-spring.css (the generated per-spring clock)`);
         }
     }
 

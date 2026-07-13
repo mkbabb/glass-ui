@@ -248,10 +248,7 @@ const SUBPATHS: Record<string, string> = {
     "substrates/fourier-field": "@mkbabb/glass-ui/fourier-field",
     "substrates/glass-material": "/substrates/glass-material",
     "substrates/glass-panel": "@mkbabb/glass-ui/glass-panel",
-    "substrates/dot-flow-field": "@mkbabb/glass-ui/dot-flow-field",
-    "substrates/concentric": "@mkbabb/glass-ui/concentric",
     "substrates/liquid-grid": "@mkbabb/glass-ui/liquid-grid",
-    "substrates/dot-matrix": "@mkbabb/glass-ui/dot-matrix",
     // Forms — the input/select/toggle family via /forms + the own subpaths.
     "forms/inputs": "@mkbabb/glass-ui/forms",
     "forms/textarea": "@mkbabb/glass-ui/forms",
@@ -305,11 +302,11 @@ const SUBPATHS: Record<string, string> = {
     "dock/overview": "@mkbabb/glass-ui/dock",
     "dock/layers": "@mkbabb/glass-ui/dock",
     "dock/rail": "@mkbabb/glass-ui/dock",
-    "dock/morph-showcase": "@mkbabb/glass-ui/dock",
     "dock/sections": "@mkbabb/glass-ui/dock",
+    "dock/controls": "@mkbabb/glass-ui/dock",
+    "dock/overflow": "@mkbabb/glass-ui/dock",
     "dock/cta-receive": "@mkbabb/glass-ui/dock",
     "dock/dock-search": "@mkbabb/glass-ui/dock",
-    "dock/siri-island": "@mkbabb/glass-ui/dock",
     // Data — the ledger surfaces.
     "data/table": "@mkbabb/glass-ui/data-table",
     "data/data-table": "@mkbabb/glass-ui/data-table",
@@ -755,63 +752,15 @@ export const CATEGORIES: Category[] = [
                     background: "grid",
                 },
             ),
-            // BB.W-VIZ-SUITE / W-FLOWFIELD — the NEW WebGPU-first dot-flow-field viz.
-            // It self-stages its OWN GL/compute context (the field IS the surface), so
-            // the route declares the FREE static `grid` wash behind the card and mounts
-            // exactly ONE live context — the dot-flow-field's own (the one-GL-per-route
-            // budget held, the glass-panel precedent above).
-            s(
-                "substrates",
-                "dot-flow-field",
-                "Dot Flow Field",
-                "A WebGPU-first curl-noise flow field traced by advected particles — soft warm-cream dots seeded along undulating streamlines rippling in Gerstner/Tessendorf waves (Tessendorf 2001 · Bridson 2007). The compute pass advects N particles through the analytic ∇⊥ψ velocity; the render pass draws instanced billboard quads; a Canvas2D point-cloud fallback steps the SAME evaluator where WebGPU is absent. The warm-cream identity is the library default; the mono-on-near-black reference is a non-default demo preset. Shipped /dot-flow-field.",
-                {
-                    background: "grid",
-                    hero: true,
-                    heroScale: "hero",
-                },
-            ),
-            // BD.W-CONCENTRIC-RELIEF — the WebGPU-first level-set TOPOGRAPHIC CONTOUR viz
-            // (liquid-grid kin), closing the Batch-V substrates band. It self-stages its OWN
-            // GL/fragment context (the field IS the surface), so the route declares the FREE
-            // static `grid` wash behind the card and mounts exactly ONE live context — its
-            // own (the one-GL-per-route budget held, the dot-flow-field precedent above).
-            s(
-                "substrates",
-                "concentric",
-                "Concentric",
-                "A WebGPU-first level-set TOPOGRAPHIC CONTOUR survey — the iso-contours of a low-octave height field, nested loops that TWIST and FLOW as a traveling wave passes OVER and THROUGH the topography (the SAME waveFlow sheet-warp that bends the liquid-grid, so the two viz move together — vector calculus, level sets, gradient topology). The basins breathe on the ω=√(g·k) deep-water swell (Tessendorf 2001); the contours bunch on steep ground (the density tracks 1/|∇H|). An opaque hypsometric fill (basins cool-cream, ridges warm-amber) under an analytic hillshade, with a two-tier index/minor contour hierarchy; the lines are extracted via Inigo Quilez's gradient-free contour distance-estimation (perfect GPU AA at any DPR). A pure fullscreen fragment pass over the shared waveField leaf on the WebGPU primary, with a clean WebGL2 GLSL fallback. Move the cursor and the topography HEAVES toward it. The warm-divergent identity is the library default; the demo themes the survey. Shipped /concentric.",
-                {
-                    background: "grid",
-                    hero: true,
-                    heroScale: "hero",
-                },
-            ),
             // BC.W-VIZ-PAPERGRID — the NEW WebGPU-first liquid AA-grid viz. It self-stages
             // its OWN GL/fragment context (the field IS the surface), so the route declares
             // the FREE static `grid` wash behind the card and mounts exactly ONE live context
-            // — its own (the one-GL-per-route budget held, the concentric precedent above).
+            // — its own (the one-GL-per-route budget held, the glass-panel precedent above).
             s(
                 "substrates",
                 "liquid-grid",
                 "Liquid Grid",
                 "A WebGPU-first liquid AA-grid — evenly-spaced LARGER cells on a sheet that bows + shears as a traveling wave passes OVER and THROUGH it. A smooth low-order curl-flow field (Bridson divergence-free) warps the grid COORDINATE before evaluation, locally affine at the cell scale, so MAJOR gridlines bend as ONE coherent continuous curve and cells deform as near-parallelogram patches — never a per-pixel jitter, never a per-cell kink. A Ben Golus derivative-AA two-tier grid (one device-pixel crisp at any DPR — the blurry-mess fix; the AA reads the FINAL warped coordinate). It reads the SAME waveFlow warp as Concentric (one shared field). Drag the cursor for a local swirl — a finger twisting the cells around it. The warm-cream identity over transparent is the library default (the page reads through the cells); the suffusion preset rides the same field at a near-invisible fieldAlpha behind page content. No Canvas2D anywhere. Shipped /liquid-grid.",
-                {
-                    background: "grid",
-                    hero: true,
-                    heroScale: "hero",
-                },
-            ),
-            // BC.W-VIZ-DOTMATRIX — the NEW WebGPU-first Fibonacci phyllotaxis dot-SPHERE
-            // viz (the Claude co-work "fine-dot spheres on dark" reference). It self-stages
-            // its OWN GL context (the globe IS the surface), so the route declares the FREE
-            // static `grid` wash behind the card and mounts exactly ONE live context — its
-            // own (the one-GL-per-route budget held, the liquid-grid precedent above).
-            s(
-                "substrates",
-                "dot-matrix",
-                "Dot Matrix",
-                "A WebGPU-first Fibonacci phyllotaxis dot-SPHERE — a globe of fine warm-cream dots laid on a sphere SURFACE (the golden-angle area-centered lattice; Martin Roberts / extremelearning, arXiv 0912.4540 — no pole-pinching, no banded rings), depth-shaded so it reads as a translucent dot-shell (opacity 0.15+0.85·facing, size 0.6+0.4·facing — the Will-Howard / COBE / Stripe lineage), slowly rotating on a gently tilted axis. The render pass draws instanced billboard quads + the crisp fwidth SDF circle fragment; a WebGL2 instanced-billboard fallback draws the SAME dots where WebGPU is absent (born-GPU — no Canvas2D). Drag the cursor — the globe tracks it (parallax), a soft dimple pushes through the dot-shell, a flick fires a brightness bloom (the accel burst). The warm-cream identity is the library default; the mono-warm-white two-globe reference is a non-default demo preset. Shipped /dot-matrix.",
                 {
                     background: "grid",
                     hero: true,
@@ -999,18 +948,9 @@ export const CATEGORIES: Category[] = [
         title: "Dock",
         icon: PanelBottom,
         stories: [
-            s(
-                "dock",
-                "liquid-playground",
-                "Liquid Morph",
-                "The dock as the primary control interface — a glass dock pill that EXPANDS into a Maps Places sheet, SPLITS into two Dynamic-Island activity islands (timer + now-playing, goo-bridged), and grows into the full Apple Music player. Composes the shipped useBloomUp source-rect bloom + the SVG-goo metaball bridge over the real dock spring, plus the accent-facet CONTEXT carousel — a hairline strip of accent-tinted facet chips fanning in a REAL dock's gutter (box-INVIOLATE), shown in BOTH a horizontal and a vertical dock via <DockStack mode=\"facets\">.",
-            ),
-            s(
-                "dock",
-                "dock-gallery",
-                "Dock Gallery",
-                "The BREADTH of dock morphs — a gallery of distinct iOS surfaces the dock shape-shifts into: the Apple Music mini-player → player + a separate queue panel, a Dynamic Island call pill → full call UI, and a notification pill → expanded card with actions. Tap each dock to morph it.",
-            ),
+            // BI.W-DOCK-RETIRES — the goo-bearing "Liquid Morph" playground + "Dock Gallery"
+            // stories are DEFINITION-ABSENT (the fission/metaball spectacle retired
+            // decided-terminal + the prime UF-C3 Safari suspect; clean break, no alias).
             s(
                 "dock",
                 "overview",
@@ -1029,12 +969,10 @@ export const CATEGORIES: Category[] = [
                 "Vertical Dock",
                 'The vertical GlassDock navigation column — an active-item accent, tap-squish press, and anchored tooltips. ONE orientation axis (no variant): a vertical dock is orientation="vertical", and it carries the same collapse/morph/shrink machinery a horizontal dock does. The only "rail" left in the dock band is the layer-switcher rail inside a DockLayerGroup.',
             ),
-            s(
-                "dock",
-                "morph-showcase",
-                "Vertical ↔ Horizontal Morph",
-                "The liquid-glass dock morph — a button flows the vertical dock, as an amorphous metaball teardrop, into the horizontal dock, fully bidirectional and deterministic on one --dock-morph-t scalar. An SVG-goo metaball bridge merges the two plates and hides the layout change at the midpoint; the shared liquid-flex primitive drives the two-dock spans and the volume-preserving teardrop squish.",
-            ),
+            // BI.W-DOCK-RETIRES — the "Vertical ↔ Horizontal Morph" showcase is
+            // DEFINITION-ABSENT (the V↔H goo morph retired decided-terminal — the platform
+            // cannot continuously interpolate a flex-column→row topology change; the swap
+            // is the crossfade). Clean break, no alias.
             // BA.W-DOCK-SECTIONS — the declarative tripartite section chassis. A
             // `sections` descriptor array renders the rail-core | divided sections |
             // nav zones over the dock's in-flow controls by composing <DockSeparator>
@@ -1045,6 +983,29 @@ export const CATEGORIES: Category[] = [
                 "sections",
                 "Dock Sections",
                 "The declarative <DockSection> chassis — pass one `sections: DockSectionDescriptor[]` array and the dock body renders the three-zone gestalt (a leading home/brand region, named divider-demarcated section groups, a trailing nav group) by composing <DockSeparator> over the controls a consumer already places. The dock box shrink-wraps unchanged; a 5-section dock renders from the array, never a hardcoded literal.",
+            ),
+            // BI.W-DOCK-CONTROLS — the reference CONTROLS demo. The dock IS
+            // SegmentedTabs/ToggleGroup wearing chrome: its control run is driven by
+            // the SAME headless useSelectionGroup engine, its controls are the folded
+            // <DockControl> (icon + tab shape axis) + <DockTrigger> (the 3 overlay
+            // triggers), and the leading #persistent + trailing #persistent-end slots.
+            s(
+                "dock",
+                "controls",
+                "Dock Controls",
+                "The dock IS SegmentedTabs/ToggleGroup wearing chrome. Its controls are ordinary members of the selection-control family: one <DockControl> (icon + tab shapes), one <DockTrigger> (select/dropdown/popover), and one headless useSelectionGroup engine driving roving focus, the traveling indicator, role-per-mode ARIA, and the scrollIntoView recenter. The painted plate insets while the hit cell stays the full control size (hit box ≠ paint box) so the target-size floor holds; both the leading #persistent and trailing #persistent-end slots ship natively.",
+            ),
+            // BI.W-DOCK-OVERFLOW — the overflow FACILITY. A native inline scroll track
+            // (overflow-x: auto) with the FadingScroll edge mask + scrollIntoView-on-select
+            // recenter (a selection past the fold pulls itself into view with a ≥1px port
+            // gutter), side-by-side with the pure-CSS Gaussian fisheye that engages IFF the
+            // row FITS. The two are EXCLUSIVE modes, never composed (PASS-4B ruling 1); the
+            // fisheye is transform/scale-only so the hit cell holds its ≥44px touch floor.
+            s(
+                "dock",
+                "overflow",
+                "Dock Overflow",
+                "The dock overflow facility — a native inline scroll track (overflow-x: auto) with the FadingScroll edge mask and scrollIntoView-on-select recenter (a control past the fold scrolls itself into view with a ≥1px port gutter), side-by-side with the pure-CSS Gaussian fisheye that magnifies the controls under the pointer IFF the row FITS. The two are exclusive modes, never composed: a scrollable row runs native scroll with fisheye OFF; the fisheye is transform/scale-only so the hit cell holds its ≥44px touch floor, and coarse-pointer / reduced-motion paints flat.",
             ),
             // BB.B2 W-DOCKMORPH-CTA — the external-CTA-morphs-into-dock seam (the iOS
             // bloom-from-source INVERSE). An external CTA button flies + reshapes from
@@ -1065,18 +1026,9 @@ export const CATEGORIES: Category[] = [
                 "Dock Search",
                 "The dock IS the search bar — tap the collapsed pill and it morphs continuously (the dock's own --dock-morph-t glide, not a hard swap) into a search field; type and the fuzzy dropdown ranks live with subsequence-match highlighting plus a ghost-text completion of the top match; arrow keys walk the results, Enter routes, a select scrolls-to-and-warms the windowed section below. useDockSearch composes the shipped useFuzzySearch matcher, the virtual-section window, and the scroll-to subuse — the dock owns the gesture, the consumer plugs the data source.",
             ),
-            // BG.W-SIRI-DOCK-CAPABILITY — Siri as a DOCK CAPABILITY via the
-            // .glass-dock-frame/#rail escape (box-inviolate). The "Search or ask" pill
-            // composes the EXISTING useDockSearch pipeline; tapping it blooms the glass
-            // island FROM the pill (useLiquidReveal) and glides through four forms on
-            // ONE --siri-island-t scalar (useDockSpring). The WebGL2 waveform is
-            // demo-private. This story REPLACES the retired "Dynamic Island Call" clone.
-            s(
-                "dock",
-                "siri-island",
-                "Siri Island",
-                "Siri as a dock capability — tap Search or ask and a glass island blooms from the dock pill (useLiquidReveal) and morphs through four forms (dormant → listening → thinking → responding) on ONE --siri-island-t scalar (useDockSpring, the ONE dock spring). The island lives beside the dock via the .glass-dock-frame/#rail escape — box-inviolate. Ask a question and the SAME useDockSearch pipeline ranks the answer; a demo-private WebGL2 pass paints the warm prismatic waveform.",
-            ),
+            // BI.W-DOCK-RETIRES — the "Siri Island" story is DEFINITION-ABSENT (the Siri
+            // dock capability retired decided-terminal; the siri-*-on-public-/dock
+            // adjudication is terminal, ruling 18). Clean break, no alias.
         ],
     },
     {

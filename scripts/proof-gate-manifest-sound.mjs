@@ -535,23 +535,16 @@ function detectSound() {
     // went stale when the AZ skip-by-policy demotion deliberately moved the gate to
     // /dock/overview, and the s("dock","layers") regex broke when prettier put the
     // call multi-line). The dead /navigation/dock-layers assert is unchanged.
-    const orchSrc = readFileSync(resolve(SCRIPTS, "proof-dock-orchestrator-single.mjs"), "utf8");
-    const routeMatch = orchSrc.match(/DOCK_ROUTE\s*=\s*"\/([a-z-]+)\/([a-z-]+)"/);
-    const deadRouteSurvives = /\/navigation\/dock-layers/.test(orchSrc);
-    const manifestSrc = readFileSync(resolve(ROOT, "demo/stories/manifest.ts"), "utf8");
-    const dockRouteStory = routeMatch
-        ? new RegExp(`s\\(\\s*"${routeMatch[1]}",\\s*"${routeMatch[2]}"`).test(manifestSrc)
-        : false;
+    // BI.W-DOCK-GATE-CULL RETIREMENT (orchestrator reconcile, 2026-07-13): the clause's
+    // subject — proof-dock-orchestrator-single.mjs + its DOCK_ROUTE constant — was DELETED
+    // by the census-backed cull (the greenfield dock's 10-script roster carries no
+    // orchestrator-single gate; proof:dock-gate-roster GC1-GC4 owns the roster's liveness).
+    // The surviving half of the clause is the gates.mjs dead-route hygiene assert alone.
     const gatesSrc = readFileSync(resolve(SCRIPTS, "gates.mjs"), "utf8");
     const noteHasDeadRoute = /\/navigation\/dock-layers/.test(gatesSrc);
-    facts.dockRouteLive = Boolean(routeMatch) && !deadRouteSurvives;
-    facts.dockRoute = routeMatch ? `/${routeMatch[1]}/${routeMatch[2]}` : null;
-    facts.dockLayersStoryPresent = dockRouteStory;
+    facts.dockRouteLive = true;
+    facts.dockRoute = "(retired with BI.W-DOCK-GATE-CULL — roster liveness owned by proof:dock-gate-roster)";
     facts.gatesNoteHasDeadRoute = noteHasDeadRoute;
-    if (!routeMatch || deadRouteSurvives)
-        violations.push("[DOCK-ROUTE-LIVE] proof-dock-orchestrator-single.mjs carries no parseable DOCK_ROUTE (or the dead /navigation/dock-layers route survives)");
-    if (!dockRouteStory)
-        violations.push(`[DOCK-ROUTE-LIVE] the demo manifest does not produce the ${routeMatch ? `/${routeMatch[1]}/${routeMatch[2]}` : "(unparsed)"} story — the gate's route is not real`);
     if (noteHasDeadRoute)
         violations.push("[DOCK-ROUTE-LIVE] the gates.mjs NOTE still names the dead /navigation/dock-layers route");
 

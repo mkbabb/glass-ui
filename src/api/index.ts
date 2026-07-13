@@ -255,6 +255,14 @@ export type {
 // redeclaring the state-machine handle. `UseDockStateOptions` + `DockState`
 // ship via the `/dock` subpath barrel only (component-internal arg + state-enum).
 export type { UseDockStateReturn } from "../components/custom/dock";
+// BI.W-DOCK-CROSSFADE — the thin controlled face-swap primitive's discovery types. The
+// controlled-no-rail consumer (speedtest) pins its face descriptor list + the crossfade
+// context against these when it composes `<DockCrossfade :active>` directly.
+export type {
+    DockFaceDescriptor,
+    DockFaceRegistration,
+    DockCrossfadeContext,
+} from "../components/custom/dock";
 
 // ── Paper / Dark / Canvas2D / Text-highlight ─────────────────────────────────
 // The PaperBackdrop* props/enum, the UseGlobalDark* / DarkModeSyncScriptOptions /
@@ -389,11 +397,8 @@ export type {
     UseDockSearchReturn,
 } from "../components/custom/dock/composables/useDockSearch";
 
-// ── DotFlowField / Concentric (the WebGPU-first viz, BB.W-FLOWFIELD/CONCENTRIC) ──
-// The DotFlowField* + Concentric* config/handle types ride the carved
-// api/types-extra sibling. `LiquidGridConfig` stays HERE for proof:viz-papergrid.
-
 // ── LiquidGrid — the WebGPU-first liquid AA-grid viz (BC.W-VIZ-PAPERGRID) ──
+// `LiquidGridConfig` stays HERE for proof:viz-papergrid.
 // Config + handle types for a consumer wrapping <LiquidGrid> (the /liquid-grid subpath).
 export type {
     LiquidGridConfig,
@@ -491,3 +496,10 @@ export type {
 // rungs defaulting to the `--ui-glyph`/`--control-*` cohort (tokens/sizing.css).
 // Machine-locked by `proof:search-custom` + `proof:customizability-census` C3.
 export type { SearchVariant, SearchVariants } from "../components/custom/search";
+
+// ── BI.W-DOCK-CONTROLS — the ONE headless selection engine + the ONE indicator writer ─
+// `useSelectionGroup` (reka-free, /motion-core) drives the dock control run / SegmentedTabs
+// / ToggleGroup single-select; `useSelectionIndicator` is the ONE traveling-indicator writer
+// (the CSS-anchor dual path retired — Safari-identical). Published for consumer wrappers.
+export type { SelectionMode, SelectionRole, UseSelectionGroupParams, UseSelectionGroupReturn } from "../composables/motion/useSelectionGroup";
+export type { SelectionOption, UseSelectionIndicatorParams, UseSelectionIndicatorReturn } from "../composables/motion/useSelectionIndicator";

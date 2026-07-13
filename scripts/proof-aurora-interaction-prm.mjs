@@ -1,30 +1,34 @@
 #!/usr/bin/env node
 // AW.W8 — the interaction PRM-suppression gate (proof:aurora-interaction-prm).
+// BI.W-FIELD-CORE re-pointed: the retired `cursorModel.ts` is GONE — the aurora cursor now IS
+// the shared `usePointerVelocityField` (`auroraCursorMapping`). The INTENT is unchanged (every
+// interactive axis suppressed under PRM via the MASTER TEMPO SCALAR); the MECHANISM moved from
+// the cursorModel advance to the field TICK.
 //
-// Accessibility is BINDING: every interactive/parallax axis (cursor-as-light,
-// velocity-burst, scroll, the WebGPU wake) MUST be suppressed under
-// `prefers-reduced-motion: reduce` AND the DockBackgroundToggle pause, via the SINGLE
-// MASTER TEMPO SCALAR seam. This gate asserts:
+// Accessibility is BINDING: every interactive/parallax axis (cursor-as-light, velocity-burst,
+// scroll, the WebGPU wake) MUST be suppressed under `prefers-reduced-motion: reduce` AND the
+// DockBackgroundToggle pause, via the SINGLE MASTER TEMPO SCALAR seam. This gate asserts:
 //
 //   (1) THE MASTER TEMPO SCALAR — frameLoop has a masterTempo() that returns 0 under
-//       getReducedMotion() (the substrate's live PRM ref) and gates the cursor advance.
-//   (2) TEMPO×dt NOT ×uTime — the tempo scales the integrated cursor advance (the
-//       integration step), never uTime (the WebGL2 axes' uTime is already frozen by
-//       the substrate under reduce). The wake advect pass gates the SPLAT by uTempo,
-//       multiplied by dt, never uTime.
-//   (3) THE CURSOR WRITE-PATH EARLY-OUT (the unhandled case) — injectCursorVelocity
-//       in runtime.ts EARLY-OUTS on canvasHandle.reducedMotion. The cursor pointermove
-//       listener fires INDEPENDENT of the parked rAF loop, so a parked loop with a
-//       live cursor write would still move the field WITHOUT this check.
-//   (4) NO PARALLEL matchMedia — the aurora interaction code does NOT install its own
-//       `matchMedia(prefers-reduced-motion)` listener (the substrate AV.W7 lift owns
-//       it; a parallel listener is the exact removed anti-pattern).
-//   (5) THE interaction-prm.test.ts arm — the tempo-scalar contract (tempo=0 freezes
-//       the velocity + burst; tempo=1 retains them).
+//       getReducedMotion() (the substrate's live PRM ref) and gates the field tick
+//       (`pointerField.tick(tempo === 0 ? 0 : deltaMs)` — the deterministic tick(0) freeze).
+//   (2) TEMPO×dt NOT ×uTime — the tempo scales the integrated field tick (the integration
+//       step), never uTime (the WebGL2 axes' uTime is already frozen by the substrate under
+//       reduce). The wake advect pass gates the SPLAT by uTempo, multiplied by dt, never uTime.
+//   (3) THE CURSOR WRITE-PATH EARLY-OUT — the field's `setPointer` EARLY-OUTS under PRM
+//       (`respectPRM && reduced`). The cursor pointermove listener fires INDEPENDENT of the
+//       parked rAF loop, so a live cursor write would move the field WITHOUT this gate. AND
+//       the aurora runtime no longer re-implements a PARALLEL cursor velocity path (no
+//       cursorModel dual-path — the field owns the derivation).
+//   (4) NO PARALLEL matchMedia — the aurora interaction code (frameLoop/useCursor) does NOT
+//       install its own `matchMedia(prefers-reduced-motion)` listener (the substrate AV.W7
+//       lift owns it; the field caches ONE, not per-event; a parallel per-viz listener is the
+//       removed anti-pattern).
+//   (5) THE interaction-prm.test.ts arm — the tempo-scalar contract (tick(0) freezes the
+//       velocity + burst; a live tick retains them).
 //
-// bite-check: detach an axis from the master tempo scalar (it animates under reduce)
-// → RED; OR let the pointermove handler write without the reducedMotion early-out
-// (the cursor write-path leaks under reduce) → RED.
+// bite-check: detach the tick from the master tempo scalar (it animates under reduce) → RED;
+// OR remove the field's setPointer PRM early-out (the cursor write-path leaks under reduce) → RED.
 
 import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
@@ -52,7 +56,7 @@ function cliPaths() {
         ROOT,
         FRAMELOOP: resolve(A, "composables/frameLoop.ts"),
         RUNTIME: resolve(A, "composables/runtime.ts"),
-        CURSORMODEL: resolve(A, "composables/cursorModel.ts"),
+        FIELD: resolve(ROOT, "src/composables/motion/usePointerVelocityField.ts"),
         USECURSOR: resolve(A, "composables/useCursorInteraction.ts"),
         WAKE: resolve(A, "constants/shaders/wake.wgsl.ts"),
         SPEC: "tests/components/custom/aurora/interaction-prm.test.ts",
@@ -62,50 +66,51 @@ function cliPaths() {
 }
 
 function run() {
-    const { ROOT, FRAMELOOP, RUNTIME, CURSORMODEL, USECURSOR, WAKE, SPEC, ARTIFACT } = cliPaths();
+    const { ROOT, FRAMELOOP, RUNTIME, FIELD, USECURSOR, WAKE, SPEC, ARTIFACT } = cliPaths();
     const violations = [];
     const facts = {};
 
     const read = (p) => (existsSync(p) ? stripComments(readFileSync(p, "utf8")) : null);
     const frameLoop = read(FRAMELOOP);
     const runtime = read(RUNTIME);
-    const cursorModel = read(CURSORMODEL);
+    const field = read(FIELD);
     const useCursor = read(USECURSOR);
     const wake = read(WAKE);
-    if (!frameLoop || !runtime || !cursorModel || !useCursor) {
-        violations.push("a required aurora source is absent");
+    if (!frameLoop || !runtime || !field || !useCursor) {
+        violations.push("a required aurora/field source is absent");
         writeGateArtifact(ARTIFACT, { generatedAt: snapshotStamp(), status: "fail", gate: "proof:aurora-interaction-prm", facts, violations });
         console.error("[proof:aurora-interaction-prm] FAIL — source absent");
         process.exit(1);
     }
 
-    // (1) the master tempo scalar.
+    // (1) the master tempo scalar — gates the FIELD TICK (the tick(0) freeze).
     facts.masterTempoScalar =
         /function\s+masterTempo\s*\(/.test(frameLoop) &&
         /getReducedMotion\s*\(\s*\)\s*\?\s*0\s*:\s*1/.test(frameLoop) &&
-        /advanceCursor\s*\(\s*cursor\s*,\s*masterTempo\s*\(\s*\)\s*\)/.test(frameLoop);
-    if (!facts.masterTempoScalar) violations.push("(1) frameLoop has no master tempo scalar (masterTempo() → 0 under getReducedMotion(), gating advanceCursor)");
+        /pointerField\.tick\s*\(\s*tempo\s*===\s*0\s*\?\s*0\s*:\s*deltaMs\s*\)/.test(frameLoop);
+    if (!facts.masterTempoScalar) violations.push("(1) frameLoop has no master tempo scalar gating the field tick (masterTempo() → 0 under getReducedMotion(), gating pointerField.tick(tempo===0?0:deltaMs))");
 
-    // (2) tempo×dt not ×uTime — advanceCursor takes a tempo arg that scales the
-    // velocity/burst RETENTION (the integration step), and tempo never multiplies uTime.
-    facts.tempoScalesStep = /advanceCursor\s*\(\s*cursor\s*:\s*CursorState\s*,\s*tempo/.test(cursorModel) && /\*=\s*\([^)]*\)\s*\*\s*k/.test(cursorModel);
-    // the tempo must NOT multiply uTime (the clock); scan for uTime * tempo / tempo * uTime.
+    // (2) tempo×dt not ×uTime — the field's tick FREEZES under tempo=0 (tick(0) → reset), and
+    // tempo never multiplies uTime.
+    facts.tempoScalesStep = /deltaMs\s*>\s*0/.test(field) && /reset\s*\(\s*\)/.test(field);
     facts.noTempoTimesUTime = !/uTime\s*\*\s*tempo/.test(frameLoop) && !/tempo\s*\*\s*uTime/.test(frameLoop) && !/uTime\s*\*\s*masterTempo/.test(frameLoop);
-    if (!facts.tempoScalesStep) violations.push("(2) advanceCursor does not take a tempo arg that scales the velocity/burst retention (the integration step)");
-    if (!facts.noTempoTimesUTime) violations.push("(2) the tempo multiplies uTime (the clock) — it must scale the integrated dt, never uTime (scaling the clock makes the flow jump)");
+    if (!facts.tempoScalesStep) violations.push("(2) the field tick does not freeze to rest under a zero delta (the tick(0) deterministic freeze — `deltaMs > 0` guard reaching reset())");
+    if (!facts.noTempoTimesUTime) violations.push("(2) the tempo multiplies uTime (the clock) — it must scale the integrated tick delta, never uTime (scaling the clock makes the flow jump)");
 
-    // (3) the cursor write-path early-out.
-    facts.cursorWritePathEarlyOut =
-        /function\s+injectCursorVelocity\s*\(/.test(runtime) &&
-        /if\s*\(\s*canvasHandle\.reducedMotion\s*\)\s*return/.test(runtime);
-    if (!facts.cursorWritePathEarlyOut) violations.push("(3) injectCursorVelocity (the cursor write-path) does NOT early-out on canvasHandle.reducedMotion — a parked loop with a live pointermove would move the field under reduce (the cursor write-path leak)");
+    // (3) the cursor write-path early-out lives in the field's setPointer (PRM-gated), AND the
+    // aurora runtime no longer re-implements a parallel cursor path (no cursorModel dual-path).
+    const fieldSetPointerGated = /function\s+setPointer\s*\([^)]*\)[^{]*\{[\s\S]*?respectPRM\s*&&\s*reduced/.test(field);
+    const runtimeNoDualPath = !/from\s*["']\.\/cursorModel["']/.test(runtime) && !/function\s+injectCursorVelocity\s*\(/.test(runtime);
+    facts.cursorWritePathEarlyOut = fieldSetPointerGated && runtimeNoDualPath;
+    if (!fieldSetPointerGated) violations.push("(3) the field's setPointer does NOT early-out under PRM (`respectPRM && reduced`) — a live pointermove would move the field under reduce (the cursor write-path leak)");
+    if (!runtimeNoDualPath) violations.push("(3) the aurora runtime still carries a parallel cursor path (a cursorModel import or an injectCursorVelocity re-implementation) — the field owns the derivation");
 
-    // (4) no parallel matchMedia in the interaction code.
+    // (4) no parallel matchMedia in the aurora interaction code (the field caches ONE; the
+    // substrate owns the aurora PRM). frameLoop + useCursor must not install one.
     facts.noParallelMatchMedia =
         !/matchMedia\s*\(\s*["'`]\(prefers-reduced-motion/.test(frameLoop) &&
-        !/matchMedia\s*\(\s*["'`]\(prefers-reduced-motion/.test(useCursor) &&
-        !/matchMedia\s*\(\s*["'`]\(prefers-reduced-motion/.test(cursorModel);
-    if (!facts.noParallelMatchMedia) violations.push("(4) the interaction code installs a PARALLEL matchMedia(prefers-reduced-motion) listener — the substrate (AV.W7 lift) owns it; a parallel listener is the removed anti-pattern");
+        !/matchMedia\s*\(\s*["'`]\(prefers-reduced-motion/.test(useCursor);
+    if (!facts.noParallelMatchMedia) violations.push("(4) the aurora interaction code (frameLoop/useCursor) installs a PARALLEL matchMedia(prefers-reduced-motion) listener — the substrate (AV.W7 lift) owns the aurora PRM; a per-viz listener is the removed anti-pattern");
 
     // (5) the wake injection is tempo-gated (W8.2; if the wake file exists).
     if (wake) {

@@ -71,7 +71,9 @@ const dockStageExists = existsSync(resolve(ROOT, "demo/stories/dock/DockStage.vu
 const dockStage = strip(read("demo/stories/dock/DockStage.vue"));
 const dockOverview = strip(read("demo/stories/dock/overview.vue"));
 const dockLayers = strip(read("demo/stories/dock/layers.vue"));
-const dockMorph = strip(read("demo/stories/dock/morph-showcase.vue"));
+// BI.W-DOCK-RETIRES — morph-showcase.vue retired (V↔H goo morph decided-terminal); the
+// third flagship DockStage-over-live-field consumer is sections.vue (a surviving story).
+const dockSections = strip(read("demo/stories/dock/sections.vue"));
 // BB.W-CARVE5 carved the MOTION_FIELDS table (incl. the `breathing` atom) out of
 // atoms.ts into atoms-fields.ts; the W4 breathing-drift assert FOLLOWS the carve into
 // the leaf (the "asserts follow the carve into the leaf" precedent). Read both so the
@@ -204,7 +206,7 @@ const dockStageComposesAurora = /<Aurora\b/.test(dockStage);
 const dockStageConsumers = [
     ["overview.vue", dockOverview],
     ["layers.vue", dockLayers],
-    ["morph-showcase.vue", dockMorph],
+    ["sections.vue", dockSections],
 ];
 const consumedByAll = dockStageConsumers.every(([, src]) => /<DockStage\b/.test(src));
 const flatPanelOffenders = dockStageConsumers

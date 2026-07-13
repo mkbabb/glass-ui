@@ -1,101 +1,13 @@
-// BB.W-VIZ-SUITE (W-FLOWFIELD) — the demo presets for the substrates-band new viz.
+// LiquidGrid (W-VIZ-PAPERGRID) — the demo presets for the liquid liquid-grid.
 //
-// PRESETS-IN-CONSUMERS (the binding fence). The library default is the warm-cream
-// identity (`DEFAULT_FLOW_CONFIG`) — soft warm-white dots over a transparent/warm ground.
-// Named NON-default reproductions (the mono-warm-white-on-near-black reference, the
-// concentric aurora-teal theme) live HERE in the DEMO tree, NEVER a library token. The
-// fabricated teal-on-navy "Claude co-work dot-wave" was DELETED at BC.W-TEAL-NAVY-PURGE
-// (the real reference is mono-on-near-black, not teal). `proof:flow-field` /
-// `proof:concentric` clause 5 + `proof:teal-navy-purge` red a teal/navy literal in any
-// LIBRARY `constants.ts`; this demo file is the sanctioned home for the named themes.
-
-import type {
-    FlowFieldConfig,
-    OklchStop,
-} from "@glass/components/custom/dot-flow-field";
-import { DEFAULT_FLOW_CONFIG } from "@glass/components/custom/dot-flow-field";
-
-// BG.W-DOTFLOW-REBUILD — the STREAMLINE presets (the mote/trail presets RETIRED with the
-// architecture). The library default (`DEFAULT_FLOW_CONFIG`) is the warm-cream identity: evenly-
-// spaced beaded streamlines the cursor bends. The IMG_1836 teal-on-navy skin ships ONLY here as
-// a NON-default demo preset (presets-in-consumers — never a library token; `proof:teal-navy-purge`
-// scans the LIBRARY constants, not this file).
-
-/** The warm-cream library-identity preset (the lead default look). */
-export const FLOW_PRESET_WARM: FlowFieldConfig = {
-    ...DEFAULT_FLOW_CONFIG,
-};
-
-/**
- * FLOW_PRESET_CALM — a quieter register: fewer, calmer streamlines with a stronger connecting
- * thread + a slower breath. The content-deferential backdrop toggle.
- */
-export const FLOW_PRESET_CALM: FlowFieldConfig = {
-    ...DEFAULT_FLOW_CONFIG,
-    lineCount: 9,
-    undulation: 0.9,
-    interweave: 0.4,
-    flowSpeed: 0.3,
-    lineStrength: 0.45,
-    beadDrift: 0.35,
-    contrast: 0.85,
-    interactive: false,
-};
-
-// ── The IMG_1836 reference SKIN (teal dots on deep navy) — a NON-default DEMO preset ───
-// PRESETS-IN-CONSUMERS: this reproduces the reference image's teal-on-navy look EXACTLY, but it
-// NEVER enters a library token (the library default stays warm-cream). The named consts avoid the
-// `proof:teal-navy-purge` T3 barred symbols (TEAL_PALETTE / NAVY_GROUND / FLOW_PRESET_REFERENCE).
-const OCEAN_DOT_RAMP: OklchStop[] = [
-    { L: 0.82, C: 0.11, h: 200 }, // bright aqua (the dot core)
-    { L: 0.66, C: 0.13, h: 210 }, // cyan-teal (the hot bead edge)
-];
-const DEEP_NAVY_FLOOR: OklchStop = { L: 0.13, C: 0.05, h: 255 };
-
-/** FLOW_PRESET_OCEAN — the IMG_1836 teal-on-navy reference skin (demo-only, non-default). */
-export const FLOW_PRESET_OCEAN: FlowFieldConfig = {
-    ...DEFAULT_FLOW_CONFIG,
-    palette: OCEAN_DOT_RAMP,
-    floor: DEEP_NAVY_FLOOR,
-    interactive: true,
-};
-
-// ── Concentric (W-CONCENTRIC) — the demo-themed ring palettes ───────────────────
-// PRESETS-IN-CONSUMERS again: the themed ring ramp is a DEMO preset here, never a
-// library token (`proof:concentric` clause 5 reds a teal/violet literal in the LIBRARY
-// constants.ts; this demo file is the sanctioned home for the themed palettes).
-
-import type { ConcentricConfig } from "@glass/components/custom/concentric";
-import { DEFAULT_CONCENTRIC_CONFIG } from "@glass/components/custom/concentric";
-
-// A cool aurora-teal ring ramp (the demo theme — a calm-deep ground that the rings
-// crest over).
-const CONCENTRIC_THEME_PALETTE: OklchStop[] = [
-    { L: 0.16, C: 0.04, h: 250 }, // the trough — a deep indigo ground
-    { L: 0.52, C: 0.12, h: 210 }, // the mid — a teal-cyan
-    { L: 0.9, C: 0.07, h: 190 }, // the crest — a bright aqua
-];
-
-/** The demo-themed concentric reproduction — aurora-teal rings over an indigo ground. */
-export const CONCENTRIC_PRESET_THEME: ConcentricConfig = {
-    ...DEFAULT_CONCENTRIC_CONFIG,
-    palette: CONCENTRIC_THEME_PALETTE,
-    background: { L: 0.12, C: 0.03, h: 255 },
-};
-
-/** The warm-cream library-identity preset (the default look). */
-export const CONCENTRIC_PRESET_WARM: ConcentricConfig = {
-    ...DEFAULT_CONCENTRIC_CONFIG,
-};
-
-// ── LiquidGrid (W-VIZ-PAPERGRID) — the demo presets for the liquid liquid-grid ─────
-// PRESETS-IN-CONSUMERS again. The library default (`DEFAULT_LIQUID_GRID_CONFIG`) is the
-// warm-cream identity — warm-foreground ink over transparent, evenly-spaced LARGE 64px
-// cells, a slow liquid curl-flow breath. The SUFFUSION preset (a near-invisible site-wide
-// background) + the BOLD-liquid showcase preset live HERE in the DEMO tree, NEVER a
-// library token. NO teal/navy literal — the grid is monochrome warm ink (`proof:viz-papergrid`
-// clause P5 reds a teal/navy hue in the LIBRARY constants.ts; this demo file is the
-// sanctioned home for any named theme).
+// PRESETS-IN-CONSUMERS (the binding fence). The library default
+// (`DEFAULT_LIQUID_GRID_CONFIG`) is the warm-cream identity — warm-foreground ink over
+// transparent, evenly-spaced LARGE 64px cells, a slow liquid curl-flow breath. The
+// SUFFUSION preset (a near-invisible site-wide background) + the BOLD-liquid showcase
+// preset + the RIPPLE lit-face preset live HERE in the DEMO tree, NEVER a library token.
+// NO teal/navy literal — the grid is monochrome warm ink (`proof:viz-papergrid` clause P5
+// reds a teal/navy hue in the LIBRARY constants.ts; this demo file is the sanctioned home
+// for any named theme).
 
 import type { LiquidGridConfig } from "@glass/components/custom/liquid-grid";
 import { DEFAULT_LIQUID_GRID_CONFIG } from "@glass/components/custom/liquid-grid";
@@ -149,55 +61,4 @@ export const LIQUID_GRID_PRESET_RIPPLE: LiquidGridConfig = {
     lightDir: [0.6, 0.8], // the upper-right cel key-light
     minorAlpha: 0.16, // the creases read as fold-lines over the lit face
     majorAlpha: 0.26,
-};
-
-// ── DotMatrix (BC.W-VIZ-DOTMATRIX) — the demo presets for the dot-sphere globe ────
-// PRESETS-IN-CONSUMERS again. The library default (`DEFAULT_DOT_MATRIX_CONFIG`) is the
-// warm-cream identity — ONE calm warm-cream globe of fine dots over a transparent ground
-// (the glass card shows through). The mono-warm-white-on-near-black REFERENCE reproduction
-// (the Claude co-work two-globe composition) lives HERE in the DEMO tree, NEVER a library
-// token. NO teal/navy literal — the reference is mono-warm-white (`proof:dot-matrix`
-// clause 5 reds a teal/navy stop in the LIBRARY constants.ts; this demo file is the
-// sanctioned home for the named themes).
-
-import type { DotMatrixConfig } from "@glass/components/custom/dot-matrix";
-import { DEFAULT_DOT_MATRIX_CONFIG } from "@glass/components/custom/dot-matrix";
-
-/** The warm-cream library-identity preset (the calm default lead). */
-export const DOT_MATRIX_PRESET_WARM: DotMatrixConfig = {
-    ...DEFAULT_DOT_MATRIX_CONFIG,
-};
-
-// The mono-warm-white dot core (the real reference — warm-white, hue ~70 cream, NOT teal).
-const DOT_MONO_WARM_PALETTE: OklchStop[] = [
-    { L: 0.95, C: 0.012, h: 70 }, // warm-white (the lit near-hemisphere)
-    { L: 0.84, C: 0.02, h: 64 }, // a whisper-warmer rim/far-side edge
-];
-
-// The reference near-black ground (a warm near-black, NOT navy — hue ~50, low C).
-const DOT_NEAR_BLACK_GROUND: OklchStop = { L: 0.1, C: 0.008, h: 50 };
-
-/**
- * The Claude co-work REFERENCE reproduction — the SUBTLE mono-warm-white fine-dot spheres
- * on near-black: TWO globes (the large + the small composition), depth-shaded, slow tilted
- * rotation, a sub-perceptual breathing. Re-tinted off the warm-cream default; only the
- * COLOR + the two-globe + the ground + the breathing differ from the library identity (the
- * phyllotaxis depth-shaded sphere IS the library default — the reference dims the palette,
- * grounds it, and turns on the second globe).
- */
-export const DOT_MATRIX_PRESET_REFERENCE: DotMatrixConfig = {
-    ...DEFAULT_DOT_MATRIX_CONFIG,
-    layout: "sphere", // the KEPT 3D-sphere register (the reference is the dot-globe)
-    palette: DOT_MONO_WARM_PALETTE,
-    background: DOT_NEAR_BLACK_GROUND,
-    spheres: 2, // the reference's two-globe composition
-    breathing: 0.02, // the sub-perceptual radius pulse (the calmest non-dead register)
-    interactive: true, // cursor gravity on
-};
-
-/** The 3D-sphere register preset (the "good" dot-globe — a kept preset, cursor gravity on). */
-export const DOT_MATRIX_PRESET_SPHERE: DotMatrixConfig = {
-    ...DEFAULT_DOT_MATRIX_CONFIG,
-    layout: "sphere",
-    interactive: true,
 };

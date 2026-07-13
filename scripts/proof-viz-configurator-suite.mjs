@@ -71,18 +71,16 @@ function walk(dir, acc = []) {
 }
 
 // ── The per-viz roster ────────────────────────────────────────────────────────────
-// The 8 CANVAS viz (each owes the full four-piece bar) + watercolor-dot (the LIGHT-
+// The CANVAS viz (each owes the full four-piece bar) + watercolor-dot (the LIGHT-
 // configurator MARK exception — no heavy studio, no WebGPU) + the grid registers
 // (liquid-grid is a canvas viz; it carries WGSL/GLSL + a Configurator studio).
+// goo-dot RETIRED at BG.W-GOODOT-PRUNE; dot-flow-field / concentric / dot-matrix DELETED
+// at BI.W-VIZ-DELETIONS (the user-ordered clean-break prune of the 30+-attempt viz family).
 const CANVAS_VIZ = [
     { id: "aurora", srcDir: "src/components/custom/aurora", studio: "demo/stories/substrates/aurora.vue" },
     { id: "blob", srcDir: "src/components/custom/blob", studio: "demo/stories/substrates/blob.vue" },
     { id: "constellation", srcDir: "src/components/custom/constellation", studio: "demo/stories/substrates/constellation.vue" },
-    { id: "dot-flow-field", srcDir: "src/components/custom/dot-flow-field", studio: "demo/stories/substrates/dot-flow-field.vue" },
-    { id: "concentric", srcDir: "src/components/custom/concentric", studio: "demo/stories/substrates/concentric.vue" },
     { id: "fourier-field", srcDir: "src/components/custom/fourier-field", studio: "demo/stories/substrates/fourier-field.vue" },
-    { id: "dot-matrix", srcDir: "src/components/custom/dot-matrix", studio: "demo/stories/substrates/dot-matrix.vue" },
-    // goo-dot RETIRED at BG.W-GOODOT-PRUNE (0 external consumers).
     { id: "liquid-grid", srcDir: "src/components/custom/liquid-grid", studio: "demo/stories/substrates/liquid-grid.vue" },
 ];
 // watercolor-dot — the recorded MARK exception (watercolor-dot.md §4): a LIGHT
@@ -196,7 +194,6 @@ add(
 const FULL_CONFIGURATOR = [
     "aurora",
     "blob",
-    "concentric",
     "fourier-field",
     "liquid-grid",
 ];
@@ -204,9 +201,8 @@ const FULL_CONFIGURATOR = [
 // wave; conformed onto the shared chassis when that wave lands its full configurator).
 const PENDING_FULL_CONFIGURATOR = [
     { id: "constellation", wave: "BC.W-VIZ-CONSTELLATION" },
-    { id: "dot-flow-field", wave: "BC.W-VIZ-DOTFLOW" },
-    { id: "dot-matrix", wave: "BC.W-VIZ-DOTMATRIX" },
-    // goo-dot RETIRED at BG.W-GOODOT-PRUNE (0 external consumers).
+    // goo-dot RETIRED at BG.W-GOODOT-PRUNE; dot-flow-field / concentric / dot-matrix DELETED
+    // at BI.W-VIZ-DELETIONS (the user-ordered clean-break prune).
 ];
 facts.s3Census = {
     fullConfigurator: FULL_CONFIGURATOR,
@@ -287,11 +283,9 @@ const PAUSE_SUBSTRATE_DIRS = {
     "aurora": "src/components/custom/aurora",
     "blob": "src/components/custom/blob",
     "constellation": "src/components/custom/constellation",
-    "dot-flow-field": "src/components/custom/dot-flow-field",
-    "concentric": "src/components/custom/concentric",
     "fourier-field": "src/components/custom/fourier-field",
-    "dot-matrix": "src/components/custom/dot-matrix",
-    // goo-dot RETIRED at BG.W-GOODOT-PRUNE (0 external consumers).
+    // goo-dot RETIRED at BG.W-GOODOT-PRUNE; dot-flow-field / concentric / dot-matrix DELETED
+    // at BI.W-VIZ-DELETIONS (the user-ordered clean-break prune).
     "liquid-grid": "src/components/custom/liquid-grid",
 };
 const s4Verdicts = CANVAS_VIZ.map((v) => {

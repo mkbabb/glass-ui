@@ -62,17 +62,12 @@ const NEUTRAL_CHROMA_FLOOR = 0.02;
 // DEFAULT palette/background source — NOT the chart/silver semantic tokens).
 const VIZ_CONSTANTS = [
     "src/components/custom/aurora/constants/presets.ts",
-    "src/components/custom/concentric/constants.ts",
-    "src/components/custom/dot-flow-field/constants.ts",
     "src/components/custom/fourier-field/constants.ts",
     "src/components/custom/blob/constants.ts",
     "src/components/custom/constellation/constants.ts",
 ];
 
 const DEMO_PRESETS = "demo/stories/substrates/presets.ts";
-const CONCENTRIC_VUE = "demo/stories/substrates/concentric.vue";
-const DOTFLOW_VUE = "demo/stories/substrates/dot-flow-field.vue";
-const DOTFLOW_README = "src/components/custom/dot-flow-field/README.md";
 const AURORA_VUE = "demo/stories/substrates/aurora.vue";
 // The aurora demo presets whose LEAD palette is a cool/blue theme — a legitimate named
 // theme (presets-in-consumers), but NEVER the studio's default-shown lead (the page must
@@ -141,28 +136,6 @@ function clauseT1(overrides = {}) {
 
 function clauseT2(overrides = {}) {
     const viol = [];
-    // concentric.vue useTheme must default FALSE.
-    const cv = CONCENTRIC_VUE in overrides ? overrides[CONCENTRIC_VUE] : read(resolve(ROOT, CONCENTRIC_VUE));
-    if (cv != null) {
-        const code = stripComments(cv);
-        if (/\buseTheme\s*=\s*ref\(\s*true\s*\)/.test(code))
-            viol.push(`T2: ${CONCENTRIC_VUE} defaults useTheme to TRUE (the teal-on-navy theme) — the warm-cream identity must lead`);
-    }
-    // dot-flow-field.vue must lead with the warm-cream identity (the live config must
-    // seed from FLOW_PRESET_WARM, NOT a teal reference; useReference defaults false).
-    const dv = DOTFLOW_VUE in overrides ? overrides[DOTFLOW_VUE] : read(resolve(ROOT, DOTFLOW_VUE));
-    if (dv != null) {
-        const code = stripComments(dv);
-        if (/\buseReference\s*=\s*ref\(\s*true\s*\)/.test(code))
-            viol.push(`T2: ${DOTFLOW_VUE} defaults useReference to TRUE (the reference preset) — the warm-cream identity must lead`);
-        // the reactive config seed must be the warm preset, not a teal reference.
-        const seed = code.match(/reactive<[^>]*>\(\s*\{\s*\.\.\.\s*([A-Z_]+)/);
-        if (seed && /TEAL|REFERENCE/.test(seed[1]) && seed[1] !== "FLOW_PRESET_MONO_REFERENCE") {
-            // only red if the seed is an explicit teal-reference default (mono is fine
-            // only as a non-default; a default seed of any *_REFERENCE is the disease).
-            viol.push(`T2: ${DOTFLOW_VUE} seeds the live config from ${seed[1]} (a reference default) — seed from FLOW_PRESET_WARM (the warm-cream lead)`);
-        }
-    }
     // aurora.vue must LEAD with a warm preset (initialPreset), not the blue OPENAI_SKY.
     const av = AURORA_VUE in overrides ? overrides[AURORA_VUE] : read(resolve(ROOT, AURORA_VUE));
     if (av != null) {
@@ -189,23 +162,6 @@ function clauseT3(overrides = {}) {
     return viol;
 }
 
-// ── T4: the stray-blue / fabricated-framing hunt ─────────────────────────────────
-
-function clauseT4(overrides = {}) {
-    const viol = [];
-    // The dot-flow README must not frame the DEFAULT aesthetic as "teal … navy"
-    // (the fabricated reference framing the user condemns). A non-default mention is
-    // fine; the DEFAULT description must read warm-cream.
-    const rd = DOTFLOW_README in overrides ? overrides[DOTFLOW_README] : read(resolve(ROOT, DOTFLOW_README));
-    if (rd != null) {
-        // the opening descriptor (the lead) — the first paragraph before the subpath line.
-        const lead = rd.split(/`@mkbabb/)[0] ?? rd;
-        if (/teal[^.]*\bnavy\b/i.test(lead) && !/DELETED|warm-cream identity: soft|NON-default/i.test(lead))
-            viol.push(`T4: ${DOTFLOW_README} leads with the fabricated "teal … navy" aesthetic — the DEFAULT description must read warm-cream`);
-    }
-    return viol;
-}
-
 // ── runners ──────────────────────────────────────────────────────────────────
 
 function runAll(overrides = {}) {
@@ -213,7 +169,6 @@ function runAll(overrides = {}) {
         ...clauseT1(overrides),
         ...clauseT2(overrides),
         ...clauseT3(overrides),
-        ...clauseT4(overrides),
     ];
 }
 
@@ -235,20 +190,6 @@ function selfTest() {
     });
     if (silverLike.length !== 0)
         fails.push("self-test: a cool NEUTRAL stop (C≤floor, the silver carve) FALSELY red T1");
-
-    // (b) a demo defaulting useTheme=true to a teal preset MUST red T2.
-    const themeTrue = clauseT2({
-        [CONCENTRIC_VUE]: "const useTheme = ref(true);",
-    });
-    if (themeTrue.length === 0)
-        fails.push("self-test: a demo defaulting useTheme=true did NOT red T2");
-
-    // (b') a dot-flow demo seeding the live config from a teal reference MUST red T2.
-    const refSeed = clauseT2({
-        [DOTFLOW_VUE]: "const useReference = ref(true);\nconst config = reactive<FlowFieldConfig>({ ...FLOW_PRESET_REFERENCE });",
-    });
-    if (refSeed.length === 0)
-        fails.push("self-test: a dot-flow demo defaulting useReference=true did NOT red T2");
 
     // (b'') an aurora studio leading with the blue OPENAI_SKY MUST red T2.
     const skyLead = clauseT2({

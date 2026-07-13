@@ -43,8 +43,12 @@ const RADIUS_CSS = "src/styles/theme/radius.css";
 // T2/T5 read the composite off the capsule register, and assert the SFC composes it.
 const CAPSULE_CSS = "src/styles/glass/glass-capsule.css";
 const SFC = "src/components/custom/tabs/SegmentedTabs.vue";
+// BI.W-DOCK-CONTROLS — the indicator engine was PROMOTED to the ONE writer
+// `composables/motion/useSelectionIndicator.ts` (the dock IS tabs wearing chrome);
+// the byte-fence FOLLOWS the carve into the leaf (the reader-gate precedent). The
+// squish cap DEFINITION + the release/clock constants moved WITH it.
 const ENGINE_FILES = [
-    "src/components/custom/tabs/composables/useTabIndicator.ts",
+    "src/composables/motion/useSelectionIndicator.ts",
     "src/components/custom/tabs/composables/useTabDragMorph.ts",
     "src/components/custom/tabs/constants.ts",
 ];
@@ -231,7 +235,9 @@ export function detectEngineFence(sfcRaw, scalePaperRaw, engineRaws) {
     // cap source never forked) rather than freezing the literal. INDICATOR_RELEASE_AT_-
     // ARRIVAL + the --tab-indicator-duration clock stay byte-frozen (LIQUID-TAB touches
     // ONLY the cap + the draggable default, never the glide release / the clock).
-    const constants = engineRaws?.constants ?? readFile(ENGINE_FILES[2]);
+    // The cap DEFINITION now lives in the promoted engine leaf (ENGINE_FILES[0]);
+    // constants.ts re-exports it (the ONE source). Read the definition-bearing file.
+    const constants = engineRaws?.constants ?? readFile(ENGINE_FILES[0]);
     const capConstM = constants.match(/DEFAULT_INDICATOR_MAX_STRETCH\s*=\s*([\d.]+)\b/);
     const capTokenM = scalePaper.match(/--tab-indicator-max-stretch:\s*([\d.]+)\s*;/);
     facts.capConst = capConstM ? Number(capConstM[1]) : null;

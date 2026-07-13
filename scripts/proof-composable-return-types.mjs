@@ -284,13 +284,17 @@ function run() {
             path: P.BARREL_DOCK_COMPOSABLES,
             expect: [
                 "useDockState", "UseDockStateOptions", "UseDockStateReturn", "DockState",
-                "useLayerTransition", "UseLayerTransitionOptions",
-                "UseLayerTransitionReturn", "useDockHold", "UseDockHoldOptions",
+                "useDockHold", "UseDockHoldOptions",
                 "UseDockHoldReturn", "isTeleportedTarget", "provideDockContext",
                 "useDockContext", "useOptionalDockContext", "DOCK_CONTEXT_KEY",
-                "DockContext", "DockOrientation", "provideDockLayerGroupContext",
-                "useDockLayerGroupContext", "useOptionalDockLayerGroupContext",
-                "DOCK_LAYER_GROUP_KEY", "DockLayerDescriptor", "DockLayerGroupContext",
+                "DockContext", "DockOrientation",
+                // BI.W-DOCK-CROSSFADE — the crossfade face-registration context (the FOLD
+                // destination of the retired useLayerTransition FLIP + the DockLayerGroup
+                // register/unregister machinery). Replaces the DockLayerGroupContext exports.
+                "provideDockCrossfadeContext",
+                "useDockCrossfadeContext", "useOptionalDockCrossfadeContext",
+                "DOCK_CROSSFADE_KEY", "DockFaceDescriptor", "DockFaceRegistration",
+                "DockCrossfadeContext",
                 "useDockMorphOrchestrator", "provideDockMorphContext",
                 "useOptionalDockMorphContext", "DOCK_MORPH_KEY", "DockMorphContext",
                 "DockMorphGroupRegistration", "DockMorphGroupHandle",
@@ -309,6 +313,10 @@ function run() {
                 "DockSplitVector", "DockSplitSquishPeak", "DockSplitSignature",
                 "DockFissionPieceRegistration", "DockFissionPieceHandle",
                 "UseDockFissionOptions", "UseDockFissionReturn",
+                // BG.W-SIRI-DOCK-CAPABILITY — the Siri-as-a-dock-capability seam (a
+                // pre-existing barrel export the snapshot had not yet enrolled; reconciled
+                // here in passing while the useLayerTransition→crossfade fold updated it).
+                "useSiriDock", "UseSiriDockOptions", "UseSiriDockReturn",
             ],
         },
     };

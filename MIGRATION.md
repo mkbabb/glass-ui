@@ -17,11 +17,12 @@ component/subpath rename (`goo-blob` → `blob`), and the source-only `src/subpa
 deletion + curated flat-barrel relocations (no export break). The BG visual band is a
 paint upgrade — no public-prop break beyond the rows below.
 
-### The `/api` discovery-subpath fold — 199-symbol re-home
+### The `/api` discovery-subpath fold — 193-symbol re-home
 
 `@mkbabb/glass-ui/api` (the pure types + constants discovery layer) is FOLD-DELETED. The
-`./api` key is the ONLY dropped key. Every one of its 199 symbols re-homes onto its
-OWNING published subpath — so a consumer swaps the import PATH with zero symbol loss:
+`./api` key is the ONLY dropped key. 193 of its symbols re-home onto their OWNING published
+subpath — so a consumer swaps the import PATH with zero symbol loss (the 6 deleted-viz types
+below are the exception — they are DELETED, not re-homed):
 
 ```ts
 // 5.0.0 — the /api discovery layer is gone; import each symbol from its owning subpath
@@ -30,8 +31,12 @@ OWNING published subpath — so a consumer swaps the import PATH with zero symbo
 + import type { CardTier } from "@mkbabb/glass-ui/card";
 ```
 
-197 of the 199 symbols were ALREADY exported by their owning subpath barrel (the fold is
-a pure import-path swap — the owning subpath needs no new export). The surface-axis
+191 of the 193 re-homed symbols were ALREADY exported by their owning subpath barrel (the
+fold is a pure import-path swap — the owning subpath needs no new export). The SIX
+`Concentric*` / `DotFlowField*`+`FlowFieldConfig` viz types are NOT re-homed — the
+`/concentric` + `/dot-flow-field` subpaths + their components are DELETED at
+BI.W-VIZ-DELETIONS (see "The BI viz-family deletion" section below), so those types have no
+owning subpath; a consumer of them has no target (the vizzes are retired). The surface-axis
 grammar types (`Surface` / `SurfaceTier`) publish via the dedicated `/axes` grammar
 subpath (BH.W-AXIS-GRAMMAR — the honest `/api` successor). Only two `ui/_shared`
 convenience unions re-home to a barrel that ADDS one type-only export: `MenuItemVariants`
@@ -41,11 +46,12 @@ convenience unions re-home to a barrel that ADDS one type-only export: `MenuItem
 `/easing` + `/styles/fonts`) are all named in the table below, so the compound-import
 unbuildable class cannot recur.
 
-The `/api` layer carries 199 symbols at the cut (down from the pre-BG 203: the
+The `/api` layer carried 199 symbols at the fold (down from the pre-BG 203: the
 dead-composable sweep retired `Haptic*` / `CelebrationBurst*` / `WaveComponent` and the
 `GlassPanelVariant` tier-homonym, and the `PaperGrid*` → `LiquidGrid*` +
 `SelectableChipVariants` → `ChipVariants` renames moved their entries — each documented in
-its own section below or in the BG retirements).
+its own section below or in the BG retirements). Of those, 193 re-home (the table above);
+the 6 `Concentric*` / `DotFlowField*`+`FlowFieldConfig` viz types are DELETED, not re-homed.
 
 The full 199-symbol map (grouped alphabetically by symbol; `kind` is the TS export kind;
 `new import (owning subpath)` is the 5.0.0 target):
@@ -108,9 +114,6 @@ The full 199-symbol map (grouped alphabetically by symbol; `kind` is the TS expo
 | `UseAccentToneReturn` | type | `/color` |
 | `CompletionSealProps` | type | `/completion-seal` |
 | `CompletionSealShape` | type | `/completion-seal` |
-| `ConcentricConfig` | type | `/concentric` |
-| `ConcentricHandle` | type | `/concentric` |
-| `UseConcentricOptions` | type | `/concentric` |
 | `ConfiguratorCloneMode` | type | `/configurator` |
 | `ConfiguratorPreset` | type | `/configurator` |
 | `ConfiguratorScrollMode` | type | `/configurator` |
@@ -132,9 +135,6 @@ The full 199-symbol map (grouped alphabetically by symbol; `kind` is the TS expo
 | `UseClipboardReturn` | type | `/dom` |
 | `UseUserInvalidAriaOptions` | type | `/dom` |
 | `UseUserInvalidAriaReturn` | type | `/dom` |
-| `DotFlowFieldHandle` | type | `/dot-flow-field` |
-| `FlowFieldConfig` | type | `/dot-flow-field` |
-| `UseDotFlowFieldOptions` | type | `/dot-flow-field` |
 | `BezierPoints` | type | `/easing` |
 | `EasingFn` | type | `/easing` |
 | `EasingPickerMode` | type | `/easing` |
@@ -295,14 +295,37 @@ rationale (0 external consumers). Clean break, no alias ("No legacy code").** Th
 `goo-dot-matrix` goo+dot HYBRID viz (`<GooDotMatrix>`, `GooDotConfig`, `useGooDotMatrix`,
 `DEFAULT_GOO_DOT_CONFIG`) + its `@mkbabb/glass-ui/goo-dot-matrix` subpath are
 DEFINITION-ABSENT at the 5.0.0 cut. It was a demonstration hybrid that earned no external
-consumer since BC (the ≥2-consumer / visual-load-bearing bar; J-inv-10 / L-inv-8). Its two
-halves both SURVIVE it and stay first-class — the blob FIELD donor
-(`@mkbabb/glass-ui/blob`, byte-untouched render) and the dot-matrix RENDER register
-(`@mkbabb/glass-ui/dot-matrix`). MIGRATE: none for the library's own tree; any external
-consumer of `/goo-dot-matrix` re-homes onto `<Blob>` (the merged-metaball FIELD look) or
-`<DotMatrix>` (the dot-lattice RENDER look) — the two registers the hybrid composed. The
-inv-11 registry-consumer probe (`npm view @mkbabb/glass-ui` + the constellation census) read
-ZERO consumers; recorded in the cut notes.
+consumer since BC (the ≥2-consumer / visual-load-bearing bar; J-inv-10 / L-inv-8). At BG its
+FIELD donor (blob) AND its dot-matrix RENDER register both survived it; **`dot-matrix` was
+subsequently DELETED at BI.W-VIZ-DELETIONS** (the user-ordered clean-break prune of the
+30+-attempt viz family), so the surviving re-home target is the blob FIELD donor
+(`@mkbabb/glass-ui/blob`, byte-untouched render). MIGRATE: none for the library's own tree;
+any external consumer of `/goo-dot-matrix` re-homes onto `<Blob>` (the merged-metaball FIELD
+look). The inv-11 registry-consumer probe (`npm view @mkbabb/glass-ui` + the constellation
+census) read ZERO consumers; recorded in the cut notes.
+
+**BI.W-VIZ-DELETIONS — `DotFlowField` / `Concentric` / `DotMatrix` + their subpaths DELETED
+(the user-ordered clean-break prune). Clean break, no alias ("No legacy code").** The three
+condemned procedural-viz members are DEFINITION-ABSENT at the 5.0.0 cut — the user edict
+verbatim: *"Dot flow field, concentric, dot matrix — all to be deleted. You've failed 30+
+attempts to implement these."* The deleted surface:
+
+| dropped subpath | dropped exports (component + composable + config/handle types) |
+|---|---|
+| `@mkbabb/glass-ui/dot-flow-field` | `<DotFlowField>`, `useDotFlowField`, `FlowFieldConfig`, `DotFlowFieldHandle`, `UseDotFlowFieldOptions`, `DEFAULT_FLOW_CONFIG`, `sampleStreamField`/`curlFBM`/… |
+| `@mkbabb/glass-ui/concentric` | `<Concentric>`, `useConcentric`, `ConcentricConfig`, `ConcentricHandle`, `UseConcentricOptions`, `DEFAULT_CONCENTRIC_CONFIG`, `sampleHeight`/`toneFromHeight`/… |
+| `@mkbabb/glass-ui/dot-matrix` | `<DotMatrix>`, `useDotMatrix`, `DotMatrixConfig`, `DotMatrixHandle`, `UseDotMatrixOptions`, `DEFAULT_DOT_MATRIX_CONFIG`, `fibonacciDot`/`facingFade`/… |
+
+This is a BREAKING export change — routed into the 5.0.0 MAJOR cut (STRUCT-2), NOT the
+zero-churn 5.1.0 flatten. It REVERSES BG.W-DOTFLOW-REBUILD (STRUCT-14): the 30+-attempt viz
+family is RETIRED, not re-attempted — a future streamline/topographic/dot-sphere need
+re-enters through a NEW honest trigger, never a re-open of the deleted registers. **MIGRATE:
+none for consumers — the sibling census (`npm view` + the constellation import-graph) read
+ZERO binary consumers of the three subpaths, so this is a no-op-for-consumers record (per
+invariant-11), not a silent prune.** The surviving procedural-viz suite is aurora · blob ·
+fourier-field · constellation · **liquid-grid** (the KEEPER born-WebGPU grid viz — NOT in the
+delete set); the shared `curlFBM` chunk (`flow.glsl.ts`/`flow.wgsl.ts`) KEEPS (liquid-grid +
+aurora-curl-warp consume it, the ≥2 shared-chunk bar).
 
 **BG.W-GRID-AFFINE — `PaperGrid` (the viz) RENAMED to `LiquidGrid`; `/paper-grid` →
 `/liquid-grid`. Clean break, no alias ("No legacy code").** The WebGPU-first liquid AA-grid
@@ -398,6 +421,39 @@ un-clip — the prior `overflow-*: visible` pin was a latent no-op that CSS Over
 Machine-locked by `proof:dock-plate-clearance` (W2 re-pointed onto the `clip` +
 `overflow-clip-margin` un-clip + the `.dock-scroll-y`-retired assert + a self-test
 bite).
+
+### BI.W-DOCK-FOLD — the dock control/trigger fold + the reka `ui/tabs` retire
+
+The dock greenfield collapses the five legacy control/trigger SFCs onto TWO folded
+survivors (`<DockControl>` with a `shape` axis + `<DockTrigger>` with a `for` axis),
+retires the reka `ui/tabs` substrate (its sole internal consumer `<DockLayerGroup>`
+re-points onto the headless `useSelectionGroup` engine), and retires the demo-only
+dock-ITEM drag-reorder axis. Clean break, no alias — every consumer re-points by name.
+
+| Retired (5.0.0) | Survivor | Rename |
+|---|---|---|
+| `DockIconButton` | `DockControl` | `<DockIconButton …>` → `<DockControl …>` (props identical; `shape="icon"` is the default) |
+| `DockTabButton` | `DockControl` | `<DockTabButton …>` → `<DockControl shape="tab" …>` |
+| `DockSelectTrigger` | `DockTrigger` | `<DockSelectTrigger …>` → `<DockTrigger for="select" …>` |
+| `DockDropdownTrigger` | `DockTrigger` | `<DockDropdownTrigger …>` → `<DockTrigger for="dropdown" …>` |
+| `DockPopoverTrigger` | `DockTrigger` | `<DockPopoverTrigger …>` → `<DockTrigger for="popover" …>` |
+
+**`<GlassDock draggable-items>` + the `update:order` emit RETIRED** (the demo-only
+`useDockItemDrag` dock-item drag-reorder — zero binary consumer, G10 census). A dock
+reorder is a consumer concern: compose `useSortable` (`@mkbabb/glass-ui/sortable`).
+Drop `draggable-items` + `@update:order` + any `data-dock-draggable` markers.
+
+**The reka `ui/tabs` substrate is DEFINITION-ABSENT** — it was never on a public barrel
+(internal-only), so there is no consumer-facing import to migrate. Consumers building tab
+UIs already use `<SegmentedTabs>` (`@mkbabb/glass-ui/tabs`).
+
+The blast radius: `DockIconButton` dominated ~24 import sites across ~9 consuming repos —
+each is a mechanical by-name rename on the `^5.0.0` bump (the cross-repo ask
+`docs/tranches/BI/coordination/W-DOCK-FOLD-asks.md`). `useDockCtaReceive` + `cta-seat.css`
+are PRESERVED (the /motion + /dock + /api triple export stays — the pass-2 /dock-only
+charge was reversed). Machine-locked by `proof:dock-fold` (F1 components-folded · F2
+reka-ui-tabs-retired · F3 cta-seat-preserved · F4 migration-table-complete · F5
+useDockItemDrag-retired + 3 self-test bites).
 
 ## 4.1.0
 

@@ -113,6 +113,14 @@ const LEAF = "src/composables/motion/useLiquidReveal.ts";
 // precedent — "the reader gates that read a carved symbol by name FOLLOW the carve").
 const SPINE = "src/composables/motion/useElementMorph.ts";
 const RECIPE = "src/styles/glass/reveal.css";
+// BI.W-REGISTER-TABLE — the named-register token home. The .glass-reveal recipe now
+// TOKENIZES onto register knobs (--reveal-spring / --reveal-clock / --reveal-exit-curve),
+// resolved HERE onto the parity-fixed --spring-* / --spring-*-duration / --ease-out
+// tokens. R2/R4 FOLLOW the register indirection (the same "reader gates FOLLOW the carve"
+// precedent R1 uses for the useElementMorph spine): the recipe rides the per-spring clock
+// THROUGH the register, and the register default (enter-overlay) resolves to --spring-snappy
+// + --spring-snappy-duration (the W-GLASS-CAL thread persists via the register).
+const REGISTERS = "src/styles/tokens/motion-registers.css";
 const ANIM = "src/styles/animations.css";
 const ANIMATE_UTIL = "src/styles/utilities/animate.css";
 const DOCK_MORPH = "src/styles/dock/morph.css";
@@ -189,6 +197,14 @@ const fail = (clause, msg) => fails.push(`[${clause}] ${msg}`);
 
 // ── R2 — the LIQUID-ENTER recipe rides the per-spring clock + the coupled blur-settle ──
 {
+    // BI.W-REGISTER-TABLE — the register default (enter-overlay) resolves the reveal's +
+    // the folded top-layer's spring/clock knobs onto --spring-snappy + its duration.
+    // Hoisted to the R2 block level so BOTH the recipe check AND the top-layer check use it.
+    const registers = stripComments(read(REGISTERS) ?? "");
+    const registerDefinesSpring =
+        /--enter-overlay-spring:\s*var\(--spring-(snappy|bouncy|dock|smooth|gentle|transient)\)/.test(registers);
+    const registerDefinesClock =
+        /--enter-overlay-clock:\s*var\(--spring-(snappy|bouncy|dock|smooth|gentle|transient)-duration\)/.test(registers);
     const recipeRaw = read(RECIPE);
     if (recipeRaw == null) {
         fail("R2", `${RECIPE} does not exist (the .glass-reveal LIQUID-ENTER recipe has no home)`);
@@ -197,12 +213,20 @@ const fail = (clause, msg) => fails.push(`[${clause}] ${msg}`);
         const hasGlassReveal = /\.glass-reveal\b/.test(recipe);
         if (!hasGlassReveal)
             fail("R2", ".glass-reveal selector absent from reveal.css");
-        // The SPATIAL channel rides a --spring-<name> token (NOT a fixed bezier).
-        if (!/var\(--spring-(snappy|bouncy|dock|smooth|gentle)\)/.test(recipe))
-            fail("R2", ".glass-reveal does not ride a --spring-<name> token on the enter (the spatial spring is missing)");
-        // The per-spring duration clock (NOT a generic --duration-*).
-        if (!/var\(--spring-(snappy|bouncy|dock|smooth|gentle)-duration\)/.test(recipe))
-            fail("R2", ".glass-reveal does not ride a --spring-<name>-duration clock (the generic --duration-* re-times the spring — W-GLASS-CAL Unit 3)");
+        // The SPATIAL channel rides a --spring-<name> token — DIRECTLY or through the
+        // --reveal-spring register knob (resolved by motion-registers.css onto --spring-*).
+        const ridesSpring =
+            /var\(--spring-(snappy|bouncy|dock|smooth|gentle)\)/.test(recipe) ||
+            (/var\(--reveal-spring\)/.test(recipe) && registerDefinesSpring);
+        if (!ridesSpring)
+            fail("R2", ".glass-reveal does not ride a --spring-<name> token on the enter (directly or via the --reveal-spring register knob → motion-registers.css --enter-overlay-spring)");
+        // The per-spring duration clock (NOT a generic --duration-*) — directly or via
+        // the --reveal-clock register knob (resolved onto --spring-<name>-duration).
+        const ridesClock =
+            /var\(--spring-(snappy|bouncy|dock|smooth|gentle)-duration\)/.test(recipe) ||
+            (/var\(--reveal-clock\)/.test(recipe) && registerDefinesClock);
+        if (!ridesClock)
+            fail("R2", ".glass-reveal does not ride a --spring-<name>-duration clock (directly or via the --reveal-clock register knob → --enter-overlay-clock; the generic --duration-* re-times the spring — W-GLASS-CAL Unit 3)");
         // The coupled blur-settle decongest — a filter/backdrop-filter blur interp.
         // (The recipe rides `filter` on the surface's own pixels, NOT backdrop-filter,
         // so the resting glass-floating plate blur is not clobbered — see reveal.css.)
@@ -217,10 +241,20 @@ const fail = (clause, msg) => fails.push(`[${clause}] ${msg}`);
         fail("R2", ".glass-top-layer top-layer enter block not found in animations.css");
     } else {
         const region = anim.slice(topLayerIdx, topLayerIdx + 2400);
-        // The enter already rides --spring-bouncy + --spring-bouncy-duration (HEAD);
-        // this wave ADDS the backdrop-filter blur-settle to the SAME block.
-        if (!/var\(--spring-bouncy\)/.test(region) || !/var\(--spring-bouncy-duration\)/.test(region))
-            fail("R2", ".glass-top-layer enter lost its --spring-bouncy + duration clock (the W-GLASS-CAL thread must persist)");
+        // BI.W-REGISTER-TABLE — the FOURTH register RETIRED: the native top-layer enter is
+        // FOLDED onto the enter-overlay register (--enter-overlay-spring / --enter-overlay-
+        // clock), which motion-registers.css resolves onto --spring-snappy + its duration
+        // (one enter grammar — the native dialog/popover enter matches the reka Dialog
+        // enter). The W-GLASS-CAL per-spring thread persists THROUGH the register; the
+        // legacy direct --spring-bouncy pair still satisfies (back-compat for the gate).
+        const topRidesSpring =
+            (/var\(--spring-bouncy\)/.test(region) && /var\(--spring-bouncy-duration\)/.test(region)) ||
+            (/var\(--enter-overlay-spring\)/.test(region) &&
+                /var\(--enter-overlay-clock\)/.test(region) &&
+                registerDefinesSpring &&
+                registerDefinesClock);
+        if (!topRidesSpring)
+            fail("R2", ".glass-top-layer enter lost its per-spring clock (neither the legacy --spring-bouncy pair NOR the folded enter-overlay register that resolves onto --spring-snappy + its duration — the W-GLASS-CAL thread must persist)");
         // The blur-settle on the top-layer is `filter` (the surface's own pixels) so
         // the resting glass-tier backdrop-filter plate blur survives.
         if (!/\bfilter:\s*blur\(/.test(region))
@@ -284,10 +318,21 @@ const fail = (clause, msg) => fails.push(`[${clause}] ${msg}`);
     if (closedIdx < 0) {
         fail("R4", ".glass-reveal has no data-[state=closed] exit leg (the exit recipe is missing)");
     } else {
+        const registers = stripComments(read(REGISTERS) ?? "");
+        // BI.W-REGISTER-TABLE — the exit-curve is tokenized onto --reveal-exit-curve,
+        // resolved by motion-registers.css onto --ease-out (the named exit register). R4
+        // FOLLOWS the indirection (or the legacy direct --ease-out/--ease-standard form
+        // still satisfies). The exit clock is likewise --reveal-exit-clock → --exit-*-duration.
+        const registerExitIsBezier = /--exit-curve:\s*var\(--ease-(out|standard)\)/.test(registers);
         const closedRegion = recipe.slice(closedIdx, closedIdx + 900);
-        if (!/var\(--ease-out\)|var\(--ease-standard\)/.test(closedRegion))
-            fail("R4", ".glass-reveal exit leg does not read --ease-out/--ease-standard (the no-overshoot bezier — §6/W-MOTION-CANON P2)");
-        if (/var\(--spring-(snappy|bouncy|dock|smooth|gentle)\)/.test(closedRegion))
+        const exitReadsBezier =
+            /var\(--ease-out\)|var\(--ease-standard\)/.test(closedRegion) ||
+            (/var\(--reveal-exit-curve\)/.test(closedRegion) && registerExitIsBezier);
+        if (!exitReadsBezier)
+            fail("R4", ".glass-reveal exit leg does not read --ease-out/--ease-standard (directly or via --reveal-exit-curve → motion-registers.css --exit-curve; the no-overshoot bezier — §6/W-MOTION-CANON P2)");
+        // The exit must NOT ride a spring — directly OR through a register knob that
+        // resolves to a spring (--reveal-exit-curve resolves to --ease-out, never a spring).
+        if (/var\(--spring-(snappy|bouncy|dock|smooth|gentle|transient)\)/.test(closedRegion))
             fail("R4", ".glass-reveal exit leg reads a --spring-* token (a closing surface must NOT overshoot past gone)");
     }
 }

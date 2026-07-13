@@ -58,20 +58,16 @@ import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-outpu
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 
-// The canvas-viz dirs every interactive procedural background lives in. dot-matrix is a
-// forward-looking per-viz wave (BC.W-VIZ-DOTMATRIX mints the dir) — it is enrolled the
-// moment its dir lands (a present-but-unwired dir REDs V1, the substrate-floor enforcement;
-// an absent dir is not yet a violation — the wave that mints it wires the field in the same
-// cut). The six EXTANT viz dirs are the binding enforcement set at HEAD.
+// The canvas-viz dirs every interactive procedural background lives in. dot-flow-field /
+// concentric / dot-matrix were DELETED at BI.W-VIZ-DELETIONS (the user-ordered clean-break
+// prune) — they are OFF the enforcement set; an absent dir is not a violation (a present-but-
+// unwired dir REDs V1, the substrate-floor enforcement). The EXTANT viz dirs are the binding
+// enforcement set at HEAD.
 const VIZ = [
     { id: "aurora", dir: "src/components/custom/aurora" },
     { id: "blob", dir: "src/components/custom/blob" },
     { id: "constellation", dir: "src/components/custom/constellation" },
-    { id: "dot-flow-field", dir: "src/components/custom/dot-flow-field" },
-    { id: "concentric", dir: "src/components/custom/concentric" },
     { id: "fourier-field", dir: "src/components/custom/fourier-field" },
-    // dot-matrix: minted by BC.W-VIZ-DOTMATRIX — enrolled below when the dir lands.
-    { id: "dot-matrix", dir: "src/components/custom/dot-matrix" },
 ];
 
 // The interactive demo stories — V4 reads the `:interactive` (or the viz enable-prop) pass.

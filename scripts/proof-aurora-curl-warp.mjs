@@ -6,8 +6,10 @@
 // warp (the divergence-free curl of an fbm potential, the SOTA flow-field warp) — as a
 // new warp mode BESIDE the existing fbm/cellular/hybrid, with the curl-noise fbm
 // FACTORED into a SHARED glsl chunk (flow.glsl.ts, the AV.W2 shared-chunk precedent)
-// so it is reusable, the ≥3-consumer bar BOOKED. The .frag arm ONLY this cut (the WGSL
-// arm is the booked procedural tail).
+// so it is reusable, the ≥2-consumer bar MET (the flow-field viz consumer #3 was DELETED
+// at BI.W-VIZ-DELETIONS; the bar re-bases onto aurora-curl-warp + paper-grid, the
+// procedural-color.glsl.ts ≥2 shared-chunk precedent). The .frag arm ONLY this cut (the
+// WGSL arm is the booked procedural tail).
 //
 // THE CARDINAL CONSTRAINT — the warp mode is OPT-IN, DEFAULT UNCHANGED. The existing
 // aurora default config (warpMode: "fbm") must render BYTE-IDENTICAL so every existing
@@ -43,10 +45,11 @@
 //        at HEAD: the union is fbm|cellular|hybrid only. Bite: a warpModeFor that
 //        returns "curl" REDs the default-unchanged clause.
 //
-//   W4 — THE ≥3-CONSUMER BOOKING IS RECORDED. docs/consumer-evidence/curl-fbm.md names
-//        consumer #1 (LIVE: aurora-curl-warp) + the booked #2/#3 (B5 paper-grid-breathe
-//        + W-FLOWFIELD) — the shared-chunk bar in its BOOKED form. RED at HEAD: the doc
-//        does not exist.
+//   W4 — THE ≥2-CONSUMER BAR IS RECORDED. docs/consumer-evidence/curl-fbm.md names
+//        consumer #1 (LIVE: aurora-curl-warp) + consumer #2 (LIVE: paper-grid) — the
+//        ≥2 shared-chunk bar (the procedural-color.glsl.ts precedent). The flow-field
+//        viz consumer #3 was DELETED at BI.W-VIZ-DELETIONS. RED at HEAD: the doc does
+//        not exist.
 //
 // + the self-test bite (the false-witness discipline) and the BINDING live-π / WebGPU
 //   parity capture rides W-REFLECT3.
@@ -228,20 +231,20 @@ export function detectAuroraCurlWarp(sources) {
         );
     }
 
-    // ── W4 — the ≥3-consumer booking is recorded ───────────────────────────────
+    // ── W4 — the ≥2-consumer bar is recorded ────────────────────────────────────
+    // The flow-field viz consumer #3 was DELETED at BI.W-VIZ-DELETIONS; the bar re-bases
+    // onto aurora-curl-warp (#1) + paper-grid (#2), the ≥2 procedural-color.glsl.ts precedent.
     facts.w4 = {};
     facts.w4.evidenceExists = evidenceExists;
     facts.w4.namesConsumer1 = /aurora-curl-warp/.test(evidence);
     facts.w4.booksConsumer2 = /paper-grid-breathe/.test(evidence);
-    facts.w4.booksConsumer3 = /W-FLOWFIELD/.test(evidence);
     facts.w4.ok =
         facts.w4.evidenceExists &&
         facts.w4.namesConsumer1 &&
-        facts.w4.booksConsumer2 &&
-        facts.w4.booksConsumer3;
+        facts.w4.booksConsumer2;
     if (!facts.w4.ok) {
         violations.push(
-            "W4: docs/consumer-evidence/curl-fbm.md must record the ≥3-consumer booking — consumer #1 (LIVE: aurora-curl-warp) + the booked #2/#3 (B5 paper-grid-breathe + W-FLOWFIELD)",
+            "W4: docs/consumer-evidence/curl-fbm.md must record the ≥2-consumer bar — consumer #1 (LIVE: aurora-curl-warp) + consumer #2 (LIVE: paper-grid-breathe)",
         );
     }
 
@@ -286,7 +289,7 @@ function selfTest() {
         "}",
     ].join("\n");
     const goodEvidence =
-        "aurora-curl-warp consumer #1; paper-grid-breathe #2; W-FLOWFIELD #3";
+        "aurora-curl-warp consumer #1; paper-grid-breathe #2";
 
     const base = {
         flow: goodFlow,
@@ -426,7 +429,7 @@ function run() {
     console.log(`  W1 shared curlFBM chunk exists + basis-agnostic       : ${yn(facts.w1.ok)}`);
     console.log(`  W2 aurora splices chunk + curl OPT-IN (uWarpMode == 3): ${yn(facts.w2.ok)}`);
     console.log(`  W3 TS seam widens + warpModeFor never auto-curl       : ${yn(facts.w3.ok)}`);
-    console.log(`  W4 ≥3-consumer booking recorded                       : ${yn(facts.w4.ok)}`);
+    console.log(`  W4 ≥2-consumer bar recorded                           : ${yn(facts.w4.ok)}`);
     console.log(`  self-test bites RED (+ good corpus passes)            : ${yn(facts.selfTest.allBite)}`);
 
     if (violations.length > 0) {

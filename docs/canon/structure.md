@@ -7,7 +7,7 @@
 > structure prose (the `src/styles/` cascade, the per-dir intent) lands at
 > BH.B4b-content [WS12]; this skeleton carries the package enumeration.
 
-## src/components/ui (43 dirs)
+## src/components/ui (42 dirs)
 
 - _shared/
 - accordion/
@@ -45,7 +45,6 @@
 - slider/
 - switch/
 - table/
-- tabs/
 - tags-input/
 - textarea/
 - toast/
@@ -53,7 +52,7 @@
 - toggle-group/
 - tooltip/
 
-## src/components/custom (49 dirs)
+## src/components/custom (46 dirs)
 
 - animated-digit/
 - aurora/
@@ -61,15 +60,12 @@
 - border-progress/
 - color-swatch/
 - completion-seal/
-- concentric/
 - configurator/
 - confirm-dialog/
 - constellation/
 - controls/
 - deck/
 - dock/
-- dot-flow-field/
-- dot-matrix/
 - easing/
 - expandable-container/
 - fading-scroll/

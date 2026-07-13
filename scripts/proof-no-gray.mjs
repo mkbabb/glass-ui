@@ -977,13 +977,8 @@ const VIZ_PALETTES = [
             arrayBody(read("src/components/custom/fourier-field/constants.ts"), "WARM_IDENTITY_PALETTE"),
         ),
     },
-    // goo-dot-matrix RETIRED at BG.W-GOODOT-PRUNE (0 external consumers).
-    {
-        viz: "dot-matrix",
-        stops: oklchStopsFromSource(
-            arrayBody(read("src/components/custom/dot-matrix/constants.ts"), "WARM_IDENTITY_PALETTE"),
-        ),
-    },
+    // goo-dot-matrix RETIRED at BG.W-GOODOT-PRUNE; dot-flow-field / concentric / dot-matrix
+    // DELETED at BI.W-VIZ-DELETIONS (the user-ordered clean-break prune).
     {
         viz: "blob",
         stops: hexStopsFromSource(

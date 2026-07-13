@@ -39,6 +39,12 @@ export const CSS_MONOLITHS = {
             // @import-ed IMMEDIATELY AFTER scheme-motion.css (adjacent same-
             // selector :root blocks at the same cascade slot).
             "scheme-spring.css",
+            // BI.W-REGISTER-TABLE — the named motion registers (enter-overlay/menu/
+            // tooltip/transient + exit clocks) over `.glass-reveal`, @import-ed
+            // IMMEDIATELY AFTER scheme-spring.css (it READS the parity-fixed spring
+            // clocks; an adjacent same-selector :root block at the same cascade slot —
+            // order-invariant custom properties, byte-isomorphic).
+            "motion-registers.css",
             "color-radius.css",
             "shadow.css",
             "glass.css",

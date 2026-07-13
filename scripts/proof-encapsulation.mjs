@@ -796,12 +796,18 @@ function detectAxisGrammar(overrides = {}) {
             `G4 — GlassPanel.vue must kill the tier homonym: NO variant prop (present=${gpHasVariantProp}), a tier prop (${gpHasTierProp}) + a renderTier prop (${gpHasRenderTierProp}), GlassPanelVariant DEFINITION-ABSENT (${gpVariantTypeAbsent})`,
         );
 
-    // ── G5 — HOMONYM-KILL TabsIndicator: boolean surface→plate. ──
+    // ── G5 — HOMONYM-KILL TabsIndicator: DELETED (BI.W-DOCK-FOLD) or surface→plate. ──
+    // The reka `ui/tabs` substrate is DEFINITION-ABSENT (BI.W-DOCK-FOLD retired it — its
+    // sole internal consumer DockLayerGroup re-points onto `useSelectionGroup`), so the
+    // `surface` homonym is killed by the STRONGEST form: the whole file is gone. When the
+    // file is absent the homonym cannot exist; a re-minted boolean `surface` prop on a
+    // resurrected file still reds (via the self-test's `tabsText` override).
+    const tabsAbsent = overrides.tabsText === undefined && !existsSync(TABS_INDICATOR);
     const tabsClean = stripComments(tabsSrc);
     const tabsHasSurfaceProp = /\bsurface\s*\??\s*:\s*boolean/.test(tabsClean);
     const tabsHasPlateProp = /\bplate\s*\??\s*:\s*boolean/.test(tabsClean);
-    facts.tabsHomonym = { tabsHasSurfaceProp, tabsHasPlateProp };
-    if (!(!tabsHasSurfaceProp && tabsHasPlateProp))
+    facts.tabsHomonym = { tabsAbsent, tabsHasSurfaceProp, tabsHasPlateProp };
+    if (!tabsAbsent && !(!tabsHasSurfaceProp && tabsHasPlateProp))
         violations.push(
             `G5 — ui/tabs/TabsIndicator.vue must kill the surface homonym: NO boolean surface prop (present=${tabsHasSurfaceProp}), a boolean plate prop (${tabsHasPlateProp})`,
         );

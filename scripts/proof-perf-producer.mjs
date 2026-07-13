@@ -90,16 +90,29 @@ function run() {
 
     // ── W1 — A′-4 morph restyle scope-narrowed + Popper deferred + DOCK_SPRING fenced ──
     const shell = stripComments(read(PATHS.shellCss));
-    // `.glass-dock` morph root carries layout + style containment (reconciled with paint).
-    // The shell rule sets a single `contain: <axes>;` declaration — assert layout+style present.
+    // `.glass-dock` morph root carries the A′-4 restyle-scope (`contain: layout style`).
+    // BI.W-DOCK-SPINE re-point: the `paint` CLIP axis is RETIRED — `.glass-dock` is no
+    // longer the clip aperture (the L0 `.dock-plate` clip-path lens owns the visible
+    // extent; the L1 controls run `overflow: visible`, so the interactive layer composes
+    // ZERO `contain: … paint`, gate-locked by proof:dock-spine S1). The A′-4 restyle-scope
+    // that `paint` reconciled WITH is `layout` + `style` — those STAY (the transitional
+    // per-frame `--dock-morph-t` subtree write is still scoped). So assert `layout` +
+    // `style` (NOT `paint`, whose clip the spine's clip-by-construction removed by design).
     const containMatch = flatten(shell).match(/contain:\s*([a-z\s]+?);/i);
     const containAxes = containMatch ? containMatch[1].trim() : "";
     facts.dockContainAxes = containAxes;
     facts.dockContainment =
-        /\blayout\b/.test(containAxes) && /\bstyle\b/.test(containAxes) && /\bpaint\b/.test(containAxes);
+        /\blayout\b/.test(containAxes) && /\bstyle\b/.test(containAxes);
+    // The spine forbids the `paint` clip on the interactive layer (proof:dock-spine S1).
+    facts.dockContainNoPaintClip = !/\bpaint\b/.test(containAxes);
     if (!facts.dockContainment) {
         violations.push(
-            `A′-4 W1: the .glass-dock morph root must carry \`contain: layout style paint\` (the restyle-scope narrowing reconciled with the existing paint clip) — found \`contain: ${containAxes || "<none>"}\``,
+            `A′-4 W1: the .glass-dock morph root must carry the \`contain: layout style\` restyle-scope (BI.W-DOCK-SPINE retired the \`paint\` clip axis — the L0 plate lens is the clip now) — found \`contain: ${containAxes || "<none>"}\``,
+        );
+    }
+    if (!facts.dockContainNoPaintClip) {
+        violations.push(
+            "A′-4 W1: the .glass-dock `contain` still carries the `paint` clip axis — BI.W-DOCK-SPINE's clip-by-construction (proof:dock-spine S1) forbids a paint clip on the interactive layer (the plate lens owns the clip)",
         );
     }
     // The morph root must NOT contain `size` (would break shrink-to-fit — the 3.3.0 sliver).

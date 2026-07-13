@@ -67,12 +67,14 @@ export const UI_CLASS = {
 export const CUSTOM_CLASS = {
     // INTERNAL (3)
     "goo-filter": "INTERNAL", "infinite-scroll": "INTERNAL", "split-chars": "INTERNAL",
-    // PUBLISH (46) — goo-dot-matrix RETIRED at BG.W-GOODOT-PRUNE (0 external consumers).
+    // PUBLISH (43) — goo-dot-matrix RETIRED at BG.W-GOODOT-PRUNE (0 external consumers);
+    // dot-flow-field / concentric / dot-matrix DELETED at BI.W-VIZ-DELETIONS (the user-ordered
+    // clean-break prune — the 30+-attempt viz family retired, breaking → the 5.0.0 MAJOR cut).
     "animated-digit": "PUBLISH", aurora: "PUBLISH", "border-progress": "PUBLISH",
-    "color-swatch": "PUBLISH", "completion-seal": "PUBLISH", concentric: "PUBLISH",
+    "color-swatch": "PUBLISH", "completion-seal": "PUBLISH",
     configurator: "PUBLISH", "confirm-dialog": "PUBLISH", constellation: "PUBLISH",
-    controls: "PUBLISH", deck: "PUBLISH", dock: "PUBLISH", "dot-flow-field": "PUBLISH",
-    "dot-matrix": "PUBLISH", easing: "PUBLISH", "expandable-container": "PUBLISH",
+    controls: "PUBLISH", deck: "PUBLISH", dock: "PUBLISH",
+    easing: "PUBLISH", "expandable-container": "PUBLISH",
     "fading-scroll": "PUBLISH", "fourier-field": "PUBLISH", "glass-panel": "PUBLISH",
     blob: "PUBLISH", handmark: "PUBLISH",
     "header-ribbon": "PUBLISH", "hover-popover": "PUBLISH", "icon-chip": "PUBLISH",

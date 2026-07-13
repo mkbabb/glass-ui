@@ -249,20 +249,20 @@ function checkIdiomHome() {
 
 // BH.B2.4a — the CARVE-LEAF clause. The colocation convention's dir-scan covers the
 // `components/custom/` README-bearing feature-dirs; this clause additionally asserts the
-// THREE god-module carves this wave landed live as colocated `composables/` (or sibling)
+// god-module carves this wave landed live as colocated `composables/` (or sibling)
 // leaves, each IMPORTED BACK by its host (the carve MOVED the logic, it did not duplicate
 // it). The gate FOLLOWS the composition into the leaf (the `proof:webgl-substrate-single`
 // precedent). Born-RED on the pre-carve tree (the leaves are absent — the worm/field logic
-// still lives inline in the SFCs/composable), GREEN once the carve lands. Two arms reach
-// dirs the README-derived target-scan does NOT cover (`components/ui/carousel`,
-// `composables/motion`), so the convention is enforced beyond the custom-dir census.
+// still lives inline in the SFCs/composable), GREEN once the carve lands. The
+// `composables/motion` arm reaches a dir the README-derived target-scan does NOT cover, so
+// the convention is enforced beyond the custom-dir census.
+//
+// BI.W-CAROUSEL-REBUILD RETIRED the `components/ui/carousel/CarouselContent.vue` →
+// `useCarouselWorm.ts` carve: the content BARBELL (the 559px-escape category error) is
+// DELETED wholesale, so CarouselContent has NO worm logic to colocate. Its CARVE_LEAVES row
+// is removed here (the carve no longer exists — not a weakening; the barbell mechanism is
+// gone). The orphaned `useCarouselWorm.ts` leaf is deleted by W-PAGER-RETIRES.
 const CARVE_LEAVES = [
-    {
-        host: "components/ui/carousel/CarouselContent.vue",
-        leaf: "components/ui/carousel/composables/useCarouselWorm.ts",
-        symbol: "useCarouselWorm",
-        importPath: "./composables/useCarouselWorm",
-    },
     {
         host: "components/custom/pager-dots/PagerDots.vue",
         leaf: "components/custom/pager-dots/composables/usePagerWorm.ts",

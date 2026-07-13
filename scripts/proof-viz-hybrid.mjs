@@ -6,9 +6,12 @@
 // THE PRUNE. `goo-dot-matrix` (the BC.W-VIZ-HYBRID goo+dot-matrix HYBRID) is RETIRED with
 // rationale at BG.W-GOODOT-PRUNE: a demonstration HYBRID that earned NO external consumer
 // since BC (one demo story ≠ the ≥2-consumer bar; J-inv-10 / L-inv-8 substrate-without-
-// consumer, binary at the close). It is retire-with-rationale, NOT a delete-in-the-dark: its
-// two halves both SURVIVE it — the goo-blob FIELD donor (byte-untouched, still first-class)
-// and the dot-matrix RENDER register (still first-class). This gate is the terminal lock.
+// consumer, binary at the close). It is retire-with-rationale, NOT a delete-in-the-dark: at
+// BG its FIELD donor (goo-blob, byte-untouched) AND its dot-matrix RENDER register both
+// survived it. BI.W-VIZ-DELETIONS then DELETED dot-matrix by USER ORDER (a distinct, later
+// clean-break prune — the 30+-attempt viz family retired; its DEFINITION-ABSENCE is the
+// concern of proof:viz-deletions, not this gate). So the goo-blob FIELD donor is now the ONE
+// surviving half this gate's survivor tooth guards. This gate is the terminal lock.
 //
 // This gate was BORN-RED at HEAD (the goo-dot-matrix dir + subpath + `./goo-dot-matrix`
 // export all resolved, so the DEFINITION-ABSENT asserts red) → GREEN once the prune lands.
@@ -28,12 +31,12 @@
 //       AND the manifest carries no `substrates/goo-dot` route / preview-still entry. A
 //       surviving demo story REDs (a retired viz must leave no live route).
 //
-//   4 — THE SURVIVOR TOOTH. The two halves that survive the hybrid stay FIRST-CLASS: the
+//   4 — THE SURVIVOR TOOTH. The FIELD half that survives the hybrid stays FIRST-CLASS: the
 //       goo-blob FIELD donor (`src/components/custom/blob/` + its metaball shader source
-//       the field spliced FROM) AND the dot-matrix RENDER register
-//       (`src/components/custom/dot-matrix/` + its fibonacciDot lattice) both resolve on disk.
-//       A prune that OVER-CUT a survivor (deleted goo-blob or dot-matrix) REDs — the rationale
-//       is "both halves survive," so their absence is the crime this tooth catches.
+//       the field spliced FROM) resolves on disk. A prune that OVER-CUT it (deleted goo-blob)
+//       REDs — the rationale is "the field half survives," so its absence is the crime this
+//       tooth catches. (The dot-matrix RENDER register was a BG survivor; BI.W-VIZ-DELETIONS
+//       DELETED it by user order — its DEFINITION-ABSENCE is proof:viz-deletions' concern.)
 //
 // + a self-test bite per clause (a synthetic re-minted goo-dot / a surviving export / a
 //   deleted survivor each REDs).
@@ -60,7 +63,6 @@ const GOOBLOB_METABALL = resolve(
     ROOT,
     "src/components/custom/blob/shaders/metaball.wgsl.ts",
 );
-const DOTMATRIX_DIR = resolve(ROOT, "src/components/custom/dot-matrix");
 
 const read = (p) => (existsSync(p) ? readFileSync(p, "utf8") : null);
 
@@ -135,10 +137,6 @@ function clauseSurvivors(over) {
         over?.metaball !== undefined ? over.metaball : existsSync(GOOBLOB_METABALL);
     if (!metaball)
         viol.push("4 survivor: the goo-blob metaball.wgsl source (the field the hybrid spliced FROM) is ABSENT — the FIELD donor must stay whole");
-    const dotmatrixDir =
-        over?.dotmatrixDir !== undefined ? over.dotmatrixDir : existsSync(DOTMATRIX_DIR);
-    if (!dotmatrixDir)
-        viol.push("4 survivor: the dot-matrix RENDER register (src/components/custom/dot-matrix/) is ABSENT — the prune OVER-CUT a survivor (the RENDER half stays first-class)");
     return viol;
 }
 
@@ -215,7 +213,7 @@ function main() {
         for (const v of viol) console.error("    ✗ " + v);
     } else {
         console.log(
-            "  GREEN (1 src-absent · 2 publication-absent · 3 demo-absent · 4 survivors first-class: goo-blob FIELD + dot-matrix RENDER)",
+            "  GREEN (1 src-absent · 2 publication-absent · 3 demo-absent · 4 survivor first-class: goo-blob FIELD; dot-matrix RENDER DELETED at BI.W-VIZ-DELETIONS)",
         );
     }
     if (isSelftest) {

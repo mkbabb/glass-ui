@@ -409,6 +409,74 @@ for (const [leaf, entry] of HALF_PRIMITIVE_CENSUS) {
     }
 }
 
+// ── D5: the pager/carousel goo-morph RETIRE is complete (BI.W-PAGER-RETIRES) ─────
+// The pager's liquid dot-MORPH worm (BI.W-PAGER-WORM) rides the two-edge useLeadTrail
+// spring driver; the carousel content is crisp weighty embla (BI.W-CAROUSEL-REBUILD).
+// The SUPERSEDED useGooMorph content-barbell composable + its CSS-transition flow/duration
+// clock + the whole-layer bed filter are ABSENT — no dual driver, no dead residue. The
+// symmetric-closure discipline: a dormant token stub, a broken import (half-delete), or a
+// surviving whole-layer bed filter each RED (comment-stripped — a prose mention is the
+// retirement record, never a live reference).
+const CAROUSEL_WORM_LEAF = resolve(
+    ROOT,
+    "src/components/ui/carousel/composables/useCarouselWorm.ts",
+);
+const CAROUSEL_CONTENT = resolve(ROOT, "src/components/ui/carousel/CarouselContent.vue");
+const PAGER_SFC = resolve(ROOT, "src/components/custom/pager-dots/PagerDots.vue");
+const PAGER_WORM_WIRING = resolve(
+    ROOT,
+    "src/components/custom/pager-dots/composables/usePagerWorm.ts",
+);
+
+// P1 — useCarouselWorm.ts DEFINITION-ABSENT + no live import survives (no half-delete)
+const carouselWormLeafPresent = existsSync(CAROUSEL_WORM_LEAF);
+const carouselWormImporters = [];
+for (const f of walk(COMPONENTS_DIR, [".vue", ".ts"])) {
+    const raw = read(f);
+    const stripped = f.endsWith(".vue") ? stripVueComments(raw) : stripJsComments(raw);
+    if (/\buseCarouselWorm\b/.test(stripped))
+        carouselWormImporters.push(f.slice(ROOT.length + 1));
+}
+// P1 — the --carousel-goo-* tokens are ABSENT from the styles tree (comment-stripped)
+const carouselGooTokenDecls = [];
+for (const f of walk(STYLES_DIR, [".css"])) {
+    const css = stripCssComments(read(f));
+    if (/(?:^|[{;])\s*--carousel-goo-[a-z-]+\s*:/m.test(css))
+        carouselGooTokenDecls.push(f.slice(ROOT.length + 1));
+}
+// P1 — the .carousel-goo-* CSS residue is ABSENT from CarouselContent (comment-stripped)
+const carouselContentStripped = stripVueComments(read(CAROUSEL_CONTENT));
+const carouselGooCssResidue = /\bcarousel-goo-(?:layer|body|neck)\b/.test(
+    carouselContentStripped,
+);
+
+// P2 — --pager-worm-duration (the retired CSS-transition clock) is ABSENT
+const pagerWormDurationDecls = [];
+for (const f of walk(STYLES_DIR, [".css"])) {
+    const css = stripCssComments(read(f));
+    if (/(?:^|[{;])\s*--pager-worm-duration\s*:/m.test(css))
+        pagerWormDurationDecls.push(f.slice(ROOT.length + 1));
+}
+// P2 — no --goo-t per-frame read-back survives on the pager path (driver is useLeadTrail)
+const pagerSfcStripped = stripVueComments(read(PAGER_SFC));
+const pagerWormWiringStripped = stripJsComments(read(PAGER_WORM_WIRING));
+const pagerGooTReadback =
+    /--goo-t/.test(pagerSfcStripped) || /--goo-t/.test(pagerWormWiringStripped);
+
+// P3 — the whole-layer bed filter is ABSENT; the pager filter scopes to #pager-worm-goo
+const pagerStyleStripped = stripCssComments(
+    read(PAGER_SFC).match(/<style[^>]*>([\s\S]*?)<\/style>/i)?.[1] ?? "",
+);
+const wholeLayerBedFilter =
+    /\.pager-goo-layer\b/.test(pagerStyleStripped) ||
+    /\.(pager-bed-layer|goo-dot)\b[^{}]*\{[^{}]*filter\s*:\s*(?!none\b)[^;}]+/i.test(
+        pagerStyleStripped,
+    );
+// the pager filter (if any) references the worm-scoped id, never a retired PLATE goo id
+const pagerRetiredFilterId = /filter\s*:[^;}]*url\(#(?:pager-goo|glass-goo)\)/i.test(
+    pagerStyleStripped,
+);
+
 // ── The SUPERSEDED_SET rationale bite (anti-evasion — the W-DEAD-SWEEP discipline) ─
 // Every SUPERSEDED_SET entry must carry a NON-EMPTY successor AND rationale — a bare
 // entry cannot silence the gate.
@@ -486,6 +554,26 @@ const bites = [];
         typeof synthetic.rationale !== "string" || synthetic.rationale.trim().length === 0;
     bites.push({ id: "D4c-bare-superseded-entry", flagged });
 }
+// Bite D5a — a live `useCarouselWorm` import (a broken-reference half-delete) flags.
+{
+    const synthetic = stripJsComments(
+        `import { useCarouselWorm } from "./composables/useCarouselWorm";`,
+    );
+    const flagged = /\buseCarouselWorm\b/.test(synthetic);
+    bites.push({ id: "D5a-carousel-worm-import", flagged });
+}
+// Bite D5b — a dormant `--carousel-goo-duration:` stub (a dead token residue) flags.
+{
+    const synthetic = stripCssComments(`:root { --carousel-goo-duration: 0.95s; }`);
+    const flagged = /(?:^|[{;])\s*--carousel-goo-[a-z-]+\s*:/m.test(synthetic);
+    bites.push({ id: "D5b-carousel-goo-token-stub", flagged });
+}
+// Bite D5c — a whole-layer bed filter (`.pager-goo-layer { filter }`) flags.
+{
+    const synthetic = stripCssComments(`.pager-goo-layer { filter: url(#pager-goo); }`);
+    const flagged = /\.pager-goo-layer\b/.test(synthetic);
+    bites.push({ id: "D5c-whole-layer-bed-filter", flagged });
+}
 const allBitesFlagged = bites.every((b) => b.flagged);
 
 // ── verdict ─────────────────────────────────────────────────────────────────────
@@ -523,6 +611,23 @@ if (manufacturedBarLeaves.length !== 0)
     violations.push(`D4 — wired verdict cannot cite ≥2 binaries (manufactured bar): ${manufacturedBarLeaves.join(", ")}`);
 if (blankRationaleLeaves.length !== 0)
     violations.push(`D4 — retired verdict with blank rationale/no named successor: ${blankRationaleLeaves.join(", ")}`);
+// D5 — the pager/carousel goo-morph retire is complete (BI.W-PAGER-RETIRES)
+if (carouselWormLeafPresent)
+    violations.push("D5 — useCarouselWorm.ts survives (the content-barbell composable must be DEFINITION-ABSENT)");
+if (carouselWormImporters.length !== 0)
+    violations.push(`D5 — a live useCarouselWorm reference survives (broken half-delete): ${carouselWormImporters.join(", ")}`);
+if (carouselGooTokenDecls.length !== 0)
+    violations.push(`D5 — --carousel-goo-* token(s) survive (dead residue): ${carouselGooTokenDecls.join(", ")}`);
+if (carouselGooCssResidue)
+    violations.push("D5 — .carousel-goo-* CSS residue survives in CarouselContent.vue (half-delete)");
+if (pagerWormDurationDecls.length !== 0)
+    violations.push(`D5 — --pager-worm-duration (the retired CSS-transition clock) survives in: ${pagerWormDurationDecls.join(", ")}`);
+if (pagerGooTReadback)
+    violations.push("D5 — a --goo-t per-frame read-back survives on the pager path (the driver is useLeadTrail ONLY)");
+if (wholeLayerBedFilter)
+    violations.push("D5 — a whole-layer bed filter survives (.pager-goo-layer / a filter on the bed — the σ8 annihilation)");
+if (pagerRetiredFilterId)
+    violations.push("D5 — the pager references a retired PLATE goo id (url(#pager-goo)/#glass-goo); the worm filter is #pager-worm-goo-scoped");
 // the SUPERSEDED_SET rationale bite
 if (bareSupersededEntries.length !== 0)
     violations.push(`bite — bare SUPERSEDED_SET entry (empty successor/rationale): ${bareSupersededEntries.join(", ")}`);
@@ -559,6 +664,15 @@ const facts = {
     bookVerdictLeaves,
     manufacturedBarLeaves,
     blankRationaleLeaves,
+    // D5 — the pager/carousel goo-morph retire
+    carouselWormLeafPresent,
+    carouselWormImporters,
+    carouselGooTokenDecls,
+    carouselGooCssResidue,
+    pagerWormDurationDecls,
+    pagerGooTReadback,
+    wholeLayerBedFilter,
+    pagerRetiredFilterId,
     // supersededSet
     supersededSetCount: SUPERSEDED_SET.size,
     bareSupersededEntries,
@@ -582,6 +696,7 @@ console.log(`  D1 slide-in-from-side closed        : ${!slideInFromSideUtility &
 console.log(`  D2 css-press floor-kept (no dual)   : ${facts.cssPressFloorKept} (--scale-press sources=${scalePressDeclSites.length}, dual=${dualPressSurfaces.length})`);
 console.log(`  D3 specular single-source           : core=${createSpecularWriterDefs} copies=${specularWriteCopies.length} disc-core-kept=${discCorePresent} auto-arm-surfaces=${vSpecularBoundSurfaces}`);
 console.log(`  D4 half-primitive census terminal   : ${undecidedHalfPrimitives.length === 0 && bookVerdictLeaves.length === 0 && manufacturedBarLeaves.length === 0 && blankRationaleLeaves.length === 0} (${HALF_PRIMITIVE_CENSUS.size} leaves)`);
+console.log(`  D5 pager/carousel retire complete   : ${!carouselWormLeafPresent && carouselGooTokenDecls.length === 0 && pagerWormDurationDecls.length === 0 && !wholeLayerBedFilter && !pagerGooTReadback} (worm-leaf=${carouselWormLeafPresent}, carousel-goo-toks=${carouselGooTokenDecls.length}, pager-worm-dur=${pagerWormDurationDecls.length}, bed-filter=${wholeLayerBedFilter})`);
 console.log(`  SUPERSEDED_SET rationale'd          : ${bareSupersededEntries.length === 0} (${SUPERSEDED_SET.size} entries)`);
 console.log(`  self-test bites all flagged         : ${allBitesFlagged} (${bites.length} bites)`);
 if (violations.length) {

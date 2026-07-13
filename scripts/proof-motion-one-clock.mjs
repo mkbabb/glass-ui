@@ -142,8 +142,7 @@ const VIZ_DIRS = [
     "src/components/custom/aurora",
     "src/components/custom/blob",
     "src/components/custom/constellation",
-    "src/components/custom/dot-flow-field",
-    "src/components/custom/concentric",
+    // dot-flow-field / concentric / dot-matrix DELETED at BI.W-VIZ-DELETIONS.
 ];
 
 // ── The SANCTIONED off-spine seams (the allowlist, M2). Each is a real, documented

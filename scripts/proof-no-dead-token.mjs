@@ -297,24 +297,22 @@ const KEEP_ALLOWLIST = new Map([
     // clocks are RETIRED (the dead CSS twins died when the 3 per-component timeline rows
     // drained OFF the global SPRING_PRESETS into the ScrubberTimeline.vue LOCAL map,
     // table→6). They are no longer declared tokens, so no KEEP_ALLOWLIST entry is owed.
-    // ── JS-COMPANION goo-morph flow curves (BD.W-GOO-CAROUSEL-DECK / -PAGER-GOO) ──
+    // ── JS-COMPANION goo-morph flow curve (BD.W-GOO-CAROUSEL-DECK) ──
     // The ONE useGooMorph engine reads its per-consumer flow/stretch tokens off a
     // RUNTIME tokenPrefix string: `getComputedStyle(el).getPropertyValue(`--${tokenPrefix}-flow`)`
     // (also `-max-stretch`, `-duration`, `-neck-gap`). Because the prefix is interpolated at
     // runtime, the static reader scan (form 5b: a LITERAL quoted "--token") cannot see these
-    // reads — the tokens are genuinely live JS-companions. The three wired prefixes are
-    // carousel-goo (CarouselContent.vue), pager-worm (PagerDots.vue), deck-goo (the deck story).
-    // The `-duration` rungs whose host SFC carries a LITERAL getPropertyValue("--carousel-goo-duration")
-    // / ("--pager-worm-duration") are already seen by the scan; the -flow/-max-stretch (+ the
-    // demo-only --deck-goo-duration) are the dynamic-prefix remainder allowlisted here.
-    [
-        "--carousel-goo-flow",
-        "JS-COMPANION — read by useGooMorph via getComputedStyle().getPropertyValue(`--${tokenPrefix}-flow`) with tokenPrefix=\"carousel-goo\" (CarouselContent.vue); the runtime prefix interpolation is invisible to the literal-string reader scan.",
-    ],
-    [
-        "--carousel-goo-max-stretch",
-        "JS-COMPANION — read by useGooMorph via getComputedStyle().getPropertyValue(`--${tokenPrefix}-max-stretch`) with tokenPrefix=\"carousel-goo\" (CarouselContent.vue); runtime-prefix read, invisible to the literal-string scan.",
-    ],
+    // reads — the tokens are genuinely live JS-companions. The ONE surviving wired prefix is
+    // deck-goo (the deck story). The `--deck-goo-duration` is ALSO read as a literal in
+    // deck.vue (seen by the scan); the -flow/-max-stretch are the dynamic-prefix remainder
+    // allowlisted here.
+    //
+    // BI.W-PAGER-RETIRES — the CAROUSEL content barbell (`--carousel-goo-*`, the 559px-escape
+    // category error) and the PAGER dot-pip worm's flow/duration clock tokens
+    // (`--pager-worm-flow`/`-duration`) RETIRED with their token declarations (clean break —
+    // the two-edge `useLeadTrail` spring driver owns the settle, no timer, no flow curve).
+    // Their allowlist entries are GONE with the declarations. `--pager-worm-max-stretch` STAYS
+    // live (retuned 1.45→1.2, read LITERALLY by usePagerWorm.ts — the squish cap).
     [
         "--deck-goo-flow",
         "JS-COMPANION — read by useGooMorph via getComputedStyle().getPropertyValue(`--${tokenPrefix}-flow`) with tokenPrefix=\"deck-goo\" (demo/stories/motion/deck.vue); runtime-prefix read, invisible to the literal-string scan.",
@@ -328,12 +326,8 @@ const KEEP_ALLOWLIST = new Map([
         "JS-COMPANION — read by useGooMorph via getComputedStyle().getPropertyValue(`--${tokenPrefix}-max-stretch`) with tokenPrefix=\"deck-goo\" (demo/stories/motion/deck.vue); runtime-prefix read, invisible to the literal-string scan.",
     ],
     [
-        "--pager-worm-flow",
-        "JS-COMPANION — read by useGooMorph via getComputedStyle().getPropertyValue(`--${tokenPrefix}-flow`) with tokenPrefix=\"pager-worm\" (PagerDots.vue); runtime-prefix read, invisible to the literal-string scan.",
-    ],
-    [
         "--pager-worm-max-stretch",
-        "JS-COMPANION — read by useGooMorph via getComputedStyle().getPropertyValue(`--${tokenPrefix}-max-stretch`) with tokenPrefix=\"pager-worm\" (PagerDots.vue); runtime-prefix read, invisible to the literal-string scan.",
+        "JS-COMPANION — read LITERALLY by usePagerWorm.ts via readPx(rootEl, \"--pager-worm-max-stretch\", …) (the BI.W-PAGER-WORM two-edge worm's `useLiquidFlex` LOW-cap squish, retuned 1.45→1.2). Allowlisted for continuity; it is also a live literal reader.",
     ],
     // ── PUBLIC-REGISTER member (BC.W-ACCENT-TONE) ──
     [

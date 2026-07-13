@@ -58,13 +58,11 @@ export const SURFACES = [
     { id: "dock-overview", route: "/dock/overview", note: "GlassDock walkthrough" },
     // BC surfaces (enrolled at BC.W-LIGHTHOUSE — a BC-painted surface omitted
     // from the score floor is a gap). The static display route is a strong
-    // perf-floor candidate; the live-WGSL viz is a DISTINCT floor class (move 5
-    // — Lighthouse measures its LOAD-window, not the 60fps steady-state, so it
-    // scores lower than a static page AT THE SAME real-device smoothness; its
-    // floor is pinned at the achieved live number via --rebaseline, NEVER forced
-    // to the static `home` perfMin).
+    // perf-floor candidate. (The live-WGSL viz load-score class was `dot-flow-field`,
+    // DELETED at BI.W-VIZ-DELETIONS — a surviving live-WGSL substrate route, e.g.
+    // `/substrates/liquid-grid`, is the re-enrollment candidate for the viz floor
+    // class; owed at the B10 lighthouse/budget rebaseline via --rebaseline.)
     { id: "display-buttons", route: "/display/buttons", note: "BC calm-CTA glass-button display surface (W-BUTTON-GLASS)" },
-    { id: "dot-flow-field", route: "/substrates/dot-flow-field", note: "BC WebGPU-first curl-noise flow viz — the viz load-score class (move 5)", viz: true },
 ];
 
 // ── The two form factors ──────────────────────────────────────────────────────

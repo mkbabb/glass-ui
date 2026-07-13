@@ -297,15 +297,18 @@ export function detectClockIntact(presets, schemeSrc, segmentedSrc) {
     } else if (snappy) {
         const analytic = springSettleDurationSeconds(snappy);
         facts.snappyAnalyticClock = analytic;
-        const m = schemeSrc.match(/--spring-snappy-duration:\s*([\d.]+)s/);
+        // BI.W-TEMPO — the raw analytic clock is the INTERNAL `--spring-snappy-settle`
+        // (the public `--spring-snappy-duration` is now the `calc(settle * --motion-
+        // tempo)` reader); U2b's "the clock == the analytic settle" reads the raw settle.
+        const m = schemeSrc.match(/--spring-snappy-settle:\s*([\d.]+)s/);
         if (!m) {
-            v.push("U2b: no --spring-snappy-duration token in scheme-motion.css");
+            v.push("U2b: no --spring-snappy-settle token in scheme-spring.css");
         } else {
             const emitted = Number.parseFloat(m[1]);
             facts.snappyEmittedClock = emitted;
             if (Math.abs(emitted - analytic) > 1e-9) {
                 v.push(
-                    `U2b: --spring-snappy-duration ${emitted}s is NOT the analytic 2%-band settle ${analytic}s — a hand-truncated clock re-introduces the W-GLASS-CAL tail-jank ("quick" is the early arrival, not a shorter clock)`,
+                    `U2b: --spring-snappy-settle ${emitted}s is NOT the analytic 2%-band settle ${analytic}s — a hand-truncated clock re-introduces the W-GLASS-CAL tail-jank ("quick" is the early arrival, not a shorter clock)`,
                 );
             }
         }
@@ -532,17 +535,18 @@ function selfTest() {
         failures.push("SELF-TEST U2: a --tab-indicator-duration forked off --duration-normal did NOT red");
     }
 
-    // U2b bite — a hand-truncated --spring-snappy-duration reds against the analytic.
+    // U2b bite — a hand-truncated --spring-snappy-settle reds against the analytic
+    // (BI.W-TEMPO: the raw clock is the internal `-settle`; U2b reads it there now).
     const truncatedScheme = (realScheme ?? "").replace(
-        /--spring-snappy-duration:\s*[\d.]+s/,
-        "--spring-snappy-duration: 0.15s",
+        /--spring-snappy-settle:\s*[\d.]+s/,
+        "--spring-snappy-settle: 0.15s",
     );
     if (
         detectClockIntact(PRESETS, truncatedScheme, realSegmented).violations.every(
-            (s) => !/snappy-duration 0\.15s/.test(s),
+            (s) => !/snappy-settle 0\.15s/.test(s),
         )
     ) {
-        failures.push("SELF-TEST U2b: a hand-truncated --spring-snappy-duration: 0.15s did NOT red against the analytic");
+        failures.push("SELF-TEST U2b: a hand-truncated --spring-snappy-settle: 0.15s did NOT red against the analytic");
     }
     // U2b bite — a per-property fork (an indicator inset leg on a non-snappy clock) reds.
     const forkedLegSegmented =

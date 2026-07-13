@@ -131,7 +131,8 @@ const NAMED_BOUNDED = [
     "ui/checkbox/Checkbox.vue",
     "ui/radio-group/RadioGroupItem.vue",
     "ui/select/SelectTrigger.vue",
-    "ui/tabs/TabsTrigger.vue",
+    // BI.W-DOCK-FOLD — ui/tabs/TabsTrigger.vue retired (the reka `ui/tabs` substrate is
+    // DEFINITION-ABSENT; its sole consumer DockLayerGroup re-points onto useSelectionGroup).
     "ui/collapsible/CollapsibleTrigger.vue",
     "custom/configurator/ConfiguratorRow.vue",
     "custom/labeled-field/LabeledField.vue",

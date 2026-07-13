@@ -273,23 +273,6 @@ export type {
     UseTextHighlightControls,
 } from "../composables/motion/useTextHighlight";
 
-// ── DotFlowField — the WebGPU-first curl-noise flow viz (BB.W-FLOWFIELD) ──
-// Config + handle types for a consumer wrapping <DotFlowField> (the
-// /dot-flow-field subpath).
-export type {
-    FlowFieldConfig,
-    DotFlowFieldHandle,
-    UseDotFlowFieldOptions,
-} from "../components/custom/dot-flow-field";
-
-// ── Concentric — the WebGPU-first level-set topographic-contour viz (BD.W-VIZ-RESPEC) ──
-// Config + handle types for a consumer wrapping <Concentric> (the /concentric subpath).
-export type {
-    ConcentricConfig,
-    ConcentricHandle,
-    UseConcentricOptions,
-} from "../components/custom/concentric";
-
 // ── HeaderRibbon ───────────────────────────────────────────────────────────
 // `HeaderRibbonProps` — props shape consumers forward when wrapping
 // `<HeaderRibbon>`. `HeaderRibbonPosition` is the alignment enum (`'left' | 'right'`).

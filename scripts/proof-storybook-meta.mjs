@@ -230,7 +230,7 @@ function detectStrayHue(sources, overrides = {}) {
 }
 
 // ── M8 — glass-panel cap (the source half: no GL added to a static-wash pane) ──
-const GL_TAGS = /<(Aurora|Constellation|FourierField|GooBlob|DotFlowField|Concentric)\b/;
+const GL_TAGS = /<(Aurora|Constellation|FourierField|GooBlob)\b/;
 // BD.W-PAGE-BACKGROUND / display-buttons Pass-E top-move #1 PROMOTED display/buttons off
 // the static-wash list: it is the sanctioned GLASS-SHOWCASE route now — its glass specimens
 // stage over ONE shared aurora field (glass over flat cream is invisible-by-construction;

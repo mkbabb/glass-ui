@@ -264,6 +264,28 @@ facts.consumerBar = {
     met: consumerBarMet,
 };
 
+// ── V6 — the BI.W-FIELD-CORE evolution (engagement + attractor). The field grew TWO
+//    additive outputs beside the byte-frozen velocity/accel chain: `engagement` (the
+//    smoothed active-envelope, half-life authored) + the `attractor`/`attractorVelocity`
+//    hand-rolled mass-spring-damper (the ONE eased-follow the per-viz mappings read). The
+//    existing V1-V5 stay GREEN (the outputs are byte-frozen); V6 asserts the evolution landed.
+const hasEngagement =
+    /readonly\s*\(\s*engagement\s*\)/.test(leaf) && /engagement\.value\s*=/.test(leaf);
+const hasAttractor =
+    /readonly\s*\(\s*attractor\s*\)/.test(leaf) && /attractor\.value\s*=/.test(leaf);
+const massSpringDamper =
+    /omega\s*\*\s*omega/.test(leaf) && /2\s*\*\s*zeta\s*\*\s*omega/.test(leaf);
+const halfLifeAuthored = /halfLifeMs/.test(leaf);
+if (!hasEngagement)
+    violations.push("V6: the field exposes no derived `engagement` envelope (the BI.W-FIELD-CORE evolution)");
+if (!hasAttractor)
+    violations.push("V6: the field exposes no `attractor` (the mass-spring-damper follow the per-viz mappings read)");
+if (!massSpringDamper)
+    violations.push("V6: the attractor is not a hand-rolled mass-spring-damper (`-ω²(x-target) - 2ζω·v` — the omega*omega + 2*zeta*omega terms)");
+if (!halfLifeAuthored)
+    violations.push("V6: no `halfLifeMs` authoring (the engagement envelope must be half-life-authored, k derived internally)");
+facts.evolution = { hasEngagement, hasAttractor, massSpringDamper, halfLifeAuthored };
+
 // ── Self-test bites (anti-evasion — each MUST flag, proven every run) ──────────
 const bites = [];
 {

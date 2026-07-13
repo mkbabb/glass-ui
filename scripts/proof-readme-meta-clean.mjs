@@ -152,7 +152,9 @@ function run() {
         for (const m of ["vangogh", "oil-pastel", "crayon"]) {
             if (!new RegExp(`\`${m}\``).test(aurora)) violations.push(`aurora/README.md mediums missing ${m}`);
         }
-        for (const f of ["atoms.ts", "configSource.ts", "cursorModel.ts", "frameLoop.ts", "glSetup.ts"]) {
+        // BI.W-FIELD-CORE — `cursorModel.ts` is RETIRED (the cursor is the shared
+        // `usePointerVelocityField` + `auroraCursorMapping`); dropped from the expected tree.
+        for (const f of ["atoms.ts", "configSource.ts", "frameLoop.ts", "glSetup.ts"]) {
             if (!aurora.includes(f)) violations.push(`aurora/README.md architecture tree missing ${f}`);
         }
         // No retired WebGPU references.

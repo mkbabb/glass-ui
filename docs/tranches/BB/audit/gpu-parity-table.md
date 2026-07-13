@@ -49,8 +49,8 @@ re-recorded there if the empirical capture demands a re-tune.
       "viz": "goo-blob",
       "subpath": "/goo-blob",
       "status": "verified",
-      "primary": "src/components/custom/goo-blob/shaders/metaball.wgsl.ts",
-      "fallback": "src/components/custom/goo-blob/shaders/metaball.frag.ts",
+      "primary": "src/components/custom/blob/shaders/metaball.wgsl.ts",
+      "fallback": "src/components/custom/blob/shaders/metaball.frag.ts",
       "rank": 2,
       "subWave": "BB.W-VIZ-SUITE.c W-GOOBLOB-WGPU",
       "captures": [
@@ -60,38 +60,6 @@ re-recorded there if the empirical capture demands a re-tune.
       ],
       "deltaE": { "mean": 0.0, "p99": 0.0 },
       "note": "MIGRATED + STAGE-2 DRESSED (BC.W-GOOBLOB-MEATBALL). metaball.wgsl.ts is the WebGPU-first primary; metaball.frag.ts is the WebGL2 fallback. BC.W-GOOBLOB-MEATBALL (1) fixes the WGSL uniformity residual — the Toksvig normal fwidth(N) sat INSIDE the if(uLit>0.5) branch AFTER the per-fragment alpha early-return (non-uniform flow WGSL rejects, so the WGSL primary never armed and GooBlob fell to the WebGL2 net forever); the fix HOISTS the normal-derivative (Nh + nVar=length(fwidth(Nh))) to UNIFORM control flow at the top of fs_main (the SAME level the working fwidth(d) AA site sits at), so the WGSL primary COMPILES + paints the full lit creature — and (2) adds the symmetric softShadow2D 2D SDF march + the uShadow/uShadowSoftness lanes to BOTH backends (a PURELY additive block in each, the lit-glass/smin/normal/OKLCh math byte-faithful — the parity bar). The two live fwidth() sites (AA-edge half-width + the hoisted Toksvig spec-clamp) transcribe to WGSL fragment-stage fwidth() — the most rasterizer-drift-prone lines, called out by name in the capture record. The renderer's simulation advance (resolveFrame) is SHARED across both backends; only the upload+draw leg differs. The recorded ΔE is the DEVICE-FREE STRUCTURAL PROXY (the parity-critical color seam — shared OETF + Ottosson OKLCh + the per-pixel OKLCh perturb round-trip + the gamut clamp + the warm-cream lit-glass specular/rim + the IGN dither — evaluated through both chunk variants over the same deterministic field; the two fwidth() sites use an analytic stand-in identical for both paths; mean/p99 = 0.0, both chunks numerically identical). The BINDING Metal-GPU live capture-pair (the real WebGPU swap-chain readback vs WebGL2 readPixels, including the REAL per-GPU fwidth() derivative drift) rides W-REFLECT3 + re-records the empirical ΔE."
-    },
-    {
-      "viz": "dot-flow-field",
-      "subpath": "/dot-flow-field",
-      "status": "verified",
-      "primary": "src/components/custom/dot-flow-field/shaders/flow-field.wgsl.ts",
-      "fallback": "src/components/custom/dot-flow-field/shaders/flow-field.glsl.ts",
-      "rank": 3,
-      "subWave": "BB.W-VIZ-SUITE.d W-FLOWFIELD",
-      "captures": [
-        "docs/tranches/BB/audit/visual/flow-field-parity/flow-field-wgpu-primary.png",
-        "docs/tranches/BB/audit/visual/flow-field-parity/flow-field-fallback.png",
-        "docs/tranches/BB/audit/visual/flow-field-parity/parity-record.json"
-      ],
-      "deltaE": { "mean": 0.0, "p99": 0.0 },
-      "note": "BC.W-VIZ-DOTFLOW RETOPOLOGY — the field is now a CALM ANCHORED DOT-MATRIX a slow LARGE wave sweeps through (NOT the free-advecting particle cloud the user condemned as a 'mess of noise'). WebGPU-first compute+render: the @compute @workgroup_size(64) kernel pulls the anchored lattice toward its sub-cell displacement target with a restoring spring (NO advection, NO re-seed); the instanced-billboard render pass lights each dot by the sweeping Gerstner-height band (flow-field.compute.wgsl.ts + flow-field.render.wgsl.ts). The Canvas2D point-cloud is GONE (the §E 'no canvas anywhere' mandate); the fallback is now a PURE WebGL2 fullscreen FRAGMENT dot-lattice + brightness shader (flow-field.glsl.ts) — the retopology made the grid+brightness model fragment-friendly, so the fallback flips degraded→verified (the SAME analytic field, no compute particles). The recorded ΔE is the DEVICE-FREE STRUCTURAL PROXY: BOTH the WGSL compute/render AND the WebGL2 fragment transcribe ONE analytic field evaluator (composables/flowField.ts gridOrigin/sampleHeight/sampleDisplacement/waveBand) through ONE shared color seam (procedural-color.{wgsl,glsl}.ts), so the height/displacement/brightness field is numerically identical at every (index, t) (proof:viz-dotflow clause F3 round-trips JS↔WGSL↔GLSL → mean/p99 = 0.0). The BINDING Metal-GPU live capture-pair (the real WebGPU swap-chain readback vs WebGL2 readPixels) rides BC.W-VIZ-DOTFLOW's own close (the per-wave fresh-capture discipline, BC.W-GESTALT-FIRST) + re-records the empirical rasterizer-drift ΔE."
-    },
-    {
-      "viz": "concentric",
-      "subpath": "/concentric",
-      "status": "verified",
-      "primary": "src/components/custom/concentric/shaders/concentric.wgsl.ts",
-      "fallback": "src/components/custom/concentric/shaders/concentric.glsl.ts",
-      "rank": 4,
-      "subWave": "BB.W-VIZ-SUITE.e W-CONCENTRIC",
-      "captures": [
-        "docs/tranches/BB/audit/visual/concentric-parity/concentric-wgpu-primary.png",
-        "docs/tranches/BB/audit/visual/concentric-parity/concentric-webgl2-fallback.png",
-        "docs/tranches/BB/audit/visual/concentric-parity/parity-record.json"
-      ],
-      "deltaE": { "mean": 0.0, "p99": 0.0 },
-      "note": "BORN WebGPU-first — a fullscreen radial-Fourier ring-interference fragment field (the aurora shape-class, the LAST new viz of Batch V): f(p,t) = Σ_j Σ_i A_i·sin(k_i·‖p−c_j‖_e − ω_i·t + φ_i), an ellipsoidal-norm radial sum over multi-centers → moiré interference, ω = √(g·k) the SAME deep-water dispersion the dot-flow-field uses (the suite's ONE Fourier vocabulary). concentric.wgsl.ts is the WebGPU-first primary (splicing the WGSL twin procedural-color.wgsl.ts); concentric.glsl.ts is the clean aurora-class WebGL2 fallback (splicing the GLSL twin procedural-color.glsl.ts). The recorded ΔE is the DEVICE-FREE STRUCTURAL PROXY: concentric is a PURE fragment field (no compute/particles), so BOTH backends evaluate ONE analytic ring-field evaluator (composables/ringField.ts sampleRingField) through ONE shared color seam — the field raster + the OKLab palette mapping are numerically identical at every (p,t) (proof:concentric clause 3 round-trips JS↔WGSL↔GLSL → mean/p99 = 0.0). UNLIKE the dot-flow-field's `degraded` density delta, concentric's fallback is the SAME pure fragment field — parity `verified`. The BINDING Metal-GPU live capture-pair (the real WebGPU swap-chain readback vs WebGL2 readPixels) rides W-REFLECT3 + re-records the empirical rasterizer-drift ΔE."
     },
     {
       "viz": "liquid-grid",

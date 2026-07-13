@@ -22,16 +22,17 @@ function cliPaths() {
     _cliPaths = {
         ROOT,
         // The W3-touched motion composables — the lift (useCountup), the
-        // dependency-free directive (vReveal), and the two FLIP-fold consumers
-        // (the drivers stay LIGHT-only). useStaggerReveal stays hand-rolled (the
-        // D1 BOOK), so it must stay value.js-free. `useStagger.ts` was MOVED to
-        // the speedtest owner at AV.W17 (zero genuine glass-ui consumer — see
-        // proof:speedtest-boundary), so it is no longer a glass-ui-guarded file.
+        // dependency-free directive (vReveal), and the hand-rolled stagger.
+        // useStaggerReveal stays hand-rolled (the D1 BOOK), so it must stay
+        // value.js-free. `useStagger.ts` was MOVED to the speedtest owner at AV.W17
+        // (zero genuine glass-ui consumer — see proof:speedtest-boundary), so it is
+        // no longer a glass-ui-guarded file. `useLayerTransition.ts` is
+        // DEFINITION-ABSENT (BI.W-DOCK-CROSSFADE — its FLIP folded to the
+        // `<DockCrossfade>` opacity overlap; there is no file to guard).
         FILES: [
             "src/composables/motion/useCountup.ts",
             "src/composables/motion/vReveal.ts",
             "src/composables/motion/useStaggerReveal.ts",
-            "src/components/custom/dock/composables/useLayerTransition.ts",
         ].map((p) => resolve(ROOT, p)),
         ARTIFACT: gateArtifactPath(
             "GLASS_UI_AV_W3_MOTION_VALUE_FREE_ARTIFACT",

@@ -242,22 +242,17 @@ export function detect() {
         // studio CHROME, not a render-background substrate page — the same exempt
         // class as glass-material/blob (demos over paper, never self-demos a field).
         if (m[1] === "fourier-studio") continue;
-        // dot-flow-field + concentric (BB.W-VIZ-SUITE) + liquid-grid + dot-matrix +
-        // goo-dot (BC.W-VIZ-SUITE/VIZ-HYBRID) + fourier-field (BC.W-VIZ-FOURIER, the
-        // three-view collapse): each NEW WebGPU-first viz mounts CONTAINED in the story
+        // liquid-grid (BC.W-VIZ-PAPERGRID) + fourier-field (BC.W-VIZ-FOURIER, the
+        // three-view collapse): each WebGPU-first viz mounts CONTAINED in the story
         // body over a calm grid/paper wash (the field is its OWN single GL/compute
         // context — the one-GL-per-route budget held), so each route DELIBERATELY
         // declares a CALM static background (grid for the viz-suite cohort, paper for
         // the fourier-field collapse) rather than self-demoing a page-background field.
         // The same exempt class as fourier-studio/blob (a contained-demo over a calm
-        // wash, never a self-demo'd page-background field — the StoryBackground kinds
-        // stay the four hero substrates aurora/blob/constellation/fourier).
+        // wash, never a self-demo'd page-background field). (dot-flow-field / concentric /
+        // dot-matrix + goo-dot RETIRED — the BI.W-VIZ-DELETIONS + BG.W-GOODOT-PRUNE prune.)
         if (
-            m[1] === "dot-flow-field" ||
-            m[1] === "concentric" ||
             m[1] === "liquid-grid" ||
-            m[1] === "dot-matrix" ||
-            m[1] === "goo-dot" ||
             m[1] === "fourier-field"
         )
             continue;

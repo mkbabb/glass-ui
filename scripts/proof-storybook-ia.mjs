@@ -58,15 +58,13 @@ export const EXPECTED_TREE = [
     // BA.W-FOURIER-STUDIO (the FOREGROUND studio — the aurora-studio idiom over a
     // Canvas2D stage; studio chrome paired with the ambient `fourier-field` sibling,
     // declares a calm paper background not a self-demo'd field — page-redesign exempt).
-    // BB.W-VIZ-SUITE / W-FLOWFIELD — the NEW WebGPU-first dot-flow-field viz appended
-    // (the manifest row sits after glass-panel). BB.W-VIZ-SUITE / W-CONCENTRIC — the
-    // NEW WebGPU-first radial-Fourier ring-interference viz appends LAST (after
-    // dot-flow-field), closing the Batch-V substrates band.
     // BC: `fourier-studio` RETIRED (BC.W-VIZ-FOURIER merged the Canvas2D three-view
     // split into the ONE WebGPU `fourier-field` view). `liquid-grid` (BC.W-VIZ-PAPERGRID)
-    // + `dot-matrix` (BC.W-VIZ-DOTMATRIX) append — the WebGPU-first viz suite.
-    // (`goo-dot` (BC.W-VIZ-HYBRID) RETIRED at BG.W-GOODOT-PRUNE — 0 external consumers.)
-    ["substrates", ["aurora", "blob", "constellation", "fourier-field", "glass-material", "glass-panel", "dot-flow-field", "concentric", "liquid-grid", "dot-matrix"]],
+    // is the KEEPER grid viz.
+    // (`goo-dot` (BC.W-VIZ-HYBRID) RETIRED at BG.W-GOODOT-PRUNE — 0 external consumers;
+    //  `dot-flow-field` / `concentric` / `dot-matrix` DELETED at BI.W-VIZ-DELETIONS — the
+    //  user-ordered clean-break prune of the 30+-attempt viz family.)
+    ["substrates", ["aurora", "blob", "constellation", "fourier-field", "glass-material", "glass-panel", "liquid-grid"]],
     // The Primitives bin split: form-controls.
     ["forms", [
         "inputs", "textarea", "checks", "slider", "number-field", "select",
@@ -99,24 +97,20 @@ export const EXPECTED_TREE = [
         "tabs", "carousel", "header-ribbon", "toc-tracking",
     ]],
     // The headline primitive's own first-class category.
-    // `morph-showcase` joined at AZ.W-MORPH-SHOWCASE (the V<->H orientation morph
-    // on the one --dock-morph-t scalar; the VT-crossfade default + the perf-gated
-    // teardrop preview). `sections` demonstrates the declarative tripartite
-    // `<DockSection>` chassis (BA.W-DOCK-SECTIONS — the descriptor-driven
-    // rail-core | section | nav zones over the in-flow controls).
-    // `cta-receive` joined at BB.B2 (W-DOCKMORPH-CTA — the external-CTA-morphs-
-    // into-dock receive seam, useDockCtaReceive composing the useLiquidReveal
-    // ElementMorph substrate FORWARD; demonstrated, not a dock-fleet edit).
-    // `dock-search` joined at BC.W-DOCK-SEARCH (the dock-as-native-dynamic-search-bar
-    // — the consumer #1 exerciser composing useDockSearch + the shipped /search
-    // useFuzzySearch matcher + the virtual-section window + the ToC scroll-to subuse).
-    // `liquid-playground` + `dock-gallery` joined at the BD dock band (the iOS-27
-    // liquid-dock spec — the dock EXPANDS into a Maps Places sheet / SPLITS into two
-    // Dynamic-Island activity islands / grows into the Apple Music player on the one
-    // useLiquidMorph engine; `dock-gallery` is the BREADTH gallery of distinct iOS
-    // surfaces the dock shape-shifts into). Both are real routed manifest stories.
-    // `siri-island` joined at the BG dock band (the Siri/Dynamic-Island dock surface).
-    ["dock", ["liquid-playground", "dock-gallery", "overview", "layers", "rail", "morph-showcase", "sections", "cta-receive", "dock-search", "siri-island"]],
+    // `sections` demonstrates the declarative tripartite `<DockSection>` chassis
+    // (BA.W-DOCK-SECTIONS — the descriptor-driven rail-core | section | nav zones over
+    // the in-flow controls). `cta-receive` joined at BB.B2 (W-DOCKMORPH-CTA — the
+    // external-CTA-morphs-into-dock receive seam). `dock-search` joined at BC.W-DOCK-SEARCH
+    // (the dock-as-native-dynamic-search-bar). `controls` (BI.W-DOCK-CONTROLS — the dock IS
+    // SegmentedTabs/ToggleGroup wearing chrome, the useSelectionGroup reference) + `overflow`
+    // (BI.W-DOCK-OVERFLOW — native scroll + scrollIntoView + fisheye-iff-fits) are the B3
+    // greenfield reference stories.
+    // BI.W-DOCK-RETIRES — `liquid-playground` / `dock-gallery` (the fission/goo spectacle,
+    // the prime UF-C3 Safari suspect), `morph-showcase` (the V↔H goo morph — the platform
+    // cannot interpolate a flex-column→row topology change; the swap is <DockCrossfade>), and
+    // `siri-island` (the Siri capability, ruling 18 terminal) are RETIRED decided-terminal
+    // (clean break, no alias — off the manifest, off this roster).
+    ["dock", ["overview", "layers", "rail", "sections", "cta-receive", "dock-search", "controls", "overflow"]],
     // BG.W-DEMO-DUP-MERGE (F7.3) — the timeline segmented/continuous member routes are
     // MERGED into `data/timeline` (the 3-<StorySection> family page); `metrics` is the
     // BG.W-DEMO-IA-REDESIGN metric-family page (metric-cell/stack/badge/pill/scrolling-text).

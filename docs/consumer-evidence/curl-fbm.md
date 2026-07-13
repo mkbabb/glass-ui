@@ -18,10 +18,12 @@ uniforms.
 
 ## Verdict
 
-`keep — shared chunk with the ≥3-consumer bar BOOKED (consumer #1 LIVE).` The
+`keep — shared chunk with the ≥2-consumer bar MET (both consumers LIVE).` The
 shared-glsl-chunk bar mirrors the AV.W2 `procedural-color.glsl.ts` precedent: a
 genuinely-shared-AND-identical math leaf the procedural surfaces splice. The curl
-operator is the SOTA flow-field warp every procedural-flow surface needs.
+operator is the SOTA flow-field warp every procedural-flow surface needs. (The
+originally-booked consumer #3 — the dot-flow-field viz — was DELETED at
+BI.W-VIZ-DELETIONS; the bar re-bases onto the ≥2 aurora + paper-grid consumers.)
 
 ## Consumers
 
@@ -47,13 +49,14 @@ operator is the SOTA flow-field warp every procedural-flow surface needs.
   booked procedural-tail WGSL chunk). PRM-static, a ≤8-tap fragment (the two counter-flow
   curl terms), no compute.
 
-- **#3 — LIVE NOW (BC.W-VIZ-DOTFLOW / W-FLOWFIELD flow-field viz).** The flow-field
-  visualization (a procedural-viz suite member): `flowField.ts` `sampleVelocity` composes the
-  SAME `curlFBM` operator (the coarse-domain braiding term) the WGSL compute kernel + the
-  GLSL fragment transcribe, the canonical curl-noise demo surface.
+- **#3 — DELETED (BI.W-VIZ-DELETIONS).** The flow-field (dot-flow-field) viz was the
+  originally-booked consumer #3 (its `flowField.ts` `sampleVelocity` composed the SAME
+  `curlFBM` operator). The 30+-attempt viz family is RETIRED by user order (clean break, no
+  alias); consumer #3 drops. The shared `curlFBM` operator + `flow.glsl.ts`/`flow.wgsl.ts`
+  KEEP — paper-grid (#2) consumes them, so the chunk is not orphaned.
 
-With consumer #1 (aurora-curl-warp LIVE) + #2 (paper-grid, the FIRST WGSL consumer) + #3
-(the flow-field viz), the ≥3-consumer bar is MET — the booking is DISCHARGED.
+With consumer #1 (aurora-curl-warp LIVE) + #2 (paper-grid, the FIRST WGSL consumer), the
+≥2-consumer bar is MET — the ≥2 `procedural-color.glsl.ts` shared-chunk precedent.
 
 The WGSL curl arm is now LIVE for paper-grid (`flow.wgsl.ts` minted, the FIRST WGSL curl
 consumer). `aurora.wgsl.ts` stays byte-untouched this cut and degrades a `warpMode: "curl"`
@@ -69,8 +72,9 @@ grep -rln 'flow\.glsl\|CURL_FBM_GLSL' src/ | grep -v '/shaders/flow\.glsl\.ts$'
 #   → src/components/custom/aurora/constants/shaders/aurora.frag.ts
 ```
 
-The ≥3-consumer bar is MET — all three consumers are LIVE (#1 aurora-curl-warp, #2 paper-grid,
-#3 the flow-field viz) — the shared-chunk escape the `procedural-color.glsl.ts` precedent
-established, now fully discharged. `proof:aurora-curl-warp` asserts the booking is recorded
-here; `proof:viz-papergrid` asserts paper-grid is the FIRST WGSL curl consumer (it mints +
+The ≥2-consumer bar is MET — both surviving consumers are LIVE (#1 aurora-curl-warp, #2
+paper-grid) — the shared-chunk escape the `procedural-color.glsl.ts` precedent established,
+now discharged onto the ≥2 bar (consumer #3, the flow-field viz, DELETED at
+BI.W-VIZ-DELETIONS). `proof:aurora-curl-warp` asserts the ≥2 bar is recorded here;
+`proof:viz-papergrid` asserts paper-grid is the FIRST WGSL curl consumer (it mints +
 splices `flow.wgsl.ts`).

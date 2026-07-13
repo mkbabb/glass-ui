@@ -25,7 +25,8 @@
 //        re-exports + wildcard `export *` recursion; `.vue` default re-exports
 //        resolve by their re-export alias without opening the SFC).
 //   M3 — no row targets a DROPPED / RENAMED subpath (`/paper-grid`, `/goo-blob`,
-//        `/goo-dot-matrix`, `/api`) — the durable catch independent of a
+//        `/goo-dot-matrix`, `/api`, + the BI.W-VIZ-DELETIONS `/dot-flow-field` /
+//        `/concentric` / `/dot-matrix`) — the durable catch independent of a
 //        package.json that may transiently lag a rename.
 //
 // Self-test bites (falsifiable, run inline every invocation): a synthetic row
@@ -54,7 +55,16 @@ const PKG = "package.json";
 // Subpaths dropped or renamed at the 5.0.0 cut — an `/api` table target must never
 // name one (the durable born-RED catch, independent of a package.json export set
 // that may transiently lag the rename's serialized apply).
-export const DROPPED_SUBPATHS = new Set(["paper-grid", "goo-blob", "goo-dot-matrix", "api"]);
+export const DROPPED_SUBPATHS = new Set([
+    "paper-grid",
+    "goo-blob",
+    "goo-dot-matrix",
+    "api",
+    // BI.W-VIZ-DELETIONS — the user-ordered clean-break prune of the 30+-attempt viz family.
+    "dot-flow-field",
+    "concentric",
+    "dot-matrix",
+]);
 
 const read = (rel) => {
     const p = resolve(ROOT, rel);

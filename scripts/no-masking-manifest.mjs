@@ -73,18 +73,13 @@ export const REGISTERED_DORMANT = [
 
 // ── Arm C — the JS single-source (stale-literal) sites ──────────────────────────
 // A composable reading a token off the live root must NOT carry a bare drift-prone
-// literal fallback duplicating the token's declared value (the 1.14/44 the
-// `useDockOrientationMorph`/`dockMorphMeasure` sites carried, whose own comments
-// record the PRIOR 1.08→1.14 drift). Single-source: import the token-mirror constant
-// from `constants.ts` (ONE JS declaration) — the gate asserts the constant is
-// imported AND the banned bare literal is GONE from the read.
+// literal fallback duplicating the token's declared value (the 44 the
+// `dockMorphMeasure` site carried, whose own comment records the drift). Single-source:
+// import the token-mirror constant from `constants.ts` (ONE JS declaration) — the gate
+// asserts the constant is imported AND the banned bare literal is GONE from the read.
+// (BI.W-DOCK-RETIRES — the `useDockOrientationMorph.ts` / `--dock-morph-max-stretch`
+// 1.14 mirror site retired with the V↔H orientation morph; DEFINITION-ABSENT.)
 export const JS_SINGLE_SOURCE = [
-    {
-        file: "src/components/custom/dock/composables/useDockOrientationMorph.ts",
-        constant: "DOCK_MORPH_MAX_STRETCH",
-        token: "--dock-morph-max-stretch",
-        banLiteral: "1.14",
-    },
     {
         file: "src/components/custom/dock/composables/dockMorphMeasure.ts",
         constant: "DOCK_TAP_FLOOR_PX",

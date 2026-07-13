@@ -78,7 +78,10 @@ export function detect() {
     const sfcCode = stripComments(sfc);
     const css =
         read("src/styles/segmented-tabs.css") || read(`${TABS_DIR}/segmented-tabs.css`);
-    const composable = read(`${TABS_DIR}/composables/useTabIndicator.ts`);
+    // BI.W-DOCK-CONTROLS — the indicator engine was PROMOTED to the ONE writer
+    // `composables/motion/useSelectionIndicator.ts` (the reader gate FOLLOWS the
+    // carve into the leaf); the axis/release/squish/center-anchor logic moved verbatim.
+    const composable = read("src/composables/motion/useSelectionIndicator.ts");
     const composableCode = stripComments(composable);
     const constants = read(`${TABS_DIR}/constants.ts`);
     const constantsCode = stripComments(constants);
@@ -292,7 +295,7 @@ export function detect() {
         /defineModel<string>\(/.test(sfc) && !/defineModel<string\s*\|\s*string\[\]>/.test(sfc),
     );
 
-    // ── 8. ui/Tabs LEFT the public surface; the dock-rail internal-keep holds. ──
+    // ── 8. ui/Tabs LEFT the public surface AND the reka substrate is retired. ──
     assert(
         "ui/Tabs retired from the root barrel (no `export * from ./components/ui/tabs`)",
         !/export\s*\*\s*from\s*["']\.\/components\/ui\/tabs["']/.test(rootBarrelCode),
@@ -301,18 +304,26 @@ export function detect() {
         "ui/Tabs retired from the ui/ barrel (no `export * from ./tabs`)",
         !/export\s*\*\s*from\s*["']\.\/tabs["']/.test(uiBarrelCode),
     );
-    // Anti-evasion: the dock-rail consumer is the recorded internal-keep — the reka
-    // substrate files remain ONLY for it (DockLayerGroup imports them + uses the
-    // :surface="false" hairline). A silent ui/Tabs public-barrel survivor reds above.
+    // BI.W-DOCK-FOLD — the reka `ui/tabs` substrate is DEFINITION-ABSENT (F2). Its
+    // sole internal consumer `DockLayerGroup` re-points onto the library's ONE headless
+    // selection engine `useSelectionGroup` (roving focus + the ONE traveling-indicator
+    // writer, Safari-identical). A resurrected `ui/tabs/` dir OR a re-added reka Tabs
+    // import in DockLayerGroup reds this arm (the reader gate FOLLOWS the carve).
     assert(
-        "dock-rail internal-keep witness: DockLayerGroup imports the reka Tabs substrate",
-        /import\s*\{[^}]*\bTabs\b[^}]*\}\s*from\s*["']\.\.\/\.\.\/ui\/tabs["']/.test(
-            dockGroup,
-        ),
+        "reka ui/tabs substrate DEFINITION-ABSENT (src/components/ui/tabs/ dir gone)",
+        !existsSync(resolve(ROOT, "src/components/ui/tabs")),
     );
-    facts.dockRailArm = /TabsIndicator/.test(dockGroup)
-        ? "internal-keep (dock-rail consumer holds)"
-        : "delete (no dock-rail consumer)";
+    assert(
+        "DockLayerGroup no longer imports the reka ui/tabs substrate",
+        !/from\s*["']\.\.\/\.\.\/ui\/tabs["']/.test(dockGroup),
+    );
+    assert(
+        "DockLayerGroup imports the headless useSelectionGroup engine",
+        /import\s*\{[^}]*\buseSelectionGroup\b[^}]*\}\s*from/.test(dockGroup),
+    );
+    facts.dockRailArm = /useSelectionGroup/.test(dockGroup)
+        ? "folded (dock-rail on useSelectionGroup — reka ui/tabs retired)"
+        : "MISSING (dock-rail engine unwired)";
 
     // ── 9. The /tabs subpath is preserved (SegmentedTabs family). ──
     const exportsKeys = Object.keys(pkg.exports ?? {});

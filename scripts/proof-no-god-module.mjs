@@ -169,7 +169,8 @@ const TRANCHE_BASELINE_MANIFEST = Object.fromEntries([
     ["styles/glass/ladder.css", 510], // drained → BI.W-STYLE-REDRAIN (452)
     ["styles/glass/surfaces.css", 508], // drained → BI.W-STYLE-REDRAIN (434)
     ["styles/tokens/dark-arm.css", 507], // drained → BI.W-STYLE-REDRAIN (455)
-    ["components/custom/aurora/composables/runtime.ts", 502], // grandfathered → BI.W-FIELD-CORE (B5 D-VIZ)
+    // aurora/composables/runtime.ts — DRAINED → BI.W-FIELD-CORE (the cursorModel retire onto
+    // the shared field + auroraCursorMapping dropped it 502 → 498, ≤500; the ratchet only drains).
 ]);
 
 /**
@@ -393,13 +394,10 @@ const RATCHET_BASELINES = {
     //    names an owning carve-successor wave whose spec RESOLVES on disk (docs/tranches/
     //    **/waves/<id>.md) — a PHANTOM successor (a drain booked to a wave that never
     //    landed) REDs the close (the FAM-12 phantom-carve-successor class made machine-
-    //    locked). property-regs.css DRAINED at BI.W-STYLE-REDRAIN (above); the ONE
-    //    remaining LIVE non-shader over-bound row:
-    //      • components/custom/aurora/composables/runtime.ts (502) → BI.W-FIELD-CORE — the
-    //        B5 D-VIZ ONE-field-core wave that drains runtime.ts's dual-path pointer model
-    //        (runtime.ts:200-211,340-410, BI.W-FIELD-CORE §Design); the phantom
-    //        BG.W-COHERENCE-CENSUS re-pointed to the REAL owning wave-spec.
-    "components/custom/aurora/composables/runtime.ts": 502, // CARVE-SUCCESSOR(BI.W-FIELD-CORE): the aurora resolve/render loop; the phantom BG.W-COHERENCE-CENSUS re-pointed to the REAL B5 D-VIZ wave that drains runtime.ts's dual-path (runtime.ts:200-211,340-410).
+    //    locked). property-regs.css DRAINED at BI.W-STYLE-REDRAIN (above); runtime.ts DRAINED
+    //    at BI.W-FIELD-CORE (the cursorModel retire onto the shared field + auroraCursorMapping
+    //    dropped 502 → 498, ≤500 — the row is DELETED, the ratchet only drains). No LIVE
+    //    non-shader over-bound row remains in this manifest.
 };
 
 let _cliPaths = null;
