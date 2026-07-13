@@ -45,9 +45,9 @@ rationale; every A/B capture pair still lands per spec so the choices stay audit
 | # | band | waves | status | task |
 |---|------|-------|--------|------|
 | 0 | PREFLIGHT | baseline gates + harnesses + worktree hygiene | pending | #81 |
-| 1 | B0-CUT | 13: ENCAP-REDRAIN · DEMO-CARD-DECLARE · STYLE-REDRAIN · BUDGET-REBASELINE · BLOB-RENAME-LAND · PI-IN-CLOSE · GESTALT-LEDGER-FILE · STAB-CLOSE · MIGRATION-TRUE-UP · DOC-CANON-REWRITE · RATCHET-GROWTH · LEDGER-DETECTOR-HARDEN · PRECUT-XR-ASKS | pending | #82 |
-| 2 | B1-GEOMETRY | 8: RADIUS-GRAMMAR · METAL-RIM-BAND · SHADOW-GRAMMAR · SHEET-RADIUS · CONFIG-IN-SHEET · BADGE-ALIGN · BP-BOTTOM-LINEAR · SCROLL-PROGRESS-RIM | pending | #83 |
-| 3 | B7-MOTION | 8: SPRING-PARITY · REGISTER-TABLE · TEMPO · ENTER-EXIT-LANDING · COMMAND-JITTER · DRAWER-PERF · ACCORDION-PRESS · DRAW-IN | pending | #84 |
+| 1 | B0-CUT | 13/13 ✅ (f1e70862…2e559f7a) | **DONE 2026-07-13** | #82 |
+| 2 | B1-GEOMETRY | 8 (7 running, SCROLL-PROGRESS-RIM waits on DOCK-SPINE): RADIUS-GRAMMAR · METAL-RIM-BAND · SHADOW-GRAMMAR · SHEET-RADIUS · CONFIG-IN-SHEET · BADGE-ALIGN · BP-BOTTOM-LINEAR · SCROLL-PROGRESS-RIM | RUNNING | #83 |
+| 3 | B7-MOTION | 8: SPRING-PARITY · REGISTER-TABLE · TEMPO · ENTER-EXIT-LANDING · COMMAND-JITTER · DRAWER-PERF · ACCORDION-PRESS · DRAW-IN | RUNNING | #84 |
 | 4 | B2-GLASS + B8-FACTOR | 14: SURFACE-EXTRACT · CLEAR-FOLD · GLASS-TOKEN-PRUNE · GLASS-DEDUP · BLUR-MUTE · OVERLAY-UNION · MENU-TRIGGER · DIALOG-PLACEMENT · CHIP-FOLD · MULTISELECT-FOLD · BUTTON-TONE · SYNONYM-RENAMES · AXES-GATES · FACTOR-ASKS | pending | #85 |
 | 5 | B3-DOCK | 11: DOCK-SPINE · TABS-FACTOR · DOCK-ESCAPE · DOCK-CONTROLS · DOCK-CROSSFADE · DOCK-OVERFLOW · DOCK-SPRING-UNIFY · DOCK-FOLD · DOCK-RETIRES · DOCK-GATE-CULL · DOCK-DEVICE | pending | #86 |
 | 6 | B4-PAGER + B5-VIZ | 13: PAGER-WORM · PAGER-A11Y · CAROUSEL-REBUILD · PAGER-RETIRES · FOURIER-RIBBON · VIZ-DELETIONS · FIELD-CORE · AURORA-VIBRANCY · CONSTELLATION-DEDUPE · STAGE-FIELD-CLAMP · AUTH-SHELL-BG · DOCK-LUMA-SHARE · E10-AURORA-ENTRANCE | pending | #87 |
@@ -88,4 +88,5 @@ verify-siblings-intact before+after any siblings-absent emulation.
 - 2026-07-12: cursor minted; task DAG #81–#95 created; guardians re-tooled to execution posture. GREENLIGHT: NO.
 - 2026-07-12 ~18:45: USER GREENLIGHT — execution begins in totality; Decision-0 ruled 5.0.0; judgments a–g delegated + ratified (above); branch tranche/BI cut @ 2c6c095d; atlas asks #21–25 routed to PRECUT-XR-ASKS.
 - 2026-07-12 B0 progress: G1 committed (STAB-CLOSE f1e70862 · ENCAP-REDRAIN 910dfffd · STYLE-REDRAIN db861d71 · GESTALT-LEDGER-FILE ac998852 · DEMO-CARD-DECLARE c396465b · LEDGER-DETECTOR-HARDEN 2f05d771); G2 committed (RATCHET-GROWTH 25f00641 · DOC-CANON-REWRITE 0ae7c21b · PI-IN-CLOSE 871ed206 · PRECUT-XR-ASKS 90d4d8bf + registrar d75197af). B0 10/13; G3+G4 running.
+- 2026-07-13 ~00:20: **B0-CUT DONE 13/13** — the cut-blocker band is closed (blob rename EXECUTED, MIGRATION disk-true 199, budget green, pi-attestation + operative-close oracles born-RED armed, XR roster + Decision-0 outbound filed). B1 (7) + B7 (8) launched in parallel.
 - 2026-07-12 ~23:30 THE MARKING PASS (user: "all must be marked and heard… hic et ubique"): every inbound communiqué marked; value.js producer reds owned BY NAME — BLOB-SEAMS + XR-PRODUCER-REPAIRS minted (**93 waves**; B4+B5=14, B8-PRUNES=15), 6 specs patched with §Inbound acceptance constraints (1db3ff92); INBOUND-MARKS.md + proof:inbound-marks land with the archive-sweep fold; RECAP ADDENDUM 5.
