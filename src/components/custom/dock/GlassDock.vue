@@ -5,11 +5,11 @@
 // morph orchestrator's OWN spring settle (`morphing`, dockMorphContext) —
 // BG.NF.1 W-FALLBACK-EXCISE excised the CSS-transition-era wrong-clock settle timer +
 // dead `@transitionend` resolver (useDockMorphWindow). The collapsed-pill touch-gate
-// lives in ./composables/useDockTouchGate; the fission split-facility wiring lives in
-// ./composables/useDockFissionWiring (BG.W-DOCK-DECOMPOSE — the F6.5
-// one-writer-per-concern carve). This SFC composes the dual-layer grid, the
+// lives in ./composables/useDockTouchGate. This SFC composes the dual-layer grid, the
 // axis-aware expand/collapse transition, and the pointer/focus hold machinery.
-import { computed, onMounted, ref, useId, useSlots, useTemplateRef, watch } from "vue";
+// BI.W-DOCK-RETIRES — the fission split facility is DEFINITION-ABSENT (decided-terminal;
+// clean break, no alias — demo-only spectacle + the prime UF-C3 Safari suspect).
+import { computed, onMounted, ref, useId, useTemplateRef, watch } from "vue";
 // AZ.W-ADAPTIVE-AUTO Arm 2 (H3 arm a) — the sampled-luminance observer is wired ON by
 // DEFAULT for the dock (the surface the user reported unreadable over light, and the
 // one most often over a live/bright backdrop). It REFINES the W55 declarative bucket +
@@ -28,9 +28,13 @@ import {
 import { useDockExpandedSize } from "./composables/dockMorphMeasure";
 import { useDockShellProps, type DockProps } from "./composables/useDockShellProps";
 import { useDockClickIntegrity } from "./composables/useDockClickIntegrity";
-import { useDockItemDrag } from "./composables/useDockItemDrag";
 import { useDockTouchGate } from "./composables/useDockTouchGate";
-import { useDockFissionWiring } from "./composables/useDockFissionWiring";
+// BI.W-DOCK-OVERFLOW — the fits-vs-scrollable mode signal. An RO measures the active
+// full layer's inline overflow and toggles `[data-dock-overflow]` on the dock root, so
+// overflow.css's native scroll track + FadingScroll mask engage ONLY when the row exceeds
+// the cap (at rest the mask is `none` — T-52 a) and fisheye.css gates on its absence (the
+// exclusive-mode ruling). ZERO scroll listener (RO + a light MutationObserver only — O5/G9).
+import { useDockOverflowFit } from "./composables/useDockOverflowFit";
 
 /* AZ R4-RAIL attrs contract — the `.glass-dock-frame` shell is STRUCTURAL chrome
    (the rail's non-clipping positioning context), never the consumer's surface.
@@ -57,11 +61,6 @@ defineOptions({ inheritAttrs: false });
    `?? default` read-site pattern in useDockShellProps). */
 const props = withDefaults(defineProps<DockProps>(), { autoLuminance: true });
 
-/* BD.W-DOCK-CORE (A12) — the draggable-items reorder emit (additive; fires only on a
-   committed pull when `:draggable-items` is armed). The consumer wires it to its own
-   item-order model — the single source of truth (the DOM move is the VISUAL commit). */
-const emit = defineEmits<{ "update:order": [from: number, to: number] }>();
-
 /* The resolved shell-prop computeds — shape/orientation/density, the collapse
    surface (`collapseDelay`/`startCollapsed`/`layoutValue`), the intrinsic
    scroll-overflow class (BG.W-DOCK-CAP-SCROLL-FADE — `scrollClass` is
@@ -86,6 +85,15 @@ const layout = layoutValue;
 
 const dockEl = useTemplateRef<HTMLElement>("dockEl");
 const layersEl = useTemplateRef<HTMLElement>("layersEl");
+
+// BI.W-DOCK-OVERFLOW — the native-scroll-track mode signal (the universal floor). The RO
+// toggles `[data-dock-overflow]` when the active full layer's over-cap inline content
+// exceeds its clamped port, so the scroll track + FadingScroll edge mask (overflow.css)
+// engage only when scrollable and the mask is honestly `none` at rest (T-52 a). The
+// scrollIntoView recenter CALL lives in useSelectionGroup (W-DOCK-CONTROLS); this owns the
+// FACILITY. The fisheye enhancement is opt-in (fisheye.css / useDockFisheye, parked behind
+// the W-DOCK-DEVICE 60fps verdict) and reads the SAME signal via `:not([data-dock-overflow])`.
+useDockOverflowFit(dockEl);
 
 /* AZ.W-ADAPTIVE-AUTO Arm 2 (H3 arm a) — wire the sampled-luminance observer ON for
    the dock by default. It writes `--glass-backdrop-luma` + derives the
@@ -154,23 +162,14 @@ provideDockContext({
 
 const visualExpanded = computed(() => alwaysExpanded.value || expanded.value);
 
-/* AZ.W-RAIL-EXTEND (R4-1) — the `#rail` chrome PERSISTENCE shell. The dock's
-   `contain: paint`/`backdrop-filter`/overflow clip swallows a dock-CHILD rail, so the
-   rail renders as a `.glass-dock` SIBLING anchored to the non-clipping
-   `.glass-dock-frame` wrapper (present ONLY when a `#rail` is authored → no-rail docks
-   are byte-identical). See the CLAUDE.md dock-rail section for the full clip rationale. */
-const slots = useSlots();
-const hasRail = computed(() => !!slots.rail);
-
-/* BC.W-DOCK-STACK-RAIL — the `#rail` slot is a `position:absolute` sibling of
-   `.glass-dock` anchored to the non-clipping `.glass-dock-frame` escape. The macOS
-   hover-expand stack (`<DockStack>`) seats at the dock EDGE (its own `position`
-   start/end), extending into its gutter — NOT a measured `<DockSeparator anchor>`
-   divider seam. The divider-carousel's `measureSeam()` seam-locator (+ the
-   `--dock-rail-seam-offset` write) is RETIRED with the chip-strip — the stack needs no
-   layout read; its geometry is the kept frame escape + the `--dock-rail-extend-length`
-   gutter reach (stack-rail.css). `frameEl` stays as the slot's positioning anchor. */
-const frameEl = useTemplateRef<HTMLElement>("frameEl");
+/* BI.W-DOCK-ESCAPE — the `.glass-dock-frame` `display:contents` escape + the `#rail` slot
+   RETIRE. The dock's satellite fan / facet strip / menus / search now render as TOP-LAYER
+   `popover` surfaces (`<DockStack>` composes `useDockPopover`), exempt from ancestor
+   clip/contain/transform BY SPEC — there is nothing to escape from, so the hand-rolled
+   non-clipping sibling frame + its `railProjection.ts` ring math are gone (PASS-4B ruling
+   4). The SPINE plate carries the clip via `clip-path`; `.glass-dock` no longer paints-
+   clips (contain:layout, not paint), so the fission bridge (retired in W-DOCK-RETIRES)
+   renders as a plain `.glass-dock` child — the removed frame is not needed to escape. */
 
 /* AX.W02 — ONE morph orchestrator per dock. W01 established the single-scalar
    `--dock-morph-t` spring; W02 folds the outer collapse↔expand pair AND every
@@ -284,41 +283,6 @@ watch(visualExpanded, (isExpanded) => {
     }
 });
 
-/* BG.W-DOCK-DECOMPOSE — the fission split facility (A13 / II.2). Armed ONLY when
-   `:splittable` (additive default-off → byte-identical to HEAD otherwise). The
-   split-signature/placement refs, the piece auto-registration + detach vectors, the
-   drag-to-split pointer state, and the imperative split/merge/toggle surface all live
-   in the wiring leaf — a CONSUMING seam BESIDE the morph engine (box-INVIOLATE; it
-   never writes `--dock-morph-t`, only the fission's own `--dock-split-t` cohort). */
-const {
-    fissioned: isFissioned,
-    onDockPointerMove,
-    onDockPointerDown,
-    onDockPointerUp,
-    split,
-    merge,
-    toggleSplit,
-} = useDockFissionWiring({
-    rootEl: dockEl,
-    frameEl,
-    splittable: props.splittable === true,
-    splitContext: () => props.splitContext,
-    splitPlacement: () => props.splitPlacement,
-});
-
-/* BD.W-DOCK-CORE (A12) — the draggable-ITEMS axis. Armed ONLY when `:draggable-items`;
-   a non-draggable dock mints ZERO gesture (the `enabled()` gate keeps the listener off).
-   WIRES the shipped `useDragMorph` (follow + tanh squish + fling-to-nearest) — no second
-   drag engine. The grab decorates the dock root `.glass-drag-grabbable` so the cursor
-   reads grabbable; the grabbed item carries `.glass-drag-lift` during the gesture. */
-const itemDrag = useDockItemDrag({
-    rootEl: dockEl,
-    enabled: () => props.draggableItems === true,
-    axis: () => (orientation.value === "vertical" ? "y" : "x"),
-    onReorder: (from, to) => emit("update:order", from, to),
-});
-const itemsDragging = itemDrag.dragging;
-
 defineExpose({
     expanded,
     isPinned,
@@ -328,37 +292,18 @@ defineExpose({
     collapse,
     keepOpen,
     release,
-    /* BD.W-DOCK-CORE (A13) — the fission control surface (no-ops on a non-splittable dock). */
-    split,
-    merge,
-    toggleSplit,
-    fissioned: isFissioned,
 });
 </script>
 
 <template>
-    <div
-        ref="frameEl"
-        class="glass-dock-frame"
-        :class="orientation"
-        :data-has-rail="hasRail || undefined"
-        :data-splittable="splittable || undefined"
-        :data-fissioned="isFissioned || undefined"
-    >
-<!--
-        AZ.W-RAIL-EXTEND (R4-1) — the dock is ALWAYS wrapped in a thin shell, but the
-        shell is `display: contents` (layout-transparent, byte-identical) UNTIL a
-        `#rail` is authored, at which point it becomes a NON-clipping positioning
-        context (`data-has-rail`). The `<DockRail>` then renders as a SIBLING of
-        `.glass-dock` (NOT a descendant), anchored to this shell, so it escapes the
-        dock's `contain: paint` + `backdrop-filter` + `overflow` clip and its hairline
-        VISIBLY overruns the dock edge (the R4-1 fix — a dock CHILD can never paint past
-        the containment box, the cause of the clipped "black blob"). The dock's own
-        position-mode (`fixed`/`sticky`/`inline`) stays on `.glass-dock`; the
-        `display:contents` shell does not interpose a box on the no-rail path. Rail
-        consumers are inline vertical docks (SidebarDock, the dock/rail story).
+    <!--
+        BI.W-DOCK-ESCAPE — `.glass-dock` is the ROOT (the `.glass-dock-frame`
+        `display:contents` escape RETIRED). The rail/fan/menu/search surfaces are now
+        TOP-LAYER `popover` elements (spec-exempt from ancestor clip/contain/transform),
+        so there is nothing to escape from — no non-clipping sibling frame, no `#rail`
+        slot. The fission bridge (retired in W-DOCK-RETIRES) renders as a `.glass-dock`
+        child (post-SPINE the box is contain:layout, not paint — it does not clip it).
     -->
-
     <div
         ref="dockEl"
         v-bind="$attrs"
@@ -369,8 +314,7 @@ defineExpose({
             `layout-${layout}`,
             scrollClass,
             { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded, 'dock-overflow-wrap': overflow === 'wrap' && orientation !== 'vertical' },
-            { 'glass-drag-grabbable': draggableItems && !itemsDragging, 'dock-items-draggable': draggableItems },
-            position === 'fixed' ? 'fixed bottom-(--dock-pos) left-1/2 -translate-x-1/2'
+            position === 'fixed' ? 'fixed bottom-(--dock-pos) inset-x-0 mx-auto w-max'
               : position === 'sticky' ? 'dock-sticky'
               : 'dock-inline',
         ]"
@@ -388,11 +332,27 @@ defineExpose({
         @touchend="onTouchEnd"
         @pointerdown.capture="onPointerDownCapture"
         @click.capture="onClickCapture"
-        @pointermove="splittable ? onDockPointerMove($event) : undefined"
-        @pointerdown="splittable ? onDockPointerDown($event) : undefined"
-        @pointerup="splittable ? onDockPointerUp() : undefined"
-        @pointercancel="splittable ? onDockPointerUp() : undefined"
     >
+        <!--
+            BI.W-DOCK-SPINE — L0 THE PLATE (the lens). One absolute, non-interactive
+            (aria-hidden, decoration) element that owns backdrop-filter + the glass surface
+            + rim + grain, and whose VISIBLE EXTENT morphs via clip-path off the ONE
+            plate-scoped `--dock-t` (dock/dock.css). It seats at z-index:-1 within the box's
+            stacking context (below the in-flow control run, above the box's drop-shadow),
+            a SIBLING of the controls — never their ancestor — so a control hover plate
+            overhangs the plate edge UN-CLIPPED (UF-C6/C7). The box (`.glass-dock`) is now
+            structural (layout + the drop-shadow elevation); the plate is the surface.
+        -->
+        <div class="dock-plate" aria-hidden="true"></div>
+
+        <!--
+            BI.W-DOCK-SPINE — L1 THE CONTROLS. The normal-flow control run OVER the plate.
+            `display: contents` (dock/dock.css) so it GROUPS the controls the SFC places
+            WITHOUT interposing a flex context — the controls stay direct flex children of
+            `.glass-dock` (the layout is byte-identical to HEAD), and NO ancestor clips them
+            (`overflow: visible` both axes; the box carries no clip/contain).
+        -->
+        <div class="dock-controls">
         <!--
             AX.W45 D13-a — the PERSISTENT region. The `#persistent` slot is a root
             flex SIBLING of the morph-region, in-flow in BOTH collapsed AND expanded,
@@ -410,8 +370,9 @@ defineExpose({
             BG.W-GLASS-CLIP-DISCIPLINE (absorbs W-DOCK-CAST-RETIRE) — the kinetic
             `.cartoon-cast` offset-shadow child is RETIRED from the dock (the
             self-defeating maroon-halo mechanism, D3). The dock's elevation is
-            carried by `--shadow-dock` + `--glass-key` (shape.css). The box PUNCH
-            keeps its `--dock-punch-stretch` squash on the `scale:` channel.
+            carried by `--shadow-dock` + `--glass-key` (shape.css). BI.W-DOCK-SPRING-UNIFY
+            (SU2) — the cartoon box-punch is RETIRED; the morph carries ONE
+            deformation-free `--dock-size-scale` box morph on the `scale:` channel.
         -->
         <div v-if="$slots.persistent" class="dock-persistent">
             <slot name="persistent" />
@@ -470,46 +431,25 @@ defineExpose({
             </div>
         </div>
 
-    </div>
-
-    <!-- BD.W-DOCK-CORE (A13 / II.2 — F-1, THE HEADLINE ASSEMBLY) — the fission BRIDGE,
-         rendered as a SIBLING of `.glass-dock` inside the non-clipping `.glass-dock-frame`
-         (the SAME escape the rail uses) so the detached ISLAND + the goo NECK paint
-         OUTSIDE the dock's `contain: paint` clip box — beside/above/below the source pill.
-         The prior build rendered the bridge INSIDE `.glass-dock`, so the island could never
-         leave the dock box (the empty-bridge / nothing-detaches F-1 defect). It carries the
-         goo NECK (a stretching gel filament from the source edge to the island) + the
-         sibling ISLAND plate (the SECOND dock the pieces fly into) + the ripple/merge-
-         splash jubilance (`::before`/`::after`). The SHIPPED ONE `<GooFilter>` mount supplies the
-         goo `<filter>` the bridge applies via the REGULAR `filter` property (Safari). -->
-    <div
-        v-if="splittable"
-        class="dock-fission-bridge"
-        :class="[orientation, `place-${splitPlacement ?? 'beside'}`]"
-        :aria-hidden="!isFissioned || undefined"
-    >
-        <div class="dock-fission-neck" aria-hidden="true" />
-        <!-- The SECOND DOCK plate. When the consumer authors a `#split` slot, the detached
-             controls render HERE (the island IS their new dock — the source pill's marked
-             pieces fade/retract as these arrive, so the content visibly MIGRATES from the
-             source pill into the sibling island). The slot is interactive only while
-             fissioned (inert otherwise); a bare island (no slot) is a pure visual plate. -->
-        <div class="dock-fission-island" :inert="!isFissioned || undefined">
-            <slot name="split" :fissioned="isFissioned" />
+        <!--
+            BI.W-DOCK-CONTROLS (atlas M25 #persistent-end) — the TRAILING persistent
+            region, the mirror of the leading `#persistent` slot. A stable, always-
+            present control cluster on the TRAILING edge (the iOS trailing-utility
+            group), in-flow in BOTH collapsed AND expanded, NEVER `:inert`, NEVER a
+            crossfade pane — it holds steady beside the expand-on-demand content
+            while the morph aperture animates on the ONE spring. Rendered only when
+            authored, so a dock with no trailing persistent controls is byte-identical
+            to before. The greenfield dock ships BOTH persistent slots natively.
+        -->
+        <div
+            v-if="$slots['persistent-end']"
+            class="dock-persistent dock-persistent-end"
+        >
+            <slot name="persistent-end" />
         </div>
-    </div>
-
-    <!--
-        AZ.W-RAIL-EXTEND (R4-1) — the `#rail` CHROME slot, rendered as a SIBLING of
-        `.glass-dock` inside the `.glass-dock-frame` (NOT a dock descendant). The
-        `.dock-hairline-slot` is `position: absolute` relative to the shell, so the
-        dock's `contain: paint` + `backdrop-filter` + `overflow` clip never reaches it
-        and the `<DockRail>` hairline VISIBLY overruns the dock edge + its context
-        end-icon PERSISTS when the dock collapses (G2 — the persistence the in-pane
-        switcher rail lacks; the R4-1 escape the dock-child render could not achieve).
-    -->
-    <div v-if="hasRail" class="dock-hairline-slot" :class="orientation">
-        <slot name="rail" />
-    </div>
+        </div>
+        <!-- /L1 .dock-controls (BI.W-DOCK-SPINE) -->
+        <!-- BI.W-DOCK-RETIRES — the fission BRIDGE + `#split` slot are DEFINITION-ABSENT
+             (the whole fission facility retired decided-terminal; clean break, no alias). -->
     </div>
 </template>

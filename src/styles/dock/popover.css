@@ -1,0 +1,249 @@
+/* dock/popover.css — BI.W-DOCK-ESCAPE — the top-layer dock popover fan.
+ *
+ * The dock's satellite fan / facet strip renders as a native `popover` surface promoted to
+ * the TOP LAYER on show (`useDockPopover` — the JS one-shot placement). The top layer is
+ * exempt from ancestor `overflow`/`clip`/`contain`/`transform`/`filter` BY SPEC, so the fan
+ * paints OVER the dock body past every former clip line — the retired `.glass-dock-frame`
+ * `display:contents` escape + the `railProjection.ts` φ²-crossing ring math are gone (there
+ * is nothing to escape from once the surface is in the top layer). The dock box is
+ * INVIOLATE: the fan is a fixed-positioned top-layer element that feeds NO size into it.
+ *
+ * PLACEMENT is the JS one-shot ONLY (`position: fixed; top/left` written by useDockPopover
+ * off `getBoundingClientRect`). This file owns the SURFACE + layout + the enter/exit bloom —
+ * NEVER `anchor-name`/`position-anchor`/`@position-try` (the banked native arm is absent;
+ * the SAF-1 Safari-transform-chain fence holds by construction).
+ *
+ * @import-ed by dock.css into the SAME `@layer components` as the other partials. */
+@layer components {
+    :root {
+        /* The macOS-stack tuning tokens (re-expressed via @theme — Tailwind-first). */
+        --dock-stack-stagger: 26ms; /* the per-member fan delay (× var(--i)) */
+        --dock-stack-gap: calc(0.375rem * var(--dock-scale, 1));
+        --dock-stack-member-size: calc(2rem * var(--dock-scale, 1));
+        /* The per-facet accent strength (facets mode) — the BB.W-GLASS-ACCENT ≤55% rim
+           ceiling whisper; the warm-cream core + AA legibility survive. A consumer retunes
+           the carousel's accent intensity from one `:root`/scope override. */
+        --dock-facet-accent-strength: 48%;
+        /* KEPT for density.css's `--dock-content-safe-inset` content-gutter key: the fan's
+           outward reach the demo `<main>` scroll-padding clears from the content side. The
+           fan is top-layer (never inflates the dock), but a bottom/side dock still overhangs
+           its gutter, so the content reserve remains ~3 member cells. */
+        --dock-rail-extend-length: calc(
+            3 * var(--dock-stack-member-size) + 2 * var(--dock-stack-gap)
+        );
+    }
+
+    /* ── The in-flow anchor cluster ─────────────────────────────────────────────────
+       The `.dock-stack` root holds the CORE anchor (a normal dock control) in flow — ZERO
+       gutter presence, ZERO box growth. The fan is the top-layer popover below. */
+    .dock-stack {
+        display: inline-flex;
+        align-items: center;
+    }
+    .dock-stack-core {
+        flex: 0 0 auto;
+    }
+
+    /* ── THE FAN — the top-layer popover surface ────────────────────────────────────
+       Reset the UA popover box (centered `inset:0; margin:auto`) so the JS one-shot
+       `top`/`left` win, and paint the floating glass strip. NO anchor CSS. */
+    .dock-stack-fan[popover] {
+        margin: 0;
+        inset: auto;
+        border: 0;
+        padding: calc(0.25rem * var(--dock-scale, 1));
+        background: transparent;
+        overflow: visible;
+        display: flex;
+        gap: var(--dock-stack-gap);
+        /* The enter/exit BLOOM — compositor-only (scale/opacity), on the --spring-dock
+           clock, from the anchor edge. `@starting-style` + `allow-discrete` carry the
+           native popover display:none↔flex transition (the modern top-layer entrance —
+           NO class-toggle race). */
+        opacity: 0;
+        scale: 0.92;
+        transition:
+            opacity var(--duration-fast) var(--ease-out),
+            scale var(--spring-dock-duration) var(--spring-dock),
+            overlay var(--spring-dock-duration) allow-discrete,
+            display var(--spring-dock-duration) allow-discrete;
+    }
+    .dock-stack-fan[popover]:popover-open {
+        opacity: 1;
+        scale: 1;
+    }
+    @starting-style {
+        .dock-stack-fan[popover]:popover-open {
+            opacity: 0;
+            scale: 0.92;
+        }
+    }
+    /* Fan from the anchor edge — vertical dock fans a ROW to the inline-end, a horizontal
+       (bottom) dock fans a COLUMN upward. The transform-origin biases the bloom toward the
+       anchor. */
+    .dock-stack-fan.vertical {
+        flex-direction: row;
+        align-items: center;
+        transform-origin: left center;
+    }
+    .dock-stack-fan:not(.vertical) {
+        flex-direction: column;
+        align-items: center;
+        transform-origin: center bottom;
+    }
+    .dock-stack-fan-scroll {
+        display: flex;
+        gap: var(--dock-stack-gap);
+    }
+    .dock-stack-fan.vertical .dock-stack-fan-scroll {
+        flex-direction: row;
+    }
+    .dock-stack-fan:not(.vertical) .dock-stack-fan-scroll {
+        flex-direction: column;
+    }
+    .dock-stack-fan[data-wrap] .dock-stack-fan-scroll {
+        flex-wrap: wrap;
+        max-inline-size: calc(
+            var(--dock-stack-member-size) * 3 + var(--dock-stack-gap) * 2 +
+                calc(0.5rem * var(--dock-scale, 1))
+        );
+    }
+
+    /* ── The members — FULLY-VISIBLE glass icons (never shadowed half-tucked chips) ──
+       Each member is a `--glass-bg-floating` tier icon with the catch-light rim. They
+       stagger IN on the fan bloom (per-member `--i` delay). */
+    .dock-stack-fan .dock-stack-member {
+        flex: 0 0 auto;
+        inline-size: var(--dock-stack-member-size);
+        block-size: var(--dock-stack-member-size);
+        background: var(--glass-bg-floating);
+        backdrop-filter: var(--glass-blur-floating);
+        -webkit-backdrop-filter: var(--glass-blur-floating);
+        box-shadow:
+            var(--glass-edge-light),
+            var(--glass-specular),
+            0 2px 6px -2px color-mix(in srgb, var(--shadow-color) 22%, transparent);
+        border-radius: var(--radius-pill);
+        color: color-mix(in srgb, var(--dock-fg-on-aurora, var(--foreground)) 88%, transparent);
+        /* the per-member stagger IN — compositor-only opacity/scale, delayed by reading
+           order (the fan bloom carries the group; this adds the cascade). */
+        opacity: 0;
+        scale: 0.7;
+        transition:
+            opacity var(--duration-fast) var(--ease-out)
+                calc(var(--dock-stack-stagger) * var(--i, 0)),
+            scale var(--spring-dock-duration) var(--spring-dock)
+                calc(var(--dock-stack-stagger) * var(--i, 0)),
+            background-color var(--duration-fast) var(--ease-standard),
+            box-shadow var(--duration-fast) var(--ease-standard);
+    }
+    .dock-stack-fan:popover-open .dock-stack-member {
+        opacity: 1;
+        scale: 1;
+    }
+    @starting-style {
+        .dock-stack-fan:popover-open .dock-stack-member {
+            opacity: 0;
+            scale: 0.7;
+        }
+    }
+    .dark .dock-stack-fan .dock-stack-member {
+        box-shadow:
+            var(--glass-edge-light-dark),
+            var(--glass-specular-dark),
+            0 2px 6px -2px color-mix(in srgb, var(--shadow-color) 30%, transparent);
+    }
+    /* The hover/active register — the plate firms, the glyph wakes (the selected-reads-as-
+       glass tier, W-REGISTER-IOS; NEVER a saturated brand hue). */
+    .dock-stack-fan .dock-stack-member:hover {
+        background: var(--dock-control-hover-bg, var(--glass-bg-resting));
+        color: var(--dock-fg-on-aurora, var(--foreground));
+    }
+    .dock-stack-fan .dock-stack-member.is-active {
+        background: var(--dock-control-active-bg, var(--glass-bg-floating));
+        color: var(--dock-fg-on-aurora, var(--foreground));
+        box-shadow:
+            var(--glass-edge-light),
+            var(--glass-specular),
+            0 0 0 1px color-mix(in srgb, var(--foreground) 12%, transparent),
+            0 3px 8px -2px color-mix(in srgb, var(--shadow-color) 28%, transparent);
+    }
+    .dark .dock-stack-fan .dock-stack-member.is-active {
+        box-shadow:
+            var(--glass-edge-light-dark),
+            var(--glass-specular-dark),
+            0 0 0 1px color-mix(in srgb, var(--foreground) 18%, transparent),
+            0 3px 8px -2px color-mix(in srgb, var(--shadow-color) 36%, transparent);
+    }
+    .dock-stack-fan .dock-stack-member svg {
+        inline-size: 0.875rem;
+        block-size: 0.875rem;
+        flex-shrink: 0;
+    }
+
+    /* ── The FACET-carousel mode (BB.W-GLASS-ACCENT) ─────────────────────────────────
+       Each chip carries its OWN `--glass-accent` hue (written per-chip by DockStack in
+       facets mode), so the strip reads as a row of distinct accent-tinted contexts — the
+       accent mixes into the rim + a soft chromatic glint (the SAME `color-mix(in oklab, …)`
+       seam `glass/rim.css` composes; NOT a plate fill). At the resting transparent/0%
+       no-op this is byte-identical to the stack member (presets-in-consumers — the facet
+       hue is the consumer's context color, never a library token). */
+    .dock-stack-fan .dock-facet-chip {
+        --dock-facet-rim-ink: color-mix(
+            in oklab,
+            var(--glass-rim-ink, hsl(0 0% 100% / 0.3)),
+            var(--glass-accent) var(--glass-accent-strength, 0%)
+        );
+        box-shadow:
+            inset 0 1px 0 var(--dock-facet-rim-ink),
+            var(--glass-specular),
+            0 0 0 1px color-mix(in oklab, transparent, var(--glass-accent) var(--glass-accent-strength, 0%)),
+            0 2px 6px -2px color-mix(in srgb, var(--shadow-color) 22%, transparent);
+    }
+    .dark .dock-stack-fan .dock-facet-chip {
+        --dock-facet-rim-ink: color-mix(
+            in oklab,
+            var(--glass-rim-ink, hsl(0 0% 100% / 0.4)),
+            var(--glass-accent) var(--glass-accent-strength, 0%)
+        );
+        box-shadow:
+            inset 0 1px 0 var(--dock-facet-rim-ink),
+            var(--glass-specular-dark),
+            0 0 0 1px color-mix(in oklab, transparent, var(--glass-accent) var(--glass-accent-strength, 0%)),
+            0 2px 6px -2px color-mix(in srgb, var(--shadow-color) 30%, transparent);
+    }
+    .dock-stack-fan .dock-facet-chip.is-active {
+        background: var(--dock-control-active-bg, var(--glass-bg-floating));
+        box-shadow:
+            inset 0 1px 0 var(--dock-facet-rim-ink),
+            var(--glass-specular),
+            0 0 0 1px color-mix(in oklab, color-mix(in srgb, var(--foreground) 12%, transparent), var(--glass-accent) var(--glass-accent-strength, 0%)),
+            0 3px 8px -2px color-mix(in srgb, var(--shadow-color) 28%, transparent);
+    }
+    .dark .dock-stack-fan .dock-facet-chip.is-active {
+        box-shadow:
+            inset 0 1px 0 var(--dock-facet-rim-ink),
+            var(--glass-specular-dark),
+            0 0 0 1px color-mix(in oklab, color-mix(in srgb, var(--foreground) 18%, transparent), var(--glass-accent) var(--glass-accent-strength, 0%)),
+            0 3px 8px -2px color-mix(in srgb, var(--shadow-color) 36%, transparent);
+    }
+
+    /* PRM — the fan SNAPS to terminal (the fade survives, the transform + stagger drop —
+       P6 / proof:no-layout-animation PRM carve). */
+    @media (prefers-reduced-motion: reduce) {
+        .dock-stack-fan[popover] {
+            scale: 1;
+            transition:
+                opacity var(--duration-fast) linear,
+                overlay var(--duration-fast) allow-discrete,
+                display var(--duration-fast) allow-discrete;
+        }
+        .dock-stack-fan .dock-stack-member {
+            scale: 1;
+            transition:
+                opacity var(--duration-fast) linear,
+                background-color var(--duration-fast) var(--ease-standard),
+                box-shadow var(--duration-fast) var(--ease-standard);
+        }
+    }
+}

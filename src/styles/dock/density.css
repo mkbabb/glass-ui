@@ -383,8 +383,11 @@
            its control than the `:root` default (the A-9 close). The `dock-label`
            font-size is `calc(--dock-control-size * --dock-label-ratio)`; the cockpit
            tunes the ratio DOWN so a 2.75rem cockpit control carries a label sized for
-           the dense strip, not the comfortable-default proportion. */
-        --dock-label-ratio: 0.42;
+           the dense strip, not the comfortable-default proportion.
+           BI.W-DOCK-CONTROLS (§Inbound speedtest) — adopts the consumer-calibrated
+           0.275 (their measured cockpit ask; was 0.42) so the greenfield cockpit
+           matches the shipped speedtest SurveyResultDock label proportion. */
+        --dock-label-ratio: 0.275;
         /* RE-RESOLVE the density-painted glyph tokens against the cockpit
            `--dock-layer-height` (the same substitution-vs-inheritance trap the
            `.glass-dock[data-size]` re-resolve below fixes — a `[data-preset]`

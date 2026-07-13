@@ -8,81 +8,88 @@
  * never re-authored), and the W45 D15 single coarse-pointer `--dock-scale`
  * multiplier.
  *
- * BG.W-DOCK-CAP-SCROLL-FADE — the `overflow="scroll"` opt-in is RETIRED (clean
- * break). A capped axis is INTRINSICALLY a scroll axis: `.dock-scroll-x` is
- * emitted on EVERY horizontal dock (scrollClass in useDockShellProps), and the
- * VERTICAL block-axis scroll folds into the unconditional cap-derived rule in
- * shell.css (the `.dock-scroll-y` opt-in class is gone — ONE home). The scroll
- * port's CROSS axis is `overflow-*: clip` + `overflow-clip-margin:
- * var(--dock-control-safe-inset)` — the mechanically-honest cross-axis un-clip
- * (CSS Overflow §3 forces a `visible` sibling of an `auto` axis to compute to
- * `auto`, so the prior `visible` pin was a latent NO-OP; `clip` is NOT a scroll
- * value so §3 leaves it alone, and the clip-margin extends the paint region
- * outward by the inset budget so the 1.1× hover plate paints past the track).
- * The geometric inset (`--dock-control-safe-inset`, the 80%-of-cell plate) stays
- * the PRIMARY lozenge guard; the clip-margin is belt-and-suspenders.
+ * BI.W-DOCK-OVERFLOW — the GREENFIELD native scroll track (PASS-1 §2.5). A capped
+ * axis is INTRINSICALLY a scroll axis: `.dock-scroll-x` is emitted on EVERY
+ * horizontal dock (scrollClass in useDockShellProps), and the VERTICAL block-axis
+ * scroll folds into the unconditional cap-derived rule in shell.css. The clip-era
+ * band-aids RETIRE (clean break): the cross-axis `overflow-clip-margin` fudge + the
+ * NO-OP `overflow-y: clip` pin + the `.dock-layers` re-clip are GONE — post-SPINE the
+ * L0 `.dock-plate` `clip-path` owns the silhouette, the L1 controls run is
+ * `overflow: visible`, and the scroll port clips ONLY its own over-cap inline content.
+ * Two EXCLUSIVE modes (PASS-4B ruling 1, never composed): FITS (`:not([data-dock-
+ * overflow])`) is `overflow-x: visible` + `mask-image: none` (the fisheye's branch);
+ * OVERFLOW (`[data-dock-overflow]`, set by `useDockOverflowFit`'s RO) is
+ * `overflow-x: auto` + the `<FadingScroll>` edge mask, fisheye OFF. The cross axis is
+ * honestly `visible` (the ring-room reserved via the `--dock-scroll-safe-inset`
+ * padding/negative-margin no-clip idiom — T-52 b), and `scroll-padding-inline` gutters
+ * the `scrollIntoView` recenter.
  *
- * @import-ed by dock.css in cascade order, in the SAME `@layer components` — the
- * carve is isomorphic (same layer, same source order → ZERO visual delta). */
+ * @import-ed by dock.css in cascade order, in the SAME `@layer components`. */
 
 @layer components {
-    /* ── Intrinsic inline scroll port (horizontal docks, `.dock-scroll-x`) ──
-       Every horizontal dock wears `.dock-scroll-x`; the port scrolls its
-       over-cap inline content but stays inert under the `--dock-max-inline-size`
-       cap. The rounded pill masks the scroll edge; both axes keep their cap. */
+    /* ── The native inline scroll TRACK (BI.W-DOCK-OVERFLOW, PASS-1 §2.5) ──
+       The GREENFIELD overflow facility: a DISTINCT inner scroll track. The
+       clip-era band-aids are GONE (the `overflow-clip-margin` cross-axis fudge +
+       the NO-OP `overflow-y: clip` pin + the `.dock-layers` re-clip that fought
+       the SPINE L1 `overflow: visible` run) — the plate's `clip-path` (dock.css)
+       owns the dock silhouette, the L1 controls run is `overflow: visible`, and
+       the scroll port clips ONLY its own over-cap content on the inline axis.
+       Two EXCLUSIVE modes, NEVER composed (PASS-4B ruling 1):
 
-    /* Inline axis (horizontal docks). The active layer becomes the scroll
-       port: `min-width: 0` releases the flex item's `min-content` floor so
-       it can shrink under the clamped `.dock-layers` track, then `overflow-x:
-       auto` scrolls its over-cap content. `.dock-layers` must KEEP clipping
-       so the pill's rounded edge masks the scroll boundary — hence the
-       grow-mode `overflow-x: visible` (`.dock-layers`, above) is overridden
-       back to `hidden` here. */
-    .glass-dock.dock-scroll-x.expanded:not(.dock-overflow-wrap) > .dock-layers {
-        overflow-x: hidden;
-    }
+         • FITS (default — `:not([data-dock-overflow])`): the row fits the cap, so
+           the port is `overflow-x: visible` (no scroll) and its `mask-image` is
+           `none` (T-52 a — no fade, no 0px-fade transparent-stop shave). The
+           fits-branch fisheye (fisheye.css) is FREE to scale its hump over the
+           `overflow: visible` L1 run.
+         • OVERFLOW (`[data-dock-overflow]`, set by `useDockOverflowFit`'s RO — ZERO
+           scroll listener, G9/O5): the row exceeds the cap, so the port is
+           `overflow-x: auto` (native inline scroll) with the `<FadingScroll>` edge
+           mask; fisheye is OFF (the `:not([data-dock-overflow])` gate). */
 
-    .glass-dock.dock-scroll-x .dock-layer--full {
+    /* min-width:0 releases the flex `min-content` floor so the active full layer
+       can shrink under the `--dock-max-inline-size`-clamped `.dock-layers` track
+       and become the scroll port on the overflow branch. */
+    .glass-dock.dock-scroll-x:not(.dock-overflow-wrap) .dock-layer--full {
         min-width: 0;
+        /* FITS default: no scroll, no mask — the cross axis is honestly `visible`
+           (SPINE: nothing clips the L1 run). T-52(a): `mask-image: none` at rest so
+           the 0px-fade transparent stop can never antialias-shave a flush item's
+           focus-ring arc. */
+        overflow-x: visible;
+        overflow-y: visible;
+        mask-image: none;
+    }
+
+    /* OVERFLOW branch — the native scroll track + the FadingScroll edge mask. */
+    .glass-dock.dock-scroll-x[data-dock-overflow]:not(.dock-overflow-wrap)
+        .dock-layer--full {
         overflow-x: auto;
-        /* BG.W-DOCK-CAP-SCROLL-FADE (F-ARM-6) — the mechanically-honest CROSS
-           (block) axis un-clip. A single-axis `overflow-x: auto` forces the OTHER
-           axis to compute from `visible` to `auto` (CSS Overflow §3 sibling-
-           degrade), so the prior `overflow-y: visible` pin was a latent NO-OP: the
-           40px-tall block axis clipped the 1.1× hover / full active control circle
-           top+bottom (the lozenge). `overflow-y: clip` is NOT a scroll value, so §3
-           leaves it alone (no forced `auto`) and it establishes no scroll container;
-           `overflow-clip-margin: var(--dock-control-safe-inset)` extends the clip
-           region outward by the inset budget so the hover plate paints past the
-           track. The geometric inset (the 80%-of-cell plate) stays the primary
-           lozenge guard; the clip-margin is belt-and-suspenders. */
-        overflow-y: clip;
-        overflow-clip-margin: var(--dock-control-safe-inset);
+        /* The cross (block) axis is honestly `visible` in SOURCE. `overflow-x: auto`
+           spec-forces the computed cross axis to a clip, so the RING-ROOM is reserved
+           the canonical no-clip scroll-strip way (T-52 b): a `--dock-scroll-safe-inset`
+           PADDING on all sides (the flush item's focus ring paints INSIDE the padded
+           clip box — all four arcs whole) pulled back by an EQUAL negative MARGIN so
+           the dock's own layout is byte-unchanged. The inline pad ALSO reserves the
+           first/last item's inline ring arc + anchors the mask AA seam in the gutter,
+           so even at a scroll extreme (fade 0) a flush item is never shaved. */
+        overflow-y: visible;
+        padding: var(--dock-scroll-safe-inset);
+        margin: calc(-1 * var(--dock-scroll-safe-inset));
+        /* The recenter gutter — `scrollIntoView({inline:'nearest'})` (useSelectionGroup,
+           on every select) lands a selected member with ≥1px port slack (O1). */
+        scroll-padding-inline: var(--dock-scroll-gutter);
         scrollbar-width: none;
-        /* Trap the inline-scroll momentum at the dock's own boundary so a
-           wheel/trackpad gesture that bottoms out the pill does NOT chain into
-           scrolling the page behind it (the dock is a self-contained scroll
-           port, not a window into the route scroller). */
+        /* Trap the inline-scroll momentum at the dock's own boundary so a wheel /
+           trackpad gesture that bottoms out the pill does NOT chain into scrolling the
+           page behind it (the dock is a self-contained scroll port). */
         overscroll-behavior-x: contain;
-    }
-
-    .glass-dock.dock-scroll-x .dock-layer--full::-webkit-scrollbar {
-        display: none;
-    }
-
-    /* BG.W-DOCK-CAP-SCROLL-FADE — the liquid-weight soft edge. The scroll port
-       feathers its over-cap inline edges via the ONE FadingScroll seam: the
-       `mask-image` reads the `--fade-start`/`--fade-end` customs the SAME
-       `gl-fade-start-in`/`gl-fade-end-out` keyframes `<FadingScroll>` uses drive
-       off the `scroll(self inline)` timeline (reached by name — ZERO new recipe).
-       The `@supports (animation-timeline: scroll())` co-gate was COLLAPSED at
-       BG.NF.2 W-LEGACY-LADDER-COLLAPSE (its shell.css block-axis sibling too) —
-       scroll-driven animations are Baseline on the target set, so this is the
-       un-gated mechanism; the start edge feathers only past `scroll > 0` and the
-       end edge only while trailing overflow remains. NOT PRM-gated (the fade is a
-       legibility cue: it stops interpolating under reduce, the discrete
-       edge-presence stays correct). */
-    .glass-dock.dock-scroll-x .dock-layer--full {
+        /* The `<FadingScroll>` edge mask, reached BY NAME (the SAME `gl-fade-start-in`/
+           `gl-fade-end-out` keyframes the component drives off `scroll(self inline)` —
+           ZERO new recipe). Painted ONLY on this overflow branch, so at rest (fits) the
+           mask is `none` (T-52 a). On the overflow branch there is ALWAYS trailing OR
+           leading overflow, so at least one fade is active by construction. Not
+           PRM-gated (a legibility cue — it stops interpolating under reduce, the
+           discrete edge-presence stays correct). */
         mask-image: linear-gradient(
             to right,
             transparent 0,
@@ -97,6 +104,11 @@
         animation-range:
             0 var(--fade-scroll-width),
             calc(100% - var(--fade-scroll-width)) 100%;
+    }
+
+    .glass-dock.dock-scroll-x[data-dock-overflow]:not(.dock-overflow-wrap)
+        .dock-layer--full::-webkit-scrollbar {
+        display: none;
     }
 
     /* The VERTICAL block-axis scroll port lives in shell.css (the unconditional

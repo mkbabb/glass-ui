@@ -20,10 +20,8 @@ import {
 } from "@lucide/vue";
 import {
     GlassDock,
-    DockIconButton,
-    DockDropdownTrigger,
-    DockSelectTrigger,
-    DockPopoverTrigger,
+    DockControl,
+    DockTrigger,
     DockSeparator,
     DockBackgroundToggle,
 } from "@glass/components/custom/dock";
@@ -103,6 +101,14 @@ function togglePlay() {
 
 <template>
     <StoryPage>
+        <!-- BI.W-DOCK-SPINE — the REFERENCE SPINE demo. Every dock here rides the
+             greenfield three-z-layer plate SPINE (L0 `.dock-plate` clip-path lens off ONE
+             `--dock-t` / L1 `.dock-controls` overflow:visible / L2 top-layer). The public
+             prop/slot surface is UNCHANGED (MIGRATION: none) — the collapse↔expand,
+             always-expanded transport, triggers, slider-hold, wrap, grid, and pause-toggle
+             all demonstrate on the new internals; a control hover plate at the dock edge
+             now overhangs UN-CLIPPED by construction (UF-C6/C7), and the box no longer
+             clips/contains (the triple identity split). -->
         <!-- BA.W-STAGE scope 8/9 (FD-DOCK-1) — the flagship dock demos sit over ONE
              shared, offscreen-paused aurora field (DockStage), replacing the flat
              bg-card/40 panels. Each demo is a transparent `.dock-stage-tile` framed
@@ -127,12 +133,12 @@ function togglePlay() {
                     <!-- Home is a persistent control: it stays visible in both the
                          collapsed and expanded states via the #persistent slot. -->
                     <template #persistent>
-                        <DockIconButton aria-label="Home"><Home /></DockIconButton>
+                        <DockControl aria-label="Home"><Home /></DockControl>
                     </template>
-                    <DockIconButton aria-label="Search"><Search /></DockIconButton>
+                    <DockControl aria-label="Search"><Search /></DockControl>
                     <DockSeparator />
-                    <DockIconButton aria-label="Notifications"><Bell /></DockIconButton>
-                    <DockIconButton aria-label="Settings"><Settings /></DockIconButton>
+                    <DockControl aria-label="Notifications"><Bell /></DockControl>
+                    <DockControl aria-label="Settings"><Settings /></DockControl>
                 </GlassDock>
             </div>
         </StorySection>
@@ -144,19 +150,17 @@ function togglePlay() {
                 <GlassDock
                     :background-canvas="backgroundCanvas"
                     always-expanded
-                    draggable-items
                 >
-                    <DockIconButton data-dock-draggable aria-label="Previous"><SkipBack /></DockIconButton>
-                    <DockIconButton
-                        data-dock-draggable
+                    <DockControl aria-label="Previous"><SkipBack /></DockControl>
+                    <DockControl
                         :aria-pressed="playing"
                         :aria-label="playing ? 'Pause' : 'Play'"
                         @click="togglePlay"
                     >
                         <Pause v-if="playing" />
                         <Play v-else />
-                    </DockIconButton>
-                    <DockIconButton data-dock-draggable aria-label="Next"><SkipForward /></DockIconButton>
+                    </DockControl>
+                    <DockControl aria-label="Next"><SkipForward /></DockControl>
                     <DockSeparator />
                     <span
                         class="px-2 text-xs text-muted-foreground tabular-nums max-w-36 truncate"
@@ -174,16 +178,15 @@ function togglePlay() {
             <div
                 class="dock-stage-tile flex flex-col items-center gap-3 rounded-[var(--radius-card)] border border-border/30 p-8"
             >
-                <!-- import { DockSelectTrigger, DockDropdownTrigger } from "@glass/components/custom/dock"; -->
                 <GlassDock :background-canvas="backgroundCanvas" always-expanded fit-content>
                     <Select v-model="dockView">
-                        <DockSelectTrigger
+                        <DockTrigger for="select"
                             aria-label="Dock view"
                             data-testid="dock-select-trigger"
                         >
                             <span class="text-xs">{{ dockViewLabels[dockView] }}</span>
                             <SelectValue class="sr-only" />
-                        </DockSelectTrigger>
+                        </DockTrigger>
                         <SelectContent>
                             <SelectItem
                                 v-for="view in dockViews"
@@ -198,8 +201,8 @@ function togglePlay() {
                     <DockSeparator />
 
                     <DropdownMenu>
-                        <DockDropdownTrigger
-                            type="button"
+                        <DockTrigger
+                            for="dropdown"
                             data-testid="dock-dropdown-trigger"
                         >
                             <Settings class="h-4 w-4" />
@@ -207,7 +210,7 @@ function togglePlay() {
                                 dockCommandLabels[dockCommand]
                             }}</span>
                             <ChevronDown class="h-3 w-3 opacity-60" />
-                        </DockDropdownTrigger>
+                        </DockTrigger>
                         <DropdownMenuContent align="center" class="w-52">
                             <DropdownMenuLabel>Dock command</DropdownMenuLabel>
                             <DropdownMenuSeparator />
@@ -226,21 +229,21 @@ function togglePlay() {
                     <DockSeparator />
 
                     <!-- BD.W-DOCK-CORE (A8 / F-2) — the POPOVER trigger UNIFIED into the
-                         dock overlay-trigger family. It composes <DockPopoverTrigger>
+                         dock overlay-trigger family. It composes <DockTrigger for="popover">
                          (the SHARED `.dock-trigger` recipe) so it is byte-identical in
                          geometry/baseline to the Select + Dropdown triggers beside it —
                          the misaligned-popover defect closed by mounting the unified
                          trigger on the SAME surface, not in an unrendered file. -->
                     <Popover>
-                        <DockPopoverTrigger
-                            type="button"
+                        <DockTrigger
+                            for="popover"
                             data-testid="dock-popover-trigger"
                             aria-label="Dock info"
                         >
                             <Bell class="h-4 w-4" />
                             <span class="text-xs">Info</span>
                             <ChevronDown class="h-3 w-3 opacity-60" />
-                        </DockPopoverTrigger>
+                        </DockTrigger>
                         <PopoverContent align="center" class="w-52">
                             <p class="text-xs text-muted-foreground">
                                 The popover trigger shares the
@@ -282,13 +285,13 @@ function togglePlay() {
                 class="dock-stage-tile flex justify-center rounded-[var(--radius-card)] border border-border/30 p-8"
             >
                 <GlassDock :background-canvas="backgroundCanvas" always-expanded>
-                    <DockIconButton aria-label="New"><Plus /></DockIconButton>
+                    <DockControl aria-label="New"><Plus /></DockControl>
 
                     <HoverPopover side="bottom" align="center" keep-dock-open>
                         <template #trigger>
-                            <DockIconButton aria-label="Share">
+                            <DockControl aria-label="Share">
                                 <Share2 />
-                            </DockIconButton>
+                            </DockControl>
                         </template>
                         <template #content>
                             <div class="flex min-w-44 flex-col gap-1 p-1">
@@ -318,9 +321,9 @@ function togglePlay() {
 
                     <HoverPopover side="bottom" align="end" keep-dock-open>
                         <template #trigger>
-                            <DockIconButton aria-label="Export">
+                            <DockControl aria-label="Export">
                                 <Download />
-                            </DockIconButton>
+                            </DockControl>
                         </template>
                         <template #content>
                             <div class="flex min-w-44 flex-col gap-1 p-1">
@@ -352,12 +355,12 @@ function togglePlay() {
 
                     <HoverPopover side="bottom" align="center" keep-dock-open>
                         <template #trigger>
-                            <DockIconButton aria-label="Track">
+                            <DockControl aria-label="Track">
                                 <span class="flex items-center gap-1">
                                     <span class="text-xs">Track</span>
                                     <ChevronDown class="h-3 w-3 opacity-60" />
                                 </span>
-                            </DockIconButton>
+                            </DockControl>
                         </template>
                         <template #content>
                             <div class="flex min-w-44 flex-col gap-1 p-1">
@@ -410,7 +413,7 @@ function togglePlay() {
                      :collapse-delay="600" keeps the capture's collapse-baseline fast.
                      Demo-private test-affordance only; no behavioral change. -->
                 <GlassDock :background-canvas="backgroundCanvas" :collapse-delay="600" data-testid="dock-capture">
-                    <DockIconButton aria-label="Volume"><Volume2 /></DockIconButton>
+                    <DockControl aria-label="Volume"><Volume2 /></DockControl>
                     <div class="flex w-44 items-center px-2">
                         <Slider
                             v-model="volume"
@@ -420,9 +423,9 @@ function togglePlay() {
                         />
                     </div>
                     <DockSeparator />
-                    <DockIconButton aria-label="Mix"
+                    <DockControl aria-label="Mix"
                         ><SlidersHorizontal
-                    /></DockIconButton>
+                    /></DockControl>
                     <div class="flex w-44 items-center px-2">
                         <Slider v-model="mix" :max="100" :step="1" aria-label="Mix" />
                     </div>
@@ -464,19 +467,19 @@ function togglePlay() {
                      defect the guard catches. The short :collapse-delay keeps the
                      collapse baseline fast. No behavioral change. -->
                 <GlassDock :background-canvas="backgroundCanvas" :collapse-delay="600" data-testid="dock-tap-capture">
-                    <DockIconButton aria-label="Skip back"><SkipBack /></DockIconButton>
-                    <DockIconButton aria-label="Previous"
+                    <DockControl aria-label="Skip back"><SkipBack /></DockControl>
+                    <DockControl aria-label="Previous"
                         ><ChevronDown
-                    /></DockIconButton>
-                    <DockIconButton aria-label="Play"><Play /></DockIconButton>
-                    <DockIconButton aria-label="Skip forward"
+                    /></DockControl>
+                    <DockControl aria-label="Play"><Play /></DockControl>
+                    <DockControl aria-label="Skip forward"
                         ><SkipForward
-                    /></DockIconButton>
-                    <DockIconButton aria-label="Share"><Share2 /></DockIconButton>
+                    /></DockControl>
+                    <DockControl aria-label="Share"><Share2 /></DockControl>
                     <template #collapsed>
-                        <DockIconButton aria-label="Settings"
+                        <DockControl aria-label="Settings"
                             ><Settings
-                        /></DockIconButton>
+                        /></DockControl>
                     </template>
                 </GlassDock>
             </div>
@@ -492,8 +495,8 @@ function togglePlay() {
                 <code class="rounded bg-muted px-1">keepOpen</code> +
                 <code class="rounded bg-muted px-1">data-glass-dock-portal</code>
                 teleport contract — the same contract the
-                <code class="rounded bg-muted px-1">DockSelectTrigger</code> /
-                <code class="rounded bg-muted px-1">DockDropdownTrigger</code> /
+                <code class="rounded bg-muted px-1">DockTrigger</code> /
+                <code class="rounded bg-muted px-1">DockTrigger</code> /
                 <code class="rounded bg-muted px-1">HoverPopover keep-dock-open</code>
                 sections above already ride. This is Apple's navigation-layer /
                 no-glass-on-glass rule made structural: glass floats only in the
@@ -536,22 +539,22 @@ function togglePlay() {
                     always-expanded
                     style="--dock-max-inline-size: 28rem"
                 >
-                    <DockIconButton aria-label="Home"><Home /></DockIconButton>
-                    <DockIconButton aria-label="Search"><Search /></DockIconButton>
-                    <DockIconButton aria-label="Add"><Plus /></DockIconButton>
-                    <DockIconButton aria-label="Notifications"><Bell /></DockIconButton>
-                    <DockIconButton aria-label="Share"><Share2 /></DockIconButton>
-                    <DockIconButton aria-label="Download"><Download /></DockIconButton>
-                    <DockIconButton aria-label="Settings"><Settings /></DockIconButton>
-                    <DockIconButton aria-label="Previous"><SkipBack /></DockIconButton>
-                    <DockIconButton aria-label="Play"><Play /></DockIconButton>
-                    <DockIconButton aria-label="Next"><SkipForward /></DockIconButton>
-                    <DockIconButton aria-label="Home (2)"><Home /></DockIconButton>
-                    <DockIconButton aria-label="Search (2)"><Search /></DockIconButton>
-                    <DockIconButton aria-label="Add (2)"><Plus /></DockIconButton>
-                    <DockIconButton aria-label="Settings (2)"
+                    <DockControl aria-label="Home"><Home /></DockControl>
+                    <DockControl aria-label="Search"><Search /></DockControl>
+                    <DockControl aria-label="Add"><Plus /></DockControl>
+                    <DockControl aria-label="Notifications"><Bell /></DockControl>
+                    <DockControl aria-label="Share"><Share2 /></DockControl>
+                    <DockControl aria-label="Download"><Download /></DockControl>
+                    <DockControl aria-label="Settings"><Settings /></DockControl>
+                    <DockControl aria-label="Previous"><SkipBack /></DockControl>
+                    <DockControl aria-label="Play"><Play /></DockControl>
+                    <DockControl aria-label="Next"><SkipForward /></DockControl>
+                    <DockControl aria-label="Home (2)"><Home /></DockControl>
+                    <DockControl aria-label="Search (2)"><Search /></DockControl>
+                    <DockControl aria-label="Add (2)"><Plus /></DockControl>
+                    <DockControl aria-label="Settings (2)"
                         ><Settings
-                    /></DockIconButton>
+                    /></DockControl>
                 </GlassDock>
             </div>
             <p class="text-xs text-muted-foreground">
@@ -563,18 +566,18 @@ function togglePlay() {
             </p>
             <div class="flex justify-center py-6">
                 <GlassDock :background-canvas="backgroundCanvas" overflow="wrap" style="--dock-max-inline-size: 22rem">
-                    <DockIconButton aria-label="Home"><Home /></DockIconButton>
-                    <DockIconButton aria-label="Search"><Search /></DockIconButton>
-                    <DockIconButton aria-label="Add"><Plus /></DockIconButton>
-                    <DockIconButton aria-label="Notifications"><Bell /></DockIconButton>
-                    <DockIconButton aria-label="Share"><Share2 /></DockIconButton>
-                    <DockIconButton aria-label="Download"><Download /></DockIconButton>
-                    <DockIconButton aria-label="Settings"><Settings /></DockIconButton>
-                    <DockIconButton aria-label="Previous"><SkipBack /></DockIconButton>
-                    <DockIconButton aria-label="Play"><Play /></DockIconButton>
-                    <DockIconButton aria-label="Next"><SkipForward /></DockIconButton>
-                    <DockIconButton aria-label="Home (2)"><Home /></DockIconButton>
-                    <DockIconButton aria-label="Search (2)"><Search /></DockIconButton>
+                    <DockControl aria-label="Home"><Home /></DockControl>
+                    <DockControl aria-label="Search"><Search /></DockControl>
+                    <DockControl aria-label="Add"><Plus /></DockControl>
+                    <DockControl aria-label="Notifications"><Bell /></DockControl>
+                    <DockControl aria-label="Share"><Share2 /></DockControl>
+                    <DockControl aria-label="Download"><Download /></DockControl>
+                    <DockControl aria-label="Settings"><Settings /></DockControl>
+                    <DockControl aria-label="Previous"><SkipBack /></DockControl>
+                    <DockControl aria-label="Play"><Play /></DockControl>
+                    <DockControl aria-label="Next"><SkipForward /></DockControl>
+                    <DockControl aria-label="Home (2)"><Home /></DockControl>
+                    <DockControl aria-label="Search (2)"><Search /></DockControl>
                 </GlassDock>
             </div>
         </StorySection>
@@ -592,15 +595,15 @@ function togglePlay() {
             </p>
             <div class="flex justify-center py-6">
                 <GlassDock :background-canvas="backgroundCanvas" shape="card" layout="grid" class="w-80">
-                    <DockIconButton aria-label="Home"><Home /></DockIconButton>
-                    <DockIconButton aria-label="Search"><Search /></DockIconButton>
-                    <DockIconButton aria-label="Add"><Plus /></DockIconButton>
-                    <DockIconButton aria-label="Notifications"><Bell /></DockIconButton>
-                    <DockIconButton aria-label="Previous"><SkipBack /></DockIconButton>
-                    <DockIconButton aria-label="Next"><SkipForward /></DockIconButton>
-                    <DockIconButton aria-label="Home (2)"><Home /></DockIconButton>
-                    <DockIconButton aria-label="Search (2)"><Search /></DockIconButton>
-                    <DockIconButton aria-label="Settings"><Settings /></DockIconButton>
+                    <DockControl aria-label="Home"><Home /></DockControl>
+                    <DockControl aria-label="Search"><Search /></DockControl>
+                    <DockControl aria-label="Add"><Plus /></DockControl>
+                    <DockControl aria-label="Notifications"><Bell /></DockControl>
+                    <DockControl aria-label="Previous"><SkipBack /></DockControl>
+                    <DockControl aria-label="Next"><SkipForward /></DockControl>
+                    <DockControl aria-label="Home (2)"><Home /></DockControl>
+                    <DockControl aria-label="Search (2)"><Search /></DockControl>
+                    <DockControl aria-label="Settings"><Settings /></DockControl>
                 </GlassDock>
             </div>
         </StorySection>
@@ -632,8 +635,8 @@ function togglePlay() {
                 />
                 <GlassDock :background-canvas="backgroundCanvas" class="relative z-10">
                     <DockBackgroundToggle v-model:paused="bgPaused" />
-                    <DockIconButton aria-label="Home"><Home /></DockIconButton>
-                    <DockIconButton aria-label="Settings"><Settings /></DockIconButton>
+                    <DockControl aria-label="Home"><Home /></DockControl>
+                    <DockControl aria-label="Settings"><Settings /></DockControl>
                     <!-- The collapsed pill mirrors the toggle's live state — Play when
                          paused (the action it offers), Pause when running. -->
                     <template #collapsed>
@@ -661,7 +664,7 @@ function togglePlay() {
                     choose what the collapsed pill shows.
                 </li>
                 <li>
-                    Use <code class="rounded bg-muted px-1">DockIconButton</code> for
+                    Use <code class="rounded bg-muted px-1">DockControl</code> for
                     buttons that fit the dock flush.
                 </li>
             </ul>

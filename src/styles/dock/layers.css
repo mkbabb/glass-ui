@@ -67,17 +67,18 @@
        per-swap rAF race) and the visible size is `--dock-live = collapsed +
        (expanded − collapsed)·clamp(0, --dock-morph-t, 1)` → BOUNDED by construction:
        a convex blend can NEVER exceed the larger endpoint nor invert below the smaller,
-       regardless of spring overshoot (the `clamp(0,t,1)` caps the size term; the >1
-       excursion routes to the orthogonal `--dock-punch-stretch` channel). No ratio, no
-       `from>to` degeneracy, no floor guard (the two endpoints ARE the floors). The box
+       regardless of spring overshoot (the `clamp(0,t,1)` caps the size term). No ratio,
+       no `from>to` degeneracy, no floor guard (the two endpoints ARE the floors). The box
        RESERVES `--dock-expanded-px` (ONE layout solve, CDP-Layout-flat) and the visible
        size rides `scale: var(--dock-size-scale)` from `transform-origin: center` —
        container-justify-agnostic, center-out by construction (left-anchored / centred /
        auto-margin docks ALL grow center-out, no justify detection, no translate). The
        endpoints default to a no-op (`expanded == collapsed → scale 1`) so an unmeasured
-       dock paints neutral. The actual `scale:` property is composed in shape.css (folded
-       WITH the `--stretch` squish × the `--dock-punch-stretch` cartoon punch on ONE
-       compositor channel). KEEP `--dock-morph-t` (the shipped token — NO rename).
+       dock paints neutral. BI.W-DOCK-SPRING-UNIFY (SU2) — the actual `scale:` property is
+       composed in shape.css as a PURE size morph off `--dock-size-scale` ALONE (the
+       `--stretch` squish × `--dock-punch-stretch` cartoon-punch deformation zoo is
+       DEFINITION-ABSENT — one compositor channel, no reciprocal squish). KEEP
+       `--dock-morph-t` (the shipped token — NO rename).
 
        BG.W-DOCK-COLLAPSE-DIR — the size blend reads the DIRECTIONAL `--dock-expand-t`
        (the expanded-ness 0=collapsed/1=expanded `morph.css` derives: expand `t`, collapse

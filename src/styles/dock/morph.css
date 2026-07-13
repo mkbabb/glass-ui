@@ -117,7 +117,11 @@
        (0 collapsed / 1 expanded) so the resting look is exact.
        AZ.W-DOCK-TAXONOMY — the `variant-dock` class is gone; `.glass-dock:not(.vertical)`
        IS the horizontal dock now (no second-way to express orientation). */
-    .glass-dock:not(.vertical) {
+    /* BI.W-DOCK-SPINE — the collapsed↔expanded SURFACE interp retargeted onto the L0
+       `.dock-plate` (the box is structural; the plate is the glass). The interp still
+       reads the SAME `--dock-expand-t` scalar + the inheriting `--glass-tint-*` tokens;
+       only the paint target moves to the plate so the box carries no competing bg. */
+    .glass-dock:not(.vertical) .dock-plate {
         /* AY.W-A11Y-PERF O-1 / AZ.W-ADAPTIVE-AUTO Arm 1 — BOTH morph endpoints compose
            the W55 oklab adaptive tint so the self-engage darken (the unconditional
            `:where(.glass-dock)` rule in the sibling adaptive-legibility.css partial
@@ -167,7 +171,10 @@
        the rest endpoints `--dock-expand-t` resolves to the class value (0 collapsed
        / 1 expanded), so the resting look is exact — byte-equivalent to the shell.css
        static plate it supersedes during the morph. */
-    .glass-dock.vertical {
+    /* BI.W-DOCK-SPINE — the VERTICAL surface interp retargeted onto `.dock-plate`
+       (0,3,0 — wins over shell.css's static `.glass-dock.vertical .dock-plate` during the
+       morph). */
+    .glass-dock.vertical .dock-plate {
         background: color-mix(
             in srgb,
             color-mix(
@@ -395,9 +402,13 @@
        (background/border/shadow) stay on the bare `:hover` (they don't multiply
        geometry, so a hovered collapse keeps its hover read without the pop). */
     .glass-dock.collapsed:hover {
+        box-shadow: var(--shadow-dock-override, var(--shadow-dock));
+    }
+    /* BI.W-DOCK-SPINE — the collapsed-hover surface lift retargeted onto the plate
+       (the box keeps the box-shadow elevation above; the plate carries the glass). */
+    .glass-dock.collapsed:hover .dock-plate {
         background: var(--glass-bg-wash);
         border-color: var(--glass-border-floating);
-        box-shadow: var(--shadow-dock-override, var(--shadow-dock));
     }
 
     .glass-dock.collapsed:hover:not([data-morphing]) {
@@ -416,7 +427,8 @@
      * thumb halo) via `useOptionalDockContext().held` for cross-substrate
      * coordination (typed-key canonical shape; O.W2 invariant 25).
      */
-    .glass-dock[data-held] {
+    /* BI.W-DOCK-SPINE — the held-tier surface lift retargeted onto the plate. */
+    .glass-dock[data-held] .dock-plate {
         /* AX.W55 — the held tier threads the oklab tint wrapper (zero-delta at the
            `0%` rest default) so the adaptive darken reaches the held state too. */
         background: color-mix(
@@ -427,8 +439,7 @@
         border-color: var(--glass-border-floating, var(--glass-border-resting));
         transition:
             background var(--duration-fast) var(--ease-standard),
-            border-color var(--duration-fast) var(--ease-standard),
-            box-shadow var(--duration-fast) var(--ease-standard);
+            border-color var(--duration-fast) var(--ease-standard);
     }
 
     /* BD.W-DOCK-CORE (A7) — the whole-plate open-descendant recolor is DELETED (clean

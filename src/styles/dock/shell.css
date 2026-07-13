@@ -143,12 +143,23 @@
            as `inline-size` ONLY on the OPT-IN `containerName` host below; the default
            free-floating dock must stay shrink-to-fit, so `size`/`inline-size` is
            DELIBERATELY excluded here — adding it would re-introduce the 3.3.0 sliver
-           regression the §99 comment documents). The morph-axis `overflow: clip`
-           (the reveal aperture) + the `.glass-dock-frame` rail-escape are UNAFFECTED:
-           `layout`/`style` containment scopes RECALC, it does not establish a paint
-           clip beyond the already-present `paint` axis. The `DOCK_SPRING` clock is
+           regression the §99 comment documents). `layout`/`style` containment scopes
+           RECALC, it does not establish a paint clip — the L0 plate owns the clip
+           (W-DOCK-SPINE) and the fan/menu surfaces are TOP-LAYER popovers (W-DOCK-ESCAPE;
+           the `.glass-dock-frame` rail-escape retired). The `DOCK_SPRING` clock is
            byte-fenced (the value.js letter) — this is restyle COST, not a re-tune. */
-        contain: layout style paint;
+        /* BI.W-DOCK-SPINE — the `paint` axis is DROPPED from `contain` (the triple-identity
+           clip root). `.glass-dock` is NO LONGER the clip aperture: the L0 `.dock-plate`
+           (dock/dock.css) owns the visible extent via `clip-path` off `--dock-t`, and the
+           L1 control run is `overflow: visible`, so a hover plate at the dock edge overhangs
+           UN-CLIPPED (UF-C6/C7 unrepresentable). `contain: layout style` is KEPT (NO
+           `paint` — the A′-4 ~13fps restyle-scope for the transitional per-frame
+           `--dock-morph-t` subtree write, WITHOUT a paint clip that would re-clip the
+           controls). `contain: layout` establishes a containing block + isolates internal
+           layout but does NOT clip painting, so the controls still overhang freely. When
+           W-DOCK-SPRING-UNIFY retires `--dock-morph-t`, the plate scalar's own
+           `inherits: false` is the sole restyle-scope + `contain` can drop entirely. */
+        contain: layout style;
         display: inline-flex;
         align-items: center;
         /* AW.W1 — the dock does NOT establish a default inline-size container.
@@ -169,21 +180,15 @@
         white-space: nowrap;
         max-inline-size: var(--dock-max-inline-size);
         padding: var(--dock-padding-block, 0.375rem) var(--dock-padding-inline, 0.5rem);
-        /* AX.W55 — the dock SHELL composes the oklab tint at the ELEMENT (not via the
-           pre-substituted `--glass-bg-dock` token, which resolves its tint at the
-           `:root` 0% strength before the @container bucket can re-point it — the
-           substitution-vs-inheritance trap). Wrapping here lets the bright-bucket
-           block below (which re-points --glass-tint-source/-strength on `.glass-dock`)
-           reach the shell: the inner `--glass-bg-dock` mix is a 0% no-op at rest, the
-           outer element mix does the adaptive darken. Zero-delta at the `0%` default
-           (both mixes resolve to the flat dock bg = byte-identical to today). */
-        background: color-mix(
-            in oklab,
-            var(--glass-bg-dock, var(--glass-bg-resting)),
-            var(--glass-tint-source) var(--glass-tint-strength)
-        );
-        backdrop-filter: var(--dock-surface-blur);
-        border: 1.5px solid var(--glass-border-dock, var(--glass-border-resting));
+        /* BI.W-DOCK-SPINE — the GLASS SURFACE (background + backdrop-filter + border)
+           MOVED off `.glass-dock` onto the L0 `.dock-plate` (dock/dock.css), which owns
+           the ONE backdrop lens + its `clip-path` visible-extent morph. The box is now
+           STRUCTURAL (layout + the drop-shadow elevation below); the plate is the surface.
+           The `--dock-surface-blur` + `--glass-tint-*` tokens re-pointed on `.glass-dock`
+           by the shell + adaptive-legibility partials INHERIT to the plate, so the AZ
+           self-engage darken + the dark-arm glow reach it with ZERO re-author. The
+           collapsed↔expanded surface INTERP is retargeted onto `.dock-plate` in
+           morph.css. No `backdrop-filter` on the box → ONE lens, no double-blur. */
         /* BC.W-BLACK-BAR D2 — the dock rim is the DIRECTIONAL pair (bright catch-light
            on the TOP edge, faint warm under-shadow on the BOTTOM — glass-fx.css), the
            leading inset layers of the dock shadow stack. RETIRES the omnidirectional
@@ -228,34 +233,18 @@
        legitimate scroll ports (`.dock-scroll-{x,y}`, `overflow: auto`) STAY
        `auto` — they are NOT migrated. AT.W7-dock-a's orthogonality holds: the
        `containerName` opt-in does not touch the clip. */
-    .glass-dock:not(.vertical) {
-        overflow-x: clip;
-        overflow-y: visible;
-    }
-
-    .glass-dock.vertical {
-        overflow-x: visible;
-        overflow-y: clip;
-    }
-
-    /* DURING a morph the clip is the aperture — keyed off `data-morphing`, NOT
-       off `.expanded`, so it survives the whole gesture and the box reveals its
-       content rather than letting it spill. */
-    .glass-dock[data-morphing]:not(.vertical) {
-        overflow-x: clip;
-        overflow-y: visible;
-    }
-
-    .glass-dock[data-morphing].vertical {
-        overflow-x: visible;
-        overflow-y: clip;
-    }
-
-    /* AT REST EXPANDED — lift the morph-axis clip (grown content + focus ring
-       paint past the box). Fires ONLY when NOT morphing; the [data-morphing]
-       rules above win during the gesture by being more specific + later. */
-    .glass-dock.expanded:not([data-morphing]),
-    .glass-dock.always-expanded:not([data-morphing]) {
+    /* BI.W-DOCK-SPINE — the box `overflow: clip` MORPH APERTURE is DELETED (all four
+       `:not(.vertical)`/`.vertical` × `[data-morphing]` aperture rules + the rest-expanded
+       lift). `.glass-dock` NEVER clips its descendants now: the L0 `.dock-plate` owns the
+       visible-extent morph via `clip-path` off `--dock-t`, and the L1 control run is
+       `overflow: visible` BOTH axes — a hover/press plate at the dock edge overhangs
+       UN-CLIPPED (UF-C6/C7). The legitimate vertical SCROLL port (`overflow-y: auto`)
+       stays below; its cross axis is `visible` (the `overflow-clip-margin` band-aid is
+       gone — the plate is the clip). During the transitional window (until
+       W-DOCK-SPRING-UNIFY re-points the plate scalar) the box-size morph still drives the
+       extent + the plate clip is a corner-safe no-op; a mid-morph content spill is the
+       tolerated transitional state W-DOCK-CROSSFADE's content-wrapper clip closes. */
+    .glass-dock {
         overflow: visible;
     }
 
@@ -275,23 +264,21 @@
        every at-rest vertical dock, so a SidebarDock that hits `--dock-max-block-
        size` at 1280×600 scrolls its trailing utility controls into reach with NO
        prop change (the #12 "dock scrolling broken" root fix). The CROSS (inline)
-       axis is `overflow-x: clip` + `overflow-clip-margin:
-       var(--dock-control-safe-inset)` — the mechanically-honest un-clip. CSS
-       Overflow §3 forces a `visible` sibling of an `auto` axis to COMPUTE to
-       `auto` (so the prior `overflow-x: visible` pin was a latent NO-OP that
-       clipped the control's inset plate left/right); `clip` is NOT a scroll value
-       so §3 leaves it alone + establishes no scroll container, and the clip-margin
-       extends the paint region outward by the inset budget so the 1.1× hover plate
-       paints past the track. The geometric inset (the 80%-of-cell plate) stays the
-       PRIMARY lozenge guard; the clip-margin is belt-and-suspenders. The soft
+       axis is `overflow-x: visible` — post-SPINE the L0 plate owns the clip, so
+       the scroll port's cross axis never clips the control's inset hover plate
+       (the `overflow-clip-margin` band-aid retired with the aperture, W-DOCK-SPINE).
+       The geometric inset (the 80%-of-cell plate) is the lozenge guard. The soft
        edge-fade rides the ONE FadingScroll mask seam (the `--fade-start`/
        `--fade-end` customs driven off `scroll(self block)` in the `@supports`
        block below); at rest both are 0px → SHARP. NOT PRM-gated (a legibility
        cue). */
     .glass-dock.vertical.always-expanded:not([data-morphing]),
     .glass-dock.vertical.expanded:not([data-morphing]) {
-        overflow-x: clip;
-        overflow-clip-margin: var(--dock-control-safe-inset);
+        /* BI.W-DOCK-SPINE — the cross-axis `overflow-x: clip` + `overflow-clip-margin`
+           band-aid is GONE (the shell.css:294 aperture the plate retires): the L0 plate
+           owns the clip, so the scroll port's cross axis is `visible`. The block-axis
+           `overflow-y: auto` scroll port stays (a capped vertical column scrolls). */
+        overflow-x: visible;
         overflow-y: auto;
         scrollbar-width: none;
         overscroll-behavior-y: contain;
@@ -330,22 +317,10 @@
             calc(100% - var(--fade-scroll-width)) 100%;
     }
 
-    .glass-dock::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border-radius: inherit;
-        background: var(--paper-clean-texture);
-        background-repeat: repeat;
-        background-size: var(--paper-texture-size);
-        opacity: var(--glass-grain-opacity);
-        pointer-events: none;
-        mix-blend-mode: overlay;
-    }
-
-    .dark .glass-dock::after {
-        mix-blend-mode: soft-light;
-    }
+    /* BI.W-DOCK-SPINE — the paper-grain `::after` MOVED onto `.dock-plate::after`
+       (dock/dock.css): the grain belongs on the glass SURFACE, which is the plate now.
+       Same recipe (the `--paper-clean-texture` overlay + the `.dark` soft-light arm),
+       byte-identical. */
 
     /* Vertical rails grow-to-fit then clamp at `--dock-max-block-size` (the
        AX.W04 F6 contract). At rest a capped column scrolls its OWN block axis
@@ -415,14 +390,15 @@
        shape/density choice, not a variant). */
     .glass-dock.vertical {
         padding: var(--dock-rail-padding, var(--dock-padding-inline, 0.5rem));
-        /* AZ.W-ADAPTIVE-AUTO Arm 1 — the vertical dock threads the SAME element-level
-           oklab tint wrapper the shell base carries (NOT the pre-substituted
-           `--glass-bg-dock` token alone, whose inner tint baked at the `:root` 0%
-           strength before the `:where(.glass-dock)` self-engage re-points the
-           inheriting tint tokens — the substitution-vs-inheritance trap §3a names).
-           Wrapping HERE lets the self-engage darken reach the vertical dock's OWN
-           plate. Zero-delta at the `0%` rest default (the mix is a no-op =
-           byte-identical to the flat dock bg). */
+    }
+
+    /* BI.W-DOCK-SPINE — the vertical dock's SURFACE (background + border-color) retargeted
+       onto the L0 `.dock-plate` (the box is structural; the plate is the glass). The
+       AZ.W-ADAPTIVE-AUTO element-level oklab tint composes the inheriting
+       `--glass-tint-source`/`-strength` the self-engage re-points on `.glass-dock`, so the
+       darken reaches the vertical plate. Zero-delta at the `0%` rest default. morph.css's
+       `.glass-dock.vertical .dock-plate` interp (0,3,0) OVERRIDES this during the morph. */
+    .glass-dock.vertical .dock-plate {
         background: color-mix(
             in oklab,
             var(--glass-bg-dock, var(--glass-bg-wash)),

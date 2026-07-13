@@ -27,34 +27,16 @@
  *
  * @import-ed by dock.css in cascade order, in the SAME `@layer components`. */
 
-/* BD.W-DOCK-PUNCH-CHANNEL — the dedicated cartoon-punch squish scalar. A SEPARATE
-   typed `<number>` @property (init 1, the no-op identity) so a one-shot transition on
-   `--ease-cartoon-punch` INTERPOLATES the ~4% pre-dip + ~22% overshoot rather than
-   snapping. It is DISTINCT from `--stretch` (the orientation/fission squish, capped by
-   `--dock-morph-max-stretch: 1.14`): the punch is NOT subject to that cap (the cartoon
-   register overshoots PAST the spring fence), it has ZERO JS owners (CSS-only, driven
-   by the transition below), and a fission split fired mid-collapse cannot clobber it
-   (the 6-owner `--stretch` last-writer race the shared channel would have introduced —
-   the dedicated channel REMOVES it, a net improvement to fission).
-
-   BG.W-DOCK-GLYPH-RIGID (F3.R1 paint-repair) — `inherits: true` is LOAD-BEARING.
-   The rigid-content contract (the inverse-scale rule on `.dock-persistent`/`.dock-layers`
-   below) reads `var(--dock-punch-stretch)` on a CHILD to CANCEL the punch the plate
-   carries — so the glyph reads 1:1 while the plate deforms. The punch value is DECLARED
-   on the dock root (`.glass-dock`), so the child can only read the root's live overshoot
-   (1.22 at the peak) if the property INHERITS; a `inherits: false` registration hands the
-   child the `initial-value: 1` instead, the full-inverse silently collapses back to the
-   size-only inverse, and the glyph carries the whole `(--dock-punch-stretch)²` = 1.4884
-   (+48.8%) residual (the F3.R1 paint-judge FAIL). Cascading the punch to descendants is
-   SAFE here because EVERY `.glass-dock` re-declares `--dock-punch-stretch: 1` at its own
-   root (below), so a nested dock resets the channel — the punch never leaks between docks;
-   and shape.css is the ONLY CSS reader (no unrelated descendant acts on the value). A
-   non-supporting engine reads the safe 1 fallback (no punch, just the bounded size). */
-@property --dock-punch-stretch {
-    syntax: "<number>";
-    inherits: true;
-    initial-value: 1;
-}
+/* BI.W-DOCK-SPRING-UNIFY (SU2) — the cartoon-punch channel is RETIRED (clean break,
+   no alias). `@property --dock-punch-stretch`, the `[data-punching]` driver, and the
+   per-child punch counter-scale are DEFINITION-ABSENT: the dock morph carries ONE
+   deformation-free box-size scale off `--dock-size-scale` (the box RESERVES its
+   expanded footprint, the visible size rides `scale: var(--dock-size-scale)` from
+   `transform-origin: center`), and the liquid weight lives in the DOCK spring's own
+   overshoot-recovery tail (DOCK-LADDER §8), not a second parallel punch transition on
+   a wrong clock. The orientation/fission `--stretch` squish is likewise gone with its
+   V↔H-goo owner (W-DOCK-RETIRES) — the scale is a pure size morph, ONE compositor
+   channel, ONE clock. */
 
 @layer components {
     /* ── The corner-profile lerp (A1 — the shape is a scalar parameter) ───────────
@@ -125,192 +107,79 @@
         --dock-shape-clip: var(--dock-shape-clip-to, none);
     }
 
-    /* ── The squish — the `useLiquidFlex` `--stretch` deformation (A4) ────────────
-       The shape morph couples the volume-preserving squish the tab-indicator +
-       useDockOrientationMorph already speak: `scale: var(--stretch) calc(1/var(--stretch))`
-       along the morph axis, capped LOW at `--dock-morph-max-stretch` (~1.14) by
-       useLiquidFlex itself (the ONE squish source — no forked deformation math). The
-       plate DEFORMS like liquid as it changes shape — a fast morph swells, a slow one
-       barely. The driver (useDockOrientationMorph) writes `--stretch` on the dock scope;
-       at rest `--stretch` is unset → 1/1 (no squish). The reciprocal pairing preserves
-       volume (stretch along travel, compress across). This is compositor-only (a
-       `scale` transform), composed WITH the ratio-free convex-blend size morph
-       (layers.css) — the box scale rides `--dock-size-scale`, the squish rides
-       `--stretch`, the cartoon punch rides `--dock-punch-stretch`, all three
-       multiply on the compositor on ONE `scale:` property.
-
-       Scoped to `[data-morphing]` so the squish is a morph-transient (at rest the plate
-       is un-squished); the cross-axis is the morph axis's reciprocal. Horizontal docks
-       stretch X / compress Y; vertical stretch Y / compress X (the inverse-axis twin,
-       mirroring the bridge plates' per-orientation squish in morph-bridge.css).
-
-       BD.W-DOCK-CORE / BD.W-DOCK-PUNCH-CHANNEL — THREE factors fold onto this ONE
-       `scale:` along the morph axis:
-         1. `--dock-size-scale` (layers.css) — the ratio-FREE convex-blend size, BOUNDED
-            in [0.06, 1] by construction (the container-justify-agnostic grow-from-center,
-            box reserves `--dock-expanded-px` + scales toward it from `transform-origin:
-            center`). The seizure-prone `--dock-root-scale` ratio it REPLACES is gone.
-         2. `--stretch` — the orientation/fission volume-preserving squish (the 6-JS-owner
-            channel, capped 1.14). Unset → 1 (the squish-only path byte-identical).
-         3. `--dock-punch-stretch` — the dedicated cartoon-punch overshoot (the §PUNCH
-            channel, driven by the one-shot transition below; NOT capped by 1.14). Unset →
-            1 (no punch).
-       The cross-axis is the RECIPROCAL of the two volume-preserving factors
-       `1 / (--stretch × --dock-punch-stretch)` so the punch + the squish deform the pill
-       along travel and pinch across WITHOUT moving the footprint or the centroid — the
-       size factor (`--dock-size-scale`) is NOT reciprocated (it is the real footprint
-       morph, not a volume-preserving deformation). Folding all three on ONE `scale:`
-       keeps the multiply explicit + on one compositor channel (a separate `transform`
-       would be a distinct box that could fight the `scale:`). Horizontal: X = size ×
-       squish × punch, Y = 1/(squish × punch); vertical: the inverse axes. */
-    .glass-dock[data-morphing]:not(.vertical),
-    .glass-dock[data-punching]:not(.vertical) {
-        scale: calc(
-                var(--dock-size-scale, 1) * var(--stretch, 1) *
-                    var(--dock-punch-stretch, 1)
-            )
-            calc(1 / (var(--stretch, 1) * var(--dock-punch-stretch, 1)));
+    /* ── The box-size morph — the deformation-FREE convex-blend scale ─────────────
+       BI.W-DOCK-SPRING-UNIFY (SU2) — the visible box size rides ONE factor:
+       `--dock-size-scale` (layers.css — the ratio-FREE convex blend of the two
+       measure-ONCE endpoints, BOUNDED [0.06, 1] by construction, grown from
+       `transform-origin: center`). The prior 7-factor product (size × `--stretch`
+       squish × `--dock-punch-stretch` cartoon-punch, reciprocated on the cross axis)
+       is RETIRED (clean break): `--stretch` died with its V↔H-goo owner
+       (W-DOCK-RETIRES) and the punch channel is DEFINITION-ABSENT (above). So the
+       scale is a PURE size morph on ONE compositor channel — no reciprocal squish,
+       no cross-axis deformation, no `[data-punching]` co-driver. Scoped to
+       `[data-morphing]` (a morph-transient); at settle the attr clears → `scale:
+       none` over the TRUE box. Horizontal scales the inline axis; vertical the block
+       axis (the cross axis stays 1 — the size morph moves the footprint, it does not
+       pinch). The liquid weight lives in the DOCK spring's own overshoot tail
+       (DOCK-LADDER §8), not a second parallel punch clock. */
+    .glass-dock[data-morphing]:not(.vertical) {
+        scale: var(--dock-size-scale, 1) 1;
     }
-    .glass-dock[data-morphing].vertical,
-    .glass-dock[data-punching].vertical {
-        scale: calc(1 / (var(--stretch, 1) * var(--dock-punch-stretch, 1)))
-            calc(
-                var(--dock-size-scale, 1) * var(--stretch, 1) *
-                    var(--dock-punch-stretch, 1)
-            );
+    .glass-dock[data-morphing].vertical {
+        scale: 1 var(--dock-size-scale, 1);
     }
 
-    /* ── BG.W-DOCK-GLYPH-RIGID — RIGID CONTENT over the morphing PLATE ─────────────
-       THE DEFECT (IOS27-MOTION-TRUTH §2.1/§4.5): the box-scale rule above scales the
-       WHOLE `.glass-dock` subtree — INCLUDING the glyphs — by the FULL morph-axis
-       factor `--dock-size-scale × --stretch × --dock-punch-stretch` (X on horizontal),
-       reciprocal `1 / (--stretch × --dock-punch-stretch)` (Y). On collapse the footprint
-       factor drives 1 → 0.06 and the punch/stretch swell the plate; both reach the
-       glyphs, so a dock glyph gets scaleX-squished to a compressed SLIVER mid-morph and
-       the collapsed REST used to paint a permanently-compressed glyph in a rounded
-       square rather than the AY.W-DOCK-NAV B4 1:1 circle + undistorted glyph.
-
-       THE FIX (spec vocab (a) — F3.R1 paint-repair): the two direct-child CONTENT
+    /* ── BG.W-DOCK-GLYPH-RIGID — RIGID CONTENT over the morphing box ───────────────
+       The box-scale rule above scales the WHOLE `.glass-dock` subtree — including the
+       glyphs — by `--dock-size-scale` on the morph axis. The two direct-child CONTENT
        containers (`.dock-persistent` + `.dock-layers`) carry the PER-FRAME INVERSE of
-       the FULL root morph-axis scale — BOTH the footprint AND the volume-preserving
-       squish/punch — so the composited glyph reads its intrinsic 1:1 aspect in EVERY
-       frame while the PLATE keeps the liquid punch/squish. A child multiplies its
-       parent's `scale`, so the content inverse `1 / (--dock-size-scale × --stretch ×
-       --dock-punch-stretch)` on the morph axis EXACTLY cancels the plate's morph-axis
-       scale (→ 1), and `--stretch × --dock-punch-stretch` on the cross axis cancels the
-       plate's reciprocal-squish (→ 1): effective glyph aspect ≡ 1.0, NOT the prior
-       `(--stretch × --dock-punch-stretch)²` residual (1.22² = +48.8% at the punch peak,
-       the F3.R1 paint-judge FAIL). The prior fix inverted ONLY `--dock-size-scale`,
-       which cancels the footprint but left the punch/stretch UNcompensated in both axes
-       — the +48.8% glyph stretch this repair removes. Inverting the FULL factor is the
-       "rigid content, liquid plate" contract: a PLATE squish is legitimate, a GLYPH
-       stretched 48.8% is exactly the rigid-content violation this wave exists to remove.
+       that size factor so the composited glyph reads its intrinsic 1:1 aspect in every
+       frame while the box scales the footprint. A child multiplies its parent's
+       `scale`, so `1 / max(--dock-size-scale, 0.06)` on the morph axis exactly cancels
+       the box's morph-axis scale (→ 1); the cross axis stays 1 (the box no longer
+       reciprocal-squishes, so the child carries no cross-axis counter — the +48.8%
+       `(--stretch × --dock-punch-stretch)²` residual the deformation zoo introduced is
+       structurally gone with it).
 
-       The `max(…, 0.06)` guard on `--dock-size-scale` is the SAME div-by-zero clamp
-       floor the box-scale rides (layers.css `--dock-size-scale` is clamped `[0.06, 1]`);
-       it is a math fence, NOT a masking fallback — and since the plate's own size factor
-       is likewise clamped to 0.06, the two match exactly at the floor (effective 1). The
-       `--stretch`/`--dock-punch-stretch` factors sit far from 0 (rest 1; punch dips to
-       ~0.96, swells to ~1.22; stretch capped ~1.14) so they carry NO div-by-zero floor —
-       raw `var(…, 1)` reads, matching the plate's raw reads so the cancel is exact. The
-       content children default `transform-origin: 50% 50%`, the SAME centre the root
-       scales from (`transform-origin: center center`, layers.css), so the inverse
-       un-does the plate's outward scale about the shared centroid — the glyph reads its
-       intrinsic size at the correct position, per-frame, on the ONE compositor channel
-       (ZERO layout, `proof:no-layout-animation` holds).
-
-       SCOPED to `[data-morphing]`/`[data-punching]` (the residual transform lives ONLY
-       mid-morph): at settle those attrs clear → the box-scale rule above drops to
-       `scale: none` (spec vocab (b)) AND this inverse drops to `scale: none` too, so the
-       collapsed/expanded REST paints the TRUE box with content byte-rigid (no residual
-       counter-scale, no compositing cost at rest). Horizontal: X carries the full
-       inverse, Y the cross squish-carry; vertical: the inverse-axis twin (X squish-carry,
-       Y full inverse), mirroring the box-scale per-orientation split above. The
-       `:not(.vertical)` / `.vertical` split is byte-parallel to the box scale so the
-       inverse always lands on the same axis the plate scaled. */
+       The `max(…, 0.06)` guard matches the layers.css `--dock-size-scale` clamp floor
+       exactly (a math fence, not a masking fallback). The children default
+       `transform-origin: 50% 50%`, the SAME centre the root scales from, so the inverse
+       un-does the box's outward scale about the shared centroid. SCOPED to
+       `[data-morphing]` (the residual transform lives ONLY mid-morph); at settle the
+       attr clears → both rules drop to `scale: none` over the TRUE box, content
+       byte-rigid, ZERO compositing cost at rest (`proof:no-layout-animation` holds). */
     .glass-dock[data-morphing]:not(.vertical) > .dock-persistent,
-    .glass-dock[data-morphing]:not(.vertical) > .dock-layers,
-    .glass-dock[data-punching]:not(.vertical) > .dock-persistent,
-    .glass-dock[data-punching]:not(.vertical) > .dock-layers {
-        scale: calc(
-                1 /
-                    (
-                        max(var(--dock-size-scale, 1), 0.06) * var(--stretch, 1) *
-                            var(--dock-punch-stretch, 1)
-                    )
-            )
-            calc(var(--stretch, 1) * var(--dock-punch-stretch, 1));
+    .glass-dock[data-morphing]:not(.vertical) > .dock-layers {
+        scale: calc(1 / max(var(--dock-size-scale, 1), 0.06)) 1;
         will-change: transform;
     }
     .glass-dock[data-morphing].vertical > .dock-persistent,
-    .glass-dock[data-morphing].vertical > .dock-layers,
-    .glass-dock[data-punching].vertical > .dock-persistent,
-    .glass-dock[data-punching].vertical > .dock-layers {
-        scale: calc(var(--stretch, 1) * var(--dock-punch-stretch, 1))
-            calc(
-                1 /
-                    (
-                        max(var(--dock-size-scale, 1), 0.06) * var(--stretch, 1) *
-                            var(--dock-punch-stretch, 1)
-                    )
-            );
+    .glass-dock[data-morphing].vertical > .dock-layers {
+        scale: 1 calc(1 / max(var(--dock-size-scale, 1), 0.06));
         will-change: transform;
     }
 
-    /* ── BD.W-DOCK-PUNCH-CHANNEL — the dedicated cartoon-punch DRIVER ──────────────
-       The size blend above is monotone + bounded (correct, boring, bulletproof). The
-       PUNCH is the audacious half: a SEPARATE one-shot transition on
-       `--ease-cartoon-punch` (the ~4% pre-dip + ~22% overshoot `linear()`) that blooms
-       `--dock-punch-stretch` AWAY from 1 then RETURNS to 1 at settle — NEVER latched
-       (the +16%-forever spike defect). It is honestly a SECOND punch animation layered
-       on the spring (NOT "one clock"): the bounded size rides `--dock-morph-t`, the
-       punch rides this transition. `--motion-weight` (dock scope 1) co-scales the punch
-       AMPLITUDE; PRM zeroes `--motion-weight` → the amplitude collapses to 1 (no punch),
-       and the PRM `--ease-cartoon-punch → --ease-standard` re-alias removes the curve
-       shape — the bounded size still snaps via the clamped `t`, the morph still CONFIRMS.
-
-       The dock is a LOUD DRIVER (design.md §L4): it pins `--motion-weight: 1` on its own
-       scope so even a slow user-driven morph rides the full punch register. The
-       `[data-punching]` hook (armed by the dock for one episode) is what lifts the punch
-       to its overshoot value; the transition carries it there on the punch curve and
-       back to the rest 1. The amplitude is `1 + 0.22·--motion-weight` (the ~22% overshoot
-       the curve peaks at × the loud-register weight). */
+    /* ── The dock is a LOUD MOTION DRIVER (design.md §L4) ──────────────────────────
+       The dock pins `--motion-weight: 1` on its own scope so the descendant control
+       motion (the glass-atom / btn cartoon-press punch recipes, which read
+       `--motion-weight` for their amplitude) reads at the full loud register inside
+       the dock chrome. The dock's OWN cartoon box-punch is RETIRED (SU2 above —
+       `--dock-punch-stretch` DEFINITION-ABSENT), so this pin now serves ONLY the
+       descendant register; the PRM carve below still collapses the loud weight to 0
+       under reduce (the cards.css / glass-atom.css pattern — descendant motion
+       confirms without the cartoon overshoot). */
     .glass-dock {
-        /* LOUD DRIVER — the dock pushes the motion weight to max so the punch reads at
-           full cartoon amplitude (design.md §L4; the rest 0.618 would mute it to ~+13.6%). */
         --motion-weight: 1;
-        /* the punch rests at the identity 1 (no deformation) */
-        --dock-punch-stretch: 1;
-        /* the one-shot punch transition — the curve does the dip+overshoot+settle; the
-           weight zeroes it under PRM (the curve also re-aliases to --ease-standard). */
-        transition: --dock-punch-stretch var(--duration-normal)
-            var(--ease-cartoon-punch);
-    }
-    /* While punching, the dock lifts the punch to its overshoot target; the transition
-       carries `--dock-punch-stretch` there on the cartoon curve then the hook clears and
-       it transitions back to 1 (the RETURN — never latched). The overshoot share scales
-       with the loud weight; PRM weight 0 → amplitude 1 (no punch). */
-    .glass-dock[data-punching] {
-        --dock-punch-stretch: calc(1 + 0.22 * var(--motion-weight, 1));
     }
 
     /* ── BG.W-GLASS-CLIP-DISCIPLINE (absorbs W-DOCK-CAST-RETIRE) — the dock cast
        is RETIRED ───────────────────────────────────────────────────────────────
-       The kinetic `.cartoon-cast` offset-shadow CHILD is GONE from the dock (the
-       block + the `<span class="cartoon-cast">` in GlassDock.vue deleted together,
-       atomically). It was the self-defeating maroon-halo mechanism the D3 defect
-       named; the dock's elevation is carried by `--shadow-dock` (the omni drop-
-       shadow painted from the dock box, so it escapes the radius correctly + in-
-       gamut) + `--glass-key` (the cel rim) — both KEPT. `--dock-punch-stretch`
-       still drives the box PUNCH on the `scale:` channel above (the KEPT squash),
-       so retiring the cast leaves no orphan reader. The shared `.cartoon-cast`
-       base rule (cards.css) + its glass-atom / btn-punch consumers are UNTOUCHED
-       — only the DOCK cast is retired.
-
-       The dock-scope PRM carve (the cards.css / glass-atom.css pattern): under
-       `prefers-reduced-motion: reduce` the dock's LOUD `--motion-weight: 1` driver
-       (above) collapses to 0, so the punch amplitude flattens to 1 (no
-       deformation) — the morph still CONFIRMS, the cartoon overshoot is off. */
+       The kinetic `.cartoon-cast` offset-shadow CHILD is GONE from the dock; the
+       dock's elevation is carried by `--shadow-dock` (the omni drop-shadow painted
+       from the dock box, so it escapes the radius correctly + in-gamut) +
+       `--glass-key` (the cel rim) — both KEPT. The shared `.cartoon-cast` base rule
+       (cards.css) + its glass-atom / btn-punch consumers are UNTOUCHED — only the
+       DOCK cast is retired. */
     @media (prefers-reduced-motion: reduce) {
         .glass-dock {
             --motion-weight: 0;

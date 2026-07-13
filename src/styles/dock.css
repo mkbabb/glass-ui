@@ -46,45 +46,48 @@
    persistent-region block was the tail of shell.css (disjoint selectors), so the carve
    is isomorphic (same layer, same source order → ZERO visual delta). */
 @import "./dock/shell-regions.css";
+/* BI.W-DOCK-SPINE — the GREENFIELD three-z-layer plate SPINE (L0 `.dock-plate` clip-path
+   lens off `--dock-t` / L1 `.dock-controls` overflow:visible / L2 top-layer). @import-ed
+   AFTER the structural shell + BEFORE morph.css so the plate BASE surface lands first and
+   morph.css's collapsed↔expanded interp (retargeted onto `.dock-plate`) source-order-wins.
+   Splits `.glass-dock`'s triple identity (surface + clip aperture + item container) — the
+   FAM-3 dock-disease terminal cure. */
+@import "./dock/dock.css";
 @import "./dock/morph.css";
 @import "./dock/adaptive-legibility.css";
 @import "./dock/density.css";
 @import "./dock/shape.css";
 @import "./dock/layers.css";
 @import "./dock/layer-group.css";
+/* BI.W-DOCK-CROSSFADE — the ONE crossfade-slot rule (`.dock-crossfade`/`.dock-face`/
+   `.dock-face-content`), the FOLD of `DockLayerGroup`/`DockLayer`/`useLayerTransition`
+   into a two-child opacity overlap on the per-face `--dock-t` + a measure-once peak
+   `min-block-size` + the G12 content-wrapper clip. @import-ed AFTER layers/layer-group
+   (their `.dock-layer-item-host` FLIP crossfade is superseded — the element no longer
+   renders) into its own `@layer components`. */
+@import "./dock/crossfade.css";
 @import "./dock/overflow.css";
-@import "./dock/stack-rail.css";
+/* BI.W-DOCK-OVERFLOW — the fits-branch pure-CSS Gaussian fisheye (the EXCLUSIVE-mode
+   enhancement, opt-in behind [data-dock-fisheye]; the native scroll track above is the
+   universal floor). @import-ed AFTER overflow.css so the fisheye scale reads the same
+   [data-dock-overflow] mode signal in source order. */
+@import "./dock/fisheye.css";
+@import "./dock/popover.css";
 @import "./dock/section.css";
-@import "./dock/morph-bridge.css";
-/* BE.W-DOCK-FISSION — the 1→N stretch-and-snap goo bridge (the sibling of morph-bridge's
-   1→1 V↔H crossfade; the per-seam `--neck-t` neck STRETCH→THIN→SNAP-BACK recoil + the
-   jubilance ripple/splash FLOOR). @import-ed into the LIBRARY cascade beside morph-bridge
-   so a consumer importing `@mkbabb/glass-ui/styles` gets the fission delights — the recipe
-   is `v-for`-shaped on `.dock-fission-piece`, compositor-only, PRM-removed, Safari-safe
-   (the REGULAR `filter: url()`, never backdrop-filter). The demo's island FACE/layout
-   (`.liquid-island-*`) stays demo-only (liquid-morph.css); this file owns only the
-   `.dock-fission-bridge`/`.dock-fission-piece` BEHAVIOR. */
-@import "./dock/fission-bridge.css";
-/* BG.W-DOCK-FISSION-WIRE — the fission ASSEMBLY leaf (goo NECK + SECOND-DOCK island),
-   carved off fission-bridge.css for the no-god-module drain. @import-ed IMMEDIATELY AFTER
-   it into the SAME `@layer components`, so the neck/island assembly rules keep their
-   cascade position (unique selectors, order-preserving — no visual delta). */
-@import "./dock/fission-island.css";
+/* BI.W-DOCK-RETIRES — `morph-bridge.css` (the V↔H goo teardrop), `fission-bridge.css` +
+   `fission-island.css` (the 1→N fission goo), and `siri.css` (the Siri island) are
+   DEFINITION-ABSENT (decided-terminal, clean break, no alias). The goo `filter:url()`
+   stacked over `backdrop-filter` was the prime UF-C3 Safari suspect; it is gone. The V↔H
+   swap is the crossfade (`crossfade.css`). */
 /* BC.W-AX-DOCK-CTA-SEAT — the [data-cta-pending] CTA-receive landing seat (the static
    resting-geometry reserve + the plain transition:opacity FLIP reveal). Last in the
    dock cascade — a net-new surface around the byte-untouched useDockCtaReceive morph. */
 @import "./dock/cta-seat.css";
 /* BC.W-DOCK-SEARCH — the dock-as-native-dynamic-search-bar field surface (the W55
    active-field tint legibility seam + the `.glass-menu-row` result rows). A net-new
-   surface on a `[data-search]` dock around the byte-untouched morph-bridge metaball;
-   CONSUMES the W55 tint seam + the menu-row recipe, re-authors neither. */
+   surface on a `[data-search]` dock; the pill→field morph is the dock's OWN `--dock-morph-t`
+   glide (box-inviolate); CONSUMES the W55 tint seam + the menu-row recipe, re-authors neither. */
 @import "./dock/search.css";
-
-/* BG.W-SIRI-DOCK-CAPABILITY — the Siri glass island + the `--siri-island-t`-coupled
-   descend scrim (the island lives BESIDE the dock via the `.glass-dock-frame`/`#rail`
-   escape, box-inviolate; the morph is compositor-only on the ONE `--siri-island-t`
-   scalar). @import-ed at the dock cascade tail (its own `@layer components`). */
-@import "./dock/siri.css";
 
 /* AX.W01 — the SINGLE morph scalar. `useLayerTransition` writes it once per frame
    to the `.glass-dock` root; EVERY morph axis (box size, padding, radius, scale,
@@ -106,6 +109,23 @@
 @property --dock-morph-t {
     syntax: "<number>";
     inherits: true;
+    initial-value: 0;
+}
+
+/* BI.W-DOCK-SPINE — the ONE plate scalar. `useDockSpring` (W-DOCK-SPRING-UNIFY) writes it
+   per-frame onto the L0 `.dock-plate` element; the plate's `clip-path` visible-extent
+   morph reads it, and NO control-family selector does — so a per-frame write recomputes
+   the plate clip ONLY, not the 10-selector control `:where()` subtree (the A′-4 ~13fps
+   restyle-storm cure). `inherits: false` is LOAD-BEARING here (the opposite of
+   `--dock-morph-t`, which MUST inherit to its descendant readers): the plate scalar has
+   NO descendant reader, so keeping it un-inherited is what scopes the per-frame restyle to
+   the single plate element. `initial-value: 0` = the collapsed-progress floor (the safe
+   resting clip on a non-supporting engine). During the transitional window the plate
+   ALIASES it to the live `--dock-morph-t` (dock/dock.css); SPRING-UNIFY makes it the sole
+   driver + deletes the scalar zoo. */
+@property --dock-t {
+    syntax: "<number>";
+    inherits: false;
     initial-value: 0;
 }
 
@@ -176,8 +196,17 @@
     .dock-tab-button:focus-visible,
     .dock-select-trigger:focus-visible,
     .dock-dropdown-trigger:focus-visible {
-        box-shadow: var(--focus-ring-shadow);
+        /* BI.W-DOCK-CONTROLS (value.js P5) — the ONE ring register. Every dock
+           control reads `--dock-ring` (defaults to `--focus-ring-shadow`, byte-
+           identical), so a consumer retunes every dock ring from one token. */
+        box-shadow: var(--dock-ring);
         outline: none;
+    }
+
+    /* The ACTIVE SEAT yields to consumer indicator content — a control hosting the
+       consumer's own indicator suppresses the dock ring so that content reads. */
+    .glass-dock [data-ring-yield]:focus-visible {
+        box-shadow: none;
     }
 
     .dock-icon-button:disabled,
