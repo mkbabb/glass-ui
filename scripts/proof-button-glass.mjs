@@ -361,12 +361,12 @@ export function detectButtonGlass(sources) {
 
     // ── BG-IOS-1 — the button blur is the UNIFIED RESTING PEER (8px content material) ──
     // BG.W-GLASS-BLUR-PEER demoted the glass button OFF the floating-tier "more glass"
-    // register onto the ONE 8px material: `--glass-blur-btn` is now an ALIAS of
-    // `--glass-blur-resting` (the dock·button·default-Card·menu-row peer, the resolved-radius
-    // peer lock in proof:glass-cal). The button reads REAL glass (the resting peer, NOT the
-    // sub-perceptual wash 1px tile AND NOT a per-button floating/deep slab — more-glass is the
-    // HERO deep tier only). ALIAS-FOLLOWING: a re-pin to the wash tile OR a per-button floating
-    // composite REDs.
+    // register onto the 8px content material; BI.W-BLUR-MUTE then dialed the button cohort a
+    // HAIR below the 8px peer via its OWN `--glass-blur-btn-radius` primitive (the muted glass
+    // CTA — dock·Card·menu-row stay the unified 8px). The button reads REAL glass (the
+    // resting/quiet peer OR the muted `btn`-cohort primitive, NOT the sub-perceptual wash 1px
+    // tile AND NOT a per-button floating/deep slab — more-glass is the HERO deep tier only).
+    // ALIAS-FOLLOWING: a re-pin to the wash tile OR a per-button floating composite REDs.
     facts.bgIos1 = {};
     const btnDecl = gtok.match(/--glass-blur-btn:\s*([^;]+);/)?.[1]?.trim() ?? "";
     const btnAlias = btnDecl.match(/^var\(\s*--(glass-blur-[a-z]+)\s*\)$/);
@@ -376,7 +376,10 @@ export function detectButtonGlass(sources) {
     facts.bgIos1.btnTier = btnTier;
     // the peer is a CALM CONTENT tier (resting | quiet) = the 8px material; wash 1px tile reds,
     // a per-button floating/deep slab reds (more-glass lives on the hero deep tier).
-    facts.bgIos1.readsContentPeer = btnTier === "resting" || btnTier === "quiet";
+    // BI.W-BLUR-MUTE — the button-cohort `btn` tier (the --glass-blur-btn-radius primitive a
+    // hair below the 8px peer, the muted glass CTA) is accepted alongside the resting/quiet peer.
+    facts.bgIos1.readsContentPeer =
+        btnTier === "resting" || btnTier === "quiet" || btnTier === "btn";
     // it still concentrates light: the resolved source carries a saturate() companion.
     const btnResolved = btnAlias
         ? (gtok.match(new RegExp(`--${btnAlias[1]}:\\s*([^;]+);`))?.[1] ?? "")
@@ -384,7 +387,7 @@ export function detectButtonGlass(sources) {
     facts.bgIos1.concentratesLight = /saturate\(/.test(btnResolved);
     if (!(facts.bgIos1.readsContentPeer && facts.bgIos1.concentratesLight)) {
         violations.push(
-            "BG-IOS-1: `--glass-blur-btn` must resolve the UNIFIED RESTING peer (`--glass-blur-resting`, the 8px dock·button·Card·menu-row material, alias-following) + a saturate() (it still concentrates light) — NOT the wash 1px tile NOR a per-button floating/deep slab (more-glass is the hero deep tier only)",
+            "BG-IOS-1: `--glass-blur-btn` must resolve real content-tier glass (the resting/quiet 8px peer OR the muted `--glass-blur-btn-radius` btn-cohort primitive a hair below it, alias-following) + a saturate() (it still concentrates light) — NOT the wash 1px tile NOR a per-button floating/deep slab (more-glass is the hero deep tier only)",
         );
     }
 

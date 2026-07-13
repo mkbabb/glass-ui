@@ -115,6 +115,20 @@
     --glass-key-lit-y: 1px; /* …and the TOP edge — the upper-right key */
     --glass-key-shade-x: 1px; /* the under-shadow grounds the LEFT edge */
     --glass-key-shade-y: -1px; /* …and the BOTTOM edge — opposite the key */
+    /* BI.W-SURFACE-EXTRACT / atlas GU-1 · O-E2 — the `--glass-key-direction`
+       under-shadow KEY-LIGHT LEAN. The two-stop rim (above) SELECTS which edge is lit
+       vs shade (edge-select px tokens); this is the DISTINCT cast-RATIO knob for the
+       non-inset under-shadow FILL family (the 3 tiers below), which historically cast
+       STRAIGHT DOWN (X = 0). ONE write leans the whole under-shadow register
+       library-wide (the 3 tiers + the dock-wrap vivid consumer all read it). It is a
+       RATIO (unitless), multiplied into each tier's Y magnitude to give the X:
+       -0.375 = tan 20.56° down-LEFT is the cel-coherent FILL lean atlas sets (cel cast
+       = 45° KEY, under-shadow = 20.56° FILL — one light). The LIBRARY DEFAULT is `0`
+       (straight-down) so the shipped under-shadow is byte-identical (the
+       BI.W-SURFACE-EXTRACT refactor-not-repaint π holds); atlas / a future identity
+       wave sets `-0.375` via this ONE token (presets-in-consumers). The spine rung is
+       INTENTIONALLY-OMNIDIRECTIONAL (an edge-thickness cue, not a cast) — left unleaned. */
+    --glass-key-direction: 0;
     /* BC.W-BLACK-BAR D2 + BD.W-GLASS-KEY-EDGE — the two-stop directional rim, now
        KEY-DRIVEN: the bright catch-light `--glass-rim-top` rides the lit (key-facing)
        edges, the faint warm under-shadow `--glass-rim-bottom` rides the shade edges.
@@ -439,9 +453,13 @@
        hand-rolled literal where it's load-bearing on chassis-internal
        surfaces).
        ───────────────────────────────────────────────────────────── */
-    --glass-under-shadow-quiet:   0 2px 8px -1px oklch(0 0 0 / 0.04);
-    --glass-under-shadow-default: 0 4px 16px -2px oklch(0 0 0 / 0.08);
-    --glass-under-shadow-vivid:   0 8px 32px -4px oklch(0 0 0 / 0.12);
+    /* atlas GU-1/O-E2 — the X cast leans off the ONE `--glass-key-direction` ratio
+       (default 0 → byte-identical straight-down cast; atlas sets -0.375 for the
+       cel-coherent down-left FILL lean). Y/blur/spread/α byte-unchanged. The spine
+       rung stays INTENTIONALLY-OMNIDIRECTIONAL (an edge-thickness cue, no cast). */
+    --glass-under-shadow-quiet:   calc(2px * var(--glass-key-direction)) 2px 8px -1px oklch(0 0 0 / 0.04);
+    --glass-under-shadow-default: calc(4px * var(--glass-key-direction)) 4px 16px -2px oklch(0 0 0 / 0.08);
+    --glass-under-shadow-vivid:   calc(8px * var(--glass-key-direction)) 8px 32px -4px oklch(0 0 0 / 0.12);
     --glass-under-shadow-spine:   0 1px 0 0 oklch(0 0 0 / 0.06);
 
     /* Overlay scrim rungs — substrate-aware modal/dialog backdrop tints.

@@ -13,7 +13,11 @@
 //   pulled, while the `--glass-level` opacity axis + the per-rung saturate()/
 //   brightness() companions stay UNTOUCHED (the radius axis ONLY — the anti-overreach
 //   wrong-axis assert). The dark-recipe saturate/brightness companions
-//   (W-DARK-MATERIAL, dark-arm.css) preserved.
+//   (W-DARK-MATERIAL, dark-arm.css) preserved. BI.W-BLUR-MUTE adds the BLUR-MUTE
+//   clause: the GLASS BUTTON cohort is dialed a HAIR below the 8px peer via the
+//   button-cohort `--glass-blur-btn-radius` PRIMITIVE (the override-the-primitive
+//   idiom, never a hardcoded composite blur()) — UF-B3/B4 "muted ever so slightly".
+//   So the button LEAVES the dock·Card·menu-row 8px peer (those three stay locked).
 //
 //   DISCO — the `btn-audacious`/`btn-audacious-gold` recipe family + the
 //   `sparkle-sweep`/`btn-gold-bg-sweep` keyframes + the `--duration-sparkle`/
@@ -97,14 +101,15 @@ function parseRadius(src, name) {
 }
 
 // ── BG.W-GLASS-BLUR-PEER — the 8px resolved-radius PEER LOCK ────────────────────
-// dock · button · default-Card · menu-row all resolve the SAME blur(8px) RADIUS LEG
-// (the ONE unified glass material). The per-tier brightness/saturate companions are
-// EXCLUDED from the lock — only the radius leg is peer-locked (the saturate-revert is a
-// later WS1-gated paint). The resolver is ALIAS-FOLLOWING: `--glass-blur-btn` is a thin
-// alias of `--glass-blur-resting`, so the gate follows the chain to the 8px primitive.
-// Born-RED on HEAD (button → floating 13px, dock → dock 9px); GREEN after the collapse
-// (button + dock → the resting/quiet 8px peer). The HERO deep register is EXCLUDED — it
-// is reached only via `.btn-glass.glass-deep` (a per-instance opt-in), never the peer.
+// dock · default-Card · menu-row all resolve the SAME blur(8px) RADIUS LEG (the ONE
+// unified glass material). The per-tier brightness/saturate companions are EXCLUDED from
+// the lock — only the radius leg is peer-locked (the saturate-revert is a later WS1-gated
+// paint). The resolver is ALIAS-FOLLOWING through the chain to the 8px primitive.
+// Born-RED on HEAD (dock → dock 9px); GREEN after the collapse (dock → the resting 8px
+// peer). BI.W-BLUR-MUTE LEAVES the button OUT of this peer: the glass button is dialed a
+// HAIR below 8px via its own `--glass-blur-btn-radius` primitive (the muted glass CTA,
+// asserted by `detectBlurMute` below); the three panel surfaces stay the unified 8px. The
+// HERO deep register is EXCLUDED — reached only via `.btn-glass.glass-deep` (opt-in).
 const PEER_RADIUS = 8;
 
 // Follow a --glass-blur-<tier> token through an alias chain to its radius primitive (px).
@@ -134,9 +139,9 @@ export function detectPeerLock({ glassTokens, surfaces, shell, menu } = {}) {
     const cardTok = surfaces.match(/\.glass-card\s*\{[\s\S]*?backdrop-filter:\s*var\(\s*--(glass-blur-[a-z]+)\s*\)/);
     facts.peers.card = cardTok ? resolveBlurRadiusPx(glassTokens, cardTok[1]) : null;
 
-    // 2. button — `.btn-glass` backdrop-filter reads `--glass-blur-btn` (alias → resting).
-    const btnTok = surfaces.match(/\.btn-glass\s*\{[\s\S]*?backdrop-filter:\s*var\(\s*--(glass-blur-[a-z]+)\s*\)/);
-    facts.peers.button = btnTok ? resolveBlurRadiusPx(glassTokens, btnTok[1]) : null;
+    // (2. button — EXCLUDED from the 8px peer at BI.W-BLUR-MUTE. The glass button is the
+    //  muted cohort, a hair below the peer via its own --glass-blur-btn-radius primitive;
+    //  it is locked separately by `detectBlurMute`, NOT in this peer set.)
 
     // 3. dock — `--dock-surface-blur` reads `--glass-blur-resting`.
     const dockTok = shell.match(/--dock-surface-blur:\s*var\(\s*--(glass-blur-[a-z]+)\b/);
@@ -180,9 +185,8 @@ export function selfTestPeerLock() {
     const headShell = `.glass-dock { --dock-surface-blur: var(--glass-blur-dock, var(--glass-blur-wash)); }`;
     const menuOk = `.glass-menu-row { --menu-row-bg: color-mix(in oklab, var(--glass-bg-quiet), var(--glass-tint-source) var(--glass-tint-strength)); }`;
     const head = detectPeerLock({ glassTokens: headGlass, surfaces: headSurfaces, shell: headShell, menu: menuOk });
-    if (!head.violations.some((v) => /PEER: button/.test(v))) {
-        fails.push("self-test PEER: the HEAD floating-tier (13px) button did NOT red the 8px peer lock");
-    }
+    // (the HEAD floating-tier button is no longer peer-checked — the button left the peer
+    //  at BI.W-BLUR-MUTE; the mute-cohort bites live in selfTestBlurMute.)
     if (!head.violations.some((v) => /PEER: dock/.test(v))) {
         fails.push("self-test PEER: the HEAD dock-tier (9px) dock did NOT red the 8px peer lock");
     }
@@ -203,6 +207,118 @@ export function selfTestPeerLock() {
     const menuBroken = detectPeerLock({ glassTokens: fixGlass, surfaces: headSurfaces, shell: fixShell, menu: ".glass-menu-row { --menu-row-bg: var(--accent); }" });
     if (!menuBroken.violations.some((v) => /PEER: menuRow/.test(v))) {
         fails.push("self-test PEER: a menu-row off the quiet-tier material did NOT red (menus are IN the peer lock)");
+    }
+    return fails;
+}
+
+// ── BI.W-BLUR-MUTE — the glass BUTTON cohort blur is a HAIR below the 8px peer ──────
+// UF-B3/B4: the glass button reads a touch LESS diffusion than the unified resting
+// material (the backdrop's structure reads a hair more through the button plate). The
+// mute rides the button-cohort `--glass-blur-btn-radius` PRIMITIVE (the override-the-
+// primitive idiom proof:doc-override-idiom teaches): the composed `--glass-blur-btn`
+// reads it through `--glass-level` + saturate, NEVER a hardcoded composite `blur(Npx)`
+// (which would DESTROY the level axis + the saturate companion). The muted radius is a
+// HAIR (1..3px) below the 8px peer — a deliberate cohort mute, never a wash tile / blur(0)
+// wholesale collapse. The value is a TASTE dial (user-gated); the clause locks the
+// MECHANISM (primitive-override, cohort-scoped, hair-bounded), not a magic number.
+const MUTE_MIN = PEER_RADIUS - 3; // 5px — the floor (below is a wash tile, not real glass)
+const MUTE_MAX = PEER_RADIUS - 1; // 7px — the ceiling (at/above the peer is an un-muted NO-OP)
+const BTN_PRIMITIVE_RE = /blur\(calc\(var\(--glass-blur-btn-radius\)\s*\*\s*var\(--glass-level\)\)\)/;
+const LADDER_RUNGS = ["wash", "quiet", "resting", "floating", "overlay"];
+
+export function detectBlurMute({ glassTokens, surfaces } = {}) {
+    const violations = [];
+    const facts = { peer: PEER_RADIUS };
+    glassTokens ??= stripCss(readFile("src/styles/tokens/glass.css"));
+    surfaces ??= stripCss(readFile("src/styles/glass/surfaces.css"));
+
+    // The `.btn-glass` reads `--glass-blur-btn` via backdrop-filter (the single owner).
+    const btnTok = surfaces.match(/\.btn-glass\s*\{[\s\S]*?backdrop-filter:\s*var\(\s*--(glass-blur-[a-z]+)\s*\)/);
+    facts.readsToken = btnTok ? btnTok[1] : null;
+    if (!btnTok) {
+        violations.push("BLUR-MUTE: `.btn-glass { backdrop-filter: var(--glass-blur-btn) }` not found in surfaces.css");
+        return { facts, violations };
+    }
+
+    // ── MUTE-1 — override-the-PRIMITIVE, never a hardcoded composite / un-muted alias.
+    const btnDecl = (glassTokens.match(/--glass-blur-btn:\s*([^;]+);/) ?? [])[1]?.trim() ?? null;
+    facts.btnDecl = btnDecl;
+    const readsPrimitive = btnDecl ? BTN_PRIMITIVE_RE.test(btnDecl) : false;
+    const isAlias = btnDecl ? /^var\(\s*--glass-blur-[a-z]+\s*\)$/.test(btnDecl) : false;
+    facts.readsPrimitive = readsPrimitive;
+    if (!readsPrimitive) {
+        if (isAlias) {
+            violations.push(
+                "BLUR-MUTE (MUTE-1): --glass-blur-btn aliases a ladder tier (the un-muted PEER — the substitution-trap NO-OP the HONEST STATE names) — re-compose it from the --glass-blur-btn-radius PRIMITIVE so the mute actually lands",
+            );
+        } else {
+            violations.push(
+                "BLUR-MUTE (MUTE-1): --glass-blur-btn must be `blur(calc(var(--glass-blur-btn-radius) * var(--glass-level))) …` — the override-the-PRIMITIVE idiom (a hardcoded composite blur(Npx) is the forbidden form, proof:doc-override-idiom)",
+            );
+        }
+    }
+
+    // ── MUTE-2 — the muted radius is a HAIR below the 8px peer (in [5,7]px). The
+    //   primitive value is read LIVE from glass.css (never a hardcoded gate number).
+    const mutePx = parseRadius(glassTokens, "glass-blur-btn-radius");
+    facts.mutePx = mutePx;
+    if (mutePx === null) {
+        violations.push("BLUR-MUTE (MUTE-2): --glass-blur-btn-radius primitive not found in tokens/glass.css");
+    } else if (!(mutePx >= MUTE_MIN && mutePx <= MUTE_MAX)) {
+        violations.push(
+            `BLUR-MUTE (MUTE-2): --glass-blur-btn-radius is ${mutePx}px — must be a HAIR below the ${PEER_RADIUS}px peer (in [${MUTE_MIN}, ${MUTE_MAX}]px): ≥${MUTE_MIN} keeps it real glass (not a wash tile), ≤${MUTE_MAX} is a genuine mute (not the un-muted peer)`,
+        );
+    }
+
+    // ── MUTE-3 — cohort-scoped: NO ladder composite reads --glass-blur-btn-radius (the
+    //   button mute must NOT leak onto the dock·Card·menu-row 8px peer material).
+    const leaked = LADDER_RUNGS.filter((t) => {
+        const m = glassTokens.match(new RegExp(`--glass-blur-${t}:\\s*([^;]+);`));
+        return m && /--glass-blur-btn-radius\b/.test(m[1]);
+    });
+    facts.leaked = leaked;
+    if (leaked.length) {
+        violations.push(
+            `BLUR-MUTE (MUTE-3): the ladder rung(s) ${leaked.join(", ")} read --glass-blur-btn-radius — the button mute must stay cohort-scoped (the 8px peer material dock·Card·menu-row is unchanged)`,
+        );
+    }
+    return { facts, violations };
+}
+
+// The blur-mute self-test bites — the FORBIDDEN forms each RED, the muted button PASSES.
+export function selfTestBlurMute() {
+    const fails = [];
+    const surf = ".btn-glass { backdrop-filter: var(--glass-blur-btn); }";
+    const restingDecl =
+        "--glass-blur-resting: blur(calc(var(--glass-blur-resting-radius) * var(--glass-level))) saturate(var(--glass-saturate-resting));";
+
+    // GREEN — the muted button: btn composes from the primitive at a hair (6px) below peer.
+    const okGlass = `:root { --glass-blur-btn-radius: 6px; --glass-blur-btn: blur(calc(var(--glass-blur-btn-radius) * var(--glass-level))) saturate(var(--glass-saturate-resting)); ${restingDecl} }`;
+    const ok = detectBlurMute({ glassTokens: okGlass, surfaces: surf });
+    if (ok.violations.length) fails.push(`the muted 6px-primitive button unexpectedly RED (${ok.violations.join("; ")})`);
+
+    // RED (MUTE-1) — the FORBIDDEN hardcoded composite blur(7px) (the anti-idiom).
+    const composite = `:root { --glass-blur-btn-radius: 7px; --glass-blur-btn: blur(7px) saturate(var(--glass-saturate-resting)); }`;
+    if (!detectBlurMute({ glassTokens: composite, surfaces: surf }).violations.some((v) => /MUTE-1/.test(v))) {
+        fails.push("a hardcoded composite `blur(7px)` override did NOT red (MUTE-1)");
+    }
+
+    // RED (MUTE-1) — the un-muted PEER alias (the substitution-trap NO-OP).
+    const aliasNoop = `:root { --glass-blur-btn-radius: 6px; --glass-blur-btn: var(--glass-blur-resting); ${restingDecl} }`;
+    if (!detectBlurMute({ glassTokens: aliasNoop, surfaces: surf }).violations.some((v) => /MUTE-1/.test(v))) {
+        fails.push("the un-muted resting-alias (the NO-OP) did NOT red (MUTE-1)");
+    }
+
+    // RED (MUTE-2) — an over-mute (2px, near blur(0) wholesale) reds the hair floor.
+    const overMute = `:root { --glass-blur-btn-radius: 2px; --glass-blur-btn: blur(calc(var(--glass-blur-btn-radius) * var(--glass-level))) saturate(var(--glass-saturate-resting)); }`;
+    if (!detectBlurMute({ glassTokens: overMute, surfaces: surf }).violations.some((v) => /MUTE-2/.test(v))) {
+        fails.push("a 2px over-mute (near blur(0)) did NOT red the hair floor (MUTE-2)");
+    }
+
+    // RED (MUTE-3) — a mute that LEAKS onto the resting ladder rung (the peer material).
+    const leak = `:root { --glass-blur-btn-radius: 6px; --glass-blur-btn: blur(calc(var(--glass-blur-btn-radius) * var(--glass-level))) saturate(var(--glass-saturate-resting)); --glass-blur-resting: blur(calc(var(--glass-blur-btn-radius) * var(--glass-level))) saturate(var(--glass-saturate-resting)); }`;
+    if (!detectBlurMute({ glassTokens: leak, surfaces: surf }).violations.some((v) => /MUTE-3/.test(v))) {
+        fails.push("a mute leaking onto the resting ladder rung did NOT red (MUTE-3)");
     }
     return fails;
 }
@@ -576,16 +692,20 @@ export function selfTestDockBlurRetired() {
 export function detect() {
     const blur = detectBlur();
     const peer = detectPeerLock();
+    const blurMute = detectBlurMute();
     const disco = detectDisco();
     const spring = detectSpringClock();
     const dockRetired = detectDockBlurRetired();
     const peerSelfTest = selfTestPeerLock().map((f) => `SELF-TEST ${f}`);
+    const blurMuteSelfTest = selfTestBlurMute().map((f) => `SELF-TEST BLUR-MUTE ${f}`);
     const retireSelfTest = selfTestDockBlurRetired().map((f) => `SELF-TEST ${f}`);
     return {
         violations: [
             ...blur.violations,
             ...peer.violations,
             ...peerSelfTest,
+            ...blurMute.violations,
+            ...blurMuteSelfTest,
             ...disco.violations,
             ...spring.violations,
             ...dockRetired.violations,
@@ -594,6 +714,7 @@ export function detect() {
         facts: {
             blur: blur.facts,
             peer: { ...peer.facts, selfTestFails: selfTestPeerLock() },
+            blurMute: { ...blurMute.facts, selfTestFails: selfTestBlurMute() },
             disco: disco.facts,
             spring: spring.facts,
             dockBlurRetired: { ...dockRetired.facts, selfTestFails: selfTestDockBlurRetired() },
@@ -618,6 +739,7 @@ function run() {
     console.log(`  blur radii        : ${Object.entries(facts.blur.radii).map(([k, v]) => `${k.replace("glass-blur-", "").replace("-radius", "")}=${v}`).join(" ")}`);
     console.log(`  @2dppx restore    : ${facts.blur.twodppx}px   companions intact: ${Object.values(facts.blur.companions).every(Boolean) ? "yes ✓" : "NO ✗"}`);
     console.log(`  8px peer lock     : ${Object.entries(facts.peer.peers).map(([k, v]) => `${k}=${v}px`).join(" ")} (target ${PEER_RADIUS}px)`);
+    console.log(`  button blur-mute  : --glass-blur-btn-radius=${facts.blurMute.mutePx}px (a hair below the ${PEER_RADIUS}px peer, in [${PEER_RADIUS - 3}, ${PEER_RADIUS - 1}]px) — primitive-override ${facts.blurMute.readsPrimitive ? "✓" : "✗"}`);
     console.log(`  disco recipe gone : ${facts.disco.recipeFamilyPresent.length === 0 ? "yes ✓" : `NO ✗ (${facts.disco.recipeFamilyPresent.join(", ")})`}`);
     console.log(`  consumer classes  : ${facts.disco.consumerClassHits.length} live`);
     console.log(`  dock grain gone   : ${facts.disco.dockGrainGone ? "yes ✓" : "NO ✗"}   chip §6: ${facts.disco.chipNoFastSnap && facts.disco.chipScaleLeg ? "yes ✓" : "NO ✗"}`);

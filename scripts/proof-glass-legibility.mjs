@@ -271,9 +271,11 @@ export function detectDiseaseRoot() {
 // onto the ONE unified 8px material: `--glass-blur-btn` is now an ALIAS of
 // `--glass-blur-resting`, so the calm glass button reads the SAME radius leg the dock, the
 // default-Card, and the menu-row read (the resolved-radius peer lock, proof:glass-cal). L3
-// is ALIAS-FOLLOWING + asserts the button reads a CALM CONTENT-TIER peer (resting/quiet,
-// 8-10px band) — REAL glass, NOT the sub-perceptual wash 1px tile AND NOT a per-button
-// divergent floating/deep slab. The MORE-glass register now lives on the HERO deep tier only
+// is ALIAS-FOLLOWING + asserts the button reads a CALM CONTENT-TIER peer (resting/quiet)
+// OR — BI.W-BLUR-MUTE — its OWN muted `--glass-blur-btn-radius` cohort primitive (a hair
+// below the 8px peer), in the [5,10]px real-glass band — NOT the sub-perceptual wash 1px
+// tile AND NOT a per-button divergent floating/deep slab. The MORE-glass register lives on
+// the HERO deep tier only
 // (`.btn-glass.glass-deep` → `--glass-blur-deep`, measured by L4 / proof:glass-depth). The
 // button still CONCENTRATES light (saturate ≥ 1.18 — resting's 1.4 clears it).
 function followBlurAlias(glass, value, depth = 0) {
@@ -305,12 +307,14 @@ export function detectButtonGlass({ glassOverride } = {}) {
     const radPx = radTier ? Number((glass.match(new RegExp(`--glass-blur-${radTier}-radius:\\s*([\\d.]+)px`)) ?? [])[1]) : null;
     facts.btnRadiusTier = radTier;
     facts.btnRadiusPx = radPx;
-    // The unified peer: a CALM CONTENT tier (resting | quiet) in the 8-10px band — real glass,
-    // the dock/Card/menu-row material. A wash (1px) tile reds (sub-perceptual); a floating/deep
-    // per-button slab reds (the un-collapsed BC state — more-glass is the hero deep tier only).
-    const isPeerTier = radTier === "resting" || radTier === "quiet";
-    if (radPx == null || !isPeerTier || !(radPx >= 8 && radPx <= 10)) {
-        violations.push(`L3: --glass-blur-btn resolves the ${radTier}-tier radius (${radPx}px) — not the unified 8px content-tier resting/quiet peer (real glass, the dock·Card·menu-row material; a wash 1px tile or a per-button floating/deep slab reds)`);
+    // The unified peer: a CALM CONTENT tier (resting | quiet) OR — BI.W-BLUR-MUTE — the
+    // button's OWN muted `--glass-blur-btn-radius` cohort primitive (the `btn` tier), in the
+    // [5,10]px real-glass band. A HAIR below the 8px peer down to 5px stays REAL glass (the
+    // muted glass CTA); a wash (1px) tile reds (sub-perceptual, <5); a floating/deep per-button
+    // slab reds (>10, the un-collapsed BC state — more-glass is the hero deep tier only).
+    const isPeerTier = radTier === "resting" || radTier === "quiet" || radTier === "btn";
+    if (radPx == null || !isPeerTier || !(radPx >= 5 && radPx <= 10)) {
+        violations.push(`L3: --glass-blur-btn resolves the ${radTier}-tier radius (${radPx}px) — not real content-tier glass (the resting/quiet 8px peer OR the muted --glass-blur-btn-radius cohort primitive, in [5,10]px; a wash 1px tile or a per-button floating/deep slab reds)`);
     }
     // the saturate the btn reads (the named --glass-saturate-{tier} knob, L7-threaded).
     const satTok = value.match(/saturate\(var\(--glass-saturate-(\w+)\)\)/);
@@ -452,6 +456,10 @@ export function selfTest() {
     // --glass-blur-resting) PASSES — it is the dock/Card/menu-row material.
     const peerBtn = detectButtonGlass({ glassOverride: ":root { --glass-blur-resting-radius: 8px; --glass-blur-resting: blur(calc(var(--glass-blur-resting-radius) * var(--glass-level))) saturate(var(--glass-saturate-resting)); --glass-saturate-resting: 1.4; --glass-blur-btn: var(--glass-blur-resting); }" });
     if (peerBtn.violations.some((v) => /L3:/.test(v))) fails.push(`self-test L3: the unified 8px resting-peer button (alias) unexpectedly RED (${peerBtn.violations.filter((v) => /L3:/.test(v)).join("; ")})`);
+    // L3 (BI.W-BLUR-MUTE): the muted button — btn composes from --glass-blur-btn-radius (6px, a
+    // hair below the peer) — PASSES (it is real content-tier glass, the muted glass CTA).
+    const mutedBtn = detectButtonGlass({ glassOverride: ":root { --glass-blur-btn-radius: 6px; --glass-blur-btn: blur(calc(var(--glass-blur-btn-radius) * var(--glass-level))) saturate(var(--glass-saturate-resting)); --glass-saturate-resting: 1.4; }" });
+    if (mutedBtn.violations.some((v) => /L3:/.test(v))) fails.push(`self-test L3: the muted 6px-primitive button unexpectedly RED (${mutedBtn.violations.filter((v) => /L3:/.test(v)).join("; ")})`);
     // L3: a sub-perceptual WASH 1px tile button reds (it is not real glass / not the peer).
     const washBtn = detectButtonGlass({ glassOverride: ":root { --glass-blur-wash-radius: 1px; --glass-blur-wash: blur(calc(var(--glass-blur-wash-radius) * var(--glass-level))) saturate(1.4); --glass-blur-btn: var(--glass-blur-wash); }" });
     if (!washBtn.violations.some((v) => /L3:/.test(v))) fails.push("self-test L3: a wash 1px tile button did NOT red the real-glass content-tier peer floor");
