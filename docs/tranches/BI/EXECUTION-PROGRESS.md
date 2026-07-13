@@ -87,3 +87,5 @@ verify-siblings-intact before+after any siblings-absent emulation.
 
 - 2026-07-12: cursor minted; task DAG #81–#95 created; guardians re-tooled to execution posture. GREENLIGHT: NO.
 - 2026-07-12 ~18:45: USER GREENLIGHT — execution begins in totality; Decision-0 ruled 5.0.0; judgments a–g delegated + ratified (above); branch tranche/BI cut @ 2c6c095d; atlas asks #21–25 routed to PRECUT-XR-ASKS.
+- 2026-07-12 B0 progress: G1 committed (STAB-CLOSE f1e70862 · ENCAP-REDRAIN 910dfffd · STYLE-REDRAIN db861d71 · GESTALT-LEDGER-FILE ac998852 · DEMO-CARD-DECLARE c396465b · LEDGER-DETECTOR-HARDEN 2f05d771); G2 committed (RATCHET-GROWTH 25f00641 · DOC-CANON-REWRITE 0ae7c21b · PI-IN-CLOSE 871ed206 · PRECUT-XR-ASKS 90d4d8bf + registrar d75197af). B0 10/13; G3+G4 running.
+- 2026-07-12 ~23:30 THE MARKING PASS (user: "all must be marked and heard… hic et ubique"): every inbound communiqué marked; value.js producer reds owned BY NAME — BLOB-SEAMS + XR-PRODUCER-REPAIRS minted (**93 waves**; B4+B5=14, B8-PRUNES=15), 6 specs patched with §Inbound acceptance constraints (1db3ff92); INBOUND-MARKS.md + proof:inbound-marks land with the archive-sweep fold; RECAP ADDENDUM 5.
