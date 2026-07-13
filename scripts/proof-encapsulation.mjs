@@ -628,8 +628,9 @@ function detectDeshadcn(overrides = {}) {
 //   G1 — AXES-MINTED: axes.ts exists AND exports the four tuples
 //        (SIZES/ORIENTATIONS/MOTIONS/SURFACES) + the derived Size/Orientation/
 //        Motion types AND re-exports Surface + SurfaceTier from ./useSurfaceAxis.
-//   G2 — SURFACE-4-MEMBER: SURFACES is exactly [glass,veil,opaque,clear] (four)
-//        AND ≡ the `useSurfaceAxis` `type Surface` union (a drift REDs).
+//   G2 — SURFACE-3-MEMBER: SURFACES is exactly [glass,veil,opaque] (three)
+//        AND ≡ the `useSurfaceAxis` `type Surface` union (a drift REDs). (`clear`
+//        RETIRED at BI.W-CLEAR-FOLD — dead substrate, 0 consumers.)
 //   G3 — MEMBERSHIP-FENCE: axes.ts exports ONLY axis unions/tuples + the two
 //        re-exported surface types — the anti-grab-bag clause (a function /
 //        component / default export REDs).
@@ -646,22 +647,56 @@ const GLASS_PANEL = resolve(SRC, "components/custom/glass-panel/GlassPanel.vue")
 const TABS_INDICATOR = resolve(SRC, "components/ui/tabs/TabsIndicator.vue");
 const FLAT_AXES = resolve(SRC, "axes.ts");
 
-const AXIS_TUPLES = ["SIZES", "ORIENTATIONS", "MOTIONS", "SURFACES"];
-const AXIS_TYPE_NAMES = ["Size", "Orientation", "Motion"];
-const CANON_SURFACES = ["glass", "veil", "opaque", "clear"];
-// The ONLY names `_shared/axes.ts` may export — the four tuples, the three derived
-// unions, + the two re-exported surface types. Anything else is a grab-bag stray.
-const AXIS_EXPORT_ALLOW = new Set([
-    "Surface",
-    "SurfaceTier",
-    "Size",
-    "Orientation",
-    "Motion",
+// BI.W-AXES-GATES — the axes-ext extends the four-tuple fence to SEVEN (the factor
+// band mints TONES/PLACEMENTS/TRIGGERS so a `variant` map can no longer smuggle a
+// tone/placement/trigger concept). G1 now requires all seven tuples + the six derived
+// types; the extra three are the axes-ext arm (G7/G8).
+const AXIS_TUPLES = [
     "SIZES",
     "ORIENTATIONS",
     "MOTIONS",
     "SURFACES",
+    "TONES",
+    "PLACEMENTS",
+    "TRIGGERS",
+];
+const AXIS_TYPE_NAMES = [
+    "Size",
+    "Orientation",
+    "Motion",
+    "Tone",
+    "Placement",
+    "Trigger",
+];
+const CANON_SURFACES = ["glass", "veil", "opaque"]; // `clear` RETIRED at BI.W-CLEAR-FOLD
+// The three NEW factor-band axes (the axes-ext paired edit).
+const AXES_EXT_TUPLES = ["TONES", "PLACEMENTS", "TRIGGERS"];
+const AXES_EXT_TYPES = ["Tone", "Placement", "Trigger"];
+// The canonical member SET each axis owns — a private `type X = <union>` outside the
+// axes home whose member set VERBATIM equals one of these is a re-mint of the axis
+// vocabulary (G8). Exact-set-equality only: a domain SUBSET (`"top"|"bottom"|"left"|
+// "right"` drawer direction) is a legit union, never flagged (the false-red fence).
+const CANON_AXIS_MEMBER_SETS = {
+    TONES: ["neutral", "success", "warning", "info", "destructive"],
+    PLACEMENTS: ["center", "top", "right", "bottom", "left"],
+    TRIGGERS: ["click", "hover", "context"],
+};
+// The ONLY names `_shared/axes.ts` may export — the seven tuples, the six derived
+// unions, + the two re-exported surface types. The DATA-DRIVEN allow-set is read from
+// axes.ts's own AXIS_TUPLES/AXIS_TYPE_NAMES meta-arrays (the paired edit); this Set is
+// the FALLBACK canonical when a self-test sabotages the meta-arrays.
+const AXIS_EXPORT_ALLOW = new Set([
+    "Surface",
+    "SurfaceTier",
+    ...AXIS_TYPE_NAMES,
+    ...AXIS_TUPLES,
 ]);
+// C2 (the 2026-07-12 atlas marking pass) — the documented `asChild`-capable COMPOUND
+// SURFACES that MUST render EXACTLY ONE root element (the directive-root guarantee
+// atlas binds to). Card is the atlas-named surface; the roster is extensible.
+const ASCHILD_SINGLE_ROOT_ROSTER = [
+    { rel: "components/ui/card/Card.vue", name: "Card" },
+];
 
 // The string members of a `NAME = [ "a", "b" ] as const` tuple (comment-stripped);
 // null when the tuple is absent.
@@ -710,8 +745,99 @@ function collectAxesExports(src) {
     return { names: [...names], hasDefault };
 }
 
+// ── BI.W-AXES-GATES helpers (the axes-ext + C2 asChild arms). ──
+
+// The names of every `export const NAME = [ … ] as const` tuple in axes.ts (the ACTUAL
+// exported tuple set — G7 cross-checks it against the AXIS_TUPLES meta-array).
+function exportedTupleNames(src) {
+    const clean = stripComments(src);
+    return [
+        ...clean.matchAll(/export\s+const\s+([A-Za-z_$][\w$]*)\s*=\s*\[[^\]]*\]\s*as\s+const/g),
+    ].map((m) => m[1]);
+}
+// The names of every `export type NAME = (typeof …)[number]` derived union in axes.ts
+// (the ACTUAL exported derived-type set; the re-exported Surface/SurfaceTier are a
+// `export type { … } from` block, so they never match this and stay handled separately).
+function exportedDerivedTypeNames(src) {
+    const clean = stripComments(src);
+    return [
+        ...clean.matchAll(/export\s+type\s+([A-Za-z_$][\w$]*)\s*=\s*\(typeof/g),
+    ].map((m) => m[1]);
+}
+// The effective membership allow-set — read from axes.ts's own AXIS_TUPLES +
+// AXIS_TYPE_NAMES meta-arrays (the paired edit) ∪ {Surface, SurfaceTier}. Falls back
+// to the gate's canonical AXIS_EXPORT_ALLOW when a self-test sabotages the meta-arrays.
+function axesAllowSet(axesSrc) {
+    const tuples = tupleMembers(axesSrc, "AXIS_TUPLES");
+    const types = tupleMembers(axesSrc, "AXIS_TYPE_NAMES");
+    if (!Array.isArray(tuples) || !Array.isArray(types)) return AXIS_EXPORT_ALLOW;
+    return new Set([...tuples, ...types, "Surface", "SurfaceTier"]);
+}
+// Two member arrays are the SAME SET (order-independent, dedup-safe).
+function sameSet(a, b) {
+    if (!Array.isArray(a) || !Array.isArray(b)) return false;
+    const sa = new Set(a);
+    const sb = new Set(b);
+    return sa.size === sb.size && [...sa].every((x) => sb.has(x));
+}
+
+// The two axis files that ARE the vocabulary home (never scanned for a private re-mint).
+const AXES_HOME_FILES = new Set([AXES, SURFACE_AXIS]);
+// Scan src/ for a private `type NAME = <string-union>;` whose member SET verbatim
+// equals a canonical axis (TONES/PLACEMENTS/TRIGGERS) — a re-mint of the axis
+// vocabulary outside the axes home. overrides.sources injects a synthetic offender.
+function scanPrivateAxisUnions(overrides = {}) {
+    const hits = [];
+    const consider = (rel, text) => {
+        const clean = stripComments(text);
+        for (const m of clean.matchAll(
+            /\btype\s+([A-Za-z_$][\w$]*)\s*=\s*((?:\s*["'][^"']+["']\s*\|?)+)\s*;/g,
+        )) {
+            const members = [...m[2].matchAll(/["']([^"']+)["']/g)].map((x) => x[1]);
+            for (const [axis, canon] of Object.entries(CANON_AXIS_MEMBER_SETS))
+                if (sameSet(members, canon))
+                    hits.push(`${rel}:${m[1]} verbatim re-mints the ${axis} axis`);
+        }
+    };
+    for (const f of walkSrc(SRC)) {
+        if (AXES_HOME_FILES.has(f)) continue;
+        consider(f.slice(SRC.length + 1), read(f));
+    }
+    if (overrides.sources)
+        for (const [rel, text] of Object.entries(overrides.sources))
+            consider(rel, text);
+    return hits;
+}
+
+// Count the DEPTH-0 element openings inside a `<template>` block (comments stripped).
+// A single-root SFC returns 1; a fragment (two-root) returns ≥ 2. Self-closing tags at
+// depth 0 count as one; `<template>`/void tags handled by the self-close flag.
+const VOID_TAGS = new Set([
+    "area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta",
+    "param", "source", "track", "wbr",
+]);
+function countRootElements(vueSrc) {
+    const tpl = stripComments(vueSrc).match(/<template>([\s\S]*)<\/template>/);
+    if (!tpl) return -1; // no template block → not a countable SFC (fence: skip)
+    const body = tpl[1].replace(/<!--[\s\S]*?-->/g, "");
+    let depth = 0;
+    let roots = 0;
+    for (const m of body.matchAll(/<(\/?)([a-zA-Z][\w.-]*)([^>]*?)(\/?)>/g)) {
+        const [, closing, tag, , selfClose] = m;
+        if (closing) {
+            depth = Math.max(0, depth - 1);
+            continue;
+        }
+        if (depth === 0) roots++;
+        const isSelfClose = selfClose === "/" || VOID_TAGS.has(tag.toLowerCase());
+        if (!isSelfClose) depth++;
+    }
+    return roots;
+}
+
 // overrides: { axesText?, axesExists?, surfaceText?, glassPanelText?, tabsText?,
-//              flatText?, flatExists? } — a self-test sabotages any input.
+//              flatText?, flatExists?, privateUnionSources?, asChildSources? } —
+//              a self-test sabotages any input.
 function detectAxisGrammar(overrides = {}) {
     const violations = [];
     const facts = {};
@@ -746,45 +872,71 @@ function detectAxisGrammar(overrides = {}) {
             `G1 — _shared/axes.ts must exist (${axesExists}) AND export SIZES/ORIENTATIONS/MOTIONS/SURFACES (${tuplesPresent}) + the Size/Orientation/Motion types (${typesPresent}) + re-export Surface/SurfaceTier from ./useSurfaceAxis (${reexportsSurface})`,
         );
 
-    // ── G2 — SURFACE-4-MEMBER: SURFACES ≡ the useSurfaceAxis Surface union. ──
+    // ── G2 — SURFACE-3-MEMBER: SURFACES ≡ the useSurfaceAxis Surface union. ──
     const surfacesTuple = tupleMembers(axesSrc, "SURFACES");
     const surfaceUnion = unionMembers(surfaceSrc, "Surface");
-    const four = Array.isArray(surfacesTuple) && surfacesTuple.length === 4;
-    const canonical = four && CANON_SURFACES.every((m) => surfacesTuple.includes(m));
+    const three = Array.isArray(surfacesTuple) && surfacesTuple.length === 3;
+    const canonical = three && CANON_SURFACES.every((m) => surfacesTuple.includes(m));
     const equiv =
         Array.isArray(surfacesTuple) &&
         Array.isArray(surfaceUnion) &&
         surfacesTuple.length === surfaceUnion.length &&
         surfacesTuple.every((m) => surfaceUnion.includes(m)) &&
         surfaceUnion.every((m) => surfacesTuple.includes(m));
-    facts.surfaceFourMember = { surfacesTuple, surfaceUnion, four, canonical, equiv };
-    if (!(four && canonical && equiv))
+    facts.surfaceThreeMember = { surfacesTuple, surfaceUnion, three, canonical, equiv };
+    if (!(three && canonical && equiv))
         violations.push(
-            `G2 — SURFACES must be the 4-member [glass,veil,opaque,clear] (got ${JSON.stringify(surfacesTuple)}) AND ≡ the useSurfaceAxis Surface union (${JSON.stringify(surfaceUnion)})`,
+            `G2 — SURFACES must be the 3-member [glass,veil,opaque] (got ${JSON.stringify(surfacesTuple)}) AND ≡ the useSurfaceAxis Surface union (${JSON.stringify(surfaceUnion)})`,
         );
 
     // ── G3 — MEMBERSHIP-FENCE: axes.ts exports ONLY axis vocabulary. ──
+    // The allow-set is DATA-DRIVEN (read from axes.ts's own AXIS_TUPLES/AXIS_TYPE_NAMES
+    // meta-arrays — the paired edit), and the anti-grab-bag TEETH are structural + a
+    // human cannot smuggle a function by widening the meta-array: a `export function` /
+    // `export class` / `export default` REDs regardless of the allow-set.
     const { names: axesExportNames, hasDefault } = collectAxesExports(axesSrc);
-    const strays = axesExportNames.filter((n) => !AXIS_EXPORT_ALLOW.has(n));
-    facts.membershipFence = { axesExportNames, strays, hasDefault };
-    if (axesExists && (strays.length || hasDefault))
+    const allowSet = axesAllowSet(axesSrc);
+    const strays = axesExportNames.filter((n) => !allowSet.has(n));
+    const axesCleanSrc = stripComments(axesSrc);
+    const hasFunctionExport = /export\s+(?:async\s+)?function\b/.test(axesCleanSrc);
+    const hasClassExport = /export\s+(?:abstract\s+)?class\b/.test(axesCleanSrc);
+    facts.membershipFence = {
+        axesExportNames,
+        strays,
+        hasDefault,
+        hasFunctionExport,
+        hasClassExport,
+    };
+    if (
+        axesExists &&
+        (strays.length || hasDefault || hasFunctionExport || hasClassExport)
+    )
         violations.push(
-            `G3 — _shared/axes.ts exports ONLY axis unions/tuples + the two surface types (grab-bag strays: ${strays.join(", ") || "none"}, default export: ${hasDefault}) — the anti-grab-bag membership fence`,
+            `G3 — _shared/axes.ts exports ONLY axis unions/tuples + the two surface types (grab-bag strays: ${strays.join(", ") || "none"}, default: ${hasDefault}, function: ${hasFunctionExport}, class: ${hasClassExport}) — the anti-grab-bag membership fence`,
         );
 
     // ── G4 — HOMONYM-KILL GlassPanel: variant→tier, backend tier→renderTier. ──
+    // BI.W-GLASS-DEDUP RETIRED GlassPanel (FAM-10 — a slotless glass surface needs no
+    // component; folded onto <Surface>/.glass-resting, the second JS refraction path
+    // deleted). When GlassPanel.vue is ABSENT the homonym cannot exist (the STRONGEST
+    // kill — the whole component gone, the G5 tabs-absent precedent); a RESURRECTED
+    // file re-minting `variant` still reds via the self-test's `glassPanelText` override.
+    const gpAbsent =
+        overrides.glassPanelText === undefined && !existsSync(GLASS_PANEL);
     const gpClean = stripComments(glassPanelSrc);
     const gpHasVariantProp = /\bvariant\s*\??\s*:/.test(gpClean);
     const gpHasTierProp = /\btier\s*\??\s*:/.test(gpClean);
     const gpHasRenderTierProp = /\brenderTier\s*\??\s*:/.test(gpClean);
     const gpVariantTypeAbsent = !definesSymbol(glassPanelSrc, "GlassPanelVariant");
     facts.glassPanelHomonym = {
+        gpAbsent,
         gpHasVariantProp,
         gpHasTierProp,
         gpHasRenderTierProp,
         gpVariantTypeAbsent,
     };
     if (
+        !gpAbsent &&
         !(
             !gpHasVariantProp &&
             gpHasTierProp &&
@@ -823,6 +975,76 @@ function detectAxisGrammar(overrides = {}) {
             `G6 — src/axes.ts must exist (${flatExists}) AND re-export ./components/ui/_shared/axes (${flatReexports})`,
         );
 
+    // ── G7 — AXES-EXT PAIRED-EDIT: the three factor axes + the meta-array soundness. ──
+    // TONES/PLACEMENTS/TRIGGERS + Tone/Placement/Trigger exist AS EXPORTS, AND the
+    // internal AXIS_TUPLES/AXIS_TYPE_NAMES meta-arrays are a VERIFIED reflection of the
+    // actual export surface (a tuple added without its meta-array row — or vice versa —
+    // reds), AND ALLOWED_EXPORTS is declared (the allow-set anchor).
+    const extTuplesPresent = AXES_EXT_TUPLES.every((n) => exportsSymbol(axesSrc, n));
+    const extTypesPresent = AXES_EXT_TYPES.every((n) => exportsSymbol(axesSrc, n));
+    const declaredTuples = tupleMembers(axesSrc, "AXIS_TUPLES");
+    const declaredTypes = tupleMembers(axesSrc, "AXIS_TYPE_NAMES");
+    const actualTuples = exportedTupleNames(axesSrc);
+    const actualTypes = exportedDerivedTypeNames(axesSrc);
+    const tuplesPaired = sameSet(declaredTuples, actualTuples);
+    const typesPaired = sameSet(declaredTypes, actualTypes);
+    const allowedExportsDeclared = /\bALLOWED_EXPORTS\s*=\s*\[/.test(axesCleanSrc);
+    facts.axesExt = {
+        extTuplesPresent,
+        extTypesPresent,
+        declaredTuples,
+        actualTuples,
+        declaredTypes,
+        actualTypes,
+        tuplesPaired,
+        typesPaired,
+        allowedExportsDeclared,
+    };
+    if (
+        axesExists &&
+        !(
+            extTuplesPresent &&
+            extTypesPresent &&
+            tuplesPaired &&
+            typesPaired &&
+            allowedExportsDeclared
+        )
+    )
+        violations.push(
+            `G7 — axes-ext must mint TONES/PLACEMENTS/TRIGGERS (${extTuplesPresent}) + Tone/Placement/Trigger (${extTypesPresent}), the AXIS_TUPLES meta-array ≡ the exported tuples (${tuplesPaired}: declared ${JSON.stringify(declaredTuples)} vs actual ${JSON.stringify(actualTuples)}), AXIS_TYPE_NAMES ≡ the exported types (${typesPaired}), ALLOWED_EXPORTS declared (${allowedExportsDeclared}) — the paired edit`,
+        );
+
+    // ── G8 — PRIVATE-AXIS-UNION: no re-mint of the axis vocabulary outside the home. ──
+    const privateUnionHits = scanPrivateAxisUnions({
+        sources: overrides.privateUnionSources,
+    });
+    facts.privateAxisUnions = { hits: privateUnionHits };
+    if (privateUnionHits.length)
+        violations.push(
+            `G8 — a private tone/placement/trigger-shaped union re-mints the axis vocabulary outside _shared/axes.ts (import Tone/Placement/Trigger, never re-declare): ${privateUnionHits.join(", ")}`,
+        );
+
+    // ── G9 — C2 asChild SINGLE-ROOT (atlas): a documented asChild surface renders 1 root. ──
+    const twoRootHits = [];
+    for (const s of ASCHILD_SINGLE_ROOT_ROSTER) {
+        const over = overrides.asChildSources && overrides.asChildSources[s.rel];
+        const src = over ?? read(resolve(SRC, s.rel));
+        const roots = countRootElements(src);
+        if (roots > 1) twoRootHits.push(`${s.name}(${roots} roots)`);
+    }
+    // A self-test may inject a synthetic asChild surface not on the roster.
+    if (overrides.asChildSources)
+        for (const [rel, src] of Object.entries(overrides.asChildSources))
+            if (!ASCHILD_SINGLE_ROOT_ROSTER.some((s) => s.rel === rel)) {
+                const roots = countRootElements(src);
+                if (roots > 1) twoRootHits.push(`${rel}(${roots} roots)`);
+            }
+    facts.asChildSingleRoot = { twoRootHits };
+    if (twoRootHits.length)
+        violations.push(
+            `G9 — a documented asChild-capable compound surface renders MORE than one root element (the directive-root guarantee atlas binds to): ${twoRootHits.join(", ")}`,
+        );
+
     return { facts, violations };
 }
 
@@ -853,10 +1075,8 @@ function detectAxisGrammar(overrides = {}) {
 //        with a `cell` member exists.
 const CONTROL_SIZE = resolve(SRC, "components/ui/_shared/useControlSize.ts");
 const BUTTON_INDEX = resolve(SRC, "components/ui/button/index.ts");
-const CHIP_VARIANTS = resolve(
-    SRC,
-    "components/custom/selectable-chip/chipVariants.ts",
-);
+// BI.W-CHIP-FOLD — the chip CVA moved to the folded survivor (custom/chip/).
+const CHIP_VARIANTS = resolve(SRC, "components/custom/chip/chipVariants.ts");
 const DOCK_SHELL = resolve(
     SRC,
     "components/custom/dock/composables/useDockShellProps.ts",
@@ -1059,7 +1279,8 @@ const MOTION_CARRIERS = [
     { rel: "components/ui/card/Card.vue", name: "Card" },
     { rel: "components/ui/slider/Slider.vue", name: "Slider" },
     { rel: "components/ui/dialog/DialogContent.vue", name: "DialogContent" },
-    { rel: "components/ui/sheet/SheetContent.vue", name: "SheetContent" },
+    // BI.W-DIALOG-PLACEMENT — SheetContent FOLDED onto <DialogContent placement>
+    // (the survivor row above); the carrier roster is FIVE.
     { rel: "components/custom/tabs/SegmentedTabs.vue", name: "SegmentedTabs" },
     { rel: "components/custom/dock/DockLayerGroup.vue", name: "DockLayerGroup" },
 ];
@@ -1067,9 +1288,16 @@ const MOTION_BOOLEANS = ["draggable", "pressable", "spring", "liquidDrag"];
 // The kept gesture contracts (NOT motion intensity) — must survive the collapse.
 const KEPT_CONTRACTS = [
     { prop: "keepDockOpen", rel: "components/ui/slider/Slider.vue" },
-    { prop: "dragDismiss", rel: "components/ui/sheet/SheetContent.vue" },
+    // BI.W-DIALOG-PLACEMENT — the Sheet dragDismiss BOOLEAN retired with Sheet; the
+    // drag-to-dismiss gesture contract now lives as the Drawer snap engine dismiss
+    // flick MECHANISM (below-smallest-detent fling), asserted by mechanism-grep in M6.
     { prop: "responsive", rel: "components/custom/tabs/SegmentedTabs.vue" },
 ];
+// The Drawer dismiss-flick mechanism (the folded dragDismiss contract survivor): the
+// snap engine must keep the below-smallest-detent dismiss path (a fold that drops the
+// gesture silently reds here — the inverse-over-unification fence, mechanism-shaped).
+const DRAWER_SNAP_ENGINE = "components/ui/drawer/composables/useDrawerSnap.ts";
+const DISMISS_FLICK_RE = /dismiss[\s-]*flick|dismiss\s*\(|flings? the sheet below/i;
 
 // A PROP declaration of `name` in a `.vue` file's `defineProps`/`withDefaults`
 // interface — `name?:`/`name:` followed by a TYPE IDENTIFIER (comment-stripped). Three
@@ -1212,6 +1440,12 @@ function detectMotionAxis(overrides = {}) {
         if (!declaresProp(text, c.prop))
             missingContracts.push(`${c.prop}@${c.rel.split("/").pop()}`);
     }
+    // The Drawer dismiss-flick mechanism survivor (the folded dragDismiss contract).
+    const drawerEngineText =
+        (overrides.sources && overrides.sources[DRAWER_SNAP_ENGINE]) ??
+        read(resolve(SRC, DRAWER_SNAP_ENGINE));
+    if (!DISMISS_FLICK_RE.test(drawerEngineText))
+        missingContracts.push(`dismiss-flick@useDrawerSnap.ts`);
     facts.keptContracts = { missing: missingContracts };
     if (missingContracts.length)
         violations.push(
@@ -1819,16 +2053,18 @@ function selfTest() {
         "G1",
         "G1 axes.ts drops the SIZES tuple",
     );
-    // G2: SURFACES drifts to a 3-member set (clear dropped — off the Surface union).
+    // G2: SURFACES drifts to a 2-member set (opaque dropped — off the 3-member
+    // Surface union). (The prior "3-member clear-dropped" drift became the CANONICAL
+    // set at BI.W-CLEAR-FOLD, so the drift now removes a surviving member.)
     sabG(
         {
             axesText: liveAxes.replace(
                 /SURFACES\s*=\s*\[[^\]]*\]/,
-                'SURFACES = ["glass", "veil", "opaque"]',
+                'SURFACES = ["glass", "veil"]',
             ),
         },
         "G2",
-        "G2 SURFACES drifts off the Surface union (3-member)",
+        "G2 SURFACES drifts off the Surface union (2-member)",
     );
     // G3: a grab-bag function export planted in axes.ts (the anti-grab-bag fence).
     sabG(
@@ -1838,20 +2074,25 @@ function selfTest() {
     );
     // G3 (fence): the clean axes-only vocabulary does NOT trip the membership fence.
     sabNotG({}, "G3", "G3 the clean axes-only vocabulary");
-    // G4: GlassPanel re-mints the `variant` surface-rung prop (the homonym returns).
+    // G4: a RESURRECTED GlassPanel re-mints the `variant` surface-rung prop (the
+    //     homonym returns even after the BI.W-GLASS-DEDUP FAM-10 retire). GlassPanel.vue
+    //     is now DEFINITION-ABSENT, so the bite provides a SYNTHETIC resurrected source
+    //     (the override sets gpAbsent=false → the homonym check runs).
     sabG(
         {
-            glassPanelText: liveGlassPanel.replace(
-                /export interface GlassPanelProps \{/,
-                "export interface GlassPanelProps {\n    variant?: SurfaceTier;",
-            ),
+            glassPanelText:
+                "export interface GlassPanelProps {\n    variant?: SurfaceTier;\n    tier?: SurfaceTier;\n    renderTier?: GlassTier;\n}",
         },
         "G4",
-        "G4 GlassPanel re-mints a variant prop",
+        "G4 a resurrected GlassPanel re-mints a variant prop",
     );
-    // G4 (fence): a bare COMMENT mention of `variant` in GlassPanel does NOT flag.
+    // G4 (fence): a resurrected GlassPanel with the homonym KILLED (tier+renderTier, NO
+    //     variant, no GlassPanelVariant) + a bare COMMENT mention of `variant` does NOT flag.
     sabNotG(
-        { glassPanelText: `// variant is the retired homonym\n${liveGlassPanel}` },
+        {
+            glassPanelText:
+                "// variant is the retired homonym\nexport interface GlassPanelProps {\n    tier?: SurfaceTier;\n    renderTier?: GlassTier;\n}",
+        },
         "G4",
         "G4 comment-mention fence (a note is not a prop)",
     );
@@ -1868,6 +2109,79 @@ function selfTest() {
         { flatExists: false, flatText: "" },
         "G6",
         "G6 the /axes barrel is absent",
+    );
+
+    // ── BI.W-AXES-GATES — the G7/G8/G9 bites (axes-ext + C2 asChild). ──
+    // G7: the AXIS_TUPLES meta-array drops TONES (the paired edit desyncs — a tuple is
+    // exported but not listed) → the paired-edit soundness reds.
+    sabG(
+        { axesText: liveAxes.replace(/"TONES",\s*\n/, "") },
+        "G7",
+        "G7 the AXIS_TUPLES meta-array desyncs from the exported tuples",
+    );
+    // G7: ALLOWED_EXPORTS is dropped (the allow-set anchor absent).
+    sabG(
+        { axesText: liveAxes.replace(/const ALLOWED_EXPORTS\s*=\s*\[[^\]]*\]/, "") },
+        "G7",
+        "G7 ALLOWED_EXPORTS is absent",
+    );
+    // G7 (fence): the clean live axes vocabulary is paired-consistent (no G7 flag).
+    sabNotG({}, "G7", "G7 the clean paired-edit axes vocabulary");
+    // G8: a synthetic private TONES-shaped union re-mints the axis vocabulary → reds.
+    sabG(
+        {
+            privateUnionSources: {
+                "components/_selftest-tone.ts":
+                    'export type FeedbackTone = "neutral" | "success" | "warning" | "info" | "destructive";',
+            },
+        },
+        "G8",
+        "G8 a private verbatim TONES re-mint",
+    );
+    // G8: a synthetic private PLACEMENTS-shaped union re-mints the axis → reds.
+    sabG(
+        {
+            privateUnionSources: {
+                "components/_selftest-placement.ts":
+                    'type Anchor = "center" | "top" | "right" | "bottom" | "left";',
+            },
+        },
+        "G8",
+        "G8 a private verbatim PLACEMENTS re-mint",
+    );
+    // G8 (the false-red FENCE): a domain SUBSET union (drawer direction, 4 members, no
+    // "center") is a legit union — it must NOT flag (a subset is not a re-mint).
+    sabNotG(
+        {
+            privateUnionSources: {
+                "components/_selftest-subset.ts":
+                    'type DrawerDirection = "top" | "bottom" | "left" | "right";',
+            },
+        },
+        "G8",
+        "G8 fence — a placement SUBSET union is not a re-mint",
+    );
+    // G9: a synthetic asChild compound surface renders TWO roots (a fragment) → reds.
+    sabG(
+        {
+            asChildSources: {
+                "components/_selftest-tworoot.vue":
+                    "<template><div data-slot=a></div><div data-slot=b></div></template>",
+            },
+        },
+        "G9",
+        "G9 a two-root asChild render",
+    );
+    // G9 (fence): a single-root asChild surface (the Card shape) passes.
+    sabNotG(
+        {
+            asChildSources: {
+                "components/_selftest-oneroot.vue":
+                    "<template><div data-slot=root><span/></div></template>",
+            },
+        },
+        "G9",
+        "G9 fence — a single-root asChild render",
     );
 
     // ── BH.W-SIZE-UNIFY — the S1–S6 bites over detectSizeGrammar. ──
@@ -2299,10 +2613,10 @@ function run() {
         `    DS4 ToastClose default name   : ${deshadcnFacts.toastClose.bindsAriaLabel && deshadcnFacts.toastClose.hasDefaultName ? "GREEN" : "RED"} (aria-label=${deshadcnFacts.toastClose.bindsAriaLabel}, default=${deshadcnFacts.toastClose.hasDefaultName})`,
     );
     console.log(
-        "  BH.W-AXIS-GRAMMAR (G1 axes-minted · G2 surface-4-member · G3 membership-fence · G4 GlassPanel-tier · G5 TabsIndicator-plate · G6 /axes-barrel):",
+        "  BH.W-AXIS-GRAMMAR + BI.W-AXES-GATES (G1 axes-minted · G2 surface-3-member · G3 membership-fence · G4 GlassPanel-tier · G5 TabsIndicator-plate · G6 /axes-barrel · G7 axes-ext-paired · G8 private-axis-union · G9 asChild-single-root):",
     );
     console.log(
-        `    axis-grammar                  : ${axisViolations.length === 0 ? "GREEN" : "RED"} (axes.ts=${axisFacts.axesMinted.axesExists}, SURFACES=${JSON.stringify(axisFacts.surfaceFourMember.surfacesTuple)}, GlassPanel variant-killed=${!axisFacts.glassPanelHomonym.gpHasVariantProp}+renderTier=${axisFacts.glassPanelHomonym.gpHasRenderTierProp}, TabsIndicator plate=${axisFacts.tabsHomonym.tabsHasPlateProp}, /axes=${axisFacts.flatBarrel.flatExists})`,
+        `    axis-grammar                  : ${axisViolations.length === 0 ? "GREEN" : "RED"} (axes.ts=${axisFacts.axesMinted.axesExists}, SURFACES=${JSON.stringify(axisFacts.surfaceThreeMember.surfacesTuple)}, GlassPanel variant-killed=${!axisFacts.glassPanelHomonym.gpHasVariantProp}+renderTier=${axisFacts.glassPanelHomonym.gpHasRenderTierProp}, TabsIndicator plate=${axisFacts.tabsHomonym.tabsHasPlateProp}, /axes=${axisFacts.flatBarrel.flatExists})`,
     );
     console.log(
         "  BH.W-SIZE-UNIFY (S1 density-absent · S2 size-prop · S3 no-adjective-rung · S4 ControlSize-md · S5 button-iconOnly · S6 chip-shape):",
@@ -2329,7 +2643,7 @@ function run() {
         `    ratchet-growth mirror         : ${growthViolations.length === 0 ? "GREEN" : "RED"} (${growthFacts.ratchetKeys} ratchet key(s) vs ${growthFacts.manifestKeys} frozen manifest key(s); off-manifest=${growthFacts.offManifest.length ? growthFacts.offManifest.join(", ") : "none"})`,
     );
     console.log(
-        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (blob E1×2+E1-fence+E2×2+E3×2+E4+E4-fence + colocate C1×2+C1-fence+C2×2+C3+C3-fence + luminance-carve C3+C2+C3-fence + alias-kill A1+A2+fence + deshadcn DS1×3+DS1-fence+DS2+DS3×2+DS3-regex+DS4+DS-clean + axis-grammar G1+G2+G3+G3-fence+G4+G4-fence+G5+G6 + size-grammar S1x2+S2+S3+S4+S5+S6+S-fence + motion-axis M1×2+M1-fence×2+M2+M3+M4+M5+M6+M-fence + goo-barbell GB1×2+GB2×4+GB3+GB3-fence+GB-fence + ratchet-growth RG1+RG1-fence×2)`,
+        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (blob E1×2+E1-fence+E2×2+E3×2+E4+E4-fence + colocate C1×2+C1-fence+C2×2+C3+C3-fence + luminance-carve C3+C2+C3-fence + alias-kill A1+A2+fence + deshadcn DS1×3+DS1-fence+DS2+DS3×2+DS3-regex+DS4+DS-clean + axis-grammar G1+G2+G3+G3-fence+G4+G4-fence+G5+G6 + axes-ext G7×2+G7-fence+G8×2+G8-fence+G9+G9-fence + size-grammar S1x2+S2+S3+S4+S5+S6+S-fence + motion-axis M1×2+M1-fence×2+M2+M3+M4+M5+M6+M-fence + goo-barbell GB1×2+GB2×4+GB3+GB3-fence+GB-fence + ratchet-growth RG1+RG1-fence×2)`,
     );
 
     if (violations.length) {
