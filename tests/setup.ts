@@ -89,6 +89,29 @@ if (!("PointerEvent" in window)) {
     });
 }
 
+// happy-dom lacks `document.elementsFromPoint` (the hit-test stack-walk). The
+// adaptive-glass backdrop sampler (`useGlassBackdropLuminance`, wired ON by
+// default for the dock via BG.W-GLASS-SIGNAL-TRUTH's `autoLuminance` default-TRUE
+// signal) calls it on mount; without the stub every dock unit test crashes at the
+// first sample. The product path is CORRECT and unchanged — a happy-dom stub is
+// HONEST (the test env genuinely has no painted stack to hit-test), NOT a product
+// fallback that would hide a dead primary (the NO-MASKING-FALLBACK edict). An
+// empty stack degrades to the static-ground floor exactly as an SSR/no-paint env would.
+// happy-dom's `document` is an `HTMLDocument` instance whose resolved prototype is
+// NOT the global `Document.prototype`, so the stub lands on the live instance's own
+// prototype (covers every `document` in the file) + the instance as a belt-and-braces.
+const elementsFromPointStub = () => [] as Element[];
+for (const target of [
+    Object.getPrototypeOf(document) as object,
+    document as unknown as object,
+]) {
+    Object.defineProperty(target, "elementsFromPoint", {
+        configurable: true,
+        writable: true,
+        value: elementsFromPointStub,
+    });
+}
+
 HTMLElement.prototype.scrollIntoView = vi.fn();
 HTMLElement.prototype.animate = vi.fn(() => ({
     cancel: vi.fn(),

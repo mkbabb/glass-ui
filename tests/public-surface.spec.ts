@@ -338,6 +338,17 @@ const exactSubpathRuntimeSurfaces = [
             // (composes useDockState + the /search fuzzy pipeline + the dock
             // --dock-morph-t metaball morph; <GlassDock search> opts into it).
             "useDockSearch",
+            // BG.W-SIRI-DOCK-CAPABILITY — Siri as a DOCK CAPABILITY (the `<SiriDockCapability>`
+            // glass island + `useSiriDock` seam + the `SIRI_FORMS`/`SIRI_SQRT_PHI`/`siriFormOf`
+            // √φ morph-form ladder) reaches consumers ONLY via the `/dock` subpath, NOT a
+            // subpath/api entry. This snapshot is HONEST to the current tree (the 27-symbol
+            // surface); the terminal siri-*-belongs-on-public-/dock adjudication carries to
+            // D-DOCK (BI ruling 18 — DOCK-RETIRES/SPINE), which may re-home them.
+            "SIRI_FORMS",
+            "SIRI_SQRT_PHI",
+            "SiriDockCapability",
+            "siriFormOf",
+            "useSiriDock",
             "provideDockContext",
             "useDockContext",
             "useLayerTransition",

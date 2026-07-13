@@ -36,12 +36,22 @@ function dispatchTransitionEnd(root: Element, propertyName: string): void {
     root.dispatchEvent(event);
 }
 
+// These specs drive the morph spring to settle with the unbounded `vi.runAllTimers()`.
+// The dock's `autoLuminance` default-TRUE backdrop sampler (BG.W-GLASS-SIGNAL-TRUTH) is
+// a PERPETUAL `useRAFLoop` monitor — never settling — so it spins `runAllTimers` past the
+// 10000-timer abort before the spring can settle. Luminance is ORTHOGONAL to the
+// isTransitioning spring-settle contract under test, so it is mounted OFF here (the
+// product default stays TRUE — this scopes the unit test to the mechanism it verifies,
+// the same test-env accommodation as the happy-dom `elementsFromPoint` stub, NOT a
+// product change).
 describe("GlassDock isTransitioning — spring-settle source (BG.NF.1 W-FALLBACK-EXCISE)", () => {
     beforeEach(() => vi.useFakeTimers());
     afterEach(() => vi.useRealTimers());
 
     it("a stray transitionend is INERT — only the spring's own settle clears the flag", async () => {
-        const wrapper = mount(GlassDock, { props: { startCollapsed: true } });
+        const wrapper = mount(GlassDock, {
+            props: { startCollapsed: true, autoLuminance: false },
+        });
         const vm = wrapper.vm as unknown as Record<string, unknown>;
         const root = wrapper.get(".glass-dock").element;
 
@@ -65,7 +75,9 @@ describe("GlassDock isTransitioning — spring-settle source (BG.NF.1 W-FALLBACK
     });
 
     it("rapid A→B→A never stale-clears: the flag stays true across the chain, false at settle", async () => {
-        const wrapper = mount(GlassDock, { props: { startCollapsed: true } });
+        const wrapper = mount(GlassDock, {
+            props: { startCollapsed: true, autoLuminance: false },
+        });
         const vm = wrapper.vm as unknown as Record<string, unknown>;
         const root = wrapper.get(".glass-dock").element;
 
@@ -89,7 +101,9 @@ describe("GlassDock isTransitioning — spring-settle source (BG.NF.1 W-FALLBACK
     });
 
     it("a superseded morph does not leak a busy flag — expand→collapse settles to false once", async () => {
-        const wrapper = mount(GlassDock, { props: { startCollapsed: true } });
+        const wrapper = mount(GlassDock, {
+            props: { startCollapsed: true, autoLuminance: false },
+        });
         const vm = wrapper.vm as unknown as Record<string, unknown>;
 
         (vm.expand as () => void)();
