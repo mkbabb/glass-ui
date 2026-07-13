@@ -64,6 +64,9 @@ export const DROPPED_SUBPATHS = new Set([
     "dot-flow-field",
     "concentric",
     "dot-matrix",
+    // BI.W-VIRTUAL-TRUTH — the /virtual PUBLISHED SUBPATH retired (fabricated consumer
+    // liveness; 0 external + 0 production, demo-only). The engine stays internal.
+    "virtual",
 ]);
 
 const read = (rel) => {

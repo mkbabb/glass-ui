@@ -1,20 +1,25 @@
 #!/usr/bin/env node
-// BC.W-VIRTUAL-WINDOW — proof:virtual-window, the re-mint + publication + no-fork
-// + lineage gate for the virtualized-section-windowing primitive RETIRED at
-// glass-ui v1.0 (MIGRATION.md §3.2-3.4) and HOME again at BC (the homecoming:
-// v0.9.4 → retired v1.0 → returned BC; two binary consumers overturn the
-// no-consumer verdict — the live words DefinitionContentView + the booked
-// BC.W-DOCK-SEARCH results list).
+// proof:virtual-window — the engine-correctness + retire-truth gate for the
+// virtualized-section-windowing mechanism. Its history: a glass-ui primitive at
+// v0.9.4, retired at v1.0 (MIGRATION.md §3.2-3.4, 0 consumers), un-retired at BC
+// on a two-binary-consumer justification that turned out FABRICATED (words ships
+// a byte-divergent local fork; the library dock only takes an ensureTargetWindow
+// callback — it never composes the windower). BI.W-VIRTUAL-TRUTH adjudicated the
+// terminal fate: the `/virtual` PUBLISHED SUBPATH is RETIRED (0 external + 0 src/
+// production consumers), while the engine STAYS as an internal, demo-consumed
+// composable under src/composables/virtual/.
 //
-// SOURCE arm + the VW3 LIVE store race-guard (a targeted vitest run). The
-// BINDING painted truth is the π arm (tests-visual/virtual-window.spec.ts + the
-// W-VIRTUAL-WINDOW-DELTA capture: the 1000-item list renders only the windowed
-// slice, the spacers are honest, a scroll-to warms + lands a far section). The
-// dist subpath-resolution is proof:resolution + verify-export-types' job — VW4
-// here asserts the SOURCE wiring only.
+// VW1/VW2/VW3 prove the engine is still correct (the pure layout core, the
+// reactive composable, the generation-counter store — the mechanism is kept).
+// VW4/VW5 prove the RETIRE is honest and complete: the subpath mirror + the /api
+// re-export are gone, the barrel still serves internal consumers, and the
+// consumer-evidence doc records the truthful 0-external/0-production/demo-only
+// state with words recorded as forked.
 //
-// BORN-RED at HEAD: src/composables/virtual/ is absent, no "./virtual" exports
-// entry, the /api types unpublished, the consumer-evidence proofs unresolved.
+// SOURCE arm + the VW3 LIVE store race-guard (a targeted vitest run). VW4 asserts
+// the SOURCE wiring only — the package.json export-key removal + the dist is the
+// registrar's regen-exports + proof:resolution job, deliberately NOT read here so
+// this gate is GREEN on the source retire independent of the export-surface regen.
 //
 // Each clause carries a self-test bite (the gate-coherence discipline): a
 // regressed shape REDs the clause.
@@ -182,42 +187,44 @@ add(
     `useWindowedStore exposes set/prepend/clear/appendIfCurrent + generation, appendIfCurrent rejects when generation !== expectedGeneration, and the LIVE race-guard vitest assert is GREEN (set→bump→stale appendIfCurrent returns false + does not mutate) [exists=${storeExists} surface=${storeSurface} guarded=${appendGuarded} live=${liveStatus}]`,
 );
 
-// ── VW4 — published on the subpath + colocation binary (SOURCE wiring) ──
-const subpathOk = /export \* from\s+["']\.\.\/composables\/virtual["']/.test(subpath);
-const exportsEntry = pkg?.exports?.["./virtual"];
-const exportsEntryOk =
-    !!exportsEntry &&
-    exportsEntry.types === "./dist/virtual.d.ts" &&
-    exportsEntry.import === "./dist/virtual.js" &&
-    // the {types, import} contract-v2 shape — no default/development arms.
-    !("default" in exportsEntry) &&
-    !("development" in exportsEntry);
-const typesVersionsOk =
-    Array.isArray(pkg?.typesVersions?.["*"]?.virtual) &&
-    pkg.typesVersions["*"].virtual.includes("dist/virtual.d.ts");
-// /api co-publishes the windowing contract types.
-const apiPublished =
-    /FlatSection/.test(apiIndex) &&
-    /SectionLayout/.test(apiIndex) &&
-    /SectionWindowRange/.test(apiIndex) &&
-    /ForcedSectionWindowRange/.test(apiIndex) &&
-    /from\s+["']\.\.\/composables\/virtual["']/.test(apiIndex);
+// ── VW4 — the subpath is RETIRED + the engine stays internal (SOURCE wiring) ──
+// The published surface is gone: no src/subpaths/virtual.ts mirror, and the /api
+// discovery layer no longer re-exports the windowing types from composables/virtual.
+// The package.json "./virtual" export-key removal is the registrar's regen job
+// (proof:resolution owns dist) — NOT asserted here, so this gate is GREEN on the
+// source retire alone. The engine barrel STAYS whole for the internal consumers.
+const subpathMirrorGone = subpath.length === 0; // src/subpaths/virtual.ts deleted
+const apiReexportGone = !/from\s+["']\.\.\/composables\/virtual["']/.test(apiIndex);
 const barrelOk =
     /useVirtualSectionWindow/.test(barrel) &&
     /useWindowedStore/.test(barrel) &&
     /clearSessionHeightCache/.test(barrel) &&
     /buildSectionLayout/.test(barrel);
 add(
-    "vw4-published-subpath-colocation",
-    subpathOk && exportsEntryOk && typesVersionsOk && apiPublished && barrelOk,
-    `src/subpaths/virtual.ts mirrors the composables/virtual barrel, package.json carries the "./virtual" exports {types,import} entry + the typesVersions["*"].virtual row, the /api discovery layer co-publishes the 4 windowing types, and the barrel exports the full surface [subpath=${subpathOk} exports=${exportsEntryOk} typesVersions=${typesVersionsOk} api=${apiPublished} barrel=${barrelOk}]`,
+    "vw4-subpath-retired-internal-only",
+    subpathMirrorGone && apiReexportGone && barrelOk,
+    `the /virtual PUBLISHED surface is retired at source: src/subpaths/virtual.ts is deleted, the /api discovery layer no longer re-exports the windowing types from composables/virtual, and the internal barrel still exports the full surface for the demo consumers [mirrorGone=${subpathMirrorGone} apiGone=${apiReexportGone} barrel=${barrelOk}]`,
 );
 
-// ── VW5 — ≥2-consumer evidence + lineage record + off-root + no useVirtualGrid fork ──
+// ── VW5 — consumer-truth (retired) + lineage + off-root + no useVirtualGrid fork ──
 const evidenceExists = evidence.length > 0;
-// Names the TWO binary consumers (words DefinitionContentView + the booked dock-search).
-const namesWordsConsumer = /DefinitionContentView/.test(evidence);
-const namesDockSearchConsumer = /DOCK-SEARCH|dock-search|dock search/i.test(evidence);
+// The doc records the RETIRE terminal verdict, the honest 0-external/0-production
+// /demo-only consumer state, and words as a byte-divergent local fork (NOT a lie
+// about a live binary consumer).
+const recordsRetire = /\bRETIRED\b/.test(evidence);
+const recordsWordsFork =
+    /DefinitionContentView/.test(evidence) && /byte-?[- ]?divergent|\bfork(?:ed)?\b/i.test(evidence);
+const recordsNoProductionConsumer =
+    /no src\/ production consumer|zero src\/ production|0 external|ZERO src\/ production/i.test(
+        evidence,
+    );
+// Names ≥2 of the real demo consumer sites (the honest demo-only justification).
+const demoConsumerSites = (
+    evidence.match(
+        /demo\/stories\/(?:navigation\/toc-tracking|dock\/dock-search|data\/virtual-section)\.vue/g,
+    ) ?? []
+).length;
+const recordsDemoConsumers = demoConsumerSites >= 2;
 // The pre-seeded grep proofs RESOLVE on disk: the paths they target exist.
 const preseededDocs = [
     "build-section-layout",
@@ -268,15 +275,17 @@ try {
 }
 facts.tanstackImporters = tanstackImporters;
 add(
-    "vw5-two-consumers-lineage-offroot-no-fork",
+    "vw5-consumer-truth-retired-offroot-no-fork",
     evidenceExists &&
-        namesWordsConsumer &&
-        namesDockSearchConsumer &&
+        recordsRetire &&
+        recordsWordsFork &&
+        recordsNoProductionConsumer &&
+        recordsDemoConsumers &&
         preseededResolve &&
         migrationReversed &&
         offRootRecorded &&
         !tanstackInSrc,
-    `the consumer-evidence names the TWO binary consumers (words DefinitionContentView + booked dock-search), the pre-seeded grep proofs RESOLVE on disk (${unresolvedDocs.length} unresolved), the v0.9.4 lineage is recorded (MIGRATION §3.2-3.4 REVERSED-at-BC), the off-root decision is recorded, and NO @tanstack/vue-virtual import exists in src/ (useVirtualGrid stays words-local) [evidence=${evidenceExists} words=${namesWordsConsumer} dock=${namesDockSearchConsumer} preseeded=${preseededResolve} reversed=${migrationReversed} offRoot=${offRootRecorded} noTanstack=${!tanstackInSrc}]`,
+    `the consumer-evidence records the /virtual RETIRE terminal verdict + the honest 0-external/0-production/demo-only state (words a byte-divergent fork, ≥2 demo consumer sites named), the pre-seeded grep proofs RESOLVE on disk (${unresolvedDocs.length} unresolved), the v0.9.4→v1.0→BC lineage is recorded, the off-root decision is recorded, and NO @tanstack/vue-virtual import exists in src/ (useVirtualGrid stays words-local) [evidence=${evidenceExists} retire=${recordsRetire} wordsFork=${recordsWordsFork} noProd=${recordsNoProductionConsumer} demoSites=${demoConsumerSites} preseeded=${preseededResolve} reversed=${migrationReversed} offRoot=${offRootRecorded} noTanstack=${!tanstackInSrc}]`,
 );
 
 // ── Report ───────────────────────────────────────────────────────────────────
@@ -296,7 +305,7 @@ function run() {
         status: pass ? "pass" : "fail",
         gate: "proof:virtual-window",
         command: COMMAND,
-        note: "SOURCE arm + the VW3 LIVE store race-guard (a targeted vitest run). The BINDING painted truth is tests-visual/virtual-window.spec.ts + the W-VIRTUAL-WINDOW-DELTA capture (the windowed-slice render + scroll-to-warm landing), never this gate alone. The dist subpath-resolution is proof:resolution + verify-export-types. The homecoming: v0.9.4 → retired v1.0 (MIGRATION §3.2-3.4) → returned BC; two binary consumers (words DefinitionContentView + booked dock-search) overturn the no-consumer retirement. useVirtualGrid stays words-local (the @tanstack fence).",
+        note: "SOURCE arm + the VW3 LIVE store race-guard (a targeted vitest run). VW1/VW2/VW3 prove the kept engine is correct; VW4/VW5 prove the /virtual PUBLISHED-SUBPATH retire (BI.W-VIRTUAL-TRUTH) is honest + complete — the subpath mirror + /api re-export are gone, the internal barrel stays for the demo consumers, the consumer-evidence records the truthful 0-external/0-production/demo-only state with words a byte-divergent fork. The package.json export-key removal is the registrar's regen-exports + proof:resolution job (NOT read here). useVirtualGrid stays words-local (the @tanstack fence).",
         facts,
         checks: checks.map((c) => ({ id: c.id, pass: c.pass, detail: c.detail })),
     });
@@ -310,7 +319,7 @@ function run() {
         process.exit(1);
     }
     console.log(
-        "\n[proof:virtual-window] the windowing engine is HOME — the pure stateless layout core (binary-search findSectionOffset), the reactive composable (full API + 320ms warm-target auto-release + content-offset + house useResizeObserver), and the generation-counter store (LIVE race-guard GREEN) re-published on /virtual + the /api types, OFF the root barrel. Two binary consumers overturn the v1.0 no-consumer retirement; useVirtualGrid stays words-local. The π arm proves the painted windowed-slice truth.",
+        "\n[proof:virtual-window] the windowing engine is correct + internal — the pure stateless layout core (binary-search findSectionOffset), the reactive composable (full API + 320ms warm-target auto-release + content-offset + house useResizeObserver), and the generation-counter store (LIVE race-guard GREEN) STAY as demo-consumed internal code. The /virtual PUBLISHED SUBPATH is retired at source (mirror + /api re-export gone); the consumer-evidence records the honest 0-external/0-production/demo-only state, words a byte-divergent fork. useVirtualGrid stays words-local.",
     );
 }
 

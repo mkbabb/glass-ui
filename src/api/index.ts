@@ -150,21 +150,15 @@ export type {
     TreeNode,
 } from "../composables/sidebar";
 
-// ── Virtual-windowing domain (BC.W-VIRTUAL-WINDOW) ───────────────────────────
-// The re-homed section-windowing contract types. `FlatSection` is the generic
-// windowing INPUT shape (id + index + the shared `SectionHierarchy` fields +
-// `estimatedHeight`) a consumer's flattener produces; `SectionLayout` is the
-// `buildSectionLayout` output; `SectionWindowRange` is the resolved visible
-// range + spacer sizes; `ForcedSectionWindowRange` is the warm-target
-// injection. A consumer typing a windowing fixture / a flattener output pins
-// these from the discovery layer; the value.js-free runtime + composables ride
-// `/virtual` ONLY (OFF the root barrel — the heavy DOM-measure leaf discipline).
-export type {
-    FlatSection,
-    SectionLayout,
-    SectionWindowRange,
-    ForcedSectionWindowRange,
-} from "../composables/virtual";
+// ── Virtual-windowing domain — RETIRED (BI.W-VIRTUAL-TRUTH) ──────────────────
+// The `/virtual` published subpath and its four re-homed windowing contract
+// types (`FlatSection` / `SectionLayout` / `SectionWindowRange` /
+// `ForcedSectionWindowRange`) are RETIRED at 5.0.0: zero external binary
+// consumers (words ships a byte-divergent local fork) and zero src/ production
+// consumers (the mechanism is demo-only). The engine STAYS as an internal,
+// demo-consumed composable under `src/composables/virtual/` — reached by
+// internal relative import, no longer re-published here or on a subpath. See
+// `docs/consumer-evidence/use-virtual-section-window.md`.
 
 // ── Search domain ──────────────────────────────────────────────────────────
 // The fuzzy-search input/result/state/option types (SearchableItem / SearchResult

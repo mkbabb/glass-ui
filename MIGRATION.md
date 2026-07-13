@@ -17,12 +17,13 @@ component/subpath rename (`goo-blob` → `blob`), and the source-only `src/subpa
 deletion + curated flat-barrel relocations (no export break). The BG visual band is a
 paint upgrade — no public-prop break beyond the rows below.
 
-### The `/api` discovery-subpath fold — 193-symbol re-home
+### The `/api` discovery-subpath fold — 189-symbol re-home
 
 `@mkbabb/glass-ui/api` (the pure types + constants discovery layer) is FOLD-DELETED. The
-`./api` key is the ONLY dropped key. 193 of its symbols re-home onto their OWNING published
+`./api` key is the ONLY dropped key. 189 of its symbols re-home onto their OWNING published
 subpath — so a consumer swaps the import PATH with zero symbol loss (the 6 deleted-viz types
-below are the exception — they are DELETED, not re-homed):
++ the 4 retired `/virtual` windowing types below are the exception — they are DELETED /
+RETIRED, not re-homed):
 
 ```ts
 // 5.0.0 — the /api discovery layer is gone; import each symbol from its owning subpath
@@ -31,12 +32,16 @@ below are the exception — they are DELETED, not re-homed):
 + import type { CardTier } from "@mkbabb/glass-ui/card";
 ```
 
-191 of the 193 re-homed symbols were ALREADY exported by their owning subpath barrel (the
+187 of the 189 re-homed symbols were ALREADY exported by their owning subpath barrel (the
 fold is a pure import-path swap — the owning subpath needs no new export). The SIX
 `Concentric*` / `DotFlowField*`+`FlowFieldConfig` viz types are NOT re-homed — the
 `/concentric` + `/dot-flow-field` subpaths + their components are DELETED at
 BI.W-VIZ-DELETIONS (see "The BI viz-family deletion" section below), so those types have no
-owning subpath; a consumer of them has no target (the vizzes are retired). The surface-axis
+owning subpath; a consumer of them has no target (the vizzes are retired). The FOUR
+`/virtual` windowing types (`FlatSection` / `ForcedSectionWindowRange` / `SectionLayout` /
+`SectionWindowRange`) are LIKEWISE not re-homed — the `/virtual` subpath is RETIRED at
+BI.W-VIRTUAL-TRUTH (see "The `/virtual` subpath retirement" section below), so those types
+have no owning subpath either. The surface-axis
 grammar types (`Surface` / `SurfaceTier`) publish via the dedicated `/axes` grammar
 subpath (BH.W-AXIS-GRAMMAR — the honest `/api` successor). Only two `ui/_shared`
 convenience unions re-home to a barrel that ADDS one type-only export: `MenuItemVariants`
@@ -50,8 +55,9 @@ The `/api` layer carried 199 symbols at the fold (down from the pre-BG 203: the
 dead-composable sweep retired `Haptic*` / `CelebrationBurst*` / `WaveComponent` and the
 `GlassPanelVariant` tier-homonym, and the `PaperGrid*` → `LiquidGrid*` +
 `SelectableChipVariants` → `ChipVariants` renames moved their entries — each documented in
-its own section below or in the BG retirements). Of those, 193 re-home (the table above);
-the 6 `Concentric*` / `DotFlowField*`+`FlowFieldConfig` viz types are DELETED, not re-homed.
+its own section below or in the BG retirements). Of those, 189 re-home (the table above);
+the 6 `Concentric*` / `DotFlowField*`+`FlowFieldConfig` viz types are DELETED and the 4
+`/virtual` windowing types are RETIRED with their subpath (BI.W-VIRTUAL-TRUTH), not re-homed.
 
 The full 199-symbol map (grouped alphabetically by symbol; `kind` is the TS export kind;
 `new import (owning subpath)` is the 5.0.0 target):
@@ -239,10 +245,6 @@ The full 199-symbol map (grouped alphabetically by symbol; `kind` is the TS expo
 | `TimelineSegmentGradient` | type | `/timeline` |
 | `TimelineSegmentState` | type | `/timeline` |
 | `ToastType` | type | `/toast` |
-| `FlatSection` | type | `/virtual` |
-| `ForcedSectionWindowRange` | type | `/virtual` |
-| `SectionLayout` | type | `/virtual` |
-| `SectionWindowRange` | type | `/virtual` |
 | `ControlSize` | type | `/forms` |
 | `MenuItemVariants` | type | `/command` |
 | `Surface` | type | `/axes` |
@@ -322,6 +324,35 @@ invariant-11), not a silent prune.** The surviving procedural-viz suite is auror
 fourier-field · constellation · **liquid-grid** (the KEEPER born-WebGPU grid viz — NOT in the
 delete set); the shared `curlFBM` chunk (`flow.glsl.ts`/`flow.wgsl.ts`) KEEPS (liquid-grid +
 aurora-curl-warp consume it, the ≥2 shared-chunk bar).
+
+#### The `/virtual` subpath retirement
+
+**BI.W-VIRTUAL-TRUTH — the `/virtual` PUBLISHED SUBPATH RETIRED (the consumer-truth
+adjudication, DOC-4). Clean break, no alias ("No legacy code").** The section-windowing
+engine was un-retired at BC on a two-binary-consumer justification that a fresh
+registry+sibling probe at execution found FABRICATED: (1) the named external consumer, words
+`DefinitionContentView`, imports a byte-DIVERGENT words-LOCAL fork (`@/composables/virtual`,
+md5 ≠ the glass-ui copy), never `@mkbabb/glass-ui/virtual` — 0 external binary consumers; (2)
+the "internal live consumer" (the dock-search results list) does NOT compose the windower —
+the library dock only accepts an optional `ensureTargetWindow` callback. There are 0 src/
+production consumers; the mechanism is DEMO-ONLY (3 demo sites). Under the mechanism-distinctness
++ ≥2-binary-consumer law the PUBLISHED SUBPATH does not earn its keep, so it retires:
+
+| dropped surface | disposition |
+|---|---|
+| `@mkbabb/glass-ui/virtual` subpath export + `typesVersions` | RETIRED — no external target |
+| `src/subpaths/virtual.ts` mirror | DELETED |
+| `/api` re-export of `FlatSection` / `ForcedSectionWindowRange` / `SectionLayout` / `SectionWindowRange` | REMOVED — the 4 types have no owning subpath (see the `/api` fold note above) |
+| `src/composables/virtual/` engine (`useVirtualSectionWindow` / `useWindowedStore` / `virtualSectionLayout`) | KEEPS — internal, demo-consumed via `@glass/composables/virtual` |
+
+**MIGRATE: none — the fresh probe read ZERO external binary consumers (words maintains its own
+fork; the atlas O-E9 document-native `/virtual` core is a long-pole future ask that "needs
+nothing from this row" today, DECLINED-TERMINAL). A no-op-for-consumers record (per
+invariant-11), not a silent prune.** Re-entry trigger: the published subpath re-mints only on
+a real ≥2 cross-repo binary consume (a words re-adopt ask, or the vft V4 → V6.g consume) — a
+production or external importer of the glass-ui surface, never a demo page and never a local
+fork. Recorded in `docs/consumer-evidence/use-virtual-section-window.md` +
+`proof:consumer-evidence-true` / `proof:virtual-window` (VW4/VW5 reconciled to the retire).
 
 **BG.W-GRID-AFFINE — `PaperGrid` (the viz) RENAMED to `LiquidGrid`; `/paper-grid` →
 `/liquid-grid`. Clean break, no alias ("No legacy code").** The WebGPU-first liquid AA-grid

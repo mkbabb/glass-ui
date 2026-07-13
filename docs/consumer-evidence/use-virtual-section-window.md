@@ -1,104 +1,111 @@
-# useVirtualSectionWindow (+ useWindowedStore + the virtualSectionLayout pure core)
+# useVirtualSectionWindow — the demo-supporting section-windowing mechanism (`/virtual` subpath RETIRED)
 
-## Artefact path
+## Terminal verdict — the `/virtual` published subpath is RETIRED (BI.W-VIRTUAL-TRUTH, DOC-4)
+
+The `./virtual` published subpath is RETIRED at the 5.0.0 major. It had ZERO
+external binary consumers and ZERO src/ production consumers — its BC un-retire
+justification was fabricated twice over (below). The windowing engine STAYS as a
+demo-supporting composable (three demo consumer sites), but it is no longer a
+published external surface. This is the terminal adjudication of the FAM-16 DOC-4
+fabrication; there is no re-book, no third state.
+
+The clean break, no alias: the `@mkbabb/glass-ui/virtual` export key, its
+`typesVersions` row, the `src/subpaths/virtual.ts` mirror, and the four windowing
+contract types re-published on the `/api` discovery layer are all removed.
+
+## The two fabrications this correction kills
+
+**Fabrication 1 — the external binary consumer.** The BC re-promotion named words
+`DefinitionContentView` as a live external consumer of `@mkbabb/glass-ui/virtual`.
+It is not:
+`../words/frontend/src/components/custom/definition/components/content/DefinitionContentView.vue:162`
+imports `useVirtualSectionWindow` from `@/composables/virtual` — a words-LOCAL,
+byte-DIVERGENT fork (`../words/frontend/src/composables/virtual/useVirtualSectionWindow.ts`,
+md5 ≠ the glass-ui copy), never a glass-ui import. Probed fresh at execution: the
+fork is byte-divergent AND words maintains it (declines re-adopt) — the §Design(a)
+retire preconditions. The old grep found the SYMBOL, never a glass-ui consume.
+
+**Fabrication 2 — the "internal live consumer".** The interim doc claimed the
+glass-ui dock-search results list composes `useVirtualSectionWindow`. It does not.
+`src/components/custom/dock/composables/useDockSearch.ts` takes an OPTIONAL
+callback `ensureTargetWindow?: (id: string) => void` and invokes it
+(`options.ensureTargetWindow?.(id)`) — it is DECOUPLED from the windower. The
+library dock composes `useFuzzySearch` + `useScrollChrome`, NOT
+`useVirtualSectionWindow`. There is NO src/ production consumer.
+Proof: `rg -n 'useVirtualSectionWindow' src/` finds only comments — zero import,
+zero call-site.
+
+## Honest consumer state — 0 external · 0 production · 3 demo
+
+The only real consumers are demo pages, wired through the internal
+`@glass/composables/virtual` alias (NOT the published subpath):
+
+- `demo/stories/navigation/toc-tracking.vue:26,73` — `useVirtualSectionWindow(...)`
+- `demo/stories/dock/dock-search.vue:21,70` — `useVirtualSectionWindow<DocSection>(...)`
+  (this demo is what wires the windower's `ensureTargetWindow` INTO the library
+  dock's callback — the library dock does not depend on it)
+- `demo/stories/data/virtual-section.vue:6,48` — `useVirtualSectionWindow<DemoSection>(...)`
+
+Proof: `rg -n 'useVirtualSectionWindow' demo/stories/navigation/toc-tracking.vue demo/stories/dock/dock-search.vue demo/stories/data/virtual-section.vue`
+
+Three demo sites clear the overfitting-audit floor (≥2 sites → a legitimate
+demo-supporting composable), so the composable STAYS in `src/composables/virtual/`
+as internal, demo-consumed code. But demo consumers do NOT count toward the
+≥2-BINARY-consumer bar (J inv-10) — a published subpath needs a production or
+cross-repo consumer, and there is none. Hence the subpath retires.
+
+## Artefact path (internal-only)
 
 `src/composables/virtual/useVirtualSectionWindow.ts`,
 `src/composables/virtual/useWindowedStore.ts`,
-`src/composables/virtual/virtualSectionLayout.ts`
-(published OFF the root barrel via `@mkbabb/glass-ui/virtual`).
+`src/composables/virtual/virtualSectionLayout.ts` — reached only by INTERNAL
+relative import (`@glass/composables/virtual` in `demo/`). NOT on the root barrel,
+NOT on a subpath.
 
-## Lineage — the homecoming (v0.9.4 → retired v1.0 → returned BC)
+## Lineage — v0.9.4 → retired v1.0 → returned BC → subpath-retired BI
 
-This engine WAS a glass-ui primitive at v0.9.4. It was retired at v1.0
-(`MIGRATION.md §3.2-3.4` — "0 production consumers, demo-only at v0.9.x") and
-the `/virtual` subpath was removed. The retirement was correct at v1.0 (no
-consumer). It was REVERSED at BC on the strength of a live external consumer
-(words `DefinitionContentView`) plus a booked internal one (the dock-search
-results list). The machinery is byte-faithful to the proven words transposed
-copy, save the three recorded refinements: the binary-search
-`findSectionOffset`, the house `useResizeObserver` leaf, and the shared
-`SectionHierarchy` type-reconcile.
+A glass-ui primitive at v0.9.4, retired at v1.0 (`MIGRATION.md §3.2-3.4` — "0
+production consumers, demo-only at v0.9.x", the `/virtual` subpath removed).
+REVERSED at BC on the (fabricated) two-binary-consumer strength. At the 5.0.0 cut
+the PUBLISHED subpath retires again (BI.W-VIRTUAL-TRUTH) — the demo-only reality
+is the SAME reality that justified the v1.0 retirement. The machinery is unchanged;
+only its publication status is.
 
-## Current consumer state (honest count: 1 internal live consumer)
+## atlas O-E9 — DECLINED-TERMINAL (re-trigger at the real consume)
 
-**The BC-era ≥2-consumer justification NO LONGER HOLDS.** The external binary
-consumer the BC re-promotion rested on has FORKED away, so the honest count at
-HEAD is ONE internal live consumer (the glass-ui dock-search results list). This
-doc records the honest state; the KEEP-vs-FOLD execution is a B8 disposition (see
-below), NOT this wave.
+The atlas VIRT-CORE ask (a document-native `/virtual` core: content-visibility
+substrate + slim viewport core, `atlas-inbox-2026-07-10-o-close.md` item 10) is a
+long-pole FUTURE ask — atlas's own note: it "needs nothing from this row" on the
+published surface today; it blocks the paper/vft long pole only. Not an active
+binary consume, so it does not float the published subpath now. Declined with the
+atlas-visible rationale, matching the INBOUND-MARKS O-E7/WG-E DECLINED-TERMINAL
+idiom: the published subpath re-mints when a real ≥2 cross-repo binary consume
+lands (the vft V4 → V6.g consume, or a words re-adopt ask). Until then the
+mechanism lives internal, demo-only.
 
-**Consumer 1 — words `DefinitionContentView` — FORKED AWAY (no longer external).**
+## Off the root barrel — now internal-only
 
-- **Project**: `words/frontend`
-- **Reality at HEAD**:
-  `../words/frontend/src/components/custom/definition/components/content/DefinitionContentView.vue:162`
-  now imports `useVirtualSectionWindow` from `@/composables/virtual` — a
-  words-LOCAL fork (`../words/frontend/src/composables/virtual/useVirtualSectionWindow.ts`
-  exists), NOT from `@mkbabb/glass-ui/virtual`. words ships its own copy.
-- **Why the old "proof" was misleading**: the recorded grep
-  `rg -n '\buseVirtualSectionWindow\b' ../words/.../DefinitionContentView.vue`
-  DOES find the symbol — but it resolves the words-local fork, not the glass-ui
-  subpath. The grep proved words uses *a* `useVirtualSectionWindow`, never that
-  it consumes `@mkbabb/glass-ui/virtual`. words is therefore NOT an external
-  binary consumer of this subpath.
-
-**Consumer 2 — the glass-ui dock-search results list (LIVE, INTERNAL).**
-
-- **Project**: `glass-ui` (Band 13, `BC.W-DOCK-SEARCH`)
-- **Source**: `src/components/custom/dock/composables/useDockSearch.ts:23,94`
-  composes `useVirtualSectionWindow` — a 5000-result fuzzy list renders only the
-  ~20 results near the viewport, with `ensureTargetWindow` warming a
-  keyboard-selected far result into the window a beat before the scroll lands.
-- **Proof**: `rg -n 'useVirtualSectionWindow' src/components/custom/dock/composables/useDockSearch.ts`
-- This is a LIVE consumer, but an INTERNAL glass-ui one — not an external binary
-  consumer in a second repo.
-
-So the honest tally is: ONE live internal consumer (dock-search), ZERO external
-binary consumers (words forked to a local copy). The BC "≥2 binary consumers"
-framing is corrected here.
-
-## Off the root barrel (the heavy-DOM-measure-leaf decision, recorded)
-
-The composable is keyframes-FREE + vueuse-FREE, so it is root-barrel-ELIGIBLE
-per the `useLiquidFlex` precedent (the SCC-trap does not force it off). It is
-DELIBERATELY off the root barrel anyway: it is a heavy DOM-measure leaf with a
-module-global `SESSION_HEIGHT_CACHE`, so the subpath-only home is correct (the
-spa-view / expandable-container off-root precedent). A consumer that wants it
-imports `@mkbabb/glass-ui/virtual`. Recorded in `proof:virtual-window` VW5.
+The composable is keyframes-FREE + vueuse-FREE (root-barrel-ELIGIBLE per the
+`useLiquidFlex` precedent), but it is a heavy DOM-measure leaf with a
+module-global `SESSION_HEIGHT_CACHE` — deliberately OFF the root barrel even while
+published. With the subpath retired it is internal-only; the off-root discipline
+is unchanged.
 
 ## useVirtualGrid stays words-local (the @tanstack fence)
 
-The grid windower (`words/frontend/src/composables/virtual/useVirtualGrid.ts`)
-depends on `@tanstack/vue-virtual` + a `WordListItem` consumer type — one
-consumer + a hard 3rd-party dep, so the ≥2-consumer bar FAILS for glass-ui.
-Re-minting it would drag a tanstack peer onto glass-ui (forbidden). It is NOT
-re-minted here. `proof:virtual-window` VW5's self-test bite REDs a
-`@tanstack/vue-virtual` import anywhere in `src/`.
+The grid windower (`../words/frontend/src/composables/virtual/useVirtualGrid.ts`)
+depends on `@tanstack/vue-virtual` — a hard 3rd-party peer — so it was never
+re-minted onto glass-ui and is not now. No `@tanstack/vue-virtual` import exists
+in `src/`.
 
-## Active-section reader reconcile (one reader per concern, recorded)
+## Re-entry trigger + re-audit proof
 
-The windowing's `resolveActiveSection` / `activeId` is the RENDER-window-local
-reader (the section at the 20%-viewport mark, labelling the current render
-window). It is NOT the ToC's binding active reader: a sidebar/ToC consumer reads
-`useScrollTracker.activeId` (the deepest-visible reader, `BC.W-TOC-RECONCILE`)
-for the highlight. The two serve distinct concerns and read distinct marks.
+The published subpath re-mints only on a real ≥2 cross-repo binary consume
+(§O-E9 above) — a production or external importer of the glass-ui surface, never a
+demo page and never a local fork.
 
-## Disposition — KEEP-vs-FOLD (deferred to B8)
-
-Under the mechanism-distinctness law, `/virtual` owns a distinct windowing
-mechanism (bounded render window + warm-target race-guard + session height
-cache) with ONE live internal consumer (dock-search). This wave records the
-honest single-internal-consumer count; it does NOT execute a fold. The
-KEEP-with-single-consumer-note vs FOLD-onto-internal decision, and the
-reconcile of `proof:virtual-window` VW5 (whose framing still asserts a
-two-binary-consumer premise that this correction supersedes), are the
-`W-ORPHAN-BINARY-SPLIT` / consumer-truth band (B8) — recorded, not re-booked.
-
-## Re-audit proof
-
-The honest greps: words imports the LOCAL fork
-(`rg -n "from '@/composables/virtual'" ../words/frontend/src/components/custom/definition/components/content/DefinitionContentView.vue`),
-and the sole live consumer is internal
-(`rg -n 'useVirtualSectionWindow' src/components/custom/dock/composables/useDockSearch.ts`).
-If the dock-search consumer is ever removed, the verdict returns to
-`library-orphan` and the subpath folds.
+Re-audit greps: no src/ production consumer
+(`rg -n 'useVirtualSectionWindow' src` finds only comments); the demo consumers
+(`rg -n 'useVirtualSectionWindow' demo/stories/navigation/toc-tracking.vue demo/stories/dock/dock-search.vue demo/stories/data/virtual-section.vue`);
+words imports its own fork
+(`rg -n "from '@/composables/virtual'" ../words/frontend/src/components/custom/definition/components/content/DefinitionContentView.vue`).

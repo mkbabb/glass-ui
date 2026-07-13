@@ -266,7 +266,7 @@ contract) — a NEW inbox-class coordination file landing WITHOUT a marks sectio
 | 7 O-E3 | INKMARK hairline/rule brush + scope note | DECLINED-TERMINAL — compose `<HandMark shape="underline" grain:0>` weight-1 today; a new brush is feature growth at 1 consumer; re-trigger ≥2 |
 | 8 O-E6 | SHIMMER gold-outline utility + `--gilt-stroke` | ANSWERED-BY-EXISTING — `.metal-gold-border` border-image swept rim + `--metal-*` knobs (BB.W-METAL-SHIMMER) |
 | 9 O-E2 | GU-1 `--glass-key-direction` under-shadow key lean | OWNED — BI.W-SURFACE-EXTRACT §Inbound (atlas GU-1/O-E2) |
-| 10 O-E9 | VIRT-CORE document-native `/virtual` (CV substrate + slim viewport) | OWNED — BI.W-VIRTUAL-TRUTH §Inbound (the KEEP/FOLD verdict cites it by name; terminal either way) |
+| 10 O-E9 | VIRT-CORE document-native `/virtual` (CV substrate + slim viewport) | DECLINED-TERMINAL — BI.W-VIRTUAL-TRUTH retired the `/virtual` PUBLISHED SUBPATH (fresh probe: 0 external binary consumers — words ships a byte-divergent fork — + 0 src/ production consumers, demo-only). O-E9 is a long-pole future ask that per atlas "needs nothing from this row" today; re-mints at a real ≥2 cross-repo binary consume (vft V4→V6.g, or a words re-adopt ask). |
 | 11 WG-E | glass TOC/search abstraction on latex-paper | DECLINED-TERMINAL — `/sidebar` (useScrollTracker/useTreeIndex) + `/search` (useFuzzySearch) are the shipped primitives; the latex-paper abstraction is consumer composition; re-trigger: a named ≥2 cross-repo need |
 | 12 WG-E | PRIMITIVES-REGISTER manifest | DISCHARGED — BH.B4-canon primitives.json |
 | 13 | pencil-boil ^0.6.0 peer bump (corrected ^0.8.1) | OWNED — BI.W-XR-PRODUCER-REPAIRS X8 (verify handmark against ^0.8.1 + widen the optionalPeer floor) |
