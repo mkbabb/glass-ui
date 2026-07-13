@@ -17,14 +17,17 @@ import type { DrawerDirection } from "./index";
  * give than the dock's crisp 0.32/0.7 box-morph). Co-located here so the pair is
  * defined ONCE rather than at the top of the composable.
  *
- * BD.W-ANIM-IOS27-TUNE — re-tuned `{0.4, 0.82}` → `{0.50, 0.74}` so the sheet-grow
- * reads as inertial liquid MASS (the Maps-card reference): `response 0.50` lengthens
- * the settle ~+25% (the flowing-heavy arrival) and `dampingFraction 0.74` adds a small
- * ~3.2% liquid overshoot (vs the prior near-critical 0%) — the sheet settles cleanly to
- * its detent WITHOUT over-shooting past the viewport (ζ ≥ 0.72 keeps overshoot ≤ ~4%).
+ * BD.W-ANIM-IOS27-TUNE re-tuned `{0.4, 0.82}` → `{0.50, 0.74}` for inertial liquid
+ * MASS — but that value was calibrated against the PRE-M1 broken CSS/JS time base AND
+ * the pre-BI.W-DRAWER-PERF main-thread storm (the lag was never the spring). BI judgment
+ * (g), user-delegated + orchestrator-ratified 2026-07-12: re-pinned `{0.50, 0.74}` →
+ * **`{0.32, 0.80}`** — the measured-iOS drawer band (the iOS-27 frame analysis: brisk
+ * arrival, ~1.5% overshoot; weight ≠ slow). Lands POST-SPRING-PARITY (M1 committed
+ * 75c9e433) + POST-DRAWER-PERF (7a9faa07), per the ordering law: no spring retune
+ * before M1. The A/B capture pair rides the π batch (W-DRAWER-PERF-DELTA).
  * The fling-decision (`DRAWER_FLING_VELOCITY`) is SEPARATE + unchanged.
  */
-export const DRAWER_SNAP = { response: 0.5, dampingFraction: 0.74 } as const;
+export const DRAWER_SNAP = { response: 0.32, dampingFraction: 0.8 } as const;
 
 /**
  * BB-2 (the direction-aware default snap ladder fold) — the peek/half/full detent
