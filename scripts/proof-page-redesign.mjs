@@ -99,9 +99,15 @@ export function detect() {
         "StoryHero renders <Constellation> behind the card",
         /<Constellation[\s>]/.test(storyHeroCode),
     );
+    // BI.W-AUTH-SHELL-BG — the `<FourierField>` StoryHero background kind is RETIRED
+    // (the library's heaviest shader must never be an ambient page wash); no route
+    // declares a live fourier wash, so the FourierField-behind-the-card assert is
+    // gone. The teaching <FourierField> lives ONLY on /substrates/fourier-field (a
+    // contained field over a calm paper wash). The LiquidGrid suffusion register is
+    // the surviving opt-in live-GL page-background kind here.
     assert(
-        "StoryHero renders <FourierField> behind the card",
-        /<FourierField[\s>]/.test(storyHeroCode),
+        "StoryHero renders the <LiquidGrid> suffusion substrate behind the card",
+        /<LiquidGrid[\s>]/.test(storyHeroCode),
     );
     // BC.W-GRID-SIMPLE clean break (no alias): the `.story-bg-grid` 28px/center
     // recipe was ABROGATED and re-expressed as the crisp full-bleed `.grid-bg`
@@ -127,13 +133,16 @@ export function detect() {
         "Story interface carries background?: StoryBackground",
         /background\?:\s*StoryBackground/.test(manifest),
     );
+    // BI.W-AUTH-SHELL-BG — `"fourier"` RETIRED from the StoryBackground union (clean
+    // break). The five surviving substrate kinds: paper · grid · liquid-grid · aurora ·
+    // constellation.
     assert(
         "StoryBackground union has the five substrates",
         /"paper"/.test(auroraHero) &&
             /"grid"/.test(auroraHero) &&
+            /"liquid-grid"/.test(auroraHero) &&
             /"aurora"/.test(auroraHero) &&
             /"constellation"/.test(auroraHero) &&
-            /"fourier"/.test(auroraHero) &&
             /StoryBackground/.test(auroraHero),
     );
     assert(

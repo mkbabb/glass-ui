@@ -222,18 +222,23 @@ export type HeroPaletteKey = keyof typeof HERO_PALETTES;
  *                     one-GL-per-route hero upgrade of the static `grid` kind).
  *   "aurora"        — a live painterly drift on the brand hues.
  *   "constellation" — a drifting proximity-graph lattice.
- *   "fourier"       — a reconstructing elliptic Fourier curve.
  *
  * A GooBlob is a CONTAINED creature (fixed aspect-ratio), NOT a full-bleed
  * page-field — so it is deliberately NOT a background kind (W-BLOB-REBUILD).
+ *
+ * BI.W-AUTH-SHELL-BG (PERF-2) — the `"fourier"` page-background kind is RETIRED
+ * (clean break, no alias): a full-bleed live Fourier SDF is the library's HEAVIEST
+ * shader and must NEVER be an ambient page wash. The teaching <FourierField> lives
+ * ONLY on its own /substrates/fourier-field studio route (a contained field over a
+ * calm paper wash), never as a StoryHero background. No route declares a live
+ * fourier wash.
  */
 export type StoryBackgroundKind =
     | "paper"
     | "grid"
     | "liquid-grid"
     | "aurora"
-    | "constellation"
-    | "fourier";
+    | "constellation";
 
 export type StoryBackground =
     | StoryBackgroundKind

@@ -1246,8 +1246,15 @@ export const CATEGORIES: Category[] = [
             s("compositions", "math-paper", "Math Paper", undefined, {
                 background: "grid",
             }),
+            // BI.W-AUTH-SHELL-BG (PERF-2 / UF-K4) — the auth-shell no longer mounts the
+            // library's HEAVIEST shader (a 4.87MP live Fourier SDF) as a decorative page
+            // wash behind the form: a teaching SDF is never an ambient background. The page
+            // declares a CALM `grid` blueprint wash (zero GL), and the route's ONE live GL
+            // context is the brand-panel aurora (auth-shell.vue). The route is enrolled in
+            // SELF_STAGES_GL (focal.ts) so the recessive shell aurora stands down — one GL
+            // per route (down from 3: fourier + brand aurora + shell aurora).
             s("compositions", "auth-shell", "Auth Shell", undefined, {
-                background: { kind: "fourier" },
+                background: "grid",
                 hero: true,
                 // A full-bleed scene specimen — keeps the largest D3 sub-rung.
                 heroScale: "hero",

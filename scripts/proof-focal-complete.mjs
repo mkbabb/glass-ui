@@ -161,7 +161,10 @@ add(
 );
 
 // ── C3 — the resolver is TOTAL (GL_BG_KINDS complete + every GL-kind row focal) ─
-const expectGlKinds = ["aurora", "constellation", "fourier", "liquid-grid"];
+// BI.W-AUTH-SHELL-BG — `"fourier"` RETIRED from GL_BG_KINDS (no route declares a live
+// fourier wash — the heaviest shader is never an ambient page-background). The three
+// surviving full-bleed GL kinds: aurora · constellation · liquid-grid.
+const expectGlKinds = ["aurora", "constellation", "liquid-grid"];
 const glKindsComplete = expectGlKinds.every((k) => GL_BG_KINDS.has(k));
 const glRows = rows.filter((r) => GL_BG_KINDS.has(r.kind));
 // Every GL-kind row is focal by construction (isFocalRoute checks the kind first).
@@ -173,7 +176,7 @@ add(
     "c3-resolver-total",
     c3,
     c3
-        ? `GL_BG_KINDS carries the 4 full-bleed GL kinds, and all ${glRows.length} GL-kind rows resolve focal by construction (no focal-without-a-field; ${rows.length} rows parsed)`
+        ? `GL_BG_KINDS carries the ${expectGlKinds.length} full-bleed GL kinds, and all ${glRows.length} GL-kind rows resolve focal by construction (no focal-without-a-field; ${rows.length} rows parsed)`
         : `the resolver is not total (gl-kinds-complete=${glKindsComplete} every-gl-row-focal=${glRowsFocal} rows=${rows.length})`,
 );
 

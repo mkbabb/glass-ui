@@ -17,13 +17,19 @@ const wonkSettings = '"WONK" 1, "SOFT" 0';
 // The brand panel paints the purple→tomato aurora palette — the section-ramp hue
 // pair (purple section-1, tomato section-6) FD §9.2.10 designed for exactly this
 // panel and that shipped unused until now (the un-orphan). A contained Aurora
-// behind the translucent panel, distinct from the page's fourier chassis hero.
+// behind the translucent panel — this is the route's ONE live GL context.
+//
+// BI.W-AUTH-SHELL-BG (PERF-2 / UF-K4) — the page background is a CALM `grid`
+// blueprint wash (zero GL); the retired 4.87MP live-fourier page-wash + the
+// recessive shell aurora are both gone (the route is enrolled in SELF_STAGES_GL so
+// the shell stands down). The one painterly moment is this brand-panel aurora, the
+// route's single GL field: the auth-shell drops from 3 GL contexts to ONE.
 const brandAurora = heroAuroraConfig("purple-tomato");
 
-// The split-auth shell declares a reconstructing Fourier field on its manifest
-// row; the page chassis renders it behind a glassy hero card. The brand panel
-// (left half) reads translucent so the field shows through; the form (right
-// half) stays a calmer surface for legibility.
+// The split-auth shell floats its OWN complete split-panel composition directly
+// over the calm grid wash (`:hero-title="false"` → the StoryHero chassis renders no
+// card around it). The brand panel (left half) reads translucent so its aurora shows
+// through; the form (right half) stays a calmer surface for legibility.
 
 const email = ref("");
 const password = ref("");
