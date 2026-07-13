@@ -456,15 +456,19 @@ export const FOLDED_STORY_IDS: ReadonlySet<string> = new Set<string>([
 
 /**
  * BG.W-DEMO-IA-REDESIGN — the DECLARED families: the subpaths a routed collision is
- * SANCTIONED on. After the family collapse, exactly two subpaths are legitimately
- * shared by >1 routed page: `/dock` (the headline dock family — 4.11's counts) and
- * `/motion-core` (the broad composable barrel `reveal` + the `scroll` family both
- * live on). Every OTHER shared subpath is a redundant-page defect. `proof:demo`'s
- * `demo-earns-page` arm reads this allowlist.
+ * SANCTIONED on. After the family collapse, three subpaths are legitimately shared
+ * by >1 routed page: `/dock` (the headline dock family — 4.11's counts), `/motion-core`
+ * (the broad composable barrel `reveal` + the `scroll` family both live on), and
+ * `/card` (BI.W-DEMO-CARD-DECLARE — `display/card` demos the Card surface-tier facets,
+ * `containers/card-pressable` demos the `:pressable` interaction facet: two distinct
+ * Card mechanisms each earning a routed page, the `/motion-core` scroll+reveal
+ * precedent — NOT a fold, both facets are load-bearing). Every OTHER shared subpath
+ * is a redundant-page defect. `proof:demo`'s `demo-earns-page` arm reads this allowlist.
  */
 export const DECLARED_FAMILY_SUBPATHS: ReadonlySet<string> = new Set<string>([
     "@mkbabb/glass-ui/dock",
     "@mkbabb/glass-ui/motion-core",
+    "@mkbabb/glass-ui/card",
 ]);
 
 function s(
