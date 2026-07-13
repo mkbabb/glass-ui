@@ -170,21 +170,20 @@ export function useDockMorphOrchestrator(
     function maybeSettleRoot() {
         const r = root();
         if (r) {
-            // BG.W-DOCK-GLYPH-RIGID (spec vocab (b)) — DROP the morph attrs BEFORE the
+            // BG.W-DOCK-GLYPH-RIGID (spec vocab (b)) — DROP the morph attr BEFORE the
             // scalar so at settle the residual `scale:` lives ONLY under `[data-morphing]`.
             // The box-size scale (shape.css `.glass-dock[data-morphing]…{scale}`) AND the
             // glyph-rigid inverse-scale on the content children (`.dock-persistent`/
             // `.dock-layers`, the per-frame inverse of `--dock-size-scale`) both gate on
-            // `[data-morphing]`/`[data-punching]`; clearing the attrs FIRST stops both
-            // rules matching, so removing the registered `--dock-morph-t` (which reverts to
-            // its `@property initial-value: 0`) cannot flash a one-frame collapsed-look
-            // scale on the already-settled true box. All four mutations coalesce into ONE
-            // style recalc (one synchronous task, no paint between), so the settle seats
-            // `scale: none` over the TRUE collapsed/expanded box with the glyph rigid.
+            // `[data-morphing]`; clearing it FIRST stops both rules matching, so removing
+            // the registered `--dock-morph-t` (which reverts to its `@property
+            // initial-value: 0`) cannot flash a one-frame collapsed-look scale on the
+            // already-settled true box. All three mutations coalesce into ONE style recalc
+            // (one synchronous task, no paint between), so the settle seats `scale: none`
+            // over the TRUE collapsed/expanded box with the glyph rigid.
             r.removeAttribute("data-morphing");
-            r.removeAttribute("data-punching");
             // BG.W-DOCK-PANE-OVERLAP (F3.R2) — drop the box-HOLD marker in the SAME recalc
-            // as the morph attrs + scalar, so no post-settle frame reads a stale hold.
+            // as the morph attr + scalar, so no post-settle frame reads a stale hold.
             r.removeAttribute("data-pane-swap");
             r.style.removeProperty("--dock-morph-t");
         }
@@ -232,19 +231,10 @@ export function useDockMorphOrchestrator(
         // derivation `:not([data-pane-swap])` so the box + chrome HOLD at the class
         // endpoint (expanded) while `--dock-morph-t` still glides 0→1 for the overlapped
         // crossfade + the inner stagger (both read `--dock-morph-t` directly, untouched).
-        // The cartoon box-punch is skipped too — a held box has no footprint to punch;
-        // the OUTER collapse/expand keeps it (byte-identical to HEAD).
         if (paneSwap) {
             r.setAttribute("data-pane-swap", "");
         } else {
             r.removeAttribute("data-pane-swap");
-            // BD.W-DOCK-PUNCH-CHANNEL — arm the dedicated cartoon-punch for ONE episode.
-            // `[data-punching]` lifts `--dock-punch-stretch` to its overshoot target; the
-            // CSS transition on `--ease-cartoon-punch` carries it there on the punch curve
-            // (the ~4% pre-dip + ~22% overshoot), and clearing the hook below transitions it
-            // back to 1 (the RETURN — never latched). Cleared partway through the glide so
-            // the return completes by settle. PRM zeroes `--motion-weight` → amplitude 1.
-            r.setAttribute("data-punching", "");
         }
         // Seat the scalar at 0 SYNCHRONOUSLY now (before the factory's `play()` first
         // rAF) so the single frame between this arm and the first spring frame reads 0
@@ -256,36 +246,18 @@ export function useDockMorphOrchestrator(
                 const rr = root();
                 if (!rr) return;
                 rr.style.setProperty("--dock-morph-t", `${tValue}`);
-                // Clear the punch hook past the curve's overshoot peak so it
-                // transitions BACK to the rest 1 before the morph settles (the
-                // never-latch fence).
-                if (tValue > 0.5 && rr.hasAttribute("data-punching")) {
-                    rr.removeAttribute("data-punching");
-                }
-                // BG.W-DOCK-GLYPH-RIGID (F3.R1 secondary) — SETTLE AT VISIBLE ARRIVAL,
-                // not at the spring's ~1s analytic ring-down. The DOCK spring
-                // (response 0.68, ζ 0.64) overshoots past 1 then rings down over its
-                // full 2%-band settle (~1s wall-clock); on an engine whose settle runs
-                // long (WebKit under the glass-blur compositing load) `[data-morphing]`
-                // lingered ~800–1000ms, holding the box in its reserved-expanded ×
-                // collapsed-scale state — a narrow scaled-reserve plate, NOT the resting
-                // circle — a ~1s sliver-at-rest (the F3.R1 paint FAIL). But the VISIBLE
-                // morph is COMPLETE at arrival (`tValue ≥ 1`): the box size clamps
-                // `clamp(0, --dock-expand-t, 1)` so it never grows past the endpoint, the
-                // punch has returned (cleared above), and both crossfade panes are at
-                // their endpoints (entering opacity 1, leaving 0, matching their base rest
-                // rules). So drop the morph state at arrival on EVERY engine
-                // (deterministic — keyed off the scalar, NOT the engine-variable
-                // ring-down): the TRUE collapsed/expanded box (inline-size → auto, the
-                // AY.W-DOCK-NAV B4 aspect-ratio circle) seats within one beat. `settleAll`
-                // → `maybeSettleRoot` still drops the attrs BEFORE the scalar (spec
-                // vocab (b), the G2 order) and disposes the spring (idempotent; the
-                // still-live-mid-flight re-toggle before arrival re-bases as before). A
-                // ζ ≥ 1 config (no overshoot) never crosses 1 and falls back to the
-                // natural `onSettle` — no regression for a critically-damped register.
-                if (tValue >= 1 && rr.hasAttribute("data-morphing")) {
-                    settleAll();
-                }
+                // BI.W-DOCK-SPRING-UNIFY (SU3) — the arrival-settle CUT is DELETED,
+                // unconditionally. It formerly dropped the morph state at `tValue >= 1`
+                // to HIDE the ζ0.64 DOCK spring's ~1s analytic ring-down (WebKit under
+                // the glass-blur compositing load lingered `[data-morphing]` ~800-1000ms).
+                // That was the mechanism dishonesty this wave removes: the settle is now
+                // HONEST PHYSICS — the spring's own 2%-band ring-down via `onSettle`,
+                // whatever the DOCK preset (the value is USER-GATED per PLAN §0.2a, not
+                // this wave's; the recommended iOS retune 0.28/ζ0.82 settles ~420ms and
+                // is the orchestrator's post-SPRING-PARITY rider). The interruptible
+                // re-seat (a mid-flight re-toggle re-bases the live `(value, velocity)`)
+                // is preserved by construction — `useDockSpring.playTo` carries the prior
+                // velocity into the fresh spring.
             },
             onSettle: () => {
                 settleAll();
