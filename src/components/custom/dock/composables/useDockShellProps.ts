@@ -184,44 +184,12 @@ export interface DockProps {
      * byte-identical to HEAD (the slot + the data-attr are present only when authored).
      */
     search?: boolean;
-    /**
-     * BD.W-DOCK-CORE (A13 / II.2) — arm the SHIPPED fission seam (additive, default
-     * `false`). When true the dock composes `useDockFission` (the n-ary detach
-     * orchestrator on the SAME `DOCK_SPRING` clock, BESIDE the morph engine — box-
-     * INVIOLATE, never editing `dockMorphContext`), auto-registers every child marked
-     * `data-dock-splittable` as a fission PIECE (its detach vector derived from its
-     * FLIP-measured center relative to the dock center), feeds the seam-tension on
-     * `@pointermove`, and exposes `split()`/`merge()`/`toggle()` via `defineExpose`. A
-     * non-splittable dock is byte-identical to HEAD. The ONE `<GooFilter>` mount must be mounted
-     * once at the app root (the goo `<filter>` the necks reference).
-     */
-    splittable?: boolean;
-    /**
-     * BD.W-DOCK-CORE (A13) — the fission CONTEXT (the `DOCK_SPLIT_SIGNATURES` row): the
-     * detach-vector family + neck stagger. `"nav"` (default) is inward-merge; `"search"`
-     * is a radial bloom; `"media"` is a lateral peel.
-     */
-    splitContext?: "search" | "media" | "nav";
-    /**
-     * BD.W-DOCK-CORE (A13) — where the detached sibling dock lands (reads the split
-     * vector). `"beside"` (default) is the radial/lateral lateral landing; `"above"`/
-     * `"below"` are the V-axis landings.
-     */
-    splitPlacement?: "beside" | "above" | "below";
-    /**
-     * BD.W-DOCK-CORE (A12) — arm the draggable-ITEMS axis (additive, default `false`).
-     * When true every child marked `data-dock-draggable` (or, lacking marks, every
-     * `.dock-icon-button` in the active layer) becomes GRABBABLE: a pointer-capture grab
-     * lets the user pull a dock item and the gesture follows ~1:1 with a volume-preserving
-     * gel-squish (the SHIPPED `useDragMorph` composing kf `Draggable` + `useLiquidFlex`
-     * "tanh" velocity-squish — NO second drag engine), then flings velocity-continuously to
-     * the nearest slot, committing a REORDER via `update:order`. Compositor-only
-     * (`transform: translate` — never a layout property); PRM-safe (the gesture still
-     * functions, the squish off, the release an instant nearest-snap); the roving-tabindex
-     * keyboard contract on the dock controls is preserved (a draggable strip that is
-     * keyboard-dead is the worse failure). A non-draggable dock is byte-identical to HEAD.
-     */
-    draggableItems?: boolean;
+    // BI.W-DOCK-RETIRES — the `splittable`/`splitContext`/`splitPlacement` fission props
+    // are DEFINITION-ABSENT (the fission facility retired decided-terminal; clean break).
+    // BI.W-DOCK-FOLD — the `draggableItems` axis (the demo-only dock-ITEM drag-reorder,
+    // `useDockItemDrag`) is DEFINITION-ABSENT (G10 census: zero binary consumer; clean
+    // break, no alias). A dock reorder is a consumer concern (`useSortable`), never a
+    // masking dead prop with no engine behind it.
 }
 
 /** The resolved shell-prop computeds the GlassDock SFC binds. */

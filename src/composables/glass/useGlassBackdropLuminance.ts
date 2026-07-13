@@ -103,6 +103,17 @@ export interface UseGlassBackdropLuminanceOptions {
      * `--glass-backdrop-luma` is written (a continuous-strength consumer).
      */
     writeBucket?: boolean;
+    /**
+     * BI.W-DOCK-LUMA-SHARE — mark this as the SHARED per-ROUTE observer. It stamps
+     * `GLASS_BACKDROP_SHARED_ATTR` on its target (the route/stage scope) so descendant
+     * glass surfaces (docks) DETECT the coverage and STAND DOWN — inheriting the route's
+     * `--glass-backdrop-luma` / `--glass-backdrop` / `--glass-ambient-*` via the cascade
+     * rather than each mounting its own readback loop (12 per-dock observers over ONE
+     * aurora → ONE per-route readback). Default false: a per-SURFACE observer, which
+     * stands down when a shared ancestor covers it and self-samples as the honest floor
+     * when standalone. N docks over the SAME aurora read ONE per-route signal.
+     */
+    shared?: boolean;
 }
 
 export interface UseGlassBackdropLuminanceControls {
@@ -117,6 +128,20 @@ export interface UseGlassBackdropLuminanceControls {
 }
 
 const PRM_QUERY = "(prefers-reduced-motion: reduce)";
+/**
+ * BI.W-DOCK-LUMA-SHARE — the shared-coverage marker. A SHARED route observer
+ * (`shared: true`) stamps this attribute on its target (the route/stage scope); a
+ * per-SURFACE observer detects it on an ANCESTOR (`.closest`) and STANDS DOWN —
+ * inheriting the route's `--glass-backdrop-luma` / `--glass-backdrop` /
+ * `--glass-ambient-*` via the registered inheriting @property cascade instead of
+ * mounting its OWN `drawImage + getImageData` readback loop (the 12 per-dock observers
+ * over ONE DockStage aurora collapse to ONE per-route readback — PERF-6/FAM-5). A DOM
+ * marker, NOT provide/inject: provide/inject does not cross the `<slot>` boundary (the
+ * DockStage renders `<slot>`, the docks are slotted from the route, so the slotted
+ * content's instance-parent is the slot OWNER not the stage), and the marker rides the
+ * SAME DOM ancestry the inheriting custom property itself cascades over.
+ */
+export const GLASS_BACKDROP_SHARED_ATTR = "data-glass-backdrop-shared";
 // The bounded ambient-bias strength the observer WRITES when it samples a real (non-
 // transparent) modal hue — the companion write-strength knob material.css names "the
 // observer's target owns". ≤ 8% (sub-perceptual under the W55 --glass-tint-strength-aa
@@ -146,6 +171,24 @@ export function useGlassBackdropLuminance(
     } = options;
     // The throttle floor is bounded ≥ 250 ms (≤ 4 Hz) — the C5-9 budget guarantee.
     const sampleIntervalMs = Math.max(250, minSampleIntervalMs);
+
+    // BI.W-DOCK-LUMA-SHARE — the shared/per-surface role. A SHARED route observer stamps
+    // the coverage marker + runs the ONE per-route readback; a per-SURFACE observer stands
+    // down when a shared ancestor covers it (inherits the route luma via the cascade) and
+    // self-samples as the honest floor when standalone.
+    const isShared = options.shared === true;
+
+    /**
+     * Does a SHARED route observer cover this per-surface target? True when an ANCESTOR
+     * carries `GLASS_BACKDROP_SHARED_ATTR`. `.closest` starts at `el`, but a per-surface
+     * target never carries the marker itself (only a `shared` observer stamps it), so a
+     * match is an ancestor's shared scope. A shared observer never stands down (it IS the
+     * coverage), so it short-circuits false.
+     */
+    function coveredByShared(el: HTMLElement): boolean {
+        if (isShared) return false;
+        return el.closest(`[${GLASS_BACKDROP_SHARED_ATTR}]`) !== null;
+    }
 
     const luma = ref<number | null>(null);
     const bucket = ref<GlassBackdropBucket | null>(null);
@@ -274,6 +317,9 @@ export function useGlassBackdropLuminance(
     function sampleNow(): void {
         const el = target.value;
         if (!el) return;
+        // STAND DOWN — a shared route observer covers this per-surface target; inherit its
+        // `--glass-backdrop-*` via the cascade (zero readback — the 12→1 collapse).
+        if (coveredByShared(el)) return;
         // Compose the stateless leaf samplers with the reusable downsample context (the
         // observer owns the canvas lifecycle) + the resolved live-field source.
         const ctx = getDownContext();
@@ -305,6 +351,9 @@ export function useGlassBackdropLuminance(
         {
             pause: () => loop.pause(),
             resume: () => {
+                // A covered per-surface observer stays parked (it inherits — never a loop).
+                const el = target.value;
+                if (el && coveredByShared(el)) return;
                 if (wantsLiveLoop() && !prefersReduced) loop.resume();
             },
         },
@@ -317,6 +366,13 @@ export function useGlassBackdropLuminance(
     // ── Arm/disarm the live loop on PRM flips (mirrors the substrate's live monitor) ─
     function applyMotionState(): void {
         prefersReduced = prmMql.matches;
+        // A covered per-surface observer never runs the loop nor samples (it inherits the
+        // shared route signal via the cascade — the 12→1 collapse).
+        const el = target.value;
+        if (el && coveredByShared(el)) {
+            loop.stop();
+            return;
+        }
         if (prefersReduced) {
             loop.stop();
             sampleNow(); // one static frame under reduce (the substrate freezes too)
@@ -336,6 +392,13 @@ export function useGlassBackdropLuminance(
         () => target.value,
         (el) => {
             if (!el) return;
+            // The SHARED route observer STAMPS the coverage marker so descendant docks
+            // detect it + stand down (the demo also carries a static template marker so
+            // the stamp is race-free from frame 0). A per-surface observer covered by a
+            // shared ancestor stands down here — it inherits the route luma (no sample,
+            // no loop); an uncovered surface self-samples (the honest floor).
+            if (isShared) el.setAttribute(GLASS_BACKDROP_SHARED_ATTR, "");
+            else if (coveredByShared(el)) return;
             sampleNow();
             applyMotionState();
         },

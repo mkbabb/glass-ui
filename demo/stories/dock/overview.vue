@@ -116,7 +116,12 @@ function togglePlay() {
              ONE GL context for the band's decorative staging — the prior per-demo
              collapsible aurora folds INTO the shared field (the pause-toggle keeps
              its OWN functional aurora below, which the toggle genuinely controls). -->
-        <DockStage #default="{ backgroundCanvas }">
+        <!-- BI.W-DOCK-LUMA-SHARE — the 10 per-dock `:background-canvas` bindings COLLAPSE
+             onto DockStage's ONE shared per-route backdrop-luminance observer: every staged
+             dock inherits `--glass-backdrop-luma` / `--glass-backdrop` / `--glass-ambient-*`
+             from the stage scope (the registered inheriting @property cascade) + stands down
+             its own getImageData readback (12 → 1). -->
+        <DockStage>
         <StorySection heading="Collapsible (hover to expand)" gap="md">
             <p class="text-sm text-muted-foreground">
                 The collapsed pill scales up on hover on the same
@@ -129,7 +134,7 @@ function togglePlay() {
             <div
                 class="dock-stage-tile flex justify-center rounded-[var(--radius-card)] border border-border/30 p-8"
             >
-                <GlassDock :background-canvas="backgroundCanvas" class="relative z-10">
+                <GlassDock class="relative z-10">
                     <!-- Home is a persistent control: it stays visible in both the
                          collapsed and expanded states via the #persistent slot. -->
                     <template #persistent>
@@ -148,7 +153,6 @@ function togglePlay() {
                 class="dock-stage-tile flex justify-center rounded-[var(--radius-card)] border border-border/30 p-8"
             >
                 <GlassDock
-                    :background-canvas="backgroundCanvas"
                     always-expanded
                 >
                     <DockControl aria-label="Previous"><SkipBack /></DockControl>
@@ -178,7 +182,7 @@ function togglePlay() {
             <div
                 class="dock-stage-tile flex flex-col items-center gap-3 rounded-[var(--radius-card)] border border-border/30 p-8"
             >
-                <GlassDock :background-canvas="backgroundCanvas" always-expanded fit-content>
+                <GlassDock always-expanded fit-content>
                     <Select v-model="dockView">
                         <DockTrigger for="select"
                             aria-label="Dock view"
@@ -284,7 +288,7 @@ function togglePlay() {
             <div
                 class="dock-stage-tile flex justify-center rounded-[var(--radius-card)] border border-border/30 p-8"
             >
-                <GlassDock :background-canvas="backgroundCanvas" always-expanded>
+                <GlassDock always-expanded>
                     <DockControl aria-label="New"><Plus /></DockControl>
 
                     <HoverPopover side="bottom" align="center" keep-dock-open>
@@ -412,7 +416,7 @@ function togglePlay() {
                      for measuring the entering-child onset the chronic owes. The short
                      :collapse-delay="600" keeps the capture's collapse-baseline fast.
                      Demo-private test-affordance only; no behavioral change. -->
-                <GlassDock :background-canvas="backgroundCanvas" :collapse-delay="600" data-testid="dock-capture">
+                <GlassDock :collapse-delay="600" data-testid="dock-capture">
                     <DockControl aria-label="Volume"><Volume2 /></DockControl>
                     <div class="flex w-44 items-center px-2">
                         <Slider
@@ -466,7 +470,7 @@ function togglePlay() {
                      morph and lands on the swapped-in control by coordinate is the
                      defect the guard catches. The short :collapse-delay keeps the
                      collapse baseline fast. No behavioral change. -->
-                <GlassDock :background-canvas="backgroundCanvas" :collapse-delay="600" data-testid="dock-tap-capture">
+                <GlassDock :collapse-delay="600" data-testid="dock-tap-capture">
                     <DockControl aria-label="Skip back"><SkipBack /></DockControl>
                     <DockControl aria-label="Previous"
                         ><ChevronDown
@@ -534,7 +538,7 @@ function togglePlay() {
             <!-- Host caps --dock-max-inline-size at 28rem so the 14-control row overflows the cap
                  and wraps ON-SCREEN at desktop (the consumer-override the cap token exposes). -->
             <div class="flex justify-center py-6">
-                <GlassDock :background-canvas="backgroundCanvas"
+                <GlassDock
                     overflow="wrap"
                     always-expanded
                     style="--dock-max-inline-size: 28rem"
@@ -565,7 +569,7 @@ function togglePlay() {
                 lockstep on the one dock spring (no jump-cut).
             </p>
             <div class="flex justify-center py-6">
-                <GlassDock :background-canvas="backgroundCanvas" overflow="wrap" style="--dock-max-inline-size: 22rem">
+                <GlassDock overflow="wrap" style="--dock-max-inline-size: 22rem">
                     <DockControl aria-label="Home"><Home /></DockControl>
                     <DockControl aria-label="Search"><Search /></DockControl>
                     <DockControl aria-label="Add"><Plus /></DockControl>
@@ -594,7 +598,7 @@ function togglePlay() {
                 by contract — no width morph).
             </p>
             <div class="flex justify-center py-6">
-                <GlassDock :background-canvas="backgroundCanvas" shape="card" layout="grid" class="w-80">
+                <GlassDock shape="card" layout="grid" class="w-80">
                     <DockControl aria-label="Home"><Home /></DockControl>
                     <DockControl aria-label="Search"><Search /></DockControl>
                     <DockControl aria-label="Add"><Plus /></DockControl>
@@ -633,7 +637,7 @@ function togglePlay() {
                     class="absolute inset-0"
                     aria-hidden="true"
                 />
-                <GlassDock :background-canvas="backgroundCanvas" class="relative z-10">
+                <GlassDock class="relative z-10">
                     <DockBackgroundToggle v-model:paused="bgPaused" />
                     <DockControl aria-label="Home"><Home /></DockControl>
                     <DockControl aria-label="Settings"><Settings /></DockControl>
