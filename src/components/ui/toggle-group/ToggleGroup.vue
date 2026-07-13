@@ -45,8 +45,28 @@ const groupRole = computed(() =>
 // recessed track needs inset padding so the chips do not paint over its rim.
 const groupTrack = computed(() =>
   props.type === 'single'
-    ? 'glass-capsule-track rounded-pill p-1'
+    ? 'glass-capsule-track p-1'
     : '',
+)
+
+// BI.W-RADIUS-GRAMMAR (GEO-6 · Law-1 concentric relay). The single-select
+// segmented track is the concentric CONTAINER (Ruling 11 relay site): it
+// publishes `--radius-ctx` (the item's concentric corner) + `--radius-inset`
+// (the `p-1` gap = 0.25rem) on itself and derives its OWN corner as
+// `track = ctx + inset`, so the outer wraps its inner concentrically. Default
+// (pill items) → ctx = --radius-pill → track = pill + 4px (a stadium end-cap,
+// byte-identical to the prior `rounded-pill`); `variant="card"` items →
+// ctx = --radius-card → track = card + 4px, killing the pill-track-vs-card-item
+// mismatch (GEO-6 auto-fall). The multi-select arm publishes nothing (byte-identical).
+const groupTrackStyle = computed<Record<string, string> | undefined>(() =>
+  props.type === 'single'
+    ? {
+        '--radius-inset': '0.25rem',
+        '--radius-ctx':
+          props.variant === 'card' ? 'var(--radius-card)' : 'var(--radius-pill)',
+        borderRadius: 'calc(var(--radius-ctx) + var(--radius-inset))',
+      }
+    : undefined,
 )
 
 const delegatedProps = computed(() => {
@@ -59,7 +79,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
 
 <template>
   <ToggleGroupRoot v-bind="forwarded" as-child>
-    <div data-slot="toggle-group" :role="groupRole" :class="cn('flex items-center justify-center gap-1', groupTrack, props.class)">
+    <div data-slot="toggle-group" :role="groupRole" :style="groupTrackStyle" :class="cn('flex items-center justify-center gap-1', groupTrack, props.class)">
       <slot />
     </div>
   </ToggleGroupRoot>

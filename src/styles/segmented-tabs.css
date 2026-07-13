@@ -69,6 +69,33 @@
     grid-auto-flow: unset;
     grid-auto-columns: unset;
     align-items: stretch;
+    /* BI.W-RADIUS-GRAMMAR (Law 2 — capsule-vs-card). A COLUMN-STACK track cannot
+       wear the horizontal arm's stadium `--radius-tab` (= --radius-pill = 9999px):
+       on a tall multi-row box the stadium clamps its end-caps to a ~46px half-height
+       balloon (the live-measured 10003px→46px defect, UF-A2/FAM-4). The vertical arm
+       re-binds the family radius var onto the BOUNDED `--radius-strip` (≈12px); the
+       shipped concentric track calc (`--bouncy-track-radius`, above) re-resolves the
+       track corner off it for free. The horizontal `.segmented-tabs` is byte-untouched
+       (its single-row pill stays a legal stadium — the pill-in-pill exemption). */
+    --bouncy-slider-radius: var(--radius-strip);
+    /* Law 1 — the concentric relay. The vertical track is the concentric CONTAINER:
+       it publishes its resolved outer radius as `--radius-ctx` + its trim inset as
+       `--radius-inset`, and the indicator (the nested surface) derives its arc below.
+       This GENERALIZES the shipped per-surface `.containerConcentric` idiom onto the
+       named Law-1 contract (Ruling 11 site #2), so the relay is LIVE not dead-on-mint. */
+    --radius-ctx: var(--bouncy-track-radius);
+    --radius-inset: var(--bouncy-track-trim);
+}
+
+/* The vertical indicator arc is the concentric INNER of the track — it reads the
+   Law-1 relay `inner = max(floor, ctx − inset)` (= --radius-strip, the shipped calc
+   value routed through the named contract). Specificity (0,2,0) wins the base
+   `.segmented-indicator` (0,1,0) `border-radius: var(--bouncy-slider-radius)`. */
+.segmented-tabs--vertical .segmented-indicator {
+    border-radius: max(
+        var(--radius-floor),
+        calc(var(--radius-ctx) - var(--radius-inset))
+    );
 }
 
 @media (min-width: 640px) {

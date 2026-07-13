@@ -42,6 +42,14 @@
        on Checkbox + base Tabs onto a softer, named radius. One geometry language
        across the form family — token + class only, no new primitive. */
     --radius-field:   var(--radius-2xl);
+    /* BI.W-RADIUS-GRAMMAR (Law 2 — capsule-vs-card) — the BOUNDED strip rung a
+       COLUMN-STACK variant of a stadium base re-binds onto. A multi-row segmented
+       track cannot wear the `9999px` pill: on a tall box the stadium clamps its
+       end-caps to a ~46px half-height balloon (UF-A2/FAM-4). ≈12px sits between
+       --radius-control (the stadium pill) and --radius-card (1rem) — a soft
+       rounded-rect, never a stadium. The vertical SegmentedTabs track reads it;
+       the shipped concentric track calc re-resolves the corner off it for free. */
+    --radius-strip:   0.75rem;
     /* BC.W-CONTROL-SMOOTH — the small-inline-control corner rung is a STADIUM, not a
        fixed small px. The prior `--radius-md` (6px) read SQUARE on a 16-24px control
        (6px on a 16px box = 0.38-of-height — a rounded-rect, not a pill); the iOS-27
@@ -66,6 +74,23 @@
        The density-scaled --dock-card-radius (dock.css) resolves through this. */
     --radius-dock-card: var(--radius-3xl);
     --radius-tooltip: var(--radius-lg);
+
+    /* ── BI.W-RADIUS-GRAMMAR — the concentric-radius RELAY (Law 1). ──────────────
+       The Apple `ConcentricRectangle` grammar (iOS 26) as a plain INHERITED
+       custom-property relay: a container PUBLISHES its resolved corner as
+       `--radius-ctx` + its inner pad as `--radius-inset` on itself; a nested
+       CARD-class surface DERIVES its own corner
+         border-radius: max(var(--radius-floor), calc(var(--radius-ctx) − var(--radius-inset)))
+       so the inner corner stays concentric with the outer across the pad. The
+       2-level relay is the contract (covers 4/5 audited sites); depth-N `inherit()`
+       is Chrome-only / non-Baseline — BOOKED, never a masking fallback. These are
+       the DEFAULT (root) channel values a container overrides per-scope: the
+       identity default `--radius-inset: 0px` makes an un-nested card read
+       `--radius-ctx` (= --radius-card) unchanged, and `--radius-floor` (4px) is the
+       minimum a nested corner never rounds below. */
+    --radius-floor:   var(--radius-xs);
+    --radius-ctx:     var(--radius-card);
+    --radius-inset:   0px;
 
     /* ── AX.W56 — the corner-SHAPE axis (parallel to the corner-RADIUS ladder above).
        `corner-shape` only changes the CURVE within the `border-radius` box; the
