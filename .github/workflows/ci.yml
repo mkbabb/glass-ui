@@ -685,6 +685,34 @@ jobs:
               run: npm run proof:dock-fold
             - name: proof:dock-gate-roster
               run: npm run proof:dock-gate-roster
+            - name: proof:pager-worm
+              run: npm run proof:pager-worm
+            - name: proof:pager-a11y
+              run: npm run proof:pager-a11y
+            - name: proof:carousel-rebuild
+              run: npm run proof:carousel-rebuild
+            - name: proof:viz-fourier-ribbon
+              run: npm run proof:viz-fourier-ribbon
+            - name: proof:viz-fourier-ribbon:selftest
+              run: npm run proof:viz-fourier-ribbon:selftest
+            - name: proof:field-core
+              run: npm run proof:field-core
+            - name: proof:aurora-vibrancy
+              run: npm run proof:aurora-vibrancy
+            - name: proof:constellation-dedup
+              run: npm run proof:constellation-dedup
+            - name: proof:stage-field-clamp
+              run: npm run proof:stage-field-clamp
+            - name: proof:one-gl-per-route
+              run: npm run proof:one-gl-per-route
+            - name: proof:dock-luma-share
+              run: npm run proof:dock-luma-share
+            - name: proof:aurora-entrance
+              run: npm run proof:aurora-entrance
+            - name: proof:blob-seams
+              run: npm run proof:blob-seams
+            - name: proof:blob-seams:selftest
+              run: npm run proof:blob-seams:selftest
             - name: gates:verify-ci
               run: npm run gates:verify-ci
             - name: proof:gen-ci-fresh
