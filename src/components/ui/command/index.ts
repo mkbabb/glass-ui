@@ -7,3 +7,7 @@ export { default as CommandItem } from './CommandItem.vue'
 export { default as CommandList } from './CommandList.vue'
 export { default as CommandSeparator } from './CommandSeparator.vue'
 export { default as CommandShortcut } from './CommandShortcut.vue'
+// The menu/picker item four-state CVA union — the published home for the type the
+// dropped `/api` discovery layer pinned (MIGRATION.md 5.0.0 /api-fold: `MenuItemVariants`
+// → `/command`). Type-only re-export of the `_shared` source (private-to-ui at runtime).
+export type { MenuItemVariants } from '../_shared'

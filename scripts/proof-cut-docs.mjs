@@ -14,11 +14,15 @@
 //        the per-version guide is `## <version>` sections, not a title that trails the
 //        cut cadence.
 //   W2 — MIGRATION.md carries a `## 5.0.0` section (the cut is authored, newest-first).
-//   W3 — the 5.0.0 `/api`-fold table is a REAL markdown table of >=203 symbol rows
-//        (the `./api` fold's 203-symbol re-home is the cut's input contract for
-//        `public-surface`'s map arm — a table, not a paragraph). Scoped to the
-//        `### The `/api`` section so a same-shaped inventory table elsewhere in the doc
-//        does not inflate the count.
+//   W3 — the 5.0.0 `/api`-fold table is a REAL, SUBSTANTIAL markdown table (>=150 symbol
+//        rows — the authored-not-a-stub witness; a table, not a paragraph). The EXACT
+//        disk-true count + per-row VALIDITY (every target subpath live, every symbol
+//        exported by its barrel) is owned by proof:migration-truth (BI.W-MIGRATION-TRUE-UP);
+//        this clause only guards substantiality so the two never re-implement each other.
+//        Scoped to the `### The `/api`` section so a same-shaped inventory table elsewhere
+//        in the doc does not inflate the count. (The re-home carries 199 rows at the 5.0.0
+//        cut — down from the pre-BG 203 as the dead-composable sweep + the PaperGrid→LiquidGrid
+//        / SelectableChipVariants→ChipVariants renames retired/renamed their entries.)
 //   W4 — MIGRATION.md carries the `--ring` → `--focus-ring-color` rename ROW with the
 //        fallback-first transition form `var(--focus-ring-color, var(--ring))` (the
 //        atlas by-name token ask's consumer-migration home).
@@ -74,8 +78,8 @@ export function evaluate({ migration, changelog }) {
     checks.push({ id: "W2-migration-5.0.0-section", pass: w2, detail: w2 ? "## 5.0.0 present" : "no ## 5.0.0" });
 
     const apiRows = countApiFoldRows(migration);
-    const w3 = apiRows >= 203;
-    checks.push({ id: "W3-api-fold-203-row-table", pass: w3, detail: `rows=${apiRows} (>=203)` });
+    const w3 = apiRows >= 150; // substantiality floor; exact count + validity → proof:migration-truth
+    checks.push({ id: "W3-api-fold-substantial-table", pass: w3, detail: `rows=${apiRows} (>=150; disk-true count/validity owned by proof:migration-truth)` });
 
     const w4 =
         /--focus-ring-color/.test(migration) &&
@@ -118,7 +122,7 @@ function selfTest() {
     const bites = [
         ["W1 v2.0-title reds", { ...good, migration: good.migration.replace("# MIGRATION", "# MIGRATION—v0.9.x → v2.0") }, "W1-title-version-agnostic"],
         ["W2 no-5.0.0 reds", { ...good, migration: good.migration.replace("## 5.0.0", "## 4.9.0") }, "W2-migration-5.0.0-section"],
-        ["W3 short-table reds", { ...good, migration: good.migration.replace(/\| `Sym20[0-2]` \| type \| `\/x` \|\n?/g, "") }, "W3-api-fold-203-row-table"],
+        ["W3 stub-table reds", { ...good, migration: good.migration.replace(/\| `Sym1[0-9][0-9]` \| type \| `\/x` \|\n?/g, "") }, "W3-api-fold-substantial-table"],
         ["W4 no-fallback reds", { ...good, migration: good.migration.replace("`var(--focus-ring-color, var(--ring))`", "renamed") }, "W4-focus-ring-color-rename-row"],
         ["W5 unreleased reds", { ...good, changelog: good.changelog.replace("## 4.2.0", "## Unreleased") }, "W5-changelog-one-5.0.0-zero-unreleased"],
     ];
@@ -149,7 +153,7 @@ function run() {
         status: pass ? "pass" : "fail",
         gate: "proof:cut-docs",
         command: COMMAND,
-        note: "DOC-AUTHORING wave — the 5.0.0 cut-doc witness: W1 version-agnostic MIGRATION title, W2 ## 5.0.0 section, W3 the >=203-row /api-fold table, W4 the --ring→--focus-ring-color fallback-first rename row, W5 CHANGELOG exactly-one ## 5.0.0 + zero ## Unreleased. Born-RED at HEAD (v2.0 title, no 5.0.0, stale Unreleased) → GREEN on the reshape. + a 5-bite self-test.",
+        note: "DOC-AUTHORING wave — the 5.0.0 cut-doc witness: W1 version-agnostic MIGRATION title, W2 ## 5.0.0 section, W3 the SUBSTANTIAL /api-fold table (>=150 rows — authored-not-a-stub; the exact disk-true count/validity is proof:migration-truth's, BI.W-MIGRATION-TRUE-UP; the re-home carries 199 rows at the cut), W4 the --ring→--focus-ring-color fallback-first rename row, W5 CHANGELOG exactly-one ## 5.0.0 + zero ## Unreleased. Born-RED at HEAD (v2.0 title, no 5.0.0, stale Unreleased) → GREEN on the reshape. + a 5-bite self-test.",
         checks: checks.map((c) => ({ id: c.id, pass: c.pass, detail: c.detail })),
         selfTest: self,
     });
@@ -163,7 +167,7 @@ function run() {
         for (const c of failed) console.error(`  ✗ ${c.id} — ${c.detail}`);
         process.exit(1);
     }
-    console.log("\n[proof:cut-docs] the 5.0.0 cut docs are authored — MIGRATION `## 5.0.0` + the 203-row /api-fold table + the --focus-ring-color rename, version-agnostic title; CHANGELOG one `## 5.0.0`, zero `## Unreleased`.");
+    console.log("\n[proof:cut-docs] the 5.0.0 cut docs are authored — MIGRATION `## 5.0.0` + the substantial /api-fold table (199 rows at the cut; validity → proof:migration-truth) + the --focus-ring-color rename, version-agnostic title; CHANGELOG one `## 5.0.0`, zero `## Unreleased`.");
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

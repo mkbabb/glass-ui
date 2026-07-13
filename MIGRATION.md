@@ -9,7 +9,7 @@ rename or import re-point per call site.
 
 The 5.0.0 cut is the joint BG/BH release: the BG visual-convergence band (the warm /
 weighty / liquid iOS-27 redesign) lands alongside the BH structural reshape. **The
-whole consumer break is ONE dropped export key — `./api` — plus its 203-symbol
+whole consumer break is ONE dropped export key — `./api` — plus its 199-symbol
 re-home** (each symbol swaps its import PATH onto the owning subpath, zero symbol loss);
 every other published key is preserved (the regen proves 96/96 keys reproduce). The
 remaining rows are a token rename (`--ring` → `--focus-ring-color`), one
@@ -17,10 +17,10 @@ component/subpath rename (`goo-blob` → `blob`), and the source-only `src/subpa
 deletion + curated flat-barrel relocations (no export break). The BG visual band is a
 paint upgrade — no public-prop break beyond the rows below.
 
-### The `/api` discovery-subpath fold — 203-symbol re-home
+### The `/api` discovery-subpath fold — 199-symbol re-home
 
 `@mkbabb/glass-ui/api` (the pure types + constants discovery layer) is FOLD-DELETED. The
-`./api` key is the ONLY dropped key. Every one of its 203 symbols re-homes onto its
+`./api` key is the ONLY dropped key. Every one of its 199 symbols re-homes onto its
 OWNING published subpath — so a consumer swaps the import PATH with zero symbol loss:
 
 ```ts
@@ -30,16 +30,24 @@ OWNING published subpath — so a consumer swaps the import PATH with zero symbo
 + import type { CardTier } from "@mkbabb/glass-ui/card";
 ```
 
-200 of the 203 symbols were ALREADY exported by their owning subpath barrel (the fold is
-a pure import-path swap — the owning subpath needs no new export). Only the three
-`ui/_shared` orphans re-home to a barrel that ADDS one export: `Surface` → `/card`,
-`MenuItemVariants` → `/command`, `ControlSize` → `/forms`. The three root-barrel
-`*Variants` types (`AlertVariants` / `AvatarVariants` / `ToggleVariants`) resolve off the
-root `@mkbabb/glass-ui` barrel. value.js's 18 consumed specifiers (root + 15 subpaths +
+197 of the 199 symbols were ALREADY exported by their owning subpath barrel (the fold is
+a pure import-path swap — the owning subpath needs no new export). The surface-axis
+grammar types (`Surface` / `SurfaceTier`) publish via the dedicated `/axes` grammar
+subpath (BH.W-AXIS-GRAMMAR — the honest `/api` successor). Only two `ui/_shared`
+convenience unions re-home to a barrel that ADDS one type-only export: `MenuItemVariants`
+→ `/command`, `ControlSize` → `/forms`. The three root-barrel `*Variants` types
+(`AlertVariants` / `AvatarVariants` / `ToggleVariants`) resolve off the root
+`@mkbabb/glass-ui` barrel. value.js's 18 consumed specifiers (root + 15 subpaths +
 `/easing` + `/styles/fonts`) are all named in the table below, so the compound-import
 unbuildable class cannot recur.
 
-The full 203-symbol map (grouped alphabetically by symbol; `kind` is the TS export kind;
+The `/api` layer carries 199 symbols at the cut (down from the pre-BG 203: the
+dead-composable sweep retired `Haptic*` / `CelebrationBurst*` / `WaveComponent` and the
+`GlassPanelVariant` tier-homonym, and the `PaperGrid*` → `LiquidGrid*` +
+`SelectableChipVariants` → `ChipVariants` renames moved their entries — each documented in
+its own section below or in the BG retirements).
+
+The full 199-symbol map (grouped alphabetically by symbol; `kind` is the TS export kind;
 `new import (owning subpath)` is the 5.0.0 target):
 
 | symbol | kind | new import (owning subpath) |
@@ -55,6 +63,8 @@ The full 203-symbol map (grouped alphabetically by symbol; `kind` is the TS expo
 | `AuroraFlow` | type | `/aurora` |
 | `AuroraHarmony` | type | `/aurora` |
 | `AuroraHuePath` | type | `/aurora` |
+| `AuroraImageBlur` | type | `/aurora` |
+| `AuroraImageSource` | type | `/aurora` |
 | `AuroraInstance` | type | `/aurora` |
 | `AuroraInteractivity` | type | `/aurora` |
 | `AuroraInteractivityAtom` | type | `/aurora` |
@@ -64,6 +74,7 @@ The full 203-symbol map (grouped alphabetically by symbol; `kind` is the TS expo
 | `AuroraNucleus` | type | `/aurora` |
 | `AuroraRuntimeMode` | type | `/aurora` |
 | `AuroraRuntimeOptions` | type | `/aurora` |
+| `AuroraSource` | type | `/aurora` |
 | `AuroraZoneArrangement` | type | `/aurora` |
 | `AuroraZones` | type | `/aurora` |
 | `DEFAULT_AURORA_CONFIG` | const | `/aurora` |
@@ -124,7 +135,6 @@ The full 203-symbol map (grouped alphabetically by symbol; `kind` is the TS expo
 | `DotFlowFieldHandle` | type | `/dot-flow-field` |
 | `FlowFieldConfig` | type | `/dot-flow-field` |
 | `UseDotFlowFieldOptions` | type | `/dot-flow-field` |
-| `WaveComponent` | type | `/dot-flow-field` |
 | `BezierPoints` | type | `/easing` |
 | `EasingFn` | type | `/easing` |
 | `EasingPickerMode` | type | `/easing` |
@@ -135,7 +145,6 @@ The full 203-symbol map (grouped alphabetically by symbol; `kind` is the TS expo
 | `FourierFieldConfig` | type | `/fourier-field` |
 | `FourierFieldProps` | type | `/fourier-field` |
 | `GlassPanelProps` | type | `/glass-panel` |
-| `GlassPanelVariant` | type | `/glass-panel` |
 | `BlendMode` | type | `/handmark` |
 | `Brush` | type | `/handmark` |
 | `BrushName` | type | `/handmark` |
@@ -160,7 +169,6 @@ The full 203-symbol map (grouped alphabetically by symbol; `kind` is the TS expo
 | `MetricRowProps` | type | `/metric-stack` |
 | `MetricStackProps` | type | `/metric-stack` |
 | `BloomUpPreset` | type | `/motion` |
-| `CelebrationBurstPreset` | type | `/motion` |
 | `Countup` | type | `/motion` |
 | `DockCtaReceivePreset` | type | `/motion` |
 | `DragMorphAxis` | type | `/motion` |
@@ -170,8 +178,6 @@ The full 203-symbol map (grouped alphabetically by symbol; `kind` is the TS expo
 | `TimingFunction` | type | `/motion` |
 | `UseBloomUpOptions` | type | `/motion` |
 | `UseBloomUpReturn` | type | `/motion` |
-| `UseCelebrationBurstOptions` | type | `/motion` |
-| `UseCelebrationBurstReturn` | type | `/motion` |
 | `UseCountupOptions` | type | `/motion` |
 | `UseDockCtaReceiveOptions` | type | `/motion` |
 | `UseDockCtaReceiveReturn` | type | `/motion` |
@@ -179,15 +185,12 @@ The full 203-symbol map (grouped alphabetically by symbol; `kind` is the TS expo
 | `UseDragMorphReturn` | type | `/motion` |
 | `UseLiquidRevealOptions` | type | `/motion` |
 | `UseLiquidRevealReturn` | type | `/motion` |
-| `HapticPattern` | type | `/motion-core` |
 | `HighlightMatcher` | type | `/motion-core` |
 | `NavigateOptions` | type | `/motion-core` |
 | `PointerVec2` | type | `/motion-core` |
 | `TriggerPoint` | type | `/motion-core` |
 | `UseCharStaggerOptions` | type | `/motion-core` |
 | `UseCharStaggerReturn` | type | `/motion-core` |
-| `UseHapticOptions` | type | `/motion-core` |
-| `UseHapticReturn` | type | `/motion-core` |
 | `UsePointerVelocityField` | type | `/motion-core` |
 | `UsePointerVelocityFieldOptions` | type | `/motion-core` |
 | `UseScrollChromeOptions` | type | `/motion-core` |
@@ -206,9 +209,9 @@ The full 203-symbol map (grouped alphabetically by symbol; `kind` is the TS expo
 | `PagerWindow` | type | `/pager-dots` |
 | `PaperBackdropFrequency` | type | `/paper-backdrop` |
 | `PaperBackdropProps` | type | `/paper-backdrop` |
-| `PaperGridConfig` | type | `/paper-grid` |
-| `PaperGridHandle` | type | `/paper-grid` |
-| `UsePaperGridOptions` | type | `/paper-grid` |
+| `LiquidGridConfig` | type | `/liquid-grid` |
+| `LiquidGridHandle` | type | `/liquid-grid` |
+| `UseLiquidGridOptions` | type | `/liquid-grid` |
 | `FuzzySearchState` | type | `/search` |
 | `SearchableItem` | type | `/search` |
 | `SearchIndex` | type | `/search` |
@@ -216,7 +219,7 @@ The full 203-symbol map (grouped alphabetically by symbol; `kind` is the TS expo
 | `SearchVariant` | type | `/search` |
 | `SearchVariants` | type | `/search` |
 | `UseFuzzySearchOptions` | type | `/search` |
-| `SelectableChipVariants` | type | `/selectable-chip` |
+| `ChipVariants` | type | `/selectable-chip` |
 | `SheetVariants` | type | `/sheet` |
 | `ClickDelegateOptions` | type | `/sidebar` |
 | `LazyLoaderOptions` | type | `/sidebar` |
@@ -246,7 +249,8 @@ The full 203-symbol map (grouped alphabetically by symbol; `kind` is the TS expo
 | `SectionWindowRange` | type | `/virtual` |
 | `ControlSize` | type | `/forms` |
 | `MenuItemVariants` | type | `/command` |
-| `Surface` | type | `/card` |
+| `Surface` | type | `/axes` |
+| `SurfaceTier` | type | `/axes` |
 ### `--ring` → `--focus-ring-color` (focus-ring token rename)
 
 The focus-ring color token `--ring` is renamed `--focus-ring-color` (clean break, no
@@ -292,10 +296,10 @@ rationale (0 external consumers). Clean break, no alias ("No legacy code").** Th
 `DEFAULT_GOO_DOT_CONFIG`) + its `@mkbabb/glass-ui/goo-dot-matrix` subpath are
 DEFINITION-ABSENT at the 5.0.0 cut. It was a demonstration hybrid that earned no external
 consumer since BC (the ≥2-consumer / visual-load-bearing bar; J-inv-10 / L-inv-8). Its two
-halves both SURVIVE it and stay first-class — the goo-blob FIELD donor
-(`@mkbabb/glass-ui/goo-blob`, byte-untouched) and the dot-matrix RENDER register
+halves both SURVIVE it and stay first-class — the blob FIELD donor
+(`@mkbabb/glass-ui/blob`, byte-untouched render) and the dot-matrix RENDER register
 (`@mkbabb/glass-ui/dot-matrix`). MIGRATE: none for the library's own tree; any external
-consumer of `/goo-dot-matrix` re-homes onto `<GooBlob>` (the merged-metaball FIELD look) or
+consumer of `/goo-dot-matrix` re-homes onto `<Blob>` (the merged-metaball FIELD look) or
 `<DotMatrix>` (the dot-lattice RENDER look) — the two registers the hybrid composed. The
 inv-11 registry-consumer probe (`npm view @mkbabb/glass-ui` + the constellation census) read
 ZERO consumers; recorded in the cut notes.
