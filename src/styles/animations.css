@@ -1,18 +1,7 @@
 /* Shared @keyframes — global animations used across projects */
 
-/* ── Floating panel entrance ── */
-@keyframes floating-panel-in {
-    from {
-        opacity: 0;
-        filter: blur(4px);
-        scale: 0.96;
-    }
-    to {
-        opacity: 1;
-        filter: blur(0);
-        scale: 1;
-    }
-}
+/* (BI.W-GLASS-DEDUP — the `floating-panel-in` entrance @keyframes retired with
+   floating-panel.css / `--animate-floating-panel-in`; FAM-9 clean break.) */
 
 /* ── Collapsible (reka-ui) ── */
 @keyframes collapsible-open {

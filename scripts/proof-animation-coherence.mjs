@@ -188,8 +188,12 @@ const SURFACE_CSS = [
     "src/styles/glass.css",
     "src/styles/instrument-chassis.css",
     "src/styles/drawer.css",
-    "src/styles/hover-popover.css",
-    "src/styles/floating-panel.css",
+    // BI.W-OVERLAY-UNION — hover-popover.css DELETED (FAM-10 fold): <HoverPopover>
+    // folded onto <Popover trigger="hover">; its .hover-popover-panel substrate is
+    // dead (the union content rides glass-floating + glass-reveal). No coherence-scan
+    // surface lost (its data-state animation already canonicalised onto .glass-reveal).
+    // BI.W-GLASS-DEDUP — floating-panel.css DELETED (FAM-9); its live dropdown rules
+    // moved to menu.css (no @keyframes/transition, so no coherence-scan surface lost).
     "src/styles/scroll-driven.css",
     "src/styles/view-transition.css",
     "src/styles/dock/shell.css",
@@ -1042,8 +1046,9 @@ const REGISTER_BINDING_ROSTER = {
     "src/components/ui/popover/PopoverContent.vue": "menu",
     "src/components/ui/dropdown-menu/DropdownMenuContent.vue": "menu",
     "src/components/ui/dropdown-menu/DropdownMenuSubContent.vue": "menu",
-    "src/components/ui/context-menu/ContextMenuContent.vue": "menu",
-    "src/components/ui/context-menu/ContextMenuSubContent.vue": "menu",
+    // BI.W-MENU-TRIGGER — context-menu folded onto dropdown-menu (`trigger="context"`);
+    // the reka ContextMenu Content/SubContent substrate is reached via the survivor's
+    // dropdown Content/SubContent above (which carry the "menu" reveal register).
     // tooltip — the hover-anchored quick surfaces (fastest arrival, no overshoot).
     "src/components/ui/tooltip/TooltipContent.vue": "tooltip",
     "src/components/ui/hover-card/HoverCardContent.vue": "tooltip",

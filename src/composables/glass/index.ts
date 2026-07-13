@@ -1,13 +1,10 @@
-// AZ.W-PRUNE2 (E4-3 + the RESTORE ruling) — the `useGlassRenderer` /
-// `createGlassFilter` / `destroyGlassFilter` detection-cascade cluster keeps its
-// BARREL seat retired (it is NOT re-exported through this `export *`), but its
-// SOURCE (`./useGlassRenderer.ts`) is RESTORED as a COMPONENT-LOCAL dependency of
-// GlassPanel. The AY/AZ prune census wrongly counted GlassPanel as retired — it
-// is a live published surface (keyframes.js binds `@mkbabb/glass-ui/glass-panel`),
-// so the cluster has a real binary consumer again. The E4-3 verdict ("the barrel
-// seat could not earn its weight") still holds for the BARREL — GlassPanel imports
-// the cluster directly via relative path, the tier-detection stays component-local.
-// A named carve (not the whole `export *` subtree) — `useSpecularTracking` + the
+// BI.W-GLASS-DEDUP (FAM-10) — the `useGlassRenderer` / `createGlassFilter` /
+// `destroyGlassFilter` detection-cascade cluster is DELETED (source-absent). It was
+// a SECOND refraction path — a JS-canvas `feDisplacementMap`-in-`backdrop-filter`
+// competing with the house `.glass-lens`/`#glass-refract` axis — with GlassPanel as
+// its ONLY consumer (a `proof:no-dual-path` violation). GlassPanel retired onto
+// `<Surface>`/`.glass-resting`, so the cluster has no consumer; `.glass-lens` is the
+// ONE refraction door. Clean break, no alias. `useSpecularTracking` + the
 // `useCanvas2D` lifecycle below stay live (aurora/blob/constellation/fourier).
 
 // AX.W09 — the DRY pointer-anchored moving-specular write seam (lifted from the

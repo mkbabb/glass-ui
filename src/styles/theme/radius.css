@@ -138,7 +138,8 @@
     --corner-shape-dialog:  superellipse(var(--corner-k-squircle));
     --corner-shape-sheet:   superellipse(var(--corner-k-squircle));
     --corner-shape-panel:   superellipse(var(--corner-k-squircle));
-    --corner-shape-hero:    superellipse(var(--corner-k-squircle));
+    /* BI.W-GLASS-DEDUP — `--corner-shape-hero` RETIRED with the `.glass-hero`
+       overlay utility (FAM-9, 0-consumer clean break). */
     /* AX.W59 — the spectrum slider's track-height thumb reads as a SQUIRCLE
        (the iOS color-picker idiom). It rides the same --corner-k-squircle
        vocabulary; @supports-gated in Slider.vue over a --radius-* round

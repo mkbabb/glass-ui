@@ -1,32 +1,35 @@
 # GlassPanel
 
-## Artefact path
+## Artefact path (RETIRED — BI.W-GLASS-DEDUP)
 
-`src/components/custom/glass-panel/` (the published subpath `@mkbabb/glass-ui/glass-panel`).
-Its component-local dependency `src/composables/glass/useGlassRenderer.ts` (the
-`useGlassRenderer`/`createGlassFilter`/`destroyGlassFilter` detection-cascade cluster) is
-imported directly by `GlassPanel.vue` via relative path, NOT re-exported through the
-`composables/glass` root barrel (the E4-3 barrel-seat retire holds; the cluster earns its
-weight only as GlassPanel's internal renderer).
+`src/components/custom/glass-panel/` + `src/subpaths/glass-panel.ts` + the `./glass-panel`
+package.json export + `GlassPanelProps` (api) + `src/composables/glass/useGlassRenderer.ts`
+(the `useGlassRenderer`/`createGlassFilter`/`destroyGlassFilter` cluster) + the
+`proof:glass-panel-tiers` gate are ALL **DELETED clean-break** (no alias). The published
+subpath `@mkbabb/glass-ui/glass-panel` is retired.
 
-## Verdict (re-graded BC.W-GLASS-PRUNE 2026-06-19)
+## Verdict (RETIRED — BI.W-GLASS-DEDUP, FAM-10; was retire-HELD-folded at BC.W-GLASS-PRUNE)
 
-`retire-HELD-folded` — **the prune to TWO registers (Glass CARDS + Glass MATERIALS) is
-DECIDED; the destructive retire is HELD on a live external consumer (the Atlas), and the
-fold is RECORDED + routed (the no-silent-prune floor).** `<GlassPanel>` is a TRUE DUPLICATE
-of `<Card>`: its `variant` (the 5-rung selector) ≡ Card's `tier`, its `surface` ≡ Card's
-`surface`, and its `tier` renderer-preference folds onto the ONE `.glass-lens`/`#glass-refract`
-refraction source (the `createGlassFilter` `feDisplacementMap`-in-`backdrop-filter` is byte-
-mechanically the same mechanism). The glass system consolidates to: a bare surface → a
-`.glass-{rung}` MATERIAL; a content container → a `<Card>`. There is no third "panel" thing.
+`RETIRED` — **the prune to TWO registers (Glass CARDS + Glass MATERIALS) LANDED.** The BC
+HELD was on a live external consumer (the Atlas); the BI-execution re-probe
+(`proof:glass-prune` P5, the registry+constellation sweep) finds **ZERO live external
+consumers** — the Atlas has already consumed-and-deleted `<GlassPanel>` in its own tree (the
+fold recorded below FIRED). The keyframes consumer the AZ.W-PRUNE2 RESTORE rested on migrated
+off long ago. So the destructive retire lands cleanly:
 
-**Why HELD, not cut now:** the BC.W-GLASS-PRUNE Fences make the registry-consumer probe the
-single non-negotiable pre-flight — *"no retire lands until the probe confirms zero un-folded
-external consumers."* The probe (re-run BC.W-GLASS-PRUNE) finds a LIVE external consumer (see
-below). Per the wave mechanism the GlassPanel external fold RIDES `BC.W-ATLAS-ASK` (Band 10,
-post-cut, the foreign-tree fence): the Atlas consume-and-deletes `<GlassPanel>` → `<Card>` /
-`.glass-{rung}` in its OWN tree on its `^4.x` bump, BEFORE the retire lands. The retire is
-SEQUENCED behind that fold, not silent.
+`<GlassPanel>` owned NO distinct mechanism — its `variant` (the 5-rung selector) ≡ Card's
+`tier`, its `surface` ≡ Card's `surface`, and its ONE distinct thing —
+`useGlassRenderer`/`createGlassFilter` (a JS-canvas `feDisplacementMap`-in-`backdrop-filter`)
+— was a SECOND refraction path competing with the house `.glass-lens`/`#glass-refract` axis, a
+textbook `proof:no-dual-path` violation with GlassPanel as its ONLY consumer. The glass system
+consolidates to: a bare surface → a `.glass-{rung}` MATERIAL or `<Surface tier surface>`; a
+content container → a `<Card>`. There is no third "panel" thing. `.glass-lens` is the ONE
+refraction door (`proof:no-dual-path` D6).
+
+**Cross-repo peer-bump asks:** the atlas×3 + sci-report×2 site folds (recorded below) ride
+`BI.W-FACTOR-ASKS`' migration ledger (the `^5.x` peer bump; the foreign-tree fence — glass-ui
+edits ZERO sibling files). Any residual registry consumer of `@mkbabb/glass-ui/glass-panel`
+resolves the named fold here (the no-silent-prune floor, BA inv-11).
 
 ## Consumer proof (re-runnable; re-grounded BC.W-GLASS-PRUNE 2026-06-19)
 
@@ -72,15 +75,16 @@ The fold is RECORDED here AND in `docs/tranches/BC/coordination/ATLAS-BC.md` (th
 migration relay BC.W-ATLAS-ASK consumes). The Atlas executes the consume-and-delete in its
 OWN tree on its `^4.x` bump (the foreign-tree fence inv-26 — glass-ui edits zero Atlas files).
 
-## The retire trigger (the close condition)
+## The retire trigger (LANDED at BI.W-GLASS-DEDUP)
 
-The destructive retire of `src/components/custom/glass-panel/` + the `/glass-panel` export +
-the `useGlassRenderer` runtime filter-builder (`createGlassFilter`/`destroyGlassFilter`) +
-`proof:glass-panel-tiers` LANDS when the registry-consumer probe confirms ZERO live external
-consumers — i.e. AFTER `BC.W-ATLAS-ASK` lands the Atlas fold (the Atlas re-pins `^4.x` and its
-three SFCs consume-and-delete `<GlassPanel>`). At that point `proof:glass-prune` flips from the
-HELD-FOLDED green to the RETIRED green (component dir absent, export gone, zero internal imports,
-zero external consumers). NO five-more-tranche ride — the fold is named and the trigger is real.
+The destructive retire LANDED: `src/components/custom/glass-panel/` + the `/glass-panel`
+export + the `useGlassRenderer` runtime filter-builder (`createGlassFilter`/`destroyGlassFilter`)
++ `proof:glass-panel-tiers` are DELETED. The trigger CONDITION was met — the registry-consumer
+probe (`proof:glass-prune` P5) confirms ZERO live external consumers (the Atlas fold FIRED).
+`proof:glass-prune` flips from the HELD-FOLDED green to the RETIRED green (component dir absent,
+subpath barrel absent, export dropped by regen, zero internal imports, zero external consumers,
+the MATERIALS-gallery story P6 already bare-rung). `proof:no-dual-path` D6 asserts the second
+refraction path (`createGlassFilter`) is DEFINITION-ABSENT and the `.glass-lens` door is KEPT.
 
 ## MIGRATION row (no alias — MEMORY no-backwards-compat)
 

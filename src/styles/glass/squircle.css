@@ -23,9 +23,9 @@
 /* ── AX.W56(R1) + W56b — squircle coupling onto the large-radius glass FAMILY ───
    W54 makes GLASS the default for the overlay-band surfaces; W56(R1)+W56b couple
    the SQUIRCLE onto the whole LARGE-RADIUS glass family — Dialog + Sheet content
-   (`.glass-floating.{rounded-dialog,sheet-animate}`), the Configurator/floating
-   PANEL (`.configurator`, `.floating-panel`), and the glass HERO overlay
-   (`.glass-hero`, the thin opt-in utility the page-redesign hero reads). Every one
+   (`.glass-floating.{rounded-dialog,sheet-animate}`) and the Configurator PANEL
+   (`.configurator`). (BI.W-GLASS-DEDUP retired `.floating-panel` + the `.glass-hero`
+   overlay utility — both DELETED clean-break.) Every one
    sits AT or ABOVE the ~--radius-xl threshold where the superellipse READS — the
    same iOS-26 idiom the big-dock card shell carries (the backdrop-filter blur halo
    + the cartoon under-shadow follow the shape). Each surface reads its OWN
@@ -45,24 +45,14 @@
         .glass-floating.sheet-animate {
             corner-shape: var(--corner-shape-sheet);
         }
-        .configurator,
-        .floating-panel {
+        .configurator {
             corner-shape: var(--corner-shape-panel);
         }
-        .glass-hero {
-            corner-shape: var(--corner-shape-hero);
-        }
     }
 }
-
-/* ── The glass HERO opt-in utility (W56b fold 7) ────────────────────────────────
-   A thin large-radius editorial glass OVERLAY — distinct from a data Card (which
-   stays round by policy). It is the surface the page-redesign hero (W60) reads;
-   minting it here (with its consumer) keeps the squircle off every `.glass-card`.
-   The corner-shape squircle rides the `@supports` block above; the un-gated
-   `border-radius` here is the cross-engine round CONTRACT. */
-@layer components {
-    .glass-hero {
-        border-radius: var(--radius-2xl);
-    }
-}
+/* BI.W-GLASS-DEDUP (FAM-9) — `.floating-panel` (its recipe RETIRED with
+   floating-panel.css) + `.glass-hero` (the thin large-radius editorial overlay
+   utility, 0-consumer verified) are DELETED clean-break. A straggler folds onto a
+   `tier`+`deep` glass surface (`<Surface tier deep>` / `.glass-floating.glass-deep`).
+   `--corner-shape-hero` retired with it (theme.css); the squircle family keeps
+   bigdock/dialog/sheet/panel. */

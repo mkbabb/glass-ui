@@ -99,6 +99,15 @@ const SUPERSEDED_SET = new Map([
                 "The static dead-centre disc CLASS (a glass surface frozen at the var(--mouse-x,50%) centred fallback because nobody writes the position) is superseded by the vSpecular auto-arm reaching every interactive glass surface + the edge glint. The two per-consumer useSpecularTracking hand-wires (Card/DockIconButton) reconciled onto the ONE createSpecularWriter core. The disc CORE (::before catch-light) is KEPT (W-LENSING refines it); only the static unwired class + the per-consumer dual source are closed.",
         },
     ],
+    [
+        "js-canvas-refraction",
+        {
+            successor: "BB.W-LENSING (.glass-lens / #glass-refract — the ONE CSS/SVG static data-URI feDisplacementMap refraction axis, src/styles/glass-refract.css)",
+            retireKind: "delete",
+            rationale:
+                "useGlassRenderer's createGlassFilter (a JS-canvas-generated feDisplacementMap built + resized per element, applied via backdrop-filter: url(#glass-refract-N)) was a SECOND refraction path with GlassPanel as its ONLY consumer (the FAM-10 dual refraction). DELETED clean-break (BI.W-GLASS-DEDUP — GlassPanel retired onto <Surface>/.glass-resting); the house's ONE refraction door is the .glass-lens/#glass-refract CSS axis. No alias, no dormant stub — the JS builder is DEFINITION-ABSENT (D6), the door is KEPT.",
+        },
+    ],
 ]);
 
 // ── The half-primitive DECIDE census (D4) ──────────────────────────────────────
@@ -477,6 +486,33 @@ const pagerRetiredFilterId = /filter\s*:[^;}]*url\(#(?:pager-goo|glass-goo)\)/i.
     pagerStyleStripped,
 );
 
+// ── D6: the SECOND refraction path is DELETED, the ONE refraction door (BI.W-GLASS-DEDUP · FAM-10) ─
+// The house has ONE refraction axis: the CSS/SVG `.glass-lens`/`#glass-refract` filter
+// (a STATIC data-URI feDisplacementMap composed into `backdrop-filter: url(#…)`,
+// src/styles/glass-refract.css). `useGlassRenderer`'s `createGlassFilter` was a SECOND
+// path — a JS-canvas-generated feDisplacementMap position-write, built + resized per
+// element, with GlassPanel as its ONLY consumer (a textbook dual refraction; the FAM-10
+// retire onto `<Surface>`/`.glass-resting`). The symmetric closure: the JS builder
+// (createGlassFilter / generateDisplacementMap / useGlassRenderer) is DEFINITION-ABSENT
+// from src (comment-stripped — a prose retirement record never flags), AND the ONE
+// `.glass-lens`/`#glass-refract` door SURVIVES. A surviving JS builder = the dual
+// refraction path; an absent door = the over-cut. Both red.
+const SRC_DIR = resolve(ROOT, "src");
+const JS_REFRACT_BUILDER_RE =
+    /\bfunction\s+(?:createGlassFilter|generateDisplacementMap|useGlassRenderer)\b/;
+const jsRefractionBuilders = [];
+for (const f of walk(SRC_DIR, [".ts", ".vue"])) {
+    const raw = read(f);
+    const stripped = f.endsWith(".vue") ? stripVueComments(raw) : stripJsComments(raw);
+    if (JS_REFRACT_BUILDER_RE.test(stripped))
+        jsRefractionBuilders.push(f.slice(ROOT.length + 1));
+}
+const GLASS_REFRACT_CSS = resolve(ROOT, "src/styles/glass-refract.css");
+const refractDoorStripped = stripCssComments(read(GLASS_REFRACT_CSS));
+const refractionDoorPresent =
+    /\.glass-lens\b/.test(refractDoorStripped) &&
+    /#glass-refract\b/.test(refractDoorStripped);
+
 // ── The SUPERSEDED_SET rationale bite (anti-evasion — the W-DEAD-SWEEP discipline) ─
 // Every SUPERSEDED_SET entry must carry a NON-EMPTY successor AND rationale — a bare
 // entry cannot silence the gate.
@@ -574,6 +610,24 @@ const bites = [];
     const flagged = /\.pager-goo-layer\b/.test(synthetic);
     bites.push({ id: "D5c-whole-layer-bed-filter", flagged });
 }
+// Bite D6a — a re-added JS-canvas refraction builder (createGlassFilter revival) flags
+//            as a SECOND refraction path (the FAM-10 dual-path returns).
+{
+    const synthetic = stripJsComments(
+        `export function createGlassFilter(el) { /* JS-canvas feDisplacementMap */ }`,
+    );
+    const flagged = JS_REFRACT_BUILDER_RE.test(synthetic);
+    bites.push({ id: "D6a-second-refraction-builder-revival", flagged });
+}
+// Bite D6b — deleting the ONE refraction door (.glass-lens/#glass-refract) is detected
+//            absent (the over-cut — the sole sanctioned refraction axis must be KEPT).
+{
+    const synthetic = stripCssComments(`.glass-material { backdrop-filter: blur(8px); }`);
+    const doorAbsent = !(
+        /\.glass-lens\b/.test(synthetic) && /#glass-refract\b/.test(synthetic)
+    );
+    bites.push({ id: "D6b-refraction-door-over-cut", flagged: doorAbsent });
+}
 const allBitesFlagged = bites.every((b) => b.flagged);
 
 // ── verdict ─────────────────────────────────────────────────────────────────────
@@ -628,6 +682,11 @@ if (wholeLayerBedFilter)
     violations.push("D5 — a whole-layer bed filter survives (.pager-goo-layer / a filter on the bed — the σ8 annihilation)");
 if (pagerRetiredFilterId)
     violations.push("D5 — the pager references a retired PLATE goo id (url(#pager-goo)/#glass-goo); the worm filter is #pager-worm-goo-scoped");
+// D6 — the second refraction path (JS-canvas feDisplacementMap builder) is DELETED (BI.W-GLASS-DEDUP)
+if (jsRefractionBuilders.length !== 0)
+    violations.push(`D6 — a SECOND refraction path survives (JS-canvas createGlassFilter/generateDisplacementMap/useGlassRenderer builder): ${jsRefractionBuilders.join(", ")} — the ONE refraction door is .glass-lens/#glass-refract (glass-refract.css); retire the JS builder onto it`);
+if (!refractionDoorPresent)
+    violations.push("D6 — the ONE refraction door (.glass-lens/#glass-refract in src/styles/glass-refract.css) is ABSENT (the over-cut — the sole sanctioned refraction axis must be KEPT)");
 // the SUPERSEDED_SET rationale bite
 if (bareSupersededEntries.length !== 0)
     violations.push(`bite — bare SUPERSEDED_SET entry (empty successor/rationale): ${bareSupersededEntries.join(", ")}`);
@@ -673,6 +732,9 @@ const facts = {
     pagerGooTReadback,
     wholeLayerBedFilter,
     pagerRetiredFilterId,
+    // D6 — the second-refraction-path deletion (BI.W-GLASS-DEDUP · FAM-10)
+    jsRefractionBuilders,
+    refractionDoorPresent,
     // supersededSet
     supersededSetCount: SUPERSEDED_SET.size,
     bareSupersededEntries,
@@ -697,6 +759,7 @@ console.log(`  D2 css-press floor-kept (no dual)   : ${facts.cssPressFloorKept} 
 console.log(`  D3 specular single-source           : core=${createSpecularWriterDefs} copies=${specularWriteCopies.length} disc-core-kept=${discCorePresent} auto-arm-surfaces=${vSpecularBoundSurfaces}`);
 console.log(`  D4 half-primitive census terminal   : ${undecidedHalfPrimitives.length === 0 && bookVerdictLeaves.length === 0 && manufacturedBarLeaves.length === 0 && blankRationaleLeaves.length === 0} (${HALF_PRIMITIVE_CENSUS.size} leaves)`);
 console.log(`  D5 pager/carousel retire complete   : ${!carouselWormLeafPresent && carouselGooTokenDecls.length === 0 && pagerWormDurationDecls.length === 0 && !wholeLayerBedFilter && !pagerGooTReadback} (worm-leaf=${carouselWormLeafPresent}, carousel-goo-toks=${carouselGooTokenDecls.length}, pager-worm-dur=${pagerWormDurationDecls.length}, bed-filter=${wholeLayerBedFilter})`);
+console.log(`  D6 single refraction door           : builders=${jsRefractionBuilders.length} (${jsRefractionBuilders.join(", ") || "none ✓"}) door=${refractionDoorPresent}`);
 console.log(`  SUPERSEDED_SET rationale'd          : ${bareSupersededEntries.length === 0} (${SUPERSEDED_SET.size} entries)`);
 console.log(`  self-test bites all flagged         : ${allBitesFlagged} (${bites.length} bites)`);
 if (violations.length) {

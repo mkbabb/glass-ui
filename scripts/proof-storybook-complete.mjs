@@ -64,21 +64,17 @@ export const COMPOSED_BY = {
 // ── DEMONSTRATED_AS_MATERIAL allowlist (BC.W-STORYBOOK-META) ──────────────────
 // A published component whose NAMED story route demonstrates the SURFACE IT
 // RENDERS by composing the library MATERIAL CLASSES directly rather than the
-// component tag. This is the Band-1 W-GLASS-PRUNE design decision recorded as a
-// gate fact: `<GlassPanel>` paints the five-rung `.glass-{wash..overlay}` ladder
-// over a live aurora; `substrates/glass-panel.vue` teaches that EXACT material by
-// composing the `.glass-{rung}` classes bare (the "which glass do I reach for?"
-// binary answer — a bare surface is a `.glass-{rung}` MATERIAL, a content container
-// is a `<Card>`). The component stays a PUBLISHED surface (the AZ.W-PRUNE2 RESTORE
-// for the keyframes consumer — subpath `/glass-panel` + the `GlassPanelVariant`/
-// `GlassPanelProps` api seats), so its export is real; its DEMONSTRATION is the
-// material it renders, shown on its own named route. Each entry names the route SFC
-// whose body teaches the surface (the gate verifies the SFC exists on disk).
-export const DEMONSTRATED_AS_MATERIAL = {
-    // GlassPanel renders the five-rung glass ladder; the substrates/glass-panel
-    // route demonstrates that ladder bare (the W-GLASS-PRUNE MATERIALS gallery).
-    GlassPanel: "demo/stories/substrates/glass-panel.vue",
-};
+// component tag. Each entry names the route SFC whose body teaches the surface (the
+// gate verifies the SFC exists on disk).
+//
+// BI.W-GLASS-DEDUP — `<GlassPanel>` RETIRED (FAM-10). The AZ.W-PRUNE2 RESTORE it was
+// re-published for was undone: GlassPanel owned NO distinct mechanism (its tier map ≡
+// Card's, its JS refraction path was a `proof:no-dual-path` violation), so a slotless
+// glass surface is now `<Surface>`/`.glass-resting`. The `substrates/glass-panel.vue`
+// route SURVIVES as the bare-rung MATERIALS gallery (zero `<GlassPanel>`, the five
+// `.glass-{rung}` classes over a live aurora — `proof:glass-prune` P6), but GlassPanel
+// is no longer a published component export, so it has no demonstration row here.
+export const DEMONSTRATED_AS_MATERIAL = {};
 
 let _cliPaths = null;
 function cliPaths() {

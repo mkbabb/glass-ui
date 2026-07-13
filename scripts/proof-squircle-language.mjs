@@ -161,7 +161,8 @@ export function detectSquircleLanguage({ themeCss, dockCss, glassCss }) {
     const shapePill = tokenValue(themeCss, "--corner-shape-pill");
     const shapePanel = tokenValue(themeCss, "--corner-shape-panel");
     const shapeBigdock = tokenValue(themeCss, "--corner-shape-bigdock");
-    const shapeHero = tokenValue(themeCss, "--corner-shape-hero");
+    // BI.W-GLASS-DEDUP — `--corner-shape-hero`/`.glass-hero` RETIRED (FAM-9); the
+    // hero overlay left the squircle family. No hero mint/read/superellipse checks.
     facts.shapeCard = shapeCard;
     facts.shapePill = shapePill;
     // BG.W-DEAD-SWEEP negative guard — the swept round-tokens must stay absent.
@@ -169,11 +170,9 @@ export function detectSquircleLanguage({ themeCss, dockCss, glassCss }) {
     facts.pillTokenSwept = shapePill === null;
     facts.shapePanel = shapePanel;
     facts.shapeBigdock = shapeBigdock;
-    facts.shapeHero = shapeHero;
     for (const [name, v] of [
         ["--corner-shape-panel", shapePanel],
         ["--corner-shape-bigdock", shapeBigdock],
-        ["--corner-shape-hero", shapeHero],
     ]) {
         if (v === null)
             violations.push(`theme.css: ${name} semantic shape alias is not minted`);
@@ -206,7 +205,6 @@ export function detectSquircleLanguage({ themeCss, dockCss, glassCss }) {
         ["--corner-shape-dialog", shapeDialogTok],
         ["--corner-shape-sheet", shapeSheetTok],
         ["--corner-shape-panel", shapePanel],
-        ["--corner-shape-hero", shapeHero],
     ];
     let bigdockIsSuperellipse = false;
     for (const [name, v] of SQUIRCLE_SET) {
@@ -227,8 +225,6 @@ export function detectSquircleLanguage({ themeCss, dockCss, glassCss }) {
     facts.bigdockIsSuperellipse = bigdockIsSuperellipse;
     facts.panelIsSuperellipse =
         shapePanel !== null && /superellipse\s*\(/.test(shapePanel);
-    facts.heroIsSuperellipse =
-        shapeHero !== null && /superellipse\s*\(/.test(shapeHero);
 
     // ── 3 + 4. BIGDOCK-READS-TOKEN + SUPPORTS-GATE-INTACT ────────────────
     const supports = matchAtSupportsBody(
@@ -323,13 +319,9 @@ export function detectSquircleLanguage({ themeCss, dockCss, glassCss }) {
         const readsPanel = /corner-shape\s*:\s*var\(\s*--corner-shape-panel\s*\)/.test(
             glassSupports.body,
         );
-        const readsHero = /corner-shape\s*:\s*var\(\s*--corner-shape-hero\s*\)/.test(
-            glassSupports.body,
-        );
         facts.dialogReadsShapeToken = readsDialog;
         facts.sheetReadsShapeToken = readsSheet;
         facts.panelReadsShapeToken = readsPanel;
-        facts.heroReadsShapeToken = readsHero;
         if (!readsDialog)
             violations.push(
                 "glass.css: the dialog glass surface must read `corner-shape: var(--corner-shape-dialog)` inside @supports (W56 R1 — dialogs get the squircle)",
@@ -340,11 +332,7 @@ export function detectSquircleLanguage({ themeCss, dockCss, glassCss }) {
             );
         if (!readsPanel)
             violations.push(
-                "glass.css: the panel glass surface (.configurator/.floating-panel) must read `corner-shape: var(--corner-shape-panel)` inside @supports (W56b — panels join the squircle family)",
-            );
-        if (!readsHero)
-            violations.push(
-                "glass.css: the hero glass surface (.glass-hero) must read `corner-shape: var(--corner-shape-hero)` inside @supports (W56b — the glass hero overlay squircles)",
+                "glass.css: the panel glass surface (.configurator) must read `corner-shape: var(--corner-shape-panel)` inside @supports (W56b — panels join the squircle family)",
             );
     }
     // (d) the dialog/sheet/panel/hero shape tokens resolve a superellipse(...) in theme.css.
@@ -363,10 +351,6 @@ export function detectSquircleLanguage({ themeCss, dockCss, glassCss }) {
     if (!facts.panelIsSuperellipse)
         violations.push(
             `theme.css: --corner-shape-panel must resolve a superellipse(...) (W56b — panel joined the squircle family); got ${shapePanel ?? "(missing)"}`,
-        );
-    if (!facts.heroIsSuperellipse)
-        violations.push(
-            `theme.css: --corner-shape-hero must resolve a superellipse(...) (W56b — the glass hero overlay squircles); got ${shapeHero ?? "(missing)"}`,
         );
 
     facts.sourceClean = violations.length === 0;
@@ -540,9 +524,7 @@ function run() {
         `  bigdock = superellipse    : ${facts.bigdockIsSuperellipse ? "YES" : "NO"}`,
     );
     console.log(
-        `  panel/hero = superellipse : ${
-            facts.panelIsSuperellipse && facts.heroIsSuperellipse ? "YES" : "NO"
-        }`,
+        `  panel = superellipse      : ${facts.panelIsSuperellipse ? "YES" : "NO"}`,
     );
     console.log(
         `  bigdock reads token (bite): ${facts.bigdockReadsToken ? "YES" : "NO"}`,

@@ -78,7 +78,7 @@ const AZ_GATE_MANIFEST = [
     { id: "proof:suffuse", class: "device-free" },
     { id: "proof:metric-core", class: "device-free" },
     { id: "proof:constellation-gen", class: "device-free" },
-    { id: "proof:glass-panel-tiers", class: "device-free" },
+    // BI.W-GLASS-DEDUP — proof:glass-panel-tiers RETIRED with GlassPanel (FAM-10).
     { id: "proof:gate-manifest-sound", class: "device-free" },
     { id: "proof:az-reflect", class: "device-free" },
 ];

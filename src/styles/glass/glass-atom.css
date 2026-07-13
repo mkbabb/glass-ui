@@ -217,16 +217,19 @@
            A consumer overrides `--glass-fill-tint` per-instance for a bespoke hue. */
         --glass-fill-strength: var(--badge-glass-strength, 16%);
     }
-    /* Per-variant glass tint — the data hue the quiet body mixes toward. The
-       semantic plate token becomes the tint source (the loud fill demoted to a
-       transmissive hue). `secondary`/`outline` are the calm/neutral routes. */
+    /* Per-axis glass tint — the data hue the quiet body mixes toward. BI.W-SYNONYM-
+       RENAMES: the STYLE plate keys off `[data-variant]` (default/secondary/outline),
+       the SEMANTIC hue off `[data-tone]` (destructive/success/warning/info — a tone
+       is not a style). A set tone's rule follows the variant rule in source order, so
+       a `tone` capsule's hue wins the cascade — byte-identical to the former
+       per-`variant` tint map. `secondary`/`outline` are the calm/neutral routes. */
     .badge-atom--glass[data-variant='default'] { --glass-fill-tint: var(--primary); }
     .badge-atom--glass[data-variant='secondary'] { --glass-fill-tint: var(--glass-capsule-warm); }
     .badge-atom--glass[data-variant='outline'] { --glass-fill-tint: var(--glass-capsule-warm); }
-    .badge-atom--glass[data-variant='destructive'] { --glass-fill-tint: var(--destructive); }
-    .badge-atom--glass[data-variant='success'] { --glass-fill-tint: var(--success); }
-    .badge-atom--glass[data-variant='warning'] { --glass-fill-tint: var(--warning); }
-    .badge-atom--glass[data-variant='info'] { --glass-fill-tint: var(--info); }
+    .badge-atom--glass[data-tone='destructive'] { --glass-fill-tint: var(--destructive); }
+    .badge-atom--glass[data-tone='success'] { --glass-fill-tint: var(--success); }
+    .badge-atom--glass[data-tone='warning'] { --glass-fill-tint: var(--warning); }
+    .badge-atom--glass[data-tone='info'] { --glass-fill-tint: var(--info); }
 
     @media (prefers-reduced-motion: reduce) {
         .badge-atom {

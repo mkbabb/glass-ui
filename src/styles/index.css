@@ -102,9 +102,11 @@
  *                              Toast / Notification / Alert consume it (the three
  *                              tone maps collapse). Loads after cards.css (it reads
  *                              the same `--glass-bg-*` rung tokens cards.css/the
- *                              ladder mint) and before floating-panel.css.
- *   8. floating-panel.css    — .floating-panel + .floating-panel-item.
- *                              Component utility layer.
+ *                              ladder mint).
+ *   8. floating-panel.css    — RETIRED (BI.W-GLASS-DEDUP / FAM-9): the
+ *                              `.floating-panel` fixed-overlay recipe had ZERO
+ *                              consumers; the still-live `.dropdown-menu-content`
+ *                              font/inner-pad rules moved to menu.css.
  *   9. transitions.css       — Vue <Transition> classes (fade, tab-fade,
  *                              route-enter, pane-swap, metric-swap, dock-in).
  *                              BI.W-REGISTER-TABLE retired fade-slide/pop/
@@ -146,8 +148,7 @@
  *  12. instrument-chassis.css — P-tranche component CSS (chassis bezel +
  *                              groove dividers). Loaded after utilities so
  *                              component-local recipes can override.
- *  13. hover-popover.css     — V.W3 popover-animation grammar.
- *  14. drawer.css            — AN.W3 detented bottom-sheet grammar (glass
+ *  13. drawer.css            — AN.W3 detented bottom-sheet grammar (glass
  *                             sheet surface + peek handle + snap-stop rules).
  *  15. segmented-tabs.css    — AX.W53 SegmentedTabs overflow/indicator grammar.
  *  16. select.css            — BA.W-EMISSION the PRECOMPILED Select content
@@ -156,12 +157,13 @@
  *                             bracket CVA class so the bound SHIPS in dist/glass-ui.css
  *                             regardless of consumer JIT reach. A structural utility
  *                             never depends on a content-scan; locked by proof:emission.
- *  17. sheet.css             — BG.W-SHEET-INSET-ROOT the PRECOMPILED Sheet
- *                             positioning (the `[data-slot="sheet-content"][data-side]`
- *                             position/inset/size rules) — the overlay-band emission
- *                             INVERSE: moved off the dead CVA geometry utilities that
- *                             broke the D7 configurator drawer so the positioning SHIPS
- *                             regardless of consumer JIT reach; locked by proof:emission.
+ *  17. dialog-placement.css  — BI.W-DIALOG-PLACEMENT the PRECOMPILED Dialog
+ *                             side-slide positioning (the `[data-slot="dialog-content"]
+ *                             [data-placement]` position/inset/size rules — the Sheet
+ *                             fold) — the overlay-band emission INVERSE: moved off the
+ *                             dead CVA geometry utilities that broke the D7 configurator
+ *                             drawer so the positioning SHIPS regardless of consumer JIT
+ *                             reach; locked by proof:emission.
  *
  * Per-package component CSS lives at (12)-(17) (loaded after utilities so
  * component-local recipes can override). New per-package CSS files append
@@ -178,7 +180,6 @@
 @import "./dock-controls.css";
 @import "./cards.css";
 @import "./feedback-tone.css";
-@import "./floating-panel.css";
 @import "./transitions.css";
 @import "./animations.css";
 @import "./viz-reveal.css";
@@ -201,7 +202,10 @@
 @import "./menu.css";
 @import "./configurator.css";
 @import "./instrument-chassis.css";
-@import "./hover-popover.css";
+/* BI.W-OVERLAY-UNION — hover-popover.css DELETED: <HoverPopover> folded onto the
+   sealed <Popover trigger="hover"> union; its content rides the shared
+   glass-floating + glass-reveal recipe, so the bespoke .hover-popover-panel
+   substrate is dead. (clean break, no alias.) */
 @import "./drawer.css";
 @import "./segmented-tabs.css";
 /* BI.W-STYLE-REDRAIN — the SegmentedTabs additive DECORATION tail (the .glass-drag-lift
@@ -210,13 +214,14 @@
    AFTER it (unlayered, unique selectors, source-order-after — byte-isomorphic). */
 @import "./tabs/segmented-tabs-drag.css";
 @import "./select.css";
-/* BG.W-SHEET-INSET-ROOT — the overlay-band Sheet structural positioning, precompiled
-   (the emission INVERSE): a [data-slot="sheet-content"][data-side] rule so the Sheet's
+/* BI.W-DIALOG-PLACEMENT — the overlay-band Dialog side-slide structural positioning,
+   precompiled (the emission INVERSE, terminalized onto Dialog `placement` — the Sheet
+   fold): a [data-slot="dialog-content"][data-placement] rule so the side sheet's
    position/inset/size ships in dist/glass-ui.css regardless of a consumer's Tailwind
    content-scan reach (off the dead CVA geometry utilities that broke the D7 configurator
    drawer). :where()-wrapped so a consumer sizing utility still wins. Locked by
    proof:emission (overlay-band inverse clause). */
-@import "./sheet.css";
+@import "./dialog-placement.css";
 /* BA.W-ICON-CHIP — the <IconChip> section-color pop recipe + the three axes
    (duotone/bloom/reveal). A component partial; the token arms (--section-color-N
    / --muted) auto-flip under .dark so the chip is mode-robust by construction. */
