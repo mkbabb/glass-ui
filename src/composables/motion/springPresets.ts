@@ -21,7 +21,8 @@ export type SpringPresetName =
     | "gentle"
     | "dock"
     | "press"
-    | "transient";
+    | "transient"
+    | "eyeglass";
 
 /** One named-spring row: the analytic (response, dampingFraction) pair + its register doc. */
 export interface SpringPresetRow {
@@ -115,6 +116,12 @@ export const SPRING_PRESETS: readonly SpringPresetRow[] = [
         response: 0.62,
         dampingFraction: 0.9,
         comment: "TRANSIENT register — the enter-transient CENTER-SEED materialize bloom (Toast + Notification): a deep scale-from with a near-critically-damped settle (overshoot ~+0.15%, no flick), t90 ~0.34s / 2%-settle 0.46s — the gentle-class MOTION-LADDER M5 bloom. Consumed by the --enter-transient-* register (BI.W-REGISTER-TABLE).",
+    },
+    {
+        name: "eyeglass",
+        response: 0.36,
+        dampingFraction: 0.64,
+        comment: "EYEGLASS register — the iOS-27 tab-pill LOUPE travel (BI.W-TABS-FACTOR, ratified judgment (e), POST-M1). The measured Find My band (TABS-GLASS-LADDER §2/§8.2): snappy-class SPEED (response 0.36 ∈ [0.32,0.40]) with dock-class GIVE (ζ 0.64 ∈ [0.6,0.85], overshoot ~7.3% — the leading-edge liquid arrival, AT the ≤10% fence). The eyeglass release composable (useEyeglassLive) reads THIS row's (response, ζ) and passes it to useLeadTrail (the ONE lead/trail integrator — the edge-asymmetric release, lead ~117ms recovery / trail ~270ms lag); NO second spring, NO hand-inlined pair (the M1 single-source discipline). The row is HONEST only post-SPRING-PARITY (M1) — the CSS/JS time base is fixed.",
     },
 ] as const;
 //

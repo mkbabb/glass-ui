@@ -52,16 +52,21 @@
          it wins `.glass-capsule-track`'s (@layer components) backdrop-filter by the
          unlayered-over-@layer cascade rule (the AZ.W-DOCK-RAIL precedent, NOT specificity).
 
-     (2) THE PROUD LOUPE (signature #2) — a STATIC negative outset so the pill spills its
-         crown/base PAST the track, taller than its slot (~1.14×). NOT an animated box
-         dimension (the CONSTANT proud addend rides the booked `size-morph-indicator` inset
-         — `proof:no-layout-animation` holds; no NEW animated dimension). Applied on BOTH
-         position paths (C3): the JS `inset-block` fallback AND the anchor
-         `inset-block-start`/`-end` longhands — so Safari-26 (anchor-primary, where the
-         refraction ALSO degrades away) still gets the proud loupe, not a flat capsule.
-         `--eyeglass-proud` is a LENGTH (a density-scaled rem sibling of --bouncy-track-trim,
-         NEVER a border-radius — the stadium is untouched, T1-safe), re-declared at BOTH
-         breakpoints (AC7). Rest == flight (static); flight adds ONLY the compositor squish.
+     (2) THE TWO-REST-STATE LOUPE (signature #1/#2, BI.W-TABS-FACTOR) — the pill is a
+         TWO-REST-STATE machine (TABS-GLASS-LADDER §1), NOT a static proud: a SETTLED long
+         rest (an inset plate, 0.84× the slot) ⇄ a LIVE touched/travelling/just-arrived
+         state (a proud loupe, 1.12× — spilling PAST the track). The `.segmented-indicator__plate`
+         interpolates between them via `transform: scaleY(var(--eyeglass-y))` — a COMPOSITOR
+         scale (proof:no-layout-animation holds; NOT a layout inset), on the plate's OWN
+         channel (never the outer's squish `scale` / glide `transform`). `--eyeglass-y` is a
+         calc off `--eyeglass-live-t` (0 ⇄ 1), which `useEyeglassLive` writes per-frame off
+         `useLeadTrail` — so the §2/§8.3 EDGE-ASYMMETRY (fast energize / ~270ms slow deflate)
+         emerges from the two edges. `--eyeglass-settled` (0.84) + `--eyeglass-proud` (1.12,
+         the ratified retune knob) are bare `<number>` RATIOS — viewport-invariant (a ratio
+         holds across breakpoints by construction, the stadium-radius precedent; no @640
+         re-declaration), NEVER a border-radius (the stadium is untouched, T1-safe). PRM
+         pins `--eyeglass-y: 1` (the flat slot-fill capsule — the calm degrade floor). A
+         consumer sets both ratios to 1 for a flat pill (the token-first escape).
 
      (3) THE SELECTED-GLYPH ACCENT INK (signature #6, the CONTRAST-SPLIT) — the selected
          GLYPH (a graphic, WCAG-1.4.11 3:1) tints via `--tab-selected-ink` on a DESCENDANT
@@ -90,40 +95,41 @@
    the bar60/ kinematics+optics ladder.
    ════════════════════════════════════════════════════════════════════════ */
 
-/* (1) + (2) declarations — the eyeglass tokens + the stronger STAGE frost. */
+/* (1) + (2) declarations — the two-rest-state geometry ratios + the stronger STAGE frost. */
 .segmented-tabs[data-eyeglass] {
-    /* The proud-outset geometry — a LENGTH (a density-scaled rem sibling of the trim),
-       NOT a bare ratio, NOT a border-radius. */
-    --eyeglass-proud: 0.3rem;
-    /* The whisper inline proud (LOW cap so adjacent pills never collide; the loop may dial
-       it to zero — the BLOCK proud is the load-bearing signature). */
-    --eyeglass-proud-inline: 0.06rem;
+    /* (2) THE TWO-REST-STATE loupe geometry (§1/§8.1) — bare `<number>` RATIOS, driven
+       by `--eyeglass-live-t` on the plate `scaleY` (viewport-invariant; NO @640 re-declare,
+       NOT a length, NOT a border-radius — T1-safe). `--eyeglass-proud` is the single
+       ratified retune knob; a consumer sets both to `1` for the flat pill. */
+    --eyeglass-settled: 0.84; /* SETTLED — the inset long-rest plate (§1: 0.80–0.88×). */
+    --eyeglass-proud: 1.12; /* LIVE — the proud loupe (§1: 1.07–1.18×); the retune knob. */
     /* Signature #7 — the STRONGER stage frost the loupe bends (the floating rung, deeper
-       than the calm quiet track the default pill keeps). */
+       than the calm quiet track the plain pill keeps). */
     --eyeglass-track-blur: var(--glass-blur-floating);
     backdrop-filter: var(--eyeglass-track-blur);
     -webkit-backdrop-filter: var(--eyeglass-track-blur);
 }
 
-@media (min-width: 640px) {
-    .segmented-tabs[data-eyeglass] {
-        /* AC7 — the proud is re-declared at BOTH breakpoints (the density bump), so it
-           never vanishes at desktop; the anchor/JS calc reads var(--bouncy-track-trim)
-           which re-resolves 0.1875rem → 0.25rem here, so the proud holds on both paths. */
-        --eyeglass-proud: 0.36rem;
+/* (2) THE PLATE MAGNIFY — the two-rest-state block-proud `scaleY`. The plate reads the
+   inherited `--eyeglass-live-t` (0 ⇄ 1) and interpolates SETTLED → LIVE. `--eyeglass-y`
+   is the ONE derived scale factor the plate transform (segmented-tabs.css) reads. NO
+   transition here — `useLeadTrail` (via `useEyeglassLive`) is the animator on the live
+   path; the `@property --eyeglass-live-t` covers the discrete/degrade path. */
+.segmented-tabs[data-eyeglass] .segmented-indicator__plate {
+    --eyeglass-y: calc(
+        var(--eyeglass-settled) +
+            var(--eyeglass-live-t) * (var(--eyeglass-proud) - var(--eyeglass-settled))
+    );
+}
+
+/* PRM (motion-canon P6) — the loupe rests as a FLAT slot-fill capsule under reduced
+   motion (the calm degrade floor): the deform is off, the state confirms. `useLeadTrail`
+   also seats `--eyeglass-live-t` instantly under PRM (belt-and-suspenders). */
+@media (prefers-reduced-motion: reduce) {
+    .segmented-tabs[data-eyeglass] .segmented-indicator__plate {
+        --eyeglass-y: 1;
     }
 }
-
-/* (2) THE PROUD LOUPE — the JS-measured fallback path (inset-block). The base inset is
-   var(--bouncy-track-trim); subtracting the proud spills the crown/base PAST the track. */
-.segmented-tabs[data-eyeglass] .segmented-indicator--js {
-    inset-block: calc(var(--bouncy-track-trim) - var(--eyeglass-proud));
-}
-
-/* BI.W-DOCK-CONTROLS — the eyeglass proud anchor-primary path RETIRED with the pill
-   CSS-anchor branch. The pill indicator rides the ONE JS-measured writer on every
-   engine, so the `.segmented-indicator--js` proud rule above is the SOLE loupe-outset
-   path (Safari-identical by construction). */
 
 /* (1) belt-and-suspenders (AC1) — re-assert the FLOATING blur rung on the eyeglass lens.
    `.glass-lens` (glass-refract.css) paints `--glass-blur-resting url(#…)` inside its own
@@ -133,11 +139,11 @@
    ("tried and painted nothing"). Re-pointing to `--glass-blur-floating` keeps Chromium a
    strong loupe AND lands Safari on the honest floating-frost floor. Stays INSIDE the same
    `@supports` gate (no refraction sits outside it) and reads the shipped BAKED
-   `--glass-refract-filter` (no revived var()-scale-splice — DDR-LENS-BAKE). The webkit
-   longhand keeps the capsule's floating frost (WebKit url() is broken → the honest floor
-   is blur-only). */
+   `--glass-refract-filter` (no revived var()-scale-splice — DDR-LENS-BAKE). The lens now
+   lives on the nested `.segmented-indicator__plate` (BI.W-TABS-FACTOR — the magnify
+   channel), so the selector reaches it there. */
 @supports (backdrop-filter: url("#glass-refract")) {
-    .segmented-tabs[data-eyeglass] .segmented-indicator.glass-lens {
+    .segmented-tabs[data-eyeglass] .segmented-indicator__plate.glass-lens {
         backdrop-filter: var(--glass-blur-floating) var(--glass-refract-filter);
     }
 }

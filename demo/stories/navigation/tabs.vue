@@ -40,7 +40,7 @@ const priorityOptions: SegmentedTabOption[] = [
 // ── Pill (glass) — DRAGGABLE (the LIQUID TAB, BB.W-DRAG-MORPH) ──
 const liquidView = ref("grid");
 
-// ── Pill (glass) — EYEGLASS (the iOS-27 loupe, BG.W-EYEGLASS-TABS) ──
+// ── Pill — accent ink & glyph (the contrast-split) ──
 const eyeglassView = ref("grid");
 // The selected-GLYPH accent-ink demo needs a glyph (an svg icon) per option — the
 // `--tab-selected-ink` seam tints the selected svg while the LABEL stays warm-ink.
@@ -50,6 +50,10 @@ const eyeglassIcons: Record<string, Component> = {
     kanban: Kanban,
     timeline: Clock,
 };
+
+// ── Pill — vertical sizing (the --eyeglass-proud knob) ──
+const sizingViewFlat = ref("grid");
+const sizingViewProud = ref("grid");
 
 // ── Pill (glass) — vertical ──
 const account = ref("profile");
@@ -118,7 +122,7 @@ const chapterBody: Record<string, string> = {
         <!-- ════ The PILL material (glass) ════ -->
         <StorySection
             heading="Pill — the glass material (default)"
-            blurb="The default register. A glass-quiet track with a hairline edge; the selected indicator is the selected-reads-as-glass plate (glass-floating, forward of the track). It glides AND squishes on the calibrated snappy clock. Shown over a live glass backdrop where the material reads."
+            blurb="The default register — the iOS-27 loupe. A glass-quiet track with a hairline edge; the selected indicator is a proud liquid-glass plate that sits taller than its slot (an inset long-rest that magnifies proud on touch and travel — the two-rest-state) and refracts the frosted track through a squircle bevel. It glides AND squishes on the calibrated snappy clock. Off backdrop-filter:url() engines it degrades to the honest glass-capsule frost floor — no faked bend."
         >
             <div class="glass-card flex flex-col gap-4 rounded-[var(--radius-card)] p-5">
                 <div class="flex flex-wrap items-center gap-3">
@@ -157,17 +161,16 @@ const chapterBody: Record<string, string> = {
             </div>
         </StorySection>
 
-        <!-- ════ The PILL material — EYEGLASS (the iOS-27 loupe) ════ -->
+        <!-- ════ The PILL material — accent ink & glyph (the contrast-split) ════ -->
         <StorySection
-            heading="Pill — eyeglass (the iOS-27 loupe)"
-            blurb="The proud liquid-glass LOUPE (pill-only, additive default-off). The selected pill composes .glass-lens — on Chromium it REFRACTS the frosted aurora stage through a squircle bevel; off backdrop-filter:url() engines it degrades to the honest proud .glass-capsule frost floor (no faked bend). The pill sits PROUD — taller than its slot, crown/base spilling past the track. A consumer accent preset (teal) flows the rim + tints the selected GLYPH via --tab-selected-ink while the LABEL stays warm-ink (the contrast-split). The snappy glide + squish are unchanged (frozen clock)."
+            heading="Pill — accent ink & glyph (the contrast-split)"
+            blurb="A consumer accent (teal) flows the selected rim via --glass-accent and tints the SELECTED glyph via --tab-selected-ink, while the LABEL stays warm-ink for the AA floor — the contrast-split. The per-option slot renders an icon beside its label; the accent tokens are the token-first retune knob (unset → byte-identical to the bare default)."
         >
             <div class="glass-card flex flex-col gap-4 rounded-[var(--radius-card)] p-5">
                 <div class="flex flex-wrap items-center gap-3">
                     <SegmentedTabs
                         v-model="eyeglassView"
                         :options="viewOptions"
-                        eyeglass
                         :style="{
                             '--glass-accent': 'oklch(0.82 0.13 205)',
                             '--glass-accent-strength': '42%',
@@ -185,6 +188,35 @@ const chapterBody: Record<string, string> = {
                     <span class="text-xs text-muted-foreground"
                         >selected: {{ eyeglassView }}</span
                     >
+                </div>
+            </div>
+        </StorySection>
+
+        <!-- ════ The PILL material — vertical sizing (the config) ════ -->
+        <StorySection
+            heading="Pill — vertical sizing (the config)"
+            blurb="ONE knob tunes the loupe's proud outset: --eyeglass-proud (the LIVE magnify ratio) with --eyeglass-settled (the inset rest). The left strip pins both to 1 for a FLAT slot-fill pill (the token-first escape — the flat register the loupe replaces); the right strip pushes the proud to the tall end of the measured band."
+        >
+            <div class="glass-card flex flex-wrap items-center gap-8 rounded-[var(--radius-card)] p-5">
+                <div class="flex flex-col gap-2">
+                    <span class="text-xs text-muted-foreground"
+                        >flat (--eyeglass-proud: 1)</span
+                    >
+                    <SegmentedTabs
+                        v-model="sizingViewFlat"
+                        :options="viewOptions"
+                        :style="{ '--eyeglass-proud': '1', '--eyeglass-settled': '1' }"
+                    />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <span class="text-xs text-muted-foreground"
+                        >proud (--eyeglass-proud: 1.18)</span
+                    >
+                    <SegmentedTabs
+                        v-model="sizingViewProud"
+                        :options="viewOptions"
+                        :style="{ '--eyeglass-proud': '1.18' }"
+                    />
                 </div>
             </div>
         </StorySection>

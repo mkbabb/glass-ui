@@ -380,6 +380,31 @@ regardless (a11y absolute).
   `responsive`) — a gesture contract is a role/behavior, not motion intensity.
 Machine-locked by `proof:encapsulation` · `motion-axis` arm (M1-M6).
 
+**BI.W-TABS-FACTOR — the eyeglass loupe becomes THE `pill` default + the variant cull.
+Clean break, no alias ("No legacy code"; UF-H1: "eyeglass should become the default tabs
+option … we don't need a million variants that are essentially the same thing").** The
+`pill` material IS the iOS-27 loupe by construction — a proud two-rest-state liquid-glass
+plate (a SETTLED inset long-rest that magnifies proud on touch/travel, the release riding
+the edge-asymmetric `useLeadTrail` integrator).
+- **`<SegmentedTabs eyeglass>` (the opt-in boolean) → DELETED.** The BG opt-in prop is
+  RETIRED: a bare `<SegmentedTabs>` now paints the loupe. MIGRATE: drop the `eyeglass`
+  attribute (it re-defaults to the loupe). A consumer who wants the prior FLAT slot-fill
+  pill sets `--eyeglass-proud: 1; --eyeglass-settled: 1` on the strip (the token-first
+  escape — the flat capsule survives only as that register + the PRM/degrade floor, not a
+  named variant).
+- **The sizing config — `--eyeglass-proud`.** The user-asked vertical-sizing knob is ONE
+  bare `<number>` ratio: `--eyeglass-proud` (the LIVE magnify, default `1.12`, band
+  1.05–1.25) with `--eyeglass-settled` (the inset rest, default `0.84`). Set it on any
+  ancestor / the strip to retune every descendant loupe; no length, no `@media` re-declare
+  (viewport-invariant by construction).
+- **The eyeglass `SPRING_PRESETS` row.** The loupe travel is its own measured register
+  (`eyeglass`, response 0.36 / ζ 0.64) — the CSS `--spring-eyeglass` + `--spring-eyeglass-duration`
+  tokens + the `MOTION_CURVES` twin derive from it. Consumers reading `var(--spring-eyeglass)`
+  get the Find My loupe curve.
+Machine-locked by `proof:eyeglass-tabs` (E7 default-is-eyeglass · E8 the bounded sizing
+axis · E9 the culled variants definition-absent · E10 `useLeadTrail` consumed, no second
+integrator).
+
 **BG.W-DEAD-SWEEP — the `selectableChipVariants` alias + the `--corner-shape-card`/
 `-pill` dead tokens SWEPT. Clean break, no alias ("No legacy code").** Two net-negative
 cuts:

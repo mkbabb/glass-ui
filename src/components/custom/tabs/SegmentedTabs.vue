@@ -33,6 +33,9 @@ import { useSelectionIndicator } from "../../../composables/motion/useSelectionI
 import { useTabDragMorph } from "./composables/useTabDragMorph";
 import { useTabResponsive } from "./composables/useTabResponsive";
 import { useTabRovingFocus } from "./composables/useTabRovingFocus";
+// BI.W-TABS-FACTOR — the iOS-27 eyeglass two-rest-state release (SETTLED ⇄ LIVE),
+// consumer #2 of `useLeadTrail` (no second integrator — the R9 dual-path fence).
+import { useEyeglassLive } from "./composables/useEyeglassLive";
 // BH.W-MOTION-AXIS — the `draggable` boolean dies onto the ONE `motion` axis.
 import type { Motion } from "../../ui/_shared/axes";
 import { useMotionAxis } from "../../ui/_shared/useMotionAxis";
@@ -114,19 +117,6 @@ export interface SegmentedTabsProps {
      * `full → reduced` regardless (a11y absolute).
      */
     motion?: Motion;
-    /**
-     * BG.W-EYEGLASS-TABS — the iOS-27 eye-glass loupe register (ADDITIVE, default
-     * `false`, `pill`-ONLY). Flips a `data-eyeglass` attribute the CSS reads to opt the
-     * strip into (a) `.glass-lens` refraction on the indicator (Chromium bends the
-     * frosted-stage backdrop; off `backdrop-filter: url()` engines it degrades to the
-     * honest proud `.glass-capsule` frost floor — NO faked bend), (b) the proud loupe
-     * geometry (the static outset spilling past the track on BOTH position paths), (c)
-     * the stronger stage frost the loupe bends, (d) the opt-in `--tab-selected-ink`
-     * glyph-accent seam. ORTHOGONAL to `variant`/`motion`/`responsive` — it stacks.
-     * Ignored on `underline` (a paper hairline has no plate to loupe — not an error).
-     * Default `false` ⇒ byte-identical to the shipped `.glass-capsule` pill.
-     */
-    eyeglass?: boolean;
     class?: HTMLAttributes["class"];
 }
 
@@ -134,7 +124,6 @@ const props = withDefaults(defineProps<SegmentedTabsProps>(), {
     variant: "pill",
     orientation: "horizontal",
     responsive: false,
-    eyeglass: false,
 });
 
 // BH.W-MOTION-AXIS — the resolved motion state. `armed` (resolved `full`) gates the
@@ -155,11 +144,18 @@ const buttonRefs = ref<HTMLElement[]>([]);
 const isUnderline = computed(() => props.variant === "underline");
 const isVertical = computed(() => props.orientation === "vertical");
 
-// BG.W-EYEGLASS-TABS — the eyeglass loupe engages pill-ONLY (the underline paper
-// hairline has no plate to loupe; eyeglass is ignored on it, not an error). This ONE
-// computed is the SINGLE gate for the `data-eyeglass` host attr AND the `.glass-lens`
-// indicator compose — additive, default-off, byte-identical to the shipped pill when off.
-const eyeglassOn = computed(() => props.eyeglass && !isUnderline.value);
+// BI.W-TABS-FACTOR — eyeglass IS the tabs DEFAULT (UF-H1: "eyeglass should become the
+// default tabs option … we don't need a million variants"; ratified judgment (e)). The
+// `eyeglass?: boolean` opt-in prop is RETIRED (clean break, no alias — MIGRATION row):
+// the PILL material IS the iOS-27 loupe by construction, so this computed is simply
+// `!isUnderline` (the paper hairline has no plate to loupe — ignored, not an error). The
+// two MATERIALS are pill/eyeglass × underline-paper; the flat capsule survives ONLY as
+// the honest degrade / PRM floor (off `backdrop-filter: url()` engines the refraction
+// falls to the un-gated frost; PRM pins `--eyeglass-y: 1`), never a named variant. A
+// consumer who wants the flat pill sets `--eyeglass-proud`/`--eyeglass-settled` to `1`
+// (the token-first escape). It is the SINGLE gate for the `data-eyeglass` host attr, the
+// `.glass-lens` plate compose, AND the `useEyeglassLive` two-rest-state release.
+const eyeglassOn = computed(() => !isUnderline.value);
 
 const activeValues = computed<string[]>(() =>
     model.value != null ? [model.value] : [],
@@ -220,6 +216,14 @@ const { singleSliderStyle, squishOnTravel } = useSelectionIndicator({
     vertical: isVertical,
 });
 
+// ── BI.W-TABS-FACTOR — the eyeglass two-rest-state release (SETTLED ⇄ LIVE) ──
+//
+// Owns the `--eyeglass-live-t` scalar (written on the indicator, read by the nested
+// `.segmented-indicator__plate` `scaleY`). CONSUMES `useLeadTrail` (consumer #2 — the
+// ONE lead/trail integrator, no second rAF/spring); the fast-energize / slow-decay
+// edge asymmetry emerges from the two edges. `enabled` gates it to the pill loupe.
+const eyeglass = useEyeglassLive({ indicatorRef, enabled: eyeglassOn });
+
 // ── BB.W-DRAG-MORPH — the LIQUID TAB (the :draggable axis) ──
 //
 // The drag-morph wiring (the center-anchored snap targets, the `useDragMorph` call,
@@ -278,8 +282,18 @@ function select(value: string, idx: number) {
     // the underline SLIDES (no squish — a hairline does not deform), gated inside
     // the composable by the underline early-return.
     squishOnTravel(idx);
+    // BI.W-TABS-FACTOR — energize the eyeglass loupe to LIVE (the keyboard/select
+    // path; the pointer path pre-blooms on pointerdown). No-op off the pill loupe.
+    eyeglass.energize();
 
     model.value = value;
+}
+
+// BI.W-TABS-FACTOR — the §1 pre-motion bloom: a touch-down energizes the loupe ~50–67ms
+// BEFORE the travel. A pointerdown anywhere on the pill strip blooms it to LIVE; the
+// click then commits the selection (the composable no-ops off the pill loupe / under PRM).
+function onStripPointerDown() {
+    eyeglass.energize();
 }
 
 // The mobile Select speaks the single-string model.
@@ -351,6 +365,7 @@ const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
             props.class,
         )"
         @keydown="onStripKeydown"
+        @pointerdown="onStripPointerDown"
     >
         <!-- The single shared indicator (pill slider). On the anchor path no
              inline `:style` (CSS `position-anchor` + `inset` govern it); on the JS
@@ -368,23 +383,41 @@ const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
                 // EVERY engine (the CSS-anchor branch retired), so the indicator always
                 // carries `--js` (Safari-identical by construction).
                 'segmented-indicator--js',
-                // BD.W-TAB-IOS-CAPSULE — the active pill COMPOSES the shared
-                // `.glass-capsule` (warm-floor fill + rim + lift, ONE recipe; the
-                // dock control selected arm + buttons greenfield compose the SAME class).
-                'glass-capsule',
-                // BG.W-EYEGLASS-TABS — the eyeglass indicator COMPOSES the shipped
-                // `.glass-lens` (glass-refract.css) — the whole refraction rides INSIDE
-                // its own `@supports (backdrop-filter: url(#glass-refract))` gate, so off
-                // that engine the pill paints the un-gated `.glass-capsule` frost floor
-                // (the honest Safari/Firefox degrade — NO faked bend). Pill-only + opt-in.
-                eyeglassOn && 'glass-lens',
                 dragEnabled && 'glass-drag-grabbable',
                 dragEnabled && drag.dragging.value && 'glass-drag-lift',
             ]"
             :style="dragEnabled
                 ? { ...singleSliderStyle, ...drag.dragStyle.value }
                 : singleSliderStyle"
-        />
+        >
+            <!-- BI.W-TABS-FACTOR — the plate. The glass-capsule fill + glass-lens
+                 refraction live on this NESTED plate so the eyeglass two-rest-state
+                 block-proud magnify (`transform: scaleY(var(--eyeglass-y))`, reading
+                 `--eyeglass-live-t`) rides its OWN compositor channel — NOT the outer's
+                 `scale` (the travel-squish) nor its `transform` (the glide/drag), so the
+                 per-frame `useLeadTrail` write is never lagged by their transitions. The
+                 outer positions + squishes + glides; the plate paints + magnifies. Both
+                 compose (the outer squish scales the plate too). eyeglass is the DEFAULT
+                 (pill = loupe); `.glass-lens` still rides INSIDE its own
+                 `@supports (backdrop-filter: url(#glass-refract))` gate (glass-refract.css)
+                 so off-Chromium the un-gated `.glass-capsule` frost floor paints — the
+                 honest degrade, NO faked bend. -->
+            <div
+                :class="[
+                    'segmented-indicator__plate',
+                    // BD.W-TAB-IOS-CAPSULE — the plate COMPOSES the shared `.glass-capsule`
+                    // (warm-floor fill + rim + lift, ONE recipe; the dock control selected
+                    // arm + buttons greenfield compose the SAME class).
+                    'glass-capsule',
+                    // BI.W-TABS-FACTOR — the plate COMPOSES the shipped `.glass-lens`
+                    // (glass-refract.css) — the whole refraction rides INSIDE its own
+                    // `@supports (backdrop-filter: url(#glass-refract))` gate, so off that
+                    // engine the plate paints the un-gated `.glass-capsule` frost floor (the
+                    // honest Safari/Firefox degrade — NO faked bend). Eyeglass is the DEFAULT.
+                    eyeglassOn && 'glass-lens',
+                ]"
+            />
+        </div>
 
         <!-- Buttons. -->
         <template v-for="(option, idx) in stripOptions" :key="option.value">

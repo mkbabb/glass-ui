@@ -53,14 +53,26 @@ const SCRUBBER_TIMELINE_VUE = resolve(
     ROOT_DIR,
     "src/components/custom/timeline/ScrubberTimeline.vue",
 );
-// The global register vocabulary is the canonical SEVEN (the six BD.W-ANIM-IOS27-TUNE
-// registers + the BI.W-REGISTER-TABLE `transient` enter-transient row, a legitimate
-// global register with ≥2 consumers: Toast + Notification via `--enter-transient-*`);
-// the 3 per-component ScrubberTimeline registers (head/fill/press) still live
-// per-component, NOT in the table. This bound catches per-component sprawl (the
-// RETIRED_TIMELINE_NAMES) + any regrowth past the canonical count — a NEW global
-// register bumps this count with its ≥2-consumer justification, never a silent add.
-const CANONICAL_SPRING_COUNT = 7;
+// The global register vocabulary is the canonical EIGHT (the six BD.W-ANIM-IOS27-TUNE
+// registers + the BI.W-REGISTER-TABLE `transient` enter-transient row + the
+// BI.W-TABS-FACTOR `eyeglass` row); the 3 per-component ScrubberTimeline registers
+// (head/fill/press) still live per-component, NOT in the table. This bound catches
+// per-component sprawl (the RETIRED_TIMELINE_NAMES) + any regrowth past the canonical
+// count — a NEW global register bumps this count with its ≥2-consumer justification,
+// never a silent add.
+//
+// BI.W-TABS-FACTOR — the count is BUMPED 7→8 for the `eyeglass` row (ratified judgment
+// (e), user-delegated + orchestrator-ratified 2026-07-12; the row is honest only
+// POST-M1 SPRING-PARITY). The iOS-27 tab-pill LOUPE travel is its OWN measured register
+// (TABS-GLASS-LADDER §8.2: snappy-class speed 0.36 with dock-class give ζ0.64 — a point
+// the six-row vocabulary did not cover). ≥2 consumers by construction: (1) the JS
+// release `useEyeglassLive` reads `springPreset("eyeglass")` and feeds its (response, ζ)
+// to `useLeadTrail` (the ONE lead/trail integrator — no hand-inlined pair, M1 single
+// source); (2) the generated `--spring-eyeglass` / `--spring-eyeglass-duration` CSS
+// tokens drive the pill indicator glide (`.segmented-indicator--js`, segmented-tabs.css
+// — the pill IS the eyeglass loupe by default now, so its travel rides the eyeglass
+// spring; the underline paper material keeps `--spring-snappy`).
+const CANONICAL_SPRING_COUNT = 8;
 const RETIRED_TIMELINE_NAMES = ["timeline-head", "timeline-fill", "timeline-press"];
 
 // BD.W-ANIM-IOS27-TUNE — the dock-spring const the band assert checks. Mirrors

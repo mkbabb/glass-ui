@@ -94,6 +94,25 @@
     initial-value: 0;
 }
 
+/* BI.W-TABS-FACTOR — the iOS-27 eyeglass two-rest-state scalar. SETTLED(0) ⇄ LIVE(1)
+   drives the tab-pill loupe's block-proud magnify (the plate `scaleY` reads
+   `--eyeglass-y`, a calc off this scalar; TABS-GLASS-LADDER §1/§8.1: settled INSET
+   0.84× ⇄ live PROUD 1.12×). It is JS-driven per-frame by `useEyeglassLive`, which
+   CONSUMES `useLeadTrail` (the ONE lead/trail integrator, reading the `eyeglass`
+   SPRING_PRESETS row) — so writing it from the `hi` edge gives fast-energize /
+   slow-decay EMERGENTLY (lead governs the rise, the ~270ms trail governs the
+   deflate; the §2/§8.3 edge-asymmetric release). `inherits: true` so the host writes
+   it on the indicator and the nested `.segmented-indicator__plate` reads it (and a
+   consumer can force it from an ancestor). `initial-value: 0` = the SETTLED long rest
+   (a non-supporting engine / SSR paints the calm inset plate, never broken). The
+   registration lets the CSS transition interpolate it under the DEGRADE floor, but on
+   the live JS path the useLeadTrail integrator is the animator (no CSS transition). */
+@property --eyeglass-live-t {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+}
+
 @property --phase-tint-amount {
     syntax: "<percentage>";
     inherits: true;

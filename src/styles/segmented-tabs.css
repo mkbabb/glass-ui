@@ -129,6 +129,25 @@
         calc(var(--tab-blob, 1) / var(--stretch));
 }
 
+/* BI.W-TABS-FACTOR — the indicator PLATE. The glass fill (`.glass-capsule`) + the
+   refraction (`.glass-lens`) live on this nested plate so the eyeglass two-rest-state
+   block-proud magnify rides its OWN compositor channel: `transform: scaleY(var(--eyeglass-y))`
+   — NOT the outer's `scale` (the travel-squish) nor its `transform` (the glide/drag), so
+   the per-frame `useLeadTrail` write of `--eyeglass-live-t` is never lagged by their
+   transitions. The plate fills the shell (`inset: 0`); the outer squish/glide scale +
+   translate compose over it (the outer scale scales the plate too — squish × magnify).
+   `--eyeglass-y` defaults 1 (the flat slot-fill capsule — the degrade / non-eyeglass
+   floor); the eyeglass scope (segmented-tabs-drag.css) drives the two-rest-state calc.
+   NO transition on the plate transform — the useLeadTrail integrator is the animator on
+   the live path; the `@property --eyeglass-live-t` covers the discrete/degrade path. */
+.segmented-indicator__plate {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    transform-origin: center;
+    transform: scaleY(var(--eyeglass-y, 1));
+}
+
 /* BD.W-TABS-LIQUID — the COMMIT accent-flood (T4, opt-in). A momentary full-capsule
    wash of `--glass-accent`, driven by `--tab-flood-t` (0→1→0), that TRAILS the
    spatial glide a beat then clears (EFFECTS-after-SPATIAL). `isolation: isolate` on
@@ -182,15 +201,20 @@
     }
 }
 
-/* Fallback (JS-measured) path — the indicator is moved by inline
-   `transform`/`width` writes; animate those alongside the squish scale on the ONE
-   calibrated clock. */
+/* The JS-measured indicator glide — the indicator is moved by inline `transform`/
+   `width` writes; animate those alongside the squish scale on the ONE calibrated clock.
+   BI.W-TABS-FACTOR — the pill IS the eyeglass loupe by default, so its travel rides the
+   `--spring-eyeglass` curve (the measured Find My loupe register, SPRING_PRESETS
+   `eyeglass` — snappy-class speed 0.36 / dock-class give ζ0.64; TABS-GLASS-LADDER §8.2)
+   on the same calibrated `--tab-indicator-duration` clock (unchanged — the underline
+   paper material keeps `--spring-snappy`). This is the eyeglass row's CSS consumer (the
+   ≥2-consumer bar: this glide + the JS `useEyeglassLive` release). */
 .segmented-indicator--js {
     transition:
-        transform var(--tab-indicator-duration) var(--spring-snappy),
-        width var(--tab-indicator-duration) var(--spring-snappy),
-        height var(--tab-indicator-duration) var(--spring-snappy),
-        scale var(--tab-indicator-duration) var(--spring-snappy),
+        transform var(--tab-indicator-duration) var(--spring-eyeglass),
+        width var(--tab-indicator-duration) var(--spring-eyeglass),
+        height var(--tab-indicator-duration) var(--spring-eyeglass),
+        scale var(--tab-indicator-duration) var(--spring-eyeglass),
         opacity var(--duration-fast) ease;
 }
 
