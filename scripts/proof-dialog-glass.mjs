@@ -22,15 +22,26 @@
 //         :where(.glass-floating,.glass-overlay) rule (which blackened the calm modal).
 //         Born-RED: the unconditional ink-flip block is present at HEAD. Bite: a
 //         synthetic re-added unconditional overlay ink-flip REDs.
-//   DG3 — DialogContent.vue re-points onto `--glass-bg-dialog` (re-declares
-//         `--glass-bg-floating: var(--glass-bg-dialog)`) AND keeps the floating tier
-//         (surfaceClass(..,'floating')) so the edge/rim/under-shadow LIFT survives.
+//   DG3 — DialogContent.vue re-points the internal `--glass-bg-rung` compose slot onto
+//         `--glass-bg-dialog` (the ONE-DOOR read of the KEPT dialog rung, BI.W-GLASS-
+//         TOKEN-PRUNE) AND keeps the floating tier (surfaceClass(..,'floating')) so the
+//         edge/rim/under-shadow LIFT survives — the retired `--glass-bg-floating: var(
+//         --glass-bg-dialog)` double-name re-declaration is DEFINITION-ABSENT. Born-RED
+//         at HEAD (the double-name lived at DialogContent.vue:253). Bite: a synthetic
+//         re-added double-name re-declaration REDs.
 //   DG4 — the overlay golden padding ladder is present (the overlay-pad tokens) AND the
 //         close button reads the overlay-pad tokens (no corner-jam at `right-4 top-4`).
 //   DG5 — ConfirmDialog.vue composes `<Dialog surface="glass">` and carries NO hand-
 //         rolled opaque `bg-card text-card-foreground border` modal scaffold (the de-
 //         shadcn A2 re-base). Born-RED: the opaque scaffold present at HEAD. Bite: a
 //         synthetic re-added opaque `bg-card` scaffold REDs.
+//   DG6 — the α-band-probe rung census (BI.W-GLASS-TOKEN-PRUNE). The probe (the arbiter)
+//         DECIDED KEEP: dialog Δ plate-α 0.12 vs floating (ΔL 0.06–0.10 over a busy/dark
+//         page), sheet Δ0.21 vs overlay — genuinely-distinct iOS control-center α, not a
+//         named duplicate. So both `--glass-bg-dialog`/`--glass-bg-sheet` composed rungs
+//         SURVIVE with the recorded distinct-physics rationale in glass.css, and no
+//         `--glass-bg-floating: var(--glass-bg-<rung>)` double-name survives in the token
+//         source. Bite: a synthetic collapse (delete the dialog rung) REDs.
 
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -144,12 +155,19 @@ export function detectDialogGlass(sources) {
         );
     }
 
-    // ── DG3 — DialogContent.vue re-points onto `--glass-bg-dialog`, keeps floating ──
+    // ── DG3 — DialogContent reads --glass-bg-dialog through ONE DOOR, keeps floating ──
+    // BI.W-GLASS-TOKEN-PRUNE re-point: the α-band probe KEPT the dialog rung (genuinely-
+    // distinct physics), so DialogContent re-points the INTERNAL `--glass-bg-rung` compose
+    // slot (glass/ladder.css: `.glass-floating { --glass-bg-rung → --glass-plate-tinted →
+    // background }`) onto the NAMED `--glass-bg-dialog` rung directly — the one-door read,
+    // NOT the retired `--glass-bg-floating: var(--glass-bg-dialog)` double-name re-declaration.
     facts.dg3 = {};
-    // the re-declare of the composed floating bg onto the dialog token (the self-re-point
-    // — an inline style or a CSS var write of `--glass-bg-floating: var(--glass-bg-dialog)`).
     facts.dg3.rePoints =
-        /--glass-bg-floating['"`\s]*:\s*['"`\s]*var\(--glass-bg-dialog\)/.test(
+        /--glass-bg-rung['"`\s]*:\s*['"`\s]*var\(--glass-bg-dialog\)/.test(dlg);
+    // the named-duplicate wart is DEFINITION-ABSENT: DialogContent NEVER re-declares
+    // `--glass-bg-floating` onto another `--glass-bg-*` rung (hijacking the floating name).
+    facts.dg3.noDoubleName =
+        !/--glass-bg-floating['"`\s]*:\s*['"`\s]*var\(--glass-bg-(dialog|sheet|overlay|resting|quiet|wash)\)/.test(
             dlg,
         );
     // the floating tier LIFT is kept (surfaceClass(.., 'floating') so edge/rim/under-shadow survive).
@@ -159,7 +177,12 @@ export function detectDialogGlass(sources) {
 
     if (!facts.dg3.rePoints) {
         violations.push(
-            "DG3: DialogContent.vue must re-declare `--glass-bg-floating: var(--glass-bg-dialog)` on the dialog scope (the self-re-point — so the base `.glass-floating` rule resolves the transparent dialog plate)",
+            "DG3: DialogContent.vue must re-point the internal `--glass-bg-rung` slot onto `--glass-bg-dialog` on the dialog scope (BI.W-GLASS-TOKEN-PRUNE — the one-door read of the KEPT dialog rung; the base `.glass-floating` rule composes its `--glass-plate-tinted` from `--glass-bg-rung`)",
+        );
+    }
+    if (!facts.dg3.noDoubleName) {
+        violations.push(
+            "DG3: the `--glass-bg-floating: var(--glass-bg-dialog)` double-name re-declaration must be DEFINITION-ABSENT (BI.W-GLASS-TOKEN-PRUNE — the named-duplicate wart is pruned; read the NAMED dialog rung directly via `--glass-bg-rung`, never hijack the `--glass-bg-floating` name)",
         );
     }
     if (!facts.dg3.keepsFloating) {
@@ -193,7 +216,9 @@ export function detectDialogGlass(sources) {
         );
     }
 
-    // ── DG5 — ConfirmDialog re-bases onto <Dialog surface="glass">, no opaque scaffold ──
+    // ── DG5 — the confirm-dialog PRESET composes <Dialog surface="glass">, no opaque
+    //    scaffold (BI.W-DIALOG-PLACEMENT — ConfirmDialog demoted to a consumer preset; the
+    //    material-first property is verified where the preset now lives, the demo story) ──
     facts.dg5 = {};
     // composes the house Dialog glass surface.
     facts.dg5.composesGlassDialog =
@@ -213,17 +238,52 @@ export function detectDialogGlass(sources) {
 
     if (!facts.dg5.composesGlassDialog) {
         violations.push(
-            'DG5: ConfirmDialog.vue must compose `<Dialog surface="glass">` (the house DialogContent on the glass surface) — the de-shadcn A2 material-first re-base',
+            'DG5: the confirm-dialog preset (demo/stories/feedback/confirm-dialog.vue) must compose `<DialogContent surface="glass">` (the house Dialog on the glass surface) — the material-first confirm preset (ConfirmDialog demoted to a consumer composition)',
         );
     }
     if (!facts.dg5.importsHouseDialog) {
         violations.push(
-            "DG5: ConfirmDialog.vue must import DialogContent from the house ui/dialog (reka behavior + the house glass material own the modal)",
+            "DG5: the confirm-dialog preset must import DialogContent from the house ui/dialog (reka behavior + the house glass material own the modal)",
         );
     }
     if (!facts.dg5.noOpaqueScaffold) {
         violations.push(
-            "DG5: ConfirmDialog.vue still hand-rolls the OPAQUE modal scaffold (`bg-card text-card-foreground border` / `bg-overlay-scrim`) — the clean break DELETES it (no opaque-confirm-dialog fork); the modal reads the SAME warm-cream translucent glass material",
+            "DG5: the confirm-dialog preset still hand-rolls the OPAQUE modal scaffold (`bg-card text-card-foreground border` / `bg-overlay-scrim`) — the confirm preset reads the SAME warm-cream translucent glass material (no opaque-confirm fork)",
+        );
+    }
+
+    // ── DG6 — the α-band-probe rung census (BI.W-GLASS-TOKEN-PRUNE, KEEP verdict) ──
+    facts.dg6 = {};
+    // KEEP: both the dialog and sheet composed rungs survive (neither collapsed) — the
+    // probe DECIDED genuinely-distinct iOS control-center α (dialog Δ0.12 / sheet Δ0.21).
+    facts.dg6.dialogRungKept = /--glass-bg-dialog:\s*color-mix/.test(tok);
+    facts.dg6.sheetRungKept = /--glass-bg-sheet:\s*color-mix/.test(tok);
+    // the KEEP branch RECORDS the probe verdict + distinct-physics rationale in glass.css
+    // (read raw — comments carry the rationale; `tok` has them stripped).
+    facts.dg6.verdictRecorded =
+        /BI\.W-GLASS-TOKEN-PRUNE/.test(glassTokens) &&
+        /probe/.test(glassTokens) &&
+        /\bKEEP\b/.test(glassTokens);
+    // no `--glass-bg-floating: var(--glass-bg-<rung>)` double-name re-declaration survives
+    // in the token source (floating composes ONCE from its own opacity register).
+    facts.dg6.noTokenDoubleName =
+        !/--glass-bg-floating\s*:\s*var\(--glass-bg-(dialog|sheet|overlay|resting|quiet|wash)\)/.test(
+            tok,
+        );
+
+    if (!(facts.dg6.dialogRungKept && facts.dg6.sheetRungKept)) {
+        violations.push(
+            "DG6: the α-band probe verdict is KEEP — both `--glass-bg-dialog` and `--glass-bg-sheet` composed rungs must survive in tokens/glass.css (genuinely-distinct iOS control-center α; neither is a named duplicate of floating/overlay)",
+        );
+    }
+    if (!facts.dg6.verdictRecorded) {
+        violations.push(
+            "DG6: the KEEP branch must RECORD the α-band probe distinct-physics rationale in tokens/glass.css (the `BI.W-GLASS-TOKEN-PRUNE … probe … KEEP` verdict beside the dialog/sheet rungs)",
+        );
+    }
+    if (!facts.dg6.noTokenDoubleName) {
+        violations.push(
+            "DG6: tokens/glass.css must not carry a `--glass-bg-floating: var(--glass-bg-<rung>)` double-name re-declaration (the floating rung composes ONCE from its own opacity register)",
         );
     }
 
@@ -235,9 +295,12 @@ function run() {
         glassTokens: safeRead("src/styles/tokens/glass.css"),
         ladderCss: safeRead("src/styles/glass/ladder.css"),
         dialogContent: safeRead("src/components/ui/dialog/DialogContent.vue"),
-        confirmDialog: safeRead(
-            "src/components/custom/confirm-dialog/ConfirmDialog.vue",
-        ),
+        // BI.W-DIALOG-PLACEMENT — ConfirmDialog DEMOTED to a Dialog preset (deleted as a
+        // library component; the confirm flow is a consumer composition now). DG5 follows
+        // the demotion: it reads the confirm-preset STORY (the consumer composition that
+        // embodies the preset) to prove the confirm modal still composes the house Dialog
+        // glass — no opaque fork — where it now lives.
+        confirmDialog: safeRead("demo/stories/feedback/confirm-dialog.vue"),
     };
 
     const { facts, violations } = detectDialogGlass(sources);
@@ -279,6 +342,31 @@ function run() {
         v.startsWith("DG5:"),
     );
 
+    // DG3 bite: a synthetic re-added `--glass-bg-floating: var(--glass-bg-dialog)`
+    // double-name re-declaration in DialogContent REDs (the pruned wart has teeth).
+    const dg3Bite = detectDialogGlass({
+        ...sources,
+        dialogContent:
+            sources.dialogContent +
+            "\nconst __bite = { '--glass-bg-floating': 'var(--glass-bg-dialog)' }\n",
+    });
+    selfTest.dg3DoubleNameBiteRed = dg3Bite.violations.some((v) =>
+        v.startsWith("DG3:"),
+    );
+
+    // DG6 bite: a synthetic COLLAPSE (rename away the `--glass-bg-dialog` rung) REDs the
+    // KEEP census (the probe-verdict-KEEP census has teeth against a silent rung drop).
+    const dg6Bite = detectDialogGlass({
+        ...sources,
+        glassTokens: sources.glassTokens.replace(
+            /--glass-bg-dialog:(\s*color-mix)/,
+            "--glass-bg-dialog-GONE:$1",
+        ),
+    });
+    selfTest.dg6CollapseBiteRed = dg6Bite.violations.some((v) =>
+        v.startsWith("DG6:"),
+    );
+
     const biteFailures = [];
     if (!selfTest.dg1OpacityBiteRed)
         biteFailures.push(
@@ -291,6 +379,14 @@ function run() {
     if (!selfTest.dg5OpaqueBiteRed)
         biteFailures.push(
             "SELF-TEST: the DG5 opaque-scaffold bite did NOT red — the material-first re-base bar has no teeth",
+        );
+    if (!selfTest.dg3DoubleNameBiteRed)
+        biteFailures.push(
+            "SELF-TEST: the DG3 double-name re-declaration bite did NOT red — the pruned named-duplicate wart has no teeth",
+        );
+    if (!selfTest.dg6CollapseBiteRed)
+        biteFailures.push(
+            "SELF-TEST: the DG6 rung-collapse bite did NOT red — the KEEP census has no teeth against a silent rung drop",
         );
     violations.push(...biteFailures);
     facts.selfTest = selfTest;
@@ -330,8 +426,10 @@ function run() {
         )}`,
     );
     console.log(
-        `  DG3 DialogContent re-points + keeps floating: ${yn(
-            facts.dg3.rePoints && facts.dg3.keepsFloating,
+        `  DG3 DialogContent one-door rung + no double-name: ${yn(
+            facts.dg3.rePoints &&
+                facts.dg3.noDoubleName &&
+                facts.dg3.keepsFloating,
         )}`,
     );
     console.log(
@@ -349,10 +447,20 @@ function run() {
         )}`,
     );
     console.log(
-        `  self-test bites (DG1/DG2/DG5) red          : ${yn(
+        `  DG6 α-band probe rung census (KEEP)        : ${yn(
+            facts.dg6.dialogRungKept &&
+                facts.dg6.sheetRungKept &&
+                facts.dg6.verdictRecorded &&
+                facts.dg6.noTokenDoubleName,
+        )}`,
+    );
+    console.log(
+        `  self-test bites (DG1/DG2/DG3/DG5/DG6) red  : ${yn(
             selfTest.dg1OpacityBiteRed &&
                 selfTest.dg2UnconditionalBiteRed &&
-                selfTest.dg5OpaqueBiteRed,
+                selfTest.dg3DoubleNameBiteRed &&
+                selfTest.dg5OpaqueBiteRed &&
+                selfTest.dg6CollapseBiteRed,
         )}`,
     );
 
