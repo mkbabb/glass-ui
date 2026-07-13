@@ -158,7 +158,6 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             entries: [
                 { storyId: "select", label: "Select" },
                 { storyId: "combobox", label: "Combobox" },
-                { storyId: "multi-select", label: "Multi-Select" },
             ],
         },
         {

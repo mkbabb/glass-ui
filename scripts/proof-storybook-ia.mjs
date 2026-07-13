@@ -47,7 +47,12 @@ export const EXPECTED_TREE = [
         // spring curve register AND the Vue <Transition> class-sets (the former
         // motion/transitions row folded in — no duplicate motion page).
         "intro", "colors", "typography", "radii", "shadows", "motion",
-        "paper-glass", "icons", "surface-tints", "overlays-scrims",
+        "paper-glass", "icons", "surface-tints",
+        // BI.W-SURFACE-EXTRACT — the tier × decoration matrix on the ONE
+        // <Surface> primitive (discharges UF-J3: every card variant + the veil
+        // card render correctly on the matrix).
+        "surface-taxonomy",
+        "overlays-scrims",
         "chart-chassis-palette", "paper-texture",
         "css-utilities",
     ]],
@@ -66,9 +71,12 @@ export const EXPECTED_TREE = [
     //  user-ordered clean-break prune of the 30+-attempt viz family.)
     ["substrates", ["aurora", "blob", "constellation", "fourier-field", "glass-material", "glass-panel", "liquid-grid"]],
     // The Primitives bin split: form-controls.
+    // BI.W-MULTISELECT-FOLD — `multi-select` FOLDED onto `<Combobox multiple>` (the
+    // combobox story carries the multiple / chips-in-trigger arm); the standalone
+    // multi-select story RETIRED.
     ["forms", [
         "inputs", "textarea", "checks", "slider", "number-field", "select",
-        "combobox", "multi-select", "toggle", "toggle-chip", "selectable-chip", "label",
+        "combobox", "toggle", "toggle-chip", "selectable-chip", "label",
     ]],
     // The Primitives bin split: display atoms. `atoms` joined at BG.W-DEMO-IA-REDESIGN
     // (the display ATOMS family page — separator/pulse/status-dot/stacked-icons/

@@ -49,9 +49,10 @@
 //
 // ── Custom-package cherry-pick rationale ─────────────────────────────────
 //
-// This root barrel re-exports a curated 4 of the `src/components/custom/`
-// packages (`instrument-chassis`, `hover-popover`, `configurator`,
-// `scrolling-text`). The rest reach consumers ONLY via their
+// This root barrel re-exports a curated 3 of the `src/components/custom/`
+// packages (`instrument-chassis`, `configurator`, `scrolling-text`);
+// `hover-popover` FOLDED onto the `ui/popover` union (BI.W-OVERLAY-UNION). The
+// rest reach consumers ONLY via their
 // dedicated subpath (`@mkbabb/glass-ui/dock`, `/aurora`, `/sidebar`, ...).
 //
 // Acceptance bar for root-barrel inclusion:
@@ -84,7 +85,8 @@ export * from "./components/ui/card";
 export * from "./components/ui/checkbox";
 export * from "./components/ui/collapsible";
 export * from "./components/ui/command";
-export * from "./components/ui/context-menu";
+// BI.W-MENU-TRIGGER — ContextMenu folded onto DropdownMenu as `trigger="context"`
+// (clean break, no alias). The context-menu family + subpath are retired.
 export * from "./components/ui/data-table";
 export * from "./components/ui/dialog";
 // Drawer is OFF the root barrel — BB.W-DRAWER-ABROGATE rebuilt it on the house
@@ -94,10 +96,14 @@ export * from "./components/ui/dialog";
 // (`@mkbabb/glass-ui/drawer`) — the dock/aurora substrate-isolation pattern; see
 // MIGRATION.md. (clean break, no alias.)
 export * from "./components/ui/dropdown-menu";
-export * from "./components/ui/hover-card";
+// BI.W-OVERLAY-UNION — `ui/hover-card` RETIRED as a NAME (the reka HoverCardRoot
+// substrate stays, imported by the sealed `<Popover trigger="hover">` union). The
+// HoverCard component + subpath fold onto ONE `Popover`. (clean break, no alias.)
 export * from "./components/ui/label";
 export * from "./components/ui/metric-pill";
-export * from "./components/ui/multi-select";
+// BI.W-MULTISELECT-FOLD — `ui/multi-select` RETIRED. A MultiSelect is a
+// Popover+Command composition over the same Combobox-family mechanism, so it folds
+// onto `<Combobox multiple>` (array v-model + chips-in-trigger). (clean break, no alias.)
 export * from "./components/ui/notification";
 export * from "./components/ui/number-field";
 export * from "./components/ui/popover";
@@ -106,7 +112,10 @@ export * from "./components/ui/radio-group";
 export * from "./components/ui/section";
 export * from "./components/ui/select";
 export * from "./components/ui/separator";
-export * from "./components/ui/sheet";
+// `ui/sheet` RETIRED at BI.W-DIALOG-PLACEMENT — Sheet's side-slide FOLDED onto
+// `<DialogContent placement=top|right|bottom|left>` (same reka DialogRoot + FocusScope;
+// the slide is paint, not mechanism). Reach `Dialog` (`@mkbabb/glass-ui/dialog`); snap-
+// detent physics stays `Drawer`'s (the N3 disambiguation). Clean break, no alias.
 export * from "./components/ui/skeleton";
 export * from "./components/ui/slider";
 export * from "./components/ui/switch";
@@ -128,7 +137,9 @@ export * from "./components/ui/tooltip";
 
 // Custom composites — instrument-cluster chassis
 export * from "./components/custom/instrument-chassis";
-export * from "./components/custom/hover-popover";
+// BI.W-OVERLAY-UNION — `custom/hover-popover` FOLDED onto `<Popover trigger="hover">`
+// (the Kronecker fold). HoverPopover the NAME is retired; the mechanism (hover-open
+// timer + keepDockOpen watch) lives on the sealed Popover union. (clean break, no alias.)
 
 // Custom composites — configurator primitive
 export * from "./components/custom/configurator";

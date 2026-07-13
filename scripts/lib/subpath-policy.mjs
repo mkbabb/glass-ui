@@ -46,22 +46,24 @@ export const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..
 
 // --- src/components/ui/<dir> ---
 export const UI_CLASS = {
-    // PUBLISH (26)
+    // PUBLISH (24) — BI.W-MENU-TRIGGER retired context-menu (folded onto dropdown-menu);
+    // BI.W-OVERLAY-UNION retired hover-card (folded onto <Popover trigger="hover">).
     badge: "PUBLISH", button: "PUBLISH", card: "PUBLISH", collapsible: "PUBLISH",
-    command: "PUBLISH", "context-menu": "PUBLISH", "data-table": "PUBLISH",
+    command: "PUBLISH", "data-table": "PUBLISH",
     dialog: "PUBLISH", drawer: "PUBLISH", "dropdown-menu": "PUBLISH",
-    "focus-scope": "PUBLISH", "hover-card": "PUBLISH", label: "PUBLISH",
+    "focus-scope": "PUBLISH", label: "PUBLISH",
     notification: "PUBLISH", "number-field": "PUBLISH", popover: "PUBLISH",
-    progress: "PUBLISH", select: "PUBLISH", separator: "PUBLISH", sheet: "PUBLISH",
+    progress: "PUBLISH", select: "PUBLISH", separator: "PUBLISH",
+    // BI.W-DIALOG-PLACEMENT retired sheet (folded onto <DialogContent placement>).
     // BI.W-SURFACE-EXTRACT — the extracted bare (tier × decoration) glass plate.
     surface: "PUBLISH",
     slider: "PUBLISH", switch: "PUBLISH", toast: "PUBLISH", "toggle-group": "PUBLISH",
     tooltip: "PUBLISH",
-    // INTERNAL (18) — reached via the root barrel / a curated subpath / substrate.
+    // INTERNAL (17) — reached via the root barrel / a curated subpath / substrate.
     _shared: "INTERNAL", accordion: "INTERNAL", alert: "INTERNAL", avatar: "INTERNAL",
     carousel: "INTERNAL", checkbox: "INTERNAL", combobox: "INTERNAL", input: "INTERNAL",
-    "metric-pill": "INTERNAL", "multi-select": "INTERNAL", "radio-group": "INTERNAL",
-    section: "INTERNAL", skeleton: "INTERNAL", table: "INTERNAL", tabs: "INTERNAL",
+    "metric-pill": "INTERNAL", "radio-group": "INTERNAL",
+    section: "INTERNAL", skeleton: "INTERNAL", table: "INTERNAL",
     "tags-input": "INTERNAL", textarea: "INTERNAL", toggle: "INTERNAL",
 };
 
@@ -69,24 +71,29 @@ export const UI_CLASS = {
 export const CUSTOM_CLASS = {
     // INTERNAL (3)
     "goo-filter": "INTERNAL", "infinite-scroll": "INTERNAL", "split-chars": "INTERNAL",
-    // PUBLISH (43) — goo-dot-matrix RETIRED at BG.W-GOODOT-PRUNE (0 external consumers);
+    // PUBLISH (42) — goo-dot-matrix RETIRED at BG.W-GOODOT-PRUNE (0 external consumers);
     // dot-flow-field / concentric / dot-matrix DELETED at BI.W-VIZ-DELETIONS (the user-ordered
     // clean-break prune — the 30+-attempt viz family retired, breaking → the 5.0.0 MAJOR cut).
     "animated-digit": "PUBLISH", aurora: "PUBLISH", "border-progress": "PUBLISH",
     "color-swatch": "PUBLISH", "completion-seal": "PUBLISH",
-    configurator: "PUBLISH", "confirm-dialog": "PUBLISH", constellation: "PUBLISH",
+    // BI.W-CHIP-FOLD: toggle-chip + selectable-chip → the one <Chip> (pressed | selected).
+    chip: "PUBLISH",
+    // BI.W-DIALOG-PLACEMENT demoted confirm-dialog to a consumer Dialog preset.
+    configurator: "PUBLISH", constellation: "PUBLISH",
     controls: "PUBLISH", deck: "PUBLISH", dock: "PUBLISH",
     easing: "PUBLISH", "expandable-container": "PUBLISH",
-    "fading-scroll": "PUBLISH", "fourier-field": "PUBLISH", "glass-panel": "PUBLISH",
+    // BI.W-GLASS-DEDUP retired glass-panel (FAM-10; the Surface/Card axis is the one plate).
+    "fading-scroll": "PUBLISH", "fourier-field": "PUBLISH",
     blob: "PUBLISH", handmark: "PUBLISH",
-    "header-ribbon": "PUBLISH", "hover-popover": "PUBLISH", "icon-chip": "PUBLISH",
+    // BI.W-OVERLAY-UNION retired hover-popover (folded onto <Popover trigger="hover">).
+    "header-ribbon": "PUBLISH", "icon-chip": "PUBLISH",
     "icon-tooltip": "PUBLISH", "instrument-chassis": "PUBLISH", "labeled-field": "PUBLISH",
     "metric-badge": "PUBLISH", "metric-cell": "PUBLISH", "metric-stack": "PUBLISH",
     "pager-dots": "PUBLISH", "paper-backdrop": "PUBLISH", "liquid-grid": "PUBLISH",
     pulse: "PUBLISH", "scrolling-text": "PUBLISH", search: "PUBLISH",
-    "selectable-chip": "PUBLISH", "sortable-list": "PUBLISH", "spa-view": "PUBLISH",
+    "sortable-list": "PUBLISH", "spa-view": "PUBLISH",
     "stacked-icons": "PUBLISH", "status-dot": "PUBLISH", tabs: "PUBLISH",
-    timeline: "PUBLISH", "toggle-chip": "PUBLISH", typewriter: "PUBLISH",
+    timeline: "PUBLISH", typewriter: "PUBLISH",
     "watercolor-dot": "PUBLISH",
 };
 

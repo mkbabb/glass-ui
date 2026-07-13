@@ -19,9 +19,9 @@ const errored = ref("not-an-email");
 const searchTerm = ref("");
 const pillBare = ref("");
 
-// BG.W-DEMO-IA-REDESIGN — the Forms INPUT family. Textarea, select, combobox,
-// multi-select, and label no longer each earn a route; they render as members of
-// this ONE input-family page via the switcher below (bare, STORY_NESTED_KEY).
+// BG.W-DEMO-IA-REDESIGN — the Forms INPUT family. Textarea, select, combobox
+// (single + multiple), and label no longer each earn a route; they render as
+// members of this ONE input-family page via the switcher below (bare, STORY_NESTED_KEY).
 const familyMembers: FamilyMember[] = [
     {
         id: "textarea",
@@ -34,14 +34,12 @@ const familyMembers: FamilyMember[] = [
         component: defineAsyncComponent(() => import("./select.vue")),
     },
     {
+        // BI.W-MULTISELECT-FOLD — the combobox member now carries BOTH the
+        // single-select AND the multiple (chips-in-trigger) arm; the standalone
+        // multi-select member RETIRED.
         id: "combobox",
         label: "Combobox",
         component: defineAsyncComponent(() => import("./combobox.vue")),
-    },
-    {
-        id: "multi-select",
-        label: "Multi-select",
-        component: defineAsyncComponent(() => import("./multi-select.vue")),
     },
     {
         id: "label",
