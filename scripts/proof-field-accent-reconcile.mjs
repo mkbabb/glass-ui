@@ -99,6 +99,12 @@ const warmField = stripTs(read("demo/chassis/hero/warm-field.ts"));
 const appShell = stripTs(read("demo/shell/AppShell.vue"));
 const sectionLanding = stripTs(read("demo/chassis/landing/SectionLanding.vue"));
 const luminance = stripTs(read("src/composables/glass/useGlassBackdropLuminance.ts"));
+// BI.W-ENCAP-REDRAIN — the shell-field auto-discovery (the SHELL_FIELD_CANVAS_SELECTOR
+// `[data-glass-field-canvas]` + resolveSourceCanvas) carved into the sample leaf the
+// observer COMPOSES; the auto-discover marker check FOLLOWS the carve into the leaf.
+const luminanceSampleLeaf = stripTs(
+    read("src/composables/glass/backdropLuminanceSample.ts"),
+);
 
 const checks = [];
 const add = (id, pass, detail) => checks.push({ id, pass: Boolean(pass), detail });
@@ -176,7 +182,10 @@ const mountedRecede = /:opacity-ceiling=["']0\.5["']/.test(appShell);
 // the luminance rewire seam: the shell aurora carries the field-canvas marker AND
 // useGlassBackdropLuminance auto-discovers it.
 const markerOnShell = /data-glass-field-canvas\b/.test(appShell);
-const luminanceAutoDiscovers = /data-glass-field-canvas/.test(luminance);
+// the auto-discovery lives in the sample leaf the observer composes (BI.W-ENCAP-REDRAIN).
+const luminanceAutoDiscovers =
+    /data-glass-field-canvas/.test(luminance) ||
+    /data-glass-field-canvas/.test(luminanceSampleLeaf);
 const w4 =
     vividnessZero &&
     recessiveChroma &&

@@ -686,12 +686,13 @@ function selfTestSatelliteLeafVerify() {
 //             logic — a severed import or an absent leaf flags). The four carves:
 //               createCanvasLifecycle     → backingSize (sizeBacking) + visibility (createCanvasVisibility)
 //               useWebGPUCanvas           → webgpuDevice (withAcquireTimeout) + webgpuCanvasTypes (WebGPUCanvasOptions)
-//               useGlassBackdropLuminance → ambientHueHistogram (accumulateHuePixel)
+//               useGlassBackdropLuminance → backdropLuminanceSample (sampleAnimated)   [BI.W-ENCAP-REDRAIN]
+//               backdropLuminanceSample   → ambientHueHistogram (accumulateHuePixel)   [re-homed]
 //               SegmentedTabs             → useTabResponsive + useTabRovingFocus
 //             The line-count DRAIN (proof:no-god-module / proof:encapsulation C1) is NOT re-asserted
-//             here — it is a BG WS-owned substrate concern (useGlassBackdropLuminance is still > 500
-//             at HEAD; its drain is BG's, not this verify wave's — "BH carves ZERO substrate, BG owns
-//             it"). This clause verifies the LEAF SHAPE only.
+//             here — it is a substrate-drain concern the owning wave carries (BI.W-ENCAP-REDRAIN
+//             drained useGlassBackdropLuminance ≤ 500 by carving the sampler leaf). This clause
+//             verifies the LEAF SHAPE only.
 //   LV5 — the tabs-README colocation map NAMES the carved SegmentedTabs leaves (useTabResponsive +
 //         useTabRovingFocus). A colocation map that lists ONLY useTabIndicator is STALE: the carve
 //         moved the responsive-collapse + roving-focus logic into colocated leaves but the README
@@ -714,7 +715,18 @@ const LEAF_VERIFY_WS4 = {
             ],
         },
         {
+            // BI.W-ENCAP-REDRAIN — the observer carves the stateless sampler family
+            // into backdropLuminanceSample.ts (it COMPOSES it back); the histogram it
+            // used to compose re-homes onto the sample leaf below.
             host: "composables/glass/useGlassBackdropLuminance.ts",
+            leaves: [
+                { path: "composables/glass/backdropLuminanceSample.ts", spec: "./backdropLuminanceSample", symbol: "sampleAnimated" },
+            ],
+        },
+        {
+            // BI.W-ENCAP-REDRAIN — the sample leaf COMPOSES the ambient-hue histogram
+            // (the accumulate CALL followed the sampling loop out of the observer host).
+            host: "composables/glass/backdropLuminanceSample.ts",
             leaves: [
                 { path: "composables/glass/ambientHueHistogram.ts", spec: "./ambientHueHistogram", symbol: "accumulateHuePixel" },
             ],

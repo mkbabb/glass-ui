@@ -49,16 +49,22 @@ import { onScopeDispose, readonly, ref, watch, type Ref } from "vue";
 import { useRAFLoop, type RAFLoopControls } from "../motion/useRAFLoop";
 import { useIntersectionPause } from "../motion/useIntersectionPause";
 import { useResizeObserver } from "../dom/useResizeObserver";
-import { resolveTokenColor } from "../dom/useResolveTokenColor";
-import { isCanvas, relLuminance, parseRgb } from "./backdropSampleMath";
-// BE.W-AMBIENT-TINT — the ambient-hue histogram (accumulate/resolve + the value.js
-// color source) lives in the colocated leaf; the observer COMPOSES it (BG.W-COLOCATE
-// — ratchet-drain #9). The value.js import moved WITH it (proof:single-color-core).
+// BI.W-ENCAP-REDRAIN — the stateless backdrop-sampling + OKLab-reduce family (the
+// `elementsFromPoint` stack-walk + the downsampled `drawImage+getImageData` field
+// reader + the OKLab luminance/ambient-hue reduce) lives in the colocated leaf; the
+// observer COMPOSES it (the no-god-module colocation carve). The observer keeps only
+// the reactive wiring + the reusable downsample-canvas lifecycle + the
+// `--glass-backdrop-*` / `--glass-ambient-*` writes. The value.js color source rides
+// THROUGH the leaf (proof:single-color-core follows the sampler into the ambient-hue
+// histogram it composes).
 import {
-    makeHueHistogram,
-    accumulateHuePixel,
-    resolveAmbientHue,
-} from "./ambientHueHistogram";
+    sampleStatic,
+    sampleAnimated,
+    resolveSourceCanvas,
+    SAMPLE_DOWNSAMPLE,
+    type SampleResult,
+    type BackgroundCanvasSource,
+} from "./backdropLuminanceSample";
 
 /** The discrete bucket the observer derives + writes (re-engages the W55 machinery). */
 export type GlassBackdropBucket = "light" | "dark";
@@ -71,11 +77,7 @@ export interface UseGlassBackdropLuminanceOptions {
      * instead of the static `elementsFromPoint` stack-walk. The aurora/blob `<canvas>`
      * the surface floats over.
      */
-    backgroundCanvas?:
-        | HTMLCanvasElement
-        | (() => HTMLCanvasElement | null)
-        | string
-        | null;
+    backgroundCanvas?: BackgroundCanvasSource;
     /**
      * Force the LIVE periodic re-sample loop on (mirrors the `data-glass-sample="live"`
      * attribute on the target). Default: read from the target's
@@ -115,17 +117,6 @@ export interface UseGlassBackdropLuminanceControls {
 }
 
 const PRM_QUERY = "(prefers-reduced-motion: reduce)";
-const SAMPLE_DOWNSAMPLE = 32;
-// BG.W-GLASS-SIGNAL-TRUTH (NF.3, paint mustFix #2) — the animated field-canvas
-// readback carries REAL painted content only when the source WebGL `<canvas>` actually
-// rendered a frame AND kept its drawing buffer (`preserveDrawingBuffer`). An
-// unrendered / composited-and-cleared / software-raster-fallback field reads
-// fully-transparent (mean alpha ≈ 0); compositing THAT over white yields a DEGENERATE
-// luma ≈ 1.0 + a `transparent` ambient hue — the "witness fires but the value is a lie"
-// state the NF.3 paint-DELTA flagged. Below this mean-alpha floor the readback is not a
-// valid sample: `sampleAnimated` returns null so `sampleNow` falls to the static
-// stack-walk (a REAL warm backdrop proxy). Fail-explicit, never a masking fake value.
-const FIELD_ALPHA_FLOOR = 0.02;
 // The bounded ambient-bias strength the observer WRITES when it samples a real (non-
 // transparent) modal hue — the companion write-strength knob material.css names "the
 // observer's target owns". ≤ 8% (sub-perceptual under the W55 --glass-tint-strength-aa
@@ -133,47 +124,6 @@ const FIELD_ALPHA_FLOOR = 0.02;
 // keeps the 0% no-op floor. Without this write the sampled hue rides a frozen 0%
 // strength — a half-dead channel (a hue written but never READ), the state NF.3 forbids.
 const AMBIENT_STRENGTH_ENGAGED = "8%";
-
-/** The per-sample result — the luminance AND the ambient hue (the FREE rider). */
-interface SampleResult {
-    /** WCAG relative luminance of the sampled backdrop (0..1). */
-    luma: number;
-    /** A complete `oklch()` ambient-hue string, or `transparent` for a gray null. */
-    ambientHue: string;
-}
-
-/** BG.W-FIELD-ACCENT-RECONCILE — the library convention marking the ONE shell
- *  field canvas (the recessive shell `<Aurora>` the demo chassis mounts behind every
- *  non-focal route; also the WS8 BACKDROP-SAMPLE marker). A glass surface that does
- *  NOT name an explicit `backgroundCanvas` auto-discovers this canvas so it samples
- *  the LIVE field rather than a static stack-walk; absent it (a focal route where the
- *  shell stands down, an SSR scope) the static `elementsFromPoint` path is the floor. */
-const SHELL_FIELD_CANVAS_SELECTOR =
-    "[data-glass-field-canvas] canvas, canvas[data-glass-field-canvas]";
-
-function resolveSourceCanvas(
-    src: UseGlassBackdropLuminanceOptions["backgroundCanvas"],
-): HTMLCanvasElement | null {
-    if (!src) {
-        // Auto-discover the shell field canvas — the rewire to the live shell field
-        // (backward-safe: no field canvas → null → the static elementsFromPoint path).
-        if (typeof document !== "undefined") {
-            const field = document.querySelector(SHELL_FIELD_CANVAS_SELECTOR);
-            if (isCanvas(field)) return field;
-        }
-        return null;
-    }
-    if (isCanvas(src)) return src;
-    if (typeof src === "function") {
-        const c = src();
-        return isCanvas(c) ? c : null;
-    }
-    if (typeof src === "string" && typeof document !== "undefined") {
-        const el = document.querySelector(src);
-        return isCanvas(el) ? el : null;
-    }
-    return null;
-}
 
 /**
  * The sampled-luminance observer. Wire it on a glass surface (the dock root, a
@@ -232,36 +182,6 @@ export function useGlassBackdropLuminance(
     }
 
     /**
-     * Robust CSS-color → sRGB `[r,g,b,a]`. `parseRgb` is the fast path for the
-     * legacy `rgb()/rgba()` serialization; ANY other valid CSS color form — the
-     * MODERN `oklch()` / `color(srgb …)` / `hsl()` tokens the warm-cream demo basis
-     * resolves to — is normalized by painting it onto the 1×1 corner of the reused 2D
-     * canvas and reading the composited pixel back (`getImageData` ALWAYS returns
-     * integer sRGB whatever the source space). BG.W-GLASS-SIGNAL-TRUTH: without this
-     * `sampleStatic` returned null on a `color(srgb …)`/`oklch(…)` backdrop and wrote
-     * NOTHING — the static floor was a DEAD channel (the dock over the field never
-     * stamped the witness). The static floor is now writer-true over ANY backdrop.
-     */
-    function normalizeToRgb(
-        css: string,
-    ): [number, number, number, number] | null {
-        const fast = parseRgb(css);
-        if (fast) return fast;
-        const ctx = getDownContext();
-        if (!ctx) return null;
-        try {
-            ctx.clearRect(0, 0, 1, 1);
-            ctx.fillStyle = "rgba(0,0,0,0)";
-            ctx.fillStyle = css; // an unparseable value is a no-op (keeps transparent)
-            ctx.fillRect(0, 0, 1, 1);
-            const d = ctx.getImageData(0, 0, 1, 1).data;
-            return [d[0]!, d[1]!, d[2]!, d[3]! / 255];
-        } catch {
-            return null;
-        }
-    }
-
-    /**
      * Is the LIVE re-sample loop requested? The explicit `live` option / the
      * `data-glass-sample="live"` attr force it; it is ALSO true when a field canvas
      * is RESOLVABLE (handed via `backgroundCanvas` OR auto-discovered off the shell
@@ -303,122 +223,6 @@ export function useGlassBackdropLuminance(
         if (options.backgroundCanvas != null) return true;
         // No explicit source: a discoverable shell field canvas IS the live signal.
         return resolveSourceCanvas(undefined) !== null;
-    }
-
-    /**
-     * Sample the ANIMATED backdrop: downsample the known source canvas under the
-     * surface's bounding box → mean relative luminance + the ambient-hue histogram
-     * (a FREE rider over the SAME pixel pass). Returns null if no source.
-     */
-    function sampleAnimated(el: HTMLElement): SampleResult | null {
-        const source = resolveSourceCanvas(options.backgroundCanvas);
-        if (!source || source.width === 0 || source.height === 0) return null;
-        const ctx = getDownContext();
-        if (!ctx) return null;
-        const rect = el.getBoundingClientRect();
-        const srcRect = source.getBoundingClientRect();
-        if (srcRect.width === 0 || srcRect.height === 0) return null;
-        // Map the surface's viewport box → the source canvas's backing-store region.
-        const scaleX = source.width / srcRect.width;
-        const scaleY = source.height / srcRect.height;
-        const sx = Math.max(0, (rect.left - srcRect.left) * scaleX);
-        const sy = Math.max(0, (rect.top - srcRect.top) * scaleY);
-        const sw = Math.min(source.width - sx, Math.max(1, rect.width * scaleX));
-        const sh = Math.min(source.height - sy, Math.max(1, rect.height * scaleY));
-        if (sw <= 0 || sh <= 0) return null;
-        try {
-            ctx.clearRect(0, 0, SAMPLE_DOWNSAMPLE, SAMPLE_DOWNSAMPLE);
-            ctx.drawImage(
-                source,
-                sx,
-                sy,
-                sw,
-                sh,
-                0,
-                0,
-                SAMPLE_DOWNSAMPLE,
-                SAMPLE_DOWNSAMPLE,
-            );
-            const data = ctx.getImageData(
-                0,
-                0,
-                SAMPLE_DOWNSAMPLE,
-                SAMPLE_DOWNSAMPLE,
-            ).data;
-            let sum = 0;
-            let alphaSum = 0;
-            let n = 0;
-            const hist = makeHueHistogram();
-            for (let i = 0; i < data.length; i += 4) {
-                // Composite over white (the alpha-translucent aurora over the page).
-                const a = data[i + 3]! / 255;
-                const r = data[i]! * a + 255 * (1 - a);
-                const g = data[i + 1]! * a + 255 * (1 - a);
-                const b = data[i + 2]! * a + 255 * (1 - a);
-                sum += relLuminance(r, g, b);
-                alphaSum += a;
-                // BE.W-AMBIENT-TINT — the hue histogram, a FREE rider in the SAME
-                // loop (no second getImageData, no second canvas, no second pass).
-                accumulateHuePixel(hist, r, g, b, a);
-                n++;
-            }
-            // BG.W-GLASS-SIGNAL-TRUTH (NF.3 mustFix #2) — an all-transparent readback
-            // (mean alpha below the floor) carries NO painted field content (an
-            // unrendered / cleared-after-composite / software-raster field). It is NOT a
-            // valid sample: returning null lets `sampleNow` fall to the static stack-walk
-            // (a real warm backdrop) instead of writing a degenerate luma ≈ 1.0 +
-            // `transparent` hue. Fail-explicit over a masking fake value.
-            if (n === 0 || alphaSum / n < FIELD_ALPHA_FLOOR) return null;
-            return { luma: sum / n, ambientHue: resolveAmbientHue(hist) };
-        } catch {
-            // fail-explicit: befitting — a tainted/cross-origin canvas throws on
-            // getImageData; the null return SURFACES the miss to the caller, which
-            // falls back to the static stack-walk (the declarative bucket stays the
-            // legibility floor regardless — never a silent wrong answer).
-            return null;
-        }
-    }
-
-    /**
-     * Sample the STATIC backdrop: stack-walk `elementsFromPoint` at the surface centre,
-     * read the first element under it with a resolved non-transparent background, un-wrap
-     * the `var(--token)` through the resolveTokenColor leaf → relative luminance + the
-     * ambient hue (the single resolved background color binned the SAME way).
-     */
-    function sampleStatic(el: HTMLElement): SampleResult | null {
-        const rect = el.getBoundingClientRect();
-        const cx = rect.left + rect.width / 2;
-        const cy = rect.top + rect.height / 2;
-        const stack = document.elementsFromPoint(cx, cy);
-        // Skip the surface itself + its glass descendants; find the first BACKGROUND
-        // layer below it with an opaque-enough painted background.
-        for (const node of stack) {
-            if (!(node instanceof HTMLElement)) continue;
-            if (node === el || el.contains(node)) continue;
-            const bgRaw = getComputedStyle(node).backgroundColor;
-            const concrete = resolveTokenColor(bgRaw, el);
-            const rgba = normalizeToRgb(concrete);
-            if (!rgba) continue;
-            if (rgba[3] < 0.5) continue; // a near-transparent layer is not the backdrop
-            return staticResult(rgba);
-        }
-        // Nothing opaque under it → the page paints through to the body/root; read that.
-        const bodyBg = resolveTokenColor(
-            getComputedStyle(document.body).backgroundColor,
-            el,
-        );
-        const bodyRgba = normalizeToRgb(bodyBg);
-        return bodyRgba ? staticResult(bodyRgba) : null;
-    }
-
-    /** A single resolved backdrop color → the luma + the ambient hue (binned alone). */
-    function staticResult(rgba: [number, number, number, number]): SampleResult {
-        const hist = makeHueHistogram();
-        accumulateHuePixel(hist, rgba[0], rgba[1], rgba[2], rgba[3]);
-        return {
-            luma: relLuminance(rgba[0], rgba[1], rgba[2]),
-            ambientHue: resolveAmbientHue(hist),
-        };
     }
 
     /** Write the derived signal onto the target's inline style. */
@@ -470,9 +274,16 @@ export function useGlassBackdropLuminance(
     function sampleNow(): void {
         const el = target.value;
         if (!el) return;
+        // Compose the stateless leaf samplers with the reusable downsample context (the
+        // observer owns the canvas lifecycle) + the resolved live-field source.
+        const ctx = getDownContext();
         const result = isLive()
-            ? sampleAnimated(el) ?? sampleStatic(el)
-            : sampleStatic(el);
+            ? sampleAnimated(
+                  el,
+                  resolveSourceCanvas(options.backgroundCanvas),
+                  ctx,
+              ) ?? sampleStatic(el, ctx)
+            : sampleStatic(el, ctx);
         if (result !== null) write(result);
         lastSampleAt =
             typeof performance !== "undefined" ? performance.now() : Date.now();

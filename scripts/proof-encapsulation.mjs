@@ -178,9 +178,40 @@ const COLOCATE_CARVES = [
         ],
     },
     {
+        // BI.W-ENCAP-REDRAIN — the observer drains ≤ 500 by carving the stateless
+        // sampling / OKLab-reduce family (the elementsFromPoint stack-walk + the
+        // downsampled drawImage+getImageData field reader + the luminance/ambient-hue
+        // reduce) into backdropLuminanceSample.ts; the observer COMPOSES it (keeps only
+        // the reactive wiring + the downsample-canvas lifecycle + the --glass-backdrop-*
+        // writes). The ambient-hue histogram it USED to compose is now composed by the
+        // sample leaf (the carve below) — the composition chain deepened one hop.
         name: "useGlassBackdropLuminance",
         host: "src/composables/glass/useGlassBackdropLuminance.ts",
         ratchetKey: "composables/glass/useGlassBackdropLuminance.ts",
+        leaves: [
+            {
+                path: "src/composables/glass/backdropLuminanceSample.ts",
+                spec: "./backdropLuminanceSample",
+                exports: [
+                    "sampleStatic",
+                    "sampleAnimated",
+                    "resolveSourceCanvas",
+                    "SampleResult",
+                ],
+                imports: ["sampleStatic", "sampleAnimated"],
+                absent: "sampleAnimated",
+            },
+        ],
+    },
+    {
+        // BI.W-ENCAP-REDRAIN — the sample leaf COMPOSES the ambient-hue histogram (the
+        // consumer moved WITH the sampling loop out of the observer host). The histogram
+        // carve re-homes here from the observer: the accumulate/resolve CALL now lives in
+        // the sampler leaf, not the observer, so the "host imports accumulateHuePixel"
+        // fact FOLLOWS the carve onto backdropLuminanceSample.ts.
+        name: "backdropLuminanceSample",
+        host: "src/composables/glass/backdropLuminanceSample.ts",
+        ratchetKey: "composables/glass/backdropLuminanceSample.ts",
         leaves: [
             {
                 path: "src/composables/glass/ambientHueHistogram.ts",
@@ -1532,6 +1563,68 @@ function selfTest() {
         "C3 comment-mention fence (a note is not a definition)",
     );
 
+    // ── BI.W-ENCAP-REDRAIN — the C2/C3 bites over the useGlassBackdropLuminance carve
+    //    (the sample-leaf drain). A host re-inlining the sampler (a leaf-import fig-leaf
+    //    over a live `function sampleAnimated`) REDs C3; a severed import REDs C2. ──
+    const lum = COLOCATE_CARVES.find(
+        (c) => c.name === "useGlassBackdropLuminance",
+    );
+    const lumHost = read(resolve(ROOT, lum.host));
+    const lumGod = read(GOD_MODULE);
+    const lumLeaf = {};
+    for (const l of lum.leaves) {
+        const p = resolve(ROOT, l.path);
+        lumLeaf[l.path] = { exists: existsSync(p), text: read(p) };
+    }
+    const lumInputs = () => ({ hostText: lumHost, godSrc: lumGod, leaf: lumLeaf });
+    const sabLum = (inputs, prefix, name) => {
+        const v = detectOneCarve(lum, inputs);
+        if (v.some((x) => x.startsWith(prefix))) flagged++;
+        else
+            throw new Error(
+                `[proof:encapsulation self-test] luminance-carve bite FAILED to flag: ${name}`,
+            );
+    };
+    const sabNotLum = (inputs, prefix, name) => {
+        const v = detectOneCarve(lum, inputs);
+        if (!v.some((x) => x.startsWith(prefix))) flagged++;
+        else
+            throw new Error(
+                `[proof:encapsulation self-test] luminance-carve fence bite WRONGLY flagged: ${name}`,
+            );
+    };
+    // C3: the observer RE-INLINES `function sampleAnimated` (the dual-path fig-leaf —
+    // a leaf import over a live duplicate; the spec's named self-test bite).
+    sabLum(
+        {
+            ...lumInputs(),
+            hostText: `function sampleAnimated(el, source, ctx) { return null; }\n${lumHost}`,
+        },
+        "C3",
+        "C3 useGlassBackdropLuminance re-inlines sampleAnimated (dual-path fig-leaf)",
+    );
+    // C2: the observer SEVERS the backdropLuminanceSample import (no composition).
+    sabLum(
+        {
+            ...lumInputs(),
+            hostText: lumHost.replace(
+                /import\s*\{[\s\S]*?\}\s*from\s*["']\.\/backdropLuminanceSample["'];/,
+                "",
+            ),
+        },
+        "C2",
+        "C2 useGlassBackdropLuminance drops the backdropLuminanceSample import",
+    );
+    // C3 (fence): a bare comment mention of `sampleAnimated` in the host does NOT flag.
+    sabNotLum(
+        {
+            ...lumInputs(),
+            hostText: `// sampleAnimated is the live-field sampler\n${lumHost}`,
+        },
+        "C3",
+        "C3 comment-mention fence (a note is not a definition)",
+    );
+
     // ── BG.W-DEAD-SWEEP — the alias-kill A1/A2 bites over detectAliasKill. ──
     const sabA = (overrides, prefix, name) => {
         const { violations } = detectAliasKill(overrides);
@@ -2126,7 +2219,7 @@ function run() {
         `    goo-barbell geometry          : ${gooViolations.length === 0 ? "GREEN" : "RED"} (leaf=${gooFacts.colocation.leafExists}, exports=${gooFacts.colocation.leafExportsAll}, engine-imports=${gooFacts.colocation.engineImports}, stateless=${!gooFacts.stateless.hasSpring && !gooFacts.stateless.importsVue && !gooFacts.stateless.hasRaf && !gooFacts.stateless.touchesDom && !gooFacts.stateless.moduleMutable}, engine-redefs=${gooFacts.singleDefinition.engineRedefines.length})`,
     );
     console.log(
-        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (blob E1×2+E1-fence+E2×2+E3×2+E4+E4-fence + colocate C1×2+C1-fence+C2×2+C3+C3-fence + alias-kill A1+A2+fence + deshadcn DS1×3+DS1-fence+DS2+DS3×2+DS3-regex+DS4+DS-clean + axis-grammar G1+G2+G3+G3-fence+G4+G4-fence+G5+G6 + size-grammar S1x2+S2+S3+S4+S5+S6+S-fence + motion-axis M1×2+M1-fence×2+M2+M3+M4+M5+M6+M-fence + goo-barbell GB1×2+GB2×4+GB3+GB3-fence+GB-fence)`,
+        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (blob E1×2+E1-fence+E2×2+E3×2+E4+E4-fence + colocate C1×2+C1-fence+C2×2+C3+C3-fence + luminance-carve C3+C2+C3-fence + alias-kill A1+A2+fence + deshadcn DS1×3+DS1-fence+DS2+DS3×2+DS3-regex+DS4+DS-clean + axis-grammar G1+G2+G3+G3-fence+G4+G4-fence+G5+G6 + size-grammar S1x2+S2+S3+S4+S5+S6+S-fence + motion-axis M1×2+M1-fence×2+M2+M3+M4+M5+M6+M-fence + goo-barbell GB1×2+GB2×4+GB3+GB3-fence+GB-fence)`,
     );
 
     if (violations.length) {

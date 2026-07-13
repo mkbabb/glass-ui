@@ -38,9 +38,16 @@ const OBSERVER_FILE = "src/composables/glass/useGlassBackdropLuminance.ts";
 // BG.W-COLOCATE — the ambient-hue histogram (the value.js color source + the
 // accumulate/resolve math + the gray-null identity) carved into this colocated leaf
 // (ratchet-drain #9); the value.js-import + gray-null A1 checks FOLLOW the carve into
-// the leaf (the "asserts follow the composition into the carved leaf" precedent). The
-// observer keeps the sampling loop + the getImageData/canvas + the accumulate CALL.
+// the leaf (the "asserts follow the composition into the carved leaf" precedent).
+// BI.W-ENCAP-REDRAIN — the observer then carved its SAMPLING loop (the elementsFromPoint
+// stack-walk + the downsampled getImageData field reader + the accumulate/resolve CALL)
+// into backdropLuminanceSample.ts; the observer keeps ONLY the reusable downsample
+// canvas (getDownContext createElement) + the writes. So the FREE-RIDER fence
+// (getImageData count) + the accumulate/resolve CALL now FOLLOW the sampler into the
+// sample leaf — read against the union (observer ∪ sample leaf); the setProperty write
+// stays pinned to the observer's own source.
 const HISTOGRAM_LEAF_FILE = "src/composables/glass/ambientHueHistogram.ts";
+const SAMPLE_LEAF_FILE = "src/composables/glass/backdropLuminanceSample.ts";
 const SURFACE_AXIS_FILE = "src/components/ui/_shared/useSurfaceAxis.ts";
 
 function stripCss(src) {
@@ -82,12 +89,17 @@ function detectAmbientHue() {
         return { violations, facts };
     }
     // The histogram math (value.js source + accumulate/resolve + gray-null) lives in
-    // the carved colocated leaf; the observer COMPOSES it (BG.W-COLOCATE). The
-    // value.js-import + gray-null checks read (observer ∪ leaf) so they follow the
-    // carve, while the FREE-RIDER fence (getImageData/canvas ONE-pass) + the
-    // accumulate/resolve CALL stay pinned to the observer's own source.
+    // the ambientHueHistogram leaf; the SAMPLING loop (getImageData/canvas + the
+    // accumulate/resolve CALL) lives in the backdropLuminanceSample leaf (BI.W-ENCAP-
+    // REDRAIN); the observer COMPOSES both. The value.js-import + gray-null checks read
+    // (observer ∪ both leaves); the FREE-RIDER fence (getImageData ONE-pass) + the
+    // accumulate/resolve CALL FOLLOW the sampler into (observer ∪ sample leaf); ONLY the
+    // setProperty write stays pinned to the observer's own source.
     const histogramLeaf = stripTs(readFile(HISTOGRAM_LEAF_FILE));
-    const srcWithLeaf = `${src}\n${histogramLeaf}`;
+    const sampleLeaf = stripTs(readFile(SAMPLE_LEAF_FILE));
+    const srcWithLeaf = `${src}\n${histogramLeaf}\n${sampleLeaf}`;
+    // the FREE-RIDER + sampling checks follow the loop into the sample leaf.
+    const srcWithSampler = `${src}\n${sampleLeaf}`;
 
     // the token is WRITTEN onto the target (the setProperty call).
     facts.writesAmbientHue =
@@ -125,9 +137,11 @@ function detectAmbientHue() {
     // the FREE-RIDER fence: the histogram rides the EXISTING getImageData pass — there
     // is exactly ONE getImageData call (the existing one) and ONE createElement
     // canvas (the existing downsample). A second of either is the second-pass defect.
-    const getImageDataCount = (src.match(/\.getImageData\s*\(/g) || []).length;
+    const getImageDataCount = (
+        srcWithSampler.match(/\.getImageData\s*\(/g) || []
+    ).length;
     const createCanvasCount = (
-        src.match(/createElement\(\s*["']canvas["']\s*\)/g) || []
+        srcWithSampler.match(/createElement\(\s*["']canvas["']\s*\)/g) || []
     ).length;
     facts.getImageDataCount = getImageDataCount;
     facts.createCanvasCount = createCanvasCount;
@@ -145,8 +159,8 @@ function detectAmbientHue() {
     // the histogram is accumulated INSIDE the existing per-pixel loop (the free rider)
     // — the per-pixel accumulate helper is called, and chroma×alpha weighting +
     // gray-null are present (the correct null identity: a gray room tints nothing).
-    facts.accumulatesHistogram = /accumulateHuePixel\s*\(/.test(src);
-    facts.resolvesAmbientHue = /resolveAmbientHue\s*\(/.test(src);
+    facts.accumulatesHistogram = /accumulateHuePixel\s*\(/.test(srcWithSampler);
+    facts.resolvesAmbientHue = /resolveAmbientHue\s*\(/.test(srcWithSampler);
     facts.grayNullIdentity = /["']transparent["']/.test(srcWithLeaf);
     if (!facts.accumulatesHistogram || !facts.resolvesAmbientHue) {
         violations.push(

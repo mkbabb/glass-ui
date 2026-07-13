@@ -38,12 +38,19 @@ const read = (rel) => {
 };
 
 const COMPOSABLE = "src/composables/glass/useGlassBackdropLuminance.ts";
+// BI.W-ENCAP-REDRAIN — the stateless sampling family (the elementsFromPoint stack-walk
+// + the downsampled field reader + the resolveTokenColor un-wrap) carved into a
+// colocated leaf the observer COMPOSES. The "composes the resolveTokenColor leaf" fact
+// FOLLOWS the carve: it now resolves in the sample leaf (observer → sample leaf →
+// resolveTokenColor). The composition check reads the union (observer ∪ sample leaf).
+const SAMPLE_LEAF = "src/composables/glass/backdropLuminanceSample.ts";
 const BARREL = "src/composables/glass/index.ts";
 const DOCK = "src/components/custom/dock/GlassDock.vue";
 const EVIDENCE = "docs/consumer-evidence/use-glass-backdrop-luminance.md";
 const DEMO = "demo/stories/substrates/glass-material.vue";
 
 const src = read(COMPOSABLE);
+const sampleLeaf = read(SAMPLE_LEAF);
 const barrel = read(BARREL);
 const dock = read(DOCK);
 const evidence = read(EVIDENCE);
@@ -83,12 +90,16 @@ add(
     ) && /\buseIntersectionPause\s*\(/.test(src),
     "imports + uses useIntersectionPause (the IntersectionObserver gate — offscreen surfaces attach no sample)",
 );
+// The composition FOLLOWS the BI.W-ENCAP-REDRAIN carve — the resolveTokenColor un-wrap
+// lives in the sample leaf the observer composes, so read the union (observer ∪ leaf).
+const composesResolveTokenColor = (text) =>
+    /import\s*\{[^}]*\bresolveTokenColor\b[^}]*\}\s*from\s*["'][^"']*useResolveTokenColor["']/.test(
+        text,
+    ) && /\bresolveTokenColor\s*\(/.test(text);
 add(
     "composes-resolve-token-color",
-    /import\s*\{[^}]*\bresolveTokenColor\b[^}]*\}\s*from\s*["'][^"']*useResolveTokenColor["']/.test(
-        src,
-    ) && /\bresolveTokenColor\s*\(/.test(src),
-    "imports + uses the resolveTokenColor leaf (the AX.W16 single-source var(--token)→rgb un-wrap for the backdrop sample)",
+    composesResolveTokenColor(src) || composesResolveTokenColor(sampleLeaf),
+    "imports + uses the resolveTokenColor leaf (the AX.W16 single-source var(--token)→rgb un-wrap for the backdrop sample) — composed via the backdropLuminanceSample carve leaf",
 );
 // NO hand-rolled requestAnimationFrame — the throttle rides the composed loop.
 add(
