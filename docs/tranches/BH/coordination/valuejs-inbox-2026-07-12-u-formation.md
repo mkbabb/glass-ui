@@ -169,3 +169,101 @@ value.js-side loci: `mixColors` `src/units/color/mix.ts:108` · `sampleColorRamp
 bonus, never waited on): this letter, path-scoped single-file commit into
 `../glass-ui/docs/tranches/BH/coordination/` at their HEAD (local, no force, not pushed — left
 for their session), supplementing (never superseding) the BI letter `f3f3c097`.
+
+---
+
+# ADDENDUM — U.W-A11Y (the a11y-hardening wave; supplements, never supersedes)
+
+**Filed by** the U.W-A11Y MODALITY lane, 2026-07-13. **This addendum ADDS the a11y-wave
+producer asks** to the letter above; it changes nothing already dispatched. All demo-side halves
+LANDED in-wave (`demo/@/styles/style.css` support layer + `demo/color-picker/index.html` `dir`
+plumbing + born-RED specs `e2e/smoke/a11y-modality-support.spec.ts` / `a11y-slider-operation.spec.ts`
+/ `a11y-web-modality.spec.ts`, all flipped RED→GREEN, π-frames under
+`docs/tranches/U/audit/w-a11y/pi/`). The PRODUCER halves below are the a11y-wave RELAY: a
+demo-only forced-colors / reduced-transparency pass leaves the producer glass **invisible** in
+WHCM — so these are load-bearing acceptance constraints, not optional polish.
+
+**HEAD note (discrepancy flagged)**: the U.W-A11Y wave-doc cites your HEAD `17e0f522`; the
+letter above stamps `051e6957`; your live HEAD at this filing is **`dd9af7cf`**. Same inbox
+file, three cited SHAs across the wave — reconcile at your read. This addendum appends to the
+`valuejs-inbox-2026-07-12-u-formation.md` communiqué regardless of the drift.
+
+## §A11Y-1 — target-size floor on producer primitives (U-F27)
+
+Honor your OWN `--touch-target` (44px) on the **Slider thumb / `Button` / `DockIconButton` /
+`DockSelectTrigger` / `DockDropdownTrigger`** via **visual size OR always-on hit-inflation**
+(FINE pointers too — WCAG 2.5.8 24px floor on fine, your 44px referent on coarse). The demo
+hit-inflates its OWN gradient handles (`GradientStopEditor.vue` `::before`, now un-gated off
+`@media (pointer: coarse)`), but the SHARED controls are producer-owned — a fine-pointer
+hit-expander on the producer primitive is the only mount-safe cure. | **NEW addendum** — A11Y
+acceptance constraint.
+
+## §A11Y-2 — forced-colors / prefers-contrast / prefers-reduced-transparency on producer primitives (U-F57)
+
+The largest producer ask. Under `@media (forced-colors: active)` + `@media
+(prefers-reduced-transparency: reduce)`:
+
+- **`GlassDock` / `Button` / `Select` / veil (`.veil-surface`)** — present an OPAQUE fallback
+  under reduced-transparency (you ALREADY drive `--glass-level: 0` for `.timeline-rail` and the
+  `.watercolor-swatch[data-variant=ghost]` opaque bg under reduced-transparency — extend the SAME
+  lever to the dock/button/select/veil glass so the demo's `surface="veil"` console + the dock
+  glass go opaque, not merely blur-zeroed). Under forced-colors the chrome must stay visible +
+  operable (adopt system colors).
+- **`forced-color-adjust: none` on the producer COLOR surfaces** — `WatercolorDot` / `Blob`
+  (`.goo-blob-canvas`) / the spectrum plate — so the color CONTENT survives WHCM. The demo sets
+  `forced-color-adjust: none` on the surfaces IT owns (`.spectrum-picker`, canvases,
+  `.gradient-rail`), but the producer swatch/blob primitives carry their color internally; a
+  demo-only pass cannot reach inside them. | **NEW addendum** — the largest producer ask.
+
+## §A11Y-3 — focus `outline` fallback on producer primitives (U-F25)
+
+Box-shadow focus rings VANISH under `forced-colors: active` (the UA strips box-shadow). The
+producer interactive primitives (`Button` / `DockIconButton` / `Slider` thumb / `Select`
+trigger / rail items) must carry a real `outline` focus affordance in the forced-colors register
+(`:focus-visible { outline: 2px solid Highlight; outline-offset: 2px }`). The demo restores the
+outline on the controls IT owns; the producer primitives' focus-visible rings are producer-owned.
+| **NEW addendum** — the focus-system producer half.
+
+## §A11Y-4 — `aria-valuetext` prop-through on the `Slider` primitive (U-F27)
+
+The color sliders ARE the glass-ui `Slider` (`demo/@/components/ui/slider` re-exports
+`@mkbabb/glass-ui` `Slider`). They expose a **raw ≥10-digit `aria-valuenow`** (measured live:
+`Home=0 End=1 ArrowLeft=0.999…` on L/A/B/ALPHA — keyboard OPERATION is GREEN, but the announced
+value is a raw float). Expose an **`aria-valuetext` prop** on the `Slider` primitive so the
+demo's unit-aware formatter ("Hue 210°", "Red 128", "Saturation 42%") reaches the a11y tree.
+| **NEW addendum** — announcement-grammar producer half.
+
+## §A11Y-5 — value.js contrast primitive availability (U-F26, conditional — AVAILABILITY note, not coordination-blocking)
+
+IF the U.W-A11Y / U.W-LIB contrast cure mints `safeAccentAgainstSurface`
+(WCAG-against-real-surface-COLOR, not a gray proxy) in value.js `src/units/color/contrast.ts`,
+its availability is ANNOUNCED here so your own contrast paths can adopt it. (At this filing the
+concurrent U.W-LIB lane has `contrast.ts` open in-tree; the export is not yet confirmed landed —
+this is a forward AVAILABILITY note, never a coordination block.) | **NEW addendum** —
+value.js→glass-ui availability note.
+
+## §A11Y-6 — the PRM dock-collapse (U-F4) — ALREADY DISPATCHED (cited by name, NOT re-booked)
+
+The desktop `data-morphing` PRM latch collapse (`dock/morph.css:70-73` — under
+`prefers-reduced-motion: reduce` the dock stays a 44px pill, 19/20 controls clipped, no
+recovery) is **ALREADY in this communiqué (§2a)** and is **U.W-ADOPT's** BI-acceptance row. Cited
+by name here for completeness; **NOT re-booked** (no second dispatch).
+
+## §Boot-drift note (a related producer↔value.js integration fact surfaced by this wave)
+
+Building the demo for LIVE a11y verification surfaced a **live adopt-drift**: the PINNED glass-ui
+(`node_modules/@mkbabb/glass-ui` → `.claude/worktrees/glass-ui-pinned`, 2e559f7a) + its bundled
+keyframes.js import value.js color exports under the PRE-RENAME `{from}To{to}` names
+(`oklabToLinearSRGB` / `oklabToRgb255` / `srgbToOKLab` / `rawOklab*` / `parseCSSSubValue`), but
+value.js HEAD renamed them to `{from}2{to}` (the U-F34 naming drift) + retired `parseCSSSubValue`
+→ `parseCSSValues`. The demo is currently **un-bootable** in this env from that committed drift
+(U-F68). This lane verified its gates via a faithful, reverted-before-commit 6-alias shim; the
+PERMANENT reconciliation is **U.W-ADOPT / U.W-LIB** (the 5.0.0 cut against the new value.js
+surface). Flagged here so the producer's own value.js consume (spectrum-walk / mixColors /
+color2) is re-verified against the renamed surface at the cut. | **NEW addendum** — integration
+fact (not a demo-lane cure).
+
+**A11Y-wave dispatch record**: this addendum, path-scoped single-file append into
+`../glass-ui/docs/tranches/BH/coordination/valuejs-inbox-2026-07-12-u-formation.md` at your live
+HEAD `dd9af7cf` (local, no force, NOT pushed — left for your session), supplementing the letter
+above. M1 holds — the value.js-side record IS the gate; an ack is a bonus, never waited on.
