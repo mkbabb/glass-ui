@@ -90,6 +90,55 @@ describe("useKeyboardShortcuts", () => {
         );
     });
 
+    it("resolves Escape LIFO — the most-recently-registered handler wins (BI.W-ESC-STACK)", () => {
+        // Two OPEN overlays register Escape in order; the dispatcher must fire the
+        // LAST-registered (top-most) one and consume, leaving the first untouched.
+        const order: string[] = [];
+        register("Escape", vi.fn(() => void order.push("first")), {
+            allowInInput: true,
+        });
+        register("Escape", vi.fn(() => void order.push("second")), {
+            allowInInput: true,
+        });
+
+        window.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
+
+        // Top-most (last-registered) wins and consumes — the first does NOT fire.
+        expect(order).toEqual(["second"]);
+    });
+
+    it("pops the Escape stack — a second Escape reaches the next handler down", () => {
+        const first = vi.fn();
+        const second = vi.fn();
+        register("Escape", first, { allowInInput: true });
+        const popSecond = registerShortcut("Escape", second, {
+            allowInInput: true,
+        });
+
+        window.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
+        expect(second).toHaveBeenCalledTimes(1);
+        expect(first).not.toHaveBeenCalled();
+
+        // The top overlay closes → unregisters; a second Escape pops the next.
+        popSecond();
+        window.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
+        expect(first).toHaveBeenCalledTimes(1);
+        expect(second).toHaveBeenCalledTimes(1);
+    });
+
+    it("keeps non-Escape keys on the forward first-registered-wins order", () => {
+        const first = vi.fn();
+        const second = vi.fn();
+        register("k", first);
+        register("k", second);
+
+        window.dispatchEvent(new KeyboardEvent("keydown", { key: "k" }));
+
+        // Forward first-match: the FIRST-registered handler wins for non-Escape.
+        expect(first).toHaveBeenCalledTimes(1);
+        expect(second).not.toHaveBeenCalled();
+    });
+
     it("formats combo strings for keyboard displays", () => {
         expect(formatComboParts("Shift+ArrowLeft")).toEqual([
             isMac ? "⇧" : "Shift",

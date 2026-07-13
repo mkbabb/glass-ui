@@ -1,6 +1,12 @@
 <template>
-    <!-- Normal mode: render inline -->
-    <div v-if="!open" class="relative" v-bind="$attrs">
+    <!-- BI.W-ESC-STACK / A11Y-4 — the inline host is ALWAYS mounted. The expand
+         trigger PERSISTS (it is the focus-restore target on collapse — a trigger
+         that unmounts cannot be restored to), and the host carries `inert` while
+         fullscreen so the page-behind footprint (the covered trigger) is not
+         keyboard / AT-reachable under the overlay. The default content renders
+         inline ONLY while collapsed; on expand it MOVES into the fullscreen panel
+         (a single stateful instance — never a duplicate render). -->
+    <div class="relative" :inert="open || undefined" v-bind="$attrs">
         <!-- BC.W-EXPANDABLE-PART — the expand affordance is a chrome HOOK, not a
              hard-coded button. `#expand-trigger` (named slot) REPLACES it; the
              unfilled default below renders today's <Maximize2> corner button
@@ -21,7 +27,7 @@
                 <Maximize2 class="h-4 w-4" />
             </button>
         </slot>
-        <slot :fullscreen="false" />
+        <slot v-if="!open" :fullscreen="false" />
     </div>
 
     <!-- Fullscreen mode: teleport to body. BA.W-SURFACE-AXIS — the fullscreen
@@ -41,15 +47,29 @@
          `open`-driven `syncBodyOverflowLock` watcher is ORTHOGONAL (it fires on the
          `open` state, never on the teleport mount), so the lock ordering is intact. -->
     <Teleport to="body" :disabled="!open">
-        <div
+        <!-- BI.W-ESC-STACK / A11Y-4 — the fullscreen panel composes reka's
+             FocusScope (via the house `ui/focus-scope` pass-through — the
+             substrate-single discipline): `trapped` keeps Tab inside the overlay,
+             the default mount-auto-focus MOVES focus in, and the collapse path
+             RESTORES focus to the trigger. reka's own restore captured
+             `document.body` (the inline host was already `inert` when the scope
+             mounted), so `@unmount-auto-focus` overrides it to the pre-inert
+             trigger we captured. `as-child` merges the scope onto the overlay div
+             (no wrapper node). -->
+        <FocusScope
             v-if="open"
-            data-part="overlay"
-            :data-surface="surface"
-            :class="cn(
-                'fixed inset-0 z-modal flex flex-col glass-overlay',
-                surfaceDecoration,
-            )"
+            as-child
+            trapped
+            @unmount-auto-focus="onFullscreenUnmountAutoFocus"
         >
+            <div
+                data-part="overlay"
+                :data-surface="surface"
+                :class="cn(
+                    'fixed inset-0 z-modal flex flex-col glass-overlay',
+                    surfaceDecoration,
+                )"
+            >
             <!-- BC.W-EXPANDABLE-PART — the fullscreen-overlay chrome is a HOOK.
                  `#fullscreen-chrome` (named slot) REPLACES it (a branded top
                  toolbar, a custom close); the unfilled default renders today's
@@ -76,7 +96,8 @@
             <div data-part="panel" class="h-full w-full">
                 <slot :fullscreen="true" />
             </div>
-        </div>
+            </div>
+        </FocusScope>
     </Teleport>
 </template>
 
@@ -107,9 +128,10 @@ function releaseBodyOverflowLock() {
 </script>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, watch } from "vue";
+import { computed, nextTick, onUnmounted, watch } from "vue";
 import { Maximize2, Minimize2 } from "@lucide/vue";
 import { registerShortcut } from "../../../composables/keyboard";
+import { FocusScope } from "../../ui/focus-scope";
 import { cn } from "../../../utils";
 // BA.W-SURFACE-AXIS — the fullscreen overlay routes through the SHARED
 // {glass·veil·opaque} axis (it was a solid `bg-background` wall — the IG-B5/FD-6
@@ -179,22 +201,62 @@ function syncBodyOverflowLock(fs: boolean) {
     }
 }
 
-watch(open, syncBodyOverflowLock, { immediate: true });
-
+// BI.W-ESC-STACK / A11Y-4 — the open-transition machine. On OPEN: lock body
+// scroll, capture the pre-inert focus (the restore target), and register the
+// Escape handler ONLY WHILE OPEN. On CLOSE: unlock + drop the Escape handler.
+// The Escape registration lives HERE (register-on-open), NOT in `onMounted`
+// (the clean break from the unconditional on-mount handler that let a collapsed
+// container swallow Escape from a later overlay — FAM-2). The dispatcher resolves
+// Escape LIFO, so while this container is the top-most open overlay its handler
+// consumes Escape; a collapsed container holds no handler at all.
 let unregEsc: (() => void) | null = null;
+let restoreTarget: HTMLElement | null = null;
 
-onMounted(() => {
-    unregEsc = registerShortcut(
-        "Escape",
-        () => {
-            if (open.value) open.value = false;
-        },
-        { label: "Exit fullscreen", group: "UI", allowInInput: true },
-    );
-});
+watch(
+    open,
+    (isOpen, wasOpen) => {
+        syncBodyOverflowLock(isOpen);
+
+        if (isOpen && !wasOpen) {
+            // `flush: "pre"` (the default) runs this BEFORE the render applies
+            // `inert` to the inline host and the browser blurs the trigger, so
+            // `activeElement` here is still the trigger — the collapse restore
+            // target.
+            const active =
+                typeof document !== "undefined" ? document.activeElement : null;
+            restoreTarget = active instanceof HTMLElement ? active : null;
+
+            unregEsc = registerShortcut(
+                "Escape",
+                () => {
+                    open.value = false;
+                },
+                { label: "Exit fullscreen", group: "UI", allowInInput: true },
+            );
+        } else if (!isOpen && wasOpen) {
+            unregEsc?.();
+            unregEsc = null;
+        }
+    },
+    { immediate: true },
+);
+
+// The collapse focus-restore. reka FocusScope captured `document.body` as its
+// own restore target (the inline host was already `inert` when the scope
+// mounted), so we `preventDefault` its restore and focus the pre-inert trigger
+// instead. `open` is already false here, so the inline host's `inert` is being
+// cleared; `nextTick` lets that attribute removal flush before `focus()` (an
+// inert element is unfocusable).
+function onFullscreenUnmountAutoFocus(event: Event) {
+    event.preventDefault();
+    const target = restoreTarget;
+    restoreTarget = null;
+    nextTick(() => target?.focus?.());
+}
 
 onUnmounted(() => {
     unregEsc?.();
+    unregEsc = null;
     syncBodyOverflowLock(false);
 });
 </script>

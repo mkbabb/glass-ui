@@ -141,6 +141,36 @@ const CONTAINERS_STOP = 2;
         </StorySection>
 
         <StorySection
+            label="Stacked Escape — dismiss-topmost (LIFO)"
+            blurb="Overlays register their Escape handler ONLY while open, and the global dispatcher resolves Escape LIFO — the top-most open overlay consumes Escape, a second Escape pops the next. Expand the outer container, then the inner one nested inside it: the first Escape collapses the INNER (topmost), the second Escape collapses the OUTER — never the outer first. Fullscreen also traps Tab inside the panel and restores focus to the trigger on collapse."
+        >
+            <ShowcaseFrame pad="md">
+                <ExpandableContainer class="esc-stack-outer">
+                    <template #default="{ fullscreen }">
+                        <div
+                            class="flex h-48 flex-col items-center justify-center gap-4 rounded-md bg-card p-6 text-muted-foreground"
+                        >
+                            <code class="fira-code text-sm">
+                                outer · fullscreen={{ fullscreen }}
+                            </code>
+                            <ExpandableContainer class="esc-stack-inner">
+                                <template #default="{ fullscreen: innerFullscreen }">
+                                    <div
+                                        class="flex h-32 items-center justify-center rounded-md bg-background/60 px-8 text-muted-foreground"
+                                    >
+                                        <code class="fira-code text-sm">
+                                            inner · fullscreen={{ innerFullscreen }}
+                                        </code>
+                                    </div>
+                                </template>
+                            </ExpandableContainer>
+                        </div>
+                    </template>
+                </ExpandableContainer>
+            </ShowcaseFrame>
+        </StorySection>
+
+        <StorySection
             label="API"
             blurb="Slot prop `fullscreen: boolean` lets the consumer paint differently in expanded mode. The `data-part` re-skin hooks (trigger/overlay/panel + `data-mode`) and the `#expand-trigger`/`#fullscreen-chrome` replacement slots are the contracted chrome seam."
         />

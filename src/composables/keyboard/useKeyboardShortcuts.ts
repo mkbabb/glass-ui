@@ -186,12 +186,33 @@ export function formatCombo(raw: string): string {
     return formatComboParts(raw).join(isMac ? "" : "+");
 }
 
+// BI.W-ESC-STACK / FAM-2 — the Escape "dismiss-topmost" test. Escape (and its
+// `Esc` alias) resolves LIFO so the most-recently-registered OPEN overlay wins;
+// every other key keeps the forward first-match dispatch (a multi-target
+// accelerator is correct there — only Escape carries the stack semantic).
+function isEscapeEvent(e: KeyboardEvent): boolean {
+    const key = e.key.toLowerCase();
+    return key === "escape" || key === "esc";
+}
+
 function dispatchShortcut(
     shortcuts: Set<RegisteredShortcut>,
     eventType: ShortcutEventType,
     e: KeyboardEvent,
 ): void {
-    for (const shortcut of shortcuts) {
+    // BI.W-ESC-STACK — resolve Escape LIFO (dismiss-topmost). Overlays register
+    // their Escape handler ONLY WHILE OPEN (register-on-open / unregister-on-
+    // close), and the registry Set preserves insertion order, so the reversed
+    // walk lands on the top-most live overlay first: it consumes and returns, a
+    // second Escape pops the next. A collapsed container holds no handler. This
+    // makes the house `registerShortcut` path MATCH the reka DismissableLayer
+    // stack (Dialog/Sheet/Drawer/Popover) rather than shadow it. All other keys
+    // keep the forward first-registered-wins order (unchanged).
+    const order = isEscapeEvent(e)
+        ? [...shortcuts].reverse()
+        : shortcuts;
+
+    for (const shortcut of order) {
         if ((shortcut.options.event ?? "keydown") !== eventType) continue;
         if (!matchesCombo(e, shortcut.combo)) continue;
 
