@@ -2,7 +2,7 @@
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { HeaderRibbon } from "@glass/components/custom/header-ribbon";
-import { DockIconButton } from "@glass/components/custom/dock";
+import { DockControl } from "@glass/components/custom/dock";
 import { IconChip } from "@glass/components/custom/icon-chip";
 import { Menu, Settings, Search, Bell, PanelTop } from "@lucide/vue";
 
@@ -44,24 +44,24 @@ const NAV_STOP = 12;
             >
                 <HeaderRibbon position="left" class="!absolute">
                     <template #anchor="{ pinned }">
-                        <DockIconButton
+                        <DockControl
                             type="button"
                             :aria-pressed="pinned"
                             aria-label="Toggle navigation ribbon"
                         >
                             <Menu aria-hidden="true" />
-                        </DockIconButton>
+                        </DockControl>
                     </template>
                     <template #items>
-                        <DockIconButton type="button" aria-label="Search">
+                        <DockControl type="button" aria-label="Search">
                             <Search aria-hidden="true" />
-                        </DockIconButton>
-                        <DockIconButton type="button" aria-label="Notifications">
+                        </DockControl>
+                        <DockControl type="button" aria-label="Notifications">
                             <Bell aria-hidden="true" />
-                        </DockIconButton>
-                        <DockIconButton type="button" aria-label="Settings">
+                        </DockControl>
+                        <DockControl type="button" aria-label="Settings">
                             <Settings aria-hidden="true" />
-                        </DockIconButton>
+                        </DockControl>
                     </template>
                 </HeaderRibbon>
                 <p

@@ -7,7 +7,7 @@ import {
     type InstrumentChassisPhase,
 } from "@glass/components/custom/instrument-chassis";
 import { MetricBadge } from "@glass/components/custom/metric-badge";
-import { DockIconButton, DockTabButton } from "@glass/components/custom/dock";
+import { DockControl } from "@glass/components/custom/dock";
 import {
     ArrowLeft,
     RotateCcw,
@@ -169,9 +169,9 @@ const primaryGlyph = computed<{ icon: LucideIcon; label: string }>(() => {
                             />
                         </div>
                     </div>
-                    <DockIconButton aria-label="Settings">
+                    <DockControl aria-label="Settings">
                         <Settings :stroke-width="2" class="size-5 text-muted-foreground" />
-                    </DockIconButton>
+                    </DockControl>
                 </template>
 
                 <template #dial>
@@ -209,18 +209,18 @@ const primaryGlyph = computed<{ icon: LucideIcon; label: string }>(() => {
 
                 <template #control>
                     <div class="flex items-center gap-2">
-                        <DockIconButton aria-label="Back">
+                        <DockControl aria-label="Back">
                             <ArrowLeft :stroke-width="2.5" class="size-5" />
-                        </DockIconButton>
-                        <DockIconButton aria-label="Retake">
+                        </DockControl>
+                        <DockControl aria-label="Retake">
                             <RotateCcw :stroke-width="2.5" class="size-5" />
-                        </DockIconButton>
+                        </DockControl>
                     </div>
                     <div class="dock-spacer" />
-                    <DockTabButton data-tier="primary" class="primary-action-demo">
+                    <DockControl shape="tab" data-tier="primary" class="primary-action-demo">
                         <component :is="primaryGlyph.icon" :stroke-width="2.5" class="size-5 text-foreground" />
                         <span class="text-heading font-medium">{{ primaryGlyph.label }}</span>
-                    </DockTabButton>
+                    </DockControl>
                 </template>
             </InstrumentChassis>
             <p class="text-mono-caption text-muted-foreground">

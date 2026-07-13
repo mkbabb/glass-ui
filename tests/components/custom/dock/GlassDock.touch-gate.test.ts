@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { defineComponent, h, ref } from "vue";
 
 import GlassDock from "@glass/components/custom/dock/GlassDock.vue";
-import DockIconButton from "@glass/components/custom/dock/DockIconButton.vue";
+import DockControl from "@glass/components/custom/dock/DockControl.vue";
 
 /**
  * AT.W6-dock-b — the BEHAVIOURAL touch-gate contract over the LIVE `<GlassDock>`
@@ -129,13 +129,13 @@ function mountDockWithCollapsedControl() {
                     {
                         // Expanded layer — full controls.
                         default: () => [
-                            h(DockIconButton, { "aria-label": "Home" }, () => "H"),
-                            h(DockIconButton, { "aria-label": "Search" }, () => "S"),
+                            h(DockControl, { "aria-label": "Home" }, () => "H"),
+                            h(DockControl, { "aria-label": "Search" }, () => "S"),
                         ],
                         // Collapsed pill — a LIVE play button (Now-Playing mini-bar).
                         collapsed: () =>
                             h(
-                                DockIconButton,
+                                DockControl,
                                 {
                                     "aria-label": "Play",
                                     "data-testid": "collapsed-play",
@@ -294,7 +294,7 @@ describe("GlassDock touch-gate behavioural contract (AT.W6-dock-b)", () => {
         // Once expanded, the gate short-circuits (`visualExpanded` true): the tap
         // is not swallowed and the control fires exactly once.
         const home = wrapper
-            .findAllComponents(DockIconButton)
+            .findAllComponents(DockControl)
             .find((c) => c.attributes("aria-label") === "Home");
         expect(home).toBeDefined();
         const tap = dispatchTap(home!.element, 0);

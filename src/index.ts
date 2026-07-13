@@ -114,12 +114,12 @@ export * from "./components/ui/table";
 // BA.W-TABS — `ui/Tabs` (the reka wrapper family) LEFT the public surface (the
 // "too many types" cut: two parallel tab families, the always-ON baked-plate
 // indicator default that painted the R10-2 oval blob). The standardized tab family
-// is `SegmentedTabs` (`@mkbabb/glass-ui/tabs`, TWO materials). The reka substrate
-// files (`components/ui/tabs/*`) remain INTERNAL solely for the dock-rail consumer
-// (`DockLayerGroup.vue` + `<TabsIndicator :plate="false">`, the AZ hairline;
-// BH.W-AXIS-GRAMMAR renamed the boolean `surface` prop to `plate` — the
-// surface-decoration-axis noun de-collision);
-// they are NOT re-exported from any public barrel.
+// is `SegmentedTabs` (`@mkbabb/glass-ui/tabs`, TWO materials).
+// BI.W-DOCK-FOLD — the reka substrate files (`components/ui/tabs/*`) are
+// DEFINITION-ABSENT (retired): their sole internal consumer `DockLayerGroup.vue`
+// re-points onto the library's ONE headless selection engine `useSelectionGroup`
+// (roving focus + the ONE traveling-indicator writer, Safari-identical), so the
+// reka `--reka-tabs-indicator-*` path is gone. No public barrel re-exported them.
 export * from "./components/ui/tags-input";
 export * from "./components/ui/toast";
 export * from "./components/ui/toggle";
@@ -219,6 +219,19 @@ export {
     type UseLiquidFlexReturn,
 } from "./composables/motion/useLiquidFlex";
 
+// BI.W-PAGER-WORM — the two-edge lead/trail integrator (the ONE driver behind the
+// liquid dot-MORPH worm + the B3 eyeglass release). A spring LEAD edge + a damped
+// TRAIL follower in ONE rAF; the gap IS the worm's elongation, the trail catching the
+// lead is the emergent release. Imports `vue` only — engine-FREE + vueuse-FREE (a
+// hand-rolled critically-damped integrator, no spring engine), so it is root-barrel
+// safe per the `useLiquidFlex` precedent; also reachable via `@mkbabb/glass-ui/motion-core`.
+export {
+    useLeadTrail,
+    type LeadTrailEdges,
+    type UseLeadTrail,
+    type UseLeadTrailOptions,
+} from "./composables/motion/useLeadTrail";
+
 // BD.W-GOO-CAROUSEL-DECK — the ONE goo-morph engine (the de-dup of the pager WORM):
 // a two-edge stretch→merge→pinch→settle driver, generalized off the dot-pip register
 // into the library's single liquid metaball-morph transition driver — consumed by the
@@ -256,6 +269,40 @@ export {
     type UsePointerVelocityField,
     type UsePointerVelocityFieldOptions,
 } from "./composables/motion/usePointerVelocityField";
+
+// BI.W-FIELD-CORE — the route pointer BROADCASTER (a full-bleed pointer-events:none
+// background viz cannot listen for itself; the ONE capture-phase window listener per
+// route serves them via provide/inject) + the four PURE per-viz pointer-field mappings
+// (fourier draw-bias/lean · blob heavy-pull · aurora cursor · constellation well). Both
+// import `vue` only (the mappings are pure) — engine-FREE + vueuse-FREE + root-barrel safe
+// per the `usePointerVelocityField` precedent; also reachable via `@mkbabb/glass-ui/motion-core`.
+export {
+    useRoutePointer,
+    type RoutePointerContext,
+    type UseRoutePointerOptions,
+} from "./composables/motion/useRoutePointer";
+export {
+    fourierLeanMapping,
+    blobPullMapping,
+    auroraCursorMapping,
+    constellationWellMapping,
+    snapshotField,
+    FOURIER_BIAS_GAIN,
+    FOURIER_FOLLOW_LEAN,
+    BLOB_LEAD_K,
+    BLOB_STRETCH_GAIN,
+    BLOB_STRETCH_MAX,
+    AURORA_CURSOR_RADIUS,
+    type PointerFieldSnapshot,
+    type FourierLeanGeometry,
+    type FourierLeanOptions,
+    type FourierLeanResult,
+    type BlobPullOptions,
+    type BlobPullResult,
+    type AuroraCursorOptions,
+    type AuroraCursorResult,
+    type ConstellationWellResult,
+} from "./composables/motion/pointerFieldMappings";
 
 // BC.W-SPLIT-CHARS — the per-glyph split partner to the shipped `.char-stagger`
 // CSS recipe. Reads a target's `textContent`, mints `.char` spans + the

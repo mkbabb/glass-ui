@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { h, nextTick } from "vue";
 
 import GlassDock from "@glass/components/custom/dock/GlassDock.vue";
-import DockIconButton from "@glass/components/custom/dock/DockIconButton.vue";
+import DockControl from "@glass/components/custom/dock/DockControl.vue";
 
 /**
  * AZ.W-DOCK-TAXONOMY (HG2) — a COLLAPSIBLE vertical dock morphs/shrinks.
@@ -26,10 +26,10 @@ describe("GlassDock vertical collapse (AZ.W-DOCK-TAXONOMY HG2)", () => {
             props: { orientation: "vertical", startCollapsed: true, ...props },
             slots: {
                 default: () => [
-                    h(DockIconButton, { "aria-label": "A" }, () => "A"),
-                    h(DockIconButton, { "aria-label": "B" }, () => "B"),
+                    h(DockControl, { "aria-label": "A" }, () => "A"),
+                    h(DockControl, { "aria-label": "B" }, () => "B"),
                 ],
-                collapsed: () => h(DockIconButton, { "aria-label": "Open" }, () => "O"),
+                collapsed: () => h(DockControl, { "aria-label": "Open" }, () => "O"),
             },
             attachTo: document.body,
         });

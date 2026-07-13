@@ -34,7 +34,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@glass/components/ui/dialog";
-import { GlassDock, DockIconButton } from "@glass/components/custom/dock";
+import { GlassDock, DockControl } from "@glass/components/custom/dock";
 import { Layers, Package, Library, Sparkles } from "@lucide/vue";
 
 // The tempo scalar (reka Slider binds a number[]). 0.7 (quicker) → 1.3 (longer);
@@ -137,11 +137,11 @@ const dialogOpen = ref(false);
         >
             <div class="dock-demo-stage flex min-h-40 items-center justify-center rounded-card p-8">
                 <GlassDock>
-                    <DockIconButton aria-label="Assets"><Package /></DockIconButton>
-                    <DockIconButton aria-label="Layers"><Layers /></DockIconButton>
-                    <DockIconButton aria-label="Libraries"><Library /></DockIconButton>
+                    <DockControl aria-label="Assets"><Package /></DockControl>
+                    <DockControl aria-label="Layers"><Layers /></DockControl>
+                    <DockControl aria-label="Libraries"><Library /></DockControl>
                     <template #collapsed>
-                        <DockIconButton aria-label="Expand"><Sparkles /></DockIconButton>
+                        <DockControl aria-label="Expand"><Sparkles /></DockControl>
                     </template>
                 </GlassDock>
             </div>

@@ -152,7 +152,7 @@ function effectiveFont(slot: keyof FontSlots): string {
 
 <template>
     <!-- AZ.W-SHELL-CONFIG — the gear-hosted demo configurator. The floating FAB
-         is GONE (the open is rehomed onto the SidebarDock gear DockIconButton);
+         is GONE (the open is rehomed onto the SidebarDock gear DockControl);
          the Sheet is open-controlled by `open` (driven by the `,` shortcut + the
          `glass-ui-demo:toggle-configurator` window event — both still functional)
          + the dock gear, so there is no in-component SheetTrigger. -->
