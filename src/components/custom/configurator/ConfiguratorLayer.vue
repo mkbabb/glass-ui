@@ -89,17 +89,21 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
 </script>
 
 <template>
-    <!-- No per-section radius: rounding is owned at the container root clip (Configurator.vue rounded-panel + overflow-hidden); flush sections keep straight border-b dividers — a per-section radius only deforms the hairline on a transparent border-only element. -->
-    <!-- BA.W-CONFIG-CHASSIS.1 (CFG-4) — the SECTION divider reads the dark-adaptive
-         --configurator-divider-section token (off the inline `border-border/40`
-         alpha that vanished on the dark glass plate). The `border-b` width stays
-         Tailwind; the COLOR comes from the scoped `.configurator-layer` rule below
-         (which also paints the faint section tonal step). -->
+    <!-- BI.W-CONFIG-IN-SHEET (Law 1/Law 2, ruling 11) — the section is a CONCENTRIC
+         CARD, not a flush-square hairline block. The `border` (all-side) width is
+         Tailwind; the concentric `border-radius` (max(floor, ctx − inset)) + the
+         `overflow: hidden` clip + the section tint + the CARD border-color come from
+         the scoped `.configurator-layer` rule in configurator.css, which reads the
+         Law-1 relay off the parent ctx (the <Configurator> root site #1 / the gear
+         Sheet site #3). This SUPERSEDES the prior "no per-section radius / flush
+         border-b" contract (clean break — UF-A4). The dark-adaptive
+         --configurator-divider-section token (BA.W-CONFIG-CHASSIS.1 / CFG-4) still
+         carries the border color so the card edge survives both glass plates. -->
     <div
         data-slot="configurator-layer"
         :class="
             cn(
-                'configurator-layer border-b last:border-b-0',
+                'configurator-layer border',
                 props.class,
             )
         "
@@ -115,7 +119,7 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
                     // transition-control surface cross-fade + the canonical
                     // focus-ring under the full four-state contract. The press
                     // springs on the same register every band atom uses.
-                    'group flex w-full items-center justify-between gap-2 px-3 py-2',
+                    'group flex w-full items-center justify-between gap-2 py-2',
                     'tap-squish transition-control text-left hover:bg-foreground/5 focus-ring',
                 )
             "
@@ -171,12 +175,15 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
                      dark-adaptive --configurator-divider token (off the inline
                      `border-border/30` alpha). The `border-t`/`pt-2` arbitrary
                      variants stay (the WIDTH + spacing); `data-dividers` keys the
-                     scoped COLOR rule below. -->
+                     scoped COLOR rule below. BI.W-CONFIG-IN-SHEET — the body drops its
+                     raw `px-3` literal; its inline padding is the ONE
+                     --configurator-pad-inline anchor (configurator.css), aligned with
+                     the section trigger + the sheet chrome. -->
                 <div
                     :data-dividers="props.dividers || undefined"
                     :class="
                         cn(
-                            'configurator-layer-body px-3 py-2 space-y-2',
+                            'configurator-layer-body py-2 space-y-2',
                             props.dividers && '[&>*+*]:border-t [&>*+*]:pt-2',
                             props.bodyClass,
                         )

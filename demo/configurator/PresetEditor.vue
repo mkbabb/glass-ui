@@ -163,7 +163,7 @@ function effectiveFont(slot: keyof FontSlots): string {
         >
             <div class="flex h-full flex-col">
                 <SheetHeader
-                    class="px-6 pt-6 pb-4 border-b"
+                    class="px-(--configurator-pad-inline) pt-6 pb-4 border-b"
                     style="border-color: var(--configurator-divider)"
                 >
                     <SheetTitle class="font-display text-2xl">
@@ -183,10 +183,17 @@ function effectiveFont(slot: keyof FontSlots): string {
                      section rung, and each former `<PresetEditorField>` (a byte-for-
                      byte ConfiguratorRow clone) is now a `<ConfiguratorRow>` — ONE
                      anatomy, the W-HIERARCHY vocabulary the studios already speak.
-                     The dividers read the dark-adaptive --configurator-divider token.
-                     The controls column is a plain scroll port (the Sheet owns the
-                     overflow; no Configurator stage grid in this single-column host). -->
-                <div class="configurator glass-floating flex-1 overflow-y-auto">
+                     BI.W-CONFIG-IN-SHEET (FAM-4, ruling 11) — the bare `.configurator
+                     glass-floating` root masquerade is GONE: the sections ARE the
+                     shipped <ConfiguratorLayer>/<ConfiguratorRow> chassis; this wrapper
+                     is an honest single-column scroll port (the Sheet owns the surface
+                     + overflow; the <Configurator> stage-grid SFC is a studio chassis,
+                     a mismatch for a controls-only sheet). The sections read the Law-1
+                     concentric card rung off the SHEET's published ctx (site #3), so
+                     each reads as a CARD inside the sheet clip (UF-A4); their inline
+                     padding + the sheet chrome share the ONE --configurator-pad-inline
+                     anchor (UF-A5/GEO-9). -->
+                <div class="configurator-sheet-body flex-1 overflow-y-auto py-3">
                     <!-- Appearance — the dark toggle LEADS (R4-3: dark-mode at the TOP
                          of the gear view), now the canonical live <DarkModeToggle>. -->
                     <ConfiguratorLayer label="Appearance" :dividers="true">
@@ -381,7 +388,7 @@ function effectiveFont(slot: keyof FontSlots): string {
                     </ConfiguratorLayer>
                 </div>
 
-                <div class="configurator-footer flex items-center justify-between gap-2 px-6 py-4 border-t">
+                <div class="configurator-footer flex items-center justify-between gap-2 px-(--configurator-pad-inline) py-4 border-t">
                     <Label class="text-micro font-mono text-muted-foreground/70">
                         glass-ui-demo-config
                     </Label>

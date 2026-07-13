@@ -193,18 +193,32 @@ const containerClass = computed(() =>
     ),
 );
 
-// Inline custom props the `asideWidth` prop projects onto the root. A single
-// length pins the band (min === max); a [min, max] pair sets each rail. When
-// the prop is absent both stay unset and the cascade/defaults apply.
+// Inline custom props projected onto the root.
+//
+// BI.W-CONFIG-IN-SHEET (Law 1 — the concentric-radius RELAY parent, site #1). The
+// <Configurator> root PUBLISHES its resolved corner (--radius-panel, the `rounded-panel`
+// the containerClass paints) as --radius-ctx + its section inset (--configurator-pad-inline)
+// as --radius-inset, so a nested `.configurator-layer` section DERIVES its own corner
+// concentric with the outer:
+//   border-radius: max(var(--radius-floor), calc(var(--radius-ctx) − var(--radius-inset)))
+// (the gear Sheet is the sibling site #3 — SheetContent publishes --radius-dialog/-inset).
+//
+// The `asideWidth` prop (when set) projects the aside band pair onto the SAME root; a single
+// length pins the band (min === max), a [min, max] pair sets each rail. When absent the band
+// stays unset and the cascade/defaults apply.
 const containerStyle = computed(() => {
-    if (props.asideWidth == null) return undefined;
-    const [min, max] = Array.isArray(props.asideWidth)
-        ? props.asideWidth
-        : [props.asideWidth, props.asideWidth];
-    return {
-        "--configurator-aside-min": min,
-        "--configurator-aside-max": max,
-    } as Record<string, string>;
+    const style: Record<string, string> = {
+        "--radius-ctx": "var(--radius-panel)",
+        "--radius-inset": "var(--configurator-pad-inline)",
+    };
+    if (props.asideWidth != null) {
+        const [min, max] = Array.isArray(props.asideWidth)
+            ? props.asideWidth
+            : [props.asideWidth, props.asideWidth];
+        style["--configurator-aside-min"] = min;
+        style["--configurator-aside-max"] = max;
+    }
+    return style;
 });
 
 // Visual side flip without a DOM reorder. BC.W-CONFIG-RIGHT — the side moves

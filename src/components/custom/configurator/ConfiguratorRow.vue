@@ -16,6 +16,16 @@ import { useOptionalConfiguratorSize, type ConfiguratorSize } from "./size";
  * etc.). The reset button is opt-in via `canReset`; emits a `reset`
  * event the consumer wires to its own field-clear path.
  *
+ * # The double-label API (value.js L14)
+ *
+ * The label header is a first-class TRIPLE: `label` (the primary, sans /
+ * medium), the optional `sub` (a SECONDARY descriptive label — sans, muted —
+ * paired inline with the primary), and the optional `name` (the mono token /
+ * spec reference, or a live numeric readout). All three are declarative props,
+ * so a consumer expresses a "double-label" row (primary + secondary) WITHOUT a
+ * `:deep()` reach into the slot or a hand-rolled in-slot sans+mono pair. Use
+ * `sub` for a descriptive secondary label and `name` for a mono token/value.
+ *
  * # Size axis (BH.W-SIZE-UNIFY)
  *
  * The row honors a three-rung size axis (`sm` | `md` | `lg`).
@@ -50,6 +60,13 @@ import { useOptionalConfiguratorSize, type ConfiguratorSize } from "./size";
 const props = defineProps<{
     /** Display label (top-left, primary). */
     label: string;
+    /**
+     * Optional SECONDARY label (value.js L14 — the double-label API). A
+     * descriptive secondary rung paired inline with the primary `label` (sans,
+     * muted), distinct from the mono `name` token/value. Lets a consumer express
+     * a two-part label declaratively — no `:deep()` reach, no in-slot label pair.
+     */
+    sub?: string;
     /** Optional token name / spec reference (right of label, monospaced). */
     name?: string;
     /** Optional helper / value description (below the control). */
@@ -99,6 +116,14 @@ const resolvedSize = computed<ConfiguratorSize | undefined>(
                 <Label class="truncate text-small font-medium text-foreground">
                     {{ label }}
                 </Label>
+                <!-- The SECONDARY label (L14 double-label) — a descriptive sans rung
+                     paired inline with the primary, distinct from the mono `name`. -->
+                <span
+                    v-if="sub"
+                    class="truncate text-small font-normal text-muted-foreground"
+                >
+                    {{ sub }}
+                </span>
                 <span
                     v-if="name"
                     class="truncate text-micro font-mono text-muted-foreground/70"

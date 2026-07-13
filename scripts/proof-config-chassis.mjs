@@ -79,6 +79,7 @@ const swatchBarrel = read("src/components/custom/color-swatch/index.ts");
 const swatchSubpath = read("src/subpaths/color-swatch.ts");
 const auroraColor = strip(read("demo/stories/substrates/aurora/sections/AuroraColorSection.vue"));
 const presetEditorVue = strip(read("demo/configurator/PresetEditor.vue"));
+const sheetContentVue = strip(read("src/components/ui/sheet/SheetContent.vue"));
 const storeTs = strip(read("demo/configurator/preset-editor/store.ts"));
 const thumbnails = strip(read("demo/stories/substrates/aurora/usePresetThumbnails.ts"));
 
@@ -234,6 +235,109 @@ add(
     "pi-readback-spec-exists",
     existsSync(resolve(ROOT, "tests-visual/config-chassis.spec.ts")),
     "tests-visual/config-chassis.spec.ts exists (the π readback — the slotted slider's non-zero width, the un-clipped DERIVE chip, the gear's html.dark flip + 20.4px section rung, the Speedtest swatch vivid, the dark-plate divider step; the BINDING truth)",
+);
+
+// ══ BI.W-CONFIG-IN-SHEET — the concentric-relay + un-indented extension ════════════════
+// Ruling 11 (PASS-4B) wires the Law-1 concentric relay's two configurator reader sites
+// (site #1: sections in the <Configurator> root clip; site #3: sections nested in the gear
+// sheet). Discharges UF-A4 (the section reads a card, not a flush-square hairline block),
+// UF-A5 / GEO-9 (the ONE --configurator-pad-inline anchor kills the 12px-section-vs-24px-
+// chrome indent), FAM-4 (the PresetEditor bare-div chassis bypass).
+// BORN-RED at HEAD: the section has NO per-section radius (the "flush border-b" contract),
+// no --configurator-pad-inline anchor (px-3 section vs px-6 chrome), and the PresetEditor
+// wraps its sections in a bare `<div class="configurator glass-floating">` masquerade.
+
+// The Law-1 reader detector — a `.configurator-layer` section derives its own corner
+// concentric with its parent ctx: max(floor, ctx − inset). Factored so the self-test bites
+// exercise the SAME predicate (the detector is not hollow).
+const sectionReadsRadiusCtx = (css) =>
+    /\.configurator-layer\s*\{[^}]*border-radius:\s*max\(\s*var\(--radius-floor\)\s*,\s*calc\(\s*var\(--radius-ctx\)\s*-\s*var\(--radius-inset\)\s*\)\s*\)/.test(
+        css,
+    );
+// The ONE-anchor detector — a chrome/section inline padding reads var(--configurator-pad-inline).
+const readsPadAnchor = (s) => /px-\(--configurator-pad-inline\)/.test(s);
+
+// ── BI-1 — the Law-1 concentric reader is WIRED at both sites ──────────────────────────
+// The `.configurator-layer` section reads the concentric card rung off its parent ctx (the
+// reader, in configurator.css — site-agnostic). Site #1: the <Configurator> root PUBLISHES
+// --radius-ctx (its --radius-panel) + --radius-inset. Site #3: SheetContent PUBLISHES
+// --radius-ctx (--radius-dialog) + --radius-inset (W-SHEET-RADIUS). Both publishers + the
+// reader present ⇒ the relay is not dead.
+const readerWired = sectionReadsRadiusCtx(configuratorCss);
+const site1Publishes =
+    /--radius-ctx["']?\s*:\s*["']?var\(--radius-panel\)/.test(configuratorVue) &&
+    /--radius-inset["']?\s*:\s*["']?var\(--configurator-pad-inline\)/.test(configuratorVue);
+const site3Publishes =
+    /--radius-ctx["']?\s*:\s*["']?var\(--radius-dialog\)/.test(sheetContentVue) &&
+    /--radius-inset["']?\s*:\s*["']?var\(--overlay-pad-inline\)/.test(sheetContentVue);
+add(
+    "bi1-concentric-reader-wired",
+    readerWired && site1Publishes && site3Publishes,
+    `the configurator sections read the Law-1 concentric card rung — .configurator-layer { border-radius: max(var(--radius-floor), calc(var(--radius-ctx) − var(--radius-inset))) } (the reader) with BOTH publisher sites present: #1 <Configurator> root publishes --radius-ctx=var(--radius-panel)+--radius-inset, #3 SheetContent publishes --radius-ctx=var(--radius-dialog)+--radius-inset (the relay is not dead) [reader=${readerWired} site1=${site1Publishes} site3=${site3Publishes}]`,
+);
+
+// ── BI-2 — the ONE --configurator-pad-inline anchor drives section + chrome ─────────────
+// Born-RED: the section rows sat at px-3 (12px) while the sheet chrome sat at px-6 (24px)
+// (GEO-9 mismatch). GREEN: --configurator-pad-inline is minted in configurator.css, the
+// section trigger + body read padding-inline: var(--configurator-pad-inline), and the
+// PresetEditor chrome (SheetHeader + footer) reads px-(--configurator-pad-inline) — ONE
+// anchor, section content aligns with chrome content (UF-A5 dead).
+const padAnchorMinted = /--configurator-pad-inline:\s*[^;]+;/.test(configuratorCss);
+const sectionReadsPad =
+    /\.configurator-layer-trigger\s*\{[^}]*padding-inline:\s*var\(--configurator-pad-inline\)/.test(
+        configuratorCss,
+    ) &&
+    /\.configurator-layer-body\s*\{[^}]*padding-inline:\s*var\(--configurator-pad-inline\)/.test(
+        configuratorCss,
+    );
+const chromeReadsPad = (presetEditorVue.match(/px-\(--configurator-pad-inline\)/g) || []).length >= 2;
+// The section trigger/body no longer carry the raw px-3 literal, and the chrome no longer
+// carries the raw px-6 literal (the GEO-9 mismatch is gone, not just papered over).
+const noSectionPx3 =
+    !/configurator-layer-trigger[^"]*\bpx-3\b/.test(layerVue) &&
+    !/configurator-layer-body\b[^"]*\bpx-3\b/.test(layerVue);
+const noChromePx6 = !/\bpx-6\b/.test(presetEditorVue);
+add(
+    "bi2-one-pad-inline-anchor",
+    padAnchorMinted && sectionReadsPad && chromeReadsPad && noSectionPx3 && noChromePx6,
+    `ONE --configurator-pad-inline anchor drives BOTH the section rows AND the sheet chrome inline padding — minted in configurator.css, read by the section trigger+body (padding-inline) AND the PresetEditor SheetHeader+footer (px-(--configurator-pad-inline)); the raw px-3 (section) / px-6 (chrome) mismatch literals are GONE (UF-A5/GEO-9 dead) [minted=${padAnchorMinted} section=${sectionReadsPad} chrome=${chromeReadsPad} noPx3=${noSectionPx3} noPx6=${noChromePx6}]`,
+);
+
+// ── BI-3 — no bare-div chassis bypass in PresetEditor ──────────────────────────────────
+// Born-RED: the gear wrapped its sections in a `<div class="configurator glass-floating">`
+// masquerade (a hand-rolled `.configurator` root, FAM-4). GREEN: the sections compose the
+// shipped <ConfiguratorLayer>/<ConfiguratorRow> chassis primitives in an honestly-named
+// wrapper (no bare `.configurator`-class div masquerading as the chassis root).
+const noBareConfiguratorMasquerade = !/<div\s+class="configurator[ "]/.test(presetEditorVue);
+const sectionsComposeChassis =
+    /<ConfiguratorLayer\b/.test(presetEditorVue) && /<ConfiguratorRow\b/.test(presetEditorVue);
+add(
+    "bi3-no-bare-div-bypass",
+    noBareConfiguratorMasquerade && sectionsComposeChassis,
+    `PresetEditor composes the shipped <ConfiguratorLayer>/<ConfiguratorRow> chassis primitives with NO bare <div class="configurator …"> root masquerade (FAM-4 dead — the sections are the chassis, not a hand-rolled .configurator div) [noMasquerade=${noBareConfiguratorMasquerade} chassis=${sectionsComposeChassis}]`,
+);
+
+// ── BI-4 — the detectors are not hollow (self-test bites) ──────────────────────────────
+const stFlushSquare = ".configurator-layer { border-color: var(--configurator-divider-section); }";
+const stConcentric =
+    ".configurator-layer { border-radius: max(var(--radius-floor), calc(var(--radius-ctx) - var(--radius-inset))); border-color: var(--x); }";
+const stPadMismatch = 'class="configurator-layer-trigger px-3 py-2"';
+const stPadAligned = 'class="configurator-layer-trigger py-2" style="padding-inline:var(--x)"';
+const selfFlushFlags = !sectionReadsRadiusCtx(stFlushSquare); // flush-square → NOT a concentric reader → flagged
+const selfConcentricPasses = sectionReadsRadiusCtx(stConcentric); // concentric card → reads ctx → passes
+const selfMismatchFlags = !readsPadAnchor(stPadMismatch); // a raw px-3 → not the anchor → flagged
+const selfAlignedNoFalseRed = !readsPadAnchor(stPadAligned) || readsPadAnchor("px-(--configurator-pad-inline)"); // anchor form recognized
+add(
+    "bi4-self-test",
+    selfFlushFlags && selfConcentricPasses && selfMismatchFlags && selfAlignedNoFalseRed,
+    `self-test: a flush-square section flags (${!selfFlushFlags ? "MISS" : "ok"}), a concentric-card section passes (${selfConcentricPasses ? "ok" : "MISS"}), a px-3 padding-mismatch flags (${!selfMismatchFlags ? "MISS" : "ok"}) — the detectors are not hollow`,
+);
+
+// ── BI-5 — the config-in-sheet π readback spec is wired (the BINDING close) ─────────────
+add(
+    "bi5-config-in-sheet-pi-exists",
+    existsSync(resolve(ROOT, "tests-visual/config-in-sheet.spec.ts")),
+    "tests-visual/config-in-sheet.spec.ts exists (the ss-24/ss-25 π — the gear-sheet configurator sections read as concentric cards inside the sheet clip; the section inline padding == the sheet chrome inline padding; both modes, LOCAL-only, the BINDING truth)",
 );
 
 // ── Report ──────────────────────────────────────────────────────────────────────────
