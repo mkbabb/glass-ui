@@ -1,81 +1,81 @@
 <script setup lang="ts">
-import { computed, nextTick, onBeforeUnmount, onMounted, useTemplateRef, watch } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref, useTemplateRef, watch } from "vue";
 import type { Component } from "vue";
-import { useDockLayerGroupContext } from "./composables/dockLayerContext";
+import { useDockCrossfadeContext } from "./composables/dockCrossfadeContext";
 
 /**
- * <DockLayer> — a named content pane inside a <DockLayerGroup>.
+ * <DockLayer> — a named content pane (a "face") inside a <DockCrossfade> /
+ * <DockLayerGroup>.
  *
- * Layers register themselves with their parent group via provide/inject,
- * so the group can both render a switcher rail (using each layer's
- * label/icon) and coordinate crossfade transitions when the active
- * layer changes.
- *
- * O.W2 Lane A — typed-key DI via `useDockLayerGroupContext()` (strict;
- * throws when used outside `<DockLayerGroup>`). Replaces the prior
- * `inject("dockLayerGroup", null) + manual !group throw` shape.
+ * BI.W-DOCK-CROSSFADE — the FLIP/registration engine is RETIRED. A face now does one
+ * thing: it registers its id + label + icon + host element with the crossfade slot on
+ * mount, renders its content in a `.dock-face` host, and reads its active/leaving state
+ * off the context. The crossfade slot (`<DockCrossfade>`) owns the two-child opacity
+ * overlap, the peak reserve, and the focus-transfer-on-dissolve — this component holds
+ * no spring, no measure, no orphan-focus watch (all folded to the ONE crossfade slot).
  */
 const props = defineProps<{
-    /** Stable identifier — referenced by the parent group's `active` v-model. */
+    /** Stable identifier — referenced by the crossfade's `active` id. */
     id: string;
-    /** Human-readable label; used for tooltip + fallback rail glyph. */
+    /** Human-readable label; used for tooltip + the switcher rail glyph. */
     label?: string;
     /** Optional icon: a Vue component, or a raw string (rendered as text). */
     icon?: Component | string;
 }>();
 
-const group = useDockLayerGroupContext();
-
-onMounted(() => {
-    group.register({
-        id: props.id,
-        label: props.label,
-        icon: props.icon,
-    });
-});
-
-onBeforeUnmount(() => {
-    group.unregister(props.id);
-});
-
-const isActive = computed(() => group.currentLayerId.value === props.id);
-const isLeaving = computed(() => group.leavingLayerId.value === props.id);
+const ctx = useDockCrossfadeContext();
 
 const hostEl = useTemplateRef<HTMLElement>("hostEl");
 
-/* AU.W8.4f — post-swap focus routing (MANDATORY; crosswalk §3.2). View
-   Transitions (and the FLIP fallback) do NOT manage focus: when the swap hides
-   the previously-active pane, a focus that lived inside it is abandoned for
-   keyboard/AT users. When THIS layer becomes active, if the document's focus
-   was orphaned (no active element, body, or an element now inside an `inert`
-   ancestor — i.e. the just-hidden pane), route focus to the revealed host
-   (`tabindex="-1"` makes the host programmatically focusable). Applies to BOTH
-   the VT native path and the FLIP fallback (the watch fires on either swap). */
-watch(isActive, async (active, wasActive) => {
-    if (!active || wasActive) return;
-    const orphaned =
-        typeof document !== "undefined" &&
-        (() => {
-            const el = document.activeElement;
-            if (!el || el === document.body) return true;
-            // The previously-focused element is inside a now-inert (hidden) pane.
-            return !!el.closest("[inert]");
-        })();
-    if (!orphaned) return;
-    await nextTick();
-    hostEl.value?.focus();
+onMounted(() => {
+    if (hostEl.value) {
+        ctx.register({
+            id: props.id,
+            label: props.label,
+            icon: props.icon,
+            el: hostEl.value,
+        });
+    }
 });
+
+// Re-register on id/label/icon change (a `v-for` re-key) so the crossfade + rail track
+// the live descriptor.
+watch(
+    () => [props.id, props.label, props.icon] as const,
+    (next, prev) => {
+        if (prev && prev[0] !== next[0]) ctx.unregister(prev[0]);
+        if (hostEl.value) {
+            ctx.register({
+                id: props.id,
+                label: props.label,
+                icon: props.icon,
+                el: hostEl.value,
+            });
+        }
+    },
+);
+
+onBeforeUnmount(() => ctx.unregister(props.id));
+
+const isActive = computed(() => ctx.activeId.value === props.id);
+const isLeaving = computed(() => ctx.leavingId.value === props.id);
 </script>
 
 <template>
     <div
         ref="hostEl"
-        class="dock-layer-item-host"
+        class="dock-face"
         :class="{ 'is-active': isActive, 'is-leaving': isLeaving }"
         :inert="isActive ? undefined : true"
         :aria-hidden="isActive ? undefined : true"
         :tabindex="isActive ? -1 : undefined"
     >
-        <slot />
+        <!-- G12 — the content-wrapper clip lands on THIS non-interactive wrapper ONLY
+             (never the `.dock-face` interactive run), so a face's row that spills past a
+             narrowing plate mid-collapse is clipped WITHOUT clipping hover plates (which
+             overflow at rest — the clip is `[data-morphing]`-gated). See crossfade.css. -->
+        <div class="dock-face-content">
+            <slot />
+        </div>
     </div>
 </template>

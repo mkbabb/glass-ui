@@ -1,11 +1,12 @@
-// AU.W8.4 — the reka-Tabs dock rail APG a11y contract (proof:dock-a11y-contract).
+// AU.W8.4 / BI.W-DOCK-FOLD — the dock rail APG a11y contract (proof:dock-a11y-contract).
 //
-// The rail WAS a hand-rolled `<button :aria-pressed>` TOGGLE group; AU.W8
-// converts it to a reka-ui Tabs contract (role=tablist/tab + aria-selected +
-// roving tabindex + Arrow/Home/End + a travelling indicator). This test asserts
-// the RENDERED roles/attributes — NOT just mount success — per the
-// glass-ui-binding-verification discipline: a stale reka `:value`/`v-model`
-// binding silently no-ops and only a rendered-attr assertion catches it.
+// The rail carries the APG tabs contract (role=tablist/tab + aria-selected + roving
+// tabindex + Arrow/Home/End + a travelling indicator). BI.W-DOCK-FOLD retired the reka
+// `ui/tabs` substrate; the rail is now driven by the library's ONE headless selection
+// engine `useSelectionGroup` (roving + role-per-mode ARIA + the ONE traveling-indicator
+// writer, Safari-identical). This test asserts the RENDERED roles/attributes — NOT just
+// mount success — per the glass-ui-binding-verification discipline: a stale binding
+// silently no-ops and only a rendered-attr assertion catches it.
 //
 // Bite-check (AU.W8 hard gate): flip `aria-selected` back to `aria-pressed`
 // (in the component or here) → the SELECTED-NOT-PRESSED assertion reddens.
@@ -157,9 +158,9 @@ describe("AU.W8.4 — dock rail a11y contract (APG tabs)", () => {
         outside.remove();
     });
 
-    it("7. ARIA-HIDDEN — the inactive .dock-layer-item-host carries aria-hidden=true", async () => {
+    it("7. ARIA-HIDDEN — the inactive .dock-face carries aria-hidden=true", async () => {
         const { wrapper } = await mountRail();
-        const hosts = wrapper.findAll(".dock-layer-item-host");
+        const hosts = wrapper.findAll(".dock-face");
         expect(hosts).toHaveLength(2);
         const active = hosts.find((h) => h.classes().includes("is-active"));
         const inactive = hosts.find((h) => !h.classes().includes("is-active"));
@@ -167,33 +168,31 @@ describe("AU.W8.4 — dock rail a11y contract (APG tabs)", () => {
         expect(inactive?.attributes("aria-hidden")).toBe("true");
     });
 
-    it("8. TRAVELLING-INDICATOR — the reka TabsIndicator is composed with the dock class", async () => {
+    it("8. TRAVELLING-INDICATOR — the .dock-layer-tab-indicator rides the ONE selection-indicator writer", async () => {
         const { wrapper } = await mountRail();
-        // The reka TabsIndicator's rendered DOM element is geometry-gated (it
-        // paints only once it can read the active tab's offsetWidth — zero/absent
-        // in happy-dom), so assert the COMPONENT is composed with the dock class
-        // (the binding-verification target) rather than its conditionally-painted
-        // element. The rendered placement is exercised by the slides deck's
-        // downstream Playwright dock validation.
-        const indicator = wrapper
-            .findAllComponents({ name: "TabsIndicator" })
-            .find((c) =>
-                String(c.props("class") ?? "").includes("dock-layer-tab-indicator"),
-            );
-        expect(indicator).toBeTruthy();
+        // BI.W-DOCK-FOLD — the reka `ui/tabs` substrate is retired; the rail is driven
+        // by the ONE headless selection engine `useSelectionGroup`, and the travelling
+        // indicator is a PLAIN `.dock-layer-tab-indicator` element carrying the
+        // `useSelectionIndicator` writer's inline style (Safari-identical, no anchor
+        // branch). Unlike the geometry-gated reka element, this plain div always renders,
+        // so assert the element EXISTS with an inline style attribute (its transform/
+        // opacity/size are 0 in happy-dom; the painted placement rides W-DOCK-DEVICE).
+        const indicator = wrapper.find(".dock-layer-tab-indicator");
+        expect(indicator.exists()).toBe(true);
+        expect(indicator.attributes("style")).toBeDefined();
+        expect(indicator.attributes("aria-hidden")).toBe("true");
     });
 
-    /* AW.W3 — the focus-orphan assert (a gate addition against the EXISTING
-       `DockLayer.vue:46-67` post-swap focus re-home; NO new component code). When
-       a layer swap hides the previously-active pane, a focus that lived inside it
-       is orphaned for keyboard/AT users; the shipped `watch(isActive)` orphan
-       guard re-homes focus to the revealed active host (`tabindex="-1"`).
+    /* BI.W-DOCK-CROSSFADE — the focus-transfer-on-dissolve assert (X4). The post-swap
+       focus re-home FOLDED from `DockLayer.vue` into the ONE crossfade slot
+       (`DockCrossfade.transferFocusOnDissolve`): when a layer swap dissolves the
+       previously-active face, a focus that lived inside it is orphaned for keyboard/AT
+       users; the crossfade slot re-homes focus to the revealed successor host
+       (`tabindex="-1"` landing pad) AFTER it is un-inert.
 
-       Born-RED witness: revert the `DockLayer.vue` watch → after the swap
-       `document.activeElement` stays inside the now-`[inert]` leaving pane (or is
-       `body`), never re-homed to the active host. GREEN here proves the shipped
-       code bites. Uses real timers so the watch's `await nextTick()` + `.focus()`
-       lands. */
+       Born-RED witness: revert `DockCrossfade.transferFocusOnDissolve` → after the swap
+       `document.activeElement` stays inside the now-`[inert]` leaving face (or is `body`),
+       never re-homed. Uses real timers so the `await nextTick()` + `.focus()` lands. */
     it("9. FOCUS-ORPHAN — focus is re-homed to the revealed active host after a swap", async () => {
         vi.useRealTimers();
         const { wrapper, active } = await mountRail();
@@ -212,7 +211,7 @@ describe("AU.W8.4 — dock rail a11y contract (APG tabs)", () => {
         await new Promise((r) => setTimeout(r, 0));
         await nextTick();
 
-        const hosts = wrapper.findAll(".dock-layer-item-host");
+        const hosts = wrapper.findAll(".dock-face");
         const activeHost = hosts.find((h) => h.classes().includes("is-active"));
         expect(activeHost).toBeTruthy();
         const activeHostEl = activeHost!.element as HTMLElement;

@@ -9,9 +9,6 @@ export type { UseDockStateOptions, UseDockStateReturn, DockState } from "./useDo
 export { useDockSearch } from "./useDockSearch";
 export type { UseDockSearchOptions, UseDockSearchReturn } from "./useDockSearch";
 
-export { useLayerTransition } from "./useLayerTransition";
-export type { UseLayerTransitionOptions, UseLayerTransitionReturn } from "./useLayerTransition";
-
 export { useDockHold } from "./useDockHold";
 export type { UseDockHoldOptions, UseDockHoldReturn } from "./useDockHold";
 
@@ -24,14 +21,18 @@ export {
     type DockContext,
     type DockOrientation,
 } from "./dockContext";
+// BI.W-DOCK-CROSSFADE — the crossfade face-registration context (the FOLD destination
+// of the retired DockLayerGroup register/unregister + useLayerTransition FLIP). Provided
+// by <DockCrossfade>; consumed by <DockLayer> faces + read by the switcher rail.
 export {
-    provideDockLayerGroupContext,
-    useDockLayerGroupContext,
-    useOptionalDockLayerGroupContext,
-    DOCK_LAYER_GROUP_KEY,
-    type DockLayerDescriptor,
-    type DockLayerGroupContext,
-} from "./dockLayerContext";
+    provideDockCrossfadeContext,
+    useDockCrossfadeContext,
+    useOptionalDockCrossfadeContext,
+    DOCK_CROSSFADE_KEY,
+    type DockFaceDescriptor,
+    type DockFaceRegistration,
+    type DockCrossfadeContext,
+} from "./dockCrossfadeContext";
 export {
     useDockMorphOrchestrator,
     provideDockMorphContext,
@@ -44,40 +45,10 @@ export {
     type UseDockMorphOrchestratorReturn,
 } from "./dockMorphContext";
 
-// AZ.W-MORPH-SHOWCASE — the vertical↔horizontal liquid-glass morph driver (the
-// metaball-bridge, H4 arm a). Layered on the ONE `--dock-morph-t` scalar; consumer #1
-// of `useLiquidFlex` (the W-LIQUID substrate).
-export {
-    useDockOrientationMorph,
-    type DockMorphOrientation,
-    type UseDockOrientationMorphOptions,
-    type UseDockOrientationMorphReturn,
-} from "./useDockOrientationMorph";
-
-// BE.W-DOCK-FISSION — the n-ary detach orchestrator. A CONSUMING seam BESIDE the morph
-// engine (dockMorphContext/DOCK_SPRING byte-untouched — box-inviolate): ONE SpringProgress
-// on DOCK_SPRING writing --dock-split-t + per-piece DIRECTION-VECTOR off a DockSplitSignature,
-// the snap-recoil on useLiquidFlex, the seam-tension on usePointerVelocityField (fed from
-// inside the ONE loop), PRM sync-seated. The N-seam goo bridge is fission-bridge.css.
-export {
-    useDockFission,
-    DOCK_SPLIT_SIGNATURES,
-    type DockSplitContext,
-    type DockSplitVector,
-    type DockSplitSquishPeak,
-    type DockSplitSignature,
-    type DockFissionPieceRegistration,
-    type DockFissionPieceHandle,
-    type UseDockFissionOptions,
-    type UseDockFissionReturn,
-} from "./useDockFission";
-
-// BG.W-SIRI-DOCK-CAPABILITY — the Siri-as-a-dock-capability seam. Composes the ONE
-// `useDockSpring` factory (form morph) + `useLiquidReveal` (source-rect bloom) + the
-// existing `useDockSearch` pipeline — no second engine. NOT a subpath/api export (the
-// capability reaches consumers via the `/dock` subpath only).
-export {
-    useSiriDock,
-    type UseSiriDockOptions,
-    type UseSiriDockReturn,
-} from "./useSiriDock";
+// BI.W-DOCK-RETIRES — the V↔H orientation morph (`useDockOrientationMorph`), the fission
+// facility (`useDockFission` + `dockFissionSignatures`), and the Siri island (`useSiriDock`)
+// are DEFINITION-ABSENT (decided-terminal, clean break, no alias). The V↔H flip is the
+// crossfade (`<DockCrossfade>`); the fission spectacle + the Siri island were demo-only
+// zero-binary-consumer mechanisms + the prime UF-C3 Safari suspect (goo `filter:url()`
+// stacked with `backdrop-filter`). See docs/tranches/AX/audit/DISPOSITION-REGISTER.json
+// (retiredBy: BI.W-DOCK-RETIRES).

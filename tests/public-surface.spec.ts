@@ -108,13 +108,14 @@ const composableRuntimeExports = [
 
 const subpathRuntimeExports = [
     { subpath: "dock", surface: Dock, name: "GlassDock" },
-    { subpath: "dock", surface: Dock, name: "DockIconButton" },
+    // BI.W-DOCK-FOLD — DockControl/DockTrigger are the folded survivors (the retired
+    // DockIconButton/DockTabButton/DockSelectTrigger/DockDropdownTrigger/DockPopoverTrigger
+    // are DEFINITION-ABSENT; clean break, no alias).
+    { subpath: "dock", surface: Dock, name: "DockControl" },
+    { subpath: "dock", surface: Dock, name: "DockTrigger" },
     { subpath: "dock", surface: Dock, name: "DockBackgroundToggle" },
     { subpath: "dock", surface: Dock, name: "DockLayer" },
     { subpath: "dock", surface: Dock, name: "DockLayerGroup" },
-    { subpath: "dock", surface: Dock, name: "DockTabButton" },
-    { subpath: "dock", surface: Dock, name: "DockSelectTrigger" },
-    { subpath: "dock", surface: Dock, name: "DockDropdownTrigger" },
     { subpath: "dock", surface: Dock, name: "DockSeparator" },
     // Drawer moved OFF the root barrel to the /drawer subpath (BB.W-DRAWER-ABROGATE
     // — keyframes-bearing heavy component, dock/aurora isolation pattern).
@@ -247,7 +248,6 @@ const nonCoreRootRetirements = [
     "ExpandableContainer",
     "IconTooltip",
     "useDockState",
-    "useLayerTransition",
     "isTeleportedTarget",
     "useTreeIndex",
     "buildTreeIndex",
@@ -292,66 +292,43 @@ const exactSubpathRuntimeSurfaces = [
         // re-export lets value.js delete its FLIP-width fork). The W02 morph
         // symbols (DOCK_MORPH_KEY / provideDockMorphContext / …) stay INTERNAL
         // to the composables barrel — NOT re-exported on the `/dock` surface.
+        // BI.W-DOCK-FOLD — regenerated from disk. The retired DockIconButton /
+        // DockTabButton / DockSelectTrigger / DockDropdownTrigger / DockPopoverTrigger
+        // fold onto DockControl + DockTrigger (the survivors); the fission
+        // (DOCK_SPLIT_SIGNATURES / useDockFission), the V↔H morph
+        // (useDockOrientationMorph), and the Siri island (SIRI_* / SiriDockCapability /
+        // useSiriDock) are DEFINITION-ABSENT (BI.W-DOCK-RETIRES). This list is EXACT to
+        // the `@mkbabb/glass-ui/dock` runtime barrel.
         names: [
             "DOCK_CONTEXT_KEY",
-            // BE.W-DOCK-FISSION — the n-ary detach orchestrator + the per-signature
-            // split-vector registry, ADDITIVELY on the /dock surface (the dock-as-
-            // control-interface liquid-morph register). Runtime composable + const.
-            "DOCK_SPLIT_SIGNATURES",
             "DockBackgroundToggle",
-            "DockDropdownTrigger",
-            "DockIconButton",
+            // BI.W-DOCK-CONTROLS / BI.W-DOCK-FOLD — the ONE dock control (folds the
+            // retired DockIconButton + DockTabButton onto a shape axis).
+            "DockControl",
+            // BI.W-DOCK-CROSSFADE — the thin controlled face-swap core.
+            "DockCrossfade",
             "DockLayer",
             "DockLayerGroup",
-            // BD impl P-dock — the popover-trigger dock control primitive.
-            "DockPopoverTrigger",
-            // BA.W-DOCK-SECTIONS — the declarative tripartite section dock chassis
-            // (the descriptor-driven <DockSection> the shell docks compose; the
-            // W-SHELL-RAIL-RESEAT re-seat consumer). Runtime SFC default-export.
+            // BA.W-DOCK-SECTIONS — the declarative tripartite section dock chassis.
             "DockSection",
-            "DockSelectTrigger",
             // AX.W45 D13-c — the orientation+layout-aware divider primitive.
             "DockSeparator",
-            // BC.W-DOCK-STACK-RAIL — the macOS hover-expand stack rail (the clean-break
-            // rebuild of the retired divider-carousel <DockRail>). Runtime SFC default-export.
+            // BC.W-DOCK-STACK-RAIL — the macOS hover-expand stack rail.
             "DockStack",
-            "DockTabButton",
+            // BI.W-DOCK-CONTROLS / BI.W-DOCK-FOLD — the ONE overlay trigger (folds the
+            // retired DockSelectTrigger/DockDropdownTrigger/DockPopoverTrigger onto the
+            // shared `.dock-trigger` recipe).
+            "DockTrigger",
             "GlassDock",
-            // BD.W-MORPH-FIELD-WELD — the ONE library metaball <filter> mount (the DRY
-            // union of the prior four goo mounts incl. the retired DockGooFilter; off one
-            // byte-identical sRGB graph at shell root). Runtime SFC default-export.
+            // BD.W-MORPH-FIELD-WELD — the ONE library metaball <filter> mount.
             "GooFilter",
-            // BC.W-AX-DOCK-CTA-SEAT — the external-CTA-morphs-into-dock receive seam +
-            // the [data-cta-pending] landing-seat API (setPending/clearPending/pending),
-            // ADDITIVELY re-exported on the /dock subpath as the natural home beside
-            // GlassDock/useDockState (the /motion export STAYS — a re-export, not a move,
-            // so no clean break). The AX.W01 useLayerTransition precedent (above).
+            // BC.W-AX-DOCK-CTA-SEAT — the external-CTA-morphs-into-dock receive seam
+            // (the /motion export STAYS — a re-export, not a move).
             "useDockCtaReceive",
-            // BE.W-DOCK-FISSION — the n-ary detach orchestrator (ONE SpringProgress on
-            // DOCK_SPRING writing --dock-split-t + per-piece direction vectors; a
-            // consuming seam BESIDE the morph engine). ADDITIVELY on the /dock surface.
-            "useDockFission",
-            // AZ.W-MORPH-SHOWCASE — the V↔H liquid-glass morph driver (consumer #1
-            // of useLiquidFlex; the metaball-bridge / arm-c crossfade showcase).
-            "useDockOrientationMorph",
-            // BC.W-DOCK-SEARCH — the dock-as-native-dynamic-search-bar seam
-            // (composes useDockState + the /search fuzzy pipeline + the dock
-            // --dock-morph-t metaball morph; <GlassDock search> opts into it).
+            // BC.W-DOCK-SEARCH — the dock-as-native-dynamic-search-bar seam.
             "useDockSearch",
-            // BG.W-SIRI-DOCK-CAPABILITY — Siri as a DOCK CAPABILITY (the `<SiriDockCapability>`
-            // glass island + `useSiriDock` seam + the `SIRI_FORMS`/`SIRI_SQRT_PHI`/`siriFormOf`
-            // √φ morph-form ladder) reaches consumers ONLY via the `/dock` subpath, NOT a
-            // subpath/api entry. This snapshot is HONEST to the current tree (the 27-symbol
-            // surface); the terminal siri-*-belongs-on-public-/dock adjudication carries to
-            // D-DOCK (BI ruling 18 — DOCK-RETIRES/SPINE), which may re-home them.
-            "SIRI_FORMS",
-            "SIRI_SQRT_PHI",
-            "SiriDockCapability",
-            "siriFormOf",
-            "useSiriDock",
             "provideDockContext",
             "useDockContext",
-            "useLayerTransition",
             "useOptionalDockContext",
         ],
     },

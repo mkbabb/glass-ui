@@ -107,74 +107,25 @@ export const DOCK_MORPH_MAX_STRETCH = 1.14;
  */
 export const DOCK_TAP_FLOOR_PX = 44;
 
-// ── BG.W-SIRI-DOCK-CAPABILITY — the Siri-island form ladder (forms-are-DATA) ──────
-
-/**
- * BG.W-SIRI-DOCK-CAPABILITY — the Siri island's four morphological FORMS, expressed
- * as DATA (never four hand-coded geometries). One `--siri-island-t` scalar glides
- * through the four `slot`s (0, ⅓, ⅔, 1) and the CSS reads it to crossfade the
- * overlapping content layers inside the clip-aperture; the `scale` axis follows the
- * √φ ladder (`SIRI_SQRT_PHI ** rank`) so the pill → orb → capsule → panel silhouette
- * steps by a constant golden proportion (the audacious √φ family the type ladder
- * speaks). A `<script setup>` SFC cannot re-export a named type through its default
- * barrel, so the descriptor lives here (the colocated types home) and
- * `SiriDockCapability.vue` + `useSiriDock` import it.
- */
-export type SiriForm = "dormant" | "listening" | "thinking" | "responding";
-
-/** √φ (the golden square-root, ≈ 1.272) — the display ladder's step, reused as the
- *  Siri form silhouette's proportional growth so pill → panel is one golden family. */
-export const SIRI_SQRT_PHI = 1.618033988749895 ** 0.5;
-
-/** The Siri form descriptor — the DATA one `--siri-island-t` scalar indexes. */
-export interface SiriFormDescriptor {
-    /** The form id (the state name + the `role="status"` announcement key). */
-    id: SiriForm;
-    /** The scalar slot this form seats at (0 dormant → 1 responding). */
-    slot: number;
-    /** The √φ-ladder silhouette scale (`SIRI_SQRT_PHI ** rank`). */
-    scale: number;
-    /** The `level(0..1)` the waveform reads at this form (dormant quiet → active). */
-    level: number;
-    /** The `aria-live` announcement label for this form. */
-    label: string;
-}
-
-/**
- * The FOUR Siri forms — the ONE ordered DATA source `useSiriDock` + the island CSS +
- * `proof:siri` all read. The √φ ladder: rank 0..3 → scale √φ⁰·√φ¹·√φ²·√φ³. `level`
- * is the waveform push-API amplitude (dormant is a still shimmer; listening peaks;
- * thinking/responding settle back). The slots are the even ¼-quantiles of [0,1].
- */
-export const SIRI_FORMS: readonly SiriFormDescriptor[] = [
-    { id: "dormant", slot: 0, scale: SIRI_SQRT_PHI ** 0, level: 0, label: "Search or ask" },
-    { id: "listening", slot: 1 / 3, scale: SIRI_SQRT_PHI ** 1, level: 1, label: "Listening" },
-    { id: "thinking", slot: 2 / 3, scale: SIRI_SQRT_PHI ** 2, level: 0.6, label: "Thinking" },
-    { id: "responding", slot: 1, scale: SIRI_SQRT_PHI ** 3, level: 0.3, label: "Here's what I found" },
-] as const;
-
-/** Resolve a form descriptor by id (the state → DATA lookup; `dormant` fallback). */
-export function siriFormOf(form: SiriForm): SiriFormDescriptor {
-    return SIRI_FORMS.find((f) => f.id === form) ?? SIRI_FORMS[0];
-}
+// BI.W-DOCK-RETIRES — the `SIRI_FORMS`/`SIRI_SQRT_PHI`/`siriFormOf` Siri-island form
+// ladder is DEFINITION-ABSENT (the Siri capability retired decided-terminal; clean break,
+// no alias — see the disposition register, retiredBy: BI.W-DOCK-RETIRES).
 
 /** `Symbol()` label for the `DockContext` injection key (`dockContext.ts`). */
 export const DOCK_CONTEXT_LABEL = "glass-ui:dock-context";
 
-/** `Symbol()` label for the `DockLayerGroupContext` injection key (`dockLayerContext.ts`). */
+/** `Symbol()` label for the `DockCrossfadeContext` injection key (`dockCrossfadeContext.ts`). */
 export const DOCK_LAYER_GROUP_LABEL = "glass-ui:dock-layer-group";
 
 /** `Symbol()` label for the `DockMorphContext` injection key (`dockMorphContext.ts`). */
 export const DOCK_MORPH_LABEL = "glass-ui:dock-morph-context";
 
-/** AZ.W-DOCK-FLICKER — the hover-hysteresis tuning pair (useDockState).
- *  HOVER_INTENT_MS: the intent-dwell before a collapsed→hover expand commits
- *  (a sweeping-edge enter is canceled by the chasing leave inside this window).
- *  EDGE_BAND_PX: the morphing-edge-sweep recheck band — a mid-morph leave with
- *  the pointer still inside (within this band of the moving edge) is the box
- *  edge sweeping past the cursor, not a real exit. */
+/** The intent-dwell before a collapsed→hover expand commits (a sweeping-edge enter is
+ *  canceled by the chasing leave inside this window) — the calmer hover register KEPT
+ *  by W-DOCK-SPINE. BI.W-DOCK-RETIRES deleted the `EDGE_BAND_PX` moving-edge-sweep
+ *  recheck band (the ~120L hysteresis): post-SPINE the hit frame is a STATIONARY
+ *  state-sized box, so a mid-morph leave never sweeps a moving edge past the cursor. */
 export const HOVER_INTENT_MS = 60;
-export const EDGE_BAND_PX = 24;
 
 /* R5-TAP (R5-3) — the MORPH-SETTLE window for the click-integrity guard
  * (`useDockClickIntegrity`). After the dock flips collapsed→expanded (a tap or a

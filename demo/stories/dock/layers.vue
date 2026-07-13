@@ -2,8 +2,8 @@
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { ref } from "vue";
-import { Package, Layers, Library, FileText, ChevronLeft, ChevronRight } from "@lucide/vue";
-import { GlassDock, DockIconButton, DockLayerGroup, DockLayer, DockSeparator } from "@glass/components/custom/dock";
+import { Package, Layers, Library, FileText, ChevronLeft, ChevronRight, Image, Type } from "@lucide/vue";
+import { GlassDock, DockControl, DockLayerGroup, DockLayer, DockCrossfade, DockSeparator } from "@glass/components/custom/dock";
 import { cn } from "@glass/utils/cn";
 import DockStage from "./DockStage.vue";
 
@@ -44,6 +44,17 @@ const layers = [
     { id: "assets" as const, label: "Assets", icon: Package, blurb: "images, fonts, tokens" },
     { id: "layers" as const, label: "Layers", icon: Layers, blurb: "z-ordered surface stack" },
     { id: "libs" as const, label: "Libraries", icon: Library, blurb: "shared component kits" },
+];
+
+/* The CONTROLLED-NO-RAIL case (X3): the thin <DockCrossfade :active> consumed directly
+   (the speedtest 5-pane pattern), driven by an external strip — no switcher rail, no
+   selection engine. Faces of genuinely differing height exercise the peak reserve. */
+const controlled = ref("assets");
+const controlledPanes = [
+    { id: "assets", label: "Assets", icon: Package, rows: ["images", "fonts"] },
+    { id: "layers", label: "Layers", icon: Layers, rows: ["surface stack", "z-order", "blend", "opacity"] },
+    { id: "media", label: "Media", icon: Image, rows: ["photos", "video", "audio"] },
+    { id: "type", label: "Type", icon: Type, rows: ["families", "weights", "features", "tracking", "leading"] },
 ];
 
 function open(id: LayerId) {
@@ -96,20 +107,20 @@ function back() {
                             :label="l.label"
                             :icon="l.icon"
                         >
-                            <DockIconButton aria-label="Back" @click="back">
+                            <DockControl aria-label="Back" @click="back">
                                 <ChevronLeft />
-                            </DockIconButton>
+                            </DockControl>
                             <DockSeparator />
                             <component :is="l.icon" class="h-4 w-4 opacity-70" />
                             <span class="text-sm font-medium">{{ l.label }}</span>
                             <span class="text-xs text-muted-foreground">· {{ l.blurb }}</span>
                             <DockSeparator />
-                            <DockIconButton aria-label="New item">
+                            <DockControl aria-label="New item">
                                 <FileText />
-                            </DockIconButton>
-                            <DockIconButton aria-label="Forward">
+                            </DockControl>
+                            <DockControl aria-label="Forward">
                                 <ChevronRight />
-                            </DockIconButton>
+                            </DockControl>
                         </DockLayer>
                     </DockLayerGroup>
                 </GlassDock>
@@ -172,7 +183,7 @@ function back() {
                             :label="l.label"
                             :icon="l.icon"
                         >
-                            <DockIconButton
+                            <DockControl
                                 v-for="candidate in layers"
                                 :key="candidate.id"
                                 :aria-label="candidate.label"
@@ -180,7 +191,7 @@ function back() {
                                 @click="railLayer = candidate.id"
                             >
                                 <component :is="candidate.icon" />
-                            </DockIconButton>
+                            </DockControl>
                         </DockLayer>
                     </DockLayerGroup>
                 </GlassDock>
@@ -213,9 +224,9 @@ function back() {
                         </DockLayer>
                     </DockLayerGroup>
                     <template #collapsed>
-                        <DockIconButton aria-label="Open layers">
+                        <DockControl aria-label="Open layers">
                             <Layers />
-                        </DockIconButton>
+                        </DockControl>
                     </template>
                 </GlassDock>
             </div>
@@ -265,13 +276,63 @@ function back() {
             </div>
         </StorySection>
 
+        <StorySection heading="Controlled — no rail" gap="md">
+            <p class="text-small text-muted-foreground">
+                The thin <code class="rounded bg-muted px-1">&lt;DockCrossfade :active&gt;</code>
+                core consumed DIRECTLY — a controlled 4-pane crossfade with NO switcher rail
+                (the speedtest pattern). An external strip drives <code class="rounded bg-muted px-1">active</code>;
+                the faces cross-dissolve on the per-face <code class="rounded bg-muted px-1">--dock-t</code>
+                spring, the box holds the PEAK face (differing heights never jump).
+            </p>
+            <div class="flex flex-wrap justify-center gap-1">
+                <button
+                    v-for="p in controlledPanes"
+                    :key="p.id"
+                    class="focus-ring inline-flex items-center gap-1 rounded-[var(--radius-pill)] border border-border/30 px-2 py-1 text-sm"
+                    :class="controlled === p.id ? 'bg-muted text-foreground' : 'text-muted-foreground'"
+                    :aria-pressed="controlled === p.id"
+                    :data-testid="`dock-crossfade-select-${p.id}`"
+                    @click="controlled = p.id"
+                >
+                    <component :is="p.icon" class="h-4 w-4" />
+                    <span>{{ p.label }}</span>
+                </button>
+            </div>
+            <div class="dock-stage-tile flex justify-center rounded-card border border-border/30 p-10">
+                <GlassDock :background-canvas="backgroundCanvas" always-expanded fit-content>
+                    <DockCrossfade :active="controlled" data-testid="dock-crossfade-controlled">
+                        <DockLayer
+                            v-for="p in controlledPanes"
+                            :key="p.id"
+                            :id="p.id"
+                            :label="p.label"
+                            :icon="p.icon"
+                        >
+                            <div class="flex flex-col gap-1 py-1">
+                                <div class="flex items-center gap-2 px-1">
+                                    <component :is="p.icon" class="h-4 w-4" />
+                                    <span class="text-sm font-medium">{{ p.label }}</span>
+                                </div>
+                                <span
+                                    v-for="(row, i) in p.rows"
+                                    :key="i"
+                                    class="dock-face-content px-1 text-xs text-muted-foreground"
+                                    >{{ row }}</span
+                                >
+                            </div>
+                        </DockLayer>
+                    </DockCrossfade>
+                </GlassDock>
+            </div>
+        </StorySection>
+
         <StorySection heading="Mechanics" gap="sm">
             <ol class="text-small list-decimal space-y-1 pl-5 text-muted-foreground">
-                <li>Capture the container's current dimension, pin it inline.</li>
-                <li>Swap active/leaving classes on the panes (grid-stacked at <code class="rounded bg-muted px-1">1 / 1</code>).</li>
-                <li>Measure the new pane's natural dimension on <code class="rounded bg-muted px-1">nextTick</code>.</li>
-                <li>Re-pin to old dimension, then transition to new on the next frame.</li>
-                <li>Clear inline dimension on <code class="rounded bg-muted px-1">transitionend</code>.</li>
+                <li>Faces stack on a CSS grid at <code class="rounded bg-muted px-1">1 / 1</code>; the box reserves the PEAK face height ONCE (never a per-swap FLIP).</li>
+                <li>A switch cross-dissolves the two faces: the entering reads <code class="rounded bg-muted px-1">opacity: var(--dock-t)</code>, the leaving <code class="rounded bg-muted px-1">calc(1 - var(--dock-t))</code>.</li>
+                <li>The <code class="rounded bg-muted px-1">--dock-t</code> scalar rides ONE interruptible <code class="rounded bg-muted px-1">useDockSpring</code> — a rapid re-toggle re-bases velocity-continuously (no hard cut, the liquid-weight edict; crossfade beats View Transitions).</li>
+                <li>A dissolving focus-holder transfers focus to its successor (un-inert-before-focus).</li>
+                <li>During a simultaneous collapse the <code class="rounded bg-muted px-1">.dock-face-content</code> wrapper clips off <code class="rounded bg-muted px-1">--dock-morph-t</code> — the interactive run's hover plates still overflow at rest.</li>
             </ol>
         </StorySection>
         </DockStage>
