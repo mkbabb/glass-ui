@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed, onBeforeUnmount, onMounted, useTemplateRef } from 'vue'
+import { type HTMLAttributes, computed, onBeforeUnmount, onMounted, useAttrs, useTemplateRef } from 'vue'
 import type { SliderRootEmits, SliderRootProps } from 'reka-ui'
 import { SliderRange, SliderRoot, SliderThumb, SliderTrack, useForwardPropsEmits } from 'reka-ui'
 import { cn } from '../../../utils'
@@ -169,6 +169,30 @@ onBeforeUnmount(() => {
 
 const isHeld = computed(() => dock?.held.value === true)
 const isTouchActive = computed(() => touchGate.isActive.value)
+
+/* BI.W-SLIDER-THUMB-NAME — the never-nameless floor's DX signal. reka's
+   SliderThumbImpl names the thumb `$attrs['aria-label'] || getLabel(index, count)`,
+   and getLabel returns UNDEFINED for a single-thumb slider (it only mints
+   "Minimum"/"Maximum"/"Value N of M" for ≥2 thumbs). So a bare single-thumb
+   <Slider> with no `aria-label`/`aria-labelledby` yields a role="slider" thumb that
+   is nameless to a screen reader (the axe `aria-input-field-name` class). Warn in
+   DEV only — no runtime name is invented (that would be a lie); the fix is to wrap in
+   <LabeledSlider> or pass an explicit `aria-label`. No-op in production. */
+const attrs = useAttrs()
+onMounted(() => {
+    if (!import.meta.env.DEV) return
+    const named = attrs['aria-label'] != null || attrs['aria-labelledby'] != null
+    const mv = props.modelValue
+    const singleThumb = !Array.isArray(mv) || mv.length <= 1
+    if (!named && singleThumb) {
+        console.warn(
+            '[Slider] no accessible name: a single-thumb <Slider> has no `aria-label` ' +
+                'or `aria-labelledby`, so its role="slider" thumb is nameless to a screen ' +
+                'reader (reka mints no fallback name for one thumb). Wrap it in ' +
+                '<LabeledSlider>, or pass an explicit `aria-label`.',
+        )
+    }
+})
 </script>
 
 <template>
@@ -438,7 +462,12 @@ const isTouchActive = computed(() => touchGate.isActive.value)
     height: 100%;
     opacity: 1;
     background: var(--slider-thumb-bg, transparent);
-    border: 2px solid var(--slider-thumb-border-color, var(--background));
+    /* BI.W-SLIDER-THUMB-NAME (value.js L6) — the thumb border WIDTH joins the
+       consumer-retunable token surface alongside `--slider-thumb-border-color`, so a
+       consumer can retune the spectrum handle's rim weight without forking the recipe
+       (one slider owner). Default 2px (byte-identical to the prior literal). */
+    border: var(--slider-thumb-border-w, 2px) solid
+        var(--slider-thumb-border-color, var(--background));
     /* The cross-engine CONTRACT: a GENEROUS radius proportional to the box reads
        squircle-adjacent on Safari/Firefox/old-Chrome — NOT a bare `--radius-lg`
        rounded RECT on the ~35% without `corner-shape`. The superellipse is the
@@ -459,9 +488,14 @@ const isTouchActive = computed(() => touchGate.isActive.value)
     }
 }
 
+/* BI.W-SLIDER-THUMB-NAME (value.js L6) — the spectrum hover recipe joins the
+   consumer-retunable token surface: the hover halo's ring WIDTH + COLOR are tokens a
+   consumer can retune (the value.js color-picker hover tune) without forking. Defaults
+   (4px / --surface-tint-8) are byte-identical to the prior literals. */
 .glass-slider[data-variant="spectrum"]:hover .slider-thumb {
     box-shadow:
-        0 0 0 4px var(--surface-tint-8),
+        0 0 0 var(--slider-thumb-hover-ring-w, 4px)
+            var(--slider-thumb-hover-ring-color, var(--surface-tint-8)),
         var(--shadow-sm);
 }
 

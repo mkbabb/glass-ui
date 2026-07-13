@@ -91,6 +91,7 @@ function onSwatch(e: Event) {
                     :max="1"
                     :step="0.01"
                     :model-value="[stop.L]"
+                    :aria-label="`Stop ${index + 1} lightness`"
                     :style="{ '--slider-track-bg': lTrack }"
                     @update:model-value="(v: number[] | undefined) => v && patch({ L: v[0] })"
                 />
@@ -108,6 +109,7 @@ function onSwatch(e: Event) {
                     :max="0.3"
                     :step="0.005"
                     :model-value="[stop.C]"
+                    :aria-label="`Stop ${index + 1} chroma`"
                     :style="{ '--slider-track-bg': cTrack }"
                     @update:model-value="(v: number[] | undefined) => v && patch({ C: v[0] })"
                 />
@@ -125,6 +127,7 @@ function onSwatch(e: Event) {
                     :max="360"
                     :step="1"
                     :model-value="[stop.h]"
+                    :aria-label="`Stop ${index + 1} hue`"
                     :style="{ '--slider-track-bg': hTrack }"
                     @update:model-value="(v: number[] | undefined) => v && patch({ h: v[0] })"
                 />

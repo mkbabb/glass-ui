@@ -271,7 +271,12 @@ const stepsModel = computed<number[]>({
             <div v-if="mode === 'bezier'" class="flex flex-col gap-2">
                 <span class="text-mono-caption text-muted-foreground">Preset</span>
                 <Select :model-value="preset" @update:model-value="(v) => selectPreset(String(v))">
-                    <SelectTrigger>
+                    <!-- BI.W-SLIDER-THUMB-NAME (proof:a11y EasingPicker arm) — the preset
+                         combobox carries a real accessible name. The visible "Preset"
+                         caption above is a bare <span> (not a <label for>), so without
+                         this the SelectTrigger's name was only its selected value — the
+                         R→S→T chronic. The Jump-term trigger (steps mode) is already named. -->
+                    <SelectTrigger aria-label="Easing preset">
                         <SelectValue placeholder="Pick a curve" />
                     </SelectTrigger>
                     <SelectContent>

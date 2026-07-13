@@ -5,10 +5,18 @@
         :label-class="labelClass"
         :required="required"
         :hide-label="hideLabel"
-        v-slot="{ labelledBy }"
     >
+        <!-- BI.W-SLIDER-THUMB-NAME — the never-nameless floor. The field's own
+             label text feeds the slotted <Slider> as `aria-label`, which Slider.vue
+             forwards onto the reka <SliderThumb> (the role="slider" element). This
+             is the ONLY name path that reaches the thumb: an `aria-labelledby` on
+             the <Slider> falls through to the reka SliderRoot (a roleless group span),
+             NOT the thumb — reka's SliderThumbImpl only reads `$attrs['aria-label']`
+             (`aria-label = $attrs['aria-label'] || getLabel(index, count)`, and
+             getLabel returns undefined for a single-thumb slider). So a LabeledSlider
+             NEVER yields a nameless thumb; the accessible name equals the field label. -->
         <Slider
-            :aria-labelledby="labelledBy"
+            :aria-label="label"
             class="py-2"
             :min="min"
             :max="max"
