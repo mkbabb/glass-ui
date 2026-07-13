@@ -105,8 +105,11 @@
  *                              ladder mint) and before floating-panel.css.
  *   8. floating-panel.css    — .floating-panel + .floating-panel-item.
  *                              Component utility layer.
- *   9. transitions.css       — Vue <Transition> classes (fade, fade-slide,
- *                              pop, dialog-scale, dropdown, tab-fade).
+ *   9. transitions.css       — Vue <Transition> classes (fade, tab-fade,
+ *                              route-enter, pane-swap, metric-swap, dock-in).
+ *                              BI.W-REGISTER-TABLE retired fade-slide/pop/
+ *                              dialog-scale/dropdown (census-dead) — overlay/menu
+ *                              enters ride the .glass-reveal data-reveal register.
  *  10. animations.css        — @keyframes for components consumed via
  *                              `animation:` properties in (9) and component
  *                              <style> blocks. Includes the §TOP-LAYER
@@ -231,6 +234,16 @@
    register; the glint composes the W-AX-METAL-GLOW catch-light. One-shot, PRM-gated,
    compositor-only — the feedback-surface partial. */
 @import "./completion-seal.css";
+
+/* BI.W-DRAW-IN — the codified self-drawing arrival register (`.draw-rule` /
+   `[data-draw-in]`). A hairline / divider / underline draws ITSELF in via
+   `transform: scaleX(0→1)` (or a `clip-path: inset()` wipe) on the NO-OVERSHOOT
+   arrival ease `--ease-out-expo`, at `--draw-in-duration = calc(0.52s * --motion-
+   tempo)` — categorically NOT a spring (a rule that overshoots past its own end reads
+   as jitter). Closes UF-G6 (the "ad-hoc, too bouncy" masthead divider); the demo
+   masthead rule + CompletionSeal + HandMark are its recorded members. Compositor-only,
+   PRM-static. */
+@import "./draw-in.css";
 
 /* Ensure Tailwind scans glass-ui's compiled component templates for the utility
    classes they emit (CVA variant classes like text-destructive-foreground,

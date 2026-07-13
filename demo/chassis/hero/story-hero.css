@@ -339,23 +339,21 @@
     transform: scaleX(1);
     transform-origin: left;
 }
-/* The rule is STRUCK left→right on entrance WHEN the motion-spring sibling delta
-   has landed (`--ease-cartoon-punch`; DEPENDS — un-landed today). Until then the
-   `@supports` guard keeps the rule STATIC (scaleX(1), painted) so it ships token-
-   independent NOW; the strike enriches it for free when the token arrives. PRM
-   holds the static rule (no draw). */
-@supports (animation-timeline: scroll()) {
-    @media (prefers-reduced-motion: no-preference) {
-        .story-page-article > header > .story-hero-cluster.story-hero-shrink::after {
-            transform: scaleX(0);
-            animation: chrome-rule-strike 520ms
-                var(--ease-cartoon-punch, var(--ease-out, ease-out)) 240ms both;
-        }
-    }
-}
-@keyframes chrome-rule-strike {
-    to {
-        transform: scaleX(1);
+/* The rule is STRUCK left→right on entrance on the codified NO-OVERSHOOT draw-in
+   register (BI.W-DRAW-IN — the shared `draw-rule-in` scaleX keyframe on the arrival
+   ease `--ease-out-expo`, at `--draw-in-duration`, staged 240ms after the cluster
+   settles). The prior `--ease-cartoon-punch` (+22% overshoot) + the demo-local
+   `chrome-rule-strike` keyframe are RETIRED (clean break): a rule drawing ITSELF never
+   overshoots past full width — that read as jitter, not craft (UF-G6, "too bouncy").
+   The base rule above stays scaleX(1) — the static paint on a gap engine AND the PRM
+   (reduce) end-state (the strike engages only under no-preference, so under reduce the
+   rule simply reads full-width, zero motion frames). */
+@media (prefers-reduced-motion: no-preference) {
+    .story-page-article > header > .story-hero-cluster.story-hero-shrink::after {
+        --draw-in-delay: 240ms;
+        transform: scaleX(0);
+        animation: draw-rule-in var(--draw-in-duration) var(--ease-out-expo)
+            var(--draw-in-delay) both;
     }
 }
 
