@@ -1,5 +1,4 @@
 export { cn } from "./cn";
-export { moveBeforeSafe } from "./moveBefore";
 // AZ.W-METRIC-UNIFY — the shared value-display core the four Metric* surfaces
 // consume (the canonical empty-check + placeholder default; kills the latent
 // truthy-coalesce zero-value bug).
@@ -9,11 +8,9 @@ export {
     type MetricValue,
     type MetricValueProps,
 } from "./coalesceMetric";
-// AS.W3 A1 — the consolidated platform feature-detection surface
-// (supportsMoveBefore + timeline predicates + supportsPostTask).
+// The CSS scroll/view-timeline feature predicates — kept in the root barrel,
+// sourced directly from their behaviour module.
 export {
-    supportsMoveBefore,
     supportsScrollTimeline,
     supportsViewTimeline,
-    supportsPostTask,
-} from "./platformSupport";
+} from "../composables/motion/supportsCssTimeline";

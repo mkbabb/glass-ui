@@ -17,8 +17,6 @@
 // (a macrotask is a macrotask) — it degrades to "run as a normal macrotask after
 // any delay", still correctness-preserving, just without the priority ordering.
 
-import { supportsPostTask } from "../../utils/platformSupport";
-
 export type TaskPriority = "user-blocking" | "user-visible" | "background";
 
 export interface PostTaskOptions {
@@ -35,6 +33,18 @@ interface SchedulerWithPostTask {
         callback: () => T,
         options?: { priority?: TaskPriority; signal?: AbortSignal; delay?: number },
     ) => Promise<T>;
+}
+
+/**
+ * True when `scheduler.postTask` is available — the feature-detected predicate
+ * gating the prioritized-task fast path (vs the MessageChannel macrotask
+ * fallback in `postTaskSafe`). Internal to this module: folded in from the
+ * dissolved `utils/platformSupport`, whose sole consumer was this guard.
+ */
+function supportsPostTask(): boolean {
+    const scheduler = (globalThis as { scheduler?: { postTask?: unknown } })
+        .scheduler;
+    return typeof scheduler?.postTask === "function";
 }
 
 function getSchedulerPostTask(): SchedulerWithPostTask["postTask"] | null {
