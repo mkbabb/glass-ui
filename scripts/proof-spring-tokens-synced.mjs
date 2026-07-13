@@ -17,8 +17,14 @@ import { readFileSync } from "node:fs";
 import { resolve, relative } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+// BI.W-SPRING-PARITY (FAM-18/M1) — the tempo-parity clause integrates the physical
+// SpringProgress step response (JS_t90) and, in its self-test bite, re-samples a
+// synthetic curve WITH vs WITHOUT `maxDuration` to prove the parity teeth are real.
+import { SpringProgress, springLinearStops } from "@mkbabb/keyframes.js";
 import {
     generateBlock,
+    PRESETS,
+    springSettleDurationSeconds,
     SPRING_LINES_RE,
     tokensPath,
 } from "./regen-spring-tokens.mjs";
@@ -47,9 +53,14 @@ const SCRUBBER_TIMELINE_VUE = resolve(
     ROOT_DIR,
     "src/components/custom/timeline/ScrubberTimeline.vue",
 );
-// The global register vocabulary is the canonical SIX; the 3 per-component
-// ScrubberTimeline registers (head/fill/press) live per-component, NOT in the table.
-const CANONICAL_SPRING_COUNT = 6;
+// The global register vocabulary is the canonical SEVEN (the six BD.W-ANIM-IOS27-TUNE
+// registers + the BI.W-REGISTER-TABLE `transient` enter-transient row, a legitimate
+// global register with ≥2 consumers: Toast + Notification via `--enter-transient-*`);
+// the 3 per-component ScrubberTimeline registers (head/fill/press) still live
+// per-component, NOT in the table. This bound catches per-component sprawl (the
+// RETIRED_TIMELINE_NAMES) + any regrowth past the canonical count — a NEW global
+// register bumps this count with its ≥2-consumer justification, never a silent add.
+const CANONICAL_SPRING_COUNT = 7;
 const RETIRED_TIMELINE_NAMES = ["timeline-head", "timeline-fill", "timeline-press"];
 
 // BD.W-ANIM-IOS27-TUNE — the dock-spring const the band assert checks. Mirrors
@@ -341,6 +352,139 @@ function detectRegisterTidyReal() {
     });
 }
 
+// ── BI.W-SPRING-PARITY (FAM-18/M1) — the TEMPO-PARITY clause. ─────────────────
+// Every CSS `transition` REPLAYS the emitted `--spring-<name>` linear() curve over
+// the paired `--spring-<name>-duration` clock. If the curve was SAMPLED over a
+// different horizon than that clock, the whole trajectory is compressed/stretched:
+// HEAD sampled the curve over `springLinearStops`'s default `maxDuration = 4×response`
+// (~1.9s for snappy) while the clock is the ~0.4s settle — a ~4.8× mismatch that
+// front-loads the motion into the first ~10–16% of the clock (a ~50ms pop + a dead
+// tail). This clause derives CSS_t90 (the time the SHIPPED linear() × its duration
+// reaches 90% travel) and JS_t90 (the physical SpringProgress step response's 90%
+// travel time) and asserts they agree within a small per-preset band. HEAD ships the
+// compression → 6/6 flag (born-RED). At the parity fix (`maxDuration` == the settle
+// clock) the two horizons are ONE, so CSS_t90 == JS_t90 by construction → 0/6.
+//
+// The three pre-existing arms (the committed-vs-generated drift, the AW.W2 dock BAND,
+// and the register-tidy drain) are all tempo-BLIND (FAM-18-RV-b) — they compare token
+// SHAPE, never the replayed trajectory. This clause is the ONLY guard on tempo.
+const TEMPO_PARITY_BAND_MS = 25; // the fix lands all six ≤0.1ms; HEAD misses by 76–428ms
+const TEMPO_RISE_LEVEL = 0.9; // the 90%-travel rise-time (t90) — the standard tempo landmark
+const TEMPO_RISE_MAX_SECONDS = 5; // loop cap (all six presets cross 0.9 well under 0.8s)
+const TEMPO_RISE_DT = 0.0002; // 0.2ms — sub-ms JS_t90 resolution
+
+/** Parse `linear(0, 0.10 2.041%, …, 1)` → `[{ v, p }]` with `p` a 0..1 clock fraction. */
+function parseLinearStops(decl) {
+    const inner = decl.slice(decl.indexOf("(") + 1, decl.lastIndexOf(")"));
+    const parts = inner.split(",").map((s) => s.trim());
+    return parts.map((part, i) => {
+        const toks = part.split(/\s+/);
+        const v = Number.parseFloat(toks[0]);
+        // A bare first stop is at 0%, a bare last stop is at 100%; the middle stops
+        // carry an explicit `N%` position.
+        const p =
+            toks[1] && toks[1].endsWith("%")
+                ? Number.parseFloat(toks[1]) / 100
+                : i === 0
+                  ? 0
+                  : 1;
+        return { v, p };
+    });
+}
+
+/** First UPWARD crossing of `level` on the piecewise-linear stop list → clock fraction 0..1 (or null). */
+function crossFraction(stops, level) {
+    for (let i = 1; i < stops.length; i++) {
+        const a = stops[i - 1];
+        const b = stops[i];
+        if (a.v < level && b.v >= level) {
+            return a.p + ((level - a.v) / (b.v - a.v)) * (b.p - a.p);
+        }
+    }
+    return null;
+}
+
+/** Physical time (seconds) the `SpringProgress(target=1)` step response first reaches `level`. */
+function springRiseTimeSeconds(preset, level) {
+    const spring = new SpringProgress({
+        response: preset.response,
+        dampingFraction: preset.dampingFraction,
+    });
+    spring.target = 1;
+    let prev = spring.tickToTime(0);
+    for (let t = TEMPO_RISE_DT; t < TEMPO_RISE_MAX_SECONDS; t += TEMPO_RISE_DT) {
+        const x = spring.tickToTime(t);
+        if (prev < level && x >= level) {
+            return t - TEMPO_RISE_DT + ((level - prev) / (x - prev)) * TEMPO_RISE_DT;
+        }
+        prev = x;
+    }
+    return null;
+}
+
+/**
+ * PURE tempo-parity detector — reads a CSS string + a presets table so the self-test
+ * can inject a synthetic curve sampled WITHOUT `maxDuration` (the dropped-arg regression)
+ * and assert it FLAGS, while the parity-fixed synthetic stays clean.
+ */
+export function detectTempoParity({ css, presets }) {
+    const violations = [];
+    const facts = { bandMs: TEMPO_PARITY_BAND_MS, perPreset: [] };
+
+    for (const preset of presets) {
+        const curveM = css.match(
+            new RegExp(`--spring-${preset.name}:\\s*(linear\\([^;]+\\))`),
+        );
+        // BI.W-TEMPO — the raw settle seconds moved to the INTERNAL `-settle` token
+        // (the public `-duration` is now the `calc(settle * --motion-tempo)` reader,
+        // which a device-free gate cannot evaluate). Read the raw settle here — at the
+        // 1.0 identity it equals the prior flat `-duration` value, so this clause is
+        // byte-unchanged in effect (the G4 round-trip).
+        const durM = css.match(
+            new RegExp(`--spring-${preset.name}-settle:\\s*([\\d.]+)s`),
+        );
+        if (!curveM || !durM) {
+            violations.push(
+                `--spring-${preset.name}: the linear() curve and/or its -settle clock is missing — cannot verify tempo parity`,
+            );
+            continue;
+        }
+        const stops = parseLinearStops(curveM[1]);
+        const durationSec = Number.parseFloat(durM[1]);
+        const f90 = crossFraction(stops, TEMPO_RISE_LEVEL);
+        const jsRise = springRiseTimeSeconds(preset, TEMPO_RISE_LEVEL);
+        if (f90 == null || jsRise == null) {
+            violations.push(
+                `--spring-${preset.name}: the ${TEMPO_RISE_LEVEL * 100}%-travel crossing could not be located`,
+            );
+            continue;
+        }
+        const cssT90ms = f90 * durationSec * 1000;
+        const jsT90ms = jsRise * 1000;
+        const deltaMs = Math.abs(cssT90ms - jsT90ms);
+        facts.perPreset.push({
+            name: preset.name,
+            cssT90ms: Math.round(cssT90ms * 10) / 10,
+            jsT90ms: Math.round(jsT90ms * 10) / 10,
+            deltaMs: Math.round(deltaMs * 10) / 10,
+        });
+        if (deltaMs > TEMPO_PARITY_BAND_MS) {
+            violations.push(
+                `--spring-${preset.name}: CSS_t90 ${cssT90ms.toFixed(1)}ms (the shipped linear() × its ${durationSec}s clock) vs physical JS_t90 ${jsT90ms.toFixed(1)}ms — Δ${deltaMs.toFixed(1)}ms exceeds the ±${TEMPO_PARITY_BAND_MS}ms tempo-parity band (FAM-18/M1: the curve and its --spring-*-duration clock are sampled over DIFFERENT horizons — re-run \`node scripts/regen-spring-tokens.mjs\`, which passes maxDuration = the settle clock so both share ONE span)`,
+            );
+        }
+    }
+
+    return { violations, facts };
+}
+
+function detectTempoParityReal() {
+    return detectTempoParity({
+        css: readFileSync(tokensPath, "utf8"),
+        presets: PRESETS,
+    });
+}
+
 export function detect() {
     const source = readFileSync(tokensPath, "utf8");
     const committedMatch = source.match(SPRING_LINES_RE);
@@ -371,6 +515,8 @@ export function detect() {
     // BG.W-SPRING-REGISTER-TIDY — the register-sprawl drain (table→6 + dead twins die +
     // the ScrubberTimeline-LOCAL move).
     const tidy = detectRegisterTidyReal();
+    // BI.W-SPRING-PARITY (FAM-18/M1) — the tempo-parity clause (CSS_t90 vs JS_t90).
+    const tempo = detectTempoParityReal();
 
     return {
         violations: [
@@ -378,12 +524,14 @@ export function detect() {
             ...band.violations,
             ...comments.violations,
             ...tidy.violations,
+            ...tempo.violations,
         ],
         committed,
         generated,
         bandFacts: band.facts,
         commentFacts: comments.facts,
         tidyFacts: tidy.facts,
+        tempoFacts: tempo.facts,
     };
 }
 
@@ -440,14 +588,61 @@ function registerTidySelfTest() {
     return failures;
 }
 
+// ── BI.W-SPRING-PARITY self-test — the tempo-parity clause proves its own bite every
+//    run: a synthetic regen that DROPS `maxDuration` (the default 4×response horizon)
+//    MUST re-red the clause, and the parity-fixed synthetic (maxDuration == the settle
+//    clock) MUST stay clean. A future regen that silently drops the arg cannot un-fix
+//    parity without this self-test going red.
+function tempoParitySelfTest() {
+    const failures = [];
+    // snappy — an unambiguously underdamped register where the horizon mismatch is loud.
+    const sample = PRESETS.find((p) => p.name === "snappy") ?? PRESETS[0];
+    const settle = springSettleDurationSeconds(sample);
+    const SAMPLE_COUNT = 48; // mirrors regen-spring-tokens.mjs (fidelity only; not load-bearing here)
+    const buildCss = (stops) =>
+        `  --spring-${sample.name}: ${stops};\n  --spring-${sample.name}-settle: ${settle}s;`;
+
+    // CLEAN: sampled over maxDuration = the settle clock (the parity fix) → in-band.
+    const cleanStops = springLinearStops({
+        response: sample.response,
+        dampingFraction: sample.dampingFraction,
+        sampleCount: SAMPLE_COUNT,
+        maxDuration: settle,
+    });
+    if (
+        detectTempoParity({ css: buildCss(cleanStops), presets: [sample] }).violations
+            .length !== 0
+    )
+        failures.push(
+            "self-test tempo: a parity-fixed synthetic (maxDuration == the settle clock) false-flagged (over-reach)",
+        );
+
+    // BITE: DROP maxDuration → the default 4×response horizon → the ~5× compression
+    // re-appears → the clause MUST flag.
+    const droppedStops = springLinearStops({
+        response: sample.response,
+        dampingFraction: sample.dampingFraction,
+        sampleCount: SAMPLE_COUNT,
+    });
+    if (
+        detectTempoParity({ css: buildCss(droppedStops), presets: [sample] }).violations
+            .length === 0
+    )
+        failures.push(
+            "self-test tempo bite: a synthetic regen that DROPPED maxDuration did NOT flag — the tempo-parity teeth are gone",
+        );
+
+    return failures;
+}
+
 function run() {
     const { ROOT, ARTIFACT } = cliPaths();
-    const { violations, committed, generated, bandFacts, commentFacts, tidyFacts } = detect();
-    const tidySelfTestFailures = registerTidySelfTest();
-    if (tidySelfTestFailures.length) {
-        for (const f of tidySelfTestFailures) console.error(`proof:spring-tokens-synced — ${f}`);
+    const { violations, committed, generated, bandFacts, commentFacts, tidyFacts, tempoFacts } = detect();
+    const selfTestFailures = [...registerTidySelfTest(), ...tempoParitySelfTest()];
+    if (selfTestFailures.length) {
+        for (const f of selfTestFailures) console.error(`proof:spring-tokens-synced — ${f}`);
         console.error(
-            "proof:spring-tokens-synced — SELF-TEST FAILED: the register-tidy clause's teeth are gone; do not trust a GREEN.",
+            "proof:spring-tokens-synced — SELF-TEST FAILED: a clause's teeth are gone (register-tidy or tempo-parity); do not trust a GREEN.",
         );
         process.exit(1);
     }
@@ -478,6 +673,8 @@ function run() {
             comments: commentFacts,
             registerTidy: tidyFacts,
             registerTidySelfTest: "OK — a re-added timeline row / dead CSS twin / vanished local map all flag",
+            tempoParity: tempoFacts,
+            tempoParitySelfTest: "OK — a synthetic regen that drops maxDuration re-reds the tempo-parity clause",
         },
         violations,
     });
@@ -500,6 +697,19 @@ function run() {
             `  register tidy (BG)        : global rows ${tidyFacts.globalRowCount} (canon ${CANONICAL_SPRING_COUNT}), dead --spring-timeline-* twins ${tidyFacts.deadTimelineTwins.length}, ScrubberTimeline local map ${tidyFacts.scrubberLocalMap ? "present ✓" : "MISSING ✗"}`,
         );
         console.log("  register tidy self-test   : OK (row / twin / local-map bites all flag)");
+    }
+    if (tempoFacts && tempoFacts.perPreset) {
+        const worst = tempoFacts.perPreset.reduce(
+            (m, r) => (r.deltaMs > m.deltaMs ? r : m),
+            { deltaMs: -1, name: "—" },
+        );
+        const inBand = tempoFacts.perPreset.filter(
+            (r) => r.deltaMs <= tempoFacts.bandMs,
+        ).length;
+        console.log(
+            `  tempo parity (BI/M1)      : ${inBand}/${tempoFacts.perPreset.length} presets within ±${tempoFacts.bandMs}ms (CSS_t90 vs JS_t90); max Δt90 ${worst.deltaMs}ms (${worst.name})`,
+        );
+        console.log("  tempo parity self-test    : OK (a dropped-maxDuration regen re-reds)");
     }
     if (firstDiff) {
         console.log(`  first divergence at block line ${firstDiff.line}:`);
