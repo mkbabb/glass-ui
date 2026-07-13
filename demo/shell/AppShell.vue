@@ -28,9 +28,6 @@ import { shellFieldActive } from "../router";
 import { PresetEditor } from "../configurator";
 import SidebarDock from "./SidebarDock.vue";
 import BottomDock from "./BottomDock.vue";
-import CommandPalette from "../eggs/CommandPalette.vue";
-import KonamiAurora from "../eggs/KonamiAurora.vue";
-import { useKonami } from "../eggs/useKonami";
 import "./dock-nav.css";
 
 const { next, prev, nextCategory, prevCategory } = useStoryNavigation();
@@ -38,14 +35,8 @@ const { next, prev, nextCategory, prevCategory } = useStoryNavigation();
 const showHelp = ref(false);
 const shortcuts = useRegisteredShortcuts();
 
-// ── Easter eggs (each PRM-fenced; each a composition of shipped machinery) ──
-// E3 — the ⌘K command palette (first-class fuzzy story nav, the shipped Command).
-const showPalette = ref(false);
-// E2 — the konami full-bleed aurora reveal.
-const showKonami = ref(false);
-useKonami(() => {
-    showKonami.value = true;
-});
+// The demo/eggs family (Konami aurora + the command-palette egg + the 404
+// constellation) is DELETED WHOLE — user order 2026-07-13, clean break.
 
 // BI.W-DOCK-RETIRES — the in-situ V↔H orientation morph (the `useDockOrientationMorph`
 // driver bound to the `<aside>` shell-dock box, the dock-anchored goo teardrop, the
@@ -200,17 +191,6 @@ onMounted(() => {
         label: "Toggle keyboard help",
         group: "UI",
     });
-    // E3 — ⌘K / Ctrl+K opens the command palette (fuzzy story navigation).
-    registerShortcut(
-        "mod+k",
-        () => (showPalette.value = !showPalette.value),
-        {
-            label: "Command palette",
-            group: "Navigation",
-            allowInInput: true,
-            preventDefault: true,
-        },
-    );
 });
 
 </script>
@@ -310,11 +290,6 @@ onMounted(() => {
         <BottomDock />
     </div>
 
-    <!-- Easter eggs (each PRM-fenced; each composes shipped machinery). The ℱ-wordmark
-         Fourier-redraw overlay was RETIRED at BG.W-DOCK-PERSISTENT-CUT with its wordmark
-         trigger — the persistent brand egg is gone from both docks. -->
-    <CommandPalette v-model:open="showPalette" />
-    <KonamiAurora v-if="showKonami" @done="showKonami = false" />
 
     <!-- BI.W-DOCK-RETIRES — the in-situ V↔H dock-morph stage is DEFINITION-ABSENT
          (decided-terminal). No modal, no goo teardrop, no `startViewTransition` on the

@@ -68,7 +68,8 @@ function routedFiles(ROOT) {
     const files = rows.map((r) => `demo/stories/${r}.vue`);
     // The category-landing route component + the catch-all 404 are routed too.
     files.push("demo/chassis/landing/SectionLanding.vue");
-    files.push("demo/eggs/NotFound.vue");
+    // The 404 moved to the shell at the eggs delete (user order 2026-07-13).
+    files.push("demo/shell/NotFound.vue");
     return [...new Set(files)];
 }
 

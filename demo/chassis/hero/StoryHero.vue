@@ -253,7 +253,7 @@ const staticBackdrop = computed(() => kind.value === "grid" || kind.value === "p
 // page (the substrate IS the page background — the user's bar: "no sub-container
 // on pages like this"). The boxed-card model trapped the substrate inside a glass
 // plate that double-washed it to invisible; here the substrate escapes to
-// `position: fixed; inset: 0` (the KonamiAurora full-bleed idiom) so it fills the
+// `position: fixed; inset: 0` (the full-bleed fixed-inset idiom) so it fills the
 // viewport behind the page header AND the content, and the content sits DIRECTLY
 // over the live field on a thin readability plate — no boxing, no wash-out.
 //

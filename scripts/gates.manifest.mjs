@@ -1010,12 +1010,6 @@ export const GATES = [
         note: "AY.W-SB-STAGE — the FD occasional-usage map + the StoryHero read-through seam: G-MAP (declared befitting backgrounds + the liveBackdrop/cardTier seam + StoryBackgroundKind blob) + G-RESTRAINT (forms/feedback/containers declare NONE). Bite: un-declare a substrate bg -> G-MAP reds; declare on a forms row -> G-RESTRAINT reds",
     },
     {
-        id: "proof:easter-eggs",
-        cmd: "proof:easter-eggs",
-        tags: ["local", "ci"],
-        note: "AY.W-EGG — the six divined eggs source-witness + per-egg PRM fence (dftFromPoints+F-redraw / konami aurora / cmd+K palette / mascot+404 / eclipse / rail toggle — 21 seams). Self-proving. Bite: drop a seam / unbind mod+k / remove a PRM fence -> RED",
-    },
-    {
         id: "proof:instrument-scope",
         cmd: "proof:instrument-scope",
         tags: ["local"],

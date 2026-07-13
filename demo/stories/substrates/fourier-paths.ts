@@ -8,14 +8,14 @@
 // wordmark is literally drawn by its own Fourier epicycles (the brand tie-in).
 //
 // The ℱ wordmark reuses the hand-traced glyph the redraw egg already ships
-// (demo/eggs/fGlyphPoints.ts) — one source of truth for the brand outline. The
+// (./fGlyphPoints.ts — colocated with this, its ONE consumer, at the eggs delete) — one source of truth for the brand outline. The
 // heart + star are authored here as their own closed parametric curves.
 
 import {
     dftFromPoints,
     type BasisComponent,
 } from "@glass/components/custom/fourier-field";
-import { fGlyphPoints } from "../../eggs/fGlyphPoints";
+import { fGlyphPoints } from "./fGlyphPoints";
 
 /** A curated trace source: a label + the closed point set + its DFT spectrum. */
 export interface FourierShape {
