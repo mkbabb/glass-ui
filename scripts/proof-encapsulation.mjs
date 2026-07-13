@@ -50,6 +50,17 @@ import {
     snapshotStamp,
     writeGateArtifact,
 } from "./gate-output.mjs";
+// BI.W-RATCHET-GROWTH — the growth-red MIRROR. proof:no-god-module owns the frozen
+// TRANCHE_BASELINE_MANIFEST (the set of files already >500 at BI tranche start) + the
+// live RATCHET_BASELINES map. This gate imports both and independently reds any ratchet
+// key OUTSIDE the frozen manifest — a wave-INTRODUCED grow the growing wave cannot
+// self-grandfather (one manifest, two enforcers). Importing is side-effect-free: the
+// sibling gate's top-level run() is guarded behind `import.meta.url`.
+import {
+    RATCHET_BASELINES,
+    TRANCHE_BASELINE_MANIFEST,
+    SHADER_LITERAL,
+} from "./proof-no-god-module.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const SRC = resolve(ROOT, "src");
@@ -357,6 +368,41 @@ function detectColocate(overrides = {}) {
         violations.push(...carveViolations);
     }
     return { facts, violations };
+}
+
+// ── BI.W-RATCHET-GROWTH — the growth-red MIRROR (RG1). A wave that grows a file past the
+//    500-line bound in its OWN diff cannot self-grandfather it by adding a
+//    RATCHET_BASELINES row: the frozen TRANCHE_BASELINE_MANIFEST (owned by
+//    proof:no-god-module, imported above) is the ONLY legal source of baseline keys. This
+//    gate INDEPENDENTLY reds any ratchet key OUTSIDE the frozen manifest — so even if the
+//    sibling gate is bypassed or weakened, the encapsulation gate still catches the
+//    wave-introduced grow (one manifest, two enforcers; the GF5 "ratchet normalizes
+//    regrowth" disease terminalized at the contract level). A shader key is EXEMPT at the
+//    sibling gate (logic-only ratchet) and never appears in the manifest, so it is skipped
+//    here. Pure over an injected input map so a self-test can sabotage the maps.
+function detectRatchetGrowth(overrides = {}) {
+    const ratchetBaselines = overrides.ratchetBaselines ?? RATCHET_BASELINES;
+    const trancheManifest = overrides.trancheManifest ?? TRANCHE_BASELINE_MANIFEST;
+    const violations = [];
+    const offManifest = [];
+    for (const key of Object.keys(ratchetBaselines)) {
+        if (SHADER_LITERAL.test(key)) continue;
+        if (!(key in trancheManifest)) {
+            offManifest.push(key);
+            violations.push(
+                `RG1 — the proof:no-god-module RATCHET_BASELINES key "${key}" is NOT in the frozen TRANCHE_BASELINE_MANIFEST — a wave-INTRODUCED >${HARD_LIMIT} file cannot self-grandfather its own growth (GROWTH reds the growing wave; only a file already >${HARD_LIMIT} at BI tranche start may carry a baseline row)`,
+            );
+        }
+    }
+    return {
+        facts: {
+            ratchetKeys: Object.keys(ratchetBaselines).length,
+            manifestKeys: Object.keys(trancheManifest).length,
+            offManifest,
+            clean: violations.length === 0,
+        },
+        violations,
+    };
 }
 
 // ── BG.W-DEAD-SWEEP — the selectableChipVariants alias-kill negative guard. ──
@@ -2090,6 +2136,53 @@ function selfTest() {
     // GB-fence: the migrated tree carries ZERO goo-barbell violation.
     sabNotGoo({}, "GB", "GB the migrated tree (goo geometry carved clean)");
 
+    // ── BI.W-RATCHET-GROWTH — the growth-red MIRROR (RG1) bites. ──
+    const sabRG = (overrides, prefix, name) => {
+        const { violations } = detectRatchetGrowth(overrides);
+        if (violations.some((x) => x.startsWith(prefix))) flagged++;
+        else
+            throw new Error(
+                `[proof:encapsulation self-test] ratchet-growth bite FAILED to flag: ${name}`,
+            );
+    };
+    const sabNotRG = (overrides, prefix, name) => {
+        const { violations } = detectRatchetGrowth(overrides);
+        if (!violations.some((x) => x.startsWith(prefix))) flagged++;
+        else
+            throw new Error(
+                `[proof:encapsulation self-test] ratchet-growth fence bite WRONGLY flagged: ${name}`,
+            );
+    };
+    // RG1: a NEW encap ratchet row (a wave-grown key) NOT in the frozen manifest REDs.
+    sabRG(
+        {
+            ratchetBaselines: { "components/custom/x/wave-grown.ts": 600 },
+            trancheManifest: {},
+        },
+        "RG1",
+        "RG1 a wave-introduced ratchet key outside the frozen manifest (grow-and-self-grandfather)",
+    );
+    // RG1 (fence): a ratchet key that IS a frozen-manifest member (a file already >500 at
+    //   tranche start) does NOT flag — a legal grandfather of a real BI-start over-bound file.
+    sabNotRG(
+        {
+            ratchetBaselines: { "components/custom/aurora/composables/runtime.ts": 502 },
+            trancheManifest: { "components/custom/aurora/composables/runtime.ts": 502 },
+        },
+        "RG1",
+        "RG1 fence — a ratchet key inside the frozen manifest (legal grandfather)",
+    );
+    // RG1 (fence): a shader key in the ratchet map is EXEMPT (logic-only ratchet) and is
+    //   skipped by the mirror even though it is not a manifest member.
+    sabNotRG(
+        {
+            ratchetBaselines: { "components/custom/x/shaders/big.wgsl.ts": 999 },
+            trancheManifest: {},
+        },
+        "RG1",
+        "RG1 fence — a shader key is skipped (the sibling shader-literal exemption)",
+    );
+
     return flagged;
 }
 
@@ -2120,6 +2213,9 @@ function run() {
         detectMotionAxis();
     // BG.W-GOO-BARBELL-CSS — the goo-morph barbell GEOMETRY carve.
     const { facts: gooFacts, violations: gooViolations } = detectGooBarbell();
+    // BI.W-RATCHET-GROWTH — the growth-red MIRROR (RG1) over the sibling gate's ratchet map.
+    const { facts: growthFacts, violations: growthViolations } =
+        detectRatchetGrowth();
     const facts = {
         ...blobFacts,
         colocate: colocateFacts,
@@ -2129,6 +2225,7 @@ function run() {
         sizeGrammar: sizeFacts,
         motionAxis: motionFacts,
         gooBarbell: gooFacts,
+        ratchetGrowth: growthFacts,
     };
     const violations = [
         ...blobViolations,
@@ -2139,6 +2236,7 @@ function run() {
         ...sizeViolations,
         ...motionViolations,
         ...gooViolations,
+        ...growthViolations,
     ];
     const status = violations.length === 0 ? "pass" : "fail";
 
@@ -2219,7 +2317,13 @@ function run() {
         `    goo-barbell geometry          : ${gooViolations.length === 0 ? "GREEN" : "RED"} (leaf=${gooFacts.colocation.leafExists}, exports=${gooFacts.colocation.leafExportsAll}, engine-imports=${gooFacts.colocation.engineImports}, stateless=${!gooFacts.stateless.hasSpring && !gooFacts.stateless.importsVue && !gooFacts.stateless.hasRaf && !gooFacts.stateless.touchesDom && !gooFacts.stateless.moduleMutable}, engine-redefs=${gooFacts.singleDefinition.engineRedefines.length})`,
     );
     console.log(
-        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (blob E1×2+E1-fence+E2×2+E3×2+E4+E4-fence + colocate C1×2+C1-fence+C2×2+C3+C3-fence + luminance-carve C3+C2+C3-fence + alias-kill A1+A2+fence + deshadcn DS1×3+DS1-fence+DS2+DS3×2+DS3-regex+DS4+DS-clean + axis-grammar G1+G2+G3+G3-fence+G4+G4-fence+G5+G6 + size-grammar S1x2+S2+S3+S4+S5+S6+S-fence + motion-axis M1×2+M1-fence×2+M2+M3+M4+M5+M6+M-fence + goo-barbell GB1×2+GB2×4+GB3+GB3-fence+GB-fence)`,
+        "  BI.W-RATCHET-GROWTH (RG1 growth-red mirror — no ratchet key outside the frozen tranche manifest):",
+    );
+    console.log(
+        `    ratchet-growth mirror         : ${growthViolations.length === 0 ? "GREEN" : "RED"} (${growthFacts.ratchetKeys} ratchet key(s) vs ${growthFacts.manifestKeys} frozen manifest key(s); off-manifest=${growthFacts.offManifest.length ? growthFacts.offManifest.join(", ") : "none"})`,
+    );
+    console.log(
+        `  self-test (bite proof)          : OK — ${selfTestCount} synthetic sabotages handled (blob E1×2+E1-fence+E2×2+E3×2+E4+E4-fence + colocate C1×2+C1-fence+C2×2+C3+C3-fence + luminance-carve C3+C2+C3-fence + alias-kill A1+A2+fence + deshadcn DS1×3+DS1-fence+DS2+DS3×2+DS3-regex+DS4+DS-clean + axis-grammar G1+G2+G3+G3-fence+G4+G4-fence+G5+G6 + size-grammar S1x2+S2+S3+S4+S5+S6+S-fence + motion-axis M1×2+M1-fence×2+M2+M3+M4+M5+M6+M-fence + goo-barbell GB1×2+GB2×4+GB3+GB3-fence+GB-fence + ratchet-growth RG1+RG1-fence×2)`,
     );
 
     if (violations.length) {
@@ -2252,5 +2356,6 @@ export {
     detectSizeGrammar,
     detectMotionAxis,
     detectGooBarbell,
+    detectRatchetGrowth,
     selfTest,
 };

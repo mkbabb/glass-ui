@@ -37,6 +37,28 @@
 // class made machine-locked — the `RATCHET_BASELINES == {}` cut precondition's drain
 // chain is now not only NAMED but PROVEN-owned.
 //
+// THE TRANCHE-BASELINE MANIFEST — GROWTH REDS THE GROWING WAVE (BI.W-RATCHET-GROWTH /
+// GF5). The ratchet above makes a baseline SHRINK-only, but a GROWING wave could still
+// ride green by (a) growing a file past 500 in its OWN diff and (b) adding its OWN
+// baseline row + a (possibly phantom) carve-successor — "normalizing" the regrowth by
+// booking a future drain (the GF5 "ratchet normalizes regrowth" disease). BI kills it
+// at the CONTRACT level: `TRANCHE_BASELINE_MANIFEST` is the FROZEN set of files ALREADY
+// >500 at the BI TRANCHE START (+ their frozen BI-start counts), and it is the ONLY
+// legal source of baseline keys:
+//   • R1 — a RATCHET_BASELINES key ABSENT from the manifest is a wave-INTRODUCED grow
+//          (a file ≤500 at tranche start crossing the bound + self-grandfathering) →
+//          RED. No self-added baseline row can grandfather wave-introduced growth.
+//   • R2 — a manifest key whose LIVE line count EXCEEDS its frozen baseline REDs (a
+//          grandfathered file that grew MORE, or a drained manifest file a later wave
+//          re-inflated past its tranche-start count). A manifest file may only SHRINK.
+// This makes the `RATCHET_BASELINES == {}` cut-precondition MONOTONIC-BY-CONSTRUCTION —
+// a wave cannot re-inflate the map, only DRAIN it (shrink or delete a manifest key). The
+// manifest is a BI-start snapshot LITERAL (frozen below, never edited by a later wave —
+// a new >500 file REDs the introducing wave, it does NOT earn a manifest row); the
+// drains (BI.W-STYLE-REDRAIN, BI.W-ENCAP-REDRAIN, D-DOCK, D-VIZ) shrink/delete its keys
+// toward ∅. proof:encapsulation MIRRORS R1 (it imports this frozen manifest and reds any
+// RATCHET_BASELINES key outside it — one manifest, two independent enforcers).
+//
 // THE SHADER-LITERAL EXEMPTION (BG.W-GOD-MODULE-STRUCTURAL / FC-B10). The
 // ratchet is LOGIC-only. A `*.{wgsl,glsl,frag,vert}.ts` file is ONE cohesive
 // GPU-program literal string — splitting it into line-count fragments breaks the
@@ -117,11 +139,47 @@ function waveSpecExists(root, waveId) {
 }
 
 /**
+ * BI.W-RATCHET-GROWTH — THE FROZEN TRANCHE-BASELINE MANIFEST. The set of non-shader
+ * `src/` files ALREADY over the 500-line bound at the BI TRANCHE START (commit 690fef91
+ * "BI GREENLIGHT (user 2026-07-12): execution begins"), each pinned at its frozen BI-start
+ * line count. This is the ONLY legal source of RATCHET_BASELINES keys (R1) and the
+ * monotonic upper bound each key may hold (R2 — a manifest file may only SHRINK). A key
+ * ABSENT here is a wave-INTRODUCED grow; a manifest file whose LIVE count EXCEEDS its
+ * frozen value is a re-inflation — both RED. FROZEN: a later wave NEVER edits this map (a
+ * new >500 file REDs the introducing wave, it does NOT earn a manifest row). The drains
+ * empty RATCHET_BASELINES toward ∅; this manifest stays as the immutable BI-start witness.
+ *
+ * SOURCE FORM — the manifest is an ARRAY OF `[path, count]` TUPLES (→ Object.fromEntries),
+ * NOT an object literal, DELIBERATELY: sibling gates (proof:encapsulation C1,
+ * proof:dock-decompose D1, and every future per-file drain gate) detect a LIVE ratchet row
+ * by scanning THIS file's text for the `"<path>": <n>` shape. An object-literal manifest
+ * row shares that exact shape and would be mis-read as a live ratchet row for the paths it
+ * lists (a false rowPresent that would block a real drain from greening those gates). The
+ * tuple form (`["<path>", <n>]` — a comma after the quoted path, never a colon) cannot match
+ * the `"<path>"\s*:\s*\d+` scanners, so ONE map lives in the god-module without polluting the
+ * consumers' whole-text row detection. Do NOT convert this to an object literal.
+ */
+const TRANCHE_BASELINE_MANIFEST = Object.fromEntries([
+    ["styles/segmented-tabs.css", 572], // drained → BI.W-STYLE-REDRAIN (413)
+    ["styles/tokens/property-regs.css", 563], // drained → BI.W-STYLE-REDRAIN (405)
+    ["composables/glass/useGlassBackdropLuminance.ts", 554], // drained → BI.W-ENCAP-REDRAIN (365)
+    ["styles/dock/shell.css", 524], // over-bound → B3 D-DOCK
+    ["components/custom/dock/DockLayerGroup.vue", 524], // over-bound → B3 D-DOCK
+    ["components/custom/dock/GlassDock.vue", 515], // over-bound → B3 D-DOCK
+    ["styles/glass/ladder.css", 510], // drained → BI.W-STYLE-REDRAIN (452)
+    ["styles/glass/surfaces.css", 508], // drained → BI.W-STYLE-REDRAIN (434)
+    ["styles/tokens/dark-arm.css", 507], // drained → BI.W-STYLE-REDRAIN (455)
+    ["components/custom/aurora/composables/runtime.ts", 502], // grandfathered → BI.W-FIELD-CORE (B5 D-VIZ)
+]);
+
+/**
  * The per-violator ratchet baselines — a file over 500 lines that is
  * grandfathered at the frozen count below until its carve drains the row. KEYED
  * by the `src/`-relative POSIX path. Empty = every file is under bound (the close
  * state). A row whose value is ABOVE the frozen open count MUST carry a
- * `// BOOK(<wave-id>):` marker (asserted below).
+ * `// BOOK(<wave-id>):` marker (asserted below). Every key MUST be a member of the
+ * frozen TRANCHE_BASELINE_MANIFEST above (R1) — a key outside it is a wave-introduced
+ * grow the growth-red clause reds (GROWTH reds the growing wave).
  */
 const RATCHET_BASELINES = {
     // BB.W-CARVE4 DRAINED the FINAL five ratchet rows to ∅ — the carve LANDED, the
@@ -403,7 +461,13 @@ function lineCount(file) {
  * (for the CARVE-SUCCESSOR marker parse). Returns `{ violations, grandfathered,
  * shaderExempt, warnings }`.
  */
-function detect({ measured, ratchetBaselines, source, resolveWave = () => true }) {
+function detect({
+    measured,
+    ratchetBaselines,
+    source,
+    resolveWave = () => true,
+    trancheManifest = TRANCHE_BASELINE_MANIFEST,
+}) {
     const over = measured.filter((m) => m.lines > HARD_LIMIT);
     const grandfathered = [];
     const shaderExempt = [];
@@ -461,6 +525,36 @@ function detect({ measured, ratchetBaselines, source, resolveWave = () => true }
         }
     }
 
+    // ── R1 (BI.W-RATCHET-GROWTH) — GROWTH REDS THE GROWING WAVE. The frozen
+    //    TRANCHE_BASELINE_MANIFEST is the ONLY legal source of baseline keys. A
+    //    RATCHET_BASELINES key ABSENT from the manifest is a wave-INTRODUCED >500 file
+    //    self-grandfathering its own growth (the GF5 disease) — RED. (A shader key is
+    //    handled by the shader-row guard above and never appears in the manifest, so it
+    //    is skipped here to avoid a redundant double-flag.)
+    for (const key of Object.keys(ratchetBaselines)) {
+        if (SHADER_LITERAL.test(key)) continue;
+        if (!(key in trancheManifest)) {
+            violations.push(
+                `the ratchet baseline row for ${key} is NOT in the TRANCHE_BASELINE_MANIFEST — a wave-INTRODUCED >${HARD_LIMIT} file cannot self-grandfather its own growth (GROWTH reds the growing wave; only a file already >${HARD_LIMIT} at tranche start may carry a baseline row)`,
+            );
+        }
+    }
+
+    // ── R2 (BI.W-RATCHET-GROWTH) — a manifest file may only SHRINK. A frozen-manifest
+    //    key whose LIVE line count EXCEEDS its frozen BI-start baseline is a re-inflation
+    //    (a grandfathered file that grew MORE, or a drained manifest file a later wave
+    //    re-grew past its tranche-start count + self-grandfathered) — RED. A shrink or a
+    //    delete (live undefined) is the only legal ratchet move.
+    for (const [key, frozen] of Object.entries(trancheManifest)) {
+        const live = measured.find((m) => m.path === key);
+        if (live && live.lines > frozen) {
+            const display = live.displayPath ?? live.path;
+            violations.push(
+                `${display} is ${live.lines} lines (> its FROZEN tranche baseline ${frozen}) — a manifest file may only SHRINK from its tranche-start count (GROWTH reds the growing wave; the ratchet drains, never re-inflates)`,
+            );
+        }
+    }
+
     const warnings = measured.filter(
         (m) =>
             m.lines > WARN_LIMIT &&
@@ -495,11 +589,14 @@ function selfTest() {
     };
 
     // Bite 1 — THE CONTRACT: a new baseline WITHOUT a carve-successor id REDs.
+    //   (Each synthetic key is pinned into an explicit trancheManifest so the R1/R2
+    //   growth-red clauses stay silent — the bite tests ONLY its own concern.)
     sab(
         {
             measured: [mk("synthetic/god.ts", 600)],
             ratchetBaselines: { "synthetic/god.ts": 600 },
             source: `const RATCHET_BASELINES = { "synthetic/god.ts": 600 };`,
+            trancheManifest: { "synthetic/god.ts": 600 },
         },
         "NO CARVE-SUCCESSOR",
         "a grandfathered baseline with no carve-successor id",
@@ -510,6 +607,7 @@ function selfTest() {
             measured: [mk("synthetic/god.ts", 600)],
             ratchetBaselines: { "synthetic/god.ts": 600 },
             source: `"synthetic/god.ts": 600, // CARVE-SUCCESSOR(BG.W-SYNTH)`,
+            trancheManifest: { "synthetic/god.ts": 600 },
         },
         "NO CARVE-SUCCESSOR",
         "a baseline WITH a carve-successor id (fence)",
@@ -550,16 +648,20 @@ function selfTest() {
             measured: [mk("components/custom/x/useThing.ts", 400)],
             ratchetBaselines: { "components/custom/x/useThing.ts": 600 },
             source: `"components/custom/x/useThing.ts": 600, // CARVE-SUCCESSOR(BG.W-X)`,
+            trancheManifest: { "components/custom/x/useThing.ts": 600 },
         },
         "is STALE",
         "a stale baseline row (file drained under the bound)",
     );
     // Bite 6 — a grandfathered file that GREW past its baseline REDs (even with a marker).
+    //   The frozen manifest holds it at 700 so the R2 growth-red clause stays silent —
+    //   the bite isolates the pre-existing per-row grow-guard (against the ratchet value).
     sab(
         {
             measured: [mk("components/custom/x/useThing.ts", 650)],
             ratchetBaselines: { "components/custom/x/useThing.ts": 600 },
             source: `"components/custom/x/useThing.ts": 600, // CARVE-SUCCESSOR(BG.W-X)`,
+            trancheManifest: { "components/custom/x/useThing.ts": 700 },
         },
         "may not GROW",
         "a grandfathered file grew past its baseline",
@@ -572,6 +674,7 @@ function selfTest() {
             ratchetBaselines: { "synthetic/god.ts": 600 },
             source: `"synthetic/god.ts": 600, // CARVE-SUCCESSOR(BI.W-DOES-NOT-EXIST)`,
             resolveWave: () => false,
+            trancheManifest: { "synthetic/god.ts": 600 },
         },
         "PHANTOM carve-successor",
         "a ratchet row whose carve-successor resolves to no wave-spec on disk",
@@ -583,9 +686,73 @@ function selfTest() {
             ratchetBaselines: { "synthetic/god.ts": 600 },
             source: `"synthetic/god.ts": 600, // CARVE-SUCCESSOR(BI.W-REAL)`,
             resolveWave: () => true,
+            trancheManifest: { "synthetic/god.ts": 600 },
         },
         "PHANTOM carve-successor",
         "a ratchet row with a resolving carve-successor (fence)",
+    );
+
+    // Bite 8 (BI.W-RATCHET-GROWTH, R1) — GROWTH REDS THE GROWING WAVE: a wave adds a
+    //   baseline row for a file NOT in the frozen manifest (a file it grew past 500 in
+    //   its own diff + self-grandfathered). The disease the current contract ACCEPTS
+    //   today; the manifest freeze reds it.
+    sab(
+        {
+            measured: [mk("components/custom/x/wave-grown.ts", 600)],
+            ratchetBaselines: { "components/custom/x/wave-grown.ts": 600 },
+            source: `"components/custom/x/wave-grown.ts": 600, // CARVE-SUCCESSOR(BI.W-REAL)`,
+            trancheManifest: {}, // NOT >500 at tranche start — a wave-introduced grow
+        },
+        "NOT in the TRANCHE_BASELINE_MANIFEST",
+        "a wave-introduced >500 file self-grandfathering a fresh baseline row (R1 grow-and-self-grandfather)",
+    );
+    // Bite 8 (fence) — a baseline row for a file ALREADY >500 at tranche start passes R1.
+    sabNot(
+        {
+            measured: [mk("components/custom/x/at-start.ts", 600)],
+            ratchetBaselines: { "components/custom/x/at-start.ts": 600 },
+            source: `"components/custom/x/at-start.ts": 600, // CARVE-SUCCESSOR(BI.W-REAL)`,
+            trancheManifest: { "components/custom/x/at-start.ts": 600 },
+        },
+        "NOT in the TRANCHE_BASELINE_MANIFEST",
+        "a baseline row for a manifest file already >500 at tranche start (R1 fence)",
+    );
+    // Bite 9 (BI.W-RATCHET-GROWTH, R2) — REGROW-PAST-BASELINE: a manifest file a later
+    //   wave re-inflated PAST its frozen tranche-start count + self-grandfathered at the
+    //   higher value (the key IS in the manifest so R1 passes — R2 is the only catcher).
+    sab(
+        {
+            measured: [mk("components/custom/x/regrown.ts", 600)],
+            ratchetBaselines: { "components/custom/x/regrown.ts": 600 },
+            source: `"components/custom/x/regrown.ts": 600, // CARVE-SUCCESSOR(BI.W-REAL)`,
+            trancheManifest: { "components/custom/x/regrown.ts": 520 }, // BI-start 520
+        },
+        "FROZEN tranche baseline",
+        "a manifest file re-inflated past its frozen tranche-start count (R2 regrow-past-baseline)",
+    );
+    // Bite 10 (BI.W-RATCHET-GROWTH, R2 fence) — a manifest file DRAINED under its frozen
+    //   count is the LEGAL ratchet move (a shrink) → GREEN.
+    sabNot(
+        {
+            measured: [mk("components/custom/x/drained.ts", 400)],
+            ratchetBaselines: {},
+            source: `const RATCHET_BASELINES = {};`,
+            trancheManifest: { "components/custom/x/drained.ts": 520 },
+        },
+        "FROZEN tranche baseline",
+        "a manifest file drained below its frozen count (R2 shrink fence — the legal drain)",
+    );
+    // Bite 10b (BI.W-RATCHET-GROWTH, R2 fence) — a manifest file DELETED entirely (gone
+    //   from disk) is the LEGAL delete move → GREEN.
+    sabNot(
+        {
+            measured: [],
+            ratchetBaselines: {},
+            source: `const RATCHET_BASELINES = {};`,
+            trancheManifest: { "components/custom/x/deleted.ts": 520 },
+        },
+        "FROZEN tranche baseline",
+        "a manifest file deleted entirely (R2 delete fence — the legal drain)",
     );
     return checks;
 }
@@ -624,6 +791,10 @@ function run() {
         // BI.W-STYLE-REDRAIN (N2) — resolve each live carve-successor to its wave spec
         // on disk; a phantom (never-landed) successor REDs.
         resolveWave: (id) => waveSpecExists(ROOT, id),
+        // BI.W-RATCHET-GROWTH (R1/R2) — the frozen BI-start manifest is the only legal
+        // source of baseline keys; a wave-introduced grow (a key outside it, or a
+        // manifest file re-inflated past its frozen count) REDs the growing wave.
+        trancheManifest: TRANCHE_BASELINE_MANIFEST,
     });
 
     // ── The born-RED self-test (throws if a bite fails to fire). The contract +
@@ -754,4 +925,11 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     run();
 }
 
-export { detect, selfTest, carveSuccessorFor, SHADER_LITERAL, RATCHET_BASELINES };
+export {
+    detect,
+    selfTest,
+    carveSuccessorFor,
+    SHADER_LITERAL,
+    RATCHET_BASELINES,
+    TRANCHE_BASELINE_MANIFEST,
+};
