@@ -31,7 +31,7 @@ const SECTION_TITLES = [
     "Foundations", "Color tokens", "Typography ladder", "Glass tiers",
     "Spacing scale", "Motion canon", "Spring presets", "Easing doctrine",
     "Dock orientation", "Dock morph engine", "Dock search bar", "Configurator chassis",
-    "Aurora background", "GooBlob metaball", "Constellation field", "Fourier epicycles",
+    "Aurora background", "Blob metaball", "Constellation field", "Fourier epicycles",
     "Flow field", "Concentric rings", "Border progress", "Completion seal",
     "Feedback tone", "Menu glass", "Surface axis", "Adaptive legibility",
     "Dark material", "Warm chroma floor", "Card padding ladder", "Scroll choreography",

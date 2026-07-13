@@ -985,10 +985,10 @@ const VIZ_PALETTES = [
         ),
     },
     {
-        viz: "goo-blob",
+        viz: "blob",
         stops: hexStopsFromSource(
             // BLOB_CONFIG_DEFAULTS.color.paletteStops — the only hex paletteStops in types.ts.
-            /paletteStops:\s*\[([^\]]*)\]/.exec(read("src/components/custom/goo-blob/types.ts"))?.[1] ?? "",
+            /paletteStops:\s*\[([^\]]*)\]/.exec(read("src/components/custom/blob/types.ts"))?.[1] ?? "",
         ),
     },
 ];

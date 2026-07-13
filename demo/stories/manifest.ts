@@ -75,7 +75,7 @@ export interface Story {
      * The explicit Fira-Code subpath chip in the hero eyebrow (BC.W-PAGE-CHASSIS).
      * A published component subpath (`@mkbabb/glass-ui/<sp>`) where one fits, else
      * the route path (`/category/story`) for token/scene/facility pages with no
-     * import surface. Title ≠ subpath (e.g. "GooBlob" → `@mkbabb/glass-ui/goo-blob`),
+     * import surface. The Title (display name) may differ from the subpath,
      * so this is an explicit per-row literal, never an inferred default.
      */
     subpath?: string;
@@ -243,7 +243,7 @@ const SUBPATHS: Record<string, string> = {
     "foundations/css-utilities": "/foundations/css-utilities",
     // Substrates — the shipped viz subpaths.
     "substrates/aurora": "@mkbabb/glass-ui/aurora",
-    "substrates/blob": "@mkbabb/glass-ui/goo-blob",
+    "substrates/blob": "@mkbabb/glass-ui/blob",
     "substrates/constellation": "@mkbabb/glass-ui/constellation",
     "substrates/fourier-field": "@mkbabb/glass-ui/fourier-field",
     "substrates/glass-material": "/substrates/glass-material",
@@ -678,10 +678,10 @@ export const CATEGORIES: Category[] = [
             s(
                 "substrates",
                 "blob",
-                "GooBlob",
-                "WebGL2 metaball droplet on the shared substrate (injected color resolver) — the lit static register, the pointer-reactive interaction hero, the mood + seed-palette model, and the pause seam. Shipped /goo-blob + /watercolor-dot.",
+                "Blob",
+                "WebGL2 metaball droplet on the shared substrate (injected color resolver) — the lit static register, the pointer-reactive interaction hero, the mood + seed-palette model, and the pause seam. Shipped /blob + /watercolor-dot.",
                 {
-                    // A GooBlob is a CONTAINED creature, not a page-field — the page
+                    // A Blob is a CONTAINED creature, not a page-field — the page
                     // presents its studio over a calm paper wash (W-BLOB-REBUILD; the
                     // prior `background: "blob"` blew the creature to full-page width).
                     background: "paper",
@@ -1292,9 +1292,9 @@ export const CATEGORIES: Category[] = [
                 background: "grid",
             }),
             s("compositions", "empty-states", "Empty States", undefined, {
-                // The empty-states page carries its OWN contained GooBlob mascot
+                // The empty-states page carries its OWN contained Blob mascot
                 // (a small pointer-leaning companion); it does not need — and a
-                // GooBlob cannot be — a full-bleed page-field (W-BLOB-REBUILD).
+                // Blob cannot be — a full-bleed page-field (W-BLOB-REBUILD).
                 background: "paper",
             }),
             s(

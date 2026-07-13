@@ -9,10 +9,10 @@
 // This spec CAPTURES (it does not re-assert the band — `blob-render.spec.ts:572` owns
 // the CENTROID_SHIFT band; this writes the own-surface PNGs + the paired-π number into
 // the DELTA). It drives `/substrates/blob`:
-//   • the interaction hero (the first <GooBlob>, the cream default) — resting cream bead
+//   • the interaction hero (the first <Blob>, the cream default) — resting cream bead
 //     + ≥5 rAF-sampled hover-flick frames showing the rightward centroid LEAN + a
 //     click-impulse bounce frame, at desktop 1280 + mobile 375 × {light,dark};
-//   • the mood hero (the second <GooBlob>) — the `blob-mood` surface, resting cream.
+//   • the mood hero (the second <Blob>) — the `blob-mood` surface, resting cream.
 // PNGs are named `W-BLOB3-<route>-<viewport>-<scheme>.png` (the `^W-BLOB3-` own-surface
 // match the deepened ledger binds). The measured rest→lean centroid SHIFT + the resting
 // body mean OKLCh-L are emitted to the console for the DELTA's paired-π readback.
@@ -238,7 +238,7 @@ for (const vp of VIEWPORTS) {
                     });
                 }
 
-                // ── the mood hero (the second <GooBlob>) — the blob-mood surface ──
+                // ── the mood hero (the second <Blob>) — the blob-mood surface ──
                 const moodCount = await blobs.count();
                 if (moodCount >= 2) {
                     const mood = blobs.nth(1);

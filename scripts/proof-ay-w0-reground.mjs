@@ -85,7 +85,7 @@ function cliPaths() {
         ],
         READMES: [
             resolve(ROOT, "src/components/custom/aurora/README.md"),
-            resolve(ROOT, "src/components/custom/goo-blob/README.md"),
+            resolve(ROOT, "src/components/custom/blob/README.md"),
             resolve(ROOT, "src/components/custom/dock/README.md"),
             resolve(ROOT, "src/components/custom/constellation/README.md"),
         ],

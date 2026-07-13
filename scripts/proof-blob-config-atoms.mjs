@@ -44,7 +44,7 @@ function cliPaths() {
     const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
     _cliPaths = {
         ROOT,
-        TYPES: resolve(ROOT, "src/components/custom/goo-blob/types.ts"),
+        TYPES: resolve(ROOT, "src/components/custom/blob/types.ts"),
         ARTIFACT: gateArtifactPath(
             "GLASS_UI_BLOB_CONFIG_ATOMS_ARTIFACT",
             "AY-blob-config-atoms",

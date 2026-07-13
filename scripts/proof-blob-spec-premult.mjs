@@ -31,7 +31,7 @@ function cliPaths() {
         ROOT,
         RENDERER: resolve(
             ROOT,
-            "src/components/custom/goo-blob/composables/useMetaballRenderer.ts",
+            "src/components/custom/blob/composables/useMetaballRenderer.ts",
         ),
         ARTIFACT: gateArtifactPath(
             "GLASS_UI_BLOB_SPEC_PREMULT_ARTIFACT",
@@ -47,7 +47,7 @@ function cliPaths() {
 // them — no dist round-trip needed. Read the source directly (the gate is then a
 // pure read, build-independent).
 function loadShaderSource(ROOT) {
-    const frag = resolve(ROOT, "src/components/custom/goo-blob/shaders/metaball.frag.ts");
+    const frag = resolve(ROOT, "src/components/custom/blob/shaders/metaball.frag.ts");
     if (!existsSync(frag)) return null;
     return readFileSync(frag, "utf8");
 }

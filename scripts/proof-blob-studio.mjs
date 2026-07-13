@@ -57,7 +57,7 @@ const COMMAND = "npm run proof:blob-studio";
 // The shader file is the IDENTITY witness for the §3.7 CONDITIONS-UNMET disposition: the
 // refraction did NOT ship, so the metaball fragment shader carries NO uBackdrop sampler /
 // refract() tap / squircle uBevel — the enamel render is byte-preserved.
-const METABALL_FRAG = resolve(ROOT, "src/components/custom/goo-blob/shaders/metaball.frag.ts");
+const METABALL_FRAG = resolve(ROOT, "src/components/custom/blob/shaders/metaball.frag.ts");
 
 function workspacePresent() {
     // The synthesized device-absent shell (proof:az-final clause 6 RUNNER-TRUTH):

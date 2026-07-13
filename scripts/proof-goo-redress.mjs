@@ -44,11 +44,11 @@
 //
 // W2 — POINTER ACTIVITY WAKES THE PARKED LOOP. A watch on the pointer's active
 //      signal (or an equivalent pointer-enter callback) that calls the renderer's
-//      wake / canvasHandle.wake() handle EXISTS in GooBlob.vue. Anti-evasion: the
+//      wake / canvasHandle.wake() handle EXISTS in Blob.vue. Anti-evasion: the
 //      detector asserts the wake handle is REACHED from a pointer-active signal
 //      (a renamed signal that still drives the wake on pointer-enter passes; a
 //      `watch` that does NOT reach `wake` fails) — NOT a literal `pointer.active`
-//      string match. RED at HEAD: GooBlob.vue carries no pointer→wake wire; the
+//      string match. RED at HEAD: Blob.vue carries no pointer→wake wire; the
 //      only wake watchers are color/paletteStops in useMetaballRenderer.ts.
 
 import { existsSync, readFileSync } from "node:fs";
@@ -66,11 +66,11 @@ let _cliPaths = null;
 function cliPaths() {
     if (_cliPaths) return _cliPaths;
     const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
-    const B = "src/components/custom/goo-blob";
+    const B = "src/components/custom/blob";
     _cliPaths = {
         ROOT,
         UPLOAD: resolve(ROOT, `${B}/composables/uploadBlobUniforms.ts`),
-        GOOBLOB: resolve(ROOT, `${B}/GooBlob.vue`),
+        GOOBLOB: resolve(ROOT, `${B}/Blob.vue`),
         RENDERER: resolve(ROOT, `${B}/composables/useMetaballRenderer.ts`),
         ARTIFACT: gateArtifactPath(
             "GLASS_UI_GOO_REDRESS_ARTIFACT",
@@ -168,7 +168,7 @@ function run() {
 
     // ── W2: pointer activity wakes the parked loop ────────────────────────────
     if (!existsSync(GOOBLOB)) {
-        violations.push("GooBlob.vue is absent");
+        violations.push("Blob.vue is absent");
     } else {
         const src = stripComments(readFileSync(GOOBLOB, "utf8"));
 
@@ -203,17 +203,17 @@ function run() {
             // still require BOTH halves, never just a watch.
             if (!(watchesPointerActive && callsWake))
                 violations.push(
-                    "GooBlob.vue has no pointer→wake wire: a watch on the pointer's active signal that calls the renderer's wake/canvasHandle.wake() handle does NOT exist — the parked demand loop never re-arms on a first hover (root cause 2 / BA-goo-3)",
+                    "Blob.vue has no pointer→wake wire: a watch on the pointer's active signal that calls the renderer's wake/canvasHandle.wake() handle does NOT exist — the parked demand loop never re-arms on a first hover (root cause 2 / BA-goo-3)",
                 );
             else
                 violations.push(
-                    "GooBlob.vue carries a pointer-active watch and a wake call, but not as ONE wire (the active signal must DRIVE the wake in the same statement) — a disjoint watch+wake does not prove the pointer-enter reaches the wake handle",
+                    "Blob.vue carries a pointer-active watch and a wake call, but not as ONE wire (the active signal must DRIVE the wake in the same statement) — a disjoint watch+wake does not prove the pointer-enter reaches the wake handle",
                 );
         }
     }
 
     // The wake handle must be REACHABLE from the SFC — assert the renderer return
-    // exposes a `wake` (the public twin of pause/resume) so GooBlob.vue's wire can
+    // exposes a `wake` (the public twin of pause/resume) so Blob.vue's wire can
     // call it. (The color/paletteStops watchers call canvasHandle.wake() from
     // INSIDE the renderer; the SFC-side wire needs the handle on the return.)
     if (existsSync(RENDERER)) {

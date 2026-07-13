@@ -195,7 +195,7 @@ function awayRimDarken(png: PNG): number {
     return (body - rimMin) / body;
 }
 
-/** The first GooBlob on the page is the STUDIO meatball (the LEAD lit/shadow stage). */
+/** The first Blob on the page is the STUDIO meatball (the LEAD lit/shadow stage). */
 function studioCanvas(page: Page): Locator {
     return page.locator(".goo-blob-canvas").first();
 }

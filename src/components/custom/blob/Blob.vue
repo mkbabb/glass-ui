@@ -10,7 +10,7 @@ import { useBlobSatellites } from "./composables/useBlobSatellites";
 import { useMetaballRenderer } from "./composables/useMetaballRenderer";
 
 /**
- * GooBlob — a gooey metaball creature on a WebGL2 canvas.
+ * Blob — a gooey metaball creature on a WebGL2 canvas.
  *
  * Renders a pulsing SDF body with orbiting satellites that periodically merge in,
  * get absorbed, then re-emerge. Mood, pointer-attraction and a deterministic
@@ -73,7 +73,7 @@ const injectedConfig = inject(BLOB_CONFIG_KEY, null);
 const cfg = config ?? injectedConfig;
 if (!cfg) {
     throw new Error(
-        "[glass-ui] GooBlob: no blob config. Pass an explicit `config` prop " +
+        "[glass-ui] Blob: no blob config. Pass an explicit `config` prop " +
             "(e.g. BLOB_CONFIG_DEFAULTS) or provide(BLOB_CONFIG_KEY, cfg) from an " +
             "ancestor. There is no silent defaults synthesis.",
     );

@@ -133,7 +133,7 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             icon: SparklesIcon as LucideIcon,
             accent: "var(--section-color-3)",
             entries: [
-                { storyId: "blob", label: "GooBlob" },
+                { storyId: "blob", label: "Blob" },
                 { storyId: "glass-material", label: "Glass Material" },
             ],
         },

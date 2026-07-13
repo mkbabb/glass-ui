@@ -65,7 +65,7 @@ const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 // cut). The six EXTANT viz dirs are the binding enforcement set at HEAD.
 const VIZ = [
     { id: "aurora", dir: "src/components/custom/aurora" },
-    { id: "goo-blob", dir: "src/components/custom/goo-blob" },
+    { id: "blob", dir: "src/components/custom/blob" },
     { id: "constellation", dir: "src/components/custom/constellation" },
     { id: "dot-flow-field", dir: "src/components/custom/dot-flow-field" },
     { id: "concentric", dir: "src/components/custom/concentric" },

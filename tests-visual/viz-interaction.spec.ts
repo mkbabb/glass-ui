@@ -52,7 +52,7 @@ const SCHEMES = ["light", "dark"] as const;
 // EACH and asserts a reactive frame diff.
 const VIZ_ROUTES = [
     { id: "aurora", route: "/substrates/aurora" },
-    { id: "goo-blob", route: "/substrates/blob" },
+    { id: "blob", route: "/substrates/blob" },
     { id: "constellation", route: "/substrates/constellation" },
     { id: "dot-flow-field", route: "/substrates/dot-flow-field" },
     { id: "concentric", route: "/substrates/concentric" },

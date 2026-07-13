@@ -57,6 +57,7 @@
 
 - animated-digit/
 - aurora/
+- blob/
 - border-progress/
 - color-swatch/
 - completion-seal/
@@ -74,7 +75,6 @@
 - fading-scroll/
 - fourier-field/
 - glass-panel/
-- goo-blob/
 - goo-filter/
 - handmark/
 - header-ribbon/

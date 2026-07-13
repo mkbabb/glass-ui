@@ -13,7 +13,7 @@ import {
 // frame the renderer drew with a token color (the confirmed live runtime bug).
 //
 // The fix resolves the token to a CONCRETE color (a browser-computed `rgb(...)`)
-// in `GooBlob.vue` BEFORE the resolver sees it. These units lock the contract at
+// in `Blob.vue` BEFORE the resolver sees it. These units lock the contract at
 // the value.js boundary: a `var()` wrapper throws (proving the bug the fix
 // avoids), a concrete color resolves clean (proving the resolved value the fix
 // produces is parseable).

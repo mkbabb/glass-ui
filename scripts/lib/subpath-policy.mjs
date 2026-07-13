@@ -74,7 +74,7 @@ export const CUSTOM_CLASS = {
     controls: "PUBLISH", deck: "PUBLISH", dock: "PUBLISH", "dot-flow-field": "PUBLISH",
     "dot-matrix": "PUBLISH", easing: "PUBLISH", "expandable-container": "PUBLISH",
     "fading-scroll": "PUBLISH", "fourier-field": "PUBLISH", "glass-panel": "PUBLISH",
-    "goo-blob": "PUBLISH", handmark: "PUBLISH",
+    blob: "PUBLISH", handmark: "PUBLISH",
     "header-ribbon": "PUBLISH", "hover-popover": "PUBLISH", "icon-chip": "PUBLISH",
     "icon-tooltip": "PUBLISH", "instrument-chassis": "PUBLISH", "labeled-field": "PUBLISH",
     "metric-badge": "PUBLISH", "metric-cell": "PUBLISH", "metric-stack": "PUBLISH",

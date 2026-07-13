@@ -76,7 +76,7 @@ function walk(dir, acc = []) {
 // (liquid-grid is a canvas viz; it carries WGSL/GLSL + a Configurator studio).
 const CANVAS_VIZ = [
     { id: "aurora", srcDir: "src/components/custom/aurora", studio: "demo/stories/substrates/aurora.vue" },
-    { id: "goo-blob", srcDir: "src/components/custom/goo-blob", studio: "demo/stories/substrates/blob.vue" },
+    { id: "blob", srcDir: "src/components/custom/blob", studio: "demo/stories/substrates/blob.vue" },
     { id: "constellation", srcDir: "src/components/custom/constellation", studio: "demo/stories/substrates/constellation.vue" },
     { id: "dot-flow-field", srcDir: "src/components/custom/dot-flow-field", studio: "demo/stories/substrates/dot-flow-field.vue" },
     { id: "concentric", srcDir: "src/components/custom/concentric", studio: "demo/stories/substrates/concentric.vue" },
@@ -195,7 +195,7 @@ add(
 // The chassis-composing (full-configurator) studios.
 const FULL_CONFIGURATOR = [
     "aurora",
-    "goo-blob",
+    "blob",
     "concentric",
     "fourier-field",
     "liquid-grid",
@@ -285,7 +285,7 @@ add(
 // ════════════════════════════════════════════════════════════════════════════════════
 const PAUSE_SUBSTRATE_DIRS = {
     "aurora": "src/components/custom/aurora",
-    "goo-blob": "src/components/custom/goo-blob",
+    "blob": "src/components/custom/blob",
     "constellation": "src/components/custom/constellation",
     "dot-flow-field": "src/components/custom/dot-flow-field",
     "concentric": "src/components/custom/concentric",
@@ -305,7 +305,7 @@ const s4Verdicts = CANVAS_VIZ.map((v) => {
             src,
         ) ||
         // a live viz instance mounted (the PascalCase viz component tag).
-        /<(?:Aurora|AuroraStage|GooBlob|Constellation|DotFlowField|Concentric|FourierField|DotMatrix|GooDotMatrix|LiquidGrid)(?:\s|>|\/)/m.test(
+        /<(?:Aurora|AuroraStage|Blob|Constellation|DotFlowField|Concentric|FourierField|DotMatrix|GooDotMatrix|LiquidGrid)(?:\s|>|\/)/m.test(
             src,
         );
     // A non-default register — a preset/variant/reference/theme/mode toggle.

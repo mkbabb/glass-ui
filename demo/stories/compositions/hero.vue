@@ -77,7 +77,7 @@ const scenes = [
     {
         id: "empty-states",
         title: "Empty states",
-        blurb: "A contained GooBlob mascot — the pointer-leaning companion for a blank scene.",
+        blurb: "A contained Blob mascot — the pointer-leaning companion for a blank scene.",
         subpath: "/compositions/empty-states",
         icon: FileQuestion,
     },

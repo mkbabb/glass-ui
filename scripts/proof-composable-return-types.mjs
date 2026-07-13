@@ -51,7 +51,7 @@ function cliPaths() {
         DARK: resolve(ROOT, "src/composables/dark/useGlobalDark.ts"),
         RENDERER_BLOB: resolve(
             ROOT,
-            "src/components/custom/goo-blob/composables/useMetaballRenderer.ts",
+            "src/components/custom/blob/composables/useMetaballRenderer.ts",
         ),
         DOM_BARREL: resolve(ROOT, "src/composables/dom/index.ts"),
         TOKEN_COLOR: resolve(ROOT, "src/composables/dom/useTokenColor.ts"),
@@ -63,7 +63,7 @@ function cliPaths() {
         CHASSIS: resolve(ROOT, "src/styles/instrument-chassis.css"),
         MARKERS: resolve(ROOT, "src/components/custom/timeline/ContinuousMarkers.vue"),
         DENSITY: resolve(ROOT, "src/components/custom/configurator/size.ts"),
-        BARREL_BLOB: resolve(ROOT, "src/components/custom/goo-blob/index.ts"),
+        BARREL_BLOB: resolve(ROOT, "src/components/custom/blob/index.ts"),
         BARREL_CONSTELLATION: resolve(
             ROOT,
             "src/components/custom/constellation/index.ts",
@@ -233,10 +233,10 @@ function run() {
     //       normalised (set-equality, not list-equality) so a re-ordering of the
     //       barrel is fine, a drop/add is not.
     const BARREL_SNAPSHOTS = {
-        "goo-blob/index.ts": {
+        "blob/index.ts": {
             path: P.BARREL_BLOB,
             expect: [
-                "GooBlob", "BlobMood", "BlobMerge", "BlobQuality", "MoodParams",
+                "Blob", "BlobMood", "BlobMerge", "BlobQuality", "MoodParams",
                 "MetaballSource", "BlobConfig", "BlobGeometry", "BlobSatelliteTiming",
                 "BlobMembrane", "BlobColor", "BlobSurface", "BlobInteraction",
                 "SatellitePhase", "SatelliteInternal", "BLOB_CONFIG_DEFAULTS",

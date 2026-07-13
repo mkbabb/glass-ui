@@ -1,13 +1,13 @@
 // AY.W-BLOB1 — proof:blob-warm-default, the BORN-RED default-warmth gate.
 //
-// The keystone OPEN item (RESEARCH.md §1 OPEN-1): the DEFAULT <GooBlob> renders a
+// The keystone OPEN item (RESEARCH.md §1 OPEN-1): the DEFAULT <Blob> renders a
 // DARK coffee-bean, not the "warm-cream living bead" every doc claims. Root cause is
 // two shipped defaults — types.ts:251 `paletteStops: []` (the body falls back to the
 // mounted near-black `color`) + types.ts:291 `rimColor: "var(--foreground)"` (near-black
 // warm-ink in light mode). The "warm-cream" identity is a thin specular/rim sheen on a
 // DARK body; it does not make the body read cream.
 //
-// THIS GATE IS BORN-RED AT HEAD BY DESIGN. It mounts the REAL <GooBlob> with
+// THIS GATE IS BORN-RED AT HEAD BY DESIGN. It mounts the REAL <Blob> with
 // BLOB_CONFIG_DEFAULTS, reads back the painted BODY pixels, and asserts the resting body
 // mean OKLCh-L reads as a LIGHT bead (L >= WARM_BEAD_L_MIN, the warm-cream band). At HEAD
 // the dark default measures WELL BELOW that floor — the calm composite reference plate
@@ -26,7 +26,7 @@
 // decoded with pngjs — it captures exactly the displayed pixels.
 //
 // CLIP-ROBUST BODY ISOLATION (the blob-render.spec.ts known hazard, restated): the story
-// mounts each <GooBlob> in a `rounded-card overflow-hidden` cell, so the canvas
+// mounts each <Blob> in a `rounded-card overflow-hidden` cell, so the canvas
 // screenshot's literal CORNER pixels fall outside the rounded clip and read dark. We
 // estimate the background as the MODAL (most-common, 16-step-quantized) colour (the cream
 // field for a contained droplet) and read the BODY mean-L over the painted (differ-from-
@@ -182,11 +182,11 @@ const COLOR_SCHEMES = ["light", "dark"] as const;
 for (const scheme of COLOR_SCHEMES) {
     test.describe(`blob-warm-default (π lane — fail-CLOSED, ${scheme})`, () => {
         test.use({ colorScheme: scheme });
-        test(`the DEFAULT <GooBlob> body reads as a WARM-CREAM bead in ${scheme} mode (resting body mean OKLCh-L >= 0.62)`, async ({
+        test(`the DEFAULT <Blob> body reads as a WARM-CREAM bead in ${scheme} mode (resting body mean OKLCh-L >= 0.62)`, async ({
             page,
         }) => {
             await page.goto(PI_TARGETS.blob.path);
-            // The story mounts SEVERAL <GooBlob> instances; the FIRST is the
+            // The story mounts SEVERAL <Blob> instances; the FIRST is the
             // BLOB_CONFIG_DEFAULTS render (the bare default — the gate target, same as
             // blob-render.spec.ts uses .first()).
             const blobCanvas = page
@@ -229,7 +229,7 @@ for (const scheme of COLOR_SCHEMES) {
             // charcoal default measured ≈ 0.53 (born-RED).
             expect(
                 bodyL,
-                `the DEFAULT blob body mean OKLCh-L = ${bodyL.toFixed(3)} (${scheme} mode) is below the warm-cream-bead floor ${WARM_BEAD_L_MIN} — a bare <GooBlob :config="BLOB_CONFIG_DEFAULTS"> paints a ${
+                `the DEFAULT blob body mean OKLCh-L = ${bodyL.toFixed(3)} (${scheme} mode) is below the warm-cream-bead floor ${WARM_BEAD_L_MIN} — a bare <Blob :config="BLOB_CONFIG_DEFAULTS"> paints a ${
                     bodyL <= DARK_DEFAULT_L_REF ? "DARK coffee-bean body" : "too-dark body"
                 }, not the "warm-cream living bead" the docs claim. FIX: ship the light warm-cream OKLCh default color.paletteStops base + the warm mid-tone rimColor (RESEARCH.md §2.1 / W-BLOB2).`,
             ).toBeGreaterThanOrEqual(WARM_BEAD_L_MIN);

@@ -51,12 +51,12 @@ const PATHS = {
     offsetsSizing: resolve(ROOT, "src/styles/tokens/sizing.css"),
     densityCss: resolve(ROOT, "src/styles/dock/density.css"),
     overflowCss: resolve(ROOT, "src/styles/dock/overflow.css"),
-    gooBlobVue: resolve(ROOT, "src/components/custom/goo-blob/GooBlob.vue"),
-    metaballRenderer: resolve(ROOT, "src/components/custom/goo-blob/composables/useMetaballRenderer.ts"),
+    gooBlobVue: resolve(ROOT, "src/components/custom/blob/Blob.vue"),
+    metaballRenderer: resolve(ROOT, "src/components/custom/blob/composables/useMetaballRenderer.ts"),
     budget: resolve(ROOT, "src/components/custom/aurora/constants/budget.ts"),
     auroraRuntime: resolve(ROOT, "src/components/custom/aurora/composables/runtime.ts"),
     auroraFrag: resolve(ROOT, "src/components/custom/aurora/constants/shaders/aurora.frag.ts"),
-    metaballFrag: resolve(ROOT, "src/components/custom/goo-blob/shaders/metaball.frag.ts"),
+    metaballFrag: resolve(ROOT, "src/components/custom/blob/shaders/metaball.frag.ts"),
     adoptBook: resolve(ROOT, "docs/tranches/BB/PROGRESS.md"),
     delta: resolve(ROOT, "docs/tranches/BB/audit/visual/W-PERF-PRODUCER-DELTA.md"),
 };
@@ -206,7 +206,7 @@ function run() {
     facts.oneCanvasPerMount = canvasCount === 1;
     if (!facts.oneCanvasPerMount) {
         violations.push(
-            `A′-1 W3: GooBlob.vue must ship EXACTLY ONE <canvas> (the zombie-second-canvas guard) — found ${canvasCount}`,
+            `A′-1 W3: Blob.vue must ship EXACTLY ONE <canvas> (the zombie-second-canvas guard) — found ${canvasCount}`,
         );
     }
     // The renderer arms behind a !canvasHandle double-arm guard + onUnmounted disposes.

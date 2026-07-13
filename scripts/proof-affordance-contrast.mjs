@@ -15,13 +15,13 @@
 //   4. the goo-blob `defaultBlobColorResolver` was handed a raw `var(--primary)`
 //      token straight to value.js's `cssToOklch`, which cannot parse a `var()`
 //      wrapper and THREW once per frame. The fix resolves the token to a
-//      concrete color via computed style in `GooBlob.vue` BEFORE the resolver
+//      concrete color via computed style in `Blob.vue` BEFORE the resolver
 //      sees it.
 //
 // This is a SEAM assertion (a pure read-and-detect over source) — happy-dom
 // resolves neither scoped-CSS contrast nor a WebGL2 frame loop, so the live
 // contrast/console-clean probes are not headless-assertable. The companion unit
-// (tests/components/custom/goo-blob/resolveColor.test.ts) exercises the
+// (tests/components/custom/blob/resolveColor.test.ts) exercises the
 // var()→concrete resolution; the browser contrast verification is the
 // orchestrator's. This gate locks the SOURCE invariants: the four token swaps
 // landed AND no NEW token / variant / resolver API was minted.
@@ -61,7 +61,7 @@ function cliPaths() {
         UTILITIES: resolve(ROOT, "src/styles/utilities.css"),
         GLASS: resolve(ROOT, "src/styles/glass.css"),
         SLIDER: resolve(ROOT, "src/components/ui/slider/Slider.vue"),
-        GOOBLOB: resolve(ROOT, "src/components/custom/goo-blob/GooBlob.vue"),
+        GOOBLOB: resolve(ROOT, "src/components/custom/blob/Blob.vue"),
         TOKENS: resolve(ROOT, "src/styles/tokens.css"),
         ARTIFACT: gateArtifactPath(
             "GLASS_UI_AFFORDANCE_CONTRAST_ARTIFACT",
@@ -220,7 +220,7 @@ function run() {
 
     // ── 4. goo-blob no longer hands a bare var() to the resolver.
     if (!existsSync(GOOBLOB)) {
-        violations.push("GooBlob.vue is absent");
+        violations.push("Blob.vue is absent");
     } else {
         const src = stripComments(readFileSync(GOOBLOB, "utf8"));
         // The component resolves a var() color to a concrete value BEFORE the
@@ -234,7 +234,7 @@ function run() {
             /resolvedColor\.value\s*=\s*tokenColors\.resolve\(/.test(src);
         if (!facts.resolvesViaComputedStyle) {
             violations.push(
-                "GooBlob.vue does not resolve a var() color to a concrete value via computed style — the per-frame value.js throw is not killed",
+                "Blob.vue does not resolve a var() color to a concrete value via computed style — the per-frame value.js throw is not killed",
             );
         }
         // The renderer is fed the RESOLVED ref, not the raw `var()` color prop.

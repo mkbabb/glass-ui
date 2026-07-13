@@ -9,7 +9,7 @@
 // resolver). Two-tier (P6):
 //   SOURCE — neither `/goo-blob` nor `/watercolor-dot` (the component graphs)
 //            imports `@mkbabb/value.js`.
-//   DIST   — `dist/goo-blob.js` / `dist/watercolor-dot.js` name `@mkbabb/value.js`
+//   DIST   — `dist/blob.js` / `dist/watercolor-dot.js` name `@mkbabb/value.js`
 //            ZERO times (the built blob carries no value.js).
 //
 // inv ε / bite-check: importing value.js into a blob composable reddens the SOURCE
@@ -27,10 +27,10 @@ function cliPaths() {
     _cliPaths = {
         ROOT,
         DIRS: [
-            resolve(ROOT, "src/components/custom/goo-blob"),
+            resolve(ROOT, "src/components/custom/blob"),
             resolve(ROOT, "src/components/custom/watercolor-dot"),
         ],
-        DIST: [resolve(ROOT, "dist/goo-blob.js"), resolve(ROOT, "dist/watercolor-dot.js")],
+        DIST: [resolve(ROOT, "dist/blob.js"), resolve(ROOT, "dist/watercolor-dot.js")],
         ARTIFACT: gateArtifactPath("GLASS_UI_BLOB_VALUE_FREE_ARTIFACT", "AU-blob-value-free"),
     };
     return _cliPaths;

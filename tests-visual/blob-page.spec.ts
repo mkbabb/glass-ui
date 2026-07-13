@@ -19,7 +19,7 @@
 //      (silhouette CV peaks ≈ 0.10, ≈3.7× baseline) AND a fully-separated satellite
 //      component appears (peak connected-component count = 2). The four-side
 //      containment HOLDS (worst-edge paint fraction = 0.000).
-//   3. HERO-FIRST IA — the page LEADS with the living GL <GooBlob> hero, the static
+//   3. HERO-FIRST IA — the page LEADS with the living GL <Blob> hero, the static
 //      WatercolorDot swatch row DEMOTED below it (a DOM-order assertion).
 //
 // Runner-truth: this spec LOADS :5199, so proof:blob-page is auto-detected
@@ -261,7 +261,7 @@ test.describe("blob-page (π lane — the TRUE blob-page defect, fail-CLOSED)", 
             // stageConfig spreads BLOB_CONFIG_DEFAULTS then overrides geometry.orbitRadius
             // (the D2 fix); the bodyRadius stays the default. Parse both from source.
             const blobVue = fileURLToPath(new URL("../demo/stories/substrates/blob.vue", import.meta.url));
-            const typesTs = fileURLToPath(new URL("../src/components/custom/goo-blob/types.ts", import.meta.url));
+            const typesTs = fileURLToPath(new URL("../src/components/custom/blob/types.ts", import.meta.url));
             const blobSrc = readFileSync(blobVue, "utf8");
             const typesSrc = readFileSync(typesTs, "utf8");
             const orbitOverride = blobSrc.match(/orbitRadius:\s*([\d.]+)/);
@@ -279,7 +279,7 @@ test.describe("blob-page (π lane — the TRUE blob-page defect, fail-CLOSED)", 
         });
     });
 
-    // The page LEADS with the living GL <GooBlob> hero; the static WatercolorDot swatch
+    // The page LEADS with the living GL <Blob> hero; the static WatercolorDot swatch
     // row is DEMOTED below it (a DOM-order assertion).
     test("HERO-FIRST IA — the first interactive blob surface in DOM order is the GL hero, not the static swatch row", async ({ page }) => {
         await page.goto(PI_TARGETS.blob.path);
@@ -298,7 +298,7 @@ test.describe("blob-page (π lane — the TRUE blob-page defect, fail-CLOSED)", 
         });
         expect(
             heroBeforeStatic,
-            `the living GL <GooBlob> hero does NOT lead the page in DOM order — the static WatercolorDot swatch row still precedes it (the C6-4 inverted IA: a fresh viewer reads the static swatches as "the blobs"). Re-order so the GL hero leads.`,
+            `the living GL <Blob> hero does NOT lead the page in DOM order — the static WatercolorDot swatch row still precedes it (the C6-4 inverted IA: a fresh viewer reads the static swatches as "the blobs"). Re-order so the GL hero leads.`,
         ).toBe(true);
     });
 });

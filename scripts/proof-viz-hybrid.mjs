@@ -29,7 +29,7 @@
 //       surviving demo story REDs (a retired viz must leave no live route).
 //
 //   4 — THE SURVIVOR TOOTH. The two halves that survive the hybrid stay FIRST-CLASS: the
-//       goo-blob FIELD donor (`src/components/custom/goo-blob/` + its metaball shader source
+//       goo-blob FIELD donor (`src/components/custom/blob/` + its metaball shader source
 //       the field spliced FROM) AND the dot-matrix RENDER register
 //       (`src/components/custom/dot-matrix/` + its fibonacciDot lattice) both resolve on disk.
 //       A prune that OVER-CUT a survivor (deleted goo-blob or dot-matrix) REDs — the rationale
@@ -55,10 +55,10 @@ const DEMO_STORY = resolve(ROOT, "demo/stories/substrates/goo-dot.vue");
 const MANIFEST = resolve(ROOT, "demo/stories/manifest.ts");
 const PREVIEW_STILL = resolve(ROOT, "demo/chassis/landing/vizPreviewStill.ts");
 // The two survivors — the halves that outlive the hybrid.
-const GOOBLOB_DIR = resolve(ROOT, "src/components/custom/goo-blob");
+const GOOBLOB_DIR = resolve(ROOT, "src/components/custom/blob");
 const GOOBLOB_METABALL = resolve(
     ROOT,
-    "src/components/custom/goo-blob/shaders/metaball.wgsl.ts",
+    "src/components/custom/blob/shaders/metaball.wgsl.ts",
 );
 const DOTMATRIX_DIR = resolve(ROOT, "src/components/custom/dot-matrix");
 
@@ -130,7 +130,7 @@ function clauseSurvivors(over) {
     const gooblobDir =
         over?.gooblobDir !== undefined ? over.gooblobDir : existsSync(GOOBLOB_DIR);
     if (!gooblobDir)
-        viol.push("4 survivor: the goo-blob FIELD donor (src/components/custom/goo-blob/) is ABSENT — the prune OVER-CUT a survivor (the hybrid retires, its FIELD half stays first-class)");
+        viol.push("4 survivor: the goo-blob FIELD donor (src/components/custom/blob/) is ABSENT — the prune OVER-CUT a survivor (the hybrid retires, its FIELD half stays first-class)");
     const metaball =
         over?.metaball !== undefined ? over.metaball : existsSync(GOOBLOB_METABALL);
     if (!metaball)

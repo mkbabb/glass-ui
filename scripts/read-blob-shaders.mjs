@@ -30,7 +30,7 @@ export const BLOB_SHADER_ORDER = [
  * uniform declarations.
  */
 export function readBlobShaders(root) {
-    const dir = resolve(root, "src/components/custom/goo-blob/shaders");
+    const dir = resolve(root, "src/components/custom/blob/shaders");
     if (!existsSync(dir)) return "";
     const present = new Set(
         readdirSync(dir).filter(

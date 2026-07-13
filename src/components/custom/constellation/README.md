@@ -6,7 +6,7 @@ continually re-triangulates. It is a Canvas2D substrate primitive: the neutral l
 nodes, pointer-web, tap ripples) ships in the library; any focal/branded mark (a flagged "anomaly"
 node, an annotation callout) is painted by the consumer through an injected `drawOverlay` pass.
 
-It is the Canvas2D sibling of the WebGL substrates ([`Aurora`](../aurora/), [`GooBlob`](../goo-blob/)):
+It is the Canvas2D sibling of the WebGL substrates ([`Aurora`](../aurora/), [`Blob`](../blob/)):
 where those are per-pixel GPU fields, the constellation is a small CPU vector field on a 2D context.
 All three compose the same lifecycle/park contract — the constellation over
 [`useCanvas2D`](../../../composables/glass/canvas2d/), the WebGL pair over
@@ -69,7 +69,7 @@ a quiet textural field under a hero, a cover, an empty state, or a 404.
 When NOT to reach for it: a dense, fast particle storm, a force-directed graph with semantic edges,
 or a data viz where edges encode real relationships — the constellation's edges are proximity
 hairlines, not data. For per-pixel organic color fields use [`Aurora`](../aurora/) /
-[`GooBlob`](../goo-blob/).
+[`Blob`](../blob/).
 
 ### Non-goal — the constellation is DECORATIVE, not a data-graph renderer
 

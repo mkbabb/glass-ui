@@ -49,7 +49,7 @@ const RENDER_SPEC = resolve(WORKSPACE, "blob-render.spec.ts");
 const MOOD_SPEC = resolve(WORKSPACE, "blob-mood-live.spec.ts");
 const MOOD_COMPOSABLE = resolve(
     ROOT,
-    "src/components/custom/goo-blob/composables/useBlobMood.ts",
+    "src/components/custom/blob/composables/useBlobMood.ts",
 );
 // npm workspaces HOIST @playwright/test to the ROOT node_modules; resolve the runner
 // across BOTH the workspace-local AND the hoisted-root layout (the W00 orchestrator fix).

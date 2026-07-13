@@ -13,7 +13,7 @@ capability + WebGPU-migration verdict. Each viz's OWN per-dir `README.md` carrie
 | viz | subpath | what it is |
 |---|---|---|
 | **aurora** | `/aurora` | procedural painterly gradients — a multi-nuclei fbm/OKLCh fullscreen composition |
-| **goo-blob** | `/goo-blob` | a WebGL2 metaball droplet on the SDF `smin` substrate, with orbiting satellites |
+| **blob** | `/blob` | a WebGL2 metaball droplet on the SDF `smin` substrate, with orbiting satellites |
 | **dot-flow-field** | `/dot-flow-field` | curl-noise flow field traced by advected particles over a Gerstner/Tessendorf wave potential |
 | **concentric** | `/concentric` | a radial Fourier ring-interference field — concentric ellipsoid rings beating into moiré |
 | **paper-grid** | `/paper-grid` | a liquid AA-grid — a Golus derivative-AA two-tier grid on a Bridson curl-warped UV sheet (BORN WebGPU-first — fullscreen fragment, the aurora/concentric shape-class; the fallback is the SAME pure fragment → parity `verified`) |

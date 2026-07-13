@@ -164,11 +164,11 @@ export function detectStaging(input) {
             `G-NO-BLOB-FIELD: StoryHero.vue carries a blob background branch — the page-field blob is the category error W-BLOB-REBUILD deleted`,
         );
     }
-    // G-CONTAINED — the empty-states page mounts its OWN contained GooBlob
+    // G-CONTAINED — the empty-states page mounts its OWN contained Blob
     // mascot (the shipped seam that replaced the background row).
-    if (input.emptyStatesSrc != null && !/GooBlob/.test(input.emptyStatesSrc)) {
+    if (input.emptyStatesSrc != null && !/<Blob\b/.test(input.emptyStatesSrc)) {
         violations.push(
-            `G-CONTAINED: compositions/empty-states must mount the contained <GooBlob> mascot (the W-BLOB-REBUILD seam that replaced background:"blob")`,
+            `G-CONTAINED: compositions/empty-states must mount the contained <Blob> mascot (the W-BLOB-REBUILD seam that replaced background:"blob")`,
         );
     }
 

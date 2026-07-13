@@ -31,8 +31,8 @@ const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const COMMAND = "npm run proof:blob-studio-config";
 
 const BLOB_VUE = resolve(ROOT, "demo/stories/substrates/blob.vue");
-const TYPES_TS = resolve(ROOT, "src/components/custom/goo-blob/types.ts");
-const GOOBLOB_VUE = resolve(ROOT, "src/components/custom/goo-blob/GooBlob.vue");
+const TYPES_TS = resolve(ROOT, "src/components/custom/blob/types.ts");
+const GOOBLOB_VUE = resolve(ROOT, "src/components/custom/blob/Blob.vue");
 const SHADOW_CSS = resolve(ROOT, "src/styles/tokens/shadow.css");
 
 function read(path) {
@@ -49,7 +49,7 @@ function run() {
     const shadow = read(SHADOW_CSS);
 
     if (!blob) violations.push("demo/stories/substrates/blob.vue not readable");
-    if (!types) violations.push("src/components/custom/goo-blob/types.ts not readable");
+    if (!types) violations.push("src/components/custom/blob/types.ts not readable");
 
     // ── 1. SATELLITE-LAYER-BOUND — the four geometry knobs + the two merge knobs ──
     const geometryKnobs = [
@@ -154,7 +154,7 @@ function run() {
         violations.push(
             "GROUNDED-SHADOW-TOKEN: shadow.css does not declare the --blob-shadow-contact rung (the grounded contact band)",
         );
-    // GooBlob.vue chains TWO drop-shadow rungs (ambient + contact).
+    // Blob.vue chains TWO drop-shadow rungs (ambient + contact).
     const restFilter = goo.match(/\.goo-blob-wrapper\s*{[\s\S]*?filter:\s*([^;]+);/);
     if (!restFilter || (restFilter[1].match(/drop-shadow/g) ?? []).length < 2)
         violations.push(

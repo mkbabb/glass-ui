@@ -55,7 +55,7 @@ function cliPaths() {
         AURORA: resolve(ROOT, "src/components/custom/aurora/composables/useAurora.ts"),
         BLOB: resolve(
             ROOT,
-            "src/components/custom/goo-blob/composables/useMetaballRenderer.ts",
+            "src/components/custom/blob/composables/useMetaballRenderer.ts",
         ),
         // BG.W-WATERCOLOR-RAF — the CSS/SVG watercolor blob's animate-mode wobble
         // rides the library's ONE useRAFLoop, not a hand-rolled zombie rAF (W1).

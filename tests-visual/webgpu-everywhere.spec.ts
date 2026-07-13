@@ -155,10 +155,10 @@ test.describe("BC.W-WEBGPU-EVERYWHERE — every substrate PAINTS, on every host"
     // ── W7 (the LOCAL real-compile arm) — every WGSL primary COMPILES under the real
     //    `device.createShaderModule` + `getCompilationInfo` on the adapter-bearing host
     //    (the binding compile the device-free static gate proxies). The bug class THIS wave
-    //    owns is the reserved-keyword identifier (the GooBlob `var target` → 250×/frame
+    //    owns is the reserved-keyword identifier (the Blob `var target` → 250×/frame
     //    invalid-pipeline → 0 pixels live) — it must be GONE on EVERY shader. The 4
     //    known-clean primaries (aurora/concentric/flow-render/flow-compute) compile fully
-    //    clean; any OTHER residual (a metaball-math uniformity issue the GooBlob per-viz
+    //    clean; any OTHER residual (a metaball-math uniformity issue the Blob per-viz
     //    wave owns) is SURFACED for its owner, never silently hidden by the picker's fall.
     test("every WGSL primary compiles with NO reserved-keyword error on real Metal", async ({
         page,
@@ -174,7 +174,7 @@ test.describe("BC.W-WEBGPU-EVERYWHERE — every substrate PAINTS, on every host"
                 concentric: "/src/components/custom/concentric/shaders/concentric.wgsl.ts#CONCENTRIC_WGSL",
                 flowRender: "/src/components/custom/dot-flow-field/shaders/flow-field.render.wgsl.ts#FLOW_FIELD_RENDER_WGSL",
                 flowCompute: "/src/components/custom/dot-flow-field/shaders/flow-field.compute.wgsl.ts#FLOW_FIELD_COMPUTE_WGSL",
-                metaball: "/src/components/custom/goo-blob/shaders/metaball.wgsl.ts#METABALL_WGSL",
+                metaball: "/src/components/custom/blob/shaders/metaball.wgsl.ts#METABALL_WGSL",
             };
             const out: Record<string, { errors: string[] }> = {};
             for (const [id, ref] of Object.entries(shaders)) {
@@ -202,7 +202,7 @@ test.describe("BC.W-WEBGPU-EVERYWHERE — every substrate PAINTS, on every host"
             const reserved = r.errors.filter((e) => /reserved|keyword|identifier/i.test(e));
             expect(
                 reserved,
-                `${id}: a WGSL reserved-keyword compile error survived (${reserved.join(" | ")}) — the GooBlob var-target class this wave fixes`,
+                `${id}: a WGSL reserved-keyword compile error survived (${reserved.join(" | ")}) — the Blob var-target class this wave fixes`,
             ).toEqual([]);
         }
         // The 4 known-clean primaries compile FULLY clean (zero errors).
@@ -212,7 +212,7 @@ test.describe("BC.W-WEBGPU-EVERYWHERE — every substrate PAINTS, on every host"
                 `${id}: the WGSL primary must compile clean on Metal (${out[id]!.errors.join(" | ")})`,
             ).toEqual([]);
         }
-        // The metaball fwidth-uniformity residual is the GooBlob per-viz wave's — SURFACE it
+        // The metaball fwidth-uniformity residual is the Blob per-viz wave's — SURFACE it
         // (it is not the reserved-keyword class, and the blob PAINTS via the WebGL2 net), do
         // not silently hide it behind the picker's fall.
         if (out.metaball!.errors.length)

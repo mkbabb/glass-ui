@@ -1,7 +1,7 @@
 # FourierField
 
 A Fourier epicycle field on a Canvas2D surface — the sibling render-background to
-`Aurora` and `GooBlob`. A seeded elliptic spectrum reconstructs a slow,
+`Aurora` and `Blob`. A seeded elliptic spectrum reconstructs a slow,
 never-repeating closed curve via the inverse DFT; a glowing comet trail chases the
 curve's head, and (in the `hero` preset) nested epicycle circles draw underneath
 in a harmonious second hue. It composes the `useCanvas2D` substrate, so it

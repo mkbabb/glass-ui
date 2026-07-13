@@ -46,7 +46,7 @@ function cliPaths() {
     const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
     _cliPaths = {
         ROOT,
-        FRAG: resolve(ROOT, "src/components/custom/goo-blob/shaders/metaball.frag.ts"),
+        FRAG: resolve(ROOT, "src/components/custom/blob/shaders/metaball.frag.ts"),
         ARTIFACT: gateArtifactPath(
             "GLASS_UI_BLOB_GRADIENT_UNIT_ARTIFACT",
             "AW-blob-gradient-unit-length",

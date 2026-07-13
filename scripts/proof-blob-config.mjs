@@ -8,7 +8,7 @@
 // THIS gate is the device-free SOURCE arm that locks the STRUCTURE each fix needs so a
 // regression that silently un-wires one is caught without a browser:
 //
-//   (D1) DEAD-FEED FIX — GooBlob.vue carries a watcher on the LIVE config's
+//   (D1) DEAD-FEED FIX — Blob.vue carries a watcher on the LIVE config's
 //        paletteStops that re-resolves into the Ref the renderer paints from (the
 //        config→Ref wire). Bite: drop the watcher → the hero color-feed goes dead again.
 //   (D2) SIGN FIX — metaball.frag.ts shifts the sample ALONG pointerDir (uv += …, the
@@ -37,17 +37,17 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
-const SFC = resolve(ROOT, "src/components/custom/goo-blob/GooBlob.vue");
-const SHADER = resolve(ROOT, "src/components/custom/goo-blob/shaders/metaball.frag.ts");
+const SFC = resolve(ROOT, "src/components/custom/blob/Blob.vue");
+const SHADER = resolve(ROOT, "src/components/custom/blob/shaders/metaball.frag.ts");
 // The W-GOD1 carve split the renderer: the uniform-upload cluster (incl. the D2
 // reachFactor sign-gate + the trailSources reach) lives in the carved
 // uploadBlobUniforms.ts leaf. The gate reads the COMPOSED pair so the D2/D4
 // witnesses survive the carve (the code moved, the contract did not).
 const RENDERER_FILES = [
-    "src/components/custom/goo-blob/composables/useMetaballRenderer.ts",
-    "src/components/custom/goo-blob/composables/uploadBlobUniforms.ts",
+    "src/components/custom/blob/composables/useMetaballRenderer.ts",
+    "src/components/custom/blob/composables/uploadBlobUniforms.ts",
 ].map((f) => resolve(ROOT, f));
-const TYPES = resolve(ROOT, "src/components/custom/goo-blob/types.ts");
+const TYPES = resolve(ROOT, "src/components/custom/blob/types.ts");
 const DEMO = resolve(ROOT, "demo/stories/substrates/blob.vue");
 
 const read = (p) => (existsSync(p) ? readFileSync(p, "utf8") : "");
@@ -78,15 +78,15 @@ function checkD1(facts, violations) {
             /live\.color\.paletteStops/.test(sfc));
     if (!facts.d1LiveConfig)
         violations.push(
-            "GooBlob.vue has no `liveConfig()` getter — the paletteStops watcher must read the LIVE config prop (the mount-time `cfg` snapshot goes stale when the consumer swaps the config object), else the hero color-feed stays dead (D1)",
+            "Blob.vue has no `liveConfig()` getter — the paletteStops watcher must read the LIVE config prop (the mount-time `cfg` snapshot goes stale when the consumer swaps the config object), else the hero color-feed stays dead (D1)",
         );
     if (!facts.d1PaletteWatcher)
         violations.push(
-            "GooBlob.vue has no watcher re-resolving the LIVE config's paletteStops into the resolvedStops Ref — a post-mount seed/harmony change never re-paints the hero body (the dead hero color-feed, D1)",
+            "Blob.vue has no watcher re-resolving the LIVE config's paletteStops into the resolvedStops Ref — a post-mount seed/harmony change never re-paints the hero body (the dead hero color-feed, D1)",
         );
     if (!facts.d1RefreshReadsLive)
         violations.push(
-            "GooBlob.vue `refreshResolvedColors` does not read `liveConfig().color.paletteStops` — it resolves the stale snapshot, so the watcher fires but resolves the OLD stops (D1)",
+            "Blob.vue `refreshResolvedColors` does not read `liveConfig().color.paletteStops` — it resolves the stale snapshot, so the watcher fires but resolves the OLD stops (D1)",
         );
 }
 

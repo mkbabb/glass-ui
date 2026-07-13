@@ -65,7 +65,7 @@ const VIZ_CONSTANTS = [
     "src/components/custom/concentric/constants.ts",
     "src/components/custom/dot-flow-field/constants.ts",
     "src/components/custom/fourier-field/constants.ts",
-    "src/components/custom/goo-blob/constants.ts",
+    "src/components/custom/blob/constants.ts",
     "src/components/custom/constellation/constants.ts",
 ];
 

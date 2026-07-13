@@ -33,14 +33,14 @@ const COMMAND = "npm run proof:blob-page-fence";
 // in the shader" re-open of the refuted-closed resolution/DPR reading). These paths stay
 // OPEN tranche-wide for W-BLOB-STUDIO's distinct commit — the fence scopes to this wave.
 const FENCED = [
-    "src/components/custom/goo-blob/composables/buildMetaballProgram.ts",
-    "src/components/custom/goo-blob/composables/uploadBlobUniforms.ts",
-    "src/components/custom/goo-blob/composables/useMetaballRenderer.ts",
-    "src/components/custom/goo-blob/shaders/metaball.frag.ts",
+    "src/components/custom/blob/composables/buildMetaballProgram.ts",
+    "src/components/custom/blob/composables/uploadBlobUniforms.ts",
+    "src/components/custom/blob/composables/useMetaballRenderer.ts",
+    "src/components/custom/blob/shaders/metaball.frag.ts",
 ];
 // The shaders/*.glsl.ts set (matched by a prefix+suffix rule so a new shader chunk is
 // covered without a hand-add).
-const FENCED_SHADER_DIR = "src/components/custom/goo-blob/shaders/";
+const FENCED_SHADER_DIR = "src/components/custom/blob/shaders/";
 const FENCED_SHADER_SUFFIX = ".glsl.ts";
 
 // The §9 commit-plan subject prefix for THIS wave's implementation commit.

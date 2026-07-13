@@ -181,12 +181,12 @@ export function detect() {
         bridgeReadsScalar,
     );
     assert("M5 — the bridge carries no free-running CSS animation", !bridgeHasCssAnimation);
-    // The showcase mounts NO goo-blob (the free-running uTime/pointer-speed path the
+    // The showcase mounts NO Blob (the free-running uTime/pointer-speed path the
     // M5 clause forbids — the CSS SVG-goo path was picked for exactly this reason).
-    const mountsGooBlob = /<GooBlob\b/.test(showcaseCode) || /\bGooBlob\b/.test(showcaseCode);
+    const mountsBlob = /<Blob\b/.test(showcaseCode);
     assert(
-        "M5 — the showcase mounts no GooBlob (no free-running uTime/pointer-speed clock)",
-        !mountsGooBlob,
+        "M5 — the showcase mounts no Blob (no free-running uTime/pointer-speed clock)",
+        !mountsBlob,
     );
     // The deterministic SVG-goo bridge IS composed by the showcase. P7's M1 dedup hoisted
     // the inline <filter> into the ONE shell-root <GooFilter> mount; the showcase now
@@ -246,7 +246,7 @@ function run() {
         `  M4 useLiquidFlex ≥2 consumers               : ${facts[`M4 — useLiquidFlex has ≥2 consumers (found ${facts.liquidFlexConsumers?.length ?? "?"})`] ? "YES" : "NO"}  (${(facts.liquidFlexConsumers ?? []).map((c) => c.split("/").pop()).join(", ")})`,
     );
     console.log(
-        `  M5 bridge clock scalar-bound (no free clock): ${facts["M5 — the bridge aspect/squish reads f(--dock-morph-t)/--stretch (scalar-bound)"] && facts["M5 — the bridge carries no free-running CSS animation"] && facts["M5 — the showcase mounts no GooBlob (no free-running uTime/pointer-speed clock)"] ? "YES" : "NO"}`,
+        `  M5 bridge clock scalar-bound (no free clock): ${facts["M5 — the bridge aspect/squish reads f(--dock-morph-t)/--stretch (scalar-bound)"] && facts["M5 — the bridge carries no free-running CSS animation"] && facts["M5 — the showcase mounts no Blob (no free-running uTime/pointer-speed clock)"] ? "YES" : "NO"}`,
     );
 
     if (violations.length > 0) {

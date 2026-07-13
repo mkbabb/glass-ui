@@ -26,7 +26,7 @@ function cliPaths() {
     _cliPaths = {
         ROOT,
         COLOR: resolve(ROOT, "src/composables/color/index.ts"),
-        FRAG: resolve(ROOT, "src/components/custom/goo-blob/shaders/metaball.frag.ts"),
+        FRAG: resolve(ROOT, "src/components/custom/blob/shaders/metaball.frag.ts"),
         ARTIFACT: gateArtifactPath("GLASS_UI_BLOB_SPACE_GAMMA_ARTIFACT", "AU-blob-space-gamma"),
     };
     return _cliPaths;

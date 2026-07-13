@@ -98,7 +98,7 @@ const FILES = {
 // The shader-tree files the GL fence forbids touching (L6).
 const SHADER_FILES = [
     "src/components/custom/aurora/constants/shaders/aurora.frag.ts",
-    "src/components/custom/goo-blob/shaders/metaball.frag.ts",
+    "src/components/custom/blob/shaders/metaball.frag.ts",
     "src/composables/glass/webgl/shaders/procedural-color.glsl.ts",
 ];
 

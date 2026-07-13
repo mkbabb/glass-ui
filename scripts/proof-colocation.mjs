@@ -514,7 +514,7 @@ function selfTestDockLeafVerify() {
 // suite-doc references the goo-dot-matrix PRUNE (BG.W-GOODOT-PRUNE) left behind. The facts:
 //   SL1 — useBlobSatellites.ts is the colocated satellite leaf: it lives under composables/
 //         AND publishes `useBlobSatellites` (the BG.W-BLOB-SATELLITE-SHADE widened leaf).
-//   SL2 — GooBlob.vue is the carved host: it imports the satellite leaf back from
+//   SL2 — Blob.vue is the carved host: it imports the satellite leaf back from
 //         ./composables/useBlobSatellites (the leaf is COMPOSED, not inline).
 //   SL3 — the goo-dot-matrix HYBRID leaf set is DEFINITION-ABSENT (the whole dir gone, the
 //         BG.W-GOODOT-PRUNE retirement — 0 external consumers).
@@ -528,9 +528,9 @@ function selfTestDockLeafVerify() {
 // README/live-row hybrid cross-refs present) → GREEN once the suite doc is reconciled to the
 // pruned frontier.
 const SATELLITE_LEAF_VERIFY = {
-    host: "components/custom/goo-blob/GooBlob.vue",
+    host: "components/custom/blob/Blob.vue",
     hostImportMarker: "./composables/useBlobSatellites",
-    satelliteLeaf: "components/custom/goo-blob/composables/useBlobSatellites.ts",
+    satelliteLeaf: "components/custom/blob/composables/useBlobSatellites.ts",
     satelliteSymbol: "useBlobSatellites",
     retiredVizDir: "components/custom/goo-dot-matrix",
     // the UNAMBIGUOUS retired-viz identifiers (never the overloaded `goo-dot` short-form

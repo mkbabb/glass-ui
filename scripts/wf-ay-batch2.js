@@ -82,7 +82,7 @@ async function laneSld() {
 
 // LANE-BLOB (W-BLOB3) — DI strip + interaction DELTA. NOTE: W-GOD1 carve + W-COHERE touch the same SFCs LATER (Batch 4) — this lane strips first (eases the carve, per the §0 RG-B).
 async function laneBlob() {
-  const r = await ag('W-BLOB3', 'phase=Blob. BOOK demo-only + STRIP the speculative ColorResolver DI (remove the required colorResolver prop + the loud-throw + the inject ceremony from GooBlob.vue + useMetaballRenderer.ts — a clean break, inv-4, the resolver was always defaultBlobColorResolver at the one real consumer). Per §0 RG: useMetaballRenderer is 707 (cites near-miss, re-grep); the W-GOD1 carve runs LATER so your strip eases it. Capture the hover-flick + dome-luma BAND interaction DELTA (the cream bead leaning, W-BLOB2 landed the cream default). verify-export-types green (the /goo-blob subpath surface changed) + the full proof:blob-* fleet green.')
+  const r = await ag('W-BLOB3', 'phase=Blob. BOOK demo-only + STRIP the speculative ColorResolver DI (remove the required colorResolver prop + the loud-throw + the inject ceremony from Blob.vue + useMetaballRenderer.ts — a clean break, inv-4, the resolver was always defaultBlobColorResolver at the one real consumer). Per §0 RG: useMetaballRenderer is 707 (cites near-miss, re-grep); the W-GOD1 carve runs LATER so your strip eases it. Capture the hover-flick + dome-luma BAND interaction DELTA (the cream bead leaning, W-BLOB2 landed the cream default). verify-export-types green (the /goo-blob subpath surface changed) + the full proof:blob-* fleet green.')
   return [r]
 }
 

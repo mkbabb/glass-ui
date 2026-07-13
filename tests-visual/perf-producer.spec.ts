@@ -11,7 +11,7 @@
 //       expand/collapse, AND the .glass-dock morph root computes
 //       `contain: layout style paint` (the restyle-scope narrowing landed live,
 //       RE-CONFIRMED over the BC.W-DOCK-ENGINE single-scalar morph rebuild).
-//   (b) A′-1 — a GooBlob mount (/substrates/blob) → EXACTLY ONE <canvas> + ONE live
+//   (b) A′-1 — a Blob mount (/substrates/blob) → EXACTLY ONE <canvas> + ONE live
 //       GPU context REGARDLESS OF BACKEND (the BC.W-GOOBLOB-PLAIN createGpuSubstrate
 //       picker arms WebGPU-first OR the WebGL2 fallback — the invariant generalizes
 //       to one canvas + one live GPU context); on unmount (route away) the context
@@ -129,8 +129,8 @@ test("A′-4 — the dock morph renders at ≥ the fps floor + the morph root is
     await page.screenshot({ path: `${OUT}/a4-dock-morph.png` });
 });
 
-// ── (b) A′-1 — one canvas + one context per GooBlob mount + clean dispose ─────────
-test("A′-1 — a GooBlob mount ships exactly ONE canvas + ONE live context, released on unmount", async ({
+// ── (b) A′-1 — one canvas + one context per Blob mount + clean dispose ─────────
+test("A′-1 — a Blob mount ships exactly ONE canvas + ONE live context, released on unmount", async ({
     page,
 }) => {
     await goto(page, "/substrates/blob");
@@ -171,15 +171,15 @@ test("A′-1 — a GooBlob mount ships exactly ONE canvas + ONE live context, re
     });
     readback.a1_mounted = mounted;
 
-    // At least one GooBlob is on the page; EVERY wrapper ships exactly one canvas +
+    // At least one Blob is on the page; EVERY wrapper ships exactly one canvas +
     // one live GPU context regardless of backend (the zombie-second-canvas guard —
     // value.js's 400×400/0×0 second canvas would show canvases:2 here).
-    expect(mounted.wrappers, "the /substrates/blob route must mount ≥1 GooBlob").toBeGreaterThanOrEqual(1);
+    expect(mounted.wrappers, "the /substrates/blob route must mount ≥1 Blob").toBeGreaterThanOrEqual(1);
     for (const w of mounted.perWrapper) {
         expect(w.canvases, "each .goo-blob-wrapper ships EXACTLY ONE <canvas> (no zombie second canvas)").toBe(1);
         expect(
             w.liveContexts,
-            `each GooBlob canvas holds EXACTLY ONE live GPU context (webgpu OR webgl2 — the createGpuSubstrate picker); got backends ${JSON.stringify(w.backends)}`,
+            `each Blob canvas holds EXACTLY ONE live GPU context (webgpu OR webgl2 — the createGpuSubstrate picker); got backends ${JSON.stringify(w.backends)}`,
         ).toBe(1);
     }
 
@@ -193,7 +193,7 @@ test("A′-1 — a GooBlob mount ships exactly ONE canvas + ONE live context, re
         () => document.querySelectorAll(".goo-blob-wrapper canvas").length,
     );
     readback.a1_canvasesAfterUnmount = afterUnmount;
-    // The blob route's wrappers are gone; any GooBlob on /foundations/intro is its
+    // The blob route's wrappers are gone; any Blob on /foundations/intro is its
     // own mount (still one-canvas-per-wrapper by construction).
     expect(afterUnmount, "the blob-route canvases are released on unmount (no orphan survivor)").toBeLessThanOrEqual(
         mounted.perWrapper.reduce((s, w) => s + w.canvases, 0),

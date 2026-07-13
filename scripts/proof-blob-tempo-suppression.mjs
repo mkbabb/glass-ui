@@ -36,7 +36,7 @@ let _cliPaths = null;
 function cliPaths() {
     if (_cliPaths) return _cliPaths;
     const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
-    const BLOB = resolve(ROOT, "src/components/custom/goo-blob");
+    const BLOB = resolve(ROOT, "src/components/custom/blob");
     _cliPaths = {
         ROOT,
         BLOB,

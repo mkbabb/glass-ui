@@ -353,7 +353,7 @@ test.describe("substrate-cohesion: G-ACCENT (ONE accent family)", () => {
         ).toBeGreaterThan(0);
         await excited.click();
         await page.waitForTimeout(1500); // let the seed->palette feed + re-paint settle
-        // The studio is the ONE live GooBlob context on the page — its canvas IS
+        // The studio is the ONE live Blob context on the page — its canvas IS
         // the mood bead.
         const moodCanvas = studioBlob;
 

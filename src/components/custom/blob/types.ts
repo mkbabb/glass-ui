@@ -174,7 +174,7 @@ export interface BlobMembrane {
 export interface BlobColor {
     // Multi-stop palette (W11.b) — 2-4 in-family CSS color stops distributed across
     // body + satellites. The DEFAULT is a light warm-cream OKLCh ramp (AY.W-BLOB2) so a
-    // bare <GooBlob> paints the cream bead. Derive one from a seed via
+    // bare <Blob> paints the cream bead. Derive one from a seed via
     // `deriveBlobPalette` (`/color`).
     paletteStops: string[];
     // F9.R1 (BG.W-BLOB-SATELLITE-SHADE) — OPTIONAL per-satellite explicit shades
@@ -385,7 +385,7 @@ export const BLOB_CONFIG_DEFAULTS: BlobConfig = {
     color: {
         // ── The light warm-cream DEFAULT palette (AY.W-BLOB2 — the headline) ──────────
         //
-        // A bare <GooBlob :config="BLOB_CONFIG_DEFAULTS"> (no `color` override) now paints
+        // A bare <Blob :config="BLOB_CONFIG_DEFAULTS"> (no `color` override) now paints
         // the warm-cream living bead the docs have always promised — because the body
         // reads the deepest stop of a LIGHT cream ramp, NOT the empty-palette fallback to
         // a near-black `color`. The ramp is DERIVED ONCE via the shared `/color` producer
@@ -492,7 +492,7 @@ export const BLOB_CONFIG_DEFAULTS: BlobConfig = {
 };
 
 // di-default: external-provide key — consumers `provide(BLOB_CONFIG_KEY, cfg)`
-// and `<GooBlob>` reads it via a bare `inject(KEY, null)` fallthrough (the
+// and `<Blob>` reads it via a bare `inject(KEY, null)` fallthrough (the
 // `config` prop wins; the loud-throw on neither is DEC-AT-2). NOT a
 // strict-or-optional triplet, so it is not minted by the DI factory (KISS).
 export const BLOB_CONFIG_KEY: InjectionKey<BlobConfig> = Symbol("blobConfig");

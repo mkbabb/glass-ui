@@ -53,7 +53,7 @@ const REPORT = resolve(WORKSPACE, ".cache/substrate-cohesion-report.json");
 const COMMAND = "npm run proof:substrate-cohesion";
 
 // ── the edit-site files (re-grepped against the W-GOD1-carved tree) ────────────
-const GOO_BLOB = resolve(ROOT, "src/components/custom/goo-blob/GooBlob.vue");
+const GOO_BLOB = resolve(ROOT, "src/components/custom/blob/Blob.vue");
 const SHADOW_CSS = resolve(ROOT, "src/styles/tokens/shadow.css");
 const COLOR_LEAF = resolve(ROOT, "src/composables/color/index.ts");
 const CONSTELLATION = resolve(ROOT, "src/components/custom/constellation/Constellation.vue");
@@ -69,7 +69,7 @@ const CONSTELLATION_TYPES = resolve(
 );
 const AURORA = resolve(ROOT, "src/components/custom/aurora/Aurora.vue");
 const FOURIER = resolve(ROOT, "src/components/custom/fourier-field/FourierField.vue");
-const BLOB_TYPES = resolve(ROOT, "src/components/custom/goo-blob/types.ts");
+const BLOB_TYPES = resolve(ROOT, "src/components/custom/blob/types.ts");
 const BLOB_DEMO = resolve(ROOT, "demo/stories/substrates/blob.vue");
 
 function workspacePresent() {
@@ -154,13 +154,13 @@ function run() {
     facts.gShadow.noHardStamp = !stampInBlob;
     if (stampInBlob)
         violations.push(
-            "G-SHADOW: GooBlob.vue still carries a hard `Npx Npx`-class drop-shadow offset-stamp (the cartoon stamp belongs on <Card surface='cartoon'>, not the gel bead — D2)",
+            "G-SHADOW: Blob.vue still carries a hard `Npx Npx`-class drop-shadow offset-stamp (the cartoon stamp belongs on <Card surface='cartoon'>, not the gel bead — D2)",
         );
     const readsBlobShadow = /drop-shadow\(\s*var\(--blob-shadow/.test(blobStyle);
     facts.gShadow.readsToken = readsBlobShadow;
     if (!readsBlobShadow)
         violations.push(
-            "G-SHADOW: GooBlob.vue does not read the `--blob-shadow` ambient token in its drop-shadow filter (E2)",
+            "G-SHADOW: Blob.vue does not read the `--blob-shadow` ambient token in its drop-shadow filter (E2)",
         );
     const shadowCss = existsSync(SHADOW_CSS) ? readFileSync(SHADOW_CSS, "utf8") : "";
     const tokenDefined =

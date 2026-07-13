@@ -5,7 +5,7 @@ import DockIconButton from "./DockIconButton.vue";
 
 /**
  * <DockBackgroundToggle> — the WCAG 2.2.2 (Pause, Stop, Hide), Level A pause/play
- * control for a continuously-running AV background (Aurora / GooBlob).
+ * control for a continuously-running AV background (Aurora / Blob).
  *
  * WCAG 2.2.2 is OBLIGATORY for any auto-starting, >5s, non-essential motion and
  * the control must be available to ALL users — it is NOT gated behind
@@ -19,7 +19,7 @@ import DockIconButton from "./DockIconButton.vue";
  *
  * ```vue
  * <script setup>
- * const blob = ref<InstanceType<typeof GooBlob>>();
+ * const blob = ref<InstanceType<typeof Blob>>();
  * const paused = ref(false);
  * watch(paused, (p) => (p ? blob.value?.pause() : blob.value?.resume()));
  * <\/script>

@@ -139,7 +139,7 @@ const FF_WGSL = "fourier-field/shaders/fourier-field.render.wgsl.ts";
 // two halves survive it: goo-blob FIELD donor + dot-matrix RENDER.)
 const VIZ_DIRS = [
     "aurora",
-    "goo-blob",
+    "blob",
     "dot-matrix",
     "dot-flow-field",
     "fourier-field",

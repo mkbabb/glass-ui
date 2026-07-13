@@ -4,7 +4,7 @@
 // trap (the canonical AW false-green): that static gate grep'd the EXACT
 // fudge-deletion that shipped the flood + ran a pure-math k-sweep in isolation —
 // it renders ZERO pixels, so a canvas-filling slab passes it. This spec mounts the
-// REAL <GooBlob> with BLOB_CONFIG_DEFAULTS on a real device, reads back the painted
+// REAL <Blob> with BLOB_CONFIG_DEFAULTS on a real device, reads back the painted
 // canvas, and asserts the SMIN UN-FLOOD the static gate is blind to.
 //
 // WHAT W08 OWNS vs W15 (the disjointness boundary — wave spec §"NOT in scope"):
@@ -29,7 +29,7 @@
 // pixels regardless of the GL context's preserveDrawingBuffer.
 //
 // CLIP-ROBUST BACKGROUND + REGIONS (the W08 measurement fix). The goo-blob story
-// mounts each <GooBlob> in a `rounded-card overflow-hidden` cell, so the canvas
+// mounts each <Blob> in a `rounded-card overflow-hidden` cell, so the canvas
 // SCREENSHOT's literal CORNER pixels fall outside the rounded clip and read DARK —
 // a naive 4-corner-average background (W00's loose floor) is corrupted by them and
 // reports a false flood. W08 estimates the background as the MODAL (most-common,
@@ -493,7 +493,7 @@ function paintedShape(
  *
  * AX.W15 REDRESS — drive over the WRAPPER, not the canvas. The pointer-follow
  * listener lives on the `.goo-blob-wrapper` (useBlobPointer(wrapperRef) in
- * GooBlob.vue); the canvas carries `pointer-events: none` and is CSS-sized 160% of
+ * Blob.vue); the canvas carries `pointer-events: none` and is CSS-sized 160% of
  * the wrapper, CENTERED — so the wrapper occupies only the central 62.5% of the
  * canvas box (canvas-fraction [0.1875, 0.8125]). The prior drive flicked to fx=0.82
  * of the CANVAS box, which lands OFF the wrapper's right edge: the last move fires
@@ -527,7 +527,7 @@ test.describe("blob-render (π lane — fail-CLOSED, the blob's CLOSING gate)", 
         page,
     }) => {
         await page.goto(PI_TARGETS.blob.path);
-        // The goo-blob story mounts SEVERAL <GooBlob> instances; the first is the
+        // The goo-blob story mounts SEVERAL <Blob> instances; the first is the
         // BLOB_CONFIG_DEFAULTS (quadratic, idle-mood) render — the gate target.
         const blobCanvas = page.locator('canvas[data-testid="goo-blob-canvas"]').first();
         await blobCanvas.waitFor({ state: "visible", timeout: 20_000 });

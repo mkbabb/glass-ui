@@ -1,4 +1,4 @@
-export { default as GooBlob } from "./GooBlob.vue";
+export { default as Blob } from "./Blob.vue";
 export type {
     BlobMood,
     BlobMerge,

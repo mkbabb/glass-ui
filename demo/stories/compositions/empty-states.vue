@@ -11,8 +11,8 @@ import {
 } from "@lucide/vue";
 import { Button } from "@glass/components/ui/button";
 import { Card, CardContent } from "@glass/components/ui/card";
-import { GooBlob } from "@glass/components/custom/goo-blob";
-import { BLOB_CONFIG_DEFAULTS } from "@glass/components/custom/goo-blob/types";
+import { Blob } from "@glass/components/custom/blob";
+import { BLOB_CONFIG_DEFAULTS } from "@glass/components/custom/blob/types";
 import { IconChip } from "@glass/components/custom/icon-chip";
 import { cn } from "@glass/utils/cn";
 
@@ -93,7 +93,7 @@ const states: EmptyState[] = [
 
 <template>
     <StoryPage>
-        <!-- The mascot — a small pointer-leaning GooBlob that follows the cursor.
+        <!-- The mascot — a small pointer-leaning Blob that follows the cursor.
              The page over an empty state earns a little companion (E4). The blob
              leans toward the pointer natively (useBlobPointer); under reduce the
              substrate freezes to a static droplet. -->
@@ -105,7 +105,7 @@ const states: EmptyState[] = [
                 aria-hidden="true"
                 data-egg="empty-states-mascot"
             >
-                <GooBlob
+                <Blob
                     :config="BLOB_CONFIG_DEFAULTS"
                     color="var(--primary, #1c1714)"
                     seed="empty-states-mascot"

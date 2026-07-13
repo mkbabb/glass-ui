@@ -36,7 +36,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
-const BLOB_DIR = resolve(ROOT, "src/components/custom/goo-blob");
+const BLOB_DIR = resolve(ROOT, "src/components/custom/blob");
 const RENDERER = resolve(BLOB_DIR, "composables/useMetaballRenderer.ts");
 const COLOR_LEAF = resolve(ROOT, "src/composables/color/index.ts");
 const FOURIER_INDEX = resolve(ROOT, "src/components/custom/fourier-field/index.ts");

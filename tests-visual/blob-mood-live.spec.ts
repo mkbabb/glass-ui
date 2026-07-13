@@ -30,7 +30,7 @@ import { PNG } from "pngjs";
 import { resolveScene } from "./pi-manifest.ts";
 
 // The blob-mood demo route (re-sourced from the manifest, never a hand path). The hero
-// is a single interactive <GooBlob> driven by the mood-pill row. AY.W-BLOB2 — the AX IA
+// is a single interactive <Blob> driven by the mood-pill row. AY.W-BLOB2 — the AX IA
 // consolidation folded the mood story into the ONE `substrates/blob` page (the prior
 // `blob-mood` route is gone — the stale id REDded this spec with "scene not found"); the
 // mood-pill row lives on that page.
@@ -111,7 +111,7 @@ test.describe("blob-mood-live (π lane — the manual-mood DELTA + PERSISTENCE)"
         await page.goto(MOOD_SCENE.path);
         // AY.W-BLOB-CONFIG — the Configurator adoption folded the interaction + mood
         // heroes into ONE Configurator-driven studio stage (the inv-16 dog-food), so the
-        // page now mounts ONE live <GooBlob> context (the studio hero) — the mood Select
+        // page now mounts ONE live <Blob> context (the studio hero) — the mood Select
         // drives setMood on it. The prior two-blob IA (.nth(1)) collapsed to .first().
         const blob = page.locator('canvas[data-testid="goo-blob-canvas"]').first();
         await blob.waitFor({ state: "visible", timeout: 20_000 });

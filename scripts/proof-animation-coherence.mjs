@@ -215,7 +215,7 @@ const SURFACE_CSS = [
 // named anchors document the surfaces the band explicitly stands over.
 const SURFACE_SFC = [
     "src/components/custom/aurora/Aurora.vue",
-    "src/components/custom/goo-blob/GooBlob.vue",
+    "src/components/custom/blob/Blob.vue",
     "src/components/custom/metric-stack/MetricRow.vue",
     "src/components/custom/scrolling-text/ScrollingText.vue",
     "src/components/ui/slider/Slider.vue",

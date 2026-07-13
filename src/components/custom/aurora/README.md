@@ -12,7 +12,7 @@ are layered noise + a UV warp over a few color points; aurora's multi-nuclei sof
 field + Quilez double domain-warp + Khronos PBR-Neutral tonemap + OKLCh-authored palette already exceeds
 that substrate on richness, and the painterly mediums take it somewhere no mesh-gradient
 tool ships — visible, hand-painted brushwork. It is the WebGL sibling of the
-[`GooBlob`](../goo-blob/): both compose the shared `useWebGLCanvas` substrate and resolve
+[`Blob`](../blob/): both compose the shared `useWebGLCanvas` substrate and resolve
 color through the shared `procedural-color.glsl` chunk; the blob is the bounded metaball
 creature, aurora is the full-bleed field.
 
@@ -384,7 +384,7 @@ tooling; Baudisch / Gamblin warm-cool temperature.)*
   (`aurora.frag.ts:384`). Without it the field ships ~2.2× too dark (linear 0.5 → display
   ~0.215 instead of ~0.735). This is machine-locked by `proof:aurora-space-gamma`. The OETF
   + the rotated-octave FBM constant are spliced from the shared `procedural-color.glsl`
-  chunk so they can never diverge from the goo-blob's copy (the divergence root cause a shared chunk forecloses).
+  chunk so they can never diverge from the blob's copy (the divergence root cause a shared chunk forecloses).
 - **Palette interpolation runs in OKLCh, not linear-sRGB.** The stop-to-stop blend in
   `samplePalette` (`composition.glsl.ts:15`) routes through the shared `samplePaletteRamp`
   (`procedural-color.glsl.ts:147`, `PALETTE_RAMP_GLSL`): a smoothstep ease then an
@@ -421,7 +421,7 @@ tooling; Baudisch / Gamblin warm-cool temperature.)*
 - **The aurora WASH is clamped to 1.5× (BB.W-PERF-PRODUCER A′-5).** The aurora is a
   heavily-blurred decorative drift wash, not a sharp-silhouette creature, so it backs
   at the SUB-2× `AV_AURORA_DPR_MAX` (1.5×) ceiling via `resolveAuroraWashDpr()`
-  (`budget.ts`), DISTINCT from the focal goo-blob's `AV_DPR_MAX` (2×, the sharp
+  (`budget.ts`), DISTINCT from the focal blob's `AV_DPR_MAX` (2×, the sharp
   creature keeps it via `resolveBudgetDpr()`). On a drift wash 1.5× is visually
   indistinguishable from 2× (the per-pixel FBM is already below the DPR-2 detail
   floor) while quartering the GPU memory + per-composite raster (the value.js LP1
@@ -632,7 +632,7 @@ src/components/custom/aurora/
     └── useCursorInteraction.ts   # the pointer layer
 ```
 
-The substrate is shared: aurora and the goo-blob both compose `useWebGLCanvas`
+The substrate is shared: aurora and the blob both compose `useWebGLCanvas`
 (`src/composables/glass/webgl/`) and both resolve color through the shared
 `procedural-color.glsl` chunk — so the offscreen-park, PRM freeze, and the OETF/FBM
 constants are single-sourced across both surfaces (gated by `proof:webgl-substrate-single`,

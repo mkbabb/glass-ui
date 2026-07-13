@@ -1,22 +1,22 @@
 <script setup lang="ts">
-// GooBlob — one coherent page for the WebGL2 metaball droplet. The page LEADS with
+// Blob — one coherent page for the WebGL2 metaball droplet. The page LEADS with
 // the LIVING lit GL bead (the Configurator-driven blob STUDIO — the interaction + mood
 // + seed-palette hero on the library's own Configurator chrome, the inv-16 dog-food
 // mirroring Aurora, satellites visibly cycling on mount), then DEMOTES the static
 // zero-GL WatercolorDot register below it as the supporting companion, then the pause
 // seam any user can reach (AZ.W-BLOB-PAGE D4 hero-first IA).
 //
-// WebGL budget: at most TWO live GooBlob contexts at once (the studio hero is the ONE
+// WebGL budget: at most TWO live Blob contexts at once (the studio hero is the ONE
 // stage). Every ambient/static swatch routes to WatercolorDot (no GL context) so the
 // page never approaches the browser's per-page WebGL cap.
 import { computed, reactive, ref, watch } from "vue";
 import VizStudio from "./VizStudio.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
-import { GooBlob } from "@glass/components/custom/goo-blob";
-import type { BlobConfig, BlobMood, BlobMerge } from "@glass/components/custom/goo-blob";
-import { BLOB_CONFIG_DEFAULTS } from "@glass/components/custom/goo-blob/types";
-import { MAX_SATS } from "@glass/components/custom/goo-blob/constants";
+import { Blob } from "@glass/components/custom/blob";
+import type { BlobConfig, BlobMood, BlobMerge } from "@glass/components/custom/blob";
+import { BLOB_CONFIG_DEFAULTS } from "@glass/components/custom/blob/types";
+import { MAX_SATS } from "@glass/components/custom/blob/constants";
 import { WatercolorDot } from "@glass/components/custom/watercolor-dot";
 import { DockBackgroundToggle } from "@glass/components/custom/dock";
 import { FadingScroll } from "@glass/components/custom/fading-scroll";
@@ -42,7 +42,7 @@ import {
 // The lit-droplet look without a WebGL context — a deterministic seeded
 // border-radius morph with an internalized DEVICE-PX turbulence filter (D1). The
 // deliberate sibling for ambient/decorative thumbnails: route the static register
-// here so the page holds exactly ONE live GooBlob context (the interactive studio
+// here so the page holds exactly ONE live Blob context (the interactive studio
 // hero, the lead section) and a grid never exhausts the per-page WebGL context cap.
 // Warm-cream identity palette (BC.W-VIZ-WATERCOLOR §E / BC.W-TEAL-NAVY-PURGE — NO
 // teal-on-navy reference; the demo default is the warm amber/cream/coral family, hue
@@ -302,7 +302,7 @@ const paletteStops = computed(() =>
     }).map(oklchStopToHex),
 );
 
-// The live BlobConfig the stage GooBlob paints — the studio axes mapped onto the atom
+// The live BlobConfig the stage Blob paints — the studio axes mapped onto the atom
 // surface. A reactive object whose `interaction`/`color` atoms track the studio config,
 // so every Configurator edit reaches the live hero (the D1/D2 fixes carry it through).
 //
@@ -435,7 +435,7 @@ const plainConfig: BlobConfig = {
     },
 };
 
-const studioBlob = ref<InstanceType<typeof GooBlob> | null>(null);
+const studioBlob = ref<InstanceType<typeof Blob> | null>(null);
 const studioPaused = ref(false);
 const clickCount = ref(0);
 
@@ -472,7 +472,7 @@ watch(studioPaused, () => {
          page identity is the ONE StoryHeader cluster the chassis renders. (The #stage/
          #controls/#presets slot bodies are preserved verbatim.) -->
     <VizStudio
-        heading="GooBlob"
+        heading="Blob"
         label="Blob studio — preset · interaction · mood · seed-palette"
         blurb="The blob showcase on the library's own Configurator chrome (the same studio shell Aurora composes). The preset row drives useConfiguratorState (per-preset clones); the stage paints the live config. Hover to feel the lean — attraction +1 leans IN, -1 SHIES AWAY (the sign is honored); click to fire the spring impulse; pick a mood (the {valence, arousal} affect model); set a seed + harmony to ramp the OKLCh palette fed LIVE to the hero body. One GL context."
         height-class="h-[min(70vh,560px)]"
@@ -535,7 +535,7 @@ watch(studioPaused, () => {
                             <div
                                 class="relative aspect-square w-full max-h-[78%] max-w-[min(78%,30rem)]"
                             >
-                                <GooBlob
+                                <Blob
                                     ref="studioBlob"
                                     v-model:paused="studioPaused"
                                     color="var(--card)"
@@ -775,7 +775,7 @@ watch(studioPaused, () => {
         >
             <ShowcaseFrame class="flex items-center justify-center">
                 <div class="relative aspect-square w-[min(60%,22rem)]">
-                    <GooBlob
+                    <Blob
                         variant="blob"
                         color="var(--card)"
                         :config="plainConfig"

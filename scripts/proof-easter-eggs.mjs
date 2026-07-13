@@ -129,11 +129,11 @@ export function detectEggs(src) {
     // — its PRM behaviour is the dialog grammar, not a suppress.
     assert("E3", "prm-nav-works", /allowInInput:\s*true/.test(src.shell ?? ""));
 
-    // ── E4 — GooBlob empty-state mascot + the 404 ───────────────────────────
+    // ── E4 — Blob empty-state mascot + the 404 ───────────────────────────
     assert(
         "E4",
         "mascot",
-        /GooBlob/.test(src.empty ?? "") &&
+        /<Blob\b/.test(src.empty ?? "") &&
             /empty-states-mascot/.test(src.empty ?? ""),
     );
     assert(

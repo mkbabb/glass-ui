@@ -16,11 +16,11 @@
 //        `active.value = true` set is GONE, replaced by a `hypot <= sdfRadius()` gate, and
 //        the `hitRadius` option threads the silhouette radius (UNSET → the whole box, the
 //        byte-identical goo-dot-matrix reuse). Born-RED (HEAD set `active.value = true`).
-//   I3 — GooBlob.vue makes the sibling click FALL THROUGH: the `.goo-blob-wrapper` root is
+//   I3 — Blob.vue makes the sibling click FALL THROUGH: the `.goo-blob-wrapper` root is
 //        `pointer-events: none` (never blocks the square) + a `.goo-blob-hit` child carries
 //        `pointer-events: auto` + a `clip-path: circle(...)` SDF-shaped hit region. Born-RED
 //        (HEAD wrapper was the `@click`/pointer-auto listener host, no hit-layer).
-//   I4 — GooBlob.vue gates the click-bounce on the hit-test: `onBlobClick` calls
+//   I4 — Blob.vue gates the click-bounce on the hit-test: `onBlobClick` calls
 //        `pointer.hitTest(` before `pulse()`/`emit`. Born-RED (HEAD pulsed unconditionally).
 //   I5 — the hover SAME-FRAME WAKE is preserved (the W-GOO-REDRESS `pointer.active` → the
 //        renderer's `wake()`, DOUBLED here) + the PRM deterministic seat is preserved
@@ -51,10 +51,10 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
-const BLOB = resolve(ROOT, "src/components/custom/goo-blob");
+const BLOB = resolve(ROOT, "src/components/custom/blob");
 const FILES = {
     pointer: resolve(BLOB, "composables/useBlobPointer.ts"),
-    sfc: resolve(BLOB, "GooBlob.vue"),
+    sfc: resolve(BLOB, "Blob.vue"),
     renderer: resolve(BLOB, "composables/useMetaballRenderer.ts"),
     constants: resolve(BLOB, "constants.ts"),
     demo: resolve(ROOT, "demo/stories/substrates/blob.vue"),
@@ -158,7 +158,7 @@ function runReal() {
     const demoSrc = read(FILES.demo);
 
     if (pointerSrc == null) violations.push("useBlobPointer.ts is absent");
-    if (sfcSrc == null) violations.push("GooBlob.vue is absent");
+    if (sfcSrc == null) violations.push("Blob.vue is absent");
     if (demoSrc == null) violations.push("demo/stories/substrates/blob.vue is absent");
 
     // ── I1 / I2 / I5 (pointer) ──

@@ -1,9 +1,9 @@
-# GooBlob
+# Blob
 
 A WebGL2 metaball "creature" for Vue 3.5 — a lit, pulsing, gooey SDF droplet with up to four
 orbiting satellites that merge in, get absorbed, and re-emerge, painted with a perceptually-uniform
 OKLCh color perturbation over glass-ui's warm-cream glass identity. It is the WebGL sibling of
-[`WatercolorDot`](../watercolor-dot/) (the CSS/SVG dot): the goo-blob is the continuously-animated,
+[`WatercolorDot`](../watercolor-dot/) (the CSS/SVG dot): the blob is the continuously-animated,
 per-pixel-shaded metaball; the watercolor-dot is the cheap static dot. They are deliberate siblings,
 not redundant — reach for the dot for the ambient/static register, the blob for the interactive/lit
 hero.
@@ -18,19 +18,19 @@ npm install @mkbabb/glass-ui
 and the pointer spring). Import the blob from its subpath:
 
 ```ts
-import { GooBlob } from "@mkbabb/glass-ui/goo-blob";
+import { Blob } from "@mkbabb/glass-ui/blob";
 ```
 
 ## Usage
 
 ```vue
 <script setup lang="ts">
-import { GooBlob, BLOB_CONFIG_DEFAULTS } from "@mkbabb/glass-ui/goo-blob";
+import { Blob, BLOB_CONFIG_DEFAULTS } from "@mkbabb/glass-ui/blob";
 </script>
 
 <template>
   <!-- A calm, lit, ambient brand mark — the warm-cream living bead the defaults paint -->
-  <GooBlob
+  <Blob
     color="var(--card)"
     :config="BLOB_CONFIG_DEFAULTS"
     class="w-28"
@@ -265,7 +265,7 @@ roundness, satellites tucked, the lit dome kept — a deliberate poster, not a r
 
 ## Best practices
 
-- **Import from the subpath, not the root barrel** — `@mkbabb/glass-ui/goo-blob` pulls only the blob
+- **Import from the subpath, not the root barrel** — `@mkbabb/glass-ui/blob` pulls only the blob
   chunk + its leaves; it never drags in the root barrel's reach.
 - **Theme via the injected config**, not by editing source — `provide(BLOB_CONFIG_KEY, …)` for a
   subtree, or a `config` prop per-instance. Named themed palettes belong in *your* app, not in the
@@ -275,8 +275,8 @@ roundness, satellites tucked, the lit dome kept — a deliberate poster, not a r
 - **Pause continuously-running backgrounds** — if the blob auto-runs > 5s as a non-essential
   background, wire `v-model:paused` (or `pause()`/`resume()`) to a `DockBackgroundToggle` (WCAG 2.2.2).
   This is binding, not optional.
-- **Reserve `GooBlob` for the interactive/lit hero; route the static register to `WatercolorDot`** —
-  each `GooBlob` holds its own WebGL2 context, and browsers cap ~8 live contexts per page. A grid of
+- **Reserve `Blob` for the interactive/lit hero; route the static register to `WatercolorDot`** —
+  each `Blob` holds its own WebGL2 context, and browsers cap ~8 live contexts per page. A grid of
   ambient/decorative thumbnails should be `WatercolorDot`s (zero GL context); reserve the GL blob for
   the one interactive hero.
 - **Decorative, so `aria-hidden`** — don't bolt an `aria-label` onto the canvas; it carries no
@@ -352,14 +352,14 @@ roundness, satellites tucked, the lit dome kept — a deliberate poster, not a r
 ```vue
 <script setup lang="ts">
 import { ref } from "vue";
-import { GooBlob, BLOB_CONFIG_DEFAULTS } from "@mkbabb/glass-ui/goo-blob";
+import { Blob, BLOB_CONFIG_DEFAULTS } from "@mkbabb/glass-ui/blob";
 import { DockBackgroundToggle } from "@mkbabb/glass-ui/dock";
 
 const paused = ref(false);
 </script>
 
 <template>
-  <GooBlob
+  <Blob
     v-model:paused="paused"
     color="var(--card)"
     :config="BLOB_CONFIG_DEFAULTS"
@@ -374,8 +374,8 @@ const paused = ref(false);
 ## Architecture
 
 ```
-goo-blob/
-├── GooBlob.vue              # the shell — props (incl. v-model:paused),
+blob/
+├── Blob.vue              # the shell — props (incl. v-model:paused),
 │                            #   var()-unwrap (the resolveTokenColor leaf), expose, wrapper shadow
 ├── types.ts                 # BlobConfig, BlobMood, BlobMerge, BlobQuality, MoodParams,
 │                            #   MetaballSource, BLOB_CONFIG_KEY/DEFAULTS
@@ -405,7 +405,7 @@ strings through the `/color` leaf (`cssToOklch → oklchToGammaRgb`).
 
 ### Substrate (BB.W-VIZ-SUITE / W-GOOBLOB-WGPU — the second migrated viz)
 
-GooBlob is the SECOND procedural-suite viz migrated to the WebGPU-first dual-substrate (after aurora).
+Blob is the SECOND procedural-suite viz migrated to the WebGPU-first dual-substrate (after aurora).
 It renders the SAME SDF metaball field through ONE of two backends, picked ONCE at mount by
 `createGpuSubstrate` (`navigator.gpu` feature-detect):
 
@@ -429,9 +429,9 @@ bounding-discard thread through the WGSL uniform buffer IDENTICALLY. Both backen
 `createCanvasLifecycle` leaf (the offscreen-pause + live-PRM-freeze + the satellite-phase wake scheduler
 is byte-identical), so the lifecycle wiring (`useIntersectionPause`, `DockBackgroundToggle` pause/resume,
 the `pointer.active → wake()` seam) is substrate-agnostic. Parity is machine-locked by
-`proof:gpu-substrate-single` (the goo-blob row is `verified` with a recorded OKLab ΔE within the
+`proof:gpu-substrate-single` (the blob row is `verified` with a recorded OKLab ΔE within the
 calibrated bar — mean ≤ 2.0 / p99 ≤ 5.0); the device-free structural-proxy capture-pair is on disk
-(`docs/tranches/BB/audit/visual/goo-blob-wgpu-parity/`), the binding Metal-GPU live capture (including
+(`docs/tranches/BB/audit/visual/blob-wgpu-parity/`), the binding Metal-GPU live capture (including
 the REAL per-GPU `fwidth()` derivative drift) rides W-REFLECT3.
 
 ---

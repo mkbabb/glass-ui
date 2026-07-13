@@ -1,11 +1,11 @@
 // AX.W16 — proof:blob-integration, the blob's INTEGRATION π-lane gate.
 //
 // The structural antidote to the static-defineExpose-string class that let a DEAD
-// pause seam ship GREEN: GooBlob.vue DISCARDED the renderer return, so the documented
+// pause seam ship GREEN: Blob.vue DISCARDED the renderer return, so the documented
 // WCAG-2.2.2 DockBackgroundToggle pause()/resume() seam was `undefined` at every
 // consumer — and EVERY static blob gate passed over it (typecheck green, the methods
 // exist on the discarded return TYPE). Only a LIVE rAF-park observation catches the
-// class. This spec mounts the REAL <GooBlob> + a wired <DockBackgroundToggle> on a real
+// class. This spec mounts the REAL <Blob> + a wired <DockBackgroundToggle> on a real
 // device, clicks pause, and asserts the render loop ACTUALLY PARKS (the displayed
 // frames stop changing) — NOT a `defineExpose`-string regex.
 //
@@ -18,7 +18,7 @@
 //      live WebGL2 contexts (the WatercolorDot static-register routing). Born-RED: the
 //      pre-wave stories mounted 5 (goo-blob) + 2 (blob-mood) GL blobs, hitting the cap.
 //   3. README-vs-CODE defineExpose CONSISTENCY — every method the README "Exposed"
-//      table lists appears in GooBlob.vue's defineExpose (or the prop/emit surface).
+//      table lists appears in Blob.vue's defineExpose (or the prop/emit surface).
 //      Born-RED: the table listed pause()/resume() that the expose OMITTED.
 //
 // READBACK MECHANISM (inherited from AX.W00 — the composited screenshot + pngjs). A
@@ -131,7 +131,7 @@ test.describe("blob-integration (π lane — the WCAG-2.2.2 pause seam + context
         page,
     }) => {
         // Count the live goo-blob GL canvases on each blob story. The re-cast routes the
-        // static register to WatercolorDot (zero GL context) and reserves GooBlob for
+        // static register to WatercolorDot (zero GL context) and reserves Blob for
         // the interactive/lit hero(es), so no single story mounts an unbounded count.
         const CAP = 6; // comfortably under the ~8 Chromium per-page cap
         // AY.W-BLOB2 — the consolidated `substrates/blob` page is the ONE blob story (the
@@ -149,18 +149,18 @@ test.describe("blob-integration (π lane — the WCAG-2.2.2 pause seam + context
                 .count();
             expect(
                 count,
-                `${path} mounts ${count} live <GooBlob> GL contexts — exceeds the bound ${CAP} (route the static register to WatercolorDot; reserve GooBlob for the interactive hero — the per-page WebGL context cap)`,
+                `${path} mounts ${count} live <Blob> GL contexts — exceeds the bound ${CAP} (route the static register to WatercolorDot; reserve Blob for the interactive hero — the per-page WebGL context cap)`,
             ).toBeLessThanOrEqual(CAP);
         }
     });
 
-    test("README-vs-code defineExpose CONSISTENCY — every README 'Exposed' method is on the GooBlob surface", () => {
+    test("README-vs-code defineExpose CONSISTENCY — every README 'Exposed' method is on the Blob surface", () => {
         const readme = readFileSync(
-            `${LIBRARY_ROOT}src/components/custom/goo-blob/README.md`,
+            `${LIBRARY_ROOT}src/components/custom/blob/README.md`,
             "utf8",
         );
         const sfc = readFileSync(
-            `${LIBRARY_ROOT}src/components/custom/goo-blob/GooBlob.vue`,
+            `${LIBRARY_ROOT}src/components/custom/blob/Blob.vue`,
             "utf8",
         );
 
@@ -186,7 +186,7 @@ test.describe("blob-integration (π lane — the WCAG-2.2.2 pause seam + context
             "parsed zero method names from the README '### Exposed' table — the table shape moved; update the parser, do not silently pass",
         ).toBeGreaterThan(0);
 
-        // The GooBlob surface: the defineExpose({ … }) keys PLUS the v-model prop pair
+        // The Blob surface: the defineExpose({ … }) keys PLUS the v-model prop pair
         // (paused). Parse the defineExpose object keys + the `paused` prop.
         const exposeMatch = sfc.match(/defineExpose\(\{([\s\S]*?)\}\)/);
         const exposeBody = exposeMatch?.[1] ?? "";
@@ -204,7 +204,7 @@ test.describe("blob-integration (π lane — the WCAG-2.2.2 pause seam + context
         const missing = [...methodNames].filter((n) => !surface.has(n));
         expect(
             missing,
-            `README '### Exposed' lists method(s) ${JSON.stringify(missing)} that are NOT on the GooBlob surface (defineExpose keys: ${JSON.stringify([...surface])}) — the README drifted ahead of the code (the dead-seam class: a table method with no expose)`,
+            `README '### Exposed' lists method(s) ${JSON.stringify(missing)} that are NOT on the Blob surface (defineExpose keys: ${JSON.stringify([...surface])}) — the README drifted ahead of the code (the dead-seam class: a table method with no expose)`,
         ).toEqual([]);
     });
 });

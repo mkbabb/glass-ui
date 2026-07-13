@@ -126,7 +126,7 @@ const DRAWER_LOOK_CSS = "src/styles/drawer.css";
 // scope). M4 asserts none of these OWN a kf rAF (RAFPlayback.play/.loop/.drive).
 const VIZ_DIRS = [
     "src/components/custom/aurora",
-    "src/components/custom/goo-blob",
+    "src/components/custom/blob",
     "src/components/custom/constellation",
     "src/components/custom/dot-flow-field",
     "src/components/custom/concentric",

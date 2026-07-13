@@ -16,7 +16,7 @@ import { categoryHero } from "../../chassis/hero/category-hero";
 // category with no summary here still renders, captioned by its first story.
 const SUMMARIES: Record<string, string> = {
     foundations: "Colors, type, radii, shadows, motion, paper & glass.",
-    substrates: "Aurora, GooBlob, the constellation lattice, the Fourier field.",
+    substrates: "Aurora, Blob, the constellation lattice, the Fourier field.",
     forms: "Inputs, selects, toggles, sliders, chips.",
     display: "Buttons, cards, badges, metrics, status.",
     containers: "Dialogs, sheets, popovers, menus, tooltips.",

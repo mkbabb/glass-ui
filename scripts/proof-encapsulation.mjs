@@ -23,7 +23,7 @@
 // Asserts:
 //   E1 — RATCHET-DRAIN: useBlobSatellites.ts is ≤ 500 lines AND the
 //        proof-no-god-module.mjs RATCHET_BASELINES map carries NO
-//        `"components/custom/goo-blob/composables/useBlobSatellites.ts": N` row
+//        `"components/custom/blob/composables/useBlobSatellites.ts": N` row
 //        (baseline #10 gone; the monotonic drain).
 //   E2 — COLOCATION: the carved leaf (satelliteKinematics.ts) exists on disk AND
 //        EXPORTS all three kinematics functions AND useBlobSatellites.ts IMPORTS
@@ -68,7 +68,7 @@ const COMMAND = "npm run proof:encapsulation";
 const SELF_TEST = process.argv.includes("--self-test");
 const HARD_LIMIT = 500;
 
-const GOO_DIR = resolve(SRC, "components/custom/goo-blob/composables");
+const GOO_DIR = resolve(SRC, "components/custom/blob/composables");
 const DRIVER = resolve(GOO_DIR, "useBlobSatellites.ts");
 const LEAF = resolve(GOO_DIR, "satelliteKinematics.ts");
 const GOD_MODULE = resolve(ROOT, "scripts/proof-no-god-module.mjs");
@@ -126,7 +126,7 @@ function importsFromLeaf(src, names) {
 // The ratchet-row shape (E1): a quoted `src/`-relative key followed by `: <number>`.
 // A bare comment mention of the path (the drain note) does NOT match.
 const RATCHET_ROW_RE =
-    /"components\/custom\/goo-blob\/composables\/useBlobSatellites\.ts"\s*:\s*\d+/;
+    /"components\/custom\/blob\/composables\/useBlobSatellites\.ts"\s*:\s*\d+/;
 
 // ── BG.W-COLOCATE — the WS4 carve fold (ratchet-drain #3/4/9/13). Four god-modules
 //    carved under the 500-line bound into COLOCATED leaves the host COMPOSES. The
@@ -1461,7 +1461,7 @@ function selfTest() {
     // E1: a re-added / surviving ratchet row.
     sab(
         {
-            godModuleSource: `const RATCHET_BASELINES = { "components/custom/goo-blob/composables/useBlobSatellites.ts": 533 };`,
+            godModuleSource: `const RATCHET_BASELINES = { "components/custom/blob/composables/useBlobSatellites.ts": 533 };`,
         },
         [E1],
         "E1 the ratchet baseline row survives",

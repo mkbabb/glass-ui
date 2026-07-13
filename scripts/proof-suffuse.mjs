@@ -575,7 +575,7 @@ add(
 // A content page (NOT a substrate-demo, NOT a chassis file) must not render a
 // live GL/Canvas substrate component. The enrolled thin pages (settings, table,
 // data-table, metric-cell, metric-stack) gained grid/paper — never a substrate.
-const LIVE_SUBSTRATE_RE = /<(Aurora|Constellation|FourierField|GooBlob)\b/;
+const LIVE_SUBSTRATE_RE = /<(Aurora|Constellation|FourierField|Blob)\b/;
 const CONTENT_PAGES_FENCED = [
     "demo/stories/compositions/settings.vue",
     "demo/stories/data/table.vue",

@@ -40,7 +40,7 @@ function cliPaths() {
     _cliPaths = {
         ROOT,
         CHUNK: resolve(ROOT, "src/composables/glass/webgl/shaders/procedural-color.glsl.ts"),
-        METABALL: resolve(ROOT, "src/components/custom/goo-blob/shaders/metaball.frag.ts"),
+        METABALL: resolve(ROOT, "src/components/custom/blob/shaders/metaball.frag.ts"),
         AURORA: resolve(ROOT, "src/components/custom/aurora/constants/shaders/aurora.frag.ts"),
         ARTIFACT: gateArtifactPath("GLASS_UI_SHADER_SHARED_SOURCE_ARTIFACT", "AV-shader-shared-source"),
     };

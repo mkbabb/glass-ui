@@ -193,7 +193,7 @@ test.describe("substrate-paints-color (π lane — fail-CLOSED)", () => {
         page,
     }) => {
         await page.goto(PI_TARGETS.blob.path);
-        // The goo-blob story mounts SEVERAL <GooBlob> instances; the first is the
+        // The goo-blob story mounts SEVERAL <Blob> instances; the first is the
         // BLOB_CONFIG_DEFAULTS render.
         const blobCanvas = page.locator('canvas[data-testid="goo-blob-canvas"]').first();
         await blobCanvas.waitFor({ state: "visible", timeout: 20_000 });

@@ -57,10 +57,10 @@ function cliPaths() {
         // AZ re-point (the AY carve relocated the uniform uploads to
         // uploadBlobUniforms.ts) — the composed pair, the carve-aware read.
         RENDERER_FILES: [
-            "src/components/custom/goo-blob/composables/useMetaballRenderer.ts",
-            "src/components/custom/goo-blob/composables/uploadBlobUniforms.ts",
+            "src/components/custom/blob/composables/useMetaballRenderer.ts",
+            "src/components/custom/blob/composables/uploadBlobUniforms.ts",
         ].map((r) => resolve(ROOT, r)),
-        SDF: resolve(ROOT, "src/components/custom/goo-blob/shaders/sdf-body.glsl.ts"),
+        SDF: resolve(ROOT, "src/components/custom/blob/shaders/sdf-body.glsl.ts"),
         ARTIFACT: gateArtifactPath(
             "GLASS_UI_BLOB_SMIN_NORMALIZED_ARTIFACT",
             "AW-blob-smin-normalized",

@@ -54,7 +54,7 @@ import { fileURLToPath } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
-const DIR = resolve(ROOT, "src/components/custom/goo-blob");
+const DIR = resolve(ROOT, "src/components/custom/blob");
 const WGSL = resolve(DIR, "shaders/metaball.wgsl.ts");
 const FRAG = resolve(DIR, "shaders/metaball.frag.ts");
 const UNIFORMS = resolve(DIR, "shaders/metaball-uniforms.glsl.ts");

@@ -21,7 +21,7 @@ const read = (rel) => {
 };
 
 const AURORA = "src/components/custom/aurora/README.md";
-const BLOB = "src/components/custom/goo-blob/README.md";
+const BLOB = "src/components/custom/blob/README.md";
 const DOCK = "src/components/custom/dock/README.md";
 const CONST = "src/components/custom/constellation/README.md";
 const FF = "src/components/custom/fourier-field/README.md";
@@ -32,7 +32,7 @@ const GLASSCSS = "src/styles/glass.css";
 // The four README package barrels the gate also head-scans (public surface).
 const BARRELS = [
     "src/components/custom/aurora/index.ts",
-    "src/components/custom/goo-blob/index.ts",
+    "src/components/custom/blob/index.ts",
     "src/components/custom/dock/index.ts",
     "src/components/custom/constellation/index.ts",
 ];
@@ -126,9 +126,9 @@ function run() {
     if (!existsSync(resolve(ROOT, "src/components/custom/aurora/RESEARCH.md")))
         violations.push("aurora/RESEARCH.md does not exist on disk (dangling citation)");
     const blob = read(BLOB) ?? "";
-    if (!/RESEARCH\.md/.test(blob)) violations.push("goo-blob/README.md does not cite ./RESEARCH.md");
-    if (!existsSync(resolve(ROOT, "src/components/custom/goo-blob/RESEARCH.md")))
-        violations.push("goo-blob/RESEARCH.md does not exist on disk (dangling citation)");
+    if (!/RESEARCH\.md/.test(blob)) violations.push("blob/README.md does not cite ./RESEARCH.md");
+    if (!existsSync(resolve(ROOT, "src/components/custom/blob/RESEARCH.md")))
+        violations.push("blob/RESEARCH.md does not exist on disk (dangling citation)");
     const dock = read(DOCK) ?? "";
     if (!/dock-facilities-corpus|dock-liquidglass/.test(dock))
         violations.push("dock/README.md does not cite the dock research corpus");
@@ -223,14 +223,14 @@ function run() {
 
     // goo-blob: documented paletteStops literal equals the types.ts shipped array.
     {
-        const types = read("src/components/custom/goo-blob/types.ts") ?? "";
+        const types = read("src/components/custom/blob/types.ts") ?? "";
         const m = types.match(/paletteStops:\s*\[([^\]]+)\]/);
         if (m) {
             const stops = [...m[1].matchAll(/#[0-9a-fA-F]{3,8}/g)].map((x) => x[0].toLowerCase());
             facts.shippedStops = stops;
             for (const s of stops) {
                 if (!blob.toLowerCase().includes(s))
-                    violations.push(`goo-blob/README.md default paletteStops out of sync — missing ${s}`);
+                    violations.push(`blob/README.md default paletteStops out of sync — missing ${s}`);
             }
         }
     }
