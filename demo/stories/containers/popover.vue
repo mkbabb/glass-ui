@@ -48,6 +48,10 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                 <p class="text-sm text-muted-foreground">
                     A typical two-field editor anchored to a button.
                 </p>
+                <!-- The lone trigger is wrapped in the `flex flex-wrap` idiom so it
+                     sizes to its content, never balloons to the article width (the
+                     StorySection body is align-items:stretch — CBA-1/CBA-7). -->
+                <div class="flex flex-wrap gap-3">
                 <Popover>
                     <PopoverTrigger as-child>
                         <Button variant="outline">Dimensions</Button>
@@ -69,6 +73,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                         </div>
                     </PopoverContent>
                 </Popover>
+                </div>
             </StorySection>
 
             <StorySection heading="Placement" gap="lg">

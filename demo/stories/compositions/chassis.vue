@@ -1,25 +1,24 @@
 <script setup lang="ts">
-// compositions/chassis — the demo SUB-TYPE taxonomy reference (BG.W-STORY-PAGE-API
-// §4-D). ONE page demonstrating the five demo KINDS side by side — the direct
-// gestalt-cohesion cure: "N bespoke spec-sheets → one product with natural
-// variation." Every KIND is a thin composition over the StoryPage chassis
-// guaranteeing the SAME conformity (a glassy sub-card · a header/rule · the warm
-// field) while its content varies.
+// compositions/chassis — the demo-kit reference (BI.W-SPECIMEN-FRAME). ONE page
+// showing the folded storybook chassis: the ONE `<SpecimenFrame>` specimen host
+// (across its glass-tier axis) + the ONE `<PermutationGrid>` variant grid — the
+// gestalt-cohesion cure "N bespoke spec-sheets → one product with natural variation."
+// Every specimen reads as glass over the shared warm field, and a lone interactive
+// child never balloons to the article width (the bounded w-full carve).
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import {
-    DemoStage,
-    DemoSpecimen,
-    DemoInteraction,
-    DemoMatrix,
-    DemoComposition,
-    type DemoMatrixCell,
+    SpecimenFrame,
+    PermutationGrid,
+    type PermutationGridCell,
 } from "../../chassis";
 import { Button } from "@glass/components/ui/button";
 import { Badge } from "@glass/components/ui/badge";
 import { Switch } from "@glass/components/ui/switch";
 
-// The matrix cells — each renders a glassy specimen cell hosting a Badge.
-const toneCells: (DemoMatrixCell & { variant: "default" | "secondary" | "outline" })[] = [
+// The grid cells — each renders a glassy specimen cell hosting a Badge.
+const toneCells: (PermutationGridCell & {
+    variant: "default" | "secondary" | "outline";
+})[] = [
     { id: "default", heading: "default", variant: "default" },
     { id: "secondary", heading: "secondary", variant: "secondary" },
     { id: "outline", heading: "outline", variant: "outline" },
@@ -31,56 +30,28 @@ const cellVariant = (id: string | number) =>
 
 <template>
     <StoryPage>
-        <!-- STAGE — a full-bleed field hosting a demo (the studio pattern). -->
-        <DemoStage
-            heading="Stage"
-            label="demo · stage"
-            blurb="A full-bleed live field hosting a demo — the studio pattern, glass controls floating over the warm field."
-        >
-            <template #stage>
-                <div class="chassis-stage-fill paper-grain-overlay" />
-            </template>
-            <template #controls>
-                <p class="section-label">controls</p>
-                <Button variant="glass" size="sm">Adjust</Button>
-                <div class="flex items-center justify-between gap-3">
-                    <span class="text-small text-muted-foreground">Animate</span>
-                    <Switch :default-value="true" />
-                </div>
-            </template>
-        </DemoStage>
-
-        <!-- MATRIX — a responsive grid of specimen cells (the variant matrix). -->
-        <DemoMatrix
-            heading="Matrix"
-            label="demo · matrix"
-            blurb="A responsive grid of specimen cells — the variant matrix / preset gallery, each cell a glassy sub-card."
-            :cells="toneCells"
-            min-cell="12rem"
-        >
-            <template #cell="{ cell }">
-                <Badge :variant="cellVariant(cell.id)">{{ cell.heading }}</Badge>
-            </template>
-        </DemoMatrix>
-
-        <!-- SPECIMEN — one glassy sub-card hosting a single specimen (the base). -->
-        <DemoSpecimen
+        <!-- SPECIMEN — one glassy sub-card hosting a single specimen (the base). A
+             lone Button is a direct body child yet sizes to its content (the bounded
+             w-full carve), never the column. -->
+        <SpecimenFrame
             heading="Specimen"
-            label="demo · specimen"
-            blurb="One glassy sub-card hosting a single demo specimen — the conformity floor every kind extends."
+            label="chassis · specimen"
+            blurb="One glassy sub-card hosting a single demo specimen — the conformity floor. A lone interactive child sizes to content, never the article width."
         >
             <div class="flex flex-wrap items-center gap-3">
                 <Button>Default</Button>
                 <Button variant="primary-audacious">Primary</Button>
                 <Badge tone="success">shipped</Badge>
             </div>
-        </DemoSpecimen>
+        </SpecimenFrame>
 
-        <!-- INTERACTION — a glassy card hosting the library's own interactives. -->
-        <DemoInteraction
+        <!-- INTERACTION — the library's own interactives on the lifted `floating`
+             tier (never a hand-rolled lozenge). -->
+        <SpecimenFrame
+            tier="floating"
             heading="Interaction"
-            label="demo · interaction"
-            blurb="A glassy card hosting the library's own interactives — real Buttons and Switches, never a hand-rolled lozenge."
+            label="chassis · interaction"
+            blurb="A glassy card hosting the library's own interactives — real Buttons and Switches on the lifted glass tier."
         >
             <div class="flex flex-wrap items-center gap-3">
                 <Button variant="glass" size="sm">Run</Button>
@@ -90,12 +61,27 @@ const cellVariant = (id: string | number) =>
                 <span class="text-small">Reduced motion</span>
                 <Switch />
             </div>
-        </DemoInteraction>
+        </SpecimenFrame>
 
-        <!-- COMPOSITION — a glassy scene composing ≥2 library components. -->
-        <DemoComposition
+        <!-- GRID — a responsive grid of specimen cells (the variant matrix). -->
+        <PermutationGrid
+            heading="Grid"
+            label="chassis · grid"
+            blurb="A responsive grid of specimen cells — the variant matrix / preset gallery, each cell a glassy sub-card."
+            :cells="toneCells"
+            min-cell="12rem"
+        >
+            <template #cell="{ cell }">
+                <Badge :variant="cellVariant(cell.id)">{{ cell.heading }}</Badge>
+            </template>
+        </PermutationGrid>
+
+        <!-- COMPOSITION — a glassy scene composing ≥2 library components into the
+             surface they were built for. The `lg` pad gives the scene room. -->
+        <SpecimenFrame
+            pad="lg"
             heading="Composition"
-            label="demo · composition"
+            label="chassis · composition"
             blurb="A glassy scene composing ≥2 library components into the surface they were built for."
         >
             <div class="flex items-center justify-between gap-4">
@@ -116,28 +102,6 @@ const cellVariant = (id: string | number) =>
                 </div>
                 <Button variant="outline" size="sm">System</Button>
             </div>
-        </DemoComposition>
+        </SpecimenFrame>
     </StoryPage>
 </template>
-
-<style scoped>
-/* The stage field illustration — a warm-cream radial wash so the stage reads as a
-   live field aperture even on a static-wash route (the global page field also
-   transmits through the transparent frame). */
-.chassis-stage-fill {
-    position: absolute;
-    inset: 0;
-    background:
-        radial-gradient(
-            120% 90% at 20% 15%,
-            color-mix(in oklab, var(--section-color-3) 22%, transparent),
-            transparent 60%
-        ),
-        radial-gradient(
-            110% 80% at 85% 90%,
-            color-mix(in oklab, var(--section-color-7) 20%, transparent),
-            transparent 55%
-        ),
-        var(--card);
-}
-</style>

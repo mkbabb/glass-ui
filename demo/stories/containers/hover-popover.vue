@@ -93,6 +93,10 @@ const CONTAINERS_STOP = 2;
 
         <section class="flex flex-col gap-3">
             <p class="section-label">richer slot · two lines + kbd</p>
+            <!-- The lone trigger is wrapped in the `flex flex-wrap` idiom so it sizes
+                 to its content, never balloons to the article width (the flex-col
+                 body is align-items:stretch — CBA-1/CBA-7). -->
+            <div class="flex flex-wrap gap-3">
             <Popover trigger="hover">
                 <PopoverTrigger as-child>
                     <Button variant="outline">Save document</Button>
@@ -104,6 +108,7 @@ const CONTAINERS_STOP = 2;
                     </div>
                 </PopoverContent>
             </Popover>
+            </div>
         </section>
 
         <section class="flex flex-col gap-3">

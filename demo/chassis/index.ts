@@ -1,15 +1,16 @@
-// The demo SUB-TYPE taxonomy barrel (BG.W-STORY-PAGE-API — the §4-D restore).
+// The demo chassis barrel — the storybook's demo-private primitives.
 //
-// The CLOSED five-KIND vocabulary the storybook composes so N bespoke
-// spec-sheets read as ONE product with natural variation. Each is a THIN
-// composition over the StoryPage chassis guaranteeing the conformity invariants
-// (a glassy sub-card · a header/rule · the shared warm field) while the content
-// varies. Demo-private — NOT a library export.
+// After the BI.W-SPECIMEN-FRAME fold the bespoke five-KIND sub-type taxonomy is
+// retired down to the ONE specimen host + the ONE variant grid: every demo reads as
+// glass over the shared warm field, and no lone interactive child can balloon to the
+// article width. Demo-private — NOT a library export.
 
-export { default as DemoStage } from "./DemoStage.vue";
-export { default as DemoSpecimen } from "./DemoSpecimen.vue";
-export { default as DemoInteraction } from "./DemoInteraction.vue";
-export { default as DemoMatrix, type DemoMatrixCell } from "./DemoMatrix.vue";
-export { default as DemoComposition } from "./DemoComposition.vue";
+export { default as SpecimenFrame } from "./showcase/SpecimenFrame.vue";
+export {
+    default as PermutationGrid,
+    type PermutationGridCell,
+} from "./PermutationGrid.vue";
 
-export { DEMO_SUBTYPES, DEMO_FIELD_KEY, type DemoSubtype } from "./subtype-context";
+// The page FIELD context — StoryPage provides its manifest-declared background so a
+// nested demo reads "what field am I over?" without a second GL context.
+export { DEMO_FIELD_KEY } from "./subtype-context";

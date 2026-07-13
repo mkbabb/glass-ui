@@ -57,6 +57,10 @@ const flags = ref({ minimap: true, overlays: false, rulers: true });
                 <p class="text-sm text-muted-foreground">
                     One trigger, every subcomponent.
                 </p>
+                <!-- The lone trigger is wrapped in the `flex flex-wrap` idiom so it
+                     sizes to its content, never balloons to the article width (the
+                     StorySection body is align-items:stretch — CBA-1/CBA-7). -->
+                <div class="flex flex-wrap gap-3">
                 <DropdownMenu>
                     <DropdownMenuTrigger as-child>
                         <Button variant="outline">Open menu</Button>
@@ -126,6 +130,7 @@ const flags = ref({ minimap: true, overlays: false, rulers: true });
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
+                </div>
 
                 <div
                     class="rounded-lg border border-border bg-card/50 px-3 py-2 font-mono text-xs"
