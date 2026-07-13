@@ -100,9 +100,9 @@ export const SPRING_PRESETS: readonly SpringPresetRow[] = [
     },
     {
         name: "dock",
-        response: 0.68,
-        dampingFraction: 0.64,
-        comment: "DOCK register — THE WEIGHTY GOOEY MORPH (collapse/expand + V↔H + fission + in-situ shell): slow inertial mass, the settle a graceful +7.3% (un-pointed liquid), the 'MORPH MORE on move' reference. BD.W-ANIM-IOS27-TUNE",
+        response: 0.3,
+        dampingFraction: 0.82,
+        comment: "DOCK register — the measured-iOS band (BI judgment (a), user-delegated + orchestrator-ratified 2026-07-12): response 0.30 / ζ 0.82 = the center of the frame-measured iOS dock morph 0.28±0.04 / ζ0.82±0.06 (overshoot ~1.1-1.4%). Apple's liquid is BRISK + tiny overshoot + coupled channels — weight ≠ slow. The BD {0.68, 0.64} weighty tune was calibrated against the pre-M1 broken CSS/JS time base and relied on the arrival-settle cut (excised at BI.W-DOCK-SPRING-UNIFY) to hide its ζ0.64 tail. Pinned POST-SPRING-PARITY (75c9e433) + POST-UNIFY; the A/B capture pair rides the π batch.",
     },
     {
         name: "press",
