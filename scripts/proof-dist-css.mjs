@@ -102,7 +102,10 @@ const lc = require_("lightningcss");
 
 const DIST_STYLES = resolve(ROOT, "dist/styles");
 const SRC_STYLES = resolve(ROOT, "src/styles");
-const VITE_STYLE_ASSETS = resolve(ROOT, "vite.style-assets.ts");
+// B0 STYLE-REDRAIN carved the fold-injection anchor into vite.style-fold.ts
+// (atSourceIndex exported there; vite.utility-emit.ts consumes it). DC4 follows
+// the carve — the anchor home is the fold module, not the assets emitter.
+const VITE_STYLE_ASSETS = resolve(ROOT, "vite.style-fold.ts");
 const COMMAND = "npm run proof:dist-css";
 
 // ── helpers ────────────────────────────────────────────────────────────────

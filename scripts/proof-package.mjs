@@ -99,7 +99,9 @@ mkdirSync(tmp, { recursive: true });
 // range; 4.x is deliberately NOT accepted (the clean-break major bump).
 {
     const kfRange = pkg.peerDependencies?.["@mkbabb/keyframes.js"] ?? "";
-    const kfMatrix = ["5.0.0", "5.1.0"];
+    // BI (XR-9 lockstep): the kf peer floor is ^5.2.0 — every asks-roster subpath row
+    // pairs it; the matrix asserts the floor + a forward minor stay accepted.
+    const kfMatrix = ["5.2.0", "5.3.0"];
     const kfMisses = kfMatrix.filter((v) => !semver.satisfies(v, kfRange));
     if (kfMisses.length) {
         steps.push({ command: `peer-matrix @mkbabb/keyframes.js`, status: "fail" });
@@ -219,7 +221,9 @@ import { Button, Card, Dialog, Tooltip, cn, useInterval } from "@mkbabb/glass-ui
 import { useGlobalDark } from "@mkbabb/glass-ui/dark";
 import { chartHeights } from "@mkbabb/glass-ui/tokens";
 import "@mkbabb/glass-ui/styles";
-import { GlassDock, DockIconButton, DockDropdownTrigger, DockLayerGroup } from "@mkbabb/glass-ui/dock";
+// BI.W-DOCK-FOLD — DockIconButton -> DockControl, DockDropdownTrigger -> DockTrigger
+// (the two fold survivors; the retired names are DEFINITION-ABSENT, clean break).
+import { GlassDock, DockControl, DockTrigger, DockLayerGroup } from "@mkbabb/glass-ui/dock";
 import { FuzzySearch, useFuzzySearch } from "@mkbabb/glass-ui/search";
 // AI.W5-delta — ProgressiveSidebar SFC retired (Path B per G-AI-D26); the
 // /sidebar subpath now surfaces composables only. The probe verifies the
@@ -247,7 +251,7 @@ import { IconTooltip } from "@mkbabb/glass-ui/icon-tooltip";
 
 const runtimeSymbols = [
   Button, Card, Dialog, Tooltip, cn, useGlobalDark, useInterval, chartHeights,
-  GlassDock, DockIconButton, DockDropdownTrigger, DockLayerGroup, FuzzySearch, useFuzzySearch,
+  GlassDock, DockControl, DockTrigger, DockLayerGroup, FuzzySearch, useFuzzySearch,
   buildTreeIndex, useTreeIndex, DarkModeToggle,
   Surface, InfiniteScroll, useInfiniteScroll, SegmentedTabs,
   TypewriterText, useTypewriter, StackedIconGroup,

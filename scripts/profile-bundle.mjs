@@ -259,7 +259,10 @@ const BUDGETS = {
     // no-teal field-consuming rebuild on the shared substrate) grew the chunk to raw
     // ~40_961 / gzip ~12_950. A one-time conscious lift to raw 45_000 / gzip 14_000
     // (thin headroom over the measured), NOT open-ended creep — an overrun still HALTS.
-    "dist/fourier-field.js": { raw: 45_000, gzip: 14_000 },
+    // BI.W-FOURIER-RIBBON (B45) — the fullscreen per-pixel SDF retired for the ribbon
+    // geometry pass on BOTH backends; the gzip cap lifts 14_000 → 14_200 for the ribbon
+    // vertex machinery (actual 14_055 at the re-land; raw comfortably inside 45_000).
+    "dist/fourier-field.js": { raw: 45_000, gzip: 14_200 },
 };
 
 // AO.W2 (inv α) — the real consumer-draw CSS artifact.

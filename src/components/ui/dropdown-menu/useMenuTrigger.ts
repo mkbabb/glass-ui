@@ -16,6 +16,7 @@ import {
     provide,
     type ComputedRef,
     type InjectionKey,
+    type Component,
     type Ref,
 } from "vue";
 import {
@@ -75,7 +76,9 @@ export function useMenuTrigger(): Ref<MenuTrigger> {
 
 // Every menu PART → its [click reka, context reka] pairing. ONE menu engine, two
 // anchoring families; the trigger switches the family, never the roving-focus/typeahead.
-const PART_PAIRS = {
+// Annotated as Component pairs — the inferred reka prop generics are non-portable in
+// declaration emit (TS2883); useMenuPart returns an opaque component either way.
+const PART_PAIRS: Record<string, readonly [Component, Component]> = {
     Root: [DropdownMenuRoot, ContextMenuRoot],
     Trigger: [DropdownMenuTrigger, ContextMenuTrigger],
     Portal: [DropdownMenuPortal, ContextMenuPortal],
@@ -91,9 +94,13 @@ const PART_PAIRS = {
     SubTrigger: [DropdownMenuSubTrigger, ContextMenuSubTrigger],
     SubContent: [DropdownMenuSubContent, ContextMenuSubContent],
     ItemIndicator: [DropdownMenuItemIndicator, ContextMenuItemIndicator],
-} as const;
+};
 
-export type MenuPart = keyof typeof PART_PAIRS;
+/** The menu part names (the PART_PAIRS keys — annotated union, portable in d.ts). */
+export type MenuPart =
+    | "Root" | "Trigger" | "Portal" | "Content" | "Item" | "CheckboxItem"
+    | "RadioItem" | "RadioGroup" | "Group" | "Separator" | "Label"
+    | "Sub" | "SubTrigger" | "SubContent" | "ItemIndicator";
 
 /** The reka component for `part`, reactive to the injected trigger. */
 export function useMenuPart(part: MenuPart): ComputedRef<unknown> {

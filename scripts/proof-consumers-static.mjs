@@ -192,6 +192,36 @@ rootAllowed.add("vReveal");
 rootAllowed.add("useTextHighlight");
 rootAllowed.add("HighlightMatcher");
 rootAllowed.add("UseTextHighlightControls");
+// BI.W-FIELD-CORE — useRoutePointer, the route pointer BROADCASTER (capture-phase
+// window listener + provide/inject; imports vue ONLY — engine-FREE + vueuse-FREE),
+// targeted-re-exported to the root barrel per the usePointerVelocityField precedent.
+// A partial re-export the whole-file contract cannot express.
+rootAllowed.add("useRoutePointer");
+rootAllowed.add("RoutePointerContext");
+rootAllowed.add("UseRoutePointerOptions");
+// BI.W-TABS-FACTOR / B3-tail — useLeadTrail, the ONE lead/trail integrator (imports
+// vue only — a hand-rolled critically-damped follower, engine-FREE + vueuse-FREE),
+// root-published per the useLiquidFlex precedent; also on /motion-core.
+for (const name of ["useLeadTrail", "LeadTrailEdges", "UseLeadTrail", "UseLeadTrailOptions"]) {
+    rootAllowed.add(name);
+}
+// BI.W-FIELD-CORE — the four PURE per-viz pointer-field mappings + snapshotField
+// (fourier lean · blob pull · aurora cursor · constellation well; vue-only imports,
+// pure functions + constants + types) — the src/index.ts block documents the reach.
+for (const name of [
+    "fourierLeanMapping", "blobPullMapping", "auroraCursorMapping", "constellationWellMapping",
+    "snapshotField", "FOURIER_BIAS_GAIN", "FOURIER_FOLLOW_LEAN", "BLOB_LEAD_K",
+    "BLOB_STRETCH_GAIN", "BLOB_STRETCH_MAX", "AURORA_CURSOR_RADIUS", "PointerFieldSnapshot",
+    "FourierLeanGeometry", "FourierLeanOptions", "FourierLeanResult", "BlobPullOptions",
+    "BlobPullResult", "AuroraCursorOptions", "AuroraCursorResult", "ConstellationWellResult",
+]) {
+    rootAllowed.add(name);
+}
+// BH.W-AXIS-GRAMMAR — the grammar axis TYPES on the root barrel (types-only,
+// _shared/axes.ts is the ONE home; /axes is the discovery front door).
+for (const name of ["Size", "Orientation", "Motion", "Surface", "SurfaceTier"]) {
+    rootAllowed.add(name);
+}
 // AZ.W-MORPH-SHOWCASE (the W-LIQUID fold) — useLiquidFlex is the shared amorphous
 // flex+squish primitive (a PURE projection of a caller-driven scalar; engine-FREE +
 // vueuse-FREE), targeted-re-exported to the root barrel from
@@ -268,6 +298,56 @@ const missingRootExports = [...rootAllowed]
     .filter((name) => !actualRootExports.has(name))
     .sort();
 const exportsMap = new Set(Object.keys(packageJson.exports ?? {}));
+
+// BI B2/B8 (the Kronecker folds) — retired subpaths whose SIBLING migrations are
+// OWNED by named asks-and-consumes roster rows (the cut-window seam). Each entry
+// cites its row; the consumer edit issues on the sibling's ^5.0.0 bump. LOCKSTEP
+// TEETH: if package.json re-declares one of these exports, the entry is STALE and
+// REDs below — the set can never outlive the retirement it excuses.
+const CUT_FIXED_SUBPATH_ASKS = new Map([
+    ["./hover-card", "asks-and-consumes row 9 (BI.W-OVERLAY-UNION)"],
+    ["./hover-popover", "asks-and-consumes row 9 (BI.W-OVERLAY-UNION)"],
+    ["./context-menu", "fold-ledger BI.W-MENU-TRIGGER row"],
+    ["./sheet", "fold-ledger BI.W-DIALOG-PLACEMENT row"],
+    ["./confirm-dialog", "fold-ledger BI.W-DIALOG-PLACEMENT row"],
+    ["./glass-panel", "asks-and-consumes row 8 (BI.W-GLASS-DEDUP)"],
+    ["./toggle-chip", "fold-ledger BI.W-CHIP-FOLD row"],
+    ["./selectable-chip", "fold-ledger BI.W-CHIP-FOLD row"],
+    ["./api", "asks-and-consumes rows 1-2 (/api retired at the BH export reshape; migrate-api-to-*)"],
+]);
+const expectedCutBreaks = [];
+// BI.W-DOCK-FOLD deleted ui/tabs WHOLE (the internal reka substrate; the by-name
+// rename roster is filed in coordination/) — sibling root-imports of the Tabs family
+// are cut-window breaks the sibling cures on its ^5.0.0 bump. Same lockstep teeth:
+// if the root union regains a symbol, the entry is STALE and REDs.
+const CUT_FIXED_ROOT_SYMBOLS = new Map([
+    ["Tabs", "W-DOCK-FOLD asks (ui/tabs deleted whole; SegmentedTabs via /tabs)"],
+    ["TabsContent", "W-DOCK-FOLD asks"],
+    ["TabsList", "W-DOCK-FOLD asks"],
+    ["TabsTrigger", "W-DOCK-FOLD asks"],
+]);
+for (const [name, row] of CUT_FIXED_ROOT_SYMBOLS) {
+    if (rootAllowed.has(name)) {
+        failures.push({
+            file: "scripts/proof-consumers-static.mjs",
+            line: 0,
+            type: "stale-cut-fixed-entry",
+            specifier: name,
+            message: `${name} is on the root surface but sits in CUT_FIXED_ROOT_SYMBOLS (${row}) — drop the entry.`,
+        });
+    }
+}
+for (const [key, row] of CUT_FIXED_SUBPATH_ASKS) {
+    if (exportsMap.has(key)) {
+        failures.push({
+            file: "scripts/proof-consumers-static.mjs",
+            line: 0,
+            type: "stale-cut-fixed-entry",
+            specifier: key,
+            message: `${key} is declared in package exports but sits in CUT_FIXED_SUBPATH_ASKS (${row}) — the retirement excuse outlived the retirement; drop the entry.`,
+        });
+    }
+}
 
 function walk(dir) {
     if (!existsSync(dir)) return [];
@@ -454,13 +534,18 @@ function scanFile(consumer, file) {
 
         for (const name of named) {
             if (!rootAllowed.has(name)) {
-                failures.push({
-                    file: rel,
-                    line,
-                    type: "non-core-root-symbol",
-                    symbol: name,
-                    message: `${name} must import from an explicit @mkbabb/glass-ui subpath.`,
-                });
+                const rosterRow = CUT_FIXED_ROOT_SYMBOLS.get(name);
+                if (rosterRow) {
+                    expectedCutBreaks.push({ file: rel, line, specifier: name, rosterRow });
+                } else {
+                    failures.push({
+                        file: rel,
+                        line,
+                        type: "non-core-root-symbol",
+                        symbol: name,
+                        message: `${name} must import from an explicit @mkbabb/glass-ui subpath.`,
+                    });
+                }
             }
         }
     }
@@ -479,13 +564,23 @@ function scanFile(consumer, file) {
         if (specifier.startsWith("@mkbabb/glass-ui/") && specifier !== "@mkbabb/glass-ui/styles") {
             const exportKey = `./${specifier.slice("@mkbabb/glass-ui/".length)}`;
             if (!exportsMap.has(exportKey)) {
-                failures.push({
-                    file: rel,
-                    line,
-                    type: "unknown-package-subpath",
-                    specifier,
-                    message: `${specifier} is not declared in package exports.`,
-                });
+                const rosterRow = CUT_FIXED_SUBPATH_ASKS.get(exportKey);
+                if (rosterRow) {
+                    // The 5.0.0 cut-window seam: the subpath was RETIRED by a BI fold
+                    // and the sibling migration is OWNED by a named asks-and-consumes
+                    // row — the consumer edits on its ^5.0.0 bump (the foreign-tree
+                    // fence). Reported, not failing; a subpath NOT in the roster set
+                    // still fails, and a re-added export makes the entry stale (below).
+                    expectedCutBreaks.push({ file: rel, line, specifier, rosterRow });
+                } else {
+                    failures.push({
+                        file: rel,
+                        line,
+                        type: "unknown-package-subpath",
+                        specifier,
+                        message: `${specifier} is not declared in package exports.`,
+                    });
+                }
             }
         }
     }
