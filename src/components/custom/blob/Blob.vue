@@ -294,6 +294,11 @@ defineExpose({
     currentMood: mood.currentMood,
     pause: renderer.pause,
     resume: renderer.resume,
+    // BI.W-BLOB-SEAMS (GAP-L5 / T-49) — the read-only quiescence seam surfaced to the
+    // template-ref consumer. `true` IFF the engine is at rest (mood settled, pointer at
+    // rest, no satellite mid-transition incl. a fission beat). A consumer parks its own
+    // idle/arming ONLY while `settled` is true, so an armed hero never freezes mid-split.
+    settled: renderer.settled,
 });
 </script>
 

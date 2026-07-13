@@ -291,6 +291,14 @@ export function useBlobPointer(
         pointer: readonly(pointer),
         velocity: readonly(velocity),
         active: readonly(active),
+        /**
+         * BI.W-FIELD-CORE — the RAW pointer target (pre-spring, [-1,1] body space). The
+         * shared `usePointerVelocityField` reads THIS (not the smoothed `pointer`) so the
+         * field is the ONE smoothing stage — the double-smooth (feeding the spring output
+         * into the field, which smooths it AGAIN) is dead. The blob's own body spring reads
+         * `rawX`/`rawY` too (parallel, not serial), so no lag compounds.
+         */
+        rawPointer: (): { x: number; y: number } => ({ x: rawX, y: rawY }),
         /** The live click-impulse pulse value (folds into uPulseAmp). */
         pulse: readonly(pulseRef),
         /** ms since the last pointer activity (W11.c mood idle drift). */

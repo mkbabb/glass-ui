@@ -1,4 +1,4 @@
-import { watch, onUnmounted, type Ref } from "vue";
+import { ref, watch, onUnmounted, type Ref } from "vue";
 import {
     createGpuSubstrate,
     type BackingSize,
@@ -41,6 +41,18 @@ export interface UseMetaballRendererOptions {
     pointer: BlobPointer;
     satellites: BlobSatelliteSystem;
     config: BlobConfig;
+    /**
+     * BI.W-E10-AURORA-ENTRANCE (value.js T-60) — the reveal-bloom CONSUMER DOOR
+     * (the twin of `AuroraRuntimeOptions.revealBloom`; the door lands on BOTH
+     * chromatic runtimes). The one-shot cold-first-VISIBLE `filter`-bloom
+     * (`data-substrate-reveal` → `@keyframes substrate-reveal-bloom`). Defaults
+     * `true` — the blob keeps a materialize entrance, but the keyframe is now
+     * PALETTE-HONEST (brightness/saturate never dip below 1, viz-reveal.css), so it
+     * never transits the `brightness<1`/`saturate<1` gray veil T-60 condemned over
+     * the chromatic field. A consumer (BI.W-BLOB-SEAMS, or an arrival-sync host)
+     * opts out with `false`.
+     */
+    revealBloom?: boolean;
 }
 
 /** The renderer's public control surface — pause/resume + wake the demand loop. */
@@ -57,6 +69,19 @@ export interface UseMetaballRendererReturn {
      * handle — NO new rAF, NO second wake path (the single-substrate-loop invariant).
      */
     wake: () => void;
+    /**
+     * BI.W-BLOB-SEAMS (GAP-L5 / value.js T-49) — the public QUIESCENCE seam. `true`
+     * IFF the engine is at rest: the mood is settled, the pointer is at rest, AND no
+     * satellite is mid-transition (merging / absorbed / emerging / FISSIONING) —
+     * i.e. zero in-flight fission beat. Derived from the SAME predicate the demand
+     * gate (`shouldContinue`) reads to decide whether to park — NO parallel busy-flag
+     * (the U3 single-signal discipline; the seam READS what the engine already knows,
+     * no second physics). A consumer parks ITS OWN idle/arming logic only while
+     * `settled` is true, so an armed-but-idle hero never freezes mid-split (the
+     * value.js 2.7s-idle-vs-5.2s-fission-beat mismatch this closes). READ-ONLY — a
+     * consumer observes it, never writes it.
+     */
+    settled: Readonly<Ref<boolean>>;
 }
 
 /**
@@ -164,6 +189,13 @@ export function useMetaballRenderer(
     let canvasHandle: ReturnType<typeof createGpuSubstrate> | null = null;
     let paused = false;
 
+    // BI.W-BLOB-SEAMS — the public quiescence seam (the T-49 `settled` GAP-L5 owner).
+    // ONE signal: `shouldContinue` writes it from the SAME `mood.isSettled() &&
+    // pointer.isAtRest() && satellites.isQuiescent()` predicate it reads to decide the
+    // demand-loop park — there is NO parallel busy-flag (the U3 single-signal
+    // discipline). Starts `false`: a cold mount is materializing/armed, not at rest.
+    const settled = ref(false);
+
     // AX.W16 (arm 2) — the satellite-phase WAKE scheduler. When the quiescence gate
     // parks a fully-at-rest blob, a `setTimeout` re-arms the loop exactly when the next
     // orbit/merge phase is due (the demand-loop wake, not a poll). `simTimeMs` is the
@@ -240,18 +272,20 @@ export function useMetaballRenderer(
         const stepMs = tempo * dtMs;
         simTimeMs += stepMs;
 
-        // BC.W-VIZ-GOOBLOB-MEATBALL — feed the shared pointer-velocity field from THIS
-        // frame callback (NO own rAF — the createCanvasLifecycle one-loop discipline).
-        // The raw pointer target is the existing `useBlobPointer` smoothed position
-        // mapped [-1,1] → [0,1] (the field owns its own derivation); `tick(0)` under
-        // PRM/pause freezes it (the deterministic FREEZE). We READ BOTH derivative axes
-        // (velocity AND acceleration — the user's accel ask, V2): the iOS-27 GEL
-        // SNAP-BACK — a fast flick that DECELERATES (the accel OPPOSES the velocity)
-        // kicks the existing mood click-pulse so the body springs toward the pointer.
-        // The fold is additive; useBlobPointer's swirl/trail baseline is untouched.
+        // BI.W-FIELD-CORE — feed the shared pointer-velocity field from THIS frame callback
+        // (NO own rAF — the createCanvasLifecycle one-loop discipline). THE DOUBLE-SMOOTH IS
+        // DEAD: the field reads the RAW pointer ([-1,1] → [0,1]) ONCE (not the already-smoothed
+        // `pointer.pointer` spring output — feeding a pre-smoothed signal into the field's
+        // own smoother was the compound-lag "not smooth" complaint). The blob's own body
+        // spring reads the same raw target (parallel, not serial), so no lag compounds. The
+        // engagement envelope tracks the SDF hit-test `active`. `tick(0)` under PRM/pause
+        // freezes it. We READ BOTH derivative axes (velocity AND acceleration — the accel ask):
+        // the iOS-27 GEL SNAP-BACK kicks the mood click-pulse so the body springs toward the
+        // pointer on a fast decelerating flick.
+        pointerField.setActive(pointer.active.value);
         if (tempo > 0 && pointer.active.value) {
-            const p = pointer.pointer.value;
-            pointerField.setPointer(p.x * 0.5 + 0.5, p.y * 0.5 + 0.5);
+            const raw = pointer.rawPointer();
+            pointerField.setPointer(raw.x * 0.5 + 0.5, raw.y * 0.5 + 0.5);
         }
         pointerField.tick(tempo === 0 ? 0 : dtMs);
         const accel = pointerField.acceleration.value;
@@ -305,10 +339,19 @@ export function useMetaballRenderer(
      * phase / auto-mood horizon so the loop re-arms on the scheduler, never by polling.
      */
     function shouldContinue(): boolean {
+        // The engine's OWN quiescence — the SINGLE predicate. The public `settled` seam
+        // (BI.W-BLOB-SEAMS) and the demand-loop park decision read this ONE expression,
+        // so the consumer-visible seam can never drift from the loop's own belief (the
+        // U3 single-signal discipline). `quiescent` is `true` IFF the mood is settled,
+        // the pointer is at rest, AND no satellite is mid-transition (isQuiescent is
+        // false for any phase !== "orbiting", so a mid-FISSIONING beat holds it live —
+        // zero-in-flight-fission-beat by construction). Written before the `paused`
+        // short-circuit so the seam reflects the real physics state even while paused.
+        const quiescent =
+            mood.isSettled() && pointer.isAtRest() && satellites.isQuiescent();
+        settled.value = quiescent;
         if (paused) return false;
-        const live =
-            !mood.isSettled() || !pointer.isAtRest() || !satellites.isQuiescent();
-        if (live) {
+        if (!quiescent) {
             clearWakeTimer();
             return true;
         }
@@ -333,9 +376,12 @@ export function useMetaballRenderer(
     function start(canvas: HTMLCanvasElement) {
         canvasHandle = createGpuSubstrate(canvas, {
             dprPolicy: blobDprPolicy,
-            // BG.W-VIZ-REVEAL-BLOOM — the one-shot cold-first-VISIBLE entrance bloom (the
-            // reveal targets the CANVAS; the wrapper's resting drop-shadow is untouched).
-            revealBloom: true,
+            // BI.W-E10-AURORA-ENTRANCE (value.js T-60) — the reveal-bloom door (twin of
+            // the aurora runtime's). DEFAULT ON: the blob keeps a materialize entrance,
+            // but the `substrate-reveal-bloom` keyframe is now PALETTE-HONEST (no
+            // brightness<1/saturate<1 veil over the chromatic field — viz-reveal.css).
+            // A consumer opts out via `revealBloom: false`.
+            revealBloom: options.revealBloom ?? true,
             contextAttrs: {
                 alpha: true,
                 premultipliedAlpha: true,
@@ -432,5 +478,10 @@ export function useMetaballRenderer(
         // already-running loop is a no-op; a wake on a parked-at-rest loop re-arms
         // it so the first hover repaints same-frame.
         wake: () => canvasHandle?.wake(),
+        // BI.W-BLOB-SEAMS — the read-only quiescence seam (see the interface doc). A
+        // plain ref widened to `Readonly<Ref<boolean>>` so the consumer observes
+        // `.value` but the type forbids writing it (the single writer is
+        // `shouldContinue`, the U3 single-signal discipline).
+        settled,
     };
 }

@@ -186,6 +186,17 @@ export interface BlobColor {
     brightnessShift: number;
     colorNoiseFreq: number;
     colorNoiseSpeed: number;
+    /**
+     * BI.W-BLOB-SEAMS (GAP-L5 / value.js D8) — the OKLab-L ink FLOOR the derived
+     * palette's deepest (body) stop is clamped to, so a seed-derived hero body never
+     * collapses toward an illegible near-black. A CONFIG atom (the consumer/HERO sets
+     * it; the palette derivation reads it via `deriveBlobPalette`'s `lightnessFloor`
+     * param). Bracket-bounded `[0.12, 0.20]` OKLab L — see `LIGHTNESS_FLOOR_BRACKET` /
+     * `clampLightnessFloor` (`./presets`); default 0.15. This does NOT affect the bare
+     * default paint (its `paletteStops` are pre-baked CSS strings) — it is the floor a
+     * consumer DERIVING a palette off `config.color.lightnessFloor` applies.
+     */
+    lightnessFloor?: number;
 }
 
 /** The lit-glass surface — Blinn-Phong glint + Fresnel rim + iridescence/SSS/core-glow. */
@@ -415,6 +426,10 @@ export const BLOB_CONFIG_DEFAULTS: BlobConfig = {
         brightnessShift: 0.0,
         colorNoiseFreq: 2.0,
         colorNoiseSpeed: 0.05,
+        // BI.W-BLOB-SEAMS — the derived-palette ink floor (mid-bracket [0.12,0.20]). The
+        // pre-baked default `paletteStops` above are unaffected; this is the floor a
+        // consumer deriving off this config applies (byte-identical default paint).
+        lightnessFloor: 0.15,
     },
 
     surface: {

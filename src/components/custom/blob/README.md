@@ -316,6 +316,16 @@ roundness, satellites tucked, the lit dome kept — a deliberate poster, not a r
   (mood settled, pointer at rest, trail collapsed, click pulse zero, no satellite mid-merge) PARKS its
   rAF and re-arms only when the next satellite phase or auto-mood arc is due. An idle ambient blob
   renders ~0 frames between phase transitions instead of burning a full 60fps forever.
+- **The `settled` seam — park YOUR own idle logic only from settled (BI.W-BLOB-SEAMS).** The renderer
+  handle (and the `<Blob>` template ref via `defineExpose`) exposes `settled: Readonly<Ref<boolean>>`
+  — `true` IFF the engine is at rest: mood settled **AND** pointer at rest **AND** no satellite
+  mid-transition (merging/absorbed/emerging/**fissioning** — zero in-flight fission beat). It is
+  derived from the SAME predicate the demand loop reads to park (no parallel busy-flag — the
+  single-signal discipline). A consumer that arms/parks its OWN idle timer around the blob (a hero that
+  pauses at N seconds of quiet) MUST gate that park on `settled`: a fixed idle timeout (e.g. 2.7s) can
+  land MID-FISSION-BEAT (one beat is ~5.2s), freezing the hero mid-split. Read `settled` and park only
+  when it is `true` — the engine already knows when it is truly at rest, so consult it rather than
+  guessing a wall-clock idle threshold.
 - **The substrate parks aggressively** — offscreen (intersection + `content-visibility`),
   tab-backgrounded (`document.hidden`), and under `prefers-reduced-motion` (one static frame then
   park). An off-screen or hidden blob attaches zero frames; you pay only for visible, in-motion blobs.
