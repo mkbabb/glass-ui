@@ -3,6 +3,7 @@ import { useTemplateRef } from "vue";
 import { type ConstellationProps } from "./constellationField";
 import { useConstellation } from "./composables/useConstellation";
 import { DEFAULT_PARALLAX } from "./constants";
+import { useRoutePointer } from "../../../composables/motion/useRoutePointer";
 import { cn } from "../../../utils/cn";
 
 /**
@@ -57,12 +58,29 @@ const props = withDefaults(defineProps<ConstellationProps>(), {
     accentEdges: false,
     pinnedDrift: false,
     warpAutoRelease: false,
+    backgroundInteractive: false,
 });
 
 const hostRef = useTemplateRef<HTMLElement>("hostRef");
 const canvasRef = useTemplateRef<HTMLCanvasElement>("canvasRef");
 
-const expose = useConstellation(props, hostRef, canvasRef);
+// BI.W-CONSTELLATION-DEDUPE — the interactive-BACKGROUND standard (the FourierField
+// pattern). A full-bleed `pointer-events:none` background cannot listen for its own
+// pointer, so it reads the route chassis's ONE window broadcaster (provided by the route
+// chassis — `StoryHero`) and feeds a SUBTLE well over the shared field. The broadcaster is
+// reused when an ancestor already provided one (one listener per route). The route read is
+// built ONLY for a background (`backgroundInteractive`); a foreground demo owns its own host
+// listeners, so it stays undefined there and the field is host-driven as before.
+const route = useRoutePointer();
+const routePointer = props.backgroundInteractive
+    ? () => ({
+          x: route.pointer.value.x,
+          y: route.pointer.value.y,
+          active: route.active.value,
+      })
+    : undefined;
+
+const expose = useConstellation(props, hostRef, canvasRef, { routePointer });
 defineExpose(expose);
 </script>
 

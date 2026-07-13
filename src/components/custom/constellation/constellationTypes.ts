@@ -420,6 +420,19 @@ export interface ConstellationProps {
      * path (`freeze || reducedMotion` is the single static-frame predicate).
      */
     freeze?: boolean;
+    /**
+     * The interactive-BACKGROUND feed (BI.W-CONSTELLATION-DEDUPE). A full-bleed
+     * `pointer-events:none` background constellation cannot listen for its own
+     * pointer, so it reads the route chassis's ONE window pointer broadcaster
+     * (`useRoutePointer`, provided by the route chassis) and feeds a SUBTLE pointer
+     * WELL — the attractor/engagement over the shared field, projected by
+     * `constellationWellMapping` and applied by the KEPT per-node well integrator
+     * (`constellationWell.ts`, byte-frozen — the pointer feeds it, it does not
+     * replace it). The background influence is subtle (~2–6%, longer half-life);
+     * the canvas STAYS `pointer-events:none` (the broadcaster is the source). Default
+     * OFF — a foreground demo owns its own host listeners; only a background sets this.
+     */
+    backgroundInteractive?: boolean;
     class?: string;
     /** The skin seam — paints the consumer's focal mark on the live field. */
     drawOverlay?: (

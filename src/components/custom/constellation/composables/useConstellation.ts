@@ -12,9 +12,20 @@
 // parallax. The expose shape (field/warpTo/holdWellAt/releaseWell/warpSettled/pinNode/
 // isFrozen) is UNCHANGED — the migration is purely a substrate swap.
 
-import { computed, getCurrentInstance, onMounted, onUnmounted, ref, type Ref } from "vue";
+import {
+    computed,
+    getCurrentInstance,
+    onMounted,
+    onUnmounted,
+    ref,
+    type Ref,
+} from "vue";
 import { mulberry32, hashString } from "../../../../utils/prng";
 import { usePointerVelocityField } from "../../../../composables/motion/usePointerVelocityField";
+import {
+    constellationWellMapping,
+    snapshotField,
+} from "../../../../composables/motion/pointerFieldMappings";
 import {
     createGpuSubstrate,
     type GpuBackend,
@@ -40,13 +51,13 @@ import {
     warpSettled as warpSettledField,
     fireBurst,
 } from "../constellationInteraction";
-import { readPalette, kVisOf, parseColorRGBA, DEFAULT_PALETTE } from "../constellationRender";
 import {
-    DEFAULT_PARALLAX,
-    DEFAULT_LINE_WIDTH,
-    E_MAX,
-    MAX_NODES,
-} from "../constants";
+    readPalette,
+    kVisOf,
+    parseColorRGBA,
+    DEFAULT_PALETTE,
+} from "../constellationRender";
+import { DEFAULT_PARALLAX, DEFAULT_LINE_WIDTH, E_MAX, MAX_NODES } from "../constants";
 import { createConstellationField } from "./createConstellationField";
 import type {
     ConstellationRenderState,
@@ -54,7 +65,49 @@ import type {
 } from "./constellationWGPUSetup";
 import { createConstellationWGPUSetup } from "./constellationWGPUSetup";
 import { createConstellationGLSetup } from "./constellationGLSetup";
-import type { PackedNode, PackedEdge, ConstellationUniformValues } from "./uniformBridgeWGPU";
+import type {
+    PackedNode,
+    PackedEdge,
+    ConstellationUniformValues,
+} from "./uniformBridgeWGPU";
+
+/** The route-pointer read a background constellation feeds its own field from. */
+export interface ConstellationRoutePointerRead {
+    /** Viewport-normalized route pointer (0..1). */
+    x: number;
+    y: number;
+    /** True while a live pointer is over the viewport (and not PRM/paused-silenced). */
+    active: boolean;
+}
+
+/** The optional composable seams (BI.W-CONSTELLATION-DEDUPE — the interactive-bg feed). */
+export interface UseConstellationOptions {
+    /**
+     * The interactive-BACKGROUND feed. When provided, the constellation reads the route
+     * chassis broadcaster each frame and drives a SUBTLE pointer WELL over the KEPT
+     * per-node integrator via `constellationWellMapping` (a longer-half-life field, so
+     * the background lean is ~2–6%, not the foreground gravity-well pull). Undefined for
+     * a foreground demo (which owns its own host listeners). Passed by `Constellation.vue`
+     * off the `backgroundInteractive` prop.
+     */
+    routePointer?: () => ConstellationRoutePointerRead | null;
+}
+
+// BI.W-CONSTELLATION-DEDUPE — the SUBTLE background well register. The route feed reuses
+// the SAME well integrator (`constellationWell.ts`, byte-frozen) but at a gentler gain +
+// wider reach than the foreground `gravityWell` (DEFAULT_WELL_CONFIG gain 19000 / reach 340),
+// and the well target is engagement-scaled (never a full held-pull), so the whole field
+// leans a SUBTLE fraction toward the route pointer rather than being sucked into it. These
+// values are the background register the π at W-REFLECT3 tunes.
+const ROUTE_WELL_OVERRIDE = {
+    gain: 5200,
+    reach: 480,
+    maxSpeed: 1.6,
+    soften: 24,
+    ramp: 4.0,
+} as const;
+/** The engagement→well-target cap — the subtle-background strength ceiling (never 1). */
+const ROUTE_WELL_STRENGTH = 0.5;
 
 /** The imperative seam the SFC re-exposes via `defineExpose`. */
 export interface ConstellationExpose {
@@ -73,7 +126,11 @@ export function useConstellation(
     props: ConstellationProps,
     hostRef: Ref<HTMLElement | null>,
     canvasRef: Ref<HTMLCanvasElement | null>,
+    options: UseConstellationOptions = {},
 ): ConstellationExpose {
+    // BI.W-CONSTELLATION-DEDUPE — the interactive-BACKGROUND feed (the route broadcaster
+    // read). Present ONLY for a full-bleed `pointer-events:none` background.
+    const routePointer = options.routePointer;
     // Mount-once reads — the field seed (count/speed), the link reach, the interaction-mode
     // flags, and the seed. The defaults are filled by the SFC `withDefaults`.
     const count = Math.min(props.count ?? 64, MAX_NODES);
@@ -83,7 +140,11 @@ export function useConstellation(
     const seed = props.seed;
     const warpOnClick = props.warpOnClick ?? false;
     const wander = props.wander ?? false;
-    const gravityWell = props.gravityWell ?? false;
+    // A background feed materializes a SUBTLE well (the route-register override) even
+    // without an explicit `gravityWell` prop, so the field can lean toward the route
+    // pointer over the KEPT integrator. An explicit `gravityWell` still wins.
+    const gravityWell =
+        props.gravityWell || (routePointer ? { ...ROUTE_WELL_OVERRIDE } : false);
     const pinned = props.pinned ?? false;
     const pinnedDrift = props.pinnedDrift ?? false;
     const warpAutoRelease = props.warpAutoRelease ?? false;
@@ -125,9 +186,20 @@ export function useConstellation(
 
     // The shared pointer-physics field (NO own rAF — fed by the renderer frame via the
     // resolveFrame `tick`). Velocity drives the §6 lean; acceleration → the flick burst.
-    const pointerField = usePointerVelocityField({
-        respectReducedMotion: true,
-    });
+    // A BACKGROUND feed runs a LONGER engagement half-life + a weightier attractor so the
+    // route-driven well lean is subtle + lagging (the interactive-background register); a
+    // foreground lattice keeps the snappy defaults.
+    const pointerField = usePointerVelocityField(
+        routePointer
+            ? {
+                  respectReducedMotion: true,
+                  halfLifeMs: 600,
+                  mass: 1.3,
+                  damping: 0.9,
+                  attractorResponse: 0.5,
+              }
+            : { respectReducedMotion: true },
+    );
 
     // The backend handle (resolved after armAsync — "webgpu" where supported, else the
     // WebGL2 instanced twin).
@@ -281,9 +353,45 @@ export function useConstellation(
                 field.well.y = -1;
             }
 
+            // BI.W-CONSTELLATION-DEDUPE — the interactive-BACKGROUND feed. A full-bleed
+            // `pointer-events:none` background cannot receive its own pointer events, so it
+            // reads the route chassis broadcaster and feeds the SAME shared field (NO second
+            // listener, NO own rAF). The viewport-normalized route pointer is re-projected
+            // into THIS canvas's local box (correct for both a full-bleed hero and a boxed
+            // page), gating `active` to an in-canvas pointer.
+            if (routePointer && !isStatic) {
+                const rp = routePointer();
+                let inside = false;
+                if (rp && rp.active && typeof window !== "undefined") {
+                    const rect = canvas.getBoundingClientRect();
+                    if (rect.width > 0 && rect.height > 0) {
+                        const nx = (rp.x * window.innerWidth - rect.left) / rect.width;
+                        const ny = (rp.y * window.innerHeight - rect.top) / rect.height;
+                        inside = nx >= 0 && nx <= 1 && ny >= 0 && ny <= 1;
+                        if (inside) pointerField.setPointer(nx, ny);
+                    }
+                }
+                pointerField.setActive(inside);
+            }
+
             // Advance the shared pointer field (the no-own-rAF discipline) — tick(0) under
             // PRM/static (the deterministic freeze; no live velocity).
             pointerField.tick(isStatic ? 0 : deltaMs);
+
+            // BI.W-CONSTELLATION-DEDUPE — drive the SUBTLE well over the KEPT per-node
+            // integrator (constellationWell.ts, byte-frozen) from the field snapshot via the
+            // pure `constellationWellMapping`. The well centre rides the smoothed attractor
+            // (canvas-local px); the well target is the engagement envelope capped at
+            // `ROUTE_WELL_STRENGTH` (never a full held-pull) — so the whole field leans a
+            // subtle fraction toward the route pointer. `stepWell` (inside `stepField`) reads
+            // `field.well.{x,y,target}`; this only writes them (the integrator is untouched).
+            // The static case is already zeroed by the `isStatic && field.well` reset above.
+            if (routePointer && field.well && !isStatic) {
+                const wellMap = constellationWellMapping(snapshotField(pointerField));
+                field.well.x = wellMap.x * w;
+                field.well.y = wellMap.y * h;
+                field.well.target = wellMap.engagement * ROUTE_WELL_STRENGTH;
+            }
 
             const pointerReactive = props.pointerReactive ?? true;
             const opacityCeiling = props.opacityCeiling ?? 1;
@@ -305,7 +413,16 @@ export function useConstellation(
             }
 
             if (!isStatic) {
-                stepField(field, k, speed, livePointer, dt, nowMs, rng.value, pointerVel);
+                stepField(
+                    field,
+                    k,
+                    speed,
+                    livePointer,
+                    dt,
+                    nowMs,
+                    rng.value,
+                    pointerVel,
+                );
             }
 
             // ── Resolve the uniforms (the ONE color source — readPalette JS-side) ──
@@ -355,7 +472,8 @@ export function useConstellation(
                     : field.focalIndex
                 : -1;
             const edges = buildEdges(field, link, accentIndex, E_MAX);
-            if (pointerReactive && !isStatic) appendPointerWeb(edges, field, link, pointer, E_MAX);
+            if (pointerReactive && !isStatic)
+                appendPointerWeb(edges, field, link, pointer, E_MAX);
             // map edge endpoints into backing-store px (parallax not applied to edges — the
             // hairlines connect the BASE node graph; node parallax is a sub-perceptual depth).
             const edgeRows: PackedEdge[] = [];

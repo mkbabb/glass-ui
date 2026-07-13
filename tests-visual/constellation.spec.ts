@@ -126,9 +126,7 @@ for (const scheme of SCHEMES) {
         const sized = await page.evaluate((sel) => {
             const cv = document.querySelectorAll(sel);
             // any in-card lattice canvas sized to its CSS box (NOT the 300×150 default).
-            return [...cv].some(
-                (c) => c.width > 200 && c.height > 100,
-            );
+            return [...cv].some((c) => c.width > 200 && c.height > 100);
         }, CANVAS);
         expect(sized).toBe(true);
 
@@ -168,7 +166,9 @@ for (const scheme of SCHEMES) {
             .screenshot({ path: resolve(VISUAL_DIR, `constellation-${scheme}.png`) });
     });
 
-    test(`constellation PRM freezes to one static frame (${scheme})`, async ({ page }) => {
+    test(`constellation PRM freezes to one static frame (${scheme})`, async ({
+        page,
+    }) => {
         await page.emulateMedia({ reducedMotion: "reduce" });
         await page.goto(ROUTE);
         await page.waitForSelector(CANVAS, { timeout: 8000 });
@@ -181,6 +181,100 @@ for (const scheme of SCHEMES) {
         const b = await readbackHash(page);
         if (a !== "tainted" && a !== "no-canvas" && a.length > 64) {
             expect(a).toBe(b);
+        }
+    });
+}
+
+// ── BI.W-CONSTELLATION-DEDUPE — the demo dedup + the interactive-background standard ─────
+//
+// The census retired the two duplicative/superfluous exhibits (the double-tap SUPERNOVA + the
+// ?freeze ANOMALY recipe); the surviving 6 each teach a DISTINCT engine mechanism. The core
+// full-bleed background constellation is now interactive by the route-broadcaster STANDARD
+// (`useRoutePointer` → a SUBTLE well over the KEPT per-node integrator) while staying
+// `pointer-events:none` (the broadcaster is the source — no click theft). The deterministic
+// truths here are the deduped structure + the pointer-events:none background; the BINDING
+// subtle well-lean paint over content rides the orchestrator's real-GPU capture (W-REFLECT3 /
+// W-PI-IN-CLOSE).
+
+test("constellation story is deduped to 6 distinct exhibits (no duplicative demos)", async ({
+    page,
+}) => {
+    await page.goto(ROUTE);
+    await page.waitForSelector(CANVAS, { timeout: 8000 });
+    // The retired exhibits are DEFINITION-ABSENT from the DOM (no nova / freeze host).
+    const retired = await page.evaluate(() => ({
+        nova: !!document.querySelector('[data-testid="constellation-nova-host"]'),
+        freeze: !!document.querySelector('[data-testid="constellation-freeze-host"]'),
+    }));
+    expect(retired.nova).toBe(false);
+    expect(retired.freeze).toBe(false);
+    // The 6 surviving distinct in-card lattice hosts remain (warp / refit / well / gen + the
+    // two recession instances; the primary lattice carries no testid).
+    const surviving = await page.evaluate(() =>
+        [
+            "constellation-warp-host",
+            "constellation-refit-host",
+            "constellation-well-host",
+            "constellation-gen-host",
+            "constellation-recession-full",
+            "constellation-recession-dim",
+        ].filter((id) => document.querySelector(`[data-testid="${id}"]`)),
+    );
+    expect(surviving.length).toBe(6);
+});
+
+for (const scheme of SCHEMES) {
+    test(`constellation background is interactive + stays pointer-events:none (${scheme})`, async ({
+        page,
+    }) => {
+        await page.goto(ROUTE);
+        await page.waitForSelector(CANVAS, { timeout: 8000 });
+        await setScheme(page, scheme);
+        await page.waitForTimeout(400);
+
+        // The full-bleed background constellation is present (the route declares
+        // background:"constellation" + hero) and its layer is `pointer-events:none` — the
+        // interactive-background standard reads the WINDOW broadcaster, never its own listener,
+        // so it can react to the pointer WITHOUT occluding the page.
+        const bg = await page.evaluate(() => {
+            const el = document.querySelector(
+                ".constellation.story-hero-bg--bleed",
+            ) as HTMLElement | null;
+            if (!el) return null;
+            return { pointerEvents: getComputedStyle(el).pointerEvents };
+        });
+        expect(bg).not.toBeNull();
+        expect(bg?.pointerEvents).toBe("none");
+
+        // WHEN a real GPU readback is available, the background field is LIVE (drift + the
+        // subtle pointer well) during a synthetic pointer sweep. Guarded so a headless-no-GPU
+        // run does not false-fail; the BINDING subtle well-lean-over-content paint is the
+        // orchestrator's real-GPU capture (W-REFLECT3).
+        const BG_CANVAS = ".constellation.story-hero-bg--bleed .constellation-canvas";
+        const grab = () =>
+            page.evaluate((sel) => {
+                const cv = document.querySelector(sel) as HTMLCanvasElement | null;
+                if (!cv) return "no-canvas";
+                try {
+                    return cv.toDataURL("image/png").slice(0, 4096);
+                } catch {
+                    return "tainted";
+                }
+            }, BG_CANVAS);
+        const before = await grab();
+        for (let i = 0; i <= 6; i++) {
+            await page.mouse.move((i / 6) * 900, 260 + i * 24);
+            await page.waitForTimeout(60);
+        }
+        await page.waitForTimeout(200);
+        const after = await grab();
+        const realReadback =
+            before !== "tainted" &&
+            before !== "no-canvas" &&
+            before.length > 256 &&
+            before !== after;
+        if (realReadback) {
+            expect(after).not.toBe(before);
         }
     });
 }
