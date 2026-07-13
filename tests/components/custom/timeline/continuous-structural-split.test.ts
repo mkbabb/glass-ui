@@ -2,7 +2,9 @@ import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
 
 import GlassTimeline from "@glass/components/custom/timeline/GlassTimeline.vue";
-import HoverPopover from "@glass/components/custom/hover-popover/HoverPopover.vue";
+// BI.W-OVERLAY-UNION — HoverPopover folded onto the sealed <Popover trigger="hover">
+// union; the markers wrap each dot in the survivor, same update:open cadence.
+import { Popover } from "@glass/components/ui/popover";
 import type { TimelineSegment } from "@glass/components/custom/timeline/types";
 
 /**
@@ -148,8 +150,8 @@ describe("GlassTimeline continuous — Option C structural split", () => {
         expect(track.attributes("aria-valuenow")).toBe("1.4");
     });
 
-    it("emits hover/hoverEnd via the HoverPopover bare-fallback path", async () => {
-        // The default continuous variant wraps each dot in HoverPopover so
+    it("emits hover/hoverEnd via the popover bare-fallback path", async () => {
+        // The default continuous variant wraps each dot in <Popover trigger="hover"> so
         // the popover's `update:open` cadence drives the hover events (the
         // pointer-skim flicker fix). The bare-fallback path (popover
         // disabled) still uses raw mouseenter/mouseleave so popover-disabled
@@ -180,9 +182,9 @@ describe("GlassTimeline continuous — Option C structural split", () => {
         expect(leavePayload.key).toBe("upload");
     });
 
-    it("emits hover/hoverEnd via the HoverPopover update:open path (default popover enabled)", async () => {
+    it("emits hover/hoverEnd via the Popover update:open path (default popover enabled)", async () => {
         // N-2 coverage gap — the W10 ContinuousMarkers split consumes
-        // HoverPopover via `@update:open` (the listen-only uncontrolled
+        // <Popover trigger="hover"> via `@update:open` (the listen-only uncontrolled
         // defineModel cadence). With the popover ENABLED (default — no
         // `disablePopover`), the dot is wrapped in HoverPopover and the
         // popover's debounced open-state is the authoritative hover signal:
@@ -198,17 +200,17 @@ describe("GlassTimeline continuous — Option C structural split", () => {
             },
         });
 
-        // One HoverPopover per segment when the popover is enabled (proves
+        // One Popover per segment when the popover is enabled (proves
         // the default path wraps each dot — not the bare-button fallback).
-        const popovers = wrapper.findAllComponents(HoverPopover);
+        const popovers = wrapper.findAllComponents(Popover);
         expect(popovers).toHaveLength(segments.length);
 
         // The marker whose trigger button labels the "upload" segment.
         const uploadIdx = segments.findIndex((s) => s.key === "upload");
         const uploadPopover = popovers[uploadIdx]!;
 
-        // Drive the popover's open-state model — the same signal reka-ui's
-        // HoverCard emits after its hoverOpenDelay/closeDelay debounce. This
+        // Drive the popover's open-state model — the same signal the union's
+        // HoverCardRoot branch emits after its open/close-delay debounce. This
         // exercises the real `@update:open → markers emit → orchestrator
         // re-emit` chain without depending on reka's pointer/timer machinery.
         uploadPopover.vm.$emit("update:open", true);
@@ -233,11 +235,11 @@ describe("GlassTimeline continuous — Option C structural split", () => {
         expect(leavePayload.key).toBe("upload");
     });
 
-    it("disablePopover=true skips the HoverPopover wrap (bare button fallback)", () => {
+    it("disablePopover=true skips the Popover wrap (bare button fallback)", () => {
         const wrapper = mount(GlassTimeline, {
             props: { variant: "continuous", segments, disablePopover: true },
         });
-        // The HoverPopover root wouldn't render a `.timeline-popover` content
+        // The Popover root wouldn't render a `.timeline-popover` content
         // class in the trigger tree (the popover content is portaled). The
         // bare-fallback path still renders the buttons.
         const dots = wrapper.findAll("button.continuous-dot");

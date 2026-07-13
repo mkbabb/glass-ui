@@ -29,6 +29,13 @@
 </template>
 
 <script setup lang="ts">
+// <IconTooltip> — a Tooltip PRESET (BI.W-OVERLAY-UNION disposition). The overlay
+// Kronecker fold collapsed HoverPopover + HoverCard onto the sealed `<Popover>`;
+// Tooltip SURVIVES the fold as a genuinely distinct mechanism (aria-describedby
+// naming, role="tooltip", the SR mirror, non-focusable content). IconTooltip is
+// its canonical preset — the auto-provider `icon + display-text` shape — NOT its
+// own overlay root. It composes the Tooltip family verbatim (Tooltip root
+// unchanged); no bespoke trigger/timer/portal lives here.
 import {
     Tooltip,
     TooltipContent,

@@ -26,8 +26,8 @@ import {
     DockBackgroundToggle,
 } from "@glass/components/custom/dock";
 import { Slider } from "@glass/components/ui/slider";
-import { HoverPopover } from "@glass/components/custom/hover-popover";
-import { Popover, PopoverContent } from "@glass/components/ui/popover";
+// BI.W-OVERLAY-UNION — HoverPopover folded onto <Popover trigger="hover">.
+import { Popover, PopoverContent, PopoverTrigger } from "@glass/components/ui/popover";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -280,10 +280,10 @@ function togglePlay() {
 
         <StorySection heading="With popover triggers" gap="md">
             <p class="text-sm text-muted-foreground">
-                <code class="rounded bg-muted px-1">HoverPopover keep-dock-open</code>
-                pins the parent dock open while the popover is visible. reka-ui's
-                HoverCard primitives handle hover-trigger, defer-on-leave, and adaptive
-                side/align collision avoidance.
+                <code class="rounded bg-muted px-1">Popover trigger="hover" keep-dock-open</code>
+                pins the parent dock open while the popover is visible. The
+                fine-hover branch (reka's HoverCardRoot) handles hover-trigger,
+                defer-on-leave, and adaptive side/align collision avoidance.
             </p>
             <div
                 class="dock-stage-tile flex justify-center rounded-[var(--radius-card)] border border-border/30 p-8"
@@ -291,14 +291,14 @@ function togglePlay() {
                 <GlassDock always-expanded>
                     <DockControl aria-label="New"><Plus /></DockControl>
 
-                    <HoverPopover side="bottom" align="center" keep-dock-open>
-                        <template #trigger>
+                    <Popover trigger="hover" keep-dock-open>
+                        <PopoverTrigger as-child>
                             <DockControl aria-label="Share">
                                 <Share2 />
                             </DockControl>
-                        </template>
-                        <template #content>
-                            <div class="flex min-w-44 flex-col gap-1 p-1">
+                        </PopoverTrigger>
+                        <PopoverContent role="card" side="bottom" align="center" class="w-auto p-1">
+                            <div class="flex min-w-44 flex-col gap-1">
                                 <p
                                     class="px-2 py-1 text-[10px] uppercase tracking-wider text-muted-foreground"
                                 >
@@ -320,17 +320,17 @@ function togglePlay() {
                                     Embed
                                 </button>
                             </div>
-                        </template>
-                    </HoverPopover>
+                        </PopoverContent>
+                    </Popover>
 
-                    <HoverPopover side="bottom" align="end" keep-dock-open>
-                        <template #trigger>
+                    <Popover trigger="hover" keep-dock-open>
+                        <PopoverTrigger as-child>
                             <DockControl aria-label="Export">
                                 <Download />
                             </DockControl>
-                        </template>
-                        <template #content>
-                            <div class="flex min-w-44 flex-col gap-1 p-1">
+                        </PopoverTrigger>
+                        <PopoverContent role="card" side="bottom" align="end" class="w-auto p-1">
+                            <div class="flex min-w-44 flex-col gap-1">
                                 <p
                                     class="px-2 py-1 text-[10px] uppercase tracking-wider text-muted-foreground"
                                 >
@@ -352,22 +352,22 @@ function togglePlay() {
                                     PDF
                                 </button>
                             </div>
-                        </template>
-                    </HoverPopover>
+                        </PopoverContent>
+                    </Popover>
 
                     <DockSeparator />
 
-                    <HoverPopover side="bottom" align="center" keep-dock-open>
-                        <template #trigger>
+                    <Popover trigger="hover" keep-dock-open>
+                        <PopoverTrigger as-child>
                             <DockControl aria-label="Track">
                                 <span class="flex items-center gap-1">
                                     <span class="text-xs">Track</span>
                                     <ChevronDown class="h-3 w-3 opacity-60" />
                                 </span>
                             </DockControl>
-                        </template>
-                        <template #content>
-                            <div class="flex min-w-44 flex-col gap-1 p-1">
+                        </PopoverTrigger>
+                        <PopoverContent role="card" side="bottom" align="center" class="w-auto p-1">
+                            <div class="flex min-w-44 flex-col gap-1">
                                 <button
                                     v-for="t in tracks"
                                     :key="t"
@@ -380,8 +380,8 @@ function togglePlay() {
                                     {{ t }}
                                 </button>
                             </div>
-                        </template>
-                    </HoverPopover>
+                        </PopoverContent>
+                    </Popover>
                 </GlassDock>
             </div>
         </StorySection>
@@ -501,7 +501,7 @@ function togglePlay() {
                 teleport contract — the same contract the
                 <code class="rounded bg-muted px-1">DockTrigger</code> /
                 <code class="rounded bg-muted px-1">DockTrigger</code> /
-                <code class="rounded bg-muted px-1">HoverPopover keep-dock-open</code>
+                <code class="rounded bg-muted px-1">Popover trigger="hover" keep-dock-open</code>
                 sections above already ride. This is Apple's navigation-layer /
                 no-glass-on-glass rule made structural: glass floats only in the
                 navigation/overlay band and never nests in glass (stacked blur muddies,

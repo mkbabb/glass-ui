@@ -1,6 +1,11 @@
 <script setup lang="ts">
+// BI.W-OVERLAY-UNION — the retired <HoverPopover> folds onto the sealed
+// <Popover trigger="hover"> union (the Kronecker fold: 3 overlays → 1). This
+// story demonstrates the HOVER trigger arm of the ONE Popover — the fine-hover
+// branch is reka's HoverCardRoot (hover-open + defer-on-leave timers), promoted
+// to tap-toggle on coarse pointers.
 import StoryPage from "../../chassis/page/StoryPage.vue";
-import { HoverPopover } from "@glass/components/custom/hover-popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@glass/components/ui/popover";
 import { IconChip } from "@glass/components/custom/icon-chip";
 import { Button } from "@glass/components/ui/button";
 import { Settings, ArrowLeft, RotateCcw, Square, MousePointer2 } from "@lucide/vue";
@@ -24,11 +29,11 @@ const CONTAINERS_STOP = 2;
             <IconChip :icon="MousePointer2" :section="CONTAINERS_STOP" bloom reveal />
             <div class="flex flex-col gap-1">
                 <span class="section-label--tinted text-admin-label">
-                    Containers · Hover popover
+                    Containers · Popover (hover trigger)
                 </span>
                 <p class="text-small text-muted-foreground">
-                    Hover-open popovers with keep-open delay — the container
-                    identity is the ONE color event.
+                    The sealed Popover under <code>trigger="hover"</code> — one
+                    primitive, the container identity is the ONE color event.
                 </p>
             </div>
         </header>
@@ -36,101 +41,99 @@ const CONTAINERS_STOP = 2;
         <section class="flex flex-col gap-3">
             <p class="section-label">label · sides</p>
             <div class="flex flex-wrap items-center gap-6">
-                <HoverPopover content="Settings" side="top">
-                    <Button variant="ghost" iconOnly>
-                        <Settings class="size-5" />
-                    </Button>
-                </HoverPopover>
-                <HoverPopover content="Back" side="bottom">
-                    <Button variant="ghost" iconOnly>
-                        <ArrowLeft class="size-5" />
-                    </Button>
-                </HoverPopover>
-                <HoverPopover content="Retake" side="right">
-                    <Button variant="ghost" iconOnly>
-                        <RotateCcw class="size-5" />
-                    </Button>
-                </HoverPopover>
-                <HoverPopover content="Stop" side="left">
-                    <Button variant="ghost" iconOnly>
-                        <Square class="size-5" />
-                    </Button>
-                </HoverPopover>
+                <Popover trigger="hover">
+                    <PopoverTrigger as-child>
+                        <Button variant="ghost" iconOnly>
+                            <Settings class="size-5" />
+                        </Button>
+                    </PopoverTrigger>
+                    <PopoverContent role="card" side="top" :side-offset="6" class="w-auto">
+                        Settings
+                    </PopoverContent>
+                </Popover>
+                <Popover trigger="hover">
+                    <PopoverTrigger as-child>
+                        <Button variant="ghost" iconOnly>
+                            <ArrowLeft class="size-5" />
+                        </Button>
+                    </PopoverTrigger>
+                    <PopoverContent role="card" side="bottom" :side-offset="6" class="w-auto">
+                        Back
+                    </PopoverContent>
+                </Popover>
+                <Popover trigger="hover">
+                    <PopoverTrigger as-child>
+                        <Button variant="ghost" iconOnly>
+                            <RotateCcw class="size-5" />
+                        </Button>
+                    </PopoverTrigger>
+                    <PopoverContent role="card" side="right" :side-offset="6" class="w-auto">
+                        Retake
+                    </PopoverContent>
+                </Popover>
+                <Popover trigger="hover">
+                    <PopoverTrigger as-child>
+                        <Button variant="ghost" iconOnly>
+                            <Square class="size-5" />
+                        </Button>
+                    </PopoverTrigger>
+                    <PopoverContent role="card" side="left" :side-offset="6" class="w-auto">
+                        Stop
+                    </PopoverContent>
+                </Popover>
             </div>
             <p class="text-mono-caption text-muted-foreground">
                 Hover-triggered floating label. The four sides above auto-flip
                 if the trigger sits near a viewport edge — reka-ui's
                 collisionAvoidance picks the next-best side without consumer
                 wiring. Defer-on-leave keeps the panel through cluster gaps
-                (~150ms close timer).
+                (the <code>closeDelay</code> timer).
             </p>
         </section>
 
         <section class="flex flex-col gap-3">
             <p class="section-label">richer slot · two lines + kbd</p>
-            <HoverPopover side="bottom" align="start">
-                <Button variant="outline">Save document</Button>
-                <template #content>
+            <Popover trigger="hover">
+                <PopoverTrigger as-child>
+                    <Button variant="outline">Save document</Button>
+                </PopoverTrigger>
+                <PopoverContent role="card" side="bottom" align="start" class="w-auto">
                     <div class="flex flex-col gap-1">
                         <span>Save the current document</span>
                         <span class="text-mono-caption text-muted-foreground">⌘ S</span>
                     </div>
-                </template>
-            </HoverPopover>
+                </PopoverContent>
+            </Popover>
         </section>
 
         <section class="flex flex-col gap-3">
-            <p class="section-label">align variants</p>
-            <div class="flex flex-wrap gap-6">
-                <HoverPopover content="aligned start" side="top" align="start">
-                    <Button variant="outline">align=start</Button>
-                </HoverPopover>
-                <HoverPopover content="aligned center" side="top" align="center">
-                    <Button variant="outline">align=center</Button>
-                </HoverPopover>
-                <HoverPopover content="aligned end" side="top" align="end">
-                    <Button variant="outline">align=end</Button>
-                </HoverPopover>
-            </div>
-        </section>
-
-        <section class="flex flex-col gap-3">
-            <p class="section-label">hover-open-delay · nested cadence</p>
+            <p class="section-label">open-delay · nested cadence</p>
             <div class="flex flex-wrap items-center gap-6">
-                <HoverPopover content="default · 250ms" side="top">
-                    <Button variant="outline">default</Button>
-                </HoverPopover>
-                <HoverPopover content="snappy · 80ms" side="top" :hover-open-delay="80">
-                    <Button variant="outline">snappy</Button>
-                </HoverPopover>
-                <HoverPopover content="deferred · 500ms" side="top" :hover-open-delay="500">
-                    <Button variant="outline">deferred</Button>
-                </HoverPopover>
+                <Popover trigger="hover">
+                    <PopoverTrigger as-child>
+                        <Button variant="outline">default · 250ms</Button>
+                    </PopoverTrigger>
+                    <PopoverContent role="card" side="top" class="w-auto">default</PopoverContent>
+                </Popover>
+                <Popover trigger="hover" :open-delay="80">
+                    <PopoverTrigger as-child>
+                        <Button variant="outline">snappy · 80ms</Button>
+                    </PopoverTrigger>
+                    <PopoverContent role="card" side="top" class="w-auto">snappy</PopoverContent>
+                </Popover>
+                <Popover trigger="hover" :open-delay="500">
+                    <PopoverTrigger as-child>
+                        <Button variant="outline">deferred · 500ms</Button>
+                    </PopoverTrigger>
+                    <PopoverContent role="card" side="top" class="w-auto">deferred</PopoverContent>
+                </Popover>
             </div>
             <p class="text-mono-caption text-muted-foreground">
-                <code class="rounded bg-muted px-1">hoverOpenDelay</code> tunes
-                the open-defer timer. Snappy reads support cluster-tier hover
-                affordances; deferred reads suit deeper-nested popovers where
-                the longer wait avoids accidental fire on transit.
-            </p>
-        </section>
-
-        <section class="flex flex-col gap-3">
-            <p class="section-label">native interestfor opt-in</p>
-            <div class="flex flex-wrap gap-6">
-                <HoverPopover :native="true" content="Native interestfor tooltip">
-                    <Button variant="outline">Native hover</Button>
-                </HoverPopover>
-                <HoverPopover content="reka-ui HoverCard (default)">
-                    <Button variant="outline">Default hover</Button>
-                </HoverPopover>
-            </div>
-            <p class="text-mono-caption text-muted-foreground">
-                <code class="rounded bg-muted px-1">:native</code> renders the
-                trigger with the native interestfor attribute and a hint popover
-                where the browser supports interest invokers; otherwise it falls
-                straight through to the reka-ui HoverCard default — no behaviour
-                change.
+                <code class="rounded bg-muted px-1">openDelay</code> tunes the
+                open-defer timer (renamed from the retired
+                <code>hoverOpenDelay</code>). Snappy reads support cluster-tier
+                hover affordances; deferred reads suit deeper-nested popovers
+                where the longer wait avoids accidental fire on transit.
             </p>
         </section>
     </StoryPage>

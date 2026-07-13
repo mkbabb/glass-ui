@@ -136,7 +136,8 @@ const rootContractFiles = [
     // The cherry-picked custom/ packages on the root barrel.
     "src/components/custom/instrument-chassis/index.ts",
     "src/components/custom/instrument-rail/index.ts",
-    "src/components/custom/hover-popover/index.ts",
+    // BI.W-OVERLAY-UNION — hover-popover FOLDED onto <Popover trigger="hover">
+    // (off the root barrel; the survivor Popover ships via /popover).
     "src/components/custom/configurator/index.ts",
     "src/components/custom/scrolling-text/index.ts",
     // BA.W-ICON-CHIP — the section-color POP primitive joins the root barrel

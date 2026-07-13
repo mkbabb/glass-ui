@@ -1,11 +1,11 @@
 <script setup lang="ts">
+// BI.W-OVERLAY-UNION — HoverCard folded onto the sealed <Popover trigger="hover">
+// union (the Kronecker fold: 3 overlays → 1). A hover-reveal preview card is the
+// union under trigger="hover" role="card" (role="group" + aria-label). Tooltip
+// SURVIVES the fold as a distinct mechanism (IconTooltip is its preset).
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
-import {
-    HoverCard,
-    HoverCardContent,
-    HoverCardTrigger,
-} from "@glass/components/ui/hover-card";
+import { Popover, PopoverContent, PopoverTrigger } from "@glass/components/ui/popover";
 import { Avatar, AvatarFallback, AvatarImage } from "@glass/components/ui/avatar";
 import { Button } from "@glass/components/ui/button";
 import { IconTooltip } from "@glass/components/custom/icon-tooltip";
@@ -46,16 +46,16 @@ const CONTAINERS_STOP = 2;
                 </p>
                 <p class="text-base">
                     Work by
-                    <HoverCard>
-                        <HoverCardTrigger as-child>
+                    <Popover trigger="hover">
+                        <PopoverTrigger as-child>
                             <button
                                 type="button"
                                 class="font-display underline decoration-dotted underline-offset-4 hover:decoration-solid"
                             >
                                 @joseph-fourier
                             </button>
-                        </HoverCardTrigger>
-                        <HoverCardContent class="w-80">
+                        </PopoverTrigger>
+                        <PopoverContent role="card" aria-label="Fourier profile" class="w-80">
                             <div class="flex gap-4">
                                 <Avatar class="size-12">
                                     <AvatarImage src="" alt="Fourier" />
@@ -74,8 +74,8 @@ const CONTAINERS_STOP = 2;
                                     </p>
                                 </div>
                             </div>
-                        </HoverCardContent>
-                    </HoverCard>
+                        </PopoverContent>
+                    </Popover>
                     on the analytic theory of heat.
                 </p>
             </StorySection>

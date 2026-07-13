@@ -22,9 +22,10 @@ export type DockLayout = "linear" | "grid";
  *    that may render outside a dock (Slider, popovers, …).
  *
  * J.W3.B — `registerPopover` / `closeOtherPopovers` retired. Hover-driven
- * dock popovers compose `<HoverPopover keep-dock-open>` whose open/close
- * cadence is owned by reka-ui's HoverCard primitives; cooperative
- * dismissal between sibling popovers is no longer needed (HoverCard's
+ * dock popovers compose `<Popover trigger="hover" keep-dock-open>` (the
+ * BI.W-OVERLAY-UNION sealed union; the fine-hover branch is reka's
+ * HoverCardRoot). Open/close cadence is owned by reka's hover primitives;
+ * cooperative dismissal between sibling popovers is no longer needed (the
  * pointer-leave timer handles the cluster transit case).
  */
 export interface DockContext {

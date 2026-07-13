@@ -9,17 +9,17 @@ export * from "./checkbox";
 export * from "./collapsible";
 export * from "./combobox";
 export * from "./command";
-export * from "./context-menu";
+// BI.W-MENU-TRIGGER — context-menu folded onto dropdown-menu (`trigger="context"`).
 export * from "./data-table";
 export * from "./dialog";
 export * from "./drawer";
 export * from "./dropdown-menu";
 export * from "./focus-scope";
-export * from "./hover-card";
+// BI.W-OVERLAY-UNION — `./hover-card` RETIRED (folds onto `<Popover trigger="hover">`).
 export * from "./input";
 export * from "./label";
 export * from "./metric-pill";
-export * from "./multi-select";
+// BI.W-MULTISELECT-FOLD — `./multi-select` RETIRED (folds onto `<Combobox multiple>`).
 export * from "./notification";
 export * from "./number-field";
 export * from "./popover";
@@ -28,7 +28,8 @@ export * from "./radio-group";
 export * from "./section";
 export * from "./select";
 export * from "./separator";
-export * from "./sheet";
+// `sheet` RETIRED at BI.W-DIALOG-PLACEMENT — folded onto `<DialogContent placement>`
+// (see src/index.ts for the rationale). Clean break, no alias.
 export * from "./skeleton";
 export * from "./slider";
 export * from "./switch";

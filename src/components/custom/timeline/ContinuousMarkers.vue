@@ -4,7 +4,9 @@
 // and the per-segment render are one tightly-coupled continuous-rail concern
 // (AU.W10 already split the 901-line orchestrator into this + Rail + Timeline).
 // W14 split the ONE over-threshold god-module (DataTable); this stays whole by design.
-import HoverPopover from "../hover-popover/HoverPopover.vue";
+// BI.W-OVERLAY-UNION — the retired HoverPopover folds onto the sealed
+// `<Popover trigger="hover">` union (hover-open timer on the HoverCardRoot branch).
+import { Popover, PopoverContent, PopoverTrigger } from "../../ui/popover";
 import { popoverPayloadFor } from "./geometry";
 import type { TimelineSegment } from "./types";
 
@@ -78,16 +80,14 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
             role="listitem"
             :style="{ left: `${boundaryX(i) * 100}%` }"
         >
-            <HoverPopover
+            <Popover
                 v-if="!disablePopover"
-                side="top"
-                :side-offset="10"
-                :hover-open-delay="120"
+                trigger="hover"
+                :open-delay="120"
                 :close-delay="160"
-                :class="`timeline-popover timeline-popover-${seg.key}`"
-                @update:open="(open) => onPopoverOpenChange(seg, open)"
+                @update:open="(open?: boolean) => onPopoverOpenChange(seg, open ?? false)"
             >
-                <template #trigger>
+                <PopoverTrigger as-child>
                     <button
                         type="button"
                         class="continuous-dot segmented-dot"
@@ -109,8 +109,13 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
                             <path d="M5 13l4 4L19 7" />
                         </svg>
                     </button>
-                </template>
-                <template #content>
+                </PopoverTrigger>
+                <PopoverContent
+                    role="card"
+                    side="top"
+                    :side-offset="10"
+                    :class="`timeline-popover timeline-popover-${seg.key}`"
+                >
                     <slot name="popoverContent" :segment="seg">
                         <!-- Default color-coded body: reads
                              gradient.from as the tint so the
@@ -144,10 +149,10 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
                             </span>
                         </div>
                     </slot>
-                </template>
-            </HoverPopover>
+                </PopoverContent>
+            </Popover>
             <!-- Popover-disabled fallback: bare button, same
-                 contract minus the HoverPopover wrap. -->
+                 contract minus the Popover wrap. -->
             <button
                 v-else
                 type="button"

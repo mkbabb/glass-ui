@@ -6,7 +6,7 @@
 // scroll-region's bottom inset, so route scroll never displaces it). It carries
 // the in-category story tabs (the DockControl (shape="tab") set) PLUS the prev/next +
 // prev/next-category controls that today live only as keyboard shortcuts, AND a
-// mobile-only category trigger hosting the off-canvas SidebarDock in a <Sheet>.
+// mobile-only category trigger hosting the off-canvas SidebarDock in a left-placement <Dialog>.
 //
 // Active-story affordance = the NCSU-red underline/pill + W25 `tap-squish` on
 // press; DockControl (shape="tab") auto-activates its `.is-active` state when the rendered
@@ -29,13 +29,13 @@ import {
     type DockSectionDescriptor,
 } from "@glass/components/custom/dock";
 import {
-    Sheet,
-    SheetContent,
-    SheetDescription,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
-} from "@glass/components/ui/sheet";
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@glass/components/ui/dialog";
 import {
     Tooltip,
     TooltipContent,
@@ -125,15 +125,15 @@ const hasNext = computed(() =>
         >
             <!-- The category trigger is the home-left anchor — it lives in the
                  #persistent region so it stays put as the story tabs scroll. On
-                 the mobile viewport it opens the off-canvas SidebarDock Sheet.
-                 The Sheet primitive owns the open/close + aria-expanded native
+                 the mobile viewport it opens the off-canvas SidebarDock as a
+                 left-placement Dialog. The Dialog primitive owns the open/close + aria-expanded native
                  a11y contract (no hand-bound dock collapse state). -->
             <template #persistent>
-                <Sheet v-model:open="sheetOpen">
+                <Dialog v-model:open="sheetOpen">
                     <TooltipProvider :delay-duration="250">
                         <Tooltip>
                             <TooltipTrigger as-child>
-                                <SheetTrigger as-child>
+                                <DialogTrigger as-child>
                                     <DockControl
                                         type="button"
                                         class="demo-bottom-dock__menu tap-squish"
@@ -141,29 +141,29 @@ const hasNext = computed(() =>
                                     >
                                         <PanelLeft class="h-4 w-4" aria-hidden="true" />
                                     </DockControl>
-                                </SheetTrigger>
+                                </DialogTrigger>
                             </TooltipTrigger>
                             <TooltipContent side="top" :side-offset="10">
                                 Categories
                             </TooltipContent>
                         </Tooltip>
                     </TooltipProvider>
-                    <SheetContent
-                        side="left"
+                    <DialogContent
+                        placement="left"
                         class="demo-bottom-dock__sheet w-fit max-w-[18rem]"
                     >
-                        <SheetHeader class="sr-only">
-                            <SheetTitle>Category navigation</SheetTitle>
-                            <SheetDescription>
+                        <DialogHeader class="sr-only">
+                            <DialogTitle>Category navigation</DialogTitle>
+                            <DialogDescription>
                                 Jump to a story category.
-                            </SheetDescription>
-                        </SheetHeader>
+                            </DialogDescription>
+                        </DialogHeader>
                         <SidebarDock
                             :show-tooltips="false"
                             @navigate="sheetOpen = false"
                         />
-                    </SheetContent>
-                </Sheet>
+                    </DialogContent>
+                </Dialog>
             </template>
 
             <!-- A divider after the home-left category trigger, before the in-category
