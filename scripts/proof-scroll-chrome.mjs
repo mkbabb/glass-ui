@@ -146,7 +146,12 @@ if (!existsSync(resolve(ROOT, FILES.recipe))) {
 const composable = stripComments(read(FILES.composable));
 const coreBarrel = stripComments(read(FILES.coreBarrel));
 const recipe = stripCss(read(FILES.recipe));
-const propertyRegs = read(FILES.propertyRegs);
+// BI.W-STYLE-REDRAIN — --chrome-collapse-t's @property registration was carved into
+// tokens/property-regs-specular.css; read both so REG FOLLOWS the carve into the leaf.
+const propertyRegs =
+    read(FILES.propertyRegs) +
+    "\n" +
+    read(FILES.propertyRegs.replace("property-regs.css", "property-regs-specular.css"));
 
 // ── C1 — exists ONCE on /motion-core + composes the reader, engine-free ───────
 const defined = /export function useScrollChrome\b/.test(composable);

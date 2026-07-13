@@ -46,6 +46,12 @@
    squircle + a11y @supports overrides, which must stay last): */
 @import "./glass/material.css";
 @import "./glass/ladder.css";
+/* BI.W-STYLE-REDRAIN — the .glass-opaque level-0 escape + the content-aware under-shadow
+   modifier carved out of ladder.css's tail to hold the no-god-module 500-line bound; its
+   own @layer components block @import-ed IMMEDIATELY AFTER ladder.css and BEFORE
+   grain-overlay.css (the ladder @layer tail, unique selectors, source-order-after — the
+   dist is byte-isomorphic). */
+@import "./glass/ladder-undershadow.css";
 /* BG.W-CLOSEFIX-9SITE — the glass-tier paper-grain `::after` overlay carved out of
    ladder.css's tail to hold the no-god-module 500-line bound. @import-ed IMMEDIATELY
    AFTER ladder.css and BEFORE accent-tone.css — the SAME @layer components; the grain
@@ -59,6 +65,12 @@
 @import "./glass/accent-tone.css";
 @import "./glass/rim.css";
 @import "./glass/surfaces.css";
+/* BI.W-STYLE-REDRAIN — the .glass-pager-ring pager-pill chassis + the .glass-chromatic
+   edge-dispersion rim fringe carved out of surfaces.css's tail to hold the 500-line
+   bound; its own @layer components block @import-ed IMMEDIATELY AFTER surfaces.css and
+   BEFORE control-surfaces.css (the surfaces @layer tail, unique selectors,
+   source-order-after — the dist is byte-isomorphic). */
+@import "./glass/surfaces-pager.css";
 /* BC.W-CARVE6 — the .input-pill / .control-surface form-control REST register
    carved out of surfaces.css to hold the 500-line bound, @import-ed IMMEDIATELY
    AFTER surfaces.css and BEFORE surface-axis.css (same @layer components, same

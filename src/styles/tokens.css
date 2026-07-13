@@ -49,4 +49,14 @@
 @import "./tokens/scroll-tokens.css";
 @import "./tokens/light-dark.css";
 @import "./tokens/dark-arm.css";
+/* BI.W-STYLE-REDRAIN — the .dark saturate/brightness luminosity-lift companion cohort
+   carved out of dark-arm.css to hold the no-god-module 500-line bound; its own .dark
+   block @import-ed IMMEDIATELY AFTER dark-arm.css (the tokens are the sole .dark
+   writers → cascade-order-invariant, computed values byte-identical). */
+@import "./tokens/dark-arm-glass.css";
 @import "./tokens/property-regs.css";
+/* BI.W-STYLE-REDRAIN — the §11b moving-specular :root/.dark magnitude cohort + the
+   interaction/scroll DRIVE @property registrations carved out of property-regs.css to
+   hold the 500-line bound; @import-ed IMMEDIATELY AFTER it (order-invariant @property
+   registrations + the sole-writer specular :root/.dark cohort → byte-isomorphic). */
+@import "./tokens/property-regs-specular.css";

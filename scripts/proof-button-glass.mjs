@@ -548,9 +548,12 @@ function run() {
         ),
         buttonVue: safeRead(resolve(ROOT, "src/components/ui/button/Button.vue")),
         surfacesCss: safeRead(resolve(ROOT, "src/styles/glass/surfaces.css")),
-        propertyRegsCss: safeRead(
-            resolve(ROOT, "src/styles/tokens/property-regs.css"),
-        ),
+        // BI.W-STYLE-REDRAIN — --glass-btn-press-t's @property registration was carved
+        // into tokens/property-regs-specular.css; read both so B2 FOLLOWS the carve.
+        propertyRegsCss:
+            safeRead(resolve(ROOT, "src/styles/tokens/property-regs.css")) +
+            "\n" +
+            safeRead(resolve(ROOT, "src/styles/tokens/property-regs-specular.css")),
         // BB.W-LENSING — the `@supports`-gated `#glass-refract` filter on the
         // renamed `.glass-lens` class lives here (B4 verifies the gate in its home).
         refractCss: safeRead(resolve(ROOT, "src/styles/glass-refract.css")),

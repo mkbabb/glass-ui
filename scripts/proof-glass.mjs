@@ -2120,7 +2120,12 @@ export function detect() {
     const reversal = darkArmColorReversalViolations(
         readFile(DARK_ARM_FILE),
         readFile(LIGHT_DARK_FILE),
-        readFile(GLASS_SURFACES_FILE),
+        // BI.W-STYLE-REDRAIN — the .dark .glass-pager-ring box-shadow arm (the DA4
+        // positive example) was carved into glass/surfaces-pager.css; read both so DA4
+        // FOLLOWS the carve into the leaf.
+        readFile(GLASS_SURFACES_FILE) +
+            "\n" +
+            readFile(GLASS_SURFACES_FILE.replace("surfaces.css", "surfaces-pager.css")),
     );
     const cornerBackplate = cornerBackplateViolations(
         readFile(TRANSITIONS_FILE),

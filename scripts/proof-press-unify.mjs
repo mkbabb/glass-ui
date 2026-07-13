@@ -202,7 +202,13 @@ if (!(buttonCouplesDrive && buttonCouplesScale)) {
 // The brightness/gleam leg reads the SAME drive (surfaces.css couples the active gleam on
 // --glass-btn-press-t; property-regs.css registers it typed).
 const surfacesStripped = stripComments(read(FILES.surfaces));
-const propRegsStripped = stripComments(read(FILES.propRegs));
+// BI.W-STYLE-REDRAIN — --glass-btn-press-t's @property registration was carved into
+// tokens/property-regs-specular.css; read both so P3 FOLLOWS the carve into the leaf.
+const propRegsStripped = stripComments(
+    read(FILES.propRegs) +
+        "\n" +
+        read(FILES.propRegs.replace("property-regs.css", "property-regs-specular.css")),
+);
 const gleamReadsDrive = /--glass-btn-press-t/.test(surfacesStripped);
 const driveRegistered = /@property\s+--glass-btn-press-t/.test(propRegsStripped);
 if (!gleamReadsDrive) {

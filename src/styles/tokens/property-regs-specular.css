@@ -1,0 +1,160 @@
+/* tokens/property-regs-specular.css
+   §11b the pointer-anchored moving-specular :root/.dark magnitude cohort + the interaction/scroll DRIVE @property registrations (glass-btn-press-t, the completion-seal draws, the native scroll-ramp / chrome-collapse customs).
+   Carved from property-regs.css to hold the no-god-module 500-line bound (BI.W-STYLE-REDRAIN); @import-ed by tokens.css IMMEDIATELY AFTER property-regs.css. Same :root cascade context as its sibling — the @property registrations are order-invariant and the specular-intensity :root/.dark cohort is the sole writer, so the relocation is byte-isomorphic. */
+/* ── The specular-intensity magnitude cohort (AX.W09) ──────────────────────
+   The catch-light alpha multiplier at each interaction state, as a SINGLE
+   overridable token cohort (was three buried literals across glass.css —
+   `0.35` rest floor / `0.6` hover / `0.85` active — and the `.dark` arm's
+   `0.22`). `glass.css`'s `.glass-material::before` rest/hover/active rules READ
+   these, so the subtle-vs-extreme magnitude is a knob a consumer (or the dark
+   arm) retunes ON THE CASCADE — never a re-buried literal. Override on `:root`
+   to retune library-wide; the cartoon-shadow override contract is the precedent.
+
+   Re-baselined AGAIN at AX.W52 D19 — with the central screen-disc replaced by a
+   BOUNDED plus-lighter edge gleam (glass.css), the gleam is a whisper at every
+   rung, so the cohort drops further (the W09 0.22/0.32 ceiling still lifted the
+   whole-tile disc on hover):
+     • rest   0    — static, unwired surfaces are CLEAN; the gleam wakes only on
+                     hover/active or on a pointer-wired surface. Aligns the painted
+                     rest with the @property `--specular-intensity { initial-value:
+                     0 }` dormancy.
+     • hover  0.10 — a whisper edge gleam, not a bloom.
+     • active 0.16 — the press whisper. */
+:root {
+    --glass-specular-intensity-rest: 0;
+    --glass-specular-intensity-hover: 0.1;
+    --glass-specular-intensity-active: 0.16;
+    /* BB.W-BUTTON-GLASS (d) — the BUTTON-SCOPED hover gleam bump. The lit glass
+       button should read a notch brighter at the grazing edge than the global
+       hover whisper (0.10). `.btn-glass` re-points its own
+       `--glass-specular-intensity-hover` to this knob (surfaces.css), so ONLY the
+       button lifts — the global cohort above is UNTOUCHED. A consumer retints the
+       button gleam from this ONE override. */
+    --glass-specular-btn-hover: 0.14;
+}
+
+/* Over the deep canvas `plus-lighter` still lifts, so the dark arm runs a touch
+   softer on the interaction rungs (rest already 0). */
+.dark {
+    --glass-specular-intensity-hover: 0.08;
+    --glass-specular-intensity-active: 0.12;
+    /* The button bump rides a touch softer in dark too (the dark hover is 0.08;
+       the button reads ~0.11, still a notch above the global whisper). */
+    --glass-specular-btn-hover: 0.11;
+}
+
+/* BB.W-BUTTON-GLASS (b)/(e) — the press DRIVE scalar. ONE typed 0..1 custom
+   property Button.vue writes off the `useSpringPress` spring (0 released → 1
+   pressed, with the ~5% overshoot the spring carries). It is the SINGLE drive the
+   press SQUISH (the `useLiquidFlex` reciprocal X/Y deform), the coupled specular/
+   brightness lift, and the optional `.glass-refract` lens-swell all read — the "one
+   drive, the glass deforms under press" read. Registered typed so a `transition`/
+   downstream `calc()` interpolates the VALUE (number), not the text. `inherits:
+   true` so the host-written value reaches the `.glass-material::before` pseudo +
+   the coupled rules. `initial-value: 0` so an unwired/SSR button is the static
+   rest frame (the no-JS CSS `.tap-squish` scale floor still presses). */
+@property --glass-btn-press-t {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+}
+
+/* BC.W-AX-COMPLETION-SEAL — the 4 motion drives of the hero-scale earned-GOLD
+   completion seal (completion-seal.css consumes them). Registered typed so the
+   one-shot draw INTERPOLATES (a bare unregistered var() snaps; the §18 typed-property
+   idiom lets the engine animate the stroke-reveal / settle / glint). The seal is the
+   visual seal of the W-PHASE-PALETTE completion event — its ink reads the earned-gold
+   register; its glint composes the W-AX-METAL-GLOW catch-light. One-shot, PRM-gated,
+   compositor-only.
+
+   • --seal-draw (<percentage>) — the stroke-reveal extent (the stroke-dashoffset wipe
+     drive: 0% undrawn → 100% fully drawn). `inherits: false` (each seal owns its own
+     draw, the per-surface ownership of the specular/border-progress cohort — a sealed
+     parent must not push its draw onto a child seal). `initial-value: 100%` is the
+     SAFE fully-drawn resting seal: on a non-supporting engine (no @property) the seal
+     paints fully drawn, NEVER a blank — the editorial draw-on degrades to the finished
+     mark, never to nothing.
+
+   • --seal-scale (<number>) — the settle scale (the draw-on lands with a small spring
+     overshoot on the seal's own --spring-snappy/--spring-bouncy clock — the SPATIAL
+     leg, W-MOTION-CANON P2 enter-bouncy). `inherits: false` (per-seal). `initial-value:
+     1` is the resting settled scale.
+
+   • --seal-glint (<number>) — the gold catch-light intensity (the one-pass glint that
+     fires once on settle, reading --metal-glow-opacity from W-AX-METAL-GLOW — a glint,
+     not a loop). `inherits: false` (per-seal). `initial-value: 0` so an unwired seal is
+     un-glinting at rest (the calm floor; the glint wakes only on the draw).
+
+   • --seal-ink (<color>) — the seal stroke color. `inherits: true` (the cascading-scalar
+     idiom — a consumer scope re-inks the seal in lockstep with the completion register).
+     The @property `initial-value` MUST be a CONCRETE var-free <color> (the typed-property
+     rule: a registration fallback cannot be a var()), so it is the LITERAL light-gold
+     `oklch(0.751 0.147 84.2)` (scale-paper.css's `--gold` value) — the engine fallback
+     when no cascaded value exists. The RUNTIME cascade default is the TOKEN form the
+     recipe sets: `--seal-ink: var(--phase-complete-color, var(--color-gold))` — the
+     EARNED-gold completion register (Q2: gold is earned at completion, NEVER the running
+     phase spectrum). */
+@property --seal-draw {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 100%;
+}
+
+@property --seal-scale {
+    syntax: "<number>";
+    inherits: false;
+    initial-value: 1;
+}
+
+@property --seal-glint {
+    syntax: "<number>";
+    inherits: false;
+    initial-value: 0;
+}
+
+@property --seal-ink {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: oklch(0.751 0.147 84.2);
+}
+
+/* BC.W-SCROLL-TRIGGER — the native scroll-ramp custom. The continuous 0..1 scroll
+   progress the `useScrollTrigger` reader exposes rides this registered custom on a
+   `supportsScrollTimeline()` engine: a `.scroll-progress`-style recipe writes it via
+   `animation-timeline: scroll(self)` so a consumer's CSS ramp (the BC.W-SCROLL-CHROME
+   shrink/opacity) reads `--scroll-t` with ZERO JS (the dual-path single-writer — the JS
+   `progress` ref attaches NOTHING on a supporting engine). `inherits: true` (the
+   cascading-scalar idiom — a scroll-driven ancestor exposes the ramp to descendant
+   chrome, the `--ui-scale`/`--glass-level` pattern), distinct from the per-element
+   non-inheriting specular/progress cohort. `initial-value: 0` is the safe resting ramp
+   (the unregistered fallback paints it; on a non-supporting engine the JS reader writes
+   `progress.value` and the consumer reads the ref, not this custom). The typed
+   `<number>` lets the engine interpolate the ramp rather than the textual rep (a bare
+   unregistered var() snaps — the `--border-progress-fill`/`--dock-morph-t` precedent). */
+@property --scroll-t {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+}
+
+/* BC.W-SCROLL-CHROME — the floating-chrome COLLAPSE fraction. `--chrome-collapse-t`
+   is the 0..1 collapse scalar `useScrollChrome` ramps off the scroll reader's
+   direction + range (0 = fully expanded, 1 = fully collapsed). The `.scroll-chrome`
+   recipe (scroll-chrome.css) reads it for the COMPOSITOR shrink/quiet ramp:
+   `transform: scale()/translateY()` (the SPATIAL leg), `opacity` (bounded above a
+   never-invisible floor — the NN/g pale-fade trap forbidden), and the shadow LIFT as
+   content scrolls under (Apple "as text scrolls underneath, shadows become more
+   prominent"). It NEVER drives the resting `backdrop-filter` blur (the
+   W-DOCK-SHRINK-BLUR fence — the shrunken bar is crisp glass, not a blurry mess).
+   Registered typed so a bare `var()` INTERPOLATES the ramp rather than snapping (the
+   `--scroll-t`/`--dock-morph-t` precedent); `inherits: true` (the cascading-scalar
+   idiom — a scroll-driven ancestor exposes the collapse to descendant chrome, the
+   `--scroll-t`/`--glass-level` pattern, distinct from the per-element non-inheriting
+   specular cohort). `initial-value: 0` is the PERSISTENT rest (the iOS-27 default — a
+   bare chrome does NOT collapse; the unregistered fallback paints it too, so the
+   recipe is byte-identical to the expanded chrome when unwired). */
+@property --chrome-collapse-t {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+}

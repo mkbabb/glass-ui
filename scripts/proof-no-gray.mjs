@@ -50,7 +50,13 @@ const strip = (s) =>
 
 const tokens = strip(readMonolith(ROOT, "tokens"));
 const colorRadius = strip(read("src/styles/tokens/color-radius.css"));
-const darkArm = strip(read("src/styles/tokens/dark-arm.css"));
+// BI.W-STYLE-REDRAIN — dark-arm.css's .dark saturate/brightness luminosity-lift cohort
+// (the --glass-saturate-*/--glass-blur-* dark rungs) carved into tokens/dark-arm-glass.css;
+// read both so the dock-blur-saturate-lockstep witness FOLLOWS the carve into the leaf
+// (the glass.css+glass-fx.css precedent, same-diff concatenation).
+const darkArm = strip(
+    read("src/styles/tokens/dark-arm.css") + "\n" + read("src/styles/tokens/dark-arm-glass.css"),
+);
 const lightDark = strip(read("src/styles/tokens/light-dark.css"));
 // BG.W-CARTOON-INK-GAMUT — the cartoon-ink recipe lives in tokens/shadow.css; read it
 // directly so the maroon witness reads the LIVE :root pin (the dark arm DRY-collapses

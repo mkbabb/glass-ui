@@ -46,7 +46,13 @@ const tokens = strip(readMonolith(ROOT, "tokens"));
 const glass = strip(readMonolith(ROOT, "glass"));
 // Raw partials for line-anchored / per-file asserts (the dark-arm floor + the light-dark()
 // enhancement arm live in the carved tokens/ partials).
-const darkArm = strip(read("src/styles/tokens/dark-arm.css"));
+// BI.W-STYLE-REDRAIN — dark-arm.css's scope-2 saturate/brightness luminosity-lift cohort
+// (the transmissive --glass-saturate-*/--glass-blur-* dark rungs) carved into
+// tokens/dark-arm-glass.css; read both so the dark-transmissive witness FOLLOWS the carve
+// into the leaf (the glass.css+glass-fx.css precedent, same-diff concatenation).
+const darkArm = strip(
+    read("src/styles/tokens/dark-arm.css") + "\n" + read("src/styles/tokens/dark-arm-glass.css"),
+);
 const lightDark = strip(read("src/styles/tokens/light-dark.css"));
 const colorRadius = strip(read("src/styles/tokens/color-radius.css"));
 const ladder = strip(read("src/styles/glass/ladder.css"));
@@ -149,10 +155,16 @@ function darkArgFromLightDark(src, token) {
 }
 /** A token's value from the `.dark {}` class fallback block. */
 function darkClassValue(src, token) {
-    const block = src.match(/\.dark\s*\{([\s\S]*?)\n\}/);
-    if (!block) return null;
-    const m = block[1].match(new RegExp(`--${token}\\s*:\\s*([^;]+?)\\s*;`));
-    return m ? m[1].trim() : null;
+    // BI.W-STYLE-REDRAIN — search ALL `.dark {}` blocks: dark-arm.css's scope-2
+    // saturate/brightness luminosity-lift cohort was carved into a sibling `.dark`
+    // block in dark-arm-glass.css (concatenated into `darkArm` above), so a token may
+    // live in the second block (the glass-blur-* rungs) — not only the first.
+    const re = new RegExp(`--${token}\\s*:\\s*([^;]+?)\\s*;`);
+    for (const block of src.matchAll(/\.dark\s*\{([\s\S]*?)\n\}/g)) {
+        const m = block[1].match(re);
+        if (m) return m[1].trim();
+    }
+    return null;
 }
 
 // The five glass rung opacities (dark arm — the dark-arm.css block re-declares them).

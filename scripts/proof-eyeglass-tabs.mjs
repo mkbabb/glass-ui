@@ -116,7 +116,7 @@ export function detectLensCompose(sfcRaw, tabsRaw, refractRaw) {
     const violations = [];
     const facts = {};
     const sfc = sfcRaw ?? readFile(SFC);
-    const tabs = stripCss(tabsRaw ?? readFile(TABS_CSS));
+    const tabs = stripCss(tabsRaw ?? (readFile(TABS_CSS) + "\n" + readFile("src/styles/tabs/segmented-tabs-drag.css")));
     const refract = stripCss(refractRaw ?? readFile(REFRACT_CSS));
 
     // The SFC composes `.glass-lens` on the indicator, gated by the eyeglass computed.
@@ -167,7 +167,7 @@ export function detectLensCompose(sfcRaw, tabsRaw, refractRaw) {
 export function detectProudGeometry(tabsRaw) {
     const violations = [];
     const facts = {};
-    const tabs = stripCss(tabsRaw ?? readFile(TABS_CSS));
+    const tabs = stripCss(tabsRaw ?? (readFile(TABS_CSS) + "\n" + readFile("src/styles/tabs/segmented-tabs-drag.css")));
 
     // `--eyeglass-proud` declared as a LENGTH (rem/px), NOT a bare ratio / percentage.
     const proudDecls = [...tabs.matchAll(/--eyeglass-proud:\s*([^;]+);/g)].map((m) => m[1].trim());
@@ -221,7 +221,7 @@ export function detectFrozenKinematics(constantsRaw, scalePaperRaw, tabsRaw) {
     const facts = {};
     const constants = constantsRaw ?? readFile(CONSTANTS);
     const scalePaper = stripCss(scalePaperRaw ?? readFile(SCALE_PAPER));
-    const tabs = stripCss(tabsRaw ?? readFile(TABS_CSS));
+    const tabs = stripCss(tabsRaw ?? (readFile(TABS_CSS) + "\n" + readFile("src/styles/tabs/segmented-tabs-drag.css")));
 
     // The frozen clock: --tab-indicator-duration = var(--spring-snappy-duration).
     facts.tokenDuration =
@@ -283,7 +283,7 @@ export function detectFrozenKinematics(constantsRaw, scalePaperRaw, tabsRaw) {
 export function detectAccentInk(tabsRaw) {
     const violations = [];
     const facts = {};
-    const tabs = stripCss(tabsRaw ?? readFile(TABS_CSS));
+    const tabs = stripCss(tabsRaw ?? (readFile(TABS_CSS) + "\n" + readFile("src/styles/tabs/segmented-tabs-drag.css")));
 
     // The active LABEL stays --foreground (T5) — scan every `.segmented-tab[aria-pressed="true"]`
     // rule that sets `color:` and is NOT the descendant-svg glyph rule.
@@ -340,8 +340,8 @@ export function detectAccentInk(tabsRaw) {
 export function detectHonestDegrade(tabsRaw, tabsRawWithComments) {
     const violations = [];
     const facts = {};
-    const tabs = stripCss(tabsRaw ?? readFile(TABS_CSS));
-    const withComments = tabsRawWithComments ?? readFile(TABS_CSS);
+    const tabs = stripCss(tabsRaw ?? (readFile(TABS_CSS) + "\n" + readFile("src/styles/tabs/segmented-tabs-drag.css")));
+    const withComments = tabsRawWithComments ?? (readFile(TABS_CSS) + "\n" + readFile("src/styles/tabs/segmented-tabs-drag.css"));
 
     // No pre-baked "magnified" image / broken url() FAKES the refraction in segmented-tabs.css
     // — the only lens is the composed shipped class (E2). A hand-authored `url("data:image`

@@ -222,7 +222,12 @@ if (!progressGated)
         `T3: the continuous progress write is not native-timeline-gated (${gatedProgressWrites}/${progressWrites} writes inside a !NATIVE_SCROLL_TIMELINE arm — an unconditional JS ramp write bypasses the dual-path single-writer)`,
     );
 // The @property --scroll-t is registered (<number>, inherits) for the native ramp.
-const propertyRegs = read(FILES.propertyRegs);
+// BI.W-STYLE-REDRAIN — --scroll-t's @property registration was carved into
+// tokens/property-regs-specular.css; read both so T3 FOLLOWS the carve into the leaf.
+const propertyRegs =
+    read(FILES.propertyRegs) +
+    "\n" +
+    read(FILES.propertyRegs.replace("property-regs.css", "property-regs-specular.css"));
 const scrollTReg =
     /@property\s+--scroll-t\s*\{[\s\S]*?syntax:\s*["']<number>["'][\s\S]*?inherits:\s*true/.test(
         propertyRegs,

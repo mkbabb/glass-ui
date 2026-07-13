@@ -201,6 +201,11 @@
 @import "./hover-popover.css";
 @import "./drawer.css";
 @import "./segmented-tabs.css";
+/* BI.W-STYLE-REDRAIN — the SegmentedTabs additive DECORATION tail (the .glass-drag-lift
+   pull affordance + the data-eyeglass iOS-27 loupe register) carved out of
+   segmented-tabs.css to hold the no-god-module 500-line bound; @import-ed IMMEDIATELY
+   AFTER it (unlayered, unique selectors, source-order-after — byte-isomorphic). */
+@import "./tabs/segmented-tabs-drag.css";
 @import "./select.css";
 /* BG.W-SHEET-INSET-ROOT — the overlay-band Sheet structural positioning, precompiled
    (the emission INVERSE): a [data-slot="sheet-content"][data-side] rule so the Sheet's

@@ -96,17 +96,18 @@ audit REDs.
 
 | file | lines | verdict | re-carve |
 |------|-------|---------|----------|
-| src/styles/glass/ladder.css | 510 | OVER | 19.1 BG.W-CUT ∅-drain (proof:no-god-module authority) |
+| src/styles/glass/ladder.css | 452 | OK | BI.W-STYLE-REDRAIN drained (the .glass-opaque escape + content-aware under-shadow modifier → glass/ladder-undershadow.css) |
 | src/styles/dock/shell.css | 524 | OVER | 19.1 BG.W-CUT ∅-drain (proof:no-god-module authority) |
 | src/styles/glass/grain-overlay.css | 79 | OK | — |
 | src/styles/dock/shell-regions.css | 73 | OK | — |
 
-Verdict: RECORDED — two named CSS carve targets (`ladder.css` 510, `shell.css` 524)
-re-grew past 500 during WS3→WS9 and are OVER at HEAD-of-WS12; their re-carve is
-NAMED to the 19.1 ∅-drain close precondition (enforced by `proof:no-god-module`).
-The two G4-carved leaves (`grain-overlay.css`, `shell-regions.css`) hold ≤500. A
-sibling carve that flips either OVER file ≤500 must re-freshen this table (the
-freshness lock).
+Verdict: RECORDED — `ladder.css` (was 510) DRAINED to 452 ≤ 500 at BI.W-STYLE-REDRAIN
+(the .glass-opaque escape + content-aware under-shadow modifier carved into
+`glass/ladder-undershadow.css`); its row re-freshened to OK per the freshness lock
+below. `shell.css` (524) remains OVER at HEAD; its re-carve is NAMED to the B3 D-DOCK
+greenfield ∅-drain close precondition (enforced by `proof:no-god-module`). The two
+G4-carved leaves (`grain-overlay.css`, `shell-regions.css`) hold ≤500. A sibling carve
+that flips an OVER file ≤500 must re-freshen this table (the freshness lock).
 
 ## Close precondition
 

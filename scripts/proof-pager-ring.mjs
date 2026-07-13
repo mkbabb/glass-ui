@@ -128,7 +128,12 @@ export function detect(paths) {
     const violations = [];
     const facts = {};
 
-    const surfacesRaw = read(paths.SURFACES_CSS);
+    // BI.W-STYLE-REDRAIN — the .glass-pager-ring chassis recipe was carved into
+    // glass/surfaces-pager.css; read both so W1 FOLLOWS the carve into the leaf.
+    const surfacesRaw =
+        (read(paths.SURFACES_CSS) ?? "") +
+        "\n" +
+        (read(paths.SURFACES_CSS.replace("surfaces.css", "surfaces-pager.css")) ?? "");
     const pagerDotsRaw = read(paths.PAGER_DOTS_VUE);
     const pagerIndexRaw = read(paths.PAGER_DOTS_INDEX);
     const pagerRaw = read(paths.CAROUSEL_PAGER_VUE);

@@ -1,0 +1,162 @@
+/* tabs/segmented-tabs-drag.css
+   The additive DECORATION tail of the SegmentedTabs grammar: the BB.W-DRAG-MORPH `.glass-drag-lift`/`.glass-drag-grabbable` pull affordance + the BG.W-EYEGLASS-TABS iOS-27 loupe register (data-eyeglass, pill-only).
+   Carved from segmented-tabs.css to hold the no-god-module 500-line bound (BI.W-STYLE-REDRAIN); @import-ed by styles/index.css IMMEDIATELY AFTER segmented-tabs.css. Unlayered (matches segmented-tabs.css) — the tail is additive decoration with unique selectors, so the relocation is byte-isomorphic. */
+/* ════════════════════════════════════════════════════════════════════════
+   BB.W-DRAG-MORPH — the `.glass-drag-lift` decoration (the pull affordance).
+
+   The `useDragMorph` consumer adds this class to the morph element while
+   `dragging` is true (the SegmentedTabs `:draggable` indicator; the
+   DockLayerGroup pull rail). It is the visual "this is grabbable + grabbed"
+   affordance — the GRAB cursor + a sub-perceptual `--glass-specular` catch-light
+   lift + the `will-change: transform` compositor hint that promotes the lozenge
+   to its own layer for the 1:1 follow. It carries NO transform itself (the
+   translate + squish are the primitive's own `translate`/`--stretch` writes, the
+   §6 compositor channels); this class only paints the affordance + the hint.
+
+   The grab cursor sits on the morph element AT REST too (a draggable indicator
+   reads grabbable before the grab), so `.glass-drag-grabbable` marks the rest
+   affordance and `.glass-drag-lift` adds the grabbing state. PRM does not gate
+   the cursor/hint (they are not motion); the lift is a static specular nudge. */
+.glass-drag-grabbable {
+    cursor: grab;
+    touch-action: none;
+}
+
+.glass-drag-lift {
+    cursor: grabbing;
+    /* Promote to its own compositor layer for the 1:1 follow (the translate write
+       is compositor-only; the hint keeps the plate off the main-thread paint). */
+    will-change: transform;
+    /* BD.W-TAB-IOS-CAPSULE C7 — the grabbed-state catch-light COMPOSES the SHARED
+       specular-lift step declared ONCE in glass/glass-capsule.css (the
+       `.glass-capsule-hover:hover, .glass-drag-lift { --glass-specular }` group), NOT
+       a parallel `--glass-specular` fork. This block carries only the grabbing-distinct
+       bits (the grab cursor + the `will-change` hint). */
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   BG.W-EYEGLASS-TABS — the iOS-27 eye-glass loupe register (ADDITIVE, pill-ONLY).
+
+   The SFC flips `data-eyeglass` on the strip host (pill-only, default-off) + composes
+   `.glass-lens` onto the indicator. This block adds the three CSS legs the mode owns
+   (the whole genuinely-new delta is deliberately small — one boolean axis, one geometry
+   token, one stage-frost token, an opt-in glyph-ink seam):
+
+     (1) THE STAGE FROST (signature #7) — the track re-points to a STRONGER frost rung so
+         the pill's `backdrop-filter` lenses a LEGIBLE smooth field (a still-noisy near-
+         sharp aurora reads worse than the reference's clean frosted stage; the nested
+         backdrop-filter compose only reads right when the pill lenses an ALREADY-frosted
+         track output). The default pill track (`.glass-capsule-track`, --glass-blur-quiet)
+         is BYTE-UNTOUCHED off eyeglass; eyeglass re-points it to `--eyeglass-track-blur`
+         (the floating rung). The rule is UNLAYERED (segmented-tabs.css is not @layer'd) so
+         it wins `.glass-capsule-track`'s (@layer components) backdrop-filter by the
+         unlayered-over-@layer cascade rule (the AZ.W-DOCK-RAIL precedent, NOT specificity).
+
+     (2) THE PROUD LOUPE (signature #2) — a STATIC negative outset so the pill spills its
+         crown/base PAST the track, taller than its slot (~1.14×). NOT an animated box
+         dimension (the CONSTANT proud addend rides the booked `size-morph-indicator` inset
+         — `proof:no-layout-animation` holds; no NEW animated dimension). Applied on BOTH
+         position paths (C3): the JS `inset-block` fallback AND the anchor
+         `inset-block-start`/`-end` longhands — so Safari-26 (anchor-primary, where the
+         refraction ALSO degrades away) still gets the proud loupe, not a flat capsule.
+         `--eyeglass-proud` is a LENGTH (a density-scaled rem sibling of --bouncy-track-trim,
+         NEVER a border-radius — the stadium is untouched, T1-safe), re-declared at BOTH
+         breakpoints (AC7). Rest == flight (static); flight adds ONLY the compositor squish.
+
+     (3) THE SELECTED-GLYPH ACCENT INK (signature #6, the CONTRAST-SPLIT) — the selected
+         GLYPH (a graphic, WCAG-1.4.11 3:1) tints via `--tab-selected-ink` on a DESCENDANT
+         `svg` selector (AC4 — NEVER the tab's own `color`, which drives the LABEL and must
+         stay --foreground for the AA 4.5:1 floor / T5). Default no-op: `--tab-selected-ink`
+         unset → the glyph resolves --foreground (byte-identical to a non-eyeglass pill). A
+         consumer sets `--tab-selected-ink: <accent>` to reproduce the cyan-glyph read
+         (presets-in-consumers). The accent RIM + the commit FLOOD ride the shipped
+         `--glass-accent` + `--tab-flood-t` registers (consumer-set, no-op at their
+         transparent/0 defaults). The calm↔busy attenuation rides the STATIC
+         `--glass-backdrop: light|dark` bucket (the shipped floor); the LIVE
+         useGlassBackdropLuminance observer is BOOKED, its animated sample path DEAD on disk
+         (BG.W-GLASS-SIGNAL-TRUTH) — a bare wire would also be dead, so it stays booked
+         (NF-honest — no ≥2-consumer promotion of a dead mechanism).
+
+   HONEST DEGRADE (NO-MASKING-FALLBACK): off `backdrop-filter: url()` engines the whole
+   refraction fails the `.glass-lens` `@supports` gate → the un-gated blur+tint+rim+specular
+   `.glass-capsule` proud loupe paints — a real glass surface making NO loupe claim (the
+   reference itself uses this state over calm backdrops). NO pre-baked "magnified" image, NO
+   broken `url()`, NO drop-and-restore mid-travel. BOOKED successors: the T1 cross-engine
+   clone-loupe (a CSS-duplicable backdrop), the chromatic-aberration RGB-split rim
+   (W-LENSING color-split), the live ambient-observer wire (a fired writer-witness). The
+   spring/clock are FROZEN (`--tab-indicator-duration` = `--spring-snappy-duration`; the
+   size caps stay in their distinct bands — stretch ≤1.2, blob area ≤1.14); the dual-engine
+   60fps frame-series π judges both arms (Chromium refraction + Safari honest capsule) vs
+   the bar60/ kinematics+optics ladder.
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* (1) + (2) declarations — the eyeglass tokens + the stronger STAGE frost. */
+.segmented-tabs[data-eyeglass] {
+    /* The proud-outset geometry — a LENGTH (a density-scaled rem sibling of the trim),
+       NOT a bare ratio, NOT a border-radius. */
+    --eyeglass-proud: 0.3rem;
+    /* The whisper inline proud (LOW cap so adjacent pills never collide; the loop may dial
+       it to zero — the BLOCK proud is the load-bearing signature). */
+    --eyeglass-proud-inline: 0.06rem;
+    /* Signature #7 — the STRONGER stage frost the loupe bends (the floating rung, deeper
+       than the calm quiet track the default pill keeps). */
+    --eyeglass-track-blur: var(--glass-blur-floating);
+    backdrop-filter: var(--eyeglass-track-blur);
+    -webkit-backdrop-filter: var(--eyeglass-track-blur);
+}
+
+@media (min-width: 640px) {
+    .segmented-tabs[data-eyeglass] {
+        /* AC7 — the proud is re-declared at BOTH breakpoints (the density bump), so it
+           never vanishes at desktop; the anchor/JS calc reads var(--bouncy-track-trim)
+           which re-resolves 0.1875rem → 0.25rem here, so the proud holds on both paths. */
+        --eyeglass-proud: 0.36rem;
+    }
+}
+
+/* (2) THE PROUD LOUPE — the JS-measured fallback path (inset-block). The base inset is
+   var(--bouncy-track-trim); subtracting the proud spills the crown/base PAST the track. */
+.segmented-tabs[data-eyeglass] .segmented-indicator--js {
+    inset-block: calc(var(--bouncy-track-trim) - var(--eyeglass-proud));
+}
+
+/* (2) THE PROUD LOUPE — the anchor-primary path (Safari-26 + Chrome). The base longhands
+   tether `anchor(top/bottom) + trim`; subtracting the proud spills proud on BOTH edges.
+   Reading var(--bouncy-track-trim) (not the base hardcoded literal) re-resolves the trim at
+   @640, so ONE rule holds the proud at both breakpoints (C3/AC7). The inline whisper proud
+   spills a hair past the button edges (LOW, collision-safe). */
+@supports (position-anchor: --x) {
+    .segmented-tabs[data-eyeglass] .segmented-indicator--anchor {
+        inset-block-start: calc(anchor(top) + var(--bouncy-track-trim) - var(--eyeglass-proud));
+        inset-block-end: calc(anchor(bottom) + var(--bouncy-track-trim) - var(--eyeglass-proud));
+        inset-inline-start: calc(anchor(left) - var(--eyeglass-proud-inline));
+        inset-inline-end: calc(anchor(right) - var(--eyeglass-proud-inline));
+    }
+}
+
+/* (1) belt-and-suspenders (AC1) — re-assert the FLOATING blur rung on the eyeglass lens.
+   `.glass-lens` (glass-refract.css) paints `--glass-blur-resting url(#…)` inside its own
+   `@supports` gate; on Chromium that is a LIGHTER frost than the capsule floor, and on
+   Safari-26 (which historically returns TRUE for the @supports probe but renders the url()
+   as nothing — WebKit bug 245510) it would leave a wrong lighter rung with NO refraction
+   ("tried and painted nothing"). Re-pointing to `--glass-blur-floating` keeps Chromium a
+   strong loupe AND lands Safari on the honest floating-frost floor. Stays INSIDE the same
+   `@supports` gate (no refraction sits outside it) and reads the shipped BAKED
+   `--glass-refract-filter` (no revived var()-scale-splice — DDR-LENS-BAKE). The webkit
+   longhand keeps the capsule's floating frost (WebKit url() is broken → the honest floor
+   is blur-only). */
+@supports (backdrop-filter: url("#glass-refract")) {
+    .segmented-tabs[data-eyeglass] .segmented-indicator.glass-lens {
+        backdrop-filter: var(--glass-blur-floating) var(--glass-refract-filter);
+    }
+}
+
+/* (3) THE SELECTED-GLYPH ACCENT INK (C7/AC4) — the CONTRAST-SPLIT: the selected GLYPH (a
+   graphic, 3:1) tints via `--tab-selected-ink` on a DESCENDANT svg selector, NEVER the
+   tab's own `color` (which drives the LABEL and must stay --foreground for AA 4.5:1 / T5).
+   Default no-op — `--tab-selected-ink` unset → the glyph resolves --foreground, the SAME
+   ink the tab already inherits. A consumer sets `--tab-selected-ink: var(--glass-accent)`
+   or a `<hue>` to reproduce the reference cyan-glyph read. */
+.segmented-tabs[data-eyeglass] .segmented-tab[aria-pressed="true"] svg {
+    color: var(--tab-selected-ink, var(--foreground));
+}

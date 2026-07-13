@@ -27,6 +27,16 @@
 // baseline is FROZEN at the file's CURRENT count (no silent refill room — a
 // baseline holding a value ABOVE the file's live line count REDs as stale).
 //
+// THE PHANTOM-SUCCESSOR RESOLUTION (BI.W-STYLE-REDRAIN / N2 / FAM-12). The
+// CARVE-SUCCESSOR(<wave-id>) marker is no longer a bare string — its wave-id MUST
+// RESOLVE to a real wave spec on disk at `docs/tranches/<LETTER>/waves/<wave-id>.md`.
+// A carve-successor that names a wave which NEVER landed (a phantom — e.g. the two
+// HEAD rows booking the never-written `BG.W-COHERENCE-CENSUS`) is a drain that self-
+// normalizes the disease the ratchet kills, so the close REDs until the row is DRAINED
+// or re-pointed to its REAL owning wave. This is the FAM-12 phantom-carve-successor
+// class made machine-locked — the `RATCHET_BASELINES == {}` cut precondition's drain
+// chain is now not only NAMED but PROVEN-owned.
+//
 // THE SHADER-LITERAL EXEMPTION (BG.W-GOD-MODULE-STRUCTURAL / FC-B10). The
 // ratchet is LOGIC-only. A `*.{wgsl,glsl,frag,vert}.ts` file is ONE cohesive
 // GPU-program literal string — splitting it into line-count fragments breaks the
@@ -42,7 +52,7 @@
 // with no CARVE-SUCCESSOR marker → RED; a >500 shader literal → EXEMPT (not RED),
 // but a shader path carrying a ratchet row → RED.
 
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { resolve, relative, sep } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
@@ -80,6 +90,30 @@ function carveSuccessorFor(source, path) {
         }
     }
     return null;
+}
+
+/**
+ * BI.W-STYLE-REDRAIN (N2) — the PHANTOM-successor resolution. A LIVE ratchet row's
+ * CARVE-SUCCESSOR(<wave-id>) must resolve to a real wave spec on disk at
+ * `docs/tranches/<LETTER>/waves/<wave-id>.md`. A carve-successor that names a wave
+ * that NEVER landed (the FAM-12 phantom-carve-successor class — e.g. property-regs.css
+ * booking the never-written BG.W-COHERENCE-CENSUS) is a drain that self-normalizes the
+ * disease it kills, so the close REDs until the row is DRAINED or re-pointed to a REAL
+ * owning wave. Returns true iff `<wave-id>.md` exists under some tranche's `waves/` dir.
+ */
+function waveSpecExists(root, waveId) {
+    const tranches = resolve(root, "docs/tranches");
+    let dirs;
+    try {
+        dirs = readdirSync(tranches, { withFileTypes: true });
+    } catch {
+        return false;
+    }
+    for (const d of dirs) {
+        if (!d.isDirectory()) continue;
+        if (existsSync(resolve(tranches, d.name, "waves", `${waveId}.md`))) return true;
+    }
+    return false;
 }
 
 /**
@@ -221,7 +255,16 @@ const RATCHET_BASELINES = {
     // the DRIVER-vs-OBSERVER autoplay seam + the barbell geometry carved into the colocated
     // ui/carousel/composables/useCarouselWorm.ts (the SFC keeps template + style + the refs).
     // Row DELETED in this same diff (the monotonic drain — the file is now ≤ 500).
-    "styles/tokens/property-regs.css": 563, // CARVE-SUCCESSOR(BG.W-COHERENCE-CENSUS): the §18 Houdini @property registrations + §11b moving-specular magnitude cohort — the §18/§11b split seam carves §11b into a sibling :root partial; WS12 (F8) drains before BG.W-CUT.
+    // BI.W-STYLE-REDRAIN DRAINED property-regs.css (563 → 405): the §11b pointer-anchored
+    // moving-specular :root/.dark magnitude cohort + the interaction/scroll DRIVE @property
+    // registrations (--glass-btn-press-t / --seal-* / --scroll-t / --chrome-collapse-t)
+    // carved into a sibling tokens/property-regs-specular.css, @import-ed by tokens.css
+    // IMMEDIATELY AFTER property-regs.css (order-invariant @property registrations + the
+    // sole-writer specular :root/.dark cohort → the dist is byte-isomorphic; read-css-
+    // monoliths tokens.order re-pointed). The PHANTOM CARVE-SUCCESSOR(BG.W-COHERENCE-CENSUS)
+    // — a wave-spec that NEVER landed on disk — is DISCHARGED by the drain (the FAM-12
+    // phantom-carve-successor class). Row DELETED in this same diff (the monotonic drain —
+    // the file is now ≤ 500).
     // BD.W-CUT (no-god-module carve) — scheme-motion.css DRAINED (585 → 359): its
     // §2 EASING block (spring linear() curves + per-spring duration clocks + the
     // goo-morph dwell-flow curves incl. --pager-worm-flow + bezier cores/aliases)
@@ -287,16 +330,18 @@ const RATCHET_BASELINES = {
     // the bound (subpath-set trims), so its stale row is DELETED here (the monotonic drain —
     // a baseline holding a value ABOVE the live count is silent refill room, now closed).
     //
-    // ── THE DRAIN CHAIN made VISIBLE (BG.W-GOD-MODULE-STRUCTURAL / GC-FC8c). The two
-    //    remaining LIVE ratchet rows are the ONLY non-shader over-bound files; each names
-    //    its owning carve-successor wave so `BG.W-CUT`'s `RATCHET_BASELINES == {}` precond
-    //    is an ENUMERATED cut gate (the 3 shader over-bounds are EXEMPT, not booked):
-    //      • styles/tokens/property-regs.css (563) → BG.W-COHERENCE-CENSUS (WS12 re-carve;
-    //        F8) — the §18 registrations / §11b magnitude-cohort split seam.
-    //      • components/custom/aurora/composables/runtime.ts (502) → BG.W-COHERENCE-CENSUS
-    //        (WS12 re-carve; F8) — grew +2 past the bound at BG.W-VIZ-REVEAL-BLOOM (the
-    //        reveal-bloom register); booked at its landed count under the new contract.
-    "components/custom/aurora/composables/runtime.ts": 502, // CARVE-SUCCESSOR(BG.W-COHERENCE-CENSUS): the aurora resolve/render loop; grew +2 at BG.W-VIZ-REVEAL-BLOOM; WS12 (F8) re-carve drains before BG.W-CUT.
+    // ── THE DRAIN CHAIN made VISIBLE (BG.W-GOD-MODULE-STRUCTURAL / GC-FC8c; the N2
+    //    phantom-resolution clause added at BI.W-STYLE-REDRAIN). Every LIVE ratchet row
+    //    names an owning carve-successor wave whose spec RESOLVES on disk (docs/tranches/
+    //    **/waves/<id>.md) — a PHANTOM successor (a drain booked to a wave that never
+    //    landed) REDs the close (the FAM-12 phantom-carve-successor class made machine-
+    //    locked). property-regs.css DRAINED at BI.W-STYLE-REDRAIN (above); the ONE
+    //    remaining LIVE non-shader over-bound row:
+    //      • components/custom/aurora/composables/runtime.ts (502) → BI.W-FIELD-CORE — the
+    //        B5 D-VIZ ONE-field-core wave that drains runtime.ts's dual-path pointer model
+    //        (runtime.ts:200-211,340-410, BI.W-FIELD-CORE §Design); the phantom
+    //        BG.W-COHERENCE-CENSUS re-pointed to the REAL owning wave-spec.
+    "components/custom/aurora/composables/runtime.ts": 502, // CARVE-SUCCESSOR(BI.W-FIELD-CORE): the aurora resolve/render loop; the phantom BG.W-COHERENCE-CENSUS re-pointed to the REAL B5 D-VIZ wave that drains runtime.ts's dual-path (runtime.ts:200-211,340-410).
 };
 
 let _cliPaths = null;
@@ -358,7 +403,7 @@ function lineCount(file) {
  * (for the CARVE-SUCCESSOR marker parse). Returns `{ violations, grandfathered,
  * shaderExempt, warnings }`.
  */
-function detect({ measured, ratchetBaselines, source }) {
+function detect({ measured, ratchetBaselines, source, resolveWave = () => true }) {
     const over = measured.filter((m) => m.lines > HARD_LIMIT);
     const grandfathered = [];
     const shaderExempt = [];
@@ -376,9 +421,17 @@ function detect({ measured, ratchetBaselines, source }) {
             grandfathered.push({ path: display, key: m.path, lines: m.lines, baseline });
             // THE CONTRACT: a live grandfathered baseline REQUIRES a companion
             // CARVE-SUCCESSOR(<wave-id>) marker naming its owning carve wave.
-            if (!carveSuccessorFor(source, m.path)) {
+            const cs = carveSuccessorFor(source, m.path);
+            if (!cs) {
                 violations.push(
                     `the ratchet baseline row for ${display} (${baseline}) carries NO CARVE-SUCCESSOR(<wave-id>) marker — a new/held baseline REQUIRES a companion carve-successor id (the drain chain must name its owning carve wave)`,
+                );
+            } else if (!resolveWave(cs)) {
+                // BI.W-STYLE-REDRAIN (N2) — the carve-successor must RESOLVE to a real
+                // wave spec on disk; a phantom successor (a drain booked to a wave that
+                // never landed) REDs the close (the FAM-12 phantom-carve-successor class).
+                violations.push(
+                    `the ratchet baseline row for ${display} (${baseline}) names carve-successor ${cs} that resolves to NO docs/tranches/**/waves/${cs}.md on disk — a PHANTOM carve-successor (FAM-12: a drain booked to a wave that never landed; re-point it to a REAL owning wave OR drain the row)`,
                 );
             }
         } else if (baseline !== undefined) {
@@ -511,6 +564,29 @@ function selfTest() {
         "may not GROW",
         "a grandfathered file grew past its baseline",
     );
+    // Bite 7 (BI.W-STYLE-REDRAIN, N2) — THE PHANTOM-SUCCESSOR RESOLUTION: a live baseline
+    //   whose carve-successor names NO real wave-spec on disk REDs (the FAM-12 phantom class).
+    sab(
+        {
+            measured: [mk("synthetic/god.ts", 600)],
+            ratchetBaselines: { "synthetic/god.ts": 600 },
+            source: `"synthetic/god.ts": 600, // CARVE-SUCCESSOR(BI.W-DOES-NOT-EXIST)`,
+            resolveWave: () => false,
+        },
+        "PHANTOM carve-successor",
+        "a ratchet row whose carve-successor resolves to no wave-spec on disk",
+    );
+    // Bite 7 (fence) — the SAME row with a RESOLVING carve-successor passes N2.
+    sabNot(
+        {
+            measured: [mk("synthetic/god.ts", 600)],
+            ratchetBaselines: { "synthetic/god.ts": 600 },
+            source: `"synthetic/god.ts": 600, // CARVE-SUCCESSOR(BI.W-REAL)`,
+            resolveWave: () => true,
+        },
+        "PHANTOM carve-successor",
+        "a ratchet row with a resolving carve-successor (fence)",
+    );
     return checks;
 }
 
@@ -545,6 +621,9 @@ function run() {
         measured,
         ratchetBaselines: RATCHET_BASELINES,
         source,
+        // BI.W-STYLE-REDRAIN (N2) — resolve each live carve-successor to its wave spec
+        // on disk; a phantom (never-landed) successor REDs.
+        resolveWave: (id) => waveSpecExists(ROOT, id),
     });
 
     // ── The born-RED self-test (throws if a bite fails to fire). The contract +

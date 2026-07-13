@@ -1,0 +1,61 @@
+/* glass/ladder-undershadow.css
+   The ladder tail: the AX.W54 .glass-opaque level-0 escape + the AV.W15 M4 content-aware under-shadow modifier (.glass-over-text / [data-over-content]).
+   Carved from glass/ladder.css to hold the no-god-module 500-line bound (BI.W-STYLE-REDRAIN); its own @layer components block @import-ed by glass.css IMMEDIATELY AFTER ladder.css (the tail of the ladder @layer, unique selectors, source-order-after — byte-isomorphic). */
+@layer components {
+    /* ── The opaque escape (AX.W54) ───────────────────
+       The level-0 endpoint of the SAME glass machinery — a solid `--card` plate
+       (the opacity seam → 1) with `blur(0)` (the blur seam → 0), routed through
+       the ONE `--glass-level` knob. NOT a parallel solid `background:` recipe:
+       a `.glass-*` surface that ALSO carries `.glass-opaque` keeps its glass edge,
+       rim, and under-shadow (a solid plate with a glass edge, not a bare div), and
+       the @supports fallback + the a11y brackets compose coherently. This is the
+       explicit opt-out from the MAXIMAL glass default (dense data, forced-colors,
+       a consumer that wants a flat surface). */
+    .glass-opaque {
+        --glass-level: 0;
+        /* BA.W-DARK-MATERIAL scope 7 — the opaque escape suppresses the adaptive TINT axis
+           too (not just the opacity/blur level). A solid opaque plate has no translucent
+           backdrop to darken-over, so the self-engage tint is meaningless on it; zeroing the
+           strength keeps the opaque escape bucket-INVARIANT (the unset floor and the bright
+           bucket resolve the SAME solid plate — the byte-identity canary). Without this, the
+           scope-7 unconditional content-tier floor (4%) tinted even the solid plate, breaking
+           the opt-out's "flat surface" contract. */
+        --glass-tint-strength: 0%;
+    }
+
+    /* ── Content-aware under-shadow modifier (AV.W15 M4) ──────────────
+       Apple raises the under-shadow over text (so the glass reads as
+       lifting OFF the text) and drops it over solid light. The modifier
+       is ATTRIBUTE-DRIVEN, no JS: a consumer adds `.glass-over-text`
+       (or `[data-over-content="text"]`) to a text-bearing glass surface to
+       swap it ONE under-shadow rung heavier, or `[data-over-content="solid"]`
+       to lighten it one rung over a solid-light backdrop. It reuses the
+       existing `--glass-under-shadow-{quiet,default,vivid}` rungs (no new
+       shadow value — `vivid` is sufficient over text), redefining only the
+       leading under-shadow layer per tier; the lift stack is untouched.
+
+       The selectors are per-tier so the swap is rung-correct
+       (quiet→default, resting→vivid). `.glass-floating` already sits at the
+       `vivid` ceiling over text, so the heavier variant is a no-op there
+       (the rung saturates) — documented, not an error. */
+    .glass-quiet.glass-over-text,
+    .glass-quiet[data-over-content="text"] {
+        box-shadow: var(--glass-under-shadow-default), var(--glass-shadow-quiet);
+    }
+    .glass-resting.glass-over-text,
+    .glass-resting[data-over-content="text"] {
+        box-shadow: var(--glass-under-shadow-vivid), var(--glass-shadow-resting);
+    }
+
+    /* The inverse — over a solid-light backdrop the under-shadow lightens
+       one rung (the glass need not lift as hard off a flat bright field). */
+    .glass-resting[data-over-content="solid"] {
+        box-shadow: var(--glass-under-shadow-quiet), var(--glass-shadow-resting);
+    }
+    .glass-floating[data-over-content="solid"] {
+        box-shadow:
+            var(--glass-material-rim),
+            var(--glass-under-shadow-default),
+            var(--glass-shadow-floating);
+    }
+}

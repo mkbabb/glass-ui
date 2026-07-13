@@ -81,7 +81,22 @@ export const CSS_MONOLITHS = {
             "scroll-tokens.css",
             "light-dark.css",
             "dark-arm.css",
+            // BI.W-STYLE-REDRAIN — dark-arm.css's .dark saturate/brightness luminosity-
+            // lift companion cohort (the transmissive --glass-saturate-* knobs + the
+            // composed --glass-blur-* rungs + the deep-glass dark arm) carved into
+            // dark-arm-glass.css to hold the 500-line bound, @import-ed IMMEDIATELY AFTER
+            // dark-arm.css (an adjacent .dark{} block; the tokens are the sole .dark
+            // writers so the relocation is cascade-order-invariant — byte-isomorphic).
+            "dark-arm-glass.css",
             "property-regs.css",
+            // BI.W-STYLE-REDRAIN — property-regs.css's §11b pointer-anchored moving-
+            // specular :root/.dark magnitude cohort + the interaction/scroll DRIVE
+            // @property registrations (--glass-btn-press-t / --seal-* / --scroll-t /
+            // --chrome-collapse-t) carved into property-regs-specular.css to hold the
+            // 500-line bound, @import-ed IMMEDIATELY AFTER property-regs.css (order-
+            // invariant @property registrations + the sole-writer specular :root/.dark
+            // cohort — the dist is byte-isomorphic).
+            "property-regs-specular.css",
         ],
     },
     glass: {
@@ -93,6 +108,13 @@ export const CSS_MONOLITHS = {
         order: [
             "material.css",
             "ladder.css",
+            // BI.W-STYLE-REDRAIN — ladder.css's tail (the AX.W54 .glass-opaque level-0
+            // escape + the AV.W15 M4 content-aware under-shadow modifier) carved into
+            // ladder-undershadow.css to hold the 500-line bound, its own @layer
+            // components block @import-ed IMMEDIATELY AFTER ladder.css and BEFORE
+            // grain-overlay.css (the ladder @layer tail, unique selectors, source-order-
+            // after — byte-isomorphic).
+            "ladder-undershadow.css",
             // BG.W-CLOSEFIX-9SITE — ladder.css's glass-tier paper-grain `::after` overlay
             // (the always-present texture + the opacity-only engage + the PRM carve + the
             // `.dark` soft-light arm) carved into grain-overlay.css, an adjacent same-@layer
@@ -114,6 +136,13 @@ export const CSS_MONOLITHS = {
             // relocation is cascade-order-invariant — the dist is byte-isomorphic).
             "rim.css",
             "surfaces.css",
+            // BI.W-STYLE-REDRAIN — surfaces.css's tail (the BA.W-PAGER .glass-pager-ring
+            // pill chassis + its .dark box-shadow arm + the AW.W23 .glass-chromatic edge-
+            // dispersion rim fringe) carved into surfaces-pager.css to hold the 500-line
+            // bound, its own @layer components block @import-ed IMMEDIATELY AFTER
+            // surfaces.css and BEFORE control-surfaces.css (the surfaces @layer tail,
+            // unique selectors, source-order-after — byte-isomorphic).
+            "surfaces-pager.css",
             // BC.W-CARVE6 — the .input-pill / .control-surface form-control REST
             // register carved out of surfaces.css to hold the 500-line bound,
             // @import-ed IMMEDIATELY AFTER surfaces.css (same @layer components,

@@ -469,7 +469,13 @@ function readInputs(P) {
         composable: stripTs(read(P.COMPOSABLE)),
         constants: stripTs(read(P.CONSTANTS)),
         css: stripCss(read(P.CSS)),
-        propertyRegs: stripCss(read(P.PROPERTY_REGS)),
+        // BI.W-STYLE-REDRAIN — the 4 --seal-* @property registrations were carved into
+        // tokens/property-regs-specular.css; read both so CS2 FOLLOWS the carve.
+        propertyRegs: stripCss(
+            read(P.PROPERTY_REGS) +
+                "\n" +
+                read(P.PROPERTY_REGS.replace("property-regs.css", "property-regs-specular.css")),
+        ),
         indexCss: stripCss(read(P.INDEX_CSS)),
         subpath: stripTs(read(P.SUBPATH)),
         apiIndex: stripTs(read(P.API_INDEX)),
