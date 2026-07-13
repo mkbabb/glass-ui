@@ -51,23 +51,38 @@
            The `2.75rem` literal fallback covers a consumer who unsets the token. */
         min-block-size: max(2rem, var(--touch-target, 2.75rem));
 
-        /* The lift transform rides the §6 spring register (`--spring-smooth`); the
+        /* The lift transform rides the §6 spring register (`--spring-smooth`)
+           paired with ITS OWN settle clock `--spring-smooth-duration` (the
+           per-spring-duration doctrine, W-GLASS-CAL Unit 3 / W-TEMPO — NOT the
+           generic `--duration-fast`, which re-timed the spring to a 0.2 s wall
+           clock and dragged a dead sub-pixel tail; BI.W-COMMAND-JITTER R5a). The
            surface props (background) ride the bezier `--ease-standard` via the
-           `.interactive-item` base transition (already declared there). The
-           explicit transform leg here pairs the spring with the lift. */
-        transition: translate var(--duration-fast) var(--spring-smooth);
+           `.interactive-item` base transition (already declared there). */
+        transition: translate var(--spring-smooth-duration) var(--spring-smooth);
         translate: 0 0;
     }
 
     /* Hover / keyboard-focus / reka internal-highlight / sub-trigger-open all
-       reach the SAME glass register (Combobox/Command/Select parity — the CVA
-       routes all three input modes through `data-[highlighted]`). */
+       reach the SAME glass BG register (Combobox/Command/Select parity — the CVA
+       routes all three input modes through `data-[highlighted]`). The TRANSLATE
+       lift is POINTER-ONLY (the rule below): reka sets `[data-highlighted]` for
+       KEYBOARD highlight too, so a lift on the bare `[data-highlighted]` restarts
+       a translate transition on EVERY arrow/keystroke → the command-palette
+       jitter (UF-G8; BI.W-COMMAND-JITTER R5b). Keyboard highlight + focus keep the
+       bg tint + color; only `:hover` lifts. */
     .glass-menu-row:hover:not([data-disabled]),
     .glass-menu-row:focus:not([data-disabled]),
     .glass-menu-row[data-highlighted]:not([data-disabled]),
     .glass-menu-row[data-state="open"]:not([data-disabled]) {
         background: var(--menu-row-bg);
         color: var(--accent-foreground);
+    }
+
+    /* The POINTER-ONLY lift (R5b) — a `:hover`-scoped translate the keyboard
+       highlight/focus never fires, so an arrow keystroke never restarts a lift
+       transition. The pointer still reads the lift on hover; the keyboard reads
+       the bg+color register above with no geometric restart. */
+    .glass-menu-row:hover:not([data-disabled]) {
         translate: 0 var(--menu-row-lift);
     }
 

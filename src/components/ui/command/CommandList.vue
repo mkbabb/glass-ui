@@ -32,6 +32,13 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     :data-surface="props.surface"
     :class="cn(
       'max-h-(--overlay-max-block) overflow-y-auto overflow-x-hidden',
+      // BI.W-COMMAND-JITTER — the classic-scrollbar-platform reflow guard on the
+      // inner scroll port: as rows filter in/out, a classic (non-overlay)
+      // scrollbar appears/disappears and reflows the row width, which the R5b
+      // keyboard-lift decouple would otherwise still leave twitching on
+      // Windows/Linux. `scrollbar-gutter: stable` reserves the gutter so the
+      // width never reflows (a no-op on macOS overlay scrollbars, which measure 0).
+      'scroll-gutter-stable',
       // The glass PLATE is the Command/Dialog host's (the list is an inner
       // scrollable region — no second glass tier); the `:data-surface` binding
       // records the axis so a standalone `<Command surface=…>` reaches the
