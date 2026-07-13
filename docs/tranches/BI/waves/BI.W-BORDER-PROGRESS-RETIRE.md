@@ -85,3 +85,12 @@ differential are the evidence.
 The `proof:consumer-truth` named in §Acceptance is the border-progress 0-consumer + re-entry arm of **`proof:consumer-evidence-true`,
 authored (NEW, born-RED) by BI.W-VIRTUAL-TRUTH** — this wave EXTENDS that gate with its arm; it
 authors no second framework.
+
+## §Inbound acceptance constraints (the 2026-07-12 marking pass)
+
+- The U-F30 mixColors raw-read coupling moves WITH the spectrum-walk to `/color`
+  (BI.W-SCROLL-PROGRESS-RIM owns the watch; this retire must not orphan the coupling marker).
+- Atlas ask #23 (answered in atlas-outbound-2026-07-12-decision-0.md): the successor primitive for
+  the dock scroll-progress affordance is BI.W-SCROLL-PROGRESS-RIM's masked-band rim — this retire's
+  MIGRATION row names it so the atlas dock-progress consume targets the successor, never the
+  retiring component.

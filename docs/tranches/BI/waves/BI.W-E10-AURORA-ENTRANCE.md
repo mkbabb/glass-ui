@@ -103,3 +103,21 @@ fades the whole root atomically from `opacity:0`. GREEN here.
   faithful ground was built but served only the software-raster fall — this promotes it to the entrance
   first frame). The flat-band placeholder retires from the capable path. Terminal.
 - The setting-sun preset (W-AURORA-VIBRANCY) is the reference entrance palette — coordinate, do not re-mint.
+
+## §Inbound acceptance constraints (the 2026-07-12 marking pass — value.js T-60, JOINS UF-E10)
+
+The value.js T-60 forensic (VALUEJS-T-COMMUNIQUE §1.1; measured 4-leg: the bloom stamps at
+t≈224–316ms while the canvas sits at consumer opacity:0, so the visible arrival ALWAYS opens inside
+the dim floor, brightness 0.54–0.83 at the flip) is the SAME defect as UF-E10 — one gray-entrance
+register, not two. This wave therefore ALSO owns the PRODUCER half:
+- **The reveal-bloom consumer door**: `revealBloom` is HARDWIRED true at `aurora/composables/runtime.ts:261`
+  + `goo-blob/composables/useMetaballRenderer.ts:338` — the redesigned entrance must expose the
+  door (opt-out AND/OR arrival-sync) on `AuroraRuntimeOptions` + the blob renderer options.
+- **The palette-honest entrance floor**: the entrance NEVER transits a `saturate<1`/`brightness<1`
+  veil over a chromatic field (`@keyframes substrate-reveal-bloom` from `brightness(0.4) saturate(0.7)`,
+  `src/styles/viz-reveal.css:29-40`, is the condemned form) — first paint is palette-DERIVED
+  (value.js co-signs this as our own UF-E10 law).
+- **Oracle**: the value.js `t60-probe.mjs` 4-leg class (cold+returning × light+dark) — no
+  achromatic/dim stage inside the visible window; runs on OUR π as well as theirs.
+- Cross-link: the blob arms the SAME bloom — the door lands on BOTH runtimes (the wake-order arm,
+  T-communiqué §2.4, is watched by BI.W-BLOB-SEAMS).

@@ -615,3 +615,15 @@ The `ASK-SPEEDTEST[-METRICS]`/`ASK-SCI-REPORT`/`ASK-WORDS` owner-column labels r
 **BI.W-PRECUT-XR-ASKS** (the pre-cut pin-guards + inbound dispositions) and **BI.W-FACTOR-ASKS** /
 **BI.W-DOCK-FOLD** (the fold-migration relays), with the structure-band sibling asks riding
 BI.W-STRUCTURE-RESEQUENCE's S5 IDs. Not W-shaped, out of clause-g scope; mapped here for readers.
+
+## ADDENDUM 5 (2026-07-12 — the execution-time inbound-marking pass)
+
+- Row 314 (VALUEJS-{R,S,T}-ASKS + BLOB-GENESIS + RIDER-AURORA-POINTER, "PARTIAL — B5 + B9-S5"):
+  **RESOLVED by name** — GAP-L5 family → `BI.W-BLOB-SEAMS`; PKT-1/T-45/P1-R3 →
+  `BI.W-XR-PRODUCER-REPAIRS`; T-60 door → `BI.W-E10-AURORA-ENTRANCE` (§Inbound constraints);
+  GAP-L2 + GAP-ARM → `BI.W-AURORA-VIBRANCY` (§Inbound constraints); T-38 → `BI.W-AURORA-VIBRANCY`
+  (already owned); T-52 → `BI.W-DOCK-OVERFLOW` (§Inbound constraints); U-F4 → `BI.W-DOCK-SPINE`
+  (§Inbound constraints); U-F30/U-F77 → `BI.W-SCROLL-PROGRESS-RIM` watch + the roster; goo-blob→blob
+  5-site → `BI.W-BLOB-RENAME-LAND` (roster row 7). PKT-2 → B7 `BI.W-REGISTER-TABLE` acceptance
+  input; PKT-3 → B7 (existing); PKT-4/L9 → DECLINED-TERMINAL (recorded in
+  `BI.W-XR-PRODUCER-REPAIRS` §Dispositions).

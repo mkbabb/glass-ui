@@ -130,3 +130,17 @@ the morph rides the `dockMorphMeasure` ResizeObserver dance, hover plates clip).
   greenfield spine IS the BUILD that ends the re-opening (clipping structurally absent, morph measurement-free,
   the triple identity split). The closing evidence is the Safari-engine gestalt verdict (W-DOCK-DEVICE), not
   a Chromium-only per-mechanism green. Decided-terminal, never re-booked.
+
+## §Inbound acceptance constraints (the 2026-07-12 marking pass — value.js U-F4, A-class)
+
+**U-F4 — the desktop-PRM dock-collapse** (u-formation §2a; the sharpest a11y break their formation
+found; JOINS our U-F2/W-adopt constraint list): under `prefers-reduced-motion: reduce` the
+expanded/always-expanded dock at HEAD resolves `--dock-expand-t = 0` (the frozen morph clock —
+`src/styles/dock/morph.css:70-73`) → a 44px pill with 19/20 controls unreachable, desktop viewport.
+The GREENFIELD SPINE must satisfy: **under PRM the reduced-motion cure is SNAP-TO-END-STATE, never
+freeze-at-start** — the expanded dock resolves its EXPANDED geometry statically (e.g. the PRM arm
+pins the drive scalar to its end state for `.expanded`/`.always-expanded`). WCAG 2.4.3/2.4.7/1.4.13
+class. **Oracle**: under emulated PRM the expanded dock renders full-width with every control
+reachable, desktop viewport, both schemes — verified on REAL GPU (their formation logged 2 headless
+false-reds on this exact surface; a headless assertion alone is distrusted). The demo is EXONERATED
+(producer-only root).

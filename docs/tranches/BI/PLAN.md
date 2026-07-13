@@ -39,7 +39,7 @@ charter; `docs/tranches/BH/spec-structure/` folds in via `waves/BI.W-STRUCTURE-R
    g. **DRAWER_SNAP detent retune A/B** ({0.5,0.74} → the measured-iOS ≈{0.32,0.80}; DRAWER-PERF's
       obligation — reverses a shipped register; capture pair in the spec).
 
-## §1 — The band DAG (91 waves; specs in `waves/BI.W-*.md`)
+## §1 — The band DAG (93 waves; specs in `waves/BI.W-*.md`)
 
 ```
 B0-CUT (13)  ── the cut-blockers + doc truth ─── gates everything
@@ -49,9 +49,9 @@ B0-CUT (13)  ── the cut-blockers + doc truth ─── gates everything
    │
    ├── B2-GLASS + B8-FACTOR (14)   Surface extraction · overlay union · folds · renames · gates
    ├── B3-DOCK (11)         the greenfield (spine→tabs-factor→escape→controls→crossfade→overflow→spring→fold→retires→gates→device)
-   ├── B4-PAGER + B5-VIZ (13)  the worm · carousel · ribbon · deletions · field core · aurora · perf clamps
+   ├── B4-PAGER + B5-VIZ (14)  the worm · carousel · ribbon · deletions · field core · aurora · blob seams · perf clamps
    ├── B6-STORY (9)         schema · kit · codeblock · shrink-hero · tiles · demeta · affordance
-   ├── B8-PRUNES (14)       interaction repairs · a11y · prunes · consumer truth
+   ├── B8-PRUNES (15)       interaction repairs · a11y · prunes · consumer truth · xr producer repairs
    │
    └── B9-STRUCTURE (1→N)  W-STRUCTURE-RESEQUENCE re-scopes the BH 20-wave plan POST-repairs
         └── CLOSE: the full battery + the formation-audit residue + THE CUT (user-gated)
@@ -76,14 +76,14 @@ BEFORE their breaking waves ship (the peer pin-guards in B0 before ANY publish).
   DOCK-SPRING-UNIFY · DOCK-FOLD · DOCK-RETIRES · DOCK-GATE-CULL · DOCK-DEVICE
 - **B4+B5**: PAGER-WORM · PAGER-A11Y · CAROUSEL-REBUILD · PAGER-RETIRES · FOURIER-RIBBON ·
   VIZ-DELETIONS · FIELD-CORE · AURORA-VIBRANCY · CONSTELLATION-DEDUPE · STAGE-FIELD-CLAMP ·
-  AUTH-SHELL-BG · DOCK-LUMA-SHARE · E10-AURORA-ENTRANCE
+  AUTH-SHELL-BG · DOCK-LUMA-SHARE · E10-AURORA-ENTRANCE · BLOB-SEAMS (minted 2026-07-12, the marking pass)
 - **B6**: STORY-SCHEMA · SPECIMEN-FRAME · CODEBLOCK · SHRINK-HERO · LIVE-TILES · DEMETA ·
   AFFORDANCE-REDESIGN · FOLDED-REDIRECTS · SUBSTRATE-INDEX-TILES
 - **B7**: SPRING-PARITY · REGISTER-TABLE · TEMPO · ENTER-EXIT-LANDING · COMMAND-JITTER · DRAWER-PERF ·
   ACCORDION-PRESS · DRAW-IN
 - **B8-PRUNES (band NAME; the wave headers' scheme governs)**: ESC-STACK · DRAG-REATTACH · GRAIN-WIRE · SLIDER-THUMB-NAME · DEMO-SOURCE-SCAN ·
   SPLITCHARS-ARIA · METRICS-DEMO · MATH-PAPER-REMOVE · HERO-DEMOTE · COMPOSITIONS-PRUNE ·
-  SPEEDTEST-ONLY-PAIR · ORPHAN-BINARY-SPLIT · BORDER-PROGRESS-RETIRE · VIRTUAL-TRUTH
+  SPEEDTEST-ONLY-PAIR · ORPHAN-BINARY-SPLIT · BORDER-PROGRESS-RETIRE · VIRTUAL-TRUTH · XR-PRODUCER-REPAIRS (minted 2026-07-12, the marking pass)
 - **B9-STRUCTURE**: STRUCTURE-RESEQUENCE (expands into the renumbered structure waves post-repair)
 
 ## §3 — The convergence record (the design loop, 5 passes + iOS-27 reference)
@@ -150,3 +150,21 @@ band numbering reconciled to NAMES; STRUCTURE-RESEQUENCE's sub-wave refs bound t
 the 16 dangling W-REFLECT refs re-pointed to the gestalt close; AXES-GATES gained the owedBy-resolve
 + FAM-11 residue clauses. Wave count: 91 (the round-4 −1 retire/+1 mint netted 90; the round-6 LEDGER-DETECTOR-HARDEN mint made 91; B0=13, B3=11 — the count annotations reconciled at round-7). Round 5 verifies the fixes
 + is clean-round candidate; the corpus closes on two consecutive clean rounds.
+
+## §9 — The execution-time inbound-marking pass (2026-07-12, user-ordered: "all must be marked and heard")
+
+The user ordered a TOTAL marking of every inbound communiqué (value.js · atlas · sci-report ·
+keyframes.js · BG-era archive). The pass found the formation had routed the value.js T-communiqué
+producer reds WHOLESALE ("B5 + B9-S5", PROMPT-RECAP row 314) without per-ask owners. Cured:
+- MINTED `BI.W-BLOB-SEAMS` (B5 — GAP-L5: settled seam · HERO preset · lightnessFloor · WGSL drain ·
+  rows A–E terminal) + `BI.W-XR-PRODUCER-REPAIRS` (B8 — PKT-1 dist duration clobber · T-45 ladder
+  edge-bleed idiom · P1-R3 slider UA-outline pairing). Wave count 91 → **93**.
+- PATCHED six specs with §Inbound acceptance constraints: E10-AURORA-ENTRANCE (+T-60 producer door +
+  palette-honest floor), AURORA-VIBRANCY (+GAP-L2 atoms door +GAP-ARM replay), DOCK-SPINE (+U-F4
+  PRM snap-to-end, real-GPU oracle), DOCK-OVERFLOW (+T-52 three arms, --dock-pill-h DECIDED-BUILD),
+  SCROLL-PROGRESS-RIM (+U-F30 mixColors-coupling hold/co-migrate), BORDER-PROGRESS-RETIRE (+the
+  successor-naming row for atlas #23).
+- PKT-2 routed to B7 REGISTER-TABLE as an acceptance input; PKT-4/L9 DECLINED-TERMINAL.
+- The marks ledger `docs/tranches/BI/coordination/INBOUND-MARKS.md` + its completeness gate
+  (`proof:inbound-marks`) land with the archive-sweep fold; T-52/T-60/GAP-L2/GAP-L5/PKT-1/T-38/
+  T-45/P1-R3/GAP-ARM/U-F4/U-F30 are thereby each owned BY NAME.

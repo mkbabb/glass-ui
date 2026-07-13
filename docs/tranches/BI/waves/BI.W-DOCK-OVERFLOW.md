@@ -100,3 +100,18 @@ Gate: **`proof:dock-overflow`** (NEW, born-RED at HEAD — NO `scrollIntoView` c
 
 None terminalized here (the `overflow-clip-margin` / clip-era shell retire terminalizes in W-DOCK-RETIRES;
 this wave WIRES the native-scroll replacement so the retire is clean).
+
+## §Inbound acceptance constraints (the 2026-07-12 marking pass — value.js T-52, owner-photographed)
+
+The T-52 arms become acceptance constraints HERE (value.js's own routing: "these arms become
+acceptance constraints on D-DOCK, not a parallel book"):
+- **(a) mask honesty at rest** — when neither fade is active, the dock layer's `mask-image`
+  computes `none`: the 0px-fade `linear-gradient(to right, transparent 0, black 0px, …)` is NOT a
+  no-op (the zero-width transparent stop antialiases the outermost pixel column at BOTH inline
+  edges, shaving flush items' focus-ring arcs). Ref: the HEAD form at `src/styles/dock/overflow.css:86-99`.
+- **(b) an inline safe-inset** on the dock layer ≥ the ring weight (~2–4px) + `scroll-padding` so a
+  flush item renders WHOLE mid-scroll.
+- **(c) `--dock-pill-h` EXPORTED** — DECIDED BUILD (not optional): one authoritative exported rung
+  ends the consumer band-reservation re-derivation drift class (their T-57 cure re-derives it today).
+- **Oracle**: a flush item's focus ring renders whole at rest AND mid-scroll, both edges, both
+  schemes, both engines.

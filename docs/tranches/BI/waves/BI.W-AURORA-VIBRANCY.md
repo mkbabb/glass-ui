@@ -87,3 +87,19 @@ below the vivid band). GREEN here.
 - **wants:aur-prism / aur-reactive / aur-satin** (CHRONIC — the unminted medium books) → RETIRE-verified
   (prism-medium-absent / uShimmer-absent / satin-absent asserts); this wave does NOT re-open them. Terminal.
 - **The interactability claim** is discharged by W-FIELD-CORE, not re-authored here (the one-field-core fence).
+
+## §Inbound acceptance constraints (the 2026-07-12 marking pass — value.js GAP-L2 + GAP-ARM)
+
+- **GAP-L2 — the lightness-scheme variance-atom door** (the OLDEST open aurora red, S→T→U; value.js
+  named THIS wave its natural BI home): `aurora/composables/atoms.ts` exports a `lightnessScheme`/
+  `lBand` door + chroma-adaptive `hueSpread` + cross-stop `chromaVariance` (+ counterpoint option),
+  sized by the T-26 bracket grammar (T-communiqué §3.3: silence ← sage-whisper C≈0.02–0.04 →
+  marigold; both poles named, the point is config). The dark L band **[0.18, 0.42] must be
+  REACHABLE** (at HEAD the dark-scheme field composites L≈0.716 over a 0.404 ground — dark cocoa
+  cards float on a bright salmon field). CONFIG-LEVEL ONLY — the GL shader fence is absolute; this
+  is the atoms table, exactly this wave's register. Oracle: the value.js O-26/O-3 dark-leg probes +
+  our dark-mode π.
+- **GAP-ARM — the cold-load arm-replay**: `useAurora.ts` `armRuntime()` arms then wires a
+  NON-immediate `watch(getCfg, …)` — a config change between deferred construction and arm is
+  silently dropped. One honest `inst.update(getCfg())` after `arm()` (or `immediate: true` with the
+  same semantics). Oracle: config-change-in-window replay observed.

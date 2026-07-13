@@ -32,3 +32,17 @@ to the shared `/color` leaf (its natural home beside `cssToOklch`), preserving t
 boundary; re-point border-progress's internal import to /color (it remains a consumer of the shared
 leaf, still 0 binary consumers of the border-progress PACKAGE — the retire wave stands); the dock rim
 consumes /color directly. This wave OWNS that move; GLASS-TOKEN-PRUNE and BORDER-PROGRESS-RETIRE cite it.
+
+## §Inbound acceptance constraints (the 2026-07-12 marking pass — value.js U-F30 mixColors coupling)
+
+The spectrum-walk this wave PROMOTES to `/color` is the constellation's ONE direct raw-channel
+reader of value.js `mixColors`/`sampleColorRamp` (u-formation §1: `spectrum-walk.ts:22,58,90` reads
+RAW OKLCH channels, tuned to the CURRENT normalized-in/hue-in-turns convention — a value.js
+convention change would silently shift the spectrum with zero born-RED). Constraints:
+- The promoted `/color` home KEEPS the raw-read site SINGULAR + carries the coupling marker comment
+  (the `:30` convention attestation moves with the code) so the U-F77 co-land re-enumeration finds it.
+- HOLD posture: value.js PREFERS the invariant-preserving toString-only fix (raw convention held —
+  no action lands here); IF a convention change ships instead, the spectrum-walk co-migrates in the
+  SAME window (U-F77 ordering) — the roster row (asks-and-consumes §U-F30 watch) is the trigger.
+- Oracle at the value.js cut: the border-progress/scroll-rim spectrum renders byte-identical
+  before/after, OR the co-migration lands in-window.
