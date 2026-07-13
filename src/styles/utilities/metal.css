@@ -11,7 +11,9 @@
        base, light, dark)` band off the bound metal quad, `background-clip: text`.
      • `.metal-{gold,silver,bronze}-border` — the swept metallic RIM (the §N6
        selected-item-border consumer): the SAME `--metal-shimmer-color`-bound
-       gradient on a `border-image`-sliced rim, swept by the SAME keyframe.
+       gradient painted as a MASKED BAND on a `::before` overlay (the house
+       border-ring idiom, BI.W-METAL-RIM-BAND), swept by the SAME keyframe — so the
+       rim FOLLOWS `border-radius` (a `border-image` squared the corners).
      • `.metal-rainbow-rim` — the prismatic gilt-figure / record-badge rim: it
        COMPOSES W-GLASS-ACCENT's `--glass-accent` rim seam (it does NOT re-author
        the rim) by binding the accent channel to a swept rainbow hue.
@@ -105,43 +107,94 @@
         --metal-stop-base: var(--color-bronze);
     }
 
-    /* ── The swept metallic RIM (the §N6 selected-item-border consumer) ───────
-       The SAME `--metal-shimmer-color`-bound gradient applied to a `border-image`
-       slice — a swept metallic RIM, not a text fill. `border-image` reads the same
-       `background`-position-swept gradient (the metal-shimmer-sweep keyframe drives
-       the `background-position`; the `border-image-source` references the SAME
-       gradient via the stop slots), so ONE keyframe drives both registers. The rim
-       sits over the surface's own background (no `background-clip: text`). */
+    /* ── The swept metallic RIM — a MASKED BAND on a dedicated ::before overlay ──
+       (BI.W-METAL-RIM-BAND — the ruling-10 band-on-overlay reform.)
+
+       `border-image` SQUARES the corners on a rounded host (UF-A7 / FAM-4 — the
+       exact defect BorderProgress's masked-conic avoided), so the swept rim is
+       re-expressed as the house border-ring idiom (the in-repo precedent at
+       border-progress.css:55-66): a `--metal-shimmer-color`-bound gradient painted
+       on a `::before` OVERLAY whose `mask-composite: exclude` cuts a border-box
+       fill AGAINST a padding-box fill, leaving ONLY the border band — which FOLLOWS
+       `border-radius` exactly. The band lives on the OVERLAY, never the host
+       (ruling 10): the host's own content/backdrop is untouched (a glass card
+       keeps its interior; the rim hugs its radii — the pass-4b direct-host
+       application was the regression pass-5 re-forms).
+
+       The `metal-shimmer-sweep` keyframe (pure `background-position`, animations.css)
+       rides the ::before band UNCHANGED — ONE keyframe, both registers (text-clip +
+       rim). `border-image` is DELETED (clean break, no alias). */
     .metal-gold-border,
     .metal-silver-border,
     .metal-bronze-border {
         --metal-stop-dark: var(--color-gold-dark);
         --metal-stop-light: var(--color-gold-light);
         --metal-stop-base: var(--color-gold);
-        border: var(--metal-border-width, 2px) solid transparent;
-        border-image: linear-gradient(
+    }
+
+    /* ── The masked-band overlay — MANDATORY @supports gate ──────────────────
+       Without the gate a mask-composite gap engine would paint the gradient as a
+       FULL BOX fill (a real break). With it the rim reads on the genuine band; the
+       `@supports not (…)` fall (below) keeps a solid metal inset ring so the rim
+       still READS (only the travelling sheen is lost — an honest degrade, the
+       primary rim present; NOT a masking fallback). Safari 26 takes this path. */
+    @supports (mask-composite: exclude) {
+        .metal-gold-border,
+        .metal-silver-border,
+        .metal-bronze-border {
+            /* the positioning context the inset:0 overlay resolves against. */
+            position: relative;
+        }
+        .metal-gold-border::before,
+        .metal-silver-border::before,
+        .metal-bronze-border::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            /* the `border` width IS the band thickness the mask cuts out. */
+            border: var(--metal-border-width, 2px) solid transparent;
+            pointer-events: none;
+            /* the swept metal gradient — the SAME --metal-stop-* slots the
+               text-clip metals resolve, off the host's --metal-shimmer-color quad
+               (custom properties inherit onto the ::before). */
+            background: linear-gradient(
                 90deg,
                 var(--metal-stop-dark),
                 var(--metal-stop-light),
                 var(--metal-stop-base),
                 var(--metal-stop-light),
                 var(--metal-stop-dark)
-            )
-            1;
-        /* The sweep rides a backing gradient `background-position` on the same band
-           (the `border-image` slice tracks the host's background extent); the
-           250% size + the position sweep give the rim its travelling sheen. */
-        background-image: linear-gradient(
-            90deg,
-            var(--metal-stop-dark),
-            var(--metal-stop-light),
-            var(--metal-stop-base),
-            var(--metal-stop-light),
-            var(--metal-stop-dark)
-        );
-        background-size: 250% 100%;
-        background-clip: border-box;
+            );
+            background-size: 250% 100%;
+            /* THE RADIUS-FOLLOWING CUT-OUT — paint a border-box fill, EXCLUDE a
+               padding-box fill, leaving only the border band (follows radius; a
+               border-image cannot). The house border-ring idiom. */
+            -webkit-mask:
+                linear-gradient(#fff 0 0) padding-box,
+                linear-gradient(#fff 0 0) border-box;
+            -webkit-mask-composite: xor;
+            mask:
+                linear-gradient(#fff 0 0) padding-box,
+                linear-gradient(#fff 0 0) border-box;
+            mask-composite: exclude;
+        }
     }
+
+    /* ── The honest degrade (metal-base inset ring) ──────────────────────────
+       On a gap engine (no `mask-composite`) the rim paints a SOLID inset ring in
+       the metal's OWN base hue — it follows the host `border-radius` (box-shadow
+       inset does) and still READS as a metal rim; only the travelling sheen is
+       lost. The primary rim is present — this is NOT a masking fallback. */
+    @supports not (mask-composite: exclude) {
+        .metal-gold-border,
+        .metal-silver-border,
+        .metal-bronze-border {
+            box-shadow: inset 0 0 0 var(--metal-border-width, 2px)
+                var(--metal-stop-base);
+        }
+    }
+
     .metal-gold-border {
         --metal-shimmer-color: gold;
         --metal-stop-dark: var(--color-gold-dark);
@@ -202,13 +255,17 @@
        metal READS for PRM users); the `animation:` is the sole thing gated. The
        slow `--duration-metal` (6s) clock — the calm dignified pass. */
     @media (prefers-reduced-motion: no-preference) {
+        /* the text-clip metals + the rainbow rim sweep on the HOST background; the
+           `-border` metals sweep on their `::before` band overlay (BI.W-METAL-RIM-
+           BAND — the band now lives on the overlay, so the sweep does too). ONE
+           keyframe, both registers. */
         .metal-gold,
         .metal-silver,
         .metal-bronze,
-        .metal-gold-border,
-        .metal-silver-border,
-        .metal-bronze-border,
-        .metal-rainbow-rim {
+        .metal-rainbow-rim,
+        .metal-gold-border::before,
+        .metal-silver-border::before,
+        .metal-bronze-border::before {
             animation: metal-shimmer-sweep var(--duration-metal) linear infinite;
         }
     }

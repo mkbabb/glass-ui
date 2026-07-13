@@ -508,6 +508,37 @@ function detect() {
     }
     facts.m7 = m7;
 
+    // ── M8 — the swept RIM follows border-radius (BI.W-METAL-RIM-BAND) ─────────
+    // The vacuous-gate fix (GEO-2/GEO-3): the gate never checked the rim GEOMETRY,
+    // so a `border-image` gradient that SQUARES the corners on a rounded card
+    // greened (UF-A7 / FAM-4). Two geometry asserts, both born-RED at HEAD:
+    //   M8a border-image-ABSENT — no `border-image:` gradient in the swept-rim
+    //       recipe (the corner-squaring mechanism; deleted clean-break, no alias).
+    //   M8b corner-FOLLOWS-radius — the swept rim paints a `mask-composite: exclude`
+    //       masked band on a `.metal-*-border::before` OVERLAY (the BorderProgress
+    //       radius-following idiom) wrapped in an `@supports (mask-composite:
+    //       exclude)` gate with an `@supports not (…)` honest inset-ring fall.
+    const m8 = {};
+    m8.borderImageAbsent = !/border-image\s*:[^;]*gradient/.test(metal);
+    m8.bandOnBeforeOverlay = /\.metal-(?:gold|silver|bronze)-border::before/.test(metal);
+    m8.maskCompositeExclude = /mask-composite\s*:\s*exclude/.test(metal);
+    m8.cornerFollowsRadius = m8.bandOnBeforeOverlay && m8.maskCompositeExclude;
+    m8.supportsGate = /@supports\s*\(\s*mask-composite\s*:\s*exclude/.test(metal);
+    m8.supportsNotFall = /@supports\s+not\s*\(\s*mask-composite\s*:\s*exclude/.test(metal);
+    if (!m8.borderImageAbsent) {
+        violations.push("M8a: a `border-image` gradient survives on the swept metal rim — it SQUARES the corners on a rounded host (UF-A7/FAM-4). The rim must paint as a masked band; border-image is deleted (clean break, no alias)");
+    }
+    if (!m8.cornerFollowsRadius) {
+        violations.push("M8b: the swept metal rim does NOT paint a `mask-composite: exclude` masked band on a `.metal-*-border::before` overlay (the radius-following BorderProgress recipe) — a rim that cannot follow border-radius");
+    }
+    if (!m8.supportsGate) {
+        violations.push("M8b: the masked-band rim is NOT wrapped in an `@supports (mask-composite: exclude)` gate (a gap engine would paint a full-box fill — a real break)");
+    }
+    if (!m8.supportsNotFall) {
+        violations.push("M8b: no `@supports not (mask-composite: exclude)` honest fall (the solid metal inset ring so the rim still reads on a gap engine)");
+    }
+    facts.m8 = m8;
+
     // metal.css is REACHABLE (wired into the utilities @import root).
     const utilRoot = readFileSync(resolve(ROOT, "src/styles/utilities.css"), "utf8");
     facts.metalImported = /@import\s+["']\.\/utilities\/metal\.css["']/.test(utilRoot);
@@ -610,6 +641,23 @@ function selfTest() {
         fails.push("self-test M7e: a fake seal consumer (names --seal-glint but never reads --metal-glow-*) counted as a LIVE reader (the fake-consumer fence has no teeth)");
     }
 
+    // M8a bite — a border-image gradient on the swept rim must be caught (the
+    // squared-corner mechanism; UF-A7/FAM-4).
+    const borderImageRim = ".metal-gold-border { border-image: linear-gradient(90deg, gold, white) 1; }";
+    if (/border-image\s*:[^;]*gradient/.test(borderImageRim) === false) {
+        fails.push("self-test M8a: a border-image gradient on the swept rim was NOT caught (the squared-corner fence has no teeth)");
+    }
+    // M8b bite — the corner-follows-radius signal (::before overlay + mask-composite:
+    // exclude) must be detectable (a border-image cannot follow radius; a masked
+    // band on the overlay does).
+    const maskedBand = ".metal-gold-border::before { mask-composite: exclude; }";
+    const bandDetectable =
+        /\.metal-(?:gold|silver|bronze)-border::before/.test(maskedBand) &&
+        /mask-composite\s*:\s*exclude/.test(maskedBand);
+    if (!bandDetectable) {
+        fails.push("self-test M8b: the ::before masked-band signal was NOT detectable (the corner-follows-radius fence has no teeth)");
+    }
+
     return fails;
 }
 
@@ -652,6 +700,7 @@ function run() {
     console.log(`  M6 CALM (no disco, --duration-metal=${facts.m6.durationMetal}s): ${facts.m6.discoHits.length === 0 && facts.m6.readsMetalClock && facts.m6.durationMetal >= 6 ? "✓" : "✗"}`);
     console.log(`  M7 gold catch-light (tokens·own-base·PRM-static·single-home·≥2-consumer): ${facts.m7.tokensDeclared && facts.m7.haloLayer && facts.m7.glowReadsOwnBase && !facts.m7.glowBakesFixedGold && facts.m7.glowPrmStatic && facts.m7.glowSingleHome && facts.m7.consumerBarMet ? "✓" : "✗"}`);
     console.log(`     M7e consumers: ${facts.m7.liveCount} live + ${facts.m7.bookedCount} booked, evidence resolves: ${facts.m7.evidenceResolves ? "✓" : "✗"}`);
+    console.log(`  M8 swept rim follows radius (border-image absent, ::before mask-band + @supports gate/fall): ${facts.m8.borderImageAbsent && facts.m8.cornerFollowsRadius && facts.m8.supportsGate && facts.m8.supportsNotFall ? "✓" : "✗"}`);
     console.log(`  WIRE metal.css @import-ed: ${facts.metalImported ? "✓" : "✗"}`);
 
     if (violations.length) {
