@@ -80,8 +80,9 @@ const props = withDefaults(
         scrollMode?: ConfiguratorScrollMode;
         /**
          * The studio height envelope — the fixed-height frame the stage flexes
-         * inside (the default `min(78vh,720px)` matches the aurora studio). Pass a
-         * tighter rung for a smaller viz.
+         * inside. BI.W-AURORA-VIBRANCY (UF-E4) bumped the default from `min(78vh,720px)`
+         * to `min(86vh,880px)` — the "core chosen aurora space larger" read (the studio
+         * canvas grows). Pass a tighter rung for a smaller viz.
          */
         heightClass?: string;
         /** Forwarded class string for the <Configurator> root (merged via cn). */
@@ -89,7 +90,7 @@ const props = withDefaults(
     }>(),
     {
         scrollMode: "auto",
-        heightClass: "h-[min(78vh,720px)]",
+        heightClass: "h-[min(86vh,880px)]",
         galleryPlacement: "aside",
     },
 );

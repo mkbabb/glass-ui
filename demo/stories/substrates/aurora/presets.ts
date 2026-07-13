@@ -574,7 +574,111 @@ const METAL = cfg({
     saturation: 1.02,
 });
 
+// ── SETTING_SUN (candidate A — the default lead, safest) ────────────────────
+// BI.W-AURORA-VIBRANCY (UF-E1) — "a few more notes of pink — like the setting sun."
+// The warm horizon band: a rose sun-core (THE pink note, h:12) low over a coral→amber→
+// gold sweep, a pale cream apex up top. Warm nuclei biased LOW (y 0.6–0.9), the sun-core
+// horizontally ELONGATED (a sun-BAND, not a blob); the pale stop rides high (y≈0.2).
+// DEMO-LOCAL (presets-in-consumers) — the pink note is a consumer theme, never a library
+// token. hues 12–82, all warm.
+const SETTING_SUN = cfg({
+    palette: [
+        { L: 0.52, C: 0.15,  h: 32  },  // coral-amber base
+        { L: 0.66, C: 0.145, h: 12  },  // rose sun-core — THE pink note
+        { L: 0.78, C: 0.135, h: 55  },  // warm amber
+        { L: 0.87, C: 0.11,  h: 82  },  // warm gold
+        { L: 0.93, C: 0.045, h: 78  },  // pale cream apex
+    ],
+    nuclei: [
+        // The horizon sun-BAND (elongated) — the rose/coral mass low + centred.
+        { x: 0.50, y: 0.82, radius: 0.52, paletteBias: 0.15, valueBias:  0.05, driftRadius: 0.024, driftPhase: 0.2, elongation: 2.0, angle: 0 },
+        { x: 0.18, y: 0.72, radius: 0.46, paletteBias: 0.00, valueBias:  0.00, driftRadius: 0.026, driftPhase: 1.6 },
+        { x: 0.84, y: 0.68, radius: 0.46, paletteBias: 0.45, valueBias:  0.03, driftRadius: 0.022, driftPhase: 3.0 },
+        { x: 0.62, y: 0.48, radius: 0.50, paletteBias: 0.72, valueBias:  0.02, driftRadius: 0.020, driftPhase: 4.3 },
+        { x: 0.34, y: 0.20, radius: 0.56, paletteBias: 1.00, valueBias:  0.08, driftRadius: 0.018, driftPhase: 5.5 },
+    ],
+    softmaxBeta: 3.0,
+    valueVariance: 0.09,
+    warpAmount: 0.5,
+    warpScale: 1.5,
+    warpDrift: 0.008,
+    noiseOctaves: 4,
+    medium: "smooth",
+    nucleiDrift: 0.022,
+    paletteDrift: 0.016,
+    breathDepth: 0.05,
+    breathPeriod: 44,
+    saturation: 1.02,
+});
+
+// ── DUSK (candidate B) ──────────────────────────────────────────────────────
+// A stronger coral-rose warm mass with ONE low-chroma dusk-lilac top stop (a whisper
+// twilight, C:0.075 h:320 — the warm mass dominates, the lilac is a note not a field).
+const DUSK = cfg({
+    palette: [
+        { L: 0.50, C: 0.17,  h: 28  },  // deep coral
+        { L: 0.62, C: 0.165, h: 8   },  // coral-rose
+        { L: 0.74, C: 0.14,  h: 50  },  // warm amber
+        { L: 0.84, C: 0.10,  h: 78  },  // gold
+        { L: 0.91, C: 0.075, h: 320 },  // dusk-lilac whisper (low chroma)
+    ],
+    nuclei: [
+        { x: 0.50, y: 0.84, radius: 0.52, paletteBias: 0.12, valueBias:  0.04, driftRadius: 0.026, driftPhase: 0.3, elongation: 2.1, angle: 0 },
+        { x: 0.20, y: 0.70, radius: 0.46, paletteBias: 0.00, valueBias:  0.00, driftRadius: 0.028, driftPhase: 1.8 },
+        { x: 0.82, y: 0.66, radius: 0.46, paletteBias: 0.42, valueBias:  0.02, driftRadius: 0.024, driftPhase: 3.2 },
+        { x: 0.60, y: 0.46, radius: 0.50, paletteBias: 0.70, valueBias:  0.02, driftRadius: 0.020, driftPhase: 4.4 },
+        { x: 0.36, y: 0.18, radius: 0.54, paletteBias: 1.00, valueBias:  0.06, driftRadius: 0.018, driftPhase: 5.6 },
+    ],
+    softmaxBeta: 3.0,
+    valueVariance: 0.10,
+    warpAmount: 0.52,
+    warpScale: 1.5,
+    warpDrift: 0.009,
+    noiseOctaves: 4,
+    medium: "smooth",
+    nucleiDrift: 0.024,
+    paletteDrift: 0.018,
+    breathDepth: 0.05,
+    breathPeriod: 46,
+    saturation: 1.04,
+});
+
+// ── VIVID_SETTING_SUN (candidate C) ─────────────────────────────────────────
+// The "slightly MORE vibrant" delivery — two pink/coral notes, chroma up to 0.175,
+// still all-warm (no teal/navy). The louder read for a consumer who wants the pink to sing.
+const VIVID_SETTING_SUN = cfg({
+    palette: [
+        { L: 0.50, C: 0.175, h: 30  },  // vivid coral
+        { L: 0.62, C: 0.17,  h: 14  },  // rose (pink note 1)
+        { L: 0.72, C: 0.165, h: 352 },  // hot rose (pink note 2)
+        { L: 0.82, C: 0.14,  h: 60  },  // warm amber
+        { L: 0.90, C: 0.09,  h: 80  },  // warm gold apex
+    ],
+    nuclei: [
+        { x: 0.50, y: 0.82, radius: 0.52, paletteBias: 0.18, valueBias:  0.05, driftRadius: 0.026, driftPhase: 0.2, elongation: 2.0, angle: 0 },
+        { x: 0.18, y: 0.74, radius: 0.46, paletteBias: 0.00, valueBias:  0.02, driftRadius: 0.028, driftPhase: 1.6 },
+        { x: 0.84, y: 0.66, radius: 0.46, paletteBias: 0.50, valueBias:  0.03, driftRadius: 0.024, driftPhase: 3.0 },
+        { x: 0.62, y: 0.46, radius: 0.50, paletteBias: 0.74, valueBias:  0.02, driftRadius: 0.020, driftPhase: 4.3 },
+        { x: 0.34, y: 0.20, radius: 0.56, paletteBias: 1.00, valueBias:  0.07, driftRadius: 0.018, driftPhase: 5.5 },
+    ],
+    softmaxBeta: 3.0,
+    valueVariance: 0.11,
+    warpAmount: 0.5,
+    warpScale: 1.45,
+    warpDrift: 0.009,
+    noiseOctaves: 4,
+    medium: "smooth",
+    nucleiDrift: 0.024,
+    paletteDrift: 0.018,
+    breathDepth: 0.06,
+    breathPeriod: 44,
+    saturation: 1.08,
+});
+
 export const PRESETS = {
+    SETTING_SUN,
+    DUSK,
+    VIVID_SETTING_SUN,
     OPENAI_SKY,
     OPENAI_DAWN,
     OPENAI_MEADOW,
@@ -607,6 +711,9 @@ function meta(label: string, medium: AuroraMedium, tail: string): PresetMeta {
 }
 
 export const PRESET_META: Record<PresetKey, PresetMeta> = {
+    SETTING_SUN:       meta("Setting Sun",  "smooth",     "warm horizon · rose sun-core"),
+    DUSK:              meta("Dusk",          "smooth",     "coral-rose · dusk-lilac whisper"),
+    VIVID_SETTING_SUN: meta("Vivid Setting Sun", "smooth", "two pink notes · vivid warm"),
     OPENAI_SKY:        meta("Sky",          "smooth",     "4 nuclei"),
     OPENAI_DAWN:       meta("Dawn",         "smooth",     "diagonal"),
     OPENAI_MEADOW:     meta("Meadow",       "watercolor", "hybrid warp"),

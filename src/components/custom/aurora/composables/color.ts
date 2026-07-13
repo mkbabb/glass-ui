@@ -22,14 +22,19 @@ import {
 import {
     srgbToOKLab,
     rawOklabToOklch,
+    rawOklchToOklab,
+    oklabToLinearSRGB,
     interpolateHue,
 } from "@mkbabb/value.js";
 
 // Re-export the shared color core from the leaf (AU.W5 hoist — surface preserved).
+// `gamutMapStop` is re-exported so the aurora-domain consumers (atoms.ts's chroma
+// bracket) funnel their gamut-safety through the ONE aurora color surface.
 export {
     cssToOklch,
     oklchStopToHex,
     oklchToLinear,
+    gamutMapStop,
 } from "../../../../composables/color";
 export type { OklchStop } from "../../../../composables/color";
 
@@ -182,12 +187,17 @@ export interface DeriveAuroraOptions {
 const DERIVE_L_BAND: readonly [number, number] = [0.35, 0.95];
 
 /**
- * BG.W-AUR-IMAGE-SOURCE (ASK-GU-AURORA-SCHEME-LUMA) — the luminous-dark L band. A deeper
- * base + a lower apex so a `scheme:"dark"` derived field reads as a rich luminous-dark
- * wash (never washing to a flat pale-gray composite behind glass in a dark shell), the
- * `W-DARK-MATERIAL` luminous-dark identity in the derive path.
+ * BG.W-AUR-IMAGE-SOURCE (ASK-GU-AURORA-SCHEME-LUMA) · BI.W-AURORA-VIBRANCY (GAP-L2) — the
+ * luminous-dark L band. A deep base + a DEEP apex so a `scheme:"dark"` derived field reads
+ * as a rich luminous-dark wash — never a washed-pale composite behind glass in a dark shell.
+ *
+ * RECALIBRATED at BI (GAP-L2): the prior apex `0.72` let a dark-scheme field composite to
+ * L≈0.716 (dark cocoa cards floating on a bright salmon field — the O-26 dark-leg defect).
+ * The apex is dropped to `0.42` so the whole ramp lands INSIDE the required deep window
+ * [0.18, 0.42] — the dark scheme now IS the luminous-dark band, reachable by construction.
+ * The `lBand` escape hatch overrides it for a bespoke window.
  */
-const DERIVE_L_BAND_DARK: readonly [number, number] = [0.18, 0.72];
+const DERIVE_L_BAND_DARK: readonly [number, number] = [0.18, 0.42];
 
 /** Resolve the L band from an explicit override, else the scheme preset, else the default. */
 function resolveDeriveLBand(
@@ -261,6 +271,15 @@ export function deriveAurora(
     lHigh = Math.min(lMax, lHigh);
 
     const stops: OklchStop[] = [];
+    // BI.W-AURORA-VIBRANCY — the derive contract PROMISES a monotonic-ascending L ramp
+    // (deep base → pale apex). value.js's `gamutMapOKLab` is a NEAREST-in-gamut mapper,
+    // NOT L-preserving: at the sRGB hull it nudges a stop's L a sub-perceptible fraction,
+    // which on a dense MAX_STOPS ramp can INVERT two adjacent stops (~0.002 L for a neon
+    // seed). `floorL` is the running maximum of the emitted L; a stop the map nudged below
+    // it is raised BACK to the floor and its chroma pulled inward until it re-enters sRGB
+    // — so the emitted ramp is monotonic BY CONSTRUCTION (the promise is TRUE, not
+    // approximately-true), gamut-safe, and a no-op for the common non-hull seed.
+    let floorL = -Infinity;
     for (let i = 0; i < n; i++) {
         const t = n === 1 ? 0 : i / (n - 1); // 0 = deep base, 1 = pale apex
 
@@ -296,9 +315,38 @@ export function deriveAurora(
             h = routeHueOutOfBands(h, avoidHues);
         }
 
-        stops.push(gamutMapStop({ L, C, h }));
+        const stop = clampMonotonicInGamut(gamutMapStop({ L, C, h }), floorL);
+        floorL = stop.L;
+        stops.push(stop);
     }
     return stops;
+}
+
+/**
+ * BI.W-AURORA-VIBRANCY — enforce the monotonic-ascending L contract on a gamut-mapped
+ * stop. If the map nudged `stop.L` below the running `floorL`, raise L back to the floor
+ * and pull chroma inward until the raised stop re-enters sRGB. The gate is the RAW linear
+ * over-1 (value.js's `oklabToLinearSRGB` is the transform — NO color math re-implemented),
+ * driven strictly ≤ 0: raising L only ever pushes a channel ABOVE 1 (never below 0, and
+ * the negative-side residual on deep blues only IMPROVES as L climbs), so the top channel
+ * is the sole escape the bake does not cap. A no-op when `stop.L >= floorL` (the common
+ * case — the map keeps L monotone for a non-hull seed).
+ */
+function clampMonotonicInGamut(stop: OklchStop, floorL: number): OklchStop {
+    if (stop.L >= floorL) return stop;
+    const { h } = stop;
+    const L = floorL;
+    let C = stop.C;
+    for (let k = 0; k < 48; k++) {
+        const [lx, ax, bx] = rawOklchToOklab(L, C, h);
+        const [lr, lg, lb] = oklabToLinearSRGB(lx, ax, bx);
+        // Drive the TOP channel strictly ≤ 1 (the dangerous escape the bake does NOT cap).
+        // Use the raw over-1, NOT isInSRGBGamut — its boundary epsilon would leave a
+        // sub-LSB overshoot the derive-gamut matrix (OVER_TOL 1e-9) forbids.
+        if (Math.max(lr, lg, lb) <= 1) break;
+        C *= 0.99; // pull chroma 1% inward — hue/L preserved
+    }
+    return { L, C, h };
 }
 
 /** Eased ramp 0..1 → 0..1. `bell` is handled separately (a chroma-only curve). */

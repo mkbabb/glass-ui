@@ -36,7 +36,7 @@ import {
     type OklchStop,
     type WarpMode,
 } from "../constants/presets";
-import { deriveAurora, oklchStopToHex, type AuroraHarmony } from "./color";
+import { deriveAurora, gamutMapStop, oklchStopToHex, type AuroraHarmony } from "./color";
 // The field-mapping leaves (BB.W-CARVE5 carve) — the COLOR-energy poles + the
 // MOTION_FIELDS table, the textured-medium texture fan + its inverse, and the
 // lerp/unlerp/motion inverses. The ZONES `nucleiPrior` + the NOISE
@@ -92,6 +92,21 @@ export interface AuroraInteractivityAtom {
     light?: boolean;
     /** palette/breath progress couples to scroll (via useScrollProgress). */
     scroll?: boolean;
+    /**
+     * BI.W-FIELD-CORE (FC6/T-38) — the cursor SWIRL/luminance-lean axis, MEDIUM-GATED. On the
+     * `smooth` medium the cursor reads as a local LUMINANCE LEAN (engagement-driven, via the
+     * `auroraCursorMapping` strength → `uCursorStrength`, ZERO shader edit) instead of the dead
+     * impasto light the `light` axis drives ONLY on the painterly mediums — the T-38 "the
+     * swirl/burst axes are perceptually DEAD on the smooth medium" fix. Default coupled to
+     * `light` when unset (an interactive config reads on EVERY medium, not just painterly).
+     */
+    swirl?: boolean;
+    /**
+     * BI.W-FIELD-CORE (FC6) — the SIZED amplitude atom (0..1, default 0.5). Sizes the cursor's
+     * field influence — how much the velocity BURST perturbs the domain-warp path near the
+     * cursor (routed through the existing `uCursorBurst`/`uWarp*` uniforms — no shader edit).
+     */
+    amplitude?: number;
 }
 
 /**
@@ -112,6 +127,47 @@ export interface AuroraAtoms {
      * continuous curve, not a 3-point named LUT.
      */
     colorEnergy?: number;
+    /**
+     * BI.W-AURORA-VIBRANCY (GAP-L2) — the lightness SCHEME of the derived ramp. `"light"`
+     * (the default when a seed is set) is the light-pastel band; `"dark"` shifts the WHOLE
+     * ramp into the luminous-dark band [0.18, 0.42] so a derived-from-seed field reads as a
+     * rich luminous-dark wash behind glass in a dark shell — never a washed-pale salmon
+     * field with dark cards floating on it (the O-26 dark-leg defect). CONFIG-LEVEL: routes
+     * to `deriveAurora`'s `scheme`; ZERO shader edit. Only read when a `seed` is set (the
+     * door drives the DERIVE path; an authored-palette config has no scheme to resolve).
+     */
+    lightnessScheme?: "light" | "dark";
+    /**
+     * BI.W-AURORA-VIBRANCY (GAP-L2) — an explicit derived L band `[min, max]` (OKLCh L
+     * units) that OVERRIDES `lightnessScheme`. The single retune knob for a bespoke
+     * luminosity window (e.g. `[0.18, 0.42]` for the deep luminous-dark identity). Routes
+     * to `deriveAurora`'s `lBand`; only read when a `seed` is set.
+     */
+    lBand?: readonly [number, number];
+    /**
+     * BI.W-AURORA-VIBRANCY (GAP-L2) — the analogous hue-walk width (degrees). Optional;
+     * omitted = the chroma-ADAPTIVE default (a higher `colorEnergy` widens the walk so a
+     * vivid field carries a real second accent hue, a calm field stays a tight
+     * neighbourhood). An explicit value wins. Only read when a `seed` is set.
+     */
+    hueSpread?: number;
+    /**
+     * BI.W-AURORA-VIBRANCY (GAP-L2) — the cross-stop chroma VARIANCE (0..1, the T-26
+     * bracket grammar). 0 (default) = the uniform painterly ramp (every stop near the
+     * anchor chroma); 1 = a WIDE bracket — the vivid stops toward marigold, the calm stops
+     * toward the sage-whisper pole (C≈0.03), so the ramp carries an "interesting" chroma
+     * counterpoint rather than a flat monochrome. Applied post-derive (chroma-only —
+     * hue/L preserved, each stop re-gamut-mapped). Only read when a `seed` is set.
+     */
+    chromaVariance?: number;
+    /**
+     * BI.W-AURORA-VIBRANCY (GAP-L2) — the counterpoint option. When true (and
+     * `chromaVariance > 0`) the deepest ramp stop is pinned to the sage-whisper pole as a
+     * deliberate low-chroma "silence" note against the vivid mass (the T-26 "silence ←
+     * whisper → marigold" grammar). Default false (the variance spreads without a dedicated
+     * whisper stop). Only read when a `seed` is set.
+     */
+    chromaCounterpoint?: boolean;
 
     // ── ZONES (the user's "zones" control element — count + arrangement) ──
     /** The color zones (nuclei) — a count + an arrangement character. */
@@ -225,6 +281,48 @@ export function nucleiPrior(
     });
 }
 
+// ── COLOR: the cross-stop chroma bracket (GAP-L2, the T-26 grammar) ─────────────
+
+/** The T-26 sage-whisper chroma pole (C≈0.02–0.04) — the "silence" note. */
+const SAGE_WHISPER_C = 0.03;
+
+/**
+ * BI.W-AURORA-VIBRANCY (GAP-L2) — spread a derived palette's cross-stop chroma into a
+ * bracket, IN PLACE. `variance∈[0,1]` widens the spread: even stops lift toward the vivid
+ * marigold pole (a bounded lift above the ramp mean), odd stops sink toward the
+ * sage-whisper pole — so a flat monochrome ramp gains an "interesting" chroma counterpoint
+ * ("silence ← sage-whisper → marigold"). `counterpoint` additionally pins the DEEPEST stop
+ * to the whisper as the deliberate silence note. CHROMA-ONLY — L and hue are preserved
+ * exactly (the bracket is a chroma grammar); each lifted chroma is gamut-clamped through
+ * the ONE `gamutMapStop` primitive so no lift escapes sRGB. A no-op at variance 0.
+ */
+function applyChromaBracket(
+    palette: OklchStop[],
+    variance: number,
+    counterpoint: boolean,
+): void {
+    const n = palette.length;
+    if (n === 0 || variance <= 0) return;
+    const meanC = palette.reduce((s, st) => s + st.C, 0) / n;
+    // The vivid pole is a bounded lift above the mean (never past the gamut-safe ceiling).
+    const marigold = Math.min(0.22, meanC * 1.5);
+    // The gamut-safe chroma at a stop's OWN L/hue — take gamutMapStop's chroma, keep L+hue.
+    const safeC = (L: number, C: number, h: number): number =>
+        gamutMapStop({ L, C, h }).C;
+    palette.forEach((st, i) => {
+        const pole = i % 2 === 0 ? marigold : SAGE_WHISPER_C;
+        const C = clampBudget(lerp(st.C, pole, variance), 0, 0.4);
+        st.C = safeC(st.L, C, st.h);
+    });
+    if (counterpoint) {
+        // Pin the deepest (lowest-L) stop to the sage pole — the base "silence" note.
+        let deep = 0;
+        for (let i = 1; i < n; i++) if (palette[i]!.L < palette[deep]!.L) deep = i;
+        const st = palette[deep]!;
+        st.C = safeC(st.L, SAGE_WHISPER_C, st.h);
+    }
+}
+
 // ── NOISE: the organic-boundary fan-out ────────────────────────────────────────
 
 /** WarpMode as a function of the noise scalar — smooth fBm → hybrid → cellular. */
@@ -282,6 +380,15 @@ export function resolveAtoms(
 
     if (atoms.seed !== undefined) {
         const stopCount = Math.min(AV_MAX_COLORS, 4);
+        // GAP-L2 — the chroma-ADAPTIVE hue-walk: an explicit atom wins; else a vivid field
+        // (high energy) widens the analogous walk so the ramp carries a real second accent
+        // hue, a calm field stays a tight neighbourhood; an unset energy keeps the derive default.
+        const hueSpread =
+            atoms.hueSpread !== undefined
+                ? clampBudget(atoms.hueSpread, 0, 180)
+                : energy !== undefined
+                  ? lerp(COLOR_ENERGY.hueSpread.calm, COLOR_ENERGY.hueSpread.vivid, energy)
+                  : undefined;
         cfg.palette = deriveAurora(atoms.seed, {
             harmony: atoms.harmony ?? "analogous",
             stopCount,
@@ -291,7 +398,20 @@ export function resolveAtoms(
                 energy !== undefined
                     ? lerp(COLOR_ENERGY.temperatureShift.calm, COLOR_ENERGY.temperatureShift.vivid, energy)
                     : 0,
+            // GAP-L2 — the (adaptive) hue-walk + the luminance scheme / explicit L band.
+            // Each is spread only when present so an unset door is a byte-identical derive.
+            ...(hueSpread !== undefined ? { hueSpread } : {}),
+            ...(atoms.lightnessScheme !== undefined ? { scheme: atoms.lightnessScheme } : {}),
+            ...(atoms.lBand !== undefined ? { lBand: atoms.lBand } : {}),
         });
+        // GAP-L2 — the cross-stop chroma bracket (T-26). Post-derive, chroma-only + opt-in.
+        if (atoms.chromaVariance !== undefined && atoms.chromaVariance > 0) {
+            applyChromaBracket(
+                cfg.palette,
+                clampBudget(atoms.chromaVariance, 0, 1),
+                atoms.chromaCounterpoint ?? false,
+            );
+        }
     }
 
     if (energy !== undefined) {
@@ -352,9 +472,20 @@ export function resolveAtoms(
         );
     }
 
-    // ── interactivity (only the wired axes — light/scroll; default OFF).
+    // ── interactivity (the wired axes — light/scroll + the FC6 medium-gated swirl + the
+    //    sized amplitude atom; default OFF). MEDIUM-GATED: `swirl` defaults ON whenever
+    //    interactivity is engaged so the cursor reads on the `smooth` medium (the T-38
+    //    dead-axis fix — the engagement-driven `auroraCursorMapping` strength paints the
+    //    cursor-local luminance lean without a shader edit), not just the painterly `light`.
     if (atoms.interactivity !== undefined) {
-        cfg.interactivity = { ...atoms.interactivity };
+        const it = atoms.interactivity;
+        cfg.interactivity = {
+            ...it,
+            // The smooth-medium interactivity reads by default (swirl ON) — the dead-axis fix.
+            swirl: it.swirl ?? true,
+            // The sized amplitude atom — clamped 0..1 (default balanced 0.5).
+            amplitude: it.amplitude !== undefined ? clampBudget(it.amplitude, 0, 1) : 0.5,
+        };
     }
 
     return cfg;

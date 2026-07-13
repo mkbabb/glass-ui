@@ -156,6 +156,17 @@ export interface AuroraInteractivity {
     flow?: boolean;
     scroll?: boolean;
     wake?: boolean;
+    /**
+     * BI.W-FIELD-CORE (FC6/T-38) — the MEDIUM-GATED cursor swirl/luminance-lean (reads on the
+     * `smooth` medium via the engagement-driven `auroraCursorMapping` strength, ZERO shader
+     * edit — the T-38 dead-swirl-axis fix). The atoms door defaults it ON when interactive.
+     */
+    swirl?: boolean;
+    /**
+     * BI.W-FIELD-CORE (FC6) — the SIZED amplitude of the cursor's field influence (0..1) —
+     * how much the velocity burst perturbs the domain-warp path near the cursor.
+     */
+    amplitude?: number;
 }
 
 export interface AuroraFlow {
@@ -400,15 +411,20 @@ export const DEFAULT_AURORA_CONFIG: AuroraConfig = {
     // so a bare `<Aurora>` reads warm-cream at rest. The prior blue/teal default
     // (h:220/200) was the teal-on-navy disease in the library identity. Named
     // themed presets (Sky, Ocean, …) live in the consumer (presets-in-consumers).
-    // BD.W-AUR-VIVIDNESS — the AUTHORED vivid identity (the floor is the runtime
-    // guarantee; this is the authored chroma). The pre-floor ramp topped out at the pale
-    // C:0.10 whisper (the §3 gray-glass root cause). Lifted to a warm C:0.16–0.20 band,
-    // hues held in the warm 45..70 amber family (NO teal/navy — the warm-floor law) so a
-    // bare `<Aurora>` reads warm-VIVID at rest, not warm-pale. Both, not either.
+    // BD.W-AUR-VIVIDNESS · BI.W-AURORA-VIBRANCY (AV1) — the AUTHORED vivid identity (the
+    // floor is the runtime guarantee; this is the authored chroma). The pre-BI ramp's pale
+    // apex (C:0.095) dragged the mean OKLab chroma BELOW the 0.13 warm-vivid floor and the
+    // hues sat in a near-monochrome 45–68 cluster (a flat amber ramp). BI lifts every stop
+    // into the 0.13–0.17 warm-vivid band AND spreads the hue into a real SUNSET sweep —
+    // a warm coral-amber base (h:30), an amber body (h:55), a warm-gold apex (h:82): a
+    // SECOND warm accent hue per the DAWN-lilac / SUNSET-rose model (a monochrome ramp
+    // reads flat), all warm (NO teal/navy — the warm-floor law; NO pink — that setting-sun
+    // note is a demo-local preset, presets-in-consumers). Mean OKLab C ≈ 0.15. A bare
+    // `<Aurora>` reads warm-VIVID + interesting at rest, not warm-pale. Both, not either.
     palette: [
-        { L: 0.68, C: 0.16, h: 52 },
-        { L: 0.78, C: 0.13, h: 45 },
-        { L: 0.86, C: 0.095, h: 68 },
+        { L: 0.64, C: 0.17, h: 30 },
+        { L: 0.76, C: 0.15, h: 55 },
+        { L: 0.87, C: 0.13, h: 82 },
     ],
     nuclei: [
         { x: 0.3, y: 0.3, radius: 0.5, paletteBias: 0.0, valueBias: 0, driftRadius: 0.045, driftPhase: 0.0 },

@@ -49,18 +49,20 @@ const AURORA_PRESETS: ConfiguratorPreset<AuroraConfig>[] = PRESET_KEYS.map((key)
     config: PRESETS[key],
 }));
 
-// BC.W-TEAL-NAVY-PURGE — the studio LEADS with the warm-cream identity (the warm Dawn
-// coral/amber preset), NOT the blue OPENAI_SKY sky theme. Sky survives as a named,
-// selectable non-default preset (presets-in-consumers — a blue sky is a theme, never
-// the lead); /substrates/aurora reads warm-cream at rest.
+// BI.W-AURORA-VIBRANCY (UF-E1) — the studio LEADS with the warm-vivid SETTING_SUN (the
+// pink-note horizon), the setting-sun candidate-A default. It supersedes the prior warm
+// Dawn lead (still a named, selectable preset); the blue OPENAI_SKY survives as a
+// non-default theme (presets-in-consumers — a blue sky is a theme, never the lead).
+// /substrates/aurora reads warm-vivid-sunset at rest. This is also the W-FIELD-CORE /
+// W-E10 entrance verify surface (the T-38 aurora-pointer + the palette-honest entrance).
 const studio = useConfiguratorState<AuroraConfig>({
     presets: AURORA_PRESETS,
-    initialPreset: "OPENAI_DAWN",
+    initialPreset: "SETTING_SUN",
     cloneMode: "per-preset",
 });
 
 const currentKey = computed<PresetKey>(
-    () => (studio.activePreset.value ?? "OPENAI_DAWN") as PresetKey,
+    () => (studio.activePreset.value ?? "SETTING_SUN") as PresetKey,
 );
 
 function selectPreset(key: PresetKey) {
@@ -132,7 +134,7 @@ const hintText = computed(() => [
         heading="Aurora"
         label="procedural painterly gradients · multi-nuclei · four mediums"
         blurb="A WebGPU-first procedural painterly gradient field — multi-nuclei composition, four mediums (smooth · oil · oil-pastel · van-Gogh) + the anisotropic-Kuwahara finish, cursor-driven swirl. Drag inside the stage to swirl the field; alt-click to spawn a nucleus. The configurator on the RIGHT drives EVERY axis: the OKLCh palette (the per-stop ColorSwatch editor), the composition (medium · zones · arrangement), the motion register, the warp/noise. The warm-cream Dawn identity is the default lead; the blue Sky is a named non-default preset. Shipped /aurora."
-        height-class="h-[min(78vh,720px)]"
+        height-class="h-[min(86vh,880px)]"
         scroll-mode="never"
         gallery-placement="top"
     >

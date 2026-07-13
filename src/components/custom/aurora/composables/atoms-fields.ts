@@ -33,6 +33,11 @@ export const COLOR_ENERGY = {
     valueVariance: { calm: 0.04, vivid: 0.14 }, // 0..0.3; 0.5→0.09
     breathDepth: { calm: 0.03, vivid: 0.08 }, // 0..0.15; 0.5→0.055
     temperatureShift: { calm: 0.15, vivid: 0.5 }, // the palette warm/cool coupling (folded from the old mood recipe)
+    // BI.W-AURORA-VIBRANCY (GAP-L2) — the chroma-ADAPTIVE hue-walk width (degrees). A calm
+    // field stays a tight analogous neighbourhood (16°); a vivid field widens the walk to
+    // ~44° so the derived ramp carries a real SECOND accent hue (a monochrome ramp reads
+    // flat — the "interesting" second note). 0.5 → ~28° (the deriveAurora default).
+    hueSpread: { calm: 16, vivid: 44 },
 } as const;
 
 export const MOTION_FIELDS: Record<AuroraMotionAtom, MotionFields> = {

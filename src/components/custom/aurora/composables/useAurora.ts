@@ -48,12 +48,6 @@ export interface UseAuroraReturn {
     setCursor: (x: number, y: number, strength?: number) => void;
     clearCursor: () => void;
     setCursorRadius: (r: number) => void;
-    /**
-     * AW.W8.1 — feed a pointer delta into the velocity-reactive flow (a fast flick →
-     * a transient swirl-burst). PRM-gated at the runtime (the cursor write-path
-     * early-out). The aurora demo wires this from its stage pointermove listener.
-     */
-    injectCursorVelocity: (dx: number, dy: number) => void;
     renderAt: (t: number) => void;
     pause: () => void;
     resume: () => void;
@@ -222,6 +216,14 @@ export function useAurora(
         }
         isArmed.value = true;
 
+        // BI.W-AURORA-VIBRANCY (GAP-ARM) — the cold-load arm-replay. On the DEFERRED path
+        // the instance is CONSTRUCTED with `getCfg()` at mount but `arm()` runs later (past
+        // first paint, gated on intersection). A config change in THAT window — a preset
+        // switch before the canvas armed — is captured neither by construction (stale) nor
+        // by the NON-immediate watch below (it only fires on the NEXT change). One honest
+        // replay of the CURRENT config seats it, closing the silently-dropped-change gap.
+        inst.update(getCfg());
+
         reducedMq = window.matchMedia("(prefers-reduced-motion: reduce)");
         reducedMq.addEventListener("change", onReducedChange);
 
@@ -359,7 +361,6 @@ export function useAurora(
         setCursor: (x, y, strength) => inst?.setCursor(x, y, strength),
         clearCursor: () => inst?.clearCursor(),
         setCursorRadius: (r) => inst?.setCursorRadius(r),
-        injectCursorVelocity: (dx, dy) => inst?.injectCursorVelocity(dx, dy),
         renderAt: (t) => inst?.renderAt(t),
         pause: () => inst?.pause(),
         resume: () => inst?.resume(),
