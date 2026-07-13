@@ -33,6 +33,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     <TooltipContent
       v-bind="{ ...forwarded, ...$attrs }"
       :data-surface="props.surface"
+      data-reveal="tooltip"
       :class="cn(
         'z-tooltip overflow-hidden rounded-tooltip border text-popover-foreground glass-reveal',
         surfaceClass(props.surface, 'floating'),

@@ -36,13 +36,19 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
       :class="props.overlayClass"
     >
       <DialogContent
+        data-reveal="overlay"
         :class="
           cn(
             // BB.W-CARD-PAD — the overlay-band golden padding ladder + the off-glass
             // `bg-background` → `glass-floating` tier fix (the scroll dialog had drifted
             // off the shared floating glass substrate). The overlay anchor lifts the
             // block axis by sqrt-phi (`*1.272`) over the inline anchor.
-            'popover-content relative z-overlay grid w-full max-w-lg my-8 gap-4 border border-border glass-floating [--overlay-pad-inline:--spacing(6)] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] px-(--overlay-pad-inline) py-(--overlay-pad-block) [box-shadow:var(--glass-shadow-floating)] duration-200 sm:rounded-dialog md:w-full',
+            // BI.W-ENTER-EXIT-LANDING — the scroll dialog joins the enter-overlay
+            // register (glass-reveal + data-reveal overlay), the SAME focal bloom the
+            // modal DialogContent rides. The hand-rolled duration-200 clock (which
+            // clobbered the reveal's per-leg transition-duration) is RETIRED onto the
+            // register — clean break, no local clock.
+            'popover-content relative z-overlay grid w-full max-w-lg my-8 gap-4 border border-border glass-floating [--overlay-pad-inline:--spacing(6)] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] px-(--overlay-pad-inline) py-(--overlay-pad-block) [box-shadow:var(--glass-shadow-floating)] glass-reveal sm:rounded-dialog md:w-full',
             props.class,
           )
         "

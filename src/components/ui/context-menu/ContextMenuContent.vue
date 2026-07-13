@@ -35,6 +35,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     <ContextMenuContent
       v-bind="forwarded"
       :data-surface="props.surface"
+      data-reveal="menu"
       :class="cn(
         'z-popover min-w-(--overlay-min-width) overflow-hidden rounded-panel border text-popover-foreground glass-reveal',
         surfaceClass(props.surface, 'floating'),

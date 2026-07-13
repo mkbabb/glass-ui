@@ -107,9 +107,9 @@ const springActive = computed(
 )
 
 // BD.W-OVERLAY-STAGE-COUPLE — the centered modal flips `--stage-t` 0→1 on open (the
-// drawer drives it per-frame; a dialog has no detent, so it transitions the ONE
-// scalar at `:root` on `--spring-snappy`). The honest `stage` enum gates the
-// page-wrapper recede; PRM degrades `scale`/`immersive` → `dim` (no page transform).
+// drawer drives it per-frame; a dialog has no detent, so it transitions the ONE scalar
+// on `--spring-snappy`, scoped to the reader roots — BI.W-DRAWER-PERF). The honest
+// `stage` enum gates the page-wrapper recede; PRM degrades `scale`/`immersive` → `dim`.
 const prefersReducedMotion =
   typeof window !== 'undefined' &&
   window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
@@ -119,30 +119,52 @@ const resolvedStage = computed(() => {
   return base
 })
 const dialogRoot = injectDialogRootContext()
+// BI.W-DRAWER-PERF — flip `--stage-t` 0→1 SCOPED to the reader roots (the page-wrapper
+// + the scrim), NOT `document.documentElement`. `--stage-t` is `inherits: false`
+// (drawer.css), so a write on the app-root wrapper recalcs ONLY the wrapper — a whole-
+// document `:root` write invalidated the inherited-property cache for the entire app
+// subtree (the storm the drawer's per-frame writer paid at 120×; the modal flip is
+// one-shot but shares the retired lever). The reader roots resolve AFTER the portal
+// commits (this watch runs pre-flush; one rAF lands post-commit so the freshly-portaled
+// scrim exists), and the CSS flip transition catches the 0→1 delta via a two-frame
+// seat-0 → flip-1 (both the persistent wrapper AND the fresh scrim gain a before-change
+// style, so both GLIDE rather than snap). On close each root reverts to the registered
+// `initial-value: 0` (no stale full-staged latch on re-open).
 function syncStage(open: boolean) {
   if (typeof document === 'undefined' || props.stage === 'none') return
-  const root = document.documentElement
-  const wrapper = document.querySelector('[data-stage-wrapper]') as HTMLElement | null
-  const scrim = document.querySelector('[data-stage-scrim]') as HTMLElement | null
-  // Flip the ONE `--stage-t` scalar 0→1 on open. The `data-stage-flip` marker on
-  // `:root` arms the CSS-owned flip TRANSITION (`:root[data-stage-flip]` in drawer.css
-  // — a snappy spring, NOT an inline `transition` shorthand on `:root` which would
-  // clobber unrelated root transitions) so the value glides 0→1. On close the marker is
-  // dropped + the inline value removed → the registered property reverts to 0 (no stale
-  // full-staged latch on re-open).
   if (open) {
-    root.setAttribute('data-stage-flip', '')
-    // seat at 0, then flip to 1 next frame so the CSS transition catches the delta.
-    root.style.setProperty('--stage-t', '0')
-    requestAnimationFrame(() => root.style.setProperty('--stage-t', '1'))
+    requestAnimationFrame(() => {
+      const wrapper = document.querySelector('[data-stage-wrapper]') as HTMLElement | null
+      const scrim = document.querySelector('[data-stage-scrim]') as HTMLElement | null
+      const wantScale = resolvedStage.value === 'scale' || resolvedStage.value === 'immersive'
+      const wantImmersive = resolvedStage.value === 'immersive'
+      for (const el of [wrapper, scrim]) {
+        if (!el) continue
+        // Arm the CSS-owned flip transition (`[data-stage-*][data-stage-flip]` in
+        // drawer.css — a snappy spring, NOT an inline shorthand that would clobber
+        // unrelated transitions) + seat 0 so the next-frame flip to 1 glides.
+        el.setAttribute('data-stage-flip', '')
+        el.style.setProperty('--stage-t', '0')
+      }
+      if (wrapper) wrapper.toggleAttribute('data-stage-scale', wantScale)
+      if (scrim) scrim.toggleAttribute('data-stage-immersive', wantImmersive)
+      requestAnimationFrame(() => {
+        for (const el of [wrapper, scrim]) {
+          if (el) el.style.setProperty('--stage-t', '1')
+        }
+      })
+    })
   } else {
-    root.removeAttribute('data-stage-flip')
-    root.style.removeProperty('--stage-t')
+    const wrapper = document.querySelector('[data-stage-wrapper]') as HTMLElement | null
+    const scrim = document.querySelector('[data-stage-scrim]') as HTMLElement | null
+    for (const el of [wrapper, scrim]) {
+      if (!el) continue
+      el.removeAttribute('data-stage-flip')
+      el.style.removeProperty('--stage-t')
+    }
+    if (wrapper) wrapper.removeAttribute('data-stage-scale')
+    if (scrim) scrim.removeAttribute('data-stage-immersive')
   }
-  const wantScale = open && (resolvedStage.value === 'scale' || resolvedStage.value === 'immersive')
-  const wantImmersive = open && resolvedStage.value === 'immersive'
-  if (wrapper) wrapper.toggleAttribute('data-stage-scale', wantScale)
-  if (scrim) scrim.toggleAttribute('data-stage-immersive', wantImmersive)
 }
 watch(() => dialogRoot?.open.value, (open) => syncStage(!!open), { immediate: true })
 onScopeDispose(() => syncStage(false))
@@ -252,6 +274,7 @@ const contentStyle = computed<CSSProperties>(() => ({
       :class="cn(baseClasses, springActive ? '' : defaultMotionClasses, variantClasses, props.class)"
       :style="contentStyle"
       :data-surface="props.surface"
+      data-reveal="overlay"
       :data-motion="motionAxis.dataMotion.value"
       :data-spring="springActive ? (props.springPreset ?? 'smooth') : undefined"
     >

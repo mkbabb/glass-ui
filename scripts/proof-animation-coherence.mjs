@@ -483,6 +483,32 @@ const OFF_DOCTRINE_TRANSFORM_SPRING = new Set([
     "--spring-gentle",
 ]);
 
+// Split a leg into whitespace tokens at PAREN-DEPTH 0, so a `var(--x, 12px)` /
+// `cubic-bezier(0.4, 0, 0.2, 1)` stays ONE token (its internal spaces do not split).
+function splitLegTokens(leg) {
+    const tokens = [];
+    let depth = 0;
+    let cur = "";
+    for (const ch of leg.trim()) {
+        if (ch === "(") {
+            depth++;
+            cur += ch;
+        } else if (ch === ")") {
+            depth = Math.max(0, depth - 1);
+            cur += ch;
+        } else if (/\s/.test(ch) && depth === 0) {
+            if (cur) {
+                tokens.push(cur);
+                cur = "";
+            }
+        } else {
+            cur += ch;
+        }
+    }
+    if (cur) tokens.push(cur);
+    return tokens;
+}
+
 // Split a `transition:` value into its comma legs, respecting parentheses so a
 // `cubic-bezier(a, b, c, d)` / `linear(…)` / `color-mix(…)` comma is not a leg
 // boundary.
@@ -792,6 +818,31 @@ function blankVarFallbacks(value) {
     }
     return out;
 }
+// BI.W-REGISTER-TABLE — the DELAY-slot precision + register-clock acceptance.
+// §P5 governs the literal DURATION on a transition leg. Per leg, the FIRST <time>
+// value is the DURATION, a SECOND is the DELAY (a stagger/overlap positional offset —
+// NOT a clock the register governs). So a BARE literal is flagged ONLY when it is the
+// leg's DURATION slot; a delay-slot literal (`… var(--clock) var(--ease) 60ms`) passes.
+// A time-slot token is a bare `<time>` literal OR a `var(--…duration…)`/`var(--…clock…)`
+// composed clock (the register clocks `--reveal-clock` / `--spring-*-duration` /
+// `--exit-*-duration` / the register `--enter-*-clock` all read as the composed DURATION).
+// A `var(--x, 150ms)` stays ONE paren-aware token (its fallback literal is never a bare
+// orphan). `0s`/`0ms` (a transition-off / PRM collapse) is never a hand-tuned duration.
+const TIME_LITERAL_TOKEN_RE = /^(\d+(?:\.\d+)?)(?:ms|s)$/;
+// A TIMING-FUNCTION var — an ease/spring-CURVE/curve/timing/bezier register (NOT a
+// `*-duration`/`*-clock` TIME token). A transition leg's non-property tokens are exactly
+// {duration, timing-function, delay}, so a var is a <time> (duration/delay) iff it is NOT
+// a timing-function var — classify by EXCLUSION (robust to opaque duration-var names).
+const TIMING_VAR_TOKEN_RE =
+    /^var\(\s*--[a-z0-9-]*(?:ease|spring|curve|timing|bezier)\b/i;
+function isTimeToken(tok) {
+    if (TIME_LITERAL_TOKEN_RE.test(tok)) return true; // a bare <time> literal
+    if (!/^var\(/i.test(tok)) return false; // a keyword / cubic-bezier()/linear()/property
+    // A var: a <time> unless it is a timing-function var (and a `*-duration`/`*-clock`
+    // var is a TIME even though its name may contain `spring`, e.g. --spring-*-duration).
+    if (/(?:duration|clock)\b/i.test(tok)) return true;
+    return !TIMING_VAR_TOKEN_RE.test(tok);
+}
 export function detectDurationBand(file, src) {
     const violations = [];
     const stripped = stripCssComments(src);
@@ -802,18 +853,21 @@ export function detectDurationBand(file, src) {
     while ((m = declRe.exec(stripped)) !== null) {
         const rawValue = m[1];
         const declStart = m.index;
-        // Blank the `var(--token, FALLBACK)` fallback literals — a composed token's
-        // defensive fallback is NOT an orphan.
-        const value = blankVarFallbacks(rawValue);
-        DURATION_LITERAL_RE.lastIndex = 0;
-        let dm;
-        while ((dm = DURATION_LITERAL_RE.exec(value)) !== null) {
-            const num = parseFloat(dm[1]);
-            // `0s`/`0ms` (transition-off / PRM-collapse) is not a hand-tuned duration.
-            if (num === 0) continue;
-            violations.push(
-                `${file}:${lineOf(stripped, declStart)}: orphan literal duration '${dm[0]}' on a transition leg — compose a --duration-*/--motion-duration-* token, not a hand-set value (DURATION-BAND, §P5)`,
-            );
+        for (const leg of splitTransitionLegs(rawValue)) {
+            let timeCount = 0;
+            for (const tok of splitLegTokens(leg)) {
+                if (!isTimeToken(tok)) continue;
+                timeCount++;
+                const litM = tok.match(TIME_LITERAL_TOKEN_RE);
+                // §P5 governs the literal DURATION slot (the FIRST <time> in a leg); a
+                // literal in the DELAY slot (timeCount ≥ 2 — a stagger/overlap offset) is
+                // not a clock the register governs.
+                if (litM && timeCount === 1 && parseFloat(litM[1]) !== 0) {
+                    violations.push(
+                        `${file}:${lineOf(stripped, declStart)}: orphan literal duration '${tok}' on a transition leg — compose a --duration-*/--motion-duration-*/--spring-*-duration/register-clock token, not a hand-set value (DURATION-BAND, §P5)`,
+                    );
+                }
+            }
         }
     }
     return violations;
@@ -927,6 +981,148 @@ export function detectAnimationEnterRegister(file, src) {
     return violations;
 }
 
+// ── BI.W-REGISTER-TABLE: the universal literal-ban EXEMPTIONS + the register roster ──
+//
+// (a) The DURATION-BAND arm is WIDENED from the anchor set to ALL src/styles/**/*.css +
+// all src/**/*.vue `<style>` blocks. The TOKEN HOMES are exempt (they DEFINE the clocks,
+// literals there are the source). The LEGACY-ORPHAN exemptions carry forward the
+// AY.W-ANIM1 gate-header routing decision (these two decorative surfaces' duration
+// orphans were ALREADY out of fence as anchor-scoped MATRIX-DEFECT rows routed to their
+// owning component waves) into the widened net — the widen is strictly STRONGER than HEAD
+// (it catches every OTHER src/styles + SFC orphan; only these two named, documented legacy
+// sites stay routed). Each is a duration with NO existing `--duration-*` token home
+// (1.6s eclipse / 0.6s border-radius) and is OUT of B7 register-table scope.
+const DURATION_BAND_TOKEN_HOMES = new Set([
+    "src/styles/tokens/scheme-motion.css",
+    "src/styles/tokens/scheme-spring.css",
+    "src/styles/tokens/motion-registers.css",
+]);
+const DURATION_BAND_EXEMPT = {
+    "src/components/custom/controls/DarkModeToggle.vue":
+        "the opt-in ~1.6s slow-ECLIPSE register (a routed MATRIX defect, AY.W-ANIM1 header) — 1.6s has no --duration-* token home; owed to the DarkModeToggle-owning wave, out of B7 register-table scope",
+    "src/components/custom/watercolor-dot/WatercolorDot.vue":
+        "the 0.6s border-radius MORPH leg (a routed MATRIX defect, AY.W-ANIM1 header) — 0.6s maps to no --duration-* token (slow=0.45s / panel=0.55s); owed to the WatercolorDot-owning wave, out of B7 register-table scope",
+};
+
+// (b) TEMPLATE-DURATION — a `.vue` `<template>` hand-rolled Tailwind timing utility
+// (`duration-[Nms]` / `duration-N` / `ease-[…]` / `delay-[Nms]` / `delay-N`) — compose a
+// register (the `.glass-reveal` `data-reveal` axis / a `--duration-*` token), not an
+// inline class. The one legacy hit (`DialogScrollContent`'s clobbering `duration-200`)
+// was routed here and is now LANDED: W-ENTER-EXIT-LANDING bound the scroll dialog onto the
+// `enter-overlay` register (`.glass-reveal[data-reveal="overlay"]`) and RETIRED the local
+// clock, so the exemption is discharged — the arm carries no standing exemption.
+const TEMPLATE_DURATION_EXEMPT = {};
+const TEMPLATE_DURATION_RE =
+    /\b(?:duration|delay)-(?:\[[^\]]+\]|\d+)|\bease-\[[^\]]+\]/g;
+
+// (c) REGISTER-BINDING — the positive arm MINTED in W-REGISTER-TABLE; the AUTHORITATIVE
+// assignment-table ROSTER is written here in W-ENTER-EXIT-LANDING. Each enrolled overlay
+// content SFC is mapped to its assigned register: it MUST compose `.glass-reveal` (the ONE
+// recipe), MUST carry its `data-reveal="<register>"` binding, and MUST carry NO raw
+// `data-[state=open]:animate-in` entrance — a clean-break onto the ONE register recipe.
+//
+// The roster is the .glass-reveal-composing surfaces ONLY. Three enter-transient/overlay
+// surfaces are DELIBERATELY OFF this roster (they are NOT .glass-reveal surfaces):
+//   · Notification — rides `enter-transient` via a Vue-<Transition> recipe reading the
+//     register TOKENS directly (a <TransitionGroup> list is not a reka data-state surface).
+//   · command/* — the palette is a Dialog (CommandDialog composes DialogContent), so it
+//     INHERITS DialogContent's `enter-overlay` binding; no command SFC composes glass-reveal.
+//   · SheetContent — rides the `sheet-animate` slide dialect (its own reka-awaitable keyframe);
+//     converging it onto the overlay bloom is a Sheet-owning concern (it retires sheet-animate,
+//     entangled with the concurrent squircle/radius geometry) — not this wave's file set.
+const REGISTER_BINDING_ROSTER = {
+    // transient — the ephemeral center-seed bloom.
+    "src/components/ui/toast/Toast.vue": "transient",
+    // overlay — the focal modal surfaces (the .glass-reveal DEFAULT).
+    "src/components/ui/dialog/DialogContent.vue": "overlay",
+    "src/components/ui/dialog/DialogScrollContent.vue": "overlay",
+    // menu — the dropdown-shaped pickers/menus (UF-G2: the popover enters like the dropdown).
+    "src/components/ui/select/SelectContent.vue": "menu",
+    "src/components/ui/combobox/ComboboxList.vue": "menu",
+    "src/components/ui/popover/PopoverContent.vue": "menu",
+    "src/components/ui/dropdown-menu/DropdownMenuContent.vue": "menu",
+    "src/components/ui/dropdown-menu/DropdownMenuSubContent.vue": "menu",
+    "src/components/ui/context-menu/ContextMenuContent.vue": "menu",
+    "src/components/ui/context-menu/ContextMenuSubContent.vue": "menu",
+    // tooltip — the hover-anchored quick surfaces (fastest arrival, no overshoot).
+    "src/components/ui/tooltip/TooltipContent.vue": "tooltip",
+    "src/components/ui/hover-card/HoverCardContent.vue": "tooltip",
+};
+
+// Blank HTML comments `<!-- … -->` to spaces (offset-preserving) — a `<template>`
+// carries HTML comments that could otherwise host a witness-shaped class token.
+function stripHtmlComments(src) {
+    return src.replace(/<!--[\s\S]*?-->/g, (mm) => mm.replace(/[^\n]/g, " "));
+}
+
+// Reduce a `.vue` to its `<template>` region (offset-preserving), blanking the rest to
+// spaces/newlines so the line offsets stay true (the template-scan witness reads the
+// original SFC line). A non-`.vue` source passes through unchanged.
+function vueTemplateOnly(src) {
+    const m = src.match(/<template[^>]*>([\s\S]*?)<\/template>/i);
+    if (!m) return src.replace(/[^\n]/g, " ");
+    const start = m.index + m[0].indexOf(">") + 1;
+    const content = m[1];
+    let out = src.slice(0, start).replace(/[^\n]/g, " ");
+    out += content;
+    out += src.slice(start + content.length).replace(/[^\n]/g, " ");
+    return out;
+}
+
+// The template CSS the (c)/(b) template scanners read: a `.vue` reduced to its
+// `<template>` region; a `.css` is not a template (returns blank).
+function templateOf(file, src) {
+    return file.endsWith(".vue") ? vueTemplateOnly(src) : src.replace(/[^\n]/g, " ");
+}
+
+// (b) TEMPLATE-DURATION — scan a `.vue` `<template>` (HTML + block + line comments
+// stripped, so a `cn()`-binding JS comment's `duration-…` prose is never a witness) for
+// a hand-rolled Tailwind timing utility. PURE — file is for the witness only.
+export function detectTemplateDuration(file, templateSrc) {
+    const violations = [];
+    const stripped = stripAllComments(stripHtmlComments(templateSrc));
+    let m;
+    TEMPLATE_DURATION_RE.lastIndex = 0;
+    while ((m = TEMPLATE_DURATION_RE.exec(stripped)) !== null) {
+        violations.push(
+            `${file}:${lineOf(stripped, m.index)}: a hand-rolled Tailwind timing utility '${m[0]}' in a <template> — compose a register (the .glass-reveal data-reveal axis / a --duration-* token), not an inline duration/ease/delay class (TEMPLATE-DURATION)`,
+        );
+    }
+    return violations;
+}
+
+// (c) REGISTER-BINDING — an enrolled overlay content SFC must compose `.glass-reveal`
+// (the ONE register recipe), carry its ASSIGNED `data-reveal="<register>"` binding, AND
+// carry NO raw `data-[state=open]:animate-in` entrance. PURE — reads the FULL comment-
+// stripped SFC source (not just the `<template>`): a surface may declare `.glass-reveal`
+// in a `<script>` const it threads into the class (the DialogContent `defaultMotionClasses`
+// shape), so scanning the whole comment-stripped source sees the class wherever it lives.
+// A `//`/`/* */`/`<!-- -->` comment naming animate-in in a retirement note is never a
+// witness (stripAllComments + stripHtmlComments run first).
+export function detectRegisterBinding(file, src, register) {
+    const violations = [];
+    const stripped = stripAllComments(stripHtmlComments(src));
+    if (!/\bglass-reveal\b/.test(stripped)) {
+        violations.push(
+            `${file}: an enrolled overlay content SFC does NOT compose '.glass-reveal' — bind the register (add glass-reveal + its data-reveal) instead of a raw entrance (REGISTER-BINDING)`,
+        );
+    }
+    if (/data-\[state=open\]:animate-in/.test(stripped)) {
+        violations.push(
+            `${file}: an enrolled overlay carries a RAW entrance (data-[state=open]:animate-in) instead of the .glass-reveal register — clean-break onto the register (REGISTER-BINDING)`,
+        );
+    }
+    // The ASSIGNED register — each roster surface carries `data-reveal="<register>"` (the
+    // assignment-table binding). A surface bound to the WRONG register, or missing its
+    // binding entirely, REDs (the per-register teeth the flat presence-check lacked).
+    if (!new RegExp(`data-reveal=["']${register}["']`).test(stripped)) {
+        violations.push(
+            `${file}: the enrolled overlay is missing its assigned register binding data-reveal="${register}" — the assignment-table roster requires each surface to carry '.glass-reveal' + its data-reveal (REGISTER-BINDING)`,
+        );
+    }
+    return violations;
+}
+
 // ── AX.W05 src-tree walk + a CSS+line-comment strip ──────────────────────────
 // The survivor sweep + the consumer-coverage census walk the whole `src/` tree
 // (CSS tokens + SFC `<style>`/`<script>` + TS), so a witness in any consumer file
@@ -960,6 +1156,92 @@ function stripAllComments(src) {
             return line.slice(0, i);
         })
         .join("\n");
+}
+
+// ── BI.W-COMMAND-JITTER — the menu-row jitter clause (R5a + R5b, paired) ──────
+// The command-palette jitter (UF-G8) has TWO paired source defects in menu.css; the
+// clause proves BOTH, and — load-bearing — proves they cannot split (R5a alone
+// LENGTHENS the lift 0.2 s → 0.35 s and worsens the per-keystroke restart, so a
+// clock-only fix that leaves the keyboard-highlight lift live is a REGRESSION):
+//
+//   · R5b — the lift is POINTER-ONLY. A `translate:` LIFT (the `--menu-row-lift`
+//     travel) must ride a `:hover`-scoped rule and MUST NOT sit on the bare
+//     `[data-highlighted]` (which reka sets for KEYBOARD highlight too, so an
+//     arrow/keystroke restarts the lift transition → the jitter) nor on `:focus`
+//     (keyboard-reachable, same restart). The keyboard-highlight/focus rows keep
+//     the bg tint + color; only `:hover` lifts.
+//   · R5a — the clock. The menu-row TRANSLATE `transition:` must ride a
+//     `--spring-*-duration` settle clock, NOT the generic `--duration-*` wall
+//     clock (the re-timed dead-tail — the P4 per-spring-duration violation).
+//
+// PURE — reads menu.css. Uses the leaf-rule idiom (`[^{}]+{[^{}]*}` skips the
+// `@layer components {` wrapper, matching only the leaf rules whose bodies carry no
+// nested braces) so the `@layer` nesting never confuses the selector attribution.
+const MENU_CSS = "src/styles/menu.css";
+export function detectMenuJitter(file, src) {
+    const violations = [];
+    const stripped = stripCssComments(src);
+    const leafRe = /([^{}]+)\{([^{}]*)\}/g;
+    let sawLift = false;
+    let sawTranslateTransition = false;
+    let m;
+    while ((m = leafRe.exec(stripped)) !== null) {
+        const selector = m[1].trim();
+        const body = m[2];
+        const declStart = m.index;
+        // ── R5b — a LIFT declaration (a `translate:` referencing --menu-row-lift). ──
+        // (The base rest `translate: 0 0` is the identity — no --menu-row-lift, skipped.)
+        if (/translate\s*:[^;]*--menu-row-lift/.test(body)) {
+            sawLift = true;
+            if (/\[data-highlighted\]/.test(selector)) {
+                violations.push(
+                    `${file}:${lineOf(stripped, declStart)}: the menu-row LIFT (translate: --menu-row-lift) sits on a '[data-highlighted]' selector — reka sets that for KEYBOARD highlight too, so every arrow/keystroke restarts the lift transition (the command-palette jitter, UF-G8). Scope the lift to ':hover' only (MENU-JITTER R5b)`,
+                );
+            }
+            if (/:focus\b/.test(selector)) {
+                violations.push(
+                    `${file}:${lineOf(stripped, declStart)}: the menu-row LIFT sits on a ':focus' selector — a keyboard-focus restart, same jitter class. Scope the lift to ':hover' only (MENU-JITTER R5b)`,
+                );
+            }
+            if (!/:hover\b/.test(selector)) {
+                violations.push(
+                    `${file}:${lineOf(stripped, declStart)}: the menu-row LIFT is not ':hover'-scoped — the pointer lift must ride a ':hover' rule the keyboard highlight never fires (MENU-JITTER R5b)`,
+                );
+            }
+        }
+        // ── R5a — the menu-row TRANSLATE transition clock. ──
+        // A `transition:` whose value animates `translate` — its duration slot must be a
+        // `--spring-*-duration` settle clock, never the generic `--duration-*` wall clock.
+        const tm = body.match(/(?<!-)\btransition\s*:\s*([^;}]*translate[^;}]*)[;}]?/i);
+        if (tm) {
+            sawTranslateTransition = true;
+            const value = tm[1];
+            const declLine = lineOf(stripped, declStart + (tm.index ?? 0));
+            if (/var\(\s*--duration-/.test(value)) {
+                violations.push(
+                    `${file}:${declLine}: the menu-row translate transition rides the generic '--duration-*' wall clock — pair the '--spring-*' curve with its OWN '--spring-*-duration' settle clock (the P4 per-spring-duration doctrine; MENU-JITTER R5a)`,
+                );
+            }
+            if (!/var\(\s*--spring-[a-z-]+-duration\b/.test(value)) {
+                violations.push(
+                    `${file}:${declLine}: the menu-row translate transition clock is not a '--spring-*-duration' settle token — the re-timed dead-tail clock is the R5a defect (MENU-JITTER R5a)`,
+                );
+            }
+        }
+    }
+    // Presence floor — the anti-evasion bite: if the lift or the translate transition
+    // vanished entirely (a silent delete that would green the clauses vacuously), RED.
+    if (!sawLift) {
+        violations.push(
+            `${file}: no menu-row LIFT (translate: --menu-row-lift) found — the register the MENU-JITTER clause governs is absent; a vacuous green is forbidden (MENU-JITTER)`,
+        );
+    }
+    if (!sawTranslateTransition) {
+        violations.push(
+            `${file}: no menu-row translate 'transition:' found — the clock the MENU-JITTER R5a clause governs is absent; a vacuous green is forbidden (MENU-JITTER)`,
+        );
+    }
+    return violations;
 }
 
 // Extract the `<style>` block content from a `.vue` SFC, blanking everything
@@ -1148,8 +1430,10 @@ export function detectAll(read) {
     const scanTableBound = (file, css) => {
         easingTableForks.push(...detectEasingTableBound(file, css, curveTokens));
     };
+    // BI.W-REGISTER-TABLE — DURATION-BAND is no longer anchor-scoped (it is the WIDE
+    // pass below, over ALL src/styles css + all SFC style blocks). ANIMATION-ENTER-
+    // REGISTER stays anchor-scoped (the spec (a) widens ONLY the literal-ban).
     const scanAnimAnchor = (file, css) => {
-        durationBandForks.push(...detectDurationBand(file, css));
         enterRegisterForks.push(...detectAnimationEnterRegister(file, css));
     };
     const scanAnchor = (file, css) => {
@@ -1178,6 +1462,46 @@ export function detectAll(read) {
     for (const file of catchAllVue) {
         scanWide(file, cssOf(file, read(file)));
     }
+
+    // ── BI.W-REGISTER-TABLE (a) — the WIDE DURATION-BAND pass (universal literal-ban) ──
+    // ALL src/styles/**/*.css + all src/**/*.vue `<style>` blocks (exempting the token
+    // homes + the two routed legacy-orphan SFCs). No `animation:`-period is scanned (the
+    // detector reads `transition:` only — the continuous-loop exemption is by construction).
+    const templateDurationForks = [];
+    const registerBindingForks = [];
+    const allVue = srcFiles.filter((f) => f.endsWith(".vue"));
+    const stylesCss = srcFiles.filter(
+        (f) => f.startsWith("src/styles/") && f.endsWith(".css"),
+    );
+    for (const file of stylesCss) {
+        if (DURATION_BAND_TOKEN_HOMES.has(file) || file in DURATION_BAND_EXEMPT) continue;
+        durationBandForks.push(...detectDurationBand(file, read(file)));
+    }
+    for (const file of allVue) {
+        if (file in DURATION_BAND_EXEMPT) continue;
+        const src = read(file, true);
+        if (src === null) continue;
+        durationBandForks.push(...detectDurationBand(file, cssOf(file, src)));
+    }
+
+    // ── BI.W-REGISTER-TABLE (b) — TEMPLATE-DURATION (all `.vue` <template> blocks) ──
+    for (const file of allVue) {
+        if (file in TEMPLATE_DURATION_EXEMPT) continue;
+        const src = read(file, true);
+        if (src === null) continue;
+        templateDurationForks.push(...detectTemplateDuration(file, templateOf(file, src)));
+    }
+
+    // ── BI.W-REGISTER-TABLE (c) — REGISTER-BINDING (roster completed in ENTER-EXIT-LANDING) ──
+    for (const [file, register] of Object.entries(REGISTER_BINDING_ROSTER)) {
+        const src = read(file, true);
+        if (src === null) continue;
+        registerBindingForks.push(...detectRegisterBinding(file, src, register));
+    }
+
+    // ── BI.W-COMMAND-JITTER — the menu-row jitter clause (R5a + R5b, paired) ──
+    const menuJitterForks = detectMenuJitter(MENU_CSS, read(MENU_CSS));
+
     // REGISTER-ASSIGNMENT on the press-spring composite token DEFINITIONS (D1).
     registerForks.push(...detectPressSpringRegister(TOKENS_CSS, readMonolith(ROOT, "tokens")));
     facts.easingForks = easingForks.length;
@@ -1188,6 +1512,11 @@ export function detectAll(read) {
     facts.easingTableForks = easingTableForks.length;
     facts.durationBandForks = durationBandForks.length;
     facts.enterRegisterForks = enterRegisterForks.length;
+    // BI.W-REGISTER-TABLE — the (b)/(c) arm tallies.
+    facts.templateDurationForks = templateDurationForks.length;
+    facts.registerBindingForks = registerBindingForks.length;
+    facts.menuJitterForks = menuJitterForks.length;
+    facts.durationBandWideScanned = stylesCss.length + allVue.length;
     violations.push(
         ...easingForks,
         ...pressForks,
@@ -1195,6 +1524,9 @@ export function detectAll(read) {
         ...easingTableForks,
         ...durationBandForks,
         ...enterRegisterForks,
+        ...templateDurationForks,
+        ...registerBindingForks,
+        ...menuJitterForks,
     );
 
     // APPLE-SPRING-SURVIVOR
@@ -1229,7 +1561,87 @@ function readFile(rel, optional = false) {
     }
 }
 
+// ── BI.W-REGISTER-TABLE — the per-arm planted-violation self-tests ─────────────
+// Each of the three arms (a/b/c) proves its own bite every run: a planted violation
+// MUST flag, and the honest/composed/bound form MUST NOT (the teeth-are-real + no-over-
+// reach discipline). A future edit that de-fangs an arm re-reds the self-test.
+function registerTableSelfTest() {
+    const failures = [];
+    // (a) DURATION-BAND — a bare DURATION-slot literal flags; a DELAY-slot literal +
+    // a composed clock + a var() fallback do NOT.
+    if (detectDurationBand("x.css", ".a { transition: width 340ms ease; }").length === 0)
+        failures.push("self-test (a): a bare duration-slot literal '340ms' did NOT flag — the literal-ban teeth are gone");
+    if (detectDurationBand("x.css", ".a { transition: opacity var(--duration-fast) var(--ease-out) 60ms; }").length !== 0)
+        failures.push("self-test (a): a DELAY-slot literal '60ms' false-flagged (a stagger/overlap delay is not a duration)");
+    if (detectDurationBand("x.css", ".a { transition: scale var(--reveal-clock) var(--reveal-spring); }").length !== 0)
+        failures.push("self-test (a): a fully register-composed transition false-flagged");
+    if (detectDurationBand("x.css", ".a { transition: width var(--duration-fast, 150ms) ease; }").length !== 0)
+        failures.push("self-test (a): a var() fallback literal '150ms' false-flagged");
+    // (b) TEMPLATE-DURATION — arbitrary + preset duration / arbitrary ease / preset
+    // delay all flag; a clean template does NOT; a `//`-comment mention is not a witness.
+    if (detectTemplateDuration("x.vue", '<div class="foo duration-[347ms] bar">').length === 0)
+        failures.push("self-test (b): arbitrary 'duration-[347ms]' did NOT flag");
+    if (detectTemplateDuration("x.vue", '<div class="foo duration-200 bar">').length === 0)
+        failures.push("self-test (b): preset 'duration-200' did NOT flag");
+    if (detectTemplateDuration("x.vue", '<div class="foo ease-[cubic-bezier(.1,.2,.3,.4)] bar">').length === 0)
+        failures.push("self-test (b): arbitrary 'ease-[…]' did NOT flag");
+    if (detectTemplateDuration("x.vue", '<div class="glass-reveal group flex" data-reveal="menu">').length !== 0)
+        failures.push("self-test (b): a clean register-bound template false-flagged");
+    if (detectTemplateDuration("x.vue", '<div :class="cn(/* the prior duration-200 recipe */ \'glass-reveal\')">').length !== 0)
+        failures.push("self-test (b): a comment-only 'duration-200' mention false-flagged (comments are not witnesses)");
+    // (c) REGISTER-BINDING — a raw-entrance overlay (no glass-reveal) reds; a register-
+    // bound overlay carrying its ASSIGNED data-reveal passes; a WRONG or MISSING binding
+    // reds (the per-register teeth); glass-reveal in a <script> const is still seen; a
+    // `//`/block-comment naming animate-in is not a witness.
+    if (detectRegisterBinding("x.vue", '<div :class="cn(\'group data-[state=open]:animate-in\')">', "overlay").length === 0)
+        failures.push("self-test (c): a raw-entrance overlay (no glass-reveal, has animate-in) did NOT flag");
+    if (detectRegisterBinding("x.vue", '<div :class="cn(\'glass-reveal group\')" data-reveal="transient">', "transient").length !== 0)
+        failures.push("self-test (c): a register-bound overlay carrying its assigned data-reveal false-flagged");
+    if (detectRegisterBinding("x.vue", '<div :class="cn(/* retired the data-[state=open]:animate-in chain */ \'glass-reveal\')" data-reveal="menu">', "menu").length !== 0)
+        failures.push("self-test (c): a `//`/block-comment mention of animate-in false-flagged (comments are not witnesses)");
+    if (detectRegisterBinding("x.vue", '<div class="glass-reveal" data-reveal="menu">', "tooltip").length === 0)
+        failures.push("self-test (c): a surface bound to the WRONG register (menu vs assigned tooltip) did NOT flag");
+    if (detectRegisterBinding("x.vue", '<div class="glass-reveal">', "menu").length === 0)
+        failures.push("self-test (c): a glass-reveal surface MISSING its data-reveal binding did NOT flag");
+    if (detectRegisterBinding("x.vue", "<script>const c = 'glass-reveal'</script><template><div data-reveal=\"overlay\"></div></template>", "overlay").length !== 0)
+        failures.push("self-test (c): glass-reveal declared in a <script> const (DialogContent shape) false-flagged");
+    // ── BI.W-COMMAND-JITTER — the menu-jitter paired-fix bites ────────────────
+    // The load-bearing ORDERING bite (the pair cannot silently split): an R5a-ONLY
+    // tree (clock swapped to a --spring-*-duration, but the LIFT still on the bare
+    // [data-highlighted]) MUST still red — a clock-only fix without R5b LENGTHENS
+    // the keyboard-highlight lift and worsens the jitter, so it may never green.
+    const jHonest =
+        ".glass-menu-row { transition: translate var(--spring-smooth-duration) var(--spring-smooth); translate: 0 0; } .glass-menu-row:hover:not([data-disabled]) { translate: 0 var(--menu-row-lift); }";
+    const jHead =
+        ".glass-menu-row { transition: translate var(--duration-fast) var(--spring-smooth); } .glass-menu-row[data-highlighted]:not([data-disabled]) { translate: 0 var(--menu-row-lift); }";
+    const jR5aOnly =
+        ".glass-menu-row { transition: translate var(--spring-smooth-duration) var(--spring-smooth); } .glass-menu-row[data-highlighted]:not([data-disabled]) { translate: 0 var(--menu-row-lift); }";
+    const jR5bOnly =
+        ".glass-menu-row { transition: translate var(--duration-fast) var(--spring-smooth); } .glass-menu-row:hover:not([data-disabled]) { translate: 0 var(--menu-row-lift); }";
+    if (detectMenuJitter("menu.css", jHonest).length !== 0)
+        failures.push("self-test (menu-jitter): the honest paired-fix tree (:hover lift + --spring-*-duration clock) false-flagged");
+    if (detectMenuJitter("menu.css", jHead).length === 0)
+        failures.push("self-test (menu-jitter): the HEAD-shape tree (--duration-fast clock + [data-highlighted] lift) did NOT flag");
+    if (detectMenuJitter("menu.css", jR5aOnly).length === 0)
+        failures.push("self-test (menu-jitter): the R5a-ONLY tree (clock swapped, lift still on [data-highlighted]) did NOT flag — the pair silently split (the ordering fence is gone)");
+    if (detectMenuJitter("menu.css", jR5bOnly).length === 0)
+        failures.push("self-test (menu-jitter): the R5b-ONLY tree (lift :hover-scoped, clock still --duration-fast) did NOT flag — the R5a clock clause is toothless");
+    // The presence floor — a silent delete of the lift OR the translate transition reds
+    // (a vacuous green is forbidden).
+    if (detectMenuJitter("menu.css", ".glass-menu-row { color: red; }").length === 0)
+        failures.push("self-test (menu-jitter): a tree with NO lift + NO translate transition did NOT flag the presence floor (vacuous-green guard is gone)");
+    return failures;
+}
+
 function run() {
+    const selfTestFailures = registerTableSelfTest();
+    if (selfTestFailures.length) {
+        for (const f of selfTestFailures) console.error(`proof:animation-coherence — ${f}`);
+        console.error(
+            "proof:animation-coherence — SELF-TEST FAILED: a BI.W-REGISTER-TABLE / W-COMMAND-JITTER arm's teeth are gone (duration-band / template-duration / register-binding / menu-jitter); do not trust a GREEN.",
+        );
+        process.exit(1);
+    }
     const { facts, violations } = detectAll(readFile);
     const status = violations.length === 0 ? "pass" : "fail";
     const ARTIFACT = gateArtifactPath(
@@ -1254,7 +1666,10 @@ function run() {
     console.log(`  register-assignment forks  : ${facts.registerForks}`);
     console.log(`  MOTION_CURVES tokens       : ${facts.curveTokenCount}`);
     console.log(`  easing-table-bound forks   : ${facts.easingTableForks}`);
-    console.log(`  duration-band forks        : ${facts.durationBandForks}`);
+    console.log(`  duration-band forks (WIDE) : ${facts.durationBandForks} (over ${facts.durationBandWideScanned} css+vue)`);
+    console.log(`  template-duration forks    : ${facts.templateDurationForks}`);
+    console.log(`  register-binding forks     : ${facts.registerBindingForks}`);
+    console.log(`  menu-jitter forks          : ${facts.menuJitterForks}`);
     console.log(`  enter-register forks       : ${facts.enterRegisterForks}`);
     console.log(`  apple-spring survivors     : ${facts.appleSpringSurvivors.length}`);
     console.log(

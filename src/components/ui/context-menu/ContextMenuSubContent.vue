@@ -23,6 +23,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
 <template>
   <ContextMenuSubContent
     v-bind="forwarded"
+    data-reveal="menu"
     :class="
       cn(
         'z-popover min-w-32 overflow-hidden rounded-panel border glass-floating p-1 text-popover-foreground glass-reveal',

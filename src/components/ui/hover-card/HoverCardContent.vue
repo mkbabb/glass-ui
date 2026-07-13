@@ -35,6 +35,7 @@ const forwardedProps = useForwardProps(delegatedProps)
     <HoverCardContent
       v-bind="forwardedProps"
       :data-surface="props.surface"
+      data-reveal="tooltip"
       :class="
         cn(
           'z-hovercard w-64 rounded-panel border [--overlay-pad-inline:1rem] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] px-(--overlay-pad-inline) py-(--overlay-pad-block) text-popover-foreground outline-none glass-reveal',

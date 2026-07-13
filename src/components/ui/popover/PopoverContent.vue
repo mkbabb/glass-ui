@@ -53,6 +53,7 @@ const surfaceDecoration = computed(() =>
       :data-glass-dock-portal="dockContext?.id ? '' : undefined"
       :data-glass-dock-owner="dockContext?.id"
       :data-surface="props.surface"
+      data-reveal="menu"
       :class="
         cn(
           'popover-content z-popover w-72 glass-floating [--overlay-pad-inline:1rem] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] px-(--overlay-pad-inline) py-(--overlay-pad-block) glass-reveal',
@@ -70,6 +71,7 @@ const surfaceDecoration = computed(() =>
     :data-glass-dock-portal="dockContext?.id ? '' : undefined"
     :data-glass-dock-owner="dockContext?.id"
     :data-surface="props.surface"
+    data-reveal="menu"
     :class="
       cn(
         'popover-content z-popover w-72 glass-floating [--overlay-pad-inline:1rem] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] px-(--overlay-pad-inline) py-(--overlay-pad-block) glass-reveal',

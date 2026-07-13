@@ -46,6 +46,7 @@ const dockContext = useOptionalDockContext()
       :data-glass-dock-portal="dockContext?.id ? '' : undefined"
       :data-glass-dock-owner="dockContext?.id"
       :data-surface="props.surface"
+      data-reveal="menu"
       :class="cn(
         'dropdown-menu-content z-popover min-w-(--overlay-min-width) max-h-(--overlay-max-block) overflow-y-auto rounded-panel border text-popover-foreground glass-reveal',
         surfaceClass(props.surface, 'floating'),
