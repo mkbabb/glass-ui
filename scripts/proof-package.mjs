@@ -226,7 +226,9 @@ import { FuzzySearch, useFuzzySearch } from "@mkbabb/glass-ui/search";
 // composables continue to resolve through the subpath after the SFC retire.
 import { buildTreeIndex, useTreeIndex } from "@mkbabb/glass-ui/sidebar";
 import { DarkModeToggle } from "@mkbabb/glass-ui/controls";
-import { ConfirmDialog } from "@mkbabb/glass-ui/confirm-dialog";
+// BI.W-DIALOG-PLACEMENT demoted ConfirmDialog to a consumer preset; the probe now
+// samples the BI.W-SURFACE-EXTRACT bare plate through its new published subpath.
+import { Surface } from "@mkbabb/glass-ui/surface";
 import { InfiniteScroll, useInfiniteScroll } from "@mkbabb/glass-ui/infinite-scroll";
 import { SegmentedTabs } from "@mkbabb/glass-ui/tabs";
 import { TypewriterText, useTypewriter } from "@mkbabb/glass-ui/typewriter";
@@ -236,7 +238,7 @@ import { MetricBadge } from "@mkbabb/glass-ui/metric-badge";
 import { StatusDot } from "@mkbabb/glass-ui/status-dot";
 import { Pulse } from "@mkbabb/glass-ui/pulse";
 import { PaperBackdrop } from "@mkbabb/glass-ui/paper-backdrop";
-import { ToggleChip } from "@mkbabb/glass-ui/toggle-chip";
+import { Chip } from "@mkbabb/glass-ui/chip";
 import { SortableList } from "@mkbabb/glass-ui/sortable-list";
 import { GlassTimeline } from "@mkbabb/glass-ui/timeline";
 import { LabeledInput } from "@mkbabb/glass-ui/labeled-field";
@@ -247,9 +249,9 @@ const runtimeSymbols = [
   Button, Card, Dialog, Tooltip, cn, useGlobalDark, useInterval, chartHeights,
   GlassDock, DockIconButton, DockDropdownTrigger, DockLayerGroup, FuzzySearch, useFuzzySearch,
   buildTreeIndex, useTreeIndex, DarkModeToggle,
-  ConfirmDialog, InfiniteScroll, useInfiniteScroll, SegmentedTabs,
+  Surface, InfiniteScroll, useInfiniteScroll, SegmentedTabs,
   TypewriterText, useTypewriter, StackedIconGroup,
-  Aurora, useAurora, MetricBadge, StatusDot, Pulse, PaperBackdrop, ToggleChip,
+  Aurora, useAurora, MetricBadge, StatusDot, Pulse, PaperBackdrop, Chip,
   SortableList, GlassTimeline, LabeledInput,
   ExpandableContainer, IconTooltip,
 ];

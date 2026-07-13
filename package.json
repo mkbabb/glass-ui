@@ -85,9 +85,6 @@
             "command": [
                 "dist/command.d.ts"
             ],
-            "context-menu": [
-                "dist/context-menu.d.ts"
-            ],
             "data-table": [
                 "dist/data-table.d.ts"
             ],
@@ -102,9 +99,6 @@
             ],
             "focus-scope": [
                 "dist/focus-scope.d.ts"
-            ],
-            "hover-card": [
-                "dist/hover-card.d.ts"
             ],
             "label": [
                 "dist/label.d.ts"
@@ -126,9 +120,6 @@
             ],
             "separator": [
                 "dist/separator.d.ts"
-            ],
-            "sheet": [
-                "dist/sheet.d.ts"
             ],
             "slider": [
                 "dist/slider.d.ts"
@@ -160,6 +151,9 @@
             "border-progress": [
                 "dist/border-progress.d.ts"
             ],
+            "chip": [
+                "dist/chip.d.ts"
+            ],
             "color-swatch": [
                 "dist/color-swatch.d.ts"
             ],
@@ -168,9 +162,6 @@
             ],
             "configurator": [
                 "dist/configurator.d.ts"
-            ],
-            "confirm-dialog": [
-                "dist/confirm-dialog.d.ts"
             ],
             "constellation": [
                 "dist/constellation.d.ts"
@@ -196,17 +187,11 @@
             "fourier-field": [
                 "dist/fourier-field.d.ts"
             ],
-            "glass-panel": [
-                "dist/glass-panel.d.ts"
-            ],
             "handmark": [
                 "dist/handmark.d.ts"
             ],
             "header-ribbon": [
                 "dist/header-ribbon.d.ts"
-            ],
-            "hover-popover": [
-                "dist/hover-popover.d.ts"
             ],
             "icon-chip": [
                 "dist/icon-chip.d.ts"
@@ -247,9 +232,6 @@
             "search": [
                 "dist/search.d.ts"
             ],
-            "selectable-chip": [
-                "dist/selectable-chip.d.ts"
-            ],
             "sortable-list": [
                 "dist/sortable-list.d.ts"
             ],
@@ -267,9 +249,6 @@
             ],
             "timeline": [
                 "dist/timeline.d.ts"
-            ],
-            "toggle-chip": [
-                "dist/toggle-chip.d.ts"
             ],
             "typewriter": [
                 "dist/typewriter.d.ts"
@@ -380,10 +359,6 @@
             "types": "./dist/command.d.ts",
             "import": "./dist/command.js"
         },
-        "./context-menu": {
-            "types": "./dist/context-menu.d.ts",
-            "import": "./dist/context-menu.js"
-        },
         "./data-table": {
             "types": "./dist/data-table.d.ts",
             "import": "./dist/data-table.js"
@@ -403,10 +378,6 @@
         "./focus-scope": {
             "types": "./dist/focus-scope.d.ts",
             "import": "./dist/focus-scope.js"
-        },
-        "./hover-card": {
-            "types": "./dist/hover-card.d.ts",
-            "import": "./dist/hover-card.js"
         },
         "./label": {
             "types": "./dist/label.d.ts",
@@ -435,10 +406,6 @@
         "./separator": {
             "types": "./dist/separator.d.ts",
             "import": "./dist/separator.js"
-        },
-        "./sheet": {
-            "types": "./dist/sheet.d.ts",
-            "import": "./dist/sheet.js"
         },
         "./slider": {
             "types": "./dist/slider.d.ts",
@@ -480,6 +447,10 @@
             "types": "./dist/border-progress.d.ts",
             "import": "./dist/border-progress.js"
         },
+        "./chip": {
+            "types": "./dist/chip.d.ts",
+            "import": "./dist/chip.js"
+        },
         "./color-swatch": {
             "types": "./dist/color-swatch.d.ts",
             "import": "./dist/color-swatch.js"
@@ -491,10 +462,6 @@
         "./configurator": {
             "types": "./dist/configurator.d.ts",
             "import": "./dist/configurator.js"
-        },
-        "./confirm-dialog": {
-            "types": "./dist/confirm-dialog.d.ts",
-            "import": "./dist/confirm-dialog.js"
         },
         "./constellation": {
             "types": "./dist/constellation.d.ts",
@@ -528,10 +495,6 @@
             "types": "./dist/fourier-field.d.ts",
             "import": "./dist/fourier-field.js"
         },
-        "./glass-panel": {
-            "types": "./dist/glass-panel.d.ts",
-            "import": "./dist/glass-panel.js"
-        },
         "./handmark": {
             "types": "./dist/handmark.d.ts",
             "import": "./dist/handmark.js"
@@ -539,10 +502,6 @@
         "./header-ribbon": {
             "types": "./dist/header-ribbon.d.ts",
             "import": "./dist/header-ribbon.js"
-        },
-        "./hover-popover": {
-            "types": "./dist/hover-popover.d.ts",
-            "import": "./dist/hover-popover.js"
         },
         "./icon-chip": {
             "types": "./dist/icon-chip.d.ts",
@@ -596,10 +555,6 @@
             "types": "./dist/search.d.ts",
             "import": "./dist/search.js"
         },
-        "./selectable-chip": {
-            "types": "./dist/selectable-chip.d.ts",
-            "import": "./dist/selectable-chip.js"
-        },
         "./sortable-list": {
             "types": "./dist/sortable-list.d.ts",
             "import": "./dist/sortable-list.js"
@@ -623,10 +578,6 @@
         "./timeline": {
             "types": "./dist/timeline.d.ts",
             "import": "./dist/timeline.js"
-        },
-        "./toggle-chip": {
-            "types": "./dist/toggle-chip.d.ts",
-            "import": "./dist/toggle-chip.js"
         },
         "./typewriter": {
             "types": "./dist/typewriter.d.ts",
@@ -782,7 +733,9 @@
         "proof:squircle-language": "node scripts/proof-squircle-language.mjs",
         "proof:card-cartoon-consumers": "node scripts/proof-card-cartoon-consumers.mjs",
         "proof:card-veil": "node scripts/proof-card-veil.mjs",
-        "proof:glass-panel-tiers": "node scripts/proof-glass-panel-tiers.mjs",
+        "proof:variant-residual": "node scripts/proof-variant-residual.mjs",
+        "proof:fold-delete": "node scripts/proof-fold-delete.mjs",
+        "proof:api-lockstep": "node scripts/proof-api-lockstep.mjs",
         "proof:metric-core": "node scripts/proof-metric-core.mjs",
         "proof:doc-consistency": "node scripts/proof-doc-consistency.mjs",
         "proof:claude-deletable": "node scripts/proof-claude-deletable.mjs",

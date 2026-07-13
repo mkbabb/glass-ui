@@ -232,7 +232,14 @@
     }
 
     .input-bar-field {
-        font-family: var(--font-mono, monospace);
+        /* BI.W-SURFACE-EXTRACT (value.js P3 — the seated field-chrome `.input-bar`
+           rung ADMIT): the field font family reads a token-first `--input-bar-font`
+           seam so a consumer retunes the seated-field face in ONE write, defaulting
+           byte-identical to the prior `var(--font-mono, monospace)`. The seat rung
+           itself (`.input-bar`, above) is already the P3 "seated field-chrome rung"
+           — reading the shared `--control-pill-*` cohort + the floating glass rung;
+           this token completes the ask's `--input-bar-font` half. */
+        font-family: var(--input-bar-font, var(--font-mono, monospace));
         /* BC.W-SEARCH-CUSTOM — the field font reads the shared `--control-pill-text`
            seam (the SAME rung `.input-pill` reads), DEFAULTING to `--control-text`
            (≈ the prior `--type-small` register at scale 1 — byte-near-identical). The

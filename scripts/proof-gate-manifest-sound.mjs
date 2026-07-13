@@ -742,7 +742,7 @@ function run() {
     console.log(`  2 PARITY-HARDENED      : gate-script-parity ${facts.gateScriptParity ? "✓" : "✗"} | tag-parity ${facts.tagParity ? "✓" : "✗"}`);
     console.log(`  3 PROOF-ALL-RUNS       : ${facts.proofAllRuns ? "✓ (local aggregate completes)" : "✗ (did not complete)"}`);
     console.log(`  4 NON-:5199 DEFAULT     : ${facts.nonCanonicalPortDefaults.length === 0 ? "OK (zero non-:5199 defaults)" : facts.nonCanonicalPortDefaults.join(", ")}`);
-    console.log(`  5 DOCK-ROUTE-LIVE      : route ${facts.dockRouteLive ? "✓" : "✗"} | manifest-story ${facts.dockLayersStoryPresent ? "✓" : "✗"} | note-clean ${!facts.gatesNoteHasDeadRoute ? "✓" : "✗"}`);
+    console.log(`  5 DOCK-ROUTE-LIVE      : ${facts.dockRoute} | note-clean ${!facts.gatesNoteHasDeadRoute ? "\u2713" : "\u2717"}`);
     console.log(`  6 BLOB-GATES-WIRED     : interaction ${facts.blobInteractionWired ? "✓" : "✗"} | tempo ${facts.blobTempoWired ? "✓" : "✗"} | reads-uniforms ${facts.blobInteractionReadsUniforms ? "✓" : "✗"} | msg ${facts.blobMessageFixed ? "✓" : "✗"}`);
     console.log(`  7 FRESHNESS-HASH       : content-hash ${facts.ledgerContentHash ? "✓" : "✗"} | git-arm-gone ${!facts.ledgerGitAncestryArmSurvives ? "✓" : "✗"} | AZ deltas ${facts.azDeltaFreshness.map((d) => `${d.wave}:${d.state}`).join(" ")}`);
     console.log(`  8 R6-PERSISTED         : dock-animation-live status "${facts.r6DockAnimationStatus}"`);

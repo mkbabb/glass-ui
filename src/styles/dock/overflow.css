@@ -180,7 +180,7 @@
             var(--shadow-dock-override, var(--shadow-dock)),
             0 8px 24px color-mix(in srgb, var(--shadow-color) calc(0.14 * var(--dock-wrap-elev)), transparent),
             0 0 0 0.5px color-mix(in srgb, var(--shadow-color) calc(0.05 * var(--dock-wrap-elev)), transparent),
-            0 8px 32px -4px color-mix(in srgb, oklch(0 0 0 / 0.12) var(--dock-wrap-elev), transparent);
+            calc(8px * var(--glass-key-direction)) 8px 32px -4px color-mix(in srgb, oklch(0 0 0 / 0.12) var(--dock-wrap-elev), transparent);
     }
 
     .glass-dock.dock-overflow-wrap .dock-layer--full {

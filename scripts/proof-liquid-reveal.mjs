@@ -135,8 +135,8 @@ const ENROLLED = [
     "src/components/ui/hover-card/HoverCardContent.vue",
     "src/components/ui/dropdown-menu/DropdownMenuContent.vue",
     "src/components/ui/dropdown-menu/DropdownMenuSubContent.vue",
-    "src/components/ui/context-menu/ContextMenuContent.vue",
-    "src/components/ui/context-menu/ContextMenuSubContent.vue",
+    // BI.W-MENU-TRIGGER — context-menu folded onto dropdown-menu (`trigger="context"`);
+    // the dropdown Content/SubContent above compose .glass-reveal for both trigger modes.
     "src/components/ui/combobox/ComboboxList.vue",
     "src/components/ui/select/SelectContent.vue",
 ];

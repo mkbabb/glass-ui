@@ -340,7 +340,9 @@ const C2_OVERLAYS = [
     { dir: "dropdown-menu", file: "src/components/ui/dropdown-menu/DropdownMenuContent.vue", pad: true },
     { dir: "select", file: "src/components/ui/select/SelectContent.vue", pad: true },
     { dir: "tooltip", file: "src/components/ui/tooltip/TooltipContent.vue", pad: true },
-    { dir: "context-menu", file: "src/components/ui/context-menu/ContextMenuContent.vue", pad: true },
+    // BI.W-MENU-TRIGGER — context-menu folded onto dropdown-menu (`trigger="context"`);
+    // the dropdown-menu Content row above carries the surface-axis + φ-pad assertion for
+    // both trigger modes (one Content SFC, two anchoring families).
     { dir: "command", file: "src/components/ui/command/CommandList.vue", pad: true },
     { dir: "hover-card", file: "src/components/ui/hover-card/HoverCardContent.vue", pad: true },
 ];

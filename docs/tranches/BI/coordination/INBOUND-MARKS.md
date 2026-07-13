@@ -222,7 +222,7 @@ contract) — a NEW inbox-class coordination file landing WITHOUT a marks sectio
 | P2 PKT-2 | spring clock hole (~0.3s-settle preset or bless snappy) | OWNED — ROUTED to BI.W-REGISTER-TABLE (B7) as an acceptance input (BI.W-XR-PRODUCER-REPAIRS §Dispositions) |
 | P2 PKT-3 | compositor collapse/expand recipe | OWNED — BI.W-ENTER-EXIT-LANDING / BI.W-ACCORDION-PRESS family (already-B7 per BI.W-XR-PRODUCER-REPAIRS §Dispositions) |
 | P2 PKT-4 (=L9) | skeleton shimmer `::after` seams | DECLINED-TERMINAL — the compositor-only shimmer stands (BI.W-XR-PRODUCER-REPAIRS §Dispositions); re-open needs a new mechanism |
-| P3 | WELL rung + input-bar + chroma-guard + tiers-publish-L | OWNED — BI.W-SURFACE-EXTRACT §Inbound (the extracted grammar DECIDES each rung; silent omission REDs) |
+| P3 | WELL rung + input-bar + chroma-guard + tiers-publish-L | DISCHARGED — BI.W-SURFACE-EXTRACT LANDED (the extracted grammar decided each rung: the `--input-bar-font` admit MINTED; tiers publish through `<Surface>` at `/surface`; `proof:surface-axis` W7 defs:1/warts:0 + W8 GREEN) |
 | P3 A1/A2 | F2.R1 dark readability | DISCHARGED — `300a30fb` (verify-at-cut) |
 | P4 (T-20) | tabs pilling anchor-arm (drop double-count, ε≤0.5px) | OWNED-BY-SUBSUMPTION — BI.W-TABS-FACTOR §Inbound (ε≤0.5px oracle; escalate-to-owner fires only if the rebuild misses ε) |
 | P5 | letter-rail + ring contract + WatercolorDot solid-ring | OWNED — `--dock-ring` → BI.W-DOCK-CONTROLS; WatercolorDot solid-ring → BI.W-XR-PRODUCER-REPAIRS X6; letter-rail PRIMITIVE DECLINED-TERMINAL (the DockStack facet mode IS the rail register; re-trigger a letter-rail consumer) |
@@ -376,6 +376,53 @@ contract) — a NEW inbox-class coordination file landing WITHOUT a marks sectio
 | answer #24 | `/deck` headless core | DISCHARGED — already ships `/deck` (BC.W-DECK) |
 | answer #25 | `@property` registration posture | DISCHARGED (ruled) — identity initial-value, no `@supports` |
 | §6 rhythm | reciprocal outbound cadence | DISCHARGED — outbound is the reciprocal (atlas §6 answered) |
+
+## docs/tranches/BI/coordination/W-DOCK-FOLD-asks.md
+
+Our OWN outbound roster (the B3 dock fold's by-name asks; feeds `asks-and-consumes.md` row 12) —
+inbox-classed by path, marked for wholeness:
+
+| ask-id | ask | disposition |
+|---|---|---|
+| F1–F5 | the dock control/trigger rename roster (~24 sites / ~9 repos) | CUT-FIXED — issues at the 5.0.0 cut; the sibling edits on its `^5.0.0` bump (row 12 of the master roster) |
+| R5-C-02 | atlas DockAppendix PEEK-as-third-detent rides the F4 crossfade fold | DECLINED-TERMINAL for 5.0.0 — atlas SELF-HOSTS the PEEK detent (their own communiqué disposition); the crossfade tri-state is a bounded extension consideration on asks-and-consumes roster row 12's F4 fold; re-open requires a fresh consumer-batch ask |
+
+## docs/tranches/BI/coordination/valuejs-inbox-2026-07-13-bi-dist-breakage.md
+
+| ask-id | ask | disposition |
+|---|---|---|
+| A1 | dangling `dist/styles/dock.css` `@import "./dock/morph-bridge.css"` at `da051943` | DISCHARGED — the aggregator was regenerated with the B3 residuals sweep; re-verified 2026-07-13 at the registrar cycle: dist CSS graph 109 imports / 0 unresolved, zero `morph-bridge` references in `src/styles/dock.css` (comment-only retire record) |
+| A2 | zero `.d.ts` in the on-disk dist at `da051943` | DISCHARGED — the on-disk dist now carries 695 `.d.ts` (re-verified 2026-07-13); ANSWERED-BY-EXISTING for the cut: the SHIPPED dist is release.sh's fresh provenance build (`vue-tsc emit-types` + `flatten-subpath-types` are `build` halves; `proof:build` gates it) — the dev-tree dist is never the shipped artifact |
+| (b) | L17 goo-blob→blob consume-swap landed value.js-side; `.goo-blob-*` DOM contract held | DISCHARGED — no producer action; the byte-stable internal-contract claim matches BI.W-BLOB-RENAME-LAND (render byte-identical, internals untouched) |
+| (c) | value.js pins `file:../glass-ui` at `2e559f7a` until 5.0.0 or a coherent HEAD dist | ANSWERED-BY-EXISTING — the pin is the consumer's own coherent-ref discipline (no producer shim, no tree write); a coherent dist exists at HEAD as of 2026-07-13, and the 5.0.0 tag is the unpin trigger they named |
+| (d) | the 5.0.0 cut ships a whole, coherent dist (regenerated aggregator + emitted types) | OWNED — BI.W-XR-PRODUCER-REPAIRS (the dist/build-correctness family: its gate asserts on the FRESH build, the G-CUR-1 discipline) + the close battery's release.sh provenance build (`proof:build`) |
+
+## docs/tranches/BI/coordination/valuejs-inbox-2026-07-13-colands-preview.md
+
+| ask-id | ask | disposition |
+|---|---|---|
+| §A/§B | the U.W-LIB `{from}2{to}` rename set previewed on the pinned sandbox (5 names at `2e559f7a`); apply the FULL live-count set at our cut ref (grep the OLD names before migrating) | OWNED — the value.js `4.0.0` co-land window (U-F77): the rename find-replace + peer-floor widen land TOGETHER when value.js `4.0.0` publishes; recorded on `asks-and-consumes.md` §co-migration; the grep-before-migrate reconcile note is adopted verbatim |
+| §C | keyframes `parseCSSSubValue → parseCSSValues` (U-F29) surfaces through our dist's keyframes dependency | DECLINED-TERMINAL — keyframes' OWN migration (their `compile/parse-flatten.ts`), relayed through keyframes' channel; no glass-ui source touches it; visible here only as the dependency note |
+| §D | verification record + `^3.1.0 → ^4.0.0` floor-widen when value.js 4.0.0 publishes | OWNED — asks-and-consumes §co-migration (peer + dev floors widen paired with the §B2 renames at the U-F77 window; nothing blocks the v5 tag) |
+
+## docs/tranches/BI/coordination/valuejs-inbox-2026-07-13-u-w-lib-invariant.md
+
+| ask-id | ask | disposition |
+|---|---|---|
+| §A U-F30 | composite Locus-P invariant landed — parser colors physical at the two parse loci; `mixColors`/`sampleColorRamp` UNCHANGED; spectrum-walk raw read PRESERVED byte-identical | DISCHARGED — no co-migration owed (the formation letter's §1 coupling RESOLVES to the preferred invariant-preserving branch and CLOSES); LIB-G6 re-greps our `spectrum-walk.ts` every value.js run — the standing census holds the verdict fresh |
+| §A bonus | `cssToOklch` auto-adopt beneficiary (mix/relative strings store physical channels) | ANSWERED-BY-EXISTING — pure upside on the minor auto-adopt; no live call site feeds it a mix string today; no action |
+| §B U-F29 | loud-fail `CSSParseError` + `parseCSSValues` rename | ANSWERED-BY-EXISTING — glass-ui consumes ZERO `parseCSSValue`; recorded for constellation coherence only |
+| §B2/§C U-F34 | the 3-symbol conversion-import rename (`srgbToOKLab→srgb2oklab` · `rawOklchToOklab→rawOklch2oklab` · `rawOklabToOklch→rawOklab2oklch`, 4 files) + the `^4.0.0` peer widen at the co-land window; MAJOR classification ack | OWNED — asks-and-consumes §co-migration (the U-F77 owner-held co-land window: find-replace + floor widen land paired; the colands-preview 5-name live-count reconcile applies — grep the old names at our ref before migrating); nothing here blocks the 5.0.0 tag |
+
+## docs/tranches/BI/coordination/valuejs-inbox-2026-07-13-u-w-visual.md
+
+| ask-id | ask | disposition |
+|---|---|---|
+| §A | whole-header contraction: demo REFERENCE landed value.js-side; the P3 `ScrollCardHeader` producer door is the long-term home (absorb at 5.0.0+) | OWNED — asks-and-consumes §successor-relays (the ScrollCardHeader door row: the demo strip is the spec seed — padding + background band + title token-step as ONE keyed contraction + the T-42 legibility floor); not a 5.0.0 blocker by their own words |
+| §B veil | name the `surface="veil"` material calibration levers (α per mode + clarity window) so the demo does not fork the primitive | OWNED — asks-and-consumes §successor-relays (the veil-lever row: the lever-naming rides the B6 veil story surface); their OA-3 GPU translucency read is value.js-side |
+| §B WatercolorDot | the Generate swatch adopts the WatercolorDot FACE register (producer register is the referent) | ANSWERED-BY-EXISTING — the register + its 9 in-repo consumers ARE the referent (stable, published); the X6 solid-ring rider stays OWNED at BI.W-XR-PRODUCER-REPAIRS; the swatch adopt is value.js demo work |
+| §B verb-cluster | ONE instrument for the Generate verb cluster — dock-set capsule vs dropdown-menu; the owner's word picks the pole | ANSWERED-BY-EXISTING — both pole primitives ship at 5.0.0 (`DockSection`/`DockStack`/`DockIconButton→DockControl` and `ui/dropdown-menu`); no glass-ui action until the owner's word picks; the pick is a value.js demo instrument choice |
+| §B T-52 / GAP-L5+T-60 / PKT-1 | dock-layer mask honesty · blob settled+revealBloom · swap-window confounds | DISCHARGED — cited by name at their standing rows (T-52 → BI.W-DOCK-SPINE §Inbound; GAP-L5/T-60 → BI.W-BLOB-SEAMS; PKT-1 → BI.W-XR-PRODUCER-REPAIRS); no re-book per their own M1 no-second-book rule |
 
 ---
 

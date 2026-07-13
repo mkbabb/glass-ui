@@ -1,7 +1,10 @@
 // Spring-driven mount + optional drag-dismiss state machine.
 //
 // Lands W13 of the AL SLIM plan — the runtime kernel behind <DialogContent>'s
-// and <SheetContent>'s `spring` opt-in. The component owns its open Ref
+// centered `springPreset` entrance and <DrawerContent>'s snap-detent drag physics
+// (the drag-dismiss gesture — BI.W-DIALOG-PLACEMENT's N3 rule keeps it Drawer's
+// mechanism, never the folded Dialog `placement` paint axis). The component owns its
+// open Ref
 // (via reka-ui's DialogContext); this composable owns the *position* (0 =
 // fully mounted, 1 = fully dismissed) and the pointer-drag pipe that re-seats
 // the spring target mid-drag.

@@ -5,8 +5,6 @@ import * as Api from "@glass/api";
 import * as Aurora from "@glass/subpaths/aurora";
 import * as CarouselSurface from "@glass/carousel";
 import * as CommandSurface from "@glass/subpaths/command";
-import * as ConfirmDialogSurface from "@glass/subpaths/confirm-dialog";
-import * as ContextMenuSurface from "@glass/subpaths/context-menu";
 import * as Glass from "@glass/index";
 import * as Controls from "@glass/subpaths/controls";
 import * as Dark from "@glass/dark";
@@ -34,7 +32,7 @@ import * as StackedIconsSurface from "@glass/subpaths/stacked-icons";
 import * as StatusDotSurface from "@glass/subpaths/status-dot";
 import * as TabsSurface from "@glass/subpaths/tabs";
 import * as TimelineSurface from "@glass/subpaths/timeline";
-import * as ToggleChipSurface from "@glass/subpaths/toggle-chip";
+import * as ChipSurface from "@glass/subpaths/chip";
 import * as TypewriterSurface from "@glass/subpaths/typewriter";
 
 const uiRuntimeExports = [
@@ -47,14 +45,13 @@ const uiRuntimeExports = [
     "Checkbox",
     "Collapsible",
     "Command",
-    "ContextMenu",
     "DataTable",
     "Dialog",
     "DropdownMenu",
-    "HoverCard",
+    // BI.W-OVERLAY-UNION — HoverCard folded onto <Popover trigger="hover"> (clean break).
     "Label",
     "MetricPill",
-    "MultiSelect",
+    // BI.W-MULTISELECT-FOLD — MultiSelect folded onto <Combobox multiple> (clean break).
     "Notification",
     "NumberField",
     "Popover",
@@ -62,7 +59,7 @@ const uiRuntimeExports = [
     "RadioGroup",
     "Select",
     "Separator",
-    "Sheet",
+    // BI.W-DIALOG-PLACEMENT — Sheet folded onto <DialogContent placement> (clean break).
     "Skeleton",
     "Slider",
     "Switch",
@@ -137,7 +134,6 @@ const subpathRuntimeExports = [
     { subpath: "sidebar", surface: Sidebar, name: "useTreeIndex" },
     { subpath: "sidebar", surface: Sidebar, name: "buildTreeIndex" },
     { subpath: "controls", surface: Controls, name: "DarkModeToggle" },
-    { subpath: "confirm-dialog", surface: ConfirmDialogSurface, name: "ConfirmDialog" },
     { subpath: "infinite-scroll", surface: InfiniteScrollSurface, name: "InfiniteScroll" },
     { subpath: "infinite-scroll", surface: InfiniteScrollSurface, name: "useInfiniteScroll" },
     { subpath: "tabs", surface: TabsSurface, name: "SegmentedTabs" },
@@ -150,7 +146,11 @@ const subpathRuntimeExports = [
     { subpath: "status-dot", surface: StatusDotSurface, name: "StatusDot" },
     { subpath: "pulse", surface: PulseSurface, name: "Pulse" },
     { subpath: "paper-backdrop", surface: PaperBackdropSurface, name: "PaperBackdrop" },
-    { subpath: "toggle-chip", surface: ToggleChipSurface, name: "ToggleChip" },
+    // BI.W-CHIP-FOLD — ToggleChip + SelectableChip FOLDED onto the ONE <Chip>
+    // (shape × tone; clean break, no alias). Chip ships subpath-ONLY (/chip, OFF the
+    // value.js-free root barrel — the value.js-bearing ink solve rides the dynamic
+    // accent-tone-solve leaf; the /border-progress carve-off precedent).
+    { subpath: "chip", surface: ChipSurface, name: "Chip" },
     { subpath: "sortable-list", surface: SortableListSurface, name: "SortableList" },
     { subpath: "timeline", surface: TimelineSurface, name: "GlassTimeline" },
     { subpath: "labeled-field", surface: LabeledFieldSurface, name: "LabeledInput" },
@@ -210,10 +210,8 @@ const subpathRuntimeExports = [
     { subpath: "dropdown-menu", surface: DropdownMenuSurface, name: "DropdownMenuItem" },
     { subpath: "dropdown-menu", surface: DropdownMenuSurface, name: "DropdownMenuTrigger" },
     { subpath: "dropdown-menu", surface: DropdownMenuSurface, name: "DropdownMenuPortal" },
-    { subpath: "context-menu", surface: ContextMenuSurface, name: "ContextMenu" },
-    { subpath: "context-menu", surface: ContextMenuSurface, name: "ContextMenuContent" },
-    { subpath: "context-menu", surface: ContextMenuSurface, name: "ContextMenuItem" },
-    { subpath: "context-menu", surface: ContextMenuSurface, name: "ContextMenuTrigger" },
+    // BI.W-MENU-TRIGGER — ContextMenu folded onto DropdownMenu as `trigger="context"`
+    // (clean break, no alias; the /context-menu subpath is retired).
     { subpath: "command", surface: CommandSurface, name: "Command" },
     { subpath: "command", surface: CommandSurface, name: "CommandDialog" },
     { subpath: "command", surface: CommandSurface, name: "CommandInput" },
@@ -238,9 +236,31 @@ const nonCoreRootRetirements = [
     // BA.W-TABS — the reka `ui/Tabs` wrapper family is OFF the root barrel (clean break,
     // no alias; `SegmentedTabs` via `/tabs` is the canonical surface).
     "Tabs",
+    // BI.W-MENU-TRIGGER — ContextMenu folded onto DropdownMenu (`trigger="context"`;
+    // clean break, no alias). The ContextMenu family is fully retired (no subpath, no
+    // root barrel export).
+    "ContextMenu",
     "TypewriterText",
     "StackedIconGroup",
+    // BI.W-CHIP-FOLD — ToggleChip + SelectableChip FOLDED onto <Chip> (shape × tone;
+    // clean break, no alias). <Chip> ships subpath-ONLY (/chip) — it is value.js-bearing
+    // (the tonal ink solve leaf), so it MUST stay OFF the value.js-free root barrel.
     "ToggleChip",
+    "SelectableChip",
+    "Chip",
+    // BI.W-DIALOG-PLACEMENT — the Sheet family + ConfirmDialog retired (Dialog placement
+    // + a consumer preset); BI.W-OVERLAY-UNION — HoverCard/HoverPopover retired
+    // (<Popover trigger>); BI.W-MULTISELECT-FOLD — MultiSelect retired (<Combobox multiple>);
+    // BI.W-GLASS-DEDUP — GlassPanel retired (FAM-10, <Surface>/.glass-resting).
+    "Sheet",
+    "SheetContent",
+    "SheetTrigger",
+    "HoverCard",
+    "HoverCardContent",
+    "HoverPopover",
+    "MultiSelect",
+    "MultiSelectOption",
+    "GlassPanel",
     "Aurora",
     "SortableList",
     "GlassTimeline",

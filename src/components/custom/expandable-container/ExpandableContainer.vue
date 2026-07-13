@@ -115,7 +115,7 @@ import { cn } from "../../../utils";
 // {glass·veil·opaque} axis (it was a solid `bg-background` wall — the IG-B5/FD-6
 // off-allowlist miss). Default `glass` (the un-walled frosted-over-content plate);
 // `surface="opaque"` is the explicit solid-wall opt-out.
-import { surfaceClass, type Surface } from "../../ui/_shared/useSurfaceAxis";
+import { decorationClass, type Surface } from "../../ui/_shared/useSurfaceAxis";
 
 defineOptions({ inheritAttrs: false });
 
@@ -139,11 +139,11 @@ const props = withDefaults(
     },
 );
 
-// The veil/opaque decoration on top of the `glass-overlay` base tier (strip the
-// resolver's base-tier prefix; the overlay owns the base). `:data-surface`
-// (template) drives the CSS seam in lockstep.
+// The veil/opaque decoration on top of the `glass-overlay` base tier (the
+// overlay owns the base). BI.W-SURFACE-EXTRACT — decoration-only, no `.replace`
+// tier-strip wart. `:data-surface` (template) drives the CSS seam in lockstep.
 const surfaceDecoration = computed(() =>
-    surfaceClass(props.surface).replace(/^glass-\w+\s*/, ""),
+    decorationClass(props.surface),
 );
 
 /**

@@ -13,7 +13,8 @@
     /* ═══════════════════════════════════════════════
        Animation → animate-* utilities
        ═══════════════════════════════════════════════ */
-    --animate-floating-panel-in: floating-panel-in var(--duration-fast) var(--ease-out);
+    /* BI.W-GLASS-DEDUP — `--animate-floating-panel-in` RETIRED with floating-panel.css
+       (its sole consumer, FAM-9). The `floating-panel-in` @keyframes is deleted too. */
     --animate-tooltip-in: tooltip-in var(--duration-fast) var(--ease-out);
     --animate-fade-in: fade-in var(--duration-normal) var(--spring-smooth);
     --animate-scale-in: scale-in var(--duration-normal) var(--spring-smooth);

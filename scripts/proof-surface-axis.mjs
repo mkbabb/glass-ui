@@ -28,10 +28,11 @@
 //        `surfaceClass`, re-exported from _shared/index.ts, AND `Surface` is
 //        published in src/api/index.ts (the discovery layer). RED at HEAD: no such
 //        symbol.
-//   W3 — EVERY ENROLLED SURFACE THREADS THE AXIS. Each of the ELEVEN surfaces
-//        (Card, GlassPanel, Dialog, Sheet, Drawer, Popover, Command,
+//   W3 — EVERY ENROLLED SURFACE THREADS THE AXIS. Each of the NINE surfaces
+//        (Card, Dialog, Drawer, Popover, Command,
 //        ExpandableContainer, Skeleton + Toast, Button — BB.W-SURFACE-AXIS-COMPLETE
-//        finished the R8-12 enrollment) carries the `surface` prop routed through
+//        finished the R8-12 enrollment; BI.W-GLASS-DEDUP retired GlassPanel)
+//        carries the `surface` prop routed through
 //        `surfaceClass` (or the `[data-surface]` decoration). The POSITIVE assert:
 //        the surface composes the axis (a `surfaceClass(` call OR a `data-surface`
 //        binding), ExpandableContainer's fullscreen overlay carries `glass-overlay`
@@ -67,7 +68,7 @@
 // byte-stable JSON artefact via gate-output, a human summary, process.exit(1) on
 // any violation.
 
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
@@ -91,9 +92,7 @@ function cliPaths() {
         // The eleven enrolled surfaces (BB.W-SURFACE-AXIS-COMPLETE finished the
         // R8-12 enrollment — Toast + Button join the prior nine).
         CARD_VUE: ui("card/Card.vue"),
-        GLASS_PANEL_VUE: custom("glass-panel/GlassPanel.vue"),
         DIALOG_VUE: ui("dialog/DialogContent.vue"),
-        SHEET_VUE: ui("sheet/SheetContent.vue"),
         DRAWER_VUE: ui("drawer/DrawerContent.vue"),
         POPOVER_VUE: ui("popover/PopoverContent.vue"),
         COMMAND_VUE: ui("command/Command.vue"),
@@ -102,6 +101,9 @@ function cliPaths() {
         // BB.W-SURFACE-AXIS-COMPLETE — the two surfaces R8-12 named verbatim.
         TOAST_VUE: ui("toast/Toast.vue"),
         BUTTON_VUE: ui("button/Button.vue"),
+        // BI.W-SURFACE-EXTRACT — the extracted bare plate primitive (W8).
+        SURFACE_VUE: ui("surface/Surface.vue"),
+        SRC_DIR: resolve(ROOT, "src"),
         // Scope 7 — control surfaces.
         SELECT_TRIGGER_VUE: ui("select/SelectTrigger.vue"),
         // Scope 8 — paper-ink-mark consumers.
@@ -172,6 +174,16 @@ function countSurfaceDecorationBlocks(css) {
         css.match(/\[data-surface\s*=\s*["']opaque["']\s*\]\s*\{/g) || []
     ).length;
     return { veil, opaque };
+}
+
+// BI.W-CLEAR-FOLD (W9) — extract the `Surface` union members from a comment-stripped
+// useSurfaceAxis.ts source. `export type Surface = "glass" | "veil" | "opaque";` →
+// ["glass","veil","opaque"]. Empty on a malformed source (the caller reds W9 on an
+// empty member set only if it also finds no consumers — a benign no-op otherwise).
+export function parseSurfaceUnion(ts) {
+    const m = /export\s+type\s+Surface\s*=\s*([^;]+);/.exec(ts);
+    if (!m) return [];
+    return [...m[1].matchAll(/["']([a-z]+)["']/g)].map((x) => x[1]);
 }
 
 /**
@@ -298,16 +310,20 @@ export function detectSurfaceAxis(sources) {
         /surfaceClass\s*\(/.test(src) || /data-surface/.test(src);
     const ENROLLED = [
         ["Card", "card"],
-        ["GlassPanel", "glassPanel"],
+        // BI.W-GLASS-DEDUP — GlassPanel RETIRED (FAM-10; folded onto <Surface>/
+        // .glass-resting). The roster drops from eleven to TEN; the count floor below
+        // tracks it (a re-freeze at nine still reds — Toast/Button stay enrolled).
         ["Dialog", "dialog"],
-        ["Sheet", "sheet"],
+        // BI.W-DIALOG-PLACEMENT — Sheet FOLDED onto <DialogContent placement> (the
+        // survivor threads the axis through the Dialog row above). Roster TEN -> NINE.
         ["Drawer", "drawer"],
         ["Popover", "popover"],
         ["Command", "command"],
         ["ExpandableContainer", "expandable"],
         ["Skeleton", "skeleton"],
         // BB.W-SURFACE-AXIS-COMPLETE — the R8-12 "buttons + toasts" close. The
-        // roster MUST stay at eleven (the count fact below reds a re-freeze at nine).
+        // roster stays at TEN (BI.W-GLASS-DEDUP dropped GlassPanel; the count fact
+        // below reds a re-freeze at nine that would drop Toast/Button).
         ["Toast", "toast"],
         ["Button", "button"],
     ];
@@ -322,12 +338,14 @@ export function detectSurfaceAxis(sources) {
             );
         }
     }
-    // The anti-evasion roster-count floor: the enrollment is COMPLETE at eleven
-    // (BB finished the two named-but-skipped surfaces). A re-freeze at nine reds.
+    // The anti-evasion roster-count floor: the enrollment is COMPLETE at NINE
+    // (BB finished the two named-but-skipped surfaces; BI.W-GLASS-DEDUP retired
+    // GlassPanel; BI.W-DIALOG-PLACEMENT folded Sheet onto DialogContent). A
+    // re-freeze at eight (dropping Toast/Button) reds.
     const enrolledCount = ENROLLED.length;
-    if (enrolledCount !== 11) {
+    if (enrolledCount !== 9) {
         violations.push(
-            `W3: the ENROLLED roster is ${enrolledCount}, not eleven — the R8-12 "buttons + toasts" enrollment must stay complete (a re-freeze that drops Toast/Button dodges the work).`,
+            `W3: the ENROLLED roster is ${enrolledCount}, not nine — the R8-12 "buttons + toasts" enrollment must stay complete (a re-freeze that drops Toast/Button dodges the work; GlassPanel retired at BI.W-GLASS-DEDUP, Sheet folded at BI.W-DIALOG-PLACEMENT).`,
         );
     }
     // ExpandableContainer fullscreen overlay carries glass-overlay, NOT bg-background.
@@ -422,10 +440,125 @@ export function detectSurfaceAxis(sources) {
         );
     }
 
-    // (BH.B5e: W7 — the doc-honesty clause reading the glass-system canon for
-    // `<Toast/Button surface=…>` examples — DROPPED. The functional Toast/Button
-    // enrollment is asserted by W3 (both thread the shared surface axis); canon
-    // authoring rides proof:claude-deletable.)
+    // (BH.B5e: the ORIGINAL W7 — the doc-honesty clause reading the glass-system
+    // canon for `<Toast/Button surface=…>` examples — was DROPPED. The functional
+    // Toast/Button enrollment is asserted by W3; canon authoring rides
+    // proof:claude-deletable. The W7 slot was thereby FREE. BI.W-SURFACE-EXTRACT
+    // RE-MINTS W7 (decorationClass-single-source) + W8 (no-component-private-surface-
+    // recipe) here — the "renumber + record" the 2026-07-12 marking pass ordered: the
+    // old doc-honesty W7 is dropped/dead, so re-minting the number is honest (no live
+    // collision), recorded here so a reader of an old artefact citing "W7 doc-honesty"
+    // sees the supersession. W9 (member-consumption) is W-CLEAR-FOLD's.)
+
+    // ── W7 — decorationClass is the SINGLE decoration source ──────────────────
+    // (BI.W-SURFACE-EXTRACT). `decorationClass` is defined EXACTLY ONCE (in
+    // useSurfaceAxis.ts), AND the `surfaceClass(x).replace(/^glass-\w+\s*/, "")` DRY
+    // wart is DEFINITION-ABSENT across src/ — every reka-portaled overlay + Card reach
+    // the decoration through the ONE regex-free function. RED at HEAD: the wart was
+    // live at 7 sites (Card + 6 overlays); `decorationClass` did not exist.
+    const decorationClassDefs = (
+        useSurfaceAxisTs.match(/export\s+function\s+decorationClass\b/g) || []
+    ).length;
+    if (decorationClassDefs !== 1) {
+        violations.push(
+            `W7: expected EXACTLY ONE \`export function decorationClass\` in useSurfaceAxis.ts, found ${decorationClassDefs} (the single decoration source).`,
+        );
+    }
+    const replaceWartHits = sources.replaceWartHits ?? [];
+    if (replaceWartHits.length > 0) {
+        violations.push(
+            `W7: the \`surfaceClass(…).replace(/^glass-…/, …)\` DRY wart survives at ${replaceWartHits.length} site(s): ${replaceWartHits.join(", ")} — every decoration must resolve via decorationClass(), regex-free.`,
+        );
+    }
+
+    // ── W8 — no component-private surface recipe ──────────────────────────────
+    // (BI.W-SURFACE-EXTRACT). The extracted `<Surface>` primitive EXISTS (composes
+    // `glass-${tier}` × `decorationClass`), AND no enrolled content-surface SFC
+    // hand-rolls a bare tier×decoration recipe OFF the seam — a hardcoded
+    // `veil-surface`/`glass-opaque`/`glass-clear` template CLASS string OR an inline
+    // `--glass-level: 0` opaque recipe (bypassing `surface="opaque"`). The
+    // `<Surface>`/`decorationClass` seam is the ONE door. RED at HEAD: `<Surface>`
+    // did not exist.
+    const surfaceComponentSrc = stripHtmlComments(
+        stripBlockComments(sources.surfaceComponentSrc ?? ""),
+    );
+    const surfaceComponentExists =
+        /decorationClass\s*\(/.test(surfaceComponentSrc) &&
+        /glass-\$\{/.test(surfaceComponentSrc);
+    if (!surfaceComponentExists) {
+        violations.push(
+            "W8: the extracted `<Surface>` plate primitive (surface/Surface.vue) does not compose `glass-${tier}` × `decorationClass(surface)` — the bare tier×decoration plate is the ONE door.",
+        );
+    }
+    // Scan the enrolled content surfaces for a hand-rolled private recipe. Card +
+    // the six reka-portaled overlays are the surfaces that MUST route through the
+    // seam (a literal decoration class or an inline level-0 recipe bypasses it).
+    const W8_SCAN = ["card", "dialog", "sheet", "popover", "command", "drawer", "expandable"];
+    // A decoration class literal is a `veil-surface`/`glass-opaque`/`glass-clear`
+    // token bounded by a quote OR whitespace on BOTH sides (a class string member) —
+    // so `decorationClass(surface)` (the seam) never matches, but a hand-composed
+    // `'glass-floating veil-surface'` does.
+    const LITERAL_DECORATION = /['"\s](?:veil-surface|glass-opaque|glass-clear)['"\s]/;
+    const INLINE_LEVEL_ZERO = /--glass-level\s*:\s*['"]?\s*0\b/;
+    const w8Private = [];
+    for (const key of W8_SCAN) {
+        const src = sfc[key] ?? "";
+        if (LITERAL_DECORATION.test(src)) w8Private.push(`${key} (literal decoration class)`);
+        if (INLINE_LEVEL_ZERO.test(src)) w8Private.push(`${key} (inline --glass-level:0 recipe)`);
+    }
+    if (w8Private.length > 0) {
+        violations.push(
+            `W8: a component-private surface recipe survives OFF the <Surface>/decorationClass seam: ${w8Private.join(", ")} — the decoration must resolve via decorationClass(), the opaque escape via surface="opaque".`,
+        );
+    }
+
+    // ── W9 — every Surface union member is CONSUMED (BI.W-CLEAR-FOLD) ──────────
+    // The vacuous-green kill: this gate asserted the members EXIST (W1/W3) but never
+    // that each is USED. A union member with ZERO real (non-demo, non-self) consumer
+    // in src/ is DEAD substrate — the FAM-9 `clear` class: a full mechanism shipped
+    // (the maximally-translucent plate + its mandatory scrim + a token rung), its
+    // consumer retired, and the gate never noticed (the substrate-without-consumer
+    // invariant J-inv-10 went un-enforced on the axis). Every member of the LIVE
+    // `Surface` union must resolve ≥1 consumer OR be DEFINITION-ABSENT (off the union
+    // entirely — the clean-break retire). A consumer is a `surface: "M"` / `surface="M"`
+    // runtime prop/default OR a `[data-surface="M"]` CSS decoration rule (both matched
+    // by the `surface[:=]"M"` scan), OUTSIDE the axis-DEFINITION files (the seam is the
+    // definition, not a consumer) and demo/ (src-only). RED at HEAD pre-wave: `clear`
+    // rode the union with 0 real consumers.
+    const surfaceMembers = parseSurfaceUnion(useSurfaceAxisTs);
+    const consumers = sources.surfaceConsumers ?? {};
+    const w9Dead = [];
+    for (const m of surfaceMembers) {
+        const count = (consumers[m] ?? []).length;
+        if (count < 1) w9Dead.push(`${m} (0 consumers)`);
+    }
+    if (w9Dead.length > 0) {
+        violations.push(
+            `W9: a Surface union member is DEAD substrate (no real non-demo/non-self consumer in src/): ${w9Dead.join(", ")} — every member must resolve ≥1 consumer OR be DEFINITION-ABSENT (the FAM-9 vacuous-green kill, J-inv-10).`,
+        );
+    }
+    // Rung-census: the retired `clear` member's rungs are DEFINITION-ABSENT (the token
+    // half of the clean break — a surviving `--glass-bg-clear`/`--glass-opacity-clear`
+    // is a dead rung the member no longer reads).
+    const clearBgAbsent = !/--glass-bg-clear\b/.test(tokensMonolith);
+    const clearOpacityAbsent = !/--glass-opacity-clear\b/.test(tokensMonolith);
+    if (!clearBgAbsent) {
+        violations.push(
+            "W9 rung-census: `--glass-bg-clear` survives in the tokens authority (the retired clear rung must be DEFINITION-ABSENT).",
+        );
+    }
+    if (!clearOpacityAbsent) {
+        violations.push(
+            "W9 rung-census: `--glass-opacity-clear` survives in the tokens authority (the retired clear rung must be DEFINITION-ABSENT).",
+        );
+    }
+    // The --glass-bg-* rung count for the record (informational — the clear retire
+    // steps it down one; the exact count also tracks the well rung the extract minted).
+    const bgRungCount = new Set(
+        (tokensMonolith.match(/--glass-bg-([a-z]+)\s*:/g) || []).map((s) =>
+            s.replace(/\s*:$/, ""),
+        ),
+    ).size;
 
     const facts = {
         w1: {
@@ -442,9 +575,90 @@ export function detectSurfaceAxis(sources) {
         w4: { dialogHasVariantProp, dialogHasSurfaceProp, migrationRow },
         w5: { controlRegisterDefined, inputReadsRegister, selectRidesGrayWash },
         w6: { paperMarkDefined, mathPaperConsumes, tabsConsumes, consumerCount },
+        w7: { decorationClassDefs, replaceWartHits: replaceWartHits.length },
+        w8: { surfaceComponentExists, w8Private: w8Private.length },
+        w9: {
+            surfaceMembers,
+            deadMembers: w9Dead,
+            clearBgAbsent,
+            clearOpacityAbsent,
+            bgRungCount,
+        },
     };
 
     return { facts, violations };
+}
+
+// BI.W-SURFACE-EXTRACT — the self-test bites: the detector must FLAG a synthetic
+// re-added `.replace()` wart (W7) and a synthetic private tier recipe (W8), and must
+// GREEN a clean synthetic tree. A hollow detector (one that greens a planted
+// violation) reds the gate itself. Returns a violation string on any failed bite.
+export function selfTestSurfaceAxis() {
+    const clean = {
+        surfaceAxisCss: `@layer components { [data-surface="veil"]{--veil-bg:color-mix(in oklab,var(--glass-bg-quiet),var(--glass-tint-source) var(--glass-tint-strength))} [data-surface="opaque"]{--glass-level:0} }`,
+        useSurfaceAxisTs: `export type Surface="glass"|"veil"|"opaque"; export function surfaceClass(){} export function decorationClass(){}`,
+        surfaceComponentSrc: `<Primitive :class="cn(\`glass-\${tier}\`, decorationClass(surface))" />`,
+        replaceWartHits: [],
+        sfc: { card: `decorationClass(surface)`, dialog: `decorationClass(props.surface)` },
+        // W9 — a clean tree resolves a consumer for every member + no clear rung.
+        surfaceConsumers: { glass: ["x.vue"], veil: ["y.css"], opaque: ["z.vue"] },
+        tokensMonolith: "",
+    };
+    const bites = [];
+    // Bite A — a re-added `.replace` wart REDs W7.
+    const wartHit = detectSurfaceAxis({ ...clean, replaceWartHits: ["src/x.vue"] });
+    if (!wartHit.violations.some((v) => v.startsWith("W7"))) {
+        bites.push("SELF-TEST W7-wart: a re-added `.replace` wart did NOT red W7.");
+    }
+    // Bite B — a missing decorationClass def REDs W7.
+    const noDef = detectSurfaceAxis({
+        ...clean,
+        useSurfaceAxisTs: `export function surfaceClass(){}`,
+    });
+    if (!noDef.violations.some((v) => v.startsWith("W7"))) {
+        bites.push("SELF-TEST W7-def: a missing decorationClass definition did NOT red W7.");
+    }
+    // Bite C — a literal private decoration string REDs W8.
+    const literalHit = detectSurfaceAxis({
+        ...clean,
+        sfc: { ...clean.sfc, popover: `:class="'glass-floating veil-surface'"` },
+    });
+    if (!literalHit.violations.some((v) => v.startsWith("W8"))) {
+        bites.push("SELF-TEST W8-literal: a hardcoded `veil-surface` string did NOT red W8.");
+    }
+    // Bite D — an inline `--glass-level: 0` private recipe REDs W8.
+    const levelHit = detectSurfaceAxis({
+        ...clean,
+        sfc: { ...clean.sfc, command: `style="--glass-level: 0"` },
+    });
+    if (!levelHit.violations.some((v) => v.startsWith("W8"))) {
+        bites.push("SELF-TEST W8-level: an inline `--glass-level:0` recipe did NOT red W8.");
+    }
+    // Bite E — a missing <Surface> primitive REDs W8.
+    const noSurface = detectSurfaceAxis({ ...clean, surfaceComponentSrc: "" });
+    if (!noSurface.violations.some((v) => v.startsWith("W8"))) {
+        bites.push("SELF-TEST W8-missing: an absent <Surface> primitive did NOT red W8.");
+    }
+    // Bite F — a synthetic re-added dead union member (no consumer) REDs W9 (the
+    // vacuous-green kill: a future dead member cannot ride the union again).
+    const deadMember = detectSurfaceAxis({
+        ...clean,
+        useSurfaceAxisTs: `export type Surface="glass"|"veil"|"opaque"|"phantom"; export function surfaceClass(){} export function decorationClass(){}`,
+        surfaceConsumers: { glass: ["x.vue"], veil: ["y.css"], opaque: ["z.vue"], phantom: [] },
+    });
+    if (!deadMember.violations.some((v) => v.startsWith("W9"))) {
+        bites.push("SELF-TEST W9-dead-member: a re-added consumer-less union member did NOT red W9.");
+    }
+    // Bite G — a surviving `--glass-bg-clear` rung REDs the W9 rung-census (the token
+    // half of the clean break).
+    const deadRung = detectSurfaceAxis({
+        ...clean,
+        tokensMonolith: "--glass-bg-clear: color-mix(in srgb, var(--card) 58%, transparent);",
+    });
+    if (!deadRung.violations.some((v) => v.startsWith("W9"))) {
+        bites.push("SELF-TEST W9-dead-rung: a surviving --glass-bg-clear rung did NOT red the W9 rung-census.");
+    }
+    return bites;
 }
 
 function safeRead(path) {
@@ -455,9 +669,93 @@ function safeRead(path) {
     }
 }
 
+// BI.W-SURFACE-EXTRACT (W7) — scan src/ for the `surfaceClass(…).replace(/^glass-…/`
+// DRY wart. Returns the repo-relative paths still carrying it (empty when the wart is
+// DEFINITION-ABSENT). Comment-stripped so a commented-out wart never counts.
+const WART = /surfaceClass\s*\([^)]*\)\s*\.replace\s*\(\s*\/\^glass-/;
+function scanReplaceWart(dir, root, hits = []) {
+    let entries;
+    try {
+        entries = readdirSync(dir);
+    } catch {
+        return hits;
+    }
+    for (const name of entries) {
+        if (name === "node_modules" || name === "dist" || name.startsWith(".")) continue;
+        const full = resolve(dir, name);
+        let st;
+        try {
+            st = statSync(full);
+        } catch {
+            continue;
+        }
+        if (st.isDirectory()) {
+            scanReplaceWart(full, root, hits);
+        } else if (name.endsWith(".vue") || name.endsWith(".ts")) {
+            const body = stripHtmlComments(stripBlockComments(safeRead(full)));
+            if (WART.test(body)) hits.push(full.slice(root.length + 1).replace(/\\/g, "/"));
+        }
+    }
+    return hits;
+}
+
+// BI.W-CLEAR-FOLD (W9) — the src/-walker that counts each Surface member's REAL
+// consumers. A consumer is a `surface: "M"` / `surface="M"` runtime prop/default OR a
+// `[data-surface="M"]` CSS decoration rule (both matched by `surface[:=]"M"`), in a
+// .vue/.ts/.css file OUTSIDE the axis-DEFINITION files below (the seam is the
+// definition, NOT a consumer — a member with ONLY a seam rule and no consumer is dead,
+// exactly the retired `clear`) and OUTSIDE demo/ (src-only, non-demo). Comment-stripped
+// so a prose `<Card surface="veil">` never counts. Returns { [member]: string[] }.
+const CONSUMER_EXCLUDE = new Set([
+    "src/components/ui/_shared/useSurfaceAxis.ts",
+    "src/components/ui/_shared/axes.ts",
+    "src/styles/glass/surface-axis.css",
+    "src/styles/glass/material.css",
+]);
+function scanSurfaceConsumers(dir, root, members, acc) {
+    let entries;
+    try {
+        entries = readdirSync(dir);
+    } catch {
+        return acc;
+    }
+    for (const name of entries) {
+        if (name === "node_modules" || name === "dist" || name.startsWith(".")) continue;
+        const full = resolve(dir, name);
+        let st;
+        try {
+            st = statSync(full);
+        } catch {
+            continue;
+        }
+        if (st.isDirectory()) {
+            scanSurfaceConsumers(full, root, members, acc);
+            continue;
+        }
+        if (!/\.(vue|ts|css)$/.test(name)) continue;
+        const rel = full.slice(root.length + 1).replace(/\\/g, "/");
+        if (CONSUMER_EXCLUDE.has(rel)) continue;
+        const body = stripHtmlComments(stripBlockComments(safeRead(full)));
+        for (const m of members) {
+            const re = new RegExp(`surface\\s*[:=]\\s*["']${m}["']`);
+            if (re.test(body)) acc[m].push(rel);
+        }
+    }
+    return acc;
+}
+
 function run() {
     const P = cliPaths();
     const { ROOT } = P;
+
+    // BI.W-CLEAR-FOLD (W9) — parse the LIVE Surface union + scan src/ for each
+    // member's real consumers (the member-consumption fence).
+    const surfaceMembers = parseSurfaceUnion(
+        stripBlockComments(safeRead(P.USE_SURFACE_AXIS_TS)),
+    );
+    const surfaceConsumers = {};
+    for (const m of surfaceMembers) surfaceConsumers[m] = [];
+    scanSurfaceConsumers(P.SRC_DIR, ROOT, surfaceMembers, surfaceConsumers);
 
     const { facts, violations } = detectSurfaceAxis({
         surfaceAxisCss: safeRead(P.SURFACE_AXIS_CSS),
@@ -472,9 +770,7 @@ function run() {
         migrationMd: safeRead(P.MIGRATION_MD),
         sfc: {
             card: safeRead(P.CARD_VUE),
-            glassPanel: safeRead(P.GLASS_PANEL_VUE),
             dialog: safeRead(P.DIALOG_VUE),
-            sheet: safeRead(P.SHEET_VUE),
             drawer: safeRead(P.DRAWER_VUE),
             popover: safeRead(P.POPOVER_VUE),
             command: safeRead(P.COMMAND_VUE),
@@ -485,7 +781,15 @@ function run() {
         },
         selectTrigger: safeRead(P.SELECT_TRIGGER_VUE),
         mathPaper: safeRead(P.MATH_PAPER_VUE),
+        // BI.W-SURFACE-EXTRACT — W7/W8 inputs.
+        surfaceComponentSrc: safeRead(P.SURFACE_VUE),
+        replaceWartHits: scanReplaceWart(P.SRC_DIR, ROOT),
+        // BI.W-CLEAR-FOLD — W9 member-consumption input.
+        surfaceConsumers,
     });
+
+    // The self-test bites — a hollow detector reds the gate itself.
+    for (const bite of selfTestSurfaceAxis()) violations.push(bite);
 
     const status = violations.length === 0 ? "pass" : "fail";
 
@@ -521,7 +825,7 @@ function run() {
         )}`,
     );
     console.log(
-        `  W3 eleven surfaces thread axis: ${yn(
+        `  W3 ten surfaces thread axis: ${yn(
             !violations.some((v) => v.startsWith("W3")),
         )}  (count:${facts.w3.enrolledCount} unwalled:${yn(
             facts.w3.expandableUnwalled,
@@ -545,6 +849,25 @@ function run() {
         `  W6 paper-ink-mark register    : ${yn(
             facts.w6.paperMarkDefined && facts.w6.consumerCount >= 2,
         )}  (consumers:${facts.w6.consumerCount})`,
+    );
+    console.log(
+        `  W7 decorationClass single-src : ${yn(
+            facts.w7.decorationClassDefs === 1 && facts.w7.replaceWartHits === 0,
+        )}  (defs:${facts.w7.decorationClassDefs} .replace-warts:${facts.w7.replaceWartHits})`,
+    );
+    console.log(
+        `  W8 no private-surface recipe  : ${yn(
+            facts.w8.surfaceComponentExists && facts.w8.w8Private === 0,
+        )}  (<Surface>:${yn(facts.w8.surfaceComponentExists)} private:${facts.w8.w8Private})`,
+    );
+    console.log(
+        `  W9 every member consumed      : ${yn(
+            !violations.some((v) => v.startsWith("W9")),
+        )}  (members:[${facts.w9.surfaceMembers.join(",")}] dead:${
+            facts.w9.deadMembers.length
+        } clear-rung-absent:${yn(
+            facts.w9.clearBgAbsent && facts.w9.clearOpacityAbsent,
+        )} bg-rungs:${facts.w9.bgRungCount})`,
     );
 
     if (violations.length > 0) {
