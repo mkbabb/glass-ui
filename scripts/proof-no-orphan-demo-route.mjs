@@ -74,6 +74,11 @@ export function collectStoryFiles(storiesDir, categories, fs) {
         if (!fs.existsSync(dir)) continue;
         for (const entry of fs.readdirSync(dir)) {
             if (!entry.endsWith(".vue")) continue;
+            // A `<id>.tile.vue` is a co-located LANDING-TILE helper (BI.W-LIVE-TILES,
+            // the AUTHORED tile-ladder rung), resolved by the manifest's separate
+            // `./*/*.tile.vue` glob — NOT a navigable route — so it is excluded from
+            // the file↔row bijection (like the PascalCase chassis partials below).
+            if (entry.endsWith(".tile.vue")) continue;
             // A PascalCase-named SFC is a composed-by chassis helper (DockStage,
             // FourierStudioStage), not a `s()`-factory route (which is lowercase
             // kebab) — excluded from the file↔row bijection by construction.

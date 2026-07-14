@@ -63,6 +63,14 @@ function walkCategorySfcs() {
         for (const f of readdirSync(catDir)) {
             if (!f.endsWith(".vue")) continue;
             const rel = `demo/stories/${cat}/${f}`;
+            // A `<id>.tile.vue` is a co-located LANDING-TILE helper (BI.W-LIVE-TILES),
+            // resolved by the manifest's separate `./*/*.tile.vue` glob — NOT a route
+            // slug — so it is a chassis-import partial for the IA≡disk bijection (like
+            // the PascalCase partials), never an orphan content SFC.
+            if (f.endsWith(".tile.vue")) {
+                pascal.push(rel);
+                continue;
+            }
             // PascalCase (starts with an uppercase letter) → a chassis/import
             // partial, not a route slug; kebab-case → a navigable story route.
             if (/^[A-Z]/.test(f)) pascal.push(rel);

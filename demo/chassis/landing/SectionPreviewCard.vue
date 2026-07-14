@@ -1,29 +1,31 @@
 <script setup lang="ts">
-// SectionPreviewCard — the bento card with the inline LIVE mini-preview
-// (BC.W-PAGE-CHASSIS — the SECTION-HERO model's affordance).
+// SectionPreviewCard — the bento card whose HERO is a real, live, per-story tile
+// (BI.W-LIVE-TILES). Each redirect card on a section landing (and on the front
+// door) is NOT a text-only link: the fenced stage hosts the story's RESOLVED tile
+// — a Button variant cluster, a real Card, a mini GlassDock, a frozen viz still, or
+// (the terminal floor) the story's identity as a glass typographic specimen — with
+// the category IconChip demoted to a small corner identity mark, and the title +
+// subpath + blurb reading BELOW the tile (the iOS-27 home-screen truth: the widget
+// SHOWS its component, the label sits under it).
 //
-// Each redirect card on a section landing (and on the front door) is NOT a
-// text-only link: it composes its <IconChip> POP + title + blurb + the Fira-Code
-// subpath chip (the bento) AND a `preview` slot hosting a bounded inert mini-render
-// of the target story's marquee specimen — a tiny live <Button> row, a mini glass
-// card silhouette, a frozen aurora still. The preview is the user's "a live
-// mini-preview within the sub-card, not just a text link" made literal.
+// THE 0-GL / 0-TAB-STOP FENCE (the 8-item fence, every tile): the stage is `inert`
+// + `aria-hidden` + `pointer-events: none` + `container-type` fit (cq-units, over
+// transform-scale text blur) + `contain: paint` + `user-select: none`, hosting a
+// 0-GL still-or-DOM tile that renders at REST. The whole card is the ONE RouterLink
+// (the one accessible name is the title), so Tab never enters a tile. A live-GL
+// target's tile is the FROZEN `vizPreviewStill` data-URI raster (an honest single
+// paint, never a running context) — the landing mounts ZERO WebGL/WebGPU contexts.
 //
-// THE ONE-GL BUDGET (CLAUDE.md §BA.W-STAGE): the preview is `pointer-events: none`
-// + `inert` + `scale`-clamped (a thumbnail) — a live-GL target's preview is a FROZEN
-// still or a single-paint, NEVER a second running GL context on the landing (the
-// landing mounts ≤1 live context). A no-GL target gets a real bounded inert render.
-// PRM → the preview is its static frame (the bounded inert render never animates).
-//
-// `BC.W-HERO-AUDACIOUS` Part C/E populates the per-category {icon, hue, preview
-// content}; this wave delivers the card SHELL + the budget-safe preview seam.
+// THE CV PARK: the card carries `content-visibility: auto` + `contain: content` +
+// an intrinsic-size reserve, so a full ~131-tile landing pays only the visible-tile
+// cost (an off-screen tile is skipped, its space held by the reserve).
 //
 // A demo-private chassis primitive — NOT a library export.
-import { computed } from "vue";
+import { computed, defineAsyncComponent } from "vue";
 import { cn } from "@glass/utils/cn";
 import { IconChip } from "@glass/components/custom/icon-chip";
 import type { IconChipIcon } from "@glass/components/custom/icon-chip";
-import { vizPreviewStill } from "./vizPreviewStill";
+import type { TileResolution } from "./storyTile";
 
 interface SectionPreviewCardProps {
     /** The target route — the card navigates here on click. */
@@ -34,7 +36,7 @@ interface SectionPreviewCardProps {
     blurb?: string | null;
     /** The explicit Fira-Code subpath chip — the route identity. */
     subpath?: string | null;
-    /** The IconChip POP glyph (a lucide functional component). */
+    /** The IconChip POP glyph (a lucide functional component) — the corner mark. */
     icon?: IconChipIcon | null;
     /** The `--section-color-N` ramp index for the IconChip POP. */
     section?: number;
@@ -42,19 +44,25 @@ interface SectionPreviewCardProps {
     tone?: string;
     /** Lead card — a wider span in the bento grid. */
     lead?: boolean;
+    /**
+     * The RESOLVED landing tile (BI.W-LIVE-TILES). The parent resolves it via the
+     * `resolveStoryTile` ladder and passes it here; the card dispatches on `kind`.
+     * Absent → the `#preview` slot is the escape (a pre-rendered vignette).
+     */
+    tile?: TileResolution | null;
     /** Forwarded class string for the card root. */
     class?: string;
 }
 
 const props = defineProps<SectionPreviewCardProps>();
 
-// BG.W-VIZ-PREVIEW-LIVE — the per-STORY distinct preview still. On a /substrates
-// viz route the card rasters its OWN recognizable Canvas2D still (keyed off the
-// route `to`, module-memoized, ZERO GL contexts — the auroraFallbackGround pattern)
-// and renders THAT, superseding the shared category field slot so the 11 cards read
-// as 11 DISTINCT previews (per-card pixel-hash differs). A non-viz route resolves
-// null → the card falls back to its `#preview` slot (the component-specimen path).
-const vizStill = computed(() => vizPreviewStill(props.to));
+// The AUTHORED rung — a co-located `.tile.vue` loaded lazily (code-split; the
+// landing never eager-imports a story's components).
+const authoredTile = computed(() =>
+    props.tile?.kind === "authored"
+        ? defineAsyncComponent(props.tile.loader)
+        : null,
+);
 </script>
 
 <template>
@@ -70,50 +78,60 @@ const vizStill = computed(() => vizPreviewStill(props.to));
             )
         "
     >
-        <!-- The bento head: the IconChip POP + the title/subpath rung. -->
-        <div class="flex items-start gap-3">
-            <IconChip
-                v-if="icon"
-                :icon="icon"
-                :section="section"
-                :tone="tone"
-                reveal
-                bloom
-                :size="40"
-                :glyph-size="20"
-            />
-            <div class="flex min-w-0 flex-col gap-1">
-                <span class="text-subheading text-foreground">{{ title }}</span>
-                <code
-                    v-if="subpath"
-                    class="fira-code section-preview-card-subpath"
-                    >{{ subpath }}</code
-                >
-            </div>
-        </div>
-
-        <!-- The inline LIVE mini-preview — the bounded inert STAGE hosting the
-             target's marquee specimen over the warm §3 field (BD.W-BENTO-SPECIMEN).
-             `inert` + `aria-hidden` keep it a 0-tab-stop thumbnail; the whole card
-             is the ONE link. `container-type: size` lets the specimen scale-to-fit
-             its stage at every card width (the ≥45%-occupancy fold). -->
-        <div
-            v-if="vizStill || $slots.preview"
-            class="section-preview-card-preview"
-            inert
-            aria-hidden="true"
-        >
-            <!-- BG.W-VIZ-PREVIEW-LIVE — the per-story distinct viz still (a device-free
-                 Canvas2D raster served as a `data:` URI, ZERO GL contexts) WINS over
-                 the shared category field slot for a known /substrates viz route. -->
+        <!-- The fenced live-tile STAGE hosting the resolved per-story tile as HERO
+             over the warm §3 field. `inert` + `aria-hidden` keep it a 0-tab-stop,
+             AT-invisible thumbnail; the whole card is the ONE link. The 8-item fence
+             (inert · aria-hidden · pointer-events:none · container-type fit · contain
+             · 0-GL still · no-select · rest-state) is carried here + in the CSS. -->
+        <div class="section-preview-card-preview" inert aria-hidden="true">
+            <!-- still — a GL-viz frozen data-URI raster (ZERO GL contexts). -->
             <img
-                v-if="vizStill"
-                class="section-preview-card-viz-still"
-                :src="vizStill"
+                v-if="tile?.kind === 'still'"
+                class="section-preview-card-tile section-preview-card-viz-still"
+                :src="tile.src"
                 alt=""
                 draggable="false"
             />
+            <!-- authored — a co-located `.tile.vue` bespoke live vignette. -->
+            <component
+                :is="authoredTile"
+                v-else-if="authoredTile"
+                class="section-preview-card-tile"
+            />
+            <!-- identity — the terminal per-story floor: the story's own identity as a
+                 glass typographic specimen (title + subpath chip). -->
+            <div
+                v-else-if="tile?.kind === 'identity'"
+                class="section-preview-card-tile section-preview-card-identity"
+            >
+                <span class="section-preview-card-identity-title">{{
+                    tile.title
+                }}</span>
+                <code class="fira-code section-preview-card-identity-path">{{
+                    tile.subpath
+                }}</code>
+            </div>
+            <!-- the escape — a pre-rendered vignette passed by the parent. -->
             <slot v-else name="preview" />
+
+            <!-- the DEMOTED IconChip — a small corner identity mark (not the lead). -->
+            <span v-if="icon" class="section-preview-card-mark">
+                <IconChip
+                    :icon="icon"
+                    :section="section"
+                    :tone="tone"
+                    :size="26"
+                    :glyph-size="14"
+                />
+            </span>
+        </div>
+
+        <!-- The label rung — the title + the Fira-Code subpath, BELOW the tile. -->
+        <div class="flex min-w-0 flex-col gap-1">
+            <span class="text-subheading text-foreground">{{ title }}</span>
+            <code v-if="subpath" class="fira-code section-preview-card-subpath">{{
+                subpath
+            }}</code>
         </div>
 
         <p v-if="blurb" class="text-small text-muted-foreground">{{ blurb }}</p>
@@ -122,18 +140,25 @@ const vizStill = computed(() => vizPreviewStill(props.to));
 
 <style scoped>
 /* BD.W-BENTO-SPECIMEN — the bento card chassis. The CO-MINT of `--phi: 1.618`
-   (the φ proportion token; NO owner on disk — story-page-standard cross-links as
-   co-consumer, first-to-land mints). Consumers ALWAYS read `var(--phi, 1.618)`
-   so a missing mint never resolves `auto`.
+   (the φ proportion token; consumers ALWAYS read `var(--phi, 1.618)` so a missing
+   mint never resolves `auto`).
 
-   THE LIQUID HOVER (§2): the prior `translate(-1px,-1px)` was too tight. Golden:
-   a real squish lift on the SHIPPED `--spring-smooth`, the SHIPPED warm-INK
-   `--shadow-cartoon` cast travels md→lg (NOT a gray box-shadow — the cartoon cast
-   on the card per GOLDEN §2), the specimen parallax-LAGS the frame +2px
-   (overlapping action). Compositor-only (translate/scale/box-shadow), Safari-native. */
+   THE LIQUID HOVER (§2): a real squish lift on the SHIPPED `--spring-smooth`, the
+   warm-INK `--shadow-cartoon` cast travels md→lg, the specimen parallax-LAGS the
+   frame +2px (overlapping action). Compositor-only (translate/scale/box-shadow).
+
+   THE CV PARK (BI.W-LIVE-TILES): `content-visibility: auto` + `contain: content` +
+   an intrinsic-size reserve, so a full ~131-tile landing pays only the visible-tile
+   cost. The card's own hover box-shadow is a decoration of THIS element (not a
+   contained descendant), so `contain: content` never clips the cartoon cast. */
 .section-preview-card {
     --phi: 1.618;
     position: relative;
+    content-visibility: auto;
+    contain: content;
+    /* the reserve the CV park holds while a tile is skipped (auto remembers the
+       last-rendered size once painted; the seed is a lead-card-ish height). */
+    contain-intrinsic-size: auto 340px;
     box-shadow: var(--shadow-cartoon-md);
     translate: 0 0;
     scale: 1;
@@ -149,13 +174,13 @@ const vizStill = computed(() => vizPreviewStill(props.to));
     box-shadow: var(--shadow-cartoon-lg);
 }
 .section-preview-card:active {
-    /* the press squish — the specimen squishes WITH the card as one body. */
+    /* the press squish — the tile squishes WITH the card as one body. */
     scale: 0.97;
     transition:
         translate var(--duration-fast) var(--spring-smooth),
         scale var(--duration-fast) var(--spring-smooth);
 }
-/* the specimen parallax-LAGS the frame on hover (contents lag the chrome). */
+/* the tile parallax-LAGS the frame on hover (contents lag the chrome). */
 .section-preview-card:hover .section-preview-card-preview {
     translate: 0 2px;
 }
@@ -181,22 +206,24 @@ const vizStill = computed(() => vizPreviewStill(props.to));
     letter-spacing: -0.01em;
 }
 
-/* BD.W-BENTO-SPECIMEN — M1 ABROGATE THE GRAY. The preview window stops being
-   `color(srgb 0 0 0 / 0.03)` and becomes a bounded WARM §3 field + a DEFINED
-   ASYMMETRIC `--glass-key` edge, framing the live specimen that transmits it.
-   The `--card-field-h` is the per-card WARMED hue (CONSUMED from `warmFieldHue`,
-   SectionLanding writes it); CSS re-clamps `[25,95]` belt-and-suspenders so an
-   inline cool hue cannot paint teal/navy. φ-proportioned (NOT a fixed 7rem void)
-   with a φ-ladder `max-block-size` double-bound so the span-2 lead can't run away
-   vertically. `container-type: size` lets the specimen scale-to-fit (≥45% occ).
-   PLAIN per-mode `.dark` arms (the `light-dark()` inset-shadow trap + the scoped
+/* ── THE FENCED TILE STAGE ──────────────────────────────────────────────────
+   The window is a bounded WARM §3 field + a DEFINED ASYMMETRIC `--glass-key` edge,
+   framing the live tile that transmits it. `--card-field-h` is the per-card WARMED
+   hue (CONSUMED from `warmFieldHue`, SectionLanding writes it); CSS re-clamps
+   `[25,95]` belt-and-suspenders. φ-proportioned with a φ-ladder `max-block-size`
+   double-bound. `container-type: size` lets the tile scale-to-fit (cq-units, over
+   transform-scale text blur). The fence: `pointer-events: none` · `contain: paint`
+   · `user-select: none` (+ the `inert` / `aria-hidden` attrs in template). PLAIN
+   per-mode `.dark` arms (the `light-dark()` inset-shadow trap + the scoped
    `:global()` drop, MEMORY). */
 .section-preview-card-preview {
     --field-h: clamp(25, var(--card-field-h, 62), 95);
     pointer-events: none;
+    user-select: none;
     position: relative;
     overflow: clip;
     container-type: size;
+    contain: paint;
     isolation: isolate;
     /* concentric rim — the window radius is the card radius minus the p-5 pad
        (CONSUME BD.W-CONCENTRIC-RADIUS: r_inner = r_outer − pad). */
@@ -206,9 +233,8 @@ const vizStill = computed(() => vizPreviewStill(props.to));
     display: grid;
     place-items: center;
     transition: translate var(--spring-smooth-duration, 0.45s) var(--spring-smooth);
-    /* the WARM §3 cel floor — amber key-mass (top-left, toward the key-light) +
-       terracotta mid (bottom-right) over a warm low-chroma floor (C 0.045 clears
-       the field-floor gate). NO gray, NO teal — warm by the field-h clamp. */
+    /* the WARM §3 cel floor — amber key-mass (top-left) + terracotta mid
+       (bottom-right) over a warm low-chroma floor. NO gray, NO teal. */
     background:
         radial-gradient(
             120% 100% at 18% 0%,
@@ -222,31 +248,76 @@ const vizStill = computed(() => vizPreviewStill(props.to));
         ),
         oklch(0.93 0.045 var(--field-h));
     /* THE DEFINED EDGE — §3 ASYMMETRIC lit corner keyed off `--glass-key` (upper-
-       right): a bright top-left-to-bottom-right over-glaze whose LIT corner (top,
-       toward the key) exceeds the opposite by ΔL. NOT a symmetric flat rim. A
-       STATIC inset shadow built off PLAIN per-mode legs (never a light-dark()
-       fragment — the inset-shadow trap). */
+       right). A STATIC inset shadow built off PLAIN per-mode legs (never a
+       light-dark() fragment — the inset-shadow trap). */
     box-shadow:
         inset 0 1.5px 0 0 oklch(1 0 0 / 0.5),
         inset 0 0 0 1px oklch(1 0 0 / 0.22),
         inset 0 -8px 14px -8px oklch(0.4 0.06 var(--field-h) / 0.3);
 }
-/* BG.W-VIZ-PREVIEW-LIVE — the per-story viz still fills the stage edge-to-edge. The
-   φ-ratio raster + the φ-ratio stage make `cover` an exact fit; `image-rendering:
-   auto` bilinear-smooths the small raster so it reads as a continuous specimen. */
-.section-preview-card-viz-still {
-    display: block;
+
+/* every resolved tile fills the stage edge-to-edge — a real component preview,
+   never a floating 5%-occupancy glyph. */
+.section-preview-card-tile {
     inline-size: 100%;
     block-size: 100%;
-    object-fit: cover;
     border-radius: inherit;
+}
+
+/* still — the φ-ratio raster over the φ-ratio stage makes `cover` an exact fit;
+   `image-rendering: auto` bilinear-smooths the small raster into a continuous
+   specimen. */
+.section-preview-card-viz-still {
+    display: block;
+    object-fit: cover;
     image-rendering: auto;
-    user-select: none;
+}
+
+/* authored — the live DOM tile is centered + fit inside the stage. The tile's own
+   components render at their native size, scaled down by the container; a landing
+   tile is static (no reveal/rAF at rest). */
+.section-preview-card-tile :deep(*) {
+    animation: none !important;
+}
+
+/* identity — the terminal per-story floor: the story's own title as a glass
+   typographic specimen + its subpath chip. Per-STORY distinct (the title differs),
+   0-GL, never the repeated compass glyph. */
+.section-preview-card-identity {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    gap: 0.4rem;
+    padding: clamp(0.75rem, 10cqmin, 1.4rem);
+}
+.section-preview-card-identity-title {
+    font-size: clamp(1rem, 13cqmin, 1.6rem);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--foreground);
+    text-wrap: balance;
+}
+.section-preview-card-identity-path {
+    font-size: clamp(0.6rem, 5cqmin, 0.78rem);
+    color: var(--muted-foreground);
+    letter-spacing: -0.01em;
+}
+
+/* the DEMOTED IconChip — a small corner identity mark (top-right, over the tile).
+   No longer the lead; a quiet WHERE-am-I badge. */
+.section-preview-card-mark {
+    position: absolute;
+    inset-block-start: 0.5rem;
+    inset-inline-end: 0.5rem;
+    z-index: 2;
+    display: block;
+    pointer-events: none;
 }
 
 .dark .section-preview-card-preview {
-    /* warm-EMBER dark floor — lower L, KEEP chroma (C 0.05 ≥ the warm floor),
-       L ∈ [0.25,0.6] so it GLOWS amber/terracotta, NEVER charcoal/gray. */
+    /* warm-EMBER dark floor — lower L, KEEP chroma (C 0.05 ≥ the warm floor). */
     background:
         radial-gradient(
             120% 100% at 18% 0%,
@@ -266,8 +337,7 @@ const vizStill = computed(() => vizPreviewStill(props.to));
 }
 
 @media (prefers-reduced-transparency: reduce) {
-    /* the field drops to the warm-SOLID floor (STILL warm, never gray) — the
-       defined edge survives as the legibility anchor. */
+    /* the field drops to the warm-SOLID floor (STILL warm, never gray). */
     .section-preview-card-preview {
         background: oklch(0.93 0.05 var(--field-h));
     }
