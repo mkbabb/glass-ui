@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { ref, computed, watch } from "vue";
 import {
     TagsInput,
@@ -8,6 +9,7 @@ import {
     TagsInputItemDelete,
     TagsInputItemText,
 } from "@glass/components/ui/tags-input";
+import { Card } from "@glass/components/ui/card";
 import { Label } from "@glass/components/ui/label";
 import { cn } from "@glass/utils/cn";
 
@@ -41,9 +43,9 @@ const skillCount = computed(() => skills.value.length);
 
 <template>
     <StoryPage>
-        <!-- Prefilled -->
-        <div class="flex flex-col gap-2">
-            <Label for="skills-input">Skills · prefilled</Label>
+        <StorySection heading="Prefilled">
+          <Card surface="veil" class="flex flex-col gap-2 p-5">
+            <Label for="skills-input">Skills</Label>
             <TagsInput
                 v-model="skills"
                 class="min-h-11 bg-card shadow-cartoon-sm"
@@ -67,11 +69,12 @@ const skillCount = computed(() => skills.value.length);
             <p class="text-mono-caption text-muted-foreground">
                 {{ skillCount }} skill{{ skillCount === 1 ? "" : "s" }} · enter to add, backspace to remove last
             </p>
-        </div>
+          </Card>
+        </StorySection>
 
-        <!-- Paste many -->
-        <div class="flex flex-col gap-2">
-            <Label for="paste-input">Paste many · comma, semicolon, or space delimited</Label>
+        <StorySection heading="Paste many" blurb="Comma, semicolon, or space delimited.">
+          <Card surface="veil" class="flex flex-col gap-2 p-5">
+            <Label for="paste-input">Bulk tags</Label>
             <TagsInput
                 v-model="pasted"
                 :delimiter="pasteDelimiter"
@@ -91,11 +94,12 @@ const skillCount = computed(() => skills.value.length);
                     placeholder="Try pasting: alpha, beta; gamma delta"
                 />
             </TagsInput>
-        </div>
+          </Card>
+        </StorySection>
 
-        <!-- Validation -->
-        <div class="flex flex-col gap-2">
-            <Label for="emails-input">Emails · validated on add</Label>
+        <StorySection heading="Validation" blurb="Rejects anything that fails a loose email check.">
+          <Card surface="veil" class="flex flex-col gap-2 p-5">
+            <Label for="emails-input">Emails</Label>
             <TagsInput
                 v-model="emails"
                 :class="
@@ -129,6 +133,7 @@ const skillCount = computed(() => skills.value.length);
             >
                 {{ emailError ?? "Valid RFC-ish emails only." }}
             </p>
-        </div>
+          </Card>
+        </StorySection>
     </StoryPage>
 </template>

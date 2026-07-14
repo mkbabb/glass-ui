@@ -71,5 +71,42 @@ const NAV_STOP = 12;
                 </p>
             </div>
         </StorySection>
+
+        <StorySection
+            heading="Placement + states"
+            blurb="The ribbon anchors to either top corner via placement; a right-placed ribbon expands leftward. A disabled control stays PRESENT (the row geometry holds) but drops out of the tab order."
+        >
+            <div
+                class="relative h-32 w-full overflow-hidden rounded-card border border-border/60 bg-card"
+            >
+                <HeaderRibbon placement="right" class="!absolute">
+                    <template #anchor="{ pinned }">
+                        <DockControl
+                            type="button"
+                            :aria-pressed="pinned"
+                            aria-label="Toggle right ribbon"
+                        >
+                            <Menu aria-hidden="true" />
+                        </DockControl>
+                    </template>
+                    <template #items>
+                        <DockControl type="button" aria-label="Search">
+                            <Search aria-hidden="true" />
+                        </DockControl>
+                        <DockControl type="button" aria-label="Notifications">
+                            <Bell aria-hidden="true" />
+                        </DockControl>
+                        <DockControl type="button" disabled aria-label="Settings (locked)">
+                            <Settings aria-hidden="true" />
+                        </DockControl>
+                    </template>
+                </HeaderRibbon>
+                <p
+                    class="absolute inset-x-0 bottom-3 text-center text-mono-caption text-muted-foreground"
+                >
+                    placement="right" · the third control is disabled
+                </p>
+            </div>
+        </StorySection>
     </StoryPage>
 </template>

@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import StoryPage from "../../chassis/page/StoryPage.vue";
-import { computed, defineComponent, h, inject, ref } from "vue";
+import StorySection from "../../chassis/section/StorySection.vue";
+import { ref } from "vue";
 import { GripVertical } from "@lucide/vue";
 import {
     SortableList,
     SortableItem,
     SortableHandle,
-    SORTABLE_CONTEXT,
 } from "@glass/components/custom/sortable-list";
+import { Card } from "@glass/components/ui/card";
 import { cn } from "@glass/utils/cn";
 
 interface Task {
@@ -29,37 +30,8 @@ const handleOnlyTasks = ref<Task[]>([
     { id: "h1", label: "Pin keyboard affordance", tone: "1" },
     { id: "h2", label: "Check drag ghost offset", tone: "3" },
     { id: "h3", label: "Verify handle selector",  tone: "5" },
-    { id: "h4", label: "Record context readout",  tone: "8" },
+    { id: "h4", label: "Confirm keyboard reorder", tone: "8" },
 ]);
-
-// Story-local consumer proving SORTABLE_CONTEXT can be read by descendants.
-const SortableContextReadout = defineComponent({
-    name: "SortableContextReadout",
-    setup() {
-        const sortable = inject(SORTABLE_CONTEXT);
-        const readout = computed(() => {
-            if (!sortable) return "missing";
-            return [
-                `isDragging=${sortable.isDragging.value}`,
-                `dragId=${sortable.dragId.value ?? "none"}`,
-                `dropIndex=${sortable.dropIndex.value ?? "none"}`,
-            ].join(" | ");
-        });
-
-        return () =>
-            h(
-                "div",
-                {
-                    class: "flex flex-wrap items-center gap-2 rounded-md border border-border/70 bg-muted/40 px-3 py-2 text-mono-caption text-muted-foreground",
-                    "data-sortable-context-readout": "",
-                },
-                [
-                    h("span", { class: "text-foreground" }, "SORTABLE_CONTEXT"),
-                    h("span", readout.value),
-                ],
-            );
-    },
-});
 
 // Cross-list: Todo / Doing / Done — share the same `group="kanban"`.
 interface Card {
@@ -89,15 +61,12 @@ function insertAt<T>(list: T[], index: number, item: T): T[] {
 
 <template>
     <StoryPage>
-        <!-- SINGLE LIST -->
-        <div>
-            <p class="text-admin-label mb-4 text-muted-foreground">
-                Single list · drag the grip to reorder
-            </p>
+        <StorySection heading="Single list" blurb="Drag the grip to reorder.">
+          <Card surface="veil" class="p-3">
             <SortableList
                 :items="tasks"
                 :get-id="(t) => t.id"
-                class="flex flex-col gap-2 rounded-card border border-border bg-card p-3 shadow-cartoon"
+                class="flex flex-col gap-2"
                 @reorder="tasks = $event"
             >
                 <SortableItem
@@ -121,21 +90,18 @@ function insertAt<T>(list: T[], index: number, item: T): T[] {
                     <span class="text-small">{{ t.label }}</span>
                 </SortableItem>
             </SortableList>
-        </div>
+          </Card>
+        </StorySection>
 
-        <!-- HANDLE-ONLY + CONTEXT CONSUMER -->
-        <div>
-            <p class="text-admin-label mb-4 text-muted-foreground">
-                Handle-only · context readout is injected inside the list
-            </p>
+        <StorySection heading="Handle-only" blurb="Only the grip button starts a drag — the row body stays selectable text.">
+          <Card surface="veil" class="p-3">
             <SortableList
                 :items="handleOnlyTasks"
                 :get-id="(t) => t.id"
                 handle-selector="[data-sortable-handle]"
-                class="flex flex-col gap-2 rounded-card border border-border bg-card p-3 shadow-cartoon"
+                class="flex flex-col gap-2"
                 @reorder="handleOnlyTasks = $event"
             >
-                <SortableContextReadout />
                 <SortableItem
                     v-for="t in handleOnlyTasks"
                     :key="t.id"
@@ -157,13 +123,10 @@ function insertAt<T>(list: T[], index: number, item: T): T[] {
                     <span class="text-small">{{ t.label }}</span>
                 </SortableItem>
             </SortableList>
-        </div>
+          </Card>
+        </StorySection>
 
-        <!-- CROSS-LIST -->
-        <div>
-            <p class="text-admin-label mb-4 text-muted-foreground">
-                Cross-list · drop between columns (group="kanban")
-            </p>
+        <StorySection heading="Cross-list" blurb="Drop between columns — the three lists share group=&quot;kanban&quot;.">
             <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
                 <!-- Todo -->
                 <div :class="cn('flex flex-col gap-2 rounded-card border border-border bg-card p-3 shadow-cartoon')">
@@ -249,6 +212,6 @@ function insertAt<T>(list: T[], index: number, item: T): T[] {
                     </SortableList>
                 </div>
             </div>
-        </div>
+        </StorySection>
     </StoryPage>
 </template>

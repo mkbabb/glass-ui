@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { Avatar, AvatarFallback, AvatarImage } from "@glass/components/ui/avatar";
+import { Card } from "@glass/components/ui/card";
 import { StackedIconGroup } from "@glass/components/custom/stacked-icons";
 import { cn } from "@glass/utils/cn";
 
@@ -27,10 +29,8 @@ const sizes = ["sm", "md", "lg"] as const;
 
 <template>
     <StoryPage>
-        <!-- SIZES -->
-        <div>
-            <p class="text-admin-label mb-4 text-muted-foreground">Sizes</p>
-            <div class="flex items-end gap-6">
+        <StorySection heading="Sizes">
+            <Card surface="veil" class="flex items-end gap-6 p-6">
                 <div v-for="s in sizes" :key="s" class="flex flex-col items-center gap-2">
                     <Avatar :size="s">
                         <AvatarImage
@@ -41,13 +41,11 @@ const sizes = ["sm", "md", "lg"] as const;
                     </Avatar>
                     <span class="text-mono-caption text-muted-foreground">{{ s }}</span>
                 </div>
-            </div>
-        </div>
+            </Card>
+        </StorySection>
 
-        <!-- SHAPES + FALLBACKS -->
-        <div>
-            <p class="text-admin-label mb-4 text-muted-foreground">Shapes · fallbacks · tones</p>
-            <div class="flex flex-wrap items-center gap-4">
+        <StorySection heading="Shapes, fallbacks, tones">
+            <Card surface="veil" class="flex flex-wrap items-center gap-4 p-6">
                 <Avatar v-for="p in people" :key="p.id" size="md" shape="circle">
                     <!-- F2.R2 W-DARK-READABILITY-REPAIR (paint re-open): the initials sit
                          on the --section-color ramp whose DARK ARM LIGHTENS the fill (L≈0.72-0.81),
@@ -74,21 +72,14 @@ const sizes = ["sm", "md", "lg"] as const;
                         ℱ
                     </AvatarFallback>
                 </Avatar>
-            </div>
-        </div>
+            </Card>
+        </StorySection>
 
-        <!-- GROUPED OVERLAP via StackedIconGroup -->
-        <div>
-            <p class="text-admin-label mb-4 text-muted-foreground">
-                Grouped · StackedIconGroup with +N overflow
-            </p>
-            <div
-                :class="
-                    cn(
-                        'flex items-center gap-6 rounded-card border border-border bg-card p-6 shadow-cartoon',
-                    )
-                "
-            >
+        <StorySection
+            heading="Grouped overlap"
+            blurb="StackedIconGroup fans the roster with a +N overflow — hover to spread."
+        >
+            <Card surface="veil" class="flex items-center gap-6 p-6">
                 <StackedIconGroup
                     :items="people"
                     :max-visible="4"
@@ -117,12 +108,10 @@ const sizes = ["sm", "md", "lg"] as const;
                         hover to fan out
                     </span>
                 </div>
-            </div>
-        </div>
+            </Card>
+        </StorySection>
 
-        <!-- ROSTER -->
-        <div>
-            <p class="text-admin-label mb-4 text-muted-foreground">Roster</p>
+        <StorySection heading="Roster">
             <ul class="flex flex-col divide-y divide-border rounded-card border border-border bg-card shadow-cartoon">
                 <li
                     v-for="p in people.slice(0, 5)"
@@ -147,6 +136,6 @@ const sizes = ["sm", "md", "lg"] as const;
                     </div>
                 </li>
             </ul>
-        </div>
+        </StorySection>
     </StoryPage>
 </template>

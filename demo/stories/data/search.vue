@@ -3,29 +3,12 @@ import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { computed, ref } from "vue";
 import {
-    CheckCircle2,
-    Database,
-    ListPlus,
-    Search,
-    Sparkles,
-    Trash2,
-} from "@lucide/vue";
-import {
     FuzzySearch,
     SearchBar,
-    buildIndex,
-    clearSearchCache as clearCache,
-    fuzzyMatch,
-    searchIndex,
     useFuzzySearch,
 } from "@glass/components/custom/search";
-import type {
-    SearchIndex,
-    SearchResult,
-    SearchableItem,
-} from "@glass/components/custom/search";
+import type { SearchResult, SearchableItem } from "@glass/components/custom/search";
 import { Badge } from "@glass/components/ui/badge";
-import { Button } from "@glass/components/ui/button";
 import {
     Card,
     CardContent,
@@ -33,7 +16,6 @@ import {
     CardHeader,
     CardTitle,
 } from "@glass/components/ui/card";
-import { Input } from "@glass/components/ui/input";
 
 type SearchStatus = "wired" | "proof" | "consumer" | "triage";
 
@@ -59,10 +41,6 @@ const rowSeeds = [
     ["FuzzySearch overlay", "component", "Keyboard navigation, modal expansion, and highlighted fuzzy result labels.", "wired", "Search", ["FuzzySearch", "keyboard"]],
     ["SearchBar query rail", "component", "Compact input bar with a baked-in icon for filtering catalogue rows.", "proof", "Search", ["SearchBar", "input"]],
     ["useFuzzySearch state", "composable", "Reactive query, debounce, selected index, open state, and result selection.", "wired", "Search", ["useFuzzySearch", "state"]],
-    ["buildIndex helper", "helper", "Builds lowercased index entries from the 200-row sample dataset.", "wired", "Search", ["buildIndex", "index"]],
-    ["searchIndex helper", "helper", "Scores multi-token fuzzy queries and returns ordered search results.", "proof", "Search", ["searchIndex", "score"]],
-    ["fuzzyMatch scorer", "helper", "Subsequence matching with bonuses for prefixes, separators, and consecutive runs.", "proof", "Search", ["fuzzyMatch", "score"]],
-    ["clearCache control", "helper", "Flushes cached search results after dataset or route state changes.", "wired", "Search", ["clearCache", "cache"]],
     ["Glass panel substrate", "component", "Glass renderer consumer row with tiered surface tokens and filter state.", "consumer", "Foundations", ["glass", "panel"]],
     ["Dock dropdown trigger", "component", "Navigation package trigger row for dock-scoped menus.", "wired", "Navigation", ["dock", "dropdown"]],
     ["Dock select trigger", "component", "Navigation package trigger row for dock-scoped selection controls.", "wired", "Navigation", ["dock", "select"]],
@@ -107,10 +85,9 @@ const rowSeeds = [
     ["Aurora gradient", "flat", "Procedural painterly gradient row with pointer-driven swirl.", "consumer", "Flat", ["aurora", "gradient"]],
 ] satisfies RowSeed[];
 
-// The curated 50 seeds are the legible head of the list; the dataset is then
-// extended to 200 rows (the dock-scale fuzzy π — BC.W-FUZZY-HARDEN acceptance)
-// by procedurally derived variants so a query exercises ranking + the prefix-
-// narrowing cache at scale, not just the small head.
+// The curated seeds are the legible head of the list; the dataset is extended to
+// 200 rows (the dock-scale fuzzy π) by procedurally derived variants so a query
+// exercises ranking + the prefix-narrowing cache at scale, not just the small head.
 const DATASET_SIZE = 200;
 const STATUSES = ["wired", "proof", "consumer", "triage"] as const satisfies readonly SearchStatus[];
 
@@ -142,13 +119,19 @@ const searchState = useFuzzySearch<SearchableItem>({
     },
 });
 
-const queryControl = computed({
+// The live SearchBar drives the query AND opens the overlay once the field is typed
+// into — the rail and the command palette read the same reactive state.
+const query = computed({
     get: () => searchState.query.value,
     set: (value: string) => {
         searchState.query.value = value;
         if (value.trim()) searchState.open();
     },
 });
+
+// The three size specimens carry their own field state so the size axis reads as a
+// permutation strip (the rungs sit side by side), independent of the live query.
+const sizeSample = ref("");
 
 const visibleResults = computed<SearchResult<StorySearchItem>[]>(() =>
     searchState.results.value
@@ -159,59 +142,8 @@ const visibleResults = computed<SearchResult<StorySearchItem>[]>(() =>
         .filter((result): result is SearchResult<StorySearchItem> => result !== null),
 );
 
-const helperQuery = ref("search index");
-const matchPattern = ref("fsp");
-const matchText = ref("Fuzzy search package");
-const manualIndex = ref<SearchIndex<StorySearchItem> | null>(null);
-const manualResults = ref<SearchResult<StorySearchItem>[]>([]);
-const matchResult = ref<{ score: number; matches: number[] } | null>(null);
-const buildCalls = ref(0);
-const searchCalls = ref(0);
-const matchCalls = ref(0);
-const clearCalls = ref(0);
-const lastHelper = ref("Awaiting helper control");
-
 const resultCount = computed(() => visibleResults.value.length);
-const helperIndexSize = computed(() => manualIndex.value?.length ?? 0);
-
-function runBuildIndex() {
-    manualIndex.value = buildIndex(searchItems);
-    buildCalls.value += 1;
-    lastHelper.value = `buildIndex indexed ${manualIndex.value.length} rows`;
-}
-
-function runSearchIndex() {
-    if (!manualIndex.value) {
-        manualIndex.value = buildIndex(searchItems);
-        buildCalls.value += 1;
-    }
-
-    manualResults.value = searchIndex(
-        manualIndex.value,
-        helperQuery.value,
-        6,
-    );
-    searchCalls.value += 1;
-    lastHelper.value = `searchIndex returned ${manualResults.value.length} rows`;
-}
-
-function runFuzzyMatch() {
-    matchResult.value = fuzzyMatch(
-        matchPattern.value.toLowerCase(),
-        matchText.value.toLowerCase(),
-    );
-    matchCalls.value += 1;
-    lastHelper.value = matchResult.value
-        ? `fuzzyMatch score ${formatScore(matchResult.value.score)}`
-        : "fuzzyMatch returned no match";
-}
-
-function runClearCache() {
-    clearCache();
-    manualResults.value = [];
-    clearCalls.value += 1;
-    lastHelper.value = "clearCache flushed cached helper results";
-}
+const hasQuery = computed(() => query.value.trim().length > 0);
 
 function typeLabel(item: SearchableItem): string {
     return item.type ?? "row";
@@ -220,233 +152,55 @@ function typeLabel(item: SearchableItem): string {
 function formatScore(score: number): string {
     return score.toFixed(1);
 }
-
-function formatMatches(indices: number[]): string {
-    return indices.length > 0 ? indices.join(", ") : "none";
-}
 </script>
 
 <template>
     <StoryPage>
-        <section class="flex flex-col gap-5">
-            <div class="flex flex-col justify-between gap-4 md:flex-row md:items-end">
-                <StorySection label="Search package" heading="Fuzzy index" />
-                <div class="flex flex-wrap gap-2">
-                    <Badge variant="outline" data-testid="dataset-size">
-                        {{ searchItems.length }} rows
-                    </Badge>
-                    <Badge variant="secondary" data-testid="result-count">
-                        {{ resultCount }} results
-                    </Badge>
-                    <Badge variant="outline">
-                        {{ selectedResult?.label ?? "No selection" }}
-                    </Badge>
-                </div>
+        <div class="flex flex-wrap items-end justify-between gap-4">
+            <StorySection label="Search package" heading="Fuzzy search" />
+            <div class="flex flex-wrap gap-2">
+                <Badge variant="outline">{{ searchItems.length }} rows</Badge>
+                <Badge variant="secondary">{{ resultCount }} matches</Badge>
+                <Badge variant="outline">
+                    {{ selectedResult?.label ?? "No selection" }}
+                </Badge>
             </div>
+        </div>
 
-            <div class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_22rem]">
-                <div class="flex flex-col gap-4 rounded-card border border-border bg-card p-4 shadow-cartoon">
-                    <!-- BC.W-SEARCH-CUSTOM — the size hierarchy on the golden
-                         --control-h-* rungs (sm quieter, default the golden pill, lg
-                         the hero field), all warm-cream glass pills off ONE recipe. -->
-                    <SearchBar
-                        v-model="queryControl"
-                        size="lg"
-                        surface="glass"
-                        placeholder="Search the 200-row dataset..."
-                        data-testid="search-query"
-                    />
-                    <SearchBar
-                        v-model="queryControl"
-                        size="md"
-                        surface="glass"
-                        placeholder="size=md..."
-                        data-testid="search-query-default"
-                    />
-                    <SearchBar
-                        v-model="queryControl"
-                        size="sm"
-                        surface="glass"
-                        placeholder="size=sm..."
-                        data-testid="search-query-sm"
-                    />
-
-                    <!-- BC.W-SEARCH-CUSTOM — the GLASS expand modal (surface=glass →
-                         the warm-cream floating plate, not the prior opaque slab) +
-                         the .glass-menu-row result rows (glass-quiet hover-lift). -->
-                    <FuzzySearch
-                        :state="searchState"
-                        variant="floating"
-                        surface="glass"
-                        placeholder="FuzzySearch component query..."
-                        :type-label="typeLabel"
-                    />
-                </div>
-
-                <div class="grid gap-3 rounded-card border border-border bg-background p-4">
-                    <div class="flex items-center gap-2">
-                        <Search class="h-4 w-4 text-muted-foreground" />
-                        <span class="text-admin-label">useFuzzySearch readout</span>
-                    </div>
-                    <dl class="grid grid-cols-2 gap-3 text-small">
-                        <div>
-                            <dt class="text-muted-foreground">Query</dt>
-                            <dd class="fira-code" data-testid="query-readout">
-                                {{ queryControl || "empty" }}
-                            </dd>
-                        </div>
-                        <div>
-                            <dt class="text-muted-foreground">Open</dt>
-                            <dd class="fira-code">{{ searchState.isOpen.value ? "yes" : "no" }}</dd>
-                        </div>
-                        <div>
-                            <dt class="text-muted-foreground">Selected index</dt>
-                            <dd class="fira-code">{{ searchState.selectedIndex.value }}</dd>
-                        </div>
-                        <div>
-                            <dt class="text-muted-foreground">Expanded</dt>
-                            <dd class="fira-code">{{ searchState.isExpanded.value ? "yes" : "no" }}</dd>
-                        </div>
-                    </dl>
-                </div>
-            </div>
-        </section>
-
-        <section class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_24rem]">
-            <div class="flex flex-col gap-4 rounded-card border border-border bg-card p-4 shadow-cartoon">
-                <div class="grid gap-3 sm:grid-cols-3">
-                    <Input
-                        v-model="helperQuery"
-                        aria-label="Helper query"
-                        placeholder="Helper query"
-                    />
-                    <Input
-                        v-model="matchPattern"
-                        aria-label="fuzzyMatch pattern"
-                        placeholder="Pattern"
-                    />
-                    <Input
-                        v-model="matchText"
-                        aria-label="fuzzyMatch text"
-                        placeholder="Text"
-                    />
-                </div>
-
-                <div class="flex flex-wrap gap-2" data-testid="helper-controls">
-                    <Button type="button" variant="outline" size="sm" data-testid="build-index-button" @click="runBuildIndex">
-                        <ListPlus class="mr-2 h-4 w-4" />
-                        buildIndex
-                    </Button>
-                    <Button type="button" variant="outline" size="sm" data-testid="search-index-button" @click="runSearchIndex">
-                        <Database class="mr-2 h-4 w-4" />
-                        searchIndex
-                    </Button>
-                    <Button type="button" variant="outline" size="sm" data-testid="fuzzy-match-button" @click="runFuzzyMatch">
-                        <Sparkles class="mr-2 h-4 w-4" />
-                        fuzzyMatch
-                    </Button>
-                    <Button
-                        type="button"
-                        tone="destructive"
-                        size="sm"
-                        data-testid="clear-cache-button"
-                        aria-label="Clear search cache"
-                        @click="runClearCache"
-                    >
-                        <Trash2 class="mr-2 h-4 w-4" />
-                        Clear cache
-                    </Button>
-                </div>
-
-                <div class="grid gap-3 text-small sm:grid-cols-2">
-                    <div class="rounded-md border border-border bg-background p-3">
-                        <span class="text-muted-foreground">Index size</span>
-                        <strong class="block fira-code" data-testid="index-size">
-                            {{ helperIndexSize }}
-                        </strong>
-                    </div>
-                    <div class="rounded-md border border-border bg-background p-3">
-                        <span class="text-muted-foreground">Manual results</span>
-                        <strong class="block fira-code" data-testid="manual-result-count">
-                            {{ manualResults.length }}
-                        </strong>
-                    </div>
-                    <div class="rounded-md border border-border bg-background p-3">
-                        <span class="text-muted-foreground">Match positions</span>
-                        <strong class="block fira-code" data-testid="match-positions">
-                            {{ matchResult ? formatMatches(matchResult.matches) : "none" }}
-                        </strong>
-                    </div>
-                    <div class="rounded-md border border-border bg-background p-3">
-                        <span class="text-muted-foreground">Last helper</span>
-                        <strong class="block fira-code" data-testid="last-helper">
-                            {{ lastHelper }}
-                        </strong>
-                    </div>
-                </div>
-            </div>
-
-            <div class="rounded-card border border-border bg-background p-4">
-                <div class="flex items-center gap-2">
-                    <CheckCircle2 class="h-4 w-4 text-muted-foreground" />
-                    <span class="text-admin-label">Helper call ledger</span>
-                </div>
-                <dl class="mt-4 grid grid-cols-2 gap-3 text-small">
-                    <div>
-                        <dt class="text-muted-foreground">buildIndex</dt>
-                        <dd class="fira-code" data-testid="build-index-calls">{{ buildCalls }}</dd>
-                    </div>
-                    <div>
-                        <dt class="text-muted-foreground">searchIndex</dt>
-                        <dd class="fira-code" data-testid="search-index-calls">{{ searchCalls }}</dd>
-                    </div>
-                    <div>
-                        <dt class="text-muted-foreground">fuzzyMatch</dt>
-                        <dd class="fira-code" data-testid="fuzzy-match-calls">{{ matchCalls }}</dd>
-                    </div>
-                    <div>
-                        <dt class="text-muted-foreground">clearCache</dt>
-                        <dd class="fira-code" data-testid="clear-cache-calls">{{ clearCalls }}</dd>
-                    </div>
-                </dl>
-
-                <ol class="mt-4 flex flex-col gap-2" data-testid="manual-results">
-                    <li
-                        v-for="result in manualResults"
-                        :key="`manual-${result.item.id}`"
-                        class="rounded-md border border-border bg-card px-3 py-2 text-small"
-                    >
-                        <span class="font-medium">{{ result.item.label }}</span>
-                        <span class="ml-2 fira-code text-mono-caption text-muted-foreground">
-                            {{ formatScore(result.score) }}
-                        </span>
-                    </li>
-                </ol>
-            </div>
-        </section>
-
-        <section class="flex flex-col gap-4">
-            <StorySection heading="Results" gap="lg" class="items-center justify-between">
-                <span class="fira-code text-mono-caption text-muted-foreground" data-testid="visible-result-count">
-                    {{ resultCount }}
-                </span>
-            </StorySection>
+        <StorySection
+            heading="Live search"
+            blurb="Type to filter the 200-row catalogue. The rail and the command overlay share one reactive query; a match is ranked by a subsequence score with prefix, separator, and run bonuses."
+        >
+            <Card surface="veil" class="flex flex-col gap-4 p-5">
+                <SearchBar
+                    v-model="query"
+                    size="lg"
+                    surface="glass"
+                    placeholder="Search components, composables, tokens…"
+                    aria-label="Search the catalogue"
+                />
+                <FuzzySearch
+                    :state="searchState"
+                    variant="floating"
+                    surface="glass"
+                    placeholder="Jump to a component…"
+                    :type-label="typeLabel"
+                />
+            </Card>
 
             <div
-                v-if="visibleResults.length > 0"
+                v-if="hasQuery && visibleResults.length > 0"
                 class="grid gap-4 md:grid-cols-2"
-                data-testid="result-list"
             >
                 <Card
                     v-for="result in visibleResults"
                     :key="result.item.id"
-                    data-testid="result-card"
                     class="border-l-4"
                     :style="{ borderLeftColor: `var(--section-color-${result.item.tone})` }"
                 >
                     <CardHeader class="pb-3">
                         <div class="flex items-start justify-between gap-3">
-                            <div>
+                            <div class="min-w-0">
                                 <CardTitle class="text-base">{{ result.item.label }}</CardTitle>
                                 <CardDescription>
                                     {{ result.item.owner }} · {{ result.item.type }}
@@ -469,20 +223,44 @@ function formatMatches(indices: number[]): string {
                             </Badge>
                             <Badge variant="outline">{{ result.item.status }}</Badge>
                         </div>
-                        <span class="fira-code text-mono-caption">
-                            matches: {{ formatMatches(result.matchIndices) }}
-                        </span>
                     </CardContent>
                 </Card>
             </div>
 
-            <div
-                v-else
-                class="ghost-slot p-6 text-small"
-                data-testid="empty-results"
-            >
-                No fuzzy results for the current query.
+            <div v-else class="ghost-slot p-8 text-center text-small text-muted-foreground">
+                {{ hasQuery
+                    ? "No matches for the current query — try a shorter subsequence."
+                    : "Start typing above to rank the catalogue by fuzzy score." }}
             </div>
-        </section>
+        </StorySection>
+
+        <StorySection
+            heading="Sizes"
+            blurb="One warm-cream glass pill recipe across the golden control-height rungs — sm for a quiet inline filter, md the default, lg the hero field."
+        >
+            <div class="flex flex-col gap-3">
+                <SearchBar
+                    v-model="sizeSample"
+                    size="sm"
+                    surface="glass"
+                    placeholder="size=sm — inline filter"
+                    aria-label="Search bar, small"
+                />
+                <SearchBar
+                    v-model="sizeSample"
+                    size="md"
+                    surface="glass"
+                    placeholder="size=md — the default rail"
+                    aria-label="Search bar, medium"
+                />
+                <SearchBar
+                    v-model="sizeSample"
+                    size="lg"
+                    surface="glass"
+                    placeholder="size=lg — the hero field"
+                    aria-label="Search bar, large"
+                />
+            </div>
+        </StorySection>
     </StoryPage>
 </template>

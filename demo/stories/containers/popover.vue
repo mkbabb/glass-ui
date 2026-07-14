@@ -7,6 +7,7 @@ import {
     PopoverTrigger,
 } from "@glass/components/ui/popover";
 import { Button } from "@glass/components/ui/button";
+import { Card } from "@glass/components/ui/card";
 import { Input } from "@glass/components/ui/input";
 import { Label } from "@glass/components/ui/label";
 import { IconChip } from "@glass/components/custom/icon-chip";
@@ -137,6 +138,48 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                         </PopoverContent>
                     </Popover>
                 </div>
+            </StorySection>
+
+            <StorySection heading="Trigger states" gap="lg">
+                <p class="text-sm text-muted-foreground">
+                    The trigger is an ordinary <code class="font-mono text-xs">Button</code> —
+                    any variant, size, or the disabled edge. A disabled trigger never
+                    opens and drops out of the tab order.
+                </p>
+                <Card surface="veil" class="flex flex-wrap items-center gap-3 p-5">
+                    <Popover>
+                        <PopoverTrigger as-child>
+                            <Button>Primary</Button>
+                        </PopoverTrigger>
+                        <PopoverContent class="w-auto">
+                            <p class="text-small">Solid trigger.</p>
+                        </PopoverContent>
+                    </Popover>
+                    <Popover>
+                        <PopoverTrigger as-child>
+                            <Button variant="outline" size="sm">Outline · sm</Button>
+                        </PopoverTrigger>
+                        <PopoverContent class="w-auto">
+                            <p class="text-small">Compact outline trigger.</p>
+                        </PopoverContent>
+                    </Popover>
+                    <Popover>
+                        <PopoverTrigger as-child>
+                            <Button variant="ghost">Ghost</Button>
+                        </PopoverTrigger>
+                        <PopoverContent class="w-auto">
+                            <p class="text-small">Ghost trigger.</p>
+                        </PopoverContent>
+                    </Popover>
+                    <Popover>
+                        <PopoverTrigger as-child>
+                            <Button variant="outline" disabled>Disabled</Button>
+                        </PopoverTrigger>
+                        <PopoverContent class="w-auto">
+                            <p class="text-small">Never reached.</p>
+                        </PopoverContent>
+                    </Popover>
+                </Card>
             </StorySection>
         </div>
     </StoryPage>

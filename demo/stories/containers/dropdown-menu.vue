@@ -19,8 +19,10 @@ import {
     DropdownMenuTrigger,
 } from "@glass/components/ui/dropdown-menu";
 import { Button } from "@glass/components/ui/button";
+import { Badge } from "@glass/components/ui/badge";
+import { Card } from "@glass/components/ui/card";
 import { IconChip } from "@glass/components/custom/icon-chip";
-import { Menu } from "@lucide/vue";
+import { Menu, MoreHorizontal } from "@lucide/vue";
 
 // BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2
 // blue identity. PH3-safe (inline borderLeft, not the border-l-[3px] +
@@ -132,13 +134,87 @@ const flags = ref({ minimap: true, overlays: false, rulers: true });
                 </DropdownMenu>
                 </div>
 
-                <div
-                    class="rounded-lg border border-border bg-card/50 px-3 py-2 font-mono text-xs"
-                >
-                    layout = {{ panelLayout }} · minimap = {{ flags.minimap }} ·
-                    overlays = {{ flags.overlays }} · rulers = {{ flags.rulers }}
-                </div>
+                <!-- CBA-3: the menu's bound state is a VISIBLE teaching canvas, not a
+                     mono debug line. The workspace mock re-lays itself to the chosen
+                     layout and lights the active overlays — the menu's effect is the
+                     affordance. -->
+                <Card surface="veil" class="flex flex-col gap-3 p-5">
+                    <div class="flex items-center justify-between">
+                        <span class="text-admin-label capitalize">{{ panelLayout }} layout</span>
+                        <div class="flex flex-wrap gap-1.5">
+                            <Badge v-if="flags.minimap" variant="secondary">Minimap</Badge>
+                            <Badge v-if="flags.overlays" variant="secondary">Paper overlay</Badge>
+                            <Badge v-if="flags.rulers" variant="secondary">Rulers</Badge>
+                        </div>
+                    </div>
+                    <div
+                        class="relative grid gap-2 rounded-md p-3"
+                        :class="{
+                            'grid-cols-3': panelLayout === 'grid',
+                            'grid-cols-1': panelLayout === 'list',
+                            'grid-flow-col auto-cols-fr': panelLayout === 'board',
+                            'bg-section-2/8': flags.overlays,
+                        }"
+                        :style="flags.rulers ? { outline: '1px dashed color-mix(in srgb, var(--section-color-2) 45%, transparent)', outlineOffset: '2px' } : {}"
+                    >
+                        <div
+                            v-for="cell in panelLayout === 'grid' ? 6 : panelLayout === 'board' ? 3 : 4"
+                            :key="cell"
+                            class="h-10 rounded bg-section-2/15"
+                            :class="panelLayout === 'board' ? 'min-h-24' : ''"
+                        />
+                        <span
+                            v-if="flags.minimap"
+                            class="pointer-events-none absolute bottom-3 right-3 h-8 w-12 rounded border border-section-2/40 bg-section-2/20"
+                        />
+                    </div>
+                </Card>
             </StorySection>
-        
+
+            <StorySection heading="Trigger variants + states" gap="lg">
+                <p class="text-sm text-muted-foreground">
+                    The trigger is any <code class="font-mono text-xs">Button</code>;
+                    items carry their own <code class="font-mono text-xs">disabled</code>
+                    edge, and a disabled trigger never opens.
+                </p>
+                <Card surface="veil" class="flex flex-wrap items-center gap-3 p-5">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger as-child>
+                            <Button variant="ghost" iconOnly aria-label="Row actions">
+                                <MoreHorizontal aria-hidden="true" />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent class="w-48">
+                            <DropdownMenuItem>Duplicate</DropdownMenuItem>
+                            <DropdownMenuItem>Share…</DropdownMenuItem>
+                            <DropdownMenuItem disabled>
+                                Archive (no access)
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem class="text-destructive">
+                                Delete
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger as-child>
+                            <Button variant="outline" size="sm">Compact menu</Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent class="w-40">
+                            <DropdownMenuItem>Rename</DropdownMenuItem>
+                            <DropdownMenuItem>Move…</DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger as-child>
+                            <Button variant="outline" disabled>Disabled trigger</Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                            <DropdownMenuItem>Never reached</DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                </Card>
+            </StorySection>
+
     </StoryPage>
 </template>

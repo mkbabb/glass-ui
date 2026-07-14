@@ -38,6 +38,8 @@ const cards: TapCard[] = [
 
 // A tiny live witness the press is real (the card is a button; activating it selects).
 const selected = ref<string>("assets");
+// The static-beside-pressable twin's own press witness.
+const twinPressed = ref(false);
 </script>
 
 <template>
@@ -45,7 +47,7 @@ const selected = ref<string>("assets");
         <StorySection
             heading="Tappable list-cards"
             label="<Card as=&quot;button&quot;> — the interruptible spring-press"
-            blurb="An interactive card (as=&quot;button&quot;) PRESSES: press-and-hold and the plate squishes on the shared iOS press spring, the --card-press-t drive lifts the surface brightness in lockstep (one drive, both legs, on the spring's own settle clock), and a rapid re-press mid-release inherits the first press's momentum. A static content card never presses. Compositor-only + PRM-instant."
+            blurb="An interactive card (as=&quot;button&quot;) PRESSES: press-and-hold and the plate squishes on the shared iOS press spring, the --card-press-t drive lifts the surface brightness in lockstep (one drive, both legs, on the spring's own settle clock), and a rapid re-press mid-release inherits the first press's momentum. A static content card never presses. Compositor-only; instant under reduced motion."
         >
             <ShowcaseFrame pad="md">
                 <div class="flex flex-col gap-3">
@@ -74,6 +76,47 @@ const selected = ref<string>("assets");
                         </CardHeader>
                         <CardContent class="text-small text-muted-foreground">
                             {{ selected === c.id ? "Selected — press again to re-confirm." : "Press to select." }}
+                        </CardContent>
+                    </Card>
+                </div>
+            </ShowcaseFrame>
+        </StorySection>
+
+        <StorySection
+            heading="Static beside pressable"
+            label="the motion axis is opt-IN"
+            blurb="A plain content Card (no as/role) NEVER presses — it is a passive surface. The interactive twin (as=&quot;button&quot;) squishes on the shared press spring. Side by side, the affordance difference is the whole point: interactivity is the opt-in, not the default."
+        >
+            <ShowcaseFrame pad="md">
+                <div class="grid gap-4 sm:grid-cols-2">
+                    <Card tier="resting" class="flex flex-col">
+                        <CardHeader>
+                            <CardTitle class="text-base font-semibold">Static card</CardTitle>
+                            <CardDescription>
+                                A passive content surface — nothing to press.
+                            </CardDescription>
+                        </CardHeader>
+                        <CardContent class="text-small text-muted-foreground">
+                            No <code class="fira-code">as</code>, no
+                            <code class="fira-code">role</code> — the plate holds still.
+                        </CardContent>
+                    </Card>
+                    <Card
+                        as="button"
+                        tier="resting"
+                        aria-label="Pressable twin — activates to confirm"
+                        :aria-pressed="twinPressed ? 'true' : 'false'"
+                        class="tap-card w-full text-left"
+                        @click="twinPressed = !twinPressed"
+                    >
+                        <CardHeader>
+                            <CardTitle class="text-base font-semibold">Pressable card</CardTitle>
+                            <CardDescription>
+                                <code class="fira-code">as="button"</code> — squishes on press.
+                            </CardDescription>
+                        </CardHeader>
+                        <CardContent class="text-small text-muted-foreground">
+                            {{ twinPressed ? "Pressed — the plate lifted." : "Press me." }}
                         </CardContent>
                     </Card>
                 </div>

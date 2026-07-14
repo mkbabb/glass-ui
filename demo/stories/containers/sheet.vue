@@ -12,6 +12,7 @@ import {
     DialogTrigger,
 } from "@glass/components/ui/dialog";
 import { Button } from "@glass/components/ui/button";
+import { Card } from "@glass/components/ui/card";
 import { Input } from "@glass/components/ui/input";
 import { Label } from "@glass/components/ui/label";
 import { Textarea } from "@glass/components/ui/textarea";
@@ -28,6 +29,10 @@ const CONTAINERS_STOP = 2;
 // non-center placements are the retired Sheet sides.
 type SidePlacement = "top" | "right" | "bottom" | "left";
 const sides: readonly SidePlacement[] = ["top", "right", "bottom", "left"] as const;
+
+// The shared {glass·veil·opaque} surface axis — the folded Sheet's surface register.
+type SheetSurface = "glass" | "veil" | "opaque";
+const surfaces: readonly SheetSurface[] = ["glass", "veil", "opaque"] as const;
 </script>
 
 <template>
@@ -100,6 +105,58 @@ const sides: readonly SidePlacement[] = ["top", "right", "bottom", "left"] as co
                         </DialogContent>
                     </Dialog>
                 </div>
+            </StorySection>
+
+            <StorySection heading="Surface axis + states" gap="lg">
+                <p class="text-sm text-muted-foreground">
+                    The same side sheet across the
+                    <code class="font-mono text-xs">surface</code> axis
+                    (glass · veil · opaque) and the disabled-trigger edge. Any
+                    <code class="font-mono text-xs">Button</code> variant anchors it.
+                </p>
+                <Card surface="veil" class="flex flex-wrap items-center gap-3 p-5">
+                    <Dialog v-for="s in surfaces" :key="s">
+                        <DialogTrigger as-child>
+                            <Button
+                                :variant="s === 'glass' ? 'default' : 'outline'"
+                                class="capitalize"
+                            >
+                                {{ s }} sheet
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent placement="right" :surface="s">
+                            <DialogHeader>
+                                <DialogTitle class="capitalize">
+                                    {{ s }} surface
+                                </DialogTitle>
+                                <DialogDescription>
+                                    The right-edge sheet rendered on the
+                                    <span class="capitalize">{{ s }}</span> rung of the
+                                    shared surface axis.
+                                </DialogDescription>
+                            </DialogHeader>
+                            <div class="grid gap-2 py-4">
+                                <Label :for="`field-${s}`">Field</Label>
+                                <Input :id="`field-${s}`" placeholder="Value…" />
+                            </div>
+                            <DialogFooter>
+                                <DialogClose as-child>
+                                    <Button variant="outline">Close</Button>
+                                </DialogClose>
+                            </DialogFooter>
+                        </DialogContent>
+                    </Dialog>
+                    <Dialog>
+                        <DialogTrigger as-child>
+                            <Button variant="ghost" disabled>Disabled trigger</Button>
+                        </DialogTrigger>
+                        <DialogContent placement="right">
+                            <DialogHeader>
+                                <DialogTitle>Never reached</DialogTitle>
+                            </DialogHeader>
+                        </DialogContent>
+                    </Dialog>
+                </Card>
             </StorySection>
 
             <StorySection heading="When to use" gap="lg">

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 // BI.W-MENU-TRIGGER — ContextMenu folded onto the Menu family as `trigger="context"`
 // (clean break, no alias). The right-click menu is now the DropdownMenu family with the
 // context trigger axis — ONE menu engine, one set of items.
@@ -27,6 +27,24 @@ const CONTAINERS_STOP = 2;
 
 const tone = ref<"warm" | "cool" | "neutral">("warm");
 const showGrid = ref(true);
+
+// CBA-3 — the bound tone/grid render as a visible tinted canvas. Each tone maps to a
+// --section-color wash; the grid is a token-tinted blueprint overlay toggled by the
+// checkbox item.
+const TONE_STOP: Record<"warm" | "cool" | "neutral", string> = {
+    warm: "5",
+    cool: "2",
+    neutral: "11",
+};
+
+const canvasStyle = computed(() => {
+    const wash = `color-mix(in srgb, var(--section-color-${TONE_STOP[tone.value]}) 12%, transparent)`;
+    const gridLine = `color-mix(in srgb, var(--section-color-${TONE_STOP[tone.value]}) 22%, transparent)`;
+    const grid = showGrid.value
+        ? `, repeating-linear-gradient(0deg, ${gridLine} 0 1px, transparent 1px 22px), repeating-linear-gradient(90deg, ${gridLine} 0 1px, transparent 1px 22px)`
+        : "";
+    return { backgroundImage: `linear-gradient(${wash}, ${wash})${grid}` };
+});
 </script>
 
 <template>
@@ -56,13 +74,17 @@ const showGrid = ref(true);
                     Right-click the paper below.
                 </p>
                 <DropdownMenu trigger="context">
+                    <!-- CBA-3: the menu's bound tone/grid drive the CANVAS itself — the
+                         paper tints warm/cool/neutral and the blueprint grid toggles on,
+                         so the menu's effect is a visible affordance, not a mono readout. -->
                     <DropdownMenuTrigger
-                        class="ghost-slot grid h-72 place-items-center transition-colors"
+                        class="grid h-72 place-items-center rounded-card border border-border/60 transition-colors"
+                        :style="canvasStyle"
                     >
                         <div class="grid gap-2 text-center">
                             <p class="text-subheading">Right-click here</p>
-                            <p class="font-mono text-xs">
-                                tone = {{ tone }} · grid = {{ showGrid }}
+                            <p class="text-small text-muted-foreground capitalize">
+                                {{ tone }} paper{{ showGrid ? " · blueprint grid" : "" }}
                             </p>
                         </div>
                     </DropdownMenuTrigger>
@@ -75,6 +97,9 @@ const showGrid = ref(true);
                         <DropdownMenuItem>
                             Duplicate
                             <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem disabled>
+                            Paste (clipboard empty)
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuLabel>Tone</DropdownMenuLabel>

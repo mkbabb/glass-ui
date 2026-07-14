@@ -74,17 +74,19 @@ function scrollToTarget() {
                 label="Virtual section window"
                 :heading="`${TOTAL}-section document — only the window renders`"
             />
+            <!-- CBA-3: the window readout is a FEATURE caption (the windowing is the
+                 story), not a test hook — only ~20 of 1000 sections live in the DOM at
+                 once, and the active id is the live scroll-spy. -->
             <div class="flex items-center gap-3">
-                <Badge variant="outline" class="fira-code" data-testid="rendered-count">
-                    {{ renderedCount }} / {{ TOTAL }} in DOM
+                <Badge variant="outline" class="fira-code">
+                    {{ renderedCount }} of {{ TOTAL }} rendered
                 </Badge>
-                <Badge variant="outline" class="fira-code" data-testid="active-id">
-                    active: {{ activeId ?? "—" }}
+                <Badge variant="outline" class="fira-code">
+                    active · {{ activeId ?? "—" }}
                 </Badge>
                 <button
                     type="button"
                     class="interactive-item rounded-md border border-border bg-background px-3 py-1.5 text-small shadow-cartoon-sm"
-                    data-testid="scroll-to-target"
                     @click="scrollToTarget"
                 >
                     Jump to {{ jumpTargetId }}
@@ -96,7 +98,6 @@ function scrollToTarget() {
              full height so the scrollbar reflects all 1000 sections. -->
         <div
             ref="scrollContainer"
-            data-testid="virtual-scroll"
             :class="
                 cn(
                     'relative max-h-[32rem] overflow-y-auto rounded-card border border-border bg-card shadow-cartoon',

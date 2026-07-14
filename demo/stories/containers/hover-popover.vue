@@ -5,7 +5,9 @@
 // branch is reka's HoverCardRoot (hover-open + defer-on-leave timers), promoted
 // to tap-toggle on coarse pointers.
 import StoryPage from "../../chassis/page/StoryPage.vue";
+import StorySection from "../../chassis/section/StorySection.vue";
 import { Popover, PopoverContent, PopoverTrigger } from "@glass/components/ui/popover";
+import { Card } from "@glass/components/ui/card";
 import { IconChip } from "@glass/components/custom/icon-chip";
 import { Button } from "@glass/components/ui/button";
 import { Settings, ArrowLeft, RotateCcw, Square, MousePointer2 } from "@lucide/vue";
@@ -38,9 +40,8 @@ const CONTAINERS_STOP = 2;
             </div>
         </header>
 
-        <section class="flex flex-col gap-3">
-            <p class="section-label">label · sides</p>
-            <div class="flex flex-wrap items-center gap-6">
+        <StorySection heading="Sides">
+            <Card surface="veil" class="flex flex-wrap items-center gap-6 p-6">
                 <Popover trigger="hover">
                     <PopoverTrigger as-child>
                         <Button variant="ghost" iconOnly>
@@ -81,7 +82,7 @@ const CONTAINERS_STOP = 2;
                         Stop
                     </PopoverContent>
                 </Popover>
-            </div>
+            </Card>
             <p class="text-mono-caption text-muted-foreground">
                 Hover-triggered floating label. The four sides above auto-flip
                 if the trigger sits near a viewport edge — reka-ui's
@@ -89,14 +90,13 @@ const CONTAINERS_STOP = 2;
                 wiring. Defer-on-leave keeps the panel through cluster gaps
                 (the <code>closeDelay</code> timer).
             </p>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-3">
-            <p class="section-label">richer slot · two lines + kbd</p>
+        <StorySection heading="Richer slot" blurb="Two lines plus a keyboard shortcut inside the hover panel.">
             <!-- The lone trigger is wrapped in the `flex flex-wrap` idiom so it sizes
                  to its content, never balloons to the article width (the flex-col
                  body is align-items:stretch — CBA-1/CBA-7). -->
-            <div class="flex flex-wrap gap-3">
+            <Card surface="veil" class="flex flex-wrap gap-3 p-6">
             <Popover trigger="hover">
                 <PopoverTrigger as-child>
                     <Button variant="outline">Save document</Button>
@@ -108,12 +108,11 @@ const CONTAINERS_STOP = 2;
                     </div>
                 </PopoverContent>
             </Popover>
-            </div>
-        </section>
+            </Card>
+        </StorySection>
 
-        <section class="flex flex-col gap-3">
-            <p class="section-label">open-delay · nested cadence</p>
-            <div class="flex flex-wrap items-center gap-6">
+        <StorySection heading="Open delay" blurb="Nested cadence — openDelay tunes the open-defer timer.">
+            <Card surface="veil" class="flex flex-wrap items-center gap-6 p-6">
                 <Popover trigger="hover">
                     <PopoverTrigger as-child>
                         <Button variant="outline">default · 250ms</Button>
@@ -132,7 +131,7 @@ const CONTAINERS_STOP = 2;
                     </PopoverTrigger>
                     <PopoverContent role="card" side="top" class="w-auto">deferred</PopoverContent>
                 </Popover>
-            </div>
+            </Card>
             <p class="text-mono-caption text-muted-foreground">
                 <code class="rounded bg-muted px-1">openDelay</code> tunes the
                 open-defer timer (renamed from the retired
@@ -140,6 +139,6 @@ const CONTAINERS_STOP = 2;
                 hover affordances; deferred reads suit deeper-nested popovers
                 where the longer wait avoids accidental fire on transit.
             </p>
-        </section>
+        </StorySection>
     </StoryPage>
 </template>
