@@ -60,8 +60,10 @@
 //        surface-*` token; SelectTrigger default is `glass-wash`.
 //   W6 — THE PAPER-INK-MARK REGISTER (scope 8). The `.paper-ink-mark` MARK register
 //        is declared ONCE (a 2px `--foreground` ink hairline — no plate, no blur,
-//        no glass), AND ≥2 consumers compose it (the math-paper section rail + the
-//        W-TABS underline indicator). RED at HEAD: no `.paper-ink-mark` register.
+//        no glass), AND ≥2 consumers compose it (a demo demonstration — the tabs
+//        paper-underline SHAPE, scanned across demo/stories after the overfit math-paper
+//        section-RAIL demo retired at BI.W-MATH-PAPER-REMOVE — + the shipping W-TABS
+//        underline indicator). RED at HEAD: no `.paper-ink-mark` register.
 //
 // House style mirrors proof-dock-rail-hairline.mjs / proof-glass-cohesion.mjs: ESM
 // .mjs, comment-strip first (false-witness discipline), a pure exported detector, a
@@ -106,8 +108,9 @@ function cliPaths() {
         SRC_DIR: resolve(ROOT, "src"),
         // Scope 7 — control surfaces.
         SELECT_TRIGGER_VUE: ui("select/SelectTrigger.vue"),
-        // Scope 8 — paper-ink-mark consumers.
-        MATH_PAPER_VUE: resolve(ROOT, "demo/stories/compositions/math-paper.vue"),
+        // Scope 8 — paper-ink-mark register consumers (the demo tree, scanned;
+        // BI.W-MATH-PAPER-REMOVE retired the single-file math-paper.vue probe).
+        DEMO_STORIES_DIR: resolve(ROOT, "demo/stories"),
         ARTIFACT: gateArtifactPath(
             "GLASS_UI_SURFACE_AXIS_ARTIFACT",
             "BA-surface-axis",
@@ -208,7 +211,7 @@ export function detectSurfaceAxis(sources) {
     const selectTrigger = stripHtmlComments(
         stripBlockComments(sources.selectTrigger ?? ""),
     );
-    const mathPaper = stripHtmlComments(stripBlockComments(sources.mathPaper ?? ""));
+    const demoInkMarkConsumers = sources.demoInkMarkConsumers ?? [];
 
     const violations = [];
 
@@ -429,14 +432,17 @@ export function detectSurfaceAxis(sources) {
             "W6: the `.paper-ink-mark` MARK register is not declared (the 2px --foreground ink hairline — scope 8).",
         );
     }
-    // ≥2 consumers: the math-paper section rail + the W-TABS underline indicator.
-    const mathPaperConsumes = /paper-ink-mark/.test(mathPaper);
+    // ≥2 consumers: a demo demonstration (the tabs paper-underline SHAPE, after the
+    // math-paper section-RAIL demo retired — UF-K3) + the W-TABS underline indicator
+    // (the shipping src register). The demo consumer is scanned across demo/stories so
+    // it is never brittle to one page.
+    const demoConsumes = demoInkMarkConsumers.length > 0;
     const tabsConsumes = /paper-ink-mark/.test(utilitiesMonolith) ||
         /paper-ink-mark/.test(sources.segmentedTabsCss ?? "");
-    const consumerCount = (mathPaperConsumes ? 1 : 0) + (tabsConsumes ? 1 : 0);
+    const consumerCount = (demoConsumes ? 1 : 0) + (tabsConsumes ? 1 : 0);
     if (paperMarkDefined && consumerCount < 2) {
         violations.push(
-            `W6: the .paper-ink-mark register has <2 consumers (math-paper:${mathPaperConsumes} tabs:${tabsConsumes}) — the ≥2-consumer bar at birth.`,
+            `W6: the .paper-ink-mark register has <2 consumers (demo:${demoConsumes} [${demoInkMarkConsumers.length}] tabs:${tabsConsumes}) — the ≥2-consumer bar (a demo demonstration + the shipping tabs underline).`,
         );
     }
 
@@ -574,7 +580,7 @@ export function detectSurfaceAxis(sources) {
         w3: { ...w3, expandableUnwalled, skeletonOverGlass, enrolledCount },
         w4: { dialogHasVariantProp, dialogHasSurfaceProp, migrationRow },
         w5: { controlRegisterDefined, inputReadsRegister, selectRidesGrayWash },
-        w6: { paperMarkDefined, mathPaperConsumes, tabsConsumes, consumerCount },
+        w6: { paperMarkDefined, demoConsumes, demoInkMarkConsumers, tabsConsumes, consumerCount },
         w7: { decorationClassDefs, replaceWartHits: replaceWartHits.length },
         w8: { surfaceComponentExists, w8Private: w8Private.length },
         w9: {
@@ -699,6 +705,42 @@ function scanReplaceWart(dir, root, hits = []) {
     return hits;
 }
 
+// BI.W-MATH-PAPER-REMOVE (W6) — the demo-tree consumers of the `.paper-ink-mark`
+// register. The overfit math-paper.vue (the sole section-RAIL demo) was retired
+// (UF-K3), so the demo demonstration of the register now rides the tabs paper-underline
+// SHAPE: navigation/tabs renders it and the motion stories theme it via the
+// `--paper-ink-mark-color` var. Counts any demo/stories `.vue` whose comment-stripped
+// body carries the register token (a `.paper-ink-mark` class OR a `--paper-ink-mark-*`
+// theming var) — robust to any single page moving, never brittle to one file. Returns
+// the repo-relative paths.
+function scanDemoInkMarkConsumers(dir, root, hits = []) {
+    let entries;
+    try {
+        entries = readdirSync(dir);
+    } catch {
+        return hits;
+    }
+    for (const name of entries) {
+        if (name === "node_modules" || name === "dist" || name.startsWith(".")) continue;
+        const full = resolve(dir, name);
+        let st;
+        try {
+            st = statSync(full);
+        } catch {
+            continue;
+        }
+        if (st.isDirectory()) {
+            scanDemoInkMarkConsumers(full, root, hits);
+        } else if (name.endsWith(".vue")) {
+            const body = stripHtmlComments(stripBlockComments(safeRead(full)));
+            if (/paper-ink-mark/.test(body)) {
+                hits.push(full.slice(root.length + 1).replace(/\\/g, "/"));
+            }
+        }
+    }
+    return hits;
+}
+
 // BI.W-CLEAR-FOLD (W9) — the src/-walker that counts each Surface member's REAL
 // consumers. A consumer is a `surface: "M"` / `surface="M"` runtime prop/default OR a
 // `[data-surface="M"]` CSS decoration rule (both matched by `surface[:=]"M"`), in a
@@ -780,7 +822,7 @@ function run() {
             button: safeRead(P.BUTTON_VUE),
         },
         selectTrigger: safeRead(P.SELECT_TRIGGER_VUE),
-        mathPaper: safeRead(P.MATH_PAPER_VUE),
+        demoInkMarkConsumers: scanDemoInkMarkConsumers(P.DEMO_STORIES_DIR, ROOT),
         // BI.W-SURFACE-EXTRACT — W7/W8 inputs.
         surfaceComponentSrc: safeRead(P.SURFACE_VUE),
         replaceWartHits: scanReplaceWart(P.SRC_DIR, ROOT),

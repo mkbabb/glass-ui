@@ -152,11 +152,11 @@ add(
 // INSIDE the story body — a redundant second descriptor. The distinguishing bite:
 // a BARE `border-l-[3px]` section rail (the math-paper §-accent — `.paper-ink-mark`)
 // with NO IconChip is NOT counted (the narrow allowlist by-SHAPE, not by-file).
-const PH3_RAIL_ALLOWLIST = new Set([
-    // The math-paper §-accent rail keeps its bespoke interior idiom (recorded with
-    // rationale in the wave spec — a bare section rail, not an IconChip header).
-    "demo/stories/compositions/math-paper.vue",
-]);
+// BI.W-MATH-PAPER-REMOVE (UF-K3) — the math-paper.vue §-accent rail allowlist entry
+// was retired with the overfit demo. No enrolled route now carries a bare
+// `border-l-[3px]` rail without an IconChip, so the allowlist is empty; a future page
+// re-introducing the bare-rail idiom would re-open a by-shape allowlist row here.
+const PH3_RAIL_ALLOWLIST = new Set([]);
 
 // Detect an idiom-B HEADER cluster: a `border-l-[3px]` AND an `<IconChip` in the
 // SAME file's body. We require the IconChip co-presence (the distinguishing

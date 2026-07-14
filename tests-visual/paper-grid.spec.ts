@@ -45,9 +45,12 @@ const VISUAL_DIR = fileURLToPath(
 );
 
 // A stable demo route that loads the global `/styles` cascade so the tokens
-// resolve. The math-paper composition is THE document-register consumer this
-// wave opts into `.paper-grid`.
-const HOST_ROUTE = "/compositions/math-paper";
+// resolve — the spec injects its OWN synthetic `.paper-grid` / bare cards over a
+// self-supplied backdrop (PAGE_BG), so the host only needs the cascade, not a
+// rendered grid. The Card demo is the thematic home: `.paper-grid` IS the Card
+// `grid` prop. (Was /compositions/math-paper — retired at BI.W-MATH-PAPER-REMOVE,
+// UF-K3, the overfit single-idiom specimen.)
+const HOST_ROUTE = "/display/card";
 
 const VIEWPORTS = [
     { name: "mobile", width: 390, height: 844 },

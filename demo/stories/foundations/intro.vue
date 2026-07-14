@@ -4,6 +4,7 @@ import StoryPage from "../../chassis/page/StoryPage.vue";
 import SectionPreviewCard from "../../chassis/landing/SectionPreviewCard.vue";
 import { CATEGORIES } from "../manifest";
 import { categoryHero } from "../../chassis/hero/category-hero";
+import { resolveStoryTile } from "../../chassis/landing/storyTile";
 
 // The storybook front-door hero declares a live aurora wash on its manifest row;
 // the page chassis renders it behind a glassy hero card so the title sits glass-
@@ -38,6 +39,14 @@ const SUMMARIES: Record<string, string> = {
 const categories = computed(() =>
     CATEGORIES.filter((c) => !c.reference).map((c, idx) => {
         const hero = categoryHero(c.id);
+        // BI.W-LIVE-TILES — the front-door card previews a REAL representative
+        // component from the section (the ss-01 "empty brown tile + lone compass"
+        // cure). Resolve the tile of the category's LEAD story (skipping the D0
+        // front door itself) via the SAME per-story ladder the landings use — a
+        // Button cluster for display, a frozen aurora still for substrates, a mini
+        // GlassDock for dock — never a repeated glyph.
+        const leadStory =
+            c.stories.find((story) => story.id !== "intro") ?? c.stories[0];
         return {
             slug: c.id,
             title: c.title,
@@ -46,6 +55,7 @@ const categories = computed(() =>
             icon: hero?.icon ?? c.icon,
             section: hero?.sectionHue ?? 7,
             lead: idx === 0,
+            tile: leadStory ? resolveStoryTile(c.id, leadStory) : null,
         };
     }),
 );
@@ -85,29 +95,9 @@ const categories = computed(() =>
                     :icon="cat.icon"
                     :section="cat.section"
                     :lead="cat.lead"
-                >
-                    <template #preview>
-                        <div class="intro-cat-thumb">
-                            <component
-                                :is="cat.icon"
-                                :size="34"
-                                :stroke-width="1.5"
-                            />
-                        </div>
-                    </template>
-                </SectionPreviewCard>
+                    :tile="cat.tile"
+                />
             </div>
         </section>
     </StoryPage>
 </template>
-
-<style scoped>
-/* The budget-safe category thumbnail — a bounded inert glyph-over-tint render (no
-   GL, no second live context — the one-GL-per-route budget). */
-.intro-cat-thumb {
-    display: grid;
-    place-items: center;
-    block-size: 7rem;
-    color: color-mix(in oklab, var(--foreground), transparent 55%);
-}
-</style>
