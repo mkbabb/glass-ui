@@ -11,6 +11,10 @@
 //   PC-2 — the scroll-shrink: scrolling the <main> 0 → 280px drops the hero cluster's
 //          transform-matrix scale MONOTONICALLY over the first ~240px then HOLDS (a
 //          captured frame-series; no route is shrink-dead). CLS ≈ 0 during the shrink.
+//   PC-STICKY — the G7-STICKY containing-block fix (BI.W-SHRINK-HERO): at scrollTop 400px
+//          (deep past the ~126px header) the pinned .story-hero-shrink cluster stays PINNED
+//          near the scroller top (born-RED: it scrolled away with the 126px header before
+//          the display:contents carve) and its ::before frosted plate lifts painted.
 //   PC-3 — the depth-keyed size hierarchy: across a category's depths the resolved
 //          hero <h1> font-size STEPS DOWN by depth — D1 landing > D2 main > D3 sub.
 //   PC-4 — PRM: with prefers-reduced-motion: reduce the scale stays 1 across scroll.
@@ -138,6 +142,70 @@ test.describe("BC.W-PAGE-CHASSIS — the ONE standardized page idiom (π)", () =
             ).toBeLessThan(0.05);
         }
         paired["PC-2"] = perRoute;
+    });
+
+    test("PC-STICKY — the pinned header PERSISTS past the header height + lifts painted (the G7-STICKY containing-block fix)", async ({
+        page,
+    }) => {
+        // BI.W-SHRINK-HERO (G7-STICKY). The content-page chrome <header> is display:
+        // contents so the sticky .story-hero-shrink cluster's containing block is the
+        // full-height <article> route-column, NOT the ~126px <header> that clipped the
+        // stick after one header-height of scroll. Scroll DEEP (400px, well past a header
+        // height) and the cluster must stay PINNED near the scroller top — before the fix
+        // it scrolled AWAY with the 126px header (a strongly negative offset). And the
+        // pinned plate (.story-hero-shrink::before) fades in so a stuck header lifts
+        // PAINTED, not transparent.
+        const CONTENT_ROUTES = ["/forms/inputs", "/data/avatar"];
+        const perRoute: Record<string, unknown> = {};
+        for (const route of CONTENT_ROUTES) {
+            await page.goto(route, { waitUntil: "domcontentloaded" });
+            await page
+                .waitForSelector("article .story-hero-shrink", { timeout: 8000 })
+                .catch(() => {});
+            await page.waitForTimeout(400);
+
+            const probe = await page.evaluate(async () => {
+                const main = document.querySelector(".demo-main-scroller") as HTMLElement;
+                const cluster = document.querySelector(
+                    "article .story-hero-shrink",
+                ) as HTMLElement;
+                if (!main || !cluster) return null;
+                const maxScroll = main.scrollHeight - main.clientHeight;
+                const offsetAt = async (top: number) => {
+                    main.scrollTo({ top, behavior: "instant" as ScrollBehavior });
+                    await new Promise((r) => requestAnimationFrame(() => r(null)));
+                    await new Promise((r) => requestAnimationFrame(() => r(null)));
+                    return (
+                        cluster.getBoundingClientRect().top -
+                        main.getBoundingClientRect().top
+                    );
+                };
+                const pinned160 = await offsetAt(160);
+                const pinned400 = await offsetAt(400);
+                const bgOpacity400 = parseFloat(
+                    getComputedStyle(cluster, "::before").opacity || "0",
+                );
+                return { maxScroll, pinned160, pinned400, bgOpacity400 };
+            });
+            perRoute[route] = probe;
+            if (!probe || probe.maxScroll < 300) continue; // short page — record only
+            // PERSISTS — at 400px (deep past the ~126px header) the cluster is STILL near
+            // the scroller top (not scrolled off to a strong negative), and ≈ its 160px
+            // pinned position (a stable sticky offset, not a scrolling-away drift).
+            expect(probe.pinned400, `${route} header persists past 400px`).toBeGreaterThan(
+                -30,
+            );
+            expect(
+                Math.abs(probe.pinned400 - probe.pinned160),
+                `${route} pinned offset stable (sticky, not scrolling away)`,
+            ).toBeLessThan(30);
+            // PAINTED — the pinned frosted plate has faded in over the condense window.
+            expect(
+                probe.bgOpacity400,
+                `${route} pinned backing lifts painted`,
+            ).toBeGreaterThan(0.5);
+        }
+        paired["PC-STICKY"] = perRoute;
     });
 
     test("PC-3 — the depth-keyed title size hierarchy (D1 > D2 > D3)", async ({

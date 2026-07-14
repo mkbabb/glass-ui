@@ -467,6 +467,25 @@
    `.story-hero-scroll-away` register below — NOT sticky, the field owns the viewport),
    and the sticky collapse stays scoped HERE, to the content-page chrome header. */
 
+/* ── BI.W-SHRINK-HERO (G7-STICKY) — the sticky containing-block carve ──────────────
+   Pass-2 measured the shrink register's sticky persistence BROKEN: a `position: sticky`
+   box is bound to its CONTAINING BLOCK, and the content-page cluster's containing block
+   was the chrome `<header>` — a box only ~126px tall (the cluster's own height). So the
+   title unstuck after ONE header-height of scroll instead of persisting against the
+   route scroller. The fix (proven on both engines, pass-3): the intermediate `<header>`
+   ancestor establishes NO box (`display: contents`), so the sticky `.story-hero-shrink`
+   cluster's containing block becomes the `<article>.story-page-article` route-column —
+   which spans the FULL scroll content, so the pinned title persists against
+   `<main>.demo-main-scroller` for the whole page. `display: contents` keeps the DOM
+   structure intact (the `> header > .story-hero-cluster::after` dividing rule + the `--i`
+   custom prop inherit unchanged) — it removes only the box, never a transformed/overflow/
+   contain ancestor into the chain (the silent sticky+timeline killer stays absent). The
+   carve scopes to the CONTENT-page header only (the HERO page has no `> header` — its
+   cluster is the scroll-away twin inside StoryHero). */
+.story-page-article > header {
+    display: contents;
+}
+
 /* The CONTENT-page header sticks to the top of the <main> route-scroller so the shrunk
    header persists while the body slides up under it. The sticky positioning is OUTSIDE
    the @supports/PRM gate (it is harmless on every engine — a non-shrinking sticky header
@@ -486,6 +505,32 @@
     --title-collapse-scale: 0.82;
     --hero-condense-range: 160px;
     --hero-condense-fade-range: 120px;
+}
+
+/* ── BI.W-SHRINK-HERO (G7-STICKY) — the pinned-header painted backing ──────────────
+   A stuck header must lift PAINTED, not transparent: once the cluster pins to the top and
+   the body slides up UNDER it, a bare cluster lets the body text bleed straight through
+   the title. This backing is a frosted-glass plate BEHIND the pinned title — a nested
+   backdrop-only pseudo (the `.chrome-aa-clip` idiom: z-index -1 so the title + subpath
+   chip read ON TOP, `backdrop-filter` on the child, no box-shadow to amputate). The plate
+   tint reads `--card` (so the dark arm re-tints FOR FREE off the token flip — no parallel
+   `.dark` rule). It rides the cluster's own scale, so title + plate shrink as ONE coherent
+   pinned chip. At rest it is opacity 0 — the resting large title floats plate-free; only
+   the PINNED chip gains the frosted lift (the iOS-27 large-title-into-nav-bar read). The
+   fade-in is the native scroll() timeline (below, gated) so under reduce / a gap engine
+   the plate stays hidden and the header is a static large sticky header (the honest
+   reduced form). `pointer-events: none` keeps the plate inert. */
+.story-hero-shrink::before {
+    content: "";
+    position: absolute;
+    inset: -0.5rem -0.75rem;
+    z-index: -1;
+    border-radius: var(--radius-card);
+    background: color-mix(in srgb, var(--card) 72%, transparent);
+    backdrop-filter: var(--glass-blur-quiet, blur(8px) saturate(1.4));
+    -webkit-backdrop-filter: var(--glass-blur-quiet, blur(8px) saturate(1.4));
+    opacity: 0;
+    pointer-events: none;
 }
 
 /* ── BD.W-VIZ-BROKEN-FIX D5 — the HERO / substrate-viz scroll-away register ───────────
@@ -589,6 +634,27 @@
             animation-range: 0 var(--hero-condense-range, 160px),
                 0 var(--hero-condense-range, 160px);
             animation-fill-mode: forwards;
+        }
+
+        /* BI.W-SHRINK-HERO (G7-STICKY) — the pinned-header frosted plate fades IN over
+           the SAME condense window (opacity 0 → 1 across 0..--hero-condense-range), so
+           the resting large title has no plate and only the pinned chip lifts painted. It
+           rides its own scroll() timeline (bidirectional by construction — scroll up
+           reverses the fade); compositor-friendly opacity only. Inside the @supports + PRM
+           bracket so under reduce / a gap engine no plate paints (the static large
+           header). */
+        @keyframes story-hero-pin-backing {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .story-hero-shrink::before {
+            animation: story-hero-pin-backing linear both;
+            animation-timeline: scroll();
+            animation-range: 0 var(--hero-condense-range, 160px);
         }
 
         /* The SUBORDINATE-RUNG fade (the iOS large-title-collapse read): the eyebrow +

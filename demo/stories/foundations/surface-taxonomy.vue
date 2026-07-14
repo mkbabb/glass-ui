@@ -69,7 +69,7 @@ const decos: { surface: Deco; hint: string }[] = [
 
         <StorySection
             label="the deep-glass opt-in"
-            blurb="`<Surface deep>` (equivalently `<Card deep>`) opts into the BB.W-DEEP-GLASS maximal iOS-27 register (Apple saturate-1.5 / blur-16px) — the `.glass-deep` decoration on the `floating` base rung. The calm content tiers stay calm; the deep tier is the opt-in for a hero/dock/CTA surface."
+            blurb="`<Surface deep>` (equivalently `<Card deep>`) opts into the maximal iOS-27 register (Apple saturate-1.5 / blur-16px) — the `.glass-deep` decoration on the `floating` base rung. The calm content tiers stay calm; the deep tier is the opt-in for a hero/dock/CTA surface."
         >
             <div class="surface-checker">
                 <div class="surface-row">

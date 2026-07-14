@@ -28,10 +28,25 @@
 //   PC7 — the 11 section-landing rows + the <SectionPreviewCard> inline-preview model.
 //   + the no-Lenis/GSAP/Locomotive fence bite.
 //
+// The BI.W-SHRINK-HERO shrink-on-scroll standard-facility clauses (born-RED at HEAD on
+// the G7-STICKY containing-block break — the sticky title clipped against the 126px
+// header — + the absent painted backing):
+//   PC-DUAL — content pages carry .story-hero-shrink, hero/viz pages carry
+//             .story-hero-scroll-away (by variant — the "every page shrinks" single read reds).
+//   PC-STICKY — the intermediate <header> is display: contents so the sticky containing
+//             block is the full-height <article> route-column (not the 126px header), the
+//             pinned header is painted, and no transformed/overflow/contain ancestor is in
+//             the chain (the silent sticky+timeline killer).
+//   PC-BIDIR — both registers ride the native scroll() timeline (bidirectional by
+//             construction); a Lenis/GSAP/Locomotive/rAF scroll engine reds.
+//   PC-PRM — the shrink/scroll-away/backing carve to a static large header under reduce.
+//
 // Self-test bites (--self-test): a planted font-size in the shrink keyframe REDs PC1; a
 // `"3"` heroScale member REDs PC2; a synthetic empty subpath + a phantom-export subpath
 // REDs PC5; a `heroScale: "3"` row + a D3-out-sizes-D2 category REDs PC6; a text-only
-// landing card REDs PC7.
+// landing card REDs PC7; a planted transform/overflow/contain ancestor REDs PC-STICKY; a
+// planted scroll-lib import REDs PC-BIDIR; a content page with the scroll-away register
+// REDs PC-DUAL; an ungated shrink animation REDs PC-PRM.
 
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
@@ -542,8 +557,145 @@ add(
     "no-lenis-gsap-fence",
     !lenisHit,
     !lenisHit
-        ? "ZERO Lenis/GSAP/Locomotive/ScrollTrigger import in the chassis files — the scroll-shrink is the native scroll() timeline only (CLAUDE.md §BB.W-SCROLL-MOTION)"
+        ? "ZERO Lenis/GSAP/Locomotive/ScrollTrigger import in the chassis files — the scroll-shrink is the native scroll() timeline only (BB.W-SCROLL-MOTION)"
         : "a Lenis/GSAP/Locomotive/ScrollTrigger reference leaked into a chassis file (the no-JS-scroll-engine fence is binding)",
+);
+
+// ── PC-DUAL / PC-STICKY / PC-BIDIR / PC-PRM — the shrink-on-scroll standard facility
+//    (BI.W-SHRINK-HERO) ─────────────────────────────────────────────────────────────
+// The UF-F2 shrink-title standard-facility mandate + the G7 dual register + the
+// G7-STICKY containing-block fix. CONTENT pages SHRINK (the scale-led sticky collapse),
+// HERO/viz pages SCROLL-AWAY (the field owns the viewport) — both native scroll()
+// timelines (bidirectional by construction), the sticky containing block carved to the
+// <article> route-column (display: contents on the 126px chrome <header>), the pinned
+// header painted (the frosted plate), the whole register PRM-gated to a static large
+// header. Born-RED at HEAD: the G7-STICKY carve + the painted backing are absent.
+
+// The containing-block-breaker detector — a transform/filter/perspective/backdrop-filter,
+// an overflow clip, or a contain that establishes a new sticky containing block (or
+// captures the scroll() timeline) on an ancestor in the sticky chain (the BG re-parenting
+// class — the silent sticky+timeline killer).
+const CB_BREAKER =
+    /(?:transform|filter|perspective|backdrop-filter)\s*:\s*(?!none\b)[^;}]+|overflow(?:-[xy])?\s*:\s*(?:hidden|clip|auto|scroll)|contain\s*:\s*(?:strict|content|layout|paint|size)/;
+
+// Extract the FIRST rule body whose head contains `selector`.
+const ruleBodyOf = (css, selector) => {
+    const i = css.indexOf(selector);
+    if (i < 0) return null;
+    const open = css.indexOf("{", i);
+    if (open < 0) return null;
+    let depth = 0;
+    for (let j = open; j < css.length; j++) {
+        if (css[j] === "{") depth++;
+        else if (css[j] === "}") {
+            depth--;
+            if (depth === 0) return css.slice(open + 1, j);
+        }
+    }
+    return null;
+};
+
+// The no-preference @media blocks (brace-matched). A needle is PRM-gated if it sits
+// inside one (so under reduce it drops to the static state).
+const prmBlocksOf = (css) => {
+    const out = [];
+    const re = /@media\s*\(prefers-reduced-motion:\s*no-preference\)\s*\{/g;
+    let m;
+    while ((m = re.exec(css)) !== null) {
+        const open = css.indexOf("{", m.index);
+        let depth = 0;
+        for (let j = open; j < css.length; j++) {
+            if (css[j] === "{") depth++;
+            else if (css[j] === "}") {
+                depth--;
+                if (depth === 0) {
+                    out.push([open, j]);
+                    break;
+                }
+            }
+        }
+    }
+    return out;
+};
+const gatedUnderPRM = (css, needle) => {
+    const idx = css.indexOf(needle);
+    if (idx < 0) return false;
+    return prmBlocksOf(css).some(([s, e]) => idx > s && idx < e);
+};
+
+// PC-DUAL — the two registers, by page variant (a literal-class probe).
+const dualRegisterOf = (pageSrc, heroSrc, css) => {
+    const pageShrinks = /class="[^"]*story-hero-shrink/.test(pageSrc);
+    const pageNotAway = !/class="[^"]*story-hero-scroll-away/.test(pageSrc);
+    const heroAway = /class="[^"]*story-hero-scroll-away/.test(heroSrc);
+    const heroNotShrink = !/class="[^"]*story-hero-shrink/.test(heroSrc);
+    const bothDefined =
+        /\.story-hero-shrink\s*\{/.test(css) &&
+        /\.story-hero-scroll-away\s*\{/.test(css);
+    return {
+        pageShrinks,
+        pageNotAway,
+        heroAway,
+        heroNotShrink,
+        bothDefined,
+        ok: pageShrinks && pageNotAway && heroAway && heroNotShrink && bothDefined,
+    };
+};
+const dual = dualRegisterOf(storyPage, storyHero, heroCss);
+add(
+    "PC-DUAL-register-by-variant",
+    dual.ok,
+    dual.ok
+        ? "the DUAL register holds by page variant — the CONTENT-page chrome header carries .story-hero-shrink (scale-led sticky collapse) and NOT scroll-away; the HERO/viz cluster carries .story-hero-scroll-away (the field owns the viewport) and NOT shrink; both registers are DEFINED in story-hero.css. The literal 'every page shrinks' single read is WRONG — the scroll-away is a decided register (BD.W-VIZ-BROKEN-FIX D5)"
+        : `dual register wrong (page shrinks: ${dual.pageShrinks}, page-not-away: ${dual.pageNotAway}, hero scroll-away: ${dual.heroAway}, hero-not-shrink: ${dual.heroNotShrink}, both defined: ${dual.bothDefined})`,
+);
+
+// PC-STICKY — the containing-block fix + the pinned painted backing + monotonic scroll().
+const headerCarve =
+    /\.story-page-article\s*>\s*header\s*\{[^}]*display:\s*contents/.test(heroCss);
+const backingBody = ruleBodyOf(heroCss, ".story-hero-shrink::before");
+const pinnedBacking =
+    backingBody != null &&
+    (/backdrop-filter\s*:/.test(backingBody) || /background\s*:/.test(backingBody));
+const carveBody = ruleBodyOf(heroCss, ".story-page-article > header {") ?? "";
+const carveNoBreaker = !CB_BREAKER.test(carveBody);
+const pcSticky =
+    headerCarve && pinnedBacking && shrinkSticky && shrinkScrollTimeline && carveNoBreaker;
+add(
+    "PC-STICKY-containing-block-fix",
+    pcSticky,
+    pcSticky
+        ? "the G7-STICKY containing-block fix lands — the intermediate .story-page-article > header is display: contents (so the sticky .story-hero-shrink cluster's containing block is the full-height <article> route-column, NOT the 126px header that clipped the stick after one header-height of scroll), the pinned header carries a painted backing (.story-hero-shrink::before frosted plate reads backdrop-filter/background — a stuck header lifts painted, not transparent), the shrink resolves real monotonic scroll() progress (position: sticky + animation-timeline: scroll()), and the carve introduces NO transformed/overflow/contain ancestor (the silent sticky+timeline killer stays absent)"
+        : `sticky fix incomplete (header display:contents carve: ${headerCarve}, pinned painted backing: ${pinnedBacking}, sticky: ${shrinkSticky}, scroll() timeline: ${shrinkScrollTimeline}, carve has no CB-breaker: ${carveNoBreaker})`,
+);
+
+// PC-BIDIR — native scroll()/view() timelines only (bidirectional by construction).
+const awayRidesScroll =
+    /\.story-hero-scroll-away\s*\{[^}]*animation-timeline:\s*scroll\(\)/.test(heroCss);
+const pcBidir = shrinkScrollTimeline && awayRidesScroll && !lenisHit;
+add(
+    "PC-BIDIR-native-timeline",
+    pcBidir,
+    pcBidir
+        ? "BIDIRECTIONAL by construction — both the shrink AND the scroll-away ride the native scroll() timeline (scroll up REVERSES the animation, no JS state to unwind), and ZERO Lenis/GSAP/Locomotive/ScrollTrigger scroll engine (the native-first fence). The per-glyph heading reveal is an ENTRANCE (one-shot IO), not a scroll animation — correctly excluded (the recorded ruling)"
+        : `bidirectional register wrong (shrink rides scroll(): ${shrinkScrollTimeline}, scroll-away rides scroll(): ${awayRidesScroll}, no scroll-lib: ${!lenisHit})`,
+);
+
+// PC-PRM — the shrink/scroll-away/backing carve to a static large header under reduce.
+const leaveGated = gatedUnderPRM(heroCss, "story-hero-scroll-leave");
+const backingGated = gatedUnderPRM(heroCss, "story-hero-pin-backing");
+const collapseGated = gatedUnderPRM(heroCss, "@keyframes title-collapse");
+const stickyBaseIdx = heroCss.search(/\.story-hero-shrink\s*\{\s*position:\s*sticky/);
+const stickyStaticFallback =
+    stickyBaseIdx >= 0 &&
+    !prmBlocksOf(heroCss).some(([s, e]) => stickyBaseIdx > s && stickyBaseIdx < e);
+const pcPrm = leaveGated && backingGated && collapseGated && stickyStaticFallback;
+add(
+    "PC-PRM-static-under-reduce",
+    pcPrm,
+    pcPrm
+        ? "PRM → a static large header — the shrink (title-collapse), the scroll-away leave, AND the pinned backing fade all live inside @media (prefers-reduced-motion: no-preference), so under reduce ZERO scroll frames run; the .story-hero-shrink position: sticky base is OUTSIDE the gate (a non-shrinking sticky header is the correct static fallback on every engine)"
+        : `PRM carve wrong (leave gated: ${leaveGated}, backing gated: ${backingGated}, title-collapse gated: ${collapseGated}, sticky base ungated fallback: ${stickyStaticFallback})`,
 );
 
 // ── Self-test bites (the anti-evasion floor) ──────────────────────────────────────
@@ -593,6 +745,49 @@ if (SELF_TEST) {
     bites.push({
         id: "selftest-PC7-text-only-card-reds",
         pass: !/name="preview"/.test('<RouterLink><span>title</span></RouterLink>'),
+    });
+    // 6. a planted transform (or overflow clip / contain) on an intermediate ancestor
+    //    REDs PC-STICKY; a clean display:contents carve does NOT.
+    bites.push({
+        id: "selftest-PCSTICKY-transform-ancestor-reds",
+        pass:
+            CB_BREAKER.test("display: contents; transform: translateZ(0);") &&
+            CB_BREAKER.test("display: contents; overflow: hidden;") &&
+            CB_BREAKER.test("display: contents; contain: paint;") &&
+            !CB_BREAKER.test("display: contents;"),
+    });
+    // 7. a planted scroll-lib import REDs PC-BIDIR; a native scroll() timeline does NOT.
+    bites.push({
+        id: "selftest-PCBIDIR-scroll-lib-reds",
+        pass:
+            /\b(lenis|gsap|locomotive|ScrollTrigger)\b/i.test('import Lenis from "lenis";') &&
+            !/\b(lenis|gsap|locomotive|ScrollTrigger)\b/i.test("animation-timeline: scroll();"),
+    });
+    // 8. a content page carrying the scroll-away register (and a hero carrying shrink) REDs
+    //    PC-DUAL; the correct-variant assignment does NOT.
+    const dualMismatch = dualRegisterOf(
+        '<div class="story-hero-cluster story-hero-scroll-away">',
+        '<div class="story-hero-cluster story-hero-shrink">',
+        ".story-hero-shrink { } .story-hero-scroll-away { }",
+    );
+    const dualCorrect = dualRegisterOf(
+        '<div class="story-hero-cluster story-hero-shrink">',
+        '<div class="story-hero-cluster story-hero-scroll-away">',
+        ".story-hero-shrink { } .story-hero-scroll-away { }",
+    );
+    bites.push({
+        id: "selftest-PCDUAL-mismatch-reds",
+        pass: !dualMismatch.ok && dualCorrect.ok,
+    });
+    // 9. an ungated shrink animation (outside no-preference) REDs PC-PRM; a gated one does NOT.
+    bites.push({
+        id: "selftest-PCPRM-ungated-reds",
+        pass:
+            gatedUnderPRM(
+                "@media (prefers-reduced-motion: no-preference) { .x { animation: title-collapse both; } }",
+                "title-collapse",
+            ) &&
+            !gatedUnderPRM(".x { animation: title-collapse both; }", "title-collapse"),
     });
     const allBitesPass = bites.every((b) => b.pass);
     add(
