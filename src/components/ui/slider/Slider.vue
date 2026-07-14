@@ -500,8 +500,13 @@ onMounted(() => {
 }
 
 /* D5 — the spectrum thumb keyboard focus rides the SAME button focus register
-   (`--focus-ring-shadow`) as the standard knob, over the squircle's drop-shadow. */
+   (`--focus-ring-shadow`) as the standard knob, over the squircle's drop-shadow.
+   P1-R3 (value.js §1.8) — the house ring is the ONE focus mark, so the UA
+   outline MUST be suppressed IN THE SAME RULE: Chromium otherwise paints its
+   `outline: auto 1px` accent OVER the accent-aware ring (a keyboard-visible
+   double-paint). Never a bare `outline: none` without the ring beside it. */
 .glass-slider[data-variant="spectrum"] .slider-thumb:focus-visible {
+    outline: none;
     box-shadow:
         var(--focus-ring-shadow),
         var(--shadow-sm);

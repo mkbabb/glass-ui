@@ -180,6 +180,16 @@ export function inlineFonts(srcFonts: string, distStyles: string): void {
  * prepend the prefixed pair with the SAME value. Runs AFTER the cpSync +
  * SFC-fold + component-utility emit + font-inline so it covers the complete
  * shipped cascade. Idempotent (skips a decl already webkit-paired).
+ *
+ * X4 (value.js A6 + L16) — THE ONE PREFIX POLICY, recorded: the source authors the
+ * UNPREFIXED `backdrop-filter` (incl. the `backdrop-filter: none` reset the spectrum
+ * slider + veil-off recipes carry); this pass emits the `-webkit-` companion for
+ * EVERY such decl (the value group admits `none`), so the shipped decl is BOTH forms.
+ * The lexical minifier (minify-css.mjs) is prefix-blind — it strips comments +
+ * collapses whitespace only, NEVER a vendor-prefix collapse — so a structural
+ * minifier's "drop the redundant unprefixed `none`" pass never runs and both forms
+ * survive to dist. `proof:xr-producer-repairs` X4 asserts the fresh dist carries the
+ * unprefixed `backdrop-filter: none` (not collapsed away) beside its `-webkit-` pair.
  */
 export function injectWebkitBackdrop(distStyles: string): void {
     if (!existsSync(distStyles)) return;

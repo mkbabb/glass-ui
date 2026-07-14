@@ -145,6 +145,16 @@
         22rem
     ); /* φ^(11/2) — peak 352px (fast.com peg) */
 
+    /* X7 (value.js P10/T-40) — the DISPLAY/HEADING/TITLE weight axis, tokenised.
+       The three emphatic registers each hard-coded their font-weight literal, so a
+       consumer tuning the bold-letterform character (a lighter title, a heavier
+       display) had to fork every @utility. These name the weight the way the size
+       ladder names --type-*: the semantic.css utilities read them; the literals are
+       byte-identical defaults (display 600, heading/title 700). */
+    --type-weight-display: 600;
+    --type-weight-heading: 700;
+    --type-weight-title: 700;
+
     /* Line heights & letter spacing live at tokens.css §0 as the canonical
        --type-leading-* / --type-tracking-* rungs. theme.css bridges them
        to Tailwind's `leading-*` / `tracking-*` utilities. The duplicate

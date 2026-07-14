@@ -263,6 +263,22 @@ const activeTransform = computed(() =>
     box-shadow:
         inset 0 0 6px color-mix(in srgb, var(--background) 25%, transparent),
         0 1px 4px color-mix(in srgb, var(--foreground) 6%, transparent);
+    /* X6 (value.js P5 rider) — make the ghost swatch a size-query container so the
+       ring can firm to SOLID at the small sizes these dots live at. `inline-size`
+       containment only (the swatch is consumer-sized + carries no in-flow content,
+       so no intrinsic collapse) — the filter/isolation stacking context is
+       untouched. */
+    container-type: inline-size;
+}
+
+/* X6 — the ring register is SOLID at ≤48px: a dashed hairline at swatch sizes
+   degrades to 3-4 sparse ticks that read as noise, not a traced silhouette (their
+   sizing law — a solid ring is the floor). Above 48px the dash pattern has room to
+   read as the hand-drawn placeholder, so it keeps the dashed register there. */
+@container (max-width: 48px) {
+    .watercolor-ghost-stroke {
+        border-style: solid;
+    }
 }
 
 .watercolor-swatch[data-variant="ghost"]:hover {

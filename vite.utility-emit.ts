@@ -198,6 +198,17 @@ export async function emitComponentUtilities(
     const baseProps = [...referenced]
         .filter((p) => themeOwned.has(p) && !glassDefined.has(p))
         .sort();
+    // PKT-1 (value.js P2 P0 / the T-58 clock CONFOUND) — a handful of Tailwind
+    // built-in defaults have a HOUSE token that is their real governing value;
+    // emit them THROUGH that token (with the Tailwind literal as the fallback)
+    // so the dist never CLOBBERS a consumer's own `@theme` alias with a bare
+    // literal. `--default-transition-duration` is the one felt-duration axis
+    // every `.transition-*` utility reads: routing it through `--duration-fast`
+    // means a consumer (or glass-ui's own tempo band) that retunes the house
+    // clock governs the emitted utilities instead of fighting a hardcoded 150ms.
+    const houseAlias: Record<string, string> = {
+        "--default-transition-duration": "var(--duration-fast, 150ms)",
+    };
     const baseBlock =
         baseProps.length === 0
             ? ""
@@ -205,10 +216,12 @@ export async function emitComponentUtilities(
               "   --text-* ladder, --ease-in-out, …) the kept utilities reference;\n" +
               "   glass-ui ships its own radius/color/text bases, so ONLY the\n" +
               "   Tailwind-owned props NOT in glass-ui's tokens are emitted here so\n" +
-              "   spacing/typography utilities paint for a bare consumer. */\n" +
+              "   spacing/typography utilities paint for a bare consumer. PKT-1 —\n" +
+              "   the felt-duration default routes THROUGH --duration-fast so the\n" +
+              "   dist never re-declares a bare 150ms over a consumer's @theme. */\n" +
               ":root {\n" +
               baseProps
-                  .map((p) => `    ${p}: ${themeOwned.get(p)};`)
+                  .map((p) => `    ${p}: ${houseAlias[p] ?? themeOwned.get(p)};`)
                   .join("\n") +
               "\n}\n";
 
