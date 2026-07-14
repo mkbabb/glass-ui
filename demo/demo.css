@@ -95,6 +95,19 @@
 @source "../src/components/**/*.vue";
 @source "../src/components/ui/_shared/*.ts";
 @source "../src/components/custom/**/*Variants.ts";
+/* BI.W-DEMO-SOURCE-SCAN — the CVA MAPS (each ui component's index.ts) too. A
+   component's cva() variant/tone map lives in index.ts, NOT the .vue render, so
+   the class strings it composes (text-destructive-foreground, the four-state
+   destructive tone fill bg-destructive + the hover/active/aria-pressed opacity
+   rungs) are UNREACHED by the .vue scan above. Without this glob the demo build
+   never generates the BARE .text-destructive-foreground rule, so a shipped
+   destructive-tone Button label falls to the inherited ink over the red fill
+   (the A11Y-1 3.57:1 fail). The index.ts scope is the CVA-map convention (KEEP
+   away from composables/useX helpers + shaders so the dev candidate-extractor
+   never trips a template-literal — no glsl/wgsl template lives under ui). The
+   published library ships these same rules for a BARE consumer via
+   emitComponentUtilities (dist components.css); this is the demo's own scan. */
+@source "../src/components/ui/**/index.ts";
 @import "tw-animate-css";
 /* BB.W-CSS-CRITICAL — the demo's DEV cascade imports the library SOURCE UNION
    (the full index.css) for HMR simplicity; this is the byte-complete union the

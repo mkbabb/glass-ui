@@ -242,3 +242,78 @@ test.describe("BA.W-EMISSION / BC.W-VIZ-WATERCOLOR — the WatercolorDot ghost i
         await page.screenshot({ path: frame("W-EMISSION-watercolor-ghost-light.png") });
     });
 });
+
+// ── (e) THE CVA-FOREGROUND CONTRAST (BI.W-DEMO-SOURCE-SCAN · A11Y-1 / FAM-15) ──────────
+// The BINDING render truth of the E-CVA clause: a shipped `<Button tone="destructive">`
+// composes the BARE `text-destructive-foreground` label ink over the `bg-destructive`
+// fill. Before the demo scanned the `ui/**/index.ts` CVA maps, the bare rule never
+// generated, so the label fell to the inherited dark ink over the red (3.57:1 — the born-
+// RED). With the demo scan reaching the CVA map, the label resolves --destructive-
+// foreground (near-white) and CLEARS WCAG AA (≥4.5:1) in BOTH modes. proof:emission
+// asserts the static reach; THIS spec measures the painted contrast (the P-1 close-class).
+test.describe("BI.W-DEMO-SOURCE-SCAN — the destructive Button label clears AA (the CVA-foreground emission fix)", () => {
+    // WCAG relative luminance + contrast ratio, computed from the painted colors.
+    async function labelContrast(page: Page) {
+        return page.evaluate(() => {
+            const btn = Array.from(document.querySelectorAll("button")).find(
+                (b) => (b.textContent || "").trim().toLowerCase() === "destructive",
+            ) as HTMLElement | undefined;
+            if (!btn) return null;
+            const cs = getComputedStyle(btn);
+            const parse = (v: string): [number, number, number] | null => {
+                const m = v.match(/rgba?\(([^)]+)\)/);
+                if (!m) return null;
+                const p = m[1].split(",").map((x) => parseFloat(x.trim()));
+                return [p[0], p[1], p[2]];
+            };
+            const fg = parse(cs.color);
+            const bg = parse(cs.backgroundColor);
+            if (!fg || !bg) return { fg: cs.color, bg: cs.backgroundColor, ratio: null };
+            const lum = ([r, g, b]: [number, number, number]) => {
+                const f = (c: number) => {
+                    const s = c / 255;
+                    return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+                };
+                return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+            };
+            const L1 = lum(fg);
+            const L2 = lum(bg);
+            const ratio = (Math.max(L1, L2) + 0.05) / (Math.min(L1, L2) + 0.05);
+            return { fg: cs.color, bg: cs.backgroundColor, ratio };
+        });
+    }
+
+    for (const mode of ["light", "dark"] as const) {
+        test(`${mode} mode — the destructive label ink resolves over bg-destructive at ≥4.5:1`, async ({
+            page,
+        }) => {
+            await page.goto("/display/buttons", { waitUntil: "networkidle" });
+            await page.evaluate((m) => {
+                document.documentElement.classList.toggle("dark", m === "dark");
+            }, mode);
+            // Let the cascade settle after the theme toggle.
+            await page.waitForTimeout(150);
+
+            const readback = await labelContrast(page);
+            console.log(`[emission] destructive contrast (${mode}):`, JSON.stringify(readback));
+            expect(readback, "the destructive Button must be present").not.toBeNull();
+            expect(
+                readback!.ratio,
+                "the destructive label/fill contrast must be measurable",
+            ).not.toBeNull();
+            // The bg is the red destructive fill (never transparent — the bare bg-destructive
+            // rule generated); the label ink is the resolved --destructive-foreground.
+            expect(readback!.bg, "the fill must be the destructive red, not transparent").not.toContain(
+                "rgba(0, 0, 0, 0)",
+            );
+            expect(
+                readback!.ratio as number,
+                "the destructive label must clear WCAG AA (≥4.5:1) — the CVA-foreground emission fix (was 3.57:1)",
+            ).toBeGreaterThanOrEqual(4.5);
+
+            await page.screenshot({
+                path: frame(`W-EMISSION-destructive-contrast-${mode}.png`),
+            });
+        });
+    }
+});

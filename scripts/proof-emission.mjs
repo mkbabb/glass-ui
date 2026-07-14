@@ -597,6 +597,197 @@ add(
         : `a W6/W7 self-test bite FAILED (geometry-planted ${plantedGeometryHits}, stripped-clean ${plantedStrippedClean}, drop-detected ${!plantedDropForwards}, forward-detected ${plantedForwards})`,
 );
 
+// ════════════════════════════════════════════════════════════════════════════════════
+// E-CVA — the CVA-FOREGROUND emission clause (BI.W-DEMO-SOURCE-SCAN · A11Y-1 / FAM-15).
+//
+// W1-W7 cover STRUCTURAL utilities (geometry/bounds/positioning). E-CVA is the same
+// emission discipline read on the CVA COLOR axis: a `cva()` variant/tone map (e.g.
+// button/index.ts `tone.destructive`) composes a BARE `text-*-foreground` label ink +
+// the `bg-*`/`hover:bg-*/N` tone fill AS PLAIN CLASS STRINGS inside `ui/<name>/index.ts`
+// — NOT the component `.vue` render. Tailwind emits a utility RULE only when a build
+// SCANS a file using it, so those CVA strings need a scan that REACHES the `index.ts`
+// maps. Two sides, mirroring the structural arm:
+//
+//   (producer) The published /styles cascade SHIPS the bare CVA-foreground rules
+//     (emitComponentUtilities scans dist/*.js — the button CVA compiles into a FLAT
+//     dist chunk — so a BARE consumer paints `<Button tone="destructive">`). This arm
+//     is the REGRESSION GUARD: it reds if a future bundling change nests the CVA chunk
+//     out of the flat dist/*.js scan (the token would silently die again).
+//   (consumer) The DEMO dogfoods the library SOURCE, so ITS OWN Tailwind scan must
+//     reach `ui/*/index.ts` (the demo `@source` set). BORN-RED at HEAD: the demo scans
+//     `**/*.vue` + `_shared/*.ts` + `custom/**/*Variants.ts` — NONE reach a CVA map, so
+//     the bare `.text-destructive-foreground` never generated in the demo build and the
+//     shipped destructive label read 3.57:1 (the inherited ink over `bg-destructive`).
+//     GREEN when demo.css scans the `ui/**/index.ts` CVA maps.
+//
+// Anti-evasion: the producer arm reads the BUILT /styles cascade (not the CVA source);
+// the consumer arm reach-matches the demo's LIVE `@source` globs against a real CVA-map
+// path (not a substring on the directive text). The self-test bite plants a synthetic
+// unbacked foreground + a CVA-map-less demo scan and proves both detectors bite.
+// ════════════════════════════════════════════════════════════════════════════════════
+
+// The BARE (unconditionally-applied, a11y-load-bearing) CVA `text-*-foreground` tokens
+// across every `ui/<name>/index.ts` CVA map. BARE = preceded by whitespace/quote/backtick
+// (NOT `:` — a `data-[state=on]:text-accent-foreground` variant form emits its OWN
+// prefixed rule and is not the bare-label contract; it is excluded).
+const uiIndexDir = resolve(ROOT, "src/components/ui");
+function listUiCvaMaps() {
+    const out = [];
+    let entries;
+    try {
+        entries = readdirSync(uiIndexDir, { withFileTypes: true });
+    } catch {
+        return out;
+    }
+    for (const e of entries) {
+        if (!e.isDirectory()) continue;
+        const p = resolve(uiIndexDir, e.name, "index.ts");
+        if (existsSync(p)) out.push(`src/components/ui/${e.name}/index.ts`);
+    }
+    return out;
+}
+const cvaMapRels = listUiCvaMaps();
+const bareFgRe = /(?:^|[\s'"`])(text-[a-z]+-foreground)\b/g;
+const cvaBareForegrounds = new Set();
+for (const rel of cvaMapRels) {
+    const src = strip(read(rel));
+    let m;
+    while ((m = bareFgRe.exec(src))) cvaBareForegrounds.add(m[1]);
+}
+const bareForegrounds = [...cvaBareForegrounds].sort();
+facts.cvaBareForegrounds = bareForegrounds;
+// A bare foreground is BACKED when the built /styles cascade carries a bare
+// `.text-X-foreground{…color…}` rule (whitespace/minifier tolerant; the bare selector,
+// NOT a variant-prefixed `.data-\[…\]\:text-X-foreground`).
+function bareForegroundBacked(token, css) {
+    const esc = token.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
+    return new RegExp(`(?:^|[},;\\s])\\.${esc}\\s*\\{[^}]*color`).test(css);
+}
+const unbackedForegrounds = bareForegrounds.filter((t) => !bareForegroundBacked(t, distCss));
+facts.unbackedCvaForegrounds = unbackedForegrounds;
+add(
+    "cva-foreground-backed-in-dist",
+    bareForegrounds.length > 0 && unbackedForegrounds.length === 0,
+    unbackedForegrounds.length === 0
+        ? `every BARE CVA text-*-foreground referenced by a ui/<name>/index.ts map has a backing rule in the built /styles cascade (${bareForegrounds.join(", ")}) — a bare consumer paints the destructive/status label ink (the emitComponentUtilities flat-dist scan covers the CVA color axis; regression guard against a nested-chunk re-break)`
+        : `a BARE CVA text-*-foreground has NO backing rule in the built /styles cascade: ${unbackedForegrounds.join(", ")} — the CVA color string died (run npm run build; the label falls to the inherited ink, the A11Y-1 3.57:1 class)`,
+);
+
+// The CONSUMER side — the demo's own Tailwind `@source` set must REACH the CVA maps.
+// Parse demo/demo.css's live `@source` globs; a glob (resolved relative to demo/, so a
+// leading `../` climbs to repo root) must MATCH a real CVA-map path. Born-RED at HEAD.
+// The generic strip() cannot be used here: an `@source` glob like `**/*.vue` carries a
+// literal `/*`, which a naive block-comment stripper would eat (swallowing the directive
+// list). A STRING-AWARE stripper drops real `/* … */` comments (so a prose @source in a
+// comment does not count) while preserving the `/*` INSIDE a quoted glob.
+function stripCssCommentsStringAware(src) {
+    let out = "";
+    let inStr = null;
+    for (let i = 0; i < src.length; i++) {
+        const c = src[i];
+        const n = src[i + 1];
+        if (inStr) {
+            out += c;
+            if (c === "\\") {
+                out += n ?? "";
+                i++;
+            } else if (c === inStr) {
+                inStr = null;
+            }
+            continue;
+        }
+        if (c === '"' || c === "'") {
+            inStr = c;
+            out += c;
+            continue;
+        }
+        if (c === "/" && n === "*") {
+            i += 2;
+            while (i < src.length && !(src[i] === "*" && src[i + 1] === "/")) i++;
+            i++; // land on the '/' of '*/'
+            out += " ";
+            continue;
+        }
+        out += c;
+    }
+    return out;
+}
+const demoCss = stripCssCommentsStringAware(read("demo/demo.css"));
+const demoSources = [...demoCss.matchAll(/@source\s+["']([^"']+)["']/g)].map((m) => m[1]);
+facts.demoSourceGlobs = demoSources;
+// glob → RegExp (fast-glob subset): `**/` = zero+ segments, `**` = any, `*` = one segment,
+// leading `../` climbs demo/→root. Enough for the reach test (no brace/negation forms).
+function globToRe(glob) {
+    let g = glob.replace(/^(?:\.\.\/)+/, "").replace(/^\.\//, "");
+    let re = "";
+    for (let i = 0; i < g.length; i++) {
+        const c = g[i];
+        if (c === "*") {
+            if (g[i + 1] === "*") {
+                i++;
+                if (g[i + 1] === "/") {
+                    i++;
+                    re += "(?:.*/)?";
+                } else {
+                    re += ".*";
+                }
+            } else {
+                re += "[^/]*";
+            }
+        } else if ("+^${}()|[]\\.".includes(c)) {
+            re += "\\" + c;
+        } else {
+            re += c;
+        }
+    }
+    return new RegExp("^" + re + "$");
+}
+// A demo scan reaches the CVA maps when at least one @source glob matches EVERY listed
+// CVA-map path (so a NEW CVA component is covered too, not just today's button/badge).
+function demoReaches(globs, targets) {
+    return targets.every((t) => globs.some((g) => globToRe(g).test(t)));
+}
+const cvaProbeTargets = cvaMapRels.length > 0 ? cvaMapRels : ["src/components/ui/button/index.ts"];
+const demoScansCvaMaps = demoReaches(demoSources, cvaProbeTargets);
+facts.demoScansCvaMaps = demoScansCvaMaps;
+add(
+    "demo-scans-cva-maps",
+    demoScansCvaMaps,
+    demoScansCvaMaps
+        ? `the demo @source set reaches every ui/<name>/index.ts CVA map (${demoSources.join(", ")}) — the demo build generates the bare CVA color utilities (text-destructive-foreground + the four-state tone fill), so the shipped destructive label resolves --destructive-foreground and clears AA`
+        : `the demo @source set does NOT reach the ui/<name>/index.ts CVA maps (${demoSources.join(", ")}) — the bare .text-destructive-foreground never generates in the demo build and the destructive label falls to the inherited ink (the A11Y-1 3.57:1 fail); add @source "../src/components/ui/**/index.ts" to demo/demo.css`,
+);
+
+// Self-test bites — each detector must BITE its planted defect (the anti-gameability floor).
+// (a) a synthetic bare foreground with NO backing rule reds the producer probe;
+// (b) a backed one passes it; (c) a demo scan lacking the CVA-map glob reds the consumer
+// probe; (d) a scan WITH the CVA-map glob passes it.
+const biteUnbacked = !bareForegroundBacked(
+    "text-zzz-foreground",
+    ".text-destructive-foreground{color:var(--destructive-foreground)}",
+);
+const biteBacked = bareForegroundBacked(
+    "text-destructive-foreground",
+    ".text-destructive-foreground{color:var(--destructive-foreground)}",
+);
+const biteDemoMiss = !demoReaches(
+    ["../src/components/**/*.vue", "../src/components/ui/_shared/*.ts"],
+    ["src/components/ui/button/index.ts"],
+);
+const biteDemoReach = demoReaches(
+    ["../src/components/ui/**/index.ts"],
+    ["src/components/ui/button/index.ts"],
+);
+const cvaSelfTest = biteUnbacked && biteBacked && biteDemoMiss && biteDemoReach;
+facts.cvaSelfTest = { biteUnbacked, biteBacked, biteDemoMiss, biteDemoReach };
+add(
+    "cva-foreground-self-test-bites",
+    cvaSelfTest,
+    cvaSelfTest
+        ? "the E-CVA detectors BITE every planted defect: a synthetic unbacked text-zzz-foreground reds the producer probe, a backed token passes, a demo scan of only **/*.vue + _shared/*.ts reds the consumer reach-probe, and a demo scan with ui/**/index.ts passes"
+        : `an E-CVA self-test bite FAILED (unbacked-reds ${biteUnbacked}, backed-passes ${biteBacked}, demo-miss-reds ${biteDemoMiss}, demo-reach-passes ${biteDemoReach})`,
+);
+
 // ── The sheet-inset π readback spec is wired (the BINDING close) ─────────────────────
 add(
     "sheet-inset-pi-spec-exists",
@@ -636,5 +827,5 @@ if (!pass) {
     process.exit(1);
 }
 console.log(
-    "\n[proof:emission] the self-emission class is CLOSED at the root — the dead @source is re-pointed to the real compiled surface, the Select collision-bound + the Slider size axis ship as precompiled rules in dist/glass-ui.css (never load-bearing on a consumer's JIT reach), the census's in-bounds structural utilities are each backed, and the WatercolorDot ghost reuses the seeded blob. The π arm proves the painted truth.",
+    "\n[proof:emission] the self-emission class is CLOSED at the root — the dead @source is re-pointed to the real compiled surface, the Select collision-bound + the Slider size axis ship as precompiled rules in dist/glass-ui.css (never load-bearing on a consumer's JIT reach), the census's in-bounds structural utilities are each backed, the WatercolorDot ghost reuses the seeded blob, and the E-CVA clause covers the CVA COLOR axis (every bare text-*-foreground is backed in dist + the demo scans the ui/**/index.ts CVA maps, so the destructive label clears AA). The π arm proves the painted truth.",
 );
