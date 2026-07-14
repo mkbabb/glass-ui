@@ -12,7 +12,6 @@ import {
     CardHeader,
     CardTitle,
     Label,
-    MetricPill,
     Progress,
     Section,
     Separator,
@@ -158,44 +157,6 @@ describe("component smoke coverage", () => {
         expect(unit.text()).toBe("Mbps");
     });
 
-    it("renders MetricPill with stacked-label defaults baked in", () => {
-        const wrapper = mount(MetricPill, {
-            props: {
-                label: "DOWNLOAD",
-                value: 730,
-                unit: "Mbps",
-                color: "var(--viz-fourier)",
-            },
-        });
-        const root = wrapper.find(".metric-badge");
-        expect(root.exists()).toBe(true);
-        expect(root.classes()).toContain("metric-pill");
-        expect(root.attributes("data-dense")).toBeUndefined();
-        expect(root.classes()).toContain("metric-badge--label-stacked");
-        expect(root.attributes("data-size")).toBe("lg");
-        const fullLabel = root.find(".metric-badge__label--full");
-        expect(fullLabel.text()).toBe("DOWNLOAD");
-        const row = root.find(".metric-badge__row");
-        expect(row.exists()).toBe(true);
-        expect(row.find(".metric-badge__amount").text()).toBe("730");
-        expect(row.find(".metric-badge__unit").text()).toBe("Mbps");
-    });
-
-    it("forwards MetricPill dense onto data-dense (canonical rail)", () => {
-        const wrapper = mount(MetricPill, {
-            props: {
-                label: "LATENCY",
-                value: 36,
-                unit: "ms",
-                dense: true,
-            },
-        });
-        const root = wrapper.find(".metric-badge");
-        expect(root.attributes("data-dense")).toBe("true");
-        expect(root.classes()).not.toContain("metric-pill--density-spacious");
-        expect(root.classes()).not.toContain("metric-pill--density-comfortable");
-    });
-
     it("keeps MetricBadge inline mode flat (no row wrapper)", () => {
         const wrapper = mount(MetricBadge, {
             props: {
@@ -261,23 +222,16 @@ describe("component smoke coverage", () => {
         expect(wrapper.find("h2").classes()).toContain("section-label");
     });
 
-    it("V.W3.T1 — size-rail probe: GlassDock exposes data-size, MetricPill data-dense on root", () => {
+    it("V.W3.T1 — size-rail probe: GlassDock exposes data-size on root", () => {
         // AI.W5-γ — the prior DockGroup arm of this probe retires alongside
         // the SFC archive (zero production consumers; Path B per G-AI-D26).
-        // The V.W3.T1 four-rung density rail still binds for the surviving
-        // pair (GlassDock + MetricPill); future cluster-inside-chassis idioms
-        // resurrect via composition, not a dedicated SFC.
+        // The V.W3.T1 rail binds for GlassDock; future cluster-inside-chassis
+        // idioms resurrect via composition, not a dedicated SFC.
 
         // GlassDock — default size is "md"
         const dock = mount(GlassDock, { slots: { default: "<button>Tool</button>" } });
         expect(dock.find(".glass-dock").attributes("data-size")).toBe("md");
         expect(dock.find(".glass-dock").classes()).not.toContain("size-md");
-
-        // MetricPill — default spacious; passing `dense` sets data-dense on root
-        const pill = mount(MetricPill, {
-            props: { label: "PING", value: 12, unit: "ms", dense: true },
-        });
-        expect(pill.find(".metric-badge").attributes("data-dense")).toBe("true");
     });
 
     it("renders a vertical GlassDock", () => {

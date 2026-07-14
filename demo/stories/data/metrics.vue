@@ -1,9 +1,9 @@
 <script setup lang="ts">
 // BG.W-DEMO-IA-REDESIGN — the Data METRICS family. The metric primitives
-// (metric-cell · metric-stack · metric-badge · metric-pill) collapse onto ONE
+// (metric-cell · metric-stack · metric-badge) collapse onto ONE
 // metrics page — the ledger's numeric-readout family, sectioned by member via
-// <FamilyTabs>. The metric-badge/metric-pill atoms move OUT of Display (they are data
-// readouts, not display atoms). Zero content re-authored — each member composed bare.
+// <FamilyTabs>. The metric-badge atom moves OUT of Display (it is a data
+// readout, not a display atom). Zero content re-authored — each member composed bare.
 // (scrolling-text left the family at BI.W-SPEEDTEST-ONLY-PAIR — RETIRE-RELOCATED to
 // speedtest, its sole binary consumer.)
 import { defineAsyncComponent } from "vue";
@@ -25,11 +25,6 @@ const members: FamilyMember[] = [
         id: "metric-badge",
         label: "Metric badge",
         component: defineAsyncComponent(() => import("../display/metric-badge.vue")),
-    },
-    {
-        id: "metric-pill",
-        label: "Metric pill",
-        component: defineAsyncComponent(() => import("../display/metric-pill.vue")),
     },
 ];
 </script>

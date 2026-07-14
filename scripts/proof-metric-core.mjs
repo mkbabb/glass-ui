@@ -1,8 +1,8 @@
 // AZ.W-METRIC-UNIFY — proof:metric-core, the Metric* value-display unification gate.
 //
-// Four primitives — MetricBadge, MetricPill (delegates to Badge), MetricCell,
-// MetricRow — paint the SAME "value + unit + placeholder" gestalt over four
-// distinct registers. They USED to share NO core: two named the primary field
+// Three primitives — MetricBadge, MetricCell, MetricRow — paint the SAME
+// "value + unit + placeholder" gestalt over three distinct registers. They USED
+// to share NO core: two named the primary field
 // `amount` and two `value`, the `placeholder: "—"` default was redeclared per
 // SFC, and the empty-check DIVERGED — the `amount` copies coalesced on
 // truthiness (`amount || placeholder` + `!amount`), which renders a VALID `0` as
@@ -50,27 +50,24 @@ function stripComments(src) {
 
 const LEAF = "src/utils/coalesceMetric.ts";
 
-// The four value-display surfaces (AnimatedDigit is a distinct animated reel —
-// out of scope, recorded as a deliberate keep in its docstring).
+// The three value-display surfaces (AnimatedDigit is a distinct animated reel —
+// out of scope, recorded as a deliberate keep in its docstring; the MetricPill
+// delegate was RETIRED at BI.W-S-METRIC-PILL-DELETE — the sole clean in-repo
+// overfit-delete).
 //
 // MetricBadge / MetricCell / MetricRow each render the value DIRECTLY and so must
-// import the core. MetricPill is composition-only — it forwards :value to
-// <MetricBadge> and carries NO local value logic — so it consumes the core
-// TRANSITIVELY through its delegate; the gate accepts it when it composes
-// MetricBadge AND declares no local coalesce/placeholder. Either way: no SFC
-// re-rolls the empty-check or the "—" default.
+// import the core — no SFC re-rolls the empty-check or the "—" default.
 const DIRECT_SFCS = [
     "src/components/custom/metric-badge/MetricBadge.vue",
     "src/components/custom/metric-cell/MetricCell.vue",
     "src/components/custom/metric-stack/MetricRow.vue",
 ];
-const DELEGATE_SFC = "src/components/ui/metric-pill/MetricPill.vue";
-const SFCS = [...DIRECT_SFCS, DELEGATE_SFC];
+const SFCS = [...DIRECT_SFCS];
 const BADGE_INDEX = "src/components/custom/metric-badge/index.ts";
 
-// The em-dash placeholder literal the prior 4-5 redeclarations carried. MetricPill
-// delegates to Badge and no longer declares its own default, so a `placeholder:
-// "—"` withDefaults entry on ANY of the four SFCs is a re-divergence.
+// The em-dash placeholder literal the prior 4-5 redeclarations carried. The core
+// owns the default, so a `placeholder: "—"` withDefaults entry on ANY of the
+// three SFCs is a re-divergence.
 const PLACEHOLDER_DEFAULT = /placeholder\s*:\s*["'`]—["'`]/;
 
 function run() {
@@ -99,10 +96,9 @@ function run() {
         const raw = read(rel);
         const code = stripComments(raw);
         const importsCoalesce = /\bcoalesceMetric\b/.test(code);
-        // The delegate (MetricPill) consumes the core via <MetricBadge>; a direct
-        // SFC must import coalesceMetric itself.
+        // Each direct SFC must import coalesceMetric itself.
         const composesBadge = /\bMetricBadge\b/.test(code);
-        const consumesCore = rel === DELEGATE_SFC ? composesBadge || importsCoalesce : importsCoalesce;
+        const consumesCore = importsCoalesce;
         const redeclaresDefault = PLACEHOLDER_DEFAULT.test(code);
         // A prop named `amount` declared on the props object (`amount:` or
         // `amount?:` at a props-type position). The CSS class `metric-badge__amount`
@@ -122,11 +118,7 @@ function run() {
             declaresValueProp,
         };
         if (!consumesCore)
-            violations.push(
-                rel === DELEGATE_SFC
-                    ? `${rel} neither composes MetricBadge nor imports coalesceMetric`
-                    : `${rel} does not import/use coalesceMetric`,
-            );
+            violations.push(`${rel} does not import/use coalesceMetric`);
         if (redeclaresDefault)
             violations.push(`${rel} redeclares a local placeholder: "—" default (must live only in ${LEAF})`);
         if (declaresAmountProp)

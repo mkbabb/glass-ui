@@ -2,7 +2,6 @@ import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
 
 import { MetricBadge } from "@glass/components/custom/metric-badge/index";
-import { MetricPill } from "@glass/components/ui/metric-pill/index";
 import { coalesceMetric } from "@glass/utils/coalesceMetric";
 
 // AZ.W-METRIC-UNIFY — the born-RED zero-value regression.
@@ -69,17 +68,6 @@ describe("MetricBadge — zero-value (the killed bug)", () => {
     it("renders the stacked register's 0 value as '0' too", () => {
         const wrapper = mount(MetricBadge, {
             props: { value: 0, labelPosition: "stacked", label: "ERRORS" },
-        });
-        const amount = wrapper.get(".metric-badge__amount");
-        expect(amount.text()).toBe("0");
-        expect(amount.classes()).not.toContain("text-muted-foreground/40");
-    });
-});
-
-describe("MetricPill — zero-value (inherits the fixed core via MetricBadge)", () => {
-    it("renders a 0 value as '0', not the em-dash", () => {
-        const wrapper = mount(MetricPill, {
-            props: { value: 0, unit: "ms", label: "LATENCY" },
         });
         const amount = wrapper.get(".metric-badge__amount");
         expect(amount.text()).toBe("0");

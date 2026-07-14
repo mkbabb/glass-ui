@@ -119,7 +119,6 @@ const BARE_SECTION = /<section\s+class="flex flex-col gap-3"/;
 // reachable ONLY via its family aggregator, never as a live standalone route.
 const AF4_FAMILY_MEMBERS = [
     "display/metric-badge",
-    "display/metric-pill",
     "data/metric-cell",
     "data/metric-stack",
     "data/data-table",

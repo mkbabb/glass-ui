@@ -164,8 +164,9 @@ export function evaluateDoc(name, text, resolver) {
 // muster + sci-report), NOT a speedtest-transfer candidate. A relocate/retire on
 // the false premise silently breaks muster + sci-report. Two arms, both device-free:
 //   M1 — KEEP-guard. The five metric subpaths stay PUBLISHED (package.json exports
-//        + the src/subpaths barrel) and metric-pill (ui/, composes MetricBadge)
-//        stays present. A silent drop of any one REDs (the break-guard).
+//        + the src/subpaths barrel). A silent drop of any one REDs (the break-guard).
+//        (metric-pill was RETIRED at BI.W-S-METRIC-PILL-DELETE — the sole clean
+//        in-repo overfit-delete; the cell/stack/badge SHARED-KEEP arms stay.)
 //   M2 — doc-truth. docs/consumer-evidence/metrics.md records the 3-repo
 //        consumption (≥3 of muster/sci-report/speedtest cited), AND no
 //        consumer-evidence doc asserts the metric family is speedtest-only /
@@ -192,18 +193,17 @@ const METRIC_REFUTATION =
     /\b(?:not|never|false|corrected?|stays?|stay|three[- ]repo|3[- ]repo|refut\w*|no longer|isn'?t|is not|premise|wrong)\b/i;
 
 /** M1 — the metric-family KEEP-guard. Pure over injected package/tree facts. */
-export function evaluateMetricKeep({ exportsKeys, subpathFiles, metricPillPresent }) {
+export function evaluateMetricKeep({ exportsKeys, subpathFiles }) {
     const missing = [];
     for (const sub of REQUIRED_METRIC_SUBPATHS) {
         if (!exportsKeys.has(`./${sub}`)) missing.push(`exports["./${sub}"]`);
         if (!subpathFiles.has(sub)) missing.push(`src/subpaths/${sub}.ts`);
     }
-    if (!metricPillPresent) missing.push("src/components/ui/metric-pill");
     return {
         pass: missing.length === 0,
         detail:
             missing.length === 0
-                ? `the metric family stays published — ${REQUIRED_METRIC_SUBPATHS.length} subpaths (exports + src barrel) + metric-pill (ui/) all present (the muster/sci-report break-guard)`
+                ? `the metric family stays published — ${REQUIRED_METRIC_SUBPATHS.length} subpaths (exports + src barrel) all present (the muster/sci-report break-guard)`
                 : `metric-family surface DROPPED (a metrics move on the false speedtest-only premise silently breaks muster + sci-report): ${missing.join(", ")}`,
     };
 }
@@ -504,7 +504,6 @@ function selfTest() {
         const r = evaluateMetricKeep({
             exportsKeys: new Set(["./metric-stack", "./metric-badge", "./instrument-chassis", "./pulse"]), // ./metric-cell dropped
             subpathFiles: new Set(REQUIRED_METRIC_SUBPATHS),
-            metricPillPresent: true,
         });
         bite("bite-metric-subpath-drop-reds-m1", r.pass === false, r.detail);
     }
@@ -513,7 +512,6 @@ function selfTest() {
         const r = evaluateMetricKeep({
             exportsKeys: new Set(REQUIRED_METRIC_SUBPATHS.map((s) => `./${s}`)),
             subpathFiles: new Set(REQUIRED_METRIC_SUBPATHS),
-            metricPillPresent: true,
         });
         bite("bite-metric-keep-passes-m1", r.pass === true, r.detail);
     }
@@ -673,7 +671,7 @@ function run() {
     });
 
     // ── M1 — the metric-family KEEP-guard (docs/consumer-evidence/metrics.md is the
-    //         evidence record; the subpaths + src barrels + metric-pill stay live) ──
+    //         evidence record; the subpaths + src barrels stay live) ──
     const pkg = JSON.parse(readFileSync(resolve(ROOT, "package.json"), "utf8"));
     const exportsKeys = new Set(Object.keys(pkg.exports ?? {}));
     const subpathsDir = resolve(ROOT, "src/subpaths");
@@ -682,8 +680,7 @@ function run() {
             .filter((f) => f.endsWith(".ts"))
             .map((f) => f.replace(/\.ts$/, "")),
     );
-    const metricPillPresent = existsSync(resolve(ROOT, "src/components/ui/metric-pill"));
-    const m1 = evaluateMetricKeep({ exportsKeys, subpathFiles, metricPillPresent });
+    const m1 = evaluateMetricKeep({ exportsKeys, subpathFiles });
     facts.metricKeep = m1;
     checks.push({ id: "metric-keep-guard", pass: m1.pass, detail: m1.detail });
 
@@ -771,7 +768,7 @@ function run() {
         status: pass ? "pass" : "fail",
         gate: "proof:consumer-evidence-true",
         command: COMMAND,
-        note: "CE1 every cited sibling-repo consumer path resolves on disk (border-progress dangling-consumer class; repo-absent paths skipped — the CI monorepo-layout fence). CE-PUB a doc that present-tense claims publication via @mkbabb/glass-ui/<sub> + cites a sibling consumer must have ≥1 resolving external importer (DOC-4 fabricated-liveness class). M1 (BI.W-METRICS-DEMO) the metric family (metric-cell/metric-stack/metric-badge/instrument-chassis/pulse + metric-pill) stays PUBLISHED — a silent drop reds (the muster/sci-report break-guard, refuting FAM-10's speedtest-only-sextet premise). M2 docs/consumer-evidence/metrics.md records the 3-repo surface (speedtest + muster + sci-report) and no doc re-asserts speedtest-only/overfit for the family. BP1 (BI.W-BORDER-PROGRESS-RETIRE) the /border-progress subpath source is RETIRED (mirror + /api re-export gone, component barrel BANKED present — source-anchored, the package.json export removal is the derived regen owned by proof:subpath-classify/enumeration). BP2 no unrefuted 'born ≥2 by construction' claim survives + border-progress.md records the honest demo-only status + the named speedtest re-entry. BP3 completion-seal STAYS published + carries the WATCHLIST annotation (the milder OFIT-3 case). SP1 (BI.W-SPEEDTEST-ONLY-PAIR) the /scrolling-text subpath + component are RETIRE-RELOCATED to speedtest (component barrel + subpath mirror + root-barrel re-export + demo story DEFINITION-ABSENT — speedtest-only, the ≥2-repo binary bar unmet) + the speedtest ADOPT ask recorded on the crossrepo-asks:bi roster. SP2 icon-tooltip is a Tooltip PRESET (composes ui/tooltip — the BI.W-OVERLAY-UNION mechanism fold, NOT its own overlay root) + the speedtest ADOPT ask recorded. Device-free; 25-bite self-test. The B8 retire waves EXTEND this gate (SPEEDTEST-ONLY-PAIR / BORDER-PROGRESS-RETIRE / METRICS-DEMO KEEP-guard).",
+        note: "CE1 every cited sibling-repo consumer path resolves on disk (border-progress dangling-consumer class; repo-absent paths skipped — the CI monorepo-layout fence). CE-PUB a doc that present-tense claims publication via @mkbabb/glass-ui/<sub> + cites a sibling consumer must have ≥1 resolving external importer (DOC-4 fabricated-liveness class). M1 (BI.W-METRICS-DEMO) the metric family (metric-cell/metric-stack/metric-badge/instrument-chassis/pulse) stays PUBLISHED — a silent drop reds (the muster/sci-report break-guard, refuting FAM-10's speedtest-only-sextet premise). M2 docs/consumer-evidence/metrics.md records the 3-repo surface (speedtest + muster + sci-report) and no doc re-asserts speedtest-only/overfit for the family. BP1 (BI.W-BORDER-PROGRESS-RETIRE) the /border-progress subpath source is RETIRED (mirror + /api re-export gone, component barrel BANKED present — source-anchored, the package.json export removal is the derived regen owned by proof:subpath-classify/enumeration). BP2 no unrefuted 'born ≥2 by construction' claim survives + border-progress.md records the honest demo-only status + the named speedtest re-entry. BP3 completion-seal STAYS published + carries the WATCHLIST annotation (the milder OFIT-3 case). SP1 (BI.W-SPEEDTEST-ONLY-PAIR) the /scrolling-text subpath + component are RETIRE-RELOCATED to speedtest (component barrel + subpath mirror + root-barrel re-export + demo story DEFINITION-ABSENT — speedtest-only, the ≥2-repo binary bar unmet) + the speedtest ADOPT ask recorded on the crossrepo-asks:bi roster. SP2 icon-tooltip is a Tooltip PRESET (composes ui/tooltip — the BI.W-OVERLAY-UNION mechanism fold, NOT its own overlay root) + the speedtest ADOPT ask recorded. Device-free; 25-bite self-test. The B8 retire waves EXTEND this gate (SPEEDTEST-ONLY-PAIR / BORDER-PROGRESS-RETIRE / METRICS-DEMO KEEP-guard).",
         facts,
         checks: checks.map((c) => ({ id: c.id, pass: c.pass, detail: c.detail })),
     });

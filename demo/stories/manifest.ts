@@ -314,7 +314,6 @@ const SUBPATHS: Record<string, string> = {
     "display/separator": "@mkbabb/glass-ui/separator",
     "display/section": "/display/section",
     "display/metric-badge": "@mkbabb/glass-ui/metric-badge",
-    "display/metric-pill": "@mkbabb/glass-ui/metric-badge",
     "display/status-dot": "@mkbabb/glass-ui/status-dot",
     "display/pulse": "@mkbabb/glass-ui/pulse",
     "display/stacked-icons": "@mkbabb/glass-ui/stacked-icons",
@@ -370,7 +369,7 @@ const SUBPATHS: Record<string, string> = {
     "data/metric-cell": "@mkbabb/glass-ui/metric-cell",
     "data/metric-stack": "@mkbabb/glass-ui/metric-stack",
     // BG.W-DEMO-IA-REDESIGN — the Data METRICS family (folds metric-cell ·
-    // metric-stack · metric-badge · metric-pill as members). scrolling-text left
+    // metric-stack · metric-badge as members). scrolling-text left
     // the family at BI.W-SPEEDTEST-ONLY-PAIR (RETIRE-RELOCATED to speedtest).
     "data/metrics": "/data/metrics",
     // BI.W-COMPOSITIONS-PRUNE — the InstrumentChassis telemetry chassis, relocated out
@@ -482,7 +481,6 @@ export const FOLDED_STORY_IDS: ReadonlySet<string> = new Set<string>([
     "display/stacked-icons",
     "display/dark-mode-toggle",
     "display/metric-badge",
-    "display/metric-pill",
     // Data → data/table (data-table) · data/metrics · display/atoms (avatar).
     // (timeline-segmented/continuous MERGED into data/timeline at F7.3 — the member
     // files are deleted, so they are no longer routed rows to fold here.)
@@ -591,9 +589,8 @@ export const FOLDED_MEMBER_FAMILY: Record<string, string> = {
     "display/stacked-icons": "/display/atoms",
     "display/dark-mode-toggle": "/display/atoms",
     "data/avatar": "/display/atoms",
-    // data/metrics composes the metric family (cell · stack · badge · pill).
+    // data/metrics composes the metric family (cell · stack · badge).
     "display/metric-badge": "/data/metrics",
-    "display/metric-pill": "/data/metrics",
     "data/metric-cell": "/data/metrics",
     "data/metric-stack": "/data/metrics",
     // data/table composes the data-table member.
@@ -989,12 +986,6 @@ export const CATEGORIES: Category[] = [
                 "Sectioning landmark over the typography ladder — title / description / tone / gap.",
             ),
             s("display", "metric-badge", "Metric Badge"),
-            s(
-                "display",
-                "metric-pill",
-                "Metric Pill",
-                "A MetricBadge composition with a stacked label, spacious density, and the large size baked in. Not a parallel primitive.",
-            ),
             s("display", "status-dot", "Status Dot"),
             s("display", "pulse", "Pulse"),
             s(
@@ -1251,7 +1242,7 @@ export const CATEGORIES: Category[] = [
                 "data",
                 "metrics",
                 "Metrics",
-                "The numeric-readout family — MetricCell, MetricStack, MetricBadge, and MetricPill on ONE page, sectioned by the family switcher.",
+                "The numeric-readout family — MetricCell, MetricStack, and MetricBadge on ONE page, sectioned by the family switcher.",
                 {
                     background: "grid",
                 },

@@ -1,8 +1,9 @@
 // The shared value-display core for the Metric* family (AZ.W-METRIC-UNIFY).
 //
-// Four primitives — MetricBadge, MetricPill (delegates to Badge), MetricCell,
-// MetricRow — paint the SAME "value + unit + placeholder" gestalt over four
-// distinct registers (badge pill / stacked pill / wash tile / subgrid row).
+// Three primitives — MetricBadge, MetricCell, MetricRow — paint the SAME
+// "value + unit + placeholder" gestalt over three distinct registers (badge
+// pill / wash tile / subgrid row; the MetricPill delegate was RETIRED at
+// BI.W-S-METRIC-PILL-DELETE).
 // They used to share NO core: two named the field `amount` and two `value`,
 // the `placeholder: "—"` default was redeclared per-SFC, and the empty-check
 // DIVERGED — the `amount` copies coalesced on truthiness (`amount || placeholder`

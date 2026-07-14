@@ -18,7 +18,6 @@ export * from "./focus-scope";
 // BI.W-OVERLAY-UNION — `./hover-card` RETIRED (folds onto `<Popover trigger="hover">`).
 export * from "./input";
 export * from "./label";
-export * from "./metric-pill";
 // BI.W-MULTISELECT-FOLD — `./multi-select` RETIRED (folds onto `<Combobox multiple>`).
 export * from "./notification";
 export * from "./number-field";

@@ -86,7 +86,9 @@ export const EXPECTED_TREE = [
     // dark-mode-toggle/avatar composed as members via <FamilyTabs>).
     ["display", [
         "buttons", "card", "badge", "separator", "section", "metric-badge",
-        "metric-pill", "status-dot", "pulse", "stacked-icons",
+        // `metric-pill` DELETED at BI.W-S-METRIC-PILL-DELETE (AD4 — DP-A: 0 consumers
+        // anywhere, muster invariant-9 bans it; metric-badge/cell/stack SHARED-KEEP).
+        "status-dot", "pulse", "stacked-icons",
         "dark-mode-toggle", "atoms",
     ]],
     // Command folds in from the dissolved single-story Tools bin. The standalone

@@ -1,4 +1,4 @@
-# Metrics family — metric-cell · metric-stack · metric-badge · instrument-chassis · pulse (+ metric-pill)
+# Metrics family — metric-cell · metric-stack · metric-badge · instrument-chassis · pulse
 
 ## Artefact paths
 
@@ -12,9 +12,12 @@ published OFF the root barrel as five subpaths:
 - `instrument-chassis` — `src/components/custom/instrument-chassis/` (`InstrumentChassis` + `ChassisDivider` + `InstrumentChassisPhase`) → `@mkbabb/glass-ui/instrument-chassis`
 - `pulse` — `src/components/custom/pulse/` (`Pulse`) → `@mkbabb/glass-ui/pulse`
 
-`metric-pill` (`src/components/ui/metric-pill/MetricPill.vue`) is the stacked-pill
-default composed over `<MetricBadge>` — a composition-only ui/ surface on the root
-barrel, no parallel logic. It rides the family; it is not a separate subpath.
+`metric-pill` (formerly `src/components/ui/metric-pill/`) was a composition-only ui/
+surface — a `<MetricBadge>` with stacked-label + large-size + spacious-density
+defaults baked in, no parallel logic, no subpath. It was DELETED at
+BI.W-S-METRIC-PILL-DELETE: 0 consumers anywhere (muster invariant-9 BANS it), the ONE
+clean in-repo delete under DP-A. The FAMILY primitives above (cell/stack/badge) STAY —
+they are the three-repo surface; only the never-consumed pill leaf left.
 
 ## Current consumer state — a THREE-repo public surface (speedtest + muster + sci-report)
 
@@ -55,9 +58,10 @@ subpath:
 Under the mechanism-distinctness law (FAM-10), the family owns a distinct
 compact-metric mechanism AND clears the ≥2-binary-consumer bar by a wide margin
 (metric-badge alone spans all three repos), so it is not a fold candidate and not a
-speedtest-transfer candidate. `metric-pill` (ui/, composes `<MetricBadge>`) stays
-with it — a D-FACTOR Metric fold, if it lands, renames layout axes but retires no
-mechanism (recorded, not executed here).
+speedtest-transfer candidate. `metric-pill` (the never-consumed composition-only ui/
+leaf) was DELETED at BI.W-S-METRIC-PILL-DELETE — 0 consumers, the sole clean in-repo
+delete; the FAMILY primitives (cell/stack/badge) STAY, unaffected. A D-FACTOR Metric
+fold, if it lands, renames layout axes but retires no mechanism (recorded here).
 
 UF-K1's overfit instinct is real, but it lands on the `/data/metrics` DEMO page (a
 spec-sheet built for speedtest's benefit), NOT the components — the demo-page
