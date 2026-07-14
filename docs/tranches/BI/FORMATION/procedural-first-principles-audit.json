@@ -1,0 +1,1075 @@
+{
+  "schemaVersion": "1.0.0",
+  "sourceBase": "26c5ae686fd0f1181083aebda1215b00524555f1",
+  "generatedAt": "2026-07-14",
+  "status": "FORMATION_RESEARCH_ONLY",
+  "method": "First-principles model and proportionate-renderer decision reconciled against exact source reachability, exact component-consumer evidence, and bound desktop/mobile direct-route demos.",
+  "rowCount": 9,
+  "componentRows": 8,
+  "sourceWitnessCount": 22,
+  "liveRouteCount": 9,
+  "rows": [
+    {
+      "id": "PROC-000",
+      "conceptId": null,
+      "name": "Shared lifecycle, capability, color, and resource substrate",
+      "decision": "retain-and-collapse",
+      "model": "One scheduling/lifecycle owner; capability selection only for scenes whose work justifies more than one renderer; explicit attributed failure after commitment.",
+      "currentRenderer": "createGpuSubstrate selects WebGPU/WebGL2 for dual-engine scenes; useCanvas2D composes the same lifecycle for proportionate vector/raster scenes.",
+      "productResolution": "Keep one lifecycle and one capability policy, but do not turn WebGPU into a suite-wide quota. A scene earns each renderer from its math, instance count, public seams, and resource envelope.",
+      "liveRoutes": [
+        "/substrates/aurora",
+        "/substrates/blob",
+        "/substrates/constellation",
+        "/substrates/fourier-field",
+        "/substrates/liquid-grid"
+      ],
+      "findingIds": [
+        "RDA-004",
+        "RDA-010",
+        "RDA-017"
+      ],
+      "canonicalWaves": [
+        "BI.W-P043",
+        "BI.W-P044",
+        "BI.W-P045",
+        "BI.W-P052",
+        "BI.W-P053",
+        "BI.W-P054"
+      ],
+      "requiredStates": [
+        "mount",
+        "resize/DPR",
+        "offscreen",
+        "visibility",
+        "PRM",
+        "capability absence",
+        "internal failure",
+        "context loss",
+        "teardown",
+        "route budget"
+      ],
+      "interactionIds": [],
+      "sourceWitnesses": [
+        {
+          "path": "src/composables/glass/webgpu/useGpuSubstrate.ts",
+          "sourceBaseBlob": "50e6d5e382d5ad774377c3277ad666b5424fcbcd",
+          "line": 244,
+          "lineSha256": "9ff98f085cb1b8dd5e5f7632ed3f359e2c9547bf389038334fbc52cae7ac2842",
+          "excerpt": "export function createGpuSubstrate(",
+          "matchCount": 1
+        },
+        {
+          "path": "src/composables/glass/webgl/createCanvasLifecycle.ts",
+          "sourceBaseBlob": "06a2ae83fe8309bf7d42335488a689e99de43903",
+          "line": 202,
+          "lineSha256": "960b2e506b793b4fc4234aa5a20a6cdb8798ba72d95f3008c51d1f04ae0549b7",
+          "excerpt": "export function createCanvasLifecycle(",
+          "matchCount": 1
+        },
+        {
+          "path": "src/composables/glass/canvas2d/useCanvas2D.ts",
+          "sourceBaseBlob": "e98f4246dd0f00c6c23253f1d5c5984f7f763268",
+          "line": 124,
+          "lineSha256": "294dfa16ec17bf4b8fca163e6b2f2e3ba6f3f85737fd7c82aff9f0ed79813472",
+          "excerpt": "export function useCanvas2D(options: Canvas2DOptions): Canvas2DHandle {",
+          "matchCount": 1
+        }
+      ],
+      "consumerEvidence": null,
+      "liveEvidence": [
+        {
+          "route": "/substrates/aurora",
+          "desktop": {
+            "canvases": 2,
+            "svgs": 51,
+            "sections": 3,
+            "visibleInteractives": 120,
+            "screenshotSha256": "a17fafb60d1b05d9a6fa0dfbcc30809210947ba2cced05f9ab53ced709fce7ff"
+          },
+          "mobile": {
+            "canvases": 2,
+            "svgs": 51,
+            "sections": 3,
+            "visibleInteractives": 105,
+            "screenshotSha256": "01a6d60b76afd2415cd74505e0e4a2da81e2d4790e6e5c9f3968d602f7f0ce3c"
+          }
+        },
+        {
+          "route": "/substrates/blob",
+          "desktop": {
+            "canvases": 3,
+            "svgs": 47,
+            "sections": 7,
+            "visibleInteractives": 48,
+            "screenshotSha256": "d4d79ab60ded3076e159144f433a84639d8a8d2ed6652a4f6f3f3483f0cac1a4"
+          },
+          "mobile": {
+            "canvases": 3,
+            "svgs": 47,
+            "sections": 7,
+            "visibleInteractives": 33,
+            "screenshotSha256": "85f6841237ecf47d5d3d5744b1174e6f1ea6a3e098433e09ae6591533ee2ac8a"
+          }
+        },
+        {
+          "route": "/substrates/constellation",
+          "desktop": {
+            "canvases": 9,
+            "svgs": 24,
+            "sections": 7,
+            "visibleInteractives": 32,
+            "screenshotSha256": "0aff14a4d2f689a1d429d190ba7db9433ad0705c19cfe418569e6540d058d958"
+          },
+          "mobile": {
+            "canvases": 9,
+            "svgs": 24,
+            "sections": 7,
+            "visibleInteractives": 17,
+            "screenshotSha256": "ba9cfbb8a3eb46658f13f425d89c884c455b86d887c07b5ad075f0df1fd31f74"
+          }
+        },
+        {
+          "route": "/substrates/fourier-field",
+          "desktop": {
+            "canvases": 2,
+            "svgs": 32,
+            "sections": 3,
+            "visibleInteractives": 47,
+            "screenshotSha256": "ec7f346d260d440f4d03428b4c1909a4dac2a905fcf470227fb48fc88f1210e3"
+          },
+          "mobile": {
+            "canvases": 2,
+            "svgs": 32,
+            "sections": 3,
+            "visibleInteractives": 32,
+            "screenshotSha256": "46a718fbcbb559c7b7cb2dbcd117d7bb8616f267bd18c8f870b6cb4153d43032"
+          }
+        },
+        {
+          "route": "/substrates/liquid-grid",
+          "desktop": {
+            "canvases": 2,
+            "svgs": 29,
+            "sections": 3,
+            "visibleInteractives": 40,
+            "screenshotSha256": "68da85c9aafc9c60c2fd95c6097e1346df9312593d322aa7ba5908132c8be13e"
+          },
+          "mobile": {
+            "canvases": 2,
+            "svgs": 29,
+            "sections": 3,
+            "visibleInteractives": 25,
+            "screenshotSha256": "804a684e83b0f9f90ec5dc08fd59de1b17cdd28b3dba10c8d436c87d6a0c71b5"
+          }
+        }
+      ],
+      "findings": [
+        {
+          "id": "RDA-004",
+          "status": "RED",
+          "finding": "Aurora advertises an unhandled deferred renderer failure path."
+        },
+        {
+          "id": "RDA-010",
+          "status": "RED",
+          "finding": "Procedural demos do not expose the renderer they claim is running."
+        },
+        {
+          "id": "RDA-017",
+          "status": "RED",
+          "finding": "Procedural renderer truth is split across mutually contradictory source, gate, documentation, and demo claims."
+        }
+      ],
+      "interactions": [],
+      "evidenceCredit": "FORMATION_RESEARCH_ONLY__NOT_EXECUTION__NOT_NATIVE_PI"
+    },
+    {
+      "id": "PROC-001",
+      "conceptId": "aurora",
+      "name": "Aurora",
+      "decision": "retain-dual-engine",
+      "model": "A painterly multi-nucleus OKLCh field whose medium, warp, palette, and pointer response remain recognizably one Aurora across WebGPU and WebGL2.",
+      "currentRenderer": "WebGPU/WebGL2 through createGpuSubstrate.",
+      "productResolution": "Retain both engines: the per-pixel field and medium pipeline justify GPU rendering. Make actual backend and attributed initialization failure visible; eliminate warning-bearing fire-and-forget ownership.",
+      "liveRoutes": [
+        "/substrates/aurora"
+      ],
+      "findingIds": [
+        "RDA-004",
+        "RDA-010",
+        "RDA-011"
+      ],
+      "canonicalWaves": [
+        "BI.W-P045",
+        "BI.W-P046",
+        "BI.W-P052",
+        "BI.W-P053",
+        "BI.W-P054"
+      ],
+      "requiredStates": [
+        "default",
+        "mediums",
+        "image",
+        "pointer",
+        "dark",
+        "narrow",
+        "PRM",
+        "webgpu",
+        "webgl2",
+        "injected failure",
+        "teardown"
+      ],
+      "interactionIds": [],
+      "sourceWitnesses": [
+        {
+          "path": "src/components/custom/aurora/composables/runtime.ts",
+          "sourceBaseBlob": "18f9d069bd7b61ef4c8a59d9b465de6bfbcd452e",
+          "line": 280,
+          "lineSha256": "6f66e287a6af4dc54da7df3ab0bedaf10501b632a40c0598b527ec26a59de1c1",
+          "excerpt": ": createGpuSubstrate(canvas, {",
+          "matchCount": 1
+        },
+        {
+          "path": "demo/stories/substrates/aurora.vue",
+          "sourceBaseBlob": "9a239fe268dd29053b55c368a0fee6ffd220dd1b",
+          "line": 136,
+          "lineSha256": "3797e0baa66f257ccbc2d9a9f0c75c938b89215832053fc2bf88210b1d6e660b",
+          "excerpt": "blurb=\"A WebGPU-first procedural painterly gradient field — multi-nuclei composition, four mediums (smooth · oil · oil-pastel · van-Gogh) + the anisotropic-Kuwahara finish, cursor-driven swirl. Drag inside the stage to swirl the field; alt-click to spawn a nucleus. The configurator on the RIGHT drives EVERY axis: the OKLCh palette (the per-stop ColorSwatch editor), the composition (medium · zones · arrangement), the motion register, the warp/noise. The warm-cream Dawn identity is the default lead; the blue Sky is a named non-default preset. Shipped /aurora.\"",
+          "matchCount": 1
+        }
+      ],
+      "consumerEvidence": {
+        "decision": "retain",
+        "externalImportClauseCount": 21,
+        "externalRepositories": [
+          "atlas",
+          "keyframes.js",
+          "muster",
+          "speedtest",
+          "value.js"
+        ],
+        "currentFirstPartyDemos": [
+          "demo/stories/compositions/auth-shell.vue",
+          "demo/stories/display/buttons.vue",
+          "demo/stories/display/card.vue",
+          "demo/stories/dock/controls.vue",
+          "demo/stories/dock/cta-receive.vue",
+          "demo/stories/dock/dock-search.vue",
+          "demo/stories/dock/layers.vue",
+          "demo/stories/dock/overflow.vue",
+          "demo/stories/dock/overview.vue",
+          "demo/stories/dock/rail.vue",
+          "demo/stories/dock/sections.vue",
+          "demo/stories/substrates/aurora.vue",
+          "demo/stories/substrates/glass-panel.vue"
+        ],
+        "canonicalWaves": [
+          "BI.W-P046"
+        ]
+      },
+      "liveEvidence": [
+        {
+          "route": "/substrates/aurora",
+          "desktop": {
+            "canvases": 2,
+            "svgs": 51,
+            "sections": 3,
+            "visibleInteractives": 120,
+            "screenshotSha256": "a17fafb60d1b05d9a6fa0dfbcc30809210947ba2cced05f9ab53ced709fce7ff"
+          },
+          "mobile": {
+            "canvases": 2,
+            "svgs": 51,
+            "sections": 3,
+            "visibleInteractives": 105,
+            "screenshotSha256": "01a6d60b76afd2415cd74505e0e4a2da81e2d4790e6e5c9f3968d602f7f0ce3c"
+          }
+        }
+      ],
+      "findings": [
+        {
+          "id": "RDA-004",
+          "status": "RED",
+          "finding": "Aurora advertises an unhandled deferred renderer failure path."
+        },
+        {
+          "id": "RDA-010",
+          "status": "RED",
+          "finding": "Procedural demos do not expose the renderer they claim is running."
+        },
+        {
+          "id": "RDA-011",
+          "status": "OBSERVED",
+          "finding": "Several live controls work, but causality is inconsistently observable."
+        }
+      ],
+      "interactions": [],
+      "evidenceCredit": "FORMATION_RESEARCH_ONLY__NOT_EXECUTION__NOT_NATIVE_PI"
+    },
+    {
+      "id": "PROC-002",
+      "conceptId": "blob",
+      "name": "Blob",
+      "decision": "retain-dual-engine",
+      "model": "One SDF/smooth-min gel body with satellites, mood, pointer response, and a legible lit material; action causality is semantic/numeric, not incidental pixel churn.",
+      "currentRenderer": "WebGPU/WebGL2 through createGpuSubstrate, despite WebGL2-only lead prose.",
+      "productResolution": "Retain the GPU pair for the per-pixel SDF. Correct public renderer truth, expose the selected engine, and give Poke/preset/fission explicit state readback and reset. When the SDF body itself is a press target, expose one named semantic control whose keyboard/touch/pointer paths share the same bounded pulse owner; decorative and aria-hidden Blob instances mount no operable hit layer.",
+      "liveRoutes": [
+        "/substrates/blob"
+      ],
+      "findingIds": [
+        "RDA-010",
+        "RDA-011",
+        "RDA-017",
+        "RDA-031"
+      ],
+      "interactionIds": [
+        "INT-024"
+      ],
+      "canonicalWaves": [
+        "BI.W-P045",
+        "BI.W-P047",
+        "BI.W-P052",
+        "BI.W-P053",
+        "BI.W-P054",
+        "BI.W-P059",
+        "BI.W-P062"
+      ],
+      "requiredStates": [
+        "calm",
+        "merge",
+        "satellites",
+        "pointer",
+        "poke",
+        "keyboard press",
+        "touch",
+        "decorative",
+        "PRM",
+        "webgpu",
+        "webgl2",
+        "failure",
+        "teardown"
+      ],
+      "sourceWitnesses": [
+        {
+          "path": "src/components/custom/blob/composables/useMetaballRenderer.ts",
+          "sourceBaseBlob": "fee15b836e9906289a5c881370cb7a6654d5e544",
+          "line": 377,
+          "lineSha256": "f646b6c918662394028927cda0a14e9962a54d053fb5343d9b932926951557ef",
+          "excerpt": "canvasHandle = createGpuSubstrate(canvas, {",
+          "matchCount": 1
+        },
+        {
+          "path": "demo/stories/manifest.ts",
+          "sourceBaseBlob": "f21057ce0dc8086c56ee114f48dacb9d4bb287e1",
+          "line": 828,
+          "lineSha256": "11986f2c64b9003b5733d4bc777d44ab97cdf66a705b99e740b731ecf9766265",
+          "excerpt": "\"WebGL2 metaball droplet on the shared substrate (injected color resolver) — the lit static register, the pointer-reactive interaction hero, the mood + seed-palette model, and the pause seam. Shipped /blob + /watercolor-dot.\",",
+          "matchCount": 1
+        }
+      ],
+      "consumerEvidence": {
+        "decision": "retain",
+        "externalImportClauseCount": 5,
+        "externalRepositories": [
+          "value.js"
+        ],
+        "currentFirstPartyDemos": [
+          "demo/stories/compositions/empty-states.vue",
+          "demo/stories/substrates/blob.vue"
+        ],
+        "canonicalWaves": [
+          "BI.W-P047"
+        ]
+      },
+      "liveEvidence": [
+        {
+          "route": "/substrates/blob",
+          "desktop": {
+            "canvases": 3,
+            "svgs": 47,
+            "sections": 7,
+            "visibleInteractives": 48,
+            "screenshotSha256": "d4d79ab60ded3076e159144f433a84639d8a8d2ed6652a4f6f3f3483f0cac1a4"
+          },
+          "mobile": {
+            "canvases": 3,
+            "svgs": 47,
+            "sections": 7,
+            "visibleInteractives": 33,
+            "screenshotSha256": "85f6841237ecf47d5d3d5744b1174e6f1ea6a3e098433e09ae6591533ee2ac8a"
+          }
+        }
+      ],
+      "findings": [
+        {
+          "id": "RDA-010",
+          "status": "RED",
+          "finding": "Procedural demos do not expose the renderer they claim is running."
+        },
+        {
+          "id": "RDA-011",
+          "status": "OBSERVED",
+          "finding": "Several live controls work, but causality is inconsistently observable."
+        },
+        {
+          "id": "RDA-017",
+          "status": "RED",
+          "finding": "Procedural renderer truth is split across mutually contradictory source, gate, documentation, and demo claims."
+        },
+        {
+          "id": "RDA-031",
+          "status": "RED",
+          "finding": "Blob's live SDF press surface is causally pointer-operable but absent from the semantic and focus model."
+        }
+      ],
+      "interactions": [
+        {
+          "id": "INT-024",
+          "route": "/substrates/blob",
+          "observation": "The visible studio readout changed from clicks 0 to clicks 1, proving the canvas/SDF press is a causal product action. The active element remained body and the hit div exposed no role, tabindex, accessible name, or keyboard path; a continuously animated raster was not used as evidence.",
+          "values": {
+            "routeHitSurfaceCount": 2,
+            "clickedElementTag": "DIV",
+            "clickedElementTestId": "goo-blob-hit",
+            "clickCounterBefore": 0,
+            "clickCounterAfter": 1,
+            "activeElementAfter": "BODY",
+            "role": null,
+            "tabindex": null,
+            "ariaLabel": null,
+            "causalSemanticObservable": true
+          }
+        }
+      ],
+      "evidenceCredit": "FORMATION_RESEARCH_ONLY__NOT_EXECUTION__NOT_NATIVE_PI"
+    },
+    {
+      "id": "PROC-003",
+      "conceptId": "constellation",
+      "name": "Constellation",
+      "decision": "retain-single-canvas2d",
+      "model": "One seeded CPU proximity graph with bounded wells/warp/pin mechanics and an ordered consumer skin pass; graph scale and multi-instance use determine the renderer, not a WebGPU quota.",
+      "currentRenderer": "Current source uploads the CPU field to WebGPU/WebGL2; current route/docs claim Canvas2D; drawOverlay remains typed and demoed but is never invoked.",
+      "productResolution": "De-migrate to one Canvas2D renderer. The current 64-node CPU scan, five overlay bindings, seven direct instances, and route context budget make dual GPU upload/render paths strictly disproportionate. Restore drawOverlay and delete the GPU setup/bridge/shader fork. Then decide pointer well/warp from product semantics rather than leaving a decorative contradiction: decorative or aria-hidden instances delete the listener, pointer cursor, gravity-well prose, and warpOnClick default; any retained manipulation becomes a named keyboard/touch/pointer command with causal state through one warp owner.",
+      "liveRoutes": [
+        "/substrates/constellation"
+      ],
+      "findingIds": [
+        "RDA-010",
+        "RDA-016",
+        "RDA-017"
+      ],
+      "canonicalWaves": [
+        "BI.W-P043",
+        "BI.W-P044",
+        "BI.W-P048",
+        "BI.W-P052",
+        "BI.W-P054",
+        "BI.W-P062"
+      ],
+      "requiredStates": [
+        "default",
+        "density",
+        "warp overlay",
+        "pinned overlay",
+        "decorative/no listener",
+        "semantic pointer well when retained",
+        "keyboard/touch parity",
+        "multi-instance",
+        "offscreen",
+        "PRM",
+        "canvas2d",
+        "zero GPU contexts",
+        "teardown"
+      ],
+      "interactionIds": [],
+      "sourceWitnesses": [
+        {
+          "path": "src/components/custom/constellation/composables/useConstellation.ts",
+          "sourceBaseBlob": "f72a66f59465ee96bff2d6f3bdd8deee87f83c83",
+          "line": 500,
+          "lineSha256": "0e67eac8c35991aa8cb474fdffa1c8910438bbc7e381f8789925112aef5d73c5",
+          "excerpt": "handle = createGpuSubstrate(canvas, {",
+          "matchCount": 1
+        },
+        {
+          "path": "src/components/custom/constellation/Constellation.vue",
+          "sourceBaseBlob": "0fe8406e756731d5c48e5b611563fdedfb946733",
+          "line": 36,
+          "lineSha256": "1255f894e4c1ffe664b2ce4d2a5f1fd578fa3450f111266d815b1608bc0001cd",
+          "excerpt": "* `field` for its own overlay layer (the Canvas2D `drawOverlay` seam is inert post-",
+          "matchCount": 1
+        },
+        {
+          "path": "demo/stories/manifest.ts",
+          "sourceBaseBlob": "f21057ce0dc8086c56ee114f48dacb9d4bb287e1",
+          "line": 843,
+          "lineSha256": "d4c90ffadc82d89024575b42f7d0587b3dda5d1cce8ce815726a36ea6029c4ed",
+          "excerpt": "\"A drifting proximity-graph lattice on the Canvas2D substrate (park/freeze/dispose). The neutral lattice ships; the --primary focal node is a consumer drawOverlay pass. Shipped /constellation.\",",
+          "matchCount": 1
+        }
+      ],
+      "consumerEvidence": {
+        "decision": "retain",
+        "externalImportClauseCount": 3,
+        "externalRepositories": [
+          "atlas",
+          "slides"
+        ],
+        "currentFirstPartyDemos": [
+          "demo/stories/substrates/constellation.vue"
+        ],
+        "canonicalWaves": [
+          "BI.W-P048"
+        ]
+      },
+      "liveEvidence": [
+        {
+          "route": "/substrates/constellation",
+          "desktop": {
+            "canvases": 9,
+            "svgs": 24,
+            "sections": 7,
+            "visibleInteractives": 32,
+            "screenshotSha256": "0aff14a4d2f689a1d429d190ba7db9433ad0705c19cfe418569e6540d058d958"
+          },
+          "mobile": {
+            "canvases": 9,
+            "svgs": 24,
+            "sections": 7,
+            "visibleInteractives": 17,
+            "screenshotSha256": "ba9cfbb8a3eb46658f13f425d89c884c455b86d887c07b5ad075f0df1fd31f74"
+          }
+        }
+      ],
+      "findings": [
+        {
+          "id": "RDA-010",
+          "status": "RED",
+          "finding": "Procedural demos do not expose the renderer they claim is running."
+        },
+        {
+          "id": "RDA-016",
+          "status": "RED",
+          "finding": "Constellation advertises a consumer overlay contract that its renderer never invokes."
+        },
+        {
+          "id": "RDA-017",
+          "status": "RED",
+          "finding": "Procedural renderer truth is split across mutually contradictory source, gate, documentation, and demo claims."
+        }
+      ],
+      "interactions": [],
+      "evidenceCredit": "FORMATION_RESEARCH_ONLY__NOT_EXECUTION__NOT_NATIVE_PI"
+    },
+    {
+      "id": "PROC-004",
+      "conceptId": "fourier-field",
+      "name": "Fourier Field",
+      "decision": "retain-dual-engine",
+      "model": "One DFT/epicycle reconstruction and head clock, with pure coefficient math feeding equivalent compute/render semantics and a causal scrub/config surface.",
+      "currentRenderer": "WebGPU compute/render primary plus WebGL2 fallback; live route says so, README and suite table still claim Canvas2D.",
+      "productResolution": "Retain the GPU pair: compute plus dense ribbon/field rendering is a justified renderer use. Delete retired Canvas2D/future-migration prose and expose actual backend identity.",
+      "liveRoutes": [
+        "/substrates/fourier-field"
+      ],
+      "findingIds": [
+        "RDA-010",
+        "RDA-011",
+        "RDA-017"
+      ],
+      "canonicalWaves": [
+        "BI.W-P045",
+        "BI.W-P049",
+        "BI.W-P052",
+        "BI.W-P053",
+        "BI.W-P054"
+      ],
+      "requiredStates": [
+        "default",
+        "ribbon",
+        "config",
+        "scrub",
+        "resize",
+        "PRM",
+        "webgpu",
+        "webgl2",
+        "failure",
+        "teardown"
+      ],
+      "interactionIds": [],
+      "sourceWitnesses": [
+        {
+          "path": "src/components/custom/fourier-field/composables/useFourierField.ts",
+          "sourceBaseBlob": "e48ed68d34522dc3c80d7effd9b439a8b85ab22e",
+          "line": 291,
+          "lineSha256": "a2cc37a278c1f778c4bbf379fc9b7ce2b831c419120613850082408faa3ac093",
+          "excerpt": "handle = createGpuSubstrate(canvas, {",
+          "matchCount": 1
+        },
+        {
+          "path": "src/components/custom/fourier-field/README.md",
+          "sourceBaseBlob": "60993073275601770f0bf106866004d9a38f409f",
+          "line": 3,
+          "lineSha256": "5329f0697ec6f78c9c06750bae0903b741a5868aba6e265063f520517b00378e",
+          "excerpt": "A Fourier epicycle field on a Canvas2D surface — the sibling render-background to",
+          "matchCount": 1
+        },
+        {
+          "path": "demo/stories/substrates/fourier-field.vue",
+          "sourceBaseBlob": "538ea7e2ca20dfd374fe0f77f1069a6de604ca36",
+          "line": 315,
+          "lineSha256": "3652519284cc1decbfbb014bca5bcfc489fead3c6f1a93d732d84740f3be3ff5",
+          "excerpt": "blurb=\"ONE Fourier view. A chain of rotating circles stacked tip-to-tail draws the reconstructing curve as you watch — drag the harmonic-count N slider and the curve assembles term by term, from a single ellipse to the full reconstruction. Toggle the epicycle chain; pick a source (a generated elliptic spectrum, the ℱ wordmark, a heart, a star); pick a color. Drag the cursor across the field to SCRUB the reconstruction — left rewinds, right fast-forwards. WebGPU-first, on the GPU substrate — no Canvas2D anywhere.\"",
+          "matchCount": 1
+        }
+      ],
+      "consumerEvidence": {
+        "decision": "retain",
+        "externalImportClauseCount": 2,
+        "externalRepositories": [
+          "slides"
+        ],
+        "currentFirstPartyDemos": [
+          "demo/stories/substrates/fourier-field.vue"
+        ],
+        "canonicalWaves": [
+          "BI.W-P049"
+        ]
+      },
+      "liveEvidence": [
+        {
+          "route": "/substrates/fourier-field",
+          "desktop": {
+            "canvases": 2,
+            "svgs": 32,
+            "sections": 3,
+            "visibleInteractives": 47,
+            "screenshotSha256": "ec7f346d260d440f4d03428b4c1909a4dac2a905fcf470227fb48fc88f1210e3"
+          },
+          "mobile": {
+            "canvases": 2,
+            "svgs": 32,
+            "sections": 3,
+            "visibleInteractives": 32,
+            "screenshotSha256": "46a718fbcbb559c7b7cb2dbcd117d7bb8616f267bd18c8f870b6cb4153d43032"
+          }
+        }
+      ],
+      "findings": [
+        {
+          "id": "RDA-010",
+          "status": "RED",
+          "finding": "Procedural demos do not expose the renderer they claim is running."
+        },
+        {
+          "id": "RDA-011",
+          "status": "OBSERVED",
+          "finding": "Several live controls work, but causality is inconsistently observable."
+        },
+        {
+          "id": "RDA-017",
+          "status": "RED",
+          "finding": "Procedural renderer truth is split across mutually contradictory source, gate, documentation, and demo claims."
+        }
+      ],
+      "interactions": [],
+      "evidenceCredit": "FORMATION_RESEARCH_ONLY__NOT_EXECUTION__NOT_NATIVE_PI"
+    },
+    {
+      "id": "PROC-005",
+      "conceptId": "liquid-grid",
+      "name": "Liquid Grid",
+      "decision": "retain-dual-engine",
+      "model": "One derivative-AA grid evaluated after a smooth curl/affine sheet deformation, with semantic color and bounded pointer bulge.",
+      "currentRenderer": "WebGPU/WebGL2 through createGpuSubstrate; the live route truthfully describes WebGPU-first but exposes no runtime-derived backend identity.",
+      "productResolution": "Retain both fullscreen fragment paths, collapse setup/bridge duplication, expose selected engine/failure, and prove the same grid/curl semantics rather than screenshot sameness.",
+      "liveRoutes": [
+        "/substrates/liquid-grid"
+      ],
+      "findingIds": [
+        "RDA-010"
+      ],
+      "canonicalWaves": [
+        "BI.W-P045",
+        "BI.W-P050",
+        "BI.W-P052",
+        "BI.W-P053",
+        "BI.W-P054"
+      ],
+      "requiredStates": [
+        "default",
+        "density",
+        "warp",
+        "pointer",
+        "dark",
+        "narrow",
+        "PRM",
+        "webgpu",
+        "webgl2",
+        "failure",
+        "teardown"
+      ],
+      "interactionIds": [],
+      "sourceWitnesses": [
+        {
+          "path": "src/components/custom/liquid-grid/composables/useLiquidGrid.ts",
+          "sourceBaseBlob": "1c7db9a3ff063254cfcfb9ad8f1dfc837feb09f0",
+          "line": 165,
+          "lineSha256": "a2cc37a278c1f778c4bbf379fc9b7ce2b831c419120613850082408faa3ac093",
+          "excerpt": "handle = createGpuSubstrate(canvas, {",
+          "matchCount": 1
+        },
+        {
+          "path": "demo/stories/manifest.ts",
+          "sourceBaseBlob": "f21057ce0dc8086c56ee114f48dacb9d4bb287e1",
+          "line": 906,
+          "lineSha256": "57754f5640cf83354f552c27e97fdfc9b91cb0a35a8921d1eff4460548d9ef97",
+          "excerpt": "\"A WebGPU-first liquid AA-grid — evenly-spaced LARGER cells on a sheet that bows + shears as a traveling wave passes OVER and THROUGH it. A smooth low-order curl-flow field (Bridson divergence-free) warps the grid COORDINATE before evaluation, locally affine at the cell scale, so MAJOR gridlines bend as ONE coherent continuous curve and cells deform as near-parallelogram patches — never a per-pixel jitter, never a per-cell kink. A Ben Golus derivative-AA two-tier grid (one device-pixel crisp at any DPR — the blurry-mess fix; the AA reads the FINAL warped coordinate). It reads the SAME waveFlow warp as Concentric (one shared field). Drag the cursor for a local swirl — a finger twisting the cells around it. The warm-cream identity over transparent is the library default (the page reads through the cells); the suffusion preset rides the same field at a near-invisible fieldAlpha behind page content. No Canvas2D anywhere. Shipped /liquid-grid.\",",
+          "matchCount": 1
+        }
+      ],
+      "consumerEvidence": {
+        "decision": "retain",
+        "externalImportClauseCount": 0,
+        "externalRepositories": [],
+        "currentFirstPartyDemos": [
+          "demo/stories/substrates/liquid-grid.vue"
+        ],
+        "canonicalWaves": [
+          "BI.W-P050"
+        ]
+      },
+      "liveEvidence": [
+        {
+          "route": "/substrates/liquid-grid",
+          "desktop": {
+            "canvases": 2,
+            "svgs": 29,
+            "sections": 3,
+            "visibleInteractives": 40,
+            "screenshotSha256": "68da85c9aafc9c60c2fd95c6097e1346df9312593d322aa7ba5908132c8be13e"
+          },
+          "mobile": {
+            "canvases": 2,
+            "svgs": 29,
+            "sections": 3,
+            "visibleInteractives": 25,
+            "screenshotSha256": "804a684e83b0f9f90ec5dc08fd59de1b17cdd28b3dba10c8d436c87d6a0c71b5"
+          }
+        }
+      ],
+      "findings": [
+        {
+          "id": "RDA-010",
+          "status": "RED",
+          "finding": "Procedural demos do not expose the renderer they claim is running."
+        }
+      ],
+      "interactions": [],
+      "evidenceCredit": "FORMATION_RESEARCH_ONLY__NOT_EXECUTION__NOT_NATIVE_PI"
+    },
+    {
+      "id": "PROC-006",
+      "conceptId": "handmark",
+      "name": "HandMark",
+      "decision": "retain-svg",
+      "model": "Real selectable text with a deterministic, namespaced SVG mark whose geometry, medium, blend, draw-on, and boil remain legible and semantically absent under PRM.",
+      "currentRenderer": "DOM/SVG plus CSS compositor motion; no drawing context is warranted.",
+      "productResolution": "Retain as the hand-voice primitive. Consolidate underline/circle/strike/highlight/path into one shape/brush model and prove baseline, blend, replay, seeded morphology, PRM, and multi-instance ID isolation.",
+      "liveRoutes": [
+        "/motion/handmark"
+      ],
+      "findingIds": [],
+      "canonicalWaves": [
+        "BI.W-P051",
+        "BI.W-P061"
+      ],
+      "requiredStates": [
+        "underline",
+        "circle",
+        "strike",
+        "highlight",
+        "custom path",
+        "draw replay",
+        "boil",
+        "multi-instance",
+        "narrow",
+        "PRM"
+      ],
+      "interactionIds": [],
+      "sourceWitnesses": [
+        {
+          "path": "src/components/custom/handmark/HandMark.vue",
+          "sourceBaseBlob": "f733cca7df3686f64f34479507a9969a78110375",
+          "line": 61,
+          "lineSha256": "32d3bf1d055f804de9caafddb36fc3f281804ee1a016be6634b4f183618abfeb",
+          "excerpt": "const uid = `hm-${useId().replace(/[^a-zA-Z0-9_-]/g, \"\")}`;",
+          "matchCount": 1
+        },
+        {
+          "path": "demo/stories/motion/handmark.vue",
+          "sourceBaseBlob": "b7540e930d7ee9d6859af664a567c2efedec4335",
+          "line": 78,
+          "lineSha256": "f34843c443cdf4ea34f668f25e9c64d6c137bdecf95483bef9cff728650ee7b2",
+          "excerpt": "<Button variant=\"outline\" @click=\"replayLoad\">Replay draw</Button>",
+          "matchCount": 1
+        }
+      ],
+      "consumerEvidence": {
+        "decision": "retain",
+        "externalImportClauseCount": 3,
+        "externalRepositories": [
+          "atlas"
+        ],
+        "currentFirstPartyDemos": [
+          "demo/stories/motion/handmark.vue"
+        ],
+        "canonicalWaves": [
+          "BI.W-P051"
+        ]
+      },
+      "liveEvidence": [
+        {
+          "route": "/motion/handmark",
+          "desktop": {
+            "canvases": 1,
+            "svgs": 42,
+            "sections": 10,
+            "visibleInteractives": 35,
+            "screenshotSha256": "d372ac49138995f5c5b6d6d10c0a6d0f3e00c60160bde0ce13f0fbaaef9df2d1"
+          },
+          "mobile": {
+            "canvases": 1,
+            "svgs": 42,
+            "sections": 10,
+            "visibleInteractives": 19,
+            "screenshotSha256": "e8197bda6b00d15f1fcc2d8961bb562a9b212fc2ceabd7e592bd0ec1f3d9da56"
+          }
+        }
+      ],
+      "findings": [],
+      "interactions": [],
+      "evidenceCredit": "FORMATION_RESEARCH_ONLY__NOT_EXECUTION__NOT_NATIVE_PI"
+    },
+    {
+      "id": "PROC-007",
+      "conceptId": "watercolor-dot",
+      "name": "Watercolor Dot",
+      "decision": "retain-svg-css",
+      "model": "A cheap seeded decorative mark whose solid/ghost silhouettes share one geometry and whose per-instance wet-edge filter is namespaced and static under animation.",
+      "currentRenderer": "CSS shape/compositor plus SVG filter; deliberately zero Canvas/WebGPU/WebGL contexts.",
+      "productResolution": "Retain as the suite's explicit non-GPU counterexample. Prove same-seed silhouette identity, unique filter IDs, Safari-static filter raster, compositor-only motion, ghost legibility, and complete unmount cleanup.",
+      "liveRoutes": [
+        "/foundations/colors",
+        "/substrates/blob"
+      ],
+      "findingIds": [],
+      "canonicalWaves": [
+        "BI.W-P051",
+        "BI.W-P054"
+      ],
+      "requiredStates": [
+        "solid",
+        "ghost",
+        "same seed",
+        "different seed",
+        "multi-instance",
+        "hover",
+        "animated",
+        "PRM",
+        "Safari",
+        "teardown"
+      ],
+      "interactionIds": [],
+      "sourceWitnesses": [
+        {
+          "path": "src/components/custom/watercolor-dot/WatercolorDot.vue",
+          "sourceBaseBlob": "e704f14890b0d709ece0494edb4fee011592f522",
+          "line": 73,
+          "lineSha256": "99614a4940eb3fa4682d89963e4cb9e51a2322bf274b7c292f7f48c20e1e442e",
+          "excerpt": "const filterId = `watercolor-filter-${useId().replace(/[^a-zA-Z0-9_-]/g, \"\")}`;",
+          "matchCount": 1
+        },
+        {
+          "path": "src/components/custom/watercolor-dot/WatercolorDot.vue",
+          "sourceBaseBlob": "e704f14890b0d709ece0494edb4fee011592f522",
+          "line": 8,
+          "lineSha256": "8ed3f6d60a95fd73e1c40eda0a4fb146587ae22bf257847debcaf4f79fec4cfa",
+          "excerpt": "* context — no WebGL/WebGPU/Canvas2D; the deliberate suite counterexample, the mark",
+          "matchCount": 1
+        }
+      ],
+      "consumerEvidence": {
+        "decision": "retain",
+        "externalImportClauseCount": 11,
+        "externalRepositories": [
+          "value.js"
+        ],
+        "currentFirstPartyDemos": [
+          "demo/stories/foundations/colors.vue",
+          "demo/stories/substrates/blob.vue"
+        ],
+        "canonicalWaves": [
+          "BI.W-P051"
+        ]
+      },
+      "liveEvidence": [
+        {
+          "route": "/foundations/colors",
+          "desktop": {
+            "canvases": 1,
+            "svgs": 39,
+            "sections": 4,
+            "visibleInteractives": 39,
+            "screenshotSha256": "4a33969ac0d010a56ebc8970cee7d127d49608edeef8a1a5408a3fa24fe3cf48"
+          },
+          "mobile": {
+            "canvases": 1,
+            "svgs": 39,
+            "sections": 4,
+            "visibleInteractives": 23,
+            "screenshotSha256": "6593461347e54d838d08a9e5c6a27865d4acc3dc0bbff5d7bea86ebc864efd7a"
+          }
+        },
+        {
+          "route": "/substrates/blob",
+          "desktop": {
+            "canvases": 3,
+            "svgs": 47,
+            "sections": 7,
+            "visibleInteractives": 48,
+            "screenshotSha256": "d4d79ab60ded3076e159144f433a84639d8a8d2ed6652a4f6f3f3483f0cac1a4"
+          },
+          "mobile": {
+            "canvases": 3,
+            "svgs": 47,
+            "sections": 7,
+            "visibleInteractives": 33,
+            "screenshotSha256": "85f6841237ecf47d5d3d5744b1174e6f1ea6a3e098433e09ae6591533ee2ac8a"
+          }
+        }
+      ],
+      "findings": [],
+      "interactions": [],
+      "evidenceCredit": "FORMATION_RESEARCH_ONLY__NOT_EXECUTION__NOT_NATIVE_PI"
+    },
+    {
+      "id": "PROC-008",
+      "conceptId": "goo-filter",
+      "name": "Goo filter facilities",
+      "decision": "rehome-private",
+      "model": "An SVG URL resource belongs to the smallest component/demo that owns its geometry and lifetime; document-global filter IDs are not a library facility.",
+      "currentRenderer": "One shell-root SVG exports five global IDs, although current runtime use is limited to PagerDots and Deck while three IDs are dead.",
+      "productResolution": "Delete the public/global GooFilter, dead IDs, Dock re-export, and AppShell mount. PagerDots owns a per-instance namespaced worm filter/clipPath; Deck owns its private filter and geometry next to the sole demo consumer.",
+      "liveRoutes": [
+        "/navigation/carousel",
+        "/motion/deck"
+      ],
+      "findingIds": [
+        "RDA-015"
+      ],
+      "canonicalWaves": [
+        "BI.W-P118",
+        "BI.W-P121"
+      ],
+      "requiredStates": [
+        "two instances",
+        "four instances",
+        "stable rerender ID",
+        "fresh mount ID",
+        "unmount",
+        "Safari filter",
+        "Chrome filter",
+        "no shell global",
+        "no dead IDs"
+      ],
+      "interactionIds": [],
+      "sourceWitnesses": [
+        {
+          "path": "src/components/custom/goo-filter/GooFilter.vue",
+          "sourceBaseBlob": "8943c40ea55ff8c2937df4fdbfd64a0e169849a5",
+          "line": 60,
+          "lineSha256": "8ba58c658baaff351b5168bcad9bab33edd7a2df2abfc4c6485af17d1f1b44a0",
+          "excerpt": "const LIBRARY_IDS: readonly GooSpec[] = [",
+          "matchCount": 1
+        },
+        {
+          "path": "demo/shell/AppShell.vue",
+          "sourceBaseBlob": "c9f0f90f580b056074503693674211ce215e343e",
+          "line": 225,
+          "lineSha256": "0e2c14c18bd7034728dbeaa20ae2050c00b7b1acb0a405f9e114f9a736e67e7e",
+          "excerpt": "<GooFilter />",
+          "matchCount": 1
+        },
+        {
+          "path": "src/components/custom/pager-dots/PagerDots.vue",
+          "sourceBaseBlob": "7f64913d8ded8cbfe3044c004ab4568e5446bb8d",
+          "line": 36,
+          "lineSha256": "063990ee4604c4b36e47be173918064c6e9092fbbb0afa56854041608a745372",
+          "excerpt": "worm-scoped `#pager-worm-goo` filter (a true smooth throat — single-body peak 0.72 >",
+          "matchCount": 5
+        }
+      ],
+      "consumerEvidence": {
+        "decision": "rehome-private",
+        "externalImportClauseCount": 0,
+        "externalRepositories": [],
+        "currentFirstPartyDemos": [
+          "demo/stories/motion/deck.vue"
+        ],
+        "canonicalWaves": [
+          "BI.W-P118",
+          "BI.W-P121"
+        ]
+      },
+      "liveEvidence": [
+        {
+          "route": "/navigation/carousel",
+          "desktop": {
+            "canvases": 1,
+            "svgs": 25,
+            "sections": 7,
+            "visibleInteractives": 51,
+            "screenshotSha256": "fc34f7b968032332e6ae226e599b464cb9303146c219f195a0c6ab59ca046032"
+          },
+          "mobile": {
+            "canvases": 1,
+            "svgs": 25,
+            "sections": 7,
+            "visibleInteractives": 39,
+            "screenshotSha256": "033745fb9b006cb473d2959359f830ad8656548c530577056d04025dd4e0a593"
+          }
+        },
+        {
+          "route": "/motion/deck",
+          "desktop": {
+            "canvases": 1,
+            "svgs": 28,
+            "sections": 8,
+            "visibleInteractives": 44,
+            "screenshotSha256": "9150f88d08d101930cec2a06bd081f3e9ad5bdcb4755da5074cb8df6212cd7e0"
+          },
+          "mobile": {
+            "canvases": 1,
+            "svgs": 28,
+            "sections": 8,
+            "visibleInteractives": 28,
+            "screenshotSha256": "dae4e79b6b7d7759f374f06f160a6be649d2b329ab1636fe832c92120a7b9462"
+          }
+        }
+      ],
+      "findings": [
+        {
+          "id": "RDA-015",
+          "status": "RED",
+          "finding": "PagerDots uses a document-global fallback clipPath identity per instance."
+        }
+      ],
+      "interactions": [],
+      "evidenceCredit": "FORMATION_RESEARCH_ONLY__NOT_EXECUTION__NOT_NATIVE_PI"
+    }
+  ]
+}

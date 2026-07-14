@@ -1,0 +1,194 @@
+import { writeFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const ROOT = dirname(fileURLToPath(import.meta.url));
+const RETRIEVED = "2026-07-14";
+const SOURCE_BASE = "26c5ae686fd0f1181083aebda1215b00524555f1";
+const table = (headers, rows) => [
+    `| ${headers.join(" | ")} |`,
+    `| ${headers.map(() => "---").join(" | ")} |`,
+    ...rows.map((row) => `| ${row.map((cell) => String(cell).replaceAll("|", "\\|").replaceAll("\n", " ")).join(" | ")} |`),
+].join("\n");
+
+const rows = [
+    {
+        id: "PR-001",
+        domain: "Liquid Glass placement",
+        authority: "Apple Human Interface Guidelines — Materials",
+        url: "https://developer.apple.com/design/human-interface-guidelines/materials",
+        sourceClass: "CURRENT_PLATFORM_GUIDANCE",
+        sourceFinding: "Apple separates Liquid Glass into a functional layer for controls/navigation and advises against using it as the content layer; standard materials remain the content substrate.",
+        localFinding: "Current stories use glass broadly enough that semantic role, not class/name or aesthetic preference, must decide every material rung.",
+        transposition: "The content field stays warm/legible; functional glass is limited to controls, navigation, and transient chrome. A role/material mismatch is executable RED even when the plate is visually attractive.",
+        canonicalWaves: ["BI.W-P016", "BI.W-P017", "BI.W-P035"],
+        canonicalFamilies: ["design.material-hierarchy", "demo.gestalt"],
+    },
+    {
+        id: "PR-002",
+        domain: "Liquid Glass variants and preferences",
+        authority: "Apple Human Interface Guidelines — Materials",
+        url: "https://developer.apple.com/design/human-interface-guidelines/materials",
+        sourceClass: "CURRENT_PLATFORM_GUIDANCE",
+        sourceFinding: "Regular and clear material variants serve different backdrop/legibility conditions, and appearance changes under reduced-transparency and increased-contrast settings.",
+        localFinding: "Glass Material advertises adaptive live luminance but reported 0.000/dark over a visibly warm animated field; reduced-transparency and contrast cannot be decorative theme toggles.",
+        transposition: "Every glass role declares backdrop complexity, text load, dimming/legibility behavior, reduced transparency, contrast, and failure provenance. Clear material is never a universal default.",
+        canonicalWaves: ["BI.W-P016", "BI.W-P022", "BI.W-P035", "BI.W-P062"],
+        canonicalFamilies: ["design.material-hierarchy", "design.adaptive-accessibility", "design.contrast"],
+    },
+    {
+        id: "PR-003",
+        domain: "Modal dialog semantics",
+        authority: "W3C WAI-ARIA Authoring Practices — Dialog (Modal) Pattern",
+        url: "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/",
+        sourceClass: "ACCESSIBILITY_PATTERN",
+        sourceFinding: "A modal dialog contains its tab sequence, closes on Escape, restores focus appropriately, makes underlying windows inert, and exposes role=dialog plus aria-modal=true and an accessible name.",
+        localFinding: "The live Rename workspace dialog focused/restored correctly but had no aria-modal and left #app neither inert nor aria-hidden; body pointer-events:none was the only background barrier.",
+        transposition: "Modal and nonmodal scenarios are distinct. Modal acceptance measures focus cycle, Escape owner/restoration, aria-modal/name, and actual background exclusion from accessibility, focus, and hit testing.",
+        canonicalWaves: ["BI.W-P037", "BI.W-P062", "BI.W-P106"],
+        canonicalFamilies: ["behavior.focus-escape", "behavior.overlay-apg", "design.adaptive-accessibility"],
+    },
+    {
+        id: "PR-004",
+        domain: "Target-size standards versus product floor",
+        authority: "W3C WCAG 2.2 — Target Size (Minimum) and Target Size (Enhanced)",
+        url: "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum",
+        companionUrl: "https://www.w3.org/WAI/WCAG22/Understanding/target-size-enhanced",
+        sourceClass: "ACCESSIBILITY_STANDARD_GUIDANCE",
+        sourceFinding: "WCAG 2.5.8 uses a 24×24 CSS-pixel minimum with spacing/equivalent/inline/user-agent/essential exceptions; WCAG 2.5.5's 44×44 CSS pixels is enhanced Level AAA guidance.",
+        localFinding: "The mobile Dock showed active targets from 20.6 to 40 px high and a source token intended to enforce a 44 px product floor, but unreadable token resolution was masked by fallback.",
+        transposition: "The 44 px Dock coarse-target rule is an explicit product floor, not a false statement of WCAG minimum. Gates separately evaluate 24 px conformance/spacing exceptions and the stricter declared product floor on actual hit rectangles.",
+        canonicalWaves: ["BI.W-P021", "BI.W-P039", "BI.W-P040", "BI.W-P062"],
+        canonicalFamilies: ["design.responsive-touch", "design.adaptive-accessibility", "behavior.dock"],
+    },
+    {
+        id: "PR-005",
+        domain: "Invalid-field semantics",
+        authority: "W3C WCAG 2 working example — Using aria-invalid",
+        url: "https://www.w3.org/WAI/WCAG22/working-examples/aria-invalid-data-format/",
+        sourceClass: "ACCESSIBILITY_TECHNIQUE",
+        sourceFinding: "Invalid controls are identified programmatically and their error text is associated through aria-describedby rather than only by a painted border/icon.",
+        localFinding: "The live empty-submit witness bridged two fields but left Workspace name native-invalid without aria-invalid; no invalid field had aria-describedby and no error appeared in the accessibility snapshot.",
+        transposition: "Each required invalid control exposes one programmatic invalid state and one visible described error, follows a declared focus/announcement policy, and clears the relationship when valid.",
+        canonicalWaves: ["BI.W-P059", "BI.W-P062", "BI.W-P067", "BI.W-P098"],
+        canonicalFamilies: ["behavior.forms", "design.adaptive-accessibility", "demo.scenario-contract"],
+    },
+    {
+        id: "PR-006",
+        domain: "Scroll-timeline capability and bug-state matrix",
+        authority: "WebKit Features for Safari 26.4 and 26.5",
+        url: "https://webkit.org/blog/17862/webkit-features-for-safari-26-4/",
+        companionUrl: "https://webkit.org/blog/17938/webkit-features-for-safari-26-5/",
+        sourceClass: "CURRENT_ENGINE_RELEASE_NOTES",
+        sourceFinding: "Safari 26.4 moved scroll-driven animations to the compositor; 26.5 fixed dynamic pause, boundary progress, and back-forward-cache restoration defects.",
+        localFinding: "Current formation named native scroll timelines but did not explicitly enumerate the newly documented pause/boundary/bfcache failure classes.",
+        transposition: "Native support removes the JS shadow writer but does not remove testing: receipts bind exact browser build and exercise dynamic pause/resume, 0/100% boundaries, bfcache back/forward restoration, nested scrollers, resize, and fast drag.",
+        canonicalWaves: ["BI.W-P030", "BI.W-P061"],
+        canonicalFamilies: ["motion.scroll", "motion.single-clock", "demo.scenario-contract"],
+    },
+    {
+        id: "PR-007",
+        domain: "Platform volatility and forward probes",
+        authority: "WebKit — News from WWDC26: Safari 27 beta",
+        url: "https://webkit.org/blog/17967/news-from-wwdc26-webkit-in-safari-27-beta/",
+        sourceClass: "BETA_ENGINE_RELEASE_NOTES",
+        sourceFinding: "Safari 27 beta changes anchor-positioning defaults/keywords and includes focus-scroll and scroll-padding fixes; beta behavior is evidence of volatility, not the stable support floor.",
+        localFinding: "The formation used the abstract label Safari-current, which could conceal materially different builds and feature semantics.",
+        transposition: "π records exact browser name/version/build and per-feature probes. Stable Safari is the release target; Safari beta is a non-gating forward-compatibility lane unless the product owner explicitly promotes it.",
+        canonicalWaves: ["BI.W-P030", "BI.W-P061", "BI.W-P103", "BI.W-P104"],
+        canonicalFamilies: ["motion.scroll", "behavior.overlay-apg", "integrity.lineage"],
+    },
+    {
+        id: "PR-008",
+        domain: "WebGPU error and device-loss semantics",
+        authority: "W3C GPU for the Web — WebGPU specification",
+        url: "https://gpuweb.github.io/gpuweb/",
+        sourceClass: "WEB_STANDARD",
+        sourceFinding: "WebGPU errors are asynchronous; applications must account for device.lost, uncapturederror, and error scopes, including devices that arrive already lost and resources invalidated by loss.",
+        localFinding: "Aurora warned that deferred initialization lacked an error handler, while procedural stories exposed no actual engine identity and current GPU fallback claims could mask internal failure.",
+        transposition: "One lifecycle owns error scopes, uncaptured errors, device loss, resource invalidation/recreation policy, terminal failure UI, and teardown. Capability absence may choose a declared peer path; internal failure never silently switches engines.",
+        canonicalWaves: ["BI.W-P043", "BI.W-P045", "BI.W-P053", "BI.W-P132"],
+        canonicalFamilies: ["procedural.lifecycle", "procedural.renderer-parity", "performance.resource-ownership"],
+    },
+    {
+        id: "PR-009",
+        domain: "corner-shape enhancement",
+        authority: "Chrome for Developers — implementing CSS corner-shape in Blink",
+        url: "https://developer.chrome.com/blog/implementing-corner-shape",
+        sourceClass: "CURRENT_ENGINE_IMPLEMENTATION_NOTE",
+        sourceFinding: "Chrome shipped corner-shape in 2025, including superellipse-based corners; this documents a Blink capability, not cross-engine parity.",
+        localFinding: "Glass Material describes corner-shape as Chrome-only progressive enhancement and keeps round border-radius as its floor.",
+        transposition: "Superellipse corners may enrich Chrome but cannot carry component identity, geometry, target size, focus, or contrast. Safari/unsupported paths must meet the same semantic product contract without a compatibility alias.",
+        canonicalWaves: ["BI.W-P018", "BI.W-P061", "BI.W-P132"],
+        canonicalFamilies: ["design.material-hierarchy", "design.responsive-touch", "demo.scenario-contract"],
+    },
+    {
+        id: "PR-010",
+        domain: "Reduced motion and transparency",
+        authority: "W3C Media Queries Level 5",
+        url: "https://www.w3.org/TR/mediaqueries-5/#user-preference",
+        sourceClass: "WEB_STANDARD",
+        sourceFinding: "prefers-reduced-motion requests removal/replacement of nonessential motion; prefers-reduced-transparency requests less transparent/translucent layering; prefers-contrast is a distinct preference.",
+        localFinding: "The product combines continuous procedural loops, spring travel, glass transparency, and contrast modes, so one local media query cannot prove cross-system resolution.",
+        transposition: "One reactive preference authority projects independently into motion, transparency, and contrast. PRM preserves immediate causal final state with zero nonessential continuous work; reduced transparency preserves hierarchy without glass; contrast remains separately observable.",
+        canonicalWaves: ["BI.W-P022", "BI.W-P031", "BI.W-P062"],
+        canonicalFamilies: ["motion.reduced", "design.adaptive-accessibility", "procedural.lifecycle"],
+    },
+    {
+        id: "PR-011",
+        domain: "Animation ownership and composition",
+        authority: "W3C Web Animations Level 1",
+        url: "https://www.w3.org/TR/web-animations-1/",
+        sourceClass: "WEB_STANDARD",
+        sourceFinding: "Animation timing, effect stacks, composition, replacement, play state, and event ordering are explicit mechanisms; multiple effects can conflict through ordered composition rather than behaving as independent decorations.",
+        localFinding: "Prior tranches accumulated overlapping CSS/JS/Dock/procedural writers and accepted source-shape gates that did not prove the actual effect owner.",
+        transposition: "Every animated property has one active owner and clock; interruption/reversal/replacement/finish/cancel are semantic states, and gates instrument writer count plus trajectories rather than searching for timing tokens.",
+        canonicalWaves: ["BI.W-P024", "BI.W-P025", "BI.W-P028", "BI.W-P029"],
+        canonicalFamilies: ["motion.single-clock", "motion.transition-continuity", "motion.spring-language"],
+    },
+    {
+        id: "PR-012",
+        domain: "View-transition lifecycle",
+        authority: "W3C CSS View Transitions Levels 1 and 2",
+        url: "https://www.w3.org/TR/css-view-transitions-1/",
+        companionUrl: "https://www.w3.org/TR/css-view-transitions-2/",
+        sourceClass: "WEB_STANDARD_WORKING_DRAFT",
+        sourceFinding: "View transitions coordinate old/new visual state through captured transition layers and a lifecycle; Level 2 cross-document behavior is still a Working Draft and conditional on navigation/document state.",
+        localFinding: "The demo needs route/focus identity to remain correct whether native view transitions run, are interrupted, are unsupported, or are reduced.",
+        transposition: "Native transition support is an enhancement behind a semantic immediate-update floor. Route state, focus, scroll restoration, and final DOM identity are authoritative; captures cannot become stale interaction surfaces.",
+        canonicalWaves: ["BI.W-P029", "BI.W-P056", "BI.W-P061"],
+        canonicalFamilies: ["motion.transition-continuity", "behavior.focus-escape", "demo.scenario-contract"],
+    },
+];
+
+const research = {
+    schemaVersion: "1.0.0",
+    sourceBase: SOURCE_BASE,
+    retrievedAt: RETRIEVED,
+    authorityPolicy: "Primary platform vendors, W3C specifications, WAI/APG, and WCAG guidance only; beta notes are volatility inputs, never silently promoted support floors.",
+    evidencePolicy: "External guidance constrains product contracts but never substitutes for source-bound native-browser execution evidence.",
+    rowCount: rows.length,
+    rows,
+};
+
+writeFileSync(join(ROOT, "platform-research.json"), `${JSON.stringify(research, null, 2)}\n`);
+const md = `# First-principles platform research\n\n` +
+    `Retrieved ${RETRIEVED}; bound to Glass source base \`${SOURCE_BASE}\`. Primary platform/specification material constrains the product contract, but it cannot turn prose, a feature-presence check, or an in-app capture into execution π. Beta release notes are volatility probes, not silently promoted support floors.\n\n` +
+    table(["ID", "domain", "primary authority", "source finding", "current Glass/demo finding", "BI transposition", "owners"], rows.map((row) => [
+        row.id,
+        row.domain,
+        `[${row.authority}](${row.url})${row.companionUrl ? `; [companion](${row.companionUrl})` : ""}`,
+        row.sourceFinding,
+        row.localFinding,
+        row.transposition,
+        row.canonicalWaves.join(", "),
+    ])) + `\n\n` +
+    `## Consequences for perfected BI\n\n` +
+    `- Liquid Glass remains a functional plane, not the content substrate; adaptive material claims need live sample provenance and explicit failure.\n` +
+    `- Browser receipts name exact version/build and feature probes. Safari stable is the product lane; beta is forward-compatibility research unless explicitly promoted.\n` +
+    `- Native feature presence never closes its historical bug classes. Scroll timelines include pause, boundary, bfcache, nested-scroll, resize, and input tests.\n` +
+    `- The Dock's 44 px coarse target is a deliberate product floor. WCAG's 24 px minimum and exceptions remain separately measured; no fallback may disguise a broken token cascade.\n` +
+    `- Modal isolation, form-error linkage, GPU loss/error channels, animation writer ownership, and preference resolution are behavioral properties owned by existing durable families, not reasons to mint more gates.\n`;
+writeFileSync(join(ROOT, "PLATFORM-RESEARCH.md"), md);
+
+console.log(JSON.stringify({ ok: true, rows: rows.length, retrievedAt: RETRIEVED, sourceBase: SOURCE_BASE }, null, 2));

@@ -1,0 +1,361 @@
+{
+  "schemaVersion": "1.0.0",
+  "messageId": "SCI-P4-GLASS-BG-BH-BI-ADDENDUM-001",
+  "status": "FORMULATION_ONLY",
+  "executionAuthorized": false,
+  "producerAuthorityPath": "docs/tranches/BI/FORMATION/waves.registry.mjs#BI.W-P133",
+  "returnChannelArtifact": "docs/tranches/BI/FORMATION/coordination/SCI-P4-GLASS-BG-BH-BI-ADDENDUM-001-ACK.json",
+  "packet": {
+    "rootReadOnly": "/Users/mkbabb/Programming/sci-report/atlas/docs/tranches/P/refine/planv4",
+    "fileCount": 87,
+    "ingestedDigestAlgorithm": "sha256(concat(bytewise-sorted(relativePath + NUL + sha256(file-bytes)-hex + LF)))",
+    "ingestedPacketDigestSha256": "36de1f6d64ca92c907a1fb21da8dcfca58878cc7ecba9f26c0cdda927a949dec",
+    "senderProsePacketDigestSha256": "c1ccbb72c8a5662631acc56f6c89aa4ef7a032b5403498b43ae0e95a7de32e6b",
+    "senderFrozenContentDigestSha256": "be98bb297efe70daccf19f18fb134f12fd145a4271ee39408ac70ff749b4f26e",
+    "proseDigestTrusted": false
+  },
+  "bases": {
+    "glass": {
+      "head": "26c5ae686fd0f1181083aebda1215b00524555f1",
+      "formationSourceBase": "26c5ae686fd0f1181083aebda1215b00524555f1",
+      "dirtyPathDigestSha256": "5a92a2c1383edd0e22862367c1c617e231bcbf591ad64172bb9780b937629adb",
+      "dirtAllowedOnly": "docs/tranches/BI/FORMATION/"
+    },
+    "atlas": {
+      "repo": "/Users/mkbabb/Programming/sci-report/atlas",
+      "branch": "feat/tranche-k-arc",
+      "head": "3983199b2cad9e20b6cd35e43db654135048f6ff",
+      "dirtyPathDigestSha256": "b8ed2640d310949be5be7a133e21aa7a7c53f045df73890f59c671dcbd7c1ec0",
+      "mutationByGlass": "FORBIDDEN"
+    },
+    "packetCapturedAtlasHead": "767314ab3507a40a283a8f490ebbd3cbeaae2771",
+    "packetCapturedGlassFreezeHead": "26c5ae686fd0f1181083aebda1215b00524555f1"
+  },
+  "scope": {
+    "rawScopeFileSha256": "21664aee77bb0787989383ac29bc76210a186f585bf07437ca37ae164823f26f",
+    "directImportSemanticDigest": "sha256:7369d8d830fb4570f03219001c58388695f27b041ec7608b8a3574d34c2699f0",
+    "baselineCardinality": {
+      "receiverFiles": 36,
+      "importClauses": 62,
+      "moduleSpecifiers": 27,
+      "directImportDigest": "sha256:7369d8d830fb4570f03219001c58388695f27b041ec7608b8a3574d34c2699f0"
+    },
+    "closureState": "CONSTRUCT_RED_UNTIL_BI.W-P133_G.W0",
+    "acceptedWriteClasses": [
+      "ATLAS_DIRECT",
+      "REQUIRED_CLOSURE"
+    ],
+    "rejectedWriteClasses": [
+      "OUT_OF_SCOPE_BANKED",
+      "UNCLASSIFIED",
+      "MIXED_SCOPE"
+    ],
+    "targetPathContracts": {
+      "disposition": "ACCEPT",
+      "count": 36,
+      "mapping": "docs/tranches/BI/FORMATION/coordination/SCI-P4-target-path-mapping.json"
+    },
+    "keyedDirectImportRows": {
+      "disposition": "ACCEPT_FOR_REFRESH",
+      "count": 62,
+      "mapping": "docs/tranches/BI/FORMATION/coordination/SCI-P4-scope-row-mapping.json",
+      "writeAuthorityGranted": false
+    }
+  },
+  "rootPrecepts": {
+    "repo": "/Users/mkbabb/Programming/precepts",
+    "head": "458c2d1167f4e3a327edf17fc7509da533cacf1e",
+    "dirtyPathDigestSha256": "b94c9dc638a34c8e096168e9c05dfc83808fe7f45beea9d10fc0f2cf36c10b95",
+    "trancheFormulationSha256": "571855e52c32aba9a2faeca27f76dd026964bb671f97283b50eb4d9dbfaa7c6a",
+    "designIterationSha256": "932d6abfcb85c3c244cb2e042f54f92c33391fcaad2115dfecc26a9b46c70036",
+    "authority": "EXTERNAL_ROOT_READ_ONLY__docs/precepts_is_not_authority"
+  },
+  "prerequisites": {
+    "FORMULATION-SEAL": "RED",
+    "ENV-DSYNC": "RED",
+    "CORPUS-100": "RED",
+    "P-EXECUTION-AUTHORIZATION": "RED",
+    "P.W0": "RED",
+    "GLASS-OUTBOX-ACK": "GREEN_BY_THIS_FORMULATION_ARTIFACT_ONLY",
+    "sourceExecutionFormula": "P.W0 + GLASS-OUTBOX-ACK + FORMULATION-SEAL + ENV-DSYNC + CORPUS-100 + P-EXECUTION-AUTHORIZATION -> BI.W-P133/G.W0"
+  },
+  "designSync": {
+    "preP0Review": "REQUIRED_AND_CURRENTLY_RED",
+    "testedSourceRefresh": "SEPARATELY_REQUIRED_AT_BI.W-P132/GG040_EQUIVALENT_AND_CURRENTLY_RED",
+    "substitutionAllowed": false
+  },
+  "authoritySeparation": {
+    "pPacket": "consumer-derived Atlas subset only",
+    "globalPerfectedBi": "separately authorized by the current user and never credited to P merely because a source row folds into a BI wave",
+    "fullGlassAuditPacketRow": {
+      "disposition": "BANK",
+      "custodian": "custodian:glass-full-audit",
+      "retrigger": "a separately authorized dedicated session",
+      "note": "the present global formation is that independent authority, but this P row remains BANK and supplies no execution scope or completion credit"
+    }
+  },
+  "rowMappings": {
+    "sourceRows": {
+      "count": 512,
+      "path": "docs/tranches/BI/FORMATION/coordination/SCI-P4-source-row-mapping.json",
+      "sourceRowMappingSha256": "9ec627abacac88a162a82a946a226e6dc37714146192fb436691c452b4c857f8",
+      "gateMappingSha256": "ab55a35f6ed0f3be42d6837086d6632e5368a6724ab63afd9227a19125d6bf3c",
+      "scopeRowMappingSha256": "ff6d6795ee6c2799ae9acfe8e4b93620baeb625c65fabb45ed22b041e87b9ca7",
+      "targetPathMappingSha256": "2c799c69b1e793f7f0f4c2ceb231703e23ae03b84fb2896a668b32d1c03efdfb"
+    },
+    "scopeRows": {
+      "count": 62,
+      "path": "docs/tranches/BI/FORMATION/coordination/SCI-P4-scope-row-mapping.json",
+      "sha256": "ff6d6795ee6c2799ae9acfe8e4b93620baeb625c65fabb45ed22b041e87b9ca7"
+    },
+    "gateRows": {
+      "count": 60,
+      "dispositionCounts": {
+        "FOLD": 60
+      },
+      "path": "docs/tranches/BI/FORMATION/coordination/SCI-P4-gate-mapping.json"
+    },
+    "targetPathRows": {
+      "count": 36,
+      "path": "docs/tranches/BI/FORMATION/coordination/SCI-P4-target-path-mapping.json"
+    },
+    "waveRows": [
+      {
+        "sourceWave": "G.W0",
+        "producerDisposition": "FOLD",
+        "canonicalWaves": [
+          "BI.W-P133",
+          "BI.W-P003",
+          "BI.W-P004",
+          "BI.W-P005",
+          "BI.W-P014"
+        ],
+        "topologyRule": "The packet's semantic order and bilateral handshake are preserved, but no serial edge or ceremonial tail is retained unless a data/invariant dependency requires it in BI's transitive-reduced DAG.",
+        "acceptancePredicate": "Every G.W0 source row is allocated exactly once in docs/tranches/BI/FORMATION/coordination/SCI-P4-source-row-mapping.json; each canonical wave reaches DONE with its applicable properties and current-source evidence through the one verifier, while P-derived completion is the exact ATLAS_DIRECT + REQUIRED_CLOSURE projection only."
+      },
+      {
+        "sourceWave": "G.W1",
+        "producerDisposition": "FOLD",
+        "canonicalWaves": [
+          "BI.W-P013",
+          "BI.W-P126"
+        ],
+        "topologyRule": "The packet's semantic order and bilateral handshake are preserved, but no serial edge or ceremonial tail is retained unless a data/invariant dependency requires it in BI's transitive-reduced DAG.",
+        "acceptancePredicate": "Every G.W1 source row is allocated exactly once in docs/tranches/BI/FORMATION/coordination/SCI-P4-source-row-mapping.json; each canonical wave reaches DONE with its applicable properties and current-source evidence through the one verifier, while P-derived completion is the exact ATLAS_DIRECT + REQUIRED_CLOSURE projection only."
+      },
+      {
+        "sourceWave": "G.W2",
+        "producerDisposition": "FOLD",
+        "canonicalWaves": [
+          "BI.W-P085",
+          "BI.W-P111",
+          "BI.W-P123",
+          "BI.W-P057",
+          "BI.W-P061",
+          "BI.W-P126"
+        ],
+        "topologyRule": "The packet's semantic order and bilateral handshake are preserved, but no serial edge or ceremonial tail is retained unless a data/invariant dependency requires it in BI's transitive-reduced DAG.",
+        "acceptancePredicate": "Every G.W2 source row is allocated exactly once in docs/tranches/BI/FORMATION/coordination/SCI-P4-source-row-mapping.json; each canonical wave reaches DONE with its applicable properties and current-source evidence through the one verifier, while P-derived completion is the exact ATLAS_DIRECT + REQUIRED_CLOSURE projection only."
+      },
+      {
+        "sourceWave": "G.W3",
+        "producerDisposition": "FOLD",
+        "canonicalWaves": [
+          "BI.W-P006",
+          "BI.W-P009",
+          "BI.W-P117",
+          "BI.W-P126"
+        ],
+        "topologyRule": "The packet's semantic order and bilateral handshake are preserved, but no serial edge or ceremonial tail is retained unless a data/invariant dependency requires it in BI's transitive-reduced DAG.",
+        "acceptancePredicate": "Every G.W3 source row is allocated exactly once in docs/tranches/BI/FORMATION/coordination/SCI-P4-source-row-mapping.json; each canonical wave reaches DONE with its applicable properties and current-source evidence through the one verifier, while P-derived completion is the exact ATLAS_DIRECT + REQUIRED_CLOSURE projection only."
+      },
+      {
+        "sourceWave": "G.W4",
+        "producerDisposition": "FOLD",
+        "canonicalWaves": [
+          "BI.W-P005",
+          "BI.W-P010",
+          "BI.W-P011",
+          "BI.W-P012"
+        ],
+        "topologyRule": "The packet's semantic order and bilateral handshake are preserved, but no serial edge or ceremonial tail is retained unless a data/invariant dependency requires it in BI's transitive-reduced DAG.",
+        "acceptancePredicate": "Every G.W4 source row is allocated exactly once in docs/tranches/BI/FORMATION/coordination/SCI-P4-source-row-mapping.json; each canonical wave reaches DONE with its applicable properties and current-source evidence through the one verifier, while P-derived completion is the exact ATLAS_DIRECT + REQUIRED_CLOSURE projection only."
+      },
+      {
+        "sourceWave": "G.W5",
+        "producerDisposition": "FOLD",
+        "canonicalWaves": [
+          "BI.W-P006",
+          "BI.W-P007",
+          "BI.W-P117"
+        ],
+        "topologyRule": "The packet's semantic order and bilateral handshake are preserved, but no serial edge or ceremonial tail is retained unless a data/invariant dependency requires it in BI's transitive-reduced DAG.",
+        "acceptancePredicate": "Every G.W5 source row is allocated exactly once in docs/tranches/BI/FORMATION/coordination/SCI-P4-source-row-mapping.json; each canonical wave reaches DONE with its applicable properties and current-source evidence through the one verifier, while P-derived completion is the exact ATLAS_DIRECT + REQUIRED_CLOSURE projection only."
+      },
+      {
+        "sourceWave": "G.W6",
+        "producerDisposition": "FOLD",
+        "canonicalWaves": [
+          "BI.W-P008",
+          "BI.W-P010",
+          "BI.W-P128"
+        ],
+        "topologyRule": "The packet's semantic order and bilateral handshake are preserved, but no serial edge or ceremonial tail is retained unless a data/invariant dependency requires it in BI's transitive-reduced DAG.",
+        "acceptancePredicate": "Every G.W6 source row is allocated exactly once in docs/tranches/BI/FORMATION/coordination/SCI-P4-source-row-mapping.json; each canonical wave reaches DONE with its applicable properties and current-source evidence through the one verifier, while P-derived completion is the exact ATLAS_DIRECT + REQUIRED_CLOSURE projection only."
+      },
+      {
+        "sourceWave": "G.W7",
+        "producerDisposition": "FOLD",
+        "canonicalWaves": [
+          "BI.W-P009",
+          "BI.W-P010",
+          "BI.W-P128"
+        ],
+        "topologyRule": "The packet's semantic order and bilateral handshake are preserved, but no serial edge or ceremonial tail is retained unless a data/invariant dependency requires it in BI's transitive-reduced DAG.",
+        "acceptancePredicate": "Every G.W7 source row is allocated exactly once in docs/tranches/BI/FORMATION/coordination/SCI-P4-source-row-mapping.json; each canonical wave reaches DONE with its applicable properties and current-source evidence through the one verifier, while P-derived completion is the exact ATLAS_DIRECT + REQUIRED_CLOSURE projection only."
+      },
+      {
+        "sourceWave": "G.W8",
+        "producerDisposition": "FOLD",
+        "canonicalWaves": [
+          "BI.W-P011",
+          "BI.W-P012",
+          "BI.W-P014",
+          "BI.W-P129"
+        ],
+        "topologyRule": "The packet's semantic order and bilateral handshake are preserved, but no serial edge or ceremonial tail is retained unless a data/invariant dependency requires it in BI's transitive-reduced DAG.",
+        "acceptancePredicate": "Every G.W8 source row is allocated exactly once in docs/tranches/BI/FORMATION/coordination/SCI-P4-source-row-mapping.json; each canonical wave reaches DONE with its applicable properties and current-source evidence through the one verifier, while P-derived completion is the exact ATLAS_DIRECT + REQUIRED_CLOSURE projection only."
+      },
+      {
+        "sourceWave": "G.W9",
+        "producerDisposition": "FOLD",
+        "canonicalWaves": [
+          "BI.W-P132",
+          "BI.W-P061",
+          "BI.W-P002",
+          "BI.W-P004"
+        ],
+        "topologyRule": "The packet's semantic order and bilateral handshake are preserved, but no serial edge or ceremonial tail is retained unless a data/invariant dependency requires it in BI's transitive-reduced DAG.",
+        "acceptancePredicate": "Every G.W9 source row is allocated exactly once in docs/tranches/BI/FORMATION/coordination/SCI-P4-source-row-mapping.json; each canonical wave reaches DONE with its applicable properties and current-source evidence through the one verifier, while P-derived completion is the exact ATLAS_DIRECT + REQUIRED_CLOSURE projection only."
+      },
+      {
+        "sourceWave": "G.W10",
+        "producerDisposition": "FOLD",
+        "canonicalWaves": [
+          "BI.W-P002",
+          "BI.W-P004",
+          "BI.W-P128"
+        ],
+        "topologyRule": "The packet's semantic order and bilateral handshake are preserved, but no serial edge or ceremonial tail is retained unless a data/invariant dependency requires it in BI's transitive-reduced DAG.",
+        "acceptancePredicate": "Every G.W10 source row is allocated exactly once in docs/tranches/BI/FORMATION/coordination/SCI-P4-source-row-mapping.json; each canonical wave reaches DONE with its applicable properties and current-source evidence through the one verifier, while P-derived completion is the exact ATLAS_DIRECT + REQUIRED_CLOSURE projection only."
+      },
+      {
+        "sourceWave": "G.W11",
+        "producerDisposition": "FOLD",
+        "canonicalWaves": [
+          "BI.W-P002",
+          "BI.W-P004",
+          "BI.W-P061"
+        ],
+        "topologyRule": "The packet's semantic order and bilateral handshake are preserved, but no serial edge or ceremonial tail is retained unless a data/invariant dependency requires it in BI's transitive-reduced DAG.",
+        "acceptancePredicate": "Every G.W11 source row is allocated exactly once in docs/tranches/BI/FORMATION/coordination/SCI-P4-source-row-mapping.json; each canonical wave reaches DONE with its applicable properties and current-source evidence through the one verifier, while P-derived completion is the exact ATLAS_DIRECT + REQUIRED_CLOSURE projection only."
+      },
+      {
+        "sourceWave": "G.W12",
+        "producerDisposition": "FOLD",
+        "canonicalWaves": [
+          "BI.W-P002"
+        ],
+        "topologyRule": "The packet's semantic order and bilateral handshake are preserved, but no serial edge or ceremonial tail is retained unless a data/invariant dependency requires it in BI's transitive-reduced DAG.",
+        "acceptancePredicate": "Every G.W12 source row is allocated exactly once in docs/tranches/BI/FORMATION/coordination/SCI-P4-source-row-mapping.json; each canonical wave reaches DONE with its applicable properties and current-source evidence through the one verifier, while P-derived completion is the exact ATLAS_DIRECT + REQUIRED_CLOSURE projection only."
+      },
+      {
+        "sourceWave": "G.W13",
+        "producerDisposition": "FOLD",
+        "canonicalWaves": [
+          "BI.W-P002",
+          "BI.W-P010",
+          "BI.W-P128"
+        ],
+        "topologyRule": "The packet's semantic order and bilateral handshake are preserved, but no serial edge or ceremonial tail is retained unless a data/invariant dependency requires it in BI's transitive-reduced DAG.",
+        "acceptancePredicate": "Every G.W13 source row is allocated exactly once in docs/tranches/BI/FORMATION/coordination/SCI-P4-source-row-mapping.json; each canonical wave reaches DONE with its applicable properties and current-source evidence through the one verifier, while P-derived completion is the exact ATLAS_DIRECT + REQUIRED_CLOSURE projection only."
+      },
+      {
+        "sourceWave": "G.W14",
+        "producerDisposition": "FOLD",
+        "canonicalWaves": [
+          "BI.W-P002",
+          "BI.W-P004",
+          "BI.W-P133"
+        ],
+        "topologyRule": "The packet's semantic order and bilateral handshake are preserved, but no serial edge or ceremonial tail is retained unless a data/invariant dependency requires it in BI's transitive-reduced DAG.",
+        "acceptancePredicate": "Every G.W14 source row is allocated exactly once in docs/tranches/BI/FORMATION/coordination/SCI-P4-source-row-mapping.json; each canonical wave reaches DONE with its applicable properties and current-source evidence through the one verifier, while P-derived completion is the exact ATLAS_DIRECT + REQUIRED_CLOSURE projection only."
+      }
+    ]
+  },
+  "requiredHandshake": [
+    "P.W0 + GLASS-OUTBOX-ACK",
+    "BI.W-P133/G.W0 allocation",
+    "canonical product owners including BI.W-P132",
+    "candidate projection",
+    "P.W12 candidate/patch ACK",
+    "battery/two-clean",
+    "tag-CI publish",
+    "registry packet",
+    "P.W13 registry/runtime ACK",
+    "Atlas-surface FINAL",
+    "P.W14 join"
+  ],
+  "preservedNegativeControls": {
+    "count": 60,
+    "rule": "each source GG negative is copied verbatim into its evidence-plan row and must fail nonzero with a named defect before restored PASS; no row becomes a runnable case or command identity",
+    "mapping": "docs/tranches/BI/FORMATION/coordination/SCI-P4-gate-mapping.json"
+  },
+  "unresolvedCollisions": [
+    {
+      "collision": "60 proposed GG scripts versus one canonical verifier and a non-normative invariant vocabulary",
+      "disposition": "FOLD predicates into typed evidence-plan rows; REJECT all sixty physical scripts, named cases, aliases, and per-invariant tables",
+      "resolutionOwner": "BI.W-P014",
+      "state": "FORMED_NOT_EXECUTED"
+    },
+    {
+      "collision": "serial G.W0-G.W14 topology versus BI minimal DAG",
+      "disposition": "FOLD semantics and preserve bilateral order; REJECT non-causal serial barriers and ceremonial tail work",
+      "resolutionOwner": "BI.W-P133/BI.W-P002",
+      "state": "FORMED_NOT_EXECUTED"
+    },
+    {
+      "collision": "P subset authority versus independently authorized global BI",
+      "disposition": "separate authority and credit on every source mapping; P writes only fixed-point direct/required closure",
+      "resolutionOwner": "BI.W-P133",
+      "state": "G.W0_CONSTRUCT_RED"
+    },
+    {
+      "collision": "packet-captured Atlas/Glass SHAs versus current repositories",
+      "disposition": "bind this ACK to current heads and require G.W0 recomputation; archaeology SHAs never execute",
+      "resolutionOwner": "BI.W-P133",
+      "state": "REFRESH_RED"
+    },
+    {
+      "collision": "orphan shaders/CSS garnish versus declared live refraction",
+      "disposition": "ACCEPT unique product contract into BI.W-P132; no source credit until live reachability and device matrix pass",
+      "resolutionOwner": "BI.W-P132",
+      "state": "PRODUCT_RED"
+    },
+    {
+      "collision": "two DesignSync phases",
+      "disposition": "retain both as non-substitutable obligations",
+      "resolutionOwner": "BI.W-P133 + BI.W-P132",
+      "state": "ENV_DSYNC_RED"
+    }
+  ],
+  "noSilentDropAssertion": {
+    "sourceActionIdsUnique": true,
+    "sourceActionCount": 512,
+    "sourceActionExpected": 512,
+    "sourceGateCount": 60,
+    "targetPathContractCount": 36,
+    "directImportScopeRowCount": 62,
+    "sourceWaveCount": 15
+  }
+}

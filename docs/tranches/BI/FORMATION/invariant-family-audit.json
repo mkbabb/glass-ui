@@ -1,0 +1,756 @@
+{
+  "schemaVersion": 1,
+  "sourceBase": "26c5ae686fd0f1181083aebda1215b00524555f1",
+  "status": "FORMATION_DESIGN_AUTHORITY",
+  "familyCount": 40,
+  "normativeFamilyCount": false,
+  "executableFamilyIdentities": 0,
+  "legacyCommandCount": 403,
+  "legacyCommandIdentitiesRetained": 0,
+  "legacyNamedCasesRetained": 0,
+  "lifecycleCounts": {
+    "CONTINUOUS_STATIC": 12,
+    "FORMATION_EXECUTION_CONTROL": 3,
+    "CUT_CONTROL": 1,
+    "CONTINUOUS_NATIVE": 23,
+    "CUT_COORDINATION_CONTROL": 1
+  },
+  "rows": [
+    {
+      "id": "integrity.types",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_STATIC",
+      "whyIndependent": "Static type agreement can fail while build files, runtime behavior, and every visual family remain green; it spans source, tests, templates, public declarations, and generated entry projections.",
+      "antiContrivance": "Run canonical project graphs and resolve emitted declarations. Never decide success from an exact diagnostic count, file roster, exported-name snapshot, or suppression-string census.",
+      "redMutation": "Remove a required public return member from emitted declarations while leaving implementation output otherwise buildable.",
+      "authority": "Changed typed source, templates, test types, entry authority, or declaration generation.",
+      "kind": "device-free",
+      "modes": [
+        "local",
+        "ci",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Library, tests, and declaration-build TypeScript programs agree without suppressions or generated declaration holes.",
+      "legacyAuditInputCount": 6,
+      "seedLegacyId": "typecheck"
+    },
+    {
+      "id": "integrity.build-package",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_STATIC",
+      "whyIndependent": "A source tree can typecheck while the packed artifact contains missing CSS assets, broken declaration paths, unresolved URLs, or source-only imports; packed consumption is an independent boundary.",
+      "antiContrivance": "Build and unpack a fresh candidate in a clean directory, then discover and resolve its emitted references. Never compare a fixed dist file count or bless a generic build exit code.",
+      "redMutation": "Delete one asset referenced by packed CSS without changing source compilation.",
+      "authority": "Changed build orchestration, assets, CSS, declarations, package metadata, or emitted entries.",
+      "kind": "device-free",
+      "modes": [
+        "local",
+        "ci",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "A clean build emits a self-contained package whose files, CSS URLs, maps, and declaration imports all resolve inside the packed artifact.",
+      "legacyAuditInputCount": 21,
+      "seedLegacyId": "build"
+    },
+    {
+      "id": "integrity.entry-graph",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_STATIC",
+      "whyIndependent": "Public-entry drift is a graph-coherence failure distinct from compilation and packing: exports, Vite inputs, declaration entries, types, and migration projections can disagree while each exists separately.",
+      "antiContrivance": "Generate every projection from one semantic authority and compare maps by keys and resolution. Never preserve an exact legacy subpath roster or mirror barrel to satisfy the audit.",
+      "redMutation": "Add one package export that is absent from the entry authority and still points at an otherwise valid file.",
+      "authority": "Changed public concepts, entry authority, package exports/types, build inputs, or migration projection.",
+      "kind": "device-free",
+      "modes": [
+        "local",
+        "ci",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "One entry graph generates Vite inputs, declarations, package exports, types, and migration mappings; no hand mirror or source subpath barrel exists.",
+      "legacyAuditInputCount": 11,
+      "seedLegacyId": "verify-export-types"
+    },
+    {
+      "id": "integrity.dependencies",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_STATIC",
+      "whyIndependent": "Import ownership and package contract can be wrong even when types and packed files resolve, producing duplicate runtimes, undeclared production dependencies, or falsely optional engines.",
+      "antiContrivance": "Derive runtime/peer/optional usage from semantic import graphs and packed boundaries. Never decide success from package-name allowlists alone, registry freshness, or a fixed dependency count.",
+      "redMutation": "Move a runtime dependency to devDependencies while cached local resolution still permits typecheck.",
+      "authority": "Changed imports, package metadata, bundler externalization, peer contracts, or engine ownership.",
+      "kind": "device-free",
+      "modes": [
+        "local",
+        "ci",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Runtime, peer, optional, and development dependencies match actual import boundaries and the supported package contract.",
+      "legacyAuditInputCount": 14,
+      "seedLegacyId": "proof:peer-conformance"
+    },
+    {
+      "id": "integrity.lineage",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "FORMATION_EXECUTION_CONTROL",
+      "whyIndependent": "Exactly-once wave attribution and immutable source/ROOT ancestry are causal execution facts that neither git cleanliness nor product tests can establish after restart or parallel integration.",
+      "antiContrivance": "Validate cursor-to-commit ancestry and unique terminal attribution only for the active formation. Never infer success from commit subject prose, demand one arbitrary message shape, or remain an acceptance authority after the cursor closes.",
+      "redMutation": "Attribute one integrated commit to two DONE waves while all product bytes and tests remain unchanged.",
+      "authority": "Active perfected-BI execution and FINAL projection only; dormant when no formation cursor is active.",
+      "kind": "device-free",
+      "modes": [
+        "local",
+        "ci",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "The execution branch, ROOT canon commit, source-base commit, and wave commits form one declared lineage with no retrospective or duplicate wave attribution.",
+      "legacyAuditInputCount": 21,
+      "seedLegacyId": "proof:lineage-probe"
+    },
+    {
+      "id": "integrity.cursor",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "FORMATION_EXECUTION_CONTROL",
+      "whyIndependent": "Crash recovery, exclusive leases, and terminal-state reconstruction are state-machine properties not covered by the DAG shape or product families.",
+      "antiContrivance": "Replay semantic crash/no-op/stale-worktree fixtures. Never decide success from a particular temp path, process ID, timestamp, worktree count, or clean global worktree.",
+      "redMutation": "Make a RUNNING wave runnable again after an integration-before-cursor crash.",
+      "authority": "Active perfected-BI execution only; unrelated dirty/staged work is expressly outside its write authority.",
+      "kind": "device-free",
+      "modes": [
+        "local",
+        "ci",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Disk cursor and git make wave execution exactly-once across restart; only terminal waves unlock dependents.",
+      "legacyAuditInputCount": 3,
+      "seedLegacyId": "proof:git-hygiene"
+    },
+    {
+      "id": "integrity.dag",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "FORMATION_EXECUTION_CONTROL",
+      "whyIndependent": "Acyclicity, minimal edges, complete obligation ownership, and lock-schedulability are graph properties independent of cursor recovery and product behavior.",
+      "antiContrivance": "Recompute topology, transitive reduction, subject coverage, and semantic lock simulation from current registries. Never require an exact wave count, stratum width, final band, or proof-only tail.",
+      "redMutation": "Add a transitive dependency or a leaf whose sole purpose is to run prior checks last.",
+      "authority": "Formation generation and active execution graph only; dormant once FINAL seals every row terminal.",
+      "kind": "device-free",
+      "modes": [
+        "local",
+        "ci",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "The active graph is acyclic, subject-complete, transitively reduced, resource-lock schedulable, and contains no ceremony-only tail.",
+      "legacyAuditInputCount": 30,
+      "seedLegacyId": "proof:gate-detrap"
+    },
+    {
+      "id": "integrity.release",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CUT_CONTROL",
+      "whyIndependent": "An exact candidate can satisfy every product invariant yet still ship mismatched version, changelog, migration, evidence, tarball, tag, or provenance bytes.",
+      "antiContrivance": "Generate one exact-tree release projection and compare cryptographic identities. Never treat the presence of FINAL, a prose checklist, a tag name, or a stale receipt as proof.",
+      "redMutation": "Change the package version or testedSourceSha after evidence generation without renewing the projection.",
+      "authority": "Release candidates and tag/publish path only; it has no authority to repair source or waive a product family.",
+      "kind": "device-free",
+      "modes": [
+        "local",
+        "ci",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "FINAL, version, changelog, migration, tarball, verifier evidence, π evidence, and tag all describe the exact same terminal source tree.",
+      "legacyAuditInputCount": 17,
+      "seedLegacyId": "proof:ship-attestation"
+    },
+    {
+      "id": "architecture.component-topology",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_STATIC",
+      "whyIndependent": "Duplicate concept authorities, wrapper synonyms, and shelf-ware public components can compile and look correct in isolation while the library architecture remains incoherent.",
+      "antiContrivance": "Discover component/export/consumer concepts semantically and require one canonical home plus private parts. Never freeze a component count, directory roster, line ceiling, or old ui/custom taxonomy.",
+      "redMutation": "Export a second public Tooltip synonym that delegates perfectly to the first.",
+      "authority": "Changed component families, public exports, wrappers, consumer graph, or concept registry.",
+      "kind": "device-free",
+      "modes": [
+        "local",
+        "ci",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Every public component concept has one flat family home; ui/custom tiers, public wrapper synonyms, and second authorities are absent.",
+      "legacyAuditInputCount": 36,
+      "seedLegacyId": "proof:component-orphan"
+    },
+    {
+      "id": "architecture.import-boundaries",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_STATIC",
+      "whyIndependent": "Legal ownership flow, SCCs, and package-vs-private boundaries can fail without dependency metadata or type errors; this is a structural coupling invariant.",
+      "antiContrivance": "Parse current TS/Vue/CSS imports and compute ownership/SCC facts. Never use string greps for a fixed path set or preserve nested barrels merely because they were once public.",
+      "redMutation": "Import an internal file from a sibling component family while retaining valid types and exports.",
+      "authority": "Changed imports, ownership declarations, component moves, CSS dependencies, or public/private entry policy.",
+      "kind": "device-free",
+      "modes": [
+        "local",
+        "ci",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Imports flow through declared public family or private owner boundaries without nested source entrypoints, cycles, or alias-dependent package behavior.",
+      "legacyAuditInputCount": 18,
+      "seedLegacyId": "proof:no-nested-import"
+    },
+    {
+      "id": "architecture.clean-break",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_STATIC",
+      "whyIndependent": "Aliases, shims, dual writers, masking fallbacks, and retired names are semantic ambiguity that other architecture and behavior families may not detect when both paths still function.",
+      "antiContrivance": "Discover equivalence/legacy paths through AST and semantic registries, with narrowly typed capability/accessibility/SSR/initial-value exceptions. Never preserve a retired-name blacklist as the sole oracle or accept migration shims.",
+      "redMutation": "Restore a retired public alias that forwards flawlessly to the canonical component.",
+      "authority": "Changed public names, props, exports, tokens, fallback/capability routing, migrations, or retired-path declarations.",
+      "kind": "device-free",
+      "modes": [
+        "local",
+        "ci",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "No legacy alias, deprecated prop, compatibility shim, dual read/write, silent masking path, or retired public name survives.",
+      "legacyAuditInputCount": 58,
+      "seedLegacyId": "proof:no-dual-path"
+    },
+    {
+      "id": "architecture.present-tense-source",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_STATIC",
+      "whyIndependent": "Production source can be behaviorally correct yet encode obsolete ownership, compatibility promises, and recovery archaeology that causes future design and maintenance decisions to fork.",
+      "antiContrivance": "Use a comment-aware semantic policy limited to production/canonical sources. Never ban arbitrary words globally, grep historical docs, or mistake stylistic phrasing for an invariant.",
+      "redMutation": "Describe a removed alternate engine as a still-supported path inside production source rationale.",
+      "authority": "Changed production comments, canonical architecture docs, API examples, or ownership declarations.",
+      "kind": "device-free",
+      "modes": [
+        "local",
+        "ci",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Production source explains current invariants without tranche IDs, recovery diaries, retired alternatives, or migration archaeology.",
+      "legacyAuditInputCount": 17,
+      "seedLegacyId": "proof:no-legacy-commentary"
+    },
+    {
+      "id": "design.token-graph",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_STATIC",
+      "whyIndependent": "Token authority, alias cycles, typed domains, and live consumption can fail while rendered samples happen to look correct through cached literals or unused definitions.",
+      "antiContrivance": "Resolve declarations and supported consumption channels as a graph in representative roots. Never decide success from token counts, raw var() greps, alphabetical snapshots, or comments as reads.",
+      "redMutation": "Add a declared semantic token with no computed consumer or create an alias cycle that current screenshots do not exercise.",
+      "authority": "Changed tokens, themes, semantic utilities, CSS/JS token reads, or generated token projections.",
+      "kind": "device-free",
+      "modes": [
+        "local",
+        "ci",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Every semantic token has one definition, typed domain, live consumer, valid dark/contrast resolution, and no alias cycle or dead rung.",
+      "legacyAuditInputCount": 36,
+      "seedLegacyId": "proof:token-manifest"
+    },
+    {
+      "id": "design.material-hierarchy",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_NATIVE",
+      "whyIndependent": "Glass material ordering is a composed perceptual property—field, content surface, functional glass, and overlay can collapse while contrast and individual component snapshots still pass.",
+      "antiContrivance": "Measure current composited ordering across discovered simple/complex light/dark scenes and retain gestalt adjudication. Never use screenshot hashes, token-presence greps, fixed pixel colors, or isolated swatches.",
+      "redMutation": "Make navigation glass and content cards share the same transmission/edge response over a complex moving backdrop.",
+      "authority": "Changed Glass tokens/recipes/components, scene backdrops, overlays, native rendering paths, or hierarchy scenarios.",
+      "kind": "browser",
+      "modes": [
+        "local",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Content field, elevated content surface, functional glass, and transient overlay remain perceptually ordered in light/dark and simple/complex backdrops.",
+      "legacyAuditInputCount": 83,
+      "seedLegacyId": "proof:liquid-glass-material"
+    },
+    {
+      "id": "design.contrast",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_NATIVE",
+      "whyIndependent": "Composited text, icon, state, focus, and boundary contrast is independent of material beauty and cannot be inferred from source tokens over translucent moving fields.",
+      "antiContrivance": "Sample actual composed foreground/background pairs in semantic states and apply role-specific bands. Never compare uncomposited token literals or let one at-rest sample stand for interaction states.",
+      "redMutation": "Lower an inactive Dock control boundary below the nontext requirement only over the complex dark scene.",
+      "authority": "Changed color/material tokens, component states, backdrops, focus/selection paint, or text/icon roles.",
+      "kind": "browser",
+      "modes": [
+        "local",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Text, icons, focus, selection, and nontext boundaries meet their semantic contrast requirements in every material and state.",
+      "legacyAuditInputCount": 34,
+      "seedLegacyId": "proof:affordance-contrast"
+    },
+    {
+      "id": "design.adaptive-accessibility",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_NATIVE",
+      "whyIndependent": "Reduced transparency, increased contrast, forced colors, and reduced motion are complete alternate product states whose hierarchy can fail even when baseline contrast and semantics pass.",
+      "antiContrivance": "Exercise the discovered rendered roster under each actual preference mode. Never grep media-query presence, count overrides, or accept per-mechanism greens without whole-state usability.",
+      "redMutation": "Leave body text on transparent Glass under reduced transparency while keeping a matching media query elsewhere.",
+      "authority": "Changed materials, preference media rules, focus/selection semantics, motion, or applicable scenario roster.",
+      "kind": "browser",
+      "modes": [
+        "local",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Reduced transparency, increased contrast, forced colors, and reduced motion remain complete product states with visible hierarchy and semantics.",
+      "legacyAuditInputCount": 7,
+      "seedLegacyId": "proof:forced-colors-skin"
+    },
+    {
+      "id": "design.typography",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_NATIVE",
+      "whyIndependent": "Optical hierarchy, fallback geometry, line wrapping, and role coherence can regress without type errors, token-graph faults, or generic gestalt failure.",
+      "antiContrivance": "Discover semantic type roles and measure computed faces, geometry, wrapping, swap shift, and overflow across widths. Never enforce exact text strings, line counts, font-file rosters, or screenshot hashes.",
+      "redMutation": "Remove fallback size-adjust so a loaded headline shifts the surrounding layout while its final pixels remain attractive.",
+      "authority": "Changed font assets/cascade, type roles, component typography, demo copy length, or responsive layout.",
+      "kind": "browser",
+      "modes": [
+        "local",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Display, heading, body, label, code, and numeric rungs are optically distinct, geometrically stable during font load, and never arbitrarily re-minted by a component.",
+      "legacyAuditInputCount": 19,
+      "seedLegacyId": "proof:font-canon"
+    },
+    {
+      "id": "design.affordance",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_NATIVE",
+      "whyIndependent": "A control can be semantically correct and contrast-safe yet remain undiscoverable or indistinguishable from static, disabled, destructive, selected, or draggable content.",
+      "antiContrivance": "Exercise discovered interactive roles and compare noncolor labels, geometry, cursor, focus, press, and material signals. Never require a class name, exact animation value, or hand-maintained control roster.",
+      "redMutation": "Make a static Badge and enabled Button visually identical while leaving roles, labels, and contrast intact.",
+      "authority": "Changed interactive components, states, control styling, gesture behavior, or demo scenario coverage.",
+      "kind": "browser",
+      "modes": [
+        "local",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Interactive, selected, disabled, destructive, draggable, and static states remain distinguishable without relying on color alone.",
+      "legacyAuditInputCount": 38,
+      "seedLegacyId": "proof:affordance-map"
+    },
+    {
+      "id": "design.responsive-touch",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_NATIVE",
+      "whyIndependent": "Reachability, reflow, overflow, overlap, and focus order under narrow/coarse input are geometry properties not implied by desktop semantics or CSS breakpoint presence.",
+      "antiContrivance": "Sweep semantic width/input states and measure actual target/focus/scroll geometry. Never pin one device model, one breakpoint value, or a fixed DOM count.",
+      "redMutation": "Hide a narrow-width control without an equivalent path or shrink one coarse target below the product 44px floor.",
+      "authority": "Changed component geometry, responsive rules, target utilities, overflow containers, or control visibility.",
+      "kind": "browser",
+      "modes": [
+        "local",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Components reflow without hidden controls, unintended overflow, or sub-floor touch targets at supported narrow/wide and coarse/fine inputs.",
+      "legacyAuditInputCount": 19,
+      "seedLegacyId": "proof:touch-target"
+    },
+    {
+      "id": "motion.single-clock",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_STATIC",
+      "whyIndependent": "Competing temporal authorities and orphan work can produce correct snapshots and plausible trajectories while leaking frames, racing properties, or silently changing semantics. Conversely, physics playback, render loops, native timelines, event coalescers, and typewriter delays are not one mechanism and must not be forced through one global callback.",
+      "antiContrivance": "Classify each current scheduler by semantic role, property ownership, lifecycle owner, and stop condition; instrument overlap, interruption, pause, settle, offscreen state, and teardown. Never decide success from rAF/timer string counts, the presence of a keyframes import, a fixed exception list, or a single quiescent frame.",
+      "redMutation": "Add a component-local rAF writer for a transform already controlled by engine playback, or leave a cancelled discrete timer alive after teardown.",
+      "authority": "Changed animation/composable code, engine playback, timers/coalescers, CSS/native timelines, renderer loops, ownership declarations, or lifecycle policy.",
+      "kind": "device-free",
+      "modes": [
+        "local",
+        "ci",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Each animated property and semantic episode has one active temporal authority and one writer; physics playback, continuous fields, render loops, native/CSS timelines, one-shot coalescers, and discrete semantic timers use their declared lifecycle owner without overlap or orphan work.",
+      "legacyAuditInputCount": 19,
+      "seedLegacyId": "proof:motion-one-clock"
+    },
+    {
+      "id": "motion.spring-language",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_NATIVE",
+      "whyIndependent": "Weight, bounce, overshoot, interruption, and settling form a temporal language that single-clock ownership and final-state correctness do not establish.",
+      "antiContrivance": "Record live geometry over time and compare behavioral bands for named roles. Never match exact frames, demand one hard-coded duration, or accept token/source synchronization as motion proof.",
+      "redMutation": "Double Dock overshoot while retaining the same final geometry and shared spring token name.",
+      "authority": "Changed spring registry, component role assignment, interaction timing, physics engine, or native motion scenario.",
+      "kind": "browser",
+      "modes": [
+        "local",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Press, selection, morph, dock, and route motion draw from one named spring vocabulary and settle without overshoot/magnitude anomalies.",
+      "legacyAuditInputCount": 25,
+      "seedLegacyId": "proof:spring-tokens-synced"
+    },
+    {
+      "id": "motion.transition-continuity",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_NATIVE",
+      "whyIndependent": "Identity, geometry, focus, and state can flash or disconnect across enter/exit/reorder/route transitions while each endpoint and spring family remains correct.",
+      "antiContrivance": "Sample live geometry/focus/state trajectories and terminal ownership. Never require prose timing receipts, screenshot pairs, exact frame counts, or source calls such as nextTick/focus as sufficient.",
+      "redMutation": "Unmount the source before the shared destination becomes measurable, producing one blank/discontinuous interval.",
+      "authority": "Changed enter/exit/reorder/route/shared-element behavior, overlay choreography, focus handoff, or transition scenarios.",
+      "kind": "browser",
+      "modes": [
+        "local",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Enter, exit, reorder, route, and shared-element transitions preserve identity, focus, and spatial continuity without layout flashing.",
+      "legacyAuditInputCount": 29,
+      "seedLegacyId": "proof:liquid-morph"
+    },
+    {
+      "id": "motion.scroll",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_NATIVE",
+      "whyIndependent": "Scroller ownership, progress monotonicity, crossing semantics, input latency, and native-vs-JS writer exclusivity are specific failures not covered by general transition or performance checks.",
+      "antiContrivance": "Instrument the actual owning scroller/timeline and sample progress/work. Never grep @scroll-timeline, count listeners, or require a browser-specific implementation when capability differs.",
+      "redMutation": "Run a JS progress writer concurrently with an active native scroll timeline.",
+      "authority": "Changed scroll readers/timelines, choreography consumers, scroller structure, capability routing, or scroll scenarios.",
+      "kind": "browser",
+      "modes": [
+        "local",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Scroll-linked effects are bounded to the owning scroller, preserve input responsiveness, and use native timelines where supported without a shadow writer.",
+      "legacyAuditInputCount": 6,
+      "seedLegacyId": "proof:scroll-motion"
+    },
+    {
+      "id": "motion.reduced",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_NATIVE",
+      "whyIndependent": "PRM must remove travel, continuous oscillation, and delay while preserving state and focus; neither baseline motion nor a media-query token proves that alternate temporal product state.",
+      "antiContrivance": "Exercise every discovered motion-bearing semantic transition under PRM and inspect time/geometry/state. Never count media queries or accept display:none as universal reduction.",
+      "redMutation": "Keep a breathing procedural loop active under PRM while all CSS transitions are correctly reduced.",
+      "authority": "Changed any animated component/procedural scene, PRM policy, transition registry, or scenario applicability.",
+      "kind": "browser",
+      "modes": [
+        "local",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Reduced motion removes travel, continuous oscillation, and nonessential delay while preserving state change and focus causality.",
+      "legacyAuditInputCount": 29,
+      "seedLegacyId": "proof:offscreen-pause"
+    },
+    {
+      "id": "behavior.overlay-apg",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_NATIVE",
+      "whyIndependent": "Dialog, drawer, popover, menu, tooltip, and toast have distinct role/modality/dismissal/announcement contracts that generic focus and component tests cannot safely merge.",
+      "antiContrivance": "Discover overlay concepts and run APG-specific keyboard/pointer/touch stacks. Never require exact DOM wrappers, aria-string presence alone, or one generic modal scenario for every concept.",
+      "redMutation": "Let Escape close the lower of two open overlays while all individual roles and focusability remain valid.",
+      "authority": "Changed overlay components/infrastructure, top-layer behavior, dismissal/focus stack, announcements, or overlay stories.",
+      "kind": "browser",
+      "modes": [
+        "local",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Dialog, drawer, popover, menu, tooltip, and toast honor their distinct APG roles, focus, dismissal, modality, and announcement contracts over shared infrastructure.",
+      "legacyAuditInputCount": 10,
+      "seedLegacyId": "proof:esc-stack"
+    },
+    {
+      "id": "behavior.forms",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_NATIVE",
+      "whyIndependent": "Labels, descriptions, errors, editing, disabled/read-only state, and native submission form a semantic transaction distinct from appearance, focus visibility, and selection models.",
+      "antiContrivance": "Discover form families and exercise valid/invalid/disabled/read-only/submission states. Never grep aria attributes, snapshot serialized markup, or freeze a component roster.",
+      "redMutation": "Detach a Select error from aria-describedby while leaving the error visible and the control keyboard-operable.",
+      "authority": "Changed form controls, validation/error plumbing, labels/descriptions, model binding, or form scenarios.",
+      "kind": "browser",
+      "modes": [
+        "local",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Form controls preserve labels, descriptions, errors, required/invalid state, keyboard editing, and native submission semantics.",
+      "legacyAuditInputCount": 17,
+      "seedLegacyId": "proof:input-invalid-aria"
+    },
+    {
+      "id": "behavior.selection",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_NATIVE",
+      "whyIndependent": "Independent, exclusive, roving, form-bound, and drag selection semantics can fail while controls remain operable, labelled, and visually selected.",
+      "antiContrivance": "Discover selection roles and drive their orientation/model/keyboard/touch contracts. Never count variants, mandate one DOM primitive, or treat selected CSS presence as model truth.",
+      "redMutation": "Allow an exclusive group to expose two selected values while both appear correctly styled.",
+      "authority": "Changed tabs/toggles/chips/radio/checkbox/lists, shared selection engine, indicator writer, or selection scenarios.",
+      "kind": "browser",
+      "modes": [
+        "local",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Tabs, toggles, chips, radio, checkbox, and selectable lists expose the correct independent/exclusive selection semantics and roving focus.",
+      "legacyAuditInputCount": 18,
+      "seedLegacyId": "proof:tabs-std"
+    },
+    {
+      "id": "behavior.dock",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_NATIVE",
+      "whyIndependent": "The headline Dock combines layers, selection, overflow, search, context, morph reception, focus, and reserved geometry as one state machine; splitting these across generic families loses cross-state defects.",
+      "antiContrivance": "Drive the public Dock state machine across rail/bottom, input modes, overflow, layers, and failure states. Never retain ten named scripts, exact Dock DOM counts, path rosters, or shallow host-only assertions.",
+      "redMutation": "Keep inactive crossfade descendants in the accessibility tree while the visible Dock face, focus call, and selection state look correct.",
+      "authority": "Changed Dock state/geometry/components, selection/overflow/search/layers, morph contracts, responsive modes, or Dock stories.",
+      "kind": "browser",
+      "modes": [
+        "local",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Dock layers, selection, overflow, morph, escape, focus, context, and reserved layout form one deterministic state machine across rail and bottom modes.",
+      "legacyAuditInputCount": 22,
+      "seedLegacyId": "proof:dock-spine"
+    },
+    {
+      "id": "behavior.data",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_NATIVE",
+      "whyIndependent": "Stable identity, semantic structure, density, virtualization, and truthful loading/empty/error/progress state can fail independently of generic form/selection behavior.",
+      "antiContrivance": "Discover data concepts and exercise sort/select/virtualize/update/status semantics with painted alignment. Never enforce line limits, exact column/row counts, or component filenames.",
+      "redMutation": "Use an array index as virtual row identity so reordering preserves attractive paint but associates state with the wrong record.",
+      "authority": "Changed tables/metrics/progress/timeline/virtual lists, data models, virtualization, density, or data scenarios.",
+      "kind": "browser",
+      "modes": [
+        "local",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Tables, data tables, metrics, progress, timeline, and virtual lists preserve semantic structure, stable identity, readable density, and truthful loading/empty/error state.",
+      "legacyAuditInputCount": 7,
+      "seedLegacyId": "proof:datatable-split"
+    },
+    {
+      "id": "behavior.feedback",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_NATIVE",
+      "whyIndependent": "Urgency, liveness, announcement, lifetime, and progress truth distinguish alerts, notifications, toasts, badges, status, pulse, skeleton, and progress beyond shared appearance or forms.",
+      "antiContrivance": "Discover feedback roles and evaluate semantic announcements, duration, labels, motion, and hierarchy. Never infer behavior from color tokens, icon names, or static presence.",
+      "redMutation": "Give a decorative pulse assertive live-region semantics while keeping its visual design unchanged.",
+      "authority": "Changed feedback components, status/progress models, announcements, motion/lifetime policy, or feedback scenarios.",
+      "kind": "browser",
+      "modes": [
+        "local",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Alert, notification, toast, badge, status, pulse, skeleton, and progress communicate distinct urgency/liveness without color-only or perpetual-motion ambiguity.",
+      "legacyAuditInputCount": 8,
+      "seedLegacyId": "proof:progress-gradient"
+    },
+    {
+      "id": "behavior.focus-escape",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_NATIVE",
+      "whyIndependent": "Accessible naming, composed-tree membership, tab reachability, focus visibility, and restoration can fail while APG roles and component-local keyboard handlers pass.",
+      "antiContrivance": "Inspect the composed accessibility/focus tree through live transitions and input modes. Never treat aria-hidden on one host, focus() source presence, or a static DOM query as sufficient.",
+      "redMutation": "Leave an opacity-zero inactive Dock control tabbable and unnamed after a crossfade.",
+      "authority": "Changed controls, overlays, inactive/teleported content, focus rings, names/descriptions, keyboard paths, or transition focus handoff.",
+      "kind": "browser",
+      "modes": [
+        "local",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Focus order, focus visibility, containment, restoration, and Escape ownership remain correct across every interactive composition.",
+      "legacyAuditInputCount": 19,
+      "seedLegacyId": "proof:a11y"
+    },
+    {
+      "id": "procedural.lifecycle",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_STATIC",
+      "whyIndependent": "Capability selection, context ownership, resize, suspend, error, loss, restore, and disposal can be structurally duplicated or masked even when one sampled frame paints correctly.",
+      "antiContrivance": "Discover backend bootstrap/lifecycle ownership through AST and instrument state transitions. Never count WebGL/WebGPU strings, require silent fallback, or infer lifecycle from a demo screenshot.",
+      "redMutation": "Handle an internal WebGPU validation failure by silently rebuilding WebGL2 and suppressing the selected-engine error.",
+      "authority": "Changed GPU/Canvas substrates, backend selection, lifecycle callbacks, resize/pause/dispose, renderer errors, or procedural consumers.",
+      "kind": "device-free",
+      "modes": [
+        "local",
+        "ci",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Every GPU/Canvas scene composes one shared mount/resize/DPR/visibility/error lifecycle and releases resources deterministically.",
+      "legacyAuditInputCount": 30,
+      "seedLegacyId": "proof:gpu-substrate-single"
+    },
+    {
+      "id": "procedural.renderer-parity",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_NATIVE",
+      "whyIndependent": "Safari/Chrome and supported backend outputs can diverge, blank, or silently substitute while lifecycle and per-engine unit math remain individually green.",
+      "antiContrivance": "Run exact native engines, record selected renderer/probes/errors, and compare semantic field identity/bands. Never use Playwright WebKit as native Safari credit, screenshot hashes, or CSS fallback as GPU parity.",
+      "redMutation": "Break a Safari GLSL identifier so the scene silently displays a CSS approximation while Chrome remains correct.",
+      "authority": "Changed shaders, backend implementations, capability routing, color/geometry math, WebKit/Chrome support, or procedural scenarios.",
+      "kind": "browser",
+      "modes": [
+        "local",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "WebGPU-preferred and supported WebGL2 paths express the same scene identity, configuration semantics, color space, and interaction within declared perceptual bands.",
+      "legacyAuditInputCount": 35,
+      "seedLegacyId": "proof:safari-webgl"
+    },
+    {
+      "id": "procedural.color",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_NATIVE",
+      "whyIndependent": "Transfer functions, gamut, premultiplication, palette hierarchy, luminance, and default field identity can fail while geometry, interaction, and renderer availability remain correct.",
+      "antiContrivance": "Measure actual native output and intermediate declared color semantics across modes/backends. Never rely on source token hue, exact screenshot pixels, one mean color, or a reference threshold lowered to current output.",
+      "redMutation": "Apply linear RGB as display RGB in Blob so geometry and interaction remain perfect but the field paints too dark.",
+      "authority": "Changed color conversion, shader composition, palettes/defaults, mode resolution, renderer math, or procedural scenes.",
+      "kind": "browser",
+      "modes": [
+        "local",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Procedural scenes resolve CSS/OKLCh inputs through one linear-light pipeline with bounded gamut handling and no duplicate OETF or premultiplication error.",
+      "legacyAuditInputCount": 77,
+      "seedLegacyId": "proof:blob-space-gamma"
+    },
+    {
+      "id": "procedural.interaction",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_NATIVE",
+      "whyIndependent": "Pointer/configuration causality, hit testing, decay, bounds, reset, and PRM response can fail while a procedural scene remains colorful and animated.",
+      "antiContrivance": "Drive live inputs and measure scene-specific causal deltas plus reset/bounds. Never accept source bindings, control events, or any nonblank animation as interaction evidence.",
+      "redMutation": "Make a Blob affect control update state labels but produce no measurable renderer change.",
+      "authority": "Changed procedural controls, pointer fields, hit tests, uniforms/state upload, decay/reset, PRM behavior, or interactive stories.",
+      "kind": "browser",
+      "modes": [
+        "local",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Pointer/touch/keyboard/config interaction changes a scene deliberately, remains bounded, and preserves a calm default plus PRM behavior.",
+      "legacyAuditInputCount": 35,
+      "seedLegacyId": "proof:blob-interaction-prm"
+    },
+    {
+      "id": "performance.experience",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_NATIVE",
+      "whyIndependent": "Loading, layout stability, response latency, frame pacing, memory, and resize cost can regress while functional, visual, and resource-ownership invariants remain correct.",
+      "antiContrivance": "Measure representative native user journeys against declared budgets and report distributions/environment. Never decide success from bundle size alone, one synthetic frame, stale Lighthouse prose, or exact historical numbers.",
+      "redMutation": "Move a heavy optional spectrum renderer onto the eager route graph while all functionality and final paint remain unchanged.",
+      "authority": "Changed eager graph, procedural/render work, animation, layout, virtualization, assets, or representative journey definitions.",
+      "kind": "browser",
+      "modes": [
+        "local",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Supported routes meet interaction, loading, layout stability, long-task, memory, and frame-pacing budgets under representative hardware profiles without hiding work.",
+      "legacyAuditInputCount": 32,
+      "seedLegacyId": "proof:perf-producer"
+    },
+    {
+      "id": "performance.resource-ownership",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_STATIC",
+      "whyIndependent": "Multiple observers, contexts, listeners, and clocks can leak or duplicate work without crossing short-run experience budgets or changing visible output.",
+      "antiContrivance": "Instrument ownership/lifecycle cardinality by semantic host and require return to baseline. Never decide success from source string counts, global process memory, or a fixed observer/context total across unrelated routes.",
+      "redMutation": "Create one backdrop-luma observer per Dock while sharing identical output so paint and behavior remain green.",
+      "authority": "Changed observers/contexts/listeners/workers/clocks, component mount topology, route caching, or shared resource infrastructure.",
+      "kind": "device-free",
+      "modes": [
+        "local",
+        "ci",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "A route owns only the observers, contexts, event listeners, and timers required by rendered concepts, and teardown returns to baseline.",
+      "legacyAuditInputCount": 21,
+      "seedLegacyId": "proof:one-gl-per-route"
+    },
+    {
+      "id": "demo.scenario-contract",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_NATIVE",
+      "whyIndependent": "A library primitive can be correct yet unevaluable because its story is missing, redirected, inert, renderer-anonymous, or omits required states and negative paths.",
+      "antiContrivance": "Discover public concepts and require direct typed live scenarios with causal controls and semantic not-found behavior. Never preserve route aliases, exact route counts, prose-only stories, or static screenshots as scenario proof.",
+      "redMutation": "Replace a live landing tile with an attractive static image while every library test continues to pass.",
+      "authority": "Changed public concepts, demo schema/routes/chassis/controls, renderer identity, negative routes, or scenario coverage.",
+      "kind": "browser",
+      "modes": [
+        "local",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Every story exposes the states required to evaluate its behavior, material, responsiveness, accessibility, and reduced-motion contract through reusable chassis.",
+      "legacyAuditInputCount": 75,
+      "seedLegacyId": "proof:story-schema"
+    },
+    {
+      "id": "demo.gestalt",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CONTINUOUS_NATIVE",
+      "whyIndependent": "Per-component and per-mechanism greens can coexist with a visually incoherent, timid, noisy, generic, or inaccessible whole; this irreducible composed judgment is explicitly required by the charter.",
+      "antiContrivance": "Bind numeric observations and independent design adjudication to exact native whole-route executions. Never use screenshot hashes, enrollment receipts, mean-color-only metrics, isolated components, or the favored design narrative as the oracle.",
+      "redMutation": "Make every component individually meet its family bands while flattening the page hierarchy into repeated identical grey slabs.",
+      "authority": "Changed any route-level composition, material/type/field balance, page chassis, major component family, or native rendering environment.",
+      "kind": "browser",
+      "modes": [
+        "local",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "The demo reads as one intentional product: warm field, functional glass, audacious typographic hierarchy, restrained color, and concept-driven motion without page-local design forks.",
+      "legacyAuditInputCount": 44,
+      "seedLegacyId": "proof:ba-gestalt"
+    },
+    {
+      "id": "constellation.handshake",
+      "decision": "SURVIVE_AS_SHARED_INVARIANT_FAMILY",
+      "lifecycle": "CUT_COORDINATION_CONTROL",
+      "whyIndependent": "Producer correctness does not prove that accepted cross-repo asks, packed imports, peer ranges, candidate pins, and immutable acknowledgments agree; foreign ownership makes this a separate boundary.",
+      "antiContrivance": "Evaluate only accepted/applicable packets against exact packed candidate and present read-only siblings. Never count receipt as ACK, absent sibling as adoption, prose version ranges as pins, or mutate a foreign tree.",
+      "redMutation": "Record an ACK against the parent Glass SHA while the consumer imports the same symbols successfully from local source.",
+      "authority": "Accepted cross-repo asks and release candidates only; formulation-only packets cannot authorize source execution or block unrelated producer work.",
+      "kind": "device-free",
+      "modes": [
+        "local",
+        "release"
+      ],
+      "executableIdentity": false,
+      "invariant": "Every in-scope sibling acceptance names the exact package tarball, owner commit, import scan, build/test evidence, and required π evidence; no retired import remains and no foreign write originates here.",
+      "legacyAuditInputCount": 26,
+      "seedLegacyId": "proof:constellation-spine"
+    }
+  ]
+}

@@ -1,0 +1,3678 @@
+{
+  "schemaVersion": 1,
+  "sourceBase": "26c5ae686fd0f1181083aebda1215b00524555f1",
+  "method": "first-principles contract + actual current demo + current-truth defect + canonical live-state owner",
+  "systemRows": [
+    {
+      "system": "Glass · material ladder",
+      "firstPrinciples": "Does each plate have a functional role, preserve content hierarchy, transmit a legible backdrop, and resolve intentionally under reduced transparency/contrast?",
+      "currentSources": [
+        "src/styles/glass/material.css",
+        "src/styles/glass/ladder.css",
+        "src/styles/glass/surfaces.css",
+        "src/styles/glass/a11y-fallback.css"
+      ],
+      "actualDemos": [
+        "demo/stories/substrates/glass-material.vue",
+        "demo/stories/foundations/paper-glass.vue"
+      ],
+      "currentTruth": "RED from the rendered audit: Glass Material labels its signal live but remains at luma 0.000 · dark over a visibly warm animated Aurora field, while useGlassBackdropLuminance can coalesce animated sampling to a static sample. P016 makes provenance/failure part of the material contract; P015–P018 still consolidate roles and adversarial modes.",
+      "canonicalWaves": [
+        "BI.W-P015",
+        "BI.W-P016",
+        "BI.W-P017",
+        "BI.W-P018",
+        "BI.W-P022"
+      ],
+      "requiredLiveStates": [
+        "warm content field",
+        "functional control glass",
+        "transient overlay",
+        "light/dark",
+        "complex high/low luminance",
+        "reduced transparency",
+        "forced colors"
+      ]
+    },
+    {
+      "system": "Glass · refraction/specular/key light",
+      "firstPrinciples": "Is refraction a nonzero depth displacement rather than hue, is rim chroma bounded, is the key light coherent with geometry, and is the declared renderer actually reached?",
+      "currentSources": [
+        "src/styles/glass-refract.css",
+        "src/styles/glass-specular-track.css",
+        "src/composables/glass/useSpecularTracking.ts",
+        "src/composables/glass/webgl/shaders/glass-refract.glsl.ts",
+        "src/composables/glass/webgpu/glassShader.wgsl"
+      ],
+      "actualDemos": [
+        "demo/stories/substrates/glass-material.vue",
+        "demo/stories/display/buttons.vue",
+        "demo/stories/navigation/tabs.vue"
+      ],
+      "currentTruth": "RED: both GPU shaders have zero runtime importers; the visible lens is a Chromium CSS/SVG data-URI path and Safari degrades to blur. Source-shape proofs therefore do not establish the advertised product.",
+      "canonicalWaves": [
+        "BI.W-P017",
+        "BI.W-P027",
+        "BI.W-P035",
+        "BI.W-P132"
+      ],
+      "requiredLiveStates": [
+        "forced WebGPU",
+        "forced WebGL2",
+        "capability-absent material",
+        "multi-surface",
+        "pointer/press/travel",
+        "native Safari Metal",
+        "Chrome",
+        "injected shader/binder/FBO/lifecycle/setup failures"
+      ]
+    },
+    {
+      "system": "Dock · state/anatomy/material",
+      "firstPrinciples": "Is there one navigation state machine, one public anatomy, and one functional plate whose content, selection, and layering remain semantically independent?",
+      "currentSources": [
+        "src/components/custom/dock/GlassDock.vue",
+        "src/components/custom/dock/DockStack.vue",
+        "src/components/custom/dock/composables/useDockState.ts",
+        "src/components/custom/dock/composables/dockContext.ts"
+      ],
+      "actualDemos": [
+        "demo/stories/dock/overview.vue",
+        "demo/stories/dock/sections.vue",
+        "demo/stories/dock/layers.vue"
+      ],
+      "currentTruth": "The current facility is richly implemented and demoed. Rendered interaction found that inactive Dock crossfade faces remain in the accessibility tree as blank controls; P036/P037/P042/P062 therefore require one active semantic face and inert hidden faces in addition to state-authority/anatomy proof.",
+      "canonicalWaves": [
+        "BI.W-P033",
+        "BI.W-P034",
+        "BI.W-P035",
+        "BI.W-P037"
+      ],
+      "requiredLiveStates": [
+        "rail",
+        "bottom",
+        "layer open/close",
+        "focus entry/return",
+        "Escape stack",
+        "complex backdrop",
+        "reduced transparency"
+      ]
+    },
+    {
+      "system": "Dock · selection/overflow/layout/controls",
+      "firstPrinciples": "Does one stable selection identity survive geometry changes, is overflow an explicit reachable state, is layout reserved, and does every icon control retain name/target/focus semantics?",
+      "currentSources": [
+        "src/components/custom/dock/DockControl.vue",
+        "src/components/custom/dock/DockCrossfade.vue",
+        "src/components/custom/dock/composables/useDockOverflowFit.ts",
+        "src/components/custom/dock/composables/useDockSearch.ts"
+      ],
+      "actualDemos": [
+        "demo/stories/dock/controls.vue",
+        "demo/stories/dock/overflow.vue",
+        "demo/stories/dock/rail.vue",
+        "demo/stories/dock/dock-search.vue"
+      ],
+      "currentTruth": "RED at 390×844: three tabbable story actions were outside the viewport, two opacity-zero facet controls remained focusable, the horizontal story scroller collapsed to 34 px for 677 px of content, and target heights fell to 20.6 px. P036/P038–P040/P062 own exact reachability, focus-reveal, overflow, reserve, and target predicates.",
+      "canonicalWaves": [
+        "BI.W-P036",
+        "BI.W-P038",
+        "BI.W-P039",
+        "BI.W-P040"
+      ],
+      "requiredLiveStates": [
+        "selection travel",
+        "rapid change",
+        "overflow scroll",
+        "selected offscreen",
+        "rail/bottom",
+        "keyboard",
+        "touch",
+        "search",
+        "narrow/orientation"
+      ]
+    },
+    {
+      "system": "Dock · fisheye/morph/settle and dogfood",
+      "firstPrinciples": "Do weight, inertia, overshoot, and settle arise from one shared spring/morph spine, with bounded magnification and no ambient motion or geometry writer fork?",
+      "currentSources": [
+        "src/components/custom/dock/composables/useDockFisheye.ts",
+        "src/components/custom/dock/composables/useDockSpring.ts",
+        "src/components/custom/dock/composables/dockMorphMeasure.ts",
+        "src/components/custom/dock/DockCrossfade.vue"
+      ],
+      "actualDemos": [
+        "demo/stories/dock/overview.vue",
+        "demo/stories/dock/cta-receive.vue",
+        "demo/stories/dock/DockStage.vue"
+      ],
+      "currentTruth": "D4 records contradictory spring constants and prior crossfade/morph facsimiles. The live CTA→Dock handoff completed in about 2009 ms without a declared product band, while first load repeated 38 unreadable --dock-morph-min warnings and masked them with the tap-floor fallback. P041 owns fail-closed token resolution and measured motion bands; P042 proves warning-clean public dogfood.",
+      "canonicalWaves": [
+        "BI.W-P026",
+        "BI.W-P028",
+        "BI.W-P041",
+        "BI.W-P042"
+      ],
+      "requiredLiveStates": [
+        "hover/focus/touch magnification",
+        "morph receive",
+        "orientation change",
+        "rapid reversal",
+        "settle",
+        "PRM",
+        "dogfood navigation"
+      ]
+    },
+    {
+      "system": "Motion · temporal authority/springs/press/morph",
+      "firstPrinciples": "Does each animated property or semantic episode have one proportionate temporal authority and writer, with semantic spring families, conserved continuity, input-appropriate response, and explicit PRM endpoints?",
+      "currentSources": [
+        "src/composables/motion/useRAFLoop.ts",
+        "src/composables/motion/useSpring.ts",
+        "src/composables/motion/springPresets.ts",
+        "src/composables/motion/useLiquidPress.ts",
+        "src/composables/motion/useElementMorph.ts",
+        "src/composables/motion/useDragMorph.ts"
+      ],
+      "actualDemos": [
+        "demo/stories/motion/springs.vue",
+        "demo/stories/motion/curve-gallery.vue",
+        "demo/stories/motion/tempo.vue",
+        "demo/stories/motion/deck.vue"
+      ],
+      "currentTruth": "The frozen tree contains 94 scheduler/native-timeline/engine-bearing source files across several legitimate mechanism classes, so one application-wide callback would be a category error. The live smooth witness reached x=360 px / 18° and settled around 653 ms, but its story bypasses managed playback with a local rAF. Deck's unused 0.5/0.85 callable easing contradicts canonical smooth 0.58/0.8 and silently substitutes cubic-out on import failure. Button directly reconstructs spring+flex solely because proof:button-glass requires that source shape while Dock consumes the declared canonical wrapper. P023–P028 therefore establish engine isomorphism, per-property temporal ownership, semantic springs, one press owner, and one FLIP/morph runner rather than a clock quota.",
+      "canonicalWaves": [
+        "BI.W-P023",
+        "BI.W-P024",
+        "BI.W-P025",
+        "BI.W-P026",
+        "BI.W-P027",
+        "BI.W-P028"
+      ],
+      "requiredLiveStates": [
+        "enter",
+        "press",
+        "drag",
+        "reverse",
+        "interruption",
+        "settle",
+        "keyboard",
+        "touch",
+        "PRM"
+      ]
+    },
+    {
+      "system": "Motion · enter/exit/scroll/pointer/text",
+      "firstPrinciples": "Are transitions continuous across ownership changes, is scroll state single-owned and native where available, and do text/procedural motions preserve meaning without animation?",
+      "currentSources": [
+        "src/composables/motion/useViewTransition.ts",
+        "src/composables/motion/useScrollProgress.ts",
+        "src/composables/motion/useScrollScene.ts",
+        "src/composables/dom/useDragVelocity.ts",
+        "src/composables/motion/useCharStagger.ts"
+      ],
+      "actualDemos": [
+        "demo/stories/motion/reveal.vue",
+        "demo/stories/motion/scroll.vue",
+        "demo/stories/motion/text-motion.vue",
+        "demo/stories/motion/deck.vue"
+      ],
+      "currentTruth": "Direct demos exist across reveal, scroll, text, and Deck. The native scroll specimen moved scaleX 0→0.669856 for 420/627 px on its named --sp timeline; Text Motion produced semantic Countup and Typewriter changes; Deck advanced pager identity, kept focus, and announced slide 2. The four old text routes are compatibility redirects and earn no separate witness credit. P029–P032/P079/P080/P121 still require interruption/reverse/PRM/input parity, semantic text order, removal of shadow scroll/pointer writers, and deletion of Deck's inert motion export rather than accepting these happy paths.",
+      "canonicalWaves": [
+        "BI.W-P029",
+        "BI.W-P030",
+        "BI.W-P031",
+        "BI.W-P032",
+        "BI.W-P079",
+        "BI.W-P080"
+      ],
+      "requiredLiveStates": [
+        "forward/reverse",
+        "mid-flight interruption",
+        "native scroll timeline",
+        "JS honest floor",
+        "pointer/coarse",
+        "offscreen",
+        "PRM",
+        "semantic text order"
+      ]
+    },
+    {
+      "system": "Procedural · shared substrate/capability/color/config",
+      "firstPrinciples": "Does every scene share lifecycle and resource ownership while retaining one declared renderer, linear-light semantic color, typed configuration, and explicit internal failure?",
+      "currentSources": [
+        "src/composables/glass/webgpu/useGpuSubstrate.ts",
+        "src/composables/glass/webgpu/useWebGPUCanvas.ts",
+        "src/composables/glass/webgl/createCanvasLifecycle.ts",
+        "src/composables/glass/canvas2d/useCanvas2D.ts"
+      ],
+      "actualDemos": [
+        "demo/stories/substrates/VizStudio.vue",
+        "demo/stories/substrates/aurora.vue",
+        "demo/stories/substrates/blob.vue",
+        "demo/stories/substrates/constellation.vue",
+        "demo/stories/substrates/fourier-field.vue",
+        "demo/stories/substrates/liquid-grid.vue"
+      ],
+      "currentTruth": "All major scenes have actual live canvases and rich controls, but the rendered snapshots exposed no trustworthy actual engine identity. Source/live reconciliation found a deeper split: Blob, Constellation, and Fourier currently arm WebGPU-first/WebGL2, while public docs and route prose variously claim WebGL2-only or Canvas2D; legacy manifest descriptions even state the inverse of their executable scripts. First-principles allocation keeps dual engines for the per-pixel/compute Blob and Fourier scenes, but P048 de-migrates the CPU-owned 64-node Constellation to one Canvas2D renderer because its seven-instance story, public overlay seam, and context budget make the GPU fork disproportional. Aurora also warned that deferred initialization had no onInitError handler. P043–P050/P052–P054 require exact source/docs/demo agreement and typed warning-free failure.",
+      "canonicalWaves": [
+        "BI.W-P043",
+        "BI.W-P044",
+        "BI.W-P045",
+        "BI.W-P052",
+        "BI.W-P053",
+        "BI.W-P054"
+      ],
+      "requiredLiveStates": [
+        "mount",
+        "resize/DPR",
+        "offscreen pause",
+        "visibility",
+        "forced renderer",
+        "capability absence",
+        "compile/setup failure",
+        "color roundtrip",
+        "teardown"
+      ]
+    },
+    {
+      "system": "Procedural · Aurora/Blob/Constellation/Fourier/LiquidGrid/hand-drawn",
+      "firstPrinciples": "Does each scene retain a distinct mathematical/visual concept while sharing infrastructure, and is its demo a live product witness rather than a static source showcase?",
+      "currentSources": [
+        "src/components/custom/aurora/Aurora.vue",
+        "src/components/custom/blob/Blob.vue",
+        "src/components/custom/constellation/Constellation.vue",
+        "src/components/custom/fourier-field/FourierField.vue",
+        "src/components/custom/liquid-grid/LiquidGrid.vue",
+        "src/components/custom/handmark/HandMark.vue",
+        "src/components/custom/watercolor-dot/WatercolorDot.vue"
+      ],
+      "actualDemos": [
+        "demo/stories/substrates/aurora.vue",
+        "demo/stories/substrates/blob.vue",
+        "demo/stories/substrates/constellation.vue",
+        "demo/stories/substrates/fourier-field.vue",
+        "demo/stories/substrates/liquid-grid.vue",
+        "demo/stories/motion/handmark.vue"
+      ],
+      "currentTruth": "The six live demo families are retained and sharpened, not greenfield-rewritten. Aurora/Fourier/text controls exposed semantic changes, while Blob Poke could only be distinguished from continuous animation by raster change. Constellation's seven-canvas story passes drawOverlay five times, yet the migrated GPU renderer never reads it; a live click-to-warp probe showed continued drift but no visible accent focal after 700 ms. P048 restores one Canvas2D renderer and the ordered overlay pass instead of perpetuating two shaders plus a no-op API. Each owner wave defines a unique model plus executable public seams, causal semantic/numeric control observables, applicable runtime engine truth, parity only where multiple engines are justified, performance distribution, and failure/teardown proof.",
+      "canonicalWaves": [
+        "BI.W-P046",
+        "BI.W-P047",
+        "BI.W-P048",
+        "BI.W-P049",
+        "BI.W-P050",
+        "BI.W-P051"
+      ],
+      "requiredLiveStates": [
+        "distinct concept gestalt",
+        "live controls",
+        "pointer",
+        "dark",
+        "narrow",
+        "offscreen",
+        "PRM",
+        "WebGPU/WebGL2 where applicable",
+        "resource teardown"
+      ]
+    }
+  ],
+  "componentRows": [
+    {
+      "conceptId": "surface",
+      "publicName": "Surface",
+      "canonicalWaves": [
+        "BI.W-P063"
+      ],
+      "category": "display",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "semantic material/elevation primitive",
+      "contract": "Surface alone selects material and elevation; it never implies content grouping, interactivity, or a copied glass recipe.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "surface",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "content",
+        "elevated",
+        "functional",
+        "overlay",
+        "dark",
+        "reduced-transparency"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/foundations/surface-taxonomy.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/display/surface.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/surface.contract.spec.ts"
+      ],
+      "mutationBite": "Give Surface a pressable variant and duplicate Button semantics; concept topology must fail.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "section",
+      "publicName": "Section",
+      "canonicalWaves": [
+        "BI.W-P064"
+      ],
+      "category": "containers",
+      "decision": "private",
+      "decisionText": "Keep as a private layout family; remove any package export or styling role that duplicates Surface/Card.",
+      "concept": "private semantic document/layout section",
+      "contract": "Section provides landmark/heading/spacing composition only and remains private unless an external runtime consumer proves a public need.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "section",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "heading",
+        "nested",
+        "narrow",
+        "landmark"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/display/section.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/display/section.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/owner-integrations/section.spec.ts"
+      ],
+      "mutationBite": "Export Section as a material variant or let it mint glass; topology/material evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "button",
+      "publicName": "Button",
+      "canonicalWaves": [
+        "BI.W-P065"
+      ],
+      "category": "display",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "command/action control",
+      "contract": "Button has one command contract, semantic tone/emphasis/size, shared press/focus/icon geometry, and native disabled/submission behavior.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "button",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "default",
+        "primary",
+        "destructive",
+        "disabled",
+        "loading",
+        "icon",
+        "keyboard",
+        "touch",
+        "prm"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/compositions/auth-shell.vue",
+        "demo/stories/compositions/chassis.vue",
+        "demo/stories/compositions/empty-states.vue",
+        "demo/stories/compositions/form-validation.vue",
+        "demo/stories/compositions/gate-pattern.vue",
+        "demo/stories/containers/collapsible.vue",
+        "demo/stories/containers/dialog.vue",
+        "demo/stories/containers/drawer.vue",
+        "demo/stories/containers/dropdown-menu.vue",
+        "demo/stories/containers/hover-card.vue",
+        "demo/stories/containers/hover-popover.vue",
+        "demo/stories/containers/popover.vue",
+        "demo/stories/containers/sheet.vue",
+        "demo/stories/containers/tooltip.vue",
+        "demo/stories/display/buttons.vue",
+        "demo/stories/display/card.vue",
+        "demo/stories/dock/cta-receive.vue",
+        "demo/stories/feedback/completion-seal.vue",
+        "demo/stories/feedback/confirm-dialog.vue",
+        "demo/stories/feedback/notification.vue",
+        "demo/stories/feedback/progress.vue",
+        "demo/stories/feedback/toast.vue",
+        "demo/stories/forms/labeled-field.vue",
+        "demo/stories/foundations/motion.vue",
+        "demo/stories/motion/deck.vue",
+        "demo/stories/motion/handmark.vue",
+        "demo/stories/motion/reveal.vue",
+        "demo/stories/motion/scroll.vue",
+        "demo/stories/motion/springs.vue",
+        "demo/stories/motion/tempo.vue",
+        "demo/stories/motion/text-motion.vue",
+        "demo/stories/substrates/aurora.vue",
+        "demo/stories/substrates/glass-material.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/display/button.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/button.contract.spec.ts",
+        "tests-visual/desktop-fluid-type.spec.ts",
+        "tests-visual/emission.spec.ts",
+        "tests-visual/liquid-hover.spec.ts",
+        "tests-visual/nested-backdrop-budget.spec.ts",
+        "tests-visual/storybook-meta.spec.ts"
+      ],
+      "mutationBite": "Make a static decorative surface render through Button or remove native disabled semantics; behavioral evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "label",
+      "publicName": "Label",
+      "canonicalWaves": [
+        "BI.W-P066"
+      ],
+      "category": "forms",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "form-control label",
+      "contract": "Label preserves native label association, required/optional annotation, disabled state, and no appearance wrapper semantics.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "label",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "associated",
+        "required",
+        "disabled",
+        "wrapped",
+        "narrow"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/compositions/auth-shell.vue",
+        "demo/stories/compositions/form-validation.vue",
+        "demo/stories/containers/dialog.vue",
+        "demo/stories/containers/popover.vue",
+        "demo/stories/containers/sheet.vue",
+        "demo/stories/data/tags-input.vue",
+        "demo/stories/display/card.vue",
+        "demo/stories/forms/checks.vue",
+        "demo/stories/forms/inputs.vue",
+        "demo/stories/forms/number-field.vue",
+        "demo/stories/motion/springs.vue",
+        "demo/stories/motion/text-motion.vue",
+        "demo/stories/substrates/constellation.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/forms/label.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/a11y-slider.spec.ts",
+        "tests-visual/label.contract.spec.ts",
+        "tests-visual/page-chassis.spec.ts",
+        "tests-visual/shell-config.spec.ts"
+      ],
+      "mutationBite": "Render a visual label without for/id or nesting association; form semantics must fail.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "input",
+      "publicName": "Input",
+      "canonicalWaves": [
+        "BI.W-P067"
+      ],
+      "category": "forms",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "single-line text input",
+      "contract": "Input preserves native value/form/autocomplete/inputmode/invalid semantics and consumes one field material/size contract.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "input",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "default",
+        "focus",
+        "invalid",
+        "disabled",
+        "readonly",
+        "autocomplete",
+        "touch"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/compositions/auth-shell.vue",
+        "demo/stories/compositions/form-validation.vue",
+        "demo/stories/compositions/gate-pattern.vue",
+        "demo/stories/containers/dialog.vue",
+        "demo/stories/containers/popover.vue",
+        "demo/stories/containers/sheet.vue",
+        "demo/stories/data/table.vue",
+        "demo/stories/forms/inputs.vue",
+        "demo/stories/forms/labeled-field.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/forms/input.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/customizability.spec.ts",
+        "tests-visual/input.contract.spec.ts"
+      ],
+      "mutationBite": "Style invalid state without aria-invalid/description linkage; form evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "textarea",
+      "publicName": "Textarea",
+      "canonicalWaves": [
+        "BI.W-P068"
+      ],
+      "category": "forms",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "multiline text input",
+      "contract": "Textarea owns multiline editing, resize, wrapping, validation, and form semantics without copying Input implementation or inventing another field material.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "textarea",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "default",
+        "focus",
+        "invalid",
+        "disabled",
+        "readonly",
+        "resize",
+        "narrow"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/compositions/form-validation.vue",
+        "demo/stories/containers/sheet.vue",
+        "demo/stories/forms/inputs.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/forms/textarea.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/textarea.contract.spec.ts"
+      ],
+      "mutationBite": "Disable resize while content becomes unreachable at narrow width; responsive/form evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "separator",
+      "publicName": "Separator",
+      "canonicalWaves": [
+        "BI.W-P069"
+      ],
+      "category": "display",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "semantic or decorative separator",
+      "contract": "Separator distinguishes decorative from semantic orientation and consumes one hairline/spacing grammar; it never becomes a generic container.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "separator",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "decorative",
+        "semantic",
+        "horizontal",
+        "vertical",
+        "dark"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/compositions/auth-shell.vue",
+        "demo/stories/compositions/settings.vue",
+        "demo/stories/display/atoms.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/display/separator.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/separator.contract.spec.ts"
+      ],
+      "mutationBite": "Expose a decorative separator to the accessibility tree without semantics; accessibility evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "skeleton",
+      "publicName": "Skeleton",
+      "canonicalWaves": [
+        "BI.W-P070"
+      ],
+      "category": "feedback",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "content-shape loading placeholder",
+      "contract": "Skeleton mirrors reserved content geometry, is hidden from AT when decorative, never loops under PRM, and does not substitute for explicit loading semantics.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "skeleton",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "text",
+        "avatar",
+        "card",
+        "dark",
+        "prm",
+        "reduced-transparency"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/feedback/skeleton.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/feedback/skeleton.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/skeleton.contract.spec.ts",
+        "tests-visual/surface-axis.spec.ts"
+      ],
+      "mutationBite": "Keep shimmer looping under PRM or let Skeleton cause layout shift on replacement; motion/layout evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "avatar",
+      "publicName": "Avatar",
+      "canonicalWaves": [
+        "BI.W-P071"
+      ],
+      "category": "data",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "person/entity image identity",
+      "contract": "Avatar owns image, accessible name/alt policy, fallback initials, load failure, status composition, and stable geometry without a second image-loading path.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "avatar",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "image",
+        "initials",
+        "broken",
+        "status",
+        "group",
+        "narrow"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/containers/hover-card.vue",
+        "demo/stories/display/atoms.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/data/avatar.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/avatar.contract.spec.ts"
+      ],
+      "mutationBite": "Expose both image alt and duplicated initials to AT; semantic evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "badge",
+      "publicName": "Badge",
+      "canonicalWaves": [
+        "BI.W-P072"
+      ],
+      "category": "display",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "compact categorical metadata",
+      "contract": "Badge is noninteractive metadata with semantic tone/emphasis and noncolor distinction; command behavior belongs to Button/Chip.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "badge",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "neutral",
+        "info",
+        "success",
+        "warning",
+        "destructive",
+        "long-text",
+        "forced-colors"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/compositions/chassis.vue",
+        "demo/stories/containers/dropdown-menu.vue",
+        "demo/stories/data/infinite-scroll.vue",
+        "demo/stories/data/search.vue",
+        "demo/stories/data/table.vue",
+        "demo/stories/data/virtual-section.vue",
+        "demo/stories/display/badge.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/display/badge.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/badge.contract.spec.ts"
+      ],
+      "mutationBite": "Make Badge clickable without command semantics or focus; affordance evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "alert",
+      "publicName": "Alert",
+      "canonicalWaves": [
+        "BI.W-P073"
+      ],
+      "category": "feedback",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "persistent inline status message",
+      "contract": "Alert owns inline status semantics, title/body/action structure, tone, and live-region policy; it never behaves like transient Toast.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "alert",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "info",
+        "success",
+        "warning",
+        "destructive",
+        "action",
+        "forced-colors"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/feedback/alert.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/feedback/alert.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/alert.contract.spec.ts"
+      ],
+      "mutationBite": "Auto-dismiss Alert or give every informational alert assertive announcement; feedback semantics must fail.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "notification-toast",
+      "publicName": "Toast",
+      "canonicalWaves": [
+        "BI.W-P074"
+      ],
+      "category": "feedback",
+      "decision": "fold",
+      "decisionText": "Fold ui/notification into ui/toast; delete the parallel Notification contract/export and migrate all consumers to one Toast queue/presentation family.",
+      "concept": "transient queued toast presentation",
+      "contract": "One Reka-backed Toast family owns provider, queue, viewport, item, action, close, swipe, lifetime, tone, and announcements; Notification's parallel TransitionGroup engine is deleted.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "toast",
+          "action": "modify"
+        },
+        {
+          "tier": "ui",
+          "name": "notification",
+          "action": "delete"
+        }
+      ],
+      "requiredStates": [
+        "single",
+        "stack",
+        "action",
+        "swipe",
+        "timeout",
+        "destructive",
+        "keyboard",
+        "prm"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/feedback/notification.vue",
+        "demo/stories/feedback/toast.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/feedback/notification.vue",
+        "demo/stories/feedback/toast.vue",
+        "demo/stories/feedback/toaster.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/notification-toast.contract.spec.ts"
+      ],
+      "mutationBite": "Restore Notification's second TransitionGroup queue or a second announcement/lifetime owner; topology/feedback evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "progress",
+      "publicName": "Progress",
+      "canonicalWaves": [
+        "BI.W-P075"
+      ],
+      "category": "data",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "determinate/indeterminate progress",
+      "contract": "Progress exposes truthful value/min/max/indeterminate/segmented semantics, readable state, stable geometry, and no invented completion claim.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "progress",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "determinate",
+        "indeterminate",
+        "segmented",
+        "complete",
+        "error",
+        "vertical",
+        "prm"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/feedback/progress.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/data/progress.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/progress.contract.spec.ts"
+      ],
+      "mutationBite": "Announce an indeterminate bar as a false percentage, render value beyond max, re-export an internal variant child, or let a child compute state outside Progress; data/topology evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "pulse",
+      "publicName": "Pulse",
+      "canonicalWaves": [
+        "BI.W-P076"
+      ],
+      "category": "feedback",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "activity/liveness signal",
+      "contract": "Pulse communicates active work without assertive semantics or perpetual motion ambiguity and becomes a static but visible signal under PRM.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "pulse",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "active",
+        "idle",
+        "success",
+        "warning",
+        "dark",
+        "prm"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/display/atoms.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/feedback/pulse.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/pulse.contract.spec.ts"
+      ],
+      "mutationBite": "Keep an endless breathing animation under PRM or announce decorative pulse assertively; feedback/motion evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "status-dot",
+      "publicName": "StatusDot",
+      "canonicalWaves": [
+        "BI.W-P077"
+      ],
+      "category": "feedback",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "compact nontext status indicator",
+      "contract": "StatusDot has an accessible label when meaningful, a decorative mode when paired with text, and shape/noncolor state distinctions.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "status-dot",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "decorative",
+        "labeled",
+        "online",
+        "warning",
+        "error",
+        "unknown",
+        "forced-colors"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/display/atoms.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/feedback/status-dot.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/status-dot.contract.spec.ts"
+      ],
+      "mutationBite": "Remove the label and rely only on red/green hue; feedback/forced-colors evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "animated-digit",
+      "publicName": "AnimatedDigit",
+      "canonicalWaves": [
+        "BI.W-P078"
+      ],
+      "category": "data",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "numeric digit transition",
+      "contract": "AnimatedDigit preserves numeric identity, tabular geometry, direction, rapid-update interruption, locale, AT announcement policy, and PRM instant state.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "animated-digit",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "increment",
+        "decrement",
+        "rapid",
+        "negative",
+        "locale",
+        "prm"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/motion/text-motion.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/data/animated-digit.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/animated-digit.contract.spec.ts"
+      ],
+      "mutationBite": "Let rapid updates announce every intermediate digit or shift width; data/continuity evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "split-chars",
+      "publicName": "SplitChars",
+      "canonicalWaves": [
+        "BI.W-P079"
+      ],
+      "category": "motion",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "accessible grapheme/word visual split",
+      "contract": "SplitChars creates grapheme-safe visual spans while exposing the unsplit text once to AT and delegates all motion to the shared motion language.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "split-chars",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "char",
+        "word",
+        "grapheme",
+        "heading",
+        "dynamic-text",
+        "prm"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/motion/text-motion.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/motion/split-chars.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/a11y-splitchars.spec.ts",
+        "tests-visual/split-chars.contract.spec.ts"
+      ],
+      "mutationBite": "Split a ZWJ grapheme or expose each glyph to AT; typography/accessibility evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "typewriter",
+      "publicName": "Typewriter",
+      "canonicalWaves": [
+        "BI.W-P080"
+      ],
+      "category": "motion",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "progressive textual reveal",
+      "contract": "Typewriter reveals grapheme-safe text through one cancellable discrete timing authority, with stable layout, explicit announcement policy, interruption/reset, complete immediate text under PRM, and no hidden pointer-only per-character editing behavior.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "typewriter",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "play",
+        "pause",
+        "reset",
+        "rapid-change",
+        "multiline",
+        "keyboard",
+        "prm"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/motion/text-motion.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/motion/typewriter.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/typewriter.contract.spec.ts"
+      ],
+      "mutationBite": "Create an uncancelled timer per glyph, strand a delay after reset/unmount, leave incomplete text under PRM, or restore click-only character deletion hidden from the direct story; motion/type/clean-break evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "color-swatch",
+      "publicName": "ColorSwatch",
+      "canonicalWaves": [
+        "BI.W-P081"
+      ],
+      "category": "forms",
+      "decision": "private",
+      "decisionText": "Move under src/components/configurator/parts/color-swatch and remove its public entry unless a current tracked external import is proven.",
+      "concept": "configurator-private color value control",
+      "contract": "ColorSwatch becomes a Configurator-owned part with value/name/contrast/copy semantics; it is not a standalone public concept without external evidence.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "color-swatch",
+          "action": "rename",
+          "targetDir": "src/components/configurator/parts/color-swatch"
+        }
+      ],
+      "requiredStates": [
+        "opaque",
+        "alpha",
+        "invalid",
+        "contrast",
+        "copy",
+        "keyboard"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/substrates/aurora.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/substrates/VizStudio.vue",
+        "demo/stories/substrates/aurora.vue",
+        "demo/stories/substrates/aurora/sections/AuroraColorSection.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/owner-integrations/color-swatch.spec.ts"
+      ],
+      "mutationBite": "Keep a public color-swatch export with no external runtime consumer; consumer-bearing evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "dark-mode-toggle",
+      "publicName": "DarkModeToggle",
+      "canonicalWaves": [
+        "BI.W-P082"
+      ],
+      "category": "display",
+      "decision": "rename",
+      "decisionText": "Rename the vague /controls family/entry to /dark-mode-toggle and remove the collective alias; it contains exactly one concept.",
+      "concept": "global appearance toggle",
+      "contract": "DarkModeToggle is one global-theme command with native pressed/state naming, shared press/motion, instant PRM, and no long-press novelty that obscures the basic action.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "controls",
+          "action": "rename",
+          "targetDir": "src/components/dark-mode-toggle"
+        }
+      ],
+      "requiredStates": [
+        "light",
+        "dark",
+        "keyboard",
+        "touch",
+        "rapid",
+        "prm"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/display/atoms.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/display/dark-mode-toggle.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/atlas-flip.spec.ts",
+        "tests-visual/config-chassis.spec.ts",
+        "tests-visual/dark-mode-toggle.contract.spec.ts"
+      ],
+      "mutationBite": "Preserve /controls as an alias, retain passive as an action-styled no-op, keep the long-press eclipse fork, or let local theme state diverge from useGlobalDark; clean-break/state/affordance evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "stacked-icons",
+      "publicName": "StackedIcons",
+      "canonicalWaves": [
+        "BI.W-P083"
+      ],
+      "category": "display",
+      "decision": "delete",
+      "decisionText": "Delete the public family/export and replace local sites with ordinary composition; no external tracked import justifies a primitive.",
+      "concept": "decorative overlapping icon/avatar composition",
+      "contract": "The current wrapper has no distinct public semantic contract and must not survive as an exported concept on layout alone.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "stacked-icons",
+          "action": "delete"
+        }
+      ],
+      "requiredStates": [
+        "local-consumer-migration"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/display/atoms.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/data/avatar.vue"
+      ],
+      "visualSpecPaths": [],
+      "mutationBite": "Restore the export with only demo/docs mentions as evidence, retain expandOnHover after deleting the story, or claim hover reveals item identities absent from the DOM; consumer-bearing topology and causal scenario evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "paper-backdrop",
+      "publicName": "PaperBackdrop",
+      "canonicalWaves": [
+        "BI.W-P084"
+      ],
+      "category": "substrates",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "warm page/content field",
+      "contract": "PaperBackdrop remains a consumed public page-field concept but becomes a thin semantic host over the one global content-field recipe, never a nested material fork.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "paper-backdrop",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "light",
+        "dark",
+        "long-content",
+        "print",
+        "reduced-transparency"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/foundations/paper-glass.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/substrates/paper-backdrop.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/paper-backdrop.contract.spec.ts"
+      ],
+      "mutationBite": "Add a component-local paper texture/material implementation divergent from the global field; ownership/material evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "border-progress",
+      "publicName": "BorderProgress",
+      "canonicalWaves": [
+        "BI.W-P085"
+      ],
+      "category": "data",
+      "decision": "delete",
+      "decisionText": "Delete the remaining directory, CSS, docs, tests, and historical proof-command residue; do not re-export or replace it with an alias.",
+      "concept": "retired progress-ring decoration",
+      "contract": "The already-unexported family is dead residue; progress/ring behavior belongs to Progress or an owning product composition.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "border-progress",
+          "action": "delete"
+        }
+      ],
+      "requiredStates": [
+        "definition-absence"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/feedback/progress.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/feedback/progress.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/ba-animate.spec.ts",
+        "tests-visual/border-progress.spec.ts"
+      ],
+      "mutationBite": "Restore a border-progress definition or export and require retired-subject detection to fail.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "checkbox",
+      "publicName": "Checkbox",
+      "canonicalWaves": [
+        "BI.W-P086"
+      ],
+      "category": "forms",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "binary/indeterminate form selection",
+      "contract": "Checkbox preserves checked/indeterminate/form/name/value/disabled/required semantics, visible focus, and noncolor state through Reka without copied shadcn styling.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "checkbox",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "unchecked",
+        "checked",
+        "indeterminate",
+        "disabled",
+        "invalid",
+        "keyboard",
+        "forced-colors"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/compositions/auth-shell.vue",
+        "demo/stories/forms/checks.vue",
+        "demo/stories/forms/inputs.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/forms/checkbox.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/checkbox.contract.spec.ts"
+      ],
+      "mutationBite": "Render indeterminate as checked or omit native form value; selection/form evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "radio-group",
+      "publicName": "RadioGroup",
+      "canonicalWaves": [
+        "BI.W-P087"
+      ],
+      "category": "forms",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "exclusive form selection",
+      "contract": "RadioGroup owns one required/exclusive value, orientation, roving focus, label/error linkage, form value, and touch geometry.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "radio-group",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "horizontal",
+        "vertical",
+        "required",
+        "invalid",
+        "disabled-item",
+        "keyboard",
+        "touch"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/forms/checks.vue",
+        "demo/stories/forms/inputs.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/forms/radio-group.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/radio-fix.spec.ts",
+        "tests-visual/radio-group.contract.spec.ts"
+      ],
+      "mutationBite": "Allow two checked values or break arrow-key orientation; selection evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "switch",
+      "publicName": "Switch",
+      "canonicalWaves": [
+        "BI.W-P088"
+      ],
+      "category": "forms",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "binary immediate setting",
+      "contract": "Switch has switch role/checked state, form participation, label/error linkage, shared press, and visible on/off distinction without duplicating Checkbox semantics.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "switch",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "off",
+        "on",
+        "disabled",
+        "invalid",
+        "keyboard",
+        "touch",
+        "prm"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/compositions/chassis.vue",
+        "demo/stories/display/card.vue",
+        "demo/stories/forms/checks.vue",
+        "demo/stories/forms/inputs.vue",
+        "demo/stories/motion/text-motion.vue",
+        "demo/stories/substrates/constellation.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/forms/switch.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/config-chassis.spec.ts",
+        "tests-visual/storybook-meta.spec.ts",
+        "tests-visual/switch.contract.spec.ts"
+      ],
+      "mutationBite": "Expose aria-pressed instead of checked or rely only on thumb color; semantics/affordance evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "toggle",
+      "publicName": "Toggle",
+      "canonicalWaves": [
+        "BI.W-P089"
+      ],
+      "category": "forms",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "independent pressed command",
+      "contract": "Toggle owns aria-pressed command state and shared Button press/material; it is not a Checkbox or Tab and remains private to aggregate entries if no direct export is needed.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "toggle",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "off",
+        "on",
+        "disabled",
+        "icon",
+        "keyboard",
+        "touch"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/forms/toggle.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/forms/toggle.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/toggle.contract.spec.ts"
+      ],
+      "mutationBite": "Give Toggle tab role or form checkbox semantics; selection evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "toggle-group",
+      "publicName": "ToggleGroup",
+      "canonicalWaves": [
+        "BI.W-P090"
+      ],
+      "category": "forms",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "single/multiple pressed-command group",
+      "contract": "ToggleGroup declares single/multiple selection, orientation, roving focus, disabled state, and one shared Toggle visual/press contract.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "toggle-group",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "single",
+        "multiple",
+        "horizontal",
+        "vertical",
+        "disabled",
+        "keyboard",
+        "touch"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/forms/toggle.vue",
+        "demo/stories/substrates/aurora.vue",
+        "demo/stories/substrates/glass-panel.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/forms/toggle-group.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/control-tokens.spec.ts",
+        "tests-visual/toggle-group.contract.spec.ts"
+      ],
+      "mutationBite": "Allow two values in single mode or duplicate Toggle styles; selection/ownership evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "chip",
+      "publicName": "Chip",
+      "canonicalWaves": [
+        "BI.W-P091"
+      ],
+      "category": "forms",
+      "decision": "fold",
+      "decisionText": "Fold icon-chip into chip through slots/size semantics; delete IconChip export, wrapper, CSS, story, and compatibility name.",
+      "concept": "compact selection/filter/action chip",
+      "contract": "One Chip family owns text/icon/removal/selection/action semantics with explicit modes; IconChip is a slot/size form, not a second concept/export.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "chip",
+          "action": "modify"
+        },
+        {
+          "tier": "custom",
+          "name": "icon-chip",
+          "action": "delete"
+        }
+      ],
+      "requiredStates": [
+        "static",
+        "selectable",
+        "selected",
+        "removable",
+        "icon",
+        "disabled",
+        "keyboard",
+        "touch"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/compositions/auth-shell.vue",
+        "demo/stories/compositions/empty-states.vue",
+        "demo/stories/containers/accordion.vue",
+        "demo/stories/containers/collapsible.vue",
+        "demo/stories/containers/command.vue",
+        "demo/stories/containers/context-menu.vue",
+        "demo/stories/containers/dialog.vue",
+        "demo/stories/containers/drawer.vue",
+        "demo/stories/containers/dropdown-menu.vue",
+        "demo/stories/containers/expandable-container.vue",
+        "demo/stories/containers/hover-card.vue",
+        "demo/stories/containers/hover-popover.vue",
+        "demo/stories/containers/popover.vue",
+        "demo/stories/containers/sheet.vue",
+        "demo/stories/containers/tooltip.vue",
+        "demo/stories/data/table.vue",
+        "demo/stories/display/badge.vue",
+        "demo/stories/feedback/alert.vue",
+        "demo/stories/feedback/confirm-dialog.vue",
+        "demo/stories/feedback/notification.vue",
+        "demo/stories/feedback/progress.vue",
+        "demo/stories/feedback/skeleton.vue",
+        "demo/stories/feedback/toast.vue",
+        "demo/stories/forms/checks.vue",
+        "demo/stories/forms/inputs.vue",
+        "demo/stories/forms/number-field.vue",
+        "demo/stories/forms/slider.vue",
+        "demo/stories/forms/toggle.vue",
+        "demo/stories/foundations/icons.vue",
+        "demo/stories/navigation/carousel.vue",
+        "demo/stories/navigation/header-ribbon.vue",
+        "demo/stories/navigation/tabs.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/compositions/auth-shell.vue",
+        "demo/stories/compositions/empty-states.vue",
+        "demo/stories/containers/accordion.vue",
+        "demo/stories/containers/collapsible.vue",
+        "demo/stories/containers/command.vue",
+        "demo/stories/containers/context-menu.vue",
+        "demo/stories/containers/dialog.vue",
+        "demo/stories/containers/drawer.vue",
+        "demo/stories/containers/dropdown-menu.vue",
+        "demo/stories/containers/expandable-container.vue",
+        "demo/stories/containers/hover-card.vue",
+        "demo/stories/containers/hover-popover.vue",
+        "demo/stories/containers/popover.vue",
+        "demo/stories/containers/sheet.vue",
+        "demo/stories/containers/tooltip.vue",
+        "demo/stories/data/data-table.vue",
+        "demo/stories/data/table.vue",
+        "demo/stories/display/badge.vue",
+        "demo/stories/feedback/alert.vue",
+        "demo/stories/feedback/confirm-dialog.vue",
+        "demo/stories/feedback/notification.vue",
+        "demo/stories/feedback/progress.vue",
+        "demo/stories/feedback/skeleton.vue",
+        "demo/stories/feedback/toast.vue",
+        "demo/stories/forms/checks.vue",
+        "demo/stories/forms/chip.vue",
+        "demo/stories/forms/combobox.vue",
+        "demo/stories/forms/inputs.vue",
+        "demo/stories/forms/label.vue",
+        "demo/stories/forms/number-field.vue",
+        "demo/stories/forms/select.vue",
+        "demo/stories/forms/selectable-chip.vue",
+        "demo/stories/forms/slider.vue",
+        "demo/stories/forms/textarea.vue",
+        "demo/stories/forms/toggle-chip.vue",
+        "demo/stories/forms/toggle.vue",
+        "demo/stories/foundations/icons.vue",
+        "demo/stories/navigation/carousel.vue",
+        "demo/stories/navigation/header-ribbon.vue",
+        "demo/stories/navigation/tabs.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/chip.contract.spec.ts",
+        "tests-visual/icon-chip.spec.ts",
+        "tests-visual/page-hierarchy.spec.ts",
+        "tests-visual/storybook-meta.spec.ts"
+      ],
+      "mutationBite": "Restore IconChip as a second export or let Chip mode be inferred ambiguously from slot content; topology/selection evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "tabs",
+      "publicName": "Tabs",
+      "canonicalWaves": [
+        "BI.W-P092"
+      ],
+      "category": "navigation",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "tabbed panel selection",
+      "contract": "Tabs owns APG tablist/tab/tabpanel, orientation, activation, roving focus, indicator, responsive overflow, controlled value, and shared selection motion.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "tabs",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "horizontal",
+        "vertical",
+        "manual",
+        "automatic",
+        "overflow",
+        "disabled",
+        "keyboard",
+        "touch",
+        "prm"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/containers/spa-view.vue",
+        "demo/stories/navigation/tabs.vue",
+        "demo/stories/substrates/aurora.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/navigation/tabs.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/tabs.contract.spec.ts"
+      ],
+      "mutationBite": "Use aria-pressed or hide inactive panels without correct semantics; selection evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "slider",
+      "publicName": "Slider",
+      "canonicalWaves": [
+        "BI.W-P093"
+      ],
+      "category": "forms",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "single/range numeric slider",
+      "contract": "Slider preserves min/max/step/orientation/single-range/keyboard/touch/form semantics and stable thumb/track geometry with no duplicate spring engine.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "slider",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "single",
+        "range",
+        "vertical",
+        "disabled",
+        "invalid",
+        "keyboard",
+        "touch",
+        "prm"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/dock/overview.vue",
+        "demo/stories/forms/slider.vue",
+        "demo/stories/motion/tempo.vue",
+        "demo/stories/motion/text-motion.vue",
+        "demo/stories/substrates/aurora.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/forms/slider.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/a11y-slider.spec.ts",
+        "tests-visual/slider.contract.spec.ts",
+        "tests-visual/tunable-anim.spec.ts"
+      ],
+      "mutationBite": "Let range thumbs cross without declared behavior or make keyboard step differ from pointer; form evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "number-field",
+      "publicName": "NumberField",
+      "canonicalWaves": [
+        "BI.W-P094"
+      ],
+      "category": "forms",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "numeric text/stepper input",
+      "contract": "NumberField owns locale parse/format, min/max/step, spinbutton keyboard, buttons, form value, invalid state, and does not fork Input/Label material.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "number-field",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "default",
+        "min-max",
+        "decimal",
+        "invalid",
+        "disabled",
+        "keyboard",
+        "touch"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/forms/number-field.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/forms/number-field.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/number-field.contract.spec.ts"
+      ],
+      "mutationBite": "Display a formatted value that submits a different unvalidated number; form contract must fail.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "select",
+      "publicName": "Select",
+      "canonicalWaves": [
+        "BI.W-P095"
+      ],
+      "category": "forms",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "single-value listbox select",
+      "contract": "Select owns trigger/listbox/options, label/error, keyboard/typeahead, portal/position, controlled value, form semantics, and shared overlay material.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "select",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "closed",
+        "open",
+        "selected",
+        "disabled-option",
+        "invalid",
+        "keyboard",
+        "touch",
+        "narrow"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/dock/controls.vue",
+        "demo/stories/dock/overview.vue",
+        "demo/stories/forms/inputs.vue",
+        "demo/stories/motion/curve-gallery.vue",
+        "demo/stories/motion/springs.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/forms/select.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/a11y-splitchars.spec.ts",
+        "tests-visual/demo-affordances.spec.ts",
+        "tests-visual/select.contract.spec.ts"
+      ],
+      "mutationBite": "Lose the selected option or label linkage through portal rendering, re-export an internal scroll child, or let pointer autoscroll diverge from keyboard active visibility; form/overlay/topology evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "combobox",
+      "publicName": "Combobox",
+      "canonicalWaves": [
+        "BI.W-P096"
+      ],
+      "category": "forms",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "editable listbox selection",
+      "contract": "Combobox owns editable input, filtering, active descendant, freeform/selection policy, async/empty/error state, and shared overlay/focus semantics.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "combobox",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "closed",
+        "open",
+        "filter",
+        "empty",
+        "async",
+        "invalid",
+        "keyboard",
+        "touch"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/forms/inputs.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/forms/combobox.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/combobox.contract.spec.ts"
+      ],
+      "mutationBite": "Move visual highlight without updating active-descendant/value, restore any of the three zero-witness exports, count CommandSeparator as ComboboxSeparator, or nest List/Viewport scroll owners; combobox/topology evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "tags-input",
+      "publicName": "TagsInput",
+      "canonicalWaves": [
+        "BI.W-P097"
+      ],
+      "category": "forms",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "multi-token text entry",
+      "contract": "TagsInput owns token creation/removal/editing, duplicate policy, delimiter/IME, keyboard roving/deletion, form value, invalid state, and Chip composition.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "tags-input",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "empty",
+        "tokens",
+        "edit",
+        "duplicate",
+        "invalid",
+        "keyboard",
+        "touch"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/data/tags-input.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/forms/tags-input.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/tags-input.contract.spec.ts"
+      ],
+      "mutationBite": "Delete a token on Backspace while its text is nonempty or duplicate form values; form evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "labeled-field",
+      "publicName": "LabeledField",
+      "canonicalWaves": [
+        "BI.W-P098"
+      ],
+      "category": "forms",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "label/description/error/control field composition",
+      "contract": "LabeledField composes Label and a slotted control through stable IDs, required/optional, description/error, invalid/disabled state, and layout only; it never restyles the control.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "labeled-field",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "default",
+        "description",
+        "required",
+        "invalid",
+        "disabled",
+        "horizontal",
+        "narrow"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/compositions/form-validation.vue",
+        "demo/stories/compositions/settings.vue",
+        "demo/stories/containers/configurator.vue",
+        "demo/stories/forms/labeled-field.vue",
+        "demo/stories/motion/springs.vue",
+        "demo/stories/substrates/aurora.vue",
+        "demo/stories/substrates/blob.vue",
+        "demo/stories/substrates/fourier-field.vue",
+        "demo/stories/substrates/liquid-grid.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/forms/labeled-field.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/labeled-field.contract.spec.ts"
+      ],
+      "mutationBite": "Generate IDs visually but fail to bind error description to the slotted control; form evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "search",
+      "publicName": "Search",
+      "canonicalWaves": [
+        "BI.W-P099"
+      ],
+      "category": "forms",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "query input with result/navigation semantics",
+      "contract": "Search owns query, clear, submit, async/loading/empty/error, optional suggestions, keyboard navigation, and result announcement without duplicating Combobox when selection is not its concept.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "search",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "empty",
+        "query",
+        "loading",
+        "results",
+        "no-results",
+        "error",
+        "keyboard",
+        "touch"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/data/search.vue",
+        "demo/stories/forms/inputs.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/forms/search.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/search.contract.spec.ts"
+      ],
+      "mutationBite": "Announce every keystroke assertively or lose query focus when results update; behavioral evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "focus-scope",
+      "publicName": "FocusScope",
+      "canonicalWaves": [
+        "BI.W-P100"
+      ],
+      "category": "containers",
+      "decision": "private",
+      "decisionText": "Move under src/components/_shared/overlay/focus-scope and remove its public entry; all overlay families consume it privately.",
+      "concept": "private overlay focus containment/restoration substrate",
+      "contract": "One private focus scope serves Dialog/Drawer/Popover/Menu/Dock overlays with stack-aware containment and restoration; it is not a public visual component.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "focus-scope",
+          "action": "rename",
+          "targetDir": "src/components/_shared/overlay/focus-scope"
+        }
+      ],
+      "requiredStates": [
+        "contain",
+        "nested",
+        "restore",
+        "trigger-removed",
+        "route-change"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/containers/command.vue",
+        "demo/stories/containers/dialog.vue",
+        "demo/stories/containers/drawer.vue",
+        "demo/stories/containers/popover.vue"
+      ],
+      "actualDemoWitnessMode": "INDIRECT_OWNER_COMPOSITION",
+      "plannedDemoPaths": [],
+      "visualSpecPaths": [
+        "tests-visual/owner-integrations/focus-scope.spec.ts"
+      ],
+      "mutationBite": "Re-export FocusScope or create a second containment implementation in Dialog; topology/focus evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "collapsible",
+      "publicName": "Collapsible",
+      "canonicalWaves": [
+        "BI.W-P101"
+      ],
+      "category": "containers",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "single disclosure region",
+      "contract": "Collapsible owns expanded state, trigger/content linkage, controlled value, keyboard activation, size transition, and PRM without accordion group semantics.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "collapsible",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "closed",
+        "open",
+        "controlled",
+        "disabled",
+        "keyboard",
+        "prm"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/containers/collapsible.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/containers/collapsible.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/collapsible.contract.spec.ts"
+      ],
+      "mutationBite": "Hide content visually while aria-expanded remains true or animate layout under PRM; selection/motion evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "accordion",
+      "publicName": "Accordion",
+      "canonicalWaves": [
+        "BI.W-P102"
+      ],
+      "category": "containers",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "single/multiple disclosure group",
+      "contract": "Accordion composes disclosure items with single/multiple/collapsible policy, heading/trigger/content structure, keyboard navigation, controlled value, and shared transition.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "accordion",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "single",
+        "multiple",
+        "collapsible",
+        "disabled",
+        "keyboard",
+        "prm"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/containers/accordion.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/containers/accordion.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/accordion.contract.spec.ts"
+      ],
+      "mutationBite": "Open two items in single mode or detach trigger from region; selection evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "popover",
+      "publicName": "Popover",
+      "canonicalWaves": [
+        "BI.W-P103"
+      ],
+      "category": "containers",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "nonmodal anchored interactive overlay",
+      "contract": "Popover owns controlled open, trigger/content linkage, positioning, focus, outside/Escape dismissal, portal, collision, and shared functional-glass overlay material.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "popover",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "closed",
+        "open",
+        "collision",
+        "nested",
+        "keyboard",
+        "touch",
+        "prm"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/containers/hover-card.vue",
+        "demo/stories/containers/hover-popover.vue",
+        "demo/stories/containers/popover.vue",
+        "demo/stories/dock/overview.vue",
+        "demo/stories/motion/tempo.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/containers/popover.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/popover.contract.spec.ts"
+      ],
+      "mutationBite": "Close a nested Popover when interacting with its teleported child or restore focus incorrectly; overlay evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "tooltip",
+      "publicName": "Tooltip",
+      "canonicalWaves": [
+        "BI.W-P104"
+      ],
+      "category": "containers",
+      "decision": "fold",
+      "decisionText": "Fold custom/icon-tooltip into ui/tooltip; delete the wrapper/export and migrate icon triggers to ordinary Tooltip composition.",
+      "concept": "terse noninteractive description overlay",
+      "contract": "One Tooltip family owns delayed hover/focus description, escape, no interactive content, touch policy, accessible description, and IconTooltip is only trigger content.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "tooltip",
+          "action": "modify"
+        },
+        {
+          "tier": "custom",
+          "name": "icon-tooltip",
+          "action": "delete"
+        }
+      ],
+      "requiredStates": [
+        "focus",
+        "hover",
+        "delay",
+        "escape",
+        "icon-trigger",
+        "touch-policy",
+        "prm"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/containers/hover-card.vue",
+        "demo/stories/containers/icon-tooltip.vue",
+        "demo/stories/containers/tooltip.vue",
+        "demo/stories/dock/rail.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/containers/hover-card.vue",
+        "demo/stories/containers/icon-tooltip.vue",
+        "demo/stories/containers/tooltip.vue",
+        "demo/stories/dock/rail.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/tooltip.contract.spec.ts"
+      ],
+      "mutationBite": "Restore IconTooltip or allow focusable interactive content inside Tooltip; topology/overlay evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "dropdown-menu",
+      "publicName": "DropdownMenu",
+      "canonicalWaves": [
+        "BI.W-P105"
+      ],
+      "category": "containers",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "menu of commands/choices",
+      "contract": "DropdownMenu owns menu/menuitem roles, submenus, check/radio items, roving/typeahead, dismissal, focus restoration, portal/collision, and shared overlay material.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "dropdown-menu",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "open",
+        "submenu",
+        "checkbox",
+        "radio",
+        "disabled",
+        "keyboard",
+        "touch"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/containers/context-menu.vue",
+        "demo/stories/containers/dropdown-menu.vue",
+        "demo/stories/dock/overview.vue",
+        "demo/stories/motion/tempo.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/containers/dropdown-menu.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/_r4-shell-config-capture.spec.ts",
+        "tests-visual/dropdown-menu.contract.spec.ts"
+      ],
+      "mutationBite": "Use menuitem for a persistent form control, break submenu Arrow/Escape ownership, restore DropdownMenuPortal, or double-teleport Content; menu/topology evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "dialog",
+      "publicName": "Dialog",
+      "canonicalWaves": [
+        "BI.W-P106"
+      ],
+      "category": "containers",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "modal/nonmodal dialog",
+      "contract": "Dialog owns title/description, modality, focus containment/restoration, inert background, dismissal policy, portal, size/scroll, and shared overlay material/motion.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "dialog",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "modal",
+        "nonmodal",
+        "scroll",
+        "nested",
+        "no-close",
+        "keyboard",
+        "touch",
+        "prm"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/compositions/gate-pattern.vue",
+        "demo/stories/containers/dialog.vue",
+        "demo/stories/containers/sheet.vue",
+        "demo/stories/feedback/confirm-dialog.vue",
+        "demo/stories/motion/tempo.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/containers/dialog.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/dialog-glass.spec.ts",
+        "tests-visual/dialog.contract.spec.ts"
+      ],
+      "mutationBite": "Open a modal without accessible title/background inertness, restore DialogScrollContent, keep a second overlay recipe, or prove scroll with nonoverflowing content; dialog/topology evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "drawer",
+      "publicName": "Drawer",
+      "canonicalWaves": [
+        "BI.W-P107"
+      ],
+      "category": "containers",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "edge-attached dialog/drawer",
+      "contract": "Drawer is Dialog semantics plus truthful modal/live-behind and fixed/detented modes. An explicit detent grip is one named slider-equivalent control whose pointer, touch, Arrow, Home, and End paths share activeSnapPoint, paint, stage, announcement, interruption, and PRM state; a fixed Drawer renders no drag affordance, and no historical Sheet alias survives.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "drawer",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "left-fixed",
+        "right-fixed",
+        "bottom-fixed",
+        "explicit-detents",
+        "live-behind-default-detents",
+        "inner-scroll",
+        "keyboard-arrows-home-end",
+        "touch",
+        "interrupt",
+        "prm"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/containers/drawer.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/containers/drawer.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/drawer.contract.spec.ts"
+      ],
+      "mutationBite": "Restore Sheet/DrawerPortal/public DrawerOverlay, render an aria-hidden drag handle, preserve muster's double portal, let ordinary omission inherit the live-behind ladder, diverge keyboard/pointer detents, split paint from v-model, or let drag dismiss while inner scroll owns the gesture; clean-break/overlay/selection evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "command",
+      "publicName": "Command",
+      "canonicalWaves": [
+        "BI.W-P108"
+      ],
+      "category": "containers",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "command palette/list",
+      "contract": "Command owns searchable command groups/items, active descendant, keyboard navigation, empty/loading state, shortcuts, execution, and optional Dialog composition without duplicating Search/Combobox contracts.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "command",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "inline",
+        "dialog",
+        "query",
+        "empty",
+        "groups",
+        "disabled",
+        "keyboard"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/containers/command.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/containers/command.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/command.contract.spec.ts"
+      ],
+      "mutationBite": "Execute a disabled command, visually move active item without semantic state, leave CommandDialog export/prose-only, render a generic Dialog instead, or let inline coverage donate dialog state; behavioral/topology evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "card",
+      "publicName": "Card",
+      "canonicalWaves": [
+        "BI.W-P109"
+      ],
+      "category": "display",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "semantic content group",
+      "contract": "Card owns content grouping and optional declared action/selection composition but delegates all material to Surface and command semantics to Button/Link.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "card",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "content",
+        "elevated",
+        "interactive-composed",
+        "selected",
+        "dense",
+        "narrow"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/compositions/empty-states.vue",
+        "demo/stories/compositions/gate-pattern.vue",
+        "demo/stories/compositions/settings.vue",
+        "demo/stories/containers/card-pressable.vue",
+        "demo/stories/containers/dropdown-menu.vue",
+        "demo/stories/containers/hover-popover.vue",
+        "demo/stories/containers/popover.vue",
+        "demo/stories/containers/sheet.vue",
+        "demo/stories/data/search.vue",
+        "demo/stories/data/sortable-list.vue",
+        "demo/stories/data/tags-input.vue",
+        "demo/stories/display/atoms.vue",
+        "demo/stories/display/card.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/display/card.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/card.contract.spec.ts",
+        "tests-visual/glass-prune.spec.ts",
+        "tests-visual/no-gray.spec.ts",
+        "tests-visual/paper-grid.spec.ts",
+        "tests-visual/selection-card.spec.ts",
+        "tests-visual/separator.spec.ts",
+        "tests-visual/shadow-grammar.spec.ts",
+        "tests-visual/storybook-meta.spec.ts",
+        "tests-visual/substrate-cohesion.spec.ts"
+      ],
+      "mutationBite": "Mint independent card glass/shadow variants or make the whole card clickable without link/button semantics; material/affordance evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "expandable-container",
+      "publicName": "ExpandableContainer",
+      "canonicalWaves": [
+        "BI.W-P110"
+      ],
+      "category": "containers",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "content container that expands between bounded layouts",
+      "contract": "ExpandableContainer owns measured collapsed/expanded geometry, trigger semantics, interruption/focus/scroll, and shared morph without duplicating Collapsible or Dialog.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "expandable-container",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "collapsed",
+        "expanded",
+        "interrupt",
+        "narrow",
+        "keyboard",
+        "prm"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/containers/expandable-container.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/containers/expandable-container.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/expandable-container.contract.spec.ts"
+      ],
+      "mutationBite": "Animate height with a private timer or lose focus on expansion; continuity evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "fading-scroll",
+      "publicName": "FadingScroll",
+      "canonicalWaves": [
+        "BI.W-P111"
+      ],
+      "category": "containers",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "scroll-edge overflow affordance",
+      "contract": "FadingScroll exposes content overflow at the owning scroller through edge masks, keyboard/touch scroll, RTL, resize, and reduced-transparency behavior without a JS shadow writer.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "fading-scroll",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "top",
+        "middle",
+        "bottom",
+        "horizontal",
+        "rtl",
+        "keyboard",
+        "touch"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/motion/curve-gallery.vue",
+        "demo/stories/navigation/carousel.vue",
+        "demo/stories/substrates/aurora.vue",
+        "demo/stories/substrates/blob.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/containers/fading-scroll.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/fading-scroll.contract.spec.ts",
+        "tests-visual/fading-scroll.spec.ts"
+      ],
+      "mutationBite": "Attach document scroll listeners for a nested scroller or hide overflow affordance at keyboard focus; scroll/affordance evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "infinite-scroll",
+      "publicName": "InfiniteScroll",
+      "canonicalWaves": [
+        "BI.W-P112"
+      ],
+      "category": "data",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "incremental list loading trigger",
+      "contract": "InfiniteScroll owns sentinel/loading/end/error/retry, abort/race, scroll restoration, accessibility announcement, and virtual-list composition without eager load-all fallback.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "infinite-scroll",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "idle",
+        "loading",
+        "end",
+        "error",
+        "retry",
+        "fast-scroll",
+        "keyboard"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/data/infinite-scroll.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/data/infinite-scroll.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/infinite-scroll.contract.spec.ts"
+      ],
+      "mutationBite": "Load every remaining item when identity lookup fails or announce duplicate loads; data/performance evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "spa-view",
+      "publicName": "SpaView",
+      "canonicalWaves": [
+        "BI.W-P113"
+      ],
+      "category": "containers",
+      "decision": "rehome",
+      "decisionText": "Move SpaView to demo/shell/spa-view, remove the public export, and keep it as demo product code; future public demand must be newly formed.",
+      "concept": "bounded KeepAlive view composition",
+      "contract": "The current public wrapper has no actual external tracked consumer; its Vue KeepAlive/Transition composition belongs to the first-party demo shell until real demand exists.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "spa-view",
+          "action": "rename",
+          "targetDir": "demo/shell/spa-view"
+        }
+      ],
+      "requiredStates": [
+        "switch",
+        "cached-return",
+        "eviction",
+        "focus",
+        "prm"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/containers/spa-view.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/containers/spa-view.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/owner-integrations/spa-view.spec.ts"
+      ],
+      "mutationBite": "Keep the public export on only a booked speedtest consumer or preserve `is` as a view alias; consumer/clean-break evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "header-ribbon",
+      "publicName": "HeaderRibbon",
+      "canonicalWaves": [
+        "BI.W-P114"
+      ],
+      "category": "navigation",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "persistent collapsible header command band",
+      "contract": "HeaderRibbon remains public because keyframes.js imports it; it owns persistent header-band reveal/pin/actions with accessible keyboard/touch behavior and shared motion/material.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "header-ribbon",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "left",
+        "right",
+        "expanded",
+        "pinned",
+        "keyboard",
+        "touch",
+        "prm"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/navigation/header-ribbon.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/navigation/header-ribbon.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/header-ribbon.contract.spec.ts"
+      ],
+      "mutationBite": "Make hover the sole way to reveal actions or leave a private timeout motion path under PRM; responsive/motion evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "table",
+      "publicName": "Table",
+      "canonicalWaves": [
+        "BI.W-P115"
+      ],
+      "category": "data",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "semantic static table parts",
+      "contract": "Table owns native table structure, caption/header/body/row/cell semantics, responsive overflow, alignment, density, and no interactive data behaviors.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "table",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "caption",
+        "headers",
+        "dense",
+        "wide",
+        "narrow-scroll",
+        "dark"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/data/table.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/data/table.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/table.contract.spec.ts"
+      ],
+      "mutationBite": "Replace semantic table structure with generic grid divs without equivalent accessibility; data evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "data-table",
+      "publicName": "DataTable",
+      "canonicalWaves": [
+        "BI.W-P116"
+      ],
+      "category": "data",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "interactive tabular data model",
+      "contract": "DataTable composes Table with stable row identity, semantic sortable-header commands, explicit controlled row selection across table/card projections, filter/pagination/virtualization, keyboard focus, loading/empty/error, and no monolithic ownership.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "data-table",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "sort",
+        "select",
+        "wide-row",
+        "narrow-card",
+        "filter",
+        "paginate",
+        "virtual",
+        "loading",
+        "empty",
+        "error",
+        "keyboard"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/data/table.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/data/data-table.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/data-table.contract.spec.ts"
+      ],
+      "mutationBite": "Use array index identity, make sorting pointer-only or omit aria-sort, emit selection from click-only hosts, lose selection through sort/projection, leave select unobserved, re-export DataTablePagination, or count its internal use as demand; data/selection/focus/topology evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "metric",
+      "publicName": "Metric",
+      "canonicalWaves": [
+        "BI.W-P117"
+      ],
+      "category": "data",
+      "decision": "fold",
+      "decisionText": "Merge metric-badge, metric-cell, and metric-stack into src/components/metric with one /metric entry and explicit parts; delete all three old entries without aliases.",
+      "concept": "metric value plus label/context composition",
+      "contract": "One Metric family owns badge/cell/row/stack presentations, numeric typography, trend/status/context, and token contract; three parallel public families are folded.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "metric-badge",
+          "action": "rename",
+          "targetDir": "src/components/metric/badge"
+        },
+        {
+          "tier": "custom",
+          "name": "metric-cell",
+          "action": "rename",
+          "targetDir": "src/components/metric/cell"
+        },
+        {
+          "tier": "custom",
+          "name": "metric-stack",
+          "action": "rename",
+          "targetDir": "src/components/metric/stack"
+        }
+      ],
+      "requiredStates": [
+        "badge",
+        "cell",
+        "row",
+        "stack",
+        "trend",
+        "status",
+        "long-label",
+        "narrow"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/data/instrument-chassis.vue",
+        "demo/stories/data/metrics.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/data/instrument-chassis.vue",
+        "demo/stories/data/metric-cell.vue",
+        "demo/stories/data/metric-stack.vue",
+        "demo/stories/data/metric.vue",
+        "demo/stories/display/metric-badge.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/_metric-zero-capture.spec.ts",
+        "tests-visual/metric.contract.spec.ts"
+      ],
+      "mutationBite": "Preserve any old metric subpath alias or duplicate token/writer across parts; clean-break/topology evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "pager-dots",
+      "publicName": "PagerDots",
+      "canonicalWaves": [
+        "BI.W-P118"
+      ],
+      "category": "navigation",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "page position and direct navigation indicator",
+      "contract": "PagerDots exposes page count/current/direct navigation, accessible labels, roving/focus, dynamic count, and one velocity-bounded worm indicator with an instance-scoped SVG filter id; it has no Carousel coupling or document-global Goo dependency.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "pager-dots",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "static",
+        "interactive",
+        "dynamic-count",
+        "keyboard",
+        "touch",
+        "multi-instance",
+        "safari-filter",
+        "prm"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/navigation/carousel.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/navigation/pager-dots.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/pager-dots.contract.spec.ts"
+      ],
+      "mutationBite": "Mount one global filter, duplicate a pager filter or clipPath id across instances, keep a dead Goo id/export, make dots clickable without labels/focus, or stretch the worm beyond neighboring pages; ownership, clean-break, selection, and motion evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "carousel",
+      "publicName": "Carousel",
+      "canonicalWaves": [
+        "BI.W-P119"
+      ],
+      "category": "navigation",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "ordered slide/content carousel",
+      "contract": "Carousel owns slide identity, previous/next/direct navigation, loop policy, drag, autoplay pause, focus, announcements, responsive sizing, and composes PagerDots rather than forking it.",
+      "currentMembers": [
+        {
+          "tier": "ui",
+          "name": "carousel",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "buttons",
+        "dots",
+        "drag",
+        "loop",
+        "autoplay",
+        "keyboard",
+        "touch",
+        "prm"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/navigation/carousel.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/navigation/carousel.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/carousel.contract.spec.ts"
+      ],
+      "mutationBite": "Autoplay while focused/hovered, announce every frame, restore GlassCarouselPager/CarouselNext/CarouselPrevious or their exports as zero-witness siblings, or let CarouselPager and PagerDots write different slide identities; behavioral/topology evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "timeline",
+      "publicName": "Timeline",
+      "canonicalWaves": [
+        "BI.W-P120"
+      ],
+      "category": "data",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "ordered temporal events/segments",
+      "contract": "Timeline owns chronological semantics, continuous/segmented/scrubber variants as one concept, stable event identity, active/progress state, semantic event-choice and marker operability, keyboard navigation, responsive layout, and shared motion.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "timeline",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "continuous",
+        "segmented",
+        "scrubber",
+        "event-choice",
+        "active",
+        "complete",
+        "long",
+        "narrow",
+        "keyboard",
+        "prm"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/data/timeline.vue",
+        "demo/stories/substrates/fourier-field.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/data/timeline.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/timeline.contract.spec.ts"
+      ],
+      "mutationBite": "Render visual chronology out of semantic DOM order, duplicate continuous/segmented engines, restore clickable li event rows, or credit the semantic slider for an inoperable event chooser; data/selection/focus/topology evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "deck",
+      "publicName": "Deck",
+      "canonicalWaves": [
+        "BI.W-P121"
+      ],
+      "category": "navigation",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "ordered presentation/page deck",
+      "contract": "Deck owns page identity, next/previous/direct navigation, progress, keyboard/touch, focus/URL policy, and transition composition without duplicating Tabs/Carousel; its one showcase-only barbell morph and SVG filter stay private to the Deck story rather than masquerading as public library facilities.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "deck",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "start",
+        "middle",
+        "end",
+        "direct",
+        "keyboard",
+        "touch",
+        "goo-travel",
+        "safari-filter",
+        "prm"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/motion/deck.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/motion/deck/DeckGooFilter.vue",
+        "demo/stories/navigation/deck.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/deck.contract.spec.ts"
+      ],
+      "mutationBite": "Lose slide identity/focus, restore a public GooFilter/useGooMorph/MORPH_SIGNATURES/installDeckSpring/deckEase/DECK_SPRING export, depend on a shell-global id, duplicate local filter IDs, or run a second transition clock; selection, continuity, temporal ownership, and clean-break evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "instrument-chassis",
+      "publicName": "InstrumentChassis",
+      "canonicalWaves": [
+        "BI.W-P122"
+      ],
+      "category": "data",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "physical instrument housing with phase bus",
+      "contract": "InstrumentChassis owns housing, regions/dividers, phase semantics, reserved geometry, and material role; it does not hardcode domain phases, duplicate Card, or carry compatibility variants.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "instrument-chassis",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "ready",
+        "active",
+        "complete",
+        "structure",
+        "wide",
+        "narrow",
+        "loading"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/data/instrument-chassis.vue",
+        "demo/stories/foundations/chart-chassis-palette.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/data/instrument-chassis.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/instrument-chassis.contract.spec.ts"
+      ],
+      "mutationBite": "Animate reserved block size or add domain-only phase names to the public union; stability/data evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "completion-seal",
+      "publicName": "CompletionSeal",
+      "canonicalWaves": [
+        "BI.W-P123"
+      ],
+      "category": "feedback",
+      "decision": "rehome",
+      "decisionText": "Move to demo/chassis/feedback/completion-seal and remove the public export; no actual external tracked import justifies it.",
+      "concept": "demo completion storytelling composition",
+      "contract": "CompletionSeal is a demo-scale celebratory composition, not a general public component; completion semantics remain in Progress/feedback and the visual seal lives in demo chassis.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "completion-seal",
+          "action": "rename",
+          "targetDir": "demo/chassis/feedback/completion-seal"
+        }
+      ],
+      "requiredStates": [
+        "draw",
+        "settle",
+        "hold",
+        "dark",
+        "prm"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/feedback/completion-seal.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/feedback/completion-seal.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/owner-integrations/completion-seal.spec.ts"
+      ],
+      "mutationBite": "Keep CompletionSeal public on demo-only evidence or keep its glint looping under PRM; topology/motion evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "easing",
+      "publicName": "Easing",
+      "canonicalWaves": [
+        "BI.W-P124"
+      ],
+      "category": "motion",
+      "decision": "retain",
+      "decisionText": "Retain one public concept and remove shadcn/CVA/raw-utility styling authority, aliases, duplicated wrappers, and unowned CSS.",
+      "concept": "interactive easing authoring/visualization",
+      "contract": "EasingPicker remains the glass-owned editor UI while value.js owns curve math; preview authority is explicit and proportionate—an editor-local normalized one-shot is distinct from reusable keyframes playback—and configurator is composition, not a second state engine.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "easing",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "bezier",
+        "steps",
+        "drag",
+        "keyboard",
+        "copy",
+        "copy-denied",
+        "playback",
+        "prm"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/motion/curve-gallery.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/motion/easing.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/easing-primitive.spec.ts",
+        "tests-visual/easing.contract.spec.ts"
+      ],
+      "mutationBite": "Remove the packed /easing export, implement curve math locally, make a Bezier handle pointer-only, swallow Clipboard denial, collapse a text playback action to the icon square, run travel under PRM, misstate preview ownership, stop a handle from changing the reparsable output, or create a second picker state in EasingConfigurator; dependency/form/focus/affordance/scenario evidence must turn RED while internal file movement alone remains neutral.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "aurora",
+      "publicName": "Aurora",
+      "canonicalWaves": [
+        "BI.W-P046"
+      ],
+      "category": "procedural",
+      "decision": "retain",
+      "decisionText": "Facility-scale family is owned by BI.W-P046 rather than a shallow duplicate component wave.",
+      "concept": "painterly interactive field",
+      "contract": "Aurora is one field model/runtime with declared renderer identity, semantic color, interaction, pause, and teardown; presets never fork the engine.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "aurora",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "idle",
+        "pointer",
+        "palette",
+        "dark",
+        "offscreen",
+        "prm",
+        "webgpu",
+        "webgl2",
+        "failure"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/compositions/auth-shell.vue",
+        "demo/stories/display/buttons.vue",
+        "demo/stories/display/card.vue",
+        "demo/stories/dock/controls.vue",
+        "demo/stories/dock/cta-receive.vue",
+        "demo/stories/dock/dock-search.vue",
+        "demo/stories/dock/layers.vue",
+        "demo/stories/dock/overflow.vue",
+        "demo/stories/dock/overview.vue",
+        "demo/stories/dock/rail.vue",
+        "demo/stories/dock/sections.vue",
+        "demo/stories/substrates/aurora.vue",
+        "demo/stories/substrates/glass-panel.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/substrates/aurora.vue",
+        "demo/stories/substrates/aurora/AuroraConfigDock.vue",
+        "demo/stories/substrates/aurora/AuroraStage.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/_aur-vangogh-harness.ts",
+        "tests-visual/aurora-apotheosis.spec.ts",
+        "tests-visual/aurora-swraster.spec.ts",
+        "tests-visual/aurora-vibrancy.spec.ts",
+        "tests-visual/page-chassis.spec.ts",
+        "tests-visual/webgpu-everywhere.spec.ts"
+      ],
+      "mutationBite": "Fork a preset renderer or mask a failed shader with a different backend; procedural evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "blob",
+      "publicName": "Blob",
+      "canonicalWaves": [
+        "BI.W-P047"
+      ],
+      "category": "procedural",
+      "decision": "retain",
+      "decisionText": "Facility-scale family is owned by BI.W-P047 rather than a shallow duplicate component wave.",
+      "concept": "coherent gel body and satellites",
+      "contract": "Blob owns one simulation/state record and two equivalent GPU translators; satellites remain coherent with the body and teardown is complete.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "blob",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "settled",
+        "pointer",
+        "satellites",
+        "fission",
+        "dark",
+        "prm",
+        "webgpu",
+        "webgl2",
+        "failure"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/compositions/empty-states.vue",
+        "demo/stories/substrates/blob.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/substrates/blob.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/blob-apotheosis.spec.ts",
+        "tests-visual/blob-mood-live.spec.ts",
+        "tests-visual/blob-page.spec.ts",
+        "tests-visual/blob-pause-seam.spec.ts",
+        "tests-visual/blob-render.spec.ts",
+        "tests-visual/blob-warm-default.spec.ts",
+        "tests-visual/blob3-interaction-capture.spec.ts",
+        "tests-visual/substrate-paints-color.spec.ts",
+        "tests-visual/webgpu-everywhere.spec.ts"
+      ],
+      "mutationBite": "Double-smooth pointer input, detach a satellite, or silently fall through after shader failure; interaction/lifecycle evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "configurator",
+      "publicName": "Configurator",
+      "canonicalWaves": [
+        "BI.W-P052",
+        "BI.W-P059"
+      ],
+      "category": "forms",
+      "decision": "retain",
+      "decisionText": "Facility-scale family is owned by BI.W-P052 + BI.W-P059 rather than a shallow duplicate component wave.",
+      "concept": "typed live component/procedural configuration",
+      "contract": "Configurator renders a typed schema, round-trips live values, exposes validation and reset, and never duplicates component state or writes arbitrary CSS strings.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "configurator",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "defaults",
+        "edited",
+        "invalid",
+        "reset",
+        "keyboard",
+        "narrow",
+        "dark",
+        "prm"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/containers/configurator.vue",
+        "demo/stories/substrates/aurora.vue",
+        "demo/stories/substrates/blob.vue",
+        "demo/stories/substrates/fourier-field.vue",
+        "demo/stories/substrates/liquid-grid.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/substrates/VizStudio.vue",
+        "demo/stories/substrates/aurora.vue",
+        "demo/stories/substrates/blob.vue",
+        "demo/stories/substrates/constellation.vue",
+        "demo/stories/substrates/fourier-field.vue",
+        "demo/stories/substrates/liquid-grid.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/procedural-config.spec.ts",
+        "tests-visual/specimen-chassis.spec.ts"
+      ],
+      "mutationBite": "Add a control with no typed roundtrip or keep a second shadow value; form and scenario evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "constellation",
+      "publicName": "Constellation",
+      "canonicalWaves": [
+        "BI.W-P048"
+      ],
+      "category": "procedural",
+      "decision": "retain",
+      "decisionText": "Facility-scale family is owned by BI.W-P048 rather than a shallow duplicate component wave.",
+      "concept": "interactive node-and-edge field",
+      "contract": "Constellation owns one seeded CPU field, one interaction field, one Canvas2D renderer on the shared lifecycle, and one executable ordered drawOverlay skin pass; its multi-instance story consumes zero scarce GPU contexts.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "constellation",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "idle",
+        "pointer-well",
+        "warp-overlay",
+        "pinned-overlay",
+        "dense",
+        "narrow",
+        "multi-instance",
+        "offscreen",
+        "prm",
+        "canvas2d",
+        "teardown"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/substrates/constellation.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/substrates/constellation.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/constellation-apotheosis.spec.ts",
+        "tests-visual/constellation-egg-live.spec.ts",
+        "tests-visual/constellation-gen-live.spec.ts",
+        "tests-visual/constellation-refit-live.spec.ts",
+        "tests-visual/constellation-warp-live.spec.ts",
+        "tests-visual/constellation.spec.ts",
+        "tests-visual/substrate-cohesion.spec.ts"
+      ],
+      "mutationBite": "Reintroduce a second field integrator or GPU renderer, preserve drawOverlay as an uncalled prop, open a Constellation GPU context, or add a demo-only supernova fork; topology, clean-break, resource, and scenario evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "dock",
+      "publicName": "Dock",
+      "canonicalWaves": [
+        "BI.W-P033",
+        "BI.W-P034",
+        "BI.W-P035",
+        "BI.W-P036",
+        "BI.W-P037",
+        "BI.W-P038",
+        "BI.W-P039",
+        "BI.W-P040",
+        "BI.W-P041",
+        "BI.W-P042"
+      ],
+      "category": "navigation",
+      "decision": "retain",
+      "decisionText": "Facility-scale family is owned by BI.W-P033 + BI.W-P034 + BI.W-P035 + BI.W-P036 + BI.W-P037 + BI.W-P038 + BI.W-P039 + BI.W-P040 + BI.W-P041 + BI.W-P042 rather than a shallow duplicate component wave.",
+      "concept": "liquid navigation and command facility",
+      "contract": "Dock has one state machine, public anatomy, functional-glass plate, selection identity, layer/focus owner, explicit overflow/layout modes, semantic controls, and one shared spring/morph spine.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "dock",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "rail",
+        "bottom",
+        "selection",
+        "search",
+        "overflow",
+        "layer",
+        "focus",
+        "keyboard",
+        "touch",
+        "orientation",
+        "prm",
+        "complex-backdrop"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/data/instrument-chassis.vue",
+        "demo/stories/display/atoms.vue",
+        "demo/stories/dock/controls.vue",
+        "demo/stories/dock/cta-receive.vue",
+        "demo/stories/dock/dock-search.vue",
+        "demo/stories/dock/layers.vue",
+        "demo/stories/dock/overflow.vue",
+        "demo/stories/dock/overview.vue",
+        "demo/stories/dock/rail.vue",
+        "demo/stories/dock/sections.vue",
+        "demo/stories/motion/tempo.vue",
+        "demo/stories/navigation/header-ribbon.vue",
+        "demo/stories/substrates/blob.vue",
+        "demo/stories/substrates/fourier-field.vue",
+        "demo/stories/substrates/liquid-grid.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/dock/DockStage.vue",
+        "demo/stories/dock/controls.vue",
+        "demo/stories/dock/cta-receive.vue",
+        "demo/stories/dock/dock-search.vue",
+        "demo/stories/dock/layers.vue",
+        "demo/stories/dock/overflow.vue",
+        "demo/stories/dock/overview.tile.vue",
+        "demo/stories/dock/overview.vue",
+        "demo/stories/dock/rail.vue",
+        "demo/stories/dock/sections.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/demo-dock.spec.ts",
+        "tests-visual/dock-controls.spec.ts",
+        "tests-visual/dock-layer-stack.spec.ts",
+        "tests-visual/dock-layout.spec.ts",
+        "tests-visual/dock-material.spec.ts",
+        "tests-visual/dock-motion.spec.ts",
+        "tests-visual/dock-overflow.spec.ts",
+        "tests-visual/dock-selection.spec.ts"
+      ],
+      "mutationBite": "Fork state or spring ownership, clip a top layer, hide overflow, or make controls icon-only without names; Dock families must fail.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "fourier-field",
+      "publicName": "FourierField",
+      "canonicalWaves": [
+        "BI.W-P049"
+      ],
+      "category": "procedural",
+      "decision": "retain",
+      "decisionText": "Facility-scale family is owned by BI.W-P049 rather than a shallow duplicate component wave.",
+      "concept": "math-owned Fourier ribbon field",
+      "contract": "FourierField derives one coefficient/geometry plan and feeds equivalent compute/render paths without per-frame fitting or a fullscreen segment loop.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "fourier-field",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "idle",
+        "pointer",
+        "term-count",
+        "resize",
+        "offscreen",
+        "prm",
+        "webgpu",
+        "webgl2"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/substrates/fourier-field.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/substrates/fourier-field.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/fourier-field-apotheosis.spec.ts"
+      ],
+      "mutationBite": "Fit coefficients per frame or restore a per-pixel segment loop; data/performance evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "goo-filter",
+      "publicName": "GooFilter",
+      "canonicalWaves": [
+        "BI.W-P118",
+        "BI.W-P121"
+      ],
+      "category": "procedural",
+      "decision": "rehome-private",
+      "decisionText": "Facility-scale family is owned by BI.W-P118 + BI.W-P121 rather than a shallow duplicate component wave.",
+      "concept": "global SVG metaball resource to be dissolved into its two live owners",
+      "contract": "GooFilter has no coherent public component contract: PagerDots owns an instance-scoped worm filter and the Deck demo owns its local barbell filter; the global shell mount, Dock re-export, three dead IDs, shared DOM IDs, and public GooFilter surface disappear without an alias.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "goo-filter",
+          "action": "rehome"
+        }
+      ],
+      "requiredStates": [
+        "pager-multi-instance",
+        "deck-render",
+        "safari-filter",
+        "owner-prm",
+        "owner-teardown"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/motion/deck.vue"
+      ],
+      "actualDemoWitnessMode": "INDIRECT_OWNER_COMPOSITION",
+      "plannedDemoPaths": [
+        "demo/stories/motion/deck/DeckGooFilter.vue",
+        "demo/stories/navigation/deck.vue",
+        "demo/stories/navigation/pager-dots.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/deck.contract.spec.ts",
+        "tests-visual/pager-dots.contract.spec.ts"
+      ],
+      "mutationBite": "Restore the global mount/public export, duplicate an SVG id across live instances, or retain an unconsumed filter id; ownership, clean-break, and rendered multi-instance evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "handmark",
+      "publicName": "Handmark",
+      "canonicalWaves": [
+        "BI.W-P051"
+      ],
+      "category": "typography",
+      "decision": "retain",
+      "decisionText": "Facility-scale family is owned by BI.W-P051 rather than a shallow duplicate component wave.",
+      "concept": "semantic hand-drawn mark and underline",
+      "contract": "Handmark owns seeded vector geometry and semantic mark variants, stays legible without motion, and shares only deterministic brush/noise facilities with WatercolorDot.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "handmark",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "underline",
+        "circle",
+        "strike",
+        "draw",
+        "static",
+        "dark",
+        "prm"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/motion/handmark.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/motion/handmark.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/hand-drawn-family.spec.ts"
+      ],
+      "mutationBite": "Use unseeded geometry or erase the semantic mark under PRM; typography/motion evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "liquid-grid",
+      "publicName": "LiquidGrid",
+      "canonicalWaves": [
+        "BI.W-P050"
+      ],
+      "category": "procedural",
+      "decision": "retain",
+      "decisionText": "Facility-scale family is owned by BI.W-P050 rather than a shallow duplicate component wave.",
+      "concept": "curl-deformed paper grid field",
+      "contract": "LiquidGrid owns one grid/curl state and equivalent fullscreen translators on the shared substrate, with semantic color and honest capability/failure state.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "liquid-grid",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "idle",
+        "pointer",
+        "density",
+        "dark",
+        "offscreen",
+        "prm",
+        "webgpu",
+        "webgl2"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/substrates/liquid-grid.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/substrates/liquid-grid.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/liquid-grid-apotheosis.spec.ts"
+      ],
+      "mutationBite": "Fork the curl math or silently render an unrelated fallback after failure; renderer evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "sortable-list",
+      "publicName": "SortableList",
+      "canonicalWaves": [
+        "BI.W-P007"
+      ],
+      "category": "data",
+      "decision": "retain",
+      "decisionText": "Facility-scale family is owned by BI.W-P007 rather than a shallow duplicate component wave.",
+      "concept": "ordered list with pointer and keyboard reordering",
+      "contract": "SortableList owns stable item identity, one reorder engine, pointer/keyboard parity, focus retention, announcements, and one colocated behavior home.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "sortable-list",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "idle",
+        "pointer-drag",
+        "keyboard-reorder",
+        "touch",
+        "disabled",
+        "focus-retained"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/data/sortable-list.vue",
+        "demo/stories/substrates/aurora.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/data/sortable-list.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/sortable-list.contract.spec.ts"
+      ],
+      "mutationBite": "Recreate a root sortable engine or lose focus identity after reorder; selection/topology evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    },
+    {
+      "conceptId": "watercolor-dot",
+      "publicName": "WatercolorDot",
+      "canonicalWaves": [
+        "BI.W-P051"
+      ],
+      "category": "procedural",
+      "decision": "retain",
+      "decisionText": "Facility-scale family is owned by BI.W-P051 rather than a shallow duplicate component wave.",
+      "concept": "seeded watercolor point mark",
+      "contract": "WatercolorDot is a seeded SVG/CSS mark in the hand-drawn family, not a GPU scene; it has bounded variation, semantic color, and static PRM equivalence.",
+      "currentMembers": [
+        {
+          "tier": "custom",
+          "name": "watercolor-dot",
+          "action": "modify"
+        }
+      ],
+      "requiredStates": [
+        "seeded",
+        "size",
+        "color",
+        "dark",
+        "prm"
+      ],
+      "actualCurrentDemoPaths": [
+        "demo/stories/foundations/colors.vue",
+        "demo/stories/substrates/blob.vue"
+      ],
+      "actualDemoWitnessMode": "DIRECT_ROUTE_GRAPH",
+      "plannedDemoPaths": [
+        "demo/stories/motion/handmark.vue"
+      ],
+      "visualSpecPaths": [
+        "tests-visual/hand-drawn-family.spec.ts"
+      ],
+      "mutationBite": "Use unseeded randomness or promote the mark to an independent GPU context; color/resource evidence must turn RED.",
+      "shadcnDisposition": "ABROGATE_STYLE_AND_STRUCTURE_AUTHORITY",
+      "aliasesOrShimsAllowed": false
+    }
+  ]
+}
