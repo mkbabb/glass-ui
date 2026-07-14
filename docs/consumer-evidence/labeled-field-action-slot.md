@@ -46,10 +46,10 @@ per-button fork.
 ## Consumer proof (re-runnable)
 
 The ≥2-consumer bar (J inv-10): the slot is exercised by **2** demo LabeledField rows —
-the canonical horizontal-action cases — in `demo/stories/compositions/labeled-field.vue`:
+the canonical horizontal-action cases — in `demo/stories/forms/labeled-field.vue`:
 
 ```bash
-grep -c '#action' demo/stories/compositions/labeled-field.vue
+grep -c '#action' demo/stories/forms/labeled-field.vue
 #   → 2  (consumer #1 clear-input + consumer #2 reveal-password)
 ```
 
@@ -73,6 +73,6 @@ verdict returns to "below the ≥2 bar" and the gate's C5 consumer-bar clause re
 
 - `src/components/custom/labeled-field/LabeledField.vue` (the slot + `horizontal` axis +
   the scoped `.labeled-field-row`/`.labeled-field-action`/`--horizontal` layout).
-- `demo/stories/compositions/labeled-field.vue` (consumer #1 clear-input + consumer #2
+- `demo/stories/forms/labeled-field.vue` (consumer #1 clear-input + consumer #2
   reveal-password — the ≥2 horizontal-action cases).
 - `docs/tranches/BC/waves/BC.W-CONTROL-SMOOTH.md` (move C, kf-G3 BUILD).

@@ -23,6 +23,11 @@ const CONTAINERS_STOP = 2;
 
 const snap = ref<number | string | null>(0.4);
 const snapPoints = [0.25, 0.4, 0.7, 1] as const;
+
+// live-behind mode — a detented non-modal sheet over a still-interactive surface.
+const liveActiveSnap = ref<number | string | null>(0.12);
+const liveOpen = ref(false);
+const ctaPresses = ref(0);
 </script>
 
 <template>
@@ -122,6 +127,103 @@ const snapPoints = [0.25, 0.4, 0.7, 1] as const;
                     </Drawer>
                 </div>
             </StorySection>
-        
+
+            <StorySection heading="Live-behind mode" gap="lg">
+                <p class="text-sm text-muted-foreground">
+                    <code class="font-mono text-xs">mode="live-behind"</code> flips
+                    three defaults at once — reka
+                    <code class="font-mono text-xs">:modal="false"</code> +
+                    <code class="font-mono text-xs">stage="none"</code> (the page never
+                    recedes) + the direction-derived
+                    <code class="font-mono text-xs">[0.12, 0.5, 1]</code> ladder — so the
+                    surface behind keeps its size, stays keyboard-reachable, and is
+                    never hidden from assistive tech. The default modal sheet above traps
+                    focus and scales the page; this mode is the opt-in non-modal peer.
+                </p>
+                <div
+                    id="verdict-surface"
+                    class="relative min-h-[24rem] overflow-hidden rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8"
+                >
+                    <div class="space-y-3">
+                        <h3 class="text-heading">Verdict — Trattoria No. 4</h3>
+                        <p class="max-w-prose text-body text-muted-foreground">
+                            The page-behind: under
+                            <code>mode="live-behind"</code> it is never scaled down
+                            and never receives <code>aria-hidden</code>.
+                        </p>
+                        <Button
+                            id="verdict-cta"
+                            variant="accent"
+                            @click="ctaPresses++"
+                        >
+                            Cast vote ({{ ctaPresses }})
+                        </Button>
+                    </div>
+
+                    <!-- Open the sheet at a chosen detent, then DRAG the handle to
+                         cycle peek → half → full. The HOUSE snap engine
+                         (`useDrawerSnap`) re-snaps an already-open sheet from an
+                         external `activeSnapPoint` write, so these buttons set the
+                         detent whether the sheet is closed or open. -->
+                    <div class="mt-4 flex items-center gap-2">
+                        <span class="text-caption text-muted-foreground">Open at:</span>
+                        <Button
+                            id="detent-peek"
+                            variant="ghost"
+                            size="sm"
+                            @click="(liveActiveSnap = 0.12), (liveOpen = true)"
+                        >
+                            Peek
+                        </Button>
+                        <Button
+                            id="detent-half"
+                            variant="ghost"
+                            size="sm"
+                            @click="(liveActiveSnap = 0.5), (liveOpen = true)"
+                        >
+                            Half
+                        </Button>
+                        <Button
+                            id="detent-full"
+                            variant="ghost"
+                            size="sm"
+                            @click="(liveActiveSnap = 1), (liveOpen = true)"
+                        >
+                            Full
+                        </Button>
+                        <span class="text-caption text-muted-foreground">
+                            active: {{ liveActiveSnap }}
+                        </span>
+                    </div>
+
+                    <Drawer
+                        mode="live-behind"
+                        v-model:open="liveOpen"
+                        v-model:active-snap-point="liveActiveSnap"
+                    >
+                        <DrawerTrigger as-child>
+                            <Button variant="outline" class="mt-6">
+                                Open instrument sheet
+                            </Button>
+                        </DrawerTrigger>
+                        <DrawerContent :show-overlay="false" class="live-sheet">
+                            <DrawerHeader>
+                                <DrawerTitle>Instrument</DrawerTitle>
+                                <DrawerDescription>
+                                    Peek · half · full — the verdict stays live behind.
+                                </DrawerDescription>
+                            </DrawerHeader>
+                            <div class="space-y-3 p-4">
+                                <p class="text-body text-muted-foreground">
+                                    Drag the handle up to half, then full. The page
+                                    behind never scales and never loses focusability.
+                                </p>
+                                <Button variant="ghost">Reorder picks</Button>
+                            </div>
+                        </DrawerContent>
+                    </Drawer>
+                </div>
+            </StorySection>
+
     </StoryPage>
 </template>
