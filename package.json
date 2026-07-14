@@ -58,9 +58,6 @@
             "reactive": [
                 "dist/reactive.d.ts"
             ],
-            "virtual": [
-                "dist/virtual.d.ts"
-            ],
             "canvas": [
                 "dist/canvas.d.ts"
             ],
@@ -148,9 +145,6 @@
             "blob": [
                 "dist/blob.d.ts"
             ],
-            "border-progress": [
-                "dist/border-progress.d.ts"
-            ],
             "chip": [
                 "dist/chip.d.ts"
             ],
@@ -225,9 +219,6 @@
             ],
             "pulse": [
                 "dist/pulse.d.ts"
-            ],
-            "scrolling-text": [
-                "dist/scrolling-text.d.ts"
             ],
             "search": [
                 "dist/search.d.ts"
@@ -322,10 +313,6 @@
         "./reactive": {
             "types": "./dist/reactive.d.ts",
             "import": "./dist/reactive.js"
-        },
-        "./virtual": {
-            "types": "./dist/virtual.d.ts",
-            "import": "./dist/virtual.js"
         },
         "./canvas": {
             "types": "./dist/canvas.d.ts",
@@ -443,10 +430,6 @@
             "types": "./dist/blob.d.ts",
             "import": "./dist/blob.js"
         },
-        "./border-progress": {
-            "types": "./dist/border-progress.d.ts",
-            "import": "./dist/border-progress.js"
-        },
         "./chip": {
             "types": "./dist/chip.d.ts",
             "import": "./dist/chip.js"
@@ -546,10 +529,6 @@
         "./pulse": {
             "types": "./dist/pulse.d.ts",
             "import": "./dist/pulse.js"
-        },
-        "./scrolling-text": {
-            "types": "./dist/scrolling-text.d.ts",
-            "import": "./dist/scrolling-text.js"
         },
         "./search": {
             "types": "./dist/search.d.ts",
@@ -703,6 +682,16 @@
         "proof:pointer-velocity": "node scripts/proof-pointer-velocity.mjs",
         "proof:border-progress": "node scripts/proof-border-progress.mjs",
         "proof:liquid-fill": "node scripts/proof-liquid-fill.mjs",
+        "proof:a11y": "node scripts/proof-a11y.mjs",
+        "proof:consumer-evidence-true": "node scripts/proof-consumer-evidence-true.mjs",
+        "proof:demo-control-live": "node scripts/proof-demo-control-live.mjs",
+        "proof:esc-stack": "node scripts/proof-esc-stack.mjs",
+        "proof:story-affordance": "node scripts/proof-story-affordance.mjs",
+        "proof:story-code-register": "node scripts/proof-story-code-register.mjs",
+        "proof:story-kit": "node scripts/proof-story-kit.mjs",
+        "proof:story-schema": "node scripts/proof-story-schema.mjs",
+        "proof:story-tiles": "node scripts/proof-story-tiles.mjs",
+        "proof:xr-producer-repairs": "node scripts/proof-xr-producer-repairs.mjs",
         "proof:demo": "node scripts/proof-demo.mjs",
         "proof:demo-design": "node scripts/proof-demo-design.mjs",
         "proof:no-dual-path": "node scripts/proof-no-dual-path.mjs",
@@ -1076,6 +1065,7 @@
     },
     "devDependencies": {
         "@lucide/vue": "^1.20.0",
+        "highlight.js": "^11.11.1",
         "@mkbabb/keyframes.js": "^5.2.0",
         "@mkbabb/pencil-boil": "^0.4.1",
         "@mkbabb/value.js": "^3.1.0",

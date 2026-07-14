@@ -523,6 +523,15 @@ export const DECLARED_FAMILY_SUBPATHS: ReadonlySet<string> = new Set<string>([
     "@mkbabb/glass-ui/motion-core",
     "@mkbabb/glass-ui/motion",
     "@mkbabb/glass-ui/card",
+    // BI B28/B68 fold families — each subpath is one primitive worn by sibling
+    // demo pages, an INTENTIONAL shared surface (not an accidental collision):
+    // `/dialog` ← dialog + sheet (Sheet is a Dialog placement) + confirm-dialog
+    // (BI.W-DIALOG-PLACEMENT preset); `/popover` ← popover + hover-card +
+    // hover-popover (BI.W-OVERLAY-UNION trigger="hover"); `/dropdown-menu` ←
+    // dropdown-menu + context-menu (one MenuTrigger primitive).
+    "@mkbabb/glass-ui/dialog",
+    "@mkbabb/glass-ui/popover",
+    "@mkbabb/glass-ui/dropdown-menu",
 ]);
 
 /**

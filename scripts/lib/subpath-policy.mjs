@@ -74,7 +74,10 @@ export const CUSTOM_CLASS = {
     // PUBLISH (42) — goo-dot-matrix RETIRED at BG.W-GOODOT-PRUNE (0 external consumers);
     // dot-flow-field / concentric / dot-matrix DELETED at BI.W-VIZ-DELETIONS (the user-ordered
     // clean-break prune — the 30+-attempt viz family retired, breaking → the 5.0.0 MAJOR cut).
-    "animated-digit": "PUBLISH", aurora: "PUBLISH", "border-progress": "PUBLISH",
+    "animated-digit": "PUBLISH", aurora: "PUBLISH",
+    // BI.W-BORDER-PROGRESS-RETIRE: the subpath UNPUBLISHES (0 external consumers; breaking →
+    // 5.0.0); the component is banked-dormant on disk (the SCROLL-PROGRESS-RIM successor coupling).
+    "border-progress": "INTERNAL",
     "color-swatch": "PUBLISH", "completion-seal": "PUBLISH",
     // BI.W-CHIP-FOLD: toggle-chip + selectable-chip → the one <Chip> (pressed | selected).
     chip: "PUBLISH",
@@ -90,7 +93,8 @@ export const CUSTOM_CLASS = {
     "icon-tooltip": "PUBLISH", "instrument-chassis": "PUBLISH", "labeled-field": "PUBLISH",
     "metric-badge": "PUBLISH", "metric-cell": "PUBLISH", "metric-stack": "PUBLISH",
     "pager-dots": "PUBLISH", "paper-backdrop": "PUBLISH", "liquid-grid": "PUBLISH",
-    pulse: "PUBLISH", "scrolling-text": "PUBLISH", search: "PUBLISH",
+    pulse: "PUBLISH", search: "PUBLISH",
+    // BI.W-SPEEDTEST-ONLY-PAIR: scrolling-text RETIRED (speedtest-only; the ask-row offers the mechanism).
     "sortable-list": "PUBLISH", "spa-view": "PUBLISH",
     "stacked-icons": "PUBLISH", "status-dot": "PUBLISH", tabs: "PUBLISH",
     timeline: "PUBLISH", typewriter: "PUBLISH",
@@ -100,7 +104,9 @@ export const CUSTOM_CLASS = {
 // --- src/composables/<subtree> ---
 export const COMPOSABLE_CLASS = {
     // PUBLISH (4) — published through their own index.ts.
-    color: "PUBLISH", dom: "PUBLISH", reactive: "PUBLISH", virtual: "PUBLISH",
+    color: "PUBLISH", dom: "PUBLISH", reactive: "PUBLISH",
+    // BI.W-VIRTUAL-TRUTH: /virtual RETIRED terminal (0 external consumers; the engine stays internal).
+    virtual: "INTERNAL",
     // CURATED (4) — the vueuse/keyframes-bearing SCC-trap surfaces published via a
     // hand-curated flat barrel at src/<name>.ts, NOT this subtree's index.ts.
     dark: "CURATED", keyboard: "CURATED", motion: "CURATED", sidebar: "CURATED",
@@ -154,7 +160,8 @@ export const COMPOSABLE_SUBPATHS = {
     color: "src/composables/color/index.ts",
     dom: "src/composables/dom/index.ts",
     reactive: "src/composables/reactive/index.ts",
-    virtual: "src/composables/virtual/index.ts",
+    // BI.W-VIRTUAL-TRUTH: /virtual RETIRED terminal — the row leaves the published map
+    // (the engine stays internal at src/composables/virtual/).
     canvas: "src/composables/glass/canvas2d/index.ts", // name "canvas" ≠ leaf "canvas2d"
     "motion-curves": "src/composables/motion/curves.ts", // nested file, name ≠ leaf
     "fourier-math": "src/components/custom/fourier-field/math.ts", // nested, name ≠ leaf

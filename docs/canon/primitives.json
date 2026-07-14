@@ -6,8 +6,8 @@
   ],
   "_note": "Machine-readable canonical-primitives register — the ROOT registry atlas G-M11 (no-hand-rolled-substitute-where-a-glass-ui-primitive-exists) references. Co-ownership: atlas M.W0-A.6 authors the consume-canon; glass-ui owns this artifact. DERIVE-not-hand-author — regenerate via the generator, never hand-edit; proof:canon-homes asserts committed==regen. BH.B4-canon / ATLAS-M item 7 / the WG-E·PRIMITIVES-REGISTER root.",
   "package": "@mkbabb/glass-ui",
-  "subpathCount": 86,
-  "primitiveCount": 1346,
+  "subpathCount": 78,
+  "primitiveCount": 1298,
   "assets": [
     "./fonts/*",
     "./styles",
@@ -98,18 +98,6 @@
         "ConfiguratorStateOptions",
         "constellationWellMapping",
         "ConstellationWellResult",
-        "ContextMenu",
-        "ContextMenuCheckboxItem",
-        "ContextMenuContent",
-        "ContextMenuItem",
-        "ContextMenuLabel",
-        "ContextMenuRadioGroup",
-        "ContextMenuRadioItem",
-        "ContextMenuSeparator",
-        "ContextMenuShortcut",
-        "ContextMenuSubContent",
-        "ContextMenuSubTrigger",
-        "ContextMenuTrigger",
         "CopyFailureReason",
         "CopyResult",
         "copyToClipboard",
@@ -152,10 +140,6 @@
         "FourierLeanResult",
         "GooBarbellRefs",
         "HighlightMatcher",
-        "HoverCard",
-        "HoverCardContent",
-        "HoverCardTrigger",
-        "HoverPopover",
         "IconChip",
         "IconChipIcon",
         "IconChipProps",
@@ -168,6 +152,7 @@
         "LeadTrailEdges",
         "LiquidFlexAxis",
         "MenuItemVariants",
+        "MenuTrigger",
         "METRIC_PLACEHOLDER",
         "MetricPill",
         "MetricValue",
@@ -177,9 +162,6 @@
         "MorphSignatureName",
         "MorphVector",
         "Motion",
-        "moveBeforeSafe",
-        "MultiSelect",
-        "MultiSelectOption",
         "navigate",
         "NavigateOptions",
         "Notification",
@@ -211,7 +193,6 @@
         "ScrollCardHeader",
         "ScrollCardHeaderProps",
         "ScrollCardProps",
-        "ScrollingText",
         "Section",
         "SectionedCell",
         "Select",
@@ -225,16 +206,6 @@
         "SelectTrigger",
         "SelectValue",
         "Separator",
-        "Sheet",
-        "SheetClose",
-        "SheetContent",
-        "SheetDescription",
-        "SheetFooter",
-        "SheetHeader",
-        "SheetTitle",
-        "SheetTrigger",
-        "sheetVariants",
-        "SheetVariants",
         "Size",
         "Skeleton",
         "Slider",
@@ -245,8 +216,6 @@
         "SpecularWriter",
         "SplitChars",
         "startViewTransition",
-        "supportsMoveBefore",
-        "supportsPostTask",
         "supportsRouteTransitions",
         "supportsScrollTimeline",
         "supportsViewTimeline",
@@ -276,7 +245,6 @@
         "ToasterPosition",
         "ToastTitle",
         "ToastType",
-        "ToastVariant",
         "Toggle",
         "ToggleGroup",
         "ToggleGroupItem",
@@ -448,11 +416,17 @@
         "MOTIONS",
         "Orientation",
         "ORIENTATIONS",
+        "Placement",
+        "PLACEMENTS",
         "Size",
         "SIZES",
         "Surface",
         "SURFACES",
-        "SurfaceTier"
+        "SurfaceTier",
+        "Tone",
+        "TONES",
+        "Trigger",
+        "TRIGGERS"
       ]
     },
     {
@@ -477,6 +451,7 @@
         "Blob",
         "BLOB_CONFIG_DEFAULTS",
         "BLOB_CONFIG_KEY",
+        "BLOB_HERO",
         "BlobColor",
         "BlobConfig",
         "BlobGeometry",
@@ -491,6 +466,9 @@
         "BlobSatelliteTiming",
         "BlobSurface",
         "BlobVariant",
+        "clampLightnessFloor",
+        "LIGHTNESS_FLOOR_BRACKET",
+        "LIGHTNESS_FLOOR_DEFAULT",
         "MetaballSource",
         "MoodParams",
         "SatelliteInternal",
@@ -503,19 +481,33 @@
       ]
     },
     {
-      "specifier": "@mkbabb/glass-ui/border-progress",
-      "name": "border-progress",
-      "tier": "component-custom",
-      "source": "src/components/custom/border-progress/index.ts",
+      "specifier": "@mkbabb/glass-ui/blob-config",
+      "name": "blob-config",
+      "tier": "curated",
+      "source": "src/components/custom/blob/config.ts",
       "canonHome": null,
       "exports": [
-        "BorderProgress",
-        "BorderProgressCoverage",
-        "BorderProgressMilestone",
-        "BorderProgressMilestoneEvent",
-        "BorderProgressProps",
-        "spectrumStops",
-        "SpectrumUpgrade"
+        "BLOB_CONFIG_DEFAULTS",
+        "BLOB_CONFIG_KEY",
+        "BLOB_HERO",
+        "BlobColor",
+        "BlobConfig",
+        "BlobGeometry",
+        "BlobInteraction",
+        "BlobMembrane",
+        "BlobMerge",
+        "BlobMood",
+        "BlobQuality",
+        "BlobSatelliteTiming",
+        "BlobSurface",
+        "BlobVariant",
+        "clampLightnessFloor",
+        "LIGHTNESS_FLOOR_BRACKET",
+        "LIGHTNESS_FLOOR_DEFAULT",
+        "MetaballSource",
+        "MoodParams",
+        "SatelliteInternal",
+        "SatellitePhase"
       ]
     },
     {
@@ -587,6 +579,19 @@
         "CarouselPrevious",
         "GlassCarouselPager",
         "useCarousel"
+      ]
+    },
+    {
+      "specifier": "@mkbabb/glass-ui/chip",
+      "name": "chip",
+      "tier": "component-custom",
+      "source": "src/components/custom/chip/index.ts",
+      "canonHome": null,
+      "exports": [
+        "Chip",
+        "ChipProps",
+        "chipVariants",
+        "ChipVariants"
       ]
     },
     {
@@ -695,16 +700,6 @@
       ]
     },
     {
-      "specifier": "@mkbabb/glass-ui/confirm-dialog",
-      "name": "confirm-dialog",
-      "tier": "component-custom",
-      "source": "src/components/custom/confirm-dialog/index.ts",
-      "canonHome": null,
-      "exports": [
-        "ConfirmDialog"
-      ]
-    },
-    {
       "specifier": "@mkbabb/glass-ui/constellation",
       "name": "constellation",
       "tier": "component-custom",
@@ -762,27 +757,6 @@
         "warpSettled",
         "warpStep",
         "warpTo"
-      ]
-    },
-    {
-      "specifier": "@mkbabb/glass-ui/context-menu",
-      "name": "context-menu",
-      "tier": "component-ui",
-      "source": "src/components/ui/context-menu/index.ts",
-      "canonHome": null,
-      "exports": [
-        "ContextMenu",
-        "ContextMenuCheckboxItem",
-        "ContextMenuContent",
-        "ContextMenuItem",
-        "ContextMenuLabel",
-        "ContextMenuRadioGroup",
-        "ContextMenuRadioItem",
-        "ContextMenuSeparator",
-        "ContextMenuShortcut",
-        "ContextMenuSubContent",
-        "ContextMenuSubTrigger",
-        "ContextMenuTrigger"
       ]
     },
     {
@@ -994,7 +968,8 @@
         "DropdownMenuSub",
         "DropdownMenuSubContent",
         "DropdownMenuSubTrigger",
-        "DropdownMenuTrigger"
+        "DropdownMenuTrigger",
+        "MenuTrigger"
       ]
     },
     {
@@ -1129,18 +1104,6 @@
       ]
     },
     {
-      "specifier": "@mkbabb/glass-ui/glass-panel",
-      "name": "glass-panel",
-      "tier": "component-custom",
-      "source": "src/components/custom/glass-panel/index.ts",
-      "canonHome": null,
-      "exports": [
-        "GlassPanel",
-        "GlassPanelProps",
-        "SurfaceTier"
-      ]
-    },
-    {
       "specifier": "@mkbabb/glass-ui/handmark",
       "name": "handmark",
       "tier": "component-custom",
@@ -1194,30 +1157,8 @@
       "canonHome": null,
       "exports": [
         "HeaderRibbon",
-        "HeaderRibbonPosition",
+        "HeaderRibbonPlacement",
         "HeaderRibbonProps"
-      ]
-    },
-    {
-      "specifier": "@mkbabb/glass-ui/hover-card",
-      "name": "hover-card",
-      "tier": "component-ui",
-      "source": "src/components/ui/hover-card/index.ts",
-      "canonHome": null,
-      "exports": [
-        "HoverCard",
-        "HoverCardContent",
-        "HoverCardTrigger"
-      ]
-    },
-    {
-      "specifier": "@mkbabb/glass-ui/hover-popover",
-      "name": "hover-popover",
-      "tier": "component-custom",
-      "source": "src/components/custom/hover-popover/index.ts",
-      "canonHome": null,
-      "exports": [
-        "HoverPopover"
       ]
     },
     {
@@ -1770,16 +1711,6 @@
       ]
     },
     {
-      "specifier": "@mkbabb/glass-ui/scrolling-text",
-      "name": "scrolling-text",
-      "tier": "component-custom",
-      "source": "src/components/custom/scrolling-text/index.ts",
-      "canonHome": null,
-      "exports": [
-        "ScrollingText"
-      ]
-    },
-    {
       "specifier": "@mkbabb/glass-ui/search",
       "name": "search",
       "tier": "component-custom",
@@ -1823,18 +1754,6 @@
       ]
     },
     {
-      "specifier": "@mkbabb/glass-ui/selectable-chip",
-      "name": "selectable-chip",
-      "tier": "component-custom",
-      "source": "src/components/custom/selectable-chip/index.ts",
-      "canonHome": null,
-      "exports": [
-        "chipVariants",
-        "ChipVariants",
-        "SelectableChip"
-      ]
-    },
-    {
       "specifier": "@mkbabb/glass-ui/separator",
       "name": "separator",
       "tier": "component-ui",
@@ -1842,25 +1761,6 @@
       "canonHome": null,
       "exports": [
         "Separator"
-      ]
-    },
-    {
-      "specifier": "@mkbabb/glass-ui/sheet",
-      "name": "sheet",
-      "tier": "component-ui",
-      "source": "src/components/ui/sheet/index.ts",
-      "canonHome": null,
-      "exports": [
-        "Sheet",
-        "SheetClose",
-        "SheetContent",
-        "SheetDescription",
-        "SheetFooter",
-        "SheetHeader",
-        "SheetTitle",
-        "SheetTrigger",
-        "sheetVariants",
-        "SheetVariants"
       ]
     },
     {
@@ -1954,6 +1854,19 @@
       ]
     },
     {
+      "specifier": "@mkbabb/glass-ui/surface",
+      "name": "surface",
+      "tier": "component-ui",
+      "source": "src/components/ui/surface/index.ts",
+      "canonHome": null,
+      "exports": [
+        "decorationClass",
+        "Surface",
+        "surfaceClass",
+        "SurfaceProps"
+      ]
+    },
+    {
       "specifier": "@mkbabb/glass-ui/switch",
       "name": "switch",
       "tier": "component-ui",
@@ -2007,20 +1920,7 @@
         "ToasterPosition",
         "ToastTitle",
         "ToastType",
-        "ToastVariant",
         "useToast"
-      ]
-    },
-    {
-      "specifier": "@mkbabb/glass-ui/toggle-chip",
-      "name": "toggle-chip",
-      "tier": "component-custom",
-      "source": "src/components/custom/toggle-chip/index.ts",
-      "canonHome": null,
-      "exports": [
-        "ToggleChip",
-        "toggleChipVariants",
-        "ToggleChipVariants"
       ]
     },
     {
@@ -2096,26 +1996,6 @@
         "TypoContext",
         "TypoState",
         "useTypewriter"
-      ]
-    },
-    {
-      "specifier": "@mkbabb/glass-ui/virtual",
-      "name": "virtual",
-      "tier": "composable",
-      "source": "src/composables/virtual/index.ts",
-      "canonHome": null,
-      "exports": [
-        "buildSectionLayout",
-        "clearSessionHeightCache",
-        "findSectionOffset",
-        "FlatSection",
-        "ForcedSectionWindowRange",
-        "resolveActiveSection",
-        "resolveSectionWindow",
-        "SectionLayout",
-        "SectionWindowRange",
-        "useVirtualSectionWindow",
-        "useWindowedStore"
       ]
     },
     {
