@@ -49,11 +49,13 @@
 //
 // ── Custom-package cherry-pick rationale ─────────────────────────────────
 //
-// This root barrel re-exports a curated 3 of the `src/components/custom/`
-// packages (`instrument-chassis`, `configurator`, `scrolling-text`);
-// `hover-popover` FOLDED onto the `ui/popover` union (BI.W-OVERLAY-UNION). The
-// rest reach consumers ONLY via their
-// dedicated subpath (`@mkbabb/glass-ui/dock`, `/aurora`, `/sidebar`, ...).
+// This root barrel re-exports a curated few of the `src/components/custom/`
+// packages (`instrument-chassis`, `configurator`, `icon-chip`, `split-chars`);
+// `hover-popover` FOLDED onto the `ui/popover` union (BI.W-OVERLAY-UNION), and
+// `scrolling-text` RETIRE-RELOCATED to speedtest (BI.W-SPEEDTEST-ONLY-PAIR — the
+// overflow-marquee was speedtest-only, the ≥2-binary bar unmet). The rest reach
+// consumers ONLY via their dedicated subpath
+// (`@mkbabb/glass-ui/dock`, `/aurora`, `/sidebar`, ...).
 //
 // Acceptance bar for root-barrel inclusion:
 //   (a) vueuse-free at every transitive import (closes the SCC trap);
@@ -144,8 +146,10 @@ export * from "./components/custom/instrument-chassis";
 // Custom composites — configurator primitive
 export * from "./components/custom/configurator";
 
-// Custom composites — overflow-marquee primitive
-export * from "./components/custom/scrolling-text";
+// BI.W-SPEEDTEST-ONLY-PAIR — `custom/scrolling-text` RETIRE-RELOCATED to speedtest.
+// The overflow-marquee's only binary consumer was speedtest (2 sites), the
+// ≥2-binary-consumer bar unmet, so the primitive + its `/scrolling-text` subpath
+// leave glass-ui; speedtest brings its own marquee. (clean break, no alias.)
 
 // Custom composites — the section-color pop primitive (BA.W-ICON-CHIP). The ONE
 // color-event vehicle (the `color-mix` backplate + full-chroma glyph + the

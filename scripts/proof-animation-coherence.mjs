@@ -221,7 +221,6 @@ const SURFACE_SFC = [
     "src/components/custom/aurora/Aurora.vue",
     "src/components/custom/blob/Blob.vue",
     "src/components/custom/metric-stack/MetricRow.vue",
-    "src/components/custom/scrolling-text/ScrollingText.vue",
     "src/components/ui/slider/Slider.vue",
 ];
 
@@ -275,11 +274,9 @@ export const NON_PHYSICAL_ALLOW = [
     "gold-shimmer-slide",
     "marquee",
     "scroll-marquee",
-    // AY.W-MOTION — the ScrollingText overflow-marquee pan: a continuous material
-    // sweep (pause-pan-pause-return), NOT a settling physical morph, so its
-    // `cubic-bezier(0.45, 0, 0.55, 1)` ease-in-out is the correct non-physical
-    // register (ScrollingText.vue, the lifted speedtest marquee).
-    "scrolling-text-pan",
+    // (AY.W-MOTION's `scrolling-text-pan` marquee entry RETIRED with ScrollingText.vue
+    // at BI.W-SPEEDTEST-ONLY-PAIR — the overflow-marquee relocated to speedtest, so
+    // the keyframe + its allow-list entry have no surviving consumer.)
 ];
 
 // Detect a raw `cubic-bezier(` or the `linear(`-with-stops spring function on a

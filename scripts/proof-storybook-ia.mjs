@@ -74,9 +74,12 @@ export const EXPECTED_TREE = [
     // BI.W-MULTISELECT-FOLD — `multi-select` FOLDED onto `<Combobox multiple>` (the
     // combobox story carries the multiple / chips-in-trigger arm); the standalone
     // multi-select story RETIRED.
+    // BI.W-COMPOSITIONS-PRUNE — `labeled-field` relocated in from the compositions band
+    // (the LabeledField forms family — a single-family control demo, not a composed scene).
     ["forms", [
         "inputs", "textarea", "checks", "slider", "number-field", "select",
         "combobox", "toggle", "toggle-chip", "selectable-chip", "label",
+        "labeled-field",
     ]],
     // The Primitives bin split: display atoms. `atoms` joined at BG.W-DEMO-IA-REDESIGN
     // (the display ATOMS family page — separator/pulse/status-dot/stacked-icons/
@@ -99,6 +102,10 @@ export const EXPECTED_TREE = [
         // `card-pressable` joined at BI.W-DEMO-CARD-DECLARE (the :pressable
         // interaction facet — a distinct Card facet from display/card).
         "card-pressable",
+        // BI.W-COMPOSITIONS-PRUNE — `configurator` (studio shell) + `icon-tooltip` (the
+        // Tooltip auto-provider preset) relocated in from the compositions band: each a
+        // single-library-family surface demo, not a composed scene.
+        "configurator", "icon-tooltip",
     ]],
     // `header-ribbon` RETURNED at AZ.W-PRUNE2 (the restore: a live keyframes.js
     // binary consumer — the published subpath ships again WITH its story).
@@ -124,11 +131,15 @@ export const EXPECTED_TREE = [
     ["dock", ["overview", "layers", "rail", "sections", "cta-receive", "dock-search", "controls", "overflow"]],
     // BG.W-DEMO-DUP-MERGE (F7.3) — the timeline segmented/continuous member routes are
     // MERGED into `data/timeline` (the 3-<StorySection> family page); `metrics` is the
-    // BG.W-DEMO-IA-REDESIGN metric-family page (metric-cell/stack/badge/pill/scrolling-text).
+    // BG.W-DEMO-IA-REDESIGN metric-family page (metric-cell/stack/badge/pill). The
+    // scrolling-text member RETIRE-RELOCATED to speedtest at BI.W-SPEEDTEST-ONLY-PAIR.
+    // BI.W-COMPOSITIONS-PRUNE — `instrument-chassis` relocated in from the compositions
+    // band (the ping/jitter/download telemetry metric-strip host — a data instrument).
     ["data", [
         "table", "data-table", "tags-input", "avatar", "sortable-list",
-        "infinite-scroll", "timeline", "search", "scrolling-text",
+        "infinite-scroll", "timeline", "search",
         "metric-cell", "metric-stack", "metrics", "virtual-section",
+        "instrument-chassis",
     ]],
     ["feedback", [
         "alert", "toast", "toaster", "notification", "progress", "skeleton",
@@ -165,11 +176,20 @@ export const EXPECTED_TREE = [
     // composed has its own story + real consumers). `instrument-rail` +
     // `dock-with-slider` retired with the instrument-rail RETIRE-FULL (the
     // never-published cockpit-rail sibling; instrument-chassis is the shipped chassis).
+    // BI.W-COMPOSITIONS-PRUNE — the compositions band keeps ONLY composed scenes (a
+    // story that carries a `/compositions/*` route path, not an `@mkbabb/glass-ui/*`
+    // library subpath). The four single-library-family demos left: `configurator` +
+    // `icon-tooltip` → containers, `instrument-chassis` → data, `labeled-field` → forms;
+    // `drawer-live-behind` folded its mode into containers/drawer.
+    // BI.W-MATH-PAPER-REMOVE (UF-K3) — `math-paper` dropped: a single-idiom specimen
+    // (fira-code math block + `.paper-ink-mark` section rail on a `.paper-grid` ground),
+    // a CSS idiom already carried by the paper/grid vocabulary, not a composed scene.
+    // BI.W-HERO-DEMOTE (UF-K2) — `hero` dropped: the standalone story duplicated the
+    // `/compositions` D1 section landing (the chassis renders the real-scene bento), so it
+    // is DEMOTED to that landing. auth-shell is the surviving marquee (the D2 main).
     ["compositions", [
-        "hero", "math-paper", "auth-shell", "settings",
-        "empty-states", "drawer-live-behind",
-        "configurator", "instrument-chassis",
-        "form-validation", "labeled-field", "icon-tooltip", "gate-pattern",
+        "auth-shell", "settings",
+        "empty-states", "form-validation", "gate-pattern",
         // `chassis` joined at BG.W-STORY-PAGE-API (§4-D — the five demo KINDS
         // side by side over the one StoryPage chassis).
         "chassis",

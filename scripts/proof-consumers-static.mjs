@@ -139,7 +139,8 @@ const rootContractFiles = [
     // BI.W-OVERLAY-UNION — hover-popover FOLDED onto <Popover trigger="hover">
     // (off the root barrel; the survivor Popover ships via /popover).
     "src/components/custom/configurator/index.ts",
-    "src/components/custom/scrolling-text/index.ts",
+    // BI.W-SPEEDTEST-ONLY-PAIR — scrolling-text RETIRE-RELOCATED to speedtest (off
+    // the root barrel; the overflow-marquee was speedtest-only, the ≥2-binary bar unmet).
     // BA.W-ICON-CHIP — the section-color POP primitive joins the root barrel
     // (`export * from "./components/custom/icon-chip"`; also /icon-chip subpath).
     "src/components/custom/icon-chip/index.ts",
