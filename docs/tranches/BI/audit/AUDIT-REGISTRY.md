@@ -128,8 +128,13 @@ row (consumers get a relay ask), regardless of how many consumers it has.
   says its being "literally reka HoverCard underneath" makes it a fold-onto-HoverCard candidate
   unless it owns a distinct mechanism (the keep-open/hoverOpenDelay behavior — D-GLASS/B8 adjudicates
   mechanism-first, consumers get the migration ask).
-- speedtest-ONLY sextet: metric-cell, metric-stack, instrument-chassis, icon-tooltip, pulse,
-  scrolling-text → the metrics-transfer ask (UF-K1) generalizes to this set (decide each).
+- ~~speedtest-ONLY sextet: metric-cell, metric-stack, instrument-chassis, icon-tooltip, pulse,
+  scrolling-text~~ → **CORRECTED (XR-3 / BI.W-METRICS-DEMO):** the "speedtest-only" premise is FALSE
+  for the metric family. metric-cell/metric-stack/metric-badge/instrument-chassis/pulse are a THREE-repo
+  public surface (speedtest + muster + sci-report; metric-badge spans all three) — they STAY (KEEP-guard
+  in proof:consumer-evidence-true M1; per-site evidence docs/consumer-evidence/metrics.md). UF-K1's overfit
+  lands on the /data/metrics DEMO page (W-AFFORDANCE-REDESIGN), not the components. Only icon-tooltip +
+  scrolling-text are truly speedtest-only (W-SPEEDTEST-ONLY-PAIR).
 - border-progress: ZERO real consumers; the CLAUDE.md "born ≥2 by construction" claim is FALSE at
   speedtest HEAD (hand-rolls its own bar). completion-seal: 1 (own demo).
 - proof:component-orphan counts demo+internal as consumers — structurally cannot catch overfit →
