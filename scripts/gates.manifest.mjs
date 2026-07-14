@@ -890,12 +890,6 @@ export const GATES = [
         note: "BI.W-AXES-GATES — the B2/B8 fold-retirement contract, one clause per fold (glass-panel FAM-10 · hover-popover/hover-card→Popover trigger · context-menu→Menu trigger · sheet+confirm-dialog→DialogContent placement · toggle-chip+selectable-chip→Chip · multi-select→Combobox multiple): retired dir ABSENT + barrel/subpath/package.json export ABSENT + ≥1 live consumer on the survivor + FAM-11 R1/R2. OWNEDBY-RESOLVE: every clause names its owning wave. Bite: revive a retired dir or re-add its export → RED.",
     },
     {
-        id: "proof:api-lockstep",
-        cmd: "proof:api-lockstep",
-        tags: ["local", "ci"],
-        note: "BI.W-SYNONYM-RENAMES — the /api surface moves in LOCKSTEP with the axis renames: retired type names (ToastVariant, HeaderRibbonPosition) ABSENT; the successors (Tone via /axes, HeaderRibbonPlacement) PUBLISHED. Born-RED at HEAD (7 stale) → GREEN by the rename set. Bite: re-export a retired alias name → RED.",
-    },
-    {
         id: "proof:metric-core",
         cmd: "proof:metric-core",
         tags: ["local", "ci"],

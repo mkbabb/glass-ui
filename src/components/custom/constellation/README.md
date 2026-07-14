@@ -182,7 +182,7 @@ The live field handed to `drawOverlay` — read-only, the consumer paints agains
 | `pinnedDrift?` | `ConstellationPinnedDrift` | the autonomous pinned-anchor drift state (G5), present when `pinnedDrift` is on (absent → the pin holds dead-still) |
 | `warpAutoRelease?` | `boolean` | the warp auto-release flag (G6) — a settled warp clears its target (the identity-ride) |
 
-The library exports `ConstellationProps` + `ConstellationField` + `ConstellationWarp` on `@mkbabb/glass-ui/api` (the curated discovery layer); the full type set including `ConstellationPinnedDrift` + the engine fns `stepPinnedDrift` / `makePinnedDrift` / `warpSettled` ship on `@mkbabb/glass-ui/constellation`.
+The library exports `ConstellationProps` + `ConstellationField` + `ConstellationWarp` — plus the full type set including `ConstellationPinnedDrift` and the engine fns `stepPinnedDrift` / `makePinnedDrift` / `warpSettled` — on `@mkbabb/glass-ui/constellation`.
 
 ### The label / callout is `drawOverlay` content (the zero-deck-domain canon — AZ.W-CON-GEN G4)
 

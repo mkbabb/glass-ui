@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import { readMonolith } from "../scripts/read-css-monoliths.mjs";
-import * as Api from "@glass/api";
 import * as Aurora from "@glass/subpaths/aurora";
 import * as CarouselSurface from "@glass/carousel";
 import * as CommandSurface from "@glass/subpaths/command";
@@ -50,7 +49,6 @@ const uiRuntimeExports = [
     "DropdownMenu",
     // BI.W-OVERLAY-UNION — HoverCard folded onto <Popover trigger="hover"> (clean break).
     "Label",
-    "MetricPill",
     // BI.W-MULTISELECT-FOLD — MultiSelect folded onto <Combobox multiple> (clean break).
     "Notification",
     "NumberField",
@@ -170,10 +168,6 @@ const subpathRuntimeExports = [
     { subpath: "keyboard", surface: Keyboard, name: "useRegisteredShortcuts" },
     { subpath: "keyboard", surface: Keyboard, name: "formatCombo" },
     { subpath: "keyboard", surface: Keyboard, name: "isMac" },
-    // L.W1 — api/ discovery layer (canonical constants; types erase)
-    { subpath: "api", surface: Api, name: "MAX_NUCLEI" },
-    { subpath: "api", surface: Api, name: "MAX_STOPS" },
-    { subpath: "api", surface: Api, name: "DEFAULT_AURORA_CONFIG" },
     // keyframes.js-BEARING motion composables on the `/motion` subpath.
     { subpath: "motion", surface: Motion, name: "useNumericTransition" },
     { subpath: "motion", surface: Motion, name: "useAnimatedNumber" },

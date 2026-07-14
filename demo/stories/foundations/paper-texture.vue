@@ -91,8 +91,8 @@ const opacity = ref(0.5);
                         to extend the register beyond clean/aged.
                     </li>
                     <li>
-                        Reachable via the <code class="fira-code">@mkbabb/glass-ui/paper-backdrop</code> subpath
-                        and the <code class="fira-code">@mkbabb/glass-ui/api</code> type discovery layer.
+                        Reachable via the <code class="fira-code">@mkbabb/glass-ui/paper-backdrop</code> subpath,
+                        which ships the component and its <code class="fira-code">PaperBackdrop*</code> types.
                     </li>
                 </ul>
             </ShowcaseFrame>

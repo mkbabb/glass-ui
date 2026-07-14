@@ -2,15 +2,16 @@
 //
 // ── Import shape canon ───────────────────────────────────────────────────
 //
-// The library exposes consumers via three layers:
+// The library exposes consumers via two layers:
 //
 //   1. ROOT barrel (`@mkbabb/glass-ui`) — vueuse-free curated surface;
 //      the per-package list below. This file IS that barrel.
 //   2. Per-package SUBPATHS (`@mkbabb/glass-ui/<pkg>`) — every public
 //      component package reachable via flat name (verified by
-//      `npm run verify-export-types`).
-//   3. API discovery layer (`@mkbabb/glass-ui/api`) — pure-types/constants
-//      re-export aggregator (see `src/api/index.ts`).
+//      `npm run verify-export-types`). Public types + constants ride
+//      their OWNING package subpath (e.g. `ConstellationProps` on
+//      `/constellation`, `AuroraConfig` + `MAX_NUCLEI` on `/aurora`,
+//      `ButtonVariants` on `/button`).
 //
 // All subpath barrels at top level (`src/<flat>.ts`) follow the same shape:
 // `export * from "./components/<dir>"` (or composition thereof).
@@ -102,7 +103,6 @@ export * from "./components/ui/dropdown-menu";
 // substrate stays, imported by the sealed `<Popover trigger="hover">` union). The
 // HoverCard component + subpath fold onto ONE `Popover`. (clean break, no alias.)
 export * from "./components/ui/label";
-export * from "./components/ui/metric-pill";
 // BI.W-MULTISELECT-FOLD — `ui/multi-select` RETIRED. A MultiSelect is a
 // Popover+Command composition over the same Combobox-family mechanism, so it folds
 // onto `<Combobox multiple>` (array v-model + chips-in-trigger). (clean break, no alias.)
