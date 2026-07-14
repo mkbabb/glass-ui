@@ -186,3 +186,87 @@ recreate. Every deletion beyond the §2-approved set is DELETE-PENDING-APPROVAL.
 6. **Guardians**: the cron pair's IDLE branch must NOT relaunch execution bands while MODE is
    TRANCHE-DEVELOPMENT (the state file carries the flag); guardians answer one-line
    DEVELOPMENT-HEALTHY against the formation workflows instead.
+
+---
+
+## 10 · ROOTING (user order 2026-07-14 — the governing precepts, one-way absorbed)
+
+This formation is ROOTED in `precepts/instructions/TRANCHE-FORMULATION.md` +
+`precepts/instructions/DESIGN-ITERATION.md` (read whole 2026-07-14; the precepts repo is
+read-only — absorption is one-way, into this charter). Their law binds beyond §2–§3:
+
+- **This is NOT an implementation phase.** Tranche development only; no source edits land from
+  the formation prompt. The deliverable is the tranche fully formed: plan folder, wave specs,
+  gates, dispositions.
+- **The 32-agent audit budget** (steerable, round over round; no lens permanently staffed;
+  batches of three against the rate wall). Audit lenses open genuinely diverse: plan-vs-landed
+  diff · gate soundness (can each gate actually fail?) · gestalt-vs-per-mechanism · the chronic
+  + disposition ledgers · prompt-recap completeness · consumer truth (import graph AND registry)
+  · performance · accessibility · doc/canon drift · dead-code + dual-path census · cross-repo
+  asks/consumes. The favored success narrative stays withheld from most auditors.
+- **Disease rows:** a chronic that has ridden two or more closes un-decided is a disease row,
+  and DECIDING it is a wave of its own. Re-booking is forbidden. Every deferred item folds in as
+  a DECIDED row: build, fold, or retire with rationale.
+- **Prompt-recap completeness:** ALL prompts and requests hitherto are recapped; an unaddressed
+  ask becomes a registry row with an owning wave. Silent drops are forbidden.
+- **The close-class lies** are the standing adversarial checklist: green-over-broken ·
+  vacuous-green gates · declared captures missing on disk · masked fallbacks · alias smuggling ·
+  re-booked chronics · per-mechanism green over gestalt broken · counting a partial as done.
+- **The return contract:** an inventory of problems without the tranche that resolves them is an
+  incomplete return.
+
+## 11 · THE CORES (user-named + brainstormed, 2026-07-14 — the tranche's design centers)
+
+Every formation family speaks to ALL of these; every wave belongs to at least one:
+
+1. **LIQUID GLASS — the material.** Glass morphism at its apotheosis: refraction, specular,
+   key-light, veil/clarity, the ONE plate axis (Surface/Card). Grounded in our iOS-27 image +
+   video analyses (the BD liquid-dock spec corpus) — and the bar is to SUPERSEDE and BEST iOS 27,
+   not match it.
+2. **THE DOCK — the headline primitive.** Liquid dock, fission/fold, rail, morph-receive,
+   search, overflow, the spine contract; the D4 spring escalations resolve here.
+3. **MOTION — the iOS-27 animation + easing analysis on ALL components.** Rich, suffused,
+   subtle, glassy; one clock, springs, tempo, inertia/weight/bounce universal (the liquid-weight
+   law); PRM carves; procedural animation as a first-class register.
+4. **PROCEDURAL VIZ — the substrates.** Aurora, blob, constellation, fourier-field, liquid-grid:
+   WebGPU-first with dual-engine paint truth.
+5. **AUDACIOUS TYPOGRAPHY.** The type scale as a statement: gilt/shimmer registers, handmark,
+   split-chars, text-motion — legible, loud, glassy.
+6. **THE COMPONENT APOTHEOSIS.** A perfected, distilled UI/UX set: ONE component per concept —
+   the synonym-duplication disease (glass panel vs pane vs card → CARD) is a named defect class
+   the critique fleet hunts; full shadcn style-and-structure ABROGATION (the ui/custom split and
+   inherited scaffolding die; our own flattened structure stands); rich affordances + modularity
+   WITHOUT duplication or contrivance; KISS, DRY, full modularization refitting.
+7. **KEYFRAMES.JS INTEGRATION — rich and deep.** In components AND the storybook: better
+   onscroll events, scroll choreography, reveal/deck registers; the library pair moves as one.
+8. **THE DEMO CHASSIS.** Perfected chassis + full codification/TEMPLATIZATION of storybook
+   storypoints and categories — the storybook is a product surface, not an afterthought.
+9. **THE PRUNE.** Full pruning of deprecated files and overfit components — AFTER a full,
+   ruthless critique + hardening; the speedtest extractions ride here (metric-pill precedent).
+10. **THE CONSTELLATION ASSAY.** Per-repo: keyframes.js · speedtest (overfit components placed
+    THERE) · value.js · fourier-analysis's web component · sci-report + **atlas (MARK: in ACTIVE
+    tranche development — a live codex session; coordinate, never collide)** · **slides (MARK:
+    the plan is to UNION slides — or at least import its facilities — into sci-report's atlas)**.
+    Audit their most recent tranches, then their begotten UIs: how REAL repos use our components
+    is the perfection signal.
+
+**Platform law:** modern CSS + WebGPU, bounded by what is globally compatible on the MOST MODERN
+Safari AND Chrome — never Chrome-overfit. Every design decision routes through Fable + the
+frontend design plugin (DesignSync — the modern web design MCP); Opus/Sonnet take mechanical
+fanout only.
+
+**The greenfield-process law (NOT an entire greenfield):** much of this library is good and has
+been fastidiously crafted over months. The process is: greenfield PROTOTYPES → ruthless critique
+→ a sedulous, deft AGGLOMERATION that folds the best facilities from the greenfields into the
+extant. Wholesale rewrites of working excellence are a critique hit, not a virtue.
+
+## 12 · THE OATHS (sworn by the orchestrator, 2026-07-14, hic et ubique)
+
+- **NO quick solutions, NO workarounds: idiomatic, gestalt approaches.** This is a development
+  product; architectural transpositions in the sake of elegance, simplicity, and performance
+  above all are both necessary and desirable.
+- **NO legacy code. Clean breaks: no aliases, no migration shims, no dual paths, no masking
+  fallbacks.**
+
+Sworn. Binding on every formation agent, every wave spec, every execution builder, and the
+orchestrator itself — here and everywhere.
