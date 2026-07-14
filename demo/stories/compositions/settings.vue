@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../../chassis/page/StoryPage.vue";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { Card, CardContent } from "@glass/components/ui/card";
 import { Separator } from "@glass/components/ui/separator";
 import {
@@ -37,6 +37,43 @@ const cartoonShadow = ref(true);
 const paperGrain = ref(true);
 const reducedMotion = ref(false);
 
+// BI.W-GRAIN-WIRE — the appearance controls drive REAL inherited surface tokens on
+// the settings surface, so every knob visibly changes the page it configures (the
+// UF-J2 fix: a control that promises an effect delivers one). All four live tokens
+// ride ONE inherited `:style` object off the page root; `paperGrain` toggles the
+// grain overlay via `:class`. No new CSS — every token/utility already ships.
+const DENSITY_SPACING: Record<(typeof densityOptions)[number], string> = {
+    Cozy: "0.5rem",
+    Comfortable: "0rem",
+    Compact: "-0.5rem",
+};
+
+const surfaceStyle = computed<Record<string, string>>(() => {
+    const grainAlpha = (grain.value / 100).toFixed(4);
+    const spacing = DENSITY_SPACING[density.value];
+    const style: Record<string, string> = {
+        // Grain slider → the live grain density on BOTH grain channels: the
+        // `--glass-grain-opacity` tier-root the glass-material grain reads, and the
+        // `--paper-grain-opacity` the `.paper-grain-overlay::after` tooth reads
+        // (the latter shadows the glass fallback, so the overlay is driven direct).
+        "--glass-grain-opacity": grainAlpha,
+        "--paper-grain-opacity": grainAlpha,
+        // Density select → the card gap/pad the CardContent grids already read.
+        "--density-gap": spacing,
+        "--density-pad": spacing,
+    };
+    // Reduce-motion switch → zero the `--motion-weight` scalar the cartoon-caster
+    // (cards.css) multiplies every travel/squash term by.
+    if (reducedMotion.value) style["--motion-weight"] = "0";
+    // Cartoon-shadows switch → drop the card cartoon-shadow tokens to `none` when
+    // off (the `.card` box-shadow reads the token, so the cards flatten).
+    if (!cartoonShadow.value) {
+        style["--shadow-cartoon-md"] = "none";
+        style["--shadow-cartoon-lg"] = "none";
+    }
+    return style;
+});
+
 interface Group {
     label: string;
     blurb: string;
@@ -69,7 +106,11 @@ const groups: Record<string, Group> = {
 
 <template>
     <StoryPage>
-        <div class="settings-page flex flex-col gap-10 max-w-3xl">
+        <div
+            class="settings-page flex flex-col gap-10 max-w-3xl"
+            :class="{ 'paper-grain-overlay': paperGrain }"
+            :style="surfaceStyle"
+        >
             <!-- Account -->
             <section class="flex flex-col gap-4">
                 <div class="settings-group flex flex-col gap-1">
