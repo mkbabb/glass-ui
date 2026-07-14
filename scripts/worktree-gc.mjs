@@ -68,14 +68,31 @@ let removed = 0, kept = 0, skippedActive = 0, freed0 = bytes;
 for (const dir of dirs) {
     if (!existsSync(dir)) continue;
     if (runId && dir.includes(runId)) { skippedActive++; continue; }
+    // REPO-CLEANUP-PLAN §2-RULINGS (2026-07-13): only wf_* lanes are prune-candidates — the
+    // live bi-* lanes are in-flight bands (retire with their own waves), and the value.js-pinned
+    // lane (HEAD 2e559f7a) is HELD on the open D3 ruling. Name-fenced here, not ancestry-fenced.
+    if (!path.basename(dir).startsWith("wf_")) { kept++; continue; }
     if (!inFence(dir)) { console.error(`worktree-gc: ${dir} resolves OUTSIDE the fence — SKIP (never touched).`); kept++; continue; }
     let head = null;
     try { head = sh("git", ["-C", dir, "rev-parse", "HEAD"]); } catch { /* not a worktree — a stray dir; still fenced-in, remove below via worktree remove failing → skip */ }
     let ancestor = false;
     if (head) {
-        try { sh("git", ["merge-base", "--is-ancestor", head, "tranche/BG"]); ancestor = true; } catch { ancestor = false; }
+        // Anchor re-pinned at the BI cleanup (§2-RULINGS D2): a lane is prunable iff its HEAD
+        // landed on EITHER line (tranche/BI or master — isolation seeds from master, the trap),
+        // i.e. it holds zero unique commits relative to landed history.
+        try { sh("git", ["merge-base", "--is-ancestor", head, "tranche/BI"]); ancestor = true; } catch {
+            try { sh("git", ["merge-base", "--is-ancestor", head, "master"]); ancestor = true; } catch { ancestor = false; }
+        }
+        // A committed-clean HEAD can still hide UNCOMMITTED work — dirty lanes are KEPT
+        // (the census harvest list is the only sanctioned override, applied by the operator).
+        if (ancestor) {
+            // -uno: tracked-file dirt only — untracked node_modules/scratch does not hold a lane
+            // (the census eyeball + the operator harvest own the untracked-payload judgment).
+            try { if (sh("git", ["-C", dir, "status", "--porcelain", "-uno"]).length > 0) { console.log(`worktree-gc: KEEP ${path.basename(dir)} — DIRTY tracked files (uncommitted work).`); kept++; continue; } } catch { /* unreadable → fall through to the remove-or-skip path */ }
+        }
     }
-    if (head && !ancestor) { console.log(`worktree-gc: KEEP ${path.basename(dir)} — HEAD ${head.slice(0, 8)} not merged into tranche/BG (unique commits).`); kept++; continue; }
+    if (head && head.startsWith("2e559f7a")) { console.log(`worktree-gc: HOLD ${path.basename(dir)} — the value.js-pinned lane (D3 open).`); kept++; continue; }
+    if (head && !ancestor) { console.log(`worktree-gc: KEEP ${path.basename(dir)} — HEAD ${head.slice(0, 8)} not merged into tranche/BI (unique commits).`); kept++; continue; }
     try {
         sh("git", ["worktree", "remove", "--force", dir]);
         removed++;
