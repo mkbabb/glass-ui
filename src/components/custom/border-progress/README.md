@@ -1,6 +1,15 @@
 # BorderProgress
 
-`@mkbabb/glass-ui/border-progress` — progress IS the element's border (BB.W-BORDER-PROGRESS).
+> **Subpath RETIRED (BI.W-BORDER-PROGRESS-RETIRE) — the component is BANKED dormant, demo-only.**
+> The `/border-progress` published subpath is un-published at the 5.0.0 cut (0 binary consumers;
+> speedtest hand-rolls its own bar, the "born ≥2" claim was false). The component + its demo STAY,
+> imported relatively (`@glass/components/custom/border-progress`) OFF the public surface. The public
+> subpath RE-PUBLISHES when the speedtest `<BorderProgress>` adopt ASK lands (deletes its hand-rolled
+> bar, imports the mechanism). Dock scroll-progress successor: `BI.W-SCROLL-PROGRESS-RIM`'s masked-band
+> rim. See `docs/consumer-evidence/border-progress.md` + MIGRATION.md "The `/border-progress` subpath
+> retirement".
+
+`BorderProgress` — progress IS the element's border (BB.W-BORDER-PROGRESS).
 
 The living-chrome border ring: a determinate progress where the fill is the card's
 own EDGE, not a floating bar bolted to it. A `@property`-animated masked CONIC ring
@@ -53,7 +62,9 @@ a spectrum of our colors."_
 
 ```vue
 <script setup lang="ts">
-import { BorderProgress } from "@mkbabb/glass-ui/border-progress";
+// Banked dormant: imported relatively off the public surface (demo-only). The
+// `@mkbabb/glass-ui/border-progress` subpath re-publishes on the speedtest adopt.
+import { BorderProgress } from "@glass/components/custom/border-progress";
 import { ref } from "vue";
 const v = ref(0.42);
 </script>

@@ -312,19 +312,16 @@ export type {
     UseEasingPickerReturn,
 } from "../components/custom/easing";
 
-// ── BorderProgress ───────────────────────────────────────────────────────────
-// The masked-conic BORDER ring (BB.W-BORDER-PROGRESS) — progress IS the element's
-// border. `BorderProgressProps` is the consume-side shape; `BorderProgressCoverage`
-// is the two-arm axis (`"full-ring" | "bottom-edge"`); `BorderProgressMilestone` +
-// `BorderProgressMilestoneEvent` are the phase-edge milestone descriptor + emit
-// payload. Ships via its `/border-progress` subpath (OFF the root barrel — the
-// conic/@property chunk).
-export type {
-    BorderProgressProps,
-    BorderProgressCoverage,
-    BorderProgressMilestone,
-    BorderProgressMilestoneEvent,
-} from "../components/custom/border-progress";
+// ── BorderProgress — the `/border-progress` PUBLISHED SUBPATH RETIRED ──────────
+// BI.W-BORDER-PROGRESS-RETIRE — the masked-conic border-ring's published subpath
+// retires (0 real binary consumers; speedtest hand-rolls its own bar, the "born
+// ≥2 by construction" claim was false). The component
+// (`src/components/custom/border-progress/`) + its demo STAY, banked dormant OFF
+// the public surface (the demo imports the barrel relatively via `@glass/…`). The
+// four `BorderProgress*` types no longer re-export off any public barrel — they
+// have no owning subpath (see MIGRATION.md "The `/border-progress` subpath
+// retirement"). Re-entry = the speedtest `<BorderProgress>` adopt ASK
+// re-publishing the subpath in the same cut it consumes the mechanism.
 
 // ── CompletionSeal ────────────────────────────────────────────────────────────
 // The hero-scale earned-GOLD completion seal (BC.W-AX-COMPLETION-SEAL) — a one-shot

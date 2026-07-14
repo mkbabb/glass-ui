@@ -67,6 +67,11 @@ export const DROPPED_SUBPATHS = new Set([
     // BI.W-VIRTUAL-TRUTH — the /virtual PUBLISHED SUBPATH retired (fabricated consumer
     // liveness; 0 external + 0 production, demo-only). The engine stays internal.
     "virtual",
+    // BI.W-BORDER-PROGRESS-RETIRE — the /border-progress PUBLISHED SUBPATH retired (0
+    // binary consumers; the "born ≥2" claim was false, speedtest hand-rolls its bar).
+    // The component is BANKED dormant off the public surface; re-entry = the speedtest
+    // adopt ASK re-publishing the subpath.
+    "border-progress",
 ]);
 
 const read = (rel) => {

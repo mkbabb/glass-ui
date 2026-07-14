@@ -31,11 +31,15 @@
 //        `full-ring` | `bottom-edge` through ONE conic-mask mechanism (a
 //        `coverage`-scoped mask region, NOT a parallel conic-fill block), and the
 //        width default + the envelope constants sit inside [10, 14]px.
-//   W5 — THE MILESTONE REGISTER + THE COLOCATION/STRUCTURE SURFACE. A phase-edge
-//        `milestone` emit (+ a PRM-gated `data-milestone` pulse) fires; the
-//        feature-dir carries the colocation four (composables/ + constants.ts +
-//        README.md + the dir); the subpath mirror + the api type publication +
-//        package.json export are present.
+//   W5 — THE MILESTONE REGISTER + THE COLOCATION/STRUCTURE SURFACE + THE SUBPATH
+//        RETIRE (BI.W-BORDER-PROGRESS-RETIRE). A phase-edge `milestone` emit (+ a
+//        PRM-gated `data-milestone` pulse) fires; the feature-dir carries the
+//        colocation four (composables/ + constants.ts + README.md + the dir) — the
+//        component STAYS banked dormant. The `/border-progress` PUBLISHED subpath is
+//        RETIRED (0 binary consumers): the `src/subpaths/border-progress.ts` mirror
+//        + the `src/api/index.ts` BorderProgress re-export are ABSENT (source-anchored;
+//        the package.json export removal is the derived regen owned by
+//        proof:subpath-classify/enumeration). The component partial STILL imports.
 //
 // The BINDING painted truth is the π readback (tests-visual/border-progress.spec.ts
 // — the radius-following ring, the backdrop-intact interior, the no-trough spectrum,
@@ -348,11 +352,17 @@ export function detectBorderProgress(inputs) {
         /@media\s*\(prefers-reduced-motion:\s*no-preference\)[\s\S]*?data-milestone/.test(
             css,
         );
-    const subpathMirror = /export \* from ["']\.\.\/components\/custom\/border-progress["']/.test(
+    // BI.W-BORDER-PROGRESS-RETIRE — the /border-progress PUBLISHED subpath is retired
+    // (0 binary consumers). Source-anchored: the mirror + the /api re-export are ABSENT;
+    // the component barrel STAYS banked. The package.json export removal is the derived
+    // regen owned by proof:subpath-classify (EXACT_REPRODUCTION) + proof:subpath-enumeration.
+    const subpathMirrorRetired = !/export \* from ["']\.\.\/components\/custom\/border-progress["']/.test(
         subpath,
     );
-    const apiPublishes = /BorderProgress(Coverage|Props|Milestone)/.test(apiIndex);
-    const pkgExport = /"\.\/border-progress"/.test(pkg);
+    const apiReexportRetired = !/export\s[^;]*from\s*["']\.\.\/components\/custom\/border-progress["']/.test(
+        apiIndex,
+    );
+    const componentBanked = dirExists && readmeExists && constantsExists && helperExists;
     const partialImported = /@import\s+["']\.\/border-progress\.css["']/.test(
         indexCss,
     );
@@ -364,9 +374,9 @@ export function detectBorderProgress(inputs) {
         readmeExists,
         constantsExists,
         helperExists,
-        subpathMirror,
-        apiPublishes,
-        pkgExport,
+        subpathMirrorRetired,
+        apiReexportRetired,
+        componentBanked,
         partialImported,
     };
     if (!milestoneEmit)
@@ -385,16 +395,18 @@ export function detectBorderProgress(inputs) {
         violations.push(
             "W5: the colocation four are incomplete (composables/useBorderSpectrum.ts + constants.ts + README.md + the dir)",
         );
-    if (!subpathMirror)
+    if (!subpathMirrorRetired)
         violations.push(
-            "W5: the src/subpaths/border-progress.ts mirror is missing/mis-shaped",
+            "W5: the src/subpaths/border-progress.ts mirror is PRESENT — the retired /border-progress subpath is re-published (BI.W-BORDER-PROGRESS-RETIRE)",
         );
-    if (!apiPublishes)
+    if (!apiReexportRetired)
         violations.push(
-            "W5: src/api/index.ts does not publish a BorderProgress* type (the discovery layer)",
+            "W5: src/api/index.ts still re-exports BorderProgress* from ../components/custom/border-progress — the retired subpath's /api surface survives",
         );
-    if (!pkgExport)
-        violations.push("W5: package.json has no `./border-progress` export");
+    if (!componentBanked)
+        violations.push(
+            "W5: the banked component is incomplete — the retire keeps the component (dir + composables/useBorderSpectrum.ts + constants.ts + README.md), it is a subpath un-publish NOT a delete",
+        );
     if (!partialImported)
         violations.push(
             "W5: src/styles/index.css does not @import ./border-progress.css (the consumption partial)",
@@ -602,9 +614,11 @@ function selfTest() {
         @media (prefers-reduced-motion: no-preference) { .border-progress[data-milestone] .x { animation: pulse; } }`,
         propertyRegs: `@property --border-progress-fill { syntax: "<percentage>"; inherits: false; initial-value: 0%; }`,
         indexCss: `@import "./border-progress.css";`,
-        subpath: `export * from "../components/custom/border-progress";`,
-        apiIndex: `export type { BorderProgressProps, BorderProgressCoverage } from "../components/custom/border-progress";`,
-        pkg: `"./border-progress": { "types": "./dist/border-progress.d.ts" }`,
+        // BI.W-BORDER-PROGRESS-RETIRE — the honest floor is the RETIRED subpath: the
+        // mirror + the /api re-export are ABSENT, the component STAYS banked.
+        subpath: ``,
+        apiIndex: `// BorderProgress subpath RETIRED — no re-export off any public barrel.`,
+        pkg: `{}`,
         readmeExists: true,
         constantsExists: true,
         helperExists: true,
@@ -838,9 +852,9 @@ function run() {
                 facts.w5.readmeExists &&
                 facts.w5.constantsExists &&
                 facts.w5.helperExists &&
-                facts.w5.subpathMirror &&
-                facts.w5.apiPublishes &&
-                facts.w5.pkgExport &&
+                facts.w5.subpathMirrorRetired &&
+                facts.w5.apiReexportRetired &&
+                facts.w5.componentBanked &&
                 facts.w5.partialImported,
         )}`,
     );

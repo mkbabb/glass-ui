@@ -11,6 +11,17 @@ motion tokens `--seal-draw`/`--seal-scale`/`--seal-glint`/`--seal-ink`) reading 
 is EARNED at completion, never the running phase spectrum) with the `W-AX-METAL-GLOW`
 gold catch-light.
 
+## Disposition: WATCHLIST (BI.W-BORDER-PROGRESS-RETIRE)
+
+**WATCHLIST — KEEP published, demo-only, ≥2-binary unmet.** Adjudicated alongside the
+`/border-progress` retire (ruling 4 / OFIT-3): completion-seal is the MILDER case. It carries 1
+honest own-demo consumer and a PRESENT evidence doc (this file), so unlike `/border-progress` it is
+NOT retired — the `/completion-seal` subpath KEEPS its keep while the named ≥2nd binary consumer (the
+speedtest complete/personal-best mount, `BC.W-SPEEDTEST-ADOPT`) is in flight. The watch closes when
+that second binary consume lands (a `grep -rln 'glass-ui/completion-seal' ~/Programming/speedtest/src`
+hit recorded below); until then this is a demo-only surface on the watchlist, never silently credited
+≥2.
+
 ## Verdict
 
 `keep-current` — **user-directed wave (BC.W-AX-COMPLETION-SEAL), the iteration-23
