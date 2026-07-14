@@ -58,11 +58,12 @@ function stripComments(src) {
         .replace(/<!--[\s\S]*?-->/g, "");
 }
 
-// The four hero pages the redesign re-homes onto the descriptor (the former
-// W57 inline-Aurora set).
+// The hero pages the redesign re-homes onto the descriptor (the former W57
+// inline-Aurora set). The standalone `compositions/hero` left this set at
+// BI.W-HERO-DEMOTE — it is the `/compositions` section landing now (SectionLanding.vue,
+// itself descriptor-driven), not a page SFC.
 const HERO_PAGES = [
     "demo/stories/foundations/intro.vue",
-    "demo/stories/compositions/hero.vue",
     "demo/stories/foundations/paper-glass.vue",
     "demo/stories/compositions/auth-shell.vue",
 ];

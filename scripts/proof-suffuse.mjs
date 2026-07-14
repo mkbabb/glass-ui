@@ -295,11 +295,14 @@ add(
 // ── (b) Activate the dead audacious tiers — FLOOR (≥2 each) + CEILING ─────────
 // FLOOR: text-display-mega + text-display-audacious each have ≥2 live demo
 // consumers on the enrolled metric/number/hero surfaces.
+// The standalone `compositions/hero` left this set at BI.W-HERO-DEMOTE (it is the
+// descriptor-driven `/compositions` section landing now, not a page SFC). It never
+// hand-authored a bare `text-display-mega/audacious` class — it routed its title
+// through the chassis — so it contributed 0 to the tier count; the floor holds.
 const ENROLLED_AUDACIOUS_SURFACES = [
     "demo/stories/data/metric-cell.vue",
     "demo/stories/data/metric-stack.vue",
     "demo/stories/display/metric-badge.vue",
-    "demo/stories/compositions/hero.vue",
     "demo/stories/foundations/intro.vue",
     "demo/stories/compositions/auth-shell.vue",
 ];

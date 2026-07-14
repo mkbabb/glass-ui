@@ -43,9 +43,10 @@ const STORIES = resolve(ROOT, "demo/stories");
 const TOKENS = resolve(ROOT, "src/styles/tokens.css");
 const PULSE = resolve(ROOT, "src/components/custom/pulse/Pulse.vue");
 
-// The four Class-A hero files (relative to demo/stories) that must adopt Aurora.
+// The Class-A hero files (relative to demo/stories) that must adopt Aurora. The
+// standalone `compositions/hero` left this set at BI.W-HERO-DEMOTE — it is the
+// `/compositions` section landing now (descriptor-driven), not a page SFC.
 const HERO_FILES = [
-    "compositions/hero.vue",
     "foundations/intro.vue",
     "foundations/paper-glass.vue",
     "compositions/auth-shell.vue",
@@ -57,9 +58,10 @@ const HERO_FILES = [
 // full-page hero to replace. A radial in these files is allowed.
 const RADIAL_KEEP_FILES = new Set([
     // The config-driven fake-aurora preview — the radial IS the lesson.
-    "compositions/configurator.vue",
+    // (BI.W-COMPOSITIONS-PRUNE — relocated out of the compositions band.)
+    "containers/configurator.vue",
     // The chassis curvature-overlay token demo (prose + component identity).
-    "compositions/instrument-chassis.vue",
+    "data/instrument-chassis.vue",
     // The nucleus-handle ring mask (a UI affordance in the aurora editor).
     "aurora/NucleiOverlay.vue",
     // The scoped (-inset-6 blur-2xl opacity-60) decorative bloom BEHIND the

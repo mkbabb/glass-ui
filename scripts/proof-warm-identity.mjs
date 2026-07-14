@@ -98,11 +98,13 @@ const PASS_E_CATEGORIES = Object.freeze([
     "motion",
 ]);
 // The C2-SENTINEL (COHERENCE FOLD G7 L8) mid-tranche spot-check routes — the 4
-// no-roster-band representatives (forms/inputs · compositions/math-paper ·
-// containers/sheet · data/metric-stack).
+// no-roster-band representatives (forms/inputs · compositions/settings ·
+// containers/sheet · data/metric-stack). The compositions representative moved from
+// the retired /compositions/math-paper (BI.W-MATH-PAPER-REMOVE, UF-K3) to
+// /compositions/settings — the surviving warm-cream grid-ground composition.
 const C2_SENTINEL_ROUTES = Object.freeze([
     "/forms/inputs",
-    "/compositions/math-paper",
+    "/compositions/settings",
     "/containers/sheet",
     "/data/metric-stack",
 ]);
@@ -717,7 +719,7 @@ function selfTest() {
                 data: "/data/metrics",
                 feedback: "/feedback/toast",
                 navigation: "/navigation/tabs",
-                compositions: "/compositions/hero",
+                compositions: "/compositions/auth-shell",
                 motion: "/motion/scroll",
             };
             const SENTINELS = C2_SENTINEL_ROUTES.map((r) => row("sentinel", r, "FAIL"));

@@ -19,17 +19,21 @@
 // hyphenation@375, a preview card above the fold) is the W-REFLECT3 π capture, never this
 // gate alone:
 //
-//   HF1 — ONE CHASSIS TITLE PATH. intro.vue + compositions/hero.vue carry NEITHER
-//         `:hero-title="false"` NOR a bare poster-rung `<h1 class="text-display-{4,5,mega,
-//         hero,audacious}">` — they route the hero title through the chassis. Born-RED:
-//         HEAD had both the opt-out + the bare <h1>.
+// BI.W-HERO-DEMOTE (UF-K2): the standalone `compositions/hero` page is RETIRED (it is the
+// `/compositions` section landing now, chassis-rendered), so it leaves HF1/HF3/HF4 — those
+// clauses now bind the surviving front door (`foundations/intro`). HF2/HF5 (the chassis + the
+// fit-cap) + HF6 (the auth-shell carve) are page-agnostic and unchanged.
+//
+//   HF1 — ONE CHASSIS TITLE PATH. intro.vue carries NEITHER `:hero-title="false"` NOR a bare
+//         poster-rung `<h1 class="text-display-{4,5,mega,hero,audacious}">` — it routes the
+//         hero title through the chassis. Born-RED: HEAD had both the opt-out + the bare <h1>.
 //   HF2 — THE CHASSIS RENDERS displayTitle ?? title + THE #title-ornament SLOT. StoryHero
 //         renders `displayTitle ?? title` and exposes a `#title-ornament` slot in the <h1>;
 //         StoryPage threads `:display-title` + forwards the slot. Born-RED: HEAD had neither.
-//   HF3 — MANDATORY SHORT displayTitle. The manifest foundations/intro + compositions/hero
-//         rows carry a `displayTitle:` key (the short wordmark — the load-bearing
-//         no-hyphenation@375 fix). Born-RED: HEAD had no displayTitle field.
-//   HF4 — max-w-5xl DROPPED. Neither page carries `max-w-5xl` (the constraint that
+//   HF3 — MANDATORY SHORT displayTitle. The manifest foundations/intro row carries a
+//         `displayTitle:` key (the short wordmark — the load-bearing no-hyphenation@375 fix).
+//         Born-RED: HEAD had no displayTitle field.
+//   HF4 — max-w-5xl DROPPED. intro.vue carries no `max-w-5xl` (the constraint that
 //         MANUFACTURES the multi-line blowout — RC4). Born-RED: HEAD pinned it on the <h1>.
 //   HF5 — HEIGHT-AWARE FIT-CAP. `.story-hero-title[data-hero-scale]` bounds the rung to a
 //         min() carrying a `100svh` short-viewport-height term + the single-source
@@ -103,7 +107,6 @@ function fitCapBlock(css) {
 export function detectHeroFit(sources) {
     const {
         introVue,
-        heroVue,
         storyHeroVue,
         storyPageVue,
         storyHeroCss,
@@ -114,7 +117,6 @@ export function detectHeroFit(sources) {
     const violations = [];
 
     const intro = stripComments(introVue);
-    const hero = stripComments(heroVue);
     const storyHero = stripComments(storyHeroVue);
     const storyPage = stripComments(storyPageVue);
     const css = stripComments(storyHeroCss);
@@ -125,16 +127,10 @@ export function detectHeroFit(sources) {
     facts.hf1 = {};
     facts.hf1.introRoutesChassis =
         !/hero-title="false"/.test(intro) && !POSTER_H1.test(intro);
-    facts.hf1.heroRoutesChassis =
-        !/hero-title="false"/.test(hero) && !POSTER_H1.test(hero);
 
     if (!facts.hf1.introRoutesChassis)
         violations.push(
             "HF1: /foundations/intro must route its title through the ONE chassis path — no `:hero-title=\"false\"` opt-out, no bare `<h1 class=\"text-display-{4,5,mega,hero,audacious}\">`",
-        );
-    if (!facts.hf1.heroRoutesChassis)
-        violations.push(
-            "HF1: /compositions/hero must route its title through the ONE chassis path — no `:hero-title=\"false\"` opt-out, no bare poster-rung `<h1 class=\"text-display-*\">`",
         );
 
     // ── HF2 — the chassis renders displayTitle ?? title + the #title-ornament slot ─
@@ -163,29 +159,21 @@ export function detectHeroFit(sources) {
     // ── HF3 — MANDATORY short displayTitle in the manifest ──────────────────────
     facts.hf3 = {};
     const introRow = rowHasDisplayTitle(manifest, "foundations", "intro");
-    const heroRow = rowHasDisplayTitle(manifest, "compositions", "hero");
     facts.hf3.introRowFound = introRow.found;
-    facts.hf3.heroRowFound = heroRow.found;
     facts.hf3.introHasDisplayTitle = introRow.hasDT;
-    facts.hf3.heroHasDisplayTitle = heroRow.hasDT;
 
     if (!(introRow.found && introRow.hasDT))
         violations.push(
             "HF3: the manifest `foundations/intro` row must carry a `displayTitle:` (the MANDATORY short wordmark — the load-bearing no-hyphenation@375 fix, P4-C)",
         );
-    if (!(heroRow.found && heroRow.hasDT))
-        violations.push(
-            "HF3: the manifest `compositions/hero` row must carry a `displayTitle:` (the MANDATORY short hero phrase)",
-        );
 
     // ── HF4 — max-w-5xl dropped ─────────────────────────────────────────────────
     facts.hf4 = {};
     facts.hf4.introNoMaxW5xl = !/max-w-5xl/.test(intro);
-    facts.hf4.heroNoMaxW5xl = !/max-w-5xl/.test(hero);
 
-    if (!(facts.hf4.introNoMaxW5xl && facts.hf4.heroNoMaxW5xl))
+    if (!facts.hf4.introNoMaxW5xl)
         violations.push(
-            "HF4: a hero page still carries `max-w-5xl` — drop it (the fixed-px measure MANUFACTURES the multi-line blowout — RC4; the chassis `max-inline-size: 18ch` is the measure)",
+            "HF4: /foundations/intro still carries `max-w-5xl` — drop it (the fixed-px measure MANUFACTURES the multi-line blowout — RC4; the chassis `max-inline-size: 18ch` is the measure)",
         );
 
     // ── HF5 — height-aware fit-cap + single-source factors ──────────────────────
@@ -234,14 +222,6 @@ function selfTest() {
         </StoryPage>
         </template>
     `;
-    const goodHero = `
-        <template>
-        <StoryPage>
-          <template #title-ornament><span class="fourier-f italic">ℱ&nbsp;</span></template>
-          <section class="mt-16"><SectionPreviewCard v-for="s in scenes" :to="\`/compositions/\${s.id}\`" /></section>
-        </StoryPage>
-        </template>
-    `;
     const goodStoryHero = `
         const heroDisplayTitle = computed(() => props.displayTitle ?? props.title);
         <h1 :data-hero-scale="heroScale" :class="cn('story-hero-title', heroClass)">
@@ -266,14 +246,12 @@ function selfTest() {
     const goodManifest = `
         s("foundations", "intro", "Intro", "blurb", { hero: true, displayTitle: "glass-ui" }),
         s("foundations", "colors", "Colors", "x"),
-        s("compositions", "hero", "Hero", "blurb", { hero: true, heroScale: "mega", displayTitle: "Real scenes" }),
-        s("compositions", "math-paper", "Math Paper", undefined, {}),
+        s("compositions", "auth-shell", "Auth Shell", undefined, { hero: true }),
     `;
     const goodAuth = `<h1 class="text-display tracking-tight">Sign in</h1>`;
 
     const base = {
         introVue: goodIntro,
-        heroVue: goodHero,
         storyHeroVue: goodStoryHero,
         storyPageVue: goodStoryPage,
         storyHeroCss: goodCss,
@@ -291,14 +269,14 @@ function selfTest() {
             introVue: goodIntro.replace("<StoryPage>", '<StoryPage :hero-title="false">'),
         }).violations.some((v) => v.startsWith("HF1")),
     });
-    // HF1b — a re-added bare poster-rung <h1> reds HF1.
+    // HF1b — a re-added bare poster-rung <h1> on the front door reds HF1.
     bites.push({
         name: "HF1: re-added bare poster <h1>",
         red: detectHeroFit({
             ...base,
-            heroVue: goodHero.replace(
+            introVue: goodIntro.replace(
                 "</section>",
-                '<h1 class="text-display-hero">Real scenes</h1></section>',
+                '<h1 class="text-display-hero">glass-ui</h1></section>',
             ),
         }).violations.some((v) => v.startsWith("HF1")),
     });
@@ -363,7 +341,6 @@ function run() {
     const ARTIFACT = gateArtifactPath("GLASS_UI_HERO_FIT_ARTIFACT", "BG-hero-fit");
     const sources = {
         introVue: safeRead(resolve(ROOT, "demo/stories/foundations/intro.vue")),
-        heroVue: safeRead(resolve(ROOT, "demo/stories/compositions/hero.vue")),
         storyHeroVue: safeRead(resolve(ROOT, "demo/chassis/hero/StoryHero.vue")),
         storyPageVue: safeRead(resolve(ROOT, "demo/chassis/page/StoryPage.vue")),
         storyHeroCss: safeRead(resolve(ROOT, "demo/chassis/hero/story-hero.css")),
@@ -409,7 +386,7 @@ function run() {
     );
     console.log(
         `  HF1 ONE chassis title path         : ${yn(
-            facts.hf1.introRoutesChassis && facts.hf1.heroRoutesChassis,
+            facts.hf1.introRoutesChassis,
         )}`,
     );
     console.log(
@@ -421,12 +398,12 @@ function run() {
     );
     console.log(
         `  HF3 MANDATORY short displayTitle   : ${yn(
-            facts.hf3.introHasDisplayTitle && facts.hf3.heroHasDisplayTitle,
+            facts.hf3.introHasDisplayTitle,
         )}`,
     );
     console.log(
         `  HF4 max-w-5xl dropped              : ${yn(
-            facts.hf4.introNoMaxW5xl && facts.hf4.heroNoMaxW5xl,
+            facts.hf4.introNoMaxW5xl,
         )}`,
     );
     console.log(
