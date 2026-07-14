@@ -639,21 +639,21 @@ function detect({ existsFn, readFn, corpus }) {
     // The paint-judge row-2 FAIL: the dock control press was the CSS `:active` no-overshoot
     // squish only — no interruptible spring, no `--dock-press-t` coupling (`--dock-press-t`
     // appeared only as a comment in useLiquidPress.ts, never written). The repair binds
-    // `useLiquidPress` (springPreset('press'), squish on) on DockIconButton writing
+    // `useLiquidPress` (springPreset('press'), squish on) on DockControl writing
     // `--dock-press-t`, which the `.dock-icon-button` CSS reads to couple the darken/specular
     // feedback to the spring physics (the `::before` gleam settles with the alive rebound on
     // release via the material press-couple; a sub-perceptual brightness deepen rides the same
     // drive) — the binary CSS `:active` staying the no-JS / PRM floor. Born-RED on HEAD
-    // (DockIconButton composes no `useLiquidPress`; the dock CSS reads no `--dock-press-t`).
-    const dockBtn = readFn("src/components/custom/dock/DockIconButton.vue");
+    // (DockControl composes no `useLiquidPress`; the dock CSS reads no `--dock-press-t`).
+    const dockBtn = readFn("src/components/custom/dock/DockControl.vue");
     const dockCtrlCss = readFn("src/styles/dock-controls/icon-button.css");
 
     if (!/\buseLiquidPress\s*\(/.test(dockBtn))
-        V.push("R2: DockIconButton.vue does not compose `useLiquidPress` — the dock control press must be the ONE interruptible spring-press (the velocity-continuous re-seat), not the CSS `:active` no-overshoot floor alone (the paint-judge row-2 dock-hover-press FAIL)");
+        V.push("R2: DockControl.vue does not compose `useLiquidPress` — the dock control press must be the ONE interruptible spring-press (the velocity-continuous re-seat), not the CSS `:active` no-overshoot floor alone (the paint-judge row-2 dock-hover-press FAIL)");
     if (!/springPreset\s*\(\s*["']press["']\s*\)/.test(dockBtn))
-        V.push("R2: DockIconButton.vue does not read `springPreset('press')` — the dock press must ride the PRESS SPRING_PRESETS row (response 0.2 / ζ 0.8 — the ≤2-frame answer + the +1.5% alive rebound), the ONE source, never a local literal");
+        V.push("R2: DockControl.vue does not read `springPreset('press')` — the dock press must ride the PRESS SPRING_PRESETS row (response 0.2 / ζ 0.8 — the ≤2-frame answer + the +1.5% alive rebound), the ONE source, never a local literal");
     if (!/pressVar\s*:\s*["']--dock-press-t["']/.test(dockBtn))
-        V.push("R2: DockIconButton.vue's useLiquidPress does not write the `--dock-press-t` drive (pressVar) — the coupled darken/specular leg reads it (useLiquidPress.ts names it the dock's press var)");
+        V.push("R2: DockControl.vue's useLiquidPress does not write the `--dock-press-t` drive (pressVar) — the coupled darken/specular leg reads it (useLiquidPress.ts names it the dock's press var)");
     // The CSS couples --dock-press-t to the darken/specular feedback (the spring-settling
     // legs), and registers the drive typed so the calc interpolates + the unwired/SSR floor is 0.
     if (!/--dock-press-t/.test(dockCtrlCss))
@@ -922,12 +922,12 @@ if (!lwCascadeSelfTestFlags) {
     process.exit(1);
 }
 
-// ── The R2 self-test bite — sever DockIconButton's useLiquidPress composition (the HEAD
+// ── The R2 self-test bite — sever DockControl's useLiquidPress composition (the HEAD
 //    unwired state the paint judge failed on row 2) and assert the dock-press arm FLAGS it
 //    (the row-2 wiring teeth are real). ────────────────────────────────────────────────────
-const dockBtnDiskR2 = diskRead("src/components/custom/dock/DockIconButton.vue");
+const dockBtnDiskR2 = diskRead("src/components/custom/dock/DockControl.vue");
 const stripDockPressRead = (rel) =>
-    rel === "src/components/custom/dock/DockIconButton.vue"
+    rel === "src/components/custom/dock/DockControl.vue"
         ? // rename the composition so the R2 detector sees no `useLiquidPress(` / `pressVar`
           dockBtnDiskR2.replace(/useLiquidPress/g, "useNoPress").replace(/pressVar/g, "noVar")
         : diskRead(rel);
@@ -935,7 +935,7 @@ const stripDockViolations = detect({ existsFn: diskExists, readFn: stripDockPres
 const r2SelfTestFlags = stripDockViolations.length > violations.length;
 if (!r2SelfTestFlags) {
     console.error(
-        "proof:motion — R2 SELF-TEST FAILED: the detector did NOT flag DockIconButton severed of its `useLiquidPress` press wiring (the HEAD unwired dock-hover-press state the paint judge failed). The row-2 teeth are gone; do not trust a GREEN.",
+        "proof:motion — R2 SELF-TEST FAILED: the detector did NOT flag DockControl severed of its `useLiquidPress` press wiring (the HEAD unwired dock-hover-press state the paint judge failed). The row-2 teeth are gone; do not trust a GREEN.",
     );
     process.exit(1);
 }
@@ -1028,8 +1028,8 @@ console.log(`  self-test (bite proof): OK — a re-planted dead composable, a re
 console.log("proof:motion — the interactive-transition DEFAULT is spring-derived (BG.W-LIQUID-WEIGHT-DEFAULT / F5.2)");
 console.log(`  liquid-weight-default : --transition-liquid-spatial = ${GENERATED_LIQUID_SPATIAL.replace(/^--transition-liquid-spatial:\s*/, "")} (spring-derived, GENERATED drift-proof) — the base atoms (.interactive-item · .tap-squish · btn-interactive) read it on their SPATIAL scale leg; weight is the VOCABULARY, not a per-site --motion-weight opt-in (the inversion off the HEAD bare --ease-standard)`);
 console.log(`  calm opt-out + PRM    : .motion-calm → var(--ease-standard) (explicit opt-out) + the PRM carve re-aliases the same — homed in scheme-spring.css AFTER the base default (the LAST-imported partial) so it WINS the source-order cascade under reduce (the F5.2 vestibular-floor fix — no overshoot under reduce)`);
-console.log(`  dock-hover-press (R2) : DockIconButton composes useLiquidPress(springPreset('press'), squish) writing --dock-press-t — the interruptible spring press; the dock CSS couples the specular gleam (via --glass-btn-press-t) + a sub-perceptual brightness deepen to the spring, the :active register the no-JS/PRM floor`);
-console.log(`  self-test (LW bites)  : OK — a .interactive-item scale leg reverted to var(--ease-standard), scheme-spring stripped of its PRM re-alias (losing-cascade), AND DockIconButton severed of useLiquidPress all flag`);
+console.log(`  dock-hover-press (R2) : DockControl composes useLiquidPress(springPreset('press'), squish) writing --dock-press-t — the interruptible spring press; the dock CSS couples the specular gleam (via --glass-btn-press-t) + a sub-perceptual brightness deepen to the spring, the :active register the no-JS/PRM floor`);
+console.log(`  self-test (LW bites)  : OK — a .interactive-item scale leg reverted to var(--ease-standard), scheme-spring stripped of its PRM re-alias (losing-cascade), AND DockControl severed of useLiquidPress all flag`);
 console.log("proof:motion — the disclosure chevron is ONE register (BG.W-DISCLOSURE-ROTATE)");
 console.log(`  disclosure-single-register: @utility transition-disclosure = rotate var(--spring-snappy-duration) var(--ease-cartoon-punch) — Accordion · Select · Configurator carets all fold onto it (the flat transition-transform-200 / the transform-on-the-wrong-property snap / the raw arbitrary form all RETIRED)`);
 console.log(`  abrupt-spatial-tailwind   : the S6 blind spot closed — detectAbruptTailwindSpatial scans the .vue TEMPLATE (not just <style>) for a transition-transform/[transition:rotate…] riding a non-spring clock (the widen folded here as a proof:motion case row, C-1)`);

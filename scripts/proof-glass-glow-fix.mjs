@@ -17,8 +17,6 @@
 // The comment-strip + pure-detector house pattern (mirroring proof-black-bar.mjs /
 // proof-glass-cal.mjs). Each witness is born-RED at HEAD pre-wave:
 //   - HEAD `.pulse-aura` has NO `overflow: clip` — the scaled radial is unbounded (G1 reds).
-//   - HEAD `.dock-morph-bridge-plate` has NO `overflow: clip` — the 120% radial is
-//     un-class-bounded (G1 reds the defensive close).
 // bite-check (each clause carries a planted self-test below): a `.pulse-aura` reverted to
 // `overflow: visible` + `scale(1.15)` reds G1+G2; a `::before` catch-light planted over a
 // canvas-content `.glass-card` reds G2; a deleted aura/catch-light/chassis glow reds G3.
@@ -116,11 +114,9 @@ function isScaledGlowLayer(body) {
 }
 
 // ── G1 — the ROOTED rule is BOUND. The `.pulse-aura` glow layer carries `overflow: clip`
-//    so its breath-scaled radial cannot spill past its own inset:0 box. The defensive
-//    CANDIDATE 4 close: `.dock-morph-bridge-plate` (the 120% radial) is likewise bounded.
+//    so its breath-scaled radial cannot spill past its own inset:0 box.
 const BOUND_LAYERS = [
     { selector: "pulse-aura", file: "src/components/custom/pulse/Pulse.vue", why: "the breath-scaled (1.15× / 1.22× vivid) aura radial — the Atlas A-8 root" },
-    { selector: "dock-morph-bridge-plate", file: "src/styles/dock/morph-bridge.css", why: "the 120%×120% teardrop radial (CANDIDATE 4 defensive close)" },
 ];
 export function detectBound(overrides = {}) {
     const violations = [];
@@ -146,7 +142,6 @@ export function detectBound(overrides = {}) {
 //    must suppress the plate `::before` over the canvas).
 const GLOW_CORPUS = [
     "src/components/custom/pulse/Pulse.vue",
-    "src/styles/dock/morph-bridge.css",
     "src/styles/glass/material.css",
     "src/styles/tokens/glass-fx.css",
 ];
@@ -232,11 +227,10 @@ export function selfTest() {
 
     // A CLEAN bounded aura must NOT red G1/G2 (anti-false-positive).
     const cleanAura = `.pulse-aura { position: absolute; inset: 0; overflow: clip; background: radial-gradient(ellipse at 50% 50%, white 0%, transparent 70%); transform: scale(var(--animate-ambient-pulse-scale-max, 1.15)); }`;
-    const cleanPlate = `.dock-morph-bridge-plate { position: absolute; overflow: clip; background: radial-gradient(120% 120% at 50% 38%, white 0%, transparent 100%); border-radius: 999px; }`;
-    if (detectBound({ "src/components/custom/pulse/Pulse.vue": cleanAura, "src/styles/dock/morph-bridge.css": cleanPlate }).violations.length !== 0) {
-        fails.push("self-test G1: a clean clipped aura+plate unexpectedly red");
+    if (detectBound({ "src/components/custom/pulse/Pulse.vue": cleanAura }).violations.length !== 0) {
+        fails.push("self-test G1: a clean clipped aura unexpectedly red");
     }
-    if (detectPattern({ "src/components/custom/pulse/Pulse.vue": cleanAura, "src/styles/dock/morph-bridge.css": "", "src/styles/glass/material.css": "", "src/styles/tokens/glass-fx.css": "" }).violations.length !== 0) {
+    if (detectPattern({ "src/components/custom/pulse/Pulse.vue": cleanAura, "src/styles/glass/material.css": "", "src/styles/tokens/glass-fx.css": "" }).violations.length !== 0) {
         fails.push("self-test G2: a clean clipped scaled glow unexpectedly red the pattern bite");
     }
 
@@ -253,7 +247,7 @@ export function selfTest() {
     // (the radial lives on the ::before). Anti-false-positive for the real fix shape.
     const splitArch = `.pulse-aura { position: absolute; inset: 0; overflow: clip; opacity: 0.28; }
 .pulse-aura::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, white 0%, transparent 70%); transform: scale(var(--pulse-aura-breath-scale, 1.15)); }`;
-    if (detectPattern({ "src/components/custom/pulse/Pulse.vue": splitArch, "src/styles/dock/morph-bridge.css": "", "src/styles/glass/material.css": "", "src/styles/tokens/glass-fx.css": "" }).violations.length !== 0) {
+    if (detectPattern({ "src/components/custom/pulse/Pulse.vue": splitArch, "src/styles/glass/material.css": "", "src/styles/tokens/glass-fx.css": "" }).violations.length !== 0) {
         fails.push("self-test G2: the clip-parent/scaled-child aura unexpectedly red the pattern bite (the scaled ::before is bounded by the unscaled parent's clip)");
     }
     if (detectPreserved({ "src/components/custom/pulse/Pulse.vue": splitArch }).violations.some((v) => /radial-gradient halo/.test(v))) {
@@ -263,7 +257,7 @@ export function selfTest() {
     // a scaled ::before whose parent is overflow:visible is STILL a spill.
     const splitLeak = `.pulse-aura { position: absolute; inset: 0; overflow: visible; }
 .pulse-aura::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, white 0%, transparent 70%); transform: scale(1.15); }`;
-    if (!detectPattern({ "src/components/custom/pulse/Pulse.vue": splitLeak, "src/styles/dock/morph-bridge.css": "", "src/styles/glass/material.css": "", "src/styles/tokens/glass-fx.css": "" }).violations.some((v) => /unbounded-scale-spill/.test(v))) {
+    if (!detectPattern({ "src/components/custom/pulse/Pulse.vue": splitLeak, "src/styles/glass/material.css": "", "src/styles/tokens/glass-fx.css": "" }).violations.some((v) => /unbounded-scale-spill/.test(v))) {
         fails.push("self-test G2/split-leak: a scaled ::before whose parent does NOT clip did NOT red the pattern bite");
     }
 

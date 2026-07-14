@@ -5,11 +5,10 @@
 // The morph-WHITE root is a degenerate scaleX(0) / a zero-width reserved box
 // (glass-dock-codebase.md §2.2): a `to:0`/`from:0` measurement with no scale floor →
 // `scaleX(0)` + `inline-size: 0` → `overflow: clip` blanks the content → a white box.
-// This wave makes the white box impossible via THREE coordinated moves: a defensive
-// scale floor (the white box can never paint), a verified+guarded live measurement (the
-// to:0 race seats at the floor), and the teardrop bridge re-expressed compositor-only
-// (clip-path/scale, NEVER per-frame width — folding the teardrop fidelity onto the
-// compositor so the AZ perf-miss is moot).
+// This wave makes the white box impossible via two coordinated moves: a defensive
+// scale floor (the white box can never paint) and a verified+guarded live measurement
+// (the to:0 race seats at the floor). (The teardrop bridge — once re-expressed
+// compositor-only — retired with morph-bridge.css.)
 //
 // The device-free SOURCE/MECHANISM arm (tags ["local","ci","release"]). The PAINT arm is
 // the ORCHESTRATOR's: the per-frame composited-pixel proof (meanLum > 0 + the glass plate
@@ -29,9 +28,8 @@
 //        `finalExpanded = Math.max(expandedSeed, collapsedPx)` (collapsedFloorPx 44px) —
 //        a 0 measurement seats at collapsed, never white. Self-test bite: an unfloored
 //        finalExpanded reds.
-//   M4 — the teardrop is compositor-only: morph-bridge.css animates NO width/height on
-//        --dock-morph-t (clip-path/scale/translate). Born-RED on HEAD's per-frame
-//        width/height calc. Self-test bite: a planted width: calc(... --dock-morph-t ...) reds.
+//   (M4 — the teardrop-compositor arm — RETIRED with morph-bridge.css: the bridge
+//    mechanism was culled, so there is no longer a per-frame-width surface to guard.)
 //   M5 — the ship decision is data-grounded: the DELTA exists + names the re-measured p50
 //        + the throttle factor + the GPU + the resulting default (the AZ booking RESOLVED,
 //        not silently re-booked). Self-test bite: a missing perf-field / a SwiftShader-only
@@ -59,7 +57,6 @@ const readRel = (rel) => {
 };
 
 const LAYERS_CSS = "src/styles/dock/layers.css";
-const BRIDGE_CSS = "src/styles/dock/morph-bridge.css";
 const CTX_TS = "src/components/custom/dock/composables/dockMorphContext.ts";
 const MEASURE_TS = "src/components/custom/dock/composables/dockMorphMeasure.ts";
 const DELTA = "docs/tranches/BC/audit/visual/W-LIQUID-MORPH-DELTA.md";
@@ -164,46 +161,6 @@ function detectM3SelfTest() {
     return guarded(UNGUARDED) === false && guarded(GUARDED) === true;
 }
 
-// ── M4 — the teardrop is compositor-only (no width/height on --dock-morph-t) ──
-const LAYOUT_PROPS = ["width", "height", "inline-size", "block-size", "padding", "margin", "top", "left", "right", "bottom", "inset"];
-function parseDecls(source) {
-    const out = [];
-    const re = /([a-z-]+)\s*:\s*([^;{}]+)/gi;
-    let m;
-    while ((m = re.exec(source)) !== null) {
-        out.push({ prop: m[1].toLowerCase(), value: m[2], line: source.slice(0, m.index).split("\n").length });
-    }
-    return out;
-}
-const isLayoutProp = (p) => LAYOUT_PROPS.some((l) => p === l || p.startsWith(`${l}-`));
-const animatesScalar = (value) =>
-    /var\(\s*--dock-morph-t/.test(value) && /calc\(/.test(value);
-export function detectM4() {
-    const violations = [];
-    const facts = { layoutLegs: [] };
-    const bridge = stripCss(readRel(BRIDGE_CSS));
-    for (const d of parseDecls(bridge)) {
-        if (isLayoutProp(d.prop) && animatesScalar(d.value)) {
-            facts.layoutLegs.push(`morph-bridge.css:${d.line} — ${d.prop}: ${d.value.trim().slice(0, 50)}`);
-            violations.push(
-                `M4: morph-bridge.css:${d.line} — the layout property \`${d.prop}\` animates --dock-morph-t (\`${d.value.trim().slice(0, 50)}\`) — the teardrop silhouette must be clip-path/scale only (the per-frame-width layout-jank root)`,
-            );
-        }
-    }
-    // Positive: the silhouette DOES morph on the compositor (clip-path on the scalar).
-    facts.clipPathMorphPresent = /clip-path:\s*inset\([\s\S]*?var\(\s*--dock-bridge-[vh]-neck/.test(bridge) ||
-        /clip-path:[\s\S]*?var\(\s*--dock-morph-t/.test(bridge);
-    if (!facts.clipPathMorphPresent)
-        violations.push("M4: the teardrop bridge does not morph its silhouette via clip-path on --dock-morph-t — the compositor re-expression is absent");
-    return { violations, facts };
-}
-function detectM4SelfTest() {
-    const PLANTED = `.x { width: calc(3.25rem * (1 - var(--dock-morph-t, 0)) + 18rem * var(--dock-morph-t, 0)); }`;
-    const SAFE = `.x { clip-path: inset(0 var(--dock-bridge-h-neck) 0 var(--dock-bridge-h-neck) round 999px); scale: var(--stretch, 1) calc(1 / var(--stretch, 1)); }`;
-    const layoutLeg = (s) => parseDecls(s).some((d) => isLayoutProp(d.prop) && animatesScalar(d.value));
-    return layoutLeg(PLANTED) === true && layoutLeg(SAFE) === false;
-}
-
 // ── M5 — the ship decision is data-grounded (the DELTA names the perf fields) ──
 export function detectM5() {
     const violations = [];
@@ -256,13 +213,11 @@ export function detect() {
     const m1 = detectM1();
     const m2 = detectM2();
     const m3 = detectM3();
-    const m4 = detectM4();
     const m5 = detectM5();
     const selfTests = {
         m1: detectM1SelfTest(),
         m2: detectM2SelfTest(),
         m3: detectM3SelfTest(),
-        m4: detectM4SelfTest(),
         m5: detectM5SelfTest(),
     };
     const selfTestViolations = [];
@@ -276,13 +231,12 @@ export function detect() {
         ...m1.violations,
         ...m2.violations,
         ...m3.violations,
-        ...m4.violations,
         ...m5.violations,
         ...selfTestViolations,
     ];
     return {
         violations,
-        facts: { m1: m1.facts, m2: m2.facts, m3: m3.facts, m4: m4.facts, m5: m5.facts, selfTests },
+        facts: { m1: m1.facts, m2: m2.facts, m3: m3.facts, m5: m5.facts, selfTests },
     };
 }
 
@@ -295,7 +249,7 @@ function run() {
         status,
         gate: "proof:liquid-morph",
         command: COMMAND,
-        note: "BC.W-LIQUID-MORPH device-free SOURCE arm (M1 the reserve floor — max(--dock-morph-to, --dock-morph-min) both axes · M2 the scale floor — max(<calc>, 0.06) · M3 the measure-failure guard — measuredTo===0 → seat-at-floor via morphMinFloorPx · M4 the teardrop compositor-only — no width/height on --dock-morph-t, clip-path/scale · M5 the ship decision is data-grounded — the DELTA names the re-measured p50 + throttle + GPU + resulting default). The white-morph SAFETY NET is inert on healthy measurements. The PAINT arm (the per-frame meanLum>0 + the synthetic to:0 worst-case + the re-measured compositor-teardrop perf trace) is the orchestrator's W-LIQUID-MORPH-DELTA.",
+        note: "BC.W-LIQUID-MORPH device-free SOURCE arm (M1 the reserve floor — max(--dock-morph-to, --dock-morph-min) both axes · M2 the scale floor — max(<calc>, 0.06) · M3 the measure-failure guard — measuredTo===0 → seat-at-floor via morphMinFloorPx · M5 the ship decision is data-grounded — the DELTA names the re-measured p50 + throttle + GPU + resulting default). The M4 teardrop compositor-only arm retired with morph-bridge.css (the bridge mechanism was culled). The white-morph SAFETY NET is inert on healthy measurements. The PAINT arm (the per-frame meanLum>0 + the synthetic to:0 worst-case) is the orchestrator's W-LIQUID-MORPH-DELTA.",
         facts,
         violations,
     });
@@ -303,7 +257,6 @@ function run() {
     console.log(`  M1 inline-endpoint=${facts.m1.inlineReservesEndpoint} block-endpoint=${facts.m1.blockReservesEndpoint} no-morph-to=${facts.m1.noMorphToReserve}`);
     console.log(`  M2 scale-clamped=${facts.m2.scaleClamped} scale-composited=${facts.m2.scaleComposited} no-morph-scale=${facts.m2.noMorphScale}`);
     console.log(`  M3 guard=${facts.m3.guardPresent} floor-helper=${facts.m3.floorHelperPresent}`);
-    console.log(`  M4 layout-legs=${facts.m4.layoutLegs.length} clip-path-morph=${facts.m4.clipPathMorphPresent}`);
     console.log(`  M5 delta-exists=${facts.m5.deltaExists} p50=${facts.m5.namesP50} throttle=${facts.m5.namesThrottle} gpu=${facts.m5.namesGpu} default=${facts.m5.namesDefault}`);
     if (violations.length) {
         console.log("\nVIOLATIONS:");
