@@ -16,6 +16,7 @@
  */
 import type { Component } from "vue";
 import type { StoryBackground } from "../chassis/hero/aurora-hero";
+import type { StoryBody } from "../chassis/body/story-body";
 import { CATEGORY_HERO } from "../chassis/hero/category-hero";
 import { makeLazy } from "./manifest/lazy";
 import {
@@ -89,6 +90,32 @@ export interface Story {
      * D2 main; the rest are D3 subs — `s()` derives this from position when unset.
      */
     depth?: StoryDepth;
+    /**
+     * BI.W-STORY-SCHEMA — the pages-as-data body (the STORY-A architecture). The
+     * schema anchor on the manifest Story: a spec-sheet page declares its sections
+     * + specimens as DATA (`StoryBody`, no hand-authored template). The DATA rides
+     * the story SFC (which passes it to `<StoryPage :body>`), so the per-route
+     * component imports stay code-split — the manifest never eager-imports a page's
+     * components. A hero scene / bespoke composition declares no `body`.
+     *
+     * ruling 9 (the ≥2-consumer law self-applied): the proposed SpecimenSpec
+     * `prefix` field was DROPPED — only badge would have consumed it (1 consumer),
+     * so badge uses the SpecimenFrame slot/label escape instead. A 1-consumer
+     * schema field is over-fit exactly as a 1-site component is; no `prefix`
+     * survives in `story-body.ts`.
+     */
+    body?: StoryBody;
+    /**
+     * BI.W-LIVE-TILES — the co-located landing-tile loader (the AUTHORED rung of the
+     * per-story tile ladder). A bespoke page whose marquee is not a spec-sheet `body`
+     * (a Button variant cluster, a mini GlassDock) ships a co-located
+     * `<cat>/<id>.tile.vue` — a bounded, inert, 0-GL vignette of the story's headline
+     * component. Resolved from the tile glob by the `s()` factory (undefined when no
+     * file exists, so the ladder falls through to still/body/identity). The tile file
+     * class is a co-located helper (NOT a route): the story glob excludes it and the
+     * bijection gates exempt it.
+     */
+    tile?: () => Promise<Component>;
 }
 
 /** Re-export the descriptor type so consumers reach it from the manifest. */
@@ -148,6 +175,21 @@ export interface SectionLanding {
 const modules = import.meta.glob<{ default: Component }>("./*/*.vue");
 
 const lazy = makeLazy(modules);
+
+// BI.W-LIVE-TILES — the co-located landing-tile glob (the AUTHORED ladder rung). A
+// co-located `<cat>/<id>.tile.vue` resolves the story row's `tile` loader; a story
+// with no tile file resolves `undefined` (the ladder falls through to the frozen
+// still / the body marquee / the identity floor). A tile SFC is never a route: routes
+// are built from the CATEGORIES rows, never from this glob (or from `modules`, where
+// a tile key simply sits unused). This separate glob keys the `tile` loader ONLY, so
+// `makeLazy`/the story resolver never touches a tile file.
+const tileModules = import.meta.glob<{ default: Component }>("./*/*.tile.vue");
+
+/** Resolve a story's co-located `.tile.vue` loader, or `undefined` when absent. */
+function tileLoader(cat: string, id: string): (() => Promise<Component>) | undefined {
+    const loader = tileModules[`./${cat}/${id}.tile.vue`];
+    return loader ? () => loader().then((m) => m.default) : undefined;
+}
 
 /** Per-page container options — the declared background + the hero register. */
 interface StoryOptions {
@@ -262,6 +304,9 @@ const SUBPATHS: Record<string, string> = {
     "forms/toggle-chip": "@mkbabb/glass-ui/chip",
     "forms/selectable-chip": "@mkbabb/glass-ui/chip",
     "forms/label": "@mkbabb/glass-ui/label",
+    // BI.W-COMPOSITIONS-PRUNE — the LabeledField forms family, relocated out of the
+    // compositions band (a single-family control demo, not a composed scene).
+    "forms/labeled-field": "@mkbabb/glass-ui/labeled-field",
     // Display — the atomic primitives.
     "display/buttons": "@mkbabb/glass-ui/button",
     "display/card": "@mkbabb/glass-ui/card",
@@ -293,6 +338,11 @@ const SUBPATHS: Record<string, string> = {
     "containers/command": "@mkbabb/glass-ui/command",
     "containers/spa-view": "@mkbabb/glass-ui/spa-view",
     "containers/card-pressable": "@mkbabb/glass-ui/card",
+    // BI.W-COMPOSITIONS-PRUNE — the Configurator studio shell + the IconTooltip
+    // auto-provider (a Tooltip preset), relocated out of the compositions band: each
+    // is a single-library-family surface demo, not a composed scene.
+    "containers/configurator": "@mkbabb/glass-ui/configurator",
+    "containers/icon-tooltip": "@mkbabb/glass-ui/icon-tooltip",
     // Navigation — the glass nav chrome.
     "navigation/tabs": "@mkbabb/glass-ui/tabs",
     "navigation/carousel": "@mkbabb/glass-ui/carousel",
@@ -317,12 +367,16 @@ const SUBPATHS: Record<string, string> = {
     "data/timeline": "@mkbabb/glass-ui/timeline",
     "data/search": "@mkbabb/glass-ui/search",
     "data/virtual-section": "@mkbabb/glass-ui/virtual",
-    "data/scrolling-text": "@mkbabb/glass-ui/scrolling-text",
     "data/metric-cell": "@mkbabb/glass-ui/metric-cell",
     "data/metric-stack": "@mkbabb/glass-ui/metric-stack",
     // BG.W-DEMO-IA-REDESIGN — the Data METRICS family (folds metric-cell ·
-    // metric-stack · metric-badge · metric-pill · scrolling-text as members).
+    // metric-stack · metric-badge · metric-pill as members). scrolling-text left
+    // the family at BI.W-SPEEDTEST-ONLY-PAIR (RETIRE-RELOCATED to speedtest).
     "data/metrics": "/data/metrics",
+    // BI.W-COMPOSITIONS-PRUNE — the InstrumentChassis telemetry chassis, relocated out
+    // of the compositions band (the ping/jitter/download metric-strip host is a data
+    // instrument surface, not a composed scene).
+    "data/instrument-chassis": "@mkbabb/glass-ui/instrument-chassis",
     // Feedback — the status surfaces.
     "feedback/alert": "/feedback/alert",
     "feedback/toast": "@mkbabb/glass-ui/toast",
@@ -351,19 +405,18 @@ const SUBPATHS: Record<string, string> = {
     // The scroll page shares /motion-core with reveal — the DECLARED motion-core family.
     "motion/scroll": "@mkbabb/glass-ui/motion-core",
     "motion/text-motion": "/motion/text-motion",
-    // Compositions — real scenes carry the route path.
-    "compositions/hero": "/compositions/hero",
-    "compositions/math-paper": "/compositions/math-paper",
+    // Compositions — real scenes carry the ROUTE path (a single-library-family demo
+    // carries an `@mkbabb/glass-ui/*` subpath and belongs on its family band, not here;
+    // the compositions-census keeps only composed scenes — drawer-live-behind folded
+    // into containers/drawer, configurator/icon-tooltip → containers, instrument-chassis
+    // → data, labeled-field → forms; BI.W-COMPOSITIONS-PRUNE. The former
+    // `compositions/hero` row (BI.W-HERO-DEMOTE) left the band entirely — it is the
+    // `/compositions` section landing now, so it carries no SUBPATHS row.
     "compositions/auth-shell": "/compositions/auth-shell",
     "compositions/settings": "/compositions/settings",
     "compositions/empty-states": "/compositions/empty-states",
-    "compositions/drawer-live-behind": "/compositions/drawer-live-behind",
-    "compositions/configurator": "@mkbabb/glass-ui/configurator",
-    "compositions/instrument-chassis": "@mkbabb/glass-ui/instrument-chassis",
     "compositions/form-validation": "/compositions/form-validation",
     "compositions/gate-pattern": "/compositions/gate-pattern",
-    "compositions/labeled-field": "@mkbabb/glass-ui/labeled-field",
-    "compositions/icon-tooltip": "@mkbabb/glass-ui/icon-tooltip",
     "compositions/chassis": "/compositions/chassis",
 };
 
@@ -436,7 +489,6 @@ export const FOLDED_STORY_IDS: ReadonlySet<string> = new Set<string>([
     "data/data-table",
     "data/metric-cell",
     "data/metric-stack",
-    "data/scrolling-text",
     "data/avatar",
     // Feedback → feedback/toast.
     "feedback/toaster",
@@ -473,6 +525,82 @@ export const DECLARED_FAMILY_SUBPATHS: ReadonlySet<string> = new Set<string>([
     "@mkbabb/glass-ui/card",
 ]);
 
+/**
+ * BI.W-COMPOSITIONS-PRUNE — the OLD→NEW route map for the demos that LEFT the
+ * compositions band (each was a single-library-family demo misfiled among the composed
+ * scenes). Unlike a FOLDED member (whose family route derives from a shared subpath),
+ * a RELOCATED demo keeps a routed page at a NEW path, so its old `/compositions/<id>`
+ * deep-link needs an explicit 302 — there is no surviving compositions page sharing its
+ * subpath to derive from. W-FOLDED-REDIRECTS reads this map ALONGSIDE `FOLDED_STORY_IDS`
+ * to register the redirect routes (a moved id resolves to its new family route, never the
+ * lattice 404). Keyed old `category/id` → new route path. `drawer-live-behind` folded its
+ * live-behind mode INTO `containers/drawer` (one comprehensive Drawer page), so it points
+ * at that page rather than a standalone route.
+ */
+export const RELOCATED_STORY_ROUTES: Record<string, string> = {
+    "compositions/configurator": "/containers/configurator",
+    "compositions/icon-tooltip": "/containers/icon-tooltip",
+    "compositions/instrument-chassis": "/data/instrument-chassis",
+    "compositions/labeled-field": "/forms/labeled-field",
+    "compositions/drawer-live-behind": "/containers/drawer",
+    // BI.W-HERO-DEMOTE (UF-K2) — the standalone `compositions/hero` story is DEMOTED to
+    // the `/compositions` section landing (its bento of real scenes IS the section hero).
+    // The old deep-link resolves to the section landing, never the lattice 404.
+    "compositions/hero": "/compositions",
+};
+
+/**
+ * BI.W-FOLDED-REDIRECTS (BI-STAB-A-1) — the folded-member → family-route relation. A
+ * `FOLDED_STORY_IDS` member is UN-ROUTED by `foldFamilies` (its SFC is composed BARE inside
+ * its family page's `<FamilyTabs>`), so a direct/deep link to its old `/<category>/<id>`
+ * path has no route and would fall through `buildRoutes` to the `:pathMatch(.*)*` catch-all
+ * → the lattice-404. This map resolves each folded id to the ROUTE of the family page that
+ * composes it, so `demo/router.ts` can register a 302 (the deep-link parity fix — the CBA-5
+ * FamilyTabs-IA routing companion: a folded member is a tab inside its family page).
+ *
+ * The relation is the fold's OWN membership: each target is the family whose SFC
+ * `defineAsyncComponent(() => import("./<member>.vue"))`s the member. `proof:demo`'s FR2 arm
+ * DERIVES that composition from the family SFCs and asserts this map ≡ the derived ground
+ * truth (keys ≡ `FOLDED_STORY_IDS`; each target the family that actually composes the member;
+ * each target a real routed page) — a family that gains/loses a member reds the gate until the
+ * map re-derives. NOT a per-id hand-list the router owns; the router iterates it. Keyed folded
+ * `category/id` → family route path.
+ */
+export const FOLDED_MEMBER_FAMILY: Record<string, string> = {
+    // forms/inputs composes the input family (textarea · select · combobox · label).
+    "forms/textarea": "/forms/inputs",
+    "forms/select": "/forms/inputs",
+    "forms/combobox": "/forms/inputs",
+    "forms/label": "/forms/inputs",
+    // forms/toggle composes the chip toggles (toggle-chip · selectable-chip).
+    "forms/toggle-chip": "/forms/toggle",
+    "forms/selectable-chip": "/forms/toggle",
+    // display/atoms composes the display atoms (+ data/avatar, the shared atom).
+    "display/separator": "/display/atoms",
+    "display/pulse": "/display/atoms",
+    "display/status-dot": "/display/atoms",
+    "display/stacked-icons": "/display/atoms",
+    "display/dark-mode-toggle": "/display/atoms",
+    "data/avatar": "/display/atoms",
+    // data/metrics composes the metric family (cell · stack · badge · pill).
+    "display/metric-badge": "/data/metrics",
+    "display/metric-pill": "/data/metrics",
+    "data/metric-cell": "/data/metrics",
+    "data/metric-stack": "/data/metrics",
+    // data/table composes the data-table member.
+    "data/data-table": "/data/table",
+    // feedback/toast composes the toaster member.
+    "feedback/toaster": "/feedback/toast",
+    // motion/text-motion composes the text-motion family (typewriter · split-chars ·
+    // animated-digit · countup).
+    "motion/typewriter": "/motion/text-motion",
+    "motion/split-chars": "/motion/text-motion",
+    "motion/animated-digit": "/motion/text-motion",
+    "motion/countup": "/motion/text-motion",
+    // foundations/paper-glass composes the paper-texture member.
+    "foundations/paper-texture": "/foundations/paper-glass",
+};
+
 function s(
     cat: string,
     id: string,
@@ -501,6 +629,10 @@ function s(
         background,
         hero: opts?.hero,
         subpath,
+        // BI.W-LIVE-TILES — the AUTHORED landing-tile rung: resolved from the
+        // `./*/*.tile.vue` glob (undefined when no co-located tile file exists, so
+        // the tile ladder falls through to the frozen still / body marquee / identity).
+        tile: tileLoader(cat, id),
         // depth + heroScale are finalized by assignDepths() once the category's
         // story order is known (the FIRST story is the D2 main; the rest D3 subs).
         heroScale: opts?.heroScale,
@@ -805,6 +937,15 @@ export const CATEGORIES: Category[] = [
                 "The contrast-floored tonal-accent register — one tone per chip, idle-legible at ≥3:1, bold when active, ink stays correct.",
             ),
             s("forms", "label", "Label"),
+            // BI.W-COMPOSITIONS-PRUNE — the LabeledField family (parent SFC + 4
+            // wrappers over Input · Select · Slider · Switch), relocated from the
+            // compositions band: a single forms family, not a composed scene.
+            s(
+                "forms",
+                "labeled-field",
+                "Labeled Field",
+                "Parent SFC + 4 wrappers (Input · Select · Slider · Switch) with shared IconTooltip label.",
+            ),
         ],
     },
     {
@@ -916,6 +1057,21 @@ export const CATEGORIES: Category[] = [
                 "card-pressable",
                 "Pressable Card",
                 "The tappable list-card — <Card as=\"button\"> presses on the shared iOS spring (reciprocal squish + the --card-press-t brightness drive, one clock family with Button); a static content card never presses.",
+            ),
+            // BI.W-COMPOSITIONS-PRUNE — the Configurator studio shell + the IconTooltip
+            // auto-provider (a Tooltip preset), relocated from the compositions band:
+            // each is a single-library-family surface demo, not a composed scene.
+            s(
+                "containers",
+                "configurator",
+                "Configurator",
+                "Studio shell — preset row + grouped <ConfiguratorLayer> + a live specimen stage. Aurora is its real consumer.",
+            ),
+            s(
+                "containers",
+                "icon-tooltip",
+                "Icon Tooltip",
+                "Auto-provider tooltip for label co-location with display typography baked in.",
             ),
         ],
     },
@@ -1066,12 +1222,6 @@ export const CATEGORIES: Category[] = [
             ),
             s(
                 "data",
-                "scrolling-text",
-                "Scrolling Text",
-                "Overflow-detection-driven horizontal marquee for inline text — IPv6 addresses, org names, entity IDs.",
-            ),
-            s(
-                "data",
                 "metric-cell",
                 "Metric Cell",
                 "Compact metric card — icon + label over value/unit on a wash-tier surface; dashboard / compact / bare registers. Shipped /metric-cell.",
@@ -1092,10 +1242,19 @@ export const CATEGORIES: Category[] = [
                 "data",
                 "metrics",
                 "Metrics",
-                "The numeric-readout family — MetricCell, MetricStack, MetricBadge, MetricPill, and the ScrollingText marquee on ONE page, sectioned by the family switcher.",
+                "The numeric-readout family — MetricCell, MetricStack, MetricBadge, and MetricPill on ONE page, sectioned by the family switcher.",
                 {
                     background: "grid",
                 },
+            ),
+            // BI.W-COMPOSITIONS-PRUNE — the InstrumentChassis telemetry chassis,
+            // relocated from the compositions band: the ping/jitter/download metric-strip
+            // host is a single data-instrument surface, not a composed scene.
+            s(
+                "data",
+                "instrument-chassis",
+                "Instrument Chassis",
+                "Three-region chassis with twin-line bezel grooves and phase cascade; the GlassDock instrument-strip host.",
             ),
         ],
     },
@@ -1141,7 +1300,7 @@ export const CATEGORIES: Category[] = [
                 "motion",
                 "tempo",
                 "Motion Tempo",
-                "The --motion-tempo axis (M11 / N6) — ONE registered inheriting TIME scalar co-scales BOTH the CSS spring clocks (the --spring-*-duration reader = settle × --motion-tempo) AND the JS spring responses (motionTempo() → response × tempo). A live 0.7→1.3 slider over a dropdown + popover + dialog + a JS dock morph proves the P7 CSS↔JS one-clock co-scale; ⟂ --motion-weight ⟂ --ui-scale.",
+                "The --motion-tempo axis — ONE registered inheriting TIME scalar co-scales BOTH the CSS spring clocks (the --spring-*-duration reader = settle × --motion-tempo) AND the JS spring responses (motionTempo() → response × tempo). A live 0.7→1.3 slider over a dropdown + popover + dialog + a JS dock morph proves the CSS↔JS one-clock co-scale; ⟂ --motion-weight ⟂ --ui-scale.",
                 {
                     // A calm blueprint wash (the one-GL-per-route fence — the tempo demo
                     // spends no GL context; the glass overlays POP over the static grid).
@@ -1231,25 +1390,12 @@ export const CATEGORIES: Category[] = [
         title: "Compositions",
         icon: LayoutDashboard,
         stories: [
-            s(
-                "compositions",
-                "hero",
-                "Hero",
-                "Dashboards, auth shells, the math-paper idiom — the components composed into the surfaces they were built for. Warm cream, cartoon offset shadows, translucent glass over a grain underpaint.",
-                {
-                    background: "constellation",
-                    hero: true,
-                    // The deliberate audacious-type showcase — the ONE D2 main at `mega`
-                    // (its content IS the audacious-type demonstration).
-                    heroScale: "mega",
-                    // BG.W-HERO-FIT — the short hero wordmark; the ℱ ornament rides the
-                    // #title-ornament slot in hero.vue.
-                    displayTitle: "Real scenes",
-                },
-            ),
-            s("compositions", "math-paper", "Math Paper", undefined, {
-                background: "grid",
-            }),
+            // BI.W-HERO-DEMOTE (UF-K2) — the standalone `compositions/hero` story is
+            // RETIRED: it duplicated the `/compositions` D1 section landing (the chassis
+            // already renders the real-scene bento over the section hero, and the landing
+            // blurb carries the "Real scenes" identity). No standalone route survives; the
+            // `/compositions/hero` deep-link resolves to `/compositions` via
+            // RELOCATED_STORY_ROUTES (W-FOLDED-REDIRECTS). auth-shell is now the D2 main.
             // BI.W-AUTH-SHELL-BG (PERF-2 / UF-K4) — the auth-shell no longer mounts the
             // library's HEAVIEST shader (a 4.87MP live Fourier SDF) as a decorative page
             // wash behind the form: a teaching SDF is never an ambient background. The page
@@ -1279,24 +1425,6 @@ export const CATEGORIES: Category[] = [
             }),
             s(
                 "compositions",
-                "drawer-live-behind",
-                "Drawer Live-Behind",
-                "A detented non-modal bottom sheet — peek / half / full snap-points over a live, still-interactive surface behind it.",
-            ),
-            s(
-                "compositions",
-                "configurator",
-                "Configurator",
-                "Studio shell — preset row + grouped <ConfiguratorLayer> + a live specimen stage. Aurora is its real consumer.",
-            ),
-            s(
-                "compositions",
-                "instrument-chassis",
-                "Instrument Chassis",
-                "Three-region chassis with twin-line bezel grooves and phase cascade; the GlassDock instrument-strip host.",
-            ),
-            s(
-                "compositions",
                 "form-validation",
                 "Form Validation",
                 "The user-invalid / user-valid rungs, the aria-invalid bridge, a required asterisk, an error slot, and Textarea autosize.",
@@ -1306,18 +1434,6 @@ export const CATEGORIES: Category[] = [
                 "gate-pattern",
                 "Gate Pattern",
                 "A contained, on-demand preview of the non-dismissable access-modal idiom — a glass-card frame shows the gate, and Open the modal demo opens the real modal that refuses esc, scrim, and close, with the widened invalid ring and shake feedback, closing only on the correct key. A blessed composition, not a component.",
-            ),
-            s(
-                "compositions",
-                "labeled-field",
-                "Labeled Field",
-                "Parent SFC + 4 wrappers (Input · Select · Slider · Switch) with shared IconTooltip label.",
-            ),
-            s(
-                "compositions",
-                "icon-tooltip",
-                "Icon Tooltip",
-                "Auto-provider tooltip for label co-location with display typography baked in.",
             ),
             // BG.W-STORY-PAGE-API (§4-D) — the demo SUB-TYPE taxonomy reference. The
             // five demo KINDS (stage · specimen · interaction · matrix · composition)

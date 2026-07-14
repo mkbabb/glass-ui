@@ -17,13 +17,13 @@ component/subpath rename (`goo-blob` → `blob`), and the source-only `src/subpa
 deletion + curated flat-barrel relocations (no export break). The BG visual band is a
 paint upgrade — no public-prop break beyond the rows below.
 
-### The `/api` discovery-subpath fold — 189-symbol re-home
+### The `/api` discovery-subpath fold — 185-symbol re-home
 
 `@mkbabb/glass-ui/api` (the pure types + constants discovery layer) is FOLD-DELETED. The
-`./api` key is the ONLY dropped key. 189 of its symbols re-home onto their OWNING published
+`./api` key is the ONLY dropped key. 185 of its symbols re-home onto their OWNING published
 subpath — so a consumer swaps the import PATH with zero symbol loss (the 6 deleted-viz types
-+ the 4 retired `/virtual` windowing types below are the exception — they are DELETED /
-RETIRED, not re-homed):
++ the 4 retired `/virtual` windowing types + the 4 retired `/border-progress` ring types
+below are the exception — they are DELETED / RETIRED, not re-homed):
 
 ```ts
 // 5.0.0 — the /api discovery layer is gone; import each symbol from its owning subpath
@@ -32,7 +32,7 @@ RETIRED, not re-homed):
 + import type { CardTier } from "@mkbabb/glass-ui/card";
 ```
 
-187 of the 189 re-homed symbols were ALREADY exported by their owning subpath barrel (the
+183 of the 185 re-homed symbols were ALREADY exported by their owning subpath barrel (the
 fold is a pure import-path swap — the owning subpath needs no new export). The SIX
 `Concentric*` / `DotFlowField*`+`FlowFieldConfig` viz types are NOT re-homed — the
 `/concentric` + `/dot-flow-field` subpaths + their components are DELETED at
@@ -41,7 +41,12 @@ owning subpath; a consumer of them has no target (the vizzes are retired). The F
 `/virtual` windowing types (`FlatSection` / `ForcedSectionWindowRange` / `SectionLayout` /
 `SectionWindowRange`) are LIKEWISE not re-homed — the `/virtual` subpath is RETIRED at
 BI.W-VIRTUAL-TRUTH (see "The `/virtual` subpath retirement" section below), so those types
-have no owning subpath either. The surface-axis
+have no owning subpath either. The FOUR `/border-progress` ring types
+(`BorderProgressCoverage` / `BorderProgressMilestone` / `BorderProgressMilestoneEvent` /
+`BorderProgressProps`) are ALSO not re-homed — the `/border-progress` subpath is RETIRED at
+BI.W-BORDER-PROGRESS-RETIRE (see "The `/border-progress` subpath retirement" section below);
+the component is BANKED dormant off the public surface, so those types have no owning subpath
+until the speedtest adopt re-publishes it. The surface-axis
 grammar types (`Surface` / `SurfaceTier`) publish via the dedicated `/axes` grammar
 subpath (BH.W-AXIS-GRAMMAR — the honest `/api` successor). Only two `ui/_shared`
 convenience unions re-home to a barrel that ADDS one type-only export: `MenuItemVariants`
@@ -55,9 +60,11 @@ The `/api` layer carried 199 symbols at the fold (down from the pre-BG 203: the
 dead-composable sweep retired `Haptic*` / `CelebrationBurst*` / `WaveComponent` and the
 `GlassPanelVariant` tier-homonym, and the `PaperGrid*` → `LiquidGrid*` +
 `SelectableChipVariants` → `ChipVariants` renames moved their entries — each documented in
-its own section below or in the BG retirements). Of those, 189 re-home (the table above);
-the 6 `Concentric*` / `DotFlowField*`+`FlowFieldConfig` viz types are DELETED and the 4
-`/virtual` windowing types are RETIRED with their subpath (BI.W-VIRTUAL-TRUTH), not re-homed.
+its own section below or in the BG retirements). Of those, 185 re-home (the table above);
+the 6 `Concentric*` / `DotFlowField*`+`FlowFieldConfig` viz types are DELETED, the 4
+`/virtual` windowing types are RETIRED with their subpath (BI.W-VIRTUAL-TRUTH), and the 4
+`BorderProgress*` ring types are RETIRED with the `/border-progress` subpath
+(BI.W-BORDER-PROGRESS-RETIRE), not re-homed.
 
 The full 199-symbol map (grouped alphabetically by symbol; `kind` is the TS export kind;
 `new import (owning subpath)` is the 5.0.0 target):
@@ -101,10 +108,6 @@ The full 199-symbol map (grouped alphabetically by symbol; `kind` is the TS expo
 | `StrokeOrient` | type | `/aurora` |
 | `WarpMode` | type | `/aurora` |
 | `BadgeVariants` | type | `/badge` |
-| `BorderProgressCoverage` | type | `/border-progress` |
-| `BorderProgressMilestone` | type | `/border-progress` |
-| `BorderProgressMilestoneEvent` | type | `/border-progress` |
-| `BorderProgressProps` | type | `/border-progress` |
 | `ButtonVariants` | type | `/button` |
 | `Canvas2DFrame` | type | `/canvas` |
 | `Canvas2DHandle` | type | `/canvas` |
@@ -354,6 +357,82 @@ production or external importer of the glass-ui surface, never a demo page and n
 fork. Recorded in `docs/consumer-evidence/use-virtual-section-window.md` +
 `proof:consumer-evidence-true` / `proof:virtual-window` (VW4/VW5 reconciled to the retire).
 
+#### The `/border-progress` subpath retirement
+
+**BI.W-BORDER-PROGRESS-RETIRE — the `/border-progress` PUBLISHED SUBPATH RETIRED, the component
+BANKED dormant (the consumer-truth adjudication; ruling 4). Clean break, no alias ("No legacy
+code").** The masked-conic border-ring was published as a net-new subpath at 4.1.0 on a
+speedtest-adopt justification that never landed: speedtest hand-rolls its own progress bar, so at
+the 5.0.0 cut the fresh registry+sibling probe (`npm view @mkbabb/glass-ui` + the constellation
+census) reads **0 binary consumers** of `/border-progress` — its own demo is the sole render. The
+"born ≥2 by construction" claim was FALSE. Under the ≥2-binary-consumer + mechanism-distinctness
+law the PUBLISHED subpath does not earn its keep, so it retires — but as a **retire-until-adoption /
+banked-with-named-re-trigger** posture, NOT a delete (the re-entry is a consume of the EXISTING
+mechanism, not a re-mint):
+
+| surface | disposition |
+|---|---|
+| `@mkbabb/glass-ui/border-progress` subpath export + `typesVersions` | RETIRED — 0 binary consumers |
+| `src/subpaths/border-progress.ts` mirror | DELETED |
+| `/api` re-export of `BorderProgressCoverage` / `BorderProgressMilestone` / `BorderProgressMilestoneEvent` / `BorderProgressProps` | REMOVED — the 4 types have no owning subpath (see the `/api` fold note above) |
+| `src/components/custom/border-progress/` component + its demo (feedback/progress, SidebarDock rim) | KEEP — banked dormant, demo-only, imported relatively via `@glass/…` off the public surface (carries the W-BP-BOTTOM-LINEAR paint) |
+
+**MIGRATE: none — the fresh probe read ZERO binary consumers (speedtest hand-rolls its bar). A
+no-op-for-consumers record (per invariant-11), not a silent prune.** Re-entry trigger: the speedtest
+`<BorderProgress>` adopt ASK (AW.W7 — delete its hand-rolled bar, import the mechanism) RE-PUBLISHES
+`/border-progress` in that cut (the named cross-repo re-trigger; rostered in the crossrepo-asks
+book). **Successor for the dock scroll-progress affordance:** BI.W-SCROLL-PROGRESS-RIM's masked-band
+rim — the atlas dock-progress consume (ask #23) targets that successor's `[0,1]` per-item contract,
+never the retiring component. The value.js `mixColors` U-F30 coupling is NOT orphaned: the
+spectrum-walk it reads moves WITH SCROLL-PROGRESS-RIM to the shared `/color` leaf, and
+border-progress stays a consumer of the moved leaf (still 0 binary consumers of its OWN package, so
+this retire stands). Recorded in `docs/consumer-evidence/border-progress.md` +
+`proof:consumer-evidence-true` (the BP1–BP3 arm). completion-seal is the milder WATCHLIST case (1
+honest own-demo consumer, evidence doc present) — it KEEPS published.
+
+#### The `/scrolling-text` subpath retire-relocation
+
+**BI.W-SPEEDTEST-ONLY-PAIR — the `/scrolling-text` PUBLISHED SUBPATH + its component RETIRE-RELOCATED
+to speedtest (the consumer-truth adjudication; XR-3 / UF-K1). Clean break, no alias ("No legacy
+code").** `ScrollingText` is an overflow-detection marquee lifted from the speedtest fleet at W.W2;
+at the 5.0.0 cut the fresh registry+sibling probe (`npm view @mkbabb/glass-ui` + a read-only grep of
+the constellation) reads its ONLY binary consumers as **speedtest, 2 sites** — `ResultDetailSheet.vue:6`
++ `AppSettingsButton.vue:97`, both `import { ScrollingText } from "@mkbabb/glass-ui/scrolling-text"`;
+**0** across muster · sci-report · atlas · slides · value.js · keyframes.js · words · bbnf-buddy. The
+≥2-**repo**-binary-consumer bar is UNMET (one consuming repo), and the mechanism is a distinct
+overflow-marquee no survivor expresses — so the law does NOT fold it onto a sibling, it RELOCATES to the
+sole consumer's own repo (UF-P6 no-standing-overfit — the honest home is speedtest's tree, NOT a
+keep-with-evidence-doc). Unlike border-progress (banked dormant, demo-only own-render), scrolling-text
+has NO glass-ui demo consumer once its story folds, so the retire is a full DELETE:
+
+| dropped surface | disposition |
+|---|---|
+| `@mkbabb/glass-ui/scrolling-text` subpath export + `typesVersions` | RETIRED — speedtest-only, ≥2-repo bar unmet (derived regen: subpath-policy drop → `regen-exports --write`) |
+| `src/subpaths/scrolling-text.ts` mirror | DELETED |
+| `src/components/custom/scrolling-text/` component (`ScrollingText.vue` + barrel + README) | DELETED — relocated to speedtest's repo |
+| root barrel re-export (`src/index.ts` `export * from "./components/custom/scrolling-text"`) | DROPPED — no `ScrollingText` off the root barrel |
+| the `data/scrolling-text` demo story + its manifest row + metrics-family member | DELETED — the metrics family keeps its four metric primitives |
+
+**MIGRATE: none — the fresh probe read ZERO external binary consumers beyond speedtest; a
+no-op-for-registry-consumers record (per invariant-11), not a silent prune.** Relocation home: speedtest
+ADOPTS a local copy (or its own overflow primitive) on its `^5.x` consume and DROPS the `/scrolling-text`
+import — the by-name ASK (with the paired kf `^5.2.0` / value `^3.1.0` peer bump) is rostered on the
+`crossrepo-asks:bi` book (`docs/tranches/BI/coordination/asks-and-consumes.md`). Re-entry trigger: a real
+≥2-repo cross-repo binary consume re-mints the published subpath (never a demo page, never one repo).
+Recorded in `proof:consumer-evidence-true` (the SP1 arm — source-anchored: component + mirror + root-barrel
+re-export + demo story DEFINITION-ABSENT).
+
+#### The `icon-tooltip` disposition (Tooltip preset — no subpath change)
+
+**BI.W-SPEEDTEST-ONLY-PAIR (consumer-truth) · BI.W-OVERLAY-UNION (mechanism).** The overlay Kronecker fold
+(BI.W-OVERLAY-UNION) already re-expressed `IconTooltip` as a **Tooltip PRESET** — it composes the `ui/tooltip`
+family verbatim (the distinct mechanism: `aria-describedby` naming, `role="tooltip"`, the SR mirror,
+non-focusable content), NOT its own overlay root. This wave owns the consumer-truth consequence: speedtest is
+the sole binary consumer (`Dock.vue:17` `import { IconTooltip } from "@mkbabb/glass-ui/icon-tooltip"` +
+`AddressAutocomplete.vue:103`), so the fold PAIRS a speedtest ADOPT ask (migrate the two sites onto the
+Tooltip preset) on the same cut — rostered on the `crossrepo-asks:bi` book. Recorded in
+`proof:consumer-evidence-true` (the SP2 arm — source-anchored: `IconTooltip.vue` composes the Tooltip family).
+
 **BG.W-GRID-AFFINE — `PaperGrid` (the viz) RENAMED to `LiquidGrid`; `/paper-grid` →
 `/liquid-grid`. Clean break, no alias ("No legacy code").** The WebGPU-first liquid AA-grid
 viz + its subpath are renamed to kill the live homonym with the STATIC `.paper-grid` /
@@ -540,6 +619,47 @@ peer-bump asks (`docs/tranches/BI/coordination/asks-and-consumes.md`, filed by
 W-FACTOR-ASKS). Machine-locked by `proof:fold-delete` (overlay clause: retired
 dir/subpath/export absent ×2, no consumer import, survivor `Popover` present) + the
 WCAG 1.4.13 / coarse-pointer / focus-return π (rides the B-close gestalt ceremony).
+
+### BI.W-COMPOSITIONS-PRUNE — the demo storybook prunes 5 misfiled single-component demos out of the `compositions` band
+
+No consumer API change (demo-only IA). The storybook `compositions` band is for REAL SCENES —
+components composed into a surface they were built for (auth-shell, settings, empty-states,
+form-validation, gate-pattern, the story chassis). Five registrations were SINGLE-library-family
+demos misfiled there; each carries an `@mkbabb/glass-ui/*` subpath (one library family owns it), so it
+belongs on that family's band. `proof:demo`'s compositions-census (CP1) enforces this: a surviving
+`compositions/*` story must carry a `/compositions/*` ROUTE-path subpath, never a library subpath.
+
+| demo | was | now |
+|---|---|---|
+| Configurator | `/compositions/configurator` | `/containers/configurator` |
+| Icon Tooltip | `/compositions/icon-tooltip` | `/containers/icon-tooltip` |
+| Instrument Chassis | `/compositions/instrument-chassis` | `/data/instrument-chassis` |
+| Labeled Field | `/compositions/labeled-field` | `/forms/labeled-field` |
+| Drawer Live-Behind | `/compositions/drawer-live-behind` | folded into `/containers/drawer` (a Live-behind mode section — one comprehensive Drawer page: snap · fixed · live-behind) |
+
+The shipped subpaths (`@mkbabb/glass-ui/{configurator,icon-tooltip,instrument-chassis,labeled-field,drawer}`)
+are UNCHANGED — only the demo routes moved. A deep-link to an old `/compositions/*` route 302s to its new
+band route via `RELOCATED_STORY_ROUTES` (`manifest.ts`) consumed by W-FOLDED-REDIRECTS (no lattice 404).
+
+### BI.W-HERO-DEMOTE — the standalone `/compositions/hero` demo is demoted to the `/compositions` section landing
+
+No consumer API change (demo-only IA). The standalone `compositions/hero` storybook page (UF-K2 — "what even
+is /compositions/hero — this likely needs to be removed or made not a full category item, a sub-page instead")
+DUPLICATED the `/compositions` D1 section landing: the chassis already renders the real-scene bento (the composed
+scenes as tiles) over the section hero, and the landing subtitle carries the "Real scenes" identity. So the
+standalone story is RETIRED — no `compositions/hero` manifest row/route and `demo/stories/compositions/hero.vue`
+is deleted; `/compositions` renders the bento landing directly. The audacious flourishes (the `heroScale:"mega"`
+rung + the ℱ ornament) were page-specific decoration and die with the page — the section landing keeps the uniform
+D1 `hero` rung across all 11 categories (no per-category special-casing). `proof:demo`'s HD arm enforces the
+demotion (no standalone row/route + `hero.vue` DEFINITION-ABSENT); `proof:compositions-hero` witnesses the SFC
+stays retired.
+
+| demo | was | now |
+|---|---|---|
+| Hero (Real scenes) | `/compositions/hero` (standalone `heroScale:"mega"` story) | the `/compositions` section landing (the real-scene bento hero) |
+
+A deep-link to `/compositions/hero` 302s to `/compositions` via `RELOCATED_STORY_ROUTES` (`manifest.ts`) consumed
+by W-FOLDED-REDIRECTS (no lattice 404).
 
 ### BI.W-MENU-TRIGGER — ContextMenu folds onto the Menu family as `trigger="context"`
 
@@ -797,6 +917,39 @@ import in `src/`, survivor `.glass-resting`/`<Surface>` present — the residual
 export drop is the orchestrator regen) + `proof:no-dual-path` (single refraction door: builders=0) +
 `proof:migration-truth` (the dead `GlassPanelProps→/glass-panel` re-home row removed).
 
+### BI.W-XR-PRODUCER-REPAIRS — the dist `--default-transition-duration` routes through `--duration-fast` + the display/heading/title weight axis
+
+Two producer-red repairs surface a consumer-visible token behaviour (the rest — the
+spectrum-thumb focus-ring pairing, the WatercolorDot solid-ring floor, the
+`backdrop-filter: none` prefix policy — are internal fixes with no API change):
+
+- **PKT-1 (value.js P2)** — the emitted `dist/styles/components.css` R3 base block no
+  longer re-declares a **bare** `:root { --default-transition-duration: 150ms }` over a
+  consumer's own `@theme` alias. It now routes THROUGH the house token —
+  `--default-transition-duration: var(--duration-fast, 150ms)`. Consumer impact: a
+  bare `@import "@mkbabb/glass-ui/styles"` consumer's Tailwind `.transition-*`
+  utilities now read the house `--duration-fast` (0.2s) as their default duration
+  (was the frozen 150ms), and a consumer that retunes `--duration-fast` (or its own
+  `--default-transition-duration` `@theme` alias) now GOVERNS them instead of being
+  clobbered. No import or class rename — a felt-duration retune only.
+- **X7 (value.js P10/T-40)** — new customization tokens `--type-weight-display` (600),
+  `--type-weight-heading` (700), `--type-weight-title` (700). The `text-display*` /
+  `text-heading` / `text-title` utilities read them instead of hardcoded weights, so a
+  consumer dials the bold-letterform character from ONE override. Purely additive
+  (defaults byte-identical); no break.
+
+Machine-locked by `proof:xr-producer-repairs` (X1 duration-through-token on the fresh
+dist + X7 tokens-declared + `text-title` reads `var(--type-weight-title)`).
+
+**Deferred (NOT in this cut):** the T-45 glass-ladder backdrop edge-bleed (X2) — its
+oversampled-pseudo cure is architecturally blocked at the rung (both pseudos claimed;
+`.btn-glass`/`.glass-deep`/the dock re-declare `backdrop-filter` on the host, so moving
+the plate to a pseudo double-blurs those consumers; the edge rim interferes with an
+edge-oversampling blur). Routed to a wrapper-architecture follow-up + the #92 paint
+batch (see `docs/tranches/BI/audit/visual/W-XR-PRODUCER-REPAIRS-DELTA.md`). Likewise the
+X5 `color-mix`-@property-collapse on bare `.glass-wash` is booked to #92 (a live-paint
+engine repro).
+
 ## 4.1.0
 
 **BC.W-VIZ-FOURIER — the Canvas2D fourier renderer + the three-view split RETIRED
@@ -866,7 +1019,10 @@ shell adoption) stays GREEN.
 
 ADDITIVE (4.1.0): `@mkbabb/glass-ui/border-progress` — `<BorderProgress>`, the masked-conic
 border-ring primitive (progress IS the element's border; BB.W-BORDER-PROGRESS). A net-new public
-subpath (off the root barrel); no retirement, no break. The speedtest AW.W7 consumer binds it on `^4.1.0`.
+subpath (off the root barrel) shipped at 4.1.0. The 4.1.0 note that "the speedtest AW.W7 consumer
+binds it on `^4.1.0`" did NOT hold — speedtest hand-rolls its own bar (0 binary consumers), so the
+subpath is RETIRED at the 5.0.0 cut (banked dormant), see "The `/border-progress` subpath
+retirement" below. Re-entry = the speedtest adopt ASK.
 
 ADDITIVE (4.1.0): `--instrument-dial-min-block-size-desktop` (BB.W-DESKTOP-RESERVE) — the wide-axis
 (desktop) chassis dial reserve now ships in the library (`@container chassis (min-width: 45rem)` on
@@ -1971,27 +2127,35 @@ at O.W6 cross-repo cohort. No other constellation references.
 
 ---
 
-## `@mkbabb/glass-ui/metric-cell` + `@mkbabb/glass-ui/metric-stack` subpaths — KEPT (speedtest-consumed)
+## The metric family — KEPT (a THREE-repo public surface: speedtest + muster + sci-report) — BI.W-METRICS-DEMO
 
-Both subpaths SHIP. The `metric-cell/` (`MetricCell`) and `metric-stack/`
-(`MetricStack` + `MetricRow`) component dirs, their `src/subpaths/metric-cell.ts`
-/ `src/subpaths/metric-stack.ts` barrels, the `./metric-cell` / `./metric-stack`
-`package.json` `exports` entries + `typesVersions` rows, the
-`@mkbabb/glass-ui/api` re-exports (`MetricCellAppearance`, `MetricCellProps`,
-`MetricStackProps`, `MetricRowProps`), and the `--metric-row-*` value-clamp token
-family (tokens.css §17) are all LIVE.
+The whole compact-metric family SHIPS: `metric-cell` (`MetricCell`), `metric-stack`
+(`MetricStack` + `MetricRow`), `metric-badge` (`MetricBadge`), `instrument-chassis`
+(`InstrumentChassis` + `ChassisDivider`), `pulse` (`Pulse`) — their `src/components/custom/`
+dirs, `src/subpaths/*.ts` barrels, the `./metric-cell` / `./metric-stack` /
+`./metric-badge` / `./instrument-chassis` / `./pulse` `package.json` `exports` entries +
+`typesVersions` rows, the `@mkbabb/glass-ui/api` re-exports, and the `--metric-row-*`
+value-clamp token family (tokens.css §17) are all LIVE. `<MetricPill>` (ui/, composes
+`<MetricBadge>`) rides the family on the root barrel.
 
-**Speedtest is the binding consumer.** The metric families clear the ≥2-consumer
-substrate bar (J inv 10) through the speedtest dashboard, which composes
-`<MetricCell>`/`<MetricStack>`/`<MetricRow>` over the `/metric-cell` +
-`/metric-stack` subpaths. They are the library's identity surface for compact
-metric cards + vertical metric grouping; no migration action is required.
+**Not speedtest-only — a three-repo public API.** The earlier "speedtest-consumed"
+framing (and the FAM-10 "speedtest-only sextet" premise / the UF-K1 move-to-speedtest
+carry) is CORRECTED: the family is consumed by speedtest, muster, AND sci-report — with
+`metric-badge` spanning all three. It clears the ≥2-binary-consumer bar (J inv 10) by a
+wide margin; a metrics relocate or retire would silently break muster + sci-report, so
+it is NOT a speedtest-transfer candidate. Per-site consumer evidence:
+`docs/consumer-evidence/metrics.md`. No migration action is required; the family STAYS.
+(The overfit UF-K1 flagged lands on the `/data/metrics` DEMO page, redesigned by
+W-AFFORDANCE-REDESIGN — not the components.)
 
-Import them via their flat subpath:
+Import them via their flat subpaths:
 
 ```ts
 import { MetricCell } from "@mkbabb/glass-ui/metric-cell";
 import { MetricStack, MetricRow } from "@mkbabb/glass-ui/metric-stack";
+import { MetricBadge } from "@mkbabb/glass-ui/metric-badge";
+import { InstrumentChassis } from "@mkbabb/glass-ui/instrument-chassis";
+import { Pulse } from "@mkbabb/glass-ui/pulse";
 ```
 
 ---

@@ -1,7 +1,13 @@
 import { ref } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
-import { CATEGORIES, firstStoryPath } from "./stories/manifest";
+import {
+    CATEGORIES,
+    firstStoryPath,
+    FOLDED_STORY_IDS,
+    FOLDED_MEMBER_FAMILY,
+    RELOCATED_STORY_ROUTES,
+} from "./stories/manifest";
 import { isFocalRoute, suppressesShellField } from "./chassis/hero/focal";
 
 /**
@@ -94,6 +100,24 @@ function buildRoutes(): RouteRecordRaw[] {
                 },
             });
         }
+    }
+
+    // BI.W-FOLDED-REDIRECTS (BI-STAB-A-1) — a FOLDED member is UN-ROUTED by `foldFamilies`
+    // (composed BARE inside its family page's <FamilyTabs>), and a RELOCATED/DEMOTED demo
+    // keeps no page at its old path, so a direct/deep link to either would fall through to
+    // the catch-all lattice-404. Register a 302 from each old id → its family route (folded)
+    // or new route (relocated), DERIVED from the two manifest maps (no per-id hand-list
+    // here — the router iterates the fold's own membership). Enrolled BEFORE the catch-all,
+    // which still catches a genuinely unknown path.
+    for (const memberId of FOLDED_STORY_IDS) {
+        const family = FOLDED_MEMBER_FAMILY[memberId];
+        // `proof:demo` FR1 asserts total coverage; skip a keyless id rather than push an
+        // undefined redirect (a partial map is a gate RED, never a broken route).
+        if (!family) continue;
+        routes.push({ path: `/${memberId}`, redirect: family });
+    }
+    for (const [oldId, target] of Object.entries(RELOCATED_STORY_ROUTES)) {
+        routes.push({ path: `/${oldId}`, redirect: target });
     }
 
     // Catch-all → the minimal shell 404 (the eggs family deleted whole,

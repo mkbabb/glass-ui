@@ -205,6 +205,76 @@ function parseSetLiteral(src, name) {
     );
 }
 
+// Parse a `NAME … { "key": "value", … }` string→string map (the FOLDED_MEMBER_FAMILY /
+// RELOCATED_STORY_ROUTES shape) by brace-matching the first `{…}` after `name`. Returns
+// `{}` when the const is absent (the HEAD state — no FOLDED_MEMBER_FAMILY yet).
+function parseStringMap(src, name) {
+    const out = {};
+    const i = src.indexOf(name);
+    if (i < 0) return out;
+    const open = src.indexOf("{", i);
+    if (open < 0) return out;
+    let depth = 0,
+        end = -1;
+    for (let j = open; j < src.length; j++) {
+        if (src[j] === "{") depth++;
+        else if (src[j] === "}") {
+            depth--;
+            if (depth === 0) {
+                end = j;
+                break;
+            }
+        }
+    }
+    if (end < 0) return out;
+    for (const m of src
+        .slice(open + 1, end)
+        .matchAll(/["']([^"']+)["']\s*:\s*["']([^"']+)["']/g))
+        out[m[1]] = m[2];
+    return out;
+}
+
+// Resolve a family SFC's `import("<rel>.vue")` member specifier to its `cat/id`, relative
+// to the family file's own dir WITHIN demo/stories (a family file is always
+// demo/stories/<cat>/<name>.vue, so its base dir within stories is `<cat>`). `../data/…`
+// climbs out of the category; `./…` stays in it.
+function resolveWithinStories(baseDir, imp) {
+    const parts = baseDir ? baseDir.split("/") : [];
+    for (const seg of imp.replace(/\.vue$/, "").split("/")) {
+        if (seg === "" || seg === ".") continue;
+        else if (seg === "..") parts.pop();
+        else parts.push(seg);
+    }
+    return parts.join("/");
+}
+
+// Derive the folded-member → family-route relation the FOLD ITSELF encodes: a family page
+// (any demo/stories/<cat>/<name>.vue that composes members via <FamilyTabs>) dynamic-imports
+// each member SFC. The member's family route is that family page's own route. Restricted to
+// FOLDED_STORY_IDS members so a family page's non-folded imports never leak in. This is the
+// GROUND TRUTH `proof:demo`'s FR2 arm holds FOLDED_MEMBER_FAMILY against — a family that
+// gains/loses a member re-derives here and reds the map until it follows.
+function deriveFoldGroundTruth(vueCorpus, foldedSet) {
+    const gt = {};
+    for (const { path, text } of vueCorpus) {
+        const m = /^demo\/stories\/(.+)\.vue$/.exec(path);
+        if (!m) continue;
+        const withinStories = m[1]; // e.g. "forms/inputs"
+        const slash = withinStories.lastIndexOf("/");
+        if (slash < 0) continue; // a top-level file, not a <cat>/<id> page
+        if (!/\bFamilyTabs\b/.test(text)) continue;
+        const baseDir = withinStories.slice(0, slash); // "forms"
+        const familyRoute = `/${withinStories}`; // "/forms/inputs"
+        for (const im of text.matchAll(
+            /import\(\s*["'](\.[^"']+?\.vue)["']\s*\)/g,
+        )) {
+            const memberId = resolveWithinStories(baseDir, im[1]);
+            if (foldedSet.has(memberId)) gt[memberId] = familyRoute;
+        }
+    }
+    return gt;
+}
+
 // Parse the SUBPATHS `"cat/id": "<subpath>"` map from the manifest source.
 function parseSubpaths(src) {
     const out = {};
@@ -1347,6 +1417,195 @@ function detect(overrides = {}) {
         pr3Px >= 72,
     );
 
+    // ── CP1/CP2 — the compositions-census (BI.W-COMPOSITIONS-PRUNE). The
+    //    `compositions` band is for REAL SCENES — components composed into a surface
+    //    they were built for (auth-shell, settings, empty-states, form-validation,
+    //    gate-pattern, the story chassis). A REAL SCENE has no single library
+    //    family owning it, so it carries a `/compositions/*` ROUTE-path subpath; a
+    //    SINGLE-library-family demo declares its family via an `@mkbabb/glass-ui/*`
+    //    subpath and is MISFILED here — it belongs on that family's band. CP1 reads the
+    //    per-row subpath (the family declaration the curated map already carries), so it
+    //    is deterministic (no fragile import-count over supporting primitives). Born-RED
+    //    on the HEAD tree — configurator/instrument-chassis/labeled-field/icon-tooltip
+    //    each carry a library subpath under compositions; GREEN once each relocates to
+    //    its band (containers/data/forms) and drawer-live-behind folds into
+    //    containers/drawer. `rows`/`subpaths` reuse the E1 parse. ──
+    const compRows = rows.filter((r) => r.startsWith("compositions/"));
+    const compMisfiled = compRows.filter((r) =>
+        (subpaths[r] ?? `/${r}`).startsWith("@mkbabb/glass-ui/"),
+    );
+    facts.cp1 = { compositionRows: compRows, misfiled: compMisfiled };
+    assert(
+        "CP1 — compositions-census: every compositions story is a composed scene (a `/compositions/*` route path); no single-library-family demo (an `@mkbabb/glass-ui/*` subpath) survives under compositions",
+        compMisfiled.length === 0,
+    );
+
+    // CP2 — no dead/unregistered SFC survives under `demo/stories/compositions/`: every
+    // `*.vue` (bar a `.tile.vue` co-located helper) is a REGISTERED compositions story
+    // (the residue-sweep — a relocated/deleted demo leaves no orphan file behind).
+    const compRegistered = new Set(
+        compRows.map((r) => r.slice("compositions/".length)),
+    );
+    const compDir = "demo/stories/compositions";
+    const compFiles =
+        overrides.compositionFiles ??
+        (existsSync(resolve(ROOT, compDir))
+            ? readdirSync(resolve(ROOT, compDir))
+                  .filter((f) => f.endsWith(".vue") && !f.endsWith(".tile.vue"))
+                  .map((f) => f.slice(0, -".vue".length))
+            : []);
+    const compOrphans = compFiles.filter((f) => !compRegistered.has(f));
+    facts.cp2 = { files: compFiles, orphans: compOrphans };
+    assert(
+        "CP2 — no dead/unregistered SFC under demo/stories/compositions/ (every .vue is a registered compositions story — the residue sweep)",
+        compOrphans.length === 0,
+    );
+
+    // ── MP1 — the overfit /compositions/math-paper demo is fully RETIRED
+    //    (BI.W-MATH-PAPER-REMOVE, UF-K3). math-paper was a single-idiom specimen (the
+    //    fira-code math block + `.paper-ink-mark` section rail on a `.paper-grid` paper
+    //    ground) that earned no category slot — a CSS idiom, not a composed scene. The
+    //    section-rail + paper-grid registers survive as the documented recipe (surface-
+    //    axis.css `.paper-ink-mark` + cards.css `.paper-grid` / the Card `grid` prop),
+    //    NOT a standalone demo page. Born-RED on the HEAD tree (the row + route + SFC all
+    //    present); GREEN once the story, its manifest row/route, AND its backing SFC are
+    //    all DEFINITION-ABSENT. A re-added row with no backing SFC (or a resurrected
+    //    file) REDs this clause — the overfit-single cannot creep back. ──
+    const mathPaperRowPresent =
+        compRows.includes("compositions/math-paper") ||
+        "compositions/math-paper" in subpaths;
+    const mathPaperFilePresent = compFiles.includes("math-paper");
+    facts.mp1 = {
+        rowPresent: mathPaperRowPresent,
+        filePresent: mathPaperFilePresent,
+        retired: !mathPaperRowPresent && !mathPaperFilePresent,
+    };
+    assert(
+        "MP1 — the overfit /compositions/math-paper demo is fully retired (no manifest row/route + math-paper.vue DEFINITION-ABSENT — UF-K3)",
+        !mathPaperRowPresent && !mathPaperFilePresent,
+    );
+
+    // ── HD1/HD2 — /compositions/hero is the SECTION LANDING, not a standalone story
+    //    peer (BI.W-HERO-DEMOTE, UF-K2). At HEAD `compositions/hero` was a standalone
+    //    `s()` story (heroScale:"mega", displayTitle:"Real scenes") DUPLICATING the
+    //    `/compositions` D1 section landing — the chassis already renders the real-scene
+    //    tiles over the section hero, and the landing blurb carries the "Real scenes"
+    //    identity. This wave RETIRES the standalone story: no `compositions/hero` manifest
+    //    row/route + hero.vue DEFINITION-ABSENT, and the old deep-link is enrolled in
+    //    RELOCATED_STORY_ROUTES → `/compositions` so a bookmark resolves to the section
+    //    landing (never the lattice-404 — the coordination handoff to W-FOLDED-REDIRECTS).
+    //    Born-RED on the HEAD tree (the row + route + SFC all present, no redirect entry);
+    //    GREEN once the standalone is gone AND the redirect is enrolled. A re-added
+    //    standalone `compositions/hero` peer REDs HD1 — the duplicate cannot creep back. ──
+    const heroRowPresent =
+        compRows.includes("compositions/hero") ||
+        "compositions/hero" in subpaths;
+    const heroFilePresent = compFiles.includes("hero");
+    facts.hd1 = {
+        rowPresent: heroRowPresent,
+        filePresent: heroFilePresent,
+        demoted: !heroRowPresent && !heroFilePresent,
+    };
+    assert(
+        "HD1 — the standalone /compositions/hero story is demoted to the section landing (no manifest row/route + hero.vue DEFINITION-ABSENT; the /compositions D1 landing carries the real-scene bento — BI.W-HERO-DEMOTE, UF-K2)",
+        !heroRowPresent && !heroFilePresent,
+    );
+
+    // HD2 — the demoted deep-link resolves to the section landing: RELOCATED_STORY_ROUTES
+    // maps `compositions/hero` → `/compositions` (the content rides the D1 landing; the
+    // duplicate route is gone but a bookmark never 404s — the handoff to W-FOLDED-REDIRECTS).
+    // manifestSrc is comment-stripped so a backtick prose mention is never a false witness.
+    const heroRelocated =
+        /["']compositions\/hero["']\s*:\s*["']\/compositions["']/.test(
+            stripComments(manifestSrc),
+        );
+    facts.hd2 = { relocatedToLanding: heroRelocated };
+    assert(
+        "HD2 — the retired /compositions/hero deep-link resolves to the section landing (RELOCATED_STORY_ROUTES compositions/hero → /compositions) — the content rides the D1 landing, the bookmark never 404s (W-FOLDED-REDIRECTS handoff)",
+        heroRelocated,
+    );
+
+    // ── FR1/FR2/FR3 — the folded-member deep-link redirects (BI.W-FOLDED-REDIRECTS,
+    //    BI-STAB-A-1). `foldFamilies` UN-ROUTES every FOLDED_STORY_IDS member (its SFC is
+    //    composed BARE inside its family page's <FamilyTabs>), so `router.ts buildRoutes()`
+    //    registers no route for a folded id → a direct/deep link falls to the
+    //    `:pathMatch(.*)*` catch-all → the lattice-404. This wave enrolls a folded→family
+    //    REDIRECT (derived from the fold's own composition relation, no per-id hand-list),
+    //    so a bookmark to `/forms/combobox` 302s to `/forms/inputs` instead of 404-ing.
+    //    Born-RED on HEAD (no FOLDED_MEMBER_FAMILY map + no router redirect loop → the ~23
+    //    folded ids 404 on a direct navigate). ──
+    const foldedFamily = parseStringMap(manifestSrc, "FOLDED_MEMBER_FAMILY");
+    const routerSrc = overrides.routerSrc ?? read("demo/router.ts");
+    const foldGroundTruth =
+        overrides.foldGroundTruth ?? deriveFoldGroundTruth(vueCorpus, folded);
+    const routedIds = new Set(rows.filter((r) => !folded.has(r)));
+    const foldedMembers = [...folded];
+
+    // FR1 — coverage + reachability: every folded member has a FOLDED_MEMBER_FAMILY entry
+    // whose target is a REAL routed family page, AND the router consumes the maps to
+    // register the redirects (references FOLDED_STORY_IDS + FOLDED_MEMBER_FAMILY +
+    // RELOCATED_STORY_ROUTES and pushes `redirect` routes). Vacuous when the fold set is
+    // empty (the HEAD-no-fold shape — matches E1's empty-FOLDED floor).
+    const uncovered = foldedMembers.filter((id) => !(id in foldedFamily));
+    const badTarget = foldedMembers.filter((id) => {
+        const t = foldedFamily[id];
+        return t && !routedIds.has(t.replace(/^\//, ""));
+    });
+    const routerConsumesFold =
+        /\bFOLDED_STORY_IDS\b/.test(routerSrc) &&
+        /\bFOLDED_MEMBER_FAMILY\b/.test(routerSrc) &&
+        /\bRELOCATED_STORY_ROUTES\b/.test(routerSrc) &&
+        /\bredirect\b/.test(routerSrc);
+    const fr1 =
+        folded.size === 0 ||
+        (uncovered.length === 0 &&
+            badTarget.length === 0 &&
+            routerConsumesFold);
+    facts.fr1 = {
+        foldedCount: folded.size,
+        uncovered,
+        badTarget,
+        routerConsumesFold,
+    };
+    assert(
+        "FR1 — every FOLDED_STORY_IDS member resolves via a router redirect to its family route (FOLDED_MEMBER_FAMILY covers the fold set, each target is a real routed family page, router.ts registers the redirects — not the lattice-404)",
+        fr1,
+    );
+
+    // FR2 — DERIVED, not hand-listed: FOLDED_MEMBER_FAMILY ≡ the fold's <FamilyTabs>
+    // composition (each member mapped to the family whose SFC actually composes it) AND its
+    // keys ≡ FOLDED_STORY_IDS, so a family that gains/loses a member re-derives; AND the
+    // router owns no per-id hand-list (it iterates the map, never hardcodes a folded path).
+    const keysMatch =
+        foldedMembers.every((id) => id in foldedFamily) &&
+        Object.keys(foldedFamily).every((id) => folded.has(id));
+    const mismatched = foldedMembers.filter(
+        (id) => foldedFamily[id] !== foldGroundTruth[id],
+    );
+    const routerHardlists = foldedMembers.some(
+        (id) =>
+            routerSrc.includes(`"/${id}"`) || routerSrc.includes(`'/${id}'`),
+    );
+    const fr2 =
+        folded.size === 0 ||
+        (keysMatch && mismatched.length === 0 && !routerHardlists);
+    facts.fr2 = { keysMatch, mismatched, routerHardlists };
+    assert(
+        "FR2 — the folded→family redirect is DERIVED from the fold's <FamilyTabs> composition (FOLDED_MEMBER_FAMILY ≡ the family membership; keys ≡ FOLDED_STORY_IDS; the router iterates the map, no per-id hand-list) — a family that gains/loses a member re-derives",
+        fr2,
+    );
+
+    // FR3 — the catch-all is preserved: a genuinely unknown path STILL resolves to the
+    // NotFound lattice egg (the redirects are registered BEFORE `:pathMatch(.*)*`, which
+    // remains the terminal route). Guards the folded-redirect enrolment from swallowing the
+    // real-404 path.
+    const catchAllPresent = /:pathMatch\(\.\*\)\*/.test(routerSrc);
+    facts.fr3 = { catchAllPresent };
+    assert(
+        "FR3 — a genuinely unknown path STILL 404s to the lattice egg (the :pathMatch(.*)* catch-all is preserved as the terminal route after the folded redirects)",
+        catchAllPresent,
+    );
+
     return { facts, violations };
 }
 
@@ -1598,6 +1857,192 @@ function selfTest() {
         },
         "E3 — shrink-not-fade (title-collapse shrink leads; subordinate fade follows the pin, not scroll 0)",
         "E3 subordinate fade leads from scroll 0 (HEAD form)",
+    );
+    // CP1 (born-RED class): a re-added single-library-family demo under compositions (an
+    // `@mkbabb/glass-ui/*` subpath) → REDs CP1. `compositionFiles` is pinned to the two
+    // synthetic rows so CP2 does not also fire on the real tree (the CP1 bite is isolated).
+    sab(
+        {
+            manifestSrc: `s("compositions","auth-shell","Auth Shell") s("compositions","widget","Widget")`,
+            subpathsOverride: {
+                "compositions/auth-shell": "/compositions/auth-shell",
+                "compositions/widget": "@mkbabb/glass-ui/widget",
+            },
+            foldedOverride: new Set(),
+            compositionFiles: ["auth-shell", "widget"],
+        },
+        "CP1 — compositions-census: every compositions story is a composed scene (a `/compositions/*` route path); no single-library-family demo (an `@mkbabb/glass-ui/*` subpath) survives under compositions",
+        "CP1 a re-added single-family demo under compositions (library subpath)",
+    );
+    // CP1 (distinguishing): a real composed scene (a `/compositions/*` route-path
+    // subpath) must NOT red — the route path is the sanction (a scene has no single owner).
+    sabNot(
+        {
+            manifestSrc: `s("compositions","auth-shell","Auth Shell") s("compositions","settings","Settings")`,
+            subpathsOverride: {
+                "compositions/auth-shell": "/compositions/auth-shell",
+                "compositions/settings": "/compositions/settings",
+            },
+            foldedOverride: new Set(),
+            compositionFiles: ["auth-shell", "settings"],
+        },
+        "CP1 — compositions-census: every compositions story is a composed scene (a `/compositions/*` route path); no single-library-family demo (an `@mkbabb/glass-ui/*` subpath) survives under compositions",
+        "CP1 a route-path composed scene is sanctioned",
+    );
+    // CP2 (born-RED class): a dead/unregistered `*.vue` under compositions/ (a relocated
+    // demo's file left behind) → REDs CP2.
+    sab(
+        {
+            manifestSrc: `s("compositions","auth-shell","Auth Shell")`,
+            subpathsOverride: {
+                "compositions/auth-shell": "/compositions/auth-shell",
+            },
+            foldedOverride: new Set(),
+            compositionFiles: ["auth-shell", "orphan-widget"],
+        },
+        "CP2 — no dead/unregistered SFC under demo/stories/compositions/ (every .vue is a registered compositions story — the residue sweep)",
+        "CP2 a dead/unregistered SFC survives under compositions/",
+    );
+    // MP1 (born-RED class): a re-added `compositions/math-paper` row (even with no
+    // backing SFC) → REDs MP1. The overfit-single cannot creep back — a resurrected
+    // manifest row alone reds the census. (BI.W-MATH-PAPER-REMOVE, UF-K3.)
+    sab(
+        {
+            manifestSrc: `s("compositions","auth-shell","Auth Shell") s("compositions","math-paper","Math Paper")`,
+            subpathsOverride: {
+                "compositions/auth-shell": "/compositions/auth-shell",
+                "compositions/math-paper": "/compositions/math-paper",
+            },
+            foldedOverride: new Set(),
+            compositionFiles: ["auth-shell"],
+        },
+        "MP1 — the overfit /compositions/math-paper demo is fully retired (no manifest row/route + math-paper.vue DEFINITION-ABSENT — UF-K3)",
+        "MP1 a re-added math-paper row (no backing SFC) reds the census",
+    );
+    // MP1 (born-RED class): a resurrected `math-paper.vue` SFC on disk (even with no
+    // manifest row) → REDs MP1 (the file-residue half of the retire).
+    sab(
+        {
+            manifestSrc: `s("compositions","auth-shell","Auth Shell")`,
+            subpathsOverride: {
+                "compositions/auth-shell": "/compositions/auth-shell",
+            },
+            foldedOverride: new Set(),
+            compositionFiles: ["auth-shell", "math-paper"],
+        },
+        "MP1 — the overfit /compositions/math-paper demo is fully retired (no manifest row/route + math-paper.vue DEFINITION-ABSENT — UF-K3)",
+        "MP1 a resurrected math-paper.vue file reds the census",
+    );
+    // HD1 (born-RED class): a re-added standalone `compositions/hero` row (even with no
+    // backing SFC) → REDs HD1 (BI.W-HERO-DEMOTE, UF-K2). The demoted duplicate cannot creep
+    // back as a peer to the section landing. The RELOCATED entry is present so ONLY HD1 fires.
+    sab(
+        {
+            manifestSrc: `s("compositions","auth-shell","Auth Shell") s("compositions","hero","Hero") "compositions/hero": "/compositions"`,
+            subpathsOverride: {
+                "compositions/auth-shell": "/compositions/auth-shell",
+            },
+            foldedOverride: new Set(),
+            compositionFiles: ["auth-shell"],
+        },
+        "HD1 — the standalone /compositions/hero story is demoted to the section landing (no manifest row/route + hero.vue DEFINITION-ABSENT; the /compositions D1 landing carries the real-scene bento — BI.W-HERO-DEMOTE, UF-K2)",
+        "HD1 a re-added standalone compositions/hero row (no backing SFC) reds the census",
+    );
+    // HD1 (born-RED class): a resurrected `hero.vue` SFC under compositions/ (even with no
+    // manifest row) → REDs HD1 (the file-residue half of the demote).
+    sab(
+        {
+            manifestSrc: `s("compositions","auth-shell","Auth Shell") "compositions/hero": "/compositions"`,
+            subpathsOverride: {
+                "compositions/auth-shell": "/compositions/auth-shell",
+            },
+            foldedOverride: new Set(),
+            compositionFiles: ["auth-shell", "hero"],
+        },
+        "HD1 — the standalone /compositions/hero story is demoted to the section landing (no manifest row/route + hero.vue DEFINITION-ABSENT; the /compositions D1 landing carries the real-scene bento — BI.W-HERO-DEMOTE, UF-K2)",
+        "HD1 a resurrected compositions/hero.vue file reds the census",
+    );
+    // HD2 (born-RED class): the demoted deep-link with NO RELOCATED_STORY_ROUTES entry →
+    // REDs HD2 (a bookmark to /compositions/hero would 404 the lattice). The row + SFC are
+    // gone (HD1 green) so ONLY HD2 fires.
+    sab(
+        {
+            manifestSrc: `s("compositions","auth-shell","Auth Shell") "compositions/configurator": "/containers/configurator"`,
+            subpathsOverride: {
+                "compositions/auth-shell": "/compositions/auth-shell",
+            },
+            foldedOverride: new Set(),
+            compositionFiles: ["auth-shell"],
+        },
+        "HD2 — the retired /compositions/hero deep-link resolves to the section landing (RELOCATED_STORY_ROUTES compositions/hero → /compositions) — the content rides the D1 landing, the bookmark never 404s (W-FOLDED-REDIRECTS handoff)",
+        "HD2 a missing RELOCATED_STORY_ROUTES compositions/hero entry reds the redirect handoff",
+    );
+    // ── FR1/FR2/FR3 bites (BI.W-FOLDED-REDIRECTS). The synthetic corpus: one folded
+    // member `forms/xyz` composed by the routed `forms/inputs` family page, a healthy
+    // router that iterates the maps + preserves the catch-all. Each bite breaks one
+    // dimension and REDs exactly its clause. ──
+    const FR_ROUTER_OK =
+        'import { CATEGORIES, firstStoryPath, FOLDED_STORY_IDS, FOLDED_MEMBER_FAMILY, RELOCATED_STORY_ROUTES } from "./stories/manifest"; for (const id of FOLDED_STORY_IDS) routes.push({ redirect: FOLDED_MEMBER_FAMILY[id] }); for (const [o,t] of Object.entries(RELOCATED_STORY_ROUTES)) routes.push({ redirect: t }); path: "/:pathMatch(.*)*"';
+    // FR1 (born-RED class): a folded member with NO FOLDED_MEMBER_FAMILY entry → the
+    // bookmark 404s (uncovered) → REDs FR1.
+    sab(
+        {
+            foldedOverride: new Set(["forms/xyz"]),
+            manifestSrc: `s("forms","inputs","Inputs") export const FOLDED_MEMBER_FAMILY = {};`,
+            routerSrc: FR_ROUTER_OK,
+            foldGroundTruth: { "forms/xyz": "/forms/inputs" },
+        },
+        "FR1 — every FOLDED_STORY_IDS member resolves via a router redirect to its family route (FOLDED_MEMBER_FAMILY covers the fold set, each target is a real routed family page, router.ts registers the redirects — not the lattice-404)",
+        "FR1 a folded member with no FOLDED_MEMBER_FAMILY entry reds coverage",
+    );
+    // FR1 (born-RED class): the map covers the fold set but the router never registers the
+    // redirects (no map refs, no redirect loop) → the deep link still 404s → REDs FR1.
+    sab(
+        {
+            foldedOverride: new Set(["forms/xyz"]),
+            manifestSrc: `s("forms","inputs","Inputs") export const FOLDED_MEMBER_FAMILY = { "forms/xyz": "/forms/inputs" };`,
+            routerSrc: 'const routes = []; path: "/:pathMatch(.*)*"',
+            foldGroundTruth: { "forms/xyz": "/forms/inputs" },
+        },
+        "FR1 — every FOLDED_STORY_IDS member resolves via a router redirect to its family route (FOLDED_MEMBER_FAMILY covers the fold set, each target is a real routed family page, router.ts registers the redirects — not the lattice-404)",
+        "FR1 a router that never registers the folded redirects reds reachability",
+    );
+    // FR2 (born-RED class): the map target DISAGREES with the family that actually composes
+    // the member (the family re-parented it) → the stale map reds the re-derive → REDs FR2.
+    sab(
+        {
+            foldedOverride: new Set(["forms/xyz"]),
+            manifestSrc: `s("forms","inputs","Inputs") s("forms","toggle","Toggle") export const FOLDED_MEMBER_FAMILY = { "forms/xyz": "/forms/inputs" };`,
+            routerSrc: FR_ROUTER_OK,
+            foldGroundTruth: { "forms/xyz": "/forms/toggle" },
+        },
+        "FR2 — the folded→family redirect is DERIVED from the fold's <FamilyTabs> composition (FOLDED_MEMBER_FAMILY ≡ the family membership; keys ≡ FOLDED_STORY_IDS; the router iterates the map, no per-id hand-list) — a family that gains/loses a member re-derives",
+        "FR2 a FOLDED_MEMBER_FAMILY target that disagrees with the family composition reds the re-derive",
+    );
+    // FR2 (born-RED class): the router HAND-LISTS a folded path literal instead of iterating
+    // the map (the per-id hand-list the mandate forbids) → REDs FR2.
+    sab(
+        {
+            foldedOverride: new Set(["forms/xyz"]),
+            manifestSrc: `s("forms","inputs","Inputs") export const FOLDED_MEMBER_FAMILY = { "forms/xyz": "/forms/inputs" };`,
+            routerSrc: `${FR_ROUTER_OK} routes.push({ path: "/forms/xyz", redirect: "/forms/inputs" });`,
+            foldGroundTruth: { "forms/xyz": "/forms/inputs" },
+        },
+        "FR2 — the folded→family redirect is DERIVED from the fold's <FamilyTabs> composition (FOLDED_MEMBER_FAMILY ≡ the family membership; keys ≡ FOLDED_STORY_IDS; the router iterates the map, no per-id hand-list) — a family that gains/loses a member re-derives",
+        "FR2 a per-id hand-listed folded path in the router reds the no-hand-list clause",
+    );
+    // FR3 (born-RED class): the router drops the `:pathMatch(.*)*` catch-all → a genuinely
+    // unknown path no longer resolves to the lattice egg → REDs FR3.
+    sab(
+        {
+            foldedOverride: new Set(["forms/xyz"]),
+            manifestSrc: `s("forms","inputs","Inputs") export const FOLDED_MEMBER_FAMILY = { "forms/xyz": "/forms/inputs" };`,
+            routerSrc:
+                'import { FOLDED_STORY_IDS, FOLDED_MEMBER_FAMILY, RELOCATED_STORY_ROUTES } from "./stories/manifest"; for (const id of FOLDED_STORY_IDS) routes.push({ redirect: FOLDED_MEMBER_FAMILY[id] });',
+            foldGroundTruth: { "forms/xyz": "/forms/inputs" },
+        },
+        "FR3 — a genuinely unknown path STILL 404s to the lattice egg (the :pathMatch(.*)* catch-all is preserved as the terminal route after the folded redirects)",
+        "FR3 a router without the :pathMatch catch-all reds the unknown-path-404 preservation",
     );
     // F1 (born-RED): the HEAD state — a surviving `timeline-segmented.vue` member
     // wrapper (the dup un-collapsed) → REDs F1.
@@ -2071,6 +2516,27 @@ function run() {
         `  E3 shrink-not-fade        : ${facts["E3 — shrink-not-fade (title-collapse shrink leads; subordinate fade follows the pin, not scroll 0)"]}`,
     );
     console.log(
+        `  CP1 compositions-census   : ${(facts.cp1?.misfiled?.length ?? 0) === 0}  (rows: ${facts.cp1?.compositionRows?.length}, misfiled: ${JSON.stringify(facts.cp1?.misfiled ?? [])})`,
+    );
+    console.log(
+        `  CP2 no-compositions-orphan: ${(facts.cp2?.orphans?.length ?? 0) === 0}  (files: ${facts.cp2?.files?.length}, orphans: ${JSON.stringify(facts.cp2?.orphans ?? [])})`,
+    );
+    console.log(
+        `  HD1 hero demoted          : ${facts.hd1?.demoted}  (rowPresent: ${facts.hd1?.rowPresent}, filePresent: ${facts.hd1?.filePresent})`,
+    );
+    console.log(
+        `  HD2 hero deep-link redirect: ${facts.hd2?.relocatedToLanding}`,
+    );
+    console.log(
+        `  FR1 folded deep-links 302 : ${facts["FR1 — every FOLDED_STORY_IDS member resolves via a router redirect to its family route (FOLDED_MEMBER_FAMILY covers the fold set, each target is a real routed family page, router.ts registers the redirects — not the lattice-404)"]}  (folded: ${facts.fr1?.foldedCount}, uncovered: ${JSON.stringify(facts.fr1?.uncovered ?? [])}, badTarget: ${JSON.stringify(facts.fr1?.badTarget ?? [])}, routerConsumes: ${facts.fr1?.routerConsumesFold})`,
+    );
+    console.log(
+        `  FR2 derived, not hand-list: ${facts["FR2 — the folded→family redirect is DERIVED from the fold's <FamilyTabs> composition (FOLDED_MEMBER_FAMILY ≡ the family membership; keys ≡ FOLDED_STORY_IDS; the router iterates the map, no per-id hand-list) — a family that gains/loses a member re-derives"]}  (keysMatch: ${facts.fr2?.keysMatch}, mismatched: ${JSON.stringify(facts.fr2?.mismatched ?? [])}, routerHardlists: ${facts.fr2?.routerHardlists})`,
+    );
+    console.log(
+        `  FR3 catch-all preserved   : ${facts.fr3?.catchAllPresent}`,
+    );
+    console.log(
         `  F1 timeline×3→1 merged    : ${facts["F1 — Timeline×3 merged to ONE data/timeline.vue (3 <StorySection> registers over colocated bodies; the segmented/continuous wrappers deleted)"]}  (sections: ${facts.f1?.sectionCount})`,
     );
     console.log(
@@ -2131,7 +2597,7 @@ function run() {
         `  PR3 ribbon tile ≥72px     : ${facts["PR3 — the top-placed preset tiles read a LARGE floor (≥72px, top-scoped configurator.css rule)"]}  (minPx: ${facts.pr3?.minPx})`,
     );
     console.log(
-        `  self-test (bite proof)    : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×2 incl. comment-strip + D4 + D5 + D6×2 + D7×3 incl. comment-strip + T1-T4 + E1×2 incl. declared-family + E2 + E3 + F1 + F2×2 incl. FamilyTabs + F3 + CF1 + CF2×3 incl. comment-strip + CD1 + CD2 + CD3×2 incl. comment-strip + CL1 + CL2 + CL3×2 incl. dir-husk + stray-drift + M1 + M2 + M3 + SM1 + SM2 + SM3 + WC1-WC5 + PR1×2 incl. comment-strip + PR2 + PR3×2 incl. sub-72)`,
+        `  self-test (bite proof)    : OK — ${selfTestCount} synthetic sabotages handled (D1 + D2 + D3×2 incl. comment-strip + D4 + D5 + D6×2 + D7×3 incl. comment-strip + T1-T4 + E1×2 incl. declared-family + E2 + E3 + CP1×2 incl. route-path + CP2 + MP1×2 incl. file-residue + HD1×2 incl. file-residue + HD2 + FR1×2 incl. no-route + FR2×2 incl. hand-list + FR3 catch-all + F1 + F2×2 incl. FamilyTabs + F3 + CF1 + CF2×3 incl. comment-strip + CD1 + CD2 + CD3×2 incl. comment-strip + CL1 + CL2 + CL3×2 incl. dir-husk + stray-drift + M1 + M2 + M3 + SM1 + SM2 + SM3 + WC1-WC5 + PR1×2 incl. comment-strip + PR2 + PR3×2 incl. sub-72)`,
     );
     if (violations.length) {
         console.log("\nVIOLATIONS:");
