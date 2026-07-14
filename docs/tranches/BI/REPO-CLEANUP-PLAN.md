@@ -438,3 +438,16 @@ wiring owed → CURED §0d · census freshness → re-pinned at cce6853f §0a (4
 c3-user-readiness additive hit folded: RED-COLLATERAL §2 line · aurora-plates + ~22 root images + 3 orphan
 deletes → W-ROOT-JUNK-SWEEP · DELETE-WITH-SUBJECT triples named · arithmetic 383 · re-measure delta noted ·
 bi-* 10→12 · wf-* .js/.mjs split.)*
+
+---
+
+## §2-RULINGS (USER, 2026-07-13 ~23:30 — recorded verbatim by the orchestrator)
+
+| decision | ruling | effect |
+|---|---|---|
+| SAFE-RECLAIM-NOW ≈27.8 GB | **APPROVED** | W-WORKTREE-GC + W-BG-JUNK(A1-A3) + W-SCRIPT-SWEEP + W-ROOT-JUNK-SWEEP + validate-consumers + W-FINALS-DELETE all EXECUTE |
+| W-RED-COLLATERAL | **APPROVED** (3 DELETE + 3 REPOINT) | executes; the 2+M3 escalations proceed at D4 |
+| D1 (BG archive) | **"Both prose and pixels"** — tranche history binds BOTH | Op A only; Op B (image sever) + Op C (prose relocate) DECLINED-TERMINAL; A4 .git rewrite does NOT fire; the 3.65 GB pixel archive + BG prose stay in place |
+| D2 (worktree-gc.mjs) | **KEEP + use --prune** | worktree-gc.mjs is the sanctioned pruner; sibling pre-flight retained |
+| D3 (value.js-pinned worktree 2e559f7a) | **OPEN — not ruled** | the worktree is HELD out of the prune set until the user rules |
+| D4 (escalations) | proceeds as orchestrator + dock-owner investigation | perf-producer spring-parity · glass-material-unified repoint-vs-cull · liquid-morph M3 floor |
