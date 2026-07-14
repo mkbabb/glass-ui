@@ -5,13 +5,13 @@ import { TooltipProvider } from "@glass/components/ui/tooltip";
 import { useStoryNavigation } from "../useStoryNavigation";
 import { SECTION_REVEAL_KEY, useSectionReveal } from "../section/useSectionReveal";
 import { STORY_NESTED_KEY } from "../family/story-nested";
-// BG.W-STORY-PAGE-API (§4-D) — the demo SUB-TYPE field context. StoryPage provides
-// its manifest-declared background (the warm field every demo floats over) so a
-// nested sub-type (chiefly <DemoStage>) reads "what field am I over?" WITHOUT
-// mounting a second GL context (the one-GL-per-route budget).
-import { DEMO_FIELD_KEY } from "../subtype-context";
 import StoryHero from "../hero/StoryHero.vue";
 import StoryHeader from "../hero/StoryHeader.vue";
+// BI.W-STORY-SCHEMA — the pages-as-data body. When a page passes `:body`
+// (`kind: "sections"`), the content slot dispatches through StoryBodyRenderer into
+// the specimen kit; a page with no `body` stays a hand-authored slot (the escape).
+import StoryBodyRenderer from "../body/StoryBodyRenderer.vue";
+import type { StoryBody } from "../body/story-body";
 
 // BG.W-DEMO-IA-REDESIGN — the family-collapse nesting seam. When this StoryPage is
 // a MEMBER inside a `<FamilyTabs>` family page (which provides STORY_NESTED_KEY), it
@@ -42,6 +42,16 @@ interface StoryPageProps {
      * lines OR in different cards" bar (USER-DEFECTS §C) — the `hr` mode.
      */
     delimited?: boolean;
+    /**
+     * BI.W-STORY-SCHEMA — the pages-as-data body. When present (`kind:
+     * "sections"`), the content region dispatches the sections through
+     * StoryBodyRenderer into the specimen kit INSTEAD of the raw slot — so a
+     * spec-sheet page is DATA, not hand-authored template. The `<slot/>` still
+     * renders alongside (a page's bespoke chrome — a tinted section-identity header
+     * — rides the slot; the data sections ride the body). A page with no `body`
+     * stays a pure hand-authored slot.
+     */
+    body?: StoryBody;
 }
 
 const props = withDefaults(defineProps<StoryPageProps>(), {
@@ -90,8 +100,6 @@ const { register, onRouteSettle } = useSectionReveal(() =>
         : document.querySelector<HTMLElement>("main.demo-main-scroller"),
 );
 provide(SECTION_REVEAL_KEY, register);
-// The page field the demo sub-type chassis reads (BG.W-STORY-PAGE-API §4-D).
-provide(DEMO_FIELD_KEY, background);
 watch(current, () => onRouteSettle());
 </script>
 
@@ -102,6 +110,12 @@ watch(current, () => onRouteSettle());
          page owns the ONE identity header. Zero member content re-authored. -->
     <div v-if="nested" class="story-nested-body">
         <slot />
+        <!-- BI.W-STORY-SCHEMA — a data-bodied member (a family tab) dispatches its
+             sections through the renderer, same as the standalone route. -->
+        <StoryBodyRenderer
+            v-if="props.body?.kind === 'sections'"
+            :body="props.body"
+        />
     </div>
     <!-- BG.W-ROUTE-TRANSITION — the routed page presents a SINGLE ELEMENT root (this
          <article>) so the AppShell bare keyed `<component class="route-enter">` swap can
@@ -207,6 +221,15 @@ watch(current, () => onRouteSettle());
                 :class="props.contentClass"
             >
                 <slot />
+                <!-- BI.W-STORY-SCHEMA — the pages-as-data body. A `:body` page's
+                     data sections dispatch into the specimen kit here; the slot
+                     above carries only the page's bespoke chrome (the header). The
+                     renderer is `display:contents`, so its sections land as direct
+                     `.story-cels` children on the ONE section-gap rhythm. -->
+                <StoryBodyRenderer
+                    v-if="props.body?.kind === 'sections'"
+                    :body="props.body"
+                />
             </section>
 
             <!-- The HERO page keeps the alive StoryHero front-door read — the

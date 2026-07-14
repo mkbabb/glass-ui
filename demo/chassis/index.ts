@@ -10,7 +10,3 @@ export {
     default as PermutationGrid,
     type PermutationGridCell,
 } from "./PermutationGrid.vue";
-
-// The page FIELD context — StoryPage provides its manifest-declared background so a
-// nested demo reads "what field am I over?" without a second GL context.
-export { DEMO_FIELD_KEY } from "./subtype-context";
