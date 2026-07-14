@@ -177,9 +177,15 @@ recreate. Every deletion beyond the §2-approved set is DELETE-PENDING-APPROVAL.
    orchestrator registrar halves).
 3. **Round zero**: Fable mints the portfolio of tranche-formulations (e.g. dependency-first vs
    consumer-first vs invariant-first decompositions — earn the axes, do not copy these).
-4. **Pass-1 workflow** (8 lanes batched 3): archaeology ×2 (early/late corpus) · constellation
-   ×2 (repo sweep / inbox drain) · structure (MS + flatten) · gates-abrogation · π/close debt ·
-   the wave-DAG skeleton. Then synthesize → the DAG probe (RUNS) → 3 critics → agglomerate.
+4. **Pass-1 workflow** (lanes batched ≤3; the §11 cores each get a research lane): archaeology
+   ×2 (promise-vs-delivery corpus · prompt-recap completeness) · constellation ×2 (the ask
+   sweep · the begotten-UI assay — how real repos consume us) · the iOS-27 canon (motion +
+   material, measured) · the component-apotheosis census (synonym disease + shadcn abrogation +
+   deprecated sweep) · keyframes.js depth + the demo chassis · structure/gates/π-close debt +
+   the wave-DAG skeleton. Then synthesize → probes (the DAG probe RUNS and fails loud on
+   tail-edges; apotheosis + chassis-template spec probes) → 3 critics (close-class lies ·
+   cores+oaths fidelity · DAG realism) → agglomerate. A reference pass-1 script is banked at
+   the session scratchpad `bi-formation/bi-formation-pass1.js` — earn it, do not copy it blind.
 5. **≥3 passes to 100%**, then the tranche lands as `docs/tranches/BI/FORMATION/` (or the
    successor letter the loop rules): the full wave set, the DAG (machine-readable + strata
    diagram), the born-RED gate set, FINAL-at-formation obligations, and the execution cursor.
