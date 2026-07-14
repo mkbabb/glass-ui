@@ -193,7 +193,7 @@ test.describe("BC.W-CODE-BLOCKS — the ONE Fira-Code code register (π)", () =>
 // `.hljs-*` crayon spans, the raw text stays present across the swap (CLS-0 content
 // invariant — highlighting is deferred COLOR, never deferred content), and the
 // warm crayons resolve to distinct non-transparent colors off the `--code-*`
-// tokens. The route is /compositions/configurator (its <CodeBlock> snippet carries
+// tokens. The route is /containers/configurator (its <CodeBlock> snippet carries
 // keyword + comment + string runs, so every crayon class is present to read).
 //
 // The full G3 AA≥4.5 / APCA≥60 crayon-contrast over the composited `.glass-quiet`
@@ -208,7 +208,7 @@ test.describe("BI.W-CODEBLOCK — the highlighted code register (π)", () => {
         test(`CB-π-5..6 — hljs swap + warm crayons resolve distinct (${mode})`, async ({
             page,
         }) => {
-            await page.goto("/compositions/configurator", {
+            await page.goto("/containers/configurator", {
                 waitUntil: "domcontentloaded",
             });
             await page.evaluate(
@@ -248,7 +248,7 @@ test.describe("BI.W-CODEBLOCK — the highlighted code register (π)", () => {
             });
 
             paintedBI[mode] = readback;
-            expect(readback, `${mode}: /compositions/configurator renders a CodeBlock`).not.toBeNull();
+            expect(readback, `${mode}: /containers/configurator renders a CodeBlock`).not.toBeNull();
             const r = readback as NonNullable<typeof readback>;
 
             // CB-π-5 — the raw text is present from frame 0 (CLS-0 content invariant)

@@ -1,26 +1,96 @@
 <script setup lang="ts">
 import StoryPage from "../../chassis/page/StoryPage.vue";
-import StorySection from "../../chassis/section/StorySection.vue";
+import type { StoryBody, SpecimenSpec } from "../../chassis/body/story-body";
 import { Alert, AlertDescription, AlertTitle } from "@glass/components/ui/alert";
 import { IconChip } from "@glass/components/custom/icon-chip";
 import { Info, CircleAlert, TriangleAlert, CircleCheck, Sparkles, Bell } from "@lucide/vue";
-// BB.W-SUFFUSE3 — the feedback band's ONE coherent --section-color-8 ruby
-// (warm-status) identity. Distinct from forms-3 / containers-2 / data-9 /
-// navigation-12; the warm-status read for a status/notification band.
+import type { Component } from "vue";
+// The feedback band's ONE coherent --section-color-8 ruby (warm-status) identity.
 const FEEDBACK_STOP = 8;
+
+// One Alert specimen — the icon (optional) + title + description compose the CVA
+// grid through the default slot; the tone is the CVA `tone` prop.
+function alertSpec(a: {
+    tone?: string;
+    icon?: Component;
+    title: string;
+    desc: string;
+}): SpecimenSpec {
+    const children: SpecimenSpec[] = [];
+    if (a.icon) children.push({ component: a.icon });
+    children.push({ component: AlertTitle, slots: { default: a.title } });
+    children.push({ component: AlertDescription, slots: { default: a.desc } });
+    return {
+        component: Alert,
+        props: a.tone ? { tone: a.tone } : {},
+        slots: { default: children },
+    };
+}
+
+const toned = [
+    {
+        heading: "Default",
+        icon: Sparkles,
+        title: "New workspace created",
+        desc: "Your analyses will autosave to this workspace until you switch.",
+    },
+    {
+        heading: "Destructive",
+        tone: "destructive",
+        icon: CircleAlert,
+        title: "Session expired",
+        desc: "Re-authenticate to continue. Unsaved changes are held locally for five minutes.",
+    },
+    {
+        heading: "Warning",
+        tone: "warning",
+        icon: TriangleAlert,
+        title: "Approaching rate limit",
+        desc: "You've used 84% of your hourly quota. The window resets in 17 minutes.",
+    },
+    {
+        heading: "Info",
+        tone: "info",
+        icon: Info,
+        title: "Live preview is read-only",
+        desc: "Open the editor pane to make changes — this preview reflects the last committed state.",
+    },
+    {
+        heading: "Success",
+        tone: "success",
+        icon: CircleCheck,
+        title: "Deployed to production",
+        desc: "Build #2048 is live. Roll back from the deploys page if anything looks off.",
+    },
+];
+
+const body: StoryBody = {
+    kind: "sections",
+    sections: [
+        ...toned.map((a) => ({
+            heading: a.heading,
+            specimens: [alertSpec(a)],
+        })),
+        {
+            heading: "Without icon",
+            blurb: "Omit the SVG — the CVA grid collapses the icon column.",
+            specimens: [
+                alertSpec({
+                    title: "Heads up",
+                    desc: "Short form when the title tone does the work.",
+                }),
+            ],
+        },
+    ],
+};
 </script>
 
 <template>
-    <StoryPage>
-        <!-- BB.W-SUFFUSE3 — the feedback-band identity COLOR EVENT (the tinted
-             eyebrow + the accent rail + the focal IconChip, all on
-             --section-color-8). This is the page-level color identity, DISTINCT
-             from the StorySection HEADING below — it carries NO `text-subheading`
-             heading rung, so it is not an idiom-B second header (PH3). The left
-             accent rail rides an inline `border-left` (the same 3px hairline) so
-             it is the suffuse color event, not the section-heading idiom. The tone
-             specimens carry their OWN component color; the section identity is the
-             ONE page event (the d3 per-surface discipline). -->
+    <StoryPage :body="body">
+        <!-- The feedback-band identity COLOR EVENT (the tinted eyebrow + accent rail
+             + focal IconChip, all on --section-color-8). The page-level color
+             identity, distinct from the section headings below — no heading rung,
+             so it is not a second header. -->
         <header
             class="flex items-center gap-4 pl-5"
             :style="{
@@ -40,76 +110,5 @@ const FEEDBACK_STOP = 8;
                 </p>
             </div>
         </header>
-
-            <StorySection heading="Default" gap="md">
-                <Alert>
-                    <Sparkles />
-                    <AlertTitle>New workspace created</AlertTitle>
-                    <AlertDescription>
-                        Your analyses will autosave to this workspace until you
-                        switch.
-                    </AlertDescription>
-                </Alert>
-            </StorySection>
-
-            <StorySection heading="Destructive" gap="md">
-                <Alert tone="destructive">
-                    <CircleAlert />
-                    <AlertTitle>Session expired</AlertTitle>
-                    <AlertDescription>
-                        Re-authenticate to continue. Unsaved changes are held
-                        locally for five minutes.
-                    </AlertDescription>
-                </Alert>
-            </StorySection>
-
-            <!-- The semantic tones ride the CVA `variant`
-                 (success/warning/info), resolving the
-                 `--{success,warning,info}` tokens. -->
-            <StorySection heading="Warning" gap="md">
-                <Alert tone="warning">
-                    <TriangleAlert />
-                    <AlertTitle>Approaching rate limit</AlertTitle>
-                    <AlertDescription>
-                        You've used 84% of your hourly quota. The window resets
-                        in 17 minutes.
-                    </AlertDescription>
-                </Alert>
-            </StorySection>
-
-            <StorySection heading="Info" gap="md">
-                <Alert tone="info">
-                    <Info />
-                    <AlertTitle>Live preview is read-only</AlertTitle>
-                    <AlertDescription>
-                        Open the editor pane to make changes — this preview
-                        reflects the last committed state.
-                    </AlertDescription>
-                </Alert>
-            </StorySection>
-
-            <StorySection heading="Success" gap="md">
-                <Alert tone="success">
-                    <CircleCheck />
-                    <AlertTitle>Deployed to production</AlertTitle>
-                    <AlertDescription>
-                        Build #2048 is live. Roll back from the deploys page if
-                        anything looks off.
-                    </AlertDescription>
-                </Alert>
-            </StorySection>
-
-            <StorySection heading="Without icon" gap="md">
-                <p class="text-sm text-muted-foreground">
-                    Omit the SVG — the CVA grid collapses the icon column.
-                </p>
-                <Alert>
-                    <AlertTitle>Heads up</AlertTitle>
-                    <AlertDescription>
-                        Short form when the title tone does the work.
-                    </AlertDescription>
-                </Alert>
-            </StorySection>
-        
     </StoryPage>
 </template>

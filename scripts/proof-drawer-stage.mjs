@@ -47,7 +47,7 @@
 //        `blur(calc(clamp(0, var(--stage-t), 1) * 16px))`.
 //   C4 — `shouldScaleBackground` DEFINITION-ABSENT. The identifier appears NOWHERE in
 //        the live drawer source (Drawer.vue · DrawerContent.vue · index.ts · drawer.css)
-//        NOR the demo composition (drawer-live-behind.vue) — clean break, no lingering
+//        NOR the containers/drawer.vue live-behind section — clean break, no lingering
 //        legacy name. RED at HEAD if a prop/comment mention survives.
 //
 // House style mirrors proof-drawer-abrogate.mjs: ESM .mjs, comment-strip first (the
@@ -82,9 +82,13 @@ function cliPaths() {
         DRAWER_VUE: drawer("Drawer.vue"),
         DRAWER_CONTENT_VUE: drawer("DrawerContent.vue"),
         DRAWER_INDEX_TS: drawer("index.ts"),
+        // BI.W-COMPOSITIONS-PRUNE — the live-behind mode folded from its own
+        // compositions demo INTO containers/drawer.vue (one comprehensive Drawer page:
+        // snap · fixed · live-behind sections). The `shouldScaleBackground`-absent C4
+        // arm now scans the merged page.
         DEMO_LIVE_BEHIND: resolve(
             ROOT,
-            "demo/stories/compositions/drawer-live-behind.vue",
+            "demo/stories/containers/drawer.vue",
         ),
         ARTIFACT: gateArtifactPath(
             "GLASS_UI_DRAWER_STAGE_ARTIFACT",
@@ -301,7 +305,7 @@ export function detectDrawerStage(sources) {
         "DrawerContent.vue": drawerContentRaw,
         "index.ts": drawerIndexRaw,
         "drawer.css": drawerCssRaw,
-        "demo/.../drawer-live-behind.vue": demoRaw,
+        "demo/.../containers/drawer.vue": demoRaw,
     };
     const shouldScaleSites = [];
     for (const [name, src] of Object.entries(nameSites)) {

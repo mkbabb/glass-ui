@@ -1,27 +1,18 @@
 <script setup lang="ts">
 import StoryPage from "../../chassis/page/StoryPage.vue";
-import StorySection from "../../chassis/section/StorySection.vue";
-import { defineAsyncComponent, ref } from "vue";
+import type { StoryBody } from "../../chassis/body/story-body";
+import { defineAsyncComponent } from "vue";
 import FamilyTabs, { type FamilyMember } from "../../chassis/family/FamilyTabs.vue";
 import { Input } from "@glass/components/ui/input";
 import { Label } from "@glass/components/ui/label";
 import { SearchBar } from "@glass/components/custom/search";
 import { IconChip } from "@glass/components/custom/icon-chip";
 import { TextCursorInput } from "@lucide/vue";
-// BC.W-SUFFUSE-reconcile — the forms band's ONE coherent --section-color-3 teal
-// identity (the cool stop). PH3-safe (inline borderLeft, not the
-// border-l-[3px] + <IconChip> double-header shape).
+// The forms band's ONE coherent --section-color-3 teal identity (the cool stop).
 const FORMS_STOP = 3;
 
-const plain = ref("");
-const withLabel = ref("");
-const errored = ref("not-an-email");
-const searchTerm = ref("");
-const pillBare = ref("");
-
-// BG.W-DEMO-IA-REDESIGN — the Forms INPUT family. Textarea, select, combobox
-// (single + multiple), and label no longer each earn a route; they render as
-// members of this ONE input-family page via the switcher below (bare, STORY_NESTED_KEY).
+// The Forms INPUT family. Textarea, select, combobox (single + multiple), and
+// label render as members of this ONE input-family page via the switcher below.
 const familyMembers: FamilyMember[] = [
     {
         id: "textarea",
@@ -34,9 +25,6 @@ const familyMembers: FamilyMember[] = [
         component: defineAsyncComponent(() => import("./select.vue")),
     },
     {
-        // BI.W-MULTISELECT-FOLD — the combobox member now carries BOTH the
-        // single-select AND the multiple (chips-in-trigger) arm; the standalone
-        // multi-select member RETIRED.
         id: "combobox",
         label: "Combobox",
         component: defineAsyncComponent(() => import("./combobox.vue")),
@@ -47,10 +35,163 @@ const familyMembers: FamilyMember[] = [
         component: defineAsyncComponent(() => import("./label.vue")),
     },
 ];
+
+// The page as data — the section stack + its controlled-state harness. Each field
+// binds through the EXPLICIT `models` map (the anti-no-op floor); the compound
+// fields (Label over Input over hint) are one `stack` frame, not three.
+const body: StoryBody = {
+    kind: "sections",
+    scope: {
+        plain: "",
+        withLabel: "",
+        errored: "not-an-email",
+        apiKey: "locked-down-xxxxxxxxxxxx",
+        searchTerm: "",
+        pillBare: "",
+    },
+    sections: [
+        {
+            heading: "Default",
+            blurb: "Bare Input, no label.",
+            size: "sm",
+            specimens: [
+                {
+                    component: Input,
+                    models: { modelValue: "plain" },
+                    props: { placeholder: "Type something…" },
+                },
+            ],
+        },
+        {
+            heading: "With label",
+            blurb: "Label + Input, explicit for binding.",
+            size: "sm",
+            specimens: [
+                {
+                    stack: [
+                        {
+                            component: Label,
+                            props: { for: "story-email" },
+                            slots: { default: "Email" },
+                        },
+                        {
+                            component: Input,
+                            models: { modelValue: "withLabel" },
+                            props: {
+                                id: "story-email",
+                                type: "email",
+                                placeholder: "name@domain.tld",
+                            },
+                        },
+                    ],
+                },
+            ],
+        },
+        {
+            heading: "With error",
+            blurb: "Error messaging lives below the field and borrows the destructive token.",
+            size: "sm",
+            specimens: [
+                {
+                    stack: [
+                        {
+                            component: Label,
+                            props: {
+                                for: "story-email-err",
+                                class: "text-destructive",
+                            },
+                            slots: { default: "Email" },
+                        },
+                        {
+                            component: Input,
+                            models: { modelValue: "errored" },
+                            props: {
+                                id: "story-email-err",
+                                "aria-invalid": "true",
+                                "aria-describedby": "story-email-err-msg",
+                                class: "border-destructive focus:border-destructive focus:shadow-[0_0_0_2px_color-mix(in_srgb,var(--destructive)_30%,transparent)]",
+                            },
+                        },
+                        {
+                            component: "p",
+                            props: {
+                                id: "story-email-err-msg",
+                                class: "text-small text-destructive",
+                            },
+                            slots: {
+                                default:
+                                    "That doesn’t look like an email address.",
+                            },
+                        },
+                    ],
+                },
+            ],
+        },
+        {
+            heading: "Disabled",
+            blurb: "The disabled attribute dims opacity and blocks pointer events.",
+            size: "sm",
+            specimens: [
+                {
+                    stack: [
+                        {
+                            component: Label,
+                            props: {
+                                for: "story-disabled",
+                                class: "opacity-60",
+                            },
+                            slots: { default: "API key" },
+                        },
+                        {
+                            component: Input,
+                            models: { modelValue: "apiKey" },
+                            props: { id: "story-disabled", disabled: true },
+                        },
+                    ],
+                },
+            ],
+        },
+        {
+            heading: "SearchBar",
+            blurb: "SearchBar from the search subpath, icon baked in.",
+            size: "sm",
+            specimens: [
+                {
+                    component: SearchBar,
+                    models: { modelValue: "searchTerm" },
+                    props: { placeholder: "Search the catalogue…" },
+                },
+            ],
+        },
+        {
+            heading: ".input-pill utility",
+            blurb: "Raw .input-pill from glass.css, no component wrapper.",
+            size: "sm",
+            specimens: [
+                {
+                    component: "input",
+                    models: { modelValue: "pillBare" },
+                    props: {
+                        class: "input-pill text-sm",
+                        placeholder: "Bare pill input…",
+                        "aria-label": "bare pill input",
+                    },
+                },
+            ],
+        },
+        {
+            heading: "The input family",
+            bespoke: {
+                component: FamilyTabs,
+                props: { members: familyMembers, ariaLabel: "Input family" },
+            },
+        },
+    ],
+};
 </script>
 
 <template>
-    <StoryPage>
+    <StoryPage :body="body">
         <header
             class="flex items-center gap-4 pl-5"
             :style="{
@@ -70,87 +211,5 @@ const familyMembers: FamilyMember[] = [
                 </p>
             </div>
         </header>
-
-        <StorySection heading="Default" gap="lg">
-            <p class="text-small text-muted-foreground">
-                Bare <code class="fira-code">Input</code>, no label.
-            </p>
-            <div class="max-w-sm">
-                <Input v-model="plain" placeholder="Type something…" />
-            </div>
-        </StorySection>
-
-        <StorySection heading="With label" gap="lg">
-            <p class="text-small text-muted-foreground">
-                <code class="fira-code">Label</code> + <code class="fira-code">Input</code>,
-                explicit <code class="fira-code">for</code> binding.
-            </p>
-            <div class="flex flex-col gap-2 max-w-sm">
-                <Label for="story-email">Email</Label>
-                <Input id="story-email" v-model="withLabel" type="email" placeholder="name@domain.tld" />
-            </div>
-        </StorySection>
-
-        <StorySection heading="With error" gap="lg">
-            <p class="text-small text-muted-foreground">
-                Error messaging lives below the field and borrows the
-                <code class="fira-code">destructive</code> token.
-            </p>
-            <div class="flex flex-col gap-2 max-w-sm">
-                <Label for="story-email-err" class="text-destructive">Email</Label>
-                <Input
-                    id="story-email-err"
-                    v-model="errored"
-                    aria-invalid="true"
-                    aria-describedby="story-email-err-msg"
-                    class="border-destructive focus:border-destructive focus:shadow-[0_0_0_2px_color-mix(in_srgb,var(--destructive)_30%,transparent)]"
-                />
-                <p id="story-email-err-msg" class="text-small text-destructive">
-                    That doesn&rsquo;t look like an email address.
-                </p>
-            </div>
-        </StorySection>
-
-        <StorySection heading="Disabled" gap="lg">
-            <p class="text-small text-muted-foreground">
-                <code class="fira-code">disabled</code> attribute dims opacity and blocks pointer events.
-            </p>
-            <div class="flex flex-col gap-2 max-w-sm">
-                <Label for="story-disabled" class="opacity-60">API key</Label>
-                <Input
-                    id="story-disabled"
-                    model-value="locked-down-xxxxxxxxxxxx"
-                    disabled
-                />
-            </div>
-        </StorySection>
-
-        <StorySection heading="SearchBar" gap="lg">
-            <p class="text-small text-muted-foreground">
-                <code class="fira-code">SearchBar</code> from
-                <code class="fira-code">@/components/custom/search</code>, icon baked in.
-            </p>
-            <div class="max-w-sm">
-                <SearchBar v-model="searchTerm" placeholder="Search the catalogue…" />
-            </div>
-        </StorySection>
-
-        <StorySection heading=".input-pill utility" gap="lg">
-            <p class="text-small text-muted-foreground">
-                Raw <code class="fira-code">.input-pill</code> from
-                <code class="fira-code">glass.css</code>, no component wrapper.
-            </p>
-            <div class="max-w-sm">
-                <input
-                    v-model="pillBare"
-                    class="input-pill text-sm"
-                    placeholder="Bare pill input…"
-                    aria-label="bare pill input"
-                >
-            </div>
-        </StorySection>
-        <StorySection heading="The input family">
-            <FamilyTabs :members="familyMembers" aria-label="Input family" />
-        </StorySection>
     </StoryPage>
 </template>

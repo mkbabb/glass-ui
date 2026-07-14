@@ -1,19 +1,18 @@
 <script setup lang="ts">
 import StoryPage from "../../chassis/page/StoryPage.vue";
-import StorySection from "../../chassis/section/StorySection.vue";
+import type { StoryBody, SpecimenSpec } from "../../chassis/body/story-body";
 import { Badge } from "@glass/components/ui/badge";
 import { IconChip } from "@glass/components/custom/icon-chip";
 import { cn } from "@glass/utils/cn";
 import { BadgeCheck } from "@lucide/vue";
 
-// BC.W-SUFFUSE-reconcile — the display band's ONE coherent --section-color-5
-// identity. PH3-safe (inline borderLeft, not the border-l-[3px] + <IconChip>
-// double-header shape).
+// The display band's ONE coherent --section-color-5 identity.
 const DISPLAY_STOP = 5;
 
-// The section-color tone axis as a documented Badge variant teaching row (the
-// display map's "surface the section-color tone as a documented variant axis").
-const sectionToneBadges: { stop: number; label: string }[] = [
+// The section-color tone axis as a documented Badge fill row (the 13-stop
+// jewel-tone ramp as a saturated-pill teaching axis). Each pill's label reads a
+// per-fill contrast-color() ink so the light/lightened fills stay legible in dark.
+const sectionToneBadges = [
     { stop: 0, label: "rose" },
     { stop: 3, label: "teal" },
     { stop: 5, label: "amber" },
@@ -21,35 +20,169 @@ const sectionToneBadges: { stop: number; label: string }[] = [
     { stop: 12, label: "indigo" },
 ];
 
-// BI.W-SYNONYM-RENAMES — `variant` is a STYLE axis (default/secondary/outline). The
-// semantic status colours are the `tone` axis below (a tone is not a style); the
-// former `variant="destructive"` is `tone="destructive"`.
-const coreVariants: { variant: "default" | "secondary" | "outline"; label: string }[] = [
-    { variant: "default", label: "default" },
-    { variant: "secondary", label: "secondary" },
-    { variant: "outline", label: "outline" },
+const coreVariants: ("default" | "secondary" | "outline")[] = [
+    "default",
+    "secondary",
+    "outline",
 ];
 
-const semanticTones: { tone: "destructive" | "success" | "warning" | "info"; label: string }[] = [
-    { tone: "destructive", label: "destructive" },
-    { tone: "success", label: "success" },
-    { tone: "warning", label: "warning" },
-    { tone: "info", label: "info" },
+const semanticTones: ("destructive" | "success" | "warning" | "info")[] = [
+    "destructive",
+    "success",
+    "warning",
+    "info",
 ];
 
-// F2.R2 W-DARK-READABILITY-REPAIR — each viz pill carries its `token` so the label
-// reads a per-fill `contrast-color(var(--viz-<token>))` ink (white on the light
-// --viz-legendre/lightened fills collapses in dark; contrast-color() picks the
-// legible ink per fill on the census engines).
-const vizBadges: { cls: string; token: string; label: string }[] = [
+const vizBadges = [
     { cls: "bg-viz-fourier text-white", token: "fourier", label: "fourier" },
     { cls: "bg-viz-chebyshev text-white", token: "chebyshev", label: "chebyshev" },
     { cls: "bg-viz-legendre text-white", token: "legendre", label: "legendre" },
 ];
+
+const leadingDot = [
+    { dot: "bg-viz-fourier", label: "Active" },
+    { dot: "bg-viz-chebyshev", label: "Syncing" },
+    { dot: "bg-muted-foreground", label: "Idle" },
+    { dot: "bg-destructive", label: "Error" },
+];
+
+// One BadgeCheck-and-label specimen at a given size (the optical-centering row).
+const verified = (size: string): SpecimenSpec => ({
+    component: Badge,
+    props: { size },
+    slots: { default: [{ component: BadgeCheck }, " Verified"] },
+});
+
+const body: StoryBody = {
+    kind: "sections",
+    sections: [
+        {
+            label: "section-color tone axis",
+            blurb: "Compose a --section-color-N fill as a documented Badge tone — the 13-stop jewel-tone ramp as a saturated-pill teaching axis.",
+            specimens: sectionToneBadges.map((t) => ({
+                component: Badge,
+                props: {
+                    class: "border-transparent text-white",
+                    style: {
+                        backgroundColor: `var(--section-color-${t.stop})`,
+                        color: `contrast-color(var(--section-color-${t.stop}))`,
+                    },
+                },
+                slots: { default: t.label },
+            })),
+        },
+        {
+            label: "variants",
+            permute: {
+                base: { component: Badge },
+                axes: [{ prop: "variant", values: coreVariants }],
+            },
+        },
+        {
+            label: "viz-basis via inline fill",
+            specimens: vizBadges.map((v) => ({
+                component: Badge,
+                props: {
+                    class: cn("border-transparent", v.cls),
+                    style: { color: `contrast-color(var(--viz-${v.token}))` },
+                },
+                slots: { default: v.label },
+            })),
+        },
+        {
+            label: "with leading dot",
+            specimens: leadingDot.map((d) => ({
+                component: Badge,
+                props: { variant: "outline", class: "gap-1.5" },
+                slots: {
+                    default: [
+                        {
+                            component: "span",
+                            props: { class: `h-1.5 w-1.5 rounded-full ${d.dot}` },
+                        },
+                        d.label,
+                    ],
+                },
+            })),
+        },
+        {
+            label: "size axis",
+            specimens: [
+                { component: Badge, props: { size: "sm" }, slots: { default: "sm · text-xs" } },
+                { component: Badge, props: { size: "md" }, slots: { default: "md · text-sm (default)" } },
+                { component: Badge, props: { size: "lg" }, slots: { default: "lg · text-base" } },
+            ],
+        },
+        {
+            label: "glyph optical centering",
+            blurb: "The leading-line-box tracks the --ui-scale-scaled font, so the glyph and the label share ONE optical center at every size (and at coarse pointer).",
+            // The optical-centering harness reads a `[data-badge-optical]` container
+            // — a page-specific hook, so it renders bespoke (frameless, verbatim).
+            bespoke: {
+                component: "div",
+                props: {
+                    "data-badge-optical": "",
+                    class: "flex flex-wrap items-center gap-3",
+                },
+                slots: { default: [verified("sm"), verified("md"), verified("lg")] },
+            },
+        },
+        {
+            label: "size × variant",
+            permute: {
+                base: { component: Badge, slots: { default: "Badge" } },
+                axes: [
+                    { prop: "variant", values: coreVariants },
+                    { prop: "size", values: ["sm", "md", "lg"] },
+                ],
+            },
+        },
+        {
+            label: "semantic tones",
+            blurb: "Compose --success / --warning / --info plates with their --*-foreground glyph counterparts. Pair with status-dot for richer pulse compositions.",
+            specimens: [
+                ...semanticTones.map((tone) => ({
+                    component: Badge,
+                    props: { tone },
+                    slots: { default: tone },
+                })),
+                ...semanticTones.map((tone) => ({
+                    component: Badge,
+                    props: { tone, class: "gap-1.5" },
+                    slots: {
+                        default: [
+                            { component: "span", props: { class: "size-1.5 rounded-full bg-current" } },
+                            ` ${tone} with dot`,
+                        ],
+                    },
+                })),
+            ],
+        },
+        {
+            label: "baseline alignment in text-sm context",
+            // Prose with an inline specimen — the bespoke escape.
+            bespoke: {
+                component: "p",
+                props: { class: "text-sm" },
+                slots: {
+                    default: [
+                        "Row text aligned with ",
+                        {
+                            component: Badge,
+                            props: { variant: "outline", size: "md" },
+                            slots: { default: 'size="md"' },
+                        },
+                        " badge — the badge line-box reads a relative leading-[1.1] that tracks the --control-text-scaled font, so it centres in the surrounding line.",
+                    ],
+                },
+            },
+        },
+    ],
+};
 </script>
 
 <template>
-    <StoryPage>
+    <StoryPage :body="body">
         <header
             class="flex items-center gap-4 pl-5"
             :style="{
@@ -69,142 +202,5 @@ const vizBadges: { cls: string; token: string; label: string }[] = [
                 </p>
             </div>
         </header>
-
-        <StorySection
-            label="section-color tone axis"
-            blurb="Compose a --section-color-N fill as a documented Badge tone — the 13-stop jewel-tone ramp as a saturated-pill teaching axis."
-        >
-            <div class="flex flex-wrap items-center gap-3">
-                <!-- F2.R2 W-DARK-READABILITY-REPAIR (paint re-open): the loud pill's fill
-                     is the --section-color ramp whose DARK ARM LIGHTENS to L≈0.72-0.81, so
-                     text-white collapses to WCAG ~1.8-2.9 in dark. Per-fill contrast-color()
-                     picks the legible ink on the census engines (Chrome 149 / Safari 26). -->
-                <Badge
-                    v-for="t in sectionToneBadges"
-                    :key="t.stop"
-                    class="border-transparent text-white"
-                    :style="{ backgroundColor: `var(--section-color-${t.stop})`, color: `contrast-color(var(--section-color-${t.stop}))` }"
-                >
-                    {{ t.label }}
-                </Badge>
-            </div>
-        </StorySection>
-
-        <StorySection label="variants">
-            <div class="flex flex-wrap items-center gap-3">
-                <Badge
-                    v-for="v in coreVariants"
-                    :key="v.variant"
-                    :variant="v.variant"
-                >
-                    {{ v.label }}
-                </Badge>
-            </div>
-        </StorySection>
-
-        <StorySection label="viz-basis via inline fill">
-            <div class="flex flex-wrap items-center gap-3">
-                <!-- F2.R2 W-DARK-READABILITY-REPAIR — per-fill contrast-color() ink
-                     (white on the light --viz-legendre / lightened viz fills collapses). -->
-                <Badge
-                    v-for="v in vizBadges"
-                    :key="v.label"
-                    :class="cn('border-transparent', v.cls)"
-                    :style="{ color: `contrast-color(var(--viz-${v.token}))` }"
-                >
-                    {{ v.label }}
-                </Badge>
-            </div>
-        </StorySection>
-
-        <StorySection label="with leading dot">
-            <div class="flex flex-wrap items-center gap-3">
-                <Badge variant="outline" class="gap-1.5">
-                    <span class="h-1.5 w-1.5 rounded-full bg-viz-fourier" />
-                    Active
-                </Badge>
-                <Badge variant="outline" class="gap-1.5">
-                    <span class="h-1.5 w-1.5 rounded-full bg-viz-chebyshev" />
-                    Syncing
-                </Badge>
-                <Badge variant="outline" class="gap-1.5">
-                    <span class="h-1.5 w-1.5 rounded-full bg-muted-foreground" />
-                    Idle
-                </Badge>
-                <Badge variant="outline" class="gap-1.5">
-                    <span class="h-1.5 w-1.5 rounded-full bg-destructive" />
-                    Error
-                </Badge>
-            </div>
-        </StorySection>
-
-        <StorySection label="size axis">
-            <div class="flex flex-wrap items-center gap-3">
-                <Badge size="sm">sm · text-xs</Badge>
-                <Badge size="md">md · text-sm (default)</Badge>
-                <Badge size="lg">lg · text-base</Badge>
-            </div>
-        </StorySection>
-
-        <StorySection
-            label="glyph optical centering"
-            blurb="BI.W-BADGE-ALIGN — the leading-line-box tracks the --ui-scale-scaled font, so the glyph and the label share ONE optical center at every size (and at coarse pointer)."
-        >
-            <div data-badge-optical class="flex flex-wrap items-center gap-3">
-                <Badge size="sm"><BadgeCheck /> Verified</Badge>
-                <Badge size="md"><BadgeCheck /> Verified</Badge>
-                <Badge size="lg"><BadgeCheck /> Verified</Badge>
-            </div>
-        </StorySection>
-
-        <StorySection label="size × variant">
-            <div class="flex flex-col gap-3">
-                <div
-                    v-for="v in coreVariants"
-                    :key="v.variant"
-                    class="flex flex-wrap items-center gap-3"
-                >
-                    <Badge :variant="v.variant" size="sm">sm</Badge>
-                    <Badge :variant="v.variant" size="md">md</Badge>
-                    <Badge :variant="v.variant" size="lg">lg</Badge>
-                    <span class="text-mono-caption text-muted-foreground">{{ v.label }}</span>
-                </div>
-            </div>
-        </StorySection>
-
-        <StorySection
-            label="semantic tones (v0.8.6)"
-            blurb="Compose --success / --warning / --info plates with their --*-foreground glyph counterparts. Pair with status-dot for richer pulse compositions."
-        >
-            <div class="flex flex-wrap items-center gap-3">
-                <Badge
-                    v-for="v in semanticTones"
-                    :key="v.tone"
-                    :tone="v.tone"
-                >
-                    {{ v.label }}
-                </Badge>
-            </div>
-            <div class="flex flex-wrap items-center gap-3">
-                <Badge
-                    v-for="v in semanticTones"
-                    :key="v.tone"
-                    :tone="v.tone"
-                    class="gap-1.5"
-                >
-                    <span class="size-1.5 rounded-full bg-current" />
-                    {{ v.label }} with dot
-                </Badge>
-            </div>
-        </StorySection>
-
-        <StorySection label="baseline alignment in text-sm context">
-            <p class="text-sm">
-                Row text aligned with
-                <Badge variant="outline" size="md">size="md"</Badge>
-                badge — the badge line-box reads a relative leading-[1.1] that tracks
-                the --control-text-scaled font, so it centres in the surrounding line.
-            </p>
-        </StorySection>
     </StoryPage>
 </template>

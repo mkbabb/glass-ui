@@ -45,7 +45,7 @@ const STUDIOS = [
     // BC.W-VIZ-CONFIGURATOR-SUITE — the ONE merged fourier view (proof:fourier-field
     // U1 retired the duplicate fourier-studio); the π roster names the live route.
     { route: "/substrates/fourier-field", id: "fourier-field" },
-    { route: "/compositions/configurator", id: "configurator" },
+    { route: "/containers/configurator", id: "configurator" },
 ] as const;
 
 const DESKTOP = { width: 1280, height: 900 } as const;

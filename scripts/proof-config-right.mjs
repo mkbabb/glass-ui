@@ -173,7 +173,9 @@ const TWO_COLUMN_STUDIOS = [
     // `fourier-studio.vue`); the census roster names the live merged view, not the
     // retired duplicate.
     "demo/stories/substrates/fourier-field.vue",
-    "demo/stories/compositions/configurator.vue",
+    // BI.W-COMPOSITIONS-PRUNE — the Configurator demo relocated to the containers band
+    // (a single-family studio shell, off the composed-scenes census).
+    "demo/stories/containers/configurator.vue",
 ];
 const SINGLE_COLUMN_EXEMPT = [
     // The gear PresetEditor recomposes <ConfiguratorLayer>/<ConfiguratorRow> but has NO

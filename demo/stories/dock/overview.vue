@@ -664,8 +664,8 @@ function togglePlay() {
                     active.
                 </li>
                 <li>
-                    Pass a <code class="rounded bg-muted px-1">#collapsed</code> slot to
-                    choose what the collapsed pill shows.
+                    Provide collapsed-pill content to choose what the dock shows once
+                    it folds.
                 </li>
                 <li>
                     Use <code class="rounded bg-muted px-1">DockControl</code> for

@@ -340,10 +340,12 @@ const M9B_ALLOWLIST = new Set([
     // aria-pressed thumbnail tile, the proof:configurator-glass-atoms primitive), a
     // hand-rolled bare control by design — the same class as the aurora configurator
     // control panes already allowlisted above.
-    "demo/stories/compositions/configurator.vue",
+    // BI.W-COMPOSITIONS-PRUNE — the configurator demo relocated to the containers band.
+    "demo/stories/containers/configurator.vue",
 ]);
 const M9B_BASELINE = new Set([
-    "demo/stories/compositions/instrument-chassis.vue",
+    // BI.W-COMPOSITIONS-PRUNE — the instrument-chassis demo relocated to the data band.
+    "demo/stories/data/instrument-chassis.vue",
     "demo/stories/containers/expandable-container.vue",
     "demo/stories/containers/hover-card.vue",
     "demo/stories/data/infinite-scroll.vue",

@@ -166,7 +166,7 @@ async function copyStops(): Promise<void> {
 
         <StorySection
             label="Named registers"
-            blurb="The four SHIPPED spring registers, driven off the single-source SPRING_PRESETS table — each fires the SAME springTimingFunction twin springLinearStops solves the CSS linear() token from. No local spring solver: the demo teaches the canonical curves, so it can never drift from the vocabulary."
+            blurb="The four SHIPPED spring registers, driven off the single-source SPRING_PRESETS table — each fires the SAME JS twin the CSS linear() token is solved from. No local spring solver: the demo teaches the canonical curves, so it can never drift from the vocabulary."
         >
             <section class="flex flex-col gap-6">
                 <div class="flex flex-wrap items-end gap-4">
@@ -233,7 +233,7 @@ async function copyStops(): Promise<void> {
 
         <StorySection
             label="Spring playground"
-            blurb="Author a spring live — drag response (the spring's period) and damping fraction ζ (1 fully damps with no overshoot, <1 overshoots); the playground feeds the pair straight to springTimingFunction and reads back the exact CSS linear() stops springLinearStops emits. Seed from a named register, then tune."
+            blurb="Author a spring live — drag response (the spring's period) and damping fraction ζ (1 fully damps with no overshoot, <1 overshoots); the playground feeds the pair straight to the JS curve and reads back the exact CSS linear() stops it emits. Seed from a named register, then tune."
         >
             <div class="grid gap-4 lg:grid-cols-[1fr_18rem]">
                 <div class="flex flex-col gap-5">

@@ -51,7 +51,7 @@ const SURFACES = [
     },
     {
         name: "configurator",
-        route: "/compositions/configurator",
+        route: "/containers/configurator",
         trigger: '[data-slot="configurator-layer-trigger"]',
         caret: '[data-slot="configurator-layer-trigger"] svg',
     },

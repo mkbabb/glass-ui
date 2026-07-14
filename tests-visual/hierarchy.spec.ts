@@ -148,7 +148,7 @@ test.describe("AZ.W-HIERARCHY — the canonical section rung + Configurator voca
     test("H3 — Configurator section label > row label; preset-row block-padding > body-row's", async ({
         page,
     }) => {
-        await page.goto("/compositions/configurator", {
+        await page.goto("/containers/configurator", {
             waitUntil: "domcontentloaded",
         });
         await page

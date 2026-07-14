@@ -80,7 +80,7 @@ function toggleBloom() {
 
         <StorySection
             heading="useLiquidReveal · bloom from source"
-            blurb="The iOS-27 surface that materializes FROM its trigger — scale + fade + a backdrop blur(4px)→0 decongest on the snappy spring, anchored at the trigger's rect. PRM snaps to a fade only."
+            blurb="The iOS-27 surface that materializes FROM its trigger — scale + fade + a backdrop blur(4px)→0 decongest on the snappy spring, anchored at the trigger's rect. Reduced motion snaps to a fade only."
         >
             <div class="relative flex flex-col items-start gap-4">
                 <Button ref="triggerRef" variant="primary-audacious" @click="toggleBloom">

@@ -3,7 +3,7 @@ import { test, expect } from "@playwright/test";
 test("configurator dark bloom token + auth-shell ink readback", async ({ page }) => {
     // configurator dark
     await page.setViewportSize({ width: 1440, height: 900 });
-    await page.goto("/compositions/configurator", { waitUntil: "networkidle" });
+    await page.goto("/containers/configurator", { waitUntil: "networkidle" });
     await page.emulateMedia({ colorScheme: "dark" });
     await page.evaluate(() => document.documentElement.classList.add("dark"));
     await page.waitForSelector(".configurator-specimen", { timeout: 8000 });

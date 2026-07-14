@@ -67,7 +67,7 @@ const RADIUS_CSS = resolve(ROOT, "src/styles/theme/radius.css");
 const TOGGLE_INDEX = resolve(ROOT, "src/components/ui/toggle/index.ts");
 const SWITCH_VUE = resolve(ROOT, "src/components/ui/switch/Switch.vue");
 const LABELED_FIELD = resolve(ROOT, "src/components/custom/labeled-field/LabeledField.vue");
-const LABELED_FIELD_DEMO = resolve(ROOT, "demo/stories/compositions/labeled-field.vue");
+const LABELED_FIELD_DEMO = resolve(ROOT, "demo/stories/forms/labeled-field.vue");
 const CONSUMER_EVIDENCE = resolve(ROOT, "docs/consumer-evidence/labeled-field-action-slot.md");
 const UI_DIR = resolve(ROOT, "src/components/ui");
 

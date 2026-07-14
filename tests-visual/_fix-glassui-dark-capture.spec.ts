@@ -20,7 +20,7 @@ async function setScheme(page: import("@playwright/test").Page, scheme: "light" 
 
 const surfaces = [
     { id: "auth-shell", route: "/compositions/auth-shell", sel: ".auth-brand-panel" },
-    { id: "configurator", route: "/compositions/configurator", sel: ".configurator-specimen" },
+    { id: "configurator", route: "/containers/configurator", sel: ".configurator-specimen" },
     { id: "icons-pops", route: "/foundations/icons", sel: ".rounded-full" },
     { id: "404-egg", route: "/this-route-does-not-exist", sel: ".constellation-canvas" },
 ];

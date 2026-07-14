@@ -143,7 +143,7 @@ const chapterBody: Record<string, string> = {
         <!-- ════ The PILL material — DRAGGABLE (the LIQUID TAB) ════ -->
         <StorySection
             heading="Pill — draggable (the liquid tab)"
-            blurb="The iOS-27 move: GRAB the indicator and PULL it. The lozenge follows the finger ~1:1, stretches on drag velocity (capped low — it swells, never taffy-pulls), and flings to the nearest tab on release. The click path is unchanged; the drag is the additive :draggable axis. Composes the kf Draggable substrate (no second drag engine)."
+            blurb="The iOS-27 move: GRAB the indicator and PULL it. The lozenge follows the finger ~1:1, stretches on drag velocity (capped low — it swells, never taffy-pulls), and flings to the nearest tab on release. The click path is unchanged; the drag is the additive :draggable axis. Composes the shared drag substrate (no second drag engine)."
         >
             <div class="glass-card flex flex-col gap-4 rounded-[var(--radius-card)] p-5">
                 <div class="flex flex-wrap items-center gap-3">

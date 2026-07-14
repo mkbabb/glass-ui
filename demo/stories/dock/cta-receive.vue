@@ -90,9 +90,9 @@ function revealNow() {
                     <code class="rounded bg-muted px-1">transition: opacity</code> FLIP (NOT
                     the dock morph-stagger). The
                     <code class="rounded bg-muted px-1">useDockCtaReceive</code> seam — the
-                    iOS bloom-from-source inverse, composing the SAME kf
-                    <code class="rounded bg-muted px-1">ElementMorph</code> substrate, a
-                    consuming seam beside the dock morph mechanism. Compositor-only;
+                    iOS bloom-from-source inverse, composing the SAME morph
+                    substrate as the dock, a consuming seam beside the dock morph
+                    mechanism. Compositor-only;
                     reduced-motion snaps the CTA to gone + instant-swaps the reveal.
                     <span v-if="pending" class="text-mono-caption">(seat armed)</span>
                 </p>
@@ -144,7 +144,7 @@ function revealNow() {
 
                 <p class="text-mono-caption text-muted-foreground">
                     The CTA is the morph vehicle (transform/opacity/filter only); the dock
-                    control is the destination. ONE kf spring substrate, ONE family with
+                    control is the destination. ONE spring substrate, ONE family with
                     <code class="rounded bg-muted px-1">useLiquidReveal</code>.
                 </p>
             </StorySection>

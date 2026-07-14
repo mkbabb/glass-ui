@@ -85,10 +85,9 @@ function cliPaths() {
         DRAWER_CONSTANTS_TS: drawer("constants.ts"),
         DRAWER_CSS: resolve(ROOT, "src/styles/drawer.css"),
         PACKAGE_JSON: resolve(ROOT, "package.json"),
-        DEMO_LIVE_BEHIND: resolve(
-            ROOT,
-            "demo/stories/compositions/drawer-live-behind.vue",
-        ),
+        // BI.W-COMPOSITIONS-PRUNE — the standalone compositions/drawer-live-behind demo
+        // folded its live-behind mode INTO containers/drawer.vue; DEMO_CONTAINERS is the
+        // single Drawer-demo surface the vaul-abrogation W1 scan now covers.
         DEMO_CONTAINERS: resolve(ROOT, "demo/stories/containers/drawer.vue"),
         ARTIFACT: gateArtifactPath(
             "GLASS_UI_DRAWER_ABROGATE_ARTIFACT",
@@ -180,9 +179,6 @@ export function detectDrawerAbrogate(sources) {
     const drawerCss = stripBlockComments(sources.drawerCss ?? "");
     // package.json is JSON (no `//` comments allowed); read raw.
     const packageJson = sources.packageJson ?? "";
-    const demoLiveBehind = stripHtmlComments(
-        stripBlockComments(sources.demoLiveBehind ?? ""),
-    );
     const demoContainers = stripHtmlComments(
         stripBlockComments(sources.demoContainers ?? ""),
     );
@@ -199,7 +195,6 @@ export function detectDrawerAbrogate(sources) {
         "index.ts": indexTs,
         "composables/useDrawerSnap.ts": useDrawerSnapTs,
         "constants.ts": constantsTs,
-        "demo/.../drawer-live-behind.vue": demoLiveBehind,
         "demo/.../containers/drawer.vue": demoContainers,
     };
     let vaulImportSites = 0;
@@ -507,7 +502,6 @@ function selfTest() {
         constantsTs: `// no DRAWER_SNAP register`,
         drawerCss: `.glass-drawer[data-vaul-snap-points="true"] { transition: transform .5s cubic-bezier(.32,.72,0,1) }`,
         packageJson: `{ "peerDependencies": { "vaul-vue": "^0.4" } }`,
-        demoLiveBehind: `import { Drawer } from '../../../src/components/ui/drawer'`,
         demoContainers: ``,
     });
     const good = detectDrawerAbrogate({
@@ -521,7 +515,6 @@ function selfTest() {
         constantsTs: `export const DRAWER_SNAP = { response: 0.4, dampingFraction: 0.82 } as const`,
         drawerCss: `.glass-drawer[data-glass-drawer-snap-points="true"] { height: 100% } .glass-drawer[data-glass-drawer-direction="top"] { top: 0 }`,
         packageJson: `{ "peerDependencies": { "reka-ui": "^2.0" } }`,
-        demoLiveBehind: `import { Drawer } from '../../../src/components/ui/drawer'`,
         demoContainers: `import { Drawer } from '../../../src/components/ui/drawer'`,
     });
     const checks = [
@@ -564,7 +557,6 @@ function run() {
         constantsTs: safeRead(P.DRAWER_CONSTANTS_TS),
         drawerCss: safeRead(P.DRAWER_CSS),
         packageJson: safeRead(P.PACKAGE_JSON),
-        demoLiveBehind: safeRead(P.DEMO_LIVE_BEHIND),
         demoContainers: safeRead(P.DEMO_CONTAINERS),
     });
 

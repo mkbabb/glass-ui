@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../../chassis/page/StoryPage.vue";
-import { ref } from "vue";
+import type { StoryBody, SpecimenSpec } from "../../chassis/body/story-body";
 import {
     Select,
     SelectContent,
@@ -14,18 +14,144 @@ import {
 import { Label } from "@glass/components/ui/label";
 import { IconChip } from "@glass/components/custom/icon-chip";
 import { ListFilter } from "@lucide/vue";
-// BC.W-SUFFUSE-reconcile — the forms band's ONE coherent --section-color-3 teal
-// identity (the cool stop). PH3-safe (inline borderLeft, not the
-// border-l-[3px] + <IconChip> double-header shape).
+// The forms band's ONE coherent --section-color-3 teal identity (the cool stop).
 const FORMS_STOP = 3;
 
-const font = ref<string>("plus-jakarta-sans");
-const basis = ref<string>("fourier");
-const density = ref<string>("");
+// A SelectItem node — `value` is the item value, `text` the label, `extra` any
+// per-item prop (a viz-dot style, a `disabled`).
+const item = (
+    value: string,
+    text: string,
+    extra: Record<string, unknown> = {},
+): SpecimenSpec => ({
+    component: SelectItem,
+    props: { value, ...extra },
+    slots: { default: text },
+});
+
+const group = (label: string, items: SpecimenSpec[]): SpecimenSpec => ({
+    component: SelectGroup,
+    slots: {
+        default: [{ component: SelectLabel, slots: { default: label } }, ...items],
+    },
+});
+
+// A labeled picker field — Label over Select. `models` is the EXPLICIT v-model map
+// (ruling 8, no convention magic): the value binds `modelValue`, and the third
+// field controls the reka `open` NAMED v-model — the anti-no-op floor made visible.
+const field = (
+    id: string,
+    labelText: string,
+    placeholder: string,
+    content: SpecimenSpec[],
+    models: Record<string, string>,
+): SpecimenSpec => ({
+    stack: [
+        { component: Label, props: { for: id }, slots: { default: labelText } },
+        {
+            component: Select,
+            models,
+            slots: {
+                default: [
+                    {
+                        component: SelectTrigger,
+                        props: { id },
+                        slots: { default: { component: SelectValue, props: { placeholder } } },
+                    },
+                    { component: SelectContent, slots: { default: content } },
+                ],
+            },
+        },
+    ],
+});
+
+const body: StoryBody = {
+    kind: "sections",
+    scope: {
+        font: "plus-jakarta-sans",
+        basis: "fourier",
+        density: "",
+        densityOpen: false,
+    },
+    sections: [
+        {
+            heading: "Grouped items",
+            blurb: "Labeled groups with a separator between them.",
+            size: "sm",
+            specimens: [
+                field(
+                    "sel-font",
+                    "Font family",
+                    "Choose a typeface",
+                    [
+                        group("Display + serif", [
+                            item("plus-jakarta-sans", "Plus Jakarta Sans"),
+                            item("plus-jakarta-sans-fallback", "Plus Jakarta Sans Fallback"),
+                        ]),
+                        { component: SelectSeparator },
+                        group("Sans", [
+                            item("inter", "Inter"),
+                            item("system-ui", "System UI"),
+                        ]),
+                        { component: SelectSeparator },
+                        group("Mono", [
+                            item("fira-code", "Fira Code"),
+                            item("jetbrains-mono", "JetBrains Mono"),
+                        ]),
+                    ],
+                    { modelValue: "font" },
+                ),
+            ],
+        },
+        {
+            heading: "Viz-basis fills",
+            blurb: "Items inherit the fourier/chebyshev/legendre dot color.",
+            size: "sm",
+            specimens: [
+                field(
+                    "sel-basis",
+                    "Orthogonal basis",
+                    "Pick a basis",
+                    [
+                        item("fourier", "Fourier", {
+                            style: { "--select-dot-color": "var(--viz-fourier)" },
+                        }),
+                        item("chebyshev", "Chebyshev", {
+                            style: { "--select-dot-color": "var(--viz-chebyshev)" },
+                        }),
+                        item("legendre", "Legendre", {
+                            style: { "--select-dot-color": "var(--viz-legendre)" },
+                        }),
+                    ],
+                    { modelValue: "basis" },
+                ),
+            ],
+        },
+        {
+            heading: "Disabled item + controlled open",
+            blurb: "A disabled item, and the reka open state bound as a NAMED v-model.",
+            size: "sm",
+            specimens: [
+                field(
+                    "sel-density",
+                    "Density",
+                    "Pick a density",
+                    [
+                        item("cozy", "Cozy"),
+                        item("comfortable", "Comfortable"),
+                        item("compact", "Compact"),
+                        item("spacious", "Spacious", { disabled: true }),
+                    ],
+                    { modelValue: "density", open: "densityOpen" },
+                ),
+            ],
+        },
+    ],
+};
 </script>
 
 <template>
-    <StoryPage>
+    <StoryPage :body="body">
         <header
             class="flex items-center gap-4 pl-5"
             :style="{
@@ -45,83 +171,5 @@ const density = ref<string>("");
                 </p>
             </div>
         </header>
-
-        <!-- Grouped items with labels + separator. -->
-        <section class="flex flex-col gap-3 max-w-sm">
-            <Label for="sel-font">Font family</Label>
-            <Select v-model="font">
-                <SelectTrigger id="sel-font">
-                    <SelectValue placeholder="Choose a typeface" />
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectGroup>
-                        <SelectLabel>Display + serif</SelectLabel>
-                        <SelectItem value="plus-jakarta-sans">Plus Jakarta Sans</SelectItem>
-                        <SelectItem value="plus-jakarta-sans-fallback">Plus Jakarta Sans Fallback</SelectItem>
-                    </SelectGroup>
-                    <SelectSeparator />
-                    <SelectGroup>
-                        <SelectLabel>Sans</SelectLabel>
-                        <SelectItem value="inter">Inter</SelectItem>
-                        <SelectItem value="system-ui">System UI</SelectItem>
-                    </SelectGroup>
-                    <SelectSeparator />
-                    <SelectGroup>
-                        <SelectLabel>Mono</SelectLabel>
-                        <SelectItem value="fira-code">Fira Code</SelectItem>
-                        <SelectItem value="jetbrains-mono">JetBrains Mono</SelectItem>
-                    </SelectGroup>
-                </SelectContent>
-            </Select>
-            <p class="text-mono-caption text-muted-foreground">
-                selected · {{ font }}
-            </p>
-        </section>
-
-        <!-- Viz-basis select: items inherit fourier/chebyshev/legendre dots. -->
-        <section class="flex flex-col gap-3 max-w-sm">
-            <Label for="sel-basis">Orthogonal basis</Label>
-            <Select v-model="basis">
-                <SelectTrigger id="sel-basis">
-                    <SelectValue placeholder="Pick a basis" />
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectItem
-                        value="fourier"
-                        :style="{ '--select-dot-color': 'var(--viz-fourier)' }"
-                    >
-                        Fourier
-                    </SelectItem>
-                    <SelectItem
-                        value="chebyshev"
-                        :style="{ '--select-dot-color': 'var(--viz-chebyshev)' }"
-                    >
-                        Chebyshev
-                    </SelectItem>
-                    <SelectItem
-                        value="legendre"
-                        :style="{ '--select-dot-color': 'var(--viz-legendre)' }"
-                    >
-                        Legendre
-                    </SelectItem>
-                </SelectContent>
-            </Select>
-        </section>
-
-        <!-- Disabled item inside an otherwise normal select. -->
-        <section class="flex flex-col gap-3 max-w-sm">
-            <Label for="sel-density">Density</Label>
-            <Select v-model="density">
-                <SelectTrigger id="sel-density">
-                    <SelectValue placeholder="Pick a density" />
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectItem value="cozy">Cozy</SelectItem>
-                    <SelectItem value="comfortable">Comfortable</SelectItem>
-                    <SelectItem value="compact">Compact</SelectItem>
-                    <SelectItem value="spacious" disabled>Spacious</SelectItem>
-                </SelectContent>
-            </Select>
-        </section>
     </StoryPage>
 </template>

@@ -7,7 +7,7 @@
 // gap is the exact AZ close-class BB exists to fix, so the live render is the
 // binding truth, never the source diff alone.
 //
-// THE BINDING ARMS (the real /compositions/instrument-chassis demo route, driven
+// THE BINDING ARMS (the real /data/instrument-chassis demo route, driven
 // to phase="complete"; the chassis root carries `data-phase="complete"` so the
 // `[data-phase="complete"]` arm + its `--phase-color` cascade resolve):
 //
@@ -42,7 +42,7 @@ const VISUAL_DIR = fileURLToPath(
     new URL("../docs/tranches/BB/audit/visual/", import.meta.url),
 );
 
-const CHASSIS_ROUTE = "/compositions/instrument-chassis";
+const CHASSIS_ROUTE = "/data/instrument-chassis";
 const CHASSIS_SEL = ".instrument-chassis";
 
 const VIEWPORTS = [

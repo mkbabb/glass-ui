@@ -120,7 +120,7 @@ const ACCENT_STRENGTH = "48%";
 
         <StorySection
             label="dynamic backdrop luminance — the iOS-27 sampled observer"
-            blurb="useGlassBackdropLuminance samples the painted Aurora backdrop under this card on a throttled ≤4 Hz loop and writes --glass-backdrop-luma + the --glass-backdrop: light|dark bucket on it, so the adaptive darken TRACKS the live field (not a static light/dark bucket). The dock wires the same observer ON by default. PRM-gated: under reduce the loop collapses to one mount sample."
+            blurb="useGlassBackdropLuminance samples the painted Aurora backdrop under this card on a throttled ≤4 Hz loop and writes --glass-backdrop-luma + the --glass-backdrop: light|dark bucket on it, so the adaptive darken TRACKS the live field (not a static light/dark bucket). The dock wires the same observer ON by default. Reduced-motion-gated: under reduce the loop collapses to one mount sample."
         >
             <ShowcaseFrame pad="lg" tier="field">
                 <div class="flex flex-wrap items-center gap-6">

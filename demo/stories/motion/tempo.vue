@@ -60,7 +60,7 @@ const dialogOpen = ref(false);
     <StoryPage>
         <StorySection
             heading="--motion-tempo · the one motion time knob"
-            blurb="ONE registered inheriting scalar co-scales EVERY spring clock — the CSS reader (--spring-*-duration = settle × --motion-tempo) AND the JS response (motionTempo() → response × tempo). Slide it and the dropdown, popover, dialog, and the JS dock morph all tighten or lengthen in proportion (the P7 CSS↔JS one-clock coherence). 1.0 is the shipped identity; ⟂ --motion-weight ⟂ --ui-scale."
+            blurb="ONE registered inheriting scalar co-scales EVERY spring clock — the CSS reader (--spring-*-duration = settle × --motion-tempo) AND the JS response (motionTempo() → response × tempo). Slide it and the dropdown, popover, dialog, and the JS dock morph all tighten or lengthen in proportion (the CSS↔JS one-clock coherence). 1.0 is the shipped identity; ⟂ --motion-weight ⟂ --ui-scale."
         >
             <div class="tempo-panel glass-card flex flex-col gap-4 rounded-card p-6">
                 <div class="flex items-baseline justify-between gap-4">
@@ -86,7 +86,7 @@ const dialogOpen = ref(false);
 
         <StorySection
             heading="CSS overlays — the reader-clock scales"
-            blurb="The reka-portaled overlays compose .glass-reveal, whose enter/exit legs ride the --spring-*-duration readers. A tempo write re-resolves those :root-declared readers, so every open/close stretches with the slider — zero per-overlay edit (the G4 round-trip)."
+            blurb="The reka-portaled overlays compose .glass-reveal, whose enter/exit legs ride the --spring-*-duration readers. A tempo write re-resolves those :root-declared readers, so every open/close stretches with the slider — zero per-overlay edit (one reader, every overlay)."
         >
             <div class="flex flex-wrap items-center gap-3">
                 <DropdownMenu>

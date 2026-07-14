@@ -5,7 +5,7 @@
 // sized (horizontally and vertically), syntax highlighted with highlight.js and a
 // theme, and fully standardized to be in every page." At HEAD the demo carried a
 // mono <CodeBlock> with ZERO highlighting adopted 1/150, and TWO pages hand-rolled
-// a raw `<pre class="fira-code">` code block (compositions/configurator.vue,
+// a raw `<pre class="fira-code">` code block (containers/configurator.vue,
 // feedback/toaster.vue). This gate is born-RED on that tree and GREEN once the two
 // offenders fold onto <CodeBlock>, the lazy highlight.js runtime is wired, and the
 // warm-crayon theme lands.
@@ -20,7 +20,7 @@
 //        code blocks survive across demo/stories, off the legit-mono classifier
 //        (a `<pre data-mono-content>` opt-out = terminal output / font specimen /
 //        ascii, NOT a code block).
-//   C2 — the two named offenders (compositions/configurator.vue,
+//   C2 — the two named offenders (containers/configurator.vue,
 //        feedback/toaster.vue) fold onto <CodeBlock>: no raw <pre fira-code>, a
 //        <CodeBlock> present.
 //   C3 — highlight is wired: useCodeHighlight lazy-imports highlight.js core +
@@ -113,7 +113,7 @@ add(
 
 // ── C2 — the two named offenders folded onto <CodeBlock> ──────────────────────
 const NAMED_OFFENDERS = [
-    "demo/stories/compositions/configurator.vue",
+    "demo/stories/containers/configurator.vue",
     "demo/stories/feedback/toaster.vue",
 ];
 const foldFailures = [];

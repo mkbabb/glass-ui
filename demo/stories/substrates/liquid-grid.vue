@@ -161,7 +161,7 @@ const boldOn = computed({
                                 <LabeledSlider
                                     v-model="majorEvery"
                                     label="Major every"
-                                    tooltip="minor cells per bolder major rule (kf 5rem/1rem)"
+                                    tooltip="minor cells per bolder major rule (default 5rem/1rem)"
                                     :min="2"
                                     :max="10"
                                     :step="1"
@@ -172,7 +172,7 @@ const boldOn = computed({
                                 <LabeledSlider
                                     v-model="minorAlpha"
                                     label="Minor weight"
-                                    tooltip="the calm hairline alpha (≈ kf 3%)"
+                                    tooltip="the calm hairline alpha (≈ 3%)"
                                     :min="0"
                                     :max="0.3"
                                     :step="0.005"
@@ -183,7 +183,7 @@ const boldOn = computed({
                                 <LabeledSlider
                                     v-model="majorAlpha"
                                     label="Major weight"
-                                    tooltip="the bolder rule alpha (kf 11%, above the 10% floor)"
+                                    tooltip="the bolder rule alpha (11%, above the 10% floor)"
                                     :min="0"
                                     :max="0.3"
                                     :step="0.005"
