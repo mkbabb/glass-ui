@@ -3,21 +3,20 @@
 //
 // THE DEFECT the /substrates bento carried: every card shared the ONE category
 // `fieldStill` (SectionLanding derives a single aurora still per category and hands
-// it to all 11 cards) — eleven IDENTICAL stills, the user's "not-live/all-the-same"
-// defect. The cure is a per-STORY dispatch: each of the 11 substrates viz cards
-// rasters its OWN recognizable still off a DISTINCT characteristic generator (the
-// viz's signature math — the golden angle for the phyllotaxis dot-sphere, sum-of-
-// sines for the fourier curve, a sum-of-inverse-squares SDF for the metaball, a
-// curl-ish advection for the flow ribbons), so per-card pixel-hash differs BY
-// CONSTRUCTION (7 leaf-signature / 2 SDF-approx / 2 glass-over-field — the item-5
-// still decision).
+// it to all cards) — IDENTICAL stills, the user's "not-live/all-the-same" defect
+// (UF-E9). The cure is a per-STORY dispatch: each substrate viz card rasters its OWN
+// recognizable still off a DISTINCT characteristic generator (the viz's signature
+// math — a curl-warped grid for liquid-grid, a partial-sum harmonic curve for the
+// fourier field, a sum-of-inverse-squares SDF for the metaball), so per-card
+// pixel-hash differs BY CONSTRUCTION. Seven surviving substrates post-B5 deletion
+// (dot-flow-field/concentric/dot-matrix retired): aurora·blob·constellation·
+// fourier-field·glass-material·glass-panel·liquid-grid — one distinct still each.
 //
-// THE ONE-GL BUDGET (CLAUDE.md §BA.W-STAGE): every still is a device-free Canvas2D
-// raster → `data:` URI (the shipped `auroraFallbackGround` pattern — pure raster
-// into a THROWAWAY offscreen canvas, never a live substrate), so the landing adds
-// ZERO WebGL/WebGPU contexts — a still is a parked frame, not a live context.
-// Module-memoized: each route rasters its data-URI ONCE globally (proto2 #6 — not
-// per card mount / per landing visit).
+// THE ONE-GL BUDGET: every still is a device-free Canvas2D raster → `data:` URI
+// (the shipped `auroraFallbackGround` pattern — pure raster into a THROWAWAY
+// offscreen canvas, never a live substrate), so the landing adds ZERO WebGL/WebGPU
+// contexts — a still is a parked frame, not a live context. Module-memoized: each
+// route rasters its data-URI ONCE globally (not per card mount / per landing visit).
 //
 // A demo-private helper — NOT a library export.
 
@@ -29,10 +28,7 @@ export type VizPattern =
     | "epicycle"
     | "glass-plate"
     | "glass-ladder"
-    | "flow"
-    | "rings"
-    | "warp-grid"
-    | "phyllotaxis";
+    | "warp-grid";
 
 /** The frozen recipe a story's still rasters from — a DISTINCT (pattern,hue,seed) triple. */
 export interface VizStillSpec {
@@ -46,9 +42,10 @@ export interface VizStillSpec {
 
 /**
  * The per-ROUTE registry — keyed on the full `/substrates/<id>` route so the
- * dispatch is per-STORY, never the per-category smear. Eleven entries, each a
- * DISTINCT (pattern,hue,seed) triple, so `proof:viz`'s preview arm proves the
- * 11-cards-11-hashes bar device-free (two entries with the same triple RED).
+ * dispatch is per-STORY, never the per-category smear. Seven entries (the surviving
+ * substrate set post-B5 deletion), each a DISTINCT (pattern,hue,seed) triple, so
+ * `proof:story-tiles`'s substrate-index arm proves the seven-cards-seven-hashes bar
+ * device-free (two entries with the same triple RED).
  */
 export const VIZ_PREVIEW_STILLS: Readonly<Record<string, VizStillSpec>> = {
     "/substrates/aurora": { pattern: "nuclei", hue: 58, seed: 101 },
@@ -57,10 +54,7 @@ export const VIZ_PREVIEW_STILLS: Readonly<Record<string, VizStillSpec>> = {
     "/substrates/fourier-field": { pattern: "epicycle", hue: 40, seed: 404 },
     "/substrates/glass-material": { pattern: "glass-plate", hue: 62, seed: 505 },
     "/substrates/glass-panel": { pattern: "glass-ladder", hue: 68, seed: 606 },
-    "/substrates/dot-flow-field": { pattern: "flow", hue: 50, seed: 707 },
-    "/substrates/concentric": { pattern: "rings", hue: 35, seed: 808 },
     "/substrates/liquid-grid": { pattern: "warp-grid", hue: 72, seed: 909 },
-    "/substrates/dot-matrix": { pattern: "phyllotaxis", hue: 55, seed: 110 },
 };
 
 // ── the raster canvas (φ ratio ≈ 1.61 — the card preview aspect) ──
@@ -253,40 +247,6 @@ function drawGlassLadder(ctx: CanvasRenderingContext2D, hue: number, rng: () => 
     }
 }
 
-/** dot-flow-field — advected dotted ribbons through a curl-ish sin/cos field. */
-function drawFlow(ctx: CanvasRenderingContext2D, hue: number, rng: () => number): void {
-    warmFloor(ctx, hue);
-    const lines = 20;
-    for (let l = 0; l < lines; l++) {
-        let x = rng() * W;
-        let y = rng() * H;
-        for (let s = 0; s < 26; s++) {
-            const vx = Math.cos(y * 0.09 + x * 0.02) + 0.4;
-            const vy = Math.sin(x * 0.08 - y * 0.015);
-            x += vx * 2.2;
-            y += vy * 2.2;
-            const a = 1 - s / 26;
-            ctx.fillStyle = warm(hue, 55, a * 0.7);
-            ctx.fillRect(x, y, 1.6, 1.6);
-        }
-    }
-}
-
-/** concentric — warped concentric interference rings (the level-set survey). */
-function drawRings(ctx: CanvasRenderingContext2D, hue: number, rng: () => number): void {
-    warmFloor(ctx, hue);
-    const cx = W * 0.5 + (rng() - 0.5) * 10;
-    const cy = H * 0.5;
-    for (let r = 4; r < W * 0.7; r += 5) {
-        const warp = Math.sin(r * 0.28) * 2;
-        ctx.beginPath();
-        ctx.arc(cx, cy, r + warp, 0, Math.PI * 2);
-        ctx.strokeStyle = warm(hue, 40 + (r % 15), 0.5);
-        ctx.lineWidth = 1.1;
-        ctx.stroke();
-    }
-}
-
 /** liquid-grid — a curl-warped grid (the sheet bows toward the crest). */
 function drawWarpGrid(ctx: CanvasRenderingContext2D, hue: number, _rng: () => number): void {
     warmFloor(ctx, hue);
@@ -328,32 +288,6 @@ function drawWarpGrid(ctx: CanvasRenderingContext2D, hue: number, _rng: () => nu
     }
 }
 
-const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5));
-
-/** dot-matrix — the Fibonacci phyllotaxis dot-SPHERE (golden angle, depth-shaded). */
-function drawPhyllotaxis(ctx: CanvasRenderingContext2D, hue: number, _rng: () => number): void {
-    warmFloor(ctx, hue);
-    const cx = W * 0.5;
-    const cy = H * 0.5;
-    const R = Math.min(W, H) * 0.42;
-    const N = 150;
-    for (let i = 0; i < N; i++) {
-        const sy = 1 - (i / (N - 1)) * 2;
-        const ring = Math.sqrt(Math.max(0, 1 - sy * sy));
-        const th = GOLDEN_ANGLE * i;
-        const sx = Math.cos(th) * ring;
-        const sz = Math.sin(th) * ring;
-        const facing = (sz + 1) / 2;
-        const px = cx + sx * R;
-        const py = cy - sy * R;
-        const size = 0.6 + 1.4 * facing;
-        ctx.beginPath();
-        ctx.arc(px, py, size, 0, Math.PI * 2);
-        ctx.fillStyle = warm(hue, 55 + 20 * facing, 0.15 + 0.8 * facing);
-        ctx.fill();
-    }
-}
-
 const GENERATORS: Record<
     VizPattern,
     (ctx: CanvasRenderingContext2D, hue: number, rng: () => number) => void
@@ -364,10 +298,7 @@ const GENERATORS: Record<
     epicycle: drawEpicycle,
     "glass-plate": drawGlassPlate,
     "glass-ladder": drawGlassLadder,
-    flow: drawFlow,
-    rings: drawRings,
     "warp-grid": drawWarpGrid,
-    phyllotaxis: drawPhyllotaxis,
 };
 
 // Module-level memo — each route rasters its data-URI ONCE globally.

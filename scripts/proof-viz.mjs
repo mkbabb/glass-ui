@@ -274,12 +274,14 @@ function runAll(over = {}) {
             "V5: the leaf does not hand the live `BackingSize` to `options.resize(s)`",
         );
 
-    // ══ PREVIEW ARM (BG.W-VIZ-PREVIEW-LIVE) — 11 DISTINCT per-story preview stills ══
-    // The /substrates bento painted 11 IDENTICAL frozen aurora stills (every card
-    // shared the ONE category `fieldStill`). The cure is a per-STORY dispatch: the
-    // card rasters its OWN distinct recognizable still (7 leaf-signature / 2 SDF-approx
-    // / 2 glass-over-field) off the colocated registry — per-card pixel-hash differs by
-    // construction, over ZERO live GL contexts (a still is a parked frame).
+    // ══ PREVIEW ARM (BG.W-VIZ-PREVIEW-LIVE) — DISTINCT per-story preview stills ══
+    // The /substrates bento painted IDENTICAL frozen aurora stills (every card shared
+    // the ONE category `fieldStill`). The cure is a per-STORY dispatch: the card
+    // rasters its OWN distinct recognizable still off the colocated registry — per-card
+    // pixel-hash differs by construction, over ZERO live GL contexts (a still is a
+    // parked frame). Seven surviving substrates post-B5 deletion (BI.W-VIZ-DELETIONS:
+    // dot-flow-field/concentric/dot-matrix retired; the still-recipe drop landed at
+    // BI.W-SUBSTRATE-INDEX-TILES).
     const still = stripComments(
         over.__still !== undefined ? over.__still : (read(STILL) ?? ""),
     );
@@ -287,13 +289,14 @@ function runAll(over = {}) {
         over.__card !== undefined ? over.__card : (read(CARD) ?? ""),
     );
 
-    // P1 — the per-story still registry exists with ≥11 route→descriptor entries.
+    // P1 — the per-story still registry exists with ≥7 route→descriptor entries (the
+    // surviving substrate set; 11→10 at BG.W-GOODOT-PRUNE, 10→7 at BI.W-VIZ-DELETIONS).
     const entries = [
         ...still.matchAll(/"(\/substrates\/[a-z0-9-]+)"\s*:\s*\{([^}]*)\}/g),
     ];
-    if (entries.length < 10)
+    if (entries.length < 7)
         fails.push(
-            `P1: the vizPreviewStill registry has ${entries.length} route entries (<10) — the per-story dispatch is absent (born-RED: on HEAD the module + registry do not exist; goo-dot RETIRED at BG.W-GOODOT-PRUNE, 11→10 substrates)`,
+            `P1: the vizPreviewStill registry has ${entries.length} route entries (<7) — the per-story dispatch is absent (born-RED: on HEAD the module + registry do not exist; the surviving substrate set is 7 post-BI.W-VIZ-DELETIONS)`,
         );
 
     // P2 — every descriptor is pairwise-DISTINCT. A shared (pattern,hue,seed) triple
@@ -684,10 +687,10 @@ function selfTest() {
     if (!f.some((v) => v.startsWith("P2")))
         fails.push("self-test: two cards sharing one still descriptor did NOT red P2");
 
-    // (g) a registry under 11 entries reds P1 (the per-story dispatch incomplete).
+    // (g) a registry under 7 entries reds P1 (the per-story dispatch incomplete).
     const g = runAll({ __still: validStill });
     if (!g.some((v) => v.startsWith("P1")))
-        fails.push("self-test: a <11-entry preview registry did NOT red P1");
+        fails.push("self-test: a <7-entry preview registry did NOT red P1");
 
     // (h) a card that does not import the registry reds P3 (the shared-smear regression).
     const h = runAll({
