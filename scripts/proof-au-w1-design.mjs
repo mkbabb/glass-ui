@@ -43,7 +43,6 @@ const FLEET = [
     "proof:dock-a11y-contract",
     "proof:dock-vocabulary",
     "proof:au-w9-consumers",
-    "proof:au-final",
 ];
 
 let _cliPaths = null;
