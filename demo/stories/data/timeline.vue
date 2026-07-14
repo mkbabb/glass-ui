@@ -23,12 +23,12 @@ interface TimelineEvent {
 }
 
 const events: TimelineEvent[] = [
-    { id: "e1", at: 0.04, label: "Kickoff",       body: "Tokens audit begins.",                 tone: "0" },
-    { id: "e2", at: 0.22, label: "Paper backdrop",body: "Turbulence underpaint lands.",         tone: "2" },
-    { id: "e3", at: 0.41, label: "Cartoon shadow",body: "Default card shadow gets the offset.", tone: "5" },
-    { id: "e4", at: 0.58, label: "Dock FLIP",     body: "Layer-group size-FLIP + crossfade.",   tone: "4" },
-    { id: "e5", at: 0.76, label: "Storybook",     body: "Routed demo replaces monolith.",       tone: "7" },
-    { id: "e6", at: 0.94, label: "Ship",          body: "Consumers rebase onto defaults.",      tone: "8" },
+    { id: "e1", at: 0.04, label: "Kickoff", body: "Research and discovery.",         tone: "0" },
+    { id: "e2", at: 0.22, label: "Design",  body: "Wireframes approved.",            tone: "2" },
+    { id: "e3", at: 0.41, label: "Build",   body: "Core features land.",             tone: "5" },
+    { id: "e4", at: 0.58, label: "Beta",    body: "First testers onboard.",          tone: "4" },
+    { id: "e5", at: 0.76, label: "Polish",  body: "Performance pass and bug fixes.", tone: "7" },
+    { id: "e6", at: 0.94, label: "Launch",  body: "Public release.",                 tone: "8" },
 ];
 
 const position = ref(0.0);

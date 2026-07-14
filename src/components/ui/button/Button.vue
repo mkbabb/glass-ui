@@ -106,16 +106,13 @@ const surfaceDecoration = computed(() => {
 // (the spring snaps to the endpoint with zero in-between frames), so under reduce
 // the press still FUNCTIONS (the scale arrives) with the squish physics off.
 //
-// BC.W-BUTTON-GLASS-IOS (move 3 / BG-IOS-3) — the iOS interactive press register.
-// The press reads `useSpringPress`'s DEFAULTS — the ONE source. The iOS interactive
-// tap physics SHIP in the `press` SPRING_PRESETS row (springPresets.ts, tuned at
-// BD.W-ANIM-IOS27-TUNE to response 0.2 / ζ 0.8 — the sub-200ms iOS press window with a
-// tiny alive rebound); `useSpringPress` reads them via `springPreset("press")` (the
-// row is LIVE, not booked — src:button-press-row is MET). Button stays consumer #1 of
-// `useSpringPress` (direct composition, `proof:button-glass` B2). NO button-local
-// magic-number spring (the W-GLASS-CAL spring fence) — the press physics live at the
-// ONE table, never a per-call literal.
-// BD.W-BUTTON-GLASS-CONSUME (§4b) — `.btn-punch` is default-ON for the loud hero
+// The iOS interactive press register. The press reads `useSpringPress`'s DEFAULTS —
+// the ONE source. The iOS interactive tap physics SHIP in the `press` SPRING_PRESETS
+// row (springPresets.ts: response 0.2 / ζ 0.8 — the sub-200ms iOS press window with a
+// tiny alive rebound); `useSpringPress` reads them via `springPreset("press")`. Button
+// stays consumer #1 of `useSpringPress` (direct composition). NO button-local
+// magic-number spring — the press physics live at the ONE table, never a per-call literal.
+// `.btn-punch` is default-ON for the loud hero
 // register (`primary-audacious`/`gold-audacious`) + opt-in via the `punch` prop on
 // any variant. ONE source for both the class emission AND the louder squish cap (no
 // drift between the CSS class and the JS amplitude).

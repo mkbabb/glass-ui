@@ -1,4 +1,4 @@
-// AY.W-MOTION2 — the complete curve library + the CSS↔JS curve TABLE made code.
+// The complete curve library + the CSS↔JS curve TABLE made code.
 //
 // glass-ui's motion system has two published halves: the CSS half names a curve
 // vocabulary in `tokens.css §2` / `theme.css` (`--spring-*`, `--ease-*`, the
@@ -140,7 +140,7 @@ const CANONICAL: MotionCurve[] = [
         token: "--ease-cartoon-punch",
         kind: "bezier",
         js: easeCartoonPunchFn,
-        note: "cartoon punch — anticipation dip → +22% overshoot → settle (the loud one-shot; BD.W-CARTOON-PUNCH)",
+        note: "cartoon punch — anticipation dip → +22% overshoot → settle (the loud one-shot)",
     },
 ];
 

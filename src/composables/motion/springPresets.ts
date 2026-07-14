@@ -1,5 +1,5 @@
-// The six glass-ui named-spring (response, dampingFraction) pairs — THE single
-// source of the iOS-canonical register vocabulary (AY.W-MOTION2).
+// The glass-ui named-spring (response, dampingFraction) pairs — THE single
+// source of the iOS-canonical register vocabulary.
 //
 // This module is the no-second-authority root: BOTH `scripts/regen-spring-tokens.mjs`
 // (which solves each pair into a CSS `linear()` string via keyframes.js
@@ -37,39 +37,30 @@ export interface SpringPresetRow {
 }
 
 /**
- * iOS-canonical (response, dampingFraction) pairs per AL-X4 §3. The names match
- * the `--spring-*` CSS tokens AND the speedtest CSS consumers that read
- * `var(--spring-smooth)` etc. directly, so they MUST stay stable across retunes —
- * only the `(response, ζ)` pair and the emitted curves change.
- *
- * GOVERNED iOS-SPRING VOCABULARY (AX.W05) — the SINGLE source of the register
- * vocabulary. Each row's `comment` names the surface-class that rides it:
+ * iOS-canonical (response, dampingFraction) pairs. The names match the `--spring-*`
+ * CSS tokens AND the CSS consumers that read `var(--spring-smooth)` etc. directly, so
+ * they MUST stay stable across retunes — only the `(response, ζ)` pair and the emitted
+ * curves change. Each row's `comment` describes the register it serves (the doc-table
+ * on /motion/springs derives from that one string):
  *
  *   SETTLE  → smooth  — patient entrances, fades, scale-ins (no overshoot read).
  *   CONTROL → snappy  — crisp position morphs: tab underline glide, progress fill,
  *                       the continuous-marker pop, the generic crisp settle.
  *   PLAYFUL → bouncy  — deliberate emphatic one-shots ONLY: the bouncy toggle press,
- *                       dialog/success entrances, the VT default. Largest overshoot.
+ *                       dialog/success entrances. Largest overshoot.
  *   GENTLE  → gentle  — critically-damped slow settles (the patient end of the ladder).
  *   DOCK    → dock    — the dock expand/collapse morph AND everything inside it.
- *   PRESS   → press   — the iOS interactive tap-press: sub-100ms answer, a tiny alive
- *                       rebound. `useSpringPress` reads this row's (response, ζ).
- *   TRANSIENT → transient — the gentle-class CENTER-SEED materialize bloom (Toast +
- *                       Notification): a deep scale-from with a near-critically-damped
- *                       settle (no flick), the `enter-transient` register (BI.W-REGISTER-TABLE).
+ *   PRESS   → press   — the iOS interactive tap-press: a sub-200ms answer, a tiny alive
+ *                       rebound.
+ *   TRANSIENT → transient — the center-seed materialize bloom (Toast + Notification):
+ *                       a deep scale-from with a near-critically-damped settle (no flick).
+ *   EYEGLASS → eyeglass — the iOS tab-pill loupe travel: snappy speed with dock-class give.
  *
- * BD.W-ANIM-IOS27-TUNE — the GLOBAL re-calibration toward the iOS-27
- * weighty-gooey-inertial pole (USER law: "SMOOTH, CONTROLLED, INERTIA, AUDACIOUS;
- * NO overly tight and springy; MORPH MORE on move"). ALL SIX rows are re-tuned in
- * lockstep toward lower stiffness (longer `response` → inertia/weight) + higher
- * through-body damping toward critically-damped-with-a-TOUCH-of-overshoot (kill the
- * pointed flick) + longer settle (the flowing arrival) — WHILE keeping the perceptual
- * arrival AUDACIOUS (t90 mid-clock for smooth/snappy/press; bouncy/dock arrive earlier
- * via the overshoot carry = the FLOWING-mass read). There are NO byte-frozen KEEPS any
- * more (the BC.W-SPRING-EASE surgical KEEP fence is RETIRED). The invariant fences:
- *   · every overshoot ∈ [0%,10%] — the "touch of overshoot" band; the OLD pointed
- *     bouncy 12.6% / dock 10.7% are RETIRED (>10% is the "too springy" defect).
- *   · every NON-gentle settle LENGTHENS vs the pre-BD baseline (the inertia floor);
+ * The whole table sits at the iOS weighty-inertial pole: longer `response` (weight) +
+ * through-body damping toward critically-damped-with-a-touch-of-overshoot, while keeping
+ * the perceptual arrival audacious. The invariant fences:
+ *   · every overshoot ∈ [0%,10%] — the "touch of overshoot" band (>10% reads too springy).
+ *   · every non-gentle settle is at least as long as the calm baseline (the inertia floor);
  *     nothing gets faster (faster = the mechanical-snap defect).
  *   · t90 ∈ [50%,61%] of clock for smooth/snappy/press (the audacious-arrival floor).
  *   · gentle ζ stays EXACTLY 1.0 (the --ease-convergence alias depends on overshoot==0).
@@ -79,60 +70,58 @@ export const SPRING_PRESETS: readonly SpringPresetRow[] = [
         name: "smooth",
         response: 0.58,
         dampingFraction: 0.8,
-        comment: "SETTLE register — the inertial settle (entrances/fades/scale-ins): weighty, a whisper of life (+1.5%), never a dead stop. BD.W-ANIM-IOS27-TUNE",
+        comment: "The settle register — patient entrances, fades and scale-ins: weighty, with a whisper of life (+1.5%), never a dead stop.",
     },
     {
         name: "snappy",
         response: 0.48,
         dampingFraction: 0.74,
-        comment: "CONTROL register — the quick-but-WEIGHTY position morph (tab indicator, progress fill, .glass-reveal SPATIAL bloom, page-build); arrives at half-clock (audacious) with a small gooey overshoot (+3.2%). BD.W-ANIM-IOS27-TUNE",
+        comment: "The control register — the quick-but-weighty position morph (tab indicator, progress fill, the reveal bloom, page-build): arrives at half-clock with a small gooey overshoot (+3.2%).",
     },
     {
         name: "bouncy",
         response: 0.6,
         dampingFraction: 0.6,
-        comment: "PLAYFUL register — the emphatic one-shot (dialog/success entrance, VT default, completion-seal): FLOWING not flicking — overshoot softened 12.6%→9.5%, slower for inertia. BD.W-ANIM-IOS27-TUNE",
+        comment: "The playful register — the emphatic one-shot (dialog and success entrances, the completion seal): flowing, not flicking, with a soft 9.5% overshoot and extra inertia.",
     },
     {
         name: "gentle",
         response: 0.82,
         dampingFraction: 1.0,
-        comment: "GENTLE register — the patient critically-damped settle (--ease-convergence alias); slow inertial arrival, ζ=1.0 (NO overshoot by definition — the convergence-reveal depends on it). BD.W-ANIM-IOS27-TUNE",
+        comment: "The gentle register — the patient critically-damped settle (the --ease-convergence alias): a slow inertial arrival at ζ=1.0, so it never overshoots (the convergence reveal depends on it).",
     },
     {
         name: "dock",
         response: 0.3,
         dampingFraction: 0.82,
-        comment: "DOCK register — the measured-iOS band (BI judgment (a), user-delegated + orchestrator-ratified 2026-07-12): response 0.30 / ζ 0.82 = the center of the frame-measured iOS dock morph 0.28±0.04 / ζ0.82±0.06 (overshoot ~1.1-1.4%). Apple's liquid is BRISK + tiny overshoot + coupled channels — weight ≠ slow. The BD {0.68, 0.64} weighty tune was calibrated against the pre-M1 broken CSS/JS time base and relied on the arrival-settle cut (excised at BI.W-DOCK-SPRING-UNIFY) to hide its ζ0.64 tail. Pinned POST-SPRING-PARITY (75c9e433) + POST-UNIFY; the A/B capture pair rides the π batch.",
+        comment: "The dock register — the brisk iOS liquid morph: response 0.30, damping 0.82, a tiny overshoot (~1.2%). Powers the dock expand/collapse and everything inside it. Apple's liquid is brisk with coupled channels — weight is not slowness.",
     },
     {
         name: "press",
         response: 0.2,
         dampingFraction: 0.8,
-        comment: "PRESS register — the iOS interactive tap (useSpringPress + --glass-btn-press-t): a hair of inertial carry (sub-200ms iOS window) + a tiny alive rebound (+1.5%); the interruptible re-seat keeps the gesture continuous. BD.W-ANIM-IOS27-TUNE",
+        comment: "The press register — the interactive tap-press: a hair of inertial carry (sub-200ms) with a tiny alive rebound (+1.5%); the interruptible re-seat keeps the gesture continuous.",
     },
     {
         name: "transient",
         response: 0.62,
         dampingFraction: 0.9,
-        comment: "TRANSIENT register — the enter-transient CENTER-SEED materialize bloom (Toast + Notification): a deep scale-from with a near-critically-damped settle (overshoot ~+0.15%, no flick), t90 ~0.34s / 2%-settle 0.46s — the gentle-class MOTION-LADDER M5 bloom. Consumed by the --enter-transient-* register (BI.W-REGISTER-TABLE).",
+        comment: "The transient register — the center-seed materialize bloom (Toast and Notification): a deep scale-from with a near-critically-damped settle (~+0.15% overshoot, no flick), reaching 90% at ~0.34s and settling by ~0.46s. Consumed by the --enter-transient-* register.",
     },
     {
         name: "eyeglass",
         response: 0.36,
         dampingFraction: 0.64,
-        comment: "EYEGLASS register — the iOS-27 tab-pill LOUPE travel (BI.W-TABS-FACTOR, ratified judgment (e), POST-M1). The measured Find My band (TABS-GLASS-LADDER §2/§8.2): snappy-class SPEED (response 0.36 ∈ [0.32,0.40]) with dock-class GIVE (ζ 0.64 ∈ [0.6,0.85], overshoot ~7.3% — the leading-edge liquid arrival, AT the ≤10% fence). The eyeglass release composable (useEyeglassLive) reads THIS row's (response, ζ) and passes it to useLeadTrail (the ONE lead/trail integrator — the edge-asymmetric release, lead ~117ms recovery / trail ~270ms lag); NO second spring, NO hand-inlined pair (the M1 single-source discipline). The row is HONEST only post-SPRING-PARITY (M1) — the CSS/JS time base is fixed.",
+        comment: "The eyeglass register — the iOS tab-pill loupe travel: snappy-class speed (response 0.36) with dock-class give (ζ 0.64, ~7.3% overshoot) for a leading-edge liquid arrival. The release is edge-asymmetric — a faster lead recovery (~117ms) than trail lag (~270ms).",
     },
 ] as const;
 //
 // PER-COMPONENT REGISTERS (presets-in-consumers) — the 3 ScrubberTimeline legs
-// (head/fill/press) are NO LONGER global SPRING_PRESETS rows (BG.W-SPRING-REGISTER-TIDY,
-// table→6). They were per-component registers folded into the global table for ONE
-// consumer, bloating the generated CSS (9 `linear()` curves + 9 duration clocks) + the
-// MOTION_CURVES twin. They now live LOCAL to ScrubberTimeline.vue as documented
-// per-primitive defaults (JS-only, no CSS `--spring-*` token) and are sanctioned in the
-// proof:motion-one-clock SPRING_DEFAULTS_ALLOWLIST (TIMELINE_HEAD/FILL/PRESS) — the
-// canon's per-primitive-default seam (motion-canon.md §P7), NOT a second register TABLE.
+// (head/fill/press) are NOT global SPRING_PRESETS rows. They were once folded into the
+// global table for ONE consumer, which bloated the generated CSS (9 `linear()` curves +
+// 9 duration clocks) + the MOTION_CURVES twin. They now live LOCAL to ScrubberTimeline.vue
+// as documented per-primitive defaults (JS-only, no CSS `--spring-*` token) — the
+// per-primitive-default seam, NOT a second register TABLE.
 
 /** Lookup one preset row by name (used by `MOTION_CURVES` spring rows). */
 export function springPreset(name: SpringPresetName): SpringPresetRow {
