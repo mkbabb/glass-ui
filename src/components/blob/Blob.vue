@@ -77,7 +77,11 @@ const {
     disabled?: boolean;
 }>();
 
-const emit = defineEmits<{ click: []; "update:paused": [value: boolean] }>();
+const emit = defineEmits<{
+    click: [];
+    "update:paused": [value: boolean];
+    rendererStatus: [status: import("../../composables/glass/webgpu/rendererStatus").RendererStatus];
+}>();
 
 const injectedConfig = inject(BLOB_CONFIG_KEY, null);
 const cfg = config ?? injectedConfig;
@@ -191,6 +195,12 @@ const renderer = useMetaballRenderer({
     satellites: satelliteSystem,
     config: renderConfig,
 });
+if (renderer.rendererStatus) {
+    watch(renderer.rendererStatus, (status) => emit("rendererStatus", status), {
+        immediate: true,
+        flush: "sync",
+    });
+}
 
 // Resolve once the host is in the tree (the cascade is live), then on every color
 // change. A MutationObserver on `<html>`'s class re-resolves the tokens on a dark-mode
@@ -310,6 +320,7 @@ defineExpose({
     // rest, no satellite mid-transition incl. a fission beat). A consumer parks its own
     // idle/arming ONLY while `settled` is true, so an armed hero never freezes mid-split.
     settled: renderer.settled,
+    rendererStatus: renderer.rendererStatus,
 });
 </script>
 

@@ -9,6 +9,8 @@
 // (presets-in-consumers; no demo-local teal).
 import { computed, reactive, ref, watch } from "vue";
 import VizStudio from "./_frame/VizStudio.vue";
+import RendererStatusView from "./_frame/RendererStatus.vue";
+import { pendingRenderer, type RendererStatus } from "@glass/composables/glass/webgpu/rendererStatus";
 import {
     FourierField,
     makeEllipticSpectrum,
@@ -300,6 +302,7 @@ function onScrub(v: number): void {
 }
 
 const liveStatus = computed(() => (paused.value ? "paused" : "playing"));
+const rendererStatus = ref<RendererStatus>(pendingRenderer("webgpu"));
 </script>
 
 <template>
@@ -333,7 +336,9 @@ const liveStatus = computed(() => (paused.value ? "paused" : "playing"));
                                     "
                                     :get-palette="getPalette"
                                     data-testid="fourier-field-canvas"
+                                    @renderer-status="rendererStatus = $event"
                                 />
+                                <RendererStatusView :status="rendererStatus" class="pointer-events-none absolute top-3 left-3" />
                                 <div
                                     class="absolute bottom-3 left-3 flex items-center gap-2 rounded-pill border border-border/40 bg-card/70 px-3 py-1 backdrop-blur-sm"
                                     data-testid="fourier-field-status"

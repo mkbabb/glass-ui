@@ -30,7 +30,9 @@ import { armWebGL2ImageTexture, createAuroraImageCoordinator } from "./auroraIma
 import {
     createGpuSubstrate,
     type BackingSize,
+    type RendererStatus,
 } from "../../../composables/glass/webgpu/useGpuSubstrate";
+import { cssRenderer } from "../../../composables/glass/webgpu/rendererStatus";
 import { isSoftwareWebGLRenderer } from "../constants/renderMode";
 import type { AuroraConfig, AuroraInstance } from "../constants/presets";
 import { createGlProgram } from "./glSetup";
@@ -102,6 +104,7 @@ export interface AuroraRuntimeOptions {
      * GENUINE violations (a malformed shader, an OOM, a real link failure).
      */
     onInitError?: (err: Error) => void;
+    onRendererStatus?: (status: RendererStatus) => void;
     /**
      * BB.W-AURORA-SWRASTER — opt OUT of the runtime software-raster wedge catch.
      * Default `false`: the wedge catch is the safe default — `createAurora`
@@ -401,7 +404,13 @@ export function createAurora(
                 },
             };
         },
+        onInitError: options.onInitError
+            ? (error) => options.onInitError?.(error instanceof Error ? error : new Error(String(error)))
+            : undefined,
+        onStatus: options.onRendererStatus,
     });
+
+    if (wedgeBlocked) options.onRendererStatus?.(cssRenderer());
 
     function setCursor(x: number, y: number, strength: number = 0.8) {
         cursorStrengthCeil = strength;

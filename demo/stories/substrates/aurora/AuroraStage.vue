@@ -3,6 +3,8 @@ import { ref } from "vue";
 import { Aurora, useCursorInteraction } from "@glass/components/aurora";
 import type { AuroraConfig } from "@glass/components/aurora";
 import NucleiOverlay from "./NucleiOverlay.vue";
+import RendererStatusView from "../_frame/RendererStatus.vue";
+import { pendingRenderer, type RendererStatus } from "@glass/composables/glass/webgpu/rendererStatus";
 
 /**
  * Stage shell — canvas + nuclei overlay + cursor interaction. Lives inside
@@ -27,6 +29,7 @@ const props = withDefaults(
 
 const stageRef = ref<HTMLDivElement | null>(null);
 const auroraRef = ref<InstanceType<typeof Aurora> | null>(null);
+const rendererStatus = ref<RendererStatus>(pendingRenderer("webgl2"));
 
 useCursorInteraction(stageRef, () => props.config, {
     setCursor: (x, y, strength) => {
@@ -52,7 +55,8 @@ useCursorInteraction(stageRef, () => props.config, {
         ref="stageRef"
         class="relative h-full w-full min-h-[30rem] cursor-crosshair touch-none select-none rounded-card overflow-hidden"
     >
-        <Aurora ref="auroraRef" :config="config" />
+        <Aurora ref="auroraRef" :config="config" @renderer-status="rendererStatus = $event" />
+        <RendererStatusView :status="rendererStatus" class="pointer-events-none absolute top-3 left-3" />
         <NucleiOverlay
             :nuclei="config.nuclei"
             :dimmed="config.medium === 'smooth'"

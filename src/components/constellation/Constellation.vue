@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import { computed, useTemplateRef } from "vue";
+import { computed, useTemplateRef, watch } from "vue";
 import { type ConstellationProps } from "./constellationField";
 import { useConstellation } from "./composables/useConstellation";
 import { DEFAULT_PARALLAX } from "./constants";
 import { useRoutePointer } from "../../composables/motion/useRoutePointer";
 import { cn } from "../_shared/class-names";
+import type { RendererStatus } from "../../composables/glass/webgpu/rendererStatus";
+
+const emit = defineEmits<{ rendererStatus: [status: RendererStatus] }>();
 
 /**
  * Constellation — a slow, geometric proximity-graph lattice rendered on the
@@ -86,6 +89,10 @@ const interactionLabel = computed(() =>
 );
 
 const expose = useConstellation(props, hostRef, canvasRef, { routePointer });
+watch(expose.rendererStatus, (status) => emit("rendererStatus", status), {
+    immediate: true,
+    flush: "sync",
+});
 defineExpose(expose);
 </script>
 

@@ -107,6 +107,8 @@ export interface WebGPUCanvasHandle {
     dispose: () => void;
     /** The live device (null before armAsync / after dispose / mid-loss). */
     readonly device: GPUDevice | null;
+    /** Runtime-derived adapter identity, available once acquisition succeeds. */
+    readonly adapterClass: string;
     /**
      * The live `prefers-reduced-motion: reduce` state. The shared lifecycle core
      * owns + re-monitors it; consumers read it (e.g. a viz freezes its frame time

@@ -17,11 +17,13 @@
 // The pointermove/enter/leave listeners bind on the wrapper; PRM freezes the field (the
 // usePointerVelocityField `tick(0)` discipline).
 
-import { onScopeDispose, type Ref } from "vue";
+import { onScopeDispose, readonly, shallowRef, type Ref } from "vue";
 import {
     createGpuSubstrate,
     type GpuBackend,
+    type RendererStatus,
 } from "../../../composables/glass/webgpu/useGpuSubstrate";
+import { pendingRenderer } from "../../../composables/glass/webgpu/rendererStatus";
 import { usePointerVelocityField } from "../../../composables/motion/usePointerVelocityField";
 import { resolveBudgetDpr } from "../../aurora/constants/budget";
 import type { LiquidGridConfig } from "../constants";
@@ -49,6 +51,7 @@ export interface LiquidGridHandle {
     renderAt: (timeSec: number) => void;
     /** The live `prefers-reduced-motion: reduce` state. */
     readonly reducedMotion: boolean;
+    readonly rendererStatus: Readonly<Ref<RendererStatus>>;
     /** Tear down the renderer + release GPU/GL resources. */
     dispose: () => void;
 }
@@ -81,6 +84,7 @@ export function useLiquidGrid(
     let lastFrameSec = 0;
 
     let handle: ReturnType<typeof createGpuSubstrate> | null = null;
+    const rendererStatus = shallowRef<RendererStatus>(pendingRenderer("webgpu"));
     let disposed = false;
 
     // The per-frame pointer hook the setups invoke from inside their frame callback (the
@@ -189,8 +193,9 @@ export function useLiquidGrid(
                     shouldContinue: () => true,
                     onFrame,
                 }),
+                onStatus: (status) => (rendererStatus.value = status),
             });
-            void handle.armAsync();
+            void handle.armAsync().catch(() => undefined);
         }
         return handle;
     };
@@ -208,6 +213,7 @@ export function useLiquidGrid(
         get reducedMotion() {
             return handle?.reducedMotion ?? false;
         },
+        rendererStatus: readonly(rendererStatus),
         dispose: () => {
             if (disposed) return;
             disposed = true;

@@ -11,12 +11,15 @@ import { Constellation, type ConstellationField } from "@glass/components/conste
 import { Switch } from "@glass/components/switch";
 import { Label } from "@glass/components/label";
 import { useTokenColor } from "@glass/composables/dom/useTokenColor";
+import RendererStatusView from "./_frame/RendererStatus.vue";
+import { pendingRenderer, type RendererStatus } from "@glass/composables/glass/webgpu/rendererStatus";
 
 // The primary hero lattice's pointer interactivity toggle. The name surfaces the
 // suite-wide `interactive` enable token (aurora/dot-flow-field/concentric/fourier all
 // use it; constellation's gating prop is `pointerReactive`, which this drives) so the
 // shared pointer-velocity field is reachable on the live route.
 const interactive = ref(true);
+const rendererStatus = ref<RendererStatus>(pendingRenderer("canvas2d"));
 
 // Resolve `--primary` to a concrete color so the canvas overlay paints it (a
 // Canvas2D `fillStyle` cannot resolve a `var()`). Re-resolves on a dark flip.
@@ -298,7 +301,9 @@ onMounted(() => {
                         :pointer-reactive="interactive"
                         :draw-overlay="drawFocal"
                         class="absolute inset-0"
+                        @renderer-status="rendererStatus = $event"
                     />
+                    <RendererStatusView :status="rendererStatus" class="pointer-events-none absolute top-3 left-3" />
                 </div>
             </ShowcaseFrame>
 

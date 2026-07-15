@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import { computed, getCurrentInstance, ref } from "vue";
+import { computed, getCurrentInstance, ref, watch } from "vue";
 import { useAurora } from "./composables/useAurora";
 import { auroraFallbackGround } from "./composables/auroraFallbackGround";
 import type { AuroraRuntimeOptions } from "./composables/runtime";
 import { DEFAULT_AURORA_CONFIG, type AuroraConfig } from "./constants/presets";
 import { resolveRenderMode, type AuroraRenderMode } from "./constants/renderMode";
+import type { RendererStatus } from "../../composables/glass/webgpu/rendererStatus";
+
+const emit = defineEmits<{ rendererStatus: [status: RendererStatus] }>();
 
 /**
  * Aurora — a painterly WebGL2 background.
@@ -149,6 +152,10 @@ const mergedRuntimeOptions: AuroraRuntimeOptions = {
 const api = useAurora(canvasRef, () => props.config, mergedRuntimeOptions, {
     renderMode: resolvedRenderMode,
 });
+watch(api.rendererStatus, (status) => emit("rendererStatus", status), {
+    immediate: true,
+    flush: "sync",
+});
 
 // BI.W-E10-AURORA-ENTRANCE — the placeholder is ALWAYS the palette-derived GROUND
 // (`auroraFallbackGround`), on the CAPABLE WebGL path as much as the `"css"`
@@ -181,6 +188,7 @@ defineExpose({
     pause: api.pause,
     resume: api.resume,
     isArmed: api.isArmed,
+    rendererStatus: api.rendererStatus,
 });
 </script>
 

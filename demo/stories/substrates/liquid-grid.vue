@@ -6,6 +6,8 @@
 // gone (§E). The configurator sits on the RIGHT (the §E controls-right mandate); the title
 // carries the explicit /liquid-grid subpath.
 import { computed, reactive, ref } from "vue";
+import RendererStatusView from "./_frame/RendererStatus.vue";
+import { pendingRenderer, type RendererStatus } from "@glass/composables/glass/webgpu/rendererStatus";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import {
@@ -35,6 +37,7 @@ const config = reactive<LiquidGridConfig>(
 );
 
 const paused = ref(false);
+const rendererStatus = ref<RendererStatus>(pendingRenderer("webgpu"));
 
 // ── geometry refs (bound directly via v-model into config) ──────────────────────
 const cellSize = computed({
@@ -135,7 +138,9 @@ const boldOn = computed({
                             :config="config"
                             v-model:paused="paused"
                             class="absolute inset-0"
+                            @renderer-status="rendererStatus = $event"
                         />
+                        <RendererStatusView :status="rendererStatus" class="pointer-events-none absolute top-3 left-3" />
                         <!-- Pause/play for the continuously-running field. -->
                         <div class="absolute right-3 top-3">
                             <DockBackgroundToggle v-model:paused="paused" />

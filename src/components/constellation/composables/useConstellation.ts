@@ -3,7 +3,9 @@ import {
     getCurrentInstance,
     onMounted,
     onUnmounted,
+    readonly,
     ref,
+    shallowRef,
     type Ref,
 } from "vue";
 import { useCanvas2D } from "../../../composables/glass/canvas2d";
@@ -42,6 +44,11 @@ import {
 } from "../constellationRender";
 import { DEFAULT_PARALLAX, E_MAX, MAX_NODES } from "../constants";
 import { createConstellationField } from "./createConstellationField";
+import {
+    canvas2DRenderer,
+    pendingRenderer,
+    type RendererStatus,
+} from "../../../composables/glass/webgpu/rendererStatus";
 
 export interface ConstellationRoutePointerRead {
     x: number;
@@ -72,6 +79,7 @@ export interface ConstellationExpose {
     releaseWell(): void;
     warpSettled(): boolean;
     pinNode(idx: number): void;
+    rendererStatus: Readonly<Ref<RendererStatus>>;
 }
 
 export function useConstellation(
@@ -133,6 +141,7 @@ export function useConstellation(
               }
             : { respectReducedMotion: true },
     );
+    const rendererStatus = shallowRef<RendererStatus>(pendingRenderer("canvas2d"));
 
     let handle: ReturnType<typeof useCanvas2D> | null = null;
     let cleanup = (): void => pointerField.dispose();
@@ -431,6 +440,7 @@ export function useConstellation(
                 },
             }),
         });
+        rendererStatus.value = canvas2DRenderer();
 
         cleanup = () => {
             if (holdTimer !== undefined) clearTimeout(holdTimer);
@@ -476,5 +486,6 @@ export function useConstellation(
             if (field.pinnedDrift) field.pinnedDrift.nextAt = -1;
             handle?.wake();
         },
+        rendererStatus: readonly(rendererStatus),
     };
 }

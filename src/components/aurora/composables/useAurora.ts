@@ -3,6 +3,7 @@ import {
     onMounted,
     readonly,
     ref,
+    shallowRef,
     watch,
     type Ref,
 } from "vue";
@@ -15,6 +16,12 @@ import { asGetter, type ConfigSource } from "./configSource";
 import { useIntersectionPause } from "../../../composables/motion/useIntersectionPause";
 import { useScrollProgress } from "../../../composables/motion/useScrollProgress";
 import type { AuroraConfig } from "../constants/presets";
+import {
+    cssRenderer,
+    pendingRenderer,
+    rendererFailure,
+    type RendererStatus,
+} from "../../../composables/glass/webgpu/rendererStatus";
 
 /**
  * Adaptive-substrate options threaded down from `Aurora.vue` (AM.W1). The
@@ -59,6 +66,7 @@ export interface UseAuroraReturn {
      * it flip on the post-first-paint idle tick.
      */
     isArmed: Readonly<Ref<boolean>>;
+    rendererStatus: Readonly<Ref<RendererStatus>>;
 }
 
 /**
@@ -159,13 +167,14 @@ export function useAurora(
     let reducedMq: MediaQueryList | null = null;
     // Guards a single arm attempt (success OR failure both consume it).
     let armAttempted = false;
-    // Dev-warn the deferred-without-onInitError contract gap exactly once.
-    let warnedNoInitHandler = false;
     // Exposed to `Aurora.vue` so it can cross-fade the canvas in over the
     // static gradient placeholder once the GL runtime is live. Stays `false`
     // on init failure — the placeholder then remains as the WebGL-unavailable
     // visual fallback (HA4 §1.5).
     const isArmed = ref(false);
+    const rendererStatus = shallowRef<RendererStatus>(
+        cssOnly ? cssRenderer() : pendingRenderer("webgl2"),
+    );
 
     // Capture mode forces eager; an explicit "eager" strategy does too. Any
     // other case takes the deferred path.
@@ -188,12 +197,12 @@ export function useAurora(
      */
     function surfaceInitError(err: unknown): void {
         const error = err instanceof Error ? err : new Error(String(err));
-        if (runtimeOptions.onInitError) {
-            runtimeOptions.onInitError(error);
-            return;
-        }
-        // No handler: re-surface unhandled, on the microtask queue.
-        void Promise.reject(error);
+        rendererStatus.value = rendererFailure(
+            rendererStatus.value.engine,
+            rendererStatus.value.adapter,
+            error,
+        );
+        runtimeOptions.onInitError?.(error);
     }
 
     /**
@@ -267,6 +276,10 @@ export function useAurora(
                 // Deferred is the default; an explicit field still wins.
                 initStrategy: "deferred",
                 ...runtimeOptions,
+                onRendererStatus: (status) => {
+                    rendererStatus.value = status;
+                    runtimeOptions.onRendererStatus?.(status);
+                },
             });
         } catch (err) {
             // fail-explicit: surface the synchronous (eager-path) init failure
@@ -282,24 +295,6 @@ export function useAurora(
             // idempotent no-op and `isArmed` flips `true` within onMounted.
             armRuntime();
             return;
-        }
-
-        // Deferred path: the init failure (if any) lands on an idle tick,
-        // outside any mount-time error boundary. Dev-warn ONCE when no
-        // `onInitError` handler is armed so the silent-by-omission case is
-        // visible (the contract's three handling paths are in the JSDoc).
-        if (
-            import.meta.env.DEV &&
-            !runtimeOptions.onInitError &&
-            !warnedNoInitHandler
-        ) {
-            warnedNoInitHandler = true;
-            console.warn(
-                "[glass-ui] useAurora: deferred init armed with no onInitError handler. " +
-                    "A WebGL/shader failure will re-surface as an unhandled rejection. " +
-                    "Pass runtimeOptions.onInitError or knowingly accept the rejection; " +
-                    "Aurora.vue adapts app.config.errorHandler into this seam.",
-            );
         }
 
         // Deferred path. Compose `useIntersectionPause` as the SINGLE owner of
@@ -367,5 +362,6 @@ export function useAurora(
         pause: () => inst?.pause(),
         resume: () => inst?.resume(),
         isArmed: readonly(isArmed),
+        rendererStatus: readonly(rendererStatus),
     };
 }

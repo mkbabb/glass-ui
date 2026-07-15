@@ -53,6 +53,7 @@ import {
     withAcquireTimeout,
     WEBGPU_ACQUIRE_TIMEOUT_MS,
 } from "./webgpuDevice";
+import { describeWebGPUAdapter } from "./rendererStatus";
 // Re-export so the picker + the package barrel reach them through this substrate
 // unchanged (the barrel re-exports from "./useWebGPUCanvas").
 export { WebGPUInitError, WEBGPU_ACQUIRE_TIMEOUT_MS } from "./webgpuDevice";
@@ -98,7 +99,11 @@ export function supportsWebGPU(): boolean {
 // `device.lost` invalidates the cache so the next acquire re-warms it (the self-heal stays);
 // a rejected warm clears the cache so a later page can retry (a transient failure is never
 // pinned). The memo lives in THIS substrate (the single WebGPU-bootstrap home — clause A).
-let sharedDevicePromise: Promise<GPUDevice> | null = null;
+interface SharedGPUDevice {
+    device: GPUDevice;
+    adapterClass: string;
+}
+let sharedDevicePromise: Promise<SharedGPUDevice> | null = null;
 
 /**
  * Reset the PROCESS-SHARED device memo. The shared-device warm (D3a) is a module-level
@@ -124,14 +129,14 @@ export function __resetSharedGpuDeviceForTest(): void {
 function acquireSharedDevice(
     adapterOptions?: GPURequestAdapterOptions,
     deviceDescriptor?: GPUDeviceDescriptor,
-): Promise<GPUDevice> {
+): Promise<SharedGPUDevice> {
     if (sharedDevicePromise) return sharedDevicePromise;
     if (!supportsWebGPU()) {
         return Promise.reject(
             new WebGPUInitError("no-navigator-gpu", "[useWebGPUCanvas] navigator.gpu unavailable"),
         );
     }
-    const warm = (async (): Promise<GPUDevice> => {
+    const warm = (async (): Promise<SharedGPUDevice> => {
         const adapter = await withAcquireTimeout(
             navigator.gpu.requestAdapter(adapterOptions),
             "requestAdapter",
@@ -168,7 +173,7 @@ function acquireSharedDevice(
         void device.lost.then(() => {
             if (sharedDevicePromise === warm) sharedDevicePromise = null;
         });
-        return device;
+        return { device, adapterClass: describeWebGPUAdapter(adapter.info) };
     })();
     warm.catch(() => {
         if (sharedDevicePromise === warm) sharedDevicePromise = null;
@@ -190,6 +195,7 @@ export function createWebGPUCanvas(
     let frameHooks: WebGPUCanvasFrame | null = null;
     let disposed = false;
     let acquiring: Promise<void> | null = null;
+    let adapterClass = "Acquiring adapter";
 
     // The leaf-supplied self-heal callbacks (set by `bindContextEvents`). On a device
     // loss the wrapper marks the surface blank (the leaf nulls its hooks + parks the
@@ -340,12 +346,13 @@ export function createWebGPUCanvas(
         // software-adapter / hung host rejects with the typed `WebGPUInitError` the picker
         // recognizes (it falls to the WebGL2 net). On a real GPU the warm resolves once and
         // the WebGPU path is byte-untouched. The per-canvas CONTEXT + `setup` stay below.
-        const dev = await acquireSharedDevice(
+        const acquired = await acquireSharedDevice(
             options.adapterOptions,
             options.deviceDescriptor,
         );
-        device = dev;
-        wireDeviceLoss(dev);
+        device = acquired.device;
+        adapterClass = acquired.adapterClass;
+        wireDeviceLoss(acquired.device);
     }
 
     /**
@@ -466,6 +473,9 @@ export function createWebGPUCanvas(
         },
         get device() {
             return device;
+        },
+        get adapterClass() {
+            return adapterClass;
         },
         get reducedMotion() {
             return lifecycle.reducedMotion;

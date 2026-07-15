@@ -11,6 +11,8 @@
 // page never approaches the browser's per-page WebGL cap.
 import { computed, reactive, ref, watch } from "vue";
 import VizStudio from "./_frame/VizStudio.vue";
+import RendererStatusView from "./_frame/RendererStatus.vue";
+import { pendingRenderer, type RendererStatus } from "@glass/composables/glass/webgpu/rendererStatus";
 import StorySection from "../../chassis/section/StorySection.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { Blob } from "@glass/components/blob";
@@ -37,6 +39,7 @@ import {
     oklchStopToHex,
     type ColorHarmony,
 } from "@glass/composables/color";
+const rendererStatus = ref<RendererStatus>(pendingRenderer("webgpu"));
 
 // ── The static zero-GL register (WatercolorDot) — DEMOTED below the hero ──────
 // The lit-droplet look without a WebGL context — a deterministic seeded
@@ -546,8 +549,10 @@ watch(studioPaused, () => {
                                     seed="studio"
                                     press-label="Pulse blob"
                                     @click="onStudioClick"
+                                    @renderer-status="rendererStatus = $event"
                                 />
                             </div>
+                            <RendererStatusView :status="rendererStatus" class="pointer-events-none absolute top-3 left-3" />
                             <div
                                 class="absolute bottom-3 left-3 flex items-center gap-2 rounded-pill border border-border/40 bg-card/70 px-3 py-1 backdrop-blur-sm"
                             >

@@ -4,6 +4,7 @@ import { useLiquidGrid } from "./composables/useLiquidGrid";
 import type { LiquidGridConfig } from "./constants";
 import { DEFAULT_LIQUID_GRID_CONFIG } from "./constants";
 import { cssToOklch } from "../../composables/color";
+import type { RendererStatus } from "../../composables/glass/webgpu/rendererStatus";
 
 /**
  * LiquidGrid — a liquid AA-grid: evenly-spaced LARGER lines on a slowly breathing
@@ -38,7 +39,10 @@ const {
     paused?: boolean;
 }>();
 
-defineEmits<{ "update:paused": [value: boolean] }>();
+const emit = defineEmits<{
+    "update:paused": [value: boolean];
+    rendererStatus: [status: RendererStatus];
+}>();
 
 const wrapperRef = useTemplateRef<HTMLElement>("wrapperRef");
 const canvasRef = useTemplateRef<HTMLCanvasElement>("canvasRef");
@@ -75,6 +79,10 @@ onMounted(() => {
 });
 
 const renderer = useLiquidGrid(canvasRef, { config: effective });
+watch(renderer.rendererStatus, (status) => emit("rendererStatus", status), {
+    immediate: true,
+    flush: "sync",
+});
 
 // Drive the substrate pause/resume from the declarative `paused` prop.
 watch(
@@ -95,6 +103,7 @@ defineExpose({
     resume: renderer.resume,
     wake: renderer.wake,
     renderAt: renderer.renderAt,
+    rendererStatus: renderer.rendererStatus,
 });
 </script>
 

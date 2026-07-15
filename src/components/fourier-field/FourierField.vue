@@ -15,6 +15,9 @@ import {
 import type { FourierFieldConfig } from "./constants";
 import { DEFAULT_FOURIER_CONFIG, MAX_PHASORS } from "./constants";
 import { useFourierField } from "./composables/useFourierField";
+import type { RendererStatus } from "../../composables/glass/webgpu/rendererStatus";
+
+const emit = defineEmits<{ rendererStatus: [status: RendererStatus] }>();
 
 /**
  * FourierField — a Fourier epicycle field on the GPU substrate (BC.W-VIZ-FOURIER), a
@@ -203,6 +206,10 @@ const renderer = useFourierField(canvasRef, {
     // pointer-events:none; the studio owns its host listeners so this is undefined there).
     routePointer: routePointerRead,
 });
+watch(renderer.rendererStatus, (status) => emit("rendererStatus", status), {
+    immediate: true,
+    flush: "sync",
+});
 
 // Wake a parked loop on a config edit (the blob paletteStops-watcher precedent) so a
 // control change to a quiescent field repaints same-frame.
@@ -230,6 +237,7 @@ defineExpose({
     wake: renderer.wake,
     renderAt: renderer.renderAt,
     setHeadT: renderer.setHeadT,
+    rendererStatus: renderer.rendererStatus,
 });
 </script>
 

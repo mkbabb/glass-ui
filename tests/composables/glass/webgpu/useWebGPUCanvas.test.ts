@@ -21,6 +21,7 @@
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createGpuSubstrate } from "@glass/composables/glass/webgpu/useGpuSubstrate";
+import type { RendererStatus } from "@glass/composables/glass/webgpu/rendererStatus";
 import {
     createWebGPUCanvas,
     WebGPUInitError,
@@ -189,7 +190,10 @@ describe("createWebGPUCanvas — the async device-acquisition prelude (W-GPU-SUB
             removeEventListener: vi.fn(),
             destroy: vi.fn(),
         };
-        const adapter = { requestDevice: vi.fn(async () => device) };
+        const adapter = {
+            info: { vendor: "Apple", architecture: "M3", description: "Metal" },
+            requestDevice: vi.fn(async () => device),
+        };
         const gpu = {
             requestAdapter: vi.fn(async () => adapter),
             getPreferredCanvasFormat: vi.fn(() => "bgra8unorm"),
@@ -207,6 +211,7 @@ describe("createWebGPUCanvas — the async device-acquisition prelude (W-GPU-SUB
         const { gpu, adapter, gpuContext } = stubWebGPU(canvas);
 
         let setupCalledWith: { device: unknown; format: unknown } | null = null;
+        const statuses: RendererStatus[] = [];
         const substrate = createGpuSubstrate(canvas, {
             setupWGPU: (device, _ctx, format) => {
                 setupCalledWith = { device, format };
@@ -219,6 +224,7 @@ describe("createWebGPUCanvas — the async device-acquisition prelude (W-GPU-SUB
             setupGL: () => {
                 throw new Error("setupGL must NOT run when WebGPU is selected");
             },
+            onStatus: (status) => statuses.push(status),
         });
 
         expect(substrate.backend).toBe("webgpu");
@@ -229,6 +235,7 @@ describe("createWebGPUCanvas — the async device-acquisition prelude (W-GPU-SUB
         expect(gpuContext.configure).toHaveBeenCalledTimes(1);
         expect(setupCalledWith).not.toBeNull();
         expect(setupCalledWith!.format).toBe("bgra8unorm");
+        expect(statuses.at(-1)).toMatchObject({ phase: "ready", engine: "webgpu", adapter: "Apple · M3 · Metal" });
 
         substrate.dispose();
     });
@@ -289,6 +296,7 @@ describe("createGpuSubstrate — the try-WebGPU-then-rebuild-WebGL2 picker (BC.W
         let live = true;
         let fellTo: string | null = null;
         const onInitError = vi.fn();
+        const statuses: RendererStatus[] = [];
         const substrate = createGpuSubstrate(canvas, {
             setupWGPU: () => ({
                 frame: vi.fn(),
@@ -309,6 +317,7 @@ describe("createGpuSubstrate — the try-WebGPU-then-rebuild-WebGL2 picker (BC.W
             onBackendFallback: ({ to }) => {
                 fellTo = to;
             },
+            onStatus: (status) => statuses.push(status),
         });
 
         // Optimistic start: backend is "webgpu" (supportsWebGPU is a presence check).
@@ -321,6 +330,7 @@ describe("createGpuSubstrate — the try-WebGPU-then-rebuild-WebGL2 picker (BC.W
         expect(substrate.backend).toBe("webgl2"); // the resolved backend is the net
         expect(fellTo).toBe("webgl2");
         expect(onInitError).not.toHaveBeenCalled(); // a no-adapter fall is NOT an error
+        expect(statuses.at(-1)).toMatchObject({ phase: "ready", engine: "webgl2" });
         // The WebGL2 net armed + the consumer's frame runs — the substrate PAINTS, never
         // a black void (the D8 close).
         expect(canvas.getContext).toHaveBeenCalledWith("webgl2", undefined);
@@ -329,5 +339,22 @@ describe("createGpuSubstrate — the try-WebGPU-then-rebuild-WebGL2 picker (BC.W
         expect(pumpFrames(() => glFrames, 5)).toBeGreaterThan(0);
 
         substrate.dispose();
+    });
+
+    it("attributes WebGPU setup failure without painting through WebGL2", async () => {
+        const canvas = makeCanvas(() => null);
+        const device = { lost: new Promise(() => {}), pushErrorScope: vi.fn(), popErrorScope: vi.fn(async () => null), addEventListener: vi.fn(), removeEventListener: vi.fn() };
+        vi.stubGlobal("navigator", { gpu: { requestAdapter: vi.fn(async () => ({ info: { vendor: "Apple" }, requestDevice: vi.fn(async () => device) })), getPreferredCanvasFormat: vi.fn(() => "bgra8unorm") } });
+        (canvas.getContext as any).mockImplementation((id: string) => id === "webgpu" ? { configure: vi.fn() } : null);
+        const statuses: RendererStatus[] = [];
+        const setupGL = vi.fn();
+        const substrate = createGpuSubstrate(canvas, {
+            setupWGPU: () => { throw new Error("shader setup failed"); },
+            setupGL,
+            onStatus: (status) => statuses.push(status),
+        });
+        await expect(substrate.armAsync()).rejects.toThrow("shader setup failed");
+        expect(setupGL).not.toHaveBeenCalled();
+        expect(statuses.at(-1)).toMatchObject({ phase: "error", engine: "webgpu", error: "shader setup failed" });
     });
 });

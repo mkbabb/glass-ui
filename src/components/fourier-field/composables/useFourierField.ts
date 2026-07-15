@@ -22,11 +22,13 @@
 // momentum, the accel term blooms the head/swells the chain (a sub-perceptual cap). PRM keeps
 // the scrub (a position read) but drops the momentum (the `tick(0)` discipline).
 
-import { onScopeDispose, type Ref } from "vue";
+import { onScopeDispose, readonly, shallowRef, type Ref } from "vue";
 import {
     createGpuSubstrate,
     type GpuBackend,
+    type RendererStatus,
 } from "../../../composables/glass/webgpu/useGpuSubstrate";
+import { pendingRenderer } from "../../../composables/glass/webgpu/rendererStatus";
 import { usePointerVelocityField } from "../../../composables/motion/usePointerVelocityField";
 import {
     fourierLeanMapping,
@@ -82,6 +84,7 @@ export interface FourierFieldHandle {
     readonly reducedMotion: boolean;
     /** The current loop parameter `head_t ∈ [0,1)` (the scrubber reads/writes it). */
     readonly headT: number;
+    readonly rendererStatus: Readonly<Ref<RendererStatus>>;
     /** Scrub the clock directly (the transport scrubber / a pointer drag). */
     setHeadT: (t: number) => void;
     /** Tear down the renderer + release GPU/GL resources. */
@@ -283,6 +286,7 @@ export function useFourierField(
     }
 
     let handle: ReturnType<typeof createGpuSubstrate> | null = null;
+    const rendererStatus = shallowRef<RendererStatus>(pendingRenderer("webgpu"));
     let disposed = false;
     const ensure = (): ReturnType<typeof createGpuSubstrate> | null => {
         if (disposed) return null;
@@ -318,8 +322,9 @@ export function useFourierField(
                     onFrame,
                     getPointerLean,
                 }),
+                onStatus: (status) => (rendererStatus.value = status),
             });
-            void handle.armAsync();
+            void handle.armAsync().catch(() => undefined);
         }
         return handle;
     };
@@ -339,6 +344,7 @@ export function useFourierField(
         get headT() {
             return headT;
         },
+        rendererStatus: readonly(rendererStatus),
         setHeadT: (t: number) => {
             headT = ((t % 1) + 1) % 1;
             ensure()?.wake();

@@ -64,10 +64,18 @@ export type { BackingSize, DprPolicy } from "../webgl/createCanvasLifecycle";
 import {
     createWebGPUCanvas,
     supportsWebGPU,
+    WebGPUInitError,
     type WebGPUCanvasFrame,
     type WebGPUCanvasHandle,
     type WebGPUCanvasOptions,
 } from "./useWebGPUCanvas";
+import {
+    describeWebGL2Adapter,
+    pendingRenderer,
+    rendererFailure,
+    type RendererStatus,
+} from "./rendererStatus";
+export type { RendererStatus, RendererEngine } from "./rendererStatus";
 
 export { supportsWebGPU };
 
@@ -129,6 +137,7 @@ export interface GpuSubstrateOptions {
      * (if any) that triggered the fall is passed for telemetry.
      */
     onBackendFallback?: (info: { from: "webgpu"; to: "webgl2"; error: unknown }) => void;
+    onStatus?: (status: RendererStatus) => void;
 }
 
 /**
@@ -258,6 +267,8 @@ export function createGpuSubstrate(
     // The live canvas — swapped for a fresh clone on the WebGPU→WebGL2 fall (the WebGPU
     // context-type poison forbids reusing the original for the net; see `freshCanvasForFallback`).
     let liveCanvas = canvas;
+    const emitStatus = (status: RendererStatus): void => options.onStatus?.(status);
+    emitStatus(pendingRenderer(backend));
 
     // Build the WebGL2 net NOW only when WebGPU is not even attempted (no WGSL path /
     // platform absent) — a Baseline WebGPU host never pays the WebGL2-context cost
@@ -302,6 +313,7 @@ export function createGpuSubstrate(
         webgpu?.dispose();
         webgpu = null;
         backend = "webgl2";
+        emitStatus(pendingRenderer("webgl2"));
         // Swap the WebGPU-poisoned canvas for a fresh clone so the WebGL2 net can acquire
         // a context (the canvas one-context-type rule — see `freshCanvasForFallback`).
         liveCanvas = freshCanvasForFallback(liveCanvas);
@@ -309,11 +321,14 @@ export function createGpuSubstrate(
         try {
             webgl2 = buildWebGL2(liveCanvas, options);
             webgl2.arm();
+            emitStatus({ phase: "ready", engine: "webgl2", adapter: describeWebGL2Adapter(webgl2.gl) });
         } catch (netErr) {
             // The host has NEITHER a working WebGPU pipeline NOR a WebGL2 context (a
             // genuinely GL-less env). Surface for telemetry, never spew an uncaught throw.
             webgl2 = null;
+            emitStatus(rendererFailure("webgl2", "WebGL 2 context", netErr));
             options.onInitError?.(netErr);
+            throw netErr;
         }
     }
 
@@ -329,6 +344,7 @@ export function createGpuSubstrate(
                 // no longer throws an uncaught error to the page — D8'); the reject is
                 // caught HERE and routed to the net.
                 await webgpu.armAsync();
+                emitStatus({ phase: "ready", engine: "webgpu", adapter: webgpu.adapterClass });
                 return;
             } catch (err) {
                 if (disposed) return;
@@ -336,12 +352,23 @@ export function createGpuSubstrate(
                 // device-lost-at-birth, validation throw) — fall to the net, silently.
                 // `fallToWebGL2` builds + arms the net (on a fresh canvas) inside its own
                 // guard, so the net is live on return.
-                fallToWebGL2(err);
-                return;
+                if (err instanceof WebGPUInitError && err.kind !== "pipeline-validation") {
+                    fallToWebGL2(err);
+                    return;
+                }
+                emitStatus(rendererFailure("webgpu", webgpu.adapterClass, err));
+                throw err;
             }
         }
         // The WebGL2 net is synchronous — arm it immediately.
-        webgl2?.arm();
+        try {
+            webgl2?.arm();
+            emitStatus({ phase: "ready", engine: "webgl2", adapter: describeWebGL2Adapter(webgl2?.gl ?? null) });
+        } catch (err) {
+            emitStatus(rendererFailure("webgl2", "WebGL 2 context", err));
+            options.onInitError?.(err);
+            throw err;
+        }
     }
 
     function presize(): void {

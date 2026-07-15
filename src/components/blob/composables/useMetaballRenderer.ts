@@ -1,8 +1,10 @@
-import { ref, watch, onUnmounted, type Ref } from "vue";
+import { ref, watch, onUnmounted, readonly, shallowRef, type Ref } from "vue";
 import {
     createGpuSubstrate,
     type BackingSize,
+    type RendererStatus,
 } from "../../../composables/glass/webgpu/useGpuSubstrate";
+import { pendingRenderer } from "../../../composables/glass/webgpu/rendererStatus";
 import { useIntersectionPause } from "../../../composables/motion/useIntersectionPause";
 import { usePointerVelocityField } from "../../../composables/motion/usePointerVelocityField";
 import { resolveBudgetDpr } from "../../aurora/constants/budget";
@@ -82,6 +84,7 @@ export interface UseMetaballRendererReturn {
      * consumer observes it, never writes it.
      */
     settled: Readonly<Ref<boolean>>;
+    readonly rendererStatus: Readonly<Ref<RendererStatus>>;
 }
 
 /**
@@ -187,6 +190,7 @@ export function useMetaballRenderer(
     }
 
     let canvasHandle: ReturnType<typeof createGpuSubstrate> | null = null;
+    const rendererStatus = shallowRef<RendererStatus>(pendingRenderer("webgpu"));
     let paused = false;
 
     // BI.W-BLOB-SEAMS — the public quiescence seam (the T-49 `settled` GAP-L5 owner).
@@ -433,13 +437,14 @@ export function useMetaballRenderer(
                     },
                 };
             },
+            onStatus: (status) => (rendererStatus.value = status),
         });
 
         // The WebGPU path needs the async device-acquire (`armAsync`); the WebGL2
         // fallback's `armAsync` resolves immediately off the synchronous `arm()`, so this
         // one call arms BOTH backends. Fire-and-forget — a device-init failure is
         // surfaced by the substrate's own `onInitError`; the loop simply never arms.
-        void canvasHandle.armAsync();
+        void canvasHandle.armAsync().catch(() => undefined);
     }
 
     watch(
@@ -487,5 +492,6 @@ export function useMetaballRenderer(
         // `.value` but the type forbids writing it (the single writer is
         // `shouldContinue`, the U3 single-signal discipline).
         settled,
+        rendererStatus: readonly(rendererStatus),
     };
 }
