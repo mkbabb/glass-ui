@@ -319,6 +319,35 @@ describe("DataTable interaction semantics", () => {
         await wrapper.setProps({ rows: [rows[1]] });
         expect(rowRef).toHaveBeenCalledWith(null, rows[0], 0);
     });
+
+    it("places grid semantics on the native table without changing the wrapper", () => {
+        const wrapper = mountTable([{ _id: "1", name: "Ada" }], {
+            role: "grid",
+            ariaLabel: "Schools",
+            ariaColCount: 4,
+        });
+        const table = wrapper.find("table");
+
+        expect(table.attributes()).toMatchObject({
+            role: "grid",
+            "aria-label": "Schools",
+            "aria-colcount": "4",
+        });
+        expect(table.element.parentElement?.hasAttribute("role")).toBe(false);
+        expect(wrapper.find("thead tr").attributes("aria-rowindex")).toBe("1");
+    });
+
+    it("keeps an empty grid's placeholder outside the logical row count", () => {
+        const wrapper = mountTable([], {
+            role: "grid",
+            ariaLabel: "Schools",
+            ariaColCount: 1,
+            ariaRowCount: 1,
+        });
+
+        expect(wrapper.find("table").attributes("aria-rowcount")).toBe("1");
+        expect(wrapper.find("tbody tr").attributes("role")).toBe("presentation");
+    });
 });
 
 describe("DataTable row identity", () => {

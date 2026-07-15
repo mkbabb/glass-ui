@@ -54,6 +54,12 @@ export interface DataTableProps<T = any> {
     rowKey?: string;
     /** Optional resolver for stable unique row identities. Takes precedence over rowKey. */
     getRowId?: (row: T) => PropertyKey | null | undefined;
+    /** Opt into grid semantics on the native table projection. */
+    role?: "grid";
+    /** Accessible name applied to the native table projection. */
+    ariaLabel?: string;
+    /** Logical column count applied to the native table projection. */
+    ariaColCount?: number;
     /** Native-table logical row count, including any header row. */
     ariaRowCount?: number;
     /**

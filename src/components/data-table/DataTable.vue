@@ -47,6 +47,9 @@ const props = withDefaults(
         isLoading?: boolean;
         rowKey?: string;
         getRowId?: (row: T) => PropertyKey | null | undefined;
+        role?: "grid";
+        ariaLabel?: string;
+        ariaColCount?: number;
         ariaRowCount?: number;
         getRowAttrs?: DataTableRowAttrs<T>;
         rowRef?: DataTableRowRef<T>;
@@ -375,9 +378,18 @@ function rowBindings(
         </template>
 
         <!-- ── Tabular layout (default + wide container) ─────────────── -->
-        <Table v-else :aria-row-count="ariaRowCount">
+        <Table
+            v-else
+            :role="role"
+            :aria-label="ariaLabel"
+            :aria-col-count="ariaColCount"
+            :aria-row-count="ariaRowCount"
+        >
             <TableHeader>
-                <TableRow class="text-muted-foreground">
+                <TableRow
+                    class="text-muted-foreground"
+                    :aria-rowindex="role === 'grid' ? 1 : undefined"
+                >
                     <TableHead
                         v-for="col in columns"
                         :key="col.key"
@@ -495,7 +507,11 @@ function rowBindings(
                 </template>
 
                 <!-- Empty state -->
-                <TableEmpty v-else :colspan="columns.length + (hasRowActions ? 1 : 0)">
+                <TableEmpty
+                    v-else
+                    :colspan="columns.length + (hasRowActions ? 1 : 0)"
+                    :role="role === 'grid' ? 'presentation' : undefined"
+                >
                     <slot name="empty">No results found</slot>
                 </TableEmpty>
             </TableBody>
