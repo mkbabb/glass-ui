@@ -22,7 +22,7 @@ describe("FuzzySearch highlighting", () => {
         const result: SearchResult = {
             item: malicious,
             score: 1,
-            matchIndices: [],
+            matchIndices: [1, 2, 3],
         };
         const state: FuzzySearchState = {
             query: ref("img"),
@@ -49,13 +49,35 @@ describe("FuzzySearch highlighting", () => {
         // becomes a DOM node.
         expect(label.text()).toContain('<img src=x onerror="alert(1)">Alpha');
         expect(label.element.querySelector("img")).toBeNull();
-        // Match emphasis rides the CSS Custom Highlight API, not a <mark>
-        // splitter — the label carries no element children. (In this env
-        // CSS.highlights is absent, so the highlight no-ops; the text still
-        // renders intact, which is the graceful fallback.)
-        expect(label.find("mark").exists()).toBe(false);
-        expect(label.element.children.length).toBe(0);
+        // Match emphasis is ordinary escaped text markup: `img` paints, while
+        // the hostile angle-bracket text remains inert.
+        expect(label.find("mark").text()).toBe("img");
+        expect(label.element.children.length).toBe(1);
 
+        wrapper.unmount();
+    });
+
+    it("slices match offsets on the matcher UTF-16 index model", async () => {
+        const result = searchIndex(buildIndex([item("astral", "🧪 Alpha")]), "🧪")[0]!;
+        const state: FuzzySearchState = {
+            query: ref("🧪"),
+            results: computed(() => [result]),
+            selectedIndex: ref(0),
+            isOpen: ref(true),
+            isExpanded: ref(false),
+            onKeydown: vi.fn(),
+            selectResult: vi.fn(),
+            toggleExpanded: vi.fn(),
+            close: vi.fn(),
+            open: vi.fn(),
+        };
+
+        const wrapper = mount(FuzzySearch, { props: { state }, attachTo: document.body });
+        await flushPromises();
+
+        const label = wrapper.find(".fuzzy-search-label");
+        expect(label.text()).toBe("🧪 Alpha");
+        expect(label.find("mark").text()).toBe("🧪");
         wrapper.unmount();
     });
 

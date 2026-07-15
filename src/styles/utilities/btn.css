@@ -250,29 +250,6 @@
     );
 }
 
-/* ── Text-highlight paint (CSS Custom Highlight API) ─────────────────────
-   The default `::highlight()` paint for the `useTextHighlight` composable
-   (composables/motion; the `/motion-core` subpath, AX.W37). A named `Highlight`
-   registered in `CSS.highlights`
-   under one of these keys paints its `Range` set without a `<mark>` wrapper.
-   Token-bridged: the search mark reads the canonical pastel-yellow rainbow
-   token at a soft alpha; the equation/variable mark reads `--primary`. Both
-   axes are overridable via the `--text-highlight-*` custom properties. */
-::highlight(glass-search-mark) {
-    background-color: var(
-        --text-highlight-search-bg,
-        color-mix(in srgb, var(--rainbow-pastel-yellow) 55%, transparent)
-    );
-    color: var(--text-highlight-search-fg, inherit);
-}
-::highlight(glass-mark) {
-    background-color: var(
-        --text-highlight-bg,
-        color-mix(in srgb, var(--primary) 18%, transparent)
-    );
-    color: var(--text-highlight-fg, inherit);
-}
-
 /* ── Interactive-button four-state recipe ────────────────────────────────
    `.btn-interactive` carries the canonical "Button-with-spring-hover"
    four-state contract — transition + hover-scale + active-press + disabled-

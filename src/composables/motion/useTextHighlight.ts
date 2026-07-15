@@ -1,8 +1,8 @@
 // Named text highlight via the CSS Custom Highlight API.
 //
 // The platform paints a `Range` set under a named `Highlight` registered in
-// `CSS.highlights`, styled by a `::highlight(<name>)` rule — no DOM mutation,
-// no `<mark>` wrapper splitting the text node. Consumers that paint matched
+// `CSS.highlights`, styled by a caller-owned `::highlight(<name>)` rule — no DOM
+// mutation, no `<mark>` wrapper splitting the text node. Consumers that paint matched
 // substrings (search marks, equation-variable emphasis) hand the composable a
 // set of `Range`s (or a container + query) and the platform repaints in place.
 //
@@ -113,7 +113,8 @@ function substringMatcher(
 /**
  * Drive a named CSS Custom Highlight reactively.
  *
- * @param name registry key — must match a `::highlight(<name>)` style rule.
+ * @param name registry key — must match a caller-owned
+ *   `::highlight(<name>)` style rule. This low-level API does not inject CSS.
  *   Instances sharing a name multiplex: each contributes its own ranges and
  *   the shared paint is their union (last to dispose drops the registry entry).
  *

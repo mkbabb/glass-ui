@@ -411,7 +411,7 @@ async function copyStops(): Promise<void> {
                         >
                             <Check
                                 v-if="copied"
-                                class="size-4 text-[var(--motion-accent)]"
+                                class="size-4 text-(--motion-accent)"
                             />
                             <Copy v-else class="size-4" />
                         </button>

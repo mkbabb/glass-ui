@@ -47,6 +47,14 @@ describe("useTextHighlight", () => {
             expect(result.supported).toBe(true);
             unmount();
         });
+
+        it("leaves paint CSS to the caller", () => {
+            installHighlightApi();
+            const before = document.head.children.length;
+            const { unmount } = mountComposable(() => useTextHighlight("custom"));
+            expect(document.head.children).toHaveLength(before);
+            unmount();
+        });
     });
 
     describe("set / clear (supported)", () => {

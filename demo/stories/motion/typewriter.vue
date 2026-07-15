@@ -63,7 +63,7 @@ function restart(): void {
         >
             <p class="font-display text-display-3 leading-tight text-foreground">
                 Built on
-                <span class="text-[var(--motion-accent)]">
+                <span class="text-(--motion-accent)">
                     <TypewriterText
                         :key="remountKey"
                         :words="phrases"

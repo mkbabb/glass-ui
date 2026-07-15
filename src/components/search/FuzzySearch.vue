@@ -5,8 +5,6 @@ import { Popover, PopoverContent, PopoverTrigger } from "../popover";
 import { Dialog, DialogContent } from "../dialog";
 import { Button } from "../button";
 import { Badge } from "../badge";
-import { fuzzyMatch } from "./composables/fuzzySearchIndex";
-import { useTextHighlight } from "../../composables/motion/useTextHighlight";
 import { cn } from "../_shared/class-names";
 import type { Surface } from "../_shared/useSurfaceAxis";
 import {
@@ -76,64 +74,31 @@ watch(() => props.state.isExpanded.value, (expanded) => {
     if (expanded) nextTick(() => modalInputRef.value?.focus());
 });
 
-// Repaint the match highlight whenever the query/result set/open-state changes,
-// against whichever list is currently mounted (dialog when expanded, else popover).
-// When both surfaces are closed there's no list to paint, so the highlight clears.
-watch(
-    [
-        () => props.state.query.value,
-        () => props.state.results.value,
-        () => props.state.isExpanded.value,
-        inlineOpen,
-    ],
-    () => {
-        const container = props.state.isExpanded.value
-            ? modalListRef.value
-            : inlineOpen.value
-                ? inlineListRef.value
-                : null;
-        repaintHighlight(container);
-    },
-    { flush: "post" },
-);
-
 function focus() { inputRef.value?.focus(); }
 defineExpose({ focus });
 
 function resultLabel(r: SearchResult) { return r.item.label || r.item.text.slice(0, 120); }
 function getTypeLabel(r: SearchResult) { return props.typeLabel ? props.typeLabel(r.item) : (r.item.type ?? ""); }
 
-// Match emphasis rides the CSS Custom Highlight API (composables/dom) rather
-// than a <mark> splitter — the matched chars paint via ::highlight(glass-search-mark)
-// over the rendered label text with no DOM mutation. The popover and dialog each
-// own a container ref; after a query/results change we re-scan the visible list's
-// `.fuzzy-search-label` text nodes and set the range union. Where the API is
-// unsupported the composable no-ops and labels render as plain text.
-const highlight = useTextHighlight("glass-search-mark");
-
-// Per-label fuzzy matcher — fuzzyMatch's char indices over the label string
-// are exactly the text-node spans, so each matched index becomes a 1-char range.
-function fuzzySpans(text: string, query: string) {
-    const tokens = query.toLowerCase().trim().split(/\s+/).filter(Boolean);
-    if (tokens.length === 0) return [];
-    const textLc = text.toLowerCase();
-    const set = new Set<number>();
-    for (const token of tokens) {
-        const m = fuzzyMatch(token, textLc);
-        if (m) for (const idx of m.matches) set.add(idx);
+// The index already reports UTF-16 offsets into the exact label string. Slice
+// on that same index model so astral graphemes remain intact when the matcher
+// returns their adjacent surrogate offsets; never reinterpret offsets through
+// code-point iteration.
+function labelParts(r: SearchResult) {
+    const text = resultLabel(r);
+    const matches = new Set(r.matchIndices);
+    const parts: Array<{ text: string; matched: boolean }> = [];
+    let start = 0;
+    let matched = matches.has(0);
+    for (let i = 1; i <= text.length; i++) {
+        const next = i < text.length && matches.has(i);
+        if (i === text.length || next !== matched) {
+            parts.push({ text: text.slice(start, i), matched });
+            start = i;
+            matched = next;
+        }
     }
-    const spans: Array<{ start: number; end: number }> = [];
-    for (const idx of [...set].sort((a, b) => a - b)) {
-        const last = spans[spans.length - 1];
-        if (last && last.end === idx) last.end = idx + 1;
-        else spans.push({ start: idx, end: idx + 1 });
-    }
-    return spans;
-}
-
-function repaintHighlight(container: HTMLElement | null) {
-    if (!container) { highlight.clear(); return; }
-    nextTick(() => highlight.setFromMatches(container, props.state.query.value, fuzzySpans));
+    return parts;
 }
 </script>
 
@@ -177,7 +142,12 @@ function repaintHighlight(container: HTMLElement | null) {
                         :data-highlighted="i === state.selectedIndex.value ? '' : undefined"
                         @click="state.selectResult(r)" @mouseenter="state.selectedIndex.value = i">
                         <Badge v-if="getTypeLabel(r)" variant="secondary" class="shrink-0 text-(length:--search-result-text-secondary) font-bold uppercase tracking-wider">{{ getTypeLabel(r) }}</Badge>
-                        <span class="fuzzy-search-label flex-1 min-w-0 truncate text-foreground/85">{{ resultLabel(r) }}</span>
+                        <span class="fuzzy-search-label flex-1 min-w-0 truncate text-foreground/85">
+                            <template v-for="(part, j) in labelParts(r)" :key="j">
+                                <mark v-if="part.matched" class="fuzzy-search-mark">{{ part.text }}</mark>
+                                <template v-else>{{ part.text }}</template>
+                            </template>
+                        </span>
                     </button>
                 </div>
             </PopoverContent>
@@ -220,7 +190,12 @@ function repaintHighlight(container: HTMLElement | null) {
                         :data-highlighted="i === state.selectedIndex.value ? '' : undefined"
                         @click="state.selectResult(r)" @mouseenter="state.selectedIndex.value = i">
                         <Badge v-if="getTypeLabel(r)" variant="secondary" class="shrink-0 text-(length:--search-result-text-secondary) font-bold uppercase tracking-wider">{{ getTypeLabel(r) }}</Badge>
-                        <span class="fuzzy-search-label flex-1 min-w-0 truncate text-foreground/85">{{ resultLabel(r) }}</span>
+                        <span class="fuzzy-search-label flex-1 min-w-0 truncate text-foreground/85">
+                            <template v-for="(part, j) in labelParts(r)" :key="j">
+                                <mark v-if="part.matched" class="fuzzy-search-mark">{{ part.text }}</mark>
+                                <template v-else>{{ part.text }}</template>
+                            </template>
+                        </span>
                     </button>
                 </div>
                 <div v-else class="px-4 py-8 text-center text-muted-foreground/60">No results</div>
@@ -233,3 +208,10 @@ function repaintHighlight(container: HTMLElement | null) {
         </Dialog>
     </div>
 </template>
+
+<style scoped>
+.fuzzy-search-mark {
+    background-color: var(--text-highlight-search-bg, color-mix(in srgb, var(--rainbow-pastel-yellow) 55%, transparent));
+    color: var(--text-highlight-search-fg, inherit);
+}
+</style>

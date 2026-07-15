@@ -1,7 +1,7 @@
 // AX.W37 — proof:text-highlight.
 //
 // VERIFIES (does not re-ship — §4 note 12) the `useTextHighlight` re-home onto
-// `/motion-core` + the already-landed FuzzySearch `CSS.highlights` retirement:
+// `/motion-core` as a low-level, caller-styled CSS Highlights API:
 //
 //   HOME — `useTextHighlight` is reachable from the `/motion-core` barrel
 //     (`src/composables/motion/core`), NOT `/dom`. The clean MOVE (no `/dom`
@@ -12,9 +12,8 @@
 //   FALLBACK — when `CSS.highlights` is absent the composable no-ops
 //     befitting-silent: every op is safe to call and the container is untouched.
 //
-// The full FuzzySearch mount + no-<mark> render is covered by
-// tests/components/search/search-contracts.test.ts (the retirement landed
-// at HEAD); this gate adds the publication-HOME assertion the re-home introduces.
+// FuzzySearch owns its match paint through ordinary escaped `<mark>` markup;
+// this gate covers only the independently published low-level API.
 
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 // The HOME assertion: import via the `/motion-core` barrel, NOT `/dom`. A stale

@@ -155,7 +155,7 @@ const collapsePct = computed(() => `${Math.round(collapseT.value * 100)}%`);
                             :key="i"
                             class="text-small fira-code text-foreground"
                         >
-                            <span class="text-[var(--motion-accent)]">{{ e.id }}</span>
+                            <span class="text-(--motion-accent)">{{ e.id }}</span>
                             {{ e.dir }} @ {{ e.pos }}px
                         </li>
                     </ul>

@@ -88,7 +88,6 @@ declarations) lives in the file that owns its COHESION DOMAIN. The home map:
 |---|---|---|
 | typography | `src/styles/typography.css` | the golden-ratio type scale, semantic type classes, the engraved/depth text utilities |
 | interactive / button | `src/styles/utilities/btn.css` | `scale-on-hover`, `twin-line-divider`, `transition-control/collapse`, `sheet-animate`, `rainbow-vivid/pastel`, `btn-interactive`, `table-cell/head` |
-| popover / entry animation | `src/styles/utilities/animate.css` | the `@media`-bracketed entry/PRM-carve grammar (the data-state entry recipes the reka overlays compose; the spatial bloom is `.glass-reveal` in `glass/reveal.css`) |
 | a11y / capability override | `src/styles/utilities/a11y-overrides.css` | `touch-hit-area` + the `@media` overrides |
 | glass surface | `src/styles/glass/*.css` | `glass-progress-rail` (the deck-position rail @utility); the `[data-surface="glass\|veil\|opaque"]` shared surface-decoration axis + the `.paper-ink-mark` MARK register (`glass/surface-axis.css` — see below); the `--control-surface-{bg,border,blur,bg-hover}` form-family REST tier (`glass/surfaces.css`) |
 | feedback tone | `src/styles/feedback-tone.css` | `.feedback-tone` + `.feedback-tone-{success,warning,info,destructive}` (the ONE shared tinted-glass tone register; cascade rung 7a after cards.css) |
