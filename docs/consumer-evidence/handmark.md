@@ -2,8 +2,8 @@
 
 ## Artefact path
 
-`src/components/custom/handmark/` (the published subpath `@mkbabb/glass-ui/handmark`).
-`HandMark` (alias `InkMark`) is the platform's ONE hand voice — a hand-drawn mark
+`src/components/handmark/` (the published subpath `@mkbabb/glass-ui/handmark`).
+`HandMark` is the platform's ONE hand voice — a hand-drawn mark
 (underline · strike · highlight band · circle · box · bracket · arbitrary path) in any
 medium, deterministic per `seed`, optionally animated; the slotted word stays REAL
 selectable text and the mark is an `aria-hidden` SVG overlay.
@@ -74,7 +74,7 @@ public surface). The next prune re-runs the slides re-grep at that date.
 
 ## Cross-references
 
-- `src/components/custom/handmark/README.md` (the four-layer hybrid + the brushes/shapes).
+- `src/components/handmark/README.md` (the four-layer hybrid + the brushes/shapes).
 - `demo/stories/motion/handmark.vue` (the showcase story — own-route, NOT a counted consumer).
 - `docs/consumer-evidence/underline.md` (the retired `GlassUnderline` predecessor — the
   DEC-8 fold superseded onto this doc).

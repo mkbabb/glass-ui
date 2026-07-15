@@ -1,11 +1,11 @@
 # handmark — the hand-voice mark family
 
-`@mkbabb/glass-ui/handmark` — the platform's ONE hand voice. `HandMark` (alias
-`InkMark`) lays a hand-drawn mark — an underline, a circle around a datum, a strike,
-a highlight band, a box, a bracket, or an arbitrary path — in any medium (pen
-default · pencil · crayon · marker · highlighter · ring · boil), any CSS color,
-deterministic per `seed`, optionally animated. The slotted word stays REAL selectable
-text; the mark is an `aria-hidden` SVG overlay.
+`@mkbabb/glass-ui/handmark` — the platform's ONE hand voice. `HandMark` lays a
+hand-drawn mark — an underline, a circle around a datum, a strike, a highlight band,
+a box, a bracket, or an arbitrary path — in any medium (pen default · pencil · crayon
+· marker · highlighter · ring · boil), any CSS color, deterministic per `seed`,
+optionally animated. The slotted word stays REAL selectable text and the mark is an
+`aria-hidden` SVG overlay.
 
 ```vue
 <HandMark>who pays in</HandMark>                          <!-- pen underline -->

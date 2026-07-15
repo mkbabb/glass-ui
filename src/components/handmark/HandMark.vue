@@ -14,7 +14,6 @@
     L5 SURFACE   this SFC — anchor/measure, mount the namespaced filter, a11y
 
   The word stays REAL selectable text; the mark is an aria-hidden SVG overlay.
-  `InkMark` is the prose alias (same impl, two names — index.ts).
 
   Two usage modes (SPEC §6.1):
     - text mode (default): wraps a slotted word, lays the mark under/over/behind it.

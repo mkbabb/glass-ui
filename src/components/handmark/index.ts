@@ -1,11 +1,9 @@
 /**
  * handmark — the ./handmark barrel (SPEC §11).
  * ─────────────────────────────────────────────────────────────────────────────
- * `HandMark` is the generic export; `InkMark` is the prose alias the atlas/slides
- * import so call sites read as prose (one implementation, zero divergence). The
- * pure L1–L3 functions ship too — they are framework-free, directly usable in
- * slides decks, D3 charts (call `shapeGeom`/`ellipsePoints` to ink a path), even
- * canvas.
+ * `HandMark` is the sole public component name. The pure L1–L3 functions ship
+ * too — they are framework-free, directly usable in slides decks, D3 charts
+ * (call `shapeGeom`/`ellipsePoints` to ink a path), even canvas.
  *
  * The DEFAULT is `pen` (clean ink, grain:0 ⇒ no filter, zero extra dep). The
  * `@mkbabb/pencil-boil` geometry + `perfect-freehand` body are OPTIONAL PEERS;
@@ -17,7 +15,7 @@
  * editorial draw-on underline is `<HandMark shape="underline" animation="draw-on">`;
  * the natural pencil-boil morphology is the `boil` brush.
  */
-export { default as HandMark, default as InkMark } from "./HandMark.vue";
+export { default as HandMark } from "./HandMark.vue";
 
 // ── the flat Brush model (pure data + types; SPEC §2) ──
 export {

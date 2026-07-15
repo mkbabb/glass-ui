@@ -14,6 +14,7 @@ import * as DrawerSurface from "@glass/components/drawer";
 import * as DropdownMenuSurface from "@glass/components/dropdown-menu";
 import * as ExpandableContainerSurface from "@glass/components/expandable-container";
 import * as Forms from "@glass/forms";
+import * as HandMarkSurface from "@glass/components/handmark";
 import * as IconTooltipSurface from "@glass/components/icon-tooltip";
 import * as InfiniteScrollSurface from "@glass/components/infinite-scroll";
 import * as Keyboard from "@glass/composables/keyboard";
@@ -145,6 +146,7 @@ const subpathRuntimeExports = [
     { subpath: "status-dot", surface: StatusDotSurface, name: "StatusDot" },
     { subpath: "pulse", surface: PulseSurface, name: "Pulse" },
     { subpath: "paper-backdrop", surface: PaperBackdropSurface, name: "PaperBackdrop" },
+    { subpath: "handmark", surface: HandMarkSurface, name: "HandMark" },
     // BI.W-CHIP-FOLD — ToggleChip + SelectableChip FOLDED onto the ONE <Chip>
     // (shape × tone; clean break, no alias). Chip ships subpath-ONLY (/chip, OFF the
     // value.js-free root barrel — the value.js-bearing ink solve rides the dynamic
@@ -227,6 +229,7 @@ const retiredSubpathRuntimeMembers = [
     { subpath: "progress", surface: ProgressSurface, name: "ProgressGradient" },
     { subpath: "progress", surface: ProgressSurface, name: "ProgressLiquid" },
     { subpath: "progress", surface: ProgressSurface, name: "ProgressSectioned" },
+    { subpath: "handmark", surface: HandMarkSurface, name: "InkMark" },
     { subpath: "select", surface: SelectSurface, name: "SelectScrollUpButton" },
     { subpath: "select", surface: SelectSurface, name: "SelectScrollDownButton" },
 ] as const;
