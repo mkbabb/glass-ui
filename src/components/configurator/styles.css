@@ -1,0 +1,360 @@
+/* Configurator component hierarchy and gallery styles.
+ *
+ * The Configurator is the controls chassis the blob + aurora studios compose;
+ * this partial lands the three NAMED hierarchy registers ONCE so every studio
+ * INHERITS a vocabulary (section weight / label register / control rhythm)
+ * rather than a flat undifferentiated stack. The token definitions live in
+ * tokens/offsets-sizing.css (`--configurator-section-*`, `--configurator-preset-row-*`);
+ * this file is where the classes that CONSUME them paint.
+ *
+ * Cascade rung: imported AFTER utilities.css so the `.configurator-section-label`
+ * size/weight overrides the prior flat `text-small font-semibold` register, and
+ * the `.configurator-presets` block-padding override wins over the `py-2`
+ * Tailwind utility on the preset-row wrapper.
+ */
+
+/* BI.W-CONFIG-IN-SHEET — the ONE section-vs-chrome inline padding anchor + the
+ * inter-section card gap. `--configurator-pad-inline` is the SINGLE inline anchor
+ * BOTH the sheet chrome (SheetHeader/footer) AND the section rows read, so the
+ * section content aligns with the chrome content (UF-A5/GEO-9: the section body no
+ * longer indents 12px while the chrome sits at 24px). Inheriting on :root so the
+ * gear sheet's `px-(--configurator-pad-inline)` chrome utilities resolve it; a
+ * consumer retunes the whole chassis inline rhythm from one override. */
+:root {
+    --configurator-pad-inline: 1rem; /* 16px — the unified section+chrome inline anchor */
+    --configurator-section-gap: 0.5rem; /* 8px — the inter-section card breath */
+}
+
+/* 1. Section register — the <ConfiguratorLayer> header label reads as a SECTION
+ *    (√φ subheading, 20.4px / 600), NOT a row. Replaces the flat
+ *    `text-small font-semibold text-foreground` span (D6-3: "section labels read
+ *    flat + undifferentiated"). The two tokens are retunable on the cascade so a
+ *    host can scale the whole section register from one override. */
+.configurator-section-label {
+    font-family: var(--font-text);
+    font-size: var(--configurator-section-size);
+    line-height: var(--type-leading-body);
+    font-weight: var(--configurator-section-weight);
+    letter-spacing: var(--type-tracking-tight);
+    color: var(--foreground);
+}
+
+/* 2. Preset-row PRIMARY-AFFORDANCE lift — the preset picker is the primary
+ *    interaction, so its row breathes ABOVE a body ConfiguratorRow. The token
+ *    drives the SPATIAL rhythm (block-padding + the chip gap), NOT a font-weight
+ *    (D6-3: "the preset row is tight"). `.configurator-presets` ships
+ *    `px-3 py-2` from Tailwind; this rule lifts the block padding to the
+ *    `--configurator-preset-row-weight` floor (10px > the 8px body py) and sets
+ *    the inner chip-list gap to `--configurator-preset-row-gap`. */
+.configurator-presets {
+    padding-block: var(--configurator-preset-row-weight);
+}
+/* The gallery track gap — the toggle-button group (BD.W-CONFIG-GALLERY-DOCK
+ * retired the `role="tablist"`/`role="tab"` ARIA-contradiction for the
+ * toggle-button `role="group"` + `aria-pressed` pattern). The token drives the
+ * inter-tile rhythm. */
+.configurator-presets .configurator-gallery-track,
+.configurator-presets [role="group"] {
+    gap: var(--configurator-preset-row-gap);
+}
+
+/* 3. The DIVIDER register — dark-adaptive (BA.W-CONFIG-CHASSIS.1, CFG-4). The
+ *    section + inter-row dividers were inline `border-border/40` / `/30` Tailwind
+ *    alphas that VANISHED over the W-DARK-MATERIAL dark glass-floating plate
+ *    ("the sections run together"). They now read the ONE dark-adaptive
+ *    --configurator-divider{,-section} token (minted in tokens/offsets-sizing.css
+ *    with a light-dark() arm + the dark-arm.css `.dark` floor) so a visible
+ *    luminance step survives BOTH plates. These rules paint only the COLOR; the
+ *    `border-b`/`border-t` WIDTH stays on the Tailwind utilities in the SFCs.
+ *
+ *    Cascade: configurator.css imports after utilities.css, and these element-
+ *    targeting selectors override the Tailwind `border-color` default the dropped
+ *    `border-border/N` utilities used to set (the utilities are GONE from the SFC
+ *    class lists, so there is no competing utility to lose to). The faint section
+ *    tonal step (--configurator-section-tint, default transparent on light) reads
+ *    behind a <ConfiguratorLayer> so a section reads as a section without a second
+ *    heading rung. */
+.configurator-layer {
+    border-color: var(--configurator-divider-section);
+    background-color: var(--configurator-section-tint);
+    /* BI.W-CONFIG-IN-SHEET (Law 1 — the concentric-radius RELAY reader; ruling 11,
+     * sites #1 + #3). A multi-row section wears a CARD radius, never a flush-square
+     * hairline block (UF-A4 / Law 2). The section derives its own corner concentric
+     * with its PARENT ctx — the <Configurator> root (site #1, publishes
+     * --radius-ctx=--radius-panel) OR the gear Sheet (site #3, W-SHEET-RADIUS
+     * publishes --radius-ctx=--radius-dialog) — across the parent's inner pad:
+     *   border-radius = max(floor, ctx − inset)
+     * so the inner corner stays concentric with the outer and never rounds below the
+     * 4px floor. This SUPERSEDES the prior "no per-section radius / flush border-b"
+     * contract (ConfiguratorLayer.vue) — a clean break: the section is now a full
+     * (all-side) bordered card, not a bottom-hairline-divided flat block. NO
+     * `overflow: hidden` on the card: the section-header trigger's OUTSET `.focus-ring`
+     * (box-shadow) must NOT be clipped by the card box (a keyboard-a11y regression), and
+     * at the concentric card radius the header hover-fill's rounded-corner poke is
+     * sub-perceptual — the rounded border + section tint carry the card read. */
+    border-radius: max(
+        var(--radius-floor),
+        calc(var(--radius-ctx) - var(--radius-inset))
+    );
+}
+/* The inter-section card breath — a gap between stacked section cards (replacing the
+ * retired flush `border-b last:border-b-0` divider). Adjacent-sibling so only the
+ * INTER-section seams get the gap; the first card stays flush to its container top. */
+.configurator-layer + .configurator-layer {
+    margin-block-start: var(--configurator-section-gap);
+}
+/* The ONE inline-padding anchor (BI.W-CONFIG-IN-SHEET) — the section header trigger
+ * AND the section body read var(--configurator-pad-inline), the SAME anchor the sheet
+ * chrome reads, so the section content aligns with the chrome content (UF-A5/GEO-9).
+ * The section SFC drops its raw `px-3` (12px) literal; the vertical `py-2` stays. */
+.configurator-layer-trigger {
+    padding-inline: var(--configurator-pad-inline);
+}
+.configurator-layer-body {
+    padding-inline: var(--configurator-pad-inline);
+}
+.configurator-layer-body[data-dividers] > * + * {
+    border-color: var(--configurator-divider);
+}
+
+/* The Configurator.vue chrome dividers (the aside top rule, the preset-row +
+ * footer separators) read the inter-row divider token — the SAME dark-adaptive
+ * register, so the whole instrument's hairline grammar lifts in lockstep. The
+ * SFC drops the inline `border-border/40` from these elements; this rule paints
+ * the color. */
+.configurator-aside,
+.configurator-presets,
+.configurator-footer {
+    border-color: var(--configurator-divider);
+}
+
+/* 4. The DESKTOP TWO-COLUMN LAYOUT — controls on the RIGHT (BC.W-CONFIG-RIGHT).
+ *
+ * The configurator's own desktop grid was the next victim of the BA.W-EMISSION
+ * self-emission class (CLAUDE.md): the SFC carried the structural layout as a
+ * `lg:grid-cols-[minmax(0,1fr)_minmax(var(--configurator-aside-min,280px),var(--configurator-aside-max,360px))]`
+ * arbitrary utility — a `lg:` arbitrary bracket with NESTED `var()` + commas +
+ * `minmax()` that dies in a consumer's content-scan (the same failure that killed
+ * the Select collision-bound). So every studio rendered SINGLE-column (controls
+ * stacked BELOW the stage) on desktop: `getComputedStyle(cfg).gridTemplateColumns`
+ * read ONE `1131px` track at 1280px width, the aside below the stage, never right.
+ *
+ * The fix is the BA.W-EMISSION discipline: the structural layout lives in SHIPPED
+ * CSS as a precompiled rule scoped to `[data-slot="configurator"]`, NEVER
+ * load-bearing on a content-scan reach (the SAME mechanism the Select bound got in
+ * select.css). Below `lg` the base `grid grid-cols-1` + the mobile row template
+ * (emitted fine — a plain utility) keeps the single-column stack: stage above,
+ * controls below (a narrow viewport has no room for side-by-side). At `lg`+ this
+ * rule sets the two-column geometry off the SAME `--configurator-aside-{min,max}`
+ * token band (default 280px/360px, retunable via the `asideWidth` prop) the dead
+ * utility read — the token contract is byte-identical, only the MECHANISM moves
+ * onto shipped CSS. The explicit mobile rows reset to `none` so one auto row
+ * stretches to the taller column. */
+/* The MOBILE / base placement of the three section-level children (the gallery
+ * moved OUT of the aside to a grid sibling — BD.W-CONFIG-GALLERY-DOCK). Single
+ * column, three rows: gallery → stage → aside. The base `grid-template-rows`
+ * (`auto minmax(stage-min,auto) 1fr`) ships from the SFC; these rules pin each
+ * child to its row so the source order (gallery, stage, aside) reads correctly.
+ * When no gallery renders the `auto` row collapses to 0 (an empty track). */
+[data-slot="configurator"] > [data-gallery-dock] {
+    grid-row: 1;
+    grid-column: 1;
+}
+[data-slot="configurator"] > .configurator-stage {
+    grid-row: 2;
+    grid-column: 1;
+}
+[data-slot="configurator"] > .configurator-aside {
+    grid-row: 3;
+    grid-column: 1;
+}
+
+@media (min-width: 1024px) {
+    /* The DESKTOP TWO-COLUMN geometry. Two columns (stage 1fr | aside band) and
+     * two rows: the gallery row (auto) over the body row (1fr). The placement of
+     * the gallery dock is the ONLY thing the `data-gallery` axis swaps. */
+    [data-slot="configurator"] {
+        grid-template-columns:
+            minmax(0, 1fr)
+            minmax(
+                var(--configurator-aside-min, 280px),
+                var(--configurator-aside-max, 360px)
+            );
+        grid-template-rows: auto minmax(0, 1fr);
+    }
+
+    /* data-gallery="aside" (the default, inspector idiom) — the gallery sits in
+     * the ASIDE column, row 1, above the controls; the stage spans BOTH rows on
+     * the left. Byte-equivalent to the legacy "preset row inside the aside top". */
+    [data-slot="configurator"][data-gallery="aside"] > [data-gallery-dock] {
+        grid-row: 1;
+        grid-column: 2;
+    }
+    [data-slot="configurator"][data-gallery="aside"] > .configurator-stage {
+        grid-row: 1 / span 2;
+        grid-column: 1;
+    }
+    [data-slot="configurator"][data-gallery="aside"] > .configurator-aside {
+        grid-row: 2;
+        grid-column: 2;
+    }
+
+    /* data-gallery="top" (the §2.1 reflow) — the gallery is a LARGE full-width
+     * dock spanning BOTH columns up-top; the stage (col 1) + controls (col 2)
+     * reclaim the full height in row 2. The gallery is now ~studio-width, not the
+     * 360px gutter — ~5 φ-tall tiles visible, horizontally scrollable. */
+    [data-slot="configurator"][data-gallery="top"] > [data-gallery-dock] {
+        grid-row: 1;
+        grid-column: 1 / span 2;
+    }
+    [data-slot="configurator"][data-gallery="top"] > .configurator-stage {
+        grid-row: 2;
+        grid-column: 1;
+    }
+    [data-slot="configurator"][data-gallery="top"] > .configurator-aside {
+        grid-row: 2;
+        grid-column: 2;
+    }
+}
+
+/* The gallery-dock chrome divider — the hairline under the up-top dock / the
+ * left edge of the aside-placed dock. A dark-adaptive border off the same token
+ * the rest of the instrument reads, so it survives both glass plates. */
+[data-slot="configurator"] > [data-gallery-dock] {
+    border-color: var(--configurator-divider);
+}
+[data-slot="configurator"][data-gallery="aside"] > [data-gallery-dock] {
+    border-bottom-width: 1px;
+}
+@media (min-width: 1024px) {
+    /* The up-top dock carries a bottom hairline; the aside-placed dock carries it
+     * too (above the controls). */
+    [data-slot="configurator"][data-gallery="top"] > [data-gallery-dock] {
+        border-bottom-width: 1px;
+    }
+}
+
+/* ── The WARM-GLASS gallery tiles + the device-free field-well ────────────────
+ * BD.W-CONFIG-GALLERY-DOCK §5/§B1. The tile is a `.glass-capsule` warm-glass cel
+ * (composed in the SFC class list) — the §3 colourful field reads THROUGH, never
+ * a flat opaque bg-card scrim. These rules add the GEOMETRY the capsule register
+ * doesn't carry: the φ-tall card shape, the rounded field-well, the active ring,
+ * the loading shimmer. No new material is minted — the transmissive composite is
+ * the shared `.glass-capsule`; the cartoon cast is the shared `.cartoon-cast`. */
+
+/* The big field-well tile (the PresetPickerRow / baked-thumbnail form). A φ-tall
+ * card: a 16:10 field-well crowned by a label band. The capsule register paints
+ * the warm-glass body; this rule sets the card radius + the column flex so the
+ * well meets the rounded crown with zero bg leak. */
+.configurator-preset-tile {
+    inline-size: clamp(160px, 22vw, 232px);
+    border-radius: var(--radius-card);
+    /* The capsule fill is a warm-glass PILL by default (--radius-pill); a TILE is
+     * a card, so re-point the geometry to the card radius here. The transmissive
+     * fill + rim + cast all carry from .glass-capsule. */
+}
+
+/* BG.W-PRESET-RIBBON-TOP (F7.6) — the LARGE full-width TOP RIBBON tile floor. When
+ * the gallery is pinned up-top (data-gallery="top") the presets span the whole studio
+ * width, not the 360px aside gutter, so the tiles read one rung LARGER than the aside
+ * form — the "LARGE ribbon" the aurora studio wants. Still the SAME
+ * .configurator-preset-tile card (no new material, the warm-glass capsule + cast carry
+ * from the base rule); only the inline-size floor lifts, and it is scoped to the top
+ * placement so the aside inspector idiom stays byte-unchanged. The clamp MIN (200px)
+ * clears the ≥72px LARGE-ribbon floor with headroom; the FadingScroll port (the
+ * .configurator-gallery-track) still clips the horizontal overflow. */
+[data-slot="configurator"][data-gallery="top"] .configurator-preset-tile {
+    inline-size: clamp(200px, 20vw, 288px);
+}
+
+/* The §3 field-well — the device-free `auroraFallbackGround` background-image is
+ * set inline per tile; this rule sets the cover sizing + the rounded inner crown.
+ * The well is the COLOURFUL field; the warm-glass capsule frames it. */
+.configurator-preset-well {
+    background-size: cover;
+    background-position: center;
+    /* a smooth bilinear upscale of the tiny raster (the per-quadrant mean
+     * luminance is preserved — the certify band reads true). */
+    image-rendering: auto;
+}
+
+/* The loading state — a warm shimmer until the field build lands (the field
+ * build is synchronous + cheap, so this is a sub-frame flicker at most). */
+.configurator-preset-well.is-loading {
+    background-image: linear-gradient(
+        100deg,
+        color-mix(in oklab, var(--card) 84%, transparent) 30%,
+        color-mix(in oklab, var(--foreground) 8%, var(--card)) 50%,
+        color-mix(in oklab, var(--card) 84%, transparent) 70%
+    );
+    background-size: 200% 100%;
+    animation: configurator-preset-shimmer 1.2s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+    .configurator-preset-well.is-loading {
+        animation: none;
+    }
+}
+@keyframes configurator-preset-shimmer {
+    from {
+        background-position: 200% 0;
+    }
+    to {
+        background-position: -200% 0;
+    }
+}
+
+/* The active tile ring — a 2px foreground-keyed inset crown over the warm-glass
+ * cel (an inset ring never clips on the scroll axis, the PresetPickerRow note).
+ * Composes with the capsule's own rim; the cast deepens to `-lg` in the SFC. */
+.configurator-preset-tile.is-active {
+    box-shadow:
+        /* BG.W-DESHADCN — the active-tile crown reads the renamed house
+           `--focus-ring-color` (off the shadcn `--ring`; value unchanged). */
+        inset 0 0 0 2px var(--focus-ring-color),
+        var(--shadow-cartoon-lg);
+}
+
+/* The compact CHIP form (the default fallback gallery — text-only preset pills).
+ * The capsule register paints the warm-glass body; this rule restores the pill
+ * radius the capsule already ships, and the active chip reads a selected fill via
+ * the `--glass-capsule-fill` override hook (no fork). */
+.configurator-preset-chip {
+    border-radius: var(--radius-pill);
+}
+.configurator-preset-chip.is-active {
+    /* the selected rung — re-point the capsule fill toward the quiet glass-tint
+     * selected register via the documented override hook (NO new composite). */
+    --glass-capsule-fill: var(--glass-bg-quiet);
+}
+
+/* 5. The SIDE FLIP — a data-attr, default RIGHT (BC.W-CONFIG-RIGHT).
+ *
+ * The aside side moves off the dead `lg:col-start-*` arbitrary utility (gated
+ * behind the same silent-JIT-failure class) onto a `data-aside-side` attr the SFC
+ * binds. `right` (the default) is the NATURAL source order — stage in column 1,
+ * aside in column 2 — so it needs NO override (the bare desktop rule above already
+ * places them left→right). `left` is the reversible taste-level flip: it swaps the
+ * grid-COLUMN targets so the aside paints on the LEFT, while the DOM/tab order
+ * stays stage→aside (the side is grid-cell PLACEMENT + border-side only, never an
+ * `order:`/`row-reverse` that would desync the visual order from the DOM reading
+ * order — WCAG 1.3.2/2.4.3 inviolate, the AM.W0 contract). Below `lg` (single
+ * column) neither side has meaning. */
+@media (min-width: 1024px) {
+    /* The flip swaps the two BODY columns (stage ↔ aside) while DOM/tab order stays
+     * gallery→stage→aside. The selectors carry `>`-child specificity to match the
+     * `data-gallery` placement rules above (which also use `>`); a bare descendant
+     * selector would lose the cascade to those and the flip would no-op. The aside
+     * keeps its body row (row 2); only the column target moves. The aside-placed
+     * gallery dock follows the aside to column 1. */
+    [data-slot="configurator"][data-aside-side="left"] > .configurator-stage {
+        grid-column: 2;
+    }
+    [data-slot="configurator"][data-aside-side="left"] > .configurator-aside {
+        grid-column: 1;
+    }
+    [data-slot="configurator"][data-aside-side="left"][data-gallery="aside"]
+        > [data-gallery-dock] {
+        grid-column: 1;
+    }
+}

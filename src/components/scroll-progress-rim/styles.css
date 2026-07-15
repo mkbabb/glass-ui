@@ -1,0 +1,88 @@
+/* ScrollProgressRim component styles.
+ * Radius-following progress paint: a border-box fill with its padding box cut
+   away. The rim is an overlay, so it never changes its host's layout. */
+.scroll-progress-rim {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--scroll-progress-rim-radius, inherit);
+    pointer-events: none;
+}
+
+.scroll-progress-rim__track {
+    position: absolute;
+    inset: 0;
+    border: var(--scroll-progress-rim-width, 4px) solid transparent;
+    border-radius: inherit;
+    background: conic-gradient(
+        from 0deg,
+        var(--scroll-progress-rim-spectrum, var(--section-color-7)),
+        transparent var(--scroll-progress-rim-fill, 0%),
+        transparent 100%
+    );
+    -webkit-mask:
+        linear-gradient(#fff 0 0) padding-box,
+        linear-gradient(#fff 0 0) border-box;
+    -webkit-mask-composite: xor;
+    mask:
+        linear-gradient(#fff 0 0) padding-box,
+        linear-gradient(#fff 0 0) border-box;
+    mask-composite: exclude;
+}
+
+.scroll-progress-rim[data-coverage="bottom-edge"] .scroll-progress-rim__track {
+    background: linear-gradient(
+        to right,
+        var(--scroll-progress-rim-spectrum, var(--section-color-7)),
+        transparent var(--scroll-progress-rim-fill, 0%),
+        transparent 100%
+    );
+    -webkit-mask:
+        linear-gradient(
+            to top,
+            #fff 0,
+            #fff var(--scroll-progress-rim-width, 4px),
+            transparent var(--scroll-progress-rim-width, 4px)
+        ),
+        linear-gradient(#fff 0 0) padding-box,
+        linear-gradient(#fff 0 0) border-box;
+    -webkit-mask-composite: source-in, xor, source-over;
+    mask:
+        linear-gradient(
+            to top,
+            #fff 0,
+            #fff var(--scroll-progress-rim-width, 4px),
+            transparent var(--scroll-progress-rim-width, 4px)
+        ),
+        linear-gradient(#fff 0 0) padding-box,
+        linear-gradient(#fff 0 0) border-box;
+    mask-composite: intersect, exclude, add;
+}
+
+.scroll-progress-rim[data-coverage="inline-end-edge"] .scroll-progress-rim__track {
+    background: linear-gradient(
+        to bottom,
+        var(--scroll-progress-rim-spectrum, var(--section-color-7)),
+        transparent var(--scroll-progress-rim-fill, 0%),
+        transparent 100%
+    );
+    -webkit-mask:
+        linear-gradient(
+            to left,
+            #fff 0,
+            #fff var(--scroll-progress-rim-width, 4px),
+            transparent var(--scroll-progress-rim-width, 4px)
+        ),
+        linear-gradient(#fff 0 0) padding-box,
+        linear-gradient(#fff 0 0) border-box;
+    -webkit-mask-composite: source-in, xor, source-over;
+    mask:
+        linear-gradient(
+            to left,
+            #fff 0,
+            #fff var(--scroll-progress-rim-width, 4px),
+            transparent var(--scroll-progress-rim-width, 4px)
+        ),
+        linear-gradient(#fff 0 0) padding-box,
+        linear-gradient(#fff 0 0) border-box;
+    mask-composite: intersect, exclude, add;
+}

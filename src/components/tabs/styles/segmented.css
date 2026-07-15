@@ -1,0 +1,424 @@
+/* SegmentedTabs component styles.
+ * ════════════════════════════════════════════════════════════════════════
+   The standardized SegmentedTabs grammar (BA.W-TABS). ONE indicator engine,
+   TWO materials, ONE orientation axis.
+
+     · PILL    (DEFAULT) — THE GLASS MATERIAL. The track rides `--glass-bg-quiet`
+                 + a hairline edge; the active indicator is the selected-reads-as-
+                 glass plate (`--glass-bg-floating`, the W-REGISTER-IOS tier — a
+                 glass tint FORWARD of the track, NEVER a saturated hue, never an
+                 opaque `bg-card`). It GLIDES + SQUISHES. Absorbs the retired
+                 `segmented` value (one register — the user kept it by name).
+     · UNDERLINE — THE PAPER MATERIAL. NO plate, NO blur, NO track surface — the
+                 2px `--foreground` ink hairline riding the shared `.paper-ink-mark`
+                 register (W-SURFACE-AXIS mints it; CONSUMED here, never re-minted).
+                 The engine drives the hairline's inline position/width only. It
+                 SLIDES (no squish — a hairline does not deform).
+
+   ORIENTATION is axis-derived (horizontal default · vertical). The vertical
+   indicator tracks the BLOCK axis (the R10-2 horizontal-only-utilities slab class
+   is structurally impossible — the engine keys off a computed `dim`). Vertical
+   underline = the leading-edge ink rail (the math-paper `border-l` read).
+
+   Carved out of the SFC `<style scoped>` into a styles/ partial (the drawer.css
+   precedent), `@import`-ed into styles/index.css in cascade order. Every selector
+   is class/attribute-based (no Vue `data-v-*` scope hash), so the rules paint
+   un-scoped — the `.segmented-tabs`-family classes the template emits carry them.
+
+   `--bouncy-track-trim` is the token the track padding, the indicator
+   `inset-block`, AND the `anchor()` offset all read so they cannot drift (the W20
+   magic-number lock). `--stretch` is the JS-written travel-squish scalar (1 at
+   rest); the indicator pairs it reciprocally (stretch X, compress Y →
+   volume-preserving). The glide + squish read ONE clock — `--tab-indicator-duration`
+   (= `--spring-snappy-duration`, the W-GLASS-CAL calibrated snappy settle, ~0.34s)
+   — so the channels cannot desync and the generic-300ms sub-pixel tail is gone.
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* ── The PILL track (the glass material — DEFAULT) ── */
+.segmented-tabs {
+    --bouncy-track-trim: 0.1875rem;
+    /* BC.W-TABS-IOS — the iOS-27 stadium register. The pill reads the role-bearing
+       `--radius-tab` (= --radius-pill = 9999px) — on a short pill box this clamps to
+       half-height → a TRUE stadium end-cap (not the squared `0.3125rem` rounded-rect
+       the HEAD shipped). The TRACK corner is CONCENTRIC with the pill (Apple's
+       `.containerConcentric`): the pill radius + the trim inset, so a stadium pill
+       sits inside a near-stadium track. No breakpoint radius bump — a stadium does
+       not change radius across viewports (clean break, the 640px radius lines gone). */
+    --bouncy-slider-radius: var(--radius-tab);
+    --bouncy-track-radius: calc(var(--bouncy-slider-radius) + var(--bouncy-track-trim));
+    /* The travel-squish axis — 1 at rest; useTabIndicator writes it transiently
+       on selection, the indicator pairs it volume-preserving. */
+    --stretch: 1;
+    position: relative;
+    display: inline-grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    padding: var(--bouncy-track-trim);
+    border-radius: var(--bouncy-track-radius);
+    /* BD.W-TAB-IOS-CAPSULE — the warm-glass quiet surface + the rim + the iOS-27
+       sunken recess now live in the SHARED `.glass-capsule-track` register (the SFC
+       composes it onto the pill track). The track is a thin warm-glass quiet capsule
+       with a lit top edge + a recessed well, never a dark hairline, never gray. The
+       indicator (`.glass-capsule`) reads FORWARD off the SAME rim + the lift shadow.
+       The underline material does NOT compose the track (paper, no surface). */
+}
+
+/* ── The vertical orientation axis (the block stack) ── */
+.segmented-tabs--vertical {
+    display: inline-flex;
+    flex-direction: column;
+    grid-auto-flow: unset;
+    grid-auto-columns: unset;
+    align-items: stretch;
+    /* BI.W-RADIUS-GRAMMAR (Law 2 — capsule-vs-card). A COLUMN-STACK track cannot
+       wear the horizontal arm's stadium `--radius-tab` (= --radius-pill = 9999px):
+       on a tall multi-row box the stadium clamps its end-caps to a ~46px half-height
+       balloon (the live-measured 10003px→46px defect, UF-A2/FAM-4). The vertical arm
+       re-binds the family radius var onto the BOUNDED `--radius-strip` (≈12px); the
+       shipped concentric track calc (`--bouncy-track-radius`, above) re-resolves the
+       track corner off it for free. The horizontal `.segmented-tabs` is byte-untouched
+       (its single-row pill stays a legal stadium — the pill-in-pill exemption). */
+    --bouncy-slider-radius: var(--radius-strip);
+    /* Law 1 — the concentric relay. The vertical track is the concentric CONTAINER:
+       it publishes its resolved outer radius as `--radius-ctx` + its trim inset as
+       `--radius-inset`, and the indicator (the nested surface) derives its arc below.
+       This GENERALIZES the shipped per-surface `.containerConcentric` idiom onto the
+       named Law-1 contract (Ruling 11 site #2), so the relay is LIVE not dead-on-mint. */
+    --radius-ctx: var(--bouncy-track-radius);
+    --radius-inset: var(--bouncy-track-trim);
+}
+
+/* The vertical indicator arc is the concentric INNER of the track — it reads the
+   Law-1 relay `inner = max(floor, ctx − inset)` (= --radius-strip, the shipped calc
+   value routed through the named contract). Specificity (0,2,0) wins the base
+   `.segmented-indicator` (0,1,0) `border-radius: var(--bouncy-slider-radius)`. */
+.segmented-tabs--vertical .segmented-indicator {
+    border-radius: max(
+        var(--radius-floor),
+        calc(var(--radius-ctx) - var(--radius-inset))
+    );
+}
+
+@media (min-width: 640px) {
+    .segmented-tabs {
+        /* BC.W-TABS-IOS — only the trim (pad) axis bumps at the wider breakpoint; the
+           radius is the viewport-invariant stadium (--radius-tab), so the corner
+           track-radius re-resolves concentric off the bigger trim by construction. */
+        --bouncy-track-trim: 0.25rem;
+    }
+}
+
+/* ── The shared indicator body (the PILL plate) ── */
+.segmented-indicator {
+    position: absolute;
+    /* BD.W-TAB-IOS-CAPSULE — the active pill COMPOSES the shared `.glass-capsule`
+       (the SFC adds the class). The warm-floor fill (`--glass-bg-floating-tinted`
+       composed toward the warm-floor source, meanChroma ≥ 0.02 both modes — never
+       gray), the floating blur, the directional rim + the lift under-shadow ALL live
+       there now, ONE recipe ≥3 consumers. This block keeps only the position +
+       inset + the indicator-local stadium radius + the motion transform. */
+    z-index: 0;
+    inset-block: var(--bouncy-track-trim);
+    border-radius: var(--bouncy-slider-radius);
+    /* BD.W-TABS-LIQUID — the COMPOSED transform write: the area-inflation BLOB
+       (uniform, both axes, `--tab-blob` driven imperatively by the 2nd
+       `useLiquidFlex` channel — grow→overshoot→shrink) × the volume-preserving
+       travel-squish (`--stretch`, reciprocal). `transform-origin: center` → the blob
+       grows from center (the label stays put) and the squish stays center-pinned. */
+    transform-origin: center;
+    scale: calc(var(--tab-blob, 1) * var(--stretch))
+        calc(var(--tab-blob, 1) / var(--stretch));
+}
+
+/* BI.W-TABS-FACTOR — the indicator PLATE. The glass fill (`.glass-capsule`) + the
+   refraction (`.glass-lens`) live on this nested plate so the eyeglass two-rest-state
+   block-proud magnify rides its OWN compositor channel: `transform: scaleY(var(--eyeglass-y))`
+   — NOT the outer's `scale` (the travel-squish) nor its `transform` (the glide/drag), so
+   the per-frame `useLeadTrail` write of `--eyeglass-live-t` is never lagged by their
+   transitions. The plate fills the shell (`inset: 0`); the outer squish/glide scale +
+   translate compose over it (the outer scale scales the plate too — squish × magnify).
+   `--eyeglass-y` defaults 1 (the flat slot-fill capsule — the degrade / non-eyeglass
+   floor); the eyeglass scope (segmented-tabs-drag.css) drives the two-rest-state calc.
+   NO transition on the plate transform — the useLeadTrail integrator is the animator on
+   the live path; the `@property --eyeglass-live-t` covers the discrete/degrade path. */
+.segmented-indicator__plate {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    transform-origin: center;
+    transform: scaleY(var(--eyeglass-y, 1));
+}
+
+/* BD.W-TABS-LIQUID — the COMMIT accent-flood (T4, opt-in). A momentary full-capsule
+   wash of `--glass-accent`, driven by `--tab-flood-t` (0→1→0), that TRAILS the
+   spatial glide a beat then clears (EFFECTS-after-SPATIAL). `isolation: isolate` on
+   the host so the `plus-lighter` blend composites the flood against the capsule
+   only (not the page); the gradient is `in srgb` (additive bloom, NOT oklab). The
+   accent is a CONSUMER accent — default `--glass-accent: transparent` → byte-
+   identical rest, provable no-op. The SAME register dock-tabs adopt (dormant at
+   `--tab-flood-t: 0`). */
+.segmented-indicator {
+    isolation: isolate;
+}
+@supports (mix-blend-mode: plus-lighter) {
+    .segmented-indicator::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        background: radial-gradient(
+            120% 140% at 50% 50%,
+            color-mix(in srgb, var(--glass-accent, transparent) 55%, transparent),
+            transparent 70%
+        );
+        mix-blend-mode: plus-lighter;
+        opacity: var(--tab-flood-t, 0);
+    }
+}
+
+/* Vertical: the indicator deforms on the BLOCK axis (compress X / stretch Y) and
+   pads on the inline axis instead. */
+.segmented-tabs--vertical .segmented-indicator {
+    inset-block: auto;
+    inset-inline: var(--bouncy-track-trim);
+    /* BD.W-TABS-LIQUID — the vertical arm mirrors the blob × squish: the block axis
+       carries the stretch, the inline axis its reciprocal, both uniformly inflated. */
+    scale: calc(var(--tab-blob, 1) / var(--stretch))
+        calc(var(--tab-blob, 1) * var(--stretch));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .segmented-indicator {
+        /* BD.W-TABS-LIQUID — the composed `scale` (`--tab-blob × --stretch`) rides the
+           DEPENDED `--ease-cartoon-punch` curve (the booked Band-0 token, CONSUMED
+           never minted) so the 5-beat blob anticipates (the curve's pre-dip < 0),
+           overshoots past the destination footprint (peaks > 1), then settles soft.
+           The discrete imperative `--tab-blob` writes (open/release) INTERPOLATE on
+           this clock via the `@property` registration — no snap-flicker. ONE clock,
+           ONE composited transform pair — the glide (inset) + the squish + the blob
+           cannot desync. The `--tab-flood-t` accent-flood trails a beat after. */
+        transition: scale var(--tab-indicator-duration) var(--ease-cartoon-punch);
+    }
+}
+
+/* The JS-measured indicator glide — the indicator is moved by inline `transform`/
+   `width` writes; animate those alongside the squish scale on the ONE calibrated clock.
+   BI.W-TABS-FACTOR — the pill IS the eyeglass loupe by default, so its travel rides the
+   `--spring-eyeglass` curve (the measured Find My loupe register, SPRING_PRESETS
+   `eyeglass` — snappy-class speed 0.36 / dock-class give ζ0.64; TABS-GLASS-LADDER §8.2)
+   on the same calibrated `--tab-indicator-duration` clock (unchanged — the underline
+   paper material keeps `--spring-snappy`). This is the eyeglass row's CSS consumer (the
+   ≥2-consumer bar: this glide + the JS `useEyeglassLive` release). */
+.segmented-indicator--js {
+    transition:
+        transform var(--tab-indicator-duration) var(--spring-eyeglass),
+        width var(--tab-indicator-duration) var(--spring-eyeglass),
+        height var(--tab-indicator-duration) var(--spring-eyeglass),
+        scale var(--tab-indicator-duration) var(--spring-eyeglass),
+        opacity var(--duration-fast) ease;
+}
+
+/* BI.W-DOCK-CONTROLS — the PILL `.segmented-indicator--anchor` CSS-anchor branch
+   is RETIRED (DEFINITION-ABSENT). The pill indicator now rides the ONE JS-measured
+   writer (`useSelectionIndicator`) on every engine — Chrome and Safari paint the
+   same pixels by construction, so the CSS `position-anchor` glide path (which only
+   fired on anchor-supporting engines) is dead. The underline material keeps its
+   own `anchor-name`/`::before` indicator below (a distinct paper-material indicator,
+   not the pill writer). */
+
+@media (min-width: 640px) {
+    .segmented-indicator {
+        /* BC.W-TABS-IOS — only the inset (trim) axis bumps; the radius stays the
+           viewport-invariant stadium (`--bouncy-slider-radius` = --radius-tab). The
+           HEAD `border-radius: 0.375rem` px-literal that squared the pill is GONE. */
+        inset-block: 0.25rem;
+    }
+    .segmented-tabs--vertical .segmented-indicator {
+        inset-block: auto;
+        inset-inline: 0.25rem;
+    }
+    /* BI.W-DOCK-CONTROLS — the pill `.segmented-indicator--anchor` breakpoint trim
+       retired with the anchor branch (the ONE JS writer carries the inset). */
+}
+
+/* ── The tab buttons ── */
+.segmented-tab {
+    position: relative;
+    z-index: 10;
+    border: none;
+    background: none;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    padding: 0.25rem 0.625rem;
+    border-radius: 0.3125rem;
+    font: inherit;
+    font-size: 0.8125rem;
+    color: var(--muted-foreground);
+    /* BD.W-TABS-LIQUID — the glyph scale-pop (overlapping action / follow-through):
+       the label settles AFTER the capsule (the child trails the parent). The `scale`
+       channel rides the snappy spring with a 60ms delay so it OVERLAPS the capsule
+       arrival; the colour cross-fade stays on the fast bezier. */
+    transition:
+        color var(--duration-fast) ease,
+        scale var(--spring-snappy-duration) var(--spring-snappy) 60ms;
+    /* AQ.W3 identity base — keep `scale:1; translate:0` so a hover/press
+       transform never mints a stacking context that severs `anchor()`
+       resolution (the WAAPI press writes `transform` transiently — harmless). */
+    scale: 1;
+    translate: 0;
+}
+
+@media (min-width: 640px) {
+    .segmented-tab {
+        padding: 0.3125rem 0.75rem;
+        font-size: 0.875rem;
+    }
+}
+
+.segmented-tab[aria-pressed="true"],
+.segmented-tab[aria-selected="true"] {
+    color: var(--foreground);
+}
+
+/* BD.W-TABS-LIQUID — the glyph scale-pop on the PILL selection. The live selection
+   model is `aria-pressed` (the pill is a ToggleGroup-shaped surface — verified in
+   SegmentedTabs.vue, NOT `aria-selected` which the underline paper material uses).
+   The pop magnitude DEPENDS `--motion-weight` (the booked Band-0 token, CONSUMED):
+   `calc(1 + 0.06 × --motion-weight)` → ~+3.7% at rest weight 0.618, and exactly 1
+   under PRM (`--motion-weight: 0`). The 60ms transition delay (above) settles it a
+   beat after the capsule arrives (overlapping action). The underline label does NOT
+   pop (paper ink, no inflation — the material fence). */
+.segmented-tabs:not(.segmented-tabs--underline) .segmented-tab[aria-pressed="true"] {
+    scale: calc(1 + 0.06 * var(--motion-weight));
+}
+
+.segmented-tab.is-disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+    filter: blur(0.5px);
+}
+
+/* ── Underline variant ── (THE PAPER MATERIAL — the panel-nav `role=tablist` strip)
+   NO plate, NO blur, NO track surface — only the ink hairline paints. */
+.segmented-tabs--underline {
+    display: flex;
+    grid-auto-flow: unset;
+    grid-auto-columns: unset;
+    gap: 0.25rem;
+    padding: 0;
+    background: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
+    border-radius: 0;
+    /* BA.W-SURFACE-AXIS scope 8 — the underline indicator COMPOSES the shared
+       `.paper-ink-mark` PAPER ink-hairline register (the 2px --foreground ink mark
+       on a paper surface — no plate, no blur, no glass). The register tokens are
+       declared here on the host; the `::before` pseudo reads them. ≥2 consumers
+       with the math-paper section rail (a HORIZONTAL underline here, a VERTICAL
+       left-edge rail there — the SAME mark register, parameterized weight/color).
+       The register itself lives in glass/surface-axis.css (CONSUMED, never
+       re-minted — a shape gap triumvirates at the minting wave). */
+    --paper-ink-mark-weight: 2px;
+    --paper-ink-mark-color: var(--foreground);
+}
+
+/* Vertical underline = the leading-edge ink rail (the math-paper `border-l` read).
+   The hairline runs the block extent of the active tab on its inline-start edge. */
+.segmented-tabs--underline.segmented-tabs--vertical {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+/* The active tab is the anchor the underline rule tethers to. */
+.segmented-tabs--underline .segmented-tab[aria-selected="true"] {
+    anchor-name: --gl-tab-active;
+}
+
+/* The underline indicator pseudo, position-anchored to the active tab; the
+   browser interpolates `inset` between anchors on selection on the ONE calibrated
+   clock, and the `scale` reads the same `--stretch` squish the slider does (one
+   indicator grammar). */
+.segmented-tabs--underline::before {
+    content: "";
+    position: absolute;
+    position-anchor: --gl-tab-active;
+    /* BA.W-SURFACE-AXIS scope 8 — the 2px ink mark reads the shared
+       `.paper-ink-mark` register (weight + --foreground ink) the host declares. */
+    inset-block-start: calc(anchor(bottom) - var(--paper-ink-mark-weight, 2px));
+    inset-inline-start: anchor(left);
+    inset-inline-end: anchor(right);
+    block-size: var(--paper-ink-mark-weight, 2px);
+    background: var(--paper-ink-mark-color, var(--foreground));
+    border-radius: var(--radius-sm);
+    transform-origin: center;
+    scale: var(--stretch) 1;
+}
+
+/* Vertical underline pseudo — the ink mark is a VERTICAL leading-edge rail (the
+   `border-l` read): a 2px-wide column on the active tab's inline-start edge,
+   running its full block extent. */
+.segmented-tabs--underline.segmented-tabs--vertical::before {
+    inset-block-start: anchor(top);
+    inset-block-end: anchor(bottom);
+    inset-inline-start: calc(anchor(left) - var(--paper-ink-mark-weight, 2px));
+    inset-inline-end: auto;
+    block-size: auto;
+    inline-size: var(--paper-ink-mark-weight, 2px);
+    scale: 1 var(--stretch);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .segmented-tabs--underline::before {
+        /* control register — the glide + the squish on the ONE calibrated clock. */
+        transition:
+            inset var(--tab-indicator-duration) var(--spring-snappy),
+            scale var(--tab-indicator-duration) var(--spring-snappy);
+    }
+}
+
+/* Fallback — static underline when anchor positioning is absent. */
+@supports not (position-anchor: --x) {
+    .segmented-tabs--underline::before {
+        display: none;
+    }
+    .segmented-tabs--underline .segmented-tab[aria-selected="true"] {
+        border-bottom: var(--paper-ink-mark-weight, 2px) solid var(--foreground);
+    }
+    .segmented-tabs--underline.segmented-tabs--vertical
+        .segmented-tab[aria-selected="true"] {
+        border-bottom: none;
+        border-inline-start: var(--paper-ink-mark-weight, 2px) solid var(--foreground);
+    }
+}
+
+.segmented-tabs--underline .segmented-tab {
+    padding: 0.375rem 0.75rem;
+    /* BC.W-UNDERLINE-TUNE — the audacious editorial label voice. The underline is
+       the PAPER/editorial material (BA.W-TABS), so its labels carry the √φ display
+       register, NOT the small 0.8125rem control size the PILL labels keep (the
+       two-voice fence — the pill is a compact control, the underline is an editorial
+       nav head). `--type-subheading` (1.272rem / 20.4px, the √φ rung) + the Apple
+       display tracking `--type-tracking-display` (−1.5%) are the BB.W-DISPLAY-TRACKING
+       ladder rungs CONSUMED here (never re-minted), the same pairing the semantic
+       display rungs ride. A confident editorial strip, not a default Tailwind row. */
+    font-size: var(--type-subheading);
+    letter-spacing: var(--type-tracking-display);
+    border-radius: 0.25rem;
+    /* The tab-text colour cross-fade rides the fast generic clock (the §6 doctrine
+       — a colour shift is a bezier ease, never a spring), matching the pill tab
+       buttons. The INDICATOR glide is the only channel on the calibrated spring
+       clock. */
+    transition: color var(--duration-fast) ease;
+}
+
+.segmented-tabs--underline.segmented-tabs--vertical .segmented-tab {
+    text-align: start;
+}
+
+.segmented-tabs--underline .segmented-tab:hover {
+    color: color-mix(in oklab, var(--foreground) 70%, transparent);
+}

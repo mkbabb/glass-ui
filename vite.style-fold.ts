@@ -1,4 +1,11 @@
-import { cpSync, existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import {
+    cpSync,
+    existsSync,
+    readdirSync,
+    readFileSync,
+    statSync,
+    writeFileSync,
+} from "node:fs";
 import { resolve } from "node:path";
 
 import { minifyCss } from "./scripts/lib/minify-css.mjs";
@@ -84,11 +91,14 @@ export function atSourceIndex(css: string): number {
 export function copyStyleAssets(root: string): {
     srcFonts: string;
     distStyles: string;
+    distComponents: string;
 } {
     const srcFonts = resolve(root, "src/fonts");
     const distFonts = resolve(root, "dist/fonts");
     const srcStyles = resolve(root, "src/styles");
     const distStyles = resolve(root, "dist/styles");
+    const srcComponents = resolve(root, "src/components");
+    const distComponents = resolve(root, "dist/components");
 
     if (existsSync(srcFonts)) {
         cpSync(srcFonts, distFonts, { recursive: true });
@@ -96,7 +106,23 @@ export function copyStyleAssets(root: string): {
     if (existsSync(srcStyles)) {
         cpSync(srcStyles, distStyles, { recursive: true });
     }
-    return { srcFonts, distStyles };
+    if (existsSync(srcComponents)) {
+        cpSync(srcComponents, distComponents, {
+            recursive: true,
+            filter: (path) => statSync(path).isDirectory() || path.endsWith(".css"),
+        });
+    }
+    return { srcFonts, distStyles, distComponents };
+}
+
+function cssFilesUnder(...roots: string[]): string[] {
+    return roots.flatMap((root) =>
+        existsSync(root)
+            ? (readdirSync(root, { recursive: true }) as string[])
+                  .filter((path) => path.endsWith(".css"))
+                  .map((path) => resolve(root, path))
+            : [],
+    );
 }
 
 /**
@@ -142,12 +168,9 @@ export function foldSfcBundle(root: string, distStyles: string): void {
  * canonical authored shape: `url("@mkbabb/glass-ui/fonts/<family>/<face>.woff2")`.
  * Resolves the relative path against `srcFonts`, encodes, rewrites in place.
  */
-export function inlineFonts(srcFonts: string, distStyles: string): void {
-    if (!existsSync(distStyles)) return;
-    const cssFiles = readdirSync(distStyles).filter((f) => f.endsWith(".css"));
+export function inlineFonts(srcFonts: string, ...cssRoots: string[]): void {
     const urlRe = /url\(\s*["']?@mkbabb\/glass-ui\/fonts\/([^"')\s]+)["']?\s*\)/g;
-    for (const file of cssFiles) {
-        const path = resolve(distStyles, file);
+    for (const path of cssFilesUnder(...cssRoots)) {
         const src = readFileSync(path, "utf-8");
         let touched = false;
         const rewritten = src.replace(urlRe, (_match, rel: string) => {
@@ -191,9 +214,7 @@ export function inlineFonts(srcFonts: string, distStyles: string): void {
  * survive to dist. `proof:xr-producer-repairs` X4 asserts the fresh dist carries the
  * unprefixed `backdrop-filter: none` (not collapsed away) beside its `-webkit-` pair.
  */
-export function injectWebkitBackdrop(distStyles: string): void {
-    if (!existsSync(distStyles)) return;
-    const distCssFiles = readdirSync(distStyles).filter((f) => f.endsWith(".css"));
+export function injectWebkitBackdrop(...cssRoots: string[]): void {
     // Match an unprefixed `backdrop-filter: <value>;` DECLARATION (a property
     // line in a rule body), NOT a `@supports`/`@container` query condition
     // (those live inside `( … )` preludes — `(backdrop-filter: blur(1px))` — and
@@ -221,8 +242,7 @@ export function injectWebkitBackdrop(distStyles: string): void {
     // unprefixed one exactly. Locked by `proof:glass`'s safari-blur-var arm.
     const bdfDeclRe =
         /([{};]|\n)(\s*)backdrop-filter\s*:\s*((?:[^;{}()]|\((?:[^()]|\((?:[^()]|\([^()]*\))*\))*\))+);/g;
-    for (const file of distCssFiles) {
-        const path = resolve(distStyles, file);
+    for (const path of cssFilesUnder(...cssRoots)) {
         const src = readFileSync(path, "utf-8");
         let changed = false;
         const out = src.replace(
@@ -276,12 +296,8 @@ export function injectWebkitBackdrop(distStyles: string): void {
  * partials ship + are `@import`-referenced, so they are minified too).
  * Idempotent by construction (a cpSync-fresh dist is minified once per build).
  */
-export function minifyStyleAssets(distStyles: string): void {
-    if (!existsSync(distStyles)) return;
-    const entries = readdirSync(distStyles, { recursive: true }) as string[];
-    for (const rel of entries) {
-        if (!rel.endsWith(".css")) continue;
-        const path = resolve(distStyles, rel);
+export function minifyStyleAssets(...cssRoots: string[]): void {
+    for (const path of cssFilesUnder(...cssRoots)) {
         const src = readFileSync(path, "utf-8");
         const min = minifyCss(src);
         if (min !== src) writeFileSync(path, min, "utf-8");

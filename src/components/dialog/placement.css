@@ -1,0 +1,68 @@
+/* Dialog placement styles.
+ * dialog-placement.css — the overlay-band Dialog side-slide structural positioning,
+ * precompiled (BI.W-DIALOG-PLACEMENT — the Sheet fold; the BG.W-SHEET-INSET-ROOT
+ * emission INVERSE, terminalized onto Dialog `placement`).
+ *
+ * THE FOLD: Sheet's side-slide is a Dialog PAINT axis now (`<DialogContent placement=
+ * top|right|bottom|left>`), same reka `DialogRoot` + FocusScope. The retired Sheet
+ * authored its STRUCTURAL positioning (position/inset/size/z-index) as CVA Tailwind
+ * utilities — load-bearing GEOMETRY that DIES in any consumer whose Tailwind content-scan
+ * does not reach glass-ui's compiled dist (the D7 configurator-drawer break). This rule
+ * ships that geometry PRECOMPILED as a plain `[data-slot="dialog-content"][data-placement]`
+ * attribute-selector rule, so it ALWAYS emits in dist/glass-ui.css regardless of JIT reach.
+ * DialogContent.vue mints `data-slot="dialog-content"` + `:data-placement` on the portaled
+ * content node for a side placement (center emits NO `data-placement`, so none of these
+ * rules touch a centered modal); the CVA keeps ONLY decoration (glass tier, overlay padding
+ * ladder, per-side rounding/border, the `sheet-animate` + slide-in/out data-state pairs).
+ *
+ * SPECIFICITY — the rules are wrapped in `:where()` (0,0,0). The library ships the DEFAULT
+ * positioning; a consumer's own sizing utility (the demo PresetEditor's `w-full sm:max-w-md`,
+ * a `.w-full`/`.h-full` class at 0,1,0) WINS over the `:where()` default, so the side sheet
+ * stays consumer-overridable (the token-first / consumer-overrides identity). UNLAYERED (like
+ * select.css's [data-slot] bound) so it never loses to an unlayered utility. Locked by
+ * proof:emission (the overlay-band inverse clause).
+ *
+ * PHYSICAL properties (width/height/max-width/top/right/bottom/left) mirror the retired
+ * Sheet CVA utilities EXACTLY (`inset-y-0 right-0 h-full w-3/4 sm:max-w-sm` &c.), so a
+ * consumer's physical sizing override resolves cleanly by SPECIFICITY against the same
+ * property name — no logical-vs-physical cascade ambiguity, and the enter/exit slide travel
+ * is byte-identical to the retired Sheet frame-series.
+ */
+:where([data-slot="dialog-content"][data-placement]) {
+    position: fixed;
+    z-index: var(--z-modal);
+}
+
+/* Top/bottom side sheets span the full width (left:0;right:0), anchor to their edge. */
+:where([data-slot="dialog-content"][data-placement="top"]) {
+    left: 0;
+    right: 0;
+    top: 0;
+}
+:where([data-slot="dialog-content"][data-placement="bottom"]) {
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+/* Left/right side sheets span the full height (top:0;bottom:0), 3/4 width, capped at sm. */
+:where([data-slot="dialog-content"][data-placement="left"]) {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    width: 75%;
+}
+:where([data-slot="dialog-content"][data-placement="right"]) {
+    top: 0;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    width: 75%;
+}
+@media (min-width: 40rem) {
+    :where([data-slot="dialog-content"][data-placement="left"]),
+    :where([data-slot="dialog-content"][data-placement="right"]) {
+        max-width: 24rem; /* the prior sm:max-w-sm */
+    }
+}

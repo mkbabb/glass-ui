@@ -1,0 +1,126 @@
+/* Dock adaptive-legibility styles (carved
+ * from dock/morph.css to hold both partials under the 500-line no-god-module bound).
+ *
+ * This partial owns the darken-over-light legibility concern, distinct from the morph
+ * chrome: the unconditional `:where(.glass-dock)` self-engage (AZ.W-ADAPTIVE-AUTO), the
+ * continuous backdrop-luma tint clamp (BC.W-ADAPTIVE-RECONCILE), the BD.W-DOCK-CORE D2
+ * warm-chromatic dock ink, the ancestor `@container style(--glass-backdrop: light)`
+ * descendant bucket, the AX.W55 contrast-color() progressive refinement, and the
+ * BB.W-LIQUID-REVEAL / BC.W-DOCK-SHRINK-BLUR PRM reveal-blur carve.
+ *
+ * @import-ed by dock.css in cascade order, in the SAME `@layer components` as morph.css
+ * (the carve is isomorphic — same layer, source order preserved → ZERO visual delta). */
+
+@layer components {
+    /* ── Adaptive legibility: SELF-ENGAGE the dock over a light backdrop by default
+       (AZ.W-ADAPTIVE-AUTO Arm 1 — the literal G2 surface; "Glass dock over VERY
+       LIGHT materials is unreadable, darken DYNAMICALLY like iOS 27") ─────────────
+       The dock floats over WHATEVER the consumer painted — frequently a light/near-
+       white app surface (the canonical G2 case the user reported). AY.W-A11Y-PERF
+       O-1 set `--glass-backdrop: light` on the dock's OWN root (shell.css) intending
+       a self-darken, but CSS style queries NEVER self-match (the `@container
+       style()` block below reads an ANCESTOR — verified on Chrome 148), so the
+       self-declaration was a NO-OP. This `:where(.glass-dock)` rule is the genuine
+       UNCONDITIONAL self-engage — mirroring the overlay band's `ladder.css:169` —
+       re-pointing the INHERITING tint tokens DIRECTLY on the dock root so the
+       shell (`--glass-bg-dock`), chassis-strip, and held/open tiers (which compose
+       the oklab tint AT THE ELEMENT — the substitution-vs-inheritance-safe targets)
+       darken toward warm-ink in lockstep. `--dock-fg-on-aurora` re-points to the
+       warm-ink here too — ONE reconciled path, the foreground twin folded in (it
+       reaches the dock CONTROLS' glyph/label color). Over a DARK page the darken is
+       sub-perceptual; a dark-substrate consumer opts out via `--glass-tint-strength:
+       0%` on the dock root. The morph-root interp (`.glass-dock:not(.vertical)`
+       above) stays `color-mix(in srgb …)` for the transition — the adaptive darken
+       rides its RESTING endpoint (`--glass-bg-dock`), the in-flight morph frames are
+       sub-perceptual (the ratified resting-endpoint-only default). The muted body
+       register lifts to the full warm-ink under the engaged plate (the muted L40
+       tier cannot clear 4.5:1 on a translucent darkened plate — darkening moves the
+       plate TOWARD muted's own luminance; the low-contrast muted register is
+       inappropriate over a busy glass plate, so it resolves to the legible dark
+       ink, which clears ~10:1). */
+    :where(.glass-dock) {
+        /* BD.W-DOCK-CORE (D2) — the dock self-engage reads the warm-CHROMATIC dock ink
+           (glass-fx.css), NOT the frozen global `--glass-tint-ink` (W-DARK-MATERIAL's
+           whole-system register). So the darken-over-light RAISES chroma toward a warm
+           material (H ≈ 62°, C ≈ 0.016 at AA) rather than dropping L with chroma flat (the
+           gray dock). ONE dock tint source, ONE global ink — file-line-disjoint. */
+        --glass-tint-source: var(--glass-tint-ink-dock);
+        /* BC.W-ADAPTIVE-RECONCILE — the dock JOINS the continuous observer driver (the
+           literal G2 surface: "darken DYNAMICALLY like iOS 27"). The dock's own
+           `useGlassBackdropLuminance` observer samples the threaded `:background-canvas`
+           (aurora/blob) and WRITES `--glass-backdrop-luma`; this clamp READS it and lerps
+           the plate from the warm-cream floor toward the ≤24% AA ceiling as the field
+           brightens past the knee — deepening over a bright bleed, lifting translucent over
+           a dark trough (the SAME clamp the content/overlay tiers get — ONE axis/driver/
+           signal; the discrete `@container` bucket RETIRED). Calm (luma ≤ knee) → floor. */
+        --glass-tint-strength: clamp(
+            var(--glass-tint-strength-floor),
+            calc(
+                var(--glass-tint-strength-floor) +
+                    (var(--glass-tint-strength-aa) - var(--glass-tint-strength-floor)) *
+                    max(
+                        0,
+                        (
+                                var(--glass-backdrop-luma, 0) -
+                                    var(--glass-backdrop-luma-knee)
+                            ) /
+                            (1 - var(--glass-backdrop-luma-knee))
+                    )
+            ),
+            var(--glass-tint-strength-aa)
+        );
+        --dock-fg-on-aurora: var(--glass-tint-ink);
+        --muted-foreground: var(--foreground);
+    }
+
+    /* The ancestor-querying `@container` block KEPT — it reaches the DESCENDANT
+       nested-glass surfaces inside a dock when a consumer marks `--glass-backdrop:
+       light` on the dock's ancestor (the self-engage above re-points only the dock
+       root's own inheriting tokens; a consumer's explicit ancestor bucket still
+       cascades to nested glass through this block). */
+    @container style(--glass-backdrop: light) {
+        .glass-dock {
+            --glass-tint-source: var(--glass-tint-ink);
+            --glass-tint-strength: var(--glass-tint-strength-aa);
+            --dock-fg-on-aurora: var(--glass-tint-ink);
+        }
+    }
+
+    /* AX.W55 — the `contrast-color()` flip for the dock control foreground (Chrome
+       147+/Safari 26+; progressive enhancement, NEVER the load-bearing floor). The
+       declarative bucket above already carries AA on all engines (it darkens the dock
+       plate so the warm-dark `--dock-fg-on-aurora` clears ~17:1 over white at the 18%
+       floor). On a supporting engine `contrast-color()` REFINES the control ink,
+       anchored on the LIGHT BACKDROP signal (`--card`, the warm-white surface base the
+       bright bucket implies) — `contrast-color(var(--card))` resolves to the legible
+       DARK ink. Anchoring on the dark ink instead inverts to white (illegible on the
+       still-light dock plate), so the anchor is the light surface, matching the rung
+       refinement in glass.css. The bucket is the floor; this is the native pick. */
+    @supports (color: contrast-color(white)) {
+        /* The SELF-ENGAGED dock refinement (the unconditional self-engage above);
+           progressive enhancement only — the declarative darken is the AA floor. */
+        :where(.glass-dock) {
+            --dock-fg-on-aurora: contrast-color(var(--card));
+            --muted-foreground: contrast-color(var(--card));
+        }
+        @container style(--glass-backdrop: light) {
+            .glass-dock {
+                --dock-fg-on-aurora: contrast-color(var(--card));
+            }
+        }
+    }
+}
+
+/* BB.W-LIQUID-REVEAL — the dock-expand bloom beat's blur-settle is OFF under
+   `prefers-reduced-motion: reduce` (the vestibular floor): a reduced-motion dock reads
+   crisp at every state, no in-between blur frames.
+   BC.W-DOCK-SHRINK-BLUR — the self-blur is now gated to `[data-morphing]`, so the PRM
+   carve zeroes it on the ARMED scope too (specificity 0,2,0) — a PRM dock that briefly
+   arms `[data-morphing]` carries no 3px bloom; the resting `.glass-dock` is already
+   crisp by the re-gate. */
+@media (prefers-reduced-motion: reduce) {
+    .glass-dock,
+    .glass-dock[data-morphing] {
+        --dock-reveal-blur: 0px;
+    }
+}

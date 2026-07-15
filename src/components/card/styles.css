@@ -1,0 +1,485 @@
+/* Card family and shared card-surface styles.
+ * `.cartoon-card` + `.elevated-card` recipe classes were removed at C.W5 per the
+ * W0 overfitting audit (Card's tier system covers both). `cartoon-surface` is the
+ * Q.W3 Lane B re-model of the former `.glass-cartoon` recipe: a decoration-only
+ * utility (no tier of its own), relocated here from glass.css — which now holds
+ * only the 5-rung glass ladder. */
+
+@layer components {
+    /* ── BD.W-CARD-MATERIAL-FLOOR — the card-surface warm tint-seam enrollment ──
+       The §4 leg-(a) material floor, reconciled to the SHIPPED `--glass-tint-*`
+       seam (NOT a fork, NOT a global re-tint). The card's glass/cartoon surfaces
+       ride the `.glass-${tier}` ladder rung, whose fill is already
+       `color-mix(in oklab, --glass-bg-${tier}, --glass-tint-source --glass-tint-
+       strength)` (ladder.css) — so the card reaches the warm floor by setting a
+       CARD-LOCAL non-zero `--glass-tint-strength` (the global default at
+       surface-axis.css:83 stays `0%`, so the 6 other seam-readers — drawer / menu /
+       veil / jubilance / .btn-glass / .segmented-indicator — are byte-unchanged:
+       the blast-radius bite). `--glass-tint-source` defaults to `var(--card)` (a
+       warm cream, glass-fx.css:158), so the floor is warm by construction in BOTH
+       modes. The card clears the warm-chroma floor (C ≥ 0.02 warm) in the MATERIAL
+       itself — before the field even lands, and on a dead ground (print / reduced-
+       transparency), the "far too gray" verdict closes at the material layer.
+
+       SCOPE — `[data-surface]` is `glass` or `cartoon` (NOT `veil`: veil owns its
+       own `--veil-bg` tint seam below; NOT `opaque`: the solid `--card` plate is
+       already warm-cream). The strength is set on the host so it inherits into the
+       rung's `color-mix`. This is a card-local re-point of the SHIPPED seam — DRY,
+       no second compositing axis, the ladder rung does the mix. */
+    [data-slot="card"]:where([data-surface="glass"], [data-surface="cartoon"]) {
+        --glass-tint-strength: 8%;
+        /* BD.W-CARD-CEL-MOTION (§3.1) — the defined-edge border-ink floor. The
+           ladder rung's `--glass-border-resting`/`-quiet` ink is 4% warm
+           (glass.css:331-332) — it vanishes cream-on-cream (K3 RED). Floor the
+           card's own border-ink UP to ≥8% warm-ink so the cel reads as a defined
+           SHAPE (WCAG 1.4.11 non-text). `--glass-border-rung` is the per-rung ink
+           the accent-composed `--glass-border-accent` reads (ladder.css /
+           surfaces.css); re-pointing it card-locally floors the border WITHOUT
+           forking the rim (the keyed two-stop rim from `--glass-material-rim` is
+           CONSUMED unchanged — the card does NOT re-mint a rim). Warm (the
+           `--foreground` mix is warm-cream in both modes); the `.dark` ink lifts
+           off the near-black field through the same `--foreground` flip. */
+        --glass-border-rung: color-mix(in srgb, var(--foreground) 9%, transparent);
+    }
+
+    /* BD.W-CARD-CEL-MOTION (§3.2) — the inner catch-light over the field. A faint
+       `screen`-blended warm catch sits where the upper-right `--glass-key` sun
+       hits, lifting the cel off the field (the §3 layer-4 catch, coherent with the
+       rim + cast — ONE key). It rides the host `background-image` stack ALONGSIDE
+       the field underlayer (both are static gradients in the same longhand; the
+       catch is the FIRST layer so it sits over the warm underlayer), so it adds NO
+       pseudo (`::before` = moving specular, `::after` = grain — both occupied).
+       `screen` lifts only where there is light, never darkening — and it is below
+       content + clipped to the host radius, so it never washes the text column
+       (the K-AA carve). Under `prefers-contrast: more` the screen blend is dropped
+       (the catch is decoration, the edge is the legibility asset). */
+    [data-slot="card"][data-surface="glass"]:not(.paper-grid) {
+        /* F2.R1 W-DARK-READABILITY-REPAIR — the blend is TOKENIZED so the dark arm
+           (tokens/dark-arm.css, the `--card-field-floor-blend` re-point) swaps the
+           light `screen` LIFT for a dark `normal` SINK. In dark the near-white amber
+           key screen-blended into a hot in-card lamp (value.js card-lighting-forensics
+           artifact 1); the dark arm blends NORMAL so the warm underlayer sinks INTO the
+           deep plate instead of lifting it toward the cream label. Light default is
+           byte-identical (unset token → the `screen, normal` fallback). */
+        background-blend-mode: var(--card-field-floor-blend, screen, normal);
+    }
+    @media (prefers-contrast: more) {
+        [data-slot="card"][data-surface="glass"]:not(.paper-grid) {
+            background-blend-mode: normal;
+        }
+    }
+
+    /* ── BD.W-CARD-FIELD-FLOOR — the orphan-card static warm field underlayer ──
+       The §2 leg-(b) structural contract, card-local fallback. The COMMON case is
+       ancestor-supplied: the page mounts ONE global `[data-paper-field]` plane
+       (AppShell) behind every route, and the card composites over it. The ORPHAN
+       case is a card in an OCCLUDING context an ancestor field cannot reach (a
+       dialog / drawer / portal that paints its own opaque ground over the page
+       field) — there the card mounts its OWN cheap static warm underlayer so it is
+       NEVER gray-over-nothing wherever it is dropped.
+
+       MECHANISM — ONE static `radial-gradient` on the host `background-image`
+       longhand (the proven `.paper-grid` coexistence seam: a later
+       `background-image` COEXISTS with the glass tier's `background:` shorthand
+       fill — paints OVER the translucent color, UNDER content + UNDER both
+       pseudos, clipped to the host `border-radius` by construction). Zero JS, one
+       compositor-cached paint, PRM-static. The warm 0-alpha stops are explicit
+       `oklch(L C H / 0)` (NEVER bare `transparent` — the WebKit black-premultiply
+       hole, build-trap-(d)).
+
+       THE NO-DOUBLE-PAINT GATE (the presence-BEHIND check, NOT `closest()`): the
+       fallback paints ONLY when NO `[data-paper-field]` ancestor is present — `:where(
+       [data-paper-field]) &` switches it OFF under the global field, so a card over
+       the page field reads the page field (no local underlayer), and a 50-card grid
+       under ONE ancestor field is ONE field paint, not N. A `cartoon`/`opaque`
+       card already carries a defined edge + warm fill, so the orphan field is the
+       glass-surface case; `surface="glass"` only (the orphan glass card is the one
+       that reads gray-over-nothing). The `.paper-grid` document register is EXCLUDED
+       by selector (it sets its own grid `background-image` underlayer — a grid card
+       opts out of the warm-field fallback, not a `background-image: none` race). */
+    [data-slot="card"][data-surface="glass"]:not(.paper-grid) {
+        /* TWO static layers in ONE longhand (blended by the `background-blend-mode`
+           above — `screen, normal`): (1) the upper-right KEYED catch-light (warm,
+           `screen`-blended so it only LIFTS — the §3 catch), then (2) the warm cel
+           UNDERLAYER (one radial, amber-key toward the upper-right `--glass-key`,
+           the field fallback). Both fade to a warm 0-alpha — NEVER bare
+           `transparent` (the WebKit black-premultiply hole, build-trap-(d)). */
+        /* F2.R1 W-DARK-READABILITY-REPAIR — TOKENIZED so the dark arm swaps the two
+           hot light-amber screen radials (L≈0.9-0.96) for ONE damped warm-DARK sink
+           (tokens/dark-arm.css `--card-field-floor-image`). Light default is the two
+           radials below (unset token → byte-identical light paint). Machine-locked by
+           `proof:glass` dark-legibility DL1 (the composited hot-zone label clears AA +
+           APCA over the dark plate). */
+        background-image: var(
+            --card-field-floor-image,
+            radial-gradient(
+                60% 55% at 80% 16%,
+                oklch(0.96 0.04 78 / 0.5),
+                oklch(0.96 0.04 78 / 0) 72%
+            ),
+            radial-gradient(
+                120% 110% at 78% 22%,
+                oklch(0.9 0.075 72 / 0.5),
+                oklch(0.9 0.075 72 / 0) 70%
+            )
+        );
+    }
+
+    /* The presence-behind gate — under an ancestor field, the card reads the REAL
+       field (the page plane transmits through the translucent fill), so the local
+       fallback is switched OFF (no double paint). A 50-card grid under ONE ancestor
+       field is ONE field paint, not N local underlayers. */
+    :where([data-paper-field])
+        [data-slot="card"][data-surface="glass"]:not(.paper-grid) {
+        background-image: none;
+    }
+
+    /* Paper texture overlay — a PAPER surface reads the ONE warm raster tooth
+       (BG.W-PAPER-TEXTURE-UNIFY), not the grey `--paper-clean-texture` whisper.
+       The tooth carries its warmth at SOURCE, so the `background-blend-mode`
+       multiply (light) / screen (dark) sinks/lifts the WARM fiber into the plate.
+       Reads the paper tile period (`--paper-grain-tile`), not the 200px glass-
+       grain whisper size. The `--paper-clean-texture` name is retained only for
+       the disjoint GLASS-grain system (glass/grain-overlay.css / dock/shell.css)
+       — the register fence (paper is warm material, glass is a neutral whisper). */
+    .paper-texture {
+        background-image: var(--paper-grain-tooth);
+        background-repeat: repeat;
+        background-size: var(--paper-grain-tile);
+        background-blend-mode: multiply;
+    }
+
+    :where(.dark) .paper-texture {
+        background-blend-mode: screen;
+    }
+
+    /* BB.W-PAPER-GRID-TEXTURE — the GEOMETRIC sibling of `.paper-texture`.
+       Paints the two-frequency `--paper-grid-texture` engineering-grid as a
+       card's INTERIOR ground, clipped to the plate's own `border-radius`
+       automatically (a host `background-image`), so the math/grid brand pillar
+       reads THROUGH a document-register card at the ambient `--paper-grid-
+       opacity` — not only in the page margin an opaque plate occludes. A
+       decoration-only register (NOT a tier): it composes ON TOP of any glass/
+       paper tier, exactly like `.paper-texture` / `cartoon-surface` /
+       `veil-surface`.
+
+       BC.W-GRID-SIMPLE — the card-interior pitch UNIFIES onto the ONE
+       `--grid-*` rhythm source: `--paper-grid-texture-size` now reads
+       `var(--grid-pitch)` (scale-paper.css), retiring the prior 32px literal so
+       the demo page grid + this card interior share ONE pitch (the
+       two-parallel-28px/32px-systems fix). This card-interior register keeps its
+       OWN quieter ambient strength (`--paper-grid-opacity`), DISTINCT from the
+       full-bleed page-bg 3%/11% tier — a card interior reads softer than a page
+       wash. It is a host `background-image` only — NO `backdrop-filter`/`filter`
+       on this element, so the grid lines are NEVER convolved into the "blurry
+       mess" the page grid suffered (the de-blur discipline: the grid is the
+       card's own underlay, not a crisp grid read THROUGH a blurred glass plate).
+
+       THE SEAM (the two-pseudo-budget reveal, recorded — the Triumvirate's
+       through-glass-read locate-the-seam, NOT a token-α loop): a glass tier
+       already claims BOTH pseudos — `::before` is the moving-specular catch-
+       light (glass/material.css) and `::after` is the grain overlay
+       (glass/ladder.css). A `.paper-grid::after` would CLOBBER the grain's
+       `background-image` on the SAME single pseudo — so the grid + grain could
+       not compose (the orthogonality the spec requires). The grid therefore
+       rides the HOST element's `background-image` longhand: the glass tier's
+       `background:` SHORTHAND sets the translucent fill `background-color`, and
+       a later `background-image` longhand COEXISTS with that color (the image
+       paints OVER the color, UNDER the content + UNDER both pseudos), so the
+       grid is the card's own underlay felt THROUGH the glass tint with ZERO
+       pseudo contention — grain (`::after`) + specular (`::before`) + grid
+       (host bg-image) all paint at once. The host bg-image is clipped by the
+       host `border-radius` by construction (no `border-radius: inherit` pseudo
+       needed). A STATIC raster — gradient-stack `background-image`, one
+       compositor-cached paint, no per-frame repaint (the W6 paint-path
+       discipline). The ambient strength lives in the line-ink alpha (the
+       `--paper-grid-opacity`-scaled `--foreground` mix, scale-paper.css) since
+       a host bg-image has no independent layer-opacity — so ONE knob
+       (`--paper-grid-opacity`) still tunes the through-card strength. */
+    .paper-grid {
+        background-image: var(--paper-grid-texture);
+        background-repeat: repeat;
+        background-size:
+            calc(var(--paper-grid-texture-size) * 4)
+                calc(var(--paper-grid-texture-size) * 4),
+            calc(var(--paper-grid-texture-size) * 4)
+                calc(var(--paper-grid-texture-size) * 4),
+            var(--paper-grid-texture-size) var(--paper-grid-texture-size),
+            var(--paper-grid-texture-size) var(--paper-grid-texture-size);
+        background-blend-mode: multiply;
+    }
+
+    /* The scheme-aware dark arm — PLAIN-ancestor `.dark` (NOT a scoped
+       `:global()`; the recurring scoped-global-drop trap, recorded; this is a
+       library CSS partial, but the discipline holds). The line ink is
+       `--foreground`-derived, so the warm-cream foreground flips dark→light in
+       the `.dark` block and the grid ink auto-lifts off the near-black `--card`
+       interior with NO parallel `--paper-grid-*-dark` family — only the BLEND
+       flips (light `multiply` → dark `screen`, the legible-on-dark equivalent
+       the `.paper-texture` dark arm uses). */
+    :where(.dark) .paper-grid,
+    .dark .paper-grid {
+        background-blend-mode: screen;
+    }
+}
+
+/* ═══════════════════════════════════════════════
+   A11y — the geometric grid honors the SAME transparency idiom the organic
+   paper register establishes (paper.css). A reduced-transparency user gets a
+   clean card interior, no texture; the static grid needs no motion gate (the
+   PRM block guards a future drift only). One a11y idiom, not a grid-local fork.
+   ═══════════════════════════════════════════════ */
+@media (prefers-reduced-transparency: reduce) {
+    .paper-grid {
+        background-image: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .paper-grid {
+        /* Static raster at rest; guard a future `@property` transform drift. */
+        animation: none !important;
+    }
+}
+
+/* ── Selection-card decoration (BC.W-SELECTION-CARD — the I5 selection card) ──────
+   The ONE new Atlas component, realized as a `<Card variant="selection">`
+   DECORATION (NOT a new SFC, NOT a new tier, NOT a new compositing seam). It
+   COMPOSES the two BUILT seams — the A-2 `--glass-accent` rim (glass/rim.css +
+   glass/material.css) + the A-3 `.metal-*-border` swept rim (utilities/metal.css)
+   — and authors ZERO competing rim/background recipe of its own. The rule is a
+   TOKEN-SUBSTITUTION on the base tier (the `.glass-opaque`/`.glass-deep` precedent):
+   it re-points the EXISTING `--glass-accent-strength` (+ an OPTIONAL sub-perceptual
+   floating-tier lift) locally; it does NOT declare a `background`/`border`.
+
+   THE RIM-NOT-FILL DISCIPLINE (the no-saturated-slab structural bar): selection is
+   read by (a) the metal rim (the `.metal-*-border` class Card composes when
+   `:selected`), (b) a BOUNDED accent-strength LIFT (unselected → selected, both ≤
+   the W-GLASS-ACCENT rim ceiling), and OPTIONALLY (c) a sub-perceptual
+   `--glass-bg-floating`-tier lift (the "selected reads as glass" register). The
+   plate STAYS warm-cream translucent — the BC.W-GLASS-IDENTITY floor is inviolate.
+   This rule NEVER writes `--glass-tint-source`/`--glass-tint-strength` (the A-2
+   distinct-axis fence — the accent is rim+glint DECORATION, not whole-plate
+   legibility) and NEVER paints a `--foreground`/`--primary`/`--surface-tint` opaque
+   plate FILL (the "selected = loud fill" anti-pattern is the disease-root the gate's
+   S3 bite reds).
+
+   THE ACCENT-STRENGTH LADDER (the bounded lift, two tokens a consumer retunes):
+     unselected → --selection-accent-strength            (~16% — a calm rim glow)
+     selected   → --selection-accent-strength-selected   (~28% — brighter at the rim,
+                  still ≤ the W-GLASS-ACCENT ceiling; the data hue reads stronger at
+                  the rim/glint, NOT a flooded plate)
+   The host (Card.vue) writes `--glass-accent` (the HUE) per-instance off `data-hue`;
+   this rule supplies the STRENGTH so the calm/selected lift is ONE source. An UNSET
+   `data-hue` leaves `--glass-accent: transparent` (the @property default), so even
+   with the strength engaged the `color-mix(in oklab, X, transparent N%)` === X — the
+   A-2 no-op floor: a `variant="selection"` card with no `data-hue` is byte-identical
+   to a bare Card. A consumer may override `--glass-accent-strength` per-instance
+   (Card.vue's `data-hue-strength`); this rule is the default. */
+[data-variant="selection"] {
+    /* The bounded accent-strength ladder — both ≤ the W-GLASS-ACCENT rim ceiling.
+       A consumer retunes the calm/selected pair from these two knobs. */
+    --selection-accent-strength: 16%;
+    --selection-accent-strength-selected: 28%;
+    /* Re-point the EXISTING accent-strength seam to the calm rung (the rim glow at
+       rest). At an unset `--glass-accent: transparent` this is a provable no-op. */
+    --glass-accent-strength: var(--selection-accent-strength);
+}
+
+[data-variant="selection"][data-selected="true"] {
+    /* SELECTED — lift the accent-strength to the brighter (still-bounded) rung. The
+       brighter rim + the `.metal-*-border` Card composes are the selection read; the
+       plate is UNTOUCHED (no background/fill here — rim-not-fill). */
+    --glass-accent-strength: var(--selection-accent-strength-selected);
+    /* OPTIONAL sub-perceptual "selected reads as glass" lift — re-point the base
+       tier's resting fill toward the floating rung (the W-REGISTER-IOS tier), a
+       TOKEN re-point, NOT a `--surface-tint` gray plate, NEVER a `--foreground`
+       brand fill. The plate stays warm-cream translucent (the floating rung is the
+       SAME warm-cream material at a heavier rung, the BC.W-GLASS-IDENTITY ladder). */
+    --glass-bg-resting: var(--glass-bg-floating, var(--glass-bg-resting));
+}
+
+/* ── Cartoon surface decoration ───────────────────────────────────
+   The Memphis-sticker register. Composes ON TOP of a glass tier — it is
+   NOT itself a tier. The former `.glass-cartoon` recipe declared
+   `var(--glass-bg-cartoon, var(--glass-bg-quiet))` etc., but the
+   `--glass-{bg,blur,border}-cartoon` tokens were never defined anywhere
+   in src/ (Qχ §2): the fall-through always resolved to the `quiet` rung.
+   That phantom-token layer is dropped — background / backdrop-filter /
+   border-color come from the `glass-${tier}` class the host already
+   applies. `cartoon-surface` carries ONLY the three real deltas over a
+   bare tier: a 2px border weight, an offset-stamp shadow, and a
+   hover-lift. <Card surface="cartoon"> layers it onto its resolved tier. */
+@utility cartoon-surface {
+    border-width: 2px;
+    box-shadow: var(--shadow-cartoon-md);
+    /* Individual-transform identity base (AQ.W3 §W3.2) — state-driven 2D lift on
+       a card surface that often hosts portaled content; `translate: 0` at rest
+       mints the stacking context once. Longhand maps `translate(x, y)` 1:1. */
+    translate: 0;
+    position: relative;
+    /* BD.W-CARTOON-CASTER — the LOUD register carries `--motion-weight: 1` in the
+       SAME recipe (the loud-register coupling: so the punch is never accidentally
+       muted to ~+13.6% by inheriting the rest 0.618 — the BD.W-CARTOON-PUNCH
+       loud-register guard's concrete pass-subject). The press ramp ALIASES the
+       existing `--card-press-t` (the host's `useLiquidPress` already drives it for
+       every `pressable` card) — NO second press var, NO Card press-driver rewrite. */
+    --motion-weight: 1;
+    --cartoon-press-t: var(--card-press-t, 0);
+    transition:
+        translate var(--duration-normal) var(--ease-cartoon-punch),
+        scale var(--duration-normal) var(--ease-cartoon-punch),
+        box-shadow var(--duration-normal) var(--ease-standard);
+
+    /* BD.W-CARTOON-CASTER — the hover RE-POINTS the existing rule onto the punch
+       curve (was --spring-smooth) and guards `:not(:active)` so the press squash wins;
+       the object lifts a hair UP-RIGHT (toward the upper-right `--glass-key`) and the
+       cast deepens to the lg rung (the gap opens). ONE hover rule, no double-declare. */
+    &:hover:not(:active):not(:disabled) {
+        translate: var(--lift-sm) var(--lift-sm);
+        /* BD.W-CARD-CEL-MOTION (§5) — the cel lifts toward the light with a
+           sub-perceptual VOL-PRESERVING scale (X·Y ≈ 1: 1.015 × 0.985 ≈ 1.0): the
+           cel rising toward its sun reads as PEELING off the field, not a flat
+           sticker slide. Composes the existing `scale` transition (declared above)
+           on the punch curve. The press squash (`scale: 1.04 0.94`) wins via
+           `:not(:active)`. */
+        scale: 1.015 0.985;
+        box-shadow: var(--shadow-cartoon-lg);
+        & .cartoon-cast {
+            box-shadow: var(--shadow-cartoon-lg);
+        }
+    }
+
+    /* BD.W-CARTOON-CASTER — the press is a NON-uniform SQUASH (H5): widen X, compress
+       Y — real squash & stretch, NOT a uniform shrink. The CSS `:active` is the no-JS
+       floor; `useLiquidPress` drives `--card-press-t` 0→1 for the continuous
+       interruptible press the inert caster rides. */
+    &:active:not(:disabled) {
+        scale: 1.04 0.94;
+    }
+}
+
+/* ── BD.W-CARTOON-CASTER — the inert-child moving cel cast ───────────────────────
+   The cast rides an INERT `<span class="cartoon-cast" aria-hidden>` child the Card
+   emits when `surface="cartoon"` — NOT a `::before`/`::after` pseudo (both are
+   OCCUPIED on the real glass carrier: `::before` is the moving-specular catch-light,
+   `::after` is the grain overlay; the H2 hardening). The child is a self-contained
+   ink-plate the body floats above: it carries the SAME shipped `--shadow-cartoon-md`
+   box-shadow (set ONCE per state-flip — NEVER animated, the §L7 paint-fence) and
+   MOVES on the compositor via `translate`/`scale` only.
+
+   The cast travels DOWN-LEFT (opposite the upper-right `--glass-key`, coherent with
+   the shadow.css cel-ink geometry) as the body lifts, and SPREADS as the gap opens.
+   ONE scalar drive: `--cartoon-press-t × --motion-weight` (the `:root` PRM carve
+   zeroes `--motion-weight` → travel/spread collapse to rest). It LAGS the body
+   (~1.15× slower transition) → the ink recoils LATE on release (follow-through /
+   overlapping action). The `--cartoon-cast-dx/dy` drag-track deltas are 0 at rest
+   (the opt-in `useCartoonCast` DOM bridge is future — labeled honestly). */
+.cartoon-cast {
+    position: absolute;
+    inset: 0;
+    z-index: -1; /* behind the cel face, in front of the page */
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow: var(--shadow-cartoon-md);
+    /* the derived offset + spread — read `--motion-weight × --cartoon-press-t`. The
+       sign is DOWN-LEFT (negative X, positive Y) to match the upper-right key. */
+    --cast-travel: calc(6px * var(--motion-weight) * var(--cartoon-press-t));
+    --cast-spread: calc(1 + 0.18 * var(--motion-weight) * var(--cartoon-press-t));
+    translate: calc(-1 * var(--cast-travel) + var(--cartoon-cast-dx))
+        calc(var(--cast-travel) + var(--cartoon-cast-dy));
+    scale: var(--cast-spread);
+    /* the caster LAGS the body (~1.15×) → the late ink recoil on release. */
+    transition:
+        translate calc(var(--duration-normal) * 1.15) var(--ease-cartoon-punch),
+        scale calc(var(--duration-normal) * 1.15) var(--ease-cartoon-punch),
+        --cartoon-cast-dx var(--duration-normal) var(--ease-cartoon-punch),
+        --cartoon-cast-dy var(--duration-normal) var(--ease-cartoon-punch);
+    will-change: translate, scale;
+}
+
+/* ── BI.W-SHADOW-GRAMMAR (Law 4) — the offset-stamp requires a CARD silhouette ──
+   The hard 0-blur `--shadow-cartoon-*` offset stamp is a card-silhouette grammar: on
+   a CARD it tucks under the corner radius, but on a CAPSULE/PILL host the hard
+   directional stamp pokes off the stadium along the bottom-left arc = the lopsided
+   crescent (UF-A8/A9 — the loud `primary-audacious`/`gold-audacious` `-audacious`
+   CTAs, ss-08/ss-26). So the `.btn-punch` pill cast RE-POINTS the inert child's stamp
+   to a SOFT radius-following drop (`--shadow-lg`): the punch WEIGHT re-lands on the
+   soft drop + the press-squish + the specular gleam (the BD.W-CARTOON-PUNCH weight
+   SURVIVES — the ratified judgment), WITHOUT the hard offset crescent. The cast still
+   TRAVELS down-left on press (`--cartoon-press-t` drives translate/scale over the soft
+   drop) — the caster punch, minus the crescent. The hard offset stamp stays legal ONLY
+   under a card-radius ancestor (`.cartoon-surface`, the Card `surface="cartoon"`
+   register above). Law-4 GREEN condition of proof:geometry-grammar. */
+.btn-punch .cartoon-cast {
+    box-shadow: var(--shadow-lg);
+}
+
+/* BD.W-CARTOON-CASTER — PRM/PRT carve. Under reduced-motion `--motion-weight: 0`
+   zeroes travel/spread/squash/lag in ONE assignment (every `calc(… * --motion-weight)`
+   collapses to rest); the transition is killed. The static bold cel STAMP persists
+   (identity/legibility — only the TRAVEL/PUNCH is removed). */
+@media (prefers-reduced-motion: reduce) {
+    .cartoon-surface,
+    .cartoon-cast {
+        --motion-weight: 0;
+        transition: none;
+    }
+}
+
+/* ── Veil surface decoration (R5-7) ──────────────────────────────
+   The text-legibility PLATE register, ratified by three slides sites (the
+   deck cover subtitle / standfirst / closer lede). Conceptually the W55
+   adaptive-legibility tint applied as a LOCAL plate: a translucent glass
+   fill + blur that darkens content-on-glass over a busy/bright backdrop so
+   text clears AA, but with the BOXED look STRIPPED — no border, no rim, no
+   highlight (the user's read: the border+rim "reads as a dividing line on a
+   text plate"). It is the `surface` sibling of `cartoon` — a decoration-only
+   utility, NOT a tier of its own.
+
+   It routes the glass MATERIAL through the `--glass-*` ladder (`--veil-bg`
+   defaults to the `quiet` rung's adaptive-tint mix, `--veil-blur` to the
+   quiet blur), so the glass-cohesion model sees a sanctioned glass register
+   (the level knob scales the blur; the W55 bright-bucket darkens the fill via
+   the same inheriting tint axis the rung already reads). What it carries on TOP
+   of a bare rung is the THREE veil deltas, each a `--veil-*` knob a consumer
+   retunes:
+
+     border  : none            (--veil-border, the dividing-line strip)
+     shadow  : none            (--veil-shadow, the rim/highlight strip)
+     feather : none (default)  (--veil-feather — an OPTIONAL radial mask that
+               fades the plate edges into the backdrop; off by default so the
+               plate is a clean rectangle, on when a consumer wants the
+               soft-edged "bleed into the page" text-plate look)
+
+   <Card surface="veil"> selects it; `--veil-bg`/`--veil-blur` ride the same
+   `--glass-*` rungs as the ladder, so one `--glass-level` / `--glass-backdrop`
+   override retunes it in lockstep with every other glass surface. */
+@utility veil-surface {
+    /* The glass material — routed through the `--glass-*` ladder so the
+       cohesion model reads a sanctioned glass register, and the W55 adaptive
+       darken (the inheriting `--glass-tint-*` axis) + the `--glass-level` clarity
+       knob reach the plate with NO veil-local recipe. Defaults to the `quiet`
+       rung; a consumer re-points `--veil-bg`/`--veil-blur` to any other rung. */
+    --veil-bg: color-mix(
+        in oklab,
+        var(--glass-bg-quiet),
+        var(--glass-tint-source) var(--glass-tint-strength)
+    );
+    --veil-blur: var(--glass-blur-quiet);
+    /* The three veil deltas over a bare rung — each overridable. */
+    --veil-border: none;
+    --veil-shadow: none;
+    --veil-feather: none;
+
+    background: var(--veil-bg);
+    backdrop-filter: var(--veil-blur);
+    border: var(--veil-border);
+    box-shadow: var(--veil-shadow);
+    /* The optional radial feather — a `mask-image` only painted when
+       `--veil-feather` is set to a gradient (default `none` = no mask = a clean
+       rectangle). `mask-image: none` is the identity, so the default plate is
+       unmasked. `mask-image` Baseline 2023-12 — a non-supporting engine ignores
+       it and keeps the clean rectangle. */
+    mask-image: var(--veil-feather);
+}

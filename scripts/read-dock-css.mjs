@@ -1,9 +1,8 @@
 // AX.W06 — the dock-CSS authority reader.
 //
 // dock.css was a 1762-line god-module that EVERY dock structural-proof gate
-// read directly (`readFileSync("src/styles/dock.css")`). AX.W06 CARVED it into
-// `src/styles/dock/` cohesive partials (shell · morph · density · layers ·
-// layer-group · overflow), each @import-ed by the thin `dock.css` core in the
+// read directly. AX.W06 CARVED it into cohesive partials (shell · morph · density · layers ·
+// layer-group · overflow), each @import-ed by the colocated component root in the
 // SAME `@layer components`. The dock CSS AUTHORITY is therefore now the partial
 // SET, not the single file. This helper returns the authority as ONE
 // concatenated string (the core + the six partials in @import / cascade order),
@@ -23,29 +22,39 @@ export const DOCK_PARTIAL_ORDER = [
     // body carved into shell-regions.css to hold the no-god-module 500-line bound,
     // @import-ed IMMEDIATELY AFTER shell.css (the tail of shell.css; byte-isomorphic).
     "shell-regions.css",
+    "dock.css",
     "morph.css",
     "adaptive-legibility.css",
     "density.css",
+    "shape.css",
     "layers.css",
     "layer-group.css",
+    "crossfade.css",
     "overflow.css",
+    "fisheye.css",
+    "popover.css",
+    "section.css",
+    "cta-seat.css",
+    "search.css",
 ];
 
 /**
- * Read the dock CSS authority (the `dock.css` core + the `src/styles/dock/`
+ * Read the dock CSS authority (the component root + its colocated
  * partials) as one concatenated string in cascade order. `root` is the repo
  * root (the same `ROOT` each gate's `cliPaths()` already computes).
  */
 export function readDockCss(root) {
-    const core = resolve(root, "src/styles/dock.css");
-    const dir = resolve(root, "src/styles/dock");
+    const core = resolve(root, "src/components/dock/styles/index.css");
+    const dir = resolve(root, "src/components/dock/styles");
     const parts = [];
     if (existsSync(core)) parts.push(readFileSync(core, "utf8"));
     if (existsSync(dir)) {
         // Read in the canonical cascade order; append any future partial not yet
         // listed (alpha) so a new cohesion axis is never silently dropped.
         const present = new Set(
-            readdirSync(dir).filter((f) => f.endsWith(".css")),
+            readdirSync(dir).filter(
+                (f) => f.endsWith(".css") && !["index.css", "controls.css"].includes(f),
+            ),
         );
         const ordered = [
             ...DOCK_PARTIAL_ORDER.filter((f) => present.has(f)),

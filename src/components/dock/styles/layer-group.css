@@ -1,0 +1,350 @@
+/* Dock layer-group and switcher rail styles.
+ * (AX.W06 carve).
+ *
+ * Carved from the dock.css god-module (slice 25). This partial owns the
+ * `<DockLayerGroup>` family: the `<DockSeparator>` orientation+layout-aware
+ * paint (vertical hairline · horizontal rule · grid section-break), the
+ * `.dock-spacer`, the `.dock-layer-group` flex axes, the `.dock-layer-rail`
+ * layer-switcher rail (the W45 DK8 rail-bg plate + the axis-aware travelling
+ * `.dock-layer-tab-indicator`), the `.dock-layer-stack`, and the axis-aware
+ * `.dock-layer-item-host` pane.
+ *
+ * NOTE: this `.dock-layer-rail` is the LAYER-SWITCHER rail inside a
+ * `<DockLayerGroup>` — the in-dock switcher tab strip. AZ.W-DOCK-TAXONOMY
+ * de-overloaded the "rail" noun: the `GlassDock variant="rail"` vertical-nav
+ * variant is GONE (a vertical nav column is now `orientation="vertical"`), and
+ * `<InstrumentRail>` retired at AY W-IC1. `.dock-layer-rail` is the ONLY surviving
+ * "rail" in the dock band; the noun is otherwise free (reserved for the
+ * W-RAIL-EXTEND beyond-dock facility).
+ *
+ * @import-ed by dock.css in cascade order, in the SAME `@layer components` — the
+ * carve is isomorphic (same layer, same source order → ZERO visual delta). */
+
+@layer components {
+    /* AX.W45 D13-c / DK5 — the `<DockSeparator>` paint source. The separator is now
+       a first-class orientation+layout-aware primitive (DockSeparator.vue) that
+       carries the orientation contract the bare class could not. It demarcates dock
+       item GROUPS (transport | navigation | settings) for affordance hierarchy. The
+       paint is PERPENDICULAR to the layout axis:
+         - row dock (horizontal, the default)   → a VERTICAL 1px hairline
+         - column dock (vertical / rail)         → a HORIZONTAL 1px rule, cross-extent
+         - grid dock (`layout="grid"`)           → a full-row SECTION BREAK
+       The component sets `data-orientation` from `useOptionalDockContext`; the
+       dock-root ancestor class (`.glass-dock.vertical` / `.layout-grid`) drives the
+       perpendicular paint so the same primitive reads correctly at every layout. */
+    .dock-separator {
+        @apply flex-shrink-0;
+        width: 1px;
+        height: var(--dock-separator-height);
+        margin: 0 0.375rem;
+        background: var(--surface-tint-15);
+    }
+
+    /* Column (vertical) dock — a HORIZONTAL hairline across the column's cross
+       extent (a 1px-WIDE vertical sliver does not divide a stack). */
+    .glass-dock.vertical .dock-separator,
+    .dock-layer-group.vertical .dock-separator,
+    .dock-separator[data-orientation="vertical"] {
+        width: var(--dock-separator-height);
+        height: 1px;
+        align-self: center;
+        margin: 0.375rem 0;
+    }
+
+    /* Grid (big-dock) — a full-row SECTION BREAK spanning every column, the
+       Launchpad-style group demarcation (a 1px sliver in one cell is useless). */
+    .glass-dock.layout-grid .dock-separator {
+        grid-column: 1 / -1;
+        width: 100%;
+        height: 1px;
+        margin: var(--dock-layer-gap, 0.375rem) 0;
+        align-self: center;
+    }
+
+    .dock-spacer {
+        @apply flex-1;
+    }
+
+    .dock-layer-group {
+        display: flex;
+        gap: var(--dock-layer-group-gap, var(--dock-layer-gap, 0.25rem));
+        min-width: 0;
+        min-height: 0;
+    }
+
+    .dock-layer-group.horizontal {
+        flex-direction: row;
+        align-items: stretch;
+    }
+
+    .dock-layer-group.horizontal.rail-end {
+        flex-direction: row-reverse;
+    }
+
+    .dock-layer-group.vertical {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .dock-layer-group.vertical.rail-end {
+        flex-direction: column-reverse;
+    }
+
+    /* AZ.W-DOCK-RAIL — the rail is a HAIRLINE register, not a fused plate. The
+       AX.W45 `--surface-tint-8` filled plate + `--radius-md` rounded background
+       (the "heavy dark blob column" R3-1) are RETIRED: the rail box paints NO fill
+       (`--dock-layer-rail-bg` defaults transparent at §sizing) and carries no
+       rounded plate background. The single `border-right` hairline — re-keyed to
+       the tunable `--dock-layer-rail-divider` token — is the only visible rail
+       edge: a thin rule between the switcher column and the dock body. The
+       hover/active affordance reads the `--dock-layer-rail-{hover,active}` glass
+       tints, so the whole rail ladder is tunable from §sizing. */
+    /* BG.W-DOCK-CONSUMER-FENCE — the switcher-rail + stack + pane internal parts carry
+       the dock-root ANCESTRY anchor (`:where(.glass-dock, .dock-layer-group)`, specificity
+       0,0,0) so a consumer element with a coincidental `.dock-layer-*` class OUTSIDE a dock
+       is never painted/repositioned. Every internal part here lives under `.dock-layer-group`
+       (a standalone `<DockLayerGroup>` too) — byte-identical match, same cascade/source order.
+       The `.dock-layer-group`-keyed rules ABOVE stay bare (the component-root identity). */
+    :where(.glass-dock, .dock-layer-group) .dock-layer-rail {
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        /* AY.W-DOCK-NAV B6 — `align-self: start` (not the group's `stretch`
+           default) so the column rail reports its OWN intrinsic content height
+           (the stacked tabs) to the group's cross-axis sizing rather than being
+           stretched to the group's content-row height. Under `stretch` the rail's
+           height resolved to the group height, which was the single content-row
+           height — circular: the rail's 3 tall tabs overflowed a 40px rail and the
+           lower tabs + the indicator fell below the dock floor (the B6 break). With
+           `align-self: start` the rail demands its natural column height, the group
+           grows to it, and the dock grows to contain the whole rail. The
+           `min-height: max-content` belt makes the demand explicit — a row-flex
+           child's cross-size can otherwise resolve to the (smaller) container row
+           height even under `align-self: start`; `max-content` floors the rail at
+           its stacked-tab content height so the chain (group → pane → dock) grows
+           to fit. */
+        align-self: start;
+        min-height: max-content;
+        gap: var(--dock-layer-rail-gap, 0.125rem);
+        padding: var(--dock-layer-rail-padding, 0.125rem);
+        background: var(--dock-layer-rail-bg, transparent);
+        border-right: 1px solid
+            var(
+                --dock-layer-rail-divider,
+                color-mix(in srgb, var(--border) 40%, transparent)
+            );
+    }
+
+    .dock-layer-group.vertical .dock-layer-rail {
+        flex-direction: row;
+        border-right: none;
+        border-bottom: 1px solid
+            var(
+                --dock-layer-rail-divider,
+                color-mix(in srgb, var(--border) 40%, transparent)
+            );
+    }
+
+    .dock-layer-group.horizontal.rail-end .dock-layer-rail {
+        border-right: none;
+        border-left: 1px solid
+            var(
+                --dock-layer-rail-divider,
+                color-mix(in srgb, var(--border) 40%, transparent)
+            );
+    }
+
+    .dock-layer-group.vertical.rail-end .dock-layer-rail {
+        border-bottom: none;
+        border-top: 1px solid
+            var(
+                --dock-layer-rail-divider,
+                color-mix(in srgb, var(--border) 40%, transparent)
+            );
+    }
+
+    /* AU.W8.4 — the rail is a reka-ui Tabs contract. The travelling
+       `.dock-layer-tab-indicator` (the reka TabsIndicator) now carries the
+       active affordance; the rail is `position: relative` so the indicator's
+       absolute placement is rail-local. */
+    :where(.glass-dock, .dock-layer-group) .dock-layer-rail {
+        position: relative;
+    }
+
+    :where(.glass-dock, .dock-layer-group) .dock-layer-rail .dock-layer-tab {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        /* AY.W-DOCK-NAV B6 — `flex-shrink: 0` so the stacked tabs in the column rail
+           hold their full size and the rail demands its natural content height (no
+           tab squish). With the rail's `align-self: start` this makes the rail report
+           its true column height to the group's cross-axis sizing, growing the dock
+           to contain all the tabs + the travelling indicator (the B6 un-clip). */
+        flex-shrink: 0;
+        width: var(--dock-layer-tab-size, var(--dock-control-size, 1.75rem));
+        height: var(--dock-layer-tab-size, var(--dock-control-size, 1.75rem));
+        border: 0;
+        border-radius: var(--dock-layer-tab-radius, var(--radius-sm));
+        background: transparent;
+        /* AZ.W-DOCK-RAIL — the rest glyph lifts OFF the low-contrast
+           `--muted-foreground` (which read sub-AA over the now-hairline transparent
+           backdrop) to the nav-glyph contrast register: a strong warm-ink tint of
+           the dock foreground (`--dock-fg-on-aurora` → `--foreground`), tempered to
+           ~78% for the unselected read while staying ≥4.5:1 over the dock substrate.
+           The selected tab flips to the full register below. */
+        color: var(
+            --dock-layer-rail-glyph,
+            color-mix(
+                in srgb,
+                var(--dock-fg-on-aurora, var(--foreground)) 78%,
+                transparent
+            )
+        );
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.75rem;
+        /* The tab glyph rides above the travelling indicator backplate. */
+        z-index: 1;
+        transition:
+            background var(--dock-motion-fast),
+            color var(--dock-motion-fast);
+    }
+
+    /* AZ.W-DOCK-RAIL — floor the rail glyph. The `size-4` (16px) icon class on the
+       lucide component does not survive the column inline-flex: with no concrete
+       `width`/`flex-shrink`, the un-floored SVG collapsed to a 4px sliver
+       (F2-R3-1). This rule floors BOTH axes to 1rem (16px) and pins
+       `flex-shrink: 0` so the glyph never re-squishes inside the flex tab. */
+    :where(.glass-dock, .dock-layer-group) .dock-layer-rail .dock-layer-tab svg {
+        width: 1rem;
+        height: 1rem;
+        flex-shrink: 0;
+    }
+
+    :where(.glass-dock, .dock-layer-group) .dock-layer-rail .dock-layer-tab:hover {
+        background: var(
+            --dock-layer-rail-hover,
+            color-mix(in srgb, var(--accent) 30%, transparent)
+        );
+        color: var(--dock-fg-on-aurora, var(--foreground));
+    }
+
+    /* AU.W8.4 — KEEP the active glyph tint on the selected tab (reka emits
+       `data-state="active"` + `aria-selected="true"`); the per-button active
+       BACKGROUND is RETIRED — the travelling indicator carries that affordance.
+       AZ.W-DOCK-RAIL — the selected glyph reads the full warm-ink register (the
+       nav-glyph contrast canon), deferring the exact accent to W-REGISTER-IOS's
+       root via `--dock-rail-active-accent` (defaults to the dock foreground, NOT
+       a saturated brand `--primary`). */
+    :where(.glass-dock, .dock-layer-group)
+        .dock-layer-rail
+        .dock-layer-tab[aria-selected="true"] {
+        color: var(
+            --dock-rail-active-accent,
+            var(--dock-fg-on-aurora, var(--foreground))
+        );
+    }
+
+    /* AU.W8.4 — the dock control focus-ring contract does not cover
+       `.dock-layer-tab` (the rail tab is not in the `.dock-icon-button` family).
+       The roving tabindex means only the active tab is in the tab order; a
+       focus-visible tab paints the shared dock ring. */
+    :where(.glass-dock, .dock-layer-group) .dock-layer-rail [role="tab"]:focus-visible {
+        box-shadow: var(--focus-ring-shadow);
+        outline: none;
+    }
+
+    /* BI.W-DOCK-FOLD — the travelling indicator is AXIS-AWARE and driven by the ONE
+       traveling-indicator writer (`useSelectionIndicator`, via `useSelectionGroup`),
+       NOT the retired reka `--reka-tabs-indicator-*` path. The writer emits the
+       travel-axis size + a center-anchored `transform` + `opacity` as an INLINE style
+       on this element (Chrome ≡ Safari by construction — one code path, no anchor
+       branch). The DEFAULT (horizontal-group) rail is a COLUMN of stacked tabs, so the
+       indicator travels the BLOCK (Y) axis: the base rule fixes the CROSS-axis size
+       (width) + the resting look; the inline writer fills height + translateY. The
+       `.vertical` group's ROW rail overrides the cross axis (height) and the writer
+       fills width + translateX. The active-tab plate reads the tunable
+       `--dock-layer-rail-active` rung.
+
+       AY.W-DOCK2 (D5 one-clock) — a rail tab switch is a DISCRETE selection (the user
+       picks a pane), NOT the box collapse↔expand morph, so the indicator glides on the
+       `--spring-snappy` register (the SAME curve `SegmentedTabs`' indicator rides),
+       never a fixed-linear `--dock-motion-resize` timer. */
+    :where(.glass-dock, .dock-layer-group) .dock-layer-rail .dock-layer-tab-indicator {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: var(--dock-layer-tab-size, var(--dock-control-size, 1.75rem));
+        opacity: 0;
+        border-radius: var(--dock-layer-tab-radius, var(--radius-sm));
+        /* AZ.W-DOCK-RAIL — the travelling indicator paints the glass-register
+           `--dock-layer-rail-active` (defaults to `--glass-bg-floating`, the
+           "selected reads as glass" register). The inline fallback is the SAME
+           glass tier — NOT the saturated `--primary 15%` warm-red mix. This token
+           rule is the sole paint (no baked plate utility to inherit). */
+        background: var(--dock-layer-rail-active, var(--glass-bg-floating));
+        transition:
+            width var(--duration-fast) var(--spring-snappy),
+            height var(--duration-fast) var(--spring-snappy),
+            transform var(--duration-fast) var(--spring-snappy);
+        pointer-events: none;
+    }
+
+    /* The `.vertical` group's rail is a ROW of tabs (flex-direction: row), so the
+       indicator travels the INLINE (X) axis. The cross axis (height) is the base
+       size; the writer fills width + translateX. */
+    .dock-layer-group.vertical .dock-layer-rail .dock-layer-tab-indicator {
+        width: auto;
+        height: var(--dock-layer-tab-size, var(--dock-control-size, 1.75rem));
+    }
+
+    :where(.glass-dock, .dock-layer-group) .dock-layer-stack {
+        position: relative;
+        display: grid;
+        /* AW.W2 — the morph axis (width for a horizontal group, height for a
+           vertical one) is driven by the `useLayerTransition` SpringProgress in
+           pixel space (FLIP path) or the View-Transition (native path); a CSS
+           `width`/`height` transition here would be a SECOND driver on the same
+           axis (the AV.W9.0 dual-driver race that froze the dock). The cross axis
+           is intrinsic-sized and never morphs. So NO size transition on the stack
+           — one owner per axis. */
+    }
+
+    /* Base layout — the crossfade + hit-test contract is shared with
+       `.dock-layer` above (see "Layer crossfade + hit-test contract"). The
+       default state is inactive: absolute + inset:0. */
+    :where(.glass-dock, .dock-layer-group) .dock-layer-item-host {
+        grid-area: 1 / 1;
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        gap: var(--dock-layer-gap, 0.375rem);
+        position: absolute;
+        inset: 0;
+    }
+
+    :where(.glass-dock, .dock-layer-group) .dock-layer-item-host.is-active {
+        position: relative;
+        inset: auto;
+        width: max-content;
+        min-width: 0;
+    }
+
+    /* AP.W3 — axis-aware layer pane. The stack + `useLayerTransition` are
+       axis-aware, but the pane was hardcoded to a no-wrap ROW with
+       `width: max-content` — forcing a `vertical` group's content onto one
+       horizontal line that could not grow down (the vertical-overflow fight).
+       A vertical group stacks in a column, stretches, wraps, and block-sizes
+       to the height the stack animates. Horizontal byte-identical. */
+    .dock-layer-group.vertical .dock-layer-item-host {
+        flex-direction: column;
+        align-items: stretch;
+        white-space: normal;
+    }
+
+    .dock-layer-group.vertical .dock-layer-item-host.is-active {
+        width: auto;
+        height: max-content;
+    }
+}

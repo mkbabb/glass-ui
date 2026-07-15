@@ -1,0 +1,87 @@
+/* Dock CTA-receive landing seat.
+ * CTA-SEAT; the speedtest-AX BC-W2 + BC-W3 fold).
+ *
+ * THE MOVE. `useDockCtaReceive` (the BB.B2 morph half) flies an EXTERNAL CTA onto a
+ * dock control's rect; this partial makes the control it lands on a SEAT that was
+ * visibly RESERVED for it. While the CTA is in flight (or pending), the target dock
+ * control carries `data-cta-pending` (written by `setPending()` on the
+ * `useDockCtaReceive` return): the control shows a quiet dim GHOST (a placeholder
+ * awaiting its arrival) AND reserves its resting footprint from frame 0 so the dock
+ * box does NOT jump when the CTA lands. On `clearPending()` (the default hand-off
+ * fires it as the CTA lands) the attribute is removed and the seat REVEALS its real
+ * content with a plain `transition: opacity` FLIP.
+ *
+ * THE NO-BOX-JUMP (T2). The reserve is a STATIC `min-inline-size`/`min-block-size`
+ * keyed off `--dock-control-size`/`--dock-layer-height` (the control's resting box) —
+ * a ONE-TIME reservation set the instant `setPending()` fires, NEVER an animated
+ * dimension (the W-DESKTOP-RESERVE static-frame-0 precedent). The dock's shrink-wrap
+ * is already at the seated width, so the CTA lands into an already-sized hole; the box
+ * never grows on reveal. `proof:no-layout-animation` holds — no `transition: width`/
+ * animated min-* anywhere here.
+ *
+ * THE FLIP REVEAL (T3). The seat is a CONTENT swap on an already-sized box, NOT a box
+ * morph — so the reveal is a PLAIN `transition: opacity` on the `--ease-out`
+ * no-overshoot register (a content reveal must not overshoot — W-MOTION-CANON P2). It
+ * does NOT ride the dock collapse/expand morph-stagger (`--dock-expand-t`/the child
+ * stagger); re-using the morph clock would read as a janky stagger-restart on a
+ * content reveal.
+ *
+ * RECT-DRIVEN, LAYOUT-AGNOSTIC (Gate-1 Q5). The seat targets `[data-cta-pending]` on
+ * ANY dock control — it makes NO assumption about a skip-arrow affordance (a
+ * consumer-side functional skip control that may or may not be present). The reserve
+ * is the control's own resting footprint; the seat works with or without arrows.
+ *
+ * COMPOSITOR-ONLY. `setPending`/`clearPending` toggle the data attribute; this partial
+ * paints with `opacity` + the static reserve. No layout property is animated. The
+ * `--cta-seat-*` knobs are the consumer retune seam.
+ *
+ * @import-ed by dock.css in the dock partial cascade, in the SAME `@layer components`. */
+
+@layer components {
+    /* The armed seat — the control is RESERVED. The static min-*-size locks the resting
+       footprint from frame 0 (the no-box-jump); the dim opacity is the placeholder
+       ghost awaiting the CTA's arrival. The `transition: opacity` is declared HERE (not
+       only on the cleared state) so the GHOST→content reveal is a smooth fade in BOTH
+       directions on the SAME compositor-safe register — the box is already sized, only
+       the opacity moves. */
+    [data-cta-pending] {
+        /* The STATIC resting-geometry reserve (T2) — a one-time min-*-size off the
+           control's own resting box. NEVER transitioned (an animated dimension
+           CLS-storms — the proof:no-layout-animation floor). */
+        min-inline-size: var(--dock-control-size, var(--size-icon-btn));
+        min-block-size: var(
+            --dock-layer-height,
+            var(--dock-control-size, var(--size-icon-btn))
+        );
+
+        /* The dim GHOST placeholder — the control awaits its arrival (T3). */
+        opacity: var(--cta-seat-ghost-opacity, 0.35);
+
+        /* The FLIP reveal register — a PLAIN opacity transition on --ease-out
+           (no-overshoot). Default duration tracks the snappy spring envelope so the
+           reveal reads as the same family as the morph that lands the CTA. */
+        transition: opacity
+            var(--cta-seat-reveal-duration, var(--spring-snappy-duration))
+            var(--ease-out);
+    }
+
+    /* The seated CONTENT also dims while pending — the icon/label is the thing that
+       fades back in on reveal. Direct-child targeting keeps the seat layout-agnostic
+       (it does not name a control class — Q5). */
+    [data-cta-pending] > * {
+        opacity: var(--cta-seat-ghost-opacity, 0.35);
+        transition: opacity
+            var(--cta-seat-reveal-duration, var(--spring-snappy-duration))
+            var(--ease-out);
+    }
+
+    /* PRM — the reveal is an INSTANT opacity swap (the vestibular floor; the seat snaps
+       to its content, zero transition frames). The reserve is unchanged (it is static,
+       not a motion). The gesture completes; the animation is off. */
+    @media (prefers-reduced-motion: reduce) {
+        [data-cta-pending],
+        [data-cta-pending] > * {
+            transition: none;
+        }
+    }
+}

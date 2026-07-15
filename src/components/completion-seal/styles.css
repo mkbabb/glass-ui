@@ -1,0 +1,201 @@
+/* CompletionSeal component styles.
+ * BC.W-AX-COMPLETION-SEAL — the hero-scale earned-GOLD completion seal.
+ *
+ * A determinate process completes and a HERO-SCALE gold mark DRAWS itself onto the
+ * surface: the stroke INKS (a `stroke-dashoffset` wipe on the registered `--seal-draw`
+ * <percentage>), settles with a small spring overshoot (the `--seal-scale` SPATIAL leg
+ * on the seal's own `--spring-snappy`/`--spring-bouncy` clock), and glints ONCE on
+ * settle (the `--seal-glint` + the W-AX-METAL-GLOW gold catch-light). It is GOLD because
+ * completion is EARNED — the ink reads the W-PHASE-PALETTE completion register
+ * (`--phase-complete-color`/`--color-gold`), so a consumer re-inking completion re-inks
+ * the seal in lockstep. The seal mints NO new gold token + does NOT re-author the metal
+ * glow — it COMPOSES both (the earned-gold register has ONE home).
+ *
+ * ONE-SHOT: the draw fires ONCE on `play` (the `.completion-seal[data-play]` arm), then
+ * holds the static fully-drawn seal — no looping shimmer (the §6 calm register; the disco
+ * family stays gone). PRM-gated: under `prefers-reduced-motion: reduce` the seal appears
+ * instantly fully-drawn (`--seal-draw: 100%` snap), no stroke animation, no glint sweep
+ * (the seal is correct, the motion off — the vestibular floor).
+ *
+ * COMPOSITOR-ONLY: the draw rides `stroke-dashoffset` (a paint prop) + `transform` (the
+ * scale) + `filter`/`opacity` (the glint) — NO layout property animates
+ * (`proof:no-layout-animation` holds). The registrations live in
+ * tokens/property-regs.css §18 (the specular/border-progress split: the @property reg
+ * there, the consumption here). */
+
+.completion-seal {
+    /* The seal stroke ink — the EARNED-gold completion register (Q2). The runtime
+       cascade default is the token form: a consumer (or any ancestor) re-inking
+       `--phase-complete-color` re-inks the seal. The @property `initial-value` literal
+       light-gold is only the non-supporting-engine fallback. */
+    --seal-ink: var(--phase-complete-color, var(--color-gold));
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    /* The settle scale rides the SPATIAL leg — a small overshoot on the seal's own
+       spring clock (NOT a generic --duration-*). Compositor-only (transform). */
+    transform: scale(var(--seal-scale, 1));
+}
+
+/* The PERSONAL-BEST earned-gold garnish (BG.W-SEAL-DISC) — a result that beat the user's
+   historical best re-points the seal ink onto the brighter earned-gold register. The seal
+   mints NO new gold literal — `--seal-best` COMPOSES the gold FAMILY (`--color-gold-light`,
+   the brighter earned gold), so a consumer re-tuning the gold family re-tunes the
+   best-garnish in lockstep (the earned-gold register has ONE home; the Q2 no-re-author
+   fence). Gold is EARNED — the personal-best coin reads a touch brighter, never a new
+   hue. */
+.completion-seal[data-best] {
+    --seal-best: var(--color-gold-light, var(--gold-light));
+    --seal-ink: var(--seal-best);
+}
+
+/* The DISC gesture — the composed earned-coin (disc→ring→check). The three layers stagger
+   on animation-delay off ONE gold-draw mechanism; the sequencing clocks are token-first
+   (a consumer retunes the cadence). The disc FACE lands, then the ring draws around it,
+   then the check draws inside. */
+.completion-seal[data-shape="disc"] {
+    --seal-ring-delay: var(--spring-snappy-duration, 0.34s);
+    --seal-check-delay: calc(var(--spring-snappy-duration, 0.34s) * 2);
+}
+
+/* The disc FACE — the earned-coin the ring draws around. A translucent glass-gold coin
+   (the warm-cream liquid-glass identity — NOT an opaque slab) so the ring + check read as
+   saturated gold ON the whisper-gold face. The fill defaults visible so a non-animating /
+   PRM / non-supporting seal shows the settled coin. Token-first (`--seal-disc-fill`). */
+.completion-seal__disc {
+    fill: var(--seal-disc-fill, color-mix(in oklab, var(--seal-ink), transparent 82%));
+    stroke: none;
+}
+
+/* The hero-scale gold-draw glyph — an SVG <path>/<circle> stroked in `--seal-ink`. The
+   stroke INKS itself via the `--seal-draw` wipe (a stroke-dashoffset paint, never a
+   fade). The glint reads the W-AX-METAL-GLOW catch-light (composed, not re-authored). */
+.completion-seal__mark {
+    fill: none;
+    stroke: var(--seal-ink);
+    stroke-width: var(--seal-stroke-width, 6);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    /* The stroke-reveal: the dash array is the full path length, the offset rides the
+       `--seal-draw` extent (100% = drawn → offset 0; 0% = undrawn → offset = full
+       length). pathLength="100" normalizes the glyph so the wipe is path-agnostic. */
+    stroke-dasharray: 100;
+    stroke-dashoffset: calc(100 - var(--seal-draw, 100%) / 1%);
+    /* The one-pass gold glint on settle — the W-AX-METAL-GLOW catch-light, scaled by
+       `--seal-glint` (0 at rest → 1 on settle-pass). A drop-shadow halo of the seal's
+       OWN gold ink at the metal-glow radius/strength — composed, never re-authored.
+       The seal is NOT a `.metal-*` element, so the bare `--metal-glow-blur`/`-opacity`
+       (declared scoped inside `.metal-{gold,silver,bronze}`) do not cascade here; the
+       seal CONSUMES THE REGISTER by chaining to the `:root` `-default` retune seam
+       (glass-fx.css), NOT a hardcoded magic-number copy — a consumer who retunes
+       `--metal-glow-blur-default` re-tunes the seal halo in lockstep. */
+    --metal-glow-blur: var(--metal-glow-blur-default, 0.5em);
+    --metal-glow-opacity: var(--metal-glow-opacity-default, 0.35);
+    filter: drop-shadow(
+        0 0 calc(var(--metal-glow-blur) * var(--seal-glint, 0))
+            color-mix(
+                in oklab,
+                var(--seal-ink),
+                transparent
+                    calc(100% - var(--metal-glow-opacity) * var(--seal-glint, 0) * 100%)
+            )
+    );
+}
+
+/* THE ONE-SHOT DRAW — fires ONCE on `play`, then holds static. PRM-gated: the whole
+   motion sits inside the no-preference gate (under reduce the seal is the static
+   fully-drawn mark, the @property initial-values). The draw is NOT a loop — a single
+   pass each on the stroke-reveal + the settle + the glint. */
+@media (prefers-reduced-motion: no-preference) {
+    /* Every shape's coin lands with the settle overshoot (the root scale, all shapes). */
+    .completion-seal[data-play] {
+        animation: completion-seal-settle var(--spring-bouncy-duration, 0.57s)
+            var(--spring-bouncy) both;
+    }
+    /* The single-mark shapes (check / ring / wordmark) — the ONE draw + settle-glint. */
+    .completion-seal:not([data-shape="disc"])[data-play] .completion-seal__mark {
+        animation:
+            completion-seal-draw var(--spring-snappy-duration, 0.34s)
+                var(--ease-out, ease-out) both,
+            completion-seal-glint var(--spring-snappy-duration, 0.34s)
+                var(--ease-out, ease-out) var(--spring-snappy-duration, 0.34s) both;
+    }
+
+    /* The disc gesture — the three layers stagger disc→ring→check on the ONE draw
+       mechanism (the staggered animation-delays sequence same-clock passes; no fourth
+       recipe). The FACE fades in (opacity), the ring draws around it, then the check
+       draws inside + glints once on its own arrival. */
+    .completion-seal[data-shape="disc"][data-play] .completion-seal__disc {
+        animation: completion-seal-disc-in var(--spring-snappy-duration, 0.34s)
+            var(--ease-out, ease-out) both;
+    }
+    .completion-seal[data-shape="disc"][data-play] .completion-seal__ring {
+        animation: completion-seal-draw var(--spring-snappy-duration, 0.34s)
+            var(--ease-out, ease-out) var(--seal-ring-delay, 0.34s) both;
+    }
+    .completion-seal[data-shape="disc"][data-play] .completion-seal__check {
+        animation:
+            completion-seal-draw var(--spring-snappy-duration, 0.34s)
+                var(--ease-out, ease-out) var(--seal-check-delay, 0.68s) both,
+            completion-seal-glint var(--spring-snappy-duration, 0.34s)
+                var(--ease-out, ease-out)
+                calc(
+                    var(--seal-check-delay, 0.68s) +
+                        var(--spring-snappy-duration, 0.34s)
+                )
+                both;
+    }
+}
+
+/* The stroke-reveal: the gold INKS itself 0→full (a stroke-dashoffset paint wipe — the
+   editorial draw-on). The registered `--seal-draw` interpolates; the offset reads it. */
+@keyframes completion-seal-draw {
+    from {
+        --seal-draw: 0%;
+    }
+    to {
+        --seal-draw: 100%;
+    }
+}
+
+/* The disc FACE materialize (BG.W-SEAL-DISC) — the earned-coin face fades in before the
+   ring draws around it (the first beat of the disc→ring→check gesture). Compositor-only
+   (opacity — a paint channel, NO layout property). `both` fill holds the settled visible
+   face; under PRM (this whole @media block is inert) the face is the static visible coin
+   (the disc's CSS default opacity 1). */
+@keyframes completion-seal-disc-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* The settle: the seal lands with a small overshoot (the SPATIAL enter-bounce). The
+   transform scale rides the `--seal-scale` spring; the keyframe nudges the scale once
+   (the §6 calm overshoot — an ENTER may overshoot on arrival). Compositor-only. */
+@keyframes completion-seal-settle {
+    from {
+        --seal-scale: 0.92;
+    }
+    to {
+        --seal-scale: 1;
+    }
+}
+
+/* The glint: a ONE-PASS gold catch-light sweep on settle (0 → peak → 0). NOT a loop —
+   a single pass, then the seal holds static at glint 0 (the metal-glow whisper is the
+   resting register; the disco family stays gone). */
+@keyframes completion-seal-glint {
+    0% {
+        --seal-glint: 0;
+    }
+    45% {
+        --seal-glint: 1;
+    }
+    100% {
+        --seal-glint: 0;
+    }
+}

@@ -1,0 +1,439 @@
+/* Drawer component styles.
+ * drawer.css — Detented bottom-sheet grammar (AN.W3; BB.W-DRAWER-ABROGATE).
+ *
+ * THE HOUSE owns the snap math end-to-end now (vaul-vue ABROGATED). The Drawer
+ * family composes the reka `DialogRoot`/`DialogPortal`/`DialogContent` headless
+ * substrate (the SAME vueuse-free substrate every other compound wrapper binds),
+ * and the snap settle is driven by ONE house `SpringProgress` on the `DRAWER_SNAP`
+ * register (`useDrawerSnap.ts`, the §6 dock-morph `linear()` clock — NOT a bespoke
+ * `cubic-bezier(.32,.72,0,1)` transition; that was vaul's). The engine writes the
+ * `--glass-drawer-t` snap-fraction scalar (0 = closed/offscreen, 1 = the fullest
+ * detent) the content root reads as its translate; this file owns the LOOK: the
+ * glass sheet surface, the rounded peek handle, the snap-stop indicator rules, and
+ * the detent-fill geometry. This file is the substrate so a consumer mounting
+ * `<Drawer mode="live-behind">` does not re-author the three detents from scratch.
+ *
+ * Token-first — every visual axis reads a custom property. Consumers retune
+ * the sheet by overriding the rungs below, never by editing this file.
+ */
+
+/* The snap-fraction scalar the house `useDrawerSnap` engine writes per frame. The
+ * content root's inline `transform` reads it (DrawerContent.vue). BG.W-DRAWER-PAINT-BIND
+ * (NO-MASKING-FALLBACK edict, USER 07-03) — the registered default is `0` (the CSS
+ * CLOSED state / offscreen), NEVER `1`. A `1` initial seated the sheet FULL-OPEN
+ * whenever the engine's `writeScalar` was dead, silently MASKING the model↔paint sever
+ * (the sheet looked open while the scalar was never written). At `0` an un-written
+ * sheet reads offscreen — the dead writer fails LOUD (the sheet is invisible), never
+ * hidden. The live engine seats + slides the sheet in from this closed base. */
+@property --glass-drawer-t {
+    syntax: "<number>";
+    inherits: false;
+    initial-value: 0;
+}
+
+/* BD.W-OVERLAY-STAGE-COUPLE — `--stage-t`, the ONE registered STAGING scalar (0 =
+ * closed/un-staged → 1 = fully staged). The whole modal band rides this ONE knob:
+ * the drawer's surface FREEZE (A), the scrim DEEPEN (B), the page RECEDE+SCALE (C),
+ * the opt-in blur ENGAGE (D) are all pure `calc()` reads OF it.
+ *
+ * BI.W-DRAWER-PERF — `inherits: false`. The scalar is SCOPED-written onto each reader
+ * root DIRECTLY (the sheet · the scrim `[data-stage-scrim]` · the page-wrapper
+ * `[data-stage-wrapper]`), and every consumer reads it on the SAME element it is
+ * written to — no cross-subtree inheritance is relied upon. `inherits: false` is what
+ * makes the scoping cheap: a write on the app-root wrapper recalcs ONLY the wrapper,
+ * not the whole app subtree an `inherits: true` write on that ancestor would invalidate
+ * (the 120× main-thread lever the `documentElement` writer paid; the drawer's per-frame
+ * writer is the hot path). An un-written reader resolves `initial-value: 0` (the
+ * resting/un-staged state) — a dead writer fails to a resting page, never a masked
+ * full-staged one.
+ *
+ * THE SINGLE WRITER (fold C1·R2 — no dual scalar desync). `useDrawerSnap.writeScalar`
+ * writes BOTH `--glass-drawer-t` (the sheet's per-element translate) AND `--stage-t`
+ * (the scene scalar, on each reader root) in the SAME call — atomically, never
+ * separately, so the two can never desync on a drag-cancel / fling-overshoot /
+ * interrupted snap. A plain modal (Dialog/Command) flips `--stage-t` 0→1 on
+ * `--spring-snappy` at open (DialogContent.vue, scoped to the same reader roots); the
+ * close-write removes the inline value so the registered property reverts to its
+ * `initial-value: 0` (the stale-latch fix). EVERY consumer `clamp(0, …, 1)`-bounds it
+ * (a `--ease-cartoon-punch` fling can overshoot >1 — the page-scale / radius / scrim
+ * must not run past their endpoints). */
+@property --stage-t {
+    syntax: "<number>";
+    inherits: false;
+    initial-value: 0;
+}
+
+/* The stage-t FLIP transition (the centered-modal glide; the registered-property
+ * stale-latch fix, fold C3·R7).
+ *
+ * The drawer's single writer (useDrawerSnap) drives `--stage-t` per frame (NO
+ * transition — the spring IS the clock) and REMOVES the inline value on close → each
+ * reader root reverts to `initial-value: 0`. The centered modal (DialogContent) has no
+ * detent, so it FLIPS `--stage-t` 0→1 on open via the `data-stage-flip` marker written
+ * onto each reader root (BI.W-DRAWER-PERF — off `:root`); this rule owns the FLIP
+ * TRANSITION (a snappy spring) so the value glides 0→1 rather than snapping. Scoped to
+ * `[data-stage-flip]` so it fires ONLY during the modal flip — the drawer's per-frame
+ * scalar writes carry no marker, so the spring never double-smooths the drag. */
+[data-stage-scrim][data-stage-flip],
+[data-stage-wrapper][data-stage-flip] {
+    transition: --stage-t var(--spring-snappy-duration, 0.4s) var(--spring-snappy, ease);
+}
+
+:root {
+    /* Detent grammar knobs — overridable per-consumer */
+    --drawer-handle-w: 2.25rem;
+    --drawer-handle-h: 0.3125rem; /* 5px — the iOS grip hit-target rhythm */
+    --drawer-handle-color: var(--muted-foreground);
+    --drawer-handle-opacity: 0.45;
+    --drawer-handle-opacity-active: 0.85;
+    --drawer-snap-rule-color: color-mix(in srgb, var(--border) 60%, transparent);
+}
+
+/*
+ * The sheet surface. The glass tier + the snap-translate feel live in one
+ * token-driven place. The fixed/inset/z-index layout stays here too.
+ *
+ * NOTE: the snap motion is the house `useDrawerSnap` `SpringProgress` writing
+ * `--glass-drawer-t`, which the content root's inline `transform` reads (the §6
+ * doctrine — ONE motion vocabulary, no `transition: transform` curve injected on
+ * `[data-glass-drawer]`). `touch-action: none` on the handle keeps the drag gesture
+ * from scrolling the page. We layer border-radius + glass surface on top of the
+ * spring-driven translate.
+ */
+.glass-drawer {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: var(--z-modal);
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    max-height: 97vh;
+    margin-top: 6rem;
+    /* The overlay-band glass surface — the heaviest rung (the Drawer is a
+       modal-band sheet, z-index: --z-modal). The oklab tint composite reads the
+       W55 bright bucket (a live-behind sheet over a bright page is the canonical
+       over-light case); the --glass-level knob flattens it to solid --card +
+       blur(0) with the rest of the band; the --glass-shadow-overlay ladder rung
+       carries the rim + the --shadow-2xl lift through the ladder. */
+    background: color-mix(
+        in oklab,
+        var(--glass-bg-overlay),
+        var(--glass-tint-source) var(--glass-tint-strength)
+    );
+    backdrop-filter: var(--glass-blur-overlay);
+    -webkit-backdrop-filter: var(--glass-blur-overlay);
+    border: 1px solid var(--glass-border-overlay);
+    border-bottom: 0;
+    border-start-start-radius: var(--radius-panel);
+    border-start-end-radius: var(--radius-panel);
+    box-shadow: var(--glass-material-rim), var(--glass-shadow-overlay);
+}
+
+/*
+ * BA.W-SURFACE-AXIS — the shared {glass·veil·opaque} surface decoration ON TOP of
+ * the `.glass-drawer` recipe. `.glass-drawer` is UNLAYERED (this file), so the
+ * `@layer components` `[data-surface]` seam in glass/surface-axis.css would LOSE
+ * to it (an unlayered rule always beats a layered one — the AZ.W-DOCK-RAIL
+ * cascade-win trap). The fix is the SAME-LAYER carve: these `.glass-drawer[data-
+ * surface=…]` rules sit unlayered alongside `.glass-drawer` and win by specificity
+ * (attr+class > class), composing the SAME veil/opaque deltas the shared seam
+ * declares — NO `glass-drawer`-local recipe fork (they read the same `--veil-*` /
+ * `--glass-level` machinery). The `glass` rung is the identity (no rule).
+ */
+.glass-drawer[data-surface="veil"] {
+    --veil-bg: color-mix(
+        in oklab,
+        var(--glass-bg-quiet),
+        var(--glass-tint-source) var(--glass-tint-strength)
+    );
+    --veil-blur: var(--glass-blur-quiet);
+    background: var(--veil-bg);
+    backdrop-filter: var(--veil-blur);
+    -webkit-backdrop-filter: var(--veil-blur);
+    border: none;
+    box-shadow: none;
+}
+
+.glass-drawer[data-surface="opaque"] {
+    /* The solid-card escape. The `.glass-drawer` background reads the `:root`-baked
+       `--glass-bg-overlay` token (which substitutes `--glass-level` at :root), so a
+       per-element `--glass-level: 0` cannot re-resolve it — the substitution-vs-
+       inheritance trap (mirrors surface-axis.css). Set the SOLID plate AT THE
+       ELEMENT; still flip the level/tint knobs for a nested glass descendant. */
+    --glass-level: 0;
+    --glass-tint-strength: 0%;
+    /* The SOLID --card plate via the house color-mix idiom (solid --card, expressed
+       as the cohesion-sanctioned mix the token ladder speaks — NOT the bare
+       `var(--card)` the cohesion D1 check forbids for the always-on drawer plate;
+       this is the EXPLICIT opt-out behind `surface="opaque"`, not the default). */
+    background: color-mix(in srgb, var(--card), transparent 0%);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+/*
+ * Detented (snap-point) sheets fill the viewport height. The house engine positions
+ * the sheet by translating it along its drag axis by `(1 - --glass-drawer-t) * 100%`
+ * (DrawerContent.vue's inline transform) — so for a snap fraction to read as that
+ * fraction OF THE VIEWPORT, the sheet's top must sit at the viewport top when fully
+ * open (translate 0). A `height: auto` content sheet would instead translate
+ * off-screen. The content root tags the multi-detent case via
+ * `[data-glass-drawer-snap-points=true]`; we fill height there and let the content
+ * scroll inside.
+ */
+.glass-drawer[data-glass-drawer-snap-points="true"] {
+    height: 100%;
+    max-height: 100%;
+    margin-top: 0;
+}
+
+/*
+ * BD.W-OVERLAY-STAGE-COUPLE — coupling (A): the surface FREEZE, composed AT THE
+ * ELEMENT. A detented sheet is SEE-THROUGH at peek/half (the page bleeds) and
+ * SOLIDIFIES toward a warm-tinted card at full (page does not bleed, blur → 0). This
+ * is the iOS-27 bottom-sheet crown the live α-0.95-at-every-detent flattened.
+ *
+ * A TWO-SEGMENT lerp on the ONE `--stage-t` knob (the self-standing crown — the wave
+ * owns BOTH endpoints so it does not block on BE.W-SHEET-TRANSLUCENT, fold C3·R1):
+ *   • DESCENT  t ∈ [0, 0.85] — the transmissive crown sinks `--glass-bg-overlay` α
+ *     toward the shipped see-through `--glass-bg-sheet` floor (`--glass-opacity-sheet:
+ *     0.74`). At peek/half the page bleeds through.
+ *   • SOLIDIFY t ∈ [0.85, 1] — `--sheet-freeze` lerps the descended plate toward a
+ *     WARM-TINTED card-mix (NOT bare `--card` — the gray-at-full carve hole, fold
+ *     C1·R4); `backdrop-filter` blur decays to 0 (a solid plate has no backdrop to
+ *     bend — a Safari win, no wasted sample behind an opaque plate).
+ *
+ * Composed AT THE ELEMENT (the `[data-surface=opaque]` substitution-safe path) via
+ * element-level `color-mix` — NEVER an ancestor `filter` (which would clobber the
+ * sheet's own backdrop-filter, the dock-hub goo-tear lesson, §7). `--stage-t` reads
+ * the `:root` scalar the single writer drives (mirrored from `--glass-drawer-t`).
+ */
+.glass-drawer[data-glass-drawer-snap-points="true"] {
+    /* the DESCENT fraction — 0 at closed → 1 at the commit floor (t=0.85). */
+    --sheet-descent: clamp(0, calc(var(--stage-t) / 0.85), 1);
+    /* the SOLIDIFY fraction — 0 below the commit floor → 1 at full (t=1). */
+    --sheet-freeze: clamp(0, calc((var(--stage-t) - 0.85) / 0.15), 1);
+    /* the transmissive crown plate: the warm overlay fill sunk toward the shipped
+       see-through `--glass-bg-sheet` floor across the descent. */
+    --sheet-crown: color-mix(
+        in oklab,
+        color-mix(
+            in oklab,
+            var(--glass-bg-overlay),
+            var(--glass-tint-source) var(--glass-tint-strength)
+        ),
+        var(--glass-bg-sheet) calc(var(--sheet-descent) * 100%)
+    );
+    /* the warm-tinted SOLID escape (fold C1·R4 — a warm card-mix toward the EXPLICIT
+       warm `--glass-capsule-warm` amber, NEVER bare `--card` and NEVER the
+       `--glass-tint-source` alias which resolves back to `--card` and would be a
+       no-op warm; build-trap-(d) safe — a warm oklch color, never bare `transparent`).
+       At the shared 16% warm floor a dark full sheet stays C ≥ 0.02 warm — no
+       charcoal holiday at full. */
+    --sheet-solid: color-mix(
+        in oklab,
+        var(--card),
+        var(--glass-capsule-warm) var(--glass-capsule-warm-floor, 16%)
+    );
+    background: color-mix(
+        in oklab,
+        var(--sheet-crown),
+        var(--sheet-solid) calc(var(--sheet-freeze) * 100%)
+    );
+    /* BG.W-BACKDROP-BLUR-ENGAGE (F5.4) — the sheet's own backdrop blur ENGAGES off the
+       LIVE gesture scalar `--glass-drawer-t`, not a fixed duration: it builds 0 → full as
+       the finger pulls the sheet in (reaching full by the shared `--glass-blur-engage-knee`
+       ~35% pull — the iOS quick-coalesce), tracks the finger 1:1 during the drag (the
+       scalar is written per-frame), and de-blurs on the trailing dismiss over the
+       DRAWER_SNAP spring's OWN settle (the scalar glides to 0 on close) — the ONE
+       sanctioned fixed-clock leg, delivered for free by the drag scalar's spring. The
+       SOLIDIFY leg (`1 - --sheet-freeze`) still decays the blur to 0 at the full-commit
+       floor (a solid plate has no backdrop to bend — the Safari win). The engage scalar
+       + the `--glass-blur-engage-knee` curve constant are the shared engage primitive
+       minted in surfaces.css; the blur recipe is inlined here (the raw `/styles` partial
+       ships unresolved-`@apply`-free) reading `--glass-blur-engage-t` on the SAME
+       `--glass-blur-overlay-radius` rung, with the sheet's own `saturate` leg on top. At
+       `--glass-drawer-t: 0` (closed) the engage resolves 0 → NO blur (no wasted sample
+       behind an offscreen sheet; NO-MASKING-FALLBACK — a dead writer shows an un-blurred
+       plate, never a masking full blur). NO `transition: backdrop-filter` — the gesture
+       IS the clock. */
+    --glass-blur-engage-t: calc(
+        clamp(0, calc(var(--glass-drawer-t) / var(--glass-blur-engage-knee, 0.35)), 1) *
+            (1 - var(--sheet-freeze))
+    );
+    /* Unprefixed ONLY — Lightning CSS emits the `-webkit-` companion (the single-source
+       authorship discipline, per `.btn-glass`); hand-authoring both doubles the prefix. */
+    backdrop-filter: blur(
+            calc(var(--glass-blur-overlay-radius, 20px) * var(--glass-blur-engage-t))
+        )
+        saturate(1.6);
+}
+
+/* The `surface=opaque` explicit escape still wins (it sets the solid plate
+   unconditionally regardless of detent) — the freeze is the DEFAULT glass crown; the
+   opt-out plate is the consumer's hard override. Source order keeps the opaque rule
+   (declared above) — re-assert it here so it beats the snap-points freeze at equal
+   specificity for a detented opaque sheet. */
+.glass-drawer[data-glass-drawer-snap-points="true"][data-surface="opaque"] {
+    background: color-mix(in srgb, var(--card), transparent 0%);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+/* Direction variants — the content root tags itself with the drag axis
+   (`data-glass-drawer-direction`). Bottom is the default; the others ride the same
+   surface so a top/side sheet inherits the grammar. The side-lens (left/right) is
+   the BB-2 full-slide axis — it pins to its edge + fills the cross axis. */
+.glass-drawer[data-glass-drawer-direction="top"] {
+    bottom: auto;
+    top: 0;
+    margin-top: 0;
+    margin-bottom: 6rem;
+    border-top: 0;
+    border-bottom: 1px solid var(--glass-border-overlay);
+    border-radius: 0 0 var(--radius-panel) var(--radius-panel);
+}
+
+.glass-drawer[data-glass-drawer-direction="left"],
+.glass-drawer[data-glass-drawer-direction="right"] {
+    inset-inline: auto;
+    inset-block: 0;
+    height: 100%;
+    max-height: 100%;
+    width: min(24rem, 92vw);
+    margin: 0;
+    border: 1px solid var(--glass-border-overlay);
+}
+
+.glass-drawer[data-glass-drawer-direction="left"] {
+    left: 0;
+    border-left: 0;
+    border-radius: 0 var(--radius-panel) var(--radius-panel) 0;
+}
+
+.glass-drawer[data-glass-drawer-direction="right"] {
+    right: 0;
+    border-right: 0;
+    border-radius: var(--radius-panel) 0 0 var(--radius-panel);
+}
+
+/*
+ * Peek handle — the rounded grip at the top of the sheet. It is the visual
+ * affordance the user drags to cycle peek → half → full. The house snap engine
+ * (`useDrawerSnap`) binds the pointer-drag gesture directly on this handle (the
+ * `[data-glass-drawer-handle]` element) and flags it `[data-dragging]` while a drag
+ * is in flight, so the grip intensifies "live" during the gesture.
+ */
+.glass-drawer-handle {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-block: 0.75rem 0.5rem;
+    touch-action: none;
+}
+
+.glass-drawer-grip {
+    display: block;
+    width: var(--drawer-handle-w);
+    height: var(--drawer-handle-h);
+    border-radius: var(--radius-pill);
+    background-color: var(--drawer-handle-color);
+    opacity: var(--drawer-handle-opacity);
+    transition:
+        opacity var(--duration-fast) var(--ease-out),
+        width var(--duration-fast) var(--ease-out);
+}
+
+/* While the sheet is being dragged the house engine flags the handle
+   `[data-dragging]`; intensify the grip so the affordance reads as "live".
+   `:active` covers the pointer-held case + `[data-dragging]` covers the captured
+   drag; the hover lift is the rest affordance. */
+.glass-drawer-handle[data-dragging] .glass-drawer-grip,
+.glass-drawer-handle:active .glass-drawer-grip,
+.glass-drawer:hover .glass-drawer-grip {
+    opacity: var(--drawer-handle-opacity-active);
+    width: calc(var(--drawer-handle-w) * 1.15);
+}
+
+/*
+ * Snap-stop indicators — subtle full-width hairline rules that mark where the
+ * sheet content sections break across detents. A consumer opts in by adding
+ * `.glass-drawer-snap-rule` to a separator element inside the sheet; it reads as
+ * the detent boundary line without competing with the content. This is the
+ * "snap-stop visual indicator" the spec asks for, expressed as an opt-in class
+ * (the detents themselves are positional, owned by the house snap engine; the
+ * RULE is the look).
+ */
+.glass-drawer-snap-rule {
+    height: 1px;
+    margin-inline: calc(var(--radius-panel) * -0.5);
+    border: 0;
+    background-color: var(--drawer-snap-rule-color);
+}
+
+/*
+ * BD.W-OVERLAY-STAGE-COUPLE — coupling (B): the scrim DEEPEN. The scrim α tracks
+ * `--stage-t` so a peek drawer barely dims and a full drawer commits hard (the live
+ * fixed-α-0.8 at every detent is the born-RED). Reuses the SHIPPED warm
+ * `--overlay-scrim-ink` (the F7 warm near-black, never flat black), now t-coupled.
+ * `clamp(0,…,1)` bounds the fling overshoot. The scrim element gains
+ * `[data-stage-scrim]` (DrawerOverlay.vue) and reads the inherited `:root` scalar.
+ */
+[data-stage-scrim] {
+    background: color-mix(
+        in srgb,
+        var(--overlay-scrim-ink)
+            calc((0.28 + clamp(0, var(--stage-t), 1) * 0.44) * 100%),
+        transparent
+    );
+}
+
+/*
+ * BD.W-OVERLAY-STAGE-COUPLE — coupling (C): the page RECEDE + SCALE. The page wrapper
+ * scales `1 → 0.95` + corner-radius blooms as `--stage-t → 1` (the iOS "card recedes"
+ * depth cue — the honest `stage=` enum drives it). `scale` +
+ * `border-radius` ONLY — NO `filter` (the ancestor-filter trap: `filter` on the app
+ * root establishes a containing block for `position:fixed` and force-rasterizes the
+ * page subtree every frame — fold C2·R1; §7). The wrapper is the consumer's app-root
+ * marker (`demo/App.vue` mounts `[data-stage-wrapper]`); when the honest
+ * `stage="none|dim"` enum is set the marker carries no `--stage-t` drive (or the
+ * `data-stage-scale` gate is absent) so (C) is a real no-op, never a lie. Under PRM
+ * `stage="scale"` degrades to `dim` at the SFC (no `data-stage-scale` attr) so the
+ * page never transforms (fold C1·R6) — this rule only fires when the scale gate is on.
+ */
+[data-stage-wrapper][data-stage-scale] {
+    scale: calc(1 - 0.05 * clamp(0, var(--stage-t), 1));
+    border-radius: calc(var(--radius-panel) * clamp(0, var(--stage-t), 1));
+    transform-origin: 50% 0; /* recede toward the top, iOS */
+    overflow: clip;
+}
+
+/*
+ * BD.W-OVERLAY-STAGE-COUPLE — coupling (D): the blur ENGAGE (opt-in `immersive`, the
+ * Command spotlight). BI.W-DRAWER-PERF — the scrim's backdrop blur ENGAGES at a FIXED
+ * depth (16px), NOT a per-frame radius ramp on `--stage-t`. A `blur(calc(--stage-t *
+ * 16px))` re-rasterizes the blur kernel EVERY frame (the cardinal Safari sin, §L7 /
+ * fold C2·R); the DIM ramps instead via the scrim α coupling (the `[data-stage-scrim]`
+ * rule above, already `--stage-t`-driven) — the backdrop blur snaps to depth while the
+ * dim tracks the detent (MOTION-LADDER §1.3: the backdrop blur engages fast at a fixed
+ * depth, the dim ramps; a symmetric radius ramp reads wrong). The scrim fades in over
+ * its `animate="fade"` enter, so the fixed blur reads as coalescing, never a pop.
+ * Default OFF.
+ */
+[data-stage-scrim][data-stage-immersive] {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+/* Reduced-motion — the house `SpringProgress` snaps the detent deterministically
+   under `prefers-reduced-motion: reduce` (its `respectReducedMotion` jumps the
+   `--glass-drawer-t` scalar to target in one frame, zero motion frames); here we
+   only suppress the grip's affordance animation so the handle does not pulse for
+   PRM users. */
+@media (prefers-reduced-motion: reduce) {
+    .glass-drawer-grip {
+        transition: none;
+    }
+}

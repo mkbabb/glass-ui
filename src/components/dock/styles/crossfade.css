@@ -1,0 +1,139 @@
+/* Dock crossfade styles — the ONE crossfade-slot rule.
+ *
+ * `DockLayerGroup`/`DockLayer`/`useLayerTransition` FOLD to ONE crossfade slot
+ * (PASS-1 §2.6): the content layer hosts ONE active face; a switch is a two-child
+ * OPACITY OVERLAP on the per-face `--dock-t` scalar (written by `useDockSpring` in
+ * `DockCrossfade.vue` — velocity-continuous + interruptible, NOT a UA-eased View
+ * Transition; G6 CLOSED). The reserved box is sized to the PEAK face as a MEASURE-ONCE
+ * `min-block-size` (set inline by the crossfade slot — a running max, never a per-swap
+ * FLIP). The clip-era `.dock-layer-item-host` FLIP crossfade in `layers.css`/
+ * `layer-group.css` is superseded (its element no longer renders — DockLayer renders
+ * `.dock-face`).
+ *
+ * `--dock-t` is `@property`-registered `inherits: false` (dock.css, the plate scalar),
+ * so writing it per-FACE is local to that face — each face reads its OWN `--dock-t` for
+ * its opacity, and the plate's own `--dock-t` (the collapse clip) never collides. The
+ * G12 content clip rides the SEPARATE inheriting `--dock-morph-t` collapse scalar.
+ */
+@layer components {
+    /* The crossfade slot: a relative grid whose cells (faces) stack at 1/1. The
+       peak-reserve `min-block-size` is set inline by `DockCrossfade.vue` (measure-once
+       running max), so the box holds the tallest face from frame 0 — no jump when a
+       shorter face becomes active nor when the plate collapses over it (the compound). */
+    .dock-crossfade {
+        position: relative;
+        display: grid;
+    }
+
+    /* A face host — the grid cell + the crossfade opacity channel (the INTERACTIVE run:
+       hover plates overflow it, NEVER clipped here). The inactive default is
+       out-of-flow (absolute + inset:0, opacity 0, inert) so the grid shrink-wraps to
+       the ACTIVE face while the peak reserve holds the box. */
+    .dock-crossfade > .dock-face {
+        grid-area: 1 / 1;
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        will-change: opacity;
+    }
+
+    /* ACTIVE — in flow, fully painted AT REST (`opacity: 1`; `--dock-t` is a registered
+       `initial-value: 0` property, so a `var(--dock-t, 1)` at-rest read would resolve the
+       registered 0, not the fallback — the active pane would vanish). The two-child
+       opacity OVERLAP engages ONLY while the crossfade slot is mid-swap
+       (`[data-crossfading]`, below). */
+    .dock-crossfade > .dock-face.is-active {
+        position: relative;
+        inset: auto;
+        inline-size: max-content;
+        min-inline-size: 0;
+        opacity: 1;
+    }
+
+    /* LEAVING — out of flow (the entering active face sizes the box); stays painted +
+       untouchable through the dissolve (the crossfading rule below drives its fade). */
+    .dock-crossfade > .dock-face.is-leaving {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        visibility: visible;
+    }
+
+    /* THE TWO-CHILD OPACITY OVERLAP ON `--dock-t` — engaged ONLY mid-swap. The crossfade
+       slot arms `[data-crossfading]` at the swap start (cleared on settle) + writes the
+       per-face `--dock-t` spring progress (`useDockSpring`, velocity-continuous). The
+       entering face reads `opacity: var(--dock-t)` (0→1), the leaving `calc(1 -
+       var(--dock-t))` (1→0) — co-present through the overlap, no blank-plate dead-zone.
+       Higher-specificity than the at-rest rules (the extra `[data-crossfading]` attr), so
+       they win while a swap runs and hand back to `opacity: 1`/idle on settle. */
+    .dock-crossfade[data-crossfading] > .dock-face.is-active {
+        opacity: var(--dock-t);
+    }
+
+    .dock-crossfade[data-crossfading] > .dock-face.is-leaving {
+        opacity: calc(1 - var(--dock-t));
+    }
+
+    /* The content flex — the controls / glyphs / labels a face authors. The
+       orientation flips to a stacked column when the crossfade lives in a vertical
+       dock or layer group (matching the box axis). */
+    .dock-crossfade > .dock-face > .dock-face-content {
+        display: flex;
+        align-items: center;
+        gap: var(--dock-layer-gap, 0.375rem);
+        white-space: nowrap;
+        block-size: 100%;
+    }
+
+    :where(.glass-dock, .dock-layer-group).vertical
+        .dock-crossfade
+        > .dock-face
+        > .dock-face-content {
+        flex-direction: column;
+        align-items: stretch;
+        white-space: normal;
+    }
+
+    :where(.glass-dock, .dock-layer-group).vertical
+        .dock-crossfade
+        > .dock-face.is-active {
+        inline-size: auto;
+        block-size: max-content;
+    }
+
+    /* G12 — the content-wrapper clip. Lands on `.dock-face-content` ONLY (the
+       non-interactive content wrapper), NEVER on the `.dock-face` interactive run, and
+       ONLY while a SIMULTANEOUS plate collapse is in flight (`.glass-dock[data-morphing]`
+       ancestor). So a face's row that spills past the narrowing plate is clipped
+       mid-collapse WHILE hover plates overflow freely at rest (no `[data-morphing]` → no
+       clip). The clip rides the inheriting `--dock-morph-t` collapse scalar (DISTINCT
+       from the per-face `--dock-t` opacity scalar): at `--dock-morph-t: 1` (expanded)
+       `inset(0)` — no clip; toward `0` (collapsing) the trailing/​bottom remainder is
+       clipped away as the aperture narrows. Compositor-only (`clip-path`) — the
+       `proof:no-layout-animation` floor. PRM snaps the collapse, so the clip is a single
+       frame. This is the COMPOUND the synthetic prototypes never composed: a face-swap
+       crossfade coexisting with a collapse-morph clip on the same face. */
+    .glass-dock[data-morphing]
+        .dock-crossfade
+        > .dock-face.is-active
+        > .dock-face-content {
+        clip-path: inset(0 calc((1 - var(--dock-morph-t)) * 100%) 0 0);
+        will-change: clip-path;
+    }
+
+    .glass-dock.vertical[data-morphing]
+        .dock-crossfade
+        > .dock-face.is-active
+        > .dock-face-content {
+        clip-path: inset(0 0 calc((1 - var(--dock-morph-t)) * 100%) 0);
+    }
+
+    /* PRM — the opacity crossfade snaps (the spring's `respectReducedMotion` jumps
+       `--dock-t` 0→1 in one frame). The reserved box + the discrete active/leaving
+       presence stay correct (fade-keeps / transform-drops; there is no transform here). */
+    @media (prefers-reduced-motion: reduce) {
+        .dock-crossfade > .dock-face {
+            will-change: auto;
+        }
+    }
+}

@@ -30,7 +30,7 @@ import { type VariantProps, cva } from "class-variance-authority";
  * EXPRESSION of the shared {glass·veil·opaque} surface-decoration axis
  * (`_shared/useSurfaceAxis.ts` / `glass/surface-axis.css`), NOT a second axis:
  * - `glass` (DEFAULT, glass-first canon AX.W54) — the `.glass-menu-row` recipe
- *   (`src/styles/menu.css`): the hover / focus / `data-highlighted` / open states
+ *   (`./menu.css`): the hover / focus / `data-highlighted` / open states
  *   paint the ELEMENT-LEVEL glass-quiet oklab tint (so the row darkens-over-light
  *   AND lifts-over-dark per W-DARK-MATERIAL's tint arm) + a PRM-gated `translateY`
  *   hover-lift, the 44px touch floor, the iOS-grade glassy hover-lift plate. The
@@ -66,7 +66,7 @@ export const menuItemVariants = cva(
             // the explicit flat-fill escape (clean break, no alias).
             surface: {
                 // The `.glass-menu-row` recipe carries the hover/focus/highlight
-                // glass-quiet tint + lift + the touch floor (src/styles/menu.css).
+                // glass-quiet tint + lift + the touch floor (`./menu.css`).
                 // NO flat-accent utility here — the recipe is the sole hover paint.
                 glass: "glass-menu-row",
                 // The prior flat-accent triad, opt-in. Hover/focus/data-highlighted

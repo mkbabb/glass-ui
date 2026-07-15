@@ -75,7 +75,7 @@
  *                              over the glass tiers.
  *   5. paper.css             — paper underpaint + grain overlay utilities.
  *                              Pairs with (4) for paper-on-glass compositions.
- *   6. dock.css              — the dock CORE: the `@property --dock-morph-t`
+ *   6. components/dock/styles/index.css — the dock CORE: the `@property --dock-morph-t`
  *                              registration, the shared cross-control four-state
  *                              comma-groups, and the `@import`s of the cohesive
  *                              `dock/*.css` partials (shell · morph · density ·
@@ -84,7 +84,7 @@
  *                              each < 500 lines, all in the SAME @layer components
  *                              so the cascade is isomorphic). Component utility
  *                              layer; consumes (1) + (3).
- *  6b. dock-controls.css     — the five dock CONTROL families carved out of
+ *  6b. components/dock/styles/controls.css — the dock CONTROL families
  *                              dock.css (AU.W8b.3): .dock-icon-button,
  *                              .dark-mode-toggle-button, .dock-tab-button + tiers,
  *                              .dock-select-trigger / .dock-dropdown-trigger, and
@@ -92,9 +92,9 @@
  *                              components; MUST load directly after dock.css so
  *                              the shared :where()/comma-group contract in (6)
  *                              cascades into these control rules.
- *   7. cards.css             — .cartoon-surface, .paper-texture.
+ *   7. components/card/styles.css — card and shared card-surface recipes.
  *                              Component utility layer.
- *  7a. feedback-tone.css     — the ONE shared tinted-glass tone register
+ *  7a. components/_shared/feedback-tone.css — the shared tinted-glass tone register
  *                              (BA.W-FEEDBACK-TONE): `.feedback-tone` +
  *                              `.feedback-tone-{success,warning,info,destructive}`
  *                              tint a glass rung a bounded % toward a house tone
@@ -140,24 +140,24 @@
  *                              K W6 + Q.W3 Lane E), rainbow-vivid +
  *                              rainbow-pastel. Consumes earlier animations +
  *                              tokens.
- *  11a. menu.css             — BA.W-MENU-GLASS the glass MENU-ROW + MENU-SECTION
+ *  11a. components/_shared/menu.css — the glass MENU-ROW + MENU-SECTION
  *                              register. AFTER utilities.css so `.glass-menu-row`'s
  *                              `@layer components` hover/highlight rules source-
  *                              order-win over `.interactive-item:hover` (same layer
  *                              + specificity) — the cascade-trap-safe placement.
- *  12. instrument-chassis.css — P-tranche component CSS (chassis bezel +
+ *  12. components/instrument-chassis/styles.css — chassis bezel +
  *                              groove dividers). Loaded after utilities so
  *                              component-local recipes can override.
- *  13. drawer.css            — AN.W3 detented bottom-sheet grammar (glass
+ *  13. components/drawer/styles.css — detented bottom-sheet grammar (glass
  *                             sheet surface + peek handle + snap-stop rules).
- *  15. segmented-tabs.css    — AX.W53 SegmentedTabs overflow/indicator grammar.
- *  16. select.css            — BA.W-EMISSION the PRECOMPILED Select content
+ *  15. components/tabs/styles/* — SegmentedTabs overflow/indicator grammar.
+ *  16. components/_shared/field-surfaces.css — precompiled field/list surfaces
  *                             collision-bound (the `[data-slot="select-content"]`
  *                             max-height rule) — moved off the dead arbitrary-
  *                             bracket CVA class so the bound SHIPS in dist/glass-ui.css
  *                             regardless of consumer JIT reach. A structural utility
  *                             never depends on a content-scan; locked by proof:emission.
- *  17. dialog-placement.css  — BI.W-DIALOG-PLACEMENT the PRECOMPILED Dialog
+ *  17. components/dialog/placement.css — precompiled Dialog
  *                             side-slide positioning (the `[data-slot="dialog-content"]
  *                             [data-placement]` position/inset/size rules — the Sheet
  *                             fold) — the overlay-band emission INVERSE: moved off the
@@ -176,10 +176,10 @@
 @import "./glass-specular-track.css";
 @import "./glass-refract.css";
 @import "./paper.css";
-@import "./dock.css";
-@import "./dock-controls.css";
-@import "./cards.css";
-@import "./feedback-tone.css";
+@import "../components/dock/styles/index.css";
+@import "../components/dock/styles/controls.css";
+@import "../components/card/styles.css";
+@import "../components/_shared/feedback-tone.css";
 @import "./transitions.css";
 @import "./animations.css";
 @import "./viz-reveal.css";
@@ -189,7 +189,7 @@
    choreography (lifted out of the CardHeader.vue <style scoped> block into ONE
    global, un-hashed home; the shared @keyframes title-collapse SCALE leg). A
    scroll-choreography partial — bucketed DEFERRED in critical-partition.mjs. */
-@import "./card-scroll.css";
+@import "../components/card/card-scroll.css";
 @import "./scroll-chrome.css";
 @import "./view-transition.css";
 @import "./utilities.css";
@@ -199,21 +199,21 @@
    over `.interactive-item:hover` (utilities/base.css, same layer + specificity) —
    the cascade-trap-safe placement, mirroring glass/surface-axis.css's "import
    AFTER ladder.css" discipline. */
-@import "./menu.css";
-@import "./configurator.css";
-@import "./instrument-chassis.css";
+@import "../components/_shared/menu.css";
+@import "../components/configurator/styles.css";
+@import "../components/instrument-chassis/styles.css";
 /* BI.W-OVERLAY-UNION — hover-popover.css DELETED: <HoverPopover> folded onto the
    sealed <Popover trigger="hover"> union; its content rides the shared
    glass-floating + glass-reveal recipe, so the bespoke .hover-popover-panel
    substrate is dead. (clean break, no alias.) */
-@import "./drawer.css";
-@import "./segmented-tabs.css";
+@import "../components/drawer/styles.css";
+@import "../components/tabs/styles/segmented.css";
 /* BI.W-STYLE-REDRAIN — the SegmentedTabs additive DECORATION tail (the .glass-drag-lift
    pull affordance + the data-eyeglass iOS-27 loupe register) carved out of
    segmented-tabs.css to hold the no-god-module 500-line bound; @import-ed IMMEDIATELY
    AFTER it (unlayered, unique selectors, source-order-after — byte-isomorphic). */
-@import "./tabs/segmented-tabs-drag.css";
-@import "./select.css";
+@import "../components/tabs/styles/drag.css";
+@import "../components/_shared/field-surfaces.css";
 /* BI.W-DIALOG-PLACEMENT — the overlay-band Dialog side-slide structural positioning,
    precompiled (the emission INVERSE, terminalized onto Dialog `placement` — the Sheet
    fold): a [data-slot="dialog-content"][data-placement] rule so the side sheet's
@@ -221,13 +221,13 @@
    content-scan reach (off the dead CVA geometry utilities that broke the D7 configurator
    drawer). :where()-wrapped so a consumer sizing utility still wins. Locked by
    proof:emission (overlay-band inverse clause). */
-@import "./dialog-placement.css";
+@import "../components/dialog/placement.css";
 /* BA.W-ICON-CHIP — the <IconChip> section-color pop recipe + the three axes
    (duotone/bloom/reveal). A component partial; the token arms (--section-color-N
    / --muted) auto-flip under .dark so the chip is mode-robust by construction. */
-@import "./icon-chip.css";
+@import "../components/icon-chip/styles.css";
 /* The thin, radius-following masked scroll-progress band. */
-@import "./scroll-progress-rim.css";
+@import "../components/scroll-progress-rim/styles.css";
 
 /* BC.W-AX-COMPLETION-SEAL — the hero-scale earned-GOLD completion seal: a one-shot
    gold-draw mark (a `stroke-dashoffset` wipe on the 4 `@property` motion tokens
@@ -235,7 +235,7 @@
    tokens/property-regs.css §18). The ink reads the W-PHASE-PALETTE earned-gold
    register; the glint composes the W-AX-METAL-GLOW catch-light. One-shot, PRM-gated,
    compositor-only — the feedback-surface partial. */
-@import "./completion-seal.css";
+@import "../components/completion-seal/styles.css";
 
 /* BI.W-DRAW-IN — the codified self-drawing arrival register (`.draw-rule` /
    `[data-draw-in]`). A hairline / divider / underline draws ITSELF in via

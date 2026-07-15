@@ -1,0 +1,446 @@
+/* Dock layer crossfade, hit-test, and reveal styles.
+ * contract (AX.W06 carve).
+ *
+ * Carved from the dock.css god-module (slice 25). This partial owns the dock's
+ * layer model: the `.dock-layers` grid container + the ratio-FREE convex-blend
+ * box-size morph (BD.W-DOCK-CORE — `scale: var(--dock-size-scale)` from a
+ * `--dock-live` blend of two measure-ONCE endpoints `--dock-expanded-px`/
+ * `--dock-collapsed-px`, BOUNDED by construction off the ONE `--dock-morph-t`
+ * scalar; NO per-swap `from/to` ratio, NO per-frame layout-axis lerp), the unified
+ * `.is-active` / `.is-leaving` 3-state crossfade + hit-test contract (the
+ * a11y-006 anchor), the per-child reveal stagger (the `--dock-stagger-*` ramp),
+ * and the `layout="grid"` 2D tile-grid arrangement. The `.dock-layer-group` /
+ * rail / stack live in dock/layer-group.css; the overflow strategies in
+ * dock/overflow.css.
+ *
+ * @import-ed by dock.css in cascade order, in the SAME `@layer components` — the
+ * carve is isomorphic (same layer, same source order → ZERO visual delta). */
+
+@layer components {
+    /* J.W3.A — outer collapsed↔expanded pair drives width via FLIP.
+       `useLayerTransition` measures the natural width before/after the
+       slot swap and animates `width` between fixed pixel values via
+       the `--dock-motion-resize` spring; this eliminates the
+       `width: auto` non-interpolation diagnosed in R1+R6. The two
+       layers stack on a CSS grid (1/1 area) and crossfade opacity
+       in step with the FLIP. Spatial motion (width) is automatically
+       suppressed by the global `prefers-reduced-motion` gate in
+       `utilities.css` (which strips width from transition-property).
+       Opacity transitions remain — the 0.1s shortened cadence in PRM
+       still reads as a snap.
+
+       J.W3.C — when the active layer's natural width exceeds
+       `--dock-max-inline-size`, the dock root clips and the layer
+       scrolls horizontally with a mask-fade. `min-width: 0` lets the
+       grid item shrink under the cap (default min-content is the
+       child's intrinsic width which would prevent the clamp). */
+    /* BG.W-DOCK-CONSUMER-FENCE — the internal-part rules carry a dock-root ANCESTRY
+       anchor at ZERO specificity cost (`:where(.glass-dock, .dock-layer-group)`), so a
+       consumer element carrying a coincidental `.dock-layers`/`.dock-layer`-family class
+       OUTSIDE a dock is never matched (the namespace-leak `visibility:hidden` /
+       `position:absolute` that silently hid consumer UI). `.dock-layers` + `.dock-layer`
+       live under `.glass-dock`; `.dock-layer-item-host` lives under `.dock-layer-group`
+       (a standalone `<DockLayerGroup>` too) — the OR-anchor matches EVERY internal use,
+       byte-identical (`:where()` is specificity 0,0,0 → same cascade, same source order).
+       Rules keyed on `.glass-dock`/`.dock-layer-group` ITSELF (the component roots) stay
+       bare (the identity-collision is the consumer's, out of scope). */
+    :where(.glass-dock, .dock-layer-group) .dock-layers {
+        display: grid;
+        min-width: 0;
+    }
+
+    /* ── BD.W-DOCK-CORE — the ratio-FREE convex-blend SIZE (the width-seizure cure) ──
+       THE BUG THIS RETIRES: the prior morph drove the visible size by an UNBOUNDED
+       per-swap `from/to` ratio — `--dock-root-scale = max(ratio + (1−ratio)·t, 0.06)`,
+       a FLOOR with NO CEILING. A degenerate `to` (the FLIP measure racing the content
+       layout) ran `ratio = from/max(to,1px)` to ~56 → `scaleX(56)` ≈ 2451px on
+       collapse, or an inversion at the spring's >1 overshoot peak. `transform-origin:
+       center` kept the centroid clean (cxRange 0), which is exactly why every prior
+       judge measuring the centroid PASSED while the WIDTH detonated. The whole
+       per-swap measure-and-arm pipeline + the `--dock-root-*`/`--dock-morph-ratio/scale`
+       rules are DELETED (clean break, no legacy).
+
+       THE CURE — a convex blend of two POSITIVE measure-ONCE endpoints. The dock
+       measures its expanded content span + its collapsed box ONCE per content change
+       (`useDockExpandedSize` writes `--dock-expanded-px`/`--dock-collapsed-px`, NOT a
+       per-swap rAF race) and the visible size is `--dock-live = collapsed +
+       (expanded − collapsed)·clamp(0, --dock-morph-t, 1)` → BOUNDED by construction:
+       a convex blend can NEVER exceed the larger endpoint nor invert below the smaller,
+       regardless of spring overshoot (the `clamp(0,t,1)` caps the size term). No ratio,
+       no `from>to` degeneracy, no floor guard (the two endpoints ARE the floors). The box
+       RESERVES `--dock-expanded-px` (ONE layout solve, CDP-Layout-flat) and the visible
+       size rides `scale: var(--dock-size-scale)` from `transform-origin: center` —
+       container-justify-agnostic, center-out by construction (left-anchored / centred /
+       auto-margin docks ALL grow center-out, no justify detection, no translate). The
+       endpoints default to a no-op (`expanded == collapsed → scale 1`) so an unmeasured
+       dock paints neutral. BI.W-DOCK-SPRING-UNIFY (SU2) — the actual `scale:` property is
+       composed in shape.css as a PURE size morph off `--dock-size-scale` ALONE (the
+       `--stretch` squish × `--dock-punch-stretch` cartoon-punch deformation zoo is
+       DEFINITION-ABSENT — one compositor channel, no reciprocal squish). KEEP
+       `--dock-morph-t` (the shipped token — NO rename).
+
+       BG.W-DOCK-COLLAPSE-DIR — the size blend reads the DIRECTIONAL `--dock-expand-t`
+       (the expanded-ness 0=collapsed/1=expanded `morph.css` derives: expand `t`, collapse
+       `1−t`), NOT the raw morph PROGRESS `--dock-morph-t` (always 0→1). The raw progress is
+       direction-AGNOSTIC, so reading it made the convex blend `collapsed + Δ·t` play
+       collapsed→expanded for BOTH directions — correct on expand, but on COLLAPSE it
+       ballooned the box UP to the full expanded footprint, held there as the spring settled
+       at t=1, then SNAPPED to the resting collapsed size when `[data-morphing]` cleared (a
+       reproducible ~440px width reversal, the live "morph hover flicker"). The chrome
+       (bg/border/blur — `morph.css`) and the child stagger (`--dock-expand-t` reads below)
+       were ALREADY on the directional scalar; this aligns the SIZE with them. Expand is
+       byte-identical (`.expanded[data-morphing]` derives `--dock-expand-t: --dock-morph-t`);
+       only `.collapsed[data-morphing]` (`1−t`) is corrected, so the box now shrinks
+       monotonically expanded→collapsed with NO snap. */
+    .glass-dock[data-morphing] {
+        --dock-live: calc(
+            var(--dock-collapsed-px, var(--dock-expanded-px, 0px)) +
+                (
+                    var(--dock-expanded-px, 0px) -
+                        var(--dock-collapsed-px, var(--dock-expanded-px, 0px))
+                ) *
+                clamp(0, var(--dock-expand-t), 1)
+        );
+        --dock-size-scale: clamp(
+            0.06,
+            calc(var(--dock-live) / max(var(--dock-expanded-px, 1px), 1px)),
+            1
+        );
+        transform-origin: center center;
+        will-change: transform;
+    }
+
+    /* The box RESERVES its expanded footprint (ONE layout solve — the page reflows
+       ONCE to the final size, CDP-Layout stays FLAT) while the visible size scales
+       toward it. Horizontal reserves `inline-size`, vertical reserves `block-size`,
+       matching the morph axis. The `.dock-layers` content lays out at its natural
+       size behind the clip (shell.css) — that natural span is the `--dock-expanded-px`
+       the ResizeObserver reads. */
+    .glass-dock[data-morphing]:not(.vertical) {
+        inline-size: var(--dock-expanded-px);
+    }
+    .glass-dock[data-morphing].vertical {
+        block-size: var(--dock-expanded-px);
+    }
+
+    /* The inner DockLayerGroup stack has no collapsed/expanded class, so its
+       stagger directional scalar is the per-swap progress directly: `--dock-morph-t`
+       reads onto an inheriting `--dock-expand-t` on the morphing stack so the new
+       pane's children cascade in as it reveals. The geometry scalar
+       (`--dock-morph-t`) stays registered + non-inheriting on the root; this is the
+       small-subtree inheriting alias the stagger reads (the inheritance-bomb guard
+       only concerns the `:root`-wide write, which never happens). */
+    .glass-dock[data-morphing] .dock-layer-stack {
+        --dock-expand-t: var(--dock-morph-t);
+    }
+
+    /* Horizontal dock content grows visibly when the active layer's natural
+       width exceeds the content area (grow-to-fit; consumers needing wrap opt
+       into `overflow="wrap"`). No edge-fade mask — content never clips or scrolls,
+       so a feather has nothing to feather and only bleeds a stray ramp onto
+       the edge controls. */
+    .glass-dock.expanded:not(.dock-overflow-wrap) > .dock-layers {
+        overflow-x: visible;
+    }
+
+    /* ── Layer crossfade + hit-test contract (ONE vocabulary) ──────────────
+       AX.W02 — the outer `.dock-layer` (GlassDock's built-in collapsed↔expanded
+       pair) and the inner `.dock-layer-item-host` (a DockLayer inside a
+       DockLayerGroup) now share ONE active-state vocabulary: `.is-active` /
+       `.is-leaving`. The prior `.layer-active` / `.is-active` / `.is-leaving`
+       TRIPLE collapsed to the pair — both surfaces drive crossfade + hit-test off
+       the same two state classes, and the morph orchestrator fold (one engine per
+       dock) means the box, both panes, and every child stagger ride one
+       `--dock-morph-t` clock. The greppable-sync tombstone that kept the two
+       never-merged vocabularies in lockstep is DELETED — there is nothing to keep
+       in sync once the vocabulary is one.
+
+       The 3-state active/inactive/leaving visibility contract here is LOAD-BEARING
+       (the a11y-006 anchor): the inactive layer leaves the hit-test tree
+       (`visibility:hidden`), the leaving layer stays painted-but-untouchable
+       through its fade (`visibility:visible` + `pointer-events:none`), and the
+       active layer shows IMMEDIATELY (`visibility 0s`, no fade-in delay). One
+       owner governs each concern — size = the spring scalar, opacity = the CSS
+       crossfade below, visibility = this 3-state fork.
+
+       An inactive layer must leave the paint AND hit-test tree: `opacity:0` alone
+       leaves the box answering `elementFromPoint()`, so an inactive layer's button
+       intercepts clicks meant for the active one. `visibility:hidden` removes it
+       from both while KEEPING it in layout flow, so the FLIP measurement still
+       reads its geometry (`display:none` would zero it). The delayed `visibility`
+       transition holds a leaving layer `visible` for the length of the opacity
+       crossfade, then flips it `hidden`.
+
+       AX.W45 DK7 — the crossfade is now on the ONE `--dock-morph-t` scalar (the
+       SAME clock the box size + child stagger ride), NOT a parallel fixed-duration
+       CSS transition. The prior `opacity var(--dock-motion-resize)` was a SECOND
+       clock: a velocity-dependent spring settles its meaningful travel in ~0.18s
+       while the 0.3s CSS transition lingered, so the leaving pane ghosted over the
+       settled box — the "laggy/delayed" layer-switch the user read. Driving the
+       leaving-pane opacity off `calc(1 - var(--dock-morph-t))` makes the fade a pure
+       FUNCTION of the same `t`: an interrupted/retargeted switch carries the
+       crossfade WITH it (no second timer to drift). Visibility is the ONLY surviving
+       CSS-timed leg — a 0s hold over `--duration-normal` keeps the leaving pane
+       paintable through the fade, then flips it hidden (the a11y-006 hit-test
+       anchor); the spring-settle clears the morph state so the hold releases in
+       lockstep. The base rule keeps NO opacity transition (the scalar IS the clock). */
+    :where(.glass-dock, .dock-layer-group) .dock-layer,
+    :where(.glass-dock, .dock-layer-group) .dock-layer-item-host {
+        transition: visibility 0s linear var(--duration-normal);
+    }
+
+    :where(.glass-dock, .dock-layer-group) .dock-layer:not(.is-active):not(.is-leaving),
+    :where(.glass-dock, .dock-layer-group)
+        .dock-layer-item-host:not(.is-active):not(.is-leaving) {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    :where(.glass-dock, .dock-layer-group) .dock-layer.is-active,
+    :where(.glass-dock, .dock-layer-group) .dock-layer-item-host.is-active {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        /* AW.W2 — the active pane is STATICALLY opacity:1, REVEALED by the clip
+           aperture (the box is the reveal mechanism), never faded. There is ZERO
+           opacity authority on the active pane — the aperture uncovers a layout
+           that is laid out ONCE at natural size behind it. Only `visibility 0s`
+           survives (the active layer must paint at once, no fade-in delay — the
+           AU.W2 governing rule). The leaving pane fades on the scalar below. */
+        transition: visibility 0s;
+    }
+
+    /* AX.W45 DK7 — the leaving pane fades on the ONE `--dock-morph-t` scalar (the
+       single clock the box rides), gated on `[data-morphing]`. At rest (no morph)
+       the leaving class is already gone, so the scalar-fade is only authored DURING
+       the morph. `opacity: calc(1 - var(--dock-morph-t))` runs 1→0 as the box
+       morphs, in perfect lockstep — no ghost, no flash, no second timer. The pane
+       stays painted (visibility:visible) + untouchable (pointer-events:none) through
+       the fade; the base-rule `visibility 0s linear var(--duration-normal)` hold
+       flips it hidden once the morph state clears on spring-settle. */
+    :where(.glass-dock, .dock-layer-group) .dock-layer.is-leaving,
+    :where(.glass-dock, .dock-layer-group) .dock-layer-item-host.is-leaving {
+        opacity: 0;
+        visibility: visible;
+        pointer-events: none;
+    }
+
+    .glass-dock[data-morphing] .dock-layer.is-leaving,
+    .glass-dock[data-morphing] .dock-layer-item-host.is-leaving {
+        opacity: calc(1 - var(--dock-morph-t));
+    }
+
+    /* AX.W45 — opacity now has ONE owner: the `--dock-morph-t` scalar (the leaving
+       pane via `calc(1 - t)`, the entering pane revealed by the clip aperture +
+       child stagger off the SAME scalar). Visibility keeps ONE owner: the delayed
+       `visibility 0s linear var(--duration-normal)` hold of the 3-state fork above
+       (the a11y-006 hit-test anchor, LOAD-BEARING) released on spring-settle. ONE
+       clock, every axis — the W01/W02 single-scalar thesis FINISHED for opacity. */
+
+    /* ── Base layout — distinct per surface ─────────────────────────── */
+    :where(.glass-dock, .dock-layer-group) .dock-layer {
+        display: flex;
+        align-items: center;
+        grid-area: 1 / 1;
+        gap: var(--dock-layer-gap, 0.375rem);
+    }
+
+    /* AW.W2 — content-intrinsic axis follows the MORPH axis. A horizontal dock
+       lays its inline content out ONCE at `width: max-content` (nowrap) so the
+       width aperture uncovers a static row; the fixed `height` keeps the row a
+       single line. Scoped to `:not(.vertical)` so a vertical rail (whose
+       block-axis morph reveals a column) is NOT forced onto one nowrap row — the
+       vertical group's active host block-sizes to `height: max-content` below
+       (the AP.W3 column treatment, KEPT). */
+    /* AY.W-DOCK-NAV B6 — the height is a FLOOR (`min-height`), not a fixed lock. A
+       single-row content pane's intrinsic height already equals
+       `--dock-layer-height` (the controls + line-height sum to it), so `min-height`
+       is byte-identical for the common case. But a horizontal dock hosting a COLUMN
+       switcher-rail (`<DockLayerGroup>` with `show-rail`) lays the rail out as a
+       stack of tabs taller than one row — the prior fixed `height` clipped the
+       rail's lower tabs + the active indicator BELOW the dock floor (the B6 "no rail
+       line / broken" read, measured: 2 of 3 tabs clipped). The floor lets the pane
+       block-size to the rail's natural column height so the dock grows to contain
+       the whole rail. The cross axis keeps `nowrap`. */
+    .glass-dock:not(.vertical) .dock-layer {
+        white-space: nowrap;
+        min-height: var(--dock-layer-height, 2.5rem);
+    }
+
+    :where(.glass-dock, .dock-layer-group) .dock-layer.is-active {
+        position: relative;
+    }
+
+    :where(.glass-dock, .dock-layer-group) .dock-layer:not(.is-active) {
+        position: absolute;
+        inset: 0;
+    }
+
+    /* AX.W01 — the spring-keyed child stagger, now off the SINGLE morph scalar.
+       The driver writes `--dock-morph-t` to the `.glass-dock` root and arms
+       `[data-morphing]` while the spring runs; `--dock-expand-t` (the inheriting
+       directional expanded-ness derived above — 0 collapsed, 1 expanded) cascades
+       to the active pane's children. Each direct child reveals when `--dock-expand-t`
+       crosses its per-child onset, so the controls cascade IN ON the physical morph
+       — symmetric in both directions (expand fades them in outer→in, collapse fades
+       them back out) and an interrupted morph carries the cascade with it (no
+       orphaned timers). The active PANE stays statically opacity:1 (revealed by the
+       clip aperture); only its CHILDREN ride this per-child onset (the W2
+       clip-reveal contract is NOT regressed).
+
+       The reveal is a pure `calc` ramp: `opacity = clamp(0, (expand-t − onset) /
+       window, 1)`. Gated on the root `[data-morphing]` so at REST the children
+       carry no opacity authority (default cascade → 1). Under PRM the spring's
+       `respectReducedMotion` jumps `--dock-morph-t` 0→1 in one frame → `--dock-expand-t`
+       lands at the endpoint → the cascade collapses to 0 stagger frames; the
+       global PRM gate strips `translate` so the rise snaps too. The inner
+       DockLayerGroup defines its own `--dock-expand-t` (= the per-swap progress)
+       in DockLayerGroup's scope so a pane swap reveals the new pane's children. */
+    .glass-dock[data-morphing] .dock-layer.is-active > *,
+    .glass-dock[data-morphing] .dock-layer-item-host.is-active > * {
+        --dock-stagger-window: var(--dock-stagger-window-size, 0.55);
+        --dock-stagger-onset: 0;
+        /* BD.W-DOCK-CORE (A6) — factor the reveal ramp into ONE named var so opacity AND
+           the center-coupled scale read the SAME clamp (W-MOTION-CANON P3, fade coupled to
+           transform). */
+        --child-reveal: clamp(
+            0,
+            calc(
+                (var(--dock-expand-t) - var(--dock-stagger-onset)) /
+                    var(--dock-stagger-window)
+            ),
+            1
+        );
+        opacity: var(--child-reveal);
+        /* BD.W-DOCK-CORE (A6) — the rise is a center-coupled SCALE pop (0.82 → 1 on the
+           reveal ramp, transform-origin center), NOT the prior independent `translate: 0
+           4px` vertical hop. The children inherit the SAME center-anchored read as the box
+           — a small inertial pop FROM the center, coupled to opacity. The global PRM gate
+           strips `scale` → snap. */
+        scale: calc(0.82 + 0.18 * var(--child-reveal));
+        transform-origin: center;
+    }
+
+    /* AX.W02 — per-child onsets off the ONE `--dock-stagger-step` token. Each
+       successive control starts `step` later than the one before it (`onset =
+       step × (childIndex − 1)`), so the row fills outer→in on expand. The
+       hand-typed 0.08/0.16/0.24/0.32/0.4 ladder is RETIRED — the onsets are now
+       derived from the single token, so retuning the cascade beat is a one-token
+       override. The set is capped at the 6th child (`nth-child(n + 6)` holds at
+       `step × 5`) so even a long row finishes within the morph window. ONE rule
+       over the unified `.is-active` vocabulary drives both the outer pane and the
+       inner pane-stack — no duplicated comma-group. (`sibling-index()` would
+       collapse this to a single declaration, but it is not yet Baseline across
+       Safari/Firefox — the token-keyed nth-child set is the cross-engine form, and
+       the magic ladder is gone either way.) */
+    /* BD.W-DOCK-CORE (A6) — the SYMMETRIC center-out stagger (the index-cascade RETIRED,
+       clean break). The onset ladders by DISTANCE FROM THE ROW CENTER (center pair = onset
+       0 via the base rule, then ±1, ±2 …) so the reveal radiates center-out in lockstep
+       with the center-out box morph (I.2) — never the prior left-to-right index cascade
+       that desynced from the centered grow. `--dock-stagger-step` is the per-ring beat;
+       `nth-child(N of *)` + `nth-last-child(N of *)` reach BOTH ends (the row is short —
+       ≤8 controls is the dock norm), the central rule holds the deep middle. The `of *`
+       syntax is Safari 16.4+/Chrome 111+. The rule is duplicated for the inner pane-stack
+       host (identical onsets). */
+    /* ring ±1 — 2nd-from-center each side */
+    .glass-dock[data-morphing] .dock-layer.is-active > *:nth-child(2 of *),
+    .glass-dock[data-morphing] .dock-layer.is-active > *:nth-last-child(2 of *),
+    .glass-dock[data-morphing] .dock-layer-item-host.is-active > *:nth-child(2 of *),
+    .glass-dock[data-morphing]
+        .dock-layer-item-host.is-active
+        > *:nth-last-child(2 of *) {
+        --dock-stagger-onset: calc(var(--dock-stagger-step) * 1);
+    }
+    /* ring ±2 — 3rd-from-center each side */
+    .glass-dock[data-morphing] .dock-layer.is-active > *:nth-child(3 of *),
+    .glass-dock[data-morphing] .dock-layer.is-active > *:nth-last-child(3 of *),
+    .glass-dock[data-morphing] .dock-layer-item-host.is-active > *:nth-child(3 of *),
+    .glass-dock[data-morphing]
+        .dock-layer-item-host.is-active
+        > *:nth-last-child(3 of *) {
+        --dock-stagger-onset: calc(var(--dock-stagger-step) * 2);
+    }
+    /* ring ±3 — the deep-middle 4th/5th-from-edge cap (a long row finishes in-window) */
+    .glass-dock[data-morphing]
+        .dock-layer.is-active
+        > *:nth-child(n + 4):nth-child(-n + 5),
+    .glass-dock[data-morphing]
+        .dock-layer-item-host.is-active
+        > *:nth-child(n + 4):nth-child(-n + 5) {
+        --dock-stagger-onset: calc(var(--dock-stagger-step) * 3);
+    }
+
+    /* AW.W2 — the at-rest clip-lift moved to `.expanded:not([data-morphing])` /
+       `.always-expanded:not([data-morphing])` (the clip-shell block at the top).
+       A plain `overflow: visible` here would lift the clip DURING the morph (the
+       load-bearing sequencing gap), so the `overflow` declarations are dropped
+       from these state rules; they keep only their non-overflow concerns.
+
+       AX.W01 — `:not([data-morphing])` gate: at REST expanded the layers fill the
+       box (`width:100%`), but DURING the morph the reserved `to`-footprint +
+       `transform: scale()` (BB.W-DOCK-MORPH-FAMILY, above) is the SOLE size
+       authority — a `width:100%` here would win on specificity and fight the
+       reserved footprint. The gate hands the box to the transform for the morph and
+       back to 100% on settle (the transform/reserve vanish when `[data-morphing]`
+       clears). */
+    .glass-dock.expanded:not(.fit-content):not([data-morphing]) .dock-layers {
+        width: 100%;
+    }
+
+    .glass-dock.expanded:not(.fit-content) .dock-layer--full {
+        width: 100%;
+    }
+
+    .glass-dock.always-expanded {
+        cursor: default;
+    }
+
+    /* ── AW.W3b — `layout="grid"` the 2D auto-grid big dock ──────────────
+       The active layer becomes a self-wrapping tile grid (Launchpad / Stage-Manager
+       track symmetry — `auto-fill` columns floored at `--dock-tile-min`, explicit
+       `grid-auto-rows` so the concentric look holds). DISTINCT from
+       `overflow="wrap"`'s content-ordered flex-wrap. A `layout="grid"` dock is
+       `alwaysExpanded` by contract (GlassDock.vue), so there is NO width morph and
+       hence NO per-frame grid-column reflow. `white-space: normal` releases the
+       single-row nowrap so the tiles wrap. */
+    .glass-dock.layout-grid {
+        white-space: normal;
+    }
+
+    .glass-dock.layout-grid .dock-layer--full {
+        display: grid;
+        grid-template-columns: repeat(
+            auto-fill,
+            minmax(var(--dock-tile-min, 4.5rem), 1fr)
+        );
+        grid-auto-rows: var(--dock-tile-min, 4.5rem);
+        gap: var(--dock-layer-gap, 0.375rem);
+        width: 100%;
+        height: auto;
+        white-space: normal;
+        /* AX.W45 DK4-a — center each fixed-size button in its tile cell on BOTH
+           axes. The grid layer only inherited `align-items: center` (block axis);
+           `justify-items` defaulted to `stretch`, which degenerates to `start` for a
+           fixed-width `inline-flex` button — so every icon hugged the inline-start
+           (left) edge of its tile, ~16px off-center (the "big-dock icons are not
+           aligned" defect). `place-items: center` centers on both axes, MIRRORING the
+           flex-wrap layer's `justify-content: center`. */
+        place-items: center;
+    }
+
+    /* A grid dock fills the inline cap; the active layer is the panel body, not a
+       shrink-to-fit row. The cap is the `--dock-max-inline-size` clamp (KEPT). */
+    .glass-dock.layout-grid .dock-layers {
+        width: 100%;
+    }
+
+    /* CONCENTRIC inner tiles — inner radius = outer card radius − padding (the
+       universal macOS / visionOS / Raycast rule). NEVER nest two pills
+       (stadium-in-stadium); a finite outer + a stepped-down inner. */
+    .glass-dock.layout-grid.shape-card .dock-layer--full > * {
+        border-radius: calc(
+            var(--dock-card-radius) - var(--dock-padding-inline, 0.5rem)
+        );
+    }
+}

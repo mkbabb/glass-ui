@@ -1,0 +1,59 @@
+/* DockSection grouping styles.
+ * seam fan-out / retract chrome.
+ *
+ * THE THREE-ZONE GESTALT (R8-9 — "the docks COMPLETELY lack sections"). The
+ * <DockSection> chassis groups the dock's already-in-flow controls into a
+ * rail-core | divided sections | nav silhouette and demarcates the zones with the
+ * existing <DockSeparator> primitive — NO box-inflation (the section grouping is the
+ * controls already in the dock plus the divider seams; it does NOT re-mount a
+ * <DockLayerGroup> switcher rail, the W-RAIL3 inflator that demanded column height).
+ *
+ * The chassis is layout-transparent by default: `display: contents` so the zones flow
+ * exactly as the bare controls did (the dock box shrink-wraps as before — the
+ * box-INVIOLATE contract). The zone wrappers carry the kind marker the recipe reads;
+ * they add NO size of their own. On a vertical (column) dock the section runs as a
+ * column; on a horizontal (row) dock it runs as a row — inheriting the dock's own
+ * flex axis, never establishing a competing one.
+ *
+ * @import-ed by dock.css into the SAME `@layer components` as the other dock partials.
+ */
+@layer components {
+    /* The chassis root is layout-transparent — the zones inherit the dock's flex flow
+       (row or column) directly, so grouping into sections adds zero box. */
+    .dock-section {
+        display: contents;
+    }
+
+    /* A grouped zone — a flex run of the consumer's controls along the dock's axis.
+       It owns NO intrinsic size beyond `max-content` (the controls' own size), so the
+       dock keeps shrink-wrapping to its tight pill (box INVIOLATE). The gap matches the
+       dock's inter-control rhythm. */
+    .dock-section-zone {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--dock-section-zone-gap, var(--dock-gap, 0.25rem));
+    }
+
+    /* On a vertical (column) dock the zones stack — the section runs down the rail. */
+    .glass-dock.vertical .dock-section-zone {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    /* The rail-core zone leads (the home/brand region); the nav zone trails. They are
+       the same flex run — the kind marker is for the recipe + a11y, not a layout fork.
+       The core (`data-kind="rail-core"`) zone gets a touch more breathing room from the
+       first section seam. The CSS token is `--core` (NOT `--rail-core`): the dock-band
+       "rail" noun is de-overloaded (AZ.W-DOCK-TAXONOMY); the data-attr carries the
+       spec's `rail-core` vocabulary, the class never says "rail". */
+    .dock-section-zone--core {
+        flex: 0 0 auto;
+    }
+    .dock-section-zone--nav {
+        flex: 0 0 auto;
+    }
+    .dock-section-zone--section {
+        flex: 0 1 auto;
+        min-inline-size: 0;
+    }
+}

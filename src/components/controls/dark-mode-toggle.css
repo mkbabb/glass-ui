@@ -1,0 +1,125 @@
+/* DarkModeToggle component styles.
+ * The `.dark-mode-toggle-button` control
+   family (AZ.W-CARVE partial 2 of 5; carved out of dock-controls.css).
+
+   The standalone toggle sizes (sm/md/lg/control) + the IN-DOCK glyph-inset
+   contract (AY.W-DOCK-CHROME §2 / AX.W06 USF-2 — the toggle glyph routes through
+   `--dock-control-glyph-size` so it is optically uniform with the nav glyphs when
+   docked). Opens its OWN `@layer components`; @import-ed after icon-button.css. */
+
+@layer components {
+    .dark-mode-toggle-button {
+        width: var(--dark-mode-toggle-size, 2.25rem);
+        height: var(--dark-mode-toggle-size, 2.25rem);
+        min-width: var(--dark-mode-toggle-size, 2.25rem);
+        min-height: var(--dark-mode-toggle-size, 2.25rem);
+        max-width: var(--dark-mode-toggle-size, 2.25rem);
+        max-height: var(--dark-mode-toggle-size, 2.25rem);
+        aspect-ratio: 1;
+        padding: var(--dark-mode-toggle-padding, 0.375rem);
+        transition:
+            opacity var(--dock-motion-standard),
+            background-color var(--dock-motion-standard),
+            box-shadow var(--dock-motion-fast);
+
+        & > svg {
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        &:hover,
+        &:focus {
+            background: var(--surface-tint-10);
+            opacity: 1;
+            outline: none;
+        }
+
+        &:focus-visible {
+            /* BI.W-DOCK-CONTROLS (value.js P5) — the ONE dock ring register. */
+            box-shadow: var(--dock-ring);
+        }
+
+        &[data-size="sm"] {
+            --dark-mode-toggle-size: 1.75rem;
+            --dark-mode-toggle-padding: 0.25rem;
+        }
+
+        &[data-size="md"] {
+            --dark-mode-toggle-size: 2.25rem;
+            --dark-mode-toggle-padding: 0.375rem;
+        }
+
+        &[data-size="lg"] {
+            --dark-mode-toggle-size: 2.75rem;
+            --dark-mode-toggle-padding: 0.5rem;
+        }
+
+        &[data-size="control"] {
+            --dark-mode-toggle-size: var(--control-size, 2.25rem);
+            --dark-mode-toggle-padding: var(--control-icon-padding, 0.375rem);
+        }
+    }
+
+    .dark-mode-toggle-button[data-size="dock"],
+    .glass-dock
+        .dark-mode-toggle-button:not([data-size="sm"]):not([data-size="lg"]):not(
+            [data-size="control"]
+        ) {
+        --dark-mode-toggle-size: var(--dock-control-size, var(--size-icon-btn));
+        /* AY.W-DOCK-CHROME §2 — the in-dock toggle GLYPH insets to the nav-glyph
+           register. The toggle SVG carries `h-full w-full` (the utility layer, which
+           BEATS the component-layer `> svg { width: --dock-control-glyph-size }` rule
+           below), so the glyph fills whatever the PADDED box leaves. Prior the in-dock
+           padding fell to `var(--dock-icon-padding, 0)` (the token is never defined →
+           0 pad → the glyph filled the whole 40px box edge-to-edge, ~2.5× the 16-20px
+           nav glyphs — the user's "too large" read). Pad the box by HALF the box↔glyph
+           difference so the `h-full` SVG lands at exactly `--dock-control-glyph-size`
+           (default `--dock-icon-glyph`, the `--dock-scale`-keyed size the nav icons
+           paint) — optically UNIFORM with the nav glyphs through the utility-win path,
+           not fighting it.
+
+           BC.W-DOCK-ENGINE move 3 (the Atlas A-9 fold) — the inset subtracts
+           `--dock-control-glyph-size`, the SAME ONE knob the SVG `width`/`height`
+           reads below, so the pad and the glyph stay LOCKED (a consumer retinting
+           `--dock-control-glyph-size` moves both in lockstep — no drift between the
+           box pad and the painted glyph). `--dock-control-size` AND
+           `--dock-control-glyph-size` both INHERIT from `.glass-dock[data-size]`,
+           where the coarse `--dock-scale` re-declare (overflow.css) re-resolves them
+           in lockstep — so the calc reads the coarse-scaled values on a coarse
+           pointer too (the AZ.R5-TOKENS substitution-vs-inheritance trap closed for
+           the toggle glyph: the var() resolves at the toggle button, reading the
+           coarse-re-resolved inherited tokens, never the frozen `:root` scale). */
+        --dark-mode-toggle-padding: calc(
+            (
+                    var(--dock-control-size, var(--size-icon-btn)) -
+                        var(--dock-control-glyph-size, var(--dock-icon-glyph, 1.25rem))
+                ) /
+                2
+        );
+    }
+
+    /* AX.W06 USF-2 — the dock-control optical-size contract. The
+       DarkModeToggle renders its OWN internal SVG `h-full w-full` (it bypasses
+       the `--dock-icon-glyph`-sized `> svg` slot the `.dock-icon-button` family
+       uses), so IN-DOCK it filled the whole control box edge-to-edge (~2.5× the
+       nav glyphs) — `--dock-icon-padding` is NEVER DEFINED, so the
+       `--dark-mode-toggle-padding: var(--dock-icon-padding, 0)` above fell to the
+       `0` fallback and zero padding let the SVG fill the box. Route the in-dock
+       toggle glyph through `--dock-control-glyph-size` (the ONE size the whole
+       dock-control family reads, default = `--dock-icon-glyph`, the same
+       `--dock-scale`-keyed glyph the nav icons paint), so the toggle is optically
+       UNIFORM with the nav glyphs WHEN DOCKED. The `h-full w-full` SVG stays
+       correct for the STANDALONE DarkModeToggle sizes (no `.glass-dock`
+       ancestor); this rule is scoped to the in-dock path only. Machine-checked by
+       the dock-control optical-parity gate, not eyeballed. */
+    .glass-dock
+        .dark-mode-toggle-button:not([data-size="sm"]):not([data-size="lg"]):not(
+            [data-size="control"]
+        )
+        > svg {
+        width: var(--dock-control-glyph-size, var(--dock-icon-glyph, 1.25rem));
+        height: var(--dock-control-glyph-size, var(--dock-icon-glyph, 1.25rem));
+    }
+}

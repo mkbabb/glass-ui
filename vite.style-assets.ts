@@ -45,7 +45,7 @@ export function publishStyleAssets(): Plugin {
             const root = __dirname;
 
             // 1. Materialize the /styles cascade in dist + fold the SFC bundle.
-            const { srcFonts, distStyles } = copyStyleAssets(root);
+            const { srcFonts, distStyles, distComponents } = copyStyleAssets(root);
             foldSfcBundle(root, distStyles);
 
             // 2. P9 — emit glass-ui's own component-utility RULES into
@@ -59,15 +59,15 @@ export function publishStyleAssets(): Plugin {
             // 3. Post-process the shipped copy: base64-inline the fonts, then
             //    inject the `-webkit-backdrop-filter` prefix pair (covers the
             //    complete shipped cascade incl. components.css).
-            inlineFonts(srcFonts, distStyles);
-            injectWebkitBackdrop(distStyles);
+            inlineFonts(srcFonts, distStyles, distComponents);
+            injectWebkitBackdrop(distStyles, distComponents);
 
             // 4. BG.W-CSS-MINIFY (F8.4) — minify the shipped cascade LAST (strip
             //    comments + collapse whitespace, string-safe). Runs after every
             //    other pass so it minifies the COMPLETE dist/styles/**/*.css set
             //    (incl. components.css + the webkit pairs); src/styles KEEP their
             //    comments (publish-time only).
-            minifyStyleAssets(distStyles);
+            minifyStyleAssets(distStyles, distComponents);
         },
     };
 }
