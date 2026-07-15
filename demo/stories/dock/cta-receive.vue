@@ -26,16 +26,22 @@ const targetRef = useTemplateRef<HTMLElement>("targetEl");
 // spot, flashed "received".
 const received = ref(false);
 
-const { receive, reset, setPending, clearPending, pending } = useDockCtaReceive(
-    ctaRef,
-    {
-        dockControl: targetRef,
-        preset: "snappy",
-        onReceived: () => {
-            received.value = true;
-        },
+const {
+    receive,
+    reset,
+    setPending,
+    clearPending,
+    pending,
+    playing,
+    progress,
+    observables,
+} = useDockCtaReceive(ctaRef, {
+    dockControl: targetRef,
+    preset: "snappy",
+    onReceived: () => {
+        received.value = true;
     },
-);
+});
 
 // BC.W-AX-DOCK-CTA-SEAT — ARM the landing seat as soon as the target dock control is
 // mounted: the control shows the dim [data-cta-pending] ghost (sized for its arrival
@@ -61,6 +67,11 @@ function replay() {
     setPending();
 }
 
+function sinceStart(value: number | null) {
+    const start = observables.value.startedAtMs;
+    return value === null || start === null ? "—" : `${Math.round(value - start)} ms`;
+}
+
 // Manually clear the seat (the consumer-drives-it-manually path) — demonstrates that
 // clearPending() reveals the seated content without the morph having to land.
 function revealNow() {
@@ -76,24 +87,10 @@ function revealNow() {
         <DockStage #default="{ backgroundCanvas }">
             <StorySection heading="External CTA morphs into the dock" gap="lg">
                 <p class="text-sm text-muted-foreground max-w-prose">
-                    The starred dock control is a <strong>landing SEAT</strong>, RESERVED
-                    for the CTA from the moment the page mounts (<code
-                        class="rounded bg-muted px-1"
-                        >setPending()</code
-                    >): it shows a dim <code class="rounded bg-muted px-1"
-                        >[data-cta-pending]</code
-                    >
-                    ghost, sized for its arrival so the dock box does NOT jump. Click
-                    <strong>Add to dock</strong> — the external CTA button flies + reshapes
-                    from its own rect ONTO that seat, fades + congests into the glass, then
-                    hands off; the seat REVEALS its real content with a calm
-                    <code class="rounded bg-muted px-1">transition: opacity</code> FLIP (NOT
-                    the dock morph-stagger). The
-                    <code class="rounded bg-muted px-1">useDockCtaReceive</code> seam — the
-                    iOS bloom-from-source inverse, composing the SAME morph
-                    substrate as the dock, a consuming seam beside the dock morph
-                    mechanism. Compositor-only;
-                    reduced-motion snaps the CTA to gone + instant-swaps the reveal.
+                    Add to dock flies the external action into its reserved star seat,
+                    then hands ownership to the Dock without moving its layout. The same
+                    morph owner measures the run below; reduced motion completes without
+                    travel.
                     <span v-if="pending" class="text-mono-caption">(seat armed)</span>
                 </p>
 
@@ -113,20 +110,36 @@ function revealNow() {
                     </Button>
                     <Button v-else variant="default" @click="replay">Replay</Button>
 
-                    <!-- The consumer-drives-the-seat-manually path: clearPending() reveals
-                         the seated content without the CTA having to land (the seat is a
-                         CSS state the consumer owns). -->
-                    <Button
-                        v-if="pending && !received"
-                        variant="ghost"
-                        class="text-mono-caption"
-                        @click="revealNow"
-                    >
-                        Reveal seat now
-                    </Button>
+                    <div v-if="!received" class="flex flex-wrap justify-center gap-2">
+                        <Button v-if="playing" variant="ghost" @click="onCta">
+                            Restart receive
+                        </Button>
+                        <Button
+                            v-if="
+                                observables.phase !== 'idle' &&
+                                observables.phase !== 'reset'
+                            "
+                            variant="ghost"
+                            @click="replay"
+                        >
+                            Reset
+                        </Button>
+                        <Button
+                            v-if="pending"
+                            variant="ghost"
+                            class="text-mono-caption"
+                            @click="revealNow"
+                        >
+                            Reveal seat
+                        </Button>
+                    </div>
 
                     <!-- The dock with the target control. -->
-                    <GlassDock :background-canvas="backgroundCanvas" always-expanded class="relative z-10">
+                    <GlassDock
+                        :background-canvas="backgroundCanvas"
+                        always-expanded
+                        class="relative z-10"
+                    >
                         <DockControl aria-label="Foundations"><Compass /></DockControl>
                         <DockControl aria-label="Primitives"><Shapes /></DockControl>
                         <DockControl aria-label="Containers"><Boxes /></DockControl>
@@ -140,12 +153,80 @@ function revealNow() {
                             <Star />
                         </DockControl>
                     </GlassDock>
+
+                    <dl
+                        class="grid w-full max-w-xl grid-cols-2 gap-x-6 gap-y-3 border-t border-border/30 pt-5 text-mono-caption sm:grid-cols-4"
+                        aria-label="CTA receive measurements"
+                    >
+                        <div>
+                            <dt class="text-muted-foreground">State</dt>
+                            <dd>
+                                {{ observables.phase }} · {{ observables.path ?? "—" }}
+                            </dd>
+                        </div>
+                        <div>
+                            <dt class="text-muted-foreground">Progress</dt>
+                            <dd>{{ Math.round(progress * 100) }}%</dd>
+                        </div>
+                        <div>
+                            <dt class="text-muted-foreground">Travel</dt>
+                            <dd>
+                                {{ Math.round(observables.travelPx) }} px
+                                <span v-if="observables.travelBandPx">
+                                    · {{ observables.travelBandPx[0] }}–{{
+                                        observables.travelBandPx[1]
+                                    }}
+                                </span>
+                            </dd>
+                        </div>
+                        <div>
+                            <dt class="text-muted-foreground">Latency</dt>
+                            <dd>
+                                {{
+                                    observables.latencyMs === null
+                                        ? "—"
+                                        : `${Math.round(observables.latencyMs)} ms`
+                                }}
+                                <span v-if="observables.withinBand !== null">
+                                    ·
+                                    {{
+                                        observables.withinBand
+                                            ? "in band"
+                                            : "out of band"
+                                    }}
+                                </span>
+                                <span v-if="observables.latencyBandMs">
+                                    · {{ Math.round(observables.latencyBandMs[0]) }}–{{
+                                        Math.round(observables.latencyBandMs[1])
+                                    }}
+                                </span>
+                            </dd>
+                        </div>
+                    </dl>
+                    <p
+                        class="text-mono-caption text-muted-foreground"
+                        aria-live="polite"
+                    >
+                        start {{ observables.startedAtMs === null ? "—" : "0 ms" }} ·
+                        settle {{ sinceStart(observables.settledAtMs) }} · handoff
+                        {{ sinceStart(observables.handedOffAtMs) }} · complete
+                        {{ sinceStart(observables.completedAtMs) }} · runs
+                        {{ observables.run }} · interruptions
+                        {{ observables.interruptions }} · resets
+                        {{ observables.resets }} · scale
+                        {{ observables.scaleRatio.toFixed(2) }}×
+                        <span v-if="observables.scaleBand">
+                            ({{ observables.scaleBand[0] }}–{{
+                                observables.scaleBand[1]
+                            }})
+                        </span>
+                    </p>
                 </div>
 
                 <p class="text-mono-caption text-muted-foreground">
-                    The CTA is the morph vehicle (transform/opacity/filter only); the dock
-                    control is the destination. ONE spring substrate, ONE family with
-                    <code class="rounded bg-muted px-1">useLiquidReveal</code>.
+                    Fine and coarse runs are checked against the selected spring
+                    horizon, travel, and scale bands. Reset is an explicit snap; reverse
+                    travel is not supported.
                 </p>
             </StorySection>
         </DockStage>

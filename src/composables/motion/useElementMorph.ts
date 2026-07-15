@@ -61,9 +61,7 @@ import { springPreset, type SpringPresetName } from "./springPresets";
 
 /** A morph endpoint — a templateRef to an element/component, or the literal `"self"`
  *  (the morphed surface's OWN settled rect). */
-export type MorphEndpoint =
-    | Ref<HTMLElement | ComponentPublicInstance | null>
-    | "self";
+export type MorphEndpoint = Ref<HTMLElement | ComponentPublicInstance | null> | "self";
 
 /** The morph register — `snappy` (the quick app-open default) or `bouncy` (the emphatic
  *  large-surface bloom). A subset of the named `SPRING_PRESETS` rows shared by every
@@ -123,6 +121,15 @@ export interface UseElementMorphReturn {
     playing: Readonly<Ref<boolean>>;
     /** The live eased ARRIVAL progress (0 at play start → 1 at settle). */
     progress: Readonly<Ref<number>>;
+    /** Geometry and engine horizon measured by this owner for the current play. */
+    measurement: Readonly<Ref<ElementMorphMeasurement | null>>;
+}
+
+export interface ElementMorphMeasurement {
+    readonly travelPx: number;
+    readonly scaleX: number;
+    readonly scaleY: number;
+    readonly durationMs: number;
 }
 
 /**
@@ -220,6 +227,7 @@ export function useElementMorph(
 
     const playing = ref(false);
     const progress = ref(0);
+    const measurement = ref<ElementMorphMeasurement | null>(null);
 
     let morph: ElementMorph | null = null;
     let raf = 0;
@@ -227,7 +235,8 @@ export function useElementMorph(
     let releaseLock: (() => void) | null = null;
 
     function cancelRaf(): void {
-        if (raf && typeof cancelAnimationFrame === "function") cancelAnimationFrame(raf);
+        if (raf && typeof cancelAnimationFrame === "function")
+            cancelAnimationFrame(raf);
         raf = 0;
     }
 
@@ -258,7 +267,9 @@ export function useElementMorph(
         const resolve = (ep: MorphEndpoint | undefined): MorphRect => {
             if (ep === undefined || ep === "self") return selfRect;
             const target = asElement(ep.value);
-            return target ? toRect(target.getBoundingClientRect()) : insetSelf(selfRect);
+            return target
+                ? toRect(target.getBoundingClientRect())
+                : insetSelf(selfRect);
         };
         const from = resolve(options.from ?? "self");
         const to = resolve(options.to);
@@ -311,6 +322,16 @@ export function useElementMorph(
         if (!el) return;
         cancel();
         const m = measure(el);
+        const fromCx = m.from.x + m.from.width / 2;
+        const fromCy = m.from.y + m.from.height / 2;
+        const toCx = m.to.x + m.to.width / 2;
+        const toCy = m.to.y + m.to.height / 2;
+        measurement.value = {
+            travelPx: Math.hypot(toCx - fromCx, toCy - fromCy),
+            scaleX: m.from.width > 0 ? m.to.width / m.from.width : 1,
+            scaleY: m.from.height > 0 ? m.to.height / m.from.height : 1,
+            durationMs,
+        };
 
         playing.value = true;
         progress.value = 0;
@@ -358,5 +379,6 @@ export function useElementMorph(
         seat,
         playing: readonly(playing),
         progress: readonly(progress),
+        measurement: readonly(measurement),
     };
 }

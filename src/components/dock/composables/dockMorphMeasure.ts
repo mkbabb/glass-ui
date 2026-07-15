@@ -1,5 +1,4 @@
-import { onScopeDispose, watch, type Ref } from "vue";
-import { DOCK_TAP_FLOOR_PX } from "../constants";
+import { onScopeDispose, readonly, ref, watch, type Ref } from "vue";
 
 /**
  * BD.W-DOCK-CORE (the width-seizure cure) — the dock morph SIZE measure.
@@ -71,6 +70,29 @@ export interface UseDockExpandedSizeOptions {
     expanded: Ref<boolean>;
 }
 
+export interface DockMorphMeasureFailure {
+    readonly code: "invalid-morph-min";
+    readonly token: string;
+}
+
+export interface UseDockExpandedSizeReturn {
+    /** The single fail-closed state for an unreadable semantic geometry token. */
+    failure: Readonly<Ref<DockMorphMeasureFailure | null>>;
+}
+
+/** Resolve the inherited semantic token through CSS itself, including max()/rem/var(). */
+export function resolveDockMorphMin(root: HTMLElement): number | null {
+    const probe = root.ownerDocument.createElement("i");
+    probe.style.cssText =
+        "position:absolute;visibility:hidden;pointer-events:none;contain:strict;inline-size:var(--dock-morph-min);block-size:0";
+    root.append(probe);
+    const px = Number.parseFloat(
+        root.ownerDocument.defaultView?.getComputedStyle(probe).inlineSize ?? "",
+    );
+    probe.remove();
+    return Number.isFinite(px) && px > 0 ? px : null;
+}
+
 /**
  * BD.W-DOCK-CORE — capture the two convex-blend endpoints ONCE PER STATE off the
  * ROOT box.
@@ -92,14 +114,18 @@ export interface UseDockExpandedSizeOptions {
  * expanded. So the FIRST morph from a freshly-mounted expanded dock already has a
  * real expanded endpoint + a sane collapsed floor — bounded by construction.
  */
-export function useDockExpandedSize(options: UseDockExpandedSizeOptions): void {
+export function useDockExpandedSize(
+    options: UseDockExpandedSizeOptions,
+): UseDockExpandedSizeReturn {
     const { rootEl, contentEl, axis, expanded } = options;
+    const failure = ref<DockMorphMeasureFailure | null>(null);
 
     let ro: ResizeObserver | null = null;
     // The two captured endpoints (px). Seeded lazily; the collapsed floor backs the
     // collapsed endpoint until a real collapsed rest is observed.
     let expandedPx = 0;
     let collapsedPx = 0;
+    let collapsedCaptured = false;
 
     function isMorphing(root: HTMLElement): boolean {
         return root.hasAttribute("data-morphing");
@@ -111,8 +137,22 @@ export function useDockExpandedSize(options: UseDockExpandedSizeOptions): void {
         const content = contentEl.value;
         if (!root || !content) return;
         const a = axis.value;
-        const floor = DOCK_TAP_FLOOR_PX;
-        if (collapsedPx <= 0) collapsedPx = floor;
+        const floor = resolveDockMorphMin(root);
+        if (floor === null) {
+            const token =
+                root.ownerDocument.defaultView
+                    ?.getComputedStyle(root)
+                    .getPropertyValue("--dock-morph-min")
+                    .trim() ?? "";
+            if (failure.value?.token !== token) {
+                failure.value = { code: "invalid-morph-min", token };
+            }
+            root.style.removeProperty("--dock-collapsed-px");
+            root.style.removeProperty("--dock-expanded-px");
+            return;
+        }
+        failure.value = null;
+        if (!collapsedCaptured) collapsedPx = floor;
 
         // Only refine an endpoint when the dock is at REST (the box is its true
         // settled footprint; mid-morph the box is mid-scale and would feed back a
@@ -122,7 +162,10 @@ export function useDockExpandedSize(options: UseDockExpandedSizeOptions): void {
             const box = getSize(root, a);
             if (box > 0) {
                 if (expanded.value) expandedPx = box;
-                else collapsedPx = box;
+                else {
+                    collapsedPx = box;
+                    collapsedCaptured = true;
+                }
             }
         }
 
@@ -174,4 +217,6 @@ export function useDockExpandedSize(options: UseDockExpandedSizeOptions): void {
         if (ro) ro.disconnect();
         ro = null;
     });
+
+    return { failure: readonly(failure) };
 }
