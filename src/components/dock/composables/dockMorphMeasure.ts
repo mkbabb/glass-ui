@@ -72,27 +72,6 @@ export interface UseDockExpandedSizeOptions {
 }
 
 /**
- * The collapsed-endpoint floor in px (the icon-square / WCAG touch floor) read off
- * the live root token, used until the collapsed state has been captured at rest.
- */
-function collapsedFloorPx(root: HTMLElement | null): number {
-    // BG.NF.1 W-FALLBACK-EXCISE — the floor is the single-sourced `DOCK_TAP_FLOOR_PX`
-    // (constants.ts, mirroring `--dock-morph-min`'s 2.75rem), NEVER a bare drift-prone
-    // literal duplicated at the read. A missing root (not yet mounted) is the honest
-    // not-mounted case → the constant; a MOUNTED root whose token is unreadable is a
-    // real bug → fail loud (dev warn) then the constant, no silent literal mask.
-    if (!root || typeof getComputedStyle !== "function") return DOCK_TAP_FLOOR_PX;
-    const raw = getComputedStyle(root).getPropertyValue("--dock-morph-min").trim();
-    const n = Number.parseFloat(raw);
-    if (Number.isFinite(n) && n > 0) return n;
-    if (import.meta.env?.DEV)
-        console.warn(
-            "[glass-ui] dock: --dock-morph-min unreadable on a mounted dock root — the token cascade did not reach it (falling back to the WCAG tap floor).",
-        );
-    return DOCK_TAP_FLOOR_PX;
-}
-
-/**
  * BD.W-DOCK-CORE — capture the two convex-blend endpoints ONCE PER STATE off the
  * ROOT box.
  *
@@ -132,7 +111,7 @@ export function useDockExpandedSize(options: UseDockExpandedSizeOptions): void {
         const content = contentEl.value;
         if (!root || !content) return;
         const a = axis.value;
-        const floor = collapsedFloorPx(root);
+        const floor = DOCK_TAP_FLOOR_PX;
         if (collapsedPx <= 0) collapsedPx = floor;
 
         // Only refine an endpoint when the dock is at REST (the box is its true
