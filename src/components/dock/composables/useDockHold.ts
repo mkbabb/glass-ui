@@ -97,6 +97,7 @@ export function useDockHold(
         if (typeof window === "undefined") return;
         window.removeEventListener("pointerup", onWindowRelease);
         window.removeEventListener("pointercancel", onWindowRelease);
+        window.removeEventListener("blur", onWindowRelease);
     }
 
     function onPress(): void {
@@ -106,8 +107,10 @@ export function useDockHold(
         // re-fires before a release (e.g. a touch then a synthesized pointer).
         window.removeEventListener("pointerup", onWindowRelease);
         window.removeEventListener("pointercancel", onWindowRelease);
+        window.removeEventListener("blur", onWindowRelease);
         window.addEventListener("pointerup", onWindowRelease);
         window.addEventListener("pointercancel", onWindowRelease);
+        window.addEventListener("blur", onWindowRelease);
     }
 
     let host: HTMLElement | null = null;
@@ -132,6 +135,7 @@ export function useDockHold(
         if (typeof window !== "undefined") {
             window.removeEventListener("pointerup", onWindowRelease);
             window.removeEventListener("pointercancel", onWindowRelease);
+            window.removeEventListener("blur", onWindowRelease);
         }
         release();
     });

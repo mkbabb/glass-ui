@@ -16,7 +16,7 @@
 //     OFF when the native timeline is supported (no double-feather).
 // The CSS axis is selected by `data-fade-axis` (the root attr); the fallback
 // reads the same `axis` prop.
-import { ref } from "vue";
+import { ref, toRef, watch } from "vue";
 import { useFadingScroll } from "./composables/useFadingScroll";
 
 const props = withDefaults(
@@ -36,11 +36,16 @@ const rootRef = ref<HTMLElement | null>(null);
 // The JS fallback. On a native-`scroll(self)`-supporting engine this attaches
 // nothing (the CSS recipe is the sole writer); otherwise it writes the per-edge
 // customs off the live scroll state. Single writer either way.
-useFadingScroll(rootRef, {
-    axis: props.axis,
-    fadeStart: props.fadeStart,
-    fadeEnd: props.fadeEnd,
+const fadingScroll = useFadingScroll(rootRef, {
+    axis: toRef(props, "axis"),
+    fadeStart: toRef(props, "fadeStart"),
+    fadeEnd: toRef(props, "fadeEnd"),
 });
+
+watch(
+    () => [props.axis, props.fadeStart, props.fadeEnd],
+    fadingScroll.measure,
+);
 </script>
 
 <template>
@@ -51,6 +56,9 @@ useFadingScroll(rootRef, {
         :data-fade-axis="axis"
         :data-fade-start="fadeStart ? '' : undefined"
         :data-fade-end="fadeEnd ? '' : undefined"
+        role="region"
+        aria-label="Scrollable content"
+        tabindex="0"
     >
         <slot />
     </div>

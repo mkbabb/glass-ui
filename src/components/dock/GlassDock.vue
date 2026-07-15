@@ -244,7 +244,12 @@ const rootVtStyle = computed<Record<string, string>>(() => ({
    consumer-side interim guards (slides' `@touchend.prevent` + 320ms capture-phase
    click guard) — the `expanded` ref STAYS exposed (a protected binary-consumer
    surface), the consumer just no longer needs a guard keyed off it. */
-const { onPointerDownCapture, onClickCapture, markExpandFlip } = useDockClickIntegrity({
+const {
+    onPointerDownCapture,
+    onPointerCancelCapture,
+    onClickCapture,
+    markExpandFlip,
+} = useDockClickIntegrity({
     rootEl: dockEl,
     visualExpanded,
 });
@@ -332,6 +337,7 @@ defineExpose({
         @touchmove="onTouchMove"
         @touchend="onTouchEnd"
         @pointerdown.capture="onPointerDownCapture"
+        @pointercancel.capture="onPointerCancelCapture"
         @click.capture="onClickCapture"
     >
         <!--

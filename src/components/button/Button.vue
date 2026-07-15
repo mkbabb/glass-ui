@@ -75,7 +75,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const hostAttrs = computed(() => ({
-  type: props.type,
+  type: props.type ?? (!props.asChild && props.as === 'button' ? 'button' : undefined),
   disabled: props.disabled,
 }))
 

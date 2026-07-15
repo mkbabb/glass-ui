@@ -58,6 +58,7 @@ function toggle() {
 <template>
     <DockControl
         type="button"
+        :active="paused"
         :aria-pressed="paused"
         :aria-label="label"
         :title="label"

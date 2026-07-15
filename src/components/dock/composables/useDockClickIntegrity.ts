@@ -44,6 +44,8 @@ import { MORPH_SETTLE_MS } from "../constants";
 export interface DockClickIntegrity {
     /** Capture-phase `pointerdown` handler — records the press-time element + state. */
     onPointerDownCapture: (event: PointerEvent) => void;
+    /** Capture-phase `pointercancel` handler — clears an abandoned press identity. */
+    onPointerCancelCapture: () => void;
     /** Capture-phase `click` handler — swallows an identity-changed post-swap click. */
     onClickCapture: (event: MouseEvent) => void;
     /** Mark the collapsed→expanded flip so the settle window opens (call on expand). */
@@ -139,6 +141,12 @@ export function useDockClickIntegrity(
         pressedDuringMorph = morphInFlight();
     }
 
+    function onPointerCancelCapture(): void {
+        pressTarget = null;
+        pressedWhileCollapsed = false;
+        pressedDuringMorph = false;
+    }
+
     /** Identity match: is `clicked` the SAME element pressed, or in the same
         control lineage (an icon inside the button the user pressed, or the button
         around the icon)? A lineage match means the SAME control survived the morph —
@@ -198,5 +206,10 @@ export function useDockClickIntegrity(
 
     onBeforeUnmount(clearSettleTimer);
 
-    return { onPointerDownCapture, onClickCapture, markExpandFlip };
+    return {
+        onPointerDownCapture,
+        onPointerCancelCapture,
+        onClickCapture,
+        markExpandFlip,
+    };
 }

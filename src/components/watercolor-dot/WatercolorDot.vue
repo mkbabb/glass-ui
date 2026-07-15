@@ -114,6 +114,7 @@ const activeTransform = computed(() =>
     <component
         :is="tag"
         :class="['watercolor-swatch', animate && 'watercolor-animated']"
+        :type="tag === 'button' ? 'button' : undefined"
         data-testid="watercolor-swatch"
         :data-variant="variant"
         :style="{

@@ -224,8 +224,10 @@ export function useAurora(
         // replay of the CURRENT config seats it, closing the silently-dropped-change gap.
         inst.update(getCfg());
 
-        reducedMq = window.matchMedia("(prefers-reduced-motion: reduce)");
-        reducedMq.addEventListener("change", onReducedChange);
+        if (typeof window.matchMedia === "function") {
+            reducedMq = window.matchMedia("(prefers-reduced-motion: reduce)");
+            reducedMq.addEventListener("change", onReducedChange);
+        }
 
         stopWatch = watch(getCfg, (next) => inst?.update(next), { deep: true });
 

@@ -47,6 +47,7 @@ export function createDragController(deps: DragControllerDeps): DragController {
     let mode: InputMode | null = null;
     let proposal: Proposal | null = null;
     let sourceEl: HTMLElement | null = null;
+    let pointerId: number | null = null;
 
     function findIndex(id: SortableId): number {
         return deps.getItems().findIndex((item) => deps.getId(item) === id);
@@ -103,6 +104,7 @@ export function createDragController(deps: DragControllerDeps): DragController {
         deps.ghost.destroyGhost();
         sourceEl?.classList.remove(SOURCE_DRAGGING_CLASS);
         sourceEl = null;
+        pointerId = null;
         dragId.value = null;
         pos.value = null;
         dropIndex.value = null;
@@ -170,6 +172,7 @@ export function createDragController(deps: DragControllerDeps): DragController {
 
     function beginPointer(id: SortableId, event: PointerEvent): void {
         if (!begin(id, "pointer")) return;
+        pointerId = event.pointerId;
         pos.value = { x: event.clientX, y: event.clientY };
         sourceEl && deps.ghost.createGhost(sourceEl, event.clientX, event.clientY);
         pointerCaptureActive.value = acquirePointerCapture(
@@ -183,7 +186,7 @@ export function createDragController(deps: DragControllerDeps): DragController {
 
     function onPointerMove(event: PointerEvent): void {
         const id = dragId.value;
-        if (id === null || mode !== "pointer") return;
+        if (id === null || mode !== "pointer" || event.pointerId !== pointerId) return;
         pos.value = { x: event.clientX, y: event.clientY };
         deps.ghost.updateGhost(event.clientX, event.clientY);
 
@@ -212,11 +215,13 @@ export function createDragController(deps: DragControllerDeps): DragController {
         propose(boundary > sourceIndex ? boundary - 1 : boundary, null);
     }
 
-    function onPointerUp(): void {
+    function onPointerUp(event: PointerEvent): void {
+        if (event.pointerId !== pointerId) return;
         commit();
     }
 
-    function onPointerCancel(): void {
+    function onPointerCancel(event: PointerEvent): void {
+        if (event.pointerId !== pointerId) return;
         cancel();
     }
 

@@ -84,6 +84,7 @@ function onKeyDown(event: KeyboardEvent) {
     :class="cn('relative', props.class)"
     role="region"
     aria-roledescription="carousel"
+    aria-label="Carousel"
     tabindex="0"
     @keydown="onKeyDown"
   >

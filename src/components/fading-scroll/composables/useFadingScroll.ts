@@ -23,11 +23,11 @@ import { NATIVE_SCROLL_TIMELINE, SNAP_TOLERANCE } from "../constants";
 
 export interface UseFadingScrollOptions {
     /** Scroll axis. `"x"` reads scrollLeft/Width; `"y"` reads scrollTop/Height. Default `"x"`. */
-    axis?: "x" | "y";
+    axis?: MaybeRef<"x" | "y">;
     /** Feather the start edge once scrolled past the start. Default `true`. */
-    fadeStart?: boolean;
+    fadeStart?: MaybeRef<boolean>;
     /** Feather the end edge while trailing overflow remains. Default `true`. */
-    fadeEnd?: boolean;
+    fadeEnd?: MaybeRef<boolean>;
 }
 
 export interface UseFadingScrollControls {
@@ -78,14 +78,15 @@ export function useFadingScroll(
     function measure(): void {
         const el = unref(target);
         if (!el) return;
-        const pos = axis === "x" ? el.scrollLeft : el.scrollTop;
+        const horizontal = unref(axis) === "x";
+        const pos = horizontal ? el.scrollLeft : el.scrollTop;
         const max =
-            axis === "x"
+            horizontal
                 ? el.scrollWidth - el.clientWidth
                 : el.scrollHeight - el.clientHeight;
         const atStart = pos <= SNAP_TOLERANCE;
         const atEnd = pos >= max - SNAP_TOLERANCE;
-        applyEdges(fadeStart && !atStart, fadeEnd && !atEnd);
+        applyEdges(unref(fadeStart) && !atStart, unref(fadeEnd) && !atEnd);
     }
 
     // rAF-coalesce the scroll handler — a single in-flight frame per burst. This
