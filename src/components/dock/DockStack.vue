@@ -121,6 +121,7 @@ function select(item: DockStackItem): void {
         :data-mode="mode"
         @focusin="popover.onFocusIn"
         @focusout="popover.onFocusOut($event)"
+        @keydown.escape="popover.onEscape"
     >
         <!-- The CORE anchor — an in-flow dock control (the popover invoker). Hover/focus
              fans the members OUT of the top-layer surface; click toggles. -->
@@ -159,7 +160,6 @@ function select(item: DockStackItem): void {
             :data-wrap="wrap || undefined"
             @pointerenter="popover.onPopoverEnter"
             @pointerleave="popover.onPopoverLeave"
-            @keydown.escape="popover.hide"
         >
             <FadingScroll
                 :axis="orientation === 'vertical' ? 'x' : 'y'"

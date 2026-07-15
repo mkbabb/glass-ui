@@ -82,6 +82,8 @@ export interface UseDockPopoverReturn {
     onFocusIn: () => void;
     /** Focus left the anchor+surface subtree → hide (focus stays while traversing members). */
     onFocusOut: (event: FocusEvent) => void;
+    /** Close the active popover and consume Escape so an ancestor layer stays open. */
+    onEscape: (event: KeyboardEvent) => void;
 }
 
 /**
@@ -110,6 +112,7 @@ export function useDockPopover(options: UseDockPopoverOptions): UseDockPopoverRe
     let intentTimer: ReturnType<typeof setTimeout> | null = null;
     let graceTimer: ReturnType<typeof setTimeout> | null = null;
     let listening = false;
+    let restoringFocus = false;
 
     function clearIntent(): void {
         if (intentTimer != null) {
@@ -247,7 +250,17 @@ export function useDockPopover(options: UseDockPopoverOptions): UseDockPopoverRe
         removeLiveListeners();
         // Focus-return-to-invoker (Esc / focus-out inside the surface) — the native
         // `popovertarget` return, hand-wired for the imperative hover path.
-        if (focusWasInside) options.anchor()?.focus();
+        if (focusWasInside) {
+            // Focusing the invoker dispatches `focusin` synchronously. Suppress that
+            // one event or the focus-open path immediately reopens what Escape/select
+            // just closed.
+            restoringFocus = true;
+            try {
+                options.anchor()?.focus();
+            } finally {
+                restoringFocus = false;
+            }
+        }
     }
 
     function toggle(): void {
@@ -277,6 +290,7 @@ export function useDockPopover(options: UseDockPopoverOptions): UseDockPopoverRe
         scheduleHide();
     }
     function onFocusIn(): void {
+        if (restoringFocus) return;
         clearIntent();
         clearGrace();
         show();
@@ -291,6 +305,12 @@ export function useDockPopover(options: UseDockPopoverOptions): UseDockPopoverRe
         ) {
             return; // focus is traversing the anchor/surface subtree — stay open
         }
+        hide();
+    }
+    function onEscape(event: KeyboardEvent): void {
+        if (!open.value) return;
+        event.preventDefault();
+        event.stopPropagation();
         hide();
     }
     function scheduleHide(): void {
@@ -327,5 +347,6 @@ export function useDockPopover(options: UseDockPopoverOptions): UseDockPopoverRe
         onPopoverLeave,
         onFocusIn,
         onFocusOut,
+        onEscape,
     };
 }
