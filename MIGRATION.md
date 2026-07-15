@@ -11,7 +11,8 @@ The 5.0.0 cut is the joint BG/BH release: the BG visual-convergence band (the wa
 weighty / liquid iOS-27 redesign) lands alongside the BH structural reshape. **The
 whole consumer break is ONE dropped export key — `./api` — plus its 199-symbol
 re-home** (each symbol swaps its import PATH onto the owning subpath, zero symbol loss);
-every other published key is preserved (the regen proves 96/96 keys reproduce). The
+every other published key is preserved (the generated export map reproduces every
+retained key). The
 remaining rows are a token rename (`--ring` → `--focus-ring-color`), one
 component/subpath rename (`goo-blob` → `blob`), and the source-only `src/subpaths/`
 deletion + curated flat-barrel relocations (no export break). The BG visual band is a
@@ -48,7 +49,7 @@ BI.W-BORDER-PROGRESS-RETIRE (see "The `/border-progress` subpath retirement" sec
 the component is BANKED dormant off the public surface, so those types have no owning subpath
 until the speedtest adopt re-publishes it. The surface-axis
 grammar types (`Surface` / `SurfaceTier`) publish via the dedicated `/axes` grammar
-subpath (BH.W-AXIS-GRAMMAR — the honest `/api` successor). Only two `ui/_shared`
+subpath (BH.W-AXIS-GRAMMAR — the honest `/api` successor). Only two `components/_shared`
 convenience unions re-home to a barrel that ADDS one type-only export: `MenuItemVariants`
 → `/command`, `ControlSize` → `/forms`. The three root-barrel `*Variants` types
 (`AlertVariants` / `AvatarVariants` / `ToggleVariants`) resolve off the root
@@ -280,14 +281,15 @@ change). MIGRATE (one-line rename per call site):
 `<GooBlob …>` → `<Blob …>`; the prop schema + the `useMetaballRenderer` seam are
 otherwise unchanged. The merged-metaball FIELD look is identical — only the name moves.
 
-### `src/subpaths/` deleted + curated flat-barrel relocations (key-preserving)
+### Semantic entries replace source mirrors (key-preserving)
 
-The 79 one-line `src/subpaths/*.ts` mirror barrels are DELETED; the build entry-map is
-re-derived from the real colocated component/composable barrels by the fail-closed
-exports regen. The 11 curated flat `src/*.ts` barrels relocate under `src/entries/`.
-Both moves are SOURCE-ONLY and KEY-PRESERVING — the same `dist/<name>.js` chunk set
-emits and every published subpath key resolves identically. No consumer action is
-required for either.
+The tracked `src/subpaths/*.ts` mirror barrels are DELETED. One semantic entry graph
+now points the build, declarations, and package exports directly at the owning
+component/composable barrels. The root pass-through files for `axes`, `carousel`,
+`dark`, `infinite-scroll`, `keyboard`, `motion`, `motion-core`, and `sidebar` are also
+deleted; `src/tokens.ts` moves to `src/styles/tokens.ts`, while `src/index.ts` and
+`src/forms.ts` remain. These are SOURCE-ONLY, KEY-PRESERVING changes: published
+subpaths and chunk names are unchanged, so consumers take no action.
 
 ### The BG/BH visual-convergence & structural retirements
 
@@ -2118,12 +2120,12 @@ at O.W6 cross-repo cohort. No other constellation references.
 
 The whole compact-metric family SHIPS: `metric-cell` (`MetricCell`), `metric-stack`
 (`MetricStack` + `MetricRow`), `metric-badge` (`MetricBadge`), `instrument-chassis`
-(`InstrumentChassis` + `ChassisDivider`), `pulse` (`Pulse`) — their `src/components/`
-dirs, `src/subpaths/*.ts` barrels, the `./metric-cell` / `./metric-stack` /
-`./metric-badge` / `./instrument-chassis` / `./pulse` `package.json` `exports` entries +
-`typesVersions` rows, the `@mkbabb/glass-ui/api` re-exports, and the `--metric-row-*`
-value-clamp token family (tokens.css §17) are all LIVE. `<MetricPill>` (ui/, composes
-`<MetricBadge>`) rides the family on the root barrel.
+(`InstrumentChassis` + `ChassisDivider`), and `pulse` (`Pulse`). Their flat
+`src/components/{metric-cell,metric-stack,metric-badge,instrument-chassis,pulse}`
+owners, generated `package.json` exports and `typesVersions` rows, and the
+`--metric-row-*` value-clamp token family are all live. Public entries and declaration
+paths derive from the semantic entry graph; no `src/subpaths/` or `/api` mirror layer
+sits between consumers and these owners.
 
 **Not speedtest-only — a three-repo public API.** The earlier "speedtest-consumed"
 framing (and the FAM-10 "speedtest-only sextet" premise / the UF-K1 move-to-speedtest

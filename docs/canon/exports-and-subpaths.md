@@ -1,51 +1,56 @@
 # Exports & subpaths (canon home)
 
-The public surface is three layers — a vueuse-FREE root barrel, flat per-package subpaths,
-and (through 4.x) a pure types/constants `@mkbabb/glass-ui/api` discovery layer.
+The public surface has three parts: a vueuse-free curated root barrel, flat
+semantic JavaScript subpaths, and CSS/font asset exports. The former
+`@mkbabb/glass-ui/api` discovery layer was dropped at the 5.0.0 clean break.
 
 ## The root barrel (`@mkbabb/glass-ui`)
 
-`src/index.ts` is the v1.0 curated public barrel — **vueuse-free** (L.W1 Lane A SCC-trap
-closure). It re-exports the vueuse-free `ui/` package barrels, a small cherry-picked set of
-`custom/` packages, the vueuse-free composable sub-trees, and `cn()`. The 4 vueuse-bearing
-surfaces (`input`, `textarea`, `combobox`, `carousel`) are reachable only via subpath. The
-remaining `custom/` packages reach consumers only via their dedicated subpath.
+`src/index.ts` re-exports selected flat component-family owners and
+dependency-free composables. Vueuse-bearing or otherwise isolated surfaces stay
+on dedicated subpaths, whose entries point directly at their owning source.
 
 ```ts
 import { Button, Card, Skeleton } from "@mkbabb/glass-ui";
-import { useGlobalDark } from "@mkbabb/glass-ui/dark";       // vueuse-bearing → flat subpath
-import { GlassDock } from "@mkbabb/glass-ui/dock";           // per-package substrate isolation
+import { useGlobalDark } from "@mkbabb/glass-ui/dark";
+import { GlassDock } from "@mkbabb/glass-ui/dock";
 import { Aurora, useAurora } from "@mkbabb/glass-ui/aurora";
 ```
 
-## The flat per-package subpaths
+## The flat semantic subpaths
 
-Each component family / composable subtree ships via a flat subpath (`@mkbabb/glass-ui/dock`,
-`/aurora`, `/sidebar`, …) that tree-shakes independently (one `dist/<name>.js` chunk per
-subpath). CSS imports the unified bundle via `@mkbabb/glass-ui/styles` (or the split
-`./styles/critical` + `./styles/deferred` — see `consumer-wiring.md`). Each `exports` entry
-carries the contract-v2 shape — `{ types, import, default }` for the `./` root,
-`{ types, import }` for the subpaths; no `development` condition.
+Each published component or composable family ships through a flat subpath such
+as `@mkbabb/glass-ui/dock`, `/aurora`, or `/sidebar`. The build emits one
+independently tree-shakable `dist/<name>.js` entry per family. Entries resolve
+straight to owner barrels; there is no `src/subpaths/` mirror layer or root
+pass-through layer.
 
-## The `/api` discovery layer (through 4.x; dropped at the 5.0.0 clean break)
+CSS consumers use `@mkbabb/glass-ui/styles` or
+`@mkbabb/glass-ui/styles.css`; fonts use
+`@mkbabb/glass-ui/styles/fonts`. The retired critical/deferred CSS split is not
+part of the public surface.
 
-`@mkbabb/glass-ui/api` is a pure types + constants discovery layer (no runtime component).
-It is the ONE dropped key of the 5.0.0 export reshape (`./api` folds into per-surface
-re-homes — a clean break, the single MIGRATION row); every other published key is preserved
-(the regen proves the key-set reproduces).
+Each JavaScript export carries `{ types, import }` conditions (plus `default`
+for the root); no `development` condition is published.
 
-## The classification is machine truth, not prose
+## The `/api` discovery layer (through 4.x)
 
-The PUBLISH / INTERNAL / CURATED classification + the generated entry set live in the fail-
-CLOSED `scripts/lib/subpath-policy.mjs` + `scripts/regen-exports.mjs` — the entry map is
-re-derived from the real colocated barrels (key-preserving), and `--inject-unclassified` /
-`--break-fidelity` each exit 1. This home carries the prose; that seam is the machine truth.
-Subpath publication is binary (`scripts/release.sh` probes each published subpath before
-`git tag`). Verified by `npm run verify-export-types` + the fail-closed `proof:resolution`.
+`@mkbabb/glass-ui/api` was a pure types-and-constants discovery layer. Its key
+was dropped at 5.0.0 and its retained symbols moved to their owning family
+subpaths; `MIGRATION.md` records the consumer re-homes.
+
+## One semantic entry graph
+
+`scripts/lib/subpath-policy.mjs` owns the publish/internal classification and
+semantic owner map. Its `libraryEntryMap` feeds Vite, `scripts/regen-exports.mjs`
+projects it into `package.json`, and `scripts/flatten-subpath-types.mjs` uses the
+same entries for declaration output. `scripts/verify-export-types.mjs` checks
+that published JavaScript entries resolve to emitted declarations.
 
 ## The `manualChunks` recipe
 
-To split glass-ui out of app code, use the single-arg `manualChunks` form
-(`build.rollupOptions.output.manualChunks`), ordered `glass-ui → vueuse → vendor` so the
-`node_modules` catch-all does not swallow the named splits. Do NOT set both `manualChunks`
-and `output.advancedChunks` (Rolldown ignores the former if the latter is present).
+To split glass-ui out of app code, use the single-argument `manualChunks` form
+at `build.rolldownOptions.output.manualChunks`, ordered
+`glass-ui → vueuse → vendor` so the `node_modules` catch-all does not swallow
+the named splits. Do not combine `manualChunks` with
+`output.advancedChunks`; Rolldown ignores the former when the latter is present.

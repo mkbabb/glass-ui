@@ -45,7 +45,7 @@ The substrate values live in `tokens.css §11..§14` and `glass.css`; the consum
 |---|---|---|---|---|
 | **Wash** | `.glass-wash` | Permeable veil over a kinetic backdrop | Dock substrate, input chrome, hover bg — anywhere the backdrop must read through | TabBar / Toolbar |
 | **Quiet** | `.glass-quiet` | Inline workspace chrome — present but recessive | Sidebar, inline panel, secondary chrome | Sidebar / inline panel |
-| **Resting** | `.glass-resting` | Canonical translucent + frosted plate; the default a primitive reaches for | Cards, sheets, the `<GlassPanel>` default surface | Sheet / Card |
+| **Resting** | `.glass-resting` | Canonical translucent + frosted plate; the default a primitive reaches for | Cards, sheets, the `<Surface>` default tier | Sheet / Card |
 | **Floating** | `.glass-floating` | Elevated transient surface | Popovers, tooltips, dropdowns, context menus | Popover / ContextMenu |
 | **Overlay** | `.glass-overlay` | Modal-over-modal; takeover surface | Dialogs, command palette, action sheets | Dialog / Action Sheet |
 | **Dock** | `.glass-dock` | Translucent plate over backdrop motion; `blur(0)` floor by design so the backdrop's blur reads through | DynamicIsland / Dock / floating action bar | DynamicIsland / Dock |
@@ -219,12 +219,12 @@ Tokens live in `src/styles/tokens.css` under `:root`, with `.dark` overrides. Co
 
 **Feature tokens live in `tokens.css` under a `§<feature>` block. Feature recipes consume them from the feature's own stylesheet.**
 
-Rationale: tokens.css is the single consumer-overridable contract surface. When a feature's knobs are in tokens.css and its recipes are in the feature's CSS file, every override site is predictable—consumers know to look in tokens.css, and the feature stylesheet is free of raw literals. Splitting token assignments between tokens.css and a second file (utilities.css, dock.css, etc.) creates a cascade-order dependency that is silent and fragile; the W3 dock split-brain (Qβ-F1 / Qβ-F4) is the canonical failure mode.
+Rationale: tokens.css is the single consumer-overridable contract surface. When a feature's knobs are in tokens.css and its recipes are colocated with the feature, every override site is predictable—consumers know to look in tokens.css, and the feature stylesheet is free of raw literals. Splitting token assignments between tokens.css and a secondary global file creates a cascade-order dependency that is silent and fragile; the W3 dock split-brain (Qβ-F1 / Qβ-F4) is the canonical failure mode.
 
 The rule has two parts:
 
 1. **Token definition belongs in `tokens.css`** under the named `§<feature>` block (`§16 TIMELINE`, `§10 DOCK GEOMETRY`, etc.). This is the single place consumers override.
-2. **Recipe consumption belongs in the feature's stylesheet** (`dock.css`, `cards.css`, the feature SFC's non-scoped `<style>` block for portal contracts, etc.). The recipe reads `var(--feature-token)` from the cascade; it never hardcodes the value.
+2. **Recipe consumption belongs with the feature owner** (`src/components/dock/styles/`, `src/components/card/styles.css`, or the feature SFC's non-scoped `<style>` block for portal contracts). The recipe reads `var(--feature-token)` from the cascade; it never hardcodes the value.
 
 **Worked example — timeline vs. dock drift.** Timeline is the model:
 
@@ -241,7 +241,7 @@ dock.css       (density rungs)   ← --dock-padding-*, --dock-control-size, …
 utilities.css  (density rungs)   ← --dock-tab-h-*, --dock-label-size  ← SPLIT-BRAIN
 ```
 
-W3 Lane A consolidates the utilities.css density assignments into dock.css, making dock match the timeline shape.
+W3 Lane A consolidated the density assignments under `src/components/dock/styles/`, making dock match the timeline shape.
 
 **Forward reference — W4 token promotions.** The metric-stack value-clamp tokens (`--metric-stack-value-clamp-*`) and the timeline dot-fill tokens (`--timeline-dot-fill`, `--timeline-dot-stroke`) that land in W4 are required to follow this rule: they define in tokens.css under the relevant `§<feature>` block, and the feature stylesheet or SFC reads them. No new tokens may be assigned inside utilities.css or a secondary feature file.
 
@@ -446,7 +446,7 @@ Five tiers compose background opacity, backdrop-blur, border, shadow, grain. Dar
 |-----------|---------------------|---------------|--------------|-------------------------------|----------------------|----------------------------|-------------------------------------|
 | Wash      | `.glass-wash`       | 30%           | 38%          | `blur(1px) saturate(1.05)`    | 8% foreground        | `--glass-shadow-wash`      | Dock bg, input bg, hover overlays   |
 | Quiet     | `.glass-quiet`      | 50%           | 58%          | `blur(3px)`                   | 10% foreground       | `--glass-shadow-quiet`     | Inline workspace chrome             |
-| Resting   | `.glass-resting`    | 65%           | 72%          | `blur(12px) saturate(1.05)`   | 12% foreground       | `--glass-shadow-resting`   | Cards, the canonical plate; **`<GlassPanel>` default** (canonical translucent + frosted)          |
+| Resting   | `.glass-resting`    | 65%           | 72%          | `blur(12px) saturate(1.05)`   | 12% foreground       | `--glass-shadow-resting`   | Cards and the canonical plate; **`<Surface>` default tier**                                       |
 | Floating  | `.glass-floating`   | 80%           | 88%          | `blur(16px) saturate(1.4)`    | 15% foreground       | `--glass-shadow-floating`  | Popovers, tooltips, dropdowns       |
 | Overlay   | `.glass-overlay`    | 95%           | 96%          | `blur(24px) saturate(1.5)`    | 18% foreground       | `--glass-shadow-overlay`   | Dialogs, command palette, modals    |
 
@@ -474,32 +474,23 @@ Per N invariant 22 (audit-verdict spot-verification gate): the user's perception
 
 NO-OP for N.W2 Lane B. No token change; no cascade adjustment. The audit lands here for posterity.
 
-### Canonical translucent + frosted (N.W1 Lane A—`<GlassPanel>` default)
+### Canonical translucent + frosted—`<Surface>` default
 
-`<GlassPanel>` (`src/components/custom/glass-panel/GlassPanel.vue`) defaults
-to `variant="resting"`, which composes the `.glass-resting` recipe above:
+`<Surface>` (`src/components/surface/Surface.vue`) defaults to `tier="resting"`
+and `surface="glass"`, which composes the `.glass-resting` recipe above:
 **65% background opacity + 12 px backdrop-blur + 1.05 saturation + 12%
-foreground border + grain overlay**. This is the canonical
+foreground border**. This is the canonical
 "translucent + frosted" surface; consumers asking for "the translucent
-frosted panel" should reach for `<GlassPanel>` (or `<Card>` for the
-cartoon-shadowed sibling) without a tier override. No additional tier
-ships at v1.1.1—per the N KISS posture (V2 + V4 + wire-before-retire),
-the existing resting rung already satisfies the brief; we verify the
-rendering rather than invent.
-
-Per N invariant 22 (audit-verdict spot-verification gate), this lane
-verified at HEAD: `GlassPanel.vue`'s `VARIANT_CLASS.resting`
-binding (line ~19) → `.glass-resting` utility → token recipe in
-`src/styles/glass.css`. The grain overlay `::after` rule renders via
-`paper-grain-overlay` composition. Visual inspection at consumer
-build-time is the canonical verification path; library-side rendering
-verification is asynchronous (Playwright-MCP or equivalent).
+frosted panel" should reach for `<Surface>` (or `<Card>` for the
+cartoon-shadowed sibling) without a tier override. The class chain is
+`Surface.vue` → `.glass-resting` → `src/styles/glass.css`; grain is an
+independent opt-in through the `grain` prop.
 
 ### Convenience shorthands
 
 - `.glass-card`—**static surface utility**: `.glass-resting` + `border-radius: var(--radius-card)` + offset card shadow. No hover lift; interactive cards live in `<Card>` (which composes its own hover via the `surface` ladder — `surface="cartoon"` → `.cartoon-surface`, or a hover tier) or in components that explicitly opt into a hover variant.
 - `.glass-pill`—`.glass-resting` + pill radius + press feedback (scale 0.97 on active)
-- `.cartoon-surface`—**the cartoon decoration utility** (`cards.css`), composed by `<Card surface="cartoon">`: a 2px inked bezel + the layered-offset cel-shadow stamp (`--shadow-cartoon-md` → `-lg` on hover), and (the Cartoon register, §Shadows) the moving caster that punches on interaction. It composes ON TOP of the host's resolved glass tier — it is NOT itself a tier. (The former `.glass-cartoon` recipe + the `<CartoonCard>` sibling primitive are retired; this is the live carrier.)
+- `.cartoon-surface`—**the cartoon decoration utility** (`src/components/card/styles.css`), composed by `<Card surface="cartoon">`: a 2px inked bezel + the layered-offset cel-shadow stamp (`--shadow-cartoon-md` → `-lg` on hover), and (the Cartoon register, §Shadows) the moving caster that punches on interaction. It composes ON TOP of the host's resolved glass tier — it is NOT itself a tier. (The former `.glass-cartoon` recipe + the `<CartoonCard>` sibling primitive are retired; this is the live carrier.)
 
 ### Accessibility fallbacks
 
@@ -924,6 +915,7 @@ into this single context. `dockExpanded` is permanently retired
 interface DockContext {
     id: string;
     orientation: ComputedRef<"horizontal" | "vertical">;
+    layout: ComputedRef<"linear" | "grid">;
     keepOpen: () => void;
     release: () => void;
     held: ComputedRef<boolean>;
@@ -937,16 +929,14 @@ Two paired helpers expose the context:
   (e.g., a custom dock-internal control).
 - `useOptionalDockContext()`—befitting silent default. Returns
   `DockContext | null`. Use for primitives that MAY render outside
-  a dock (Slider, HoverPopover, PopoverContent, SelectContent,
+  a dock (Slider, Popover, PopoverContent, SelectContent,
   DropdownMenuContent—every one of them composes the optional
   helper because each can render standalone).
 
-This shape is the canonical reference for invariant 25
-(typed-key + helper-pair DI). The same pattern lives at
-`src/components/custom/dock/composables/dockLayerContext.ts`
-(DockLayer ↔ DockLayerGroup) and
-`src/components/ui/toggle-group/toggleGroupContext.ts`
-(ToggleGroup ↔ ToggleGroupItem).
+This shape is implemented in
+`src/components/dock/composables/dockContext.ts`. The optional-context variant
+used by ToggleGroup lives at
+`src/components/toggle-group/toggleGroupContext.ts`.
 
 ### Components
 
@@ -1134,7 +1124,7 @@ The sticky-position + backdrop-blur classes (and the `--card-header-bg` tint tok
 1. **Acquire**—`pointerdown` on the slider thumb injects a `dockKeepOpen` token via the dock's `useDockState` provide tree. While the token is held, the dock's idle-collapse timer is suspended.
 2. **Release**—`pointerup` / `pointercancel` (attached at window scope so the gesture survives the cursor leaving the dock) drops the token.
 3. **Visual binding**—the Slider subscribes to the dock's reactive `dockHeld` flag (the OR-reduction of all currently-held tokens) and reflects it via `data-held` on its root, intensifying the thumb-halo via a denser `--surface-tint` rung in scoped CSS.
-4. **Substrate response**—`.glass-dock[data-held]` in `src/styles/dock.css` tier-shades the dock background up while any descendant holds a token.
+4. **Substrate response**—`.glass-dock[data-held]` in `src/components/dock/styles/morph.css` tier-shades the dock background up while any descendant holds a token.
 
 The cross-substrate proof story lives at `demo/stories/compositions/dock-with-slider.vue` (K W7)—three cells exercising the contract: standard slider (Volume), `glass-pill` variant (Brightness), and a multi-slider mixer demonstrating multi-token reference-counting.
 
@@ -1288,10 +1278,10 @@ Consumers own the choreography. The canonical shape is a Vue `<Transition mode="
 - **Segmented**: `role="group"` on the wrapper, per-dot `<button>` with composed `aria-label` (`"{label}: {state}"`). Per-segment payload surfaces via the `hover` + `click` events.
 - **Continuous**: `role="group"` on the wrapper, plus an **Option C structural split** (AB.W2.T4 / A4 §nested-interactive) under the wrapper:
   - `.continuous-track[role="progressbar"]` with `aria-valuemin="0"`, `aria-valuemax=N`, `aria-valuenow` derived from completed-segment-count + fractional active progress (rounded to 2 decimals). The rail is **non-interactive**—it carries no focusable descendants, satisfying axe `nested-interactive` (serious; WCAG 2.0 A—4.1.2). Each region renders a `.continuous-region-fill` child that paints the per-phase gradient up to the inline `--continuous-fill-width` (load-bearing: the var actually paints, it is not merely computed; W3 will lean on this substrate for the phase-bus echo).
-  - `.continuous-markers[role="list"]` carries the interactive `<button class="continuous-dot">` markers as `<li role="listitem">` siblings. Each button has composed `aria-label` (`"{label}: {state}"`), per-segment data hooks (`data-state`, `data-current`, `data-completed`), and a `<HoverPopover>` wrap that surfaces `{ label, value, description, state }` on hover (color-coded via the segment's gradient endpoint).
+  - `.continuous-markers[role="list"]` carries the interactive `<button class="continuous-dot">` markers as `<li role="listitem">` siblings. Each button has composed `aria-label` (`"{label}: {state}"`), per-segment data hooks (`data-state`, `data-current`, `data-completed`), and a `<Popover trigger="hover">` wrap that surfaces `{ label, value, description, state }` on hover (color-coded via the segment's gradient endpoint).
   - The `currentSegmentKey?: string` prop stamps `data-current="true"` on the matching marker so consumers (panel rendering, W3 raised-rivet styling) can distinguish active phase from transient hovered phase without DOM surgery. Hover affects only the floating popover; the data-current marker survives hover-leave.
 
-The continuous variant's event surface adds `hoverEnd` (mirror of `hover`) so consumers can blend hover-over-current in panels via `effective = hovered ?? current`. The events fire from the HoverPopover's debounced `update:open` cadence (inherits `hoverOpenDelay` + `closeDelay`), eliminating the pointer-skim flicker the raw `@mouseenter`/`@mouseleave` model produced when the popover content overlapped the trigger.
+The continuous variant's event surface adds `hoverEnd` (mirror of `hover`) so consumers can blend hover-over-current in panels via `effective = hovered ?? current`. The events fire from the Popover's debounced `update:open` cadence (configured through `openDelay` + `closeDelay`), eliminating the pointer-skim flicker the raw `@mouseenter`/`@mouseleave` model produced when the popover content overlapped the trigger.
 
 All variants respect `prefers-reduced-motion: reduce` by collapsing band / region / dot transitions to `0.01ms`.
 
@@ -1464,8 +1454,6 @@ state through module-scope registries:
 - `instances` (sortable lists)
 - `activeTimers` (typewriter ambient animations)
 - `toasts` (useToast queue + `toastTimeouts` Map)
-- `generatedRowIds` (DataTable; `src/components/ui/data-table/DataTable.vue:61`—`WeakMap<object, symbol>` keying per-row-id stability across re-renders; GC'd with row objects)
-- `warnedRowIdentityIssues` (DataTable; `src/components/ui/data-table/DataTable.vue:62`—`Set<string>` suppressing DEV warnings to once-per-row-kind across the process)
 
 Plus two vueuse-wrapped registries on the `/dark` and `/keyboard`
 subpaths (`useGlobalDark`, `useShortcutRegistry`)—these use vueuse's
@@ -1478,6 +1466,11 @@ copy environments (rare; e.g., a consumer that bundles two different
 glass-ui versions into one page) would observe state divergence between
 the copies. Per Rδ verification: no DI-able alternative is cleaner; the
 process-singleton pattern is canonical for these substrates.
+
+DataTable instead owns two per-instance registries inside
+`src/components/data-table/composables/useDataTableRowIdentity.ts`:
+`generatedRowIds` preserves object-row identity across recomputes, while
+`warnedRowIdentityIssues` de-duplicates development warnings for that table.
 
 The `useToast` subsystem additionally preserves shadcn-vue parity, so
 consumers migrating from shadcn-vue retain a drop-in compatible API.
@@ -1618,9 +1611,9 @@ The canonical paper-texture substrate is two composable `@utility` declarations 
 
 ### Substrate
 
-- `<PaperBackdrop>` (`src/components/custom/paper-backdrop/PaperBackdrop.vue`)—the wrapper SFC. Props: `opacity?: number | string`, `frequency?: "clean" | "aged"`, `class?`. Renders a single `<div class="paper-underpaint" aria-hidden="true">`; the `frequency="aged"` prop swaps `backgroundImage` to `var(--paper-aged-texture)` inline.
-- `paper-underpaint` (`src/styles/paper.css:12`)—`@utility` declaration. `position: fixed; inset: 0; z-index: -1; pointer-events: none` plus the canonical feTurbulence-noise SVG data-url at 60 × 60 tile. Bound to `--glass-grain-opacity` for the alpha rung and `multiply` / `soft-light` blend (light / dark mode).
-- `paper-grain-overlay` (`src/styles/paper.css:29`)—`@utility` declaration. `::after` overlay variant for individual surfaces (the underpaint is fullscreen-fixed; the overlay is a card-shaped pseudo-element). Same texture / opacity / blend cascade.
+- `<PaperBackdrop>` (`src/components/paper-backdrop/PaperBackdrop.vue`)—the wrapper SFC. Props: `opacity?: number | string`, `frequency?: "clean" | "aged"`, `class?`. Renders a single `<div class="paper-underpaint" aria-hidden="true">`; the `frequency="aged"` prop swaps `backgroundImage` to `var(--paper-aged-texture)` inline.
+- `paper-underpaint` (`src/styles/paper.css`)—`@utility` declaration. `position: fixed; inset: 0; z-index: -1; pointer-events: none` plus the canonical feTurbulence-noise SVG data-url at 60 × 60 tile. Bound to `--glass-grain-opacity` for the alpha rung and `multiply` / `soft-light` blend (light / dark mode).
+- `paper-grain-overlay` (`src/styles/paper.css`)—`@utility` declaration. `::after` overlay variant for individual surfaces (the underpaint is fullscreen-fixed; the overlay is a card-shaped pseudo-element). Same texture / opacity / blend cascade.
 
 ### Custom-property cascade pattern
 
