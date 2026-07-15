@@ -1,6 +1,7 @@
 import { flushPromises, mount } from "@vue/test-utils";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import EasingPicker from "@glass/components/easing/EasingPicker.vue";
+import { COPY_ATTEMPT_TIMEOUT_MS } from "@glass/components/easing/constants";
 
 const clipboardDescriptor = Object.getOwnPropertyDescriptor(navigator, "clipboard");
 
@@ -98,6 +99,33 @@ describe("EasingPicker product contract", () => {
         expect(wrapper.attributes("data-copy-state")).toBe("copied");
         expect(allowed).toHaveBeenCalledOnce();
         wrapper.unmount();
+    });
+
+    it("times out a stalled Clipboard write and keeps retry and unmount timer-safe", async () => {
+        vi.useFakeTimers();
+        let resolveStalled!: () => void;
+        const writeText = vi.fn()
+            .mockImplementationOnce(() => new Promise<void>((resolve) => { resolveStalled = resolve; }))
+            .mockResolvedValueOnce(undefined);
+        setClipboard({ writeText });
+        const wrapper = mountPicker();
+        const copy = wrapper.get('[data-testid="easing-copy"]');
+
+        await copy.trigger("click");
+        expect(wrapper.attributes("data-copy-state")).toBe("pending");
+        await vi.advanceTimersByTimeAsync(COPY_ATTEMPT_TIMEOUT_MS);
+        expect(wrapper.attributes("data-copy-state")).toBe("failed");
+        expect(wrapper.get('[data-testid="easing-select-literal"]').exists()).toBe(true);
+
+        await copy.trigger("click");
+        await flushPromises();
+        expect(wrapper.attributes("data-copy-state")).toBe("copied");
+        resolveStalled();
+        await flushPromises();
+        expect(wrapper.attributes("data-copy-state")).toBe("copied");
+
+        wrapper.unmount();
+        expect(vi.getTimerCount()).toBe(0);
     });
 
     it("owns truthful restart/cancel/final state and completes immediately when PRM flips on", async () => {

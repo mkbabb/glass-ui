@@ -44,3 +44,6 @@ export const TRAVEL_DURATION_MS = 1200;
 
 /** The copy-feedback dwell (ms). */
 export const COPY_FEEDBACK_MS = 1400;
+
+/** Maximum wait for a Clipboard write before offering manual selection (ms). */
+export const COPY_ATTEMPT_TIMEOUT_MS = 2000;
