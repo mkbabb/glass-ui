@@ -8,6 +8,7 @@ import {
 } from "@lucide/vue";
 import {
     Command,
+    CommandDialog,
     CommandEmpty,
     CommandGroup,
     CommandInput,
@@ -16,6 +17,8 @@ import {
     CommandSeparator,
     CommandShortcut,
 } from "@glass/components/command";
+import { Button } from "@glass/components/button";
+import { DialogDescription, DialogTitle } from "@glass/components/dialog";
 import { IconChip } from "@glass/components/icon-chip";
 
 // BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2
@@ -25,32 +28,45 @@ const CONTAINERS_STOP = 2;
 
 const selected = ref<string | null>(null);
 const query = ref("");
+const dialogQuery = ref("");
+const dialogOpen = ref(false);
 
 type CommandRow = { id: string; label: string; icon: any; shortcut?: string };
+type CommandGroupRows = { heading: string; rows: CommandRow[] };
 
-const files: CommandRow[] = [
-    { id: "file:readme", label: "README.md", icon: FileText },
-    { id: "file:design", label: "DESIGN.md", icon: FileText },
-    { id: "file:tokens", label: "tokens.css", icon: FileText },
+const commandGroups: CommandGroupRows[] = [
+    {
+        heading: "Files",
+        rows: [
+            { id: "file:readme", label: "README.md", icon: FileText },
+            { id: "file:design", label: "DESIGN.md", icon: FileText },
+            { id: "file:tokens", label: "tokens.css", icon: FileText },
+        ],
+    },
+    {
+        heading: "Commands",
+        rows: [
+            { id: "cmd:new", label: "New file", icon: Plus, shortcut: "⌘N" },
+            { id: "cmd:search", label: "Search everywhere", icon: Search, shortcut: "⌘K" },
+            { id: "cmd:branch", label: "Switch branch", icon: GitBranch, shortcut: "⌘B" },
+            { id: "cmd:pkg", label: "Install package", icon: Package },
+        ],
+    },
+    {
+        heading: "Preferences",
+        rows: [
+            { id: "pref:theme-light", label: "Light theme", icon: Sun },
+            { id: "pref:theme-dark", label: "Dark theme", icon: Moon },
+            { id: "pref:palette", label: "Customize palette", icon: Palette },
+            { id: "pref:account", label: "Account settings", icon: User, shortcut: "⌘," },
+            { id: "pref:general", label: "General settings", icon: Settings },
+        ],
+    },
 ];
 
-const commands: CommandRow[] = [
-    { id: "cmd:new", label: "New file", icon: Plus, shortcut: "⌘N" },
-    { id: "cmd:search", label: "Search everywhere", icon: Search, shortcut: "⌘K" },
-    { id: "cmd:branch", label: "Switch branch", icon: GitBranch, shortcut: "⌘B" },
-    { id: "cmd:pkg", label: "Install package", icon: Package },
-];
-
-const prefs: CommandRow[] = [
-    { id: "pref:theme-light", label: "Light theme", icon: Sun },
-    { id: "pref:theme-dark", label: "Dark theme", icon: Moon },
-    { id: "pref:palette", label: "Customize palette", icon: Palette },
-    { id: "pref:account", label: "Account settings", icon: User, shortcut: "⌘," },
-    { id: "pref:general", label: "General settings", icon: Settings },
-];
-
-function pick(id: string) {
+function execute(id: string, closeDialog = false) {
     selected.value = id;
+    if (closeDialog) dialogOpen.value = false;
 }
 </script>
 
@@ -78,8 +94,7 @@ function pick(id: string) {
 
         <StorySection heading="Inline palette" gap="md">
             <p class="text-sm text-muted-foreground">
-                The Command element embeds inline here; in practice you'd wrap it in a
-                <code class="rounded bg-muted px-1">CommandDialog</code> for a ⌘K overlay.
+                Search the collection in place; selection is shared with the focused dialog below.
             </p>
             <div class="mx-auto w-full max-w-lg">
                 <Command
@@ -96,47 +111,22 @@ function pick(id: string) {
                             </div>
                         </CommandEmpty>
 
-                        <CommandGroup heading="Files">
-                            <CommandItem
-                                v-for="f in files"
-                                :key="f.id"
-                                :value="f.label"
-                                @select="pick(f.id)"
-                            >
-                                <component :is="f.icon" class="mr-2 h-4 w-4 opacity-70" />
-                                <span>{{ f.label }}</span>
-                            </CommandItem>
-                        </CommandGroup>
-
-                        <CommandSeparator />
-
-                        <CommandGroup heading="Commands">
-                            <CommandItem
-                                v-for="c in commands"
-                                :key="c.id"
-                                :value="c.label"
-                                @select="pick(c.id)"
-                            >
-                                <component :is="c.icon" class="mr-2 h-4 w-4 opacity-70" />
-                                <span>{{ c.label }}</span>
-                                <CommandShortcut v-if="c.shortcut">{{ c.shortcut }}</CommandShortcut>
-                            </CommandItem>
-                        </CommandGroup>
-
-                        <CommandSeparator />
-
-                        <CommandGroup heading="Preferences">
-                            <CommandItem
-                                v-for="p in prefs"
-                                :key="p.id"
-                                :value="p.label"
-                                @select="pick(p.id)"
-                            >
-                                <component :is="p.icon" class="mr-2 h-4 w-4 opacity-70" />
-                                <span>{{ p.label }}</span>
-                                <CommandShortcut v-if="p.shortcut">{{ p.shortcut }}</CommandShortcut>
-                            </CommandItem>
-                        </CommandGroup>
+                        <template v-for="(group, index) in commandGroups" :key="group.heading">
+                            <CommandSeparator v-if="index" />
+                            <CommandGroup :heading="group.heading">
+                                <CommandItem
+                                    v-for="row in group.rows"
+                                    :key="row.id"
+                                    :value="row.id"
+                                    :text-value="row.label"
+                                    @select="execute(row.id)"
+                                >
+                                    <component :is="row.icon" class="mr-2 h-4 w-4 opacity-70" />
+                                    <span>{{ row.label }}</span>
+                                    <CommandShortcut v-if="row.shortcut">{{ row.shortcut }}</CommandShortcut>
+                                </CommandItem>
+                            </CommandGroup>
+                        </template>
                     </CommandList>
                 </Command>
 
@@ -147,6 +137,49 @@ function pick(id: string) {
             </div>
         </StorySection>
 
+        <StorySection heading="Dialog palette" gap="md">
+            <div class="mx-auto flex w-full max-w-lg items-center justify-between gap-4">
+                <p class="max-w-sm text-sm text-muted-foreground">
+                    Open the same commands in a modal search surface. Escape dismisses it and returns focus here.
+                </p>
+                <Button variant="outline" class="shrink-0" @click="dialogOpen = true">
+                    <Search />
+                    Open palette
+                </Button>
+            </div>
+
+            <CommandDialog v-model="selected" v-model:open="dialogOpen">
+                <DialogTitle class="sr-only">Command palette</DialogTitle>
+                <DialogDescription class="sr-only">Search and run a command.</DialogDescription>
+                <CommandInput v-model="dialogQuery" placeholder="Search commands, files, settings…" />
+                <CommandList>
+                    <CommandEmpty>
+                        <div class="flex flex-col items-center gap-2 py-4">
+                            <CommandIcon class="h-6 w-6 opacity-40" />
+                            <p>No matches for "{{ dialogQuery }}"</p>
+                        </div>
+                    </CommandEmpty>
+
+                    <template v-for="(group, index) in commandGroups" :key="group.heading">
+                        <CommandSeparator v-if="index" />
+                        <CommandGroup :heading="group.heading">
+                            <CommandItem
+                                v-for="row in group.rows"
+                                :key="row.id"
+                                :value="row.id"
+                                :text-value="row.label"
+                                @select="execute(row.id, true)"
+                            >
+                                <component :is="row.icon" class="mr-2 h-4 w-4 opacity-70" />
+                                <span>{{ row.label }}</span>
+                                <CommandShortcut v-if="row.shortcut">{{ row.shortcut }}</CommandShortcut>
+                            </CommandItem>
+                        </CommandGroup>
+                    </template>
+                </CommandList>
+            </CommandDialog>
+        </StorySection>
+
         <StorySection heading="Anatomy" gap="sm" class="text-sm text-muted-foreground">
             <ul class="list-disc pl-5 space-y-1">
                 <li><code class="rounded bg-muted px-1">Command</code> — root, owns the query and selection.</li>
@@ -154,6 +187,7 @@ function pick(id: string) {
                 <li><code class="rounded bg-muted px-1">CommandList</code> + <code class="rounded bg-muted px-1">CommandGroup</code> — virtualized rows with headings.</li>
                 <li><code class="rounded bg-muted px-1">CommandEmpty</code> — renders when the filter returns zero.</li>
                 <li><code class="rounded bg-muted px-1">CommandShortcut</code> — aligned key glyph at the row's tail.</li>
+                <li><code class="rounded bg-muted px-1">CommandDialog</code> — the same command model inside Dialog's modal and focus lifecycle.</li>
             </ul>
         </StorySection>
     </StoryPage>
