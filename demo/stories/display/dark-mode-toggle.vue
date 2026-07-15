@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// DarkModeToggle — passive vs live, size axis, disable-transitions knob.
+// DarkModeToggle — one live command across the size and motion axes.
 //
 // The `dock` size rung is shown ONLY inside a real <GlassDock>: it resolves
 // `--dock-control-size` from the host density, so standalone it would fall
@@ -82,18 +82,6 @@ const disableTransitions = ref(false);
                         <input v-model="disableTransitions" type="checkbox" />
                         suppress transitions during toggle
                     </label>
-                </div>
-            </ShowcaseFrame>
-        </StorySection>
-
-        <StorySection
-            label="passive mode"
-            blurb="passive=true makes the button a no-op trigger — useful for embed-only contexts where the toggle is decorative or driven externally."
-        >
-            <ShowcaseFrame pad="md">
-                <div class="flex items-center gap-4">
-                    <DarkModeToggle :passive="true" size="md" />
-                    <span class="text-sm text-muted-foreground">passive — does not toggle</span>
                 </div>
             </ShowcaseFrame>
         </StorySection>

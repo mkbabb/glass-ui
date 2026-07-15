@@ -10,7 +10,6 @@ type DarkModeToggleSize = "sm" | "md" | "lg" | "control" | "dock";
 
 const props = withDefaults(
     defineProps<{
-        passive?: boolean;
         /**
          * Button size. `sm` = 28px, `md` = 36px (default), `lg` = 44px.
          * `control` follows generic control CSS variables; `dock` follows
@@ -35,7 +34,6 @@ const props = withDefaults(
         eclipse?: boolean;
     }>(),
     {
-        passive: false,
         size: "md",
         disableTransitions: false,
         eclipse: false,
@@ -70,7 +68,7 @@ function clearEclipse(): void {
 }
 
 function onEclipseDown(): void {
-    if (!props.eclipse || props.passive) return;
+    if (!props.eclipse) return;
     didEclipse = false;
     clearPress();
     pressTimer = setTimeout(() => {
@@ -106,7 +104,7 @@ function onEclipseClick(e: MouseEvent): void {
         didEclipse = false;
         return;
     }
-    if (!props.passive) toggleDark();
+    toggleDark();
 }
 
 watch(prefersReducedMotion, (reduced) => {
@@ -136,16 +134,10 @@ const rootClass = computed(() =>
 const { isDark, toggleDark, setDisableTransitions } = useGlobalDark();
 
 const forwardedAttrs = computed(() => {
-    const { class: _omit, ...rest } = attrs;
-
-    if (props.passive) {
-        return rest;
-    }
-
+    const { class: _class, type: _type, ...rest } = attrs;
     return {
-        type: "button",
         "aria-label": isDark.value ? "Switch to light mode" : "Switch to dark mode",
-        "aria-pressed": isDark.value ? "true" : "false",
+        "aria-pressed": isDark.value,
         ...rest,
     };
 });
@@ -157,8 +149,8 @@ watchEffect(() => {
 
 <template>
     <!-- Credit to Kevin Powell at https://codepen.io/kevinpowell/pen/PomqjxO -->
-    <component
-        :is="passive ? 'div' : 'button'"
+    <button
+        type="button"
         :class="rootClass"
         :data-size="props.size"
         :data-eclipsing="eclipse && eclipsing ? 'true' : undefined"
@@ -196,7 +188,7 @@ watchEffect(() => {
                 <circle cx="236.2" cy="236.2" r="90" />
             </g>
         </svg>
-    </component>
+    </button>
 </template>
 
 <style scoped>
