@@ -12,9 +12,7 @@ import {
 
 // Mutable view of `document` so the stub/delete dance type-checks (the lib DOM
 // types do not carry `startViewTransition` on every target).
-const docMut = document as unknown as {
-    startViewTransition?: (cb: () => void) => { finished: Promise<unknown> };
-};
+const docMut = document as unknown as { startViewTransition?: unknown };
 
 afterEach(() => {
     vi.restoreAllMocks();
@@ -96,6 +94,54 @@ describe("startViewTransition — native path (API present)", () => {
         // lets a consumer `await finished` to route focus.
         await expect(finished).resolves.toBeUndefined();
     });
+
+    it("keeps callback-only engines on the callback form when types are requested", () => {
+        const supports = vi.spyOn(CSS, "supports").mockReturnValue(false);
+        const native = vi.fn((arg: unknown) => {
+            expect(typeof arg).toBe("function");
+            (arg as () => void)();
+            return { finished: Promise.resolve() };
+        });
+        docMut.startViewTransition = native;
+
+        const mutate = vi.fn();
+        const result = startViewTransition(mutate, { types: ["forward"] });
+
+        expect(supports).toHaveBeenCalledWith(
+            "selector(:active-view-transition-type(glass))",
+        );
+        expect(mutate).toHaveBeenCalledTimes(1);
+        expect(result.transitioned).toBe(true);
+    });
+
+    it("uses the typed overload only when its selector capability is present", () => {
+        vi.spyOn(CSS, "supports").mockReturnValue(true);
+        docMut.startViewTransition = (arg: unknown) => {
+            expect(arg).toMatchObject({ types: ["forward"] });
+            (arg as { update: () => void }).update();
+            return { finished: Promise.resolve() };
+        };
+
+        const mutate = vi.fn();
+        const result = startViewTransition(mutate, { types: ["forward"] });
+
+        expect(mutate).toHaveBeenCalledTimes(1);
+        expect(result.transitioned).toBe(true);
+    });
+
+    it("falls back visibly when the native call throws before running its update", async () => {
+        docMut.startViewTransition = () => {
+            throw new TypeError("unsupported overload");
+        };
+
+        const mutate = vi.fn();
+        const result = startViewTransition(mutate, { types: ["forward"] });
+        await result.finished;
+
+        expect(mutate).toHaveBeenCalledTimes(1);
+        expect(result.transitioned).toBe(false);
+    });
+
 });
 
 // ── BA.W-ATLAS-RECONCILE A-4b — async update + reduced-motion instant-path ────

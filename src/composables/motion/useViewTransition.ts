@@ -103,6 +103,25 @@ function prefersReducedMotion(): boolean {
     return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
+/** The typed object overload and its matching selector arrived after the callback
+ *  API. Use the selector as the capability probe so callback-only Safari builds
+ *  never receive an object they reject. */
+function supportsViewTransitionTypes(): boolean {
+    return (
+        typeof CSS !== "undefined" &&
+        typeof CSS.supports === "function" &&
+        CSS.supports("selector(:active-view-transition-type(glass))")
+    );
+}
+
+function runInstant(mutate: () => void | Promise<void>): ViewTransitionResult {
+    const finished = (async () => mutate())().then(
+        () => undefined,
+        () => undefined,
+    );
+    return { finished, transitioned: false };
+}
+
 /**
  * Wrap a synchronous DOM mutation in `document.startViewTransition` with an
  * instant fallback. `mutate` performs the DOM/state change and is called
@@ -145,22 +164,22 @@ export function startViewTransition(
         typeof doc.startViewTransition !== "function" ||
         (options?.instantUnderReducedMotion && prefersReducedMotion())
     ) {
-        const finished = (async () => mutate())().then(
-            () => undefined,
-            () => undefined,
-        );
-        return { finished, transitioned: false };
+        return runInstant(mutate);
     }
 
-    // The object-form `{ update, types }` overload is Chrome 140+. When a
-    // consumer passes `types` we use it; on an engine that lacks the overload the
-    // browser ignores the unknown `types` key (it still reads `update`), so the
-    // call degrades to the single symmetric curve — no separate feature-probe
-    // needed beyond gating the object form on a non-empty `types`.
-    const vt =
-        options?.types && options.types.length > 0
-            ? doc.startViewTransition({ update: () => mutate(), types: options.types })
-            : doc.startViewTransition(() => mutate());
+    // The typed object overload arrived after the callback API. A callback-only
+    // implementation may throw on an object instead of ignoring `types`, so gate
+    // that form on its matching selector capability. A synchronous native failure
+    // takes the same visible instant path as no support.
+    let vt: ViewTransitionLike;
+    try {
+        vt =
+            options?.types?.length && supportsViewTransitionTypes()
+                ? doc.startViewTransition({ update: mutate, types: options.types })
+                : doc.startViewTransition(mutate);
+    } catch {
+        return runInstant(mutate);
+    }
     // fail-explicit: befitting — 'ready' rejects 'Transition was skipped' on a
     // rapid re-trigger; the swallow prevents an unhandled pageerror; 'ready' is
     // otherwise unread, so there is no real failure to surface.
