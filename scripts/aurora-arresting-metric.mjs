@@ -8,13 +8,9 @@
 //   §4.2  structure-tensor anisotropy     A = (λ₁−λ₂)/(λ₁+λ₂)   (mean interior)
 //   §4.3  radial luminance power-spectrum slope  β  (the −5/3 Kolmogorov keystone)
 //
-// This is the reproducibility leg of the wave: §4 is a real gate, not prose, because the
-// number is recoverable. Consumer #1 is THIS reference-plate invocation
-// (`npm run proof:aurora-arresting-ref` → run against starry-night-crop.png; the printed
-// slope MUST land in [−1.85, −1.45], ratifying the harness against the ground-truth
-// painting Ma et al. measured at β=1.67±0.13). Consumer #2 is the downstream
-// `proof:aurora-arresting` live-GPU spec (W-AUR-PAINTERLY) that calls the same three
-// functions on the rendered medium readback — the substrate-with-consumer ≥2 bar.
+// This is a reproducible diagnostic rather than an acceptance identity: invoke it
+// directly with starry-night-crop.png to print the reference triple. Browser evidence
+// scenarios call the same exported functions on rendered medium readbacks.
 //
 // Pure Node + pngjs (a tests-visual devDependency, resolvable from the repo root). No
 // shader code, no library surface — a build/test leaf under scripts/.

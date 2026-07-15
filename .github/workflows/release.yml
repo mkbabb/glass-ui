@@ -1,31 +1,3 @@
-# release — publish @mkbabb/glass-ui to npm on a v*.*.* tag.
-#
-# Trigger: a pushed tag matching v*.*.* (changesets Version-Packages merge, or
-# hand-cut). Before publishing, the job re-runs the FULL gate matrix as the
-# `gates.mjs --run full` UNION (BB.W-CLOSE-BATTERY — the deduped local ∪ ci ∪
-# release, NOT `--run release` alone; BA's close claimed `--run local` green while
-# `ci ⊂ local` carried 18 reds and never ran the union siblings-absent). inv-θ:
-# the union derives from ONE manifest (scripts/gates.mjs), never a hand-curated
-# list that drifts (the prior hand list had silently dropped proof:components-css,
-# proof:lockfile, proof:phantom-classes). A tag can therefore never ship an
-# artifact the gate would reject. Sibling + detected-Playwright gates
-# (proof:resolution, proof:phantom-classes, proof:consumers:static,
-# proof:substrate-cohesion, proof:touch-target) skip-by-policy on the clean runner
-# where the sibling repos + a live demo are absent. `proof:close-battery-parity`
-# locks that this path runs `--run full`.
-#
-# Publish auth: the NPM_TOKEN repository secret (automation token, publish
-# scope) + an OIDC id-token for npm provenance (`--provenance` attests the
-# build to this repo/workflow). The publish step runs only on tag refs —
-# push/PR never reach it.
-#
-# BG.W-CUT (5.0.0) — the CI publish path. `--run full` is the deduped union that
-# carries Arm B `proof:ship-attestation` (['ci','release'], the device-free tag
-# BYPASS-CLOSER — CI=SwiftShader cannot paint Metal, so it re-verifies the
-# committed docs/tranches/BG/SHIP-ATTESTATION.json Arm A wrote on the Mac dev-box,
-# NEVER `--run ship`) AND the `RATCHET_BASELINES=={}` drain (proof:no-god-module).
-# The tag can therefore never publish an absent/stale/software-raster attestation
-# or an undrained ratchet.
 name: release
 
 on:
@@ -38,29 +10,23 @@ jobs:
         runs-on: ubuntu-latest
         permissions:
             contents: read
-            id-token: write # npm provenance via OIDC
-        env:
-            # profile:budget reuses the `build` gate's dist instead of rebuilding.
-            GLASS_UI_BUDGET_SKIP_BUILD: "1"
+            id-token: write
         steps:
             - uses: actions/checkout@v4
               with:
-                  # full history — proof:ay-final's cardinal-ledger sub-gates
-                  # resolve capture/surface commits via `git log` (a shallow
-                  # clone reads every DELTA as unresolvable → false RED).
                   fetch-depth: 0
             - uses: actions/setup-node@v4
               with:
                   node-version: 24
                   registry-url: "https://registry.npmjs.org"
             - run: npm ci
-            - name: verify tag matches package.json version
+            - name: verify tag matches package version
               run: |
                   TAG="${GITHUB_REF_NAME#v}"
                   PKG="$(node -p "require('./package.json').version")"
                   test "$TAG" = "$PKG" || { echo "tag ${GITHUB_REF_NAME} != package.json ${PKG}"; exit 1; }
-            - name: release gate matrix (gates.mjs --run full)
-              run: node scripts/gates.mjs --run full
+            - name: verify terminal release state
+              run: node scripts/verify.mjs --state auto --profile release --require-terminal
             - name: publish
               run: npm publish --access public --provenance
               env:

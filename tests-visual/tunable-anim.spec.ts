@@ -1,6 +1,6 @@
 // BC.W-TUNABLE-ANIM — tunable-anim.spec.ts, the π readback of the LIVE-TUNABLE motion
-// surface. The device-free SOURCE arm (scripts/proof-tunable-anim.mjs) proves the
-// registry is the single source + boundary-law-correct; THIS SPEC PROVES THE RENDER —
+// surface. Device-free assertions cover the single-source and boundary laws; this
+// scenario covers the render —
 // motion is a genuinely tunable design axis: dragging the steppedEase `n` Slider
 // re-steps the staircase live, flipping the jumpTerm re-shapes the jump, the readout
 // round-trips through value.js, and editing a spring's (response, ζ) re-shapes the live

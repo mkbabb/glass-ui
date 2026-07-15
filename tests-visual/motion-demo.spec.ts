@@ -1,5 +1,5 @@
-// AZ.W-MOTION-SUITE — motion-demo.spec.ts, the π half of proof:motion-demo (the
-// device-free deletion-proofs + source-witnesses live in scripts/proof-motion-demo.mjs).
+// AZ.W-MOTION-SUITE — motion-demo.spec.ts, the browser half of the motion-demo
+// contract; device-free assertions own deletion and source witnesses.
 //
 // THIS SPEC PROVES THE RENDER (the cardinal AX lesson — a green CPU gate over a still-
 // wrong live render is the gap). It reads back, off the LIVE painted :5199 DOM:

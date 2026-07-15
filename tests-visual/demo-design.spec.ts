@@ -1,7 +1,6 @@
 // BB.W-DEMO-DESIGN — demo-design.spec.ts, the π getComputedStyle readback of the
-// demo-design pass (the BINDING close criterion; BB inv-4). The device-free SOURCE
-// arm (scripts/proof-demo-design.mjs) proves the STRUCTURE; THIS SPEC PROVES THE
-// RENDER.
+// demo-design pass (the binding browser criterion). Device-free assertions cover
+// structure; this scenario covers the resolved render.
 //
 // The flat spec-sheet token tours become DESIGNED specimens. The bite the source arm
 // cannot give: an implementer could green the source parse while the RESOLVED render
@@ -24,7 +23,7 @@
 //
 // THE BINDING ASSERTION IS THE RESOLVED READBACK. It loads :5199 →
 // LIVE_VERIFIED_LOCAL_ONLY (tags: ["local"]); CI grace-skips, backstopped by
-// proof:live-verified-ledger over the W-DEMO-DESIGN DELTA.
+// the immutable browser evidence receipt over the W-DEMO-DESIGN delta.
 
 import { test, expect } from "@playwright/test";
 import type { Page } from "@playwright/test";

@@ -1,6 +1,6 @@
-// AZ.W-MOTION2 (R7) — motion2.spec.ts, the π PAINTED-truth half of proof:motion2
-// (the device-free dead-token re-point + stroke-floor + picker register + canon
-// isomorphism census live in scripts/proof-motion2.mjs).
+// AZ.W-MOTION2 (R7) — motion2.spec.ts, the painted browser half of the motion
+// contract. Device-free assertions own the dead-token, stroke-floor, picker-register,
+// and canon-isomorphism semantics.
 //
 // THIS SPEC PROVES THE RENDER (the cardinal AX lesson — a green CPU gate over a
 // still-wrong live render is the gap; W-MOTION-SUITE's data-table gate witnessed the

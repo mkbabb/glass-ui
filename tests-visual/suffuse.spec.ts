@@ -1,6 +1,6 @@
 // AZ.W-SUFFUSE — suffuse.spec.ts, the π getComputedStyle readback of the
-// suffusion pass (the BINDING close criterion; G2). The device-free SOURCE arm
-// (scripts/proof-suffuse.mjs) proves the STRUCTURE; THIS SPEC PROVES THE RENDER.
+// suffusion pass (the binding browser criterion; G2). Device-free assertions cover
+// structure; this scenario covers the render.
 //
 // The house OWNS a magnificent type ladder + a 13-stop section-color ramp +
 // paper/grid/math vocabulary, but the demo STARVED all three. This wave SUFFUSES
@@ -23,7 +23,7 @@
 //
 // THE BINDING ASSERTION IS THE RESOLVED READBACK. It loads :5199 →
 // LIVE_VERIFIED_LOCAL_ONLY (tags: ["local"]); CI grace-skips, backstopped by
-// proof:live-verified-ledger over the W-SUFFUSE DELTA.
+// the immutable browser evidence receipt over the W-SUFFUSE delta.
 
 import { test, expect } from "@playwright/test";
 import type { Page } from "@playwright/test";

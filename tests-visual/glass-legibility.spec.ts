@@ -1,12 +1,12 @@
 // BC.W-GLASS-LEGIBILITY-MEASURED — glass-legibility.spec.ts, the live BIDIRECTIONAL
 // legibility-AND-glassiness π readback (more glass AND more legible at once; the iOS-27
-// dynamic-range shift, MEASURED). The PAINT/π arm of proof:glass-legibility — getComputedStyle
-// over a real :5199 surface, both modes; the device-free SOURCE arm is scripts/proof-glass-
-// legibility.mjs (the L1-L7 + disease-root bites). Per-mechanism greens alone do NOT close the
+// dynamic-range shift, measured). This scenario reads getComputedStyle over a real
+// :5199 surface in both modes; device-free assertions own the L1-L7 and disease-root
+// mutations. Per-mechanism results alone do not close the
 // visual wave — the captured DELTA (docs/tranches/BC/audit/visual/W-GLASS-LEGIBILITY-MEASURED-
 // DELTA.md, the orchestrator's capture) is the binding truth (BC anti-disease law).
 //
-// THE DISEASE-ROOT (postmortem/az.md §2): proof:adaptive-glass-live is MONOTONIC — a grey slab
+// The disease root (postmortem/az.md §2): the former contrast check was monotonic — a grey slab
 // over white scores BETTER on `contrastRatio >= 4.5` + `deltaL` than the warm-cream plate
 // (darkening RAISES both). ZERO "is the glass still glassy while legible?" measure. The fix
 // (this spec): over the composited plate, assert `contrastRatio(bodyInk, effBg) >= 4.5` AND
@@ -19,7 +19,7 @@
 // transparent AND more readable, at once.
 //
 // ONE colour-math source for OKLab: the SHARED paint-arm.mjs leaf (statsFromResolvedBg →
-// reflect-capture-verify's oklabFromRgb) — the SAME decompose the device-free source gate +
+// reflect-capture-verify's oklabFromRgb) — the same decomposition used by device-free assertions and
 // the live arm read (the canvas-unify single-source fence). The WCAG contrast + alpha-composite
 // is standard sRGB (NOT OKLab — not a duplicate of the fenced decompose); the same relative-
 // luminance the adaptive-glass-live π arm computes, kept local + minimal.

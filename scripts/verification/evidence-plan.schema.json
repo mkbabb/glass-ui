@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glass-ui.dev/schemas/verification/evidence-plan.schema.json",
+  "title": "Glass UI semantic verification evidence plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "waveId",
+    "profile",
+    "authority",
+    "invariantFamilies",
+    "sources",
+    "currentReds",
+    "summary"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "waveId": { "type": "string", "pattern": "^BI\\.W-P[0-9]{3}$" },
+    "profile": {
+      "enum": ["bootstrap", "commit", "ci", "local", "native", "release"]
+    },
+    "authority": {
+      "enum": [
+        "IMMUTABLE_FORMATION_P000_PLAN_ONLY",
+        "GIT_FIRST_PARENT_PLUS_COMMITTED_RECEIPTS"
+      ]
+    },
+    "invariantFamilies": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[a-z]+(?:[.-][a-z]+)+$" }
+    },
+    "sources": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/source" }
+    },
+    "currentReds": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/routedRed" }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["normalTestFiles", "browserScenarioFiles", "assertionSites", "externalScenarios"],
+      "properties": {
+        "normalTestFiles": { "type": "integer", "minimum": 0 },
+        "browserScenarioFiles": { "type": "integer", "minimum": 0 },
+        "assertionSites": { "type": "integer", "minimum": 0 },
+        "externalScenarios": { "type": "integer", "minimum": 0 }
+      }
+    }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "source": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "path", "sha256", "assertions", "invariantFamilies"],
+          "properties": {
+            "kind": { "const": "normal-test" },
+            "path": { "type": "string", "minLength": 1 },
+            "sha256": { "$ref": "#/$defs/sha256" },
+            "assertions": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["callee", "line", "column"],
+                "properties": {
+                  "callee": { "type": "string", "minLength": 1 },
+                  "line": { "type": "integer", "minimum": 1 },
+                  "column": { "type": "integer", "minimum": 1 }
+                }
+              }
+            },
+            "invariantFamilies": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "path", "sha256", "assertions", "invariantFamilies", "currentProductPiCredit"],
+          "properties": {
+            "kind": { "const": "browser-scenario" },
+            "path": { "type": "string", "minLength": 1 },
+            "sha256": { "$ref": "#/$defs/sha256" },
+            "assertions": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["callee", "line", "column"],
+                "properties": {
+                  "callee": { "type": "string", "minLength": 1 },
+                  "line": { "type": "integer", "minimum": 1 },
+                  "column": { "type": "integer", "minimum": 1 }
+                }
+              }
+            },
+            "invariantFamilies": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": { "type": "string", "minLength": 1 }
+            },
+            "currentProductPiCredit": { "const": false }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "path", "sha256", "scenarioId", "invariantFamilies"],
+          "properties": {
+            "kind": { "const": "external-scenario" },
+            "path": { "type": "string", "minLength": 1 },
+            "sha256": { "$ref": "#/$defs/sha256" },
+            "scenarioId": { "type": "string", "minLength": 1 },
+            "invariantFamilies": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      ]
+    },
+    "routedRed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["findingId", "invariantFamily", "summary", "status", "ownerWave", "evidencePath"],
+      "properties": {
+        "findingId": { "type": "string", "minLength": 1 },
+        "invariantFamily": { "type": "string", "minLength": 1 },
+        "summary": { "type": "string", "minLength": 1 },
+        "status": { "const": "ROUTED_RED" },
+        "ownerWave": { "type": "string", "pattern": "^BI\\.W-P(?:00[1-9]|0[1-9][0-9]|1[0-2][0-9]|13[0-3])$" },
+        "evidencePath": { "const": "docs/tranches/BI/BOOTSTRAP.json" }
+      }
+    }
+  }
+}

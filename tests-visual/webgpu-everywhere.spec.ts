@@ -19,7 +19,7 @@
 // real device (a real browser + demo + GPU — the orchestrator owns the capture on real
 // Metal). The adapter-less paint + no-throw (W5) runs on the SwiftShader headless CI lane
 // (the WebGL2 net fires under software-raster); the device-free source closes (W1/W2/W3/
-// W7) live in `scripts/proof-webgpu-everywhere.mjs`.
+// W7) remain device-free semantic assertions selected by the verifier.
 
 import { test, expect, type Page } from "@playwright/test";
 import { PNG } from "pngjs";

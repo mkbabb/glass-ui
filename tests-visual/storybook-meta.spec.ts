@@ -1,7 +1,7 @@
 // BC.W-STORYBOOK-META — storybook-meta.spec.ts, the π readback of the WHOLE-STORYBOOK
 // frontend-design quality SYNTHESIS (the BINDING close; BC inv — never a stale-PNG
-// stamp). The device-free SOURCE arm (scripts/proof-storybook-meta.mjs) proves the
-// STRUCTURE; THIS SPEC PROVES THE RENDER off the LIVE painted :5199 DOM.
+// stamp). Device-free assertions cover structure; this scenario covers the live
+// render on the painted :5199 DOM.
 //
 // The bite the source arm cannot give: an implementer could green the source parse
 // while the RESOLVED render is still clipped/occluded, sub-legible, off-palette, or
@@ -25,7 +25,7 @@
 //
 // THE BINDING ASSERTION IS THE RESOLVED READBACK. It loads :5199 →
 // LIVE_VERIFIED_LOCAL_ONLY (tags: ["local"]); CI grace-skips, backstopped by
-// proof:live-verified-ledger over the W-STORYBOOK-META DELTA.
+// the immutable browser evidence receipt over the W-STORYBOOK-META delta.
 
 import { test, expect } from "@playwright/test";
 import type { Page } from "@playwright/test";

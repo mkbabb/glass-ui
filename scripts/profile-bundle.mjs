@@ -10,29 +10,42 @@ import {
 import { gzipSync } from "node:zlib";
 import { dirname, extname, join, resolve } from "node:path";
 import { ROOT } from "./constellation.mjs";
-import {
-    gateArtifactPath,
-    isSnapshot,
-    snapshotStamp,
-    writeGateArtifact,
-} from "./gate-output.mjs";
-// BB.W-PAYLOAD-DEFER (W1) — the SHARED transitive-import walker (the no-second-copy
-// leaf proof-vueuse-free-root.mjs also consumes). The critical-path-weight arm walks
-// the root-barrel eager SOURCE graph with it, asserting ZERO reach to the heavy-leaf
-// set (the WebGL substrate / GL shader strings / value.js color-math leaf).
+// Shared transitive-import discovery for the root-barrel critical-path profile.
 import { findReach } from "./lib/critical-path-walk.mjs";
 
 // ROOT is the glass-ui repo root — sourced from constellation.mjs (the single
 // constellation/path authority), not re-derived locally.
 const root = ROOT;
+const profileCacheDir = resolve(root, ".cache/profiles");
+const isProfileSnapshot = process.env.GLASS_UI_PROFILE_SNAPSHOT === "1";
+
+function profileArtifactPath(envVar, cacheName) {
+    const override = envVar ? process.env[envVar] : undefined;
+    return override
+        ? resolve(root, override)
+        : resolve(profileCacheDir, `${cacheName}.json`);
+}
+
+function profileStamp() {
+    return isProfileSnapshot ? new Date().toISOString() : undefined;
+}
+
+function writeProfileArtifact(path, data, { volatile = [] } = {}) {
+    const omitted = new Set(["generatedAt", ...volatile]);
+    const payload = isProfileSnapshot
+        ? data
+        : Object.fromEntries(Object.entries(data).filter(([key]) => !omitted.has(key)));
+    mkdirSync(dirname(path), { recursive: true });
+    writeFileSync(path, `${JSON.stringify(payload, null, 2)}\n`);
+}
 // Pure-output artefact (AS.W2 inv-θ): the per-run profile JSON routes to the
-// byte-stable `.cache/gates/W4-bundle-profile.json` by default; the existing
+// byte-stable `.cache/profiles/W4-bundle-profile.json` by default; the existing
 // GLASS_UI_BUNDLE_ARTIFACT env still overrides to a committed snapshot path.
 // The run timestamp + timing fields (buildDurationMs/durationMs) are volatile —
 // dropped from the cache artefact so a run leaves git status clean; only the
 // gzip/raw byte measurements (the budget gate's POINT) persist, and those move
 // only when the bundle actually changes.
-const artifactPath = gateArtifactPath(
+const artifactPath = profileArtifactPath(
     "GLASS_UI_BUNDLE_ARTIFACT",
     "W4-bundle-profile",
 );
@@ -56,7 +69,7 @@ const baselinePath = resolve(
 );
 const startedAt = Date.now();
 
-// Bundle budget — enforced via `npm run profile:budget` (passes --enforce).
+// Bundle budget — enforced via `npm run profile:bundle -- --enforce`.
 // `npm run profile:bundle` keeps its measurement-only contract and prints the
 // same report without exiting non-zero on FAIL.
 //
@@ -145,7 +158,7 @@ const startedAt = Date.now();
 // AW.W4.0 governor preamble (the load-bearing budget fix): aurora ships as
 // `dist/aurora.js` — the `/aurora` subpath chunk, NOT root-barrel cherry-picked —
 // so its shader growth NEVER entered the BUDGETS walk and every prior "stays inside
-// profile:budget" for shader payload was a NO-OP. This entry closes that hole: the
+// enforced bundle profile for shader payload was a no-op. This entry closes that hole: the
 // aurora-chunk ceiling is the genuine cost gate the W4 painterly folds (structure
 // tensor + impasto height→normal→relight + the vangogh medium + the oil-pastel
 // rework) and the W7 WGSL+compute twins answer to. HEAD is raw ≈60.9k / gzip
@@ -289,7 +302,7 @@ function combinedStylesDraw(distRoot) {
 //
 // The JS critical path (the cost a Card/Button-only consumer pays through
 // `@mkbabb/glass-ui`) is DEFENDED by a gate, not by accident. The arm has three
-// falsifiable sub-witnesses, all extending profile:budget IN PLACE (no new gate
+// falsifiable sub-witnesses, all extending the bundle profile in place
 // row — the registry stays single-owner). It is born-RED on the arm's ABSENCE at
 // HEAD (the favourable HEAD is LOCKED so a regression reds), NOT on a violation.
 //
@@ -674,9 +687,9 @@ if (criticalPath.violations.length > 0) anyBudgetExceeded = true;
 // ─────────────────────────────────────────────────────────────────────────────
 // BH.B1-W1 — the BUILD-side externalization mirror.
 //
-// proof:external-payload (the SOURCE gate) asserts every JS runtime peer the src/
+// The source externalization invariant requires every JS runtime peer the src/
 // graph imports is in `libraryExternal` (E1) and every entry there is a declared
-// peer (E2). Its note assigns the BUILD-side mirror to profile:budget: an
+// peer (E2). Its build-side mirror runs in enforced bundle profiling: an
 // externalized peer must ship as an EXTERNAL `from "<peer>"` import in dist, NEVER
 // inlined. The @lucide/vue icon peer (39 src imports) was MISSING from
 // libraryExternal, so Vite BUNDLED it — the `createLucideIcon` factory + every icon
@@ -721,7 +734,7 @@ function evaluateExternalPayload(jsFiles) {
         if (chunks.length) {
             facts.bundledPeers.push({ peer, chunks });
             violations.push(
-                `${peer} BUNDLED into dist (${chunks.join(", ")}) — add it to libraryExternal so the peer ships external, not inlined (proof:external-payload E1).`,
+                `${peer} BUNDLED into dist (${chunks.join(", ")}) — add it to libraryExternal so the peer ships external, not inlined.`,
             );
         }
     }
@@ -755,9 +768,11 @@ if (!externalPayloadSelfTestOk) {
 }
 
 const profile = {
-    generatedAt: snapshotStamp(),
+    generatedAt: profileStamp(),
     status: anyBudgetExceeded ? "fail" : "pass",
-    command: budgetMode ? "npm run profile:budget" : "npm run profile:bundle",
+    command: budgetMode
+        ? "npm run profile:bundle -- --enforce"
+        : "npm run profile:bundle",
     buildDurationMs,
     durationMs: Date.now() - startedAt,
     budgets: BUDGETS,
@@ -777,20 +792,20 @@ const profile = {
 
 // Ephemeral per-run profile — the informational artifact. NOT the baseline
 // the next run reads (that is `baselinePath`, committed + `--rebaseline`-only).
-// writeGateArtifact drops `generatedAt` + the volatile timing fields unless
-// GATE_SNAPSHOT=1, so the default cache artefact is byte-stable run-to-run and
+// The profile writer drops `generatedAt` + volatile timing fields unless
+// GLASS_UI_PROFILE_SNAPSHOT=1, so the default cache artefact is byte-stable and
 // only the gzip/raw budget measurements move it. The gate's POINT — those raw
 // + gzip byte counts — stays in the artefact.
-writeGateArtifact(artifactPath, profile, {
+writeProfileArtifact(artifactPath, profile, {
     volatile: ["buildDurationMs", "durationMs"],
 });
 
 // `--rebaseline` — the ONLY path that moves the committed D5 reference. A
-// reviewed git mutation: a human runs `profile:budget -- --rebaseline` once
+// reviewed git mutation: a human runs `npm run profile:bundle -- --rebaseline` once
 // against a canonical `npm run build` dist, then commits the result. The
 // baseline carries the same shape the read path parses (`subpathTable`); it
 // keeps a real `generatedAt` (a deliberate, reviewed snapshot regardless of
-// GATE_SNAPSHOT) for provenance.
+// GLASS_UI_PROFILE_SNAPSHOT) for provenance.
 if (rebaseline) {
     mkdirSync(dirname(baselinePath), { recursive: true });
     const baselineProfile = {
@@ -813,10 +828,10 @@ const mdRows = subpathEntries.map(
         `| \`dist/${e.name}\` | ${e.kind} | ${e.bytes} (${fmtKiB(e.bytes)}) | ${e.gzipBytes} (${fmtKiB(e.gzipBytes)}) |`,
 );
 // The `Generated …` provenance line is volatile — included only under
-// GATE_SNAPSHOT so the default cache markdown is byte-stable run-to-run (same
+// GLASS_UI_PROFILE_SNAPSHOT so the default cache markdown is byte-stable run-to-run (same
 // inv-θ discipline the JSON artefact follows).
-const generatedLine = isSnapshot
-    ? [`Generated ${snapshotStamp()} by \`scripts/profile-bundle.mjs\`.`]
+const generatedLine = isProfileSnapshot
+    ? [`Generated ${profileStamp()} by \`scripts/profile-bundle.mjs\`.`]
     : ["Generated by `scripts/profile-bundle.mjs`."];
 mkdirSync(dirname(subpathMarkdownPath), { recursive: true });
 writeFileSync(
@@ -858,7 +873,7 @@ console.log(
 );
 
 // Print budget report. Always emitted (including from profile:bundle), but
-// only --enforce / profile:budget exits non-zero on FAIL. Format is
+// only `--enforce` exits non-zero on FAIL. Format is
 // rg-friendly so the CI log filter can pick it up without parsing JSON.
 console.log("");
 console.log("Bundle budget report:");
@@ -924,8 +939,7 @@ console.log("Critical-path-weight report (BB.W-PAYLOAD-DEFER):");
     }
 }
 
-// BH.B1-W1 — the build-side externalization report (the proof:external-payload
-// build-side mirror). Same rg-friendly format.
+// BH.B1-W1 — the build-side externalization report. Same rg-friendly format.
 console.log("");
 console.log("External-payload report (BH.B1-W1 — build-side mirror):");
 {

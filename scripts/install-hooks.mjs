@@ -1,21 +1,31 @@
-// install-hooks.mjs — AX.W62: point git at the tracked .githooks/ dir (the
-// dependency-free hook mechanism; no husky). Run from `prepare`, so a dev
-// checkout wires the commit-msg ledger hook on install. A no-git tree (the
-// package installed as a dependency) is a silent no-op — `prepare` does not run
-// in a consumer's node_modules anyway, and the guard makes it safe regardless.
+import { accessSync, constants } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { resolve } from "node:path";
 
-import { execSync } from "node:child_process";
+function git(args, options = {}) {
+    return execFileSync("git", args, {
+        encoding: "utf8",
+        stdio: ["ignore", "pipe", "pipe"],
+        ...options,
+    }).trim();
+}
 
 try {
-    execSync("git rev-parse --git-dir", { stdio: "ignore" });
+    if (git(["rev-parse", "--is-inside-work-tree"]) !== "true") process.exit(0);
 } catch {
-    process.exit(0); // not a git checkout — nothing to wire
+    process.exit(0);
 }
 
-try {
-    execSync("git config core.hooksPath .githooks", { stdio: "ignore" });
-    console.log("[install-hooks] core.hooksPath → .githooks (commit-msg ledger hook armed)");
-} catch (err) {
-    // fail-explicit: surface, but never block install on a hook-wiring hiccup.
-    console.warn(`[install-hooks] could not set core.hooksPath: ${err?.message ?? err}`);
+const root = git(["rev-parse", "--show-toplevel"]);
+const hook = resolve(root, ".githooks/commit-msg");
+accessSync(hook, constants.R_OK | constants.X_OK);
+
+git(["config", "core.hooksPath", ".githooks"], { cwd: root });
+const installedPath = git(["config", "--get", "core.hooksPath"], { cwd: root });
+if (installedPath !== ".githooks") {
+    throw new Error(
+        `core.hooksPath did not persist the tracked hook directory (read ${JSON.stringify(installedPath)})`,
+    );
 }
+
+console.log("[install-hooks] tracked commit verifier installed from .githooks");

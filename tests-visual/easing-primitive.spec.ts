@@ -1,7 +1,7 @@
 // BB.W-EASING-PRIMITIVE — easing-primitive.spec.ts, the π readback of the published
-// <EasingPicker> over the consumer-#1 surface (/motion/curve-gallery). The device-
-// free SOURCE arm (scripts/proof-easing-primitive.mjs) proves the STRUCTURE + the
-// boundary law; THIS SPEC PROVES THE RENDER — the picker plots the REAL value.js
+// <EasingPicker> over the consumer-#1 surface (/motion/curve-gallery). Device-free
+// assertions cover structure and the boundary law; this scenario covers the render —
+// the picker plots the real value.js
 // twin, the curve strokes --motion-accent, the readout is re-parseable, both modes.
 //
 // The bite the source arm cannot give: an implementer could green the source parse
@@ -20,7 +20,7 @@
 //
 // THE BINDING ASSERTION IS THE RESOLVED READBACK. It loads :5199 →
 // LIVE_VERIFIED_LOCAL_ONLY (tags: ["local"]); CI grace-skips, backstopped by
-// proof:live-verified-ledger over the W-EASING-PRIMITIVE DELTA. The binding whole-
+// the immutable browser evidence receipt over the W-EASING-PRIMITIVE delta. The binding whole-
 // fleet capture rides W-REFLECT3.
 
 import { test, expect } from "@playwright/test";

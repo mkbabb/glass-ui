@@ -47,7 +47,7 @@ function uninstallHighlightApi(): void {
     delete (globalThis as unknown as { Highlight?: unknown }).Highlight;
 }
 
-describe("proof:text-highlight — /motion-core home + zero-<mark> CSS.highlights paint (AX.W37)", () => {
+describe("useTextHighlight publishes from /motion-core and paints without <mark> wrappers", () => {
     it("HOME — useTextHighlight is reachable from the /motion-core barrel", () => {
         // The import above resolved from `composables/motion/core` — if the
         // re-home left it on `/dom` this module would not have loaded.

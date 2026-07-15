@@ -1,27 +1,18 @@
-// BB.W-VISUAL-RUNNER — the visual-π ENROLLMENT manifest (the anti-hand-list seam).
+// Browser evidence scenario discovery.
 //
-// The ~93 `*.spec.ts` in this workspace are the binding painted truth CLAUDE.md
-// repeatedly names. Before this manifest they ran NOWHERE automated: only ~22 were
-// spawned by a `proof-*.mjs` gate, the other ~57 ran only if a human cd'd in and
-// typed `playwright test`. The `gates.mjs --run pi` mode runs the WHOLE enrolled set
-// as one command; this module is the single source of truth for WHICH specs that set
-// contains.
+// The `*.spec.ts` files in this workspace are browser evidence scenarios. This
+// module discovers the public scenarios from disk for the verifier's evidence plan;
+// it does not expose a separately executable acceptance identity.
 //
 // THE ANTI-DRIFT DISCIPLINE (the pi-manifest.ts I-1/I-2 idiom, extended from the
 // SCENE targets to the spec ENROLLMENT): the enrolled set is COMPUTED FROM DISK — the
 // non-private (`!/^_/`) `*.spec.ts` glob MINUS a small explicitly-declared EXCLUDE
 // allowlist (each row carrying a one-line rationale). The default is INCLUDE: a new
 // `tests-visual/foo.spec.ts` is enrolled the MOMENT it lands, no manifest edit. There
-// is NO hand-list of enrolled spec names to drift — `proof:visual-runner`'s W2 clause
-// reds if a future agent re-hand-lists the set, and reds if a committed spec is
-// neither enrolled nor excluded-with-rationale (the orphan self-test bite).
+// is no hand-list of enrolled spec names to drift. A committed spec must be either
+// enrolled or excluded with a rationale.
 //
-// `.mjs` (not `.ts`) BY NECESSITY: the two consumers are node `.mjs` modules — the
-// `gates.mjs --run pi` runner (it spawns Playwright with this set as the spec args)
-// and `proof-visual-runner.mjs` (the headless enrollment census) — so a single
-// node-importable ESM source is the no-second-copy shape. No Playwright spec imports
-// the enrollment (the runner passes the list on the CLI); the spec side needs no
-// mirror.
+// `.mjs` keeps discovery directly importable from the Node verification engine.
 
 import { readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -30,12 +21,12 @@ import { resolve } from "node:path";
 const WORKSPACE = fileURLToPath(new URL(".", import.meta.url));
 
 /**
- * The EXCLUDE allowlist — the ONLY non-private specs NOT in the `--run pi` set, each
+ * The EXCLUDE allowlist — the only non-private specs outside the binding set, each
  * with a one-line rationale (the `pi-manifest.ts` reasoned-allowlist discipline). The
  * default is INCLUDE; a spec lands here ONLY when it is genuinely non-binding (an
  * orchestration/capture probe that drives a constellation capture rather than assert a
  * re-runnable readback). A committed non-private spec on NEITHER the enrolled set NOR
- * this allowlist REDs `proof:visual-runner` (the orphan-class fix).
+ * this allowlist is an orphan scenario.
  *
  * The 14 `_`-prefixed private capture helpers are excluded by the `!/^_/` glob, NOT by
  * a row here (the rationale recorded once, in the glob below — not 14 rows).
@@ -46,7 +37,7 @@ export const PI_EXCLUDE = [
     {
         spec: "reflect-aurora.spec.ts",
         rationale:
-            "AZ.W-REFLECT aurora-lane capture probe — AUDIT-ONLY, not a gate (its own header). Drives a fresh whole-page capture into docs/tranches/AZ/audit/reflect/ and probes the dead-select fix; it asserts no re-runnable binding readback (the painterly metrics are reported, not asserted). A reflection-orchestration helper, not the binding-π suite.",
+            "AZ.W-REFLECT aurora-lane capture probe — AUDIT-ONLY. Drives a fresh whole-page capture into docs/tranches/AZ/audit/reflect/ and probes the dead-select fix; it asserts no re-runnable binding readback (the painterly metrics are reported, not asserted). A reflection-orchestration helper, not a binding scenario.",
     },
     {
         spec: "reflect-aurora-selects.spec.ts",
@@ -66,7 +57,7 @@ export const PI_EXCLUDE = [
     {
         spec: "coherence-congruence.spec.ts",
         rationale:
-            "BG.W-PAGE-COMPONENT-AUDIT (17.6) — the 480-capture CROSS-PAGE harmonized-whole read (the LOCAL late-sweep instrument, two-tier model COHERENCE FOLD G7 L8). It sweeps the enrolled route set × {light,dark} × {chromium,webkit} and records per-route dominant-hue reads for the NON-AUTHORING judge to flip each roster row — a POST-INTEGRATION whole-congruence orchestration, NOT a per-mechanism binding readback, and NOT an always-on `--run pi` member (a 480-to-ci promotion re-creates the terminal-reflect chokepoint the plan forbids). Invoked explicitly at the WS12 close; the device-free convergence STRUCTURE is `proof:warm-identity`'s cross-page arm.",
+            "BG.W-PAGE-COMPONENT-AUDIT (17.6) — the 480-capture cross-page harmonized-whole read is a local late-sweep instrument. It sweeps the enrolled route set × {light,dark} × {chromium,webkit} and records dominant-hue observations for post-integration review; it is intentionally outside the always-on binding scenario set.",
     },
 ];
 

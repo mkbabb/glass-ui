@@ -10,7 +10,7 @@
 // + `Animation`→`KeyframesAnimation` (the PKG-3 ambient-collision renames); the
 // top-level `animate()` helper removed; the static surface gained `Oscillator`,
 // `drag2D`, `reseatToSpring`, `probeVelocity`, `reducedMotionScale`, `waveformValue`,
-// `warmEngine`. Mirrors scripts/proof-motion-suite.mjs.
+// `warmEngine`. These assertions are the ordinary test authority for that surface.
 
 import { describe, expect, it } from "vitest";
 import * as motion from "@glass/composables/motion";

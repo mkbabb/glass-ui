@@ -1,21 +1,5 @@
-// reflect-capture-verify — the SHARED capture-rigor leaf (BB.W-GESTALT-GATE2,
-// extended BC.W-GESTALT-FIRST).
-//
-// The single import surface for the content/dimension/viewport/freshness/PIXEL
-// verify mechanisms the reflection + paint gates run:
-//   - proof:live-verified-ledger  (the cardinal-lesson PROGRESS ledger gate)
-//   - proof:ba-gestalt            (the holistic per-surface PIXEL acceptance gate)
-//   - scripts/lib/paint-arm.mjs   (BC.W-PAINT-GATE — imports the OKLab decompose)
-//
-// W-GESTALT-GATE2 transposed the ledger's proven rigor (IHDR dimension read,
-// fabricated-viewport reconcile, content-hash freshness) onto the gestalt gate.
-// The transposition is a SHARE, NOT a second copy: the four pure verify functions
-// are minted ONCE in proof-live-verified-ledger.mjs (AX.W62 → AY.W-LIVE1 →
-// AZ.W-GATES D6) and RE-EXPORTED here so both gates import from one place (the
-// W-CANVAS-UNIFY discipline — a second `pngDimensions`/`surfaceHash` copy is the
-// exact AV.W1 two-copy class the carve waves drain, machine-barred by
-// proof:ba-gestalt G3's no-re-roll clause). There is exactly ONE
-// `createHash("sha256")` over surface paths in the tree (the ledger's surfaceHash).
+// Shared capture evidence primitives: PNG authenticity/dimensions, viewport
+// fidelity, source-byte freshness, region statistics, and OKLab decomposition.
 //
 // BC.W-GESTALT-FIRST adds the PIXEL reader: `pngRegionStats(path, region) →
 // {meanL, meanChroma, meanAlpha}` — the ONE PNG-decoder leaf (zlib IDAT inflate +
@@ -26,28 +10,78 @@
 // gestalt reads the captured PNG; both share the OKLab decompose — one math
 // source, the canvas-unify single-source discipline applied to colour).
 //
-// The ledger module guards its top-level run behind an `import.meta.url ===
-// process.argv[1]` check, so importing it for these pure functions never runs the
-// sibling gate (no console spam, no artifact write, no process.exit on import).
-//
-// This leaf adds ONE gestalt-only helper the ledger does NOT carry: the SYMMETRIC
-// `-desktop-`-below-floor verdict (G2's desktop-fidelity arm). It is here, not in
-// the ledger, so the ledger's own `viewportFidelityVerdict` call sites stay
-// behaviour-identical (the ledger never gained the desktop arm).
-
-import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { existsSync, readFileSync, statSync } from "node:fs";
+import { join } from "node:path";
 import { inflateSync } from "node:zlib";
-import { pngDimensions } from "./proof-live-verified-ledger.mjs";
+import { ROOT } from "./constellation.mjs";
 
-export {
-    isRealPng,
-    pngDimensions,
-    viewportFidelityVerdict,
-    baseName,
-    surfaceHash,
-    freshnessVerdict,
-    FABRICATED_MOBILE_WIDTH,
-} from "./proof-live-verified-ledger.mjs";
+const PNG_MAGIC = Buffer.from([0x89, 0x50, 0x4e, 0x47]);
+
+export function isRealPng(path) {
+    try {
+        if (!existsSync(path) || !statSync(path).isFile()) return false;
+        const bytes = readFileSync(path);
+        return bytes.length > 1024 && bytes.subarray(0, 4).equals(PNG_MAGIC);
+    } catch {
+        return false;
+    }
+}
+
+export function pngDimensions(path) {
+    try {
+        const bytes = readFileSync(path);
+        if (bytes.length < 24 || bytes.subarray(12, 16).toString("ascii") !== "IHDR") return null;
+        return { w: bytes.readUInt32BE(16), h: bytes.readUInt32BE(20) };
+    } catch {
+        return null;
+    }
+}
+
+export const FABRICATED_MOBILE_WIDTH = 1000;
+
+export function viewportFidelityVerdict(basename, dimensions) {
+    if (!/-mobile-/.test(basename) || !dimensions) return { ok: true };
+    if (dimensions.w < FABRICATED_MOBILE_WIDTH) return { ok: true };
+    return {
+        ok: false,
+        reason: `${basename} declares a mobile viewport but its IHDR is ${dimensions.w}×${dimensions.h}`,
+    };
+}
+
+export function baseName(reference) {
+    const index = reference.lastIndexOf("/");
+    return index === -1 ? reference : reference.slice(index + 1);
+}
+
+export function surfaceHash(root, surfacePaths) {
+    const chunks = [];
+    for (const path of surfacePaths) {
+        const absolute = join(root, path);
+        if (!existsSync(absolute)) return "";
+        chunks.push(readFileSync(absolute));
+    }
+    return createHash("sha256").update(chunks.join("\n")).digest("hex");
+}
+
+export function freshnessVerdict(document, root = ROOT) {
+    const pathsHeader = document.match(/<!--\s*surface-paths:\s*([^>]*?)\s*-->/);
+    const hashHeader = document.match(/<!--\s*surface-hash:\s*([0-9a-fA-F]{64})\s*-->/);
+    if (!pathsHeader?.[1]?.trim() || !hashHeader) return { state: "no-header" };
+    const paths = pathsHeader[1].split(",").map((path) => path.trim()).filter(Boolean);
+    for (const path of paths) {
+        if (!existsSync(join(root, path))) {
+            return { state: "stale", reason: `surface path ${path} no longer exists` };
+        }
+    }
+    const declared = hashHeader[1].toLowerCase();
+    const current = surfaceHash(root, paths);
+    if (current === declared) return { state: "fresh" };
+    return {
+        state: "stale",
+        reason: `surface ${paths.join(",")} changed since capture (${declared.slice(0, 12)} → ${current.slice(0, 12)})`,
+    };
+}
 
 // The desktop full-viewport floor: a `-desktop-` basename whose IHDR width is
 // BELOW this is a non-desktop crop mislabeled desktop (the symmetric fabrication

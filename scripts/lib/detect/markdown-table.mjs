@@ -1,12 +1,6 @@
-// scripts/lib/detect/markdown-table.mjs — the ONE markdown pipe-table parser.
-//
-// BG.W-GATE-FAMILY-CONSOLIDATE (F8.1). The by-HEADER-NAME table parser
-// (BB.W-LEDGER-REPAIR — column order is FREE) was re-implemented in every
-// table-reading gate: proof-meta, proof-live-verified-ledger, proof-ba-gestalt,
-// proof-be-bf-ledger, proof-selection-card, proof-visual-reconcile. The
-// positional-coupling class it exists to kill (a re-ordered column silently
-// parsing 0 rows + greening vacuously) recurs precisely because each gate
-// re-derives it. This is the single home. Pure (no fs, no argv) → self-testable.
+// Shared markdown pipe-table parsing primitives. Header lookup is semantic and
+// column-order independent, preventing reordered tables from parsing vacuously.
+// The module is pure and independent of the filesystem or arguments.
 
 /**
  * Split a pipe-row into trimmed inner cells (drop the outer-pipe empties). An

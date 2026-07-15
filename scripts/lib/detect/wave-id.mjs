@@ -1,9 +1,4 @@
-// scripts/lib/detect/wave-id.mjs — the ONE wave-id + paint-class detectors.
-//
-// BG.W-GATE-FAMILY-CONSOLIDATE (F8.1). The BG/BH wave-id shape and the "is this
-// row VISUAL (carries a standalone paint `P` token)" class predicate were
-// inlined in proof-meta (the fable-arm scan) and belong to any gate reading the
-// §1 MASTER TABLE. Pure → self-testable.
+// Pure wave-id and paint-class detectors for descriptive formation tables.
 
 /** A cell is a real BG/BH wave id (skips legend/prose/§1b/§2 rows). */
 export function isWaveId(cell) {

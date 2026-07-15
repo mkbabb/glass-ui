@@ -1,43 +1,12 @@
 #!/bin/sh
-# AX.W62 / AY.W-CARDINAL-INFRA — the live-verified-ledger commit-time forcing
-# function (the fast local bite). Re-validates the PROGRESS ledger on every
-# commit: a row flipped to `live-verified` without a fresh on-disk .png DELTA,
-# or a retired `(DEVELOPED)` status cell, fails the commit.
-#
-# BH.B0-W0 — the bite reads the ACTIVE tranche from the ENVIRONMENT, never a
-# hardcoded letter (the prior `--tranche=BB` went stale the moment BB closed —
-# every closed tranche re-stales the hook). Export GLASS_UI_ACTIVE_TRANCHE to the
-# tranche under active development (e.g. `BG`); the per-tranche tracker arms
-# `proof:live-verified-ledger:ax`/`:ay`/`:az`/`:ba` stay the closed-tranche guards.
-# The bite SKIPS (never blocks a commit) when the env var is unset OR the named
-# tranche has no PROGRESS ledger yet — a tranche with nothing to validate is not a
-# reason to brick `git commit`.
-TRANCHE="${GLASS_UI_ACTIVE_TRANCHE:-}"
-if [ -z "$TRANCHE" ] || [ ! -f "docs/tranches/$TRANCHE/PROGRESS.md" ]; then
-    exit 0
-fi
-node scripts/proof-live-verified-ledger.mjs --tranche="$TRANCHE" || {
-    echo ""
-    echo "commit blocked: the $TRANCHE live-verified ledger is inconsistent (see above)."
-    echo "  Either capture the owed .png DELTA, or set the status to 'live-pending'."
-    echo "  (The closed-tranche backlogs are their own per-tranche trackers, NOT this"
-    echo "   hook — run \`npm run proof:live-verified-ledger:ba\` &c. to see them.)"
-    exit 1
-}
 
-# BG.W-CLOSE-SWEEP — the standing closeDisease sweep-fast arm (APPENDS to the B0
-# ledger arm above under the SAME GLASS_UI_ACTIVE_TRANCHE env-gate). Runs the 7
-# sub-second closeDisease members node-direct (spawn-all, names EVERY red — the
-# 112s gate-manifest-sound is the T2/close-only member, excluded from FAST), so a
-# hot-file wave-commit under an active tranche cannot re-mint the close disease
-# (green own gate / leave a shared close gate RED). Env-gated, NOT hot-file-fires:
-# a fires-always hook would block the integrator's own P-CLOSE carves while R1–R4
-# are dirty. The commit-per-wave cadence exercises it by construction.
-node scripts/proof-close-sweep.mjs --sweep-fast || {
-    echo ""
-    echo "commit blocked: a closeDisease close-gate is RED (the standing sweep-fast, see above)."
-    echo "  A wave greened its own gate while leaving a SHARED close gate RED — fix the named"
-    echo "  member(s) before committing, or (if this is the P-CLOSE fix-in-progress) the sweep"
-    echo "  clears as R1–R4 land. Run \`npm run gates:sweep-fast\` to re-check."
-    exit 1
-}
+set -eu
+
+MESSAGE_PATH=${1:?"commit message path is required"}
+
+unset NODE_OPTIONS NODE_PATH
+
+exec node scripts/verify.mjs \
+    --state auto \
+    --profile commit \
+    --wave-from-message "$MESSAGE_PATH"

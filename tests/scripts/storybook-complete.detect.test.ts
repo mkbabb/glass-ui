@@ -1,66 +1,57 @@
 import { describe, expect, it } from "vitest";
 
-import { detect, COMPOSED_BY } from "../../scripts/proof-storybook-complete.mjs";
+import { validateEvidencePlan } from "../../scripts/verification/discover.mjs";
 
-/**
- * AW.W28.a — the pure-detector unit for `proof:storybook-complete`.
- *
- * The gate enumerates the public component-export surface + the demonstrated
- * set (story import graph) and asserts the export → story map is TOTAL. This
- * unit covers the pure `detect()` directly so the failure path cannot regress
- * to a false-GREEN: an undemonstrated component export MUST violate.
- */
+const family = "integrity.lineage";
+const sourceSha = "a".repeat(64);
 
-describe("proof:storybook-complete detect()", () => {
-    it("passes when every component export is demonstrated", () => {
-        const comps = new Map([
-            ["Button", "/src/components/ui/button/Button.vue"],
-            ["Card", "/src/components/ui/card/Card.vue"],
-        ]);
-        const demonstrated = new Set(["Button", "Card", "cn"]);
-        const { facts, violations } = detect(comps, demonstrated, {});
-        expect(violations).toHaveLength(0);
-        expect(facts.undemonstrated).toEqual([]);
+function routedPlan() {
+    return {
+        schemaVersion: "1.0.0",
+        waveId: "BI.W-P000",
+        profile: "bootstrap",
+        authority: "IMMUTABLE_FORMATION_P000_PLAN_ONLY",
+        invariantFamilies: [family],
+        sources: [
+            {
+                kind: "normal-test",
+                path: "tests/fixture.test.ts",
+                sha256: sourceSha,
+                assertions: [{ callee: "expect.toBe", line: 1, column: 1 }],
+                invariantFamilies: [family],
+            },
+        ],
+        currentReds: [
+            {
+                findingId: "fixture-red",
+                invariantFamily: family,
+                summary: "synthetic routed finding",
+                status: "ROUTED_RED",
+                ownerWave: "BI.W-P001",
+                evidencePath: "docs/tranches/BI/BOOTSTRAP.json",
+            },
+        ],
+        summary: {
+            normalTestFiles: 1,
+            browserScenarioFiles: 0,
+            assertionSites: 1,
+            externalScenarios: 0,
+        },
+    };
+}
+
+describe("honest routed findings", () => {
+    it("accepts one future owner while retaining RED status", () => {
+        expect(validateEvidencePlan(routedPlan(), new Set([family]))).toMatchObject({ ok: true, errors: [] });
     });
 
-    it("violates on a component export with zero demonstration", () => {
-        const comps = new Map([
-            ["Button", "/src/components/ui/button/Button.vue"],
-            ["UndemonstratedWidget", "/src/components/custom/undemonstrated-widget/UndemonstratedWidget.vue"],
-        ]);
-        const demonstrated = new Set(["Button"]);
-        const { facts, violations } = detect(comps, demonstrated, {});
-        expect(facts.undemonstrated).toEqual(["UndemonstratedWidget"]);
-        expect(violations.some((v) => v.includes("UndemonstratedWidget"))).toBe(true);
-    });
+    it("rejects PASS laundering and non-singular ownership", () => {
+        const passed = routedPlan();
+        passed.currentReds[0].status = "PASS";
+        expect(validateEvidencePlan(passed, new Set([family])).ok).toBe(false);
 
-    it("accepts a composed-by sub-component when its parent is demonstrated", () => {
-        const comps = new Map([
-            ["Progress", "/src/.../Progress.vue"],
-            ["ProgressGradient", "/src/.../ProgressGradient.vue"],
-        ]);
-        const demonstrated = new Set(["Progress"]); // gradient ridden via variant
-        const { violations } = detect(comps, demonstrated, {
-            ProgressGradient: "Progress",
-        });
-        expect(violations).toHaveLength(0);
-    });
-
-    it("flags a dead composed-by claim (parent itself undemonstrated)", () => {
-        const comps = new Map([["ProgressGradient", "/src/.../ProgressGradient.vue"]]);
-        const demonstrated = new Set<string>(); // parent Progress NOT demonstrated
-        const { violations } = detect(comps, demonstrated, {
-            ProgressGradient: "Progress",
-        });
-        expect(violations.some((v) => v.includes("dead claim"))).toBe(true);
-    });
-
-    it("ships a non-empty COMPOSED_BY allowlist whose parents are real names", () => {
-        // The allowlist must name a parent for each internal sub-component.
-        expect(Object.keys(COMPOSED_BY).length).toBeGreaterThan(0);
-        for (const parent of Object.values(COMPOSED_BY) as string[]) {
-            expect(typeof parent).toBe("string");
-            expect(parent.length).toBeGreaterThan(0);
-        }
+        const ambiguous = routedPlan();
+        ambiguous.currentReds[0].ownerWave = ["BI.W-P001", "BI.W-P002"] as any;
+        expect(validateEvidencePlan(ambiguous, new Set([family])).ok).toBe(false);
     });
 });

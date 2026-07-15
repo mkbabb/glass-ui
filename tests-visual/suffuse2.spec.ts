@@ -1,7 +1,6 @@
 // BA.W-SUFFUSE2 — suffuse2.spec.ts, the π getComputedStyle readback of the
-// per-category color identity spread (the BINDING close criterion; G2). The
-// device-free SOURCE arm (scripts/proof-suffuse2.mjs) proves the STRUCTURE; THIS
-// SPEC PROVES THE RENDER.
+// per-category color identity spread (the binding browser criterion; G2).
+// Device-free assertions cover structure; this scenario covers the render.
 //
 // The source arm can parse the eyebrow/rail/chip markup while the RESOLVED render
 // is still flat (the identity did not take) or rainbow (a second event slipped
