@@ -112,6 +112,7 @@
 .story-hero {
     position: relative;
     isolation: isolate;
+    container-type: inline-size;
     overflow: hidden;
     border-radius: var(--radius-card);
 }
@@ -233,11 +234,11 @@
        a `vw` axis with poster-peak maxima (display-5 110px · mega 177px · hero
        287px · audacious 352px). On a NARROW viewport a long unbreakable wordmark
        (e.g. "Substrates") at that rung clips OFF the right edge — the verbatim
-       user defect. The fix bounds the resolved `font-size` to a viewport-width
-       BUDGET: `min(<the √φ ladder rung>, <the budget that fits>)`. The rung
+       user defect. The fix bounds the resolved `font-size` to the hero's actual
+       inline-size BUDGET: `min(<the √φ ladder rung>, <the budget that fits>)`. The rung
        (`--story-hero-title-rung`) is captured from the SAME `--type-display-*`
        token the utility class resolves (set per `data-hero-scale` below — the
-       ladder stays BYTE-UNTOUCHED, the fence); the budget is the page inline
+       ladder stays BYTE-UNTOUCHED, the fence); the budget is the hero inline
        measure minus the chassis padding, divided by a √φ wordmark-length factor —
        a rung that always lands inside the column. `overflow-wrap`/`hyphens` give a
        multi-letter wordmark a break opportunity as the last-resort floor, so even
@@ -259,7 +260,7 @@
    budget holds an ~7ch wordmark at the column edge; longer words hyphenate. */
 .story-hero-title[data-hero-scale] {
     /* BG.W-HERO-FIT (D10) — the height-aware fit-cap. The audacious √φ rung is now
-       bounded to MIN of THREE terms: the rung itself, the width budget (the page
+       bounded to MIN of THREE terms: the rung itself, the width budget (the hero
        inline measure ÷ the wordmark `--story-hero-cpl` factor), AND a viewport-
        HEIGHT budget — a SHORT-VIEWPORT GUARD that caps the rendered block so its
        font-size × leading × est-lines never exceeds ≈0.62 (1/φ) of the small
@@ -273,7 +274,7 @@
         var(--story-hero-title-rung, var(--type-display-4)),
         var(
             --story-hero-title-fit,
-            calc((100vw - 2 * var(--story-hero-pad, 2rem)) / var(--story-hero-cpl, 7))
+            calc((100cqi - 2 * var(--story-hero-pad, 2rem)) / var(--story-hero-cpl, 7))
         ),
         var(
             --story-hero-title-svh,
