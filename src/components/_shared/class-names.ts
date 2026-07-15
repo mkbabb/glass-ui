@@ -1,7 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 
 /**
- * `cn()` — class-name compositor for glass-ui.
+ * `cn()` — class-name compositor for glass-ui components.
  *
  * Rationale (W3.b.2 / A5 §3 Split 6): `tailwind-merge` ships ~22 KB
  * gzipped of full Tailwind config to resolve every conflict pair across

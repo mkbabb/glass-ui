@@ -4,7 +4,7 @@ import StorySection from "../../chassis/section/StorySection.vue";
 import { Avatar, AvatarFallback, AvatarImage } from "@glass/components/ui/avatar";
 import { Card } from "@glass/components/ui/card";
 import { StackedIconGroup } from "@glass/components/custom/stacked-icons";
-import { cn } from "@glass/utils/cn";
+import { cn } from "@glass/components/_shared/class-names";
 
 interface Member {
     id: string;

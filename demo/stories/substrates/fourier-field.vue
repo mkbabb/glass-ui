@@ -19,7 +19,7 @@ import {
     type FourierFieldConfig,
 } from "@glass/components/custom/fourier-field";
 import { DEFAULT_FOURIER_CONFIG } from "@glass/components/custom/fourier-field";
-import { mulberry32, hashString } from "@glass/utils/prng";
+import { mulberry32, hashString } from "@glass/composables/glass/procedural/prng";
 import {
     cssToOklch,
     type OklchStop,

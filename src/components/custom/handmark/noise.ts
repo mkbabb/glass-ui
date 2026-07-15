@@ -18,10 +18,10 @@
  * it, so the /handmark barrel surface is unchanged.
  *
  * THE SEED RECONCILE (BA.W-HANDMARK [S2]): the wobble seeds from the HOUSE prng leaf
- * (src/utils/prng.ts mulberry32 — the AV.W14 single-source), ZERO pencil-boil
+ * (src/composables/glass/procedural/prng.ts mulberry32 — the AV.W14 single-source), ZERO pencil-boil
  * `mulberry32` import.
  */
-import { mulberry32 } from "../../../utils/prng";
+import { mulberry32 } from "../../../composables/glass/procedural/prng";
 import {
     NOISE_AMP_FRAC,
     NOISE_EDGE,

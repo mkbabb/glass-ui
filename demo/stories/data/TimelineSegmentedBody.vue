@@ -9,7 +9,7 @@ import type {
     TimelineSegment,
     TimelineSegmentGradient,
 } from "@glass/components/custom/timeline";
-import { cn } from "@glass/utils/cn";
+import { cn } from "@glass/components/_shared/class-names";
 
 /**
  * Segmented variant — adjacent gradient bands with boundary dots that emit

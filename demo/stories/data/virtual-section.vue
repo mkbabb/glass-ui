@@ -7,7 +7,7 @@ import {
     type FlatSection,
 } from "@glass/composables/virtual";
 import { Badge } from "@glass/components/ui/badge";
-import { cn } from "@glass/utils/cn";
+import { cn } from "@glass/components/_shared/class-names";
 
 // A 1000-section synthetic document. The producer (this flattener) lives in the
 // consumer; glass-ui owns only the generic FlatSection windowing contract. The

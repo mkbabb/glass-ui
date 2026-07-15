@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type HTMLAttributes, computed, toRef } from "vue";
 import { ProgressIndicator, ProgressRoot, type ProgressRootProps } from "reka-ui";
-import { cn } from "../../../utils";
+import { cn } from "../../_shared/class-names";
 import { useProgressGeometry, type ProgressSegment } from "./useProgressGeometry";
 
 /**

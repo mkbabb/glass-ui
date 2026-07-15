@@ -3,7 +3,7 @@ import type { ComboboxItemEmits, ComboboxItemProps } from 'reka-ui'
 import type { HTMLAttributes } from 'vue'
 import { reactiveOmit } from '@vueuse/core'
 import { ComboboxItem, useForwardPropsEmits } from 'reka-ui'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 import { menuItemVariants } from '../_shared/menuItemVariants'
 
 const props = defineProps<ComboboxItemProps & { class?: HTMLAttributes['class'] }>()

@@ -21,7 +21,7 @@ import { LIQUID_GRID_PRESET_SUFFUSE } from "../../stories/substrates/presets";
 import { useTokenColor } from "@glass/composables/dom/useTokenColor";
 import { useRoutePointer } from "@glass/composables/motion/useRoutePointer";
 import { useGlobalDark } from "@glass/composables/dark/useGlobalDark";
-import { cn } from "@glass/utils/cn";
+import { cn } from "@glass/components/_shared/class-names";
 import StoryHeader from "./StoryHeader.vue";
 import {
     heroAuroraConfig,

@@ -132,7 +132,7 @@ import { computed, nextTick, onUnmounted, watch } from "vue";
 import { Maximize2, Minimize2 } from "@lucide/vue";
 import { registerShortcut } from "../../../composables/keyboard";
 import { FocusScope } from "../../ui/focus-scope";
-import { cn } from "../../../utils";
+import { cn } from "../../_shared/class-names";
 // BA.W-SURFACE-AXIS — the fullscreen overlay routes through the SHARED
 // {glass·veil·opaque} axis (it was a solid `bg-background` wall — the IG-B5/FD-6
 // off-allowlist miss). Default `glass` (the un-walled frosted-over-content plate);

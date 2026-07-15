@@ -19,13 +19,13 @@
  *     + boil + the seeded variant for free.
  *
  * THE SEED RECONCILE (BA.W-HANDMARK [S2]): the per-pass jitter rng is the HOUSE
- * `mulberry32` (src/utils/prng.ts — the AV.W14 single-source), NOT pencil-boil's
+ * `mulberry32` (src/composables/glass/procedural/prng.ts — the AV.W14 single-source), NOT pencil-boil's
  * mulberry32. ONE seed leaf in glass-ui code.
  *
  * The renderer emits a fragment the SFC binds; it owns no DOM and no reactivity.
  */
 import { perturbPoints, catmullRomToBezier, pointsToLinear } from "@mkbabb/pencil-boil";
-import { mulberry32 } from "../../../utils/prng";
+import { mulberry32 } from "../../../composables/glass/procedural/prng";
 import type { Brush, InkPath } from "./brush";
 import { getStroke, getSvgPathFromStroke } from "./freehand";
 import { grainFilter, hasGrain } from "./texture";

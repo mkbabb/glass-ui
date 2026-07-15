@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { HTMLAttributes, Component } from "vue";
 import { computed } from "vue";
-import { cn, coalesceMetric, type MetricValue } from "../../../utils";
+import { cn } from "../../_shared/class-names";
+import { coalesceMetric, type MetricValue } from "../../metric/coalesce-metric";
 
 /**
  * MetricRow — a single row inside <MetricStack>.

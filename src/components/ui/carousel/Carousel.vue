@@ -2,7 +2,7 @@
 import type { CarouselEmits, CarouselProps, WithClassAsProps } from './interface'
 import type { UnwrapRefCarouselApi } from './interface'
 import { watch } from 'vue'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 import { useProvideCarousel } from './useCarousel'
 
 const props = withDefaults(defineProps<CarouselProps & WithClassAsProps>(), {

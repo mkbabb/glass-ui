@@ -9,7 +9,7 @@ import type {
 } from "@glass/components/ui/data-table";
 import { Input } from "@glass/components/ui/input";
 import { IconChip } from "@glass/components/custom/icon-chip";
-import { cn } from "@glass/utils/cn";
+import { cn } from "@glass/components/_shared/class-names";
 import { Sheet as SheetIcon, Database } from "@lucide/vue";
 
 // BC.W-SUFFUSE-reconcile — the data band's ONE coherent --section-color-9

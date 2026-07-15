@@ -9,7 +9,7 @@ import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { ref } from "vue";
 import { Button } from "@glass/components/ui/button";
-import { cn } from "@glass/utils/cn";
+import { cn } from "@glass/components/_shared/class-names";
 
 // ── The §6 easing-doctrine legend (the curve canon's "which job" companion) ─────
 const doctrine: { kind: string; easing: string }[] = [

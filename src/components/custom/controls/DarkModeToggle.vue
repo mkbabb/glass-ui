@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, useAttrs, watchEffect } from "vue";
 import { useGlobalDark } from "../../../composables/dark";
-import { cn } from "../../../utils/cn";
+import { cn } from "../../_shared/class-names";
 
 defineOptions({ inheritAttrs: false });
 

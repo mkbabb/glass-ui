@@ -6,7 +6,7 @@ import {
   useForwardPropsEmits,
 } from 'reka-ui'
 import { Check } from "@lucide/vue"
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 import { menuItemVariants } from '../_shared/menuItemVariants'
 // BI.W-MENU-TRIGGER — the trigger axis switches the reka CheckboxItem + ItemIndicator.
 import { useMenuPart } from './useMenuTrigger'

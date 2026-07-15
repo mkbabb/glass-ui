@@ -6,7 +6,7 @@ import {
   type ToastRootProps,
   useForwardPropsEmits,
 } from 'reka-ui'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 import { type Surface, surfaceClass } from '../_shared/useSurfaceAxis'
 import type { Tone } from '../_shared/axes'
 

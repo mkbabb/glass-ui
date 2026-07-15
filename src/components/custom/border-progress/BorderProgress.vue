@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 import { computed, ref, watch, type CSSProperties } from "vue";
-import { cn } from "../../../utils/cn";
+import { cn } from "../../_shared/class-names";
 import { spectrumStops } from "./composables/useBorderSpectrum";
 import {
     BORDER_PROGRESS_DEFAULT_SPECTRUM,

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type HTMLAttributes, computed } from 'vue'
 import { type DropdownMenuItemProps, useForwardProps } from 'reka-ui'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 import { menuItemVariants } from '../_shared/menuItemVariants'
 // BI.W-MENU-TRIGGER — the trigger axis switches the reka Item family (one CVA, one engine).
 import { useMenuPart } from './useMenuTrigger'

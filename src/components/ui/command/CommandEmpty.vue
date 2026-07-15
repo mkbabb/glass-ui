@@ -2,7 +2,7 @@
 import { type HTMLAttributes, computed } from 'vue'
 import type { ComboboxEmptyProps } from 'reka-ui'
 import { ComboboxEmpty } from 'reka-ui'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 
 const props = defineProps<ComboboxEmptyProps & { class?: HTMLAttributes['class'] }>()
 

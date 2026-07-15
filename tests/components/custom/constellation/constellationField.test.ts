@@ -3,7 +3,7 @@
 // flips); the four neutral passes paint without throwing on a stub 2D context.
 
 import { describe, expect, it } from "vitest";
-import { mulberry32 } from "@glass/utils/prng";
+import { mulberry32 } from "@glass/composables/glass/procedural/prng";
 import {
     seedField,
     stepField,

@@ -9,7 +9,7 @@ import { Label } from "@glass/components/ui/label";
 import { Separator } from "@glass/components/ui/separator";
 import { Aurora } from "@glass/components/custom/aurora";
 import { IconChip } from "@glass/components/custom/icon-chip";
-import { cn } from "@glass/utils/cn";
+import { cn } from "@glass/components/_shared/class-names";
 import { heroAuroraConfig } from "../../chassis/hero/aurora-hero";
 
 const wonkSettings = '"WONK" 1, "SOFT" 0';

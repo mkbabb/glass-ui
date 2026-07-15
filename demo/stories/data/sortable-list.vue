@@ -9,7 +9,7 @@ import {
     SortableHandle,
 } from "@glass/components/custom/sortable-list";
 import { Card } from "@glass/components/ui/card";
-import { cn } from "@glass/utils/cn";
+import { cn } from "@glass/components/_shared/class-names";
 
 interface Task {
     id: string;

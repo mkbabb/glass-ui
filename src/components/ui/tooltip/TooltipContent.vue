@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type HTMLAttributes, computed } from 'vue'
 import { TooltipContent, type TooltipContentEmits, type TooltipContentProps, TooltipPortal, useForwardPropsEmits } from 'reka-ui'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 // BC.W-OVERLAY-UNIFORM — thread the SHARED {glass·veil·opaque} surface axis + the
 // φ --overlay-pad-* ladder (tight tooltip anchor) onto the tooltip chip + token-
 // back the bare `text-sm` onto `--tooltip-text` (the overlay golden uniformity +

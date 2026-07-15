@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { WithClassAsProps } from './interface'
 import { ArrowLeft } from "@lucide/vue"
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 import { Button, type ButtonVariants } from '../button'
 import { useCarousel } from './useCarousel'
 

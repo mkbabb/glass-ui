@@ -343,5 +343,15 @@ export type {
     SurfaceTier,
 } from "./components/ui/_shared/axes";
 
-// Core utilities
-export * from "./utils";
+// Component foundations
+export { cn } from "./components/_shared/class-names";
+export {
+    coalesceMetric,
+    METRIC_PLACEHOLDER,
+    type MetricValue,
+    type MetricValueProps,
+} from "./components/metric/coalesce-metric";
+export {
+    supportsScrollTimeline,
+    supportsViewTimeline,
+} from "./composables/motion/supportsCssTimeline";

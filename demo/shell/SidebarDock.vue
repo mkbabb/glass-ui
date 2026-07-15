@@ -33,7 +33,7 @@ import {
     TooltipTrigger,
 } from "@glass/components/ui/tooltip";
 import { Settings2 } from "@lucide/vue";
-import { cn } from "@glass/utils/cn";
+import { cn } from "@glass/components/_shared/class-names";
 import { CATEGORIES } from "../stories/manifest";
 import { useStoryNavigation } from "../chassis/useStoryNavigation";
 import { useShellNavDock } from "./useShellNavDock";

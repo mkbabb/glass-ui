@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue'
 import { computed } from 'vue'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 
 /**
  * Pulse — three variants:

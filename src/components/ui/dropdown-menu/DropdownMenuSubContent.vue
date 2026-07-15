@@ -5,7 +5,7 @@ import {
   type DropdownMenuSubContentProps,
   useForwardPropsEmits,
 } from 'reka-ui'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 // BI.W-MENU-TRIGGER — the trigger axis switches the reka SubContent + Portal family.
 import { useMenuPart } from './useMenuTrigger'
 

@@ -5,7 +5,7 @@
 // opt-out is the content's `v-if` over this overlay (no paint, page-interactive).
 import { DialogOverlay, type DialogOverlayProps } from 'reka-ui'
 import { type HtmlHTMLAttributes, computed } from 'vue'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 
 const props = defineProps<DialogOverlayProps & { class?: HtmlHTMLAttributes['class'] }>()
 

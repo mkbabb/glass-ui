@@ -52,7 +52,7 @@
 // this wave closed).
 //
 // A demo-private chassis primitive — NOT a library export.
-import { cn } from "@glass/utils/cn";
+import { cn } from "@glass/components/_shared/class-names";
 
 interface StoryHeaderProps {
     /** The mono eyebrow tag (category · story). Rendered ABOVE the title. */

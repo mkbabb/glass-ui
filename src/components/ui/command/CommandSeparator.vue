@@ -2,7 +2,7 @@
 import { type HTMLAttributes, computed } from 'vue'
 import type { ComboboxSeparatorProps } from 'reka-ui'
 import { ComboboxSeparator } from 'reka-ui'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 
 const props = defineProps<ComboboxSeparatorProps & { class?: HTMLAttributes['class'] }>()
 

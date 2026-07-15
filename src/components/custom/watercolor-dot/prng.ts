@@ -1,10 +1,10 @@
 // Watercolor-dot PRNG surface — so a dot keyed by `color + seed` reproduces the
 // same organic blob shape across mounts. The core `mulberry32` + `hashString`
-// is the shared `src/utils/prng.ts` leaf (AV.W14 single-source); the 8-value
+// is the shared `src/composables/glass/procedural/prng.ts` leaf (AV.W14 single-source); the 8-value
 // border-radius helpers below are watercolor-local (single-component) and stay
 // here. Re-exported so the existing named surface (and the package barrel) is
 // byte-identical.
-export { mulberry32, hashString } from "../../../utils/prng";
+export { mulberry32, hashString } from "../../../composables/glass/procedural/prng";
 
 /** Generate 8 random border-radius percentages in [lo, hi] using the given PRNG. */
 export function randomRadii(rng: () => number, lo: number, hi: number): number[] {

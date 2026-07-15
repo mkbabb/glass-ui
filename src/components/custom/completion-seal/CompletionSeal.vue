@@ -66,7 +66,7 @@
 
 <script setup lang="ts">
 import { computed, toRef } from "vue";
-import { cn } from "../../../utils/cn";
+import { cn } from "../../_shared/class-names";
 import { useCompletionSeal } from "./composables/useCompletionSeal";
 import {
     COMPLETION_SEAL_DEFAULT_SHAPE,

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { cn } from "@glass/utils/cn";
+import { cn } from "@glass/components/_shared/class-names";
 
 describe("cn — variadic + clsx normalisation", () => {
     it("joins string args separated by spaces", () => {

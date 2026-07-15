@@ -21,7 +21,7 @@ import DataTablePagination from "./DataTablePagination.vue";
 import type { DataTableColumn, DataTableSort } from "./types";
 import { useDataTableRowIdentity } from "./composables/useDataTableRowIdentity";
 import { useDataTableResponsive } from "./composables/useDataTableResponsive";
-import { cn } from '../../../utils';
+import { cn } from '../../_shared/class-names';
 
 const props = withDefaults(
     defineProps<{

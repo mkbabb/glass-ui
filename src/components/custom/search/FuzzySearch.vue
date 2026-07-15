@@ -7,7 +7,7 @@ import { Button } from "../../ui/button";
 import { Badge } from "../../ui/badge";
 import { fuzzyMatch } from "./composables/fuzzySearchIndex";
 import { useTextHighlight } from "../../../composables/motion/useTextHighlight";
-import { cn } from "../../../utils";
+import { cn } from "../../_shared/class-names";
 import type { Surface } from "../../ui/_shared/useSurfaceAxis";
 import {
     type ControlSize,

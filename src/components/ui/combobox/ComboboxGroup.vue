@@ -3,7 +3,7 @@ import type { ComboboxGroupProps } from 'reka-ui'
 import type { HTMLAttributes } from 'vue'
 import { reactiveOmit } from '@vueuse/core'
 import { ComboboxGroup, ComboboxLabel } from 'reka-ui'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 
 const props = defineProps<ComboboxGroupProps & {
   class?: HTMLAttributes['class']

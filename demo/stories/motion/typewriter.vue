@@ -10,7 +10,7 @@ import { Button } from "@glass/components/ui/button";
 import { Label } from "@glass/components/ui/label";
 import { Slider } from "@glass/components/ui/slider";
 import { Switch } from "@glass/components/ui/switch";
-import { cn } from "@glass/utils/cn";
+import { cn } from "@glass/components/_shared/class-names";
 
 const phrases: TypewriterWord[] = [
     { text: "warm cream" },

@@ -11,7 +11,7 @@ export interface ScrollCardHeaderProps {
 
 <script setup lang="ts">
 import CardHeader from "./CardHeader.vue";
-import { cn } from "../../../utils";
+import { cn } from "../../_shared/class-names";
 
 /**
  * <ScrollCardHeader> — the LARGER-header-items scroll-shrink header

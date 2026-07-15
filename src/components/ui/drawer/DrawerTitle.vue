@@ -3,7 +3,7 @@
 // type-bind + the typography class are PRESERVED; only the component identity changes.
 import { DialogTitle, type DialogTitleProps } from 'reka-ui'
 import { type HtmlHTMLAttributes, computed } from 'vue'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 
 const props = defineProps<DialogTitleProps & { class?: HtmlHTMLAttributes['class'] }>()
 

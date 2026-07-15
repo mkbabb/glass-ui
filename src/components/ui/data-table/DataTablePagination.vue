@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { Button } from "../button";
-import { cn } from '../../../utils';
+import { cn } from '../../_shared/class-names';
 
 const props = defineProps<{
     page: number;

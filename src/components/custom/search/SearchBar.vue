@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import { ref, type Component } from "vue";
 import { Search } from "@lucide/vue";
-import { cn } from "../../../utils";
+import { cn } from "../../_shared/class-names";
 import type { Surface } from "../../ui/_shared/useSurfaceAxis";
 import {
     type ControlSize,

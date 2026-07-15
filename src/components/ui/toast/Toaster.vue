@@ -6,7 +6,7 @@ import ToastClose from './ToastClose.vue'
 import ToastTitle from './ToastTitle.vue'
 import ToastDescription from './ToastDescription.vue'
 import { useToast } from './use-toast'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 
 export type ToasterPosition =
   | 'top-left'

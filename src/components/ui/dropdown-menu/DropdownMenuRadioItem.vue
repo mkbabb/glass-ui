@@ -5,7 +5,7 @@ import {
   type DropdownMenuRadioItemProps,
   useForwardPropsEmits,
 } from 'reka-ui'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 import { menuItemVariants } from '../_shared/menuItemVariants'
 // BI.W-MENU-TRIGGER — the trigger axis switches the reka RadioItem + ItemIndicator.
 import { useMenuPart } from './useMenuTrigger'

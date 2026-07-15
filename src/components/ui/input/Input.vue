@@ -24,7 +24,7 @@ export default { inheritAttrs: false }
 import type { HTMLAttributes, InputHTMLAttributes } from 'vue'
 import { computed } from 'vue'
 import { useVModel } from '@vueuse/core'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 import { type ControlSize, controlSizeClass } from '../_shared/useControlSize'
 
 const props = defineProps<{

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, type HTMLAttributes } from "vue";
-import { cn } from "../../../utils/cn";
+import { cn } from "../../_shared/class-names";
 
 /**
  * <ColorSwatch> — the library's first-class color-input register

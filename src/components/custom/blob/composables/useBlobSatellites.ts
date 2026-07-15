@@ -1,4 +1,4 @@
-import { mulberry32, hashString } from "../../../../utils/prng";
+import { mulberry32, hashString } from "../../../../composables/glass/procedural/prng";
 import {
     BASE_OPACITY,
     MERGE_STAGGER_MS,

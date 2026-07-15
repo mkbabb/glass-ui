@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from "vue";
-import { cn } from "../../../utils";
+import { cn } from "../../_shared/class-names";
 
 /**
  * <CardAction> — the shadcn-2025 top-right action slot of the Card family.

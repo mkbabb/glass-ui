@@ -10,7 +10,7 @@ import {
   useForwardPropsEmits,
 } from 'reka-ui'
 import { X } from "@lucide/vue"
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 import { useSpringMount, type SpringPreset } from '../../../composables/motion/useSpringMount'
 import ModalOverlay from '../_shared/ModalOverlay.vue'
 // BH.W-MOTION-AXIS — the `spring` boolean dies onto the ONE `motion` axis (the preset

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Component, HTMLAttributes } from "vue";
 import { computed } from "vue";
-import { cn } from "../../../utils";
+import { cn } from "../../_shared/class-names";
 
 /**
  * MetricStack — the layout shell that hosts a stack of <MetricRow> children.

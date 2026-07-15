@@ -21,7 +21,7 @@
 // <StorySection> / <ShowcaseFrame> precedent).
 import { computed, ref, toRef, useSlots } from "vue";
 import { Check, Copy } from "@lucide/vue";
-import { cn } from "@glass/utils/cn";
+import { cn } from "@glass/components/_shared/class-names";
 import { FadingScroll } from "@glass/components/custom/fading-scroll";
 import { useCodeHighlight } from "./useCodeHighlight";
 // The warm-crayon highlight.js theme — GLOBAL (unscoped) so it reaches the

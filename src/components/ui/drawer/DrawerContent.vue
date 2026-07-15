@@ -8,7 +8,7 @@ import {
   useForwardPropsEmits,
 } from 'reka-ui'
 import DrawerOverlay from './DrawerOverlay.vue'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 // BA.W-SURFACE-AXIS — Drawer carries the SHARED {glass·veil·opaque} surface axis.
 // The `.glass-drawer` recipe is a parallel glass recipe (NOT on the 5-rung ladder);
 // the `[data-surface]` decoration applies ON TOP of it — the veil rung strips the

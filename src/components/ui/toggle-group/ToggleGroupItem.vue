@@ -3,7 +3,7 @@ import { type HTMLAttributes, computed } from 'vue'
 import { ToggleGroupItem, type ToggleGroupItemProps, injectToggleGroupRootContext, useForwardProps } from 'reka-ui'
 import { toggleVariants } from '../toggle'
 import { useOptionalToggleGroupContext, type ToggleGroupVariants } from './toggleGroupContext'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 
 const props = defineProps<ToggleGroupItemProps & {
   class?: HTMLAttributes['class']

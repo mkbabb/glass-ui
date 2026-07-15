@@ -52,7 +52,7 @@
 <script setup lang="ts">
 import { type HTMLAttributes, useId } from "vue";
 import { IconTooltip } from "../icon-tooltip";
-import { cn } from "../../../utils";
+import { cn } from "../../_shared/class-names";
 
 /**
  * LabeledField — parent SFC for the labeled-field family (V.W3.T5 / A5 §5.5).

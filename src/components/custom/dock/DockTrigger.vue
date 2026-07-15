@@ -7,7 +7,7 @@ import {
     PopoverTrigger,
 } from "reka-ui";
 import { ChevronDown } from "@lucide/vue";
-import { cn } from "../../../utils";
+import { cn } from "../../_shared/class-names";
 import { vSpecular } from "../../../composables/glass";
 
 /**

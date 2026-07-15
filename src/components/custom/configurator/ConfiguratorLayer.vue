@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, useId, type HTMLAttributes } from "vue";
 import { ChevronDown } from "@lucide/vue";
-import { cn } from "../../../utils/cn";
+import { cn } from "../../_shared/class-names";
 
 /**
  * <ConfiguratorLayer> — labeled section inside a <Configurator>'s controls

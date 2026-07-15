@@ -3,7 +3,7 @@ import StoryPage from "../../chassis/page/StoryPage.vue";
 import type { StoryBody, SpecimenSpec } from "../../chassis/body/story-body";
 import { Badge } from "@glass/components/ui/badge";
 import { IconChip } from "@glass/components/custom/icon-chip";
-import { cn } from "@glass/utils/cn";
+import { cn } from "@glass/components/_shared/class-names";
 import { BadgeCheck } from "@lucide/vue";
 
 // The display band's ONE coherent --section-color-5 identity.

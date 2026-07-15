@@ -14,7 +14,7 @@ export default { inheritAttrs: false }
 
 <script setup lang="ts">
 import { NumberFieldInput } from 'reka-ui'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 import { type ControlSize, controlSizeClass } from '../_shared/useControlSize'
 
 // BC.W-CONTROL-CUSTOM — the shared control-size axis (see Input.vue). The stepper

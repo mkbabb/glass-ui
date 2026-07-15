@@ -2,7 +2,7 @@
 import { type HTMLAttributes, computed, onBeforeUnmount, onMounted, useAttrs, useTemplateRef } from 'vue'
 import type { SliderRootEmits, SliderRootProps } from 'reka-ui'
 import { SliderRange, SliderRoot, SliderThumb, SliderTrack, useForwardPropsEmits } from 'reka-ui'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 import { useTouchGate } from '../../../composables/dom/useTouchGate'
 import { useDragVelocity } from '../../../composables/dom/useDragVelocity'
 import { useOptionalDockContext } from '../../custom/dock/composables/dockContext'

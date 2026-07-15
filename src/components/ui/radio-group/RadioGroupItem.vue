@@ -7,7 +7,7 @@ import {
   useForwardProps,
 } from 'reka-ui'
 import { Circle } from "@lucide/vue"
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 
 const props = defineProps<RadioGroupItemProps & { class?: HTMLAttributes['class'] }>()
 

@@ -20,7 +20,7 @@ import {
     ref,
     type Ref,
 } from "vue";
-import { mulberry32, hashString } from "../../../../utils/prng";
+import { mulberry32, hashString } from "../../../../composables/glass/procedural/prng";
 import { usePointerVelocityField } from "../../../../composables/motion/usePointerVelocityField";
 import {
     constellationWellMapping,

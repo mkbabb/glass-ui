@@ -10,7 +10,7 @@
 // position seam. The `overflow` axis (→ <FadingScroll>) and the `:multi-select`
 // prop (→ ToggleGroup) RETIRED — clean break, no alias (see MIGRATION.md).
 import { ref, computed, type HTMLAttributes } from "vue";
-import { cn } from "../../../utils";
+import { cn } from "../../_shared/class-names";
 import {
     Tooltip,
     TooltipContent,

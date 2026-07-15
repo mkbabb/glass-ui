@@ -7,7 +7,7 @@
 // bespoke craft.
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
-import { cn } from "@glass/utils/cn";
+import { cn } from "@glass/components/_shared/class-names";
 
 const scale: { cls: string; label: string; hint: string }[] = [
     { cls: "rounded-xs", label: "xs", hint: "2px" },

@@ -28,7 +28,7 @@ import {
     type HTMLAttributes,
 } from "vue";
 import { Primitive } from "reka-ui";
-import { cn } from "../../../utils";
+import { cn } from "../../_shared/class-names";
 import {
     useCharStagger,
     type UseCharStaggerOptions,

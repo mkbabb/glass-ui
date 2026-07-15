@@ -22,7 +22,7 @@ import { PagerDots } from "@glass/components/custom/pager-dots";
 import { FadingScroll } from "@glass/components/custom/fading-scroll";
 import { IconChip } from "@glass/components/custom/icon-chip";
 import { GalleryHorizontal } from "@lucide/vue";
-import { cn } from "@glass/utils/cn";
+import { cn } from "@glass/components/_shared/class-names";
 
 // BC.W-SUFFUSE-reconcile — the navigation band's ONE coherent --section-color-12 indigo
 // identity (PH3-safe inline borderLeft, not the double-header shape).

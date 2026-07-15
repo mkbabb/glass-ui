@@ -11,7 +11,7 @@ import {
 } from "@glass/components/ui/tags-input";
 import { Card } from "@glass/components/ui/card";
 import { Label } from "@glass/components/ui/label";
-import { cn } from "@glass/utils/cn";
+import { cn } from "@glass/components/_shared/class-names";
 
 // Prefilled tags — reka-ui accepts v-model:modelValue on TagsInputRoot.
 const skills = ref<string[]>(["Vue", "TypeScript", "Tailwind", "reka-ui"]);

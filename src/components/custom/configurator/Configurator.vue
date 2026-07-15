@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="T">
 import { computed, type HTMLAttributes } from "vue";
-import { cn } from "../../../utils/cn";
+import { cn } from "../../_shared/class-names";
 import { FadingScroll } from "../fading-scroll";
 import {
     provideConfiguratorSize,

@@ -34,7 +34,7 @@
 //
 // A demo-private chassis primitive — NOT a library export.
 import { computed, type HTMLAttributes } from "vue";
-import { cn } from "@glass/utils/cn";
+import { cn } from "@glass/components/_shared/class-names";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import {

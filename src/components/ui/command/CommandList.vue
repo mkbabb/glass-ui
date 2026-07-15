@@ -2,7 +2,7 @@
 import { type HTMLAttributes, computed } from 'vue'
 import type { ComboboxContentEmits, ComboboxContentProps } from 'reka-ui'
 import { ComboboxContent, useForwardPropsEmits } from 'reka-ui'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 // BC.W-OVERLAY-UNIFORM — thread the SHARED {glass·veil·opaque} surface axis + the
 // φ --overlay-pad-* ladder onto the Command list + token-back `max-h-[300px]` onto
 // `--overlay-max-block`. The Command HOST is a Dialog (CommandDialog) — its

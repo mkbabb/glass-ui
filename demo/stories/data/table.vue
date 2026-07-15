@@ -15,7 +15,7 @@ import {
 } from "@glass/components/ui/table";
 import { Badge } from "@glass/components/ui/badge";
 import { IconChip } from "@glass/components/custom/icon-chip";
-import { cn } from "@glass/utils/cn";
+import { cn } from "@glass/components/_shared/class-names";
 import { Table as TableIcon, Table2 } from "@lucide/vue";
 
 // BC.W-SUFFUSE-reconcile — the data band's ONE coherent --section-color-9

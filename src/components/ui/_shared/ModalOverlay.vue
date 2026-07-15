@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, type CSSProperties, type HTMLAttributes } from "vue";
 import { DialogOverlay } from "reka-ui";
-import { cn } from "../../../utils";
+import { cn } from "../../_shared/class-names";
 
 /**
  * ModalOverlay — canonical wrapper for Dialog / Sheet / AlertDialog scrim

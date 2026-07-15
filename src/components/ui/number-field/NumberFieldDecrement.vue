@@ -4,7 +4,7 @@ import { NumberFieldDecrement, useForwardProps } from 'reka-ui'
 import { type HTMLAttributes, computed } from 'vue'
 import { Minus } from "@lucide/vue"
 import { Button } from '../button'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 
 const props = defineProps<NumberFieldDecrementProps & { class?: HTMLAttributes['class'] }>()
 

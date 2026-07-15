@@ -54,7 +54,7 @@ import {
     ref,
     type HTMLAttributes,
 } from "vue";
-import { cn } from "@glass/utils/cn";
+import { cn } from "@glass/components/_shared/class-names";
 import { SplitChars } from "@glass/components/custom/split-chars";
 import { SECTION_REVEAL_KEY } from "./useSectionReveal";
 

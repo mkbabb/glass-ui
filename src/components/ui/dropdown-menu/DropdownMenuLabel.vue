@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type HTMLAttributes, computed } from 'vue'
 import { type DropdownMenuLabelProps, useForwardProps } from 'reka-ui'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 // BI.W-MENU-TRIGGER — the trigger axis switches the reka Label family.
 import { useMenuPart } from './useMenuTrigger'
 

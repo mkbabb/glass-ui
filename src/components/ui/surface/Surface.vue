@@ -25,7 +25,7 @@
 // DOM node (byte-identical to Card's prior single-Primitive root).
 import { computed, type HTMLAttributes } from "vue";
 import { Primitive, type PrimitiveProps } from "reka-ui";
-import { cn } from "../../../utils";
+import { cn } from "../../_shared/class-names";
 import {
     decorationClass,
     type Surface as SurfaceKind,

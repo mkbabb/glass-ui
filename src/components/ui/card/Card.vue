@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, useAttrs, type HTMLAttributes, type CSSProperties } from "vue";
 import type { PrimitiveProps } from "reka-ui";
-import { cn } from "../../../utils";
+import { cn } from "../../_shared/class-names";
 import { vSpecular } from "../../../composables/glass";
 import { useLiquidPress } from "../../../composables/motion/useLiquidPress";
 import { useStalePropWarning } from "../_shared/useStalePropWarning";

@@ -19,7 +19,7 @@
 // the drag-scrub that drives it lives in the consumer beside the pager.
 import type { WithClassAsProps } from "./interface";
 import { onBeforeUnmount, ref, watch } from "vue";
-import { cn } from "../../../utils";
+import { cn } from "../../_shared/class-names";
 import { useCarousel } from "./useCarousel";
 import type { UnwrapRefCarouselApi } from "./interface";
 

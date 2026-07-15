@@ -22,7 +22,7 @@ import {
     HoverCardPortal,
     useForwardPropsEmits,
 } from "reka-ui";
-import { cn } from "../../../utils";
+import { cn } from "../../_shared/class-names";
 import { useOptionalDockContext } from "../../custom/dock/composables/dockContext";
 import { decorationClass, type Surface } from "../_shared/useSurfaceAxis";
 import { usePopoverUnion } from "./popoverContext";

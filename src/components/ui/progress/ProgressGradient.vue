@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type HTMLAttributes, computed } from "vue";
 import { ProgressIndicator, ProgressRoot, type ProgressRootProps } from "reka-ui";
-import { cn } from "../../../utils";
+import { cn } from "../../_shared/class-names";
 
 /**
  * Gradient progress variant — the rail respects `--progress-track`, the indicator

@@ -25,7 +25,7 @@
 //
 // A demo-private chassis primitive — NOT a library export.
 import { computed, type HTMLAttributes } from "vue";
-import { cn } from "@glass/utils/cn";
+import { cn } from "@glass/components/_shared/class-names";
 
 type GlassTier = "wash" | "quiet" | "resting" | "floating" | "overlay";
 

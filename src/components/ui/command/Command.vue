@@ -2,7 +2,7 @@
 import { type HTMLAttributes, computed } from 'vue'
 import type { ComboboxRootEmits, ComboboxRootProps } from 'reka-ui'
 import { ComboboxRoot, useForwardPropsEmits } from 'reka-ui'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 // BA.W-SURFACE-AXIS — Command CONSUMES the shared {glass·veil·opaque} axis (the
 // IG-C4 residual: the plate is already `glass-floating`; `surface="veil"` lands
 // the busy-substrate legibility feather — the SAME --veil-feather axis the floating

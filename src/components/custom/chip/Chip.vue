@@ -32,7 +32,7 @@
 import type { CSSProperties } from "vue";
 import { computed } from "vue";
 import { Toggle, type ToggleEmits, type ToggleProps, useForwardPropsEmits } from "reka-ui";
-import { cn } from "../../../utils";
+import { cn } from "../../_shared/class-names";
 // The sync value.js-FREE shell — a `var()`/unset tone stays value.js-free; a
 // concrete `#hex`/`oklch(…)` tone loads the value.js ink-solve behind a dynamic
 // import() INSIDE the shell (never a static edge into this chunk).

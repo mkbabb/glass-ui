@@ -7,7 +7,7 @@ import {
   SwitchThumb,
   useForwardPropsEmits,
 } from 'reka-ui'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 import { type ControlSize, switchSizeClass } from '../_shared/useControlSize'
 
 const props = defineProps<SwitchRootProps & {

@@ -33,7 +33,7 @@
 
 <script setup lang="ts">
 import { computed, type HTMLAttributes } from "vue";
-import { cn } from "../../../utils/cn";
+import { cn } from "../../_shared/class-names";
 
 type Variant = "active" | "paused" | "idle" | "error" | "custom";
 type Size = "xs" | "sm" | "md";

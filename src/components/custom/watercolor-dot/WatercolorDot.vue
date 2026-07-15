@@ -73,7 +73,7 @@ const props = withDefaults(
 const filterId = `watercolor-filter-${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
 const filterUrl = computed(() => `url(#${filterId})`);
 
-// Per-instance wet-edge seed — derived off the SAME house PRNG hash (src/utils/prng.ts
+// Per-instance wet-edge seed — derived off the SAME house PRNG hash (src/composables/glass/procedural/prng.ts
 // single-source, AV.W14) the shape morph uses. The prior hardcoded `seed="2"` made
 // every dot share ONE wet-edge displacement (twelve clones); deriving it off
 // `hashString(color + seed)` gives each dot a unique wet edge coherent with its

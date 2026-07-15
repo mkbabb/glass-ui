@@ -4,7 +4,7 @@
 // identity changes.
 import { DialogDescription, type DialogDescriptionProps } from 'reka-ui'
 import { type HtmlHTMLAttributes, computed } from 'vue'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 
 const props = defineProps<DialogDescriptionProps & { class?: HtmlHTMLAttributes['class'] }>()
 

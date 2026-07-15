@@ -5,7 +5,7 @@ import { cssToOklch } from "../../../composables/color";
 import { resolveTokenColor } from "../../../composables/dom";
 import { useGlobalDark } from "../../../composables/dark";
 import { useRoutePointer } from "../../../composables/motion/useRoutePointer";
-import { mulberry32, hashString } from "../../../utils/prng";
+import { mulberry32, hashString } from "../../../composables/glass/procedural/prng";
 import {
     makeEllipticSpectrum,
     makeHarmonicFigure,

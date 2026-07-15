@@ -16,7 +16,7 @@
  * overshoot ring — the sole upstream geometry delta this component required).
  *
  * THE SEED RECONCILE (BA.W-HANDMARK [S2]): the wobble centerlines are seeded from
- * the HOUSE prng leaf (`src/utils/prng.ts` mulberry32 + hashString — the AV.W14
+ * the HOUSE prng leaf (`src/composables/glass/procedural/prng.ts` mulberry32 + hashString — the AV.W14
  * single-source). The family FEEDS pencil-boil a house-derived integer seed; glass-
  * ui code imports ZERO `mulberry32` from pencil-boil (its internal mulberry32 stays
  * inside its OWN perturb math). ONE seed leaf, the house identity.

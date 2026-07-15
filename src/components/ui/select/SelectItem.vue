@@ -7,7 +7,7 @@ import {
   SelectItemText,
   useForwardProps,
 } from 'reka-ui'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 import { menuItemVariants } from '../_shared/menuItemVariants'
 
 const props = defineProps<SelectItemProps & { class?: HTMLAttributes['class']; hideIndicator?: boolean }>()

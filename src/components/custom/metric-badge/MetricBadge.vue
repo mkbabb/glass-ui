@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue'
 import { computed } from 'vue'
-import { cn, coalesceMetric, type MetricValue } from '../../../utils'
+import { cn } from "../../_shared/class-names";
+import { coalesceMetric, type MetricValue } from "../../metric/coalesce-metric";
 
 export type MetricBadgeSize = 'sm' | 'md' | 'lg' | 'xl'
 export type MetricBadgeLabelPosition = 'inline' | 'stacked'

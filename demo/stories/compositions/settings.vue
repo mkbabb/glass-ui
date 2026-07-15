@@ -9,7 +9,7 @@ import {
     LabeledSlider,
     LabeledSwitch,
 } from "@glass/components/custom/labeled-field";
-import { cn } from "@glass/utils/cn";
+import { cn } from "@glass/components/_shared/class-names";
 
 const displayName = ref("Mike Babb");
 const email = ref("mbabb@ncsu.edu");

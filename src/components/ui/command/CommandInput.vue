@@ -3,7 +3,7 @@ import type { HTMLAttributes, InputHTMLAttributes } from 'vue'
 import { computed } from 'vue'
 import { Search } from "@lucide/vue"
 import { ComboboxInput, type ComboboxInputProps, useForwardProps } from 'reka-ui'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 
 defineOptions({
   inheritAttrs: false,

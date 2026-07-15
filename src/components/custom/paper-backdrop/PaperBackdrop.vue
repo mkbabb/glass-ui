@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, type HTMLAttributes } from "vue";
-import { cn } from "../../../utils";
+import { cn } from "../../_shared/class-names";
 
 /**
  * Turbulence-texture register on `<PaperBackdrop>`. `"clean"` is the default

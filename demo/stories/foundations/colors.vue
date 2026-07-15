@@ -24,7 +24,7 @@ import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { WatercolorDot } from "@glass/components/custom/watercolor-dot";
-import { cn } from "@glass/utils/cn";
+import { cn } from "@glass/components/_shared/class-names";
 
 // Core surface/semantic roles exposed as Tailwind utilities via @theme.
 const core: { name: string; cssVar: string; utility: string }[] = [

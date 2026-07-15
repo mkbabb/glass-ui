@@ -9,7 +9,7 @@ import {
   useForwardPropsEmits,
 } from 'reka-ui'
 import { SelectScrollDownButton, SelectScrollUpButton } from '.'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 import { useOptionalDockContext } from "../../custom/dock/composables/dockContext"
 // BC.W-OVERLAY-UNIFORM — thread the SHARED {glass·veil·opaque} surface axis + the
 // φ --overlay-pad-* ladder onto the Select listbox (the overlay golden uniformity).

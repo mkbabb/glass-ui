@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { Component, FunctionalComponent, HTMLAttributes } from "vue";
 import { computed } from "vue";
-import { cn, coalesceMetric, type MetricValue } from "../../../utils";
+import { cn } from "../../_shared/class-names";
+import { coalesceMetric, type MetricValue } from "../../metric/coalesce-metric";
 import { IconChip } from "../icon-chip";
 
 /**

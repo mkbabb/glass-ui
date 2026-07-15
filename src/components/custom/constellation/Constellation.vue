@@ -4,7 +4,7 @@ import { type ConstellationProps } from "./constellationField";
 import { useConstellation } from "./composables/useConstellation";
 import { DEFAULT_PARALLAX } from "./constants";
 import { useRoutePointer } from "../../../composables/motion/useRoutePointer";
-import { cn } from "../../../utils/cn";
+import { cn } from "../../_shared/class-names";
 
 /**
  * Constellation — a slow, geometric proximity-graph lattice rendered on the

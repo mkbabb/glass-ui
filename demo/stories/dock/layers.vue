@@ -4,7 +4,7 @@ import StorySection from "../../chassis/section/StorySection.vue";
 import { ref } from "vue";
 import { Package, Layers, Library, FileText, ChevronLeft, ChevronRight, Image, Type } from "@lucide/vue";
 import { GlassDock, DockControl, DockLayerGroup, DockLayer, DockCrossfade, DockSeparator } from "@glass/components/custom/dock";
-import { cn } from "@glass/utils/cn";
+import { cn } from "@glass/components/_shared/class-names";
 import DockStage from "./DockStage.vue";
 
 type LayerId = "root" | "assets" | "layers" | "libs";

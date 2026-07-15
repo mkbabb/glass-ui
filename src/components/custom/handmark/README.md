@@ -60,7 +60,7 @@ ONE pencil-boil engine under every wobble; ZERO wobble under the structural mark
 
 ## Seed discipline (the AV.W14 single-source)
 
-The family seeds via the HOUSE prng leaf (`src/utils/prng.ts` — `mulberry32` +
+The family seeds via the HOUSE prng leaf (`src/composables/glass/procedural/prng.ts` — `mulberry32` +
 `hashString`) and FEEDS pencil-boil a house-derived integer seed. glass-ui code
 imports ZERO `mulberry32` from pencil-boil; its internal `mulberry32` stays inside
 its OWN perturb math. ONE seed leaf, the house identity.

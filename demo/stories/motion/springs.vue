@@ -33,7 +33,7 @@ import {
     SelectValue,
 } from "@glass/components/ui/select";
 import { Check, Copy } from "@lucide/vue";
-import { cn } from "@glass/utils/cn";
+import { cn } from "@glass/components/_shared/class-names";
 
 // ── The named presets, straight off the SINGLE source ───────────────────────────
 // `SPRING_PRESETS` is the no-second-authority register table; `springTimingFunction`

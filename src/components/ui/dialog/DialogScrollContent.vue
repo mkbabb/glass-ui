@@ -9,7 +9,7 @@ import {
   useForwardPropsEmits,
 } from 'reka-ui'
 import { X } from "@lucide/vue"
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 import ModalOverlay from '../_shared/ModalOverlay.vue'
 
 const props = defineProps<DialogContentProps & {

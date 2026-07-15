@@ -5,7 +5,7 @@ import {
   useForwardProps,
 } from 'reka-ui'
 import { ChevronRight } from "@lucide/vue"
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 import { menuItemVariants } from '../_shared/menuItemVariants'
 // BI.W-MENU-TRIGGER — the trigger axis switches the reka SubTrigger family.
 import { useMenuPart } from './useMenuTrigger'

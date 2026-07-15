@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, type HTMLAttributes } from 'vue'
 import { ToastTitle, type ToastTitleProps } from 'reka-ui'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 
 interface Props extends ToastTitleProps {
   class?: HTMLAttributes['class']

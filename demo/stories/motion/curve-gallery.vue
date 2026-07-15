@@ -41,7 +41,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@glass/components/ui/select";
-import { cn } from "@glass/utils/cn";
+import { cn } from "@glass/components/_shared/class-names";
 import { CURVE_FAMILIES, type CurveRow } from "./curve-families";
 // BB.W-EASING-PRIMITIVE — the C-3 fold LANDED. The two demo editors (BezierEditor +
 // StepsEditor) re-home onto the ONE published <EasingPicker> primitive (the

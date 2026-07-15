@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from "vue";
 import { computed, nextTick, ref, watch } from "vue";
-import { cn } from "../../../utils";
+import { cn } from "../../_shared/class-names";
 import { pagerWindow } from "./pagerWindow";
 import { usePagerWorm } from "./composables/usePagerWorm";
 

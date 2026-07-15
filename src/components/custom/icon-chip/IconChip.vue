@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import { computed, type CSSProperties } from "vue";
-import { cn } from "../../../utils/cn";
+import { cn } from "../../_shared/class-names";
 import { vReveal } from "../../../composables/motion/vReveal";
 import type { IconChipProps } from "./types";
 

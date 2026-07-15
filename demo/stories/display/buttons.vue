@@ -18,7 +18,7 @@ import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { ref } from "vue";
 import { Button } from "@glass/components/ui/button";
-import { cn } from "@glass/utils/cn";
+import { cn } from "@glass/components/_shared/class-names";
 import { Aurora } from "@glass/components/custom/aurora";
 import { PRESETS } from "../substrates/aurora/presets";
 

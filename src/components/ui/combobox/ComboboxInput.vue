@@ -3,7 +3,7 @@ import type { HTMLAttributes, InputHTMLAttributes } from 'vue'
 import { reactiveOmit } from '@vueuse/core'
 import { SearchIcon } from "@lucide/vue"
 import { ComboboxInput, type ComboboxInputEmits, type ComboboxInputProps, useForwardPropsEmits } from 'reka-ui'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 
 defineOptions({
   inheritAttrs: false,

@@ -2,7 +2,7 @@
 import { computed, type HTMLAttributes } from "vue";
 import { RotateCcw } from "@lucide/vue";
 import { Label } from "../../ui/label";
-import { cn } from "../../../utils/cn";
+import { cn } from "../../_shared/class-names";
 import { useOptionalConfiguratorSize, type ConfiguratorSize } from "./size";
 
 /**

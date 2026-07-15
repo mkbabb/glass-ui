@@ -18,7 +18,7 @@ import {
     supportsViewTimeline,
 } from "@glass/composables/motion/supportsCssTimeline";
 import { Button } from "@glass/components/ui/button";
-import { cn } from "@glass/utils/cn";
+import { cn } from "@glass/components/_shared/class-names";
 
 // ── Capability badges ───────────────────────────────────────────────────────────
 const scrollOk = ref(false);

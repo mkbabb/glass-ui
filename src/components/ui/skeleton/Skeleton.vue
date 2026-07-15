@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue'
-import { cn } from '../../../utils'
+import { cn } from '../../_shared/class-names'
 
 /**
  * Skeleton variants — three distinct temporal registers.
