@@ -4,12 +4,16 @@ import { cn } from '../_shared/class-names';
 
 const props = defineProps<{
     class?: HTMLAttributes["class"];
+    ariaRowCount?: number;
 }>();
 </script>
 
 <template>
     <div data-slot="table" class="relative w-full overflow-auto">
-        <table :class="cn('w-full caption-bottom text-sm', props.class)">
+        <table
+            :class="cn('w-full caption-bottom text-sm', props.class)"
+            :aria-rowcount="props.ariaRowCount"
+        >
             <slot />
         </table>
     </div>

@@ -1,4 +1,4 @@
-import type { Component } from "vue";
+import type { Component, HTMLAttributes } from "vue";
 
 export interface DataTableColumn<T = any> {
     /** Unique key matching a property on the row object */
@@ -24,6 +24,19 @@ export interface DataTableSort {
     direction: "asc" | "desc";
 }
 
+/** Caller-owned bindings for a mounted data row. */
+export type DataTableRowAttrs<T> = (
+    row: T,
+    index: number,
+) => HTMLAttributes | undefined;
+
+/** Receives each mounted row element and `null` when that row leaves the DOM. */
+export type DataTableRowRef<T> = (
+    element: HTMLElement | null,
+    row: T,
+    index: number,
+) => void;
+
 export interface DataTableProps<T = any> {
     /** Column definitions */
     columns: DataTableColumn<T>[];
@@ -41,6 +54,17 @@ export interface DataTableProps<T = any> {
     rowKey?: string;
     /** Optional resolver for stable unique row identities. Takes precedence over rowKey. */
     getRowId?: (row: T) => PropertyKey | null | undefined;
+    /** Native-table logical row count, including any header row. */
+    ariaRowCount?: number;
+    /**
+     * Attributes and handlers for each caller-windowed row. `aria-rowindex`
+     * applies only to the native-table projection and is omitted from cards.
+     */
+    getRowAttrs?: DataTableRowAttrs<T>;
+    /** Mounted row element callback for measurement or focus. */
+    rowRef?: DataTableRowRef<T>;
+    /** Stable id of the sole mounted row placed in the tab order. */
+    tabbableRowId?: PropertyKey | null;
     /** Current sort state */
     sort?: DataTableSort;
     /** Enables controlled single-row selection and row keyboard activation. */

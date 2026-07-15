@@ -8,6 +8,7 @@ interface Row {
     _id?: string;
     slug?: string;
     name: string;
+    absoluteIndex?: number;
     meta?: {
         id: string;
     };
@@ -56,6 +57,23 @@ function mountTable(rows: Row[], props: Record<string, unknown> = {}) {
 
 function rowText(wrapper: VueWrapper, index: number): string {
     return wrapper.findAll("tbody tr")[index]?.text() ?? "";
+}
+
+class NarrowResizeObserver {
+    constructor(private readonly callback: ResizeObserverCallback) {}
+    observe(target: Element) {
+        this.callback(
+            [
+                {
+                    target,
+                    contentRect: { width: 320, height: 240 },
+                } as ResizeObserverEntry,
+            ],
+            this as unknown as ResizeObserver,
+        );
+    }
+    unobserve() {}
+    disconnect() {}
 }
 
 afterEach(() => {
@@ -217,22 +235,6 @@ describe("DataTable interaction semantics", () => {
     });
 
     it("projects the same controlled selection contract onto responsive cards", async () => {
-        class NarrowResizeObserver {
-            constructor(private readonly callback: ResizeObserverCallback) {}
-            observe(target: Element) {
-                this.callback(
-                    [
-                        {
-                            target,
-                            contentRect: { width: 320, height: 240 },
-                        } as ResizeObserverEntry,
-                    ],
-                    this as unknown as ResizeObserver,
-                );
-            }
-            unobserve() {}
-            disconnect() {}
-        }
         vi.stubGlobal("ResizeObserver", NarrowResizeObserver);
         const wrapper = mountTable(
             [
@@ -249,6 +251,73 @@ describe("DataTable interaction semantics", () => {
 
         await cards[0].trigger("keydown", { key: " " });
         expect(wrapper.emitted("update:selectedRowId")?.at(-1)?.[0]).toBe("1");
+    });
+
+    it("keeps native-table row indices out of responsive cards", async () => {
+        vi.stubGlobal("ResizeObserver", NarrowResizeObserver);
+        const wrapper = mountTable(
+            [
+                { _id: "40", name: "Ada", absoluteIndex: 42 },
+                { _id: "41", name: "Grace", absoluteIndex: 43 },
+            ],
+            {
+                responsive: true,
+                selectable: true,
+                ariaRowCount: 101,
+                tabbableRowId: "41",
+                getRowAttrs: (row: Row) => ({
+                    "aria-rowindex": row.absoluteIndex,
+                    "data-absolute-index": row.absoluteIndex,
+                }),
+            },
+        );
+
+        await vi.waitFor(() => expect(wrapper.find('[role="listbox"]').exists()).toBe(true));
+        const cards = wrapper.findAll("[data-absolute-index]");
+        expect(wrapper.find("table").exists()).toBe(false);
+        expect(wrapper.find('[aria-rowcount="101"]').exists()).toBe(false);
+        expect(cards.map((card) => card.attributes("aria-rowindex"))).toEqual([
+            undefined,
+            undefined,
+        ]);
+        expect(cards.map((card) => card.attributes("data-absolute-index"))).toEqual([
+            "42",
+            "43",
+        ]);
+        expect(cards.map((card) => card.attributes("tabindex"))).toEqual(["-1", "0"]);
+    });
+
+    it("projects caller-windowed row semantics without owning the window", async () => {
+        const rows: Row[] = [
+            { _id: "40", name: "Ada", absoluteIndex: 42 },
+            { _id: "41", name: "Grace", absoluteIndex: 43 },
+        ];
+        const rowRef = vi.fn();
+        const wrapper = mountTable(rows, {
+            ariaRowCount: 101,
+            tabbableRowId: "41",
+            getRowAttrs: (row: Row) => ({
+                "aria-rowindex": row.absoluteIndex,
+                "data-absolute-index": row.absoluteIndex,
+            }),
+            rowRef,
+        });
+        const mountedRows = wrapper.findAll("tbody tr");
+
+        expect(wrapper.find("table").attributes("aria-rowcount")).toBe("101");
+        expect(mountedRows.map((row) => row.attributes("aria-rowindex"))).toEqual([
+            "42",
+            "43",
+        ]);
+        expect(mountedRows.map((row) => row.attributes("tabindex"))).toEqual([
+            "-1",
+            "0",
+        ]);
+        expect(rowRef).toHaveBeenCalledWith(mountedRows[0].element, rows[0], 0);
+        expect(rowRef).toHaveBeenCalledWith(mountedRows[1].element, rows[1], 1);
+
+        await wrapper.setProps({ rows: [rows[1]] });
+        expect(rowRef).toHaveBeenCalledWith(null, rows[0], 0);
     });
 });
 

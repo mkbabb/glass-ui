@@ -1,5 +1,12 @@
 <script setup lang="ts" generic="T extends Record<string, any>">
-import { computed, onBeforeUpdate, onUpdated, ref, useSlots } from "vue";
+import {
+    computed,
+    mergeProps,
+    onBeforeUpdate,
+    onUpdated,
+    ref,
+    useSlots,
+} from "vue";
 import { useResizeObserver } from "../../composables/dom";
 import {
     Table,
@@ -18,7 +25,12 @@ import {
     DropdownMenuContent,
 } from "../dropdown-menu";
 import DataTablePagination from "./DataTablePagination.vue";
-import type { DataTableColumn, DataTableSort } from "./types";
+import type {
+    DataTableColumn,
+    DataTableRowAttrs,
+    DataTableRowRef,
+    DataTableSort,
+} from "./types";
 import {
     useDataTableRowIdentity,
     type RowEntry,
@@ -35,6 +47,10 @@ const props = withDefaults(
         isLoading?: boolean;
         rowKey?: string;
         getRowId?: (row: T) => PropertyKey | null | undefined;
+        ariaRowCount?: number;
+        getRowAttrs?: DataTableRowAttrs<T>;
+        rowRef?: DataTableRowRef<T>;
+        tabbableRowId?: PropertyKey | null;
         sort?: DataTableSort;
         /** Enables the controlled single-row selection contract. */
         selectable?: boolean;
@@ -117,11 +133,13 @@ const { rowEntries } = useDataTableRowIdentity<T>({
 
 const rowEls = new Map<PropertyKey, HTMLElement>();
 
-function setRowEl(key: PropertyKey, value: unknown): void {
+function setRowEl(entry: RowEntry<T>, index: number, value: unknown): void {
     const candidate = value as { $el?: unknown } | null;
     const el = value instanceof HTMLElement ? value : candidate?.$el;
-    if (el instanceof HTMLElement) rowEls.set(key, el);
-    else rowEls.delete(key);
+    const rowEl = el instanceof HTMLElement ? el : null;
+    if (rowEl) rowEls.set(entry.key, rowEl);
+    else rowEls.delete(entry.key);
+    props.rowRef?.(rowEl, entry.row, index);
 }
 
 let focusedRowKey: PropertyKey | null = null;
@@ -209,7 +227,10 @@ function onRowKeydown(event: KeyboardEvent, entry: RowEntry<T>): void {
     selectRow(entry);
 }
 
-function rowInteraction(entry: RowEntry<T>, card = false): Record<string, unknown> {
+function rowInteraction(
+    entry: RowEntry<T>,
+    card = false,
+): Record<string, unknown> {
     if (!props.selectable) return {};
     const selected = isSelected(entry);
     return {
@@ -223,6 +244,22 @@ function rowInteraction(entry: RowEntry<T>, card = false): Record<string, unknow
         onClick: (event: MouseEvent) => onRowClick(event, entry),
         onKeydown: (event: KeyboardEvent) => onRowKeydown(event, entry),
     };
+}
+
+function rowBindings(
+    entry: RowEntry<T>,
+    index: number,
+    card = false,
+): Record<string, unknown> {
+    const attrs = {
+        ...props.getRowAttrs?.(entry.row, index),
+    } as Record<string, unknown>;
+    if (card) delete attrs["aria-rowindex"];
+    const roving =
+        props.tabbableRowId === undefined
+            ? {}
+            : { tabindex: Object.is(props.tabbableRowId, entry.key) ? 0 : -1 };
+    return mergeProps(attrs, rowInteraction(entry, card), roving);
 }
 
 </script>
@@ -250,7 +287,7 @@ function rowInteraction(entry: RowEntry<T>, card = false): Record<string, unknow
                 :role="selectable ? 'listbox' : undefined"
                 :aria-label="selectable ? 'Rows' : undefined"
             >
-                <template v-for="entry in rowEntries" :key="entry.key">
+                <template v-for="(entry, index) in rowEntries" :key="entry.key">
                     <component
                         :is="hasRowContextMenu ? DropdownMenu : 'div'"
                         :trigger="hasRowContextMenu ? 'context' : undefined"
@@ -260,8 +297,8 @@ function rowInteraction(entry: RowEntry<T>, card = false): Record<string, unknow
                             :as-child="hasRowContextMenu ? true : undefined"
                         >
                             <div
-                                :ref="(el) => setRowEl(entry.key, el)"
-                                v-bind="rowInteraction(entry, true)"
+                                :ref="(el) => setRowEl(entry, index, el)"
+                                v-bind="rowBindings(entry, index, true)"
                                 class="rounded-lg border border-border p-3 transition-colors"
                             >
                                 <!-- Header line — first column + actions -->
@@ -338,7 +375,7 @@ function rowInteraction(entry: RowEntry<T>, card = false): Record<string, unknow
         </template>
 
         <!-- ── Tabular layout (default + wide container) ─────────────── -->
-        <Table v-else>
+        <Table v-else :aria-row-count="ariaRowCount">
             <TableHeader>
                 <TableRow class="text-muted-foreground">
                     <TableHead
@@ -396,13 +433,13 @@ function rowInteraction(entry: RowEntry<T>, card = false): Record<string, unknow
 
                 <!-- Data rows -->
                 <template v-else-if="rows.length > 0">
-                    <template v-for="entry in rowEntries" :key="entry.key">
+                    <template v-for="(entry, index) in rowEntries" :key="entry.key">
                         <!-- Row with right-click context menu -->
                         <DropdownMenu v-if="hasRowContextMenu" trigger="context">
                             <DropdownMenuTrigger as-child>
                                 <TableRow
-                                    :ref="(el) => setRowEl(entry.key, el)"
-                                    v-bind="rowInteraction(entry)"
+                                    :ref="(el) => setRowEl(entry, index, el)"
+                                    v-bind="rowBindings(entry, index)"
                                 >
                                     <TableCell
                                         v-for="col in columns"
@@ -432,8 +469,8 @@ function rowInteraction(entry: RowEntry<T>, card = false): Record<string, unknow
                         <!-- Plain row (no context menu) -->
                         <TableRow
                             v-else
-                            :ref="(el) => setRowEl(entry.key, el)"
-                            v-bind="rowInteraction(entry)"
+                            :ref="(el) => setRowEl(entry, index, el)"
+                            v-bind="rowBindings(entry, index)"
                         >
                             <TableCell
                                 v-for="col in columns"
