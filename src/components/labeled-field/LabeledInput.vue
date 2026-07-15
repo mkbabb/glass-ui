@@ -13,6 +13,11 @@
                 v-bind="inputAttrs"
                 :id="controlId"
                 :type="type ?? 'text'"
+                :autocomplete="autocomplete"
+                :inputmode="inputmode"
+                :enterkeyhint="enterkeyhint"
+                :pattern="pattern"
+                :placeholder="placeholder"
                 :class="inputClass ?? 'fira-code'"
                 :model-value="modelValue"
                 :required="required"
@@ -25,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, useAttrs } from "vue";
+import { computed, useAttrs, type InputHTMLAttributes } from "vue";
 import LabeledField from "./LabeledField.vue";
 import { Input } from "../input";
 
@@ -44,6 +49,11 @@ defineProps<{
     labelClass?: string;
     inputClass?: string;
     type?: string;
+    autocomplete?: InputHTMLAttributes["autocomplete"];
+    inputmode?: InputHTMLAttributes["inputmode"];
+    enterkeyhint?: InputHTMLAttributes["enterkeyhint"];
+    pattern?: InputHTMLAttributes["pattern"];
+    placeholder?: InputHTMLAttributes["placeholder"];
     /**
      * AQ.W4 §W4.5 — mark the field required. Threads the `aria-hidden`
      * asterisk onto the label AND sets the native `required` attribute on the

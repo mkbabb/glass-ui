@@ -7,15 +7,17 @@ describe("form validity ownership", () => {
     it("forwards native input attributes and owns one linked, quiet error", async () => {
         const wrapper = mount(LabeledInput, {
             attrs: {
-                autocomplete: "postal-code",
                 class: "field-grid-cell",
-                inputmode: "numeric",
-                pattern: "[0-9]{5}",
             },
             props: {
+                autocomplete: "postal-code",
+                enterkeyhint: "done",
                 errorLive: "off",
+                inputmode: "numeric",
                 label: "ZIP",
                 modelValue: "",
+                pattern: "[0-9]{5}",
+                placeholder: "27606",
                 required: true,
             },
             slots: { error: "Enter a five-digit ZIP code." },
@@ -26,8 +28,10 @@ describe("form validity ownership", () => {
         expect(wrapper.classes()).toContain("field-grid-cell");
         expect(input.attributes()).toMatchObject({
             autocomplete: "postal-code",
+            enterkeyhint: "done",
             inputmode: "numeric",
             pattern: "[0-9]{5}",
+            placeholder: "27606",
             required: "",
         });
         expect(input.attributes("aria-errormessage")).toBe(error.attributes("id"));
