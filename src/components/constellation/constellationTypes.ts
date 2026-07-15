@@ -20,7 +20,7 @@ export interface ConstellationNode {
      * BC.W-VIZ-CONSTELLATION — the seeded parallax DEPTH (`z ∈ [0,1]`, §6). The pointer
      * offsets the node's SCREEN position by `parallax · z · (pointer − center)` so the flat
      * lattice reads as having depth (the Awwwards "living network" register). Seeded in
-     * `seedField`; perturbs the GPU node-position write only (never a layout property). A
+     * `seedField`; perturbs the painted node position only (never field geometry). A
      * field literal that omits it is treated as `z = 0.5` (the mid-plane, no parallax bias).
      */
     z?: number;
@@ -28,12 +28,12 @@ export interface ConstellationNode {
 
 /**
  * BC.W-VIZ-CONSTELLATION — ONE edge of the proximity graph, the row the CPU all-pairs scan
- * (`buildEdges`) writes each frame into the instanced-lines storage buffer. `a`/`b` are the
+ * (`buildEdges`) writes each frame for the Canvas2D line pass. `a`/`b` are the
  * two endpoint positions in canvas-local CSS px; `alpha` is the distance-falloff weight
  * (`1 − d²/reach²`, the `drawEdges` math) the segment-quad fragment multiplies; `accent`
  * (0/1) flags the accented-node tether (the flagged-node edge tint); `focus` (0/1) flags
- * the pointer-web tether (the cursor's incident edges). The WGSL/GLSL render transcribes
- * the SHAPE, never re-derives the scan (the ONE math source stays JS).
+ * the pointer-web tether (the cursor's incident edges). The renderer consumes the row
+ * directly and never re-derives the scan.
  */
 export interface ConstellationEdge {
     ax: number;
@@ -331,8 +331,8 @@ export interface ConstellationProps {
      * depth `z ∈ [0,1]`; the pointer offsets node screen positions by `parallax · z ·
      * (pointer − center)` so the flat lattice reads as having depth (the Awwwards "living
      * network" register). Additive default-on at a SUB-PERCEPTUAL 0.08 (a hair of depth, not
-     * a behavior break); 0 = the flat lattice. GPU-only (perturbs the node-position write,
-     * never a layout property). Frozen under reduced-motion / `freeze`.
+     * a behavior break); 0 = the flat lattice. It perturbs only the painted node position,
+     * never field geometry. Frozen under reduced-motion / `freeze`.
      */
     parallax?: number;
     /**
@@ -346,13 +346,14 @@ export interface ConstellationProps {
     opacityCeiling?: number;
     /** Seed for a reproducible field (number or hashed string); omit for `Math.random`. */
     seed?: number | string;
-    /** Steer-toward-cursor + tap ripples. Default true; auto-off under reduced-motion. */
+    /** Decorative steer-toward-cursor + tap ripples. Default true; auto-off under reduced-motion. */
     pointerReactive?: boolean;
     /**
      * Click-to-warp (AX.W17): a click warps the focal node to the nearest
      * drifting node + springs it there. INDEPENDENT of `pointerReactive` (warp
      * works on a non-ripple lattice). Default false; auto-off under
-     * reduced-motion (the focal mark stays put — the stated PRM policy).
+     * reduced-motion. Enabling it gives the host a named keyboard/pointer button
+     * contract; Enter/Space targets the field center through the same warp owner.
      */
     warpOnClick?: boolean;
     /**
@@ -371,7 +372,9 @@ export interface ConstellationProps {
      * and `pointerReactive` (a consumer can hold-to-pull on a non-ripple,
      * non-warp lattice). `true` uses the tokenised defaults; an object tunes the
      * gains. Default OFF (absent → byte-identical to HEAD). PRM-gated by the WARP
-     * precedent (the held-timer is not registered under reduced-motion).
+     * precedent (the held-timer is not registered under reduced-motion). Enabling it
+     * gives the host a named keyboard/pointer button contract; keyboard press/release
+     * drives the same well target as pointer hold/release.
      */
     gravityWell?:
         | boolean

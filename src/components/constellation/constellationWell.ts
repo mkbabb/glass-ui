@@ -22,24 +22,8 @@ const WELL_EPS = 1e-3;
  * (too brisk) or never cools (too gentle). Preferred over the steer's hard
  * `|v|=speed` renorm because the well MUST be able to heat the field while held.
  *
- * GENTLED 1.5→0.6 (BC.W-VIZ-CONSTELLATION): the GPU-substrate migration runs the frame
- * loop at the real device refresh (~130fps), halving the per-frame `dt` vs the unit
- * dt=1/60. The held force injects LESS velocity per frame at that cadence, so a held-cool
- * fast enough to keep the field calm at 60fps over-cancelled the heat at 130fps — the
- * held-peak mean |v| collapsed to ~9% over rest (below the egg-live π gate's ≥20% floor).
- * A gentler held-cool lets the (now faster-ramping, stronger-gain) force build the
- * perturb the gate reads, while the BRISKER WELL_COOL_RELEASED (below) owns the
- * cool-down so the field still re-settles to within the ±5% COOL_TOL on release.
- *
- * WELL_COOL_RELEASED LIFTED 7.0→11.0 (BC.W-VIZ-CONSTELLATION): the same GPU-substrate
- * high-refresh cadence that starved the perturb also slowed the cool in WALL-CLOCK
- * frames — at the headless gate's throttled rAF the released ease-back rendered fewer
- * effective cool iterations within the 60-frame desktop window, so the larger perturb
- * (the stronger gain) read HOT (~7% off rest > ±5%) at the sample. A brisker released
- * ease renorms the lattice inside the window REGARDLESS of frame cadence (HELD perturb
- * untouched — this rate fires ONLY after release, `target ≤ 0`). The WELL_RELEASE_RAMP
- * strength-decay derivation (below) is unchanged: it still clears the force inside ~15
- * frames, leaving the brisker ease the rest of the window to renorm.
+ * The gentle held rate lets the force create a visible perturb across refresh rates;
+ * the brisk released rate returns the field to its configured drift without a tail.
  */
 const WELL_COOL_HELD = 0.6;
 const WELL_COOL_RELEASED = 11.0;

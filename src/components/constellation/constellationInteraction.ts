@@ -378,7 +378,7 @@ export const BURST_FIRE_THRESHOLD = 0.45;
  * `burst` (from the shared `usePointerVelocityField`, the eased flick impulse) warps the
  * focal node toward the cursor (the warp spring snaps it) AND drops an expanding ripple at
  * the focal — the lattice "snaps the focal toward the cursor and drops an expanding ring"
- * (the WGSL ripple instance / the accent-ring overlay). A slow drag (`burst` below the
+ * (the Canvas2D ripple / consumer accent-ring overlay). A slow drag (`burst` below the
  * threshold) never fires (a steady hover is the gentle gather, not a snap). Returns true
  * when a burst fired. Composes the EXISTING `warpTo` + the ripple list — no new mechanic,
  * no second rAF (the warp rides the substrate's ONE clock); PRM is enforced by the CALLER
@@ -399,4 +399,3 @@ export function fireBurst(
     ripples.push({ x: field.warp.x, y: field.warp.y, start: -1 });
     return true;
 }
-

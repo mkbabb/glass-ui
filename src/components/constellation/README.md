@@ -50,8 +50,9 @@ A **proximity graph** (a geometric / unit-disk graph) animated frame by frame:
   full pause machinery (offscreen, tab-hidden, reduced-motion). The constellation never bootstraps
   its own context or RAF loop, and inherits the same freeze contract every glass-ui substrate has.
 
-It renders on a transparent canvas behind content (`pointer-events: none` by default), so it sits as
-a quiet textural field under a hero, a cover, an empty state, or a 404.
+It renders on a transparent canvas, so it can sit as a quiet textural field under a hero, a cover,
+an empty state, or a 404. A placed background consumer may set `pointer-events: none`; a foreground
+instance retains host input only for the interaction modes it explicitly enables.
 
 ---
 
@@ -143,9 +144,9 @@ function drawFocal(ctx: CanvasRenderingContext2D, field: ConstellationField, now
 | `speed` | `number` | `0.16` | node drift speed |
 | `seed` | `number \| string` | — | omit → fresh `Math.random` field; supply → reproducible `mulberry32` field (string hashed via `hashString`) |
 | `pointerReactive` | `boolean` | `true` | nodes steer gently toward the cursor + taps drop ripples (disabled under reduced-motion) |
-| `warpOnClick` | `boolean` | `false` | a click warps the focal node to the nearest drifting node + springs it there. **INDEPENDENT** of `pointerReactive` — warp works on a non-ripple lattice (disabled under reduced-motion) |
+| `warpOnClick` | `boolean` | `false` | pointer activation warps the focal node to the nearest drifting node; Enter/Space targets the field center through the same warp owner. Enabling it gives the host a named button contract. Disabled under reduced-motion |
 | `wander` | `boolean \| { minIdle?, jitter? }` | `false` | auto-DRIFT: a periodic auto-pick re-points the focal node to a random node on a jittered cadence, on the SAME warp spring (no second rAF). `true` uses the 8–16s default cadence; the object tunes `minIdle`/`jitter` (ms). PRM-gated — the cadence lives inside the `!reducedMotion` step block, so under reduced-motion it never advances |
-| `gravityWell` | `boolean \| { holdMs?, gain?, reach?, ramp?, maxSpeed? }` | `false` | pointer-held GRAVITY-WELL: hold the pointer over the lattice and the nodes within reach are PULLED toward it (an inverse-square force on the SAME engine), released back to `speed` on lift. INDEPENDENT of `warpOnClick`/`pointerReactive`. `true` uses the tokenised `--constellation-well-*` defaults; the object overrides the gains. PRM-gated — the held-timer lives inside `!reducedMotion`, and the well STATE resets to neutral on the PRM-true edge |
+| `gravityWell` | `boolean \| { holdMs?, gain?, reach?, ramp?, maxSpeed? }` | `false` | pointer hold/release and keyboard press/release drive the same inverse-square well target. Enabling it gives the host a named button contract. `true` uses the tokenised defaults; an object overrides them. Disabled under reduced-motion |
 | `pinned` | `boolean \| number` | `false` | PINNED node (AZ.W-CON-GEN G1): a node HELD by every step pass — it does not drift, bounce, steer toward the cursor, or feel the gravity-well, so it holds its seeded position (the flagged node a consumer pins). `false` → no pin; `true` → node 0; a number → that index |
 | `accentEdges` | `boolean` | `false` | ACCENT-edge skin (G2): edges incident on the pinned (else focal) node stroke the `--constellation-accent` tint at the `--constellation-edge-accent-alpha` weight — the flagged-node tether. Default OFF (the neutral single-color pass) |
 | `pinnedDrift` | `boolean \| { wanderFrac?, durMs?, minIdle?, jitter? }` | `false` | autonomous PINNED-ANCHOR drift (G5): the pinned node gently wanders its seeded anchor (default ±0.14 of the canvas) on a jittered cadence — DISTINCT from `wander` (which re-targets the warp). A closed-form easeInOutQuad stepped inside the single rAF; PRM-gated |
@@ -200,9 +201,9 @@ When `pointerReactive` (the default, off under reduced-motion):
   plus a soft cursor node.
 - **Ripple** — a tap/click drops an expanding ring that fades over ~0.9s.
 
-The host canvas is `pointer-events: none` (it sits behind content), so the listeners attach to the
-host element and map viewport coordinates into canvas-local px via `getBoundingClientRect` — which
-keeps the mapping correct even when the surface is CSS-scaled (a deck-scale transform, a zoom).
+Listeners attach to the host element and map viewport coordinates into canvas-local px via
+`getBoundingClientRect`, keeping the mapping correct under CSS scale or zoom. Route backgrounds
+consume the shared route-pointer feed and register no per-instance host pointer listeners.
 
 ---
 
@@ -473,13 +474,11 @@ display does not triple the fill cost.
 
 ## Accessibility
 
-The canvas is decorative — it carries no semantic content, sits behind the type at
-`pointer-events: none`, and is `aria-hidden` by default. Under `prefers-reduced-motion: reduce` the
-substrate paints ONE static frame and parks the loop (the lattice is present but still); the pointer
-steer + ripples are disabled. The freeze is live-monitored — a runtime PRM flip re-freezes or re-arms
-without a remount. Because the field is purely ambient texture, no pause/play control is required (it
-is not the auto-running, attention-pulling background that WCAG 2.2.2 obligates a stop control for —
-that contract is the AV-background story the WebGL substrates carry via `DockBackgroundToggle`).
+The canvas itself is always `aria-hidden`: its pixels carry no semantic content. With direct
+interaction props off, the host is ordinary decorative chrome. Enabling `warpOnClick` or
+`gravityWell` promotes the host to a named, focusable button whose pointer and Enter/Space paths use
+the same field owner. Under `prefers-reduced-motion: reduce` the substrate paints one static frame,
+parks, and disables input-driven motion.
 
 ---
 
@@ -512,12 +511,11 @@ src/components/constellation/
 ├── Constellation.vue        # the component: composes useCanvas2D, seeds via prng,
 │                            #   runs the four neutral passes + the warp spring,
 │                            #   then drawOverlay; warpOnClick + the warpTo expose
-├── constellationField.ts    # the pure engine: Node, seedField, stepField, the four
-│                            #   neutral draw passes, the focal seam (nearestNode,
-│                            #   warpStep critically-damped integrator, warpTo,
-│                            #   setWarpTarget), the gravity-well force (stepWell), the
-│                            #   wander cadence (warpSettled, pickWanderTarget), and the
-│                            #   token readers (readInteractionConfig) — all free functions
+├── constellationField.ts    # seeded field stepping + the single edge scan
+├── constellationRender.ts   # the Canvas2D neutral passes over that field/edge set
+├── composables/
+│   ├── createConstellationField.ts
+│   └── useConstellation.ts  # shared lifecycle, input, field step, ordered paint
 ├── index.ts                 # package barrel
 └── README.md                # this file
 
@@ -527,9 +525,9 @@ src/composables/glass/canvas2d/
                              #   — the Canvas2D parallel to useWebGLCanvas
 ```
 
-The neutral/skin split is the load-bearing design choice: `constellationField.ts` contains NO
-anomaly pass, no accent color, no callout typeface — only the four neutral passes. The branded mark
-reaches the canvas exclusively through `Constellation.vue`'s `drawOverlay` prop. The single-source
+The neutral/skin split is the load-bearing design choice: the field contains no anomaly pass,
+callout, or deck-domain content. The branded mark reaches the canvas exclusively through
+`Constellation.vue`'s final `drawOverlay` prop. The single-source
 PRNG ([`prng.ts`](../../../utils/prng.ts)) is consumed verbatim — the constellation re-rolls no
 `mulberry32` of its own.
 
@@ -546,13 +544,9 @@ PRNG ([`prng.ts`](../../../utils/prng.ts)) is consumed verbatim — the constell
   single-source `mulberry32` + `hashString`), [`useIntersectionPause`](../../../composables/motion/useIntersectionPause.ts)
   + [`useResizeObserver`](../../../composables/dom/useResizeObserver.ts) (composed by the substrate).
 
-## Substrate (BB.W-VIZ-SUITE — DO NOT MIGRATE now)
+## Substrate
 
-Constellation renders on the **Canvas2D** substrate (`useCanvas2D` over the ONE
-`createCanvasLifecycle` leaf; a node/edge proximity-graph lattice). It is a first-class member
-of the procedural-animation suite (`src/components/PROCEDURAL-SUITE.md`) but is **NOT
-migrated to WebGPU in BB.W-VIZ-SUITE**: Canvas2D handles the current node count fine, and
-`proof:constellation-substrate-single` is substrate-agnostic (unaffected). Booked successor
-**W-CONSTELLATION-GPU** — trigger: a much denser lattice, where the dot-flow-field advection
-compute pass generalizes to constellation's nodes. Recorded in the parity table as a
-`no-migrate` row with this reason.
+Constellation renders on **Canvas2D** through `useCanvas2D` over the shared
+`createCanvasLifecycle` leaf. Its deterministic CPU field feeds one edge scan and one ordered vector
+paint; the consumer overlay is the final pass. Constellation owns no WebGPU/WebGL setup, shader,
+bridge, or GPU context.

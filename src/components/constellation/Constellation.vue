@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useTemplateRef } from "vue";
+import { computed, useTemplateRef } from "vue";
 import { type ConstellationProps } from "./constellationField";
 import { useConstellation } from "./composables/useConstellation";
 import { DEFAULT_PARALLAX } from "./constants";
@@ -8,20 +8,15 @@ import { cn } from "../_shared/class-names";
 
 /**
  * Constellation — a slow, geometric proximity-graph lattice rendered on the
- * WebGPU instanced-points + instanced-lines substrate (the WebGL2 instanced-arrays
- * twin fallback for the genuinely-absent tail; BC.W-VIZ-CONSTELLATION). Nodes drift
- * + bounce + render as crisp `fwidth`-SDF discs (resolution-independent — no more
- * low-res Canvas2D `arc()` upscaling); near nodes link with distance-falloff
- * hairlines; the web leans toward the cursor (velocity-aware) and a flick fires a
- * focal burst. It composes `createGpuSubstrate` over the ONE canvas lifecycle leaf,
- * so it inherits the offscreen / tab-hidden / reduced-motion freeze for free (no
- * hand-rolled RAF-park).
+ * Canvas2D substrate. Nodes drift and bounce; near nodes link with distance-falloff
+ * hairlines; the web leans toward the cursor and a flick fires a focal burst. It
+ * composes `useCanvas2D` over the shared lifecycle leaf, inheriting offscreen and
+ * tab-hidden parking plus the reduced-motion static frame without a local scheduler.
  *
  * The lattice ships NEUTRAL with the warm-cream identity default. The field step
- * (`constellationField.ts`) is the ONE JS math source the WGSL/GLSL render
- * transcribes; the palette read (`constellationRender.ts`) resolves the
- * `--constellation-*` tokens JS-side into the uniform buffer. Zero deck-domain
- * content lives in the component.
+ * (`constellationField.ts`) is the ONE geometry source consumed by the Canvas2D
+ * passes; the palette read (`constellationRender.ts`) resolves the
+ * `--constellation-*` tokens. Zero deck-domain content lives in the component.
  *
  * Palette reads the FULL `--constellation-*` legibility set off the canvas (the
  * node/node-dim/line colors + the edge-alpha multipliers + the field-yields-to-
@@ -32,9 +27,8 @@ import { cn } from "../_shared/class-names";
  * `warpOnClick`, a click warps the focal node to the nearest drifting node via a
  * critically-damped spring stepped INSIDE the substrate's single rAF (no
  * `useSpring`, no second rAF). The focal mark rides `field.warp.{x,y}` (the
- * spring-eased position the engine owns); a consumer reads it off the exposed
- * `field` for its own overlay layer (the Canvas2D `drawOverlay` seam is inert post-
- * migration — the lattice renders on the GPU, not a 2D context).
+ * spring-eased position the engine owns); `drawOverlay` receives that live field
+ * exactly once as the final Canvas2D pass.
  *
  * The prop contract is the public `ConstellationProps` (constellationTypes.ts);
  * the render-loop + lifecycle wiring lives in the `useConstellation` composable
@@ -80,12 +74,29 @@ const routePointer = props.backgroundInteractive
       })
     : undefined;
 
+const interactive = computed(
+    () => !props.backgroundInteractive && (props.warpOnClick || !!props.gravityWell),
+);
+const interactionLabel = computed(() =>
+    props.warpOnClick && props.gravityWell
+        ? "Move the constellation focal point or pull the field"
+        : props.gravityWell
+          ? "Pull the constellation field"
+          : "Move the constellation focal point",
+);
+
 const expose = useConstellation(props, hostRef, canvasRef, { routePointer });
 defineExpose(expose);
 </script>
 
 <template>
-    <div ref="hostRef" :class="cn('constellation', props.class)">
+    <div
+        ref="hostRef"
+        :class="cn('constellation', props.class)"
+        :role="interactive ? 'button' : undefined"
+        :tabindex="interactive ? 0 : undefined"
+        :aria-label="interactive ? interactionLabel : undefined"
+    >
         <canvas ref="canvasRef" class="constellation-canvas" aria-hidden="true" />
     </div>
 </template>
@@ -100,6 +111,11 @@ defineExpose(expose);
     contain: layout style;
     content-visibility: auto;
     contain-intrinsic-size: auto none;
+}
+
+.constellation[role="button"]:focus-visible {
+    outline: 2px solid var(--focus-ring-color);
+    outline-offset: 2px;
 }
 
 /* The root layout is CONSUMER-OVERRIDABLE (AY.W-SB1 §1.5.2 — the zero-paint

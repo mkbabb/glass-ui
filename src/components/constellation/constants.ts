@@ -56,22 +56,9 @@ export const WARP_ZETA = 1.0;
  * speed cap, and the singularity-soften floor.
  */
 export const DEFAULT_WELL_CONFIG: ConstellationWellConfig = {
-    gain: 19000, // inverse-square force scale — a clear pull over the reach. Lifted
-    // 14000→19000 (BC.W-VIZ-CONSTELLATION): the migration's GPU substrate runs the
-    // frame loop at the real device refresh (~130fps on the live canvas), so the
-    // per-frame `cfg.ramp`-eased strength reaches only ~0.70 within the 40-frame
-    // perturb sample (NOT the ~1.0 the unit dt=1/60 reaches). The weaker effective
-    // force, fought by the always-on |v|→speed ease-back, left the held-peak mean |v|
-    // only ~9% above rest — under the egg-live π gate's ≥20% perturb floor. A moderate
-    // pull restores the heat across the reach while staying low enough that the brisk
-    // released-cool re-settles the field inside the ±5% window. HELD-physics only: rest
-    // is byte-untouched.
+    gain: 19000, // inverse-square force scale — a clear pull over the reach
     reach: 340, // base-width px — the well's influence radius (k-scaled at step)
-    ramp: 8.0, // 1/s — the ARM rate. Doubled 4→8 (BC.W-VIZ-CONSTELLATION) so the
-    // strength reaches near-full power within the gate's 40-frame perturb window at the
-    // GPU substrate's high refresh (at ~130fps the prior 4/s only reached ~0.70 strength
-    // by frame 39 — the slow bloom starved the perturb). ≈0.12s bloom; release stays the
-    // fixed brisk WELL_RELEASE_RAMP, F8.2.
+    ramp: 8.0, // 1/s — ≈0.12s arm bloom; release uses its brisk fixed ramp
     maxSpeed: 4.0, // base-width px/frame cap — the no-slingshot clamp
     soften: 8, // px — the singularity floor (a node AT the cursor → bounded pull)
     holdMs: 140, // ms hold before the well arms
@@ -106,31 +93,16 @@ export const DEFAULT_PINNED_DRIFT_JITTER = 8000; // ms — random extra rest per
  *  there by construction); below it the marks stop crushing sub-pixel. */
 export const DEFAULT_K_FLOOR = 0.72;
 
-// ── BC.W-VIZ-CONSTELLATION — the WebGPU instanced-render budget constants ─────
-//
-// The lattice re-homes onto `createGpuSubstrate` (WebGPU instanced-points + instanced-
-// lines primary, the WebGL2 instanced-arrays twin fallback) — the four Canvas2D draw
-// passes retire. The edge SET stays a CPU all-pairs scan at the default count=64 (O(N²)/2
-// ≈ 2k pairs/frame — trivial; the GPU spatial-hash compute neighbor-bin is the BOOKED
-// dense-register successor, triggered ONLY at N ≫ 256 — overfit substrate against the
-// J-inv-10 ≥2-consumer bar until a ≥256-node consumer lands). These pre-size the storage
-// buffers so the per-frame `device.queue.writeBuffer` never re-allocates.
-
-/**
- * The maximum node count the points/edges buffers pre-size for (the slider cap — a count
- * above this is clamped at upload). ≫ this BOOKS the compute neighbor-bin path.
- */
+/** Maximum public node count; keeps the quadratic proximity scan bounded. */
 export const MAX_NODES = 256;
 
 /**
- * The per-node max degree budget — the edge buffer is pre-sized at `MAX_NODES · MAX_DEGREE`
- * so the CPU all-pairs scan never overflows it (a denser-than-degree neighborhood drops the
- * weakest edges, never re-allocates). 12 is a generous incident-edge ceiling for a
- * distance-threshold ε-proximity graph at the default link/count.
+ * Per-node paint-density budget. A denser neighborhood drops its weakest edges so a
+ * pathological link radius cannot turn the quiet lattice into an opaque mesh.
  */
 export const MAX_DEGREE = 12;
 
-/** The pre-sized edge instance budget (`MAX_NODES · MAX_DEGREE`). */
+/** Maximum painted edges (`MAX_NODES · MAX_DEGREE`). */
 export const E_MAX = MAX_NODES * MAX_DEGREE;
 
 /**
@@ -146,14 +118,8 @@ export const E_MAX = MAX_NODES * MAX_DEGREE;
 export const DEFAULT_PARALLAX = 0;
 
 /**
- * The base node radius band (CSS px) the DPR-aware SDF circle sizes within (the §1 "Node
- * size" config axis). `seedField` rolls each node's radius in `[NODE_R_MIN, NODE_R_MIN +
- * NODE_R_SPREAD)` (the prior `1.6 + rng()*1.6` band, named); the WGSL/GLSL fragment SDF
- * sizes `half = radius · uKVis · uDpr / uResolution` so the disc samples at full device
- * resolution and is AA'd by the pixel-footprint derivative — crisp at ANY DPR.
+ * Base Canvas2D node-radius band in CSS px. `seedField` rolls each node's radius in
+ * `[NODE_R_MIN, NODE_R_MIN + NODE_R_SPREAD)`.
  */
 export const NODE_R_MIN = 1.6;
 export const NODE_R_SPREAD = 1.6;
-
-/** The hairline edge half-width (CSS px) the instanced segment-quad fragment AAs. */
-export const DEFAULT_LINE_WIDTH = 1.0;

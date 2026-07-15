@@ -6,12 +6,10 @@
 //
 // This module owns the SHARED TYPES + the engine core: `seedField`/`refitField`/
 // `stepField` + the CPU edge SET scan (`buildEdges`/`appendPointerWeb`) + the
-// parallax-offset helper (BC.W-VIZ-CONSTELLATION). The pointer-INTERACTION machinery
+// parallax-offset helper. The pointer-INTERACTION machinery
 // lives in `./constellationInteraction`; the palette read + the visual-size floor live
-// in `./constellationRender`. The four Canvas2D draw passes RETIRED — the lattice renders
-// on the WebGPU instanced-points+lines substrate (the WebGL2 instanced-arrays twin
-// fallback); this engine is the ONE math source the WGSL/GLSL render transcribes. Zero
-// deck-domain content lives here.
+// in `./constellationRender`. This engine is the one math source the Canvas2D renderer
+// consumes. Zero deck-domain content lives here.
 
 import {
     stepWell,
@@ -69,7 +67,7 @@ export function seedField(
             dim: rng() < 0.45,
             // BC.W-VIZ-CONSTELLATION — the seeded parallax DEPTH (§6). z ∈ [0,1]; the
             // pointer offsets the node's SCREEN position by parallax·z·(pointer−center)
-            // so the flat lattice reads as having depth (GPU node-position write only).
+            // so the flat lattice reads as having depth (paint position only).
             z: rng(),
         });
     }
@@ -252,15 +250,12 @@ export function stepField(
 //
 // The distance-threshold ε-proximity graph: every two nodes within `reach = link·k` are
 // joined by an edge whose `alpha = 1 − d²/reach²` falls off with distance. This is the
-// `drawEdges` math relocated OUT of the retired Canvas2D draw pass into a PURE,
-// node-testable export the render loop calls each frame — the WGSL/GLSL instanced-lines
-// render transcribes only the SHAPE (the segment-quad expansion + the cross-line AA), never
-// re-derives this scan (the single-math-source bar; the GPU spatial-hash compute neighbor-
-// bin is the BOOKED dense-register successor — overfit substrate at the default count=64).
+// `drawEdges` math is a PURE, node-testable export the render loop calls once per frame;
+// Canvas2D paints these rows and never re-derives the scan.
 //
 // At count=64 the O(N²)/2 ≈ 2k pairs/frame is trivial. `accentIndex ≥ 0` flags the edges
 // incident on the accented node (the flagged-node tether); the writer caps total edges at
-// `eMax` (the pre-sized buffer budget) by dropping the WEAKEST (lowest-alpha) overflow.
+// `eMax` (the paint-density budget) by dropping the WEAKEST overflow.
 
 import type { ConstellationEdge } from "./constellationTypes";
 
@@ -268,11 +263,9 @@ import type { ConstellationEdge } from "./constellationTypes";
  * Scan the proximity graph and return its edge SET (the `1 − d²/reach²` distance-falloff
  * weight per pair within `reach = link·k`). `accentIndex ≥ 0` marks the edges incident on
  * that node (the flagged-node tether). Pure + node-testable; the render loop calls it each
- * frame and uploads the result to the instanced-lines storage buffer.
+ * frame and hands the result directly to the Canvas2D edge pass.
  *
- * `eMax` caps the result (the pre-sized buffer budget). When the scan would exceed it, the
- * WEAKEST overflow edges are dropped (a denser-than-budget neighborhood keeps its strongest
- * links — never re-allocates the GPU buffer mid-frame).
+ * `eMax` caps the result. A denser neighborhood keeps its strongest links.
  */
 export function buildEdges(
     field: ConstellationField,
@@ -354,7 +347,7 @@ export function appendPointerWeb(
  * `parallax · z · (pointer − center)` — a cheap pointer-parallax giving the flat lattice
  * apparent depth (deeper nodes — higher `z` — shift more, the Awwwards "living network"
  * register). When the pointer is inactive the offset is 0 (the flat lattice). Pure; the
- * render loop maps each node's `(x,y)` through this before writing the GPU position buffer.
+ * renderer maps each node's `(x,y)` through this before painting the dot.
  */
 export function parallaxNodePos(
     node: ConstellationNode,

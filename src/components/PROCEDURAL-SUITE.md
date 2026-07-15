@@ -72,7 +72,7 @@ below). `proof:gpu-substrate-single` machine-locks the no-second-fork + no-delet
 | **blob** | WebGL2 (`metaball.frag.ts`, 417L, SDF smin + 2 `fwidth()` sites) + the `metaball.wgsl.ts` primary | demo studio per-preset | injected ColorResolver (`uploadBlobUniforms.ts`) | **MIGRATED** — clean SDF port; the two `fwidth()` AA/Toksvig sites transcribed to WGSL fragment-stage `fwidth()` | **2** | **W-GOOBLOB-WGPU** |
 | **liquid-grid** | WebGPU fragment primary, GLSL fallback | `useConfiguratorState<LiquidGridConfig>` commit-on-write | ColorResolver | **BORN WebGPU-first** — fullscreen fragment (Golus derivative-AA grid on a Bridson curl-warped UV); the fallback is the SAME pure fragment → parity `verified` | **5** | **W-VIZ-PAPERGRID** |
 | **fourier-field** | **Canvas2D** (`useCanvas2D`; `math.ts` DFT epicycle math) | demo studio per-preset | ColorResolver | **DO NOT MIGRATE (now)** — a few-to-dozens of phasors is the RIGHT tool for `ctx.stroke`; the DFT math is already GPU-agnostic. "WebGPU-first WHEN POSSIBLE" gives latitude | — | **W-FOURIER-GPU** (booked; trigger: harmonic density scales to thousands of phasors → GPU line-instancing wins) |
-| **constellation** | **Canvas2D** (`useCanvas2D`; node/edge proximity-graph lattice) | (substrate-agnostic) | ColorResolver | **DO NOT MIGRATE (now)** — Canvas2D handles the current node count fine; `proof:constellation-substrate-single` is substrate-agnostic | — | **W-CONSTELLATION-GPU** (booked; trigger: a much denser lattice) |
+| **constellation** | **Canvas2D** (`useCanvas2D`; node/edge proximity-graph lattice) | (substrate-agnostic) | CSS palette tokens | **CANVAS2D** — one deterministic CPU field, one proportionate vector renderer, and a final consumer `drawOverlay` pass | — | Single-renderer contract |
 | **watercolor-dot** | **SVG/CSS only — NO drawing context** (`<filter>` feDisplacementMap + seeded prng; `useWatercolorBlob.ts` pure geometry) | (none — a decorative dot) | per-instance prng + color | **PERMANENTLY OUT** — mounts ZERO drawing context; a GPU context for one decorative dot is a regression against the ~8-context-per-page cap | — | NEVER a wave — the canonical "mark NOT to migrate, with the reason" case |
 
 The migration ORDER was `aurora (1) → goo-blob (2) → dot-flow-field (3) → concentric (4)`
@@ -99,8 +99,6 @@ math.
 
 - **W-FOURIER-GPU** — FourierField migrates to a WebGPU instanced-line-segment path IF the
   harmonic density scales to thousands of phasors. Today Canvas2D is the RIGHT tool.
-- **W-CONSTELLATION-GPU** — Constellation migrates to a WebGPU compute-particle lattice IF a
-  much denser lattice is wanted.
 - **The per-satellite derived-shade blob color** (BA-VJS-5 / C-1) — booked to a 4.x point
   release; the GL color-seam fence is NOT widened.
 - **A `.frag`/`.glsl` WebGL2-fallback RETIREMENT** — booked but GATED: forbidden until the

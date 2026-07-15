@@ -313,7 +313,7 @@ onMounted(() => {
 
         <StorySection
             label="click-to-warp focal node"
-            blurb="Click anywhere — the focal mark warps to the NEAREST drifting node and springs there (critically damped, chasing the live drifting target so it arrives ON the node, then rides its drift). Click again to re-point. The warp is one engine-owned spring stepped inside the substrate's single rAF (no second rAF, no useSpring); it is disabled under prefers-reduced-motion. The --constellation-accent tint is the consumer-preset boundary (the library ships a neutral default; slides aliases it to --ncsu-red)."
+            blurb="Click anywhere, or focus the field and press Enter/Space — the focal mark warps through the same engine-owned spring to a drifting node. The drawOverlay mark is the final Canvas2D pass, so visible state and field readback stay causal. The action is disabled under prefers-reduced-motion."
         >
             <ShowcaseFrame pad="none">
                 <div
@@ -333,7 +333,7 @@ onMounted(() => {
                     <span
                         class="pointer-events-none absolute bottom-3 left-3 rounded-pill bg-card/80 px-2.5 py-1 text-xs text-muted-foreground"
                     >
-                        click to warp the focal node
+                        click or press Enter/Space to warp
                     </span>
                 </div>
             </ShowcaseFrame>
@@ -341,9 +341,8 @@ onMounted(() => {
             <p class="text-sm text-muted-foreground">
                 Note <code class="font-mono text-xs">pointerReactive</code> is OFF here
                 and <code class="font-mono text-xs">warpOnClick</code> still fires — the
-                two axes are independent (warp works on a non-ripple lattice). The
-                constellation is a DECORATIVE proximity graph, not a data-graph
-                renderer.
+                two axes are independent. The pixels remain decorative; enabling the
+                warp promotes the host to a named keyboard/pointer control.
             </p>
         </StorySection>
 
@@ -378,7 +377,7 @@ onMounted(() => {
 
         <StorySection
             label="pointer-held gravity-well"
-            blurb="Hold the pointer over the lattice and the nodes within reach are pulled toward it — an inverse-square force on the same engine; release and the field cools back to its drift speed. The well reuses the pointer the engine already tracks, with a no-singularity softening floor and a no-slingshot speed clamp. Reduced-motion-gated: under reduce the held timer never arms."
+            blurb="Hold the pointer, or focus the field and hold Enter/Space, to pull nearby nodes through the same inverse-square well target; release and the field cools. Pointer and keyboard paths share one owner and are disabled under reduced motion."
         >
             <ShowcaseFrame pad="none">
                 <div
@@ -398,7 +397,7 @@ onMounted(() => {
                     <span
                         class="pointer-events-none absolute bottom-3 left-3 rounded-pill bg-card/80 px-2.5 py-1 text-xs text-muted-foreground"
                     >
-                        hold to pull the field in
+                        hold pointer or Enter/Space to pull
                     </span>
                 </div>
             </ShowcaseFrame>

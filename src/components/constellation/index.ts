@@ -42,7 +42,6 @@ export {
 export {
     kVisOf,
     readPalette,
-    parseColorRGBA,
     DEFAULT_PALETTE,
 } from "./constellationRender";
 export type {
