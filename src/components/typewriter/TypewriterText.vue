@@ -1,17 +1,8 @@
 <template>
     <span class="tw-root">
-        <span
-            v-for="(char, index) in leadingChars"
-            :key="index"
-            :class="charClass"
-            @click="handleCharClick(index)"
-        >
-            {{ char }}
-        </span>
+        <span>{{ leadingText }}</span>
         <span v-if="tailChar !== null" class="tw-tail">
-            <span :class="charClass" @click="handleCharClick(displayTextChars.length - 1)">
-                {{ tailChar }}
-            </span>
+            {{ tailChar }}
             <span
                 v-if="cursorVisible"
                 class="tw-cursor"
@@ -38,6 +29,7 @@
 import { watch, onMounted, onUnmounted, computed } from "vue";
 import { useTypewriter } from "./composables/useTypewriter";
 import type { TypewriterWord } from "./types";
+import { splitGraphemes } from "./utils/graphemes";
 
 interface Props {
     /** Single text to type. Use this OR `words`, not both. */
@@ -64,8 +56,6 @@ interface Props {
     pauseAfterDelete?: number;
     /** Backspace speed in word-rotation mode (ms per char). */
     deletingSpeed?: number;
-    /** Whether clicking characters triggers interactive backspace. */
-    interactive?: boolean;
     respectReducedMotion?: boolean;
 }
 
@@ -89,7 +79,6 @@ const props = withDefaults(defineProps<Props>(), {
     pauseAfterType: 3000,
     pauseAfterDelete: 800,
     deletingSpeed: 70,
-    interactive: true,
     respectReducedMotion: true,
 });
 
@@ -124,17 +113,15 @@ const typewriter = useTypewriter({
     onWordComplete: (index: number) => emit("wordComplete", index),
 });
 
-const { displayText, startTyping, stopTyping, reset, backspaceToPosition } = typewriter;
+const { displayText, startTyping, stopTyping, reset } = typewriter;
 
-const displayTextChars = computed(() => displayText.value.split(""));
-const leadingChars = computed(() => displayTextChars.value.slice(0, -1));
+const displayTextChars = computed(() => splitGraphemes(displayText.value));
+const leadingText = computed(() => displayTextChars.value.slice(0, -1).join(""));
 const tailChar = computed(() =>
     displayTextChars.value.length > 0
         ? displayTextChars.value[displayTextChars.value.length - 1]
         : null,
 );
-
-const charClass = computed(() => (props.interactive ? "tw-char tw-char--interactive" : "tw-char"));
 
 type TypewriterTimer = ReturnType<typeof setTimeout>;
 
@@ -160,18 +147,6 @@ function scheduleStart() {
         emit("start");
         void startTyping();
     }, props.startDelay);
-}
-
-function handleCharClick(clickedIndex: number) {
-    if (!props.interactive) return;
-    if (clickedIndex >= displayText.value.length) return;
-
-    if (typewriter.isTyping.value) {
-        stopTyping();
-        scheduleTimer(() => void backspaceToPosition(clickedIndex + 1), 50);
-    } else {
-        void backspaceToPosition(clickedIndex + 1);
-    }
 }
 
 // Watch for text changes in single-text mode
@@ -220,29 +195,6 @@ defineExpose({
 
 .tw-tail {
     white-space: nowrap;
-}
-
-.tw-char {
-    display: inline;
-}
-
-.tw-char--interactive {
-    cursor: pointer;
-    border-radius: var(--radius-sm);
-    padding: 0 1px;
-    margin: 0 -1px;
-    transition: background-color var(--duration-fast) var(--ease-standard);
-}
-
-.tw-char--interactive:hover {
-    /* BC.W-VISUAL-RECONCILE (the merged BC.W-DESHADCN A7 finding) — the interactive-
-       char hover plate reads the WARM hover-bg rung off `--foreground`, not a literal
-       mid-NEUTRAL gray. NON-isomorphic: `rgba(128,128,128,0.15)` (OKLab a flat neutral)
-       → the warm-amber identity the BA.W-NO-GRAY warm floor speaks library-wide. The
-       `custom/` marks-family sibling already in this wave's unit-6 re-walk; gated by
-       proof:no-gray / the marks re-walk verdict (TypewriterText is custom/, off the
-       proof:no-shadcn-default ui/ scope). */
-    background-color: color-mix(in srgb, var(--foreground) 8%, transparent);
 }
 
 .tw-cursor {

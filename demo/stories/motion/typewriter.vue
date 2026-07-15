@@ -73,7 +73,6 @@ function restart(): void {
                         :cursor-blink="cursorBlink"
                         :pause-after-type="2200"
                         :pause-after-delete="600"
-                        :interactive="false"
                     />
                 </span>
                 .
@@ -102,7 +101,6 @@ function restart(): void {
                     :cursor-visible="cursorVisible"
                     :cursor-blink="cursorBlink"
                     :loop="false"
-                    :interactive="false"
                 />
             </div>
         </section>

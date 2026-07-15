@@ -2,6 +2,7 @@ import { ref, computed } from "vue";
 import type { TypewriterOptions, TypewriterWord, CancellationToken } from "../types";
 import { DEFAULTS } from "../types";
 import { calculateKeyDelay } from "../utils/keyboard";
+import { splitGraphemes } from "../utils/graphemes";
 import { getPauseDelay, PAUSE_PATTERNS } from "../utils/pausePatterns";
 import {
     createCancellationToken,
@@ -39,6 +40,7 @@ export function useTypewriter(options: TypewriterOptions) {
 
     // --- Internal state (non-reactive) ---
     let targetText = isWordRotation ? opts.words![0].text : (opts.text ?? "");
+    let targetChars = splitGraphemes(targetText);
     let currentToken: CancellationToken | null = null;
 
     // --- Derived typo config ---
@@ -54,16 +56,16 @@ export function useTypewriter(options: TypewriterOptions) {
     // --- Core typing loop ---
 
     async function typeTextWithNgrams(token: CancellationToken): Promise<void> {
-        const chars = targetText;
+        const chars = targetChars;
         let typoCtx = createTypoContext();
         const typoConfig = getTypoConfig();
         const speedFactor = isFirstAnimation.value ? opts.firstAnimationSpeedFactor : 1;
         const skipTypos = isFirstAnimation.value;
 
-        while (displayText.value.length < chars.length) {
+        while (splitGraphemes(displayText.value).length < chars.length) {
             if (token.cancelled) return;
 
-            const pos = displayText.value.length;
+            const pos = splitGraphemes(displayText.value).length;
             const currentChar = chars[pos];
             const prevChar = pos > 0 ? chars[pos - 1] : "";
 
@@ -176,7 +178,7 @@ export function useTypewriter(options: TypewriterOptions) {
 
         for (let i = 0; i < count; i++) {
             if (token.cancelled) return false;
-            displayText.value = displayText.value.slice(0, -1);
+            displayText.value = splitGraphemes(displayText.value).slice(0, -1).join("");
             const delay = calcBackspaceDelay(base, opts.variance * 0.5, i, accel);
             const ok = await sleep(delay, token);
             if (!ok) return false;
@@ -195,7 +197,7 @@ export function useTypewriter(options: TypewriterOptions) {
                 isDeleting.value = false;
                 return false;
             }
-            displayText.value = displayText.value.slice(0, -1);
+            displayText.value = splitGraphemes(displayText.value).slice(0, -1).join("");
             const jitter = Math.random() * 20;
             const ok = await sleep(speed + jitter, token);
             if (!ok) {
@@ -218,6 +220,7 @@ export function useTypewriter(options: TypewriterOptions) {
             currentWord.value = words[wordIdx];
             currentWordIndex.value = wordIdx;
             targetText = words[wordIdx].text;
+            targetChars = splitGraphemes(targetText);
 
             // Type the word
             await typeTextWithNgrams(token);
@@ -280,7 +283,7 @@ export function useTypewriter(options: TypewriterOptions) {
                 if (!ok) return;
 
                 const ok2 = await animateBackspaceSequence(
-                    displayText.value.length,
+                    splitGraphemes(displayText.value).length,
                     token,
                     false,
                 );
@@ -324,38 +327,18 @@ export function useTypewriter(options: TypewriterOptions) {
             currentWordIndex.value = 0;
             currentWord.value = opts.words![0];
             targetText = opts.words![0].text;
+            targetChars = splitGraphemes(targetText);
         }
     }
 
     function updateText(newText: string): void {
         targetText = newText;
+        targetChars = splitGraphemes(newText);
         if (!isWordRotation) {
             opts.text = newText;
         }
         if (displayText.value.length > 0) {
             isFirstAnimation.value = false;
-        }
-    }
-
-    async function backspaceToPosition(targetLength: number): Promise<void> {
-        if (isTyping.value || targetLength >= displayText.value.length || targetLength < 0) {
-            return;
-        }
-
-        currentToken?.cancel();
-        const token = createCancellationToken();
-        currentToken = token;
-        isTyping.value = true;
-
-        const charsToRemove = displayText.value.length - targetLength;
-        await animateBackspaceSequence(charsToRemove, token, false);
-
-        isTyping.value = false;
-        if (!token.cancelled) {
-            await sleep(200, token);
-            if (!token.cancelled) {
-                startTyping();
-            }
         }
     }
 
@@ -372,9 +355,9 @@ export function useTypewriter(options: TypewriterOptions) {
     }
 
     function setCharPosition(n: number): void {
-        const maxLen = targetText.length;
+        const maxLen = targetChars.length;
         const clamped = Math.max(0, Math.min(n, maxLen));
-        displayText.value = targetText.slice(0, clamped);
+        displayText.value = targetChars.slice(0, clamped).join("");
     }
 
     function forceWord(idx: number, charPos: number): void {
@@ -385,6 +368,7 @@ export function useTypewriter(options: TypewriterOptions) {
         currentWordIndex.value = safeIdx;
         currentWord.value = words[safeIdx];
         targetText = words[safeIdx].text;
+        targetChars = splitGraphemes(targetText);
         setCharPosition(charPos);
     }
 
@@ -402,7 +386,6 @@ export function useTypewriter(options: TypewriterOptions) {
         stopTyping,
         reset,
         updateText,
-        backspaceToPosition,
 
         // Word-rotation API
         pause,
