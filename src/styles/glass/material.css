@@ -395,19 +395,25 @@
         --specular-intensity: var(--glass-specular-intensity-active, 0.16);
     }
 
-    /* AX.W45-TUNE C5 — the SELECTED dock control reads as the keyframes-dock glass
-       register: a glass-tier active fill (`--dock-control-active-bg` → the floating
-       plate, tokens.css) WITH the specular gleam waking over it, not a flat ink
-       stamp. The CSS `:active` pseudo above only fires on press-down; a SELECTED tile
-       (`.is-active` / `[aria-pressed]` / `[aria-expanded]` / `[aria-current]`) holds
-       the gleam lit so the selected element reads as a lit glass tier the substrate
-       shows through (the model the user named, `pass-3:13`). Family-scoped addition
-       on the dock-control `::before`, line-disjoint from the shared recipe above. */
-    .dock-icon-button:is(.is-active, .active, [aria-pressed="true"], [aria-expanded="true"], [aria-current="page"])::before,
-    .dock-tab-button:is(.is-active, .active, [aria-pressed="true"], [aria-expanded="true"], [aria-current="page"])::before,
-    .dock-select-trigger:is(.is-active, .active, [aria-pressed="true"], [aria-expanded="true"], [aria-current="page"])::before,
-    .dock-dropdown-trigger:is(.is-active, .active, [aria-pressed="true"], [aria-expanded="true"], [aria-current="page"])::before {
+    /* Selected and dragged controls hold the same interaction lens used during
+       press. Semantics choose the state attribute; the material owns its paint. */
+    :is(.glass-material, .glass-wash, .glass-quiet, .glass-resting, .glass-floating,
+        .glass-overlay, .glass-specular-track, .dock-icon-button, .dock-tab-button,
+        .dock-select-trigger, .dock-dropdown-trigger):is(.is-active, .active, [data-active],
+        [data-dragging], [data-state="checked"], [data-state="on"], [aria-pressed="true"],
+        [aria-selected="true"], [aria-expanded="true"], [aria-current="page"])::before {
         --specular-intensity: var(--glass-specular-intensity-active, 0.16);
+    }
+
+    /* Disabled glass keeps its neutral separating hairline but cannot wake the
+       interaction lens through hover, press, or retained state. Content ink is
+       untouched; each control continues to own its disabled legibility. */
+    :is(.glass-material, .glass-wash, .glass-quiet, .glass-resting, .glass-floating,
+        .glass-overlay, .glass-specular-track, .dock-icon-button, .dock-tab-button,
+        .dock-select-trigger, .dock-dropdown-trigger):is(:disabled, [data-disabled],
+        [aria-disabled="true"])::before {
+        --specular-intensity: var(--glass-specular-intensity-rest, 0);
+        transition: none;
     }
 
     /* BB.W-LENSING (scope 2) — the `:active` LENS-SWELL is RETIRED (DDR-LENS-BAKE,
