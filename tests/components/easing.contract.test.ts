@@ -115,7 +115,7 @@ describe("EasingPicker product contract", () => {
         expect(wrapper.attributes("data-copy-state")).toBe("pending");
         await vi.advanceTimersByTimeAsync(COPY_ATTEMPT_TIMEOUT_MS);
         expect(wrapper.attributes("data-copy-state")).toBe("failed");
-        expect(wrapper.get('[data-testid="easing-select-literal"]').exists()).toBe(true);
+        expect(wrapper.find('[data-testid="easing-select-literal"]').exists()).toBe(true);
 
         await copy.trigger("click");
         await flushPromises();

@@ -1,5 +1,6 @@
 import { mount } from "@vue/test-utils";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import type { ConstellationField } from "@glass/components/constellation";
 
 const substrate = vi.hoisted(() => ({
     render: undefined as
@@ -77,7 +78,10 @@ describe("Constellation Canvas2D lifecycle", () => {
 
     it("invokes drawOverlay exactly once as the final pass with frozen time", async () => {
         const events: string[] = [];
-        const overlay = vi.fn(() => events.push("overlay"));
+        const overlay = vi.fn(
+            (_ctx: CanvasRenderingContext2D, _field: ConstellationField, now: number) =>
+                events.push("overlay"),
+        );
         const wrapper = mount(Constellation, {
             props: { freeze: true, seed: "static", drawOverlay: overlay },
         });

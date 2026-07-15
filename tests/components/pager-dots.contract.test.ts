@@ -41,17 +41,17 @@ describe("PagerDots SVG resources", () => {
     it("allocates a fresh namespace on remount and removes definitions on unmount", async () => {
         const wrapper = mount(MultiPager, { attachTo: document.body });
         const remountHost = () => wrapper.find("[data-remount]");
-        const first = remountHost().find("filter").attributes("id");
+        const first = remountHost().get("filter").element.id;
 
         await wrapper.setData({ showRemount: false });
         expect(document.getElementById(first)).toBeNull();
         await wrapper.setData({ showRemount: true });
-        const second = remountHost().find("filter").attributes("id");
+        const second = remountHost().get("filter").element.id;
         expect(second).not.toBe(first);
 
         const mountedIds = wrapper
             .findAll(".pager-dots filter, .pager-dots clipPath")
-            .map((node) => node.attributes("id"));
+            .map((node) => node.element.id);
         wrapper.unmount();
         expect(mountedIds.every((id) => document.getElementById(id) === null)).toBe(true);
     });
