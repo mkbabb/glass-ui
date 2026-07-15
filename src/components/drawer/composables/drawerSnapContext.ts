@@ -9,7 +9,7 @@
 import type { Ref } from "vue";
 import { createOptionalContext } from "../../../composables/context";
 import { DRAWER_SNAP_LABEL } from "../constants";
-import type { DrawerDirection } from "../index";
+import type { DrawerDirection, DrawerMode } from "../index";
 
 /**
  * The snap seam the root provides + the content consumes. The root resolves the
@@ -25,6 +25,8 @@ export interface DrawerSnapContext {
     snapPoints: Readonly<Ref<readonly number[]>>;
     /** The drag/slide axis. */
     direction: Readonly<Ref<DrawerDirection>>;
+    /** The root presentation mode; the content owns the mode-specific layer contract. */
+    mode: Readonly<Ref<DrawerMode>>;
     /** The live active detent fraction (the `v-model:active-snap-point` writeback). */
     activeSnapPoint: Ref<number | string | null>;
 }

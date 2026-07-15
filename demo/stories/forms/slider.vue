@@ -3,12 +3,6 @@ import StoryPage from "../../chassis/page/StoryPage.vue";
 import { ref } from "vue";
 import { Slider, type SliderVariants } from "@glass/components/slider";
 import { cn } from "@glass/components/_shared/class-names";
-import { IconChip } from "@glass/components/icon-chip";
-import { SlidersHorizontal } from "@lucide/vue";
-// BC.W-SUFFUSE-reconcile — the forms band's ONE coherent --section-color-3 teal
-// identity (the cool stop). PH3-safe (inline borderLeft, not the
-// border-l-[3px] + <IconChip> double-header shape).
-const FORMS_STOP = 3;
 
 const volume = ref<number[]>([42]);
 const balance = ref<number[]>([65]);
@@ -37,26 +31,6 @@ const matrix = ref<Record<MatrixKey, number[]>>(
 
 <template>
     <StoryPage>
-        <header
-            class="flex items-center gap-4 pl-5"
-            :style="{
-                '--section-label-accent': `var(--section-color-${FORMS_STOP})`,
-                borderLeft:
-                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
-            }"
-        >
-            <IconChip :icon="SlidersHorizontal" :section="FORMS_STOP" bloom reveal />
-            <div class="flex flex-col gap-1">
-                <span class="section-label--tinted text-admin-label">
-                    Forms · Slider
-                </span>
-                <p class="text-small text-muted-foreground">
-                    Range selection with keep-dock-open — the section identity is
-                    the ONE color event.
-                </p>
-            </div>
-        </header>
-
         <!-- Standard — the integrated-cylinder glass slider: the fill is one
              continuous glass pill whose rounded leading edge is the grab. With
              label + value readout. -->

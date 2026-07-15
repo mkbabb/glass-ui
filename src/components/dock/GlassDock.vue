@@ -59,7 +59,10 @@ defineOptions({ inheritAttrs: false });
    default-ON (the documented H3 arm-a intent) while `:auto-luminance="false"` still opts
    out — the ONE place the boolean default resolves (the other shell defaults stay the
    `?? default` read-site pattern in useDockShellProps). */
-const props = withDefaults(defineProps<DockProps>(), { autoLuminance: true });
+const props = withDefaults(defineProps<DockProps>(), {
+    autoLuminance: true,
+    backdropMode: "live",
+});
 
 /* The resolved shell-prop computeds — shape/orientation/density, the collapse
    surface (`collapseDelay`/`startCollapsed`/`layoutValue`), the intrinsic
@@ -101,7 +104,7 @@ useDockOverflowFit(dockEl);
    painted backdrop (a live aurora bleed) the static bucket is too coarse for. The
    Arm-1 self-engage + the declarative bucket stay the FLOOR — this REFINES. Opt out
    with `:auto-luminance="false"`. */
-if (props.autoLuminance !== false) {
+if (props.backdropMode === "live" && props.autoLuminance !== false) {
     // BG.W-GLASS-SIGNAL-TRUTH (ST3) — hand the field canvas as a REACTIVE GETTER, not
     // a by-value snapshot. `props.backgroundCanvas` is the DockStage aurora canvas,
     // which resolves POST-MOUNT (the scoped-slot `canvasRef` is null during this
@@ -330,6 +333,7 @@ defineExpose({
               : 'dock-inline',
         ]"
         :data-size="size"
+        :data-backdrop-mode="props.backdropMode"
         :data-held="isHeld || undefined"
         :data-search="search || undefined"
         :data-container-name="containerName || undefined"

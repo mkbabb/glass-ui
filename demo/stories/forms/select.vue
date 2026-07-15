@@ -12,10 +12,6 @@ import {
     SelectValue,
 } from "@glass/components/select";
 import { Label } from "@glass/components/label";
-import { IconChip } from "@glass/components/icon-chip";
-import { ListFilter } from "@lucide/vue";
-// The forms band's ONE coherent --section-color-3 teal identity (the cool stop).
-const FORMS_STOP = 3;
 
 // A SelectItem node — `value` is the item value, `text` the label, `extra` any
 // per-item prop (a viz-dot style, a `disabled`).
@@ -151,25 +147,5 @@ const body: StoryBody = {
 </script>
 
 <template>
-    <StoryPage :body="body">
-        <header
-            class="flex items-center gap-4 pl-5"
-            :style="{
-                '--section-label-accent': `var(--section-color-${FORMS_STOP})`,
-                borderLeft:
-                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
-            }"
-        >
-            <IconChip :icon="ListFilter" :section="FORMS_STOP" bloom reveal />
-            <div class="flex flex-col gap-1">
-                <span class="section-label--tinted text-admin-label">
-                    Forms · Select
-                </span>
-                <p class="text-small text-muted-foreground">
-                    Single-choice dropdown pickers — the section identity is the
-                    ONE color event; the controls stay ink.
-                </p>
-            </div>
-        </header>
-    </StoryPage>
+    <StoryPage :body="body" />
 </template>

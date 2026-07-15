@@ -3,15 +3,10 @@ import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { computed, defineAsyncComponent, ref } from "vue";
 import FamilyTabs, { type FamilyMember } from "../../chassis/family/FamilyTabs.vue";
-import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, ToggleRight } from "@lucide/vue";
+import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight } from "@lucide/vue";
 import { Toggle } from "@glass/components/toggle";
 import { ToggleGroup, ToggleGroupItem } from "@glass/components/toggle-group";
 import { Chip } from "@glass/components/chip";
-import { IconChip } from "@glass/components/icon-chip";
-// BC.W-SUFFUSE-reconcile — the forms band's ONE coherent --section-color-3 teal
-// identity (the cool stop). PH3-safe (inline borderLeft, not the
-// border-l-[3px] + <IconChip> double-header shape).
-const FORMS_STOP = 3;
 
 // BG.W-DEMO-IA-REDESIGN — the Forms TOGGLES family. The chip toggles (toggle-chip,
 // selectable-chip) collapse onto this ONE toggles page as members (bare,
@@ -47,26 +42,6 @@ const cell = ref<string>("warm");
 
 <template>
     <StoryPage>
-        <header
-            class="flex items-center gap-4 pl-5"
-            :style="{
-                '--section-label-accent': `var(--section-color-${FORMS_STOP})`,
-                borderLeft:
-                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
-            }"
-        >
-            <IconChip :icon="ToggleRight" :section="FORMS_STOP" bloom reveal />
-            <div class="flex flex-col gap-1">
-                <span class="section-label--tinted text-admin-label">
-                    Forms · Toggle
-                </span>
-                <p class="text-small text-muted-foreground">
-                    On/off and grouped toggles — the section identity is the ONE
-                    color event.
-                </p>
-            </div>
-        </header>
-
         <!-- Single toggle. -->
         <section class="flex flex-col gap-3">
             <p class="section-label">single toggle</p>

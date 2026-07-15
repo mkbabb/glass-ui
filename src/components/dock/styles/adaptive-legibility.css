@@ -109,6 +109,24 @@
             }
         }
     }
+
+    /* The public frozen-backdrop arm. A static dock is the per-instance opaque
+       endpoint of the existing glass material: no live luminance signal reaches
+       the plate and no backdrop-filter surface is allocated. This rule follows
+       morph.css so the solid plate wins over both axis-specific chrome interps. */
+    .glass-dock[data-backdrop-mode="static"] {
+        --glass-level: 0;
+        --glass-tint-strength: 0%;
+        --glass-backdrop-luma: 0;
+        --glass-ambient-hue: transparent;
+        --glass-ambient-strength: 0%;
+    }
+
+    .glass-dock[data-backdrop-mode="static"] .dock-plate {
+        background: color-mix(in srgb, var(--card), transparent 0%);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
 }
 
 /* BB.W-LIQUID-REVEAL — the dock-expand bloom beat's blur-settle is OFF under

@@ -23,6 +23,7 @@ import { computed, type ComputedRef } from "vue";
 // comfortable→md, spacious→lg, audacious→xl; `xl` is legal here (the dock is the
 // sole HEAD Size-`xl` consumer, axes.ts §sub-range-law).
 export type DockSize = "sm" | "md" | "lg" | "xl";
+export type DockBackdropMode = "live" | "static";
 
 /**
  * The ONE GlassDock prop shape (AZ.W-DOCK-TAXONOMY — the discriminated union is
@@ -32,6 +33,12 @@ export type DockSize = "sm" | "md" | "lg" | "xl";
 export interface DockProps {
     fitContent?: boolean;
     position?: "fixed" | "inline" | "sticky";
+    /**
+     * Backdrop material mode. `"live"` (default) samples and filters the painted
+     * backdrop; `"static"` uses a solid plate with no luminance observer or
+     * backdrop-filter work.
+     */
+    backdropMode?: DockBackdropMode;
     /**
      * Never collapse — render permanently expanded; the single opt-OUT of the
      * collapse↔expand machinery. Default `false` (every dock is collapsible).

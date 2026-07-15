@@ -2,17 +2,12 @@
 // Chip — pill vs cell shapes over a reka-ui Toggle root (the folded <Chip>, BI.W-CHIP-FOLD).
 // Deliberately unopinionated about exclusive vs multi selection; consumers
 // wire `model-value` / `@update:model-value` (or `v-model`) directly.
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { Chip } from "@glass/components/chip";
-import { IconChip } from "@glass/components/icon-chip";
-import { Triangle, Square, Circle, Hexagon, CircleDot } from "@lucide/vue";
-// BC.W-SUFFUSE-reconcile — the forms band's ONE coherent --section-color-3 teal
-// identity (the cool stop). PH3-safe (inline borderLeft, not the
-// border-l-[3px] + <IconChip> double-header shape).
-const FORMS_STOP = 3;
+import { Triangle, Square, Circle, Hexagon } from "@lucide/vue";
 
 const tags = ref<Record<string, boolean>>({
     bone: true,
@@ -36,26 +31,6 @@ const cells = [
 
 <template>
     <StoryPage>
-        <header
-            class="flex items-center gap-4 pl-5"
-            :style="{
-                '--section-label-accent': `var(--section-color-${FORMS_STOP})`,
-                borderLeft:
-                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
-            }"
-        >
-            <IconChip :icon="CircleDot" :section="FORMS_STOP" bloom reveal />
-            <div class="flex flex-col gap-1">
-                <span class="section-label--tinted text-admin-label">
-                    Forms · Toggle chip
-                </span>
-                <p class="text-small text-muted-foreground">
-                    Segmented chip and cell toggles — the section identity is the
-                    ONE color event.
-                </p>
-            </div>
-        </header>
-
         <StorySection
             label="shape=pill — multi-select"
             blurb="Inline horizontal selectors. Each chip carries `aria-pressed` from the reka-ui Toggle root; consumers manage their own selection model."

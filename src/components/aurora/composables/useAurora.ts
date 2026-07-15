@@ -133,8 +133,8 @@ function scheduleAfterFirstPaint(task: () => void): () => void {
  * of three paths:
  *   1. pass an `onInitError(err)` handler in `runtimeOptions` (the explicit
  *      opt-in — receives the error directly), OR
- *   2. install a Vue global `app.config.errorHandler` (the re-surfaced
- *      microtask rejection reaches it), OR
+ *   2. when using `Aurora.vue`, install a Vue global `app.config.errorHandler`
+ *      (the component adapts it into `onInitError`), OR
  *   3. knowingly accept the unhandled rejection (the dev console still gets it).
  * Armed deferred with NO `onInitError`, `useAurora` dev-warns ONCE so the
  * silent-by-omission case is visible. WebGL2-unavailable still throws HARD.
@@ -181,8 +181,8 @@ export function useAurora(
      * Surface an init failure per O invariant 24. On the deferred path the
      * failure happens on an idle tick, outside any mount-time error boundary —
      * so when no `onInitError` is supplied we re-throw on the microtask queue
-     * (`Promise.reject`), which still reaches the dev console and
-     * `app.config.errorHandler` (Vue installs a global rejection handler).
+     * (`Promise.reject`), which reaches the dev console. `Aurora.vue` supplies
+     * its app-level Vue error handler through `onInitError` when one exists.
      * This preserves invariant 24's "fails explicitly by default" semantics
      * across the synchronous → deferred move.
      */
@@ -271,7 +271,7 @@ export function useAurora(
         } catch (err) {
             // fail-explicit: surface the synchronous (eager-path) init failure
             // through surfaceInitError — onInitError if provided, else re-raised
-            // on the microtask queue (reaches the dev console / errorHandler).
+            // on the microtask queue (reaches the dev console).
             surfaceInitError(err);
             return;
         }
@@ -297,8 +297,8 @@ export function useAurora(
             console.warn(
                 "[glass-ui] useAurora: deferred init armed with no onInitError handler. " +
                     "A WebGL/shader failure will re-surface as an unhandled rejection. " +
-                    "Pass runtimeOptions.onInitError, install app.config.errorHandler, " +
-                    "or knowingly accept the rejection.",
+                    "Pass runtimeOptions.onInitError or knowingly accept the rejection; " +
+                    "Aurora.vue adapts app.config.errorHandler into this seam.",
             );
         }
 

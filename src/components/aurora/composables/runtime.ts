@@ -85,9 +85,9 @@ export interface AuroraRuntimeOptions {
      * the signal reaches the consumer's error boundary / dev console. On the
      * DEFERRED path the failure happens on an idle tick — outside any mount-time
      * boundary — so the runtime routes it here, and `useAurora` re-surfaces it on
-     * the microtask queue (so it still reaches the dev console /
-     * `app.config.errorHandler`) when no handler is supplied. Provide this
-     * callback to opt into silent handling on either path.
+     * the microtask queue (so it still reaches the dev console) when no handler
+     * is supplied. `Aurora.vue` adapts its Vue `app.config.errorHandler` into
+     * this callback; direct composable consumers provide their own handler.
      *
      * NOTE: this is the `useAurora` Vue-wrapper contract surface. The imperative
      * `createAurora(...)` runtime throws on eager init failure and — for

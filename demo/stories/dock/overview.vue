@@ -175,6 +175,28 @@ function togglePlay() {
             </div>
         </StorySection>
 
+        <StorySection heading="Static backdrop" gap="md">
+            <p class="text-sm text-muted-foreground">
+                <code class="rounded bg-muted px-1">backdrop-mode="static"</code>
+                keeps the dock controls and morph behavior while replacing the live
+                sampled lens with a solid, filter-free plate.
+            </p>
+            <div
+                class="dock-stage-tile flex justify-center rounded-[var(--radius-card)] border border-border/30 p-8"
+            >
+                <GlassDock
+                    backdrop-mode="static"
+                    always-expanded
+                    data-testid="dock-static-backdrop"
+                >
+                    <DockControl aria-label="Home"><Home /></DockControl>
+                    <DockControl aria-label="Search"><Search /></DockControl>
+                    <DockSeparator />
+                    <DockControl aria-label="Settings"><Settings /></DockControl>
+                </GlassDock>
+            </div>
+        </StorySection>
+
         <StorySection
             heading="Select and dropdown triggers"
             data-testid="dock-trigger-story"

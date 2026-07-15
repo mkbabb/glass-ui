@@ -235,10 +235,11 @@ const ctaPresses = ref(0);
                 <div
                     v-if="liveOpen"
                     class="fixed inset-x-0 bottom-0 flex items-center justify-center border-t border-border bg-card text-caption text-muted-foreground"
-                    :style="{ height: '4.5rem', zIndex: 'var(--z-modal)' }"
+                    :style="{ height: '4.5rem', zIndex: 'var(--z-dock)' }"
                     data-drawer-reserve-band
+                    data-dock-z-witness
                 >
-                    Reserved menubar · 4.5rem
+                    Reserved dock band · 4.5rem
                 </div>
             </StorySection>
 

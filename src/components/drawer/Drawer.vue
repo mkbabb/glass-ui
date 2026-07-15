@@ -182,6 +182,7 @@ provideDrawerSnapContext({
   open: openRef,
   snapPoints: resolvedSnapPoints,
   direction: toRef(props, 'direction'),
+  mode: toRef(props, 'mode'),
   activeSnapPoint: activeSnapModel,
 })
 </script>

@@ -116,6 +116,12 @@
     border-start-end-radius: var(--radius-panel);
 }
 
+/* A live-behind sheet shares the page's interactive layer band and must never cover
+ * persistent dock chrome. Modal drawers retain the overlay-band `--z-modal` above. */
+.glass-drawer[data-mode="live-behind"] {
+    z-index: calc(var(--z-dock) - 1);
+}
+
 /*
  * BA.W-SURFACE-AXIS — the shared {glass·veil·opaque} surface decoration ON TOP of
  * the `.glass-drawer` recipe. `.glass-drawer` is UNLAYERED (this file), so the

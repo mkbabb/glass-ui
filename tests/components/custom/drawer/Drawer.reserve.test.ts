@@ -11,6 +11,39 @@ import {
 const styles = readFileSync("src/components/drawer/styles.css", "utf8");
 
 describe("Drawer bottom reserve", () => {
+    it("keeps live-behind sheets below the dock without changing modal layering", async () => {
+        const liveRule = styles.match(
+            /\.glass-drawer\[data-mode="live-behind"\]\s*\{([^}]+)\}/,
+        )?.[1];
+        expect(liveRule).toContain("z-index: calc(var(--z-dock) - 1)");
+
+        const baseRule = styles.match(/\.glass-drawer\s*\{([^}]+)\}/)?.[1];
+        expect(baseRule).toContain("z-index: var(--z-modal)");
+
+        const Harness = defineComponent({
+            components: { Drawer, DrawerContent, DrawerTitle },
+            template: `
+                <Drawer :open="true" mode="live-behind">
+                    <DrawerContent :show-overlay="false" data-layer-test>
+                        <DrawerTitle>Live sheet</DrawerTitle>
+                    </DrawerContent>
+                </Drawer>
+            `,
+        });
+        const wrapper = mount(Harness, {
+            attachTo: document.body,
+            global: { stubs: { teleport: false } },
+        });
+        await nextTick();
+        await nextTick();
+
+        expect(
+            document.querySelector<HTMLElement>("[data-layer-test]")?.dataset.mode,
+        ).toBe("live-behind");
+
+        wrapper.unmount();
+    });
+
     it("caps detented bottom-sheet geometry through the zero-default public token", () => {
         expect(styles).toMatch(/--drawer-inset-block-end:\s*0px\s*;/);
         const rule = styles.match(

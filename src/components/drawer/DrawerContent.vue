@@ -95,6 +95,7 @@ const hasSnapPoints = computed(
   () => (snapCtx?.snapPoints.value.length ?? 0) > 1,
 )
 const direction = computed(() => snapCtx?.direction.value ?? 'bottom')
+const mode = computed(() => snapCtx?.mode.value ?? 'modal')
 
 // The snap-translate transform — the `--glass-drawer-t` scalar (0 = closed/offscreen,
 // 1 = fully open) maps to the sheet's translate along its drag axis. Token-driven
@@ -125,6 +126,7 @@ const snapStyle = computed<CSSProperties | undefined>(() => {
     <DialogContent
       v-bind="{ ...forwarded, ...$attrs }"
       data-glass-drawer
+      :data-mode="mode"
       :data-glass-drawer-snap-points="hasSnapPoints ? 'true' : undefined"
       :data-glass-drawer-direction="direction"
       :data-surface="props.surface"

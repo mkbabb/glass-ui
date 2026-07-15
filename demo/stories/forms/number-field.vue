@@ -9,12 +9,6 @@ import {
     NumberFieldInput,
 } from "@glass/components/number-field";
 import { Label } from "@glass/components/label";
-import { IconChip } from "@glass/components/icon-chip";
-import { Hash } from "@lucide/vue";
-// BC.W-SUFFUSE-reconcile — the forms band's ONE coherent --section-color-3 teal
-// identity (the cool stop). PH3-safe (inline borderLeft, not the
-// border-l-[3px] + <IconChip> double-header shape).
-const FORMS_STOP = 3;
 
 const quantity = ref<number>(3);
 const tip = ref<number>(0.18);
@@ -24,26 +18,6 @@ const bounded = ref<number>(5);
 
 <template>
     <StoryPage>
-        <header
-            class="flex items-center gap-4 pl-5"
-            :style="{
-                '--section-label-accent': `var(--section-color-${FORMS_STOP})`,
-                borderLeft:
-                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
-            }"
-        >
-            <IconChip :icon="Hash" :section="FORMS_STOP" bloom reveal />
-            <div class="flex flex-col gap-1">
-                <span class="section-label--tinted text-admin-label">
-                    Forms · Number field
-                </span>
-                <p class="text-small text-muted-foreground">
-                    Numeric steppers with min/max — the section identity is the
-                    ONE color event.
-                </p>
-            </div>
-        </header>
-
         <section class="grid grid-cols-1 gap-10 md:grid-cols-2">
             <!-- Plain integer counter. -->
             <div class="flex flex-col gap-3">

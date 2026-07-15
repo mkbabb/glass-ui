@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, getCurrentInstance, ref } from "vue";
 import { useAurora } from "./composables/useAurora";
 import { auroraFallbackGround } from "./composables/auroraFallbackGround";
 import type { AuroraRuntimeOptions } from "./composables/runtime";
@@ -127,17 +127,26 @@ const canvasRef = ref<HTMLCanvasElement | null>(null);
 // Top-level `onInitError` prop wins over `runtimeOptions.onInitError` —
 // the prop is the ergonomic surface, runtimeOptions stays the
 // pass-through for fully-composed AuroraRuntimeOptions objects (e.g.
-// thumbnail-baking consumers).
-const mergedRuntimeOptions = computed<AuroraRuntimeOptions>(() => ({
+// thumbnail-baking consumers). When neither is present, adapt Vue's global
+// handler into the composable's explicit async-error seam; a floating rejected
+// promise does not pass through `app.config.errorHandler` on its own.
+const component = getCurrentInstance();
+const appErrorHandler = component?.appContext.config.errorHandler;
+const onAppInitError = appErrorHandler
+    ? (error: Error) =>
+          appErrorHandler(error, component?.proxy ?? null, "Aurora initialization")
+    : undefined;
+const mergedRuntimeOptions: AuroraRuntimeOptions = {
     ...(props.runtimeOptions ?? {}),
-    ...(props.onInitError ? { onInitError: props.onInitError } : {}),
-}));
+    onInitError:
+        props.onInitError ?? props.runtimeOptions?.onInitError ?? onAppInitError,
+};
 // Pass a getter so `watch` tracks prop swaps (preset switch) as well as
 // deep mutations (slider edits). If we passed `props.config` directly the
 // watch would bind to the initial object and miss reference changes.
 // Thread the resolved substrate into the composable so `"css"` short-circuits
 // the WebGL arm schedule entirely (no webgl2 context is ever created).
-const api = useAurora(canvasRef, () => props.config, mergedRuntimeOptions.value, {
+const api = useAurora(canvasRef, () => props.config, mergedRuntimeOptions, {
     renderMode: resolvedRenderMode,
 });
 

@@ -1,4 +1,5 @@
 export { default as GlassDock } from "./GlassDock.vue";
+export type { DockBackdropMode } from "./composables/useDockShellProps";
 export { default as DockLayerGroup } from "./DockLayerGroup.vue";
 export { default as DockLayer } from "./DockLayer.vue";
 // BI.W-DOCK-CROSSFADE — the thin controlled face-swap core (PASS-4B ruling 3). The

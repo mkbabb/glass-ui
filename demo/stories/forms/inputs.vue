@@ -6,10 +6,6 @@ import FamilyTabs, { type FamilyMember } from "../../chassis/family/FamilyTabs.v
 import { Input } from "@glass/components/input";
 import { Label } from "@glass/components/label";
 import { SearchBar } from "@glass/components/search";
-import { IconChip } from "@glass/components/icon-chip";
-import { TextCursorInput } from "@lucide/vue";
-// The forms band's ONE coherent --section-color-3 teal identity (the cool stop).
-const FORMS_STOP = 3;
 
 // The Forms INPUT family. Textarea, select, combobox (single + multiple), and
 // label render as members of this ONE input-family page via the switcher below.
@@ -191,25 +187,5 @@ const body: StoryBody = {
 </script>
 
 <template>
-    <StoryPage :body="body">
-        <header
-            class="flex items-center gap-4 pl-5"
-            :style="{
-                '--section-label-accent': `var(--section-color-${FORMS_STOP})`,
-                borderLeft:
-                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
-            }"
-        >
-            <IconChip :icon="TextCursorInput" :section="FORMS_STOP" bloom reveal />
-            <div class="flex flex-col gap-1">
-                <span class="section-label--tinted text-admin-label">
-                    Forms · Text input
-                </span>
-                <p class="text-small text-muted-foreground">
-                    Text fields, search, and password inputs — the field controls
-                    stay ink; the section identity is the ONE color event.
-                </p>
-            </div>
-        </header>
-    </StoryPage>
+    <StoryPage :body="body" />
 </template>
