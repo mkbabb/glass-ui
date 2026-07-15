@@ -24,7 +24,6 @@ export * from "./motion";
 // the `export * from "./dark"` above.)
 export * from "./motion/core";
 export * from "./glass";
-export * from "./sortable";
 export * from "./sidebar";
 
 // Co-located domain composable (infinite-scroll lives next to its component).

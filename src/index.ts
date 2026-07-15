@@ -184,7 +184,6 @@ export * from "./components/custom/split-chars";
 export * from "./composables/reactive";
 export * from "./composables/dom";
 export * from "./composables/glass";
-export * from "./composables/sortable";
 
 // The View-Transitions motion substrate. Dependency-free (no `vue`, no
 // `@mkbabb/keyframes.js`, no `@vueuse/core`), so it is safe on the

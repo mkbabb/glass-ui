@@ -8,7 +8,7 @@ import {
     LabeledSelect,
     LabeledSlider,
 } from "@glass/components/custom/labeled-field";
-import { SortableList, SortableItem } from "@glass/components/custom/sortable-list";
+import { SortableList, SortableItem } from "@glass/components/sortable-list";
 import { ColorSwatch } from "@glass/components/custom/color-swatch";
 import type {
     AuroraAtoms,
@@ -252,6 +252,8 @@ function derive() {
         <SortableList
             :items="stopsWithIds"
             :get-id="stopRefId"
+            :get-label="(item) => `Palette stop ${item.sid}`"
+            label="Palette stops"
             class="flex flex-col gap-2"
             @reorder="onPaletteReorder"
         >
@@ -259,7 +261,6 @@ function derive() {
                 v-for="(item, i) in stopsWithIds"
                 :key="item.sid"
                 :id="item.sid"
-                as="div"
             >
                 <OklchStopRow
                     :stop="item.stop"

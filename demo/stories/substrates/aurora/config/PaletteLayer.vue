@@ -3,7 +3,7 @@ import { computed, ref, toRef } from "vue";
 import { Minus, Plus, Sparkles } from "@lucide/vue";
 import { Button } from "@glass/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@glass/components/ui/toggle-group";
-import { SortableList, SortableItem } from "@glass/components/custom/sortable-list";
+import { SortableList, SortableItem } from "@glass/components/sortable-list";
 import type { AuroraConfig, AuroraHarmony } from "@glass/components/custom/aurora";
 import { MAX_STOPS, deriveAurora, oklchStopToHex } from "@glass/components/custom/aurora";
 import OklchStopRow from "../OklchStopRow.vue";
@@ -176,6 +176,8 @@ function derive() {
         <SortableList
             :items="stopsWithIds"
             :get-id="stopRefId"
+            :get-label="(item) => `Palette stop ${item.sid}`"
+            label="Palette stops"
             class="flex flex-col gap-2"
             @reorder="onPaletteReorder"
         >
@@ -183,7 +185,6 @@ function derive() {
                 v-for="(item, i) in stopsWithIds"
                 :key="item.sid"
                 :id="item.sid"
-                as="div"
             >
                 <OklchStopRow
                     :stop="item.stop"

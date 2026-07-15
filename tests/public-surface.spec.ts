@@ -92,7 +92,6 @@ const composableRuntimeExports = [
     // AZ.W-PRUNE2 (E4-3) — useGlassRenderer/createGlassFilter/destroyGlassFilter
     // retired off the root barrel (the detection-cascade cluster; its binary
     // consumer GlassPanel retired at the AY prune, no second consumer).
-    "useSortable",
     // O.W6 Lane A — useClipboard composable promotion.
     // P.W5 Lane A.1 — copyToClipboard bare co-export (Path B). Both must
     // remain root-barrel reachable so value.js's 19-site bulk import flip
@@ -360,7 +359,7 @@ const typeSurfaceChecks = [
     ["src/composables/keyboard/useKeyboardShortcuts.ts", "ShortcutOptions"],
     ["src/composables/keyboard/useKeyboardShortcuts.ts", "RegisteredShortcut"],
     ["src/composables/dom/useTouchGate.ts", "TouchGateReturn"],
-    ["src/composables/sortable/useSortable.ts", "UseSortableReturn"],
+    ["src/components/sortable-list/composables/types.ts", "SortableId"],
 ];
 
 const rootStyleChecks = [

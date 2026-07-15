@@ -1,1 +1,1 @@
-export * from "../components/custom/sortable-list";
+export * from "../components/sortable-list";

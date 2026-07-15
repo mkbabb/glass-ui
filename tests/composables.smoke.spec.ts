@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { ref } from "vue";
-import { useSortable } from "@glass/index";
+import { useSortable } from "@glass/components/sortable-list/composables/useSortable";
 // AI.W3 R3 — motion composables moved off the root barrel into the /motion
 // flat subpath (keyframes.js SCC trap closure). Smoke test reaches the new
 // subpath directly via `src/motion` (mirrors the `src/keyboard` shape below).

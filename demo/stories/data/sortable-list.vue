@@ -7,7 +7,7 @@ import {
     SortableList,
     SortableItem,
     SortableHandle,
-} from "@glass/components/custom/sortable-list";
+} from "@glass/components/sortable-list";
 import { Card } from "@glass/components/ui/card";
 import { cn } from "@glass/components/_shared/class-names";
 
@@ -66,6 +66,8 @@ function insertAt<T>(list: T[], index: number, item: T): T[] {
             <SortableList
                 :items="tasks"
                 :get-id="(t) => t.id"
+                :get-label="(t) => t.label"
+                label="Tasks"
                 class="flex flex-col gap-2"
                 @reorder="tasks = $event"
             >
@@ -75,8 +77,6 @@ function insertAt<T>(list: T[], index: number, item: T): T[] {
                     :id="t.id"
                     class="flex items-center gap-3 rounded-md border border-border/70 bg-background px-3 py-2.5"
                 >
-                    <!-- Default span grip: role="button" + tabindex auto-emitted;
-                         bind the reorder context via aria-label. -->
                     <SortableHandle
                         class="text-muted-foreground hover:text-foreground"
                         :aria-label="`Reorder ${t.label}`"
@@ -98,6 +98,8 @@ function insertAt<T>(list: T[], index: number, item: T): T[] {
             <SortableList
                 :items="handleOnlyTasks"
                 :get-id="(t) => t.id"
+                :get-label="(t) => t.label"
+                label="Handle-only tasks"
                 handle-selector="[data-sortable-handle]"
                 class="flex flex-col gap-2"
                 @reorder="handleOnlyTasks = $event"
@@ -106,10 +108,10 @@ function insertAt<T>(list: T[], index: number, item: T): T[] {
                     v-for="t in handleOnlyTasks"
                     :key="t.id"
                     :id="t.id"
+                    :disabled="t.id === 'h3'"
                     class="flex items-center gap-3 rounded-md border border-border/70 bg-background px-3 py-2.5"
                 >
                     <SortableHandle
-                        as="button"
                         type="button"
                         class="rounded-md border border-border bg-card p-1.5 text-muted-foreground transition-colors hover:text-foreground"
                         :aria-label="`Drag ${t.label}`"
@@ -138,8 +140,10 @@ function insertAt<T>(list: T[], index: number, item: T): T[] {
                     </header>
                     <SortableList
                         group="kanban"
+                        label="Todo"
                         :items="todo"
                         :get-id="(c) => c.id"
+                        :get-label="(c) => c.title"
                         class="flex min-h-24 flex-col gap-2"
                         @reorder="todo = $event as Card[]"
                         @insert="(i, item) => (todo = insertAt(todo, i, item as Card))"
@@ -166,8 +170,10 @@ function insertAt<T>(list: T[], index: number, item: T): T[] {
                     </header>
                     <SortableList
                         group="kanban"
+                        label="Doing"
                         :items="doing"
                         :get-id="(c) => c.id"
+                        :get-label="(c) => c.title"
                         class="flex min-h-24 flex-col gap-2"
                         @reorder="doing = $event as Card[]"
                         @insert="(i, item) => (doing = insertAt(doing, i, item as Card))"
@@ -194,8 +200,10 @@ function insertAt<T>(list: T[], index: number, item: T): T[] {
                     </header>
                     <SortableList
                         group="kanban"
+                        label="Done"
                         :items="done"
                         :get-id="(c) => c.id"
+                        :get-label="(c) => c.title"
                         class="flex min-h-24 flex-col gap-2"
                         @reorder="done = $event as Card[]"
                         @insert="(i, item) => (done = insertAt(done, i, item as Card))"
