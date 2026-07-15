@@ -204,7 +204,6 @@ const subpathRuntimeExports = [
     { subpath: "dropdown-menu", surface: DropdownMenuSurface, name: "DropdownMenuContent" },
     { subpath: "dropdown-menu", surface: DropdownMenuSurface, name: "DropdownMenuItem" },
     { subpath: "dropdown-menu", surface: DropdownMenuSurface, name: "DropdownMenuTrigger" },
-    { subpath: "dropdown-menu", surface: DropdownMenuSurface, name: "DropdownMenuPortal" },
     // BI.W-MENU-TRIGGER — ContextMenu folded onto DropdownMenu as `trigger="context"`
     // (clean break, no alias; the /context-menu subpath is retired).
     { subpath: "command", surface: CommandSurface, name: "Command" },
@@ -222,6 +221,8 @@ const retiredSubpathRuntimeMembers = [
     { subpath: "forms", surface: Forms, name: "ComboboxViewport" },
     { subpath: "data-table", surface: DataTableSurface, name: "DataTablePagination" },
     { subpath: "drawer", surface: DrawerSurface, name: "DrawerOverlay" },
+    { subpath: "drawer", surface: DrawerSurface, name: "DrawerPortal" },
+    { subpath: "dropdown-menu", surface: DropdownMenuSurface, name: "DropdownMenuPortal" },
     { subpath: "progress", surface: ProgressSurface, name: "ProgressDefault" },
     { subpath: "progress", surface: ProgressSurface, name: "ProgressGradient" },
     { subpath: "progress", surface: ProgressSurface, name: "ProgressLiquid" },

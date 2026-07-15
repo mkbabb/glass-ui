@@ -1,11 +1,6 @@
-// BB.W-DRAWER-ABROGATE — the Drawer family on the HOUSE reka headless substrate.
-// vaul-vue is ABROGATED: the three primitives that used to re-export straight from
-// the foreign tree are now house wrappers over reka `DialogTrigger`/`DialogClose`/
-// `DialogPortal` (the SAME vueuse-free substrate every other compound wrapper binds).
-// The `as-child`/`as-child` trigger contract is reka-native, so the trigger/close/
-// portal pass-through is byte-identical for the consumer.
+// Trigger and close preserve reka's native as-child contract. Portal ownership stays
+// internal to DrawerContent so each drawer has exactly one teleport boundary.
 export {
-    DialogPortal as DrawerPortal,
     DialogTrigger as DrawerTrigger,
     DialogClose as DrawerClose,
 } from "reka-ui";
