@@ -58,7 +58,7 @@ const mainEl = ref<HTMLElement | null>(null);
 // ── BG.W-DOCK-SCROLL-PROGRESS — the scroll fraction the dock ring wears ──────
 // The standalone `.demo-scroll-progress` bar is RETIRED (clean break); the page
 // scroll position is now a BORDER ITEM on the leftside dock (SidebarDock mounts
-// `<BorderProgress>` reading this fraction). ONE writer: a rAF-coalesced passive
+// `<ScrollProgressRim>` reading this fraction). ONE writer: a rAF-coalesced passive
 // scroll listener on the route scroller + a route-settle recompute (the scroller
 // persists across the keyed route swap, so the listener attaches once).
 const shellScrollProgress = ref(0);
@@ -262,7 +262,7 @@ onMounted(() => {
                 <!-- BG.W-DOCK-SCROLL-PROGRESS — the standalone scroll-progress bar is
                      RETIRED (clean break, no alias): the page-scroll position is now a
                      BORDER ITEM on the leftside dock (SidebarDock wears the
-                     `<BorderProgress>` ring off the provided shell scroll fraction).
+                     `<ScrollProgressRim>` off the provided shell scroll fraction).
                      The `.scroll-progress` LIBRARY recipe stays (its consumer is the
                      /motion/scroll story, native register). -->
                 <!-- BG.W-ROUTE-TRANSITION (M1) — the route swap is a BARE KEYED ATOMIC

@@ -26,6 +26,7 @@ import * as PulseSurface from "@glass/subpaths/pulse";
 import * as Search from "@glass/subpaths/search";
 import * as SelectSurface from "@glass/subpaths/select";
 import * as Sidebar from "@glass/sidebar";
+import * as ScrollProgressRimSurface from "@glass/components/custom/scroll-progress-rim";
 import * as SortableListSurface from "@glass/subpaths/sortable-list";
 import * as StackedIconsSurface from "@glass/subpaths/stacked-icons";
 import * as StatusDotSurface from "@glass/subpaths/status-dot";
@@ -147,8 +148,9 @@ const subpathRuntimeExports = [
     // BI.W-CHIP-FOLD — ToggleChip + SelectableChip FOLDED onto the ONE <Chip>
     // (shape × tone; clean break, no alias). Chip ships subpath-ONLY (/chip, OFF the
     // value.js-free root barrel — the value.js-bearing ink solve rides the dynamic
-    // accent-tone-solve leaf; the /border-progress carve-off precedent).
+    // accent-tone-solve leaf; the dynamic color-leaf precedent).
     { subpath: "chip", surface: ChipSurface, name: "Chip" },
+    { subpath: "scroll-progress-rim", surface: ScrollProgressRimSurface, name: "ScrollProgressRim" },
     { subpath: "sortable-list", surface: SortableListSurface, name: "SortableList" },
     { subpath: "timeline", surface: TimelineSurface, name: "GlassTimeline" },
     { subpath: "labeled-field", surface: LabeledFieldSurface, name: "LabeledInput" },

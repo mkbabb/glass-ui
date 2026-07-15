@@ -75,9 +75,6 @@ export const CUSTOM_CLASS = {
     // dot-flow-field / concentric / dot-matrix DELETED at BI.W-VIZ-DELETIONS (the user-ordered
     // clean-break prune — the 30+-attempt viz family retired, breaking → the 5.0.0 MAJOR cut).
     "animated-digit": "PUBLISH", aurora: "PUBLISH",
-    // BI.W-BORDER-PROGRESS-RETIRE: the subpath UNPUBLISHES (0 external consumers; breaking →
-    // 5.0.0); the component is banked-dormant on disk (the SCROLL-PROGRESS-RIM successor coupling).
-    "border-progress": "INTERNAL",
     "color-swatch": "PUBLISH", "completion-seal": "PUBLISH",
     // BI.W-CHIP-FOLD: toggle-chip + selectable-chip → the one <Chip> (pressed | selected).
     chip: "PUBLISH",
@@ -93,7 +90,7 @@ export const CUSTOM_CLASS = {
     "icon-tooltip": "PUBLISH", "instrument-chassis": "PUBLISH", "labeled-field": "PUBLISH",
     "metric-badge": "PUBLISH", "metric-cell": "PUBLISH", "metric-stack": "PUBLISH",
     "pager-dots": "PUBLISH", "paper-backdrop": "PUBLISH", "liquid-grid": "PUBLISH",
-    pulse: "PUBLISH", search: "PUBLISH",
+    pulse: "PUBLISH", search: "PUBLISH", "scroll-progress-rim": "PUBLISH",
     // BI.W-SPEEDTEST-ONLY-PAIR: scrolling-text RETIRED (speedtest-only; the ask-row offers the mechanism).
     "sortable-list": "PUBLISH", "spa-view": "PUBLISH",
     "stacked-icons": "PUBLISH", "status-dot": "PUBLISH", tabs: "PUBLISH",
@@ -151,7 +148,7 @@ export const CURATED = {
     // to the REAL config barrel so `namedExports` + fidelity read the concrete surface
     // (the `canvas`/`fourier-math` name≠leaf pattern). A config-only consumer imports
     // the `BlobConfig` shape + hero preset WITHOUT Blob.vue's value.js `/color` eager
-    // weight (~−33 KiB), the `/border-progress` bp-lazy critical-path discipline.
+    // weight (~−33 KiB), the established dynamic color-leaf discipline.
     "blob-config": "src/components/custom/blob/config.ts",
 };
 

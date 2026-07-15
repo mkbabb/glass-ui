@@ -24,8 +24,10 @@ import {
     GlassDock,
     type DockSectionDescriptor,
 } from "@glass/components/custom/dock";
-import { BorderProgress } from "@glass/components/custom/border-progress";
-import type { BorderProgressCoverage } from "@glass/components/custom/border-progress";
+import {
+    ScrollProgressRim,
+    type ScrollProgressRimCoverage,
+} from "@glass/components/custom/scroll-progress-rim";
 import {
     Tooltip,
     TooltipContent,
@@ -138,10 +140,10 @@ function openConfigurator(): void {
 
 // ── BG.W-DOCK-SCROLL-PROGRESS — the scroll progress IS the dock's border ─────
 // The standalone route-scroller bar is retired; the page-scroll position wears the
-// dock's own EDGE via `<BorderProgress>` (the masked, radius-following,
+// dock's own EDGE via `<ScrollProgressRim>` (the masked, radius-following,
 // @property-animated progress-as-border) mounted as an inset-0 overlay hugging the
-// dock plate. Decorative-informational: `aria-hidden` (the scroll position stays
-// reachable via the scroller itself). Coverage is STATE-DRIVEN, one register per
+// dock plate. The rim exposes the page position as a named progressbar. Coverage is
+// STATE-DRIVEN, one register per
 // dock form:
 //   · vertical rail (the static left column) → `inline-end-edge` — the
 //     content-facing edge fills top→bottom with the scroll (the scrollbar
@@ -159,7 +161,7 @@ function openConfigurator(): void {
 // 13-stop ramp so the rim reads as "a spectrum of our colors". Presets-in-consumers — the demo
 // (this shell) passes the spectrum config; the tokens resolve in the cascade + flip modes for
 // free. Thickness (the thin RIM rung ~4px, dock-nav.css) + pill radius ride the
-// `--border-progress-*` cascade tokens — the band inherits the dock PLATE's stadium
+// `--scroll-progress-rim-*` cascade tokens — the band inherits the dock PLATE's stadium
 // (BI.W-DOCK-SPINE: the plate is `border-radius: inherit` from the pill `.glass-dock`) with
 // zero measurement.
 const SCROLL_RING_STOPS: readonly string[] = [
@@ -172,7 +174,7 @@ const SCROLL_RING_STOPS: readonly string[] = [
 ];
 const scrollProgress = useShellScrollProgress();
 const dockRef = useTemplateRef<InstanceType<typeof GlassDock>>("dockRef");
-const ringCoverage = computed<BorderProgressCoverage>(() => {
+const ringCoverage = computed<ScrollProgressRimCoverage>(() => {
     const dock = dockRef.value;
     // BI.W-DOCK-RETIRES — the shell dock is a static vertical rail (no V↔H morph): a
     // collapsed pill wears the full ring; the expanded rail fills its inline-end edge.
@@ -190,7 +192,7 @@ const ringCoverage = computed<BorderProgressCoverage>(() => {
          affordance is the BottomDock's job, not the category rail's. The persistent ℱ
          brand wordmark is GONE (BG.W-DOCK-PERSISTENT-CUT); Foundations is a normal chip. -->
     <!-- BG.W-DOCK-SCROLL-PROGRESS — the progress-host wrapper shrink-wraps the dock
-         so the `<BorderProgress>` ring (an inset-0 sibling overlay) hugs the static
+         so the `<ScrollProgressRim>` (an inset-0 sibling overlay) hugs the static
          vertical dock plate's own box (BI.W-DOCK-RETIRES retired the V↔H morph). -->
     <div class="demo-dock-progress-host min-h-0">
     <GlassDock
@@ -321,15 +323,15 @@ const ringCoverage = computed<BorderProgressCoverage>(() => {
 
     <!-- The page-scroll progress as the dock's own BORDER (BG.W-DOCK-SCROLL-PROGRESS).
          An inset-0 overlay hugging the dock plate; masked to the border band only, so
-         the dock's glass + controls read through untouched. Decorative (aria-hidden);
-         PRM-safe by construction (the fill is scroll-COUPLED position feedback — a
+         the dock's glass + controls read through untouched. PRM-safe by construction
+         (the fill is scroll-COUPLED position feedback — a
          static fill at the current value, no autonomous sweep animation). -->
-    <BorderProgress
+    <ScrollProgressRim
         class="demo-dock-scroll-ring"
         :value="scrollProgress"
         :coverage="ringCoverage"
         :stops="SCROLL_RING_STOPS"
-        aria-hidden="true"
+        aria-label="Page scroll progress"
     />
     </div>
 </template>

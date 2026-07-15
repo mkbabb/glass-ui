@@ -359,36 +359,23 @@ fork. Recorded in `docs/consumer-evidence/use-virtual-section-window.md` +
 
 #### The `/border-progress` subpath retirement
 
-**BI.W-BORDER-PROGRESS-RETIRE — the `/border-progress` PUBLISHED SUBPATH RETIRED, the component
-BANKED dormant (the consumer-truth adjudication; ruling 4). Clean break, no alias ("No legacy
-code").** The masked-conic border-ring was published as a net-new subpath at 4.1.0 on a
-speedtest-adopt justification that never landed: speedtest hand-rolls its own progress bar, so at
-the 5.0.0 cut the fresh registry+sibling probe (`npm view @mkbabb/glass-ui` + the constellation
-census) reads **0 binary consumers** of `/border-progress` — its own demo is the sole render. The
-"born ≥2 by construction" claim was FALSE. Under the ≥2-binary-consumer + mechanism-distinctness
-law the PUBLISHED subpath does not earn its keep, so it retires — but as a **retire-until-adoption /
-banked-with-named-re-trigger** posture, NOT a delete (the re-entry is a consume of the EXISTING
-mechanism, not a re-mint):
+**BI.W-BORDER-PROGRESS-RETIRE — `/border-progress` and the broad `BorderProgress` component are
+deleted. Clean break, no alias.** The old surface mixed a content wrapper, three coverage modes,
+milestone events, spectrum expansion, and progress paint despite having no external binary
+consumer. Its one earned mechanism—the radius-following masked band—now belongs to the smaller
+public `ScrollProgressRim` successor.
 
 | surface | disposition |
 |---|---|
 | `@mkbabb/glass-ui/border-progress` subpath export + `typesVersions` | RETIRED — 0 binary consumers |
-| `src/subpaths/border-progress.ts` mirror | DELETED |
-| `/api` re-export of `BorderProgressCoverage` / `BorderProgressMilestone` / `BorderProgressMilestoneEvent` / `BorderProgressProps` | REMOVED — the 4 types have no owning subpath (see the `/api` fold note above) |
-| `src/components/custom/border-progress/` component + its demo (feedback/progress, SidebarDock rim) | KEEP — banked dormant, demo-only, imported relatively via `@glass/…` off the public surface (carries the W-BP-BOTTOM-LINEAR paint) |
+| `BorderProgress`, milestone APIs, content-wrapper behavior, and old CSS properties | DELETED |
+| `@mkbabb/glass-ui/scroll-progress-rim` | ADDED — exports `ScrollProgressRim` |
 
-**MIGRATE: none — the fresh probe read ZERO binary consumers (speedtest hand-rolls its bar). A
-no-op-for-consumers record (per invariant-11), not a silent prune.** Re-entry trigger: the speedtest
-`<BorderProgress>` adopt ASK (AW.W7 — delete its hand-rolled bar, import the mechanism) RE-PUBLISHES
-`/border-progress` in that cut (the named cross-repo re-trigger; rostered in the crossrepo-asks
-book). **Successor for the dock scroll-progress affordance:** BI.W-SCROLL-PROGRESS-RIM's masked-band
-rim — the atlas dock-progress consume (ask #23) targets that successor's `[0,1]` per-item contract,
-never the retiring component. The value.js `mixColors` U-F30 coupling is NOT orphaned: the
-spectrum-walk it reads moves WITH SCROLL-PROGRESS-RIM to the shared `/color` leaf, and
-border-progress stays a consumer of the moved leaf (still 0 binary consumers of its OWN package, so
-this retire stands). Recorded in `docs/consumer-evidence/border-progress.md` +
-`proof:consumer-evidence-true` (the BP1–BP3 arm). completion-seal is the milder WATCHLIST case (1
-honest own-demo consumer, evidence doc present) — it KEEPS published.
+`ScrollProgressRim` accepts aggregate `value` / `max`, optional per-item `segments` whose values
+are clamped to `[0,1]`, an edge `coverage`, and optional rainbow `stops`. It paints one 4px masked
+band that follows the host radius and exposes native progressbar semantics. SidebarDock and the
+feedback progress demo consume this successor directly. `completion-seal` remains published and
+unchanged.
 
 #### The `/scrolling-text` subpath retire-relocation
 
@@ -2890,4 +2877,3 @@ motion-named SIGNATURE DATA.
 | `useMorphField()` (the weld function + `MorphTier`/`MorphSilhouette`/`MorphFieldRect`/`BodySpec`/`MorphFieldOptions`/`MorphFieldHandle`) | root barrel · `/motion-core` | GUTTED — the weld body had ZERO callers. Its live surface — `MORPH_SIGNATURES` + `MorphSignature`/`MorphSignatureName`/`MorphVector` — MOVES to `composables/motion/morphSignatures.ts` and STAYS on the barrel (byte-identical DATA). |
 
 **Consumer re-pin (`MORPH_SIGNATURES`):** none — the import path is unchanged (the root barrel + `/motion-core` still re-export `MORPH_SIGNATURES` and the three signature types). Only the `useMorphField` function symbol + its function-domain types leave the surface. Machine-locked by `proof:motion` (the DEFINITION-ABSENCE + the gut + the name-collision fence against `proof:liquid-morph`, the DISTINCT BC dock-morph gate).
-

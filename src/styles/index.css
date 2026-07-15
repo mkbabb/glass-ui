@@ -226,11 +226,8 @@
    (duotone/bloom/reveal). A component partial; the token arms (--section-color-N
    / --muted) auto-flip under .dark so the chip is mode-robust by construction. */
 @import "./icon-chip.css";
-/* BB.W-BORDER-PROGRESS — progress IS the element's border: the masked-conic ring
-   consumption (the @property reg lives in tokens/property-regs.css §18). A
-   component partial; the conic + the radius-following mask-composite + the coverage
-   masks + the PRM milestone-pulse bracket. */
-@import "./border-progress.css";
+/* The thin, radius-following masked scroll-progress band. */
+@import "./scroll-progress-rim.css";
 
 /* BC.W-AX-COMPLETION-SEAL — the hero-scale earned-GOLD completion seal: a one-shot
    gold-draw mark (a `stroke-dashoffset` wipe on the 4 `@property` motion tokens

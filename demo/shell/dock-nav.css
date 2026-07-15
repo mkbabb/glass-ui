@@ -147,7 +147,7 @@
 /* ── BG.W-DOCK-SCROLL-PROGRESS — the route scroller (the bar RETIRED onto the dock) ──
    The standalone `.demo-scroll-progress` sticky bar is RETIRED (clean break, no
    alias): the page-scroll position is now a BORDER ITEM on the leftside dock (the
-   `.demo-dock-scroll-ring` `<BorderProgress>` overlay below). The `.scroll-progress`
+   `.demo-dock-scroll-ring` `<ScrollProgressRim>` overlay below). The `.scroll-progress`
    LIBRARY recipe (src/styles/scroll-driven.css) stays — its consumer is the
    /motion/scroll story (the native register). */
 .demo-main-scroller {
@@ -179,10 +179,10 @@
     scroll-padding-inline-start: var(--dock-content-safe-inset, 2.5rem);
 }
 /* ── BG.W-DOCK-SCROLL-PROGRESS — the dock's scroll-progress BORDER ring ───────
-   The `<BorderProgress>` overlay SidebarDock mounts as an inset-0 sibling of its
+   The `<ScrollProgressRim>` overlay SidebarDock mounts as an inset-0 sibling of its
    `<GlassDock>` inside the shrink-wrapping `.demo-dock-progress-host`. The ring is
    masked to the border band only (the dock's glass + controls read through); the
-   pill radius + the 10-14px envelope thickness ride the `--border-progress-*`
+   pill radius + thin-band thickness ride the `--scroll-progress-rim-*`
    cascade tokens (the props-defer-to-cascade seam — the ring follows the dock's
    stadium with zero measurement). */
 .demo-dock-progress-host {
@@ -200,12 +200,12 @@
        greenfield `.dock-plate` is `border-radius: inherit` from the pill `.glass-dock`,
        so the sibling-overlay ring hugs the SAME stadium. Follow the pill: the static
        vertical rail is `shape-pill`, and a collapsed pill is the same register. */
-    --border-progress-radius: var(--radius-pill, 9999px);
+    --scroll-progress-rim-radius: var(--radius-pill, 9999px);
     /* BI.W-SCROLL-PROGRESS-RIM (UF-D1: "thinner") — the THIN RIM rung (~4px), a RIM
        indicator STRICTLY below the 10-14px card-envelope floor (a card chrome), not the
        prior chunky 11px band ss-02 read as a gray slab. Tuned against the ~67px vertical
        pill so the rainbow band reads as the dock's own thin edge. */
-    --border-progress-width: 4px;
+    --scroll-progress-rim-width: 4px;
     /* BI.W-DOCK-RETIRES — the `[data-dock-morphing]` ring dissolve (continuity across
        the V↔H morph) is DEFINITION-ABSENT (the shell dock no longer morphs orientation). */
     transition: opacity 180ms var(--ease-out, ease-out);

@@ -14,9 +14,9 @@
 //       (hard-cut), not a per-element cascade.
 //   (b) the dock scroll-progress ring tracks the route scroller
 //       (BG.W-DOCK-SCROLL-PROGRESS — the standalone `.demo-scroll-progress` bar is
-//       RETIRED onto the dock's own BORDER): the SidebarDock `<BorderProgress>`
-//       overlay wears the `inline-end-edge` coverage, is aria-hidden decorative,
-//       and its registered `--border-progress-fill` sweeps to ~100% as the <main>
+//       RETIRED onto the dock's own BORDER): the SidebarDock `<ScrollProgressRim>`
+//       overlay wears the `inline-end-edge` coverage, is a named progressbar,
+//       and its registered `--scroll-progress-rim-fill` sweeps to ~100% as the <main>
 //       scroller reaches the bottom; the retired bar is DEFINITION-ABSENT.
 //   (c) the count-up tweens then snaps under PRM — on the /data/metric-cell route
 //       the audacious figure's textContent tweens UP toward its target on
@@ -104,7 +104,8 @@ test("(a) a route change fires exactly ONE page-enter transition", async ({
 test("(b) the dock scroll-progress ring tracks the route scroller; the standalone bar is gone", async ({
     page,
 }) => {
-    await page.goto("/data/metric-cell", { waitUntil: "networkidle" });
+    await page.setViewportSize({ width: 1280, height: 500 });
+    await page.goto("/feedback/progress", { waitUntil: "networkidle" });
     await page.waitForTimeout(300);
 
     const reg = await page.evaluate(() => {
@@ -114,25 +115,28 @@ test("(b) the dock scroll-progress ring tracks the route scroller; the standalon
         const cs = getComputedStyle(ring);
         return {
             coverage: ring.getAttribute("data-coverage"),
-            fill: parseFloat(cs.getPropertyValue("--border-progress-fill")) || 0,
+            fill: parseFloat(cs.getPropertyValue("--scroll-progress-rim-fill")) || 0,
             // the retired standalone bar must be DEFINITION-ABSENT in the DOM
             barSurvives: !!document.querySelector(".demo-scroll-progress"),
-            hidden: ring.getAttribute("aria-hidden"),
+            role: ring.getAttribute("role"),
+            label: ring.getAttribute("aria-label"),
         };
     });
     expect(reg).not.toBeNull();
     // The standalone route-scroller bar is RETIRED (clean break, no alias).
     expect(reg!.barSurvives).toBe(false);
     // The vertical rail wears the inline-end-edge coverage (the scrollbar
-    // metaphor as the dock's own border) and is decorative (aria-hidden).
+    // metaphor as the dock's own border) and exposes its progress semantics.
     expect(reg!.coverage).toBe("inline-end-edge");
-    expect(reg!.hidden).toBe("true");
+    expect(reg!.role).toBe("progressbar");
+    expect(reg!.label).toBe("Page scroll progress");
 
     // Scroll the route scroller to the bottom → the registered fill sweeps to ~100%.
     const before = reg!.fill;
     const scrolled = await page.evaluate(() => {
         const main = document.querySelector<HTMLElement>(".demo-main-scroller");
         if (!main) return 0;
+        main.style.scrollBehavior = "auto";
         main.scrollTop = main.scrollHeight;
         return main.scrollTop;
     });
@@ -142,7 +146,7 @@ test("(b) the dock scroll-progress ring tracks the route scroller; the standalon
         return ring
             ? parseFloat(
                   getComputedStyle(ring).getPropertyValue(
-                      "--border-progress-fill",
+                      "--scroll-progress-rim-fill",
                   ),
               ) || 0
             : -1;

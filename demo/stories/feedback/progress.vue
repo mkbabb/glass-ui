@@ -7,7 +7,7 @@ import {
     type ProgressSegment,
 } from "@glass/components/ui/progress";
 import { Button } from "@glass/components/ui/button";
-import { BorderProgress } from "@glass/components/custom/border-progress";
+import { ScrollProgressRim } from "@glass/components/custom/scroll-progress-rim";
 import { IconChip } from "@glass/components/custom/icon-chip";
 import { Gauge } from "@lucide/vue";
 // BB.W-SUFFUSE3 — the feedback band's --section-color-8 ruby identity. Progress is
@@ -28,6 +28,7 @@ const phaseActive = ref<string>("download");
 const phaseProgress = ref<number>(58);
 
 const determinate = ref(42);
+const segmentProgress = [1, 0.72, 0.35, 0] as const;
 
 const animated = ref(0);
 let timer: number | undefined;
@@ -191,27 +192,37 @@ onUnmounted(stopAnimated);
             />
         </StorySection>
 
-        <!-- BB.W-BORDER-PROGRESS — progress IS the element's border: the
-             masked-conic @property ring (radius-following, the brand spectrum
-             walked OKLCH/shorter-hue), bound to the same `determinate` model. -->
-        <StorySection label="border ring (progress IS the chrome)">
+        <StorySection label="scroll progress rim">
             <p class="font-mono text-xs text-muted-foreground">
-                The conic ring paints in the card's own border band ({{ determinate }}%) —
-                no floating bar, no relayout; the glass interior still transmits the
-                backdrop. Coverage full-ring; the spectrum walks the brand ramp.
+                A thin rainbow band follows the host radius without changing layout.
             </p>
-            <BorderProgress
-                :value="determinate"
-                coverage="full-ring"
-                class="glass-card rounded-card p-6"
-            >
+            <div class="glass-card relative rounded-card p-6">
+                <ScrollProgressRim
+                    :value="determinate"
+                    :max="100"
+                    aria-label="Example scroll progress"
+                />
                 <div class="flex flex-col gap-1">
                     <span class="text-display-1 tabular-nums">{{ determinate }}%</span>
                     <span class="section-label--tinted text-admin-label">
                         Coverage · full-ring
                     </span>
                 </div>
-            </BorderProgress>
+            </div>
+            <div class="glass-card relative rounded-card p-6">
+                <ScrollProgressRim
+                    :value="2.07"
+                    :max="4"
+                    :segments="segmentProgress"
+                    aria-label="Segment progress"
+                />
+                <div class="flex flex-col gap-1">
+                    <span class="text-display-1 tabular-nums">4 stages</span>
+                    <span class="section-label--tinted text-admin-label">
+                        Per-item · 1.00 / 0.72 / 0.35 / 0.00
+                    </span>
+                </div>
+            </div>
         </StorySection>
     </StoryPage>
 </template>

@@ -22,7 +22,7 @@
 //      (b) the deferred-component-recipe rules in the union sheet (matched by the
 //      deferred-partial selector signatures — `.glass-menu-*`, `.feedback-tone-*`,
 //      `.dock-*`, `.configurator-*`, `.cartoon-*`, `.scroll-build/-cascade/-pin/-chrome`,
-//      `.completion-seal`, `.border-progress`, `.segmented-tab`, `.icon-chip`, `.paper-*`,
+//      `.completion-seal`, `.scroll-progress-rim`, `.segmented-tab`, `.icon-chip`, `.paper-*`,
 //      `.floating-panel`) — KEEPING the critical token cascade + glass ladder + typography
 //      + theme AND the consumer's own Tailwind layout (which a real consumer ships
 //      independently of glass-ui's `/styles` split — never stripped);
@@ -106,7 +106,7 @@ async function disableDeferredCascade(page: Page): Promise<{ sfcSheets: number; 
         // .glass-wash/.glass-quiet/.glass-resting/.glass-btn are critical glass.css rules,
         // NOT matched here) and the consumer Tailwind layout.
         const DEFERRED_SIG =
-            /\.(glass-menu|feedback-tone|dock-|configurator|cartoon|floating-panel|scroll-build|scroll-cascade|scroll-pin|scroll-chrome|completion-seal|border-progress|segmented-tab|icon-chip|paper-texture|paper-grain|paper-underpaint|hover-popover|drawer-|instrument-)/;
+            /\.(glass-menu|feedback-tone|dock-|configurator|cartoon|floating-panel|scroll-build|scroll-cascade|scroll-pin|scroll-chrome|completion-seal|scroll-progress-rim|segmented-tab|icon-chip|paper-texture|paper-grain|paper-underpaint|hover-popover|drawer-|instrument-)/;
         for (const sheet of Array.from(document.styleSheets)) {
             let rules: CSSRuleList;
             try {

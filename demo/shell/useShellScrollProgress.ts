@@ -1,7 +1,7 @@
 // BG.W-DOCK-SCROLL-PROGRESS — the shell scroll-progress seam.
 //
 // The page-scroll progress is no longer a standalone bar: it is a BORDER ITEM on
-// the leftside shell dock (the `<BorderProgress>` ring SidebarDock wears). The
+// the leftside shell dock (the `<ScrollProgressRim>` SidebarDock wears). The
 // VALUE source is the shell route-scroller's scroll FRACTION
 // (`scrollTop / (scrollHeight − clientHeight)`) — AppShell owns `<main
 // class="demo-main-scroller">`, computes the fraction (rAF-coalesced passive
