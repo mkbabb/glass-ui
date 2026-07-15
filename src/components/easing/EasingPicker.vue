@@ -5,11 +5,9 @@
 // fence) and is the DESIGN REFERENCE for the props-in/events-out, state-shape-
 // agnostic shape.
 //
-// THE BOUNDARY LAW: curve MATH = value.js (CSSCubicBezier / steppedEase / bezier-
-// Presets / jumpTerms, composed via useEasingPicker) · playback = a one-shot rAF
-// (the kf Oscillator slots into the `loop` seam when it ships) · the editor
-// COMPONENT = glass-ui. This SFC re-implements NO math — every curve callable is a
-// value.js import (through the composable).
+// Curve math belongs to value.js. The component owns a bounded editor-local
+// normalized one-shot preview, distinct from reusable physical/keyframes playback.
+// This SFC re-implements no curve math.
 //
 // The canvas chrome is Tailwind utilities + token custom-properties (the tailwind-
 // first law; the BezierEditor/StepsEditor idiom carried in), NEVER raw pasted CSS.
@@ -20,8 +18,9 @@
 // still override `--motion-accent` from any ancestor (the ppmycota fence: a demo
 // hue NEVER enters a library token, and the primitive is self-sufficient
 // standalone).
-import { computed, onUnmounted, ref, useTemplateRef, watch } from "vue";
-import { Check, Copy } from "@lucide/vue";
+import { computed, onUnmounted, ref, useId, useTemplateRef, watch } from "vue";
+import { Check, Copy, LoaderCircle, Play, RotateCcw, Square } from "@lucide/vue";
+import { Button } from "../button";
 import {
     Select,
     SelectContent,
@@ -105,7 +104,11 @@ const {
     stepPathD,
     viewBox,
     progress,
+    playing,
+    playbackState,
+    reducedMotion,
     playTravel,
+    cancelTravel,
     stopTravel,
 } = picker;
 
@@ -121,10 +124,9 @@ watch(
 // Emit the v-model on every authored change.
 watch(value, (v) => (model.value = v), { immediate: true });
 
-onUnmounted(stopTravel);
-
 // ── bezier drag (self-contained pointer-capture, no external seam) ─────────────
 const svgEl = useTemplateRef<SVGSVGElement>("svgEl");
+const handleInstructionsId = useId();
 const dragIndex = ref<0 | 1 | null>(null);
 
 function pointerToSvg(ev: PointerEvent): { x: number; y: number } {
@@ -171,21 +173,86 @@ function onUp(): void {
     dragIndex.value = null;
 }
 
+function onHandleKeydown(index: 0 | 1, ev: KeyboardEvent): void {
+    const offset = index * 2;
+    const x = points.value[offset]!;
+    const y = points.value[offset + 1]!;
+    const step = ev.shiftKey ? 0.1 : 0.01;
+    let nextX = x;
+    let nextY = y;
+    switch (ev.key) {
+        case "ArrowLeft": nextX -= step; break;
+        case "ArrowRight": nextX += step; break;
+        case "ArrowDown": nextY -= step; break;
+        case "ArrowUp": nextY += step; break;
+        case "Home": nextX = 0; break;
+        case "End": nextX = 1; break;
+        default: return;
+    }
+    ev.preventDefault();
+    setHandle(index, nextX, nextY);
+}
+
 // ── copy state ────────────────────────────────────────────────────────────────
-const copied = ref(false);
+type CopyState = "idle" | "pending" | "copied" | "failed";
+const copyState = ref<CopyState>("idle");
+const readoutEl = useTemplateRef<HTMLElement>("readoutEl");
+let copyAttempt = 0;
+let copyResetTimer: ReturnType<typeof setTimeout> | undefined;
+
+function clearCopyReset(): void {
+    if (copyResetTimer !== undefined) clearTimeout(copyResetTimer);
+    copyResetTimer = undefined;
+}
+
 async function copy(): Promise<void> {
+    clearCopyReset();
+    const attempt = ++copyAttempt;
+    copyState.value = "pending";
     try {
-        await navigator.clipboard.writeText(readoutLiteral.value);
-        copied.value = true;
-        setTimeout(() => (copied.value = false), COPY_FEEDBACK_MS);
+        const clipboard = navigator.clipboard;
+        if (!clipboard?.writeText) throw new Error("Clipboard unavailable");
+        await clipboard.writeText(readoutLiteral.value);
+        if (attempt !== copyAttempt) return;
+        copyState.value = "copied";
+        copyResetTimer = setTimeout(() => {
+            if (attempt === copyAttempt) copyState.value = "idle";
+        }, COPY_FEEDBACK_MS);
     } catch {
-        // fail-explicit: a befitting swallow — the Clipboard API is unavailable
-        // (insecure context / permission denied / no navigator.clipboard). The copy
-        // is a convenience affordance, not a contract: `copied` stays false so the
-        // "copied!" feedback simply never fires; the readout literal is still on
-        // screen for a manual select-copy. No state to recover, nothing to throw.
+        if (attempt === copyAttempt) copyState.value = "failed";
     }
 }
+
+function selectLiteral(): void {
+    const el = readoutEl.value;
+    const selection = window.getSelection();
+    if (!el || !selection) return;
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    selection.removeAllRanges();
+    selection.addRange(range);
+    el.focus();
+}
+
+const copyMessage = computed(() => ({
+    idle: "",
+    pending: "Copying curve literal…",
+    copied: "Copied curve literal.",
+    failed: "Clipboard unavailable. Select the full literal to copy manually.",
+})[copyState.value]);
+
+const playbackLabel = computed(() => {
+    const noun = mode.value === "steps" ? "staircase" : "curve";
+    if (playing.value) return `Restart ${noun}`;
+    if (playbackState.value === "complete") return `Replay ${noun}`;
+    return mode.value === "steps" ? "Climb the staircase" : "Trace the curve";
+});
+
+onUnmounted(() => {
+    copyAttempt++;
+    clearCopyReset();
+    stopTravel();
+});
 
 // The bezier canvas viewBox (clamps overshoot) vs the steps canvas frame (a 0/1
 // unit box with a gentle pad).
@@ -210,11 +277,17 @@ const stepsModel = computed<number[]>({
     <div
         class="grid gap-4 lg:grid-cols-[1fr_18rem]"
         :data-mode="mode"
+        :data-copy-state="copyState"
+        :data-playback-state="playbackState"
+        :data-reduced-motion="reducedMotion ? '' : undefined"
         data-testid="easing-picker"
         style="--easing-curve-accent: var(--motion-accent, var(--viz-legendre))"
     >
         <!-- the editable curve canvas (bezier draggable / steps staircase) -->
         <div class="glass-card relative overflow-hidden rounded-card p-3">
+            <span :id="handleInstructionsId" class="sr-only">
+                Left and Right change x from 0 to 1. Up and Down change y from -0.6 to 1.6. Hold Shift for larger steps.
+            </span>
             <svg
                 ref="svgEl"
                 class="block w-full touch-none select-none"
@@ -222,7 +295,7 @@ const stepsModel = computed<number[]>({
                 preserveAspectRatio="xMidYMid meet"
                 style="aspect-ratio: 1; block-size: clamp(200px, 38cqi, 320px); margin-inline: auto"
                 :aria-label="label"
-                role="img"
+                role="group"
                 @pointerdown="onDown"
                 @pointermove="onMove"
                 @pointerup="onUp"
@@ -256,8 +329,25 @@ const stepsModel = computed<number[]>({
 
                 <!-- bezier draggable handles -->
                 <template v-if="mode === 'bezier'">
-                    <circle :cx="handlesSvg[0]!.x" :cy="handlesSvg[0]!.y" r="0.04" class="fill-foreground stroke-background" stroke-width="0.02" style="cursor: move" />
-                    <circle :cx="handlesSvg[1]!.x" :cy="handlesSvg[1]!.y" r="0.04" class="fill-foreground stroke-background" stroke-width="0.02" style="cursor: move" />
+                    <circle
+                        v-for="index in ([0, 1] as const)"
+                        :key="index"
+                        :cx="handlesSvg[index]!.x"
+                        :cy="handlesSvg[index]!.y"
+                        r="0.04"
+                        class="fill-foreground stroke-background focus:outline-none focus-visible:stroke-(--easing-curve-accent) focus-visible:[stroke-width:0.045]"
+                        stroke-width="0.02"
+                        style="cursor: move"
+                        role="slider"
+                        tabindex="0"
+                        :aria-label="`Bezier control point ${index + 1}`"
+                        :aria-valuemin="0"
+                        :aria-valuemax="1"
+                        :aria-valuenow="points[index * 2]"
+                        :aria-valuetext="`x ${points[index * 2]!.toFixed(3)}, y ${points[index * 2 + 1]!.toFixed(3)}`"
+                        :aria-describedby="handleInstructionsId"
+                        @keydown="onHandleKeydown(index, $event)"
+                    />
                 </template>
 
                 <!-- travelling dot (the playback arm) -->
@@ -322,31 +412,50 @@ const stepsModel = computed<number[]>({
                  boundary-law surface, readable by the π spec). -->
             <div
                 v-if="readout"
-                class="glass-card flex items-center gap-2 rounded-card px-3 py-2"
+                class="glass-card flex flex-col gap-2 rounded-card px-3 py-2"
                 :data-reparse-ok="reparseOk"
                 data-testid="easing-readout"
             >
-                <code class="min-w-0 flex-1 truncate text-xs text-foreground" :title="readoutLiteral">{{ readoutLiteral }}</code>
-                <button
-                    type="button"
-                    class="shrink-0 rounded-pill p-1.5 text-muted-foreground transition-colors hover:bg-(--surface-tint-8) hover:text-foreground"
-                    :aria-label="copied ? 'Copied' : 'Copy curve literal'"
-                    @click="copy"
-                >
-                    <Check v-if="copied" class="size-4 text-(--easing-curve-accent)" />
-                    <Copy v-else class="size-4" />
-                </button>
+                <div class="flex items-center gap-2">
+                    <code ref="readoutEl" tabindex="0" class="min-w-0 flex-1 break-all text-xs text-foreground select-text">{{ readoutLiteral }}</code>
+                    <button
+                        type="button"
+                        class="shrink-0 rounded-pill p-1.5 text-muted-foreground transition-colors hover:bg-(--surface-tint-8) hover:text-foreground disabled:cursor-wait disabled:opacity-disabled"
+                        :disabled="copyState === 'pending'"
+                        :aria-label="copyState === 'failed' ? 'Retry copy curve literal' : copyState === 'copied' ? 'Copied' : copyState === 'pending' ? 'Copying curve literal' : 'Copy curve literal'"
+                        data-testid="easing-copy"
+                        @click="copy"
+                    >
+                        <LoaderCircle v-if="copyState === 'pending'" class="size-4 animate-spin" />
+                        <Check v-else-if="copyState === 'copied'" class="size-4 text-(--easing-curve-accent)" />
+                        <Copy v-else class="size-4" />
+                    </button>
+                </div>
+                <div v-if="copyState !== 'idle'" class="flex flex-wrap items-center justify-between gap-2 text-mono-caption">
+                    <span role="status" aria-live="polite" :class="copyState === 'failed' ? 'text-destructive' : 'text-muted-foreground'">
+                        {{ copyMessage }}
+                    </span>
+                    <Button v-if="copyState === 'failed'" variant="outline" class="shrink-0 px-3 py-1" data-testid="easing-select-literal" @click="selectLiteral">
+                        Select literal
+                    </Button>
+                </div>
             </div>
 
             <!-- the playback travel control -->
-            <button
-                v-if="playback"
-                type="button"
-                class="btn-pill glass-btn rounded-pill px-3 py-2 text-sm text-foreground"
-                @click="playTravel"
-            >
-                {{ mode === "steps" ? "Climb the staircase" : "Trace the curve" }}
-            </button>
+            <div v-if="playback" class="flex flex-wrap items-center gap-2">
+                <Button variant="outline" class="w-fit" data-testid="easing-playback" @click="playTravel">
+                    <RotateCcw v-if="playing || playbackState === 'complete'" />
+                    <Play v-else />
+                    {{ playbackLabel }}
+                </Button>
+                <Button v-if="playing" variant="outline" class="w-fit" data-testid="easing-cancel" @click="cancelTravel">
+                    <Square />
+                    Cancel preview
+                </Button>
+                <span class="text-mono-caption text-muted-foreground" role="status" aria-live="polite">
+                    {{ playbackState === "playing" ? "Preview playing" : playbackState === "complete" ? "Preview complete" : "Preview idle" }}
+                </span>
+            </div>
 
             <slot name="footer" :value="value" />
         </div>

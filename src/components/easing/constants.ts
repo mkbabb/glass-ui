@@ -3,10 +3,8 @@
 // these inline as module-scope consts; homed here so the composable + SFCs stay
 // magic-number-free).
 //
-// The boundary law (curve MATH = value.js · playback = keyframes.js · the editor =
-// glass-ui) means these are CHASSIS constants only — the SVG plot geometry, the
-// sample density, the drag hit-radii, the rAF travel clock. NO curve math lives
-// here (the staircase evaluator + the bezier sampler are value.js imports).
+// Curve math belongs to value.js. These are chassis constants only: SVG geometry,
+// sample density, drag hit-radii, and the bounded editor-local preview clock.
 
 /** The bezier-mode catalogue key used for the live-edited custom curve. */
 export const CUSTOM_PRESET = "custom" as const;

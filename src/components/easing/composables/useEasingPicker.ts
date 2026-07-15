@@ -2,11 +2,9 @@
 // composable half). The two demo editors (BezierEditor / StepsEditor) re-home onto
 // this ONE primitive — no fourth fork.
 //
-// THE BOUNDARY LAW (kf-AFFIRMED at KF-TO-GLASSUI-BB-ASKS.md:48, the load-bearing
-// fence): curve MATH = value.js · playback/spring = keyframes.js · the editor
-// COMPONENT = glass-ui. So this composable OWNS only the chassis state — the live
-// control points / step count + term, the re-parseable CSS literal, the rAF travel
-// dot — and REACHES for its math:
+// Curve math belongs to value.js; this editor owns only its authoring chassis and
+// a bounded normalized one-shot preview. The preview is UI feedback, not reusable
+// physical/keyframes playback. This composable reaches for all curve math:
 //   · the bezier curve callable is value.js `CSSCubicBezier`;
 //   · the staircase callable is value.js `steppedEase(n, term)`;
 //   · the bezier preset catalogue is value.js `bezierPresets`;
@@ -108,9 +106,13 @@ export interface UseEasingPickerReturn {
     stepPathD: ComputedRef<string>;
     /** The bezier-canvas viewBox `{ minY, height }` clamping overshoot. */
     viewBox: ComputedRef<{ minY: number; height: number }>;
-    // ── playback (the one-shot rAF travel dot; the kf Oscillator loop seam) ───────
+    // ── playback (bounded editor-local normalized one-shot) ──────────────────────
     progress: Ref<number>;
+    playing: Ref<boolean>;
+    playbackState: ComputedRef<"idle" | "playing" | "complete">;
+    reducedMotion: Ref<boolean>;
     playTravel: () => void;
+    cancelTravel: () => void;
     stopTravel: () => void;
 }
 
@@ -229,17 +231,30 @@ export function useEasingPicker(
         return { minY, height: maxY - minY };
     });
 
-    // ── playback (one-shot rAF travel; the kf Oscillator loop seam) ─────────────
+    // ── playback ───────────────────────────────────────────────────────────────
+    // A normalized one-shot is proportionate editor feedback. It is intentionally
+    // local and distinct from reusable/physical keyframes playback.
     const progress = ref(0);
+    const playing = ref(false);
+    const playbackState = computed<"idle" | "playing" | "complete">(() =>
+        playing.value ? "playing" : progress.value >= 1 ? "complete" : "idle",
+    );
     let rafId = 0;
+    let runId = 0;
     const reducedMotion = ref(false);
     const motionQuery =
         typeof window === "undefined" || typeof window.matchMedia !== "function"
             ? null
             : window.matchMedia("(prefers-reduced-motion: reduce)");
     function stopTravel(): void {
+        runId++;
         if (rafId) cancelAnimationFrame(rafId);
         rafId = 0;
+        playing.value = false;
+    }
+    function cancelTravel(): void {
+        stopTravel();
+        progress.value = 0;
     }
     const syncReducedMotion = (event: MediaQueryListEvent | MediaQueryList) => {
         reducedMotion.value = event.matches;
@@ -251,25 +266,33 @@ export function useEasingPicker(
     if (motionQuery) {
         syncReducedMotion(motionQuery);
         motionQuery.addEventListener("change", syncReducedMotion);
-        onScopeDispose(() =>
-            motionQuery.removeEventListener("change", syncReducedMotion),
-        );
     }
     function playTravel(): void {
         stopTravel();
+        progress.value = 0;
         if (reducedMotion.value) {
             progress.value = 1;
             return;
         }
+        playing.value = true;
+        const activeRun = runId;
         const start = performance.now();
         const tick = (now: number) => {
+            if (activeRun !== runId) return;
             const t = Math.min(1, (now - start) / TRAVEL_DURATION_MS);
             progress.value = t;
             if (t < 1) rafId = requestAnimationFrame(tick);
-            else rafId = 0;
+            else {
+                rafId = 0;
+                playing.value = false;
+            }
         };
         rafId = requestAnimationFrame(tick);
     }
+    onScopeDispose(() => {
+        stopTravel();
+        motionQuery?.removeEventListener("change", syncReducedMotion);
+    });
 
     return {
         mode,
@@ -290,7 +313,11 @@ export function useEasingPicker(
         stepPathD,
         viewBox,
         progress,
+        playing,
+        playbackState,
+        reducedMotion,
         playTravel,
+        cancelTravel,
         stopTravel,
     };
 }

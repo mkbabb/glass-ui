@@ -49,10 +49,11 @@ const eased = computed(() => curve.value?.fn(progress.value) ?? progress.value);
 </template>
 ```
 
-## The boundary law (the recorded fence)
+## Ownership boundary
 
-curve **MATH = value.js** · playback/spring = keyframes.js · the editor
-**COMPONENT = glass-ui** (kf-AFFIRMED at `KF-TO-GLASSUI-BB-ASKS.md:48`).
+Curve **math = value.js** · editor **component = glass-ui**. The travelling-dot
+preview is a bounded editor-local normalized one-shot: it communicates the authored
+curve, but is not reusable physical/keyframes playback.
 
 This primitive OWNS only the chassis — the editable SVG canvas, the family/preset
 selector, the re-parseable readout, the travelling-dot playback — and REACHES for
@@ -63,11 +64,10 @@ its math by COMPOSITION:
 - the preset catalogue is value.js `bezierPresets`;
 - the jump-term family is value.js `jumpTerms`.
 
-It re-implements NEITHER half — no hand-rolled cubic-bezier Newton-solver, no
-hand-rolled staircase evaluator (the `curves.ts` NO-FORK discipline, now in a
-published component). The optional spring-driven dot reads the library's
-`MOTION_CURVES` table (which itself composes the keyframes.js `springTimingFunction`
-+ value.js callables), never a hand-rolled spring solver.
+It re-implements no curve math: there is no local cubic-bezier solver or staircase
+evaluator. The preview dot reads the active value.js callable and exposes idle,
+playing, and complete state plus restart/cancel behavior. Under reduced motion it
+completes immediately without scheduling travel frames.
 
 `EasingPicker` deliberately authors only CSS-reparseable cubic-bezier and steps
 curves. Analytic bounce and spring catalogues remain value.js/keyframes-owned;
@@ -85,12 +85,12 @@ primitive is self-sufficient standalone AND honours the ppmycota fence (a demo h
 NEVER enters a library token); a consumer still overrides `--motion-accent` from any
 ancestor.
 
-## The `loop` playback seam (named successor)
+## Preview authority
 
-The travelling dot's default playback is a one-shot rAF travel. The keyframes.js
-LIGHT `Oscillator` (BOOKED at `KF-TO-GLASSUI-BB-ASKS.md:47`) slots into the
-`playTravel`/`progress` loop seam when kf ships it — the idle-breath periodic phase
-the dot loops off, a named-successor consume, NOT a blocking dependency.
+The travelling dot uses one local `requestAnimationFrame` clock for a single 1200 ms
+normalized pass. This deliberately small authority is owned and cancelled by the
+editor; it makes no keyframes.js ownership claim and creates no periodic or physical
+playback mechanism.
 
 ## Consumers (the ≥2-consumer bar)
 

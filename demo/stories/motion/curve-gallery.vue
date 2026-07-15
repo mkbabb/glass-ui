@@ -81,7 +81,7 @@ const activeRows = computed<readonly CurveRow[]>(
 );
 const activeBlurb = computed(() => {
     if (activeFamily.value === CUSTOM_FAMILY)
-        return "Drag the control points to author a curve live — the path is the real CSSCubicBezier twin from value.js, the same evaluator the library samples.";
+        return "Drag either control point or focus it and use Arrow keys to author the real value.js CSSCubicBezier twin. Copy reports success or denial with a full-literal recovery path; the preview is an editor-local one-shot with restart, cancel, and reduced-motion completion.";
     return CURVE_FAMILIES.find((f) => f.family === activeFamily.value)?.blurb ?? "";
 });
 
