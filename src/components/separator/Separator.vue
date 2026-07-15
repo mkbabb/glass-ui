@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
+import { type HTMLAttributes, computed, useAttrs, useId } from 'vue'
 import { Separator, type SeparatorProps } from 'reka-ui'
 import { cn } from '../_shared/class-names'
+
+defineOptions({ inheritAttrs: false })
 
 // BC.W-SEPARATOR-FIX — the labelled arm is a SPLIT-RULE flexbox, not an
 // absolute label floated over a 1px line.
@@ -24,15 +26,46 @@ import { cn } from '../_shared/class-names'
 // the labelled arm wraps it as `role="separator"` with the label as its
 // accessible name.
 const props = defineProps<
-  SeparatorProps & { class?: HTMLAttributes['class'], label?: string }
+  SeparatorProps & {
+    class?: HTMLAttributes['class']
+    label?: string
+  }
 >()
 
 const isVertical = computed(() => props.orientation === 'vertical')
+const attrs = useAttrs()
+const labelId = `${useId()}-label`
 
 const delegatedProps = computed(() => {
-  const { class: _class, label: _label, ...delegated } = props
+  const {
+    class: _class,
+    label: _label,
+    ...delegated
+  } = props
 
   return delegated
+})
+
+const labelledAttrs = computed(() => {
+  const {
+    role: _role,
+    'aria-orientation': _orientation,
+    'aria-label': rawAriaLabel,
+    'aria-labelledby': rawAriaLabelledby,
+    ...rest
+  } = attrs
+  if (props.decorative) return { ...rest, role: 'none' }
+
+  const ariaLabel = typeof rawAriaLabel === 'string' ? rawAriaLabel : undefined
+  const ariaLabelledby = typeof rawAriaLabelledby === 'string' ? rawAriaLabelledby : undefined
+  const labelledby = ariaLabelledby ?? (ariaLabel ? undefined : labelId)
+  return {
+    ...rest,
+    role: 'separator',
+    'aria-orientation': isVertical.value ? ('vertical' as const) : undefined,
+    'aria-label': labelledby ? undefined : ariaLabel,
+    'aria-labelledby': labelledby,
+  }
 })
 
 // The rule-segment class (one axis painted, the warm hairline ink).
@@ -49,10 +82,8 @@ const ruleClass = computed(() =>
        visible label is the accessible name. -->
   <div
     v-if="props.label"
+    v-bind="labelledAttrs"
     data-slot="separator"
-    role="separator"
-    :aria-orientation="isVertical ? 'vertical' : 'horizontal'"
-    :aria-label="props.label"
     :class="
       cn(
         'flex items-center',
@@ -67,7 +98,7 @@ const ruleClass = computed(() =>
          segments must read clearly over ANY host, glass or paper, so it gets a
          small `bg-background` chip; this is the chip backplate, NOT the retired
          absolute-occlusion trick — the rule is genuinely two segments). -->
-    <span class="text-mono-caption text-muted-foreground bg-background shrink-0 px-1.5 rounded-sm">{{ props.label }}</span>
+    <span :id="labelId" class="text-mono-caption text-muted-foreground bg-background shrink-0 px-1.5 rounded-sm">{{ props.label }}</span>
     <span :class="ruleClass" />
   </div>
 
@@ -75,7 +106,7 @@ const ruleClass = computed(() =>
   <Separator
     v-else
     data-slot="separator"
-    v-bind="delegatedProps"
+    v-bind="{ ...$attrs, ...delegatedProps }"
     :class="
       cn(
         'shrink-0 bg-(--separator-ink)',

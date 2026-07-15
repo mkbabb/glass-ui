@@ -68,15 +68,21 @@ interface Props extends PrimitiveProps {
   // (see `hostAttrs`) rather than bound on <Primitive> directly.
   type?: ButtonHTMLAttributes['type']
   disabled?: ButtonHTMLAttributes['disabled']
+  /** Marks an in-flight command and disables native activation until it settles. */
+  loading?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   as: 'button',
 })
 
+const interactionDisabled = computed(
+  () => props.loading === true || props.disabled === true || props.disabled === 'true',
+)
+
 const hostAttrs = computed(() => ({
   type: props.type ?? (!props.asChild && props.as === 'button' ? 'button' : undefined),
-  disabled: props.disabled,
+  disabled: interactionDisabled.value,
 }))
 
 // BB.W-SURFACE-AXIS-COMPLETE — the surface DECORATION composed alongside
@@ -126,6 +132,9 @@ const punchActive = computed(
 const punchDecoration = computed(() => (punchActive.value ? 'btn-punch' : undefined))
 
 const press = useSpringPress()
+const onPointerDown = () => {
+  if (!interactionDisabled.value) press.press()
+}
 const squish = useLiquidFlex({
   from: 0,
   to: 1,
@@ -249,10 +258,12 @@ const liquidDecoration = computed(() =>
     :data-tone="tone"
     :data-icon-only="iconOnly || undefined"
     :data-surface="surface"
+    :data-loading="loading || undefined"
+    :aria-busy="loading || undefined"
     v-bind="hostAttrs"
     :class="cn(buttonVariants({ variant, size, iconOnly, tone }), surfaceDecoration, liquidDecoration, punchDecoration, props.class)"
     :style="hostStyle"
-    @pointerdown="press.press"
+    @pointerdown="onPointerDown"
     @pointerup="press.release"
     @pointercancel="press.release"
     @pointerleave="press.release"

@@ -181,7 +181,6 @@ export const CONTEXT_LAYER_MAP: Record<string, ContextLayer[]> = {
             accent: "var(--section-color-2)",
             entries: [
                 { storyId: "card", label: "Card" },
-                { storyId: "section", label: "Section" },
                 { storyId: "separator", label: "Separator" },
             ],
         },

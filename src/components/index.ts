@@ -24,7 +24,6 @@ export * from "./number-field";
 export * from "./popover";
 export * from "./progress";
 export * from "./radio-group";
-export * from "./section";
 export * from "./select";
 export * from "./separator";
 // `sheet` RETIRED at BI.W-DIALOG-PLACEMENT — folded onto `<DialogContent placement>`

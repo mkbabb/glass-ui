@@ -13,7 +13,6 @@ import {
     CardTitle,
     Label,
     Progress,
-    Section,
     Separator,
     Skeleton,
     badgeVariants,
@@ -200,26 +199,6 @@ describe("component smoke coverage", () => {
         // so target it directly rather than the (now multi-root) wrapper.
         const wrapper = mount(PaperBackdrop, { props: { opacity: 0.5 } });
         expect(wrapper.find(".paper-underpaint").attributes("style")).toContain("opacity: 0.5");
-    });
-
-    it("V.W3.T7 — Section composes typography ladder via tone variant", () => {
-        const wrapper = mount(Section, {
-            props: { title: "Audio settings", description: "Configure inputs and outputs.", tone: "heading" },
-            slots: { default: "<div>body</div>" },
-        });
-        expect(wrapper.find("section").exists()).toBe(true);
-        expect(wrapper.find("h2").text()).toBe("Audio settings");
-        expect(wrapper.find("h2").classes()).toContain("text-heading");
-        expect(wrapper.find("p").text()).toBe("Configure inputs and outputs.");
-        expect(wrapper.find("p").classes()).toContain("section-description");
-        expect(wrapper.text()).toContain("body");
-    });
-
-    it("V.W3.T7 — Section tone='label' composes the .section-label class", () => {
-        const wrapper = mount(Section, {
-            props: { title: "MICROPHONE LEVELS", tone: "label" },
-        });
-        expect(wrapper.find("h2").classes()).toContain("section-label");
     });
 
     it("V.W3.T1 — size-rail probe: GlassDock exposes data-size on root", () => {

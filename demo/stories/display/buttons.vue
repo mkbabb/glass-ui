@@ -18,6 +18,7 @@ import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { ref } from "vue";
 import { Button } from "@glass/components/button";
+import { Pulse } from "@glass/components/pulse";
 import { cn } from "@glass/components/_shared/class-names";
 import { Aurora } from "@glass/components/aurora";
 import { PRESETS } from "../substrates/aurora/presets";
@@ -151,14 +152,18 @@ const sizes = ["xs", "sm", "md", "lg"] as const;
         </StorySection>
 
         <StorySection
-            heading="Four-state contract"
-            blurb="Rest, hover, active, disabled, and aria-pressed. Hover and active emerge from pointer interaction — shown simulated for reference."
+            heading="Command state contract"
+            blurb="Rest, hover, active, disabled, loading, and aria-pressed. Hover and active emerge from pointer interaction — shown simulated for reference."
         >
             <div class="flex flex-wrap items-center gap-3">
                 <Button>Rest</Button>
                 <Button class="bg-[var(--glass-bg-resting)] border-[var(--glass-border-resting)]">Hover (sim.)</Button>
                 <Button class="scale-[0.97]">Active (sim.)</Button>
                 <Button disabled>Disabled</Button>
+                <Button loading type="submit">
+                    <Pulse variant="ring" aria-hidden="true" />
+                    Saving changes
+                </Button>
             </div>
         </StorySection>
 

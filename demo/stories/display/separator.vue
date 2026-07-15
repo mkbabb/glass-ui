@@ -22,6 +22,20 @@ import { Card, CardContent } from "@glass/components/card";
             </Card>
         </StorySection>
 
+        <StorySection label="decorative">
+            <Card>
+                <CardContent class="flex flex-col gap-4">
+                    <p class="text-small text-foreground">
+                        Related details share one visual group.
+                    </p>
+                    <Separator decorative />
+                    <p class="text-small text-foreground">
+                        The rule shapes the layout without adding separator semantics.
+                    </p>
+                </CardContent>
+            </Card>
+        </StorySection>
+
         <!-- Horizontal with label — the fixed split-rule centering witness. -->
         <StorySection label="horizontal · labelled">
             <Card>
