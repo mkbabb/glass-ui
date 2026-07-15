@@ -24,10 +24,7 @@
 import { NumericAnimation } from "@mkbabb/keyframes.js";
 import { onScopeDispose, type Ref } from "vue";
 
-/**
- * The `useCountup` return shape (AW.W15 — named `Use<Name>Return` convention).
- * `Countup` is the preserved alias so existing import sites do not break.
- */
+/** The `useCountup` return shape. */
 export interface UseCountupReturn {
     /** Animate the count-ups inside the currently-active slide/region. */
     runActive: () => void;
@@ -36,9 +33,6 @@ export interface UseCountupReturn {
     /** Cancel every in-flight tween (also runs on scope-dispose). */
     cancel: () => void;
 }
-
-/** Preserved alias for {@link UseCountupReturn} — keeps import sites stable (AW.W15). */
-export type Countup = UseCountupReturn;
 
 export interface UseCountupOptions {
     /**

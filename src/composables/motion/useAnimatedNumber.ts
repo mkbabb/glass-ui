@@ -40,10 +40,7 @@ export interface UseAnimatedNumberOptions {
     onValue?: (value: number) => void;
 }
 
-/**
- * The `useAnimatedNumber` return shape (AW.W15 — named `Use<Name>Return`
- * convention). `AnimatedNumber` is the preserved alias so import sites stay put.
- */
+/** The `useAnimatedNumber` return shape. */
 export interface UseAnimatedNumberReturn {
     /** Reactive smoothed value. Bind in templates. */
     current: Readonly<Ref<number>>;
@@ -56,9 +53,6 @@ export interface UseAnimatedNumberReturn {
     /** Stop the smoother and target watcher. */
     dispose: () => void;
 }
-
-/** Preserved alias for {@link UseAnimatedNumberReturn} (AW.W15). */
-export type AnimatedNumber = UseAnimatedNumberReturn;
 
 function clampProgress(value: number): number {
     return Math.max(0, Math.min(100, value));

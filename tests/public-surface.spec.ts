@@ -369,7 +369,6 @@ const exactSubpathRuntimeSurfaces = [
 const typeSurfaceChecks = [
     // AZ.W-PRUNE2 (E4-3) — the useGlassRenderer cluster (GlassTier/GlassFilterState)
     // retired; the source file is deleted, so no type-surface row anchors it.
-    ["src/composables/motion/useAnimatedNumber.ts", "AnimatedNumber"],
     ["src/composables/motion/useAnimatedNumber.ts", "UseAnimatedNumberOptions"],
     ["src/composables/motion/useNumericTransition.ts", "SpringSnapshot"],
     ["src/composables/motion/useNumericTransition.ts", "UseNumericTransitionOptions"],
