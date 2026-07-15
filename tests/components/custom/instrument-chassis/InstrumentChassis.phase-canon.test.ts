@@ -22,7 +22,7 @@ import { InstrumentChassis, type InstrumentChassisPhase } from "@glass/component
  */
 
 const cssSource = readFileSync(
-    resolve(__dirname, "../../../../src/styles/instrument-chassis.css"),
+    resolve(__dirname, "../../../../src/components/instrument-chassis/styles.css"),
     "utf8",
 );
 // AY.W-CSS1 — tokens.css is a thin @import root; read the carved partials as the
