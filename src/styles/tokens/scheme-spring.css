@@ -185,16 +185,6 @@
        same way (no overshoot under reduce — the vestibular floor). */
     --transition-liquid-spatial: var(--spring-smooth);
 
-    /* ── DECK SLIDE-TRANSITION CURVE (BC.W-DECK) ──
-       The full-viewport keyboard-paged deck's slide transition rides the SAME
-       `--spring-smooth` register the deck's `DECK_SPRING` samples (the calm-settle
-       `.smooth` family; the (response, ζ) pair lives in deck/constants.ts) — an
-       ALIAS, NOT a new spring family (the donor's own fence + the W-GLASS-CAL spring
-       fence). `--spring-deck: var(--spring-smooth)` so a deck slide reads as a calm
-       settle, not a bounce; the JS half (`installDeckSpring`) consumes keyframes.js
-       `springTimingFunction(DECK_SPRING)` for the count-up easing. */
-    --spring-deck: var(--spring-smooth);
-
     /* ── GOO-MORPH SLIDE-TRANSITION FLOW CURVE (BD.W-GOO-CAROUSEL-DECK) ──
        The per-consumer dwell-flow curve the ONE `useGooMorph` engine reads off its
        `tokenPrefix` (`--{prefix}-flow`/`-duration`/`-max-stretch`). This is NOT a new

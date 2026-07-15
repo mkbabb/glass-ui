@@ -1,10 +1,10 @@
 import { computed, ref, type ComputedRef, type Ref } from "vue";
 
 /* useDeck — the headless deck-state core: a pure reactive index + progress with
-   ZERO DOM. A deck consumer (the slides app, the speedtest survey-deck) composes
-   this and layers its own DOM glue — slide-toggling, scale, hash-sync, count-ups —
-   on top. The full-viewport keyboard-paged aria-live PRESENTATION register, DISTINCT
-   from `/carousel`'s embla item-scroller.
+   ZERO DOM. A presentation consumer composes this and layers its own DOM glue —
+   slide-toggling, scale, hash-sync, count-ups — on top. The full-viewport
+   keyboard-paged aria-live PRESENTATION register, DISTINCT from `/carousel`'s embla
+   item-scroller.
 
    `liveMessage` is the portable WCAG step announcer seam: a "Slide N of M"
    (optionally "… : <accessible-name>") computed every deck consumer surfaces in a

@@ -1329,7 +1329,7 @@ export const CATEGORIES: Category[] = [
                 "motion",
                 "deck",
                 "Deck",
-                "The full-viewport keyboard-paged aria-live PRESENTATION register (DISTINCT from /carousel) — useDeck (headless index/progress/liveMessage) + useDeckKeyboard (focus-guarded Arrow/Space/digit) + <DeckPager> (windowed dots over PagerDots' ONE oracle) + the --spring-deck slide settle. Unblocks the speedtest survey-deck + the slides consume-back.",
+                "The full-viewport keyboard-paged aria-live PRESENTATION register (DISTINCT from /carousel) — useDeck (headless index/progress/liveMessage) + useDeckKeyboard (focus-guarded Arrow/Space/digit) + <DeckPager> (windowed dots over PagerDots' ONE oracle). The story's visible slide settle reads the canonical --spring-smooth token directly.",
             ),
             s("motion", "typewriter", "Typewriter"),
             s(

@@ -3,7 +3,7 @@
 `@mkbabb/glass-ui/deck` — the full-viewport, keyboard-paged, aria-live PRESENTATION
 register (BC.W-DECK). DISTINCT from `/carousel`'s embla item-scroller: a deck pages
 between whole slides via the keyboard, announces each step, and renders a windowed
-dot pager — the headless core a slides deck or a survey-deck composes.
+dot pager — the headless core a presentation consumer composes.
 
 ## Anatomy
 
@@ -18,14 +18,6 @@ dot pager — the headless core a slides deck or a survey-deck composes.
   are FOCUS-GUARDED (`CONTROL_SELECTOR` test) so a focused control gets its native
   activation, never hijacked. `handleDeckKey` is the pure one-key handler (happy-dom
   testable).
-- **`installDeckSpring()` / `deckEase` — the dogfooded motion curve.** `DECK_SPRING`
-  is SwiftUI `.smooth` (response 0.5, ζ 0.85) — the SAME family `--spring-smooth`
-  derives from. The CSS half is the `--spring-deck: var(--spring-smooth)` token (a
-  slide transition reads it). The JS half is the count-up easing: `deckEase.fn`
-  defaults to a monotone cubic, swapped to keyframes.js `springTimingFunction(.smooth)`
-  by `installDeckSpring()` — a LAZY dynamic import, so `/deck` stays keyframes-FREE on
-  the static graph (the SCC-trap discipline; the chunk degrades to the cubic if it
-  fails).
 - **`<DeckPager>` — the windowed dot register.** A THIN wrapper over `<PagerDots>`'s
   already-factored `pagerWindow` oracle, carrying ONLY the deck's PRESENTATION aria
   register (`role="group"`/`aria-current` via the `pattern="group"` axis). ZERO
@@ -38,14 +30,13 @@ dot pager — the headless core a slides deck or a survey-deck composes.
 
 ```vue
 <script setup lang="ts">
-import { useDeck, useDeckKeyboard, installDeckSpring, DeckPager } from "@mkbabb/glass-ui/deck";
+import { useDeck, useDeckKeyboard, DeckPager } from "@mkbabb/glass-ui/deck";
 
 const deck = useDeck(slides.length, {
     label: (i) => slides[i].title,
     onChange: (to) => { history.replaceState(null, "", `#${to + 1}`); },
 });
 useDeckKeyboard(deck);
-installDeckSpring();
 </script>
 
 <template>
@@ -72,4 +63,5 @@ lifted core — the over-lift (dragging the app glue into the primitive) is the
 visual-load-bearing-ness violation the wave forbids.
 
 Off the root barrel — reached only via `@mkbabb/glass-ui/deck`. The headless core is
-vueuse-FREE + keyframes-FREE on the static graph.
+vueuse- and keyframes-free. Motion remains consumer-owned; a presentation may use the
+canonical public spring tokens where it actually renders a transition.

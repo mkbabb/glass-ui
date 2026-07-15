@@ -1,20 +1,18 @@
 <script setup lang="ts">
 // BC.W-DECK — the live demonstration of the `@mkbabb/glass-ui/deck` register. The
 // in-repo exerciser: `useDeck` (the headless index/progress/liveMessage core),
-// `useDeckKeyboard` (the focus-guarded Arrow/Space/digit contract), `installDeckSpring`
-// (the lazy keyframes count-up easing), and `<DeckPager>` (the windowed dots over
-// PagerDots' ONE pagerWindow oracle via the group aria axis). The slide transition
-// rides `--spring-deck` (= --spring-smooth); the aria-live announcer surfaces
+// `useDeckKeyboard` (the focus-guarded Arrow/Space/digit contract), and `<DeckPager>`
+// (the windowed dots over PagerDots' ONE pagerWindow oracle via the group aria axis).
+// The story's real slide transition reads canonical `--spring-smooth` directly; the
+// aria-live announcer surfaces
 // "Slide N of M" per step. A focused control inside a slide gets Space/digit (NOT
-// hijacked). The 2nd binary consumer is the speedtest survey-deck (cross-repo); the
-// slides repo CONSUMES-BACK its donor (post-cut).
+// hijacked).
 import { computed, onMounted, onBeforeUnmount, ref, watch, nextTick } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import {
     useDeck,
     useDeckKeyboard,
-    installDeckSpring,
     DeckPager,
 } from "@glass/components/deck";
 import { Button } from "@glass/components/button";
@@ -33,7 +31,6 @@ const deck = useDeck(slides.length, {
     label: (i) => slides[i]?.title ?? "",
 });
 useDeckKeyboard(deck);
-onMounted(() => installDeckSpring());
 
 const index = computed({
     get: () => deck.index.value,
@@ -141,11 +138,11 @@ watch(
         <StorySection
             heading="Keyboard-paged presentation deck"
             label="deck"
-            blurb="The full-viewport keyboard-paged aria-live PRESENTATION register — DISTINCT from /carousel's item-scroller. useDeck owns the headless index + progress + the 'Slide N of M' announcer; useDeckKeyboard pages on Arrow/Space/digit (focus-guarded so a focused control keeps its native activation); the slide transition rides --spring-deck; <DeckPager> windows the dots over PagerDots' ONE oracle."
+            blurb="The full-viewport keyboard-paged aria-live PRESENTATION register — DISTINCT from /carousel's item-scroller. useDeck owns the headless index + progress + the 'Slide N of M' announcer; useDeckKeyboard pages on Arrow/Space/digit (focus-guarded so a focused control keeps its native activation); <DeckPager> windows the dots over PagerDots' ONE oracle. The story's visible slide transition reads the canonical --spring-smooth token directly."
         >
             <div class="flex flex-col gap-6" tabindex="0">
                 <!-- The deck stage — one slide active at a time, the rest faded out
-                     on the --spring-deck slide-transition curve, with the GOO-MORPH neck
+                     on the canonical --spring-smooth curve, with the GOO-MORPH neck
                      bridging the outgoing→incoming slide (BD.W-GOO-CAROUSEL-DECK). -->
                 <div ref="gooStageEl" class="deck-demo-stage glass-quiet rounded-card">
                     <!-- BD.W-MORPH-FIELD-WELD — the goo `<filter>` is the ONE `<GooFilter>`
@@ -436,10 +433,9 @@ watch(
     align-items: flex-start;
     justify-content: center;
     padding: 2rem;
-    /* The deck slide transition — the --spring-deck calm settle (= --spring-smooth),
-       compositor-only (transform + opacity). */
+    /* The story-owned slide transition uses the canonical calm spatial spring directly. */
     transition:
-        transform var(--spring-smooth-duration) var(--spring-deck),
+        transform var(--spring-smooth-duration) var(--spring-smooth),
         opacity var(--duration-fast) var(--ease-out);
 }
 .deck-demo-slide[data-state="inactive"] {
