@@ -181,6 +181,18 @@ describe("DataTable interaction semantics", () => {
         expect(wrapper.emitted("select")).toBeUndefined();
     });
 
+    it("selects when a visible cell descendant is clicked", async () => {
+        const ada = { _id: "1", name: "Ada" };
+        const wrapper = mountTable([ada], {
+            selectable: true,
+            selectedRowId: null,
+        });
+
+        await wrapper.find("tbody td span").trigger("click");
+        expect(wrapper.emitted("update:selectedRowId")?.at(-1)?.[0]).toBe("1");
+        expect(wrapper.emitted("select")?.at(-1)?.[0]).toStrictEqual(ada);
+    });
+
     it("selects from keyboard through stable row identity and retains focus", async () => {
         const ada = { _id: "1", name: "Ada" };
         const grace = { _id: "2", name: "Grace" };

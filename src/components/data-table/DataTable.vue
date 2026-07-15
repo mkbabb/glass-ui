@@ -194,7 +194,11 @@ function selectRow(entry: RowEntry<T>): void {
 }
 
 function onRowClick(event: MouseEvent, entry: RowEntry<T>): void {
-    if (event.target === event.currentTarget) selectRow(entry);
+    if (!(event.target instanceof Element)) return;
+    const nestedControl = event.target.closest(
+        'button,a[href],input,select,textarea,summary,[contenteditable="true"],[tabindex]:not([tabindex="-1"])',
+    );
+    if (!nestedControl || nestedControl === event.currentTarget) selectRow(entry);
 }
 
 function onRowKeydown(event: KeyboardEvent, entry: RowEntry<T>): void {
