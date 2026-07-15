@@ -281,7 +281,10 @@ onMounted(() => {
         >
             <div class="flex flex-wrap items-center gap-4">
                 <Label class="flex items-center gap-2">
-                    <Switch v-model="interactive" />
+                    <Switch
+                        v-model="interactive"
+                        aria-label="Interactive pointer effects"
+                    />
                     <span class="text-sm"
                         >interactive (steer-toward-cursor + tap ripples)</span
                     >
