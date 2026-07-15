@@ -9,7 +9,7 @@ import { ref } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
-import { DarkModeToggle } from "@glass/subpaths/controls";
+import { DarkModeToggle } from "@glass/components/controls";
 import { GlassDock } from "@glass/components/dock";
 
 // Standalone rungs only — `dock` is excluded here because it inherits its

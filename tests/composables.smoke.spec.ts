@@ -12,7 +12,7 @@ import {
     clearSearchCache,
     fuzzyMatch,
     searchIndex,
-} from "@glass/subpaths/search";
+} from "@glass/components/search";
 import {
     buildTreeIndex,
     isActive,

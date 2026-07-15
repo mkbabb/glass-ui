@@ -139,8 +139,8 @@ export const CURATED = {
     // `/api` successor: the four grammar axes + their frozen tuples, GENERATED).
     axes: "src/components/_shared/axes.ts",
     // BI.W-BLOB-SEAMS (RP-2 / L20) — the value.js-FREE `/blob-config` config leaf.
-    // The vite entry is the `src/subpaths/blob-config.ts` mirror (the glob); this maps
-    // to the REAL config barrel so `namedExports` + fidelity read the concrete surface
+    // This maps directly to the real config barrel so `namedExports` + fidelity
+    // read the concrete surface
     // (the `canvas`/`fourier-math` name≠leaf pattern). A config-only consumer imports
     // the `BlobConfig` shape + hero preset WITHOUT Blob.vue's value.js `/color` eager
     // weight (~−33 KiB), the established dynamic color-leaf discipline.

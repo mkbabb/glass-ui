@@ -7,7 +7,7 @@ import { computed, onMounted, onUnmounted, ref, useTemplateRef } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
-import { Constellation, type ConstellationField } from "@glass/subpaths/constellation";
+import { Constellation, type ConstellationField } from "@glass/components/constellation";
 import { Switch } from "@glass/components/switch";
 import { Label } from "@glass/components/label";
 import { useTokenColor } from "@glass/composables/dom/useTokenColor";

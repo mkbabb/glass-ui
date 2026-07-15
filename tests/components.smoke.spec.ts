@@ -20,14 +20,14 @@ import {
     buttonVariants,
 } from "@glass/index";
 import { Input, Textarea } from "@glass/forms";
-import { DarkModeToggle } from "@glass/subpaths/controls";
-import { DockLayer, DockLayerGroup, GlassDock } from "@glass/subpaths/dock";
-import { MetricBadge } from "@glass/subpaths/metric-badge";
-import { PaperBackdrop } from "@glass/subpaths/paper-backdrop";
-import { Pulse } from "@glass/subpaths/pulse";
-import { StatusDot } from "@glass/subpaths/status-dot";
-import { SegmentedTabs } from "@glass/subpaths/tabs";
-import { Chip, chipVariants } from "@glass/subpaths/chip";
+import { DarkModeToggle } from "@glass/components/controls";
+import { DockLayer, DockLayerGroup, GlassDock } from "@glass/components/dock";
+import { MetricBadge } from "@glass/components/metric-badge";
+import { PaperBackdrop } from "@glass/components/paper-backdrop";
+import { Pulse } from "@glass/components/pulse";
+import { StatusDot } from "@glass/components/status-dot";
+import { SegmentedTabs } from "@glass/components/tabs";
+import { Chip, chipVariants } from "@glass/components/chip";
 
 describe("component smoke coverage", () => {
     it("renders Button slot content", () => {

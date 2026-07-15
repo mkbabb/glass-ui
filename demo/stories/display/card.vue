@@ -22,7 +22,7 @@ import { Label } from "@glass/components/label";
 // W12 — stage the tier matrix + shadow/grain toggles over a shipped
 // high-frequency backdrop (Aurora) so the tier-alpha steps (0.30→0.95) and the
 // shadow-on/off differential become perceptible against busy color.
-import { Aurora, DEFAULT_AURORA_CONFIG } from "@glass/subpaths/aurora";
+import { Aurora, DEFAULT_AURORA_CONFIG } from "@glass/components/aurora";
 
 interface TierExample {
     tier: CardTier;

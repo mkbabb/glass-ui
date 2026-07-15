@@ -1,58 +1,12 @@
-import { readdirSync } from "node:fs";
-import { resolve } from "node:path";
+import { libraryEntryMap } from "./scripts/lib/subpath-policy.mjs";
 
 /**
- * The library entry map. Two tiers:
- *
- *  1. The MULTI-LINE CURATED barrels — hand-listed below. These carry real
- *     curation logic, not a single mirror line: `index` (the vueuse-FREE root
- *     barrel — L.W1 Lane A SCC closure), `tokens`, `axes` (the types-only grammar
- *     discovery layer — the `/api` successor; `/api` dropped at BH.B2.2),
- *     `forms`/`dark`/`keyboard`/`carousel` (the vueuse-bearing
- *     flat subpaths — L.W1 Lane C), `motion`/`motion-core` (the keyframes-engine
- *     split — AP.W3 R0G-7), `sidebar` (the AI.W5-δ composables-of-record
- *     relocation), `infinite-scroll` (the component + composables pair). They
- *     STAY at `src/` top level — moving them would obscure the curation.
- *
- *  2. The TRIVIAL single-line subpath barrels — each `export * from
- *     "../components/<…>"` or `"../composables/<…>"`. These live in
- *     `src/subpaths/` (AV.W5 Lane A) and are BATCH-RESOLVED below: the dir is
- *     globbed and mapped programmatically so a new per-family subpath barrel
- *     never has to be hand-added here. Zero runtime delta — the emitted
- *     `dist/<name>.js` chunk set is name-for-name identical to the prior
- *     hand-list (proven by `proof:subpath-enumeration`'s BATCH-EQUIV assert).
- *
- * `package.json` exports are byte-unchanged by the source move: each `import`
- * key points at `dist/<name>.js` (the BUILT chunk keyed by entry NAME), which is
- * unaffected by where the source barrel lives.
+ * Resolve Vite's inputs from the same fail-closed semantic entry graph that
+ * generates package exports and flat declarations. Public entry names remain
+ * stable while their sources live only at their component/composable owners.
  */
 export function libraryEntries(rootDir: string) {
-    // Tier 1 — curated semantic entries (explicit; public names stay flat).
-    const curated: Record<string, string> = {
-        index: resolve(rootDir, "src/index.ts"),
-        tokens: resolve(rootDir, "src/styles/tokens.ts"),
-        forms: resolve(rootDir, "src/forms.ts"),
-        dark: resolve(rootDir, "src/composables/dark/index.ts"),
-        keyboard: resolve(rootDir, "src/composables/keyboard/index.ts"),
-        carousel: resolve(rootDir, "src/components/carousel/index.ts"),
-        motion: resolve(rootDir, "src/composables/motion/index.ts"),
-        "motion-core": resolve(rootDir, "src/composables/motion/core/index.ts"),
-        sidebar: resolve(rootDir, "src/composables/sidebar/index.ts"),
-        "infinite-scroll": resolve(rootDir, "src/components/infinite-scroll/index.ts"),
-        // BH.W-AXIS-GRAMMAR — the types-only `/axes` discovery subpath.
-        axes: resolve(rootDir, "src/components/_shared/axes.ts"),
-    };
-
-    // Tier 2 — batch-resolve every `src/subpaths/*.ts` trivial mirror barrel.
-    const subpathsDir = resolve(rootDir, "src/subpaths");
-    const batched: Record<string, string> = {};
-    for (const file of readdirSync(subpathsDir)) {
-        if (!file.endsWith(".ts")) continue;
-        const name = file.slice(0, -3);
-        batched[name] = resolve(subpathsDir, file);
-    }
-
-    return { ...curated, ...batched };
+    return libraryEntryMap(rootDir);
 }
 
 export function libraryFileName(_format: string, entryName: string) {

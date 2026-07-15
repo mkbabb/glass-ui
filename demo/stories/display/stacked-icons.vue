@@ -4,7 +4,7 @@
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
-import { StackedIconGroup } from "@glass/subpaths/stacked-icons";
+import { StackedIconGroup } from "@glass/components/stacked-icons";
 import { Heart, Star, Bookmark, Flag, Pin, Bell, Sparkles } from "@lucide/vue";
 
 interface Avatar {

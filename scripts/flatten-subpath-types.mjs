@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// Generate the flat declaration entries from the same src/subpaths entry graph
-// Vite scans in vite.library.ts. Component declarations stay in their emitted
+// Generate flat declaration entries from the semantic entry graph Vite scans
+// in vite.library.ts. Component declarations stay in their emitted
 // flat family homes; only the public entry declarations are generated here.
 
 import { rmSync, writeFileSync } from "node:fs";
