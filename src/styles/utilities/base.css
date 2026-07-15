@@ -283,11 +283,11 @@
             scale var(--duration-fast) var(--transition-liquid-spatial);
         transform-origin: center center;
     }
-    .tap-squish:active {
+    .tap-squish:not([data-press-armed]):active {
         scale: var(--scale-press);
     }
     @media (prefers-reduced-motion: reduce) {
-        .tap-squish:active {
+        .tap-squish:not([data-press-armed]):active {
             /* Reset to the longhand identity (not `transform: none`) so the
                press scale is neutralized under PRM. */
             scale: 1;

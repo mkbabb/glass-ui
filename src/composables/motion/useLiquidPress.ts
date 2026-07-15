@@ -31,19 +31,19 @@
 //     animation` enforces). The CSS `.tap-squish` `:active` scale stays the no-JS /
 //     SSR floor; the JS reciprocal deform is the ENHANCEMENT over it.
 //
-// The ≥2-consumer bar (J-inv-10) is on the DEAD primitive `useSpringPress`: it is now
-// activated on TWO binaries — Button (direct; the W-BUTTON-GLASS surface, kept inline so
-// `proof:button-glass`'s B2 direct-composition assert stays green) + Card (`:pressable`,
-// via THIS wrapper, which composes `useSpringPress`). `useLiquidPress` is the canonical
-// press wrapper Card consumes + the dock control is the booked third. Keyframes-bearing
-// (via `useSpringPress`), so it ships on `/motion` ONLY, never the root barrel (the
-// SCC-trap discipline).
+// Consumers configure this wrapper rather than composing its spring and reciprocal-flex
+// leaves themselves. It ships on `/motion` only because the spring is keyframes-backed.
 
 import {
     computed,
+    onMounted,
+    readonly,
+    ref,
+    toValue,
     watch,
     type CSSProperties,
     type ComputedRef,
+    type MaybeRefOrGetter,
     type Ref,
 } from "vue";
 import { useSpringPress, type UseSpringPressOptions } from "./useSpringPress";
@@ -65,7 +65,7 @@ export interface UseLiquidPressOptions extends UseSpringPressOptions {
      * the travel axis). Default 1.04 (a button has no size span — the deform is a
      * lively settle, never a taffy-pull). Kept LOW by the liquid register.
      */
-    maxStretch?: number;
+    maxStretch?: MaybeRefOrGetter<number>;
     /**
      * The custom-property NAME the live press value (0..1) is written under, for the
      * surface CSS to read for the coupled brightness/specular leg. Default
@@ -101,6 +101,8 @@ export interface UseLiquidPressOptions extends UseSpringPressOptions {
      * lively settle, never a taffy-pull.
      */
     el?: Ref<HTMLElement | null>;
+    /** Disable every activation path. A held press is released when this becomes true. */
+    disabled?: MaybeRefOrGetter<boolean | undefined>;
 }
 
 export interface UseLiquidPressReturn {
@@ -110,12 +112,18 @@ export interface UseLiquidPressReturn {
     press: () => void;
     /** Release the press to 0 (call on `pointerup`/`cancel`/`leave`). */
     release: () => void;
-    /** Pointer handlers ready to spread onto an element (the `useSpringPress` ergonomics). */
+    /** True after hydration, when JS exclusively owns the scale channel. */
+    armed: Readonly<Ref<boolean>>;
+    /** Pointer and keyboard handlers for the complete press lifecycle. */
     handlers: {
-        onPointerdown: () => void;
+        onPointerdown: (event?: PointerEvent) => void;
         onPointerup: () => void;
         onPointercancel: () => void;
         onPointerleave: () => void;
+        onPointerenter: (event: PointerEvent) => void;
+        onKeydown: (event: KeyboardEvent) => void;
+        onKeyup: (event: KeyboardEvent) => void;
+        onBlur: () => void;
     };
     /**
      * The coupled press style — the ONE `:style` object a consumer binds. Carries the
@@ -145,7 +153,6 @@ export function useLiquidPress(
     options: UseLiquidPressOptions = {},
 ): UseLiquidPressReturn {
     const shrinkDepth = options.shrinkDepth ?? 0.03;
-    const maxStretch = options.maxStretch ?? 1.04;
     const pressVar = options.pressVar ?? "--press-t";
     const engageThreshold = options.engageThreshold ?? 0.001;
     // BG.W-MOTION-SPINE — the press-tower collapse: squish ON (default) is the coupled
@@ -182,10 +189,55 @@ export function useLiquidPress(
               // `maxStretch` cap at rest 0.618, 1.0 at weight 0 (the observer/PRM fence). No
               // element → the static cap (still correct at rest weight). The reciprocal
               // squish is the GENTLE press register.
-              maxStretch: () => effectiveCap(options.el?.value ?? null, maxStretch),
+              maxStretch: () =>
+                  effectiveCap(
+                      options.el?.value ?? null,
+                      toValue(options.maxStretch ?? 1.04),
+                  ),
               squishLaw: "linear",
           })
         : null;
+
+    // No-JS and pre-hydration CSS owns the fallback scale. Once mounted, consumers
+    // stamp `data-press-armed` and this composable becomes the exclusive scale writer.
+    const armed = ref(false);
+    onMounted(() => {
+        armed.value = true;
+    });
+
+    const isDisabled = (): boolean => Boolean(toValue(options.disabled));
+    const activate = (): void => {
+        if (!isDisabled()) press.press();
+    };
+    const release = (): void => press.release();
+
+    if (options.disabled !== undefined) {
+        watch(isDisabled, (disabled) => {
+            if (disabled) release();
+        });
+    }
+
+    const isActivationKey = (event: KeyboardEvent): boolean =>
+        event.key === "Enter" || event.key === " " || event.key === "Spacebar";
+
+    const handlers = {
+        onPointerdown: (event?: PointerEvent): void => {
+            if (!event || event.button === 0) activate();
+        },
+        onPointerup: release,
+        onPointercancel: release,
+        onPointerleave: release,
+        onPointerenter: (event: PointerEvent): void => {
+            if ((event.buttons & 1) !== 0) activate();
+        },
+        onKeydown: (event: KeyboardEvent): void => {
+            if (isActivationKey(event) && !event.repeat) activate();
+        },
+        onKeyup: (event: KeyboardEvent): void => {
+            if (isActivationKey(event)) release();
+        },
+        onBlur: release,
+    };
 
     // Feed the live spring value as the squish travel via a WATCH (the side-effect site —
     // NOT inside a computed getter, which would mutate `useLiquidFlex`'s travel ref during
@@ -236,9 +288,10 @@ export function useLiquidPress(
 
     return {
         value: press.value,
-        press: press.press,
-        release: press.release,
-        handlers: press.handlers,
+        press: activate,
+        release,
+        armed: readonly(armed),
+        handlers,
         pressStyle,
     };
 }

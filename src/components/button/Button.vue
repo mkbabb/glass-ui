@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import type { ButtonHTMLAttributes, CSSProperties, HTMLAttributes } from 'vue'
-import { computed, watch } from 'vue'
+import { computed } from 'vue'
 import { Primitive, type PrimitiveProps } from 'reka-ui'
 import { type ButtonVariants, buttonVariants } from './'
 import { cn } from '../_shared/class-names'
 import type { Surface } from '../_shared/useSurfaceAxis'
-import { useSpringPress } from '../../composables/motion/useSpringPress'
-import { useLiquidFlex } from '../../composables/motion/useLiquidFlex'
+import { useLiquidPress } from '../../composables/motion/useLiquidPress'
 import { vSpecular } from '../../composables/glass'
 
 interface Props extends PrimitiveProps {
@@ -97,31 +96,8 @@ const surfaceDecoration = computed(() => {
   return undefined
 })
 
-// BB.W-BUTTON-GLASS (b) — the squishy interruptible press. `useSpringPress`
-// (response 0.25, ζ 0.7, ~5% overshoot — the iOS tap-press canonical, PRM-safe)
-// drives a 0..1 press value; `useLiquidFlex` projects that onto the volume-
-// preserving X/Y reciprocal squish (the SAME primitive the tabs indicator + the
-// dock orientation-morph speak — this is `useSpringPress`'s FIRST binary consumer,
-// the visual-load-bearing activation the audit names). The squish is SQUISH-ONLY
-// (a button has no size span), so it feeds the spring value as the `linear`-law
-// travel fraction, capped LOW at 1.04 (never a taffy-pull). The press is
-// INTERRUPTIBLE (a rapid re-press re-targets the spring mid-flight) and releases at
-// settle on the `--spring-snappy-duration` clock the spring carries.
-//
-// PRM-safe by construction: `useSpringPress` respects `prefers-reduced-motion`
-// (the spring snaps to the endpoint with zero in-between frames), so under reduce
-// the press still FUNCTIONS (the scale arrives) with the squish physics off.
-//
-// The iOS interactive press register. The press reads `useSpringPress`'s DEFAULTS —
-// the ONE source. The iOS interactive tap physics SHIP in the `press` SPRING_PRESETS
-// row (springPresets.ts: response 0.2 / ζ 0.8 — the sub-200ms iOS press window with a
-// tiny alive rebound); `useSpringPress` reads them via `springPreset("press")`. Button
-// stays consumer #1 of `useSpringPress` (direct composition). NO button-local
-// magic-number spring — the press physics live at the ONE table, never a per-call literal.
-// `.btn-punch` is default-ON for the loud hero
-// register (`primary-audacious`/`gold-audacious`) + opt-in via the `punch` prop on
-// any variant. ONE source for both the class emission AND the louder squish cap (no
-// drift between the CSS class and the JS amplitude).
+// Loud variants share the same press owner with a slightly wider, still fenced
+// reciprocal squish. The spring clock and gesture lifecycle remain canonical.
 const LOUD_VARIANTS = new Set<ButtonVariants['variant']>([
   'primary-audacious',
   'gold-audacious',
@@ -131,75 +107,10 @@ const punchActive = computed(
 )
 const punchDecoration = computed(() => (punchActive.value ? 'btn-punch' : undefined))
 
-const press = useSpringPress()
-const onPointerDown = () => {
-  if (!interactionDisabled.value) press.press()
-}
-const squish = useLiquidFlex({
-  from: 0,
-  to: 1,
-  axis: 'width',
-  // The fenced louder amplitude on `.btn-punch` (1.09) vs the calm workhorse (1.04),
-  // read LIVE per drive (the getter form). Both stay under the composed-area ≤1.14
-  // anti-taffy fence (the squish is volume-preserving, so peak area ≈ maxStretch).
+const press = useLiquidPress({
+  disabled: () => interactionDisabled.value,
+  pressVar: '--glass-btn-press-t',
   maxStretch: () => (punchActive.value ? 1.09 : 1.04),
-  squishLaw: 'linear',
-})
-
-// Feed the live spring value as the squish travel via a WATCH (the side-effect
-// site — NOT inside a computed getter, which would mutate `useLiquidFlex`'s travel
-// ref during render). The reciprocal stretch swells as the press travels and
-// relaxes to 1 as it settles — the SAME drive calls carry the release, no free-
-// running timer (the M5 determinism `useLiquidFlex` documents).
-watch(
-  () => press.value.value,
-  (t) => squish.squish(t),
-  { immediate: true, flush: 'sync' },
-)
-
-const pressStyle = computed<CSSProperties>(() => {
-  const t = press.value.value
-  const stretch = squish.stretch.value
-  // The press SHRINK (the iOS uniform contraction) couples WITH the volume-
-  // preserving reciprocal squish: the X axis reads `shrink · stretch`, the Y axis
-  // `shrink / stretch` (the volume preserved on the travel axis). `shrink` rides the
-  // CSS press-scale token (`--scale-press-btn`, 0.97) so the JS path AGREES with the
-  // CSS `.tap-squish active:scale` floor's magnitude — the JS is the ENHANCEMENT
-  // (the reciprocal deform), not a competing shrink. Inline `scale` wins over the
-  // CVA `active:scale-*` utility, so the hydrated path is the SINGLE press source;
-  // pre-hydration the CSS scale floor is the only press (the no-JS / SSR floor).
-  const shrink = 1 - t * 0.03
-  const scaleX = (shrink * stretch).toFixed(4)
-  const scaleY = (shrink / stretch).toFixed(4)
-  const style: CSSProperties = {
-    // The ONE press drive scalar the coupled specular lift + the optional
-    // `.glass-refract` lens read consume (surfaces.css / property-regs.css). The
-    // `:active` gleam couples a sub-perceptual brightness nudge on this drive so the
-    // glass reads as DEFORMING, not just shrinking.
-    '--glass-btn-press-t': t.toFixed(4),
-  } as CSSProperties
-  // BD.W-BUTTON-GLASS-CONSUME (§4b) — feed the SAME spring drive into the
-  // BD.W-CARTOON-CASTER ramp (`--cartoon-press-t`), so the inert `.cartoon-cast`
-  // child travels DOWN-LEFT + spreads on press, scaled by `--motion-weight` (the
-  // `.btn-punch` css sets `--motion-weight: 1` — the loud register). ONE press scalar
-  // drives the squish, the gleam, AND the cast — no second press var. Only emitted on
-  // the punch register (the calm workhorse carries no cast). BI.W-SHADOW-GRAMMAR
-  // (Law 4) — on the pill the cast carries a SOFT radius-following drop (`--shadow-lg`)
-  // not the hard offset stamp, so the press travel moves a soft drop (the punch
-  // weight) rather than the crescent.
-  if (punchActive.value) {
-    ;(style as Record<string, string>)['--cartoon-press-t'] = t.toFixed(4)
-  }
-  // Emit the JS reciprocal `scale` ONLY while the press is engaged (t past a
-  // sub-perceptual threshold) — at rest the inline `scale` is OMITTED so the CVA
-  // hover utilities (`hover:scale-(--scale-hover-btn)` on primary/gold-audacious)
-  // win unimpeded. The inline value wins over the CVA `active:scale-*` floor while
-  // pressed (the single-source press), then yields back to the utility cascade as it
-  // settles — no desync, no double-apply (the §Triumvirate single-source).
-  if (t > 0.001) {
-    style.scale = `${scaleX} ${scaleY}`
-  }
-  return style
 })
 
 // BB.W-LIQUIDHOVER — the moving-specular gleam AUTO-ARMS via the `v-specular`
@@ -235,7 +146,10 @@ const specularArmed = computed(() => GLASS_VARIANTS.has(props.variant ?? 'defaul
 // the directive's job now (a direct `el.style` host write, not a merged `:style`
 // object). The press squish overrides the CVA `scale` utility (the single-source press).
 const hostStyle = computed<CSSProperties>(() => ({
-  ...pressStyle.value,
+  ...press.pressStyle.value,
+  ...(punchActive.value
+    ? { '--cartoon-press-t': press.value.value.toFixed(4) }
+    : {}),
 }))
 
 // The refraction opt-in is a GLASS-register-only decoration (a `solid` button has
@@ -259,14 +173,19 @@ const liquidDecoration = computed(() =>
     :data-icon-only="iconOnly || undefined"
     :data-surface="surface"
     :data-loading="loading || undefined"
+    :data-press-armed="press.armed ? '' : undefined"
     :aria-busy="loading || undefined"
     v-bind="hostAttrs"
     :class="cn(buttonVariants({ variant, size, iconOnly, tone }), surfaceDecoration, liquidDecoration, punchDecoration, props.class)"
     :style="hostStyle"
-    @pointerdown="onPointerDown"
-    @pointerup="press.release"
-    @pointercancel="press.release"
-    @pointerleave="press.release"
+    @pointerdown="press.handlers.onPointerdown"
+    @pointerup="press.handlers.onPointerup"
+    @pointercancel="press.handlers.onPointercancel"
+    @pointerleave="press.handlers.onPointerleave"
+    @pointerenter="press.handlers.onPointerenter"
+    @keydown="press.handlers.onKeydown"
+    @keyup="press.handlers.onKeyup"
+    @blur="press.handlers.onBlur"
   >
     <!-- BD.W-BUTTON-GLASS-CONSUME (§4b) — the INERT moving cast child (the
          BD.W-CARTOON-CASTER inert-child pattern: a real aria-hidden child, NEVER a

@@ -122,6 +122,7 @@ const hostAttrs = computed(() =>
 // PRM-instant + compositor-only. The tab shape reads its own CSS press register.
 const PRESS = springPreset("press");
 const press = useLiquidPress({
+    disabled: () => props.disabled || isTab.value,
     squish: true,
     response: PRESS.response,
     dampingFraction: PRESS.dampingFraction,
@@ -155,10 +156,15 @@ function blockDisabledActivation(event: MouseEvent): void {
         v-bind="{ ...hostAttrs, ...stateAttrs }"
         :class="classes"
         :style="hostStyle"
-        @pointerdown="!isTab && !disabled && press.press()"
-        @pointerup="!isTab && press.release()"
-        @pointercancel="!isTab && press.release()"
-        @pointerleave="!isTab && press.release()"
+        :data-press-armed="!isTab && press.armed ? '' : undefined"
+        @pointerdown="press.handlers.onPointerdown"
+        @pointerup="press.handlers.onPointerup"
+        @pointercancel="press.handlers.onPointercancel"
+        @pointerleave="press.handlers.onPointerleave"
+        @pointerenter="press.handlers.onPointerenter"
+        @keydown="press.handlers.onKeydown"
+        @keyup="press.handlers.onKeyup"
+        @blur="press.handlers.onBlur"
         @click.capture="blockDisabledActivation"
     >
         <slot />

@@ -5,14 +5,7 @@ export { default as Button } from './Button.vue'
 export const buttonVariants = cva(
   // Base: compose with btn-pill from glass.css.
   // Four-state contract enforced per variant below; shared base locks down
-  // focus-visible ring, disabled geometry, and press scale via tokens.
-  //
-  // AW.W25 — `.tap-squish` carries the press scale onto the canonical spring
-  // channel (`transition: scale … var(--spring-snappy)`), so the button springs
-  // like the slider rather than snapping on `--ease-standard`. The button keeps
-  // its own slightly-softer `active:scale-(--scale-press-btn)` (0.97) — the
-  // utility-layer scale value wins over `.tap-squish`'s default `--scale-press`
-  // (0.96); only the spring TRANSITION channel is shared. ONE press source.
+  // focus-visible ring, disabled geometry, and the pre-hydration press floor.
   //
   // AW.W26 — the modern shadcn-2025 icon-sizing idiom: an un-sized child `<svg>`
   // resolves the glyph register, every `<svg>` is non-shrinking + pointer-transparent.
@@ -24,7 +17,7 @@ export const buttonVariants = cva(
   // the base font reads `--control-text` (the scaled `text-sm` register — RED 3,
   // "font too small"), the un-sized glyph reads `--ui-glyph` (the scaled `size-4`
   // register — RED 4, glyph grows WITH the box), keeping the host-sized-icon escape.
-  'btn-pill tap-squish focus-ring whitespace-nowrap text-[length:var(--control-text)] font-medium cursor-pointer active:scale-(--scale-press-btn) disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-disabled [&_svg:not([class*=size-])]:size-(--ui-glyph) [&_svg]:shrink-0 [&_svg]:pointer-events-none',
+  'btn-pill tap-squish focus-ring whitespace-nowrap text-[length:var(--control-text)] font-medium cursor-pointer [--scale-press:var(--scale-press-btn)] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-disabled [&_svg:not([class*=size-])]:size-(--ui-glyph) [&_svg]:shrink-0 [&_svg]:pointer-events-none',
   {
     variants: {
       variant: {
@@ -185,7 +178,7 @@ export const buttonVariants = cva(
         // dark-arm.css dark) — one identity token, mode-adaptive by the cascade,
         // no raw-palette utility. The glass warmth carries the surface.
         ai: 'glass-wash btn-glass glass-capsule glass-capsule-hover text-(--accent-ai-ink) [--glass-accent:oklch(0.78_0.14_75)] [--glass-accent-strength:34%]',
-        link: 'text-primary underline-offset-4 hover:underline active:opacity-80 active:scale-100',
+        link: 'text-primary underline-offset-4 hover:underline active:opacity-80 [--scale-press:1]',
       },
       // BH.W-SIZE-UNIFY — the size axis is the SHARED ordinal (xs/sm/md/lg ∈ Size);
       // the middle rung is `md` (was `default`). The icon-only geometry split off

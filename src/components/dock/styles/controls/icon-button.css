@@ -121,6 +121,9 @@
            scale-only). Token-first — a consumer retunes via `--dock-control-press-bg`. */
         &:active:not(:disabled) {
             background: var(--dock-control-press-bg);
+        }
+
+        &:active:not(:disabled):not([data-press-armed]) {
             scale: var(--scale-press-dock);
         }
 

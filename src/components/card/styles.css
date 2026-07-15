@@ -354,7 +354,7 @@
        Y — real squash & stretch, NOT a uniform shrink. The CSS `:active` is the no-JS
        floor; `useLiquidPress` drives `--card-press-t` 0→1 for the continuous
        interruptible press the inert caster rides. */
-    &:active:not(:disabled) {
+    &:active:not(:disabled):not([data-press-armed]) {
         scale: 1.04 0.94;
     }
 }

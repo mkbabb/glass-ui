@@ -4,6 +4,42 @@ import { describe, expect, it, vi } from "vitest";
 import { Button } from "@glass/components/button/index";
 
 describe("Button", () => {
+    it("hands pointer and keyboard press state to the hydrated liquid owner", async () => {
+        vi.useFakeTimers();
+        const wrapper = mount(Button, { slots: { default: "Save" } });
+        const button = wrapper.get("button");
+
+        try {
+            expect(button.attributes("data-press-armed")).toBe("");
+            expect(button.classes().some((name) => name.startsWith("active:scale"))).toBe(
+                false,
+            );
+
+            await button.trigger("keydown", { key: "Enter" });
+            await vi.advanceTimersByTimeAsync(400);
+            expect(
+                Number(
+                    (button.element as HTMLElement).style.getPropertyValue(
+                        "--glass-btn-press-t",
+                    ),
+                ),
+            ).toBeGreaterThan(0.9);
+
+            await button.trigger("blur");
+            await vi.advanceTimersByTimeAsync(600);
+            expect(
+                Number(
+                    (button.element as HTMLElement).style.getPropertyValue(
+                        "--glass-btn-press-t",
+                    ),
+                ),
+            ).toBeLessThan(0.1);
+        } finally {
+            wrapper.unmount();
+            vi.useRealTimers();
+        }
+    });
+
     it("renders the requested button variant and size", () => {
         const wrapper = mount(Button, {
             props: {

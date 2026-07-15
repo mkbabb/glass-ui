@@ -129,14 +129,14 @@
            scale of its own — the translate/squish are the morph primitive's writes) */
         scale: 1.015;
     }
-    .glass-capsule-hover:active {
+    .glass-capsule-hover:not([data-press-armed]):active {
         /* the --scale-press snap */
         scale: var(--scale-press-sm, 0.97);
     }
     @media (prefers-reduced-motion: reduce) {
         /* the lift is motion; the specular catch (a static legibility cue) stays. */
         .glass-capsule-hover:hover,
-        .glass-capsule-hover:active {
+        .glass-capsule-hover:not([data-press-armed]):active {
             scale: 1;
         }
     }

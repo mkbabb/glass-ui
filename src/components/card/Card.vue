@@ -281,6 +281,7 @@ const specularTokenStyle = computed<CSSProperties>(() =>
 // `pressable` — the rest-state press value is 0 so an un-pressable card is byte-
 // identical to HEAD (no `scale`, no `--card-press-t` paint).
 const press = useLiquidPress({
+    disabled: () => !pressable.value,
     pressVar: "--card-press-t",
     shrinkDepth: 0.02,
     maxStretch: 1.03,
@@ -376,6 +377,7 @@ useStalePropWarning("Card", ["flush"]);
         :data-surface="surface"
         :data-grid="grid"
         :data-pressable="pressable || undefined"
+        :data-press-armed="pressable && press.armed ? '' : undefined"
         :data-motion="motionAxis.dataMotion.value"
         :data-variant="variant || undefined"
         :data-selected="
@@ -384,10 +386,14 @@ useStalePropWarning("Card", ["flush"]);
         :as="as"
         :as-child="asChild"
         :style="hostStyle"
-        @pointerdown="pressable ? press.press() : undefined"
-        @pointerup="pressable ? press.release() : undefined"
-        @pointercancel="pressable ? press.release() : undefined"
-        @pointerleave="pressable ? press.release() : undefined"
+        @pointerdown="press.handlers.onPointerdown"
+        @pointerup="press.handlers.onPointerup"
+        @pointercancel="press.handlers.onPointercancel"
+        @pointerleave="press.handlers.onPointerleave"
+        @pointerenter="press.handlers.onPointerenter"
+        @keydown="press.handlers.onKeydown"
+        @keyup="press.handlers.onKeyup"
+        @blur="press.handlers.onBlur"
         :class="
             cn(
                 'rounded-card text-card-foreground scrollbar-hidden',
