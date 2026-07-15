@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glass-ui.dev/schemas/tranche/wave-receipt-schema.json",
+  "title": "BI.W-P001+ acyclic terminal wave receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "authority",
+    "formationDigest",
+    "sourceBase",
+    "waveId",
+    "status",
+    "integrationParent",
+    "receiptPath",
+    "dependsOn",
+    "integrationRequires",
+    "projectionMode",
+    "subjectOutcomes",
+    "evidence",
+    "terminalRationale",
+    "intendedTrailers",
+    "payloadDigestExcludingCurrentIntegrationAdjuncts"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "authority": { "const": "GIT_FIRST_PARENT_PLUS_COMMITTED_RECEIPTS" },
+    "formationDigest": { "$ref": "#/$defs/sha256" },
+    "sourceBase": { "$ref": "#/$defs/gitSha" },
+    "waveId": { "$ref": "#/$defs/waveId" },
+    "status": { "enum": ["DONE", "DEAD"] },
+    "integrationParent": { "$ref": "#/$defs/gitSha" },
+    "receiptPath": { "type": "string", "minLength": 1 },
+    "dependsOn": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/anyWaveId" }
+    },
+    "integrationRequires": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/anyWaveId" }
+    },
+    "projectionMode": { "enum": ["NONE", "ACTIVATE", "REFRESH"] },
+    "subjectOutcomes": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/subjectOutcome" }
+    },
+    "evidence": { "$ref": "#/$defs/evidenceIndex" },
+    "terminalRationale": { "type": "string", "minLength": 1 },
+    "intendedTrailers": { "$ref": "#/$defs/intendedTrailers" },
+    "payloadDigestExcludingCurrentIntegrationAdjuncts": { "$ref": "#/$defs/payloadDigest" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "gitSha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "waveId": {
+      "allOf": [
+        { "$ref": "#/$defs/anyWaveId" },
+        { "not": { "const": "BI.W-P000" } }
+      ]
+    },
+    "anyWaveId": { "type": "string", "pattern": "^BI\\.W-P(?:[0-9]{3}|[1-9][0-9]{3,})$" },
+    "gitObject": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "oid"],
+          "properties": {
+            "mode": { "type": "string", "pattern": "^[0-9]{6}$" },
+            "oid": { "$ref": "#/$defs/gitSha" }
+          }
+        },
+        { "type": "null" }
+      ]
+    },
+    "subjectOutcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "targetPath", "plannedAction", "disposition", "preimage", "postimage"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "targetPath": {
+          "anyOf": [
+            { "type": "string", "minLength": 1 },
+            { "type": "null" }
+          ]
+        },
+        "plannedAction": { "enum": ["create", "delete", "modify", "rename", "repair", "verify"] },
+        "disposition": { "enum": ["CREATED", "DELETED", "MODIFIED", "RENAMED", "VERIFIED_UNCHANGED", "WITHDRAWN"] },
+        "preimage": { "$ref": "#/$defs/gitObject" },
+        "postimage": { "$ref": "#/$defs/gitObject" }
+      }
+    },
+    "evidenceEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "kind", "status", "sha256", "bytes"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "kind": { "type": "string", "minLength": 1 },
+        "status": { "enum": ["PASS", "RED"] },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "bytes": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "evidenceIndex": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "sha256", "entryCount", "entries"],
+      "properties": {
+        "algorithm": { "const": "sha256(canonical-wave-evidence-index-v1)" },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "entryCount": { "type": "integer", "minimum": 1 },
+        "entries": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/evidenceEntry" }
+        }
+      }
+    },
+    "intendedTrailers": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["names", "values", "externallyDerived"],
+      "properties": {
+        "names": {
+          "oneOf": [
+            { "const": ["BI-Wave", "BI-Status", "BI-Receipt-SHA256", "BI-Formation-SHA256"] },
+            { "const": ["BI-Wave", "BI-Status", "BI-Receipt-SHA256", "BI-Formation-SHA256", "BI-Attestation-SHA256", "BI-FINAL-SHA256"] }
+          ]
+        },
+        "values": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["BI-Wave", "BI-Status", "BI-Formation-SHA256"],
+          "properties": {
+            "BI-Wave": { "$ref": "#/$defs/waveId" },
+            "BI-Status": { "enum": ["DONE", "DEAD"] },
+            "BI-Formation-SHA256": { "$ref": "#/$defs/sha256" }
+          }
+        },
+        "externallyDerived": {
+          "oneOf": [
+            { "const": ["BI-Receipt-SHA256"] },
+            { "const": ["BI-Receipt-SHA256", "BI-Attestation-SHA256", "BI-FINAL-SHA256"] }
+          ]
+        }
+      }
+    },
+    "payloadDigest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "sha256", "entryCount", "excludes"],
+      "properties": {
+        "algorithm": { "const": "sha256(canonical-git-stage0-index-v1)" },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "entryCount": { "type": "integer", "minimum": 1 },
+        "excludes": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}
