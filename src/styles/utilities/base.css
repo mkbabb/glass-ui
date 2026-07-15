@@ -103,7 +103,7 @@
         inline-size: 100%;
         min-inline-size: 0;
     }
-    .labeled-field:has(:user-invalid),
+    .labeled-field:has(:where(:user-invalid, [aria-invalid="true"])),
     .labeled-field.has-error {
         --field-label-color: var(--destructive);
     }
@@ -119,12 +119,12 @@
         color: var(--destructive);
         margin-block-start: 0.25rem;
     }
-    .labeled-field:has(:user-invalid) .labeled-field-error,
+    .labeled-field:has(:where(:user-invalid, [aria-invalid="true"])) .labeled-field-error,
     .labeled-field.has-error .labeled-field-error {
         display: block;
     }
     /* Hide the error text once the field reads valid (the user corrected it). */
-    .labeled-field:has(:user-valid) .labeled-field-error,
+    .labeled-field:has(:where(:user-valid, [aria-invalid="false"])) .labeled-field-error,
     .labeled-field.has-valid .labeled-field-error {
         display: none;
     }

@@ -1,19 +1,16 @@
 <script setup lang="ts">
-// Form-validity vocabulary in one place — the `useUserInvalidAria` composable
-// drives the `aria-invalid` / error-message wiring across the fields below.
-import { onMounted, onUnmounted, ref } from "vue";
+import { nextTick, onMounted, onUnmounted, ref } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { useUserInvalidAria } from "@glass/composables/dom/useUserInvalidAria";
-import { Input } from "@glass/components/input";
 import { Textarea } from "@glass/components/textarea";
-import { Label } from "@glass/components/label";
 import { Button } from "@glass/components/button";
-import { LabeledInput } from "@glass/components/labeled-field";
+import { LabeledField, LabeledInput } from "@glass/components/labeled-field";
 
 // The bridge: `aria-invalid` tracks the visual `:user-invalid` state.
 const { bind } = useUserInvalidAria();
 const formEl = ref<HTMLFormElement | null>(null);
+const hasErrors = ref(false);
 
 onMounted(() => {
     if (formEl.value) {
@@ -23,97 +20,108 @@ onMounted(() => {
 });
 
 const bio = ref("");
+const email = ref("");
+const zip = ref("");
 const name = ref("");
+
+async function submit(): Promise<void> {
+    const form = formEl.value;
+    if (!form) return;
+
+    const firstInvalid = form.querySelector<HTMLElement>(":invalid");
+    hasErrors.value = Boolean(firstInvalid);
+    await nextTick();
+    firstInvalid?.focus();
+}
+
+function clearSummaryWhenValid(): void {
+    if (hasErrors.value && formEl.value?.checkValidity()) hasErrors.value = false;
+}
 </script>
 
 <template>
     <StoryPage>
-        
-            <StorySection heading="Validity vocabulary" gap="lg">
-                <p class="text-sm text-muted-foreground">
-                    <code class="font-mono text-xs">:user-invalid</code> paints
-                    the field on field-exit (blur), never on mount;
-                    <code class="font-mono text-xs">useUserInvalidAria</code>
-                    bridges that visual state to
-                    <code class="font-mono text-xs">aria-invalid</code> so a
-                    screen reader tracks it. Submit empties to flag every
-                    required field at once.
-                </p>
+        <StorySection heading="Form validation" gap="lg">
+            <p class="max-w-xl text-sm text-muted-foreground">
+                Errors wait for field exit or submit, then clear as each native value becomes valid.
+                Submit moves focus to the first invalid field.
+            </p>
 
-                <form
-                    ref="formEl"
-                    class="glass-card grid max-w-md gap-4 p-6"
-                    novalidate
-                    @submit.prevent
-                >
-                    <div class="grid gap-2">
-                        <Label for="fv-email" required>Email</Label>
-                        <Input
-                            id="fv-email"
-                            type="email"
-                            required
-                            autocomplete="email"
-                            inputmode="email"
-                            enterkeyhint="next"
-                            placeholder="you@example.com"
-                        />
-                    </div>
+            <form
+                ref="formEl"
+                class="glass-card grid max-w-lg gap-5 p-6 sm:p-7"
+                novalidate
+                @input="clearSummaryWhenValid"
+                @submit.prevent="submit"
+            >
+                <div role="status" aria-atomic="true">
+                    <p
+                        v-if="hasErrors"
+                        class="border-s-2 border-destructive ps-3 text-sm text-destructive"
+                    >
+                        Some details need attention. Complete the highlighted fields.
+                    </p>
+                </div>
 
-                    <div class="grid gap-2">
-                        <Label for="fv-zip" required>ZIP</Label>
-                        <Input
-                            id="fv-zip"
-                            type="text"
-                            required
-                            inputmode="numeric"
-                            pattern="[0-9]{5}"
-                            autocomplete="postal-code"
-                            placeholder="27606"
-                        />
-                    </div>
+                <div class="grid gap-4 sm:grid-cols-2">
+                    <LabeledInput
+                        v-model="email"
+                        label="Email"
+                        type="email"
+                        required
+                        error-live="off"
+                        autocomplete="email"
+                        inputmode="email"
+                        enterkeyhint="next"
+                        placeholder="you@example.com"
+                    >
+                        <template #error>Enter a valid email address.</template>
+                    </LabeledInput>
 
-                    <div class="grid gap-2">
-                        <Label for="fv-bio">Bio (autosize)</Label>
-                        <Textarea
-                            id="fv-bio"
-                            v-model="bio"
-                            autosize
-                            placeholder="Grows with content via field-sizing…"
-                        />
-                    </div>
+                    <LabeledInput
+                        v-model="zip"
+                        label="ZIP"
+                        type="text"
+                        required
+                        error-live="off"
+                        inputmode="numeric"
+                        pattern="[0-9]{5}"
+                        autocomplete="postal-code"
+                        enterkeyhint="next"
+                        placeholder="27606"
+                    >
+                        <template #error>Enter a five-digit ZIP code.</template>
+                    </LabeledInput>
 
-                    <Button type="submit">Submit</Button>
-                </form>
-            </StorySection>
-
-            <StorySection heading="LabeledInput — required + error slot" gap="lg">
-                <p class="text-sm text-muted-foreground">
-                    The <code class="font-mono text-xs">required</code> prop threads
-                    the asterisk onto the label and the native attribute onto the
-                    control; the <code class="font-mono text-xs">error</code> slot
-                    reveals on <code class="font-mono text-xs">:has(:user-invalid)</code>.
-                </p>
-                <form class="max-w-md" novalidate @submit.prevent>
                     <LabeledInput
                         v-model="name"
                         label="Workspace name"
-                        tooltip="Shown in the sidebar"
                         required
+                        error-live="off"
+                        autocomplete="organization"
+                        enterkeyhint="next"
+                        placeholder="Studio"
+                        class="sm:col-span-2"
                     >
                         <template #error>A workspace name is required.</template>
                     </LabeledInput>
-                </form>
-            </StorySection>
+                </div>
 
-            <StorySection heading="Native customizable &lt;select&gt;" gap="lg">
-                <p class="text-sm text-muted-foreground">
-                    The customizable native <code class="font-mono text-xs">&lt;select&gt;</code>
-                    (<code class="font-mono text-xs">appearance: base-select</code>) is
-                    Chromium-only for now. glass-ui does not ship it as a primitive; the
-                    reka-ui <code class="font-mono text-xs">&lt;Select&gt;</code> stays the
-                    default rich path.
-                </p>
-            </StorySection>
-        
+                <LabeledField label="Bio">
+                    <template #default="{ controlId }">
+                        <Textarea
+                            :id="controlId"
+                            v-model="bio"
+                            autosize
+                            placeholder="A short introduction…"
+                        />
+                    </template>
+                </LabeledField>
+
+                <div class="flex justify-end border-t border-border/50 pt-4">
+                    <Button type="submit">Review details</Button>
+                </div>
+            </form>
+        </StorySection>
     </StoryPage>
 </template>

@@ -42,7 +42,7 @@
             v-if="$slots.error"
             :id="errorId"
             class="labeled-field-error"
-            aria-live="polite"
+            :aria-live="errorLive === 'off' ? undefined : errorLive"
         >
             <slot name="error" />
         </div>
@@ -91,7 +91,9 @@ import { cn } from "../_shared/class-names";
  * so the message is announced when shown. The region's id is exposed as the
  * default slot's `errorId` slot-prop so the slotted control can bind
  * `aria-errormessage="errorId"` (the four wrappers auto-wire it; a raw
- * `<LabeledField>` slot binds it manually).
+ * `<LabeledField>` slot binds it manually). It is polite by default; a form
+ * with one summary live region can set `errorLive="off"` to avoid duplicate
+ * submit announcements.
  *
  * # LabeledField vs ConfiguratorRow — recorded divergence (AZ.W-METRIC-UNIFY §B)
  *
@@ -109,11 +111,17 @@ import { cn } from "../_shared/class-names";
  * (NOT a forced merge — no ≥2-consumer shared-chassis need surfaced) in
  * `docs/precepts/design-idioms.md §9`, alongside the `cn`/`focus-ring` keeps.
  */
-defineProps<{
+withDefaults(defineProps<{
     label: string;
     tooltip?: string;
     labelClass?: HTMLAttributes["class"];
     required?: boolean;
+    /**
+     * Controls whether this field's error announces itself. A form-level
+     * summary can set this to `off` so one submit does not create competing
+     * live-region announcements.
+     */
+    errorLive?: "off" | "polite" | "assertive";
     /**
      * AZ.W-BLOB-REDRESS — render the field's own label `sr-only` (kept in the
      * DOM for the control↔label a11y association) instead of visibly. Use when
@@ -131,7 +139,9 @@ defineProps<{
      * REQ-sec20 horizontal-action case the kf-G3 row booked.
      */
     horizontal?: boolean;
-}>();
+}>(), {
+    errorLive: "polite",
+});
 
 const errorId = useId();
 // AU.W3 (a11y B3-1) — the for/id binding. `controlId` is exposed as a slot-prop
