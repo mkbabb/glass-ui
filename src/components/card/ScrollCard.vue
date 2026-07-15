@@ -73,6 +73,8 @@ const hostStyle = computed(() => ({ "--scroll-card-max-height": props.maxHeight 
         :specular="specular"
         :grain="false"
         tabindex="0"
+        role="region"
+        aria-label="Scrollable content"
         data-slot="scroll-card"
         :style="hostStyle"
         :class="['scroll-card', 'card-scroll-host', props.class]"

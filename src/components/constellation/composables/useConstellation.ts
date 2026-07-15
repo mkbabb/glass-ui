@@ -205,6 +205,11 @@ export function useConstellation(
     // WebGL2 instanced twin).
     let handle: ReturnType<typeof createGpuSubstrate> | null = null;
     let resolvedBackend: GpuBackend = "webgpu";
+    let cleanup = (): void => {
+        pointerField.dispose();
+        handle?.dispose();
+    };
+    onUnmounted(() => cleanup());
 
     // The hoisted client→canvas-local px mapper (the deck-scale invariant). null pre-mount.
     const toLocalRef = ref<
@@ -281,14 +286,14 @@ export function useConstellation(
             target.addEventListener("pointerleave", onPointerLeave);
             if (warpOnClick) target.addEventListener("pointerdown", onClick);
         }
-        onUnmounted(() => {
+        cleanup = () => {
             target.removeEventListener("pointermove", onPointerMove);
             target.removeEventListener("pointerenter", onPointerEnter);
             target.removeEventListener("pointerleave", onPointerLeave);
             target.removeEventListener("pointerdown", onClick);
             pointerField.dispose();
             handle?.dispose();
-        });
+        };
 
         // ── The per-frame resolve (the ONE JS math source + the shared pointer tick) ──
         const resolveFrame = (timeSec: number): ConstellationRenderState | null => {

@@ -276,6 +276,7 @@ export function useDockSearch<T extends SearchableItem = SearchableItem>(
     }
 
     onScopeDispose(() => {
+        if (isSearchArmed.value) dockState.release();
         abortController?.abort();
         abortController = null;
     });

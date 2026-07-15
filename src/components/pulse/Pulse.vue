@@ -89,6 +89,8 @@ const auraScaleMax = computed(() => ({
   />
   <div
     v-else
+    role="status"
+    aria-label="Loading"
     :class="cn(
       'inline-flex items-center',
       variant === 'dots' && 'gap-1',

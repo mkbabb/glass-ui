@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { computed, nextTick, onMounted, ref, useTemplateRef, watch } from "vue";
+import {
+    computed,
+    nextTick,
+    onBeforeUnmount,
+    onMounted,
+    ref,
+    useTemplateRef,
+    watch,
+} from "vue";
 import type { Component } from "vue";
 import { useSelectionGroup } from "../../composables/motion/useSelectionGroup";
 import { useOptionalDockContext } from "./composables/dockContext";
@@ -179,6 +187,10 @@ function onRailFocusOut(e: FocusEvent) {
     railHolds.value = false;
     dock?.release();
 }
+
+onBeforeUnmount(() => {
+    if (railHolds.value) dock?.release();
+});
 </script>
 
 <template>

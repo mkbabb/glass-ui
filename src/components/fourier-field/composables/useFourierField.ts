@@ -283,7 +283,9 @@ export function useFourierField(
     }
 
     let handle: ReturnType<typeof createGpuSubstrate> | null = null;
+    let disposed = false;
     const ensure = (): ReturnType<typeof createGpuSubstrate> | null => {
+        if (disposed) return null;
         const canvas = canvasRef.value;
         if (!canvas) return null;
         if (!handle) {
@@ -342,6 +344,8 @@ export function useFourierField(
             ensure()?.wake();
         },
         dispose: () => {
+            if (disposed) return;
+            disposed = true;
             const canvas = canvasRef.value;
             if (canvas) unbindPointer(canvas);
             pointer.dispose();

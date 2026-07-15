@@ -81,6 +81,7 @@ export function useLiquidGrid(
     let lastFrameSec = 0;
 
     let handle: ReturnType<typeof createGpuSubstrate> | null = null;
+    let disposed = false;
 
     // The per-frame pointer hook the setups invoke from inside their frame callback (the
     // no-own-rAF discipline — the renderer's loop feeds the push-API tick). It advances the
@@ -158,6 +159,7 @@ export function useLiquidGrid(
     }
 
     const ensure = (): ReturnType<typeof createGpuSubstrate> | null => {
+        if (disposed) return null;
         const canvas = canvasRef.value;
         if (!canvas) return null;
         if (!handle) {
@@ -206,6 +208,8 @@ export function useLiquidGrid(
             return handle?.reducedMotion ?? false;
         },
         dispose: () => {
+            if (disposed) return;
+            disposed = true;
             const canvas = canvasRef.value;
             if (canvas) unbindPointer(canvas);
             pointer.dispose();

@@ -63,6 +63,7 @@ const crescendoStyle = computed(() => {
     <ProgressRoot
         data-slot="progress"
         v-bind="delegatedProps"
+        :model-value="props.indeterminate ? null : props.modelValue"
         :class="
             cn(
                 'relative h-4 w-full overflow-hidden rounded-pill bg-[var(--progress-track,var(--progress-track-on-glass))] progress-gradient-rail',
