@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from "vue";
-import { computed, nextTick, ref, watch } from "vue";
+import { computed, nextTick, ref, useId, watch } from "vue";
 import { cn } from "../_shared/class-names";
 import { pagerWindow } from "./pagerWindow";
 import { usePagerWorm } from "./composables/usePagerWorm";
@@ -33,9 +33,9 @@ import { usePagerWorm } from "./composables/usePagerWorm";
      The bed + worm layers are PRESENTATIONAL.
 
    THE PAINT ARM (ruling 13). Arm A (the shipped register) merges the barbell with the
-   worm-scoped `#pager-worm-goo` filter (a true smooth throat — single-body peak 0.72 >
+   instance-scoped worm filter (a true smooth throat — single-body peak 0.72 >
    the 0.33 threshold). Arm B (the `@supports`-not degrade FLOOR) renders the un-merged
-   clip-path barbell (`#pager-neck-throat`) — a VISIBLE honest partial, NEVER the empty
+   instance-scoped neck clip-path — a VISIBLE honest partial, NEVER the empty
    pill. No dual path at 13px: the filter is the sole paint; the clip is reached ONLY on
    an engine that cannot ref an SVG filter.
 
@@ -84,6 +84,12 @@ const emit = defineEmits<{ (e: "select", index: number): void }>();
 
 /** v-model:active — the active 0-based index. */
 const active = defineModel<number>("active", { default: 0 });
+
+// SVG resource references resolve document-wide. Namespace both definitions and
+// their consumers per component instance so co-mounted pagers cannot alias.
+const resourceId = useId().replace(/[^a-zA-Z0-9_-]/g, "");
+const wormFilterId = `pager-worm-filter-${resourceId}`;
+const neckClipId = `pager-neck-clip-${resourceId}`;
 
 const rootEl = ref<HTMLElement | null>(null);
 // the WORM layer — the bodies/neck's positioning context (the coordinate origin the
@@ -250,6 +256,10 @@ function onKeydown(e: KeyboardEvent): void {
         :aria-label="ariaLabel"
         :aria-orientation="pattern === 'group' ? undefined : orientation"
         :data-orientation="orientation"
+        :style="{
+            '--pager-goo-filter': `url(#${wormFilterId})`,
+            '--pager-neck-clip': `url(#${neckClipId})`,
+        }"
         @keydown="onKeydown"
         :class="
             cn(
@@ -260,24 +270,42 @@ function onKeydown(e: KeyboardEvent): void {
             )
         "
     >
-        <!-- ONE hidden SVG defs, mounted per rail (aria-hidden, 0×0). The concave
-             NECK-THROAT clipPath is the Arm B degrade FLOOR — a structural hourglass
-             waist reached ONLY under `@supports not (filter: url())`. The metaball goo
-             `<filter>` lives ONCE at the app/shell root (`<GooFilter>`); the worm layer
-             references `#pager-worm-goo` by id. -->
+        <!-- One non-zero Safari-safe SVG definition host per pager. Both resources
+             and every url() consumer share this instance's stable namespace. -->
         <svg
             class="pager-worm-defs"
-            width="0"
-            height="0"
+            width="1"
+            height="1"
             aria-hidden="true"
             focusable="false"
         >
             <defs>
+                <filter
+                    :id="wormFilterId"
+                    color-interpolation-filters="sRGB"
+                    x="-50%"
+                    y="-50%"
+                    width="200%"
+                    height="200%"
+                >
+                    <feGaussianBlur
+                        in="SourceGraphic"
+                        stdDeviation="4"
+                        result="blur"
+                    />
+                    <feColorMatrix
+                        in="blur"
+                        mode="matrix"
+                        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -6"
+                        result="goo"
+                    />
+                    <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+                </filter>
                 <!-- the concave NECK-THROAT — objectBoundingBox cubic-Bézier sides
                      pulling IN to the 0.34 waist (a SMOOTH concave throat, NOT a faceted
                      polygon, NOT `inset()`). Safari-safe (objectBoundingBox clipPath
                      universally supported). Arm B (the `@supports`-not floor) only. -->
-                <clipPath id="pager-neck-throat" clipPathUnits="objectBoundingBox">
+                <clipPath :id="neckClipId" clipPathUnits="objectBoundingBox">
                     <path
                         d="M0,0 C0.25,0 0.36,0.34 0.5,0.34 C0.64,0.34 0.75,0 1,0 L1,1 C0.75,1 0.64,0.66 0.5,0.66 C0.36,0.66 0.25,1 0,1 Z"
                     />
@@ -364,9 +392,6 @@ function onKeydown(e: KeyboardEvent): void {
     /* the worm layer translucency, ONCE at the layer — a solid WET worm (still
        translucent glass, not opaque). */
     --pager-worm-layer-opacity: 0.65;
-    /* the worm-scoped filter — a consumer can swap a wetter/crisper graph. */
-    --pager-goo-filter: url(#pager-worm-goo);
-
     /* the travel-squish scalar (1 at rest; the worm bodies read it via the CSS `scale`
        reciprocal). Written per-frame off `useLiquidFlex` by the worm driver. */
     --stretch: 1;
@@ -380,6 +405,13 @@ function onKeydown(e: KeyboardEvent): void {
     --pager-hit-inset: -2px; /* = (24px cell − 28px target) / 2 — the flow-cell pull-back */
 
     position: relative; /* the bed + worm layers anchor to the rail box */
+}
+
+.pager-worm-defs {
+    position: absolute;
+    inset: -9999px auto auto -9999px;
+    overflow: hidden;
+    pointer-events: none;
 }
 
 /* THE BED LAYER — N crisp CSS circles, NEVER filtered. Mirrors the button grid so a
@@ -431,7 +463,7 @@ function onKeydown(e: KeyboardEvent): void {
     position: absolute;
     inset: 0;
     pointer-events: none; /* the buttons ABOVE own the hit-targets */
-    filter: var(--pager-goo-filter, url(#pager-worm-goo)); /* the metaball MERGE (Arm A) */
+    filter: var(--pager-goo-filter); /* the instance-local metaball MERGE (Arm A) */
     opacity: var(--pager-worm-layer-opacity, 0.65); /* the translucency, ONCE */
     color: var(--pager-dot-active); /* the solid ink the masses use */
     will-change: transform; /* force a compositor layer — Safari re-raster */
@@ -477,7 +509,7 @@ function onKeydown(e: KeyboardEvent): void {
 /* THE CONCAVE NECK — the welling bridge between the two bodies. A rect that the driver
    spans (`scaleX(gap/D)`) + wells (`scaleY(neckGirth)`); the girth-following opacity
    (wells in → pinches out). Under Arm A the goo filter fuses it; under Arm B (the
-   `@supports`-not floor) the `#pager-neck-throat` clip carves the structural waist. */
+   `@supports`-not floor) the local neck clip carves the structural waist. */
 .goo-neck {
     border-radius: 0;
     opacity: 0; /* the driver writes the girth-following opacity */
@@ -488,12 +520,12 @@ function onKeydown(e: KeyboardEvent): void {
    VISIBLE honest partial (the structural hourglass waist), NEVER the empty pill. The
    filter is the SOLE 13px paint on every supporting engine; the clip is reached ONLY
    here (no dual path at 13px). */
-@supports not (filter: url(#pager-worm-goo)) {
+@supports not (filter: url("#pager-filter-support-probe")) {
     .pager-worm-layer {
         filter: none;
     }
     .goo-neck {
-        clip-path: url(#pager-neck-throat);
+        clip-path: var(--pager-neck-clip);
     }
 }
 

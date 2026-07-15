@@ -27,6 +27,10 @@ const StickyNameCell = defineComponent({
     },
 });
 
+const NestedButtonCell = defineComponent({
+    template: '<button type="button" data-nested-action>Open</button>',
+});
+
 const columns: DataTableColumn[] = [
     {
         key: "name",
@@ -37,6 +41,7 @@ const columns: DataTableColumn[] = [
 
 function mountTable(rows: Row[], props: Record<string, unknown> = {}) {
     return mount(DataTable as Component, {
+        attachTo: document.body,
         props: {
             columns,
             rows,
@@ -55,6 +60,7 @@ function rowText(wrapper: VueWrapper, index: number): string {
 
 afterEach(() => {
     vi.restoreAllMocks();
+    vi.unstubAllGlobals();
 });
 
 describe("DataTable page defineModel round-trip", () => {
@@ -116,11 +122,121 @@ describe("DataTable page defineModel round-trip", () => {
                 infinite: true,
             },
         });
-        await wrapper.find("thead th").trigger("click");
+        await wrapper.find("thead th button").trigger("click");
         expect(wrapper.emitted("update:sort")?.at(-1)?.[0]).toEqual({
             key: "name",
             direction: "asc",
         });
+    });
+});
+
+describe("DataTable interaction semantics", () => {
+    it("keeps sortable-header focus and exposes truthful aria-sort", async () => {
+        const sortableColumns: DataTableColumn[] = [
+            { key: "name", label: "Name", sortable: true },
+        ];
+        const wrapper = mountTable([{ _id: "1", name: "Ada" }], {
+            columns: sortableColumns,
+            sort: { key: "name", direction: "asc" },
+        });
+        const head = wrapper.find("thead th");
+        const command = head.find("button");
+
+        expect(command.text()).toContain("Name");
+        expect(head.attributes("aria-sort")).toBe("ascending");
+        (command.element as HTMLButtonElement).focus();
+        await command.trigger("click");
+        await wrapper.setProps({ sort: { key: "name", direction: "desc" } });
+
+        expect(head.attributes("aria-sort")).toBe("descending");
+        expect(document.activeElement).toBe(command.element);
+    });
+
+    it("leaves rows noninteractive unless controlled selection is enabled", async () => {
+        const wrapper = mountTable([{ _id: "1", name: "Ada" }]);
+        const row = wrapper.find("tbody tr");
+
+        expect(row.attributes("tabindex")).toBeUndefined();
+        expect(row.attributes("aria-selected")).toBeUndefined();
+        expect(row.classes()).not.toContain("cursor-pointer");
+        await row.trigger("click");
+        expect(wrapper.emitted("select")).toBeUndefined();
+    });
+
+    it("does not turn a nested button click into row selection", async () => {
+        const wrapper = mountTable([{ _id: "1", name: "Ada" }], {
+            columns: [
+                {
+                    key: "name",
+                    label: "Name",
+                    component: markRaw(NestedButtonCell),
+                },
+            ],
+            selectable: true,
+            selectedRowId: null,
+        });
+
+        await wrapper.find("[data-nested-action]").trigger("click");
+        expect(wrapper.emitted("update:selectedRowId")).toBeUndefined();
+        expect(wrapper.emitted("select")).toBeUndefined();
+    });
+
+    it("selects from keyboard through stable row identity and retains focus", async () => {
+        const ada = { _id: "1", name: "Ada" };
+        const grace = { _id: "2", name: "Grace" };
+        const wrapper = mountTable([ada, grace], {
+            selectable: true,
+            selectedRowId: "1",
+        });
+        const rows = wrapper.findAll("tbody tr");
+
+        expect(rows[0].attributes("aria-selected")).toBe("true");
+        expect(rows[1].attributes("aria-selected")).toBe("false");
+        (rows[1].element as HTMLElement).focus();
+        await rows[1].trigger("keydown", { key: "Enter" });
+
+        expect(wrapper.emitted("update:selectedRowId")?.at(-1)?.[0]).toBe("2");
+        expect(wrapper.emitted("select")?.at(-1)?.[0]).toStrictEqual(grace);
+
+        await wrapper.setProps({ rows: [grace, ada], selectedRowId: "2" });
+        const movedGrace = wrapper.findAll("tbody tr")[0];
+        expect(movedGrace.attributes("aria-selected")).toBe("true");
+        expect(document.activeElement).toBe(movedGrace.element);
+    });
+
+    it("projects the same controlled selection contract onto responsive cards", async () => {
+        class NarrowResizeObserver {
+            constructor(private readonly callback: ResizeObserverCallback) {}
+            observe(target: Element) {
+                this.callback(
+                    [
+                        {
+                            target,
+                            contentRect: { width: 320, height: 240 },
+                        } as ResizeObserverEntry,
+                    ],
+                    this as unknown as ResizeObserver,
+                );
+            }
+            unobserve() {}
+            disconnect() {}
+        }
+        vi.stubGlobal("ResizeObserver", NarrowResizeObserver);
+        const wrapper = mountTable(
+            [
+                { _id: "1", name: "Ada" },
+                { _id: "2", name: "Grace" },
+            ],
+            { responsive: true, selectable: true, selectedRowId: "2" },
+        );
+
+        await vi.waitFor(() => expect(wrapper.find('[role="listbox"]').exists()).toBe(true));
+        const cards = wrapper.findAll('[role="option"]');
+        expect(cards).toHaveLength(2);
+        expect(cards[1].attributes("aria-selected")).toBe("true");
+
+        await cards[0].trigger("keydown", { key: " " });
+        expect(wrapper.emitted("update:selectedRowId")?.at(-1)?.[0]).toBe("1");
     });
 });
 

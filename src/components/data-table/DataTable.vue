@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T extends Record<string, any>">
-import { computed, ref, useSlots } from "vue";
+import { computed, onBeforeUpdate, onUpdated, ref, useSlots } from "vue";
 import { useResizeObserver } from "../../composables/dom";
 import {
     Table,
@@ -19,7 +19,10 @@ import {
 } from "../dropdown-menu";
 import DataTablePagination from "./DataTablePagination.vue";
 import type { DataTableColumn, DataTableSort } from "./types";
-import { useDataTableRowIdentity } from "./composables/useDataTableRowIdentity";
+import {
+    useDataTableRowIdentity,
+    type RowEntry,
+} from "./composables/useDataTableRowIdentity";
 import { useDataTableResponsive } from "./composables/useDataTableResponsive";
 import { cn } from '../_shared/class-names';
 
@@ -33,6 +36,10 @@ const props = withDefaults(
         rowKey?: string;
         getRowId?: (row: T) => PropertyKey | null | undefined;
         sort?: DataTableSort;
+        /** Enables the controlled single-row selection contract. */
+        selectable?: boolean;
+        /** Stable identity of the selected row when `selectable` is true. */
+        selectedRowId?: PropertyKey | null;
         infinite?: boolean;
         hasMore?: boolean;
         /**
@@ -58,6 +65,7 @@ const props = withDefaults(
     {
         isLoading: false,
         rowKey: "_id",
+        selectable: false,
         infinite: false,
         hasMore: false,
         responsive: false,
@@ -72,6 +80,7 @@ const page = defineModel<number>("page", { required: true });
 
 const emit = defineEmits<{
     "update:sort": [sort: DataTableSort];
+    "update:selectedRowId": [id: PropertyKey];
     select: [row: T];
     "load-more": [];
 }>();
@@ -104,6 +113,25 @@ const { rowEntries } = useDataTableRowIdentity<T>({
     rows: () => props.rows,
     rowKey: () => props.rowKey,
     getRowId: () => props.getRowId,
+});
+
+const rowEls = new Map<PropertyKey, HTMLElement>();
+
+function setRowEl(key: PropertyKey, value: unknown): void {
+    const candidate = value as { $el?: unknown } | null;
+    const el = value instanceof HTMLElement ? value : candidate?.$el;
+    if (el instanceof HTMLElement) rowEls.set(key, el);
+    else rowEls.delete(key);
+}
+
+let focusedRowKey: PropertyKey | null = null;
+onBeforeUpdate(() => {
+    const focused = Array.from(rowEls).find(([, el]) => el === document.activeElement);
+    focusedRowKey = focused?.[0] ?? null;
+});
+onUpdated(() => {
+    if (focusedRowKey !== null) rowEls.get(focusedRowKey)?.focus();
+    focusedRowKey = null;
 });
 
 const skeletonRows = computed(() =>
@@ -144,10 +172,53 @@ function toggleSort(col: DataTableColumn<T>) {
     }
 }
 
+function ariaSort(col: DataTableColumn<T>): "none" | "ascending" | "descending" | undefined {
+    if (!col.sortable) return undefined;
+    if (props.sort?.key !== col.key) return "none";
+    return props.sort.direction === "asc" ? "ascending" : "descending";
+}
+
 function sortIndicator(col: DataTableColumn<T>): string {
     if (!col.sortable) return "";
     if (props.sort?.key !== col.key) return " ↕";
     return props.sort.direction === "asc" ? " ↑" : " ↓";
+}
+
+function isSelected(entry: RowEntry<T>): boolean {
+    return Object.is(props.selectedRowId, entry.key);
+}
+
+function selectRow(entry: RowEntry<T>): void {
+    emit("update:selectedRowId", entry.key);
+    emit("select", entry.row);
+}
+
+function onRowClick(event: MouseEvent, entry: RowEntry<T>): void {
+    if (event.target === event.currentTarget) selectRow(entry);
+}
+
+function onRowKeydown(event: KeyboardEvent, entry: RowEntry<T>): void {
+    if (event.target !== event.currentTarget || !["Enter", " "].includes(event.key)) {
+        return;
+    }
+    event.preventDefault();
+    selectRow(entry);
+}
+
+function rowInteraction(entry: RowEntry<T>, card = false): Record<string, unknown> {
+    if (!props.selectable) return {};
+    const selected = isSelected(entry);
+    return {
+        class: card
+            ? "interactive-item focus-ring cursor-pointer"
+            : "focus-ring cursor-pointer",
+        role: card ? "option" : undefined,
+        tabindex: 0,
+        "aria-selected": selected,
+        "data-state": selected ? "selected" : undefined,
+        onClick: (event: MouseEvent) => onRowClick(event, entry),
+        onKeydown: (event: KeyboardEvent) => onRowKeydown(event, entry),
+    };
 }
 
 </script>
@@ -169,7 +240,12 @@ function sortIndicator(col: DataTableColumn<T>): string {
             </div>
 
             <!-- Data cards -->
-            <div v-else-if="rows.length > 0" class="flex flex-col gap-2">
+            <div
+                v-else-if="rows.length > 0"
+                class="flex flex-col gap-2"
+                :role="selectable ? 'listbox' : undefined"
+                :aria-label="selectable ? 'Rows' : undefined"
+            >
                 <template v-for="entry in rowEntries" :key="entry.key">
                     <component
                         :is="hasRowContextMenu ? DropdownMenu : 'div'"
@@ -180,8 +256,9 @@ function sortIndicator(col: DataTableColumn<T>): string {
                             :as-child="hasRowContextMenu ? true : undefined"
                         >
                             <div
-                                class="cursor-pointer rounded-lg border border-border p-3 transition-colors hover:bg-muted/40"
-                                @click="emit('select', entry.row)"
+                                :ref="(el) => setRowEl(entry.key, el)"
+                                v-bind="rowInteraction(entry, true)"
+                                class="rounded-lg border border-border p-3 transition-colors"
                             >
                                 <!-- Header line — first column + actions -->
                                 <div class="flex items-start justify-between gap-2">
@@ -266,13 +343,30 @@ function sortIndicator(col: DataTableColumn<T>): string {
                         :class="
                             cn(
                                 getAlignClass(col.align),
-                                col.sortable && 'cursor-pointer select-none',
                                 col.headerClass,
                             )
                         "
-                        @click="toggleSort(col)"
+                        :aria-sort="ariaSort(col)"
                     >
-                        {{ col.label }}{{ sortIndicator(col) }}
+                        <button
+                            v-if="col.sortable"
+                            type="button"
+                            :class="
+                                cn(
+                                    'focus-ring inline-flex w-full cursor-pointer items-center gap-1 rounded-sm',
+                                    col.align === 'right'
+                                        ? 'justify-end'
+                                        : col.align === 'center'
+                                          ? 'justify-center'
+                                          : 'justify-start',
+                                )
+                            "
+                            @click="toggleSort(col)"
+                        >
+                            <span>{{ col.label }}</span>
+                            <span aria-hidden="true">{{ sortIndicator(col) }}</span>
+                        </button>
+                        <template v-else>{{ col.label }}</template>
                     </TableHead>
                     <!-- Trailing actions column header (auto when row-actions slot is provided) -->
                     <TableHead v-if="hasRowActions" class="w-10" />
@@ -303,8 +397,8 @@ function sortIndicator(col: DataTableColumn<T>): string {
                         <DropdownMenu v-if="hasRowContextMenu" trigger="context">
                             <DropdownMenuTrigger as-child>
                                 <TableRow
-                                    class="cursor-pointer"
-                                    @click="emit('select', entry.row)"
+                                    :ref="(el) => setRowEl(entry.key, el)"
+                                    v-bind="rowInteraction(entry)"
                                 >
                                     <TableCell
                                         v-for="col in columns"
@@ -334,8 +428,8 @@ function sortIndicator(col: DataTableColumn<T>): string {
                         <!-- Plain row (no context menu) -->
                         <TableRow
                             v-else
-                            class="cursor-pointer"
-                            @click="emit('select', entry.row)"
+                            :ref="(el) => setRowEl(entry.key, el)"
+                            v-bind="rowInteraction(entry)"
                         >
                             <TableCell
                                 v-for="col in columns"

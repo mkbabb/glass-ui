@@ -53,6 +53,24 @@ const label = computed(() => {
 function jumpTo(e: TimelineEvent) {
     position.value = e.at;
 }
+
+const eventButtons = new Map<number, HTMLButtonElement>();
+
+function setEventButton(index: number, value: Element | null): void {
+    if (value instanceof HTMLButtonElement) eventButtons.set(index, value);
+    else eventButtons.delete(index);
+}
+
+function onEventKeydown(event: KeyboardEvent, index: number): void {
+    let target: number | undefined;
+    if (event.key === "ArrowDown") target = Math.min(events.length - 1, index + 1);
+    else if (event.key === "ArrowUp") target = Math.max(0, index - 1);
+    else if (event.key === "Home") target = 0;
+    else if (event.key === "End") target = events.length - 1;
+    if (target === undefined) return;
+    event.preventDefault();
+    eventButtons.get(target)?.focus();
+}
 </script>
 
 <template>
@@ -124,32 +142,39 @@ function jumpTo(e: TimelineEvent) {
                     <li
                         v-for="(e, i) in events"
                         :key="e.id"
-                        :class="
-                            cn(
-                                'interactive-item flex cursor-pointer items-center gap-4 px-4 py-3',
-                                i === activeIndex && 'bg-muted/40',
-                            )
-                        "
-                        @click="jumpTo(e)"
                     >
-                        <!-- F2.R1 W-DARK-READABILITY-REPAIR (paint re-open): the step number sits
-                             on a brand-ramp fill whose luminance varies per tone, so a hardcoded
-                             white collapses on the LIGHT rungs in dark (WCAG ~1.8-2.8). The native
-                             contrast-color() picks the max-contrast ink per fill on the census
-                             engines (Chrome 149 / Safari 26); text-white is the pre-modern base. -->
-                        <span
-                            class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-medium text-white"
-                            :style="{ background: `var(--section-color-${e.tone})`, color: `contrast-color(var(--section-color-${e.tone}))` }"
+                        <button
+                            :ref="(el) => setEventButton(i, el as Element | null)"
+                            type="button"
+                            :aria-current="i === activeIndex ? 'step' : undefined"
+                            :class="
+                                cn(
+                                    'interactive-item focus-ring flex w-full cursor-pointer items-center gap-4 border-0 bg-transparent px-4 py-3 text-left',
+                                    i === activeIndex && 'bg-muted/40',
+                                )
+                            "
+                            @click="jumpTo(e)"
+                            @keydown="onEventKeydown($event, i)"
                         >
-                            {{ i + 1 }}
-                        </span>
-                        <div class="flex min-w-0 flex-1 flex-col">
-                            <span class="text-small font-medium">{{ e.label }}</span>
-                            <span class="text-mono-caption text-muted-foreground">{{ e.body }}</span>
-                        </div>
-                        <span class="fira-code text-mono-caption text-muted-foreground">
-                            {{ Math.round(e.at * 100) }}%
-                        </span>
+                            <!-- F2.R1 W-DARK-READABILITY-REPAIR (paint re-open): the step number sits
+                                 on a brand-ramp fill whose luminance varies per tone, so a hardcoded
+                                 white collapses on the LIGHT rungs in dark (WCAG ~1.8-2.8). The native
+                                 contrast-color() picks the max-contrast ink per fill on the census
+                                 engines (Chrome 149 / Safari 26); text-white is the pre-modern base. -->
+                            <span
+                                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-medium text-white"
+                                :style="{ background: `var(--section-color-${e.tone})`, color: `contrast-color(var(--section-color-${e.tone}))` }"
+                            >
+                                {{ i + 1 }}
+                            </span>
+                            <span class="flex min-w-0 flex-1 flex-col">
+                                <span class="text-small font-medium">{{ e.label }}</span>
+                                <span class="text-mono-caption text-muted-foreground">{{ e.body }}</span>
+                            </span>
+                            <span class="fira-code text-mono-caption text-muted-foreground">
+                                {{ Math.round(e.at * 100) }}%
+                            </span>
+                        </button>
                     </li>
                 </ol>
             </div>

@@ -43,6 +43,10 @@ export interface DataTableProps<T = any> {
     getRowId?: (row: T) => PropertyKey | null | undefined;
     /** Current sort state */
     sort?: DataTableSort;
+    /** Enables controlled single-row selection and row keyboard activation. */
+    selectable?: boolean;
+    /** Stable identity of the selected row when selection is enabled. */
+    selectedRowId?: PropertyKey | null;
     /** When true, hides pagination and shows infinite scroll sentinel */
     infinite?: boolean;
     /** Whether more data is available (for infinite scroll mode) */

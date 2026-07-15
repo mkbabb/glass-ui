@@ -8,9 +8,10 @@ import type {
     DataTableSort,
 } from "@glass/components/data-table";
 import { Input } from "@glass/components/input";
+import { Button } from "@glass/components/button";
 import { IconChip } from "@glass/components/icon-chip";
 import { cn } from "@glass/components/_shared/class-names";
-import { Sheet as SheetIcon, Database } from "@lucide/vue";
+import { Database } from "@lucide/vue";
 
 // BC.W-SUFFUSE-reconcile — the data band's ONE coherent --section-color-9
 // identity. PH3-safe (inline borderLeft, not the border-l-[3px] + <IconChip>
@@ -97,6 +98,10 @@ const filter = ref("");
 const page = ref(1);
 const pageSize = 5;
 const sort = ref<DataTableSort | undefined>({ key: "stars", direction: "desc" });
+const selectedRowId = ref<PropertyKey | null>("3");
+const selectedRepo = computed(() =>
+    rows.find((row) => row._id === selectedRowId.value),
+);
 
 const columns: DataTableColumn<Repo>[] = [
     { key: "name", label: "Repository", sortable: true, class: "font-medium" },
@@ -190,6 +195,22 @@ const paged = computed(() => {
             />
         </div>
 
+        <div class="flex items-center justify-between gap-4 text-small">
+            <p aria-live="polite">
+                Selected repository:
+                <strong>{{ selectedRepo?.name ?? "None" }}</strong>
+            </p>
+            <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                :disabled="selectedRowId === null"
+                @click="selectedRowId = null"
+            >
+                Clear selection
+            </Button>
+        </div>
+
         <div :class="cn('rounded-card border border-border bg-card shadow-cartoon')">
             <DataTable
                 :columns="columns"
@@ -198,7 +219,10 @@ const paged = computed(() => {
                 :page="page"
                 :page-size="pageSize"
                 :sort="sort"
+                v-model:selected-row-id="selectedRowId"
                 row-key="_id"
+                selectable
+                responsive
                 @update:page="page = $event"
                 @update:sort="sort = $event"
             />
