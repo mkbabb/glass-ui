@@ -160,6 +160,7 @@ export function createCanvasVisibility(
     // backing is sharp from frame 0 even while no GPU device exists yet.
     let ro: ResizeObserver | null = null;
     let presized = false;
+    let settleRaf = 0;
     function presize(): void {
         if (presized) return;
         presized = true;
@@ -173,10 +174,12 @@ export function createCanvasVisibility(
         // This is the cure for the live intermittent arm-time stuck-300×150 race (the
         // DELTA-ASSAY §1 concentric+blob defect) that today only aurora survives.
         if (typeof requestAnimationFrame !== "undefined") {
-            requestAnimationFrame(() => {
+            settleRaf = requestAnimationFrame(() => {
+                settleRaf = 0;
                 if (deps.isDisposed()) return;
                 deps.resize();
-                requestAnimationFrame(() => {
+                settleRaf = requestAnimationFrame(() => {
+                    settleRaf = 0;
                     if (!deps.isDisposed()) deps.resize();
                 });
             });
@@ -254,6 +257,7 @@ export function createCanvasVisibility(
     // settled field, zero ramp.
     let revealFired = false;
     let revealIo: IntersectionObserver | null = null;
+    let revealRaf = 0;
     function fireRevealBloom(): void {
         if (revealFired) return;
         revealFired = true;
@@ -272,7 +276,8 @@ export function createCanvasVisibility(
         // disconnects; an env with no IntersectionObserver best-effort fires next paint.
         if (typeof IntersectionObserver === "undefined") {
             if (typeof requestAnimationFrame !== "undefined")
-                requestAnimationFrame(() => {
+                revealRaf = requestAnimationFrame(() => {
+                    revealRaf = 0;
                     if (!deps.isDisposed()) fireRevealBloom();
                 });
             else fireRevealBloom();
@@ -291,6 +296,12 @@ export function createCanvasVisibility(
     }
 
     function dispose(): void {
+        if (typeof cancelAnimationFrame !== "undefined") {
+            if (settleRaf) cancelAnimationFrame(settleRaf);
+            if (revealRaf) cancelAnimationFrame(revealRaf);
+        }
+        settleRaf = 0;
+        revealRaf = 0;
         if (hasDocument)
             document.removeEventListener(
                 "visibilitychange",
