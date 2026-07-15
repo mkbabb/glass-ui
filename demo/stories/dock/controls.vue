@@ -29,7 +29,7 @@ import {
     SelectValue,
 } from "@glass/components/select";
 import { useSelectionGroup } from "@glass/composables/motion/core";
-import DockStage from "./DockStage.vue";
+import DockStage from "./_frame/DockStage.vue";
 
 // BI.W-DOCK-CONTROLS — the reference CONTROLS demo. The dock IS SegmentedTabs/
 // ToggleGroup wearing chrome, so its control run is driven by the SAME headless

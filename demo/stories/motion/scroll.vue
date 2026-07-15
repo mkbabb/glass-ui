@@ -8,9 +8,9 @@
 // into a colocated PascalCase body sub-component (Scroll{Native,Reader,Choreography}Body).
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
-import ScrollNativeBody from "./ScrollNativeBody.vue";
-import ScrollReaderBody from "./ScrollReaderBody.vue";
-import ScrollChoreographyBody from "./ScrollChoreographyBody.vue";
+import ScrollNativeBody from "./scroll/ScrollNativeBody.vue";
+import ScrollReaderBody from "./scroll/ScrollReaderBody.vue";
+import ScrollChoreographyBody from "./scroll/ScrollChoreographyBody.vue";
 </script>
 
 <template>

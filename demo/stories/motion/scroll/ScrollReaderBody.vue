@@ -14,7 +14,7 @@
 //
 // It CONSUMES the reader — no new substrate, no second listener. PascalCase composed-by
 // helper.
-import StorySection from "../../chassis/section/StorySection.vue";
+import StorySection from "../../../chassis/section/StorySection.vue";
 import { computed, ref } from "vue";
 import {
     useScrollChrome,

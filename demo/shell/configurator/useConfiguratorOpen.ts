@@ -1,4 +1,4 @@
-// demo/configurator/useConfiguratorOpen.ts — the shared open-state singleton
+// demo/shell/configurator/useConfiguratorOpen.ts — the shared open-state singleton
 // for the gear-hosted demo Configurator (AZ.R4-SHELL).
 //
 // ONE source of truth for "is the gear view open": the PresetEditor binds the

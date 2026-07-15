@@ -7,7 +7,7 @@ import {
 } from "@glass/components/configurator";
 import { registerShortcut } from "@glass/composables/keyboard";
 import type { AuroraConfig } from "@glass/components/aurora";
-import VizStudio from "./VizStudio.vue";
+import VizStudio from "./_frame/VizStudio.vue";
 import PresetPickerRow from "./aurora/PresetPickerRow.vue";
 import AuroraStage from "./aurora/AuroraStage.vue";
 import AuroraConfigDock from "./aurora/AuroraConfigDock.vue";

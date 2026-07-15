@@ -15,7 +15,7 @@ import { Plus, Star, Compass, Shapes, Boxes } from "@lucide/vue";
 import { GlassDock, DockControl } from "@glass/components/dock";
 import { Button } from "@glass/components/button";
 import { useDockCtaReceive } from "@glass/composables/motion/useDockCtaReceive";
-import DockStage from "./DockStage.vue";
+import DockStage from "./_frame/DockStage.vue";
 
 // The external CTA element (the morph vehicle) + the target dock control (the
 // destination). The CTA flies INTO the target on receive().

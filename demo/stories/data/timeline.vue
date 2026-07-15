@@ -11,8 +11,8 @@ import { cn } from "@glass/components/_shared/class-names";
 // routed `timeline-segmented.vue` / `timeline-continuous.vue` member wrappers +
 // the <FamilyTabs> switcher are RETIRED (clean break) — each render body moved bare
 // into a colocated PascalCase body sub-component (Timeline{Segmented,Continuous}Body).
-import TimelineSegmentedBody from "./TimelineSegmentedBody.vue";
-import TimelineContinuousBody from "./TimelineContinuousBody.vue";
+import TimelineSegmentedBody from "./timeline/TimelineSegmentedBody.vue";
+import TimelineContinuousBody from "./timeline/TimelineContinuousBody.vue";
 
 interface TimelineEvent {
     id: string;

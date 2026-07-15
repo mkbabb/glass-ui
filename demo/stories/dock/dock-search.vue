@@ -22,7 +22,7 @@ import { useVirtualSectionWindow } from "@glass/composables/virtual";
 import { useScrollTo } from "@glass/composables/sidebar";
 import type { SearchableItem } from "@glass/components/search/composables";
 import type { FlatSection } from "@glass/composables/virtual/virtualSectionLayout";
-import DockStage from "./DockStage.vue";
+import DockStage from "./_frame/DockStage.vue";
 
 // ── A sizeable searchable item set — section titles + their body text (the fuzzy
 // index searches label×12/type×10/text×3). Each item is ALSO a content section the

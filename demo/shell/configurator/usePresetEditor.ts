@@ -1,4 +1,4 @@
-// demo/configurator/usePresetEditor.ts — thin façade.
+// demo/shell/configurator/usePresetEditor.ts — thin façade.
 //
 // O.W3 Lane C — the prior 657-line god-module was split into 6 cohesive
 // sub-modules under `./preset-editor/`. This façade preserves the exact

@@ -6,7 +6,7 @@
 // rung). One-shot generator — the evidence is the .png set + the readback JSON.
 //
 // Surface-hash header (the surfaces under test at capture time):
-//   demo/configurator/PresetEditor.vue            57a9d0cb73cf4eb6
+//   demo/shell/configurator/PresetEditor.vue      57a9d0cb73cf4eb6
 //   src/styles/floating-panel.css                 a0ec1245796189c2
 //   src/styles/tokens/offsets-sizing.css          3e8a0a762859de6c
 //   src/components/dropdown-menu/DropdownMenuContent.vue  584a36444a1a255c

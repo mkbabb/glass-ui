@@ -17,7 +17,7 @@ import { Card, type CardTier } from "@glass/components/card";
 import { Aurora } from "@glass/components/aurora";
 import { Constellation } from "@glass/components/constellation";
 import { LiquidGrid } from "@glass/components/liquid-grid";
-import { LIQUID_GRID_PRESET_SUFFUSE } from "../../stories/substrates/presets";
+import { LIQUID_GRID_PRESET_SUFFUSE } from "./suffuse-preset";
 import { useTokenColor } from "@glass/composables/dom/useTokenColor";
 import { useRoutePointer } from "@glass/composables/motion/useRoutePointer";
 import { useGlobalDark } from "@glass/composables/dark/useGlobalDark";

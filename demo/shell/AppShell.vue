@@ -25,7 +25,7 @@ import {
 } from "../chassis/hero/aurora-hero";
 import { useGlobalDark } from "@glass/composables/dark/useGlobalDark";
 import { shellFieldActive } from "../router";
-import { PresetEditor } from "../configurator";
+import { PresetEditor } from "./configurator";
 import SidebarDock from "./SidebarDock.vue";
 import BottomDock from "./BottomDock.vue";
 import "./dock-nav.css";

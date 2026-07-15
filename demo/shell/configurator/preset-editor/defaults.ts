@@ -1,4 +1,4 @@
-// demo/configurator/preset-editor/defaults.ts — default presets, constants,
+// demo/shell/configurator/preset-editor/defaults.ts — default presets, constants,
 // and CSS-variable name tables.
 //
 // O.W3 Lane C — split from the prior `usePresetEditor.ts` god-module per Rβ.

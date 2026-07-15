@@ -1,4 +1,4 @@
-// demo/configurator/preset-editor/types.ts — public + module-internal types.
+// demo/shell/configurator/preset-editor/types.ts — public + module-internal types.
 //
 // O.W3 Lane C — split from the prior `usePresetEditor.ts` god-module per Rβ.
 // Types-only module; no runtime side effects.

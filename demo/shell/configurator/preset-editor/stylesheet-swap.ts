@@ -1,4 +1,4 @@
-// demo/configurator/preset-editor/stylesheet-swap.ts — preset-active stylesheet
+// demo/shell/configurator/preset-editor/stylesheet-swap.ts — preset-active stylesheet
 // `<link>` hot-swap path.
 //
 // O.W3 Lane C — split from the prior `usePresetEditor.ts` god-module per Rβ.

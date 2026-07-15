@@ -3,8 +3,8 @@
 // PRESETS-IN-CONSUMERS (the binding fence). The library default
 // (`DEFAULT_LIQUID_GRID_CONFIG`) is the warm-cream identity — warm-foreground ink over
 // transparent, evenly-spaced LARGE 64px cells, a slow liquid curl-flow breath. The
-// SUFFUSION preset (a near-invisible site-wide background) + the BOLD-liquid showcase
-// preset + the RIPPLE lit-face preset live HERE in the DEMO tree, NEVER a library token.
+// BOLD-liquid showcase + RIPPLE lit-face presets live HERE in the DEMO tree, NEVER a
+// library token. The shared SUFFUSION ground belongs to the page chassis.
 // NO teal/navy literal — the grid is monochrome warm ink (`proof:viz-papergrid` clause P5
 // reds a teal/navy hue in the LIBRARY constants.ts; this demo file is the sanctioned home
 // for any named theme).
@@ -15,20 +15,6 @@ import { DEFAULT_LIQUID_GRID_CONFIG } from "@glass/components/liquid-grid";
 /** The warm-cream library-identity preset (the calm default lead — story 1). */
 export const LIQUID_GRID_PRESET_WARM: LiquidGridConfig = {
     ...DEFAULT_LIQUID_GRID_CONFIG,
-};
-
-/**
- * The SUFFUSION preset — the §E "suffuse it throughout the site as a subtle background
- * element" done RIGHT: a near-invisible (`fieldAlpha ≈ 0.12`) large-pitch (96px) slow-warp
- * grid, `interactive:false`, behind page content (NOT in a card — the full-bleed escape).
- */
-export const LIQUID_GRID_PRESET_SUFFUSE: LiquidGridConfig = {
-    ...DEFAULT_LIQUID_GRID_CONFIG,
-    cellSize: 96, // a larger pitch for a calmer site-wide ground
-    fieldAlpha: 0.12, // near-invisible — a subtle background, not a focal element
-    twistMax: 0.22, // a gentler cell-twist behind content
-    waveOmega: 0.4,
-    interactive: false, // a background does not chase the cursor
 };
 
 /** The BOLD-liquid showcase preset — the deliberate "felt MORE" calibration counter. */

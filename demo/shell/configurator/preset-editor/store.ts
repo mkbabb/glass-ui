@@ -1,4 +1,4 @@
-// demo/configurator/preset-editor/store.ts — singleton state + the
+// demo/shell/configurator/preset-editor/store.ts — singleton state + the
 // `usePresetEditor()` composable factory.
 //
 // O.W3 Lane C — split from the prior `usePresetEditor.ts` god-module per Rβ.

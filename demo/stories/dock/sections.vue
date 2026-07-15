@@ -18,7 +18,7 @@ import {
     DockControl,
     type DockSectionDescriptor,
 } from "@glass/components/dock";
-import DockStage from "./DockStage.vue";
+import DockStage from "./_frame/DockStage.vue";
 
 // BA.W-DOCK-SECTIONS — the declarative tripartite <DockSection> chassis. A consumer
 // passes ONE `sections: DockSectionDescriptor[]` array and the dock body renders the

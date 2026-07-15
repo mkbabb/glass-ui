@@ -24,9 +24,9 @@ import {
 } from "@glass/components/liquid-grid";
 import {
     LIQUID_GRID_PRESET_WARM,
-    LIQUID_GRID_PRESET_SUFFUSE,
     LIQUID_GRID_PRESET_BOLD,
 } from "./presets";
+import { LIQUID_GRID_PRESET_SUFFUSE } from "../../chassis/hero/suffuse-preset";
 
 // The studio model — a live config the controls drive (commit-on-write — a single surface;
 // a preset switch is a clean reset, the library default). The DEFAULT is warm-cream identity.

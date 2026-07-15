@@ -24,7 +24,7 @@ import {
     useGlassBackdropLuminance,
     GLASS_BACKDROP_SHARED_ATTR,
 } from "@glass/composables/glass/useGlassBackdropLuminance";
-import { heroAuroraConfig } from "../../chassis/hero/aurora-hero";
+import { heroAuroraConfig } from "../../../chassis/hero/aurora-hero";
 
 withDefaults(
     defineProps<{

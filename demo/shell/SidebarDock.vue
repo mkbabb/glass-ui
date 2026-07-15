@@ -40,7 +40,7 @@ import { CATEGORIES } from "../stories/manifest";
 import { useStoryNavigation } from "../chassis/useStoryNavigation";
 import { useShellNavDock } from "./useShellNavDock";
 import { useShellScrollProgress } from "./useShellScrollProgress";
-import { useConfiguratorOpen } from "../configurator/useConfiguratorOpen";
+import { useConfiguratorOpen } from "./configurator/useConfiguratorOpen";
 
 const props = withDefaults(
     defineProps<{

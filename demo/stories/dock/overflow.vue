@@ -25,7 +25,7 @@ import {
 import { GlassDock, DockControl } from "@glass/components/dock";
 import { useSelectionGroup } from "@glass/composables/motion/core";
 import { useDockFisheye } from "@glass/components/dock/composables/useDockFisheye";
-import DockStage from "./DockStage.vue";
+import DockStage from "./_frame/DockStage.vue";
 
 // BI.W-DOCK-OVERFLOW — the overflow-feel reference. The native scroll track (the
 // UNIVERSAL FLOOR) side-by-side with the pure-CSS Gaussian fisheye (the EXCLUSIVE-mode

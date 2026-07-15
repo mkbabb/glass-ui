@@ -44,7 +44,7 @@ import {
 } from "@glass/components/select";
 import { Aurora } from "@glass/components/aurora";
 import { DEFAULT_AURORA_CONFIG } from "@glass/components/aurora";
-import DockStage from "./DockStage.vue";
+import DockStage from "./_frame/DockStage.vue";
 
 const playing = ref(false);
 

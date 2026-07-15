@@ -5,7 +5,7 @@ import { ref } from "vue";
 import { Package, Layers, Library, FileText, ChevronLeft, ChevronRight, Image, Type } from "@lucide/vue";
 import { GlassDock, DockControl, DockLayerGroup, DockLayer, DockCrossfade, DockSeparator } from "@glass/components/dock";
 import { cn } from "@glass/components/_shared/class-names";
-import DockStage from "./DockStage.vue";
+import DockStage from "./_frame/DockStage.vue";
 
 type LayerId = "root" | "assets" | "layers" | "libs";
 

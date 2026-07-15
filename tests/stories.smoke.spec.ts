@@ -1,7 +1,7 @@
 // stories.smoke.spec.ts — the storybook manifest smoke gate.
 //
 // Asserts every Story row in `demo/stories/manifest.ts` resolves to a real SFC
-// (no MissingStory placeholder) across four complementary checks:
+// (no MissingStory placeholder) across five complementary checks:
 //
 //   1. structural — every category is non-empty + every story id is unique
 //                   within its category (manifest hygiene).
@@ -14,7 +14,10 @@
 //                   `makeLazy` builds. This is the device-independent "every row
 //                   resolves" truth: it verifies the file the lazy resolver keys
 //                   to actually exists, without leaning on Vite's glob runtime.
-//   4. runtime    — every `story.component()` lazy import fires + resolves to a
+//   4. bijection  — every top-level non-tile story SFC is either routed or enrolled
+//                   in the manifest's folded-member authority; nested helpers are
+//                   never phantom route candidates.
+//   5. runtime    — every `story.component()` lazy import fires + resolves to a
 //                   non-MissingStory component (import-time syntax/type errors
 //                   surface here).
 //
@@ -25,12 +28,15 @@
 // δ3/δ4 are NOT story rows and are correctly OUTSIDE the `demo/stories/*/*.vue`
 // route glob — the disk check keys only on the (category, id) route pair.
 
-import { existsSync } from "node:fs";
+import { existsSync, readdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { Component } from "vue";
 import { describe, expect, it } from "vitest";
-import { CATEGORIES } from "../demo/stories/manifest";
+import {
+    CATEGORIES,
+    FOLDED_STORY_IDS,
+} from "../demo/stories/manifest";
 import { makeLazy } from "../demo/stories/manifest/lazy";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -79,6 +85,35 @@ describe("storybook manifest smoke", () => {
                 ).toBe(true);
             }
         }
+    });
+
+    it("every top-level story SFC is routed or folded exactly once", () => {
+        const declaredKeys = [
+            ...CATEGORIES.flatMap((cat) =>
+                cat.stories.map((story) => `${cat.id}/${story.id}`),
+            ),
+            ...FOLDED_STORY_IDS,
+        ].sort();
+        const diskKeys = readdirSync(STORIES_DIR, { withFileTypes: true })
+            .filter((entry) => entry.isDirectory())
+            .flatMap((category) =>
+                readdirSync(resolve(STORIES_DIR, category.name), {
+                    withFileTypes: true,
+                })
+                    .filter(
+                        (entry) =>
+                            entry.isFile() &&
+                            entry.name.endsWith(".vue") &&
+                            !entry.name.endsWith(".tile.vue"),
+                    )
+                    .map(
+                        (entry) =>
+                            `${category.name}/${entry.name.slice(0, -".vue".length)}`,
+                    ),
+            )
+            .sort();
+
+        expect(diskKeys).toEqual(declaredKeys);
     });
 
     it("every story import resolves (no MissingStory placeholder)", async () => {

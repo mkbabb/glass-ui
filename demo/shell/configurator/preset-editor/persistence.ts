@@ -1,4 +1,4 @@
-// demo/configurator/preset-editor/persistence.ts — localStorage I/O + the
+// demo/shell/configurator/preset-editor/persistence.ts — localStorage I/O + the
 // 2-version migration logic (full-snapshot → sparse-delta).
 //
 // O.W3 Lane C — split from the prior `usePresetEditor.ts` god-module per Rβ.

@@ -10,7 +10,7 @@
 //   · a `supportsScrollTimeline`/`supportsViewTimeline` capability badge
 // These CONSUME the facilities — no new substrate. Reduced-motion is the outer gate
 // on the CSS recipes (they never bind under PRM). PascalCase composed-by helper.
-import StorySection from "../../chassis/section/StorySection.vue";
+import StorySection from "../../../chassis/section/StorySection.vue";
 import { onMounted, ref } from "vue";
 import { startViewTransition } from "@glass/composables/motion/useViewTransition";
 import {

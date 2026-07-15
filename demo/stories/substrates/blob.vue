@@ -10,7 +10,7 @@
 // stage). Every ambient/static swatch routes to WatercolorDot (no GL context) so the
 // page never approaches the browser's per-page WebGL cap.
 import { computed, reactive, ref, watch } from "vue";
-import VizStudio from "./VizStudio.vue";
+import VizStudio from "./_frame/VizStudio.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { Blob } from "@glass/components/blob";

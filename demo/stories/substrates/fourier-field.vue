@@ -8,7 +8,7 @@
 // library identity is the default; the cool/violet options read the shipped --viz-* tokens
 // (presets-in-consumers; no demo-local teal).
 import { computed, reactive, ref, watch } from "vue";
-import VizStudio from "./VizStudio.vue";
+import VizStudio from "./_frame/VizStudio.vue";
 import {
     FourierField,
     makeEllipticSpectrum,
@@ -38,7 +38,7 @@ import {
     LabeledSelect,
     LabeledSlider,
 } from "@glass/components/labeled-field";
-import { FOURIER_SHAPES, getFourierShape } from "./fourier-paths";
+import { FOURIER_SHAPES, getFourierShape } from "./fourier-field/fourier-paths";
 
 // ── The ONE view config (the variant bundles fold into config PRESETS). ──
 interface FourierViewCfg {

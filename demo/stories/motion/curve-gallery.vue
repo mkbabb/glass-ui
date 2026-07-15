@@ -42,7 +42,7 @@ import {
     SelectValue,
 } from "@glass/components/select";
 import { cn } from "@glass/components/_shared/class-names";
-import { CURVE_FAMILIES, type CurveRow } from "./curve-families";
+import { CURVE_FAMILIES, type CurveRow } from "./curve-gallery/curve-families";
 // BB.W-EASING-PRIMITIVE — the C-3 fold LANDED. The two demo editors (BezierEditor +
 // StepsEditor) re-home onto the ONE published <EasingPicker> primitive (the
 // /easing subpath). The curve-gallery is consumer #1 by construction — it binds the
