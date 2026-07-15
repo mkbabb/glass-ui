@@ -224,8 +224,9 @@
    margin sets it off from the body section stack below. */
 .story-hero-title {
     margin-block-end: clamp(1.5rem, 3vw, 2.5rem);
+    margin-inline-start: -0.035em;
     color: var(--foreground);
-    max-inline-size: 18ch;
+    max-inline-size: min(14ch, 100%);
 
     /* ── BD.W-CUT page-chrome — HERO-OVERFLOW: the audacious title always FITS ──
        The √φ display ladder (`text-display-{4,5,mega,hero,audacious}`) is tuned on
@@ -433,8 +434,6 @@
 .story-header-subpath {
     align-self: flex-start;
     color: var(--muted-foreground);
-    font-size: var(--type-caption);
-    letter-spacing: -0.01em;
     /* a faint code-chip plate so the import line reads as code over the field */
     padding: 0.125rem 0.5rem;
     border-radius: var(--radius-sm);

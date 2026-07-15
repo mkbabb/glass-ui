@@ -56,10 +56,7 @@ const peaks: { cls: string; label: string; peg: string; word: string }[] = [
              cascade host) on its own view() timeline. -->
         <section class="flex flex-col gap-3">
             <p class="section-label">Foundations · Typography</p>
-            <div
-                class="text-display-audacious font-display leading-[0.85] tracking-tight text-foreground"
-                style="font-variation-settings: 'WONK' 1, 'SOFT' 0"
-            >
+            <div class="text-display-audacious text-foreground">
                 Aa
             </div>
             <p class="text-small max-w-prose text-muted-foreground">
@@ -83,10 +80,9 @@ const peaks: { cls: string; label: string; peg: string; word: string }[] = [
                     pad="lg"
                     :caption="`.${p.cls} · ${p.peg}`"
                 >
-                    <div class="overflow-hidden">
+                    <div>
                         <span
-                            :class="cn(p.cls, 'font-display leading-none text-foreground')"
-                            style="font-variation-settings: 'WONK' 1, 'SOFT' 0"
+                            :class="cn(p.cls, 'text-foreground')"
                         >{{ p.word }}</span>
                     </div>
                 </ShowcaseFrame>
@@ -119,7 +115,7 @@ const peaks: { cls: string; label: string; peg: string; word: string }[] = [
         <StorySection heading="Signature glyph">
             <ShowcaseFrame tier="field" pad="xl" caption=".fourier-f — Plus Jakarta Sans display italic, viz-fourier red">
                 <div class="flex flex-col items-center gap-3">
-                    <div class="fourier-f text-display-5 leading-none italic">ℱ</div>
+                    <div class="fourier-f text-display-5">ℱ</div>
                 </div>
             </ShowcaseFrame>
         </StorySection>

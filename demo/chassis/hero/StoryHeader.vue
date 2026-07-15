@@ -101,7 +101,7 @@ const props = withDefaults(defineProps<StoryHeaderProps>(), {
             v-if="subpath"
             :class="
                 cn(
-                    'fira-code story-header-subpath',
+                    'text-mono-caption story-header-subpath',
                     props.animate && 'story-header-cluster--enter',
                 )
             "
