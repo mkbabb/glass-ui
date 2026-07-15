@@ -163,11 +163,9 @@ const paged = computed(() => {
 <template>
     <StoryPage>
         <header
-            class="flex items-center gap-4 pl-5"
+            class="story-color-event flex items-center gap-4 pl-5"
             :style="{
                 '--section-label-accent': `var(--section-color-${DATA_STOP})`,
-                borderLeft:
-                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
             }"
         >
             <IconChip :icon="Database" :section="DATA_STOP" bloom reveal />

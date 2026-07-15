@@ -64,11 +64,9 @@ const fmt = (n: number) => new Intl.NumberFormat("en-US", { style: "currency", c
 <template>
     <StoryPage>
         <header
-            class="flex items-center gap-4 pl-5"
+            class="story-color-event flex items-center gap-4 pl-5"
             :style="{
                 '--section-label-accent': `var(--section-color-${DATA_STOP})`,
-                borderLeft:
-                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
             }"
         >
             <IconChip :icon="Table2" :section="DATA_STOP" bloom reveal />

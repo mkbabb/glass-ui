@@ -42,11 +42,9 @@ const faq = [
 <template>
     <StoryPage>
         <header
-            class="flex items-center gap-4 pl-5"
+            class="story-color-event flex items-center gap-4 pl-5"
             :style="{
                 '--section-label-accent': `var(--section-color-${CONTAINERS_STOP})`,
-                borderLeft:
-                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
             }"
         >
             <IconChip :icon="ChevronsDownUp" :section="CONTAINERS_STOP" bloom reveal />

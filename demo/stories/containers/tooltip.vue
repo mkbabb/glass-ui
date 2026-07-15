@@ -23,11 +23,9 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
 <template>
     <StoryPage>
         <header
-            class="flex items-center gap-4 pl-5"
+            class="story-color-event flex items-center gap-4 pl-5"
             :style="{
                 '--section-label-accent': `var(--section-color-${CONTAINERS_STOP})`,
-                borderLeft:
-                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
             }"
         >
             <IconChip :icon="Info" :section="CONTAINERS_STOP" bloom reveal />

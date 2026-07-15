@@ -92,11 +92,9 @@ const body: StoryBody = {
              identity, distinct from the section headings below — no heading rung,
              so it is not a second header. -->
         <header
-            class="flex items-center gap-4 pl-5"
+            class="story-color-event flex items-center gap-4 pl-5"
             :style="{
                 '--section-label-accent': `var(--section-color-${FEEDBACK_STOP})`,
-                borderLeft:
-                    '3px solid color-mix(in srgb, var(--section-label-accent) 55%, transparent)',
             }"
         >
             <IconChip :icon="Bell" :section="FEEDBACK_STOP" bloom reveal />

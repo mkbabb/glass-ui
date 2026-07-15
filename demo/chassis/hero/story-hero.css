@@ -158,26 +158,11 @@
     border-radius: 0;
 }
 
-/* B16 — the constellation hero reads STRONGER over the full-bleed background.
-   The library defaults tune the lattice to RECEDE behind card content (the §7
-   field-yields-to-type midpoint); on the front-door hero where the field IS the
-   page background it should READ, so this demo override (the consumer-token
-   pattern — NO library edit) lifts the node/line contrast + the edge/field
-   alpha. The dark arm needs less lift (light dots already read on dark). */
+/* The full-bleed field keeps the library's mode-calibrated neutral palette and
+   raises only presence. The page does not fork physical node/line colours. */
 .constellation.story-hero-bg--bleed {
-    --constellation-node: hsl(30 10% 34%);
-    --constellation-node-dim: hsl(30 9% 46%);
-    --constellation-line: hsl(24 16% 18%);
-    --constellation-edge-alpha: 0.34;
-    --constellation-edge-focus-alpha: 0.46;
-    --constellation-alpha: 0.95;
-}
-.dark .constellation.story-hero-bg--bleed {
-    --constellation-node: hsl(42 12% 80%);
-    --constellation-node-dim: hsl(42 9% 62%);
-    --constellation-line: hsl(45 14% 80%);
-    --constellation-edge-alpha: 0.3;
-    --constellation-edge-focus-alpha: 0.44;
+    --constellation-edge-alpha: 0.32;
+    --constellation-edge-focus-alpha: 0.45;
     --constellation-alpha: 0.95;
 }
 
@@ -315,8 +300,8 @@
     /* the calm display label keeps the display face/weight the retired
        `text-display-*` utility carried — only the SIZE drops to the calm rung. */
     font-family: var(--font-display);
-    font-weight: 600;
-    line-height: 1.05;
+    font-weight: var(--type-weight-display);
+    line-height: var(--type-leading-display);
     letter-spacing: var(--type-tracking-display);
     font-optical-sizing: auto;
     text-wrap: balance;
@@ -381,6 +366,13 @@
    intra-cluster rhythm; the cluster root owns the major gap to the body. */
 .story-hero-cluster .story-hero-title {
     margin-block-end: 0;
+}
+
+/* One page-level colour event: demos select the existing section accent seam;
+   the chassis owns its logical rail so pages do not restate paint geometry. */
+.story-color-event {
+    border-inline-start: 3px solid
+        color-mix(in oklab, var(--section-label-accent, var(--section-color-7)) 55%, transparent);
 }
 
 /* BG.W-FIELD-AURORA (re-paint #1) — the LIGHT-mode chrome-header muted ink over the

@@ -103,10 +103,10 @@
     /* Responsive pane title */
     .text-pane-title {
         font-family: var(--font-display);
-        font-size: clamp(2.4rem, 1.8rem + 2vw, 3.33rem);
+        font-size: var(--type-display-2);
         line-height: var(--type-leading-display);
-        letter-spacing: var(--type-tracking-tight);
-        font-weight: 600;
+        letter-spacing: var(--type-tracking-display);
+        font-weight: var(--type-weight-display);
         font-optical-sizing: auto;
     }
 
@@ -165,9 +165,9 @@
         color: color-mix(in oklab, var(--neutral-5), var(--foreground) 22%);
     }
 
-    /* Font-feature helpers */
+    /* Numeric role — a size-agnostic modifier for values, counters, and tables. */
     .tabular-nums {
-        font-variant-numeric: tabular-nums;
+        font-variant-numeric: tabular-nums lining-nums;
     }
 
     /* Kinetic: per-character stagger. The per-glyph increment is the single-
