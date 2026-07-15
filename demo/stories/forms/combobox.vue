@@ -77,7 +77,10 @@ const summary = computed(() => selectedMulti.value.map(labelFor).join(", "));
                 </ComboboxAnchor>
 
                 <ComboboxList class="w-[var(--reka-combobox-anchor-width)]">
-                    <ComboboxInput placeholder="Filter..." />
+                    <ComboboxInput
+                        placeholder="Filter..."
+                        aria-label="Filter bases and palettes"
+                    />
                     <ComboboxEmpty>Nothing matched.</ComboboxEmpty>
 
                     <ComboboxGroup heading="Basis">
@@ -159,7 +162,7 @@ const summary = computed(() => selectedMulti.value.map(labelFor).join(", "));
                     </ComboboxAnchor>
 
                     <ComboboxList class="w-[var(--reka-combobox-anchor-width)]">
-                        <ComboboxInput placeholder="Filter..." />
+                        <ComboboxInput placeholder="Filter..." aria-label="Filter selected bases" />
                         <ComboboxEmpty>Nothing matched.</ComboboxEmpty>
 
                         <ComboboxGroup heading="Basis">

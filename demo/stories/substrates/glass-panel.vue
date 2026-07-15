@@ -48,7 +48,12 @@ const lensOn = () => axes.value.includes("lens");
                 <span class="text-mono-caption text-muted-foreground">axes:</span>
                 <!-- The two modifier axes — multi-select chips (orthogonal
                      decorations ON the ladder, composed live onto every rung). -->
-                <ToggleGroup v-model="axes" type="multiple" class="flex-wrap">
+                <ToggleGroup
+                    v-model="axes"
+                    type="multiple"
+                    class="flex-wrap"
+                    aria-label="Glass modifiers"
+                >
                     <ToggleGroupItem value="deep">.glass-deep</ToggleGroupItem>
                     <ToggleGroupItem value="lens">.glass-lens</ToggleGroupItem>
                 </ToggleGroup>

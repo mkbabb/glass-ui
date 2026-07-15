@@ -58,8 +58,8 @@ const cellVariant = (id: string | number) =>
                 <Button variant="ghost" size="sm">Reset</Button>
             </div>
             <div class="flex items-center justify-between gap-3">
-                <span class="text-small">Reduced motion</span>
-                <Switch />
+                <span id="chassis-reduced-motion" class="text-small">Reduced motion</span>
+                <Switch aria-labelledby="chassis-reduced-motion" />
             </div>
         </SpecimenFrame>
 
@@ -86,12 +86,12 @@ const cellVariant = (id: string | number) =>
         >
             <div class="flex items-center justify-between gap-4">
                 <div class="flex flex-col gap-1">
-                    <span class="text-subheading">Notifications</span>
+                    <span id="chassis-notifications" class="text-subheading">Notifications</span>
                     <span class="text-small text-muted-foreground">
                         Email me when a run completes.
                     </span>
                 </div>
-                <Switch :default-value="true" />
+                <Switch :default-value="true" aria-labelledby="chassis-notifications" />
             </div>
             <div class="flex items-center justify-between gap-4">
                 <div class="flex flex-col gap-1">

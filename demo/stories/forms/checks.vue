@@ -48,7 +48,7 @@ const airplane = ref(false);
             <p class="text-small text-muted-foreground">
                 One-of-N. Inline layout with labels for hit-targets.
             </p>
-            <RadioGroup v-model="plan" class="flex flex-wrap gap-6">
+            <RadioGroup v-model="plan" class="flex flex-wrap gap-6" aria-label="Plan">
                 <div v-for="p in ['solo', 'team', 'org']" :key="p" class="flex items-center gap-2">
                     <RadioGroupItem :id="`plan-${p}`" :value="p" />
                     <Label :for="`plan-${p}`" class="capitalize">{{ p }}</Label>
@@ -58,7 +58,11 @@ const airplane = ref(false);
             <p class="text-small text-muted-foreground mt-4">
                 Same pattern, with one option disabled.
             </p>
-            <RadioGroup v-model="delivery" class="flex flex-wrap gap-6">
+            <RadioGroup
+                v-model="delivery"
+                class="flex flex-wrap gap-6"
+                aria-label="Delivery speed"
+            >
                 <div class="flex items-center gap-2">
                     <RadioGroupItem id="delivery-standard" value="standard" />
                     <Label for="delivery-standard">Standard</Label>

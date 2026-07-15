@@ -92,6 +92,8 @@ export interface SegmentedTabsResponsive {
 
 export interface SegmentedTabsProps {
     options: SegmentedTabOption[];
+    /** Accessible name shared by the desktop strip and responsive Select. */
+    ariaLabel?: string;
     /**
      * The material — `pill` (DEFAULT, the glass-track slider) or `underline`
      * (the paper ink-hairline rule).
@@ -338,7 +340,7 @@ const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
     >
         <Select :model-value="model" @update:model-value="onMobileUpdate">
             <SelectTrigger
-                :aria-label="mobileAriaLabel"
+                :aria-label="props.ariaLabel ?? mobileAriaLabel"
                 :class="cn('segmented-tabs__trigger text-small w-auto min-w-input-sm', responsiveCfg?.triggerClass)"
             >
                 <SelectValue />
@@ -361,6 +363,7 @@ const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
         v-else
         ref="containerRef"
         :role="isTabsSemantic ? 'tablist' : 'group'"
+        :aria-label="props.ariaLabel"
         :aria-orientation="isTabsSemantic ? (isVertical ? 'vertical' : 'horizontal') : undefined"
         :data-motion="motionAxis.dataMotion.value"
         :data-eyeglass="eyeglassOn ? '' : undefined"

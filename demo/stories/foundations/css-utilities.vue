@@ -23,18 +23,18 @@ import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
                          palette (`--section-color-N`), not raw Tailwind off-brand
                          hues (the stray-blue idiom-adherence sweep — the "WTF is
                          this blue" close). Each glyph pops one ramp stop. -->
-                    <button class="scale-on-hover flex h-14 w-14 items-center justify-center rounded-full bg-card border border-border shadow-cartoon">
+                    <div class="scale-on-hover flex h-14 w-14 items-center justify-center rounded-full bg-card border border-border shadow-cartoon">
                         <Heart class="h-5 w-5" :style="{ color: 'var(--section-color-8)' }" />
-                    </button>
-                    <button class="scale-on-hover flex h-14 w-14 items-center justify-center rounded-full bg-card border border-border shadow-cartoon">
+                    </div>
+                    <div class="scale-on-hover flex h-14 w-14 items-center justify-center rounded-full bg-card border border-border shadow-cartoon">
                         <Star class="h-5 w-5" :style="{ color: 'var(--section-color-2)' }" />
-                    </button>
-                    <button class="scale-on-hover flex h-14 w-14 items-center justify-center rounded-full bg-card border border-border shadow-cartoon">
+                    </div>
+                    <div class="scale-on-hover flex h-14 w-14 items-center justify-center rounded-full bg-card border border-border shadow-cartoon">
                         <Sparkles class="h-5 w-5" :style="{ color: 'var(--section-color-7)' }" />
-                    </button>
-                    <button class="scale-on-hover flex h-14 w-14 items-center justify-center rounded-full bg-card border border-border shadow-cartoon">
+                    </div>
+                    <div class="scale-on-hover flex h-14 w-14 items-center justify-center rounded-full bg-card border border-border shadow-cartoon">
                         <Zap class="h-5 w-5" :style="{ color: 'var(--section-color-5)' }" />
-                    </button>
+                    </div>
                 </div>
             </ShowcaseFrame>
         </StorySection>
@@ -46,28 +46,28 @@ import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
             <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
                 <ShowcaseFrame pad="md" tier="quiet" class="scope-subtle">
                     <div class="flex flex-col items-center gap-2">
-                        <button class="scale-on-hover h-12 w-12 rounded-card bg-primary text-primary-foreground" />
+                        <div class="scale-on-hover h-12 w-12 rounded-card bg-primary text-primary-foreground" />
                         <code class="fira-code text-mono-caption">1.04</code>
                         <span class="text-mono-caption text-muted-foreground">subtle</span>
                     </div>
                 </ShowcaseFrame>
                 <ShowcaseFrame pad="md" tier="quiet" class="scope-default">
                     <div class="flex flex-col items-center gap-2">
-                        <button class="scale-on-hover h-12 w-12 rounded-card bg-primary text-primary-foreground" />
+                        <div class="scale-on-hover h-12 w-12 rounded-card bg-primary text-primary-foreground" />
                         <code class="fira-code text-mono-caption">1.08</code>
                         <span class="text-mono-caption text-muted-foreground">default</span>
                     </div>
                 </ShowcaseFrame>
                 <ShowcaseFrame pad="md" tier="quiet" class="scope-boomed">
                     <div class="flex flex-col items-center gap-2">
-                        <button class="scale-on-hover h-12 w-12 rounded-card bg-primary text-primary-foreground" />
+                        <div class="scale-on-hover h-12 w-12 rounded-card bg-primary text-primary-foreground" />
                         <code class="fira-code text-mono-caption">1.15</code>
                         <span class="text-mono-caption text-muted-foreground">boomed</span>
                     </div>
                 </ShowcaseFrame>
                 <ShowcaseFrame pad="md" tier="quiet" class="scope-audacious">
                     <div class="flex flex-col items-center gap-2">
-                        <button class="scale-on-hover h-12 w-12 rounded-card bg-primary text-primary-foreground" />
+                        <div class="scale-on-hover h-12 w-12 rounded-card bg-primary text-primary-foreground" />
                         <code class="fira-code text-mono-caption">1.25</code>
                         <span class="text-mono-caption text-muted-foreground">audacious</span>
                     </div>

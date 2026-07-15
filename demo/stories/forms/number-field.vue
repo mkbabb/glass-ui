@@ -21,11 +21,16 @@ const bounded = ref<number>(5);
         <section class="grid grid-cols-1 gap-10 md:grid-cols-2">
             <!-- Plain integer counter. -->
             <div class="flex flex-col gap-3">
-                <Label for="nf-qty">Quantity</Label>
-                <NumberField id="nf-qty" v-model="quantity" :min="0" :max="99">
+                <Label id="nf-qty-label" for="nf-qty-input">Quantity</Label>
+                <NumberField
+                    v-model="quantity"
+                    :min="0"
+                    :max="99"
+                    aria-labelledby="nf-qty-label"
+                >
                     <NumberFieldContent>
                         <NumberFieldDecrement />
-                        <NumberFieldInput />
+                        <NumberFieldInput id="nf-qty-input" />
                         <NumberFieldIncrement />
                     </NumberFieldContent>
                 </NumberField>
@@ -34,18 +39,18 @@ const bounded = ref<number>(5);
 
             <!-- Decimal + percent formatting. -->
             <div class="flex flex-col gap-3">
-                <Label for="nf-tip">Tip rate</Label>
+                <Label id="nf-tip-label" for="nf-tip-input">Tip rate</Label>
                 <NumberField
-                    id="nf-tip"
                     v-model="tip"
                     :min="0"
                     :max="1"
                     :step="0.01"
                     :format-options="{ style: 'percent' }"
+                    aria-labelledby="nf-tip-label"
                 >
                     <NumberFieldContent>
                         <NumberFieldDecrement />
-                        <NumberFieldInput />
+                        <NumberFieldInput id="nf-tip-input" />
                         <NumberFieldIncrement />
                     </NumberFieldContent>
                 </NumberField>
@@ -54,11 +59,17 @@ const bounded = ref<number>(5);
 
             <!-- Stepped integer. -->
             <div class="flex flex-col gap-3">
-                <Label for="nf-step">Step by 5</Label>
-                <NumberField id="nf-step" v-model="steps" :min="0" :max="100" :step="5">
+                <Label id="nf-step-label" for="nf-step-input">Step by 5</Label>
+                <NumberField
+                    v-model="steps"
+                    :min="0"
+                    :max="100"
+                    :step="5"
+                    aria-labelledby="nf-step-label"
+                >
                     <NumberFieldContent>
                         <NumberFieldDecrement />
-                        <NumberFieldInput />
+                        <NumberFieldInput id="nf-step-input" />
                         <NumberFieldIncrement />
                     </NumberFieldContent>
                 </NumberField>
@@ -67,11 +78,15 @@ const bounded = ref<number>(5);
 
             <!-- Disabled. -->
             <div class="flex flex-col gap-3">
-                <Label for="nf-disabled">Disabled</Label>
-                <NumberField id="nf-disabled" v-model="bounded" disabled>
+                <Label id="nf-disabled-label" for="nf-disabled-input">Disabled</Label>
+                <NumberField
+                    v-model="bounded"
+                    disabled
+                    aria-labelledby="nf-disabled-label"
+                >
                     <NumberFieldContent>
                         <NumberFieldDecrement />
-                        <NumberFieldInput />
+                        <NumberFieldInput id="nf-disabled-input" />
                         <NumberFieldIncrement />
                     </NumberFieldContent>
                 </NumberField>
@@ -80,16 +95,19 @@ const bounded = ref<number>(5);
         </section>
 
         <!--
-            Label-binding contract. The accessible name belongs on the inner
-            <NumberFieldInput> (the focusable spinbutton), NOT on the NumberField
-            group wrapper. Bind it via one of three channels — each lands the name
-            on the input below.
+            Label-binding contract. The focusable <NumberFieldInput> and its
+            NumberField group each carry the same contextual name. Bind it via one
+            of three channels — each lands on both semantic owners below.
         -->
         <section class="grid grid-cols-1 gap-10 md:grid-cols-3">
             <!-- Channel 1: <Label for> → input id. -->
             <div class="flex flex-col gap-3">
-                <Label for="nf-label-input">Servings</Label>
-                <NumberField v-model="quantity" :min="0">
+                <Label id="nf-servings-label" for="nf-label-input">Servings</Label>
+                <NumberField
+                    v-model="quantity"
+                    :min="0"
+                    aria-labelledby="nf-servings-label"
+                >
                     <NumberFieldContent>
                         <NumberFieldDecrement />
                         <NumberFieldInput id="nf-label-input" />
@@ -104,7 +122,7 @@ const bounded = ref<number>(5);
             <!-- Channel 2: aria-labelledby → external label id. -->
             <div class="flex flex-col gap-3">
                 <span id="nf-aria-by" class="text-admin-label text-foreground">Portions</span>
-                <NumberField v-model="quantity" :min="0">
+                <NumberField v-model="quantity" :min="0" aria-labelledby="nf-aria-by">
                     <NumberFieldContent>
                         <NumberFieldDecrement />
                         <NumberFieldInput aria-labelledby="nf-aria-by" />
@@ -118,7 +136,7 @@ const bounded = ref<number>(5);
 
             <!-- Channel 3: aria-label directly on the input. -->
             <div class="flex flex-col gap-3">
-                <NumberField v-model="quantity" :min="0">
+                <NumberField v-model="quantity" :min="0" aria-label="Helpings">
                     <NumberFieldContent>
                         <NumberFieldDecrement />
                         <NumberFieldInput aria-label="Helpings" />

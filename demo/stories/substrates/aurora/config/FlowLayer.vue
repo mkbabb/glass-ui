@@ -27,6 +27,7 @@ function setFlowPattern(v: string | string[]) {
                 :options="[...flowPatternOptions]"
                 :model-value="config.flow.pattern"
                 variant="pill"
+                aria-label="Flow pattern"
                 @update:model-value="setFlowPattern"
             />
         </div>

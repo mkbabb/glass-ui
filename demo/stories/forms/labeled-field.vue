@@ -134,8 +134,13 @@ const revealLabel = computed(() => (revealed.value ? "Hide password" : "Show pas
             blurb="LabeledField directly accepts any form control via <slot /> for cases where the four wrappers don't fit (e.g. multi-select, custom popover)."
         >
             <ShowcaseFrame pad="md">
-                <LabeledField label="Custom" tooltip="Passes through any slotted control.">
+                <LabeledField
+                    label="Custom"
+                    tooltip="Passes through any slotted control."
+                    v-slot="{ controlId }"
+                >
                     <input
+                        :id="controlId"
                         type="email"
                         class="rounded-md border border-border bg-background px-3 py-1.5 text-sm"
                         placeholder="user@example.com"

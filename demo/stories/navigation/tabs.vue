@@ -126,13 +126,21 @@ const chapterBody: Record<string, string> = {
         >
             <div class="glass-card flex flex-col gap-4 rounded-[var(--radius-card)] p-5">
                 <div class="flex flex-wrap items-center gap-3">
-                    <SegmentedTabs v-model="viewMode" :options="viewOptions" />
+                    <SegmentedTabs
+                        v-model="viewMode"
+                        :options="viewOptions"
+                        aria-label="View mode"
+                    />
                     <span class="text-xs text-muted-foreground"
                         >selected: {{ viewMode }}</span
                     >
                 </div>
                 <div class="flex flex-wrap items-center gap-3">
-                    <SegmentedTabs v-model="priority" :options="priorityOptions" />
+                    <SegmentedTabs
+                        v-model="priority"
+                        :options="priorityOptions"
+                        aria-label="Priority"
+                    />
                     <span class="text-xs text-muted-foreground"
                         >selected: {{ priority }}</span
                     >
@@ -153,6 +161,7 @@ const chapterBody: Record<string, string> = {
                     <SegmentedTabs
                         v-model="liquidView"
                         :options="viewOptions"
+                        aria-label="Draggable view mode"
                     />
                     <span class="text-xs text-muted-foreground"
                         >selected: {{ liquidView }} — drag the pill</span
@@ -171,6 +180,7 @@ const chapterBody: Record<string, string> = {
                     <SegmentedTabs
                         v-model="eyeglassView"
                         :options="viewOptions"
+                        aria-label="Accent view mode"
                         :style="{
                             '--glass-accent': 'oklch(0.82 0.13 205)',
                             '--glass-accent-strength': '42%',
@@ -205,6 +215,7 @@ const chapterBody: Record<string, string> = {
                     <SegmentedTabs
                         v-model="sizingViewFlat"
                         :options="viewOptions"
+                        aria-label="Flat view mode"
                         :style="{ '--eyeglass-proud': '1', '--eyeglass-settled': '1' }"
                     />
                 </div>
@@ -215,6 +226,7 @@ const chapterBody: Record<string, string> = {
                     <SegmentedTabs
                         v-model="sizingViewProud"
                         :options="viewOptions"
+                        aria-label="Proud view mode"
                         :style="{ '--eyeglass-proud': '1.18' }"
                     />
                 </div>
@@ -233,6 +245,7 @@ const chapterBody: Record<string, string> = {
                     v-model="account"
                     :options="accountOptions"
                     orientation="vertical"
+                    aria-label="Account settings"
                     class="shrink-0"
                 />
                 <div class="min-h-32 flex-1 text-small text-muted-foreground">
@@ -255,6 +268,7 @@ const chapterBody: Record<string, string> = {
                     v-model="docTab"
                     :options="docTabs"
                     variant="underline"
+                    aria-label="Document section"
                 />
                 <p class="mt-4 text-small text-muted-foreground">
                     {{ docTab }} live here. Press
@@ -276,6 +290,7 @@ const chapterBody: Record<string, string> = {
                     :options="chapterTabs"
                     variant="underline"
                     orientation="vertical"
+                    aria-label="Chapter"
                     class="shrink-0"
                 />
                 <p class="min-h-24 flex-1 text-small text-muted-foreground">
@@ -296,6 +311,7 @@ const chapterBody: Record<string, string> = {
                     v-model="respView"
                     :options="respOptions"
                     variant="underline"
+                    aria-label="Project view"
                     :responsive="{ ariaLabel: 'Project view' }"
                 />
                 <p class="mt-4 text-xs text-muted-foreground">

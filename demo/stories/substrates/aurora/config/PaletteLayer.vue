@@ -102,6 +102,7 @@ function derive() {
                     type="single"
                     variant="outline"
                     class="flex-1"
+                    aria-label="Palette harmony"
                     @update:model-value="(v) => onHarmony(v as string)"
                 >
                     <ToggleGroupItem

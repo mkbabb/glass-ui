@@ -52,7 +52,7 @@ const plan = ref<string>("pro");
         <!-- Radio group — each radio gets a label. -->
         <section class="flex flex-col gap-3">
             <p class="section-label">radio group</p>
-            <RadioGroup v-model="plan" class="flex flex-col gap-2">
+            <RadioGroup v-model="plan" class="flex flex-col gap-2" aria-label="Plan">
                 <Label class="flex items-center gap-2 cursor-pointer">
                     <RadioGroupItem value="free" />
                     <span>Free — library on the house.</span>

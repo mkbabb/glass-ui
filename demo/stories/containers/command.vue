@@ -101,7 +101,11 @@ function execute(id: string, closeDialog = false) {
                     v-model="selected"
                     class="rounded-[var(--radius-card)] border border-border/50 bg-card/70 shadow-lg backdrop-blur"
                 >
-                    <CommandInput v-model="query" placeholder="Type to search commands, files, settings…" />
+                    <CommandInput
+                        v-model="query"
+                        placeholder="Type to search commands, files, settings…"
+                        aria-label="Search inline commands"
+                    />
                     <CommandList class="max-h-80">
                         <CommandEmpty>
                             <div class="flex flex-col items-center gap-2 py-4">
@@ -151,7 +155,11 @@ function execute(id: string, closeDialog = false) {
             <CommandDialog v-model="selected" v-model:open="dialogOpen">
                 <DialogTitle class="sr-only">Command palette</DialogTitle>
                 <DialogDescription class="sr-only">Search and run a command.</DialogDescription>
-                <CommandInput v-model="dialogQuery" placeholder="Search commands, files, settings…" />
+                <CommandInput
+                    v-model="dialogQuery"
+                    placeholder="Search commands, files, settings…"
+                    aria-label="Search dialog commands"
+                />
                 <CommandList>
                     <CommandEmpty>
                         <div class="flex flex-col items-center gap-2 py-4">

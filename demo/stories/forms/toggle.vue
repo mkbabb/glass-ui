@@ -58,7 +58,12 @@ const cell = ref<string>("warm");
         <!-- ToggleGroup type=multiple. -->
         <section class="flex flex-col gap-3">
             <p class="section-label">toggle-group · multiple</p>
-            <ToggleGroup v-model="marks" type="multiple" variant="outline">
+            <ToggleGroup
+                v-model="marks"
+                type="multiple"
+                variant="outline"
+                aria-label="Text styles"
+            >
                 <ToggleGroupItem value="bold" aria-label="Bold">
                     <Bold class="h-4 w-4" />
                 </ToggleGroupItem>
@@ -77,7 +82,7 @@ const cell = ref<string>("warm");
         <!-- ToggleGroup type=single. -->
         <section class="flex flex-col gap-3">
             <p class="section-label">toggle-group · single</p>
-            <ToggleGroup v-model="align" type="single">
+            <ToggleGroup v-model="align" type="single" aria-label="Text alignment">
                 <ToggleGroupItem value="left" aria-label="Align left">
                     <AlignLeft class="h-4 w-4" />
                 </ToggleGroupItem>

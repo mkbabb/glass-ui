@@ -20,9 +20,12 @@ describe("SegmentedTabs v-model (segmented default)", () => {
         expect(wrapper.emitted("update:modelValue")?.at(-1)?.[0]).toBe("two");
     });
     it("reflects an external modelValue write in aria-pressed", async () => {
-        const wrapper = mount(SegmentedTabs, { props: { options: OPTIONS, modelValue: "one" } });
+        const wrapper = mount(SegmentedTabs, {
+            props: { options: OPTIONS, modelValue: "one", ariaLabel: "Priority" },
+        });
         await wrapper.setProps({ modelValue: "three" });
         const group = wrapper.get('[role="group"]');
+        expect(group.attributes("aria-label")).toBe("Priority");
         expect(group.attributes("aria-orientation")).toBeUndefined();
         const btns = group.findAll("button");
         expect(btns[2]!.attributes("aria-pressed")).toBe("true");
@@ -31,11 +34,14 @@ describe("SegmentedTabs v-model (segmented default)", () => {
 
 describe("SegmentedTabs variant=underline (panel nav)", () => {
     it("renders a tablist and round-trips aria-selected", async () => {
-        const wrapper = mount(SegmentedTabs, { props: { options: OPTIONS, modelValue: "one", variant: "underline" } });
+        const wrapper = mount(SegmentedTabs, {
+            props: { options: OPTIONS, modelValue: "one", variant: "underline", ariaLabel: "View" },
+        });
         expect(wrapper.find('[role="tablist"]').exists()).toBe(true);
         const tabs = wrapper.findAll('[role="tab"]');
         expect(tabs.length).toBe(3);
         expect(wrapper.get('[role="tablist"]').attributes("aria-orientation")).toBe("horizontal");
+        expect(wrapper.get('[role="tablist"]').attributes("aria-label")).toBe("View");
         await tabs[1]!.trigger("click");
         expect(wrapper.emitted("update:modelValue")?.at(-1)?.[0]).toBe("two");
         await wrapper.setProps({ modelValue: "three" });

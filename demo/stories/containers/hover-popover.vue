@@ -44,7 +44,7 @@ const CONTAINERS_STOP = 2;
             <Card surface="veil" class="flex flex-wrap items-center gap-6 p-6">
                 <Popover trigger="hover">
                     <PopoverTrigger as-child>
-                        <Button variant="ghost" iconOnly>
+                        <Button variant="ghost" iconOnly aria-label="Settings">
                             <Settings class="size-5" />
                         </Button>
                     </PopoverTrigger>
@@ -54,7 +54,7 @@ const CONTAINERS_STOP = 2;
                 </Popover>
                 <Popover trigger="hover">
                     <PopoverTrigger as-child>
-                        <Button variant="ghost" iconOnly>
+                        <Button variant="ghost" iconOnly aria-label="Back">
                             <ArrowLeft class="size-5" />
                         </Button>
                     </PopoverTrigger>
@@ -64,7 +64,7 @@ const CONTAINERS_STOP = 2;
                 </Popover>
                 <Popover trigger="hover">
                     <PopoverTrigger as-child>
-                        <Button variant="ghost" iconOnly>
+                        <Button variant="ghost" iconOnly aria-label="Retake">
                             <RotateCcw class="size-5" />
                         </Button>
                     </PopoverTrigger>
@@ -74,7 +74,7 @@ const CONTAINERS_STOP = 2;
                 </Popover>
                 <Popover trigger="hover">
                     <PopoverTrigger as-child>
-                        <Button variant="ghost" iconOnly>
+                        <Button variant="ghost" iconOnly aria-label="Stop">
                             <Square class="size-5" />
                         </Button>
                     </PopoverTrigger>

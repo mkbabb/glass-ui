@@ -106,7 +106,14 @@ const opacity = ref(0.5);
                 <PaperBackdrop :opacity="opacity" />
                 <div class="relative flex h-full items-center justify-center gap-4">
                     <code class="fira-code text-mono-caption">opacity={{ opacity.toFixed(2) }}</code>
-                    <input v-model.number="opacity" type="range" min="0" max="1" step="0.05" />
+                    <input
+                        v-model.number="opacity"
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.05"
+                        aria-label="Paper grain opacity"
+                    />
                 </div>
             </ShowcaseFrame>
         </StorySection>

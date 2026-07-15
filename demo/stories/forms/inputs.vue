@@ -54,7 +54,10 @@ const body: StoryBody = {
                 {
                     component: Input,
                     models: { modelValue: "plain" },
-                    props: { placeholder: "Type something…" },
+                    props: {
+                        placeholder: "Type something…",
+                        "aria-label": "Plain text input",
+                    },
                 },
             ],
         },
@@ -155,7 +158,10 @@ const body: StoryBody = {
                 {
                     component: SearchBar,
                     models: { modelValue: "searchTerm" },
-                    props: { placeholder: "Search the catalogue…" },
+                    props: {
+                        placeholder: "Search the catalogue…",
+                        "aria-label": "Search the catalogue",
+                    },
                 },
             ],
         },

@@ -36,6 +36,7 @@ function onImageFile(e: Event) {
                 :options="[...sourceOptions]"
                 :model-value="config.source ?? 'palette'"
                 variant="pill"
+                aria-label="Color source"
                 @update:model-value="setSource"
             />
         </div>
@@ -45,6 +46,7 @@ function onImageFile(e: Event) {
                 type="file"
                 accept="image/*"
                 class="text-small"
+                aria-label="Image source"
                 @change="onImageFile"
             />
         </div>
@@ -54,6 +56,7 @@ function onImageFile(e: Event) {
                 :options="[...warpModeOptions]"
                 :model-value="config.warpMode"
                 variant="pill"
+                aria-label="Warp mode"
                 @update:model-value="setWarpMode"
             />
         </div>

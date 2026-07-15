@@ -40,6 +40,7 @@ function setNoiseOctaves(v: string | string[]) {
                 :options="[...strokeModeOptions]"
                 :model-value="config.strokeMode"
                 variant="pill"
+                aria-label="Stroke mode"
                 @update:model-value="setStrokeMode"
             />
         </div>
@@ -49,6 +50,7 @@ function setNoiseOctaves(v: string | string[]) {
                 :options="[...strokeLayersOptions]"
                 :model-value="String(config.strokeLayers)"
                 variant="pill"
+                aria-label="Stroke layers"
                 @update:model-value="setStrokeLayers"
             />
         </div>
@@ -58,6 +60,7 @@ function setNoiseOctaves(v: string | string[]) {
                 :options="[...noiseOctavesOptions]"
                 :model-value="String(config.noiseOctaves)"
                 variant="pill"
+                aria-label="Noise octaves"
                 @update:model-value="setNoiseOctaves"
             />
         </div>
