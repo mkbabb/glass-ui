@@ -197,7 +197,7 @@ test.describe("motion-demo (π lane — the robust /motion render, fail-CLOSED)"
             const { fileURLToPath } = await import("node:url");
             const { mkdirSync } = await import("node:fs");
             const VISUAL_DIR = fileURLToPath(
-                new URL("../docs/tranches/AZ/audit/visual/", import.meta.url),
+                new URL("../docs/tranches/AZ/audit/visual", import.meta.url),
             );
             mkdirSync(VISUAL_DIR, { recursive: true });
             await page.setViewportSize({ width: 1280, height: 900 });
@@ -235,7 +235,7 @@ test.describe("motion-demo (π lane — the robust /motion render, fail-CLOSED)"
         const { fileURLToPath } = await import("node:url");
         const { mkdirSync, writeFileSync } = await import("node:fs");
         const VISUAL_DIR = fileURLToPath(
-            new URL("../docs/tranches/AZ/audit/visual/", import.meta.url),
+            new URL("../docs/tranches/AZ/audit/visual", import.meta.url),
         );
         mkdirSync(VISUAL_DIR, { recursive: true });
         const out: Record<string, unknown> = {};

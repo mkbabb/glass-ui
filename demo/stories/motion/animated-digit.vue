@@ -2,8 +2,8 @@
 import { ref } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
-import { AnimatedDigit } from "@glass/components/custom/animated-digit";
-import { Button } from "@glass/components/ui/button";
+import { AnimatedDigit } from "@glass/components/animated-digit";
+import { Button } from "@glass/components/button";
 
 // AnimatedDigit is a single-figure smoothed reel over useAnimatedNumber — it
 // tweens its displayed value toward the bound `value` so a metric never snaps.

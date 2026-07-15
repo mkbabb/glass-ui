@@ -7,7 +7,7 @@ import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { Info, HelpCircle, AlertTriangle } from "@lucide/vue";
-import { IconTooltip } from "@glass/components/custom/icon-tooltip";
+import { IconTooltip } from "@glass/components/icon-tooltip";
 </script>
 
 <template>

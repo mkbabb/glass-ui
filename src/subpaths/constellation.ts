@@ -1,1 +1,1 @@
-export * from "../components/custom/constellation";
+export * from "../components/constellation";

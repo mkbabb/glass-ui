@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, inject, provide, watch } from "vue";
 import { cn } from "@glass/components/_shared/class-names";
-import { TooltipProvider } from "@glass/components/ui/tooltip";
+import { TooltipProvider } from "@glass/components/tooltip";
 import { useStoryNavigation } from "../useStoryNavigation";
 import { SECTION_REVEAL_KEY, useSectionReveal } from "../section/useSectionReveal";
 import { STORY_NESTED_KEY } from "../family/story-nested";

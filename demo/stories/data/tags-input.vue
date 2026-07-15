@@ -8,9 +8,9 @@ import {
     TagsInputItem,
     TagsInputItemDelete,
     TagsInputItemText,
-} from "@glass/components/ui/tags-input";
-import { Card } from "@glass/components/ui/card";
-import { Label } from "@glass/components/ui/label";
+} from "@glass/components/tags-input";
+import { Card } from "@glass/components/card";
+import { Label } from "@glass/components/label";
 import { cn } from "@glass/components/_shared/class-names";
 
 // Prefilled tags — reka-ui accepts v-model:modelValue on TagsInputRoot.

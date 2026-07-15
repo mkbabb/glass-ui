@@ -1,1 +1,1 @@
-export * from "../components/custom/dock";
+export * from "../components/dock";

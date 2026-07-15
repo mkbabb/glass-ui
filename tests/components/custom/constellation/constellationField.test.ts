@@ -15,7 +15,7 @@ import {
     type ConstellationNode,
     type ConstellationWander,
     type ConstellationWell,
-} from "@glass/components/custom/constellation/constellationField";
+} from "@glass/components/constellation/constellationField";
 import {
     stepWell,
     nearestNode,
@@ -29,8 +29,8 @@ import {
     DEFAULT_WELL_CONFIG,
     WARP_RESPONSE,
     WARP_ZETA,
-} from "@glass/components/custom/constellation/constellationInteraction";
-import { DEFAULT_PALETTE } from "@glass/components/custom/constellation/constellationRender";
+} from "@glass/components/constellation/constellationInteraction";
+import { DEFAULT_PALETTE } from "@glass/components/constellation/constellationRender";
 
 /** A complete `ConstellationField` (focalIndex + warp) — AX.W17. */
 function makeField(
@@ -803,9 +803,9 @@ describe("constellation generalization (AZ.W-CON-GEN)", () => {
 // R5-8 (the slides-consumer kVis floor) — the two-axis split: SIZES floor at
 // kVis = max(k, kFloor) while TRUE k keeps positions/reach. Byte-identical
 // at/above kFloor·BASE_WIDTH by construction (kVis === k there).
-import { BASE_WIDTH } from "@glass/components/custom/constellation/constellationField";
-import { DEFAULT_K_FLOOR } from "@glass/components/custom/constellation/constants";
-import { kVisOf } from "@glass/components/custom/constellation/constellationRender";
+import { BASE_WIDTH } from "@glass/components/constellation/constellationField";
+import { DEFAULT_K_FLOOR } from "@glass/components/constellation/constants";
+import { kVisOf } from "@glass/components/constellation/constellationRender";
 
 describe("constellation kVis floor (R5-8)", () => {
     const fieldAt = (k: number, kFloor?: number) =>

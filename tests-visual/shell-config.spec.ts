@@ -25,7 +25,7 @@ import { fileURLToPath } from "node:url";
 import { mkdirSync, writeFileSync } from "node:fs";
 
 const VISUAL_DIR = fileURLToPath(
-    new URL("../docs/tranches/AZ/audit/visual/", import.meta.url),
+    new URL("../docs/tranches/AZ/audit/visual", import.meta.url),
 );
 
 // Park any WebGL background so a capture is deterministic.

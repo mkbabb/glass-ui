@@ -11,7 +11,7 @@
 // This file lives under scripts/ — OUTSIDE the main tsconfig include (src/+demo/) —
 // so it never breaks `npm run typecheck`. It is only ever compiled by the gate's
 // dedicated fixture tsconfig.
-import { GlassDock } from "../../src/components/custom/dock";
+import { GlassDock } from "../../src/components/dock";
 </script>
 
 <template>

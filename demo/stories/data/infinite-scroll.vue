@@ -2,8 +2,8 @@
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { ref } from "vue";
-import { InfiniteScroll } from "@glass/components/custom/infinite-scroll";
-import { Badge } from "@glass/components/ui/badge";
+import { InfiniteScroll } from "@glass/components/infinite-scroll";
+import { Badge } from "@glass/components/badge";
 import { cn } from "@glass/components/_shared/class-names";
 
 interface Event {

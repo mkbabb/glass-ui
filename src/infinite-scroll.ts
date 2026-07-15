@@ -1,2 +1,2 @@
-export * from "./components/custom/infinite-scroll";
-export * from "./components/custom/infinite-scroll/composables";
+export * from "./components/infinite-scroll";
+export * from "./components/infinite-scroll/composables";

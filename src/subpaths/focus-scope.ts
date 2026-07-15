@@ -1,1 +1,1 @@
-export * from "../components/ui/focus-scope";
+export * from "../components/focus-scope";

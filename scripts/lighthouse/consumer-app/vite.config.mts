@@ -13,7 +13,7 @@ import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vite";
 
-const ROOT = resolve(fileURLToPath(new URL("../../../", import.meta.url)));
+const ROOT = resolve(fileURLToPath(new URL("../../..", import.meta.url)));
 const HERE = resolve(fileURLToPath(new URL("./", import.meta.url)));
 const OUT_DIR = resolve(ROOT, ".cache/lighthouse/consumer-dist");
 

@@ -1,1 +1,1 @@
-export * from "../components/ui/select";
+export * from "../components/select";

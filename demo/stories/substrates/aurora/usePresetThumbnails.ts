@@ -2,7 +2,7 @@ import { onMounted, ref, type Ref } from "vue";
 import {
     auroraFallbackGround,
     type AuroraConfig,
-} from "@glass/components/custom/aurora";
+} from "@glass/components/aurora";
 import { PRESET_KEYS, PRESETS, type PresetKey } from "./presets";
 
 /**

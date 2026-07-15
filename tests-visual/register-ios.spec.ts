@@ -283,7 +283,7 @@ test.describe("register-ios (π lane — the de-red'd iOS selected register, fai
             const { fileURLToPath } = await import("node:url");
             const { mkdirSync } = await import("node:fs");
             const VISUAL_DIR = fileURLToPath(
-                new URL("../docs/tranches/AZ/audit/visual/", import.meta.url),
+                new URL("../docs/tranches/AZ/audit/visual", import.meta.url),
             );
             mkdirSync(VISUAL_DIR, { recursive: true });
             await page.setViewportSize({ width: 1280, height: 800 });

@@ -1,1 +1,1 @@
-export * from "../components/custom/color-swatch";
+export * from "../components/color-swatch";

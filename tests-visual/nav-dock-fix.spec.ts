@@ -30,7 +30,7 @@ import { fileURLToPath } from "node:url";
 import { mkdirSync } from "node:fs";
 
 const VISUAL_DIR = fileURLToPath(
-    new URL("../docs/tranches/BD/viz/refine/nav-dock-fix/", import.meta.url),
+    new URL("../docs/tranches/BD/viz/refine/nav-dock-fix", import.meta.url),
 );
 
 const VIEWPORTS = [

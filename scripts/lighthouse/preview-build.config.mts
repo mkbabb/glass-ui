@@ -27,7 +27,7 @@ import { fileURLToPath } from "node:url";
 import { defineConfig } from "vite";
 
 // This config file lives at <root>/scripts/lighthouse/; the repo root is two up.
-const ROOT = resolve(fileURLToPath(new URL("../../", import.meta.url)));
+const ROOT = resolve(fileURLToPath(new URL("../..", import.meta.url)));
 
 // The production demo-SPA build lands in a dedicated dir under the gate cache so
 // it never collides with the library `dist/` (the consumer harness imports the

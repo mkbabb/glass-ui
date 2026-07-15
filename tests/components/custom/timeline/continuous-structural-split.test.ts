@@ -1,11 +1,11 @@
 import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
 
-import GlassTimeline from "@glass/components/custom/timeline/GlassTimeline.vue";
+import GlassTimeline from "@glass/components/timeline/GlassTimeline.vue";
 // BI.W-OVERLAY-UNION — HoverPopover folded onto the sealed <Popover trigger="hover">
 // union; the markers wrap each dot in the survivor, same update:open cadence.
-import { Popover } from "@glass/components/ui/popover";
-import type { TimelineSegment } from "@glass/components/custom/timeline/types";
+import { Popover } from "@glass/components/popover";
+import type { TimelineSegment } from "@glass/components/timeline/types";
 
 /**
  * AB.W2.T4 (A4 §nested-interactive) — Option C structural split.

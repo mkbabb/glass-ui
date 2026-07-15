@@ -16,8 +16,8 @@
 // gives the icon-only register; passing it gives the leading-icon + text pill.
 import { computed } from "vue";
 import { Play, Pause } from "@lucide/vue";
-import { Button } from "@glass/components/ui/button";
-import type { ButtonVariants } from "@glass/components/ui/button";
+import { Button } from "@glass/components/button";
+import type { ButtonVariants } from "@glass/components/button";
 
 const props = withDefaults(
     defineProps<{

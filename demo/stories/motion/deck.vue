@@ -16,8 +16,8 @@ import {
     useDeckKeyboard,
     installDeckSpring,
     DeckPager,
-} from "@glass/components/custom/deck";
-import { Button } from "@glass/components/ui/button";
+} from "@glass/components/deck";
+import { Button } from "@glass/components/button";
 import { useGooMorph } from "@glass/composables/motion/useGooMorph";
 
 const slides = [

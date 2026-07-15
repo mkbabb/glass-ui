@@ -1,1 +1,1 @@
-export * from "../components/custom/paper-backdrop";
+export * from "../components/paper-backdrop";

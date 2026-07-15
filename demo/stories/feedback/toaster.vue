@@ -6,9 +6,9 @@ import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import CodeBlock from "../../chassis/code/CodeBlock.vue";
-import { Button } from "@glass/components/ui/button";
+import { Button } from "@glass/components/button";
 import { Play } from "@lucide/vue";
-import { Toaster, useToast } from "@glass/components/ui/toast";
+import { Toaster, useToast } from "@glass/components/toast";
 
 const { toast } = useToast();
 

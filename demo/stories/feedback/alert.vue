@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import type { StoryBody, SpecimenSpec } from "../../chassis/body/story-body";
-import { Alert, AlertDescription, AlertTitle } from "@glass/components/ui/alert";
-import { IconChip } from "@glass/components/custom/icon-chip";
+import { Alert, AlertDescription, AlertTitle } from "@glass/components/alert";
+import { IconChip } from "@glass/components/icon-chip";
 import { Info, CircleAlert, TriangleAlert, CircleCheck, Sparkles, Bell } from "@lucide/vue";
 import type { Component } from "vue";
 // The feedback band's ONE coherent --section-color-8 ruby (warm-status) identity.

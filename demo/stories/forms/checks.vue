@@ -2,11 +2,11 @@
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { ref } from "vue";
-import { Checkbox } from "@glass/components/ui/checkbox";
-import { RadioGroup, RadioGroupItem } from "@glass/components/ui/radio-group";
-import { Switch } from "@glass/components/ui/switch";
-import { Label } from "@glass/components/ui/label";
-import { IconChip } from "@glass/components/custom/icon-chip";
+import { Checkbox } from "@glass/components/checkbox";
+import { RadioGroup, RadioGroupItem } from "@glass/components/radio-group";
+import { Switch } from "@glass/components/switch";
+import { Label } from "@glass/components/label";
+import { IconChip } from "@glass/components/icon-chip";
 import { SquareCheck } from "@lucide/vue";
 // BC.W-SUFFUSE-reconcile — the forms band's ONE coherent --section-color-3 teal
 // (the cool stop the per-category map assigns forms). The page identity COLOR

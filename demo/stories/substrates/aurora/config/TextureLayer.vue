@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { SegmentedTabs } from "@glass/components/custom/tabs";
-import { LabeledSlider } from "@glass/components/custom/labeled-field";
+import { SegmentedTabs } from "@glass/components/tabs";
+import { LabeledSlider } from "@glass/components/labeled-field";
 import type {
     AuroraConfig,
     StrokeMode,
-} from "@glass/components/custom/aurora";
+} from "@glass/components/aurora";
 import {
     noiseOctavesOptions,
     strokeLayersOptions,

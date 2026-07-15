@@ -1,1 +1,1 @@
-export * from "../components/custom/metric-stack";
+export * from "../components/metric-stack";

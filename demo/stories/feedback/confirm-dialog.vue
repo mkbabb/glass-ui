@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import { ref } from "vue";
-import { Button } from "@glass/components/ui/button";
+import { Button } from "@glass/components/button";
 // BI.W-DIALOG-PLACEMENT — ConfirmDialog DEMOTED to a Dialog PRESET (its imperative
 // promise-opener was thin — a preset over the Dialog root, not a distinct component).
 // The confirm flow is a CONSUMER composition now (presets live in consumers): a glass
@@ -14,8 +14,8 @@ import {
     DialogTitle,
     DialogDescription,
     DialogFooter,
-} from "@glass/components/ui/dialog";
-import { IconChip } from "@glass/components/custom/icon-chip";
+} from "@glass/components/dialog";
+import { IconChip } from "@glass/components/icon-chip";
 import {
     Trash2,
     LogOut,

@@ -3,105 +3,93 @@
 > Re-derived from disk by `node scripts/regen-structure.mjs --write` via the
 > SAME colocated-barrel glob (`scripts/lib/subpath-policy.mjs` `readTree`) the
 > export regen feeds, so the package enumeration cannot drift. Run `--check` in
-> CI to RED a `custom/` dir add that never re-generated this file. The narrative
+> CI to RED a component dir add that never re-generated this file. The narrative
 > structure prose (the `src/styles/` cascade, the per-dir intent) lands at
 > BH.B4b-content [WS12]; this skeleton carries the package enumeration.
 
-## src/components/ui (42 dirs)
+## src/components (79 dirs)
 
 - _shared/
 - accordion/
 - alert/
+- animated-digit/
+- aurora/
 - avatar/
 - badge/
+- blob/
 - button/
 - card/
 - carousel/
 - checkbox/
+- chip/
 - collapsible/
+- color-swatch/
 - combobox/
 - command/
-- context-menu/
-- data-table/
-- dialog/
-- drawer/
-- dropdown-menu/
-- focus-scope/
-- hover-card/
-- input/
-- label/
-- metric-pill/
-- multi-select/
-- notification/
-- number-field/
-- popover/
-- progress/
-- radio-group/
-- section/
-- select/
-- separator/
-- sheet/
-- skeleton/
-- slider/
-- switch/
-- table/
-- tags-input/
-- textarea/
-- toast/
-- toggle/
-- toggle-group/
-- tooltip/
-
-## src/components/custom (46 dirs)
-
-- animated-digit/
-- aurora/
-- blob/
-- border-progress/
-- color-swatch/
 - completion-seal/
 - configurator/
-- confirm-dialog/
 - constellation/
 - controls/
+- data-table/
 - deck/
+- dialog/
 - dock/
+- drawer/
+- dropdown-menu/
 - easing/
 - expandable-container/
 - fading-scroll/
+- focus-scope/
 - fourier-field/
-- glass-panel/
 - goo-filter/
 - handmark/
 - header-ribbon/
-- hover-popover/
 - icon-chip/
 - icon-tooltip/
 - infinite-scroll/
+- input/
 - instrument-chassis/
+- label/
 - labeled-field/
 - liquid-grid/
 - metric-badge/
 - metric-cell/
 - metric-stack/
+- notification/
+- number-field/
 - pager-dots/
 - paper-backdrop/
+- popover/
+- progress/
 - pulse/
-- scrolling-text/
+- radio-group/
+- scroll-progress-rim/
 - search/
-- selectable-chip/
+- section/
+- select/
+- separator/
+- skeleton/
+- slider/
 - sortable-list/
 - spa-view/
 - split-chars/
 - stacked-icons/
 - status-dot/
+- surface/
+- switch/
+- table/
 - tabs/
+- tags-input/
+- textarea/
 - timeline/
-- toggle-chip/
+- toast/
+- toggle/
+- toggle-group/
+- tooltip/
 - typewriter/
 - watercolor-dot/
 
-## src/composables (11 dirs)
+## src/composables (10 dirs)
 
 - color/
 - context/
@@ -112,5 +100,4 @@
 - motion/
 - reactive/
 - sidebar/
-- sortable/
 - virtual/

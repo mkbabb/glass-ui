@@ -15,9 +15,9 @@ import { mount } from "@vue/test-utils";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { defineComponent, h, nextTick, ref } from "vue";
 
-import GlassDock from "@glass/components/custom/dock/GlassDock.vue";
-import DockLayerGroup from "@glass/components/custom/dock/DockLayerGroup.vue";
-import DockLayer from "@glass/components/custom/dock/DockLayer.vue";
+import GlassDock from "@glass/components/dock/GlassDock.vue";
+import DockLayerGroup from "@glass/components/dock/DockLayerGroup.vue";
+import DockLayer from "@glass/components/dock/DockLayer.vue";
 
 /**
  * Mount a `<GlassDock>` (so the dock context — keepOpen/release — is provided)

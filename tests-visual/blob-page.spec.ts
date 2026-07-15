@@ -261,7 +261,7 @@ test.describe("blob-page (π lane — the TRUE blob-page defect, fail-CLOSED)", 
             // stageConfig spreads BLOB_CONFIG_DEFAULTS then overrides geometry.orbitRadius
             // (the D2 fix); the bodyRadius stays the default. Parse both from source.
             const blobVue = fileURLToPath(new URL("../demo/stories/substrates/blob.vue", import.meta.url));
-            const typesTs = fileURLToPath(new URL("../src/components/custom/blob/types.ts", import.meta.url));
+            const typesTs = fileURLToPath(new URL("../src/components/blob/types.ts", import.meta.url));
             const blobSrc = readFileSync(blobVue, "utf8");
             const typesSrc = readFileSync(typesTs, "utf8");
             const orbitOverride = blobSrc.match(/orbitRadius:\s*([\d.]+)/);

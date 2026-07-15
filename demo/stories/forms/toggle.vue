@@ -4,10 +4,10 @@ import StorySection from "../../chassis/section/StorySection.vue";
 import { computed, defineAsyncComponent, ref } from "vue";
 import FamilyTabs, { type FamilyMember } from "../../chassis/family/FamilyTabs.vue";
 import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, ToggleRight } from "@lucide/vue";
-import { Toggle } from "@glass/components/ui/toggle";
-import { ToggleGroup, ToggleGroupItem } from "@glass/components/ui/toggle-group";
-import { Chip } from "@glass/components/custom/chip";
-import { IconChip } from "@glass/components/custom/icon-chip";
+import { Toggle } from "@glass/components/toggle";
+import { ToggleGroup, ToggleGroupItem } from "@glass/components/toggle-group";
+import { Chip } from "@glass/components/chip";
+import { IconChip } from "@glass/components/icon-chip";
 // BC.W-SUFFUSE-reconcile — the forms band's ONE coherent --section-color-3 teal
 // identity (the cool stop). PH3-safe (inline borderLeft, not the
 // border-l-[3px] + <IconChip> double-header shape).

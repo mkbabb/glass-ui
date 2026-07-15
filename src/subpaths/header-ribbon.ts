@@ -1,1 +1,1 @@
-export * from "../components/custom/header-ribbon";
+export * from "../components/header-ribbon";

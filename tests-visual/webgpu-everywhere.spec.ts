@@ -169,8 +169,8 @@ test.describe("BC.W-WEBGPU-EVERYWHERE — every substrate PAINTS, on every host"
             if (!adapter) return { skip: "no adapter (the WebGL2 net carries this host; the compile arm needs a device)" };
             const device = await adapter.requestDevice();
             const shaders: Record<string, string> = {
-                aurora: "/src/components/custom/aurora/constants/shaders/aurora.wgsl.ts#AURORA_WGSL",
-                metaball: "/src/components/custom/blob/shaders/metaball.wgsl.ts#METABALL_WGSL",
+                aurora: "/src/components/aurora/constants/shaders/aurora.wgsl.ts#AURORA_WGSL",
+                metaball: "/src/components/blob/shaders/metaball.wgsl.ts#METABALL_WGSL",
             };
             const out: Record<string, { errors: string[] }> = {};
             for (const [id, ref] of Object.entries(shaders)) {

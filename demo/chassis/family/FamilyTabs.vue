@@ -17,7 +17,7 @@ import type { Component } from "vue";
 import {
     SegmentedTabs,
     type SegmentedTabOption,
-} from "@glass/components/custom/tabs";
+} from "@glass/components/tabs";
 import { STORY_NESTED_KEY } from "./story-nested";
 
 export interface FamilyMember {

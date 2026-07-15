@@ -7,4 +7,4 @@
 // `subpath-policy.mjs` (the CURATED bucket) — never hand-listed. The tuples are
 // ~0.1KB of frozen const arrays (no functions, no component code); a consumer
 // iterates `SIZES`/`TONES` for an axis-matrix, or types against `Size`/`Tone`.
-export * from "./components/ui/_shared/axes";
+export * from "./components/_shared/axes";

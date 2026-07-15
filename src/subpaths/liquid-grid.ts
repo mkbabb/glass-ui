@@ -1,1 +1,1 @@
-export * from "../components/custom/liquid-grid";
+export * from "../components/liquid-grid";

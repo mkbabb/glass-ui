@@ -30,7 +30,7 @@ import { fileURLToPath } from "node:url";
 import { mkdirSync } from "node:fs";
 
 const VISUAL_DIR = fileURLToPath(
-    new URL("../docs/tranches/BB/audit/visual/", import.meta.url),
+    new URL("../docs/tranches/BB/audit/visual", import.meta.url),
 );
 
 // The forms/toggle route hosts BOTH a type="single" + a type="multiple"

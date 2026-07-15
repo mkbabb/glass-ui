@@ -8,7 +8,7 @@ import {
     SortableItem,
     SortableHandle,
 } from "@glass/components/sortable-list";
-import { Card } from "@glass/components/ui/card";
+import { Card } from "@glass/components/card";
 import { cn } from "@glass/components/_shared/class-names";
 
 interface Task {

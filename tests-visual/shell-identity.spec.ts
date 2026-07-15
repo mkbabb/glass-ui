@@ -27,7 +27,7 @@ import { fileURLToPath } from "node:url";
 import { mkdirSync } from "node:fs";
 
 const VISUAL_DIR = fileURLToPath(
-    new URL("../docs/tranches/AZ/audit/visual/", import.meta.url),
+    new URL("../docs/tranches/AZ/audit/visual", import.meta.url),
 );
 
 // The ±0.5px optical-centering band (the spec's HG2/S5 acceptance).

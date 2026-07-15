@@ -6,10 +6,10 @@
 // to tap-toggle on coarse pointers.
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
-import { Popover, PopoverContent, PopoverTrigger } from "@glass/components/ui/popover";
-import { Card } from "@glass/components/ui/card";
-import { IconChip } from "@glass/components/custom/icon-chip";
-import { Button } from "@glass/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@glass/components/popover";
+import { Card } from "@glass/components/card";
+import { IconChip } from "@glass/components/icon-chip";
+import { Button } from "@glass/components/button";
 import { Settings, ArrowLeft, RotateCcw, Square, MousePointer2 } from "@lucide/vue";
 
 // BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2

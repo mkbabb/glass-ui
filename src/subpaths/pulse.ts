@@ -1,1 +1,1 @@
-export * from "../components/custom/pulse";
+export * from "../components/pulse";

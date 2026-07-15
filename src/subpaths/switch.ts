@@ -1,1 +1,1 @@
-export * from "../components/ui/switch";
+export * from "../components/switch";

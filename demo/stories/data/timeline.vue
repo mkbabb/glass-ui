@@ -2,7 +2,7 @@
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { ref, computed } from "vue";
-import { GlassTimeline } from "@glass/components/custom/timeline";
+import { GlassTimeline } from "@glass/components/timeline";
 import { cn } from "@glass/components/_shared/class-names";
 
 // BG.W-DEMO-DUP-MERGE (F7.3) — the Data TIMELINE family, mechanically consolidated.

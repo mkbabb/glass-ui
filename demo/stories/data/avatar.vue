@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
-import { Avatar, AvatarFallback, AvatarImage } from "@glass/components/ui/avatar";
-import { Card } from "@glass/components/ui/card";
-import { StackedIconGroup } from "@glass/components/custom/stacked-icons";
+import { Avatar, AvatarFallback, AvatarImage } from "@glass/components/avatar";
+import { Card } from "@glass/components/card";
+import { StackedIconGroup } from "@glass/components/stacked-icons";
 import { cn } from "@glass/components/_shared/class-names";
 
 interface Member {

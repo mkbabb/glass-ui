@@ -33,14 +33,14 @@ import StorySection from "../../chassis/section/StorySection.vue";
 import StoryPlayButton from "../../chassis/play/StoryPlayButton.vue";
 import { computed, onUnmounted, ref } from "vue";
 import { Play } from "@lucide/vue";
-import { FadingScroll } from "@glass/components/custom/fading-scroll";
+import { FadingScroll } from "@glass/components/fading-scroll";
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from "@glass/components/ui/select";
+} from "@glass/components/select";
 import { cn } from "@glass/components/_shared/class-names";
 import { CURVE_FAMILIES, type CurveRow } from "./curve-families";
 // BB.W-EASING-PRIMITIVE — the C-3 fold LANDED. The two demo editors (BezierEditor +
@@ -56,7 +56,7 @@ import { CURVE_FAMILIES, type CurveRow } from "./curve-families";
 import {
     EasingConfigurator,
     EasingPicker,
-} from "@glass/components/custom/easing";
+} from "@glass/components/easing";
 
 const CUSTOM_FAMILY = "Custom";
 // BA.W-FOURIER-STUDIO / REC-6 — the Steps family hosts the live steppedEase(n,

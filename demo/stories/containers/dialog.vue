@@ -11,11 +11,11 @@ import {
     DialogTitle,
     DialogTrigger,
     DialogClose,
-} from "@glass/components/ui/dialog";
-import { Button } from "@glass/components/ui/button";
-import { Input } from "@glass/components/ui/input";
-import { Label } from "@glass/components/ui/label";
-import { IconChip } from "@glass/components/custom/icon-chip";
+} from "@glass/components/dialog";
+import { Button } from "@glass/components/button";
+import { Input } from "@glass/components/input";
+import { Label } from "@glass/components/label";
+import { IconChip } from "@glass/components/icon-chip";
 import { MessageSquare, LoaderCircle } from "@lucide/vue";
 
 // BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2

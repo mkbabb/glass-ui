@@ -1,7 +1,7 @@
 import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
 
-import { MetricBadge } from "@glass/components/custom/metric-badge/index";
+import { MetricBadge } from "@glass/components/metric-badge/index";
 import { coalesceMetric } from "@glass/components/metric/coalesce-metric";
 
 // AZ.W-METRIC-UNIFY — the born-RED zero-value regression.

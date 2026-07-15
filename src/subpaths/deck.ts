@@ -1,1 +1,1 @@
-export * from "../components/custom/deck";
+export * from "../components/deck";

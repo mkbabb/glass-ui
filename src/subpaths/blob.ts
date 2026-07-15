@@ -1,1 +1,1 @@
-export * from "../components/custom/blob";
+export * from "../components/blob";

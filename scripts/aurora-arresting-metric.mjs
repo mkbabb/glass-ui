@@ -2,7 +2,7 @@
 // aurora-arresting-metric — the falsifiable "arresting" metric harness (AY.W-AUR1).
 //
 // Computes the THREE reference-anchored painterly metrics defined in
-// src/components/custom/aurora/RESEARCH.md §4 on an input PNG and prints the triple:
+// src/components/aurora/RESEARCH.md §4 on an input PNG and prints the triple:
 //
 //   §4.1  Hasler-Süsstrunk colorfulness   C = σ_rgyb + 0.3·μ_rgyb
 //   §4.2  structure-tensor anisotropy     A = (λ₁−λ₂)/(λ₁+λ₂)   (mean interior)

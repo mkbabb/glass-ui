@@ -76,7 +76,7 @@ test.describe("BI.W-AURORA-VIBRANCY — vibrant warm-sun field + the setting-sun
             const built = await page.evaluate(
                 async ({ grid, keys }) => {
                     const groundMod = await import(
-                        "/src/components/custom/aurora/composables/auroraFallbackGround.ts"
+                        "/src/components/aurora/composables/auroraFallbackGround.ts"
                     );
                     const presetMod = await import(
                         "/demo/stories/substrates/aurora/presets.ts"
@@ -158,7 +158,7 @@ test.describe("BI.W-AURORA-VIBRANCY — vibrant warm-sun field + the setting-sun
         await assertServedDemoAurora(page);
         const res = await page.evaluate(async ({ grid }) => {
             const groundMod = await import(
-                "/src/components/custom/aurora/composables/auroraFallbackGround.ts"
+                "/src/components/aurora/composables/auroraFallbackGround.ts"
             );
             const presetMod = await import("/demo/stories/substrates/aurora/presets.ts");
             const cfg = presetMod.PRESETS.SETTING_SUN;
@@ -204,7 +204,7 @@ test.describe("BI.W-AURORA-VIBRANCY — vibrant warm-sun field + the setting-sun
             await assertServedDemoAurora(page);
             await page.evaluate(async ({ grid }) => {
                 const groundMod = await import(
-                    "/src/components/custom/aurora/composables/auroraFallbackGround.ts"
+                    "/src/components/aurora/composables/auroraFallbackGround.ts"
                 );
                 const presetMod = await import("/demo/stories/substrates/aurora/presets.ts");
                 const cfg = presetMod.PRESETS.SETTING_SUN;

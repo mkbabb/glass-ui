@@ -10,9 +10,9 @@ import {
     SelectSeparator,
     SelectTrigger,
     SelectValue,
-} from "@glass/components/ui/select";
-import { Label } from "@glass/components/ui/label";
-import { IconChip } from "@glass/components/custom/icon-chip";
+} from "@glass/components/select";
+import { Label } from "@glass/components/label";
+import { IconChip } from "@glass/components/icon-chip";
 import { ListFilter } from "@lucide/vue";
 // The forms band's ONE coherent --section-color-3 teal identity (the cool stop).
 const FORMS_STOP = 3;

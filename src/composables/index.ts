@@ -27,4 +27,4 @@ export * from "./glass";
 export * from "./sidebar";
 
 // Co-located domain composable (infinite-scroll lives next to its component).
-export * from "../components/custom/infinite-scroll/composables";
+export * from "../components/infinite-scroll/composables";

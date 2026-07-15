@@ -269,7 +269,7 @@ test.describe("motion2 (π lane — the curve gallery REDRESS render, fail-CLOSE
             const { fileURLToPath } = await import("node:url");
             const { mkdirSync } = await import("node:fs");
             const VISUAL_DIR = fileURLToPath(
-                new URL("../docs/tranches/AZ/audit/visual/", import.meta.url),
+                new URL("../docs/tranches/AZ/audit/visual", import.meta.url),
             );
             mkdirSync(VISUAL_DIR, { recursive: true });
             await page.setViewportSize({ width: 1440, height: 1000 });
@@ -308,7 +308,7 @@ test.describe("motion2 (π lane — the curve gallery REDRESS render, fail-CLOSE
         const { fileURLToPath } = await import("node:url");
         const { mkdirSync, writeFileSync } = await import("node:fs");
         const VISUAL_DIR = fileURLToPath(
-            new URL("../docs/tranches/AZ/audit/visual/", import.meta.url),
+            new URL("../docs/tranches/AZ/audit/visual", import.meta.url),
         );
         mkdirSync(VISUAL_DIR, { recursive: true });
         const out: Record<string, unknown> = {};

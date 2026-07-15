@@ -32,7 +32,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const VISUAL_DIR = fileURLToPath(
-    new URL("../docs/tranches/BI/audit/visual/", import.meta.url),
+    new URL("../docs/tranches/BI/audit/visual", import.meta.url),
 );
 
 // The optical-center delta ceiling. The spec target is ≤ ~1px; the tolerance carries

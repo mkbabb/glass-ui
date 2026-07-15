@@ -1,7 +1,7 @@
 import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
 
-import GlassDock from "@glass/components/custom/dock/GlassDock.vue";
+import GlassDock from "@glass/components/dock/GlassDock.vue";
 
 /**
  * BG.W-DOCK-CAP-SCROLL-FADE — a capped axis is ALWAYS a scroll axis (the

@@ -6,9 +6,9 @@ import {
     Collapsible,
     CollapsibleContent,
     CollapsibleTrigger,
-} from "@glass/components/ui/collapsible";
-import { Button } from "@glass/components/ui/button";
-import { IconChip } from "@glass/components/custom/icon-chip";
+} from "@glass/components/collapsible";
+import { Button } from "@glass/components/button";
+import { IconChip } from "@glass/components/icon-chip";
 import { ChevronDown } from "@lucide/vue";
 
 // BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2

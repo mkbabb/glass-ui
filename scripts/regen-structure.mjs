@@ -3,7 +3,7 @@
 // ============================================================================
 // Generates `docs/canon/structure.md` from disk via the SAME colocated-barrel glob
 // `scripts/lib/subpath-policy.mjs` (`readTree`) feeds the export regen — so the
-// 5-reader hot structure enumeration (the `custom/` package list that drifted from
+// 5-reader hot structure enumeration (the component package list that drifted from
 // CLAUDE.md §Structure through two closes — proof:claude-structure-sync's lesson)
 // CANNOT drift again: it is re-derived, never hand-maintained.
 //
@@ -12,7 +12,7 @@
 //   --write   — write docs/canon/structure.md.
 //   --check   — compare the on-disk structure.md to the freshly-generated form;
 //               exit 1 on drift (the B5c [WS12] re-point of proof:claude-structure-
-//               sync consumes this so a custom/ dir add without a re-gen REDs).
+//               sync consumes this so a component dir add without a re-gen REDs).
 //
 // READ-ONLY by default. Pure disk read; no side effects unless --write.
 // ============================================================================
@@ -52,15 +52,14 @@ export function generateStructureMd() {
         "> export regen feeds, so the package enumeration cannot drift. Run `--check` in",
     );
     lines.push(
-        "> CI to RED a `custom/` dir add that never re-generated this file. The narrative",
+        "> CI to RED a component dir add that never re-generated this file. The narrative",
     );
     lines.push(
         "> structure prose (the `src/styles/` cascade, the per-dir intent) lands at",
     );
     lines.push("> BH.B4b-content [WS12]; this skeleton carries the package enumeration.");
     lines.push("");
-    lines.push(tierSection("src/components/ui", tree.ui));
-    lines.push(tierSection("src/components/custom", tree.custom));
+    lines.push(tierSection("src/components", tree.component));
     lines.push(tierSection("src/composables", tree.composable));
     // Single trailing newline.
     return `${lines.join("\n").replace(/\n+$/, "")}\n`;
@@ -92,7 +91,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
         const current = readFileSync(OUT_ABS, "utf8");
         if (current !== generated) {
             console.error(
-                `regen-structure --check — ${OUT_REL} is STALE (a custom/ui/composable dir drifted from disk). Run: node scripts/regen-structure.mjs --write`,
+                `regen-structure --check — ${OUT_REL} is STALE (a component/composable dir drifted from disk). Run: node scripts/regen-structure.mjs --write`,
             );
             process.exit(1);
         }

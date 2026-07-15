@@ -5,10 +5,10 @@ import { onMounted, onUnmounted, ref } from "vue";
 import {
     Progress,
     type ProgressSegment,
-} from "@glass/components/ui/progress";
-import { Button } from "@glass/components/ui/button";
-import { ScrollProgressRim } from "@glass/components/custom/scroll-progress-rim";
-import { IconChip } from "@glass/components/custom/icon-chip";
+} from "@glass/components/progress";
+import { Button } from "@glass/components/button";
+import { ScrollProgressRim } from "@glass/components/scroll-progress-rim";
+import { IconChip } from "@glass/components/icon-chip";
 import { Gauge } from "@lucide/vue";
 // BB.W-SUFFUSE3 — the feedback band's --section-color-8 ruby identity. Progress is
 // a REFERENCE surface (its phase-bus --viz-* hues ARE the teaching content); the

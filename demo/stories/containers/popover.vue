@@ -5,12 +5,12 @@ import {
     Popover,
     PopoverContent,
     PopoverTrigger,
-} from "@glass/components/ui/popover";
-import { Button } from "@glass/components/ui/button";
-import { Card } from "@glass/components/ui/card";
-import { Input } from "@glass/components/ui/input";
-import { Label } from "@glass/components/ui/label";
-import { IconChip } from "@glass/components/custom/icon-chip";
+} from "@glass/components/popover";
+import { Button } from "@glass/components/button";
+import { Card } from "@glass/components/card";
+import { Input } from "@glass/components/input";
+import { Label } from "@glass/components/label";
+import { IconChip } from "@glass/components/icon-chip";
 import { MessageCircle } from "@lucide/vue";
 
 // BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2

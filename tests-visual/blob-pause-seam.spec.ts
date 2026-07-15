@@ -156,11 +156,11 @@ test.describe("blob-integration (π lane — the WCAG-2.2.2 pause seam + context
 
     test("README-vs-code defineExpose CONSISTENCY — every README 'Exposed' method is on the Blob surface", () => {
         const readme = readFileSync(
-            `${LIBRARY_ROOT}src/components/custom/blob/README.md`,
+            `${LIBRARY_ROOT}src/components/blob/README.md`,
             "utf8",
         );
         const sfc = readFileSync(
-            `${LIBRARY_ROOT}src/components/custom/blob/Blob.vue`,
+            `${LIBRARY_ROOT}src/components/blob/Blob.vue`,
             "utf8",
         );
 

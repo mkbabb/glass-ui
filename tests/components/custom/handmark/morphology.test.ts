@@ -9,7 +9,7 @@
 //     proof gate; here the determinism + variation prove the seed is consumed).
 
 import { describe, expect, it } from "vitest";
-import { serialize, shapeGeom } from "@glass/components/custom/handmark/geometry";
+import { serialize, shapeGeom } from "@glass/components/handmark/geometry";
 
 const OPTS = { roughness: 0.9, segments: 14, seed: 1 } as const;
 

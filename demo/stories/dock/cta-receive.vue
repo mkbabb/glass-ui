@@ -12,8 +12,8 @@ import { onMounted, ref, useTemplateRef } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { Plus, Star, Compass, Shapes, Boxes } from "@lucide/vue";
-import { GlassDock, DockControl } from "@glass/components/custom/dock";
-import { Button } from "@glass/components/ui/button";
+import { GlassDock, DockControl } from "@glass/components/dock";
+import { Button } from "@glass/components/button";
 import { useDockCtaReceive } from "@glass/composables/motion/useDockCtaReceive";
 import DockStage from "./DockStage.vue";
 

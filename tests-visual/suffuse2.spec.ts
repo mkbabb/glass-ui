@@ -29,7 +29,7 @@ import { mkdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const VISUAL_DIR = fileURLToPath(
-    new URL("../docs/tranches/BA/audit/visual/", import.meta.url),
+    new URL("../docs/tranches/BA/audit/visual", import.meta.url),
 );
 try {
     mkdirSync(VISUAL_DIR, { recursive: true });

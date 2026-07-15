@@ -12,9 +12,9 @@ import {
     TableHeader,
     TableRow,
     TableEmpty,
-} from "@glass/components/ui/table";
-import { Badge } from "@glass/components/ui/badge";
-import { IconChip } from "@glass/components/custom/icon-chip";
+} from "@glass/components/table";
+import { Badge } from "@glass/components/badge";
+import { IconChip } from "@glass/components/icon-chip";
 import { cn } from "@glass/components/_shared/class-names";
 import { Table as TableIcon, Table2 } from "@lucide/vue";
 

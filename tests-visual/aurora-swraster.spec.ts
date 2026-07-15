@@ -101,10 +101,10 @@ test.describe("BB.W-AURORA-SWRASTER — headless luminance-faithful fallback", (
             const built = await page.evaluate(
                 async ({ refGrid }) => {
                     const groundMod = await import(
-                        "/src/components/custom/aurora/composables/auroraFallbackGround.ts"
+                        "/src/components/aurora/composables/auroraFallbackGround.ts"
                     );
                     const presetMod = await import(
-                        "/src/components/custom/aurora/constants/presets.ts"
+                        "/src/components/aurora/constants/presets.ts"
                     );
                     const cfg = presetMod.DEFAULT_AURORA_CONFIG;
 
@@ -237,13 +237,13 @@ test.describe("BB.W-AURORA-SWRASTER — headless luminance-faithful fallback", (
         // un-armed (the inert handle — no live GL layer) so the page never wedges.
         const result = await page.evaluate(async () => {
             const rmMod = await import(
-                "/src/components/custom/aurora/constants/renderMode.ts"
+                "/src/components/aurora/constants/renderMode.ts"
             );
             const rtMod = await import(
-                "/src/components/custom/aurora/composables/runtime.ts"
+                "/src/components/aurora/composables/runtime.ts"
             );
             const presetMod = await import(
-                "/src/components/custom/aurora/constants/presets.ts"
+                "/src/components/aurora/constants/presets.ts"
             );
             const isSoftware = rmMod.isSoftwareWebGLRenderer();
             const canvas = document.createElement("canvas");

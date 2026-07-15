@@ -17,13 +17,13 @@ import { fileURLToPath } from "node:url";
 import { mkdirSync } from "node:fs";
 
 const VISUAL_DIR = fileURLToPath(
-    new URL("../docs/tranches/BA/audit/visual/", import.meta.url),
+    new URL("../docs/tranches/BA/audit/visual", import.meta.url),
 );
 mkdirSync(VISUAL_DIR, { recursive: true });
 
 // BG.W-HANDMARK-PERFECT — the aspect-correct + hull-guard captures land in the BG dir.
 const BG_VISUAL_DIR = fileURLToPath(
-    new URL("../docs/tranches/BG/audit/visual/", import.meta.url),
+    new URL("../docs/tranches/BG/audit/visual", import.meta.url),
 );
 mkdirSync(BG_VISUAL_DIR, { recursive: true });
 

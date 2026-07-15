@@ -6,10 +6,10 @@
 // clause rides proof:handmark W7 + proof:handmark-audit A3; the box-mode render is the π).
 
 import { describe, expect, it } from "vitest";
-import { ink } from "@glass/components/custom/handmark/ink";
-import { getSvgPathFromStroke } from "@glass/components/custom/handmark/freehand";
-import { BRUSHES } from "@glass/components/custom/handmark/brush";
-import { shapeGeom } from "@glass/components/custom/handmark/geometry";
+import { ink } from "@glass/components/handmark/ink";
+import { getSvgPathFromStroke } from "@glass/components/handmark/freehand";
+import { BRUSHES } from "@glass/components/handmark/brush";
+import { shapeGeom } from "@glass/components/handmark/geometry";
 
 // a degenerate near-point centerline — a tiny sub-unit hull datum. The two anchored
 // endpoints span 0.3 marking-space units; perfect-freehand collapses that to a < 4-point

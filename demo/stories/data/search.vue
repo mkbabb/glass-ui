@@ -6,16 +6,16 @@ import {
     FuzzySearch,
     SearchBar,
     useFuzzySearch,
-} from "@glass/components/custom/search";
-import type { SearchResult, SearchableItem } from "@glass/components/custom/search";
-import { Badge } from "@glass/components/ui/badge";
+} from "@glass/components/search";
+import type { SearchResult, SearchableItem } from "@glass/components/search";
+import { Badge } from "@glass/components/badge";
 import {
     Card,
     CardContent,
     CardDescription,
     CardHeader,
     CardTitle,
-} from "@glass/components/ui/card";
+} from "@glass/components/card";
 
 type SearchStatus = "wired" | "proof" | "consumer" | "triage";
 

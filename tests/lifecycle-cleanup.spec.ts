@@ -1,7 +1,7 @@
 import { mount } from "@vue/test-utils";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import ExpandableContainer from "@glass/components/custom/expandable-container/ExpandableContainer.vue";
-import TypewriterText from "@glass/components/custom/typewriter/TypewriterText.vue";
+import ExpandableContainer from "@glass/components/expandable-container/ExpandableContainer.vue";
+import TypewriterText from "@glass/components/typewriter/TypewriterText.vue";
 
 afterEach(() => {
     vi.useRealTimers();

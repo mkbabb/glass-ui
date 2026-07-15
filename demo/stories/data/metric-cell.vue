@@ -2,7 +2,7 @@
 import { onBeforeUnmount, ref, watch } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
-import { MetricCell } from "@glass/components/custom/metric-cell";
+import { MetricCell } from "@glass/components/metric-cell";
 import { useCountup } from "@glass/composables/motion/useCountup";
 import { Download, Upload, Gauge, Activity } from "@lucide/vue";
 

@@ -9,7 +9,7 @@ import { ref } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
-import { Chip } from "@glass/components/custom/chip";
+import { Chip } from "@glass/components/chip";
 
 
 

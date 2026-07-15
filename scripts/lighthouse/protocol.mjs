@@ -30,7 +30,7 @@ import { createServer } from "node:net";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const ROOT = resolve(fileURLToPath(new URL("../../", import.meta.url)));
+const ROOT = resolve(fileURLToPath(new URL("../..", import.meta.url)));
 const PREVIEW_CONFIG = resolve(ROOT, "scripts/lighthouse/preview-build.config.mts");
 const CONSUMER_CONFIG = resolve(ROOT, "scripts/lighthouse/consumer-app/vite.config.mts");
 const DEMO_DIST = resolve(ROOT, ".cache/lighthouse/demo-dist");

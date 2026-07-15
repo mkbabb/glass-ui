@@ -1,1 +1,1 @@
-export * from "../components/custom/spa-view";
+export * from "../components/spa-view";

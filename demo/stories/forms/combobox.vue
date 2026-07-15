@@ -12,9 +12,9 @@ import {
     ComboboxItemIndicator,
     ComboboxList,
     ComboboxTrigger,
-} from "@glass/components/ui/combobox";
-import { Label } from "@glass/components/ui/label";
-import { IconChip } from "@glass/components/custom/icon-chip";
+} from "@glass/components/combobox";
+import { Label } from "@glass/components/label";
+import { IconChip } from "@glass/components/icon-chip";
 // BC.W-SUFFUSE-reconcile — the forms band's ONE coherent --section-color-3 teal
 // identity (the cool stop). PH3-safe (inline borderLeft, not the
 // border-l-[3px] + <IconChip> double-header shape).

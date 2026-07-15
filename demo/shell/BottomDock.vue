@@ -27,7 +27,7 @@ import {
     DockStack,
     GlassDock,
     type DockSectionDescriptor,
-} from "@glass/components/custom/dock";
+} from "@glass/components/dock";
 import {
     Dialog,
     DialogContent,
@@ -35,14 +35,14 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-} from "@glass/components/ui/dialog";
+} from "@glass/components/dialog";
 import {
     Tooltip,
     TooltipContent,
     TooltipProvider,
     TooltipTrigger,
-} from "@glass/components/ui/tooltip";
-import { FadingScroll } from "@glass/components/custom/fading-scroll";
+} from "@glass/components/tooltip";
+import { FadingScroll } from "@glass/components/fading-scroll";
 import SidebarDock from "./SidebarDock.vue";
 import { useStoryNavigation } from "../chassis/useStoryNavigation";
 import { useShellNavDock } from "./useShellNavDock";

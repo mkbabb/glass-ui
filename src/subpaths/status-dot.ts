@@ -1,1 +1,1 @@
-export * from "../components/custom/status-dot";
+export * from "../components/status-dot";

@@ -22,16 +22,16 @@ import {
     type AuroraAtoms,
     type AuroraMotionAtom,
     type AuroraZoneArrangement,
-} from "@glass/components/custom/aurora/composables/atoms";
+} from "@glass/components/aurora/composables/atoms";
 import {
     DEFAULT_AURORA_CONFIG,
     MAX_NUCLEI,
     MAX_STOPS,
     type AuroraConfig,
     type AuroraMedium,
-} from "@glass/components/custom/aurora/constants/presets";
-import type { AuroraHarmony } from "@glass/components/custom/aurora/composables/color";
-import { AV_MAX_COLORS } from "@glass/components/custom/aurora/constants/budget";
+} from "@glass/components/aurora/constants/presets";
+import type { AuroraHarmony } from "@glass/components/aurora/composables/color";
+import { AV_MAX_COLORS } from "@glass/components/aurora/constants/budget";
 
 // ── The full atom-combination matrix. ────────────────────────────────────────
 const SEEDS: (string | undefined)[] = [undefined, "#3a7bd5", "#ff8a00", "oklch(0.7 0.15 140)"];

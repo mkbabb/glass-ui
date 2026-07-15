@@ -17,27 +17,27 @@ import {
     FOURIER_FIGURE_KEYS,
     type BasisComponent,
     type FourierFieldConfig,
-} from "@glass/components/custom/fourier-field";
-import { DEFAULT_FOURIER_CONFIG } from "@glass/components/custom/fourier-field";
+} from "@glass/components/fourier-field";
+import { DEFAULT_FOURIER_CONFIG } from "@glass/components/fourier-field";
 import { mulberry32, hashString } from "@glass/composables/glass/procedural/prng";
 import {
     cssToOklch,
     type OklchStop,
 } from "@glass/composables/color";
 import { useGlobalDark } from "@glass/composables/dark";
-import { DockBackgroundToggle } from "@glass/components/custom/dock";
-import { GlassTimeline } from "@glass/components/custom/timeline";
+import { DockBackgroundToggle } from "@glass/components/dock";
+import { GlassTimeline } from "@glass/components/timeline";
 import {
     Configurator,
     ConfiguratorLayer,
     ConfiguratorRow,
     useConfiguratorState,
     type ConfiguratorPreset,
-} from "@glass/components/custom/configurator";
+} from "@glass/components/configurator";
 import {
     LabeledSelect,
     LabeledSlider,
-} from "@glass/components/custom/labeled-field";
+} from "@glass/components/labeled-field";
 import { FOURIER_SHAPES, getFourierShape } from "./fourier-paths";
 
 // ── The ONE view config (the variant bundles fold into config PRESETS). ──

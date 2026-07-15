@@ -1,1 +1,1 @@
-export * from "../components/custom/pager-dots";
+export * from "../components/pager-dots";

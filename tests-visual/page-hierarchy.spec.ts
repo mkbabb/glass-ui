@@ -29,7 +29,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const VISUAL_DIR = fileURLToPath(
-    new URL("../docs/tranches/BC/audit/visual/", import.meta.url),
+    new URL("../docs/tranches/BC/audit/visual", import.meta.url),
 );
 
 // The canonical section rung — --type-subheading = 1.272rem = 20.4px (√φ).

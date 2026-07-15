@@ -3,7 +3,7 @@
 // A real glass <Card> (the floating tier) with a title bar + two rule bars — the
 // live surface the /display landing curates. Inert + 0-GL by the fenced stage; the
 // glass composites the warm §3 field behind it (the library's headline material).
-import { Card } from "@glass/components/ui/card";
+import { Card } from "@glass/components/card";
 </script>
 
 <template>

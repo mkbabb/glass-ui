@@ -12,8 +12,8 @@ import { ref, type Component } from "vue";
 import {
     SegmentedTabs,
     type SegmentedTabOption,
-} from "@glass/components/custom/tabs";
-import { IconChip } from "@glass/components/custom/icon-chip";
+} from "@glass/components/tabs";
+import { IconChip } from "@glass/components/icon-chip";
 import { LayoutGrid, List, Kanban, Clock } from "@lucide/vue";
 
 // BC.W-SUFFUSE-reconcile — the navigation band's ONE coherent --section-color-12 indigo identity. PH3-safe (inline borderLeft, not the border-l-[3px] + <IconChip> double-header shape).

@@ -4,11 +4,11 @@
 // composed as one <StorySection> register inside data/timeline.vue). PascalCase =
 // composed-by helper (off the no-orphan bijection), never a route.
 import { ref } from "vue";
-import { GlassTimeline } from "@glass/components/custom/timeline";
+import { GlassTimeline } from "@glass/components/timeline";
 import type {
     TimelineSegment,
     TimelineSegmentGradient,
-} from "@glass/components/custom/timeline";
+} from "@glass/components/timeline";
 import { cn } from "@glass/components/_shared/class-names";
 
 /**

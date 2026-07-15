@@ -13,25 +13,25 @@ import { computed, reactive, ref, watch } from "vue";
 import VizStudio from "./VizStudio.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
-import { Blob } from "@glass/components/custom/blob";
-import type { BlobConfig, BlobMood, BlobMerge } from "@glass/components/custom/blob";
-import { BLOB_CONFIG_DEFAULTS } from "@glass/components/custom/blob/types";
-import { MAX_SATS } from "@glass/components/custom/blob/constants";
-import { WatercolorDot } from "@glass/components/custom/watercolor-dot";
-import { DockBackgroundToggle } from "@glass/components/custom/dock";
-import { FadingScroll } from "@glass/components/custom/fading-scroll";
+import { Blob } from "@glass/components/blob";
+import type { BlobConfig, BlobMood, BlobMerge } from "@glass/components/blob";
+import { BLOB_CONFIG_DEFAULTS } from "@glass/components/blob/types";
+import { MAX_SATS } from "@glass/components/blob/constants";
+import { WatercolorDot } from "@glass/components/watercolor-dot";
+import { DockBackgroundToggle } from "@glass/components/dock";
+import { FadingScroll } from "@glass/components/fading-scroll";
 import {
     Configurator,
     ConfiguratorLayer,
     ConfiguratorRow,
     useConfiguratorState,
     type ConfiguratorPreset,
-} from "@glass/components/custom/configurator";
+} from "@glass/components/configurator";
 import {
     LabeledSelect,
     LabeledSlider,
     LabeledSwitch,
-} from "@glass/components/custom/labeled-field";
+} from "@glass/components/labeled-field";
 import {
     deriveBlobPalette,
     oklchStopToHex,

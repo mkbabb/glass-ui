@@ -5,11 +5,11 @@ import { onMounted, onUnmounted, ref } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { useUserInvalidAria } from "@glass/composables/dom/useUserInvalidAria";
-import { Input } from "@glass/components/ui/input";
-import { Textarea } from "@glass/components/ui/textarea";
-import { Label } from "@glass/components/ui/label";
-import { Button } from "@glass/components/ui/button";
-import { LabeledInput } from "@glass/components/custom/labeled-field";
+import { Input } from "@glass/components/input";
+import { Textarea } from "@glass/components/textarea";
+import { Label } from "@glass/components/label";
+import { Button } from "@glass/components/button";
+import { LabeledInput } from "@glass/components/labeled-field";
 
 // The bridge: `aria-invalid` tracks the visual `:user-invalid` state.
 const { bind } = useUserInvalidAria();

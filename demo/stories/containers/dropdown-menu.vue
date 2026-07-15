@@ -17,11 +17,11 @@ import {
     DropdownMenuSubContent,
     DropdownMenuSubTrigger,
     DropdownMenuTrigger,
-} from "@glass/components/ui/dropdown-menu";
-import { Button } from "@glass/components/ui/button";
-import { Badge } from "@glass/components/ui/badge";
-import { Card } from "@glass/components/ui/card";
-import { IconChip } from "@glass/components/custom/icon-chip";
+} from "@glass/components/dropdown-menu";
+import { Button } from "@glass/components/button";
+import { Badge } from "@glass/components/badge";
+import { Card } from "@glass/components/card";
+import { IconChip } from "@glass/components/icon-chip";
 import { Menu, MoreHorizontal } from "@lucide/vue";
 
 // BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2

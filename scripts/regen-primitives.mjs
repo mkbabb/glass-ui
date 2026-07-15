@@ -87,12 +87,11 @@ export function namedExports(absPath, seen = new Set()) {
 }
 
 /** The tier label for an entry name (the export-manifest classification). */
-function tierFor(name, publishUi, publishCustom) {
+function tierFor(name, publishComponents) {
     if (name === "index") return "root-barrel";
     if (name in COMPOSABLE_SUBPATHS) return "composable";
     if (name in CURATED) return "curated";
-    if (publishCustom.includes(name)) return "component-custom";
-    if (publishUi.includes(name)) return "component-ui";
+    if (publishComponents.includes(name)) return "component";
     return "unknown";
 }
 
@@ -106,7 +105,7 @@ function canonHomeFor(name) {
 /** Build the register OBJECT from disk (the export manifest + canon docs). */
 export function buildPrimitivesRegister() {
     const tree = readTree({ repoRoot: ROOT });
-    const { entries, publishUi, publishCustom } = buildEntrySet(tree);
+    const { entries, publishComponents } = buildEntrySet(tree);
 
     const primitives = Object.entries(entries)
         .map(([name, rel]) => {
@@ -115,7 +114,7 @@ export function buildPrimitivesRegister() {
             return {
                 specifier,
                 name,
-                tier: tierFor(name, publishUi, publishCustom),
+                tier: tierFor(name, publishComponents),
                 source: rel,
                 canonHome: canonHomeFor(name),
                 exports: namedExports(abs).sort((a, b) => a.localeCompare(b)),

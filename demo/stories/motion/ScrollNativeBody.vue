@@ -17,7 +17,7 @@ import {
     supportsScrollTimeline,
     supportsViewTimeline,
 } from "@glass/composables/motion/supportsCssTimeline";
-import { Button } from "@glass/components/ui/button";
+import { Button } from "@glass/components/button";
 import { cn } from "@glass/components/_shared/class-names";
 
 // ── Capability badges ───────────────────────────────────────────────────────────

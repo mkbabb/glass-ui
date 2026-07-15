@@ -7,4 +7,4 @@
 // discipline; the /motion-curves precedent — a value.js-bearing curve leaf carves
 // OFF the value.js-free /motion). A consumer that wants the curve editor imports
 // here; the value.js-free motion suite stays on /motion.
-export * from "../components/custom/easing";
+export * from "../components/easing";

@@ -7,9 +7,9 @@ import {
     NumberFieldDecrement,
     NumberFieldIncrement,
     NumberFieldInput,
-} from "@glass/components/ui/number-field";
-import { Label } from "@glass/components/ui/label";
-import { IconChip } from "@glass/components/custom/icon-chip";
+} from "@glass/components/number-field";
+import { Label } from "@glass/components/label";
+import { IconChip } from "@glass/components/icon-chip";
 import { Hash } from "@lucide/vue";
 // BC.W-SUFFUSE-reconcile — the forms band's ONE coherent --section-color-3 teal
 // identity (the cool stop). PH3-safe (inline borderLeft, not the

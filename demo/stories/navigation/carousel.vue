@@ -17,10 +17,10 @@ import {
     CarouselItem,
     CarouselPager,
     type CarouselApi,
-} from "@glass/components/ui/carousel";
-import { PagerDots } from "@glass/components/custom/pager-dots";
-import { FadingScroll } from "@glass/components/custom/fading-scroll";
-import { IconChip } from "@glass/components/custom/icon-chip";
+} from "@glass/components/carousel";
+import { PagerDots } from "@glass/components/pager-dots";
+import { FadingScroll } from "@glass/components/fading-scroll";
+import { IconChip } from "@glass/components/icon-chip";
 import { GalleryHorizontal } from "@lucide/vue";
 import { cn } from "@glass/components/_shared/class-names";
 

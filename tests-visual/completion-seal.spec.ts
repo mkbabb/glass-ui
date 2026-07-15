@@ -32,7 +32,7 @@ import { mkdirSync } from "node:fs";
 import { statsFromResolvedBg } from "../scripts/lib/paint-arm.mjs";
 
 const VISUAL_DIR = fileURLToPath(
-    new URL("../docs/tranches/BC/audit/visual/", import.meta.url),
+    new URL("../docs/tranches/BC/audit/visual", import.meta.url),
 );
 
 // A live route so the seal injects over the REAL loaded /styles cascade.

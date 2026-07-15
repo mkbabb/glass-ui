@@ -3,12 +3,12 @@ import { computed, ref } from "vue";
 import {
     LabeledSelect,
     LabeledSlider,
-} from "@glass/components/custom/labeled-field";
+} from "@glass/components/labeled-field";
 import type {
     AuroraAtoms,
     AuroraConfig,
     AuroraMotionAtom,
-} from "@glass/components/custom/aurora";
+} from "@glass/components/aurora";
 
 /**
  * The Motion section — the motion-register ATOM (still · breathing · drifting)

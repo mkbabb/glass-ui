@@ -1,1 +1,1 @@
-export * from "../components/custom/fourier-field";
+export * from "../components/fourier-field";

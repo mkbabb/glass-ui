@@ -12,8 +12,8 @@
 //   • the fail-CLOSED generator `scripts/regen-exports.mjs`.
 // so the entry NAME set and the export key set can never drift from one hand-list.
 //
-// FAIL-CLOSED is the cardinal property: EVERY `src/components/{ui,custom}/<dir>`
-// and EVERY `src/composables/<subtree>` present on disk MUST carry an EXPLICIT
+// FAIL-CLOSED is the cardinal property: EVERY `src/components/<dir>` and EVERY
+// `src/composables/<subtree>` present on disk MUST carry an EXPLICIT
 // bucket — PUBLISH | INTERNAL | CURATED. A dir on disk with NO classification
 // entry is a HARD ERROR (the generator exits 1), never a silent auto-publish onto
 // the semver-bearing export surface (the fail-OPEN flaw a deny-list carries: a
@@ -40,12 +40,12 @@ import { fileURLToPath } from "node:url";
 export const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 
 // ===========================================================================
-// THE THREE POLICY MAPS — the EXHAUSTIVE, EXPLICIT, fail-closed classification.
+// THE TWO POLICY MAPS — the EXHAUSTIVE, EXPLICIT, fail-closed classification.
 // Every dir on disk MUST appear in its tier's map.
 // ===========================================================================
 
-// --- src/components/ui/<dir> ---
-export const UI_CLASS = {
+// --- src/components/<dir> ---
+export const COMPONENT_CLASS = {
     // PUBLISH (24) — BI.W-MENU-TRIGGER retired context-menu (folded onto dropdown-menu);
     // BI.W-OVERLAY-UNION retired hover-card (folded onto <Popover trigger="hover">).
     badge: "PUBLISH", button: "PUBLISH", card: "PUBLISH", collapsible: "PUBLISH",
@@ -62,13 +62,9 @@ export const UI_CLASS = {
     // INTERNAL (17) — reached via the root barrel / a curated subpath / substrate.
     _shared: "INTERNAL", accordion: "INTERNAL", alert: "INTERNAL", avatar: "INTERNAL",
     carousel: "INTERNAL", checkbox: "INTERNAL", combobox: "INTERNAL", input: "INTERNAL",
-    "metric-pill": "INTERNAL", "radio-group": "INTERNAL",
+    "radio-group": "INTERNAL",
     section: "INTERNAL", skeleton: "INTERNAL", table: "INTERNAL",
     "tags-input": "INTERNAL", textarea: "INTERNAL", toggle: "INTERNAL",
-};
-
-// --- src/components/custom/<dir> ---
-export const CUSTOM_CLASS = {
     // INTERNAL (3)
     "goo-filter": "INTERNAL", "infinite-scroll": "INTERNAL", "split-chars": "INTERNAL",
     // PUBLISH (42) — goo-dot-matrix RETIRED at BG.W-GOODOT-PRUNE (0 external consumers);
@@ -107,13 +103,12 @@ export const COMPOSABLE_CLASS = {
     // CURATED (4) — the vueuse/keyframes-bearing SCC-trap surfaces published via a
     // hand-curated flat barrel at src/<name>.ts, NOT this subtree's index.ts.
     dark: "CURATED", keyboard: "CURATED", motion: "CURATED", sidebar: "CURATED",
-    // INTERNAL (3) — substrate (context DI factory / glass GL substrate / sortable).
-    context: "INTERNAL", glass: "INTERNAL", sortable: "INTERNAL",
+    // INTERNAL (2) — substrate (context DI factory / glass GL substrate).
+    context: "INTERNAL", glass: "INTERNAL",
 };
 
 export const TIERS = [
-    { tier: "ui", relBase: "src/components/ui", classMap: UI_CLASS },
-    { tier: "custom", relBase: "src/components/custom", classMap: CUSTOM_CLASS },
+    { tier: "component", relBase: "src/components", classMap: COMPONENT_CLASS },
     { tier: "composable", relBase: "src/composables", classMap: COMPOSABLE_CLASS },
 ];
 
@@ -149,7 +144,7 @@ export const CURATED = {
     // (the `canvas`/`fourier-math` name≠leaf pattern). A config-only consumer imports
     // the `BlobConfig` shape + hero preset WITHOUT Blob.vue's value.js `/color` eager
     // weight (~−33 KiB), the established dynamic color-leaf discipline.
-    "blob-config": "src/components/custom/blob/config.ts",
+    "blob-config": "src/components/blob/config.ts",
 };
 
 // The 7 composable subpaths whose entry source is a nested leaf (name ≠ leaf).
@@ -161,7 +156,7 @@ export const COMPOSABLE_SUBPATHS = {
     // (the engine stays internal at src/composables/virtual/).
     canvas: "src/composables/glass/canvas2d/index.ts", // name "canvas" ≠ leaf "canvas2d"
     "motion-curves": "src/composables/motion/curves.ts", // nested file, name ≠ leaf
-    "fourier-math": "src/components/custom/fourier-field/math.ts", // nested, name ≠ leaf
+    "fourier-math": "src/components/fourier-field/math.ts", // nested, name ≠ leaf
 };
 
 // The non-JS export keys — verbatim, never derived.
@@ -183,7 +178,7 @@ export const TYPES_OVERRIDE = {};
 
 // ===========================================================================
 // DISK READ — the dir name list per tier. `injectUnclassified` appends a
-// SYNTHETIC phantom dir to the in-memory ui list (the self-test bite — emulates a
+// SYNTHETIC phantom dir to the in-memory component list (the self-test bite — emulates a
 // BG-added dir mid-interleave that carries an index.ts but no classification);
 // nothing is created on disk.
 // ===========================================================================
@@ -198,11 +193,10 @@ export function dirsWithIndex(relBase, repoRoot = REPO_ROOT) {
 export const PHANTOM_DIR = "zzz-bg-added-unclassified";
 
 export function readTree({ injectUnclassified = false, repoRoot = REPO_ROOT } = {}) {
-    const ui = dirsWithIndex("src/components/ui", repoRoot);
-    const custom = dirsWithIndex("src/components/custom", repoRoot);
+    const component = dirsWithIndex("src/components", repoRoot);
     const composable = dirsWithIndex("src/composables", repoRoot);
-    if (injectUnclassified) ui.push(PHANTOM_DIR);
-    return { ui, custom, composable };
+    if (injectUnclassified) component.push(PHANTOM_DIR);
+    return { component, composable };
 }
 
 // ===========================================================================
@@ -225,47 +219,40 @@ export function classifyTier(diskDirs, classMap, tierLabel) {
 }
 
 export function classifyAll(tree) {
-    const ui = classifyTier(tree.ui, UI_CLASS, "ui");
-    const custom = classifyTier(tree.custom, CUSTOM_CLASS, "custom");
+    const component = classifyTier(tree.component, COMPONENT_CLASS, "component");
     const composable = classifyTier(tree.composable, COMPOSABLE_CLASS, "composable");
     const unclassified = [
-        ...ui.unclassified.map((d) => `ui/${d}`),
-        ...custom.unclassified.map((d) => `custom/${d}`),
+        ...component.unclassified.map((d) => `components/${d}`),
         ...composable.unclassified.map((d) => `composables/${d}`),
     ];
     const stale = [
-        ...ui.stale.map((d) => `ui/${d}`),
-        ...custom.stale.map((d) => `custom/${d}`),
+        ...component.stale.map((d) => `components/${d}`),
         ...composable.stale.map((d) => `composables/${d}`),
     ];
-    return { tiers: { ui, custom, composable }, unclassified, stale, pass: unclassified.length === 0 };
+    return { tiers: { component, composable }, unclassified, stale, pass: unclassified.length === 0 };
 }
 
 export function publishSets(tree) {
-    const publishUi = tree.ui.filter((d) => UI_CLASS[d] === "PUBLISH").sort();
-    const publishCustom = tree.custom.filter((d) => CUSTOM_CLASS[d] === "PUBLISH").sort();
-    return { publishUi, publishCustom };
+    const publishComponents = tree.component.filter((d) => COMPONENT_CLASS[d] === "PUBLISH").sort();
+    return { publishComponents };
 }
 
 // ===========================================================================
 // ENTRY SET — name → SOURCE rel path. The PUBLISH classification drives the
-// component glob (NOT a deny-list). This is the data BOTH `libraryEntries()` and
-// the generator consume. `custom` wins a name collision against `ui` (the public
-// key is the custom family's).
+// component glob (NOT a deny-list). This is the data both the package generator
+// and the declaration entry generator consume.
 // ===========================================================================
 
 export function buildEntrySet(tree) {
-    const { publishUi, publishCustom } = publishSets(tree);
+    const { publishComponents } = publishSets(tree);
     const entries = {}; // name -> source rel
-    const collisions = [];
     for (const [n, s] of Object.entries(CURATED)) entries[n] = s;
     for (const [n, s] of Object.entries(COMPOSABLE_SUBPATHS)) entries[n] = s;
-    for (const d of publishUi) entries[d] = `src/components/ui/${d}/index.ts`;
-    for (const d of publishCustom) {
-        if (entries[d]) collisions.push(d); // custom wins the public key on collision
-        entries[d] = `src/components/custom/${d}/index.ts`;
+    for (const d of publishComponents) {
+        if (entries[d]) throw new Error(`subpath-policy: duplicate entry name ${d}`);
+        entries[d] = `src/components/${d}/index.ts`;
     }
-    return { entries, collisions, publishUi, publishCustom };
+    return { entries, collisions: [], publishComponents };
 }
 
 /**
@@ -330,13 +317,12 @@ export function fileFidelity(rel, repoRoot = REPO_ROOT) {
 export const PHANTOM_SOURCE = "src/this-source-was-deleted.ts";
 
 export function symbolFidelity(tree, { breakFidelity = false, repoRoot = REPO_ROOT } = {}) {
-    const { publishUi, publishCustom } = publishSets(tree);
+    const { publishComponents } = publishSets(tree);
     const checks = [];
     for (const [name, rel] of Object.entries(CURATED)) checks.push({ kind: "curated", name, ...fileFidelity(rel, repoRoot) });
     for (const [name, rel] of Object.entries(COMPOSABLE_SUBPATHS)) checks.push({ kind: "composable", name, ...fileFidelity(rel, repoRoot) });
     if (breakFidelity) checks.push({ kind: "curated", name: "phantom", ...fileFidelity(PHANTOM_SOURCE, repoRoot) });
-    for (const d of publishUi) checks.push({ kind: "ui-barrel", name: d, ...fileFidelity(`src/components/ui/${d}/index.ts`, repoRoot) });
-    for (const d of publishCustom) checks.push({ kind: "custom-barrel", name: d, ...fileFidelity(`src/components/custom/${d}/index.ts`, repoRoot) });
+    for (const d of publishComponents) checks.push({ kind: "component-barrel", name: d, ...fileFidelity(`src/components/${d}/index.ts`, repoRoot) });
     const failed = checks.filter((c) => !c.ok);
     return { total: checks.length, failed, checks };
 }

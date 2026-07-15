@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import { ref } from "vue";
-import { Slider, type SliderVariants } from "@glass/components/ui/slider";
+import { Slider, type SliderVariants } from "@glass/components/slider";
 import { cn } from "@glass/components/_shared/class-names";
-import { IconChip } from "@glass/components/custom/icon-chip";
+import { IconChip } from "@glass/components/icon-chip";
 import { SlidersHorizontal } from "@lucide/vue";
 // BC.W-SUFFUSE-reconcile — the forms band's ONE coherent --section-color-3 teal
 // identity (the cool stop). PH3-safe (inline borderLeft, not the

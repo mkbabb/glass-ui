@@ -1,1 +1,1 @@
-export * from "../components/ui/number-field";
+export * from "../components/number-field";

@@ -1,7 +1,7 @@
 import { mount } from "@vue/test-utils";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@glass/components/ui/card/index";
+import { Card, CardContent, CardHeader, CardTitle } from "@glass/components/card/index";
 
 describe("Card", () => {
     it("renders card layout content with the new tier API", () => {
@@ -230,7 +230,7 @@ describe("CardHeader — shrink modifier (AI.W1-α)", () => {
     });
 
     it("renders <CardTitle> + <CardDescription> with canonical data-slot hooks the shrink choreography selects on", async () => {
-        const { CardDescription } = await import("@glass/components/ui/card/index");
+        const { CardDescription } = await import("@glass/components/card/index");
         const wrapper = mount({
             components: { CardHeader, CardTitle, CardDescription },
             template: `

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { cn } from "@glass/components/_shared/class-names";
-import { FadingScroll } from "@glass/components/custom/fading-scroll";
+import { FadingScroll } from "@glass/components/fading-scroll";
 import { PRESET_KEYS, PRESET_META, type PresetKey } from "./presets";
 
 defineProps<{

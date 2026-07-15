@@ -14,8 +14,8 @@ import {
     hexToOklchStop,
     cssToOklch,
     flattenPalette,
-} from "@glass/components/custom/aurora/composables/color";
-import type { OklchStop } from "@glass/components/custom/aurora/constants/presets";
+} from "@glass/components/aurora/composables/color";
+import type { OklchStop } from "@glass/components/aurora/constants/presets";
 
 /**
  * inv-K-2 canary (value.js-K, K.W2c). glass-ui's aurora color helpers were

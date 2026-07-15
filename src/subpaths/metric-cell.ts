@@ -1,1 +1,1 @@
-export * from "../components/custom/metric-cell";
+export * from "../components/metric-cell";

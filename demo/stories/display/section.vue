@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
-import { Section } from "@glass/components/ui/section";
+import { Section } from "@glass/components/section";
 
 const tones = ["heading", "title", "subheading", "label"] as const;
 const gaps = ["tight", "regular", "loose"] as const;

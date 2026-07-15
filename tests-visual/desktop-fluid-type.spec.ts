@@ -36,7 +36,7 @@ import { fileURLToPath } from "node:url";
 import { mkdirSync } from "node:fs";
 
 const VISUAL_DIR = fileURLToPath(
-    new URL("../docs/tranches/AY/audit/visual/", import.meta.url),
+    new URL("../docs/tranches/AY/audit/visual", import.meta.url),
 );
 
 /** Read the resolved control-font + body-font px at the CURRENT viewport. */

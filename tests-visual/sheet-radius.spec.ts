@@ -28,7 +28,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const VISUAL_DIR = fileURLToPath(
-    new URL("../docs/tranches/BI/audit/visual/", import.meta.url),
+    new URL("../docs/tranches/BI/audit/visual", import.meta.url),
 );
 
 // --radius-dialog → --radius-2xl → 1rem = 16px. TOL carries sub-px bounding + the

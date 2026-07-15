@@ -3,12 +3,12 @@ import { computed, ref } from "vue";
 import {
     LabeledSelect,
     LabeledSlider,
-} from "@glass/components/custom/labeled-field";
+} from "@glass/components/labeled-field";
 import type {
     AuroraAtoms,
     AuroraMedium,
     AuroraZoneArrangement,
-} from "@glass/components/custom/aurora";
+} from "@glass/components/aurora";
 import { mediumOptions } from "../config/options";
 
 /**

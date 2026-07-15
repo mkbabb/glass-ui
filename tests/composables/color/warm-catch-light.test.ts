@@ -9,7 +9,7 @@
 
 import { describe, expect, it } from "vitest";
 import { warmCatchLight, oklchToLinear } from "@glass/composables/color";
-import { AURORA_CATCH_LIGHT_ANCHOR } from "@glass/components/custom/aurora/composables/uniformBridge";
+import { AURORA_CATCH_LIGHT_ANCHOR } from "@glass/components/aurora/composables/uniformBridge";
 
 // The prior eyeballed aurora catch-light literal (declared "warm-white tint (linear)"
 // in the shader) — the warm-white the OKLCh derive must reproduce.

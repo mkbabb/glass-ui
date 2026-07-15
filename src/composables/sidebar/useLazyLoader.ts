@@ -5,7 +5,7 @@
  * scrollbar drags that skip past the sentinel, and re-observes the sentinel on
  * each `visibleCount` change (it moves down as new items mount).
  *
- * DISTINCT from `useInfiniteScroll` (`components/custom/infinite-scroll/`):
+ * DISTINCT from `useInfiniteScroll` (`components/infinite-scroll/`):
  * that fires a DATA-FETCH `onLoadMore` trigger to pull more records; this grows
  * a render-mount count over an ALREADY-loaded list. Different concerns, kept
  * disjoint. The `visibleCount` this returns is the SAME ref `useScrollTo`'s

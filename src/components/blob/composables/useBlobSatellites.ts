@@ -1,0 +1,427 @@
+import { mulberry32, hashString } from "../../../composables/glass/procedural/prng";
+import {
+    BASE_OPACITY,
+    MERGE_STAGGER_MS,
+    ORBIT_BLEND_MS,
+    FISSION_REACH_MAX,
+    FISSION_REACH_MIN,
+    FISSION_BEAT_MS,
+    FISSION_PROB_AT_FULL,
+} from "../constants";
+import { easeIn, easeOut, fissionSnap } from "./easing";
+// BG.W-BLOB-KINEMATICS-LEAF — the stateless orbit/eccentricity/wobble math is the
+// colocated satelliteKinematics.ts leaf; the driver COMPOSES it (one writer of the
+// satellite state here, the pure kinematics beside it).
+import {
+    createSatellite,
+    orbitPos,
+    randomizeOrbit,
+} from "./satelliteKinematics";
+import type {
+    BlobConfig,
+    MetaballSource,
+    MoodParams,
+    SatelliteInternal,
+    SatellitePhase,
+} from "../types";
+
+function randRange(rng: () => number, lo: number, hi: number): number {
+    return lo + rng() * (hi - lo);
+}
+
+function clamp01(t: number): number {
+    return t < 0 ? 0 : t > 1 ? 1 : t;
+}
+
+function lerp(a: number, b: number, t: number): number {
+    return a + (b - a) * t;
+}
+
+function setPhase(
+    s: SatelliteInternal,
+    phase: SatellitePhase,
+    now: number,
+    duration: number,
+) {
+    s.phase = phase;
+    s.phaseStart = now;
+    s.phaseDuration = duration;
+}
+
+/**
+ * The satellite system — a small pool of orbiting metaball sources that
+ * periodically merge into the body, get absorbed, then re-emerge on a fresh
+ * orbit. Deterministic given `initialColor` (seeds the PRNG); `reseed` rekeys it.
+ */
+export function useBlobSatellites(config: BlobConfig, initialColor: string) {
+    let rng = mulberry32(hashString(initialColor + "goo"));
+    const internals: SatelliteInternal[] = [];
+    const sources: MetaballSource[] = [];
+
+    // Per-satellite: the position where orbit began, for blending
+    const orbitBlendOrigins: { x: number; y: number; start: number }[] = [];
+
+    let lastMergeTime = -Infinity;
+    let lastOrbitRadius = config.geometry.orbitRadius;
+
+    // BD.W-GOOBLOB-MERCURY-COLONY — the SINGLE-FISSIONER token: the index of the satellite
+    // currently in the `fissioning` beat, or -1 when none is splitting. AT MOST ONE
+    // satellite is the fissioning satellite per cycle (the bounded-apex + single-fissioner
+    // rule re-prevents the "two unrelated discs" failure WITHOUT the blanket
+    // never-leaves-reach clamp). A bonded-breath satellite only enters `fissioning` when
+    // this is -1.
+    let fissioningIndex = -1;
+
+    // A callback the renderer wires so a pinch-off SNAP kicks the EXISTING body-pulse
+    // spring (the cartoon follow-through recoil — the SAME `pulseVel` oscillator
+    // BD.W-BLOB-MOTION-TUNE tunes; no new spring, no new clock). Null until wired.
+    let onPinchSnap: ((impulse: number) => void) | null = null;
+
+    function syncOrbitRadius() {
+        const cur = config.geometry.orbitRadius;
+        if (cur !== lastOrbitRadius && lastOrbitRadius > 0) {
+            const scale = cur / lastOrbitRadius;
+            for (const s of internals) {
+                s.baseRadiusX *= scale;
+                s.baseRadiusY *= scale;
+            }
+            lastOrbitRadius = cur;
+        }
+    }
+
+    function syncCount(now: number) {
+        const count = config.geometry.satelliteCount;
+        while (internals.length < count) {
+            internals.push(
+                createSatellite(
+                    rng,
+                    internals.length,
+                    config.geometry.orbitRadius,
+                    config.geometry.eccentricity,
+                    now,
+                ),
+            );
+            sources.push({
+                x: 0,
+                y: 0,
+                radius: config.geometry.satelliteRadius,
+                opacity: 0,
+                fissioning: false,
+            });
+            orbitBlendOrigins.push({ x: 0, y: 0, start: 0 });
+        }
+        if (internals.length > count) {
+            internals.length = count;
+            sources.length = count;
+            orbitBlendOrigins.length = count;
+        }
+    }
+
+    // The satellites are seeded on the FIRST tick (which carries the canonical
+    // tempo clock), NOT at construction — so their phase clocks share the renderer's
+    // tempo-integrated `now` base rather than `performance.now()` (W11.c).
+
+    function tick(now: number, mood: MoodParams) {
+        syncCount(now);
+        syncOrbitRadius();
+
+        const count = internals.length;
+        const mergeRateScale = mood.mergeRate;
+        const satelliteRadius = config.geometry.satelliteRadius;
+        const mergeDuration = config.satellites.mergeDuration;
+        const emergeDuration = config.satellites.emergeDuration;
+        const orbitDuration = config.satellites.orbitDuration;
+        const absorbedDuration = config.satellites.absorbedDuration;
+
+        // BD.W-GOOBLOB-MERCURY-COLONY — the EFFECTIVE fission amp (config × mood). The
+        // OPT-IN register `config.surface.fissionAmp` (0 = the calm default, never splits)
+        // is mood-coupled: `mergeRate` runs 2.0 (sleepy) → 0.3 (excited), so its inverse is
+        // an arousal proxy in ~[0, 1] (sleepy ≈ 0, excited ≈ 1). An excited colony splits
+        // MORE; a sleepy one barely. Clamped to [0, 1]. At amp 0 the whole fission branch
+        // is dead (the gate-faithful calm contract).
+        const fissionAmp = config.surface.fissionAmp ?? 0;
+        const arousalProxy = Math.max(0, Math.min(1, (2.0 - mergeRateScale) / 1.7));
+        const effFissionAmp = Math.max(0, Math.min(1, fissionAmp * (0.4 + 0.6 * arousalProxy)));
+        const fissionReachSpan = FISSION_REACH_MAX - FISSION_REACH_MIN;
+
+        for (let i = 0; i < count; i++) {
+            const s = internals[i]!;
+            const elapsed = now - s.phaseStart;
+            const t = clamp01(s.phaseDuration > 0 ? elapsed / s.phaseDuration : 1);
+
+            switch (s.phase) {
+                case "orbiting": {
+                    if (t >= 1) {
+                        if (now - lastMergeTime < MERGE_STAGGER_MS * mergeRateScale) {
+                            s.phaseStart = now;
+                            s.phaseDuration = randRange(rng, orbitDuration[0], orbitDuration[1]);
+                        } else if (
+                            // BD.W-GOOBLOB-MERCURY-COLONY — the SPLIT branch. When the
+                            // merge window opens AND the colony register is armed AND no
+                            // satellite is already mid-split (the single-fissioner rule) AND
+                            // the cadence roll passes, this satellite enters the `fissioning`
+                            // beat (bud OUT through a thinning neck → SNAP) instead of the
+                            // bonded merge-IN. At amp 0 `effFissionAmp` is 0 so this is dead
+                            // (the calm contract). The roll reuses the deterministic PRNG so
+                            // the colony is reproducible per seed.
+                            effFissionAmp > 0 &&
+                            fissioningIndex < 0 &&
+                            rng() < effFissionAmp * FISSION_PROB_AT_FULL
+                        ) {
+                            // Re-base the orbit clock to NOW so the fissioning bead buds out
+                            // from its CURRENT swept angle (no phase discontinuity). The bead
+                            // still ARCS (the pertX/pertY wobble in orbitPos carries the arc);
+                            // its radius rides the fissionSnap curve in the output switch.
+                            const sweptAngle =
+                                s.angularSpeed *
+                                    mood.orbitSpeedScale *
+                                    ((now - s.timeOrigin) / 1000) +
+                                s.phaseOffset;
+                            s.phaseOffset = sweptAngle;
+                            s.timeOrigin = now;
+                            s.fissioning = true;
+                            s.snapFired = false;
+                            fissioningIndex = i;
+                            setPhase(s, "fissioning", now, FISSION_BEAT_MS);
+                            lastMergeTime = now;
+                        } else {
+                            const pos = orbitPos(s, now, mood.orbitSpeedScale, mood.wobbleScale);
+                            s.startX = pos.x;
+                            s.startY = pos.y;
+                            const dist = Math.hypot(pos.x, pos.y);
+                            const sc = dist > 0.01 ? 0.08 / dist : 0;
+                            s.endX = pos.x * sc;
+                            s.endY = pos.y * sc;
+                            setPhase(s, "merging", now, mergeDuration);
+                            lastMergeTime = now;
+                        }
+                    }
+                    break;
+                }
+                case "fissioning": {
+                    // BD.W-GOOBLOB-MERCURY-COLONY — the SPLIT beat runs for FISSION_BEAT_MS,
+                    // then the satellite re-merges (returns to the bonded orbit) and releases
+                    // the single-fissioner token. The pinch SNAP (the kick to the body-pulse
+                    // spring for the cartoon recoil) fires ONCE as the neck crosses the snap
+                    // band — handled in the output switch below where the reach is computed.
+                    if (t >= 1) {
+                        s.fissioning = false;
+                        if (fissioningIndex === i) fissioningIndex = -1;
+                        // Resume the bonded orbit from the current excursion angle (no snap
+                        // back to center — the bead re-bonds smoothly).
+                        s.timeOrigin = now;
+                        setPhase(
+                            s,
+                            "orbiting",
+                            now,
+                            randRange(rng, orbitDuration[0], orbitDuration[1]),
+                        );
+                    }
+                    break;
+                }
+                case "merging": {
+                    if (t >= 1) {
+                        setPhase(
+                            s,
+                            "absorbed",
+                            now,
+                            randRange(rng, absorbedDuration[0], absorbedDuration[1]),
+                        );
+                    }
+                    break;
+                }
+                case "absorbed": {
+                    if (t >= 1) {
+                        // New orbit — emerge toward a point on it
+                        randomizeOrbit(s, rng, config.geometry.orbitRadius, config.geometry.eccentricity, now);
+                        const futurePos = orbitPos(s, now + 3000, mood.orbitSpeedScale, mood.wobbleScale);
+                        s.endX = futurePos.x;
+                        s.endY = futurePos.y;
+                        const dist = Math.hypot(futurePos.x, futurePos.y);
+                        const sc = dist > 0.01 ? 0.08 / dist : 0;
+                        s.startX = futurePos.x * sc;
+                        s.startY = futurePos.y * sc;
+                        setPhase(s, "emerging", now, emergeDuration);
+                    }
+                    break;
+                }
+                case "emerging": {
+                    if (t >= 1) {
+                        // Begin orbit — store emerge endpoint for blending
+                        const blend = orbitBlendOrigins[i]!;
+                        blend.x = s.endX;
+                        blend.y = s.endY;
+                        blend.start = now;
+                        // Set timeOrigin so orbit starts from now
+                        s.timeOrigin = now;
+                        // Compute phaseOffset so the orbit direction roughly matches
+                        s.phaseOffset = Math.atan2(s.endY, s.endX);
+                        setPhase(
+                            s,
+                            "orbiting",
+                            now,
+                            randRange(rng, orbitDuration[0], orbitDuration[1]),
+                        );
+                    }
+                    break;
+                }
+            }
+
+            // Compute output position and opacity
+            let x: number, y: number, opacity: number, scale: number;
+
+            switch (s.phase) {
+                case "orbiting": {
+                    const pos = orbitPos(s, now, mood.orbitSpeedScale, mood.wobbleScale);
+                    // Smooth blend from emerge endpoint into orbit over ORBIT_BLEND_MS
+                    const blend = orbitBlendOrigins[i]!;
+                    const blendElapsed = now - blend.start;
+                    if (blend.start > 0 && blendElapsed < ORBIT_BLEND_MS) {
+                        const bt = clamp01(blendElapsed / ORBIT_BLEND_MS);
+                        const ease = bt * bt * (3 - 2 * bt); // smoothstep
+                        x = lerp(blend.x, pos.x, ease);
+                        y = lerp(blend.y, pos.y, ease);
+                    } else {
+                        x = pos.x;
+                        y = pos.y;
+                    }
+                    opacity = BASE_OPACITY;
+                    scale = 1;
+                    break;
+                }
+                case "merging": {
+                    const ease = easeIn(clamp01((now - s.phaseStart) / s.phaseDuration));
+                    x = lerp(s.startX, s.endX, ease);
+                    y = lerp(s.startY, s.endY, ease);
+                    const mt = clamp01((now - s.phaseStart) / s.phaseDuration);
+                    opacity = mt > 0.85 ? lerp(BASE_OPACITY, 0, (mt - 0.85) / 0.15) : BASE_OPACITY;
+                    scale = lerp(1, 0.65, ease);
+                    break;
+                }
+                case "absorbed": {
+                    x = 0;
+                    y = 0;
+                    opacity = 0;
+                    scale = 0.5;
+                    break;
+                }
+                case "emerging": {
+                    const ease = easeOut(clamp01((now - s.phaseStart) / s.phaseDuration));
+                    x = lerp(s.startX, s.endX, ease);
+                    y = lerp(s.startY, s.endY, ease);
+                    const et = clamp01((now - s.phaseStart) / s.phaseDuration);
+                    opacity = et < 0.1 ? lerp(0, BASE_OPACITY, et / 0.1) : BASE_OPACITY;
+                    scale = lerp(0.65, 1, ease);
+                    break;
+                }
+                case "fissioning": {
+                    // BD.W-GOOBLOB-MERCURY-COLONY — the SPLIT excursion. The orbit RADIUS
+                    // rides the named `fissionSnap` curve (easing.ts): a SLOW gather
+                    // (anticipation squash) → a FAST snap OUT past the body skin (the neck
+                    // thins past the smin reach and the bead pinches free) → a damped recoil
+                    // → re-merge. The position is the live orbitPos at this (now-grown)
+                    // radius; the satellite ARCS (the pertX/pertY wobble in orbitPos carries
+                    // the arc). The radius is NOT re-based globally — only THIS satellite
+                    // breathes out, so the lean stays bounded.
+                    const ft = clamp01((now - s.phaseStart) / s.phaseDuration);
+                    const reachT = fissionSnap(ft); // -0.06 .. ~1.12 (the snap envelope)
+                    const reach = FISSION_REACH_MIN + fissionReachSpan * reachT;
+                    // Map the live orbit position onto the fission reach (the bead keeps its
+                    // angular sweep but its radius rides the snap curve).
+                    const orbit = orbitPos(s, now, mood.orbitSpeedScale, mood.wobbleScale);
+                    const orbitDist = Math.hypot(orbit.x, orbit.y);
+                    const dirX = orbitDist > 1e-4 ? orbit.x / orbitDist : Math.cos(s.phaseOffset);
+                    const dirY = orbitDist > 1e-4 ? orbit.y / orbitDist : Math.sin(s.phaseOffset);
+                    x = dirX * reach;
+                    y = dirY * reach;
+                    opacity = BASE_OPACITY;
+                    // The bead shrinks a touch as it pinches free (the volume necks down
+                    // through the waist), recovering at the apex hold.
+                    scale = lerp(0.78, 1.0, clamp01(reachT));
+
+                    // The cartoon SNAP kick — fire ONCE as the neck crosses the snap band
+                    // (the steep `fissionSnap` derivative ~[0.30, 0.55]). The impulse kicks
+                    // the EXISTING body-pulse spring (the recoil ring, inheriting the tuned
+                    // ζ — BD.W-BLOB-MOTION-TUNE). `snapFired` is the phase-local latch
+                    // (reset false at beat start), fired once mid-snap.
+                    if (!s.snapFired && ft >= 0.42) {
+                        s.snapFired = true;
+                        // Scale the recoil by the fission intensity so a calm split barely
+                        // rings, an excited one punches. Clamped to the gentle pulse range.
+                        onPinchSnap?.(Math.min(0.4, 0.18 + 0.22 * effFissionAmp));
+                    }
+                    break;
+                }
+            }
+
+            const src = sources[i]!;
+            src.x = x;
+            src.y = y;
+            src.radius = satelliteRadius * scale;
+            src.opacity = opacity;
+            // BD.W-GOOBLOB-MERCURY-COLONY — publish the per-source SPLIT token so the
+            // uniform packers PHASE-SCOPE `orbitWiden`: drop the bridge to nominal for the
+            // fissioning satellite ALONE (its neck snaps), full+capped for every other
+            // (R8-07 cured).
+            src.fissioning = s.fissioning;
+        }
+    }
+
+    function nudge() {
+        for (const s of internals) {
+            s.phaseOffset += (rng() - 0.5) * 0.6;
+            s.pertXPhase += rng() * Math.PI;
+            s.pertYPhase += rng() * Math.PI;
+        }
+    }
+
+    function reseed(color: string) {
+        rng = mulberry32(hashString(color + "goo"));
+    }
+
+    /**
+     * BD.W-GOOBLOB-MERCURY-COLONY — wire the pinch-off SNAP to the body-pulse spring. The
+     * renderer passes `pointer.click` so a fission snap kicks the EXISTING underdamped
+     * oscillator (the cartoon follow-through recoil — the SAME `pulseVel` channel a
+     * decel-flick already kicks; no new spring, no new clock). Idempotent re-wire.
+     */
+    function onPinch(cb: (impulse: number) => void) {
+        onPinchSnap = cb;
+    }
+
+    /**
+     * AX.W16 (arm 2) — the satellite system is QUIESCENT (the quiescence loop may park)
+     * when NO satellite is mid-TRANSITION — i.e. none is `merging`, `absorbed`, or
+     * `emerging`. Those phases are the per-frame morph events (the gooey merge in, the
+     * re-emergence) that demand continuous render; a steady `orbiting` satellite is the
+     * slow ambient sweep the loop parks between, re-arming at the next phase boundary
+     * via `nextEventMs`. (The spec's at-rest condition: "no satellite is mid-merge".)
+     */
+    function isQuiescent(): boolean {
+        for (const s of internals) {
+            if (s.phase !== "orbiting") return false;
+        }
+        return true;
+    }
+
+    /**
+     * AX.W16 (arm 2) — the soonest upcoming phase-boundary across all satellites, in
+     * the SAME tempo-integrated clock `tick` is driven by. The renderer's wake
+     * scheduler re-arms the parked loop at this horizon so the next orbit→merge
+     * transition animates on time (the demand-loop wake, not a poll). Returns the min
+     * `phaseStart + phaseDuration` over the pool; `now + a long idle ceiling` when the
+     * pool is empty (a satellite-less blob has no phase events).
+     */
+    function nextEventMs(now: number): number {
+        let soonest = Infinity;
+        for (const s of internals) {
+            const end = s.phaseStart + s.phaseDuration;
+            if (end < soonest) soonest = end;
+        }
+        return soonest === Infinity ? now + 30_000 : soonest;
+    }
+
+    return { sources, tick, nudge, reseed, onPinch, isQuiescent, nextEventMs };
+}
+
+export type BlobSatelliteSystem = ReturnType<typeof useBlobSatellites>;

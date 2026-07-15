@@ -33,7 +33,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const VISUAL_DIR = fileURLToPath(
-    new URL("../docs/tranches/BC/audit/visual/", import.meta.url),
+    new URL("../docs/tranches/BC/audit/visual", import.meta.url),
 );
 
 // The legible body floor (text-small = 14px). A body/caption run below this is the

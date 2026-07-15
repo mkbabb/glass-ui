@@ -6,27 +6,27 @@ import {
     DialogDescription,
     DialogHeader,
     DialogTitle,
-} from "@glass/components/ui/dialog";
-import { Slider } from "@glass/components/ui/slider";
-import { Switch } from "@glass/components/ui/switch";
+} from "@glass/components/dialog";
+import { Slider } from "@glass/components/slider";
+import { Switch } from "@glass/components/switch";
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from "@glass/components/ui/select";
-import { Label } from "@glass/components/ui/label";
-import { Button } from "@glass/components/ui/button";
+} from "@glass/components/select";
+import { Label } from "@glass/components/label";
+import { Button } from "@glass/components/button";
 import {
     SegmentedTabs,
     type SegmentedTabOption,
-} from "@glass/components/custom/tabs";
+} from "@glass/components/tabs";
 import {
     ConfiguratorLayer,
     ConfiguratorRow,
-} from "@glass/components/custom/configurator";
-import { DarkModeToggle } from "@glass/components/custom/controls";
+} from "@glass/components/configurator";
+import { DarkModeToggle } from "@glass/components/controls";
 import { PRESETS } from "./presets/manifest";
 import {
     FONT_OPTIONS,

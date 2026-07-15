@@ -31,7 +31,7 @@ import { fileURLToPath } from "node:url";
 import { mkdirSync } from "node:fs";
 
 const VISUAL_DIR = fileURLToPath(
-    new URL("../docs/tranches/BG/audit/visual/motion-axis/", import.meta.url),
+    new URL("../docs/tranches/BG/audit/visual/motion-axis", import.meta.url),
 );
 
 const TABS_ROUTE = "/navigation/tabs";

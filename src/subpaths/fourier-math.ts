@@ -4,4 +4,4 @@
 // this subpath WITHOUT dragging FourierField.vue or the elliptic-spectrum
 // generators into a math-only consumer's bundle (the substrate-isolation concern
 // the `/fourier-field` component subpath would violate).
-export * from "../components/custom/fourier-field/math";
+export * from "../components/fourier-field/math";

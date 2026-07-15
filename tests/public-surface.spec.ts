@@ -26,7 +26,7 @@ import * as PulseSurface from "@glass/subpaths/pulse";
 import * as Search from "@glass/subpaths/search";
 import * as SelectSurface from "@glass/subpaths/select";
 import * as Sidebar from "@glass/sidebar";
-import * as ScrollProgressRimSurface from "@glass/components/custom/scroll-progress-rim";
+import * as ScrollProgressRimSurface from "@glass/components/scroll-progress-rim";
 import * as SortableListSurface from "@glass/subpaths/sortable-list";
 import * as StackedIconsSurface from "@glass/subpaths/stacked-icons";
 import * as StatusDotSurface from "@glass/subpaths/status-dot";
@@ -459,8 +459,8 @@ describe("root style surface", () => {
     });
 
     it("routes toast and notification stacking through z tokens", () => {
-        const notification = readFileSync("src/components/ui/notification/Notification.vue", "utf8");
-        const toaster = readFileSync("src/components/ui/toast/Toaster.vue", "utf8");
+        const notification = readFileSync("src/components/notification/Notification.vue", "utf8");
+        const toaster = readFileSync("src/components/toast/Toaster.vue", "utf8");
 
         expect(notification).toContain("z-toast");
         expect(toaster).toContain("z-toast");

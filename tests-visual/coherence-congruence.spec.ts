@@ -28,7 +28,7 @@ const ROSTER = fileURLToPath(
     new URL("../docs/tranches/BG/audit/reflect/bg-page-audit-roster.md", import.meta.url),
 );
 const OUT_DIR = fileURLToPath(
-    new URL("../docs/tranches/BG/audit/visual/BG.W-PAGE-COMPONENT-AUDIT-paint/", import.meta.url),
+    new URL("../docs/tranches/BG/audit/visual/BG.W-PAGE-COMPONENT-AUDIT-paint", import.meta.url),
 );
 
 interface AuditRow {

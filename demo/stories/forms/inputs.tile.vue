@@ -2,7 +2,7 @@
 // forms/inputs — the landing-tile vignette (BI.W-LIVE-TILES, the AUTHORED rung).
 // A real <Input> pair at REST — the live control the /forms landing (and the
 // front-door forms card) curates. Inert + 0-GL by the fenced stage; no own rAF.
-import { Input } from "@glass/components/ui/input";
+import { Input } from "@glass/components/input";
 </script>
 
 <template>

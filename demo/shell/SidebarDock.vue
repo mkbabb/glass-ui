@@ -23,17 +23,17 @@ import {
     DockStack,
     GlassDock,
     type DockSectionDescriptor,
-} from "@glass/components/custom/dock";
+} from "@glass/components/dock";
 import {
     ScrollProgressRim,
     type ScrollProgressRimCoverage,
-} from "@glass/components/custom/scroll-progress-rim";
+} from "@glass/components/scroll-progress-rim";
 import {
     Tooltip,
     TooltipContent,
     TooltipProvider,
     TooltipTrigger,
-} from "@glass/components/ui/tooltip";
+} from "@glass/components/tooltip";
 import { Settings2 } from "@lucide/vue";
 import { cn } from "@glass/components/_shared/class-names";
 import { CATEGORIES } from "../stories/manifest";

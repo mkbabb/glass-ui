@@ -6,9 +6,9 @@ import {
     TooltipContent,
     TooltipProvider,
     TooltipTrigger,
-} from "@glass/components/ui/tooltip";
-import { Button } from "@glass/components/ui/button";
-import { IconChip } from "@glass/components/custom/icon-chip";
+} from "@glass/components/tooltip";
+import { Button } from "@glass/components/button";
+import { IconChip } from "@glass/components/icon-chip";
 import { Bold, Italic, Underline, Save, Share2, Info } from "@lucide/vue";
 
 // BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2

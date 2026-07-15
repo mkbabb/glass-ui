@@ -23,8 +23,8 @@
 // A demo-private chassis primitive — NOT a library export.
 import { computed, defineAsyncComponent } from "vue";
 import { cn } from "@glass/components/_shared/class-names";
-import { IconChip } from "@glass/components/custom/icon-chip";
-import type { IconChipIcon } from "@glass/components/custom/icon-chip";
+import { IconChip } from "@glass/components/icon-chip";
+import type { IconChipIcon } from "@glass/components/icon-chip";
 import type { TileResolution } from "./storyTile";
 
 interface SectionPreviewCardProps {

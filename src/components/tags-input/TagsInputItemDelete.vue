@@ -1,0 +1,24 @@
+<script setup lang="ts">
+import { type HTMLAttributes, computed } from 'vue'
+import { TagsInputItemDelete, type TagsInputItemDeleteProps, useForwardProps } from 'reka-ui'
+import { X } from "@lucide/vue"
+import { cn } from '../_shared/class-names'
+
+const props = defineProps<TagsInputItemDeleteProps & { class?: HTMLAttributes['class'] }>()
+
+const delegatedProps = computed(() => {
+  const { class: _, ...delegated } = props
+
+  return delegated
+})
+
+const forwardedProps = useForwardProps(delegatedProps)
+</script>
+
+<template>
+  <TagsInputItemDelete v-bind="forwardedProps" :class="cn('relative touch-hit-area flex rounded bg-transparent mr-1', props.class)">
+    <slot>
+      <X class="w-4 h-4" />
+    </slot>
+  </TagsInputItemDelete>
+</template>

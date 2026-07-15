@@ -15,8 +15,8 @@ import {
     CommandList,
     CommandSeparator,
     CommandShortcut,
-} from "@glass/components/ui/command";
-import { IconChip } from "@glass/components/custom/icon-chip";
+} from "@glass/components/command";
+import { IconChip } from "@glass/components/icon-chip";
 
 // BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2
 // blue identity. PH3-safe (inline borderLeft, not the border-l-[3px] +

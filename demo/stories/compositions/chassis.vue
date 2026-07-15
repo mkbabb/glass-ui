@@ -11,9 +11,9 @@ import {
     PermutationGrid,
     type PermutationGridCell,
 } from "../../chassis";
-import { Button } from "@glass/components/ui/button";
-import { Badge } from "@glass/components/ui/badge";
-import { Switch } from "@glass/components/ui/switch";
+import { Button } from "@glass/components/button";
+import { Badge } from "@glass/components/badge";
+import { Switch } from "@glass/components/switch";
 
 // The grid cells — each renders a glassy specimen cell hosting a Badge.
 const toneCells: (PermutationGridCell & {

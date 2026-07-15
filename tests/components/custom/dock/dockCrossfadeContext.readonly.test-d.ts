@@ -17,7 +17,7 @@ import type { Ref } from "vue";
 import type {
     DockCrossfadeContext,
     DockFaceDescriptor,
-} from "@glass/components/custom/dock/composables/dockCrossfadeContext";
+} from "@glass/components/dock/composables/dockCrossfadeContext";
 
 type ActiveRef = DockCrossfadeContext["activeId"];
 type LeavingRef = DockCrossfadeContext["leavingId"];

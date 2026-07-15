@@ -3,7 +3,7 @@ import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { ref } from "vue";
 import { Package, Layers, Library, FileText, ChevronLeft, ChevronRight, Image, Type } from "@lucide/vue";
-import { GlassDock, DockControl, DockLayerGroup, DockLayer, DockCrossfade, DockSeparator } from "@glass/components/custom/dock";
+import { GlassDock, DockControl, DockLayerGroup, DockLayer, DockCrossfade, DockSeparator } from "@glass/components/dock";
 import { cn } from "@glass/components/_shared/class-names";
 import DockStage from "./DockStage.vue";
 

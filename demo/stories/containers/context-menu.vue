@@ -16,8 +16,8 @@ import {
     DropdownMenuSeparator,
     DropdownMenuShortcut,
     DropdownMenuTrigger,
-} from "@glass/components/ui/dropdown-menu";
-import { IconChip } from "@glass/components/custom/icon-chip";
+} from "@glass/components/dropdown-menu";
+import { IconChip } from "@glass/components/icon-chip";
 import { MousePointerClick } from "@lucide/vue";
 
 // BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2

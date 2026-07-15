@@ -21,16 +21,16 @@ import {
     CardHeader,
     CardTitle,
     CardDescription,
-} from "@glass/components/ui/card";
+} from "@glass/components/card";
 import {
     Dialog,
     DialogContent,
     DialogTitle,
     DialogDescription,
     DialogFooter,
-} from "@glass/components/ui/dialog";
-import { Input } from "@glass/components/ui/input";
-import { Button } from "@glass/components/ui/button";
+} from "@glass/components/dialog";
+import { Input } from "@glass/components/input";
+import { Button } from "@glass/components/button";
 
 // The modal starts CLOSED — the demo opens it on demand, never on mount.
 const open = ref(false);

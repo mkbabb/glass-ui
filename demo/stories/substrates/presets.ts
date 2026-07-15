@@ -9,8 +9,8 @@
 // reds a teal/navy hue in the LIBRARY constants.ts; this demo file is the sanctioned home
 // for any named theme).
 
-import type { LiquidGridConfig } from "@glass/components/custom/liquid-grid";
-import { DEFAULT_LIQUID_GRID_CONFIG } from "@glass/components/custom/liquid-grid";
+import type { LiquidGridConfig } from "@glass/components/liquid-grid";
+import { DEFAULT_LIQUID_GRID_CONFIG } from "@glass/components/liquid-grid";
 
 /** The warm-cream library-identity preset (the calm default lead — story 1). */
 export const LIQUID_GRID_PRESET_WARM: LiquidGridConfig = {

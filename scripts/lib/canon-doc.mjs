@@ -50,11 +50,11 @@ export const CANON_HOMES = Object.freeze({
     // ── public-facing ──
     readme: "README.md",
     // ── per-component READMEs (colocated; DRY beside the code) ──
-    "component:dock": "src/components/custom/dock/README.md",
-    "component:easing": "src/components/custom/easing/README.md",
-    "component:handmark": "src/components/custom/handmark/README.md",
-    "component:spa-view": "src/components/custom/spa-view/README.md",
-    "component:instrument-chassis": "src/components/custom/instrument-chassis/README.md",
+    "component:dock": "src/components/dock/README.md",
+    "component:easing": "src/components/easing/README.md",
+    "component:handmark": "src/components/handmark/README.md",
+    "component:spa-view": "src/components/spa-view/README.md",
+    "component:instrument-chassis": "src/components/instrument-chassis/README.md",
 });
 
 /** Resolve a canon key to an ABSOLUTE path. Throws on unknown key (fail-explicit). */

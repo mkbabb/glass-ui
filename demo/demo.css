@@ -93,8 +93,8 @@
    trips on a shader template literal (the `Missing opening (` trap index.css §EMISSION
    narrates). */
 @source "../src/components/**/*.vue";
-@source "../src/components/ui/_shared/*.ts";
-@source "../src/components/custom/**/*Variants.ts";
+@source "../src/components/_shared/*.ts";
+@source "../src/components/**/*Variants.ts";
 /* BI.W-DEMO-SOURCE-SCAN — the CVA MAPS (each ui component's index.ts) too. A
    component's cva() variant/tone map lives in index.ts, NOT the .vue render, so
    the class strings it composes (text-destructive-foreground, the four-state
@@ -107,7 +107,7 @@
    never trips a template-literal — no glsl/wgsl template lives under ui). The
    published library ships these same rules for a BARE consumer via
    emitComponentUtilities (dist components.css); this is the demo's own scan. */
-@source "../src/components/ui/**/index.ts";
+@source "../src/components/**/index.ts";
 @import "tw-animate-css";
 /* BB.W-CSS-CRITICAL — the demo's DEV cascade imports the library SOURCE UNION
    (the full index.css) for HMR simplicity; this is the byte-complete union the

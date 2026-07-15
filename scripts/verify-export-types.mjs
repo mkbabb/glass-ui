@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
 
-const root = resolve(fileURLToPath(new URL("../", import.meta.url)));
+const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
 const pkg = JSON.parse(readFileSync(resolve(root, "package.json"), "utf8"));
 
 const missing = [];

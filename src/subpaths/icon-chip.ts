@@ -1,1 +1,1 @@
-export * from "../components/custom/icon-chip";
+export * from "../components/icon-chip";

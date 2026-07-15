@@ -24,9 +24,9 @@ import { fileURLToPath } from "node:url";
 import { mkdirSync, writeFileSync } from "node:fs";
 
 const VISUAL_DIR = fileURLToPath(
-    new URL("../docs/tranches/AY/audit/visual/", import.meta.url),
+    new URL("../docs/tranches/AY/audit/visual", import.meta.url),
 );
-const CACHE_DIR = fileURLToPath(new URL("../.cache/", import.meta.url));
+const CACHE_DIR = fileURLToPath(new URL("../.cache", import.meta.url));
 const TOUCH_FLOOR = 44;
 
 interface AtomTarget {

@@ -4,7 +4,7 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import { readMonolith } from "../../../../scripts/read-css-monoliths.mjs";
 
-import { InstrumentChassis, type InstrumentChassisPhase } from "@glass/components/custom/instrument-chassis/index";
+import { InstrumentChassis, type InstrumentChassisPhase } from "@glass/components/instrument-chassis/index";
 
 /**
  * AI.W5-α + AI.W5-β — chassis phase-cascade canon test.
@@ -43,7 +43,7 @@ describe("InstrumentChassis phase-cascade canon", () => {
         // against silent removal of a phase from the type without a matching
         // cascade retire.
         const sfcSource = readFileSync(
-            resolve(__dirname, "../../../../src/components/custom/instrument-chassis/InstrumentChassis.vue"),
+            resolve(__dirname, "../../../../src/components/instrument-chassis/InstrumentChassis.vue"),
             "utf8",
         );
         const unionMatch = sfcSource.match(

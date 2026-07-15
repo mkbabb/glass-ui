@@ -7,9 +7,9 @@ import {
     DialogDescription,
     DialogHeader,
     DialogTitle,
-} from "@glass/components/ui/dialog";
-import { Aurora } from "@glass/components/custom/aurora";
-import { GooFilter } from "@glass/components/custom/dock";
+} from "@glass/components/dialog";
+import { Aurora } from "@glass/components/aurora";
+import { GooFilter } from "@glass/components/dock";
 import {
     formatCombo,
     formatComboParts,

@@ -81,7 +81,7 @@ export const REGISTERED_DORMANT = [
 // 1.14 mirror site retired with the V↔H orientation morph; DEFINITION-ABSENT.)
 export const JS_SINGLE_SOURCE = [
     {
-        file: "src/components/custom/dock/composables/dockMorphMeasure.ts",
+        file: "src/components/dock/composables/dockMorphMeasure.ts",
         constant: "DOCK_TAP_FLOOR_PX",
         token: "--dock-morph-min",
         banLiteral: "44",
@@ -95,11 +95,11 @@ export const JS_SINGLE_SOURCE = [
 // dock-morph composable/SFC may carry a transitionend settle arm or a wrong-clock
 // settle timer; `isTransitioning` resolves from the spring's OWN settle (useDockSpring).
 export const NO_TRANSITIONEND_LADDER = [
-    "src/components/custom/dock/composables/useDockMorphWindow.ts", // DELETED at NF.1
-    "src/components/custom/dock/composables/dockMorphContext.ts",
-    "src/components/custom/dock/composables/useLayerTransition.ts",
-    "src/components/custom/dock/GlassDock.vue",
-    "src/components/custom/dock/DockLayerGroup.vue",
+    "src/components/dock/composables/useDockMorphWindow.ts", // DELETED at NF.1
+    "src/components/dock/composables/dockMorphContext.ts",
+    "src/components/dock/composables/useLayerTransition.ts",
+    "src/components/dock/GlassDock.vue",
+    "src/components/dock/DockLayerGroup.vue",
 ];
 // The wrong-clock settle-timer signatures the ladder carried (a spring-driven morph
 // must never re-time off `--duration-normal`).

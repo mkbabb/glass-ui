@@ -4,7 +4,7 @@
 // glass dock with four icon controls at REST (one active). Inert + 0-GL by the
 // fenced stage (SectionPreviewCard); no live substrate, no own rAF — the dock reads
 // as the real component the /dock landing curates.
-import { GlassDock, DockControl } from "@glass/components/custom/dock";
+import { GlassDock, DockControl } from "@glass/components/dock";
 import { Home, Search, Bell, Settings } from "@lucide/vue";
 </script>
 

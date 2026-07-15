@@ -20,7 +20,7 @@ import {
     CardTitle,
     CardDescription,
     CardContent,
-} from "@glass/components/ui/card";
+} from "@glass/components/card";
 import { Package, Layers, Library } from "@lucide/vue";
 
 interface TapCard {

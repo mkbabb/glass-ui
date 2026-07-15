@@ -1,1 +1,1 @@
-export * from "../components/ui/drawer";
+export * from "../components/drawer";

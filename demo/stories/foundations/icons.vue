@@ -35,7 +35,7 @@ import {
     Zap,
 } from "@lucide/vue";
 import type { Component } from "vue";
-import { IconChip } from "@glass/components/custom/icon-chip";
+import { IconChip } from "@glass/components/icon-chip";
 
 interface IconRow {
     name: string;

@@ -18,7 +18,7 @@ import { readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { resolve } from "node:path";
 
-const WORKSPACE = fileURLToPath(new URL(".", import.meta.url));
+const WORKSPACE = fileURLToPath(new URL("./", import.meta.url));
 
 /**
  * The EXCLUDE allowlist — the only non-private specs outside the binding set, each

@@ -3,7 +3,7 @@
 // A real Button variant cluster (primary-audacious · glass · ghost) at REST — the
 // live component the /display landing curates, never a silhouette. Inert + 0-GL by
 // the fenced stage (SectionPreviewCard); no own rAF.
-import { Button } from "@glass/components/ui/button";
+import { Button } from "@glass/components/button";
 </script>
 
 <template>

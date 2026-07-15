@@ -21,13 +21,13 @@ import {
     DockControl,
     DockTrigger,
     DockSeparator,
-} from "@glass/components/custom/dock";
+} from "@glass/components/dock";
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectValue,
-} from "@glass/components/ui/select";
+} from "@glass/components/select";
 import { useSelectionGroup } from "@glass/composables/motion/core";
 import DockStage from "./DockStage.vue";
 

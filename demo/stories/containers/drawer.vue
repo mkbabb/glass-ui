@@ -11,9 +11,9 @@ import {
     DrawerHeader,
     DrawerTitle,
     DrawerTrigger,
-} from "@glass/components/ui/drawer";
-import { Button } from "@glass/components/ui/button";
-import { IconChip } from "@glass/components/custom/icon-chip";
+} from "@glass/components/drawer";
+import { Button } from "@glass/components/button";
+import { IconChip } from "@glass/components/icon-chip";
 import { PanelBottom } from "@lucide/vue";
 
 // BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2

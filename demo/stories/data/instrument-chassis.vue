@@ -5,9 +5,9 @@ import {
     InstrumentChassis,
     ChassisDivider,
     type InstrumentChassisPhase,
-} from "@glass/components/custom/instrument-chassis";
-import { MetricBadge } from "@glass/components/custom/metric-badge";
-import { DockControl } from "@glass/components/custom/dock";
+} from "@glass/components/instrument-chassis";
+import { MetricBadge } from "@glass/components/metric-badge";
+import { DockControl } from "@glass/components/dock";
 import {
     ArrowLeft,
     RotateCcw,

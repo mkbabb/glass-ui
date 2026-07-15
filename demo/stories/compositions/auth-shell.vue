@@ -2,13 +2,13 @@
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import { ref } from "vue";
 import { Lock, ShieldCheck, Sparkles, Users } from "@lucide/vue";
-import { Button } from "@glass/components/ui/button";
-import { Checkbox } from "@glass/components/ui/checkbox";
-import { Input } from "@glass/components/ui/input";
-import { Label } from "@glass/components/ui/label";
-import { Separator } from "@glass/components/ui/separator";
-import { Aurora } from "@glass/components/custom/aurora";
-import { IconChip } from "@glass/components/custom/icon-chip";
+import { Button } from "@glass/components/button";
+import { Checkbox } from "@glass/components/checkbox";
+import { Input } from "@glass/components/input";
+import { Label } from "@glass/components/label";
+import { Separator } from "@glass/components/separator";
+import { Aurora } from "@glass/components/aurora";
+import { IconChip } from "@glass/components/icon-chip";
 import { cn } from "@glass/components/_shared/class-names";
 import { heroAuroraConfig } from "../../chassis/hero/aurora-hero";
 

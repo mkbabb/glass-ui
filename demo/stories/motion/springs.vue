@@ -22,16 +22,16 @@ import {
     type SpringSnapshot,
     type SpringPresetName,
 } from "@glass/composables/motion";
-import { Button } from "@glass/components/ui/button";
-import { Label } from "@glass/components/ui/label";
-import { LabeledSlider } from "@glass/components/custom/labeled-field";
+import { Button } from "@glass/components/button";
+import { Label } from "@glass/components/label";
+import { LabeledSlider } from "@glass/components/labeled-field";
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from "@glass/components/ui/select";
+} from "@glass/components/select";
 import { Check, Copy } from "@lucide/vue";
 import { cn } from "@glass/components/_shared/class-names";
 

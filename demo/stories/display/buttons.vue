@@ -17,9 +17,9 @@ import StoryPage from "../../chassis/page/StoryPage.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { ref } from "vue";
-import { Button } from "@glass/components/ui/button";
+import { Button } from "@glass/components/button";
 import { cn } from "@glass/components/_shared/class-names";
-import { Aurora } from "@glass/components/custom/aurora";
+import { Aurora } from "@glass/components/aurora";
 import { PRESETS } from "../substrates/aurora/presets";
 
 const pressed = ref(false);

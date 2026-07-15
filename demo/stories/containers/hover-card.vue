@@ -5,11 +5,11 @@
 // SURVIVES the fold as a distinct mechanism (IconTooltip is its preset).
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
-import { Popover, PopoverContent, PopoverTrigger } from "@glass/components/ui/popover";
-import { Avatar, AvatarFallback, AvatarImage } from "@glass/components/ui/avatar";
-import { Button } from "@glass/components/ui/button";
-import { IconTooltip } from "@glass/components/custom/icon-tooltip";
-import { IconChip } from "@glass/components/custom/icon-chip";
+import { Popover, PopoverContent, PopoverTrigger } from "@glass/components/popover";
+import { Avatar, AvatarFallback, AvatarImage } from "@glass/components/avatar";
+import { Button } from "@glass/components/button";
+import { IconTooltip } from "@glass/components/icon-tooltip";
+import { IconChip } from "@glass/components/icon-chip";
 import { Info, CircleHelp, Sparkles, IdCard } from "@lucide/vue";
 
 // BC.W-SUFFUSE-reconcile — the containers band's ONE coherent --section-color-2

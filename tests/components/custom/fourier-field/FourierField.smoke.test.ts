@@ -25,7 +25,7 @@ import {
     positionsAt,
 } from "@mkbabb/glass-ui/fourier-math";
 // (1) the COMPONENT — relative import (the mirrored-test-tree rule).
-import { FourierField } from "@glass/components/custom/fourier-field";
+import { FourierField } from "@glass/components/fourier-field";
 import { defaultBlobColorResolver } from "@glass/composables/color";
 
 describe("FourierField mount-smoke", () => {

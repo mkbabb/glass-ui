@@ -1,1 +1,1 @@
-export * from "../components/custom/animated-digit";
+export * from "../components/animated-digit";

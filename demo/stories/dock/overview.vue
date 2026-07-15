@@ -24,10 +24,10 @@ import {
     DockTrigger,
     DockSeparator,
     DockBackgroundToggle,
-} from "@glass/components/custom/dock";
-import { Slider } from "@glass/components/ui/slider";
+} from "@glass/components/dock";
+import { Slider } from "@glass/components/slider";
 // BI.W-OVERLAY-UNION — HoverPopover folded onto <Popover trigger="hover">.
-import { Popover, PopoverContent, PopoverTrigger } from "@glass/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@glass/components/popover";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -35,15 +35,15 @@ import {
     DropdownMenuRadioGroup,
     DropdownMenuRadioItem,
     DropdownMenuSeparator,
-} from "@glass/components/ui/dropdown-menu";
+} from "@glass/components/dropdown-menu";
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectValue,
-} from "@glass/components/ui/select";
-import { Aurora } from "@glass/components/custom/aurora";
-import { DEFAULT_AURORA_CONFIG } from "@glass/components/custom/aurora";
+} from "@glass/components/select";
+import { Aurora } from "@glass/components/aurora";
+import { DEFAULT_AURORA_CONFIG } from "@glass/components/aurora";
 import DockStage from "./DockStage.vue";
 
 const playing = ref(false);

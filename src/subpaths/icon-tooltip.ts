@@ -1,1 +1,1 @@
-export * from "../components/custom/icon-tooltip";
+export * from "../components/icon-tooltip";

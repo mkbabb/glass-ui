@@ -33,7 +33,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const VISUAL_DIR = fileURLToPath(
-    new URL("../docs/tranches/BB/audit/visual/", import.meta.url),
+    new URL("../docs/tranches/BB/audit/visual", import.meta.url),
 );
 
 // The Apple −1.5%-of-size band the display rungs must resolve to. The em rung is

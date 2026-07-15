@@ -12,8 +12,8 @@
 import { onUnmounted, ref, watchEffect } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
-import { Button } from "@glass/components/ui/button";
-import { Slider } from "@glass/components/ui/slider";
+import { Button } from "@glass/components/button";
+import { Slider } from "@glass/components/slider";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -21,20 +21,20 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from "@glass/components/ui/dropdown-menu";
+} from "@glass/components/dropdown-menu";
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
-} from "@glass/components/ui/popover";
+} from "@glass/components/popover";
 import {
     Dialog,
     DialogContent,
     DialogDescription,
     DialogTitle,
     DialogTrigger,
-} from "@glass/components/ui/dialog";
-import { GlassDock, DockControl } from "@glass/components/custom/dock";
+} from "@glass/components/dialog";
+import { GlassDock, DockControl } from "@glass/components/dock";
 import { Layers, Package, Library, Sparkles } from "@lucide/vue";
 
 // The tempo scalar (reka Slider binds a number[]). 0.7 (quicker) → 1.3 (longer);

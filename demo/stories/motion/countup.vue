@@ -5,7 +5,7 @@
 import { ref } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import { useCountup } from "@glass/composables/motion/useCountup";
-import { Button } from "@glass/components/ui/button";
+import { Button } from "@glass/components/button";
 
 const host = ref<HTMLElement | null>(null);
 

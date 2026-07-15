@@ -22,12 +22,12 @@
 import { mount } from "@vue/test-utils";
 import { defineComponent, h, nextTick, ref } from "vue";
 import { afterEach, describe, expect, it } from "vitest";
-import { GlassDock } from "@glass/components/custom/dock";
-import { Slider } from "@glass/components/ui/slider";
+import { GlassDock } from "@glass/components/dock";
+import { Slider } from "@glass/components/slider";
 import {
     provideDockContext,
     type DockContext,
-} from "@glass/components/custom/dock/composables/dockContext";
+} from "@glass/components/dock/composables/dockContext";
 
 /** Dispatch a real `pointerdown` Event on a node (happy-dom PointerEvent shim). */
 function firePointer(el: Element, type: string): void {

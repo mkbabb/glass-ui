@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import type { AuroraNucleus } from "@glass/components/custom/aurora";
+import type { AuroraNucleus } from "@glass/components/aurora";
 
 /**
  * DOM overlay drawing nucleus rings over the stage canvas.

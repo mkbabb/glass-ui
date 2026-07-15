@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
-import { StatusDot } from "@glass/components/custom/status-dot";
+import { StatusDot } from "@glass/components/status-dot";
 
 type Variant = "active" | "paused" | "idle" | "error" | "custom";
 type Size = "xs" | "sm" | "md";

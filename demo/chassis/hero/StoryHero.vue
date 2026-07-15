@@ -13,10 +13,10 @@
 //   - variant="hero"           — a full-bleed glassy hero card floating over the
 //     live substrate; the front-door demonstration.
 import { computed, ref, watch } from "vue";
-import { Card, type CardTier } from "@glass/components/ui/card";
-import { Aurora } from "@glass/components/custom/aurora";
-import { Constellation } from "@glass/components/custom/constellation";
-import { LiquidGrid } from "@glass/components/custom/liquid-grid";
+import { Card, type CardTier } from "@glass/components/card";
+import { Aurora } from "@glass/components/aurora";
+import { Constellation } from "@glass/components/constellation";
+import { LiquidGrid } from "@glass/components/liquid-grid";
 import { LIQUID_GRID_PRESET_SUFFUSE } from "../../stories/substrates/presets";
 import { useTokenColor } from "@glass/composables/dom/useTokenColor";
 import { useRoutePointer } from "@glass/composables/motion/useRoutePointer";

@@ -514,7 +514,7 @@ test.describe("adaptive-glass (π lane — the bright-bucket darken over synthet
             const { fileURLToPath } = await import("node:url");
             const { mkdirSync } = await import("node:fs");
             const VISUAL_DIR = fileURLToPath(
-                new URL("../docs/tranches/AY/audit/visual/", import.meta.url),
+                new URL("../docs/tranches/AY/audit/visual", import.meta.url),
             );
             mkdirSync(VISUAL_DIR, { recursive: true });
             await page.setViewportSize({ width: 390, height: 844 });
@@ -547,7 +547,7 @@ test.describe("adaptive-glass (π lane — the bright-bucket darken over synthet
             });
             await page.waitForTimeout(250);
             await page.screenshot({
-                path: `${fileURLToPath(new URL("../docs/tranches/AY/audit/visual/", import.meta.url))}W-A11Y-PERF-overlay-band-mobile-${mode}.png`,
+                path: `${fileURLToPath(new URL("../docs/tranches/AY/audit/visual", import.meta.url))}W-A11Y-PERF-overlay-band-mobile-${mode}.png`,
             });
             await page.evaluate(() => document.getElementById("__w55_capture__")?.remove());
         });

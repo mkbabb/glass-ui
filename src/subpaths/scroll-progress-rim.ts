@@ -1,1 +1,1 @@
-export * from "../components/custom/scroll-progress-rim";
+export * from "../components/scroll-progress-rim";

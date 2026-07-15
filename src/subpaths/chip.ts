@@ -7,4 +7,4 @@
 // ships as its OWN subpath leaf and is NOT on the value.js-FREE root barrel (the
 // SCC-trap discipline; the /border-progress + /easing precedent — a value.js-bearing
 // component carves OFF the value.js-free root). A consumer imports here.
-export * from "../components/custom/chip";
+export * from "../components/chip";

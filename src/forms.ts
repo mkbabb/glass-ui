@@ -12,9 +12,9 @@
 // vueuse-free (native listeners only), so it is ALSO reachable on the root
 // barrel; co-locating it on `/forms` lets a consumer pull the validation
 // vocabulary (Input/Textarea + the `aria-invalid` bridge) from one subpath.
-export * from "./components/ui/input";
-export * from "./components/ui/textarea";
-export * from "./components/ui/combobox";
+export * from "./components/input";
+export * from "./components/textarea";
+export * from "./components/combobox";
 export {
     useUserInvalidAria,
     type UseUserInvalidAriaOptions,
@@ -24,4 +24,4 @@ export {
 // NumberFieldInput) threads as `size?` — the published home for the type the dropped
 // `/api` discovery layer pinned (MIGRATION.md 5.0.0 /api-fold: `ControlSize` → `/forms`).
 // Type-only re-export of the `_shared` source (the form-family shared home).
-export type { ControlSize } from "./components/ui/_shared";
+export type { ControlSize } from "./components/_shared";

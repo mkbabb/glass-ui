@@ -2,8 +2,8 @@ import { mount } from "@vue/test-utils";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { defineComponent, h, ref } from "vue";
 
-import GlassDock from "@glass/components/custom/dock/GlassDock.vue";
-import DockControl from "@glass/components/custom/dock/DockControl.vue";
+import GlassDock from "@glass/components/dock/GlassDock.vue";
+import DockControl from "@glass/components/dock/DockControl.vue";
 
 /**
  * AT.W6-dock-b — the BEHAVIOURAL touch-gate contract over the LIVE `<GlassDock>`

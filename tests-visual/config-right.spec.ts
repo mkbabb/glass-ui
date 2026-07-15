@@ -35,7 +35,7 @@ import { fileURLToPath } from "node:url";
 import { mkdirSync } from "node:fs";
 
 const VISUAL_DIR = fileURLToPath(
-    new URL("../docs/tranches/BC/audit/visual/", import.meta.url),
+    new URL("../docs/tranches/BC/audit/visual", import.meta.url),
 );
 
 // Every studio that composes the <Configurator> chassis (the census two-column list).

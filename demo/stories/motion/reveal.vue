@@ -13,7 +13,7 @@ import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { vReveal } from "@glass/composables/motion/vReveal";
 import { useLiquidReveal } from "@glass/composables/motion/useLiquidReveal";
-import { Button } from "@glass/components/ui/button";
+import { Button } from "@glass/components/button";
 
 const playing = ref(true);
 

@@ -11,8 +11,8 @@
  * DEFAULT_AURORA_CONFIG.
  */
 
-import type { AuroraConfig, AuroraMedium } from "@glass/components/custom/aurora";
-import { DEFAULT_AURORA_CONFIG } from "@glass/components/custom/aurora";
+import type { AuroraConfig, AuroraMedium } from "@glass/components/aurora";
+import { DEFAULT_AURORA_CONFIG } from "@glass/components/aurora";
 import { mediumOptions } from "./config/options";
 
 type PresetOverrides = Partial<AuroraConfig>;

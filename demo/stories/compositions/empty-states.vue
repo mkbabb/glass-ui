@@ -9,11 +9,11 @@ import {
     TriangleAlert,
     type LucideIcon,
 } from "@lucide/vue";
-import { Button } from "@glass/components/ui/button";
-import { Card, CardContent } from "@glass/components/ui/card";
-import { Blob } from "@glass/components/custom/blob";
-import { BLOB_CONFIG_DEFAULTS } from "@glass/components/custom/blob/types";
-import { IconChip } from "@glass/components/custom/icon-chip";
+import { Button } from "@glass/components/button";
+import { Card, CardContent } from "@glass/components/card";
+import { Blob } from "@glass/components/blob";
+import { BLOB_CONFIG_DEFAULTS } from "@glass/components/blob/types";
+import { IconChip } from "@glass/components/icon-chip";
 import { cn } from "@glass/components/_shared/class-names";
 
 interface EmptyState {

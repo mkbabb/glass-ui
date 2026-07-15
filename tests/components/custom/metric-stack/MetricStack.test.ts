@@ -1,7 +1,7 @@
 import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
 
-import { MetricRow, MetricStack } from "@glass/components/custom/metric-stack/index";
+import { MetricRow, MetricStack } from "@glass/components/metric-stack/index";
 
 describe("MetricStack", () => {
     it("mounts with the container-name + data-variant attributes", () => {

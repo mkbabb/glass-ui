@@ -1,1 +1,1 @@
-export * from "../components/custom/labeled-field";
+export * from "../components/labeled-field";

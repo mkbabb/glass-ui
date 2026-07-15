@@ -15,7 +15,7 @@ const familyMembers: FamilyMember[] = [
         component: defineAsyncComponent(() => import("./toaster.vue")),
     },
 ];
-import { Button } from "@glass/components/ui/button";
+import { Button } from "@glass/components/button";
 import {
     Toast,
     ToastAction,
@@ -23,9 +23,9 @@ import {
     ToastDescription,
     ToastTitle,
     useToast,
-} from "@glass/components/ui/toast";
+} from "@glass/components/toast";
 import { CheckCircle2, AlertTriangle, XCircle, Info, BellRing } from "@lucide/vue";
-import { IconChip } from "@glass/components/custom/icon-chip";
+import { IconChip } from "@glass/components/icon-chip";
 // BB.W-SUFFUSE3 — the feedback band's --section-color-8 ruby identity.
 const FEEDBACK_STOP = 8;
 

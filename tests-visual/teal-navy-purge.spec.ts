@@ -19,7 +19,7 @@ import { fileURLToPath } from "node:url";
 import { mkdirSync } from "node:fs";
 
 const VISUAL_DIR = fileURLToPath(
-    new URL("../docs/tranches/BC/audit/visual/", import.meta.url),
+    new URL("../docs/tranches/BC/audit/visual", import.meta.url),
 );
 
 // The substrate DEFAULT routes — each must lead warm-cream (presets-in-consumers; the

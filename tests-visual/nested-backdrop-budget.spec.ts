@@ -31,7 +31,7 @@ import { resolveScene } from "./pi-manifest.ts";
 import { fileURLToPath } from "node:url";
 import { mkdirSync, writeFileSync } from "node:fs";
 
-const CACHE_DIR = fileURLToPath(new URL("../.cache/", import.meta.url));
+const CACHE_DIR = fileURLToPath(new URL("../.cache", import.meta.url));
 // The documented ceiling: a Button-in-Card-in-Dialog stack is depth 3 (the Dialog
 // surface + the card + the button each carry a backdrop-filter). The page substrate may
 // add 1 (a glass/aurora page). Set the ceiling at 4 (depth-3 stack + 1 page) and RECORD

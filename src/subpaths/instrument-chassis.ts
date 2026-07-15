@@ -1,1 +1,1 @@
-export * from "../components/custom/instrument-chassis";
+export * from "../components/instrument-chassis";

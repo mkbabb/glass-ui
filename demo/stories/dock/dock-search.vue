@@ -16,11 +16,11 @@ import { computed, ref, useTemplateRef } from "vue";
 import { Search } from "@lucide/vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
-import { GlassDock, useDockSearch } from "@glass/components/custom/dock";
-import { useDockState } from "@glass/components/custom/dock/composables/useDockState";
+import { GlassDock, useDockSearch } from "@glass/components/dock";
+import { useDockState } from "@glass/components/dock/composables/useDockState";
 import { useVirtualSectionWindow } from "@glass/composables/virtual";
 import { useScrollTo } from "@glass/composables/sidebar";
-import type { SearchableItem } from "@glass/components/custom/search/composables";
+import type { SearchableItem } from "@glass/components/search/composables";
 import type { FlatSection } from "@glass/composables/virtual/virtualSectionLayout";
 import DockStage from "./DockStage.vue";
 

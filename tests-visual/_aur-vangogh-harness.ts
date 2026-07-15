@@ -3,9 +3,9 @@
 // studio chrome (which a sibling lane is mid-rebuild on). The Vite demo dev server
 // bundles this; the capture script navigates here. ?medium= forces a medium override.
 
-import { createAurora } from "../src/components/custom/aurora/composables/runtime";
+import { createAurora } from "../src/components/aurora/composables/runtime";
 import { PRESETS } from "../demo/stories/substrates/aurora/presets";
-import type { AuroraConfig, AuroraMedium } from "../src/components/custom/aurora/constants/presets";
+import type { AuroraConfig, AuroraMedium } from "../src/components/aurora/constants/presets";
 
 const params = new URLSearchParams(location.search);
 const presetKey = (params.get("preset") ?? "VANGOGH").toUpperCase();

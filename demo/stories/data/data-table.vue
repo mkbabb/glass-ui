@@ -2,13 +2,13 @@
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { computed, ref } from "vue";
-import { DataTable } from "@glass/components/ui/data-table";
+import { DataTable } from "@glass/components/data-table";
 import type {
     DataTableColumn,
     DataTableSort,
-} from "@glass/components/ui/data-table";
-import { Input } from "@glass/components/ui/input";
-import { IconChip } from "@glass/components/custom/icon-chip";
+} from "@glass/components/data-table";
+import { Input } from "@glass/components/input";
+import { IconChip } from "@glass/components/icon-chip";
 import { cn } from "@glass/components/_shared/class-names";
 import { Sheet as SheetIcon, Database } from "@lucide/vue";
 

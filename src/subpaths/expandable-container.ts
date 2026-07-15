@@ -1,1 +1,1 @@
-export * from "../components/custom/expandable-container";
+export * from "../components/expandable-container";

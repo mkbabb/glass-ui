@@ -1,10 +1,10 @@
 import { flushPromises, mount } from "@vue/test-utils";
 import { computed, nextTick, ref } from "vue";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import FuzzySearch from "@glass/components/custom/search/FuzzySearch.vue";
-import { buildIndex, clearSearchCache, searchIndex } from "@glass/components/custom/search/composables/fuzzySearchIndex";
-import { useFuzzySearch } from "@glass/components/custom/search/composables/useFuzzySearch";
-import type { FuzzySearchState, SearchableItem, SearchResult } from "@glass/components/custom/search/composables/types";
+import FuzzySearch from "@glass/components/search/FuzzySearch.vue";
+import { buildIndex, clearSearchCache, searchIndex } from "@glass/components/search/composables/fuzzySearchIndex";
+import { useFuzzySearch } from "@glass/components/search/composables/useFuzzySearch";
+import type { FuzzySearchState, SearchableItem, SearchResult } from "@glass/components/search/composables/types";
 import { mountComposable } from "../../../utils/mountComposable";
 
 function item(id: string, label: string): SearchableItem {

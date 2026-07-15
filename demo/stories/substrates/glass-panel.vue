@@ -16,7 +16,7 @@ import { ref } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { Aurora, DEFAULT_AURORA_CONFIG } from "@glass/subpaths/aurora";
-import { ToggleGroup, ToggleGroupItem } from "@glass/components/ui/toggle-group";
+import { ToggleGroup, ToggleGroupItem } from "@glass/components/toggle-group";
 
 // The five-rung ladder — the canonical MATERIAL (BC.W-GLASS-IDENTITY owns the values).
 // Each rung is visibly more present than the last (alpha-monotonic by design).

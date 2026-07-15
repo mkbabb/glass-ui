@@ -31,7 +31,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const VISUAL_DIR = fileURLToPath(
-    new URL("../docs/tranches/AZ/audit/visual/", import.meta.url),
+    new URL("../docs/tranches/AZ/audit/visual", import.meta.url),
 );
 
 // ── oklab/sRGB plumbing (Chrome serializes oklch()/oklab() — invert to hue) ──────
@@ -325,7 +325,7 @@ test.describe("AZ.W-SUFFUSE — the suffusion pass (π)", () => {
 // proof:live-verified-ledger over the W-SUFFUSE3 DELTA.
 // ════════════════════════════════════════════════════════════════════════════
 const BB_VISUAL_DIR = fileURLToPath(
-    new URL("../docs/tranches/BB/audit/visual/", import.meta.url),
+    new URL("../docs/tranches/BB/audit/visual", import.meta.url),
 );
 const paired3: Record<string, unknown> = {};
 

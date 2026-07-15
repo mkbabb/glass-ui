@@ -1,1 +1,1 @@
-export * from "../components/custom/stacked-icons";
+export * from "../components/stacked-icons";

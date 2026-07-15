@@ -1,7 +1,7 @@
 import { mount } from "@vue/test-utils";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import GlassDock from "@glass/components/custom/dock/GlassDock.vue";
+import GlassDock from "@glass/components/dock/GlassDock.vue";
 
 /**
  * GlassDock `isTransitioning` — the spring-settle-driven busy flag (BG.NF.1

@@ -13,7 +13,7 @@ import { mount } from "@vue/test-utils";
 import { defineComponent, h, nextTick } from "vue";
 import { describe, expect, it } from "vitest";
 
-import { Dialog, DialogContent, DialogTrigger } from "@glass/components/ui/dialog/index";
+import { Dialog, DialogContent, DialogTrigger } from "@glass/components/dialog/index";
 
 type PresetValue = "smooth" | "snappy" | "bouncy" | "gentle";
 

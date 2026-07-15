@@ -2,7 +2,7 @@ import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
 import { defineComponent, h } from "vue";
 
-import ModalOverlay from "@glass/components/ui/_shared/ModalOverlay.vue";
+import ModalOverlay from "@glass/components/_shared/ModalOverlay.vue";
 
 /**
  * AJ-W4-δ — ModalOverlay `scrimAnimation` prop test suite.

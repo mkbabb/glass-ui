@@ -31,7 +31,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const VISUAL_DIR = fileURLToPath(
-    new URL("../docs/tranches/BB/audit/visual/", import.meta.url),
+    new URL("../docs/tranches/BB/audit/visual", import.meta.url),
 );
 
 // The page-title rung the focal type-event must EXCEED — text-title = 32.9px.

@@ -36,7 +36,7 @@ import { fileURLToPath } from "node:url";
 import { mkdirSync } from "node:fs";
 
 const VISUAL_DIR = fileURLToPath(
-    new URL("../docs/tranches/BA/audit/visual/", import.meta.url),
+    new URL("../docs/tranches/BA/audit/visual", import.meta.url),
 );
 
 const ICONS_ROUTE = "/foundations/icons";
@@ -230,7 +230,7 @@ test.describe("BA.W-ICON-CHIP — the IconChip pop register π readback", () => 
 // pop snaps to its endpoint. Same LOCAL :5199 discipline.
 // ════════════════════════════════════════════════════════════════════════════
 const BB_VISUAL_DIR = fileURLToPath(
-    new URL("../docs/tranches/BB/audit/visual/", import.meta.url),
+    new URL("../docs/tranches/BB/audit/visual", import.meta.url),
 );
 
 /**

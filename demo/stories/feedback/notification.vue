@@ -3,10 +3,10 @@ import StoryPage from "../../chassis/page/StoryPage.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { ref } from "vue";
 import type { Component } from "vue";
-import { Button } from "@glass/components/ui/button";
-import { Notification } from "@glass/components/ui/notification";
+import { Button } from "@glass/components/button";
+import { Notification } from "@glass/components/notification";
 import { AlertTriangle, CheckCircle2, Info, XCircle, BellDot } from "@lucide/vue";
-import { IconChip } from "@glass/components/custom/icon-chip";
+import { IconChip } from "@glass/components/icon-chip";
 // BB.W-SUFFUSE3 — the feedback band's --section-color-8 ruby identity.
 const FEEDBACK_STOP = 8;
 

@@ -42,7 +42,7 @@ import {
     type ConfiguratorGalleryPlacement,
     type ConfiguratorPreset,
     type ConfiguratorScrollMode,
-} from "@glass/components/custom/configurator";
+} from "@glass/components/configurator";
 
 const props = withDefaults(
     defineProps<{

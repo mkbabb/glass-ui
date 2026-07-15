@@ -15,7 +15,7 @@ function harnessSource() {
     return HARNESS_SOURCE;
 }
 
-const root = resolve(fileURLToPath(new URL("../", import.meta.url)));
+const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
 const artifactPath = resolve(
     root,
     process.env.GLASS_UI_AURORA_PROFILE_ARTIFACT ??

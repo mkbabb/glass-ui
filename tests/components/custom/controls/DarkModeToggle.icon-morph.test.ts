@@ -58,7 +58,7 @@ import { useGlobalDark } from "@glass/composables/dark/useGlobalDark";
 // file: URL (track-frost.test.ts precedent), so CWD is the stable anchor.
 const SFC = resolve(
     process.cwd(),
-    "src/components/custom/controls/DarkModeToggle.vue",
+    "src/components/controls/DarkModeToggle.vue",
 );
 // BA.W-ATLAS-RECONCILE re-anchor: the AY partials carve moved the `.no-transition`
 // + PRM bytes here from the retired monolithic `src/styles/utilities.css`.

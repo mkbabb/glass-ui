@@ -1,1 +1,1 @@
-export * from "../components/custom/completion-seal";
+export * from "../components/completion-seal";

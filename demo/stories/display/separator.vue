@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
-import { Separator } from "@glass/components/ui/separator";
-import { Card, CardContent } from "@glass/components/ui/card";
+import { Separator } from "@glass/components/separator";
+import { Card, CardContent } from "@glass/components/card";
 </script>
 
 <template>

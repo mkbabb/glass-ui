@@ -1,1 +1,1 @@
-export * from "../components/ui/card";
+export * from "../components/card";

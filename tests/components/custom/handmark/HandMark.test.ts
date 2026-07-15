@@ -11,7 +11,7 @@
 
 import { mount } from "@vue/test-utils";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import HandMark from "@glass/components/custom/handmark/HandMark.vue";
+import HandMark from "@glass/components/handmark/HandMark.vue";
 
 function mockPRM(matches: boolean): void {
     Object.defineProperty(window, "matchMedia", {

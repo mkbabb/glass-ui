@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import { computed, ref } from "vue";
-import { Card, CardContent } from "@glass/components/ui/card";
-import { Separator } from "@glass/components/ui/separator";
+import { Card, CardContent } from "@glass/components/card";
+import { Separator } from "@glass/components/separator";
 import {
     LabeledInput,
     LabeledSelect,
     LabeledSlider,
     LabeledSwitch,
-} from "@glass/components/custom/labeled-field";
+} from "@glass/components/labeled-field";
 import { cn } from "@glass/components/_shared/class-names";
 
 const displayName = ref("Mike Babb");

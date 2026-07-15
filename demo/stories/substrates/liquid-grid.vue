@@ -12,16 +12,16 @@ import {
     Configurator,
     ConfiguratorLayer,
     ConfiguratorRow,
-} from "@glass/components/custom/configurator";
+} from "@glass/components/configurator";
 import {
     LabeledSlider,
     LabeledSwitch,
-} from "@glass/components/custom/labeled-field";
-import { DockBackgroundToggle } from "@glass/components/custom/dock";
+} from "@glass/components/labeled-field";
+import { DockBackgroundToggle } from "@glass/components/dock";
 import {
     LiquidGrid,
     type LiquidGridConfig,
-} from "@glass/components/custom/liquid-grid";
+} from "@glass/components/liquid-grid";
 import {
     LIQUID_GRID_PRESET_WARM,
     LIQUID_GRID_PRESET_SUFFUSE,

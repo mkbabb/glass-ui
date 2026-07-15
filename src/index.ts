@@ -45,12 +45,12 @@
 //   PausableRuntime, DAMPING, SNAP_THRESHOLD
 //
 // Mechanism: the root barrel re-exports each vueuse-free leaf EXPLICITLY rather
-// than `export * from "./components/ui"`, so Rollup never walks a vueuse-bearing
+// than `export * from "./components"`, so Rollup never walks a vueuse-bearing
 // leaf into the root SCC.
 //
 // ── Custom-package cherry-pick rationale ─────────────────────────────────
 //
-// This root barrel re-exports a curated few of the `src/components/custom/`
+// This root barrel re-exports a curated few of the `src/components/`
 // packages (`instrument-chassis`, `configurator`, `icon-chip`, `split-chars`);
 // `hover-popover` FOLDED onto the `ui/popover` union (BI.W-OVERLAY-UNION), and
 // `scrolling-text` RETIRE-RELOCATED to speedtest (BI.W-SPEEDTEST-ONLY-PAIR — the
@@ -76,75 +76,75 @@
 // the root barrel's transitive-import graph tight.
 
 // ─── Core UI primitives (vueuse-free) ─────────────────────────────────────
-// Explicit per-package re-exports — the `export * from "./components/ui"`
+// Explicit per-package re-exports — the `export * from "./components"`
 // wildcard is intentionally NOT used because it drags vueuse-bearing
 // carousel/combobox/input/textarea barrels into the root SCC walk.
-export * from "./components/ui/accordion";
-export * from "./components/ui/alert";
-export * from "./components/ui/avatar";
-export * from "./components/ui/badge";
-export * from "./components/ui/button";
-export * from "./components/ui/card";
-export * from "./components/ui/checkbox";
-export * from "./components/ui/collapsible";
-export * from "./components/ui/command";
+export * from "./components/accordion";
+export * from "./components/alert";
+export * from "./components/avatar";
+export * from "./components/badge";
+export * from "./components/button";
+export * from "./components/card";
+export * from "./components/checkbox";
+export * from "./components/collapsible";
+export * from "./components/command";
 // BI.W-MENU-TRIGGER — ContextMenu folded onto DropdownMenu as `trigger="context"`
 // (clean break, no alias). The context-menu family + subpath are retired.
-export * from "./components/ui/data-table";
-export * from "./components/ui/dialog";
+export * from "./components/data-table";
+export * from "./components/dialog";
 // Drawer is OFF the root barrel — BB.W-DRAWER-ABROGATE rebuilt it on the house
 // `useDrawerSnap` engine (a `@mkbabb/keyframes.js` SpringProgress consumer), so
 // it is now a keyframes-BEARING heavy component that must NOT inline its optional
 // peer into the vueuse-free root bundle. It ships via the `/drawer` subpath
 // (`@mkbabb/glass-ui/drawer`) — the dock/aurora substrate-isolation pattern; see
 // MIGRATION.md. (clean break, no alias.)
-export * from "./components/ui/dropdown-menu";
+export * from "./components/dropdown-menu";
 // BI.W-OVERLAY-UNION — `ui/hover-card` RETIRED as a NAME (the reka HoverCardRoot
 // substrate stays, imported by the sealed `<Popover trigger="hover">` union). The
 // HoverCard component + subpath fold onto ONE `Popover`. (clean break, no alias.)
-export * from "./components/ui/label";
+export * from "./components/label";
 // BI.W-MULTISELECT-FOLD — `ui/multi-select` RETIRED. A MultiSelect is a
 // Popover+Command composition over the same Combobox-family mechanism, so it folds
 // onto `<Combobox multiple>` (array v-model + chips-in-trigger). (clean break, no alias.)
-export * from "./components/ui/notification";
-export * from "./components/ui/number-field";
-export * from "./components/ui/popover";
-export * from "./components/ui/progress";
-export * from "./components/ui/radio-group";
-export * from "./components/ui/section";
-export * from "./components/ui/select";
-export * from "./components/ui/separator";
+export * from "./components/notification";
+export * from "./components/number-field";
+export * from "./components/popover";
+export * from "./components/progress";
+export * from "./components/radio-group";
+export * from "./components/section";
+export * from "./components/select";
+export * from "./components/separator";
 // `ui/sheet` RETIRED at BI.W-DIALOG-PLACEMENT — Sheet's side-slide FOLDED onto
 // `<DialogContent placement=top|right|bottom|left>` (same reka DialogRoot + FocusScope;
 // the slide is paint, not mechanism). Reach `Dialog` (`@mkbabb/glass-ui/dialog`); snap-
 // detent physics stays `Drawer`'s (the N3 disambiguation). Clean break, no alias.
-export * from "./components/ui/skeleton";
-export * from "./components/ui/slider";
-export * from "./components/ui/switch";
-export * from "./components/ui/table";
+export * from "./components/skeleton";
+export * from "./components/slider";
+export * from "./components/switch";
+export * from "./components/table";
 // BA.W-TABS — `ui/Tabs` (the reka wrapper family) LEFT the public surface (the
 // "too many types" cut: two parallel tab families, the always-ON baked-plate
 // indicator default that painted the R10-2 oval blob). The standardized tab family
 // is `SegmentedTabs` (`@mkbabb/glass-ui/tabs`, TWO materials).
-// BI.W-DOCK-FOLD — the reka substrate files (`components/ui/tabs/*`) are
+// BI.W-DOCK-FOLD — the reka substrate files (`components/tabs/*`) are
 // DEFINITION-ABSENT (retired): their sole internal consumer `DockLayerGroup.vue`
 // re-points onto the library's ONE headless selection engine `useSelectionGroup`
 // (roving focus + the ONE traveling-indicator writer, Safari-identical), so the
 // reka `--reka-tabs-indicator-*` path is gone. No public barrel re-exported them.
-export * from "./components/ui/tags-input";
-export * from "./components/ui/toast";
-export * from "./components/ui/toggle";
-export * from "./components/ui/toggle-group";
-export * from "./components/ui/tooltip";
+export * from "./components/tags-input";
+export * from "./components/toast";
+export * from "./components/toggle";
+export * from "./components/toggle-group";
+export * from "./components/tooltip";
 
 // Custom composites — instrument-cluster chassis
-export * from "./components/custom/instrument-chassis";
+export * from "./components/instrument-chassis";
 // BI.W-OVERLAY-UNION — `custom/hover-popover` FOLDED onto `<Popover trigger="hover">`
 // (the Kronecker fold). HoverPopover the NAME is retired; the mechanism (hover-open
 // timer + keepDockOpen watch) lives on the sealed Popover union. (clean break, no alias.)
 
 // Custom composites — configurator primitive
-export * from "./components/custom/configurator";
+export * from "./components/configurator";
 
 // BI.W-SPEEDTEST-ONLY-PAIR — `custom/scrolling-text` RETIRE-RELOCATED to speedtest.
 // The overflow-marquee's only binary consumer was speedtest (2 sites), the
@@ -157,7 +157,7 @@ export * from "./components/custom/configurator";
 // the dependency-free `vReveal` directive — no `@vueuse/core`, no
 // `@mkbabb/keyframes.js`), so it is root-barrel safe and cherry-picked here for
 // BROAD reach; also reachable via `@mkbabb/glass-ui/icon-chip`.
-export * from "./components/custom/icon-chip";
+export * from "./components/icon-chip";
 
 // BC.W-SPLIT-CHARS — the per-glyph split COMPONENT face (`<SplitChars>`). It
 // composes the engine-free `useCharStagger` + the shipped `.char-stagger` CSS +
@@ -165,7 +165,7 @@ export * from "./components/custom/icon-chip";
 // keyframes-FREE (it adds NO animation engine — the CSS owns the motion), so it
 // is root-barrel safe per the icon-chip/`vReveal` precedent; also reachable via
 // `@mkbabb/glass-ui/motion-core`.
-export * from "./components/custom/split-chars";
+export * from "./components/split-chars";
 
 // ─── Core composables (vueuse-free) ───────────────────────────────────────
 // `useGlobalDark` and `useKeyboardShortcuts` are intentionally removed
@@ -340,7 +340,7 @@ export type {
     Motion,
     Surface,
     SurfaceTier,
-} from "./components/ui/_shared/axes";
+} from "./components/_shared/axes";
 
 // Component foundations
 export { cn } from "./components/_shared/class-names";

@@ -19,7 +19,7 @@
 // OWN functional aurora (it must, to demonstrate pause/resume on a real renderer) — it
 // is NOT a transparent tile; it self-stages.
 import { computed, useTemplateRef } from "vue";
-import { Aurora, type AuroraConfig } from "@glass/components/custom/aurora";
+import { Aurora, type AuroraConfig } from "@glass/components/aurora";
 import {
     useGlassBackdropLuminance,
     GLASS_BACKDROP_SHARED_ATTR,

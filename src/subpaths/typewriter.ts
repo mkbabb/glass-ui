@@ -1,1 +1,1 @@
-export * from "../components/custom/typewriter";
+export * from "../components/typewriter";

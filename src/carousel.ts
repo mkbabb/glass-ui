@@ -9,7 +9,7 @@
 // the Phase 2 root-barrel curation that L.W1 closed for the dark/keyboard
 // surfaces.
 //
-// Single canonical home: `src/components/ui/carousel/index.ts` (the package
+// Single canonical home: `src/components/carousel/index.ts` (the package
 // barrel). The root barrel does NOT re-export this family.
 // BA.W-PAGER — CarouselDots retired onto `<PagerDots>` (@mkbabb/glass-ui/pager-dots);
 // the dots are the shared carousel ≡ slides-deck position-dot register now.
@@ -22,5 +22,5 @@ export {
     CarouselPrevious,
     GlassCarouselPager,
     useCarousel,
-} from "./components/ui/carousel";
-export type { CarouselApi } from "./components/ui/carousel";
+} from "./components/carousel";
+export type { CarouselApi } from "./components/carousel";

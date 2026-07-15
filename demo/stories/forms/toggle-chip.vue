@@ -6,8 +6,8 @@ import { ref, computed } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
-import { Chip } from "@glass/components/custom/chip";
-import { IconChip } from "@glass/components/custom/icon-chip";
+import { Chip } from "@glass/components/chip";
+import { IconChip } from "@glass/components/icon-chip";
 import { Triangle, Square, Circle, Hexagon, CircleDot } from "@lucide/vue";
 // BC.W-SUFFUSE-reconcile — the forms band's ONE coherent --section-color-3 teal
 // identity (the cool stop). PH3-safe (inline borderLeft, not the

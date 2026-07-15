@@ -7,7 +7,7 @@ import { readMonolith } from "../../../../scripts/read-css-monoliths.mjs";
 import {
     InstrumentChassis,
     type InstrumentChassisVariant,
-} from "@glass/components/custom/instrument-chassis/index";
+} from "@glass/components/instrument-chassis/index";
 
 /**
  * AL-W1-α augmented — chassis spine-variant canon test (per AL-X5 §4.1).
@@ -43,7 +43,7 @@ const tokensSource = readMonolith(resolve(__dirname, "../../../../"), "tokens");
 describe("InstrumentChassis spine variant canon", () => {
     it("exports `glass` and `spine` in the `InstrumentChassisVariant` union", () => {
         const sfcSource = readFileSync(
-            resolve(__dirname, "../../../../src/components/custom/instrument-chassis/InstrumentChassis.vue"),
+            resolve(__dirname, "../../../../src/components/instrument-chassis/InstrumentChassis.vue"),
             "utf8",
         );
         const unionMatch = sfcSource.match(

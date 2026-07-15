@@ -7,8 +7,8 @@ import { defineComponent, h, ref } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
-import { SpaView } from "@glass/components/custom/spa-view";
-import { SegmentedTabs } from "@glass/components/custom/tabs";
+import { SpaView } from "@glass/components/spa-view";
+import { SegmentedTabs } from "@glass/components/tabs";
 import { Layers } from "@lucide/vue";
 
 

@@ -25,7 +25,7 @@ import { springLinearStops, SpringProgress } from "@mkbabb/keyframes.js";
 // directly (native type-stripping); the table is pure value.js-free data.
 import { SPRING_PRESETS } from "../src/composables/motion/springPresets.ts";
 
-const root = resolve(fileURLToPath(new URL("../", import.meta.url)));
+const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
 // AY.W-CSS1 — tokens.css was carved into thin @import root + tokens/* partials;
 // BD.W-CUT then carved scheme-motion.css's §2 EASING block (the spring linear()
 // curves + per-spring duration clocks + goo-flow curves + bezier cores/aliases)

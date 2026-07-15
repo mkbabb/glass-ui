@@ -37,7 +37,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const VISUAL_DIR = fileURLToPath(
-    new URL("../docs/tranches/AZ/audit/visual/", import.meta.url),
+    new URL("../docs/tranches/AZ/audit/visual", import.meta.url),
 );
 
 // The canonical section rung — --type-subheading = 1.272rem = 20.4px (√φ). The
@@ -212,7 +212,7 @@ test.describe("AZ.W-HIERARCHY — the canonical section rung + Configurator voca
 // ══════════════════════════════════════════════════════════════════════════════
 
 const BB_VISUAL_DIR = fileURLToPath(
-    new URL("../docs/tranches/BB/audit/visual/", import.meta.url),
+    new URL("../docs/tranches/BB/audit/visual", import.meta.url),
 );
 
 // The substrate hero pages that route through the <StoryPage> chassis (so they wear

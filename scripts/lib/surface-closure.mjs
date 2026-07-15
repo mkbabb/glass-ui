@@ -35,7 +35,7 @@ import { existsSync, readFileSync, statSync } from "node:fs";
 import { resolve, join, dirname, relative } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
-export const ROOT = resolve(fileURLToPath(new URL("../../", import.meta.url)));
+export const ROOT = resolve(fileURLToPath(new URL("../..", import.meta.url)));
 
 // The demo SHELL is on every route — the AppShell + the two nav docks + the library
 // style entry. It seeds the closure so a prose-only roster still produces a non-empty

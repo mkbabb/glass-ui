@@ -6,7 +6,7 @@
 // `scripts/lib/subpath-policy.mjs` — NOT from the 79 `src/subpaths/*.ts` mirror
 // lines and NOT from a deny-list that defaults a stranger to PUBLIC.
 //
-// FAIL-CLOSED: every `src/components/{ui,custom}/<dir>` + every
+// FAIL-CLOSED: every `src/components/<dir>` + every
 // `src/composables/<subtree>` on disk MUST carry an EXPLICIT PUBLISH | INTERNAL |
 // CURATED classification. A dir with no entry is a HARD ERROR (exit 1) — never a
 // silent auto-publish onto the semver export surface.
@@ -92,8 +92,7 @@ if (cls.pass) {
         currentExportKeys: curKeys.size,
         emittedExportKeys: newKeys.size,
         jsSubpaths: Object.keys(entries).filter((n) => n !== "index").length,
-        publishUi: cls.tiers.ui.counts.PUBLISH,
-        publishCustom: cls.tiers.custom.counts.PUBLISH,
+        publishComponents: cls.tiers.component.counts.PUBLISH,
         collisions,
         drops,
         adds,
@@ -185,7 +184,7 @@ if (JSON_OUT) {
     console.log(JSON.stringify(report, null, 2));
 } else {
     console.log(`=== regen-exports — MODE=${MODE} ===\n`);
-    for (const t of [cls.tiers.ui, cls.tiers.custom, cls.tiers.composable]) {
+    for (const t of [cls.tiers.component, cls.tiers.composable]) {
         console.log(
             `[${t.tier}] disk=${t.total}  PUBLISH=${t.counts.PUBLISH} INTERNAL=${t.counts.INTERNAL} CURATED=${t.counts.CURATED}  unclassified=${t.unclassified.length} stale=${t.stale.length}`,
         );

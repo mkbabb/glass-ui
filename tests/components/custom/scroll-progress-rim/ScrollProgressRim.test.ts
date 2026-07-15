@@ -1,7 +1,7 @@
 import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
 
-import { ScrollProgressRim } from "@glass/components/custom/scroll-progress-rim";
+import { ScrollProgressRim } from "@glass/components/scroll-progress-rim";
 
 describe("ScrollProgressRim", () => {
     it("exposes clamped aggregate progress and a thin rainbow rim", () => {

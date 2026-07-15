@@ -19,7 +19,7 @@ import { mkdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const VISUAL_DIR = fileURLToPath(
-    new URL("../docs/tranches/BI/audit/visual/", import.meta.url),
+    new URL("../docs/tranches/BI/audit/visual", import.meta.url),
 );
 
 const SURFACE = ".settings-page";

@@ -5,11 +5,11 @@ import { computed, ref } from "vue";
 import {
     TypewriterText,
     type TypewriterWord,
-} from "@glass/components/custom/typewriter";
-import { Button } from "@glass/components/ui/button";
-import { Label } from "@glass/components/ui/label";
-import { Slider } from "@glass/components/ui/slider";
-import { Switch } from "@glass/components/ui/switch";
+} from "@glass/components/typewriter";
+import { Button } from "@glass/components/button";
+import { Label } from "@glass/components/label";
+import { Slider } from "@glass/components/slider";
+import { Switch } from "@glass/components/switch";
 import { cn } from "@glass/components/_shared/class-names";
 
 const phrases: TypewriterWord[] = [

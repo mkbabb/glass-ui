@@ -8,7 +8,7 @@
 // — never a shared per-category silhouette. The landing mounts 0 GL contexts.
 import { computed } from "vue";
 import { useRoute } from "vue-router";
-import { TooltipProvider } from "@glass/components/ui/tooltip";
+import { TooltipProvider } from "@glass/components/tooltip";
 import StoryHero from "../hero/StoryHero.vue";
 import SectionPreviewCard from "./SectionPreviewCard.vue";
 import { findCategory } from "../../stories/manifest";

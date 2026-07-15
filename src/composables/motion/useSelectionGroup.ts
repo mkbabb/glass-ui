@@ -7,7 +7,7 @@ import {
 // SegmentedTabs/ToggleGroup wearing chrome; ONE roving machine, never re-forked).
 // `useTabRovingFocus` imports `vue` only (engine-FREE + vueuse-FREE), so pulling it
 // into the `/motion-core`-eligible engine keeps the keyframes/vueuse fence.
-import { useTabRovingFocus } from "../../components/custom/tabs/composables/useTabRovingFocus";
+import { useTabRovingFocus } from "../../components/tabs/composables/useTabRovingFocus";
 
 /**
  * useSelectionGroup — the library's ONE headless selection engine

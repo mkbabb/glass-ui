@@ -13,7 +13,7 @@
 //     befitting-silent: every op is safe to call and the container is untouched.
 //
 // The full FuzzySearch mount + no-<mark> render is covered by
-// tests/components/custom/search/search-contracts.test.ts (the retirement landed
+// tests/components/search/search-contracts.test.ts (the retirement landed
 // at HEAD); this gate adds the publication-HOME assertion the re-home introduces.
 
 import { afterEach, beforeEach, describe, expect, it } from "vitest";

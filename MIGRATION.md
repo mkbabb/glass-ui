@@ -396,8 +396,8 @@ has NO glass-ui demo consumer once its story folds, so the retire is a full DELE
 |---|---|
 | `@mkbabb/glass-ui/scrolling-text` subpath export + `typesVersions` | RETIRED — speedtest-only, ≥2-repo bar unmet (derived regen: subpath-policy drop → `regen-exports --write`) |
 | `src/subpaths/scrolling-text.ts` mirror | DELETED |
-| `src/components/custom/scrolling-text/` component (`ScrollingText.vue` + barrel + README) | DELETED — relocated to speedtest's repo |
-| root barrel re-export (`src/index.ts` `export * from "./components/custom/scrolling-text"`) | DROPPED — no `ScrollingText` off the root barrel |
+| `src/components/scrolling-text/` component (`ScrollingText.vue` + barrel + README) | DELETED — relocated to speedtest's repo |
+| root barrel re-export (`src/index.ts` `export * from "./components/scrolling-text"`) | DROPPED — no `ScrollingText` off the root barrel |
 | the `data/scrolling-text` demo story + its manifest row + metrics-family member | DELETED — the metrics family keeps its four metric primitives |
 
 **MIGRATE: none — the fresh probe read ZERO external binary consumers beyond speedtest; a
@@ -2084,7 +2084,7 @@ import { avatarVariants } from "@mkbabb/glass-ui";
 The `AvatarVariants` type alias is unchanged. Cross-repo audit
 (`words`, `fourier-analysis`, `bbnf-buddy`, `keyframes.js`, `value.js`,
 `speedtest`) found one passthrough re-export site
-(`value.js/demo/@/components/ui/avatar/index.ts`); coordinated at O.W6
+(`value.js/demo/@/components/avatar/index.ts`); coordinated at O.W6
 cross-repo cohort wave. No other production call sites use the symbol
 across the constellation.
 
@@ -2118,7 +2118,7 @@ at O.W6 cross-repo cohort. No other constellation references.
 
 The whole compact-metric family SHIPS: `metric-cell` (`MetricCell`), `metric-stack`
 (`MetricStack` + `MetricRow`), `metric-badge` (`MetricBadge`), `instrument-chassis`
-(`InstrumentChassis` + `ChassisDivider`), `pulse` (`Pulse`) — their `src/components/custom/`
+(`InstrumentChassis` + `ChassisDivider`), `pulse` (`Pulse`) — their `src/components/`
 dirs, `src/subpaths/*.ts` barrels, the `./metric-cell` / `./metric-stack` /
 `./metric-badge` / `./instrument-chassis` / `./pulse` `package.json` `exports` entries +
 `typesVersions` rows, the `@mkbabb/glass-ui/api` re-exports, and the `--metric-row-*`

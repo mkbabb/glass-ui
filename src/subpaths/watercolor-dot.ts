@@ -1,1 +1,1 @@
-export * from "../components/custom/watercolor-dot";
+export * from "../components/watercolor-dot";

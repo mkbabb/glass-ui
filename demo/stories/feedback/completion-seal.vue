@@ -2,8 +2,8 @@
 import { ref } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
-import { CompletionSeal } from "@glass/components/custom/completion-seal";
-import { Button } from "@glass/components/ui/button";
+import { CompletionSeal } from "@glass/components/completion-seal";
+import { Button } from "@glass/components/button";
 
 
 // BB.W-SUFFUSE3 — the feedback-band's --section-color-8 ruby identity.

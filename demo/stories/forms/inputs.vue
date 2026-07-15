@@ -3,10 +3,10 @@ import StoryPage from "../../chassis/page/StoryPage.vue";
 import type { StoryBody } from "../../chassis/body/story-body";
 import { defineAsyncComponent } from "vue";
 import FamilyTabs, { type FamilyMember } from "../../chassis/family/FamilyTabs.vue";
-import { Input } from "@glass/components/ui/input";
-import { Label } from "@glass/components/ui/label";
-import { SearchBar } from "@glass/components/custom/search";
-import { IconChip } from "@glass/components/custom/icon-chip";
+import { Input } from "@glass/components/input";
+import { Label } from "@glass/components/label";
+import { SearchBar } from "@glass/components/search";
+import { IconChip } from "@glass/components/icon-chip";
 import { TextCursorInput } from "@lucide/vue";
 // The forms band's ONE coherent --section-color-3 teal identity (the cool stop).
 const FORMS_STOP = 3;

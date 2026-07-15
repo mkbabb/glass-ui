@@ -7,8 +7,8 @@
 import { ref } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
-import { Button } from "@glass/components/ui/button";
-import { HandMark } from "@glass/components/custom/handmark";
+import { Button } from "@glass/components/button";
+import { HandMark } from "@glass/components/handmark";
 
 // The imperative draw-on — a template ref + play() (the masthead / Sequence register).
 const loadRef = ref<{ play: () => void } | null>(null);

@@ -1,6 +1,6 @@
 import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
-import ConfiguratorLayer from "@glass/components/custom/configurator/ConfiguratorLayer.vue";
+import ConfiguratorLayer from "@glass/components/configurator/ConfiguratorLayer.vue";
 
 // AU.W8b.5 — v-model:open round-trip coverage for the defineModel conversion.
 // Also pins the uncontrolled `defaultOpen` seed (the prior `props.open ??

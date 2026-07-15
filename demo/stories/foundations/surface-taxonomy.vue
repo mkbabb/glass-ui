@@ -12,7 +12,7 @@
 // `opaque` escape reads solid over the same field. A demo CONSUMER of the shipped
 // `<Surface>` primitive — reached via the `@glass/*` → `src/*` demo alias (the
 // published subpath is `@mkbabb/glass-ui/surface`), zero library paint.
-import { Surface, type SurfaceProps } from "@glass/components/ui/surface";
+import { Surface, type SurfaceProps } from "@glass/components/surface";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 

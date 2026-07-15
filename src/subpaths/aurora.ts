@@ -1,1 +1,1 @@
-export * from "../components/custom/aurora";
+export * from "../components/aurora";

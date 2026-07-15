@@ -22,9 +22,9 @@ import {
     Phone,
     Settings,
 } from "@lucide/vue";
-import { GlassDock, DockControl } from "@glass/components/custom/dock";
+import { GlassDock, DockControl } from "@glass/components/dock";
 import { useSelectionGroup } from "@glass/composables/motion/core";
-import { useDockFisheye } from "@glass/components/custom/dock/composables/useDockFisheye";
+import { useDockFisheye } from "@glass/components/dock/composables/useDockFisheye";
 import DockStage from "./DockStage.vue";
 
 // BI.W-DOCK-OVERFLOW — the overflow-feel reference. The native scroll track (the

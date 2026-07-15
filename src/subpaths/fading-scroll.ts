@@ -1,1 +1,1 @@
-export * from "../components/custom/fading-scroll";
+export * from "../components/fading-scroll";

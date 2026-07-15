@@ -1,1 +1,1 @@
-export * from "../components/custom/metric-badge";
+export * from "../components/metric-badge";

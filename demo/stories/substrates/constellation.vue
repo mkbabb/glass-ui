@@ -8,8 +8,8 @@ import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { Constellation, type ConstellationField } from "@glass/subpaths/constellation";
-import { Switch } from "@glass/components/ui/switch";
-import { Label } from "@glass/components/ui/label";
+import { Switch } from "@glass/components/switch";
+import { Label } from "@glass/components/label";
 import { useTokenColor } from "@glass/composables/dom/useTokenColor";
 
 // The primary hero lattice's pointer interactivity toggle. The name surfaces the

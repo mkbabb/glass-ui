@@ -27,7 +27,7 @@ import { fileURLToPath } from "node:url";
 import { mkdirSync } from "node:fs";
 
 const VISUAL_DIR = fileURLToPath(
-    new URL("../docs/tranches/BI/audit/visual/W-PAGER-WORM/", import.meta.url),
+    new URL("../docs/tranches/BI/audit/visual/W-PAGER-WORM", import.meta.url),
 );
 
 const HOST_ROUTE = "/navigation/carousel";
