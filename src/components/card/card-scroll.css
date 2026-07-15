@@ -60,9 +60,7 @@
     --card-shrink-ease: var(--ease-out, linear);
     /* the stuck-header backplate reads a KEYED warm-glass floating plate (the same
        --glass-tint-* warm-admit seam the card body reads — the W55 tinted floating
-       rung). Card-LOCAL re-point of --card-header-bg (the shared shadow.css token is
-       READ-ONLY); a consumer override on the host still wins (higher specificity /
-       inline). */
+       rung). A consumer override on the host still wins (higher specificity / inline). */
     --card-header-bg: color-mix(
         in oklab,
         var(--glass-bg-floating),

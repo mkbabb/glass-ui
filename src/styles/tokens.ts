@@ -29,7 +29,7 @@ export const chartColors = {
     dividerStrong: "rgba(128, 128, 128, 0.7)",
 } as const;
 
-/** Default form-select minimum width (px). Matches `--min-width-input-sm`. */
+/** Default form-select minimum width (px). Matches `--input-min-width-sm`. */
 export const minWidthInputSm = 80;
 
 /**

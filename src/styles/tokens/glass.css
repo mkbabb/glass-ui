@@ -310,9 +310,8 @@
        P3 [6%,10%] band (below 6% reads flat, above 10% reads like a filled plate). The
        `.glass-well` class (glass/surface-axis.css) composes it AT the element (so a
        per-scope `--glass-well-tone` override re-resolves — the substitution-vs-
-       inheritance discipline); this `:root` token is the named rung for a direct read. */
+       inheritance discipline). */
     --glass-well-tone: 8%;
-    --glass-bg-well:     color-mix(in oklab, var(--card), var(--foreground) var(--glass-well-tone));
 
     /* ── BE.W-TINTED-CHIP — the per-INSTANCE PLATE-FILL tint axis (`--glass-fill-tint`
        / `--glass-fill-strength`) ──────────────────────────────────────────────────

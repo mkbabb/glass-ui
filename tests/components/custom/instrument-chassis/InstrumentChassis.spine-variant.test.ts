@@ -33,7 +33,7 @@ import {
  */
 
 const cssSource = readFileSync(
-    resolve(__dirname, "../../../../src/styles/instrument-chassis.css"),
+    resolve(__dirname, "../../../../src/components/instrument-chassis/styles.css"),
     "utf8",
 );
 // AY.W-CSS1 — tokens.css is a thin @import root; read the carved partials as the
@@ -76,9 +76,7 @@ describe("InstrumentChassis spine variant canon", () => {
         ).toBe("glass");
     });
 
-    it("publishes the 4 spine-tier tokens at `tokens.css`", () => {
-        expect(tokensSource).toMatch(/--glass-spine-opacity\s*:\s*0\s*;/);
-        expect(tokensSource).toMatch(/--glass-spine-blur\s*:\s*0px\s*;/);
+    it("publishes the spine border and vignette tokens at `tokens.css`", () => {
         expect(tokensSource).toMatch(
             /--glass-spine-border\s*:\s*var\(--surface-tint-8\)\s*;/,
         );

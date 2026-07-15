@@ -408,7 +408,6 @@
     --glass-shadow-overlay:  var(--shadow-2xl),
         0 0 0 0.5px color-mix(in srgb, var(--shadow-color) 8%, transparent),
         var(--glass-highlight);
-    --glass-shadow:    var(--glass-shadow-quiet);
 
     /* ─────────────────────────────────────────────────────────────
        AL-W1-α augmented — SPINE 8th tier (HOUSING register)
@@ -423,11 +422,8 @@
        The 4 tokens here cover the minimum viable substrate the SLIM
        Y4/Y6/Y7 retention set ratified. The 35 rejected axes (saturate
        band, edge-light per tier, depth-shadow per tier, tier-up macro)
-       stay rejected per the conservative-creation mandate. (BB.W-DEAD-SWEEP KEEP:
-       --glass-spine-opacity/-blur — no var() consumer, pinned by InstrumentChassis.spine-variant.test.ts; Batch-6 re-anchor.)
+       stay rejected per the conservative-creation mandate.
        ───────────────────────────────────────────────────────────── */
-    --glass-spine-opacity: 0;
-    --glass-spine-blur: 0px;
     --glass-spine-border: var(--surface-tint-8);
     --glass-spine-vignette: radial-gradient(
         ellipse at 50% 0%,

@@ -26,25 +26,11 @@
     --modal-shadow:         var(--shadow-modal);
 
     /* Elevation scale */
-    --shadow-xs: 0 1px 3px color-mix(in srgb, var(--shadow-color) 4%, transparent),
-        0 1px 2px color-mix(in srgb, var(--shadow-color) 6%, transparent);
     --shadow-sm: 0 2px 8px color-mix(in srgb, var(--shadow-color) 6%, transparent);
     --shadow-md: 0 4px 16px color-mix(in srgb, var(--shadow-color) 8%, transparent);
     --shadow-lg: 0 4px 20px color-mix(in srgb, var(--shadow-color) 12%, transparent);
     --shadow-xl: 0 8px 24px color-mix(in srgb, var(--shadow-color) 14%, transparent);
     --shadow-2xl: 0 25px 50px -12px color-mix(in srgb, var(--shadow-color) 25%, transparent);
-
-    /* Z.W2.T3a — uniform-cast shadow rung. Offset 0 / 0, no directional
-       Y bias. Use case: dock-hosted icons (e.g. the speedtest settings
-       gear) where the surrounding dock shadow's downward cast reads as
-       a per-icon right-edge halo on the rightmost child (A2 §B7). The
-       uniform variant carries the same color-mix recipe family as the
-       sized rungs (`--shadow-md`, `--shadow-lg`) so the perceived
-       elevation is a peer, not a sibling. Consumers compose via
-       `--shadow-dock-override: var(--shadow-uniform)` per-instance, or
-       attach to per-icon-button stacks where directional cast is wrong-
-       shape. Documented in DESIGN.md token table. */
-    --shadow-uniform: 0 0 12px color-mix(in srgb, var(--shadow-color) 8%, transparent);
 
     /* Card = soft drop plate by default. The cartoon offset is a brand-flavoured
        decoration (a sticker look), not the canonical card shape. Consumers
@@ -53,14 +39,6 @@
        §F.1, S.W4; Q.W3 Lane H. */
     --shadow-card:       var(--shadow-md);
     --card-shadow:       var(--shadow-card);
-
-    /* AI.W1-α — sticky CardHeader background. Parameterises the
-       `bg-card/60` literal value.js's PaneHeader.vue carried so the
-       glass-ui canon owns the recipe. The scroll-driven `<CardHeader
-       shrink>` choreography reads this token for its sticky-header
-       backdrop tint; consumers retune per-app by overriding the
-       variable at any ancestor. Auto-dark via `--card`. */
-    --card-header-bg:    color-mix(in srgb, var(--card) 60%, transparent);
 
     /* Dock shadows — a single omnidirectional glow in the
        `--shadow-md`/`--shadow-lg` family (a directional drop concentrated on
@@ -183,19 +161,15 @@
        satellite bulges). Both rungs ride the SAME `--blob-shadow-color` (the ambient
        `--shadow-color`/`--foreground` base), so the grounded read re-resolves under
        `.dark` with no hardcoded dark block (the house cartoon-shadow adaptive pattern).
-       A consumer retunes grounding by overriding `--blob-shadow-contact-*` or the whole
-       `--blob-shadow` composite on the cascade. */
+       A consumer retunes grounding by overriding `--blob-shadow-contact-*` on the cascade. */
     --blob-shadow-contact-offset: 0 1px;
     --blob-shadow-contact-blur:   3px;
     --blob-shadow-contact-strength: 38%;
     --blob-shadow-contact: var(--blob-shadow-contact-offset) var(--blob-shadow-contact-blur)
         color-mix(in srgb, var(--blob-shadow-color) var(--blob-shadow-contact-strength), transparent);
 
-    /* The grounded composite is consumed by GooBlob.vue as TWO chained drop-shadow()
-       filters: drop-shadow(ambient) drop-shadow(contact). `--blob-shadow` keeps the
-       single-rung ambient value (back-compat: a consumer reading the old token still
-       gets the soft cast); the grounded read is the explicit two-rung pair. */
-    --blob-shadow: var(--blob-shadow-ambient);
+    /* GooBlob consumes the grounded pair as chained ambient and contact
+       drop-shadow() filters. */
 
     /* The hover lift — the ambient cast deepens + softens (the dome rises) AND the
        contact band TIGHTENS toward the lifted base (a touch of extra grounding-darken
