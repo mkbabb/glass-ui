@@ -58,7 +58,7 @@ const props = withDefaults(
      * ease-in-out infinite"`); the rule
      * `[data-scrim-animation] { animation: var(--scrim-animation, none) }`
      * in `animations.css` consumes it on the portaled overlay element.
-     * Composes with the default `animate="fade"` enter/exit (distinct
+     * Composes with the default `.sheet-animate` enter/exit (distinct
      * selectors: `[data-state]` keys the fade, `[data-scrim-animation]`
      * keys the breath — no cascade fight).
      *
@@ -96,6 +96,11 @@ const props = withDefaults(
      */
     showClose?: boolean;
     /**
+     * Bound the dialog to the viewport and make its content the single vertical
+     * scroll owner.
+     */
+    scroll?: boolean;
+    /**
      * BD.W-OVERLAY-STAGE-COUPLE — the scene-staging enum for the centered modal band.
      * `none` (default — byte-identical to HEAD) leaves the page untouched; `dim`/
      * `scale`/`immersive` flip the ONE `--stage-t` scalar 0→1 on open so the page
@@ -104,12 +109,12 @@ const props = withDefaults(
      */
     stage?: 'none' | 'dim' | 'scale' | 'immersive';
   }>(),
-  { surface: 'glass', placement: 'center', showClose: true, stage: 'none' },
+  { surface: 'glass', placement: 'center', showClose: true, scroll: false, stage: 'none' },
 )
 const emits = defineEmits<DialogContentEmits>()
 
 const delegatedProps = computed(() => {
-  const { class: _, surface: _su, placement: _pl, scrimAnimation: _sa, motion: _mo, springPreset: _spp, showClose: _sc, stage: _st, ...delegated } = props
+  const { class: _, surface: _su, placement: _pl, scrimAnimation: _sa, motion: _mo, springPreset: _spp, showClose: _sc, scroll: _sl, stage: _st, ...delegated } = props
   return delegated
 })
 
@@ -245,16 +250,25 @@ const PLACEMENT_SLIDE: Record<Exclude<Placement, 'center'>, string> = {
 // ease-in-out`. `glass-floating` rides `surfaceClass(.., 'floating')` below (no double-name).
 const sideBaseClasses = 'grid gap-4 [--overlay-pad-inline:--spacing(6)] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] px-(--overlay-pad-inline) py-(--overlay-pad-block) transition ease-in-out sheet-animate'
 
+const scrollClasses = computed(() =>
+  props.scroll
+    ? isCenter.value
+      ? 'max-h-[calc(100dvh-2rem)] overflow-y-auto'
+      : 'overflow-y-auto'
+    : '',
+)
+
 // The resolved content class — center (the `.glass-reveal` bloom or the JS spring) vs the
 // folded side-slide. A side placement never arms the JS spring (springActive gates to
 // center) and never composes the center `-translate-x/y-1/2 glass-reveal` recipe.
 const contentClass = computed(() =>
   isCenter.value
-    ? cn(baseClasses, springActive.value ? '' : defaultMotionClasses, variantClasses.value, props.class)
+    ? cn(baseClasses, springActive.value ? '' : defaultMotionClasses, variantClasses.value, scrollClasses.value, props.class)
     : cn(
         sideBaseClasses,
         PLACEMENT_SLIDE[placement.value as Exclude<Placement, 'center'>],
         surfaceClass(props.surface, 'floating'),
+        scrollClasses.value,
         props.class,
       )
 )
@@ -342,9 +356,6 @@ const contentStyle = computed<CSSProperties>(() => ({
 <template>
   <DialogPortal>
     <ModalOverlay
-      scrim="glass"
-      animate="fade"
-      layout="centered"
       :scrim-animation="props.scrimAnimation"
     />
     <DialogContent
@@ -355,6 +366,7 @@ const contentStyle = computed<CSSProperties>(() => ({
       data-slot="dialog-content"
       data-material="transient-overlay"
       :data-placement="isCenter ? undefined : placement"
+      :data-scroll="props.scroll ? '' : undefined"
       :data-reveal="isCenter ? 'overlay' : undefined"
       :data-motion="motionAxis.dataMotion.value"
       :data-spring="springActive ? (props.springPreset ?? 'smooth') : undefined"

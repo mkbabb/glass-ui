@@ -34,7 +34,7 @@
 //   ShortcutEventType
 //   Carousel, CarouselContent,                 @mkbabb/glass-ui/carousel      @vueuse/core
 //   CarouselItem, CarouselNext, CarouselPager,
-//   CarouselPrevious, GlassCarouselPager,
+//   CarouselPrevious,
 //   useCarousel, CarouselApi
 //   useSpring, useSpringMount, useSpringPress, @mkbabb/glass-ui/motion        @mkbabb/keyframes.js
 //   useNumericTransition, useAnimatedNumber,

@@ -8,6 +8,7 @@ import * as Glass from "@glass/index";
 import * as Controls from "@glass/components/controls";
 import * as Dark from "@glass/composables/dark";
 import * as DataTableSurface from "@glass/components/data-table";
+import * as DialogSurface from "@glass/components/dialog";
 import * as Dock from "@glass/components/dock";
 import * as DrawerSurface from "@glass/components/drawer";
 import * as DropdownMenuSurface from "@glass/components/dropdown-menu";
@@ -22,6 +23,7 @@ import * as Motion from "@glass/composables/motion";
 import * as MotionCore from "@glass/composables/motion/core";
 import * as PaperBackdropSurface from "@glass/components/paper-backdrop";
 import * as PopoverSurface from "@glass/components/popover";
+import * as ProgressSurface from "@glass/components/progress";
 import * as PulseSurface from "@glass/components/pulse";
 import * as Search from "@glass/components/search";
 import * as SelectSurface from "@glass/components/select";
@@ -117,7 +119,6 @@ const subpathRuntimeExports = [
     { subpath: "drawer", surface: DrawerSurface, name: "Drawer" },
     { subpath: "drawer", surface: DrawerSurface, name: "DrawerContent" },
     { subpath: "drawer", surface: DrawerSurface, name: "DrawerTrigger" },
-    { subpath: "drawer", surface: DrawerSurface, name: "DrawerOverlay" },
     { subpath: "drawer", surface: DrawerSurface, name: "DrawerHeader" },
     { subpath: "drawer", surface: DrawerSurface, name: "DrawerFooter" },
     { subpath: "drawer", surface: DrawerSurface, name: "DrawerTitle" },
@@ -199,7 +200,6 @@ const subpathRuntimeExports = [
     { subpath: "select", surface: SelectSurface, name: "SelectTrigger" },
     { subpath: "select", surface: SelectSurface, name: "SelectValue" },
     { subpath: "data-table", surface: DataTableSurface, name: "DataTable" },
-    { subpath: "data-table", surface: DataTableSurface, name: "DataTablePagination" },
     { subpath: "dropdown-menu", surface: DropdownMenuSurface, name: "DropdownMenu" },
     { subpath: "dropdown-menu", surface: DropdownMenuSurface, name: "DropdownMenuContent" },
     { subpath: "dropdown-menu", surface: DropdownMenuSurface, name: "DropdownMenuItem" },
@@ -212,6 +212,22 @@ const subpathRuntimeExports = [
     { subpath: "command", surface: CommandSurface, name: "CommandInput" },
     { subpath: "command", surface: CommandSurface, name: "CommandList" },
     { subpath: "command", surface: CommandSurface, name: "CommandItem" },
+] as const;
+
+const retiredSubpathRuntimeMembers = [
+    { subpath: "carousel", surface: CarouselSurface, name: "GlassCarouselPager" },
+    { subpath: "dialog", surface: DialogSurface, name: "DialogScrollContent" },
+    { subpath: "forms", surface: Forms, name: "ComboboxCancel" },
+    { subpath: "forms", surface: Forms, name: "ComboboxSeparator" },
+    { subpath: "forms", surface: Forms, name: "ComboboxViewport" },
+    { subpath: "data-table", surface: DataTableSurface, name: "DataTablePagination" },
+    { subpath: "drawer", surface: DrawerSurface, name: "DrawerOverlay" },
+    { subpath: "progress", surface: ProgressSurface, name: "ProgressDefault" },
+    { subpath: "progress", surface: ProgressSurface, name: "ProgressGradient" },
+    { subpath: "progress", surface: ProgressSurface, name: "ProgressLiquid" },
+    { subpath: "progress", surface: ProgressSurface, name: "ProgressSectioned" },
+    { subpath: "select", surface: SelectSurface, name: "SelectScrollUpButton" },
+    { subpath: "select", surface: SelectSurface, name: "SelectScrollDownButton" },
 ] as const;
 
 const nonCoreRootRetirements = [
@@ -417,6 +433,10 @@ describe("public runtime surface", () => {
 
     it.each(subpathRuntimeExports)("exports $subpath subpath symbol $name", ({ surface, name }) => {
         expect(surface).toHaveProperty(name);
+    });
+
+    it.each(retiredSubpathRuntimeMembers)("does not export retired $subpath member $name", ({ surface, name }) => {
+        expect(surface).not.toHaveProperty(name);
     });
 
     it.each(nonCoreRootRetirements)("does not export non-core root symbol %s", (name) => {

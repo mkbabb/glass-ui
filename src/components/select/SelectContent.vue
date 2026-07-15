@@ -8,7 +8,8 @@ import {
   SelectViewport,
   useForwardPropsEmits,
 } from 'reka-ui'
-import { SelectScrollDownButton, SelectScrollUpButton } from './'
+import SelectScrollDownButton from './SelectScrollDownButton.vue'
+import SelectScrollUpButton from './SelectScrollUpButton.vue'
 import { cn } from '../_shared/class-names'
 import { useOptionalDockContext } from "../dock/composables/dockContext"
 // BC.W-OVERLAY-UNIFORM — thread the SHARED {glass·veil·opaque} surface axis + the

@@ -12,7 +12,7 @@ import { describe, expect, it } from "vitest";
 
 import { Dialog, DialogContent, DialogTrigger } from "@glass/components/dialog/index";
 
-function mountDialog(showClose?: boolean) {
+function mountDialog(showClose?: boolean, scroll?: boolean) {
     const Host = defineComponent({
         components: { Dialog, DialogContent, DialogTrigger },
         setup() {
@@ -23,6 +23,7 @@ function mountDialog(showClose?: boolean) {
                         DialogContent,
                         {
                             ...(showClose !== undefined ? { showClose } : {}),
+                            ...(scroll !== undefined ? { scroll } : {}),
                             class: "test-dialog",
                         },
                         () => h("p", "body"),
@@ -79,6 +80,18 @@ describe("DialogContent — AU.W9.C showClose prop", () => {
         const portal = findDialog();
         expect(portal).not.toBeNull();
         expect(hasCloseButton(portal!)).toBe(false);
+        wrapper.unmount();
+    });
+
+    it("owns viewport-bounded inner scrolling when scroll=true", async () => {
+        const wrapper = mountDialog(undefined, true);
+        await nextTick();
+        await nextTick();
+        const portal = findDialog();
+        expect(portal).not.toBeNull();
+        expect(portal?.getAttribute("data-scroll")).toBe("");
+        expect(portal?.className).toContain("max-h-[calc(100dvh-2rem)]");
+        expect(portal?.className).toContain("overflow-y-auto");
         wrapper.unmount();
     });
 });

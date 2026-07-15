@@ -1,6 +1,5 @@
 <script setup lang="ts">
-// Overlays & Scrims — the ModalOverlay + scrim ladder + popover offset
-// + motion offsets.
+// Overlays & Scrims — static scrim-token swatches + motion offsets.
 //
 // BA.W-STAGE scope 7 (FD-FS-1/FD-FS-3) — the scrim tour reads against a VIVID
 // reference field. A scrim is a translucent DIM; over a same-tone `bg-card` plate
@@ -46,7 +45,7 @@ const motionOffsets: TokenLadderRow[] = [
     <StoryPage>
         <StorySection
             label="three scrim weights"
-            blurb="The <ModalOverlay> primitive is one shared scrim surface. The three weights below paint OVER a vivid reference stage so each dim reads as the backdrop-darkening it is — not over a same-tone plate where the dim has nothing to dim."
+            blurb="Static token swatches, not mounted overlays. Each weight paints over a vivid reference stage so its backdrop-darkening reads clearly. Interaction proof for scrim, focus, and dismissal lives in Containers · Dialog and Feedback · Confirm dialog."
         >
             <div class="scrim-grid">
                 <div v-for="row in scrims" :key="row.label" class="scrim-cell">
@@ -76,11 +75,6 @@ const motionOffsets: TokenLadderRow[] = [
                 />
             </ShowcaseFrame>
         </StorySection>
-
-        <StorySection
-            label="ModalOverlay primitive"
-            blurb="One <ModalOverlay> SFC backs the dialog, sheet, and confirm scrims, reading from --overlay-scrim. Compose `<ModalOverlay tier='strong' />` for the destructive variant."
-        />
     </StoryPage>
 </template>
 

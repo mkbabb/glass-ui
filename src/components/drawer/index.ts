@@ -41,7 +41,6 @@ export type DrawerMode = "modal" | "live-behind";
 export type DrawerStage = "none" | "dim" | "scale" | "immersive";
 
 export { default as Drawer } from "./Drawer.vue";
-export { default as DrawerOverlay } from "./DrawerOverlay.vue";
 export { default as DrawerContent } from "./DrawerContent.vue";
 export { default as DrawerHeader } from "./DrawerHeader.vue";
 export { default as DrawerFooter } from "./DrawerFooter.vue";
