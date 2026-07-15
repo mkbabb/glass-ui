@@ -1,14 +1,13 @@
 <script setup lang="ts">
 // BI.W-TEMPO — the `--motion-tempo` axis live demo (M11 / N6). ONE registered
 // inheriting TIME scalar co-scales BOTH the CSS spring clocks (the
-// `--spring-<name>-duration` reader = `settle * --motion-tempo`) AND the JS spring
-// responses (`motionTempo()` → `response *= tempo`), so a CSS overlay (dropdown /
-// popover / dialog) and a JS dock morph tighten/loosen IN PROPORTION as the slider
-// moves — the P7 one-clock coherence proof (G2). The `--spring-*-duration` reader is
-// declared at `:root`, so the slider writes `--motion-tempo` on `document.
-// documentElement` (the honest "consumer sets `:root { --motion-tempo }`" mechanism —
-// a descendant override would not re-resolve the `:root`-computed reader, the
-// substitution trap); the JS engines read the SAME `:root` tempo at construction.
+// `--spring-<name>-duration` reader = `settle * --motion-tempo`), the canonical
+// sheet panel/scrim enter+exit reader, AND the JS spring responses
+// (`motionTempo()` → `response *= tempo`), so CSS overlays and a JS dock morph
+// tighten/loosen IN PROPORTION as the slider moves. Spring-duration readers resolve
+// at `:root`; sheet-animate reads the inherited value on its portaled element. The
+// slider therefore writes the shared owner on `document.documentElement`, and JS
+// engines read that SAME root value at construction.
 import { onUnmounted, ref, watchEffect } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
@@ -60,7 +59,7 @@ const dialogOpen = ref(false);
     <StoryPage>
         <StorySection
             heading="--motion-tempo · the one motion time knob"
-            blurb="ONE registered inheriting scalar co-scales EVERY spring clock — the CSS reader (--spring-*-duration = settle × --motion-tempo) AND the JS response (motionTempo() → response × tempo). Slide it and the dropdown, popover, dialog, and the JS dock morph all tighten or lengthen in proportion (the CSS↔JS one-clock coherence). 1.0 is the shipped identity; ⟂ --motion-weight ⟂ --ui-scale."
+            blurb="ONE registered inheriting scalar co-scales every channel shown here: CSS spring readers, the dialog's portaled scrim enter/exit, and JS spring responses. Their base durations remain distinct, but each multiplies the same --motion-tempo owner. Slide it and the dropdown, popover, dialog panel + scrim, and JS dock morph all tighten or lengthen in proportion. 1.0 is the shipped identity; ⟂ --motion-weight ⟂ --ui-scale."
         >
             <div class="tempo-panel glass-card flex flex-col gap-4 rounded-card p-6">
                 <div class="flex items-baseline justify-between gap-4">
@@ -86,7 +85,7 @@ const dialogOpen = ref(false);
 
         <StorySection
             heading="CSS overlays — the reader-clock scales"
-            blurb="The reka-portaled overlays compose .glass-reveal, whose enter/exit legs ride the --spring-*-duration readers. A tempo write re-resolves those :root-declared readers, so every open/close stretches with the slider — zero per-overlay edit (one reader, every overlay)."
+            blurb="Dropdown and popover blooms read their spring-duration registers. The dialog panel reads the same spring owner, while its portaled scrim keeps distinct panel/fast base durations through the canonical sheet-animate reader. Every open, close, and interrupted reverse multiplies the same --motion-tempo value; no overlay-specific clock is copied."
         >
             <div class="flex flex-wrap items-center gap-3">
                 <DropdownMenu>
@@ -122,9 +121,10 @@ const dialogOpen = ref(false);
                     <DialogContent class="max-w-md">
                         <DialogTitle>Materialize on the tempo clock</DialogTitle>
                         <DialogDescription>
-                            The dialog panel blooms on the enter-overlay register — the
-                            same --spring-snappy-duration reader the tempo slider scales.
-                            Open it at 0.70 and at 1.30 to feel the co-scale.
+                            The panel blooms on --spring-snappy-duration while the
+                            portaled scrim fades on its distinct panel/fast bases. Both
+                            multiply --motion-tempo on open and close. Compare 0.70 and
+                            1.30 to feel the shared ratio, not identical raw durations.
                         </DialogDescription>
                     </DialogContent>
                 </Dialog>

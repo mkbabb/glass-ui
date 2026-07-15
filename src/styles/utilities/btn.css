@@ -104,14 +104,16 @@
    surfaces now ride the spring-clocked `.glass-reveal`, BB.W-LIQUID-REVEAL).
    Pairs with
    `slide-in-from-{top,right,bottom,left}-N` to compose side-keyed entries.
-   The open path uses --duration-panel (slow, deliberate); the close path
-   uses --duration-fast so dismiss feels snappy. R5 vocab.γ gap row 6;
+   The open path uses --duration-panel (slow, deliberate); the close path uses
+   --duration-fast so dismiss feels snappy. Both base clocks multiply the ONE
+   inherited --motion-tempo reader here, so portaled panels and scrims co-scale
+   without a story/consumer bridge or a second duration alias. R5 vocab.γ gap row 6;
    consumed by W2.A sheet/drawer migration. */
 @utility sheet-animate {
     @apply data-[state=open]:animate-in data-[state=closed]:animate-out
            data-[state=open]:fade-in data-[state=closed]:fade-out
-           data-[state=open]:duration-[var(--duration-panel)]
-           data-[state=closed]:duration-[var(--duration-fast)];
+           data-[state=open]:duration-[calc(var(--duration-panel)*var(--motion-tempo))]
+           data-[state=closed]:duration-[calc(var(--duration-fast)*var(--motion-tempo))];
 }
 
 /* ── Calm CTA register (BA.W-GLASS-CAL, H2a — the disco retired) ──────────

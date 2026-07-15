@@ -1293,7 +1293,7 @@ export const CATEGORIES: Category[] = [
                 "motion",
                 "tempo",
                 "Motion Tempo",
-                "The --motion-tempo axis — ONE registered inheriting TIME scalar co-scales BOTH the CSS spring clocks (the --spring-*-duration reader = settle × --motion-tempo) AND the JS spring responses (motionTempo() → response × tempo). A live 0.7→1.3 slider over a dropdown + popover + dialog + a JS dock morph proves the CSS↔JS one-clock co-scale; ⟂ --motion-weight ⟂ --ui-scale.",
+                "The --motion-tempo axis — ONE registered inheriting TIME scalar co-scales CSS spring clocks, the dialog's portaled panel/scrim open+close readers, and JS spring responses while preserving their distinct base durations. A live 0.7→1.3 slider over a dropdown + popover + dialog + JS dock morph demonstrates the shared ratio; ⟂ --motion-weight ⟂ --ui-scale.",
                 {
                     // A calm blueprint wash (the one-GL-per-route fence — the tempo demo
                     // spends no GL context; the glass overlays POP over the static grid).

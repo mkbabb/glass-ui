@@ -18,8 +18,8 @@ interface ModalOverlayProps {
      * `[data-scrim-animation] { animation: var(--scrim-animation, none) }`
      * rule in `animations.css` so consumers can drive a long-running
      * scrim-breath without owning the portal traversal. Composes with the
-     * `.sheet-animate` data-state enter/exit (the fade rides
-     * `tw-animate-css` keyframes on `data-[state]`; the scrim-breath
+     * `.sheet-animate` data-state enter/exit (the fade's panel/fast base clocks
+     * co-scale through `--motion-tempo`; the scrim-breath
      * rides the typed variable on `data-scrim-animation` — distinct
      * selectors, no cascade fight).
      *
