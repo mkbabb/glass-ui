@@ -1,29 +1,27 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from "vue";
+import { computed, type CSSProperties, type HTMLAttributes } from "vue";
 import { ProgressIndicator, ProgressRoot, type ProgressRootProps } from "reka-ui";
 import { cn } from "../_shared/class-names";
+import { resolveValueFraction, resolveValueMarks } from "../_shared/valueDomain";
 
-/**
- * Default progress variant — a `--progress-track` rail + a `--progress-fill`
- * indicator with a `translateX(-%)` intake-pulse. The plainest rung; no lifecycle
- * motion grammar (that lives on the gradient variant). The thin `Progress`
- * dispatcher routes here for `variant="default"`.
- *
- * Token-read parity with the `gradient` variant (AX.W24 F1): the rail/indicator
- * colour read `--progress-track`/`--progress-fill` (fallbacks
- * `var(--progress-track-on-glass)`/`var(--primary)`) as Tailwind arbitrary
- * properties — `bg-[var(--token,…)]` /
- * `[background:var(--token,…)]` — NOT the `bg-secondary`/`bg-primary` utility
- * classes. A `bg-primary` utility lives in `@layer utilities`, which ALWAYS
- * outranks the `@layer components` `.glass-progress-rail` recipe regardless of
- * source order, so a `:root { --progress-fill }` (or `.glass-progress-rail`'s
- * token-set) override was a silent no-op on the default variant. Reading the token
- * at source makes the `default` variant token-retintable for EVERY consumer.
- */
-const props = defineProps<ProgressRootProps & { class?: HTMLAttributes["class"] }>();
+const props = defineProps<
+    ProgressRootProps & {
+        class?: HTMLAttributes["class"];
+        marks?: readonly number[];
+    }
+>();
 
+const max = computed(() => props.max ?? 100);
+const fraction = computed(() => resolveValueFraction(props.modelValue, 0, max.value));
+const marks = computed(() => resolveValueMarks(props.marks, 0, max.value));
+const rootStyle = computed(
+    () =>
+        ({
+            "--progress-value-percent": `${fraction.value * 100}%`,
+        }) as CSSProperties,
+);
 const delegatedProps = computed(() => {
-    const { class: _, ...delegated } = props;
+    const { class: _, marks: _m, ...delegated } = props;
     return delegated;
 });
 </script>
@@ -38,10 +36,20 @@ const delegatedProps = computed(() => {
                 props.class,
             )
         "
+        :style="rootStyle"
     >
+        <span v-if="marks.length" class="progress-value-marks" aria-hidden="true">
+            <span
+                v-for="mark in marks"
+                :key="mark.value"
+                class="progress-value-mark"
+                :style="{ '--value-mark-position': `${mark.position * 100}%` }"
+            />
+        </span>
         <ProgressIndicator
-            class="h-full w-full flex-1 rounded-pill [background:var(--progress-fill,var(--primary))] transition-transform"
-            :style="{ transform: `translateX(-${100 - (props.modelValue ?? 0)}%)` }"
+            class="progress-value-fill h-full w-full flex-1 rounded-pill [background:var(--progress-fill,var(--primary))] transition-transform"
         />
     </ProgressRoot>
 </template>
+
+<style src="./valueMarks.css"></style>

@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from "vue";
+import { computed, type CSSProperties, type HTMLAttributes } from "vue";
 import { ProgressIndicator, ProgressRoot, type ProgressRootProps } from "reka-ui";
 import { cn } from "../_shared/class-names";
+import { resolveValueFraction, resolveValueMarks } from "../_shared/valueDomain";
 
 /**
  * Liquid progress variant (BG.W-LIQUID-FILL) — the meter's fill is the ONE shared
@@ -16,10 +17,25 @@ import { cn } from "../_shared/class-names";
  * (or `--liquid-fill-tint`) with NO knowledge of the blur / rim / under-shadow the
  * register owns. The thin `Progress` dispatcher routes here for `variant="liquid"`.
  */
-const props = defineProps<ProgressRootProps & { class?: HTMLAttributes["class"] }>();
+const props = defineProps<
+    ProgressRootProps & {
+        class?: HTMLAttributes["class"];
+        marks?: readonly number[];
+    }
+>();
+
+const max = computed(() => props.max ?? 100);
+const fraction = computed(() => resolveValueFraction(props.modelValue, 0, max.value));
+const marks = computed(() => resolveValueMarks(props.marks, 0, max.value));
+const rootStyle = computed(
+    () =>
+        ({
+            "--progress-value-percent": `${fraction.value * 100}%`,
+        }) as CSSProperties,
+);
 
 const delegatedProps = computed(() => {
-    const { class: _, ...delegated } = props;
+    const { class: _, marks: _m, ...delegated } = props;
     return delegated;
 });
 </script>
@@ -34,13 +50,23 @@ const delegatedProps = computed(() => {
                 props.class,
             )
         "
+        :style="rootStyle"
     >
+        <span v-if="marks.length" class="progress-value-marks" aria-hidden="true">
+            <span
+                v-for="mark in marks"
+                :key="mark.value"
+                class="progress-value-mark"
+                :style="{ '--value-mark-position': `${mark.position * 100}%` }"
+            />
+        </span>
         <ProgressIndicator
-            class="glass-liquid-fill progress-liquid-fill h-full w-full flex-1 transition-transform"
-            :style="{ transform: `translateX(-${100 - (props.modelValue ?? 0)}%)` }"
+            class="glass-liquid-fill progress-liquid-fill progress-value-fill h-full w-full flex-1 transition-transform"
         />
     </ProgressRoot>
 </template>
+
+<style src="./valueMarks.css"></style>
 
 <style scoped>
 /* The phase/tint colour is the ONLY per-site knowledge — the surface reads the

@@ -2,30 +2,13 @@
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { onMounted, onUnmounted, ref } from "vue";
-import {
-    Progress,
-    type ProgressSegment,
-} from "@glass/components/progress";
+import { Progress } from "@glass/components/progress";
 import { Button } from "@glass/components/button";
 import { ScrollProgressRim } from "@glass/components/scroll-progress-rim";
 import { IconChip } from "@glass/components/icon-chip";
 import { Gauge } from "@lucide/vue";
-// BB.W-SUFFUSE3 — the feedback band's --section-color-8 ruby identity. Progress is
-// a REFERENCE surface (its phase-bus --viz-* hues ARE the teaching content); the
-// page identity is the eyebrow/rail/chip event, distinct from the bus colors.
+// BB.W-SUFFUSE3 — the feedback band's --section-color-8 ruby identity.
 const FEEDBACK_STOP = 8;
-
-
-// Sectioned variant demo — a 4-phase pattern (pings / jitter / download /
-// upload) with one phase active to show the spring active-fill.
-const phaseSegments: ProgressSegment[] = [
-    { key: "pings", label: "Pings", color: "var(--viz-fourier)", state: "completed" },
-    { key: "jitter", label: "Jitter", color: "var(--viz-chebyshev)", state: "completed" },
-    { key: "download", label: "Download", color: "var(--viz-legendre)", state: "active" },
-    { key: "upload", label: "Upload", color: "var(--viz-amber)", state: "pending" },
-];
-const phaseActive = ref<string>("download");
-const phaseProgress = ref<number>(58);
 
 const determinate = ref(42);
 const segmentProgress = [1, 0.72, 0.35, 0] as const;
@@ -61,7 +44,7 @@ onUnmounted(stopAnimated);
         <!-- BB.W-SUFFUSE3 — the feedback-band identity COLOR EVENT (the tinted
              eyebrow + the inline accent rail + the focal IconChip, all on
              --section-color-8). The page-level color identity, DISTINCT from the
-             StorySection labels + the phase-bus --viz-* content below — it carries
+             StorySection labels + the range content below — it carries
              NO heading rung (not an idiom-B second header; PH3). -->
         <header
             class="flex items-center gap-4 pl-5"
@@ -77,8 +60,8 @@ onUnmounted(stopAnimated);
                     Feedback · Progress
                 </span>
                 <p class="text-small text-muted-foreground">
-                    Progress surfaces — the phase bus carries its own --viz-* hues;
-                    the section identity is the ONE page event.
+                    Continuous progress, optional checkpoints, and a quiet
+                    radius-following completion rim.
                 </p>
             </div>
         </header>
@@ -106,7 +89,23 @@ onUnmounted(stopAnimated);
                         </Button>
                     </div>
                 </div>
-                <Progress :model-value="determinate" />
+                <Progress
+                    :model-value="determinate"
+                    :marks="[20, 40, 60, 80]"
+                    aria-label="Checkpointed completion"
+                />
+                <div class="flex items-center justify-between gap-4">
+                    <span class="font-mono text-xs text-muted-foreground">
+                        Arbitrary domain · 0.5 / 1
+                    </span>
+                    <Progress
+                        :model-value="0.5"
+                        :max="1"
+                        :marks="[0.25, 0.5, 0.75]"
+                        class="max-w-sm"
+                        aria-label="Normalized checkpoint example"
+                    />
+                </div>
             </div>
         </StorySection>
 
@@ -174,22 +173,6 @@ onUnmounted(stopAnimated);
                     :style="{ '--progress-fill': 'var(--viz-legendre)' }"
                 />
             </div>
-        </StorySection>
-
-        <!-- Sectioned variant — per-segment colour cells,
-             spring active fill, transition-gradient seams. -->
-        <StorySection label="sectioned variant (phase bus)">
-            <p class="font-mono text-xs text-muted-foreground">
-                Per-segment colour cells + spring active-fill overlay. Mirrors the
-                speedtest phase-bus shape (pings / jitter / download / upload).
-            </p>
-            <Progress
-                variant="sectioned"
-                :segments="phaseSegments"
-                :current-segment-key="phaseActive"
-                :active-progress="phaseProgress / 100"
-                class="h-3"
-            />
         </StorySection>
 
         <StorySection label="scroll progress rim">

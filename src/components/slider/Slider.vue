@@ -7,6 +7,7 @@ import { useTouchGate } from '../../composables/dom/useTouchGate'
 import { useDragVelocity } from '../../composables/dom/useDragVelocity'
 import { useOptionalDockContext } from '../dock/composables/dockContext'
 import { useDockHold } from '../dock/composables/useDockHold'
+import { resolveValueMarks } from '../_shared/valueDomain'
 import { sliderVariants, type SliderVariants } from './index'
 // BH.W-MOTION-AXIS — the `liquidDrag` boolean dies onto the ONE `motion` axis.
 import type { Motion } from '../_shared/axes'
@@ -18,6 +19,8 @@ const props = withDefaults(defineProps<SliderRootProps & {
   variant?: SliderVariants['variant']
   /** Track + thumb geometry — sm | md (default) | lg. */
   size?: SliderVariants['size']
+  /** Quiet, paint-only checkpoints in the slider's numeric domain. */
+  marks?: readonly number[]
   /**
    * Acquire a `dockKeepOpen` token while the user drags the slider, so
    * an enclosing dock doesn't auto-collapse mid-gesture. The slider also
@@ -49,9 +52,10 @@ const emits = defineEmits<SliderRootEmits>()
 const v = computed<NonNullable<SliderVariants['variant']>>(() => props.variant ?? 'standard')
 const s = computed<NonNullable<SliderVariants['size']>>(() => props.size ?? 'md')
 const keepDockOpen = computed(() => props.keepDockOpen)
+const marks = computed(() => resolveValueMarks(props.marks, props.min ?? 0, props.max ?? 100))
 
 const delegatedProps = computed(() => {
-  const { class: _, variant: __, size: ___, keepDockOpen: ____, motion: _____, ...delegated } = props
+  const { class: _, variant: __, size: ___, marks: ____, keepDockOpen: _____, motion: ______, ...delegated } = props
   // BOTH recipes inscribe the thumb within the capsule so it never overshoots the
   // rounded ends — reka-ui's `contain` alignment enforces the containment law. The
   // standard slider paints NO VISIBLE THUMB at all (the filled glass track's leading
@@ -110,7 +114,10 @@ useDockHold(getRootEl, { enabled: () => keepDockOpen.value })
    BH.W-MOTION-AXIS — `motion.armed` is the PROP door (full → armed), the bridge's own
    PRM pin is the OS door; both close to the plain-squish floor. */
 const motionAxis = useMotionAxis(() => props.motion)
-useDragVelocity({ host: () => (motionAxis.armed.value ? getRootEl() : null) })
+useDragVelocity({
+  host: () => (motionAxis.armed.value ? getRootEl() : null),
+  axis: () => props.orientation === 'vertical' ? 'y' : 'x',
+})
 
 /* N.W0 Lane A1 — useTouchGate scroll-vs-drag arbitration (a SEPARATE
    concern from the hold: it decides whether a touch is a drag or a
@@ -203,11 +210,20 @@ onMounted(() => {
     :data-size="s"
     :data-held="isHeld || undefined"
     :data-touch-active="isTouchActive || undefined"
+    :data-inverted="props.inverted || undefined"
     :data-motion="motionAxis.dataMotion.value"
     :style="motionAxis.hostStyle.value"
     v-bind="forwarded"
   >
     <SliderTrack class="slider-track">
+      <span v-if="marks.length" class="slider-marks" aria-hidden="true">
+        <span
+          v-for="mark in marks"
+          :key="mark.value"
+          class="slider-mark"
+          :style="{ '--value-mark-position': `${mark.position * 100}%` }"
+        />
+      </span>
       <SliderRange class="slider-range glass-liquid-fill" />
     </SliderTrack>
     <SliderThumb
@@ -257,6 +273,38 @@ onMounted(() => {
     transition:
         background var(--duration-fast) var(--ease-standard),
         border-color var(--duration-fast) var(--ease-standard);
+}
+
+.slider-marks {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.slider-mark {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: var(--value-mark-position);
+    width: 0;
+}
+
+.glass-slider[data-inverted] .slider-mark {
+    inset-inline: auto var(--value-mark-position);
+}
+
+.slider-mark::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: var(--value-mark-size, 0.375rem);
+    height: var(--value-mark-size, 0.375rem);
+    border-radius: 50%;
+    background: var(
+        --value-mark-color,
+        color-mix(in srgb, var(--foreground) 34%, transparent)
+    );
+    transform: translate(-50%, -50%);
 }
 
 /* ── The continuous GLASS fill (standard) — the shared liquid-fill register ──
@@ -510,5 +558,67 @@ onMounted(() => {
     box-shadow:
         var(--focus-ring-shadow),
         var(--shadow-sm);
+}
+
+.glass-slider[data-orientation="vertical"] {
+    flex-direction: column;
+    width: var(--slider-track-height, 0.375rem);
+    height: var(--slider-vertical-size, 12rem);
+}
+
+.glass-slider[data-orientation="vertical"] .slider-track {
+    width: var(--slider-track-height, 0.375rem);
+    height: 100%;
+}
+
+.glass-slider[data-orientation="vertical"] .slider-range {
+    width: 100%;
+    height: auto;
+}
+
+.glass-slider[data-orientation="vertical"]:active .slider-range,
+.glass-slider[data-orientation="vertical"][data-held] .slider-range {
+    --smear: calc(var(--atom-drag-v, 0) * var(--motion-weight, 0.618));
+    transform: scale(
+        calc(0.94 - 0.06 * var(--smear)),
+        calc(1.02 + 0.16 * var(--smear))
+    );
+    transform-origin: center bottom;
+}
+
+.glass-slider[data-orientation="vertical"][data-inverted] .slider-range {
+    transform-origin: center top;
+}
+
+.glass-slider[data-orientation="vertical"] .slider-mark {
+    inset-inline: 0;
+    inset-block: auto var(--value-mark-position);
+    width: 100%;
+    height: 0;
+}
+
+.glass-slider[data-orientation="vertical"][data-inverted] .slider-mark {
+    inset-block: var(--value-mark-position) auto;
+}
+
+.glass-slider[data-orientation="vertical"][data-variant="spectrum"] {
+    width: calc(var(--slider-thumb-size, 1rem) * 1.5);
+}
+
+.glass-slider[data-orientation="vertical"][data-variant="spectrum"] .slider-track {
+    width: 100%;
+    height: 100%;
+}
+
+.glass-slider[data-orientation="vertical"][data-variant="spectrum"] .slider-thumb {
+    width: 100%;
+    height: calc(var(--slider-thumb-size, 1rem) * 0.75);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .glass-slider[data-orientation="vertical"]:active .slider-range,
+    .glass-slider[data-orientation="vertical"][data-held] .slider-range {
+        transform: scale(0.97, 1);
+    }
 }
 </style>

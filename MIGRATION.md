@@ -23,7 +23,8 @@ and `HandMark` remain public. The package export-map delta is exactly the remova
 | `DataTablePagination` | Own paging beside `DataTable` using the table's controlled state. |
 | `DrawerOverlay`, `DrawerPortal` | Use `DrawerContent`; it owns one overlay and portal boundary. |
 | `DropdownMenuPortal` | Use `DropdownMenuContent`; it owns the portal boundary. |
-| `ProgressDefault`, `ProgressGradient`, `ProgressLiquid`, `ProgressSectioned` | Use `<Progress variant="default|gradient|liquid|sectioned">`. |
+| `ProgressDefault`, `ProgressGradient`, `ProgressLiquid` | Use `<Progress variant="default|gradient|liquid">`. |
+| `ProgressSectioned`, `useProgressGeometry`, `ProgressSegment`, `SectionedCell`, or `<Progress variant="sectioned">` | Use numeric `marks` on continuous Progress for reference checkpoints; own colored lifecycle phases in the product composition. |
 | `SelectScrollUpButton`, `SelectScrollDownButton` | Use `SelectContent`; overflow controls are internal. |
 | `ConstellationExpose.backend()` | Read the exposed `rendererStatus` ref or `@renderer-status`; Constellation now reports `engine: "canvas2d"`. |
 | `parseColorRGBA` from `/constellation` | Resolve paint in the consumer or use the component's palette input; the renderer-local parser is no longer public. |
@@ -35,6 +36,9 @@ and `HandMark` remain public. The package export-map delta is exactly the remova
 
 ### Additive and corrected surfaces
 
+- `Progress` and `Slider` accept decorative numeric `marks` in their existing value
+  domains. Marks never snap or alter the model. Continuous Progress now derives paint and
+  lifecycle from `modelValue / max`, so arbitrary maxima such as `0.5 / 1` paint truthfully.
 - `SegmentedTabs` accepts `semantics?: "toggle" | "tabs"` independently of visual
   `variant`. `ariaLabel` reaches both the desktop strip and responsive Select; tab
   semantics publish `aria-orientation` and retain roving tabindex. Consumers can remove

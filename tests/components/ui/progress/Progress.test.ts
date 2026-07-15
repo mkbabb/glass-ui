@@ -1,219 +1,123 @@
-import { mount } from "@vue/test-utils";
+import { mount, type VueWrapper } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
 
-import { Progress } from "@glass/components/progress/index";
+import { Progress } from "@glass/components/progress";
+
+const root = (wrapper: VueWrapper) => wrapper.get('[role="progressbar"]');
 
 describe("Progress", () => {
-    it("renders a progress indicator at the supplied value", () => {
+    it.each(["default", "gradient", "liquid"] as const)(
+        "normalizes arbitrary max for the %s fill and marks",
+        (variant) => {
+            const wrapper = mount(Progress, {
+                props: { variant, modelValue: 0.5, max: 1, marks: [0.25, 0.5, 0.75] },
+            });
+
+            expect(root(wrapper).attributes("style")).toContain(
+                "--progress-value-percent: 50%",
+            );
+            expect(root(wrapper).attributes()).toMatchObject({
+                "aria-valuenow": "0.5",
+                "aria-valuemax": "1",
+            });
+            expect(
+                wrapper.findAll(".progress-value-mark").map((mark) => mark.attributes("style")),
+            ).toEqual([
+                "--value-mark-position: 25%;",
+                "--value-mark-position: 50%;",
+                "--value-mark-position: 75%;",
+            ]);
+        },
+    );
+
+    it("aligns a non-percent domain without changing its ARIA value", () => {
         const wrapper = mount(Progress, {
-            props: {
-                modelValue: 40,
-                variant: "gradient",
-            },
+            props: { modelValue: 125, max: 250, marks: [125] },
         });
 
-        const indicator = wrapper.find('[style*="translateX"]');
-
-        expect(wrapper.find('[role="progressbar"]').exists()).toBe(true);
-        expect(indicator.attributes("style")).toContain("translateX(-60%)");
+        expect(root(wrapper).attributes("style")).toContain(
+            "--progress-value-percent: 50%",
+        );
+        expect(root(wrapper).attributes("aria-valuenow")).toBe("125");
+        expect(wrapper.get(".progress-value-mark").attributes("style")).toContain(
+            "--value-mark-position: 50%",
+        );
     });
 
-    // AI.W4-M.1 — lifecycle attribute drives the intake / crescendo / discharge
-    // keyframes. Verify the four-state machine maps as documented (idle / loading
-    // / progressing / complete). The lifecycle lives on the gradient variant.
-    describe("AI.W4 lifecycle attribute", () => {
-        it("reports idle when modelValue is 0", () => {
-            const wrapper = mount(Progress, {
-                props: { modelValue: 0, variant: "gradient" },
-            });
-            expect(wrapper.find('[role="progressbar"]').attributes("data-lifecycle")).toBe("idle");
+    it("renders only sorted, unique, interior marks as decorative paint", () => {
+        const wrapper = mount(Progress, {
+            props: { modelValue: 40, marks: [100, 75, 25, 25, -1, Number.NaN] },
         });
 
-        it("reports loading for the rising-edge band (0 < v < 5)", () => {
-            const wrapper = mount(Progress, {
-                props: { modelValue: 2, variant: "gradient" },
-            });
-            expect(wrapper.find('[role="progressbar"]').attributes("data-lifecycle")).toBe(
-                "loading",
-            );
-        });
-
-        it("reports progressing in the body register (5 ≤ v < 100)", () => {
-            const wrapper = mount(Progress, {
-                props: { modelValue: 60, variant: "gradient" },
-            });
-            expect(wrapper.find('[role="progressbar"]').attributes("data-lifecycle")).toBe(
-                "progressing",
-            );
-        });
-
-        it("reports complete at modelValue 100", () => {
-            const wrapper = mount(Progress, {
-                props: { modelValue: 100, variant: "gradient" },
-            });
-            expect(wrapper.find('[role="progressbar"]').attributes("data-lifecycle")).toBe(
-                "complete",
-            );
-        });
+        expect(wrapper.get(".progress-value-marks").attributes("aria-hidden")).toBe(
+            "true",
+        );
+        expect(
+            wrapper.findAll(".progress-value-mark").map((mark) => mark.attributes("style")),
+        ).toEqual([
+            "--value-mark-position: 25%;",
+            "--value-mark-position: 75%;",
+        ]);
     });
 
-    describe("AI.W4 indeterminate prop", () => {
-        it("emits data-indeterminate when indeterminate is true", () => {
+    it("adds no decorative layer when marks are omitted", () => {
+        const wrapper = mount(Progress, { props: { modelValue: 40 } });
+        expect(wrapper.find(".progress-value-marks").exists()).toBe(false);
+    });
+
+    it("keeps inherited RTL on the same logical value geometry", () => {
+        const wrapper = mount(Progress, {
+            props: { modelValue: 25, marks: [25] },
+            attrs: { dir: "rtl" },
+        });
+
+        expect(root(wrapper).attributes("dir")).toBe("rtl");
+        expect(root(wrapper).attributes("style")).toContain(
+            "--progress-value-percent: 25%",
+        );
+        expect(wrapper.get(".progress-value-mark").attributes("style")).toContain(
+            "--value-mark-position: 25%",
+        );
+    });
+
+    describe("gradient lifecycle", () => {
+        it.each([
+            [0, "idle"],
+            [0.02, "loading"],
+            [0.6, "progressing"],
+            [1, "complete"],
+        ] as const)("maps %s of max=1 to %s", (modelValue, lifecycle) => {
+            const wrapper = mount(Progress, {
+                props: { modelValue, max: 1, variant: "gradient" },
+            });
+            expect(root(wrapper).attributes("data-lifecycle")).toBe(lifecycle);
+        });
+
+        it("derives the crescendo from the same fraction", () => {
+            const wrapper = mount(Progress, {
+                props: { modelValue: 230, max: 250, variant: "gradient" },
+            });
+            const style = root(wrapper).attributes("style") ?? "";
+            expect(style).toContain("--progress-value-percent: 92%");
+            const crescendo = style.match(/--progress-crescendo:\s*([\d.]+)%/)?.[1];
+            expect(Number(crescendo)).toBeCloseTo(46.67, 2);
+        });
+
+        it("keeps indeterminate progress numeric-free", () => {
             const wrapper = mount(Progress, {
                 props: { indeterminate: true, variant: "gradient" },
             });
-            expect(wrapper.find('[role="progressbar"]').attributes("data-indeterminate")).toBe(
-                "true",
-            );
+            expect(root(wrapper).attributes("data-indeterminate")).toBe("true");
+            expect(root(wrapper).attributes("data-lifecycle")).toBe("idle");
+            expect(root(wrapper).attributes("aria-valuenow")).toBeUndefined();
         });
 
-        it("omits data-indeterminate by default", () => {
-            const wrapper = mount(Progress, {
-                props: { modelValue: 50, variant: "gradient" },
-            });
-            expect(
-                wrapper.find('[role="progressbar"]').attributes("data-indeterminate"),
-            ).toBeUndefined();
-        });
-
-        it("collapses lifecycle to idle when indeterminate", () => {
-            // The lifecycle machine and the indeterminate sweep are mutually
-            // exclusive — the sweep owns the motion story and the four-state
-            // machine retires.
-            const wrapper = mount(Progress, {
-                props: { indeterminate: true, modelValue: 60, variant: "gradient" },
-            });
-            expect(wrapper.find('[role="progressbar"]').attributes("data-lifecycle")).toBe("idle");
-        });
-    });
-
-    describe("AI.W4 crescendo style binding", () => {
-        it("does not emit --progress-crescendo below 85%", () => {
-            const wrapper = mount(Progress, {
-                props: { modelValue: 80, variant: "gradient" },
-            });
-            const indicator = wrapper.find('[style*="translateX"]');
-            expect(indicator.attributes("style")).toContain("--progress-crescendo: 0%");
-        });
-
-        it("emits a positive --progress-crescendo past 85%", () => {
-            const wrapper = mount(Progress, {
-                props: { modelValue: 92, variant: "gradient" },
-            });
-            const indicator = wrapper.find('[style*="translateX"]');
-            // 92 → (92-85)/15 * 100 ≈ 46.67%
-            const style = indicator.attributes("style") ?? "";
-            const match = style.match(/--progress-crescendo:\s*([\d.]+)%/);
-            expect(match).not.toBeNull();
-            const crescendo = Number(match?.[1]);
-            expect(crescendo).toBeGreaterThan(40);
-            expect(crescendo).toBeLessThan(55);
-        });
-
-        it("caps crescendo at 100% at modelValue 100", () => {
-            const wrapper = mount(Progress, {
-                props: { modelValue: 100, variant: "gradient" },
-            });
-            const indicator = wrapper.find('[style*="translateX"]');
-            expect(indicator.attributes("style")).toContain("--progress-crescendo: 100%");
-        });
-    });
-
-    // AV.W13 — the sectioned variant derives its OWN value from the per-cell state
-    // map; `modelValue` is NOT its truth. It renders colour cells, not the
-    // translateX indicator.
-    describe("AV.W13 sectioned variant", () => {
-        const segments = [
-            { key: "a", color: "var(--chart-ping)", state: "completed" as const },
-            { key: "b", color: "var(--chart-download)", state: "active" as const },
-        ];
-
-        it("paints ONE single-fill flow over the frosted rail (no per-cell stack)", () => {
-            // BA.W-PROGRESS-GRADIENT clean break (RC-1/RC-4): the per-cell capped
-            // `.progress-sectioned-cell` stack is DELETED for ONE `.progress-sectioned-flow`
-            // element spanning the cumulative filled extent (the single front pill cap; the
-            // segment hues blend in ONE linear-gradient, no per-cell rectangles). The track
-            // is the frosted `.progress-sectioned-rail` register. proof:progress-gradient owns
-            // the gradient-model assertion; this companion re-points off the retired cell stack.
-            const wrapper = mount(Progress, {
-                props: {
-                    variant: "sectioned",
-                    segments,
-                    currentSegmentKey: "b",
-                    activeProgress: 0.5,
-                },
-            });
-            expect(wrapper.find('[role="progressbar"]').exists()).toBe(true);
-            expect(wrapper.findAll(".progress-sectioned-cell").length).toBe(0);
-            expect(wrapper.findAll(".progress-sectioned-flow").length).toBe(1);
-            expect(wrapper.find(".progress-sectioned-rail").exists()).toBe(true);
-        });
-
-        it("does NOT emit the gradient lifecycle attribute", () => {
-            const wrapper = mount(Progress, {
-                props: { variant: "sectioned", segments, currentSegmentKey: "b" },
-            });
-            expect(
-                wrapper.find('[role="progressbar"]').attributes("data-lifecycle"),
-            ).toBeUndefined();
-        });
-    });
-
-    // AV.W13 — the prop-boundary contract refuses incompatible combinations out
-    // loud (a dev throw) instead of a silent wrong paint. The historical break:
-    // `modelValue` passed to the sectioned variant was silently overridden.
-    describe("AV.W13 prop-boundary contract", () => {
-        it("throws when modelValue is passed (as truth) to the sectioned variant", () => {
+        it("refuses numeric marks on indeterminate progress", () => {
             expect(() =>
                 mount(Progress, {
-                    props: {
-                        variant: "sectioned",
-                        modelValue: 60,
-                        segments: [{ key: "a", color: "var(--chart-ping)" }],
-                        currentSegmentKey: "a",
-                    },
+                    props: { indeterminate: true, variant: "gradient", marks: [25] },
                 }),
-            ).toThrow(/variant="sectioned" ignores `modelValue`/);
-        });
-
-        it("throws when segments are passed to a non-sectioned variant", () => {
-            expect(() =>
-                mount(Progress, {
-                    props: {
-                        variant: "gradient",
-                        segments: [{ key: "a", color: "var(--chart-ping)" }],
-                    },
-                }),
-            ).toThrow(/`segments` is only valid on variant="sectioned"/);
-        });
-
-        it("throws when indeterminate is combined with the sectioned variant", () => {
-            expect(() =>
-                mount(Progress, {
-                    props: {
-                        variant: "sectioned",
-                        indeterminate: true,
-                        segments: [{ key: "a", color: "var(--chart-ping)" }],
-                        currentSegmentKey: "a",
-                    },
-                }),
-            ).toThrow(/`indeterminate` is not compatible with variant="sectioned"/);
-        });
-
-        it("accepts the corrected sectioned wiring (no modelValue; activeProgress drives fill)", () => {
-            expect(() =>
-                mount(Progress, {
-                    props: {
-                        variant: "sectioned",
-                        segments: [
-                            { key: "a", color: "var(--chart-ping)", state: "completed" as const },
-                            { key: "b", color: "var(--chart-download)", state: "active" as const },
-                        ],
-                        currentSegmentKey: "b",
-                        activeProgress: 0.5,
-                    },
-                }),
-            ).not.toThrow();
+            ).toThrow(/marks.*determinate progress/);
         });
     });
 });

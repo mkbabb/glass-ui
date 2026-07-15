@@ -846,7 +846,7 @@ export const CATEGORIES: Category[] = [
                 "forms",
                 "slider",
                 "Slider",
-                "Two recipes — standard (continuous rounded iOS knob) + spectrum (gradient-track color slider).",
+                "Two recipes — standard (continuous glass fill, no visible thumb) + spectrum (gradient-track color slider).",
             ),
             s("forms", "number-field", "Number Field"),
             s("forms", "select", "Select"),

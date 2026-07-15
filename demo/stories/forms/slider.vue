@@ -9,14 +9,17 @@ const balance = ref<number[]>([65]);
 const range = ref<number[]>([22, 78]);
 const spectrum = ref<number[]>([50]);
 const disabled = ref<number[]>([30]);
+const rtl = ref<number[]>([38]);
+const inverted = ref<number[]>([62]);
+const vertical = ref<number[]>([54]);
+
+const irregularMarks = [14, 37, 68, 89] as const;
+const rangeMarks = [10, 25, 50, 75, 90] as const;
 
 // Variant × size matrix (2 variants × 3 sizes = 6 cells).
 // Each cell binds an independent reactive value so drag interactions
 // don't cross-couple. Hard gate requires every cell renders.
-const variants: NonNullable<SliderVariants["variant"]>[] = [
-    "standard",
-    "spectrum",
-];
+const variants: NonNullable<SliderVariants["variant"]>[] = ["standard", "spectrum"];
 const sizes: NonNullable<SliderVariants["size"]>[] = ["sm", "md", "lg"];
 
 type MatrixKey = `${(typeof variants)[number]}__${(typeof sizes)[number]}`;
@@ -42,7 +45,13 @@ const matrix = ref<Record<MatrixKey, number[]>>(
                     {{ volume[0] }}%
                 </span>
             </div>
-            <Slider v-model="volume" :max="100" :step="1" aria-label="Volume" />
+            <Slider
+                v-model="volume"
+                :max="100"
+                :step="1"
+                :marks="irregularMarks"
+                aria-label="Volume"
+            />
         </section>
 
         <!-- Custom fourier-red fill via descendant selectors. -->
@@ -77,7 +86,45 @@ const matrix = ref<Record<MatrixKey, number[]>>(
                     ${{ range[0] }} – ${{ range[1] }}
                 </span>
             </div>
-            <Slider v-model="range" :max="100" :step="1" aria-label="Price range" />
+            <Slider
+                v-model="range"
+                :max="100"
+                :step="1"
+                :marks="rangeMarks"
+                aria-label="Price range"
+            />
+        </section>
+
+        <section class="flex flex-col gap-4">
+            <p class="section-label">checkpoint directions</p>
+            <div class="grid gap-5 md:grid-cols-2">
+                <div class="grid gap-2">
+                    <span class="text-small text-foreground">RTL</span>
+                    <Slider
+                        v-model="rtl"
+                        dir="rtl"
+                        :marks="irregularMarks"
+                        aria-label="RTL checkpoints"
+                    />
+                </div>
+                <div class="grid gap-2">
+                    <span class="text-small text-foreground">Inverted</span>
+                    <Slider
+                        v-model="inverted"
+                        inverted
+                        :marks="irregularMarks"
+                        aria-label="Inverted checkpoints"
+                    />
+                </div>
+            </div>
+            <div class="flex h-48 justify-center">
+                <Slider
+                    v-model="vertical"
+                    orientation="vertical"
+                    :marks="irregularMarks"
+                    aria-label="Vertical checkpoints"
+                />
+            </div>
         </section>
 
         <!-- Spectrum variant — value.js gradient track + a track-height
@@ -123,7 +170,9 @@ const matrix = ref<Record<MatrixKey, number[]>>(
                     {{ size }}
                 </div>
                 <template v-for="variant in variants" :key="variant">
-                    <div class="text-mono-caption text-muted-foreground">{{ variant }}</div>
+                    <div class="text-mono-caption text-muted-foreground">
+                        {{ variant }}
+                    </div>
                     <Slider
                         v-for="size in sizes"
                         :key="`${variant}__${size}`"

@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from "vue";
+import { computed, type CSSProperties, type HTMLAttributes } from "vue";
 import { ProgressIndicator, ProgressRoot, type ProgressRootProps } from "reka-ui";
 import { cn } from "../_shared/class-names";
+import { resolveValueFraction, resolveValueMarks } from "../_shared/valueDomain";
 
 /**
  * Gradient progress variant — the rail respects `--progress-track`, the indicator
@@ -14,6 +15,7 @@ import { cn } from "../_shared/class-names";
 const props = defineProps<
     ProgressRootProps & {
         class?: HTMLAttributes["class"];
+        marks?: readonly number[];
         /**
          * AI.W4-M.1 — indeterminate sweep. When true, the rail runs a slow
          * left-to-right gradient pan (`--motion-duration-progress-indeterminate`, 4s
@@ -27,9 +29,13 @@ const props = defineProps<
 >();
 
 const delegatedProps = computed(() => {
-    const { class: _, indeterminate: _i, ...delegated } = props;
+    const { class: _, marks: _m, indeterminate: _i, ...delegated } = props;
     return delegated;
 });
+
+const max = computed(() => props.max ?? 100);
+const fraction = computed(() => resolveValueFraction(props.modelValue, 0, max.value));
+const marks = computed(() => resolveValueMarks(props.marks, 0, max.value));
 
 // ── AI.W4-M.1 lifecycle state attr ────────────────────────────────
 // `data-lifecycle` is glass-ui's W4 lifecycle hook. reka-ui already emits its own
@@ -40,22 +46,22 @@ const delegatedProps = computed(() => {
 // the sweep).
 const lifecycleState = computed<"idle" | "loading" | "progressing" | "complete">(() => {
     if (props.indeterminate) return "idle";
-    const value = props.modelValue ?? 0;
+    const value = fraction.value;
     if (value <= 0) return "idle";
-    if (value >= 100) return "complete";
-    if (value < 5) return "loading";
+    if (value >= 1) return "complete";
+    if (value < 0.05) return "loading";
     return "progressing";
 });
 
 // `--progress-crescendo` typed CSS variable — typed at the tokens.css §18
 // @property registration. Past 85% the leading-edge gradient stop brightens
 // proportionally; below 85% the typed variable stays at 0%.
-const crescendoStyle = computed(() => {
-    if (props.indeterminate) return undefined;
-    const value = props.modelValue ?? 0;
-    if (value < 85) return { "--progress-crescendo": "0%" };
-    const ramp = ((value - 85) / 15) * 100;
-    return { "--progress-crescendo": `${Math.min(100, Math.max(0, ramp))}%` };
+const rootStyle = computed(() => {
+    const crescendo = Math.min(1, Math.max(0, (fraction.value - 0.85) / 0.15));
+    return {
+        "--progress-value-percent": `${fraction.value * 100}%`,
+        "--progress-crescendo": `${props.indeterminate ? 0 : crescendo * 100}%`,
+    } as CSSProperties;
 });
 </script>
 
@@ -72,16 +78,23 @@ const crescendoStyle = computed(() => {
         "
         :data-lifecycle="lifecycleState"
         :data-indeterminate="indeterminate || undefined"
+        :style="rootStyle"
     >
+        <span v-if="marks.length" class="progress-value-marks" aria-hidden="true">
+            <span
+                v-for="mark in marks"
+                :key="mark.value"
+                class="progress-value-mark"
+                :style="{ '--value-mark-position': `${mark.position * 100}%` }"
+            />
+        </span>
         <ProgressIndicator
-            class="h-full w-full flex-1 rounded-pill [background:var(--progress-fill,var(--primary))] transition-transform"
-            :style="{
-                transform: `translateX(-${100 - (props.modelValue ?? 0)}%)`,
-                ...(crescendoStyle ?? {}),
-            }"
+            class="progress-value-fill h-full w-full flex-1 rounded-pill [background:var(--progress-fill,var(--primary))] transition-transform"
         />
     </ProgressRoot>
 </template>
+
+<style src="./valueMarks.css"></style>
 
 <style scoped>
 /* ─────────────────────── AI.W4-M.1 — Progress lifecycle gestalt ───────────────────────

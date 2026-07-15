@@ -14,9 +14,13 @@ delta from 5.0.0 is one removal, `./stacked-icons`; no key is added or renamed.
 - **Owner-internal members leave their family barrels.** Removed: `GlassCarouselPager`,
   `DialogScrollContent`, `ComboboxCancel`, `ComboboxSeparator`, `ComboboxViewport`,
   `DataTablePagination`, `DrawerOverlay`, `DrawerPortal`, `DropdownMenuPortal`,
-  `ProgressDefault`, `ProgressGradient`, `ProgressLiquid`, `ProgressSectioned`,
+  `ProgressDefault`, `ProgressGradient`, `ProgressLiquid`,
   `SelectScrollUpButton`, and `SelectScrollDownButton`. Their surviving public parent
   components own those details.
+- **The product-specific sectioned Progress branch is removed.** `variant="sectioned"`,
+  `segments`, `currentSegmentKey`, `activeProgress`, `useProgressGeometry`,
+  `ProgressSegment`, and `SectionedCell` no longer ship. Use numeric `marks` for
+  decorative checkpoints or own colored lifecycle phases in the product composition.
 - **Constellation has one Canvas2D lifecycle.** `ConstellationExpose.backend()` and
   `parseColorRGBA` are removed; read the new `rendererStatus` ref/event when renderer
   identity or failure attribution matters.
@@ -35,6 +39,9 @@ delta from 5.0.0 is one removal, `./stacked-icons`; no key is added or renamed.
 
 ### Added and changed
 
+- `Progress` and `Slider` accept optional numeric `marks` that remain decorative and do
+  not change stepping or model values. Continuous Progress now normalizes fill, lifecycle,
+  and crescendo against arbitrary `max` values and grows from logical inline-start in RTL.
 - `SegmentedTabs` now applies `ariaLabel` to both desktop and responsive owners, always
   reports tablist orientation, and adds `semantics?: "toggle" | "tabs"` so material and
   ARIA roles are independent. The historical `pill`/`underline` mapping remains the
