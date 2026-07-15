@@ -13,13 +13,18 @@ import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { vReveal } from "@glass/composables/motion/vReveal";
 import { useLiquidReveal } from "@glass/composables/motion/useLiquidReveal";
+import { springPreset } from "@glass/composables/motion/springPresets";
+import { springProjection } from "@glass/composables/motion/springProjection";
 import { Button } from "@glass/components/button";
 
-const playing = ref(true);
+const replayKey = ref(0);
+const tempo = ref(1);
+const revealProjection = springProjection(springPreset("bouncy"));
 
 function replay() {
-    playing.value = false;
-    requestAnimationFrame(() => requestAnimationFrame(() => (playing.value = true)));
+    // Replacing the keyed subtree cancels the prior CSS cohort and mounts one new
+    // cohort in the same Vue patch. No timer/frame chain survives replay or unmount.
+    replayKey.value++;
 }
 
 const rows = ["Discover", "Compose", "Refine", "Ship", "Measure", "Iterate"];
@@ -48,59 +53,85 @@ function toggleBloom() {
 
 <template>
     <StoryPage>
-        <StorySection heading="v-reveal · staggered entrance">
-            <p class="text-small text-muted-foreground max-w-prose">
-                <code class="fira-code">v-reveal</code> writes the
-                <code class="fira-code">[data-reveal]</code> hook and the
-                <code class="fira-code">--d</code> stagger step the consumer's own CSS
-                reads. <code class="fira-code">v-reveal="N"</code> rises;
-                <code class="fira-code">v-reveal:fade="N"</code> fades — both cascade
-                by <code class="fira-code">--d</code>.
-            </p>
+        <div class="contents" :style="{ '--motion-tempo': tempo }">
+            <StorySection heading="v-reveal · staggered entrance">
+                <p class="text-small text-muted-foreground max-w-prose">
+                    <code class="fira-code">v-reveal</code> writes the
+                    <code class="fira-code">[data-reveal]</code> hook and the
+                    <code class="fira-code">--d</code> stagger step the consumer's own
+                    CSS reads. <code class="fira-code">v-reveal="N"</code> rises;
+                    <code class="fira-code">v-reveal:fade="N"</code> fades — both
+                    cascade by <code class="fira-code">--d</code>. This specimen pairs
+                    <code class="fira-code">--spring-bouncy</code> with its generated
+                    <code class="fira-code">--spring-bouncy-duration</code>; both the
+                    settle and the
+                    <code class="fira-code">--motion-stagger-default</code> interval
+                    scale with <code class="fira-code">--motion-tempo</code>.
+                </p>
 
-            <div class="flex flex-wrap items-center gap-3">
-                <Button variant="default" @click="replay">Replay</Button>
-            </div>
+                <div class="flex flex-wrap items-center gap-3">
+                    <Button variant="default" @click="replay">Replay</Button>
+                    <Button
+                        v-for="value in [0.7, 1, 1.3]"
+                        :key="value"
+                        size="sm"
+                        :variant="tempo === value ? 'secondary' : 'ghost'"
+                        :aria-pressed="tempo === value"
+                        @click="tempo = value"
+                    >
+                        {{ value.toFixed(2) }}×
+                    </Button>
+                    <output class="text-small text-muted-foreground" aria-live="polite">
+                        replay {{ replayKey + 1 }} ·
+                        {{ (revealProjection.settleSeconds * tempo).toFixed(3) }}s
+                        settle · stagger scales {{ tempo.toFixed(2) }}×
+                    </output>
+                </div>
 
-            <div v-if="playing" class="reveal-stage flex flex-col gap-3">
-                <div
-                    v-for="(label, i) in rows"
-                    :key="label"
-                    v-reveal:fade="i + 1"
-                    class="glass-card flex items-center gap-3 px-5 py-3"
-                >
-                    <!-- BA.W-SUFFUSE2 — the motion band's ONE coherent violet event
+                <div :key="replayKey" class="reveal-stage flex flex-col gap-3">
+                    <div
+                        v-for="(label, i) in rows"
+                        :key="label"
+                        v-reveal:fade="i + 1"
+                        class="glass-card flex items-center gap-3 px-5 py-3"
+                    >
+                        <!-- BA.W-SUFFUSE2 — the motion band's ONE coherent violet event
                          (--motion-accent, the demo-local --viz-legendre twin): a
                          leading stagger marker. The row label stays ink. -->
-                    <span class="size-2 rounded-pill bg-[var(--motion-accent)]" />
-                    {{ label }}
+                        <span class="size-2 rounded-pill bg-[var(--motion-accent)]" />
+                        {{ label }}
+                    </div>
                 </div>
-            </div>
-        </StorySection>
+            </StorySection>
 
-        <StorySection
-            heading="useLiquidReveal · bloom from source"
-            blurb="The iOS-27 surface that materializes FROM its trigger — scale + fade + a backdrop blur(4px)→0 decongest on the snappy spring, anchored at the trigger's rect. Reduced motion snaps to a fade only."
-        >
-            <div class="relative flex flex-col items-start gap-4">
-                <Button ref="triggerRef" variant="primary-audacious" @click="toggleBloom">
-                    {{ open ? "Conceal" : "Bloom from here" }}
-                </Button>
-                <div
-                    v-if="open"
-                    ref="surfaceRef"
-                    class="glass-floating glass-reveal w-full max-w-sm rounded-card border border-border p-6"
-                    data-state="open"
-                >
-                    <p class="text-subheading text-foreground">Materialized</p>
-                    <p class="text-small text-muted-foreground">
-                        This surface bloomed from the trigger's rect — the
-                        <code class="fira-code">useLiquidReveal</code> source-rect
-                        inversion, compositor-only.
-                    </p>
+            <StorySection
+                heading="useLiquidReveal · bloom from source"
+                blurb="The iOS-27 surface that materializes FROM its trigger — scale + fade + a backdrop blur(4px)→0 decongest on the snappy spring, anchored at the trigger's rect. Reduced motion snaps to a fade only."
+            >
+                <div class="relative flex flex-col items-start gap-4">
+                    <Button
+                        ref="triggerRef"
+                        variant="primary-audacious"
+                        @click="toggleBloom"
+                    >
+                        {{ open ? "Conceal" : "Bloom from here" }}
+                    </Button>
+                    <div
+                        v-if="open"
+                        ref="surfaceRef"
+                        class="glass-floating glass-reveal w-full max-w-sm rounded-card border border-border p-6"
+                        data-state="open"
+                    >
+                        <p class="text-subheading text-foreground">Materialized</p>
+                        <p class="text-small text-muted-foreground">
+                            This surface bloomed from the trigger's rect — the
+                            <code class="fira-code">useLiquidReveal</code> source-rect
+                            inversion, compositor-only.
+                        </p>
+                    </div>
                 </div>
-            </div>
-        </StorySection>
+            </StorySection>
+        </div>
     </StoryPage>
 </template>
 
@@ -110,8 +141,10 @@ function toggleBloom() {
    keyframes (it is root-barrel safe — the consumer owns the entrance CSS); these
    are that documented consumer pattern, NOT a fork of a sibling-wave pop-entrance. */
 .reveal-stage [data-reveal] {
-    animation: reveal-rise 0.5s var(--spring-bouncy, ease-out) both;
-    animation-delay: calc(var(--d, 0) * 80ms);
+    animation: reveal-rise var(--spring-bouncy-duration) var(--spring-bouncy) both;
+    animation-delay: calc(
+        var(--d, 0) * var(--motion-stagger-default) * var(--motion-tempo)
+    );
 }
 
 .reveal-stage [data-reveal="fade"] {

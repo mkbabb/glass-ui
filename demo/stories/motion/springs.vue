@@ -1,27 +1,19 @@
 <script setup lang="ts">
-// Spring Orchestrator (AZ.W-MOTION-SUITE) — the SHIPPED named-spring registers,
-// driven off the SINGLE-SOURCE `SPRING_PRESETS`/`springPreset()` (no local fork).
-//
-// The former local `damped(stiffness, damping)` closed-form is DEAD — the
-// orchestrator now reads the canonical `springTimingFunction({response, ζ})` twin
-// straight from the keyframes.js suite over the SAME (response, dampingFraction)
-// pair `springLinearStops` solves the CSS `linear()` from, so the demo teaches the
-// SHIPPED curves and can never drift from the token vocabulary. A live Spring
-// Playground lets the user author a spring (response/ζ → linear() readout). The
-// animated block reads `--motion-accent` (the glass-ui violet twin), not warm-red.
+// Named and custom previews use keyframes.js managed playback. Their callable,
+// CSS readout, measured settle, density, and rounding share the token generator's
+// projection; this story owns no frame scheduler.
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import StoryPlayButton from "../../chassis/play/StoryPlayButton.vue";
-import { computed, ref, shallowRef } from "vue";
+import { computed, onBeforeUnmount, ref, shallowRef, watch } from "vue";
+import { NumericAnimation, type TimingFunction } from "@mkbabb/keyframes.js";
 import {
-    useNumericTransition,
-    springTimingFunction,
-    springLinearStops,
     SPRING_PRESETS,
     springPreset,
-    type SpringSnapshot,
     type SpringPresetName,
-} from "@glass/composables/motion";
+} from "@glass/composables/motion/springPresets";
+import { springProjection } from "@glass/composables/motion/springProjection";
+import { motionTempo } from "@glass/composables/motion/motionTempo";
 import { Button } from "@glass/components/button";
 import { Label } from "@glass/components/label";
 import { LabeledSlider } from "@glass/components/labeled-field";
@@ -35,33 +27,66 @@ import {
 import { Check, Copy } from "@lucide/vue";
 import { cn } from "@glass/components/_shared/class-names";
 
-// ── The named presets, straight off the SINGLE source ───────────────────────────
-// `SPRING_PRESETS` is the no-second-authority register table; `springTimingFunction`
-// is the SAME solver `springLinearStops` derives the CSS `linear()` token from.
-type PresetId = Exclude<SpringPresetName, "dock">; // dock is the in-dock morph register
-const PRESET_IDS = SPRING_PRESETS.map((p) => p.name).filter(
-    (n): n is PresetId => n !== "dock",
+// Dock is deliberately taught in its product-specific morph lab; every shared row
+// remains derived from SPRING_PRESETS without a copied roster or count.
+type PresetId = Exclude<SpringPresetName, "dock">;
+type Snapshot<K extends string> = Record<K, number>;
+const PRESET_ROWS = SPRING_PRESETS.filter(
+    (row): row is typeof row & { name: PresetId } => row.name !== "dock",
 );
 
-function presetFn(id: PresetId) {
-    const row = springPreset(id);
-    return springTimingFunction({
-        response: row.response,
-        dampingFraction: row.dampingFraction,
-    });
+function useManagedPreview<K extends string>(onFrame: (values: Snapshot<K>) => void) {
+    let animation: NumericAnimation<Snapshot<K>> | null = null;
+    let generation = 0;
+    const playing = ref(false);
+
+    async function play(
+        frames: Snapshot<K>[],
+        duration: number,
+        timingFunction: TimingFunction,
+    ): Promise<void> {
+        const current = ++generation;
+        animation?.stop();
+        animation = new NumericAnimation(frames, {
+            duration,
+            timingFunction,
+            respectReducedMotion: true,
+        });
+        playing.value = true;
+        try {
+            await animation.play(onFrame);
+        } finally {
+            if (current === generation) playing.value = false;
+        }
+    }
+
+    function stop(): void {
+        generation++;
+        animation?.stop();
+        animation = null;
+        playing.value = false;
+    }
+
+    onBeforeUnmount(stop);
+    return { play, stop, playing };
 }
 
 // ── Animation state ─────────────────────────────────────────────────────────────
 type Keys = "x" | "rotate" | "hue";
-const from: SpringSnapshot<Keys> = { x: 0, rotate: 0, hue: 0 };
-const to: SpringSnapshot<Keys> = { x: 360, rotate: 18, hue: 60 };
+const from: Snapshot<Keys> = { x: 0, rotate: 0, hue: 0 };
+const to: Snapshot<Keys> = { x: 360, rotate: 18, hue: 60 };
 
 const card = shallowRef<HTMLElement | null>(null);
 const preset = ref<PresetId>("smooth");
 
 const presetRow = computed(() => springPreset(preset.value));
+const presetProjection = computed(() => springProjection(presetRow.value));
+const namedTempo = ref(1);
+const namedDuration = computed(
+    () => presetProjection.value.settleSeconds * 1000 * namedTempo.value,
+);
 
-function applySnapshot(values: SpringSnapshot<Keys>): void {
+function applySnapshot(values: Snapshot<Keys>): void {
     const el = card.value;
     if (!el) return;
     el.style.setProperty("--demo-x", `${values.x}px`);
@@ -70,46 +95,57 @@ function applySnapshot(values: SpringSnapshot<Keys>): void {
     el.style.setProperty("--demo-l", `${0.46 + values.hue / 600}`);
 }
 
-// Re-create the orchestrator on preset change so it picks up the new SHIPPED twin.
-const orchestrator = computed(() =>
-    useNumericTransition<Keys>({
-        from,
-        to,
-        duration: 1100,
-        timingFunction: presetFn(preset.value).fn,
-        onFrame: applySnapshot,
-    }),
-);
+const namedPreview = useManagedPreview(applySnapshot);
 
 function play(): void {
+    namedTempo.value = motionTempo(card.value);
     applySnapshot(from);
-    orchestrator.value.start();
+    void namedPreview.play(
+        [from, to],
+        namedDuration.value,
+        presetProjection.value.timingFunction,
+    );
 }
 
 function reset(): void {
-    orchestrator.value.stop();
+    namedPreview.stop();
     applySnapshot(from);
 }
 
-// ── The live Spring Playground (response/ζ → springTimingFunction → linear()) ────
+watch(preset, reset);
+
+// ── Custom authoring, seeded from (but distinct from) shipped tokens ──────────
 const playResponse = ref(0.5);
 const playDamping = ref(0.86);
 
-const playStops = computed(() =>
-    springLinearStops({
-        response: playResponse.value,
-        dampingFraction: playDamping.value,
-    }),
+const playParameters = computed(() => ({
+    response: playResponse.value,
+    dampingFraction: playDamping.value,
+}));
+const playProjection = computed(() => springProjection(playParameters.value));
+const playStops = computed(() => playProjection.value.stops);
+const matchingPreset = computed(() =>
+    PRESET_ROWS.find(
+        (row) =>
+            row.response === playResponse.value &&
+            row.dampingFraction === playDamping.value,
+    ),
 );
-const playFn = computed(() =>
-    springTimingFunction({
-        response: playResponse.value,
-        dampingFraction: playDamping.value,
-    }),
+const shippedToken = computed(() => {
+    const row = matchingPreset.value;
+    if (!row || typeof getComputedStyle !== "function") return "";
+    return getComputedStyle(document.documentElement)
+        .getPropertyValue(`--spring-${row.name}`)
+        .trim();
+});
+const tokenMatches = computed(
+    () => !!matchingPreset.value && shippedToken.value === playStops.value,
 );
 const playOvershoot = computed(() => {
     let max = 0;
-    for (let i = 0; i <= 64; i++) max = Math.max(max, playFn.value.fn(i / 64));
+    for (let i = 0; i <= 64; i++) {
+        max = Math.max(max, playProjection.value.timingFunction(i / 64));
+    }
     return ((max - 1) * 100).toFixed(1);
 });
 
@@ -120,21 +156,25 @@ function loadPlaygroundPreset(name: PresetId): void {
 }
 
 const playCard = shallowRef<HTMLElement | null>(null);
-const playgroundTransition = useNumericTransition<"x">({
-    from: { x: 0 },
-    to: { x: 280 },
-    duration: 1100,
-    timingFunction: (t) => playFn.value.fn(t),
-    onFrame: ({ x }) => {
-        if (playCard.value)
-            playCard.value.style.transform = `translateX(${x.toFixed(2)}px)`;
-    },
+const playTempo = ref(1);
+const playDuration = computed(
+    () => playProjection.value.settleSeconds * 1000 * playTempo.value,
+);
+const playgroundPreview = useManagedPreview<"x">(({ x }) => {
+    if (playCard.value) {
+        playCard.value.style.transform = `translateX(${x.toFixed(2)}px)`;
+    }
 });
 
 function playgroundPlay(): void {
     if (!playCard.value) return;
+    playTempo.value = motionTempo(playCard.value);
     playCard.value.style.transform = "translateX(0px)";
-    void playgroundTransition.start();
+    void playgroundPreview.play(
+        [{ x: 0 }, { x: 280 }],
+        playDuration.value,
+        playProjection.value.timingFunction,
+    );
 }
 
 const copied = ref(false);
@@ -169,7 +209,7 @@ async function copyStops(): Promise<void> {
 
         <StorySection
             label="Named registers"
-            blurb="The four SHIPPED spring registers, driven off the single-source SPRING_PRESETS table — each fires the SAME JS twin the CSS linear() token is solved from. No local spring solver: the demo teaches the canonical curves, so it can never drift from the vocabulary."
+            blurb="Every shared SPRING_PRESETS row is discovered from the source table; Dock is intentionally demonstrated in its product-specific morph lab. Play uses keyframes.js managed NumericAnimation, the generated measured-settle horizon, and the current --motion-tempo."
         >
             <section class="flex flex-col gap-6">
                 <div class="flex flex-wrap items-end gap-4">
@@ -180,8 +220,12 @@ async function copyStops(): Promise<void> {
                                 <SelectValue placeholder="Pick a register" />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem v-for="id in PRESET_IDS" :key="id" :value="id">
-                                    {{ id }}
+                                <SelectItem
+                                    v-for="row in PRESET_ROWS"
+                                    :key="row.name"
+                                    :value="row.name"
+                                >
+                                    {{ row.name }}
                                 </SelectItem>
                             </SelectContent>
                         </Select>
@@ -197,10 +241,12 @@ async function copyStops(): Promise<void> {
 
                 <!-- Stage -->
                 <div
-                    :class="cn(
-                        'relative h-48 overflow-hidden rounded-card border border-border/60 bg-background/40',
-                        'paper-grain-overlay',
-                    )"
+                    :class="
+                        cn(
+                            'relative h-48 overflow-hidden rounded-card border border-border/60 bg-background/40',
+                            'paper-grain-overlay',
+                        )
+                    "
                 >
                     <div
                         ref="card"
@@ -208,26 +254,54 @@ async function copyStops(): Promise<void> {
                         :style="{
                             transform:
                                 'translate(var(--demo-x, 0px), -50%) rotate(var(--demo-rotate, 0deg))',
-                            backgroundColor:
-                                'oklch(var(--demo-l, 0.46) 0.18 317.5)',
+                            backgroundColor: 'oklch(var(--demo-l, 0.46) 0.18 317.5)',
                         }"
                     >
                         spring
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 gap-3 md:grid-cols-3">
-                    <!-- BA.W-DEMO-AFFORDANCES — the range cells re-point off the dead
-                         bg-card/60 slab onto the quiet glass tier (glass over the
-                         staged backdrop, FD-FS X-2). -->
-                    <div
-                        v-for="(label, key) in { x: 'translateX', rotate: 'rotate', hue: 'lightness' }"
-                        :key="key"
-                        class="glass-quiet flex flex-col gap-1 rounded-panel p-3"
-                    >
-                        <span class="text-mono-caption text-muted-foreground">{{ label }}</span>
+                <div
+                    class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4"
+                    aria-live="polite"
+                >
+                    <div class="glass-quiet flex flex-col gap-1 rounded-panel p-3">
+                        <span class="text-mono-caption text-muted-foreground"
+                            >family</span
+                        >
                         <span class="fira-code text-small text-foreground">
-                            {{ from[key as Keys] }} &rarr; {{ to[key as Keys] }}
+                            {{ preset }} · {{ presetRow.response }}s / ζ{{
+                                presetRow.dampingFraction
+                            }}
+                        </span>
+                    </div>
+                    <div class="glass-quiet flex flex-col gap-1 rounded-panel p-3">
+                        <span class="text-mono-caption text-muted-foreground"
+                            >authority</span
+                        >
+                        <span class="fira-code text-small text-foreground">
+                            NumericAnimation ·
+                            {{ namedPreview.playing.value ? "playing" : "settled" }}
+                        </span>
+                    </div>
+                    <div class="glass-quiet flex flex-col gap-1 rounded-panel p-3">
+                        <span class="text-mono-caption text-muted-foreground"
+                            >generated clock</span
+                        >
+                        <span class="fira-code text-small text-foreground">
+                            {{ (presetProjection.settleSeconds * 1000).toFixed(0) }}ms ×
+                            {{ namedTempo.toFixed(2) }} =
+                            {{ namedDuration.toFixed(0) }}ms
+                        </span>
+                    </div>
+                    <div class="glass-quiet flex flex-col gap-1 rounded-panel p-3">
+                        <span class="text-mono-caption text-muted-foreground"
+                            >projection</span
+                        >
+                        <span class="fira-code text-small text-foreground">
+                            {{ presetProjection.sampleCount }} samples ·
+                            {{ presetProjection.sampleCount + 2 }} stops ·
+                            {{ presetProjection.stops.length }} bytes
                         </span>
                     </div>
                 </div>
@@ -235,8 +309,8 @@ async function copyStops(): Promise<void> {
         </StorySection>
 
         <StorySection
-            label="Spring playground"
-            blurb="Author a spring live — drag response (the spring's period) and damping fraction ζ (1 fully damps with no overshoot, <1 overshoots); the playground feeds the pair straight to the JS curve and reads back the exact CSS linear() stops it emits. Seed from a named register, then tune."
+            label="Custom spring authoring"
+            blurb="Tune a custom response/ζ pair through the token generator's measured 2%-settle, 10ms rounding, 48-sample projection, and tempo-scaled managed playback. Seeded values are byte-compared with their shipped CSS token; edited values remain explicitly custom."
         >
             <div class="grid gap-4 lg:grid-cols-[1fr_18rem]">
                 <div class="flex flex-col gap-5">
@@ -280,38 +354,82 @@ async function copyStops(): Promise<void> {
                     <div class="flex flex-wrap items-center gap-3">
                         <StoryPlayButton @play="playgroundPlay" />
                         <span class="text-small text-muted-foreground">
-                            overshoot ~<span class="fira-code text-foreground">{{ playOvershoot }}%</span>
+                            overshoot ~<span class="fira-code text-foreground"
+                                >{{ playOvershoot }}%</span
+                            >
+                        </span>
+                        <span
+                            class="text-small text-muted-foreground"
+                            aria-live="polite"
+                        >
+                            {{
+                                playgroundPreview.playing.value ? "playing" : "settled"
+                            }}
+                            · {{ playDuration.toFixed(0) }}ms at
+                            {{ playTempo.toFixed(2) }}×
                         </span>
                     </div>
                 </div>
 
                 <div class="flex flex-col gap-3">
-                    <span class="text-mono-caption text-muted-foreground">Seed from a register</span>
+                    <span class="text-mono-caption text-muted-foreground"
+                        >Seed from a register</span
+                    >
                     <div class="flex flex-wrap gap-2">
                         <button
-                            v-for="id in PRESET_IDS"
-                            :key="id"
+                            v-for="row in PRESET_ROWS"
+                            :key="row.name"
                             type="button"
                             class="rounded-pill border border-border/60 px-3 py-1 text-xs text-muted-foreground transition-colors hover:bg-[var(--surface-tint-1)] hover:text-foreground"
-                            @click="loadPlaygroundPreset(id)"
+                            @click="loadPlaygroundPreset(row.name)"
                         >
-                            {{ id }}
+                            {{ row.name }}
                         </button>
                     </div>
 
-                    <span class="mt-2 text-mono-caption text-muted-foreground">linear() readout</span>
-                    <div class="glass-card flex items-start gap-2 rounded-card px-3 py-2">
-                        <code class="min-w-0 flex-1 break-all text-[0.7rem] leading-snug text-foreground">{{ playStops }}</code>
+                    <span class="mt-2 text-mono-caption text-muted-foreground">
+                        {{
+                            matchingPreset
+                                ? `Seeded --spring-${matchingPreset.name}`
+                                : "Custom linear()"
+                        }}
+                        · {{ playProjection.sampleCount }} samples ·
+                        {{ playProjection.settleSeconds.toFixed(2) }}s settle
+                    </span>
+                    <div
+                        class="glass-card flex items-start gap-2 rounded-card px-3 py-2"
+                    >
+                        <code
+                            class="min-w-0 flex-1 break-all text-[0.7rem] leading-snug text-foreground"
+                            >{{ playStops }}</code
+                        >
                         <button
                             type="button"
                             class="shrink-0 rounded-pill p-1.5 text-muted-foreground transition-colors hover:bg-[var(--surface-tint-1)] hover:text-foreground"
                             :aria-label="copied ? 'Copied' : 'Copy linear() stops'"
                             @click="copyStops"
                         >
-                            <Check v-if="copied" class="size-4 text-[var(--motion-accent)]" />
+                            <Check
+                                v-if="copied"
+                                class="size-4 text-[var(--motion-accent)]"
+                            />
                             <Copy v-else class="size-4" />
                         </button>
                     </div>
+                    <p
+                        v-if="matchingPreset"
+                        class="text-small"
+                        :class="tokenMatches ? 'text-success' : 'text-destructive'"
+                        role="status"
+                    >
+                        {{
+                            tokenMatches ? "Byte-exact shipped token" : "Token mismatch"
+                        }}
+                        · {{ playStops.length }} bytes
+                    </p>
+                    <p v-else class="text-small text-muted-foreground">
+                        Custom authoring · no shipped token claimed
+                    </p>
                 </div>
             </div>
         </StorySection>

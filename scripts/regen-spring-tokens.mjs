@@ -17,13 +17,16 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { springLinearStops, SpringProgress } from "@mkbabb/keyframes.js";
 // AY.W-MOTION2 — the (response, ζ) pairs are SINGLE-SOURCED in
 // `src/composables/motion/springPresets.ts` so the CSS `linear()` strings here
 // and the `MOTION_CURVES` JS twins both derive from ONE table (the
 // no-second-authority discipline this header names). Node imports the `.ts`
 // directly (native type-stripping); the table is pure value.js-free data.
 import { SPRING_PRESETS } from "../src/composables/motion/springPresets.ts";
+import {
+    springProjection,
+    springSettleDurationSeconds,
+} from "../src/composables/motion/springProjection.ts";
 
 const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
 // AY.W-CSS1 — tokens.css was carved into thin @import root + tokens/* partials;
@@ -37,20 +40,6 @@ export const tokensPath = resolve(root, "src/styles/tokens/scheme-spring.css");
 /** The shared (response, ζ) table — re-exported so the sync gate keeps its import. */
 export const PRESETS = SPRING_PRESETS;
 
-/**
- * 48 intermediate samples + 2 endpoints = 50 stops.
- *
- * Raised from 24 in AM-W2-α: a lower-ζ spring produces a sharper/earlier/higher
- * first peak, and a coarse uniform grid straddles + clips it (under-representing
- * the overshoot — a faithfulness defect, since the `linear()` must represent the
- * solver, not a clipped approximation). At 48 samples (~2% grid) the steepest
- * retuned peak (BC.W-SPRING-EASE `bouncy` ζ=0.55, analytic overshoot
- * 1 + exp(-ζπ/√(1-ζ²)) = 1.1263) lands within its target — verified empirically
- * against the keyframes.js solver. (The eased `snappy` ζ=0.78 + the minted `press`
- * ζ=0.86 are gentler still; 48 over-samples them comfortably.)
- */
-const SAMPLE_COUNT = 48;
-
 export function generateBlock() {
     const lines = PRESETS.map((preset) => {
         // BI.W-SPRING-PARITY (FAM-18/M1) — the linear() sample horizon MUST equal
@@ -61,12 +50,7 @@ export function generateBlock() {
         // the whole trajectory into the first ~10–16% of the clock (the measured
         // ~5× CSS-vs-JS t90 compression). Passing the settle seconds here re-times
         // the curve so CSS_t90 == JS SpringProgress t90 (<1ms, all presets).
-        const stops = springLinearStops({
-            response: preset.response,
-            dampingFraction: preset.dampingFraction,
-            sampleCount: SAMPLE_COUNT,
-            maxDuration: springSettleDurationSeconds(preset),
-        });
+        const { stops } = springProjection(preset);
         return `    --spring-${preset.name}: ${stops};`;
     });
     return lines.join("\n");
@@ -97,30 +81,6 @@ export function generateBlock() {
 //      analytic span left gentle's penultimate stop at 0.895 → a visible 10.5% endpoint
 //      snap; the numeric span lands it at ~0.978 (sub-perceptual, inside the 2% band).
 // Rounded to the nearest 10ms (sub-perceptual, token-clean).
-const SETTLE_BAND = 0.02;
-const SETTLE_TICK_DT = 0.0005; // 0.5ms — sub-10ms resolution for the round
-const SETTLE_MAX_SECONDS = 5; // cap (all six presets settle < 0.8s; ζ→1 rows stay bounded)
-
-/**
- * The TRUE NUMERIC 2%-band settle in seconds — the last time the closed-form step
- * response x(t) of `SpringProgress(target=1)` is ≥2% off unity (after which it stays
- * within band). Uses `tickToTime` (the closed-form read; `tickDt` is a no-op in the
- * shipped kf build), so it is exact + deterministic. Rounded to 10ms.
- */
-export function springSettleDurationSeconds(preset) {
-    const spring = new SpringProgress({
-        response: preset.response,
-        dampingFraction: preset.dampingFraction,
-    });
-    spring.target = 1;
-    let lastOutOfBand = 0;
-    for (let t = SETTLE_TICK_DT; t < SETTLE_MAX_SECONDS; t += SETTLE_TICK_DT) {
-        if (Math.abs(1 - spring.tickToTime(t)) >= SETTLE_BAND) lastOutOfBand = t;
-    }
-    // round to nearest 10ms, token-clean
-    return Math.round((lastOutOfBand * 1000) / 10) * 10 / 1000;
-}
-
 // BI.W-TEMPO — the `-settle`/reader SPLIT (M11). The raw analytic 2%-settle is
 // emitted under the RENAMED INTERNAL token `--spring-<name>-settle`; the PUBLIC name
 // `--spring-<name>-duration` is preserved as a generated READER that co-scales it by
