@@ -529,80 +529,6 @@ export const DECLARED_FAMILY_SUBPATHS: ReadonlySet<string> = new Set<string>([
     "@mkbabb/glass-ui/dropdown-menu",
 ]);
 
-/**
- * BI.W-COMPOSITIONS-PRUNE — the OLD→NEW route map for the demos that LEFT the
- * compositions band (each was a single-library-family demo misfiled among the composed
- * scenes). Unlike a FOLDED member (whose family route derives from a shared subpath),
- * a RELOCATED demo keeps a routed page at a NEW path, so its old `/compositions/<id>`
- * deep-link needs an explicit 302 — there is no surviving compositions page sharing its
- * subpath to derive from. W-FOLDED-REDIRECTS reads this map ALONGSIDE `FOLDED_STORY_IDS`
- * to register the redirect routes (a moved id resolves to its new family route, never the
- * lattice 404). Keyed old `category/id` → new route path. `drawer-live-behind` folded its
- * live-behind mode INTO `containers/drawer` (one comprehensive Drawer page), so it points
- * at that page rather than a standalone route.
- */
-export const RELOCATED_STORY_ROUTES: Record<string, string> = {
-    "compositions/configurator": "/containers/configurator",
-    "compositions/icon-tooltip": "/containers/icon-tooltip",
-    "compositions/instrument-chassis": "/data/instrument-chassis",
-    "compositions/labeled-field": "/forms/labeled-field",
-    "compositions/drawer-live-behind": "/containers/drawer",
-    // BI.W-HERO-DEMOTE (UF-K2) — the standalone `compositions/hero` story is DEMOTED to
-    // the `/compositions` section landing (its bento of real scenes IS the section hero).
-    // The old deep-link resolves to the section landing, never the lattice 404.
-    "compositions/hero": "/compositions",
-};
-
-/**
- * BI.W-FOLDED-REDIRECTS (BI-STAB-A-1) — the folded-member → family-route relation. A
- * `FOLDED_STORY_IDS` member is UN-ROUTED by `foldFamilies` (its SFC is composed BARE inside
- * its family page's `<FamilyTabs>`), so a direct/deep link to its old `/<category>/<id>`
- * path has no route and would fall through `buildRoutes` to the `:pathMatch(.*)*` catch-all
- * → the lattice-404. This map resolves each folded id to the ROUTE of the family page that
- * composes it, so `demo/router.ts` can register a 302 (the deep-link parity fix — the CBA-5
- * FamilyTabs-IA routing companion: a folded member is a tab inside its family page).
- *
- * The relation is the fold's OWN membership: each target is the family whose SFC
- * `defineAsyncComponent(() => import("./<member>.vue"))`s the member. `proof:demo`'s FR2 arm
- * DERIVES that composition from the family SFCs and asserts this map ≡ the derived ground
- * truth (keys ≡ `FOLDED_STORY_IDS`; each target the family that actually composes the member;
- * each target a real routed page) — a family that gains/loses a member reds the gate until the
- * map re-derives. NOT a per-id hand-list the router owns; the router iterates it. Keyed folded
- * `category/id` → family route path.
- */
-export const FOLDED_MEMBER_FAMILY: Record<string, string> = {
-    // forms/inputs composes the input family (textarea · select · combobox · label).
-    "forms/textarea": "/forms/inputs",
-    "forms/select": "/forms/inputs",
-    "forms/combobox": "/forms/inputs",
-    "forms/label": "/forms/inputs",
-    // forms/toggle composes the chip toggles (toggle-chip · selectable-chip).
-    "forms/toggle-chip": "/forms/toggle",
-    "forms/selectable-chip": "/forms/toggle",
-    // display/atoms composes the display atoms (+ data/avatar, the shared atom).
-    "display/separator": "/display/atoms",
-    "display/pulse": "/display/atoms",
-    "display/status-dot": "/display/atoms",
-    "display/dark-mode-toggle": "/display/atoms",
-    "data/avatar": "/display/atoms",
-    // data/metrics composes the metric family (cell · stack · badge).
-    "display/metric-badge": "/data/metrics",
-    "data/metric-cell": "/data/metrics",
-    "data/metric-stack": "/data/metrics",
-    // data/table composes the data-table member.
-    "data/data-table": "/data/table",
-    // feedback/toast composes the toaster member.
-    "feedback/toaster": "/feedback/toast",
-    // motion/text-motion composes the text-motion family (typewriter · split-chars ·
-    // animated-digit · countup).
-    "motion/typewriter": "/motion/text-motion",
-    "motion/split-chars": "/motion/text-motion",
-    "motion/animated-digit": "/motion/text-motion",
-    "motion/countup": "/motion/text-motion",
-    // foundations/paper-glass composes the paper-texture member.
-    "foundations/paper-texture": "/foundations/paper-glass",
-};
-
 function s(
     cat: string,
     id: string,
@@ -1378,8 +1304,7 @@ export const CATEGORIES: Category[] = [
             // RETIRED: it duplicated the `/compositions` D1 section landing (the chassis
             // already renders the real-scene bento over the section hero, and the landing
             // blurb carries the "Real scenes" identity). No standalone route survives; the
-            // `/compositions/hero` deep-link resolves to `/compositions` via
-            // RELOCATED_STORY_ROUTES (W-FOLDED-REDIRECTS). auth-shell is now the D2 main.
+            // `/compositions/hero` is no longer a route. auth-shell is now the D2 main.
             // BI.W-AUTH-SHELL-BG (PERF-2 / UF-K4) — the auth-shell no longer mounts the
             // library's HEAVIEST shader (a 4.87MP live Fourier SDF) as a decorative page
             // wash behind the form: a teaching SDF is never an ambient background. The page

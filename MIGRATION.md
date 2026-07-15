@@ -627,8 +627,8 @@ belongs on that family's band. `proof:demo`'s compositions-census (CP1) enforces
 | Drawer Live-Behind | `/compositions/drawer-live-behind` | folded into `/containers/drawer` (a Live-behind mode section — one comprehensive Drawer page: snap · fixed · live-behind) |
 
 The shipped subpaths (`@mkbabb/glass-ui/{configurator,icon-tooltip,instrument-chassis,labeled-field,drawer}`)
-are UNCHANGED — only the demo routes moved. A deep-link to an old `/compositions/*` route 302s to its new
-band route via `RELOCATED_STORY_ROUTES` (`manifest.ts`) consumed by W-FOLDED-REDIRECTS (no lattice 404).
+are UNCHANGED — only the demo routes moved. Retired demo paths resolve to the semantic 404; use the current
+routes in the table above.
 
 ### BI.W-HERO-DEMOTE — the standalone `/compositions/hero` demo is demoted to the `/compositions` section landing
 
@@ -647,8 +647,7 @@ stays retired.
 |---|---|---|
 | Hero (Real scenes) | `/compositions/hero` (standalone `heroScale:"mega"` story) | the `/compositions` section landing (the real-scene bento hero) |
 
-A deep-link to `/compositions/hero` 302s to `/compositions` via `RELOCATED_STORY_ROUTES` (`manifest.ts`) consumed
-by W-FOLDED-REDIRECTS (no lattice 404).
+The retired `/compositions/hero` path resolves to the semantic 404; `/compositions` is the canonical landing.
 
 ### BI.W-MENU-TRIGGER — ContextMenu folds onto the Menu family as `trigger="context"`
 
