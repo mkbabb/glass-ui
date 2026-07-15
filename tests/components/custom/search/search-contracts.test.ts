@@ -58,6 +58,54 @@ describe("FuzzySearch highlighting", () => {
 
         wrapper.unmount();
     });
+
+    it("connects each combobox to its active listbox option", async () => {
+        const results = ref<SearchResult[]>([]);
+        const selectedIndex = ref(0);
+        const isOpen = ref(true);
+        const isExpanded = ref(false);
+        const state: FuzzySearchState = {
+            query: ref("alpha"),
+            results: computed(() => results.value),
+            selectedIndex,
+            isOpen,
+            isExpanded,
+            onKeydown: vi.fn(),
+            selectResult: vi.fn(),
+            toggleExpanded: () => { isExpanded.value = !isExpanded.value; },
+            close: vi.fn(),
+            open: vi.fn(),
+        };
+        const wrapper = mount(FuzzySearch, {
+            props: { state, ariaLabel: "Find components" },
+            attachTo: document.body,
+            global: { stubs: { teleport: false } },
+        });
+
+        await flushPromises();
+        const inlineInput = wrapper.find('input[role="combobox"]');
+        expect(inlineInput.attributes("aria-activedescendant")).toBeUndefined();
+        expect(inlineInput.attributes("aria-controls")).toBeUndefined();
+
+        results.value = [{ item: item("alpha", "Alpha"), score: 1, matchIndices: [] }];
+        await flushPromises();
+        const inlineList = wrapper.find('[role="listbox"]');
+        const inlineOption = inlineList.find('[role="option"]');
+        expect(inlineInput.attributes("aria-controls")).toBe(inlineList.attributes("id"));
+        expect(inlineInput.attributes("aria-activedescendant")).toBe(inlineOption.attributes("id"));
+        expect(inlineOption.attributes("aria-selected")).toBe("true");
+
+        isExpanded.value = true;
+        await flushPromises();
+        const modalInput = document.querySelector<HTMLElement>('[role="dialog"] input[role="combobox"]')!;
+        const modalList = document.querySelector<HTMLElement>('[role="dialog"] [role="listbox"]')!;
+        expect(modalInput.getAttribute("aria-controls")).toBe(modalList.id);
+        expect(modalInput.getAttribute("aria-activedescendant")).toBe(
+            modalList.querySelector<HTMLElement>('[role="option"]')!.id,
+        );
+
+        wrapper.unmount();
+    });
 });
 
 describe("fuzzy search index caching", () => {

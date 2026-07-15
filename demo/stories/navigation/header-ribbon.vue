@@ -37,7 +37,7 @@ const NAV_STOP = 12;
 
         <StorySection
             label="hover-tracking ribbon"
-            blurb="An anchor button that reveals a row of controls on hover, then auto-collapses after the hide timeout. The anchor slot exposes pinned / toggled state."
+            blurb="An anchor button that reveals a row of controls on hover or keyboard focus, then auto-collapses after the hide timeout. The anchor slot exposes pinned / toggled state."
         >
             <div
                 class="relative h-32 w-full overflow-hidden rounded-card border border-border/60 bg-card"
@@ -67,7 +67,7 @@ const NAV_STOP = 12;
                 <p
                     class="absolute inset-x-0 bottom-3 text-center text-mono-caption text-muted-foreground"
                 >
-                    hover the anchor to expand · click to pin
+                    hover or focus the anchor to expand · click to pin
                 </p>
             </div>
         </StorySection>

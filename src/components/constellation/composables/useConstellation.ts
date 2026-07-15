@@ -181,6 +181,7 @@ export function useConstellation(
     const pointer: ConstellationPointer = { x: -1, y: -1 };
     const ripples: ConstellationRipple[] = [];
     let palette: ConstellationPalette = { ...DEFAULT_PALETTE };
+    let paletteDirty = true;
     let prevNow = -1;
     let interactionRead = false;
 
@@ -224,6 +225,17 @@ export function useConstellation(
     onMounted(() => {
         const canvas = canvasRef.value;
         if (!canvas) return;
+        const paletteObserver =
+            typeof MutationObserver === "undefined"
+                ? null
+                : new MutationObserver(() => {
+                      paletteDirty = true;
+                      handle?.wake();
+                  });
+        paletteObserver?.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ["class"],
+        });
 
         const reducedMotionNow = (): boolean => {
             if (handle) return handle.reducedMotion;
@@ -287,6 +299,7 @@ export function useConstellation(
             if (warpOnClick) target.addEventListener("pointerdown", onClick);
         }
         cleanup = () => {
+            paletteObserver?.disconnect();
             target.removeEventListener("pointermove", onPointerMove);
             target.removeEventListener("pointerenter", onPointerEnter);
             target.removeEventListener("pointerleave", onPointerLeave);
@@ -328,7 +341,6 @@ export function useConstellation(
                 } else {
                     refitField(field, prevW, prevH);
                 }
-                palette = readPalette(canvas);
                 if (!interactionRead) {
                     interactionRead = true;
                     const cfgs = readInteractionConfig(canvas);
@@ -341,6 +353,10 @@ export function useConstellation(
                             wanderOverride.jitter ?? cfgs.wander.jitter;
                     }
                 }
+            }
+            if (paletteDirty) {
+                palette = readPalette(canvas);
+                paletteDirty = false;
             }
             field.k = k;
 

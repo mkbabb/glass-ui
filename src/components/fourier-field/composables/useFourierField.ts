@@ -154,9 +154,9 @@ export function useFourierField(
         // reads the route pointer rather than its own listener). A single position write; the
         // field derives velocity/burst/engagement in tick.
         const rp = options.routePointer?.();
-        if (rp) {
-            pointer.setActive(rp.active);
-            if (rp.active) pointer.setPointer(rp.x, rp.y);
+        if (options.routePointer) {
+            pointer.setActive(rp?.active ?? false);
+            if (rp?.active) pointer.setPointer(rp.x, rp.y);
         }
         pointer.tick(deltaMs);
 

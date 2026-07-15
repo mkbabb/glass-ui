@@ -59,7 +59,7 @@ const triggerClass = computed(() =>
         <slot />
         <SelectIcon as-child>
             <slot name="icon">
-                <ChevronDown class="dock-select-trigger__chevron" />
+                <ChevronDown class="dock-select-trigger__chevron" aria-hidden="true" />
             </slot>
         </SelectIcon>
     </SelectTrigger>

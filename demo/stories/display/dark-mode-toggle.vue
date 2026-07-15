@@ -58,6 +58,20 @@ const disableTransitions = ref(false);
         </StorySection>
 
         <StorySection
+            label="eclipse long press"
+            blurb="The opt-in eclipse uses the same toggle state with a slower transition. Hold with a pointer or the Space key; a short activation remains the normal toggle."
+        >
+            <ShowcaseFrame pad="md">
+                <div class="flex items-center gap-4">
+                    <DarkModeToggle eclipse size="lg" aria-describedby="eclipse-help" />
+                    <span id="eclipse-help" class="text-sm text-muted-foreground">
+                        Hold pointer or Space for the slow eclipse
+                    </span>
+                </div>
+            </ShowcaseFrame>
+        </StorySection>
+
+        <StorySection
             label="disableTransitions knob"
             blurb="When true, suppresses CSS transitions on <html> and descendants during the toggle to avoid mid-flight cascade jank. Pair with a transitions-cascading layout to feel the difference."
         >

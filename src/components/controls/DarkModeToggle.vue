@@ -89,6 +89,14 @@ function onEclipseEnd(): void {
     clearPress();
 }
 
+function onEclipseKeyDown(e: KeyboardEvent): void {
+    if (e.key === " " && !e.repeat) onEclipseDown();
+}
+
+function onEclipseKeyUp(e: KeyboardEvent): void {
+    if (e.key === " ") onEclipseEnd();
+}
+
 function onEclipseClick(e: MouseEvent): void {
     // If the long-press already toggled, swallow the trailing click so it does
     // not double-toggle back.
@@ -160,6 +168,9 @@ watchEffect(() => {
         @pointerup="onEclipseEnd"
         @pointerleave="onEclipseEnd"
         @pointercancel="onEclipseEnd"
+        @keydown="onEclipseKeyDown"
+        @keyup="onEclipseKeyUp"
+        @blur="onEclipseEnd"
     >
         <svg
             xmlns="http://www.w3.org/2000/svg"

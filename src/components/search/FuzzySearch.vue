@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, nextTick, computed } from "vue";
+import { ref, watch, nextTick, computed, useId } from "vue";
 import { Search, X, Maximize2, Minimize2 } from "@lucide/vue";
 import { Popover, PopoverContent, PopoverTrigger } from "../popover";
 import { Dialog, DialogContent } from "../dialog";
@@ -34,13 +34,27 @@ const props = withDefaults(
         size?: ControlSize;
         surface?: Surface;
         placeholder?: string;
+        ariaLabel?: string;
         typeLabel?: (item: SearchableItem) => string;
     }>(),
-    { variant: "inline", size: "md", surface: "glass", placeholder: "Search…" },
+    {
+        variant: "inline",
+        size: "md",
+        surface: "glass",
+        placeholder: "Search…",
+        ariaLabel: "Search",
+    },
 );
+
+const searchId = useId();
+const inlineListId = `${searchId}-inline-results`;
+const modalListId = `${searchId}-modal-results`;
+const optionId = (listId: string, index: number) => `${listId}-${index}`;
 
 const inputRef = ref<HTMLInputElement | null>(null);
 const modalInputRef = ref<HTMLInputElement | null>(null);
+const inlineListRef = ref<HTMLElement | null>(null);
+const modalListRef = ref<HTMLElement | null>(null);
 
 const inlineOpen = computed({
     get: () =>
@@ -51,7 +65,8 @@ const inlineOpen = computed({
 });
 
 watch(() => props.state.selectedIndex.value, () => {
-    nextTick(() => document.querySelector(".fuzzy-search-result.is-selected")
+    nextTick(() => (props.state.isExpanded.value ? modalListRef.value : inlineListRef.value)
+        ?.querySelector(".fuzzy-search-result.is-selected")
         ?.scrollIntoView({ block: "nearest" }));
 });
 watch(() => props.state.isOpen.value, (open) => {
@@ -94,8 +109,6 @@ function getTypeLabel(r: SearchResult) { return props.typeLabel ? props.typeLabe
 // own a container ref; after a query/results change we re-scan the visible list's
 // `.fuzzy-search-label` text nodes and set the range union. Where the API is
 // unsupported the composable no-ops and labels render as plain text.
-const inlineListRef = ref<HTMLElement | null>(null);
-const modalListRef = ref<HTMLElement | null>(null);
 const highlight = useTextHighlight("glass-search-mark");
 
 // Per-label fuzzy matcher — fuzzyMatch's char indices over the label string
@@ -132,19 +145,23 @@ function repaintHighlight(container: HTMLElement | null) {
                     :class="cn(controlSizeClass(size), searchFieldVariants({ variant }))">
                     <Search class="size-(--search-icon-size) shrink-0 text-muted-foreground/70" />
                     <input
-                        ref="inputRef" type="text" class="input-bar-field" :placeholder="placeholder"
+                        ref="inputRef" type="search" role="combobox" class="input-bar-field" :placeholder="placeholder"
+                        :aria-label="ariaLabel" aria-autocomplete="list" :aria-expanded="inlineOpen"
+                        :aria-controls="inlineOpen ? inlineListId : undefined"
+                        :aria-activedescendant="inlineOpen ? optionId(inlineListId, state.selectedIndex.value) : undefined"
                         :value="state.query.value"
                         @input="state.query.value = ($event.target as HTMLInputElement).value"
                         @keydown="state.onKeydown" @focus="state.isOpen.value = true"
                     />
                     <Button v-if="state.query.value && state.results.value.length > 0"
                         type="button" variant="ghost" iconOnly class="size-(--search-button-size)"
+                        :aria-label="state.isExpanded.value ? 'Collapse search' : 'Expand search'"
                         :title="state.isExpanded.value ? 'Collapse' : 'Expand'" @click="state.toggleExpanded()">
                         <Maximize2 v-if="!state.isExpanded.value" class="size-(--search-icon-size)" />
                         <Minimize2 v-else class="size-(--search-icon-size)" />
                     </Button>
                     <Button v-if="state.query.value" type="button" variant="ghost" iconOnly class="size-(--search-button-size)"
-                        title="Clear search" @click="state.close()">
+                        aria-label="Clear search" title="Clear search" @click="state.close()">
                         <X class="size-(--search-icon-size)" />
                     </Button>
                 </div>
@@ -152,8 +169,9 @@ function repaintHighlight(container: HTMLElement | null) {
             <PopoverContent align="start" :side-offset="4" :portal="false"
                 class="w-(--reka-popover-trigger-width) max-h-[50vh] overflow-y-auto overscroll-contain p-1"
                 @open-auto-focus="(e: Event) => e.preventDefault()">
-                <div ref="inlineListRef">
-                    <button v-for="(r, i) in state.results.value" :key="`${r.item.id}-${r.item.type}-${i}`" type="button"
+                <div :id="inlineListId" ref="inlineListRef" role="listbox" :aria-label="`${ariaLabel} results`">
+                    <button v-for="(r, i) in state.results.value" :id="optionId(inlineListId, i)" :key="`${r.item.id}-${r.item.type}-${i}`" type="button"
+                        role="option" tabindex="-1" :aria-selected="i === state.selectedIndex.value"
                         class="fuzzy-search-result glass-menu-row interactive-item flex w-full items-baseline gap-1.5 px-2 py-1.5 text-left text-(length:--search-result-text)"
                         :class="{ 'is-selected': i === state.selectedIndex.value }"
                         :data-highlighted="i === state.selectedIndex.value ? '' : undefined"
@@ -183,16 +201,20 @@ function repaintHighlight(container: HTMLElement | null) {
                 @open-auto-focus="(e: Event) => e.preventDefault()">
                 <div class="flex items-center gap-2 border-b border-border/50 [--overlay-pad-inline:1rem] [--overlay-pad-block:calc(var(--overlay-pad-inline)*1.272)] px-(--overlay-pad-inline) py-(--overlay-pad-block)">
                     <Search class="size-(--search-icon-size) shrink-0 text-muted-foreground/70" />
-                    <input ref="modalInputRef" type="text" class="input-bar-field flex-1 text-(length:--search-result-text)" :placeholder="placeholder"
+                    <input ref="modalInputRef" type="search" role="combobox" class="input-bar-field flex-1 text-(length:--search-result-text)" :placeholder="placeholder"
+                        :aria-label="ariaLabel" aria-autocomplete="list" :aria-expanded="state.isExpanded.value"
+                        :aria-controls="state.results.value.length ? modalListId : undefined"
+                        :aria-activedescendant="state.results.value.length ? optionId(modalListId, state.selectedIndex.value) : undefined"
                         :value="state.query.value"
                         @input="state.query.value = ($event.target as HTMLInputElement).value"
                         @keydown="state.onKeydown" />
-                    <Button type="button" variant="ghost" iconOnly class="size-(--search-button-size)" title="Collapse" @click="state.toggleExpanded()">
+                    <Button type="button" variant="ghost" iconOnly class="size-(--search-button-size)" aria-label="Collapse search" title="Collapse" @click="state.toggleExpanded()">
                         <Minimize2 class="size-(--search-icon-size)" />
                     </Button>
                 </div>
-                <div v-if="state.results.value.length > 0" ref="modalListRef" class="flex-1 min-h-0 overflow-y-auto overscroll-contain p-1.5">
-                    <button v-for="(r, i) in state.results.value" :key="`modal-${r.item.id}-${r.item.type}-${i}`" type="button"
+                <div v-if="state.results.value.length > 0" :id="modalListId" ref="modalListRef" role="listbox" :aria-label="`${ariaLabel} results`" class="flex-1 min-h-0 overflow-y-auto overscroll-contain p-1.5">
+                    <button v-for="(r, i) in state.results.value" :id="optionId(modalListId, i)" :key="`modal-${r.item.id}-${r.item.type}-${i}`" type="button"
+                        role="option" tabindex="-1" :aria-selected="i === state.selectedIndex.value"
                         class="fuzzy-search-result glass-menu-row interactive-item flex w-full items-baseline gap-1.5 px-2.5 py-2 text-left text-(length:--search-result-text)"
                         :class="{ 'is-selected': i === state.selectedIndex.value }"
                         :data-highlighted="i === state.selectedIndex.value ? '' : undefined"

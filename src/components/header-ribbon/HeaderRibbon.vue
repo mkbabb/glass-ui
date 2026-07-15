@@ -5,6 +5,8 @@
             placement === 'left' ? 'top-0 left-0' : 'top-0 right-0',
         ]"
         @mouseleave="onGroupMouseLeave"
+        @focusin="onGroupFocusIn"
+        @focusout="onGroupFocusOut"
     >
         <!-- Optional extra slot anchored alongside the ribbon (e.g. a logo). -->
         <div v-if="$slots.left" class="pointer-events-auto shrink-0 mr-2">
@@ -60,9 +62,10 @@ const props = withDefaults(defineProps<HeaderRibbonProps>(), {
 const isExpanded = ref(false);
 const isPinned = ref(false);
 const isToggled = ref(false);
-// Hover-tracking guard — prevents premature collapse scheduling while the
-// pointer is still inside the ribbon (the keyframes.js refinement).
+// Presence guards prevent premature collapse while pointer or keyboard focus
+// remains inside the ribbon.
 const isMouseOver = ref(false);
+const isFocusWithin = ref(false);
 
 let hoverTimeout: ReturnType<typeof setTimeout> | undefined;
 
@@ -76,9 +79,8 @@ function clearHoverTimeout(): void {
 }
 
 function startHideTimeout(): void {
-    // Don't schedule collapse while the pointer is still over the ribbon —
-    // the timeout would fire while the user is mid-interaction.
-    if (isMouseOver.value) return;
+    // Don't schedule collapse while the user is still interacting with the ribbon.
+    if (isMouseOver.value || isFocusWithin.value) return;
     clearHoverTimeout();
     hoverTimeout = setTimeout(() => {
         isExpanded.value = false;
@@ -96,6 +98,19 @@ function onGroupMouseLeave(): void {
     if (!isPinned.value) {
         startHideTimeout();
     }
+}
+
+function onGroupFocusIn(): void {
+    isFocusWithin.value = true;
+    clearHoverTimeout();
+    isExpanded.value = true;
+}
+
+function onGroupFocusOut(event: FocusEvent): void {
+    const root = event.currentTarget as HTMLElement;
+    if (event.relatedTarget instanceof Node && root.contains(event.relatedTarget)) return;
+    isFocusWithin.value = false;
+    if (!isPinned.value) startHideTimeout();
 }
 
 function onAnchorClick(): void {

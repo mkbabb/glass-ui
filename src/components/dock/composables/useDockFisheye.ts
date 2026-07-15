@@ -38,6 +38,10 @@ export function useDockFisheye(
         return dockEl.value?.querySelector<HTMLElement>(".dock-layer--full") ?? null;
     }
 
+    function vertical(): boolean {
+        return dockEl.value?.classList.contains("vertical") ?? false;
+    }
+
     function items(p: HTMLElement): HTMLElement[] {
         return Array.from(p.children).filter(
             (c): c is HTMLElement => c instanceof HTMLElement,
@@ -48,11 +52,14 @@ export function useDockFisheye(
     function remeasure() {
         const p = port();
         if (!p) return;
-        const portLeft = p.getBoundingClientRect().left;
+        const isVertical = vertical();
+        const portRect = p.getBoundingClientRect();
+        const portStart = isVertical ? portRect.top : portRect.left;
         for (const el of items(p)) {
             el.classList.add("dock-fisheye-item");
             const r = el.getBoundingClientRect();
-            el.style.setProperty("--x", String(Math.round(r.left + r.width / 2 - portLeft)));
+            const center = isVertical ? r.top + r.height / 2 : r.left + r.width / 2;
+            el.style.setProperty("--x", String(Math.round(center - portStart)));
         }
     }
 
@@ -75,7 +82,8 @@ export function useDockFisheye(
     function onPointerMove(e: PointerEvent) {
         const p = port();
         if (!p) return;
-        pendingX = e.clientX - p.getBoundingClientRect().left;
+        const r = p.getBoundingClientRect();
+        pendingX = vertical() ? e.clientY - r.top : e.clientX - r.left;
         // rAF-COALESCE — at most ONE `--dock-px` write per frame regardless of move rate.
         if (!rafId) rafId = requestAnimationFrame(flush);
     }

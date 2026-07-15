@@ -106,6 +106,7 @@ function zoneClass(kind: DockSectionDescriptor["kind"]): string {
                 :class="zoneClass(section.kind)"
                 :data-kind="section.kind"
                 :data-section-id="section.id"
+                role="group"
                 :aria-label="section.label || undefined"
             >
                 <slot :name="section.id" :section="section" :kind="section.kind" />

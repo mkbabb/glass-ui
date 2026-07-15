@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@vueuse/core";
 import { onUnmounted, readonly, ref, watch } from "vue";
 import type { Ref } from "vue";
 import { createOptionalContext } from "../../../composables/context";
@@ -149,6 +150,7 @@ export function useDockMorphOrchestrator(
         response: DOCK_SPRING.response,
         dampingFraction: DOCK_SPRING.dampingFraction,
     });
+    const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
 
     const targets = new Set<MorphTarget>();
 
@@ -205,6 +207,10 @@ export function useDockMorphOrchestrator(
         for (const tt of targets) settleTarget(tt);
         maybeSettleRoot();
     }
+
+    watch(prefersReducedMotion, (reduced) => {
+        if (reduced && anyMorphing()) settleAll();
+    });
 
     /**
      * Ensure the ONE shared spring is running 0→1, writing `--dock-morph-t` once

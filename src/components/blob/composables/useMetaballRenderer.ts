@@ -455,7 +455,11 @@ export function useMetaballRenderer(
     // wake the loop too, so a seed/harmony-driven `paletteStops` change repaints the
     // hero body even when the demand loop has parked at rest.
     watch(color, () => canvasHandle?.wake());
+    watch(rimColor, () => canvasHandle?.wake());
     watch(paletteStops, () => canvasHandle?.wake(), { deep: true });
+    if (satelliteColors) {
+        watch(satelliteColors, () => canvasHandle?.wake(), { deep: true });
+    }
 
     onUnmounted(() => {
         clearWakeTimer();

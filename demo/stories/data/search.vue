@@ -184,6 +184,7 @@ function formatScore(score: number): string {
                     variant="floating"
                     surface="glass"
                     placeholder="Jump to a component…"
+                    aria-label="Search component catalogue"
                     :type-label="typeLabel"
                 />
             </Card>

@@ -117,4 +117,65 @@ describe("GlassDock isTransitioning — spring-settle source (BG.NF.1 W-FALLBACK
         vi.runAllTimers();
         expect(vm.isTransitioning).toBe(false);
     });
+
+    it("settles an active morph immediately when reduced motion becomes preferred", async () => {
+        const originalMatchMedia = window.matchMedia;
+        let reduced = false;
+        const listeners = new Set<(event: MediaQueryListEvent) => void>();
+        const media = {
+            get matches() {
+                return reduced;
+            },
+            media: "(prefers-reduced-motion: reduce)",
+            onchange: null,
+            addEventListener: (
+                _type: string,
+                listener: (event: MediaQueryListEvent) => void,
+            ) => listeners.add(listener),
+            removeEventListener: (
+                _type: string,
+                listener: (event: MediaQueryListEvent) => void,
+            ) => listeners.delete(listener),
+            addListener: (listener: (event: MediaQueryListEvent) => void) =>
+                listeners.add(listener),
+            removeListener: (listener: (event: MediaQueryListEvent) => void) =>
+                listeners.delete(listener),
+            dispatchEvent: () => true,
+        } as MediaQueryList;
+        Object.defineProperty(window, "matchMedia", {
+            configurable: true,
+            value: () => media,
+        });
+
+        try {
+            const wrapper = mount(GlassDock, {
+                props: { startCollapsed: true, autoLuminance: false },
+            });
+            const vm = wrapper.vm as unknown as Record<string, unknown>;
+            const root = wrapper.get(".glass-dock").element;
+
+            (vm.expand as () => void)();
+            await wrapper.vm.$nextTick();
+            expect(vm.isTransitioning).toBe(true);
+            expect(root.hasAttribute("data-morphing")).toBe(true);
+
+            reduced = true;
+            const event = { matches: true, media: media.media } as MediaQueryListEvent;
+            for (const listener of listeners) listener(event);
+            await wrapper.vm.$nextTick();
+
+            expect(vm.isTransitioning).toBe(false);
+            expect(root.hasAttribute("data-morphing")).toBe(false);
+            expect(root.hasAttribute("data-pane-swap")).toBe(false);
+            expect((root as HTMLElement).style.getPropertyValue("--dock-morph-t")).toBe(
+                "",
+            );
+            wrapper.unmount();
+        } finally {
+            Object.defineProperty(window, "matchMedia", {
+                configurable: true,
+                value: originalMatchMedia,
+            });
+        }
+    });
 });

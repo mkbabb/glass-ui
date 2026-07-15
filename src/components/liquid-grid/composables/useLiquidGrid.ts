@@ -89,8 +89,9 @@ export function useLiquidGrid(
     // position AND the velocity (a directional lead — the smear wake) AND the burst (a
     // transient ripple lift on a flick — the acceleration axis).
     function onFrame(timeSec: number): void {
-        const deltaMs = lastFrameSec > 0 ? (timeSec - lastFrameSec) * 1000 : 16.7;
+        const rawDeltaMs = lastFrameSec > 0 ? (timeSec - lastFrameSec) * 1000 : 16.7;
         lastFrameSec = timeSec;
+        const deltaMs = Math.min(Math.max(rawDeltaMs, 0), 50);
         pointer.tick(deltaMs);
 
         // Drive the spring-eased traveling-wave envelope amplitude (the liquid-weight inertia).

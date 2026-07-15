@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from "vue";
 // BD.W-MORPH-FIELD-WELD — GooFilter: the ONE library metaball `<filter>` mount.
 //
 // THE UNIFICATION (4a — the DRY win). `GlassGooFilter.vue` (#glass-goo) +
@@ -76,7 +77,7 @@ const props = withDefaults(
     { extra: () => [] },
 );
 
-const filters = [...LIBRARY_IDS, ...props.extra];
+const filters = computed(() => [...LIBRARY_IDS, ...props.extra]);
 </script>
 
 <template>
