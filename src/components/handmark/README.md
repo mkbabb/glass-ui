@@ -67,7 +67,7 @@ its OWN perturb math. ONE seed leaf, the house identity.
 
 ## Optional peers
 
-- `@mkbabb/pencil-boil ^0.4.1` — the L1 wobble geometry (the `ellipsePoints` ring +
+- `@mkbabb/pencil-boil ^0.9.2` — the L1 wobble geometry (the `ellipsePoints` ring +
   the per-pass perturb + the default underline wobble). The `boil` voice is the HOUSE
   φ-incommensurate value-noise morphology (`geometry.ts`), not a pencil-boil line.
 - `perfect-freehand` — VENDORED into `freehand.ts` (MIT, tldraw). The `ribbon:'hull'`

@@ -20,10 +20,10 @@ if [[ -n "$(git status --porcelain)" ]]; then
     exit 1
 fi
 
-node scripts/verify.mjs --state auto --profile release --require-terminal
+npm run prepublishOnly
 
 if [[ ! -f dist/index.d.ts ]]; then
-    echo "ERROR: terminal verification did not leave dist/index.d.ts" >&2
+    echo "ERROR: build did not leave dist/index.d.ts" >&2
     exit 1
 fi
 

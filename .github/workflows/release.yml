@@ -25,9 +25,13 @@ jobs:
                   TAG="${GITHUB_REF_NAME#v}"
                   PKG="$(node -p "require('./package.json').version")"
                   test "$TAG" = "$PKG" || { echo "tag ${GITHUB_REF_NAME} != package.json ${PKG}"; exit 1; }
-            - name: verify terminal release state
-              run: node scripts/verify.mjs --state auto --profile release --require-terminal
+            - name: typecheck
+              run: npm run typecheck
+            - name: build
+              run: npm run build
+            - name: test
+              run: npm test
             - name: publish
-              run: npm publish --access public --provenance
+              run: npm publish --ignore-scripts --access public --provenance
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

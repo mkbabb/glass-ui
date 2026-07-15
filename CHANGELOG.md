@@ -1,5 +1,60 @@
 # Changelog
 
+## 6.0.0
+
+The BI consolidation cut: fewer public names and interaction owners, one truthful
+renderer-status seam, and the stable focused `ScrollProgressRim` implementation.
+`CompletionSeal`, `Deck`, `Dock`, and `HandMark` remain public. The exact export-key
+delta from 5.0.0 is one removal, `./stacked-icons`; no key is added or renamed.
+
+### Breaking
+
+- **Root `Section` is removed.** Use an ordinary semantic `<section>` and compose the
+  required surface (`Card`, `PaperBackdrop`, or `InstrumentChassis`) explicitly.
+- **Owner-internal members leave their family barrels.** Removed: `GlassCarouselPager`,
+  `DialogScrollContent`, `ComboboxCancel`, `ComboboxSeparator`, `ComboboxViewport`,
+  `DataTablePagination`, `DrawerOverlay`, `DrawerPortal`, `DropdownMenuPortal`,
+  `ProgressDefault`, `ProgressGradient`, `ProgressLiquid`, `ProgressSectioned`,
+  `SelectScrollUpButton`, and `SelectScrollDownButton`. Their surviving public parent
+  components own those details.
+- **Constellation has one Canvas2D lifecycle.** `ConstellationExpose.backend()` and
+  `parseColorRGBA` are removed; read the new `rendererStatus` ref/event when renderer
+  identity or failure attribution matters.
+- **Blob interaction is explicit.** A decorative `<Blob>` mounts no hit surface or
+  pointer listeners. Supply `pressLabel` to opt into its named native button; `disabled`
+  disables that surface.
+- **Deck motion helpers are removed.** `installDeckSpring`, `deckEase`, and `DECK_SPRING`
+  no longer ship; `useDeck`, keyboard navigation, `DeckPager`, and the `/deck` subpath
+  remain.
+- **Typewriter is text, not a hidden glyph control.** `interactive` and
+  `backspaceToPosition` are removed. Render an explicit button when text editing is the
+  user action.
+- **`InkMark` is removed; use `HandMark`.** The implementation and `/handmark` subpath
+  remain. **`StackedIconGroup` and `/stacked-icons` are removed**; owner-local DOM should
+  express each avatar/icon cluster's actual controls and overflow.
+
+### Added and changed
+
+- `SegmentedTabs` now applies `ariaLabel` to both desktop and responsive owners, always
+  reports tablist orientation, and adds `semantics?: "toggle" | "tabs"` so material and
+  ARIA roles are independent. The historical `pill`/`underline` mapping remains the
+  default.
+- `/scroll-progress-rim` remains the minimal `ScrollProgressRim` segment renderer for an
+  aggregate value or explicit segments; the broader retired `BorderProgress` surface is
+  not restored.
+- Aurora, Blob, Constellation, FourierField, and LiquidGrid expose/emit
+  `rendererStatus` (`phase`, `engine`, `adapter`, optional `error`) with attributed
+  WebGPU/WebGL2/Canvas2D/CSS fallback state.
+- FuzzySearch paints matches with ordinary escaped `<mark>` elements. The bundled named
+  `::highlight()` rules and empty `styles/utilities/animate.css` artifact are gone;
+  `useTextHighlight` remains a caller-styled low-level Custom Highlight API.
+- The optional `@mkbabb/pencil-boil` peer is now `^0.9.2`; development pins immutable
+  `0.9.2`. The HandMark geometry and boil imports build and test against that artifact.
+  Pencil 0.9.2 itself declares Node 24/npm 11; Glass core remains Node 22 compatible
+  when that optional peer is not installed.
+- Release validation is direct (`typecheck`, build, tests) and tag publication retains
+  npm provenance; packaging no longer depends on terminal tranche metadata.
+
 ## 5.0.0
 
 The joint BG/BH cut — the BG visual-convergence redesign lands with the BH structural

@@ -382,10 +382,9 @@ const typeSurfaceChecks = [
 const rootStyleChecks = [
     ["src/styles/utilities.css", ".metric-badge"],
     ["src/styles/utilities.css", "justify-content: center"],
-    // AU.W8b carve: the control family (incl. the dark-mode-toggle sizes)
-    // moved dock.css → dock-controls.css (nested); both ship via /styles.
-    ["src/styles/dock-controls.css", ".dark-mode-toggle-button"],
-    ["src/styles/dock-controls.css", "[data-size=\"sm\"]"],
+    // The toggle owns its control recipe beside the component; the dock composes it.
+    ["src/components/controls/dark-mode-toggle.css", ".dark-mode-toggle-button"],
+    ["src/components/controls/dark-mode-toggle.css", "[data-size=\"sm\"]"],
 ];
 
 const retiredRootUtilities = [

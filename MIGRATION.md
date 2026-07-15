@@ -5,6 +5,56 @@ records the breaking changes that landed in that cut, newest first. Clean breaks
 — no legacy aliases, no back-compat shims (L invariant 4); every break is a one-line
 rename or import re-point per call site.
 
+## 6.0.0
+
+The BI cut removes public wrappers and aliases whose lifecycle belongs to their parent,
+and adds explicit interaction and renderer-status seams. `CompletionSeal`, `Deck`, `Dock`,
+and `HandMark` remain public. The package export-map delta is exactly the removal of
+`./stacked-icons`; all other 5.0.0 export keys, including `./scroll-progress-rim`, remain.
+
+### Clean breaks
+
+| 5.x consumer surface | 6.0 migration |
+|---|---|
+| Root `<Section>` | Render a semantic `<section>` and compose `Card`, `PaperBackdrop`, or `InstrumentChassis` only when that surface is needed. |
+| `GlassCarouselPager` | Compose the retained carousel controls/pager primitives at the carousel owner. |
+| `DialogScrollContent` | Use `DialogContent`; it owns scrolling. |
+| `ComboboxCancel`, `ComboboxSeparator`, `ComboboxViewport` | Compose the retained Combobox root/input/content/item surface; these members are internal. |
+| `DataTablePagination` | Own paging beside `DataTable` using the table's controlled state. |
+| `DrawerOverlay`, `DrawerPortal` | Use `DrawerContent`; it owns one overlay and portal boundary. |
+| `DropdownMenuPortal` | Use `DropdownMenuContent`; it owns the portal boundary. |
+| `ProgressDefault`, `ProgressGradient`, `ProgressLiquid`, `ProgressSectioned` | Use `<Progress variant="default|gradient|liquid|sectioned">`. |
+| `SelectScrollUpButton`, `SelectScrollDownButton` | Use `SelectContent`; overflow controls are internal. |
+| `ConstellationExpose.backend()` | Read the exposed `rendererStatus` ref or `@renderer-status`; Constellation now reports `engine: "canvas2d"`. |
+| `parseColorRGBA` from `/constellation` | Resolve paint in the consumer or use the component's palette input; the renderer-local parser is no longer public. |
+| `<Blob @click>` relying on the implicit hit layer | Add `press-label="…"` to opt into the SDF-shaped native button. Omit it for a decorative, listener-free Blob; use `disabled` to disable the button. |
+| `installDeckSpring`, `deckEase`, `DECK_SPRING` | Keep `useDeck` for deck state/navigation and own presentation motion at the presentation boundary. |
+| `<TypewriterText interactive>` / `backspaceToPosition()` | Remove the hidden per-glyph action; render a named native button for an editing command. |
+| `InkMark` | Rename to `HandMark` from `@mkbabb/glass-ui/handmark`. |
+| `StackedIconGroup` / `@mkbabb/glass-ui/stacked-icons` | Render ordinary owner-local DOM with explicit names, overflow, and detail controls. |
+
+### Additive and corrected surfaces
+
+- `SegmentedTabs` accepts `semantics?: "toggle" | "tabs"` independently of visual
+  `variant`. `ariaLabel` reaches both the desktop strip and responsive Select; tab
+  semantics publish `aria-orientation` and retain roving tabindex. Consumers can remove
+  local orientation/role workarounds.
+- `ScrollProgressRim` remains the focused public successor on
+  `@mkbabb/glass-ui/scroll-progress-rim`. It accepts aggregate `value`/`max`, optional
+  `segments`, and `coverage`; the broad `BorderProgress` API remains retired.
+- Aurora, Blob, Constellation, FourierField, and LiquidGrid expose and emit
+  `rendererStatus` with `{ phase, engine, adapter, error? }`. Capability fallback may
+  change `engine`; shader/pipeline failures remain attributed to the backend that failed.
+- FuzzySearch now emits ordinary escaped `<mark>` elements. Remove assumptions about
+  bundled `::highlight(glass-search-mark)` / `::highlight(glass-mark)` paint. Code using
+  `useTextHighlight` must continue to provide its own Custom Highlight CSS. The empty
+  `styles/utilities/animate.css` file/import is removed.
+- Install `@mkbabb/pencil-boil@^0.9.2` when using HandMark. Glass development and the
+  release build pin `0.9.2`; `catmullRomToBezier`, `ellipsePoints`, `perturbPoints`,
+  `perturbPointsClosed`, `pointsToLinear`, `wobbleLinePoints`, and `useLineBoil` are the
+  exercised producer surface. Pencil 0.9.2 declares Node 24/npm 11; the optional peer may
+  be omitted by Glass consumers that do not use HandMark.
+
 ## 5.0.0
 
 The 5.0.0 cut is the joint BG/BH release: the BG visual-convergence band (the warm /

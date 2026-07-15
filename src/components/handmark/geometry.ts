@@ -12,7 +12,7 @@
  *   - text mode (box == null): use the full viewBox (single-line underline/strike)
  *   - positioned mode (box = {x,y,w,h}): map an explicit rect (circle a datum)
  *
- * The circle arm rides pencil-boil 0.4.x's `ellipsePoints` (the hand-circle
+ * The circle arm rides pencil-boil's `ellipsePoints` (the hand-circle
  * overshoot ring — the sole upstream geometry delta this component required).
  *
  * THE SEED RECONCILE (BA.W-HANDMARK [S2]): the wobble centerlines are seeded from

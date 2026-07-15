@@ -1,6 +1,6 @@
 {
     "name": "@mkbabb/glass-ui",
-    "version": "5.0.0",
+    "version": "6.0.0",
     "description": "Glassmorphic design system — Vue 3.5 components, reka-ui primitives, Tailwind CSS v4 tokens",
     "license": "MIT",
     "repository": {
@@ -591,7 +591,7 @@
         "iter-test": "vitest run --reporter=verbose",
         "iter-test-watch": "vitest --watch",
         "prepare": "node scripts/install-hooks.mjs && (test -f dist/glass-ui.js -a -f dist/index.d.ts || npm run build)",
-        "prepublishOnly": "npm run build && npm test && node scripts/verify.mjs --state auto --profile release --require-terminal",
+        "prepublishOnly": "npm run typecheck && npm run build && npm test",
         "profile:aurora": "node scripts/profile-aurora.mjs",
         "profile:bundle": "node scripts/profile-bundle.mjs",
         "release": "bash scripts/release.sh",
@@ -605,7 +605,7 @@
     "peerDependencies": {
         "@lucide/vue": "^1.16.0",
         "@mkbabb/keyframes.js": "^5.2.0",
-        "@mkbabb/pencil-boil": "^0.4.1",
+        "@mkbabb/pencil-boil": "^0.9.2",
         "@mkbabb/value.js": "^3.1.0",
         "@vueuse/core": "^14.0",
         "class-variance-authority": "^0.7",
@@ -644,7 +644,7 @@
         "@lucide/vue": "^1.20.0",
         "highlight.js": "^11.11.1",
         "@mkbabb/keyframes.js": "^5.2.0",
-        "@mkbabb/pencil-boil": "^0.4.1",
+        "@mkbabb/pencil-boil": "0.9.2",
         "@mkbabb/value.js": "^3.1.0",
         "@tailwindcss/postcss": "^4.3.1",
         "@tailwindcss/vite": "^4.3.1",
