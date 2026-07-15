@@ -14,7 +14,7 @@
 // It re-implements NEITHER a cubic-bezier Newton-solver NOR a staircase evaluator
 // (the curves.ts NO-FORK discipline, now in a published component).
 
-import { computed, ref, type ComputedRef, type Ref } from "vue";
+import { computed, onScopeDispose, ref, type ComputedRef, type Ref } from "vue";
 import {
     CSSCubicBezier,
     steppedEase,
@@ -232,12 +232,35 @@ export function useEasingPicker(
     // ── playback (one-shot rAF travel; the kf Oscillator loop seam) ─────────────
     const progress = ref(0);
     let rafId = 0;
+    const reducedMotion = ref(false);
+    const motionQuery =
+        typeof window === "undefined" || typeof window.matchMedia !== "function"
+            ? null
+            : window.matchMedia("(prefers-reduced-motion: reduce)");
     function stopTravel(): void {
         if (rafId) cancelAnimationFrame(rafId);
         rafId = 0;
     }
+    const syncReducedMotion = (event: MediaQueryListEvent | MediaQueryList) => {
+        reducedMotion.value = event.matches;
+        if (event.matches) {
+            stopTravel();
+            progress.value = 1;
+        }
+    };
+    if (motionQuery) {
+        syncReducedMotion(motionQuery);
+        motionQuery.addEventListener("change", syncReducedMotion);
+        onScopeDispose(() =>
+            motionQuery.removeEventListener("change", syncReducedMotion),
+        );
+    }
     function playTravel(): void {
         stopTravel();
+        if (reducedMotion.value) {
+            progress.value = 1;
+            return;
+        }
         const start = performance.now();
         const tick = (now: number) => {
             const t = Math.min(1, (now - start) / TRAVEL_DURATION_MS);

@@ -22,6 +22,7 @@
                         'header-items-wrapper header-items-right flex items-center gap-3',
                         isVisible ? '' : 'header-collapsed-right',
                     ]"
+                    :inert="!isVisible || undefined"
                 >
                     <slot name="items" />
                 </div>
@@ -38,6 +39,7 @@
                         'header-items-wrapper header-items-left flex items-center gap-3',
                         isVisible ? '' : 'header-collapsed-left',
                     ]"
+                    :inert="!isVisible || undefined"
                 >
                     <slot name="items" />
                 </div>

@@ -120,18 +120,21 @@ function loadPlaygroundPreset(name: PresetId): void {
 }
 
 const playCard = shallowRef<HTMLElement | null>(null);
-let playRaf = 0;
+const playgroundTransition = useNumericTransition<"x">({
+    from: { x: 0 },
+    to: { x: 280 },
+    duration: 1100,
+    timingFunction: (t) => playFn.value.fn(t),
+    onFrame: ({ x }) => {
+        if (playCard.value)
+            playCard.value.style.transform = `translateX(${x.toFixed(2)}px)`;
+    },
+});
+
 function playgroundPlay(): void {
-    const el = playCard.value;
-    if (!el) return;
-    cancelAnimationFrame(playRaf);
-    const start = performance.now();
-    const tick = (now: number) => {
-        const t = Math.min(1, (now - start) / 1100);
-        el.style.transform = `translateX(${(playFn.value.fn(t) * 280).toFixed(2)}px)`;
-        if (t < 1) playRaf = requestAnimationFrame(tick);
-    };
-    playRaf = requestAnimationFrame(tick);
+    if (!playCard.value) return;
+    playCard.value.style.transform = "translateX(0px)";
+    void playgroundTransition.start();
 }
 
 const copied = ref(false);

@@ -37,6 +37,8 @@ export interface UseNumericTransitionOptions<K extends string> {
     to: SpringSnapshot<K>;
     /** Playback duration in ms. */
     duration: number;
+    /** Honor prefers-reduced-motion by snapping to the target. Default true. */
+    respectReducedMotion?: boolean;
     /**
      * keyframes.js timing function — an explicit callable `(t) => number`.
      *
@@ -73,11 +75,19 @@ export function useNumericTransition<K extends string>(
     const progress = ref(0);
     const playing = ref(false);
 
-    const { from, to, duration, timingFunction, onFrame } = options;
+    const {
+        from,
+        to,
+        duration,
+        timingFunction,
+        onFrame,
+        respectReducedMotion = true,
+    } = options;
 
     const numericOpts: NumericAnimationOptions = {
         duration,
         timingFunction,
+        respectReducedMotion,
     };
 
     const animation = shallowRef(

@@ -16,6 +16,7 @@
              `expand()` callback flips the SAME `v-model:open` (no parallel state). -->
         <slot name="expand-trigger" :expand="expand" :label="expandLabel">
             <button
+                type="button"
                 data-part="trigger"
                 data-mode="expand"
                 class="absolute z-10 rounded-button bg-card/70 [backdrop-filter:var(--glass-blur-wash)] p-1.5 text-muted-foreground hover:text-foreground transition-colors shadow-sm border border-border/40"
@@ -24,7 +25,7 @@
                 :aria-label="expandLabel"
                 @click="expand"
             >
-                <Maximize2 class="h-4 w-4" />
+                <Maximize2 class="h-4 w-4" aria-hidden="true" />
             </button>
         </slot>
         <slot v-if="!open" :fullscreen="false" />
@@ -82,6 +83,7 @@
                 :fullscreen="true"
             >
                 <button
+                    type="button"
                     data-part="trigger"
                     data-mode="collapse"
                     class="absolute z-10 rounded-button bg-card/70 [backdrop-filter:var(--glass-blur-wash)] p-2 text-muted-foreground hover:text-foreground transition-colors shadow-sm border border-border/40"
@@ -90,7 +92,7 @@
                     :aria-label="collapseLabel"
                     @click="collapse"
                 >
-                    <Minimize2 class="h-4 w-4" />
+                    <Minimize2 class="h-4 w-4" aria-hidden="true" />
                 </button>
             </slot>
             <div data-part="panel" class="h-full w-full">

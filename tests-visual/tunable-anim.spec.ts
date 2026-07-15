@@ -257,6 +257,12 @@ test.describe("BC.W-TUNABLE-ANIM — the live-tunable motion surface (π)", () =
         await expect(picker, "the curve plot is present under PRM (readable, not stripped)").toBeVisible();
         const hasCurve = await picker.locator("svg path[d^='M 0 1 C']").count();
         expect(hasCurve, "the bezier curve is still plotted under reduce").toBeGreaterThan(0);
+        await picker.getByRole("button", { name: "Trace the curve" }).click();
+        await page.waitForTimeout(180);
+        await expect(
+            picker.locator("svg circle").last(),
+            "reduced motion settles the travel dot immediately instead of starting a rAF animation",
+        ).toHaveAttribute("cx", "1");
     });
 
     // ── P7 — WebKit-native (no backdrop-filter:url, no WebGL on the editor) ───────

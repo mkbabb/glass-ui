@@ -107,7 +107,8 @@ async function readSurface(
             host.style.cssText =
                 "position:fixed;left:0;top:0;width:360px;height:200px;z-index:99999;padding:24px;";
             host.style.background = BUSY_BG;
-            if (level0) host.style.setProperty("--glass-level", "0");
+            const priorGlassLevel = document.documentElement.style.getPropertyValue("--glass-level");
+            if (level0) document.documentElement.style.setProperty("--glass-level", "0");
 
             let target: HTMLElement;
             if (kind === "slider-range") {
@@ -130,7 +131,7 @@ async function readSurface(
                 target = range;
             } else {
                 target = document.createElement("div");
-                target.className = kind === "drawer" ? "glass-drawer" : "glass-floating";
+                target.className = kind === "drawer" ? "glass-drawer glass-overlay" : "glass-floating";
                 target.style.cssText =
                     "position:relative;width:100%;height:100%;border-radius:12px;";
                 host.appendChild(target);
@@ -156,6 +157,13 @@ async function readSurface(
             }
 
             document.getElementById(FIXTURE_ID)?.remove();
+            if (level0) {
+                if (priorGlassLevel) {
+                    document.documentElement.style.setProperty("--glass-level", priorGlassLevel);
+                } else {
+                    document.documentElement.style.removeProperty("--glass-level");
+                }
+            }
             return { backdropFilter, background, translucent: alpha < 0.995 };
         },
         { kind, level0, BUSY_BG },

@@ -14,7 +14,16 @@
 // animation). The seal is COMPOSITOR-ONLY (the recipe rides stroke-dashoffset /
 // transform / filter) — this leaf writes only the boolean seam + the PRM-snap flag.
 
-import { computed, onMounted, readonly, ref, watch, type Ref } from "vue";
+import {
+    computed,
+    onMounted,
+    onScopeDispose,
+    readonly,
+    ref,
+    watch,
+    type Ref,
+} from "vue";
+import { useMediaQuery } from "@vueuse/core";
 
 export interface UseCompletionSealOptions {
     /**
@@ -45,14 +54,6 @@ export interface UseCompletionSeal {
     draw: () => void;
 }
 
-function prefersReducedMotion(): boolean {
-    return (
-        typeof window !== "undefined" &&
-        typeof window.matchMedia === "function" &&
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    );
-}
-
 function readPlay(
     play: UseCompletionSealOptions["play"],
 ): boolean | undefined {
@@ -75,15 +76,25 @@ export function useCompletionSeal(
 
     const playing = ref(false);
     const drawn = ref(false);
+    const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
     const reduced = computed(
-        () => respectReducedMotion && prefersReducedMotion(),
+        () => respectReducedMotion && prefersReducedMotion.value,
     );
+    let drawFrame: number | null = null;
+
+    function snap(): void {
+        if (drawFrame !== null) {
+            cancelAnimationFrame(drawFrame);
+            drawFrame = null;
+        }
+        playing.value = false;
+        drawn.value = true;
+    }
 
     function draw(): void {
         if (reduced.value) {
             // PRM: snap to the static fully-drawn seal, never arm the motion.
-            playing.value = false;
-            drawn.value = true;
+            snap();
             return;
         }
         // The one-shot: arm `data-play` for one frame's restart, then mark drawn. The
@@ -91,7 +102,13 @@ export function useCompletionSeal(
         // the finished frame, so dropping the arm afterward keeps the static seal.
         playing.value = false;
         if (typeof requestAnimationFrame === "function") {
-            requestAnimationFrame(() => {
+            if (drawFrame !== null) cancelAnimationFrame(drawFrame);
+            drawFrame = requestAnimationFrame(() => {
+                drawFrame = null;
+                if (reduced.value) {
+                    snap();
+                    return;
+                }
                 playing.value = true;
                 drawn.value = true;
             });
@@ -100,6 +117,14 @@ export function useCompletionSeal(
             drawn.value = true;
         }
     }
+
+    watch(reduced, (isReduced) => {
+        if (isReduced) snap();
+    });
+
+    onScopeDispose(() => {
+        if (drawFrame !== null) cancelAnimationFrame(drawFrame);
+    });
 
     // Fire on the `play` trigger (or on mount when `play` is unset — the default draw).
     if (play == null) {

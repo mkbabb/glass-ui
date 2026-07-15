@@ -87,6 +87,7 @@ const fieldStyle = computed(() =>
       :data-glass-dock-portal="dockContext?.id ? '' : undefined"
       :data-glass-dock-owner="dockContext?.id"
       :data-surface="props.surface"
+      data-material="transient-overlay"
       data-reveal="menu"
       data-slot="select-content"
       :class="cn(

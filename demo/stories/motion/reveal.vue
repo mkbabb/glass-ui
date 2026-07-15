@@ -118,6 +118,12 @@ function toggleBloom() {
     animation-name: reveal-fade;
 }
 
+@media (prefers-reduced-motion: reduce) {
+    .reveal-stage [data-reveal] {
+        animation: none;
+    }
+}
+
 @keyframes reveal-rise {
     from {
         opacity: 0;

@@ -254,4 +254,10 @@ defineExpose({
 .tw-cursor--blink {
     animation: typewriter-blink 1.06s step-end infinite;
 }
+
+@media (prefers-reduced-motion: reduce) {
+    .tw-cursor--blink {
+        animation: none;
+    }
+}
 </style>

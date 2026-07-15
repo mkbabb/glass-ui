@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, ref, useAttrs, watchEffect } from "vue";
+import { computed, onBeforeUnmount, ref, useAttrs, watch, watchEffect } from "vue";
+import { useMediaQuery } from "@vueuse/core";
 import { useGlobalDark } from "../../composables/dark";
 import { cn } from "../_shared/class-names";
 
@@ -48,10 +49,9 @@ const attrs = useAttrs();
 // transition; a short tap falls through to the normal @click flip. The default
 // (`eclipse:false`) leaves the click path byte-identical.
 const eclipsing = ref(false);
-const prefersReduced =
-    typeof matchMedia !== "undefined" &&
-    matchMedia("(prefers-reduced-motion: reduce)").matches;
+const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
 let pressTimer: ReturnType<typeof setTimeout> | null = null;
+let eclipseTimer: number | null = null;
 let didEclipse = false;
 
 function clearPress(): void {
@@ -59,6 +59,14 @@ function clearPress(): void {
         clearTimeout(pressTimer);
         pressTimer = null;
     }
+}
+
+function clearEclipse(): void {
+    if (eclipseTimer !== null) {
+        clearTimeout(eclipseTimer);
+        eclipseTimer = null;
+    }
+    eclipsing.value = false;
 }
 
 function onEclipseDown(): void {
@@ -69,9 +77,9 @@ function onEclipseDown(): void {
         didEclipse = true;
         pressTimer = null;
         // Under reduce, flip instantly (no eclipse register).
-        if (!prefersReduced) {
+        if (!prefersReducedMotion.value) {
             eclipsing.value = true;
-            window.setTimeout(() => (eclipsing.value = false), 1700);
+            eclipseTimer = window.setTimeout(clearEclipse, 1700);
         }
         toggleDark();
     }, 460);
@@ -92,6 +100,15 @@ function onEclipseClick(e: MouseEvent): void {
     }
     if (!props.passive) toggleDark();
 }
+
+watch(prefersReducedMotion, (reduced) => {
+    if (reduced) clearEclipse();
+});
+
+onBeforeUnmount(() => {
+    clearPress();
+    clearEclipse();
+});
 
 const rootClass = computed(() =>
     cn(

@@ -128,7 +128,8 @@ const snapStyle = computed<CSSProperties | undefined>(() => {
       :data-glass-drawer-snap-points="hasSnapPoints ? 'true' : undefined"
       :data-glass-drawer-direction="direction"
       :data-surface="props.surface"
-      :class="cn('glass-drawer', surfaceDecoration, props.class)"
+      :class="cn('glass-drawer glass-overlay', surfaceDecoration, props.class)"
+      data-material="transient-overlay"
       :style="snapStyle"
     >
       <!-- Detent peek handle (AN.W3) — the grip the user drags to cycle the

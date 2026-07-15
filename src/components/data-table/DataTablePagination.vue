@@ -56,7 +56,7 @@ function goTo(p: number) {
             {{ total.toLocaleString() }} result{{ total === 1 ? "" : "s" }}
         </span>
 
-        <div class="flex items-center gap-1">
+        <nav aria-label="Pagination" class="flex items-center gap-1">
             <Button
                 variant="ghost"
                 iconOnly
@@ -77,12 +77,14 @@ function goTo(p: number) {
             </Button>
 
             <template v-for="(p, i) in visiblePages" :key="i">
-                <span v-if="p === null" class="px-1 select-none">...</span>
+                <span v-if="p === null" aria-hidden="true" class="px-1 select-none">…</span>
                 <Button
                     v-else
                     :variant="p === clampedPage ? 'default' : 'ghost'"
                     iconOnly
                     class="tabular-nums"
+                    :aria-label="`Page ${p}`"
+                    :aria-current="p === clampedPage ? 'page' : undefined"
                     @click="goTo(p)"
                 >
                     {{ p }}
@@ -107,6 +109,6 @@ function goTo(p: number) {
             >
                 ⟩⟩
             </Button>
-        </div>
+        </nav>
     </div>
 </template>

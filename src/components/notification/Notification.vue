@@ -7,6 +7,7 @@
     <div
       v-for="notification in notifications"
       :key="notification.id"
+      :role="notification.tone === 'destructive' ? 'alert' : 'status'"
       class="glass-floating feedback-tone flex items-center gap-3 rounded-panel px-4 py-3 text-foreground"
       :class="[
         toneClasses[notification.tone],
@@ -16,15 +17,18 @@
       <component
         :is="notificationIcons[notification.tone]"
         class="feedback-tone-glyph h-5 w-5 flex-shrink-0"
+        aria-hidden="true"
       />
       <p class="flex-1 text-sm font-medium">
         {{ notification.message }}
       </p>
       <button
+        type="button"
+        aria-label="Dismiss notification"
         @click="$emit('remove', notification.id)"
         class="rounded-button p-1 transition-colors hover:bg-white/10"
       >
-        <X class="h-4 w-4" />
+        <X class="h-4 w-4" aria-hidden="true" />
       </button>
     </div>
   </TransitionGroup>

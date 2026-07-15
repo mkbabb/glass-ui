@@ -110,24 +110,9 @@
     height: auto;
     max-height: 97vh;
     margin-top: 6rem;
-    /* The overlay-band glass surface — the heaviest rung (the Drawer is a
-       modal-band sheet, z-index: --z-modal). The oklab tint composite reads the
-       W55 bright bucket (a live-behind sheet over a bright page is the canonical
-       over-light case); the --glass-level knob flattens it to solid --card +
-       blur(0) with the rest of the band; the --glass-shadow-overlay ladder rung
-       carries the rim + the --shadow-2xl lift through the ladder. */
-    background: color-mix(
-        in oklab,
-        var(--glass-bg-overlay),
-        var(--glass-tint-source) var(--glass-tint-strength)
-    );
-    backdrop-filter: var(--glass-blur-overlay);
-    -webkit-backdrop-filter: var(--glass-blur-overlay);
-    border: 1px solid var(--glass-border-overlay);
     border-bottom: 0;
     border-start-start-radius: var(--radius-panel);
     border-start-end-radius: var(--radius-panel);
-    box-shadow: var(--glass-material-rim), var(--glass-shadow-overlay);
 }
 
 /*

@@ -22,8 +22,10 @@ describe("useNumericTransition", () => {
             from: { x: 0 },
             to: { x: 1 },
             duration: 100,
+            respectReducedMotion: false,
         };
         expect(options.duration).toBe(100);
+        expect(options.respectReducedMotion).toBe(false);
     });
 
     it("SpringSnapshot type contract remains stable across the rename", () => {

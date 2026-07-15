@@ -18,6 +18,7 @@
 // layout property (motion-canon P5). The pager worm (PagerDots) is the ONE metaball morph;
 // the drag-scrub that drives it lives in the consumer beside the pager.
 import type { WithClassAsProps } from "./interface";
+import { useMediaQuery } from "@vueuse/core";
 import { onBeforeUnmount, ref, watch } from "vue";
 import { cn } from "../_shared/class-names";
 import { useCarousel } from "./useCarousel";
@@ -52,16 +53,13 @@ const trackEl = ref<HTMLElement | null>(null);
 // so a per-slide transform never collides. PRM → the slides rest at scale 1 (no arrival).
 const ARRIVAL_SCALE_DROP = 0.035; // 1 → 0.965 at one slide away
 const ARRIVAL_FADE_DROP = 0.3; // 1 → 0.7 at one slide away
-const prefersReducedMotion =
-    typeof window !== "undefined" &&
-    typeof window.matchMedia === "function" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
 
 function applyArrival(): void {
     const api = carouselApi.value;
     if (!api) return;
     const nodes = api.slideNodes();
-    if (!props.arrival || prefersReducedMotion) {
+    if (!props.arrival || prefersReducedMotion.value) {
         for (const node of nodes) {
             node.style.transform = "";
             node.style.opacity = "";
@@ -89,7 +87,7 @@ function bindArrival(api: UnwrapRefCarouselApi | null | undefined): void {
 }
 watch(carouselApi, (api) => bindArrival(api), { immediate: true });
 watch(
-    () => props.arrival,
+    [() => props.arrival, prefersReducedMotion],
     () => applyArrival(),
 );
 onBeforeUnmount(() => {
