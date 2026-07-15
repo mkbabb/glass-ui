@@ -321,19 +321,29 @@
 }
 
 /*
- * Peek handle — the rounded grip at the top of the sheet. It is the visual
- * affordance the user drags to cycle peek → half → full. The house snap engine
- * (`useDrawerSnap`) binds the pointer-drag gesture directly on this handle (the
- * `[data-glass-drawer-handle]` element) and flags it `[data-dragging]` while a drag
- * is in flight, so the grip intensifies "live" during the gesture.
+ * Detent handle — the rounded grip at the top of a multi-stop sheet. Its 44px host
+ * is the named slider control for keyboard and pointer/touch; the 5px grip remains
+ * the quiet visual mark. The house snap engine binds pointer drag directly to this
+ * host and flags it `[data-dragging]` while a drag is in flight.
  */
 .glass-drawer-handle {
     flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    min-block-size: var(--touch-target, 2.75rem);
     padding-block: 0.75rem 0.5rem;
     touch-action: none;
+    cursor: grab;
+}
+
+.glass-drawer-handle:focus-visible {
+    outline: none;
+}
+
+.glass-drawer-handle:focus-visible .glass-drawer-grip {
+    opacity: var(--drawer-handle-opacity-active);
+    box-shadow: 0 0 0 3px var(--focus-ring-color);
 }
 
 .glass-drawer-grip {

@@ -78,11 +78,15 @@ const surfaceDecoration = computed(() =>
 // function-ref first fires is a stale comment placeholder that never refreshes when
 // `<Presence>` mounts the real element — the writer wrote to a dead ref forever (the
 // model↔paint SEVER: `--glass-drawer-t` stayed unwritten, the sheet never moved). The
-// handle mounts WITH the sheet, so `handleEl.closest([data-glass-drawer])` is always
-// the live content root the transform + the `--glass-drawer-t` scalar share.
+// A hidden anchor mounts with every sheet; a real detent handle supersedes it when
+// present. Either resolves the live content root without relying on Presence's
+// transient component ref.
 const handleEl = ref<HTMLElement | null>(null)
+const contentAnchorEl = ref<HTMLElement | null>(null)
 const resolveContentEl = (): HTMLElement | null =>
-  (handleEl.value?.closest('[data-glass-drawer]') as HTMLElement | null) ?? null
+  ((handleEl.value ?? contentAnchorEl.value)?.closest(
+    '[data-glass-drawer]',
+  ) as HTMLElement | null) ?? null
 const snapCtx = useOptionalDrawerSnapContext()
 const snap = snapCtx
   ? useDrawerSnap({ contentEl: resolveContentEl, handleEl, ctx: snapCtx })
@@ -94,8 +98,41 @@ const snap = snapCtx
 const hasSnapPoints = computed(
   () => (snapCtx?.snapPoints.value.length ?? 0) > 1,
 )
+const detents = computed(() =>
+  [...(snapCtx?.snapPoints.value ?? [])].sort((a, b) => a - b),
+)
+const activeDetentIndex = computed(() => {
+  const raw = snapCtx?.activeSnapPoint.value
+  const value = typeof raw === 'number' ? raw : Number.parseFloat(String(raw))
+  if (Number.isNaN(value)) return Math.max(0, detents.value.length - 1)
+  return detents.value.reduce(
+    (best, point, index) =>
+      Math.abs(point - value) < Math.abs(detents.value[best]! - value) ? index : best,
+    0,
+  )
+})
+const activeDetent = computed(() => detents.value[activeDetentIndex.value] ?? 1)
+const detentValueText = computed(
+  () =>
+    `${Math.round(activeDetent.value * 100)}%, position ${activeDetentIndex.value + 1} of ${detents.value.length}`,
+)
 const direction = computed(() => snapCtx?.direction.value ?? 'bottom')
 const mode = computed(() => snapCtx?.mode.value ?? 'modal')
+
+function onHandleKeydown(event: KeyboardEvent) {
+  if (!snap || !hasSnapPoints.value) return
+  const last = detents.value.length - 1
+  let index = activeDetentIndex.value
+  if (event.key === 'Home') index = 0
+  else if (event.key === 'End') index = last
+  else if (event.key === 'ArrowUp' || event.key === 'ArrowRight')
+    index = Math.min(last, index + 1)
+  else if (event.key === 'ArrowDown' || event.key === 'ArrowLeft')
+    index = Math.max(0, index - 1)
+  else return
+  event.preventDefault()
+  snap.snapTo(detents.value[index]!)
+}
 
 // The snap-translate transform — the `--glass-drawer-t` scalar (0 = closed/offscreen,
 // 1 = fully open) maps to the sheet's translate along its drag axis. Token-driven
@@ -134,16 +171,26 @@ const snapStyle = computed<CSSProperties | undefined>(() => {
       data-material="transient-overlay"
       :style="snapStyle"
     >
-      <!-- Detent peek handle (AN.W3) — the grip the user drags to cycle the
-           detents (the house snap engine binds its pointer gesture). -->
+      <span ref="contentAnchorEl" hidden />
+      <!-- The detent grip is present only for a real ladder. Pointer, touch, and
+           keyboard all settle through useDrawerSnap.snapTo's active model writer. -->
       <div
+        v-if="hasSnapPoints"
         ref="handleEl"
         class="glass-drawer-handle"
         data-glass-drawer-handle
         :data-dragging="snap?.dragging.value ? '' : undefined"
-        aria-hidden="true"
+        role="slider"
+        tabindex="0"
+        aria-label="Drawer position"
+        :aria-orientation="direction === 'left' || direction === 'right' ? 'horizontal' : 'vertical'"
+        :aria-valuemin="detents[0]"
+        :aria-valuemax="detents[detents.length - 1]"
+        :aria-valuenow="activeDetent"
+        :aria-valuetext="detentValueText"
+        @keydown="onHandleKeydown"
       >
-        <span class="glass-drawer-grip" />
+        <span class="glass-drawer-grip" aria-hidden="true" />
       </div>
       <slot />
     </DialogContent>

@@ -31,7 +31,8 @@ export const DRAWER_SNAP = { response: 0.32, dampingFraction: 0.8 } as const;
 
 /**
  * BB-2 (the direction-aware default snap ladder fold) — the peek/half/full detent
- * ladder a bottom/top sheet resolves when the consumer passes no `snapPoints`. The
+ * ladder a live-behind bottom/top sheet resolves when the consumer passes no
+ * `snapPoints`. The
  * value (12% peek · 50% half · 100% full) is the `DEFAULT_LIVE_SNAP_POINTS` shape
  * the prior vaul wrapper hardcoded, re-homed into the engine as the bottom/top
  * default. A side-lens (left/right) sheet resolves a FULL-SLIDE instead (no detents)
@@ -40,11 +41,10 @@ export const DRAWER_SNAP = { response: 0.32, dampingFraction: 0.8 } as const;
 export const BOTTOM_SHEET_LADDER: readonly number[] = [0.12, 0.5, 1];
 
 /**
- * BB-2 — resolve the DEFAULT snap ladder from `direction` natively (retiring the
- * Atlas `:snap-points="[]"` workaround). A bottom/top sheet gets the peek/half/full
- * ladder; a left/right side-lens gets a full-slide (no detents — an empty ladder, so
- * `useDrawerSnap` treats it as a single open/closed slide). A consumer-supplied
- * `snapPoints` always wins over this default.
+ * BB-2 — resolve the LIVE-BEHIND default snap ladder from `direction` natively. A
+ * bottom/top sheet gets the peek/half/full ladder; a left/right side-lens gets a
+ * full-slide (no detents — an empty ladder, so `useDrawerSnap` treats it as a single
+ * open/closed slide). A consumer-supplied `snapPoints` always wins over this default.
  */
 export function resolveDefaultSnapPoints(
     direction: DrawerDirection,

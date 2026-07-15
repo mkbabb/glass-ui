@@ -12,10 +12,9 @@ export {
 
 /**
  * Drawer drag/slide direction (BB.W-DRAWER-ABROGATE). `bottom` (default) + `top`
- * are the peek/half/full bottom-sheet axes; `left`/`right` are the side-lens
- * full-slide axes. The house snap engine (`useDrawerSnap`) resolves the default
- * detent ladder FROM this (BB-2): bottom/top → `[0.12, 0.5, 1]`, left/right →
- * a full-slide (no detents).
+ * can carry peek/half/full detents; `left`/`right` are the side-lens full-slide
+ * axes. Only `mode="live-behind"` resolves a default ladder (bottom/top →
+ * `[0.12, 0.5, 1]`); ordinary modal drawers without `snapPoints` rest fully open.
  */
 export type DrawerDirection = "top" | "bottom" | "left" | "right";
 

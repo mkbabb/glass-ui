@@ -48,7 +48,7 @@ const props = withDefaults(
     modal?: boolean
     /** Presentation mode shorthand. */
     mode?: DrawerMode
-    /** The detent ladder (fractions 0..1). When omitted, resolved from `direction` (BB-2). */
+    /** The detent ladder (fractions 0..1). Live-behind resolves a default ladder. */
     snapPoints?: (number | string)[]
     /** The active detent fraction (`v-model:active-snap-point`). */
     activeSnapPoint?: number | string | null
@@ -143,17 +143,16 @@ watch(
 watch(resolvedStage, () => syncStageGates(resolvedOpen.value))
 onScopeDispose(() => syncStageGates(false))
 
-// BB-2 — the direction-aware default snap ladder. A consumer-supplied `snapPoints`
-// wins; otherwise the engine resolves it from `direction` (bottom/top →
-// [0.12,0.5,1], left/right → a full-slide). The values are kept as numbers (the
-// fraction ladder the house engine reads).
+// A consumer-supplied ladder (including `[]`) always wins. Only live-behind owns
+// the direction-derived peek/half/full default; an ordinary modal/content-sized
+// drawer has one full resting position and no implicit detents.
 const resolvedSnapPoints = computed<readonly number[]>(() => {
-  if (props.snapPoints && props.snapPoints.length > 0) {
+  if (props.snapPoints !== undefined) {
     return props.snapPoints.map((p) =>
       typeof p === 'number' ? p : Number.parseFloat(p),
     )
   }
-  return resolveDefaultSnapPoints(props.direction)
+  return live.value ? resolveDefaultSnapPoints(props.direction) : []
 })
 
 // The active-snap-point round-trip (`v-model:active-snap-point`). The house snap

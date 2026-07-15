@@ -69,8 +69,8 @@ const ctaPresses = ref(0);
                             <DrawerHeader>
                                 <DrawerTitle>Session details</DrawerTitle>
                                 <DrawerDescription>
-                                    Drag the handle up or down to switch snap
-                                    points.
+                                    Drag the handle or focus it and use Arrow,
+                                    Home, and End to switch snap points.
                                 </DrawerDescription>
                             </DrawerHeader>
                             <div class="px-6 pb-4 grid gap-3 text-sm">
@@ -223,8 +223,9 @@ const ctaPresses = ref(0);
                             </DrawerHeader>
                             <div class="space-y-3 p-4">
                                 <p class="text-body text-muted-foreground">
-                                    Drag the handle up to half, then full. The page
-                                    behind never scales and never loses focusability.
+                                    Drag the handle or use its keyboard controls to
+                                    reach half, then full. The page behind never
+                                    scales and never loses focusability.
                                 </p>
                                 <Button variant="ghost">Reorder picks</Button>
                             </div>
