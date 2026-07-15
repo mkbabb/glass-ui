@@ -1,0 +1,18 @@
+/* The public material hierarchy. Content and elevated content own their paint here;
+   functional glass and transient overlays keep their component-specific anatomy. */
+@layer components {
+    [data-material="content-field"] {
+        background: var(--background);
+        color: var(--foreground);
+    }
+
+    /* A content card is elevation, not another glass pane. Keep nested controls free
+       to remain functional glass by changing only the card root's paint. */
+    [data-material="elevated-content"][data-surface="glass"] {
+        background: var(--card);
+        border-color: var(--border-soft);
+        box-shadow: var(--card-shadow);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+}

@@ -367,6 +367,7 @@ useStalePropWarning("Card", ["flush"]);
     <Surface
         v-specular="specularArmed"
         data-slot="card"
+        data-material="elevated-content"
         :tier="tier"
         :surface="surfaceForPlate"
         :deep="deep"

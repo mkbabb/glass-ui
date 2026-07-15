@@ -76,7 +76,12 @@ useGlassBackdropLuminance(stageEl, {
 </script>
 
 <template>
-    <div ref="stageEl" class="dock-stage" :[GLASS_BACKDROP_SHARED_ATTR]="''">
+    <div
+        ref="stageEl"
+        class="dock-stage"
+        data-material="functional-glass"
+        :[GLASS_BACKDROP_SHARED_ATTR]="''"
+    >
         <!-- The ONE shared field behind the whole demo column. The field's backing
              store is CLAMPED to the VIEWPORT (BI.W-STAGE-FIELD-CLAMP / PERF-3): the
              absolute track spans the full scroll column, but the <Aurora> host inside

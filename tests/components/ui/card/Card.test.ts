@@ -22,6 +22,7 @@ describe("Card", () => {
         expect(classes).toContain("scrollbar-hidden");
         expect(classes).toContain("glass-resting");
         expect(root.attributes("data-slot")).toBe("card");
+        expect(root.attributes("data-material")).toBe("elevated-content");
         expect(root.attributes("data-tier")).toBe("resting");
         expect(wrapper.text()).toContain("Account");
         expect(wrapper.text()).toContain("Billing summary");

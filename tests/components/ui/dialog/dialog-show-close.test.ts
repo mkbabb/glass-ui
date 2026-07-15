@@ -57,6 +57,7 @@ describe("DialogContent — AU.W9.C showClose prop", () => {
         await nextTick();
         const portal = findDialog();
         expect(portal).not.toBeNull();
+        expect(portal?.getAttribute("data-material")).toBe("transient-overlay");
         expect(hasCloseButton(portal!)).toBe(true);
         wrapper.unmount();
     });

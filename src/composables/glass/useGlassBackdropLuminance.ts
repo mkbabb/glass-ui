@@ -121,10 +121,46 @@ export interface UseGlassBackdropLuminanceControls {
     readonly luma: Readonly<Ref<number | null>>;
     /** The last derived bucket, or null before the first sample. */
     readonly bucket: Readonly<Ref<GlassBackdropBucket | null>>;
+    /**
+     * The observer's explicit sample provenance. A live request is never represented
+     * as a static sample: a missing or unreadable canvas reports `unavailable`.
+     */
+    readonly sample: Readonly<Ref<GlassBackdropSample>>;
     /** Force one sample now (bypasses the throttle — used on mount + resize-settle). */
     sampleNow: () => void;
     /** Stop the loop + detach every observer/listener. */
     dispose: () => void;
+}
+
+export type GlassBackdropSample =
+    | {
+          state: "pending";
+          mode: "live" | "static";
+          source: "canvas" | "elements";
+      }
+    | {
+          state: "sampled";
+          mode: "live" | "static";
+          source: "canvas" | "elements";
+          luma: number;
+          ambientHue: string;
+          sampledAt: number;
+          targetRect: GlassBackdropTargetRect;
+      }
+    | {
+          state: "unavailable";
+          mode: "live" | "static";
+          source: "canvas" | "elements";
+          reason: "source-unavailable" | "sample-unavailable";
+          sampledAt: number;
+          targetRect: GlassBackdropTargetRect;
+      };
+
+export interface GlassBackdropTargetRect {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
 }
 
 const PRM_QUERY = "(prefers-reduced-motion: reduce)";
@@ -192,6 +228,11 @@ export function useGlassBackdropLuminance(
 
     const luma = ref<number | null>(null);
     const bucket = ref<GlassBackdropBucket | null>(null);
+    const sample = ref<GlassBackdropSample>({
+        state: "pending",
+        mode: options.live === true ? "live" : "static",
+        source: options.live === true ? "canvas" : "elements",
+    });
 
     // SSR / no-DOM: a pure no-op handle (the static surfaces never need this; the
     // composable is safe to call in a non-browser scope).
@@ -199,6 +240,7 @@ export function useGlassBackdropLuminance(
         return {
             luma: readonly(luma) as Readonly<Ref<number | null>>,
             bucket: readonly(bucket) as Readonly<Ref<GlassBackdropBucket | null>>,
+            sample: readonly(sample) as Readonly<Ref<GlassBackdropSample>>,
             sampleNow: () => {},
             dispose: () => {},
         };
@@ -225,37 +267,10 @@ export function useGlassBackdropLuminance(
     }
 
     /**
-     * Is the LIVE re-sample loop requested? The explicit `live` option / the
-     * `data-glass-sample="live"` attr force it; it is ALSO true when a field canvas
-     * is RESOLVABLE (handed via `backgroundCanvas` OR auto-discovered off the shell
-     * `[data-glass-field-canvas]`). BG.W-GLASS-SIGNAL-TRUTH (ST3/ST5): the dock hands
-     * the DockStage aurora canvas but no `live` flag — without the canvas leg the
-     * `sampleAnimated` path is UNREACHABLE and the observer is DEAD on the whole dock
-     * band (0 of 12 docks fired the writer-fired witness). A resolvable field canvas
-     * IS the live signal: the surface samples the painted field (real luma + ambient
-     * hue) rather than a coarse static stack-walk, and the witness lands.
-     */
-    function isLive(): boolean {
-        if (options.live !== undefined) return options.live;
-        if (target.value?.dataset.glassSample === "live") return true;
-        return resolveSourceCanvas(options.backgroundCanvas) !== null;
-    }
-
-    /**
-     * Does the config INTEND the live re-sample loop? This is the ARMING predicate,
-     * DISTINCT from `isLive()` (the per-sample READBACK decision). The loop must arm
-     * on live INTENT even before the field canvas RESOLVES: the aurora `<canvas>`
-     * mounts a beat AFTER the surface (the DockStage field paints post-mount), so a
-     * mount-time `isLive()` that REQUIRES `resolveSourceCanvas() !== null` reads false
-     * at the single mount sample, never `loop.start()`s, and — with NO watcher on the
-     * getter's resolution — stays DEAD forever. BG.W-GLASS-SIGNAL-TRUTH (M8 runtime,
-     * the paint-DELTA re-open): the ST5 fix (isLive considers a resolvable canvas) was
-     * NECESSARY but not SUFFICIENT — 0 of 12 docks fired the witness because the arm
-     * still keyed off the un-resolved mount instant. A PROVIDED source (a getter /
-     * canvas / selector) signals live intent NOW; the running loop's per-tick
-     * `isLive()` re-check then picks up the field the instant it paints (and
-     * `sampleAnimated` writes the real warm luma + ambient hue). No new watcher, no
-     * second raf — the throttled loop IS the re-check.
+     * Does the config intend the live loop? The loop must arm before a provided source
+     * resolves: field canvases commonly mount one beat after their consumer. Each tick
+     * re-resolves the source, so a live request is either sampled from that canvas or
+     * reported unavailable; it never becomes a static sample.
      */
     function wantsLiveLoop(): boolean {
         if (options.live !== undefined) return options.live;
@@ -268,12 +283,36 @@ export function useGlassBackdropLuminance(
         return resolveSourceCanvas(undefined) !== null;
     }
 
+    function targetRect(el: HTMLElement): GlassBackdropTargetRect {
+        const rect = el.getBoundingClientRect();
+        return {
+            x: rect.x,
+            y: rect.y,
+            width: rect.width,
+            height: rect.height,
+        };
+    }
+
     /** Write the derived signal onto the target's inline style. */
-    function write(result: SampleResult): void {
+    function write(
+        result: SampleResult,
+        el: HTMLElement,
+        mode: "live" | "static",
+        sampledAt: number,
+    ): void {
         const value = result.luma;
         luma.value = value;
-        const el = target.value;
-        if (!el) return;
+        const next: GlassBackdropBucket = value >= lightThreshold ? "light" : "dark";
+        bucket.value = next;
+        sample.value = {
+            state: "sampled",
+            mode,
+            source: mode === "live" ? "canvas" : "elements",
+            luma: value,
+            ambientHue: result.ambientHue,
+            sampledAt,
+            targetRect: targetRect(el),
+        };
         el.style.setProperty("--glass-backdrop-luma", value.toFixed(3));
         // BE.W-AMBIENT-TINT — the ambient hue (a complete `oklch()` at a FIXED
         // sub-perceptual chroma, or `transparent` for a gray null) the plate's tint
@@ -302,13 +341,46 @@ export function useGlassBackdropLuminance(
         // backdrop mask). This never animates a layout property (the compositor-only
         // floor); it is a signal-truth stamp, set once per target.
         el.setAttribute("data-backdrop-sampled", "");
+        el.setAttribute("data-backdrop-sample-state", "sampled");
+        el.setAttribute(
+            "data-backdrop-sample-source",
+            mode === "live" ? "canvas" : "elements",
+        );
+        el.removeAttribute("data-backdrop-sample-reason");
         el.style.setProperty("--glass-backdrop-sampled", "1");
         if (writeBucket) {
-            const next: GlassBackdropBucket =
-                value >= lightThreshold ? "light" : "dark";
-            bucket.value = next;
             el.style.setProperty("--glass-backdrop", next);
         }
+    }
+
+    function writeUnavailable(
+        el: HTMLElement,
+        mode: "live" | "static",
+        reason: "source-unavailable" | "sample-unavailable",
+        sampledAt: number,
+    ): void {
+        luma.value = null;
+        bucket.value = null;
+        sample.value = {
+            state: "unavailable",
+            mode,
+            source: mode === "live" ? "canvas" : "elements",
+            reason,
+            sampledAt,
+            targetRect: targetRect(el),
+        };
+        el.style.removeProperty("--glass-backdrop-luma");
+        el.style.removeProperty("--glass-ambient-hue");
+        el.style.removeProperty("--glass-ambient-strength");
+        el.style.removeProperty("--glass-backdrop-sampled");
+        if (writeBucket) el.style.removeProperty("--glass-backdrop");
+        el.removeAttribute("data-backdrop-sampled");
+        el.setAttribute("data-backdrop-sample-state", "unavailable");
+        el.setAttribute(
+            "data-backdrop-sample-source",
+            mode === "live" ? "canvas" : "elements",
+        );
+        el.setAttribute("data-backdrop-sample-reason", reason);
     }
 
     let lastSampleAt = 0;
@@ -320,19 +392,27 @@ export function useGlassBackdropLuminance(
         // STAND DOWN — a shared route observer covers this per-surface target; inherit its
         // `--glass-backdrop-*` via the cascade (zero readback — the 12→1 collapse).
         if (coveredByShared(el)) return;
-        // Compose the stateless leaf samplers with the reusable downsample context (the
-        // observer owns the canvas lifecycle) + the resolved live-field source.
+        // Live intent has one source of truth: an unavailable canvas is surfaced as
+        // unavailable, never substituted with the static stack-walk/default signal.
         const ctx = getDownContext();
-        const result = isLive()
-            ? sampleAnimated(
-                  el,
-                  resolveSourceCanvas(options.backgroundCanvas),
-                  ctx,
-              ) ?? sampleStatic(el, ctx)
-            : sampleStatic(el, ctx);
-        if (result !== null) write(result);
+        const mode = wantsLiveLoop() ? "live" : "static";
+        const source =
+            mode === "live" ? resolveSourceCanvas(options.backgroundCanvas) : null;
+        const result =
+            mode === "live" ? sampleAnimated(el, source, ctx) : sampleStatic(el, ctx);
+        const sampledAt = Date.now();
+        if (result) write(result, el, mode, sampledAt);
+        else
+            writeUnavailable(
+                el,
+                mode,
+                mode === "live" && !source
+                    ? "source-unavailable"
+                    : "sample-unavailable",
+                sampledAt,
+            );
         lastSampleAt =
-            typeof performance !== "undefined" ? performance.now() : Date.now();
+            typeof performance !== "undefined" ? performance.now() : sampledAt;
     }
 
     // ── The rAF loop — THROTTLED to ≤ 4 Hz, only ticks while live + not reduced ──────
@@ -377,8 +457,7 @@ export function useGlassBackdropLuminance(
             loop.stop();
             sampleNow(); // one static frame under reduce (the substrate freezes too)
         } else if (wantsLiveLoop()) {
-            // Arm on live INTENT — the loop's per-tick isLive() re-check picks up the
-            // field canvas the instant it resolves (BG.W-GLASS-SIGNAL-TRUTH M8 runtime).
+            // Each tick re-resolves the requested field canvas as it mounts.
             loop.start();
         }
     }
@@ -422,6 +501,7 @@ export function useGlassBackdropLuminance(
     return {
         luma: readonly(luma) as Readonly<Ref<number | null>>,
         bucket: readonly(bucket) as Readonly<Ref<GlassBackdropBucket | null>>,
+        sample: readonly(sample) as Readonly<Ref<GlassBackdropSample>>,
         sampleNow,
         dispose,
     };

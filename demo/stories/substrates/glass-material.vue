@@ -13,7 +13,7 @@
 // the `color-mix(in oklab, …)` actually bites, the squircle reads on the
 // dialog/sheet register (cards stay round by policy), and the deliberately-subtle
 // rim is shown against an on/off contrast device.
-import { ref, useTemplateRef } from "vue";
+import { computed, onMounted, onScopeDispose, ref, useTemplateRef } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
@@ -53,17 +53,42 @@ const tintSamples = [
 ] as const;
 const tint = ref<(typeof tintSamples)[number]>(tintSamples[0]);
 
-// AZ.W-ADAPTIVE-AUTO Arm 2 — the live observer exerciser. A glass-card over the page's
-// Aurora substrate samples the painted backdrop on the throttled (≤ 4 Hz) loop and
-// writes `--glass-backdrop-luma` + the bucket on itself. `backgroundCanvas: ".aurora
-// canvas"` points it at the StoryHero aurora `<canvas>` (the ANIMATED case); absent a
-// canvas it falls back to the static stack-walk. The reactive `luma`/`bucket` refs are
-// surfaced as a readout so the dynamic signal is visible.
+// A local Canvas2D field makes the live path deterministic: the card samples exactly
+// this source, alternating dark and light pixels at a pace the 4 Hz sampler can show.
 const liveCardEl = useTemplateRef<HTMLElement>("liveCardEl");
-const { luma: backdropLuma, bucket: backdropBucket } = useGlassBackdropLuminance(
-    liveCardEl,
-    { live: true, backgroundCanvas: () => document.querySelector("canvas") },
-);
+const liveCanvas = useTemplateRef<HTMLCanvasElement>("liveCanvas");
+const { sample: backdropSample } = useGlassBackdropLuminance(liveCardEl, {
+    live: true,
+    backgroundCanvas: () => liveCanvas.value,
+});
+const sampleNow = ref(Date.now());
+let liveFieldTimer: number | undefined;
+
+onMounted(() => {
+    let light = false;
+    const paint = () => {
+        const canvas = liveCanvas.value;
+        const context = canvas?.getContext("2d");
+        if (!canvas || !context) return;
+        light = !light;
+        context.fillStyle = light ? "rgb(245 204 132)" : "rgb(26 61 91)";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+    };
+    paint();
+    liveFieldTimer = window.setInterval(() => {
+        sampleNow.value = Date.now();
+        paint();
+    }, 700);
+});
+
+onScopeDispose(() => {
+    if (liveFieldTimer !== undefined) window.clearInterval(liveFieldTimer);
+});
+
+const sampleAge = computed(() => {
+    const current = backdropSample.value;
+    return current.state === "pending" ? null : sampleNow.value - current.sampledAt;
+});
 
 // BB.W-GLASS-ACCENT — the THIRD disjoint glass axis: the per-INSTANCE chromatic-rim
 // tint. Each swatch sets `--glass-accent: <data-hue>; --glass-accent-strength: <N%>`
@@ -120,20 +145,50 @@ const ACCENT_STRENGTH = "48%";
 
         <StorySection
             label="dynamic backdrop luminance — the iOS-27 sampled observer"
-            blurb="useGlassBackdropLuminance samples the painted Aurora backdrop under this card on a throttled ≤4 Hz loop and writes --glass-backdrop-luma + the --glass-backdrop: light|dark bucket on it, so the adaptive darken TRACKS the live field (not a static light/dark bucket). The dock wires the same observer ON by default. Reduced-motion-gated: under reduce the loop collapses to one mount sample."
+            blurb="This card samples its named live canvas on a throttled ≤4 Hz loop. The readout exposes source, state, age, luminance, and target coordinates; a live request with no readable canvas is explicitly unavailable rather than silently using a static/default value."
         >
             <ShowcaseFrame pad="lg" tier="field">
                 <div class="flex flex-wrap items-center gap-6">
                     <div
-                        ref="liveCardEl"
-                        data-glass-sample="live"
-                        class="glass-card flex h-28 w-56 flex-col items-center justify-center gap-1 rounded-card text-sm font-medium"
+                        class="relative h-28 w-56 overflow-hidden rounded-card"
+                        data-material="content-field"
                     >
-                        <span>glass-card · live sample</span>
-                        <span class="text-mono-caption text-muted-foreground">
-                            luma {{ backdropLuma === null ? "—" : backdropLuma.toFixed(3) }}
-                            · {{ backdropBucket ?? "—" }}
-                        </span>
+                        <canvas
+                            ref="liveCanvas"
+                            width="224"
+                            height="112"
+                            class="pointer-events-none absolute inset-0 h-full w-full"
+                            data-material-live-canvas
+                            aria-hidden="true"
+                        />
+                        <div
+                            ref="liveCardEl"
+                            data-glass-sample="live"
+                            class="glass-card relative flex size-full flex-col items-center justify-center gap-1 rounded-card px-3 text-center text-sm font-medium"
+                            data-material="functional-glass"
+                        >
+                            <span>live canvas sample</span>
+                            <span class="text-mono-caption text-muted-foreground">
+                                {{ backdropSample.state }} ·
+                                {{ backdropSample.source }} ·
+                                {{ sampleAge === null ? "—" : `${sampleAge}ms` }}
+                            </span>
+                            <span
+                                v-if="backdropSample.state === 'sampled'"
+                                class="text-mono-caption text-muted-foreground"
+                            >
+                                {{ backdropSample.luma.toFixed(3) }} ·
+                                {{ Math.round(backdropSample.targetRect.x) }},{{
+                                    Math.round(backdropSample.targetRect.y)
+                                }}
+                            </span>
+                            <span
+                                v-else-if="backdropSample.state === 'unavailable'"
+                                class="text-mono-caption text-muted-foreground"
+                            >
+                                {{ backdropSample.reason }}
+                            </span>
+                        </div>
                     </div>
                 </div>
             </ShowcaseFrame>

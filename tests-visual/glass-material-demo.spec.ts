@@ -60,6 +60,38 @@ function colorDist(a: number[], b: number[]): number {
 }
 
 test.describe("glass-material-demo (π lane — moving specular + biting tint, fail-CLOSED)", () => {
+    test("the named live canvas publishes live provenance and changing luminance", async ({
+        page,
+    }) => {
+        await page.setViewportSize({ width: 1280, height: 900 });
+        await page.goto(GLASS_MATERIAL.path, { waitUntil: "networkidle" });
+
+        const sample = page.locator('[data-glass-sample="live"]').first();
+        await sample.scrollIntoViewIfNeeded();
+        await expect(sample).toHaveAttribute("data-material", "functional-glass");
+        await page.waitForFunction(
+            () => {
+                const el = document.querySelector('[data-glass-sample="live"]');
+                return (
+                    el?.getAttribute("data-backdrop-sample-state") === "sampled" &&
+                    el.getAttribute("data-backdrop-sample-source") === "canvas"
+                );
+            },
+            undefined,
+            { timeout: 5000 },
+        );
+
+        const first = await sample.evaluate((el) =>
+            (el as HTMLElement).style.getPropertyValue("--glass-backdrop-luma"),
+        );
+        await page.waitForTimeout(900);
+        const second = await sample.evaluate((el) =>
+            (el as HTMLElement).style.getPropertyValue("--glass-backdrop-luma"),
+        );
+        expect(first, "the live canvas should produce a luminance write").not.toBe("");
+        expect(second, "the named canvas changes luminance over time").not.toBe(first);
+    });
+
     test("the headline catch-light tracks the pointer and the tint sample bites the surface", async ({
         page,
     }) => {

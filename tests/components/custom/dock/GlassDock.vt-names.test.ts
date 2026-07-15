@@ -51,6 +51,14 @@ describe("GlassDock dockId (AR inv-η pairwise-distinct guard)", () => {
             .findAll(".dock-id-probe")
             .map((el) => el.attributes("data-dock-id"));
 
+        expect(
+            wrapper
+                .findAll(".glass-dock")
+                .every(
+                    (dock) => dock.attributes("data-material") === "functional-glass",
+                ),
+        ).toBe(true);
+
         expect(ids).toHaveLength(2);
         // Both well-formed (useId() returned a non-empty value — the real
         // degenerate is `glass-dock-` from an empty-string id, NOT

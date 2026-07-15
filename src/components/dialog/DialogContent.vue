@@ -353,6 +353,7 @@ const contentStyle = computed<CSSProperties>(() => ({
       :style="contentStyle"
       :data-surface="props.surface"
       data-slot="dialog-content"
+      data-material="transient-overlay"
       :data-placement="isCenter ? undefined : placement"
       :data-reveal="isCenter ? 'overlay' : undefined"
       :data-motion="motionAxis.dataMotion.value"
