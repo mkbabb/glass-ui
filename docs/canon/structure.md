@@ -7,7 +7,7 @@
 > structure prose (the `src/styles/` cascade, the per-dir intent) lands at
 > BH.B4b-content [WS12]; this skeleton carries the package enumeration.
 
-## src/components (79 dirs)
+## src/components (78 dirs)
 
 - _shared/
 - accordion/
@@ -73,7 +73,6 @@
 - sortable-list/
 - spa-view/
 - split-chars/
-- stacked-icons/
 - status-dot/
 - surface/
 - switch/

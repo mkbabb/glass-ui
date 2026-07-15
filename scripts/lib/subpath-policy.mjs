@@ -89,7 +89,7 @@ export const COMPONENT_CLASS = {
     pulse: "PUBLISH", search: "PUBLISH", "scroll-progress-rim": "PUBLISH",
     // BI.W-SPEEDTEST-ONLY-PAIR: scrolling-text RETIRED (speedtest-only; the ask-row offers the mechanism).
     "sortable-list": "PUBLISH", "spa-view": "PUBLISH",
-    "stacked-icons": "PUBLISH", "status-dot": "PUBLISH", tabs: "PUBLISH",
+    "status-dot": "PUBLISH", tabs: "PUBLISH",
     timeline: "PUBLISH", typewriter: "PUBLISH",
     "watercolor-dot": "PUBLISH",
 };

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // BG.W-DEMO-IA-REDESIGN — the Display ATOMS wall. The trivial single-primitive
-// atoms (separator · pulse · status-dot · stacked-icons · dark-mode-toggle · avatar)
+// atoms (separator · pulse · status-dot · dark-mode-toggle · avatar)
 // no longer each earn a standalone route; they render as sections of ONE designed
 // atoms page via the family switcher. Zero content re-authored — each member is its
 // own SFC, composed bare (STORY_NESTED_KEY) inside <FamilyTabs>.
@@ -23,11 +23,6 @@ const members: FamilyMember[] = [
         id: "pulse",
         label: "Pulse",
         component: defineAsyncComponent(() => import("./pulse.vue")),
-    },
-    {
-        id: "stacked-icons",
-        label: "Stacked icons",
-        component: defineAsyncComponent(() => import("./stacked-icons.vue")),
     },
     {
         id: "avatar",

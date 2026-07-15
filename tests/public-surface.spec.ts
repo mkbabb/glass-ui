@@ -31,7 +31,6 @@ import * as SelectSurface from "@glass/components/select";
 import * as Sidebar from "@glass/composables/sidebar";
 import * as ScrollProgressRimSurface from "@glass/components/scroll-progress-rim";
 import * as SortableListSurface from "@glass/components/sortable-list";
-import * as StackedIconsSurface from "@glass/components/stacked-icons";
 import * as StatusDotSurface from "@glass/components/status-dot";
 import * as TabsSurface from "@glass/components/tabs";
 import * as TimelineSurface from "@glass/components/timeline";
@@ -139,7 +138,6 @@ const subpathRuntimeExports = [
     { subpath: "tabs", surface: TabsSurface, name: "SegmentedTabs" },
     { subpath: "typewriter", surface: TypewriterSurface, name: "TypewriterText" },
     { subpath: "typewriter", surface: TypewriterSurface, name: "useTypewriter" },
-    { subpath: "stacked-icons", surface: StackedIconsSurface, name: "StackedIconGroup" },
     { subpath: "aurora", surface: Aurora, name: "Aurora" },
     { subpath: "aurora", surface: Aurora, name: "useAurora" },
     { subpath: "metric-badge", surface: MetricBadgeSurface, name: "MetricBadge" },
@@ -256,7 +254,6 @@ const nonCoreRootRetirements = [
     // root barrel export).
     "ContextMenu",
     "TypewriterText",
-    "StackedIconGroup",
     // BI.W-CHIP-FOLD — ToggleChip + SelectableChip FOLDED onto <Chip> (shape × tone;
     // clean break, no alias). <Chip> ships subpath-ONLY (/chip) — it is value.js-bearing
     // (the tonal ink solve leaf), so it MUST stay OFF the value.js-free root barrel.

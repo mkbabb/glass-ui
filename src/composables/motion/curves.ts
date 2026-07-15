@@ -133,7 +133,7 @@ const CANONICAL: MotionCurve[] = [
     // hand-authored `linear()` (scheme-motion.css §2: -3.8% anticipation dip → +22%
     // overshoot → settle); the JS twin is the anticipate-then-overshoot CSSCubicBezier
     // the consumers already name as the fallback. CONSUMED by cards / slider /
-    // segmented-tabs / paper / drawer / morph-field / stacked-icons / timeline /
+    // segmented-tabs / paper / drawer / morph-field / timeline /
     // carousel (≥2-site bar cleared). A canonical row (measurably distinct from bouncy
     // — louder peak + pre-dip — so NOT an alias).
     {

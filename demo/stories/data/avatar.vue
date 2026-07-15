@@ -3,7 +3,6 @@ import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { Avatar, AvatarFallback, AvatarImage } from "@glass/components/avatar";
 import { Card } from "@glass/components/card";
-import { StackedIconGroup } from "@glass/components/stacked-icons";
 import { cn } from "@glass/components/_shared/class-names";
 
 interface Member {
@@ -76,17 +75,20 @@ const sizes = ["sm", "md", "lg"] as const;
         </StorySection>
 
         <StorySection
-            heading="Grouped overlap"
-            blurb="StackedIconGroup fans the roster with a +N overflow — hover to spread."
+            heading="Contributor group"
+            blurb="A compact, static roster preview with an explicit remainder count."
         >
             <Card surface="veil" class="flex items-center gap-6 p-6">
-                <StackedIconGroup
-                    :items="people"
-                    :max-visible="4"
-                    size="lg"
-                    :key-fn="(p: Member) => p.id"
+                <ul
+                    class="isolate flex items-center"
+                    aria-label="Project contributors"
                 >
-                    <template #icon="{ item }">
+                    <li
+                        v-for="(person, index) in people.slice(0, 4)"
+                        :key="person.id"
+                        :class="index > 0 ? '-ms-2' : ''"
+                        :style="{ zIndex: 5 - index }"
+                    >
                         <Avatar
                             size="sm"
                             class="h-10 w-10 border-2 border-background"
@@ -95,17 +97,25 @@ const sizes = ["sm", "md", "lg"] as const;
                                  (the dark-arm-lightened --section-color fill washes text-white). -->
                             <AvatarFallback
                                 class="text-xs font-medium text-white"
-                                :style="{ background: `var(--section-color-${(item as Member).tone})`, color: `contrast-color(var(--section-color-${(item as Member).tone}))` }"
+                                :style="{ background: `var(--section-color-${person.tone})`, color: `contrast-color(var(--section-color-${person.tone}))` }"
                             >
-                                {{ (item as Member).initials }}
+                                <span aria-hidden="true">{{ person.initials }}</span>
+                                <span class="sr-only">{{ person.name }}</span>
                             </AvatarFallback>
                         </Avatar>
-                    </template>
-                </StackedIconGroup>
+                    </li>
+                    <li
+                        v-if="people.length > 4"
+                        class="relative -ms-1 flex h-8 min-w-8 items-center justify-center rounded-full border-2 border-background bg-muted px-1.5 text-xs font-semibold text-muted-foreground shadow-cartoon-sm"
+                    >
+                        <span aria-hidden="true">+{{ people.length - 4 }}</span>
+                        <span class="sr-only">{{ people.length - 4 }} more contributors</span>
+                    </li>
+                </ul>
                 <div class="flex flex-col">
                     <span class="text-subheading">Project contributors</span>
                     <span class="text-mono-caption text-muted-foreground">
-                        hover to fan out
+                        4 shown, {{ people.length - 4 }} more
                     </span>
                 </div>
             </Card>

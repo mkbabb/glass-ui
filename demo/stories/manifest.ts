@@ -315,10 +315,9 @@ const SUBPATHS: Record<string, string> = {
     "display/metric-badge": "@mkbabb/glass-ui/metric-badge",
     "display/status-dot": "@mkbabb/glass-ui/status-dot",
     "display/pulse": "@mkbabb/glass-ui/pulse",
-    "display/stacked-icons": "@mkbabb/glass-ui/stacked-icons",
     "display/dark-mode-toggle": "@mkbabb/glass-ui/controls",
     // BG.W-DEMO-IA-REDESIGN — the Display ATOMS wall (folds separator · pulse ·
-    // status-dot · stacked-icons · dark-mode-toggle · avatar as family members).
+    // status-dot · dark-mode-toggle · avatar as family members).
     "display/atoms": "/display/atoms",
     // Containers — the glass surfaces.
     "containers/dialog": "@mkbabb/glass-ui/dialog",
@@ -477,7 +476,6 @@ export const FOLDED_STORY_IDS: ReadonlySet<string> = new Set<string>([
     "display/separator",
     "display/pulse",
     "display/status-dot",
-    "display/stacked-icons",
     "display/dark-mode-toggle",
     "display/metric-badge",
     // Data → data/table (data-table) · data/metrics · display/atoms (avatar).
@@ -585,7 +583,6 @@ export const FOLDED_MEMBER_FAMILY: Record<string, string> = {
     "display/separator": "/display/atoms",
     "display/pulse": "/display/atoms",
     "display/status-dot": "/display/atoms",
-    "display/stacked-icons": "/display/atoms",
     "display/dark-mode-toggle": "/display/atoms",
     "data/avatar": "/display/atoms",
     // data/metrics composes the metric family (cell · stack · badge).
@@ -983,12 +980,6 @@ export const CATEGORIES: Category[] = [
             s("display", "pulse", "Pulse"),
             s(
                 "display",
-                "stacked-icons",
-                "Stacked Icons",
-                "Overlapping icon stack with maxVisible / +N overflow; size axis only.",
-            ),
-            s(
-                "display",
                 "dark-mode-toggle",
                 "Dark Mode Toggle",
                 "Size axis (sm · md · lg · control standalone; dock sizes to its GlassDock host); composes useGlobalDark.",
@@ -997,7 +988,7 @@ export const CATEGORIES: Category[] = [
                 "display",
                 "atoms",
                 "Atoms",
-                "The designed atoms wall — separator, status-dot, pulse, stacked-icons, avatar, and the dark-mode toggle on ONE page, sectioned by the family switcher.",
+                "The designed atoms wall — separator, status-dot, pulse, avatar, and the dark-mode toggle on ONE page, sectioned by the family switcher.",
             ),
         ],
     },
