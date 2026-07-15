@@ -27,20 +27,20 @@ import { resolve } from "node:path";
  * unaffected by where the source barrel lives.
  */
 export function libraryEntries(rootDir: string) {
-    // Tier 1 — the curated multi-line barrels (explicit; STAY at src/ top level).
+    // Tier 1 — curated semantic entries (explicit; public names stay flat).
     const curated: Record<string, string> = {
         index: resolve(rootDir, "src/index.ts"),
-        tokens: resolve(rootDir, "src/tokens.ts"),
+        tokens: resolve(rootDir, "src/styles/tokens.ts"),
         forms: resolve(rootDir, "src/forms.ts"),
-        dark: resolve(rootDir, "src/dark.ts"),
-        keyboard: resolve(rootDir, "src/keyboard.ts"),
-        carousel: resolve(rootDir, "src/carousel.ts"),
-        motion: resolve(rootDir, "src/motion.ts"),
-        "motion-core": resolve(rootDir, "src/motion-core.ts"),
-        sidebar: resolve(rootDir, "src/sidebar.ts"),
-        "infinite-scroll": resolve(rootDir, "src/infinite-scroll.ts"),
+        dark: resolve(rootDir, "src/composables/dark/index.ts"),
+        keyboard: resolve(rootDir, "src/composables/keyboard/index.ts"),
+        carousel: resolve(rootDir, "src/components/carousel/index.ts"),
+        motion: resolve(rootDir, "src/composables/motion/index.ts"),
+        "motion-core": resolve(rootDir, "src/composables/motion/core/index.ts"),
+        sidebar: resolve(rootDir, "src/composables/sidebar/index.ts"),
+        "infinite-scroll": resolve(rootDir, "src/components/infinite-scroll/index.ts"),
         // BH.W-AXIS-GRAMMAR — the types-only `/axes` discovery subpath.
-        axes: resolve(rootDir, "src/axes.ts"),
+        axes: resolve(rootDir, "src/components/_shared/axes.ts"),
     };
 
     // Tier 2 — batch-resolve every `src/subpaths/*.ts` trivial mirror barrel.

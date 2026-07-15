@@ -126,18 +126,18 @@ export const TIERS = [
 // → the regen emits no `./api` export key + no `typesVersions.api`.
 export const CURATED = {
     index: "src/index.ts",
-    tokens: "src/tokens.ts",
+    tokens: "src/styles/tokens.ts",
     forms: "src/forms.ts",
-    dark: "src/dark.ts",
-    keyboard: "src/keyboard.ts",
-    carousel: "src/carousel.ts",
-    motion: "src/motion.ts",
-    "motion-core": "src/motion-core.ts",
-    sidebar: "src/sidebar.ts",
-    "infinite-scroll": "src/infinite-scroll.ts",
+    dark: "src/composables/dark/index.ts",
+    keyboard: "src/composables/keyboard/index.ts",
+    carousel: "src/components/carousel/index.ts",
+    motion: "src/composables/motion/index.ts",
+    "motion-core": "src/composables/motion/core/index.ts",
+    sidebar: "src/composables/sidebar/index.ts",
+    "infinite-scroll": "src/components/infinite-scroll/index.ts",
     // BH.W-AXIS-GRAMMAR — the types-only `/axes` discovery subpath (the honest
     // `/api` successor: the four grammar axes + their frozen tuples, GENERATED).
-    axes: "src/axes.ts",
+    axes: "src/components/_shared/axes.ts",
     // BI.W-BLOB-SEAMS (RP-2 / L20) — the value.js-FREE `/blob-config` config leaf.
     // The vite entry is the `src/subpaths/blob-config.ts` mirror (the glob); this maps
     // to the REAL config barrel so `namedExports` + fidelity read the concrete surface

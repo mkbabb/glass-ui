@@ -7,7 +7,7 @@
 //
 // L.W2 — Implementation lives at `src/composables/dark/useGlobalDark.ts`;
 // the sub-tree's `index.ts` re-exports it, and the flat `@mkbabb/glass-ui/dark`
-// subpath barrel (`src/dark.ts`) resolves through that sub-tree index.
+// public subpath resolves directly through this sub-tree index.
 //
 // AU.W9.B — `initialValue` seed (#21). `createGlobalState` memoizes the factory
 // closure, so the SINGLE shared instance is built exactly once on first call. A

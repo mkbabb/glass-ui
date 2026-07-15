@@ -1,9 +1,7 @@
 // Sub-tree barrel for dark-mode composables.
 //
-// Resolved by both:
-//   - The flat public subpath `@mkbabb/glass-ui/dark` (`src/dark.ts` re-exports
-//     `./composables/dark`, which lands here).
-//   - Internal consumers that `import { useGlobalDark } from ".../composables/dark"`.
+// Direct source for the flat public `@mkbabb/glass-ui/dark` entry and internal
+// consumers of the dark-mode family.
 //
 // AP.W3 R0G-7 — `installDarkModeSync` relocated here from `composables/motion/`.
 // It is keyframes-free but vueuse-bearing (via `useGlobalDark`), so it homes on

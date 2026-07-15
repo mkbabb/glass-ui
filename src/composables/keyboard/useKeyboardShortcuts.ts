@@ -7,7 +7,7 @@
 //
 // L.W2 — Implementation lives at `src/composables/keyboard/useKeyboardShortcuts.ts`;
 // the sub-tree's `index.ts` re-exports it, and the flat
-// `@mkbabb/glass-ui/keyboard` subpath barrel (`src/keyboard.ts`) resolves
+// `@mkbabb/glass-ui/keyboard` public entry resolves
 // through that sub-tree index.
 import { createGlobalState, useEventListener } from "@vueuse/core";
 import {
