@@ -449,6 +449,9 @@ watch(
 function onStudioClick() {
     clickCount.value++;
 }
+function resetClicks() {
+    clickCount.value = 0;
+}
 function poke() {
     studioBlob.value?.pulse();
 }
@@ -474,7 +477,7 @@ watch(studioPaused, () => {
     <VizStudio
         heading="Blob"
         label="Blob studio — preset · interaction · mood · seed-palette"
-        blurb="The blob showcase on the library's own Configurator chrome (the same studio shell Aurora composes). The preset row drives useConfiguratorState (per-preset clones); the stage paints the live config. Hover to feel the lean — attraction +1 leans IN, -1 SHIES AWAY (the sign is honored); click to fire the spring impulse; pick a mood (the {valence, arousal} affect model); set a seed + harmony to ramp the OKLCh palette fed LIVE to the hero body. One GL context."
+        blurb="The blob showcase on the library's own Configurator chrome (the same studio shell Aurora composes). The preset row drives useConfiguratorState (per-preset clones); the stage paints the live config. Hover to feel the lean — attraction +1 leans IN, -1 SHIES AWAY (the sign is honored); click, tap, or focus the blob and press Enter/Space to fire the same spring impulse; pick a mood (the {valence, arousal} affect model); set a seed + harmony to ramp the OKLCh palette fed LIVE to the hero body. One GL context."
         height-class="h-[min(70vh,560px)]"
         :presets="presets"
         :active-preset="studio.activePreset.value"
@@ -541,6 +544,7 @@ watch(studioPaused, () => {
                                     color="var(--card)"
                                     :config="stageConfig"
                                     seed="studio"
+                                    press-label="Pulse blob"
                                     @click="onStudioClick"
                                 />
                             </div>
@@ -550,16 +554,24 @@ watch(studioPaused, () => {
                                 <span class="text-micro font-mono text-muted-foreground">
                                     {{ studio.config.mood }}
                                 </span>
-                                <span class="text-micro font-mono text-muted-foreground/60">
+                                <span class="text-micro font-mono text-muted-foreground/60" aria-live="polite">
                                     attraction {{ studio.config.attraction.toFixed(2) }} · clicks {{ clickCount }}
                                 </span>
                             </div>
-                            <button
-                                class="btn-press absolute right-3 bottom-3 rounded-pill border bg-card/70 px-3 py-1 text-micro backdrop-blur-sm"
-                                @click.stop="poke"
-                            >
-                                Poke
-                            </button>
+                            <div class="absolute right-3 bottom-3 flex gap-2">
+                                <button
+                                    class="btn-press rounded-pill border bg-card/70 px-3 py-1 text-micro backdrop-blur-sm"
+                                    @click.stop="resetClicks"
+                                >
+                                    Reset clicks
+                                </button>
+                                <button
+                                    class="btn-press rounded-pill border bg-card/70 px-3 py-1 text-micro backdrop-blur-sm"
+                                    @click.stop="poke"
+                                >
+                                    Poke
+                                </button>
+                            </div>
                         </div>
                     </template>
                     <!--

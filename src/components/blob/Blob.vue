@@ -37,6 +37,8 @@ const {
     variant,
     seed = "",
     paused = false,
+    pressLabel,
+    disabled = false,
 } = defineProps<{
     /** Base CSS color string (a `var()`/`oklch()`/`lab()`/`hsl()`/hex form; resolved
      *  internally through the `/color` leaf to a gamma-sRGB triple). */
@@ -65,6 +67,14 @@ const {
      * renderer seam (no parallel pause path); the prop owns the default.
      */
     paused?: boolean;
+    /**
+     * Accessible name for the optional press surface. Omit it for a decorative,
+     * listener-free Blob; provide it to render a native button that owns pointer,
+     * touch, Enter, and Space activation.
+     */
+    pressLabel?: string;
+    /** Disables the optional press surface and pointer response. */
+    disabled?: boolean;
 }>();
 
 const emit = defineEmits<{ click: []; "update:paused": [value: boolean] }>();
@@ -106,7 +116,12 @@ const renderConfig: BlobConfig = new Proxy(cfg!, {
 
 const canvasRef = useTemplateRef<HTMLCanvasElement>("canvasRef");
 const wrapperRef = useTemplateRef<HTMLElement>("wrapperRef");
-const hitLayerRef = useTemplateRef<HTMLElement>("hitLayerRef");
+const hitLayerRef = useTemplateRef<HTMLButtonElement>("hitLayerRef");
+const hasPressSurface = computed(() => Boolean(pressLabel?.trim()));
+const interactionEnabled = computed(() => hasPressSurface.value && !disabled && !paused);
+const pointerHost = computed(() =>
+    interactionEnabled.value ? hitLayerRef.value : null,
+);
 
 // F9.R8 (BG.W-BLOB-AFFECT-INTERACT — pointer truth) — the SDF hit region radius in the
 // listener's normalized [-1, 1] space. The body renders at `bodyRadius` in the CANVAS's
@@ -125,7 +140,7 @@ const hitRadius = Math.min(
 const hitClip = `${(hitRadius * 50).toFixed(2)}%`;
 
 const mood = useBlobMood();
-const pointer = useBlobPointer(hitLayerRef, { hitRadius: () => hitRadius });
+const pointer = useBlobPointer(pointerHost, { hitRadius: () => hitRadius });
 const satelliteSystem = useBlobSatellites(cfg, color + seed);
 
 // AX.W16 (arm 4) — un-wrap EVERY color string (base + rim + every palette stop) to a
@@ -275,11 +290,7 @@ function setMood(m: BlobMood) {
 function pulse() {
     pointer.click(cfg!.interaction.clickImpulse);
 }
-function onBlobClick(e: MouseEvent) {
-    // F9.R8 — only bounce/emit when the click lands INSIDE the SDF. The `.goo-blob-hit`
-    // clip already drops corner clicks to a sibling; this is the authoritative gate + the
-    // pulse-swell edge (the hit region widens with a live click pulse).
-    if (!pointer.hitTest(e.clientX, e.clientY)) return;
+function activateBlob() {
     pulse();
     emit("click");
 }
@@ -313,12 +324,16 @@ defineExpose({
         <!-- F9.R8 — the SDF-shaped hit surface. The wrapper is pointer-transparent; this
              clipped child is the ONLY interactive surface, so a click outside the body
              silhouette falls through to whatever card sits beneath. -->
-        <div
+        <button
+            v-if="hasPressSurface"
             ref="hitLayerRef"
+            type="button"
             class="goo-blob-hit"
+            :aria-label="pressLabel"
+            :disabled="disabled || paused"
             :style="{ '--blob-hit-radius': hitClip }"
             data-testid="goo-blob-hit"
-            @click="onBlobClick"
+            @click="activateBlob"
         />
     </div>
 </template>
@@ -391,9 +406,29 @@ defineExpose({
 .goo-blob-hit {
     position: absolute;
     inset: 0;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    border-radius: 50%;
+    background: transparent;
     pointer-events: auto;
     cursor: pointer;
     clip-path: circle(var(--blob-hit-radius, 50%));
+}
+
+.goo-blob-hit:focus-visible {
+    outline: none;
+    background: radial-gradient(
+        circle,
+        transparent calc(var(--blob-hit-radius) - 3px),
+        var(--focus-ring-color) calc(var(--blob-hit-radius) - 3px),
+        var(--focus-ring-color) var(--blob-hit-radius),
+        transparent var(--blob-hit-radius)
+    );
+}
+
+.goo-blob-hit:disabled {
+    cursor: default;
 }
 
 @media (prefers-reduced-motion: reduce) {

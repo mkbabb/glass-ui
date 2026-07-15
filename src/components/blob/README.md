@@ -121,6 +121,8 @@ It is **not** a data visualization and conveys no information — the canvas is 
 | `config`        | `BlobConfig`          | —       | The metaball tuning. REQUIRED unless an ancestor `provide(BLOB_CONFIG_KEY, …)` supplies it. Pass `BLOB_CONFIG_DEFAULTS` for the stock look. |
 | `seed`          | `string`              | `""`    | Extra seed mixed into the satellite PRNG for a unique-but-reproducible system. |
 | `paused`        | `boolean`             | `false` | `v-model:paused` — the declarative WCAG-2.2.2 pause seam. `true` parks the render loop, `false` restarts it. Wire a `<DockBackgroundToggle>`'s `v-model:paused` straight to it. |
+| `pressLabel`    | `string`              | —       | Opts into the SDF-shaped native button and supplies its accessible name. Omit it for a decorative, listener-free Blob. |
+| `disabled`      | `boolean`             | `false` | Disables the optional press surface and pointer response. A paused Blob is disabled for the same reason: it cannot paint the promised response. |
 
 ### Exposed (via `defineExpose`)
 
@@ -237,7 +239,8 @@ interface BlobConfig {
 
 ## Interaction model
 
-The blob is a pointer-reactive creature; the interaction ships wired (it is no longer "planned"):
+The blob is decorative and listener-free by default. Set `pressLabel` to opt into its named native
+button surface; pointer, touch, Enter, and Space then share the same activation owner:
 
 - **Pointer-follow + lean** — the body deforms toward (or, for negative `pointerAttraction`, away from)
   the cursor via a frame-rate-independent critically-damped spring (`@mkbabb/keyframes.js`). The
@@ -257,9 +260,9 @@ The blob is a pointer-reactive creature; the interaction ships wired (it is no l
   arc — ONE precedence rule, manual > auto until interrupted. The sheen intensity, orbit speed,
   wobble, and pulse all read off the affect point.
 
-All interaction respects `prefers-reduced-motion` and the `DockBackgroundToggle` pause — see
-[Accessibility](#accessibility). Under reduced-motion the substrate paints a composed rest pose (peak
-roundness, satellites tucked, the lit dome kept — a deliberate poster, not a random freeze).
+Paused or explicitly disabled instances keep the button visible but disabled and detach pointer
+tracking. Under reduced motion the button remains operable and still emits `click`, while the visual
+impulse resolves to the substrate's static rest pose. See [Accessibility](#accessibility).
 
 ---
 
@@ -279,9 +282,9 @@ roundness, satellites tucked, the lit dome kept — a deliberate poster, not a r
   each `Blob` holds its own WebGL2 context, and browsers cap ~8 live contexts per page. A grid of
   ambient/decorative thumbnails should be `WatercolorDot`s (zero GL context); reserve the GL blob for
   the one interactive hero.
-- **Decorative, so `aria-hidden`** — don't bolt an `aria-label` onto the canvas; it carries no
-  information. If you make a blob genuinely interactive (a button), wrap it in a real
-  `<button>`/`role` with a name, not the canvas.
+- **Decorative by default** — don't bolt an `aria-label` onto the canvas; it carries no information.
+  Omit `pressLabel` to mount no hit surface or pointer listeners. Set `pressLabel` only when pressing
+  the blob performs a real action; Blob then renders the named native button over its live silhouette.
 
 ---
 
@@ -348,7 +351,11 @@ roundness, satellites tucked, the lit dome kept — a deliberate poster, not a r
 ## Accessibility
 
 - **Decorative canvas** — `aria-hidden="true"`; no accessible-name obligation (the blob conveys no
-  information).
+  information). The default Blob mounts no interactive surface or pointer listeners.
+- **Opt-in press surface** — `pressLabel` renders one SDF-shaped native button. Pointer, touch, Enter,
+  and Space all reach the same `click`/pulse owner, and its focus ring follows the live silhouette.
+  `disabled` and `paused` disable the button and detach pointer response. Under reduced motion the
+  semantic action and `click` event remain available while the animated impulse resolves to rest.
 - **`prefers-reduced-motion`** — the `useWebGLCanvas` substrate *live-monitors* PRM (a `matchMedia`
   `change` listener) and paints one composed-rest-pose static frame then parks under reduce — every
   surface inherits the freeze, and a CSS reset cannot reach the WebGL rAF, so the substrate owns it.
@@ -373,6 +380,7 @@ const paused = ref(false);
     v-model:paused="paused"
     color="var(--card)"
     :config="BLOB_CONFIG_DEFAULTS"
+    press-label="Pulse blob"
     class="w-80"
   />
   <DockBackgroundToggle v-model:paused="paused" />
