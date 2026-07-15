@@ -134,6 +134,12 @@ const hostStyle = computed<CSSProperties>(() =>
     isTab.value ? {} : { ...press.pressStyle.value },
 );
 
+function blockDisabledActivation(event: MouseEvent): void {
+    if (!props.disabled) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+}
+
 // BB.W-LIQUIDHOVER — the dock control auto-arms the pointer-following gleam via the
 // tier-root `v-specular` directive (ONE position-write source, zero call-site wiring).
 // The icon shape wires the interruptible spring-press; the tab shape reads its own CSS
@@ -149,10 +155,11 @@ const hostStyle = computed<CSSProperties>(() =>
         v-bind="{ ...hostAttrs, ...stateAttrs }"
         :class="classes"
         :style="hostStyle"
-        @pointerdown="!isTab && press.press()"
+        @pointerdown="!isTab && !disabled && press.press()"
         @pointerup="!isTab && press.release()"
         @pointercancel="!isTab && press.release()"
         @pointerleave="!isTab && press.release()"
+        @click.capture="blockDisabledActivation"
     >
         <slot />
     </Primitive>

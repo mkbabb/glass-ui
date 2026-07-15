@@ -12,6 +12,7 @@ export function useInfiniteScroll(options: InfiniteScrollOptions): InfiniteScrol
     const { threshold = 200, hasMore, isLoading, onLoadMore } = options;
     const sentinelRef = ref<HTMLElement | null>(null);
     let observer: IntersectionObserver | null = null;
+    let checkFrame = 0;
 
     function shouldLoad(): boolean {
         return toValue(hasMore) && !toValue(isLoading);
@@ -39,6 +40,10 @@ export function useInfiniteScroll(options: InfiniteScrollOptions): InfiniteScrol
             observer.disconnect();
             observer = null;
         }
+        if (checkFrame) {
+            cancelAnimationFrame(checkFrame);
+            checkFrame = 0;
+        }
     }
 
     function check() {
@@ -58,7 +63,11 @@ export function useInfiniteScroll(options: InfiniteScrollOptions): InfiniteScrol
         (loading) => {
             if (!loading && sentinelRef.value) {
                 // Defer to next tick so DOM updates first
-                requestAnimationFrame(check);
+                if (checkFrame) cancelAnimationFrame(checkFrame);
+                checkFrame = requestAnimationFrame(() => {
+                    checkFrame = 0;
+                    check();
+                });
             }
         },
     );

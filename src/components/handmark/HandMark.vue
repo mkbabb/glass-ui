@@ -102,6 +102,7 @@ const escapePath = computed(() => props.path ?? null);
 // ── draw-on state (SPEC §8) ────────────────────────────────────────────────
 const drawn = ref(false);
 const root = ref<HTMLElement | null>(null);
+let drawFrame: number | null = null;
 
 const drawTransition = computed(() => {
     if (!draws.value) return "none";
@@ -124,10 +125,12 @@ function play(): void {
         armBoil();
         return;
     }
+    if (drawFrame !== null) cancelAnimationFrame(drawFrame);
     drawn.value = false;
     // reflow so the transition re-fires from the un-drawn state
     if (root.value) void root.value.offsetWidth;
-    requestAnimationFrame(() => {
+    drawFrame = requestAnimationFrame(() => {
+        drawFrame = null;
         drawn.value = true;
     });
 }
@@ -232,6 +235,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
+    if (drawFrame !== null) cancelAnimationFrame(drawFrame);
     io?.disconnect();
     ro?.disconnect();
     boil.stop();

@@ -223,7 +223,8 @@ export function useDockPopover(options: UseDockPopoverOptions): UseDockPopoverRe
         try {
             el.showPopover();
         } catch {
-            // already open / not connected — the open guard + native state cover it.
+            // A disconnected/unsupported surface cannot become the interaction owner.
+            return;
         }
         open.value = true;
         // The one-shot AFTER show (the surface is now measurable in the top layer).

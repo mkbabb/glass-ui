@@ -105,7 +105,7 @@ const showLabel = computed(() =>
 <template>
   <div
     :class="cn(
-      'metric-badge cursor-pointer',
+      'metric-badge',
       // BG.W-DESHADCN — off the shadcn `outline-ring` (the deleted `--color-ring`
       // theme bridge) onto the renamed house `--focus-ring-color` token.
       'focus-visible:outline-2 focus-visible:outline-(color:--focus-ring-color) focus-visible:outline-offset-2',

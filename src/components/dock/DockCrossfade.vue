@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useMediaQuery } from "@vueuse/core";
 import { computed, nextTick, onBeforeUnmount, ref, watch } from "vue";
 import { useResizeObserver } from "../../composables/dom/useResizeObserver";
 import { useDockSpring } from "./composables/useDockSpring";
@@ -136,13 +137,14 @@ function clamp01(v: number): number {
     return v < 0 ? 0 : v > 1 ? 1 : v;
 }
 
-function prefersReducedMotion(): boolean {
-    return (
-        typeof window !== "undefined" &&
-        typeof window.matchMedia === "function" &&
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    );
-}
+const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
+let settleCrossfade: (() => void) | null = null;
+
+watch(prefersReducedMotion, (reduced) => {
+    if (!reduced) return;
+    spring.dispose();
+    settleCrossfade?.();
+});
 
 /**
  * X4 — a dissolving focus-holding face transfers focus to its SUCCESSOR (the entering
@@ -209,11 +211,13 @@ watch(
             clearT(prev);
             rootEl.value?.removeAttribute("data-crossfading");
             leavingId.value = null;
+            if (settleCrossfade === settle) settleCrossfade = null;
         };
+        settleCrossfade = settle;
 
         // PRM — snap: entering full, leaving gone, zero in-between frames (fade-keeps/
         // transform-drops; there is no transform here, so PRM is an instant swap).
-        if (prefersReducedMotion()) {
+        if (prefersReducedMotion.value) {
             settle();
             return;
         }
@@ -233,7 +237,10 @@ watch(
     },
 );
 
-onBeforeUnmount(() => spring.dispose());
+onBeforeUnmount(() => {
+    spring.dispose();
+    settleCrossfade = null;
+});
 
 // The switcher rail (a composing `<DockLayerGroup>`) reads the registered face
 // descriptors off this expose; the controlled-no-rail case ignores it.

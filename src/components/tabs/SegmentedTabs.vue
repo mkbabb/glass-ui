@@ -425,6 +425,7 @@ const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
                 <Tooltip>
                     <TooltipTrigger as-child>
                         <button
+                            type="button"
                             :ref="(el) => { if (el) buttonRefs[idx] = el as HTMLElement }"
                             class="segmented-tab"
                             :role="isUnderline ? 'tab' : undefined"
@@ -452,6 +453,7 @@ const { rovingTabindex, onStripKeydown } = useTabRovingFocus({
 
             <button
                 v-else
+                type="button"
                 :ref="(el) => { if (el) buttonRefs[idx] = el as HTMLElement }"
                 class="segmented-tab"
                 :role="isUnderline ? 'tab' : undefined"

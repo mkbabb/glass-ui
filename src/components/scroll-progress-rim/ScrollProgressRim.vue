@@ -32,8 +32,10 @@ const props = withDefaults(defineProps<ScrollProgressRimProps>(), {
 });
 
 const clamp = (value: number, min: number, max: number) =>
-    Math.min(max, Math.max(min, value));
-const max = computed(() => (props.max > 0 ? props.max : 1));
+    Number.isNaN(value) ? min : Math.min(max, Math.max(min, value));
+const max = computed(() =>
+    Number.isFinite(props.max) && props.max > 0 ? props.max : 1,
+);
 const value = computed(() => clamp(props.value, 0, max.value));
 const fraction = computed(() => value.value / max.value);
 const spectrum = computed(() => (props.stops?.length ? props.stops : DEFAULT_STOPS));

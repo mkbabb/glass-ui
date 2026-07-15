@@ -24,9 +24,8 @@ import { cn } from "../_shared/class-names";
  * # Contract
  *
  * - `v-model` — the hex string (`"#3a7bd5"`). The native input round-trips it.
- * - `aria-label` (fall-through) — names the picker for a11y (the bare swatch is
- *   otherwise unlabeled). REQUIRED when the chip is not adjacent to a visible
- *   label; a configurator row's label names it otherwise.
+ * - `aria-label` (fall-through) — overrides the default "Choose color" name
+ *   when the surrounding field has a more specific label.
  * - `showHex?: boolean` (default `false`) — render the uppercase hex code beside
  *   the swatch (the "hex affordance"). Off → the bare proportioned chip.
  * - `size?: "sm" | "md"` (default `"md"`) — the chip edge (28px / 32px), floored
@@ -82,6 +81,7 @@ function onInput(e: Event): void {
         >
             <input
                 type="color"
+                aria-label="Choose color"
                 :value="model"
                 v-bind="$attrs"
                 class="color-swatch__input absolute inset-0 h-full w-full cursor-pointer appearance-none border-0 bg-transparent p-0 opacity-0"

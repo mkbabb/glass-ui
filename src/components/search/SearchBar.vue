@@ -4,9 +4,15 @@
         :class="cn('input-bar', controlSizeClass(size), searchFieldVariants({ variant }), $attrs.class as string)"
         :data-surface="surface"
     >
-        <component :is="icon ?? Search" class="size-(--search-icon-size) text-muted-foreground shrink-0" />
+        <component
+            :is="icon ?? Search"
+            class="size-(--search-icon-size) text-muted-foreground shrink-0"
+            aria-hidden="true"
+        />
         <input
             ref="inputRef"
+            type="search"
+            v-bind="inputAttrs"
             :value="modelValue"
             :placeholder="placeholder"
             class="input-bar-field"
@@ -17,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, type Component } from "vue";
+import { computed, ref, useAttrs, type Component } from "vue";
 import { Search } from "@lucide/vue";
 import { cn } from "../_shared/class-names";
 import type { Surface } from "../_shared/useSurfaceAxis";
@@ -27,6 +33,8 @@ import {
     controlSizeClass,
     searchFieldVariants,
 } from "./searchVariants";
+
+defineOptions({ inheritAttrs: false });
 
 const props = withDefaults(
     defineProps<{
@@ -62,6 +70,12 @@ const props = withDefaults(
 const emit = defineEmits<{
     "update:modelValue": [value: string];
 }>();
+
+const attrs = useAttrs();
+const inputAttrs = computed(() => {
+    const { class: _, ...input } = attrs;
+    return input;
+});
 
 const inputRef = ref<HTMLInputElement | null>(null);
 
