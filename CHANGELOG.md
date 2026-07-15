@@ -55,12 +55,21 @@ delta from 5.0.0 is one removal, `./stacked-icons`; no key is added or renamed.
 - FuzzySearch paints matches with ordinary escaped `<mark>` elements. The bundled named
   `::highlight()` rules and empty `styles/utilities/animate.css` artifact are gone;
   `useTextHighlight` remains a caller-styled low-level Custom Highlight API.
+- `DataTable` adds `ariaRowCount`, `getRowAttrs`, `rowRef`, and `tabbableRowId`, plus
+  exported `DataTableRowAttrs` and `DataTableRowRef` types, for caller-owned windowing.
+  Logical row ARIA stays on the native table projection; responsive cards retain generic
+  attributes, mounted-row refs, and the sole roving tab stop.
 - The optional `@mkbabb/pencil-boil` peer is now `^0.9.2`; development pins immutable
   `0.9.2`. The HandMark geometry and boil imports build and test against that artifact.
   Pencil 0.9.2 itself declares Node 24/npm 11; Glass core remains Node 22 compatible
   when that optional peer is not installed.
 - Release validation is direct (`typecheck`, build, tests) and tag publication retains
   npm provenance; packaging no longer depends on terminal tranche metadata.
+
+### Fixed
+
+- WebGL visibility disposal cancels pending resize-settle and fallback reveal frames and
+  prevents their callbacks from running after teardown.
 
 ## 5.0.0
 

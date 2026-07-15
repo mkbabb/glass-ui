@@ -53,6 +53,10 @@ and `HandMark` remain public. The package export-map delta is exactly the remova
   bundled `::highlight(glass-search-mark)` / `::highlight(glass-mark)` paint. Code using
   `useTextHighlight` must continue to provide its own Custom Highlight CSS. The empty
   `styles/utilities/animate.css` file/import is removed.
+- Windowed `DataTable` consumers can pass `ariaRowCount`, `getRowAttrs`, `rowRef`, and
+  `tabbableRowId`; `DataTableRowAttrs` and `DataTableRowRef` are exported from the same
+  subpath. `aria-rowcount` and caller-supplied `aria-rowindex` remain table-only, while
+  responsive cards retain generic attributes, mounted-row refs, and the sole tab stop.
 - Install `@mkbabb/pencil-boil@^0.9.2` when using HandMark. Glass development and the
   release build pin `0.9.2`; `catmullRomToBezier`, `ellipsePoints`, `perturbPoints`,
   `perturbPointsClosed`, `pointsToLinear`, `wobbleLinePoints`, and `useLineBoil` are the

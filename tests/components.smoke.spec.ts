@@ -115,7 +115,9 @@ describe("component smoke coverage", () => {
 
     it("positions Progress indicator from model value", () => {
         const wrapper = mount(Progress, { props: { modelValue: 75 } });
-        expect(wrapper.html()).toContain("translateX(-25%)");
+        const root = wrapper.get('[role="progressbar"]');
+        expect(root.attributes("style")).toContain("--progress-value-percent: 75%");
+        expect(root.find(".progress-value-fill").exists()).toBe(true);
     });
 
     it("renders MetricBadge amount and unit", () => {
